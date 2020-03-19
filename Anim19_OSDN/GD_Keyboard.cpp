@@ -1,0 +1,328 @@
+#include "stdafx.h"
+#include "GD19_App.h"
+#include "GD_Keyboard.h"
+
+
+GD_Keyboard::GD_Keyboard()
+{
+	Rate = 0;
+	OldPos.ZERO;
+	//mCamera = App->Cl19_Ogre->OgreListener->mCam;
+
+}
+
+
+GD_Keyboard::~GD_Keyboard()
+{
+}
+
+// *************************************************************************
+// *						Keyboard_Monitor Terry						   *
+// *************************************************************************
+void GD_Keyboard::Keyboard_Monitor(float deltaTime)
+{
+	//------------------------------------------------ O Key - Change to Object
+	if (GetAsyncKeyState(79) < 0 && App->Cl19_Ogre->OgreListener->GD_CameraMode == Enums::CamFirst)
+	{
+		
+		App->Cl19_Ogre->OgreListener->FollowPlayer = 0;
+	}
+
+	if (GetAsyncKeyState(80) < 0 && App->Cl19_Ogre->OgreListener->GD_CameraMode == Enums::CamFirst)
+	{
+
+		App->Cl19_Ogre->OgreListener->FollowPlayer = 1; // P Key - Change to Player
+	}
+
+	//------------------------------------------------ Space Key - Jump and Selection
+	if (GetAsyncKeyState(VK_SPACE) < 0 && App->Cl_Player->PlayerAdded == 1)
+	{
+		if (App->Cl19_Ogre->OgreListener->GD_Selection_Mode == 0)
+		{
+			App->Cl_Player->Jump(Ogre::Vector3(1, 1, 0), 1.2);
+		}
+		else
+		{
+			App->Cl19_Ogre->OgreListener->SelectEntity();
+		}
+	}
+
+	//------------------------------------------------ Y Key
+	if (GetAsyncKeyState(89) < 0 && App->Cl19_Ogre->OgreListener->mNameOverlay->isVisible() == 1)
+	{
+		App->Cl19_Ogre->OgreListener->mNameOverlay->hide();
+
+		if (App->Cl19_Ogre->OgreListener->Pl_Entity_Name == "Player_1")
+		{
+			App->Cl_FileView->SelectItem(App->Cl_Player->ListViewItem);
+		}
+		else
+		{
+			App->Cl_FileView->Select_Item(App->Cl19_Ogre->OgreListener->Selected_Entity_Index);
+		}
+
+	}
+
+	//------------------------------------------------ N Key
+	if (GetAsyncKeyState(78) < 0 && App->Cl19_Ogre->OgreListener->mNameOverlay->isVisible() == 1)
+	{
+		App->Cl19_Ogre->OgreListener->mNameOverlay->hide();
+	}
+
+	//------------------------------------------------ Forward
+	if (GetAsyncKeyState(VK_UP) < 0 && App->Cl_Player->PlayerAdded == 1 && App->Cl19_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
+	{
+		App->Cl_Player->Forward(deltaTime);
+		App->Cl_Player->IsMOving = 1;
+	}
+	else
+	{
+		if (App->Cl_Player->PlayerAdded == 1 && App->Cl_Player->IsMOving == 1 && App->Cl19_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
+		{
+			App->Cl_Player->Stop();
+			App->Cl_Player->IsMOving = 0;
+		}
+	}
+	//------------------------------------------------ Back
+	if (GetAsyncKeyState(VK_DOWN) < 0 && App->Cl_Player->PlayerAdded == 1 && App->Cl19_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
+	{
+		App->Cl_Player->Back();
+		App->Cl_Player->IsMOving_Back = 1;
+	}
+	else
+	{
+		if (App->Cl_Player->PlayerAdded == 1 && App->Cl_Player->IsMOving_Back == 1 && App->Cl19_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
+		{
+			App->Cl_Player->Stop();
+			App->Cl_Player->IsMOving_Back = 0;
+		}
+	}
+
+	//------------------------------------------------ Turn Right
+	if (GetAsyncKeyState(VK_RIGHT) < 0 && App->Cl_Player->PlayerAdded == 1)
+	{
+		App->Cl19_Ogre->OgreListener->toggleTimer -= deltaTime;
+
+		if (App->Cl19_Ogre->OgreListener->toggleTimer < 0)
+		{
+			Ogre::Vector3 Rotate;
+			Rotate.x = 0;
+			Rotate.y = 1;
+			Rotate.z = 0;
+
+			float Delta = App->Cl_Utilities->DegreesToRadians(1);
+
+			App->Cl_Player->Rotate(Rotate, false);
+
+			App->Cl19_Ogre->OgreListener->toggleTimer = 0.01;
+		}
+	}
+
+	//------------------------------------------------ Turn Left
+	if (GetAsyncKeyState(VK_LEFT) < 0 && App->Cl_Player->PlayerAdded == 1)
+	{
+		App->Cl19_Ogre->OgreListener->toggleTimer -= deltaTime;
+
+		if (App->Cl19_Ogre->OgreListener->toggleTimer < 0)
+		{
+			Ogre::Vector3 Rotate;
+			Rotate.x = 0;
+			Rotate.y = -1;
+			Rotate.z = 0;
+
+			float Delta = App->Cl_Utilities->DegreesToRadians(1);
+
+			App->Cl_Player->Rotate(Rotate, false);
+
+			App->Cl19_Ogre->OgreListener->toggleTimer = 0.01;
+		}
+	}
+
+	//------------------------------------------------ Q key Down in Fly Mode
+	if (GetAsyncKeyState(69) < 0)
+	{
+		Rate = (App->Cl19_Ogre->OgreListener->mMoveSensitivity / 1000) * 2; //FlyRate;
+
+		OldPos = App->Cl19_Ogre->OgreListener->mCam->getPosition();
+
+		OldPos.y += Rate;
+
+		App->Cl19_Ogre->OgreListener->mCam->setPosition(OldPos);
+	}
+	
+	//------------------------------------------------ E key Up in Fly Mode
+	if (GetAsyncKeyState(81) < 0)
+	{
+		Rate = (App->Cl19_Ogre->OgreListener->mMoveSensitivity / 1000) * 2; //FlyRate;
+
+		OldPos = App->Cl19_Ogre->OgreListener->mCam->getPosition();
+
+		OldPos.y -= Rate;
+
+		App->Cl19_Ogre->OgreListener->mCam->setPosition(OldPos);
+	}
+	//------------------------------------------------
+	if (App->Cl19_Ogre->OgreListener->Wheel < 0) // Mouse Wheel Forward
+	{
+		if (App->Cl19_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
+		{
+			App->Cl19_Ogre->OgreListener->mTranslateVector.z = -App->Cl19_Ogre->OgreListener->mMoveScale * 30;
+		}
+		/*else
+		{
+			if (App->Cl_Player->PlayerAdded == 1)
+			{
+				App->Cl_Player->IsMOving = 1;
+				App->Cl_Player->Forward(deltaTime);
+			}
+			else
+			{
+				if (App->Cl_Player->IsMOving == 1)
+				{
+					App->Cl_Player->Stop();
+					App->Cl_Player->IsMOving = 0;
+				}
+			}
+		}*/
+	}
+
+	//------------------------------------------------ Move Forward
+	if (GetAsyncKeyState(87) < 0) // W Key
+	{
+		if (App->Cl19_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
+		{
+			App->Cl19_Ogre->OgreListener->mTranslateVector.z = -App->Cl19_Ogre->OgreListener->mMoveScale;
+		}
+		else
+		{
+			if (App->Cl_Player->PlayerAdded == 1)
+			{
+
+				App->Cl_Player->Forward(deltaTime);
+				App->Cl_Player->IsMOving = 1;
+			}
+		}
+	}
+	else
+	{
+		if (App->Cl19_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
+		{
+
+		}
+		else if (App->Cl_Player->PlayerAdded == 1 && App->Cl_Player->IsMOving == 1)
+		{
+			App->Cl_Player->Stop();
+			App->Cl_Player->IsMOving = 0;
+		}
+	}
+
+	if (App->Cl19_Ogre->OgreListener->Wheel > 0) // Mouse Wheel Back
+	{
+		if (App->Cl19_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
+		{
+			App->Cl19_Ogre->OgreListener->mTranslateVector.z = App->Cl19_Ogre->OgreListener->mMoveScale * 30;
+		}
+		/*else
+		{
+		if (App->Cl_Player->PlayerAdded == 1)
+		{
+		App->Cl_Player->Back();
+		}
+		}*/
+	}
+
+	//------------------------------------------------ Move Back
+	if (GetAsyncKeyState(83) < 0) // S Key	
+	{
+
+		if (App->Cl19_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
+		{
+			App->Cl19_Ogre->OgreListener->mTranslateVector.z = App->Cl19_Ogre->OgreListener->mMoveScale;
+		}
+		else
+		{
+			if (App->Cl_Player->PlayerAdded == 1)
+			{
+				App->Cl_Player->Back();
+				App->Cl_Player->IsMOving_Back = 1;
+			}
+		}
+	}
+	else
+	{
+		if (App->Cl19_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
+		{
+
+		}
+		else if (App->Cl_Player->PlayerAdded == 1 && App->Cl_Player->IsMOving_Back == 1)
+		{
+			App->Cl_Player->Stop();
+			App->Cl_Player->IsMOving_Back = 0;
+		}
+	}
+
+	//------------------------------------------------ Move Right
+	if (GetAsyncKeyState(65) < 0)
+	{
+		if (App->Cl19_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
+		{
+			App->Cl19_Ogre->OgreListener->mTranslateVector.x = -App->Cl19_Ogre->OgreListener->mMoveScale;
+		}
+		else
+		{
+			if (App->Cl_Player->PlayerAdded == 1)
+			{
+				App->Cl_Player->Move_Right();
+				App->Cl_Player->IsMOving_Right = 1;
+			}
+		}
+	}
+	else
+	{
+		if (App->Cl19_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
+		{
+
+		}
+		else if (App->Cl_Player->PlayerAdded == 1 && App->Cl_Player->IsMOving_Right == 1)
+		{
+			App->Cl_Player->Stop();
+			App->Cl_Player->IsMOving_Right = 0;
+		}
+	}
+
+	//------------------------------------------------ Move Left
+	if (GetAsyncKeyState(68) < 0)
+	{
+		if (App->Cl19_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
+		{
+			App->Cl19_Ogre->OgreListener->mTranslateVector.x = App->Cl19_Ogre->OgreListener->mMoveScale;
+		}
+		else
+		{
+			if (App->Cl_Player->PlayerAdded == 1)
+			{
+				App->Cl_Player->Move_Left();
+				App->Cl_Player->IsMOving_Left = 1;
+			}
+		}
+	}
+	else
+	{
+		if (App->Cl19_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
+		{
+
+		}
+		else if (App->Cl_Player->PlayerAdded == 1 && App->Cl_Player->IsMOving_Left == 1)
+		{
+			App->Cl_Player->Stop();
+			App->Cl_Player->IsMOving_Left = 0;
+		}
+	}
+
+	//------------------------------------------------ Escape 
+	if (GetAsyncKeyState(VK_ESCAPE) < 0) // Back to full Screen;
+	{
+		App->Cl19_Ogre->ExitFullScreen();
+	}
+
+}

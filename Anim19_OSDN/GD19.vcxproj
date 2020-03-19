@@ -1,0 +1,289 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{FE2B8ABE-DBBE-466A-86BB-0B2344866A98}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>GD19_OSDN</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <ProjectName>GD19</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>..\Bin\</OutDir>
+    <TargetName>Gamedirector</TargetName>
+    <IntDir>Release2\</IntDir>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>..\..\GD19_OSDN\GD19_OSDN;Common\Bullet\Source;Common\include\OGRE;Common\include\OGRE\Terrain;Common\include\OIS;Common\include\OGRE\Overlay;Common\spdlog;Common\irrKlang\Headers;Common\imGui\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <EnablePREfast>false</EnablePREfast>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>Common\lib\Release;Common\Bullet\lib;Common\irrKlang\Libs</AdditionalLibraryDirectories>
+      <AdditionalDependencies>comctl32.lib;OgreMain.lib;OgreOverlay.lib;OgreTerrain.lib;BulletDynamics.lib;BulletCollision.lib;LinearMath.lib;irrKlang.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)Gamedirector.exe</OutputFile>
+      <IgnoreSpecificDefaultLibraries>LIBCMT.lib;libcpmt.lib</IgnoreSpecificDefaultLibraries>
+      <LinkTimeCodeGeneration>UseFastLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GD19_Bullet.h" />
+    <ClInclude Include="GD19_Collision.h" />
+    <ClInclude Include="GD19_DIALOGS.h" />
+    <ClInclude Include="GD19_Dimensions.h" />
+    <ClInclude Include="GD19_Environment.h" />
+    <ClInclude Include="GD19_FileView.h" />
+    <ClInclude Include="GD19_FileView_V2.h" />
+    <ClInclude Include="GD19_File_IO.h" />
+    <ClInclude Include="GD19_Grid.h" />
+    <ClInclude Include="GD19_Ini.h" />
+    <ClInclude Include="GD19_Load_Scene.h" />
+    <ClInclude Include="GD19_LookUps.h" />
+    <ClInclude Include="GD19_Mesh_Viewer.h" />
+    <ClInclude Include="GD19_Objects.h" />
+    <ClInclude Include="GD19_Objects_Com.h" />
+    <ClInclude Include="GD19_Objects_FFile.h" />
+    <ClInclude Include="GD19_Objects_New.h" />
+    <ClInclude Include="GD19_Object_Properties.h" />
+    <ClInclude Include="GD19_OSDN.h" />
+    <ClInclude Include="GD19_App.h" />
+    <ClInclude Include="GD19_Ogre.h" />
+    <ClInclude Include="GD19_OgreListener.h" />
+    <ClInclude Include="GD19_Panel.h" />
+    <ClInclude Include="GD19_Panels.h" />
+    <ClInclude Include="GD19_Panel_Com.h" />
+    <ClInclude Include="GD19_PB.h" />
+    <ClInclude Include="GD19_Player.h" />
+    <ClInclude Include="GD19_Project.h" />
+    <ClInclude Include="GD19_Properties.h" />
+    <ClInclude Include="GD19_Resources.h" />
+    <ClInclude Include="GD19_Save_Scene.h" />
+    <ClInclude Include="GD19_Scene_Data.h" />
+    <ClInclude Include="GD19_SoundMgr.h" />
+    <ClInclude Include="GD19_Stock.h" />
+    <ClInclude Include="GD19_ToolBar.h" />
+    <ClInclude Include="GD19_Utilities.h" />
+    <ClInclude Include="GD19_Visuals.h" />
+    <ClInclude Include="GD_Bt_Render.h" />
+    <ClInclude Include="GD_File_Data.h" />
+    <ClInclude Include="GD_ImGui.h" />
+    <ClInclude Include="GD_Keyboard.h" />
+    <ClInclude Include="GD_spdlog.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="CollisionTools.cpp" />
+    <ClCompile Include="Common\imGui\ImGui_cpp\imgui.cpp" />
+    <ClCompile Include="Common\imGui\ImGui_cpp\ImguiManager.cpp" />
+    <ClCompile Include="Common\imGui\ImGui_cpp\ImguiRenderable.cpp" />
+    <ClCompile Include="Common\imGui\ImGui_cpp\imgui_demo.cpp" />
+    <ClCompile Include="Common\imGui\ImGui_cpp\imgui_draw.cpp" />
+    <ClCompile Include="Common\imGui\ImGui_cpp\imgui_widgets.cpp" />
+    <ClCompile Include="GD19_Bullet.cpp" />
+    <ClCompile Include="GD19_Collision.cpp" />
+    <ClCompile Include="GD19_DIALOGS.cpp" />
+    <ClCompile Include="GD19_Dimensions.cpp" />
+    <ClCompile Include="GD19_Environment.cpp" />
+    <ClCompile Include="GD19_FileView.cpp" />
+    <ClCompile Include="GD19_FileView_V2.cpp" />
+    <ClCompile Include="GD19_File_IO.cpp" />
+    <ClCompile Include="GD19_Grid.cpp" />
+    <ClCompile Include="GD19_Ini.cpp" />
+    <ClCompile Include="GD19_Load_Scene .cpp" />
+    <ClCompile Include="GD19_LookUps.cpp" />
+    <ClCompile Include="GD19_Mesh_Viewer.cpp" />
+    <ClCompile Include="GD19_Objects.cpp" />
+    <ClCompile Include="GD19_Objects_Com.cpp" />
+    <ClCompile Include="GD19_Objects_FFile.cpp" />
+    <ClCompile Include="GD19_Objects_New.cpp" />
+    <ClCompile Include="GD19_Object_Properties.cpp" />
+    <ClCompile Include="GD19_OSDN.cpp" />
+    <ClCompile Include="GD19_App.cpp" />
+    <ClCompile Include="GD19_Ogre.cpp" />
+    <ClCompile Include="GD19_OgreListener.cpp" />
+    <ClCompile Include="GD19_Panel.cpp" />
+    <ClCompile Include="GD19_Panels.cpp" />
+    <ClCompile Include="GD19_Panel_Com.cpp" />
+    <ClCompile Include="GD19_PB.cpp" />
+    <ClCompile Include="GD19_Player.cpp" />
+    <ClCompile Include="GD19_Project.cpp" />
+    <ClCompile Include="GD19_Properties.cpp" />
+    <ClCompile Include="GD19_Resources.cpp" />
+    <ClCompile Include="GD19_Save_Scene.cpp" />
+    <ClCompile Include="GD19_Scene_Data.cpp" />
+    <ClCompile Include="GD19_SoundMgr.cpp" />
+    <ClCompile Include="GD19_Stock.cpp" />
+    <ClCompile Include="GD19_ToolBar.cpp" />
+    <ClCompile Include="GD19_Utilities.cpp" />
+    <ClCompile Include="GD19_Visuals.cpp" />
+    <ClCompile Include="GD_Bt_Render.cpp" />
+    <ClCompile Include="GD_File_Data.cpp" />
+    <ClCompile Include="GD_ImGui.cpp" />
+    <ClCompile Include="GD_Keyboard.cpp" />
+    <ClCompile Include="GD_spdlog.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GD19_OSDN.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="GD19_OSDN.ico" />
+    <Image Include="resource\fileview\bitmap1.bmp" />
+    <Image Include="Resource\FileView\File.bmp" />
+    <Image Include="Resource\FileView\FileInactive.bmp" />
+    <Image Include="Resource\FileView\FIleSelected.bmp" />
+    <Image Include="Resource\FileView\Folder.bmp" />
+    <Image Include="Resource\FileView\SoundOff.bmp" />
+    <Image Include="Resource\FileView\SoundOn.bmp" />
+    <Image Include="Resource\FileView\StartUpOff.bmp" />
+    <Image Include="Resource\FileView\StartUpOn.bmp" />
+    <Image Include="Resource\MenuBar\FullScreen.bmp" />
+    <Image Include="Resource\MenuBar\ModelData.bmp" />
+    <Image Include="Resource\MenuBar\MouseSensitivity.bmp" />
+    <Image Include="small.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

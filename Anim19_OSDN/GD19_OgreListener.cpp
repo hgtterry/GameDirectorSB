@@ -1,0 +1,705 @@
+/*
+Copyright (c) GameDirector 2019 Inflanite Software W.T.Flanigan H.C.Flanigan B.Parkin
+
+This software is provided 'as-is', without any express or implied
+warranty. In no event will the authors be held liable for any damages
+arising from the use of this software.
+
+Permission is granted to anyone to use this software for any purpose,
+including commercial applications, and to alter it and redistribute it
+freely, subject to the following restrictions:
+
+1. The origin of this software must not be misrepresented; you must not
+claim that you wrote the original software. If you use this software
+in a product, an acknowledgment in the product documentation would be
+appreciated but is not required.
+
+2. Altered source versions must be plainly marked as such, and must not be
+misrepresented as being the original software.
+
+3. This notice may not be removed or altered from any source
+distribution.
+*/
+
+#include "stdafx.h"
+#include "GD19_App.h"
+#include "GD19_OgreListener.h"
+
+
+
+GD19_OgreListener::GD19_OgreListener(void)
+{
+	mCam = App->Cl19_Ogre->mCamera;
+	Pl_mDummyCamera = App->Cl19_Ogre->mSceneMgr->createCamera("PickCamera");
+
+	Wheel = 0;
+	StopOgre = 0;
+	ShowFPS = 1;
+
+	GD_CameraMode = Enums::CamDetached;
+	Pl_mDummyTranslateVector = Ogre::Vector3::ZERO;
+
+	mMoveScale = 0;
+	mMoveSensitivity = 50;
+	mMoveSensitivityMouse = 50;
+
+	Pl_LeftMouseDown = 0;
+	Pl_RightMouseDown = 0;
+
+	Pl_DeltaMouse = 0;
+	Pl_MouseX = 0;
+	Pl_MouseY = 0;
+
+	Pl_Cent500X = 500;
+	Pl_Cent500Y = 500;
+
+	GD_Run_Physics = 0;
+	GD_Dubug_Physics = 0;
+	GD_MeshViewer_Running = 0;
+	GD_SpinRate = 1;
+	GD_Selection_Mode = 0;
+
+	FollowPlayer = 1;
+	Object_ToFollow = 1;
+
+	Show_ImGui_Panels = 1;
+
+	View_Height = 0;
+	View_Width = 0;
+
+	Selected_Entity_Index = 0;
+
+	toggleTimer = 0.01;
+
+	Animate_Ogre = 0;
+	AnimationScale = 1;
+	
+	mNameOverlay = OverlayManager::getSingleton().getByName("Core/ObjectNameOverlay");
+	mNameOverlay->hide();
+
+	mCollisionTools = new MOC::CollisionTools(App->Cl19_Ogre->mSceneMgr);
+	mCollisionTools->setHeightAdjust(3.5f);
+
+}
+
+GD19_OgreListener::~GD19_OgreListener(void)
+{
+}
+
+// *************************************************************************
+// *				frameStarted   Terry Bernie							   *
+// *************************************************************************
+bool GD19_OgreListener::frameStarted(const FrameEvent& evt)
+{
+	if (GD_MeshViewer_Running == 1)
+	{
+		return true;
+	}
+	else
+	{
+		App->Cl19_Ogre->Get_View_Height_Width();
+
+		App->Cl19_Ogre->m_imgui.NewFrame(evt.timeSinceLastFrame, (float)View_Width, (float)View_Height);
+
+		if (Show_ImGui_Panels == 1)
+		{
+			App->Cl_ImGui->Render_Main_Panels();
+		}
+
+		/*if (Animate_Ogre == 1 && GD_CameraMode == Enums::CamDetached)
+		{
+			Animate_State->addTime(evt.timeSinceLastFrame * AnimationScale);
+			Animate_State2->addTime(evt.timeSinceLastFrame * AnimationScale);
+		}*/
+
+		if (GD_Dubug_Physics == 1)
+		{
+			App->Cl_Bullet->dynamicsWorld->debugDrawWorld();
+		}
+
+		if (GD_Run_Physics == 1)
+		{
+			btVector3 currentVelocityDirection = App->Cl_Scene_Data->Cl_Object[1]->bt_body->getLinearVelocity();
+			btScalar currentVelocty = currentVelocityDirection.length();
+			if (currentVelocty < _desiredVelocity)
+			{
+				currentVelocityDirection *= _desiredVelocity / currentVelocty;
+
+				currentVelocityDirection.setY(0);
+
+				App->Cl_Scene_Data->Cl_Object[1]->bt_body->setLinearVelocity(currentVelocityDirection);
+			}
+
+			{
+				App->Cl_Bullet->dynamicsWorld->stepSimulation(evt.timeSinceLastFrame * 2); //suppose you have 60 frames per second
+
+				for (int j = App->Cl_Bullet->dynamicsWorld->getNumCollisionObjects() - 1; j >= 0; j--)
+				{
+					btCollisionObject* obj = App->Cl_Bullet->dynamicsWorld->getCollisionObjectArray()[j];
+					btRigidBody* body = btRigidBody::upcast(obj);
+					btTransform trans;
+					if (body && body->getMotionState())
+					{
+						int UI = body->getUserIndex();
+						int Index = body->getUserIndex2();
+
+
+						if (UI == Enums::Usage_Dynamic && App->Cl_Scene_Data->Cl_Object[Index]->Deleted == 0)
+						{
+							body->getMotionState()->getWorldTransform(trans);
+							btQuaternion orientation = trans.getRotation();
+
+							Ogre::Vector3 BB = App->Cl_Objects_Com->GetMesh_Center(Index, App->Cl_Scene_Data->Cl_Object[Index]->OgreNode);
+							Ogre::Vector3 WC = App->Cl_Objects_New->Get_BoundingBox_World_Centre(Index);
+
+							float x = trans.getOrigin().getX();
+							float y = trans.getOrigin().getY();
+							float z = trans.getOrigin().getZ();
+
+							App->Cl_Scene_Data->Cl_Object[Index]->OgreNode->setPosition(Ogre::Vector3(x, y, z));
+							App->Cl_Scene_Data->Cl_Object[Index]->OgreNode->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
+
+							WC = App->Cl_Objects_New->Get_BoundingBox_World_Centre(Index);
+
+							Ogre::Vector3 NewPos = Ogre::Vector3(x, y, z) - WC;
+							App->Cl_Scene_Data->Cl_Object[Index]->OgreNode->setPosition((Ogre::Vector3(x, y, z)) + NewPos);
+						}
+
+					}
+					else
+					{
+						trans = obj->getWorldTransform();
+					}
+				}
+			}
+			btTransform trans;
+			App->Cl_Player->mObject->getMotionState()->getWorldTransform(trans);
+			btQuaternion orientation = trans.getRotation();
+			App->Cl_Player->Player_Node->setPosition(Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ()));
+			App->Cl_Player->Player_Node->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
+			App->Cl_Player->Player_Node->pitch(Ogre::Degree(180));
+		}
+	}
+
+	return true;
+}
+
+// *************************************************************************
+// *			frameRenderingQueued   Terry Bernie						   *
+// *************************************************************************
+bool GD19_OgreListener::frameRenderingQueued(const FrameEvent& evt)
+{
+	//Real ttW = 1000.0 / 65 - 1000.0 * evt.timeSinceLastFrame;
+	//if (ttW > 0) Sleep(ttW);
+
+	if (GD_MeshViewer_Running == 1)
+	{
+		//if (Flags[0]->MeshViewer_SpinObject == 1)
+		{
+			Ogre::Radian Rotation_Speed;
+			Rotation_Speed = GD_SpinRate / (float)57.3;
+			App->Cl_Mesh_Viewer->MvNode->yaw(Rotation_Speed);
+		}
+		return 1;
+	}
+
+	float start = evt.timeSinceLastFrame;
+
+	App->Cl19_Ogre->m_imgui.render();
+
+	mRotX = 0;
+	mRotY = 0;
+	mTranslateVector = Ogre::Vector3::ZERO;
+
+	mMoveScale = mMoveSensitivity  * evt.timeSinceLastFrame;
+
+	if (GD_CameraMode == Enums::CamFirst)
+	{
+		Ogre::Vector3 Pos;
+		Ogre::Radian mmPitch;
+		Ogre::Radian mYaw;
+
+		if (FollowPlayer == 1)
+		{
+			Pos = App->Cl_Player->Player_Node->getPosition();
+			//Ogre::Quaternion  CQ = App->Cl_Player->Player_Node->getOrientation();
+
+			mmPitch = App->Cl_Player->CameraPitch->getOrientation().getPitch();
+			mYaw = App->Cl_Player->Player_Node->getOrientation().getYaw();
+			Pos.y = Pos.y + App->Cl_Player->PlayerHeight;
+
+		}
+		else
+		{
+			btVector3 Centre;
+			Centre = App->Cl_Scene_Data->Cl_Object[Object_ToFollow]->bt_body->getWorldTransform().getOrigin();
+			Pos.x = Centre.getX();
+			Pos.y = Centre.getY();
+			Pos.z = Centre.getZ();
+
+			//mmPitch = App->Cl_Scene_Data->Cl_Object[Object_ToFollow]->OgreNode->getOrientation().getPitch();
+			mYaw = App->Cl_Scene_Data->Cl_Object[Object_ToFollow]->OgreNode->getOrientation().getYaw();
+			Pos.y = Pos.y + App->Cl_Player->PlayerHeight;
+		}
+
+			App->Cl19_Ogre->mCamera->setPosition(Pos);
+			App->Cl19_Ogre->mCamera->setOrientation(Ogre::Quaternion(1, 0, 0, 0));
+			App->Cl19_Ogre->mCamera->yaw(mYaw);
+			//App->Cl19_Ogre->mCamera->pitch(mmPitch);
+			App->Cl19_Ogre->mCamera->yaw(Ogre::Degree(180));
+		
+
+	}
+
+	App->Cl_Keyboard->Keyboard_Monitor(evt.timeSinceLastFrame);
+	
+	// Left Mouse
+	if (Pl_LeftMouseDown == 1 && Pl_RightMouseDown == 0)
+	{
+		if (GD_CameraMode == Enums::CamFirst)
+		{
+			Capture_Mouse_FirstPerson();
+			SetCursorPos(500, 500);
+		}
+		else if (GD_CameraMode == Enums::CamNone)
+		{
+			Capture_LeftMouse();
+		}
+		else
+		{
+			Capture_Mouse_Free();
+		}
+	}
+
+	if (Pl_LeftMouseDown == 1 && GD_CameraMode == Enums::CamDetached)
+	{
+
+		if (!ImGui::GetIO().WantCaptureMouse)
+		{
+			SetCursorPos(500, 500);
+		}
+	}
+
+	// Right Mouse
+	if (Pl_LeftMouseDown == 0 && Pl_RightMouseDown == 1)
+	{
+		Capture_RightMouse();
+	}
+
+	MoveCamera();
+
+	if (App->Cl_Collision->DoMove == 1)
+	{
+		App->Cl_Collision->MoveObject(evt.timeSinceLastFrame);
+	}
+	return 1;
+}
+
+// *************************************************************************
+// *				frameEnded   Terry Bernie							   *
+// *************************************************************************
+bool GD19_OgreListener::frameEnded(const FrameEvent& evt)
+{
+
+	if (StopOgre == 1)
+	{
+		return false;
+	}
+
+	return true;
+}
+
+// *************************************************************************
+// *				moveCamera   Terry Bernie							   *
+// *************************************************************************
+void GD19_OgreListener::MoveCamera(void)
+{
+	mCam->yaw(mRotX);
+	mCam->pitch(mRotY);
+	mCam->moveRelative(mTranslateVector); // Position Relative
+	Wheel = 0;
+}
+
+// *************************************************************************
+// *				Capture_Mouse_Free   Terry Bernie						   *
+// *************************************************************************
+bool GD19_OgreListener::Capture_Mouse_Free(void)
+{
+	if (!ImGui::GetIO().WantCaptureMouse)
+	{
+		GetCursorPos(&Pl_pt);
+		Pl_MouseX = (int(Pl_pt.x));
+		Pl_MouseY = (int(Pl_pt.y));
+
+		// Left Right
+		if (Pl_MouseX < Pl_Cent500X)
+		{
+			long test = Pl_Cent500X - Pl_MouseX; // Positive
+			if (test > 2)
+			{
+				Pl_DeltaMouse = float(Pl_Cent500X - Pl_MouseX);
+				mRotX = Degree(Pl_DeltaMouse * (float)0.03);//S_Player[0]->TurnRate);
+			}
+		}
+		else if (Pl_MouseX > Pl_Cent500X)
+		{
+			long test = Pl_MouseX - Pl_Cent500X; // Positive
+
+			if (test > 2)
+			{
+				Pl_DeltaMouse = float(Pl_MouseX - Pl_Cent500X);
+				mRotX = Degree(-Pl_DeltaMouse * (float)0.03);//S_Player[0]->TurnRate);
+			}
+		}
+
+		// Up Down
+		if (Pl_MouseY < Pl_Cent500Y)
+		{
+			long test = Pl_Cent500Y - Pl_MouseY; // Positive
+
+			if (test > 2)
+			{
+				Pl_DeltaMouse = float(Pl_Cent500Y - Pl_MouseY);
+				mRotY = Degree(Pl_DeltaMouse * (float)0.03);//S_Player[0]->TurnRate);
+			}
+		}
+		else if (Pl_MouseY > Pl_Cent500Y)
+		{
+			long test = Pl_MouseY - Pl_Cent500Y; // Positive
+
+			if (test > 2)
+			{
+				Pl_DeltaMouse = float(Pl_MouseY - Pl_Cent500Y);
+				mRotY = Degree(-Pl_DeltaMouse * (float)0.03);//S_Player[0]->TurnRate);
+			}
+		}
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *				Capture_LeftMouse   Terry Bernie					   *
+// *************************************************************************
+bool GD19_OgreListener::Capture_LeftMouse(void)
+{
+	if (!ImGui::GetIO().WantCaptureMouse)
+	{
+		GetCursorPos(&Pl_pt);
+
+		Pl_MouseX = (int(Pl_pt.x));
+		Pl_MouseY = (int(Pl_pt.y));
+
+		//// Left Right
+		if (Pl_MouseX < Pl_Cent500X)
+		{
+			long test = Pl_Cent500X - Pl_MouseX; // Positive
+
+			if (test > 2)
+			{
+				Pl_DeltaMouse = float(Pl_Cent500X - Pl_MouseX);
+				App->Cl_Grid->GridNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
+				App->Cl_Grid->HairNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
+				App->Cl_Grid->DummyNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
+				///App->Cl19_Ogre->RenderListener->RZ = App->Cl19_Ogre->RenderListener->RZ - (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
+				SetCursorPos(500, 500);
+			}
+		}
+		else if (Pl_MouseX > Pl_Cent500X)
+		{
+			long test = Pl_MouseX - Pl_Cent500X; // Positive
+
+			if (test > 2)
+			{
+				Pl_DeltaMouse = float(Pl_MouseX - Pl_Cent500X);
+				App->Cl_Grid->GridNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
+				App->Cl_Grid->HairNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
+				App->Cl_Grid->DummyNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
+				///App->Cl19_Ogre->RenderListener->RZ = App->Cl19_Ogre->RenderListener->RZ + (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
+				SetCursorPos(500, 500);
+			}
+		}
+
+		// Up Down
+		if (Pl_MouseY < Pl_Cent500Y)
+		{
+			long test = Pl_Cent500Y - Pl_MouseY; // Positive
+
+			if (test > 2)
+			{
+				Pl_DeltaMouse = float(Pl_Cent500Y - Pl_MouseY);
+				App->Cl_Grid->GridNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+				App->Cl_Grid->HairNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+				App->Cl_Grid->DummyNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+				///App->Cl19_Ogre->RenderListener->RX = App->Cl19_Ogre->RenderListener->RX - (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
+				SetCursorPos(500, 500);
+			}
+		}
+		else if (Pl_MouseY > Pl_Cent500Y)
+		{
+			long test = Pl_MouseY - Pl_Cent500Y; // Positive
+
+			if (test > 2)
+			{
+				Pl_DeltaMouse = float(Pl_MouseY - Pl_Cent500Y);
+				App->Cl_Grid->GridNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+				App->Cl_Grid->HairNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+				App->Cl_Grid->DummyNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+				///App->Cl19_Ogre->RenderListener->RX = App->Cl19_Ogre->RenderListener->RX + (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
+				SetCursorPos(500, 500);
+			}
+		}
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *				Capture_Mouse_FirstPerson   Terry Bernie			   *
+// *************************************************************************
+bool GD19_OgreListener::Capture_Mouse_FirstPerson(void)
+{
+
+	/*if (Stop_PhysX_Render==0)
+	{*/
+	GetCursorPos(&Pl_pt);
+
+	Pl_MouseX = (int(Pl_pt.x));
+	Pl_MouseY = (int(Pl_pt.y));
+
+	// Left Right
+	if (Pl_MouseX < Pl_Cent500X)
+	{
+		long test = Pl_Cent500X - Pl_MouseX; // Positive
+		if (test > 1)
+		{
+			Pl_DeltaMouse = float(Pl_Cent500X - Pl_MouseX);
+
+			Ogre::Vector3 Rotate;
+			Rotate.x = 0;
+			Rotate.y = -1;
+			Rotate.z = 0;
+
+			float mTurn = ((float)0.00040*Pl_DeltaMouse);//S_Player[0]->TurnRate);
+
+			App->Cl_Player->Rotate_FromCam(Rotate, mTurn, false);
+
+		}
+	}
+	else if (Pl_MouseX > Pl_Cent500X)
+	{
+		long test = Pl_MouseX - Pl_Cent500X; // Positive
+
+		if (test > 1)
+		{
+			Pl_DeltaMouse = float(Pl_MouseX - Pl_Cent500X);
+
+			Ogre::Vector3 Rotate;
+			Rotate.x = 0;
+			Rotate.y = 1;
+			Rotate.z = 0;
+
+			float mTurn = ((float)0.00040*Pl_DeltaMouse);//S_Player[0]->TurnRate);
+
+			App->Cl_Player->Rotate_FromCam(Rotate, mTurn, false);
+		}
+	}
+
+	//Up Down
+	if (Pl_MouseY < Pl_Cent500Y)
+	{
+		long test = Pl_Cent500Y - Pl_MouseY; // Positive
+
+		if (test > 2)
+		{
+			Pl_DeltaMouse = float(Pl_Cent500Y - Pl_MouseY);
+			Ogre::Radian pp = Degree(Pl_DeltaMouse * (float)0.03);
+			App->Cl_Player->CameraPitch->pitch(pp);//S_Player[0]->TurnRate);
+		}
+	}
+	else if (Pl_MouseY > Pl_Cent500Y)
+	{
+		long test = Pl_MouseY - Pl_Cent500Y; // Positive
+
+		if (test > 2)
+		{
+			Pl_DeltaMouse = float(Pl_MouseY - Pl_Cent500Y);
+			Ogre::Radian pp = Degree(-Pl_DeltaMouse * (float)0.03);
+			App->Cl_Player->CameraPitch->pitch(pp);//S_Player[0]->TurnRate);
+		}
+	}
+
+	//	MoveCamera();
+	//}
+	return 1;
+}
+
+// *************************************************************************
+// *				Capture_RightMouse   Terry Bernie					   *
+// *************************************************************************
+bool GD19_OgreListener::Capture_RightMouse(void)
+{
+	/*if (App->CL10_Dimensions->Mouse_Move_Mode == Enums::Edit_Mouse_Active)
+	{
+		return 1;
+	}
+
+	if (GD_CameraMode == Enums::CamFirst)
+	{
+		return 1;
+	}*/
+
+	GetCursorPos(&Pl_pt);
+
+	Pl_MouseX = (int(Pl_pt.x));
+	Pl_MouseY = (int(Pl_pt.y));
+
+	//// Left Right
+	if (Pl_MouseX < Pl_Cent500X)
+	{
+		long test = Pl_Cent500X - Pl_MouseX; // Positive
+
+		if (test > 2)
+		{
+			Pl_DeltaMouse = float(Pl_Cent500X - Pl_MouseX);
+			mTranslateVector.x = Pl_DeltaMouse * (mMoveSensitivityMouse / 1000);
+			SetCursorPos(500, 500);
+		}
+	}
+	else if (Pl_MouseX > Pl_Cent500X)
+	{
+		long test = Pl_MouseX - Pl_Cent500X; // Positive
+
+		if (test > 2)
+		{
+			Pl_DeltaMouse = float(Pl_MouseX - Pl_Cent500X);
+			mTranslateVector.x = -Pl_DeltaMouse * (mMoveSensitivityMouse / 1000);
+			SetCursorPos(500, 500);
+		}
+	}
+
+	//// Up Down
+	if (Pl_MouseY < Pl_Cent500Y)
+	{
+		long test = Pl_Cent500Y - Pl_MouseY; // Positive
+
+		if (test > 2)
+		{
+			Pl_DeltaMouse = float(Pl_Cent500Y - Pl_MouseY);
+
+			Ogre::Real Rate;
+			Rate = Pl_DeltaMouse * (mMoveSensitivityMouse / 1000);
+
+			Ogre::Vector3 OldPos;
+			OldPos = mCam->getPosition();
+
+			OldPos.y -= Rate;
+			mCam->setPosition(OldPos);
+			SetCursorPos(500, 500);
+		}
+
+	}
+	else if (Pl_MouseY > Pl_Cent500Y)
+	{
+		long test = Pl_MouseY - Pl_Cent500Y; // Positive
+
+		if (test > 2)
+		{
+			Pl_DeltaMouse = float(Pl_MouseY - Pl_Cent500Y);
+
+			Ogre::Real Rate;
+			Rate = Pl_DeltaMouse * (mMoveSensitivityMouse / 1000);
+
+			Ogre::Vector3 OldPos;
+			OldPos = mCam->getPosition();
+
+			OldPos.y += Rate;
+			mCam->setPosition(OldPos);
+			SetCursorPos(500, 500);
+		}
+
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *					SelectEntity   Terry Bernie						   *
+// *************************************************************************
+bool GD19_OgreListener::SelectEntity(void)
+{
+	Ogre::SceneNode *mNode;
+	Vector3 oldPos = App->Cl19_Ogre->mCamera->getPosition();
+	Pl_mDummyCamera->setPosition(oldPos);
+
+	Ogre::Quaternion Q;
+	Q = App->Cl19_Ogre->mCamera->getOrientation();
+
+	Pl_mDummyCamera->setOrientation(Q);
+	Pl_mDummyTranslateVector = Ogre::Vector3::ZERO;
+
+	Pl_mDummyTranslateVector.z = -10000.0;
+	Pl_mDummyCamera->moveRelative(Pl_mDummyTranslateVector);
+
+	if (mCollisionTools->collidesWithEntity(oldPos, Pl_mDummyCamera->getPosition(), 1.0f, 0, -1))
+	{
+		mNode = mCollisionTools->pentity->getParentSceneNode();
+
+		Pl_Entity_Name = mCollisionTools->pentity->getName();
+		char buff[255];
+		strcpy(buff, Pl_Entity_Name.c_str());
+		//App->Say(buff);
+
+		mNameOverlay->show();
+		bool test = Ogre::StringUtil::match("Plane0", Pl_Entity_Name, true);
+		if (test == 1)
+		{
+			Pl_Entity_Name = "---------";
+		}
+		else
+		{
+			bool test = Ogre::StringUtil::match("Player_1", Pl_Entity_Name, true);
+			if (test == 1)
+			{
+				Pl_Entity_Name = "Player_1";
+				OverlayElement* guiName = OverlayManager::getSingleton().getOverlayElement("Core/ObjectName");
+				guiName->setCaption("Player_1");
+				mNameOverlay->show();
+				return 1;
+				//mNameOverlay->show();
+			}
+			else
+			{
+				char *pdest;
+				int IntNum = 0;
+				char buffer[255];
+
+				strcpy(buffer, Pl_Entity_Name.c_str());
+				pdest = strstr(buffer, "GDEnt_");
+
+				if (pdest != NULL)
+				{
+					sscanf((buffer + 6), "%i", &IntNum);
+
+					if (IntNum > 0)
+					{
+						App->Cl_Visuals->MarkerBB_Addjust(IntNum);
+						Selected_Entity_Index = IntNum;
+						OverlayElement* guiName = OverlayManager::getSingleton().getOverlayElement("Core/ObjectName");
+						guiName->setCaption(App->Cl_Scene_Data->Cl_Object[IntNum]->Name);
+						mNameOverlay->show();
+						return 1;
+					}
+				}
+			}
+
+			OverlayElement* guiName = OverlayManager::getSingleton().getOverlayElement("Core/ObjectName");
+			guiName->setCaption("-------------");
+		}
+
+	}
+
+	return 1;
+}
+
+

@@ -1,0 +1,1211 @@
+/*
+Copyright (c) GameDirector 2019 Inflanite Software W.T.Flanigan H.C.Flanigan B.Parkin
+
+This software is provided 'as-is', without any express or implied
+warranty. In no event will the authors be held liable for any damages
+arising from the use of this software.
+
+Permission is granted to anyone to use this software for any purpose,
+including commercial applications, and to alter it and redistribute it
+freely, subject to the following restrictions:
+
+1. The origin of this software must not be misrepresented; you must not
+claim that you wrote the original software. If you use this software
+in a product, an acknowledgment in the product documentation would be
+appreciated but is not required.
+
+2. Altered source versions must be plainly marked as such, and must not be
+misrepresented as being the original software.
+
+3. This notice may not be removed or altered from any source
+distribution.
+*/
+
+#include "stdafx.h"
+#include "GD19_OSDN.h"
+
+#define MAX_LOADSTRING 100
+
+// Global Variables:
+HINSTANCE hInst;                                // current instance
+TCHAR szTitle[MAX_LOADSTRING];                  // The title bar text
+TCHAR szWindowClass[MAX_LOADSTRING];            // the main window class name
+
+// Forward declarations of functions included in this code module:
+ATOM                MyRegisterClass(HINSTANCE hInstance);
+BOOL                InitInstance(HINSTANCE, int);
+LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
+INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
+
+LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+LRESULT CALLBACK ViewerMain_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+LRESULT CALLBACK ListPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+LRESULT CALLBACK PleaseWait_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+int Block_Call = 0;
+void Close_App();
+void StartOgre();
+
+GD19_App *App = NULL;
+
+// *************************************************************************
+// *							WinMain HGT Software		  	 		   *
+// *************************************************************************
+int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
+	_In_opt_ HINSTANCE hPrevInstance,
+	_In_ LPWSTR    lpCmdLine,
+	_In_ int       nCmdShow)
+{
+
+	InitCommonControls();
+
+	App = new GD19_App();
+	_getcwd(App->EquityDirecory_FullPath, 1024);
+
+	App->InitApp();
+
+	UNREFERENCED_PARAMETER(hPrevInstance);
+	UNREFERENCED_PARAMETER(lpCmdLine);
+
+	// TODO: Place code here.
+
+	// Initialize global strings
+	LoadString(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
+	LoadString(hInstance, IDC_GD19_OSDN, szWindowClass, MAX_LOADSTRING);
+	MyRegisterClass(hInstance);
+
+	// Perform application initialization:
+	if (!InitInstance(hInstance, nCmdShow))
+	{
+		return FALSE;
+	}
+
+	App->LoadProgramResource();
+
+	App->mMenu = GetMenu(App->MainHwnd);
+
+//	HBITMAP hBitMap = LoadBitmap(App->hInst, MAKEINTRESOURCE(IDB_FILEINACTIVE));
+//	SetMenuItemBitmaps(App->mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND, 0, hBitMap);
+
+	App->ListPanel = CreateDialog(App->hInst, (LPCTSTR)IDD_LIST, App->MainHwnd, (DLGPROC)ListPanel_Proc);
+	App->Cl_Panels->Resize_FileView();
+
+	App->SetMainWinCentre();
+	App->Cl_FileView->Init_FileView();
+	ShowWindow(App->ListPanel, 0);
+
+	ShowWindow(App->MainHwnd, nCmdShow);
+	//ShowWindow(App->MainHwnd, SW_MAXIMIZE);
+	UpdateWindow(App->MainHwnd);
+
+	App->Cl_Panels->Move_FileView_Window();
+	App->Cl_Panels->Place_GlobalGroups();
+	
+
+	App->Cl_Properties->Start_GD_Properties();
+
+	//App->Cl_Bullet->Start_Physics_Console(); // Atention
+	//App->Cl_Panels->MovePhysicsView();
+
+	App->Cl_ToolBar->Start_TB1();
+
+	//CheckMenuItem(App->mMenu, ID_WINDOW_SHOWFPSSHORT, MF_BYCOMMAND | MF_CHECKED);
+	//CheckMenuItem(App->mMenu, ID_GRID_DIVISIONS, MF_BYCOMMAND | MF_CHECKED);
+
+	App->Cl_Bullet->Init_Bullet();
+	App->Cl_Scene_Data->Init_Scene();
+
+	SetTimer(App->MainHwnd, 1, 1, NULL);
+
+	HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_GD19_OSDN));
+
+	MSG msg;
+
+	// Main message loop:
+	while (GetMessage(&msg, nullptr, 0, 0))
+	{
+		if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+		{
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+	}
+
+	return (int)msg.wParam;
+}
+
+// *************************************************************************
+// *						MyRegisterClass HGT Software	  	 		   *
+// *************************************************************************
+ATOM MyRegisterClass(HINSTANCE hInstance)
+{
+	WNDCLASSEX wcex;
+
+	wcex.cbSize = sizeof(WNDCLASSEX);
+
+	wcex.style = 0;
+	wcex.lpfnWndProc = WndProc;
+	wcex.cbClsExtra = 0;
+	wcex.cbWndExtra = 0;
+	wcex.hInstance = hInstance;
+	wcex.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_GD19_OSDN));
+	wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
+	wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+	wcex.lpszMenuName = MAKEINTRESOURCE(IDC_GD19_OSDN);
+	wcex.lpszClassName = szWindowClass;
+	wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
+
+	return RegisterClassEx(&wcex);
+}
+
+// *************************************************************************
+// *						InitInstance HGT Software		  	 		   *
+// *************************************************************************
+BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
+{
+	App->hInst = hInstance;
+
+	App->MainHwnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
+		0, 0, 1200, 800, NULL, NULL, hInstance, NULL);
+
+	App->Fdlg = CreateDialog(App->hInst, (LPCTSTR)IDD_FILEVIEW, App->MainHwnd, (DLGPROC)ViewerMain_Proc);
+
+	int cx = GetSystemMetrics(SM_CXSCREEN);
+	int cy = GetSystemMetrics(SM_CYSCREEN);
+	MoveWindow(App->Fdlg, 0, 0, cx, cy, TRUE);
+
+	App->ViewGLhWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_VIEWER3D, App->Fdlg, (DLGPROC)Ogre3D_Proc);
+
+	App->Cl19_Ogre->RenderHwnd = App->ViewGLhWnd;
+
+	if (!App->MainHwnd)
+	{
+		return FALSE;
+	}
+
+	//ShowWindow(App->MainHwnd, nCmdShow);
+	UpdateWindow(App->MainHwnd);
+
+	return TRUE;
+}
+
+// *************************************************************************
+// *						WndProc HGT Software			  	 		   *
+// *************************************************************************
+LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+	case WM_COMMAND:
+	{
+		int wmId = LOWORD(wParam);
+		// Parse the menu selections:
+		switch (wmId)
+		{
+		case ID_TEST_GENERAL:
+		{
+			if (App->Cl_FileView_V2->OpenObjects == 1)
+			{
+				//App->Cl_FileView_V2->OpenObjects = 0;
+				App->Cl_FileView_V2->SelectObject = 1;
+			}
+			else
+			{
+				App->Cl_FileView_V2->OpenObjects = 1;
+				App->Cl_FileView_V2->SelectObject = 1;
+			}
+			return 1;
+		}
+
+		//------------------------- Menu Camera
+		case ID_CAMERA_FOLLOWOBJECT:
+		{
+			if (App->Cl19_Ogre->OgreListener->FollowPlayer == 1)
+			{
+				App->Cl19_Ogre->OgreListener->FollowPlayer = 0;
+			}
+			else
+			{
+				App->Cl19_Ogre->OgreListener->FollowPlayer = 1;
+			}
+			return 1;
+		}
+
+		case ID_CAMERA_OBJECTPROPERTIES:
+		{
+			if (App->Cl_ImGui->Show_Camera_Object == 1)
+			{
+				App->Cl_ImGui->Show_Camera_Object = 0;
+			}
+			else
+			{
+				App->Cl_ImGui->Show_Camera_Object = 1;
+			}
+			return 1;
+		}
+		
+		//------------------------- Menu Test
+		case ID_SETTINGS_TEST:
+		{
+			if (App->Cl_ImGui->Show_ImGui_Preferences == 1)
+			{
+				App->Cl_ImGui->Show_ImGui_Preferences = 0;
+			}
+			else
+			{
+				App->Cl_ImGui->Show_ImGui_Preferences = 1;
+			}
+			return 1;
+		}
+
+		case ID_TEST_VIEWLOG:
+		{
+			if (App->FollowFunctions == 1)
+			{
+				App->FollowFunctions = 0;
+				CheckMenuItem(App->mMenu, ID_TEST_VIEWLOG, MF_BYCOMMAND | MF_UNCHECKED);
+			}
+			else
+			{
+				App->FollowFunctions = 1;
+				CheckMenuItem(App->mMenu, ID_TEST_VIEWLOG, MF_BYCOMMAND | MF_CHECKED);
+			}
+			return 1;
+		}
+
+		//------------------------- Menu Settings
+		case ID_SETTINGS_STARTUP:
+		{
+			App->Cl_Scene_Data->Dialog_GetUserFile(App->MainHwnd);
+			return 1;
+		}
+		
+		//------------------------- Add Item
+		case ID_ADDITEM_OBJECT:
+		{
+			App->Cl_Dialogs->YesNo("Add Object", "Do you want to add a new Object now");
+			bool Doit = App->Cl_Dialogs->Canceled;
+			if (Doit == 0)
+			{
+				App->Cl_Mesh_Viewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Objects; // Objects
+				App->Cl_Mesh_Viewer->StartMeshViewer();
+				App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
+			}
+
+			return 1;
+		}
+
+		/*case ID_ADDITEM_SOUNDS:
+		{
+			App->CL_Dialogs->YesNo("Add Entity", "Do you want to add a new Sound Entity now");
+			bool Doit = App->GDCL_Dialogs->Canceled;
+			if (Doit == 0)
+			{
+				App->CL10_Objects_New->Add_New_SoundEntity();
+			}
+
+			return 1;
+		}*/
+
+		/*case ID_ADDITEM_MESSAGE:
+		{
+			App->CL_Dialogs->YesNo("Add Entity", "Do you want to add a new Message Entity now");
+			bool Doit = App->GDCL_Dialogs->Canceled;
+			if (Doit == 0)
+			{
+				App->CL10_Objects_New->Add_New_MessageEntity();
+			}
+
+			return 1;
+		}*/
+
+		/*case ID_ADDITEM_MOVER:
+		{
+			App->CL_Dialogs->YesNo("Add Entity", "Do you want to add a new Move Entity now");
+			bool Doit = App->GDCL_Dialogs->Canceled;
+			if (Doit == 0)
+			{
+				App->CL10_Objects_New->Add_New_MessageEntity();
+			}
+
+			return 1;
+		}*/
+
+		//case ID_ADDITEM_COLLECTABLES:
+		//{
+		//	App->CL_Dialogs->YesNo("Add Entity", "Do you want to add a new Collectable Entity now");
+		//	bool Doit = App->GDCL_Dialogs->Canceled;
+		//	if (Doit == 0)
+		//	{
+		//		App->GDCL_Mesh_Viewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Collectables;
+		//		App->GDCL_Mesh_Viewer->StartMeshViewer();
+		//		App->GDCL_Object_Props->Is_Player = 0; // Mark as Object selected
+		//											   //App->GDCL_Add_NewObject->Add_Collectable_Entity();
+		//	}
+
+		//	return 1;
+		//}
+
+		/*case ID_ADDITEM_TELEPORTER:
+		{
+			App->CL_Dialogs->YesNo("Add Entity", "Do you want to add a new Telport Entity now");
+			bool Doit = App->GDCL_Dialogs->Canceled;
+			if (Doit == 0)
+			{
+				App->CL10_Objects_New->Add_New_TeleportEntity();
+			}
+
+			return 1;
+		}*/
+
+		//------------------------- Tools
+		case ID_TOOLS_SOUNDPLAYER:
+		{
+			App->Cl_SoundMgr->Dialog_SoundFile();
+			return 1;
+		}
+
+		case ID_TOOLS_RESOURCEVIEWER:
+		{
+			App->Cl_Resources->Start_Resources();
+			return 1;
+		}
+
+		/*case ID_TOOLS_MESHVIEWER:
+		{
+			App->Cl_Mesh_Viewer->StartMeshViewer();
+			return 1;
+		}*/
+
+		//------------------------- Mode
+		case ID_MODE_FREECAM:
+		{
+			if (App->Cl_Player->PlayerAdded == 1)
+			{
+				App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
+			}
+			return 1;
+		}
+
+		case ID_MODE_FIRSTPERSON:
+		{
+			if (App->Cl_Player->PlayerAdded == 1)
+			{
+				App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamFirst;
+			}
+			else
+			{
+				App->Say("No Player in Scene");
+			}
+			return 1;
+		}
+
+		//------------------------- Data
+		case ID_DATA_SCENEDATA:
+		{
+			App->Cl_Dialogs->Start_DataView();
+			return 1;
+		}
+		//------------------------- Menu Windows
+		
+		
+		case ID_WINDOWS_PROPERTIES:
+		{
+
+			if (App->Cl_ImGui->Show_Propertities == 1)
+			{
+				App->Cl_ImGui->Show_Propertities = 0;
+				CheckMenuItem(App->mMenu, ID_WINDOWS_PROPERTIES, MF_BYCOMMAND | MF_UNCHECKED);
+			}
+			else
+			{
+				App->Cl_ImGui->Show_Propertities = 1;
+				CheckMenuItem(App->mMenu, ID_WINDOWS_PROPERTIES, MF_BYCOMMAND | MF_CHECKED);
+			}
+
+			return 1;
+		}
+
+		case ID_WINDOWS_SHOWIMGUIPANELS:
+		{
+
+			if (App->Cl19_Ogre->OgreListener->Show_ImGui_Panels == 1)
+			{
+				App->Cl19_Ogre->OgreListener->Show_ImGui_Panels = 0;
+				CheckMenuItem(App->mMenu, ID_WINDOWS_SHOWIMGUIPANELS, MF_BYCOMMAND | MF_UNCHECKED);
+			}
+			else
+			{
+				App->Cl19_Ogre->OgreListener->Show_ImGui_Panels = 1;
+				CheckMenuItem(App->mMenu, ID_WINDOWS_SHOWIMGUIPANELS, MF_BYCOMMAND | MF_CHECKED);
+			}
+
+			return 1;
+		}
+		case ID_WINDOWS_SHOWPHYSICSPANEL:
+		{
+
+			if (App->Cl_ImGui->Show_PhysicsConsole == 1)
+			{
+				App->Cl_ImGui->Show_PhysicsConsole = 0;
+				CheckMenuItem(App->mMenu, ID_WINDOWS_SHOWPHYSICSPANEL, MF_BYCOMMAND | MF_UNCHECKED);
+			}
+			else
+			{
+				App->Cl_ImGui->Show_PhysicsConsole = 1;
+				CheckMenuItem(App->mMenu, ID_WINDOWS_SHOWPHYSICSPANEL, MF_BYCOMMAND | MF_CHECKED);
+			}
+
+		/*	if (App->Cl_Bullet->Physics_Dlg_Active == 1) // Atention
+			{
+				App->Cl_Bullet->Physics_Dlg_Active = 0;
+				ShowWindow(App->Physics_Console_Hwnd, 0);
+				CheckMenuItem(App->mMenu, ID_WINDOWS_SHOWPHYSICSPANEL, MF_BYCOMMAND | MF_UNCHECKED);
+			}
+			else
+			{
+				App->Cl_Bullet->Physics_Dlg_Active = 1;
+				ShowWindow(App->Physics_Console_Hwnd, 1);
+				CheckMenuItem(App->mMenu, ID_WINDOWS_SHOWPHYSICSPANEL, MF_BYCOMMAND | MF_CHECKED);
+			}*/
+			return 1;
+		}
+
+		case ID_WINDOWS_LOG:
+		{
+			if (App->Cl_ImGui->Show_ImGui_Log == 1)
+			{
+				App->Cl_ImGui->Show_ImGui_Log = 0;
+			}
+			else
+			{
+				App->Cl_ImGui->Show_ImGui_Log = 1;
+			}
+			return 1;
+		}
+
+		case ID_WINDOWS_NEWFILEVIEW:
+		{
+			if (App->Cl_ImGui->Show_ImGui_FileView == 1)
+			{
+				App->Cl_ImGui->Show_ImGui_FileView = 0;
+			}
+			else
+			{
+				App->Cl_ImGui->Show_ImGui_FileView = 1;
+			}
+			return 1;
+		}
+
+		case ID_WINDOWS_DEBUGPROPERTIES:
+		{
+			if (App->Cl_ImGui->Show_Object_Data == 1)
+			{
+				App->Cl_ImGui->Show_Object_Data = 0;
+			}
+			else
+			{
+				App->Cl_ImGui->Show_Object_Data = 1;
+			}
+			return 1;
+		}
+
+		case ID_WINDOWS_TESTIMGUI:
+		{
+			if (App->Cl_ImGui->Show_ImGui_Test == 1)
+			{
+				App->Cl_ImGui->Show_ImGui_Test = 0;
+			}
+			else
+			{
+				App->Cl_ImGui->Show_ImGui_Test = 1;
+			}
+			return 1;
+		}
+
+		case ID_WINDOWS_FPS:
+		{
+
+			if (App->Cl_ImGui->Show_OgreData == 1)
+			{
+				App->Cl_ImGui->Show_OgreData = 0;
+				CheckMenuItem(App->mMenu, ID_WINDOWS_FPS, MF_BYCOMMAND | MF_UNCHECKED);
+			}
+			else
+			{
+				App->Cl_ImGui->Show_OgreData = 1;
+				CheckMenuItem(App->mMenu, ID_WINDOWS_FPS, MF_BYCOMMAND | MF_CHECKED);
+			}
+			return 1;
+		}
+
+		// File View
+		case ID_WINDOWS_FILEVIEW:
+		{
+			ShowWindow(App->ListPanel, 1);
+
+			if (App->Cl_FileView->FileView_Active == 1)
+			{
+				App->Cl_FileView->FileView_Active = 0;
+				ShowWindow(App->ListPanel, 0);
+				CheckMenuItem(App->mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND | MF_UNCHECKED);
+			}
+			else
+			{
+				App->Cl_FileView->FileView_Active = 1;
+				ShowWindow(App->ListPanel, 1);
+				CheckMenuItem(App->mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND | MF_CHECKED);
+			}
+			return 1;
+		}
+
+		//------------------------- Menu File
+		case ID_FILE_CLEARLEVEL:
+		{
+			App->Cl_Scene_Data->ClearScene();
+			return 1;
+		}
+
+		case ID_FILE_SAVELEVELAS:
+		{
+			App->Cl_Save_Scene->SaveGDScene_40(true);
+			return 1;
+		}
+
+		case ID_FILE_LOADLEVEL:
+		{
+			App->Cl_Load_Scene->OpenScene(true);
+			return 1;
+		}
+
+		case IDM_ABOUT:
+			DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
+			break;
+		case IDM_EXIT:
+			/*App->CL64_Dialogs->YesNo("Close GameDirector", "Are you sure");
+			if (App->GDCL_Dialogs->Canceled == 1)
+			{
+			break;
+			}*/
+			if (App->Cl19_Ogre->OgreListener->StopOgre == 0)
+			{
+				App->Cl19_Ogre->OgreListener->StopOgre = 1;
+			}
+			PostQuitMessage(0);
+			break;
+		default:
+			return DefWindowProc(hWnd, message, wParam, lParam);
+		}
+	}
+	break;
+	case WM_PAINT:
+	{
+		PAINTSTRUCT ps;
+		HDC hdc = BeginPaint(hWnd, &ps);
+		// TODO: Add any drawing code that uses hdc here...
+		EndPaint(hWnd, &ps);
+		break;
+	}
+	
+	case WM_MOUSEWHEEL:
+	{
+		int zDelta = (short)HIWORD(wParam);    // wheel rotation
+
+		if (zDelta > 0)
+		{
+			App->Cl19_Ogre->OgreListener->Wheel = -1;
+		}
+		else if (zDelta < 0)
+		{
+			App->Cl19_Ogre->OgreListener->Wheel = 1;
+		}
+
+		return 1;
+	}
+
+	case WM_MOVING:
+	{
+		App->Resize_OgreWin();
+		Root::getSingletonPtr()->renderOneFrame();
+		return 0;
+	}
+	
+	case WM_SIZE:
+	{
+		App->Resize_OgreWin();
+
+	}break;
+
+	case WM_CLOSE:
+	{
+
+		/*App->CL_Dialogs->YesNo("Close GameDirector", "Are you sure");
+		if (App->GDCL_Dialogs->Canceled == 1)
+		{
+			break;
+		}*/
+		if (App->Cl19_Ogre->OgreListener->StopOgre == 0)
+		{
+			App->Cl19_Ogre->OgreListener->StopOgre = 1;
+		}
+		PostQuitMessage(0);
+		break;
+	}
+
+	case WM_TIMER:
+		if (wParam == 1)
+		{
+			if (App->OgreStarted == 0)
+			{
+				if (Block_Call == 0)
+				{
+					Block_Call = 1;
+					StartOgre();
+				}
+			}
+
+			if (App->OgreStarted == 1 && App->Start_Scene_Loaded == 0)
+			{
+				App->Start_Scene_Loaded = 1;
+				App->Cl_Scene_Data->Start_Scene();
+
+				// Check
+				App->Cl_Scene_Data->Cl_Object[1]->bt_body->setLinearVelocity(btVector3(35,0,35));
+				App->Cl19_Ogre->OgreListener->_desiredVelocity = App->Cl_Scene_Data->Cl_Object[1]->bt_body->getLinearVelocity().length();
+			}
+
+			//// Render behind windows
+			if (App->RenderBackGround == 1 && App->OgreStarted == 1)
+			{
+				Ogre::Root::getSingletonPtr()->renderOneFrame();
+			}
+			break;
+		}
+	case WM_DESTROY:
+		PostQuitMessage(0);
+		break;
+	default:
+		return DefWindowProc(hWnd, message, wParam, lParam);
+	}
+	return 0;
+}
+
+// *************************************************************************
+// *					Ogre3D_Proc Terry Bernie 						   *
+// *************************************************************************
+LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+
+	case WM_INITDIALOG: // Bernie as the dialog is created
+	{
+		App->ViewPLeaseWait = CreateDialog(App->hInst, (LPCTSTR)IDD_PLEASEWAIT, App->Fdlg, (DLGPROC)PleaseWait_Proc);
+		return TRUE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		if (App->OgreStarted == 0)
+		{
+			return (LONG)App->BlackBrush;
+		}
+	}
+	case WM_MOUSEWHEEL:
+	{
+		if (App->FullScreen == 1)
+		{
+			int zDelta = (short)HIWORD(wParam);    // wheel rotation
+
+			if (zDelta > 0)
+			{
+				App->Cl19_Ogre->OgreListener->Wheel = -1;
+			}
+			else if (zDelta < 0)
+			{
+				App->Cl19_Ogre->OgreListener->Wheel = 1;
+			}
+			return 1;
+		}
+	}
+
+	case WM_MOUSEMOVE: // ok up and running and we have a loop for mouse
+	{
+		POINT p;
+
+		App->Cl19_Ogre->m_imgui.mouseMoved();
+		
+		
+		if (GetCursorPos(&p) && App->OgreStarted == 1)// && App->CL10_Dimensions->Mouse_Move_Mode == Enums::Edit_Mouse_None)
+		{
+			if (ScreenToClient(App->ViewGLhWnd, &p))
+			{
+				RECT rc;
+				GetClientRect(App->ViewGLhWnd, &rc);
+				int width = rc.right - rc.left;
+				int height = rc.bottom - rc.top;
+
+				float tx = (width / 2) - (float)p.x;
+				//float ty = (float)(1.0f / height) * Y;
+
+				//App->Cl19_Ogre->OgreListener->Mouse_X = tx;
+			}
+		}
+
+		//if (App->StopCapture == 1)
+		//{
+		//	return 1;
+		//}
+
+		SetFocus(App->ViewGLhWnd);
+
+		//if (App->CL10_Dimensions->Mouse_Move_Mode > 0 && App->Cl_Ogre->OgreListener->Pl_RightMouseDown == 1)
+		//{
+		//	App->CL10_Dimensions->MouseXE = LOWORD(lParam);  // horizontal position of cursor 
+		//	App->CL10_Dimensions->MouseYE = HIWORD(lParam);  // vertical position of cursor 
+
+		//	if (GetAsyncKeyState(VK_LBUTTON) != 0 || GetAsyncKeyState(VK_RBUTTON) != 0)//Added by bernie
+		//	{
+		//		App->CL10_Dimensions->DecodeMovment();
+		//	}
+		//	else
+		//	{
+		//		//MouseDown=0;
+		//		//ReleaseCapture();
+		//	}
+		//}
+
+
+		break;
+	}
+	// Right Mouse Button
+	case WM_RBUTTONDOWN: // BERNIE_HEAR_FIRE 
+	{
+		App->Cl19_Ogre->m_imgui.mousePressed();
+
+		if (ImGui::GetIO().WantCaptureMouse)
+		{
+			App->Cl_FileView_V2->RightMouseDown = 1;
+		}
+
+		if (!ImGui::GetIO().WantCaptureMouse)
+		{
+			if (App->OgreStarted == 1)
+			{
+				/*if (App->GDCL_Scene_Data->S_Flags[0]->GameMode == 1)
+				{
+				}
+				else
+				{*/
+				SetCapture(App->ViewGLhWnd);// Bernie
+				SetCursorPos(500, 500);
+				App->Cl19_Ogre->OgreListener->Pl_RightMouseDown = 1;
+				App->CUR = SetCursor(NULL);
+				//}
+				return 1;
+			}
+		}
+		return 1;
+	}
+	case WM_RBUTTONUP:
+	{
+		App->Cl19_Ogre->m_imgui.mouseReleased();
+		
+		if (App->OgreStarted == 1)
+		{
+			/*if (App->GDCL_Scene_Data->S_Flags[0]->GameMode == 1)
+			{
+			}
+			else
+			{*/
+			ReleaseCapture();
+			App->Cl19_Ogre->OgreListener->Pl_RightMouseDown = 0;
+			SetCursor(App->CUR);
+			//}
+			return 1;
+		}
+
+		return 1;
+	}
+	// Left Mouse Button
+	case WM_LBUTTONDOWN: // BERNIE_HEAR_FIRE 
+	{
+		App->Cl19_Ogre->m_imgui.mousePressed();
+
+		if (!ImGui::GetIO().WantCaptureMouse)
+		{
+
+			{
+				/*if (App->StopCapture == 1)
+				{
+					POINT p;
+					if (GetCursorPos(&p))
+					{
+						if (ScreenToClient(App->ViewGLhWnd, &p))
+						{
+							RECT rc;
+							GetClientRect(App->ViewGLhWnd, &rc);
+							int width = rc.right - rc.left;
+							int height = rc.bottom - rc.top;
+
+							float tx = (width / 2) - (float)p.x;
+							App->Cl_Ogre->RayCast(tx, 0);
+						}
+					}
+					return 1;
+				}*/
+
+				if (App->OgreStarted == 1)
+				{
+					if (!ImGui::GetIO().WantCaptureMouse)
+					{
+						SetCapture(App->ViewGLhWnd);// Bernie
+						SetCursorPos(500, 500);
+						App->Cl19_Ogre->OgreListener->Pl_LeftMouseDown = 1;
+						App->CUR = SetCursor(NULL);
+					}
+					else
+					{
+						App->Cl19_Ogre->OgreListener->Pl_LeftMouseDown = 1;
+					}
+
+					return 1;
+				}
+			}
+		}
+
+		return 1;
+	}
+
+	case WM_LBUTTONUP:
+	{
+		App->Cl19_Ogre->m_imgui.mouseReleased();
+
+		if (App->Cl_Scene_Data->S_Flags[0]->GameMode == 0)
+		{
+			if (App->OgreStarted == 1)
+			{
+				ReleaseCapture();
+				App->Cl19_Ogre->OgreListener->Pl_LeftMouseDown = 0;
+				SetCursor(App->CUR);
+				return 1;
+			}
+		}
+
+		return 1;
+	}
+	case WM_KEYDOWN:
+		switch (wParam)
+		{
+			case 'C':
+				if (GetAsyncKeyState(VK_CONTROL))
+				{
+			//		App->CL10_Objects_Com->Copy_Object();
+			//		return 1;
+				}
+			case 'V':
+				if (GetAsyncKeyState(VK_CONTROL))
+				{
+			//		App->CL10_Objects_Com->Paste_Object();
+			//		return 1;
+				}
+				return 1;
+			//	// more keys here
+		}break;
+	}
+
+	return FALSE;
+}
+
+// *************************************************************************
+// *					ListPanel_Proc_Proc Terry Bernie 				   *
+// *************************************************************************
+LRESULT CALLBACK ListPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+
+	case WM_INITDIALOG: // Bernie as the dialog is created
+	{
+		App->Cl_FileView->FileView_Active = 1;
+		ShowWindow(hDlg, 1);
+
+		CheckMenuItem(App->mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND | MF_CHECKED);
+		return TRUE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->DialogBackGround;
+	}
+
+	case WM_SIZE:
+	{
+		App->Cl_Panels->Resize_FileView();
+	}break;
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR nmhdr = (LPNMHDR)lParam;
+		if (nmhdr->idFrom == IDC_TREE1)
+		{
+			switch (nmhdr->code)
+			{
+
+			case TVN_SELCHANGED:
+			{
+				App->Cl_FileView->Get_Selection((LPNMHDR)lParam);
+			}
+			}
+		}
+
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_ENVIONMENT && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_LEVELS && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->Cl_FileView->Level_But_Active);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_STOCK && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->Cl_FileView->Stock_But_Active);
+			return CDRF_DODEFAULT;
+		}
+
+		return 1;
+	}
+	case WM_COMMAND:
+	{
+		if (LOWORD(wParam) == IDC_LEVELS)
+		{
+			App->Cl_FileView->Level_But_Active = 1;
+			App->Cl_FileView->Stock_But_Active = 0;
+			App->RedrawWindow_Dlg(hDlg);
+
+			ShowWindow(GetDlgItem(App->ListPanel, IDC_TREE1), 1);
+
+			//App->GDCL_FileView->HideRightPanes();
+			//ShowWindow(App->GD_Properties_Hwnd, 1);*/
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_STOCK)
+		{
+			/*App->Cl_FileView->HideRightPanes();
+			ShowWindow(App->GD_Stock_Hwnd, 1);*/
+			App->Cl_Stock->Start_Stock_Dialog();
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_ENVIONMENT)
+		{
+			App->Cl_Environment->Start_Environment();
+			return TRUE;
+		}
+		break;
+	}
+
+	case WM_CLOSE:
+	{
+		App->Cl_FileView->FileView_Active = 0;
+		ShowWindow(App->ListPanel, 0);
+
+		HMENU mMenu = GetMenu(App->MainHwnd);
+		CheckMenuItem(mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND | MF_UNCHECKED);
+
+		break;
+	}
+
+	break;
+	}
+	return FALSE;
+}
+
+// *************************************************************************
+// *					ViewerMain_Proc  (Terry Bernie)					   *
+// *************************************************************************
+LRESULT CALLBACK ViewerMain_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+
+	case WM_INITDIALOG:
+	{
+		return TRUE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+	case WM_COMMAND:
+	{
+
+	}
+	break;
+	}
+	return FALSE;
+}
+
+// *************************************************************************
+// *					PleaseWait_Proc Terry Bernie 					   *
+// *************************************************************************
+LRESULT CALLBACK PleaseWait_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+
+	case WM_INITDIALOG: // Bernie as the dialog is created
+	{
+		HFONT Font;
+		Font = CreateFont(-15, 0, 0, 0, FW_BOLD, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Aerial Black");
+		SendDlgItemMessage(hDlg, IDC_STWAIT, WM_SETFONT, (WPARAM)Font, MAKELPARAM(TRUE, 0));
+
+		return TRUE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->BlackBrush;
+	}
+
+	break;
+	case WM_CTLCOLORSTATIC:
+	{
+		if (GetDlgItem(hDlg, IDC_STWAIT) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 255, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->BlackBrush;
+		}
+		return FALSE;
+	}
+	}
+	return FALSE;
+}
+
+// *************************************************************************
+// *							About Terry Bernie			  	 		   *
+// *************************************************************************
+INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	UNREFERENCED_PARAMETER(lParam);
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		HFONT Font;
+		HFONT Font1;
+		Font1 = CreateFont(-20, 0, 0, 0, FW_BOLD, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
+		Font = CreateFont(-15, 0, 0, 0, FW_BOLD, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
+
+		SendDlgItemMessage(hDlg, IDC_STNAME, WM_SETFONT, (WPARAM)Font1, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STCOPYRIGHT, WM_SETFONT, (WPARAM)Font, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_LISTABOUT, WM_SETFONT, (WPARAM)Font, MAKELPARAM(TRUE, 0));
+
+		SetDlgItemText(hDlg, IDC_STNAME, App->Version);
+
+		char buff[255];
+
+		SendDlgItemMessage(hDlg, IDC_LISTABOUT, LB_ADDSTRING, (WPARAM)0, (LPARAM)" ");
+		sprintf(buff, "%s  %s", " Programing ","W.T.Flaniagn");
+		SendDlgItemMessage(hDlg, IDC_LISTABOUT, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
+
+		SendDlgItemMessage(hDlg, IDC_LISTABOUT, LB_ADDSTRING, (WPARAM)0, (LPARAM)" ");
+
+		sprintf(buff, "%s  %s", " Ogre Version ", "1.9");
+		SendDlgItemMessage(hDlg, IDC_LISTABOUT, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
+
+		sprintf(buff, "%s  %s", " Bullet Version ", "2.86");
+		SendDlgItemMessage(hDlg, IDC_LISTABOUT, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
+		
+		sprintf(buff, "%s  %s", " ImGui ", ImGui::GetVersion());
+		SendDlgItemMessage(hDlg, IDC_LISTABOUT, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
+		sprintf(buff, "%s  %s", " ImGui ", ImGui::GetVersion());
+
+		return (INT_PTR)TRUE;
+	}
+
+	case WM_CTLCOLORSTATIC:
+	{
+		if (GetDlgItem(hDlg, IDC_STNAME) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+		if (GetDlgItem(hDlg, IDC_STCOPYRIGHT) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+		return FALSE;
+	}
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_COMMAND:
+		if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return (INT_PTR)TRUE;
+		}
+		break;
+	}
+	return (INT_PTR)FALSE;
+}
+
+// *************************************************************************
+// *						StartOgre Terry Bernie			  	 		   *
+// *************************************************************************
+void StartOgre()
+{
+	App->Cl19_Ogre->InitOgre();
+
+	Ogre::Root::getSingletonPtr()->renderOneFrame();
+	EndDialog(App->ViewPLeaseWait, LOWORD(0));
+
+	App->OgreStarted = 1;
+
+	//App->Resize_OgreWin();
+
+	App->Cl_ImGui->Show_PhysicsConsole = 1;
+
+	App->Cl19_Ogre->mRoot->startRendering();
+
+	Close_App();
+
+	SystemParametersInfo(SPI_SETSCREENSAVEACTIVE, TRUE, NULL, TRUE);
+	PostQuitMessage(0);
+}
+
+// *************************************************************************
+// *						Close_App Terry Bernie			  	 		   *
+// *************************************************************************
+void Close_App()
+{
+	if (App->Cl19_Ogre->mRoot)
+	{
+		delete App->Cl19_Ogre->mRoot;
+		App->Cl19_Ogre->mRoot = NULL;
+	}
+	ImGui::DestroyContext();
+}
