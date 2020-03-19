@@ -1,0 +1,13 @@
+material ANV_metal
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture Tools\metal.dds
+             }
+         }
+    }
+}

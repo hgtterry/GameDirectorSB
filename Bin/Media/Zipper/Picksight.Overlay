@@ -1,0 +1,17 @@
+// The name of the overlay comes first
+MyOverlays/PicksightOverlay
+{
+    zorder 200
+
+    container Panel(MyOverlayElements/TestPane2)
+    {
+        // Centre it horizontally, put it at the top
+        left 0.46
+        top 0.46
+        width 0.08
+        height 0.08
+        material Picksight
+       
+    }
+
+}

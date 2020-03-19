@@ -1,0 +1,13 @@
+material Virgil_Text
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture Virgil\Virgil_Text.jpg
+             }
+         }
+    }
+}

@@ -1,0 +1,78 @@
+material Dummy0
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture Dummy0.bmp
+             }
+         }
+    }
+}
+material Dummy1
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture Dummy1.bmp
+             }
+         }
+    }
+}
+material Dummy2
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture Dummy2.bmp
+             }
+         }
+    }
+}
+material Dummy3
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture Dummy3.bmp
+             }
+         }
+    }
+}
+material Dummy4
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture Dummy4.bmp
+             }
+         }
+    }
+}
+material Dummy5
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture Dummy5.bmp
+             }
+         }
+    }
+}

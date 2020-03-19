@@ -1,0 +1,17 @@
+
+material D_Dol
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture rocks\Limestone.png
+			}
+		}
+
+	}
+
+}

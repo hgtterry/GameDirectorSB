@@ -1,0 +1,253 @@
+material ground-from-nxogre.org
+{
+  technique
+  {
+    pass
+    {
+      emissive 1 1 1 1
+      scene_blend alpha_blend
+      texture_unit
+      {
+        texture nxogre.floor.png
+        scale 0.002 0.002
+        colour_op modulate
+      }
+      
+      texture_unit
+      {
+        texture nxogre.floor.shadowalpha.png
+        colour_op_ex modulate_x2 src_current src_texture
+      }
+    }
+  }
+}
+
+
+material from-nxogre.org
+{
+  technique
+  {
+    pass
+    {      
+      texture_unit ambient_tex
+      {
+      }
+    }
+  }
+}
+
+material flag
+{
+  technique
+  {
+    pass
+    {
+      cull_hardware none
+      texture_unit ambient_tex
+      {
+      }
+    }
+  }
+}
+
+material cube-from-nxogre.org : from-nxogre.org
+{
+  set_texture_alias ambient_tex nxogre.cube.png
+}
+
+material radioactive-cube-from-nxogre.org : from-nxogre.org
+{
+  set_texture_alias ambient_tex nxogre.cube.radioactive.png
+}
+
+material gas-from-nxogre.org : from-nxogre.org
+{
+  set_texture_alias ambient_tex nxogre.gas.png
+}
+
+material barrel-from-nxogre.org : from-nxogre.org
+{
+    set_texture_alias ambient_tex nxogre.barrel.png
+}
+
+material container1-from-nxogre.org : from-nxogre.org
+{
+    set_texture_alias ambient_tex nxogre.container1.png
+}
+
+material weight1-from-nxogre.org : from-nxogre.org
+{
+    set_texture_alias ambient_tex nxogre.weight1.png
+}
+
+material barrier1-from-nxogre.org : from-nxogre.org
+{
+    set_texture_alias ambient_tex nxogre.barrier1.png
+}
+
+material slide-from-nxogre.org : from-nxogre.org
+{
+    set_texture_alias ambient_tex nxogre.slide.jpg
+}
+
+material nx.island : from-nxogre.org
+{
+    set_texture_alias ambient_tex nxogre.island.png
+}
+
+material nxogre.funnel : from-nxogre.org
+{
+    set_texture_alias ambient_tex nxogre.concrete.jpg
+}
+
+material nxogre-concrete : from-nxogre.org
+{
+    set_texture_alias ambient_tex nxogre.concrete.jpg
+}
+
+material nxogre-road1 : from-nxogre.org
+{
+    set_texture_alias ambient_tex nxogre.road1.jpg
+}
+
+material nxogre-road2 : from-nxogre.org
+{
+    set_texture_alias ambient_tex nxogre.road2.jpg
+}
+
+material nxogre-grass : from-nxogre.org
+{
+    set_texture_alias ambient_tex nxogre.grass.jpg
+}
+
+material nxogre.playpenfloor : from-nxogre.org
+{
+    set_texture_alias ambient_tex nxogre.concrete.jpg
+}
+
+material nxogre.playpenwall : from-nxogre.org
+{
+    set_texture_alias ambient_tex nxogre.wall.jpg
+}
+
+material nxogre.orb : from-nxogre.org
+{
+    set_texture_alias ambient_tex nxogre.orb.png
+}
+
+material nxogre.metal : from-nxogre.org
+{
+    set_texture_alias ambient_tex nxogre.metal.jpg
+}
+
+material nxogre.playpenfloor : from-nxogre.org
+{
+    set_texture_alias ambient_tex nxogre.funnel.jpg
+}
+
+material nxogre.platform : from-nxogre.org
+{
+    set_texture_alias ambient_tex nxogre.forcefieldplatform.png
+}
+
+material nxogre.castle : from-nxogre.org
+{
+    set_texture_alias ambient_tex nxogre.castle.jpg
+}
+
+material nxogre.forcefield
+{
+  technique
+  {
+    pass
+    {
+      scene_blend alpha_blend
+      lighting off
+      depth_write off
+
+      texture_unit
+      {
+        scroll_anim 0.01 0
+        texture nxogre.forcefield.png
+      }
+    }
+  }
+}
+
+material nxogre.forcefield2
+{
+  technique
+  {
+    pass
+    {
+      scene_blend alpha_blend
+      lighting off
+      depth_write off
+
+      texture_unit
+      {
+        scale 1000 1000
+        texture nxogre.forcefield.png
+      }
+    }
+  }
+}
+
+material nxogre.sleeping
+{
+  technique
+  {
+    pass
+    {
+      scene_blend alpha_blend
+      lighting off
+      depth_write off
+
+      texture_unit
+      {
+        texture nxogre.sleeping.png
+      }
+    }
+  }
+}
+
+material nxogre.balloon
+{
+  technique
+  {
+    pass
+    {
+      scene_blend alpha_blend
+
+      texture_unit
+      {
+        texture nxogre.balloon.png
+      }
+    }
+  }
+}
+
+material wales : flag
+{
+    set_texture_alias ambient_tex wales.png
+}
+
+material germany : flag
+{
+    set_texture_alias ambient_tex germany.png
+}
+
+material usa : flag
+{
+    set_texture_alias ambient_tex usa.png
+}
+
+material uk : flag
+{
+    set_texture_alias ambient_tex uk.png
+}
+
+material guernsey : flag
+{
+    set_texture_alias ambient_tex guernsey.png
+}

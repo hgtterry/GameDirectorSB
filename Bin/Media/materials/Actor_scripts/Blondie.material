@@ -1,0 +1,78 @@
+material BL4_Head
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture Blondie/BL4_Head.dds
+             }
+         }
+    }
+}
+material BL4_Shirt
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture Blondie/BL4_Shirt.dds
+             }
+         }
+    }
+}
+material BL4_Arms_Hands
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture Blondie/BL4_Arms_Hands.dds
+             }
+         }
+    }
+}
+material BL4_Pants
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture Blondie/BL4_Pants.dds
+             }
+         }
+    }
+}
+material BL4_Shoes
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture Blondie/BL4_Shoes.dds
+             }
+         }
+    }
+}
+material BL4_TBack
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture Blondie/BL4_TBack.dds
+             }
+         }
+    }
+}

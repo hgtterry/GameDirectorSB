@@ -1,0 +1,52 @@
+material CH_pants
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture Charlie\CH_pants.dds
+             }
+         }
+    }
+}
+material CH_face_hands
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture Charlie\CH_face_hands.dds
+             }
+         }
+    }
+}
+material CH_shirt
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture Charlie\CH_shirt.dds
+             }
+         }
+    }
+}
+material CH_shoes
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture Charlie\CH_shoes.dds
+             }
+         }
+    }
+}

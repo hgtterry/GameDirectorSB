@@ -1,0 +1,13 @@
+material P_bucket
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture misc\P_bucket.png
+             }
+         }
+    }
+}

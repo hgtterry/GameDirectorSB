@@ -1,0 +1,18 @@
+
+material R_roche
+{
+	technique
+	{
+		pass
+		{
+
+
+			texture_unit
+			{
+				texture Rocks\Limestone3.png
+			}
+		}
+
+	}
+
+}

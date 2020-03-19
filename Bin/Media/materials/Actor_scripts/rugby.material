@@ -1,0 +1,13 @@
+material Rball
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture misc\Rball.png
+             }
+         }
+    }
+}

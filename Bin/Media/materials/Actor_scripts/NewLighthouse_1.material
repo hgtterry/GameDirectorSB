@@ -1,0 +1,115 @@
+material LT_Body
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture Lighthouse\LT_Body.dds
+             }
+         }
+    }
+}
+material LT_Rails
+{
+    technique
+    {
+         pass
+         {
+                alpha_rejection greater 192
+             texture_unit
+             {
+                 texture Lighthouse\LT_Rails.dds
+             }
+         }
+    }
+}
+material LT_White
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture Lighthouse\LT_White.dds
+             }
+         }
+    }
+}
+material LT_Glass
+{
+    technique
+    {
+         pass
+         {
+                alpha_rejection greater 192
+             texture_unit
+             {
+                 texture Lighthouse\LT_Glass.dds
+             }
+         }
+    }
+}
+material LT_Roof
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture Lighthouse\LT_Roof.dds
+             }
+         }
+    }
+}
+material LT_Walls
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture Lighthouse\LT_Walls.dds
+             }
+         }
+    }
+}
+material LT_END
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture Lighthouse\LT_END.dds
+             }
+         }
+    }
+}
+material LT_Lamp
+{
+    technique
+    {
+         pass
+         {
+		emissive 1 1 1
+		ambient 0 0 0
+		lighting off
+			depth_write off
+			scene_blend add
+
+
+             texture_unit
+             {
+                 texture Lighthouse\LT_flare.dds
+		 scroll_anim 0.25 0
+             }
+
+         }
+    }
+}

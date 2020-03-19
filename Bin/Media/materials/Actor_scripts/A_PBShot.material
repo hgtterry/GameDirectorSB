@@ -1,0 +1,52 @@
+material PB_Flask
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture Weapons\PB_Flask.dds
+             }
+         }
+    }
+}
+material PB_Box
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture Weapons\PB_Box.dds
+             }
+         }
+    }
+}
+material PB_Cloth
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture Weapons\PB_Cloth.dds
+             }
+         }
+    }
+}
+material PB_Ball
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                texture  Weapons\PB_Ball.dds
+             }
+         }
+    }
+}

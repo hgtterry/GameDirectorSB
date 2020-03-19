@@ -1,0 +1,8 @@
+[GDScene]
+Version=4.0
+ 
+[Sounds]
+Sounds_Count=0
+ 
+[Counters]
+Sounds_ID_Counter=3000

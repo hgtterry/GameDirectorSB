@@ -1,0 +1,28 @@
+material HAM_Handle
+{
+    technique
+    {
+         pass
+         {
+			cull_hardware none
+			cull_software none
+             texture_unit
+             {
+                 texture Tools\Handle.dds
+             }
+         }
+    }
+}
+material HAM_head
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture Tools\Head.dds
+             }
+         }
+    }
+}

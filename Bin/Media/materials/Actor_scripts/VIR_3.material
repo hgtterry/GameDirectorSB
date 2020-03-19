@@ -1,0 +1,13 @@
+material Material_#2
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture Material_#2.bmp
+             }
+         }
+    }
+}

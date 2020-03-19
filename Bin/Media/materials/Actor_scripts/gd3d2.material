@@ -1,0 +1,13 @@
+material default_Not_loaded
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture blue.dds
+             }
+         }
+    }
+}

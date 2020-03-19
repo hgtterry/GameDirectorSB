@@ -1,0 +1,26 @@
+material Tab_wood1
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture Furniture\Tab_wood1.dds
+             }
+         }
+    }
+}
+material Cha_cloth
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture Furniture\Cha_cloth.dds
+             }
+         }
+    }
+}

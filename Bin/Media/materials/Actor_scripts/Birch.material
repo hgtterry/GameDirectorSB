@@ -1,0 +1,30 @@
+material Birch_leaves
+{
+    technique
+    {
+         pass
+         {
+		scene_blend alpha_blend
+                cull_hardware none
+                cull_software none
+                alpha_rejection greater 128
+             texture_unit
+             {
+                 texture Trees\Birch_leaves.dds
+             }
+         }
+    }
+}
+material Birch_bark
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture Trees\Birch_bark.dds
+             }
+         }
+    }
+}

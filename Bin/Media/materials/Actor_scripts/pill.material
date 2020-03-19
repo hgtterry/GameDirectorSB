@@ -1,0 +1,13 @@
+material pill
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture pill.dds
+             }
+         }
+    }
+}

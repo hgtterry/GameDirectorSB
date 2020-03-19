@@ -1,0 +1,14 @@
+[GDScene]
+Version=4.0
+ 
+[Sounds]
+Sounds_Count=1
+ 
+[Sound_0]
+Sound_ID=3000
+Name=Sound_0
+SoundFile=footstep.ogg
+Volume=0.500000
+ 
+[Counters]
+Sounds_ID_Counter=3001

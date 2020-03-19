@@ -1,0 +1,17 @@
+material Bush_green
+{
+    technique
+    {
+         pass
+         {
+		scene_blend alpha_blend
+                cull_hardware none
+                cull_software none
+                alpha_rejection greater 128
+             texture_unit
+             {
+                 texture Trees\Bush_green.dds
+             }
+         }
+    }
+}

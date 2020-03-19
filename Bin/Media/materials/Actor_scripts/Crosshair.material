@@ -1,0 +1,17 @@
+
+material Crosshair
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture Weapons\Red.png -1
+			}
+		}
+
+	}
+
+}

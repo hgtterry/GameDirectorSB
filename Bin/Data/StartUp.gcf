@@ -1,0 +1,8 @@
+[Startup]
+Default=0
+Scene_FileName=Ball_View.GDScene
+Scene_Path_FileName=C:\Users\Terry\Desktop\GD19_OSDN\Bin\Media\Levels\Ball_View.GDScene
+[Config]
+Full_Screen=1
+Project_Path=C:\Users\Terry\Desktop
+Game_Name=YourGameName

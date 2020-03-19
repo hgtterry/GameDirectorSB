@@ -1,0 +1,15 @@
+[GDScene]
+Version=4.0
+ 
+[Locations]
+Locations_Count=1
+ 
+[Location_0]
+Locatoin_ID=57716648
+Name=Start_Location
+Mesh_Position=0.000000,0.000000,0.000000
+Physics_Position=0.000000,0.000000,0.000000
+Physics_Rotation=0.000000,1.000000,0.000000,0.000000
+ 
+[Counters]
+Location_ID_Counter=2000

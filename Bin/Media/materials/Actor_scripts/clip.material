@@ -1,0 +1,26 @@
+material CL_clip
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture Weapons\CL_clip.dds
+             }
+         }
+    }
+}
+material CL_back
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture Weapons\CL_back.dds
+             }
+         }
+    }
+}

@@ -1,0 +1,90 @@
+material MoveMat1
+{
+    technique
+    {
+         pass
+         {
+			scene_blend colour_blend
+			depth_write off
+             texture_unit
+             {
+                 texture MoveMat1.jpg
+             }
+         }
+    }
+}
+material MoveMat2
+{
+    technique
+    {
+         pass
+         {
+			scene_blend colour_blend
+			depth_write off
+             texture_unit
+             {
+                 texture MoveMat1.jpg
+             }
+         }
+    }
+}
+material MoveMat3
+{
+    technique
+    {
+         pass
+         {
+			scene_blend colour_blend
+			depth_write off
+             texture_unit
+             {
+                 texture MoveMat1.jpg
+             }
+         }
+    }
+}
+material MoveMat4
+{
+    technique
+    {
+         pass
+         {
+			scene_blend colour_blend
+			depth_write off
+             texture_unit
+             {
+                 texture MoveMat1.jpg
+             }
+         }
+    }
+}
+material MoveMat5
+{
+    technique
+    {
+         pass
+         {
+			scene_blend colour_blend
+			depth_write off
+             texture_unit
+             {
+                 texture MoveMat1.jpg
+             }
+         }
+    }
+}
+material MoveMat6
+{
+    technique
+    {
+         pass
+         {
+			scene_blend colour_blend
+			depth_write off
+             texture_unit
+             {
+                 texture MoveMat1.jpg
+             }
+         }
+    }
+}

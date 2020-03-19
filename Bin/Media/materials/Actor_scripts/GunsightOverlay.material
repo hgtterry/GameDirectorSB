@@ -1,0 +1,14 @@
+material Gunsight
+{
+    technique
+    {
+         pass
+         {
+                alpha_rejection greater 192
+             texture_unit
+             {
+                 texture Weapons\Target.png
+             }
+         }
+    }
+}

@@ -1,0 +1,13 @@
+material Bball
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture misc\Bball.png
+             }
+         }
+    }
+}
