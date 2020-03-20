@@ -5,6 +5,8 @@ public:
 	GD19_File_IO();
 	~GD19_File_IO();
 
+	bool Vm_OpenFile(char* Extension, char* Title, char* StartDirectory);
+
 	bool OpenFile(char* Extension, char* Title, char* StartDirectory);
 	bool SaveFileCom(char* Extension, char* Title, char* StartDirectory);
 	bool SaveFile(char* Extension, char* Title, char* FileName); // ?
@@ -20,6 +22,9 @@ public:
 
 	char Scene_FileName[255];
 	char Scene_Path_FileName[1024];
+
+	char Model_FileName[255];
+	char Model_Path_FileName[1024];
 
 	char mSaveFileCom[255];
 	char mSavePathFileCom[255];

@@ -202,6 +202,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		// Parse the menu selections:
 		switch (wmId)
 		{
+
+		// Vima 20/3/20
+		case ID_IMPORT_GENESIS3D:
+		{
+			App->CL_Importer->Genesis3D_Loader();
+			return 1;
+		}
+
 		case ID_TEST_GENERAL:
 		{
 			if (App->Cl_FileView_V2->OpenObjects == 1)

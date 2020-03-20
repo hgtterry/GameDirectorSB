@@ -112,73 +112,73 @@ bool GD19_OgreListener::frameStarted(const FrameEvent& evt)
 			Animate_State2->addTime(evt.timeSinceLastFrame * AnimationScale);
 		}*/
 
-		if (GD_Dubug_Physics == 1)
-		{
-			App->Cl_Bullet->dynamicsWorld->debugDrawWorld();
-		}
+	//	if (GD_Dubug_Physics == 1)
+	//	{
+	//		App->Cl_Bullet->dynamicsWorld->debugDrawWorld();
+	//	}
 
-		if (GD_Run_Physics == 1)
-		{
-			btVector3 currentVelocityDirection = App->Cl_Scene_Data->Cl_Object[1]->bt_body->getLinearVelocity();
-			btScalar currentVelocty = currentVelocityDirection.length();
-			if (currentVelocty < _desiredVelocity)
-			{
-				currentVelocityDirection *= _desiredVelocity / currentVelocty;
+	//	if (GD_Run_Physics == 1)
+	//	{
+	//		btVector3 currentVelocityDirection = App->Cl_Scene_Data->Cl_Object[1]->bt_body->getLinearVelocity();
+	//		btScalar currentVelocty = currentVelocityDirection.length();
+	//		if (currentVelocty < _desiredVelocity)
+	//		{
+	//			currentVelocityDirection *= _desiredVelocity / currentVelocty;
 
-				currentVelocityDirection.setY(0);
+	//			currentVelocityDirection.setY(0);
 
-				App->Cl_Scene_Data->Cl_Object[1]->bt_body->setLinearVelocity(currentVelocityDirection);
-			}
+	//			App->Cl_Scene_Data->Cl_Object[1]->bt_body->setLinearVelocity(currentVelocityDirection);
+	//		}
 
-			{
-				App->Cl_Bullet->dynamicsWorld->stepSimulation(evt.timeSinceLastFrame * 2); //suppose you have 60 frames per second
+	//		{
+	//			App->Cl_Bullet->dynamicsWorld->stepSimulation(evt.timeSinceLastFrame * 2); //suppose you have 60 frames per second
 
-				for (int j = App->Cl_Bullet->dynamicsWorld->getNumCollisionObjects() - 1; j >= 0; j--)
-				{
-					btCollisionObject* obj = App->Cl_Bullet->dynamicsWorld->getCollisionObjectArray()[j];
-					btRigidBody* body = btRigidBody::upcast(obj);
-					btTransform trans;
-					if (body && body->getMotionState())
-					{
-						int UI = body->getUserIndex();
-						int Index = body->getUserIndex2();
+	//			for (int j = App->Cl_Bullet->dynamicsWorld->getNumCollisionObjects() - 1; j >= 0; j--)
+	//			{
+	//				btCollisionObject* obj = App->Cl_Bullet->dynamicsWorld->getCollisionObjectArray()[j];
+	//				btRigidBody* body = btRigidBody::upcast(obj);
+	//				btTransform trans;
+	//				if (body && body->getMotionState())
+	//				{
+	//					int UI = body->getUserIndex();
+	//					int Index = body->getUserIndex2();
 
 
-						if (UI == Enums::Usage_Dynamic && App->Cl_Scene_Data->Cl_Object[Index]->Deleted == 0)
-						{
-							body->getMotionState()->getWorldTransform(trans);
-							btQuaternion orientation = trans.getRotation();
+	//					if (UI == Enums::Usage_Dynamic && App->Cl_Scene_Data->Cl_Object[Index]->Deleted == 0)
+	//					{
+	//						body->getMotionState()->getWorldTransform(trans);
+	//						btQuaternion orientation = trans.getRotation();
 
-							Ogre::Vector3 BB = App->Cl_Objects_Com->GetMesh_Center(Index, App->Cl_Scene_Data->Cl_Object[Index]->OgreNode);
-							Ogre::Vector3 WC = App->Cl_Objects_New->Get_BoundingBox_World_Centre(Index);
+	//						Ogre::Vector3 BB = App->Cl_Objects_Com->GetMesh_Center(Index, App->Cl_Scene_Data->Cl_Object[Index]->OgreNode);
+	//						Ogre::Vector3 WC = App->Cl_Objects_New->Get_BoundingBox_World_Centre(Index);
 
-							float x = trans.getOrigin().getX();
-							float y = trans.getOrigin().getY();
-							float z = trans.getOrigin().getZ();
+	//						float x = trans.getOrigin().getX();
+	//						float y = trans.getOrigin().getY();
+	//						float z = trans.getOrigin().getZ();
 
-							App->Cl_Scene_Data->Cl_Object[Index]->OgreNode->setPosition(Ogre::Vector3(x, y, z));
-							App->Cl_Scene_Data->Cl_Object[Index]->OgreNode->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
+	//						App->Cl_Scene_Data->Cl_Object[Index]->OgreNode->setPosition(Ogre::Vector3(x, y, z));
+	//						App->Cl_Scene_Data->Cl_Object[Index]->OgreNode->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
 
-							WC = App->Cl_Objects_New->Get_BoundingBox_World_Centre(Index);
+	//						WC = App->Cl_Objects_New->Get_BoundingBox_World_Centre(Index);
 
-							Ogre::Vector3 NewPos = Ogre::Vector3(x, y, z) - WC;
-							App->Cl_Scene_Data->Cl_Object[Index]->OgreNode->setPosition((Ogre::Vector3(x, y, z)) + NewPos);
-						}
+	//						Ogre::Vector3 NewPos = Ogre::Vector3(x, y, z) - WC;
+	//						App->Cl_Scene_Data->Cl_Object[Index]->OgreNode->setPosition((Ogre::Vector3(x, y, z)) + NewPos);
+	//					}
 
-					}
-					else
-					{
-						trans = obj->getWorldTransform();
-					}
-				}
-			}
-			btTransform trans;
-			App->Cl_Player->mObject->getMotionState()->getWorldTransform(trans);
-			btQuaternion orientation = trans.getRotation();
-			App->Cl_Player->Player_Node->setPosition(Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ()));
-			App->Cl_Player->Player_Node->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
-			App->Cl_Player->Player_Node->pitch(Ogre::Degree(180));
-		}
+	//				}
+	//				else
+	//				{
+	//					trans = obj->getWorldTransform();
+	//				}
+	//			}
+	//		}
+	//		btTransform trans;
+	//		App->Cl_Player->mObject->getMotionState()->getWorldTransform(trans);
+	//		btQuaternion orientation = trans.getRotation();
+	//		App->Cl_Player->Player_Node->setPosition(Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ()));
+	//		App->Cl_Player->Player_Node->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
+	//		App->Cl_Player->Player_Node->pitch(Ogre::Degree(180));
+	//	}
 	}
 
 	return true;
