@@ -67,6 +67,7 @@ GD19_App::GD19_App(void)
 
 	// Vima19 19/03/20
 	CL_Importer =		nullptr;
+	CL_Vm_Genesis3D =	nullptr;
 
 
 	Fdlg = nullptr;
@@ -187,6 +188,7 @@ bool GD19_App::InitApp(void)
 
 	// Vima19 19/03/20
 	CL_Importer =		new VM_Importer();
+	CL_Vm_Genesis3D =	new VM_Genisis3D();
 	
 	SetBrushes_Fonts();
 

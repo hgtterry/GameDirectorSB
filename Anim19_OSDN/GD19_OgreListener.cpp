@@ -184,6 +184,9 @@ bool GD19_OgreListener::frameStarted(const FrameEvent& evt)
 	return true;
 }
 
+
+
+
 // *************************************************************************
 // *			frameRenderingQueued   Terry Bernie						   *
 // *************************************************************************
@@ -247,8 +250,6 @@ bool GD19_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 			App->Cl19_Ogre->mCamera->yaw(mYaw);
 			//App->Cl19_Ogre->mCamera->pitch(mmPitch);
 			App->Cl19_Ogre->mCamera->yaw(Ogre::Degree(180));
-		
-
 	}
 
 	App->Cl_Keyboard->Keyboard_Monitor(evt.timeSinceLastFrame);
