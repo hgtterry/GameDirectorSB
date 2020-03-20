@@ -62,6 +62,11 @@ distribution.
 #include "GD19_FileView_V2.h" // Test
 
 
+// Vima19 19/03/20
+
+#include "VM_Importer.h"
+
+
 class GD19_App
 {
 
@@ -103,6 +108,9 @@ public:
 	GD19_PB*			Cl_PB;
 	GD_File_Data*		Cl_File_Data;
 	GD_Keyboard*		Cl_Keyboard;
+
+	// Vima19 19/03/20
+	VM_Importer*		CL_Importer;
 
 
 	GD19_App(void);

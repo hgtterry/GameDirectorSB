@@ -65,6 +65,9 @@ GD19_App::GD19_App(void)
 	Cl_File_Data =		nullptr;
 	Cl_Keyboard =		nullptr;
 
+	// Vima19 19/03/20
+	CL_Importer =		nullptr;
+
 
 	Fdlg = nullptr;
 	hInst = nullptr;
@@ -181,6 +184,9 @@ bool GD19_App::InitApp(void)
 	Cl_Project =		new GD19_Project();	
 	Cl_File_Data =		new GD_File_Data();
 	Cl_Keyboard =		new GD_Keyboard();
+
+	// Vima19 19/03/20
+	CL_Importer =		new VM_Importer();
 	
 	SetBrushes_Fonts();
 

@@ -667,11 +667,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			if (App->OgreStarted == 1 && App->Start_Scene_Loaded == 0)
 			{
 				App->Start_Scene_Loaded = 1;
-				App->Cl_Scene_Data->Start_Scene();
+				//App->Cl_Scene_Data->Start_Scene();
 
 				// Check
-				App->Cl_Scene_Data->Cl_Object[1]->bt_body->setLinearVelocity(btVector3(35,0,35));
-				App->Cl19_Ogre->OgreListener->_desiredVelocity = App->Cl_Scene_Data->Cl_Object[1]->bt_body->getLinearVelocity().length();
+				//App->Cl_Scene_Data->Cl_Object[1]->bt_body->setLinearVelocity(btVector3(35,0,35));
+				//App->Cl19_Ogre->OgreListener->_desiredVelocity = App->Cl_Scene_Data->Cl_Object[1]->bt_body->getLinearVelocity().length();
 			}
 
 			//// Render behind windows
