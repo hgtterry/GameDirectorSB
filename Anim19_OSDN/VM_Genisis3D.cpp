@@ -114,12 +114,152 @@ bool VM_Genisis3D::AddActor(char* FileName)
 
 	RenderActor(TestActor->Puppet, TestActor->Pose);
 
+	Animate(0);
+
 	App->Say("Loaded2");
-	//Animate(0);
 
 	//GetUVs();
 
 	//Set_Scene();
+
+	return 1;
+}
+
+// *************************************************************************
+// *						Animate Terry Bernie	 			  	 	   *
+// *************************************************************************
+bool VM_Genisis3D::Animate(int Do)
+{
+	//if (Do == 1)
+	//{
+	//	geMotion *Motion = geActor_GetMotionByName(ActorDef_Memory, MotionName);
+
+	//	if (m_CurrentPose>FrameSpeed)
+	//	{
+	//		//if (MotionLoop == 1)
+	//		{
+	//			m_CurrentPose = 0;
+	//		}
+	//		/*else
+	//		{
+	//		App->C_Ogre->RenderListener->PlayActive = 0;
+	//		App->TogglePlayBmp();
+	//		return 1;
+	//		}*/
+	//	}
+
+	//	geActor_SetPose(TestActor, Motion, m_CurrentPose, NULL);
+
+	//	m_CurrentPose += (geFloat)AnimationSpeed;
+	//}
+	//if (Do == 2)
+	//{
+	//	if (m_CurrentPose>FrameSpeed)
+	//	{
+	//		m_CurrentPose = 0;
+	//	}
+
+	//	geMotion *Motion = geActor_GetMotionByName(ActorDef_Memory, MotionName);
+	//	geActor_SetPose(TestActor, Motion, m_CurrentPose, NULL);
+
+	//	m_CurrentPose += (geFloat)AnimationSpeed * 5;
+	//}
+
+	//if (Do == 3)
+	//{
+	//	if (m_CurrentPose>FrameSpeed)
+	//	{
+	//		m_CurrentPose = 0;
+	//	}
+
+	//	geMotion *Motion = geActor_GetMotionByName(ActorDef_Memory, MotionName);
+	//	geActor_SetPose(TestActor, Motion, m_CurrentPose, NULL);
+
+	//	m_CurrentPose -= (geFloat)AnimationSpeed * 5;
+	//}
+
+	//if (Do == 4)
+	//{
+	//	/*if (m_CurrentPose>FrameSpeed)
+	//	{
+	//	m_CurrentPose = 0;
+	//	}*/
+
+	//	geMotion *Motion = geActor_GetMotionByName(ActorDef_Memory, MotionName);
+	//	geActor_SetPose(TestActor, Motion, m_CurrentPose, NULL);
+	//}
+
+	//int Count = 0;
+	//float x;
+	//float y;
+	//float z;
+	//int face1;
+	//int face2;
+	//int face3;
+	//App->CL_Model_Data->VertCount = TestActor->Puppet->BodyInstance->ExportGeometry.SkinVertexCount;
+
+	//App->CL_Model_Data->vertex_Data.resize(App->CL_Model_Data->VertCount);
+
+	//while (Count < App->CL_Model_Data->VertCount)
+	//{
+	//	x = TestActor->Puppet->BodyInstance->ExportGeometry.SkinVertexArray[Count].SVPoint.X;
+	//	y = TestActor->Puppet->BodyInstance->ExportGeometry.SkinVertexArray[Count].SVPoint.Y;
+	//	z = TestActor->Puppet->BodyInstance->ExportGeometry.SkinVertexArray[Count].SVPoint.Z;
+
+	//	App->CL_Model_Data->vertex_Data[Count].x = x;
+	//	App->CL_Model_Data->vertex_Data[Count].y = y;
+	//	App->CL_Model_Data->vertex_Data[Count].z = z;
+
+	//	Count++;
+	//}
+
+	//Count = 0;
+	//App->CL_Model_Data->NormalsCount = TestActor->Puppet->BodyInstance->ExportGeometry.NormalCount;
+
+	//App->CL_Model_Data->Normal_Data.resize(App->CL_Model_Data->NormalsCount);
+
+	//while (Count < App->CL_Model_Data->NormalsCount)
+	//{
+	//	x = TestActor->Puppet->BodyInstance->ExportGeometry.NormalArray[Count].X;
+	//	y = TestActor->Puppet->BodyInstance->ExportGeometry.NormalArray[Count].Y;
+	//	z = TestActor->Puppet->BodyInstance->ExportGeometry.NormalArray[Count].Z;
+
+	//	App->CL_Model_Data->Normal_Data[Count].x = x;
+	//	App->CL_Model_Data->Normal_Data[Count].y = y;
+	//	App->CL_Model_Data->Normal_Data[Count].z = z;
+
+	//	Count++;
+	//}
+
+	//App->CL_Model_Data->FaceCount = TestActor->Puppet->BodyInstance->BodyTemplate->SkinFaces->FaceCount;
+
+	//App->CL_Model_Data->Face_Data.resize(App->CL_Model_Data->FaceCount);
+	//App->CL_Model_Data->MatIndex_Data.resize(App->CL_Model_Data->FaceCount);
+
+	//Count = 0;
+	//while (Count < App->CL_Model_Data->FaceCount)
+	//{
+	//	face1 = TestActor->Puppet->BodyInstance->BodyTemplate->SkinFaces[GE_BODY_HIGHEST_LOD].FaceArray[Count].VtxIndex[0];
+	//	face2 = TestActor->Puppet->BodyInstance->BodyTemplate->SkinFaces[GE_BODY_HIGHEST_LOD].FaceArray[Count].VtxIndex[1];
+	//	face3 = TestActor->Puppet->BodyInstance->BodyTemplate->SkinFaces[GE_BODY_HIGHEST_LOD].FaceArray[Count].VtxIndex[2];
+
+	//	App->CL_Model_Data->MatIndex_Data[Count] = TestActor->Puppet->BodyInstance->BodyTemplate->SkinFaces[GE_BODY_HIGHEST_LOD].FaceArray[Count].MaterialIndex;
+
+	//	App->CL_Model_Data->Face_Data[Count].a = face1;
+	//	App->CL_Model_Data->Face_Data[Count].b = face2;
+	//	App->CL_Model_Data->Face_Data[Count].c = face3;
+
+	//	Count++;
+	//}
+
+	//RenderActor(TestActor->Puppet, TestActor->Pose);
+
+	//                        //App->CL_Actor_Loader->UpDateMeshAnimation();
+
+	//if (App->CL_Model_Data->Model_Loaded == 1)
+	//{
+	//	GetBoundingBoxModel_Update();
+	//}
 
 	return 1;
 }

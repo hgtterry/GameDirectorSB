@@ -62,6 +62,8 @@ protected:
 	geBodyInst_Geometry* TGetGeometryPrep(geBodyInst *BI, int LevelOfDetail);
 	void TPostScale(const geXForm3d *M, const geVec3d *S, geXForm3d *Scaled);
 
+	bool Animate(int Do);
+
 	geActor_Def* ActorDef_Memory;
 	geBody* ActorBody_Memory;
 	geActor * TestActor;
