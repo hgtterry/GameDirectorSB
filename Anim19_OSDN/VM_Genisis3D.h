@@ -47,6 +47,20 @@ public:
 protected:
 
 	bool AddActor(char* FileName);
+	bool BuildActor(geActor *Actor);
+	gePuppet* CreatePuppet(geVFile *TextureFS, const geBody *B);
+	geBodyInst* CreateGeometry(const geBody *B);
+
+	bool RenderActor(const gePuppet *P, const gePose *Joints);
+
+	geBodyInst_Geometry *GetGeometry(
+		const geBodyInst *BI,
+		const geVec3d *ScaleVector,
+		const geXFArray *BoneTransformArray,
+		int LevelOfDetail);
+
+	geBodyInst_Geometry* TGetGeometryPrep(geBodyInst *BI, int LevelOfDetail);
+	void TPostScale(const geXForm3d *M, const geVec3d *S, geXForm3d *Scaled);
 
 	geActor_Def* ActorDef_Memory;
 	geBody* ActorBody_Memory;

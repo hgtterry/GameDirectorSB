@@ -25,6 +25,7 @@
 
 #define NOMINMAX
 #include <windows.h>
+#include <Genesis.h>
 #include "btBulletDynamicsCommon.h"
 // C RunTime Header Files
 //#include <stdint.h>
@@ -50,6 +51,8 @@
 #include "OgreVertexIndexData.h"
 #include "OgreResourceGroupManager.h"
 #include "irrKlang.h"
+
+#include "Gen_Structures.h"
 
 namespace Enums
 {
