@@ -24,16 +24,19 @@ bool VM_Importer::Genesis3D_Loader(void)
 		return 1;
 	}
 
+	
+
+	//App->Cl_Ogre->Loading_Text("Loading Data", 1);
+
+	//Clear_Model();
+
+	App->CL_Vm_Model->Set_Paths();
+
 	App->Say("Genesis");
 
-	/*App->Cl_Ogre->Loading_Text("Loading Data", 1);
+	/*App->CL_Genesis_Import->LoadActor();
 
-	Clear_Model();
-
-	App->CL_Model_Data->Set_Paths();
-
-	App->CL_Genesis_Import->LoadActor();
-
+	App->Say("Genesis");
 	App->CL_Model_Data->Model_Type = LoadedFile_Actor;
 
 	Set_Equity();
