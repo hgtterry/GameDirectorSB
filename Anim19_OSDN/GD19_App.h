@@ -66,6 +66,7 @@ distribution.
 
 #include "VM_Importer.h"
 #include "VM_Genisis3D.h"
+#include "VM_Model.h"
 
 
 class GD19_App
@@ -113,6 +114,7 @@ public:
 	// Vima19 19/03/20
 	VM_Importer*		CL_Importer;
 	VM_Genisis3D*		CL_Vm_Genesis3D;
+	VM_Model*			CL_Vm_Model;
 
 
 	GD19_App(void);

@@ -205,6 +205,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="VM_Genisis3D.h" />
     <ClInclude Include="VM_Importer.h" />
+    <ClInclude Include="VM_Model.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CollisionTools.cpp" />
@@ -264,6 +265,7 @@
     </ClCompile>
     <ClCompile Include="VM_Genisis3D.cpp" />
     <ClCompile Include="VM_Importer.cpp" />
+    <ClCompile Include="VM_Model.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GD19_OSDN.rc" />
