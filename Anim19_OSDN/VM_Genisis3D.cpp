@@ -24,13 +24,90 @@ distribution.
 #include "stdafx.h"
 #include "GD19_App.h"
 #include "VM_Genisis3D.h"
+#include "stdio.h"
+#include "stdarg.h"
 
 
 VM_Genisis3D::VM_Genisis3D()
 {
+	ActorDef_Memory =	nullptr;
+	ActorBody_Memory =	nullptr;
+	TestActor =			nullptr;
 }
 
 
 VM_Genisis3D::~VM_Genisis3D()
 {
+}
+
+// *************************************************************************
+// *						LoadActor Terry Bernie					 	   *
+// *************************************************************************
+void VM_Genisis3D::LoadActor(void)
+{
+
+	AddActor(App->CL_Vm_Model->Path_FileName);
+
+	//SetCounters();
+
+	////	ListMotions();
+
+	//GetDefaultBones();
+
+	//LoadActorTextures();
+
+	//GetBoundingBoxModel_Create();
+
+	//FileView_AddMotions();
+
+	//App->CL_Model_Data->HasMesh = 1;
+
+}
+
+// *************************************************************************
+// *						AddActor Terry Bernie	  			  	 	   *
+// *************************************************************************
+bool VM_Genisis3D::AddActor(char* FileName)
+{
+	if (TestActor)
+	{
+		TestActor = nullptr;
+	}
+
+	geVFile* HFile;
+
+	HFile = geVFile_OpenNewSystem(NULL, GE_VFILE_TYPE_DOS,
+		FileName, NULL, GE_VFILE_OPEN_READONLY);
+
+	if (HFile)
+	{
+		ActorDef_Memory = geActor_DefCreateFromFile(HFile);
+
+		if (ActorDef_Memory)
+		{
+			TestActor = geActor_Create(ActorDef_Memory);
+
+			geActor_SetScale(TestActor, 1, 1, 1);
+
+			//BuildActor(TestActor);
+			App->Say("Loaded");
+		}
+		else
+		{
+			App->Say("Cant Create HFile");
+			return 0;
+		}
+	}
+
+	geVFile_Close(HFile);
+
+	//RenderActor(TestActor->Puppet, TestActor->Pose);
+
+	//Animate(0);
+
+	//GetUVs();
+
+	//Set_Scene();
+
+	return 1;
 }

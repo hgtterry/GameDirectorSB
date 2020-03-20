@@ -17,6 +17,8 @@
 #pragma warning( disable : 4316) // Heap Alication
 #pragma warning( disable : 4477) // format string
 
+#pragma comment(lib, "legacy_stdio_definitions.lib")
+
 //typedef unsigned long  uint32;
 
 #include "targetver.h"

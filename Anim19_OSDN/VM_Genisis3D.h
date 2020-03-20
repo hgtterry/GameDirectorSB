@@ -22,10 +22,34 @@ distribution.
 */
 
 #pragma once
+
+#include "Genesis.h"
+#include "ram.h"
+#include "strblock.h"
+#include "Puppet.h"
+
+#include "body.h"
+#include "quatern.h"
+#include "ram.h"
+#include "strblock.h"
+#include "vph.h"
+#include "mkbody.h"
+#include "bitmap.h"
+
 class VM_Genisis3D
 {
 public:
 	VM_Genisis3D();
 	~VM_Genisis3D();
+
+	void LoadActor(void);
+
+protected:
+
+	bool AddActor(char* FileName);
+
+	geActor_Def* ActorDef_Memory;
+	geBody* ActorBody_Memory;
+	geActor * TestActor;
 };
 

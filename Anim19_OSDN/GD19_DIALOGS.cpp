@@ -1524,17 +1524,17 @@ LRESULT CALLBACK GD19_Dialogs::Start_DataView_Proc(HWND hDlg, UINT message, WPAR
 
 		char buf[255];
 
-		sprintf(buf, "%s", "Scene Info   ");
+		sprintf(buf, "%s", "Model Info   ");
 		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
 		sprintf(buf, "%s", "    ");
 		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
 		////----------------------- 
-		sprintf(buf,"%s%s","Terrian ",App->Cl_Scene_Data->S_Scene[0]->TerrainFileName);
+		sprintf(buf,"%s%s","File Name ",App->CL_Vm_Model->FileName);
 		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
-		sprintf(buf, "%s%s", "GDSceneName    ", App->Cl_Scene_Data->S_Scene[0]->GDSceneName);
+		sprintf(buf, "%s%s", "GDSceneName    ", App->CL_Vm_Model->Path_FileName);
 		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
 		sprintf(buf, "%s%s", "Level Directory   ", App->LevelDirectory);

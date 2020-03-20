@@ -235,7 +235,7 @@ LRESULT CALLBACK GD19_ToolBar::TB1_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 		if (LOWORD(wParam) == IDC_BTMODELINFO)
 		{
 
-			///App->Cl_Dialogs->Start_DataView();
+			App->Cl_Dialogs->Start_DataView();
 			return TRUE;
 		}
 
