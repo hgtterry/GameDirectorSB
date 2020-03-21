@@ -69,6 +69,8 @@ protected:
 
 	bool Animate(int Do);
 
+	bool GetUVs();
+
 	geActor_Def* ActorDef_Memory;
 	geBody* ActorBody_Memory;
 	geActor * TestActor;

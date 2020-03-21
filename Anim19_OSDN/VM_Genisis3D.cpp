@@ -120,10 +120,9 @@ bool VM_Genisis3D::AddActor(char* FileName)
 	RenderActor(TestActor->Puppet, TestActor->Pose);
 
 	Animate(0);
+	GetUVs();
 
 	App->Say("Loaded2");
-
-	//GetUVs();
 
 	//Set_Scene();
 
@@ -219,46 +218,47 @@ bool VM_Genisis3D::Animate(int Do)
 		Count++;
 	}
 
-	//Count = 0;
-	//App->CL_Model_Data->NormalsCount = TestActor->Puppet->BodyInstance->ExportGeometry.NormalCount;
+	Count = 0;
+	int mNormsCount = TestActor->Puppet->BodyInstance->ExportGeometry.NormalCount;
+	App->CL_Vm_Model->NormalsCount = mNormsCount;
+	App->CL_Vm_Model->Normal_Data.resize(mNormsCount);
 
-	//App->CL_Model_Data->Normal_Data.resize(App->CL_Model_Data->NormalsCount);
+	while (Count < mNormsCount)
+	{
+		x = TestActor->Puppet->BodyInstance->ExportGeometry.NormalArray[Count].X;
+		y = TestActor->Puppet->BodyInstance->ExportGeometry.NormalArray[Count].Y;
+		z = TestActor->Puppet->BodyInstance->ExportGeometry.NormalArray[Count].Z;
 
-	//while (Count < App->CL_Model_Data->NormalsCount)
-	//{
-	//	x = TestActor->Puppet->BodyInstance->ExportGeometry.NormalArray[Count].X;
-	//	y = TestActor->Puppet->BodyInstance->ExportGeometry.NormalArray[Count].Y;
-	//	z = TestActor->Puppet->BodyInstance->ExportGeometry.NormalArray[Count].Z;
+		App->CL_Vm_Model->Normal_Data[Count].x = x;
+		App->CL_Vm_Model->Normal_Data[Count].y = y;
+		App->CL_Vm_Model->Normal_Data[Count].z = z;
 
-	//	App->CL_Model_Data->Normal_Data[Count].x = x;
-	//	App->CL_Model_Data->Normal_Data[Count].y = y;
-	//	App->CL_Model_Data->Normal_Data[Count].z = z;
+		Count++;
+	}
 
-	//	Count++;
-	//}
+	Count = 0;
+	int mFaceCount = TestActor->Puppet->BodyInstance->BodyTemplate->SkinFaces->FaceCount;
+	App->CL_Vm_Model->FaceCount = mFaceCount;
 
-	//App->CL_Model_Data->FaceCount = TestActor->Puppet->BodyInstance->BodyTemplate->SkinFaces->FaceCount;
+	App->CL_Vm_Model->Face_Data.resize(mFaceCount);
+	App->CL_Vm_Model->MatIndex_Data.resize(mFaceCount);
 
-	//App->CL_Model_Data->Face_Data.resize(App->CL_Model_Data->FaceCount);
-	//App->CL_Model_Data->MatIndex_Data.resize(App->CL_Model_Data->FaceCount);
+	while (Count < mFaceCount)
+	{
+		face1 = TestActor->Puppet->BodyInstance->BodyTemplate->SkinFaces[GE_BODY_HIGHEST_LOD].FaceArray[Count].VtxIndex[0];
+		face2 = TestActor->Puppet->BodyInstance->BodyTemplate->SkinFaces[GE_BODY_HIGHEST_LOD].FaceArray[Count].VtxIndex[1];
+		face3 = TestActor->Puppet->BodyInstance->BodyTemplate->SkinFaces[GE_BODY_HIGHEST_LOD].FaceArray[Count].VtxIndex[2];
 
-	//Count = 0;
-	//while (Count < App->CL_Model_Data->FaceCount)
-	//{
-	//	face1 = TestActor->Puppet->BodyInstance->BodyTemplate->SkinFaces[GE_BODY_HIGHEST_LOD].FaceArray[Count].VtxIndex[0];
-	//	face2 = TestActor->Puppet->BodyInstance->BodyTemplate->SkinFaces[GE_BODY_HIGHEST_LOD].FaceArray[Count].VtxIndex[1];
-	//	face3 = TestActor->Puppet->BodyInstance->BodyTemplate->SkinFaces[GE_BODY_HIGHEST_LOD].FaceArray[Count].VtxIndex[2];
+		App->CL_Vm_Model->MatIndex_Data[Count] = TestActor->Puppet->BodyInstance->BodyTemplate->SkinFaces[GE_BODY_HIGHEST_LOD].FaceArray[Count].MaterialIndex;
 
-	//	App->CL_Model_Data->MatIndex_Data[Count] = TestActor->Puppet->BodyInstance->BodyTemplate->SkinFaces[GE_BODY_HIGHEST_LOD].FaceArray[Count].MaterialIndex;
+		App->CL_Vm_Model->Face_Data[Count].a = face1;
+		App->CL_Vm_Model->Face_Data[Count].b = face2;
+		App->CL_Vm_Model->Face_Data[Count].c = face3;
 
-	//	App->CL_Model_Data->Face_Data[Count].a = face1;
-	//	App->CL_Model_Data->Face_Data[Count].b = face2;
-	//	App->CL_Model_Data->Face_Data[Count].c = face3;
+		Count++;
+	}
 
-	//	Count++;
-	//}
-
-	//RenderActor(TestActor->Puppet, TestActor->Pose);
+	RenderActor(TestActor->Puppet, TestActor->Pose);
 
 	//                        //App->CL_Actor_Loader->UpDateMeshAnimation();
 
@@ -608,4 +608,30 @@ geBodyInst* VM_Genisis3D::CreateGeometry(const geBody *B)
 	BI->FaceCount = 0;
 
 	return BI;
+}
+
+// *************************************************************************
+// *						GetUVs								  	 	   *
+// *************************************************************************
+bool VM_Genisis3D::GetUVs()
+{
+	int Count = 0;
+	float U = 0;
+	float V = 0;
+	int mUVsNum = TestActor->Puppet->BodyInstance->ExportGeometry.SkinVertexCount;
+
+	App->CL_Vm_Model->MapCord_Data.resize(mUVsNum);
+
+	while (Count<mUVsNum)
+	{
+		U = TestActor->Puppet->BodyInstance->ExportGeometry.SkinVertexArray[Count].SVU;
+		V = TestActor->Puppet->BodyInstance->ExportGeometry.SkinVertexArray[Count].SVV;
+
+		App->CL_Vm_Model->MapCord_Data[Count].u = U;
+		App->CL_Vm_Model->MapCord_Data[Count].v = V;
+		App->CL_Vm_Model->MapCord_Data[Count].v = 1 - V;
+
+		Count++;
+	}
+	return 1;
 }

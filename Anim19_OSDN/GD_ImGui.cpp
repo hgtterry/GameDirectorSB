@@ -199,6 +199,16 @@ void GD_ImGui::Render_Main_Panels(void)
 		Camera_Object();
 	}
 
+	if (App->Cl_ImGui->Show_ImGui_Counters == 1)
+	{
+		ImGui_Scene_Data();
+	}
+
+	if (Show_ImGui_Test == 1)
+	{
+		ImGui::ShowDemoWindow();
+	}
+	
 }
 
 // *************************************************************************
@@ -768,48 +778,39 @@ void GD_ImGui::ImGui_Preferences(void)
 // *************************************************************************
 void GD_ImGui::ImGui_Scene_Data(void)
 {
-	if (!ImGui::Begin("Scene Data", &Show_ImGui_Counters))
+	ImGui::SetNextWindowSize(ImVec2(530, 250), ImGuiCond_FirstUseEver);
+
+	ImGui::OpenPopup("Model Data");
+
+	if (!ImGui::BeginPopupModal("Model Data", &Show_ImGui_Counters, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_AlwaysAutoResize))
 	{
-		ImGui::End();
+		ImGui::EndPopup();
 	}
 	else
 	{
-		int index = App->Cl_Properties->Current_Selected_Object;
-		/*if (StartPos == 0)
-		{
-		ImGui::SetWindowPos(ImVec2(400, 40));
-		ImGui::SetWindowSize(ImVec2(350, 90));
-		StartPos = 1;
-		}*/
-
-		ImGui::Text("Scene Name: = %s", App->Cl_Scene_Data->S_Scene[0]->GDSceneName);
-		ImGui::Text("Level Directory: = %s", App->LevelDirectory);
-		ImGui::Text("Level Name: = %s", App->Cl_Scene_Data->S_Scene[0]->LevelName);
 		
-		ImGui::Spacing();
-		if (ImGui::CollapsingHeader("Counters"))
-		{
-			ImGui::Text("Object Count = %i", App->Cl_Scene_Data->ObjectCount);
-			ImGui::Text("Object_ID_Counter = %i", App->Cl_Scene_Data->Object_ID_Counter);
-			ImGui::Text("Player Location Count = %i", App->Cl_Scene_Data->Player_Location_Count);
-			ImGui::Text("Stock Sound Count = %i", App->Cl_Scene_Data->Stock_Sound_Count);
-			//ImGui::Text("Stock Sound Count = %i", App->Cl_Scene_Data->Stock_Sound_Count);
-		}
+		//ImGui::SetWindowPos(ImVec2(400, 40));
+		//ImGui::SetWindowSize(ImVec2(350, 90));
+		
+	
+
+		ImGui::Text("Model Name: = %s", App->CL_Vm_Model->JustName);
+		ImGui::Text("Model File Name: = %s", App->CL_Vm_Model->FileName);
+		ImGui::Text("Model Path: = %s", App->CL_Vm_Model->Model_FolderPath);
 
 		ImGui::Spacing();
-		if (ImGui::CollapsingHeader("States"))
-		{
-			ImGui::Text("Ogre Running = %i", App->OgreStarted);
-			ImGui::Text("Physics Running = %i", App->Cl19_Ogre->OgreListener->GD_Run_Physics);
-			ImGui::Separator();
-			ImGui::Text("Scene Loaded = %i", App->Cl_Scene_Data->SceneLoaded);
-			ImGui::Text("Scene has Area = %i", App->Cl_Scene_Data->Scene_Has_Area);
-			ImGui::Text("Camera Mode = %i", App->Cl19_Ogre->OgreListener->GD_CameraMode);
-			ImGui::Text("Selection Mode = %i", App->Cl19_Ogre->OgreListener->GD_Selection_Mode);
-			ImGui::Text("Wheel = %i", App->Cl19_Ogre->OgreListener->Wheel);
-		}
 
-		ImGui::End();
+		ImGui::Text("Vertices: = %i", App->CL_Vm_Model->VerticeCount);
+		ImGui::Text("Faces: = %i", App->CL_Vm_Model->FaceCount);
+		ImGui::Text("Normals: = %i", App->CL_Vm_Model->NormalsCount);
+
+		if (ImGui::Button("Close"))
+		{
+			Show_ImGui_Counters = 0;
+		}
+		
+
+		ImGui::EndPopup();
 	}
 
 }

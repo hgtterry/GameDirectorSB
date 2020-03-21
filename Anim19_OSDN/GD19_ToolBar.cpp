@@ -234,8 +234,15 @@ LRESULT CALLBACK GD19_ToolBar::TB1_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 		}
 		if (LOWORD(wParam) == IDC_BTMODELINFO)
 		{
-
-			App->Cl_Dialogs->Start_DataView();
+			if (App->Cl_ImGui->Show_ImGui_Counters == 1)
+			{
+				App->Cl_ImGui->Show_ImGui_Counters = 0;
+			}
+			else
+			{
+				App->Cl_ImGui->Show_ImGui_Counters = 1;
+			}
+			//App->Cl_Dialogs->Start_DataView();
 			return TRUE;
 		}
 

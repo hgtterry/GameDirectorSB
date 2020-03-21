@@ -6,6 +6,8 @@
 VM_Model::VM_Model()
 {
 	VerticeCount = 0;
+	NormalsCount = 0;
+	FaceCount = 0;
 }
 
 
@@ -24,10 +26,10 @@ void VM_Model::Set_Paths(void)
 	// Get Texure path assumed at this point to be where model is
 	int len1 = strlen(FileName);
 	int len2 = strlen(Path_FileName);
-	strcpy(Texture_FolderPath, Path_FileName);
-	Texture_FolderPath[len2 - len1] = 0;
+	strcpy(Model_FolderPath, Path_FileName);
+	Model_FolderPath[len2 - len1] = 0;
 
-	strcpy(Model_FullPath, Texture_FolderPath);
+	//strcpy(Model_FullPath, Model_FolderPath);
 
 	strcpy(JustName, FileName);
 	int Len = strlen(JustName);
