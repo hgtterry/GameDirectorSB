@@ -523,14 +523,14 @@ LRESULT CALLBACK GD19_Properties::GD_Properties_Proc(HWND hDlg, UINT message, WP
 
 				if (App->Cl_Player->ShowDebug == 1)
 				{
-					App->Cl19_Ogre->RenderListener->ShowDebug = 0;
+				//	App->Cl19_Ogre->RenderListener->ShowDebug = 0;
 					App->Cl_Object_Props->ToggleObjectDebug = 0;
 					App->Cl_Player->ShowDebug = 0;
 					App->Cl_Player->mObject->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 				}
 				else
 				{
-					App->Cl19_Ogre->RenderListener->ShowDebug = 1;
+				//	App->Cl19_Ogre->RenderListener->ShowDebug = 1;
 					App->Cl_Object_Props->ToggleObjectDebug = 1;
 					App->Cl_Player->ShowDebug = 1;
 					App->Cl_Player->mObject->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
@@ -547,14 +547,14 @@ LRESULT CALLBACK GD19_Properties::GD_Properties_Proc(HWND hDlg, UINT message, WP
 
 					if (App->Cl_Scene_Data->Cl_Object[Index]->Show_Debug == 1)
 					{
-						App->Cl19_Ogre->RenderListener->ShowDebug = 0;
+						//App->Cl19_Ogre->RenderListener->ShowDebug = 0;
 						App->Cl_Object_Props->ToggleObjectDebug = 0;
 						App->Cl_Scene_Data->Cl_Object[Index]->Show_Debug = 0;
 						App->Cl_Scene_Data->Cl_Object[Index]->bt_body->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 					}
 					else
 					{
-						App->Cl19_Ogre->RenderListener->ShowDebug = 1;
+						//App->Cl19_Ogre->RenderListener->ShowDebug = 1;
 						App->Cl_Object_Props->ToggleObjectDebug = 1;
 						App->Cl_Scene_Data->Cl_Object[Index]->Show_Debug = 1;
 						App->Cl_Scene_Data->Cl_Object[Index]->bt_body->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);

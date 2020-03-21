@@ -297,8 +297,8 @@ bool GD19_Ogre::loadResources(void)
 bool GD19_Ogre::Configure(void)
 {
 
-	Ogre::RenderSystem* rs = mRoot->getRenderSystemByName("Direct3D9 Rendering Subsystem");
-	if (!(rs->getName() == "Direct3D9 Rendering Subsystem"))
+	Ogre::RenderSystem* rs = mRoot->getRenderSystemByName("OpenGL Rendering Subsystem");
+	if (!(rs->getName() == "OpenGL Rendering Subsystem"))
 	{
 		return false; //No RenderSystem found
 	}
@@ -381,15 +381,10 @@ bool GD19_Ogre::createFrameListener(void)
 	String RenderSystemName = mSceneMgr->getDestinationRenderSystem()->getName();
 	
 	RenderListener = NULL;
-	if ("Direct3D9 Rendering Subsystem" == RenderSystemName)
+	if ("OpenGL Rendering Subsystem" == RenderSystemName)
 	{
-		RenderListener = new GD_Bt_Render();
-
+		RenderListener = new VM_Render();
 		mSceneMgr->addRenderQueueListener(RenderListener);
-
-		RenderListener->setDebugMode(RenderListener->getDebugMode()
-			| btIDebugDraw::DBG_MAX_DEBUG_DRAW_MODE);
-		App->Cl_Bullet->dynamicsWorld->setDebugDrawer(RenderListener);
 	}
 
 	return 1;
