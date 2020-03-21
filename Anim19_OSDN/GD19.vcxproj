@@ -131,7 +131,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <AdditionalLibraryDirectories>Common\lib\Release;Common\Bullet\lib;Common\irrKlang\Libs;Common\Genesis</AdditionalLibraryDirectories>
-      <AdditionalDependencies>comctl32.lib;genesis.lib;OgreMain.lib;OgreOverlay.lib;OgreTerrain.lib;BulletDynamics.lib;BulletCollision.lib;LinearMath.lib;irrKlang.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>comctl32.lib;genesis.lib;OgreMain.lib;OgreOverlay.lib;OgreTerrain.lib;opengl32.lib;glu32.lib;BulletDynamics.lib;BulletCollision.lib;LinearMath.lib;irrKlang.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)Vima19.exe</OutputFile>
       <IgnoreSpecificDefaultLibraries>LIBCMT.lib;libcpmt.lib</IgnoreSpecificDefaultLibraries>
       <LinkTimeCodeGeneration>UseFastLinkTimeCodeGeneration</LinkTimeCodeGeneration>
@@ -206,6 +206,7 @@
     <ClInclude Include="VM_Genisis3D.h" />
     <ClInclude Include="VM_Importer.h" />
     <ClInclude Include="VM_Model.h" />
+    <ClInclude Include="VM_Render.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CollisionTools.cpp" />
@@ -266,6 +267,7 @@
     <ClCompile Include="VM_Genisis3D.cpp" />
     <ClCompile Include="VM_Importer.cpp" />
     <ClCompile Include="VM_Model.cpp" />
+    <ClCompile Include="VM_Render.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GD19_OSDN.rc" />

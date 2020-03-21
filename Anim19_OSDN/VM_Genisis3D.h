@@ -49,6 +49,10 @@ public:
 	float AnimationSpeed;
 	float FrameSpeed;
 
+	geActor_Def* ActorDef_Memory;
+	geBody* ActorBody_Memory;
+	geActor * TestActor;
+
 protected:
 
 	bool AddActor(char* FileName);
@@ -76,8 +80,5 @@ protected:
 	void Get_MotionNames(void);
 	void Get_TextureNames(void);
 
-	geActor_Def* ActorDef_Memory;
-	geBody* ActorBody_Memory;
-	geActor * TestActor;
 };
 
