@@ -44,6 +44,11 @@ VM_Genisis3D::VM_Genisis3D()
 	ActorDef_Memory =	nullptr;
 	ActorBody_Memory =	nullptr;
 	TestActor =			nullptr;
+
+	MotionName[0] = 0;
+	m_CurrentPose = 0;
+	AnimationSpeed = 0;
+	FrameSpeed = 0;
 }
 
 
@@ -130,88 +135,89 @@ bool VM_Genisis3D::AddActor(char* FileName)
 // *************************************************************************
 bool VM_Genisis3D::Animate(int Do)
 {
-	//if (Do == 1)
-	//{
-	//	geMotion *Motion = geActor_GetMotionByName(ActorDef_Memory, MotionName);
+	if (Do == 1)
+	{
+		geMotion *Motion = geActor_GetMotionByName(ActorDef_Memory, MotionName);
 
-	//	if (m_CurrentPose>FrameSpeed)
-	//	{
-	//		//if (MotionLoop == 1)
-	//		{
-	//			m_CurrentPose = 0;
-	//		}
-	//		/*else
-	//		{
-	//		App->C_Ogre->RenderListener->PlayActive = 0;
-	//		App->TogglePlayBmp();
-	//		return 1;
-	//		}*/
-	//	}
+		if (m_CurrentPose>FrameSpeed)
+		{
+			//if (MotionLoop == 1)
+			{
+				m_CurrentPose = 0;
+			}
+			/*else
+			{
+			App->C_Ogre->RenderListener->PlayActive = 0;
+			App->TogglePlayBmp();
+			return 1;
+			}*/
+		}
 
-	//	geActor_SetPose(TestActor, Motion, m_CurrentPose, NULL);
+		geActor_SetPose(TestActor, Motion, m_CurrentPose, NULL);
 
-	//	m_CurrentPose += (geFloat)AnimationSpeed;
-	//}
-	//if (Do == 2)
-	//{
-	//	if (m_CurrentPose>FrameSpeed)
-	//	{
-	//		m_CurrentPose = 0;
-	//	}
+		m_CurrentPose += (geFloat)AnimationSpeed;
+	}
+	if (Do == 2)
+	{
+		if (m_CurrentPose>FrameSpeed)
+		{
+			m_CurrentPose = 0;
+		}
 
-	//	geMotion *Motion = geActor_GetMotionByName(ActorDef_Memory, MotionName);
-	//	geActor_SetPose(TestActor, Motion, m_CurrentPose, NULL);
+		geMotion *Motion = geActor_GetMotionByName(ActorDef_Memory, MotionName);
+		geActor_SetPose(TestActor, Motion, m_CurrentPose, NULL);
 
-	//	m_CurrentPose += (geFloat)AnimationSpeed * 5;
-	//}
+		m_CurrentPose += (geFloat)AnimationSpeed * 5;
+	}
 
-	//if (Do == 3)
-	//{
-	//	if (m_CurrentPose>FrameSpeed)
-	//	{
-	//		m_CurrentPose = 0;
-	//	}
+	if (Do == 3)
+	{
+		if (m_CurrentPose>FrameSpeed)
+		{
+			m_CurrentPose = 0;
+		}
 
-	//	geMotion *Motion = geActor_GetMotionByName(ActorDef_Memory, MotionName);
-	//	geActor_SetPose(TestActor, Motion, m_CurrentPose, NULL);
+		geMotion *Motion = geActor_GetMotionByName(ActorDef_Memory, MotionName);
+		geActor_SetPose(TestActor, Motion, m_CurrentPose, NULL);
 
-	//	m_CurrentPose -= (geFloat)AnimationSpeed * 5;
-	//}
+		m_CurrentPose -= (geFloat)AnimationSpeed * 5;
+	}
 
-	//if (Do == 4)
-	//{
-	//	/*if (m_CurrentPose>FrameSpeed)
-	//	{
-	//	m_CurrentPose = 0;
-	//	}*/
+	if (Do == 4)
+	{
+		/*if (m_CurrentPose>FrameSpeed)
+		{
+		m_CurrentPose = 0;
+		}*/
 
-	//	geMotion *Motion = geActor_GetMotionByName(ActorDef_Memory, MotionName);
-	//	geActor_SetPose(TestActor, Motion, m_CurrentPose, NULL);
-	//}
+		geMotion *Motion = geActor_GetMotionByName(ActorDef_Memory, MotionName);
+		geActor_SetPose(TestActor, Motion, m_CurrentPose, NULL);
+	}
 
-	//int Count = 0;
-	//float x;
-	//float y;
-	//float z;
-	//int face1;
-	//int face2;
-	//int face3;
-	//App->CL_Model_Data->VertCount = TestActor->Puppet->BodyInstance->ExportGeometry.SkinVertexCount;
+	int Count = 0;
+	float x;
+	float y;
+	float z;
+	int face1;
+	int face2;
+	int face3;
 
-	//App->CL_Model_Data->vertex_Data.resize(App->CL_Model_Data->VertCount);
+	int mVertCount = TestActor->Puppet->BodyInstance->ExportGeometry.SkinVertexCount;
+	App->CL_Vm_Model->VerticeCount = mVertCount;
+	App->CL_Vm_Model->vertex_Data.resize(mVertCount);
 
-	//while (Count < App->CL_Model_Data->VertCount)
-	//{
-	//	x = TestActor->Puppet->BodyInstance->ExportGeometry.SkinVertexArray[Count].SVPoint.X;
-	//	y = TestActor->Puppet->BodyInstance->ExportGeometry.SkinVertexArray[Count].SVPoint.Y;
-	//	z = TestActor->Puppet->BodyInstance->ExportGeometry.SkinVertexArray[Count].SVPoint.Z;
+	while (Count < mVertCount)
+	{
+		x = TestActor->Puppet->BodyInstance->ExportGeometry.SkinVertexArray[Count].SVPoint.X;
+		y = TestActor->Puppet->BodyInstance->ExportGeometry.SkinVertexArray[Count].SVPoint.Y;
+		z = TestActor->Puppet->BodyInstance->ExportGeometry.SkinVertexArray[Count].SVPoint.Z;
 
-	//	App->CL_Model_Data->vertex_Data[Count].x = x;
-	//	App->CL_Model_Data->vertex_Data[Count].y = y;
-	//	App->CL_Model_Data->vertex_Data[Count].z = z;
+		App->CL_Vm_Model->vertex_Data[Count].x = x;
+		App->CL_Vm_Model->vertex_Data[Count].y = y;
+		App->CL_Vm_Model->vertex_Data[Count].z = z;
 
-	//	Count++;
-	//}
+		Count++;
+	}
 
 	//Count = 0;
 	//App->CL_Model_Data->NormalsCount = TestActor->Puppet->BodyInstance->ExportGeometry.NormalCount;

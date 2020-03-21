@@ -1,4 +1,7 @@
 #pragma once
+
+#include "Model_Data.h"
+
 class VM_Model
 {
 public:
@@ -13,5 +16,9 @@ public:
 	char Texture_FolderPath[1024];	// Just the Path of the model Textures location includes "\" at the end
 	char Texture_FullPath[1024];
 	char Model_FullPath[1024];
+
+	int VerticeCount;
+
+	std::vector<vertex_type> vertex_Data;
 };
 

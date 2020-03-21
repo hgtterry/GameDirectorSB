@@ -52,6 +52,9 @@
 #include "OgreResourceGroupManager.h"
 #include "irrKlang.h"
 
+#include <gl/gl.h>
+#include <gl/glu.h>
+
 #include "Gen_Structures.h"
 
 namespace Enums

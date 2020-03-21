@@ -44,6 +44,11 @@ public:
 
 	void LoadActor(void);
 
+	char MotionName[255];
+	float m_CurrentPose;
+	float AnimationSpeed;
+	float FrameSpeed;
+
 protected:
 
 	bool AddActor(char* FileName);

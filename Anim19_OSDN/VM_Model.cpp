@@ -5,6 +5,7 @@
 
 VM_Model::VM_Model()
 {
+	VerticeCount = 0;
 }
 
 
