@@ -19,6 +19,12 @@ public:
 	int NormalsCount;
 	int FaceCount;
 
+	int TextureCount;
+	int MotionCount;
+	int BoneCount;
+
+	Bone_Type*	S_Bones[200];
+
 	std::vector<vertex_type> vertex_Data;
 	std::vector<normal_type> Normal_Data;
 	std::vector<polygon_type> Face_Data;

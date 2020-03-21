@@ -71,6 +71,9 @@ protected:
 
 	bool GetUVs();
 
+	void SetCounters(void);
+	bool GetDefaultBones(void);
+
 	geActor_Def* ActorDef_Memory;
 	geBody* ActorBody_Memory;
 	geActor * TestActor;

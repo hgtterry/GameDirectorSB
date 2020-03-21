@@ -8,6 +8,10 @@ VM_Model::VM_Model()
 	VerticeCount = 0;
 	NormalsCount = 0;
 	FaceCount = 0;
+
+	TextureCount = 0;
+	MotionCount = 0;
+	BoneCount = 0;
 }
 
 

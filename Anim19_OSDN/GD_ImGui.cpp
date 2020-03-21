@@ -782,7 +782,7 @@ void GD_ImGui::ImGui_Scene_Data(void)
 
 	ImGui::OpenPopup("Model Data");
 
-	if (!ImGui::BeginPopupModal("Model Data", &Show_ImGui_Counters, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_AlwaysAutoResize))
+	if (!ImGui::BeginPopupModal("Model Data", &Show_ImGui_Counters, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize))
 	{
 		ImGui::EndPopup();
 	}
@@ -804,12 +804,34 @@ void GD_ImGui::ImGui_Scene_Data(void)
 		ImGui::Text("Faces: = %i", App->CL_Vm_Model->FaceCount);
 		ImGui::Text("Normals: = %i", App->CL_Vm_Model->NormalsCount);
 
+		ImGui::Spacing();
+
+		ImGui::Text("Textures: = %i", App->CL_Vm_Model->TextureCount);
+		ImGui::Text("Motions: = %i", App->CL_Vm_Model->MotionCount);
+		
+		ImGui::Spacing();
+
+		char Header[255];
+		int BoneCount = App->CL_Vm_Model->BoneCount;
+		sprintf(Header, "%s %i", "Bones", BoneCount);
+
+		if (ImGui::CollapsingHeader(Header))
+		{
+			ImGui::Text("Bones Count = %i", BoneCount);
+			int Count = 0;
+			while (Count < BoneCount)
+			{
+				ImGui::Text("%s", App->CL_Vm_Model->S_Bones[Count]->BoneName);
+				Count++;
+			}
+		}
+
+
 		if (ImGui::Button("Close"))
 		{
 			Show_ImGui_Counters = 0;
 		}
 		
-
 		ImGui::EndPopup();
 	}
 

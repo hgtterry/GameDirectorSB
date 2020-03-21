@@ -64,12 +64,13 @@ void VM_Genisis3D::LoadActor(void)
 
 	AddActor(App->CL_Vm_Model->Path_FileName);
 
-	//SetCounters();
+	SetCounters();
 
 	////	ListMotions();
 
-	//GetDefaultBones();
+	GetDefaultBones();
 
+	App->Say("Loaded4");
 	//LoadActorTextures();
 
 	//GetBoundingBoxModel_Create();
@@ -78,6 +79,67 @@ void VM_Genisis3D::LoadActor(void)
 
 	//App->CL_Model_Data->HasMesh = 1;
 
+}
+
+// *************************************************************************
+// *					GetDefaultBones Terry Bernie	   			  	   *
+// *************************************************************************
+bool VM_Genisis3D::GetDefaultBones(void)
+{
+	const char *BoneName;
+
+	const char *BoneNameQ;
+	int pb;
+	int BoneCount = 0;
+	geXForm3d  A;
+	geXForm3d  B;
+
+	BoneCount = geBody_GetBoneCount(ActorDef_Memory->Body);
+
+	int Count = 0;
+	while (Count<BoneCount)
+	{
+		App->CL_Vm_Model->S_Bones[Count] = new Bone_Type;
+
+		geBody_GetBone(ActorDef_Memory->Body, Count, &BoneNameQ, &A, &pb);
+		geActor_GetBoneTransform(TestActor, BoneNameQ, &B);
+
+		App->CL_Vm_Model->S_Bones[Count]->Parent = pb;
+
+		App->CL_Vm_Model->S_Bones[Count]->Boneverts.x = B.Translation.X;
+		App->CL_Vm_Model->S_Bones[Count]->Boneverts.y = B.Translation.Y;
+		App->CL_Vm_Model->S_Bones[Count]->Boneverts.z = B.Translation.Z;
+
+		App->CL_Vm_Model->S_Bones[Count]->TranslationStart.X = B.Translation.X;
+		App->CL_Vm_Model->S_Bones[Count]->TranslationStart.Y = B.Translation.Y;
+		App->CL_Vm_Model->S_Bones[Count]->TranslationStart.Z = B.Translation.Z;
+
+		BoneName = geStrBlock_GetString(ActorDef_Memory->Body->BoneNames, Count);
+		strcpy(App->CL_Vm_Model->S_Bones[Count]->BoneName, BoneName);
+
+		//App->CL_FileView->Add_BoneName(App->CL_Model_Data->S_Bones[Count]->BoneName, Count);
+		Count++;
+	}
+
+	if (BoneCount > 0)
+	{
+		//App->CL_FileView->Set_FolderActive(App->CL_FileView->HT_BonesFolder);
+	}
+	return 1;
+}
+
+// *************************************************************************
+// *					SetCounters Terry Bernin		  			 	   *
+// *************************************************************************
+void VM_Genisis3D::SetCounters(void)
+{
+	App->CL_Vm_Model->TextureCount = ActorDef_Memory->Body->MaterialCount;
+	App->CL_Vm_Model->MotionCount = ActorDef_Memory->MotionCount;
+	App->CL_Vm_Model->BoneCount = ActorDef_Memory->Body->BoneCount;
+
+	//App->CL_Model_Data->VertCount = ActorDef_Memory->Body->XSkinVertexCount;
+	//	App->S_Counters[0]->PolygonCount =	 ActorDef_Memory->Body->SkinFaces[GE_BODY_HIGHEST_LOD].FaceCount;
+	//	App->S_Counters[0]->UVCount =		 App->S_Counters[0]->PolygonCount*3;
 }
 
 // *************************************************************************
@@ -121,8 +183,6 @@ bool VM_Genisis3D::AddActor(char* FileName)
 
 	Animate(0);
 	GetUVs();
-
-	App->Say("Loaded2");
 
 	//Set_Scene();
 
