@@ -12,6 +12,9 @@ VM_Model::VM_Model()
 	TextureCount = 0;
 	MotionCount = 0;
 	BoneCount = 0;
+
+	Model_Type = 0;
+	Model_Loaded = 0;
 }
 
 

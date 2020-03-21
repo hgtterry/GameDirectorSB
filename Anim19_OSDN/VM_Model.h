@@ -23,6 +23,9 @@ public:
 	int MotionCount;
 	int BoneCount;
 
+	int Model_Type;
+	int Model_Loaded;
+
 	Bone_Type*	S_Bones[200];
 
 	std::vector<vertex_type> vertex_Data;

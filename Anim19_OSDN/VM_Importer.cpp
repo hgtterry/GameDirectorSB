@@ -35,16 +35,16 @@ bool VM_Importer::Genesis3D_Loader(void)
 
 	App->CL_Vm_Genesis3D->LoadActor();
 
-	/*App->Say("Genesis");
-	App->CL_Model_Data->Model_Type = LoadedFile_Actor;
+	
+	App->CL_Vm_Model->Model_Type = LoadedFile_Actor;
 
-	Set_Equity();
+	//Set_Equity();
 
-	App->CL_Model_Data->Model_Loaded = 1;
+	App->CL_Vm_Model->Model_Loaded = 1;
 
-	App->Cl_Grid->Zoom();
+	//App->Cl_Grid->Zoom();
 
-	App->Cl_Ogre->Loading_Text("Loading Finished", 0);*/
+	//App->Cl_Ogre->Loading_Text("Loading Finished", 0);*/
 
 	return 1;
 }
