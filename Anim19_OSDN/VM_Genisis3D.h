@@ -73,6 +73,8 @@ protected:
 
 	void SetCounters(void);
 	bool GetDefaultBones(void);
+	void Get_MotionNames(void);
+	void Get_TextureNames(void);
 
 	geActor_Def* ActorDef_Memory;
 	geBody* ActorBody_Memory;

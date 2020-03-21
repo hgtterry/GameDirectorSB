@@ -30,5 +30,8 @@ public:
 	std::vector<polygon_type> Face_Data;
 	std::vector<int> MatIndex_Data;
 	std::vector<mapcoord_type> MapCord_Data;
+	std::vector<Char_type> MotionNames_Data;
+	std::vector<Char_type> TextureNames_Data;
+
 };
 

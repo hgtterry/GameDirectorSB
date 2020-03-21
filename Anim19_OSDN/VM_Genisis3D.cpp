@@ -70,15 +70,57 @@ void VM_Genisis3D::LoadActor(void)
 
 	GetDefaultBones();
 
+	Get_MotionNames();
+	Get_TextureNames();
+
 	App->Say("Loaded4");
 	//LoadActorTextures();
 
 	//GetBoundingBoxModel_Create();
 
-	//FileView_AddMotions();
-
 	//App->CL_Model_Data->HasMesh = 1;
 
+}
+
+// *************************************************************************
+// *						Get_TextureNames Terry Bernie			 	   *
+// *************************************************************************
+void VM_Genisis3D::Get_TextureNames(void)
+{
+	const char *MaterialName;
+	int Count = 0;
+	int MatIndex = 0;
+
+	int mTexturesCount = App->CL_Vm_Model->TextureCount;
+
+	App->CL_Vm_Model->TextureNames_Data.resize(mTexturesCount);
+
+	while (Count < mTexturesCount)
+	{
+		MaterialName = geStrBlock_GetString(ActorDef_Memory->Body->MaterialNames, Count);
+		strcpy(App->CL_Vm_Model->TextureNames_Data[Count].Name, MaterialName);
+		Count++;
+	}	
+}
+
+// *************************************************************************
+// *						Get_MotionNames Terry Bernie			 	   *
+// *************************************************************************
+void VM_Genisis3D::Get_MotionNames(void)
+{
+	const char *TempMotionName;
+	int Count = 0;
+	
+	int mMotionsCount = App->CL_Vm_Model->MotionCount;
+
+	App->CL_Vm_Model->MotionNames_Data.resize(mMotionsCount);
+
+	while (Count < mMotionsCount)
+	{
+		TempMotionName = geActor_GetMotionName(ActorDef_Memory, Count);
+		strcpy(App->CL_Vm_Model->MotionNames_Data[Count].Name, TempMotionName);
+		Count++;
+	}
 }
 
 // *************************************************************************

@@ -807,17 +807,47 @@ void GD_ImGui::ImGui_Scene_Data(void)
 		ImGui::Spacing();
 
 		ImGui::Text("Textures: = %i", App->CL_Vm_Model->TextureCount);
-		ImGui::Text("Motions: = %i", App->CL_Vm_Model->MotionCount);
-		
+
+		// ----------------------------- Textures
+		char Header[255];
+		int TextureCount = App->CL_Vm_Model->TextureCount;
+
+		sprintf(Header, "%s %i", "Textures", TextureCount);
+
+		if (ImGui::CollapsingHeader(Header))
+		{
+			int Count = 0;
+			while (Count < TextureCount)
+			{
+				ImGui::Text("%s", App->CL_Vm_Model->TextureNames_Data[Count].Name);
+				Count++;
+			}
+		}
+
+		ImGui::Spacing();
+	
+		// ----------------------------- Motions
+		int MotionCount = App->CL_Vm_Model->MotionCount;
+		sprintf(Header, "%s %i", "Motions", MotionCount);
+
+		if (ImGui::CollapsingHeader(Header))
+		{
+			int Count = 0;
+			while (Count < MotionCount)
+			{
+				ImGui::Text("%s", App->CL_Vm_Model->MotionNames_Data[Count].Name);
+				Count++;
+			}
+		}
+
 		ImGui::Spacing();
 
-		char Header[255];
+		// ----------------------------- Bones
 		int BoneCount = App->CL_Vm_Model->BoneCount;
 		sprintf(Header, "%s %i", "Bones", BoneCount);
 
 		if (ImGui::CollapsingHeader(Header))
 		{
-			ImGui::Text("Bones Count = %i", BoneCount);
 			int Count = 0;
 			while (Count < BoneCount)
 			{
