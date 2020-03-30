@@ -315,7 +315,7 @@ bool GD19_OgreListener::frameEnded(const FrameEvent& evt)
 }
 
 // *************************************************************************
-// *				moveCamera   Terry Bernie							   *
+// *				moveCamera_World   Terry Bernie						   *
 // *************************************************************************
 void GD19_OgreListener::MoveCamera_World(void)
 {
@@ -326,7 +326,7 @@ void GD19_OgreListener::MoveCamera_World(void)
 }
 
 // *************************************************************************
-// *				Capture_Mouse_Free   Terry Bernie						   *
+// *				Capture_Mouse_Free_World   Terry Bernie				   *
 // *************************************************************************
 bool GD19_OgreListener::Capture_Mouse_Free_World(void)
 {
@@ -384,7 +384,7 @@ bool GD19_OgreListener::Capture_Mouse_Free_World(void)
 }
 
 // *************************************************************************
-// *				Capture_LeftMouse   Terry Bernie					   *
+// *				Capture_LeftMouse_World   Terry Bernie				   *
 // *************************************************************************
 bool GD19_OgreListener::Capture_LeftMouse_World(void)
 {
@@ -460,7 +460,7 @@ bool GD19_OgreListener::Capture_LeftMouse_World(void)
 }
 
 // *************************************************************************
-// *				Capture_Mouse_FirstPerson   Terry Bernie			   *
+// *				Capture_Mouse_FirstPerson_World   Terry Bernie		   *
 // *************************************************************************
 bool GD19_OgreListener::Capture_Mouse_FirstPerson_World(void)
 {
@@ -540,7 +540,7 @@ bool GD19_OgreListener::Capture_Mouse_FirstPerson_World(void)
 }
 
 // *************************************************************************
-// *				Capture_RightMouse   Terry Bernie					   *
+// *				Capture_RightMouse_World   Terry Bernie				   *
 // *************************************************************************
 bool GD19_OgreListener::Capture_RightMouse_World(void)
 {
@@ -629,7 +629,7 @@ bool GD19_OgreListener::Capture_RightMouse_World(void)
 }
 
 // *************************************************************************
-// *					SelectEntity   Terry Bernie						   *
+// *					SelectEntity_World   Terry Bernie				   *
 // *************************************************************************
 bool GD19_OgreListener::SelectEntity_World(void)
 {
