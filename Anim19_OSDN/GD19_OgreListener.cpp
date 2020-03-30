@@ -80,6 +80,8 @@ GD19_OgreListener::GD19_OgreListener(void)
 	mCollisionTools = new MOC::CollisionTools(App->Cl19_Ogre->mSceneMgr);
 	mCollisionTools->setHeightAdjust(3.5f);
 
+	CameraMode = 0;
+
 }
 
 GD19_OgreListener::~GD19_OgreListener(void)
@@ -192,20 +194,7 @@ bool GD19_OgreListener::frameStarted(const FrameEvent& evt)
 // *************************************************************************
 bool GD19_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 {
-	//Real ttW = 1000.0 / 65 - 1000.0 * evt.timeSinceLastFrame;
-	//if (ttW > 0) Sleep(ttW);
-
-	if (GD_MeshViewer_Running == 1)
-	{
-		//if (Flags[0]->MeshViewer_SpinObject == 1)
-		{
-			Ogre::Radian Rotation_Speed;
-			Rotation_Speed = GD_SpinRate / (float)57.3;
-			App->Cl_Mesh_Viewer->MvNode->yaw(Rotation_Speed);
-		}
-		return 1;
-	}
-
+	
 	float start = evt.timeSinceLastFrame;
 
 	App->Cl19_Ogre->m_imgui.render();
@@ -294,6 +283,14 @@ bool GD19_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 		App->Cl_Collision->MoveObject(evt.timeSinceLastFrame);
 	}
 	return 1;
+}
+
+// *************************************************************************
+// *							WorldMode   							   *
+// *************************************************************************
+void GD19_OgreListener::worldMode(float DeltaTime)
+{
+
 }
 
 // *************************************************************************

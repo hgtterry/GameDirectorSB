@@ -43,6 +43,8 @@ public:
 	bool frameEnded(const FrameEvent& evt);
 	bool frameRenderingQueued(const FrameEvent& evt);
 
+	void worldMode(float DeltaTime);
+
 	void MoveCamera(void);
 	bool Capture_Mouse_Free(void);
 	bool Capture_RightMouse(void);
@@ -108,6 +110,8 @@ public:
 	MOC::CollisionTools* mCollisionTools;
 
 	btScalar   _desiredVelocity;
+
+	bool CameraMode;
 
 };
 

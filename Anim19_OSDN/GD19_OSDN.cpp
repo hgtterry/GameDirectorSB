@@ -210,6 +210,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return 1;
 		}
 
+		// Camera Mode
+		case ID_MODE_WORLD:
+		{
+			App->Cl19_Ogre->OgreListener->CameraMode = 0;
+			return 1;
+		}
+
+		case ID_MODE_MODEL:
+		{
+
+			App->Cl19_Ogre->OgreListener->CameraMode = 1;
+			return 1;
+		}
+
+		// -----------------------------------------------------
 		case ID_TEST_GENERAL:
 		{
 			if (App->Cl_FileView_V2->OpenObjects == 1)

@@ -45,7 +45,7 @@ VM_Render::VM_Render(void)
 	ShowTextured = 1;
 	ShowMesh = 0;
 	ShowBones = 0;
-	ShowPoints = 0;
+	ShowPoints = 1;
 	ShowNormals = 0;
 	ShowBoundingBox = 0;
 	PlayActive = 0;
@@ -826,8 +826,6 @@ bool VM_Render::RenderMeshOnly(void)
 bool VM_Render::RenderPoints(void)
 {
 	int Count=0;
-	int MatIndex=0;
-
 	glPointSize(5);
 
 	glColor3f(1.0f, 1.0f, 0.0f);
