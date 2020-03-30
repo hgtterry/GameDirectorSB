@@ -200,7 +200,7 @@ bool GD19_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 	}
 	else
 	{
-
+		ModelMode(evt.timeSinceLastFrame);
 	}
 
 	return 1;
@@ -292,12 +292,107 @@ void GD19_OgreListener::WorldMode(float DeltaTime)
 		Capture_RightMouse_World();
 	}
 
-	MoveCamera_World();
+	MoveCamera();
 
 	if (App->Cl_Collision->DoMove == 1)
 	{
 		App->Cl_Collision->MoveObject(DeltaTime);
 	}
+}
+
+// *************************************************************************
+// *							ModelMode   							   *
+// *************************************************************************
+void GD19_OgreListener::ModelMode(float DeltaTime)
+{
+	mRotX = 0;
+	mRotY = 0;
+	mTranslateVector = Ogre::Vector3::ZERO;
+
+	mMoveScale = mMoveSensitivity  * DeltaTime;
+
+	if (GetAsyncKeyState(88) < 0)
+	{
+		//SelectEntity();
+	}
+
+	if (GetAsyncKeyState(69) < 0) // Q key Down in Fly Mode
+	{
+		Ogre::Real Rate;
+		Rate = (mMoveSensitivity / 1000) * 2;    //0.1;//FlyRate;
+
+		Ogre::Vector3 OldPos;
+		OldPos = mCam->getPosition();
+
+		OldPos.y += Rate;
+		mCam->setPosition(OldPos);
+	}
+	//------------------------------------------------
+	if (GetAsyncKeyState(81) < 0) // E key Up in Fly Mode
+	{
+		Ogre::Real Rate;
+		Rate = (mMoveSensitivity / 1000) * 2;// 0.1;//FlyRate;
+
+		Ogre::Vector3 OldPos;
+		OldPos = mCam->getPosition();
+
+		OldPos.y -= Rate;
+		mCam->setPosition(OldPos);
+	}
+	//------------------------------------------------
+	if (Wheel < 0) // Mouse Wheel Forward
+	{
+		mTranslateVector.z = -mMoveScale * 30;
+	}
+	if (GetAsyncKeyState(87) < 0) // W Key
+	{
+		mTranslateVector.z = -mMoveScale;
+	}
+	////------------------------------------------------
+	//// back
+	if (Wheel > 0) // Mouse Wheel Back
+	{
+		mTranslateVector.z = mMoveScale * 30;
+	}
+	if (GetAsyncKeyState(83) < 0) // S Key	
+	{
+		mTranslateVector.z = mMoveScale;
+	}
+	//------------------------------------------------
+	// Right
+	if (GetAsyncKeyState(65) < 0)
+	{
+		mTranslateVector.x = mMoveScale;
+	}
+	// Left
+	if (GetAsyncKeyState(68) < 0)
+	{
+		mTranslateVector.x = -mMoveScale;
+	}
+
+	if (GetAsyncKeyState(VK_ESCAPE) < 0) // Back to full Screen;
+	{
+		//App->Cl_Ogre->ExitFullScreen();
+	}
+
+	if (GetAsyncKeyState(VK_END) < 0) // Back to full Screen;
+	{
+		//SelectEntity();
+	}
+
+	// Left Mouse
+	if (Pl_LeftMouseDown == 1 && Pl_RightMouseDown == 0)
+	{
+//		Capture_LeftMouse();
+	}
+
+	// Right Mouse
+	if (Pl_LeftMouseDown == 0 && Pl_RightMouseDown == 1)
+	{
+//		Capture_RightMouse();
+	}
+
+	MoveCamera();
 }
 
 // *************************************************************************
@@ -315,9 +410,9 @@ bool GD19_OgreListener::frameEnded(const FrameEvent& evt)
 }
 
 // *************************************************************************
-// *				moveCamera_World   Terry Bernie						   *
+// *				moveCamera   Terry Bernie							   *
 // *************************************************************************
-void GD19_OgreListener::MoveCamera_World(void)
+void GD19_OgreListener::MoveCamera(void)
 {
 	mCam->yaw(mRotX);
 	mCam->pitch(mRotY);

@@ -44,8 +44,10 @@ public:
 	bool frameRenderingQueued(const FrameEvent& evt);
 
 	void WorldMode(float DeltaTime);
+	void ModelMode(float DeltaTime);
 
-	void MoveCamera_World(void);
+	void MoveCamera(void);
+
 	bool Capture_Mouse_Free_World(void);
 	bool Capture_RightMouse_World(void);
 	bool Capture_Mouse_FirstPerson_World(void);
