@@ -45,13 +45,13 @@ public:
 
 	void WorldMode(float DeltaTime);
 
-	void MoveCamera(void);
-	bool Capture_Mouse_Free(void);
-	bool Capture_RightMouse(void);
-	bool Capture_Mouse_FirstPerson(void);
-	bool Capture_LeftMouse(void);
+	void MoveCamera_World(void);
+	bool Capture_Mouse_Free_World(void);
+	bool Capture_RightMouse_World(void);
+	bool Capture_Mouse_FirstPerson_World(void);
+	bool Capture_LeftMouse_World(void);
 
-	bool SelectEntity(void);
+	bool SelectEntity_World(void);
 
 	Ogre::Camera* mCam;
 	Ogre::Camera* Pl_mDummyCamera;

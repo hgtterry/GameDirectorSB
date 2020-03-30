@@ -207,7 +207,7 @@ bool GD19_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 }
 
 // *************************************************************************
-// *							WorldMode_Do   							   *
+// *							WorldMode   							   *
 // *************************************************************************
 void GD19_OgreListener::WorldMode(float DeltaTime)
 {
@@ -264,16 +264,16 @@ void GD19_OgreListener::WorldMode(float DeltaTime)
 	{
 		if (GD_CameraMode == Enums::CamFirst)
 		{
-			Capture_Mouse_FirstPerson();
+			Capture_Mouse_FirstPerson_World();
 			SetCursorPos(500, 500);
 		}
 		else if (GD_CameraMode == Enums::CamNone)
 		{
-			Capture_LeftMouse();
+			Capture_LeftMouse_World();
 		}
 		else
 		{
-			Capture_Mouse_Free();
+			Capture_Mouse_Free_World();
 		}
 	}
 
@@ -289,10 +289,10 @@ void GD19_OgreListener::WorldMode(float DeltaTime)
 	// Right Mouse
 	if (Pl_LeftMouseDown == 0 && Pl_RightMouseDown == 1)
 	{
-		Capture_RightMouse();
+		Capture_RightMouse_World();
 	}
 
-	MoveCamera();
+	MoveCamera_World();
 
 	if (App->Cl_Collision->DoMove == 1)
 	{
@@ -317,7 +317,7 @@ bool GD19_OgreListener::frameEnded(const FrameEvent& evt)
 // *************************************************************************
 // *				moveCamera   Terry Bernie							   *
 // *************************************************************************
-void GD19_OgreListener::MoveCamera(void)
+void GD19_OgreListener::MoveCamera_World(void)
 {
 	mCam->yaw(mRotX);
 	mCam->pitch(mRotY);
@@ -328,7 +328,7 @@ void GD19_OgreListener::MoveCamera(void)
 // *************************************************************************
 // *				Capture_Mouse_Free   Terry Bernie						   *
 // *************************************************************************
-bool GD19_OgreListener::Capture_Mouse_Free(void)
+bool GD19_OgreListener::Capture_Mouse_Free_World(void)
 {
 	if (!ImGui::GetIO().WantCaptureMouse)
 	{
@@ -386,7 +386,7 @@ bool GD19_OgreListener::Capture_Mouse_Free(void)
 // *************************************************************************
 // *				Capture_LeftMouse   Terry Bernie					   *
 // *************************************************************************
-bool GD19_OgreListener::Capture_LeftMouse(void)
+bool GD19_OgreListener::Capture_LeftMouse_World(void)
 {
 	if (!ImGui::GetIO().WantCaptureMouse)
 	{
@@ -462,7 +462,7 @@ bool GD19_OgreListener::Capture_LeftMouse(void)
 // *************************************************************************
 // *				Capture_Mouse_FirstPerson   Terry Bernie			   *
 // *************************************************************************
-bool GD19_OgreListener::Capture_Mouse_FirstPerson(void)
+bool GD19_OgreListener::Capture_Mouse_FirstPerson_World(void)
 {
 
 	/*if (Stop_PhysX_Render==0)
@@ -542,7 +542,7 @@ bool GD19_OgreListener::Capture_Mouse_FirstPerson(void)
 // *************************************************************************
 // *				Capture_RightMouse   Terry Bernie					   *
 // *************************************************************************
-bool GD19_OgreListener::Capture_RightMouse(void)
+bool GD19_OgreListener::Capture_RightMouse_World(void)
 {
 	/*if (App->CL10_Dimensions->Mouse_Move_Mode == Enums::Edit_Mouse_Active)
 	{
@@ -631,7 +631,7 @@ bool GD19_OgreListener::Capture_RightMouse(void)
 // *************************************************************************
 // *					SelectEntity   Terry Bernie						   *
 // *************************************************************************
-bool GD19_OgreListener::SelectEntity(void)
+bool GD19_OgreListener::SelectEntity_World(void)
 {
 	Ogre::SceneNode *mNode;
 	Vector3 oldPos = App->Cl19_Ogre->mCamera->getPosition();

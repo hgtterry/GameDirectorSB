@@ -43,7 +43,7 @@ void GD_Keyboard::Keyboard_Monitor(float deltaTime)
 		}
 		else
 		{
-			App->Cl19_Ogre->OgreListener->SelectEntity();
+			App->Cl19_Ogre->OgreListener->SelectEntity_World();
 		}
 	}
 
