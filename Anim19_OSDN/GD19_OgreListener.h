@@ -43,7 +43,7 @@ public:
 	bool frameEnded(const FrameEvent& evt);
 	bool frameRenderingQueued(const FrameEvent& evt);
 
-	void worldMode(float DeltaTime);
+	void WorldMode(float DeltaTime);
 
 	void MoveCamera(void);
 	bool Capture_Mouse_Free(void);

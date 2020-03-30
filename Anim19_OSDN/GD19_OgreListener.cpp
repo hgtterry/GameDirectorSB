@@ -194,8 +194,24 @@ bool GD19_OgreListener::frameStarted(const FrameEvent& evt)
 // *************************************************************************
 bool GD19_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 {
-	
-	float start = evt.timeSinceLastFrame;
+	if (CameraMode == 0)
+	{
+		WorldMode(evt.timeSinceLastFrame);
+	}
+	else
+	{
+
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *							WorldMode_Do   							   *
+// *************************************************************************
+void GD19_OgreListener::WorldMode(float DeltaTime)
+{
+	float start = DeltaTime;
 
 	App->Cl19_Ogre->m_imgui.render();
 
@@ -203,7 +219,7 @@ bool GD19_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 	mRotY = 0;
 	mTranslateVector = Ogre::Vector3::ZERO;
 
-	mMoveScale = mMoveSensitivity  * evt.timeSinceLastFrame;
+	mMoveScale = mMoveSensitivity  * DeltaTime;
 
 	if (GD_CameraMode == Enums::CamFirst)
 	{
@@ -234,15 +250,15 @@ bool GD19_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 			Pos.y = Pos.y + App->Cl_Player->PlayerHeight;
 		}
 
-			App->Cl19_Ogre->mCamera->setPosition(Pos);
-			App->Cl19_Ogre->mCamera->setOrientation(Ogre::Quaternion(1, 0, 0, 0));
-			App->Cl19_Ogre->mCamera->yaw(mYaw);
-			//App->Cl19_Ogre->mCamera->pitch(mmPitch);
-			App->Cl19_Ogre->mCamera->yaw(Ogre::Degree(180));
+		App->Cl19_Ogre->mCamera->setPosition(Pos);
+		App->Cl19_Ogre->mCamera->setOrientation(Ogre::Quaternion(1, 0, 0, 0));
+		App->Cl19_Ogre->mCamera->yaw(mYaw);
+		//App->Cl19_Ogre->mCamera->pitch(mmPitch);
+		App->Cl19_Ogre->mCamera->yaw(Ogre::Degree(180));
 	}
 
-	App->Cl_Keyboard->Keyboard_Monitor(evt.timeSinceLastFrame);
-	
+	App->Cl_Keyboard->Keyboard_Monitor(DeltaTime);
+
 	// Left Mouse
 	if (Pl_LeftMouseDown == 1 && Pl_RightMouseDown == 0)
 	{
@@ -280,17 +296,8 @@ bool GD19_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 
 	if (App->Cl_Collision->DoMove == 1)
 	{
-		App->Cl_Collision->MoveObject(evt.timeSinceLastFrame);
+		App->Cl_Collision->MoveObject(DeltaTime);
 	}
-	return 1;
-}
-
-// *************************************************************************
-// *							WorldMode   							   *
-// *************************************************************************
-void GD19_OgreListener::worldMode(float DeltaTime)
-{
-
 }
 
 // *************************************************************************
