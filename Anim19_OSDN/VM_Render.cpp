@@ -45,7 +45,7 @@ VM_Render::VM_Render(void)
 	ShowTextured = 1;
 	ShowMesh = 0;
 	ShowBones = 0;
-	ShowPoints = 1;
+	ShowPoints = 0;
 	ShowNormals = 0;
 	ShowBoundingBox = 0;
 	PlayActive = 0;
@@ -756,7 +756,7 @@ bool VM_Render::RenderByTexture()
 		//MatIndex = App->CL_Genesis_Import->ActorDef_Memory->Body->SkinFaces[GE_BODY_HIGHEST_LOD].FaceArray[Count].MaterialIndex;
 		MatIndex = App->CL_Vm_Model->MatIndex_Data[Count];
 
-		//glBindTexture(GL_TEXTURE_2D, App->CL_Textures->g_Texture[MatIndex]);
+		glBindTexture(GL_TEXTURE_2D, App->CL_Vm_Textures->g_Texture[MatIndex]);
 
 		glBegin(GL_POLYGON);
 
