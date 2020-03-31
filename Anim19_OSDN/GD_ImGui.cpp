@@ -857,6 +857,20 @@ void GD_ImGui::ImGui_Scene_Data(void)
 			}
 		}
 
+		// ----------------------------- Groups
+		int GroupCount = App->CL_Vm_Model->GroupCount;
+		sprintf(Header, "%s %i", "Groupd", GroupCount);
+
+		if (ImGui::CollapsingHeader(Header))
+		{
+			/*int Count = 0;
+			while (Count < BoneCount)
+			{
+				ImGui::Text("%s", App->CL_Vm_Model->S_Bones[Count]->BoneName);
+				Count++;
+			}*/
+		}
+
 
 		if (ImGui::Button("Close"))
 		{
