@@ -31,6 +31,142 @@ VM_Model::~VM_Model()
 }
 
 // *************************************************************************
+// *					CLear_ModelData Terry Bernie					   *
+// *************************************************************************
+void VM_Model::Clear_ModelData(void)
+{
+	int Count = 0;
+
+	//--------------------- Stop Motion Play if Active
+	/*App->Cl_Ogre->RenderListener->PlayActive = 0;
+	App->Cl_Ogre->OgreListener->Animate_Ogre = 0;
+	App->Cl_Ogre->RenderListener->Show_Crosshair = 0;*/
+
+	Model_Loaded = 0;
+
+	Model_Type = LoadedFile_None;
+
+	//--------------------- Clear Local data
+	vertex_Data.clear();
+	vertex_Data.resize(0);
+	//vertex_Data.swap(vertex_Data);
+
+	Face_Data.resize(0);
+	Normal_Data.resize(0);
+	MapCord_Data.resize(0);
+	MatIndex_Data.resize(0);
+
+	//--------------------- Clear Group data
+	while (Count < GroupCount)
+	{
+		if (S_MeshGroup[Count] != NULL)
+		{
+			S_MeshGroup[Count]->vertex_Data.clear();
+			S_MeshGroup[Count]->vertex_Data.resize(0);
+
+
+			S_MeshGroup[Count]->Face_Data.resize(0);
+
+			S_MeshGroup[Count]->Normal_Data.resize(0);
+			S_MeshGroup[Count]->MapCord_Data.resize(0);
+
+			if (S_MeshGroup[Count]->Base_Bitmap)
+			{
+				DeleteObject(S_MeshGroup[Count]->Base_Bitmap);
+			}
+
+			delete S_MeshGroup[Count];
+			S_MeshGroup[Count] = NULL;
+		}
+		Count++;
+	}
+
+	//--------------------- Clear Bone data
+	Count = 0;
+	while (Count < BoneCount)
+	{
+		if (S_Bones[Count] != NULL)
+		{
+			delete S_Bones[Count];
+			S_Bones[Count] = NULL;
+		}
+		Count++;
+	}
+
+	//--------------------- Clear Local Texture structure
+	if (S_Texture[0] != NULL)
+	{
+		delete S_Texture[0];
+		S_Texture[0] = NULL;
+
+		S_Texture[0] = new Texture_Type;
+		S_Texture[0]->TextureCount = 1;
+		S_Texture[0]->UsedTextureCount = 0;
+		strcpy(S_Texture[0]->TextureName[0].Name, "Test.bmp");
+	}
+
+	//--------------------- Clear Bounding box data
+	/*if (S_BoundingBox[0] != NULL)
+	{
+		delete S_BoundingBox[0];
+		S_BoundingBox[0] = NULL;
+	}*/
+
+	//--------------------- Clear Ogre Model if one was loaded
+	/*if (App->Cl_Ogre->OgreModel_Ent && App->Cl_Ogre->OgreModel_Node)
+	{
+		App->Cl_Ogre->OgreModel_Node->detachAllObjects();
+		App->Cl_Ogre->mSceneMgr->destroySceneNode(App->Cl_Ogre->OgreModel_Node);
+		App->Cl_Ogre->mSceneMgr->destroyEntity(App->Cl_Ogre->OgreModel_Ent);
+		App->Cl_Ogre->OgreModel_Ent = NULL;
+		App->Cl_Ogre->OgreModel_Node = NULL;
+		App->CL_Model_Data->ItsAnOgreModel = 0;
+	}*/
+
+	//--------------------- Reset Class Data
+	Reset_Counters();
+	App->Cl_Grid->Reset_View();
+
+	//--------------------- Reset Equity
+	//App->CL_FileView->HideRightPanes(1);
+
+	//SetDlgItemText(App->ModelGlobal_Hwnd, IDC_STMODELNAME, (LPCTSTR)"No Model Loaded");
+
+
+	// ----------------- Motions Panel
+	/*SetDlgItemText(App->CentralView_Hwnd, IDC_STMOTIONNAME, "Model has no Motions");
+	App->CL_Motions->MotionsDialog_Active = 0;
+	ShowWindow(App->CentralView_Hwnd, 0);
+	CheckMenuItem(App->mMenu, ID_WINDOW_SHOWMOTIONSPANEL, MF_BYCOMMAND | MF_UNCHECKED);*/
+}
+
+// *************************************************************************
+// *						Reset_Counters Terry						   *
+// *************************************************************************
+void VM_Model::Reset_Counters(void)
+{
+	VerticeCount = 0;
+	NormalsCount = 0;
+	FaceCount = 0;
+
+	TextureCount = 0;
+	MotionCount = 0;
+	BoneCount = 0;
+
+	GroupCount = 0;
+
+	Model_Type = 0;
+	Model_Loaded = 0;
+
+	strcpy(FileName, "No Model Loaded");
+	strcpy(Path_FileName, "No Model Loaded");
+	strcpy(JustName, "No Model Loaded");
+	strcpy(Texture_FolderPath, "No Model Loaded");
+	strcpy(Model_FolderPath, "No Model Loaded");
+
+}
+
+// *************************************************************************
 // *						Set_Paths Terry Bernie						   *
 // *************************************************************************
 void VM_Model::Set_Paths(void)

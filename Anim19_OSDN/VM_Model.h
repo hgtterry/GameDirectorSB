@@ -10,6 +10,8 @@ public:
 
 	void Set_Paths(void);
 	void Create_S_MeshGroup(int Index);
+	void Clear_ModelData(void);
+	void Reset_Counters(void);
 
 	char FileName[255];				// Just the File name of the model NO Path includes the extension
 	char Path_FileName[1024];		// Full Path to Model including file name and extension

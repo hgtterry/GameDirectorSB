@@ -210,6 +210,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return 1;
 		}
 
+		case ID_IMPORT_CLEAR:
+		{
+			App->CL_Vm_Model->Clear_ModelData();
+			return 1;
+		}
+
 		// Camera Mode
 		case ID_MODE_WORLD:
 		{
@@ -230,6 +236,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return 1;
 		}
 
+		// -----------------------------------------------------
 		// -----------------------------------------------------
 		case ID_TEST_GENERAL:
 		{
