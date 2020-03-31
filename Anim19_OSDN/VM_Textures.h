@@ -36,5 +36,9 @@ public:
 	int Genesis_WriteTGA(const char * pszFile, geBitmap *pBitmap);
 	int Genesis_WriteToBmp(geBitmap *bmp, char *filename);
 	bool Soil_Load_Texture(UINT textureArray[], LPSTR strFileName, int textureID);
+
+protected:
+
+	bool Texture_To_Bmp(char* File);
 };
 

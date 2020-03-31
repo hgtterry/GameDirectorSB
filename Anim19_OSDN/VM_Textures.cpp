@@ -2,6 +2,8 @@
 #include "GD19_App.h"
 #include "VM_Textures.h"
 
+#include "SOIL.h"
+
 #include "il.h"
 #include "ilu.h"
 #include "ilut.h"
@@ -343,5 +345,15 @@ bool VM_Textures::Soil_Load_Texture(UINT textureArray[], LPSTR strFileName, int 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 
+	return 1;
+}
+
+// *************************************************************************
+// *							Texture_To_Bmp				  		 	   *
+// *************************************************************************
+bool VM_Textures::Texture_To_Bmp(char* File)
+{
+	ilLoadImage(File);
+	ilSaveImage("Etemp.bmp");
 	return 1;
 }
