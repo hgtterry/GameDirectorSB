@@ -785,20 +785,20 @@ bool VM_Genisis3D::LoadActorTextures(void)
 		{
 			if (App->CL_Vm_Model->S_TextureInfo[Count]->GEHasAlpha == 1)
 			{
-				//App->CL_Textures->Genesis_WriteTGA(TempTextureFile_TGA, App->CL_Vm_Model->S_TextureInfo[Count]->Bitmap);
+				App->CL_Vm_Textures->Genesis_WriteTGA(TempTextureFile_TGA, App->CL_Vm_Model->S_TextureInfo[Count]->Bitmap);
 				//App->CL_Textures->Soil_Load_Texture(App->CL_Textures->g_Texture, TempTextureFile_TGA, MatIndex);
-				//TgaLoaded = 1;// Signal bmp Loaded for delete
+				TgaLoaded = 1;// Signal bmp Loaded for delete
 			}
 			else
 			{
 				if (App->CL_Vm_Model->S_TextureInfo[Count]->HasGEBitmap == 1)
 				{
-					//App->CL_Textures->Genesis_WriteToBmp(App->CL_Vm_Model->S_TextureInfo[Count]->Bitmap, TempTextureFile_BMP);
+					App->CL_Vm_Textures->Genesis_WriteToBmp(App->CL_Vm_Model->S_TextureInfo[Count]->Bitmap, TempTextureFile_BMP);
 
 					//App->CL_Textures->TexureToWinPreviewFullPath(Count, TempTextureFile_BMP);
 
 					//App->CL_Textures->Soil_Load_Texture(App->CL_Textures->g_Texture, TempTextureFile_BMP, MatIndex);
-					//BmpLoaded = 1;// Signal bmp Loaded for delete
+					BmpLoaded = 1;// Signal bmp Loaded for delete
 				}
 			}
 		}

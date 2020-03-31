@@ -122,7 +122,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\..\GD19_OSDN\GD19_OSDN;Common\Genesis\include2;Common\Genesis\Gen2;Common\Genesis\Gen;Common\Bullet\Source;Common\include\OGRE;Common\include\OGRE\Terrain;Common\include\OIS;Common\include\OGRE\Overlay;Common\spdlog;Common\irrKlang\Headers;Common\imGui\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\GD19_OSDN\GD19_OSDN;Common\Genesis\include2;Common\Genesis\Gen2;Common\Genesis\Gen;Common\Bullet\Source;Common\include\OGRE;Common\include\OGRE\Terrain;Common\include\OIS;Common\include\OGRE\Overlay;Common\spdlog;Common\irrKlang\Headers;Common\imGui\include;Common\Devil\include\IL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <EnablePREfast>false</EnablePREfast>
     </ClCompile>
     <Link>
