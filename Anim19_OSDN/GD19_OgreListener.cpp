@@ -311,6 +311,8 @@ void GD19_OgreListener::ModelMode(float DeltaTime)
 
 	mMoveScale = mMoveSensitivity  * DeltaTime;
 
+	App->Cl19_Ogre->m_imgui.render();
+
 	if (GetAsyncKeyState(88) < 0)
 	{
 		//SelectEntity();
@@ -383,13 +385,13 @@ void GD19_OgreListener::ModelMode(float DeltaTime)
 	// Left Mouse
 	if (Pl_LeftMouseDown == 1 && Pl_RightMouseDown == 0)
 	{
-//		Capture_LeftMouse();
+		Capture_LeftMouse_Model();
 	}
 
 	// Right Mouse
 	if (Pl_LeftMouseDown == 0 && Pl_RightMouseDown == 1)
 	{
-//		Capture_RightMouse();
+		Capture_RightMouse_World();
 	}
 
 	MoveCamera();
@@ -555,6 +557,79 @@ bool GD19_OgreListener::Capture_LeftMouse_World(void)
 }
 
 // *************************************************************************
+// *					Capture_LeftMouse_Model							   *
+// *************************************************************************
+bool GD19_OgreListener::Capture_LeftMouse_Model(void)
+{
+	GetCursorPos(&Pl_pt);
+
+	Pl_MouseX = (int(Pl_pt.x));
+	Pl_MouseY = (int(Pl_pt.y));
+
+	//// Left Right
+	if (Pl_MouseX < Pl_Cent500X)
+	{
+		long test = Pl_Cent500X - Pl_MouseX; // Positive
+
+		if (test > 2)
+		{
+			Pl_DeltaMouse = float(Pl_Cent500X - Pl_MouseX);
+			App->Cl_Grid->GridNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
+			App->Cl_Grid->HairNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
+			App->Cl_Grid->DummyNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
+			App->Cl19_Ogre->RenderListener->RZ = App->Cl19_Ogre->RenderListener->RZ - (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
+			SetCursorPos(500, 500);
+		}
+	}
+	else if (Pl_MouseX > Pl_Cent500X)
+	{
+		long test = Pl_MouseX - Pl_Cent500X; // Positive
+
+		if (test > 2)
+		{
+			Pl_DeltaMouse = float(Pl_MouseX - Pl_Cent500X);
+			App->Cl_Grid->GridNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
+			App->Cl_Grid->HairNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
+			App->Cl_Grid->DummyNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
+			App->Cl19_Ogre->RenderListener->RZ = App->Cl19_Ogre->RenderListener->RZ + (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
+			SetCursorPos(500, 500);
+		}
+	}
+
+	// Up Down
+	if (Pl_MouseY < Pl_Cent500Y)
+	{
+		long test = Pl_Cent500Y - Pl_MouseY; // Positive
+
+		if (test > 2)
+		{
+			Pl_DeltaMouse = float(Pl_Cent500Y - Pl_MouseY);
+			App->Cl_Grid->GridNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+			App->Cl_Grid->HairNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+			App->Cl_Grid->DummyNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+			App->Cl19_Ogre->RenderListener->RX = App->Cl19_Ogre->RenderListener->RX - (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
+			SetCursorPos(500, 500);
+		}
+	}
+	else if (Pl_MouseY > Pl_Cent500Y)
+	{
+		long test = Pl_MouseY - Pl_Cent500Y; // Positive
+
+		if (test > 2)
+		{
+			Pl_DeltaMouse = float(Pl_MouseY - Pl_Cent500Y);
+			App->Cl_Grid->GridNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+			App->Cl_Grid->HairNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+			App->Cl_Grid->DummyNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+			App->Cl19_Ogre->RenderListener->RX = App->Cl19_Ogre->RenderListener->RX + (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
+			SetCursorPos(500, 500);
+		}
+	}
+
+	return 1;
+}
+
+// *************************************************************************
 // *				Capture_Mouse_FirstPerson_World   Terry Bernie		   *
 // *************************************************************************
 bool GD19_OgreListener::Capture_Mouse_FirstPerson_World(void)
@@ -634,6 +709,84 @@ bool GD19_OgreListener::Capture_Mouse_FirstPerson_World(void)
 	return 1;
 }
 
+// *************************************************************************
+// *					Capture_RightMouse_Model Terry					   *
+// *************************************************************************
+bool GD19_OgreListener::Capture_RightMouse_Model(void)
+{
+	GetCursorPos(&Pl_pt);
+
+	Pl_MouseX = (int(Pl_pt.x));
+	Pl_MouseY = (int(Pl_pt.y));
+
+	//// Left Right
+	if (Pl_MouseX < Pl_Cent500X)
+	{
+		long test = Pl_Cent500X - Pl_MouseX; // Positive
+
+		if (test > 2)
+		{
+			Pl_DeltaMouse = float(Pl_Cent500X - Pl_MouseX);
+			mTranslateVector.x = Pl_DeltaMouse * (mMoveSensitivityMouse / 1000);
+			SetCursorPos(500, 500);
+		}
+	}
+	else if (Pl_MouseX > Pl_Cent500X)
+	{
+		long test = Pl_MouseX - Pl_Cent500X; // Positive
+
+		if (test > 2)
+		{
+			Pl_DeltaMouse = float(Pl_MouseX - Pl_Cent500X);
+			mTranslateVector.x = -Pl_DeltaMouse * (mMoveSensitivityMouse / 1000);
+			SetCursorPos(500, 500);
+		}
+	}
+
+	//// Up Down
+	if (Pl_MouseY < Pl_Cent500Y)
+	{
+		long test = Pl_Cent500Y - Pl_MouseY; // Positive
+
+		if (test > 2)
+		{
+			Pl_DeltaMouse = float(Pl_Cent500Y - Pl_MouseY);
+
+			Ogre::Real Rate;
+			Rate = Pl_DeltaMouse * (mMoveSensitivityMouse / 1000);
+
+			Ogre::Vector3 OldPos;
+			OldPos = mCam->getPosition();
+
+			OldPos.y -= Rate;
+			mCam->setPosition(OldPos);
+			SetCursorPos(500, 500);
+		}
+
+	}
+	else if (Pl_MouseY > Pl_Cent500Y)
+	{
+		long test = Pl_MouseY - Pl_Cent500Y; // Positive
+
+		if (test > 2)
+		{
+			Pl_DeltaMouse = float(Pl_MouseY - Pl_Cent500Y);
+
+			Ogre::Real Rate;
+			Rate = Pl_DeltaMouse * (mMoveSensitivityMouse / 1000);
+
+			Ogre::Vector3 OldPos;
+			OldPos = mCam->getPosition();
+
+			OldPos.y += Rate;
+			mCam->setPosition(OldPos);
+			SetCursorPos(500, 500);
+		}
+
+	}
+
+	return 1;
+}
 // *************************************************************************
 // *				Capture_RightMouse_World   Terry Bernie				   *
 // *************************************************************************

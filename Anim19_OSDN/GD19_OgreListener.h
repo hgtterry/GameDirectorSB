@@ -49,9 +49,14 @@ public:
 	void MoveCamera(void);
 
 	bool Capture_Mouse_Free_World(void);
+
+	bool Capture_RightMouse_Model(void);
 	bool Capture_RightMouse_World(void);
+
 	bool Capture_Mouse_FirstPerson_World(void);
+
 	bool Capture_LeftMouse_World(void);
+	bool Capture_LeftMouse_Model(void);
 
 	bool SelectEntity_World(void);
 
