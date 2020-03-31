@@ -28,7 +28,8 @@ bool VM_Importer::Genesis3D_Loader(void)
 
 	//App->Cl_Ogre->Loading_Text("Loading Data", 1);
 
-	//Clear_Model();
+
+	App->CL_Vm_Model->Clear_ModelData();
 
 	App->CL_Vm_Model->Set_Paths();
 
