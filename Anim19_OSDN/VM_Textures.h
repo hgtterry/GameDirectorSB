@@ -37,6 +37,8 @@ public:
 	int Genesis_WriteToBmp(geBitmap *bmp, char *filename);
 	bool Soil_Load_Texture(UINT textureArray[], LPSTR strFileName, int textureID);
 
+	UINT  g_Texture[300];
+
 protected:
 
 	bool Texture_To_Bmp(char* File);
