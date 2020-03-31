@@ -207,6 +207,7 @@
     <ClInclude Include="VM_Importer.h" />
     <ClInclude Include="VM_Model.h" />
     <ClInclude Include="VM_Render.h" />
+    <ClInclude Include="VM_Textures.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CollisionTools.cpp" />
@@ -268,6 +269,7 @@
     <ClCompile Include="VM_Importer.cpp" />
     <ClCompile Include="VM_Model.cpp" />
     <ClCompile Include="VM_Render.cpp" />
+    <ClCompile Include="VM_Textures.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GD19_OSDN.rc" />

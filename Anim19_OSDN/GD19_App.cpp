@@ -69,6 +69,7 @@ GD19_App::GD19_App(void)
 	CL_Importer =		nullptr;
 	CL_Vm_Genesis3D =	nullptr;
 	CL_Vm_Model =		nullptr;
+	CL_Vm_Textures =	nullptr;
 
 
 	Fdlg = nullptr;
@@ -191,6 +192,7 @@ bool GD19_App::InitApp(void)
 	CL_Importer =		new VM_Importer();
 	CL_Vm_Genesis3D =	new VM_Genisis3D();		
 	CL_Vm_Model =		new VM_Model();
+	CL_Vm_Textures =	new VM_Textures();
 	
 	SetBrushes_Fonts();
 
