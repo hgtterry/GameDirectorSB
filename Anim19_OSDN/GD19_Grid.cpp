@@ -236,8 +236,8 @@ void GD19_Grid::Reset_View(void)
 	HairNode->setPosition(0, 0, 0);
 	HairNode->resetOrientation();
 
-	//App->Cl19_Ogre->RenderListener->RX = 0;
-	//App->Cl19_Ogre->RenderListener->RZ = 0;
+	App->Cl19_Ogre->RenderListener->RX = 0;
+	App->Cl19_Ogre->RenderListener->RZ = 0;
 
 	App->Cl19_Ogre->mCamera->setPosition(Ogre::Vector3(0, 90, 100));
 	App->Cl19_Ogre->mCamera->lookAt(Ogre::Vector3(0, 30, 0));

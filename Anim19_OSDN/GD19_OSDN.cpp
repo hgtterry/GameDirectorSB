@@ -224,6 +224,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return 1;
 		}
 
+		case ID_CAMERA_RESET:
+		{
+			App->Cl_Grid->Reset_View();
+			return 1;
+		}
+
 		// -----------------------------------------------------
 		case ID_TEST_GENERAL:
 		{
