@@ -80,7 +80,7 @@ GD19_OgreListener::GD19_OgreListener(void)
 	mCollisionTools = new MOC::CollisionTools(App->Cl19_Ogre->mSceneMgr);
 	mCollisionTools->setHeightAdjust(3.5f);
 
-	CameraMode = 0;
+	CameraMode = 1;  // Model Mode
 
 }
 

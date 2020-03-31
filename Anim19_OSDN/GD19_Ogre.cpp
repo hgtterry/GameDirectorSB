@@ -344,8 +344,8 @@ bool GD19_Ogre::chooseSceneManager(void)
 bool GD19_Ogre::createCamera(void)
 {
 	mCamera = mSceneMgr->createCamera("MainCamera");
-	mCamera->setPosition(Ogre::Vector3(0, -50, 40));
-	mCamera->lookAt(Ogre::Vector3(0, -50, 0));
+	mCamera->setPosition(Ogre::Vector3(0, 90, 100));
+	mCamera->lookAt(Ogre::Vector3(0, 30, 0));
 	mCamera->setNearClipDistance(Ogre::Real(0.1));
 	mCamera->setFarClipDistance(Ogre::Real(8000));
 
