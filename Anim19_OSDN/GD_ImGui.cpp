@@ -797,6 +797,7 @@ void GD_ImGui::ImGui_Scene_Data(void)
 		ImGui::Text("Model Name: = %s", App->CL_Vm_Model->JustName);
 		ImGui::Text("Model File Name: = %s", App->CL_Vm_Model->FileName);
 		ImGui::Text("Model Path: = %s", App->CL_Vm_Model->Model_FolderPath);
+		ImGui::Text("Texture Path: = %s", App->CL_Vm_Model->Texture_FolderPath);
 
 		ImGui::Spacing();
 

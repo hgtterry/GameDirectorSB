@@ -14,6 +14,7 @@ public:
 	char Path_FileName[1024];		// Full Path to Model including file name and extension
 	char JustName[255];				// Model name No Path No Extension
 	char Model_FolderPath[1024];	// Just the Path of the model Textures location includes "\" at the end
+	char Texture_FolderPath[1024];
 	
 	int VerticeCount;
 	int NormalsCount;
@@ -26,7 +27,8 @@ public:
 	int Model_Type;
 	int Model_Loaded;
 
-	Bone_Type*	S_Bones[200];
+	Texture_Type*			S_Texture[1];
+	Bone_Type*				S_Bones[200];
 
 	std::vector<vertex_type> vertex_Data;
 	std::vector<normal_type> Normal_Data;

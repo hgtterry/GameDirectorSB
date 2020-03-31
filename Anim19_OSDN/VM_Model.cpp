@@ -15,6 +15,12 @@ VM_Model::VM_Model()
 
 	Model_Type = 0;
 	Model_Loaded = 0;
+
+	S_Texture[0] = NULL;
+	S_Texture[0] = new Texture_Type;
+	S_Texture[0]->TextureCount = 1;
+	S_Texture[0]->UsedTextureCount = 0;
+	strcpy(S_Texture[0]->TextureName[0].Name, "Test.bmp");
 }
 
 
@@ -36,7 +42,7 @@ void VM_Model::Set_Paths(void)
 	strcpy(Model_FolderPath, Path_FileName);
 	Model_FolderPath[len2 - len1] = 0;
 
-	//strcpy(Model_FullPath, Model_FolderPath);
+	strcpy(Texture_FolderPath, Model_FolderPath);
 
 	strcpy(JustName, FileName);
 	int Len = strlen(JustName);
