@@ -82,6 +82,8 @@ protected:
 
 	bool LoadActorTextures(void);
 	bool SetTexture_Type(void);
+	void CreateTextureInfo(void);
+	bool FillTextureInfo(void);
 
 	char TempTextureFile_BMP[1024];
 	char TempTextureFile_TGA[1024];

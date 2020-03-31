@@ -13,6 +13,8 @@ VM_Model::VM_Model()
 	MotionCount = 0;
 	BoneCount = 0;
 
+	GroupCount = 0;
+
 	Model_Type = 0;
 	Model_Loaded = 0;
 
@@ -50,3 +52,42 @@ void VM_Model::Set_Paths(void)
 
 //	App->Cl_Importer->RecentFileHistory_Update();
 }
+
+// *************************************************************************
+// *					Create_S_MeshGroup  Terry Bernie   		  	 	   *
+// *************************************************************************
+void VM_Model::Create_S_MeshGroup(int Index)
+{
+	S_MeshGroup[Index] = new MeshGroup_Type;
+
+	S_MeshGroup[Index]->Base_Bitmap = NULL;
+
+	S_MeshGroup[Index]->BasePicHeight = 0;
+	S_MeshGroup[Index]->BasePicWidth = 0;
+
+	S_MeshGroup[Index]->Alpha_Bitmap = NULL;
+	S_MeshGroup[Index]->AlphaPicHeight = 0;
+	S_MeshGroup[Index]->AlphaPicWidth = 0;
+
+	S_MeshGroup[Index]->Soil_TextureIndex = 0;
+	S_MeshGroup[Index]->Bitmap_Loaded = 0;
+	strcpy(S_MeshGroup[Index]->GroupName, "");
+
+	S_MeshGroup[Index]->GroupVertCount = 0;
+	S_MeshGroup[Index]->GroupFaceCount = 0;
+	S_MeshGroup[Index]->MaterialIndex = -1;
+	//	S_MeshGroup[Index]->EqIndex = Index+1;
+
+	strcpy(S_MeshGroup[Index]->Text_FileName, "No_Texture");
+	strcpy(S_MeshGroup[Index]->Text_PathFileName, "No_Texture");
+	strcpy(S_MeshGroup[Index]->Text_JustName, "No_Texture");
+
+	strcpy(S_MeshGroup[Index]->MaterialName, "No_Material");
+
+	S_MeshGroup[Index]->HasBones = 0;
+	S_MeshGroup[Index]->BoneCount = 0;
+	S_MeshGroup[Index]->IsDirty = 0;
+	S_MeshGroup[Index]->IsTextureValid = 0;
+	S_MeshGroup[Index]->BoneAssignMentCount = 0;
+}
+

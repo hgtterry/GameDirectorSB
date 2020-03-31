@@ -9,6 +9,7 @@ public:
 	~VM_Model();
 
 	void Set_Paths(void);
+	void Create_S_MeshGroup(int Index);
 
 	char FileName[255];				// Just the File name of the model NO Path includes the extension
 	char Path_FileName[1024];		// Full Path to Model including file name and extension
@@ -20,6 +21,8 @@ public:
 	int NormalsCount;
 	int FaceCount;
 
+	int GroupCount;
+
 	int TextureCount;
 	int MotionCount;
 	int BoneCount;
@@ -28,7 +31,11 @@ public:
 	int Model_Loaded;
 
 	Texture_Type*			S_Texture[1];
+	GLTextureInfo_Type *	S_TextureInfo[30];
+
 	Bone_Type*				S_Bones[200];
+
+	MeshGroup_Type*			S_MeshGroup[500];
 
 	std::vector<vertex_type> vertex_Data;
 	std::vector<normal_type> Normal_Data;

@@ -762,59 +762,59 @@ bool VM_Genisis3D::LoadActorTextures(void)
 
 	// ----------------------------------------------------------------- Textures used by actor
 	SetTexture_Type();			// Collect only textures in actor
-	//CreateTextureInfo();		// Create Empty Texture Structures
-	//FillTextureInfo();			// Populate Structures
+	CreateTextureInfo();		// Create Empty Texture Structures
+	FillTextureInfo();			// Populate Structures
 	//							// ----------------------------------------------------------------- All Textures
 
-	//App->CL_Vm_Model->GroupCount = App->CL_Vm_Model->S_Texture[0]->UsedTextureCount;
+	App->CL_Vm_Model->GroupCount = App->CL_Vm_Model->S_Texture[0]->UsedTextureCount;
 
-	//while (Count < App->CL_Vm_Model->S_Texture[0]->UsedTextureCount)
-	//{
-	//	MatIndex = App->CL_Vm_Model->S_TextureInfo[Count]->ActorMaterialIndex;
-	//	MaterialName = geStrBlock_GetString(ActorDef_Memory->Body->MaterialNames, Count);//App->CL_Vm_Model->S_Texture[0]->MatIndex[Count].Index);
+	while (Count < App->CL_Vm_Model->S_Texture[0]->UsedTextureCount)
+	{
+		MatIndex = App->CL_Vm_Model->S_TextureInfo[Count]->ActorMaterialIndex;
+		MaterialName = geStrBlock_GetString(ActorDef_Memory->Body->MaterialNames, Count);//App->CL_Vm_Model->S_Texture[0]->MatIndex[Count].Index);
 
-	//	App->CL_Vm_Model->Create_S_MeshGroup(Count);
+		App->CL_Vm_Model->Create_S_MeshGroup(Count);
 
-	//	App->CL_Vm_Model->S_MeshGroup[Count]->Soil_TextureIndex = Count;
-	//	strcpy(App->CL_Vm_Model->S_MeshGroup[Count]->GroupName, MaterialName);
-	//	strcpy(App->CL_Vm_Model->S_MeshGroup[Count]->Text_FileName, MaterialName);
+		App->CL_Vm_Model->S_MeshGroup[Count]->Soil_TextureIndex = Count;
+		strcpy(App->CL_Vm_Model->S_MeshGroup[Count]->GroupName, MaterialName);
+		strcpy(App->CL_Vm_Model->S_MeshGroup[Count]->Text_FileName, MaterialName);
 
-	//	//&App->C_RF_Com->Store_bitmap_TextureInfoIndex(Count);
+		//&App->C_RF_Com->Store_bitmap_TextureInfoIndex(Count);
 
-	//	if (App->CL_Vm_Model->S_TextureInfo[Count]->HasGEBitmap == 1)
-	//	{
-	//		if (App->CL_Vm_Model->S_TextureInfo[Count]->GEHasAlpha == 1)
-	//		{
-	//			App->CL_Textures->Genesis_WriteTGA(TempTextureFile_TGA, App->CL_Vm_Model->S_TextureInfo[Count]->Bitmap);
-	//			App->CL_Textures->Soil_Load_Texture(App->CL_Textures->g_Texture, TempTextureFile_TGA, MatIndex);
-	//			TgaLoaded = 1;// Signal bmp Loaded for delete
-	//		}
-	//		else
-	//		{
-	//			if (App->CL_Vm_Model->S_TextureInfo[Count]->HasGEBitmap == 1)
-	//			{
-	//				App->CL_Textures->Genesis_WriteToBmp(App->CL_Vm_Model->S_TextureInfo[Count]->Bitmap, TempTextureFile_BMP);
+		if (App->CL_Vm_Model->S_TextureInfo[Count]->HasGEBitmap == 1)
+		{
+			if (App->CL_Vm_Model->S_TextureInfo[Count]->GEHasAlpha == 1)
+			{
+				//App->CL_Textures->Genesis_WriteTGA(TempTextureFile_TGA, App->CL_Vm_Model->S_TextureInfo[Count]->Bitmap);
+				//App->CL_Textures->Soil_Load_Texture(App->CL_Textures->g_Texture, TempTextureFile_TGA, MatIndex);
+				//TgaLoaded = 1;// Signal bmp Loaded for delete
+			}
+			else
+			{
+				if (App->CL_Vm_Model->S_TextureInfo[Count]->HasGEBitmap == 1)
+				{
+					//App->CL_Textures->Genesis_WriteToBmp(App->CL_Vm_Model->S_TextureInfo[Count]->Bitmap, TempTextureFile_BMP);
 
-	//				App->CL_Textures->TexureToWinPreviewFullPath(Count, TempTextureFile_BMP);
+					//App->CL_Textures->TexureToWinPreviewFullPath(Count, TempTextureFile_BMP);
 
-	//				App->CL_Textures->Soil_Load_Texture(App->CL_Textures->g_Texture, TempTextureFile_BMP, MatIndex);
-	//				BmpLoaded = 1;// Signal bmp Loaded for delete
-	//			}
-	//		}
-	//	}
+					//App->CL_Textures->Soil_Load_Texture(App->CL_Textures->g_Texture, TempTextureFile_BMP, MatIndex);
+					//BmpLoaded = 1;// Signal bmp Loaded for delete
+				}
+			}
+		}
 
-	//	Count++;
-	//}
+		Count++;
+	}
 
-	//if (BmpLoaded == 1)
-	//{
-	//	DeleteFile((LPCTSTR)TempTextureFile_BMP);
-	//}
+	if (BmpLoaded == 1)
+	{
+		DeleteFile((LPCTSTR)TempTextureFile_BMP);
+	}
 
-	//if (TgaLoaded == 1)
-	//{
-	//	DeleteFile((LPCTSTR)TempTextureFile_TGA);
-	//}
+	if (TgaLoaded == 1)
+	{
+		DeleteFile((LPCTSTR)TempTextureFile_TGA);
+	}
 
 	////Update_Model_File_View();
 
@@ -855,18 +855,79 @@ bool VM_Genisis3D::SetTexture_Type(void)
 // *************************************************************************
 // *					CreateTextureInfo Terry Bernie	   		 	   	   *
 // *************************************************************************
-//void EQ_Genesis_Import::CreateTextureInfo(void)
-//{
-//	int Count = 0;
-//
-//	while (Count < App->CL_Vm_Model->S_Texture[0]->UsedTextureCount)
-//	{
-//		App->CL_Vm_Model->S_TextureInfo[Count] = new GLTextureInfo_Type;
-//		App->CL_Vm_Model->S_TextureInfo[Count]->Tga = 0;
-//		App->CL_Vm_Model->S_TextureInfo[Count]->type = 0;
-//
-//		App->CL_Vm_Model->S_TextureInfo[Count]->GEHasAlpha = 0;
-//
-//		Count++;
-//	}
-//}
+void VM_Genisis3D::CreateTextureInfo(void)
+{
+	int Count = 0;
+
+	while (Count < App->CL_Vm_Model->S_Texture[0]->UsedTextureCount)
+	{
+		App->CL_Vm_Model->S_TextureInfo[Count] = new GLTextureInfo_Type;
+		App->CL_Vm_Model->S_TextureInfo[Count]->Tga = 0;
+		App->CL_Vm_Model->S_TextureInfo[Count]->type = 0;
+
+		App->CL_Vm_Model->S_TextureInfo[Count]->GEHasAlpha = 0;
+
+		Count++;
+	}
+}
+
+// *************************************************************************
+// *					FillTextureInfo	Terry Bernie	   		 	   	   *
+// *************************************************************************
+bool VM_Genisis3D::FillTextureInfo(void)
+{
+	int Count = 0;
+	int Index = 0;
+	float R, G, B = 0;
+	geBitmap* Bitmap;
+	const char *MName;
+	geBitmap* Lock;
+	geBitmap_Info Info;
+	int test = 0;
+
+	ActorDef_Memory = geActor_GetActorDef(TestActor);
+	ActorBody_Memory = geActor_GetBody(ActorDef_Memory);
+
+	while (Count < App->CL_Vm_Model->S_Texture[0]->UsedTextureCount)
+	{
+
+		strcpy(App->CL_Vm_Model->S_TextureInfo[Count]->MaterialName, App->CL_Vm_Model->S_Texture[0]->TextureName[Count].Name);
+		App->CL_Vm_Model->S_TextureInfo[Count]->ActorMaterialIndex = App->CL_Vm_Model->S_Texture[0]->MatIndex[Count].Index;
+
+		Index = App->CL_Vm_Model->S_TextureInfo[Count]->ActorMaterialIndex;
+
+		App->CL_Vm_Model->S_TextureInfo[Count]->HasGEBitmap = 0; // Assume no Genesis Bitmap
+		geBody_GetMaterial(ActorBody_Memory, Index, &MName, &Bitmap, &R, &G, &B);
+		if (Bitmap)
+		{
+			App->CL_Vm_Model->S_TextureInfo[Count]->Bitmap = Bitmap;
+			App->CL_Vm_Model->S_TextureInfo[Count]->HasGEBitmap = 1;
+
+			geBitmap_LockForReadNative(Bitmap, &Lock, 0, 0);
+			geBitmap_GetInfo(Lock, &Info, NULL);
+
+			App->CL_Vm_Model->S_TextureInfo[Count]->GEWitdth = Info.Width;
+			App->CL_Vm_Model->S_TextureInfo[Count]->GEHeight = Info.Height;
+			App->CL_Vm_Model->S_TextureInfo[Count]->GEFormat = Info.Format;
+			App->CL_Vm_Model->S_TextureInfo[Count]->GEHasColorKey = Info.HasColorKey;
+
+			App->CL_Vm_Model->S_TextureInfo[Count]->GEHasAlpha = 0; // Assune no Alpha
+			test = geBitmap_HasAlpha(Lock);
+			if (test == 1)
+			{
+				App->CL_Vm_Model->S_TextureInfo[Count]->GEHasAlpha = 1;
+			}
+
+			geBitmap_UnLock(Lock);
+			geBitmap_RefreshMips(Bitmap);
+		}
+
+		App->CL_Vm_Model->S_TextureInfo[Count]->R = R;
+		App->CL_Vm_Model->S_TextureInfo[Count]->G = G;
+		App->CL_Vm_Model->S_TextureInfo[Count]->B = B;
+
+		Count++;
+	}
+
+	return 1;
+}
