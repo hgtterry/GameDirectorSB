@@ -1238,10 +1238,15 @@ void StartOgre()
 // *************************************************************************
 void Close_App()
 {
+	App->CL_Vm_Model->Clear_ModelData();
+
+	//App->Say("Exit");
+
 	if (App->Cl19_Ogre->mRoot)
 	{
 		delete App->Cl19_Ogre->mRoot;
 		App->Cl19_Ogre->mRoot = NULL;
 	}
+
 	ImGui::DestroyContext();
 }
