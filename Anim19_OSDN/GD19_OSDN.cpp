@@ -240,16 +240,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		// -----------------------------------------------------
 		case ID_TEST_GENERAL:
 		{
-			if (App->Cl_FileView_V2->OpenObjects == 1)
-			{
-				//App->Cl_FileView_V2->OpenObjects = 0;
-				App->Cl_FileView_V2->SelectObject = 1;
-			}
-			else
-			{
-				App->Cl_FileView_V2->OpenObjects = 1;
-				App->Cl_FileView_V2->SelectObject = 1;
-			}
+			App->CL_Vm_TopBar->Start_TopBar();
+			//if (App->Cl_FileView_V2->OpenObjects == 1)
+			//{
+			//	//App->Cl_FileView_V2->OpenObjects = 0;
+			//	App->Cl_FileView_V2->SelectObject = 1;
+			//}
+			//else
+			//{
+			//	App->Cl_FileView_V2->OpenObjects = 1;
+			//	App->Cl_FileView_V2->SelectObject = 1;
+			//}
 			return 1;
 		}
 
