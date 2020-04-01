@@ -70,6 +70,7 @@ GD19_App::GD19_App(void)
 	CL_Vm_Genesis3D =	nullptr;
 	CL_Vm_Model =		nullptr;
 	CL_Vm_Textures =	nullptr;
+	CL_Vm_TopBar =		nullptr;
 
 
 	Fdlg = nullptr;
@@ -193,6 +194,7 @@ bool GD19_App::InitApp(void)
 	CL_Vm_Genesis3D =	new VM_Genisis3D();		
 	CL_Vm_Model =		new VM_Model();
 	CL_Vm_Textures =	new VM_Textures();
+	CL_Vm_TopBar =		new VM_TopBar();
 	
 	SetBrushes_Fonts();
 

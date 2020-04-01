@@ -68,6 +68,7 @@ distribution.
 #include "VM_Genisis3D.h"
 #include "VM_Model.h"
 #include "VM_Textures.h"
+#include "VM_TopBar.h"
 
 
 class GD19_App
@@ -117,6 +118,7 @@ public:
 	VM_Genisis3D*		CL_Vm_Genesis3D;
 	VM_Model*			CL_Vm_Model;
 	VM_Textures*		CL_Vm_Textures;
+	VM_TopBar*			CL_Vm_TopBar;
 
 
 	GD19_App(void);
