@@ -261,7 +261,7 @@ bool GD19_App::Resize_OgreWin(void)
 	NewHeight = HeightClient - 150;
 
 	//-----------------Ogre Window
-	SetWindowPos(ViewGLhWnd, NULL, 4, 43, NewWidth + 384, NewHeight + 100, SWP_NOZORDER);
+	SetWindowPos(ViewGLhWnd, NULL, 4, 72, NewWidth + 384, NewHeight + 72, SWP_NOZORDER);
 
 	if (App->OgreStarted == 1)
 	{

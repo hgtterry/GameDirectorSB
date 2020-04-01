@@ -40,7 +40,7 @@ LRESULT CALLBACK VM_TopBar::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 			TCS_MULTILINE |
 			TCS_RAGGEDRIGHT,
 
-			4, 4, 1500, 80, hDlg, NULL, App->hInst, NULL);
+			2, 2, 1500, 68, hDlg, NULL, App->hInst,NULL);
 
 		TabCtrl_SetItemSize(App->CL_Vm_TopBar->TabsHwnd, 54, 24);
 
@@ -49,12 +49,17 @@ LRESULT CALLBACK VM_TopBar::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 		item.mask = TCIF_TEXT;
 		item.pszText = "Old";
 		TabCtrl_InsertItem(App->CL_Vm_TopBar->TabsHwnd, 0, &item);
-		item.pszText = "Folders";
+		item.pszText = "Motions";
 		TabCtrl_InsertItem(App->CL_Vm_TopBar->TabsHwnd, 1, &item);
 		item.pszText = "Texture Files";
 		TabCtrl_InsertItem(App->CL_Vm_TopBar->TabsHwnd, 2, &item);
 
+	
 		TabCtrl_SetCurFocus(App->CL_Vm_TopBar->TabsHwnd, 0);
+
+		HFONT Font11;
+		Font11 = CreateFont(-16, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Aerial Black");
+		SendMessage(App->CL_Vm_TopBar->TabsHwnd, WM_SETFONT, (unsigned int)Font11, 0);
 
 		App->CL_Vm_TopBar->Start_TB1();
 		
@@ -111,8 +116,6 @@ LRESULT CALLBACK VM_TopBar::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 				ShowWindow(App->CL_Vm_TopBar->TB_1, SW_HIDE);
 				
 				break;
-
-
 			}
 		}
 
@@ -139,7 +142,6 @@ LRESULT CALLBACK VM_TopBar::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 	}
 	return FALSE;
 }
-
 
 // *************************************************************************
 // *						Start_TB1 Terry Berine						   *
