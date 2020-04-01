@@ -206,6 +206,7 @@
     <ClInclude Include="VM_Genisis3D.h" />
     <ClInclude Include="VM_Importer.h" />
     <ClInclude Include="VM_Model.h" />
+    <ClInclude Include="VM_Motions.h" />
     <ClInclude Include="VM_Render.h" />
     <ClInclude Include="VM_Textures.h" />
     <ClInclude Include="VM_TopBar.h" />
@@ -269,6 +270,7 @@
     <ClCompile Include="VM_Genisis3D.cpp" />
     <ClCompile Include="VM_Importer.cpp" />
     <ClCompile Include="VM_Model.cpp" />
+    <ClCompile Include="VM_Motions.cpp" />
     <ClCompile Include="VM_Render.cpp" />
     <ClCompile Include="VM_Textures.cpp" />
     <ClCompile Include="VM_TopBar.cpp" />
