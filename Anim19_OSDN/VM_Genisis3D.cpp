@@ -126,6 +126,31 @@ void VM_Genisis3D::Get_MotionNames(void)
 }
 
 // *************************************************************************
+// *					GetMotion  ( Terry Bernie ) 					   *
+// *************************************************************************
+bool VM_Genisis3D::GetMotion(char *mMotionName)
+{
+	geMotion* Motion = NULL;
+	float StartTime = 0;
+	float EndTime = 0;
+
+	strcpy(MotionName, mMotionName);
+
+	Motion = geActor_GetMotionByName(ActorDef_Memory, MotionName);
+	if (Motion == NULL)
+	{
+		return 0;
+	}
+
+	geMotion_GetTimeExtents(Motion, &StartTime, &EndTime);
+	FrameSpeed = EndTime;
+
+	App->CL_Vm_Motions->Current_StartTime = StartTime;
+	App->CL_Vm_Motions->Current_EndTime = EndTime;
+	return 1;
+}
+
+// *************************************************************************
 // *					GetDefaultBones Terry Bernie	   			  	   *
 // *************************************************************************
 bool VM_Genisis3D::GetDefaultBones(void)

@@ -44,6 +44,8 @@ public:
 
 	void LoadActor(void);
 
+	bool GetMotion(char *mMotionName);
+
 	char MotionName[255];
 	float m_CurrentPose;
 	float AnimationSpeed;

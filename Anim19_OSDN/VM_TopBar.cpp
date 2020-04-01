@@ -609,11 +609,11 @@ LRESULT CALLBACK VM_TopBar::Motions_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 	case WM_COMMAND:
 	{
-		//if (LOWORD(wParam) == IDC_SHOWTEXTURED) // 1st Person
-		//{
-		//	
-		//	return TRUE;
-		//}
+		if (LOWORD(wParam) == IDC_TBPLAY) // Play Motion
+		{
+			App->CL_Vm_Motions->Play_SelectedMotion();
+			return TRUE;
+		}
 
 		return FALSE;
 	}
