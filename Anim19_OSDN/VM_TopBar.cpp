@@ -20,7 +20,7 @@ VM_TopBar::~VM_TopBar()
 // *************************************************************************
 bool VM_TopBar::Start_TopBar()
 {
-	DialogBox(App->hInst,(LPCTSTR)IDD_TOPBAR,App->Fdlg,(DLGPROC)TopBar_Proc);
+	CreateDialog(App->hInst,(LPCTSTR)IDD_TOPBAR,App->Fdlg,(DLGPROC)TopBar_Proc);
 	return 1;
 }
 // *************************************************************************
