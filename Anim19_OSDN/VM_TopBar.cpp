@@ -8,6 +8,7 @@ VM_TopBar::VM_TopBar()
 {
 	TabsHwnd =	nullptr;
 	TB_1 =		nullptr;
+	Motions_TB_hWnd = nullptr;
 }
 
 
@@ -62,6 +63,7 @@ LRESULT CALLBACK VM_TopBar::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 		SendMessage(App->CL_Vm_TopBar->TabsHwnd, WM_SETFONT, (unsigned int)Font11, 0);
 
 		App->CL_Vm_TopBar->Start_TB1();
+		App->CL_Vm_TopBar->Start_Motions_TB();
 		
 
 		return TRUE;
@@ -99,14 +101,14 @@ LRESULT CALLBACK VM_TopBar::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 			case 0:
 
 				ShowWindow(App->CL_Vm_TopBar->TB_1, SW_SHOW);
+				ShowWindow(App->CL_Vm_TopBar->Motions_TB_hWnd, SW_HIDE);
 
 				break;
 				//--------------------------------- Bones
 			case 1:
 
-				
+				ShowWindow(App->CL_Vm_TopBar->Motions_TB_hWnd, SW_SHOW);
 				ShowWindow(App->CL_Vm_TopBar->TB_1, SW_HIDE);
-				
 
 				break;
 				//--------------------------------- Mesh
@@ -114,7 +116,7 @@ LRESULT CALLBACK VM_TopBar::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 
 				
 				ShowWindow(App->CL_Vm_TopBar->TB_1, SW_HIDE);
-				
+				ShowWindow(App->CL_Vm_TopBar->Motions_TB_hWnd, SW_HIDE);
 				break;
 			}
 		}
@@ -570,5 +572,51 @@ void VM_TopBar::Init_Bmps_TB1(void)
 	ti11.lpszText = "1st Person View with Physics";
 	ti11.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_1, TTM_ADDTOOL, 0, (LPARAM)&ti11);
+}
 
+// *************************************************************************
+// *						Start_Motions_TB Terry						   *
+// *************************************************************************
+void VM_TopBar::Start_Motions_TB(void)
+{
+	Motions_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_MOTIONS, App->CL_Vm_TopBar->TabsHwnd, (DLGPROC)Motions_TB_Proc);
+	//Init_Bmps_TB1();
+}
+
+// *************************************************************************
+// *								Motions_TB_Proc						   *
+// *************************************************************************
+LRESULT CALLBACK VM_TopBar::Motions_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		return TRUE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_NOTIFY:
+	{
+		
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+		//if (LOWORD(wParam) == IDC_SHOWTEXTURED) // 1st Person
+		//{
+		//	
+		//	return TRUE;
+		//}
+
+		return FALSE;
+	}
+	}
+	return FALSE;
 }

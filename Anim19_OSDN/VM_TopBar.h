@@ -9,6 +9,7 @@ public:
 
 	HWND TabsHwnd;
 	HWND TB_1;
+	HWND Motions_TB_hWnd;
 
 protected:
 
@@ -16,7 +17,11 @@ protected:
 
 	static LRESULT CALLBACK TB1_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
+	static LRESULT CALLBACK Motions_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
 	void Start_TB1(void);
 	void Init_Bmps_TB1(void);
+
+	void Start_Motions_TB(void);
 };
 
