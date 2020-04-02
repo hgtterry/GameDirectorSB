@@ -88,6 +88,8 @@ protected:
 	void CreateTextureInfo(void);
 	bool FillTextureInfo(void);
 
+	bool GetBoundingBoxModel_Create(void);
+
 	char TempTextureFile_BMP[1024];
 	char TempTextureFile_TGA[1024];
 

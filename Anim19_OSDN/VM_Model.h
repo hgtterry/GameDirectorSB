@@ -34,10 +34,9 @@ public:
 
 	Texture_Type*			S_Texture[1];
 	GLTextureInfo_Type *	S_TextureInfo[30];
-
 	Bone_Type*				S_Bones[200];
-
 	MeshGroup_Type*			S_MeshGroup[500];
+	AABB_Type*				S_BoundingBox[1];
 
 	std::vector<vertex_type> vertex_Data;
 	std::vector<normal_type> Normal_Data;

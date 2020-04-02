@@ -82,7 +82,7 @@ void VM_Genisis3D::LoadActor(void)
 
 	App->Say("Loaded5");
 
-	//GetBoundingBoxModel_Create();
+	GetBoundingBoxModel_Create();
 
 	//App->CL_Vm_Model->HasMesh = 1;
 
@@ -127,6 +127,53 @@ void VM_Genisis3D::Get_MotionNames(void)
 		strcpy(App->CL_Vm_Model->MotionNames_Data[Count].Name, TempMotionName);
 		Count++;
 	}
+}
+
+// *************************************************************************
+// *				GetBoundingBoxModel_Create Terry Bernie				   *
+// *************************************************************************
+bool VM_Genisis3D::GetBoundingBoxModel_Create(void)
+{
+
+	App->CL_Vm_Model->S_BoundingBox[0] = new AABB_Type;
+
+	App->CL_Vm_Model->S_BoundingBox[0]->BB_Min[0].x = App->CL_Vm_Model->vertex_Data[0].x;
+	App->CL_Vm_Model->S_BoundingBox[0]->BB_Min[0].y = App->CL_Vm_Model->vertex_Data[0].y;
+	App->CL_Vm_Model->S_BoundingBox[0]->BB_Min[0].z = App->CL_Vm_Model->vertex_Data[0].z;
+
+	App->CL_Vm_Model->S_BoundingBox[0]->BB_Max[0].x = App->CL_Vm_Model->vertex_Data[0].x;
+	App->CL_Vm_Model->S_BoundingBox[0]->BB_Max[0].y = App->CL_Vm_Model->vertex_Data[0].y;
+	App->CL_Vm_Model->S_BoundingBox[0]->BB_Max[0].z = App->CL_Vm_Model->vertex_Data[0].z;
+
+	int Count = 0;
+	int VertCount = 0;
+	//while (Count<App->S_Counters[0]->GroupCount)
+	//{
+	VertCount = 0;
+	while (VertCount < App->CL_Vm_Model->VerticeCount)
+	{
+		if (App->CL_Vm_Model->vertex_Data[VertCount].x < App->CL_Vm_Model->S_BoundingBox[0]->BB_Min[0].x) App->CL_Vm_Model->S_BoundingBox[0]->BB_Min[0].x = App->CL_Vm_Model->vertex_Data[VertCount].x;
+		if (App->CL_Vm_Model->vertex_Data[VertCount].y < App->CL_Vm_Model->S_BoundingBox[0]->BB_Min[0].y) App->CL_Vm_Model->S_BoundingBox[0]->BB_Min[0].y = App->CL_Vm_Model->vertex_Data[VertCount].y;
+		if (App->CL_Vm_Model->vertex_Data[VertCount].z < App->CL_Vm_Model->S_BoundingBox[0]->BB_Min[0].z) App->CL_Vm_Model->S_BoundingBox[0]->BB_Min[0].z = App->CL_Vm_Model->vertex_Data[VertCount].z;
+		if (App->CL_Vm_Model->vertex_Data[VertCount].x > App->CL_Vm_Model->S_BoundingBox[0]->BB_Max[0].x) App->CL_Vm_Model->S_BoundingBox[0]->BB_Max[0].x = App->CL_Vm_Model->vertex_Data[VertCount].x;
+		if (App->CL_Vm_Model->vertex_Data[VertCount].y > App->CL_Vm_Model->S_BoundingBox[0]->BB_Max[0].y) App->CL_Vm_Model->S_BoundingBox[0]->BB_Max[0].y = App->CL_Vm_Model->vertex_Data[VertCount].y;
+		if (App->CL_Vm_Model->vertex_Data[VertCount].z > App->CL_Vm_Model->S_BoundingBox[0]->BB_Max[0].z)App->CL_Vm_Model->S_BoundingBox[0]->BB_Max[0].z = App->CL_Vm_Model->vertex_Data[VertCount].z;
+		VertCount++;
+	}
+	//	Count++;
+	//}
+
+	App->CL_Vm_Model->S_BoundingBox[0]->Size[0].x = (fabs(App->CL_Vm_Model->S_BoundingBox[0]->BB_Max[0].x - App->CL_Vm_Model->S_BoundingBox[0]->BB_Min[0].x));
+	App->CL_Vm_Model->S_BoundingBox[0]->Size[0].y = (fabs(App->CL_Vm_Model->S_BoundingBox[0]->BB_Max[0].y - App->CL_Vm_Model->S_BoundingBox[0]->BB_Min[0].y));
+	App->CL_Vm_Model->S_BoundingBox[0]->Size[0].z = (fabs(App->CL_Vm_Model->S_BoundingBox[0]->BB_Max[0].z - App->CL_Vm_Model->S_BoundingBox[0]->BB_Min[0].z));
+
+	App->CL_Vm_Model->S_BoundingBox[0]->radius = (App->CL_Vm_Model->S_BoundingBox[0]->Size[0].x>App->CL_Vm_Model->S_BoundingBox[0]->Size[0].z) ? App->CL_Vm_Model->S_BoundingBox[0]->Size[0].z / 2.0f : App->CL_Vm_Model->S_BoundingBox[0]->Size[0].x / 2.0f;
+
+	App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].x = (App->CL_Vm_Model->S_BoundingBox[0]->BB_Min[0].x + App->CL_Vm_Model->S_BoundingBox[0]->BB_Max[0].x) / 2.0f;
+	App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].y = (App->CL_Vm_Model->S_BoundingBox[0]->BB_Min[0].y + App->CL_Vm_Model->S_BoundingBox[0]->BB_Max[0].y) / 2.0f;
+	App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].z = (App->CL_Vm_Model->S_BoundingBox[0]->BB_Min[0].z + App->CL_Vm_Model->S_BoundingBox[0]->BB_Max[0].z) / 2.0f;
+
+	return 1;
 }
 
 // *************************************************************************

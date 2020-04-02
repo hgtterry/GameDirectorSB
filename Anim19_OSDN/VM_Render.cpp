@@ -676,7 +676,7 @@ bool VM_Render::As_RenderBones()
 // *************************************************************************
 void VM_Render::Render_BoundingBoxModel(void)
 {
-	/*float m_xMin = App->CL_Vm_Model->S_BoundingBox[0]->BB_Min[0].x;
+	float m_xMin = App->CL_Vm_Model->S_BoundingBox[0]->BB_Min[0].x;
 	float m_yMin = App->CL_Vm_Model->S_BoundingBox[0]->BB_Min[0].y;
 	float m_zMin = App->CL_Vm_Model->S_BoundingBox[0]->BB_Min[0].z;
 
@@ -725,7 +725,7 @@ void VM_Render::Render_BoundingBoxModel(void)
 	glVertex3f(m_xMax, m_yMax, m_zMax);
 
 	glEnd();
-	glEnable(GL_TEXTURE_2D);*/
+	glEnable(GL_TEXTURE_2D);
 }
 
 // *************************************************************************
