@@ -70,7 +70,8 @@ LRESULT CALLBACK VM_TopBar::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 	}
 
 	case WM_COMMAND:
-
+		
+		// ------------------------------------------ Tabs
 
 		if (LOWORD(wParam) == IDC_TBMOTIONS)
 		{
@@ -85,7 +86,41 @@ LRESULT CALLBACK VM_TopBar::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 			ShowWindow(App->CL_Vm_TopBar->Motions_TB_hWnd, SW_HIDE);
 			return TRUE;
 		}
-		
+
+		// -----------------------------------------------------
+
+		if (LOWORD(wParam) == IDC_TBSHOWTEXTURE)
+		{
+			if (App->CL_Vm_Model->Model_Loaded == 1)
+			{
+				if (App->Cl19_Ogre->RenderListener->ShowTextured == 1)
+				{
+					App->Cl19_Ogre->RenderListener->ShowTextured = 0;
+				}
+				else
+				{
+					App->Cl19_Ogre->RenderListener->ShowTextured = 1;
+				}
+			}
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_TBSHOWFACES)
+		{
+			if (App->CL_Vm_Model->Model_Loaded == 1)
+			{
+				if (App->Cl19_Ogre->RenderListener->ShowMesh == 1)
+				{
+					App->Cl19_Ogre->RenderListener->ShowMesh = 0;
+				}
+				else
+				{
+					App->Cl19_Ogre->RenderListener->ShowMesh = 1;
+				}
+			}
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDCANCEL)
 		{
 			
