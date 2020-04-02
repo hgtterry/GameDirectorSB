@@ -90,6 +90,7 @@ void VM_Motions::Stop_SelectedMotion(void)
 void VM_Motions::Populate_Combo(void)
 {
 	HWND temp = GetDlgItem(App->CL_Vm_TopBar->Motions_TB_hWnd, IDC_CBMOTIONS);
+	SendMessage(temp, CB_RESETCONTENT, 0, 0);
 
 	char MotionName[255];
 	int Count = 0;
@@ -105,4 +106,13 @@ void VM_Motions::Populate_Combo(void)
 	SendMessage(temp, CB_SETCURSEL, 0, 0);
 
 	strcpy(App->CL_Vm_Genesis3D->MotionName, App->CL_Vm_Model->MotionNames_Data[0].Name);
+}
+
+// *************************************************************************
+// *					Clear_Combo Terry Bernie						   *
+// *************************************************************************
+void VM_Motions::Clear_Combo(void)
+{
+	HWND temp = GetDlgItem(App->CL_Vm_TopBar->Motions_TB_hWnd, IDC_CBMOTIONS);
+	SendMessage(temp, CB_RESETCONTENT, 0, 0);
 }

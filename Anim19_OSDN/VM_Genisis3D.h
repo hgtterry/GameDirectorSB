@@ -49,6 +49,8 @@ public:
 	void GetBoneMoveMent(void);
 	bool Animate(int Do);
 
+	bool GetBoundingBoxModel_Update(void);
+
 	char MotionName[255];
 	float m_CurrentPose;
 	float AnimationSpeed;

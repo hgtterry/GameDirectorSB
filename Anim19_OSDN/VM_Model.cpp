@@ -38,8 +38,9 @@ void VM_Model::Clear_ModelData(void)
 	int Count = 0;
 
 	//--------------------- Stop Motion Play if Active
-	/*App->Cl_Ogre->RenderListener->PlayActive = 0;
-	App->Cl_Ogre->OgreListener->Animate_Ogre = 0;
+	App->Cl19_Ogre->RenderListener->PlayActive = 0;
+
+	/*App->Cl_Ogre->OgreListener->Animate_Ogre = 0;
 	App->Cl_Ogre->RenderListener->Show_Crosshair = 0;*/
 
 	Model_Loaded = 0;
@@ -106,11 +107,14 @@ void VM_Model::Clear_ModelData(void)
 	}
 
 	//--------------------- Clear Bounding box data
-	/*if (S_BoundingBox[0] != NULL)
+	if (S_BoundingBox[0] != NULL)
 	{
 		delete S_BoundingBox[0];
 		S_BoundingBox[0] = NULL;
-	}*/
+	}
+
+	// Clear Motion Combo Box
+	App->CL_Vm_Motions->Clear_Combo();
 
 	//--------------------- Clear Ogre Model if one was loaded
 	/*if (App->Cl_Ogre->OgreModel_Ent && App->Cl_Ogre->OgreModel_Node)

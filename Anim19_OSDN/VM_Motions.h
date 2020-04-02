@@ -10,6 +10,7 @@ public:
 
 
 	void Populate_Combo(void);
+	void Clear_Combo(void);
 
 
 	float Current_StartTime;
