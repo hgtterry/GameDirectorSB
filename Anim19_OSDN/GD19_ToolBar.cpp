@@ -188,12 +188,7 @@ LRESULT CALLBACK GD19_ToolBar::TB1_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 			return TRUE;
 		}
 
-		if (LOWORD(wParam) == IDC_BUILDGAME)
-		{
-			App->Cl_Project->Start_Project_Build();
-			return 1;
-		}
-
+		
 		if (LOWORD(wParam) == IDC_SELECTION)
 		{
 			if (App->Cl_ToolBar->Selection_Active == 1)

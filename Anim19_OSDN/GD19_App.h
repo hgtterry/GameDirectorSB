@@ -54,7 +54,6 @@ distribution.
 #include "GD19_Objects_FFile.h"
 #include "GD_spdlog.h"
 #include "GD_ImGui.h"
-#include "GD19_Project.h"
 #include "GD19_PB.h"
 #include "GD_File_Data.h"
 #include "GD_Keyboard.h"
@@ -109,7 +108,6 @@ public:
 	GD19_Objects_FFile*	Cl_Objects_FFile;
 	GD_spdlog*			Cl_spdlog;
 	GD_ImGui*			Cl_ImGui;
-	GD19_Project*		Cl_Project;
 	GD19_PB*			Cl_PB;
 	GD_File_Data*		Cl_File_Data;
 	GD_Keyboard*		Cl_Keyboard;
