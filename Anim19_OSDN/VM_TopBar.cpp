@@ -34,33 +34,11 @@ LRESULT CALLBACK VM_TopBar::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 	{
 	case WM_INITDIALOG:
 	{
-		App->CL_Vm_TopBar->TabsHwnd = CreateWindow(WC_TABCONTROL, "",
-			WS_CHILD |
-			WS_VISIBLE |
-			ES_LEFT |
-			TCS_MULTILINE |
-			TCS_RAGGEDRIGHT,
-
-			2, 2, 1500, 68, hDlg, NULL, App->hInst,NULL);
-
-		TabCtrl_SetItemSize(App->CL_Vm_TopBar->TabsHwnd, 54, 24);
-
-		TC_ITEM item;
-		ZeroMemory(&item, sizeof(item));
-		item.mask = TCIF_TEXT;
-		item.pszText = "Old";
-		TabCtrl_InsertItem(App->CL_Vm_TopBar->TabsHwnd, 0, &item);
-		item.pszText = "Motions";
-		TabCtrl_InsertItem(App->CL_Vm_TopBar->TabsHwnd, 1, &item);
-		item.pszText = "Texture Files";
-		TabCtrl_InsertItem(App->CL_Vm_TopBar->TabsHwnd, 2, &item);
-
-	
-		TabCtrl_SetCurFocus(App->CL_Vm_TopBar->TabsHwnd, 0);
-
-		HFONT Font11;
+		App->CL_Vm_TopBar->TabsHwnd = hDlg;
+		
+		/*HFONT Font11;
 		Font11 = CreateFont(-16, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Aerial Black");
-		SendMessage(App->CL_Vm_TopBar->TabsHwnd, WM_SETFONT, (unsigned int)Font11, 0);
+		SendMessage(App->CL_Vm_TopBar->TabsHwnd, WM_SETFONT, (unsigned int)Font11, 0);*/
 
 		App->CL_Vm_TopBar->Start_TB1();
 		App->CL_Vm_TopBar->Start_Motions_TB();
@@ -88,51 +66,26 @@ LRESULT CALLBACK VM_TopBar::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 
 	case WM_NOTIFY:
 	{
-
-		LPNMHDR nmhdr = (LPNMHDR)lParam;
-		switch (nmhdr->code)
-		{
-		case TCN_SELCHANGE:
-		{
-			int num = TabCtrl_GetCurSel(nmhdr->hwndFrom);
-			switch (num)
-			{
-				//--------------------------------- Textures
-			case 0:
-
-				ShowWindow(App->CL_Vm_TopBar->TB_1, SW_SHOW);
-				ShowWindow(App->CL_Vm_TopBar->Motions_TB_hWnd, SW_HIDE);
-
-				break;
-				//--------------------------------- Bones
-			case 1:
-
-				ShowWindow(App->CL_Vm_TopBar->Motions_TB_hWnd, SW_SHOW);
-				ShowWindow(App->CL_Vm_TopBar->TB_1, SW_HIDE);
-
-				break;
-				//--------------------------------- Mesh
-			case 2:
-
-				
-				ShowWindow(App->CL_Vm_TopBar->TB_1, SW_HIDE);
-				ShowWindow(App->CL_Vm_TopBar->Motions_TB_hWnd, SW_HIDE);
-				break;
-			}
-		}
-
-		}
 		return 0;
 	}
 
 	case WM_COMMAND:
-		if (LOWORD(wParam) == IDOK)
+
+
+		if (LOWORD(wParam) == IDC_TBMOTIONS)
 		{
-			
-			EndDialog(hDlg, LOWORD(wParam));
+			ShowWindow(App->CL_Vm_TopBar->Motions_TB_hWnd, SW_SHOW);
+			ShowWindow(App->CL_Vm_TopBar->TB_1, SW_HIDE);
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_TBOLD)
+		{
+			ShowWindow(App->CL_Vm_TopBar->TB_1, SW_SHOW);
+			ShowWindow(App->CL_Vm_TopBar->Motions_TB_hWnd, SW_HIDE);
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == IDCANCEL)
 		{
 			
