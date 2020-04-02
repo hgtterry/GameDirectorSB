@@ -158,7 +158,55 @@ LRESULT CALLBACK VM_TopBar::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 			}
 			return TRUE;
 		}
-		
+
+		if (LOWORD(wParam) == IDC_TBNORMALS)
+		{
+			if (App->CL_Vm_Model->Model_Loaded == 1)
+			{
+				if (App->Cl19_Ogre->RenderListener->ShowNormals == 1)
+				{
+					App->Cl19_Ogre->RenderListener->ShowNormals = 0;
+				}
+				else
+				{
+					App->Cl19_Ogre->RenderListener->ShowNormals = 1;
+				}
+			}
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_TBBOUNDBOX)
+		{
+			if (App->CL_Vm_Model->Model_Loaded == 1)
+			{
+				if (App->Cl19_Ogre->RenderListener->ShowBoundingBox == 1)
+				{
+					App->Cl19_Ogre->RenderListener->ShowBoundingBox = 0;
+				}
+				else
+				{
+					App->Cl19_Ogre->RenderListener->ShowBoundingBox = 1;
+				}
+			}
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_TBLIGHT)
+		{
+			if (App->CL_Vm_Model->Model_Loaded == 1)
+			{
+				if (App->Cl19_Ogre->RenderListener->Light_Activated == 1)
+				{
+					App->Cl19_Ogre->RenderListener->Light_Activated = 0;
+				}
+				else
+				{
+					App->Cl19_Ogre->RenderListener->Light_Activated = 1;
+				}
+			}
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDCANCEL)
 		{
 			
