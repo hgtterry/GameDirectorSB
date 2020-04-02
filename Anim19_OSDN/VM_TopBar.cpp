@@ -593,6 +593,7 @@ LRESULT CALLBACK VM_TopBar::Motions_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 	{
 	case WM_INITDIALOG:
 	{
+		SendDlgItemMessage(hDlg, IDC_CBMOTIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		return TRUE;
 	}
 
@@ -613,6 +614,33 @@ LRESULT CALLBACK VM_TopBar::Motions_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 		{
 			App->CL_Vm_Motions->Play_SelectedMotion();
 			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_TBSTOP) // Stop Motion
+		{
+			App->CL_Vm_Motions->Stop_SelectedMotion();
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_CBMOTIONS)
+		{
+			switch (HIWORD(wParam)) // Find out what message it was
+			{
+			case CBN_DROPDOWN:
+				break;
+			case CBN_CLOSEUP:
+			{
+				char buff[255];
+				GetDlgItemText(hDlg, IDC_CBMOTIONS, (LPTSTR)buff, 255);
+
+				App->CL_Vm_Genesis3D->GetMotion(buff);
+
+				strcpy(App->CL_Vm_Genesis3D->MotionName,buff);
+
+				App->CL_Vm_Genesis3D->m_CurrentPose = 0;
+
+			}
+			}
 		}
 
 		return FALSE;

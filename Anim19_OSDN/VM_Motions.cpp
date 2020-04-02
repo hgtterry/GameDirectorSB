@@ -58,6 +58,33 @@ void VM_Motions::Play_SelectedMotion(void)
 }
 
 // *************************************************************************
+// *					Stop_SelectedMotion Terry Bernie				   *
+// *************************************************************************
+void VM_Motions::Stop_SelectedMotion(void)
+{
+	if (App->CL_Vm_Model->Model_Loaded == 0) { return; }
+	if (App->CL_Vm_Model->MotionCount == 0) { return; }
+
+	//------------------------------------------------------- RF Model
+	if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
+	{
+		App->Cl19_Ogre->RenderListener->PlayActive = 0;
+		/*App->CL_Motions->PlayButtonActive = 0;
+		App->CL_Motions->TogglePlayBmp();*/
+	}
+	//------------------------------------------------------- Ogre3D Model
+	/*if (App->CL_Model_Data->ItsAnOgreModel == 1)
+	{
+		App->Cl_Ogre->OgreListener->Animate_Ogre = 0;
+		App->Cl_Ogre->OgreListener->Animate_State->setEnabled(false);
+		OgreMotionIsPlaying = 0;
+
+		App->CL_Motions->PlayButtonActive = 0;
+		App->CL_Motions->TogglePlayBmp();
+	}*/
+}
+
+// *************************************************************************
 // *					Populate_Combo Terry Bernie						   *
 // *************************************************************************
 void VM_Motions::Populate_Combo(void)
