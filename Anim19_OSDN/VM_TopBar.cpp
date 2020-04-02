@@ -121,6 +121,44 @@ LRESULT CALLBACK VM_TopBar::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_TBPOINTS)
+		{
+			if (App->CL_Vm_Model->Model_Loaded == 1)
+			{
+				if (App->Cl19_Ogre->RenderListener->ShowPoints == 1)
+				{
+					App->Cl19_Ogre->RenderListener->ShowPoints = 0;
+				}
+				else
+				{
+					App->Cl19_Ogre->RenderListener->ShowPoints = 1;
+				}
+			}
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_TBSHOWBONES)
+		{
+			if (App->CL_Vm_Model->Model_Loaded == 1)
+			{
+				if (App->CL_Vm_Model->BoneCount == 0)
+				{
+					App->Say("Model has no Bone/Joint structure.");
+					return FALSE;
+				}
+
+				if (App->Cl19_Ogre->RenderListener->ShowBones == 1)
+				{
+					App->Cl19_Ogre->RenderListener->ShowBones = 0;
+				}
+				else
+				{
+					App->Cl19_Ogre->RenderListener->ShowBones = 1;
+				}
+			}
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == IDCANCEL)
 		{
 			
