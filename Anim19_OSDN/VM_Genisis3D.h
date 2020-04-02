@@ -46,6 +46,9 @@ public:
 
 	bool GetMotion(char *mMotionName);
 
+	void GetBoneMoveMent(void);
+	bool Animate(int Do);
+
 	char MotionName[255];
 	float m_CurrentPose;
 	float AnimationSpeed;
@@ -72,8 +75,6 @@ protected:
 
 	geBodyInst_Geometry* TGetGeometryPrep(geBodyInst *BI, int LevelOfDetail);
 	void TPostScale(const geXForm3d *M, const geVec3d *S, geXForm3d *Scaled);
-
-	bool Animate(int Do);
 
 	bool GetUVs();
 

@@ -102,16 +102,16 @@ void VM_Render::renderQueueEnded(Ogre::uint8 queueGroupId, const String& invocat
 
 	if (PlayActive == 1)
 	{
-		//if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
-		//{
-		//	App->CL_Genesis_Import->GetBoneMoveMent();	// Update Bones 
-		//	App->CL_Genesis_Import->Animate(1);
+		if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
+		{
+			App->CL_Vm_Genesis3D->GetBoneMoveMent();	// Update Bones 
+			App->CL_Vm_Genesis3D->Animate(1);
 
-		//	if (App->Cl_Ogre->RenderListener->Show_Crosshair == 1)
-		//	{
-		//		App->Cl_Bones->Move_BoneCrosshair();
-		//	}
-		//}
+			/*if (App->Cl_Ogre->RenderListener->Show_Crosshair == 1)
+			{
+				App->Cl_Bones->Move_BoneCrosshair();
+			}*/
+		}
 	}
 
 	PreRender();

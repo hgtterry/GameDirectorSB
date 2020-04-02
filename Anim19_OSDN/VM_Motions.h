@@ -6,6 +6,7 @@ public:
 	~VM_Motions();
 
 	void Play_SelectedMotion(void);
+	void Populate_Combo(void);
 
 
 	float Current_StartTime;

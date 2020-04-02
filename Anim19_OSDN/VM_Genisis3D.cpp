@@ -46,9 +46,10 @@ VM_Genisis3D::VM_Genisis3D()
 	TestActor =			nullptr;
 
 	MotionName[0] = 0;
-	m_CurrentPose = 0;
-	AnimationSpeed = 0;
-	FrameSpeed = 0;
+
+	FrameSpeed = (float)1.15;;
+	m_CurrentPose = NULL;
+	AnimationSpeed = (float)0.005;
 }
 
 
@@ -66,11 +67,14 @@ void VM_Genisis3D::LoadActor(void)
 
 	SetCounters();
 
-	////	ListMotions();
-
 	GetDefaultBones();
 
-	Get_MotionNames();
+	if (App->CL_Vm_Model->MotionCount > 0)
+	{
+		Get_MotionNames();
+		App->CL_Vm_Motions->Populate_Combo();
+	}
+
 	Get_TextureNames();
 
 	
@@ -195,6 +199,40 @@ bool VM_Genisis3D::GetDefaultBones(void)
 		//App->CL_FileView->Set_FolderActive(App->CL_FileView->HT_BonesFolder);
 	}
 	return 1;
+}
+
+// *************************************************************************
+// *					GetBoneMoveMent Terry Bernie	   			  	   *
+// *************************************************************************
+void VM_Genisis3D::GetBoneMoveMent(void)
+{
+	const char *BoneNameQ;
+	int pb;
+	int BoneCount = 0;
+	geXForm3d  A;
+	geXForm3d  B;
+	geVec3d Angels;
+
+	BoneCount = geBody_GetBoneCount(ActorDef_Memory->Body);
+
+	int Count = 0;
+	while (Count<BoneCount)
+	{
+		geBody_GetBone(ActorDef_Memory->Body, Count, &BoneNameQ, &A, &pb);
+		geActor_GetBoneTransform(TestActor, BoneNameQ, &B);
+
+		geXForm3d_GetEulerAngles(&B, &Angels);
+
+		App->CL_Vm_Model->S_Bones[Count]->Boneverts.x = B.Translation.X;
+		App->CL_Vm_Model->S_Bones[Count]->Boneverts.y = B.Translation.Y;
+		App->CL_Vm_Model->S_Bones[Count]->Boneverts.z = B.Translation.Z;
+
+		App->CL_Vm_Model->S_Bones[Count]->TranslationStart.X = B.Translation.X;
+		App->CL_Vm_Model->S_Bones[Count]->TranslationStart.Y = B.Translation.Y;
+		App->CL_Vm_Model->S_Bones[Count]->TranslationStart.Z = B.Translation.Z;
+
+		Count++;
+	}
 }
 
 // *************************************************************************
