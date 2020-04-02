@@ -195,7 +195,6 @@
     <ClInclude Include="GD19_Utilities.h" />
     <ClInclude Include="GD19_Visuals.h" />
     <ClInclude Include="GD_Bt_Render.h" />
-    <ClInclude Include="GD_File_Data.h" />
     <ClInclude Include="GD_ImGui.h" />
     <ClInclude Include="GD_Keyboard.h" />
     <ClInclude Include="GD_spdlog.h" />
@@ -255,7 +254,6 @@
     <ClCompile Include="GD19_Utilities.cpp" />
     <ClCompile Include="GD19_Visuals.cpp" />
     <ClCompile Include="GD_Bt_Render.cpp" />
-    <ClCompile Include="GD_File_Data.cpp" />
     <ClCompile Include="GD_ImGui.cpp" />
     <ClCompile Include="GD_Keyboard.cpp" />
     <ClCompile Include="GD_spdlog.cpp" />

@@ -55,7 +55,6 @@ distribution.
 #include "GD_spdlog.h"
 #include "GD_ImGui.h"
 #include "GD19_PB.h"
-#include "GD_File_Data.h"
 #include "GD_Keyboard.h"
 
 #include "GD19_FileView_V2.h" // Test
@@ -109,7 +108,6 @@ public:
 	GD_spdlog*			Cl_spdlog;
 	GD_ImGui*			Cl_ImGui;
 	GD19_PB*			Cl_PB;
-	GD_File_Data*		Cl_File_Data;
 	GD_Keyboard*		Cl_Keyboard;
 
 	// Vima19 19/03/20
