@@ -135,7 +135,7 @@ float GD19_Utilities::floatPercent(int Val)
 // *************************************************************************
 float GD19_Utilities::DegreesToRadians(float Degrees)
 {
-	float Radians = 0;//(Degrees * GE_PI)/180;
+	float Radians = (Degrees * GE_PI)/180;
 	return Radians;
 }
 

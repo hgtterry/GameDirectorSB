@@ -832,7 +832,14 @@ LRESULT CALLBACK VM_TopBar::Dimensions_TB_Proc(HWND hDlg, UINT message, WPARAM w
 	{
 		if (LOWORD(wParam) == IDC_TBROTATION) // Rotation
 		{
-			App->Say("RR");
+			if (App->CL_Vm_ImGui->Show_Rotation == 1)
+			{
+				App->CL_Vm_ImGui->Show_Rotation = 0;
+			}
+			else
+			{
+				App->CL_Vm_ImGui->Show_Rotation = 1;
+			}
 			return TRUE;
 		}
 

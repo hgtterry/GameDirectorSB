@@ -50,6 +50,18 @@ VM_Genisis3D::VM_Genisis3D()
 	FrameSpeed = (float)1.15;;
 	m_CurrentPose = NULL;
 	AnimationSpeed = (float)0.005;
+
+	Actor_Position.X = 0;
+	Actor_Position.Y = 0;
+	Actor_Position.Z = 0;
+
+	Actor_Rotation.X = 0;
+	Actor_Rotation.Y = 0;
+	Actor_Rotation.Z = 0;
+
+	Actor_Scale.X = 0;
+	Actor_Scale.Y = 0;
+	Actor_Scale.Z = 0;
 }
 
 
@@ -1251,6 +1263,35 @@ bool VM_Genisis3D::Export_VectorIRotate(const geXForm3d* matrix, const geVec3d* 
 	result->Y = angle.X*matrix->AY + angle.Y*matrix->BY + angle.Z*matrix->CY;
 
 	result->Z = angle.X*matrix->AZ + angle.Y*matrix->BZ + angle.Z*matrix->CZ;
+
+	return 1;
+}
+
+// *************************************************************************
+// *								MoveActor		 					   *
+// *************************************************************************
+bool VM_Genisis3D::MoveActor(void)
+{
+	geXForm3d XForm;
+	geVec3d Angles;
+
+	Angles.X = App->Cl_Utilities->DegreesToRadians(Actor_Rotation.X);
+	Angles.Y = App->Cl_Utilities->DegreesToRadians(Actor_Rotation.Y);
+	Angles.Z = App->Cl_Utilities->DegreesToRadians(Actor_Rotation.Z);
+
+	geXForm3d_SetIdentity(&XForm);
+
+	geXForm3d_RotateX(&XForm, Angles.X);
+	geXForm3d_RotateY(&XForm, Angles.Y);
+	geXForm3d_RotateZ(&XForm, Angles.Z);
+
+	geXForm3d_Translate(&XForm, Actor_Position.X, Actor_Position.Y, Actor_Position.Z);
+
+	geActor_ClearPose(TestActor, &XForm);
+
+	RenderActor(TestActor->Puppet, TestActor->Pose);
+	GetBoneMoveMent();
+	Animate(0);
 
 	return 1;
 }

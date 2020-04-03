@@ -53,6 +53,8 @@ public:
 
 	void Export_As_Actor(void);
 
+	bool MoveActor(void);
+
 	char MotionName[255];
 	float m_CurrentPose;
 	float AnimationSpeed;
@@ -61,6 +63,10 @@ public:
 	geActor_Def* ActorDef_Memory;
 	geBody* ActorBody_Memory;
 	geActor * TestActor;
+
+	geVec3d Actor_Position;
+	geVec3d Actor_Rotation;
+	geVec3d Actor_Scale;
 
 protected:
 

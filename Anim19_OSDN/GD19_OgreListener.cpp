@@ -105,7 +105,7 @@ bool GD19_OgreListener::frameStarted(const FrameEvent& evt)
 
 		if (Show_ImGui_Panels == 1)
 		{
-			App->Cl_ImGui->Render_Main_Panels();
+			App->CL_Vm_ImGui->Render_ImGui();
 		}
 
 		/*if (Animate_Ogre == 1 && GD_CameraMode == Enums::CamDetached)

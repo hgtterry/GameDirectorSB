@@ -557,13 +557,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		case ID_WINDOWS_TESTIMGUI:
 		{
-			if (App->Cl_ImGui->Show_ImGui_Test == 1)
+			if (App->CL_Vm_ImGui->Show_ImGui_Test == 1)
 			{
-				App->Cl_ImGui->Show_ImGui_Test = 0;
+				App->CL_Vm_ImGui->Show_ImGui_Test = 0;
 			}
 			else
 			{
-				App->Cl_ImGui->Show_ImGui_Test = 1;
+				App->CL_Vm_ImGui->Show_ImGui_Test = 1;
 			}
 			return 1;
 		}
