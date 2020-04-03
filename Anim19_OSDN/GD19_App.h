@@ -70,6 +70,7 @@ distribution.
 #include "VM_Motions.h"
 #include "VM_Exporter.h"
 #include "VM_FileIO.h"
+#include "VM_ImGui.h"
 
 
 class GD19_App
@@ -121,6 +122,7 @@ public:
 	VM_Motions*			CL_Vm_Motions;
 	VM_Exporter*		CL_Vm_Exporter;
 	VM_FileIO*			CL_Vm_FileIO;
+	VM_ImGui*			CL_Vm_ImGui;
 
 
 	GD19_App(void);
