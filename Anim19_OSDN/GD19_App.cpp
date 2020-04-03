@@ -37,7 +37,7 @@ GD19_App::GD19_App(void)
 	Cl_Panels =			nullptr;
 	Cl_Load_Scene =		nullptr;
 	Cl_Save_Scene =		nullptr;
-	Cl_File_IO =		nullptr;
+
 	Cl_Scene_Data =		nullptr;
 	Cl_Bullet =			nullptr;
 	Cl_Player =			nullptr;
@@ -71,6 +71,7 @@ GD19_App::GD19_App(void)
 	CL_Vm_TopBar =		nullptr;
 	CL_Vm_Motions =		nullptr;
 	CL_Vm_Exporter =	nullptr;
+	CL_Vm_FileIO =		nullptr;
 
 
 	Fdlg = nullptr;
@@ -160,7 +161,7 @@ bool GD19_App::InitApp(void)
 	Cl_Panels =			new GD19_Panels();
 	Cl_Load_Scene =		new GD19_Load_Scene();
 	Cl_Save_Scene =		new GD19_Save_Scene();
-	Cl_File_IO =		new GD19_File_IO();
+
 	Cl_Scene_Data =		new GD19_Scene_Data();
 	Cl_Bullet =			new GD19_Bullet();		
 	Cl_Player =			new GD19_Player();
@@ -195,6 +196,7 @@ bool GD19_App::InitApp(void)
 	CL_Vm_TopBar =		new VM_TopBar();
 	CL_Vm_Motions =		new VM_Motions();
 	CL_Vm_Exporter =	new VM_Exporter();
+	CL_Vm_FileIO =			new VM_FileIO();
 	
 	SetBrushes_Fonts();
 

@@ -317,10 +317,10 @@ int __stdcall VM_FileIO::BrowseCallbackProc(HWND  hwnd, UINT  uMsg, LPARAM  lPar
 		if (!bRet)
 		{
 			::EnableWindow(GetDlgItem(hwnd, IDOK), FALSE);
-			strcpy(App->Cl_File_IO->szSelectedDir, "");
+			strcpy(App->CL_Vm_FileIO->szSelectedDir, "");
 		}
 		else
-			strcpy(App->Cl_File_IO->szSelectedDir, szDir);
+			strcpy(App->CL_Vm_FileIO->szSelectedDir, szDir);
 	}
 
 	return 0;

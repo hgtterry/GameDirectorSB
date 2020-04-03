@@ -18,7 +18,7 @@ VM_Importer::~VM_Importer()
 bool VM_Importer::Genesis3D_Loader(void)
 {
 
-	int Result = App->Cl_File_IO->Vm_OpenFile("RF Actor   *.act\0*.act\0", "RF Actor", NULL);
+	int Result = App->CL_Vm_FileIO->Vm_OpenFile("RF Actor   *.act\0*.act\0", "RF Actor", NULL);
 	if (Result == 0)
 	{
 		return 1;

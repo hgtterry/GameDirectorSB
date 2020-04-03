@@ -25,18 +25,18 @@ bool GD19_Load_Scene::OpenScene(bool AskForScene)
 {
 	if (AskForScene == 1)
 	{
-		int test = App->Cl_File_IO->OpenFile("Scene Files   *.gdscene\0*.gdscene\0", "gdscene", "Media\\Levels");
+		int test = App->CL_Vm_FileIO->OpenFile("Scene Files   *.gdscene\0*.gdscene\0", "gdscene", "Media\\Levels");
 		if (test == 0) { return 1; }
 	}
 
 
 	File_Is_Loading = 1; // Signal File is loading 
 
-	App->Cl_File_IO->Update_File_Info(App->Cl_File_IO->Scene_Path_FileName, App->Cl_File_IO->Scene_FileName);
+	App->CL_Vm_FileIO->Update_File_Info(App->CL_Vm_FileIO->Scene_Path_FileName, App->CL_Vm_FileIO->Scene_FileName);
 
 	gdLoader_LoadGDScene_New(); // Load All of the Scene
 
-	SetWindowText(App->MainHwnd, App->Cl_File_IO->Scene_Path_FileName);
+	SetWindowText(App->MainHwnd, App->CL_Vm_FileIO->Scene_Path_FileName);
 
 	File_Is_Loading = 0; // Signal File is Loaded 
 
@@ -61,7 +61,7 @@ bool GD19_Load_Scene::gdLoader_LoadGDScene_New()
 	int TagFloat = 0;
 	int TagInt = 0;
 
-	App->Cl_Ini->SetPathName(App->Cl_File_IO->Scene_Path_FileName);
+	App->Cl_Ini->SetPathName(App->CL_Vm_FileIO->Scene_Path_FileName);
 
 	////========== Version
 	
@@ -614,7 +614,7 @@ bool GD19_Load_Scene::Load_Player_Locations40()
 	strcat(PathTemp, App->Cl_Scene_Data->S_Scene[0]->LevelName);
 	strcat(PathTemp, ".gpl");
 
-	bool test = App->Cl_File_IO->SearchFolders("", PathTemp);
+	bool test = App->CL_Vm_FileIO->SearchFolders("", PathTemp);
 
 	if (test == 0)
 	{
@@ -715,7 +715,7 @@ bool GD19_Load_Scene::Load_Stock_Sounds40()
 	strcat(PathTemp, App->Cl_Scene_Data->S_Scene[0]->LevelName);
 	strcat(PathTemp, ".gss");
 
-	bool test = App->Cl_File_IO->SearchFolders("", PathTemp);
+	bool test = App->CL_Vm_FileIO->SearchFolders("", PathTemp);
 
 	if (test == 0)
 	{

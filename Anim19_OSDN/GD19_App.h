@@ -69,6 +69,7 @@ distribution.
 #include "VM_TopBar.h"
 #include "VM_Motions.h"
 #include "VM_Exporter.h"
+#include "VM_FileIO.h"
 
 
 class GD19_App
@@ -84,7 +85,7 @@ public:
 	GD19_Panels*		Cl_Panels;
 	GD19_Load_Scene*	Cl_Load_Scene;
 	GD19_Save_Scene*	Cl_Save_Scene;
-	GD19_File_IO*		Cl_File_IO;
+	
 	GD19_Scene_Data*	Cl_Scene_Data;
 	GD19_Bullet*		Cl_Bullet;
 	GD19_Player*		Cl_Player;
@@ -119,6 +120,7 @@ public:
 	VM_TopBar*			CL_Vm_TopBar;
 	VM_Motions*			CL_Vm_Motions;
 	VM_Exporter*		CL_Vm_Exporter;
+	VM_FileIO*			CL_Vm_FileIO;
 
 
 	GD19_App(void);

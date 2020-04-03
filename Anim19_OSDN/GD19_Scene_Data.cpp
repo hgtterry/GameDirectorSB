@@ -642,14 +642,14 @@ bool GD19_Scene_Data::Start_UpScene()
 		strcat(ParhFile, "\\");
 		strcat(ParhFile, "Media\\Levels\\StartLevel_40.GDScene");
 
-		strcpy(App->Cl_File_IO->Scene_FileName, FileName);
-		strcpy(App->Cl_File_IO->Scene_Path_FileName, ParhFile);
+		strcpy(App->CL_Vm_FileIO->Scene_FileName, FileName);
+		strcpy(App->CL_Vm_FileIO->Scene_Path_FileName, ParhFile);
 		return 1;
 	}
 	else
 	{
-		App->Cl_Ini->GetString("Startup", "Scene_FileName", App->Cl_File_IO->Scene_FileName,1024);
-		App->Cl_Ini->GetString("Startup", "Scene_Path_FileName", App->Cl_File_IO->Scene_Path_FileName,1024);
+		App->Cl_Ini->GetString("Startup", "Scene_FileName", App->CL_Vm_FileIO->Scene_FileName,1024);
+		App->Cl_Ini->GetString("Startup", "Scene_Path_FileName", App->CL_Vm_FileIO->Scene_Path_FileName,1024);
 		return 1;
 	}
 

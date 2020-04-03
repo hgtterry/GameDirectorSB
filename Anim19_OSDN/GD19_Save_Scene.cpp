@@ -25,11 +25,11 @@ GD19_Save_Scene::~GD19_Save_Scene(void)
 // *************************************************************************
 bool GD19_Save_Scene::Create_NewScene()
 {
-	int test = App->Cl_File_IO->SaveFileCom("Scene Files   *.GDScene\0*.GDScene\0", "GDScene",NULL);
+	int test = App->CL_Vm_FileIO->SaveFileCom("Scene Files   *.GDScene\0*.GDScene\0", "GDScene",NULL);
 	if (test == 0) { return 1; }
 
-	strcpy(New_Scene_File, App->Cl_File_IO->mSaveFileCom);
-	strcpy(New_Scene_Path_File, App->Cl_File_IO->mSavePathFileCom);
+	strcpy(New_Scene_File, App->CL_Vm_FileIO->mSaveFileCom);
+	strcpy(New_Scene_Path_File, App->CL_Vm_FileIO->mSavePathFileCom);
 
 	if (_stricmp(New_Scene_File + strlen(New_Scene_File) - 8, ".GDScene") != 0)
 	{
@@ -174,20 +174,20 @@ bool GD19_Save_Scene::SaveGDScene_40(bool AskForFile)
 
 	if (AskForFile == 1)
 	{
-		int test = App->Cl_File_IO->SaveFile("Scene Files   *.GDScene\0*.GDScene\0", "GDScene", App->Cl_Scene_Data->S_Scene[0]->GDSceneName);
+		int test = App->CL_Vm_FileIO->SaveFile("Scene Files   *.GDScene\0*.GDScene\0", "GDScene", App->Cl_Scene_Data->S_Scene[0]->GDSceneName);
 		if (test == 0) { return 1; }
 
-		if (_stricmp(App->Cl_File_IO->Full_Path_And_File + strlen(App->Cl_File_IO->Full_Path_And_File) - 8, ".GDScene") != 0)
+		if (_stricmp(App->CL_Vm_FileIO->Full_Path_And_File + strlen(App->CL_Vm_FileIO->Full_Path_And_File) - 8, ".GDScene") != 0)
 		{
-			strcat(App->Cl_File_IO->Full_Path_And_File, ".GDScene");
+			strcat(App->CL_Vm_FileIO->Full_Path_And_File, ".GDScene");
 		}
 
-		if (_stricmp(App->Cl_File_IO->Just_FileName + strlen(App->Cl_File_IO->Just_FileName) - 8, ".GDScene") != 0)
+		if (_stricmp(App->CL_Vm_FileIO->Just_FileName + strlen(App->CL_Vm_FileIO->Just_FileName) - 8, ".GDScene") != 0)
 		{
-			strcat(App->Cl_File_IO->Just_FileName, ".GDScene");
+			strcat(App->CL_Vm_FileIO->Just_FileName, ".GDScene");
 		}
 
-		App->Cl_File_IO->Update_File_Info(App->Cl_File_IO->Full_Path_And_File, App->Cl_File_IO->Just_FileName);
+		App->CL_Vm_FileIO->Update_File_Info(App->CL_Vm_FileIO->Full_Path_And_File, App->CL_Vm_FileIO->Just_FileName);
 
 		mLevel_Directory[0] = 0;
 
@@ -197,10 +197,10 @@ bool GD19_Save_Scene::SaveGDScene_40(bool AskForFile)
 		DLog(App->Cl_Scene_Data->S_Scene[0]->LevelName);
 	}
 
-	DLog(App->Cl_File_IO->Full_Path_And_File);
+	DLog(App->CL_Vm_FileIO->Full_Path_And_File);
 	
 
-	WriteScene = fopen(App->Cl_File_IO->Full_Path_And_File, "wt");
+	WriteScene = fopen(App->CL_Vm_FileIO->Full_Path_And_File, "wt");
 	if (!WriteScene)
 	{
 		App->Say("Cant Create Level Files");
@@ -229,7 +229,7 @@ bool GD19_Save_Scene::SaveGDScene_40(bool AskForFile)
 	Write_Player_Locations_New();
 	Write_Stock_Sounds_New();
 
-	SetWindowText(App->MainHwnd, App->Cl_File_IO->Full_Path_And_File);
+	SetWindowText(App->MainHwnd, App->CL_Vm_FileIO->Full_Path_And_File);
 
 	strcpy(App->Cl_FileView->LevelName, App->Cl_Scene_Data->S_Scene[0]->LevelName);
 	App->Cl_FileView->ChangeItem_Name(App->Cl_FileView->GD_LevelFolder, App->Cl_Scene_Data->S_Scene[0]->LevelName);

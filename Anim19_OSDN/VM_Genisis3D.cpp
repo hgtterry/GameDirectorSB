@@ -1090,7 +1090,7 @@ bool VM_Genisis3D::FillTextureInfo(void)
 void VM_Genisis3D::Export_As_Actor(void)
 {
 	
-	//App->Cl_File_IO->Create_Output_Folder("_Actor");  // Create Main Folder for Output
+	//App->CL_Vm_FileIO->Create_Output_Folder("_Actor");  // Create Main Folder for Output
 
 	//char Temp[1024];
 	//strcpy(Temp, App->CL_FileIO->OutputFolder);

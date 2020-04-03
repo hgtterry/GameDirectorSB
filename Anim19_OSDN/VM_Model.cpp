@@ -175,8 +175,8 @@ void VM_Model::Reset_Counters(void)
 // *************************************************************************
 void VM_Model::Set_Paths(void)
 {
-	strcpy(FileName, App->Cl_File_IO->Model_FileName);
-	strcpy(Path_FileName, App->Cl_File_IO->Model_Path_FileName);
+	strcpy(FileName, App->CL_Vm_FileIO->Model_FileName);
+	strcpy(Path_FileName, App->CL_Vm_FileIO->Model_Path_FileName);
 
 	// Get Texure path assumed at this point to be where model is
 	int len1 = strlen(FileName);
