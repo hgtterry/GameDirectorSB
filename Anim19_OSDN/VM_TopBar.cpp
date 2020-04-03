@@ -9,6 +9,7 @@ VM_TopBar::VM_TopBar()
 	TabsHwnd =	nullptr;
 	TB_1 =		nullptr;
 	Motions_TB_hWnd = nullptr;
+	Tabs_TB_hWnd = nullptr;
 }
 
 
@@ -40,6 +41,7 @@ LRESULT CALLBACK VM_TopBar::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 		Font11 = CreateFont(-16, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Aerial Black");
 		SendMessage(App->CL_Vm_TopBar->TabsHwnd, WM_SETFONT, (unsigned int)Font11, 0);*/
 
+		App->CL_Vm_TopBar->Start_Tabs();
 		App->CL_Vm_TopBar->Start_TB1();
 		App->CL_Vm_TopBar->Start_Motions_TB();
 		
@@ -71,22 +73,6 @@ LRESULT CALLBACK VM_TopBar::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 
 	case WM_COMMAND:
 		
-		// ------------------------------------------ Tabs
-
-		if (LOWORD(wParam) == IDC_TBMOTIONS)
-		{
-			ShowWindow(App->CL_Vm_TopBar->Motions_TB_hWnd, SW_SHOW);
-			ShowWindow(App->CL_Vm_TopBar->TB_1, SW_HIDE);
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDC_TBOLD)
-		{
-			ShowWindow(App->CL_Vm_TopBar->TB_1, SW_SHOW);
-			ShowWindow(App->CL_Vm_TopBar->Motions_TB_hWnd, SW_HIDE);
-			return TRUE;
-		}
-
 		// -----------------------------------------------------
 
 		if (LOWORD(wParam) == IDC_TBSHOWTEXTURE)
@@ -233,11 +219,65 @@ LRESULT CALLBACK VM_TopBar::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 }
 
 // *************************************************************************
+// *							Start_Tabs Terry						   *
+// *************************************************************************
+void VM_TopBar::Start_Tabs(void)
+{
+	Tabs_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_TAB, App->CL_Vm_TopBar->TabsHwnd, (DLGPROC)Tabs_Proc);
+}
+
+// *************************************************************************
+// *								Tabs_Proc_Proc						   *
+// *************************************************************************
+LRESULT CALLBACK VM_TopBar::Tabs_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_CBMOTIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		return TRUE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->Brush_Green;
+	}
+
+	case WM_NOTIFY:
+	{
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+		if (LOWORD(wParam) == IDC_TBMOTIONS)
+		{
+			ShowWindow(App->CL_Vm_TopBar->Motions_TB_hWnd, SW_SHOW);
+			ShowWindow(App->CL_Vm_TopBar->TB_1, SW_HIDE);
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_TBOLD)
+		{
+			ShowWindow(App->CL_Vm_TopBar->TB_1, SW_SHOW);
+			ShowWindow(App->CL_Vm_TopBar->Motions_TB_hWnd, SW_HIDE);
+			return TRUE;
+		}
+
+	}
+	}
+	return FALSE;
+}
+
+// *************************************************************************
 // *						Start_TB1 Terry Berine						   *
 // *************************************************************************
 void VM_TopBar::Start_TB1(void)
 {
-	TB_1 = CreateDialog(App->hInst, (LPCTSTR)IDD_TB1, App->CL_Vm_TopBar->TabsHwnd, (DLGPROC)TB1_Proc);
+	TB_1 = CreateDialog(App->hInst, (LPCTSTR)IDD_TB1, Tabs_TB_hWnd, (DLGPROC)TB1_Proc);
 	Init_Bmps_TB1();
 }
 
@@ -660,7 +700,7 @@ void VM_TopBar::Init_Bmps_TB1(void)
 // *************************************************************************
 void VM_TopBar::Start_Motions_TB(void)
 {
-	Motions_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_MOTIONS, App->CL_Vm_TopBar->TabsHwnd, (DLGPROC)Motions_TB_Proc);
+	Motions_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_MOTIONS, Tabs_TB_hWnd, (DLGPROC)Motions_TB_Proc);
 	//Init_Bmps_TB1();
 }
 
