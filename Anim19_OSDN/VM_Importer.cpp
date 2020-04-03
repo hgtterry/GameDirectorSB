@@ -34,7 +34,7 @@ bool VM_Importer::Genesis3D_Loader(void)
 	App->CL_Vm_Model->Set_Paths();
 
 
-	App->CL_Vm_Genesis3D->LoadActor();
+	App->CL_Vm_Genesis3D->Import_LoadActor();
 
 	
 	App->CL_Vm_Model->Model_Type = LoadedFile_Actor;

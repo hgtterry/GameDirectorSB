@@ -42,7 +42,7 @@ public:
 	VM_Genisis3D();
 	~VM_Genisis3D();
 
-	void LoadActor(void);
+	void Import_LoadActor(void);
 
 	bool GetMotion(char *mMotionName);
 
@@ -64,7 +64,7 @@ public:
 
 protected:
 
-	bool AddActor(char* FileName);
+	bool Import_AddActor(char* FileName);
 	bool BuildActor(geActor *Actor);
 	gePuppet* CreatePuppet(geVFile *TextureFS, const geBody *B);
 	geBodyInst* CreateGeometry(const geBody *B);
@@ -87,7 +87,7 @@ protected:
 	void Get_MotionNames(void);
 	void Get_TextureNames(void);
 
-	bool LoadActorTextures(void);
+	bool Import_LoadActorTextures(void);
 	bool SetTexture_Type(void);
 	void CreateTextureInfo(void);
 	bool FillTextureInfo(void);

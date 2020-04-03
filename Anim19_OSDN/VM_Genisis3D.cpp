@@ -60,10 +60,10 @@ VM_Genisis3D::~VM_Genisis3D()
 // *************************************************************************
 // *						LoadActor Terry Bernie					 	   *
 // *************************************************************************
-void VM_Genisis3D::LoadActor(void)
+void VM_Genisis3D::Import_LoadActor(void)
 {
 
-	AddActor(App->CL_Vm_Model->Path_FileName);
+	Import_AddActor(App->CL_Vm_Model->Path_FileName);
 
 	SetCounters();
 
@@ -78,7 +78,7 @@ void VM_Genisis3D::LoadActor(void)
 	Get_TextureNames();
 
 	
-	LoadActorTextures();
+	Import_LoadActorTextures();
 
 	App->Say("Loaded5");
 
@@ -341,7 +341,7 @@ void VM_Genisis3D::SetCounters(void)
 // *************************************************************************
 // *						AddActor Terry Bernie	  			  	 	   *
 // *************************************************************************
-bool VM_Genisis3D::AddActor(char* FileName)
+bool VM_Genisis3D::Import_AddActor(char* FileName)
 {
 	if (TestActor)
 	{
@@ -379,8 +379,6 @@ bool VM_Genisis3D::AddActor(char* FileName)
 
 	Animate(0);
 	GetUVs();
-
-	//Set_Scene();
 
 	return 1;
 }
@@ -896,7 +894,7 @@ bool VM_Genisis3D::GetUVs()
 // *************************************************************************
 // *						LoadActorTextures							   *
 // *************************************************************************
-bool VM_Genisis3D::LoadActorTextures(void)
+bool VM_Genisis3D::Import_LoadActorTextures(void)
 {
 	strcpy(TempTextureFile_BMP, App->CL_Vm_Model->Texture_FolderPath);
 	strcat(TempTextureFile_BMP, "TextureLoad.bmp");
