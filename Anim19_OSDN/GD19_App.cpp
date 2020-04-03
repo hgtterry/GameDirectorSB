@@ -70,6 +70,7 @@ GD19_App::GD19_App(void)
 	CL_Vm_Textures =	nullptr;
 	CL_Vm_TopBar =		nullptr;
 	CL_Vm_Motions =		nullptr;
+	CL_Vm_Exporter =	nullptr;
 
 
 	Fdlg = nullptr;
@@ -193,6 +194,7 @@ bool GD19_App::InitApp(void)
 	CL_Vm_Textures =	new VM_Textures();
 	CL_Vm_TopBar =		new VM_TopBar();
 	CL_Vm_Motions =		new VM_Motions();
+	CL_Vm_Exporter =	new VM_Exporter();
 	
 	SetBrushes_Fonts();
 

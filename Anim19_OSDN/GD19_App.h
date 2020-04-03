@@ -68,6 +68,7 @@ distribution.
 #include "VM_Textures.h"
 #include "VM_TopBar.h"
 #include "VM_Motions.h"
+#include "VM_Exporter.h"
 
 
 class GD19_App
@@ -117,6 +118,7 @@ public:
 	VM_Textures*		CL_Vm_Textures;
 	VM_TopBar*			CL_Vm_TopBar;
 	VM_Motions*			CL_Vm_Motions;
+	VM_Exporter*		CL_Vm_Exporter;
 
 
 	GD19_App(void);
