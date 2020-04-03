@@ -8,8 +8,11 @@ VM_TopBar::VM_TopBar()
 {
 	TabsHwnd =	nullptr;
 	TB_1 =		nullptr;
-	Motions_TB_hWnd = nullptr;
+	
 	Tabs_TB_hWnd = nullptr;
+
+	Motions_TB_hWnd =		nullptr;
+	Dimensions_TB_hWnd =	nullptr;
 }
 
 
@@ -44,6 +47,7 @@ LRESULT CALLBACK VM_TopBar::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 		App->CL_Vm_TopBar->Start_Tabs();
 		App->CL_Vm_TopBar->Start_TB1();
 		App->CL_Vm_TopBar->Start_Motions_TB();
+		App->CL_Vm_TopBar->Start_Dimensions_TB();
 		
 
 		return TRUE;
@@ -253,23 +257,44 @@ LRESULT CALLBACK VM_TopBar::Tabs_Proc(HWND hDlg, UINT message, WPARAM wParam, LP
 
 	case WM_COMMAND:
 	{
-		if (LOWORD(wParam) == IDC_TBMOTIONS)
-		{
-			ShowWindow(App->CL_Vm_TopBar->Motions_TB_hWnd, SW_SHOW);
-			ShowWindow(App->CL_Vm_TopBar->TB_1, SW_HIDE);
-			return TRUE;
-		}
 
 		if (LOWORD(wParam) == IDC_TBOLD)
 		{
+			App->CL_Vm_TopBar->Hide_Tabs();
 			ShowWindow(App->CL_Vm_TopBar->TB_1, SW_SHOW);
-			ShowWindow(App->CL_Vm_TopBar->Motions_TB_hWnd, SW_HIDE);
+
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_TBMOTIONS)
+		{
+			App->CL_Vm_TopBar->Hide_Tabs();
+			ShowWindow(App->CL_Vm_TopBar->Motions_TB_hWnd, SW_SHOW);
+			
+			return TRUE;
+		}
+
+
+		if (LOWORD(wParam) == IDC_TBDIMENSIONS)
+		{
+			App->CL_Vm_TopBar->Hide_Tabs();
+			ShowWindow(App->CL_Vm_TopBar->Dimensions_TB_hWnd, SW_SHOW);
+			
+			return TRUE;
+		}
 	}
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *						Hide_Tabs Terry Berine						   *
+// *************************************************************************
+void VM_TopBar::Hide_Tabs(void)
+{
+	ShowWindow(App->CL_Vm_TopBar->TB_1, SW_HIDE);
+	ShowWindow(App->CL_Vm_TopBar->Motions_TB_hWnd, SW_HIDE);
+	ShowWindow(App->CL_Vm_TopBar->Dimensions_TB_hWnd, SW_HIDE);
 }
 
 // *************************************************************************
@@ -762,6 +787,53 @@ LRESULT CALLBACK VM_TopBar::Motions_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 			}
 			}
+		}
+
+		return FALSE;
+	}
+	}
+	return FALSE;
+}
+
+// *************************************************************************
+// *						Start_Dimensions_TB Terry					   *
+// *************************************************************************
+void VM_TopBar::Start_Dimensions_TB(void)
+{
+	Dimensions_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_DIMENSIONS, Tabs_TB_hWnd, (DLGPROC)Dimensions_TB_Proc);
+}
+
+// *************************************************************************
+// *								Dimensions_TB_Proc					   *
+// *************************************************************************
+LRESULT CALLBACK VM_TopBar::Dimensions_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_CBMOTIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		return TRUE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_NOTIFY:
+	{
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+		if (LOWORD(wParam) == IDC_TBROTATION) // Rotation
+		{
+			App->Say("RR");
+			return TRUE;
 		}
 
 		return FALSE;

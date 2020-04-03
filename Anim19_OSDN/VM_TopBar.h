@@ -9,8 +9,10 @@ public:
 
 	HWND TabsHwnd;
 	HWND TB_1;
-	HWND Motions_TB_hWnd;
 	HWND Tabs_TB_hWnd;
+
+	HWND Motions_TB_hWnd;
+	HWND Dimensions_TB_hWnd;
 
 protected:
 
@@ -19,6 +21,7 @@ protected:
 	static LRESULT CALLBACK TB1_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	static LRESULT CALLBACK Motions_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Dimensions_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	static LRESULT CALLBACK Tabs_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
@@ -26,7 +29,10 @@ protected:
 	void Init_Bmps_TB1(void);
 
 	void Start_Motions_TB(void);
+	void Start_Dimensions_TB(void);
 
 	void Start_Tabs(void);
+
+	void Hide_Tabs(void);
 };
 
