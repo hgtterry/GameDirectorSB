@@ -1083,3 +1083,29 @@ bool VM_Genisis3D::FillTextureInfo(void)
 
 	return 1;
 }
+
+// *************************************************************************
+// *					Export_As_Actor Terry Berine					   *
+// *************************************************************************
+void VM_Genisis3D::Export_As_Actor(void)
+{
+	
+	//App->Cl_File_IO->Create_Output_Folder("_Actor");  // Create Main Folder for Output
+
+	//char Temp[1024];
+	//strcpy(Temp, App->CL_FileIO->OutputFolder);
+	//strcat(Temp, App->CL_Model_Data->JustName);
+	//strcat(Temp, ".act");
+
+	//if (App->CL_Model_Data->Model_Type == LoadedFile_Actor)
+	//{
+	//	Actor_To_Actor(Temp, App->CL_Genesis_Import->ActorDef_Memory);
+	//}
+	//else
+	//{
+	//	App->CL_Model_Common->Convert_To_GlobalMesh();
+	//	MakeOBJActor(Temp, 0);
+	//}
+
+	//App->Cl_Ogre->Loading_Text("Exporting Finished", 0);
+}

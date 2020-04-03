@@ -51,6 +51,8 @@ public:
 
 	bool GetBoundingBoxModel_Update(void);
 
+	void Export_As_Actor(void);
+
 	char MotionName[255];
 	float m_CurrentPose;
 	float AnimationSpeed;

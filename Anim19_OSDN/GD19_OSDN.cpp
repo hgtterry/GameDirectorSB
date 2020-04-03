@@ -211,6 +211,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return 1;
 		}
 
+		case ID_EXPORT_GENESIS3D:
+		{
+			App->CL_Vm_Exporter->Actor_Model();
+			return 1;
+		}
+
+
 		case ID_FILE_CLEAR:
 		{
 			App->CL_Vm_Model->Clear_ModelData();
