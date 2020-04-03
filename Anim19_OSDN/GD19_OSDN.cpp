@@ -211,7 +211,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return 1;
 		}
 
-		case ID_IMPORT_CLEAR:
+		case ID_FILE_CLEAR:
 		{
 			App->CL_Vm_Model->Clear_ModelData();
 			return 1;
