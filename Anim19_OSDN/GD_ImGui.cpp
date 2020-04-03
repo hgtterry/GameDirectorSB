@@ -556,7 +556,7 @@ void GD_ImGui::ImGui_FPS(void)
 	{
 		if (StartPos == 0)
 		{
-			ImGui::SetWindowPos("Ogre Data",ImVec2(400, 10));
+			ImGui::SetWindowPos("Ogre Data",ImVec2(10, 550));
 			ImGui::SetWindowSize(ImVec2(350, 90));
 			StartPos = 1;
 		}

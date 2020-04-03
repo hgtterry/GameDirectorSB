@@ -207,6 +207,19 @@ LRESULT CALLBACK VM_TopBar::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_TBINFO)
+		{
+			if (App->Cl_ImGui->Show_ImGui_Counters == 1)
+			{
+				App->Cl_ImGui->Show_ImGui_Counters = 0;
+			}
+			else
+			{
+				App->Cl_ImGui->Show_ImGui_Counters = 1;
+			}
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDCANCEL)
 		{
 			

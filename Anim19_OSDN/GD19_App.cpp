@@ -274,10 +274,10 @@ bool GD19_App::Resize_OgreWin(void)
 			Root::getSingletonPtr()->renderOneFrame();
 		}
 
-		int Width = App->Cl19_Ogre->OgreListener->View_Width;
+		/*int Width = App->Cl19_Ogre->OgreListener->View_Width;
 		int poo = (Width / 2) - 175;
 
-		ImGui::SetWindowPos("Ogre Data", ImVec2(poo, 20));
+		ImGui::SetWindowPos("Ogre Data", ImVec2(poo, 20));*/
 	}
 
 	App->Cl_Panels->MovePhysicsView();
