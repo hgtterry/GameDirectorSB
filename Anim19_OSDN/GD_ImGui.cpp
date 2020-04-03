@@ -123,7 +123,7 @@ GD_ImGui::GD_ImGui()
 	Show_ImGui_Dimensions = 0;
 	Show_ImGui_Properties_Editor = 0;
 	Show_ImGui_Debug_Player = 0;
-	Show_ImGui_FileView = 1;
+	Show_ImGui_FileView = 0;
 	Show_ImGui_Preferences = 0;
 	Show_ImGui_Log = 0;
 	Show_PhysicsConsole = 0;
@@ -181,7 +181,7 @@ void GD_ImGui::Render_Main_Panels(void)
 
 	if (Show_PhysicsConsole == 1)
 	{
-		ImGui_PhysicsConsole();
+		//ImGui_PhysicsConsole();
 	}
 
 	if (Show_Propertities == 1)
@@ -566,14 +566,14 @@ void GD_ImGui::ImGui_FPS(void)
 		ImGui::Text("FPS average %.1f ms/frame (%.0f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 		//ImGui::PopFont();
 
-		ImGui::Spacing();
-		if (ImGui::CollapsingHeader("Camera Position"))
-		{
-			Ogre::Vector3 campos = App->Cl19_Ogre->mCamera->getPosition();
-			//ImGui::PushFont(font2);
-			ImGui::Text("Cam Pos X %.3f Y %.3f Z %.3f", campos.x, campos.y , campos.z);
-			//ImGui::PopFont();
-		}
+		//ImGui::Spacing();
+		//if (ImGui::CollapsingHeader("Camera Position"))
+		//{
+		//	Ogre::Vector3 campos = App->Cl19_Ogre->mCamera->getPosition();
+		//	//ImGui::PushFont(font2);
+		//	ImGui::Text("Cam Pos X %.3f Y %.3f Z %.3f", campos.x, campos.y , campos.z);
+		//	//ImGui::PopFont();
+		//}
 
 		ImGui::Separator();
 
