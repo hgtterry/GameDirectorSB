@@ -326,3 +326,20 @@ int __stdcall VM_FileIO::BrowseCallbackProc(HWND  hwnd, UINT  uMsg, LPARAM  lPar
 	return 0;
 }
 
+// *************************************************************************
+// *					Create_OutPut_Folder Terry Bernie			 	   *
+// *************************************************************************
+bool VM_FileIO::Create_Output_Folder(char* Extension)
+{
+	strcpy(OutputFolder, "");
+
+	strcpy(OutputFolder, App->CL_Vm_FileIO->szSelectedDir);
+	strcat(OutputFolder, "\\");
+	strcat(OutputFolder, App->CL_Vm_Model->JustName);
+	strcat(OutputFolder, Extension);
+	strcat(OutputFolder, "\\");
+
+	CreateDirectory(OutputFolder, NULL);
+	return 0;
+}
+

@@ -1090,22 +1090,171 @@ bool VM_Genisis3D::FillTextureInfo(void)
 void VM_Genisis3D::Export_As_Actor(void)
 {
 	
-	//App->CL_Vm_FileIO->Create_Output_Folder("_Actor");  // Create Main Folder for Output
+	App->CL_Vm_FileIO->Create_Output_Folder("_Actor");  // Create Main Folder for Output
 
-	//char Temp[1024];
-	//strcpy(Temp, App->CL_FileIO->OutputFolder);
-	//strcat(Temp, App->CL_Model_Data->JustName);
-	//strcat(Temp, ".act");
+	char Temp[1024];
+	strcpy(Temp, App->CL_Vm_FileIO->OutputFolder);
+	strcat(Temp, App->CL_Vm_Model->JustName);
+	strcat(Temp, ".act");
 
-	//if (App->CL_Model_Data->Model_Type == LoadedFile_Actor)
-	//{
-	//	Actor_To_Actor(Temp, App->CL_Genesis_Import->ActorDef_Memory);
-	//}
-	//else
-	//{
-	//	App->CL_Model_Common->Convert_To_GlobalMesh();
-	//	MakeOBJActor(Temp, 0);
-	//}
-
-	//App->Cl_Ogre->Loading_Text("Exporting Finished", 0);
+	if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
+	{
+		Export_Actor_To_Actor(Temp, App->CL_Vm_Genesis3D->ActorDef_Memory);
+	}
+	else
+	{
+		/*App->CL_Model_Common->Convert_To_GlobalMesh();
+		MakeOBJActor(Temp, 0);*/
+	}
 }
+
+// *************************************************************************
+// *						Actor_To_Actor Terry Bernie			  	 	   *
+// *************************************************************************
+bool VM_Genisis3D::Export_Actor_To_Actor(char* FileName, geActor_Def *mActorDef)
+{
+	Export_SaveMatric();
+	Export_SortMesh();
+
+	geVFile *VF = NULL;
+
+	VF = geVFile_OpenNewSystem(NULL, GE_VFILE_TYPE_DOS, FileName, NULL, GE_VFILE_OPEN_CREATE);
+	if (VF)
+	{
+		geActor_DefWriteToFile(mActorDef, VF);
+	}
+	else
+	{
+		return 0;
+	}
+
+	geVFile_Close(VF);
+
+	return 1;
+}
+
+// *************************************************************************
+// *							Export_SaveMatric	    				   *
+// *************************************************************************
+bool VM_Genisis3D::Export_SaveMatric()
+{
+	int pb;
+	const char *BoneNameQ;
+	geXForm3d  A;
+	int Count = 0;
+	int BoneCount = ActorDef_Memory->Body->BoneCount;
+
+	while (Count<BoneCount)
+	{
+		geBody_GetBone(ActorDef_Memory->Body, Count, &BoneNameQ, &A, &pb);
+		if (pb<0)
+		{
+			Export_SaveMatric_Bones(Count);
+		}
+		Count++;
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *						Export_SaveMatric_Bones	    				   *
+// *************************************************************************
+bool VM_Genisis3D::Export_SaveMatric_Bones(int Index)
+{
+	int pb;
+	const char *BoneNameQ;
+
+	geXForm3d  A;
+	geXForm3d  B;
+	geBody_GetBone(ActorDef_Memory->Body, Index, &BoneNameQ, &A, &pb);
+	geActor_GetBoneTransform(TestActor, BoneNameQ, &B);
+
+	ActorDef_Memory->Body->BoneArray[Index].AttachmentMatrix.AX = B.AX;
+	ActorDef_Memory->Body->BoneArray[Index].AttachmentMatrix.AY = B.AY;
+	ActorDef_Memory->Body->BoneArray[Index].AttachmentMatrix.AZ = B.AZ;
+
+	ActorDef_Memory->Body->BoneArray[Index].AttachmentMatrix.BX = B.BX;
+	ActorDef_Memory->Body->BoneArray[Index].AttachmentMatrix.BY = B.BY;
+	ActorDef_Memory->Body->BoneArray[Index].AttachmentMatrix.BZ = B.BZ;
+
+	ActorDef_Memory->Body->BoneArray[Index].AttachmentMatrix.CX = B.CX;
+	ActorDef_Memory->Body->BoneArray[Index].AttachmentMatrix.CY = B.CY;
+	ActorDef_Memory->Body->BoneArray[Index].AttachmentMatrix.CZ = B.CZ;
+
+	ActorDef_Memory->Body->BoneArray[Index].AttachmentMatrix.Translation.X = B.Translation.X;
+	ActorDef_Memory->Body->BoneArray[Index].AttachmentMatrix.Translation.Y = B.Translation.Y;
+	ActorDef_Memory->Body->BoneArray[Index].AttachmentMatrix.Translation.Z = B.Translation.Z;
+
+	return 1;
+}
+
+// *************************************************************************
+// *						Export_SortMesh					  		 	   *
+// *************************************************************************
+bool VM_Genisis3D::Export_SortMesh()
+{
+	int Count = 0;
+	float x;
+	float y;
+	float z;
+	int BoneID = 0;
+	const char* bonename;
+	geXForm3d B;
+	int pb = 0;
+
+	int VertNum = TestActor->Puppet->BodyInstance->ExportGeometry.SkinVertexCount;
+	while (Count < VertNum)
+	{
+
+		BoneID = TestActor->Puppet->BodyInstance->ExportGeometry.SkinVertexArray[Count].ReferenceBoneIndex;
+
+		x = TestActor->Puppet->BodyInstance->ExportGeometry.SkinVertexArray[Count].SVPoint.X;
+		y = TestActor->Puppet->BodyInstance->ExportGeometry.SkinVertexArray[Count].SVPoint.Y;
+		z = TestActor->Puppet->BodyInstance->ExportGeometry.SkinVertexArray[Count].SVPoint.Z;
+
+		App->CL_Vm_Model->vertex_Data[Count].x = x;
+		App->CL_Vm_Model->vertex_Data[Count].y = y;
+		App->CL_Vm_Model->vertex_Data[Count].z = z;
+
+		geBody_GetBone(ActorBody_Memory, BoneID, &bonename, &B, &pb);
+
+		geActor_GetBoneTransform(TestActor, bonename, &B); // Here
+
+		geVec3d angle;
+
+		angle.X = App->CL_Vm_Model->vertex_Data[Count].x - B.Translation.X;
+		angle.Y = App->CL_Vm_Model->vertex_Data[Count].y - B.Translation.Y;
+		angle.Z = App->CL_Vm_Model->vertex_Data[Count].z - B.Translation.Z;
+
+		Export_VectorIRotate(&B, &angle, &angle);
+
+		ActorDef_Memory->Body->XSkinVertexArray[Count].XPoint.X = angle.X;
+		ActorDef_Memory->Body->XSkinVertexArray[Count].XPoint.Y = angle.Y;
+		ActorDef_Memory->Body->XSkinVertexArray[Count].XPoint.Z = angle.Z;
+
+		Count++;
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *					Export_VectorIRotate Terry Bernie  		 	 	   *
+// *************************************************************************
+bool VM_Genisis3D::Export_VectorIRotate(const geXForm3d* matrix, const geVec3d* v, geVec3d* result)
+{
+	geVec3d angle;
+
+	angle = *v;
+
+	result->X = angle.X*matrix->AX + angle.Y*matrix->BX + angle.Z*matrix->CX;
+
+	result->Y = angle.X*matrix->AY + angle.Y*matrix->BY + angle.Z*matrix->CY;
+
+	result->Z = angle.X*matrix->AZ + angle.Y*matrix->BZ + angle.Z*matrix->CZ;
+
+	return 1;
+}
+
+

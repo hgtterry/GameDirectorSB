@@ -92,6 +92,12 @@ protected:
 	void CreateTextureInfo(void);
 	bool FillTextureInfo(void);
 
+	bool Export_Actor_To_Actor(char* FileName, geActor_Def *mActorDef);
+	bool Export_SaveMatric();
+	bool Export_SaveMatric_Bones(int Index);
+	bool Export_SortMesh();
+	bool Export_VectorIRotate(const geXForm3d* matrix, const geVec3d* v, geVec3d* result);
+
 	bool GetBoundingBoxModel_Create(void);
 
 	char TempTextureFile_BMP[1024];

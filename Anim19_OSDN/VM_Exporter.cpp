@@ -31,7 +31,7 @@ void VM_Exporter::Actor_Model(void)
 		return;
 	}
 
-	//App->CL_Export_Actor->Export_As_Actor();
+	App->CL_Vm_Genesis3D->Export_As_Actor();
 
-	//App->CL_Dialogs->Message("RF Actor Saved successfully");
+	App->Say("RF Actor Saved successfully");
 }
