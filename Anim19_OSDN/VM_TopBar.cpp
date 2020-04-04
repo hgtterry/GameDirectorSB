@@ -26,6 +26,7 @@ VM_TopBar::~VM_TopBar()
 bool VM_TopBar::Start_TopBar()
 {
 	CreateDialog(App->hInst,(LPCTSTR)IDD_TOPBAR,App->Fdlg,(DLGPROC)TopBar_Proc);
+	Init_Bmps_TB2();
 	return 1;
 }
 // *************************************************************************
@@ -708,7 +709,7 @@ void VM_TopBar::Init_Bmps_TB1(void)
 
 	// --------------------------------------------------- 
 
-	Temp = GetDlgItem(TB_1, IDC_FIRSTPERSON);
+	/*Temp = GetDlgItem(TB_1, IDC_FIRSTPERSON);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOff_Bmp);
 
 	TOOLINFO ti11 = { 0 };
@@ -717,7 +718,24 @@ void VM_TopBar::Init_Bmps_TB1(void)
 	ti11.uId = (UINT_PTR)Temp;
 	ti11.lpszText = "1st Person View with Physics";
 	ti11.hwnd = App->MainHwnd;
-	SendMessage(hTooltip_TB_1, TTM_ADDTOOL, 0, (LPARAM)&ti11);
+	SendMessage(hTooltip_TB_1, TTM_ADDTOOL, 0, (LPARAM)&ti11);*/
+}
+
+// *************************************************************************
+// *						Init_Bmps_TB2 Terry Bernie					   *
+// *************************************************************************
+void VM_TopBar::Init_Bmps_TB2(void)
+{
+	HWND Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWTEXTURE);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOff_Bmp);
+
+	/*TOOLINFO ti11 = { 0 };
+	ti11.cbSize = sizeof(ti11);
+	ti11.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti11.uId = (UINT_PTR)Temp;
+	ti11.lpszText = "Show Textures";
+	ti11.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_1, TTM_ADDTOOL, 0, (LPARAM)&ti11);*/
 }
 
 // *************************************************************************

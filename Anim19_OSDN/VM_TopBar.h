@@ -26,7 +26,9 @@ protected:
 	static LRESULT CALLBACK Tabs_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Start_TB1(void);
+
 	void Init_Bmps_TB1(void);
+	void Init_Bmps_TB2(void);
 
 	void Start_Motions_TB(void);
 	void Start_Dimensions_TB(void);

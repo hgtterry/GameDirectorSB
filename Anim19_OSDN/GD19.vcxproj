@@ -292,6 +292,7 @@
     <Image Include="Resource\MenuBar\FullScreen.bmp" />
     <Image Include="Resource\MenuBar\ModelData.bmp" />
     <Image Include="Resource\MenuBar\MouseSensitivity.bmp" />
+    <Image Include="Resource\MenuBar\TexturesOff.bmp" />
     <Image Include="small.ico" />
   </ItemGroup>
   <ItemGroup>
