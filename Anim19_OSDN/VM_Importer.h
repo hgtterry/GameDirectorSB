@@ -6,5 +6,6 @@ public:
 	~VM_Importer();
 
 	bool Genesis3D_Loader(void);
+	void Reload_FromResentFiles(char* ResentPathAndFile);
 };
 

@@ -26,7 +26,9 @@ public:
 	void ResentHistory_Clear();
 
 	bool Search_For_Folder(char* FolderPath);
+	void VM_FileIO::CheckPath(char *pString, char *FileName);
 
+	// ----------------------------------
 	bool Cannceled;
 
 	char Scene_FileName[255];
@@ -46,6 +48,8 @@ public:
 	char OutputFolder[1024];
 
 	char UserData_Folder[1024];
+
+	char JustFileName[256];
 
 	std::vector<std::string> mPreviousFiles;
 
