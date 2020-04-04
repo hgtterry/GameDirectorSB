@@ -13,6 +13,8 @@ VM_TopBar::VM_TopBar()
 
 	Motions_TB_hWnd =		nullptr;
 	Dimensions_TB_hWnd =	nullptr;
+
+	Toggle_Faces_Flag = 0;
 }
 
 
@@ -41,16 +43,16 @@ LRESULT CALLBACK VM_TopBar::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 	{
 		App->CL_Vm_TopBar->TabsHwnd = hDlg;
 		
-		/*HFONT Font11;
+		HFONT Font11;
 		Font11 = CreateFont(-16, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Aerial Black");
-		SendMessage(App->CL_Vm_TopBar->TabsHwnd, WM_SETFONT, (unsigned int)Font11, 0);*/
+		
+		SendDlgItemMessage(hDlg, IDC_TBSHOWFACES, WM_SETFONT, (WPARAM)App->Font_CB15_Bold, MAKELPARAM(TRUE, 0));
 
 		App->CL_Vm_TopBar->Start_Tabs();
 		App->CL_Vm_TopBar->Start_TB1();
 		App->CL_Vm_TopBar->Start_Motions_TB();
 		App->CL_Vm_TopBar->Start_Dimensions_TB();
 		
-
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
@@ -73,7 +75,16 @@ LRESULT CALLBACK VM_TopBar::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 
 	case WM_NOTIFY:
 	{
-		return 0;
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_TBSHOWFACES && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_Vm_TopBar->Toggle_Faces_Flag);
+			return CDRF_DODEFAULT;
+		}
+		
+		return CDRF_DODEFAULT;
 	}
 
 	case WM_COMMAND:
@@ -103,10 +114,12 @@ LRESULT CALLBACK VM_TopBar::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 				if (App->Cl19_Ogre->RenderListener->ShowMesh == 1)
 				{
 					App->Cl19_Ogre->RenderListener->ShowMesh = 0;
+					App->CL_Vm_TopBar->Toggle_Faces_Flag = 0;
 				}
 				else
 				{
 					App->Cl19_Ogre->RenderListener->ShowMesh = 1;
+					App->CL_Vm_TopBar->Toggle_Faces_Flag = 1;
 				}
 			}
 			return TRUE;
@@ -726,16 +739,18 @@ void VM_TopBar::Init_Bmps_TB1(void)
 // *************************************************************************
 void VM_TopBar::Init_Bmps_TB2(void)
 {
-	HWND Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWTEXTURE);
-	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOff_Bmp);
+	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
 
-	/*TOOLINFO ti11 = { 0 };
-	ti11.cbSize = sizeof(ti11);
-	ti11.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
-	ti11.uId = (UINT_PTR)Temp;
-	ti11.lpszText = "Show Textures";
-	ti11.hwnd = App->MainHwnd;
-	SendMessage(hTooltip_TB_1, TTM_ADDTOOL, 0, (LPARAM)&ti11);*/
+
+	HWND Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWFACES);
+	TOOLINFO ti2 = { 0 };
+	ti2.cbSize = sizeof(ti2);
+	ti2.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti2.uId = (UINT_PTR)Temp;
+	ti2.lpszText = "Toggle Faces";
+	ti2.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti2);
+
 }
 
 // *************************************************************************

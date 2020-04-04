@@ -63,6 +63,8 @@ public:
 	bool ThirdPerson_Active;
 	bool Selection_Active;
 
+	bool Toggle_Faces_Flag;
+
 protected:
 
 	static LRESULT CALLBACK TopOgre_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);

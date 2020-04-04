@@ -36,5 +36,7 @@ protected:
 	void Start_Tabs(void);
 
 	void Hide_Tabs(void);
+
+	bool Toggle_Faces_Flag;
 };
 
