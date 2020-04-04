@@ -80,15 +80,15 @@ void VM_ImGui::ImGui_Rotation(void)
 		
 		ImGui::Text("  X    Y    Z");
 
+		
 		ImGui::VSliderFloat("##RotationX", ImVec2(70, 260), &App->CL_Vm_Genesis3D->Actor_Rotation.X, 0.0f, 360.0f, "%.2f\nDeg");
 		ImGui::SameLine();
 		ImGui::VSliderFloat("##RotationY", ImVec2(70, 260), &App->CL_Vm_Genesis3D->Actor_Rotation.Y, 0.0f, 360.0f, "%.2f\nDeg");
 		ImGui::SameLine();
 		ImGui::VSliderFloat("##RotationZ", ImVec2(70, 260), &App->CL_Vm_Genesis3D->Actor_Rotation.Z, 0.0f, 360.0f, "%.2f\nDeg");
-
-
+		
 		App->CL_Vm_Genesis3D->MoveActor();
-
+		
 		ImGui::End();
 	}
 }

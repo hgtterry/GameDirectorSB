@@ -66,6 +66,8 @@ public:
 
 	geVec3d Actor_Position;
 	geVec3d Actor_Rotation;
+	geVec3d Actor_Rotation_Old;
+
 	geVec3d Actor_Scale;
 
 protected:
