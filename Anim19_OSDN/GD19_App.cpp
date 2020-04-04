@@ -24,6 +24,8 @@ distribution.
 #include "StdAfx.h"
 #include "resource.h"
 #include "GD19_App.h"
+#include "Shlobj.h"
+
 
 GD19_App::GD19_App(void)
 {
@@ -205,14 +207,18 @@ bool GD19_App::InitApp(void)
 
 	LoadString(hInst, IDS_APP_TITLE, Version, 255);
 
-	//char Udir[1024];
-	//wchar_t* path = new wchar_t[128];
-	//if (SUCCEEDED(SHGetKnownFolderPath(FOLDERID_LocalAppData, 0, NULL, &path)))//KF_FLAG_CREATE
-	//{
-	//	wsprintf(Udir, "%ls", path);
-	//	CoTaskMemFree(path);
-	//	strcpy(UserData_Folder, Udir);
-	//}
+	char Udir[1024];
+	wchar_t* path = new wchar_t[128];
+	if (SUCCEEDED(SHGetKnownFolderPath(FOLDERID_LocalAppData, 0, NULL, &path)))//KF_FLAG_CREATE
+	{
+		wsprintf(Udir, "%ls", path);
+		CoTaskMemFree(path);
+		strcpy(App->CL_Vm_FileIO->UserData_Folder, Udir);
+	}
+	else
+	{
+		App->Say("Can not acceses user folder");
+	}
 
 	//char Udir2[1024];
 	//wchar_t* path2 = new wchar_t[128];

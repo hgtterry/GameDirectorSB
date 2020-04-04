@@ -190,7 +190,7 @@ void VM_Model::Set_Paths(void)
 	int Len = strlen(JustName);
 	JustName[Len - 4] = 0;
 
-//	App->Cl_Importer->RecentFileHistory_Update();
+	App->CL_Vm_FileIO->RecentFileHistory_Update();
 }
 
 // *************************************************************************

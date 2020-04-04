@@ -116,6 +116,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	App->Cl_Bullet->Init_Bullet();
 	App->Cl_Scene_Data->Init_Scene();
 
+	App->CL_Vm_FileIO->Init_History();
+
 	SetTimer(App->MainHwnd, 1, 1, NULL);
 
 	HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_GD19_OSDN));

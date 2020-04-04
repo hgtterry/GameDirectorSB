@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "GD19_App.h"
+#include "resource.h"
 #include <tchar.h>
 #include <shellapi.h>
 #include "Shlobj.h"
@@ -340,6 +341,221 @@ bool VM_FileIO::Create_Output_Folder(char* Extension)
 	strcat(OutputFolder, "\\");
 
 	CreateDirectory(OutputFolder, NULL);
+	return 0;
+}
+
+// *************************************************************************
+// *						Init_History() Terry Bernie					   *
+// *************************************************************************
+void VM_FileIO::Init_History()
+{
+	char DirCheck[1024];
+	strcpy(DirCheck, UserData_Folder);
+	strcat(DirCheck, "\\");
+	strcat(DirCheck, "Vima19");
+
+	bool check = 0;
+	check = Search_For_Folder(DirCheck);
+	if (check == 0)
+	{
+		mPreviousFiles.resize(EQUITY_NUM_RECENT_FILES);
+
+		CreateDirectory(DirCheck, NULL);
+		ResentHistory_Clear(); // Set all slots to Empty
+		Save_FileHistory();
+		LoadHistory();
+	}
+	else
+	{
+		LoadHistory();
+	}
+}
+// *************************************************************************
+// *						LoadHistory() Terry Bernie					   *
+// *************************************************************************
+void VM_FileIO::LoadHistory()
+{
+	mPreviousFiles.resize(EQUITY_NUM_RECENT_FILES);
+
+	char buffer[1024];
+	char buf[1024];
+
+	strcpy(buf, UserData_Folder);
+	strcat(buf, "\\Vima19\\Vima19.ini");
+
+	ReadRecentFiles = fopen(buf, "rt");
+
+	if (!ReadRecentFiles)
+	{
+		App->Say("Cant Find Recent Files");
+		return;
+	}
+
+	// Read in File Names from RecentFiles.ini
+	for (unsigned int i = 0; i < EQUITY_NUM_RECENT_FILES; ++i)
+	{
+		memset(buffer, 0, 1024);
+		fgets(buffer, 1024, ReadRecentFiles);
+
+		char Path[1024];
+		strcpy(Path, buffer);
+		int Len = strlen(Path);
+		Path[Len - 1] = 0;
+
+		mPreviousFiles[i] = std::string(Path);
+	}
+
+	fclose(ReadRecentFiles);
+
+	mHistoryMenu = CreateMenu();
+
+	// Check for empty slots and gray out
+	for (int i = EQUITY_NUM_RECENT_FILES - 1; i >= 0; --i)
+	{
+		char szText[1024];
+		strcpy(szText, mPreviousFiles[i].c_str());
+
+		UINT iFlags = 0;
+		int Result = 0;
+		Result = strcmp("<empty>", szText);
+		if (Result == 0)
+		{
+			iFlags = MF_GRAYED | MF_DISABLED;
+		}
+
+		AppendMenu(mHistoryMenu, MF_STRING | iFlags, EQUITY_RECENT_FILE_ID(i), szText);
+	}
+
+	ModifyMenu(GetMenu(App->MainHwnd), ID_FILE_RECENTFILES, MF_BYCOMMAND | MF_POPUP,
+		(UINT_PTR)mHistoryMenu, "Recent files");
+	return;
+}
+
+// *************************************************************************
+// *					Save_FileHistory Terry Bernie					   *
+// *************************************************************************
+void VM_FileIO::Save_FileHistory()
+{
+
+	//	WriteRecentFiles = 0;
+
+	char buf[1024];
+	strcpy(buf, UserData_Folder);
+	strcat(buf, "\\Vima19\\Vima19.ini");
+
+
+	WriteRecentFiles = fopen(buf, "wt");
+
+	if (!WriteRecentFiles)
+	{
+		App->Say("Why Cant Find Recent Files");
+		return;
+	}
+
+	// Save out to RecentFile.ini
+	for (unsigned int i = 0; i < EQUITY_NUM_RECENT_FILES; ++i)
+	{
+		char szName[1024];
+		strcpy(szName, mPreviousFiles[i].c_str());
+
+		fprintf(WriteRecentFiles, "%s\n", szName);
+	}
+
+	fclose(WriteRecentFiles);
+	return;
+}
+// *************************************************************************
+// *					RecentFileHistory_Update Terry Bernie			   *
+// *************************************************************************
+void VM_FileIO::RecentFileHistory_Update()
+{
+	if (!mHistoryMenu)return;
+
+	std::string sz = std::string(App->CL_Vm_Model->Path_FileName);
+	if (mPreviousFiles[EQUITY_NUM_RECENT_FILES - 1] == sz)return;
+
+	// add the new file to the list of recent files
+	for (unsigned int i = 0; i < EQUITY_NUM_RECENT_FILES - 1; ++i)
+	{
+		mPreviousFiles[i] = mPreviousFiles[i + 1];
+	}
+
+	mPreviousFiles[EQUITY_NUM_RECENT_FILES - 1] = sz;
+
+	// Check for empty slots and gray out
+	for (int i = EQUITY_NUM_RECENT_FILES - 1; i >= 0; --i)
+	{
+		char szText[1024];
+		strcpy(szText, mPreviousFiles[i].c_str());
+
+		UINT iFlags = 0;
+		int Result = 0;
+		Result = strcmp("<empty>", szText);
+		if (Result == 0)
+		{
+			iFlags = MF_GRAYED | MF_DISABLED;
+		}
+
+		ModifyMenu(mHistoryMenu, EQUITY_RECENT_FILE_ID(i),
+			MF_STRING | MF_BYCOMMAND | iFlags, EQUITY_RECENT_FILE_ID(i), szText);
+	}
+
+	// Save Changes
+	Save_FileHistory();
+
+	return;
+}
+// *************************************************************************
+// *			ResentHistory_Clear Terry Bernie Hazel Nathan			   *
+// *************************************************************************
+void VM_FileIO::ResentHistory_Clear()
+{
+	App->Cl_Dialogs->YesNo("Delete file history.", "Are you sure all File history will be Deleted Procede.");
+	if (App->Cl_Dialogs->Canceled == 1)
+	{
+		return;
+	}
+
+	// Set all slots to <empty>
+	for (unsigned int i = 0; i < EQUITY_NUM_RECENT_FILES; ++i)
+	{
+		mPreviousFiles[i] = std::string("<empty>");
+	}
+
+	// Repopulate Menu system
+	for (int i = EQUITY_NUM_RECENT_FILES - 1; i >= 0; --i)
+	{
+		ModifyMenu(mHistoryMenu, EQUITY_RECENT_FILE_ID(i),
+			MF_STRING | MF_BYCOMMAND | MF_GRAYED | MF_DISABLED, EQUITY_RECENT_FILE_ID(i), "<empty>");
+	}
+
+	// Save Changes
+	Save_FileHistory();
+}
+
+// *************************************************************************
+// *					Search_For_Folder Terry Bernie				 	   *
+// *************************************************************************
+bool VM_FileIO::Search_For_Folder(char* FolderPath)
+{
+	char pSearchPath[1024];
+
+	WIN32_FIND_DATA FindFileData;
+	HANDLE hFind;
+
+	strcpy(pSearchPath, FolderPath);
+
+	hFind = FindFirstFile(pSearchPath, &FindFileData);
+	if (hFind == INVALID_HANDLE_VALUE)
+	{
+		return 0;
+	}
+	else
+	{
+		FindClose(hFind);
+		return 1;
+	}
+
 	return 0;
 }
 
