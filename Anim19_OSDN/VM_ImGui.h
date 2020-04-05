@@ -5,10 +5,13 @@ public:
 	VM_ImGui();
 	~VM_ImGui();
 
+	void Reset_Class(void);
 	void Render_ImGui(void);
 	void ImGui_FPS(void);
+
 	void ImGui_Rotation(void);
 	void ImGui_Position(void);
+	void ImGui_Scale(void);
 	
 	bool StartPos;
 
@@ -17,7 +20,11 @@ public:
 
 	bool Show_Rotation;
 	bool Show_Position;
+	bool Show_Scale;
 	
+	float Model_XTranslate;
+	float Model_YTranslate;
+	float Model_ZTranslate;
 
 	float Test;
 };

@@ -42,6 +42,8 @@ public:
 	VM_Genisis3D();
 	~VM_Genisis3D();
 
+	void Reset_Class(void);
+
 	void Import_LoadActor(void);
 
 	bool GetMotion(char *mMotionName);

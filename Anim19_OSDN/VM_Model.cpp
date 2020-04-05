@@ -131,6 +131,9 @@ void VM_Model::Clear_ModelData(void)
 	Reset_Counters();
 	App->Cl_Grid->Reset_View();
 
+	App->CL_Vm_Genesis3D->Reset_Class();
+	App->CL_Vm_ImGui->Reset_Class();
+
 	//--------------------- Reset Equity
 	//App->CL_FileView->HideRightPanes(1);
 
