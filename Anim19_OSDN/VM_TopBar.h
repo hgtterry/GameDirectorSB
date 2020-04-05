@@ -39,5 +39,7 @@ protected:
 
 	bool Toggle_Faces_Flag;
 	bool Toggle_Textures_Flag;
+	bool Toggle_Points_Flag;
+	bool Toggle_Bones_Flag;
 };
 

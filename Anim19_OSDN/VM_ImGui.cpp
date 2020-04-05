@@ -9,6 +9,7 @@ VM_ImGui::VM_ImGui()
 	Show_FPS = 1;
 	Show_ImGui_Test = 0;
 	Show_Rotation = 0;
+	Show_Position = 0;
 
 	Test = 180;
 }
@@ -37,6 +38,11 @@ void VM_ImGui::Render_ImGui(void)
 	if (Show_Rotation == 1)
 	{
 		ImGui_Rotation();
+	}
+
+	if (Show_Position == 1)
+	{
+		ImGui_Position();
 	}
 }
 
@@ -130,6 +136,137 @@ void VM_ImGui::ImGui_Rotation(void)
 			App->CL_Vm_Genesis3D->Actor_Rotation_Old.Z = App->CL_Vm_Genesis3D->Actor_Rotation.Z;
 		}
 		
+		ImGui::End();
+	}
+}
+
+// *************************************************************************
+// *						ImGui_Position  Terry Bernie				   *
+// *************************************************************************
+void VM_ImGui::ImGui_Position(void)
+{
+	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
+
+	if (!ImGui::Begin("Position", &Show_Position, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize))
+	{
+		ImGui::End();
+	}
+	else
+	{
+
+		/*Ogre::Vector3 pos = App->Cl_Scene_Data->Cl_Object[index]->OgreNode->getPosition();
+		ImGui::Text("X %.3f Y %.3f Z %.3f", pos.x, pos.y, pos.z);*/
+	
+		ImGui::Spacing();
+
+		// ------------------------------------------ Position X
+		ImGui::Text("X ");
+		ImGui::SameLine();
+
+		float spacing = ImGui::GetStyle().ItemInnerSpacing.x;
+		ImGui::PushButtonRepeat(true);
+		if (ImGui::ArrowButton("##left", ImGuiDir_Left))
+		{
+			//Ogre::Vector3 Pos = App->Cl_Scene_Data->Cl_Object[index]->Mesh_Pos;
+			//Pos.x += App->Cl_Dimensions->Model_XTranslate;// Delta;
+			//App->Cl_Scene_Data->Cl_Object[index]->Mesh_Pos = Pos;
+			//App->Cl_Scene_Data->Cl_Object[index]->OgreNode->setPosition(Pos);
+			//App->Cl_Dimensions->UpDate_Physics_And_Visuals(index);
+		}
+		ImGui::SameLine(0.0f, spacing);
+		if (ImGui::ArrowButton("##right", ImGuiDir_Right))
+		{
+			//Ogre::Vector3 Pos = App->Cl_Scene_Data->Cl_Object[index]->Mesh_Pos;
+			//Pos.x -= App->Cl_Dimensions->Model_XTranslate;// Delta;
+			//App->Cl_Scene_Data->Cl_Object[index]->Mesh_Pos = Pos;
+			//App->Cl_Scene_Data->Cl_Object[index]->OgreNode->setPosition(Pos);
+			////App->Cl_Dimensions->Select_Properties_Update();
+			//App->Cl_Dimensions->UpDate_Physics_And_Visuals(index);
+		}
+		ImGui::PopButtonRepeat();
+
+		ImGui::SameLine();
+		ImGui::SetNextItemWidth(100);
+		const char* XitemsX[] = { "1", "2", "5", "10", "20" };
+		static int XitemX = 1;
+		bool Changed = ImGui::Combo("Step X", &XitemX, XitemsX, IM_ARRAYSIZE(XitemsX));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
+		if (Changed == 1)
+		{
+			App->Cl_Dimensions->Model_XTranslate = (float)atof(XitemsX[XitemX]);
+		}
+
+		// ------------------------------------------ Position y
+		//ImGui::Text("Y ");
+		//ImGui::SameLine();
+
+		//float spacing2 = ImGui::GetStyle().ItemInnerSpacing.x;
+		//ImGui::PushButtonRepeat(true);
+		//if (ImGui::ArrowButton("##leftY", ImGuiDir_Left))
+		//{
+		//	Ogre::Vector3 Pos = App->Cl_Scene_Data->Cl_Object[index]->Mesh_Pos;
+		//	Pos.y += App->Cl_Dimensions->Model_YTranslate;// Delta;
+		//	App->Cl_Scene_Data->Cl_Object[index]->Mesh_Pos = Pos;
+		//	App->Cl_Scene_Data->Cl_Object[index]->OgreNode->setPosition(Pos);
+		//	App->Cl_Dimensions->UpDate_Physics_And_Visuals(index);
+		//}
+		//ImGui::SameLine(0.0f, spacing2);
+		//if (ImGui::ArrowButton("##rightY", ImGuiDir_Right))
+		//{
+		//	Ogre::Vector3 Pos = App->Cl_Scene_Data->Cl_Object[index]->Mesh_Pos;
+		//	Pos.y -= App->Cl_Dimensions->Model_YTranslate;// Delta;
+		//	App->Cl_Scene_Data->Cl_Object[index]->Mesh_Pos = Pos;
+		//	App->Cl_Scene_Data->Cl_Object[index]->OgreNode->setPosition(Pos);
+		//	
+		//	App->Cl_Dimensions->UpDate_Physics_And_Visuals(index);
+		//}
+		//ImGui::PopButtonRepeat();
+
+		//ImGui::SameLine();
+		//ImGui::SetNextItemWidth(100);
+		//const char* XitemsY[] = { "1", "2", "5", "10", "20" };
+		//static int XitemY = 1;
+		//bool ChangedY = ImGui::Combo("Step Y", &XitemY, XitemsY, IM_ARRAYSIZE(XitemsY));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
+		//if (ChangedY == 1)
+		//{
+		//	App->Cl_Dimensions->Model_YTranslate = (float)atof(XitemsY[XitemY]);
+		//}
+
+		//// ------------------------------------------ Position z
+		//ImGui::Text("Z ");
+		//ImGui::SameLine();
+
+		//float spacing3 = ImGui::GetStyle().ItemInnerSpacing.x;
+		//ImGui::PushButtonRepeat(true);
+		//if (ImGui::ArrowButton("##leftZ", ImGuiDir_Left))
+		//{
+		//	Ogre::Vector3 Pos = App->Cl_Scene_Data->Cl_Object[index]->Mesh_Pos;
+		//	Pos.z += App->Cl_Dimensions->Model_ZTranslate;// Delta;
+		//	App->Cl_Scene_Data->Cl_Object[index]->Mesh_Pos = Pos;
+		//	App->Cl_Scene_Data->Cl_Object[index]->OgreNode->setPosition(Pos);
+		//	App->Cl_Dimensions->UpDate_Physics_And_Visuals(index);
+		//}
+		//ImGui::SameLine(0.0f, spacing3);
+		//if (ImGui::ArrowButton("##rightZ", ImGuiDir_Right))
+		//{
+		//	Ogre::Vector3 Pos = App->Cl_Scene_Data->Cl_Object[index]->Mesh_Pos;
+		//	Pos.z -= App->Cl_Dimensions->Model_ZTranslate;// Delta;
+		//	App->Cl_Scene_Data->Cl_Object[index]->Mesh_Pos = Pos;
+		//	App->Cl_Scene_Data->Cl_Object[index]->OgreNode->setPosition(Pos);
+		//	
+		//	App->Cl_Dimensions->UpDate_Physics_And_Visuals(index);
+		//}
+		//ImGui::PopButtonRepeat();
+
+		//ImGui::SameLine();
+		//ImGui::SetNextItemWidth(100);
+		//const char* XitemsZ[] = { "1", "2", "5", "10", "20" };
+		//static int XitemZ = 1;
+		//bool ChangedZ = ImGui::Combo("Step Z", &XitemZ, XitemsZ, IM_ARRAYSIZE(XitemsZ));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
+		//if (ChangedZ == 1)
+		//{
+		//	App->Cl_Dimensions->Model_ZTranslate = (float)atof(XitemsZ[XitemZ]);
+		//}
+	
 		ImGui::End();
 	}
 }

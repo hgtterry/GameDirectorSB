@@ -8,6 +8,7 @@ public:
 	void Render_ImGui(void);
 	void ImGui_FPS(void);
 	void ImGui_Rotation(void);
+	void ImGui_Position(void);
 	
 	bool StartPos;
 
@@ -15,6 +16,8 @@ public:
 	bool Show_FPS;
 
 	bool Show_Rotation;
+	bool Show_Position;
+	
 
 	float Test;
 };
