@@ -34,6 +34,8 @@ bool VM_Importer::Genesis3D_Loader(void)
 
 	App->CL_Vm_Model->Model_Loaded = 1;
 
+	
+
 	//App->Cl_Grid->Zoom();
 
 	return 1;

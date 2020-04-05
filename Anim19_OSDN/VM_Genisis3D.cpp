@@ -92,8 +92,6 @@ void VM_Genisis3D::Import_LoadActor(void)
 	
 	Import_LoadActorTextures();
 
-	App->Say("Loaded5");
-
 	GetBoundingBoxModel_Create();
 
 	//App->CL_Vm_Model->HasMesh = 1;

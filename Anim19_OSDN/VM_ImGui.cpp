@@ -80,14 +80,53 @@ void VM_ImGui::ImGui_Rotation(void)
 		
 		ImGui::Text("  X    Y    Z");
 
+		if (ImGui::Button("X+", ImVec2(70, 0)))
+		{
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("Y+", ImVec2(70, 0)))
+		{
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("Z+", ImVec2(70, 0)))
+		{
+		}
 		
-		ImGui::VSliderFloat("##RotationX", ImVec2(70, 260), &App->CL_Vm_Genesis3D->Actor_Rotation.X, 0.0f, 360.0f, "%.2f\nDeg");
+		ImGui::VSliderFloat("##RotationX", ImVec2(70, 260),  &App->CL_Vm_Genesis3D->Actor_Rotation.X, 0.0f, 360.0f, "%.2f\nDeg");
 		ImGui::SameLine();
 		ImGui::VSliderFloat("##RotationY", ImVec2(70, 260), &App->CL_Vm_Genesis3D->Actor_Rotation.Y, 0.0f, 360.0f, "%.2f\nDeg");
 		ImGui::SameLine();
 		ImGui::VSliderFloat("##RotationZ", ImVec2(70, 260), &App->CL_Vm_Genesis3D->Actor_Rotation.Z, 0.0f, 360.0f, "%.2f\nDeg");
 		
-		App->CL_Vm_Genesis3D->MoveActor();
+		if (ImGui::Button("X-", ImVec2(70, 0)))
+		{
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("Y-", ImVec2(70, 0)))
+		{
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("Z-", ImVec2(70, 0)))
+		{
+		}
+
+		if (App->CL_Vm_Genesis3D->Actor_Rotation.X > App->CL_Vm_Genesis3D->Actor_Rotation_Old.X || App->CL_Vm_Genesis3D->Actor_Rotation.X < App->CL_Vm_Genesis3D->Actor_Rotation_Old.X)
+		{
+			App->CL_Vm_Genesis3D->MoveActor();
+			App->CL_Vm_Genesis3D->Actor_Rotation_Old.X = App->CL_Vm_Genesis3D->Actor_Rotation.X;
+		}
+
+		if (App->CL_Vm_Genesis3D->Actor_Rotation.Y > App->CL_Vm_Genesis3D->Actor_Rotation_Old.Y || App->CL_Vm_Genesis3D->Actor_Rotation.Y < App->CL_Vm_Genesis3D->Actor_Rotation_Old.Y)
+		{
+			App->CL_Vm_Genesis3D->MoveActor();
+			App->CL_Vm_Genesis3D->Actor_Rotation_Old.Y = App->CL_Vm_Genesis3D->Actor_Rotation.Y;
+		}
+
+		if (App->CL_Vm_Genesis3D->Actor_Rotation.Z > App->CL_Vm_Genesis3D->Actor_Rotation_Old.Z || App->CL_Vm_Genesis3D->Actor_Rotation.Z < App->CL_Vm_Genesis3D->Actor_Rotation_Old.Z)
+		{
+			App->CL_Vm_Genesis3D->MoveActor();
+			App->CL_Vm_Genesis3D->Actor_Rotation_Old.Z = App->CL_Vm_Genesis3D->Actor_Rotation.Z;
+		}
 		
 		ImGui::End();
 	}
