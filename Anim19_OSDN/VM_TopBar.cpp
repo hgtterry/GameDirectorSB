@@ -15,6 +15,7 @@ VM_TopBar::VM_TopBar()
 	Dimensions_TB_hWnd =	nullptr;
 
 	Toggle_Faces_Flag = 0;
+	Toggle_Textures_Flag = 0;
 }
 
 
@@ -27,14 +28,14 @@ VM_TopBar::~VM_TopBar()
 // *************************************************************************
 bool VM_TopBar::Start_TopBar()
 {
-	CreateDialog(App->hInst,(LPCTSTR)IDD_TOPBAR,App->Fdlg,(DLGPROC)TopBar_Proc);
+	CreateDialog(App->hInst,(LPCTSTR)IDD_TOPBAR,App->Fdlg,(DLGPROC)TopMain_Proc);
 	Init_Bmps_TB2();
 	return 1;
 }
 // *************************************************************************
 // *						TopBar_Proc Terry							   *
 // *************************************************************************
-LRESULT CALLBACK VM_TopBar::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK VM_TopBar::TopMain_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 
 	switch (message)
@@ -42,12 +43,10 @@ LRESULT CALLBACK VM_TopBar::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 	case WM_INITDIALOG:
 	{
 		App->CL_Vm_TopBar->TabsHwnd = hDlg;
-		
-		HFONT Font11;
-		Font11 = CreateFont(-16, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Aerial Black");
-		
+	
 		SendDlgItemMessage(hDlg, IDC_TBSHOWFACES, WM_SETFONT, (WPARAM)App->Font_CB15_Bold, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_TBSHOWTEXTURE, WM_SETFONT, (WPARAM)App->Font_CB15_Bold, MAKELPARAM(TRUE, 0));
+		
 		App->CL_Vm_TopBar->Start_Tabs();
 		App->CL_Vm_TopBar->Start_TB1();
 		App->CL_Vm_TopBar->Start_Motions_TB();
@@ -77,6 +76,13 @@ LRESULT CALLBACK VM_TopBar::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
+		if (some_item->idFrom == IDC_TBSHOWTEXTURE && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_Vm_TopBar->Toggle_Textures_Flag);
+			return CDRF_DODEFAULT;
+		}
+
 		if (some_item->idFrom == IDC_TBSHOWFACES && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
@@ -98,10 +104,12 @@ LRESULT CALLBACK VM_TopBar::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 				if (App->Cl19_Ogre->RenderListener->ShowTextured == 1)
 				{
 					App->Cl19_Ogre->RenderListener->ShowTextured = 0;
+					App->CL_Vm_TopBar->Toggle_Textures_Flag = 0;
 				}
 				else
 				{
 					App->Cl19_Ogre->RenderListener->ShowTextured = 1;
+					App->CL_Vm_TopBar->Toggle_Textures_Flag = 1;
 				}
 			}
 			return TRUE;
@@ -741,8 +749,16 @@ void VM_TopBar::Init_Bmps_TB2(void)
 {
 	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
 
+	HWND Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWTEXTURE);
+	TOOLINFO ti1 = { 0 };
+	ti1.cbSize = sizeof(ti1);
+	ti1.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti1.uId = (UINT_PTR)Temp;
+	ti1.lpszText = "Toggle Textures";
+	ti1.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti1);
 
-	HWND Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWFACES);
+	Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWFACES);
 	TOOLINFO ti2 = { 0 };
 	ti2.cbSize = sizeof(ti2);
 	ti2.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;

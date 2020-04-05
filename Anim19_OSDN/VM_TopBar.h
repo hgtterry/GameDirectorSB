@@ -16,7 +16,7 @@ public:
 
 protected:
 
-	static LRESULT CALLBACK TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK TopMain_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	static LRESULT CALLBACK TB1_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
@@ -38,5 +38,6 @@ protected:
 	void Hide_Tabs(void);
 
 	bool Toggle_Faces_Flag;
+	bool Toggle_Textures_Flag;
 };
 

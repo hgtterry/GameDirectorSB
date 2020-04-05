@@ -71,6 +71,8 @@ void VM_ImGui::ImGui_FPS(void)
 // *************************************************************************
 void VM_ImGui::ImGui_Rotation(void)
 {
+	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
+
 	if (!ImGui::Begin("Rotation", &Show_Rotation, ImGuiWindowFlags_NoSavedSettings |ImGuiWindowFlags_AlwaysAutoResize))
 	{
 		ImGui::End();
