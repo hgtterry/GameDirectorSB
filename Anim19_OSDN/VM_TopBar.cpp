@@ -932,7 +932,7 @@ LRESULT CALLBACK VM_TopBar::Dimensions_TB_Proc(HWND hDlg, UINT message, WPARAM w
 			return TRUE;
 		}
 
-		if (LOWORD(wParam) == IDC_TBPOSITION) // Rotation
+		if (LOWORD(wParam) == IDC_TBPOSITION) // Position
 		{
 			if (App->CL_Vm_ImGui->Show_Position == 1)
 			{
@@ -945,6 +945,19 @@ LRESULT CALLBACK VM_TopBar::Dimensions_TB_Proc(HWND hDlg, UINT message, WPARAM w
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_TBSCALE) // Scale
+		{
+			if (App->CL_Vm_ImGui->Show_Scale == 1)
+			{
+				App->CL_Vm_ImGui->Show_Scale = 0;
+			}
+			else
+			{
+				App->CL_Vm_ImGui->Show_Scale = 1;
+			}
+			return TRUE;
+		}
+		
 		return FALSE;
 	}
 	}
