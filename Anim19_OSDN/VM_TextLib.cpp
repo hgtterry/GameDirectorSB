@@ -6,7 +6,7 @@
 
 VM_TextLib::VM_TextLib()
 {
-
+	//FinderCount = NULL;
 }
 
 VM_TextLib::~VM_TextLib()
@@ -41,7 +41,7 @@ LRESULT CALLBACK VM_TextLib::TextureLib_Proc(HWND hDlg, UINT message, WPARAM wPa
 	{
 		App->CL_Vm_TextLib->Entry = new BitmapEntry;
 
-//		SetWindowLong(GetDlgItem(hDlg, IDC_PREVIEW), GWL_WNDPROC, (LONG)TextureLibPreviewWnd);
+		SetWindowLong(GetDlgItem(hDlg, IDC_PREVIEW), GWL_WNDPROC, (LONG)TextureLibPreviewWnd);
 		char buf1[200];
 		HFONT				Font;
 		HFONT				Font1;
@@ -239,6 +239,57 @@ LRESULT CALLBACK VM_TextLib::TextureLib_Proc(HWND hDlg, UINT message, WPARAM wPa
 	break;
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *					TextureLibPreviewWnd							   *
+// *************************************************************************
+
+bool CALLBACK VM_TextLib::TextureLibPreviewWnd(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+
+	if (msg == WM_PAINT)
+	{
+
+		PAINTSTRUCT	ps;
+		HDC			hDC;
+		RECT		Rect;
+
+		hDC = BeginPaint(hwnd, &ps);
+		GetClientRect(hwnd, &Rect);
+		Rect.left--;
+		Rect.bottom--;
+		FillRect(hDC, &Rect, (HBRUSH)(COLOR_WINDOW + 1));
+
+		if (App->CL_Vm_TextLib->Entry->Bitmap != NULL)
+		{
+			RECT	Source;
+			RECT	Dest;
+			HDC		hDC;
+
+			Source.left = 0;
+			Source.top = 0;
+			Source.bottom = geBitmap_Height(App->CL_Vm_TextLib->Entry->Bitmap);
+			Source.right = geBitmap_Width(App->CL_Vm_TextLib->Entry->Bitmap);
+
+			Dest = Rect;
+
+			hDC = GetDC(hwnd);
+			SetStretchBltMode(hDC, HALFTONE);
+
+			App->CL_Vm_TextLib->Render2d_Blit(hDC,
+				App->CL_Vm_TextLib->Entry->WinBitmap,
+				App->CL_Vm_TextLib->Entry->WinABitmap,
+				&Source,
+				&Dest);
+
+			ReleaseDC(hwnd, hDC);
+		}
+		EndPaint(hwnd, &ps);
+		return 0;
+	}
+
+	return DefWindowProc(hwnd, msg, wParam, lParam);
 }
 
 // *************************************************************************
@@ -698,9 +749,9 @@ ExitWriteBitmap:
 // *************************************************************************
 bool VM_TextLib::LoadFile(HWND ChDlg)
 {
-	geVFile *			VFS;
+	geVFile *			VFS = NULL;
 	geVFile_Finder *	Finder = NULL;
-	geVFile_Finder *	FinderCount;
+	geVFile_Finder *	FinderCount = NULL;
 
 	pData = new TPack_WindowData;
 	pData->hwnd = ChDlg;
@@ -709,19 +760,19 @@ bool VM_TextLib::LoadFile(HWND ChDlg)
 	int TextureCount = 0;
 
 
-	//Say(FileName);
-	//Say(Path_FileName);
-	VFS = geVFile_OpenNewSystem(NULL, GE_VFILE_TYPE_VIRTUAL, Txt_FileName, NULL, GE_VFILE_OPEN_READONLY | GE_VFILE_OPEN_DIRECTORY);
+	//App->Say(Txt_FileName);
+	//App->Say(Txt_Path_FileName);
+	VFS = geVFile_OpenNewSystem(NULL, GE_VFILE_TYPE_VIRTUAL, Txt_Path_FileName, NULL, GE_VFILE_OPEN_READONLY | GE_VFILE_OPEN_DIRECTORY);
 	if (!VFS)
 	{
-		NonFatalError("Could not open file %s", Txt_FileName);
+		NonFatalError("Could not open file %s", Txt_Path_FileName);
 		return 0;
 	}
 
 	FinderCount = geVFile_CreateFinder(VFS, "*.*");
-	if (!Finder)
+	if (!FinderCount)
 	{
-		NonFatalError("Could not load textures from %s", Txt_FileName);
+		NonFatalError("Could not load textures from 1 %s", Txt_Path_FileName);
 		geVFile_Close(VFS);
 		return 0;
 	}
@@ -733,12 +784,10 @@ bool VM_TextLib::LoadFile(HWND ChDlg)
 
 	}
 
-
-
 	Finder = geVFile_CreateFinder(VFS, "*.*");
 	if (!Finder)
 	{
-		NonFatalError("Could not load textures from %s", Txt_FileName);
+		NonFatalError("Could not load textures from 2 %s", Txt_Path_FileName);
 		geVFile_Close(VFS);
 		return 0;
 	}
@@ -761,7 +810,7 @@ bool VM_TextLib::LoadFile(HWND ChDlg)
 	pData->Dirty = FALSE;
 	geVFile_Close(VFS);
 
-	//SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_SETCURSEL, (WPARAM)0, (LPARAM)0);
+	SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_SETCURSEL, (WPARAM)0, (LPARAM)0);
 
 	return 1;
 }
@@ -846,7 +895,7 @@ bool VM_TextLib::AddTexture(geVFile *BaseFile, const char *Path)
 	NewBitmapList[pData->BitmapCount]->Flags = 0;
 	pData->BitmapCount++;
 
-	//SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)Name);
+	SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)Name);
 
 	return TRUE;
 

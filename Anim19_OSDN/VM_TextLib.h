@@ -121,7 +121,9 @@ public:
 protected:
 
 	static LRESULT CALLBACK TextureLib_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static bool CALLBACK TextureLibPreviewWnd(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
+	
 	bool Txt_OpenFile(char* Extension, char* Title, char* StartDirectory);
 
 	OPENFILENAME ofn;
