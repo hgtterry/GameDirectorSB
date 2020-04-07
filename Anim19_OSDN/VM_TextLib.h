@@ -73,7 +73,9 @@ class VM_TextLib
 {
 public:
 	VM_TextLib();
-	virtual ~VM_TextLib();
+	~VM_TextLib();
+
+	void Start_TexturePack();
 
 	int WriteTGA(const char * pszFile, geBitmap *pBitmap);
 
@@ -114,6 +116,10 @@ public:
 	char SaveFile[256];
 
 	char FileName[255];
+
+protected:
+
+	static LRESULT CALLBACK TextureLib_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 };
 

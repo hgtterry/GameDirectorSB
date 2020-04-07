@@ -1,5 +1,6 @@
 
 #include "stdafx.h"
+#include "resource.h"
 #include "GD19_App.h"
 #include "VM_TextLib.h"
 
@@ -10,7 +11,233 @@ VM_TextLib::VM_TextLib()
 
 VM_TextLib::~VM_TextLib()
 {
+	
+}
 
+// *************************************************************************
+// *							Start_TexturePack				  		   *
+// *************************************************************************
+void VM_TextLib::Start_TexturePack()
+{
+	/*int test = C_File->OpenFileCom("Texture Libary   *.txl\0*.txl\0", "Texure Editor", S_Prefs[0]->TXLFolder);
+	if (test == 0)
+	{
+
+		return 1;
+	}*/
+
+	DialogBox(App->hInst, (LPCTSTR)IDD_TEXTUREPACKER, App->Fdlg, (DLGPROC)TextureLib_Proc);
+}
+
+// *************************************************************************
+// *					TextureLib_Proc  06/06/08   					   *
+// *************************************************************************
+LRESULT CALLBACK VM_TextLib::TextureLib_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		App->CL_Vm_TextLib->Entry = new BitmapEntry;
+
+//		SetWindowLong(GetDlgItem(hDlg, IDC_PREVIEW), GWL_WNDPROC, (LONG)TextureLibPreviewWnd);
+		char buf1[200];
+		HFONT				Font;
+		HFONT				Font1;
+		HFONT				Font2;
+		HFONT				Font3;
+
+
+		App->CL_Vm_TextLib->LoadFile(hDlg);
+
+		/*strcpy(buf1, szTitle);
+		strcat(buf1, "        ");
+		strcat(buf1, C_TetureLib->pData->TXLFileName);
+		SetWindowText(hDlg, buf1);*/
+
+		Font = CreateFont(-24, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Arial Black");
+		Font1 = CreateFont(-20, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Arial Black");
+		Font2 = CreateFont(-12, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
+		Font3 = CreateFont(-10, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier");
+		SendDlgItemMessage(hDlg, IDC_TEXTURE, WM_SETFONT, (WPARAM)Font, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ALPHA, WM_SETFONT, (WPARAM)Font, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_GEINFO, WM_SETFONT, (WPARAM)Font1, MAKELPARAM(TRUE, 0));
+		//	SendDlgItemMessage(hDlg,IDC_CTRLKEY, WM_SETFONT, (WPARAM)Font2, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_TEXTURELIST, WM_SETFONT, (WPARAM)Font2, MAKELPARAM(TRUE, 0));
+
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	return TRUE;
+
+	case WM_COMMAND:
+	{
+		if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
+		{
+
+			if (App->CL_Vm_TextLib->pData->Dirty)
+			{
+				int	Result;
+
+				Result = MessageBox(NULL,
+					"Do you want to save changes before quitting?",
+					"Texture Packer",
+					MB_YESNOCANCEL);
+
+				if (Result == IDCANCEL)
+					return 0;
+
+				if (Result == IDYES)
+				{
+					if (App->CL_Vm_TextLib->pData->FileNameIsValid)
+						App->CL_Vm_TextLib->Save(App->CL_Vm_TextLib->pData->TXLFileName);
+					else
+						App->CL_Vm_TextLib->Save(NULL);
+				}
+			}
+			//	C_TetureLib->CleanUp();
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+		//-------------------Click in Texture List Box ----------------
+		if (LOWORD(wParam) == IDC_TEXTURELIST)
+		{
+			App->CL_Vm_TextLib->SelectBitmap();
+
+			return TRUE;
+		}
+		//--------------------------------- Add -----------------------
+		if (LOWORD(wParam) == IDC_ADD)
+		{
+			/*int test = C_File->OpenFileCom("Texture Files ( *.bmp *.tga )\0*.bmp;*.tga\0*.tga\0*.tga\0*.bmp\0*.bmp\0", "Add Texture", "Bitmap Files");
+			if (test == 0)
+			{
+				return 1;
+			}*/
+
+			App->CL_Vm_TextLib->AddTexture(NULL, App->CL_Vm_TextLib->FileName);
+			App->CL_Vm_TextLib->pData->Dirty = 1; // it as changed reqest save
+			return TRUE;
+		}
+		//--------------------------------- Save ----------------------
+		if (LOWORD(wParam) == IDC_SAVE)
+		{
+
+			App->CL_Vm_TextLib->Save(App->CL_Vm_TextLib->pData->TXLFileName);
+			return TRUE;
+		}
+		//--------------------------------- Rename ----------------------
+		if (LOWORD(wParam) == IDC_RENAME)
+		{
+
+			//DialogBox(hInst, (LPCTSTR)IDD_RENAME, Fdlg, (DLGPROC)RenameProc);
+			//App->CL_Vm_TextLib->pData->Dirty = 1;  // it as changed reqest save
+			return TRUE;
+		}
+		//--------------------------------- Save AS --------------------
+		if (LOWORD(wParam) == IDC_SAVEAS)
+		{
+
+			App->CL_Vm_TextLib->Save(NULL);
+			return TRUE;
+		}
+
+		//--------------------------------- IDC_LOAD --------------------
+		/*	if (LOWORD(wParam) == IDC_LOAD)
+		{
+
+		C_TetureLib->TPack_ExtractSelected();
+
+		strcpy(FileName,C_TetureLib->L_FileName);
+
+		if (stricmp(C_TetureLib->L_FileName+strlen(C_TetureLib->L_FileName)-4,".bmp") == 0)
+		{
+
+		int textureID=S_TextureInfo[PictureIndex]->ActorMaterialIndex;
+		S_TextureInfo[PictureIndex]->Tga=0;
+		NEWLoadTexture(g_Texture,C_TetureLib->L_FileName,textureID,PictureIndex);
+		Test();
+		At->SingleTextureInfo(PictureIndex);
+		C_Display->TextureNames();
+		}
+		if (stricmp(C_TetureLib->L_FileName+strlen(C_TetureLib->L_FileName)-4,".tga") == 0)
+		{
+
+
+		C_File->LoadTGA(C_TetureLib->L_FileName);
+		C_Textures->ReloadTextures(g_Texture);
+		At->SingleTextureInfo(PictureIndex);
+		C_Display->TextureNames();
+		}
+
+		DeleteFile(C_TetureLib->L_FileName);
+
+		return TRUE;
+		}*/
+
+		//--------------------------------- Save AS --------------------
+		if (LOWORD(wParam) == IDC_EXPORTSELECTED)
+		{
+
+			App->CL_Vm_TextLib->TPack_ExtractSelected();
+			return TRUE;
+		}
+
+		//--------------------------------- Export All -----------------
+		if (LOWORD(wParam) == IDC_EXPORTALL)
+		{
+			/*char File[256];
+
+			_getcwd(App->CL_Vm_TextLib->LastPath, 256);
+			_splitpath(App->CL_Vm_TextLib->pData->TXLFileName, NULL, NULL, File, NULL);
+			strcat(File, "_Textures");
+
+			strcpy(S_File[0]->NewSubFolderName, File);
+
+			strcpy(S_File[0]->SaveMessage, "Select Folder To Place Decompiled Textures");
+
+			int Test = GetSaveFolder();
+			if (Test == 0)
+			{
+				return 0;
+			}
+
+			App->CL_Vm_TextLib->TPack_ExtractAll();*/
+
+			return TRUE;
+		}
+
+	}
+
+	case WM_CTLCOLORSTATIC:
+	{
+
+		/*if (GetDlgItem(hDlg, IDC_ALPHA) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			hBrushStatic = CreateSolidBrush(RGB(200, 200, 0));
+			return (UINT)hBrushStatic;
+		}
+		if (GetDlgItem(hDlg, IDC_TEXTURE) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			hBrushStatic = CreateSolidBrush(RGB(200, 200, 0));
+			return (UINT)hBrushStatic;
+		}*/
+
+		break;
+	}
+	break;
+	}
+	return FALSE;
 }
 
 // *************************************************************************
