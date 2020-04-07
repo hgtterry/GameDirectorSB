@@ -58,7 +58,7 @@ typedef struct	TPack_WindowData
 	BitmapEntry	*	Bitmaps;
 	BitmapEntry *	SelectedEntry;
 	BOOL			FileNameIsValid;
-	char			TXLFileName[256];
+	char			TXLFileName[1024];
 	BOOL			Dirty;
 }	TPack_WindowData;
 
@@ -102,6 +102,7 @@ public:
 	TPack_WindowData *pData;
 	BitmapEntry *	NewBitmapList[200];
 	BitmapEntry *   Entry;
+
 	char LastPath [256];
 	char TextureName[256];
 	char NewTextureName[256];

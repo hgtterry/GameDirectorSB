@@ -28,7 +28,8 @@ distribution.
 
 VM_TextLib::VM_TextLib()
 {
-	
+	Entry = nullptr;
+	pData = nullptr;
 }
 
 VM_TextLib::~VM_TextLib()
@@ -1471,6 +1472,8 @@ bool VM_TextLib::CleanUp()
 {
 
 	if (Entry) { delete Entry; Entry = NULL; }
+
+	//if (pData ) { delete pData; pData = NULL; }
 	return 1;
 }
 
@@ -1504,19 +1507,19 @@ bool VM_TextLib::ReName(const char *NewName)
 bool VM_TextLib::UpDateList(const char *NewName)
 {
 
-	int Index = 0;// SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
-	//SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+	int Index = SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+	SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
 	int	i;
 
 	for (i = 0; i < pData->BitmapCount; i++)
 	{
 
-		//SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)NewBitmapList[i]->Name);
+		SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)NewBitmapList[i]->Name);
 
 	}
 
-	//SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_SETCURSEL, (WPARAM)Index, (LPARAM)0);
+	SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_SETCURSEL, (WPARAM)Index, (LPARAM)0);
 
 	return 1;
 }
