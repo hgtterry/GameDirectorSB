@@ -50,56 +50,56 @@ typedef struct	TPack_WindowData
 
 #pragma pack(1)
 
-typedef struct TGAHEADER
-{
-	char	IDLength;
-	char	ColorMapType;
-	char	ImageType;
-	uint16	CMFirstEntry;
-	uint16	CMLength;
-	char	CMEntrySize;
-	uint16	Xorigin;
-	uint16	Yorigin;
-	uint16	Width;
-	uint16	Height;
-	char	PixelDepth;
-	char	ImageDescriptor;
-} TGAHEADER;
+//typedef struct TGAHEADER
+//{
+//	char	IDLength;
+//	char	ColorMapType;
+//	char	ImageType;
+//	uint16	CMFirstEntry;
+//	uint16	CMLength;
+//	char	CMEntrySize;
+//	uint16	Xorigin;
+//	uint16	Yorigin;
+//	uint16	Width;
+//	uint16	Height;
+//	char	PixelDepth;
+//	char	ImageDescriptor;
+//} TGAHEADER;
 
 #pragma pack()
 
 
-class TTextureLib  
+class VM_TextLib
 {
 public:
-	TTextureLib();
-	virtual ~TTextureLib();
+	VM_TextLib();
+	virtual ~VM_TextLib();
 
-	int TTextureLib::WriteTGA(const char * pszFile, geBitmap *pBitmap);
+	int WriteTGA(const char * pszFile, geBitmap *pBitmap);
 
-	BOOL TTextureLib::Render2d_Blit(HDC hDC, HBITMAP Bmp,  HBITMAP Alpha, const RECT *SourceRect, const RECT *DestRect);
+	bool Render2d_Blit(HDC hDC, HBITMAP Bmp,  HBITMAP Alpha, const RECT *SourceRect, const RECT *DestRect);
 
-	int TTextureLib::WriteBMP8(const char * pszFile, geBitmap *pBitmap);
+	int WriteBMP8(const char * pszFile, geBitmap *pBitmap);
 
 
-	BOOL TTextureLib::LoadFile(HWND ChDlg);
-	BOOL TTextureLib::NonFatalError(const char *Msg, ...);
-	BOOL TTextureLib::AddTexture(geVFile *BaseFile, const char *Path);
-	BOOL TTextureLib::SelectBitmap();
-	int TTextureLib::FindBitmap(TPack_WindowData *pData, const char *Name);
-	HBITMAP TTextureLib::CreateHBitmapFromgeBitmap (geBitmap *Bitmap, HDC hdc);
-	BOOL TTextureLib::UpDateGeList(int Location);
+	bool LoadFile(HWND ChDlg);
+	bool NonFatalError(const char *Msg, ...);
+	bool AddTexture(geVFile *BaseFile, const char *Path);
+	bool SelectBitmap();
+	int FindBitmap(TPack_WindowData *pData, const char *Name);
+	HBITMAP CreateHBitmapFromgeBitmap (geBitmap *Bitmap, HDC hdc);
+	bool UpDateGeList(int Location);
 
-	BOOL TTextureLib::TPack_ExtractSelected();
-	BOOL TTextureLib::SaveSelectedFile(char* Extension,char* TszFile);
+	bool TPack_ExtractSelected();
+	bool SaveSelectedFile(char* Extension,char* TszFile);
 
-	BOOL TTextureLib::CheckExtention(char *FileName);
-	BOOL TTextureLib::TPack_ExtractAll();
-	BOOL TTextureLib::Save(const char *Path);
-	BOOL TTextureLib::CleanUp();
-	BOOL TTextureLib::GetName();
-	BOOL TTextureLib::ReName(const char *NewName);
-	BOOL TTextureLib::UpDateList(const char *NewName);
+	bool CheckExtention(char *FileName);
+	bool TPack_ExtractAll();
+	bool Save(const char *Path);
+	bool CleanUp();
+	bool GetName();
+	bool ReName(const char *NewName);
+	bool UpDateList(const char *NewName);
 
 
 
@@ -112,6 +112,8 @@ public:
 	int EditOrLoad;
 	char L_FileName[256];
 	char SaveFile[256];
+
+	char FileName[255];
 
 };
 
