@@ -246,6 +246,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return 1;
 		}
 
+		case ID_TOOLS_TEXTURELIB:
+		{
+			App->CL_Vm_TextLib->Start_TexturePack();
+			return 1;
+		}
 
 		// ------------------------------------- Recent Files
 		case 5000 + 7: // Top Recent Files 1

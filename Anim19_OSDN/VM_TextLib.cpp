@@ -14,17 +14,18 @@ VM_TextLib::~VM_TextLib()
 	
 }
 
+
 // *************************************************************************
 // *							Start_TexturePack				  		   *
 // *************************************************************************
 void VM_TextLib::Start_TexturePack()
 {
-	/*int test = C_File->OpenFileCom("Texture Libary   *.txl\0*.txl\0", "Texure Editor", S_Prefs[0]->TXLFolder);
+	int test = Txt_OpenFile("Texture Libary   *.txl\0*.txl\0", "Texure Editor", NULL);// S_Prefs[0]->TXLFolder);
 	if (test == 0)
 	{
 
-		return 1;
-	}*/
+		return;
+	}
 
 	DialogBox(App->hInst, (LPCTSTR)IDD_TEXTUREPACKER, App->Fdlg, (DLGPROC)TextureLib_Proc);
 }
@@ -119,7 +120,7 @@ LRESULT CALLBACK VM_TextLib::TextureLib_Proc(HWND hDlg, UINT message, WPARAM wPa
 				return 1;
 			}*/
 
-			App->CL_Vm_TextLib->AddTexture(NULL, App->CL_Vm_TextLib->FileName);
+			App->CL_Vm_TextLib->AddTexture(NULL, App->CL_Vm_TextLib->Txt_FileName);
 			App->CL_Vm_TextLib->pData->Dirty = 1; // it as changed reqest save
 			return TRUE;
 		}
@@ -710,17 +711,17 @@ bool VM_TextLib::LoadFile(HWND ChDlg)
 
 	//Say(FileName);
 	//Say(Path_FileName);
-	VFS = geVFile_OpenNewSystem(NULL, GE_VFILE_TYPE_VIRTUAL, FileName, NULL, GE_VFILE_OPEN_READONLY | GE_VFILE_OPEN_DIRECTORY);
+	VFS = geVFile_OpenNewSystem(NULL, GE_VFILE_TYPE_VIRTUAL, Txt_FileName, NULL, GE_VFILE_OPEN_READONLY | GE_VFILE_OPEN_DIRECTORY);
 	if (!VFS)
 	{
-		NonFatalError("Could not open file %s", FileName);
+		NonFatalError("Could not open file %s", Txt_FileName);
 		return 0;
 	}
 
 	FinderCount = geVFile_CreateFinder(VFS, "*.*");
 	if (!Finder)
 	{
-		NonFatalError("Could not load textures from %s", FileName);
+		NonFatalError("Could not load textures from %s", Txt_FileName);
 		geVFile_Close(VFS);
 		return 0;
 	}
@@ -737,7 +738,7 @@ bool VM_TextLib::LoadFile(HWND ChDlg)
 	Finder = geVFile_CreateFinder(VFS, "*.*");
 	if (!Finder)
 	{
-		NonFatalError("Could not load textures from %s", FileName);
+		NonFatalError("Could not load textures from %s", Txt_FileName);
 		geVFile_Close(VFS);
 		return 0;
 	}
@@ -755,7 +756,7 @@ bool VM_TextLib::LoadFile(HWND ChDlg)
 		}
 
 	}
-	strcpy(pData->TXLFileName, FileName);
+	strcpy(pData->TXLFileName, Txt_FileName);
 	pData->FileNameIsValid = TRUE;
 	pData->Dirty = FALSE;
 	geVFile_Close(VFS);
@@ -1446,4 +1447,38 @@ bool VM_TextLib::UpDateList(const char *NewName)
 	//SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_SETCURSEL, (WPARAM)Index, (LPARAM)0);
 
 	return 1;
+}
+
+// *************************************************************************
+// *					Txt_OpenFile Terry Bernie						   *
+// *************************************************************************
+bool VM_TextLib::Txt_OpenFile(char* Extension, char* Title, char* StartDirectory)
+{
+	strcpy(Txt_FileName, "");
+	strcpy(Txt_Path_FileName, "");
+
+	ZeroMemory(&ofn, sizeof(ofn));
+	ofn.lStructSize = sizeof(ofn);
+	ofn.hwndOwner = App->MainHwnd;
+	ofn.hInstance = App->hInst;
+	ofn.lpstrFile = Txt_Path_FileName;						// full path and file name
+	ofn.nMaxFile = sizeof(Txt_Path_FileName);
+	ofn.lpstrFilter = Extension;
+
+	ofn.nFilterIndex = 1;
+	ofn.lpstrFileTitle = Txt_FileName;						// Just File Name
+	ofn.nMaxFileTitle = sizeof(Txt_FileName);;
+	ofn.lpstrInitialDir = StartDirectory;
+	ofn.lpstrTitle = Title;
+	ofn.Flags = OFN_PATHMUSTEXIST |
+		OFN_FILEMUSTEXIST |
+		OFN_EXPLORER |
+		OFN_HIDEREADONLY |
+		OFN_FILEMUSTEXIST;
+
+	if (GetOpenFileName(&ofn) == TRUE)
+	{
+		return 1;
+	}
+	return 0;
 }

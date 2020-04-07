@@ -115,11 +115,16 @@ public:
 	char L_FileName[256];
 	char SaveFile[256];
 
-	char FileName[255];
+	char Txt_FileName[255];
+	char Txt_Path_FileName[1024];
 
 protected:
 
 	static LRESULT CALLBACK TextureLib_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	bool Txt_OpenFile(char* Extension, char* Title, char* StartDirectory);
+
+	OPENFILENAME ofn;
 
 };
 
