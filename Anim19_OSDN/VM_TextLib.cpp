@@ -912,14 +912,14 @@ bool VM_TextLib::SelectBitmap()
 
 	int location = 0;
 
-	Index = 0;// SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+	Index = SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
 	if (Index == LB_ERR)
 	{
 		//	Entry = NULL;
 	}
 	else
 	{
-		//SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_GETTEXT, (WPARAM)Index, (LPARAM)&TextureName[0]);
+		SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_GETTEXT, (WPARAM)Index, (LPARAM)&TextureName[0]);
 		
 		location = FindBitmap(pData, TextureName);
 
@@ -931,7 +931,7 @@ bool VM_TextLib::SelectBitmap()
 			HBITMAP	ahbm;
 			HDC		hDC;
 
-			PreviewWnd = 0;// GetDlgItem(pData->hwnd, IDC_PREVIEW);
+			PreviewWnd = GetDlgItem(pData->hwnd, IDC_PREVIEW);
 			hDC = GetDC(PreviewWnd);
 			hbm = CreateHBitmapFromgeBitmap(NewBitmapList[location]->Bitmap, hDC);
 			NewBitmapList[location]->WinBitmap = hbm;
@@ -951,7 +951,7 @@ bool VM_TextLib::SelectBitmap()
 		}
 	}
 
-	//InvalidateRect(GetDlgItem(pData->hwnd, IDC_PREVIEW), NULL, TRUE);
+	InvalidateRect(GetDlgItem(pData->hwnd, IDC_PREVIEW), NULL, TRUE);
 
 	Entry = NewBitmapList[location];
 	UpDateGeList(location);
