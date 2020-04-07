@@ -1,13 +1,27 @@
-// TTextureLib.h: interface for the TTextureLib class.
-//
-//////////////////////////////////////////////////////////////////////
+/*
+Copyright (c) Vima19 Inflanite Software W.T.Flanigan H.C.Flanigan
 
-#if !defined(AFX_TTEXTURELIB_H__DB5984F2_BA86_412D_A409_C0EC519FBDC5__INCLUDED_)
-#define AFX_TTEXTURELIB_H__DB5984F2_BA86_412D_A409_C0EC519FBDC5__INCLUDED_
+This software is provided 'as-is', without any express or implied
+warranty. In no event will the authors be held liable for any damages
+arising from the use of this software.
 
-#if _MSC_VER > 1000
+Permission is granted to anyone to use this software for any purpose,
+including commercial applications, and to alter it and redistribute it
+freely, subject to the following restrictions:
+
+1. The origin of this software must not be misrepresented; you must not
+claim that you wrote the original software. If you use this software
+in a product, an acknowledgment in the product documentation would be
+appreciated but is not required.
+
+2. Altered source versions must be plainly marked as such, and must not be
+misrepresented as being the original software.
+
+3. This notice may not be removed or altered from any source
+distribution.
+*/
+
 #pragma once
-#endif // _MSC_VER > 1000
 
 #define	ENTRY_DELETED	0x00000001
 
@@ -47,26 +61,6 @@ typedef struct	TPack_WindowData
 	char			TXLFileName[256];
 	BOOL			Dirty;
 }	TPack_WindowData;
-
-#pragma pack(1)
-
-//typedef struct TGAHEADER
-//{
-//	char	IDLength;
-//	char	ColorMapType;
-//	char	ImageType;
-//	uint16	CMFirstEntry;
-//	uint16	CMLength;
-//	char	CMEntrySize;
-//	uint16	Xorigin;
-//	uint16	Yorigin;
-//	uint16	Width;
-//	uint16	Height;
-//	char	PixelDepth;
-//	char	ImageDescriptor;
-//} TGAHEADER;
-
-#pragma pack()
 
 
 class VM_TextLib
@@ -130,4 +124,3 @@ protected:
 
 };
 
-#endif // !defined(AFX_TTEXTURELIB_H__DB5984F2_BA86_412D_A409_C0EC519FBDC5__INCLUDED_)

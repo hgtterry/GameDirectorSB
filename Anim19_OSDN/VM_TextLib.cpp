@@ -1,3 +1,25 @@
+/*
+Copyright (c) Vima19 Inflanite Software W.T.Flanigan H.C.Flanigan
+
+This software is provided 'as-is', without any express or implied
+warranty. In no event will the authors be held liable for any damages
+arising from the use of this software.
+
+Permission is granted to anyone to use this software for any purpose,
+including commercial applications, and to alter it and redistribute it
+freely, subject to the following restrictions:
+
+1. The origin of this software must not be misrepresented; you must not
+claim that you wrote the original software. If you use this software
+in a product, an acknowledgment in the product documentation would be
+appreciated but is not required.
+
+2. Altered source versions must be plainly marked as such, and must not be
+misrepresented as being the original software.
+
+3. This notice may not be removed or altered from any source
+distribution.
+*/
 
 #include "stdafx.h"
 #include "resource.h"
@@ -6,7 +28,7 @@
 
 VM_TextLib::VM_TextLib()
 {
-	//FinderCount = NULL;
+	
 }
 
 VM_TextLib::~VM_TextLib()
@@ -100,7 +122,8 @@ LRESULT CALLBACK VM_TextLib::TextureLib_Proc(HWND hDlg, UINT message, WPARAM wPa
 						App->CL_Vm_TextLib->Save(NULL);
 				}
 			}
-			//	C_TetureLib->CleanUp();
+
+			App->CL_Vm_TextLib->CleanUp();
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -1080,7 +1103,7 @@ bool VM_TextLib::UpDateGeList(int Location)
 
 	char buff[256];
 	strcpy(buff, "no info");
-	/*SendDlgItemMessage(pData->hwnd, IDC_GEINFO, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+	SendDlgItemMessage(pData->hwnd, IDC_GEINFO, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
 	sprintf(buff, "%s %s", "Texture Name :-", NewBitmapList[Location]->Name);
 	SendDlgItemMessage(pData->hwnd, IDC_GEINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
@@ -1098,7 +1121,7 @@ bool VM_TextLib::UpDateGeList(int Location)
 	SendDlgItemMessage(pData->hwnd, IDC_GEINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
 
 
-	geBitmap_GetInfo(NewBitmapList[Location]->Bitmap, &MPInfo, &MSInfo);*/
+	geBitmap_GetInfo(NewBitmapList[Location]->Bitmap, &MPInfo, &MSInfo);
 	
 	return 1;
 }
@@ -1125,15 +1148,15 @@ bool VM_TextLib::TPack_ExtractSelected()
 	// Ouput to the current directory
 	GetCurrentDirectory(MAX_PATH, szPath);
 
-	nSel = 0;// SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+	nSel = SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
 	if (nSel == LB_ERR)
 	{
 		//	Entry = NULL;
 	}
-//	SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_GETTEXT, (WPARAM)nSel, (LPARAM)&szName[0]);
+	SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_GETTEXT, (WPARAM)nSel, (LPARAM)&szName[0]);
 
 
-	//	pEntry = FindBitmap(pData, szName);
+	//	App->CL_Vm_TextLib->pEntry = FindBitmap(pData, szName);
 	//	if (pEntry)
 	{
 		// Create an output file name
