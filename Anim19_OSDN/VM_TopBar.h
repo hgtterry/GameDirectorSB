@@ -44,5 +44,6 @@ protected:
 
 	bool Toggle_Tabs_Old_Flag;
 	bool Toggle_Tabs_Motions_Flag;
+	bool Toggle_Tabs_Dimensions_Flag;
 };
 
