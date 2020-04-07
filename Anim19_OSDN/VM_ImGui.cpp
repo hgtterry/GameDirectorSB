@@ -308,7 +308,9 @@ void VM_ImGui::ImGui_Scale(void)
 			ImGui::PushButtonRepeat(true);
 			if (ImGui::ArrowButton("##LeftSX", ImGuiDir_Left))
 			{
-				//float Delta = 0.2;// App->Cl_Dimensions->Model_XScale;
+				float Delta = 0.5;// App->Cl_Dimensions->Model_XScale;
+
+				App->CL_Vm_Genesis3D->ScaleActor(Delta, Delta, Delta);
 				//Ogre::Vector3 Scale = App->Cl_Scene_Data->Cl_Object[index]->Mesh_Scale;
 				//Scale.x += Delta;
 				//Scale.y += Delta;
@@ -329,8 +331,9 @@ void VM_ImGui::ImGui_Scale(void)
 			ImGui::SameLine(0.0f, spacingSX);
 			if (ImGui::ArrowButton("##rightSX", ImGuiDir_Right))
 			{
-				//float Delta = 0.2;// App->Cl_Dimensions->Model_XScale;
-				//Ogre::Vector3 Scale = App->Cl_Scene_Data->Cl_Object[index]->Mesh_Scale;
+				float Delta = 1;// App->Cl_Dimensions->Model_XScale;
+
+				App->CL_Vm_Genesis3D->ScaleActor(Delta, Delta, Delta);
 				//Scale.x -= Delta;
 				//Scale.y -= Delta;
 				//Scale.z -= Delta;

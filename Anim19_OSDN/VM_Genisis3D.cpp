@@ -1293,6 +1293,51 @@ bool VM_Genisis3D::Export_VectorIRotate(const geXForm3d* matrix, const geVec3d* 
 	return 1;
 }
 
+
+//**************************************************************************
+// *						ScaleActor 									   *
+// *************************************************************************
+bool VM_Genisis3D::ScaleActor(float SX, float SY, float SZ)
+{
+	gePose *P;
+	geVec3d Scale;
+	Scale.X = SX;
+	Scale.Y = SY;
+	Scale.Z = SZ;
+
+	int i;
+	gePose_Joint *J;
+
+	P = TestActor->Pose;
+	P->Scale = Scale;
+
+	for (i = 0, J = &(P->JointArray[0]); i<P->JointCount; i++, J++)
+	{
+		//AnimateProgressBar();
+		J->AttachmentTransform.Translation.X = J->UnscaledAttachmentTranslation.X * Scale.X;
+		J->AttachmentTransform.Translation.Y = J->UnscaledAttachmentTranslation.Y * Scale.Y;
+		J->AttachmentTransform.Translation.Z = J->UnscaledAttachmentTranslation.Z * Scale.Z;
+
+		ActorDef_Memory->Body->BoneArray[i].AttachmentMatrix.Translation.X = J->AttachmentTransform.Translation.X;
+		ActorDef_Memory->Body->BoneArray[i].AttachmentMatrix.Translation.Y = J->AttachmentTransform.Translation.Y;
+		ActorDef_Memory->Body->BoneArray[i].AttachmentMatrix.Translation.Z = J->AttachmentTransform.Translation.Z;
+
+		J->Touched = GE_TRUE;
+
+		/*J->UnscaledAttachmentTranslation.X = J->UnscaledAttachmentTranslation.X * Scale.X;
+		J->UnscaledAttachmentTranslation.Y = J->UnscaledAttachmentTranslation.Y * Scale.Y;
+		J->UnscaledAttachmentTranslation.Z = J->UnscaledAttachmentTranslation.Z * Scale.Z;*/
+	}
+	P->Touched = GE_TRUE;
+
+	Animate(0);
+	GetBoneMoveMent();
+
+	Animate(0);
+	GetBoneMoveMent();
+
+	return 1;
+}
 // *************************************************************************
 // *								MoveActor		 					   *
 // *************************************************************************

@@ -56,6 +56,7 @@ public:
 	void Export_As_Actor(void);
 
 	bool MoveActor(void);
+	bool ScaleActor(float SX, float SY, float SZ);
 
 	char MotionName[255];
 	float m_CurrentPose;
