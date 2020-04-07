@@ -18,6 +18,9 @@ VM_TopBar::VM_TopBar()
 	Toggle_Textures_Flag = 0;
 	Toggle_Points_Flag = 0;
 	Toggle_Bones_Flag = 0;
+
+	Toggle_Tabs_Old_Flag = 1;
+	Toggle_Tabs_Motions_Flag = 0;
 }
 
 
@@ -286,17 +289,35 @@ LRESULT CALLBACK VM_TopBar::Tabs_Proc(HWND hDlg, UINT message, WPARAM wParam, LP
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_CBMOTIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
+		SendDlgItemMessage(hDlg, IDC_TBOLD, WM_SETFONT, (WPARAM)App->Font_CB15_Bold, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_TBMOTIONS, WM_SETFONT, (WPARAM)App->Font_CB15_Bold, MAKELPARAM(TRUE, 0));
+		
 		return TRUE;
 	}
 
 	case WM_CTLCOLORDLG:
 	{
-		return (LONG)App->Brush_Green;
+		return (LONG)App->AppBackground;
 	}
 
 	case WM_NOTIFY:
 	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
 
+		if (some_item->idFrom == IDC_TBOLD && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle_Tabs(item, App->CL_Vm_TopBar->Toggle_Tabs_Old_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_TBMOTIONS && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle_Tabs(item, App->CL_Vm_TopBar->Toggle_Tabs_Motions_Flag);
+			return CDRF_DODEFAULT;
+		}
 		return CDRF_DODEFAULT;
 	}
 
@@ -307,7 +328,9 @@ LRESULT CALLBACK VM_TopBar::Tabs_Proc(HWND hDlg, UINT message, WPARAM wParam, LP
 		{
 			App->CL_Vm_TopBar->Hide_Tabs();
 			ShowWindow(App->CL_Vm_TopBar->TB_1, SW_SHOW);
+			App->CL_Vm_TopBar->Toggle_Tabs_Old_Flag = 1;
 
+			RedrawWindow(App->CL_Vm_TopBar->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
 		}
 
@@ -315,7 +338,9 @@ LRESULT CALLBACK VM_TopBar::Tabs_Proc(HWND hDlg, UINT message, WPARAM wParam, LP
 		{
 			App->CL_Vm_TopBar->Hide_Tabs();
 			ShowWindow(App->CL_Vm_TopBar->Motions_TB_hWnd, SW_SHOW);
+			App->CL_Vm_TopBar->Toggle_Tabs_Motions_Flag = 1;
 			
+			RedrawWindow(App->CL_Vm_TopBar->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
 		}
 
@@ -325,6 +350,7 @@ LRESULT CALLBACK VM_TopBar::Tabs_Proc(HWND hDlg, UINT message, WPARAM wParam, LP
 			App->CL_Vm_TopBar->Hide_Tabs();
 			ShowWindow(App->CL_Vm_TopBar->Dimensions_TB_hWnd, SW_SHOW);
 			
+			RedrawWindow(App->CL_Vm_TopBar->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
 		}
 	}
@@ -340,6 +366,9 @@ void VM_TopBar::Hide_Tabs(void)
 	ShowWindow(App->CL_Vm_TopBar->TB_1, SW_HIDE);
 	ShowWindow(App->CL_Vm_TopBar->Motions_TB_hWnd, SW_HIDE);
 	ShowWindow(App->CL_Vm_TopBar->Dimensions_TB_hWnd, SW_HIDE);
+
+	Toggle_Tabs_Old_Flag = 0;
+	Toggle_Tabs_Motions_Flag = 0;
 }
 
 // *************************************************************************
@@ -368,7 +397,7 @@ LRESULT CALLBACK VM_TopBar::TB1_Proc(HWND hDlg, UINT message, WPARAM wParam, LPA
 
 	case WM_CTLCOLORDLG:
 	{
-		return (LONG)App->AppBackground;
+		return (LONG)App->Brush_Tabs;
 	}
 
 	case WM_NOTIFY:
@@ -834,7 +863,7 @@ LRESULT CALLBACK VM_TopBar::Motions_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 	case WM_CTLCOLORDLG:
 	{
-		return (LONG)App->AppBackground;
+		return (LONG)App->Brush_Tabs;
 	}
 
 	case WM_NOTIFY:

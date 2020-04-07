@@ -143,6 +143,8 @@ public:
 	bool Custom_Button_Blue(LPNMCUSTOMDRAW item);
 	bool Custom_Button_Red(LPNMCUSTOMDRAW item);
 
+	bool Custom_Button_Toggle_Tabs(LPNMCUSTOMDRAW item, bool Toggle);
+
 	HBRUSH CreateGradientBrush(COLORREF top, COLORREF bottom, LPNMCUSTOMDRAW item);
 
 	void LoadProgramResource(void);
@@ -178,6 +180,7 @@ public:
 	HBRUSH Brush_But_Pressed;
 	HBRUSH Brush_But_Normal;
 	HBRUSH Brush_But_Hover;
+	HBRUSH Brush_Tabs;
 
 	HANDLE Hnd_PinOff;
 	HANDLE Hnd_PinOn;
