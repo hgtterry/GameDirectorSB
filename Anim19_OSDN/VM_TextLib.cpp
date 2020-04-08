@@ -29,7 +29,7 @@ distribution.
 VM_TextLib::VM_TextLib()
 {
 	Entry = nullptr;
-	pData = nullptr;
+	p_Data = nullptr;
 }
 
 VM_TextLib::~VM_TextLib()
@@ -62,6 +62,8 @@ LRESULT CALLBACK VM_TextLib::TextureLib_Proc(HWND hDlg, UINT message, WPARAM wPa
 	{
 	case WM_INITDIALOG:
 	{
+		SendDlgItemMessage(hDlg, IDC_TEXTURELIST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		App->CL_Vm_TextLib->Entry = new BitmapEntry;
 
 		SetWindowLong(GetDlgItem(hDlg, IDC_PREVIEW), GWL_WNDPROC, (LONG)TextureLibPreviewWnd);
@@ -74,10 +76,10 @@ LRESULT CALLBACK VM_TextLib::TextureLib_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 		App->CL_Vm_TextLib->LoadFile(hDlg);
 
-		/*strcpy(buf1, szTitle);
+		strcpy(buf1, App->Version);
 		strcat(buf1, "        ");
-		strcat(buf1, C_TetureLib->pData->TXLFileName);
-		SetWindowText(hDlg, buf1);*/
+		strcat(buf1, App->CL_Vm_TextLib->p_Data->TXLFileName);
+		SetWindowText(hDlg, buf1);
 
 		Font = CreateFont(-24, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Arial Black");
 		Font1 = CreateFont(-20, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Arial Black");
@@ -86,8 +88,7 @@ LRESULT CALLBACK VM_TextLib::TextureLib_Proc(HWND hDlg, UINT message, WPARAM wPa
 		SendDlgItemMessage(hDlg, IDC_TEXTURE, WM_SETFONT, (WPARAM)Font, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ALPHA, WM_SETFONT, (WPARAM)Font, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_GEINFO, WM_SETFONT, (WPARAM)Font1, MAKELPARAM(TRUE, 0));
-		//	SendDlgItemMessage(hDlg,IDC_CTRLKEY, WM_SETFONT, (WPARAM)Font2, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_TEXTURELIST, WM_SETFONT, (WPARAM)Font2, MAKELPARAM(TRUE, 0));
+		
 
 	}
 
@@ -103,7 +104,7 @@ LRESULT CALLBACK VM_TextLib::TextureLib_Proc(HWND hDlg, UINT message, WPARAM wPa
 		if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
 		{
 
-			if (App->CL_Vm_TextLib->pData->Dirty)
+			if (App->CL_Vm_TextLib->p_Data->Dirty)
 			{
 				int	Result;
 
@@ -117,8 +118,8 @@ LRESULT CALLBACK VM_TextLib::TextureLib_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 				if (Result == IDYES)
 				{
-					if (App->CL_Vm_TextLib->pData->FileNameIsValid)
-						App->CL_Vm_TextLib->Save(App->CL_Vm_TextLib->pData->TXLFileName);
+					if (App->CL_Vm_TextLib->p_Data->FileNameIsValid)
+						App->CL_Vm_TextLib->Save(App->CL_Vm_TextLib->p_Data->TXLFileName);
 					else
 						App->CL_Vm_TextLib->Save(NULL);
 				}
@@ -145,14 +146,14 @@ LRESULT CALLBACK VM_TextLib::TextureLib_Proc(HWND hDlg, UINT message, WPARAM wPa
 			}*/
 
 			App->CL_Vm_TextLib->AddTexture(NULL, App->CL_Vm_TextLib->Txt_FileName);
-			App->CL_Vm_TextLib->pData->Dirty = 1; // it as changed reqest save
+			App->CL_Vm_TextLib->p_Data->Dirty = 1; // it as changed reqest save
 			return TRUE;
 		}
 		//--------------------------------- Save ----------------------
 		if (LOWORD(wParam) == IDC_SAVE)
 		{
 
-			App->CL_Vm_TextLib->Save(App->CL_Vm_TextLib->pData->TXLFileName);
+			App->CL_Vm_TextLib->Save(App->CL_Vm_TextLib->p_Data->TXLFileName);
 			return TRUE;
 		}
 		//--------------------------------- Rename ----------------------
@@ -505,7 +506,6 @@ bool VM_TextLib::Render2d_Blit(HDC hDC, HBITMAP Bmp, HBITMAP Alpha, const RECT *
 		return FALSE;
 
 	SelectObject(MemDC, Bmp);
-
 	SourceWidth = SourceRect->right - SourceRect->left;
 	SourceHeight = SourceRect->bottom - SourceRect->top;
 	DestWidth = DestRect->right - DestRect->left;
@@ -522,6 +522,7 @@ bool VM_TextLib::Render2d_Blit(HDC hDC, HBITMAP Bmp, HBITMAP Alpha, const RECT *
 		SourceWidth,
 		SourceHeight,
 		SRCCOPY);
+
 	if (Alpha)
 	{
 		SelectObject(MemDC, Alpha);
@@ -777,9 +778,9 @@ bool VM_TextLib::LoadFile(HWND ChDlg)
 	geVFile_Finder *	Finder = NULL;
 	geVFile_Finder *	FinderCount = NULL;
 
-	pData = new TPack_WindowData;
-	pData->hwnd = ChDlg;
-	pData->BitmapCount = 0;
+	p_Data = new TPack_WindowData;
+	p_Data->hwnd = ChDlg;
+	p_Data->BitmapCount = 0;
 
 	int TextureCount = 0;
 
@@ -829,13 +830,13 @@ bool VM_TextLib::LoadFile(HWND ChDlg)
 		}
 
 	}
-	strcpy(pData->TXLFileName, Txt_FileName);
-	pData->FileNameIsValid = TRUE;
-	pData->Dirty = FALSE;
+	strcpy(p_Data->TXLFileName, Txt_FileName);
+	p_Data->FileNameIsValid = TRUE;
+	p_Data->Dirty = FALSE;
 	geVFile_Close(VFS);
 
-	SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_SETCURSEL, (WPARAM)0, (LPARAM)0);
-
+	SendDlgItemMessage(p_Data->hwnd, IDC_TEXTURELIST, LB_SETCURSEL, (WPARAM)0, (LPARAM)0);
+	App->CL_Vm_TextLib->SelectBitmap();
 	return 1;
 }
 
@@ -905,21 +906,21 @@ bool VM_TextLib::AddTexture(geVFile *BaseFile, const char *Path)
 	//		goto fail;
 	//	}
 	//	NewBitmapList = geRam_Realloc(pData->Bitmaps, sizeof(*NewBitmapList) * (pData->BitmapCount + 1));
-	NewBitmapList[pData->BitmapCount] = new BitmapEntry;
+	NewBitmapList[p_Data->BitmapCount] = new BitmapEntry;
 	if (!NewBitmapList)
 	{
 		NonFatalError("Memory allocation error processing %s", Path);
 		return TRUE;
 	}
 
-	NewBitmapList[pData->BitmapCount]->Name = Name;
-	NewBitmapList[pData->BitmapCount]->Bitmap = Bitmap;
-	NewBitmapList[pData->BitmapCount]->WinBitmap = NULL;
-	NewBitmapList[pData->BitmapCount]->WinABitmap = NULL;
-	NewBitmapList[pData->BitmapCount]->Flags = 0;
-	pData->BitmapCount++;
+	NewBitmapList[p_Data->BitmapCount]->Name = Name;
+	NewBitmapList[p_Data->BitmapCount]->Bitmap = Bitmap;
+	NewBitmapList[p_Data->BitmapCount]->WinBitmap = NULL;
+	NewBitmapList[p_Data->BitmapCount]->WinABitmap = NULL;
+	NewBitmapList[p_Data->BitmapCount]->Flags = 0;
+	p_Data->BitmapCount++;
 
-	SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)Name);
+	SendDlgItemMessage(p_Data->hwnd, IDC_TEXTURELIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)Name);
 
 	return TRUE;
 
@@ -936,16 +937,16 @@ bool VM_TextLib::SelectBitmap()
 
 	int location = 0;
 
-	Index = SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+	Index = SendDlgItemMessage(p_Data->hwnd, IDC_TEXTURELIST, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
 	if (Index == LB_ERR)
 	{
 		//	Entry = NULL;
 	}
 	else
 	{
-		SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_GETTEXT, (WPARAM)Index, (LPARAM)&TextureName[0]);
+		SendDlgItemMessage(p_Data->hwnd, IDC_TEXTURELIST, LB_GETTEXT, (WPARAM)Index, (LPARAM)&TextureName[0]);
 		
-		location = FindBitmap(pData, TextureName);
+		location = FindBitmap(p_Data, TextureName);
 
 		//	assert(Entry);
 		if (!NewBitmapList[location]->WinBitmap)
@@ -955,7 +956,7 @@ bool VM_TextLib::SelectBitmap()
 			HBITMAP	ahbm;
 			HDC		hDC;
 
-			PreviewWnd = GetDlgItem(pData->hwnd, IDC_PREVIEW);
+			PreviewWnd = GetDlgItem(p_Data->hwnd, IDC_PREVIEW);
 			hDC = GetDC(PreviewWnd);
 			hbm = CreateHBitmapFromgeBitmap(NewBitmapList[location]->Bitmap, hDC);
 			NewBitmapList[location]->WinBitmap = hbm;
@@ -975,7 +976,7 @@ bool VM_TextLib::SelectBitmap()
 		}
 	}
 
-	InvalidateRect(GetDlgItem(pData->hwnd, IDC_PREVIEW), NULL, TRUE);
+	InvalidateRect(GetDlgItem(p_Data->hwnd, IDC_PREVIEW), NULL, TRUE);
 
 	Entry = NewBitmapList[location];
 	UpDateGeList(location);
@@ -987,11 +988,11 @@ bool VM_TextLib::SelectBitmap()
 // *************************************************************************
 // *						FindBitmap  06/06/08 				  		   *
 // *************************************************************************
-int VM_TextLib::FindBitmap(TPack_WindowData *pData, const char *Name)
+int VM_TextLib::FindBitmap(TPack_WindowData *p_Data, const char *Name)
 {
 	int	i;
 
-	for (i = 0; i < pData->BitmapCount; i++)
+	for (i = 0; i < p_Data->BitmapCount; i++)
 	{
 
 		if (!strcmp(Name, NewBitmapList[i]->Name))
@@ -1104,22 +1105,22 @@ bool VM_TextLib::UpDateGeList(int Location)
 
 	char buff[256];
 	strcpy(buff, "no info");
-	SendDlgItemMessage(pData->hwnd, IDC_GEINFO, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+	SendDlgItemMessage(p_Data->hwnd, IDC_GEINFO, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
 	sprintf(buff, "%s %s", "Texture Name :-", NewBitmapList[Location]->Name);
-	SendDlgItemMessage(pData->hwnd, IDC_GEINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
+	SendDlgItemMessage(p_Data->hwnd, IDC_GEINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
 
 	sprintf(buff, "%s %i", "Index :-", Location);
-	SendDlgItemMessage(pData->hwnd, IDC_GEINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
+	SendDlgItemMessage(p_Data->hwnd, IDC_GEINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
 
 	sprintf(buff, "%s %s", "Bitmap :-", "Valid");
-	SendDlgItemMessage(pData->hwnd, IDC_GEINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
+	SendDlgItemMessage(p_Data->hwnd, IDC_GEINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
 
 	sprintf(buff, "%s %d", "Width :-", geBitmap_Width(NewBitmapList[Location]->Bitmap));
-	SendDlgItemMessage(pData->hwnd, IDC_GEINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
+	SendDlgItemMessage(p_Data->hwnd, IDC_GEINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
 
 	sprintf(buff, "%s %d", "Height :-", geBitmap_Height(NewBitmapList[Location]->Bitmap));
-	SendDlgItemMessage(pData->hwnd, IDC_GEINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
+	SendDlgItemMessage(p_Data->hwnd, IDC_GEINFO, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
 
 
 	geBitmap_GetInfo(NewBitmapList[Location]->Bitmap, &MPInfo, &MSInfo);
@@ -1149,12 +1150,12 @@ bool VM_TextLib::TPack_ExtractSelected()
 	// Ouput to the current directory
 	GetCurrentDirectory(MAX_PATH, szPath);
 
-	nSel = SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+	nSel = SendDlgItemMessage(p_Data->hwnd, IDC_TEXTURELIST, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
 	if (nSel == LB_ERR)
 	{
 		//	Entry = NULL;
 	}
-	SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_GETTEXT, (WPARAM)nSel, (LPARAM)&szName[0]);
+	SendDlgItemMessage(p_Data->hwnd, IDC_TEXTURELIST, LB_GETTEXT, (WPARAM)nSel, (LPARAM)&szName[0]);
 
 
 	//	App->CL_Vm_TextLib->pEntry = FindBitmap(pData, szName);
@@ -1385,8 +1386,8 @@ bool VM_TextLib::Save(const char *Path)
 		GetCurrentDirectory(sizeof(Dir), Dir);
 
 		ofn.lStructSize = sizeof(OPENFILENAME);
-		ofn.hwndOwner = pData->hwnd;
-		ofn.hInstance = pData->Instance;
+		ofn.hwndOwner = p_Data->hwnd;
+		ofn.hInstance = p_Data->Instance;
 		{
 			char *c;
 
@@ -1430,7 +1431,7 @@ bool VM_TextLib::Save(const char *Path)
 		return 0;
 	}
 
-	for (i = 0; i < pData->BitmapCount; i++)
+	for (i = 0; i < p_Data->BitmapCount; i++)
 	{
 		geVFile *	File;
 		geBoolean	WriteResult;
@@ -1454,13 +1455,13 @@ bool VM_TextLib::Save(const char *Path)
 		}
 	}
 
-	strcpy(pData->TXLFileName, Path);
-	pData->FileNameIsValid = TRUE;
+	strcpy(p_Data->TXLFileName, Path);
+	p_Data->FileNameIsValid = TRUE;
 
 	if (geVFile_Close(VFS) == GE_FALSE)
 		NonFatalError("I/O error writing %s", Path);
 	else
-		pData->Dirty = FALSE;
+		p_Data->Dirty = FALSE;
 	return 1;
 }
 
@@ -1483,8 +1484,8 @@ bool VM_TextLib::CleanUp()
 bool VM_TextLib::GetName()
 {
 
-	int Index = SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
-	SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_GETTEXT, (WPARAM)Index, (LPARAM)&TextureName[0]);
+	int Index = SendDlgItemMessage(p_Data->hwnd, IDC_TEXTURELIST, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+	SendDlgItemMessage(p_Data->hwnd, IDC_TEXTURELIST, LB_GETTEXT, (WPARAM)Index, (LPARAM)&TextureName[0]);
 	return 1;
 }
 // *************************************************************************
@@ -1493,9 +1494,9 @@ bool VM_TextLib::GetName()
 bool VM_TextLib::ReName(const char *NewName)
 {
 
-	int Index = SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
-	SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_GETTEXT, (WPARAM)Index, (LPARAM)&TextureName[0]);
-	int location = FindBitmap(pData, TextureName);
+	int Index = SendDlgItemMessage(p_Data->hwnd, IDC_TEXTURELIST, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+	SendDlgItemMessage(p_Data->hwnd, IDC_TEXTURELIST, LB_GETTEXT, (WPARAM)Index, (LPARAM)&TextureName[0]);
+	int location = FindBitmap(p_Data, TextureName);
 
 	strcpy(NewBitmapList[location]->Name, NewName);
 	return 1;
@@ -1507,19 +1508,19 @@ bool VM_TextLib::ReName(const char *NewName)
 bool VM_TextLib::UpDateList(const char *NewName)
 {
 
-	int Index = SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
-	SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+	int Index = SendDlgItemMessage(p_Data->hwnd, IDC_TEXTURELIST, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+	SendDlgItemMessage(p_Data->hwnd, IDC_TEXTURELIST, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
 	int	i;
 
-	for (i = 0; i < pData->BitmapCount; i++)
+	for (i = 0; i < p_Data->BitmapCount; i++)
 	{
 
-		SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)NewBitmapList[i]->Name);
+		SendDlgItemMessage(p_Data->hwnd, IDC_TEXTURELIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)NewBitmapList[i]->Name);
 
 	}
 
-	SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_SETCURSEL, (WPARAM)Index, (LPARAM)0);
+	SendDlgItemMessage(p_Data->hwnd, IDC_TEXTURELIST, LB_SETCURSEL, (WPARAM)Index, (LPARAM)0);
 
 	return 1;
 }

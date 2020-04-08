@@ -207,6 +207,20 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 
 		// Vima 20/3/20
+
+		case ID_TEST_GENERAL:
+		{
+			if (App->CL_Vm_ImGui->Show_Image == 1)
+			{
+				App->CL_Vm_ImGui->Show_Image = 0;
+			}
+			else
+			{
+				App->CL_Vm_ImGui->Show_Image = 1;
+			}
+			return 1;
+		}
+
 		case ID_IMPORT_GENESIS3D:
 		{
 			App->CL_Importer->Genesis3D_Loader();
@@ -311,23 +325,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		}
 
 		// -----------------------------------------------------
-		// -----------------------------------------------------
-		case ID_TEST_GENERAL:
-		{
-			App->CL_Vm_TopBar->Start_TopBar();
-			//if (App->Cl_FileView_V2->OpenObjects == 1)
-			//{
-			//	//App->Cl_FileView_V2->OpenObjects = 0;
-			//	App->Cl_FileView_V2->SelectObject = 1;
-			//}
-			//else
-			//{
-			//	App->Cl_FileView_V2->OpenObjects = 1;
-			//	App->Cl_FileView_V2->SelectObject = 1;
-			//}
-			return 1;
-		}
-
 		//------------------------- Menu Camera
 		case ID_CAMERA_FOLLOWOBJECT:
 		{

@@ -11,6 +11,7 @@ VM_ImGui::VM_ImGui()
 	Show_Rotation = 0;
 	Show_Position = 0;
 	Show_Scale = 0;
+	Show_Image = 0;
 
 	Model_XTranslate = 2;
 	Model_YTranslate = 2;
@@ -72,6 +73,13 @@ void VM_ImGui::Render_ImGui(void)
 	{
 		ImGui_Scale();
 	}
+
+	if (Show_Image == 1)
+	{
+		ImGui_Image();
+	}
+
+
 }
 
 // *************************************************************************
@@ -113,7 +121,7 @@ void VM_ImGui::ImGui_Rotation(void)
 	}
 	else
 	{
-		
+
 		ImGui::Text("  X    Y    Z");
 
 		if (ImGui::Button("X+", ImVec2(70, 0)))
@@ -480,5 +488,37 @@ void VM_ImGui::ImGui_Scale(void)
 			}
 		}
 		ImGui::End();
+	}
+}
+
+
+// *************************************************************************
+// *						ImGui_Image  Terry Bernie					   *
+// *************************************************************************
+void VM_ImGui::ImGui_Image(void)
+{
+	//ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
+
+	if (!ImGui::Begin("Image", &Show_Image, ImGuiWindowFlags_NoSavedSettings))
+	{
+		ImGui::End();
+	}
+	else
+	{
+		if (App->CL_Vm_Textures->g_Texture[0] == NULL)
+		{
+
+		}
+		else
+		{
+			
+			/*int MatIndex = App->CL_Vm_Model->MatIndex_Data[0];
+			glBindTexture(GL_TEXTURE_2D, App->CL_Vm_Textures->g_Texture[MatIndex]);
+
+			ImGui::Text("pointer = %p", App->CL_Vm_Textures->g_Texture[MatIndex]);
+			ImGui::Text("size = %d x %d", 256, 256);
+			ImGui::Image((void*)(intptr_t)App->CL_Vm_Textures->g_Texture[MatIndex], ImVec2(256.0f, 256.0f));
+			ImGui::End();*/
+		}
 	}
 }

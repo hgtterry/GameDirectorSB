@@ -12,6 +12,7 @@ public:
 	void ImGui_Rotation(void);
 	void ImGui_Position(void);
 	void ImGui_Scale(void);
+	void ImGui_Image(void);
 	
 	bool StartPos;
 
@@ -21,6 +22,7 @@ public:
 	bool Show_Rotation;
 	bool Show_Position;
 	bool Show_Scale;
+	bool Show_Image;
 	
 	float Model_XTranslate;
 	float Model_YTranslate;

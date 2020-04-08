@@ -99,7 +99,7 @@ public:
 
 
 
-	TPack_WindowData *pData;
+	TPack_WindowData *p_Data;
 	BitmapEntry *	NewBitmapList[200];
 	BitmapEntry *   Entry;
 
