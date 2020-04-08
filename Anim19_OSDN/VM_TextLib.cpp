@@ -1483,8 +1483,8 @@ bool VM_TextLib::CleanUp()
 bool VM_TextLib::GetName()
 {
 
-	int Index = 0;// SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
-//	SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_GETTEXT, (WPARAM)Index, (LPARAM)&TextureName[0]);
+	int Index = SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+	SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_GETTEXT, (WPARAM)Index, (LPARAM)&TextureName[0]);
 	return 1;
 }
 // *************************************************************************
@@ -1493,8 +1493,8 @@ bool VM_TextLib::GetName()
 bool VM_TextLib::ReName(const char *NewName)
 {
 
-	int Index = 0;// SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
-	//SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_GETTEXT, (WPARAM)Index, (LPARAM)&TextureName[0]);
+	int Index = SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+	SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_GETTEXT, (WPARAM)Index, (LPARAM)&TextureName[0]);
 	int location = FindBitmap(pData, TextureName);
 
 	strcpy(NewBitmapList[location]->Name, NewName);
