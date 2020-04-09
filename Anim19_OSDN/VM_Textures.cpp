@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "GD19_App.h"
+#include "resource.h"
 #include "VM_Textures.h"
 
 #include "SOIL.h"
@@ -357,5 +358,87 @@ bool VM_Textures::Texture_To_Bmp(char* File)
 {
 	ilLoadImage(File);
 	ilSaveImage("Etemp.bmp");
+	return 1;
+}
+
+// *************************************************************************
+// *						TexureToWinPreviewFullPath			  	 	   *
+// *************************************************************************
+bool VM_Textures::TexureToWinPreviewFullPath(int Index, char* FullPath)
+{
+	char mFileName[1024];
+	strcpy(mFileName, FullPath);
+
+	// ----------------------------------- Bitmap
+	if (_stricmp(mFileName + strlen(mFileName) - 4, ".BMP") == 0)
+	{
+	
+		App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap = (HBITMAP)LoadImage(NULL, mFileName, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+		
+		App->CL_Vm_Model->S_MeshGroup[Index]->Bitmap_Loaded = 1;
+		
+		return 1;
+	}
+	// ------------------------------------ TGA
+	if (_stricmp(mFileName + strlen(mFileName) - 4, ".TGA") == 0)
+	{
+		
+		Texture_To_Bmp(mFileName);
+		App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap = (HBITMAP)LoadImage(NULL, mFileName, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+		App->CL_Vm_Model->S_MeshGroup[Index]->Bitmap_Loaded = 1;
+
+		int test = remove("Etemp.bmp");
+		return 1;
+	}
+	// ------------------------------------ JPEG
+	if (_stricmp(mFileName + strlen(mFileName) - 4, ".JPG") == 0)
+	{
+		Texture_To_Bmp(mFileName);
+		
+		
+
+		App->CL_Vm_Model->S_MeshGroup[Index]->Bitmap_Loaded = 1;
+
+		remove("Etemp.bmp");
+		return 1;
+	}
+	// ------------------------------------ DDS
+	if (_stricmp(mFileName + strlen(mFileName) - 4, ".DDS") == 0)
+	{
+		Texture_To_Bmp(mFileName);
+		
+		
+
+		App->CL_Vm_Model->S_MeshGroup[Index]->Bitmap_Loaded = 1;
+
+		remove("Etemp.bmp");
+		return 1;
+	}
+	// ------------------------------------ PNG
+	if (_stricmp(mFileName + strlen(mFileName) - 4, ".PNG") == 0)
+	{
+		Texture_To_Bmp(mFileName);
+		
+
+		App->CL_Vm_Model->S_MeshGroup[Index]->Bitmap_Loaded = 1;
+
+		remove("Etemp.bmp");
+		return 1;
+	}
+
+	
+	// if all fails dummy texture here 
+
+	//CreateDummyTexture();
+
+	//char buf[1024];
+	//strcpy(buf,App->EquityDirecory_FullPath);
+	//strcat(buf,"\\");
+	//strcat(buf,"Etemp.bmp");
+
+	//App->CL_Model_Data->S_MeshGroup[Index]->Base_Bitmap = ilutWinLoadImage("Etemp.bmp",hDC);
+	////Soil_Load_Texture(g_Texture,buf,TextureID);
+	//remove(buf);
+
 	return 1;
 }

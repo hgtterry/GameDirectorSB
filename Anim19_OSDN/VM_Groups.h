@@ -30,6 +30,7 @@ public:
 	~VM_Groups();
 
 	bool Start_Groups();
+	void Update_Groups_Dialog(int Index);
 
 	HWND RightGroups_Hwnd;
 

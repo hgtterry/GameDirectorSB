@@ -983,7 +983,7 @@ bool VM_Genisis3D::Import_LoadActorTextures(void)
 				{
 					App->CL_Vm_Textures->Genesis_WriteToBmp(App->CL_Vm_Model->S_TextureInfo[Count]->Bitmap, TempTextureFile_BMP);
 
-					//App->CL_Textures->TexureToWinPreviewFullPath(Count, TempTextureFile_BMP);
+					App->CL_Vm_Textures->TexureToWinPreviewFullPath(Count, TempTextureFile_BMP);
 
 					App->CL_Vm_Textures->Soil_Load_Texture(App->CL_Vm_Textures->g_Texture, TempTextureFile_BMP, MatIndex);
 					BmpLoaded = 1;// Signal bmp Loaded for delete
@@ -1004,7 +1004,7 @@ bool VM_Genisis3D::Import_LoadActorTextures(void)
 		DeleteFile((LPCTSTR)TempTextureFile_TGA);
 	}
 
-	////Update_Model_File_View();
+	App->CL_Vm_Groups->Update_Groups_Dialog(0);
 
 	return 1;
 }

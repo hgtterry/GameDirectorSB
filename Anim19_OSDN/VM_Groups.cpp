@@ -326,3 +326,26 @@ bool VM_Groups::RenderTexture_Blit(HDC hDC, HBITMAP Bmp, const RECT *SourceRect,
 
 	return TRUE;
 }
+
+// *************************************************************************
+// *					Update_Groups_Dialog Terry Bernie		  		   *
+// *************************************************************************
+void VM_Groups::Update_Groups_Dialog(int Index)
+{
+
+	Sel_BaseBitmap = App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap;
+
+	BITMAP bm;
+	GetObject(Sel_BaseBitmap, sizeof(bm), &bm);
+
+	BasePicWidth = bm.bmWidth;
+	BasePicHeight = bm.bmHeight;
+
+	ShowWindow(GetDlgItem(RightGroups_Hwnd, IDC_BASETEXTURE), 0);
+	ShowWindow(GetDlgItem(RightGroups_Hwnd, IDC_BASETEXTURE), 1);
+
+
+	/*SetDlgItemText(App->RightGroups_Hwnd, IDC_TEXTURENAME, (LPCTSTR)App->CL_Model_Data->S_MeshGroup[Index]->Text_FileName);
+	SetDlgItemText(App->RightGroups_Hwnd, IDC_GROUPNAME, (LPCTSTR)App->CL_Model_Data->S_MeshGroup[Index]->GroupName);*/
+
+}
