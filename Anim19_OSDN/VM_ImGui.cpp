@@ -19,6 +19,8 @@ VM_ImGui::VM_ImGui()
 	Model_ZTranslate = 2;
 
 	Test = 180;
+
+	Block = 0;
 }
 
 
@@ -533,28 +535,42 @@ void VM_ImGui::ImGui_Image(void)
 // *************************************************************************
 void VM_ImGui::ImGui_GroupList(void)
 {
+	static int selected_Players = -1;
+
 	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
 
-	if (!ImGui::Begin("Image", &Show_Group_List, ImGuiWindowFlags_NoSavedSettings))
+	if (!ImGui::Begin("Image", &Show_Group_List, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize))
 	{
 		ImGui::End();
 	}
 	else
 	{
-		if (App->CL_Vm_Textures->g_Texture[0] == NULL)
+		int GroupCount = App->CL_Vm_Model->GroupCount;
+		ImGui::Text("Group Count %i", GroupCount);
+
+		ImGui::Separator();
+		ImGui::Spacing();
+
+		int Count = 0;
+		while (Count < GroupCount)
 		{
+			ImGui::Bullet();
+			if (ImGui::Selectable(App->CL_Vm_Model->S_MeshGroup[Count]->GroupName, selected_Players == Count))
+			{
+				selected_Players = Count;
+				Block = 1;
+			}
 
+			Count++;
 		}
-		else
+
+		if (Block == 1)
 		{
-
-			int MatIndex = App->CL_Vm_Model->MatIndex_Data[0];
-			glBindTexture(GL_TEXTURE_2D, App->CL_Vm_Textures->g_Texture[MatIndex]);
-
-			ImGui::Text("pointer = %p", App->CL_Vm_Textures->g_Texture[MatIndex]);
-			ImGui::Text("size = %d x %d", 256, 256);
-			ImGui::Image((void*)(intptr_t)App->CL_Vm_Textures->g_Texture[MatIndex], ImVec2(256.0f, 256.0f));
-			ImGui::End();
+			App->CL_Vm_Groups->Update_Groups_Dialog(selected_Players);
+			Block = 0;
 		}
+
+		ImGui::End();
+
 	}
 }

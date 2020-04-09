@@ -31,5 +31,7 @@ public:
 	float Model_ZTranslate;
 
 	float Test;
+
+	bool Block;
 };
 
