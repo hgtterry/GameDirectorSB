@@ -30,6 +30,11 @@ distribution.
 VM_Groups::VM_Groups()
 {
 	RightGroups_Hwnd = nullptr;
+
+	Sel_BaseBitmap = nullptr;
+
+	BasePicWidth = 0;
+	BasePicHeight = 0;
 }
 
 
@@ -65,7 +70,7 @@ LRESULT CALLBACK VM_Groups::Groups_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 
 		//SendDlgItemMessage(hDlg, IDC_GROUPNAME, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 
-		//SetWindowLong(GetDlgItem(hDlg, IDC_BASETEXTURE), GWL_WNDPROC, (LONG)ViewerBasePic);
+		SetWindowLong(GetDlgItem(hDlg, IDC_BASETEXTURE), GWL_WNDPROC, (LONG)ViewerBasePic);
 	}
 
 	case WM_CTLCOLORSTATIC:
@@ -236,4 +241,88 @@ LRESULT CALLBACK VM_Groups::Groups_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 	}
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *						ViewerBasePic Terry Bernie	  				   *
+// *************************************************************************
+bool CALLBACK VM_Groups::ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+	if (msg == WM_PAINT)
+	{
+		PAINTSTRUCT	ps;
+		HDC			hDC;
+		RECT		Rect;
+
+		hDC = BeginPaint(hwnd, &ps);
+		GetClientRect(hwnd, &Rect);
+		Rect.left--;
+		Rect.bottom--;
+		FillRect(hDC, &Rect, (HBRUSH)(RGB(0, 255, 0)));
+
+		if (App->CL_Vm_Groups->Sel_BaseBitmap != NULL)
+		{
+			RECT	Source;
+			RECT	Dest;
+			HDC		hDC;
+
+			Source.left = 0;
+			Source.top = 0;
+			Source.bottom = App->CL_Vm_Groups->BasePicHeight;
+			Source.right = App->CL_Vm_Groups->BasePicWidth;
+
+			Dest = Rect;
+
+			hDC = GetDC(hwnd);
+			SetStretchBltMode(hDC, HALFTONE);
+
+			App->CL_Vm_Groups->RenderTexture_Blit(hDC, App->CL_Vm_Groups->Sel_BaseBitmap, &Source, &Dest);
+			ReleaseDC(hwnd, hDC);
+		}
+		EndPaint(hwnd, &ps);
+		return 0;
+	}
+	return DefWindowProc(hwnd, msg, wParam, lParam);
+}
+
+// *************************************************************************
+// *					RenderTexture_Blit Terry Bernie		  		   *
+// *************************************************************************
+bool VM_Groups::RenderTexture_Blit(HDC hDC, HBITMAP Bmp, const RECT *SourceRect, const RECT *DestRect)
+{
+	HDC		MemDC;
+	int		SourceWidth;
+	int		SourceHeight;
+	int		DestWidth;
+	int		DestHeight;
+
+	MemDC = CreateCompatibleDC(hDC);
+	if (MemDC == NULL)
+		return FALSE;
+
+	if (Bmp)
+	{
+		SelectObject(MemDC, Bmp);
+
+		SourceWidth = SourceRect->right - SourceRect->left;
+		SourceHeight = SourceRect->bottom - SourceRect->top;
+		DestWidth = DestRect->right - DestRect->left;
+		DestHeight = DestRect->bottom - DestRect->top;
+		SetStretchBltMode(hDC, COLORONCOLOR);
+		StretchBlt(hDC,
+			DestRect->left,
+			DestRect->top,
+			DestHeight,
+			DestHeight,
+			MemDC,
+			SourceRect->left,
+			SourceRect->top,
+			SourceWidth,
+			SourceHeight,
+			SRCCOPY);
+	}
+
+	DeleteDC(MemDC);
+
+	return TRUE;
 }
