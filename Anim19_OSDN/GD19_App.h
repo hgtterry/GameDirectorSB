@@ -72,6 +72,7 @@ distribution.
 #include "VM_FileIO.h"
 #include "VM_ImGui.h"
 #include "VM_TextLib.h"
+#include "VM_Groups.h"
 
 
 class GD19_App
@@ -125,6 +126,7 @@ public:
 	VM_FileIO*			CL_Vm_FileIO;
 	VM_ImGui*			CL_Vm_ImGui;
 	VM_TextLib*			CL_Vm_TextLib;
+	VM_Groups*			CL_Vm_Groups;
 
 
 	GD19_App(void);
