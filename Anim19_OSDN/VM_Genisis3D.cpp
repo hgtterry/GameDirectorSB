@@ -100,10 +100,14 @@ void VM_Genisis3D::Reset_Class(void)
 // *************************************************************************
 // *						LoadActor Terry Bernie					 	   *
 // *************************************************************************
-void VM_Genisis3D::Import_LoadActor(void)
+bool VM_Genisis3D::Import_LoadActor(void)
 {
 
-	Import_AddActor(App->CL_Vm_Model->Path_FileName);
+	bool Test = Import_AddActor(App->CL_Vm_Model->Path_FileName);
+	if (Test == 0)
+	{
+		return 0;
+	}
 
 	SetCounters();
 
@@ -124,6 +128,7 @@ void VM_Genisis3D::Import_LoadActor(void)
 
 	//App->CL_Vm_Model->HasMesh = 1;
 
+	return 1;
 }
 
 // *************************************************************************
@@ -386,7 +391,8 @@ bool VM_Genisis3D::Import_AddActor(char* FileName)
 		TestActor = nullptr;
 	}
 
-	geVFile* HFile;
+	geVFile* HFile = nullptr;
+
 
 	HFile = geVFile_OpenNewSystem(NULL, GE_VFILE_TYPE_DOS,
 		FileName, NULL, GE_VFILE_OPEN_READONLY);
@@ -406,9 +412,15 @@ bool VM_Genisis3D::Import_AddActor(char* FileName)
 		}
 		else
 		{
-			App->Say("Cant Create HFile");
+			App->Say("Cant Create ActorDef_Memory");
+			geVFile_Close(HFile);
 			return 0;
 		}
+	}
+	else
+	{
+		App->Say("Cant Create HFile");
+		return 0;
 	}
 
 	geVFile_Close(HFile);

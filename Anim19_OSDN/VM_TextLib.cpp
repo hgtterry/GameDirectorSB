@@ -74,7 +74,12 @@ LRESULT CALLBACK VM_TextLib::TextureLib_Proc(HWND hDlg, UINT message, WPARAM wPa
 		HFONT				Font3;
 
 
-		App->CL_Vm_TextLib->LoadFile(hDlg);
+		bool test = App->CL_Vm_TextLib->LoadFile(hDlg);
+		if (test == 0)
+		{
+			App->CL_Vm_TextLib->CleanUp();
+			EndDialog(hDlg, LOWORD(wParam));
+		}
 
 		strcpy(buf1, App->Version);
 		strcat(buf1, "        ");

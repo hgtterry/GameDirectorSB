@@ -68,21 +68,22 @@ LRESULT CALLBACK VM_Groups::Groups_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 		//SendDlgItemMessage(hDlg,IDC_SHOWALLGROUPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));*/
 		//SendDlgItemMessage(hDlg, IDC_TEXTURENAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		//SendDlgItemMessage(hDlg, IDC_GROUPNAME, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_RGGROUPNAME, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		
 		SetWindowLong(GetDlgItem(hDlg, IDC_BASETEXTURE2), GWL_WNDPROC, (LONG)ViewerBasePic);
 	}
 
 	case WM_CTLCOLORSTATIC:
 	{
-		/*if (GetDlgItem(hDlg, IDC_TEXTURENAME) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_RGGROUPNAME) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
 		}
-		if (GetDlgItem(hDlg, IDC_GROUPNAME) == (HWND)lParam)
+
+	/*	if (GetDlgItem(hDlg, IDC_GROUPNAME) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -344,8 +345,9 @@ void VM_Groups::Update_Groups_Dialog(int Index)
 	ShowWindow(GetDlgItem(RightGroups_Hwnd, IDC_BASETEXTURE2), 0);
 	ShowWindow(GetDlgItem(RightGroups_Hwnd, IDC_BASETEXTURE2), 1);
 
+	
+	SetDlgItemText(RightGroups_Hwnd, IDC_RGGROUPNAME, (LPCTSTR)App->CL_Vm_Model->S_MeshGroup[Index]->GroupName);
 
-	/*SetDlgItemText(App->RightGroups_Hwnd, IDC_TEXTURENAME, (LPCTSTR)App->CL_Model_Data->S_MeshGroup[Index]->Text_FileName);
-	SetDlgItemText(App->RightGroups_Hwnd, IDC_GROUPNAME, (LPCTSTR)App->CL_Model_Data->S_MeshGroup[Index]->GroupName);*/
+	//SetDlgItemText(App->RightGroups_Hwnd, IDC_GROUPNAME, (LPCTSTR)App->CL_Model_Data->S_MeshGroup[Index]->GroupName);*/
 
 }

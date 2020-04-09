@@ -571,6 +571,5 @@ void VM_ImGui::ImGui_GroupList(void)
 		}
 
 		ImGui::End();
-
 	}
 }

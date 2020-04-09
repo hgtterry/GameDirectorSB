@@ -44,7 +44,7 @@ public:
 
 	void Reset_Class(void);
 
-	void Import_LoadActor(void);
+	bool Import_LoadActor(void);
 
 	bool GetMotion(char *mMotionName);
 
