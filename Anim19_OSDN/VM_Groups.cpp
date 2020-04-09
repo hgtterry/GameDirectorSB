@@ -48,7 +48,7 @@ VM_Groups::~VM_Groups()
 bool VM_Groups::Start_Groups()
 {
 	RightGroups_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_RIGHTGROUPS, App->Fdlg, (DLGPROC)Groups_Proc);
-	ShowWindow(RightGroups_Hwnd, 1);
+	ShowWindow(RightGroups_Hwnd, 0);
 	return 1;
 }
 
@@ -70,7 +70,7 @@ LRESULT CALLBACK VM_Groups::Groups_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 
 		//SendDlgItemMessage(hDlg, IDC_GROUPNAME, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 
-		SetWindowLong(GetDlgItem(hDlg, IDC_BASETEXTURE), GWL_WNDPROC, (LONG)ViewerBasePic);
+		SetWindowLong(GetDlgItem(hDlg, IDC_BASETEXTURE2), GWL_WNDPROC, (LONG)ViewerBasePic);
 	}
 
 	case WM_CTLCOLORSTATIC:
@@ -341,8 +341,8 @@ void VM_Groups::Update_Groups_Dialog(int Index)
 	BasePicWidth = bm.bmWidth;
 	BasePicHeight = bm.bmHeight;
 
-	ShowWindow(GetDlgItem(RightGroups_Hwnd, IDC_BASETEXTURE), 0);
-	ShowWindow(GetDlgItem(RightGroups_Hwnd, IDC_BASETEXTURE), 1);
+	ShowWindow(GetDlgItem(RightGroups_Hwnd, IDC_BASETEXTURE2), 0);
+	ShowWindow(GetDlgItem(RightGroups_Hwnd, IDC_BASETEXTURE2), 1);
 
 
 	/*SetDlgItemText(App->RightGroups_Hwnd, IDC_TEXTURENAME, (LPCTSTR)App->CL_Model_Data->S_MeshGroup[Index]->Text_FileName);

@@ -395,7 +395,7 @@ bool VM_Textures::TexureToWinPreviewFullPath(int Index, char* FullPath)
 	{
 		Texture_To_Bmp(mFileName);
 		
-		
+		App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap = (HBITMAP)LoadImage(NULL, mFileName, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
 
 		App->CL_Vm_Model->S_MeshGroup[Index]->Bitmap_Loaded = 1;
 
@@ -407,7 +407,7 @@ bool VM_Textures::TexureToWinPreviewFullPath(int Index, char* FullPath)
 	{
 		Texture_To_Bmp(mFileName);
 		
-		
+		App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap = (HBITMAP)LoadImage(NULL, mFileName, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
 
 		App->CL_Vm_Model->S_MeshGroup[Index]->Bitmap_Loaded = 1;
 
@@ -419,6 +419,7 @@ bool VM_Textures::TexureToWinPreviewFullPath(int Index, char* FullPath)
 	{
 		Texture_To_Bmp(mFileName);
 		
+		App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap = (HBITMAP)LoadImage(NULL, mFileName, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
 
 		App->CL_Vm_Model->S_MeshGroup[Index]->Bitmap_Loaded = 1;
 

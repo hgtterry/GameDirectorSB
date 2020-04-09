@@ -13,6 +13,7 @@ public:
 	void ImGui_Position(void);
 	void ImGui_Scale(void);
 	void ImGui_Image(void);
+	void ImGui_GroupList(void);
 	
 	bool StartPos;
 
@@ -23,6 +24,7 @@ public:
 	bool Show_Position;
 	bool Show_Scale;
 	bool Show_Image;
+	bool Show_Group_List;
 	
 	float Model_XTranslate;
 	float Model_YTranslate;
