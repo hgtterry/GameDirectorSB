@@ -1073,18 +1073,11 @@ LRESULT CALLBACK VM_TopBar::Groups_TB_Proc(HWND hDlg, UINT message, WPARAM wPara
 
 	case WM_COMMAND:
 	{
-		//if (LOWORD(wParam) == IDC_TBROTATION) // Rotation
-		//{
-		//	if (App->CL_Vm_ImGui->Show_Rotation == 1)
-		//	{
-		//		App->CL_Vm_ImGui->Show_Rotation = 0;
-		//	}
-		//	else
-		//	{
-		//		App->CL_Vm_ImGui->Show_Rotation = 1;
-		//	}
-		//	return TRUE;
-		//}
+		if (LOWORD(wParam) == IDC_GRCHANGETEXTURE) // Rotation
+		{
+			App->CL_Vm_Groups->ChangeTexture_ModelLocation();
+			return TRUE;
+		}
 
 		//if (LOWORD(wParam) == IDC_TBPOSITION) // Position
 		//{

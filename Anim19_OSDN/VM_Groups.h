@@ -32,6 +32,10 @@ public:
 	bool Start_Groups();
 	void Update_Groups_Dialog(int Index);
 
+	bool ChangeTexture_ModelLocation(void);
+
+	int SelectedGroup;
+
 	HWND RightGroups_Hwnd;
 
 	HBITMAP	Sel_BaseBitmap;

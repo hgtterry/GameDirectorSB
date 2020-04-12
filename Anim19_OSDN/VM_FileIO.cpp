@@ -94,6 +94,45 @@ bool VM_FileIO::OpenFile(char* Extension, char* Title, char* StartDirectory)
 	return 0;
 }
 
+// *************************************************************************
+// *					OpenTextureFile Terry Bernie			  	 	   *
+// *************************************************************************
+bool VM_FileIO::OpenTextureFile(char* Title, char* StartDirectory, bool SaveLocation)
+{
+	strcpy(Texture_FileName, "");
+	strcpy(Texture_Path_FileName, "");
+
+	ZeroMemory(&ofn, sizeof(ofn));
+	ofn.lStructSize = sizeof(ofn);
+	ofn.hwndOwner = App->Fdlg;
+	ofn.hInstance = App->hInst;
+	ofn.lpstrFile = Texture_Path_FileName;						// full path and file name
+	ofn.nMaxFile = sizeof(Texture_Path_FileName);
+	ofn.lpstrFilter = "Available Formats\0*.bmp;*.tga;*.jpg;*.png;*.dds;*.pcx;*.tif;*.tiff;\0Windows Bitmap  (*.bmp)\0*.bmp\0Truevision Targa  (*.tga) \0*.tga\0JPEG  (*.jpg) \0*.jpg\0Portable Network Graphics (*.png) \0*.png\0Direct Draw  (*.dds) \0*.dds\0ZSoft PCX  (*.pcx) \0*.pcx\0Tagged Image File Format  (*.tif) \0*.tif\0Tagged Image File Format  (*.tiff) \0*.tiff\0";
+
+	ofn.nFilterIndex = 1;
+	ofn.lpstrFileTitle = Texture_FileName;				// Just File Name
+	ofn.nMaxFileTitle = sizeof(Texture_FileName);
+	ofn.lpstrInitialDir = StartDirectory;
+	ofn.lpstrTitle = Title;
+	ofn.Flags = OFN_PATHMUSTEXIST |
+		OFN_FILEMUSTEXIST |
+		OFN_EXPLORER |
+		OFN_HIDEREADONLY |
+		OFN_FILEMUSTEXIST;
+	if (GetOpenFileName(&ofn) == TRUE)
+	{
+		if (SaveLocation == 1)
+		{
+			//_getcwd(S_Folders[0]->TempLoadLocation,1024);
+		}
+
+		return 1;
+	}
+
+	return 0;
+}
+
 // ************************************************************************
 // *						SaveFileCom Terry Bernie		 		 	   *
 // *************************************************************************

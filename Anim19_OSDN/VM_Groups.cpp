@@ -33,6 +33,8 @@ VM_Groups::VM_Groups()
 
 	Sel_BaseBitmap = nullptr;
 
+	SelectedGroup = 0;
+
 	BasePicWidth = 0;
 	BasePicHeight = 0;
 }
@@ -328,6 +330,7 @@ bool VM_Groups::RenderTexture_Blit(HDC hDC, HBITMAP Bmp, const RECT *SourceRect,
 // *************************************************************************
 void VM_Groups::Update_Groups_Dialog(int Index)
 {
+	SelectedGroup = Index;
 
 	Sel_BaseBitmap = App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap;
 
@@ -346,4 +349,97 @@ void VM_Groups::Update_Groups_Dialog(int Index)
 
 	//SetDlgItemText(App->RightGroups_Hwnd, IDC_GROUPNAME, (LPCTSTR)App->CL_Model_Data->S_MeshGroup[Index]->GroupName);*/
 
+}
+
+// *************************************************************************
+// *				ChangeTexture_ModelLocation Terry Bernie			   *
+// *************************************************************************
+bool VM_Groups::ChangeTexture_ModelLocation(void)
+{
+
+	int test = 0;
+	
+	if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
+	{
+
+		test = App->CL_Vm_FileIO->OpenTextureFile("Equity10 Replace Texture", NULL, NULL);//App->S_ModelTexturePaths[0]->TextureFolder,1);
+		if (test == 0) { return 0; }
+
+
+		char mFileName[1024];
+		strcpy(mFileName, App->CL_Vm_FileIO->Texture_Path_FileName);
+
+		App->CL_Vm_Textures->Soil_Load_Texture(App->CL_Vm_Textures->g_Texture, App->CL_Vm_FileIO->Texture_Path_FileName, SelectedGroup);//App->S_MeshGroup[mIndex]->Soil_TextureIndex);
+
+		strcpy(App->CL_Vm_Model->S_MeshGroup[SelectedGroup]->Text_FileName, App->CL_Vm_FileIO->Texture_FileName);
+		strcpy(App->CL_Vm_Model->S_MeshGroup[SelectedGroup]->Text_PathFileName, App->CL_Vm_FileIO->Texture_Path_FileName);
+
+
+		App->CL_Vm_Textures->TexureToWinPreviewFullPath(SelectedGroup, App->CL_Vm_FileIO->Texture_Path_FileName);
+		Update_Groups_Dialog(SelectedGroup);
+
+		char buf[255];
+		strcpy(buf, App->CL_Vm_Model->S_MeshGroup[SelectedGroup]->GroupName);
+		strcat(buf, " -> ");
+		strcat(buf, App->CL_Vm_Model->S_MeshGroup[SelectedGroup]->Text_FileName);
+
+	//	App->CL_FileView->ChangeItem_Name(App->CL_FileView->HT_Textures_Mapped_Item[SelectedGroup], buf);
+
+		if (_stricmp(mFileName + strlen(mFileName) - 4, ".BMP") == 0)
+		{
+			App->CL_Vm_Genesis3D->ChangeTexture(mFileName);
+		}
+	//	//---------------------------------------------------------- TGA
+	//	if (stricmp(mFileName + strlen(mFileName) - 4, ".TGA") == 0)
+	//	{
+	//		
+	//	}
+	//	//---------------------------------------------------------- JPG
+	//	if (stricmp(mFileName + strlen(mFileName) - 4, ".jpg") == 0)
+	//	{
+	//		App->CL_Textures->Texture_To_Bmp(mFileName);
+	//		App->CL_Textures->Genesis_ChangeTexture("Etemp.bmp");
+	//		remove("Etemp.bmp");
+	//	}
+	//	//---------------------------------------------------------- PNG
+	//	if (stricmp(mFileName + strlen(mFileName) - 4, ".png") == 0)
+	//	{
+	//		App->CL_Textures->Texture_To_Bmp(mFileName);
+	//		App->CL_Textures->Genesis_ChangeTexture("Etemp.bmp");
+	//		remove("Etemp.bmp");
+	//	}
+	//	//---------------------------------------------------------- DDS
+	//	if (stricmp(mFileName + strlen(mFileName) - 4, ".dds") == 0)
+	//	{
+	//		App->CL_Textures->Texture_To_Bmp(mFileName);
+	//		App->CL_Textures->Genesis_ChangeTexture("Etemp.bmp");
+	//		remove("Etemp.bmp");
+
+	//	}
+	//	//---------------------------------------------------------- PCX
+	//	if (stricmp(mFileName + strlen(mFileName) - 4, ".pcx") == 0)
+	//	{
+	//		App->CL_Textures->Texture_To_Bmp(mFileName);
+	//		App->CL_Textures->Genesis_ChangeTexture("Etemp.bmp");
+	//		remove("Etemp.bmp");
+	//	}
+
+	//	//---------------------------------------------------------- TIF
+	//	if (stricmp(mFileName + strlen(mFileName) - 4, ".tif") == 0)
+	//	{
+	//		App->CL_Textures->Texture_To_Bmp(mFileName);
+	//		App->CL_Textures->Genesis_ChangeTexture("Etemp.bmp");
+	//		remove("Etemp.bmp");
+	//	}
+
+	//	//---------------------------------------------------------- TIFF
+	//	if (stricmp(mFileName + strlen(mFileName) - 5, ".tiff") == 0)
+	//	{
+	//		App->CL_Textures->Texture_To_Bmp(mFileName);
+	//		App->CL_Textures->Genesis_ChangeTexture("Etemp.bmp");
+	//		remove("Etemp.bmp");
+	//	}
+	}
+
+	return TRUE;
 }

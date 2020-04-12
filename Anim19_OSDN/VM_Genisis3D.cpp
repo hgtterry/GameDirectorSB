@@ -1382,4 +1382,50 @@ bool VM_Genisis3D::MoveActor(void)
 	return 1;
 }
 
+// *************************************************************************
+// *							Genesis_ChangeTexture	 			  	   *
+// *************************************************************************
+bool VM_Genisis3D::ChangeTexture(char* TextureFile)
+{
+	geVFile *VF;
+	geBitmap *Bmp = NULL;
+
+	if (_stricmp(TextureFile + strlen(TextureFile) - 4, ".bmp") != 0)
+	{
+		App->Say("Not A BMP");
+		return GE_FALSE;
+	}
+
+	VF = geVFile_OpenNewSystem(NULL, GE_VFILE_TYPE_DOS, TextureFile, NULL, GE_VFILE_OPEN_READONLY);
+	if (VF == NULL)
+	{
+		
+		App->Say("Can't CreateFile");
+		return GE_FALSE;
+	}
+
+	Bmp = geBitmap_CreateFromFile(VF);
+
+	geVFile_Close(VF);
+
+	if (Bmp == NULL)
+	{
+		App->Say("Can't Create Bitmap");
+		return GE_FALSE;
+	}
+	if (geBitmap_SetColorKey(Bmp, GE_TRUE, 255, GE_TRUE) == GE_FALSE)
+	{
+		App->Say("Can't Set Colour Key");
+		return GE_FALSE;
+	}
+
+	int textureID = 0;
+
+	textureID = App->CL_Vm_Groups->SelectedGroup;
+
+	geBody_SetMaterial(ActorDef_Memory->Body, textureID, Bmp, 255, 255, 255);
+
+	return 1;
+}
+
 

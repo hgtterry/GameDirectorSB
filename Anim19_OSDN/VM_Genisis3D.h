@@ -58,6 +58,8 @@ public:
 	bool MoveActor(void);
 	bool ScaleActor(float SX, float SY, float SZ);
 
+	bool ChangeTexture(char* TextureFile);
+
 	char MotionName[255];
 	float m_CurrentPose;
 	float AnimationSpeed;
