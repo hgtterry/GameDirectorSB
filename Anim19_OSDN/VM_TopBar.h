@@ -13,6 +13,7 @@ public:
 
 	HWND Motions_TB_hWnd;
 	HWND Dimensions_TB_hWnd;
+	HWND Groups_TB_hWnd;
 
 protected:
 
@@ -22,6 +23,7 @@ protected:
 
 	static LRESULT CALLBACK Motions_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Dimensions_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Groups_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	static LRESULT CALLBACK Tabs_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
@@ -32,6 +34,7 @@ protected:
 
 	void Start_Motions_TB(void);
 	void Start_Dimensions_TB(void);
+	void Start_Groups_TB(void);
 
 	void Start_Tabs(void);
 

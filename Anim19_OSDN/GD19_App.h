@@ -185,6 +185,7 @@ public:
 	HBRUSH Brush_But_Normal;
 	HBRUSH Brush_But_Hover;
 	HBRUSH Brush_Tabs;
+	HBRUSH Brush_Tabs_UnSelected;
 
 	HANDLE Hnd_PinOff;
 	HANDLE Hnd_PinOn;

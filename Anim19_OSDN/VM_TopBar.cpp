@@ -13,6 +13,7 @@ VM_TopBar::VM_TopBar()
 
 	Motions_TB_hWnd =		nullptr;
 	Dimensions_TB_hWnd =	nullptr;
+	Groups_TB_hWnd =		nullptr;
 
 	Toggle_Faces_Flag = 0;
 	Toggle_Textures_Flag = 0;
@@ -61,6 +62,7 @@ LRESULT CALLBACK VM_TopBar::TopMain_Proc(HWND hDlg, UINT message, WPARAM wParam,
 		App->CL_Vm_TopBar->Start_TB1();
 		App->CL_Vm_TopBar->Start_Motions_TB();
 		App->CL_Vm_TopBar->Start_Dimensions_TB();
+		App->CL_Vm_TopBar->Start_Groups_TB();
 		
 		return TRUE;
 	}
@@ -377,6 +379,7 @@ LRESULT CALLBACK VM_TopBar::Tabs_Proc(HWND hDlg, UINT message, WPARAM wParam, LP
 		{
 			App->CL_Vm_TopBar->Hide_Tabs();
 			
+			ShowWindow(App->CL_Vm_TopBar->Groups_TB_hWnd, SW_SHOW);
 			ShowWindow(App->CL_Vm_Groups->RightGroups_Hwnd, SW_SHOW);
 			App->CL_Vm_ImGui->Show_Group_List = 1;
 
@@ -399,7 +402,7 @@ void VM_TopBar::Hide_Tabs(void)
 	ShowWindow(App->CL_Vm_TopBar->TB_1, SW_HIDE);
 	ShowWindow(App->CL_Vm_TopBar->Motions_TB_hWnd, SW_HIDE);
 	ShowWindow(App->CL_Vm_TopBar->Dimensions_TB_hWnd, SW_HIDE);
-	//ShowWindow(App->CL_Vm_TopBar->Toggle_Tabs_Groups_Flag, SW_HIDE);
+	ShowWindow(App->CL_Vm_TopBar->Groups_TB_hWnd, SW_HIDE);
 	
 	ShowWindow(App->CL_Vm_Groups->RightGroups_Hwnd, 0);
 	App->CL_Vm_ImGui->Show_Group_List = 0;
@@ -1029,6 +1032,86 @@ LRESULT CALLBACK VM_TopBar::Dimensions_TB_Proc(HWND hDlg, UINT message, WPARAM w
 			return TRUE;
 		}
 		
+		return FALSE;
+	}
+	}
+	return FALSE;
+}
+
+// *************************************************************************
+// *						Start_Groups_TB Terry					   *
+// *************************************************************************
+void VM_TopBar::Start_Groups_TB(void)
+{
+	Groups_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_GROUPS, Tabs_TB_hWnd, (DLGPROC)Groups_TB_Proc);
+}
+
+// *************************************************************************
+// *								Dimensions_TB_Proc					   *
+// *************************************************************************
+LRESULT CALLBACK VM_TopBar::Groups_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		//SendDlgItemMessage(hDlg, IDC_CBMOTIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		return TRUE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->Brush_Tabs;
+	}
+
+	case WM_NOTIFY:
+	{
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+		//if (LOWORD(wParam) == IDC_TBROTATION) // Rotation
+		//{
+		//	if (App->CL_Vm_ImGui->Show_Rotation == 1)
+		//	{
+		//		App->CL_Vm_ImGui->Show_Rotation = 0;
+		//	}
+		//	else
+		//	{
+		//		App->CL_Vm_ImGui->Show_Rotation = 1;
+		//	}
+		//	return TRUE;
+		//}
+
+		//if (LOWORD(wParam) == IDC_TBPOSITION) // Position
+		//{
+		//	if (App->CL_Vm_ImGui->Show_Position == 1)
+		//	{
+		//		App->CL_Vm_ImGui->Show_Position = 0;
+		//	}
+		//	else
+		//	{
+		//		App->CL_Vm_ImGui->Show_Position = 1;
+		//	}
+		//	return TRUE;
+		//}
+
+		//if (LOWORD(wParam) == IDC_TBSCALE) // Scale
+		//{
+		//	if (App->CL_Vm_ImGui->Show_Scale == 1)
+		//	{
+		//		App->CL_Vm_ImGui->Show_Scale = 0;
+		//	}
+		//	else
+		//	{
+		//		App->CL_Vm_ImGui->Show_Scale = 1;
+		//	}
+		//	return TRUE;
+		//}
+
 		return FALSE;
 	}
 	}

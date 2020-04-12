@@ -62,13 +62,8 @@ LRESULT CALLBACK VM_Groups::Groups_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 	case WM_INITDIALOG:
 	{
 
-		//SendDlgItemMessage(hDlg, IDC_CHANGE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		///*SendDlgItemMessage(hDlg,IDC_CKSHOWONLYGROUPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg,IDC_CKHIDEGROUP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg,IDC_SHOWALLGROUPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));*/
-		//SendDlgItemMessage(hDlg, IDC_TEXTURENAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
 		SendDlgItemMessage(hDlg, IDC_RGGROUPNAME, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_RGTEXTURENAME, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 		
 		SetWindowLong(GetDlgItem(hDlg, IDC_BASETEXTURE2), GWL_WNDPROC, (LONG)ViewerBasePic);
 	}
@@ -83,7 +78,7 @@ LRESULT CALLBACK VM_Groups::Groups_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 			return (UINT)App->AppBackground;
 		}
 
-	/*	if (GetDlgItem(hDlg, IDC_GROUPNAME) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_RGTEXTURENAME) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -91,7 +86,7 @@ LRESULT CALLBACK VM_Groups::Groups_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 			return (UINT)App->AppBackground;
 		}
 
-		if (GetDlgItem(hDlg, IDC_CKSHOWONLYGROUPS) == (HWND)lParam)
+	/*	if (GetDlgItem(hDlg, IDC_CKSHOWONLYGROUPS) == (HWND)lParam)
 		{
 			if (App->CL_Right_Groups->CK_ShowGroupOnly == 0)
 			{
@@ -347,6 +342,7 @@ void VM_Groups::Update_Groups_Dialog(int Index)
 
 	
 	SetDlgItemText(RightGroups_Hwnd, IDC_RGGROUPNAME, (LPCTSTR)App->CL_Vm_Model->S_MeshGroup[Index]->GroupName);
+	SetDlgItemText(RightGroups_Hwnd, IDC_RGTEXTURENAME, (LPCTSTR)App->CL_Vm_Model->S_MeshGroup[Index]->Text_FileName);
 
 	//SetDlgItemText(App->RightGroups_Hwnd, IDC_GROUPNAME, (LPCTSTR)App->CL_Model_Data->S_MeshGroup[Index]->GroupName);*/
 
