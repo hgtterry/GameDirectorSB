@@ -90,7 +90,9 @@ protected:
 
 	bool RenderPoints(void);
 	bool RenderMeshOnly(void);
-	bool RenderByTexture();
+
+	bool RenderByTexture_Actor();
+	bool Render_Just_Texture_Actor();
 
 	void RenderCrossHair(void);
 

@@ -1073,24 +1073,25 @@ LRESULT CALLBACK VM_TopBar::Groups_TB_Proc(HWND hDlg, UINT message, WPARAM wPara
 
 	case WM_COMMAND:
 	{
-		if (LOWORD(wParam) == IDC_GRCHANGETEXTURE) // Rotation
+		if (LOWORD(wParam) == IDC_GRCHANGETEXTURE) 
 		{
 			App->CL_Vm_Groups->ChangeTexture_ModelLocation();
 			return TRUE;
 		}
 
-		//if (LOWORD(wParam) == IDC_TBPOSITION) // Position
-		//{
-		//	if (App->CL_Vm_ImGui->Show_Position == 1)
-		//	{
-		//		App->CL_Vm_ImGui->Show_Position = 0;
-		//	}
-		//	else
-		//	{
-		//		App->CL_Vm_ImGui->Show_Position = 1;
-		//	}
-		//	return TRUE;
-		//}
+		if (LOWORD(wParam) == IDC_ONLYGROUP) 
+		{
+			if (App->Cl19_Ogre->RenderListener->ShowOnlySubMesh == 1)
+			{
+				App->Cl19_Ogre->RenderListener->ShowOnlySubMesh = 0;
+			}
+			else
+			{
+				App->Cl19_Ogre->RenderListener->ShowOnlySubMesh = 1;
+			}
+
+			return TRUE;
+		}
 
 		//if (LOWORD(wParam) == IDC_TBSCALE) // Scale
 		//{

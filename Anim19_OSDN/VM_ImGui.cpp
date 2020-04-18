@@ -541,7 +541,7 @@ void VM_ImGui::ImGui_Image(void)
 // *************************************************************************
 void VM_ImGui::ImGui_GroupList(void)
 {
-	static int selected_Players = -1;
+	static int selected_Players = 0;
 
 	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
 

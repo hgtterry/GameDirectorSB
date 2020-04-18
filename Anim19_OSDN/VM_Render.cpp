@@ -203,8 +203,14 @@ void VM_Render::Render()
 
 		if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
 		{
-			RenderByTexture();
-			//Render_As_Textured();
+			if (ShowOnlySubMesh == 1)
+			{
+				Render_Just_Texture_Actor();
+			}
+			else
+			{
+				RenderByTexture_Actor();
+			}
 		}
 
 		/*if (App->CL_Vm_Model->Render_Mode = Render_As_Assimp)
@@ -731,9 +737,9 @@ void VM_Render::Render_BoundingBoxModel(void)
 }
 
 // *************************************************************************
-// *					RenderByTexture  ( Terry Bernie ) 				   *
+// *					RenderByTexture_Actor  ( Terry Bernie ) 		   *
 // *************************************************************************
-bool VM_Render::RenderByTexture()
+bool VM_Render::RenderByTexture_Actor()
 {
 	const geBody_Triangle *SF;
 	SF = App->CL_Vm_Genesis3D->ActorDef_Memory->Body->SkinFaces[GE_BODY_HIGHEST_LOD].FaceArray;
@@ -753,11 +759,78 @@ bool VM_Render::RenderByTexture()
 	glColor3f(1,1,1);	
 	glEnable(GL_ALPHA_TEST);
 
+	while (Count < App->CL_Vm_Model->FaceCount)
+	{
+		MatIndex = App->CL_Vm_Model->MatIndex_Data[Count];
+
+		glBindTexture(GL_TEXTURE_2D, App->CL_Vm_Textures->g_Texture[MatIndex]);
+
+		glBegin(GL_POLYGON);
+
+		x = App->CL_Vm_Model->vertex_Data[App->CL_Vm_Model->Face_Data[Count].a].x;
+		y = App->CL_Vm_Model->vertex_Data[App->CL_Vm_Model->Face_Data[Count].a].y;
+		z = App->CL_Vm_Model->vertex_Data[App->CL_Vm_Model->Face_Data[Count].a].z;
+
+
+		glNormal3f(App->CL_Vm_Model->Normal_Data[SF[Count].NormalIndex[0]].x, App->CL_Vm_Model->Normal_Data[SF[Count].NormalIndex[0]].y, App->CL_Vm_Model->Normal_Data[SF[Count].NormalIndex[0]].z);
+		glTexCoord2f(App->CL_Vm_Model->MapCord_Data[App->CL_Vm_Model->Face_Data[Count].a].u, App->CL_Vm_Model->MapCord_Data[App->CL_Vm_Model->Face_Data[Count].a].v);
+		glVertex3f(x, y, z);//Vertex definition
+
+		x = App->CL_Vm_Model->vertex_Data[App->CL_Vm_Model->Face_Data[Count].b].x;
+		y = App->CL_Vm_Model->vertex_Data[App->CL_Vm_Model->Face_Data[Count].b].y;
+		z = App->CL_Vm_Model->vertex_Data[App->CL_Vm_Model->Face_Data[Count].b].z;
+
+
+		glNormal3f(App->CL_Vm_Model->Normal_Data[SF[Count].NormalIndex[1]].x, App->CL_Vm_Model->Normal_Data[SF[Count].NormalIndex[1]].y, App->CL_Vm_Model->Normal_Data[SF[Count].NormalIndex[1]].z);
+		glTexCoord2f(App->CL_Vm_Model->MapCord_Data[App->CL_Vm_Model->Face_Data[Count].b].u, App->CL_Vm_Model->MapCord_Data[App->CL_Vm_Model->Face_Data[Count].b].v);
+		glVertex3f(x, y, z);
+
+		x = App->CL_Vm_Model->vertex_Data[App->CL_Vm_Model->Face_Data[Count].c].x;
+		y = App->CL_Vm_Model->vertex_Data[App->CL_Vm_Model->Face_Data[Count].c].y;
+		z = App->CL_Vm_Model->vertex_Data[App->CL_Vm_Model->Face_Data[Count].c].z;
+
+		glNormal3f(App->CL_Vm_Model->Normal_Data[SF[Count].NormalIndex[2]].x, App->CL_Vm_Model->Normal_Data[SF[Count].NormalIndex[2]].y, App->CL_Vm_Model->Normal_Data[SF[Count].NormalIndex[2]].z);
+		glTexCoord2f(App->CL_Vm_Model->MapCord_Data[App->CL_Vm_Model->Face_Data[Count].c].u, App->CL_Vm_Model->MapCord_Data[App->CL_Vm_Model->Face_Data[Count].c].v);
+		glVertex3f(x, y, z);
+
+		glEnd();
+
+		Count++;
+	}
+
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_ALPHA_TEST);
+
+	return 1;
+}
+
+// *************************************************************************
+// *					Render_Just_Texture_Actor  ( Terry Bernie ) 	   *
+// *************************************************************************
+bool VM_Render::Render_Just_Texture_Actor()
+{
+	const geBody_Triangle *SF;
+	SF = App->CL_Vm_Genesis3D->ActorDef_Memory->Body->SkinFaces[GE_BODY_HIGHEST_LOD].FaceArray;
+
+	int Count = 0;
+	int MatIndex;
+	int UVIndex = 0;
+
+	float x = 0;
+	float y = 0;
+	float z = 0;
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	glEnable(GL_TEXTURE_2D);
+	glColor3f(1, 1, 1);
+	glEnable(GL_ALPHA_TEST);
+
 	int SelectedIndex = App->CL_Vm_Model->S_TextureInfo[App->CL_Vm_Groups->SelectedGroup]->ActorMaterialIndex;
 
 	while (Count<App->CL_Vm_Model->FaceCount)
 	{
-		//MatIndex = App->CL_Vm_Genesis3D->ActorDef_Memory->Body->SkinFaces[GE_BODY_HIGHEST_LOD].FaceArray[Count].MaterialIndex;
 		MatIndex = App->CL_Vm_Model->MatIndex_Data[Count];
 
 		if (MatIndex == SelectedIndex)
@@ -794,8 +867,6 @@ bool VM_Render::RenderByTexture()
 			glVertex3f(x, y, z);
 
 			glEnd();
-
-			//FlashWindow(App->MainHwnd, true);
 		}
 
 		Count++;
@@ -818,9 +889,9 @@ bool VM_Render::RenderMeshOnly(void)
 	glColor3f(0.9f, 0.9f, 0.9f);
 	while (Count<App->CL_Vm_Model->FaceCount)
 	{
-		MatIndex = App->CL_Vm_Model->MatIndex_Data[Count];
+		//MatIndex = App->CL_Vm_Model->MatIndex_Data[Count];
 
-		if (MatIndex == App->CL_Vm_Groups->SelectedGroup)
+		//if (MatIndex == App->CL_Vm_Groups->SelectedGroup)
 		{
 			glBegin(GL_POLYGON);
 			glVertex3f(App->CL_Vm_Model->vertex_Data[App->CL_Vm_Model->Face_Data[Count].a].x, App->CL_Vm_Model->vertex_Data[App->CL_Vm_Model->Face_Data[Count].a].y, App->CL_Vm_Model->vertex_Data[App->CL_Vm_Model->Face_Data[Count].a].z);
