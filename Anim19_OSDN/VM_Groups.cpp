@@ -167,11 +167,18 @@ LRESULT CALLBACK VM_Groups::Groups_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 
 	case WM_COMMAND:
 	{
-		//if (LOWORD(wParam) == IDC_CHANGE)
-		//{
-		//	App->CL_Right_Groups->ChangeTexture_ModelLocation();
-		//	return TRUE;
-		//}
+		if (LOWORD(wParam) == IDC_INFO)
+		{
+			if (App->CL_Vm_ImGui->Show_ImGui_TextureData == 1)
+			{
+				App->CL_Vm_ImGui->Show_ImGui_TextureData = 0;
+			}
+			else
+			{
+				App->CL_Vm_ImGui->Show_ImGui_TextureData = 1;
+			}
+			return TRUE;
+		}
 		//// ------------------------------------------------- Show All Groups
 		//if (LOWORD(wParam) == IDC_SHOWALLGROUPS)
 		//{
@@ -344,11 +351,13 @@ void VM_Groups::Update_Groups_Dialog(int Index)
 	ShowWindow(GetDlgItem(RightGroups_Hwnd, IDC_BASETEXTURE2), 1);
 
 	
-	SetDlgItemText(RightGroups_Hwnd, IDC_RGGROUPNAME, (LPCTSTR)App->CL_Vm_Model->S_MeshGroup[Index]->GroupName);
+	SetDlgItemText(RightGroups_Hwnd, IDC_RGGROUPNAME, (LPCTSTR)App->CL_Vm_Model->S_TextureInfo[Index]->MaterialName);
 	SetDlgItemText(RightGroups_Hwnd, IDC_RGTEXTURENAME, (LPCTSTR)App->CL_Vm_Model->S_MeshGroup[Index]->Text_FileName);
 
-	//SetDlgItemText(App->RightGroups_Hwnd, IDC_GROUPNAME, (LPCTSTR)App->CL_Model_Data->S_MeshGroup[Index]->GroupName);*/
 
+	char buff[255];
+	_itoa(SelectedGroup, buff, 10);
+	SetDlgItemText(RightGroups_Hwnd, IDC_GROUPID, (LPCTSTR)buff);
 }
 
 // *************************************************************************

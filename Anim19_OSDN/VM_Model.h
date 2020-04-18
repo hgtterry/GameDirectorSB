@@ -37,6 +37,7 @@ public:
 	Bone_Type*				S_Bones[200];
 	MeshGroup_Type*			S_MeshGroup[500];
 	AABB_Type*				S_BoundingBox[1];
+	//AllTextureInfo_Type *	S_AllTexturesInfo[40];
 
 	std::vector<vertex_type> vertex_Data;
 	std::vector<normal_type> Normal_Data;

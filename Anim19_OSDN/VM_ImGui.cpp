@@ -13,6 +13,7 @@ VM_ImGui::VM_ImGui()
 	Show_Scale = 0;
 	Show_Image = 0;
 	Show_Group_List = 0;
+	Show_ImGui_TextureData = 0;
 
 	Model_XTranslate = 2;
 	Model_YTranslate = 2;
@@ -85,6 +86,11 @@ void VM_ImGui::Render_ImGui(void)
 	if (Show_Group_List == 1)
 	{
 		ImGui_GroupList();
+	}
+
+	if (Show_ImGui_TextureData == 1)
+	{
+		ImGui_Texture_Data();
 	}
 
 }
@@ -572,4 +578,41 @@ void VM_ImGui::ImGui_GroupList(void)
 
 		ImGui::End();
 	}
+}
+
+// *************************************************************************
+// *					ImGui_Texture_Data  Terry Bernie				   *
+// *************************************************************************
+void VM_ImGui::ImGui_Texture_Data(void)
+{
+	ImGui::SetNextWindowSize(ImVec2(530, 250), ImGuiCond_FirstUseEver);
+
+	ImGui::OpenPopup("Texture Data");
+
+	if (!ImGui::BeginPopupModal("Texture Data", &Show_ImGui_TextureData, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize))
+	{
+		ImGui::EndPopup();
+	}
+	else
+	{
+
+		//ImGui::SetWindowPos(ImVec2(400, 40));
+		//ImGui::SetWindowSize(ImVec2(350, 90));
+
+
+
+		ImGui::Text("Texture Name: = %s", App->CL_Vm_Model->S_TextureInfo[App->CL_Vm_Groups->SelectedGroup]->MaterialName);
+
+		ImGui::Text("Mat Index: = %i", App->CL_Vm_Model->S_TextureInfo[App->CL_Vm_Groups->SelectedGroup]->ActorMaterialIndex);
+		
+
+	
+		if (ImGui::Button("Close"))
+		{
+			Show_ImGui_TextureData = 0;
+		}
+
+		ImGui::EndPopup();
+	}
+
 }

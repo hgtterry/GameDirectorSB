@@ -971,7 +971,7 @@ bool VM_Genisis3D::Import_LoadActorTextures(void)
 	while (Count < App->CL_Vm_Model->S_Texture[0]->UsedTextureCount)
 	{
 		MatIndex = App->CL_Vm_Model->S_TextureInfo[Count]->ActorMaterialIndex;
-		MaterialName = geStrBlock_GetString(ActorDef_Memory->Body->MaterialNames, Count);//App->CL_Vm_Model->S_Texture[0]->MatIndex[Count].Index);
+		MaterialName = App->CL_Vm_Model->S_TextureInfo[Count]->MaterialName; // Now Correct
 
 		App->CL_Vm_Model->Create_S_MeshGroup(Count);
 

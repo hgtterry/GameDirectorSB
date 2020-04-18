@@ -183,3 +183,31 @@ typedef	struct GLTextureInfo_Type
 	float	G;
 	float	B;
 } GLTextureInfo_Type;
+
+//typedef	struct
+//{
+//	GLubyte	* imageData;									// Image Data (Up To 32 Bits)
+//	GLuint	bpp;											// Image Color Depth In Bits Per Pixel
+//	GLuint	width;											// Image Width
+//	GLuint	height;											// Image Height
+//	GLuint	texID;											// Texture ID Used To Select A Texture
+//	GLuint	type;	// Image Type (GL_RGB, GL_RGBA)
+//	unsigned char *data;
+//	geBitmap* Bitmap;
+//	char	MaterialName[200];
+//	int		ActorMaterialIndex;
+//	int		HasGEBitmap;
+//	int		GEWitdth;
+//	int		GEHeight;
+//	int		GEFormat;
+//	int		GEHasAlpha;
+//	int		GEHasColorKey;
+//	int		pSizeX;
+//	int		pSizeY;
+//	int		Tga;
+//	float	R;
+//	float	G;
+//	float	B;
+//	int		AlphaRejection;
+//	int		CullNone;
+//} AllTextureInfo_Type;
