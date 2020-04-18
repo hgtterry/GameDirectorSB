@@ -37,6 +37,9 @@ public:
 	int Genesis_WriteToBmp(geBitmap *bmp, char *filename);
 	bool Soil_Load_Texture(UINT textureArray[], LPSTR strFileName, int textureID);
 	bool TexureToWinPreviewFullPath(int Index, char* FullPath);
+	bool GetFormat(int cformat);
+
+	char GEFormatString[255];
 
 	UINT  g_Texture[300];
 

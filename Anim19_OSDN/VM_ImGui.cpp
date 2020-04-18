@@ -602,11 +602,28 @@ void VM_ImGui::ImGui_Texture_Data(void)
 
 
 		ImGui::Text("Texture Name: = %s", App->CL_Vm_Model->S_TextureInfo[App->CL_Vm_Groups->SelectedGroup]->MaterialName);
-
 		ImGui::Text("Mat Index: = %i", App->CL_Vm_Model->S_TextureInfo[App->CL_Vm_Groups->SelectedGroup]->ActorMaterialIndex);
+		ImGui::Text("Has Bitmap: = %i", App->CL_Vm_Model->S_TextureInfo[App->CL_Vm_Groups->SelectedGroup]->HasGEBitmap);
 		
+		ImGui::Separator();
+		ImGui::Spacing();
 
-	
+		ImGui::Text("Width: = %i", App->CL_Vm_Model->S_TextureInfo[App->CL_Vm_Groups->SelectedGroup]->GEWitdth);
+		ImGui::Text("Height: = %i", App->CL_Vm_Model->S_TextureInfo[App->CL_Vm_Groups->SelectedGroup]->GEHeight);
+
+		ImGui::Separator();
+		ImGui::Spacing();
+
+		ImGui::Text("Red: = %0.3f", App->CL_Vm_Model->S_TextureInfo[App->CL_Vm_Groups->SelectedGroup]->R);
+		ImGui::Text("Green: = %0.3f", App->CL_Vm_Model->S_TextureInfo[App->CL_Vm_Groups->SelectedGroup]->G);
+		ImGui::Text("Blue: = %0.3f", App->CL_Vm_Model->S_TextureInfo[App->CL_Vm_Groups->SelectedGroup]->B);
+		
+		App->CL_Vm_Textures->GetFormat(App->CL_Vm_Model->S_TextureInfo[App->CL_Vm_Groups->SelectedGroup]->GEFormat);
+		ImGui::Text("Format: = %s", App->CL_Vm_Textures->GEFormatString);
+
+		ImGui::Separator();
+		ImGui::Spacing();
+
 		if (ImGui::Button("Close"))
 		{
 			Show_ImGui_TextureData = 0;

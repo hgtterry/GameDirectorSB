@@ -378,7 +378,7 @@ bool VM_Groups::ChangeTexture_ModelLocation(void)
 		char mFileName[1024];
 		strcpy(mFileName, App->CL_Vm_FileIO->Texture_Path_FileName);
 
-		App->CL_Vm_Textures->Soil_Load_Texture(App->CL_Vm_Textures->g_Texture, App->CL_Vm_FileIO->Texture_Path_FileName, SelectedGroup);//App->S_MeshGroup[mIndex]->Soil_TextureIndex);
+		App->CL_Vm_Textures->Soil_Load_Texture(App->CL_Vm_Textures->g_Texture, App->CL_Vm_FileIO->Texture_Path_FileName, App->CL_Vm_Model->S_TextureInfo[App->CL_Vm_Groups->SelectedGroup]->ActorMaterialIndex);//App->S_MeshGroup[mIndex]->Soil_TextureIndex);
 
 		strcpy(App->CL_Vm_Model->S_MeshGroup[SelectedGroup]->Text_FileName, App->CL_Vm_FileIO->Texture_FileName);
 		strcpy(App->CL_Vm_Model->S_MeshGroup[SelectedGroup]->Text_PathFileName, App->CL_Vm_FileIO->Texture_Path_FileName);

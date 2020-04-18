@@ -443,3 +443,42 @@ bool VM_Textures::TexureToWinPreviewFullPath(int Index, char* FullPath)
 
 	return 1;
 }
+
+// *************************************************************************
+// *								GetFormat					  	 	   *
+// *************************************************************************
+bool VM_Textures::GetFormat(int cformat)
+{
+	GEFormatString[0] = 0;
+
+	switch (cformat)
+	{
+	case 0:
+		strcpy(GEFormatString, "PIXELFORMAT_NO_DATA = 0");
+		return 1;
+
+	case 1:
+		strcpy(GEFormatString, "PIXELFORMAT_8BIT");
+		return 1;
+
+
+
+	case 10:
+		strcpy(GEFormatString, "PIXELFORMAT_24BIT_BGR");
+		return 1;
+
+
+	case 13:
+		strcpy(GEFormatString, "PIXELFORMAT_32BIT_XRGB");
+		return 1;
+
+	case 17:
+		strcpy(GEFormatString, "PIXELFORMAT_32BIT_ARGB");
+		return 1;
+
+	}
+
+	strcpy(GEFormatString, "Cant Decode");
+	return 1;
+}
+

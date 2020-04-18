@@ -1421,7 +1421,7 @@ bool VM_Genisis3D::ChangeTexture(char* TextureFile)
 
 	int textureID = 0;
 
-	textureID = App->CL_Vm_Groups->SelectedGroup;
+	textureID = App->CL_Vm_Model->S_TextureInfo[App->CL_Vm_Groups->SelectedGroup]->ActorMaterialIndex;
 
 	geBody_SetMaterial(ActorDef_Memory->Body, textureID, Bmp, 255, 255, 255);
 
