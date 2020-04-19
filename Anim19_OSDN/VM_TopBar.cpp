@@ -24,11 +24,39 @@ VM_TopBar::VM_TopBar()
 	Toggle_Tabs_Motions_Flag = 0;
 	Toggle_Tabs_Dimensions_Flag = 0;
 	Toggle_Tabs_Groups_Flag = 0;
+	Toggle_GroupsOnly_Flag = 0;
 }
 
 
 VM_TopBar::~VM_TopBar()
 {
+}
+
+// *************************************************************************
+// *	  					Reset_Class  	Terry						   *
+// *************************************************************************
+void VM_TopBar::Reset_Class()
+{
+	Toggle_Faces_Flag = 0;
+	Toggle_Textures_Flag = 0;
+	Toggle_Points_Flag = 0;
+	Toggle_Bones_Flag = 0;
+
+	Toggle_Tabs_Old_Flag = 1;
+	Toggle_Tabs_Motions_Flag = 0;
+	Toggle_Tabs_Dimensions_Flag = 0;
+	Toggle_Tabs_Groups_Flag = 0;
+	Toggle_GroupsOnly_Flag = 0;
+
+	App->Cl19_Ogre->RenderListener->ShowOnlySubMesh = 0;
+
+	App->CL_Vm_TopBar->Hide_Tabs();
+	ShowWindow(App->CL_Vm_TopBar->TB_1, SW_SHOW);
+	App->CL_Vm_TopBar->Toggle_Tabs_Old_Flag = 1;
+
+	RedrawWindow(App->CL_Vm_TopBar->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+	return;
 }
 
 // *************************************************************************
@@ -40,6 +68,7 @@ bool VM_TopBar::Start_TopBar()
 	Init_Bmps_TB2();
 	return 1;
 }
+
 // *************************************************************************
 // *						TopBar_Proc Terry							   *
 // *************************************************************************
@@ -1056,7 +1085,8 @@ LRESULT CALLBACK VM_TopBar::Groups_TB_Proc(HWND hDlg, UINT message, WPARAM wPara
 	{
 	case WM_INITDIALOG:
 	{
-		//SendDlgItemMessage(hDlg, IDC_CBMOTIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_GRCHANGETEXTURE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ONLYGROUP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		return TRUE;
 	}
 
@@ -1067,6 +1097,22 @@ LRESULT CALLBACK VM_TopBar::Groups_TB_Proc(HWND hDlg, UINT message, WPARAM wPara
 
 	case WM_NOTIFY:
 	{
+
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_ONLYGROUP && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_Vm_TopBar->Toggle_GroupsOnly_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_GRCHANGETEXTURE && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
 
 		return CDRF_DODEFAULT;
 	}
@@ -1084,10 +1130,12 @@ LRESULT CALLBACK VM_TopBar::Groups_TB_Proc(HWND hDlg, UINT message, WPARAM wPara
 			if (App->Cl19_Ogre->RenderListener->ShowOnlySubMesh == 1)
 			{
 				App->Cl19_Ogre->RenderListener->ShowOnlySubMesh = 0;
+				App->CL_Vm_TopBar->Toggle_GroupsOnly_Flag = 0;
 			}
 			else
 			{
 				App->Cl19_Ogre->RenderListener->ShowOnlySubMesh = 1;
+				App->CL_Vm_TopBar->Toggle_GroupsOnly_Flag = 1;
 			}
 
 			return TRUE;

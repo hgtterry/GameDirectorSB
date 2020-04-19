@@ -6,6 +6,7 @@ public:
 	~VM_TopBar();
 
 	bool Start_TopBar();
+	void Reset_Class();
 
 	HWND TabsHwnd;
 	HWND TB_1;
@@ -49,5 +50,7 @@ protected:
 	bool Toggle_Tabs_Motions_Flag;
 	bool Toggle_Tabs_Dimensions_Flag;
 	bool Toggle_Tabs_Groups_Flag;
+
+	bool Toggle_GroupsOnly_Flag;
 };
 

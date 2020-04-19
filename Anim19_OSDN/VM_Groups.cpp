@@ -66,6 +66,8 @@ LRESULT CALLBACK VM_Groups::Groups_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 
 		SendDlgItemMessage(hDlg, IDC_RGGROUPNAME, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_RGTEXTURENAME, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_INFO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SetWindowLong(GetDlgItem(hDlg, IDC_BASETEXTURE2), GWL_WNDPROC, (LONG)ViewerBasePic);
 	}
@@ -112,28 +114,21 @@ LRESULT CALLBACK VM_Groups::Groups_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 	}
 	case WM_NOTIFY:
 	{
-		/*LPNMHDR some_item = (LPNMHDR)lParam;
+		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		if (some_item->idFrom == IDC_CKSHOWONLYGROUPS && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_Right_Groups->CK_ShowGroupOnly);
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_CKHIDEGROUP && some_item->code == NM_CUSTOMDRAW)
+		/*if (some_item->idFrom == IDC_CKHIDEGROUP && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle(item, App->CL_Right_Groups->CK_HideGroup);
 			return CDRF_DODEFAULT;
-		}
+		}*/
 
-		if (some_item->idFrom == IDC_CHANGE && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_INFO && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
-		}*/
+		}
 
 		return CDRF_DODEFAULT;
 	}
@@ -142,13 +137,16 @@ LRESULT CALLBACK VM_Groups::Groups_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 	{
 		if (LOWORD(wParam) == IDC_INFO)
 		{
-			if (App->CL_Vm_ImGui->Show_ImGui_TextureData == 1)
+			if (App->CL_Vm_Model->Model_Loaded == 1)
 			{
-				App->CL_Vm_ImGui->Show_ImGui_TextureData = 0;
-			}
-			else
-			{
-				App->CL_Vm_ImGui->Show_ImGui_TextureData = 1;
+				if (App->CL_Vm_ImGui->Show_ImGui_TextureData == 1)
+				{
+					App->CL_Vm_ImGui->Show_ImGui_TextureData = 0;
+				}
+				else
+				{
+					App->CL_Vm_ImGui->Show_ImGui_TextureData = 1;
+				}
 			}
 			return TRUE;
 		}
@@ -260,7 +258,7 @@ bool CALLBACK VM_Groups::ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPARA
 		EndPaint(hwnd, &ps);
 		return 0;
 	}
-	return DefWindowProc(hwnd, msg, wParam, lParam);
+	return 0;// DefWindowProc(hwnd, msg, wParam, lParam);
 }
 
 // *************************************************************************
