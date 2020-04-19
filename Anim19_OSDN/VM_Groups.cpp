@@ -88,41 +88,14 @@ LRESULT CALLBACK VM_Groups::Groups_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 			return (UINT)App->AppBackground;
 		}
 
-	/*	if (GetDlgItem(hDlg, IDC_CKSHOWONLYGROUPS) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_GROUPID) == (HWND)lParam)
 		{
-			if (App->CL_Right_Groups->CK_ShowGroupOnly == 0)
-			{
-				SetBkColor((HDC)wParam, RGB(0, 255, 0));
-				SetTextColor((HDC)wParam, RGB(0, 255, 0));
-				SetBkMode((HDC)wParam, TRANSPARENT);
-				return (UINT)App->Brush_White;
-			}
-			else
-			{
-				SetBkColor((HDC)wParam, RGB(0, 255, 0));
-				SetTextColor((HDC)wParam, RGB(0, 255, 0));
-				SetBkMode((HDC)wParam, TRANSPARENT);
-				return (UINT)App->Brush_Green;
-			}
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
 		}
 
-		if (GetDlgItem(hDlg, IDC_CKHIDEGROUP) == (HWND)lParam)
-		{
-			if (App->CL_Right_Groups->CK_HideGroup == 0)
-			{
-				SetBkColor((HDC)wParam, RGB(0, 255, 0));
-				SetTextColor((HDC)wParam, RGB(0, 255, 0));
-				SetBkMode((HDC)wParam, TRANSPARENT);
-				return (UINT)App->Brush_White;
-			}
-			else
-			{
-				SetBkColor((HDC)wParam, RGB(0, 255, 0));
-				SetTextColor((HDC)wParam, RGB(0, 255, 0));
-				SetBkMode((HDC)wParam, TRANSPARENT);
-				return (UINT)App->Brush_Green;
-			}
-		}*/
 		return FALSE;
 	}
 
@@ -338,6 +311,7 @@ bool VM_Groups::RenderTexture_Blit(HDC hDC, HBITMAP Bmp, const RECT *SourceRect,
 void VM_Groups::Update_Groups_Dialog(int Index)
 {
 	SelectedGroup = Index;
+	int TextureID = App->CL_Vm_Model->S_TextureInfo[Index]->ActorMaterialIndex;
 
 	Sel_BaseBitmap = App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap;
 
@@ -356,7 +330,7 @@ void VM_Groups::Update_Groups_Dialog(int Index)
 
 
 	char buff[255];
-	_itoa(SelectedGroup, buff, 10);
+	_itoa(TextureID, buff, 10);
 	SetDlgItemText(RightGroups_Hwnd, IDC_GROUPID, (LPCTSTR)buff);
 }
 
