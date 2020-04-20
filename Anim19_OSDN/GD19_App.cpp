@@ -62,7 +62,6 @@ GD19_App::GD19_App(void)
 	Cl_ToolBar =		nullptr;
 	Cl_Objects_FFile =	nullptr;
 	Cl_spdlog =			nullptr;
-	Cl_ImGui =			nullptr;
 	Cl_Keyboard =		nullptr;
 
 	// Vima19 19/03/20
@@ -193,7 +192,6 @@ bool GD19_App::InitApp(void)
 	Cl_Objects_FFile =	new GD19_Objects_FFile();
 		
 	Cl_spdlog =			new	GD_spdlog();
-	Cl_ImGui =			new GD_ImGui();
 	Cl_Keyboard =		new GD_Keyboard();
 
 	// Vima19 19/03/20

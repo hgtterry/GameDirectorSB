@@ -342,28 +342,28 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		case ID_CAMERA_OBJECTPROPERTIES:
 		{
-			if (App->Cl_ImGui->Show_Camera_Object == 1)
+			/*if (App->Cl_ImGui->Show_Camera_Object == 1)
 			{
 				App->Cl_ImGui->Show_Camera_Object = 0;
 			}
 			else
 			{
 				App->Cl_ImGui->Show_Camera_Object = 1;
-			}
+			}*/
 			return 1;
 		}
 		
 		//------------------------- Menu Test
 		case ID_SETTINGS_TEST:
 		{
-			if (App->Cl_ImGui->Show_ImGui_Preferences == 1)
+			/*if (App->Cl_ImGui->Show_ImGui_Preferences == 1)
 			{
 				App->Cl_ImGui->Show_ImGui_Preferences = 0;
 			}
 			else
 			{
 				App->Cl_ImGui->Show_ImGui_Preferences = 1;
-			}
+			}*/
 			return 1;
 		}
 
@@ -521,7 +521,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		case ID_WINDOWS_PROPERTIES:
 		{
 
-			if (App->Cl_ImGui->Show_Propertities == 1)
+			/*if (App->Cl_ImGui->Show_Propertities == 1)
 			{
 				App->Cl_ImGui->Show_Propertities = 0;
 				CheckMenuItem(App->mMenu, ID_WINDOWS_PROPERTIES, MF_BYCOMMAND | MF_UNCHECKED);
@@ -530,7 +530,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			{
 				App->Cl_ImGui->Show_Propertities = 1;
 				CheckMenuItem(App->mMenu, ID_WINDOWS_PROPERTIES, MF_BYCOMMAND | MF_CHECKED);
-			}
+			}*/
 
 			return 1;
 		}
@@ -554,7 +554,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		case ID_WINDOWS_SHOWPHYSICSPANEL:
 		{
 
-			if (App->Cl_ImGui->Show_PhysicsConsole == 1)
+			/*if (App->Cl_ImGui->Show_PhysicsConsole == 1)
 			{
 				App->Cl_ImGui->Show_PhysicsConsole = 0;
 				CheckMenuItem(App->mMenu, ID_WINDOWS_SHOWPHYSICSPANEL, MF_BYCOMMAND | MF_UNCHECKED);
@@ -563,7 +563,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			{
 				App->Cl_ImGui->Show_PhysicsConsole = 1;
 				CheckMenuItem(App->mMenu, ID_WINDOWS_SHOWPHYSICSPANEL, MF_BYCOMMAND | MF_CHECKED);
-			}
+			}*/
 
 		/*	if (App->Cl_Bullet->Physics_Dlg_Active == 1) // Atention
 			{
@@ -582,40 +582,40 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		case ID_WINDOWS_LOG:
 		{
-			if (App->Cl_ImGui->Show_ImGui_Log == 1)
+			/*if (App->Cl_ImGui->Show_ImGui_Log == 1)
 			{
 				App->Cl_ImGui->Show_ImGui_Log = 0;
 			}
 			else
 			{
 				App->Cl_ImGui->Show_ImGui_Log = 1;
-			}
+			}*/
 			return 1;
 		}
 
 		case ID_WINDOWS_NEWFILEVIEW:
 		{
-			if (App->Cl_ImGui->Show_ImGui_FileView == 1)
+			/*if (App->Cl_ImGui->Show_ImGui_FileView == 1)
 			{
 				App->Cl_ImGui->Show_ImGui_FileView = 0;
 			}
 			else
 			{
 				App->Cl_ImGui->Show_ImGui_FileView = 1;
-			}
+			}*/
 			return 1;
 		}
 
 		case ID_WINDOWS_DEBUGPROPERTIES:
 		{
-			if (App->Cl_ImGui->Show_Object_Data == 1)
+			/*if (App->Cl_ImGui->Show_Object_Data == 1)
 			{
 				App->Cl_ImGui->Show_Object_Data = 0;
 			}
 			else
 			{
 				App->Cl_ImGui->Show_Object_Data = 1;
-			}
+			}*/
 			return 1;
 		}
 
@@ -635,7 +635,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		case ID_WINDOWS_FPS:
 		{
 
-			if (App->Cl_ImGui->Show_OgreData == 1)
+			/*if (App->Cl_ImGui->Show_OgreData == 1)
 			{
 				App->Cl_ImGui->Show_OgreData = 0;
 				CheckMenuItem(App->mMenu, ID_WINDOWS_FPS, MF_BYCOMMAND | MF_UNCHECKED);
@@ -644,7 +644,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			{
 				App->Cl_ImGui->Show_OgreData = 1;
 				CheckMenuItem(App->mMenu, ID_WINDOWS_FPS, MF_BYCOMMAND | MF_CHECKED);
-			}
+			}*/
 			return 1;
 		}
 
@@ -1295,8 +1295,6 @@ void StartOgre()
 	App->OgreStarted = 1;
 
 	//App->Resize_OgreWin();
-
-	App->Cl_ImGui->Show_PhysicsConsole = 1;
 
 	App->Cl19_Ogre->mRoot->startRendering();
 

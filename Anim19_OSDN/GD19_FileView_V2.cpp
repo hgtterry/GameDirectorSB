@@ -33,397 +33,397 @@ GD19_FileView_V2::~GD19_FileView_V2()
 void GD19_FileView_V2::ImGui_FileView2(void)
 {
 
-	static int selected_Object = -1;
-	static int selected_Sounds = -1;
-	static int selected_Messages = -1;
-	static int selected_MoveEntities = -1;
-	static int selected_Collectables = -1;
-	static int selected_Teleporters = -1;
-	static int selected_Areas = -1;
-	static int selected_Players = -1;
+	//static int selected_Object = -1;
+	//static int selected_Sounds = -1;
+	//static int selected_Messages = -1;
+	//static int selected_MoveEntities = -1;
+	//static int selected_Collectables = -1;
+	//static int selected_Teleporters = -1;
+	//static int selected_Areas = -1;
+	//static int selected_Players = -1;
 
-	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
-	ImGui::SetNextWindowSize(ImVec2(200, 550), ImGuiCond_FirstUseEver);
+	//ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
+	//ImGui::SetNextWindowSize(ImVec2(200, 550), ImGuiCond_FirstUseEver);
 
-	if (!ImGui::Begin("File_View", &App->Cl_ImGui->Show_ImGui_FileView, ImGuiWindowFlags_NoSavedSettings))
-	{
-		ImGui::End();
-		return;
-	}
-	else
-	{
-		ImGui::PushFont(App->Cl_ImGui->fontDroid);
-		ImGui::Text("Test Project");
-		ImGui::Separator();
-		ImGui::Spacing();
+	//if (!ImGui::Begin("File_View", &App->Cl_ImGui->Show_ImGui_FileView, ImGuiWindowFlags_NoSavedSettings))
+	//{
+	//	ImGui::End();
+	//	return;
+	//}
+	//else
+	//{
+	//	//ImGui::PushFont(App->Cl_ImGui->fontDroid);
+	//	ImGui::Text("Test Project");
+	//	ImGui::Separator();
+	//	ImGui::Spacing();
 
-		if (ImGui::CollapsingHeader("Camera"))
-		{
+	//	if (ImGui::CollapsingHeader("Camera"))
+	//	{
 
-		}
-		
-		// --------------------------------------------- Player
-		ImGui::Spacing();
-		if (ImGui::CollapsingHeader("Player"))
-		{
-			ImGui::Indent();
-			int Count = 0;
-			while (Count < Players_Names_Count)
-			{
-				ImGui::Bullet();
-				if (ImGui::Selectable(Players_Names_Vec[Count].c_str(), selected_Players == Count))
-				{
+	//	}
+	//	
+	//	// --------------------------------------------- Player
+	//	ImGui::Spacing();
+	//	if (ImGui::CollapsingHeader("Player"))
+	//	{
+	//		ImGui::Indent();
+	//		int Count = 0;
+	//		while (Count < Players_Names_Count)
+	//		{
+	//			ImGui::Bullet();
+	//			if (ImGui::Selectable(Players_Names_Vec[Count].c_str(), selected_Players == Count))
+	//			{
 
-					selected_Players = Count;
-					strcpy(Selected_Players_Name, Players_Names_Vec[Count].c_str());
+	//				selected_Players = Count;
+	//				strcpy(Selected_Players_Name, Players_Names_Vec[Count].c_str());
 
-					selected_Object = -1;
-					selected_Sounds = -1;
-					selected_Messages = -1;
-					selected_MoveEntities = -1;
-					selected_Collectables = -1;
-					selected_Teleporters = -1;
-					selected_Areas = -1;
+	//				selected_Object = -1;
+	//				selected_Sounds = -1;
+	//				selected_Messages = -1;
+	//				selected_MoveEntities = -1;
+	//				selected_Collectables = -1;
+	//				selected_Teleporters = -1;
+	//				selected_Areas = -1;
 
-					Block = 1;
-				}
-				Count++;
-			}
+	//				Block = 1;
+	//			}
+	//			Count++;
+	//		}
 
-			if (Block == 1)
-			{
-				Update_Properties_Players(Selected_Players_Name);
-			}
+	//		if (Block == 1)
+	//		{
+	//			Update_Properties_Players(Selected_Players_Name);
+	//		}
 
-			ImGui::Unindent();
+	//		ImGui::Unindent();
 
-		}
+	//	}
 
-		// --------------------------------------------- Areas
-		ImGui::Spacing();
-		if (ImGui::CollapsingHeader("Area"))
-		{
-			ImGui::Indent();
-			int Count = 0;
-			while (Count < Areas_Names_Count)
-			{
-				ImGui::Bullet();
-				if (ImGui::Selectable(Areas_Names_Vec[Count].c_str(), selected_Areas == Count))
-				{
+	//	// --------------------------------------------- Areas
+	//	ImGui::Spacing();
+	//	if (ImGui::CollapsingHeader("Area"))
+	//	{
+	//		ImGui::Indent();
+	//		int Count = 0;
+	//		while (Count < Areas_Names_Count)
+	//		{
+	//			ImGui::Bullet();
+	//			if (ImGui::Selectable(Areas_Names_Vec[Count].c_str(), selected_Areas == Count))
+	//			{
 
-					selected_Areas = Count;
-					strcpy(Selected_Areas_Name, Areas_Names_Vec[Count].c_str());
+	//				selected_Areas = Count;
+	//				strcpy(Selected_Areas_Name, Areas_Names_Vec[Count].c_str());
 
-					selected_Object = -1;
-					selected_Sounds = -1;
-					selected_Messages = -1;
-					selected_MoveEntities = -1;
-					selected_Collectables = -1;
-					selected_Teleporters = -1;
-					selected_Players = -1;
+	//				selected_Object = -1;
+	//				selected_Sounds = -1;
+	//				selected_Messages = -1;
+	//				selected_MoveEntities = -1;
+	//				selected_Collectables = -1;
+	//				selected_Teleporters = -1;
+	//				selected_Players = -1;
 
-					Block = 1;
-				}
-				Count++;
-			}
+	//				Block = 1;
+	//			}
+	//			Count++;
+	//		}
 
-			if (Block == 1)
-			{
-				Update_Properties_Areas(Selected_Areas_Name);
-			}
+	//		if (Block == 1)
+	//		{
+	//			Update_Properties_Areas(Selected_Areas_Name);
+	//		}
 
-			ImGui::Unindent();
-			
-		}
+	//		ImGui::Unindent();
+	//		
+	//	}
 
-	//	ImGui::Text("(You can also right-click me to open the same popup as above.)");
-	//	ImGui::OpenPopupOnItemClick("item context menu", 1);
+	////	ImGui::Text("(You can also right-click me to open the same popup as above.)");
+	////	ImGui::OpenPopupOnItemClick("item context menu", 1);
 
-		// When used after an item that has an ID (here the Button), we can skip providing an ID to BeginPopupContextItem().
-		// BeginPopupContextItem() will use the last item ID as the popup ID.
-		// In addition here, we want to include your editable label inside the button label. We use the ### operator to override the ID (read FAQ about ID for details)
-		//static char name[32] = "Label1";
-		//char buf[64]; sprintf(buf, "Button: %s###Button", name); // ### operator override ID ignoring the preceding label
-		//ImGui::Selectable(buf);
-		//if (RightMouseDown == 1 && ImGui::BeginPopupContextItem(buf, 0))
-		//{
-		//	ImGui::Text("Edit name:");
-		//	ImGui::InputText("##edit", name, IM_ARRAYSIZE(name));
-		//	if (ImGui::Button("Close"))
-		//	{
-		//		ImGui::CloseCurrentPopup();
-		//	}
+	//	// When used after an item that has an ID (here the Button), we can skip providing an ID to BeginPopupContextItem().
+	//	// BeginPopupContextItem() will use the last item ID as the popup ID.
+	//	// In addition here, we want to include your editable label inside the button label. We use the ### operator to override the ID (read FAQ about ID for details)
+	//	//static char name[32] = "Label1";
+	//	//char buf[64]; sprintf(buf, "Button: %s###Button", name); // ### operator override ID ignoring the preceding label
+	//	//ImGui::Selectable(buf);
+	//	//if (RightMouseDown == 1 && ImGui::BeginPopupContextItem(buf, 0))
+	//	//{
+	//	//	ImGui::Text("Edit name:");
+	//	//	ImGui::InputText("##edit", name, IM_ARRAYSIZE(name));
+	//	//	if (ImGui::Button("Close"))
+	//	//	{
+	//	//		ImGui::CloseCurrentPopup();
+	//	//	}
 
-		//	ImGui::EndPopup();
-		//}
-		
-		// --------------------------------------------- Objects
-		ImGui::Spacing();
-		if (SelectObject == 1)
-		{
-			ImGui::SetNextItemOpen(OpenObjects);
-		}
+	//	//	ImGui::EndPopup();
+	//	//}
+	//	
+	//	// --------------------------------------------- Objects
+	//	ImGui::Spacing();
+	//	if (SelectObject == 1)
+	//	{
+	//		ImGui::SetNextItemOpen(OpenObjects);
+	//	}
 
-		if (ImGui::CollapsingHeader("Objects"))
-		{
+	//	if (ImGui::CollapsingHeader("Objects"))
+	//	{
 
-			ImGui::Indent();
-			int Count = 0;
-			while (Count < Object_Names_Count)
-			{
-				if (SelectObject == 1)
-				{
-					selected_Object = Chosen_Object_Index;
-					strcpy(Selected_Object_Name, Object_Names_Vec[Chosen_Object_Index].c_str());
-					Update_Properties_Objects(Selected_Object_Name);
-					selected_Sounds = -1;
-					selected_Messages = -1;
-					selected_MoveEntities = -1;
-					selected_Collectables = -1;
-					selected_Teleporters = -1;
-					selected_Areas = -1;
-					selected_Players = -1;
-				}
+	//		ImGui::Indent();
+	//		int Count = 0;
+	//		while (Count < Object_Names_Count)
+	//		{
+	//			if (SelectObject == 1)
+	//			{
+	//				selected_Object = Chosen_Object_Index;
+	//				strcpy(Selected_Object_Name, Object_Names_Vec[Chosen_Object_Index].c_str());
+	//				Update_Properties_Objects(Selected_Object_Name);
+	//				selected_Sounds = -1;
+	//				selected_Messages = -1;
+	//				selected_MoveEntities = -1;
+	//				selected_Collectables = -1;
+	//				selected_Teleporters = -1;
+	//				selected_Areas = -1;
+	//				selected_Players = -1;
+	//			}
 
-				ImGui::Bullet();
-				
-				if (ImGui::Selectable(Object_Names_Vec[Count].c_str(), selected_Object == Count))
-				{
-			
-					if (SelectObject == 0)
-					{
-						selected_Object = Count;
-					}
+	//			ImGui::Bullet();
+	//			
+	//			if (ImGui::Selectable(Object_Names_Vec[Count].c_str(), selected_Object == Count))
+	//			{
+	//		
+	//				if (SelectObject == 0)
+	//				{
+	//					selected_Object = Count;
+	//				}
 
-					char buff[255];
-					_itoa(Count,buff,10);
+	//				char buff[255];
+	//				_itoa(Count,buff,10);
 
-					static char name[32] = "Label1";
-					char buf[64]; sprintf(buf, "Button: %s###Button", name);
+	//				static char name[32] = "Label1";
+	//				char buf[64]; sprintf(buf, "Button: %s###Button", name);
 
-					if (ImGui::BeginPopupContextItem())
-					{
-					
-						ImGui::Text("Edit name:");
-						ImGui::InputText("##edit", buff, IM_ARRAYSIZE(buff));
-						if (ImGui::Button("Close"))
-						{
-							ImGui::CloseCurrentPopup();
-						}
+	//				if (ImGui::BeginPopupContextItem())
+	//				{
+	//				
+	//					ImGui::Text("Edit name:");
+	//					ImGui::InputText("##edit", buff, IM_ARRAYSIZE(buff));
+	//					if (ImGui::Button("Close"))
+	//					{
+	//						ImGui::CloseCurrentPopup();
+	//					}
 
-						ImGui::EndPopup();
-					}
+	//					ImGui::EndPopup();
+	//				}
 
 
-					strcpy(Selected_Object_Name, Object_Names_Vec[Count].c_str());
-					selected_Sounds = -1;
-					selected_Messages = -1;
-					selected_MoveEntities = -1;
-					selected_Collectables = -1;
-					selected_Teleporters = -1;
-					selected_Areas = -1;
-					selected_Players = -1;
-					Block = 1;
+	//				strcpy(Selected_Object_Name, Object_Names_Vec[Count].c_str());
+	//				selected_Sounds = -1;
+	//				selected_Messages = -1;
+	//				selected_MoveEntities = -1;
+	//				selected_Collectables = -1;
+	//				selected_Teleporters = -1;
+	//				selected_Areas = -1;
+	//				selected_Players = -1;
+	//				Block = 1;
 
-				}
-				Count++;
-			}
+	//			}
+	//			Count++;
+	//		}
 
-			if (Block == 1)
-			{
-				App->Cl_FileView_V2->RightMouseDown = 0;
-				Update_Properties_Objects(Selected_Object_Name);
-			}
+	//		if (Block == 1)
+	//		{
+	//			App->Cl_FileView_V2->RightMouseDown = 0;
+	//			Update_Properties_Objects(Selected_Object_Name);
+	//		}
 
-			// ------------------------------------------------- PoP Up
-			
-			SelectObject = 0;
-			ImGui::Unindent();
-		}
+	//		// ------------------------------------------------- PoP Up
+	//		
+	//		SelectObject = 0;
+	//		ImGui::Unindent();
+	//	}
 
-		// ------------------------------------------- Entities
-		ImGui::Spacing();
-		if (ImGui::CollapsingHeader("Entities"))
-		{
+	//	// ------------------------------------------- Entities
+	//	ImGui::Spacing();
+	//	if (ImGui::CollapsingHeader("Entities"))
+	//	{
 
-			// --------------------------------------------- Sounds
-			ImGui::Indent();
-			if (ImGui::CollapsingHeader("Sounds"))
-			{
-				ImGui::Indent();
-				int Count = 0;
-				while (Count < Sound_Names_Count)
-				{
-					ImGui::Bullet();
-					if (ImGui::Selectable(Sound_Names_Vec[Count].c_str(), selected_Sounds == Count))
-					{
+	//		// --------------------------------------------- Sounds
+	//		ImGui::Indent();
+	//		if (ImGui::CollapsingHeader("Sounds"))
+	//		{
+	//			ImGui::Indent();
+	//			int Count = 0;
+	//			while (Count < Sound_Names_Count)
+	//			{
+	//				ImGui::Bullet();
+	//				if (ImGui::Selectable(Sound_Names_Vec[Count].c_str(), selected_Sounds == Count))
+	//				{
 
-						selected_Sounds = Count;
-						strcpy(Selected_Sound_Name, Sound_Names_Vec[Count].c_str());
-						selected_Object = -1;
-						selected_Messages = -1;
-						selected_MoveEntities = -1;
-						selected_Collectables = -1;
-						selected_Teleporters = -1;
-						selected_Areas = -1;
-						selected_Players = -1;
-						Block = 1;
-					}
-					Count++;
-				}
+	//					selected_Sounds = Count;
+	//					strcpy(Selected_Sound_Name, Sound_Names_Vec[Count].c_str());
+	//					selected_Object = -1;
+	//					selected_Messages = -1;
+	//					selected_MoveEntities = -1;
+	//					selected_Collectables = -1;
+	//					selected_Teleporters = -1;
+	//					selected_Areas = -1;
+	//					selected_Players = -1;
+	//					Block = 1;
+	//				}
+	//				Count++;
+	//			}
 
-				if (Block == 1)
-				{
-					Update_Properties_Sounds(Selected_Sound_Name);
-				}
+	//			if (Block == 1)
+	//			{
+	//				Update_Properties_Sounds(Selected_Sound_Name);
+	//			}
 
-				ImGui::Unindent();
+	//			ImGui::Unindent();
 
-			}
+	//		}
 
-			// --------------------------------------------- Messages
-			if (ImGui::CollapsingHeader("Messages"))
-			{
-				ImGui::Indent();
-				int Count = 0;
-				while (Count < Message_Names_Count)
-				{
-					ImGui::Bullet();
-					if (ImGui::Selectable(Message_Names_Vec[Count].c_str(), selected_Messages == Count))
-					{
-						//Null_Selected();
-						selected_Messages = Count;
-						strcpy(Selected_Message_Name, Message_Names_Vec[Count].c_str());
-						selected_Object = -1;
-						selected_Sounds = -1;
-						selected_MoveEntities = -1;
-						selected_Collectables = -1;
-						selected_Teleporters = -1;
-						selected_Areas = -1;
-						selected_Players = -1;
-						Block = 1;
-					}
-					Count++;
-				}
+	//		// --------------------------------------------- Messages
+	//		if (ImGui::CollapsingHeader("Messages"))
+	//		{
+	//			ImGui::Indent();
+	//			int Count = 0;
+	//			while (Count < Message_Names_Count)
+	//			{
+	//				ImGui::Bullet();
+	//				if (ImGui::Selectable(Message_Names_Vec[Count].c_str(), selected_Messages == Count))
+	//				{
+	//					//Null_Selected();
+	//					selected_Messages = Count;
+	//					strcpy(Selected_Message_Name, Message_Names_Vec[Count].c_str());
+	//					selected_Object = -1;
+	//					selected_Sounds = -1;
+	//					selected_MoveEntities = -1;
+	//					selected_Collectables = -1;
+	//					selected_Teleporters = -1;
+	//					selected_Areas = -1;
+	//					selected_Players = -1;
+	//					Block = 1;
+	//				}
+	//				Count++;
+	//			}
 
-				if (Block == 1)
-				{
-					Update_Properties_Messages(Selected_Message_Name);
-				}
+	//			if (Block == 1)
+	//			{
+	//				Update_Properties_Messages(Selected_Message_Name);
+	//			}
 
-				ImGui::Unindent();
-			}
+	//			ImGui::Unindent();
+	//		}
 
-			// --------------------------------------------- Move Enitities
-			if (ImGui::CollapsingHeader("Move Enitities"))
-			{
-				ImGui::Indent();
-				int Count = 0;
-				while (Count < MoveEntities_Names_Count)
-				{
-					ImGui::Bullet();
-					if (ImGui::Selectable(MoveEntities_Names_Vec[Count].c_str(), selected_MoveEntities == Count))
-					{
-						selected_MoveEntities = Count;
-						strcpy(Selected_MoveEntities_Name, MoveEntities_Names_Vec[Count].c_str());
-						selected_Object = -1;
-						selected_Sounds = -1;
-						selected_Messages = -1;
-						selected_Collectables = -1;
-						selected_Teleporters = -1;
-						selected_Areas = -1;
-						selected_Players = -1;
-						Block = 1;
-					}
-					Count++;
-				}
+	//		// --------------------------------------------- Move Enitities
+	//		if (ImGui::CollapsingHeader("Move Enitities"))
+	//		{
+	//			ImGui::Indent();
+	//			int Count = 0;
+	//			while (Count < MoveEntities_Names_Count)
+	//			{
+	//				ImGui::Bullet();
+	//				if (ImGui::Selectable(MoveEntities_Names_Vec[Count].c_str(), selected_MoveEntities == Count))
+	//				{
+	//					selected_MoveEntities = Count;
+	//					strcpy(Selected_MoveEntities_Name, MoveEntities_Names_Vec[Count].c_str());
+	//					selected_Object = -1;
+	//					selected_Sounds = -1;
+	//					selected_Messages = -1;
+	//					selected_Collectables = -1;
+	//					selected_Teleporters = -1;
+	//					selected_Areas = -1;
+	//					selected_Players = -1;
+	//					Block = 1;
+	//				}
+	//				Count++;
+	//			}
 
-				if (Block == 1)
-				{
-					Update_Properties_MoveEntities(Selected_MoveEntities_Name);
-				}
+	//			if (Block == 1)
+	//			{
+	//				Update_Properties_MoveEntities(Selected_MoveEntities_Name);
+	//			}
 
-				ImGui::Unindent();
-			}
+	//			ImGui::Unindent();
+	//		}
 
-			// --------------------------------------------- Collectables
-			if (ImGui::CollapsingHeader("Collectables"))
-			{
-				ImGui::Indent();
-				int Count = 0;
-				while (Count < Collectables_Names_Count)
-				{
-					ImGui::Bullet();
-					if (ImGui::Selectable(Collectables_Names_Vec[Count].c_str(), selected_Collectables == Count))
-					{
-						selected_Collectables = Count;
-						strcpy(Selected_Collectables_Name, Collectables_Names_Vec[Count].c_str());
+	//		// --------------------------------------------- Collectables
+	//		if (ImGui::CollapsingHeader("Collectables"))
+	//		{
+	//			ImGui::Indent();
+	//			int Count = 0;
+	//			while (Count < Collectables_Names_Count)
+	//			{
+	//				ImGui::Bullet();
+	//				if (ImGui::Selectable(Collectables_Names_Vec[Count].c_str(), selected_Collectables == Count))
+	//				{
+	//					selected_Collectables = Count;
+	//					strcpy(Selected_Collectables_Name, Collectables_Names_Vec[Count].c_str());
 
-						selected_Object = -1;
-						selected_Sounds = -1;
-						selected_Messages = -1;
-						selected_MoveEntities = -1;
-						selected_Teleporters = -1;
-						selected_Areas = -1;
-						selected_Players = -1;
+	//					selected_Object = -1;
+	//					selected_Sounds = -1;
+	//					selected_Messages = -1;
+	//					selected_MoveEntities = -1;
+	//					selected_Teleporters = -1;
+	//					selected_Areas = -1;
+	//					selected_Players = -1;
 
-						Block = 1;
-					}
-					Count++;
-				}
+	//					Block = 1;
+	//				}
+	//				Count++;
+	//			}
 
-				if (Block == 1)
-				{
-					Update_Properties_Collectables(Selected_Collectables_Name);
-				}
+	//			if (Block == 1)
+	//			{
+	//				Update_Properties_Collectables(Selected_Collectables_Name);
+	//			}
 
-				ImGui::Unindent();
-				
-			}
+	//			ImGui::Unindent();
+	//			
+	//		}
 
-			// --------------------------------------------- Teleporters
-			if (ImGui::CollapsingHeader("Teleporters"))
-			{
-				ImGui::Indent();
-				int Count = 0;
-				while (Count < Teleporters_Names_Count)
-				{
-					ImGui::Bullet();
-					if (ImGui::Selectable(Teleporters_Names_Vec[Count].c_str(), selected_Teleporters == Count))
-					{
-						selected_Teleporters = Count;
-						strcpy(Selected_Teleporters_Name, Teleporters_Names_Vec[Count].c_str());
+	//		// --------------------------------------------- Teleporters
+	//		if (ImGui::CollapsingHeader("Teleporters"))
+	//		{
+	//			ImGui::Indent();
+	//			int Count = 0;
+	//			while (Count < Teleporters_Names_Count)
+	//			{
+	//				ImGui::Bullet();
+	//				if (ImGui::Selectable(Teleporters_Names_Vec[Count].c_str(), selected_Teleporters == Count))
+	//				{
+	//					selected_Teleporters = Count;
+	//					strcpy(Selected_Teleporters_Name, Teleporters_Names_Vec[Count].c_str());
 
-						selected_Object = -1;
-						selected_Sounds = -1;
-						selected_Messages = -1;
-						selected_MoveEntities = -1;
-						selected_Collectables = -1;
-						selected_Areas = -1;
-						selected_Players = -1;
+	//					selected_Object = -1;
+	//					selected_Sounds = -1;
+	//					selected_Messages = -1;
+	//					selected_MoveEntities = -1;
+	//					selected_Collectables = -1;
+	//					selected_Areas = -1;
+	//					selected_Players = -1;
 
-						Block = 1;
-					}
-					Count++;
-				}
+	//					Block = 1;
+	//				}
+	//				Count++;
+	//			}
 
-				if (Block == 1)
-				{
-					Update_Properties_Teleporters(Selected_Teleporters_Name);
-				}
+	//			if (Block == 1)
+	//			{
+	//				Update_Properties_Teleporters(Selected_Teleporters_Name);
+	//			}
 
-				ImGui::Unindent();
-				
-			}
+	//			ImGui::Unindent();
+	//			
+	//		}
 
-			ImGui::Unindent();
-		}
+	//		ImGui::Unindent();
+	//	}
 
-		
-		ImGui::PopFont();
-		ImGui::PushFont(App->Cl_ImGui->font1);
-		ImGui::End();
-	}
+	//	
+	//	ImGui::PopFont();
+	//	//ImGui::PushFont(App->Cl_ImGui->font1);
+	//	ImGui::End();
+	//}
 
 }
 
@@ -550,8 +550,6 @@ void GD19_FileView_V2::Update_Properties_Objects(char* Name)
 		App->Cl_Properties->Current_Selected_Object = ItemIndex;
 		App->Cl_Properties->Update_Transform_Dlg();
 
-		App->Cl_ImGui->Update_StaticData();
-
 		App->Cl_Properties->Update_ListView_Objects();
 		App->Cl_Visuals->MarkerBB_Addjust(ItemIndex);
 		Block = 0;
@@ -577,8 +575,6 @@ void GD19_FileView_V2::Update_Properties_Sounds(char* Name)
 		App->Cl_Properties->Edit_Category = Enums::Edit_Sounds;
 		App->Cl_Properties->Current_Selected_Object = ItemIndex;
 		App->Cl_Properties->Update_Transform_Dlg();
-
-		App->Cl_ImGui->Update_StaticData();
 
 		if (App->Cl_Properties->Edit_Physics == 0)
 		{
@@ -614,8 +610,6 @@ void GD19_FileView_V2::Update_Properties_Messages(char* Name)
 		App->Cl_Properties->Edit_Category = Enums::Edit_Message;
 		App->Cl_Properties->Current_Selected_Object = ItemIndex;
 		App->Cl_Properties->Update_Transform_Dlg();
-
-		App->Cl_ImGui->Update_StaticData();
 
 		if (App->Cl_Properties->Edit_Physics == 0)
 		{
@@ -655,7 +649,6 @@ void GD19_FileView_V2::Update_Properties_MoveEntities(char* Name)
 		App->Cl_Properties->Current_Selected_Object = ItemIndex;
 		App->Cl_Properties->Update_Transform_Dlg();
 
-		App->Cl_ImGui->Update_StaticData();
 
 		if (App->Cl_Properties->Edit_Physics == 0)
 		{
@@ -692,8 +685,6 @@ void GD19_FileView_V2::Update_Properties_Collectables(char* Name)
 		App->Cl_Properties->Edit_Category = Enums::Edit_Collectable;
 		App->Cl_Properties->Current_Selected_Object = ItemIndex;
 		App->Cl_Properties->Update_Transform_Dlg();
-
-		App->Cl_ImGui->Update_StaticData();
 
 		if (App->Cl_Properties->Edit_Physics == 0)
 		{
@@ -750,8 +741,6 @@ void GD19_FileView_V2::Update_Properties_Teleporters(char* Name)
 		App->Cl_Properties->Current_Selected_Object = ItemIndex;
 		App->Cl_Properties->Update_Transform_Dlg();
 
-		App->Cl_ImGui->Update_StaticData();
-
 		if (App->Cl_Properties->Edit_Physics == 0)
 		{
 			App->Cl_Properties->Update_ListView_Teleport();
@@ -785,7 +774,7 @@ void GD19_FileView_V2::Update_Properties_Areas(char* Name)
 		App->Cl_Properties->Edit_Category = Enums::Edit_Mesh_Object;
 		App->Cl_Properties->Current_Selected_Object = ItemIndex;
 		App->Cl_Properties->Update_Transform_Dlg();
-		App->Cl_ImGui->Update_StaticData();
+	
 
 		if (App->Cl_Properties->Edit_Physics == 0)
 		{
@@ -817,7 +806,7 @@ void GD19_FileView_V2::Update_Properties_Players(char* Name)
 		App->Cl_Properties->Edit_Category = Enums::Edit_Player;
 	//	App->Cl_Properties->Current_Selected_Object = ItemIndex;
 		
-		App->Cl_ImGui->Update_StaticData();
+		
 
 		if (App->Cl_Properties->Edit_Physics == 0)
 		{

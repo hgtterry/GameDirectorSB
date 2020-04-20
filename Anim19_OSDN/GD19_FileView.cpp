@@ -293,8 +293,7 @@ void GD19_FileView::Get_Selection(LPNMHDR lParam)
 		App->Cl_Properties->Edit_Category = Enums::Edit_Mesh_Object;
 		App->Cl_Properties->Current_Selected_Object = Index;
 		App->Cl_Properties->Update_Transform_Dlg();
-		App->Cl_ImGui->Update_StaticData();
-
+		
 		if (App->Cl_Properties->Edit_Physics == 0)
 		{
 			App->Cl_Properties->Update_ListView_Objects();
@@ -344,7 +343,6 @@ void GD19_FileView::Get_Selection(LPNMHDR lParam)
 		App->Cl_Properties->Current_Selected_Object = Index;
 		App->Cl_Properties->Update_Transform_Dlg();
 
-		App->Cl_ImGui->Update_StaticData();
 
 		if (App->Cl_Properties->Edit_Physics == 0)
 		{
@@ -370,7 +368,6 @@ void GD19_FileView::Get_Selection(LPNMHDR lParam)
 		App->Cl_Properties->Current_Selected_Object = Index;
 		//App->CL10_Properties->Update_Transform_Dlg();
 
-		App->Cl_ImGui->Update_StaticData();
 
 		if (App->Cl_Properties->Edit_Physics == 0)
 		{
@@ -416,7 +413,6 @@ void GD19_FileView::Get_Selection(LPNMHDR lParam)
 		App->Cl_Properties->Current_Selected_Object = Index;
 		App->Cl_Properties->Update_Transform_Dlg();
 
-		App->Cl_ImGui->Update_StaticData();
 
 		if (App->Cl_Properties->Edit_Physics == 0)
 		{
@@ -466,7 +462,7 @@ void GD19_FileView::Get_Selection(LPNMHDR lParam)
 		App->Cl_Properties->Current_Selected_Object = Index;
 		App->Cl_Properties->Update_Transform_Dlg();
 
-		App->Cl_ImGui->Update_StaticData();
+	
 
 		if (App->Cl_Properties->Edit_Physics == 0)
 		{
@@ -518,7 +514,6 @@ void GD19_FileView::Get_Selection(LPNMHDR lParam)
 		App->Cl_Properties->Current_Selected_Object = Index;
 		App->Cl_Properties->Update_Transform_Dlg();
 
-		App->Cl_ImGui->Update_StaticData();
 
 		if (App->Cl_Properties->Edit_Physics == 0)
 		{
@@ -575,7 +570,6 @@ void GD19_FileView::Get_Selection(LPNMHDR lParam)
 		App->Cl_Properties->Current_Selected_Object = Index;
 		App->Cl_Properties->Update_Transform_Dlg();
 
-		App->Cl_ImGui->Update_StaticData();
 
 		if (App->Cl_Properties->Edit_Physics == 0)
 		{
@@ -645,7 +639,6 @@ void GD19_FileView::Get_Selection(LPNMHDR lParam)
 		App->Cl_Properties->Current_Selected_Object = Index;
 		App->Cl_Properties->Update_Transform_Dlg();
 
-		App->Cl_ImGui->Update_StaticData();
 
 		if (App->Cl_Properties->Edit_Physics == 0)
 		{
@@ -718,7 +711,7 @@ void GD19_FileView::Get_Selection(LPNMHDR lParam)
 
 		App->Cl_Properties->Update_Transform_Dlg();
 
-		App->Cl_ImGui->Update_StaticData();
+	
 
 		if (App->Cl_Properties->Edit_Physics == 0)
 		{
@@ -772,7 +765,6 @@ void GD19_FileView::Get_Selection(LPNMHDR lParam)
 
 		App->Cl_Properties->Update_Transform_Dlg();
 
-		App->Cl_ImGui->Update_StaticData();
 
 		if (App->Cl_Properties->Edit_Physics == 0)
 		{
@@ -826,7 +818,6 @@ void GD19_FileView::Get_Selection(LPNMHDR lParam)
 
 		App->Cl_Properties->Update_Transform_Dlg();
 
-		App->Cl_ImGui->Update_StaticData();
 
 		if (App->Cl_Properties->Edit_Physics == 0)
 		{
@@ -882,7 +873,6 @@ void GD19_FileView::Get_Selection(LPNMHDR lParam)
 
 		App->Cl_Properties->Update_Transform_Dlg();
 
-		App->Cl_ImGui->Update_StaticData();
 
 		if (App->Cl_Properties->Edit_Physics == 0)
 		{

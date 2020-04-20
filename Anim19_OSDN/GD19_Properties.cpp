@@ -300,7 +300,7 @@ LRESULT CALLBACK GD19_Properties::GD_Properties_Proc(HWND hDlg, UINT message, WP
 		if (some_item->idFrom == IDC_BUTDIMENSIONS && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->Cl_ImGui->Show_ImGui_Dimensions);
+//			App->Custom_Button_Toggle(item, App->Cl_ImGui->Show_ImGui_Dimensions);
 			return CDRF_DODEFAULT;
 		}
 
@@ -389,7 +389,7 @@ LRESULT CALLBACK GD19_Properties::GD_Properties_Proc(HWND hDlg, UINT message, WP
 		if (LOWORD(wParam) == IDC_INFODETAILS)
 		{
 
-			if (App->Cl_ImGui->Show_Object_Data == 1)
+		/*	if (App->Cl_ImGui->Show_Object_Data == 1)
 			{
 				App->Cl_ImGui->Show_Object_Data = 0;
 			}
@@ -397,7 +397,7 @@ LRESULT CALLBACK GD19_Properties::GD_Properties_Proc(HWND hDlg, UINT message, WP
 			{
 				App->Cl_ImGui->Update_StaticData();
 				App->Cl_ImGui->Show_Object_Data = 1;
-			}
+			}*/
 
 			return 1;
 		}
@@ -405,14 +405,14 @@ LRESULT CALLBACK GD19_Properties::GD_Properties_Proc(HWND hDlg, UINT message, WP
 		if (LOWORD(wParam) == IDC_BUTDIMENSIONS)
 		{
 
-			if (App->Cl_ImGui->Show_ImGui_Dimensions == 1)
+			/*if (App->Cl_ImGui->Show_ImGui_Dimensions == 1)
 			{
 				App->Cl_ImGui->Show_ImGui_Dimensions = 0;
 			}
 			else
 			{
 				App->Cl_ImGui->Show_ImGui_Dimensions = 1;
-			}
+			}*/
 			
 			return 1;
 		}

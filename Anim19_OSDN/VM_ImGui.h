@@ -6,6 +6,10 @@ public:
 	~VM_ImGui();
 
 	void Reset_Class(void);
+
+	void Load_Font(void);
+	void ImGui_Set_Colours(void);
+
 	void Render_ImGui(void);
 	void ImGui_FPS(void);
 
@@ -29,6 +33,11 @@ public:
 	bool Show_Group_List;
 	bool Show_ImGui_TextureData;
 	bool Show_Model_Data;
+
+	ImFont* font0;
+	ImFont* font1;
+	ImFont* font2;
+	ImFont* fontDroid;
 	
 	float Model_XTranslate;
 	float Model_YTranslate;

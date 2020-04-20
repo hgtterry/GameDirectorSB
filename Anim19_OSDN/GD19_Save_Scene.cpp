@@ -192,12 +192,12 @@ bool GD19_Save_Scene::SaveGDScene_40(bool AskForFile)
 		mLevel_Directory[0] = 0;
 
 		strcpy(mLevel_Directory, App->LevelDirectory);
-		DLog(App->LevelDirectory);
+	//	DLog(App->LevelDirectory);
 
-		DLog(App->Cl_Scene_Data->S_Scene[0]->LevelName);
+	//	DLog(App->Cl_Scene_Data->S_Scene[0]->LevelName);
 	}
 
-	DLog(App->CL_Vm_FileIO->Full_Path_And_File);
+//	DLog(App->CL_Vm_FileIO->Full_Path_And_File);
 	
 
 	WriteScene = fopen(App->CL_Vm_FileIO->Full_Path_And_File, "wt");
@@ -237,7 +237,7 @@ bool GD19_Save_Scene::SaveGDScene_40(bool AskForFile)
 	if (AskForFile == 1)
 	{
 		//App->Cl_Dialogs->Message("Saved");
-		DLog("Saved");
+	//	DLog("Saved");
 	}
 	else
 	{

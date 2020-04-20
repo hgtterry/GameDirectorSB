@@ -53,7 +53,6 @@ distribution.
 #include "GD19_ToolBar.h"
 #include "GD19_Objects_FFile.h"
 #include "GD_spdlog.h"
-#include "GD_ImGui.h"
 #include "GD19_PB.h"
 #include "GD_Keyboard.h"
 
@@ -111,7 +110,6 @@ public:
 	GD19_ToolBar*		Cl_ToolBar;
 	GD19_Objects_FFile*	Cl_Objects_FFile;
 	GD_spdlog*			Cl_spdlog;
-	GD_ImGui*			Cl_ImGui;
 	GD19_PB*			Cl_PB;
 	GD_Keyboard*		Cl_Keyboard;
 
