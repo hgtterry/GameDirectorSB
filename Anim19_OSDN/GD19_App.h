@@ -56,9 +56,6 @@ distribution.
 #include "GD19_PB.h"
 #include "GD_Keyboard.h"
 
-#include "GD19_FileView_V2.h" // Test
-
-
 // Vima19 19/03/20
 
 #include "VM_Importer.h"
@@ -83,7 +80,6 @@ public:
 	GD19_Utilities*		Cl_Utilities;
 	GD19_Grid*			Cl_Grid;
 	GD19_FileView*		Cl_FileView;
-	GD19_FileView_V2*	Cl_FileView_V2;
 	GD19_Panels*		Cl_Panels;
 	GD19_Load_Scene*	Cl_Load_Scene;
 	GD19_Save_Scene*	Cl_Save_Scene;

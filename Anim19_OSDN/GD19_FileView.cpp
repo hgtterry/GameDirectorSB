@@ -1054,7 +1054,7 @@ void GD19_FileView::Select_Item(int Index)
 	// Fall Through
 	//if (App->Cl_Scene_Data->CL_Object[Index]->Usage == Enums::Usage_Object)
 	{
-		App->Cl_FileView_V2->Select_ObjectFV(Index);
+		//App->Cl_FileView_V2->Select_ObjectFV(Index);
 
 		App->Cl_FileView->SelectItem(App->Cl_Scene_Data->Cl_Object[Index]->ListViewItem);
 		App->Cl_Properties->Edit_Category = Enums::Edit_Mesh_Object;

@@ -84,7 +84,7 @@ void GD19_Player::Load_Player(void)
 {
 	Initialize(StartPos,Capsule_Mass, Capsule_Radius,Capsule_Height);
 
-	App->Cl_FileView_V2->Add_Player_Name(App->Cl_Player->PlayerName);
+//	App->Cl_FileView_V2->Add_Player_Name(App->Cl_Player->PlayerName);
 
 //	CameraPitch = App->Cl_Ogre->mSceneMgr->createCamera("PlayerPitch");
 	

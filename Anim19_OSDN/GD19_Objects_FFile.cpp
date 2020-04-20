@@ -134,7 +134,6 @@ bool GD19_Objects_FFile::Add_Object_FFile(int Object_Index)
 		HTREEITEM Temp = App->Cl_FileView->Add_Room_Object(Object->Name, Count);
 		Object->ListViewItem = Temp;
 
-		App->Cl_FileView_V2->Add_Area_Name(Object->Name);
 
 		App->Cl_Scene_Data->Scene_Has_Area = 1;
 	}
@@ -143,7 +142,7 @@ bool GD19_Objects_FFile::Add_Object_FFile(int Object_Index)
 		HTREEITEM Temp = App->Cl_FileView->Add_MiscFile(Object->Name, Count);
 		Object->ListViewItem = Temp;
 
-		App->Cl_FileView_V2->Add_ObjectName(Object->Name);
+	
 	}
 
 	App->Cl_FileView->Select_Item(NULL);
@@ -218,7 +217,7 @@ bool GD19_Objects_FFile::Add_SoundEntity_FFile(int Object_Index)
 	HTREEITEM Temp = App->Cl_FileView->Add_Sound_Entity(Object->Name, Index);
 	Object->ListViewItem = Temp;
 
-	App->Cl_FileView_V2->Add_SoundName(Object->Name);
+	//App->Cl_FileView_V2->Add_SoundName(Object->Name);
 
 	//App->Cl_FileView->Select_Item(NULL,NULL);
 	ShowWindow(App->GD_Properties_Hwnd, 1);
@@ -294,7 +293,7 @@ bool GD19_Objects_FFile::Add_MessageEntity_FFile(int Object_Index)
 	HTREEITEM Temp = App->Cl_FileView->Add_Message_Entity(Object->Name, Index);
 	Object->ListViewItem = Temp;
 
-	App->Cl_FileView_V2->Add_MessageName(Object->Name);
+//	App->Cl_FileView_V2->Add_MessageName(Object->Name);
 
 	//App->Cl_FileView->Select_Item(NULL,NULL);
 	ShowWindow(App->GD_Properties_Hwnd, 1);
@@ -384,7 +383,7 @@ bool GD19_Objects_FFile::Add_MoveEntity_FFile(int Object_Index)
 	HTREEITEM Temp = App->Cl_FileView->Add_Move_Entity(Object->Name, Index);
 	Object->ListViewItem = Temp;
 
-	App->Cl_FileView_V2->Add_MoveEntities(Object->Name);
+//	App->Cl_FileView_V2->Add_MoveEntities(Object->Name);
 
 	//App->Cl_FileView->Select_Item(NULL,NULL);
 	ShowWindow(App->GD_Properties_Hwnd, 1);
@@ -462,7 +461,7 @@ bool GD19_Objects_FFile::Add_CollectableEntity_FFile(int Object_Index)
 	HTREEITEM Temp = App->Cl_FileView->Add_Collectable(Object->Name, Count);
 	Object->ListViewItem = Temp;
 
-	App->Cl_FileView_V2->Add_Collectable_Name(Object->Name);
+//	App->Cl_FileView_V2->Add_Collectable_Name(Object->Name);
 	return 1;
 }
 
@@ -537,7 +536,7 @@ bool GD19_Objects_FFile::Add_TeleportEntity_FFile(int Object_Index)
 	HTREEITEM Temp = App->Cl_FileView->Add_Teleport(Object->Name, Count);
 	Object->ListViewItem = Temp;
 
-	App->Cl_FileView_V2->Add_Teleporter_Name(Object->Name);
+	
 
 	return 1;
 }

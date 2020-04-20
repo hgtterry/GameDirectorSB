@@ -894,7 +894,7 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 
 		if (ImGui::GetIO().WantCaptureMouse)
 		{
-			App->Cl_FileView_V2->RightMouseDown = 1;
+			//App->Cl_FileView_V2->RightMouseDown = 1;
 		}
 
 		if (!ImGui::GetIO().WantCaptureMouse)
