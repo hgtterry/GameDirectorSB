@@ -15,6 +15,7 @@ public:
 	void ImGui_Image(void);
 	void ImGui_GroupList(void);
 	void ImGui_Texture_Data(void);
+	void ImGui_Model_Data(void);
 	
 	bool StartPos;
 
@@ -27,6 +28,7 @@ public:
 	bool Show_Image;
 	bool Show_Group_List;
 	bool Show_ImGui_TextureData;
+	bool Show_Model_Data;
 	
 	float Model_XTranslate;
 	float Model_YTranslate;

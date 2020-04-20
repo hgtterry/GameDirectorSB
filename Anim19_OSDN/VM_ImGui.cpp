@@ -14,6 +14,7 @@ VM_ImGui::VM_ImGui()
 	Show_Image = 0;
 	Show_Group_List = 0;
 	Show_ImGui_TextureData = 0;
+	Show_Model_Data = 0;
 
 	Model_XTranslate = 2;
 	Model_YTranslate = 2;
@@ -91,6 +92,11 @@ void VM_ImGui::Render_ImGui(void)
 	if (Show_ImGui_TextureData == 1)
 	{
 		ImGui_Texture_Data();
+	}
+
+	if (Show_Model_Data == 1)
+	{
+		ImGui_Model_Data();
 	}
 
 }
@@ -631,5 +637,107 @@ void VM_ImGui::ImGui_Texture_Data(void)
 
 		ImGui::EndPopup();
 	}
+}
 
+// *************************************************************************
+// *					ImGui_Model_Data  Terry Bernie					   *
+// *************************************************************************
+void VM_ImGui::ImGui_Model_Data(void)
+{
+	ImGui::SetNextWindowSize(ImVec2(530, 250), ImGuiCond_FirstUseEver);
+
+	ImGui::OpenPopup("Model Data");
+
+	if (!ImGui::BeginPopupModal("Model Data", &Show_Model_Data, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize))
+	{
+		ImGui::EndPopup();
+	}
+	else
+	{
+
+		ImGui::Text("Model Name: = %s", App->CL_Vm_Model->JustName);
+		ImGui::Text("Model File Name: = %s", App->CL_Vm_Model->FileName);
+		ImGui::Text("Model Path: = %s", App->CL_Vm_Model->Model_FolderPath);
+		ImGui::Text("Texture Path: = %s", App->CL_Vm_Model->Texture_FolderPath);
+
+		ImGui::Spacing();
+
+		ImGui::Text("Vertices: = %i", App->CL_Vm_Model->VerticeCount);
+		ImGui::Text("Faces: = %i", App->CL_Vm_Model->FaceCount);
+		ImGui::Text("Normals: = %i", App->CL_Vm_Model->NormalsCount);
+
+		ImGui::Spacing();
+
+		ImGui::Text("Textures: = %i", App->CL_Vm_Model->TextureCount);
+
+		// ----------------------------- Textures
+		char Header[255];
+		int TextureCount = App->CL_Vm_Model->TextureCount;
+
+		sprintf(Header, "%s %i", "Textures", TextureCount);
+
+		if (ImGui::CollapsingHeader(Header))
+		{
+			int Count = 0;
+			while (Count < TextureCount)
+			{
+				ImGui::Text("%s", App->CL_Vm_Model->TextureNames_Data[Count].Name);
+				Count++;
+			}
+		}
+
+		ImGui::Spacing();
+
+		// ----------------------------- Motions
+		int MotionCount = App->CL_Vm_Model->MotionCount;
+		sprintf(Header, "%s %i", "Motions", MotionCount);
+
+		if (ImGui::CollapsingHeader(Header))
+		{
+			int Count = 0;
+			while (Count < MotionCount)
+			{
+				ImGui::Text("%s", App->CL_Vm_Model->MotionNames_Data[Count].Name);
+				Count++;
+			}
+		}
+
+		ImGui::Spacing();
+
+		// ----------------------------- Bones
+		int BoneCount = App->CL_Vm_Model->BoneCount;
+		sprintf(Header, "%s %i", "Bones", BoneCount);
+
+		if (ImGui::CollapsingHeader(Header))
+		{
+			int Count = 0;
+			while (Count < BoneCount)
+			{
+				ImGui::Text("%s", App->CL_Vm_Model->S_Bones[Count]->BoneName);
+				Count++;
+			}
+		}
+
+		// ----------------------------- Groups
+		int GroupCount = App->CL_Vm_Model->GroupCount;
+		sprintf(Header, "%s %i", "Groupd", GroupCount);
+
+		if (ImGui::CollapsingHeader(Header))
+		{
+			/*int Count = 0;
+			while (Count < BoneCount)
+			{
+			ImGui::Text("%s", App->CL_Vm_Model->S_Bones[Count]->BoneName);
+			Count++;
+			}*/
+		}
+
+
+		if (ImGui::Button("Close"))
+		{
+			Show_Model_Data = 0;
+		}
+
+		ImGui::EndPopup();
+	}
 }
