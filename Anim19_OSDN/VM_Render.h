@@ -86,13 +86,12 @@ protected:
 
 	void Render_BoundingBoxModel(void);
 
-	void Render_Normals_Actor(void);
-
 	bool RenderPoints(void);
 	bool RenderMeshOnly(void);
 
-	bool RenderByTexture_Actor();
-	bool Render_Just_Texture_Actor();
+	bool RF_Render_All_Groups();
+	bool RF_Render_Just_Group();
+	void RF_Render_Normals(void);
 
 	void RenderCrossHair(void);
 

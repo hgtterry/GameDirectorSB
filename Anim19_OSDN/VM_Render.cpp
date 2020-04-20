@@ -196,20 +196,20 @@ void VM_Render::Render()
 	// ---------------------- Textured
 	if (App->CL_Vm_Model->Model_Loaded == 1 && ShowTextured == 1)
 	{
-		glEnable (GL_DEPTH_TEST);
-		glShadeModel (GL_SMOOTH);
+		glEnable(GL_DEPTH_TEST);
+		glShadeModel(GL_SMOOTH);
 
-		glPolygonMode (GL_FRONT_AND_BACK, GL_FILL);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 		if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
 		{
 			if (ShowOnlySubMesh == 1)
 			{
-				Render_Just_Texture_Actor();
+				RF_Render_Just_Group();
 			}
 			else
 			{
-				RenderByTexture_Actor();
+				RF_Render_All_Groups();
 			}
 		}
 
@@ -261,7 +261,7 @@ void VM_Render::Render()
 		}*/
 		if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
 		{
-			Render_Normals_Actor();
+			RF_Render_Normals();
 		}
 	}
 
@@ -556,9 +556,9 @@ void VM_Render::Render_As_Normals_Parts(int Count)
 }
 
 // *************************************************************************
-// *					Render_Normals_Actor Terry Bernie	   			   *
+// *					RF_Render_Normals Terry Bernie		  			   *
 // *************************************************************************
-void VM_Render::Render_Normals_Actor(void)
+void VM_Render::RF_Render_Normals(void)
 {
 	#define t 2
 
@@ -737,9 +737,9 @@ void VM_Render::Render_BoundingBoxModel(void)
 }
 
 // *************************************************************************
-// *					RenderByTexture_Actor  ( Terry Bernie ) 		   *
+// *					RF_Render_All_Groups  ( Terry Bernie ) 			   *
 // *************************************************************************
-bool VM_Render::RenderByTexture_Actor()
+bool VM_Render::RF_Render_All_Groups()
 {
 	const geBody_Triangle *SF;
 	SF = App->CL_Vm_Genesis3D->ActorDef_Memory->Body->SkinFaces[GE_BODY_HIGHEST_LOD].FaceArray;
@@ -805,9 +805,9 @@ bool VM_Render::RenderByTexture_Actor()
 }
 
 // *************************************************************************
-// *					Render_Just_Texture_Actor  ( Terry Bernie ) 	   *
+// *					RF_Render_Just_Group  ( Terry Bernie )			   *
 // *************************************************************************
-bool VM_Render::Render_Just_Texture_Actor()
+bool VM_Render::RF_Render_Just_Group()
 {
 	const geBody_Triangle *SF;
 	SF = App->CL_Vm_Genesis3D->ActorDef_Memory->Body->SkinFaces[GE_BODY_HIGHEST_LOD].FaceArray;
