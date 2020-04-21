@@ -13,6 +13,51 @@ VM_Importer::~VM_Importer()
 }
 
 // *************************************************************************
+// *						Assimp_Loader Terry Bernie					   *
+// *************************************************************************
+bool VM_Importer::Assimp_Loader(char* Extension, char* Extension2)
+{
+	int Result = App->CL_Vm_FileIO->Vm_OpenFile(Extension, Extension2, NULL);
+	if (Result == 0)
+	{
+		return 1;
+	}
+
+//	App->CL_Assimp = new Eq_Assimp();
+
+
+	App->CL_Vm_Model->Clear_ModelData();
+
+	App->CL_Vm_Model->Set_Paths();
+
+
+	App->Cl_Vm_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
+
+	bool Test = App->Cl_Vm_Assimp->LoadFile(App->CL_Vm_FileIO->Model_Path_FileName);
+	if (Test == 0)
+	{
+		//App->CL_Dialogs->PleaseWaitEnd();
+		return 0;
+	}
+
+	App->CL_Vm_Model->Model_Type = LoadedFile_Assimp;
+	//App->CL_Vm_Model->Render_Mode = Render_As_Assimp;
+
+	App->CL_Vm_Model->Model_Loaded = 1;
+
+	App->Cl_Grid->Zoom();
+
+	//Set_Equity();
+
+	/*if (App->CL_Assimp)
+	{
+		delete App->CL_Assimp;
+		App->CL_Assimp = NULL;
+	}*/
+	return 1;
+}
+
+// *************************************************************************
 // *						Genesis3D Terry Terry Berine				   *
 // *************************************************************************
 bool VM_Importer::Genesis3D_Loader(void)
@@ -40,7 +85,7 @@ bool VM_Importer::Genesis3D_Loader(void)
 
 	
 
-	//App->Cl_Grid->Zoom();
+	App->Cl_Grid->Zoom();
 
 	return 1;
 }
