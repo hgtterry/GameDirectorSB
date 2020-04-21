@@ -228,6 +228,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return 1;
 		}
 
+		case ID_IMPORT_WAVEFRONTOBJ:
+		{
+			App->CL_Importer->Assimp_Loader("Wavefront OBJ   *.obj\0*.obj\0", "Wavefront OBJ");
+			return 1;
+		}
+
 		case ID_EXPORT_GENESIS3D:
 		{
 			App->CL_Vm_Exporter->Actor_Model();
