@@ -445,6 +445,45 @@ bool VM_Textures::TexureToWinPreviewFullPath(int Index, char* FullPath)
 }
 
 // *************************************************************************
+// *						CheckPath Terry Bernie	   					   *
+// *************************************************************************
+void VM_Textures::Strip_JustFileName(char *pString, char *FileName)
+{
+	int Count = 0;
+	int Mark = 0;
+	bool Test = 0;
+
+	while (*pString != 0)
+	{
+		if (*pString == '\\' || *pString == '/')
+		{
+			Test = 1;
+			Mark = Count;
+		}
+
+		Count++;
+		pString++;
+	}
+
+	if (Mark == 0 && Test == 0)
+	{
+		strcpy(JustFileName, FileName);
+	}
+	else
+	{
+		if (Mark == 0 && Test == 1)
+		{
+			Mark = 1;
+			strcpy(JustFileName, (FileName + Mark));
+		}
+		else
+		{
+			strcpy(JustFileName, (FileName + Mark) + 1);
+		}
+	}
+}
+
+// *************************************************************************
 // *								GetFormat					  	 	   *
 // *************************************************************************
 bool VM_Textures::GetFormat(int cformat)

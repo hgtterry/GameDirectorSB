@@ -304,3 +304,81 @@ void VM_Assimp::StoreMeshData(const aiScene* pScene)
 		GroupCount++;
 	}
 }
+
+// *************************************************************************
+// *					LoadTextures Terry Bernie Hazel			  	 	   *
+// *************************************************************************
+void VM_Assimp::LoadTextures()
+{
+	//int v = 0;
+	//int Count = 0;
+
+	//while (Count < App->CL_Vm_Model->GroupCount)
+	//{
+	//	char FullName[1024];
+	//	strcpy(FullName, App->CL_Vm_Model->S_MeshGroup[Count]->Text_FileName);
+
+	//	App->CL_Vm_Textures->Strip_JustFileName(FullName, FullName);
+
+	//	strcpy(App->CL_Vm_Model->S_MeshGroup[Count]->Text_FileName, App->CL_Vm_Textures->JustFileName);
+
+	//	//App->Cl_Ogre->Loading_Process(App->Cl_Importer->JustFileName);
+
+	//	strcpy(App->CL_Vm_Model->Texture_FolderPath, App->CL_Vm_Model->Texture_FolderPath);
+	//	strcat(App->CL_Vm_Model->Texture_FullPath, App->CL_Vm_Textures->JustFileName);
+
+
+	//	int Test = strcmp(App->CL_Vm_Textures->JustFileName, "No_Texture");
+	//	if (Test != 0) // Dose not equal 
+	//	{
+	//		int MatIndex = App->CL_Vm_Model->S_MeshGroup[Count]->MaterialIndex;
+
+	//		App->CL_Vm_Model->S_MeshGroup[v]->Soil_TextureIndex = MatIndex;
+
+	//		strcpy(App->CL_Vm_Model->S_MeshGroup[v]->Text_FileName, App->CL_Vm_Textures->JustFileName);
+
+	//		char ImageFullPath[1024];
+	//		strcpy(ImageFullPath, App->CL_Vm_Model->Texture_FolderPath);
+	//		strcat(ImageFullPath, App->CL_Vm_Textures->JustFileName);
+
+
+	//		strcpy(App->CL_Vm_Model->S_MeshGroup[v]->Text_PathFileName, ImageFullPath);
+	//		strcpy(App->CL_Vm_Textures->TextureFileName, ImageFullPath);
+
+	//		App->CL_Vm_Textures->TexureToWinPreviewFullPath(v, ImageFullPath);
+	//		App->CL_Vm_Textures->Soil_DecodeTextures(MatIndex); // ??
+
+	//														 //---------- Add Group N + Tetxure File Name
+	//		
+	//		v++;
+	//	}
+	//	else
+	//	{
+	//		//App->Debug();
+	//		App->CL_Textures->CreateDummyTexture();
+
+	//		int MatIndex = App->CL_Vm_Model->S_MeshGroup[Count]->MaterialIndex;
+
+	//		App->CL_Vm_Model->S_MeshGroup[v]->Soil_TextureIndex = MatIndex;
+
+	//		strcpy(App->CL_Vm_Model->S_MeshGroup[v]->Text_FileName, "Etemp.bmp");
+
+	//		char ImageFullPath[1024];
+	//		strcpy(ImageFullPath, App->CL_Model_Data->Texture_FolderPath);
+	//		strcat(ImageFullPath, "Etemp.bmp");
+
+	//		strcpy(App->CL_Vm_Model->S_MeshGroup[v]->Text_PathFileName, ImageFullPath);
+	//		strcpy(App->CL_Textures->TextureFileName, ImageFullPath);
+
+	//		App->CL_Vm_Textures->TexureToWinPreviewFullPath(v, ImageFullPath);
+	//		//App->CL_Textures->Soil_DecodeTextures(MatIndex); // ??
+
+
+	//		remove(ImageFullPath);
+
+	//		v++;
+	//	}
+	//	Count++;
+	//}
+
+}

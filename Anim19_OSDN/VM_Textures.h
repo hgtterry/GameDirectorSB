@@ -38,7 +38,9 @@ public:
 	bool Soil_Load_Texture(UINT textureArray[], LPSTR strFileName, int textureID);
 	bool TexureToWinPreviewFullPath(int Index, char* FullPath);
 	bool GetFormat(int cformat);
+	void Strip_JustFileName(char *pString, char *FileName);
 
+	char JustFileName[255];
 	char GEFormatString[255];
 
 	UINT  g_Texture[300];

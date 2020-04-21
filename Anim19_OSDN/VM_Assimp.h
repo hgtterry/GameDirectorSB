@@ -31,5 +31,6 @@ protected:
 	void Create_MeshGroups(const aiScene* pScene);
 	void Get_Group_VertCount(const aiScene* pScene);
 	void StoreMeshData(const aiScene* pScene);
+	void LoadTextures();
 };
 
