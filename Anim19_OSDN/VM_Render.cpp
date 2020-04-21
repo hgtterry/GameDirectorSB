@@ -213,10 +213,10 @@ void VM_Render::Render()
 			}
 		}
 
-		/*if (App->CL_Vm_Model->Render_Mode = Render_As_Assimp)
+		if (App->CL_Vm_Model->Model_Type == LoadedFile_Assimp)
 		{
 			Render_As_Textured();
-		}*/
+		}
 	}
 
 	// ---------------------- Mesh
@@ -422,12 +422,12 @@ bool VM_Render::Render_As_Textured(void)
 
 	//glLineWidth(10);
 
-	if (ShowOnlySubMesh == 1) // Show Only Selected SubMesh
-	{
-		Render_As_Textured_Parts(App->CL_Vm_Groups->SelectedGroup);
-		glDisable(GL_TEXTURE_2D);
-		return 1;
-	}
+	//if (ShowOnlySubMesh == 1) // Show Only Selected SubMesh
+	//{
+	//	Render_As_Textured_Parts(App->CL_Vm_Groups->SelectedGroup);
+	//	glDisable(GL_TEXTURE_2D);
+	//	return 1;
+	//}
 
 	//if (Show_HideGroup == 1) // Hide Selected SubMesh
 	//{
@@ -508,7 +508,6 @@ bool VM_Render::Render_As_Textured_Parts(int Count)
 
 		glEnd();
 
-		FlashWindow(App->MainHwnd, true);
 	}
 
 	return 1;

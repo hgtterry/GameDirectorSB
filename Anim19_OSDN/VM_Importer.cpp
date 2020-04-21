@@ -36,7 +36,7 @@ bool VM_Importer::Assimp_Loader(char* Extension, char* Extension2)
 	bool Test = App->Cl_Vm_Assimp->LoadFile(App->CL_Vm_FileIO->Model_Path_FileName);
 	if (Test == 0)
 	{
-		//App->CL_Dialogs->PleaseWaitEnd();
+		App->Say("Failed To Load");
 		return 0;
 	}
 
@@ -54,6 +54,8 @@ bool VM_Importer::Assimp_Loader(char* Extension, char* Extension2)
 		delete App->CL_Assimp;
 		App->CL_Assimp = NULL;
 	}*/
+
+	App->Say("Loaded");
 	return 1;
 }
 
