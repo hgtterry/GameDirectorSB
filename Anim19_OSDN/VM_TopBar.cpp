@@ -280,14 +280,14 @@ LRESULT CALLBACK VM_TopBar::TopMain_Proc(HWND hDlg, UINT message, WPARAM wParam,
 
 		if (LOWORD(wParam) == IDC_TBINFO)
 		{
-			/*if (App->Cl_ImGui->Show_ImGui_Counters == 1)
+			if (App->CL_Vm_ImGui->Show_Model_Data == 1)
 			{
-				App->Cl_ImGui->Show_ImGui_Counters = 0;
+				App->CL_Vm_ImGui->Show_Model_Data = 0;
 			}
 			else
 			{
-				App->Cl_ImGui->Show_ImGui_Counters = 1;
-			}*/
+				App->CL_Vm_ImGui->Show_Model_Data = 1;
+			}
 			return TRUE;
 		}
 
