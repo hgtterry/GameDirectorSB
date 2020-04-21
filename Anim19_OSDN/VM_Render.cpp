@@ -449,7 +449,7 @@ bool VM_Render::Render_As_Textured(void)
 
 	while (Count<App->CL_Vm_Model->GroupCount)
 	{
-		Render_As_Textured_Parts(Count);
+		Assimp_Textured_Parts(Count);
 		Count++;
 	}
 
@@ -458,9 +458,9 @@ bool VM_Render::Render_As_Textured(void)
 	return 1;
 }
 // *************************************************************************
-// *					Render_As_Textured_Parts Terry Bernie	 		   *
+// *					Assimp_Textured_Parts Terry Bernie		 		   *
 // *************************************************************************
-bool VM_Render::Render_As_Textured_Parts(int Count)
+bool VM_Render::Assimp_Textured_Parts(int Count)
 {
 	int VertCount=0;
 	int A = 0;

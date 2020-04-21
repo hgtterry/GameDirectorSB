@@ -71,7 +71,7 @@ protected:
 	void Translate(void);
 
 	bool Render_As_Textured(void);
-	bool Render_As_Textured_Parts(int Count);
+	bool Assimp_Textured_Parts(int Count);
 
 	bool Render_As_Points(void);
 	bool Render_As_Points_Parts(int Count);
