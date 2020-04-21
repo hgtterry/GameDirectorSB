@@ -74,6 +74,7 @@ GD19_App::GD19_App(void)
 	CL_Vm_ImGui =		nullptr;
 	CL_Vm_TextLib =		nullptr;
 	CL_Vm_Groups =		nullptr;
+	Cl_Vm_Assimp =		nullptr;
 
 
 	Fdlg = nullptr;
@@ -202,9 +203,8 @@ bool GD19_App::InitApp(void)
 	CL_Vm_ImGui =		new VM_ImGui();
 	CL_Vm_TextLib =		new VM_TextLib();
 	CL_Vm_Groups =		new VM_Groups();
+	Cl_Vm_Assimp =		new VM_Assimp();
 
-	CL_Vm_TextLib;
-	
 	SetBrushes_Fonts();
 
 	LoadString(hInst, IDS_APP_TITLE, Version, 255);

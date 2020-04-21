@@ -69,6 +69,7 @@ distribution.
 #include "VM_ImGui.h"
 #include "VM_TextLib.h"
 #include "VM_Groups.h"
+#include "VM_Assimp.h"
 
 
 class GD19_App
@@ -121,6 +122,7 @@ public:
 	VM_ImGui*			CL_Vm_ImGui;
 	VM_TextLib*			CL_Vm_TextLib;
 	VM_Groups*			CL_Vm_Groups;
+	VM_Assimp*			Cl_Vm_Assimp;
 
 
 	GD19_App(void);
