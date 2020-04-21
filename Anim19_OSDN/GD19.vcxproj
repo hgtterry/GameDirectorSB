@@ -122,7 +122,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\..\GD19_OSDN\GD19_OSDN;Common\Genesis\include2;Common\Genesis\Gen2;Common\Genesis\Gen;Common\Bullet\Source;Common\include\OGRE;Common\include\OGRE\Terrain;Common\include\OIS;Common\include\OGRE\Overlay;Common\spdlog;Common\irrKlang\Headers;Common\imGui\include;Common\Soil\include;Common\Devil\include\IL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\GD19_OSDN\GD19_OSDN;Common\Genesis\include2;Common\Genesis\Gen2;Common\Genesis\Gen;Common\Bullet\Source;Common\include\OGRE;Common\include\OGRE\Terrain;Common\include\OIS;Common\include\OGRE\Overlay;Common\spdlog;Common\irrKlang\Headers;Common\imGui\include;Common\Soil\include;Common\Devil\include\IL;Common\Assimp\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <EnablePREfast>false</EnablePREfast>
     </ClCompile>
     <Link>
@@ -130,8 +130,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>Common\lib\Release;Common\Bullet\lib;Common\irrKlang\Libs;Common\Genesis;Common\Soil\lib;Common\Devil\lib\unicode</AdditionalLibraryDirectories>
-      <AdditionalDependencies>comctl32.lib;genesis.lib;OgreMain.lib;OgreOverlay.lib;OgreTerrain.lib;opengl32.lib;glu32.lib;BulletDynamics.lib;BulletCollision.lib;LinearMath.lib;irrKlang.lib;SOIL.lib;DevIL.lib;ILU.lib;ILUT.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>Common\lib\Release;Common\Bullet\lib;Common\irrKlang\Libs;Common\Genesis;Common\Soil\lib;Common\Devil\lib\unicode;Common\Assimp\Lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>comctl32.lib;genesis.lib;OgreMain.lib;OgreOverlay.lib;OgreTerrain.lib;opengl32.lib;glu32.lib;BulletDynamics.lib;BulletCollision.lib;LinearMath.lib;irrKlang.lib;SOIL.lib;DevIL.lib;ILU.lib;ILUT.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)Vima19.exe</OutputFile>
       <IgnoreSpecificDefaultLibraries>LIBCMT.lib;libcpmt.lib</IgnoreSpecificDefaultLibraries>
       <LinkTimeCodeGeneration>UseFastLinkTimeCodeGeneration</LinkTimeCodeGeneration>

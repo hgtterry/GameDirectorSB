@@ -68,7 +68,7 @@ void VM_Render::TestLight(void)
 { 
 	//glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
-	float ld[4] = { 0.4, 0.4, 0.4, 0 };
+	float ld[4] = { (float) 0.4,(float) 0.4, (float)0.4,(float)0 };
 	glLightfv(GL_LIGHT0, GL_AMBIENT, ld);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, ld);
 	glLightfv(GL_LIGHT0, GL_SPECULAR, ld);
