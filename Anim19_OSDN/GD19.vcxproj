@@ -282,6 +282,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="GD19_OSDN.ico" />
+    <Image Include="Resource\Dummy.bmp" />
     <Image Include="resource\fileview\bitmap1.bmp" />
     <Image Include="Resource\FileView\File.bmp" />
     <Image Include="Resource\FileView\FileInactive.bmp" />

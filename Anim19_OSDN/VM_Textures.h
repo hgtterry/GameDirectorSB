@@ -39,9 +39,13 @@ public:
 	bool TexureToWinPreviewFullPath(int Index, char* FullPath);
 	bool GetFormat(int cformat);
 	void Strip_JustFileName(char *pString, char *FileName);
+	bool CreateDummyTexture(void);
+	bool Soil_DecodeTextures(int TextureID);
 
 	char JustFileName[255];
 	char GEFormatString[255];
+
+	char TextureFileName[255];
 
 	UINT  g_Texture[300];
 

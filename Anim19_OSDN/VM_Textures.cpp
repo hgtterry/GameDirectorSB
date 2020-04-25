@@ -305,6 +305,102 @@ int VM_Textures::Genesis_WriteToBmp(geBitmap *bmp, char *filename)
 }
 
 // *************************************************************************
+// *					DecodeTextures  Terry Bernie   			  	 	   *
+// *************************************************************************
+bool VM_Textures::Soil_DecodeTextures(int TextureID)
+{
+	int Index = 0;
+	int Dont = 0;
+	int jpg = 0;
+	int DontAdd = 0;
+	int AddDummy = 0;
+
+	char buf[1024];
+	strcpy(buf, App->CL_Vm_Model->Texture_FolderPath);
+	strcat(buf, "Etemp.bmp");
+
+	// ----------------------------------- Bitmap
+	if (_stricmp(TextureFileName + strlen(TextureFileName) - 4, ".BMP") == 0)
+	{
+		////S_TextureInfo[Count] = new GLTextureInfo_Type; // Need To Populate
+
+		int Test = Soil_Load_Texture(g_Texture, TextureFileName, TextureID);
+		if (Test == 0)
+		{
+			CreateDummyTexture();
+			Soil_Load_Texture(g_Texture, buf, TextureID);
+			//remove(buf);
+		}
+
+		return 1;
+	}
+	// ------------------------------------ JPEG
+	if (_stricmp(TextureFileName + strlen(TextureFileName) - 4, ".JPG") == 0)
+	{
+		//S_TextureInfo[Count] = new GLTextureInfo_Type; // Need To Populate
+
+		int Test = Soil_Load_Texture(g_Texture, TextureFileName, TextureID);
+		if (Test == 0)
+		{
+			CreateDummyTexture();
+			Soil_Load_Texture(g_Texture, buf, TextureID);
+			//remove(buf);
+		}
+
+		return 1;
+	}
+	// ------------------------------------ TGA
+	if (_stricmp(TextureFileName + strlen(TextureFileName) - 4, ".TGA") == 0)
+	{
+		//S_TextureInfo[Count] = new GLTextureInfo_Type; // Need To Populate
+
+		int Test = Soil_Load_Texture(g_Texture, TextureFileName, TextureID);
+		if (Test == 0)
+		{
+			CreateDummyTexture();
+			Soil_Load_Texture(g_Texture, buf, TextureID);
+			//remove(buf);
+		}
+
+		return 1;
+	}
+	// ------------------------------------ DDS
+	if (_stricmp(TextureFileName + strlen(TextureFileName) - 4, ".DDS") == 0)
+	{
+		//S_TextureInfo[Count] = new GLTextureInfo_Type; // Need To Populate
+
+		int Test = Soil_Load_Texture(g_Texture, TextureFileName, TextureID);
+		if (Test == 0)
+		{
+			CreateDummyTexture();
+			Soil_Load_Texture(g_Texture, buf, TextureID);
+			//remove(buf);
+		}
+		return 1;
+	}
+	// ------------------------------------ PNG
+	if (_stricmp(TextureFileName + strlen(TextureFileName) - 4, ".PNG") == 0)
+	{
+		//S_TextureInfo[Count] = new GLTextureInfo_Type; // Need To Populate
+
+		int Test = Soil_Load_Texture(g_Texture, TextureFileName, TextureID);
+		if (Test == 0)
+		{
+			CreateDummyTexture();
+			Soil_Load_Texture(g_Texture, buf, TextureID);
+			//remove(buf);
+		}
+		return 1;
+	}
+
+	CreateDummyTexture();
+	Soil_Load_Texture(g_Texture, buf, TextureID);
+	remove(buf);
+
+	return 1;
+}
+
+// *************************************************************************
 // *					Soil_Load_Texture Terry Bernie		  		  	   *
 // *************************************************************************
 bool VM_Textures::Soil_Load_Texture(UINT textureArray[], LPSTR strFileName, int textureID)
@@ -350,6 +446,8 @@ bool VM_Textures::Soil_Load_Texture(UINT textureArray[], LPSTR strFileName, int 
 
 	return 1;
 }
+
+
 
 // *************************************************************************
 // *							Texture_To_Bmp				  		 	   *
@@ -440,6 +538,151 @@ bool VM_Textures::TexureToWinPreviewFullPath(int Index, char* FullPath)
 	//App->CL_Model_Data->S_MeshGroup[Index]->Base_Bitmap = ilutWinLoadImage("Etemp.bmp",hDC);
 	////Soil_Load_Texture(g_Texture,buf,TextureID);
 	//remove(buf);
+
+	return 1;
+}
+
+// *************************************************************************
+// *					CreateDummyTexture Terry Bernie   		 	 	   *
+// *************************************************************************
+bool VM_Textures::CreateDummyTexture(void)
+{
+	HBITMAP hbmpTemp;
+	hbmpTemp = LoadBitmap(App->hInst, MAKEINTRESOURCE(IDB_DUMMY));
+
+	HDC	hdcTemp;
+	BITMAP bmp;
+	PBITMAPINFO pbmi;
+	WORD cClrBits;
+	HANDLE hf;
+	BITMAPFILEHEADER hdr;
+	PBITMAPINFOHEADER pbih;
+	LPBYTE lpBits;
+	DWORD dwTotal;
+	DWORD cb;
+	BYTE *hp;
+	DWORD dwTmp;
+
+	hdcTemp = CreateCompatibleDC(GetDC(0));
+	if (!hdcTemp)
+	{
+		App->Say("Compatible Faild");
+		return 0;
+	}
+
+	if (!GetObject(hbmpTemp, sizeof(BITMAP), (LPSTR)&bmp))
+
+	{
+		App->Say("Failed 3");
+		return 0;
+	}
+
+	cClrBits = (WORD)(bmp.bmPlanes * bmp.bmBitsPixel);
+	if (cClrBits == 1)
+		cClrBits = 1;
+	else if (cClrBits <= 4)
+		cClrBits = 4;
+	else if (cClrBits <= 8)
+		cClrBits = 8;
+	else if (cClrBits <= 16)
+		cClrBits = 16;
+	else if (cClrBits <= 24)
+		cClrBits = 24;
+	else cClrBits = 32;
+
+
+	if (cClrBits != 24)
+		pbmi = (PBITMAPINFO)LocalAlloc(LPTR,
+			sizeof(BITMAPINFOHEADER) + sizeof(RGBQUAD) * (1 << cClrBits));
+	else
+		pbmi = (PBITMAPINFO)LocalAlloc(LPTR, sizeof(BITMAPINFOHEADER));
+
+	// Initialize the fields in the BITMAPINFO structure. 
+
+	pbmi->bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+	pbmi->bmiHeader.biWidth = bmp.bmWidth;
+	pbmi->bmiHeader.biHeight = bmp.bmHeight;
+	pbmi->bmiHeader.biPlanes = bmp.bmPlanes;
+	pbmi->bmiHeader.biBitCount = bmp.bmBitsPixel;
+	if (cClrBits < 24)
+		pbmi->bmiHeader.biClrUsed = (1 << cClrBits);
+
+
+	pbmi->bmiHeader.biCompression = BI_RGB;
+
+	pbmi->bmiHeader.biSizeImage = (pbmi->bmiHeader.biWidth + 7) / 8 * pbmi->bmiHeader.biHeight * cClrBits;
+
+	pbmi->bmiHeader.biClrImportant = 0;
+
+	pbih = (PBITMAPINFOHEADER)pbmi;
+	lpBits = (LPBYTE)GlobalAlloc(GMEM_FIXED, pbih->biSizeImage);
+
+	if (!lpBits)
+	{
+		App->Say("writeBMP::Could not allocate memory");
+		return 0;
+	}
+
+	if (!GetDIBits(hdcTemp, HBITMAP(hbmpTemp), 0, (WORD)pbih->biHeight, lpBits, pbmi,
+		DIB_RGB_COLORS))
+	{
+		App->Say("writeBMP::GetDIB error");
+		return 0;
+	}
+
+	char buf[1024];
+	strcpy(buf, App->CL_Vm_Model->Texture_FolderPath);
+	strcat(buf, "Etemp.bmp");
+
+	hf = CreateFile(buf, GENERIC_READ | GENERIC_WRITE, (DWORD)0,
+		NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL,
+		(HANDLE)NULL);
+	if (hf == INVALID_HANDLE_VALUE)
+	{
+		App->Say("Could not create file for writing");
+		return 0;
+	}
+	hdr.bfType = 0x4d42; // 0x42 = "B" 0x4d = "M" 
+
+	hdr.bfSize = (DWORD)(sizeof(BITMAPFILEHEADER) +
+		pbih->biSize + pbih->biClrUsed
+		* sizeof(RGBQUAD) + pbih->biSizeImage);
+	hdr.bfReserved1 = 0;
+	hdr.bfReserved2 = 0;
+
+
+	hdr.bfOffBits = (DWORD) sizeof(BITMAPFILEHEADER) +
+		pbih->biSize + pbih->biClrUsed
+		* sizeof(RGBQUAD);
+
+	if (!WriteFile(hf, (LPVOID)&hdr, sizeof(BITMAPFILEHEADER),
+		(LPDWORD)&dwTmp, NULL)) {
+		App->Say("Could not write in to file");
+		return 0;
+	}
+
+	if (!WriteFile(hf, (LPVOID)pbih, sizeof(BITMAPINFOHEADER)
+		+ pbih->biClrUsed * sizeof(RGBQUAD),
+		(LPDWORD)&dwTmp, (NULL))) {
+		App->Say("Could not write in to file");
+		return 0;
+	}
+
+	dwTotal = cb = pbih->biSizeImage;
+	hp = lpBits;
+	if (!WriteFile(hf, (LPSTR)hp, (int)cb, (LPDWORD)&dwTmp, NULL)) {
+		App->Say("Could not write in to file");
+		return 0;
+	}
+
+	if (!CloseHandle(hf)) {
+		App->Say("Could not close file");
+		return 0;
+	}
+
+	GlobalFree((HGLOBAL)lpBits);
+	DeleteObject(hbmpTemp);
+	DeleteDC(hdcTemp);
 
 	return 1;
 }
