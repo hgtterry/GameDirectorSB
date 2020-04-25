@@ -43,6 +43,8 @@ public:
 	bool Soil_DecodeTextures(int TextureID);
 	void CreateTextureInfo(void);
 
+	HBITMAP GetHBITMAPFromImageFile(const WCHAR* pFilePath);
+
 	char JustFileName[255];
 	char GEFormatString[255];
 

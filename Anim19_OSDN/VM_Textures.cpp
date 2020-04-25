@@ -13,6 +13,8 @@
 #include "bitmap._h"
 #include "bitmap.__h"
 
+#include <gdiplus.h>
+
 VM_Textures::VM_Textures()
 {
 }
@@ -454,7 +456,12 @@ bool VM_Textures::Soil_Load_Texture(UINT textureArray[], LPSTR strFileName, int 
 // *************************************************************************
 bool VM_Textures::Texture_To_Bmp(char* File)
 {
-	ilLoadImage(File);
+	int test = ilLoadImage(File);
+	if (test == 0)
+	{
+		App->Say("Cant Load Image");
+	}
+
 	ilSaveImage("Etemp.bmp");
 	return 1;
 }
@@ -491,13 +498,15 @@ bool VM_Textures::TexureToWinPreviewFullPath(int Index, char* FullPath)
 	// ------------------------------------ JPEG
 	if (_stricmp(mFileName + strlen(mFileName) - 4, ".JPG") == 0)
 	{
-		Texture_To_Bmp(mFileName);
 		
-		App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap = (HBITMAP)LoadImage(NULL, mFileName, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+		std::wstring w;
+		std::copy(mFileName, mFileName + strlen(mFileName), back_inserter(w));
+		const WCHAR *pwcsName = w.c_str();
+
+		App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap = GetHBITMAPFromImageFile(pwcsName);
 
 		App->CL_Vm_Model->S_MeshGroup[Index]->Bitmap_Loaded = 1;
 
-		remove("Etemp.bmp");
 		return 1;
 	}
 	// ------------------------------------ DDS
@@ -535,11 +544,30 @@ bool VM_Textures::TexureToWinPreviewFullPath(int Index, char* FullPath)
 	//strcat(buf,"\\");
 	//strcat(buf,"Etemp.bmp");
 
-	//App->CL_Model_Data->S_MeshGroup[Index]->Base_Bitmap = ilutWinLoadImage("Etemp.bmp",hDC);
+	////App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap = ilLoadImage("Etemp.bmp");
 	////Soil_Load_Texture(g_Texture,buf,TextureID);
 	//remove(buf);
 
 	return 1;
+}
+
+// *************************************************************************
+// *					GetHBITMAPFromImageFile Terry Bernie   		 	   *
+// *************************************************************************
+HBITMAP VM_Textures::GetHBITMAPFromImageFile(const WCHAR* pFilePath)
+{
+	Gdiplus:: GdiplusStartupInput gpStartupInput;
+	ULONG_PTR gpToken;
+	GdiplusStartup(&gpToken, &gpStartupInput, NULL);
+	HBITMAP result = NULL;
+	Gdiplus::Bitmap* bitmap = Gdiplus::Bitmap::FromFile(pFilePath, false);
+	if (bitmap)
+	{
+		bitmap->GetHBITMAP(RGB(255, 255, 255), &result);
+		delete bitmap;
+	}
+	Gdiplus::GdiplusShutdown(gpToken);
+	return result;
 }
 
 // *************************************************************************
