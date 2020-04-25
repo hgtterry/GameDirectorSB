@@ -313,6 +313,9 @@ void VM_Assimp::LoadTextures()
 	int v = 0;
 	int Count = 0;
 
+	App->CL_Vm_Model->S_Texture[0]->UsedTextureCount = App->CL_Vm_Model->GroupCount;
+	App->CL_Vm_Textures->CreateTextureInfo();
+
 	while (Count < App->CL_Vm_Model->GroupCount)
 	{
 		char FullName[1024];

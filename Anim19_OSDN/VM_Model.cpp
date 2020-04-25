@@ -95,6 +95,20 @@ void VM_Model::Clear_ModelData(void)
 	}
 
 	//--------------------- Clear Local Texture structure
+
+	Count = 0;
+
+	while (Count < App->CL_Vm_Model->S_Texture[0]->UsedTextureCount)
+	{
+		if (S_TextureInfo[Count] != NULL)
+		{
+			delete S_TextureInfo[Count];
+			S_TextureInfo[Count] = NULL;
+		}
+		
+		Count++;
+	}
+
 	if (S_Texture[0] != NULL)
 	{
 		delete S_Texture[0];

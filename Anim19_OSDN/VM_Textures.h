@@ -41,6 +41,7 @@ public:
 	void Strip_JustFileName(char *pString, char *FileName);
 	bool CreateDummyTexture(void);
 	bool Soil_DecodeTextures(int TextureID);
+	void CreateTextureInfo(void);
 
 	char JustFileName[255];
 	char GEFormatString[255];

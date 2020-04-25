@@ -727,6 +727,25 @@ void VM_Textures::Strip_JustFileName(char *pString, char *FileName)
 }
 
 // *************************************************************************
+// *					CreateTextureInfo Terry Bernie	   		 	   	   *
+// *************************************************************************
+void VM_Textures::CreateTextureInfo(void)
+{
+	int Count = 0;
+
+	while (Count < App->CL_Vm_Model->S_Texture[0]->UsedTextureCount)
+	{
+		App->CL_Vm_Model->S_TextureInfo[Count] = new GLTextureInfo_Type;
+		App->CL_Vm_Model->S_TextureInfo[Count]->Tga = 0;
+		App->CL_Vm_Model->S_TextureInfo[Count]->type = 0;
+
+		App->CL_Vm_Model->S_TextureInfo[Count]->GEHasAlpha = 0;
+
+		Count++;
+	}
+}
+
+// *************************************************************************
 // *								GetFormat					  	 	   *
 // *************************************************************************
 bool VM_Textures::GetFormat(int cformat)
