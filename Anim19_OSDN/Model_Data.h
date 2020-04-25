@@ -159,7 +159,7 @@ typedef struct Texture_Type {
 // *************************************************************************
 typedef	struct GLTextureInfo_Type									
 {
-	GLubyte	* imageData;									// Image Data (Up To 32 Bits)
+	//GLubyte	* imageData;									// Image Data (Up To 32 Bits)
 	GLuint	bpp;											// Image Color Depth In Bits Per Pixel
 	GLuint	width;											// Image Width
 	GLuint	height;											// Image Height

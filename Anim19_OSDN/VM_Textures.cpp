@@ -738,6 +738,9 @@ void VM_Textures::CreateTextureInfo(void)
 		App->CL_Vm_Model->S_TextureInfo[Count] = new GLTextureInfo_Type;
 		App->CL_Vm_Model->S_TextureInfo[Count]->Tga = 0;
 		App->CL_Vm_Model->S_TextureInfo[Count]->type = 0;
+		App->CL_Vm_Model->S_TextureInfo[Count]->texID = 0;
+		App->CL_Vm_Model->S_TextureInfo[Count]->ActorMaterialIndex = 0;
+		App->CL_Vm_Model->S_TextureInfo[Count]->Bitmap = nullptr;
 
 		App->CL_Vm_Model->S_TextureInfo[Count]->GEHasAlpha = 0;
 
