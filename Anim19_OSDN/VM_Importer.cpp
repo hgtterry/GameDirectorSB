@@ -146,4 +146,21 @@ void VM_Importer::Reload_FromResentFiles(char* ResentPathAndFile)
 		return;
 	}
 
+
+	// Fall through fo assimp
+	bool Test = App->Cl_Vm_Assimp->LoadFile(ResentPathAndFile);
+	if (Test == 0)
+	{
+		App->Say("Can Not Load File");
+		return;
+	}
+
+	App->CL_Vm_Model->Model_Type = LoadedFile_Assimp;
+	
+	App->CL_Vm_Model->Model_Loaded = 1;
+
+	App->Cl_Grid->Zoom();
+
+	App->Say("Loaded 2");
+
 }

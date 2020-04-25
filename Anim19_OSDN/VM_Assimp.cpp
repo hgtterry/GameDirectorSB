@@ -128,6 +128,9 @@ void VM_Assimp::Create_MeshGroups(const aiScene* pScene)
 	char MaterialName[255];
 	char GroupNum[255];
 
+	App->CL_Vm_Model->S_Texture[0]->UsedTextureCount = App->CL_Vm_Model->GroupCount;
+	App->CL_Vm_Textures->CreateTextureInfo();
+
 	while (Count < App->CL_Vm_Model->GroupCount)
 	{
 		aiMesh* mesh = pScene->mMeshes[Count];
@@ -313,8 +316,7 @@ void VM_Assimp::LoadTextures()
 	int v = 0;
 	int Count = 0;
 
-	App->CL_Vm_Model->S_Texture[0]->UsedTextureCount = App->CL_Vm_Model->GroupCount;
-	App->CL_Vm_Textures->CreateTextureInfo();
+	
 
 	while (Count < App->CL_Vm_Model->GroupCount)
 	{
@@ -334,6 +336,7 @@ void VM_Assimp::LoadTextures()
 		if (Test != 0) // Dose not equal 
 		{
 			int MatIndex = App->CL_Vm_Model->S_MeshGroup[Count]->MaterialIndex;
+			App->CL_Vm_Model->S_TextureInfo[Count]->ActorMaterialIndex = MatIndex;
 
 			App->CL_Vm_Model->S_MeshGroup[v]->Soil_TextureIndex = MatIndex;
 
@@ -349,9 +352,7 @@ void VM_Assimp::LoadTextures()
 
 			App->CL_Vm_Textures->TexureToWinPreviewFullPath(v, ImageFullPath);
 			App->CL_Vm_Textures->Soil_DecodeTextures(MatIndex); // ??
-
-	//														 //---------- Add Group N + Tetxure File Name
-	//		
+													
 			v++;
 		}
 		else
@@ -360,6 +361,7 @@ void VM_Assimp::LoadTextures()
 			App->CL_Vm_Textures->CreateDummyTexture();
 
 			int MatIndex = App->CL_Vm_Model->S_MeshGroup[Count]->MaterialIndex;
+			App->CL_Vm_Model->S_TextureInfo[Count]->ActorMaterialIndex = MatIndex;
 
 	//		App->CL_Vm_Model->S_MeshGroup[v]->Soil_TextureIndex = MatIndex;
 
