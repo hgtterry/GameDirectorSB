@@ -45,6 +45,8 @@ public:
 
 	HBITMAP GetHBITMAPFromImageFile(const WCHAR* pFilePath);
 
+	bool Ogre_LoadImage(const Ogre::String& tex_ext, const Ogre::String& texture_path);
+
 	char JustFileName[255];
 	char GEFormatString[255];
 

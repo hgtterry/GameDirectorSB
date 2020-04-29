@@ -463,7 +463,33 @@ bool VM_Textures::Texture_To_Bmp(char* File)
 	}
 
 	ilSaveImage("Etemp.bmp");
+
 	return 1;
+}
+
+
+bool VM_Textures::Ogre_LoadImage(const Ogre::String& tex_ext, const Ogre::String& texture_path)
+{
+	bool image_loaded = false;
+	std::ifstream ifs(texture_path.c_str(), std::ios::binary | std::ios::in);
+	if (ifs.is_open())
+	{
+
+		{
+			Ogre::DataStreamPtr data_stream(new Ogre::FileStreamDataStream(texture_path, &ifs, false));
+			Ogre::Image img;
+			img.load(data_stream, tex_ext);
+			
+			img.save("Etemp.bmp");
+			img.freeMemory();
+
+			data_stream->close();
+
+			image_loaded = true;
+		}
+		ifs.close();
+	}
+	return image_loaded;
 }
 
 // *************************************************************************
@@ -499,14 +525,16 @@ bool VM_Textures::TexureToWinPreviewFullPath(int Index, char* FullPath)
 	if (_stricmp(mFileName + strlen(mFileName) - 4, ".JPG") == 0)
 	{
 		
-		std::wstring w;
-		std::copy(mFileName, mFileName + strlen(mFileName), back_inserter(w));
-		const WCHAR *pwcsName = w.c_str();
 
-		App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap = GetHBITMAPFromImageFile(pwcsName);
+		int Test = Ogre_LoadImage("jpg", mFileName);
+		if (Test == 0)
+		{
+			App->Say("Failed to load image");
+		}
 
-		App->CL_Vm_Model->S_MeshGroup[Index]->Bitmap_Loaded = 1;
-
+		App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap = (HBITMAP)LoadImage(NULL,"Etemp.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+		
+		remove("Etemp.bmp");
 		return 1;
 	}
 	// ------------------------------------ DDS

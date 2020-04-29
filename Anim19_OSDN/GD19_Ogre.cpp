@@ -87,6 +87,8 @@ bool GD19_Ogre::InitOgre(void)
 
 	//CreateTextOverlay();
 
+	
+
 	return 1;
 }
 
