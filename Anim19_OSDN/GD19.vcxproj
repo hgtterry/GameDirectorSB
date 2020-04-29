@@ -131,7 +131,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <AdditionalLibraryDirectories>Common\lib\Release;Common\Bullet\lib;Common\irrKlang\Libs;Common\Genesis;Common\Soil\lib;Common\Devil\lib\unicode;Common\Assimp\Lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>comctl32.lib;genesis.lib;OgreMain.lib;OgreOverlay.lib;OgreTerrain.lib;opengl32.lib;glu32.lib;BulletDynamics.lib;BulletCollision.lib;LinearMath.lib;irrKlang.lib;SOIL.lib;DevIL.lib;ILU.lib;ILUT.lib;assimp-vc140-mt.lib;Gdiplus.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>comctl32.lib;genesis.lib;OgreMain.lib;OgreOverlay.lib;OgreTerrain.lib;opengl32.lib;glu32.lib;BulletDynamics.lib;BulletCollision.lib;LinearMath.lib;irrKlang.lib;SOIL.lib;DevIL.lib;ILU.lib;ILUT.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)Vima19.exe</OutputFile>
       <IgnoreSpecificDefaultLibraries>LIBCMT.lib;libcpmt.lib</IgnoreSpecificDefaultLibraries>
       <LinkTimeCodeGeneration>UseFastLinkTimeCodeGeneration</LinkTimeCodeGeneration>

@@ -13,7 +13,7 @@
 #include "bitmap._h"
 #include "bitmap.__h"
 
-#include <gdiplus.h>
+//#include <gdiplus.h>
 
 VM_Textures::VM_Textures()
 {
@@ -467,28 +467,38 @@ bool VM_Textures::Texture_To_Bmp(char* File)
 	return 1;
 }
 
-
-bool VM_Textures::Ogre_LoadImage(const Ogre::String& tex_ext, const Ogre::String& texture_path)
+// *************************************************************************
+// *								Ogre_LoadImage				  	 	   *
+// *************************************************************************
+bool VM_Textures::Ogre_LoadImage(const Ogre::String& tex_ext, const Ogre::String& texture_path,int Index)
 {
 	bool image_loaded = false;
+
 	std::ifstream ifs(texture_path.c_str(), std::ios::binary | std::ios::in);
 	if (ifs.is_open())
 	{
-
 		{
 			Ogre::DataStreamPtr data_stream(new Ogre::FileStreamDataStream(texture_path, &ifs, false));
 			Ogre::Image img;
 			img.load(data_stream, tex_ext);
 			
 			img.save("Etemp.bmp");
+
+			App->CL_Vm_Model->S_TextureInfo[Index]->HasGEBitmap = 1;
+			App->CL_Vm_Model->S_TextureInfo[Index]->GEWitdth = img.getWidth();
+			App->CL_Vm_Model->S_TextureInfo[Index]->GEHeight = img.getHeight();
+
+			App->CL_Vm_Model->S_TextureInfo[Index]->GEFormat = img.getFormat();
+
 			img.freeMemory();
-
 			data_stream->close();
-
+			
 			image_loaded = true;
 		}
+
 		ifs.close();
 	}
+
 	return image_loaded;
 }
 
@@ -525,8 +535,7 @@ bool VM_Textures::TexureToWinPreviewFullPath(int Index, char* FullPath)
 	if (_stricmp(mFileName + strlen(mFileName) - 4, ".JPG") == 0)
 	{
 		
-
-		int Test = Ogre_LoadImage("jpg", mFileName);
+		int Test = Ogre_LoadImage("jpg", mFileName, Index);
 		if (Test == 0)
 		{
 			App->Say("Failed to load image");
@@ -579,24 +588,24 @@ bool VM_Textures::TexureToWinPreviewFullPath(int Index, char* FullPath)
 	return 1;
 }
 
-// *************************************************************************
-// *					GetHBITMAPFromImageFile Terry Bernie   		 	   *
-// *************************************************************************
-HBITMAP VM_Textures::GetHBITMAPFromImageFile(const WCHAR* pFilePath)
-{
-	Gdiplus:: GdiplusStartupInput gpStartupInput;
-	ULONG_PTR gpToken;
-	GdiplusStartup(&gpToken, &gpStartupInput, NULL);
-	HBITMAP result = NULL;
-	Gdiplus::Bitmap* bitmap = Gdiplus::Bitmap::FromFile(pFilePath, false);
-	if (bitmap)
-	{
-		bitmap->GetHBITMAP(RGB(255, 255, 255), &result);
-		delete bitmap;
-	}
-	Gdiplus::GdiplusShutdown(gpToken);
-	return result;
-}
+//// *************************************************************************
+//// *					GetHBITMAPFromImageFile Terry Bernie   		 	   *
+//// *************************************************************************
+//HBITMAP VM_Textures::GetHBITMAPFromImageFile(const WCHAR* pFilePath)
+//{
+//	Gdiplus:: GdiplusStartupInput gpStartupInput;
+//	ULONG_PTR gpToken;
+//	GdiplusStartup(&gpToken, &gpStartupInput, NULL);
+//	HBITMAP result = NULL;
+//	Gdiplus::Bitmap* bitmap = Gdiplus::Bitmap::FromFile(pFilePath, false);
+//	if (bitmap)
+//	{
+//		bitmap->GetHBITMAP(RGB(255, 255, 255), &result);
+//		delete bitmap;
+//	}
+//	Gdiplus::GdiplusShutdown(gpToken);
+//	return result;
+//}
 
 // *************************************************************************
 // *					CreateDummyTexture Terry Bernie   		 	 	   *

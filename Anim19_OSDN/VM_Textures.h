@@ -43,9 +43,9 @@ public:
 	bool Soil_DecodeTextures(int TextureID);
 	void CreateTextureInfo(void);
 
-	HBITMAP GetHBITMAPFromImageFile(const WCHAR* pFilePath);
+	//HBITMAP GetHBITMAPFromImageFile(const WCHAR* pFilePath);
 
-	bool Ogre_LoadImage(const Ogre::String& tex_ext, const Ogre::String& texture_path);
+	bool Ogre_LoadImage(const Ogre::String& tex_ext, const Ogre::String& texture_path, int Index);
 
 	char JustFileName[255];
 	char GEFormatString[255];
