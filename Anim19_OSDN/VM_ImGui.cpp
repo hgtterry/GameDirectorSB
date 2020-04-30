@@ -301,14 +301,21 @@ void VM_ImGui::ImGui_Position(void)
 		ImGui::PushButtonRepeat(true);
 		if (ImGui::ArrowButton("##left", ImGuiDir_Left))
 		{
-			App->CL_Vm_Genesis3D->Actor_Position.X += Model_XTranslate;
-			App->CL_Vm_Genesis3D->MoveActor();
+			if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
+			{
+				App->CL_Vm_Genesis3D->Actor_Position.X += Model_XTranslate;
+				App->CL_Vm_Genesis3D->MoveActor();
+			}
 		}
+
 		ImGui::SameLine(0.0f, spacing);
 		if (ImGui::ArrowButton("##right", ImGuiDir_Right))
 		{
-			App->CL_Vm_Genesis3D->Actor_Position.X -= Model_XTranslate;
-			App->CL_Vm_Genesis3D->MoveActor();
+			if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
+			{
+				App->CL_Vm_Genesis3D->Actor_Position.X -= Model_XTranslate;
+				App->CL_Vm_Genesis3D->MoveActor();
+			}
 		}
 		ImGui::PopButtonRepeat();
 
@@ -330,14 +337,20 @@ void VM_ImGui::ImGui_Position(void)
 		ImGui::PushButtonRepeat(true);
 		if (ImGui::ArrowButton("##leftY", ImGuiDir_Left))
 		{
-			App->CL_Vm_Genesis3D->Actor_Position.Y += Model_YTranslate;
-			App->CL_Vm_Genesis3D->MoveActor();
+			if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
+			{
+				App->CL_Vm_Genesis3D->Actor_Position.Y += Model_YTranslate;
+				App->CL_Vm_Genesis3D->MoveActor();
+			}
 		}
 		ImGui::SameLine(0.0f, spacing2);
 		if (ImGui::ArrowButton("##rightY", ImGuiDir_Right))
 		{
-			App->CL_Vm_Genesis3D->Actor_Position.Y -= Model_YTranslate;
-			App->CL_Vm_Genesis3D->MoveActor();
+			if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
+			{
+				App->CL_Vm_Genesis3D->Actor_Position.Y -= Model_YTranslate;
+				App->CL_Vm_Genesis3D->MoveActor();
+			}
 		}
 		ImGui::PopButtonRepeat();
 
@@ -359,14 +372,20 @@ void VM_ImGui::ImGui_Position(void)
 		ImGui::PushButtonRepeat(true);
 		if (ImGui::ArrowButton("##leftZ", ImGuiDir_Left))
 		{
-			App->CL_Vm_Genesis3D->Actor_Position.Z += Model_ZTranslate;
-			App->CL_Vm_Genesis3D->MoveActor();
+			if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
+			{
+				App->CL_Vm_Genesis3D->Actor_Position.Z += Model_ZTranslate;
+				App->CL_Vm_Genesis3D->MoveActor();
+			}
 		}
 		ImGui::SameLine(0.0f, spacing3);
 		if (ImGui::ArrowButton("##rightZ", ImGuiDir_Right))
 		{
-			App->CL_Vm_Genesis3D->Actor_Position.Z -= Model_ZTranslate;
-			App->CL_Vm_Genesis3D->MoveActor();
+			if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
+			{
+				App->CL_Vm_Genesis3D->Actor_Position.Z -= Model_ZTranslate;
+				App->CL_Vm_Genesis3D->MoveActor();
+			}
 		}
 		ImGui::PopButtonRepeat();
 
@@ -380,13 +399,14 @@ void VM_ImGui::ImGui_Position(void)
 			Model_ZTranslate = (float)atof(XitemsZ[XitemZ]);
 		}
 	
-
-		if (ImGui::Button("Middle of Bounding Box"))
+		ImGui::Spacing();
+		ImGui::Indent();
+		if (ImGui::Button("Middle of Bounding Box",ImVec2(200,40)))
 		{
 			App->Cl_Vm_Dimensions->Centre_Model_Mid();
 		}
 
-		if (ImGui::Button("Base of Bounding Box"))
+		if (ImGui::Button("Base of Bounding Box", ImVec2(200, 40)))
 		{
 			App->Cl_Vm_Dimensions->Centre_Model_Base();
 		}
