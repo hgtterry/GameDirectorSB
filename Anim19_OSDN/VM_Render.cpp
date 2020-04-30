@@ -222,7 +222,7 @@ void VM_Render::Render()
 	// ---------------------- Mesh
 	if (App->CL_Vm_Model->Model_Loaded == 1 && ShowMesh == 1)
 	{
-		//glPolygonMode (GL_FRONT_AND_BACK, GL_LINE);
+		glPolygonMode (GL_FRONT_AND_BACK, GL_LINE);
 
 		if (App->CL_Vm_Model->Model_Type == LoadedFile_Assimp)
 		{
@@ -256,10 +256,11 @@ void VM_Render::Render()
 	{
 		//glPolygonMode (GL_FRONT_AND_BACK, GL_LINE);
 
-		/*if (App->CL_Vm_Model->Render_Mode = Render_As_Assimp)
+		if (App->CL_Vm_Model->Model_Type == LoadedFile_Assimp)
 		{
-			Render_As_Normals();
-		}*/
+			Assimp_Render_Normals();
+		}
+
 		if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
 		{
 			RF_Render_Normals();
@@ -325,16 +326,16 @@ bool VM_Render::Assimp_Render_Faces(void)
 	
 	while (Count<App->CL_Vm_Model->GroupCount)
 	{
-		Render_As_Mesh_Parts(Count);
+		Assimp_Face_Parts(Count);
 		Count++;
 	}
 
 	return 1;
 }
 // *************************************************************************
-// *					Render_AsMesh_Parts Terry Bernie	   			   *
+// *					Assimp_Face_Parts Terry Bernie		   			   *
 // *************************************************************************
-bool VM_Render::Render_As_Mesh_Parts(int Count)
+bool VM_Render::Assimp_Face_Parts(int Count)
 {
 	int FaceCount=0;
 	int A = 0;
@@ -425,12 +426,12 @@ bool VM_Render::Assimp_Render_Textures(void)
 
 	//glLineWidth(10);
 
-	//if (ShowOnlySubMesh == 1) // Show Only Selected SubMesh
-	//{
-	//	Render_As_Textured_Parts(App->CL_Vm_Groups->SelectedGroup);
-	//	glDisable(GL_TEXTURE_2D);
-	//	return 1;
-	//}
+	if (ShowOnlySubMesh == 1) // Show Only Selected SubMesh
+	{
+		Assimp_Textured_Parts(App->CL_Vm_Groups->SelectedGroup);
+		glDisable(GL_TEXTURE_2D);
+		return 1;
+	}
 
 	//if (Show_HideGroup == 1) // Hide Selected SubMesh
 	//{
@@ -456,7 +457,7 @@ bool VM_Render::Assimp_Render_Textures(void)
 		Count++;
 	}
 
-	//glDisable(GL_TEXTURE_2D);
+	glDisable(GL_TEXTURE_2D);
 
 	return 1;
 }
@@ -517,19 +518,19 @@ bool VM_Render::Assimp_Textured_Parts(int Count)
 }
 
 //*************************************************************************
-// *					Render_AsNormals Terry Bernie	   				   *
+// *					Assimp_Render_Normals Terry Bernie	   			   *
 // *************************************************************************
-void VM_Render::Render_As_Normals(void)
+void VM_Render::Assimp_Render_Normals(void)
 {
 	int Count=0;
 
-	glColor3f(1,1,0);
+	glColor3f(1,1,1);
 	
-	/*while (Count < App->CL_Vm_Model->GroupCount)
+	while (Count < App->CL_Vm_Model->GroupCount)
 	{
 		Render_As_Normals_Parts(Count);
 		Count++;
-	}*/
+	}
 }
 // *************************************************************************
 // *					Render_AsNormals_Part Terry Bernie	   			   *
@@ -543,17 +544,18 @@ void VM_Render::Render_As_Normals_Parts(int Count)
 	glPointSize(3);
 	glBegin(GL_LINES);
 
-	//while (VertCount<App->CL_Vm_Model->S_MeshGroup[Count]->GroupVertCount)
-	//{
-	//	//-----------------------------------------------
-	//	glVertex3fv(&App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].x);
+	while (VertCount<App->CL_Vm_Model->S_MeshGroup[Count]->GroupVertCount)
+	{
+		//-----------------------------------------------
+		glVertex3fv(&App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].x);
 
-	//	glVertex3f(App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].x+App->CL_Vm_Model->S_MeshGroup[Count]->Normal_Data[VertCount].x*Scaler,
-	//		App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].y+App->CL_Vm_Model->S_MeshGroup[Count]->Normal_Data[VertCount].y*Scaler,
-	//		App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].z+App->CL_Vm_Model->S_MeshGroup[Count]->Normal_Data[VertCount].z*Scaler);
-	//	VertCount++;
+		glVertex3f(App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].x+App->CL_Vm_Model->S_MeshGroup[Count]->Normal_Data[VertCount].x*Scaler,
+			App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].y+App->CL_Vm_Model->S_MeshGroup[Count]->Normal_Data[VertCount].y*Scaler,
+			App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].z+App->CL_Vm_Model->S_MeshGroup[Count]->Normal_Data[VertCount].z*Scaler);
+		VertCount++;
 
-	//}
+	}
+
 	glEnd();
 }
 

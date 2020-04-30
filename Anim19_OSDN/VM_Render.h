@@ -77,9 +77,9 @@ protected:
 	bool Render_As_Points_Parts(int Count);
 
 	bool Assimp_Render_Faces(void);
-	bool Render_As_Mesh_Parts(int Count);
+	bool Assimp_Face_Parts(int Count);
 
-	void Render_As_Normals(void);
+	void Assimp_Render_Normals(void);
 	void Render_As_Normals_Parts(int Count);
 
 	bool As_RenderBones();
