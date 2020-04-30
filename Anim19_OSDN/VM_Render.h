@@ -70,13 +70,13 @@ protected:
 	void Render();
 	void Translate(void);
 
-	bool Render_As_Textured(void);
+	bool Assimp_Render_Textures(void);
 	bool Assimp_Textured_Parts(int Count);
 
 	bool Render_As_Points(void);
 	bool Render_As_Points_Parts(int Count);
 
-	bool Render_As_Mesh(void);
+	bool Assimp_Render_Faces(void);
 	bool Render_As_Mesh_Parts(int Count);
 
 	void Render_As_Normals(void);

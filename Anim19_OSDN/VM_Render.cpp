@@ -215,20 +215,20 @@ void VM_Render::Render()
 
 		if (App->CL_Vm_Model->Model_Type == LoadedFile_Assimp)
 		{
-			Render_As_Textured();
+			Assimp_Render_Textures();
 		}
 	}
 
 	// ---------------------- Mesh
 	if (App->CL_Vm_Model->Model_Loaded == 1 && ShowMesh == 1)
 	{
-		glPolygonMode (GL_FRONT_AND_BACK, GL_LINE);
+		//glPolygonMode (GL_FRONT_AND_BACK, GL_LINE);
 
-		//if (App->CL_Vm_Model->Render_Mode = Render_As_Assimp)
-		//{
-		//	Render_As_Mesh();
-		//	//Render_As_Points();
-		//}
+		if (App->CL_Vm_Model->Model_Type == LoadedFile_Assimp)
+		{
+			Assimp_Render_Faces();
+		}
+
 		if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
 		{
 			RenderMeshOnly();
@@ -240,10 +240,11 @@ void VM_Render::Render()
 	{
 		//glPolygonMode (GL_FRONT_AND_BACK, GL_LINE);
 
-		/*if (App->CL_Vm_Model->Render_Mode = Render_As_Assimp)
+		if (App->CL_Vm_Model->Model_Type == LoadedFile_Assimp)
 		{
 			Render_As_Points();
-		}*/
+		}
+
 		if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
 		{
 			RenderPoints();
@@ -314,19 +315,19 @@ void VM_Render::Translate(void)
 }
 
 // *************************************************************************
-// *						Render_AsMesh Terry Bernie	   				   *
+// *						Assimp_Render_Faces Terry Bernie	   		   *
 // *************************************************************************
-bool VM_Render::Render_As_Mesh(void)
+bool VM_Render::Assimp_Render_Faces(void)
 {
 	int Count=0;
 
-	glColor3f(0.9,0.9,0.9);
+	glColor3f(1,1,1);
 	
-	/*while (Count<App->CL_Vm_Model->GroupCount)
+	while (Count<App->CL_Vm_Model->GroupCount)
 	{
 		Render_As_Mesh_Parts(Count);
 		Count++;
-	}*/
+	}
 
 	return 1;
 }
@@ -341,24 +342,25 @@ bool VM_Render::Render_As_Mesh_Parts(int Count)
 	int C = 0;
 
 	glPolygonMode (GL_FRONT_AND_BACK, GL_LINE);
-	//while (FaceCount<App->CL_Vm_Model->S_MeshGroup[Count]->GroupFaceCount)
+
+	while (FaceCount<App->CL_Vm_Model->S_MeshGroup[Count]->GroupFaceCount)
 	{
-		//A = App->CL_Vm_Model->S_MeshGroup[Count]->Face_Data[FaceCount].a;
-		//B = App->CL_Vm_Model->S_MeshGroup[Count]->Face_Data[FaceCount].b;
-		//C = App->CL_Vm_Model->S_MeshGroup[Count]->Face_Data[FaceCount].c;
+		A = App->CL_Vm_Model->S_MeshGroup[Count]->Face_Data[FaceCount].a;
+		B = App->CL_Vm_Model->S_MeshGroup[Count]->Face_Data[FaceCount].b;
+		C = App->CL_Vm_Model->S_MeshGroup[Count]->Face_Data[FaceCount].c;
 
-		//glBegin(GL_POLYGON);
+		glBegin(GL_POLYGON);
 
-		////-----------------------------------------------
-		//glVertex3fv(&App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[A].x);
-		//
-		////-----------------------------------------------
-		//glVertex3fv(&App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[B].x);
-		//
-		////-----------------------------------------------
-		//glVertex3fv(&App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[C].x);
-		//FaceCount++;
-		////-----------------------------------------------
+		//-----------------------------------------------
+		glVertex3fv(&App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[A].x);
+		
+		//-----------------------------------------------
+		glVertex3fv(&App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[B].x);
+		
+		//-----------------------------------------------
+		glVertex3fv(&App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[C].x);
+		FaceCount++;
+		//-----------------------------------------------
 
 		glEnd();
 	}
@@ -375,11 +377,11 @@ bool VM_Render::Render_As_Points(void)
 
 	glColor3f(1.0f, 1.0f, 0.0f);
 	
-	/*while (Count<App->CL_Vm_Model->GroupCount)
+	while (Count<App->CL_Vm_Model->GroupCount)
 	{
 		Render_As_Points_Parts(Count);
 		Count++;
-	}*/
+	}
 
 	return 1;
 }
@@ -392,7 +394,8 @@ bool VM_Render::Render_As_Points_Parts(int Count)
 
 	int VertCount=0;
 
-	/*glPolygonMode (GL_FRONT_AND_BACK, GL_LINE);
+	glPolygonMode (GL_FRONT_AND_BACK, GL_LINE);
+
 	while (VertCount<App->CL_Vm_Model->S_MeshGroup[Count]->GroupVertCount)
 	{
 		glBegin(GL_POINTS);
@@ -402,16 +405,16 @@ bool VM_Render::Render_As_Points_Parts(int Count)
 		glEnd();
 
 		VertCount++;
-	}*/
+	}
 
 	return 1;
 }
 
 
 // *************************************************************************
-// *						Render_As_Texured_Terry Bernie	   			   *
+// *						Assimp_Render_Textures_Terry Bernie	   		   *
 // *************************************************************************
-bool VM_Render::Render_As_Textured(void)
+bool VM_Render::Assimp_Render_Textures(void)
 {
 	int Count=0;
 	glEnable (GL_BLEND);
