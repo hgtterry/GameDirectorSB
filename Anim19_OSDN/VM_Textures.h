@@ -56,6 +56,6 @@ public:
 
 protected:
 
-	bool Texture_To_Bmp(char* File);
+	
 };
 

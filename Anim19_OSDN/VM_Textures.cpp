@@ -5,10 +5,6 @@
 
 #include "SOIL.h"
 
-#include "il.h"
-#include "ilu.h"
-#include "ilut.h"
-
 #include "bitmap.h"
 #include "bitmap._h"
 #include "bitmap.__h"
@@ -417,8 +413,8 @@ bool VM_Textures::Soil_Load_Texture(UINT textureArray[], LPSTR strFileName, int 
 
 	if (textureArray[textureID] == 0) // Fall back attemp to convert and load or Bail
 	{
-
-		Texture_To_Bmp(strFileName);
+		App->Say("Soil Fail");
+		//Texture_To_Bmp(strFileName);
 
 		textureArray[textureID] = SOIL_load_OGL_texture
 		(
@@ -451,21 +447,21 @@ bool VM_Textures::Soil_Load_Texture(UINT textureArray[], LPSTR strFileName, int 
 
 
 
-// *************************************************************************
-// *							Texture_To_Bmp				  		 	   *
-// *************************************************************************
-bool VM_Textures::Texture_To_Bmp(char* File)
-{
-	int test = ilLoadImage(File);
-	if (test == 0)
-	{
-		App->Say("Cant Load Image");
-	}
-
-	ilSaveImage("Etemp.bmp");
-
-	return 1;
-}
+//// *************************************************************************
+//// *							Texture_To_Bmp				  		 	   *
+//// *************************************************************************
+//bool VM_Textures::Texture_To_Bmp(char* File)
+//{
+//	int test = ilLoadImage(File);
+//	if (test == 0)
+//	{
+//		App->Say("Cant Load Image");
+//	}
+//
+//	ilSaveImage("Etemp.bmp");
+//
+//	return 1;
+//}
 
 // *************************************************************************
 // *								Ogre_LoadImage				  	 	   *
