@@ -46,6 +46,7 @@ protected:
 	bool Toggle_Points_Flag;
 	bool Toggle_Bones_Flag;
 	bool Toggle_Normals_Flag;
+	bool Toggle_BBox_Flag;
 
 	bool Toggle_Tabs_Old_Flag;
 	bool Toggle_Tabs_Motions_Flag;

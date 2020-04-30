@@ -70,8 +70,8 @@ bool VM_Assimp::LoadFile(const char* pFile)
 			LoadTextures();
 	//	}
 
-		//App->Cl_Ogre->Loading_Text("Loading Creating BBox", 1);
-	//	App->CL_Model_Data->Create_BondingBox_Model();*/
+		
+		App->CL_Vm_Model->Create_BondingBox_Model();
 
 	}
 

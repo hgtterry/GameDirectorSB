@@ -20,6 +20,7 @@ VM_TopBar::VM_TopBar()
 	Toggle_Points_Flag = 0;
 	Toggle_Bones_Flag = 0;
 	Toggle_Normals_Flag = 0;
+	Toggle_BBox_Flag = 0;
 
 	Toggle_Tabs_Old_Flag = 1;
 	Toggle_Tabs_Motions_Flag = 0;
@@ -87,6 +88,7 @@ LRESULT CALLBACK VM_TopBar::TopMain_Proc(HWND hDlg, UINT message, WPARAM wParam,
 		SendDlgItemMessage(hDlg, IDC_TBPOINTS, WM_SETFONT, (WPARAM)App->Font_CB15_Bold, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_TBSHOWBONES, WM_SETFONT, (WPARAM)App->Font_CB15_Bold, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_TBNORMALS, WM_SETFONT, (WPARAM)App->Font_CB15_Bold, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_TBBOUNDBOX, WM_SETFONT, (WPARAM)App->Font_CB15_Bold, MAKELPARAM(TRUE, 0));
 		
 		App->CL_Vm_TopBar->Start_Tabs();
 		App->CL_Vm_TopBar->Start_TB1();
@@ -153,6 +155,13 @@ LRESULT CALLBACK VM_TopBar::TopMain_Proc(HWND hDlg, UINT message, WPARAM wParam,
 			return CDRF_DODEFAULT;
 		}
 		
+		if (some_item->idFrom == IDC_TBBOUNDBOX && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_Vm_TopBar->Toggle_BBox_Flag);
+			return CDRF_DODEFAULT;
+		}
+
 		return CDRF_DODEFAULT;
 	}
 
@@ -263,10 +272,12 @@ LRESULT CALLBACK VM_TopBar::TopMain_Proc(HWND hDlg, UINT message, WPARAM wParam,
 				if (App->Cl19_Ogre->RenderListener->ShowBoundingBox == 1)
 				{
 					App->Cl19_Ogre->RenderListener->ShowBoundingBox = 0;
+					App->CL_Vm_TopBar->Toggle_BBox_Flag = 0;
 				}
 				else
 				{
 					App->Cl19_Ogre->RenderListener->ShowBoundingBox = 1;
+					App->CL_Vm_TopBar->Toggle_BBox_Flag = 1;
 				}
 			}
 			return TRUE;
@@ -926,6 +937,16 @@ void VM_TopBar::Init_Bmps_TB2(void)
 	ti5.lpszText = "Toggle Normals";
 	ti5.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti5);
+
+	Temp = GetDlgItem(TabsHwnd, IDC_TBBOUNDBOX);
+	TOOLINFO ti6 = { 0 };
+	ti6.cbSize = sizeof(ti6);
+	ti6.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti6.uId = (UINT_PTR)Temp;
+	ti6.lpszText = "Toggle Bounding Box";
+	ti6.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti6);
+
 }
 
 // *************************************************************************

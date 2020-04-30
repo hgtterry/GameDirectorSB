@@ -751,19 +751,22 @@ void VM_ImGui::ImGui_Model_Data(void)
 
 		// ----------------------------- Textures
 		char Header[255];
-		int TextureCount = App->CL_Vm_Model->TextureCount;
+		int TextureCount = App->CL_Vm_Model->S_Texture[0]->UsedTextureCount;
 
 		sprintf(Header, "%s %i", "Textures", TextureCount);
 
 		if (ImGui::CollapsingHeader(Header))
 		{
 			int Count = 0;
-			while (Count < TextureCount)
+			while (Count < App->CL_Vm_Model->S_Texture[0]->UsedTextureCount)
 			{
-				ImGui::Text("%s", App->CL_Vm_Model->TextureNames_Data[Count].Name);
+				//ImGui::Text("%s", App->CL_Vm_Model->S_TextureInfo[Count]->Text_FileName);
+				ImGui::Text("%s", App->CL_Vm_Model->S_MeshGroup[Count]->Text_FileName);
 				Count++;
 			}
 		}
+
+		
 
 		ImGui::Spacing();
 
