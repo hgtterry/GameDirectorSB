@@ -28,6 +28,8 @@ public:
 	VM_Dimensions();
 	~VM_Dimensions();
 
+	void Reset_Class(void);
+
 	void Centre_Model_Mid(void);
 	void Centre_Model_Base(void);
 

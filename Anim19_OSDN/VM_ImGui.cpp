@@ -264,7 +264,7 @@ void VM_ImGui::ImGui_Rotation2(void)
 		//------------------------------------------------------------------------------
 		ImGui::SameLine();
 		ImGui::SetNextItemWidth(100);
-		const char* XitemsX[] = { "1", "2", "5", "10", "90" };
+		const char* XitemsX[] = { "0.5", "1", "10", "45", "90", "180" };
 		static int XitemX = 4;
 		bool Changed = ImGui::Combo("Step X", &XitemX, XitemsX, IM_ARRAYSIZE(XitemsX));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
 		if (Changed == 1)
@@ -310,7 +310,7 @@ void VM_ImGui::ImGui_Rotation2(void)
 		//------------------------------------------------------------------------------
 		ImGui::SameLine();
 		ImGui::SetNextItemWidth(100);
-		const char* XitemsY[] = { "1", "2", "5", "10", "90" };
+		const char* XitemsY[] = { "0.5", "1", "10", "45", "90", "180" };
 		static int XitemY = 4;
 		bool ChangedY = ImGui::Combo("Step Y", &XitemY, XitemsY, IM_ARRAYSIZE(XitemsY));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
 		if (ChangedY == 1)
@@ -355,7 +355,7 @@ void VM_ImGui::ImGui_Rotation2(void)
 
 		ImGui::SameLine();
 		ImGui::SetNextItemWidth(100);
-		const char* XitemsZ[] = { "1", "2", "5", "10", "90" };
+		const char* XitemsZ[] = { "0.5", "1", "10", "45", "90", "180" };
 		static int XitemZ = 4;
 		bool ChangedZ = ImGui::Combo("Step Z", &XitemZ, XitemsZ, IM_ARRAYSIZE(XitemsZ));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
 		if (ChangedZ == 1)

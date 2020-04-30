@@ -39,6 +39,16 @@ VM_Dimensions::~VM_Dimensions()
 }
 
 // *************************************************************************
+// *	  					Reset_Class Terry Bernie					   *
+// *************************************************************************
+void VM_Dimensions::Reset_Class(void)
+{
+	Model_X_Rotation = 90;
+	Model_Y_Rotation = 90;
+	Model_Z_Rotation = 90;
+}
+
+// *************************************************************************
 // *	  				Centre_Model_Mid Terry Bernie					   *
 // *************************************************************************
 void VM_Dimensions::Centre_Model_Mid(void)
