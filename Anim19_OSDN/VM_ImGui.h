@@ -13,9 +13,11 @@ public:
 	void Render_ImGui(void);
 	void ImGui_FPS(void);
 
-	void ImGui_Rotation(void);
+	
+	void ImGui_Rotation2(void);
 	void ImGui_Position(void);
 	void ImGui_Scale(void);
+
 	void ImGui_Image(void);
 	void ImGui_GroupList(void);
 	void ImGui_Texture_Data(void);

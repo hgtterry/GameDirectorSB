@@ -145,7 +145,7 @@ void VM_ImGui::Render_ImGui(void)
 
 	if (Show_Rotation == 1)
 	{
-		ImGui_Rotation();
+		ImGui_Rotation2();
 	}
 
 	if (Show_Position == 1)
@@ -207,69 +207,145 @@ void VM_ImGui::ImGui_FPS(void)
 }
 
 // *************************************************************************
-// *						ImGui_Rotation  Terry Bernie				   *
+// *						ImGui_Rotation2  Terry Bernie				   *
 // *************************************************************************
-void VM_ImGui::ImGui_Rotation(void)
+void VM_ImGui::ImGui_Rotation2(void)
 {
 	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
 
-	if (!ImGui::Begin("Rotation", &Show_Rotation, ImGuiWindowFlags_NoSavedSettings |ImGuiWindowFlags_AlwaysAutoResize))
+	if (!ImGui::Begin("Rotation2", &Show_Rotation, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize))
 	{
 		ImGui::End();
 	}
 	else
 	{
 
-		ImGui::Text("  X    Y    Z");
+		geVec3d pos = App->CL_Vm_Genesis3D->Actor_Position;
+		ImGui::Text("X %.3f Y %.3f Z %.3f", pos.X, pos.Y, pos.Z);
 
-		if (ImGui::Button("X+", ImVec2(70, 0)))
-		{
-		}
+		ImGui::Spacing();
+
+		// ------------------------------------------ Rotation X
+		ImGui::Text("X ");
 		ImGui::SameLine();
-		if (ImGui::Button("Y+", ImVec2(70, 0)))
+
+		float spacing = ImGui::GetStyle().ItemInnerSpacing.x;
+		ImGui::PushButtonRepeat(true);
+		if (ImGui::ArrowButton("##left", ImGuiDir_Left))
 		{
-		}
-		ImGui::SameLine();
-		if (ImGui::Button("Z+", ImVec2(70, 0)))
-		{
-		}
-		
-		ImGui::VSliderFloat("##RotationX", ImVec2(70, 260),  &App->CL_Vm_Genesis3D->Actor_Rotation.X, 0.0f, 360.0f, "%.2f\nDeg");
-		ImGui::SameLine();
-		ImGui::VSliderFloat("##RotationY", ImVec2(70, 260), &App->CL_Vm_Genesis3D->Actor_Rotation.Y, 0.0f, 360.0f, "%.2f\nDeg");
-		ImGui::SameLine();
-		ImGui::VSliderFloat("##RotationZ", ImVec2(70, 260), &App->CL_Vm_Genesis3D->Actor_Rotation.Z, 0.0f, 360.0f, "%.2f\nDeg");
-		
-		if (ImGui::Button("X-", ImVec2(70, 0)))
-		{
-		}
-		ImGui::SameLine();
-		if (ImGui::Button("Y-", ImVec2(70, 0)))
-		{
-		}
-		ImGui::SameLine();
-		if (ImGui::Button("Z-", ImVec2(70, 0)))
-		{
+			if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
+			{
+				App->CL_Vm_Genesis3D->Actor_Rotation.X += Model_XTranslate;
+				App->CL_Vm_Genesis3D->MoveActor();
+			}
 		}
 
-		if (App->CL_Vm_Genesis3D->Actor_Rotation.X > App->CL_Vm_Genesis3D->Actor_Rotation_Old.X || App->CL_Vm_Genesis3D->Actor_Rotation.X < App->CL_Vm_Genesis3D->Actor_Rotation_Old.X)
+		ImGui::SameLine(0.0f, spacing);
+		if (ImGui::ArrowButton("##right", ImGuiDir_Right))
 		{
-			App->CL_Vm_Genesis3D->MoveActor();
-			App->CL_Vm_Genesis3D->Actor_Rotation_Old.X = App->CL_Vm_Genesis3D->Actor_Rotation.X;
+			if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
+			{
+				App->CL_Vm_Genesis3D->Actor_Rotation.X -= Model_XTranslate;
+				App->CL_Vm_Genesis3D->MoveActor();
+			}
+		}
+		ImGui::PopButtonRepeat();
+
+		//------------------------------------------------------------------------------
+		ImGui::SameLine();
+		ImGui::SetNextItemWidth(100);
+		const char* XitemsX[] = { "1", "2", "5", "10", "20" };
+		static int XitemX = 1;
+		bool Changed = ImGui::Combo("Step X", &XitemX, XitemsX, IM_ARRAYSIZE(XitemsX));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
+		if (Changed == 1)
+		{
+			Model_XTranslate = (float)atof(XitemsX[XitemX]);
 		}
 
-		if (App->CL_Vm_Genesis3D->Actor_Rotation.Y > App->CL_Vm_Genesis3D->Actor_Rotation_Old.Y || App->CL_Vm_Genesis3D->Actor_Rotation.Y < App->CL_Vm_Genesis3D->Actor_Rotation_Old.Y)
+		// ------------------------------------------ Rotation y
+		ImGui::Text("Y ");
+		ImGui::SameLine();
+
+		float spacing2 = ImGui::GetStyle().ItemInnerSpacing.x;
+		ImGui::PushButtonRepeat(true);
+		if (ImGui::ArrowButton("##leftY", ImGuiDir_Left))
 		{
-			App->CL_Vm_Genesis3D->MoveActor();
-			App->CL_Vm_Genesis3D->Actor_Rotation_Old.Y = App->CL_Vm_Genesis3D->Actor_Rotation.Y;
+			if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
+			{
+				App->CL_Vm_Genesis3D->Actor_Rotation.Y += Model_YTranslate;
+				App->CL_Vm_Genesis3D->MoveActor();
+			}
+		}
+		ImGui::SameLine(0.0f, spacing2);
+		if (ImGui::ArrowButton("##rightY", ImGuiDir_Right))
+		{
+			if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
+			{
+				App->CL_Vm_Genesis3D->Actor_Rotation.Y -= Model_YTranslate;
+				App->CL_Vm_Genesis3D->MoveActor();
+			}
+		}
+		ImGui::PopButtonRepeat();
+
+		//------------------------------------------------------------------------------
+		ImGui::SameLine();
+		ImGui::SetNextItemWidth(100);
+		const char* XitemsY[] = { "1", "2", "5", "10", "20" };
+		static int XitemY = 1;
+		bool ChangedY = ImGui::Combo("Step Y", &XitemY, XitemsY, IM_ARRAYSIZE(XitemsY));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
+		if (ChangedY == 1)
+		{
+			Model_YTranslate = (float)atof(XitemsY[XitemY]);
 		}
 
-		if (App->CL_Vm_Genesis3D->Actor_Rotation.Z > App->CL_Vm_Genesis3D->Actor_Rotation_Old.Z || App->CL_Vm_Genesis3D->Actor_Rotation.Z < App->CL_Vm_Genesis3D->Actor_Rotation_Old.Z)
+		// ------------------------------------------ Rotation z
+		ImGui::Text("Z ");
+		ImGui::SameLine();
+
+		float spacing3 = ImGui::GetStyle().ItemInnerSpacing.x;
+		ImGui::PushButtonRepeat(true);
+		if (ImGui::ArrowButton("##leftZ", ImGuiDir_Left))
 		{
-			App->CL_Vm_Genesis3D->MoveActor();
-			App->CL_Vm_Genesis3D->Actor_Rotation_Old.Z = App->CL_Vm_Genesis3D->Actor_Rotation.Z;
+			if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
+			{
+				App->CL_Vm_Genesis3D->Actor_Rotation.Z += Model_ZTranslate;
+				App->CL_Vm_Genesis3D->MoveActor();
+			}
 		}
-		
+		ImGui::SameLine(0.0f, spacing3);
+		if (ImGui::ArrowButton("##rightZ", ImGuiDir_Right))
+		{
+			if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
+			{
+				App->CL_Vm_Genesis3D->Actor_Rotation.Z -= Model_ZTranslate;
+				App->CL_Vm_Genesis3D->MoveActor();
+			}
+		}
+		ImGui::PopButtonRepeat();
+
+		ImGui::SameLine();
+		ImGui::SetNextItemWidth(100);
+		const char* XitemsZ[] = { "1", "2", "5", "10", "20" };
+		static int XitemZ = 1;
+		bool ChangedZ = ImGui::Combo("Step Z", &XitemZ, XitemsZ, IM_ARRAYSIZE(XitemsZ));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
+		if (ChangedZ == 1)
+		{
+			Model_ZTranslate = (float)atof(XitemsZ[XitemZ]);
+		}
+
+		// ----------------------------- 
+		ImGui::Spacing();
+		ImGui::Indent();
+		if (ImGui::Button("Middle of Bounding Box", ImVec2(200, 40)))
+		{
+			App->Cl_Vm_Dimensions->Centre_Model_Mid();
+		}
+
+		if (ImGui::Button("Base of Bounding Box", ImVec2(200, 40)))
+		{
+			App->Cl_Vm_Dimensions->Centre_Model_Base();
+		}
+
 		ImGui::End();
 	}
 }
