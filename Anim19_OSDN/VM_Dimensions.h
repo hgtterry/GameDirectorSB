@@ -30,5 +30,9 @@ public:
 
 	void Centre_Model_Mid(void);
 	void Centre_Model_Base(void);
+
+	float Model_X_Rotation;
+	float Model_Y_Rotation;
+	float Model_Z_Rotation;
 };
 

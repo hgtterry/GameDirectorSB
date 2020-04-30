@@ -220,7 +220,7 @@ void VM_ImGui::ImGui_Rotation2(void)
 	else
 	{
 
-		geVec3d pos = App->CL_Vm_Genesis3D->Actor_Position;
+		geVec3d pos = App->CL_Vm_Genesis3D->Actor_Rotation;
 		ImGui::Text("X %.3f Y %.3f Z %.3f", pos.X, pos.Y, pos.Z);
 
 		ImGui::Spacing();
@@ -235,7 +235,7 @@ void VM_ImGui::ImGui_Rotation2(void)
 		{
 			if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
 			{
-				App->CL_Vm_Genesis3D->Actor_Rotation.X += Model_XTranslate;
+				App->CL_Vm_Genesis3D->Actor_Rotation.X += App->Cl_Vm_Dimensions->Model_X_Rotation;
 				App->CL_Vm_Genesis3D->MoveActor();
 			}
 		}
@@ -245,7 +245,7 @@ void VM_ImGui::ImGui_Rotation2(void)
 		{
 			if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
 			{
-				App->CL_Vm_Genesis3D->Actor_Rotation.X -= Model_XTranslate;
+				App->CL_Vm_Genesis3D->Actor_Rotation.X -= App->Cl_Vm_Dimensions->Model_X_Rotation;
 				App->CL_Vm_Genesis3D->MoveActor();
 			}
 		}
@@ -254,12 +254,12 @@ void VM_ImGui::ImGui_Rotation2(void)
 		//------------------------------------------------------------------------------
 		ImGui::SameLine();
 		ImGui::SetNextItemWidth(100);
-		const char* XitemsX[] = { "1", "2", "5", "10", "20" };
+		const char* XitemsX[] = { "1", "2", "5", "10", "90" };
 		static int XitemX = 1;
 		bool Changed = ImGui::Combo("Step X", &XitemX, XitemsX, IM_ARRAYSIZE(XitemsX));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
 		if (Changed == 1)
 		{
-			Model_XTranslate = (float)atof(XitemsX[XitemX]);
+			App->Cl_Vm_Dimensions->Model_X_Rotation = (float)atof(XitemsX[XitemX]);
 		}
 
 		// ------------------------------------------ Rotation y
@@ -272,7 +272,7 @@ void VM_ImGui::ImGui_Rotation2(void)
 		{
 			if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
 			{
-				App->CL_Vm_Genesis3D->Actor_Rotation.Y += Model_YTranslate;
+				App->CL_Vm_Genesis3D->Actor_Rotation.Y += App->Cl_Vm_Dimensions->Model_Y_Rotation;
 				App->CL_Vm_Genesis3D->MoveActor();
 			}
 		}
@@ -281,7 +281,7 @@ void VM_ImGui::ImGui_Rotation2(void)
 		{
 			if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
 			{
-				App->CL_Vm_Genesis3D->Actor_Rotation.Y -= Model_YTranslate;
+				App->CL_Vm_Genesis3D->Actor_Rotation.Y -= App->Cl_Vm_Dimensions->Model_Y_Rotation;
 				App->CL_Vm_Genesis3D->MoveActor();
 			}
 		}
@@ -290,12 +290,12 @@ void VM_ImGui::ImGui_Rotation2(void)
 		//------------------------------------------------------------------------------
 		ImGui::SameLine();
 		ImGui::SetNextItemWidth(100);
-		const char* XitemsY[] = { "1", "2", "5", "10", "20" };
+		const char* XitemsY[] = { "1", "2", "5", "10", "90" };
 		static int XitemY = 1;
 		bool ChangedY = ImGui::Combo("Step Y", &XitemY, XitemsY, IM_ARRAYSIZE(XitemsY));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
 		if (ChangedY == 1)
 		{
-			Model_YTranslate = (float)atof(XitemsY[XitemY]);
+			App->Cl_Vm_Dimensions->Model_Y_Rotation = (float)atof(XitemsY[XitemY]);
 		}
 
 		// ------------------------------------------ Rotation z
@@ -308,7 +308,7 @@ void VM_ImGui::ImGui_Rotation2(void)
 		{
 			if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
 			{
-				App->CL_Vm_Genesis3D->Actor_Rotation.Z += Model_ZTranslate;
+				App->CL_Vm_Genesis3D->Actor_Rotation.Z += App->Cl_Vm_Dimensions->Model_Z_Rotation;
 				App->CL_Vm_Genesis3D->MoveActor();
 			}
 		}
@@ -317,7 +317,7 @@ void VM_ImGui::ImGui_Rotation2(void)
 		{
 			if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
 			{
-				App->CL_Vm_Genesis3D->Actor_Rotation.Z -= Model_ZTranslate;
+				App->CL_Vm_Genesis3D->Actor_Rotation.Z -= App->Cl_Vm_Dimensions->Model_Z_Rotation;
 				App->CL_Vm_Genesis3D->MoveActor();
 			}
 		}
@@ -325,12 +325,12 @@ void VM_ImGui::ImGui_Rotation2(void)
 
 		ImGui::SameLine();
 		ImGui::SetNextItemWidth(100);
-		const char* XitemsZ[] = { "1", "2", "5", "10", "20" };
+		const char* XitemsZ[] = { "1", "2", "5", "10", "90" };
 		static int XitemZ = 1;
 		bool ChangedZ = ImGui::Combo("Step Z", &XitemZ, XitemsZ, IM_ARRAYSIZE(XitemsZ));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
 		if (ChangedZ == 1)
 		{
-			Model_ZTranslate = (float)atof(XitemsZ[XitemZ]);
+			App->Cl_Vm_Dimensions->Model_Z_Rotation = (float)atof(XitemsZ[XitemZ]);
 		}
 
 		// ----------------------------- 
