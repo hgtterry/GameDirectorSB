@@ -524,11 +524,15 @@ bool VM_Textures::TexureToWinPreviewFullPath(int Index, char* FullPath)
 	if (_stricmp(mFileName + strlen(mFileName) - 4, ".TGA") == 0)
 	{
 		
-		Texture_To_Bmp(mFileName);
-		App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap = (HBITMAP)LoadImage(NULL, mFileName, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
-		App->CL_Vm_Model->S_MeshGroup[Index]->Bitmap_Loaded = 1;
+		int Test = Ogre_LoadImage("tga", mFileName, Index);
+		if (Test == 0)
+		{
+			App->Say("Failed to load image");
+		}
 
-		int test = remove("Etemp.bmp");
+		App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap = (HBITMAP)LoadImage(NULL, "Etemp.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+
+		remove("Etemp.bmp");
 		return 1;
 	}
 	// ------------------------------------ JPEG
@@ -549,11 +553,13 @@ bool VM_Textures::TexureToWinPreviewFullPath(int Index, char* FullPath)
 	// ------------------------------------ DDS
 	if (_stricmp(mFileName + strlen(mFileName) - 4, ".DDS") == 0)
 	{
-		Texture_To_Bmp(mFileName);
-		
-		App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap = (HBITMAP)LoadImage(NULL, mFileName, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+		int Test = Ogre_LoadImage("dds", mFileName, Index);
+		if (Test == 0)
+		{
+			App->Say("Failed to load image");
+		}
 
-		App->CL_Vm_Model->S_MeshGroup[Index]->Bitmap_Loaded = 1;
+		App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap = (HBITMAP)LoadImage(NULL, "Etemp.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
 
 		remove("Etemp.bmp");
 		return 1;
@@ -561,11 +567,13 @@ bool VM_Textures::TexureToWinPreviewFullPath(int Index, char* FullPath)
 	// ------------------------------------ PNG
 	if (_stricmp(mFileName + strlen(mFileName) - 4, ".PNG") == 0)
 	{
-		Texture_To_Bmp(mFileName);
-		
-		App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap = (HBITMAP)LoadImage(NULL, mFileName, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+		int Test = Ogre_LoadImage("png", mFileName, Index);
+		if (Test == 0)
+		{
+			App->Say("Failed to load image");
+		}
 
-		App->CL_Vm_Model->S_MeshGroup[Index]->Bitmap_Loaded = 1;
+		App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap = (HBITMAP)LoadImage(NULL, "Etemp.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
 
 		remove("Etemp.bmp");
 		return 1;
