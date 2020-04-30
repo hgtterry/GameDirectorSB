@@ -1,24 +1,24 @@
-/*	
-	Copyright (c) Equity10 2016 HGT Software W.T.Flanigan B.Parkin H.C.Flanigan
+/*
+Copyright (c) Vima19 Inflanite Software W.T.Flanigan H.C.Flanigan
 
-	This software is provided 'as-is', without any express or implied
-	warranty. In no event will the authors be held liable for any damages
-	arising from the use of this software.
+This software is provided 'as-is', without any express or implied
+warranty. In no event will the authors be held liable for any damages
+arising from the use of this software.
 
-	Permission is granted to anyone to use this software for any purpose,
-	including commercial applications, and to alter it and redistribute it
-	freely, subject to the following restrictions:
+Permission is granted to anyone to use this software for any purpose,
+including commercial applications, and to alter it and redistribute it
+freely, subject to the following restrictions:
 
-	1. The origin of this software must not be misrepresented; you must not
-	claim that you wrote the original software. If you use this software
-	in a product, an acknowledgment in the product documentation would be
-	appreciated but is not required.
+1. The origin of this software must not be misrepresented; you must not
+claim that you wrote the original software. If you use this software
+in a product, an acknowledgment in the product documentation would be
+appreciated but is not required.
 
-	2. Altered source versions must be plainly marked as such, and must not be
-	misrepresented as being the original software.
+2. Altered source versions must be plainly marked as such, and must not be
+misrepresented as being the original software.
 
-	3. This notice may not be removed or altered from any source
-	distribution.
+3. This notice may not be removed or altered from any source
+distribution.
 */
 
 #include "StdAfx.h"
@@ -43,7 +43,7 @@ VM_Render::VM_Render(void)
 
 
 	ShowTextured = 1;
-	ShowMesh = 0;
+	ShowFaces = 0;
 	ShowBones = 0;
 	ShowPoints = 0;
 	ShowNormals = 0;
@@ -116,7 +116,7 @@ void VM_Render::renderQueueEnded(Ogre::uint8 queueGroupId, const String& invocat
 
 	PreRender();
 
-	Render();
+	Render_Loop();
 
 	PostRender();
 }
@@ -170,9 +170,9 @@ void VM_Render::PostRender()
 }
 
 // *************************************************************************
-// *					Render   Terry Bernie							   *
+// *					Render_Loop   Terry Bernie						   *
 // *************************************************************************
-void VM_Render::Render()
+void VM_Render::Render_Loop()
 {
 	
 	GLboolean depthTestEnabled=glIsEnabled(GL_DEPTH_TEST);
@@ -220,7 +220,7 @@ void VM_Render::Render()
 	}
 
 	// ---------------------- Mesh
-	if (App->CL_Vm_Model->Model_Loaded == 1 && ShowMesh == 1)
+	if (App->CL_Vm_Model->Model_Loaded == 1 && ShowFaces == 1)
 	{
 		glPolygonMode (GL_FRONT_AND_BACK, GL_LINE);
 
@@ -242,7 +242,7 @@ void VM_Render::Render()
 
 		if (App->CL_Vm_Model->Model_Type == LoadedFile_Assimp)
 		{
-			Render_As_Points();
+			Assimp_Render_Points();
 		}
 
 		if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
@@ -370,9 +370,9 @@ bool VM_Render::Assimp_Face_Parts(int Count)
 }
 
 // *************************************************************************
-// *						Render_As_Points Terry Bernie	   			   *
+// *						Assimp_Render_Points Terry Bernie	   		   *
 // *************************************************************************
-bool VM_Render::Render_As_Points(void)
+bool VM_Render::Assimp_Render_Points(void)
 {
 	int Count=0;
 

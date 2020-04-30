@@ -19,6 +19,7 @@ VM_TopBar::VM_TopBar()
 	Toggle_Textures_Flag = 0;
 	Toggle_Points_Flag = 0;
 	Toggle_Bones_Flag = 0;
+	Toggle_Normals_Flag = 0;
 
 	Toggle_Tabs_Old_Flag = 1;
 	Toggle_Tabs_Motions_Flag = 0;
@@ -85,8 +86,8 @@ LRESULT CALLBACK VM_TopBar::TopMain_Proc(HWND hDlg, UINT message, WPARAM wParam,
 		SendDlgItemMessage(hDlg, IDC_TBSHOWTEXTURE, WM_SETFONT, (WPARAM)App->Font_CB15_Bold, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_TBPOINTS, WM_SETFONT, (WPARAM)App->Font_CB15_Bold, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_TBSHOWBONES, WM_SETFONT, (WPARAM)App->Font_CB15_Bold, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_TBNORMALS, WM_SETFONT, (WPARAM)App->Font_CB15_Bold, MAKELPARAM(TRUE, 0));
 		
-
 		App->CL_Vm_TopBar->Start_Tabs();
 		App->CL_Vm_TopBar->Start_TB1();
 		App->CL_Vm_TopBar->Start_Motions_TB();
@@ -144,6 +145,13 @@ LRESULT CALLBACK VM_TopBar::TopMain_Proc(HWND hDlg, UINT message, WPARAM wParam,
 			App->Custom_Button_Toggle(item, App->CL_Vm_TopBar->Toggle_Bones_Flag);
 			return CDRF_DODEFAULT;
 		}
+
+		if (some_item->idFrom == IDC_TBNORMALS && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_Vm_TopBar->Toggle_Normals_Flag);
+			return CDRF_DODEFAULT;
+		}
 		
 		return CDRF_DODEFAULT;
 	}
@@ -174,14 +182,14 @@ LRESULT CALLBACK VM_TopBar::TopMain_Proc(HWND hDlg, UINT message, WPARAM wParam,
 		{
 			if (App->CL_Vm_Model->Model_Loaded == 1)
 			{
-				if (App->Cl19_Ogre->RenderListener->ShowMesh == 1)
+				if (App->Cl19_Ogre->RenderListener->ShowFaces == 1)
 				{
-					App->Cl19_Ogre->RenderListener->ShowMesh = 0;
+					App->Cl19_Ogre->RenderListener->ShowFaces = 0;
 					App->CL_Vm_TopBar->Toggle_Faces_Flag = 0;
 				}
 				else
 				{
-					App->Cl19_Ogre->RenderListener->ShowMesh = 1;
+					App->Cl19_Ogre->RenderListener->ShowFaces = 1;
 					App->CL_Vm_TopBar->Toggle_Faces_Flag = 1;
 				}
 			}
@@ -237,10 +245,12 @@ LRESULT CALLBACK VM_TopBar::TopMain_Proc(HWND hDlg, UINT message, WPARAM wParam,
 				if (App->Cl19_Ogre->RenderListener->ShowNormals == 1)
 				{
 					App->Cl19_Ogre->RenderListener->ShowNormals = 0;
+					App->CL_Vm_TopBar->Toggle_Normals_Flag = 0;
 				}
 				else
 				{
 					App->Cl19_Ogre->RenderListener->ShowNormals = 1;
+					App->CL_Vm_TopBar->Toggle_Normals_Flag = 1;
 				}
 			}
 			return TRUE;
@@ -907,6 +917,15 @@ void VM_TopBar::Init_Bmps_TB2(void)
 	ti4.lpszText = "Toggle Bones";
 	ti4.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti4);
+
+	Temp = GetDlgItem(TabsHwnd, IDC_TBNORMALS);
+	TOOLINFO ti5 = { 0 };
+	ti5.cbSize = sizeof(ti5);
+	ti5.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti5.uId = (UINT_PTR)Temp;
+	ti5.lpszText = "Toggle Normals";
+	ti5.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti5);
 }
 
 // *************************************************************************
