@@ -199,6 +199,7 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="VM_Assimp.h" />
+    <ClInclude Include="VM_Dimensions.h" />
     <ClInclude Include="VM_Exporter.h" />
     <ClInclude Include="VM_FileIO.h" />
     <ClInclude Include="VM_Genisis3D.h" />
@@ -264,6 +265,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="VM_Assimp.cpp" />
+    <ClCompile Include="VM_Dimensions.cpp" />
     <ClCompile Include="VM_Exporter.cpp" />
     <ClCompile Include="VM_FileIO.cpp" />
     <ClCompile Include="VM_Genisis3D.cpp" />

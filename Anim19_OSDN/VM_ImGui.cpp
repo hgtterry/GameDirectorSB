@@ -383,13 +383,14 @@ void VM_ImGui::ImGui_Position(void)
 
 		if (ImGui::Button("Middle of Bounding Box"))
 		{
-			
+			App->Cl_Vm_Dimensions->Centre_Model_Mid();
 		}
 
 		if (ImGui::Button("Base of Bounding Box"))
 		{
-
+			App->Cl_Vm_Dimensions->Centre_Model_Base();
 		}
+
 		ImGui::End();
 	}
 }
