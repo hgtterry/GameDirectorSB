@@ -339,6 +339,27 @@ bool VM_Groups::ChangeTexture_ModelLocation(void)
 {
 
 	int test = 0;
+
+	if (App->CL_Vm_Model->Model_Type == LoadedFile_Assimp)
+	{
+
+		test = App->CL_Vm_FileIO->OpenTextureFile("Equity10 Replace Texture", NULL, NULL);//App->S_ModelTexturePaths[0]->TextureFolder,1);
+		if (test == 0) { return 0; }
+
+		// Render Texture
+		App->CL_Vm_Textures->Soil_Load_Texture(App->CL_Vm_Textures->g_Texture, App->CL_Vm_FileIO->Texture_Path_FileName, SelectedGroup);//App->S_MeshGroup[mIndex]->Soil_TextureIndex);
+
+																															   // Preview Texture
+		strcpy(App->CL_Vm_Model->S_MeshGroup[SelectedGroup]->Text_FileName, App->CL_Vm_FileIO->Texture_FileName);
+		strcpy(App->CL_Vm_Model->S_MeshGroup[SelectedGroup]->Text_PathFileName, App->CL_Vm_FileIO->Texture_Path_FileName);
+
+
+		App->CL_Vm_Textures->TexureToWinPreviewFullPath(SelectedGroup, App->CL_Vm_FileIO->Texture_Path_FileName);
+		Update_Groups_Dialog(SelectedGroup);
+
+
+		return 1;
+	}
 	
 	if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
 	{
