@@ -416,45 +416,51 @@ void VM_ImGui::ImGui_Scale(void)
 			{
 				float Delta = 0.5;// App->Cl_Dimensions->Model_XScale;
 
-				App->CL_Vm_Genesis3D->ScaleActor(Delta, Delta, Delta);
-				//Ogre::Vector3 Scale = App->Cl_Scene_Data->Cl_Object[index]->Mesh_Scale;
-				//Scale.x += Delta;
-				//Scale.y += Delta;
-				//Scale.z += Delta;
-				//App->Cl_Scene_Data->Cl_Object[index]->Mesh_Scale = Scale;
-				//App->Cl_Scene_Data->Cl_Object[index]->OgreNode->setScale(Scale);
+				if (App->CL_Vm_Model->Model_Loaded == 1)
+				{
+					App->CL_Vm_Genesis3D->ScaleActor(Delta, Delta, Delta);
+					//Ogre::Vector3 Scale = App->Cl_Scene_Data->Cl_Object[index]->Mesh_Scale;
+					//Scale.x += Delta;
+					//Scale.y += Delta;
+					//Scale.z += Delta;
+					//App->Cl_Scene_Data->Cl_Object[index]->Mesh_Scale = Scale;
+					//App->Cl_Scene_Data->Cl_Object[index]->OgreNode->setScale(Scale);
 
-				//Scale = App->Cl_Scene_Data->Cl_Object[index]->Physics_Scale;
-				//Scale.x += Delta;
-				//Scale.y += Delta;
-				//Scale.z += Delta;
-				//App->Cl_Scene_Data->Cl_Object[index]->Physics_Scale = Scale;
-				//App->Cl_Scene_Data->Cl_Object[index]->bt_body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+					//Scale = App->Cl_Scene_Data->Cl_Object[index]->Physics_Scale;
+					//Scale.x += Delta;
+					//Scale.y += Delta;
+					//Scale.z += Delta;
+					//App->Cl_Scene_Data->Cl_Object[index]->Physics_Scale = Scale;
+					//App->Cl_Scene_Data->Cl_Object[index]->bt_body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
 
-				////App->Cl_Dimensions->Set_Physics_Position(index);
-				//App->Cl_Dimensions->UpDate_Physics_And_Visuals(index);
+					////App->Cl_Dimensions->Set_Physics_Position(index);
+					//App->Cl_Dimensions->UpDate_Physics_And_Visuals(index);
+				}
 			}
 			ImGui::SameLine(0.0f, spacingSX);
 			if (ImGui::ArrowButton("##rightSX", ImGuiDir_Right))
 			{
 				float Delta = 1;// App->Cl_Dimensions->Model_XScale;
 
-				App->CL_Vm_Genesis3D->ScaleActor(Delta, Delta, Delta);
-				//Scale.x -= Delta;
-				//Scale.y -= Delta;
-				//Scale.z -= Delta;
-				//App->Cl_Scene_Data->Cl_Object[index]->Mesh_Scale = Scale;
-				//App->Cl_Scene_Data->Cl_Object[index]->OgreNode->setScale(Scale);
+				if (App->CL_Vm_Model->Model_Loaded == 1)
+				{
+					App->CL_Vm_Genesis3D->ScaleActor(Delta, Delta, Delta);
+					//Scale.x -= Delta;
+					//Scale.y -= Delta;
+					//Scale.z -= Delta;
+					//App->Cl_Scene_Data->Cl_Object[index]->Mesh_Scale = Scale;
+					//App->Cl_Scene_Data->Cl_Object[index]->OgreNode->setScale(Scale);
 
-				//Scale = App->Cl_Scene_Data->Cl_Object[index]->Physics_Scale;
-				//Scale.x -= Delta;
-				//Scale.y -= Delta;
-				//Scale.z -= Delta;
-				//App->Cl_Scene_Data->Cl_Object[index]->Physics_Scale = Scale;
-				//App->Cl_Scene_Data->Cl_Object[index]->bt_body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+					//Scale = App->Cl_Scene_Data->Cl_Object[index]->Physics_Scale;
+					//Scale.x -= Delta;
+					//Scale.y -= Delta;
+					//Scale.z -= Delta;
+					//App->Cl_Scene_Data->Cl_Object[index]->Physics_Scale = Scale;
+					//App->Cl_Scene_Data->Cl_Object[index]->bt_body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
 
-				////App->Cl_Dimensions->Set_Physics_Position(index);
-				//App->Cl_Dimensions->UpDate_Physics_And_Visuals(index);
+					////App->Cl_Dimensions->Set_Physics_Position(index);
+					//App->Cl_Dimensions->UpDate_Physics_And_Visuals(index);
+				}
 			}
 			ImGui::PopButtonRepeat();
 		}
