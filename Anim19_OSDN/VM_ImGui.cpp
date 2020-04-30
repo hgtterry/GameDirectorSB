@@ -380,6 +380,16 @@ void VM_ImGui::ImGui_Position(void)
 			Model_ZTranslate = (float)atof(XitemsZ[XitemZ]);
 		}
 	
+
+		if (ImGui::Button("Middle of Bounding Box"))
+		{
+			
+		}
+
+		if (ImGui::Button("Base of Bounding Box"))
+		{
+
+		}
 		ImGui::End();
 	}
 }
