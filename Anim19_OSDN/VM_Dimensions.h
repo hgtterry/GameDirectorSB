@@ -31,6 +31,10 @@ public:
 	void Centre_Model_Mid(void);
 	void Centre_Model_Base(void);
 
+	void Rotate_X_Model(float X);
+	void Rotate_Y_Model(float Y);
+	void Rotate_Z_Model(float Z);
+
 	float Model_X_Rotation;
 	float Model_Y_Rotation;
 	float Model_Z_Rotation;

@@ -118,8 +118,171 @@ void VM_Dimensions::Centre_Model_Base(void)
 			App->CL_Vm_Model->GetBoundingBoxModel_Update();
 		}
 	}
+}
 
-	/*Ogre::Root::getSingletonPtr()->renderOneFrame();
-	Ogre::Root::getSingletonPtr()->renderOneFrame();
-	App->CL_Global_Model->UpdatePositionData(PositionDlg_Hwnd);*/
+// *************************************************************************
+// *	  					Rotate_X_Model Terry Bernie					   *
+// *************************************************************************
+void VM_Dimensions::Rotate_X_Model(float X)
+{
+	Ogre::Vector3 Centre;
+
+	Centre.x = App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].x;
+	Centre.y = App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].y;
+	Centre.z = App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].z;
+
+	Ogre::Vector3 Rotate;
+	Rotate.x = X;
+	Rotate.y = 0;
+	Rotate.z = 0;
+
+	int Count = 0;
+	int VertCount = 0;
+
+	while (Count < App->CL_Vm_Model->GroupCount)
+	{
+		VertCount = 0;
+		while (VertCount < App->CL_Vm_Model->S_MeshGroup[Count]->GroupVertCount)
+		{
+			Ogre::Vector3 VertPos;
+			Ogre::Vector3 RotatedVert;
+
+			VertPos.x = App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].x;
+			VertPos.y = App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].y;
+			VertPos.z = App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].z;
+
+			if (Rotate.x != 0) // Dont bother if Zero
+			{
+				RotatedVert = (Ogre::Quaternion(Ogre::Degree(Rotate.x), Ogre::Vector3::UNIT_Y)*(VertPos - Centre));
+			}
+			else
+			{
+				RotatedVert = VertPos - Centre;
+			}
+
+			RotatedVert += Centre;
+
+			App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].x = RotatedVert.x;
+			App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].y = RotatedVert.y;
+			App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].z = RotatedVert.z;
+
+			VertCount++;
+		}
+		Count++;
+	}
+
+	App->CL_Vm_Model->GetBoundingBoxModel_Update();
+}
+
+// *************************************************************************
+// *	  				Rotate_Y_Model Terry Bernie						   *
+// *************************************************************************
+void VM_Dimensions::Rotate_Y_Model(float Y)
+{
+	Ogre::Vector3 Min;
+	Ogre::Vector3 Max;
+	Ogre::Vector3 Centre;
+
+	Centre.x = App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].x;
+	Centre.y = App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].y;
+	Centre.z = App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].z;
+
+	Ogre::Vector3 Rotate;
+	Rotate.x = 0;
+	Rotate.y = Y;
+	Rotate.z = 0;
+
+
+	int Count = 0;
+	int VertCount = 0;
+
+	while (Count < App->CL_Vm_Model->GroupCount)
+	{
+		VertCount = 0;
+		while (VertCount < App->CL_Vm_Model->S_MeshGroup[Count]->GroupVertCount)
+		{
+			Ogre::Vector3 VertPos;
+			Ogre::Vector3 RotatedVert;
+
+			VertPos.x = App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].x;
+			VertPos.y = App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].y;
+			VertPos.z = App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].z;
+
+			if (Rotate.y != 0) // Dont bother if Zero
+			{
+				RotatedVert = (Ogre::Quaternion(Ogre::Degree(Rotate.y), Ogre::Vector3::UNIT_Z)*(VertPos - Centre));
+			}
+			else
+			{
+				RotatedVert = VertPos - Centre;
+			}
+
+			RotatedVert += Centre;
+
+			App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].x = RotatedVert.x;
+			App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].y = RotatedVert.y;
+			App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].z = RotatedVert.z;
+
+			VertCount++;
+		}
+		Count++;
+	}
+	App->CL_Vm_Model->GetBoundingBoxModel_Update();
+}
+
+// *************************************************************************
+// *	  				Rotate_Z_Model Terry Bernie						   *
+// *************************************************************************
+void VM_Dimensions::Rotate_Z_Model(float Z)
+{
+	Ogre::Vector3 Min;
+	Ogre::Vector3 Max;
+	Ogre::Vector3 Centre;
+
+	Centre.x = App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].x;
+	Centre.y = App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].y;
+	Centre.z = App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].z;
+
+	Ogre::Vector3 Rotate;
+	Rotate.x = 0;
+	Rotate.y = 0;
+	Rotate.z = Z;
+
+
+	int Count = 0;
+	int VertCount = 0;
+
+	while (Count < App->CL_Vm_Model->GroupCount)
+	{
+		VertCount = 0;
+		while (VertCount < App->CL_Vm_Model->S_MeshGroup[Count]->GroupVertCount)
+		{
+			Ogre::Vector3 VertPos;
+			Ogre::Vector3 RotatedVert;
+
+			VertPos.x = App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].x;
+			VertPos.y = App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].y;
+			VertPos.z = App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].z;
+
+			if (Rotate.z != 0) // Dont bother if Zero
+			{
+				RotatedVert = (Ogre::Quaternion(Ogre::Degree(Rotate.z), Ogre::Vector3::UNIT_X)*(VertPos - Centre));
+			}
+			else
+			{
+				RotatedVert = VertPos - Centre;
+			}
+
+			RotatedVert += Centre;
+
+			App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].x = RotatedVert.x;
+			App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].y = RotatedVert.y;
+			App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].z = RotatedVert.z;
+
+			VertCount++;
+		}
+		Count++;
+	}
+
+	App->CL_Vm_Model->GetBoundingBoxModel_Update();
 }

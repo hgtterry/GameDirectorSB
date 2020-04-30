@@ -238,6 +238,11 @@ void VM_ImGui::ImGui_Rotation2(void)
 				App->CL_Vm_Genesis3D->Actor_Rotation.X += App->Cl_Vm_Dimensions->Model_X_Rotation;
 				App->CL_Vm_Genesis3D->MoveActor();
 			}
+
+			if (App->CL_Vm_Model->Model_Type == LoadedFile_Assimp)
+			{
+				App->Cl_Vm_Dimensions->Rotate_X_Model(App->Cl_Vm_Dimensions->Model_X_Rotation);
+			}
 		}
 
 		ImGui::SameLine(0.0f, spacing);
@@ -248,6 +253,11 @@ void VM_ImGui::ImGui_Rotation2(void)
 				App->CL_Vm_Genesis3D->Actor_Rotation.X -= App->Cl_Vm_Dimensions->Model_X_Rotation;
 				App->CL_Vm_Genesis3D->MoveActor();
 			}
+
+			if (App->CL_Vm_Model->Model_Type == LoadedFile_Assimp)
+			{
+				App->Cl_Vm_Dimensions->Rotate_X_Model(-App->Cl_Vm_Dimensions->Model_X_Rotation);
+			}
 		}
 		ImGui::PopButtonRepeat();
 
@@ -255,7 +265,7 @@ void VM_ImGui::ImGui_Rotation2(void)
 		ImGui::SameLine();
 		ImGui::SetNextItemWidth(100);
 		const char* XitemsX[] = { "1", "2", "5", "10", "90" };
-		static int XitemX = 1;
+		static int XitemX = 4;
 		bool Changed = ImGui::Combo("Step X", &XitemX, XitemsX, IM_ARRAYSIZE(XitemsX));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
 		if (Changed == 1)
 		{
@@ -275,6 +285,11 @@ void VM_ImGui::ImGui_Rotation2(void)
 				App->CL_Vm_Genesis3D->Actor_Rotation.Y += App->Cl_Vm_Dimensions->Model_Y_Rotation;
 				App->CL_Vm_Genesis3D->MoveActor();
 			}
+
+			if (App->CL_Vm_Model->Model_Type == LoadedFile_Assimp)
+			{
+				App->Cl_Vm_Dimensions->Rotate_Y_Model(App->Cl_Vm_Dimensions->Model_Y_Rotation);
+			}
 		}
 		ImGui::SameLine(0.0f, spacing2);
 		if (ImGui::ArrowButton("##rightY", ImGuiDir_Right))
@@ -284,6 +299,11 @@ void VM_ImGui::ImGui_Rotation2(void)
 				App->CL_Vm_Genesis3D->Actor_Rotation.Y -= App->Cl_Vm_Dimensions->Model_Y_Rotation;
 				App->CL_Vm_Genesis3D->MoveActor();
 			}
+
+			if (App->CL_Vm_Model->Model_Type == LoadedFile_Assimp)
+			{
+				App->Cl_Vm_Dimensions->Rotate_Y_Model(-App->Cl_Vm_Dimensions->Model_Y_Rotation);
+			}
 		}
 		ImGui::PopButtonRepeat();
 
@@ -291,7 +311,7 @@ void VM_ImGui::ImGui_Rotation2(void)
 		ImGui::SameLine();
 		ImGui::SetNextItemWidth(100);
 		const char* XitemsY[] = { "1", "2", "5", "10", "90" };
-		static int XitemY = 1;
+		static int XitemY = 4;
 		bool ChangedY = ImGui::Combo("Step Y", &XitemY, XitemsY, IM_ARRAYSIZE(XitemsY));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
 		if (ChangedY == 1)
 		{
@@ -311,6 +331,11 @@ void VM_ImGui::ImGui_Rotation2(void)
 				App->CL_Vm_Genesis3D->Actor_Rotation.Z += App->Cl_Vm_Dimensions->Model_Z_Rotation;
 				App->CL_Vm_Genesis3D->MoveActor();
 			}
+
+			if (App->CL_Vm_Model->Model_Type == LoadedFile_Assimp)
+			{
+				App->Cl_Vm_Dimensions->Rotate_Z_Model(App->Cl_Vm_Dimensions->Model_Z_Rotation);
+			}
 		}
 		ImGui::SameLine(0.0f, spacing3);
 		if (ImGui::ArrowButton("##rightZ", ImGuiDir_Right))
@@ -320,13 +345,18 @@ void VM_ImGui::ImGui_Rotation2(void)
 				App->CL_Vm_Genesis3D->Actor_Rotation.Z -= App->Cl_Vm_Dimensions->Model_Z_Rotation;
 				App->CL_Vm_Genesis3D->MoveActor();
 			}
+
+			if (App->CL_Vm_Model->Model_Type == LoadedFile_Assimp)
+			{
+				App->Cl_Vm_Dimensions->Rotate_Z_Model(-App->Cl_Vm_Dimensions->Model_Z_Rotation);
+			}
 		}
 		ImGui::PopButtonRepeat();
 
 		ImGui::SameLine();
 		ImGui::SetNextItemWidth(100);
 		const char* XitemsZ[] = { "1", "2", "5", "10", "90" };
-		static int XitemZ = 1;
+		static int XitemZ = 4;
 		bool ChangedZ = ImGui::Combo("Step Z", &XitemZ, XitemsZ, IM_ARRAYSIZE(XitemsZ));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
 		if (ChangedZ == 1)
 		{
@@ -334,7 +364,7 @@ void VM_ImGui::ImGui_Rotation2(void)
 		}
 
 		// ----------------------------- 
-		ImGui::Spacing();
+		/*ImGui::Spacing();
 		ImGui::Indent();
 		if (ImGui::Button("Middle of Bounding Box", ImVec2(200, 40)))
 		{
@@ -344,7 +374,7 @@ void VM_ImGui::ImGui_Rotation2(void)
 		if (ImGui::Button("Base of Bounding Box", ImVec2(200, 40)))
 		{
 			App->Cl_Vm_Dimensions->Centre_Model_Base();
-		}
+		}*/
 
 		ImGui::End();
 	}
