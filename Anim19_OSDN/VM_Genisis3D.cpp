@@ -1428,4 +1428,32 @@ bool VM_Genisis3D::ChangeTexture(char* TextureFile)
 	return 1;
 }
 
+// *************************************************************************
+// *					DefaultPose ( Terry Bernie )  			 	 	   *
+// *************************************************************************
+bool VM_Genisis3D::DefaultPose(void)
+{
+	geVec3d Angles;
+
+	Angles.X = App->Cl_Utilities->DegreesToRadians(Actor_Rotation.X);
+	Angles.Y = App->Cl_Utilities->DegreesToRadians(Actor_Rotation.Y);
+	Angles.Z = App->Cl_Utilities->DegreesToRadians(Actor_Rotation.Z);
+
+	geXForm3d MedXForm;
+	geXForm3d_SetIdentity(&MedXForm);
+
+	geXForm3d_RotateX(&MedXForm, Angles.X);
+	geXForm3d_RotateY(&MedXForm, Angles.Y);
+	geXForm3d_RotateZ(&MedXForm, Angles.Z);
+
+	geXForm3d_Translate(&MedXForm, Actor_Position.X, Actor_Position.Y, Actor_Position.Z);
+
+	geActor_ClearPose(TestActor, &MedXForm);// &MedXForm
+
+	RenderActor(TestActor->Puppet, TestActor->Pose);
+	Animate(0);
+
+	return 1;
+}
+
 

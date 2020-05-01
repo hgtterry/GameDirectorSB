@@ -995,6 +995,7 @@ LRESULT CALLBACK VM_TopBar::Motions_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_CBMOTIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_TBPOSE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		return TRUE;
 	}
 
@@ -1014,6 +1015,13 @@ LRESULT CALLBACK VM_TopBar::Motions_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_TBPOSE && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
 		return CDRF_DODEFAULT;
 	}
 
@@ -1028,6 +1036,12 @@ LRESULT CALLBACK VM_TopBar::Motions_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 		if (LOWORD(wParam) == IDC_TBSTOP) // Stop Motion
 		{
 			App->CL_Vm_Motions->Stop_SelectedMotion();
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_TBPOSE) // Stop Motion
+		{
+			App->CL_Vm_Motions->Set_Pose();
 			return TRUE;
 		}
 

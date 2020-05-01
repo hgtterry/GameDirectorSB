@@ -7,6 +7,7 @@ public:
 
 	void Play_SelectedMotion(void);
 	void Stop_SelectedMotion(void);
+	void Set_Pose(void);
 
 
 	void Populate_Combo(void);
