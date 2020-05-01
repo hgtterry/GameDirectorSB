@@ -127,9 +127,6 @@ void VM_Model::Clear_ModelData(void)
 		S_BoundingBox[0] = NULL;
 	}
 
-	// Clear Motion Combo Box
-	App->CL_Vm_Motions->Clear_Combo();
-
 	//--------------------- Clear Ogre Model if one was loaded
 	/*if (App->Cl_Ogre->OgreModel_Ent && App->Cl_Ogre->OgreModel_Node)
 	{

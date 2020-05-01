@@ -1059,34 +1059,6 @@ LRESULT CALLBACK VM_TopBar::Motions_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 			return TRUE;
 		}
 
-		if (LOWORD(wParam) == IDC_CBMOTIONS)
-		{
-			switch (HIWORD(wParam)) // Find out what message it was
-			{
-			case CBN_DROPDOWN:
-				break;
-			case CBN_CLOSEUP:
-			{
-				if (App->CL_Vm_Model->Model_Loaded == 1 && App->CL_Vm_Model->MotionCount > 0)
-				{
-					if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
-					{
-						char buff[255];
-						GetDlgItemText(hDlg, IDC_CBMOTIONS, (LPTSTR)buff, 255);
-
-						App->CL_Vm_Genesis3D->GetMotion(buff);
-
-						strcpy(App->CL_Vm_Genesis3D->MotionName, buff);
-
-						App->CL_Vm_Genesis3D->m_CurrentPose = 0;
-					}
-
-				}
-
-			}
-			}
-		}
-
 		return FALSE;
 	}
 	}

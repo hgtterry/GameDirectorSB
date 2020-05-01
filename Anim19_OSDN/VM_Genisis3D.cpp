@@ -116,7 +116,7 @@ bool VM_Genisis3D::Import_LoadActor(void)
 	if (App->CL_Vm_Model->MotionCount > 0)
 	{
 		Get_MotionNames();
-		App->CL_Vm_Motions->Populate_Combo();
+		strcpy(MotionName, App->CL_Vm_Model->MotionNames_Data[0].Name);
 	}
 
 	Get_TextureNames();

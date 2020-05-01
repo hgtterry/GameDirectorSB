@@ -9,11 +9,6 @@ public:
 	void Stop_SelectedMotion(void);
 	void Set_Pose(void);
 
-
-	void Populate_Combo(void);
-	void Clear_Combo(void);
-
-
 	float Current_StartTime;
 	float Current_EndTime;
 };
