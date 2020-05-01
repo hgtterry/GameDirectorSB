@@ -290,13 +290,13 @@ void GD19_Grid::Hair_DisplayGeneralCrossHair(float x, float y, float z, bool Opt
 // *************************************************************************
 void GD19_Grid::Load_Arrow()
 {
-	Arrow_Ent = App->Cl19_Ogre->mSceneMgr->createEntity("Arrow", "Gizmo.mesh", App->Cl19_Ogre->PermResourceGroup);
+	/*Arrow_Ent = App->Cl19_Ogre->mSceneMgr->createEntity("Arrow", "Gizmo.mesh", App->Cl19_Ogre->PermResourceGroup);
 	Arrow_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Arrow_Node->attachObject(Arrow_Ent);
 
 	Arrow_Node->setVisible(false);
 	Arrow_Node->setPosition(0, 0, 0);
-	Arrow_Node->setScale(7, 7, 7);
+	Arrow_Node->setScale(7, 7, 7);*/
 
 	/*Ogre::MaterialPtr materialPtr = Ogre::MaterialManager::getSingleton().getByName("BaseYellowLine");
 	Arrow_Ent->setMaterial(materialPtr);*/

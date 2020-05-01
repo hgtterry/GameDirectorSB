@@ -1005,16 +1005,20 @@ LRESULT CALLBACK VM_TopBar::Motions_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 				break;
 			case CBN_CLOSEUP:
 			{
-				if (App->CL_Vm_Model->Model_Loaded == 1)
+				if (App->CL_Vm_Model->Model_Loaded == 1 && App->CL_Vm_Model->MotionCount > 0)
 				{
-					char buff[255];
-					GetDlgItemText(hDlg, IDC_CBMOTIONS, (LPTSTR)buff, 255);
+					if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
+					{
+						char buff[255];
+						GetDlgItemText(hDlg, IDC_CBMOTIONS, (LPTSTR)buff, 255);
 
-					App->CL_Vm_Genesis3D->GetMotion(buff);
+						App->CL_Vm_Genesis3D->GetMotion(buff);
 
-					strcpy(App->CL_Vm_Genesis3D->MotionName, buff);
+						strcpy(App->CL_Vm_Genesis3D->MotionName, buff);
 
-					App->CL_Vm_Genesis3D->m_CurrentPose = 0;
+						App->CL_Vm_Genesis3D->m_CurrentPose = 0;
+					}
+
 				}
 
 			}

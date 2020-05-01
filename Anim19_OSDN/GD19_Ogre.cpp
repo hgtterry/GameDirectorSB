@@ -142,12 +142,12 @@ bool GD19_Ogre::SetUpResources(void)
 		PermResourceGroup);
 
 	//-------------------------------- Materials
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/materials/Actor_scripts", "FileSystem",
-		PermResourceGroup);
+//	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/materials/Actor_scripts", "FileSystem",
+//		PermResourceGroup);
 
 
 	//-------------------------------- Textures
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/textures", "FileSystem",
+	/*Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/textures", "FileSystem",
 		PermResourceGroup);
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/textures/Test", "FileSystem",
 		PermResourceGroup);
@@ -156,19 +156,19 @@ bool GD19_Ogre::SetUpResources(void)
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/textures/Sinbad", "FileSystem",
 		PermResourceGroup);
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/textures/Hall", "FileSystem",
-		PermResourceGroup);
+		PermResourceGroup);*/
 
 
 
 	//-------------------------------- Actors/Mesh
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/Actors", "FileSystem",
-		PermResourceGroup);
+//	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/Actors", "FileSystem",
+//		PermResourceGroup);
 
-	Get_Main_Folders();
+//	Get_Main_Folders();
 
 
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/Levels/RF_Level1_Ogre", "FileSystem",
-		PermResourceGroup);
+//	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/Levels/RF_Level1_Ogre", "FileSystem",
+//		PermResourceGroup);
 
 	return 1;
 }
