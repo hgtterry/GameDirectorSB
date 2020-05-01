@@ -27,6 +27,9 @@ VM_TopBar::VM_TopBar()
 	Toggle_Tabs_Dimensions_Flag = 0;
 	Toggle_Tabs_Groups_Flag = 0;
 	Toggle_GroupsOnly_Flag = 0;
+
+	// Motions
+	Toggle_Play_Flag = 0;
 }
 
 
@@ -950,12 +953,35 @@ void VM_TopBar::Init_Bmps_TB2(void)
 }
 
 // *************************************************************************
+// *						Init_Bmps_Motions Terry Bernie				   *
+// *************************************************************************
+void VM_TopBar::Init_Bmps_Motions(void)
+{
+	//HWND hTooltip_TB_1 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
+
+	// --------------------------------------------------- 
+	HWND Temp = GetDlgItem(Motions_TB_hWnd, IDC_TBPLAY);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_Playoff);
+
+	/*TOOLINFO ti = { 0 };
+	ti.cbSize = sizeof(ti);
+	ti.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti.uId = (UINT_PTR)Temp;
+	ti.lpszText = "Full Screen View";
+	ti.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_1, TTM_ADDTOOL, 0, (LPARAM)&ti);*/
+
+	// --------------------------------------------------- 
+
+}
+
+// *************************************************************************
 // *						Start_Motions_TB Terry						   *
 // *************************************************************************
 void VM_TopBar::Start_Motions_TB(void)
 {
 	Motions_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_MOTIONS, Tabs_TB_hWnd, (DLGPROC)Motions_TB_Proc);
-	//Init_Bmps_TB1();
+	Init_Bmps_Motions();
 }
 
 // *************************************************************************
@@ -979,7 +1005,15 @@ LRESULT CALLBACK VM_TopBar::Motions_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 	case WM_NOTIFY:
 	{
-		
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_TBPLAY && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_Vm_TopBar->Toggle_Play_Flag);
+			return CDRF_DODEFAULT;
+		}
+
 		return CDRF_DODEFAULT;
 	}
 
@@ -1202,4 +1236,21 @@ LRESULT CALLBACK VM_TopBar::Groups_TB_Proc(HWND hDlg, UINT message, WPARAM wPara
 	}
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *					TogglePlayBmp Inflanite						       *
+// *************************************************************************
+void VM_TopBar::TogglePlayBmp(void)
+{
+	HWND Temp = GetDlgItem(Motions_TB_hWnd, IDC_TBPLAY);
+
+	if (Toggle_Play_Flag == 1)
+	{
+		SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_PlayOn);
+	}
+	else
+	{
+		SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_Playoff);
+	}
 }

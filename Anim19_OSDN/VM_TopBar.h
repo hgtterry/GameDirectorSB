@@ -8,6 +8,8 @@ public:
 	bool Start_TopBar();
 	void Reset_Class();
 
+	void TogglePlayBmp(void);
+
 	HWND TabsHwnd;
 	HWND TB_1;
 	HWND Tabs_TB_hWnd;
@@ -15,6 +17,9 @@ public:
 	HWND Motions_TB_hWnd;
 	HWND Dimensions_TB_hWnd;
 	HWND Groups_TB_hWnd;
+
+	// Motions
+	bool Toggle_Play_Flag;
 
 protected:
 
@@ -32,6 +37,7 @@ protected:
 
 	void Init_Bmps_TB1(void);
 	void Init_Bmps_TB2(void);
+	void Init_Bmps_Motions(void);
 
 	void Start_Motions_TB(void);
 	void Start_Dimensions_TB(void);
@@ -48,11 +54,13 @@ protected:
 	bool Toggle_Normals_Flag;
 	bool Toggle_BBox_Flag;
 
+	// Groups
 	bool Toggle_Tabs_Old_Flag;
 	bool Toggle_Tabs_Motions_Flag;
 	bool Toggle_Tabs_Dimensions_Flag;
 	bool Toggle_Tabs_Groups_Flag;
 
 	bool Toggle_GroupsOnly_Flag;
+
 };
 

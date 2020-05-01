@@ -216,6 +216,9 @@ public:
 	HANDLE Hnd_Info_Bmp;
 	HANDLE Hnd_InfoSmall_Bmp;
 
+	HANDLE Hnd_Playoff;
+	HANDLE Hnd_PlayOn;
+
 	HFONT Font_CB12;
 	HFONT Font_CB15;
 	HFONT Font_Arial20;

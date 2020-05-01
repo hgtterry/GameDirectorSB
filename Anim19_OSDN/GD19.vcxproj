@@ -298,6 +298,8 @@
     <Image Include="Resource\MenuBar\ModelData.bmp" />
     <Image Include="Resource\MenuBar\MouseSensitivity.bmp" />
     <Image Include="Resource\MenuBar\TexturesOff.bmp" />
+    <Image Include="Resource\Motions\Tplay.bmp" />
+    <Image Include="Resource\Motions\TplayON.bmp" />
     <Image Include="small.ico" />
   </ItemGroup>
   <ItemGroup>

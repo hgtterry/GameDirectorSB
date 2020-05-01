@@ -38,8 +38,8 @@ void VM_Motions::Play_SelectedMotion(void)
 
 		App->Cl19_Ogre->RenderListener->PlayActive = 1;
 
-		//App->CL_Motions->PlayButtonActive = 1;
-		//App->CL_Motions->TogglePlayBmp();
+		App->CL_Vm_TopBar->Toggle_Play_Flag = 1;
+		App->CL_Vm_TopBar->TogglePlayBmp();
 	}
 
 	//------------------------------------------------------- Ogre3D Model
@@ -69,8 +69,8 @@ void VM_Motions::Stop_SelectedMotion(void)
 	if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
 	{
 		App->Cl19_Ogre->RenderListener->PlayActive = 0;
-		/*App->CL_Motions->PlayButtonActive = 0;
-		App->CL_Motions->TogglePlayBmp();*/
+		App->CL_Vm_TopBar->Toggle_Play_Flag = 0;
+		App->CL_Vm_TopBar->TogglePlayBmp();
 	}
 	//------------------------------------------------------- Ogre3D Model
 	/*if (App->CL_Model_Data->ItsAnOgreModel == 1)
