@@ -412,6 +412,7 @@ LRESULT CALLBACK VM_TopBar::Tabs_Proc(HWND hDlg, UINT message, WPARAM wParam, LP
 			App->CL_Vm_TopBar->Hide_Tabs();
 			ShowWindow(App->CL_Vm_TopBar->Motions_TB_hWnd, SW_SHOW);
 			App->CL_Vm_TopBar->Toggle_Tabs_Motions_Flag = 1;
+			App->CL_Vm_ImGui->Show_Motion_List = 1;
 			
 			RedrawWindow(App->CL_Vm_TopBar->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
@@ -458,7 +459,9 @@ void VM_TopBar::Hide_Tabs(void)
 	ShowWindow(App->CL_Vm_TopBar->Groups_TB_hWnd, SW_HIDE);
 	
 	ShowWindow(App->CL_Vm_Groups->RightGroups_Hwnd, 0);
+
 	App->CL_Vm_ImGui->Show_Group_List = 0;
+	App->CL_Vm_ImGui->Show_Motion_List = 0;
 
 	Toggle_Tabs_Old_Flag = 0;
 	Toggle_Tabs_Motions_Flag = 0;

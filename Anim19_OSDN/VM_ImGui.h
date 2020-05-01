@@ -20,6 +20,7 @@ public:
 
 	void ImGui_Image(void);
 	void ImGui_GroupList(void);
+	void ImGui_MotionList(void);
 	void ImGui_Texture_Data(void);
 	void ImGui_Model_Data(void);
 	
@@ -33,6 +34,7 @@ public:
 	bool Show_Scale;
 	bool Show_Image;
 	bool Show_Group_List;
+	bool Show_Motion_List;
 	bool Show_ImGui_TextureData;
 	bool Show_Model_Data;
 
@@ -48,5 +50,6 @@ public:
 	float Test;
 
 	bool Block;
+	bool Block_Motion;
 };
 

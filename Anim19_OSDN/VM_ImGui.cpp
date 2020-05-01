@@ -21,6 +21,7 @@ VM_ImGui::VM_ImGui()
 	Show_Scale = 0;
 	Show_Image = 0;
 	Show_Group_List = 0;
+	Show_Motion_List = 0;
 	Show_ImGui_TextureData = 0;
 	Show_Model_Data = 0;
 
@@ -31,6 +32,7 @@ VM_ImGui::VM_ImGui()
 	Test = 180;
 
 	Block = 0;
+	Block_Motion = 0;
 }
 
 
@@ -166,6 +168,11 @@ void VM_ImGui::Render_ImGui(void)
 	if (Show_Group_List == 1)
 	{
 		ImGui_GroupList();
+	}
+
+	if (Show_Motion_List == 1)
+	{
+		ImGui_MotionList();
 	}
 
 	if (Show_ImGui_TextureData == 1)
@@ -802,6 +809,58 @@ void VM_ImGui::ImGui_GroupList(void)
 		{
 			App->CL_Vm_Groups->Update_Groups_Dialog(selected_Players);
 			Block = 0;
+		}
+
+		ImGui::End();
+	}
+}
+
+// *************************************************************************
+// *						ImGui_MotionList  Terry Bernie				   *
+// *************************************************************************
+void VM_ImGui::ImGui_MotionList(void)
+{
+	static int selected_Motion = 0;
+
+	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
+
+	if (!ImGui::Begin("Motions", &Show_Motion_List, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize))
+	{
+		ImGui::End();
+	}
+	else
+	{
+		int MotionCount = App->CL_Vm_Model->MotionCount;
+		ImGui::Text("Motion Count %i", MotionCount);
+
+		ImGui::Separator();
+		ImGui::Spacing();
+
+		int Count = 0;
+		while (Count < MotionCount)
+		{
+			ImGui::Bullet();
+			if (ImGui::Selectable(App->CL_Vm_Model->MotionNames_Data[Count].Name, selected_Motion == Count))
+			{
+				selected_Motion = Count;
+				Block_Motion = 1;
+			}
+
+			Count++;
+		}
+
+		if (Block_Motion == 1)
+		{
+			char buff[255];
+			strcpy(buff, App->CL_Vm_Model->MotionNames_Data[selected_Motion].Name);
+
+			App->CL_Vm_Genesis3D->GetMotion(buff);
+
+			strcpy(App->CL_Vm_Genesis3D->MotionName, buff);
+
+			App->CL_Vm_Genesis3D->m_CurrentPose = 0;
+
+			Block_Motion = 0;
 		}
 
 		ImGui::End();
