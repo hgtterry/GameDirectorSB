@@ -234,6 +234,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return 1;
 		}
 
+		case ID_IMPORT_AUTODESK3DS:
+		{
+			App->CL_Importer->Assimp_Loader("Autodesk 3DS   *.3ds\0*.3ds\0", "Autodesk 3DS");
+			return 1;
+		}
+
+		
+
 		case ID_EXPORT_GENESIS3D:
 		{
 			App->CL_Vm_Exporter->Actor_Model();
