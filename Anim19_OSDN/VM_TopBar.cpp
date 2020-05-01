@@ -1059,6 +1059,33 @@ LRESULT CALLBACK VM_TopBar::Motions_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_STEPTIMEBACK)
+		{
+			if (App->CL_Vm_Model->MotionCount == 0) { return 1; }
+
+			if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
+			{
+				App->CL_Vm_Genesis3D->GetBoneMoveMent();
+				App->CL_Vm_Genesis3D->Animate(3);
+
+			}
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_STEPTIMEPLUS)
+		{
+
+			if (App->CL_Vm_Model->MotionCount == 0) { return 1; }
+
+			if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
+			{
+				App->CL_Vm_Genesis3D->GetBoneMoveMent();
+				App->CL_Vm_Genesis3D->Animate(2);
+
+			}
+			return TRUE;
+		}
+
 		return FALSE;
 	}
 	}

@@ -64,7 +64,7 @@ public:
 	char MotionName[255];
 	float m_CurrentPose;
 	float AnimationSpeed;
-	float FrameSpeed;
+	float Frame_End_Time;
 
 	geActor_Def* ActorDef_Memory;
 	geBody* ActorBody_Memory;

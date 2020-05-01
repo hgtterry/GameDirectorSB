@@ -47,8 +47,8 @@ VM_Genisis3D::VM_Genisis3D()
 
 	MotionName[0] = 0;
 
-	FrameSpeed = (float)1.15;;
-	m_CurrentPose = NULL;
+	Frame_End_Time = (float)1.15;;
+	m_CurrentPose = 0;
 	AnimationSpeed = (float)0.005;
 
 	Actor_Position.X = 0;
@@ -81,7 +81,7 @@ void VM_Genisis3D::Reset_Class(void)
 
 	MotionName[0] = 0;
 
-	FrameSpeed = (float)1.15;;
+	Frame_End_Time = (float)1.15;;
 	m_CurrentPose = NULL;
 	AnimationSpeed = (float)0.005;
 
@@ -279,7 +279,7 @@ bool VM_Genisis3D::GetMotion(char *mMotionName)
 	}
 
 	geMotion_GetTimeExtents(Motion, &StartTime, &EndTime);
-	FrameSpeed = EndTime;
+	Frame_End_Time = EndTime;
 
 	App->CL_Vm_Motions->Current_StartTime = StartTime;
 	App->CL_Vm_Motions->Current_EndTime = EndTime;
@@ -442,7 +442,7 @@ bool VM_Genisis3D::Animate(int Do)
 	{
 		geMotion *Motion = geActor_GetMotionByName(ActorDef_Memory, MotionName);
 
-		if (m_CurrentPose>FrameSpeed)
+		if (m_CurrentPose>Frame_End_Time)
 		{
 			//if (MotionLoop == 1)
 			{
@@ -462,7 +462,7 @@ bool VM_Genisis3D::Animate(int Do)
 	}
 	if (Do == 2)
 	{
-		if (m_CurrentPose>FrameSpeed)
+		if (m_CurrentPose>Frame_End_Time)
 		{
 			m_CurrentPose = 0;
 		}
@@ -475,7 +475,7 @@ bool VM_Genisis3D::Animate(int Do)
 
 	if (Do == 3)
 	{
-		if (m_CurrentPose>FrameSpeed)
+		if (m_CurrentPose>Frame_End_Time)
 		{
 			m_CurrentPose = 0;
 		}
