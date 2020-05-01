@@ -300,6 +300,7 @@
     <Image Include="Resource\MenuBar\TexturesOff.bmp" />
     <Image Include="Resource\Motions\Tplay.bmp" />
     <Image Include="Resource\Motions\TplayON.bmp" />
+    <Image Include="Resource\Motions\Tstop.bmp" />
     <Image Include="small.ico" />
   </ItemGroup>
   <ItemGroup>

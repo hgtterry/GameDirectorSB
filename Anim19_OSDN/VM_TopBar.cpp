@@ -963,6 +963,10 @@ void VM_TopBar::Init_Bmps_Motions(void)
 	HWND Temp = GetDlgItem(Motions_TB_hWnd, IDC_TBPLAY);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_Playoff);
 
+
+	Temp = GetDlgItem(Motions_TB_hWnd, IDC_TBSTOP);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_PlayStop);
+
 	/*TOOLINFO ti = { 0 };
 	ti.cbSize = sizeof(ti);
 	ti.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
@@ -1012,6 +1016,13 @@ LRESULT CALLBACK VM_TopBar::Motions_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle(item, App->CL_Vm_TopBar->Toggle_Play_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_TBSTOP && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, 0);
 			return CDRF_DODEFAULT;
 		}
 

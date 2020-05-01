@@ -127,8 +127,9 @@ GD19_App::GD19_App(void)
 	Hnd_Info_Bmp = NULL;
 	Hnd_InfoSmall_Bmp = NULL;
 
-	Hnd_Playoff = NULL;;
-	Hnd_PlayOn = NULL;;
+	Hnd_Playoff = NULL;
+	Hnd_PlayOn = NULL;
+	Hnd_PlayStop = NULL;
 
 	Font_CB12 = 0;
 	Font_CB15 = 0;
@@ -387,6 +388,7 @@ void GD19_App::LoadProgramResource(void)
 
 	Hnd_Playoff = LoadBitmap(App->hInst, (LPCTSTR)IDB_MOTPLAYOFF);
 	Hnd_PlayOn = LoadBitmap(App->hInst, (LPCTSTR)IDB_MOTPLAYON);
+	Hnd_PlayStop = LoadBitmap(App->hInst, (LPCTSTR)IDB_MOTSTOP);
 
 }
 

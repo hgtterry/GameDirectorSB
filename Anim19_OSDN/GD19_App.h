@@ -218,6 +218,7 @@ public:
 
 	HANDLE Hnd_Playoff;
 	HANDLE Hnd_PlayOn;
+	HANDLE Hnd_PlayStop;
 
 	HFONT Font_CB12;
 	HFONT Font_CB15;
