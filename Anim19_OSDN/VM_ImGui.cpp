@@ -69,6 +69,8 @@ void VM_ImGui::Load_Font(void)
 	font2 = io.Fonts->AddFontFromFileTTF("Roboto-Medium.ttf", 48);
 	font0 = io.Fonts->AddFontFromFileTTF("Roboto-Medium.ttf", 18);
 	fontDroid = io.Fonts->AddFontFromFileTTF("DroidSans.ttf", 12);
+
+	io.IniFilename = NULL;
 }
 
 // *************************************************************************

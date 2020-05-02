@@ -221,23 +221,20 @@ LRESULT CALLBACK VM_TextLib::TextureLib_Proc(HWND hDlg, UINT message, WPARAM wPa
 		//--------------------------------- Export All -----------------
 		if (LOWORD(wParam) == IDC_EXPORTALL)
 		{
-			/*char File[256];
+			char File[256];
 
 			_getcwd(App->CL_Vm_TextLib->LastPath, 256);
-			_splitpath(App->CL_Vm_TextLib->pData->TXLFileName, NULL, NULL, File, NULL);
+			_splitpath(App->CL_Vm_TextLib->p_Data->TXLFileName, NULL, NULL, File, NULL);
 			strcat(File, "_Textures");
 
-			strcpy(S_File[0]->NewSubFolderName, File);
-
-			strcpy(S_File[0]->SaveMessage, "Select Folder To Place Decompiled Textures");
-
-			int Test = GetSaveFolder();
+			strcpy(App->CL_Vm_FileIO->BrowserMessage, "Select Folder To Extract Textures");
+			int Test = App->CL_Vm_FileIO->StartBrowser("");
 			if (Test == 0)
 			{
 				return 0;
 			}
 
-			App->CL_Vm_TextLib->TPack_ExtractAll();*/
+			App->CL_Vm_TextLib->TPack_ExtractAll();
 
 			return TRUE;
 		}
@@ -1303,70 +1300,64 @@ bool VM_TextLib::CheckExtention(char *FileName)
 // *************************************************************************
 bool VM_TextLib::TPack_ExtractAll()
 {
-	//HWND            hLB = GetDlgItem(pData->hwnd, IDC_TEXTURELIST);
-	//int             nCount;
-	//int             i;
-	////	BitmapEntry *	pEntry;
-	//char            szName[256];
-	//char            szFile[256];
-	//char            szPath[256];
-	//int             nErrorCode;
+	HWND            hLB = GetDlgItem(p_Data->hwnd, IDC_TEXTURELIST);
+	int             nCount;
+	int             i;
+	//	BitmapEntry *	pEntry;
+	char            szName[256];
+	char            szFile[256];
+	char            szPath[256];
+	int             nErrorCode;
 
-	//_chdir(S_File[0]->NewPath);
-	//strcpy(szPath, S_File[0]->NewPath);
-	//_mkdir(S_File[0]->NewSubFolderName);
-	//strcat(szPath, "//");
-	//strcat(szPath, S_File[0]->NewSubFolderName);
+	nCount = SendDlgItemMessage(p_Data->hwnd, IDC_TEXTURELIST, LB_GETCOUNT, (WPARAM)0, (LPARAM)0);
 
-	//nCount = SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_GETCOUNT, (WPARAM)0, (LPARAM)0);
+	for (i = 0; i < nCount; i++)
+	{
+		if (SendMessage(p_Data->hwnd, LB_GETTEXT, i, (LPARAM)(LPCTSTR)szName) != LB_ERR) // Get text
+		{
 
-	//for (i = 0; i < nCount; i++)
-	//{
-	//	if (SendMessage(pData->hwnd, LB_GETTEXT, i, (LPARAM)(LPCTSTR)szName) != LB_ERR) // Get text
-	//	{
+			if (NewBitmapList[i])
+			{
+				strcpy(szFile, App->CL_Vm_FileIO->szSelectedDir);
+				strcat(szFile, "\\");
+				strcat(szFile, NewBitmapList[i]->Name);
 
-	//		if (NewBitmapList[i])
-	//		{
-	//			strcpy(szFile, szPath);
-	//			strcat(szFile, "\\");
-	//			strcat(szFile, NewBitmapList[i]->Name);
-
-	//			if (geBitmap_HasAlpha(NewBitmapList[i]->Bitmap))
-	//				strcat(szFile, ".tga");
-	//			else
-	//				strcat(szFile, ".bmp");
+				if (geBitmap_HasAlpha(NewBitmapList[i]->Bitmap))
+					strcat(szFile, ".tga");
+				else
+					strcat(szFile, ".bmp");
 
 
-	//			if (geBitmap_HasAlpha(NewBitmapList[i]->Bitmap))
-	//				nErrorCode = WriteTGA(szFile, NewBitmapList[i]->Bitmap);
-	//			else
-	//				nErrorCode = WriteBMP8(szFile, NewBitmapList[i]->Bitmap);
+				if (geBitmap_HasAlpha(NewBitmapList[i]->Bitmap))
+					nErrorCode = WriteTGA(szFile, NewBitmapList[i]->Bitmap);
+				else
+					nErrorCode = WriteBMP8(szFile, NewBitmapList[i]->Bitmap);
 
 
-	//			if (nErrorCode != TPACKERROR_OK)
-	//			{
-	//				// Error writing this bitmap
-	//				switch (nErrorCode)
-	//				{
-	//				case TPACKERROR_CREATEFILE:
-	//					NonFatalError("Unable to create output file %s", szFile);
-	//					break;
-	//				case TPACKERROR_WRITE:
-	//					NonFatalError("I/O error writing %s", szFile);
-	//					break;
-	//				case TPACKERROR_MEMORYALLOCATION:
-	//					NonFatalError("Memory allocation error writing %s", szFile);
-	//					break;
-	//				case TPACKERROR_UNKNOWN:
-	//				default:
-	//					NonFatalError("UInknown error writing %s", szFile);
-	//				}
+				if (nErrorCode != TPACKERROR_OK)
+				{
+					// Error writing this bitmap
+					switch (nErrorCode)
+					{
+					case TPACKERROR_CREATEFILE:
+						NonFatalError("Unable to create output file %s", szFile);
+						break;
+					case TPACKERROR_WRITE:
+						NonFatalError("I/O error writing %s", szFile);
+						break;
+					case TPACKERROR_MEMORYALLOCATION:
+						NonFatalError("Memory allocation error writing %s", szFile);
+						break;
+					case TPACKERROR_UNKNOWN:
+					default:
+						NonFatalError("UInknown error writing %s", szFile);
+					}
 
-	//				break;
-	//			}
-	//		}
-	//	}
-	//}
+					break;
+				}
+			}
+		}
+	}
 
 	return 1;
 }
