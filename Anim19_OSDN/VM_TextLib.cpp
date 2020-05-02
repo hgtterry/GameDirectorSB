@@ -63,6 +63,9 @@ LRESULT CALLBACK VM_TextLib::TextureLib_Proc(HWND hDlg, UINT message, WPARAM wPa
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_TEXTURELIST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_EXPORTALL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_RENAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 
 		App->CL_Vm_TextLib->Entry = new BitmapEntry;
 
@@ -102,7 +105,40 @@ LRESULT CALLBACK VM_TextLib::TextureLib_Proc(HWND hDlg, UINT message, WPARAM wPa
 		return (LONG)App->AppBackground;
 	}
 
-	return TRUE;
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_EXPORTALL && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_RENAME && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
 
 	case WM_COMMAND:
 	{
@@ -150,30 +186,30 @@ LRESULT CALLBACK VM_TextLib::TextureLib_Proc(HWND hDlg, UINT message, WPARAM wPa
 				return 1;
 			}*/
 
-			App->CL_Vm_TextLib->AddTexture(NULL, App->CL_Vm_TextLib->Txt_FileName);
-			App->CL_Vm_TextLib->p_Data->Dirty = 1; // it as changed reqest save
+			//App->CL_Vm_TextLib->AddTexture(NULL, App->CL_Vm_TextLib->Txt_FileName);
+			//App->CL_Vm_TextLib->p_Data->Dirty = 1; // it as changed reqest save
 			return TRUE;
 		}
 		//--------------------------------- Save ----------------------
 		if (LOWORD(wParam) == IDC_SAVE)
 		{
 
-			App->CL_Vm_TextLib->Save(App->CL_Vm_TextLib->p_Data->TXLFileName);
+			//App->CL_Vm_TextLib->Save(App->CL_Vm_TextLib->p_Data->TXLFileName);
 			return TRUE;
 		}
 		//--------------------------------- Rename ----------------------
 		if (LOWORD(wParam) == IDC_RENAME)
 		{
 
-			//DialogBox(hInst, (LPCTSTR)IDD_RENAME, Fdlg, (DLGPROC)RenameProc);
-			//App->CL_Vm_TextLib->pData->Dirty = 1;  // it as changed reqest save
+			DialogBox(App->hInst, (LPCTSTR)IDD_RENAME,App->Fdlg, (DLGPROC)RenameProc);
+			App->CL_Vm_TextLib->p_Data->Dirty = 1;  // it as changed reqest save
 			return TRUE;
 		}
 		//--------------------------------- Save AS --------------------
 		if (LOWORD(wParam) == IDC_SAVEAS)
 		{
 
-			App->CL_Vm_TextLib->Save(NULL);
+			//App->CL_Vm_TextLib->Save(NULL);
 			return TRUE;
 		}
 
@@ -214,7 +250,7 @@ LRESULT CALLBACK VM_TextLib::TextureLib_Proc(HWND hDlg, UINT message, WPARAM wPa
 		if (LOWORD(wParam) == IDC_EXPORTSELECTED)
 		{
 
-			App->CL_Vm_TextLib->TPack_ExtractSelected();
+			//App->CL_Vm_TextLib->TPack_ExtractSelected();
 			return TRUE;
 		}
 
@@ -236,6 +272,7 @@ LRESULT CALLBACK VM_TextLib::TextureLib_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 			App->CL_Vm_TextLib->TPack_ExtractAll();
 
+			App->Say("All Textures Exported");
 			return TRUE;
 		}
 
@@ -1306,7 +1343,6 @@ bool VM_TextLib::TPack_ExtractAll()
 	//	BitmapEntry *	pEntry;
 	char            szName[256];
 	char            szFile[256];
-	char            szPath[256];
 	int             nErrorCode;
 
 	nCount = SendDlgItemMessage(p_Data->hwnd, IDC_TEXTURELIST, LB_GETCOUNT, (WPARAM)0, (LPARAM)0);
@@ -1553,4 +1589,40 @@ bool VM_TextLib::Txt_OpenFile(char* Extension, char* Title, char* StartDirectory
 		return 1;
 	}
 	return 0;
+}
+
+// *************************************************************************
+// *						RenameProc 13/06/04   						   *
+// *************************************************************************
+LRESULT CALLBACK VM_TextLib::RenameProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+	case WM_INITDIALOG:
+		
+		App->CL_Vm_TextLib->GetName();
+		SetDlgItemText(hDlg, IDC_OLDNAME, App->CL_Vm_TextLib->TextureName);
+		SetDlgItemText(hDlg, IDC_NEWNAME, App->CL_Vm_TextLib->TextureName);
+		return TRUE;
+
+	case WM_COMMAND:
+		if (LOWORD(wParam) == IDOK)
+		{
+			char buf1[256];
+			GetDlgItemText(hDlg, IDC_NEWNAME, buf1, 256);
+
+			int test = strcmp(buf1, "");
+			if (test == 0)
+			{
+				strcpy(buf1, App->CL_Vm_TextLib->TextureName);
+			}
+			App->CL_Vm_TextLib->ReName(buf1);
+			App->CL_Vm_TextLib->UpDateList(buf1);
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+		break;
+	}
+
+	return FALSE;
 }
