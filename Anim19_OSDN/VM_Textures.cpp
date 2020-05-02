@@ -413,8 +413,9 @@ bool VM_Textures::Soil_Load_Texture(UINT textureArray[], LPSTR strFileName, int 
 
 	if (textureArray[textureID] == 0) // Fall back attemp to convert and load or Bail
 	{
-		App->Say("Soil Fail");
-		//Texture_To_Bmp(strFileName);
+		//App->Say("Soil Fail 2");
+		
+		CreateDummyTexture();
 
 		textureArray[textureID] = SOIL_load_OGL_texture
 		(
@@ -423,6 +424,7 @@ bool VM_Textures::Soil_Load_Texture(UINT textureArray[], LPSTR strFileName, int 
 			SOIL_CREATE_NEW_ID,
 			SOIL_FLAG_TEXTURE_REPEATS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_MIPMAPS
 		);
+
 		remove("Etemp.bmp");
 
 		if (textureArray[textureID] == 0)
@@ -430,6 +432,7 @@ bool VM_Textures::Soil_Load_Texture(UINT textureArray[], LPSTR strFileName, int 
 			const char* test = SOIL_last_result();
 			char buff[255];
 			strcpy(buff, test);
+			strcat(buff, "- Soil Message");
 			App->Say(buff);
 			return 0;
 		}
@@ -509,10 +512,23 @@ bool VM_Textures::TexureToWinPreviewFullPath(int Index, char* FullPath)
 	// ----------------------------------- Bitmap
 	if (_stricmp(mFileName + strlen(mFileName) - 4, ".BMP") == 0)
 	{
-	
+		App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap = NULL;
+
 		App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap = (HBITMAP)LoadImage(NULL, mFileName, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
 		
-		App->CL_Vm_Model->S_MeshGroup[Index]->Bitmap_Loaded = 1;
+		if (App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap == NULL)
+		{
+			//App->Say("Cant Load TexureToWin BMP ");
+			CreateDummyTexture();
+			App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap = (HBITMAP)LoadImage(NULL, "Etemp.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+			remove("Etemp.bmp");
+
+			App->CL_Vm_Model->S_MeshGroup[Index]->Bitmap_Loaded = 1;
+		}
+		else
+		{
+			App->CL_Vm_Model->S_MeshGroup[Index]->Bitmap_Loaded = 1;
+		}
 		
 		return 1;
 	}
@@ -523,7 +539,7 @@ bool VM_Textures::TexureToWinPreviewFullPath(int Index, char* FullPath)
 		int Test = Ogre_LoadImage("tga", mFileName, Index);
 		if (Test == 0)
 		{
-			App->Say("Failed to load image");
+			App->Say("Failed to load image tga");
 		}
 
 		App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap = (HBITMAP)LoadImage(NULL, "Etemp.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
@@ -538,7 +554,7 @@ bool VM_Textures::TexureToWinPreviewFullPath(int Index, char* FullPath)
 		int Test = Ogre_LoadImage("jpg", mFileName, Index);
 		if (Test == 0)
 		{
-			App->Say("Failed to load image");
+			App->Say("Failed to load image jpg");
 		}
 
 		App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap = (HBITMAP)LoadImage(NULL,"Etemp.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
@@ -552,7 +568,7 @@ bool VM_Textures::TexureToWinPreviewFullPath(int Index, char* FullPath)
 		int Test = Ogre_LoadImage("dds", mFileName, Index);
 		if (Test == 0)
 		{
-			App->Say("Failed to load image");
+			App->Say("Failed to load image dds");
 		}
 
 		App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap = (HBITMAP)LoadImage(NULL, "Etemp.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
@@ -566,7 +582,7 @@ bool VM_Textures::TexureToWinPreviewFullPath(int Index, char* FullPath)
 		int Test = Ogre_LoadImage("png", mFileName, Index);
 		if (Test == 0)
 		{
-			App->Say("Failed to load image");
+			App->Say("Failed to load image png");
 		}
 
 		App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap = (HBITMAP)LoadImage(NULL, "Etemp.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);

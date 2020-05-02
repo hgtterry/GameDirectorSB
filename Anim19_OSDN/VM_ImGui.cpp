@@ -142,7 +142,7 @@ void VM_ImGui::Render_ImGui(void)
 
 	if (Show_ImGui_Test == 1)
 	{
-		ImGui::ShowDemoWindow();
+		//ImGui::ShowDemoWindow();
 	}
 
 	if (Show_Rotation == 1)
