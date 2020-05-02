@@ -339,3 +339,101 @@ bool VM_Model::GetBoundingBoxModel_Update(void)
 	return 1;
 }
 
+// *************************************************************************
+// *					Convert_To_GlobalMesh  Terry Bernie   	  	 	   *
+// *************************************************************************
+void VM_Model::Convert_To_GlobalMesh(void)
+{
+	int Count = 0;
+	int GroupVertCount = 0;
+	int GroupFaceCount = 0;
+	int VC = 0;
+
+	int Offset = 0;
+
+	vertex_Data.resize(VerticeCount);
+	Face_Data.resize(FaceCount);
+
+	Normal_Data.resize(VerticeCount);
+	MapCord_Data.resize(VerticeCount);
+	MatIndex_Data.resize(FaceCount);
+
+	/*if (App->CL_Model_Data->ItsAnOgreModel == 1)
+	{
+		App->CL_Model_Data->BoneIndex_Data.resize(App->CL_Model_Data->VertCount);
+	}*/
+
+	while (Count < GroupCount)
+	{
+		GroupVertCount = 0;
+
+		while (GroupVertCount < S_MeshGroup[Count]->GroupVertCount)
+		{
+			vertex_Data[VC].x = S_MeshGroup[Count]->vertex_Data[GroupVertCount].x;
+			vertex_Data[VC].y = S_MeshGroup[Count]->vertex_Data[GroupVertCount].y;
+			vertex_Data[VC].z = S_MeshGroup[Count]->vertex_Data[GroupVertCount].z;
+
+			/*if (App->CL_Model_Data->ItsAnOgreModel == 1)
+			{
+				App->CL_Model_Data->BoneIndex_Data[VC].Index = App->CL_Model_Data->S_MeshGroup[Count]->BoneIndex_Data[GroupVertCount].Index;
+			}*/
+
+			MapCord_Data[VC].u = S_MeshGroup[Count]->MapCord_Data[GroupVertCount].u;
+			MapCord_Data[VC].v = S_MeshGroup[Count]->MapCord_Data[GroupVertCount].v;
+
+			Normal_Data[VC].x = S_MeshGroup[Count]->Normal_Data[GroupVertCount].x;
+			Normal_Data[VC].y = S_MeshGroup[Count]->Normal_Data[GroupVertCount].y;
+			Normal_Data[VC].z = S_MeshGroup[Count]->Normal_Data[GroupVertCount].z;
+
+			VC++;
+
+			GroupVertCount++;
+		}
+
+		Count++;
+	}
+
+
+	VC = 0;
+	Count = 0;
+	int mFaceCount = 0;
+	while (Count < GroupCount)
+	{
+		mFaceCount = 0;
+		while (mFaceCount < S_MeshGroup[Count]->GroupFaceCount)
+		{
+
+			Face_Data[VC].Group = Count;
+
+			Face_Data[VC].a = S_MeshGroup[Count]->Face_Data[mFaceCount].a + Offset;
+			Face_Data[VC].b = S_MeshGroup[Count]->Face_Data[mFaceCount].b + Offset;
+			Face_Data[VC].c = S_MeshGroup[Count]->Face_Data[mFaceCount].c + Offset;
+
+			VC++;
+			mFaceCount++;
+		}
+
+		Offset = Offset + S_MeshGroup[Count]->GroupVertCount;
+		Count++;
+
+	}
+
+
+	VC = 0;
+	Count = 0;
+	while (Count < GroupCount)
+	{
+		GroupFaceCount = 0;
+
+		while (GroupFaceCount < S_MeshGroup[Count]->GroupFaceCount)
+		{
+			MatIndex_Data[VC] = S_MeshGroup[Count]->MaterialIndex;
+
+			VC++;
+			GroupFaceCount++;
+		}
+
+		Count++;
+	}
+}
+

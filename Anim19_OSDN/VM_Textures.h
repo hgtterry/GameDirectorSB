@@ -42,10 +42,13 @@ public:
 	bool CreateDummyTexture(void);
 	bool Soil_DecodeTextures(int TextureID);
 	void CreateTextureInfo(void);
+	bool HBITMAP_TO_BmpFile(HBITMAP Bitmap, char* Filename, char* SaveFolder);
 
 	//HBITMAP GetHBITMAPFromImageFile(const WCHAR* pFilePath);
 
 	bool Ogre_LoadImage(const Ogre::String& tex_ext, const Ogre::String& texture_path, int Index);
+
+	bool RemoveFile(char* Filename, char* Folder);
 
 	char JustFileName[255];
 	char GEFormatString[255];

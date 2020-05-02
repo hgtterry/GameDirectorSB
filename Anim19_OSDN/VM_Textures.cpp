@@ -467,6 +467,16 @@ bool VM_Textures::Soil_Load_Texture(UINT textureArray[], LPSTR strFileName, int 
 //}
 
 // *************************************************************************
+// *						HBITMAP_TO_BmpFile						 	   *
+// *************************************************************************
+bool VM_Textures::HBITMAP_TO_BmpFile(HBITMAP Bitmap, char* Filename, char* SaveFolder)
+{
+	//ilutWinSaveImage(Filename, Bitmap);
+
+	return 1;
+}
+
+// *************************************************************************
 // *								Ogre_LoadImage				  	 	   *
 // *************************************************************************
 bool VM_Textures::Ogre_LoadImage(const Ogre::String& tex_ext, const Ogre::String& texture_path,int Index)
@@ -626,6 +636,15 @@ bool VM_Textures::TexureToWinPreviewFullPath(int Index, char* FullPath)
 //	Gdiplus::GdiplusShutdown(gpToken);
 //	return result;
 //}
+
+// *************************************************************************
+// *						RemoveFile Terry Bernie					 	   *
+// *************************************************************************
+bool VM_Textures::RemoveFile(char* Filename, char* Folder)
+{
+	remove(Filename);
+	return 1;
+}
 
 // *************************************************************************
 // *					CreateDummyTexture Terry Bernie   		 	 	   *

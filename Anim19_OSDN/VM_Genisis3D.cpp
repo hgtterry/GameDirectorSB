@@ -23,6 +23,7 @@ distribution.
 
 #include "stdafx.h"
 #include "GD19_App.h"
+#include "resource.h"
 #include "VM_Genisis3D.h"
 #include "stdio.h"
 #include "stdarg.h"
@@ -51,6 +52,8 @@ VM_Genisis3D::VM_Genisis3D()
 	m_CurrentPose = 0;
 	AnimationSpeed = (float)0.005;
 
+	NewBody = nullptr;
+
 	Actor_Position.X = 0;
 	Actor_Position.Y = 0;
 	Actor_Position.Z = 0;
@@ -62,6 +65,16 @@ VM_Genisis3D::VM_Genisis3D()
 	Actor_Scale.X = 0;
 	Actor_Scale.Y = 0;
 	Actor_Scale.Z = 0;
+
+	ParentBone = -1;
+
+	PosX = 0;
+	PosY = 0;
+	PosZ = 0;
+
+	RotX = 0;
+	RotY = 0;
+	RotZ = 0;
 }
 
 
@@ -96,6 +109,15 @@ void VM_Genisis3D::Reset_Class(void)
 	Actor_Scale.X = 0;
 	Actor_Scale.Y = 0;
 	Actor_Scale.Z = 0;
+
+	PosX = 0;
+	PosY = 0;
+	PosZ = 0;
+
+	RotX = 0;
+	RotY = 0;
+	RotZ = 0;
+
 }
 // *************************************************************************
 // *						LoadActor Terry Bernie					 	   *
@@ -1151,10 +1173,504 @@ void VM_Genisis3D::Export_As_Actor(void)
 	}
 	else
 	{
-		/*App->CL_Model_Common->Convert_To_GlobalMesh();
-		MakeOBJActor(Temp, 0);*/
+		App->CL_Vm_Model->Convert_To_GlobalMesh();
+		MakeOBJActor(Temp, 0);
 	}
 }
+
+// *************************************************************************
+// *							MakeOBJActor						 	   *
+// *************************************************************************
+bool VM_Genisis3D::MakeOBJActor(char* Filename, bool Decompile)
+{
+	NewBody = geBody_Create();
+
+	geVFile *VF = NULL;
+	geActor_Def *ActorDef = NULL;
+
+	ActorDef = geActor_DefCreate();
+	geActor_SetBody(ActorDef, NewBody);
+
+	AddBone();
+	AddFaces_Assimp();
+
+	int Count = 0;
+	int NumMatrials = App->CL_Vm_Model->GroupCount;
+
+	while (Count < NumMatrials)
+	{
+
+		char buf[255];
+		sprintf(buf, "%s%i", "Dummy", Count);
+
+		strcpy(CTextureName, buf);//App->S_MeshGroup[Count]->GroupName);
+
+		ReadTextures(Count);
+		Count++;
+	}
+
+	char F_Name[255];
+	strcpy(F_Name, Filename);
+
+	VF = geVFile_OpenNewSystem(NULL, GE_VFILE_TYPE_DOS, F_Name, NULL, GE_VFILE_OPEN_CREATE);
+
+	if (VF)
+	{
+		geActor_DefWriteToFile(ActorDef, VF);
+		geVFile_Close(VF);
+
+		/*if (Decompile == 1)
+		{
+			char Temp[1024];
+			strcpy(Temp, App->CL_Vm_FileIO->OutputFolder);
+			strcat(Temp, App->CL_Vm_Model->JustName);
+			strcat(Temp, ".bdy");
+			Decompile_Body(Temp, ActorDef);
+
+			App->CL_FileIO->Create_Texture_Folder();
+			Decompile_Textures(ActorDef);
+		}*/
+
+		geActor_DefDestroy(&ActorDef); // cleans up all motions and body*/
+		return 1;
+	}
+
+	geVFile_Close(VF);
+	geActor_DefDestroy(&ActorDef); // cleans up all motions and body*/
+	App->Say("Cant create Actor");
+	return 1;
+}
+
+// *************************************************************************
+// *						ReadTextures Terry Bernie  		  		 	   *
+// *************************************************************************
+bool VM_Genisis3D::ReadTextures(int Count)
+{
+	//AddDummyTexture();
+
+	HBITMAP HbmpTemp;
+
+	HbmpTemp = App->CL_Vm_Model->S_MeshGroup[Count]->Base_Bitmap;
+
+	App->CL_Vm_Textures->HBITMAP_TO_BmpFile(HbmpTemp, "Etemp.bmp", "");
+	strcpy(TextureFileName, "Etemp.bmp");
+	AddTextureToActor();
+
+	remove("Etemp.bmp");
+
+	return 1;
+}
+
+// *************************************************************************
+// *					AddTextureToActor Terry Bernie					   *
+// *************************************************************************
+bool VM_Genisis3D::AddTextureToActor(void)
+{
+	geVFile *VF;
+	geBitmap *Bmp;
+	bool LetTextureGo = 0;
+
+	int Index = 0;
+	VF = geVFile_OpenNewSystem(NULL, GE_VFILE_TYPE_DOS, TextureFileName, NULL, GE_VFILE_OPEN_READONLY);
+	if (VF == NULL)
+	{
+		AddDummyTexture();
+		return 0;
+	}
+	else
+	{
+		Bmp = geBitmap_CreateFromFile(VF);
+		geVFile_Close(VF);
+		if (Bmp == NULL)
+		{
+			App->Say("Cant Read Texture ");
+			return GE_FALSE;
+		}
+		if (geBitmap_SetColorKey(Bmp, GE_TRUE, 255, GE_TRUE) == GE_FALSE)
+		{
+			App->Say("Cant Set Colors");
+			return GE_FALSE;
+		}
+		//-------------------------------------- Test for Dup Name	
+
+		float R, G, B = 0;
+		geBitmap* Bitmap;
+		const char *MaterialName;
+
+		char Temp[256];
+		int Loop = 0;
+		int BodyMatCount = geBody_GetMaterialCount(NewBody);
+		while (Loop<BodyMatCount)
+		{
+			char bufnum[256];
+			geBody_GetMaterial(NewBody, Loop, &MaterialName, &Bitmap, &R, &G, &B);
+			strcpy(Temp, MaterialName);
+
+			int test = strcmp(Temp, CTextureName);
+			if (test == 0)
+			{
+				_itoa(Loop, bufnum, 10);
+				strcat(CTextureName, bufnum);
+				break;
+			}
+			Loop++;
+		}
+		//----------------------------------------------------------------	
+
+		if (LetTextureGo == 0)
+		{
+			int W, H, TwoPower;
+			W = geBitmap_Width(Bmp);
+			H = geBitmap_Height(Bmp);
+
+			for (TwoPower = 1; TwoPower <= 2048; TwoPower *= 2)
+			{
+				if (TwoPower == W)
+					break;
+			}
+			if (TwoPower > 2048)
+			{
+				App->Say("You need to resize your texture in a paint program");
+				AddDummyTexture();
+				return 0;
+			}
+
+			for (TwoPower = 1; TwoPower <= 2048; TwoPower *= 2)
+			{
+				if (TwoPower == H)
+					break;
+			}
+			if (TwoPower > 2048)
+			{
+				App->Say("You need to resize your texture in a paint program");
+				AddDummyTexture();
+				return 0;
+			}
+
+		}
+		if (geBody_AddMaterial(NewBody, CTextureName, Bmp, 255.0f, 255.0f, 255.0f, &Index) == GE_FALSE)
+		{
+			App->Say("Could Not Add Texture To Body ");
+			return GE_FALSE;
+		}
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *					AddDummyTexture Terry Bernie	   			 	   *
+// *************************************************************************
+bool VM_Genisis3D::AddDummyTexture()
+{
+	geVFile *VF;
+	geBitmap *Bmp = NULL;
+
+	HbitmapToSaveBmp();
+
+	VF = geVFile_OpenNewSystem(NULL, GE_VFILE_TYPE_DOS, "Etemp.bmp", NULL, GE_VFILE_OPEN_READONLY);
+	if (VF == NULL)
+	{
+		App->Say("Cant Create Dummy Texture");
+	}
+	else
+	{
+		Bmp = geBitmap_CreateFromFile(VF);
+		geVFile_Close(VF);
+		if (Bmp == NULL)
+		{
+			App->Say("Cant Read Texture ");
+			return GE_FALSE;
+		}
+		if (geBitmap_SetColorKey(Bmp, GE_TRUE, 255, GE_TRUE) == GE_FALSE)
+		{
+			App->Say("Cant Set Colors");
+			return GE_FALSE;
+		}
+	}
+	int Index = 0;
+
+	if (geBody_AddMaterial(NewBody, CTextureName, Bmp, 255, 255, 255, &Index) == GE_FALSE)
+	{
+
+		App->Say("Could Not Add Texture To Body ");
+		App->CL_Vm_Textures->RemoveFile("Etemp.bmp", "");
+		return GE_FALSE;
+	}
+
+	App->CL_Vm_Textures->RemoveFile("Etemp.bmp", "");
+	return 1;
+}
+
+// *************************************************************************
+// *						HbitmapToSaveBmp Terry Bernie   	 	 	   *
+// *************************************************************************
+bool VM_Genisis3D::HbitmapToSaveBmp(void) // Old Routine needs new one Terry 24/04/13
+{
+	HBITMAP hbmpTemp;
+	hbmpTemp = LoadBitmap(App->hInst, MAKEINTRESOURCE(IDB_DUMMY));
+
+	App->CL_Vm_Textures->HBITMAP_TO_BmpFile(hbmpTemp, "Etemp.bmp", "");
+	return 1;
+}
+
+// *************************************************************************
+// *							AddFaces_Assimp		  		  		 	   *
+// *************************************************************************
+bool VM_Genisis3D::AddFaces_Assimp(void)
+{
+	int Count = 0;
+	int FaceCount = App->CL_Vm_Model->FaceCount;
+
+	const geVec3d* vertices[3];
+
+	geVec3d Fvert[3];
+	geVec3d normals[3];
+
+	const char* bonename;
+	geActor * NewActor1;
+
+	int Add = 0;
+
+	normals[0].X = 1;
+	normals[0].Y = 1;
+	normals[0].Z = 1;
+
+	normals[1].X = 1;
+	normals[1].Y = 1;
+	normals[1].Z = 1;
+
+	normals[2].X = 1;
+	normals[2].Y = 1;
+	normals[2].Z = 1;
+
+	float tu1 = 1;
+	float tv1 = 0;
+
+	float tu2 = 1;
+	float tv2 = 1;
+
+	float tu3 = 0;
+	float tv3 = 0;
+
+	int BoneIndex = 0;
+	int MaterialIndex = 0;
+
+	geActor_Def *ActorDef = NULL;
+	ActorDef = geActor_DefCreate();
+	geActor_SetBody(ActorDef, NewBody);
+	NewActor1 = geActor_Create(ActorDef);
+
+	while (Count < App->CL_Vm_Model->FaceCount)
+	{
+
+		Fvert[0].X = App->CL_Vm_Model->vertex_Data[App->CL_Vm_Model->Face_Data[Count].a].x;
+		Fvert[0].Y = App->CL_Vm_Model->vertex_Data[App->CL_Vm_Model->Face_Data[Count].a].y;
+		Fvert[0].Z = App->CL_Vm_Model->vertex_Data[App->CL_Vm_Model->Face_Data[Count].a].z;
+
+		Fvert[1].X = App->CL_Vm_Model->vertex_Data[App->CL_Vm_Model->Face_Data[Count].b].x;
+		Fvert[1].Y = App->CL_Vm_Model->vertex_Data[App->CL_Vm_Model->Face_Data[Count].b].y;
+		Fvert[1].Z = App->CL_Vm_Model->vertex_Data[App->CL_Vm_Model->Face_Data[Count].b].z;
+
+		Fvert[2].X = App->CL_Vm_Model->vertex_Data[App->CL_Vm_Model->Face_Data[Count].c].x;
+		Fvert[2].Y = App->CL_Vm_Model->vertex_Data[App->CL_Vm_Model->Face_Data[Count].c].y;
+		Fvert[2].Z = App->CL_Vm_Model->vertex_Data[App->CL_Vm_Model->Face_Data[Count].c].z;
+
+		vertices[0] = &Fvert[0];
+		vertices[1] = &Fvert[1];
+		vertices[2] = &Fvert[2];
+
+		MaterialIndex = App->CL_Vm_Model->MatIndex_Data[Count];
+
+		float tu1 = App->CL_Vm_Model->MapCord_Data[App->CL_Vm_Model->Face_Data[Count].a].u;
+		float tv1 = 1 - App->CL_Vm_Model->MapCord_Data[App->CL_Vm_Model->Face_Data[Count].a].v;
+
+		float tu2 = App->CL_Vm_Model->MapCord_Data[App->CL_Vm_Model->Face_Data[Count].b].u;
+		float tv2 = 1 - App->CL_Vm_Model->MapCord_Data[App->CL_Vm_Model->Face_Data[Count].b].v;
+
+		float tu3 = App->CL_Vm_Model->MapCord_Data[App->CL_Vm_Model->Face_Data[Count].c].u;
+		float tv3 = 1 - App->CL_Vm_Model->MapCord_Data[App->CL_Vm_Model->Face_Data[Count].c].v;
+
+		normals[0].X = App->CL_Vm_Model->Normal_Data[App->CL_Vm_Model->Face_Data[Count].a].x;
+		normals[0].Y = App->CL_Vm_Model->Normal_Data[App->CL_Vm_Model->Face_Data[Count].a].y;
+		normals[0].Z = App->CL_Vm_Model->Normal_Data[App->CL_Vm_Model->Face_Data[Count].a].z;
+
+		normals[1].X = App->CL_Vm_Model->Normal_Data[App->CL_Vm_Model->Face_Data[Count].b].x;
+		normals[1].Y = App->CL_Vm_Model->Normal_Data[App->CL_Vm_Model->Face_Data[Count].b].y;
+		normals[1].Z = App->CL_Vm_Model->Normal_Data[App->CL_Vm_Model->Face_Data[Count].b].z;
+
+		normals[2].X = App->CL_Vm_Model->Normal_Data[App->CL_Vm_Model->Face_Data[Count].c].x;
+		normals[2].Y = App->CL_Vm_Model->Normal_Data[App->CL_Vm_Model->Face_Data[Count].c].y;
+		normals[2].Z = App->CL_Vm_Model->Normal_Data[App->CL_Vm_Model->Face_Data[Count].c].z;
+
+		geVec3d angle;
+		geXForm3d B;
+		int pb = 0;
+		for (int j = 0; j<3; j++)
+		{
+			geBody_GetBone(NewBody, 0, &bonename, &B, &pb);
+
+			geActor_GetBoneTransform(NewActor1, bonename, &B);
+
+			angle.X = normals[j].X;
+			angle.Y = normals[j].Y;
+			angle.Z = normals[j].Z;
+
+			VectorIRotate(&B, &angle, &angle);
+
+			normals[j].X = angle.X;
+			normals[j].Y = angle.Y;
+			normals[j].Z = angle.Z;
+		}
+
+		if (geBody_AddFace(NewBody,
+			vertices[0], &normals[0], tu1, tv1, BoneIndex,
+			vertices[1], &normals[1], tu2, tv2, BoneIndex,
+			vertices[2], &normals[2], tu3, tv3, BoneIndex,
+			MaterialIndex) == GE_FALSE)
+		{
+			App->Say("Could not add face for mesh");
+			App->Say_Int(Count);
+			return 0;
+		}
+		Count++;
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *					VectorIRotate Terry Bernie  			 	 	   *
+// *************************************************************************
+bool VM_Genisis3D::VectorIRotate(const geXForm3d* matrix, const geVec3d* v, geVec3d* result)
+{
+	geVec3d angle;
+
+	angle = *v;
+
+	result->X = angle.X*matrix->AX + angle.Y*matrix->BX + angle.Z*matrix->CX;
+
+	result->Y = angle.X*matrix->AY + angle.Y*matrix->BY + angle.Z*matrix->CY;
+
+	result->Z = angle.X*matrix->AZ + angle.Y*matrix->BZ + angle.Z*matrix->CZ;
+
+	return 1;
+}
+
+
+// *************************************************************************
+// *						AddBone Terry Bernie					 	   *
+// *************************************************************************
+bool VM_Genisis3D::AddBone(void)
+{
+	int Index = 0;
+	geXForm3d matrix;
+	geQuaternion gQ;
+	geVec3d v;
+
+	PosX = 0;
+	PosY = 0;
+	PosZ = 0;
+
+	RotX = 0;
+	RotY = 0;
+	RotZ = 0;
+
+	ParentBone = -1;
+
+	strcpy(BoneName, "joint1");
+	MakeBoneMatrix();
+
+	matrix = BoneMatrix;
+
+	v = matrix.Translation;
+
+	geQuaternion_FromMatrix(&matrix, &gQ);
+	gQ.W = -gQ.W;
+
+	geQuaternion_ToMatrix(&gQ, &matrix);
+	matrix.Translation = v;
+
+	geXForm3d_Orthonormalize(&matrix);
+
+	if (ParentBone == -1) { ParentBone = GE_BODY_NO_PARENT_BONE; }
+
+	// attach the bone
+	if (geBody_AddBone(NewBody, ParentBone, BoneName, &matrix, &Index) == GE_FALSE)
+	{
+		return 0;
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *						MakeBoneMatrix Terry Bernie  			 	   *
+// *************************************************************************
+bool VM_Genisis3D::MakeBoneMatrix(void)
+{
+	Vec3[0] = RotX * 180 / (float)Q_PI;
+	Vec3[1] = RotY * 180 / (float)Q_PI;
+	Vec3[2] = RotZ * 180 / (float)Q_PI;
+
+	AngleMatrix(Vec3);
+
+	TempMatrix_t[0][3] = PosX;
+	TempMatrix_t[1][3] = PosY;
+	TempMatrix_t[2][3] = PosZ;
+
+	BoneMatrix.AX = TempMatrix_t[0][0];
+	BoneMatrix.AY = TempMatrix_t[1][0];
+	BoneMatrix.AZ = TempMatrix_t[2][0];
+
+	BoneMatrix.BX = TempMatrix_t[0][1];
+	BoneMatrix.BY = TempMatrix_t[1][1];
+	BoneMatrix.BZ = TempMatrix_t[2][1];
+
+	BoneMatrix.CX = TempMatrix_t[0][2];
+	BoneMatrix.CY = TempMatrix_t[1][2];
+	BoneMatrix.CZ = TempMatrix_t[2][2];
+
+	BoneMatrix.Translation.X = TempMatrix_t[0][3];
+	BoneMatrix.Translation.Y = TempMatrix_t[1][3];
+	BoneMatrix.Translation.Z = TempMatrix_t[2][3];
+
+	return 1;
+}
+// *************************************************************************
+// *						AngleMatrix Terry Bernie				 	   *
+// *************************************************************************
+bool VM_Genisis3D::AngleMatrix(const TVec3 angles)
+{
+	float		angle;
+	float		sr, sp, sy, cr, cp, cy;
+
+	angle = angles[2] * (Q_PI * 2 / 360);
+	sy = sin(angle);
+	cy = cos(angle);
+	angle = angles[1] * (Q_PI * 2 / 360);
+	sp = sin(angle);
+	cp = cos(angle);
+	angle = angles[0] * (Q_PI * 2 / 360);
+	sr = sin(angle);
+	cr = cos(angle);
+
+	// matrix = (Z * Y) * X
+	TempMatrix_t[0][0] = cp*cy;
+	TempMatrix_t[1][0] = cp*sy;
+	TempMatrix_t[2][0] = -sp;
+	TempMatrix_t[0][1] = sr*sp*cy + cr*-sy;
+	TempMatrix_t[1][1] = sr*sp*sy + cr*cy;
+	TempMatrix_t[2][1] = sr*cp;
+	TempMatrix_t[0][2] = (cr*sp*cy + -sr*-sy);
+	TempMatrix_t[1][2] = (cr*sp*sy + -sr*cy);
+	TempMatrix_t[2][2] = cr*cp;
+	TempMatrix_t[0][3] = 0.0;
+	TempMatrix_t[1][3] = 0.0;
+	TempMatrix_t[2][3] = 0.0;
+	return 1;
+}
+
 
 // *************************************************************************
 // *						Actor_To_Actor Terry Bernie			  	 	   *

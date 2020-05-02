@@ -36,6 +36,10 @@ distribution.
 #include "mkbody.h"
 #include "bitmap.h"
 
+#define	Q_PI	3.14159265358979323846
+
+typedef float   TVec3[3];
+
 class VM_Genisis3D
 {
 public:
@@ -113,6 +117,37 @@ protected:
 	bool Export_VectorIRotate(const geXForm3d* matrix, const geVec3d* v, geVec3d* result);
 
 	bool GetBoundingBoxModel_Create(void);
+
+	// ---------------------------------------------------- Export Routines
+	bool MakeOBJActor(char* Filename, bool Decompile);
+	bool AddBone(void);
+	bool MakeBoneMatrix(void);
+	bool AngleMatrix(const TVec3 angles);
+	bool AddFaces_Assimp(void);
+	bool VectorIRotate(const geXForm3d* matrix, const geVec3d* v, geVec3d* result);
+	bool ReadTextures(int Count);
+	bool AddTextureToActor(void);
+	bool AddDummyTexture();
+	bool HbitmapToSaveBmp(void);
+
+	geBody* NewBody;
+
+	int ParentBone;
+	float PosX;
+	float PosY;
+	float PosZ;
+
+	float RotX;
+	float RotY;
+	float RotZ;
+	geXForm3d BoneMatrix;
+	float TempMatrix_t[3][4];
+	TVec3 Vec3;
+	char CTextureName[255];
+	char TextureFileName[1024];
+	char BoneName[255];
+
+	//------------------------------------------------
 
 	char TempTextureFile_BMP[1024];
 	char TempTextureFile_TGA[1024];
