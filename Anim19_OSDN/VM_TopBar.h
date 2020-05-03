@@ -25,7 +25,7 @@ protected:
 
 	static LRESULT CALLBACK TopMain_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
-	static LRESULT CALLBACK TB1_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK View_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	static LRESULT CALLBACK Motions_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Dimensions_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
@@ -33,7 +33,7 @@ protected:
 
 	static LRESULT CALLBACK Tabs_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
-	void Start_TB1(void);
+	void Start_View_TB(void);
 
 	void Init_Bmps_TB1(void);
 	void Init_Bmps_TB2(void);
