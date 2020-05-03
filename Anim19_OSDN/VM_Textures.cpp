@@ -508,7 +508,6 @@ bool VM_Textures::Ogre_LoadImage(const Ogre::String& tex_ext, const Ogre::String
 // *************************************************************************
 bool VM_Textures::HBITMAP_TO_BmpFile(HBITMAP Bitmap, char* Filename, char* SaveFolder)
 {
-	//ilutWinSaveImage(Filename, Bitmap);
 	HDC hDC;
 	int iBits;
 	WORD wBitCount;
