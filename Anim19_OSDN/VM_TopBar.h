@@ -11,7 +11,7 @@ public:
 	void TogglePlayBmp(void);
 
 	HWND TabsHwnd;
-	HWND TB_1;
+	HWND Camera_TB_hWnd;
 	HWND Tabs_TB_hWnd;
 
 	HWND Motions_TB_hWnd;
@@ -59,6 +59,11 @@ protected:
 	bool Toggle_Tabs_Motions_Flag;
 	bool Toggle_Tabs_Dimensions_Flag;
 	bool Toggle_Tabs_Groups_Flag;
+
+	// Camera
+	bool Toggle_Model_Flag;
+	bool Toggle_World_Flag;
+
 
 	bool Toggle_GroupsOnly_Flag;
 
