@@ -252,7 +252,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return 1;
 		}
 
-		
+		case ID_IMPORT_COLLADADAE:
+		{
+			App->CL_Importer->Assimp_Loader("Collada DAE   *.dae\0*.dae\0", "Collada DAE");
+			return 1;
+		}
+
+		case ID_IMPORT_DOOM3MD5MESH:
+		{
+			App->CL_Importer->Assimp_Loader("Doom3  *.md5mesh\0*.md5mesh\0", "Doom3");
+			return 1;
+		}
 
 		case ID_EXPORT_GENESIS3D:
 		{
