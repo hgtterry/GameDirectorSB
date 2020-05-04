@@ -295,6 +295,8 @@
     <Image Include="Resource\MenuBar\FullScreen.bmp" />
     <Image Include="Resource\MenuBar\ModelData.bmp" />
     <Image Include="Resource\MenuBar\MouseSensitivity.bmp" />
+    <Image Include="Resource\MenuBar\ShowMeshOff.bmp" />
+    <Image Include="Resource\MenuBar\ShowMeshOn.bmp" />
     <Image Include="Resource\MenuBar\TexturesOff.bmp" />
     <Image Include="Resource\Motions\Tforward.bmp" />
     <Image Include="Resource\Motions\Tplay.bmp" />

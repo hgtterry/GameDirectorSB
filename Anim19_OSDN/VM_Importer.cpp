@@ -56,6 +56,7 @@ bool VM_Importer::Assimp_Loader(char* Extension, char* Extension2)
 	}*/
 
 	App->Cl19_Ogre->RenderFrame();
+	App->CL_Vm_Groups->Update_Groups_Dialog(0);
 
 	App->Say("Loaded");
 	return 1;
@@ -90,6 +91,7 @@ bool VM_Importer::Genesis3D_Loader(void)
 	App->Cl_Grid->Zoom();
 
 	App->Cl19_Ogre->RenderFrame();
+	
 
 	App->Say("Loaded");
 
@@ -166,6 +168,7 @@ void VM_Importer::Reload_FromResentFiles(char* ResentPathAndFile)
 	App->Cl_Grid->Zoom();
 
 	App->Cl19_Ogre->RenderFrame();
+	App->CL_Vm_Groups->Update_Groups_Dialog(0);
 
 	App->Say("Loaded");
 
