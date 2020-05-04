@@ -259,6 +259,11 @@ void GD19_OgreListener::WorldMode(float DeltaTime)
 
 	App->Cl_Keyboard->Keyboard_Monitor(DeltaTime);
 
+	if (GetAsyncKeyState(VK_ESCAPE) < 0) // Back to full Screen;
+	{
+		App->Cl19_Ogre->ExitFullScreen();
+	}
+
 	// Left Mouse
 	if (Pl_LeftMouseDown == 1 && Pl_RightMouseDown == 0)
 	{
@@ -374,7 +379,7 @@ void GD19_OgreListener::ModelMode(float DeltaTime)
 
 	if (GetAsyncKeyState(VK_ESCAPE) < 0) // Back to full Screen;
 	{
-		//App->Cl_Ogre->ExitFullScreen();
+		App->Cl19_Ogre->ExitFullScreen();
 	}
 
 	if (GetAsyncKeyState(VK_END) < 0) // Back to full Screen;
