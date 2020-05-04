@@ -398,7 +398,6 @@ bool GD19_Ogre::createFrameListener(void)
 void GD19_Ogre::Go_FullScreen_Mode(void)
 {
 
-
 	App->FullScreen = 1;
 	int cx = GetSystemMetrics(SM_CXSCREEN);
 	int cy = GetSystemMetrics(SM_CYSCREEN);

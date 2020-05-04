@@ -34,6 +34,11 @@ VM_TopBar::VM_TopBar()
 	// Camera
 	Toggle_Model_Flag = 1;
 	Toggle_World_Flag = 0;
+
+	// Dimensions
+	Toggle_Rotation_Flag = 0;
+	Toggle_Position_Flag = 0;
+	Toggle_Scale_Flag = 0;
 }
 
 
@@ -63,6 +68,11 @@ void VM_TopBar::Reset_Class()
 	// Camera
 	Toggle_Model_Flag = 1;
 	Toggle_World_Flag = 0;
+
+	// Dimensions
+	Toggle_Rotation_Flag = 0;
+	Toggle_Position_Flag = 0;
+	Toggle_Scale_Flag = 0;
 
 	App->Cl19_Ogre->RenderListener->ShowOnlySubMesh = 0;
 
@@ -996,7 +1006,9 @@ LRESULT CALLBACK VM_TopBar::Dimensions_TB_Proc(HWND hDlg, UINT message, WPARAM w
 	{
 	case WM_INITDIALOG:
 	{
-		SendDlgItemMessage(hDlg, IDC_CBMOTIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_TBROTATION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_TBPOSITION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_TBSCALE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		return TRUE;
 	}
 
@@ -1007,6 +1019,28 @@ LRESULT CALLBACK VM_TopBar::Dimensions_TB_Proc(HWND hDlg, UINT message, WPARAM w
 
 	case WM_NOTIFY:
 	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_TBROTATION && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_Vm_TopBar->Toggle_Rotation_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_TBPOSITION && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_Vm_TopBar->Toggle_Position_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_TBSCALE && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_Vm_TopBar->Toggle_Scale_Flag);
+			return CDRF_DODEFAULT;
+		}
 
 		return CDRF_DODEFAULT;
 	}
@@ -1015,6 +1049,8 @@ LRESULT CALLBACK VM_TopBar::Dimensions_TB_Proc(HWND hDlg, UINT message, WPARAM w
 	{
 		if (LOWORD(wParam) == IDC_TBROTATION) // Rotation
 		{
+			App->CL_Vm_TopBar->Switch_Dimensions_Flag();
+
 			if (App->CL_Vm_ImGui->Show_Rotation == 1)
 			{
 				App->CL_Vm_ImGui->Show_Rotation = 0;
@@ -1022,12 +1058,17 @@ LRESULT CALLBACK VM_TopBar::Dimensions_TB_Proc(HWND hDlg, UINT message, WPARAM w
 			else
 			{
 				App->CL_Vm_ImGui->Show_Rotation = 1;
+				App->CL_Vm_TopBar->Toggle_Rotation_Flag = 1;
 			}
+
+			RedrawWindow(App->CL_Vm_TopBar->Dimensions_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_TBPOSITION) // Position
 		{
+			App->CL_Vm_TopBar->Switch_Dimensions_Flag();
+
 			if (App->CL_Vm_ImGui->Show_Position == 1)
 			{
 				App->CL_Vm_ImGui->Show_Position = 0;
@@ -1035,12 +1076,17 @@ LRESULT CALLBACK VM_TopBar::Dimensions_TB_Proc(HWND hDlg, UINT message, WPARAM w
 			else
 			{
 				App->CL_Vm_ImGui->Show_Position = 1;
+				App->CL_Vm_TopBar->Toggle_Position_Flag = 1;
 			}
+
+			RedrawWindow(App->CL_Vm_TopBar->Dimensions_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_TBSCALE) // Scale
 		{
+			App->CL_Vm_TopBar->Switch_Dimensions_Flag();
+
 			if (App->CL_Vm_ImGui->Show_Scale == 1)
 			{
 				App->CL_Vm_ImGui->Show_Scale = 0;
@@ -1048,7 +1094,10 @@ LRESULT CALLBACK VM_TopBar::Dimensions_TB_Proc(HWND hDlg, UINT message, WPARAM w
 			else
 			{
 				App->CL_Vm_ImGui->Show_Scale = 1;
+				App->CL_Vm_TopBar->Toggle_Scale_Flag = 1;
 			}
+
+			RedrawWindow(App->CL_Vm_TopBar->Dimensions_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
 		}
 		
@@ -1056,6 +1105,16 @@ LRESULT CALLBACK VM_TopBar::Dimensions_TB_Proc(HWND hDlg, UINT message, WPARAM w
 	}
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *						Hide_Tabs Terry Berine						   *
+// *************************************************************************
+void VM_TopBar::Switch_Dimensions_Flag(void)
+{
+	Toggle_Rotation_Flag = 0;
+	Toggle_Position_Flag = 0;
+	Toggle_Scale_Flag = 0;
 }
 
 // *************************************************************************
