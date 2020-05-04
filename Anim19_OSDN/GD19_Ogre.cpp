@@ -435,7 +435,7 @@ bool GD19_Ogre::ExitFullScreen()
 		mCamera->setAspectRatio((Ogre::Real)mWindow->getWidth() / (Ogre::Real)mWindow->getHeight());
 		mCamera->yaw(Radian(0));
 		Root::getSingletonPtr()->renderOneFrame();
-		App->Cl_Scene_Data->EditorMode();
+		//App->Cl_Scene_Data->EditorMode();
 
 	}
 	return 1;

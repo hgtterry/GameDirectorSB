@@ -379,7 +379,11 @@ void GD19_OgreListener::ModelMode(float DeltaTime)
 
 	if (GetAsyncKeyState(VK_ESCAPE) < 0) // Back to full Screen;
 	{
-		App->Cl19_Ogre->ExitFullScreen();
+		if (App->FullScreen == 1)
+		{
+			App->FullScreen = 0;
+			App->Cl19_Ogre->ExitFullScreen();
+		}
 	}
 
 	if (GetAsyncKeyState(VK_END) < 0) // Back to full Screen;
