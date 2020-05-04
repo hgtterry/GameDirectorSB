@@ -47,8 +47,6 @@ protected:
 
 	void Hide_Tabs(void);
 
-	void Switch_Dimensions_Flag(void);
-
 	bool Toggle_Faces_Flag;
 	bool Toggle_Textures_Flag;
 	bool Toggle_Points_Flag;
@@ -66,10 +64,8 @@ protected:
 	bool Toggle_Model_Flag;
 	bool Toggle_World_Flag;
 
-	// Dimensions
-	bool Toggle_Rotation_Flag;
-	bool Toggle_Position_Flag;
-	bool Toggle_Scale_Flag;
+	// Dimensions - >ImGui Flags
+	
 
 
 	bool Toggle_GroupsOnly_Flag;

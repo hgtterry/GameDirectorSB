@@ -35,10 +35,8 @@ VM_TopBar::VM_TopBar()
 	Toggle_Model_Flag = 1;
 	Toggle_World_Flag = 0;
 
-	// Dimensions
-	Toggle_Rotation_Flag = 0;
-	Toggle_Position_Flag = 0;
-	Toggle_Scale_Flag = 0;
+	// Dimensions - >ImGui Flags
+	
 }
 
 
@@ -69,11 +67,8 @@ void VM_TopBar::Reset_Class()
 	Toggle_Model_Flag = 1;
 	Toggle_World_Flag = 0;
 
-	// Dimensions
-	Toggle_Rotation_Flag = 0;
-	Toggle_Position_Flag = 0;
-	Toggle_Scale_Flag = 0;
-
+	// Dimensions - >ImGui Flags
+	
 	App->Cl19_Ogre->RenderListener->ShowOnlySubMesh = 0;
 
 	App->CL_Vm_TopBar->Hide_Tabs();
@@ -1024,21 +1019,21 @@ LRESULT CALLBACK VM_TopBar::Dimensions_TB_Proc(HWND hDlg, UINT message, WPARAM w
 		if (some_item->idFrom == IDC_TBROTATION && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_Vm_TopBar->Toggle_Rotation_Flag);
+			App->Custom_Button_Toggle(item, App->CL_Vm_ImGui->Show_Rotation);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_TBPOSITION && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_Vm_TopBar->Toggle_Position_Flag);
+			App->Custom_Button_Toggle(item, App->CL_Vm_ImGui->Show_Position);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_TBSCALE && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_Vm_TopBar->Toggle_Scale_Flag);
+			App->Custom_Button_Toggle(item, App->CL_Vm_ImGui->Show_Scale);
 			return CDRF_DODEFAULT;
 		}
 
@@ -1049,8 +1044,7 @@ LRESULT CALLBACK VM_TopBar::Dimensions_TB_Proc(HWND hDlg, UINT message, WPARAM w
 	{
 		if (LOWORD(wParam) == IDC_TBROTATION) // Rotation
 		{
-			App->CL_Vm_TopBar->Switch_Dimensions_Flag();
-
+			
 			if (App->CL_Vm_ImGui->Show_Rotation == 1)
 			{
 				App->CL_Vm_ImGui->Show_Rotation = 0;
@@ -1058,7 +1052,6 @@ LRESULT CALLBACK VM_TopBar::Dimensions_TB_Proc(HWND hDlg, UINT message, WPARAM w
 			else
 			{
 				App->CL_Vm_ImGui->Show_Rotation = 1;
-				App->CL_Vm_TopBar->Toggle_Rotation_Flag = 1;
 			}
 
 			RedrawWindow(App->CL_Vm_TopBar->Dimensions_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
@@ -1067,8 +1060,7 @@ LRESULT CALLBACK VM_TopBar::Dimensions_TB_Proc(HWND hDlg, UINT message, WPARAM w
 
 		if (LOWORD(wParam) == IDC_TBPOSITION) // Position
 		{
-			App->CL_Vm_TopBar->Switch_Dimensions_Flag();
-
+			
 			if (App->CL_Vm_ImGui->Show_Position == 1)
 			{
 				App->CL_Vm_ImGui->Show_Position = 0;
@@ -1076,7 +1068,6 @@ LRESULT CALLBACK VM_TopBar::Dimensions_TB_Proc(HWND hDlg, UINT message, WPARAM w
 			else
 			{
 				App->CL_Vm_ImGui->Show_Position = 1;
-				App->CL_Vm_TopBar->Toggle_Position_Flag = 1;
 			}
 
 			RedrawWindow(App->CL_Vm_TopBar->Dimensions_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
@@ -1085,8 +1076,7 @@ LRESULT CALLBACK VM_TopBar::Dimensions_TB_Proc(HWND hDlg, UINT message, WPARAM w
 
 		if (LOWORD(wParam) == IDC_TBSCALE) // Scale
 		{
-			App->CL_Vm_TopBar->Switch_Dimensions_Flag();
-
+			
 			if (App->CL_Vm_ImGui->Show_Scale == 1)
 			{
 				App->CL_Vm_ImGui->Show_Scale = 0;
@@ -1094,7 +1084,6 @@ LRESULT CALLBACK VM_TopBar::Dimensions_TB_Proc(HWND hDlg, UINT message, WPARAM w
 			else
 			{
 				App->CL_Vm_ImGui->Show_Scale = 1;
-				App->CL_Vm_TopBar->Toggle_Scale_Flag = 1;
 			}
 
 			RedrawWindow(App->CL_Vm_TopBar->Dimensions_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
@@ -1105,16 +1094,6 @@ LRESULT CALLBACK VM_TopBar::Dimensions_TB_Proc(HWND hDlg, UINT message, WPARAM w
 	}
 	}
 	return FALSE;
-}
-
-// *************************************************************************
-// *						Hide_Tabs Terry Berine						   *
-// *************************************************************************
-void VM_TopBar::Switch_Dimensions_Flag(void)
-{
-	Toggle_Rotation_Flag = 0;
-	Toggle_Position_Flag = 0;
-	Toggle_Scale_Flag = 0;
 }
 
 // *************************************************************************

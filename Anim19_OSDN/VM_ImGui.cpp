@@ -222,12 +222,15 @@ void VM_ImGui::ImGui_Rotation2(void)
 {
 	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
 
-	if (!ImGui::Begin("Rotation2", &Show_Rotation, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize))
+	if (!ImGui::Begin("Rotation2", &Show_Rotation, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
 	{
 		ImGui::End();
 	}
 	else
 	{
+		ImGui::Text("Rotation");
+		ImGui::Separator();
+		ImGui::Spacing();
 
 		geVec3d pos = App->CL_Vm_Genesis3D->Actor_Rotation;
 		ImGui::Text("X %.3f Y %.3f Z %.3f", pos.X, pos.Y, pos.Z);
@@ -396,12 +399,15 @@ void VM_ImGui::ImGui_Position(void)
 {
 	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
 
-	if (!ImGui::Begin("Position", &Show_Position, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize))
+	if (!ImGui::Begin("Position", &Show_Position, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
 	{
 		ImGui::End();
 	}
 	else
 	{
+		ImGui::Text("Position");
+		ImGui::Separator();
+		ImGui::Spacing();
 
 		geVec3d pos = App->CL_Vm_Genesis3D->Actor_Position;
 		ImGui::Text("X %.3f Y %.3f Z %.3f", pos.X, pos.Y, pos.Z);
@@ -537,13 +543,15 @@ void VM_ImGui::ImGui_Scale(void)
 {
 	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
 
-	if (!ImGui::Begin("Scale", &Show_Scale , ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize))
+	if (!ImGui::Begin("Scale", &Show_Scale , ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
 	{
 		ImGui::End();
 	}
 	else
 	{
-		//ImGui::Text("Scale");
+		ImGui::Text("Scale");
+		ImGui::Separator();
+		ImGui::Spacing();
 
 		ImGui::SameLine();
 		ImGui::Checkbox("Lock Axis", &App->Cl_Dimensions->Set_ScaleLock);
