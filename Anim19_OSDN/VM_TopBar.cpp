@@ -14,6 +14,7 @@ VM_TopBar::VM_TopBar()
 	Motions_TB_hWnd =		nullptr;
 	Dimensions_TB_hWnd =	nullptr;
 	Groups_TB_hWnd =		nullptr;
+	MouseOption_DlgHwnd =	nullptr;
 
 	Toggle_Faces_Flag = 0;
 	Toggle_Textures_Flag = 0;
@@ -862,9 +863,17 @@ void VM_TopBar::Init_Bmps_Motions(void)
 	HWND Temp = GetDlgItem(Motions_TB_hWnd, IDC_TBPLAY);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_Playoff);
 
-
 	Temp = GetDlgItem(Motions_TB_hWnd, IDC_TBSTOP);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_PlayStop);
+
+	Temp = GetDlgItem(Motions_TB_hWnd, IDC_STEPTIMEBACK);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_StepBack);
+
+	Temp = GetDlgItem(Motions_TB_hWnd, IDC_STEPTIMEPLUS);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_StepForward);
+
+
+
 
 	/*TOOLINFO ti = { 0 };
 	ti.cbSize = sizeof(ti);
@@ -919,6 +928,20 @@ LRESULT CALLBACK VM_TopBar::Motions_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 		}
 
 		if (some_item->idFrom == IDC_TBSTOP && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, 0);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_STEPTIMEBACK && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, 0);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_STEPTIMEPLUS && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle(item, 0);
@@ -1209,4 +1232,15 @@ void VM_TopBar::TogglePlayBmp(void)
 	{
 		SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_Playoff);
 	}
+}
+
+// *************************************************************************
+// *					Check_Current_Option Terry Bernie				   *
+// *************************************************************************
+void VM_TopBar::UnCheck_All_MouseOption(HWND hDlg)
+{
+	App->Cl_Dialogs->Mouse_Normal2 = 0;
+	App->Cl_Dialogs->Mouse_Slow2 = 0;
+	App->Cl_Dialogs->Mouse_VerySlow2 = 0;
+	App->Cl_Dialogs->Mouse_Fast2 = 0;
 }

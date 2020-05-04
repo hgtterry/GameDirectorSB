@@ -1075,7 +1075,7 @@ LRESULT CALLBACK GD19_Dialogs::Mouse_Sensitivity_Proc(HWND hDlg, UINT message, W
 		SendDlgItemMessage(hDlg, IDC_CKVERYSLOW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CKFAST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		App->Cl_ToolBar->MouseOption_DlgHwnd = hDlg;
+		App->CL_Vm_TopBar->MouseOption_DlgHwnd = hDlg;
 
 		return TRUE;
 	}
@@ -1146,7 +1146,7 @@ LRESULT CALLBACK GD19_Dialogs::Mouse_Sensitivity_Proc(HWND hDlg, UINT message, W
 			App->Cl19_Ogre->OgreListener->mMoveSensitivity = 50;
 			App->Cl19_Ogre->OgreListener->mMoveSensitivityMouse = 50;
 
-			App->Cl_ToolBar->UnCheck_All_MouseOption(hDlg);
+			//App->Cl_ToolBar->UnCheck_All_MouseOption(hDlg);
 			App->Cl_Dialogs->Mouse_Normal2 = 1;
 
 			InvalidateRect(hDlg, NULL, false);
@@ -1159,7 +1159,7 @@ LRESULT CALLBACK GD19_Dialogs::Mouse_Sensitivity_Proc(HWND hDlg, UINT message, W
 			App->Cl19_Ogre->OgreListener->mMoveSensitivity = 5;
 			App->Cl19_Ogre->OgreListener->mMoveSensitivityMouse = 5;
 
-			App->Cl_ToolBar->UnCheck_All_MouseOption(hDlg);
+			App->CL_Vm_TopBar->UnCheck_All_MouseOption(hDlg);
 			App->Cl_Dialogs->Mouse_Slow2 = 1;
 
 			InvalidateRect(hDlg, NULL, false);
@@ -1172,7 +1172,7 @@ LRESULT CALLBACK GD19_Dialogs::Mouse_Sensitivity_Proc(HWND hDlg, UINT message, W
 			App->Cl19_Ogre->OgreListener->mMoveSensitivity = 1;
 			App->Cl19_Ogre->OgreListener->mMoveSensitivityMouse = 1;
 
-			App->Cl_ToolBar->UnCheck_All_MouseOption(hDlg);
+			App->CL_Vm_TopBar->UnCheck_All_MouseOption(hDlg);
 			App->Cl_Dialogs->Mouse_VerySlow2 = 1;
 
 			InvalidateRect(hDlg, NULL, false);
@@ -1185,7 +1185,7 @@ LRESULT CALLBACK GD19_Dialogs::Mouse_Sensitivity_Proc(HWND hDlg, UINT message, W
 			App->Cl19_Ogre->OgreListener->mMoveSensitivity = 250;
 			App->Cl19_Ogre->OgreListener->mMoveSensitivityMouse = 250;
 
-			App->Cl_ToolBar->UnCheck_All_MouseOption(hDlg);
+			//App->Cl_ToolBar->UnCheck_All_MouseOption(hDlg);
 			App->Cl_Dialogs->Mouse_Fast2 = 1;
 
 			EndDialog(hDlg, LOWORD(wParam));

@@ -189,7 +189,6 @@
     <ClInclude Include="GD19_Scene_Data.h" />
     <ClInclude Include="GD19_SoundMgr.h" />
     <ClInclude Include="GD19_Stock.h" />
-    <ClInclude Include="GD19_ToolBar.h" />
     <ClInclude Include="GD19_Utilities.h" />
     <ClInclude Include="GD19_Visuals.h" />
     <ClInclude Include="GD_Bt_Render.h" />
@@ -252,7 +251,6 @@
     <ClCompile Include="GD19_Scene_Data.cpp" />
     <ClCompile Include="GD19_SoundMgr.cpp" />
     <ClCompile Include="GD19_Stock.cpp" />
-    <ClCompile Include="GD19_ToolBar.cpp" />
     <ClCompile Include="GD19_Utilities.cpp" />
     <ClCompile Include="GD19_Visuals.cpp" />
     <ClCompile Include="GD_Bt_Render.cpp" />
@@ -298,8 +296,10 @@
     <Image Include="Resource\MenuBar\ModelData.bmp" />
     <Image Include="Resource\MenuBar\MouseSensitivity.bmp" />
     <Image Include="Resource\MenuBar\TexturesOff.bmp" />
+    <Image Include="Resource\Motions\Tforward.bmp" />
     <Image Include="Resource\Motions\Tplay.bmp" />
     <Image Include="Resource\Motions\TplayON.bmp" />
+    <Image Include="Resource\Motions\Treverse.bmp" />
     <Image Include="Resource\Motions\Tstop.bmp" />
     <Image Include="small.ico" />
   </ItemGroup>

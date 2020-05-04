@@ -9,6 +9,7 @@ public:
 	void Reset_Class();
 
 	void TogglePlayBmp(void);
+	void UnCheck_All_MouseOption(HWND hDlg);
 
 	HWND TabsHwnd;
 	HWND Camera_TB_hWnd;
@@ -17,6 +18,8 @@ public:
 	HWND Motions_TB_hWnd;
 	HWND Dimensions_TB_hWnd;
 	HWND Groups_TB_hWnd;
+
+	HWND MouseOption_DlgHwnd;
 
 	// Motions
 	bool Toggle_Play_Flag;

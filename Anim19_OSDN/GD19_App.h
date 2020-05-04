@@ -19,6 +19,8 @@ misrepresented as being the original software.
 
 3. This notice may not be removed or altered from any source
 distribution.
+
+ebopster
 */
 
 #pragma once
@@ -50,7 +52,6 @@ distribution.
 #include "GD19_Object_Properties.h"
 #include "GD19_Stock.h"
 #include "GD19_LookUps.h"
-#include "GD19_ToolBar.h"
 #include "GD19_Objects_FFile.h"
 #include "GD_spdlog.h"
 #include "GD19_PB.h"
@@ -105,7 +106,7 @@ public:
 	GD19_Object_Properties* Cl_Object_Props;
 	GD19_Stock*			Cl_Stock;
 	GD19_LookUps*		Cl_LookUps;
-	GD19_ToolBar*		Cl_ToolBar;
+	
 	GD19_Objects_FFile*	Cl_Objects_FFile;
 	GD_spdlog*			Cl_spdlog;
 	GD19_PB*			Cl_PB;
@@ -219,6 +220,8 @@ public:
 	HANDLE Hnd_Playoff;
 	HANDLE Hnd_PlayOn;
 	HANDLE Hnd_PlayStop;
+	HANDLE Hnd_StepBack;
+	HANDLE Hnd_StepForward;
 
 	HFONT Font_CB12;
 	HFONT Font_CB15;

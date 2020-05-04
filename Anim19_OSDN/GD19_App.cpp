@@ -57,7 +57,6 @@ GD19_App::GD19_App(void)
 	Cl_Object_Props =	nullptr;
 	Cl_Stock =			nullptr;
 	Cl_LookUps =		nullptr;
-	Cl_ToolBar =		nullptr;
 	Cl_Objects_FFile =	nullptr;
 	Cl_spdlog =			nullptr;
 	Cl_Keyboard =		nullptr;
@@ -130,6 +129,8 @@ GD19_App::GD19_App(void)
 	Hnd_Playoff = NULL;
 	Hnd_PlayOn = NULL;
 	Hnd_PlayStop = NULL;
+	Hnd_StepBack = NULL;
+	Hnd_StepForward = NULL;
 
 	Font_CB12 = 0;
 	Font_CB15 = 0;
@@ -190,7 +191,7 @@ bool GD19_App::InitApp(void)
 	Cl_Object_Props =	new GD19_Object_Properties();
 	Cl_Stock =			new GD19_Stock();
 	Cl_LookUps =		new GD19_LookUps();	
-	Cl_ToolBar =		new GD19_ToolBar();
+	
 	Cl_Objects_FFile =	new GD19_Objects_FFile();
 		
 	Cl_spdlog =			new	GD_spdlog();
@@ -389,6 +390,8 @@ void GD19_App::LoadProgramResource(void)
 	Hnd_Playoff = LoadBitmap(App->hInst, (LPCTSTR)IDB_MOTPLAYOFF);
 	Hnd_PlayOn = LoadBitmap(App->hInst, (LPCTSTR)IDB_MOTPLAYON);
 	Hnd_PlayStop = LoadBitmap(App->hInst, (LPCTSTR)IDB_MOTSTOP);
+	Hnd_StepBack = LoadBitmap(App->hInst, (LPCTSTR)IDB_STEPBACK);
+	Hnd_StepForward = LoadBitmap(App->hInst, (LPCTSTR)IDB_STEPFORWARD);
 
 }
 

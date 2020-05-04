@@ -371,11 +371,11 @@ LRESULT CALLBACK GD19_Properties::GD_Properties_Proc(HWND hDlg, UINT message, WP
 		if (LOWORD(wParam) == IDC_BTLOOKAT)
 		{
 
-			App->Cl_ToolBar->FreeCam_Active = 1;
-			App->Cl_ToolBar->FirstPerson_Active = 0;
+			//App->Cl_ToolBar->FreeCam_Active = 1;
+			//App->Cl_ToolBar->FirstPerson_Active = 0;
 			App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
 
-			RedrawWindow(App->Cl_ToolBar->TB_1, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			//RedrawWindow(App->Cl_ToolBar->TB_1, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 			int Index = App->Cl_Properties->Current_Selected_Object;
 			Ogre::Vector3 Centre = App->Cl_Scene_Data->Cl_Object[Index]->OgreNode->getAttachedObject(0)->getBoundingBox().getCenter();
