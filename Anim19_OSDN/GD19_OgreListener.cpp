@@ -82,6 +82,8 @@ GD19_OgreListener::GD19_OgreListener(void)
 
 	CameraMode = 1;  // Model Mode
 
+	ImGui_Render_Tab = 0;
+
 }
 
 GD19_OgreListener::~GD19_OgreListener(void)
@@ -105,7 +107,26 @@ bool GD19_OgreListener::frameStarted(const FrameEvent& evt)
 
 		if (Show_ImGui_Panels == 1)
 		{
-			App->CL_Vm_ImGui->Render_ImGui();
+			if (ImGui_Render_Tab == Enums::ImGui_Camera)
+			{
+				App->CL_Vm_ImGui->Tabs_Render_Camera();
+			}
+
+			if (ImGui_Render_Tab == Enums::ImGui_Motions)
+			{
+				App->CL_Vm_ImGui->Tabs_Render_Motions();
+			}
+
+			if (ImGui_Render_Tab == Enums::ImGui_Dimensions)
+			{
+				App->CL_Vm_ImGui->Tabs_Render_Dimensions();
+			}
+
+			if (ImGui_Render_Tab == Enums::ImGui_Groups)
+			{
+				App->CL_Vm_ImGui->Tabs_Render_Groups();
+			}
+
 		}
 
 		/*if (Animate_Ogre == 1 && GD_CameraMode == Enums::CamDetached)

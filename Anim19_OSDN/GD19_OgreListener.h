@@ -101,6 +101,8 @@ public:
 	int		View_Height;
 	int		View_Width;
 
+	int		ImGui_Render_Tab;
+
 
 	int	Selected_Entity_Index;
 	Ogre::String Pl_Entity_Name;

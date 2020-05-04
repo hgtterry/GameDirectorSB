@@ -132,19 +132,60 @@ void VM_ImGui::ImGui_Set_Colours(void)
 }
 
 // *************************************************************************
-// *					Render_ImGui  Terry Bernie						   *
+// *					Tabs_Render_Camera  Terry Bernie				   *
 // *************************************************************************
-void VM_ImGui::Render_ImGui(void)
+void VM_ImGui::Tabs_Render_Camera(void)
 {
-
 	if (Show_FPS == 1)
 	{
 		ImGui_FPS();
 	}
 
+	if (Show_Model_Data == 1)
+	{
+		ImGui_Model_Data();
+	}
+
 	if (Show_ImGui_Test == 1)
 	{
-		//ImGui::ShowDemoWindow();
+		ImGui::ShowDemoWindow();
+	}
+}
+
+// *************************************************************************
+// *					Tabs_Render_Motions  Terry Bernie				   *
+// *************************************************************************
+void VM_ImGui::Tabs_Render_Motions(void)
+{
+	if (Show_FPS == 1)
+	{
+		ImGui_FPS();
+	}
+
+	if (Show_Model_Data == 1)
+	{
+		ImGui_Model_Data();
+	}
+
+	if (Show_Motion_List == 1)
+	{
+		ImGui_MotionList();
+	}
+}
+
+// *************************************************************************
+// *					Tabs_Render_Dimensions  Terry Bernie			   *
+// *************************************************************************
+void VM_ImGui::Tabs_Render_Dimensions(void)
+{
+	if (Show_FPS == 1)
+	{
+		ImGui_FPS();
+	}
+
+	if (Show_Model_Data == 1)
+	{
+		ImGui_Model_Data();
 	}
 
 	if (Show_Rotation == 1)
@@ -161,25 +202,16 @@ void VM_ImGui::Render_ImGui(void)
 	{
 		ImGui_Scale();
 	}
+}
 
-	if (Show_Image == 1)
+// *************************************************************************
+// *					Tabs_Render_Groups  Terry Bernie				   *
+// *************************************************************************
+void VM_ImGui::Tabs_Render_Groups(void)
+{
+	if (Show_FPS == 1)
 	{
-		ImGui_Image();
-	}
-
-	if (Show_Group_List == 1)
-	{
-		ImGui_GroupList();
-	}
-
-	if (Show_Motion_List == 1)
-	{
-		ImGui_MotionList();
-	}
-
-	if (Show_ImGui_TextureData == 1)
-	{
-		ImGui_Texture_Data();
+		ImGui_FPS();
 	}
 
 	if (Show_Model_Data == 1)
@@ -187,6 +219,15 @@ void VM_ImGui::Render_ImGui(void)
 		ImGui_Model_Data();
 	}
 
+	if (Show_ImGui_TextureData == 1)
+	{
+		ImGui_Texture_Data();
+	}
+
+	if (Show_Motion_List == 1)
+	{
+		ImGui_MotionList();
+	}
 }
 
 // *************************************************************************

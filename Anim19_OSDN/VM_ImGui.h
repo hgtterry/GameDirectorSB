@@ -10,10 +10,8 @@ public:
 	void Load_Font(void);
 	void ImGui_Set_Colours(void);
 
-	void Render_ImGui(void);
 	void ImGui_FPS(void);
 
-	
 	void ImGui_Rotation2(void);
 	void ImGui_Position(void);
 	void ImGui_Scale(void);
@@ -23,6 +21,11 @@ public:
 	void ImGui_MotionList(void);
 	void ImGui_Texture_Data(void);
 	void ImGui_Model_Data(void);
+
+	void Tabs_Render_Camera(void);
+	void Tabs_Render_Motions(void);
+	void Tabs_Render_Dimensions(void);
+	void Tabs_Render_Groups(void);
 	
 	bool StartPos;
 

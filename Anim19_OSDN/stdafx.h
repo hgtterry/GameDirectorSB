@@ -299,6 +299,15 @@ namespace Enums
 		DropDialog_Counters = 3,
 		DropDialog_Locations = 4
 	};
+
+	enum ImGui_Groups
+	{
+		ImGui_None = 0,
+		ImGui_Camera = 1,
+		ImGui_Motions = 2,
+		ImGui_Dimensions = 3,
+		ImGui_Groups = 4
+	};
 }
 
 
