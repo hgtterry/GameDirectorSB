@@ -224,10 +224,11 @@ void VM_ImGui::Tabs_Render_Groups(void)
 		ImGui_Texture_Data();
 	}
 
-	if (Show_Motion_List == 1)
+	if (Show_Group_List == 1)
 	{
-		ImGui_MotionList();
+		ImGui_GroupList();
 	}
+
 }
 
 // *************************************************************************
