@@ -308,6 +308,7 @@
     <Image Include="Resource\MenuBar\TargetOff.bmp" />
     <Image Include="Resource\MenuBar\TargetOn.bmp" />
     <Image Include="Resource\MenuBar\TexturesOff.bmp" />
+    <Image Include="Resource\MenuBar\TexturesOn.bmp" />
     <Image Include="Resource\Motions\Tforward.bmp" />
     <Image Include="Resource\Motions\Tplay.bmp" />
     <Image Include="Resource\Motions\TplayON.bmp" />

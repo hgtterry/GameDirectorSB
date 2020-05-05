@@ -50,12 +50,15 @@ protected:
 
 	void Hide_Tabs(void);
 
+	// Main Controls
 	bool Toggle_Faces_Flag;
 	bool Toggle_Textures_Flag;
 	bool Toggle_Points_Flag;
 	bool Toggle_Bones_Flag;
 	bool Toggle_Normals_Flag;
 	bool Toggle_BBox_Flag;
+	bool Toggle_Grid_Flag;
+	bool Toggle_Hair_Flag;
 
 	// Groups
 	bool Toggle_Tabs_Old_Flag;

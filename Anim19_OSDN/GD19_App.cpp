@@ -366,7 +366,7 @@ void GD19_App::LoadProgramResource(void)
 //	Hnd_PinOn = LoadBitmap(hInst, (LPCTSTR)IDB_PINON);
 	Hnd_FullScreen_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_FULLSCREEN);
 //	Hnd_FlipWindingOrder = LoadBitmap(hInst, (LPCTSTR)IDB_FLIPWINDINGORDER);
-	Hnd_ModelInfo_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_MODELDATA);
+	
 	Hnd_MouseSensitivity_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_MOUSESENSITIVITY);
 //	Hnd_Projection_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_PROJECTION);
 
@@ -377,8 +377,6 @@ void GD19_App::LoadProgramResource(void)
 	//Hnd_NormalsOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_NORMALSON);
 	//Hnd_NormalsOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_NORMALSOFF);
 
-	//Hnd_TexturesOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_TEXTURESON);
-	Hnd_TexturesOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_TEXTURESOFF);
 	//Hnd_Info_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_INFO);
 	//Hnd_InfoSmall_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_INFOSMALL);
 
@@ -405,6 +403,11 @@ void GD19_App::LoadProgramResource(void)
 
 	Hnd_HairOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_HAIRON);
 	Hnd_HairOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_HAIROFF);
+
+	Hnd_TexturesOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_TEXTURESON);
+	Hnd_TexturesOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_TEXTURESOFF);
+
+	Hnd_ModelInfo_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_MODELDATA);
 
 }
 
