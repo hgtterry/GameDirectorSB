@@ -132,6 +132,12 @@ GD19_App::GD19_App(void)
 	Hnd_StepBack = NULL;
 	Hnd_StepForward = NULL;
 
+	Hnd_GridOn_Bmp = NULL;
+	Hnd_GridOff_Bmp = NULL;
+
+	Hnd_HairOn_Bmp = NULL;
+	Hnd_HairOff_Bmp = NULL;
+
 	Font_CB12 = 0;
 	Font_CB15 = 0;
 	Font_CB15_Bold = 0;
@@ -371,9 +377,6 @@ void GD19_App::LoadProgramResource(void)
 	//Hnd_NormalsOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_NORMALSON);
 	//Hnd_NormalsOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_NORMALSOFF);
 
-	//Hnd_BonesOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_BONESON);
-	//Hnd_BonesOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_BONESOFF);
-
 	//Hnd_TexturesOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_TEXTURESON);
 	Hnd_TexturesOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_TEXTURESOFF);
 	//Hnd_Info_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_INFO);
@@ -393,6 +396,15 @@ void GD19_App::LoadProgramResource(void)
 
 	Hnd_BBOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_BONDINGBOXON);
 	Hnd_BBOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_BONDINGBOXOFF);
+
+	Hnd_BonesOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_BONESON);
+	Hnd_BonesOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_BONESOFF);
+
+	Hnd_GridOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_GRIDON);
+	Hnd_GridOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_GRIDOFF);
+
+	Hnd_HairOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_HAIRON);
+	Hnd_HairOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_HAIROFF);
 
 }
 

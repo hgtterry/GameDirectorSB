@@ -212,6 +212,12 @@ public:
 	HANDLE Hnd_MeshOn_Bmp;
 	HANDLE Hnd_MeshOff_Bmp;
 
+	HANDLE Hnd_GridOn_Bmp;
+	HANDLE Hnd_GridOff_Bmp;
+
+	HANDLE Hnd_HairOn_Bmp;
+	HANDLE Hnd_HairOff_Bmp;
+
 	HANDLE Hnd_TexturesOn_Bmp;
 	HANDLE Hnd_TexturesOff_Bmp;
 	HANDLE Hnd_Info_Bmp;
