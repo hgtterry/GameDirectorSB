@@ -292,6 +292,9 @@
     <Image Include="Resource\FileView\SoundOn.bmp" />
     <Image Include="Resource\FileView\StartUpOff.bmp" />
     <Image Include="Resource\FileView\StartUpOn.bmp" />
+    <Image Include="Resource\MenuBar\bitmap1.bmp" />
+    <Image Include="Resource\MenuBar\bitmap2.bmp" />
+    <Image Include="resource\menubar\bitmap7.bmp" />
     <Image Include="Resource\MenuBar\BondingBoxOff.bmp" />
     <Image Include="Resource\MenuBar\BondingBoxOn.bmp" />
     <Image Include="Resource\MenuBar\BonesOff.bmp" />

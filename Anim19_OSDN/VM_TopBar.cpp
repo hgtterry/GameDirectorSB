@@ -325,15 +325,21 @@ LRESULT CALLBACK VM_TopBar::TopMain_Proc(HWND hDlg, UINT message, WPARAM wParam,
 		{
 			if (App->CL_Vm_Model->Model_Loaded == 1)
 			{
+				HWND Temp = GetDlgItem(hDlg, IDC_TBNORMALS);
+
 				if (App->Cl19_Ogre->RenderListener->ShowNormals == 1)
 				{
 					App->Cl19_Ogre->RenderListener->ShowNormals = 0;
 					App->CL_Vm_TopBar->Toggle_Normals_Flag = 0;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_NormalsOff_Bmp);
 				}
 				else
 				{
 					App->Cl19_Ogre->RenderListener->ShowNormals = 1;
 					App->CL_Vm_TopBar->Toggle_Normals_Flag = 1;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_NormalsOn_Bmp);
 				}
 			}
 			return TRUE;
@@ -876,8 +882,15 @@ void VM_TopBar::Init_Bmps_TB2(void)
 	Temp = GetDlgItem(TabsHwnd, IDC_TBINFO);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfo_Bmp);
 
+	Temp = GetDlgItem(TabsHwnd, IDC_TBNORMALS);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_NormalsOff_Bmp);
+
 	Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWTEXTURE);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOff_Bmp);
+
+	
+
+
 
 
 	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
