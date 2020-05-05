@@ -1059,7 +1059,7 @@ void VM_ImGui::ImGui_Model_Data(void)
 
 		// ----------------------------- Groups
 		int GroupCount = App->CL_Vm_Model->GroupCount;
-		sprintf(Header, "%s %i", "Groupd", GroupCount);
+		sprintf(Header, "%s %i", "Groups", GroupCount);
 
 		if (ImGui::CollapsingHeader(Header))
 		{

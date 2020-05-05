@@ -5,7 +5,7 @@ public:
 	VM_TopBar();
 	~VM_TopBar();
 
-	bool Start_TopBar();
+	bool Start_TopBar_Globals();
 	void Reset_Class();
 
 	void TogglePlayBmp(void);
@@ -28,7 +28,7 @@ public:
 
 protected:
 
-	static LRESULT CALLBACK TopMain_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK TopBar_Globals_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	static LRESULT CALLBACK View_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
@@ -41,7 +41,7 @@ protected:
 	void Start_View_TB(void);
 
 	void Init_Bmps_TB1(void);
-	void Init_Bmps_TB2(void);
+	void Init_Bmps_Globals(void);
 	void Init_Bmps_Motions(void);
 
 	void Start_Motions_TB(void);

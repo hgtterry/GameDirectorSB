@@ -108,8 +108,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	//App->Cl_Bullet->Start_Physics_Console(); // Atention
 	//App->Cl_Panels->MovePhysicsView();
 
-	//App->Cl_ToolBar->Start_TB1();
-	App->CL_Vm_TopBar->Start_TopBar();
+	App->CL_Vm_TopBar->Start_TopBar_Globals();
 
 	//CheckMenuItem(App->mMenu, ID_WINDOW_SHOWFPSSHORT, MF_BYCOMMAND | MF_CHECKED);
 	//CheckMenuItem(App->mMenu, ID_GRID_DIVISIONS, MF_BYCOMMAND | MF_CHECKED);

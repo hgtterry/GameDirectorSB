@@ -87,19 +87,19 @@ void VM_TopBar::Reset_Class()
 }
 
 // *************************************************************************
-// *	  					Start_TopBar  	Terry						   *
+// *	  				Start_TopBarr_Globals  	Terry					   *
 // *************************************************************************
-bool VM_TopBar::Start_TopBar()
+bool VM_TopBar::Start_TopBar_Globals()
 {
-	CreateDialog(App->hInst,(LPCTSTR)IDD_TOPBAR,App->Fdlg,(DLGPROC)TopMain_Proc);
-	Init_Bmps_TB2();
+	CreateDialog(App->hInst,(LPCTSTR)IDD_TOPBAR,App->Fdlg,(DLGPROC)TopBar_Globals_Proc);
+	Init_Bmps_Globals();
 	return 1;
 }
 
 // *************************************************************************
-// *						TopBar_Proc Terry							   *
+// *						TopBar_Globals_Proc Terry					   *
 // *************************************************************************
-LRESULT CALLBACK VM_TopBar::TopMain_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK VM_TopBar::TopBar_Globals_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 
 	switch (message)
@@ -968,9 +968,9 @@ void VM_TopBar::Init_Bmps_TB1(void)
 }
 
 // *************************************************************************
-// *						Init_Bmps_TB2 Terry Bernie					   *
+// *						Init_Bmps_Globals Terry Bernie				   *
 // *************************************************************************
-void VM_TopBar::Init_Bmps_TB2(void)
+void VM_TopBar::Init_Bmps_Globals(void)
 {
 	HWND Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWFACES);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
