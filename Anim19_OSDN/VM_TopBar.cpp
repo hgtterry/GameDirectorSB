@@ -374,13 +374,19 @@ LRESULT CALLBACK VM_TopBar::TopMain_Proc(HWND hDlg, UINT message, WPARAM wParam,
 		{
 			if (App->CL_Vm_Model->Model_Loaded == 1)
 			{
+				HWND Temp = GetDlgItem(hDlg, IDC_TBLIGHT);
+
 				if (App->Cl19_Ogre->RenderListener->Light_Activated == 1)
 				{
 					App->Cl19_Ogre->RenderListener->Light_Activated = 0;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_LightsOff_Bmp);
 				}
 				else
 				{
 					App->Cl19_Ogre->RenderListener->Light_Activated = 1;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_LightsOn_Bmp);
 				}
 			}
 			return TRUE;
@@ -888,9 +894,8 @@ void VM_TopBar::Init_Bmps_TB2(void)
 	Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWTEXTURE);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOff_Bmp);
 
-	
-
-
+	Temp = GetDlgItem(TabsHwnd, IDC_TBLIGHT);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_LightsOff_Bmp);
 
 
 	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
@@ -948,6 +953,42 @@ void VM_TopBar::Init_Bmps_TB2(void)
 	ti6.lpszText = "Toggle Bounding Box";
 	ti6.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti6);
+
+	Temp = GetDlgItem(TabsHwnd, IDC_TBLIGHT);
+	TOOLINFO ti7 = { 0 };
+	ti7.cbSize = sizeof(ti7);
+	ti7.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti7.uId = (UINT_PTR)Temp;
+	ti7.lpszText = "Toggle Lights";
+	ti7.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti7);
+
+	Temp = GetDlgItem(TabsHwnd, IDC_TBINFO);
+	TOOLINFO ti8 = { 0 };
+	ti8.cbSize = sizeof(ti8);
+	ti8.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti8.uId = (UINT_PTR)Temp;
+	ti8.lpszText = "Show Model Information";
+	ti8.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti8);
+
+	Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWHAIR);
+	TOOLINFO ti9 = { 0 };
+	ti9.cbSize = sizeof(ti9);
+	ti9.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti9.uId = (UINT_PTR)Temp;
+	ti9.lpszText = "Toggle Main Cross Hair";
+	ti9.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti9);
+
+	Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWGRID);
+	TOOLINFO ti10 = { 0 };
+	ti10.cbSize = sizeof(ti10);
+	ti10.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti10.uId = (UINT_PTR)Temp;
+	ti10.lpszText = "Toggle Main Grid";
+	ti10.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti10);
 
 }
 
