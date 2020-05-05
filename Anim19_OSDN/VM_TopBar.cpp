@@ -71,6 +71,8 @@ void VM_TopBar::Reset_Class()
 	Toggle_Model_Flag = 1;
 	Toggle_World_Flag = 0;
 
+	Reset_Main_Controls();
+
 	// Dimensions - >ImGui Flags
 	
 	App->Cl19_Ogre->RenderListener->ShowOnlySubMesh = 0;
@@ -601,6 +603,70 @@ void VM_TopBar::Hide_Tabs(void)
 	Toggle_Tabs_Motions_Flag = 0;
 	Toggle_Tabs_Dimensions_Flag = 0;
 	Toggle_Tabs_Groups_Flag = 0;
+}
+
+// *************************************************************************
+// *						Reset_Main Controlls Terry Berine			   *
+// *************************************************************************
+void VM_TopBar::Reset_Main_Controls(void)
+{
+	HWND Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWFACES);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
+
+	Temp = GetDlgItem(TabsHwnd, IDC_TBPOINTS);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshPointsOff_Bmp);
+
+	Temp = GetDlgItem(TabsHwnd, IDC_TBBOUNDBOX);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOff_Bmp);
+
+	Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWBONES);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BonesOff_Bmp);
+
+	Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWGRID);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_GridOn_Bmp);
+
+	Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWHAIR);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HairOn_Bmp);
+
+	Temp = GetDlgItem(TabsHwnd, IDC_TBINFO);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfo_Bmp);
+
+	Temp = GetDlgItem(TabsHwnd, IDC_TBNORMALS);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_NormalsOff_Bmp);
+
+	Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWTEXTURE);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOff_Bmp);
+
+	Temp = GetDlgItem(TabsHwnd, IDC_TBLIGHT);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_LightsOff_Bmp);
+
+	// Main Controls
+	
+	Toggle_Textures_Flag = 0;
+	App->Cl19_Ogre->RenderListener->ShowTextured = 0;
+
+	Toggle_Faces_Flag = 0;
+	App->Cl19_Ogre->RenderListener->ShowFaces = 0;
+
+	Toggle_Points_Flag = 0;
+	App->Cl19_Ogre->RenderListener->ShowPoints = 0;
+
+	Toggle_Bones_Flag = 0;
+	App->Cl19_Ogre->RenderListener->ShowBones = 0;
+
+	Toggle_Normals_Flag = 0;
+	App->Cl19_Ogre->RenderListener->ShowNormals = 0;
+
+	Toggle_BBox_Flag = 0;
+	App->Cl19_Ogre->RenderListener->ShowBoundingBox = 0;
+
+	Toggle_Hair_Flag = 1;
+	App->Cl_Grid->ShowHair = 1;
+	App->Cl_Grid->Hair_SetVisible(1);
+
+	Toggle_Grid_Flag = 1;
+	App->Cl_Grid->Grid_SetVisible(1);
+	App->Cl_Grid->ShowGridFlag = 1;
 }
 
 // *************************************************************************
@@ -1411,6 +1477,30 @@ void VM_TopBar::TogglePlayBmp(void)
 	{
 		SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_Playoff);
 	}
+}
+
+// *************************************************************************
+// *					ToggleTexturesBmp Inflanite					       *
+// *************************************************************************
+void VM_TopBar::ToggleTexturesBmp(bool Show)
+{
+	HWND Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWTEXTURE);
+
+	if (Show == 1)
+	{
+		App->Cl19_Ogre->RenderListener->ShowTextured = 1;
+		App->CL_Vm_TopBar->Toggle_Textures_Flag = 1;
+
+		SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOn_Bmp);
+	}
+	else
+	{
+		App->Cl19_Ogre->RenderListener->ShowTextured = 0;
+		App->CL_Vm_TopBar->Toggle_Textures_Flag = 0;
+
+		SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOff_Bmp);
+	}
+
 }
 
 // *************************************************************************

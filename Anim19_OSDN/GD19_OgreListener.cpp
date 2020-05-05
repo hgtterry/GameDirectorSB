@@ -82,7 +82,7 @@ GD19_OgreListener::GD19_OgreListener(void)
 
 	CameraMode = 1;  // Model Mode
 
-	ImGui_Render_Tab = 0;
+	ImGui_Render_Tab = Enums::ImGui_Camera;
 
 }
 

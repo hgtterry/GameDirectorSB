@@ -58,7 +58,9 @@ bool VM_Importer::Assimp_Loader(char* Extension, char* Extension2)
 	App->Cl19_Ogre->RenderFrame();
 	App->CL_Vm_Groups->Update_Groups_Dialog(0);
 
-	App->Say("Loaded");
+	App->CL_Vm_TopBar->ToggleTexturesBmp(1);
+
+	App->Say("Model Loaded");
 	return 1;
 }
 
@@ -92,8 +94,9 @@ bool VM_Importer::Genesis3D_Loader(void)
 
 	App->Cl19_Ogre->RenderFrame();
 	
+	App->CL_Vm_TopBar->ToggleTexturesBmp(1);
 
-	App->Say("Loaded");
+	App->Say("Model Loaded");
 
 	return 1;
 }
@@ -147,7 +150,13 @@ void VM_Importer::Reload_FromResentFiles(char* ResentPathAndFile)
 
 		App->CL_Vm_Model->Model_Loaded = 1;
 
-		//App->Cl_Grid->Zoom();
+		App->Cl_Grid->Zoom();
+
+		App->Cl19_Ogre->RenderFrame();
+
+		App->CL_Vm_TopBar->ToggleTexturesBmp(1);
+
+		App->Say("Model Loaded");
 		
 		return;
 	}
@@ -170,6 +179,8 @@ void VM_Importer::Reload_FromResentFiles(char* ResentPathAndFile)
 	App->Cl19_Ogre->RenderFrame();
 	App->CL_Vm_Groups->Update_Groups_Dialog(0);
 
-	App->Say("Loaded");
+	App->CL_Vm_TopBar->ToggleTexturesBmp(1);
+
+	App->Say("Model Loaded");
 
 }

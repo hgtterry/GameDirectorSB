@@ -9,6 +9,8 @@ public:
 	void Reset_Class();
 
 	void TogglePlayBmp(void);
+	void ToggleTexturesBmp(bool Show);
+
 	void UnCheck_All_MouseOption(HWND hDlg);
 
 	HWND TabsHwnd;
@@ -49,6 +51,8 @@ protected:
 	void Start_Tabs(void);
 
 	void Hide_Tabs(void);
+
+	void Reset_Main_Controls(void);
 
 	// Main Controls
 	bool Toggle_Faces_Flag;
