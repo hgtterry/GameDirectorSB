@@ -1103,7 +1103,7 @@ void VM_TopBar::Init_Bmps_Globals(void)
 // *************************************************************************
 void VM_TopBar::Init_Bmps_Motions(void)
 {
-	//HWND hTooltip_TB_1 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
+	HWND hTooltip_TB_Motions = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
 
 	// --------------------------------------------------- 
 	HWND Temp = GetDlgItem(Motions_TB_hWnd, IDC_TBPLAY);
@@ -1118,19 +1118,52 @@ void VM_TopBar::Init_Bmps_Motions(void)
 	Temp = GetDlgItem(Motions_TB_hWnd, IDC_STEPTIMEPLUS);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_StepForward);
 
+	Temp = GetDlgItem(Motions_TB_hWnd, IDC_TBPLAY);
+	TOOLINFO ti1 = { 0 };
+	ti1.cbSize = sizeof(ti1);
+	ti1.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti1.uId = (UINT_PTR)Temp;
+	ti1.lpszText = "Play Selected Motion";
+	ti1.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_Motions, TTM_ADDTOOL, 0, (LPARAM)&ti1);
 
+	Temp = GetDlgItem(Motions_TB_hWnd, IDC_TBSTOP);
+	TOOLINFO ti2 = { 0 };
+	ti2.cbSize = sizeof(ti2);
+	ti2.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti2.uId = (UINT_PTR)Temp;
+	ti2.lpszText = "Stop Selected Motion";
+	ti2.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_Motions, TTM_ADDTOOL, 0, (LPARAM)&ti2);
 
+	Temp = GetDlgItem(Motions_TB_hWnd, IDC_STEPTIMEBACK);
+	TOOLINFO ti3 = { 0 };
+	ti3.cbSize = sizeof(ti3);
+	ti3.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti3.uId = (UINT_PTR)Temp;
+	ti3.lpszText = "Step Motion Back";
+	ti3.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_Motions, TTM_ADDTOOL, 0, (LPARAM)&ti3);
 
-	/*TOOLINFO ti = { 0 };
-	ti.cbSize = sizeof(ti);
-	ti.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
-	ti.uId = (UINT_PTR)Temp;
-	ti.lpszText = "Full Screen View";
-	ti.hwnd = App->MainHwnd;
-	SendMessage(hTooltip_TB_1, TTM_ADDTOOL, 0, (LPARAM)&ti);*/
+	Temp = GetDlgItem(Motions_TB_hWnd, IDC_STEPTIMEPLUS);
+	TOOLINFO ti4 = { 0 };
+	ti4.cbSize = sizeof(ti4);
+	ti4.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti4.uId = (UINT_PTR)Temp;
+	ti4.lpszText = "Step Motion Forward";
+	ti4.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_Motions, TTM_ADDTOOL, 0, (LPARAM)&ti4);
+
+	Temp = GetDlgItem(Motions_TB_hWnd, IDC_TBPOSE);
+	TOOLINFO ti5 = { 0 };
+	ti5.cbSize = sizeof(ti5);
+	ti5.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti5.uId = (UINT_PTR)Temp;
+	ti5.lpszText = "Reset to default Pose";
+	ti5.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_Motions, TTM_ADDTOOL, 0, (LPARAM)&ti5);
 
 	// --------------------------------------------------- 
-
 }
 
 // *************************************************************************
