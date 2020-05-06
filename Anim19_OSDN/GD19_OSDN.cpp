@@ -1253,23 +1253,27 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 	{
 		HFONT Font;
 		HFONT Font1;
-		Font1 = CreateFont(-20, 0, 0, 0, FW_BOLD, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
-		Font = CreateFont(-15, 0, 0, 0, FW_BOLD, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
+		HFONT Font2;
+		Font = CreateFont(-17, 0, 0, 0, FW_BOLD, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Aerial Black");
+		Font1 = CreateFont(-30, 0, 0, 0, FW_BOLD, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Aerial Black");
+		Font2 = CreateFont(-20, 0, 0, 0, FW_BOLD, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Aerial Black");
 
 		SendDlgItemMessage(hDlg, IDC_STNAME, WM_SETFONT, (WPARAM)Font1, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STCOPYRIGHT, WM_SETFONT, (WPARAM)Font, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_LISTABOUT, WM_SETFONT, (WPARAM)Font, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_STPROGRAMER, WM_SETFONT, (WPARAM)Font2, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STGRAPHICS, WM_SETFONT, (WPARAM)Font2, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_STTHANKS, WM_SETFONT, (WPARAM)Font, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST10, WM_SETFONT, (WPARAM)Font, MAKELPARAM(TRUE, 0));
 
 		SetDlgItemText(hDlg, IDC_STNAME, App->Version);
 
 		char buff[255];
 
 		SendDlgItemMessage(hDlg, IDC_LISTABOUT, LB_ADDSTRING, (WPARAM)0, (LPARAM)" ");
-		sprintf(buff, "%s  %s", " Programing ","W.T.Flaniagn");
-		SendDlgItemMessage(hDlg, IDC_LISTABOUT, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
-
-		SendDlgItemMessage(hDlg, IDC_LISTABOUT, LB_ADDSTRING, (WPARAM)0, (LPARAM)" ");
-
+		
 		sprintf(buff, "%s  %s", " Ogre Version ", "1.9");
 		SendDlgItemMessage(hDlg, IDC_LISTABOUT, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
 
@@ -1278,7 +1282,10 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 		
 		sprintf(buff, "%s  %s", " ImGui ", ImGui::GetVersion());
 		SendDlgItemMessage(hDlg, IDC_LISTABOUT, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
-		sprintf(buff, "%s  %s", " ImGui ", ImGui::GetVersion());
+		
+		SendDlgItemMessage(hDlg, IDC_LISTABOUT, LB_ADDSTRING, (WPARAM)0, (LPARAM)" "); // Space
+		App->Cl19_Ogre->GetVersion(buff);
+		SendDlgItemMessage(hDlg, IDC_LISTABOUT, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
 
 		return (INT_PTR)TRUE;
 	}
@@ -1299,11 +1306,57 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
 		}
+
+		if (GetDlgItem(hDlg, IDC_STPROGRAMER) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STGRAPHICS) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STTHANKS) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_ST10) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
 		return FALSE;
 	}
 	case WM_CTLCOLORDLG:
 	{
 		return (LONG)App->AppBackground;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
 	}
 
 	case WM_COMMAND:

@@ -57,6 +57,8 @@ public:
 
 	bool Get_View_Height_Width(void);
 
+	void GetVersion(char* buff);
+
 	HWND RenderHwnd;
 	Ogre::Root* mRoot;
 	Ogre::RenderWindow* mWindow;
