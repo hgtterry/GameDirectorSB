@@ -88,6 +88,7 @@ GD19_OgreListener::GD19_OgreListener(void)
 
 GD19_OgreListener::~GD19_OgreListener(void)
 {
+	
 }
 
 // *************************************************************************
@@ -95,7 +96,9 @@ GD19_OgreListener::~GD19_OgreListener(void)
 // *************************************************************************
 void GD19_OgreListener::Reset_Class(void)
 {
-	
+	Animate_Ogre = 0;
+	CameraMode = 1;  // Model Mode
+	ImGui_Render_Tab = Enums::ImGui_Camera;
 }
 
 // *************************************************************************

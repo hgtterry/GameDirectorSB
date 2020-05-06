@@ -72,6 +72,7 @@ void VM_TopBar::Reset_Class()
 	Toggle_World_Flag = 0;
 
 	Reset_Main_Controls();
+	TogglePlayBmp();
 
 	// Dimensions - >ImGui Flags
 	

@@ -136,7 +136,9 @@ public:
 	bool Resize_OgreWin(void);
 	void SetBrushes_Fonts(void);
 	void RedrawWindow_Dlg(HWND hDlg);
+
 	void SetTitleBar(HWND hDlg);
+	void Set_Main_TitleBar(void);
 
 	void GetPriority_Class();
 

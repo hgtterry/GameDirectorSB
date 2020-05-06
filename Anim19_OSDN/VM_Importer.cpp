@@ -41,24 +41,8 @@ bool VM_Importer::Assimp_Loader(char* Extension, char* Extension2)
 	}
 
 	App->CL_Vm_Model->Model_Type = LoadedFile_Assimp;
-	//App->CL_Vm_Model->Render_Mode = Render_As_Assimp;
-
-	App->CL_Vm_Model->Model_Loaded = 1;
-
-	App->Cl_Grid->Zoom();
-
-	//Set_Equity();
-
-	/*if (App->CL_Assimp)
-	{
-		delete App->CL_Assimp;
-		App->CL_Assimp = NULL;
-	}*/
-
-	App->Cl19_Ogre->RenderFrame();
-	App->CL_Vm_Groups->Update_Groups_Dialog(0);
-
-	App->CL_Vm_TopBar->ToggleTexturesBmp(1);
+	
+	Set_Hazel19();
 
 	App->Say("Model Loaded");
 	return 1;
@@ -88,13 +72,7 @@ bool VM_Importer::Genesis3D_Loader(void)
 
 	App->CL_Vm_Model->Model_Type = LoadedFile_Actor;
 
-	App->CL_Vm_Model->Model_Loaded = 1;
-
-	App->Cl_Grid->Zoom();
-
-	App->Cl19_Ogre->RenderFrame();
-	
-	App->CL_Vm_TopBar->ToggleTexturesBmp(1);
+	Set_Hazel19();
 
 	App->Say("Model Loaded");
 
@@ -148,13 +126,7 @@ void VM_Importer::Reload_FromResentFiles(char* ResentPathAndFile)
 
 		App->CL_Vm_Model->Model_Type = LoadedFile_Actor;
 
-		App->CL_Vm_Model->Model_Loaded = 1;
-
-		App->Cl_Grid->Zoom();
-
-		App->Cl19_Ogre->RenderFrame();
-
-		App->CL_Vm_TopBar->ToggleTexturesBmp(1);
+		Set_Hazel19();
 
 		App->Say("Model Loaded");
 		
@@ -169,18 +141,29 @@ void VM_Importer::Reload_FromResentFiles(char* ResentPathAndFile)
 		App->Say("Can Not Load File");
 		return;
 	}
-
+	
 	App->CL_Vm_Model->Model_Type = LoadedFile_Assimp;
 	
+	Set_Hazel19();
+	
+	App->Say("Model Loaded");
+
+}
+
+// *************************************************************************
+// *						Set_Hazel19 Terry Bernie					   *
+// *************************************************************************
+void VM_Importer::Set_Hazel19(void)
+{
 	App->CL_Vm_Model->Model_Loaded = 1;
 
 	App->Cl_Grid->Zoom();
 
-	App->Cl19_Ogre->RenderFrame();
+
 	App->CL_Vm_Groups->Update_Groups_Dialog(0);
 
 	App->CL_Vm_TopBar->ToggleTexturesBmp(1);
+	App->Set_Main_TitleBar();
 
-	App->Say("Model Loaded");
-
+	App->Cl19_Ogre->RenderFrame();
 }

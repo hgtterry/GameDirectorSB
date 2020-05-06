@@ -421,6 +421,18 @@ void GD19_App::SetTitleBar(HWND hDlg)
 }
 
 // *************************************************************************
+// *	  				Set_Main_TitleBar Inflanite						   *
+// *************************************************************************
+void GD19_App::Set_Main_TitleBar()
+{
+	char TitleBar[260];
+	strcpy(TitleBar, App->Version);
+	strcat(TitleBar, "    ");
+	strcat(TitleBar, App->CL_Vm_Model->Path_FileName);
+	SetWindowText(MainHwnd, TitleBar);
+}
+
+// *************************************************************************
 // *						GetPriority_Class							   *
 // *************************************************************************
 void GD19_App::GetPriority_Class()

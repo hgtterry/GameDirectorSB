@@ -60,6 +60,14 @@ VM_Render::VM_Render(void)
 
 VM_Render::~VM_Render(void)
 {
+	
+}
+
+// *************************************************************************
+// *						Reset_Class Terry Bernie					   *
+// *************************************************************************
+void VM_Render::Reset_Class(void)
+{
 	RX = 0;
 	RZ = 0;
 
@@ -82,13 +90,6 @@ VM_Render::~VM_Render(void)
 	ShowOnlySubMesh = 0;
 	Show_HideGroup = 0;
 	Show_Crosshair = 0;
-}
-
-// *************************************************************************
-// *						Reset_Class Terry Bernie					   *
-// *************************************************************************
-void VM_Render::Reset_Class(void)
-{
 
 }
 

@@ -23,6 +23,12 @@ VM_Model::VM_Model()
 	S_Texture[0]->TextureCount = 1;
 	S_Texture[0]->UsedTextureCount = 0;
 	strcpy(S_Texture[0]->TextureName[0].Name, "Test.bmp");
+
+	strcpy(FileName, "No Model Loaded");
+	strcpy(Path_FileName, "No Model Loaded");
+	strcpy(JustName, "No Model Loaded");
+	strcpy(Texture_FolderPath, "No Model Loaded");
+	strcpy(Model_FolderPath, "No Model Loaded");
 }
 
 
@@ -118,6 +124,12 @@ void VM_Model::Reset_Class(void)
 		S_BoundingBox[0] = NULL;
 	}
 
+	strcpy(FileName, "No Model Loaded");
+	strcpy(Path_FileName, "No Model Loaded");
+	strcpy(JustName, "No Model Loaded");
+	strcpy(Texture_FolderPath, "No Model Loaded");
+	strcpy(Model_FolderPath, "No Model Loaded");
+
 	Reset_Counters();
 }
 
@@ -146,11 +158,15 @@ void VM_Model::Clear_ModelData(void)
 	//--------------------- Reset Class Data
 
 	App->Cl19_Ogre->RenderListener->Reset_Class();
+	App->Cl19_Ogre->OgreListener->Reset_Class();
+
 	Reset_Class(); // Here
 	App->Cl_Grid->Reset_Class();
 	App->CL_Vm_Genesis3D->Reset_Class();
 	App->CL_Vm_ImGui->Reset_Class();
 	App->CL_Vm_TopBar->Reset_Class();
+
+	App->Set_Main_TitleBar();
 
 	//--------------------- Reset Equity
 	//App->CL_FileView->HideRightPanes(1);
@@ -182,13 +198,6 @@ void VM_Model::Reset_Counters(void)
 
 	Model_Type = 0;
 	Model_Loaded = 0;
-
-	strcpy(FileName, "No Model Loaded");
-	strcpy(Path_FileName, "No Model Loaded");
-	strcpy(JustName, "No Model Loaded");
-	strcpy(Texture_FolderPath, "No Model Loaded");
-	strcpy(Model_FolderPath, "No Model Loaded");
-
 }
 
 // *************************************************************************
