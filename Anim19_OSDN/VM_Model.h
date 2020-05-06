@@ -8,6 +8,7 @@ public:
 	VM_Model();
 	~VM_Model();
 
+	void Reset_Class(void);
 	void Set_Paths(void);
 	void Create_S_MeshGroup(int Index);
 	void Clear_ModelData(void);

@@ -60,7 +60,38 @@ VM_Render::VM_Render(void)
 
 VM_Render::~VM_Render(void)
 {
+	RX = 0;
+	RZ = 0;
+
+	Hair_1PosX = 0;
+	Hair_1PosY = 0;
+	Hair_1PosZ = 0;
+
+	Hair_1RotX = 0;
+	Hair_1RotY = 0;
+	Hair_1RotZ = 0;
+
+	ShowTextured = 1;
+	ShowFaces = 0;
+	ShowBones = 0;
+	ShowPoints = 0;
+	ShowNormals = 0;
+	ShowBoundingBox = 0;
+	PlayActive = 0;
+	Light_Activated = 0;
+	ShowOnlySubMesh = 0;
+	Show_HideGroup = 0;
+	Show_Crosshair = 0;
 }
+
+// *************************************************************************
+// *						Reset_Class Terry Bernie					   *
+// *************************************************************************
+void VM_Render::Reset_Class(void)
+{
+
+}
+
 // *************************************************************************
 // *						TestLight Terry Bernie						   *
 // *************************************************************************

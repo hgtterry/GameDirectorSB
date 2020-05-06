@@ -28,6 +28,7 @@ public:
 	GD19_Grid(void);
 	~GD19_Grid(void);
 
+	void Reset_Class();
 	void Load_Arrow();
 	void Move_Arrow(Ogre::Vector3 pos);
 

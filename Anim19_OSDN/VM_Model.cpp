@@ -31,27 +31,18 @@ VM_Model::~VM_Model()
 }
 
 // *************************************************************************
-// *					CLear_ModelData Terry Bernie					   *
+// *					Reset_Class Terry Bernie						   *
 // *************************************************************************
-void VM_Model::Clear_ModelData(void)
+void VM_Model::Reset_Class(void)
 {
 	int Count = 0;
 
-	//--------------------- Stop Motion Play if Active
-	App->Cl19_Ogre->RenderListener->PlayActive = 0;
-
-	/*App->Cl_Ogre->OgreListener->Animate_Ogre = 0;
-	App->Cl_Ogre->RenderListener->Show_Crosshair = 0;*/
-
 	Model_Loaded = 0;
-
 	Model_Type = LoadedFile_None;
 
 	//--------------------- Clear Local data
 	vertex_Data.clear();
 	vertex_Data.resize(0);
-	//vertex_Data.swap(vertex_Data);
-
 	Face_Data.resize(0);
 	Normal_Data.resize(0);
 	MapCord_Data.resize(0);
@@ -105,7 +96,7 @@ void VM_Model::Clear_ModelData(void)
 			delete S_TextureInfo[Count];
 			S_TextureInfo[Count] = NULL;
 		}
-		
+
 		Count++;
 	}
 
@@ -127,6 +118,20 @@ void VM_Model::Clear_ModelData(void)
 		S_BoundingBox[0] = NULL;
 	}
 
+	Reset_Counters();
+}
+
+// *************************************************************************
+// *					CLear_ModelData Terry Bernie					   *
+// *************************************************************************
+void VM_Model::Clear_ModelData(void)
+{
+	
+	//--------------------- Stop Motion Play if Active
+	
+	/*App->Cl_Ogre->OgreListener->Animate_Ogre = 0;
+	App->Cl_Ogre->RenderListener->Show_Crosshair = 0;*/
+
 	//--------------------- Clear Ogre Model if one was loaded
 	/*if (App->Cl_Ogre->OgreModel_Ent && App->Cl_Ogre->OgreModel_Node)
 	{
@@ -139,9 +144,10 @@ void VM_Model::Clear_ModelData(void)
 	}*/
 
 	//--------------------- Reset Class Data
-	Reset_Counters();
-	App->Cl_Grid->Reset_View();
 
+	App->Cl19_Ogre->RenderListener->Reset_Class();
+	Reset_Class(); // Here
+	App->Cl_Grid->Reset_Class();
 	App->CL_Vm_Genesis3D->Reset_Class();
 	App->CL_Vm_ImGui->Reset_Class();
 	App->CL_Vm_TopBar->Reset_Class();

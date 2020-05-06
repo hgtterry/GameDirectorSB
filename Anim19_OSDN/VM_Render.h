@@ -31,6 +31,8 @@ public:
 	VM_Render(void);
 	~VM_Render(void);
 
+	void Reset_Class(void);
+
 	float RX;
 	float RZ;
 

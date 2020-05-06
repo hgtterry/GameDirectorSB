@@ -91,6 +91,14 @@ GD19_OgreListener::~GD19_OgreListener(void)
 }
 
 // *************************************************************************
+// *						Reset_Class Terry Bernie					   *
+// *************************************************************************
+void GD19_OgreListener::Reset_Class(void)
+{
+	
+}
+
+// *************************************************************************
 // *				frameStarted   Terry Bernie							   *
 // *************************************************************************
 bool GD19_OgreListener::frameStarted(const FrameEvent& evt)

@@ -39,6 +39,7 @@ public:
 	GD19_OgreListener(void);
 	~GD19_OgreListener(void);
 
+	void Reset_Class(void);
 	bool frameStarted(const FrameEvent& evt);
 	bool frameEnded(const FrameEvent& evt);
 	bool frameRenderingQueued(const FrameEvent& evt);
