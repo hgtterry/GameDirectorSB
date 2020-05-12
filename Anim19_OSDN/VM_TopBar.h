@@ -43,6 +43,8 @@ protected:
 	void Init_Bmps_Camera(void);
 	void Init_Bmps_Globals(void);
 	void Init_Bmps_Motions(void);
+	void Init_Bmps_Dimensions(void);
+	void Init_Bmps_Groups(void);
 
 	void Start_Motions_TB(void);
 	void Start_Dimensions_TB(void);

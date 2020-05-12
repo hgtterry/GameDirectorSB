@@ -901,6 +901,81 @@ void VM_TopBar::Init_Bmps_Camera(void)
 }
 
 // *************************************************************************
+// *						Init_Bmps_Dimensions Terry Bernie			   *
+// *************************************************************************
+void VM_TopBar::Init_Bmps_Dimensions(void)
+{
+	HWND hTooltip_TB_Dim = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
+
+	// --------------------------------------------------- 
+	HWND Temp = GetDlgItem(Dimensions_TB_hWnd, IDC_TBROTATION);
+
+	TOOLINFO ti = { 0 };
+	ti.cbSize = sizeof(ti);
+	ti.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti.uId = (UINT_PTR)Temp;
+	ti.lpszText = "Rotate Model";
+	ti.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_Dim, TTM_ADDTOOL, 0, (LPARAM)&ti);
+
+	// --------------------------------------------------- 
+
+	Temp = GetDlgItem(Dimensions_TB_hWnd, IDC_TBSCALE);
+
+	TOOLINFO ti2 = { 0 };
+	ti2.cbSize = sizeof(ti2);
+	ti2.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti2.uId = (UINT_PTR)Temp;
+	ti2.lpszText = "Scale Model";
+	ti2.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_Dim, TTM_ADDTOOL, 0, (LPARAM)&ti2);
+
+	// --------------------------------------------------- 
+
+	Temp = GetDlgItem(Dimensions_TB_hWnd, IDC_TBPOSITION);
+
+	TOOLINFO ti3 = { 0 };
+	ti3.cbSize = sizeof(ti3);
+	ti3.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti3.uId = (UINT_PTR)Temp;
+	ti3.lpszText = "Position Model";
+	ti3.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_Dim, TTM_ADDTOOL, 0, (LPARAM)&ti3);
+
+}
+
+// *************************************************************************
+// *						Init_Bmps_Groups Terry Bernie				   *
+// *************************************************************************
+void VM_TopBar::Init_Bmps_Groups(void)
+{
+	HWND hTooltip_TB_Gro = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
+
+	// --------------------------------------------------- 
+	HWND Temp = GetDlgItem(Groups_TB_hWnd, IDC_GRCHANGETEXTURE);
+
+	TOOLINFO ti = { 0 };
+	ti.cbSize = sizeof(ti);
+	ti.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti.uId = (UINT_PTR)Temp;
+	ti.lpszText = "Change Texture for Selected Group";
+	ti.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_Gro, TTM_ADDTOOL, 0, (LPARAM)&ti);
+
+	// --------------------------------------------------- 
+
+	Temp = GetDlgItem(Groups_TB_hWnd, IDC_ONLYGROUP);
+
+	TOOLINFO ti2 = { 0 };
+	ti2.cbSize = sizeof(ti2);
+	ti2.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti2.uId = (UINT_PTR)Temp;
+	ti2.lpszText = "Show Only Seleceted Group";
+	ti2.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_Gro, TTM_ADDTOOL, 0, (LPARAM)&ti2);
+}
+
+// *************************************************************************
 // *						Init_Bmps_Globals Terry Bernie				   *
 // *************************************************************************
 void VM_TopBar::Init_Bmps_Globals(void)
@@ -1228,6 +1303,7 @@ LRESULT CALLBACK VM_TopBar::Motions_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 void VM_TopBar::Start_Dimensions_TB(void)
 {
 	Dimensions_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_DIMENSIONS, Tabs_TB_hWnd, (DLGPROC)Dimensions_TB_Proc);
+	Init_Bmps_Dimensions();
 }
 
 // *************************************************************************
@@ -1341,6 +1417,7 @@ LRESULT CALLBACK VM_TopBar::Dimensions_TB_Proc(HWND hDlg, UINT message, WPARAM w
 void VM_TopBar::Start_Groups_TB(void)
 {
 	Groups_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_GROUPS, Tabs_TB_hWnd, (DLGPROC)Groups_TB_Proc);
+	Init_Bmps_Groups();
 }
 
 // *************************************************************************
