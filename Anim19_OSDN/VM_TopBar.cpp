@@ -116,7 +116,7 @@ LRESULT CALLBACK VM_TopBar::TopBar_Globals_Proc(HWND hDlg, UINT message, WPARAM 
 		SendDlgItemMessage(hDlg, IDC_TBNORMALS, WM_SETFONT, (WPARAM)App->Font_CB15_Bold, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_TBBOUNDBOX, WM_SETFONT, (WPARAM)App->Font_CB15_Bold, MAKELPARAM(TRUE, 0));
 		
-		App->CL_Vm_TopBar->Start_Tabs();
+		App->CL_Vm_TopBar->Start_Tabs_Headers();
 		App->CL_Vm_TopBar->Start_Camera_TB();
 		App->CL_Vm_TopBar->Start_Motions_TB();
 		App->CL_Vm_TopBar->Start_Dimensions_TB();
@@ -823,149 +823,81 @@ LRESULT CALLBACK VM_TopBar::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPara
 // *************************************************************************
 void VM_TopBar::Init_Bmps_Camera(void)
 {
-	//HWND hTooltip_TB_1 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
+	HWND hTooltip_TB_1 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
 
-	//// --------------------------------------------------- 
-	//HWND Temp = GetDlgItem(TB_1, IDC_FULLSCREEN);
-	//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_FullScreen_Bmp);
+	// --------------------------------------------------- 
+	HWND Temp = GetDlgItem(Camera_TB_hWnd, IDC_TBRESETVIEW);
+	
+	TOOLINFO ti = { 0 };
+	ti.cbSize = sizeof(ti);
+	ti.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti.uId = (UINT_PTR)Temp;
+	ti.lpszText = "Reset to Default View";
+	ti.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_1, TTM_ADDTOOL, 0, (LPARAM)&ti);
 
-	//TOOLINFO ti = { 0 };
-	//ti.cbSize = sizeof(ti);
-	//ti.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
-	//ti.uId = (UINT_PTR)Temp;
-	//ti.lpszText = "Full Screen View";
-	//ti.hwnd = App->MainHwnd;
-	//SendMessage(hTooltip_TB_1, TTM_ADDTOOL, 0, (LPARAM)&ti);
+	// --------------------------------------------------- 
 
-	//// --------------------------------------------------- 
+	Temp = GetDlgItem(Camera_TB_hWnd, IDC_TBZOOM);
+	
+	TOOLINFO ti2 = { 0 };
+	ti2.cbSize = sizeof(ti2);
+	ti2.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti2.uId = (UINT_PTR)Temp;
+	ti2.lpszText = "Reset and Zoom to fit Model In Window";
+	ti2.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_1, TTM_ADDTOOL, 0, (LPARAM)&ti2);
 
-	//Temp = GetDlgItem(TB_1, IDC_BTMODELINFO);
-	//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfo_Bmp);
+	// --------------------------------------------------- 
 
-	//TOOLINFO ti2 = { 0 };
-	//ti2.cbSize = sizeof(ti);
-	//ti2.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
-	//ti2.uId = (UINT_PTR)Temp;
-	//ti2.lpszText = "Model Information";
-	//ti2.hwnd = App->MainHwnd;
-	//SendMessage(hTooltip_TB_1, TTM_ADDTOOL, 0, (LPARAM)&ti2);
+	Temp = GetDlgItem(Camera_TB_hWnd, IDC_BTMOUSESPEED);
+	
+	TOOLINFO ti3 = { 0 };
+	ti3.cbSize = sizeof(ti3);
+	ti3.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti3.uId = (UINT_PTR)Temp;
+	ti3.lpszText = "Adujust Mouse and Keys Speed";
+	ti3.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_1, TTM_ADDTOOL, 0, (LPARAM)&ti3);
 
-	//// --------------------------------------------------- 
+	// --------------------------------------------------- 
 
-	//Temp = GetDlgItem(TB_1, IDC_BTMOUSESPEED);
-	//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MouseSensitivity_Bmp);
+	Temp = GetDlgItem(Camera_TB_hWnd, IDC_FULLSCREEN);
+	
+	TOOLINFO ti4 = { 0 };
+	ti4.cbSize = sizeof(ti4);
+	ti4.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti4.uId = (UINT_PTR)Temp;
+	ti4.lpszText = "Go Fullscreen Press esc to return";
+	ti4.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_1, TTM_ADDTOOL, 0, (LPARAM)&ti4);
 
-	//TOOLINFO ti3 = { 0 };
-	//ti3.cbSize = sizeof(ti);
-	//ti3.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
-	//ti3.uId = (UINT_PTR)Temp;
-	//ti3.lpszText = "Set Mouse Sensitivity";
-	//ti3.hwnd = App->MainHwnd;
-	//SendMessage(hTooltip_TB_1, TTM_ADDTOOL, 0, (LPARAM)&ti3);
+	// --------------------------------------------------- 
 
-	//// --------------------------------------------------- 
+	Temp = GetDlgItem(Camera_TB_hWnd, IDC_TBMODEL);
+	
+	TOOLINFO ti5 = { 0 };
+	ti5.cbSize = sizeof(ti5);
+	ti5.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti5.uId = (UINT_PTR)Temp;
+	ti5.lpszText = "Camera Mode Rotate Model";
+	ti5.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_1, TTM_ADDTOOL, 0, (LPARAM)&ti5);
 
-	//Temp = GetDlgItem(TB_1, IDC_BTLOCATIONS);
-	//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_Projection_Bmp);
+	// --------------------------------------------------- 
 
-	//TOOLINFO ti4 = { 0 };
-	//ti4.cbSize = sizeof(ti);
-	//ti4.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
-	//ti4.uId = (UINT_PTR)Temp;
-	//ti4.lpszText = "Location:- Save and Move to Locations within the Scene";
-	//ti4.hwnd = App->MainHwnd;
-	//SendMessage(hTooltip_TB_1, TTM_ADDTOOL, 0, (LPARAM)&ti4);
+	Temp = GetDlgItem(Camera_TB_hWnd, IDC_TBWORLD);
 
-	//// --------------------------------------------------- 
+	TOOLINFO ti6 = { 0 };
+	ti6.cbSize = sizeof(ti6);
+	ti6.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti6.uId = (UINT_PTR)Temp;
+	ti6.lpszText = "Camera Mode You Move Around Model";
+	ti6.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_1, TTM_ADDTOOL, 0, (LPARAM)&ti6);
 
-	//Temp = GetDlgItem(TB_1, IDC_SELECTION);
-	//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_LightsOff_Bmp);
+	// --------------------------------------------------- 
 
-	//TOOLINFO ti5 = { 0 };
-	//ti5.cbSize = sizeof(ti);
-	//ti5.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
-	//ti5.uId = (UINT_PTR)Temp;
-	//ti5.lpszText = "Selection Mode Press Space bar to Select";
-	//ti5.hwnd = App->MainHwnd;
-	//SendMessage(hTooltip_TB_1, TTM_ADDTOOL, 0, (LPARAM)&ti5);
-
-	//// --------------------------------------------------- 
-
-	//Temp = GetDlgItem(TB_1, IDC_BUILDGAME);
-	//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOff_Bmp);
-
-	//TOOLINFO ti6 = { 0 };
-	//ti6.cbSize = sizeof(ti);
-	//ti6.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
-	//ti6.uId = (UINT_PTR)Temp;
-	//ti6.lpszText = "Build Stand Alone GAme";
-	//ti6.hwnd = App->MainHwnd;
-	//SendMessage(hTooltip_TB_1, TTM_ADDTOOL, 0, (LPARAM)&ti6);
-
-	//// --------------------------------------------------- 
-
-	//Temp = GetDlgItem(TB_1, IDC_GAMEMODE);
-	//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_NormalsOff_Bmp);
-
-	//TOOLINFO ti7 = { 0 };
-	//ti7.cbSize = sizeof(ti);
-	//ti7.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
-	//ti7.uId = (UINT_PTR)Temp;
-	//ti7.lpszText = "Game Mode Preview";
-	//ti7.hwnd = App->MainHwnd;
-	//SendMessage(hTooltip_TB_1, TTM_ADDTOOL, 0, (LPARAM)&ti7);
-
-	//// --------------------------------------------------- 
-
-	//Temp = GetDlgItem(TB_1, IDC_IMGUIDEBUG);
-	//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BonesOff_Bmp);
-
-	//TOOLINFO ti8 = { 0 };
-	//ti8.cbSize = sizeof(ti);
-	//ti8.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
-	//ti8.uId = (UINT_PTR)Temp;
-	//ti8.lpszText = "Debug Game/App";
-	//ti8.hwnd = App->MainHwnd;
-	//SendMessage(hTooltip_TB_1, TTM_ADDTOOL, 0, (LPARAM)&ti8);
-
-	//// --------------------------------------------------- 
-
-	//Temp = GetDlgItem(TB_1, IDC_FREECAM);
-	//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshPointsOff_Bmp);
-
-	//TOOLINFO ti9 = { 0 };
-	//ti9.cbSize = sizeof(ti);
-	//ti9.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
-	//ti9.uId = (UINT_PTR)Temp;
-	//ti9.lpszText = "Free Camera No Collision";
-	//ti9.hwnd = App->MainHwnd;
-	//SendMessage(hTooltip_TB_1, TTM_ADDTOOL, 0, (LPARAM)&ti9);
-
-	//// --------------------------------------------------- 
-
-	//Temp = GetDlgItem(TB_1, IDC_THIRDPERSON);
-	//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
-
-	//TOOLINFO ti10 = { 0 };
-	//ti10.cbSize = sizeof(ti);
-	//ti10.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
-	//ti10.uId = (UINT_PTR)Temp;
-	//ti10.lpszText = "3rd Person View Not available yet";
-	//ti10.hwnd = App->MainHwnd;
-	//SendMessage(hTooltip_TB_1, TTM_ADDTOOL, 0, (LPARAM)&ti10);
-
-	//// --------------------------------------------------- 
-
-	///*Temp = GetDlgItem(TB_1, IDC_FIRSTPERSON);
-	//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOff_Bmp);
-
-	//TOOLINFO ti11 = { 0 };
-	//ti11.cbSize = sizeof(ti);
-	//ti11.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
-	//ti11.uId = (UINT_PTR)Temp;
-	//ti11.lpszText = "1st Person View with Physics";
-	//ti11.hwnd = App->MainHwnd;
-	//SendMessage(hTooltip_TB_1, TTM_ADDTOOL, 0, (LPARAM)&ti11);*/
 }
 
 // *************************************************************************
