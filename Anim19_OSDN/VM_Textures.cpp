@@ -416,16 +416,21 @@ bool VM_Textures::Soil_Load_Texture(UINT textureArray[], LPSTR strFileName, int 
 		//App->Say("Soil Fail 2");
 		
 		CreateDummyTexture();
+		char buf[1024];
+		strcpy(buf, App->CL_Vm_Model->Texture_FolderPath);
+		strcat(buf, "Etemp.bmp");
 
 		textureArray[textureID] = SOIL_load_OGL_texture
 		(
-			"Etemp.bmp",
+
+			buf,
 			SOIL_LOAD_AUTO,
 			SOIL_CREATE_NEW_ID,
 			SOIL_FLAG_TEXTURE_REPEATS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_MIPMAPS
+			
 		);
 
-		remove("Etemp.bmp");
+		remove(buf);
 
 		if (textureArray[textureID] == 0)
 		{
@@ -448,8 +453,6 @@ bool VM_Textures::Soil_Load_Texture(UINT textureArray[], LPSTR strFileName, int 
 	return 1;
 }
 
-
-
 //// *************************************************************************
 //// *							Texture_To_Bmp				  		 	   *
 //// *************************************************************************
@@ -465,8 +468,6 @@ bool VM_Textures::Soil_Load_Texture(UINT textureArray[], LPSTR strFileName, int 
 //
 //	return 1;
 //}
-
-
 
 // *************************************************************************
 // *								Ogre_LoadImage				  	 	   *
@@ -922,6 +923,12 @@ void VM_Textures::CreateTextureInfo(void)
 		App->CL_Vm_Model->S_TextureInfo[Count]->texID = 0;
 		App->CL_Vm_Model->S_TextureInfo[Count]->ActorMaterialIndex = 0;
 		App->CL_Vm_Model->S_TextureInfo[Count]->Bitmap = nullptr;
+
+		App->CL_Vm_Model->S_TextureInfo[Count]->R = 0;
+		App->CL_Vm_Model->S_TextureInfo[Count]->G = 0;
+		App->CL_Vm_Model->S_TextureInfo[Count]->B = 0;
+
+		strcpy(App->CL_Vm_Model->S_TextureInfo[Count]->MaterialName, "Unkown");
 
 		App->CL_Vm_Model->S_TextureInfo[Count]->GEHasAlpha = 0;
 
