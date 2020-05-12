@@ -88,7 +88,7 @@ void VM_TopBar::Reset_Class()
 }
 
 // *************************************************************************
-// *	  				Start_TopBarr_Globals  	Terry					   *
+// *	  				Start_TopBar_Globals  	Terry					   *
 // *************************************************************************
 bool VM_TopBar::Start_TopBar_Globals()
 {
@@ -117,7 +117,7 @@ LRESULT CALLBACK VM_TopBar::TopBar_Globals_Proc(HWND hDlg, UINT message, WPARAM 
 		SendDlgItemMessage(hDlg, IDC_TBBOUNDBOX, WM_SETFONT, (WPARAM)App->Font_CB15_Bold, MAKELPARAM(TRUE, 0));
 		
 		App->CL_Vm_TopBar->Start_Tabs();
-		App->CL_Vm_TopBar->Start_View_TB();
+		App->CL_Vm_TopBar->Start_Camera_TB();
 		App->CL_Vm_TopBar->Start_Motions_TB();
 		App->CL_Vm_TopBar->Start_Dimensions_TB();
 		App->CL_Vm_TopBar->Start_Groups_TB();
@@ -460,17 +460,17 @@ LRESULT CALLBACK VM_TopBar::TopBar_Globals_Proc(HWND hDlg, UINT message, WPARAM 
 }
 
 // *************************************************************************
-// *							Start_Tabs Terry						   *
+// *						Start_Tabs_Headers Terry					   *
 // *************************************************************************
-void VM_TopBar::Start_Tabs(void)
+void VM_TopBar::Start_Tabs_Headers(void)
 {
-	Tabs_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_TAB, App->CL_Vm_TopBar->TabsHwnd, (DLGPROC)Tabs_Proc);
+	Tabs_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_TAB, App->CL_Vm_TopBar->TabsHwnd, (DLGPROC)Tabs_Headers_Proc);
 }
 
 // *************************************************************************
-// *								Tabs_Proc_Proc						   *
+// *							Tabs_Headers_Proc_Proc					   *
 // *************************************************************************
-LRESULT CALLBACK VM_TopBar::Tabs_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK VM_TopBar::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 
 	switch (message)
@@ -671,18 +671,18 @@ void VM_TopBar::Reset_Main_Controls(void)
 }
 
 // *************************************************************************
-// *						Start_View_TB Terry Berine					   *
+// *						Start_Camera_TB Terry Berine				   *
 // *************************************************************************
-void VM_TopBar::Start_View_TB(void)
+void VM_TopBar::Start_Camera_TB(void)
 {
-	Camera_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB1, Tabs_TB_hWnd, (DLGPROC)View_TB_Proc);
-	Init_Bmps_TB1();
+	Camera_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB1, Tabs_TB_hWnd, (DLGPROC)Camera_TB_Proc);
+	Init_Bmps_Camera();
 }
 
 // *************************************************************************
 // *								View_TB_Proc						   *
 // *************************************************************************
-LRESULT CALLBACK VM_TopBar::View_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK VM_TopBar::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 
 	switch (message)
@@ -819,9 +819,9 @@ LRESULT CALLBACK VM_TopBar::View_TB_Proc(HWND hDlg, UINT message, WPARAM wParam,
 }
 
 // *************************************************************************
-// *						Init_Bmps_TB1 Terry Bernie					   *
+// *						Init_Bmps_Camera Terry Bernie				   *
 // *************************************************************************
-void VM_TopBar::Init_Bmps_TB1(void)
+void VM_TopBar::Init_Bmps_Camera(void)
 {
 	//HWND hTooltip_TB_1 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
 

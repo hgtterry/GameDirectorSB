@@ -30,17 +30,17 @@ protected:
 
 	static LRESULT CALLBACK TopBar_Globals_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
-	static LRESULT CALLBACK View_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	static LRESULT CALLBACK Motions_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Dimensions_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Groups_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
-	static LRESULT CALLBACK Tabs_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
-	void Start_View_TB(void);
+	void Start_Camera_TB(void);
 
-	void Init_Bmps_TB1(void);
+	void Init_Bmps_Camera(void);
 	void Init_Bmps_Globals(void);
 	void Init_Bmps_Motions(void);
 
@@ -48,7 +48,7 @@ protected:
 	void Start_Dimensions_TB(void);
 	void Start_Groups_TB(void);
 
-	void Start_Tabs(void);
+	void Start_Tabs_Headers(void);
 
 	void Hide_Tabs(void);
 
