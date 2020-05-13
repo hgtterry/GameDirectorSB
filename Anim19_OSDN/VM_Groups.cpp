@@ -323,7 +323,7 @@ void VM_Groups::Update_Groups_Dialog(int Index)
 	ShowWindow(GetDlgItem(RightGroups_Hwnd, IDC_BASETEXTURE2), 1);
 
 	
-	SetDlgItemText(RightGroups_Hwnd, IDC_RGGROUPNAME, (LPCTSTR)App->CL_Vm_Model->S_TextureInfo[Index]->MaterialName);
+	SetDlgItemText(RightGroups_Hwnd, IDC_RGGROUPNAME, (LPCTSTR)App->CL_Vm_Model->S_MeshGroup[Index]->GroupName);
 	SetDlgItemText(RightGroups_Hwnd, IDC_RGTEXTURENAME, (LPCTSTR)App->CL_Vm_Model->S_MeshGroup[Index]->Text_FileName);
 
 
