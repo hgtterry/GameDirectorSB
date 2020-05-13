@@ -245,6 +245,7 @@ public:
 	char Version[100];
 	char LevelDirectory[1024];
 	char DeskTop_Folder[1024];
+	char ETemp_Folder[1024];
 
 };
 

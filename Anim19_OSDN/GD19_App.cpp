@@ -158,6 +158,7 @@ GD19_App::GD19_App(void)
 
 
 	EquityDirecory_FullPath[0] = 0;
+	ETemp_Folder[0] = 0;
 }
 
 GD19_App::~GD19_App(void)
@@ -243,6 +244,9 @@ bool GD19_App::InitApp(void)
 	//	CoTaskMemFree(path2);
 	//	strcpy(DeskTop_Folder, Udir2);
 	//}
+
+	strcpy(ETemp_Folder, EquityDirecory_FullPath);
+	strcat(ETemp_Folder, "\\Data\\ETemp.bmp");
 
 	return 1;
 }

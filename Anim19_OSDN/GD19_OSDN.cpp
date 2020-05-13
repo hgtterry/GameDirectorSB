@@ -212,14 +212,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		case ID_TEST_GENERAL:
 		{
-			if (App->CL_Vm_ImGui->Show_Image == 1)
-			{
-				App->CL_Vm_ImGui->Show_Image = 0;
-			}
-			else
-			{
-				App->CL_Vm_ImGui->Show_Image = 1;
-			}
+			App->Say(App->ETemp_Folder);
+			App->CL_Vm_Textures->CreateDummyTexture();
+			App->Say("ok");
+
+			remove(App->ETemp_Folder);
+
 			return 1;
 		}
 

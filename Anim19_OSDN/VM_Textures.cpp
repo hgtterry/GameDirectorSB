@@ -819,6 +819,11 @@ bool VM_Textures::CreateDummyTexture(void)
 	hf = CreateFile(buf, GENERIC_READ | GENERIC_WRITE, (DWORD)0,
 		NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL,
 		(HANDLE)NULL);
+
+	/*hf = CreateFile(App->ETemp_Folder, GENERIC_READ | GENERIC_WRITE, (DWORD)0,
+		NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL,
+		(HANDLE)NULL);*/
+
 	if (hf == INVALID_HANDLE_VALUE)
 	{
 		App->Say("Could not create file for writing");
