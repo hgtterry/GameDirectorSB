@@ -134,7 +134,7 @@
       <AdditionalDependencies>comctl32.lib;genesis.lib;OgreMain.lib;OgreOverlay.lib;OgreTerrain.lib;opengl32.lib;glu32.lib;BulletDynamics.lib;BulletCollision.lib;LinearMath.lib;irrKlang.lib;SOIL.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)Hazel19.exe</OutputFile>
       <IgnoreSpecificDefaultLibraries>LIBCMT.lib;libcpmt.lib</IgnoreSpecificDefaultLibraries>
-      <LinkTimeCodeGeneration>UseFastLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

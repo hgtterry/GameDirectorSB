@@ -33,6 +33,7 @@ VM_ImGui::VM_ImGui()
 
 	Block = 0;
 	Block_Motion = 0;
+	Reset_Groups = 0;
 }
 
 
@@ -45,6 +46,8 @@ VM_ImGui::~VM_ImGui()
 // *************************************************************************
 void VM_ImGui::Reset_Class(void)
 {
+	Reset_Groups = 1;
+
 	StartPos = 0;
 	Show_FPS = 1;
 	Show_ImGui_Test = 0;
@@ -861,6 +864,12 @@ void VM_ImGui::ImGui_GroupList(void)
 		{
 			App->CL_Vm_Groups->Update_Groups_Dialog(selected_Players);
 			Block = 0;
+		}
+
+		if (Reset_Groups == 1)
+		{
+			selected_Players = 0;
+			Reset_Groups = 0;
 		}
 
 		ImGui::End();

@@ -54,5 +54,6 @@ public:
 
 	bool Block;
 	bool Block_Motion;
+	bool Reset_Groups;
 };
 

@@ -212,11 +212,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		case ID_TEST_GENERAL:
 		{
-			App->Say(App->ETemp_Folder);
+			App->CL_Vm_ImGui->Reset_Groups = 1;
+			/*App->Say(App->ETemp_Folder);
 			App->CL_Vm_Textures->CreateDummyTexture();
 			App->Say("ok");
 
-			remove(App->ETemp_Folder);
+			remove(App->ETemp_Folder);*/
 
 			return 1;
 		}
