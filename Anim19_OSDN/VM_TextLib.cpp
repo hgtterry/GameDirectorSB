@@ -26,6 +26,8 @@ distribution.
 #include "GD19_App.h"
 #include "VM_TextLib.h"
 
+#pragma warning( disable : 4800)
+
 VM_TextLib::VM_TextLib()
 {
 	Entry = nullptr;
@@ -65,7 +67,7 @@ LRESULT CALLBACK VM_TextLib::TextureLib_Proc(HWND hDlg, UINT message, WPARAM wPa
 		SendDlgItemMessage(hDlg, IDC_TEXTURELIST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_EXPORTALL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_RENAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		
+		SendDlgItemMessage(hDlg, IDC_EXPORTSELECTED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		App->CL_Vm_TextLib->Entry = new BitmapEntry;
 
@@ -131,6 +133,13 @@ LRESULT CALLBACK VM_TextLib::TextureLib_Proc(HWND hDlg, UINT message, WPARAM wPa
 		}
 
 		if (some_item->idFrom == IDC_RENAME && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_EXPORTSELECTED && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
@@ -249,8 +258,7 @@ LRESULT CALLBACK VM_TextLib::TextureLib_Proc(HWND hDlg, UINT message, WPARAM wPa
 		//--------------------------------- Save AS --------------------
 		if (LOWORD(wParam) == IDC_EXPORTSELECTED)
 		{
-
-			//App->CL_Vm_TextLib->TPack_ExtractSelected();
+			App->CL_Vm_TextLib->TPack_ExtractSelected();
 			return TRUE;
 		}
 
@@ -1187,8 +1195,9 @@ bool VM_TextLib::TPack_ExtractSelected()
 	//----------------------------------------------
 
 	// Ouput to the current directory
+	
 	GetCurrentDirectory(MAX_PATH, szPath);
-
+	
 	nSel = SendDlgItemMessage(p_Data->hwnd, IDC_TEXTURELIST, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
 	if (nSel == LB_ERR)
 	{
