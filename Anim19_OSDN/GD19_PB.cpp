@@ -41,7 +41,7 @@ LRESULT CALLBACK GD19_PB::ProgressNewBarProc(HWND hDlg, UINT message, WPARAM wPa
 	HPEN hPen, holdPen;
 	HFONT hFont, holdFont;
 	PAINTSTRUCT ps;
-	RECT rect, rect2;
+	RECT rect;// rect2;
 
 	wchar_t* cap[] = { L"75", L"150", L"225", L"300", L"375", L"450",
 		L"525", L"600", L"675" };
@@ -49,7 +49,7 @@ LRESULT CALLBACK GD19_PB::ProgressNewBarProc(HWND hDlg, UINT message, WPARAM wPa
 	HDC hdc;
 	int till;
 	int step, full;
-	int i;
+//	int i;
 
 
 	switch (message)

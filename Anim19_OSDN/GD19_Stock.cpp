@@ -825,7 +825,7 @@ LRESULT CALLBACK GD19_Stock::List_Stock_Proc(HWND hDlg, UINT message, WPARAM wPa
 	{
 	//	if (LOWORD(wParam) == IDC_LIST1)
 		{
-			char buff[256];
+		//	char buff[256];
 		///	App->Cl_Stock->ListIndex = SendDlgItemMessage(hDlg, IDC_LIST1, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
 
 			if (App->Cl_Stock->ListIndex == -1)
