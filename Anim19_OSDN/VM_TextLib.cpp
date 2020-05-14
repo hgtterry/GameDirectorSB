@@ -68,6 +68,7 @@ LRESULT CALLBACK VM_TextLib::TextureLib_Proc(HWND hDlg, UINT message, WPARAM wPa
 		SendDlgItemMessage(hDlg, IDC_EXPORTALL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_RENAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_EXPORTSELECTED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ADD, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		App->CL_Vm_TextLib->Entry = new BitmapEntry;
 
@@ -146,6 +147,13 @@ LRESULT CALLBACK VM_TextLib::TextureLib_Proc(HWND hDlg, UINT message, WPARAM wPa
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_ADD && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
 		return CDRF_DODEFAULT;
 	}
 
@@ -189,14 +197,14 @@ LRESULT CALLBACK VM_TextLib::TextureLib_Proc(HWND hDlg, UINT message, WPARAM wPa
 		//--------------------------------- Add -----------------------
 		if (LOWORD(wParam) == IDC_ADD)
 		{
-			/*int test = C_File->OpenFileCom("Texture Files ( *.bmp *.tga )\0*.bmp;*.tga\0*.tga\0*.tga\0*.bmp\0*.bmp\0", "Add Texture", "Bitmap Files");
+			int test = App->CL_Vm_TextLib->Txt_OpenFile("Texture Files ( *.bmp *.tga )\0*.bmp;*.tga\0*.tga\0*.tga\0*.bmp\0*.bmp\0", "Add Texture", "Bitmap Files");
 			if (test == 0)
 			{
 				return 1;
-			}*/
+			}
 
-			//App->CL_Vm_TextLib->AddTexture(NULL, App->CL_Vm_TextLib->Txt_FileName);
-			//App->CL_Vm_TextLib->p_Data->Dirty = 1; // it as changed reqest save
+			App->CL_Vm_TextLib->AddTexture(NULL, App->CL_Vm_TextLib->Txt_FileName);
+			App->CL_Vm_TextLib->p_Data->Dirty = 1; // it as changed reqest save
 			return TRUE;
 		}
 		//--------------------------------- Save ----------------------
