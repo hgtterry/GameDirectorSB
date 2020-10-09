@@ -69,6 +69,8 @@ LRESULT CALLBACK VM_TextLib::TextureLib_Proc(HWND hDlg, UINT message, WPARAM wPa
 		SendDlgItemMessage(hDlg, IDC_RENAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_EXPORTSELECTED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ADD, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_SAVEAS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_SAVE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		App->CL_Vm_TextLib->Entry = new BitmapEntry;
 
@@ -154,6 +156,20 @@ LRESULT CALLBACK VM_TextLib::TextureLib_Proc(HWND hDlg, UINT message, WPARAM wPa
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_SAVEAS && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_SAVE && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
 		return CDRF_DODEFAULT;
 	}
 
@@ -172,7 +188,9 @@ LRESULT CALLBACK VM_TextLib::TextureLib_Proc(HWND hDlg, UINT message, WPARAM wPa
 					MB_YESNOCANCEL);
 
 				if (Result == IDCANCEL)
+				{
 					return 0;
+				}
 
 				if (Result == IDYES)
 				{
@@ -205,13 +223,16 @@ LRESULT CALLBACK VM_TextLib::TextureLib_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 			App->CL_Vm_TextLib->AddTexture(NULL, App->CL_Vm_TextLib->Txt_FileName);
 			App->CL_Vm_TextLib->p_Data->Dirty = 1; // it as changed reqest save
+
+			App->Say("Texture Added");
 			return TRUE;
 		}
 		//--------------------------------- Save ----------------------
 		if (LOWORD(wParam) == IDC_SAVE)
 		{
 
-			//App->CL_Vm_TextLib->Save(App->CL_Vm_TextLib->p_Data->TXLFileName);
+			App->CL_Vm_TextLib->Save(App->CL_Vm_TextLib->p_Data->TXLFileName);
+			App->Say("Saved");
 			return TRUE;
 		}
 		//--------------------------------- Rename ----------------------
@@ -226,7 +247,8 @@ LRESULT CALLBACK VM_TextLib::TextureLib_Proc(HWND hDlg, UINT message, WPARAM wPa
 		if (LOWORD(wParam) == IDC_SAVEAS)
 		{
 
-			//App->CL_Vm_TextLib->Save(NULL);
+			App->CL_Vm_TextLib->Save(NULL);
+			App->Say("Saved");
 			return TRUE;
 		}
 
@@ -267,6 +289,7 @@ LRESULT CALLBACK VM_TextLib::TextureLib_Proc(HWND hDlg, UINT message, WPARAM wPa
 		if (LOWORD(wParam) == IDC_EXPORTSELECTED)
 		{
 			App->CL_Vm_TextLib->TPack_ExtractSelected();
+			App->Say("Texture Exported");
 			return TRUE;
 		}
 
