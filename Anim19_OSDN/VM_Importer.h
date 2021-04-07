@@ -9,6 +9,6 @@ public:
 	bool Genesis3D_Loader(void);
 	void Reload_FromResentFiles(char* ResentPathAndFile);
 
-	void Set_Hazel19(void);
+	void Set_Equity(void);
 };
 

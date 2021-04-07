@@ -42,7 +42,7 @@ bool VM_Importer::Assimp_Loader(char* Extension, char* Extension2)
 
 	App->CL_Vm_Model->Model_Type = LoadedFile_Assimp;
 	
-	Set_Hazel19();
+	Set_Equity();
 
 	App->Say("Model Loaded");
 	return 1;
@@ -72,7 +72,7 @@ bool VM_Importer::Genesis3D_Loader(void)
 
 	App->CL_Vm_Model->Model_Type = LoadedFile_Actor;
 
-	Set_Hazel19();
+	Set_Equity();
 
 	App->Say("Model Loaded");
 
@@ -126,7 +126,7 @@ void VM_Importer::Reload_FromResentFiles(char* ResentPathAndFile)
 
 		App->CL_Vm_Model->Model_Type = LoadedFile_Actor;
 
-		Set_Hazel19();
+		Set_Equity();
 
 		App->Say("Model Loaded");
 		
@@ -144,16 +144,16 @@ void VM_Importer::Reload_FromResentFiles(char* ResentPathAndFile)
 	
 	App->CL_Vm_Model->Model_Type = LoadedFile_Assimp;
 	
-	Set_Hazel19();
+	Set_Equity();
 	
 	App->Say("Model Loaded");
 
 }
 
 // *************************************************************************
-// *						Set_Hazel19 Terry Bernie					   *
+// *						Set_Equity Terry Bernie						   *
 // *************************************************************************
-void VM_Importer::Set_Hazel19(void)
+void VM_Importer::Set_Equity(void)
 {
 	App->CL_Vm_Model->Model_Loaded = 1;
 
