@@ -253,7 +253,7 @@ void VM_ImGui::ImGui_FPS(void)
 		}
 
 		ImGui::Spacing();
-		ImGui::Text("FPS average %.1f ms/frame (%.0f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+		ImGui::Text("FPS average %.0f",ImGui::GetIO().Framerate);
 		//ImGui::PopFont();
 
 		ImGui::End();
