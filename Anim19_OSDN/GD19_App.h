@@ -33,7 +33,7 @@ ebopster
 #include "GD19_Panels.h"
 #include "GD19_Load_Scene.h"
 #include "GD19_Save_Scene.h"
-#include "GD19_File_IO.h"
+//#include "GD19_File_IO.h"
 #include "GD19_Scene_Data.h"
 #include "GD19_Bullet.h"
 #include "GD19_Player.h"
