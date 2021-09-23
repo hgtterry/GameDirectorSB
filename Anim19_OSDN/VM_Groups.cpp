@@ -68,6 +68,7 @@ LRESULT CALLBACK VM_Groups::Groups_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 		SendDlgItemMessage(hDlg, IDC_RGTEXTURENAME, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDC_INFO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CHANGETEXTURE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SetWindowLong(GetDlgItem(hDlg, IDC_BASETEXTURE2), GWL_WNDPROC, (LONG)ViewerBasePic);
 	}
@@ -116,12 +117,12 @@ LRESULT CALLBACK VM_Groups::Groups_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		/*if (some_item->idFrom == IDC_CKHIDEGROUP && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_CHANGETEXTURE && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_Right_Groups->CK_HideGroup);
+			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
-		}*/
+		}
 
 		if (some_item->idFrom == IDC_INFO && some_item->code == NM_CUSTOMDRAW)
 		{
@@ -147,6 +148,15 @@ LRESULT CALLBACK VM_Groups::Groups_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 				{
 					App->CL_Vm_ImGui->Show_ImGui_TextureData = 1;
 				}
+			}
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_CHANGETEXTURE)
+		{
+			if (App->CL_Vm_Model->Model_Loaded == 1)
+			{
+				App->CL_Vm_Groups->ChangeTexture_ModelLocation();
 			}
 			return TRUE;
 		}
