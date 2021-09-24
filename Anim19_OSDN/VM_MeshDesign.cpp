@@ -23,7 +23,11 @@ VM_MeshDesign::~VM_MeshDesign()
 // *************************************************************************
 bool VM_MeshDesign::StartMeshDesign()
 {
+	App->RenderBackGround = 1;
+
 	DialogBox(App->hInst, (LPCTSTR)IDD_MESHDESIGN, App->Fdlg, (DLGPROC)MeshDesign_Proc);
+
+	App->RenderBackGround = 0;
 	Close_OgreWindow();
 	return 1;
 }
