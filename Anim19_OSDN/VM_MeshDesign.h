@@ -7,6 +7,8 @@ public:
 
 	bool StartMeshDesign();
 
+	Ogre::SceneNode*		MvNode;
+
 protected:
 
 	static LRESULT CALLBACK MeshDesign_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
@@ -17,7 +19,6 @@ protected:
 	HWND MeshView_Hwnd;
 
 	Ogre::Entity*			MvEnt;
-	Ogre::SceneNode*		MvNode;
 
 	Ogre::RenderWindow* MeshView_Window;
 	Ogre::SceneManager* mSceneMgrMeshView;

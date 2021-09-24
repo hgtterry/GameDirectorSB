@@ -28,6 +28,7 @@ bool VM_MeshDesign::StartMeshDesign()
 	DialogBox(App->hInst, (LPCTSTR)IDD_MESHDESIGN, App->Fdlg, (DLGPROC)MeshDesign_Proc);
 
 	App->RenderBackGround = 0;
+	App->Cl19_Ogre->OgreListener->GD_MeshViewer_Running = 0;
 	Close_OgreWindow();
 	return 1;
 }
@@ -83,9 +84,9 @@ LRESULT CALLBACK VM_MeshDesign::MeshDesign_Proc(HWND hDlg, UINT message, WPARAM 
 		//App->Cl_Mesh_Viewer->Physics_Type = Enums::Bullet_Type_None;
 
 		/*char ConNum[256];
-		char ATest[256];
+		char ATest[256];*/
 
-		App->Cl19_Ogre->OgreListener->GD_MeshViewer_Running = 1;*/
+		App->Cl19_Ogre->OgreListener->GD_MeshViewer_Running = 1;
 
 
 		return TRUE;

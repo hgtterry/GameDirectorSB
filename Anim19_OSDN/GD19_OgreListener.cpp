@@ -226,6 +226,17 @@ bool GD19_OgreListener::frameStarted(const FrameEvent& evt)
 // *************************************************************************
 bool GD19_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 {
+	if (GD_MeshViewer_Running == 1)
+	{
+		//if (Flags[0]->MeshViewer_SpinObject == 1)
+		{
+			Ogre::Radian Rotation_Speed;
+			Rotation_Speed = GD_SpinRate / (float)57.3;
+			App->Cl_Vm_MeshDesign->MvNode->yaw(Rotation_Speed);
+		}
+		return 1;
+	}
+
 	if (CameraMode == 0)
 	{
 		WorldMode(evt.timeSinceLastFrame);
