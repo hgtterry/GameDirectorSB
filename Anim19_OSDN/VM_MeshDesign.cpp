@@ -11,6 +11,9 @@ VM_MeshDesign::VM_MeshDesign()
 	mSceneMgrMeshView = nullptr;
 	mCameraMeshView = nullptr;
 	CamNode = nullptr;
+
+	MvNode = nullptr;
+	MvEnt = nullptr;
 }
 
 
