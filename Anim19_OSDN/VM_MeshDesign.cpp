@@ -6,6 +6,11 @@
 
 VM_MeshDesign::VM_MeshDesign()
 {
+	MeshView_Hwnd = nullptr;
+	MeshView_Window = nullptr;
+	mSceneMgrMeshView = nullptr;
+	mCameraMeshView = nullptr;
+	CamNode = nullptr;
 }
 
 
@@ -19,6 +24,7 @@ VM_MeshDesign::~VM_MeshDesign()
 bool VM_MeshDesign::StartMeshDesign()
 {
 	DialogBox(App->hInst, (LPCTSTR)IDD_MESHDESIGN, App->Fdlg, (DLGPROC)MeshDesign_Proc);
+	Close_OgreWindow();
 	return 1;
 }
 
@@ -46,14 +52,16 @@ LRESULT CALLBACK VM_MeshDesign::MeshDesign_Proc(HWND hDlg, UINT message, WPARAM 
 
 		//App->Cl_Mesh_Viewer->ListHwnd = GetDlgItem(hDlg, IDC_LISTFILES);
 
-		//HWND Ogre_Hwnd = GetDlgItem(hDlg, IDC_OGREWIN);
-		//App->Cl_Mesh_Viewer->MeshView_Hwnd = GetDlgItem(hDlg, IDC_OGREWIN);
-		//App->Cl_Mesh_Viewer->Set_OgreWindow();
+		HWND Ogre_Hwnd = GetDlgItem(hDlg, IDC_OGREWIN2);
+
+		App->Cl_Vm_MeshDesign->MeshView_Hwnd = GetDlgItem(hDlg, IDC_OGREWIN2);
+
+		App->Cl_Vm_MeshDesign->Set_OgreWindow();
 
 		////App->Cl19_Ogre->textArea->hide();
 
-		//Ogre::Root::getSingletonPtr()->renderOneFrame();
-		//Ogre::Root::getSingletonPtr()->renderOneFrame();
+		Ogre::Root::getSingletonPtr()->renderOneFrame();
+		Ogre::Root::getSingletonPtr()->renderOneFrame();
 
 		//HWND CB_hWnd = GetDlgItem(hDlg, IDC_CB_FOLDERS);
 		//App->Cl_Mesh_Viewer->Get_Media_Folders_Actors(CB_hWnd); // Populate Combo
@@ -80,13 +88,13 @@ LRESULT CALLBACK VM_MeshDesign::MeshDesign_Proc(HWND hDlg, UINT message, WPARAM 
 	}
 	case WM_CTLCOLORSTATIC:
 	{
-		if (GetDlgItem(hDlg, IDC_STNAME) == (HWND)lParam)
+		/*if (GetDlgItem(hDlg, IDC_STNAME) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 255));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
-		}
+		}*/
 
 		return FALSE;
 	}
@@ -148,4 +156,64 @@ LRESULT CALLBACK VM_MeshDesign::MeshDesign_Proc(HWND hDlg, UINT message, WPARAM 
 		break;
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *				Set_OgreWindow Terry Bernie							   *
+// *************************************************************************
+bool VM_MeshDesign::Set_OgreWindow(void)
+{
+
+	Ogre::NameValuePairList options;
+
+	options["externalWindowHandle"] =
+		Ogre::StringConverter::toString((size_t)MeshView_Hwnd);
+
+	MeshView_Window = App->Cl19_Ogre->mRoot->createRenderWindow("MeshViewWin", 1024, 768, false, &options);
+
+	mSceneMgrMeshView = App->Cl19_Ogre->mRoot->createSceneManager("DefaultSceneManager", "MeshViewGD");
+
+	mCameraMeshView = mSceneMgrMeshView->createCamera("CameraMV");
+	mCameraMeshView->setPosition(Ogre::Vector3(0, 0, 0));
+	mCameraMeshView->setNearClipDistance(0.1);
+	mCameraMeshView->setFarClipDistance(1000);
+
+	Ogre::Viewport* vp = MeshView_Window->addViewport(mCameraMeshView);
+	mCameraMeshView->setAspectRatio(Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));
+
+	vp->setBackgroundColour(ColourValue(0.5, 0.5, 0.5));
+
+	CamNode = mSceneMgrMeshView->getRootSceneNode()->createChildSceneNode("Camera_Node");
+	CamNode->attachObject(mCameraMeshView);
+
+	//-------------------------------------------- 
+	MvEnt = mSceneMgrMeshView->createEntity("MVTest", "axes.mesh");
+	MvNode = mSceneMgrMeshView->getRootSceneNode()->createChildSceneNode();
+	MvNode->attachObject(MvEnt);
+
+	mSceneMgrMeshView->setAmbientLight(ColourValue(0.7, 0.7, 0.7));
+
+	// add a bright light above the scene
+	Light* light = mSceneMgrMeshView->createLight();
+	light->setType(Light::LT_POINT);
+	light->setPosition(-10, 40, 20);
+	light->setSpecularColour(ColourValue::White);
+
+	Ogre::Vector3 Centre = MvEnt->getBoundingBox().getCenter();
+	Ogre::Real Radius = MvEnt->getBoundingRadius();
+
+	mCameraMeshView->setPosition(0, Centre.y, -Radius*(Real(2.5)));
+	mCameraMeshView->lookAt(0, Centre.y, 0);
+
+	return 1;
+}
+
+// *************************************************************************
+// *				CloseMeshView (Terry Bernie)						   *
+// *************************************************************************
+void VM_MeshDesign::Close_OgreWindow(void)
+{
+	App->Cl19_Ogre->mRoot->detachRenderTarget("MeshViewWin");
+	MeshView_Window->destroy();
+	App->Cl19_Ogre->mRoot->destroySceneManager(mSceneMgrMeshView);
 }
