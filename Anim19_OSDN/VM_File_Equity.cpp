@@ -57,6 +57,7 @@ bool VM_File_Equity::SaveFile(char* Extension, char* Title, char* FileName)
 // *************************************************************************
 bool VM_File_Equity::WriteData_File()
 {
+	int Count = 0;
 	WriteScene = NULL;
 
 	WriteScene = fopen(mPath_FileName, "wt");
@@ -75,7 +76,87 @@ bool VM_File_Equity::WriteData_File()
 	fprintf(WriteScene, "%s\n", " ");
 
 	fprintf(WriteScene, "%s%i\n", "Groups = ", App->CL_Vm_Model->GroupCount);
+
+
+	while (Count<App->CL_Vm_Model->GroupCount)
+	{
+		fprintf(WriteScene, "%s%i %s\n", "Group ", Count, App->CL_Vm_Model->S_MeshGroup[Count]->GroupName);
+
+		Write_All(Count);
+		fprintf(WriteScene, "%s\n", " ");
+		Count++;
+	}
 	
 	fclose(WriteScene);
+	return 1;
+}
+
+// *************************************************************************
+// *							Write_All Terry Bernie			 		   *
+// *************************************************************************
+bool VM_File_Equity::Write_All(int Count)
+{
+	int VertCount = 0;
+	int A = 0;
+	int B = 0;
+	int C = 0;
+
+	if (App->CL_Vm_Model->S_MeshGroup[Count]->MaterialIndex>-1)
+	{
+		int MatIndex = App->CL_Vm_Model->S_MeshGroup[Count]->MaterialIndex;
+		fprintf(WriteScene, "%s%i\n", "Material Index = ", MatIndex);
+		
+	}
+	else
+	{
+		fprintf(WriteScene, "%s\n", "Material Index = No Material");
+	}
+
+	while (VertCount<App->CL_Vm_Model->S_MeshGroup[Count]->GroupFaceCount)
+	{
+		A = App->CL_Vm_Model->S_MeshGroup[Count]->Face_Data[VertCount].a;
+		B = App->CL_Vm_Model->S_MeshGroup[Count]->Face_Data[VertCount].b;
+		C = App->CL_Vm_Model->S_MeshGroup[Count]->Face_Data[VertCount].c;
+
+		fprintf(WriteScene, "%s %i %i %i\n", "Face Indices =",A,B,C);
+
+	//	//-----------------------------------------------
+	//	glTexCoord2f(App->CL_Vm_Model->S_MeshGroup[Count]->MapCord_Data[A].u, App->CL_Vm_Model->S_MeshGroup[Count]->MapCord_Data[A].v);
+	//	glNormal3fv(&App->CL_Vm_Model->S_MeshGroup[Count]->Normal_Data[A].x);
+		glVertex3fv(&App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[A].x);
+		//VertCount++;
+
+		float X, Y, Z;
+
+		X = App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[A].x;
+		Y = App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[A].y;
+		Z = App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[A].z;
+		fprintf(WriteScene, "%s %f %f %f\n", "v =", X, Y, Z);
+	//	//-----------------------------------------------
+	//	glTexCoord2f(App->CL_Vm_Model->S_MeshGroup[Count]->MapCord_Data[B].u, App->CL_Vm_Model->S_MeshGroup[Count]->MapCord_Data[B].v);
+	//	glNormal3fv(&App->CL_Vm_Model->S_MeshGroup[Count]->Normal_Data[B].x);
+	//	glVertex3fv(&App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[B].x);
+		//VertCount++;
+
+		X = App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[B].x;
+		Y = App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[B].y;
+		Z = App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[B].z;
+		fprintf(WriteScene, "%s %f %f %f\n", "v =", X, Y, Z);
+
+		X = App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[C].x;
+		Y = App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[C].y;
+		Z = App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[C].z;
+		fprintf(WriteScene, "%s %f %f %f\n", "v =", X, Y, Z);
+
+	//	//-----------------------------------------------
+	//	glTexCoord2f(App->CL_Vm_Model->S_MeshGroup[Count]->MapCord_Data[C].u, App->CL_Vm_Model->S_MeshGroup[Count]->MapCord_Data[C].v);
+	//	glNormal3fv(&App->CL_Vm_Model->S_MeshGroup[Count]->Normal_Data[C].x);
+	//	glVertex3fv(&App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[C].x);
+		VertCount++;
+		//-----------------------------------------------
+
+
+	}
+
 	return 1;
 }
