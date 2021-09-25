@@ -201,6 +201,7 @@
     <ClInclude Include="VM_Dimensions.h" />
     <ClInclude Include="VM_Exporter.h" />
     <ClInclude Include="VM_FileIO.h" />
+    <ClInclude Include="VM_File_Equity.h" />
     <ClInclude Include="VM_Genisis3D.h" />
     <ClInclude Include="VM_Groups.h" />
     <ClInclude Include="VM_ImGui.h" />
@@ -267,6 +268,7 @@
     <ClCompile Include="VM_Dimensions.cpp" />
     <ClCompile Include="VM_Exporter.cpp" />
     <ClCompile Include="VM_FileIO.cpp" />
+    <ClCompile Include="VM_File_Equity.cpp" />
     <ClCompile Include="VM_Genisis3D.cpp" />
     <ClCompile Include="VM_Groups.cpp" />
     <ClCompile Include="VM_ImGui.cpp" />

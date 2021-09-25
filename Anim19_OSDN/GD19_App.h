@@ -73,6 +73,7 @@ ebopster
 #include "VM_Assimp.h"
 #include "VM_Dimensions.h"
 #include "VM_MeshDesign.h"
+#include "VM_File_Equity.h"
 
 
 class GD19_App
@@ -128,6 +129,7 @@ public:
 	VM_Assimp*			Cl_Vm_Assimp;
 	VM_Dimensions*		Cl_Vm_Dimensions;
 	VM_MeshDesign*		Cl_Vm_MeshDesign;
+	VM_File_Equity*		Cl_Vm_File_Equity;
 
 
 	GD19_App(void);
