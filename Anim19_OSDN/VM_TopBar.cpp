@@ -14,6 +14,8 @@ VM_TopBar::VM_TopBar()
 	Motions_TB_hWnd =		nullptr;
 	Dimensions_TB_hWnd =	nullptr;
 	Groups_TB_hWnd =		nullptr;
+	Shapes_TB_hWnd =		nullptr;
+
 	MouseOption_DlgHwnd =	nullptr;
 
 	// Main Controls
@@ -30,6 +32,9 @@ VM_TopBar::VM_TopBar()
 	Toggle_Tabs_Motions_Flag = 0;
 	Toggle_Tabs_Dimensions_Flag = 0;
 	Toggle_Tabs_Groups_Flag = 0;
+	Toggle_Tabs_Shapes_Flag = 0;
+
+
 	Toggle_GroupsOnly_Flag = 0;
 
 	// Motions
@@ -121,6 +126,7 @@ LRESULT CALLBACK VM_TopBar::TopBar_Globals_Proc(HWND hDlg, UINT message, WPARAM 
 		App->CL_Vm_TopBar->Start_Motions_TB();
 		App->CL_Vm_TopBar->Start_Dimensions_TB();
 		App->CL_Vm_TopBar->Start_Groups_TB();
+		App->CL_Vm_TopBar->Start_Shapes_TB();
 		
 		return TRUE;
 	}
@@ -483,6 +489,7 @@ LRESULT CALLBACK VM_TopBar::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM wP
 		SendDlgItemMessage(hDlg, IDC_TBMOTIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_TBDIMENSIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_TBGROUPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_TBSHAPES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		return TRUE;
 	}
@@ -521,6 +528,13 @@ LRESULT CALLBACK VM_TopBar::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM wP
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle_Tabs(item, App->CL_Vm_TopBar->Toggle_Tabs_Groups_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_TBSHAPES && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle_Tabs(item, App->CL_Vm_TopBar->Toggle_Tabs_Shapes_Flag);
 			return CDRF_DODEFAULT;
 		}
 		return CDRF_DODEFAULT;
@@ -583,6 +597,20 @@ LRESULT CALLBACK VM_TopBar::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM wP
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_TBSHAPES)
+		{
+			App->CL_Vm_TopBar->Hide_Tabs();
+			
+			ShowWindow(App->CL_Vm_TopBar->Shapes_TB_hWnd, SW_SHOW);
+			
+			App->CL_Vm_TopBar->Toggle_Tabs_Shapes_Flag = 1;
+
+			App->Cl19_Ogre->OgreListener->ImGui_Render_Tab = Enums::ImGui_None;
+
+			RedrawWindow(App->CL_Vm_TopBar->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			return TRUE;
+		}
+
 	}
 	}
 	return FALSE;
@@ -597,6 +625,7 @@ void VM_TopBar::Hide_Tabs(void)
 	ShowWindow(App->CL_Vm_TopBar->Motions_TB_hWnd, SW_HIDE);
 	ShowWindow(App->CL_Vm_TopBar->Dimensions_TB_hWnd, SW_HIDE);
 	ShowWindow(App->CL_Vm_TopBar->Groups_TB_hWnd, SW_HIDE);
+	ShowWindow(App->CL_Vm_TopBar->Shapes_TB_hWnd, SW_HIDE);
 	
 	ShowWindow(App->CL_Vm_Groups->RightGroups_Hwnd, 0);
 
@@ -604,6 +633,7 @@ void VM_TopBar::Hide_Tabs(void)
 	Toggle_Tabs_Motions_Flag = 0;
 	Toggle_Tabs_Dimensions_Flag = 0;
 	Toggle_Tabs_Groups_Flag = 0;
+	Toggle_Tabs_Shapes_Flag = 0;
 }
 
 // *************************************************************************
@@ -1418,6 +1448,87 @@ void VM_TopBar::Start_Groups_TB(void)
 {
 	Groups_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_GROUPS, Tabs_TB_hWnd, (DLGPROC)Groups_TB_Proc);
 	Init_Bmps_Groups();
+}
+
+// *************************************************************************
+// *						Start_Shapes_TB Terry						   *
+// *************************************************************************
+void VM_TopBar::Start_Shapes_TB(void)
+{
+	Shapes_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_SHAPES, Tabs_TB_hWnd, (DLGPROC)Shapes_TB_Proc);
+	//Init_Bmps_Groups();
+}
+
+// *************************************************************************
+// *								Shapes_TB_Proc					   *
+// *************************************************************************
+LRESULT CALLBACK VM_TopBar::Shapes_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		/*SendDlgItemMessage(hDlg, IDC_GRCHANGETEXTURE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ONLYGROUP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));*/
+		return TRUE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->Brush_Tabs;
+	}
+
+	case WM_NOTIFY:
+	{
+
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		/*if (some_item->idFrom == IDC_ONLYGROUP && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_Vm_TopBar->Toggle_GroupsOnly_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_GRCHANGETEXTURE && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}*/
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+		/*if (LOWORD(wParam) == IDC_GRCHANGETEXTURE)
+		{
+			App->CL_Vm_Groups->ChangeTexture_ModelLocation();
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_ONLYGROUP)
+		{
+			if (App->Cl19_Ogre->RenderListener->ShowOnlySubMesh == 1)
+			{
+				App->Cl19_Ogre->RenderListener->ShowOnlySubMesh = 0;
+				App->CL_Vm_TopBar->Toggle_GroupsOnly_Flag = 0;
+			}
+			else
+			{
+				App->Cl19_Ogre->RenderListener->ShowOnlySubMesh = 1;
+				App->CL_Vm_TopBar->Toggle_GroupsOnly_Flag = 1;
+			}
+
+			return TRUE;
+		}*/
+
+		return FALSE;
+	}
+	}
+	return FALSE;
 }
 
 // *************************************************************************

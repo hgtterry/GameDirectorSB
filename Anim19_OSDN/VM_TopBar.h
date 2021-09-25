@@ -20,6 +20,7 @@ public:
 	HWND Motions_TB_hWnd;
 	HWND Dimensions_TB_hWnd;
 	HWND Groups_TB_hWnd;
+	HWND Shapes_TB_hWnd;
 
 	HWND MouseOption_DlgHwnd;
 
@@ -35,6 +36,7 @@ protected:
 	static LRESULT CALLBACK Motions_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Dimensions_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Groups_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Shapes_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	static LRESULT CALLBACK Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
@@ -49,6 +51,7 @@ protected:
 	void Start_Motions_TB(void);
 	void Start_Dimensions_TB(void);
 	void Start_Groups_TB(void);
+	void Start_Shapes_TB(void);
 
 	void Start_Tabs_Headers(void);
 
@@ -66,11 +69,12 @@ protected:
 	bool Toggle_Grid_Flag;
 	bool Toggle_Hair_Flag;
 
-	// Groups
+	// Tabs
 	bool Toggle_Tabs_Old_Flag;
 	bool Toggle_Tabs_Motions_Flag;
 	bool Toggle_Tabs_Dimensions_Flag;
 	bool Toggle_Tabs_Groups_Flag;
+	bool Toggle_Tabs_Shapes_Flag;
 
 	// Camera
 	bool Toggle_Model_Flag;
