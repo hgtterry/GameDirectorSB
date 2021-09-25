@@ -66,16 +66,16 @@ bool VM_File_Equity::WriteData_File()
 		return 0;
 	}
 
+	fprintf(WriteScene, "%s %s\n", "Equity Model Data File", App->CL_Vm_Model->FileName);
 	fprintf(WriteScene, "%s\n", " ");
-	fprintf(WriteScene, "%s\n", "[Options]");
 
-	fprintf(WriteScene, "%s%i\n", "Has_Planes=", App->Cl_Scene_Data->S_LoadOptions[0]->Has_Planes);
-	fprintf(WriteScene, "%s%i\n", "Has_Objects=", App->Cl_Scene_Data->S_LoadOptions[0]->Has_Objects);
-	fprintf(WriteScene, "%s%i\n", "Has_Particles=", App->Cl_Scene_Data->S_LoadOptions[0]->Has_Particles);
-	fprintf(WriteScene, "%s%i\n", "Has_Weapons=", App->Cl_Scene_Data->S_LoadOptions[0]->Has_Weapons);
-	fprintf(WriteScene, "%s%i\n", "Has_Player=", App->Cl_Scene_Data->S_LoadOptions[0]->Has_Player);
-	fprintf(WriteScene, "%s%i\n", "Has_Debug=", App->Cl_Scene_Data->S_LoadOptions[0]->Has_Debug);
+	fprintf(WriteScene, "%s%i\n", "Vertices = ", App->CL_Vm_Model->VerticeCount);
+	fprintf(WriteScene, "%s%i\n", "Faces = ", App->CL_Vm_Model->FaceCount);
 
+	fprintf(WriteScene, "%s\n", " ");
+
+	fprintf(WriteScene, "%s%i\n", "Groups = ", App->CL_Vm_Model->GroupCount);
+	
 	fclose(WriteScene);
 	return 1;
 }
