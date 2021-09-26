@@ -157,6 +157,12 @@ bool GD19_OgreListener::frameStarted(const FrameEvent& evt)
 // *************************************************************************
 bool GD19_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 {
+	if (App->CL_Vm_ImGui->Show_Progress_Bar == 1)
+	{
+		App->Cl19_Ogre->m_imgui.render();
+		return 1;
+	}
+
 	if (GD_MeshViewer_Running == 1)
 	{
 		//if (Flags[0]->MeshViewer_SpinObject == 1)

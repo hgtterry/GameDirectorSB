@@ -148,7 +148,10 @@ void VM_Render::renderQueueEnded(Ogre::uint8 queueGroupId, const String& invocat
 
 	PreRender();
 
-	Render_Loop();
+	if (App->CL_Vm_ImGui->Show_Progress_Bar == 0)
+	{
+		Render_Loop();
+	}
 
 	PostRender();
 }

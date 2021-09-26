@@ -284,7 +284,7 @@ void VM_ImGui::ImGui_ProgressBar(void)
 		}
 
 		//progress = 0.0f,
-		progress += 0.0001;
+		//progress += 0.0001;
 
 		float progress_saturated = (progress < 0.0f) ? 0.0f : (progress > 1.0f) ? 1.0f : progress;
 
@@ -321,6 +321,27 @@ void VM_ImGui::Stop_ProgressBar(void)
 void VM_ImGui::Set_ProgressCount(float Count)
 {
 	Progress_Count = Count;
+}
+
+// *************************************************************************
+// *								Nudge 								   *
+// *************************************************************************
+bool VM_ImGui::Nudge()
+{
+	MSG msg;
+
+	float gg = 1 / Progress_Count;
+	progress += gg;
+
+	Ogre::Root::getSingletonPtr()->renderOneFrame();
+
+	if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+	{
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
+	}
+
+	return 1;
 }
 
 // *************************************************************************

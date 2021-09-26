@@ -1197,6 +1197,7 @@ bool VM_Genisis3D::MakeOBJActor(char* Filename, bool Decompile)
 	int Count = 0;
 	int NumMatrials = App->CL_Vm_Model->GroupCount;
 
+	App->Say("here");
 	while (Count < NumMatrials)
 	{
 
@@ -1461,6 +1462,10 @@ bool VM_Genisis3D::AddFaces_Assimp(void)
 	geActor_SetBody(ActorDef, NewBody);
 	NewActor1 = geActor_Create(ActorDef);
 
+	App->CL_Vm_ImGui->Set_ProgressCount(App->CL_Vm_Model->FaceCount);
+	App->CL_Vm_ImGui->Start_ProgressBar();
+	
+
 	while (Count < App->CL_Vm_Model->FaceCount)
 	{
 
@@ -1533,9 +1538,12 @@ bool VM_Genisis3D::AddFaces_Assimp(void)
 			App->Say_Int(Count);
 			return 0;
 		}
+
+		App->CL_Vm_ImGui->Nudge();
 		Count++;
 	}
 
+	
 	return 1;
 }
 

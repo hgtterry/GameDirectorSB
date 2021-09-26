@@ -31,6 +31,7 @@ public:
 	void Start_ProgressBar(void);
 	void Stop_ProgressBar(void);
 	void Set_ProgressCount(float Count);
+	bool Nudge();
 	
 	bool StartPos;
 
