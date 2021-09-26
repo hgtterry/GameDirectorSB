@@ -26,11 +26,21 @@ public:
 	void Tabs_Render_Motions(void);
 	void Tabs_Render_Dimensions(void);
 	void Tabs_Render_Groups(void);
+
+	void ImGui_ProgressBar(void);
+	void Start_ProgressBar(void);
+	void Stop_ProgressBar(void);
+	void Set_ProgressCount(float Count);
 	
 	bool StartPos;
 
+	bool StartPos_PB;
+
 	bool Show_ImGui_Test;
 	bool Show_FPS;
+
+	bool Show_Progress_Bar;
+
 
 	bool Show_Rotation;
 	bool Show_Position;
@@ -49,6 +59,9 @@ public:
 	float Model_XTranslate;
 	float Model_YTranslate;
 	float Model_ZTranslate;
+
+	float progress;
+	float Progress_Count;
 
 	float Test;
 

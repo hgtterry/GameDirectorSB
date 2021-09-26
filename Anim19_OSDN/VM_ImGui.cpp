@@ -14,6 +14,7 @@ VM_ImGui::VM_ImGui()
 	Load_Font();
 
 	StartPos = 0;
+	StartPos_PB = 0;
 	Show_FPS = 1;
 	Show_ImGui_Test = 0;
 	Show_Rotation = 0;
@@ -24,6 +25,7 @@ VM_ImGui::VM_ImGui()
 	Show_Motion_List = 0;
 	Show_ImGui_TextureData = 0;
 	Show_Model_Data = 0;
+	Show_Progress_Bar = 0;
 
 	Model_XTranslate = 2;
 	Model_YTranslate = 2;
@@ -34,6 +36,9 @@ VM_ImGui::VM_ImGui()
 	Block = 0;
 	Block_Motion = 0;
 	Reset_Groups = 0;
+
+	progress = 0;
+	Progress_Count = 0;
 }
 
 
@@ -256,17 +261,66 @@ void VM_ImGui::ImGui_FPS(void)
 		ImGui::Text("FPS average %.0f", ImGui::GetIO().Framerate);
 		//ImGui::PopFont();
 
+		ImGui::End();
+	}
+}
 
-		static float progress = 0.0f, progress_dir = 0.5f;
-		progress += 0.0001;// progress_dir*0.4f * ImGui::GetIO().DeltaTime;
+// *************************************************************************
+// *					ImGui_ProgressBar  Terry Bernie					   *
+// *************************************************************************
+void VM_ImGui::ImGui_ProgressBar(void)
+{
+	if (!ImGui::Begin("ProgressBar1", &Show_Progress_Bar, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_AlwaysAutoResize))
+	{
+		ImGui::End();
+	}
+	else
+	{
+		if (StartPos_PB == 0)
+		{
+			ImGui::SetWindowPos("ProgressBar1", ImVec2(400, 250));
+			ImGui::SetWindowSize(ImVec2(350, 90));
+			StartPos_PB = 1;
+		}
+
+		//progress = 0.0f,
+		progress += 0.0001;
 
 		float progress_saturated = (progress < 0.0f) ? 0.0f : (progress > 1.0f) ? 1.0f : progress;
+
 		char buf[32];
-		sprintf(buf, "%d/%d", (int)(progress_saturated * 1000753), 1000753);
+		sprintf(buf, "%d/%d", (int)(progress_saturated * Progress_Count), (int)Progress_Count);
 		ImGui::ProgressBar(progress, ImVec2(0.f, 0.f), buf);
 
 		ImGui::End();
 	}
+}
+
+// *************************************************************************
+// *					Start_ProgressBar  Terry Bernie					   *
+// *************************************************************************
+void VM_ImGui::Start_ProgressBar(void)
+{
+	StartPos_PB = 0;
+	Show_Progress_Bar = 1;
+}
+
+// *************************************************************************
+// *					Stop_ProgressBar  Terry Bernie					   *
+// *************************************************************************
+void VM_ImGui::Stop_ProgressBar(void)
+{
+	StartPos_PB = 0;
+	progress = 0.0f,
+	Show_Progress_Bar = 0;
+}
+
+// *************************************************************************
+// *					Set_ProgressCount  Terry Bernie					   *
+// *************************************************************************
+void VM_ImGui::Set_ProgressCount(float Count)
+{
+	Progress_Count = Count;
 }
 
 // *************************************************************************

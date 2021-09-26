@@ -142,6 +142,11 @@ bool GD19_OgreListener::frameStarted(const FrameEvent& evt)
 
 		}
 
+		if (App->CL_Vm_ImGui->Show_Progress_Bar == 1)
+		{
+			App->CL_Vm_ImGui->ImGui_ProgressBar();
+		}
+
 	}
 
 	return true;

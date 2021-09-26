@@ -226,6 +226,20 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return 1;
 		}
 
+		case ID_TEST_PROGRESSBAR:
+		{
+			if (App->CL_Vm_ImGui->Show_Progress_Bar == 0)
+			{
+				App->CL_Vm_ImGui->Set_ProgressCount(10501);
+				App->CL_Vm_ImGui->Start_ProgressBar();
+			}
+			else
+			{
+				App->CL_Vm_ImGui->Stop_ProgressBar();
+			}
+			return 1;
+		}
+
 		case ID_IMPORT_GENESIS3D:
 		{
 			App->CL_Importer->Genesis3D_Loader();
