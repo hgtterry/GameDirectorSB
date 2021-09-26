@@ -106,6 +106,15 @@ void GD19_OgreListener::Reset_Class(void)
 // *************************************************************************
 bool GD19_OgreListener::frameStarted(const FrameEvent& evt)
 {
+	if (App->CL_Vm_ImGui->Show_Progress_Bar == 1)
+	{
+		App->Cl19_Ogre->Get_View_Height_Width();
+
+		App->Cl19_Ogre->m_imgui.NewFrame(evt.timeSinceLastFrame, (float)View_Width, (float)View_Height);
+		App->CL_Vm_ImGui->ImGui_ProgressBar();
+		return true;
+	}
+
 	if (GD_MeshViewer_Running == 1)
 	{
 		return true;
@@ -140,11 +149,6 @@ bool GD19_OgreListener::frameStarted(const FrameEvent& evt)
 
 			//ImGui::ShowDemoWindow();
 
-		}
-
-		if (App->CL_Vm_ImGui->Show_Progress_Bar == 1)
-		{
-			App->CL_Vm_ImGui->ImGui_ProgressBar();
 		}
 
 	}
