@@ -63,6 +63,8 @@ public:
 
 	float progress;
 	float Progress_Count;
+	float Progress_Delta;
+	MSG msg;
 
 	float Test;
 

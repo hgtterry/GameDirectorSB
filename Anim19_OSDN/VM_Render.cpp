@@ -127,6 +127,11 @@ void VM_Render::renderQueueStarted(Ogre::uint8 queueGroupId, const String& invoc
 // *************************************************************************
 void VM_Render::renderQueueEnded(Ogre::uint8 queueGroupId, const String& invocation, bool& repeatThisInvocation)
 {
+	if (App->CL_Vm_ImGui->Show_Progress_Bar == 1)
+	{
+		return;
+	}
+
 	if (queueGroupId != RENDER_QUEUE_MAIN)
 	{
 		return;
@@ -148,10 +153,9 @@ void VM_Render::renderQueueEnded(Ogre::uint8 queueGroupId, const String& invocat
 
 	PreRender();
 
-	if (App->CL_Vm_ImGui->Show_Progress_Bar == 0)
-	{
-		Render_Loop();
-	}
+	
+	Render_Loop();
+	
 
 	PostRender();
 }

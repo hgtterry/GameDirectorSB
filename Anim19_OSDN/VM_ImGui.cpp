@@ -39,6 +39,7 @@ VM_ImGui::VM_ImGui()
 
 	progress = 0;
 	Progress_Count = 0;
+	Progress_Delta = 0;
 }
 
 
@@ -321,6 +322,7 @@ void VM_ImGui::Stop_ProgressBar(void)
 void VM_ImGui::Set_ProgressCount(float Count)
 {
 	Progress_Count = Count;
+	Progress_Delta = 1 / Count;
 }
 
 // *************************************************************************
@@ -328,10 +330,7 @@ void VM_ImGui::Set_ProgressCount(float Count)
 // *************************************************************************
 bool VM_ImGui::Nudge()
 {
-	MSG msg;
-
-	float gg = 1 / Progress_Count;
-	progress += gg;
+	progress += Progress_Delta;
 
 	Ogre::Root::getSingletonPtr()->renderOneFrame();
 
