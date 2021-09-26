@@ -138,6 +138,8 @@ bool GD19_OgreListener::frameStarted(const FrameEvent& evt)
 				App->CL_Vm_ImGui->Tabs_Render_Groups();
 			}
 
+			//ImGui::ShowDemoWindow();
+
 		}
 
 	}

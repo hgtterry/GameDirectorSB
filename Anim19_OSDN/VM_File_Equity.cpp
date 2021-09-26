@@ -95,6 +95,12 @@ bool VM_File_Equity::WriteData_File()
 		Count++;
 	}
 	
+	Convert_To_GlobalMesh();
+
+	fprintf(WriteScene, "%s\n", " ");
+	fprintf(WriteScene, "%s\n", "Global ");
+	Write_Global_Vertices();
+
 	fclose(WriteScene);
 	return 1;
 }
@@ -158,6 +164,121 @@ bool VM_File_Equity::Write_Face_Indices(int Count)
 		fprintf(WriteScene, "%s %i %i %i\n", "Face Indices =",A,B,C);
 
 		FaceCount++;
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *					Convert_To_GlobalMesh  Terry Bernie   	  	 	   *
+// *************************************************************************
+void VM_File_Equity::Convert_To_GlobalMesh(void)
+{
+	int Count = 0;
+	int GroupVertCount = 0;
+	int GroupFaceCount = 0;
+	int VC = 0;
+
+	int Offset = 0;
+
+	App->CL_Vm_Model->vertex_Data.resize(App->CL_Vm_Model->VerticeCount);
+	App->CL_Vm_Model->Face_Data.resize(App->CL_Vm_Model->FaceCount);
+
+	App->CL_Vm_Model->Normal_Data.resize(App->CL_Vm_Model->VerticeCount);
+	App->CL_Vm_Model->MapCord_Data.resize(App->CL_Vm_Model->VerticeCount);
+	App->CL_Vm_Model->MatIndex_Data.resize(App->CL_Vm_Model->FaceCount);
+
+	while (Count < App->CL_Vm_Model->GroupCount)
+	{
+		GroupVertCount = 0;
+
+		while (GroupVertCount < App->CL_Vm_Model->S_MeshGroup[Count]->GroupVertCount)
+		{
+			App->CL_Vm_Model->vertex_Data[VC].x = App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[GroupVertCount].x;
+			App->CL_Vm_Model->vertex_Data[VC].y = App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[GroupVertCount].y;
+			App->CL_Vm_Model->vertex_Data[VC].z = App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[GroupVertCount].z;
+
+			/*if (App->CL_Model_Data->ItsAnOgreModel == 1)
+			{
+			App->CL_Model_Data->BoneIndex_Data[VC].Index = App->CL_Model_Data->S_MeshGroup[Count]->BoneIndex_Data[GroupVertCount].Index;
+			}*/
+
+			App->CL_Vm_Model->MapCord_Data[VC].u = App->CL_Vm_Model->S_MeshGroup[Count]->MapCord_Data[GroupVertCount].u;
+			App->CL_Vm_Model->MapCord_Data[VC].v = App->CL_Vm_Model->S_MeshGroup[Count]->MapCord_Data[GroupVertCount].v;
+
+			App->CL_Vm_Model->Normal_Data[VC].x = App->CL_Vm_Model->S_MeshGroup[Count]->Normal_Data[GroupVertCount].x;
+			App->CL_Vm_Model->Normal_Data[VC].y = App->CL_Vm_Model->S_MeshGroup[Count]->Normal_Data[GroupVertCount].y;
+			App->CL_Vm_Model->Normal_Data[VC].z = App->CL_Vm_Model->S_MeshGroup[Count]->Normal_Data[GroupVertCount].z;
+
+			VC++;
+
+			GroupVertCount++;
+		}
+
+		Count++;
+	}
+
+
+	VC = 0;
+	Count = 0;
+	int mFaceCount = 0;
+	while (Count < App->CL_Vm_Model->GroupCount)
+	{
+		mFaceCount = 0;
+		while (mFaceCount < App->CL_Vm_Model->S_MeshGroup[Count]->GroupFaceCount)
+		{
+
+			App->CL_Vm_Model->Face_Data[VC].Group = Count;
+
+			App->CL_Vm_Model->Face_Data[VC].a = App->CL_Vm_Model->S_MeshGroup[Count]->Face_Data[mFaceCount].a + Offset;
+			App->CL_Vm_Model->Face_Data[VC].b = App->CL_Vm_Model->S_MeshGroup[Count]->Face_Data[mFaceCount].b + Offset;
+			App->CL_Vm_Model->Face_Data[VC].c = App->CL_Vm_Model->S_MeshGroup[Count]->Face_Data[mFaceCount].c + Offset;
+
+			VC++;
+			mFaceCount++;
+		}
+
+		Offset = Offset + App->CL_Vm_Model->S_MeshGroup[Count]->GroupVertCount;
+		Count++;
+
+	}
+
+
+	VC = 0;
+	Count = 0;
+	while (Count < App->CL_Vm_Model->GroupCount)
+	{
+		GroupFaceCount = 0;
+
+		while (GroupFaceCount < App->CL_Vm_Model->S_MeshGroup[Count]->GroupFaceCount)
+		{
+			App->CL_Vm_Model->MatIndex_Data[VC] = App->CL_Vm_Model->S_MeshGroup[Count]->MaterialIndex;
+
+			VC++;
+			GroupFaceCount++;
+		}
+
+		Count++;
+	}
+}
+
+// *************************************************************************
+// *					Write_Global_Vertices Terry Bernie					   *
+// *************************************************************************
+bool VM_File_Equity::Write_Global_Vertices()
+{
+	int VerticeCount = 0;
+	float X, Y, Z;
+
+	while (VerticeCount<App->CL_Vm_Model->VerticeCount)
+	{
+
+		X = App->CL_Vm_Model->vertex_Data[VerticeCount].x;
+		Y = App->CL_Vm_Model->vertex_Data[VerticeCount].y;
+		Z = App->CL_Vm_Model->vertex_Data[VerticeCount].z;
+		fprintf(WriteScene, "%s %f %f %f\n", "v =", X, Y, Z);
+
+		VerticeCount++;
 	}
 
 	return 1;

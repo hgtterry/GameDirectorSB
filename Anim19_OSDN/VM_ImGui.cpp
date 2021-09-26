@@ -253,8 +253,17 @@ void VM_ImGui::ImGui_FPS(void)
 		}
 
 		ImGui::Spacing();
-		ImGui::Text("FPS average %.0f",ImGui::GetIO().Framerate);
+		ImGui::Text("FPS average %.0f", ImGui::GetIO().Framerate);
 		//ImGui::PopFont();
+
+
+		static float progress = 0.0f, progress_dir = 0.5f;
+		progress += 0.0001;// progress_dir*0.4f * ImGui::GetIO().DeltaTime;
+
+		float progress_saturated = (progress < 0.0f) ? 0.0f : (progress > 1.0f) ? 1.0f : progress;
+		char buf[32];
+		sprintf(buf, "%d/%d", (int)(progress_saturated * 1000753), 1000753);
+		ImGui::ProgressBar(progress, ImVec2(0.f, 0.f), buf);
 
 		ImGui::End();
 	}

@@ -65,6 +65,36 @@ public:
 	bool ChangeTexture(char* TextureFile);
 	bool DefaultPose(void);
 
+	bool AddFace_N(geBody *B,
+		const geVec3d *Vertex1, const geVec3d *Normal1,
+		geFloat U1, geFloat V1, int BoneIndex1,
+		const geVec3d *Vertex2, const geVec3d *Normal2,
+		geFloat U2, geFloat V2, int BoneIndex2,
+		const geVec3d *Vertex3, const geVec3d *Normal3,
+		geFloat U3, geFloat V3, int BoneIndex3,
+		int MaterialIndex);
+
+	bool AddSkinVertex_N(geBody *B,
+		const geVec3d *Vertex,
+		geFloat U, geFloat V,
+		geBody_Index BoneIndex,
+		geBody_Index *Index);
+
+	bool AddNormal_N(geBody *B,
+		const geVec3d *Normal,
+		geBody_Index BoneIndex,
+		geBody_Index *Index);
+
+	bool AddToFaces_N(geBody *B, geBody_Triangle *F, int DetailLevel);
+
+	bool SortSkinVertices_N(geBody *B);
+
+	bool SwapVertexIndices_N(geBody *B, geBody_Index Index1, geBody_Index Index2);
+
+	bool XSkinVertexCompare_N(
+		const geBody_XSkinVertex *SV1,
+		const geBody_XSkinVertex *SV2);
+
 	char MotionName[255];
 	float m_CurrentPose;
 	float AnimationSpeed;

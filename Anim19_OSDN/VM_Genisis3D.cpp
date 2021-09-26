@@ -1523,7 +1523,7 @@ bool VM_Genisis3D::AddFaces_Assimp(void)
 			normals[j].Z = angle.Z;
 		}
 
-		if (geBody_AddFace(NewBody,
+		if (AddFace_N(NewBody,
 			vertices[0], &normals[0], tu1, tv1, BoneIndex,
 			vertices[1], &normals[1], tu2, tv2, BoneIndex,
 			vertices[2], &normals[2], tu3, tv3, BoneIndex,
@@ -1970,6 +1970,360 @@ bool VM_Genisis3D::DefaultPose(void)
 	Animate(0);
 
 	return 1;
+}
+
+
+#define GE_BODY_HIGHEST_LOD_MASK	( 1 << GE_BODY_HIGHEST_LOD )
+
+// *************************************************************************
+// *						AddFace_N ( Terry Bernie )  			  	   *
+// *************************************************************************
+bool VM_Genisis3D::AddFace_N(geBody *B,
+	const geVec3d *Vertex1, const geVec3d *Normal1,
+	geFloat U1, geFloat V1, int BoneIndex1,
+	const geVec3d *Vertex2, const geVec3d *Normal2,
+	geFloat U2, geFloat V2, int BoneIndex2,
+	const geVec3d *Vertex3, const geVec3d *Normal3,
+	geFloat U3, geFloat V3, int BoneIndex3,
+	int MaterialIndex)
+{
+	geBody_Triangle F;
+
+	assert(B != NULL);
+	assert(Vertex1 != NULL);
+	assert(Normal1 != NULL);
+	assert(geBody_IsValid(B) != GE_FALSE);
+
+	assert(BoneIndex1 >= 0);
+	assert(BoneIndex1 < B->BoneCount);
+
+	assert(Vertex2 != NULL);
+	assert(Normal2 != NULL);
+	assert(BoneIndex2 >= 0);
+	assert(BoneIndex2 < B->BoneCount);
+
+	assert(Vertex3 != NULL);
+	assert(Normal3 != NULL);
+	assert(BoneIndex3 >= 0);
+	assert(BoneIndex3 < B->BoneCount);
+
+	assert(MaterialIndex >= 0);
+	assert(MaterialIndex < B->MaterialCount);
+
+	if (AddSkinVertex_N(B, Vertex1, U1, V1, (geBody_Index)BoneIndex1, &(F.VtxIndex[0])) == GE_FALSE)
+	{	// error already recorded
+		return GE_FALSE;
+	}
+	if (AddSkinVertex_N(B, Vertex2, U2, V2, (geBody_Index)BoneIndex2, &(F.VtxIndex[1])) == GE_FALSE)
+	{	// error already recorded
+		return GE_FALSE;
+	}
+	if (AddSkinVertex_N(B, Vertex3, U3, V3, (geBody_Index)BoneIndex3, &(F.VtxIndex[2])) == GE_FALSE)
+	{	// error already recorded
+		return GE_FALSE;
+	}
+
+	if (AddNormal_N(B, Normal1, (geBody_Index)BoneIndex1, &(F.NormalIndex[0])) == GE_FALSE)
+	{	// error already recorded
+		return GE_FALSE;
+	}
+	if (AddNormal_N(B, Normal2, (geBody_Index)BoneIndex2, &(F.NormalIndex[1])) == GE_FALSE)
+	{	// error already recorded
+		return GE_FALSE;
+	}
+	if (AddNormal_N(B, Normal3, (geBody_Index)BoneIndex3, &(F.NormalIndex[2])) == GE_FALSE)
+	{	// error already recorded
+		return GE_FALSE;
+	}
+
+	F.MaterialIndex = (geBody_Index)MaterialIndex;
+	if (AddToFaces_N(B, &F, GE_BODY_HIGHEST_LOD) == GE_FALSE)
+	{	// error already recorded
+		return GE_FALSE;
+	}
+
+	SortSkinVertices_N(B);
+
+	return GE_TRUE;
+
+}
+
+// *************************************************************************
+// *					SortSkinVertices_N ( Terry Bernie ) 		  	   *
+// *************************************************************************
+bool VM_Genisis3D::SortSkinVertices_N(geBody *B)
+{
+	int i, j;
+	int Count;
+	geBoolean AnyChanges = GE_FALSE;
+	assert(B != NULL);
+
+	Count = B->XSkinVertexCount;
+	for (i = 0; i<Count; i++)
+	{
+		for (j = 0; j<Count - 1; j++)
+		{
+			if (B->XSkinVertexArray[j].BoneIndex > B->XSkinVertexArray[j + 1].BoneIndex)
+			{
+				geBody_XSkinVertex Swap;
+
+				Swap = B->XSkinVertexArray[j];
+				B->XSkinVertexArray[j] = B->XSkinVertexArray[j + 1];
+				B->XSkinVertexArray[j + 1] = Swap;
+				SwapVertexIndices_N(B, (geBody_Index)j, (geBody_Index)(j + 1));
+				AnyChanges = GE_TRUE;
+			}
+		}
+		if (AnyChanges != GE_TRUE)
+		{
+			break;
+		}
+		AnyChanges = GE_FALSE;
+	}
+	return GE_TRUE;
+}
+
+// *************************************************************************
+// *				SwapVertexIndices_N ( Terry Bernie )			  	   *
+// *************************************************************************
+bool VM_Genisis3D::SwapVertexIndices_N(geBody *B, geBody_Index Index1, geBody_Index Index2)
+// zips through all triangles, and swaps index1 and index2.
+{
+	int i, j, lod;
+	geBody_Index Count;
+	geBody_Triangle *T;
+
+	assert(B != NULL);
+	for (lod = 0; lod< GE_BODY_NUMBER_OF_LOD; lod++)
+	{
+		Count = B->SkinFaces[lod].FaceCount;
+		for (i = 0, T = B->SkinFaces[lod].FaceArray;
+			i<Count;
+			i++, T++)
+		{
+			for (j = 0; j<3; j++)
+			{
+				if (T->VtxIndex[j] == Index1)
+				{
+					T->VtxIndex[j] = Index2;
+				}
+				else
+				{
+					if (T->VtxIndex[j] == Index2)
+					{
+						T->VtxIndex[j] = Index1;
+					}
+				}
+			}
+		}
+	}
+	return GE_TRUE;
+}
+
+#define MAX(aa,bb)   ( (aa)>(bb)?(aa):(bb) )
+#define MIN(aa,bb)   ( (aa)<(bb)?(aa):(bb) )
+
+// *************************************************************************
+// *					AddSkinVertex_N ( Terry Bernie ) 			  	   *
+// *************************************************************************
+bool VM_Genisis3D::AddSkinVertex_N(geBody *B,
+	const geVec3d *Vertex,
+	geFloat U, geFloat V,
+	geBody_Index BoneIndex,
+	geBody_Index *Index)
+{
+	geBody_Bone *Bone;
+	geBody_XSkinVertex *SV;
+	geBody_XSkinVertex NewSV;
+	int i;
+	assert(B != NULL);
+	assert(Vertex != NULL);
+	assert(Index != NULL);
+	assert(geBody_IsValid(B) != GE_FALSE);
+
+	assert(B->XSkinVertexCount + 1 > 0);
+
+	NewSV.XPoint = *Vertex;
+	NewSV.XU = U;
+	NewSV.XV = V;
+	NewSV.LevelOfDetailMask = GE_BODY_HIGHEST_LOD_MASK;
+	NewSV.BoneIndex = BoneIndex;
+
+	assert(B->BoneCount > BoneIndex);
+	Bone = &(B->BoneArray[BoneIndex]);
+
+
+	// see if new Vertex is alreay in XSkinVertexArray
+	for (i = 0; i<B->XSkinVertexCount; i++)
+	{
+		SV = &(B->XSkinVertexArray[i]);
+		if (SV->BoneIndex == BoneIndex)
+		{
+			if (XSkinVertexCompare_N(SV, &NewSV) == GE_TRUE)
+			{
+				*Index = (geBody_Index)i;
+				return GE_TRUE;
+			}
+		}
+	}
+	// new Vertex needs to be added to XSkinVertexArray
+	SV = GE_RAM_REALLOC_ARRAY(B->XSkinVertexArray,
+		geBody_XSkinVertex, (B->XSkinVertexCount + 1));
+	if (SV == NULL)
+	{
+		//geErrorLog_Add(ERR_BODY_ENOMEM, NULL);
+		App->Say("Cant Create XSkinVertexArray");
+		
+		return GE_FALSE;
+	}
+	B->XSkinVertexArray = SV;
+
+	B->XSkinVertexArray[B->XSkinVertexCount] = NewSV;
+	*Index = B->XSkinVertexCount;
+
+	Bone->BoundingBoxMin.X = MIN(Bone->BoundingBoxMin.X, NewSV.XPoint.X);
+	Bone->BoundingBoxMin.Y = MIN(Bone->BoundingBoxMin.Y, NewSV.XPoint.Y);
+	Bone->BoundingBoxMin.Z = MIN(Bone->BoundingBoxMin.Z, NewSV.XPoint.Z);
+	Bone->BoundingBoxMax.X = MAX(Bone->BoundingBoxMax.X, NewSV.XPoint.X);
+	Bone->BoundingBoxMax.Y = MAX(Bone->BoundingBoxMax.Y, NewSV.XPoint.Y);
+	Bone->BoundingBoxMax.Z = MAX(Bone->BoundingBoxMax.Z, NewSV.XPoint.Z);
+
+	B->XSkinVertexCount++;
+	return GE_TRUE;
+}
+
+#define GE_BODY_TOLERANCE (0.001f)
+
+
+// *************************************************************************
+// *					XSkinVertexCompare_N ( Terry Bernie ) 		 	   *
+// *************************************************************************
+bool VM_Genisis3D::XSkinVertexCompare_N(
+	const geBody_XSkinVertex *SV1,
+	const geBody_XSkinVertex *SV2)
+{
+	assert(SV1 != NULL);
+	assert(SV2 != NULL);
+	if (geVec3d_Compare(&(SV1->XPoint), &(SV2->XPoint),
+		GE_BODY_TOLERANCE) == GE_FALSE)
+	{
+		return GE_FALSE;
+	}
+	if (geVec3d_Compare(&(SV1->XPoint), &(SV2->XPoint),
+		GE_BODY_TOLERANCE) == GE_FALSE)
+	{
+		return GE_FALSE;
+	}
+	if (fabs(SV1->XU - SV2->XU) > GE_BODY_TOLERANCE)
+	{
+		return GE_FALSE;
+	}
+	if (fabs(SV1->XV - SV2->XV) > GE_BODY_TOLERANCE)
+	{
+		return GE_FALSE;
+	}
+	return GE_TRUE;
+}
+
+
+// *************************************************************************
+// *						AddNormal_N ( Terry Bernie ) 			  	   *
+// *************************************************************************
+bool VM_Genisis3D::AddNormal_N(geBody *B,
+	const geVec3d *Normal,
+	geBody_Index BoneIndex,
+	geBody_Index *Index)
+{
+	geBody_Normal *NewNormalArray;
+	geBody_Normal *N;
+	geVec3d NNorm;
+	int i;
+
+	assert(B != NULL);
+	assert(Normal != NULL);
+	assert(Index != NULL);
+	assert(geBody_IsValid(B) != GE_FALSE);
+
+	assert(B->SkinNormalCount + 1 > 0);
+	NNorm = *Normal;
+	geVec3d_Normalize(&NNorm);
+	// see if new normal is alreay in SkinNormalArray
+	for (i = 0, N = B->SkinNormalArray; i<B->SkinNormalCount; i++, N++)
+	{
+		if (N->BoneIndex == BoneIndex)
+		{
+			if (geVec3d_Compare(&(N->Normal), &NNorm, GE_BODY_TOLERANCE) == GE_TRUE)
+			{
+				*Index = (geBody_Index)i;
+				return GE_TRUE;
+			}
+		}
+	}
+
+	//  new normal needs to be added to SkinNormalArray
+	NewNormalArray = GE_RAM_REALLOC_ARRAY(B->SkinNormalArray,
+		geBody_Normal, (B->SkinNormalCount + 1));
+	if (NewNormalArray == NULL)
+	{
+		//geErrorLog_Add(ERR_BODY_ENOMEM, NULL);
+		App->Say("Cant Create NewNormalArray");
+		return GE_FALSE;
+	}
+	B->SkinNormalArray = NewNormalArray;
+	B->SkinNormalArray[B->SkinNormalCount].Normal = NNorm;
+	B->SkinNormalArray[B->SkinNormalCount].BoneIndex = BoneIndex;
+	B->SkinNormalArray[B->SkinNormalCount].LevelOfDetailMask = GE_BODY_HIGHEST_LOD_MASK;
+	*Index = B->SkinNormalCount;
+	B->SkinNormalCount++;
+	return GE_TRUE;
+}
+
+// *************************************************************************
+// *					AddToFaces_N ( Terry Bernie ) 				 	   *
+// *************************************************************************
+bool VM_Genisis3D::AddToFaces_N(geBody *B, geBody_Triangle *F, int DetailLevel)
+{
+	geBody_Triangle *NewFaceArray;
+	geBody_TriangleList *FL;
+
+	assert(B != NULL);
+	assert(F != NULL);
+	assert(DetailLevel >= 0);
+	assert(DetailLevel < GE_BODY_NUMBER_OF_LOD);
+	assert(geBody_IsValid(B) != GE_FALSE);
+
+	FL = &(B->SkinFaces[DetailLevel]);
+
+	assert(F->MaterialIndex >= 0);
+	assert(F->MaterialIndex < B->MaterialCount);
+
+	NewFaceArray = GE_RAM_REALLOC_ARRAY(FL->FaceArray,
+		geBody_Triangle, (FL->FaceCount + 1));
+	if (NewFaceArray == NULL)
+	{
+		//geErrorLog_Add(ERR_BODY_ENOMEM, NULL);
+		App->Say("Cant Create NewFaceArray");
+		return GE_FALSE;
+	}
+
+	FL->FaceArray = NewFaceArray;
+
+	{
+		int i;
+		// insertion sort new face into FaceArray keyed on MaterialIndex
+		geBody_Index MaterialIndex = F->MaterialIndex;
+		for (i = FL->FaceCount; i >= 1; i--)
+		{
+			if (FL->FaceArray[i - 1].MaterialIndex <= MaterialIndex)
+				break;
+			FL->FaceArray[i] = FL->FaceArray[i - 1];
+		}
+
+		FL->FaceArray[i] = *F;
+	}
+	FL->FaceCount++;
+
+	return GE_TRUE;
 }
 
 

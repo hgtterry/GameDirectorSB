@@ -9,6 +9,9 @@ public:
 	bool WriteData_File();
 	bool Write_Vertices(int Count);
 	bool Write_Face_Indices(int Count);
+	void Convert_To_GlobalMesh(void);
+
+	bool Write_Global_Vertices();
 
 	char mFileName[255];
 	char mPath_FileName[1024];
