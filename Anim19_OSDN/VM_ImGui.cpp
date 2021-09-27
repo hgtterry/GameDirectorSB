@@ -1093,6 +1093,7 @@ void VM_ImGui::ImGui_Model_Data(void)
 		ImGui::Text("Vertices: = %i", App->CL_Vm_Model->VerticeCount);
 		ImGui::Text("Faces: = %i", App->CL_Vm_Model->FaceCount);
 		ImGui::Text("Normals: = %i", App->CL_Vm_Model->NormalsCount);
+		ImGui::Text("UVs: = %i", App->CL_Vm_Model->UVCount);
 
 		ImGui::Spacing();
 

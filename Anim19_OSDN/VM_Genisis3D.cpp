@@ -948,6 +948,8 @@ bool VM_Genisis3D::GetUVs()
 
 	App->CL_Vm_Model->MapCord_Data.resize(mUVsNum);
 
+	App->CL_Vm_Model->UVCount = TestActor->Puppet->BodyInstance->ExportGeometry.SkinVertexCount;
+
 	while (Count<mUVsNum)
 	{
 		U = TestActor->Puppet->BodyInstance->ExportGeometry.SkinVertexArray[Count].SVU;

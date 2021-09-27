@@ -8,6 +8,7 @@ VM_Model::VM_Model()
 	VerticeCount = 0;
 	NormalsCount = 0;
 	FaceCount = 0;
+	UVCount = 0;
 
 	TextureCount = 0;
 	MotionCount = 0;
@@ -189,6 +190,7 @@ void VM_Model::Reset_Counters(void)
 	VerticeCount = 0;
 	NormalsCount = 0;
 	FaceCount = 0;
+	UVCount = 0;
 
 	TextureCount = 0;
 	MotionCount = 0;

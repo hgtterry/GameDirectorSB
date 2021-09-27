@@ -26,6 +26,7 @@ public:
 	int VerticeCount;
 	int NormalsCount;
 	int FaceCount;
+	int UVCount;
 
 	int GroupCount;
 
