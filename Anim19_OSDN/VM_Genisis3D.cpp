@@ -1197,7 +1197,6 @@ bool VM_Genisis3D::MakeOBJActor(char* Filename, bool Decompile)
 	int Count = 0;
 	int NumMatrials = App->CL_Vm_Model->GroupCount;
 
-	App->Say("here");
 	while (Count < NumMatrials)
 	{
 
@@ -1543,7 +1542,7 @@ bool VM_Genisis3D::AddFaces_Assimp(void)
 		Count++;
 	}
 
-	
+	App->CL_Vm_ImGui->Stop_ProgressBar();
 	return 1;
 }
 

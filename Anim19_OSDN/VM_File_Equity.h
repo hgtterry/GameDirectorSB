@@ -12,6 +12,8 @@ public:
 	void Convert_To_GlobalMesh(void);
 
 	bool Write_Global_Vertices();
+	bool Write_Global_TextIDs();
+	bool Write_Global_Normals();
 
 	char mFileName[255];
 	char mPath_FileName[1024];

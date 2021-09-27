@@ -99,7 +99,17 @@ bool VM_File_Equity::WriteData_File()
 
 	fprintf(WriteScene, "%s\n", " ");
 	fprintf(WriteScene, "%s\n", "Global ");
+
+
 	Write_Global_Vertices();
+
+	fprintf(WriteScene, "%s\n", " ");
+
+	Write_Global_TextIDs();
+
+	fprintf(WriteScene, "%s\n", " ");
+
+	Write_Global_Normals();
 
 	fclose(WriteScene);
 	return 1;
@@ -276,10 +286,59 @@ bool VM_File_Equity::Write_Global_Vertices()
 		X = App->CL_Vm_Model->vertex_Data[VerticeCount].x;
 		Y = App->CL_Vm_Model->vertex_Data[VerticeCount].y;
 		Z = App->CL_Vm_Model->vertex_Data[VerticeCount].z;
-		fprintf(WriteScene, "%s %f %f %f\n", "v =", X, Y, Z);
+		fprintf(WriteScene, "%s %f %f %f\n", "v", X, Y, Z);
 
 		VerticeCount++;
 	}
 
+	fprintf(WriteScene, "%s %d %s\n", "#", App->CL_Vm_Model->VerticeCount,"vertices");
+	return 1;
+}
+
+// *************************************************************************
+// *					Write_Global_TextIDs Terry Bernie				   *
+// *************************************************************************
+bool VM_File_Equity::Write_Global_TextIDs()
+{
+	int VerticeCount = 0;
+	float U, V;
+
+	while (VerticeCount<App->CL_Vm_Model->VerticeCount)
+	{
+
+		U = App->CL_Vm_Model->MapCord_Data[VerticeCount].u;
+		V = App->CL_Vm_Model->MapCord_Data[VerticeCount].v;
+
+		fprintf(WriteScene, "%s %f %f\n", "vt", U, V);
+
+		VerticeCount++;
+	}
+
+	fprintf(WriteScene, "%s %d %s\n", "#", App->CL_Vm_Model->VerticeCount, "texture coordinates");
+
+	return 1;
+}
+
+// *************************************************************************
+// *					Write_Global_Normals Terry Bernie				   *
+// *************************************************************************
+bool VM_File_Equity::Write_Global_Normals()
+{
+	int VerticeCount = 0;
+	float X,Y,Z;
+
+	while (VerticeCount<App->CL_Vm_Model->VerticeCount)
+	{
+		X = App->CL_Vm_Model->Normal_Data[VerticeCount].x;
+		Y = App->CL_Vm_Model->Normal_Data[VerticeCount].y;
+		Z = App->CL_Vm_Model->Normal_Data[VerticeCount].z;
+
+		fprintf(WriteScene, "%s %f %f %f\n", "vn", X, Y, Z);
+
+		VerticeCount++;
+	}
+
+	fprintf(WriteScene, "%s %d %s\n", "#", App->CL_Vm_Model->VerticeCount, "normals");
+	
 	return 1;
 }
