@@ -14,6 +14,9 @@ public:
 	char Txt_Path_FileName[1024];
 
 protected:
+
+	bool LoadFile();
+
 	OPENFILENAME ofn;
 };
 

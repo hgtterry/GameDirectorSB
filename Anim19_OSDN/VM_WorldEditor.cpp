@@ -36,6 +36,7 @@ void VM_WorldEditor::Change_Textures()
 		return;
 	}
 
+	LoadFile();
 }
 
 // *************************************************************************
@@ -70,4 +71,77 @@ bool VM_WorldEditor::Txt_OpenFile(char* Extension, char* Title, char* StartDirec
 		return 1;
 	}
 	return 0;
+}
+
+// *************************************************************************
+// *						LoadFile  Terry Flanigan 			  		   *
+// *************************************************************************
+bool VM_WorldEditor::LoadFile()
+{
+	geVFile *			VFS = NULL;
+	geVFile_Finder *	Finder = NULL;
+	geVFile_Finder *	FinderCount = NULL;
+
+	/*p_Data = new TPack_WindowData;
+	p_Data->hwnd = ChDlg;
+	p_Data->BitmapCount = 0;*/
+
+	int TextureCount = 0;
+
+
+	//App->Say(Txt_FileName);
+	//App->Say(Txt_Path_FileName);
+	VFS = geVFile_OpenNewSystem(NULL, GE_VFILE_TYPE_VIRTUAL, Txt_Path_FileName, NULL, GE_VFILE_OPEN_READONLY | GE_VFILE_OPEN_DIRECTORY);
+	if (!VFS)
+	{
+		App->Say("Could not open file");
+		return 0;
+	}
+
+	FinderCount = geVFile_CreateFinder(VFS, "*.*");
+	if (!FinderCount)
+	{
+		App->Say("Could not load textures from");
+		geVFile_Close(VFS);
+		return 0;
+	}
+
+	while (geVFile_FinderGetNextFile(FinderCount) != GE_FALSE)
+	{
+
+		TextureCount++;
+
+	}
+
+	Finder = geVFile_CreateFinder(VFS, "*.*");
+	if (!Finder)
+	{
+		App->Say("Could not load textures from 2 ");
+		geVFile_Close(VFS);
+		return 0;
+	}
+
+
+	while (geVFile_FinderGetNextFile(Finder) != GE_FALSE)
+	{
+		geVFile_Properties	Properties;
+
+		geVFile_FinderGetProperties(Finder, &Properties);
+		
+		App->Say(Properties.Name);
+		/*if (!AddTexture(VFS, Properties.Name))
+		{
+			geVFile_Close(VFS);
+			return 0;
+		}*/
+
+	}
+	/*strcpy(p_Data->TXLFileName, Txt_FileName);
+	p_Data->FileNameIsValid = TRUE;
+	p_Data->Dirty = FALSE;*/
+	geVFile_Close(VFS);
+
+	//SendDlgItemMessage(p_Data->hwnd, IDC_TEXTURELIST, LB_SETCURSEL, (WPARAM)0, (LPARAM)0);
+	//App->CL_Vm_TextLib->SelectBitmap();*/
+	return 1;
 }
