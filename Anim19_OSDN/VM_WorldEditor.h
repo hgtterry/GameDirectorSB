@@ -1,4 +1,28 @@
 #pragma once
+
+typedef	struct	BitmapEntry2
+{
+	char *		Name;
+	geBitmap *	Bitmap;
+	HBITMAP		WinBitmap;
+	HBITMAP		WinABitmap;
+	unsigned	Flags;
+	int			Dirty;
+}	BitmapEntry2;
+
+typedef struct	TPack_WindowData2
+{
+	HINSTANCE		Instance;
+	HWND			hwnd;
+	int				BitmapCount;
+	BitmapEntry	*	Bitmaps;
+	BitmapEntry *	SelectedEntry;
+	BOOL			FileNameIsValid;
+	char			TXLFileName[1024];
+	BOOL			Dirty;
+}	TPack_WindowData2;
+
+
 class VM_WorldEditor
 {
 public:
@@ -16,6 +40,13 @@ public:
 protected:
 
 	bool LoadFile();
+	bool AddTexture(geVFile *BaseFile, const char *Path);
+
+	bool NonFatalError(const char *Msg, ...);
+
+	TPack_WindowData2 *p_Data2;
+	BitmapEntry2 *	NewBitmapList2[200];
+	BitmapEntry2 *   Entry;
 
 	OPENFILENAME ofn;
 };

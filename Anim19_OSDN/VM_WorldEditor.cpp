@@ -74,6 +74,22 @@ bool VM_WorldEditor::Txt_OpenFile(char* Extension, char* Title, char* StartDirec
 }
 
 // *************************************************************************
+// *						NonFatalError   					  		   *
+// *************************************************************************
+bool VM_WorldEditor::NonFatalError(const char *Msg, ...)
+{
+	char Buffer[1024];
+	va_list argptr;
+
+	va_start(argptr, Msg);
+	vsprintf(Buffer, Msg, argptr);
+	va_end(argptr);
+
+	MessageBox(NULL, Buffer, "Error", MB_ICONEXCLAMATION | MB_OK);
+	return 1;
+}
+
+// *************************************************************************
 // *						LoadFile  Terry Flanigan 			  		   *
 // *************************************************************************
 bool VM_WorldEditor::LoadFile()
@@ -82,9 +98,9 @@ bool VM_WorldEditor::LoadFile()
 	geVFile_Finder *	Finder = NULL;
 	geVFile_Finder *	FinderCount = NULL;
 
-	/*p_Data = new TPack_WindowData;
-	p_Data->hwnd = ChDlg;
-	p_Data->BitmapCount = 0;*/
+	p_Data2 = new TPack_WindowData2;
+	p_Data2->hwnd = NULL;
+	p_Data2->BitmapCount = 0;
 
 	int TextureCount = 0;
 
@@ -128,13 +144,14 @@ bool VM_WorldEditor::LoadFile()
 
 		geVFile_FinderGetProperties(Finder, &Properties);
 		
-		App->Say(Properties.Name);
-		/*if (!AddTexture(VFS, Properties.Name))
+		
+		if (!AddTexture(VFS, Properties.Name))
 		{
 			geVFile_Close(VFS);
 			return 0;
-		}*/
+		}
 
+		App->Say(Properties.Name);
 	}
 	/*strcpy(p_Data->TXLFileName, Txt_FileName);
 	p_Data->FileNameIsValid = TRUE;
@@ -144,4 +161,70 @@ bool VM_WorldEditor::LoadFile()
 	//SendDlgItemMessage(p_Data->hwnd, IDC_TEXTURELIST, LB_SETCURSEL, (WPARAM)0, (LPARAM)0);
 	//App->CL_Vm_TextLib->SelectBitmap();*/
 	return 1;
+}
+
+// *************************************************************************
+// *						AddTexture  06/06/08 				  		   *
+// *************************************************************************
+bool VM_WorldEditor::AddTexture(geVFile *BaseFile, const char *Path)
+{
+	geBitmap_Info	PInfo;
+	geBitmap_Info	SInfo;
+	geBitmap *		Bitmap;
+
+	geVFile *		File;
+	char			FileName[_MAX_FNAME];
+	char *			Name;
+
+	Bitmap = NULL;
+	File = NULL;
+
+	_splitpath(Path, NULL, NULL, FileName, NULL);
+	Name = _strdup(FileName);
+	if (!Name)
+	{
+		NonFatalError("Memory allocation error processing %s", Path);
+		return FALSE;
+	}
+
+	if (BaseFile)
+		File = geVFile_Open(BaseFile, Path, GE_VFILE_OPEN_READONLY);
+	else
+		File = geVFile_OpenNewSystem(NULL, GE_VFILE_TYPE_DOS, Path, NULL, GE_VFILE_OPEN_READONLY);
+
+	if (!File)
+	{
+		NonFatalError("Could not open %s", Path);
+		return TRUE;
+	}
+
+	Bitmap = geBitmap_CreateFromFile(File);
+
+	geVFile_Close(File);
+
+	if (!Bitmap)
+	{
+		NonFatalError("%s is not a valid bitmap", Path);
+		return TRUE;
+	}
+
+	
+	NewBitmapList2[p_Data2->BitmapCount] = new BitmapEntry2;
+	if (!NewBitmapList2)
+	{
+		NonFatalError("Memory allocation error processing %s", Path);
+		return TRUE;
+	}
+
+	NewBitmapList2[p_Data2->BitmapCount]->Name = Name;
+	NewBitmapList2[p_Data2->BitmapCount]->Bitmap = Bitmap;
+	NewBitmapList2[p_Data2->BitmapCount]->WinBitmap = NULL;
+	NewBitmapList2[p_Data2->BitmapCount]->WinABitmap = NULL;
+	NewBitmapList2[p_Data2->BitmapCount]->Flags = 0;
+	p_Data2->BitmapCount++;
+
+	//SendDlgItemMessage(p_Data->hwnd, IDC_TEXTURELIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)Name);
+
+	return TRUE;
+
 }
