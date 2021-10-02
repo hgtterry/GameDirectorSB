@@ -77,6 +77,7 @@ GD19_App::GD19_App(void)
 	Cl_Vm_Dimensions =	nullptr;
 	Cl_Vm_MeshDesign =	nullptr;
 	Cl_Vm_File_Equity =	nullptr;
+	Cl_Vm_WorldEditor = nullptr;
 
 
 	Fdlg = nullptr;
@@ -222,6 +223,7 @@ bool GD19_App::InitApp(void)
 	Cl_Vm_Dimensions =	new VM_Dimensions();
 	Cl_Vm_MeshDesign =	new VM_MeshDesign();
 	Cl_Vm_File_Equity = new VM_File_Equity();
+	Cl_Vm_WorldEditor = new VM_WorldEditor();
 
 	SetBrushes_Fonts();
 

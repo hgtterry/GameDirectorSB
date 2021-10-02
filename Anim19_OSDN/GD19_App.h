@@ -74,6 +74,7 @@ ebopster
 #include "VM_Dimensions.h"
 #include "VM_MeshDesign.h"
 #include "VM_File_Equity.h"
+#include "VM_WorldEditor.h"
 
 
 class GD19_App
@@ -130,6 +131,7 @@ public:
 	VM_Dimensions*		Cl_Vm_Dimensions;
 	VM_MeshDesign*		Cl_Vm_MeshDesign;
 	VM_File_Equity*		Cl_Vm_File_Equity;
+	VM_WorldEditor*		Cl_Vm_WorldEditor;
 
 
 	GD19_App(void);
