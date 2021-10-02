@@ -257,11 +257,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			App->CL_Importer->Assimp_Loader("Autodesk 3DS   *.3ds\0*.3ds\0", "Autodesk 3DS");
 
-			App->Cl_Vm_Dimensions->Rotate_Z_Model(90);
-			App->Cl_Vm_Dimensions->Rotate_X_Model(-90);
-			App->Cl_Vm_Dimensions->Centre_Model_Mid();
-			App->Cl_Grid->Reset_View();
+			App->Cl_Vm_WorldEditor->Adjust();
 
+			App->Cl_Vm_WorldEditor->Change_Textures();
+			
+		
 			return 1;
 		}
 
