@@ -42,12 +42,14 @@ public:
 protected:
 
 	bool LoadFile();
-	bool AddTexture(geVFile *BaseFile, const char *Path);
+	bool AddTexture(geVFile *BaseFile, const char *Path,int  GroupIndex);
 
 	bool NonFatalError(const char *Msg, ...);
 
 	int Check_for_Textures(geVFile *BaseFile);
 	bool Check_in_Txl(char *FileName);
+
+	HBITMAP CreateHBitmapFromgeBitmap(geBitmap *Bitmap, HDC hdc);
 
 	TPack_WindowData2 *p_Data2;
 	BitmapEntry2 *	NewBitmapList2[200];

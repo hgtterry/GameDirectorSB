@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "GD19_App.h"
+#include "resource.h"
 #include "VM_WorldEditor.h"
 
 
@@ -98,11 +99,6 @@ bool VM_WorldEditor::LoadFile()
 	geVFile_Finder *	Finder = NULL;
 	geVFile_Finder *	FinderCount = NULL;
 
-	p_Data2 = new TPack_WindowData2;
-	p_Data2->hwnd = NULL;
-	p_Data2->BitmapCount = 0;
-
-	int TextureCount = 0;
 	NameCount = 0;
 
 
@@ -126,7 +122,6 @@ bool VM_WorldEditor::LoadFile()
 	while (geVFile_FinderGetNextFile(FinderCount) != GE_FALSE)
 	{
 
-		TextureCount++;
 
 	}
 
@@ -183,13 +178,11 @@ int VM_WorldEditor::Check_for_Textures(geVFile *BaseFile)
 
 		if (test == 1)
 		{
-			if (!AddTexture(BaseFile, JustName))
+			if (!AddTexture(BaseFile, JustName,Count))
 			{
 				App->Say("Error");
 				return 0;
 			}
-
-			App->Say("Matched");
 		}
 		else
 		{
@@ -229,10 +222,9 @@ bool VM_WorldEditor::Check_in_Txl(char *FileName)
 // *************************************************************************
 // *						AddTexture  06/06/08 				  		   *
 // *************************************************************************
-bool VM_WorldEditor::AddTexture(geVFile *BaseFile, const char *Path)
+bool VM_WorldEditor::AddTexture(geVFile *BaseFile, const char *Path,int GroupIndex)
 {
-	geBitmap_Info	PInfo;
-	geBitmap_Info	SInfo;
+
 	geBitmap *		Bitmap;
 
 	geVFile *		File;
@@ -263,31 +255,122 @@ bool VM_WorldEditor::AddTexture(geVFile *BaseFile, const char *Path)
 
 	Bitmap = geBitmap_CreateFromFile(File);
 
-	geVFile_Close(File);
+	HWND	PreviewWnd;
+	HBITMAP	hbm;
+	HDC		hDC;
 
-	if (!Bitmap)
+	PreviewWnd = GetDlgItem(App->CL_Vm_Groups->RightGroups_Hwnd, IDC_BASETEXTURE2);
+	hDC = GetDC(PreviewWnd);
+	hbm = CreateHBitmapFromgeBitmap(Bitmap, hDC);
+
+	App->CL_Vm_Model->S_MeshGroup[GroupIndex]->Base_Bitmap = hbm;
+	
+
+	/*if (!Bitmap)
 	{
 		NonFatalError("%s is not a valid bitmap", Path);
 		return TRUE;
-	}
+	}*/
 
+	char TempTextureFile_BMP[1024];
+	strcpy(TempTextureFile_BMP, App->EquityDirecory_FullPath);
+	strcat(TempTextureFile_BMP, "\\");
+	strcat(TempTextureFile_BMP, "TextureLoad.bmp");
+
+	App->CL_Vm_Textures->Genesis_WriteToBmp(Bitmap, TempTextureFile_BMP);
+
+	App->CL_Vm_Textures->Soil_Load_Texture(App->CL_Vm_Textures->g_Texture, TempTextureFile_BMP, GroupIndex);
 	
-	NewBitmapList2[p_Data2->BitmapCount] = new BitmapEntry2;
-	if (!NewBitmapList2)
-	{
-		NonFatalError("Memory allocation error processing %s", Path);
-		return TRUE;
-	}
+	geVFile_Close(File);
 
-	NewBitmapList2[p_Data2->BitmapCount]->Name = Name;
-	NewBitmapList2[p_Data2->BitmapCount]->Bitmap = Bitmap;
-	NewBitmapList2[p_Data2->BitmapCount]->WinBitmap = NULL;
-	NewBitmapList2[p_Data2->BitmapCount]->WinABitmap = NULL;
-	NewBitmapList2[p_Data2->BitmapCount]->Flags = 0;
-	p_Data2->BitmapCount++;
-
-	//SendDlgItemMessage(p_Data->hwnd, IDC_TEXTURELIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)Name);
-
+	DeleteFile((LPCTSTR)TempTextureFile_BMP);
 	return TRUE;
 
+}
+
+// *************************************************************************
+// *				CreateHBitmapFromgeBitmap  06/06/08 		  		   *
+// *************************************************************************
+HBITMAP VM_WorldEditor::CreateHBitmapFromgeBitmap(geBitmap *Bitmap, HDC hdc)
+{
+	geBitmap * Lock;
+	gePixelFormat Format;
+	geBitmap_Info info;
+	HBITMAP hbm = NULL;
+
+	// <> choose format to be 8,16,or 24, whichever is closest to Bitmap
+	Format = GE_PIXELFORMAT_24BIT_BGR;
+
+	if (geBitmap_GetBits(Bitmap))
+	{
+		Lock = Bitmap;
+	}
+	else
+	{
+		if (!geBitmap_LockForRead(Bitmap, &Lock, 0, 0, Format, GE_FALSE, 0))
+		{
+			return NULL;
+		}
+	}
+
+	geBitmap_GetInfo(Lock, &info, NULL);
+
+	if (info.Format != Format)
+		return NULL;
+
+	{
+		void * bits;
+		BITMAPINFOHEADER bmih;
+		int pelbytes;
+
+		pelbytes = gePixelFormat_BytesPerPel(Format);
+		bits = geBitmap_GetBits(Lock);
+
+		bmih.biSize = sizeof(bmih);
+		bmih.biHeight = -info.Height;
+		bmih.biPlanes = 1;
+		bmih.biBitCount = 24;
+		bmih.biCompression = BI_RGB;
+		bmih.biSizeImage = 0;
+		bmih.biXPelsPerMeter = bmih.biYPelsPerMeter = 10000;
+		bmih.biClrUsed = bmih.biClrImportant = 0;
+
+		if ((info.Stride*pelbytes) == (((info.Stride*pelbytes) + 3)&(~3)))
+		{
+			bmih.biWidth = info.Stride;
+			hbm = CreateDIBitmap(hdc, &bmih, CBM_INIT, bits, (BITMAPINFO *)&bmih, DIB_RGB_COLORS);
+		}
+		else
+		{
+			void * newbits;
+			int Stride;
+
+			bmih.biWidth = info.Width;
+			Stride = (((info.Width*pelbytes) + 3)&(~3));
+			newbits = geRam_Allocate(Stride * info.Height);
+			if (newbits)
+			{
+				char *newptr, *oldptr;
+				int y;
+
+				newptr = (char *)newbits;
+				oldptr = (char *)bits;
+				for (y = 0; y < info.Height; y++)
+				{
+					memcpy(newptr, oldptr, (info.Width)*pelbytes);
+					oldptr += info.Stride*pelbytes;
+					newptr += Stride;
+				}
+				hbm = CreateDIBitmap(hdc, &bmih, CBM_INIT, newbits, (BITMAPINFO *)&bmih, DIB_RGB_COLORS);
+				geRam_Free(newbits);
+			}
+		}
+	}
+
+	if (Lock != Bitmap)
+	{
+		geBitmap_UnLock(Lock);
+	}
+
+	return hbm;
 }
