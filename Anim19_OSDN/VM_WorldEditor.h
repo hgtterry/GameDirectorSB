@@ -1,5 +1,7 @@
 #pragma once
 
+typedef struct Char_type2 { char Name[256]; }Char_type2;
+
 typedef	struct	BitmapEntry2
 {
 	char *		Name;
@@ -44,12 +46,16 @@ protected:
 
 	bool NonFatalError(const char *Msg, ...);
 
-	int Check_for_Name(char* Name);
+	int Check_for_Textures(geVFile *BaseFile);
+	bool Check_in_Txl(char *FileName);
 
 	TPack_WindowData2 *p_Data2;
 	BitmapEntry2 *	NewBitmapList2[200];
 	BitmapEntry2 *   Entry;
 
+	std::vector<Char_type2> BitMap_Names;
+
+	int NameCount;
 	OPENFILENAME ofn;
 };
 

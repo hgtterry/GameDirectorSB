@@ -103,6 +103,7 @@ bool VM_WorldEditor::LoadFile()
 	p_Data2->BitmapCount = 0;
 
 	int TextureCount = 0;
+	NameCount = 0;
 
 
 	//App->Say(Txt_FileName);
@@ -137,65 +138,92 @@ bool VM_WorldEditor::LoadFile()
 		return 0;
 	}
 
+	BitMap_Names.resize(100);
 
 	while (geVFile_FinderGetNextFile(Finder) != GE_FALSE)
 	{
 		geVFile_Properties	Properties;
 
 		geVFile_FinderGetProperties(Finder, &Properties);
-		
-		Check_for_Name(Properties.Name);
-		
+
+		strcpy(BitMap_Names[NameCount].Name, Properties.Name);
+		NameCount++;
+
 		/*if (!AddTexture(VFS, Properties.Name))
 		{
 			geVFile_Close(VFS);
 			return 0;
-		}
-
-		App->Say(Properties.Name);*/
+		}*/
 	}
-	/*strcpy(p_Data->TXLFileName, Txt_FileName);
-	p_Data->FileNameIsValid = TRUE;
-	p_Data->Dirty = FALSE;*/
+
+	Check_for_Textures(VFS);
+
 	geVFile_Close(VFS);
 
-	//SendDlgItemMessage(p_Data->hwnd, IDC_TEXTURELIST, LB_SETCURSEL, (WPARAM)0, (LPARAM)0);
-	//App->CL_Vm_TextLib->SelectBitmap();*/
 	return 1;
 }
 
 // *************************************************************************
-// *	  			Check_for_Name Terry Bernie							   *
+// *	  			Check_for_Textures Terry Bernie						   *
 // *************************************************************************
-int VM_WorldEditor::Check_for_Name(char* Name)
+int VM_WorldEditor::Check_for_Textures(geVFile *BaseFile)
 {
 	int Count = 0;
-	int Total = App->CL_Vm_Model->GroupCount;
+	int GroupCount = App->CL_Vm_Model->GroupCount;
 
 	char JustName[255];
 	
-
-	while (Count < Total)
+	while (Count < GroupCount)
 	{
 		strcpy(JustName, App->CL_Vm_Model->S_MeshGroup[Count]->Text_FileName);
 		int Len = strlen(JustName);
 		JustName[Len - 4] = 0;
 
-		int Result = 1;
-		Result = strcmp(JustName, Name);
-		if (Result == 0)
+		bool test = Check_in_Txl(JustName);
+
+		if (test == 1)
 		{
+			if (!AddTexture(BaseFile, JustName))
+			{
+				App->Say("Error");
+				return 0;
+			}
+
 			App->Say("Matched");
-			App->Say(Name);
-			return 1;
 		}
-		
+		else
+		{
+			App->Say("unMatched");
+			App->Say(JustName);
+		}
+
 		Count++;
 	}
 
-	App->Say("UnMached");
-	
 	return -1;
+}
+
+// *************************************************************************
+// *	  			Check_in_Txl Terry Bernie							   *
+// *************************************************************************
+bool VM_WorldEditor::Check_in_Txl(char *FileName)
+{
+	int loop = 0;
+	int TxlNameCount = NameCount;
+
+	while (loop < TxlNameCount)
+	{
+		int Result = 1;
+		Result = strcmp(FileName, BitMap_Names[loop].Name);
+		if (Result == 0)
+		{
+			return 1;
+		}
+
+		loop++;
+	}
+
+	return 0;
 }
 
 // *************************************************************************
