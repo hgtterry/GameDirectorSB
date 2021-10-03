@@ -144,14 +144,15 @@ bool VM_WorldEditor::LoadFile()
 
 		geVFile_FinderGetProperties(Finder, &Properties);
 		
+		Check_for_Name(Properties.Name);
 		
-		if (!AddTexture(VFS, Properties.Name))
+		/*if (!AddTexture(VFS, Properties.Name))
 		{
 			geVFile_Close(VFS);
 			return 0;
 		}
 
-		App->Say(Properties.Name);
+		App->Say(Properties.Name);*/
 	}
 	/*strcpy(p_Data->TXLFileName, Txt_FileName);
 	p_Data->FileNameIsValid = TRUE;
@@ -161,6 +162,40 @@ bool VM_WorldEditor::LoadFile()
 	//SendDlgItemMessage(p_Data->hwnd, IDC_TEXTURELIST, LB_SETCURSEL, (WPARAM)0, (LPARAM)0);
 	//App->CL_Vm_TextLib->SelectBitmap();*/
 	return 1;
+}
+
+// *************************************************************************
+// *	  			Check_for_Name Terry Bernie							   *
+// *************************************************************************
+int VM_WorldEditor::Check_for_Name(char* Name)
+{
+	int Count = 0;
+	int Total = App->CL_Vm_Model->GroupCount;
+
+	char JustName[255];
+	
+
+	while (Count < Total)
+	{
+		strcpy(JustName, App->CL_Vm_Model->S_MeshGroup[Count]->Text_FileName);
+		int Len = strlen(JustName);
+		JustName[Len - 4] = 0;
+
+		int Result = 1;
+		Result = strcmp(JustName, Name);
+		if (Result == 0)
+		{
+			App->Say("Matched");
+			App->Say(Name);
+			return 1;
+		}
+		
+		Count++;
+	}
+
+	App->Say("UnMached");
+	
+	return -1;
 }
 
 // *************************************************************************

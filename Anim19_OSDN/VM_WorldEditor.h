@@ -44,6 +44,8 @@ protected:
 
 	bool NonFatalError(const char *Msg, ...);
 
+	int Check_for_Name(char* Name);
+
 	TPack_WindowData2 *p_Data2;
 	BitmapEntry2 *	NewBitmapList2[200];
 	BitmapEntry2 *   Entry;
