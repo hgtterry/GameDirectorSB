@@ -75,6 +75,7 @@ ebopster
 #include "VM_MeshDesign.h"
 #include "VM_File_Equity.h"
 #include "VM_WorldEditor.h"
+#include "VM_Preferences.h"
 
 
 class GD19_App
@@ -132,6 +133,7 @@ public:
 	VM_MeshDesign*		Cl_Vm_MeshDesign;
 	VM_File_Equity*		Cl_Vm_File_Equity;
 	VM_WorldEditor*		Cl_Vm_WorldEditor;
+	VM_Preferences*		Cl_Vm_Preferences;
 
 
 	GD19_App(void);
