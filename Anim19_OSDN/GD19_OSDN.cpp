@@ -456,7 +456,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			App->Cl_Scene_Data->Dialog_GetUserFile(App->MainHwnd);
 			return 1;
 		}
-		
+
+		case ID_SETTINGS_PREFERENCES:
+		{
+			App->Cl_Vm_Preferences->Start_Preferences();
+			return 1;
+		}
+
 		//------------------------- Add Item
 		case ID_ADDITEM_OBJECT:
 		{
