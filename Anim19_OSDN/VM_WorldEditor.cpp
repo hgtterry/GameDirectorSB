@@ -43,7 +43,7 @@ LRESULT CALLBACK VM_WorldEditor::WE_import_Proc(HWND hDlg, UINT message, WPARAM 
 		SetDlgItemText(hDlg, IDC_TITLENAME, (LPCTSTR)App->Cl_Dialogs->btext);*/
 
 		SetDlgItemText(hDlg, IDC_STWEPATHFILE, (LPCTSTR)App->Cl_Vm_Preferences->Pref_WE_Path_FileName);
-		SetDlgItemText(hDlg, IDC_STTXLFILEPATH, (LPCTSTR)App->Cl_Vm_Preferences->Pref_WE_Path_FileName);
+		SetDlgItemText(hDlg, IDC_STTXLFILEPATH, (LPCTSTR)App->Cl_Vm_Preferences->Pref_Txl_Path_FileName);
 
 		return TRUE;
 	}
@@ -118,6 +118,32 @@ LRESULT CALLBACK VM_WorldEditor::WE_import_Proc(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDOK)
 		{
+			App->Cl_Vm_Preferences->Write_Preferences();
+
+			App->CL_Vm_Model->Clear_ModelData();
+
+			App->CL_Vm_Model->Set_Paths();
+
+			App->Cl_Vm_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
+
+			bool Test = App->Cl_Vm_Assimp->LoadFile(App->Cl_Vm_Preferences->Pref_WE_Path_FileName);
+			if (Test == 0)
+			{
+				App->Say("Failed To Load");
+				return 0;
+			}
+
+			App->CL_Vm_Model->Model_Type = LoadedFile_Assimp;
+
+
+
+			App->CL_Importer->Set_Equity();
+
+			App->Cl_Vm_WorldEditor->Adjust();
+
+			App->Cl_Vm_WorldEditor->LoadFile();
+
+			App->Say("Model Loaded");
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -224,10 +250,7 @@ bool VM_WorldEditor::LoadFile()
 
 	NameCount = 0;
 
-
-	//App->Say(Txt_FileName);
-	//App->Say(Txt_Path_FileName);
-	VFS = geVFile_OpenNewSystem(NULL, GE_VFILE_TYPE_VIRTUAL, Txt_Path_FileName, NULL, GE_VFILE_OPEN_READONLY | GE_VFILE_OPEN_DIRECTORY);
+	VFS = geVFile_OpenNewSystem(NULL, GE_VFILE_TYPE_VIRTUAL, App->Cl_Vm_Preferences->Pref_Txl_Path_FileName, NULL, GE_VFILE_OPEN_READONLY | GE_VFILE_OPEN_DIRECTORY);
 	if (!VFS)
 	{
 		App->Say("Could not open file");

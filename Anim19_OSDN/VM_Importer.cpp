@@ -23,9 +23,6 @@ bool VM_Importer::Assimp_Loader(char* Extension, char* Extension2)
 		return 1;
 	}
 
-//	App->CL_Assimp = new Eq_Assimp();
-
-
 	App->CL_Vm_Model->Clear_ModelData();
 
 	App->CL_Vm_Model->Set_Paths();
