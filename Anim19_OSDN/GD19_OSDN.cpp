@@ -118,6 +118,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	App->CL_Vm_FileIO->Init_History();
 
+	App->Cl_Vm_Preferences->Read_Preferences(); // Read Preferences
+
 	App->Set_Main_TitleBar();
 
 	SetTimer(App->MainHwnd, 1, 1, NULL);
@@ -237,6 +239,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			{
 				App->CL_Vm_ImGui->Stop_ProgressBar();
 			}
+			return 1;
+		}
+
+		case ID_TEST_WRITEPREFERENCES:
+		{
+			App->Cl_Vm_Preferences->Write_Preferences();
 			return 1;
 		}
 

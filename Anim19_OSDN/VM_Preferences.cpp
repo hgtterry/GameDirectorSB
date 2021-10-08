@@ -6,6 +6,8 @@
 
 VM_Preferences::VM_Preferences()
 {
+	strcpy(Pref_Txl_Path_FileName, "Not_Set");
+	strcpy(Pref_WE_Path_FileName, "Not_Set");
 }
 
 
@@ -13,6 +15,71 @@ VM_Preferences::~VM_Preferences()
 {
 }
 
+
+// *************************************************************************
+// *						Write_Preferences Terry Flanigan 			   *
+// *************************************************************************
+bool VM_Preferences::Write_Preferences()
+{
+	WriteScene = NULL;
+
+	char Preferences_Path[1024];
+
+	strcpy(Preferences_Path, App->EquityDirecory_FullPath);;
+	strcat(Preferences_Path, "\\");
+	strcat(Preferences_Path, "Data");
+	strcat(Preferences_Path, "\\");
+	strcat(Preferences_Path, "Preferences.ini");
+
+	WriteScene = fopen(Preferences_Path, "wt");
+	if (!WriteScene)
+	{
+		App->Say("Cant Create Save File");
+		return 0;
+	}
+
+	fprintf(WriteScene, "%s\n", "[WE_Fast_Load]");
+	fprintf(WriteScene, "%s%s\n", "Pref_WE_Path_FileName=", Pref_WE_Path_FileName);
+	fprintf(WriteScene, "%s%s\n", "Pref_Txl_Path_FileName=", Pref_Txl_Path_FileName);
+	fprintf(WriteScene, "%s\n", " ");
+
+	fclose(WriteScene);
+
+	Read_Preferences();
+	return 1;
+}
+
+// *************************************************************************
+// *						Read_Preferences Terry Flanigan 			   *
+// *************************************************************************
+bool VM_Preferences::Read_Preferences()
+{
+	char chr_Tag1[1024];
+	char chr_Tag2[1024];
+
+	chr_Tag1[0] = 0;
+	chr_Tag2[0] = 0;
+
+	char Preferences_Path[1024];
+
+	strcpy(Preferences_Path, App->EquityDirecory_FullPath);
+	strcat(Preferences_Path, "\\");
+	strcat(Preferences_Path, "Data");
+	strcat(Preferences_Path, "\\");
+	strcat(Preferences_Path, "Preferences.ini");
+
+	App->Cl_Ini->SetPathName(Preferences_Path);
+
+	App->Cl_Ini->GetString("WE_Fast_Load", "Pref_WE_Path_FileName", chr_Tag1, 1024);
+	strcpy(Pref_WE_Path_FileName, chr_Tag1);
+
+	App->Cl_Ini->GetString("WE_Fast_Load", "Pref_Txl_Path_FileName", chr_Tag2, 1024);
+	strcpy(Pref_Txl_Path_FileName, chr_Tag2);
+
+	//App->Say(chr_Tag1);
+
+	return 1;
+}
 
 // *************************************************************************
 // *	  				 Start_Preferences	Terry Flanigan				   *

@@ -5,6 +5,9 @@ public:
 	VM_Preferences();
 	~VM_Preferences();
 
+	bool Write_Preferences();
+	bool Read_Preferences();
+
 	bool Start_Preferences();
 
 	char Pref_Txl_FileName[255];
@@ -16,5 +19,7 @@ public:
 protected:
 
 	static LRESULT CALLBACK Preferences_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	FILE *WriteScene;
 };
 
