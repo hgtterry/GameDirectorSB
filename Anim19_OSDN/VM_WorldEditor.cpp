@@ -40,9 +40,10 @@ LRESULT CALLBACK VM_WorldEditor::WE_import_Proc(HWND hDlg, UINT message, WPARAM 
 
 		SendDlgItemMessage(hDlg, IDC_EDITTEXT, WM_SETFONT, (WPARAM)App->Font_CB12, MAKELPARAM(TRUE, 0));
 
-		SetDlgItemText(hDlg, IDC_TITLENAME, (LPCTSTR)App->Cl_Dialogs->btext);
+		SetDlgItemText(hDlg, IDC_TITLENAME, (LPCTSTR)App->Cl_Dialogs->btext);*/
 
-		SetDlgItemText(hDlg, IDC_EDITTEXT, (LPCTSTR)App->Cl_Dialogs->Chr_Text);*/
+		SetDlgItemText(hDlg, IDC_STWEPATHFILE, (LPCTSTR)App->Cl_Vm_Preferences->Pref_WE_Path_FileName);
+		SetDlgItemText(hDlg, IDC_STTXLFILEPATH, (LPCTSTR)App->Cl_Vm_Preferences->Pref_WE_Path_FileName);
 
 		return TRUE;
 	}
@@ -86,6 +87,35 @@ LRESULT CALLBACK VM_WorldEditor::WE_import_Proc(HWND hDlg, UINT message, WPARAM 
 
 	case WM_COMMAND:
 	{
+		if (LOWORD(wParam) == IDC_3DSBROWSE)
+		{
+			int Result = App->CL_Vm_FileIO->Vm_OpenFile("Autodesk 3DS   *.3ds\0*.3ds\0", "Autodesk 3DS", NULL);
+			if (Result == 0)
+			{
+				return 1;
+			}
+
+			strcpy(App->Cl_Vm_Preferences->Pref_WE_Path_FileName, App->CL_Vm_FileIO->Model_Path_FileName);
+
+			SetDlgItemText(hDlg, IDC_STWEPATHFILE, (LPCTSTR)App->Cl_Vm_Preferences->Pref_WE_Path_FileName);
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_TXLBROWSE)
+		{
+
+			int test = App->Cl_Vm_WorldEditor->Txt_OpenFile("Texture Libary   *.txl\0*.txl\0", "Texure Editor", NULL);// S_Prefs[0]->TXLFolder);
+			if (test == 0)
+			{
+				return 1;
+			}
+
+			strcpy(App->Cl_Vm_Preferences->Pref_Txl_Path_FileName, App->Cl_Vm_WorldEditor->Txt_Path_FileName);
+
+			SetDlgItemText(hDlg, IDC_STTXLFILEPATH, (LPCTSTR)App->Cl_Vm_Preferences->Pref_Txl_Path_FileName);
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDOK)
 		{
 			EndDialog(hDlg, LOWORD(wParam));
@@ -97,6 +127,7 @@ LRESULT CALLBACK VM_WorldEditor::WE_import_Proc(HWND hDlg, UINT message, WPARAM 
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
+
 	}
 
 	break;
