@@ -32,15 +32,8 @@ LRESULT CALLBACK VM_WorldEditor::WE_import_Proc(HWND hDlg, UINT message, WPARAM 
 	case WM_INITDIALOG:
 	{
 
-		/*App->SetTitleBar(hDlg);
-
-		HFONT Font;
-		Font = CreateFont(-20, 0, 0, 0, FW_BOLD, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
-		SendDlgItemMessage(hDlg, IDC_TITLENAME, WM_SETFONT, (WPARAM)Font, MAKELPARAM(TRUE, 0));
-
-		SendDlgItemMessage(hDlg, IDC_EDITTEXT, WM_SETFONT, (WPARAM)App->Font_CB12, MAKELPARAM(TRUE, 0));
-
-		SetDlgItemText(hDlg, IDC_TITLENAME, (LPCTSTR)App->Cl_Dialogs->btext);*/
+		SendDlgItemMessage(hDlg, IDC_STWEPATHFILE, WM_SETFONT, (WPARAM)App->Font_CB12, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STTXLFILEPATH, WM_SETFONT, (WPARAM)App->Font_CB12, MAKELPARAM(TRUE, 0));
 
 		SetDlgItemText(hDlg, IDC_STWEPATHFILE, (LPCTSTR)App->Cl_Vm_Preferences->Pref_WE_Path_FileName);
 		SetDlgItemText(hDlg, IDC_STTXLFILEPATH, (LPCTSTR)App->Cl_Vm_Preferences->Pref_Txl_Path_FileName);
@@ -49,13 +42,39 @@ LRESULT CALLBACK VM_WorldEditor::WE_import_Proc(HWND hDlg, UINT message, WPARAM 
 	}
 	case WM_CTLCOLORSTATIC:
 	{
-		/*if (GetDlgItem(hDlg, IDC_TITLENAME) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_STWEPATHFILE) == (HWND)lParam)
 		{
 		SetBkColor((HDC)wParam, RGB(0, 255, 0));
-		SetTextColor((HDC)wParam, RGB(0, 0, 255));
+		SetTextColor((HDC)wParam, RGB(0, 0, 0));
 		SetBkMode((HDC)wParam, TRANSPARENT);
-		return (UINT)App->AppBackground;
-		}*/
+		return (UINT)App->Brush_White;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STTXLFILEPATH) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->Brush_White;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STATICTXL) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STATICWE) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+
 		return FALSE;
 	}
 
@@ -68,7 +87,7 @@ LRESULT CALLBACK VM_WorldEditor::WE_import_Proc(HWND hDlg, UINT message, WPARAM 
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		/*if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
 		{
 		LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 		App->Custom_Button_Normal(item);
@@ -80,7 +99,21 @@ LRESULT CALLBACK VM_WorldEditor::WE_import_Proc(HWND hDlg, UINT message, WPARAM 
 		LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 		App->Custom_Button_Normal(item);
 		return CDRF_DODEFAULT;
-		}*/
+		}
+
+		if (some_item->idFrom == IDC_3DSBROWSE && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_TXLBROWSE && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
 
 		return CDRF_DODEFAULT;
 	}
@@ -135,16 +168,15 @@ LRESULT CALLBACK VM_WorldEditor::WE_import_Proc(HWND hDlg, UINT message, WPARAM 
 
 			App->CL_Vm_Model->Model_Type = LoadedFile_Assimp;
 
-
+			App->Cl_Vm_WorldEditor->LoadFile();
 
 			App->CL_Importer->Set_Equity();
 
 			App->Cl_Vm_WorldEditor->Adjust();
-
-			App->Cl_Vm_WorldEditor->LoadFile();
+			
+			EndDialog(hDlg, LOWORD(wParam));
 
 			App->Say("Model Loaded");
-			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
 
