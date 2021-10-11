@@ -321,7 +321,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		case ID_OGRE3D_MESH:
 		{
-			App->Debug_Text();
+			App->CL_Vm_Exporter->Ogre3D_Model();
 			return 1;
 		}
 

@@ -74,9 +74,9 @@ void VM_Exporter::Ogre3D_Model(void)
 		App->CL_Dialogs->Message("Ogre3D Model Saved successfully");
 		return;
 	}*/
-	else
-	{
-		//App->Cl_Export_Ogre3D->Export_AssimpToOgre();
+	//else
+	//{
+		App->Cl_Vm_Ogre3d->Export_AssimpToOgre();
 		App->Say("Ogre3D Model Saved successfully");
-	}
+	//}
 }

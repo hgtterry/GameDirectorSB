@@ -44,6 +44,9 @@ public:
 	void CreateTextureInfo(void);
 	bool HBITMAP_TO_BmpFile(HBITMAP Bitmap, char* Filename, char* SaveFolder);
 
+	bool Jpg_To_Tga24(char* File);
+	bool Jpg_To_png24(char* File);
+
 	//HBITMAP GetHBITMAPFromImageFile(const WCHAR* pFilePath);
 
 	bool Ogre_LoadImage(const Ogre::String& tex_ext, const Ogre::String& texture_path, int Index);

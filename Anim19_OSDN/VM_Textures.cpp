@@ -5,6 +5,11 @@
 
 #include "SOIL.h"
 
+#include "il.h"
+#include "ilu.h"
+#include "ilut.h"
+
+
 #include "bitmap.h"
 #include "bitmap._h"
 #include "bitmap.__h"
@@ -976,6 +981,46 @@ bool VM_Textures::GetFormat(int cformat)
 	}
 
 	strcpy(GEFormatString, "Cant Decode");
+	return 1;
+}
+
+// *************************************************************************
+// *							Jpg_To_Tga					  		 	   *
+// *************************************************************************
+bool VM_Textures::Jpg_To_Tga24(char* File)
+{
+	char OldFile[1024];
+	strcpy(OldFile, File);
+
+	ilLoadImage(File);
+
+	int Len = strlen(File);
+	File[Len - 4] = 0;
+	strcat(File, ".tga");
+
+	ilSaveImage(File);
+
+	remove(OldFile);
+	return 1;
+}
+
+// *************************************************************************
+// *							Jpg_To_png24					  		 	   *
+// *************************************************************************
+bool VM_Textures::Jpg_To_png24(char* File)
+{
+	char OldFile[1024];
+	strcpy(OldFile, File);
+
+	ilLoadImage(File);
+
+	int Len = strlen(File);
+	File[Len - 4] = 0;
+	strcat(File, ".png");
+
+	ilSaveImage(File);
+
+	remove(OldFile);
 	return 1;
 }
 
