@@ -303,6 +303,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return 1;
 		}
 
+		case ID_OGRE3D_TEST:
+		{
+			//App->CL_Vm_Exporter->Actor_Model();
+			App->Say("Here");
+
+			char Path[1024];
+			strcpy(Path, App->EquityDirecory_FullPath);;
+			strcat(Path, "\\");
+			strcat(Path, "Data");
+			strcat(Path, "\\");
+			strcat(Path, "Test.mesh");
+			App->Say(Path);
+			App->CL_Vm_Model->CreateMeshFile("Test.mesh");
+			return 1;
+		}
+
 		case ID_EQUITY_DATAFILE:
 		{
 			App->Cl_Vm_File_Equity->SaveFile("Data Files   *.edf\0*.edf\0*", "Data Files", App->CL_Vm_Model->JustName);
