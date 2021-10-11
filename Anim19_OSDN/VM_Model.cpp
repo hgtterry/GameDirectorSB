@@ -465,10 +465,10 @@ bool VM_Model::CreateMeshFile(char* MatFileName)
 	/*int wh, numbones;
 	int intweight[3], intbones[3];*/
 
-	Ogre::SkeletonManager SkeletonMgr;
+	//Ogre::SkeletonManager SkeletonMgr;
 	Ogre::DefaultHardwareBufferManager *bufferManager = 0;
 
-	Ogre::MeshManager MeshMgr;
+	//Ogre::MeshManager MeshMgr;
 
 	Ogre::MeshPtr ogreMesh = Ogre::MeshManager::getSingleton().create("export",
 		Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
@@ -501,7 +501,7 @@ bool VM_Model::CreateMeshFile(char* MatFileName)
 			strcpy(MatName,App->S_MeshGroup[i]->MatName);*/
 			ogreSubMesh->setMaterialName(MatName);
 		}
-		//------------------------------------------
+		------------------------------------------
 
 		ogreSubMesh->vertexData = new Ogre::VertexData();
 		ogreSubMesh->vertexData->vertexCount = App->CL_Vm_Model->S_MeshGroup[i]->GroupVertCount;//App->CA_Milk_Import->GetNumVertices();//S_XMLStore[0]->SXMLCount;
