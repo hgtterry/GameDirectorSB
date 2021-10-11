@@ -6,5 +6,6 @@ public:
 	~VM_Exporter();
 
 	void Actor_Model(void);
+	void Ogre3D_Model(void);
 };
 

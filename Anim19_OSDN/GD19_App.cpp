@@ -79,6 +79,7 @@ GD19_App::GD19_App(void)
 	Cl_Vm_File_Equity =	nullptr;
 	Cl_Vm_WorldEditor = nullptr;
 	Cl_Vm_Preferences = nullptr;
+	Cl_Vm_Ogre3d =		nullptr;
 
 
 	Fdlg = nullptr;
@@ -226,6 +227,7 @@ bool GD19_App::InitApp(void)
 	Cl_Vm_File_Equity = new VM_File_Equity();
 	Cl_Vm_WorldEditor = new VM_WorldEditor();
 	Cl_Vm_Preferences = new VM_Preferences();
+	Cl_Vm_Ogre3d =		new VM_Ogre3d();
 
 	SetBrushes_Fonts();
 
@@ -469,6 +471,14 @@ void GD19_App::Say(const char* Message)
 	char text[1024];
 	strcpy(text, Message);
 	App->Cl_Dialogs->Message(text);
+}
+
+// *************************************************************************
+// *						Debug_Text Terry Flanigan					   *
+// *************************************************************************
+void GD19_App::Debug_Text()
+{
+	App->Cl_Dialogs->Message("Here");
 }
 
 // *************************************************************************
