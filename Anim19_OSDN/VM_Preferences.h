@@ -13,7 +13,7 @@ public:
 	char Pref_Txl_FileName[255];
 	char Pref_Txl_Path_FileName[1024];
 
-	char Pref_WE_FileName[255];			//World Editor/RFpro File 3ds
+	char Pref_WE_JustFileName[255];			//World Editor/RFpro File 3ds
 	char Pref_WE_Path_FileName[1024];	//World Editor/RFpro File 3ds
 
 protected:

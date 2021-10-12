@@ -129,6 +129,7 @@ LRESULT CALLBACK VM_WorldEditor::WE_import_Proc(HWND hDlg, UINT message, WPARAM 
 			}
 
 			strcpy(App->Cl_Vm_Preferences->Pref_WE_Path_FileName, App->CL_Vm_FileIO->Model_Path_FileName);
+			strcpy(App->Cl_Vm_Preferences->Pref_WE_JustFileName, App->CL_Vm_FileIO->Model_FileName);
 
 			SetDlgItemText(hDlg, IDC_STWEPATHFILE, (LPCTSTR)App->Cl_Vm_Preferences->Pref_WE_Path_FileName);
 			return TRUE;
@@ -165,6 +166,7 @@ LRESULT CALLBACK VM_WorldEditor::WE_import_Proc(HWND hDlg, UINT message, WPARAM 
 			}
 
 			strcpy(App->CL_Vm_FileIO->Model_Path_FileName, App->Cl_Vm_Preferences->Pref_WE_Path_FileName);
+			strcpy(App->CL_Vm_FileIO->Model_FileName, App->Cl_Vm_Preferences->Pref_WE_JustFileName);
 
 			App->CL_Vm_Model->Set_Paths();
 
