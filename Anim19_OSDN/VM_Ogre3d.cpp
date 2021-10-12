@@ -126,6 +126,15 @@ bool VM_Ogre3d::DecompileTextures(void)
 			App->CL_Vm_Textures->HBITMAP_TO_BmpFile(Data, FileName, "");
 			App->CL_Vm_Textures->Jpg_To_png24(FileName);
 		}
+		else if (_stricmp(FileName + strlen(FileName) - 4, ".jpg") == 0)
+		{
+			int Len = strlen(FileName);
+			FileName[Len - 4] = 0;
+			strcat(FileName, ".bmp");
+
+			App->CL_Vm_Textures->HBITMAP_TO_BmpFile(Data, FileName, "");
+			App->CL_Vm_Textures->Bmp_To_Jpg(FileName);
+		}
 		else
 		{
 

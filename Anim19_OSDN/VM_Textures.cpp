@@ -18,6 +18,7 @@
 
 VM_Textures::VM_Textures()
 {
+	ilInit();
 }
 
 
@@ -1017,6 +1018,30 @@ bool VM_Textures::Jpg_To_png24(char* File)
 	int Len = strlen(File);
 	File[Len - 4] = 0;
 	strcat(File, ".png");
+
+	ilSaveImage(File);
+
+	remove(OldFile);
+	return 1;
+}
+
+// *************************************************************************
+// *							Bmp_To_Jpg					  		 	   *
+// *************************************************************************
+bool VM_Textures::Bmp_To_Jpg(char* File)
+{
+	char OldFile[1024];
+	strcpy(OldFile, File);
+
+	bool test = ilLoadImage(File);
+	if (test == 0)
+	{
+		App->Say("Failed to load Texture Bmp_To_Jpg");
+	}
+
+	int Len = strlen(File);
+	File[Len - 4] = 0;
+	strcat(File, ".jpg");
 
 	ilSaveImage(File);
 

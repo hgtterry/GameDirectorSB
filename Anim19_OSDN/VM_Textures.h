@@ -46,6 +46,7 @@ public:
 
 	bool Jpg_To_Tga24(char* File);
 	bool Jpg_To_png24(char* File);
+	bool Bmp_To_Jpg(char* File);
 
 	//HBITMAP GetHBITMAPFromImageFile(const WCHAR* pFilePath);
 

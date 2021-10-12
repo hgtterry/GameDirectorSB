@@ -6,6 +6,9 @@ public:
 	~VM_Ogre3d();
 
 	bool Export_AssimpToOgre(void);
+
+protected:
+
 	bool CreateDirectoryMesh(void);
 	bool DecompileTextures(void);
 	bool CreateMeshFile(char* MatFileName);
