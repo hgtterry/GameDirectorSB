@@ -95,7 +95,7 @@ bool VM_Ogre3d::CreateDirectoryMesh(void)
 // *************************************************************************
 bool VM_Ogre3d::DecompileTextures(void)
 {
-	int MatCount = App->CL_Vm_Model->TextureCount;
+	int MatCount = App->CL_Vm_Model->GroupCount;
 
 	char FileName[255];
 
@@ -332,7 +332,7 @@ void VM_Ogre3d::CreateMaterialFile(char* MatFileName)
 	Ogre::String OFile;
 	Ogre::String OMatName;
 
-	int numMaterials = App->CL_Vm_Model->TextureCount;
+	int numMaterials = App->CL_Vm_Model->GroupCount;
 
 	Ogre::MaterialManager &matMgrSgl = Ogre::MaterialManager::getSingleton();
 	//matMgrSgl.initialise();

@@ -155,8 +155,6 @@ LRESULT CALLBACK VM_WorldEditor::WE_import_Proc(HWND hDlg, UINT message, WPARAM 
 
 			App->CL_Vm_Model->Clear_ModelData();
 
-			App->CL_Vm_Model->Set_Paths();
-
 			App->Cl_Vm_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
 
 			bool Test = App->Cl_Vm_Assimp->LoadFile(App->Cl_Vm_Preferences->Pref_WE_Path_FileName);
@@ -165,6 +163,10 @@ LRESULT CALLBACK VM_WorldEditor::WE_import_Proc(HWND hDlg, UINT message, WPARAM 
 				App->Say("Failed To Load");
 				return 0;
 			}
+
+			strcpy(App->CL_Vm_FileIO->Model_Path_FileName, App->Cl_Vm_Preferences->Pref_WE_Path_FileName);
+
+			App->CL_Vm_Model->Set_Paths();
 
 			App->CL_Vm_Model->Model_Type = LoadedFile_Assimp;
 

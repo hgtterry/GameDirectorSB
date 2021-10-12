@@ -7,6 +7,8 @@ public:
 
 	bool Assimp_Loader(char* Extension, char* Extension2);
 	bool Genesis3D_Loader(void);
+	bool WorldEditor_Loader(void);
+
 	void Reload_FromResentFiles(char* ResentPathAndFile);
 
 	void Set_Equity(void);

@@ -46,6 +46,15 @@ bool VM_Importer::Assimp_Loader(char* Extension, char* Extension2)
 }
 
 // *************************************************************************
+// *					WorldEditor_Loader Terry Terry Berine			   *
+// *************************************************************************
+bool VM_Importer::WorldEditor_Loader(void)
+{
+	App->Cl_Vm_WorldEditor->Start_WE_import();
+	return 1;
+}
+
+// *************************************************************************
 // *						Genesis3D Terry Terry Berine				   *
 // *************************************************************************
 bool VM_Importer::Genesis3D_Loader(void)
