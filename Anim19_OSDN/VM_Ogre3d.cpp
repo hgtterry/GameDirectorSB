@@ -39,6 +39,11 @@ bool VM_Ogre3d::Export_AssimpToOgre(void)
 	strcat(mOgreScriptFileName, ".material");
 	strcat(mOgreSkellFileName, ".skeleton");
 
+	Ogre::MaterialManager &mm = Ogre::MaterialManager::getSingleton();
+	//matMgrSgl = OGRE_NEW MaterialManager();
+	//matMgrSgl  = Ogre::MaterialManager;
+	//matMgrSgl->initialise();
+
 	//	if (mDoExportTextures == 1 && App->S_Counters[0]->TextureCount > 0)
 	//	{
 	DecompileTextures();
@@ -50,9 +55,10 @@ bool VM_Ogre3d::Export_AssimpToOgre(void)
 
 	//	if (mDoCreateMaterialFile == 1 && App->S_Counters[0]->TextureCount > 0)
 	//	{
-	//CreateMaterialFile(mOgreScriptFileName);
+	CreateMaterialFile(mOgreScriptFileName);
 	//	}
 
+	//delete matMgrSgl;
 	return 1;
 }
 
@@ -309,14 +315,8 @@ bool VM_Ogre3d::CreateMeshFile(char* MatFileName)
 // *************************************************************************
 void VM_Ogre3d::CreateMaterialFile(char* MatFileName)
 {
-	Ogre::MaterialManager *matMgrSgl;
-
-	matMgrSgl = new Ogre::MaterialManager();
-	matMgrSgl->initialise();
-
 	char MatName[255];
 	char File[255];
-	//	char FileName[255];
 	char MaterialNumber[255];
 
 	Ogre::String OMatFileName = MatFileName;
@@ -325,9 +325,8 @@ void VM_Ogre3d::CreateMaterialFile(char* MatFileName)
 
 	int numMaterials = App->CL_Vm_Model->TextureCount;
 
-	/*char Temp[255];
-	itoa(numMaterials,Temp,10);
-	App->WinMessage(Temp);*/
+	Ogre::MaterialManager &matMgrSgl = Ogre::MaterialManager::getSingleton();
+	//matMgrSgl.initialise();
 
 	Ogre::MaterialSerializer matSer;
 
@@ -338,26 +337,19 @@ void VM_Ogre3d::CreateMaterialFile(char* MatFileName)
 		strcat(MatName, "_Material_");
 		strcat(MatName, MaterialNumber);
 
-
-		//strcpy(MatName,App->S_MeshGroup[i]->mTextureName);
 		strcpy(File, App->CL_Vm_Model->S_MeshGroup[i]->Text_FileName);
 
 		OMatName = MatName;
 		OFile = File;
 
-		Ogre::MaterialPtr ogremat = matMgrSgl->create(OMatName,
+		Ogre::MaterialPtr ogremat = matMgrSgl.create(OMatName,
 			Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
 
-		//ogremat->setAmbient(msVec4ToColourValue(mat->Ambient));
-		//ogremat->setDiffuse(msVec4ToColourValue(mat->Diffuse));
-		//ogremat->setSpecular(msVec4ToColourValue(mat->Specular));
-		//ogremat->setShininess(mat->fShininess);
-
+		
 		if (0 < strlen(File))
+		{
 			ogremat->getTechnique(0)->getPass(0)->createTextureUnitState(File);
-
-		/* if (0 < strlen(mat->szAlphaTexture))
-		ogremat->getTechnique(0)->getPass(0)->createTextureUnitState(mat->szAlphaTexture);*/
+		}
 
 		matSer.queueForExport(ogremat);
 	}
