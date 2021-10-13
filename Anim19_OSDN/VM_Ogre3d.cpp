@@ -196,7 +196,7 @@ bool VM_Ogre3d::CreateMeshFile(char* MatFileName)
 		//------------------------------------------
 
 		ogreSubMesh->vertexData = new Ogre::VertexData();
-		ogreSubMesh->vertexData->vertexCount = App->CL_Vm_Model->S_MeshGroup[i]->GroupVertCount;//App->CA_Milk_Import->GetNumVertices();//S_XMLStore[0]->SXMLCount;
+		ogreSubMesh->vertexData->vertexCount = App->CL_Vm_Model->S_MeshGroup[i]->GroupFaceCount*3;//App->CA_Milk_Import->GetNumVertices();//S_XMLStore[0]->SXMLCount;
 		ogreSubMesh->vertexData->vertexStart = 0;
 		Ogre::VertexBufferBinding* bind = ogreSubMesh->vertexData->vertexBufferBinding;
 		Ogre::VertexDeclaration* decl = ogreSubMesh->vertexData->vertexDeclaration;
@@ -217,6 +217,7 @@ bool VM_Ogre3d::CreateMeshFile(char* MatFileName)
 		Ogre::HardwareVertexBufferSharedPtr tbuf = Ogre::HardwareBufferManager::getSingleton().
 			createVertexBuffer(decl->getVertexSize(TEXCOORD_BINDING), ogreSubMesh->vertexData->vertexCount,
 				Ogre::HardwareBuffer::HBU_DYNAMIC, false);
+
 		bind->setBinding(POSITION_BINDING, pbuf);
 		bind->setBinding(NORMAL_BINDING, nbuf);
 		bind->setBinding(TEXCOORD_BINDING, tbuf);
@@ -227,11 +228,28 @@ bool VM_Ogre3d::CreateMeshFile(char* MatFileName)
 			pbuf->lock(Ogre::HardwareBuffer::HBL_DISCARD));
 
 		size_t j;
-		for (j = 0; j < ogreSubMesh->vertexData->vertexCount; ++j)
+
+		int A = 0;
+		int B = 0;
+		int C = 0;
+
+		for (j = 0; j < App->CL_Vm_Model->S_MeshGroup[i]->GroupFaceCount; j++)
 		{
-			*pPos++ = App->CL_Vm_Model->S_MeshGroup[i]->vertex_Data[j].x;
-			*pPos++ = App->CL_Vm_Model->S_MeshGroup[i]->vertex_Data[j].y;
-			*pPos++ = App->CL_Vm_Model->S_MeshGroup[i]->vertex_Data[j].z;
+			A = App->CL_Vm_Model->S_MeshGroup[i]->Face_Data[j].a;
+			B = App->CL_Vm_Model->S_MeshGroup[i]->Face_Data[j].b;
+			C = App->CL_Vm_Model->S_MeshGroup[i]->Face_Data[j].c;
+
+			*pPos++ = App->CL_Vm_Model->S_MeshGroup[i]->vertex_Data[A].x;
+			*pPos++ = App->CL_Vm_Model->S_MeshGroup[i]->vertex_Data[A].y;
+			*pPos++ = App->CL_Vm_Model->S_MeshGroup[i]->vertex_Data[A].z;
+
+			*pPos++ = App->CL_Vm_Model->S_MeshGroup[i]->vertex_Data[B].x;
+			*pPos++ = App->CL_Vm_Model->S_MeshGroup[i]->vertex_Data[B].y;
+			*pPos++ = App->CL_Vm_Model->S_MeshGroup[i]->vertex_Data[B].z;
+
+			*pPos++ = App->CL_Vm_Model->S_MeshGroup[i]->vertex_Data[C].x;
+			*pPos++ = App->CL_Vm_Model->S_MeshGroup[i]->vertex_Data[C].y;
+			*pPos++ = App->CL_Vm_Model->S_MeshGroup[i]->vertex_Data[C].z;
 
 			currpos = Ogre::Vector3(App->CL_Vm_Model->S_MeshGroup[i]->vertex_Data[j].x, App->CL_Vm_Model->S_MeshGroup[i]->vertex_Data[j].y, App->CL_Vm_Model->S_MeshGroup[i]->vertex_Data[j].z);
 			if (first)
@@ -255,7 +273,7 @@ bool VM_Ogre3d::CreateMeshFile(char* MatFileName)
 
 		float* pNorm = static_cast<float*>(
 			nbuf->lock(Ogre::HardwareBuffer::HBL_DISCARD));
-		ogreSubMesh->indexData->indexCount = App->CL_Vm_Model->S_MeshGroup[i]->GroupVertCount;//group->triangleIndices.size()*3;
+		ogreSubMesh->indexData->indexCount = App->CL_Vm_Model->S_MeshGroup[i]->GroupFaceCount;//group->triangleIndices.size()*3;
 
 		Ogre::HardwareIndexBufferSharedPtr ibuf = Ogre::HardwareBufferManager::getSingleton().
 			createIndexBuffer(Ogre::HardwareIndexBuffer::IT_16BIT,
@@ -264,15 +282,18 @@ bool VM_Ogre3d::CreateMeshFile(char* MatFileName)
 		unsigned short *pIdx = static_cast<unsigned short*>(
 			ibuf->lock(Ogre::HardwareBuffer::HBL_DISCARD));
 
-		for (j = 0; j < ogreSubMesh->indexData->indexCount; j += 3)
+		int index = 0;
+		int UVindex = 0;
+		
+		for (j = 0; j < App->CL_Vm_Model->S_MeshGroup[i]->GroupFaceCount; j++)
 		{
 			unsigned short nIndices[3];
 			float UV_Indices[2];
 			float Norm_Indices[3];
 
-			nIndices[0] = j;
-			nIndices[1] = j + 1;
-			nIndices[2] = j + 2;
+			nIndices[0] = App->CL_Vm_Model->S_MeshGroup[i]->Face_Data[j].a;
+			nIndices[1] = App->CL_Vm_Model->S_MeshGroup[i]->Face_Data[j].b;
+			nIndices[2] = App->CL_Vm_Model->S_MeshGroup[i]->Face_Data[j].c;
 
 			int k, vertIdx;
 
@@ -297,17 +318,18 @@ bool VM_Ogre3d::CreateMeshFile(char* MatFileName)
 			}
 
 		} // Faces
+
 		nbuf->unlock();
 		ibuf->unlock();
 		tbuf->unlock();
 
-		Ogre::VertexDeclaration* newDecl =
+		/*Ogre::VertexDeclaration* newDecl =
 			ogreSubMesh->vertexData->vertexDeclaration->getAutoOrganisedDeclaration(
 				foundBoneAssignment, false, 0);
 		Ogre::BufferUsageList bufferUsages;
 		for (size_t u = 0; u <= newDecl->getMaxSource(); ++u)
 			bufferUsages.push_back(Ogre::HardwareBuffer::HBU_STATIC_WRITE_ONLY);
-		ogreSubMesh->vertexData->reorganiseBuffers(newDecl, bufferUsages);
+		ogreSubMesh->vertexData->reorganiseBuffers(newDecl, bufferUsages);*/
 	}
 
 	ogreMesh->_setBoundingSphereRadius(Ogre::Math::Sqrt(maxSquaredRadius));

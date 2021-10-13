@@ -77,6 +77,7 @@ ebopster
 #include "VM_WorldEditor.h"
 #include "VM_Preferences.h"
 #include "VM_Ogre3d.h"
+#include "VM_TXMLExport.h"
 
 
 class GD19_App
@@ -136,6 +137,7 @@ public:
 	VM_WorldEditor*		Cl_Vm_WorldEditor;
 	VM_Preferences*		Cl_Vm_Preferences;
 	VM_Ogre3d*			Cl_Vm_Ogre3d;
+	VM_XMLExport*		Cl_Vm_XMLExport;
 
 
 	GD19_App(void);

@@ -80,6 +80,7 @@ GD19_App::GD19_App(void)
 	Cl_Vm_WorldEditor = nullptr;
 	Cl_Vm_Preferences = nullptr;
 	Cl_Vm_Ogre3d =		nullptr;
+	Cl_Vm_XMLExport =	nullptr;
 
 
 	Fdlg = nullptr;
@@ -228,6 +229,7 @@ bool GD19_App::InitApp(void)
 	Cl_Vm_WorldEditor = new VM_WorldEditor();
 	Cl_Vm_Preferences = new VM_Preferences();
 	Cl_Vm_Ogre3d =		new VM_Ogre3d();
+	Cl_Vm_XMLExport =	new VM_XMLExport();
 
 	SetBrushes_Fonts();
 
