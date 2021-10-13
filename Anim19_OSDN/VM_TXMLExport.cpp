@@ -672,34 +672,29 @@ bool VM_XMLExport::StartRenderToXML(int LTextureFormat)
 	//	return 0;
 	//}
 
-	//S_XMLStore[0]= new XMLStore_Type;
-	//S_XMLStore[0]->SortedPolyCount=0;
-	//
-
-
-	//C_ProgBar->StartNewProgressBar();
-	//C_ProgBar->SetMainText("Starting Actor to XML Convertion");
-
+	S_XMLStore[0]= new XMLStore_Type;
+	S_XMLStore[0]->SortedPolyCount=0;
+	
 	//DecompileTextures(LTextureFormat);
 
-	//char XmlFileName[256];
-	//char XFIle[256];
+	char XmlFileName[256];
+	char XFIle[256];
 
 
-	//strcpy(XmlFileName,S_File[0]->ActorFileName);
+	strcpy(XmlFileName,App->CL_Vm_Model->FileName);
 
-	//int Len=strlen(XmlFileName);
-	//XmlFileName[Len-4]=0;
-
-
-
-	//strcpy(XmlMeshFileName,XmlFileName);
-	//strcpy(XmlScriptFileName,XmlFileName);
-	//strcpy(XmlSkellFileName,XmlFileName);
-	//strcpy(XmlSkellTagName,XmlFileName);
+	int Len=strlen(XmlFileName);
+	XmlFileName[Len-4]=0;
 
 
-	//strcpy(XFIle,XmlFileName);
+
+	strcpy(XmlMeshFileName,XmlFileName);
+	strcpy(XmlScriptFileName,XmlFileName);
+	strcpy(XmlSkellFileName,XmlFileName);
+	strcpy(XmlSkellTagName,XmlFileName);
+
+
+	strcpy(XFIle,XmlFileName);
 
 	//if(C_Render->SelectedTexture==-1)
 	//{
@@ -711,37 +706,37 @@ bool VM_XMLExport::StartRenderToXML(int LTextureFormat)
 	//}
 	//else
 	//{
-	//	geBitmap* Bitmap;
-	//	int Count=0;
-	//	float R,G,B=0;
-	//	const char *MatName;
-	//	geBody_GetMaterial(At->ActorDef_Memory->Body,C_Render->SelectedTexture,&MatName,&Bitmap,&R,&G,&B);
-	//	
-	//	strcat(XmlMeshFileName,"_");
-	//	strcat(XmlScriptFileName,"_");
-	//	strcat(XmlSkellTagName,"_");
+		/*geBitmap* Bitmap;
+		int Count=0;
+		float R,G,B=0;
+		const char *MatName;
+		geBody_GetMaterial(At->ActorDef_Memory->Body,C_Render->SelectedTexture,&MatName,&Bitmap,&R,&G,&B);*/
+		
+		strcat(XmlMeshFileName,"_");
+		strcat(XmlScriptFileName,"_");
+		strcat(XmlSkellTagName,"_");
 
-	//	strcat(XmlMeshFileName,MatName);
-	//	strcat(XmlScriptFileName,MatName);
-	//	strcat(XmlSkellTagName,MatName);
+		//strcat(XmlMeshFileName,MatName);
+		//strcat(XmlScriptFileName,MatName);
+		//strcat(XmlSkellTagName,MatName);
 
-	//	strcpy(XFIle,XmlMeshFileName);
+		strcpy(XFIle,XmlMeshFileName);
 
-	//	strcat(XmlMeshFileName,".mesh.xml");
-	//	strcat(XmlScriptFileName,".material");
-	//	strcat(XmlSkellFileName,".skeleton.xml");
-	//	strcat(XmlSkellTagName,".skeleton");
+		strcat(XmlMeshFileName,".mesh.xml");
+		strcat(XmlScriptFileName,".material");
+		strcat(XmlSkellFileName,".skeleton.xml");
+		strcat(XmlSkellTagName,".skeleton");
 	//}
 
 
-	//WritePolyFile = fopen(XmlMeshFileName, "wt");
-	//if(!WritePolyFile) 
-	//{
-	//	return 0;
-	//}
+	WritePolyFile = fopen(XmlMeshFileName, "wt");
+	if(!WritePolyFile) 
+	{
+		return 0;
+	}
 
-	//fprintf(WritePolyFile, "%s\n","<mesh>");
-	//fprintf(WritePolyFile,"%s\n","    <submeshes>");
+	fprintf(WritePolyFile, "%s\n","<mesh>");
+	fprintf(WritePolyFile,"%s\n","    <submeshes>");
 
 	//if(C_Render->SelectedTexture==-1)
 	//{
@@ -763,20 +758,20 @@ bool VM_XMLExport::StartRenderToXML(int LTextureFormat)
 	//{
 	//	
 	//	TextureNum=C_Render->SelectedTexture;
-	//	RenderToXML();
+		RenderToXML();
 	//	WriteNewXML();
 	//}
 
 
-	//fprintf(WritePolyFile, "%s\n","    </submeshes>");
-	//if(DoSkell==1)
-	//{
-	//fprintf(WritePolyFile, "%s%s%s\n","    <skeletonlink name=\"",XmlSkellTagName,"\" />");
-	//}
-	//fprintf(WritePolyFile, "%s\n","</mesh>");
+	fprintf(WritePolyFile, "%s\n","    </submeshes>");
+	if(DoSkell==1)
+	{
+	fprintf(WritePolyFile, "%s%s%s\n","    <skeletonlink name=\"",XmlSkellTagName,"\" />");
+	}
+	fprintf(WritePolyFile, "%s\n","</mesh>");
 
 
-	//fclose(WritePolyFile);
+	fclose(WritePolyFile);
 
 
 	//C_ProgBar->Nudge();

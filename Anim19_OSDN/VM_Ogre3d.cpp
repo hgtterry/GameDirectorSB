@@ -50,7 +50,8 @@ bool VM_Ogre3d::Export_AssimpToOgre(void)
 	//	}
 	//	if (mDoExportMesh == 1)
 	//	{
-	CreateMeshFile(mOgreMeshFileName);
+	//CreateMeshFile(mOgreMeshFileName);
+	App->Cl_Vm_XMLExport->StartRenderToXML(1);
 	//	}
 
 	//	if (mDoCreateMaterialFile == 1 && App->S_Counters[0]->TextureCount > 0)

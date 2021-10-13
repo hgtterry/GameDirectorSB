@@ -9,6 +9,20 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
+typedef struct {
+	vertex_type XMLvertex[MAX_VERTICES];
+	normal_type XMLnormal[MAX_VERTICES];
+	polygon_type XMLpolygon[MAX_POLYGONS];
+	mapcoord_type mapcoord[MAX_VERTICES];
+	int BeenAdded[MAX_VERTICES];
+	int SortedVerticeCount;
+	int SortedPolyCount;
+	int SortedVertIndex[MAX_VERTICES];
+	int SXMLCount;
+	int BoneIndex[MAX_VERTICES];
+
+} XMLStore_Type;
+
 class VM_XMLExport  
 {
 
@@ -83,6 +97,8 @@ public:
 	
 	geXForm3d SPosNewMatric;
 	geXForm3d SRotNewMatric;
+
+	XMLStore_Type * S_XMLStore[1];
 
 };
 
