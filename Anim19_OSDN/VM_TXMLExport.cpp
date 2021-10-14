@@ -735,32 +735,16 @@ bool VM_XMLExport::StartRenderToXML(int LTextureFormat)
 		return 0;
 	}
 
-	fprintf(WritePolyFile, "%s\n","<mesh>");
-	fprintf(WritePolyFile,"%s\n","    <submeshes>");
+	fprintf(WritePolyFile, "%s\n", "<mesh>");
+	fprintf(WritePolyFile, "%s\n", "    <submeshes>");
 
-	//if(C_Render->SelectedTexture==-1)
-	//{
-	//	
-
-	////	int texturecount=geBody_GetMaterialCount(At->ActorDef_Memory->Body);
-	//	int texturecount=Texture[0]->UsedTextureCount;
-	//	int Count=0;
-	//	while (Count<texturecount)
-	//	{
-	//		TextureNum=Count;
-	//		RenderToXML();
-	//		WriteNewXML();
-	//		Count++;
-	//	}
-	//
-	//}
-	//else
-	//{
-	//	
-	//	TextureNum=C_Render->SelectedTexture;
-		RenderToXML();
-	//	WriteNewXML();
-	//}
+	int Count = 0;
+	while (Count < App->CL_Vm_Model->GroupCount)
+	{
+		RenderToXML(Count);
+		WriteNewXML(Count);
+		Count++;
+	}
 
 
 	fprintf(WritePolyFile, "%s\n","    </submeshes>");
@@ -773,121 +757,96 @@ bool VM_XMLExport::StartRenderToXML(int LTextureFormat)
 
 	fclose(WritePolyFile);
 
-
-	//C_ProgBar->Nudge();
-
 	//WriteScript(LTextureFormat);
 	//if(DoSkell==1)
 	//{
 	//	WriteSkellFile();
 	//}
-	//C_ProgBar->Nudge();
+	
 
-	//C_ProgBar->SetMainText("Converting XML File to .skeleton");
-	//C_ProgBar->Nudge();
-
-	//C_ProgBar->Nudge();
-	//if(S_XMLStore[0])
-	//{ 
-	//	delete S_XMLStore[0];
-	//	S_XMLStore[0]=NULL;
-	//	
-	//}
+	if(S_XMLStore[0])
+	{ 
+		delete S_XMLStore[0];
+		S_XMLStore[0]=NULL;
+		
+	}
 	//remove("OgreXMLConverter.log");
-	//C_ProgBar->Nudge();
-
-	//C_ProgBar->Close();
-	//strcpy(AnswerText,"Your Actor has been converted to the XML Ogre Format");
-	//App->Say("Converted");
+	
+	App->Say("Converted");
 	return 1;
 }
 // *************************************************************************
 // *							RenderToXML					   		   	   *
 // *************************************************************************
-bool VM_XMLExport::RenderToXML()
+bool VM_XMLExport::RenderToXML(int GroupIndex)
 {
+	int FaceCount = 0;
+	int XMLCount=0;
+	int Face=0;
+
+	int A = 0;
+	int B = 0;
+	int C = 0;
 	
-	//int PolyCount=At->ActorDef_Memory->Body->SkinFaces[GE_BODY_HIGHEST_LOD].FaceCount;
-	//const geBody_Triangle *SF;
-	//const geBody_XSkinVertex *SN;
+	while (FaceCount < App->CL_Vm_Model->S_MeshGroup[GroupIndex]->GroupFaceCount)
+	{
+		A = App->CL_Vm_Model->S_MeshGroup[GroupIndex]->Face_Data[FaceCount].a;
+		B = App->CL_Vm_Model->S_MeshGroup[GroupIndex]->Face_Data[FaceCount].b;
+		C = App->CL_Vm_Model->S_MeshGroup[GroupIndex]->Face_Data[FaceCount].c;
 
-	//SF=At->ActorDef_Memory->Body->SkinFaces[GE_BODY_HIGHEST_LOD].FaceArray;
-	//SN=At->ActorDef_Memory->Body->XSkinVertexArray;
+		// first vector in face and vertic + normal and uv 
+		S_XMLStore[0]->XMLvertex[XMLCount].x = App->CL_Vm_Model->S_MeshGroup[GroupIndex]->vertex_Data[A].x;
+		S_XMLStore[0]->XMLvertex[XMLCount].y = App->CL_Vm_Model->S_MeshGroup[GroupIndex]->vertex_Data[A].y;
+		S_XMLStore[0]->XMLvertex[XMLCount].z = App->CL_Vm_Model->S_MeshGroup[GroupIndex]->vertex_Data[A].z;
 
-	//int Count=0;
-	//int MatIndex;
-	//int XMLCount=0;
-	//int Face=0;
-	//int ClockTime=0;
+		S_XMLStore[0]->mapcoord[XMLCount].u = App->CL_Vm_Model->S_MeshGroup[GroupIndex]->MapCord_Data[A].u;
+		S_XMLStore[0]->mapcoord[XMLCount].v = App->CL_Vm_Model->S_MeshGroup[GroupIndex]->MapCord_Data[A].v;
 
-	//while (Count<PolyCount)
-	//{
-	//	ClockTime++;
-	//	if (ClockTime==100)
-	//	{
-	//		C_ProgBar->Nudge();
-	//		ClockTime=0;
+		S_XMLStore[0]->XMLnormal[XMLCount].x = App->CL_Vm_Model->S_MeshGroup[GroupIndex]->Normal_Data[A].x;
+		S_XMLStore[0]->XMLnormal[XMLCount].y = App->CL_Vm_Model->S_MeshGroup[GroupIndex]->Normal_Data[A].y;
+		S_XMLStore[0]->XMLnormal[XMLCount].z = App->CL_Vm_Model->S_MeshGroup[GroupIndex]->Normal_Data[A].z;
 
-	//	}
-	//	MatIndex=At->ActorDef_Memory->Body->SkinFaces[GE_BODY_HIGHEST_LOD].FaceArray[Count].MaterialIndex;
-	//	
-	//	if(MatIndex==TextureNum)
-	//	{
-	//		
-	//		// first vector in face and vertic + normal and uv 
-	//		S_XMLStore[0]->XMLvertex[XMLCount].x=cube.vertex[ cube.polygon[Count].a ].x;
-	//		S_XMLStore[0]->XMLvertex[XMLCount].y=cube.vertex[ cube.polygon[Count].a ].y;
-	//		S_XMLStore[0]->XMLvertex[XMLCount].z=cube.vertex[ cube.polygon[Count].a ].z;
-	//		
-	//		S_XMLStore[0]->mapcoord[XMLCount].u=cube.mapcoord[ cube.polygon[Count].a].u;
-	//		S_XMLStore[0]->mapcoord[XMLCount].v=cube.mapcoord[ cube.polygon[Count].a].v;
-	//		
-	//		S_XMLStore[0]->XMLnormal[XMLCount].x=cube.normal[SF[Count].NormalIndex[0]].x;
-	//		S_XMLStore[0]->XMLnormal[XMLCount].y=cube.normal[SF[Count].NormalIndex[0]].y;
-	//		S_XMLStore[0]->XMLnormal[XMLCount].z=cube.normal[SF[Count].NormalIndex[0]].z;
+		S_XMLStore[0]->BoneIndex[XMLCount] = 0;// SN[cube.polygon[Count].a].BoneIndex;
+		S_XMLStore[0]->XMLpolygon[Face].a = XMLCount;
+		XMLCount++;
 
-	//		S_XMLStore[0]->BoneIndex[XMLCount]=SN[cube.polygon[Count].a].BoneIndex;
-	//		S_XMLStore[0]->XMLpolygon[Face].a=XMLCount;
-	//		XMLCount++;
+		// second vector in face and vertic + normal and uv 
+		S_XMLStore[0]->XMLvertex[XMLCount].x = App->CL_Vm_Model->S_MeshGroup[GroupIndex]->vertex_Data[B].x;
+		S_XMLStore[0]->XMLvertex[XMLCount].y = App->CL_Vm_Model->S_MeshGroup[GroupIndex]->vertex_Data[B].y;
+		S_XMLStore[0]->XMLvertex[XMLCount].z = App->CL_Vm_Model->S_MeshGroup[GroupIndex]->vertex_Data[B].z;
 
-	//		// second vector in face and vertic + normal and uv 
-	//		S_XMLStore[0]->XMLvertex[XMLCount].x=cube.vertex[ cube.polygon[Count].b ].x;
-	//		S_XMLStore[0]->XMLvertex[XMLCount].y=cube.vertex[ cube.polygon[Count].b ].y;
-	//		S_XMLStore[0]->XMLvertex[XMLCount].z=cube.vertex[ cube.polygon[Count].b ].z;
-	//		
-	//		S_XMLStore[0]->mapcoord[XMLCount].u=cube.mapcoord[ cube.polygon[Count].b].u;
-	//		S_XMLStore[0]->mapcoord[XMLCount].v=cube.mapcoord[ cube.polygon[Count].b].v;
-	//		
-	//		S_XMLStore[0]->XMLnormal[XMLCount].x=cube.normal[SF[Count].NormalIndex[1]].x;
-	//		S_XMLStore[0]->XMLnormal[XMLCount].y=cube.normal[SF[Count].NormalIndex[1]].y;
-	//		S_XMLStore[0]->XMLnormal[XMLCount].z=cube.normal[SF[Count].NormalIndex[1]].z;
-	//		
-	//		S_XMLStore[0]->BoneIndex[XMLCount]=SN[cube.polygon[Count].b].BoneIndex;
-	//		S_XMLStore[0]->XMLpolygon[Face].b=XMLCount;
-	//		XMLCount++;
+		S_XMLStore[0]->mapcoord[XMLCount].u = App->CL_Vm_Model->S_MeshGroup[GroupIndex]->MapCord_Data[B].u;
+		S_XMLStore[0]->mapcoord[XMLCount].v = App->CL_Vm_Model->S_MeshGroup[GroupIndex]->MapCord_Data[B].v;
 
-	//		// third vector in face and vertic + normal and uv 
-	//		S_XMLStore[0]->XMLvertex[XMLCount].x=cube.vertex[ cube.polygon[Count].c ].x;
-	//		S_XMLStore[0]->XMLvertex[XMLCount].y=cube.vertex[ cube.polygon[Count].c ].y;
-	//		S_XMLStore[0]->XMLvertex[XMLCount].z=cube.vertex[ cube.polygon[Count].c ].z;
-	//		
-	//		S_XMLStore[0]->mapcoord[XMLCount].u=cube.mapcoord[ cube.polygon[Count].c].u;
-	//		S_XMLStore[0]->mapcoord[XMLCount].v=cube.mapcoord[ cube.polygon[Count].c].v;
-	//		
-	//		S_XMLStore[0]->XMLnormal[XMLCount].x=cube.normal[SF[Count].NormalIndex[2]].x;
-	//		S_XMLStore[0]->XMLnormal[XMLCount].y=cube.normal[SF[Count].NormalIndex[2]].y;
-	//		S_XMLStore[0]->XMLnormal[XMLCount].z=cube.normal[SF[Count].NormalIndex[2]].z;
+		S_XMLStore[0]->XMLnormal[XMLCount].x = App->CL_Vm_Model->S_MeshGroup[GroupIndex]->Normal_Data[B].x;
+		S_XMLStore[0]->XMLnormal[XMLCount].y = App->CL_Vm_Model->S_MeshGroup[GroupIndex]->Normal_Data[B].y;
+		S_XMLStore[0]->XMLnormal[XMLCount].z = App->CL_Vm_Model->S_MeshGroup[GroupIndex]->Normal_Data[B].z;
 
-	//		S_XMLStore[0]->BoneIndex[XMLCount]=SN[cube.polygon[Count].c].BoneIndex;
-	//		S_XMLStore[0]->XMLpolygon[Face].c=XMLCount;
-	//		XMLCount++;
-	//		Face++;
-	//		
-	//	}
-	//	Count++;
-	//	
-	//}
-	//	S_XMLStore[0]->SXMLCount=XMLCount;
+		S_XMLStore[0]->BoneIndex[XMLCount] = 0;// SN[cube.polygon[Count].a].BoneIndex;
+		S_XMLStore[0]->XMLpolygon[Face].b = XMLCount;
+		XMLCount++;
+
+		// third vector in face and vertic + normal and uv 
+		S_XMLStore[0]->XMLvertex[XMLCount].x = App->CL_Vm_Model->S_MeshGroup[GroupIndex]->vertex_Data[C].x;
+		S_XMLStore[0]->XMLvertex[XMLCount].y = App->CL_Vm_Model->S_MeshGroup[GroupIndex]->vertex_Data[C].y;
+		S_XMLStore[0]->XMLvertex[XMLCount].z = App->CL_Vm_Model->S_MeshGroup[GroupIndex]->vertex_Data[C].z;
+
+		S_XMLStore[0]->mapcoord[XMLCount].u = App->CL_Vm_Model->S_MeshGroup[GroupIndex]->MapCord_Data[C].u;
+		S_XMLStore[0]->mapcoord[XMLCount].v = App->CL_Vm_Model->S_MeshGroup[GroupIndex]->MapCord_Data[C].v;
+
+		S_XMLStore[0]->XMLnormal[XMLCount].x = App->CL_Vm_Model->S_MeshGroup[GroupIndex]->Normal_Data[C].x;
+		S_XMLStore[0]->XMLnormal[XMLCount].y = App->CL_Vm_Model->S_MeshGroup[GroupIndex]->Normal_Data[C].y;
+		S_XMLStore[0]->XMLnormal[XMLCount].z = App->CL_Vm_Model->S_MeshGroup[GroupIndex]->Normal_Data[C].z;
+
+		S_XMLStore[0]->BoneIndex[XMLCount] = 0;// SN[cube.polygon[Count].a].BoneIndex;
+		S_XMLStore[0]->XMLpolygon[Face].c = XMLCount;
+		XMLCount++;
+		Face++;
+
+		FaceCount++;
+	}
+
+	S_XMLStore[0]->SXMLCount = XMLCount;
 
 	return 1;
 }
@@ -895,29 +854,13 @@ bool VM_XMLExport::RenderToXML()
 // *************************************************************************
 // *							WriteNewXML					   		   	   *
 // *************************************************************************
-bool VM_XMLExport::WriteNewXML()
+bool VM_XMLExport::WriteNewXML(int GroupIndex)
 {
-	
+	WriteSubMesh(GroupIndex);
 
-//	int NewCount=S_XMLStore[0]->SXMLCount;
-//	int PolyCount=S_XMLStore[0]->SXMLCount;
-//	int VertCount=S_XMLStore[0]->SXMLCount;
-//	int Count=0;
-//	int a=0;
-//	int b=0;
-//	int c=0;
-//
-//	WriteSubMesh();
-//if (DoSkell==1)
-//{
-//
-//}
-//else
-//{
-//	fprintf(WritePolyFile, "%s\n","                </vertexbuffer>");
-//	fprintf(WritePolyFile, "%s\n","            </geometry>");
-//}
-//	fprintf(WritePolyFile, "%s\n","        </submesh>");
+	fprintf(WritePolyFile, "%s\n","                </vertexbuffer>");
+	fprintf(WritePolyFile, "%s\n","            </geometry>");
+	fprintf(WritePolyFile, "%s\n","        </submesh>");
 
 	return 1;
 }
@@ -925,87 +868,78 @@ bool VM_XMLExport::WriteNewXML()
 // *************************************************************************
 // *							WriteSubMesh				   		   	   *
 // *************************************************************************
-bool VM_XMLExport::WriteSubMesh()
+bool VM_XMLExport::WriteSubMesh(int GroupIndex)
 {
-//	float x=0;
-//	float y=0;
-//	float z=0;
-//	
-//	int a=0;
-//	int b=0;
-//	int c=0;
-//
-//	geBitmap* Bitmap;
-//	float R,G,B=0;
-//	const char *MatName;
-//	
-//	float V=0;
-//	int NewCount=S_XMLStore[0]->SXMLCount;
-//	int PolyCount=S_XMLStore[0]->SXMLCount/3;
-//	int VertCount=S_XMLStore[0]->SXMLCount;
-//	int Count=0;
-//
-//
-//	C_ProgBar->SetMainText("Writing XML Mesh File");
-//	//------------------------------- texture
-//
-//	char SubMesh[256];
-//	strcpy(SubMesh,"        <submesh material=\"");
-//
-//	geBody_GetMaterial(At->ActorDef_Memory->Body,TextureNum,&MatName,&Bitmap,&R,&G,&B);
-//
-//
-//	fprintf(WritePolyFile,"%s%s%s %s\n",SubMesh,MatName,"\" usesharedvertices=\"false\"","use32bitindexes=\"false\" operationtype=\"triangle_list\">");
-//	
-//	//------------------------------- PolyGons
-//	fprintf(WritePolyFile, "%s%i%s\n","            <faces count=\"",PolyCount,"\">");
-//	
-//	while (Count<NewCount/3)
-//	{
-//		a =S_XMLStore[0]->XMLpolygon[Count].a;
-//		b =S_XMLStore[0]->XMLpolygon[Count].b;
-//		c =S_XMLStore[0]->XMLpolygon[Count].c;
-//		
-//		fprintf(WritePolyFile, "%s%i%s%i%s%i%s\n","                <face v1=\"",a,"\" v2=\"",b,"\" v3=\"",c,"\" />");
-//		Count++;
-//	}
-//	
-//	fprintf(WritePolyFile, "%s\n","            </faces>");
-//	
-//	//------------------------------- Vertices
-//	fprintf(WritePolyFile, "%s%i%s\n","            <geometry vertexcount=\"",VertCount,"\">");
-//	fprintf(WritePolyFile, "%s\n","                <vertexbuffer positions=\"true\" normals=\"true\" texture_coord_dimensions_0=\"2\" texture_coords=\"1\">");
-//	
-//	Count=0;
-//	while (Count<NewCount)
-//	{
-//	//	AnimateProgressBar();
-//		fprintf(WritePolyFile, "%s\n","                    <vertex>");
-//		x=S_XMLStore[0]->XMLvertex[Count].x;
-//		y=S_XMLStore[0]->XMLvertex[Count].y;
-//		z=S_XMLStore[0]->XMLvertex[Count].z;
-//		
-//		u=S_XMLStore[0]->mapcoord[Count].u;
-//		V=S_XMLStore[0]->mapcoord[Count].v;
-//		
-//		v=1-V; // Swop V From RF to Ogre format
-//		
-//		nx=S_XMLStore[0]->XMLnormal[Count].x;
-//		ny=S_XMLStore[0]->XMLnormal[Count].y;
-//		nz=S_XMLStore[0]->XMLnormal[Count].z;
-//		
-//		fprintf(WritePolyFile, "%s%f%s%f%s%f%s\n","                        <position x=\"",x,"\" y=\"",y,"\" z=\"",z,"\" />");	
-//		fprintf(WritePolyFile, "%s%f%s%f%s%f%s\n","                        <normal x=\"",nx,"\" y=\"",ny,"\" z=\"",nz,"\" />");
-//		fprintf(WritePolyFile, "%s%f%s%f%s\n","                        <texcoord u=\"",u,"\" v=\"",v,"\" />");
-//		
-//		fprintf(WritePolyFile, "%s\n","                    </vertex>");
-//		Count++;
-//		
-//	}
-//if (DoSkell==1)
-//{
-//	WriteBoneAssigenment();
-//}
+	float x=0;
+	float y=0;
+	float z=0;
+	
+	int a=0;
+	int b=0;
+	int c=0;
+
+	char MatName[256];
+	
+	float V=0;
+	int NewCount=S_XMLStore[0]->SXMLCount;
+	int PolyCount=S_XMLStore[0]->SXMLCount/3;
+	int VertCount=S_XMLStore[0]->SXMLCount;
+	int Count=0;
+
+
+	//------------------------------- texture
+
+	char SubMesh[256];
+	strcpy(SubMesh,"        <submesh material=\"");
+	strcpy(MatName,App->CL_Vm_Model->S_MeshGroup[GroupIndex]->MaterialName);
+	
+	fprintf(WritePolyFile,"%s%s%s %s\n",SubMesh,MatName,"\" usesharedvertices=\"false\"","use32bitindexes=\"false\" operationtype=\"triangle_list\">");
+	
+	//------------------------------- PolyGons
+	fprintf(WritePolyFile, "%s%i%s\n","            <faces count=\"",PolyCount,"\">");
+	
+	while (Count<NewCount/3)
+	{
+		a =S_XMLStore[0]->XMLpolygon[Count].a;
+		b =S_XMLStore[0]->XMLpolygon[Count].b;
+		c =S_XMLStore[0]->XMLpolygon[Count].c;
+		
+		fprintf(WritePolyFile, "%s%i%s%i%s%i%s\n","                <face v1=\"",a,"\" v2=\"",b,"\" v3=\"",c,"\" />");
+		Count++;
+	}
+	
+	fprintf(WritePolyFile, "%s\n","            </faces>");
+	
+	//------------------------------- Vertices
+	fprintf(WritePolyFile, "%s%i%s\n","            <geometry vertexcount=\"",VertCount,"\">");
+	fprintf(WritePolyFile, "%s\n","                <vertexbuffer positions=\"true\" normals=\"true\" texture_coord_dimensions_0=\"2\" texture_coords=\"1\">");
+	
+	Count=0;
+	while (Count<NewCount)
+	{
+		fprintf(WritePolyFile, "%s\n","                    <vertex>");
+		x=S_XMLStore[0]->XMLvertex[Count].x;
+		y=S_XMLStore[0]->XMLvertex[Count].y;
+		z=S_XMLStore[0]->XMLvertex[Count].z;
+		
+		u=S_XMLStore[0]->mapcoord[Count].u;
+		V=S_XMLStore[0]->mapcoord[Count].v;
+		
+		v=1-V; // Swop V From RF to Ogre format
+		
+		nx=S_XMLStore[0]->XMLnormal[Count].x;
+		ny=S_XMLStore[0]->XMLnormal[Count].y;
+		nz=S_XMLStore[0]->XMLnormal[Count].z;
+		
+		fprintf(WritePolyFile, "%s%f%s%f%s%f%s\n","                        <position x=\"",x,"\" y=\"",y,"\" z=\"",z,"\" />");	
+		fprintf(WritePolyFile, "%s%f%s%f%s%f%s\n","                        <normal x=\"",nx,"\" y=\"",ny,"\" z=\"",nz,"\" />");
+		fprintf(WritePolyFile, "%s%f%s%f%s\n","                        <texcoord u=\"",u,"\" v=\"",v,"\" />");
+		
+		fprintf(WritePolyFile, "%s\n","                    </vertex>");
+		Count++;
+		
+	}
+
 	return 1;
 }
 
