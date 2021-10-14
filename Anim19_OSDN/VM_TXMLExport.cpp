@@ -712,7 +712,7 @@ bool VM_XMLExport::StartRenderToXML(int LTextureFormat)
 		const char *MatName;
 		geBody_GetMaterial(At->ActorDef_Memory->Body,C_Render->SelectedTexture,&MatName,&Bitmap,&R,&G,&B);*/
 		
-		strcat(XmlMeshFileName,"_");
+		//strcat(XmlMeshFileName,"_");
 		strcat(XmlScriptFileName,"_");
 		strcat(XmlSkellTagName,"_");
 
@@ -891,7 +891,10 @@ bool VM_XMLExport::WriteSubMesh(int GroupIndex)
 
 	char SubMesh[256];
 	strcpy(SubMesh,"        <submesh material=\"");
-	strcpy(MatName,App->CL_Vm_Model->S_MeshGroup[GroupIndex]->MaterialName);
+
+	strcpy(MatName, App->CL_Vm_Model->JustName);
+	strcat(MatName, "_");
+	strcat(MatName,App->CL_Vm_Model->S_MeshGroup[GroupIndex]->MaterialName);
 	
 	fprintf(WritePolyFile,"%s%s%s %s\n",SubMesh,MatName,"\" usesharedvertices=\"false\"","use32bitindexes=\"false\" operationtype=\"triangle_list\">");
 	
