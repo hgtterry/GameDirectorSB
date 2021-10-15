@@ -102,7 +102,7 @@ bool VM_Importer::Ogre_Loader(char* Extension, char* Extension2)
 	App->CL_Vm_Model->Set_Paths();
 
 
-	App->Cl_Vm_Ogre3d->Load_OgreModel(); // Load Ogre Model
+	App->CL_Ogre_Import_E15->Load_OgreModel(); // Load Ogre Model
 
 	//App->CL_Vm_Model->Model_Type = LoadedFile_Assimp;
 

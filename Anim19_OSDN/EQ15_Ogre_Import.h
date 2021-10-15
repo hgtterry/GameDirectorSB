@@ -20,5 +20,14 @@ protected:
 		unsigned long* &indices,
 		int SubMesh,
 		Ogre::int16* &BoneIndices);
+
+	bool NewGet_SubPoseTextureUV(Ogre::MeshPtr mesh, int SubMesh);
+
+	bool NewGet_SubPoseNormals(Ogre::MeshPtr mesh,
+		size_t &vertex_count,
+		Ogre::Vector3* &Normals,
+		int SubMesh);
+
+	std::vector<Vector2> MeshTextureCoords;
 };
 

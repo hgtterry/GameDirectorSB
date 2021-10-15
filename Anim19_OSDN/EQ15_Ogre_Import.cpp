@@ -150,97 +150,97 @@ void EQ15_Ogre_Import::Create_MeshGroups()
 // *************************************************************************
 bool EQ15_Ogre_Import::Extract_Mesh_Two()
 {
-	//int FaceCount = 0;
-	//int FaceNum = 0;
-	//int FaceIndexNum = 0;
-	//int mFaceIndex = 0;
-	//int xx = 0;
-	//size_t vertex_count, index_count;
-	//Vector3* vertices;
-	//Vector3* normals;
-	//unsigned long* indices;
+	int FaceCount = 0;
+	int FaceNum = 0;
+	int FaceIndexNum = 0;
+	int mFaceIndex = 0;
+	int xx = 0;
+	size_t vertex_count, index_count;
+	Vector3* vertices;
+	Vector3* normals;
+	unsigned long* indices;
 
-	//Ogre::int16* BoneIndices;	// Bone Index
+	Ogre::int16* BoneIndices;	// Bone Index
 
-	//int SubMeshCount = App->Cl19_Ogre->OgreModel_Ent->getNumSubEntities();
+	int SubMeshCount = App->Cl19_Ogre->OgreModel_Ent->getNumSubEntities();
 
-	//unsigned int Vertloop = 0;
-	//unsigned int Faceloop = 0;
-	//int Count = 0;
+	unsigned int Vertloop = 0;
+	unsigned int Faceloop = 0;
+	int Count = 0;
 
-	//while (Count<SubMeshCount)
-	//{
-	//	Get_SubPoseMeshInstance(App->Cl19_Ogre->OgreModel_Ent->getMesh(), vertex_count, vertices, index_count, indices, Count, BoneIndices);
+	while (Count<SubMeshCount)
+	{
+		Get_SubPoseMeshInstance(App->Cl19_Ogre->OgreModel_Ent->getMesh(), vertex_count, vertices, index_count, indices, Count, BoneIndices);
 
-	//	int mUVTest = NewGet_SubPoseTextureUV(App->Cl19_Ogre->OgreModel_Ent->getMesh(), Count);
-	//	NewGet_SubPoseNormals(App->Cl19_Ogre->OgreModel_Ent->getMesh(), vertex_count, normals, Count);
-
-
-	//	App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data.resize(index_count);
-	//	App->CL_Vm_Model->S_MeshGroup[Count]->Normal_Data.resize(index_count);
-	//	App->CL_Vm_Model->S_MeshGroup[Count]->MapCord_Data.resize(index_count);
-	//	App->CL_Vm_Model->S_MeshGroup[Count]->Face_Data.resize(index_count);
-	//	App->CL_Vm_Model->S_MeshGroup[Count]->FaceIndex_Data.resize(index_count);
-
-	//	App->CL_Vm_Model->S_MeshGroup[Count]->BoneIndex_Data.resize(index_count);
-
-	//	FaceIndexNum = 0;
-	//	int Faceit = 0;
-	//	FaceCount = 0;
-	//	Vertloop = 0;
-	//	xx = 0;
-	//	while (Vertloop < vertex_count) // Process Vertices
-	//	{
-	//		App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[Vertloop].x = vertices[Vertloop].x;
-	//		App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[Vertloop].y = vertices[Vertloop].y;
-	//		App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[Vertloop].z = vertices[Vertloop].z;
-
-	//		App->CL_Vm_Model->S_MeshGroup[Count]->BoneIndex_Data[Vertloop].Index = BoneIndices[Vertloop]; // Bone Index 
-
-	//		if (mUVTest)
-	//		{
-	//			App->CL_Vm_Model->S_MeshGroup[Count]->MapCord_Data[Vertloop].u = MeshTextureCoords[Vertloop].x;
-	//			App->CL_Vm_Model->S_MeshGroup[Count]->MapCord_Data[Vertloop].v = 1 - MeshTextureCoords[Vertloop].y;
-	//		}
-
-	//		App->CL_Vm_Model->S_MeshGroup[Count]->Normal_Data[Vertloop].x = normals[Vertloop].x;
-	//		App->CL_Vm_Model->S_MeshGroup[Count]->Normal_Data[Vertloop].y = normals[Vertloop].y;
-	//		App->CL_Vm_Model->S_MeshGroup[Count]->Normal_Data[Vertloop].z = normals[Vertloop].z;
-
-	//		Vertloop++;
-	//	}
-
-	//	FaceIndexNum = 0;
-	//	Faceloop = 0;
-	//	while (Faceloop < index_count) // Process Faces
-	//	{
-	//		App->CL_Vm_Model->S_MeshGroup[Count]->Face_Data[FaceIndexNum].a = indices[Faceloop];
-	//		Faceloop++;
-	//		App->CL_Vm_Model->S_MeshGroup[Count]->Face_Data[FaceIndexNum].b = indices[Faceloop];
-	//		Faceloop++;
-	//		App->CL_Vm_Model->S_MeshGroup[Count]->Face_Data[FaceIndexNum].c = indices[Faceloop];
-	//		Faceloop++;
-
-	//		FaceIndexNum++;
-
-	//		App->CL_Vm_Model->S_MeshGroup[Count]->FaceIndex_Data[xx].Index = mFaceIndex;
-
-	//		xx++;
-	//		mFaceIndex++;
-	//	}
-
-	//	App->CL_Vm_Model->S_MeshGroup[Count]->GroupFaceCount = FaceIndexNum;
-	//	App->CL_Vm_Model->S_MeshGroup[Count]->GroupVertCount = Vertloop;
-	//	App->CL_Vm_Model->S_MeshGroup[Count]->IndicesCount = Vertloop;
-
-	//	App->CL_Vm_Model->VerticeCount = App->CL_Vm_Model->VerticeCount + Vertloop;
-	//	App->CL_Vm_Model->FaceCount = App->CL_Vm_Model->FaceCount + FaceIndexNum;
+		int mUVTest = NewGet_SubPoseTextureUV(App->Cl19_Ogre->OgreModel_Ent->getMesh(), Count);
+		int mNormalsTest = NewGet_SubPoseNormals(App->Cl19_Ogre->OgreModel_Ent->getMesh(), vertex_count, normals, Count);
 
 
-	//	GetBoneAssignment(App->Cl19_Ogre->OgreModel_Ent->getMesh(), Count, 0);
+		App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data.resize(index_count);
+		App->CL_Vm_Model->S_MeshGroup[Count]->Normal_Data.resize(index_count);
+		App->CL_Vm_Model->S_MeshGroup[Count]->MapCord_Data.resize(index_count);
+		App->CL_Vm_Model->S_MeshGroup[Count]->Face_Data.resize(index_count);
+		App->CL_Vm_Model->S_MeshGroup[Count]->FaceIndex_Data.resize(index_count);
 
-	//	Count++;
-	//}
+		App->CL_Vm_Model->S_MeshGroup[Count]->BoneIndex_Data.resize(index_count);
+
+		FaceIndexNum = 0;
+		int Faceit = 0;
+		FaceCount = 0;
+		Vertloop = 0;
+		xx = 0;
+		while (Vertloop < vertex_count) // Process Vertices
+		{
+			App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[Vertloop].x = vertices[Vertloop].x;
+			App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[Vertloop].y = vertices[Vertloop].y;
+			App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[Vertloop].z = vertices[Vertloop].z;
+
+			App->CL_Vm_Model->S_MeshGroup[Count]->BoneIndex_Data[Vertloop].Index = BoneIndices[Vertloop]; // Bone Index 
+
+			if (mUVTest)
+			{
+				App->CL_Vm_Model->S_MeshGroup[Count]->MapCord_Data[Vertloop].u = MeshTextureCoords[Vertloop].x;
+				App->CL_Vm_Model->S_MeshGroup[Count]->MapCord_Data[Vertloop].v = 1 - MeshTextureCoords[Vertloop].y;
+			}
+
+			App->CL_Vm_Model->S_MeshGroup[Count]->Normal_Data[Vertloop].x = normals[Vertloop].x;
+			App->CL_Vm_Model->S_MeshGroup[Count]->Normal_Data[Vertloop].y = normals[Vertloop].y;
+			App->CL_Vm_Model->S_MeshGroup[Count]->Normal_Data[Vertloop].z = normals[Vertloop].z;
+
+			Vertloop++;
+		}
+
+		FaceIndexNum = 0;
+		Faceloop = 0;
+		while (Faceloop < index_count) // Process Faces
+		{
+			App->CL_Vm_Model->S_MeshGroup[Count]->Face_Data[FaceIndexNum].a = indices[Faceloop];
+			Faceloop++;
+			App->CL_Vm_Model->S_MeshGroup[Count]->Face_Data[FaceIndexNum].b = indices[Faceloop];
+			Faceloop++;
+			App->CL_Vm_Model->S_MeshGroup[Count]->Face_Data[FaceIndexNum].c = indices[Faceloop];
+			Faceloop++;
+
+			FaceIndexNum++;
+
+			App->CL_Vm_Model->S_MeshGroup[Count]->FaceIndex_Data[xx].Index = mFaceIndex;
+
+			xx++;
+			mFaceIndex++;
+		}
+
+		App->CL_Vm_Model->S_MeshGroup[Count]->GroupFaceCount = FaceIndexNum;
+		App->CL_Vm_Model->S_MeshGroup[Count]->GroupVertCount = Vertloop;
+		App->CL_Vm_Model->S_MeshGroup[Count]->IndicesCount = Vertloop;
+
+		App->CL_Vm_Model->VerticeCount = App->CL_Vm_Model->VerticeCount + Vertloop;
+		App->CL_Vm_Model->FaceCount = App->CL_Vm_Model->FaceCount + FaceIndexNum;
+
+
+		//GetBoneAssignment(App->Cl19_Ogre->OgreModel_Ent->getMesh(), Count, 0);
+
+		Count++;
+	}
 
 	return 1;
 }
@@ -358,4 +358,110 @@ void EQ15_Ogre_Import::Get_SubPoseMeshInstance(Ogre::MeshPtr mesh,
 
 	ibuf->unlock();
 	current_offset = next_offset;
+}
+
+// *************************************************************************
+// *					NewGet_SubPoseTextureUV Terry Bernie			   *
+// *************************************************************************
+bool EQ15_Ogre_Import::NewGet_SubPoseTextureUV(Ogre::MeshPtr mesh, int SubMesh)
+{
+	Ogre::SubMesh* submesh = mesh->getSubMesh(SubMesh);
+	int m_iCoordSet = 0;
+
+	//// Get vertex UV coordinates
+	//std::vector<Vector2> MeshTextureCoords;
+	{
+		Ogre::VertexData* vertex_data = submesh->useSharedVertices ? mesh->sharedVertexData : submesh->vertexData;
+		// Get last set of texture coordinates
+		int i = 0;
+		const VertexElement* texcoordElem;
+		const VertexElement* pCurrentElement = NULL;
+		do
+		{
+			texcoordElem = pCurrentElement;
+			pCurrentElement = vertex_data->vertexDeclaration->findElementBySemantic(Ogre::VES_TEXTURE_COORDINATES, i++);
+		} while (pCurrentElement);
+		m_iCoordSet = i - 2;
+		if (!texcoordElem)
+		{
+			App->Say("no TextCords");
+			return false;
+		}
+		HardwareVertexBufferSharedPtr vbuf = vertex_data->vertexBufferBinding->getBuffer(texcoordElem->getSource());
+		unsigned char* vertex = static_cast<unsigned char*>(vbuf->lock(Ogre::HardwareBuffer::HBL_READ_ONLY));
+
+		float* pReal;
+
+		MeshTextureCoords.resize(vertex_data->vertexCount);
+
+		for (size_t j = 0; j < vertex_data->vertexCount; ++j, vertex += vbuf->getVertexSize())
+		{
+			texcoordElem->baseVertexPointerToElement(vertex, &pReal);
+			MeshTextureCoords[j] = Vector2(pReal[0], pReal[1]);
+		}
+
+		vbuf->unlock();
+	}
+
+	return true;
+}
+// *************************************************************************
+// *					NewGet_SubPoseNormals Terry Bernie				   *
+// *************************************************************************
+bool EQ15_Ogre_Import::NewGet_SubPoseNormals(Ogre::MeshPtr mesh,
+	size_t &vertex_count,
+	Ogre::Vector3* &Normals,
+	int SubMesh)
+{
+
+	bool added_shared = false;
+	size_t current_offset = 0;
+	size_t shared_offset = 0;
+	size_t next_offset = 0;
+	size_t index_offset = 0;
+
+	const Vector3 &position = Vector3::ZERO;
+	const Quaternion &orient = Quaternion::IDENTITY;
+	const Vector3 &scale = Vector3::UNIT_SCALE;
+
+	vertex_count = 0;
+
+	Ogre::SubMesh* submesh = mesh->getSubMesh(SubMesh);
+
+	vertex_count = submesh->vertexData->vertexCount;
+
+	Normals = new Ogre::Vector3[vertex_count];
+
+	//-------------------- Get Data
+	Ogre::VertexData* vertex_data = submesh->useSharedVertices ? mesh->sharedVertexData : submesh->vertexData;
+
+	if ((!submesh->useSharedVertices) || (submesh->useSharedVertices && !added_shared))
+	{
+		if (submesh->useSharedVertices)
+		{
+			added_shared = true;
+			shared_offset = current_offset;
+		}
+
+		const Ogre::VertexElement* posElem =
+			vertex_data->vertexDeclaration->findElementBySemantic(Ogre::VES_NORMAL);
+
+		Ogre::HardwareVertexBufferSharedPtr vbuf =
+			vertex_data->vertexBufferBinding->getBuffer(posElem->getSource());
+
+		unsigned char* vertex =
+			static_cast<unsigned char*>(vbuf->lock(Ogre::HardwareBuffer::HBL_READ_ONLY));
+
+		float* pReal;
+
+		for (size_t j = 0; j < vertex_data->vertexCount; ++j, vertex += vbuf->getVertexSize())
+		{
+			posElem->baseVertexPointerToElement(vertex, &pReal);
+			Ogre::Vector3 pt(pReal[0], pReal[1], pReal[2]);
+			Normals[current_offset + j] = (orient * (pt * scale)) + position;
+		}
+
+		vbuf->unlock();
+	}
+	return 1;
 }
