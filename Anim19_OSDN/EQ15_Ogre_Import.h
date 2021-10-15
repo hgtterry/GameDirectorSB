@@ -28,6 +28,12 @@ protected:
 		Ogre::Vector3* &Normals,
 		int SubMesh);
 
+	void Get_Textures(void);
+
+	bool NoTexture;
+	bool NoMaterialFileFound; // Returns 1 No Material File Found;
+	bool ExternalResourceLoaded;
+
 	std::vector<Vector2> MeshTextureCoords;
 };
 

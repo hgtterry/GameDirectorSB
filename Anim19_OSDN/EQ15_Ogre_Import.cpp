@@ -5,6 +5,10 @@
 
 EQ15_Ogre_Import::EQ15_Ogre_Import()
 {
+	NoTexture = 0;
+	NoMaterialFileFound = 0; // Returns 1 No Material File Found;
+	ExternalResourceLoaded = 0;
+
 }
 
 
@@ -17,8 +21,8 @@ EQ15_Ogre_Import::~EQ15_Ogre_Import()
 // *************************************************************************
 bool EQ15_Ogre_Import::Load_OgreModel(void)
 {
-	/*NoTexture = 0;
-	NoMaterialFileFound = 0;*/
+	NoTexture = 0;
+	NoMaterialFileFound = 0;
 
 	AddToScene();
 
@@ -26,19 +30,19 @@ bool EQ15_Ogre_Import::Load_OgreModel(void)
 
 	Extract_Mesh_Two();
 
-	/*App->CL_Model_Data->HasMesh = 1;
+	//App->CL_Vm_Model->HasMesh = 1;
 
-	App->CL_Model_Data->Create_BondingBox_Model();
+	App->CL_Vm_Model->Create_BondingBox_Model();
 
-	Get_SkeletonInstance();
+	/*Get_SkeletonInstance();
 
 	Get_BoneNames();
 
-	Get_Motions();
+	Get_Motions();*/
 
 	Get_Textures();
 
-	bool SkellAnimation = App->Cl_Ogre->OgreModel_Ent->hasSkeleton();
+	/*bool SkellAnimation = App->Cl_Ogre->OgreModel_Ent->hasSkeleton();
 	Ogre::SkeletonInstance *skeletonInstance = App->Cl_Ogre->OgreModel_Ent->getSkeleton();
 
 	if (skeletonInstance && SkellAnimation == 1)
@@ -90,7 +94,7 @@ void EQ15_Ogre_Import::AddToScene(void)
 	App->Cl19_Ogre->OgreModel_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	App->Cl19_Ogre->OgreModel_Node->attachObject(App->Cl19_Ogre->OgreModel_Ent);
 
-	App->Cl19_Ogre->OgreModel_Node->setVisible(true);
+	App->Cl19_Ogre->OgreModel_Node->setVisible(false);
 	App->Cl19_Ogre->OgreModel_Node->setPosition(0, 0, 0);
 	App->Cl19_Ogre->OgreModel_Node->setScale(1, 1, 1);
 
@@ -464,4 +468,119 @@ bool EQ15_Ogre_Import::NewGet_SubPoseNormals(Ogre::MeshPtr mesh,
 		vbuf->unlock();
 	}
 	return 1;
+}
+
+// *************************************************************************
+// *	  					Get_Textures Terry Bernie					   *
+// *************************************************************************
+void EQ15_Ogre_Import::Get_Textures(void)
+{
+	int SubMeshCount = App->Cl19_Ogre->OgreModel_Ent->getNumSubEntities();
+
+	int mMaterialindex = 0;
+	int Count = 0;
+	char MatName[255];
+	char TextureName[255];
+	char SubMeshName[255];
+	char buf[255];
+
+	strcpy(SubMeshName, "SubMesh_");
+
+	while (Count<SubMeshCount)
+	{
+		Ogre::SubMesh const *subMesh = App->Cl19_Ogre->OgreModel_Ent->getSubEntity(Count)->getSubMesh();
+		strcpy(MatName, subMesh->getMaterialName().c_str());
+
+		_itoa(Count, buf, 10);
+		strcpy(SubMeshName, "SubMesh_");
+		strcat(SubMeshName, buf);
+
+		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(MatName);
+
+		if (material.isNull())
+		{
+			NoMaterialFileFound = 1; // Flag we dont have a texture yet
+									 //App->Say_Int(NoMaterialFileFound);
+		}
+		else
+		{
+			Ogre::Technique *technique = material->getTechnique(0);
+			if (technique == NULL)
+			{
+
+			}
+			else
+			{
+				Ogre::Pass *pass;
+				pass = technique->getPass(0);
+				if (pass == NULL)
+				{
+				}
+				else
+				{
+					int TextureUnitCount = pass->getNumTextureUnitStates();
+					if (TextureUnitCount == 0)
+					{
+						strcpy(App->CL_Vm_Model->S_MeshGroup[Count]->Text_FileName, "No_Texture");
+						//App->S_MeshGroup[Count]->IsValid = 0;
+						NoTexture = 1;
+					}
+					else
+					{
+						Ogre::TextureUnitState *textureUnit = pass->getTextureUnitState(0);
+
+						Ogre::String TxtName = textureUnit->getTextureName();
+
+						strcpy(TextureName, TxtName.c_str());
+
+						strcpy(App->CL_Vm_Model->S_MeshGroup[Count]->Text_FileName, TextureName);
+
+						// New 25 august 2013 
+
+						NoTexture = 0;
+
+						bool result = 0;
+						result = App->CL_Vm_FileIO->SearchFolders(App->CL_Vm_Model->Texture_FolderPath, TextureName);
+
+						if (result == 1) // Texture Found in Mesh Folder
+						{
+							char ImageFullPath[1024];
+							strcpy(ImageFullPath, App->CL_Vm_Model->Texture_FolderPath);
+							strcat(ImageFullPath, TextureName);
+
+							strcpy(App->CL_Vm_Textures->TextureFileName, ImageFullPath);
+
+							strcpy(App->CL_Vm_Model->S_MeshGroup[Count]->Text_PathFileName, ImageFullPath);
+							strcpy(App->CL_Vm_Model->S_MeshGroup[Count]->Text_FileName, TextureName);
+
+							App->CL_Vm_Textures->TexureToWinPreviewFullPath(Count, TextureName);
+							//=App->CL_RP_Textures->New_PreViewTextures(0);
+
+							App->CL_Vm_Model->S_MeshGroup[Count]->MaterialIndex = mMaterialindex;
+
+							App->CL_Vm_Textures->Soil_DecodeTextures(mMaterialindex);
+							mMaterialindex++;
+						}
+						else
+						{
+							//if (ExternalResourceLoaded == 1) // Search for texture via resource file
+							//{
+							//	Scan_ResourcesNew(ResourcePathAndFile, Count);
+
+							//	strcpy(App->CL_Vm_Textures->TextureFileName, App->CL_Vm_Model->S_MeshGroup[Count]->Text_PathFileName);
+
+							//	App->CL_Vm_Model->S_MeshGroup[Count]->MaterialIndex = mMaterialindex;
+
+							//	App->CL_Vm_Textures->Soil_DecodeTextures(mMaterialindex);
+							//	mMaterialindex++;
+							//}
+						}
+					}
+				}
+			}
+		}
+
+		Count++;
+	}
+
 }

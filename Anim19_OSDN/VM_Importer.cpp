@@ -104,11 +104,11 @@ bool VM_Importer::Ogre_Loader(char* Extension, char* Extension2)
 
 	App->CL_Ogre_Import_E15->Load_OgreModel(); // Load Ogre Model
 
-	//App->CL_Vm_Model->Model_Type = LoadedFile_Assimp;
+	App->CL_Vm_Model->Model_Type = LoadedFile_Assimp;
 
 	//Set_Equity();
-
-	//App->Say("Model Loaded");
+	App->CL_Vm_Model->Model_Loaded = 1;
+	App->Say("Model Loaded");
 	return 1;
 }
 
