@@ -106,8 +106,11 @@ bool VM_Importer::Ogre_Loader(char* Extension, char* Extension2)
 
 	App->CL_Vm_Model->Model_Type = LoadedFile_Assimp;
 
-	//Set_Equity();
 	App->CL_Vm_Model->Model_Loaded = 1;
+
+	App->Cl_Grid->Zoom();
+	//Set_Equity();
+	
 	App->Say("Model Loaded");
 	return 1;
 }
