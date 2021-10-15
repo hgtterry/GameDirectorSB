@@ -79,6 +79,8 @@ ebopster
 #include "VM_Ogre3d.h"
 #include "VM_TXMLExport.h"
 
+#include "EQ15_Ogre_Import.h"
+
 
 class GD19_App
 {
@@ -138,6 +140,9 @@ public:
 	VM_Preferences*		Cl_Vm_Preferences;
 	VM_Ogre3d*			Cl_Vm_Ogre3d;
 	VM_XMLExport*		Cl_Vm_XMLExport;
+
+	// ---------------------------------------------------- 15/10/21
+	EQ15_Ogre_Import*	CL_Ogre_Import_E15;
 
 
 	GD19_App(void);

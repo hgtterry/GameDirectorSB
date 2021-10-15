@@ -82,6 +82,9 @@ GD19_App::GD19_App(void)
 	Cl_Vm_Ogre3d =		nullptr;
 	Cl_Vm_XMLExport =	nullptr;
 
+	// ---------------------------------------------------- 15/10/21
+	CL_Ogre_Import_E15 = nullptr;
+
 
 	Fdlg = nullptr;
 	hInst = nullptr;
@@ -230,6 +233,9 @@ bool GD19_App::InitApp(void)
 	Cl_Vm_Preferences = new VM_Preferences();
 	Cl_Vm_Ogre3d =		new VM_Ogre3d();
 	Cl_Vm_XMLExport =	new VM_XMLExport();
+
+	// ---------------------------------------------------- 15/10/21
+	CL_Ogre_Import_E15 =	new EQ15_Ogre_Import();
 
 	SetBrushes_Fonts();
 
