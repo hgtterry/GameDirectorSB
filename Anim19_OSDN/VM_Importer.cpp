@@ -86,6 +86,33 @@ bool VM_Importer::Genesis3D_Loader(void)
 }
 
 // *************************************************************************
+// *						Ogre_Loader Terry Bernie					   *
+// *************************************************************************
+bool VM_Importer::Ogre_Loader(char* Extension, char* Extension2)
+{
+	
+	int Result = App->CL_Vm_FileIO->Vm_OpenFile(Extension, Extension2, NULL);
+	if (Result == 0)
+	{
+		return 1;
+	}
+
+	App->CL_Vm_Model->Clear_ModelData();
+
+	App->CL_Vm_Model->Set_Paths();
+
+
+	App->Cl_Vm_Ogre3d->Load_OgreModel(); // Load Ogre Model
+
+	//App->CL_Vm_Model->Model_Type = LoadedFile_Assimp;
+
+	//Set_Equity();
+
+	//App->Say("Model Loaded");
+	return 1;
+}
+
+// *************************************************************************
 // *					Reload_FromResentFiles Terry Bernie				   *
 // *************************************************************************
 void VM_Importer::Reload_FromResentFiles(char* ResentPathAndFile)

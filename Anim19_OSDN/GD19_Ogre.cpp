@@ -40,6 +40,9 @@ GD19_Ogre::GD19_Ogre(void)
 	manObj =		nullptr;
 	ModelNode =		nullptr;
 
+	OgreModel_Ent =  nullptr;
+	OgreModel_Node = nullptr;
+
 	RenderListener = nullptr;
 
 	PermResourceGroup = "PermanentResourceGroup";

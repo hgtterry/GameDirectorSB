@@ -389,3 +389,86 @@ void VM_Ogre3d::CreateMaterialFile(char* MatFileName)
 	matSer.exportQueued(OMatFileName);
 
 }
+
+// *************************************************************************
+// *					Load_OgreModel Terry Flanigan 					   *
+// *************************************************************************
+bool VM_Ogre3d::Load_OgreModel(void)
+{
+	/*NoTexture = 0;
+	NoMaterialFileFound = 0;*/
+
+	AddToScene();
+
+	/*Create_MeshGroups();
+	Extract_Mesh_Two();
+	App->CL_Model_Data->HasMesh = 1;
+
+	App->CL_Model_Data->Create_BondingBox_Model();
+
+	Get_SkeletonInstance();
+
+	Get_BoneNames();
+
+	Get_Motions();
+
+	Get_Textures();
+
+	bool SkellAnimation = App->Cl_Ogre->OgreModel_Ent->hasSkeleton();
+	Ogre::SkeletonInstance *skeletonInstance = App->Cl_Ogre->OgreModel_Ent->getSkeleton();
+
+	if (skeletonInstance && SkellAnimation == 1)
+	{
+		if (App->CL_Model_Data->MotionCount > 0)
+		{
+			Ogre::Animation *animation = skeletonInstance->getAnimation(0);
+			strcpy(App->CL_Motions->SelectedMotion, animation->getName().c_str());
+			strcpy(App->CL_Motions->Decode_MotionByName, App->CL_Motions->SelectedMotion);
+			App->Cl_Ogre->OgreListener->Animate_State = App->Cl_Ogre->OgreModel_Ent->getAnimationState(App->CL_Motions->SelectedMotion);
+		}
+	}*/
+
+	return 1;
+}
+
+// *************************************************************************
+// *					AddToScene Terry Flanigan 						   *
+// *************************************************************************
+void VM_Ogre3d::AddToScene(void)
+{
+
+	if (App->Cl19_Ogre->OgreModel_Ent && App->Cl19_Ogre->OgreModel_Node)
+	{
+		App->Cl19_Ogre->OgreModel_Node->detachAllObjects();
+		App->Cl19_Ogre->mSceneMgr->destroySceneNode(App->Cl19_Ogre->OgreModel_Node);
+		App->Cl19_Ogre->mSceneMgr->destroyEntity(App->Cl19_Ogre->OgreModel_Ent);
+		App->Cl19_Ogre->OgreModel_Ent = NULL;
+		App->Cl19_Ogre->OgreModel_Node = NULL;
+	}
+
+	Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->Cl19_Ogre->TempResourceGroup);
+	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App->Cl19_Ogre->TempResourceGroup);
+
+	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(App->CL_Vm_Model->Texture_FolderPath,
+		"FileSystem",
+		App->Cl19_Ogre->TempResourceGroup);
+
+	try
+	{
+		Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+	}
+	catch (...)
+	{
+
+	}
+
+	App->Cl19_Ogre->OgreModel_Ent = App->Cl19_Ogre->mSceneMgr->createEntity("UserMesh", App->CL_Vm_Model->FileName, App->Cl19_Ogre->TempResourceGroup);
+	App->Cl19_Ogre->OgreModel_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	App->Cl19_Ogre->OgreModel_Node->attachObject(App->Cl19_Ogre->OgreModel_Ent);
+
+	App->Cl19_Ogre->OgreModel_Node->setVisible(true);
+	App->Cl19_Ogre->OgreModel_Node->setPosition(0, 0, 0);
+	App->Cl19_Ogre->OgreModel_Node->setScale(1, 1, 1);
+
+	App->Cl_Grid->Grid_SetVisible(1);
+}

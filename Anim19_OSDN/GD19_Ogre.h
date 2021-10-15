@@ -68,6 +68,9 @@ public:
 	Ogre::ManualObject *manObj;
 	Ogre::SceneNode*	ModelNode;
 
+	Ogre::Entity*		OgreModel_Ent;
+	Ogre::SceneNode*	OgreModel_Node;
+
 	Ogre::String mResourcePath;
 
 	Ogre::String TempResourceGroup;   // Tempory Reosource Group

@@ -285,6 +285,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return 1;
 		}
 
+		case ID_OGRE3D_MESH32834:
+		{
+			App->CL_Importer->Ogre_Loader("Ogre3D   *.mesh\0*.mesh\0", "Ogre3D");
+			return 1;
+		}
+
 		// Exporters
 		case ID_EXPORT_GENESIS3D:
 		{
