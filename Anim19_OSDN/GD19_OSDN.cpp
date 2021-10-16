@@ -211,6 +211,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 
 		// Vima 20/3/20
+
+		case ID_TEST_ADDROOM:
+			{
+				App->CL_Importer->Bullet_Load_Room("Ogre3D   *.mesh\0*.mesh\0", "Ogre3D");
+				return 1;
+			}
+
 		case ID_TEST_MESHDESIGN:
 		{
 			App->Cl_Vm_MeshDesign->StartMeshDesign();

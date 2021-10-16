@@ -10,6 +10,8 @@ public:
 	bool WorldEditor_Loader(void);
 	bool Ogre_Loader(char* Extension, char* Extension2);
 
+	bool Bullet_Load_Room(char* Extension, char* Extension2);
+
 	void Reload_FromResentFiles(char* ResentPathAndFile);
 
 	void Set_Equity(void);

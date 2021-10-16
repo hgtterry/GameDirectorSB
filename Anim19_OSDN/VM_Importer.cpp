@@ -200,3 +200,30 @@ void VM_Importer::Set_Equity(void)
 
 	App->Cl19_Ogre->RenderFrame();
 }
+
+// *************************************************************************
+// *						Bullet_Load_Room Terry Bernie				   *
+// *************************************************************************
+bool VM_Importer::Bullet_Load_Room(char* Extension, char* Extension2)
+{
+
+	int Result = App->CL_Vm_FileIO->Vm_OpenFile(Extension, Extension2, NULL);
+	if (Result == 0)
+	{
+		return 1;
+	}
+
+	App->CL_Vm_Model->Clear_ModelData();
+
+	App->CL_Vm_Model->Set_Paths();
+
+
+	App->CL_Bullet_AddRoom->AddToScene(); // Load Ogre Model
+
+	//App->CL_Vm_Model->Model_Type = LoadedFile_Assimp;
+
+	//Set_Equity();
+
+	App->Say("Model Loaded");
+	return 1;
+}
