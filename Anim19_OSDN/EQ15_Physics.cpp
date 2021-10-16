@@ -76,6 +76,12 @@ LRESULT CALLBACK EQ15_Physics::Start_Physics_Proc(HWND hDlg, UINT message, WPARA
 	case WM_COMMAND:
 	{
 
+		if (LOWORD(wParam) == IDC_BTPHYLOAD)
+		{
+			App->CL_Importer->Bullet_Load_Room("Ogre3D   *.mesh\0*.mesh\0", "Ogre3D");
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDC_BTPHYRESET)
 		{
 			//if (App->Cl_Scene_Data->SceneLoaded == 1)
