@@ -79,7 +79,9 @@ ebopster
 #include "VM_Ogre3d.h"
 #include "VM_TXMLExport.h"
 
+// ---------------------------------------------------- 15/10/21
 #include "EQ15_Ogre_Import.h"
+#include "EQ15_Bullet_AddRoom.h"
 
 
 class GD19_App
@@ -142,7 +144,8 @@ public:
 	VM_XMLExport*		Cl_Vm_XMLExport;
 
 	// ---------------------------------------------------- 15/10/21
-	EQ15_Ogre_Import*	CL_Ogre_Import_E15;
+	EQ15_Ogre_Import*		CL_Ogre_Import_E15;
+	EQ15_Bullet_AddRoom*	CL_Bullet_AddRoom;
 
 
 	GD19_App(void);
