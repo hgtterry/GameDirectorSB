@@ -220,9 +220,16 @@ bool VM_Importer::Bullet_Load_Room(char* Extension, char* Extension2)
 
 	App->CL_Bullet_AddRoom->AddToScene(); // Load Ogre Model
 
+
+
 	//App->CL_Vm_Model->Model_Type = LoadedFile_Assimp;
 
 	//Set_Equity();
+
+	App->Cl19_Ogre->OgreListener->CameraMode = 0;
+
+	App->Cl19_Ogre->mCamera->setPosition(Ogre::Vector3(0, 0, 0));
+	App->Cl19_Ogre->mCamera->lookAt(Ogre::Vector3(0, 0, 0));
 
 	App->Say("Model Loaded");
 	return 1;

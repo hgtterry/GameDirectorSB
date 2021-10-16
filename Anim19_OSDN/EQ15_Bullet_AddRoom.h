@@ -7,5 +7,8 @@ public:
 
 	void AddToScene(void);
 	bool Add_New_Room(void);
+
+protected:
+	btBvhTriangleMeshShape* create_New_Trimesh(Ogre::Entity* ent);
 };
 
