@@ -230,7 +230,7 @@ bool VM_Importer::Bullet_Load_Room(char* Extension, char* Extension2)
 
 	App->Cl19_Ogre->mCamera->setPosition(Ogre::Vector3(0, 0, 0));
 	App->Cl19_Ogre->mCamera->lookAt(Ogre::Vector3(0, 0, 0));
-
+	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
 	App->Say("Model Loaded");
 	return 1;
 }
