@@ -81,7 +81,7 @@ void GD19_Bullet::Reset_Physics(void)
 	int Count = 0;
 	while (Count < App->Cl_Scene_Data->ObjectCount)
 	{
-		if(App->Cl_Scene_Data->Cl_Object[Count]->Usage == Enums::Usage_Dynamic)
+		/*if(App->Cl_Scene_Data->Cl_Object[Count]->Usage == Enums::Usage_Dynamic)
 		{
 			btVector3 zeroVector(0,0,0);
 
@@ -102,7 +102,7 @@ void GD19_Bullet::Reset_Physics(void)
 			App->Cl_Scene_Data->Cl_Object[Count]->bt_body->setWorldTransform(startTransform);
 			App->Cl_Scene_Data->Cl_Object[Count]->bt_body->getMotionState()->setWorldTransform(startTransform);
 			App->Cl_Scene_Data->Cl_Object[Count]->bt_body->activate(true);
-		}
+		}*/
 
 		/*if(App->GDCL_Scene_Data->CL_Object[Count]->Usage == Enums::Usage_Sound)
 		{
@@ -130,7 +130,7 @@ void GD19_Bullet::Reset_Physics(void)
 		Count++;
 	}
 	
-	if(App->Cl_Player->PlayerAdded == 1 && GD_Reset_Player == 1)
+	if(App->Cl_Player->PlayerAdded == 1)// && GD_Reset_Player == 1)
 	{
 		btVector3 zeroVector(0,0,0);
 
