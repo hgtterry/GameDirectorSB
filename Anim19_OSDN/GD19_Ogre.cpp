@@ -386,10 +386,21 @@ bool GD19_Ogre::createFrameListener(void)
 	String RenderSystemName = mSceneMgr->getDestinationRenderSystem()->getName();
 	
 	RenderListener = NULL;
+	BulletListener = NULL;
+
 	if ("OpenGL Rendering Subsystem" == RenderSystemName)
 	{
+		BulletListener = new GD_Bt_Render();
+
+		mSceneMgr->addRenderQueueListener(BulletListener);
+
+		BulletListener->setDebugMode(BulletListener->getDebugMode()
+			| btIDebugDraw::DBG_MAX_DEBUG_DRAW_MODE);
+		App->Cl_Bullet->dynamicsWorld->setDebugDrawer(BulletListener);
+
 		RenderListener = new VM_Render();
 		mSceneMgr->addRenderQueueListener(RenderListener);
+		
 	}
 
 	return 1;

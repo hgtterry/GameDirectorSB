@@ -88,19 +88,19 @@ void GD19_Player::Load_Player(void)
 
 //	CameraPitch = App->Cl_Ogre->mSceneMgr->createCamera("PlayerPitch");
 	
-	Player_Ent->getSkeleton()->setBlendMode(ANIMBLEND_CUMULATIVE);
+	//Player_Ent->getSkeleton()->setBlendMode(ANIMBLEND_CUMULATIVE);
 
-	// Get the two halves of the idle animation.
-	App->Cl19_Ogre->OgreListener->Animate_State = Player_Ent->getAnimationState("IdleBase");
-	App->Cl19_Ogre->OgreListener->Animate_State2 = Player_Ent->getAnimationState("IdleTop");
+	//// Get the two halves of the idle animation.
+	//App->Cl19_Ogre->OgreListener->Animate_State = Player_Ent->getAnimationState("IdleBase");
+	//App->Cl19_Ogre->OgreListener->Animate_State2 = Player_Ent->getAnimationState("IdleTop");
 
-	// Enable both of them and set them to loop.
-	App->Cl19_Ogre->OgreListener->Animate_State->setLoop(true);
-	App->Cl19_Ogre->OgreListener->Animate_State2->setLoop(true);
-	App->Cl19_Ogre->OgreListener->Animate_State->setEnabled(true);
-	App->Cl19_Ogre->OgreListener->Animate_State2->setEnabled(true);
+	//// Enable both of them and set them to loop.
+	//App->Cl19_Ogre->OgreListener->Animate_State->setLoop(true);
+	//App->Cl19_Ogre->OgreListener->Animate_State2->setLoop(true);
+	//App->Cl19_Ogre->OgreListener->Animate_State->setEnabled(true);
+	//App->Cl19_Ogre->OgreListener->Animate_State2->setEnabled(true);
 
-	App->Cl19_Ogre->OgreListener->Animate_Ogre = 1;
+	//App->Cl19_Ogre->OgreListener->Animate_Ogre = 1;
 }
 
 // *************************************************************************
@@ -110,7 +110,7 @@ void GD19_Player::Initialize(const Ogre::Vector3 p, float mass, float radius, fl
 {
 	// Bug been Called Twice
 	// ------------------- Ogre
-	Player_Ent = App->Cl19_Ogre->mSceneMgr->createEntity("Player_1","Sinbad.mesh",App->Cl19_Ogre->PermResourceGroup);
+	Player_Ent = App->Cl19_Ogre->mSceneMgr->createEntity("Player_1","axes.mesh",App->Cl19_Ogre->PermResourceGroup);
 	Player_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Player_Node->attachObject(Player_Ent); 
 	Player_Node->setPosition(p.x, p.y, p.z);
@@ -194,12 +194,6 @@ void GD19_Player::Initialize_New(const Ogre::Vector3 p, float mass, float radius
 	Physics_Rotation = mObject->getWorldTransform().getRotation();
 
 	PlayerAdded = 1;
-
-	HTREEITEM Temp = App->Cl_FileView->Add_PlayerFile(App->Cl_Player->PlayerName, 0);
-	ListViewItem = Temp;
-
-
-	App->Cl_FileView->Redraw_FileView();
 
 	btCollisionWorld* Poo = NULL;
 	PostStep(Poo);

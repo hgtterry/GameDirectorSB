@@ -151,6 +151,17 @@ bool GD19_OgreListener::frameStarted(const FrameEvent& evt)
 
 		}
 
+		if (GD_Dubug_Physics == 1)
+		{
+			App->Cl_Bullet->dynamicsWorld->debugDrawWorld();
+		}
+
+		if (GD_Run_Physics == 1)
+		{
+			
+			App->Cl_Bullet->dynamicsWorld->stepSimulation(evt.timeSinceLastFrame * 2); //suppose you have 60 frames per second	
+		}
+
 	}
 
 	return true;

@@ -218,6 +218,32 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				return 1;
 			}
 
+		case ID_TEST_RENDERDEBUG:
+		{
+			int f = App->Cl_Player->mObject->getCollisionFlags();
+
+			if (App->Cl19_Ogre->OgreListener->GD_Dubug_Physics == 0)
+			{
+				App->Cl19_Ogre->OgreListener->GD_Dubug_Physics = 1;
+				App->Cl19_Ogre->OgreListener->GD_Run_Physics = 1;
+				App->Cl19_Ogre->BulletListener->ShowDebug = 1;
+
+				App->Cl_Player->ShowDebug = 1;
+				App->Cl_Player->mObject->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+			}
+			else
+			{
+				App->Cl19_Ogre->OgreListener->GD_Dubug_Physics = 0;
+				App->Cl19_Ogre->OgreListener->GD_Run_Physics = 0;
+				App->Cl19_Ogre->BulletListener->ShowDebug = 0;
+				App->Cl_Player->ShowDebug = 0;
+				App->Cl_Player->mObject->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+			}
+			
+			return 1;
+		}
+
+
 		case ID_TEST_MESHDESIGN:
 		{
 			App->Cl_Vm_MeshDesign->StartMeshDesign();

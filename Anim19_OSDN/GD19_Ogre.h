@@ -80,6 +80,7 @@ public:
 
 	GD19_OgreListener*	OgreListener;
 	VM_Render*		RenderListener;
+	GD_Bt_Render*	BulletListener;
 
 	OgreImGui  m_imgui;
 };
