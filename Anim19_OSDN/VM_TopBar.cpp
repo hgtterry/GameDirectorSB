@@ -14,7 +14,7 @@ VM_TopBar::VM_TopBar()
 	Motions_TB_hWnd =		nullptr;
 	Dimensions_TB_hWnd =	nullptr;
 	Groups_TB_hWnd =		nullptr;
-	Shapes_TB_hWnd =		nullptr;
+	Physics_TB_hWnd =		nullptr;
 
 	MouseOption_DlgHwnd =	nullptr;
 
@@ -601,8 +601,9 @@ LRESULT CALLBACK VM_TopBar::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM wP
 		{
 			App->CL_Vm_TopBar->Hide_Tabs();
 			
-			ShowWindow(App->CL_Vm_TopBar->Shapes_TB_hWnd, SW_SHOW);
-			
+			ShowWindow(App->CL_Vm_TopBar->Physics_TB_hWnd, SW_SHOW);
+			ShowWindow(App->CL_Physics_E15->PhysicsPannel_Hwnd, SW_SHOW);
+
 			App->CL_Vm_TopBar->Toggle_Tabs_Shapes_Flag = 1;
 
 			App->Cl19_Ogre->OgreListener->ImGui_Render_Tab = Enums::ImGui_None;
@@ -625,9 +626,10 @@ void VM_TopBar::Hide_Tabs(void)
 	ShowWindow(App->CL_Vm_TopBar->Motions_TB_hWnd, SW_HIDE);
 	ShowWindow(App->CL_Vm_TopBar->Dimensions_TB_hWnd, SW_HIDE);
 	ShowWindow(App->CL_Vm_TopBar->Groups_TB_hWnd, SW_HIDE);
-	ShowWindow(App->CL_Vm_TopBar->Shapes_TB_hWnd, SW_HIDE);
+	ShowWindow(App->CL_Vm_TopBar->Physics_TB_hWnd, SW_HIDE);
 	
 	ShowWindow(App->CL_Vm_Groups->RightGroups_Hwnd, 0);
+	ShowWindow(App->CL_Physics_E15->PhysicsPannel_Hwnd,0);
 
 	Toggle_Tabs_Old_Flag = 0;
 	Toggle_Tabs_Motions_Flag = 0;
@@ -1455,7 +1457,7 @@ void VM_TopBar::Start_Groups_TB(void)
 // *************************************************************************
 void VM_TopBar::Start_Shapes_TB(void)
 {
-	Shapes_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_SHAPES, Tabs_TB_hWnd, (DLGPROC)Shapes_TB_Proc);
+	Physics_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_PHYSICS, Tabs_TB_hWnd, (DLGPROC)Shapes_TB_Proc);
 	//Init_Bmps_Groups();
 }
 

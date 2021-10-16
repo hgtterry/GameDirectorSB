@@ -20,7 +20,7 @@ public:
 	HWND Motions_TB_hWnd;
 	HWND Dimensions_TB_hWnd;
 	HWND Groups_TB_hWnd;
-	HWND Shapes_TB_hWnd;
+	HWND Physics_TB_hWnd;
 
 	HWND MouseOption_DlgHwnd;
 
