@@ -82,6 +82,7 @@ ebopster
 // ---------------------------------------------------- 15/10/21
 #include "EQ15_Ogre_Import.h"
 #include "EQ15_Bullet_AddRoom.h"
+#include "EQ15_Physics.h"
 
 
 class GD19_App
@@ -146,6 +147,7 @@ public:
 	// ---------------------------------------------------- 15/10/21
 	EQ15_Ogre_Import*		CL_Ogre_Import_E15;
 	EQ15_Bullet_AddRoom*	CL_Bullet_AddRoom;
+	EQ15_Physics*			CL_Physics_E15;
 
 
 	GD19_App(void);

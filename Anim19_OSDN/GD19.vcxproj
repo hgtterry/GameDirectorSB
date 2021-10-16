@@ -160,6 +160,7 @@
   <ItemGroup>
     <ClInclude Include="EQ15_Bullet_AddRoom.h" />
     <ClInclude Include="EQ15_Ogre_Import.h" />
+    <ClInclude Include="EQ15_Physics.h" />
     <ClInclude Include="GD19_Bullet.h" />
     <ClInclude Include="GD19_Collision.h" />
     <ClInclude Include="GD19_DIALOGS.h" />
@@ -230,6 +231,7 @@
     <ClCompile Include="Common\imGui\ImGui_cpp\imgui_widgets.cpp" />
     <ClCompile Include="EQ15_Bullet_AddRoom.cpp" />
     <ClCompile Include="EQ15_Ogre_Import.cpp" />
+    <ClCompile Include="EQ15_Physics.cpp" />
     <ClCompile Include="GD19_Bullet.cpp" />
     <ClCompile Include="GD19_Collision.cpp" />
     <ClCompile Include="GD19_DIALOGS.cpp" />
