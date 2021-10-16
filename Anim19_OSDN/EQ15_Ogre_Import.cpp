@@ -147,6 +147,9 @@ void EQ15_Ogre_Import::Create_MeshGroups()
 
 	App->CL_Vm_Model->TextureCount = SubMeshCount;
 	App->CL_Vm_Model->GroupCount = SubMeshCount;
+
+	App->CL_Vm_Model->S_Texture[0]->UsedTextureCount = App->CL_Vm_Model->GroupCount;
+	App->CL_Vm_Textures->CreateTextureInfo();
 }
 
 // *************************************************************************
@@ -491,9 +494,9 @@ void EQ15_Ogre_Import::Get_Textures(void)
 		Ogre::SubMesh const *subMesh = App->Cl19_Ogre->OgreModel_Ent->getSubEntity(Count)->getSubMesh();
 		strcpy(MatName, subMesh->getMaterialName().c_str());
 
-		_itoa(Count, buf, 10);
+		/*_itoa(Count, buf, 10);
 		strcpy(SubMeshName, "SubMesh_");
-		strcat(SubMeshName, buf);
+		strcat(SubMeshName, buf);*/
 
 		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(MatName);
 
@@ -548,17 +551,23 @@ void EQ15_Ogre_Import::Get_Textures(void)
 							strcpy(ImageFullPath, App->CL_Vm_Model->Texture_FolderPath);
 							strcat(ImageFullPath, TextureName);
 
-							strcpy(App->CL_Vm_Textures->TextureFileName, ImageFullPath);
+							strcpy(App->CL_Vm_Textures->TextureFileName, TextureName);
 
 							strcpy(App->CL_Vm_Model->S_MeshGroup[Count]->Text_PathFileName, ImageFullPath);
 							strcpy(App->CL_Vm_Model->S_MeshGroup[Count]->Text_FileName, TextureName);
+							
+							strcpy(App->CL_Vm_Model->S_MeshGroup[mMaterialindex]->Text_PathFileName, ImageFullPath);
+							strcpy(App->CL_Vm_Textures->TextureFileName, ImageFullPath);
 
-							App->CL_Vm_Textures->TexureToWinPreviewFullPath(Count, TextureName);
-							//=App->CL_RP_Textures->New_PreViewTextures(0);
+							App->CL_Vm_Textures->TexureToWinPreviewFullPath(Count, ImageFullPath);
+							
 
 							App->CL_Vm_Model->S_MeshGroup[Count]->MaterialIndex = mMaterialindex;
 
 							App->CL_Vm_Textures->Soil_DecodeTextures(mMaterialindex);
+
+							App->CL_Vm_Model->S_MeshGroup[Count]->MaterialIndex = mMaterialindex;
+							App->CL_Vm_Model->S_TextureInfo[Count]->ActorMaterialIndex = mMaterialindex;
 							mMaterialindex++;
 						}
 						else
