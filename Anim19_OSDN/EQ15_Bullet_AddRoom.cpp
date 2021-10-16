@@ -41,14 +41,21 @@ EQ15_Bullet_AddRoom::~EQ15_Bullet_AddRoom()
 // *************************************************************************
 void EQ15_Bullet_AddRoom::AddToScene(void)
 {
+	int Index = 0;// App->Cl_Scene_Data->ObjectCount;
 
-	if (App->Cl19_Ogre->OgreModel_Ent && App->Cl19_Ogre->OgreModel_Node)
+
+	App->Cl_Scene_Data->Cl_Object[Index] = new GD19_Objects();
+	App->Cl_Scene_Data->Cl_Object[Index]->Object_ID = 0;// App->Cl_Scene_Data->Object_ID_Counter;
+
+	GD19_Objects* Object = App->Cl_Scene_Data->Cl_Object[Index];
+
+	if (Object->OgreEntity && Object->OgreNode)
 	{
-		App->Cl19_Ogre->OgreModel_Node->detachAllObjects();
-		App->Cl19_Ogre->mSceneMgr->destroySceneNode(App->Cl19_Ogre->OgreModel_Node);
-		App->Cl19_Ogre->mSceneMgr->destroyEntity(App->Cl19_Ogre->OgreModel_Ent);
-		App->Cl19_Ogre->OgreModel_Ent = NULL;
-		App->Cl19_Ogre->OgreModel_Node = NULL;
+		Object->OgreNode->detachAllObjects();
+		App->Cl19_Ogre->mSceneMgr->destroySceneNode(Object->OgreNode);
+		App->Cl19_Ogre->mSceneMgr->destroyEntity(Object->OgreEntity);
+		Object->OgreEntity = NULL;
+		Object->OgreNode = NULL;
 	}
 
 	Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->Cl19_Ogre->TempResourceGroup);
@@ -67,13 +74,13 @@ void EQ15_Bullet_AddRoom::AddToScene(void)
 
 	}
 
-	App->Cl19_Ogre->OgreModel_Ent = App->Cl19_Ogre->mSceneMgr->createEntity("UserMesh", App->CL_Vm_Model->FileName, App->Cl19_Ogre->TempResourceGroup);
-	App->Cl19_Ogre->OgreModel_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	App->Cl19_Ogre->OgreModel_Node->attachObject(App->Cl19_Ogre->OgreModel_Ent);
+	Object->OgreEntity = App->Cl19_Ogre->mSceneMgr->createEntity("UserMesh", App->CL_Vm_Model->FileName, App->Cl19_Ogre->TempResourceGroup);
+	Object->OgreNode = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	Object->OgreNode->attachObject(Object->OgreEntity);
 
-	App->Cl19_Ogre->OgreModel_Node->setVisible(true);
-	App->Cl19_Ogre->OgreModel_Node->setPosition(0, 0, 0);
-	App->Cl19_Ogre->OgreModel_Node->setScale(1, 1, 1);
+	Object->OgreNode->setVisible(true);
+	Object->OgreNode->setPosition(0, 0, 0);
+	Object->OgreNode->setScale(1, 1, 1);
 
 	App->Cl_Grid->Grid_SetVisible(1);
 }
