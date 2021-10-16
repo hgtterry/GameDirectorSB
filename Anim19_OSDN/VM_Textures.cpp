@@ -600,19 +600,24 @@ bool VM_Textures::HBITMAP_TO_BmpFile(HBITMAP Bitmap, char* Filename, char* SaveF
 // *************************************************************************
 bool VM_Textures::TexureToWinPreviewFullPath(int Index, char* FullPath)
 {
+	//ilutGetBmpInfo(BITMAPINFO *Info);
+
 	char mFileName[1024];
 	strcpy(mFileName, FullPath);
+
+	HWND PreviewWnd = GetDlgItem(App->CL_Vm_Groups->RightGroups_Hwnd, IDC_BASETEXTURE2);
+	HDC	hDC = GetDC(PreviewWnd);
 
 	// ----------------------------------- Bitmap
 	if (_stricmp(mFileName + strlen(mFileName) - 4, ".BMP") == 0)
 	{
 		App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap = NULL;
 
-		App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap = (HBITMAP)LoadImage(NULL, mFileName, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
-		
+		App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap = ilutWinLoadImage(mFileName, hDC);
+		ReleaseDC(PreviewWnd, hDC);
+
 		if (App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap == NULL)
 		{
-			//App->Say("Cant Load TexureToWin BMP ");
 			CreateDummyTexture();
 			App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap = (HBITMAP)LoadImage(NULL, "Etemp.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
 			remove("Etemp.bmp");
