@@ -8,8 +8,19 @@ public:
 	bool StartMeshDesign();
 
 	Ogre::SceneNode*		MvNode;
+
 	ManualObject*		GridManual;
 	SceneNode*			GridNode;
+
+	ManualObject*		HairManual;
+	SceneNode*			HairNode;
+
+	Ogre::ManualObject *manObj;
+	Ogre::SceneNode*	ModelNode;
+
+	Ogre::SceneManager* mSceneMgrMeshView;
+
+	VM_Render*		RenderListener;
 
 protected:
 
@@ -19,6 +30,7 @@ protected:
 	void Close_OgreWindow(void);
 
 	void Grid_Update(bool Create);
+	void Hair_Update(bool Create);
 
 	HWND MeshView_Hwnd;
 	HWND MeshViewDialog_Hwnd;
@@ -33,6 +45,7 @@ protected:
 	int	YAxis_max;
 	int ZAxis_min;
 	int	ZAxis_max;
+	int HairExtend;
 
 	int Scale_X;
 	int Scale_Y;
@@ -52,7 +65,6 @@ protected:
 	Ogre::Entity*			MvEnt;
 
 	Ogre::RenderWindow* MeshView_Window;
-	Ogre::SceneManager* mSceneMgrMeshView;
 	Ogre::SceneNode*	CamNode;
 };
 

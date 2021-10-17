@@ -81,7 +81,7 @@ void VM_TopBar::Reset_Class()
 
 	// Dimensions - >ImGui Flags
 	
-	App->Cl19_Ogre->RenderListener->ShowOnlySubMesh = 0;
+	//App->Cl19_Ogre->RenderListener->ShowOnlySubMesh = 0;
 
 	App->CL_Vm_TopBar->Hide_Tabs();
 	ShowWindow(App->CL_Vm_TopBar->Camera_TB_hWnd, SW_SHOW);
@@ -275,14 +275,14 @@ LRESULT CALLBACK VM_TopBar::TopBar_Globals_Proc(HWND hDlg, UINT message, WPARAM 
 
 				if (App->Cl19_Ogre->RenderListener->ShowTextured == 1)
 				{
-					App->Cl19_Ogre->RenderListener->ShowTextured = 0;
+					//App->Cl19_Ogre->RenderListener->ShowTextured = 0;
 					App->CL_Vm_TopBar->Toggle_Textures_Flag = 0;
 
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOff_Bmp);
 				}
 				else
 				{
-					App->Cl19_Ogre->RenderListener->ShowTextured = 1;
+					//App->Cl19_Ogre->RenderListener->ShowTextured = 1;
 					App->CL_Vm_TopBar->Toggle_Textures_Flag = 1;
 
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOn_Bmp);
@@ -676,22 +676,22 @@ void VM_TopBar::Reset_Main_Controls(void)
 	// Main Controls
 	
 	Toggle_Textures_Flag = 0;
-	App->Cl19_Ogre->RenderListener->ShowTextured = 0;
+	//App->Cl19_Ogre->RenderListener->ShowTextured = 0;
 
 	Toggle_Faces_Flag = 0;
-	App->Cl19_Ogre->RenderListener->ShowFaces = 0;
+	//App->Cl19_Ogre->RenderListener->ShowFaces = 0;
 
 	Toggle_Points_Flag = 0;
-	App->Cl19_Ogre->RenderListener->ShowPoints = 0;
+	//App->Cl19_Ogre->RenderListener->ShowPoints = 0;
 
 	Toggle_Bones_Flag = 0;
-	App->Cl19_Ogre->RenderListener->ShowBones = 0;
+	//App->Cl19_Ogre->RenderListener->ShowBones = 0;
 
 	Toggle_Normals_Flag = 0;
-	App->Cl19_Ogre->RenderListener->ShowNormals = 0;
+	//App->Cl19_Ogre->RenderListener->ShowNormals = 0;
 
 	Toggle_BBox_Flag = 0;
-	App->Cl19_Ogre->RenderListener->ShowBoundingBox = 0;
+	//App->Cl19_Ogre->RenderListener->ShowBoundingBox = 0;
 
 	Toggle_Hair_Flag = 1;
 	App->Cl_Grid->ShowHair = 1;
@@ -1585,7 +1585,7 @@ LRESULT CALLBACK VM_TopBar::Groups_TB_Proc(HWND hDlg, UINT message, WPARAM wPara
 
 		if (LOWORD(wParam) == IDC_ONLYGROUP) 
 		{
-			if (App->Cl19_Ogre->RenderListener->ShowOnlySubMesh == 1)
+			/*if (App->Cl19_Ogre->RenderListener->ShowOnlySubMesh == 1)
 			{
 				App->Cl19_Ogre->RenderListener->ShowOnlySubMesh = 0;
 				App->CL_Vm_TopBar->Toggle_GroupsOnly_Flag = 0;
@@ -1594,7 +1594,7 @@ LRESULT CALLBACK VM_TopBar::Groups_TB_Proc(HWND hDlg, UINT message, WPARAM wPara
 			{
 				App->Cl19_Ogre->RenderListener->ShowOnlySubMesh = 1;
 				App->CL_Vm_TopBar->Toggle_GroupsOnly_Flag = 1;
-			}
+			}*/
 
 			return TRUE;
 		}
@@ -1644,14 +1644,14 @@ void VM_TopBar::ToggleTexturesBmp(bool Show)
 
 	if (Show == 1)
 	{
-		App->Cl19_Ogre->RenderListener->ShowTextured = 1;
+		//App->Cl19_Ogre->RenderListener->ShowTextured = 1;
 		App->CL_Vm_TopBar->Toggle_Textures_Flag = 1;
 
 		SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOn_Bmp);
 	}
 	else
 	{
-		App->Cl19_Ogre->RenderListener->ShowTextured = 0;
+		//App->Cl19_Ogre->RenderListener->ShowTextured = 0;
 		App->CL_Vm_TopBar->Toggle_Textures_Flag = 0;
 
 		SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOff_Bmp);

@@ -164,6 +164,11 @@ void VM_Render::renderQueueEnded(Ogre::uint8 queueGroupId, const String& invocat
 // *************************************************************************
 void VM_Render::PreRender()
 {
+	if (App->Cl19_Ogre->OgreListener->GD_MeshViewer_Running == 0)
+	{
+		return;
+	}
+
 	// save matrices
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
@@ -173,11 +178,22 @@ void VM_Render::PreRender()
 	glPushMatrix();
 	glLoadIdentity(); //Texture addressing should start out as direct.
 
-	RenderSystem* renderSystem = App->Cl19_Ogre->manObj->_getManager()->getDestinationRenderSystem();
-	Node* parentNode = App->Cl19_Ogre->manObj->getParentNode();
-	renderSystem->_setWorldMatrix(parentNode->_getFullTransform());
-	renderSystem->_setViewMatrix(App->Cl19_Ogre->mCamera->getViewMatrix());
-	renderSystem->_setProjectionMatrix(App->Cl19_Ogre->mCamera->getProjectionMatrixRS());
+	if (App->Cl19_Ogre->OgreListener->GD_MeshViewer_Running == 1)
+	{
+		RenderSystem* renderSystem = App->Cl_Vm_MeshDesign->manObj->_getManager()->getDestinationRenderSystem();
+		Node* parentNode = App->Cl_Vm_MeshDesign->manObj->getParentNode();
+		renderSystem->_setWorldMatrix(parentNode->_getFullTransform());
+		renderSystem->_setViewMatrix(App->CL_WE_Listener_E15->WE_Cam->getViewMatrix());
+		renderSystem->_setProjectionMatrix(App->CL_WE_Listener_E15->WE_Cam->getProjectionMatrixRS());
+	}
+	else
+	{
+		/*RenderSystem* renderSystem = App->Cl19_Ogre->manObj->_getManager()->getDestinationRenderSystem();
+		Node* parentNode = App->Cl19_Ogre->manObj->getParentNode();
+		renderSystem->_setWorldMatrix(parentNode->_getFullTransform());
+		renderSystem->_setViewMatrix(App->Cl19_Ogre->mCamera->getViewMatrix());
+		renderSystem->_setProjectionMatrix(App->Cl19_Ogre->mCamera->getProjectionMatrixRS());*/
+	}
 
 	static Pass* clearPass = NULL;
 	if (!clearPass)
@@ -185,8 +201,16 @@ void VM_Render::PreRender()
 		MaterialPtr clearMat = MaterialManager::getSingleton().getByName("BaseWhite");
 		clearPass = clearMat->getTechnique(0)->getPass(0);
 	}
+
 	//Set a clear pass to give the renderer a clear renderstate
-	App->Cl19_Ogre->mSceneMgr->_setPass(clearPass, true, false);
+	if (App->Cl19_Ogre->OgreListener->GD_MeshViewer_Running == 1)
+	{
+		App->Cl_Vm_MeshDesign->mSceneMgrMeshView->_setPass(clearPass, true, false);
+	}
+	else
+	{
+		/*App->Cl19_Ogre->mSceneMgr->_setPass(clearPass, true, false);*/
+	}
 
 	// save attribs
 	glPushAttrib(GL_ALL_ATTRIB_BITS);
@@ -213,7 +237,10 @@ void VM_Render::PostRender()
 // *************************************************************************
 void VM_Render::Render_Loop()
 {
-	
+	if (App->Cl19_Ogre->OgreListener->GD_MeshViewer_Running == 0)
+	{
+		return;
+	}
 	GLboolean depthTestEnabled=glIsEnabled(GL_DEPTH_TEST);
 	glDisable(GL_DEPTH_TEST);
 	GLboolean stencilTestEnabled = glIsEnabled(GL_STENCIL_TEST);

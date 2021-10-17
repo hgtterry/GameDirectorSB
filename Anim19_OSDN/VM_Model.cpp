@@ -158,8 +158,8 @@ void VM_Model::Clear_ModelData(void)
 
 	//--------------------- Reset Class Data
 
-	App->Cl19_Ogre->RenderListener->Reset_Class();
-	App->Cl19_Ogre->OgreListener->Reset_Class();
+	//App->Cl19_Ogre->RenderListener->Reset_Class();
+	//App->Cl19_Ogre->OgreListener->Reset_Class();
 
 	Reset_Class(); // Here
 	App->Cl_Grid->Reset_Class();

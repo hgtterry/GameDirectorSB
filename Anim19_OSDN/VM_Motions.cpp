@@ -36,7 +36,7 @@ void VM_Motions::Play_SelectedMotion(void)
 			return;
 		}
 
-		App->Cl19_Ogre->RenderListener->PlayActive = 1;
+		//App->Cl19_Ogre->RenderListener->PlayActive = 1;
 
 		App->CL_Vm_TopBar->Toggle_Play_Flag = 1;
 		App->CL_Vm_TopBar->TogglePlayBmp();
@@ -68,7 +68,7 @@ void VM_Motions::Stop_SelectedMotion(void)
 	//------------------------------------------------------- RF Model
 	if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
 	{
-		App->Cl19_Ogre->RenderListener->PlayActive = 0;
+		//App->Cl19_Ogre->RenderListener->PlayActive = 0;
 		App->CL_Vm_TopBar->Toggle_Play_Flag = 0;
 		App->CL_Vm_TopBar->TogglePlayBmp();
 	}
@@ -91,7 +91,7 @@ void VM_Motions::Set_Pose(void)
 {
 	if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
 	{
-		App->Cl19_Ogre->RenderListener->PlayActive = 0;
+		//App->Cl19_Ogre->RenderListener->PlayActive = 0;
 		App->CL_Vm_Genesis3D->DefaultPose();
 		App->CL_Vm_Genesis3D->GetBoneMoveMent();
 		App->CL_Vm_Genesis3D->m_CurrentPose = 0; // Reset to frame 0;

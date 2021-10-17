@@ -19,6 +19,9 @@ VM_MeshDesign::VM_MeshDesign()
 	GridManual = nullptr;
 	GridNode = nullptr;
 
+	HairManual = nullptr;
+	HairNode = nullptr;
+
 	ShowGridFlag = 1;
 	ShowDivisions = 1;
 	ShowHair = 1;
@@ -31,6 +34,8 @@ VM_MeshDesign::VM_MeshDesign()
 
 	XAxis_min = -8;
 	XAxis_max = 8;
+
+	HairExtend = 8;
 
 	Scale_X = 4;
 	Scale_Y = 4;
@@ -86,8 +91,6 @@ LRESULT CALLBACK VM_MeshDesign::MeshDesign_Proc(HWND hDlg, UINT message, WPARAM 
 
 		Ogre::Root::getSingletonPtr()->renderOneFrame();
 		Ogre::Root::getSingletonPtr()->renderOneFrame();
-
-		App->Cl19_Ogre->OgreListener->GD_MeshViewer_Running = 1; // Must be Last
 
 
 		return TRUE;
@@ -271,7 +274,17 @@ bool VM_MeshDesign::Set_OgreWindow(void)
 	App->CL_WE_Listener_E15->WE_Cam->setPosition(0, Centre.y, -Radius*(Real(2.5)));
 	App->CL_WE_Listener_E15->WE_Cam->lookAt(0, Centre.y, 0);
 
+	manObj = mSceneMgrMeshView->createManualObject("sampleArea2");
+	ModelNode = mSceneMgrMeshView->getRootSceneNode()->createChildSceneNode();
+	ModelNode->attachObject(manObj);
+
 	Grid_Update(1);
+	Hair_Update(1);
+
+	RenderListener = new VM_Render();
+	mSceneMgrMeshView->addRenderQueueListener(RenderListener);
+
+	App->Cl19_Ogre->OgreListener->GD_MeshViewer_Running = 1; // Must be Last
 
 	return 1;
 }
@@ -345,6 +358,49 @@ void VM_MeshDesign::Grid_Update(bool Create)
 	GridNode->setPosition(0, 0, 0);
 	GridNode->setVisible(true);
 	GridNode->setScale(Scale_X, Scale_Y, Scale_Z);
+}
+
+// *************************************************************************
+// *	  					Hair_Update Terry Bernie					   *
+// *************************************************************************
+void VM_MeshDesign::Hair_Update(bool Create)
+{
+	if (Create == 1)
+	{
+		HairManual = mSceneMgrMeshView->createManualObject("HairManual");
+		HairManual->setRenderQueueGroup(5);
+	}
+
+	HairManual->clear();
+	HairManual->begin("BaseWhiteAlphaBlended", RenderOperation::OT_LINE_LIST);
+
+	// X Axis
+	HairManual->position(Ogre::Vector3(YAxis_min - HairExtend, 0, 0));
+	HairManual->colour(ColourHairX);
+	HairManual->position(Ogre::Vector3(YAxis_max + HairExtend, 0, 0));
+	HairManual->colour(ColourHairX);
+	// Y Axis
+	HairManual->position(Ogre::Vector3(0, YAxis_min - HairExtend, 0));
+	HairManual->colour(ColourHairY);
+	HairManual->position(Ogre::Vector3(0, YAxis_max + HairExtend, 0));
+	HairManual->colour(ColourHairY);
+	// Z Axis
+	HairManual->position(Ogre::Vector3(0, 0, ZAxis_min - HairExtend));
+	HairManual->colour(ColourHairZ);
+	HairManual->position(Ogre::Vector3(0, 0, ZAxis_max + HairExtend));
+	HairManual->colour(ColourHairZ);
+
+	HairManual->end();
+
+	if (Create == 1)
+	{
+		HairNode = mSceneMgrMeshView->getRootSceneNode()->createChildSceneNode();
+		HairNode->attachObject(HairManual);
+	}
+
+	HairNode->setPosition(0, 0, 0);
+	HairNode->setVisible(true);
+	HairNode->setScale(Scale_X, Scale_Y, Scale_Z);
 }
 
 // *************************************************************************
