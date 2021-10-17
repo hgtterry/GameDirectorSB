@@ -84,8 +84,9 @@ GD19_App::GD19_App(void)
 
 	// ---------------------------------------------------- 15/10/21
 	CL_Ogre_Import_E15 = nullptr;
-	CL_Bullet_AddRoom = nullptr;
-	CL_Physics_E15 =	nullptr;
+	CL_Bullet_AddRoom =  nullptr;
+	CL_Physics_E15 =	 nullptr;
+	CL_WE_Listener_E15 = nullptr;
 
 	Fdlg = nullptr;
 	hInst = nullptr;
@@ -239,6 +240,7 @@ bool GD19_App::InitApp(void)
 	CL_Ogre_Import_E15 =	new EQ15_Ogre_Import();
 	CL_Bullet_AddRoom =		new EQ15_Bullet_AddRoom();		
 	CL_Physics_E15 =		new EQ15_Physics();
+	CL_WE_Listener_E15 = new EQ15_WE_Listener();
 
 	SetBrushes_Fonts();
 

@@ -84,6 +84,8 @@ ebopster
 #include "EQ15_Bullet_AddRoom.h"
 #include "EQ15_Physics.h"
 
+#include "EQ15_WE_Listener.h"
+
 
 class GD19_App
 {
@@ -148,6 +150,8 @@ public:
 	EQ15_Ogre_Import*		CL_Ogre_Import_E15;
 	EQ15_Bullet_AddRoom*	CL_Bullet_AddRoom;
 	EQ15_Physics*			CL_Physics_E15;
+
+	EQ15_WE_Listener*		CL_WE_Listener_E15;
 
 
 	GD19_App(void);
