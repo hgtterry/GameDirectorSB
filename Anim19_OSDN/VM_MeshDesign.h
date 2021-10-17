@@ -17,6 +17,7 @@ protected:
 	void Close_OgreWindow(void);
 
 	HWND MeshView_Hwnd;
+	HWND MeshViewDialog_Hwnd;
 
 	Ogre::Entity*			MvEnt;
 

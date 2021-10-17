@@ -7,6 +7,8 @@
 VM_MeshDesign::VM_MeshDesign()
 {
 	MeshView_Hwnd = nullptr;
+	MeshViewDialog_Hwnd = nullptr;
+
 	MeshView_Window = nullptr;
 	mSceneMgrMeshView = nullptr;
 	CamNode = nullptr;
@@ -48,6 +50,7 @@ LRESULT CALLBACK VM_MeshDesign::MeshDesign_Proc(HWND hDlg, UINT message, WPARAM 
 		HWND Ogre_Hwnd = GetDlgItem(hDlg, IDC_OGREWIN2);
 
 		App->Cl_Vm_MeshDesign->MeshView_Hwnd = GetDlgItem(hDlg, IDC_OGREWIN2);
+		App->Cl_Vm_MeshDesign->MeshViewDialog_Hwnd = hDlg;
 
 		App->Cl_Vm_MeshDesign->Set_OgreWindow();
 
@@ -109,6 +112,65 @@ LRESULT CALLBACK VM_MeshDesign::MeshDesign_Proc(HWND hDlg, UINT message, WPARAM 
 		}*/
 
 		return CDRF_DODEFAULT;
+	}
+
+	case WM_MOUSEWHEEL:
+	{
+		int zDelta = (short)HIWORD(wParam);    // wheel rotation
+
+		if (zDelta > 0)
+		{
+			App->CL_WE_Listener_E15->Wheel = -1;
+		}
+		else if (zDelta < 0)
+		{
+			App->CL_WE_Listener_E15->Wheel = 1;
+		}
+
+		return 1;
+	}
+
+	case WM_LBUTTONDOWN: // BERNIE_HEAR_FIRE 
+	{
+
+		if (App->OgreStarted == 1)
+		{
+
+			SetCapture(App->Cl_Vm_MeshDesign->MeshViewDialog_Hwnd);// Bernie
+			SetCursorPos(500, 500);
+			App->CL_WE_Listener_E15->Pl_LeftMouseDown = 1;
+			App->CUR = SetCursor(NULL);
+
+			return 1;
+		}
+
+		return 1;
+	}
+
+	case WM_RBUTTONUP:
+	{
+		if (App->OgreStarted == 1)
+		{
+			ReleaseCapture();
+			App->CL_WE_Listener_E15->Pl_RightMouseDown = 0;
+			SetCursor(App->CUR);
+			return 1;
+		}
+
+		return 1;
+	}
+
+	case WM_LBUTTONUP:
+	{
+			if (App->OgreStarted == 1)
+			{
+				ReleaseCapture();
+				App->CL_WE_Listener_E15->Pl_LeftMouseDown = 0;
+				SetCursor(App->CUR);
+				return 1;
+			}
+
+		return 1;
 	}
 
 	case WM_COMMAND:

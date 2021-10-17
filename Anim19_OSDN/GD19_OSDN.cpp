@@ -962,36 +962,10 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 				int height = rc.bottom - rc.top;
 
 				float tx = (width / 2) - (float)p.x;
-				//float ty = (float)(1.0f / height) * Y;
-
-				//App->Cl19_Ogre->OgreListener->Mouse_X = tx;
 			}
 		}
 
-		//if (App->StopCapture == 1)
-		//{
-		//	return 1;
-		//}
-
 		SetFocus(App->ViewGLhWnd);
-
-		//if (App->CL10_Dimensions->Mouse_Move_Mode > 0 && App->Cl_Ogre->OgreListener->Pl_RightMouseDown == 1)
-		//{
-		//	App->CL10_Dimensions->MouseXE = LOWORD(lParam);  // horizontal position of cursor 
-		//	App->CL10_Dimensions->MouseYE = HIWORD(lParam);  // vertical position of cursor 
-
-		//	if (GetAsyncKeyState(VK_LBUTTON) != 0 || GetAsyncKeyState(VK_RBUTTON) != 0)//Added by bernie
-		//	{
-		//		App->CL10_Dimensions->DecodeMovment();
-		//	}
-		//	else
-		//	{
-		//		//MouseDown=0;
-		//		//ReleaseCapture();
-		//	}
-		//}
-
-
 		break;
 	}
 	// Right Mouse Button
@@ -1008,16 +982,11 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 		{
 			if (App->OgreStarted == 1)
 			{
-				/*if (App->GDCL_Scene_Data->S_Flags[0]->GameMode == 1)
-				{
-				}
-				else
-				{*/
+				
 				SetCapture(App->ViewGLhWnd);// Bernie
 				SetCursorPos(500, 500);
 				App->Cl19_Ogre->OgreListener->Pl_RightMouseDown = 1;
 				App->CUR = SetCursor(NULL);
-				//}
 				return 1;
 			}
 		}
@@ -1029,15 +998,9 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 		
 		if (App->OgreStarted == 1)
 		{
-			/*if (App->GDCL_Scene_Data->S_Flags[0]->GameMode == 1)
-			{
-			}
-			else
-			{*/
 			ReleaseCapture();
 			App->Cl19_Ogre->OgreListener->Pl_RightMouseDown = 0;
 			SetCursor(App->CUR);
-			//}
 			return 1;
 		}
 
@@ -1052,25 +1015,7 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 		{
 
 			{
-				/*if (App->StopCapture == 1)
-				{
-					POINT p;
-					if (GetCursorPos(&p))
-					{
-						if (ScreenToClient(App->ViewGLhWnd, &p))
-						{
-							RECT rc;
-							GetClientRect(App->ViewGLhWnd, &rc);
-							int width = rc.right - rc.left;
-							int height = rc.bottom - rc.top;
-
-							float tx = (width / 2) - (float)p.x;
-							App->Cl_Ogre->RayCast(tx, 0);
-						}
-					}
-					return 1;
-				}*/
-
+				
 				if (App->OgreStarted == 1)
 				{
 					if (!ImGui::GetIO().WantCaptureMouse)
