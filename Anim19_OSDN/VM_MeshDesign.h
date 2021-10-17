@@ -22,7 +22,6 @@ protected:
 
 	Ogre::RenderWindow* MeshView_Window;
 	Ogre::SceneManager* mSceneMgrMeshView;
-	Ogre::Camera*		mCameraMeshView;
 	Ogre::SceneNode*	CamNode;
 };
 

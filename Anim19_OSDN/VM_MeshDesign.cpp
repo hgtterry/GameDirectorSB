@@ -9,7 +9,6 @@ VM_MeshDesign::VM_MeshDesign()
 	MeshView_Hwnd = nullptr;
 	MeshView_Window = nullptr;
 	mSceneMgrMeshView = nullptr;
-	mCameraMeshView = nullptr;
 	CamNode = nullptr;
 
 	MvNode = nullptr;
@@ -46,50 +45,16 @@ LRESULT CALLBACK VM_MeshDesign::MeshDesign_Proc(HWND hDlg, UINT message, WPARAM 
 	case WM_INITDIALOG:
 	{
 
-		//App->Cl_Mesh_Viewer->MainDlgHwnd = hDlg;
-
-		//SendDlgItemMessage(hDlg, IDC_LISTFILES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_OBJECTNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_STNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_STSHAPE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_STTYPE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_CB_FOLDERS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_STFOLDER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_SELECTEDNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
-
-		//App->Cl_Mesh_Viewer->ListHwnd = GetDlgItem(hDlg, IDC_LISTFILES);
-
 		HWND Ogre_Hwnd = GetDlgItem(hDlg, IDC_OGREWIN2);
 
 		App->Cl_Vm_MeshDesign->MeshView_Hwnd = GetDlgItem(hDlg, IDC_OGREWIN2);
 
 		App->Cl_Vm_MeshDesign->Set_OgreWindow();
 
-		////App->Cl19_Ogre->textArea->hide();
-
 		Ogre::Root::getSingletonPtr()->renderOneFrame();
 		Ogre::Root::getSingletonPtr()->renderOneFrame();
 
-		//HWND CB_hWnd = GetDlgItem(hDlg, IDC_CB_FOLDERS);
-		//App->Cl_Mesh_Viewer->Get_Media_Folders_Actors(CB_hWnd); // Populate Combo
-
-
-		//App->Cl_Mesh_Viewer->SelectStartFolder();
-
-		//App->Cl_Mesh_Viewer->SelectStatic = 0;
-		//App->Cl_Mesh_Viewer->SelectDynamic = 0;
-		//App->Cl_Mesh_Viewer->SelectTriMesh = 0;
-
-		//App->Cl_Mesh_Viewer->Enable_ShapeButtons(0);
-		//App->Cl_Mesh_Viewer->Enable_TypeButtons(0);
-
-		//App->Cl_Mesh_Viewer->Physics_Type = Enums::Bullet_Type_None;
-
-		/*char ConNum[256];
-		char ATest[256];*/
-
-		App->Cl19_Ogre->OgreListener->GD_MeshViewer_Running = 1;
+		App->Cl19_Ogre->OgreListener->GD_MeshViewer_Running = 1; // Must be Last
 
 
 		return TRUE;
@@ -181,18 +146,19 @@ bool VM_MeshDesign::Set_OgreWindow(void)
 
 	mSceneMgrMeshView = App->Cl19_Ogre->mRoot->createSceneManager("DefaultSceneManager", "MeshViewGD");
 
-	mCameraMeshView = mSceneMgrMeshView->createCamera("CameraMV");
-	mCameraMeshView->setPosition(Ogre::Vector3(0, 0, 0));
-	mCameraMeshView->setNearClipDistance(0.1);
-	mCameraMeshView->setFarClipDistance(1000);
+	
+	App->CL_WE_Listener_E15->WE_Cam = mSceneMgrMeshView->createCamera("CameraMV");
+	App->CL_WE_Listener_E15->WE_Cam->setPosition(Ogre::Vector3(0, 0, 0));
+	App->CL_WE_Listener_E15->WE_Cam->setNearClipDistance(0.1);
+	App->CL_WE_Listener_E15->WE_Cam->setFarClipDistance(1000);
 
-	Ogre::Viewport* vp = MeshView_Window->addViewport(mCameraMeshView);
-	mCameraMeshView->setAspectRatio(Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));
+	Ogre::Viewport* vp = MeshView_Window->addViewport(App->CL_WE_Listener_E15->WE_Cam);
+	App->CL_WE_Listener_E15->WE_Cam->setAspectRatio(Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));
 
 	vp->setBackgroundColour(ColourValue(0.5, 0.5, 0.5));
 
 	CamNode = mSceneMgrMeshView->getRootSceneNode()->createChildSceneNode("Camera_Node");
-	CamNode->attachObject(mCameraMeshView);
+	CamNode->attachObject(App->CL_WE_Listener_E15->WE_Cam);
 
 	//-------------------------------------------- 
 	MvEnt = mSceneMgrMeshView->createEntity("MVTest", "axes.mesh");
@@ -210,8 +176,8 @@ bool VM_MeshDesign::Set_OgreWindow(void)
 	Ogre::Vector3 Centre = MvEnt->getBoundingBox().getCenter();
 	Ogre::Real Radius = MvEnt->getBoundingRadius();
 
-	mCameraMeshView->setPosition(0, Centre.y, -Radius*(Real(2.5)));
-	mCameraMeshView->lookAt(0, Centre.y, 0);
+	App->CL_WE_Listener_E15->WE_Cam->setPosition(0, Centre.y, -Radius*(Real(2.5)));
+	App->CL_WE_Listener_E15->WE_Cam->lookAt(0, Centre.y, 0);
 
 	return 1;
 }
