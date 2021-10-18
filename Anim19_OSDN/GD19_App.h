@@ -86,6 +86,9 @@ ebopster
 
 #include "EQ15_WE_Listener.h"
 
+// ---------------------------------------------------- 18/10/21
+#include "SB_Equity.h"
+
 
 class GD19_App
 {
@@ -152,6 +155,9 @@ public:
 	EQ15_Physics*			CL_Physics_E15;
 
 	EQ15_WE_Listener*		CL_WE_Listener_E15;
+
+	// ---------------------------------------------------- 18/10/21
+	SB_Equity*				SBC_Equity;
 
 
 	GD19_App(void);

@@ -88,6 +88,9 @@ GD19_App::GD19_App(void)
 	CL_Physics_E15 =	 nullptr;
 	CL_WE_Listener_E15 = nullptr;
 
+	// ---------------------------------------------------- 18/10/21
+	SBC_Equity = nullptr;
+
 	Fdlg = nullptr;
 	hInst = nullptr;
 	MainHwnd = nullptr;
@@ -241,6 +244,10 @@ bool GD19_App::InitApp(void)
 	CL_Bullet_AddRoom =		new EQ15_Bullet_AddRoom();		
 	CL_Physics_E15 =		new EQ15_Physics();
 	CL_WE_Listener_E15 = new EQ15_WE_Listener();
+
+	// ---------------------------------------------------- 18/10/21
+		
+	SBC_Equity = new SB_Equity();
 
 	SetBrushes_Fonts();
 
