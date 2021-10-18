@@ -257,13 +257,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return 1;
 		}
 
-		
-		case ID_IMPORT_RFEDITPRO:
-		{
-			App->CL_Importer->WorldEditor_Loader();
-			return 1;
-		}
-
 		case ID_IMPORT_AUTODESK3DS:
 		{
 			App->CL_Importer->Assimp_Loader("Autodesk 3DS   *.3ds\0*.3ds\0", "Autodesk 3DS");

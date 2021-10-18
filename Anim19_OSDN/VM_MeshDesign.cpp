@@ -208,6 +208,11 @@ LRESULT CALLBACK VM_MeshDesign::MeshDesign_Proc(HWND hDlg, UINT message, WPARAM 
 
 	case WM_COMMAND:
 	
+		if (LOWORD(wParam) == ID_IMPORT_WORLDEDITOR)
+		{
+			App->CL_Importer->WorldEditor_Loader();
+			return TRUE;
+		}
 
 		if (LOWORD(wParam) == IDOK)
 		{

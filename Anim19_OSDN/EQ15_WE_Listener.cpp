@@ -34,9 +34,9 @@ EQ15_WE_Listener::~EQ15_WE_Listener()
 // *************************************************************************
 bool EQ15_WE_Listener::WE_RenderingQueued(const FrameEvent& evt)
 {
-	Ogre::Radian Rotation_Speed;
+	/*Ogre::Radian Rotation_Speed;
 	Rotation_Speed = 1 / (float)57.3;
-	App->Cl_Vm_MeshDesign->MvNode->yaw(Rotation_Speed);
+	App->Cl_Vm_MeshDesign->MvNode->yaw(Rotation_Speed);*/
 	
 	ModelMode(evt.timeSinceLastFrame);
 	return 1;
@@ -56,7 +56,7 @@ void EQ15_WE_Listener::ModelMode(float DeltaTime)
 	if (GetAsyncKeyState(69) < 0) // Q key Down in Fly Mode
 	{
 		Ogre::Real Rate;
-		Rate = (mMoveSensitivity / 1000) * 2;    //0.1;//FlyRate;
+		Rate = (mMoveSensitivity / 1000) * 4;    //0.1;//FlyRate;
 
 		Ogre::Vector3 OldPos;
 		OldPos = WE_Cam->getPosition();
@@ -68,7 +68,7 @@ void EQ15_WE_Listener::ModelMode(float DeltaTime)
 	if (GetAsyncKeyState(81) < 0) // E key Up in Fly Mode
 	{
 		Ogre::Real Rate;
-		Rate = (mMoveSensitivity / 1000) * 2;// 0.1;//FlyRate;
+		Rate = (mMoveSensitivity / 1000) * 4;// 0.1;//FlyRate;
 
 		Ogre::Vector3 OldPos;
 		OldPos = WE_Cam->getPosition();
