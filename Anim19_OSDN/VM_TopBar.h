@@ -21,6 +21,7 @@ public:
 	HWND Dimensions_TB_hWnd;
 	HWND Groups_TB_hWnd;
 	HWND Physics_TB_hWnd;
+	HWND Editors_TB_hWnd;
 
 	HWND MouseOption_DlgHwnd;
 
@@ -77,6 +78,7 @@ protected:
 	bool Toggle_Tabs_Dimensions_Flag;
 	bool Toggle_Tabs_Groups_Flag;
 	bool Toggle_Tabs_Shapes_Flag;
+	bool Toggle_Tabs_Editors_Flag;
 
 	// Camera
 	bool Toggle_Model_Flag;

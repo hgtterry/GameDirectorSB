@@ -15,6 +15,7 @@ VM_TopBar::VM_TopBar()
 	Dimensions_TB_hWnd =	nullptr;
 	Groups_TB_hWnd =		nullptr;
 	Physics_TB_hWnd =		nullptr;
+	Editors_TB_hWnd =		nullptr;
 
 	MouseOption_DlgHwnd =	nullptr;
 
@@ -33,6 +34,7 @@ VM_TopBar::VM_TopBar()
 	Toggle_Tabs_Dimensions_Flag = 0;
 	Toggle_Tabs_Groups_Flag = 0;
 	Toggle_Tabs_Shapes_Flag = 0;
+	Toggle_Tabs_Editors_Flag = 0;
 
 
 	Toggle_GroupsOnly_Flag = 0;
@@ -127,6 +129,7 @@ LRESULT CALLBACK VM_TopBar::TopBar_Globals_Proc(HWND hDlg, UINT message, WPARAM 
 		App->CL_Vm_TopBar->Start_Dimensions_TB();
 		App->CL_Vm_TopBar->Start_Groups_TB();
 		App->CL_Vm_TopBar->Start_Shapes_TB();
+		App->CL_Vm_TopBar->Start_Editors_TB();
 		
 		return TRUE;
 	}
@@ -542,7 +545,7 @@ LRESULT CALLBACK VM_TopBar::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM wP
 		if (some_item->idFrom == IDC_TAB_EDITORS && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle_Tabs(item, App->CL_Vm_TopBar->Toggle_Tabs_Shapes_Flag);
+			App->Custom_Button_Toggle_Tabs(item, App->CL_Vm_TopBar->Toggle_Tabs_Editors_Flag);
 			return CDRF_DODEFAULT;
 		}
 
@@ -625,12 +628,11 @@ LRESULT CALLBACK VM_TopBar::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM wP
 		{
 			App->CL_Vm_TopBar->Hide_Tabs();
 
-			ShowWindow(App->CL_Vm_TopBar->Physics_TB_hWnd, SW_SHOW);
-			ShowWindow(App->CL_Physics_E15->PhysicsPannel_Hwnd, SW_SHOW);
+			ShowWindow(App->CL_Vm_TopBar->Editors_TB_hWnd, SW_SHOW);
+		
+			App->CL_Vm_TopBar->Toggle_Tabs_Editors_Flag = 1;
 
-			App->CL_Vm_TopBar->Toggle_Tabs_Shapes_Flag = 1;
-
-			//App->Cl19_Ogre->OgreListener->ImGui_Render_Tab = Enums::ImGui_None;
+			App->Cl19_Ogre->OgreListener->ImGui_Render_Tab = Enums::ImGui_None;
 
 			RedrawWindow(App->CL_Vm_TopBar->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
@@ -651,6 +653,7 @@ void VM_TopBar::Hide_Tabs(void)
 	ShowWindow(App->CL_Vm_TopBar->Dimensions_TB_hWnd, SW_HIDE);
 	ShowWindow(App->CL_Vm_TopBar->Groups_TB_hWnd, SW_HIDE);
 	ShowWindow(App->CL_Vm_TopBar->Physics_TB_hWnd, SW_HIDE);
+	ShowWindow(App->CL_Vm_TopBar->Editors_TB_hWnd, SW_HIDE);
 	
 	ShowWindow(App->CL_Vm_Groups->RightGroups_Hwnd, 0);
 	ShowWindow(App->CL_Physics_E15->PhysicsPannel_Hwnd,0);
@@ -660,6 +663,7 @@ void VM_TopBar::Hide_Tabs(void)
 	Toggle_Tabs_Dimensions_Flag = 0;
 	Toggle_Tabs_Groups_Flag = 0;
 	Toggle_Tabs_Shapes_Flag = 0;
+	Toggle_Tabs_Editors_Flag = 0;
 }
 
 // *************************************************************************
@@ -1562,7 +1566,7 @@ LRESULT CALLBACK VM_TopBar::Shapes_TB_Proc(HWND hDlg, UINT message, WPARAM wPara
 // *************************************************************************
 void VM_TopBar::Start_Editors_TB(void)
 {
-	Physics_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_EDITORS, Tabs_TB_hWnd, (DLGPROC)Editors_TB_Proc);
+	Editors_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_EDITORS, Tabs_TB_hWnd, (DLGPROC)Editors_TB_Proc);
 	//Init_Bmps_Groups();
 }
 
@@ -1576,8 +1580,8 @@ LRESULT CALLBACK VM_TopBar::Editors_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 	{
 	case WM_INITDIALOG:
 	{
-		/*SendDlgItemMessage(hDlg, IDC_GRCHANGETEXTURE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_ONLYGROUP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));*/
+		SendDlgItemMessage(hDlg, IDC_EDITORS_WE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		return TRUE;
 	}
 
@@ -1591,32 +1595,25 @@ LRESULT CALLBACK VM_TopBar::Editors_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		/*if (some_item->idFrom == IDC_ONLYGROUP && some_item->code == NM_CUSTOMDRAW)
-		{
-		LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-		App->Custom_Button_Toggle(item, App->CL_Vm_TopBar->Toggle_GroupsOnly_Flag);
-		return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_GRCHANGETEXTURE && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_EDITORS_WE && some_item->code == NM_CUSTOMDRAW)
 		{
 		LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 		App->Custom_Button_Normal(item);
 		return CDRF_DODEFAULT;
-		}*/
+		}
 
 		return CDRF_DODEFAULT;
 	}
 
 	case WM_COMMAND:
 	{
-		/*if (LOWORD(wParam) == IDC_GRCHANGETEXTURE)
+		if (LOWORD(wParam) == IDC_EDITORS_WE)
 		{
-		App->CL_Vm_Groups->ChangeTexture_ModelLocation();
-		return TRUE;
+			App->Cl_Vm_MeshDesign->StartMeshDesign();
+			return TRUE;
 		}
 
-		if (LOWORD(wParam) == IDC_ONLYGROUP)
+		/*if (LOWORD(wParam) == IDC_ONLYGROUP)
 		{
 		if (App->Cl19_Ogre->RenderListener->ShowOnlySubMesh == 1)
 		{

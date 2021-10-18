@@ -213,12 +213,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		// Vima 20/3/20
 
-
-		case ID_TEST_MESHDESIGN:
-		{
-			App->Cl_Vm_MeshDesign->StartMeshDesign();
-			return 1;
-		}
 		case ID_TEST_GENERAL:
 		{
 			App->CL_Vm_ImGui->Reset_Groups = 1;
