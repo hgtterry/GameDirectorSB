@@ -208,6 +208,12 @@ LRESULT CALLBACK VM_MeshDesign::MeshDesign_Proc(HWND hDlg, UINT message, WPARAM 
 
 	case WM_COMMAND:
 	
+		if (LOWORD(wParam) == IDC_BTUPDATE)
+		{
+			App->Cl_Vm_MeshDesign->Update_Model();
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == ID_IMPORT_WORLDEDITOR)
 		{
 			App->CL_Importer->WorldEditor_Loader();
@@ -416,4 +422,12 @@ void VM_MeshDesign::Close_OgreWindow(void)
 	App->Cl19_Ogre->mRoot->detachRenderTarget("MeshViewWin");
 	MeshView_Window->destroy();
 	App->Cl19_Ogre->mRoot->destroySceneManager(mSceneMgrMeshView);
+}
+
+// *************************************************************************
+// *				Update_Model (Terry Bernie)							   *
+// *************************************************************************
+void VM_MeshDesign::Update_Model(void)
+{
+	App->Debug_Text();
 }

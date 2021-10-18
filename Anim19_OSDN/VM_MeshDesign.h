@@ -32,6 +32,8 @@ protected:
 	void Grid_Update(bool Create);
 	void Hair_Update(bool Create);
 
+	void Update_Model(void);
+
 	HWND MeshView_Hwnd;
 	HWND MeshViewDialog_Hwnd;
 
