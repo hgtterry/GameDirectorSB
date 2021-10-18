@@ -490,6 +490,7 @@ LRESULT CALLBACK VM_TopBar::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM wP
 		SendDlgItemMessage(hDlg, IDC_TBDIMENSIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_TBGROUPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_TBSHAPES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_TAB_EDITORS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		return TRUE;
 	}
@@ -537,6 +538,14 @@ LRESULT CALLBACK VM_TopBar::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM wP
 			App->Custom_Button_Toggle_Tabs(item, App->CL_Vm_TopBar->Toggle_Tabs_Shapes_Flag);
 			return CDRF_DODEFAULT;
 		}
+
+		if (some_item->idFrom == IDC_TAB_EDITORS && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle_Tabs(item, App->CL_Vm_TopBar->Toggle_Tabs_Shapes_Flag);
+			return CDRF_DODEFAULT;
+		}
+
 		return CDRF_DODEFAULT;
 	}
 
@@ -607,6 +616,21 @@ LRESULT CALLBACK VM_TopBar::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM wP
 			App->CL_Vm_TopBar->Toggle_Tabs_Shapes_Flag = 1;
 
 			App->Cl19_Ogre->OgreListener->ImGui_Render_Tab = Enums::ImGui_None;
+
+			RedrawWindow(App->CL_Vm_TopBar->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_TAB_EDITORS)
+		{
+			App->CL_Vm_TopBar->Hide_Tabs();
+
+			ShowWindow(App->CL_Vm_TopBar->Physics_TB_hWnd, SW_SHOW);
+			ShowWindow(App->CL_Physics_E15->PhysicsPannel_Hwnd, SW_SHOW);
+
+			App->CL_Vm_TopBar->Toggle_Tabs_Shapes_Flag = 1;
+
+			//App->Cl19_Ogre->OgreListener->ImGui_Render_Tab = Enums::ImGui_None;
 
 			RedrawWindow(App->CL_Vm_TopBar->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
@@ -1525,6 +1549,87 @@ LRESULT CALLBACK VM_TopBar::Shapes_TB_Proc(HWND hDlg, UINT message, WPARAM wPara
 			}
 
 			return TRUE;
+		}*/
+
+		return FALSE;
+	}
+	}
+	return FALSE;
+}
+
+// *************************************************************************
+// *						Start_Editors_TB Terry Flanigan				   *
+// *************************************************************************
+void VM_TopBar::Start_Editors_TB(void)
+{
+	Physics_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_EDITORS, Tabs_TB_hWnd, (DLGPROC)Editors_TB_Proc);
+	//Init_Bmps_Groups();
+}
+
+// *************************************************************************
+// *					Editors_TB_Proc Terry Flanigan					   *
+// *************************************************************************
+LRESULT CALLBACK VM_TopBar::Editors_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		/*SendDlgItemMessage(hDlg, IDC_GRCHANGETEXTURE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ONLYGROUP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));*/
+		return TRUE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->Brush_Tabs;
+	}
+
+	case WM_NOTIFY:
+	{
+
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		/*if (some_item->idFrom == IDC_ONLYGROUP && some_item->code == NM_CUSTOMDRAW)
+		{
+		LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+		App->Custom_Button_Toggle(item, App->CL_Vm_TopBar->Toggle_GroupsOnly_Flag);
+		return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_GRCHANGETEXTURE && some_item->code == NM_CUSTOMDRAW)
+		{
+		LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+		App->Custom_Button_Normal(item);
+		return CDRF_DODEFAULT;
+		}*/
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+		/*if (LOWORD(wParam) == IDC_GRCHANGETEXTURE)
+		{
+		App->CL_Vm_Groups->ChangeTexture_ModelLocation();
+		return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_ONLYGROUP)
+		{
+		if (App->Cl19_Ogre->RenderListener->ShowOnlySubMesh == 1)
+		{
+		App->Cl19_Ogre->RenderListener->ShowOnlySubMesh = 0;
+		App->CL_Vm_TopBar->Toggle_GroupsOnly_Flag = 0;
+		}
+		else
+		{
+		App->Cl19_Ogre->RenderListener->ShowOnlySubMesh = 1;
+		App->CL_Vm_TopBar->Toggle_GroupsOnly_Flag = 1;
+		}
+
+		return TRUE;
 		}*/
 
 		return FALSE;

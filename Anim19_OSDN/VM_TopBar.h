@@ -37,6 +37,7 @@ protected:
 	static LRESULT CALLBACK Dimensions_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Groups_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Shapes_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Editors_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	static LRESULT CALLBACK Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
@@ -52,6 +53,7 @@ protected:
 	void Start_Dimensions_TB(void);
 	void Start_Groups_TB(void);
 	void Start_Shapes_TB(void);
+	void Start_Editors_TB(void);
 
 	void Start_Tabs_Headers(void);
 
