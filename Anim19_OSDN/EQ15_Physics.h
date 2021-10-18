@@ -6,6 +6,7 @@ public:
 	~EQ15_Physics();
 
 	bool Start_Physics_Pannel();
+	
 
 
 	HWND PhysicsPannel_Hwnd;
@@ -13,6 +14,8 @@ public:
 protected:
 
 	static LRESULT CALLBACK Start_Physics_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	void Update_Model(void);
 
 };
 

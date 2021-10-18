@@ -110,6 +110,16 @@ void GD19_Player::Initialize(const Ogre::Vector3 p, float mass, float radius, fl
 {
 	// Bug been Called Twice
 	// ------------------- Ogre
+
+	if (Player_Ent && Player_Node)
+	{
+		App->Cl19_Ogre->mSceneMgr->destroySceneNode(Player_Node);
+		App->Cl19_Ogre->mSceneMgr->destroyEntity(Player_Ent);
+		Player_Ent = nullptr;
+		Player_Node = nullptr;
+
+	}
+	
 	Player_Ent = App->Cl19_Ogre->mSceneMgr->createEntity("Player_1","axes.mesh",App->Cl19_Ogre->PermResourceGroup);
 	Player_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Player_Node->attachObject(Player_Ent); 
@@ -144,11 +154,11 @@ void GD19_Player::Initialize(const Ogre::Vector3 p, float mass, float radius, fl
 
 	PlayerAdded = 1;
 
-	HTREEITEM Temp = App->Cl_FileView->Add_PlayerFile(App->Cl_Player->PlayerName,0);
+	/*HTREEITEM Temp = App->Cl_FileView->Add_PlayerFile(App->Cl_Player->PlayerName,0);
 	ListViewItem = Temp;
 
 
-	App->Cl_FileView->Redraw_FileView();
+	App->Cl_FileView->Redraw_FileView();*/
 
 	btCollisionWorld* Poo = NULL;
 	PostStep(Poo);

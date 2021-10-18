@@ -104,6 +104,9 @@ bool GD19_Objects::Init_Object(void)
 	Play_v2 = 1;
 
 	Ogre_Particle = nullptr;
+
+	OgreNode = nullptr;
+	OgreEntity = nullptr;
 	return 1;
 }
 

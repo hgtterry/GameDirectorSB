@@ -45,6 +45,8 @@ bool GD19_Scene_Data::Init_Class(void)
 	Locations_ID_Counter = 2000; //Locations 2000 to 3000
 	StockSounds_ID_Counter = 3000; // Stock sounds 3000 to 4000
 
+	Cl_Object[0] = nullptr;
+
 	return 1;
 }
 

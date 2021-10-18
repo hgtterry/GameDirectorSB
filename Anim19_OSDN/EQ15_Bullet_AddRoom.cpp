@@ -44,19 +44,25 @@ void EQ15_Bullet_AddRoom::AddToScene(void)
 	int Index = 0;// App->Cl_Scene_Data->ObjectCount;
 
 
+	if (App->Cl_Scene_Data->Cl_Object[Index])
+	{
+		if (App->Cl_Scene_Data->Cl_Object[Index]->OgreEntity && App->Cl_Scene_Data->Cl_Object[Index]->OgreNode)
+		{
+			App->Cl_Scene_Data->Cl_Object[Index]->OgreNode->detachAllObjects();
+			App->Cl19_Ogre->mSceneMgr->destroySceneNode(App->Cl_Scene_Data->Cl_Object[Index]->OgreNode);
+			App->Cl19_Ogre->mSceneMgr->destroyEntity(App->Cl_Scene_Data->Cl_Object[Index]->OgreEntity);
+			App->Cl_Scene_Data->Cl_Object[Index]->OgreEntity = NULL;
+			App->Cl_Scene_Data->Cl_Object[Index]->OgreNode = NULL;
+
+			delete App->Cl_Scene_Data->Cl_Object[Index];
+			App->Cl_Scene_Data->Cl_Object[Index] = nullptr;
+		}
+	}
+
 	App->Cl_Scene_Data->Cl_Object[Index] = new GD19_Objects();
 	App->Cl_Scene_Data->Cl_Object[Index]->Object_ID = 0;// App->Cl_Scene_Data->Object_ID_Counter;
 
 	GD19_Objects* Object = App->Cl_Scene_Data->Cl_Object[Index];
-
-	if (Object->OgreEntity && Object->OgreNode)
-	{
-		Object->OgreNode->detachAllObjects();
-		App->Cl19_Ogre->mSceneMgr->destroySceneNode(Object->OgreNode);
-		App->Cl19_Ogre->mSceneMgr->destroyEntity(Object->OgreEntity);
-		Object->OgreEntity = NULL;
-		Object->OgreNode = NULL;
-	}
 
 	Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->Cl19_Ogre->TempResourceGroup);
 	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App->Cl19_Ogre->TempResourceGroup);
