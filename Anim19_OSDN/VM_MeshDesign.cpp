@@ -429,5 +429,29 @@ void VM_MeshDesign::Close_OgreWindow(void)
 // *************************************************************************
 void VM_MeshDesign::Update_Model(void)
 {
-	App->Debug_Text();
+	App->CL_Vm_Model->Clear_ModelData();
+
+	App->Cl_Vm_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
+
+	bool Test = App->Cl_Vm_Assimp->LoadFile(App->Cl_Vm_Preferences->Pref_WE_Path_FileName);
+	if (Test == 0)
+	{
+		App->Say("Failed To Load");
+		return;
+	}
+
+	strcpy(App->CL_Vm_FileIO->Model_Path_FileName, App->Cl_Vm_Preferences->Pref_WE_Path_FileName);
+	strcpy(App->CL_Vm_FileIO->Model_FileName, App->Cl_Vm_Preferences->Pref_WE_JustFileName);
+
+	App->CL_Vm_Model->Set_Paths();
+
+	App->CL_Vm_Model->Model_Type = LoadedFile_Assimp;
+
+	App->Cl_Vm_WorldEditor->LoadFile();
+
+	App->CL_Importer->Set_Equity();
+
+	App->Cl_Vm_WorldEditor->Adjust();
+
+	App->Say("Model Updated");
 }

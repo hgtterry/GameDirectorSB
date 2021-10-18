@@ -35,6 +35,8 @@ public:
 	void Change_Textures();
 	bool Start_WE_import();
 
+	bool LoadFile();
+
 	bool Txt_OpenFile(char* Extension, char* Title, char* StartDirectory);
 
 	char Txt_FileName[255];
@@ -47,7 +49,6 @@ protected:
 
 	static LRESULT CALLBACK WE_import_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
-	bool LoadFile();
 	bool AddTexture(geVFile *BaseFile, const char *Path,int  GroupIndex);
 
 	bool NonFatalError(const char *Msg, ...);
