@@ -220,6 +220,12 @@ LRESULT CALLBACK VM_MeshDesign::MeshDesign_Proc(HWND hDlg, UINT message, WPARAM 
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == ID_OGRE3D_MESH32842)
+		{
+			App->CL_Vm_Exporter->Ogre3D_Model();
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDOK)
 		{
 			EndDialog(hDlg, LOWORD(wParam));

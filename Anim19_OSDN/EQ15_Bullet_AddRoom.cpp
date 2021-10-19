@@ -67,7 +67,7 @@ void EQ15_Bullet_AddRoom::AddToScene(void)
 	Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->Cl19_Ogre->TempResourceGroup);
 	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App->Cl19_Ogre->TempResourceGroup);
 
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(App->CL_Vm_Model->Texture_FolderPath,
+	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(App->CL_Vm_Model->Model_FolderPath,
 		"FileSystem",
 		App->Cl19_Ogre->TempResourceGroup);
 

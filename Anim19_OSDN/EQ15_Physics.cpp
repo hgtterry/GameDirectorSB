@@ -155,5 +155,12 @@ void EQ15_Physics::Update_Model(void)
 
 	App->Cl_Vm_WorldEditor->Adjust();
 
+	App->Say("Model 3ds imported");
+
+	App->CL_Vm_Exporter->Ogre3D_Model();
+
+	App->CL_Importer->Bullet_Load_Room("Ogre3D   *.mesh\0*.mesh\0", "Ogre3D");
+	//App->CL_Bullet_AddRoom->AddToScene();
+
 	App->Say("Model Updated");
 }
