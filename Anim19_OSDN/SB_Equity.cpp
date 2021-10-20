@@ -228,6 +228,31 @@ LRESULT CALLBACK SB_Equity::MeshDesign_Proc(HWND hDlg, UINT message, WPARAM wPar
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_TBSHOWHAIR)
+		{
+			HWND Temp = GetDlgItem(hDlg, IDC_TBSHOWHAIR);
+
+			if (App->Cl_Grid->ShowHair == 1)
+			{
+				App->Cl_Grid->ShowHair = 0;
+				App->SBC_Equity->HairNode->setVisible(false);
+
+				//App->CL_Vm_TopBar->Toggle_Hair_Flag = 0;
+
+				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HairOff_Bmp);
+			}
+			else
+			{
+				App->Cl_Grid->ShowHair = 1;
+				App->SBC_Equity->HairNode->setVisible(true);
+
+				//App->CL_Vm_TopBar->Toggle_Hair_Flag = 1;
+
+				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HairOn_Bmp);
+			}
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDOK)
 		{
 			EndDialog(hDlg, LOWORD(wParam));
