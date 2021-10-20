@@ -34,20 +34,43 @@ LRESULT CALLBACK VM_WorldEditor::WE_import_Proc(HWND hDlg, UINT message, WPARAM 
 
 		SendDlgItemMessage(hDlg, IDC_STWEPATHFILE, WM_SETFONT, (WPARAM)App->Font_CB12, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STTXLFILEPATH, WM_SETFONT, (WPARAM)App->Font_CB12, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STQLOGREFILE, WM_SETFONT, (WPARAM)App->Font_CB12, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STQLOGREPATH, WM_SETFONT, (WPARAM)App->Font_CB12, MAKELPARAM(TRUE, 0));
 
 		SetDlgItemText(hDlg, IDC_STWEPATHFILE, (LPCTSTR)App->Cl_Vm_Preferences->Pref_WE_Path_FileName);
 		SetDlgItemText(hDlg, IDC_STTXLFILEPATH, (LPCTSTR)App->Cl_Vm_Preferences->Pref_Txl_Path_FileName);
+
+		SetDlgItemText(hDlg, IDC_STQLOGREFILE, (LPCTSTR)App->Cl_Vm_Preferences->Pref_Ogre_JustFileName);
+		SetDlgItemText(hDlg, IDC_STQLOGREPATH, (LPCTSTR)App->Cl_Vm_Preferences->Pref_Ogre_Path_FileName);
+
+
 
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
 	{
+		if (GetDlgItem(hDlg, IDC_STQLOGREFILE) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->Brush_White;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STQLOGREPATH) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->Brush_White;
+		}
+
 		if (GetDlgItem(hDlg, IDC_STWEPATHFILE) == (HWND)lParam)
 		{
-		SetBkColor((HDC)wParam, RGB(0, 255, 0));
-		SetTextColor((HDC)wParam, RGB(0, 0, 0));
-		SetBkMode((HDC)wParam, TRANSPARENT);
-		return (UINT)App->Brush_White;
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->Brush_White;
 		}
 
 		if (GetDlgItem(hDlg, IDC_STTXLFILEPATH) == (HWND)lParam)
