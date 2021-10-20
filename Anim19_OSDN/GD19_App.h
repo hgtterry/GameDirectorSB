@@ -88,7 +88,7 @@ ebopster
 
 // ---------------------------------------------------- 18/10/21
 #include "SB_Equity.h"
-
+#include "SB_XMLConverter.h"
 
 class GD19_App
 {
@@ -158,7 +158,7 @@ public:
 
 	// ---------------------------------------------------- 18/10/21
 	SB_Equity*				SBC_Equity;
-
+	SB_XMLConverter*		SBC_XMLConverter;
 
 	GD19_App(void);
 	~GD19_App(void);

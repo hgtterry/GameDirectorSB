@@ -90,6 +90,7 @@ GD19_App::GD19_App(void)
 
 	// ---------------------------------------------------- 18/10/21
 	SBC_Equity = nullptr;
+	SBC_XMLConverter = nullptr;
 
 	Fdlg = nullptr;
 	hInst = nullptr;
@@ -248,6 +249,7 @@ bool GD19_App::InitApp(void)
 	// ---------------------------------------------------- 18/10/21
 		
 	SBC_Equity = new SB_Equity();
+	SBC_XMLConverter = new SB_XMLConverter();
 
 	SetBrushes_Fonts();
 

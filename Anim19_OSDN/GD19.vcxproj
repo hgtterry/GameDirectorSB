@@ -122,7 +122,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\..\GD19_OSDN\GD19_OSDN;Common\Devil\include\IL;Common\Genesis\include2;Common\Genesis\Gen2;Common\Genesis\Gen;Common\Bullet\Source;Common\include\OGRE;Common\include\OGRE\Terrain;Common\include\OIS;Common\include\OGRE\Overlay;Common\spdlog;Common\irrKlang\Headers;Common\imGui\include;Common\Soil\include;Common\Assimp\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Equity\Desktop\Equity15\Anim19_OSDN;..\..\GD19_OSDN\GD19_OSDN;Common\Devil\include\IL;Common\Genesis\include2;Common\Genesis\Gen2;Common\Genesis\Gen;Common\Bullet\Source;Common\include\OGRE;Common\include\OGRE\Terrain;Common\include\OIS;Common\include\OGRE\Overlay;Common\spdlog;Common\irrKlang\Headers;Common\imGui\include;Common\Soil\include;Common\Assimp\Include;Common\XMLConverter\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <EnablePREfast>false</EnablePREfast>
     </ClCompile>
     <Link>
@@ -200,6 +200,7 @@
     <ClInclude Include="GD_spdlog.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SB_Equity.h" />
+    <ClInclude Include="SB_XMLConverter.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="VM_Assimp.h" />
@@ -231,6 +232,10 @@
     <ClCompile Include="Common\imGui\ImGui_cpp\imgui_demo.cpp" />
     <ClCompile Include="Common\imGui\ImGui_cpp\imgui_draw.cpp" />
     <ClCompile Include="Common\imGui\ImGui_cpp\imgui_widgets.cpp" />
+    <ClCompile Include="Common\XMLConverter\src\tinystr.cpp" />
+    <ClCompile Include="Common\XMLConverter\src\tinyxml.cpp" />
+    <ClCompile Include="Common\XMLConverter\src\tinyxmlerror.cpp" />
+    <ClCompile Include="Common\XMLConverter\src\tinyxmlparser.cpp" />
     <ClCompile Include="EQ15_Bullet_AddRoom.cpp" />
     <ClCompile Include="EQ15_Ogre_Import.cpp" />
     <ClCompile Include="EQ15_Physics.cpp" />
@@ -272,6 +277,7 @@
     <ClCompile Include="GD_Keyboard.cpp" />
     <ClCompile Include="GD_spdlog.cpp" />
     <ClCompile Include="SB_Equity.cpp" />
+    <ClCompile Include="SB_XMLConverter.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

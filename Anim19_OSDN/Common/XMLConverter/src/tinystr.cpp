@@ -27,8 +27,8 @@ distribution.
  */
 
 
-#ifndef TIXML_USE_STL
 
+#include "StdAfx.h"
 #include "tinystr.h"
 
 // Error value for find primitive
@@ -113,4 +113,4 @@ TiXmlString operator + (const char* a, const TiXmlString & b)
 }
 
 
-#endif	// TIXML_USE_STL
+
