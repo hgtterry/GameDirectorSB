@@ -27,6 +27,7 @@ distribution.
  */
 
 
+#ifndef TIXML_USE_STL
 
 #include "StdAfx.h"
 #include "tinystr.h"
@@ -112,5 +113,4 @@ TiXmlString operator + (const char* a, const TiXmlString & b)
 	return tmp;
 }
 
-
-
+#endif	// TIXML_USE_STL

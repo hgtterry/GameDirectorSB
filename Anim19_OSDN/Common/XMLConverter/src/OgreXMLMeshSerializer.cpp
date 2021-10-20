@@ -54,6 +54,7 @@ namespace Ogre {
     void XMLMeshSerializer::importMesh(const String& filename, 
 		VertexElementType colourElementType, Mesh* pMesh)
     {
+		LogManager::getSingleton().logMessage("Equity");
         LogManager::getSingleton().logMessage("XMLMeshSerializer reading mesh data from " + filename + "...");
         mMesh = pMesh;
 		mColourElementType = colourElementType;
@@ -124,7 +125,7 @@ namespace Ogre {
     //---------------------------------------------------------------------
     void XMLMeshSerializer::exportMesh(const Mesh* pMesh, const String& filename)
     {
-        LogManager::getSingleton().logMessage("XMLMeshSerializer writing mesh data to " + filename + "...");
+        LogManager::getSingleton().logMessage("Equity XMLMeshSerializer writing mesh data to " + filename + "...");
         
         mMesh = const_cast<Mesh*>(pMesh);
 
@@ -691,7 +692,7 @@ namespace Ogre {
     //---------------------------------------------------------------------
     void XMLMeshSerializer::readSubMeshes(TiXmlElement* mSubmeshesNode)
     {
-        LogManager::getSingleton().logMessage("Reading submeshes...");
+        LogManager::getSingleton().logMessage("Equity Reading submeshes...");
 
         for (TiXmlElement* smElem = mSubmeshesNode->FirstChildElement();
             smElem != 0; smElem = smElem->NextSiblingElement())
