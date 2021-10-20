@@ -64,7 +64,7 @@ bool VM_MeshDesign::StartMeshDesign()
 {
 	App->RenderBackGround = 1;
 
-	DialogBox(App->hInst, (LPCTSTR)IDD_MESHDESIGN, App->Fdlg, (DLGPROC)MeshDesign_Proc);
+	DialogBox(App->hInst, (LPCTSTR)IDD_EQUITY, App->Fdlg, (DLGPROC)MeshDesign_Proc);
 
 	App->RenderBackGround = 0;
 	App->Cl19_Ogre->OgreListener->GD_MeshViewer_Running = 0;
