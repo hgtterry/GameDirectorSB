@@ -160,9 +160,9 @@ bool EQ15_WE_Listener::Capture_LeftMouse_Model(void)
 		if (test > 2)
 		{
 			Pl_DeltaMouse = float(Pl_Cent500X - Pl_MouseX);
-			App->Cl_Vm_MeshDesign->GridNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
-			App->Cl_Vm_MeshDesign->HairNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
-			App->Cl_Vm_MeshDesign->RenderListener->RZ = App->Cl_Vm_MeshDesign->RenderListener->RZ - (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
+			App->SBC_Equity->GridNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
+			App->SBC_Equity->HairNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
+			App->SBC_Equity->RenderListener->RZ = App->SBC_Equity->RenderListener->RZ - (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
 			SetCursorPos(500, 500);
 		}
 	}
@@ -173,9 +173,9 @@ bool EQ15_WE_Listener::Capture_LeftMouse_Model(void)
 		if (test > 2)
 		{
 			Pl_DeltaMouse = float(Pl_MouseX - Pl_Cent500X);
-			App->Cl_Vm_MeshDesign->GridNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
-			App->Cl_Vm_MeshDesign->HairNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
-			App->Cl_Vm_MeshDesign->RenderListener->RZ = App->Cl_Vm_MeshDesign->RenderListener->RZ + (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
+			App->SBC_Equity->GridNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
+			App->SBC_Equity->HairNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
+			App->SBC_Equity->RenderListener->RZ = App->SBC_Equity->RenderListener->RZ + (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
 			SetCursorPos(500, 500);
 		}
 	}
@@ -188,9 +188,9 @@ bool EQ15_WE_Listener::Capture_LeftMouse_Model(void)
 		if (test > 2)
 		{
 			Pl_DeltaMouse = float(Pl_Cent500Y - Pl_MouseY);
-			App->Cl_Vm_MeshDesign->GridNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
-			App->Cl_Vm_MeshDesign->HairNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
-			App->Cl_Vm_MeshDesign->RenderListener->RX = App->Cl_Vm_MeshDesign->RenderListener->RX - (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
+			App->SBC_Equity->GridNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+			App->SBC_Equity->HairNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+			App->SBC_Equity->RenderListener->RX = App->SBC_Equity->RenderListener->RX - (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
 			SetCursorPos(500, 500);
 		}
 	}
@@ -201,9 +201,9 @@ bool EQ15_WE_Listener::Capture_LeftMouse_Model(void)
 		if (test > 2)
 		{
 			Pl_DeltaMouse = float(Pl_MouseY - Pl_Cent500Y);
-			App->Cl_Vm_MeshDesign->GridNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
-			App->Cl_Vm_MeshDesign->HairNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
-			App->Cl_Vm_MeshDesign->RenderListener->RX = App->Cl_Vm_MeshDesign->RenderListener->RX + (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
+			App->SBC_Equity->GridNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+			App->SBC_Equity->HairNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+			App->SBC_Equity->RenderListener->RX = App->SBC_Equity->RenderListener->RX + (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
 			SetCursorPos(500, 500);
 		}
 	}

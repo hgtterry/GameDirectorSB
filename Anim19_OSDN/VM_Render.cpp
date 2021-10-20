@@ -180,8 +180,8 @@ void VM_Render::PreRender()
 
 	if (App->Cl19_Ogre->OgreListener->GD_MeshViewer_Running == 1)
 	{
-		RenderSystem* renderSystem = App->Cl_Vm_MeshDesign->manObj->_getManager()->getDestinationRenderSystem();
-		Node* parentNode = App->Cl_Vm_MeshDesign->manObj->getParentNode();
+		RenderSystem* renderSystem = App->SBC_Equity->manObj->_getManager()->getDestinationRenderSystem();
+		Node* parentNode = App->SBC_Equity->manObj->getParentNode();
 		renderSystem->_setWorldMatrix(parentNode->_getFullTransform());
 		renderSystem->_setViewMatrix(App->CL_WE_Listener_E15->WE_Cam->getViewMatrix());
 		renderSystem->_setProjectionMatrix(App->CL_WE_Listener_E15->WE_Cam->getProjectionMatrixRS());
@@ -205,7 +205,7 @@ void VM_Render::PreRender()
 	//Set a clear pass to give the renderer a clear renderstate
 	if (App->Cl19_Ogre->OgreListener->GD_MeshViewer_Running == 1)
 	{
-		App->Cl_Vm_MeshDesign->mSceneMgrMeshView->_setPass(clearPass, true, false);
+		App->SBC_Equity->mSceneMgrMeshView->_setPass(clearPass, true, false);
 	}
 	else
 	{

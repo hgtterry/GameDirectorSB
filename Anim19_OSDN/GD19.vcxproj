@@ -212,7 +212,6 @@
     <ClInclude Include="VM_Groups.h" />
     <ClInclude Include="VM_ImGui.h" />
     <ClInclude Include="VM_Importer.h" />
-    <ClInclude Include="VM_MeshDesign.h" />
     <ClInclude Include="VM_Model.h" />
     <ClInclude Include="VM_Motions.h" />
     <ClInclude Include="VM_Ogre3d.h" />
@@ -289,7 +288,6 @@
     <ClCompile Include="VM_Groups.cpp" />
     <ClCompile Include="VM_ImGui.cpp" />
     <ClCompile Include="VM_Importer.cpp" />
-    <ClCompile Include="VM_MeshDesign.cpp" />
     <ClCompile Include="VM_Model.cpp" />
     <ClCompile Include="VM_Motions.cpp" />
     <ClCompile Include="VM_Ogre3d.cpp" />

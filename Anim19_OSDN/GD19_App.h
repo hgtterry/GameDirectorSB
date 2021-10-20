@@ -72,7 +72,6 @@ ebopster
 #include "VM_Groups.h"
 #include "VM_Assimp.h"
 #include "VM_Dimensions.h"
-#include "VM_MeshDesign.h"
 #include "VM_File_Equity.h"
 #include "VM_WorldEditor.h"
 #include "VM_Preferences.h"
@@ -142,7 +141,6 @@ public:
 	VM_Groups*			CL_Vm_Groups;
 	VM_Assimp*			Cl_Vm_Assimp;
 	VM_Dimensions*		Cl_Vm_Dimensions;
-	VM_MeshDesign*		Cl_Vm_MeshDesign;
 	VM_File_Equity*		Cl_Vm_File_Equity;
 	VM_WorldEditor*		Cl_Vm_WorldEditor;
 	VM_Preferences*		Cl_Vm_Preferences;

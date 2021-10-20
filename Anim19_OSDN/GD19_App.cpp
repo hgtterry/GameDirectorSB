@@ -75,7 +75,6 @@ GD19_App::GD19_App(void)
 	CL_Vm_Groups =		nullptr;
 	Cl_Vm_Assimp =		nullptr;
 	Cl_Vm_Dimensions =	nullptr;
-	Cl_Vm_MeshDesign =	nullptr;
 	Cl_Vm_File_Equity =	nullptr;
 	Cl_Vm_WorldEditor = nullptr;
 	Cl_Vm_Preferences = nullptr;
@@ -233,7 +232,6 @@ bool GD19_App::InitApp(void)
 	CL_Vm_Groups =		new VM_Groups();
 	Cl_Vm_Assimp =		new VM_Assimp();
 	Cl_Vm_Dimensions =	new VM_Dimensions();
-	Cl_Vm_MeshDesign =	new VM_MeshDesign();
 	Cl_Vm_File_Equity = new VM_File_Equity();
 	Cl_Vm_WorldEditor = new VM_WorldEditor();
 	Cl_Vm_Preferences = new VM_Preferences();
