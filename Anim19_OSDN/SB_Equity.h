@@ -26,6 +26,8 @@ protected:
 
 	static LRESULT CALLBACK MeshDesign_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
+	void Init_Bmps_Globals(void);
+
 	bool Set_OgreWindow(void);
 	void Close_OgreWindow(void);
 

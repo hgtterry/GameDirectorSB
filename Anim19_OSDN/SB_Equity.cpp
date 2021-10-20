@@ -87,6 +87,8 @@ LRESULT CALLBACK SB_Equity::MeshDesign_Proc(HWND hDlg, UINT message, WPARAM wPar
 		App->SBC_Equity->MeshView_Hwnd = GetDlgItem(hDlg, IDC_OGREWIN2);
 		App->SBC_Equity->MeshViewDialog_Hwnd = hDlg;
 
+		App->SBC_Equity->Init_Bmps_Globals();
+
 		App->SBC_Equity->Set_OgreWindow();
 
 		Ogre::Root::getSingletonPtr()->renderOneFrame();
@@ -241,6 +243,136 @@ LRESULT CALLBACK SB_Equity::MeshDesign_Proc(HWND hDlg, UINT message, WPARAM wPar
 		break;
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *						Init_Bmps_Globals Terry Bernie				   *
+// *************************************************************************
+void SB_Equity::Init_Bmps_Globals(void)
+{
+	HWND Temp = GetDlgItem(MeshViewDialog_Hwnd, IDC_TBSHOWFACES);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
+
+	Temp = GetDlgItem(MeshViewDialog_Hwnd, IDC_TBPOINTS);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshPointsOff_Bmp);
+
+	Temp = GetDlgItem(MeshViewDialog_Hwnd, IDC_TBBOUNDBOX);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOff_Bmp);
+
+	Temp = GetDlgItem(MeshViewDialog_Hwnd, IDC_TBSHOWBONES);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BonesOff_Bmp);
+
+	Temp = GetDlgItem(MeshViewDialog_Hwnd, IDC_TBSHOWGRID);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_GridOn_Bmp);
+
+	Temp = GetDlgItem(MeshViewDialog_Hwnd, IDC_TBSHOWHAIR);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HairOn_Bmp);
+
+	Temp = GetDlgItem(MeshViewDialog_Hwnd, IDC_TBINFO);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfo_Bmp);
+
+	Temp = GetDlgItem(MeshViewDialog_Hwnd, IDC_TBNORMALS);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_NormalsOff_Bmp);
+
+	Temp = GetDlgItem(MeshViewDialog_Hwnd, IDC_TBSHOWTEXTURE);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOff_Bmp);
+
+	Temp = GetDlgItem(MeshViewDialog_Hwnd, IDC_TBLIGHT);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_LightsOff_Bmp);
+
+
+	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
+
+	Temp = GetDlgItem(MeshViewDialog_Hwnd, IDC_TBSHOWTEXTURE);
+	TOOLINFO ti1 = { 0 };
+	ti1.cbSize = sizeof(ti1);
+	ti1.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti1.uId = (UINT_PTR)Temp;
+	ti1.lpszText = "Toggle Textures";
+	ti1.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti1);
+
+	Temp = GetDlgItem(MeshViewDialog_Hwnd, IDC_TBSHOWFACES);
+	TOOLINFO ti2 = { 0 };
+	ti2.cbSize = sizeof(ti2);
+	ti2.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti2.uId = (UINT_PTR)Temp;
+	ti2.lpszText = "Toggle Faces";
+	ti2.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti2);
+
+	Temp = GetDlgItem(MeshViewDialog_Hwnd, IDC_TBPOINTS);
+	TOOLINFO ti3 = { 0 };
+	ti3.cbSize = sizeof(ti3);
+	ti3.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti3.uId = (UINT_PTR)Temp;
+	ti3.lpszText = "Toggle Points";
+	ti3.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti3);
+
+	Temp = GetDlgItem(MeshViewDialog_Hwnd, IDC_TBSHOWBONES);
+	TOOLINFO ti4 = { 0 };
+	ti4.cbSize = sizeof(ti4);
+	ti4.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti4.uId = (UINT_PTR)Temp;
+	ti4.lpszText = "Toggle Bones";
+	ti4.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti4);
+
+	Temp = GetDlgItem(MeshViewDialog_Hwnd, IDC_TBNORMALS);
+	TOOLINFO ti5 = { 0 };
+	ti5.cbSize = sizeof(ti5);
+	ti5.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti5.uId = (UINT_PTR)Temp;
+	ti5.lpszText = "Toggle Normals";
+	ti5.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti5);
+
+	Temp = GetDlgItem(MeshViewDialog_Hwnd, IDC_TBBOUNDBOX);
+	TOOLINFO ti6 = { 0 };
+	ti6.cbSize = sizeof(ti6);
+	ti6.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti6.uId = (UINT_PTR)Temp;
+	ti6.lpszText = "Toggle Bounding Box";
+	ti6.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti6);
+
+	Temp = GetDlgItem(MeshViewDialog_Hwnd, IDC_TBLIGHT);
+	TOOLINFO ti7 = { 0 };
+	ti7.cbSize = sizeof(ti7);
+	ti7.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti7.uId = (UINT_PTR)Temp;
+	ti7.lpszText = "Toggle Lights";
+	ti7.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti7);
+
+	Temp = GetDlgItem(MeshViewDialog_Hwnd, IDC_TBINFO);
+	TOOLINFO ti8 = { 0 };
+	ti8.cbSize = sizeof(ti8);
+	ti8.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti8.uId = (UINT_PTR)Temp;
+	ti8.lpszText = "Show Model Information";
+	ti8.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti8);
+
+	Temp = GetDlgItem(MeshViewDialog_Hwnd, IDC_TBSHOWHAIR);
+	TOOLINFO ti9 = { 0 };
+	ti9.cbSize = sizeof(ti9);
+	ti9.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti9.uId = (UINT_PTR)Temp;
+	ti9.lpszText = "Toggle Main Cross Hair";
+	ti9.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti9);
+
+	Temp = GetDlgItem(MeshViewDialog_Hwnd, IDC_TBSHOWGRID);
+	TOOLINFO ti10 = { 0 };
+	ti10.cbSize = sizeof(ti10);
+	ti10.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti10.uId = (UINT_PTR)Temp;
+	ti10.lpszText = "Toggle Main Grid";
+	ti10.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti10);
+
 }
 
 // *************************************************************************
