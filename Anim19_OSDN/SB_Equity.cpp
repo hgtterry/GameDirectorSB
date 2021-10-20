@@ -45,6 +45,8 @@ SB_Equity::SB_Equity()
 	Division_Y = 2;
 	Division_Z = 2;
 
+	Model_Loaded = 0;
+
 	ColourHairZ = ColourValue(1, 0, 0, 1);
 	ColourHairX = ColourValue(0, 0, 1, 1);
 	ColourHairY = ColourValue(0, 1, 0, 1);
@@ -219,6 +221,7 @@ LRESULT CALLBACK SB_Equity::MeshDesign_Proc(HWND hDlg, UINT message, WPARAM wPar
 		if (LOWORD(wParam) == ID_IMPORT_WORLDEDITOR)
 		{
 			App->CL_Importer->WorldEditor_Loader();
+			App->SBC_Equity->Model_Loaded = 1;
 			return TRUE;
 		}
 
@@ -228,6 +231,7 @@ LRESULT CALLBACK SB_Equity::MeshDesign_Proc(HWND hDlg, UINT message, WPARAM wPar
 			return TRUE;
 		}
 
+		//-------------------------------------------------------- Show Hair
 		if (LOWORD(wParam) == IDC_TBSHOWHAIR)
 		{
 			HWND Temp = GetDlgItem(hDlg, IDC_TBSHOWHAIR);
@@ -249,6 +253,56 @@ LRESULT CALLBACK SB_Equity::MeshDesign_Proc(HWND hDlg, UINT message, WPARAM wPar
 				//App->CL_Vm_TopBar->Toggle_Hair_Flag = 1;
 
 				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HairOn_Bmp);
+			}
+			return TRUE;
+		}
+
+		//-------------------------------------------------------- Show Textures
+		if (LOWORD(wParam) == IDC_TBSHOWTEXTURE)
+		{
+			if (App->SBC_Equity->Model_Loaded == 1)
+			{
+				HWND Temp = GetDlgItem(hDlg, IDC_TBSHOWTEXTURE);
+
+				if (App->SBC_Equity->RenderListener->ShowTextured == 1)
+				{
+					App->SBC_Equity->RenderListener->ShowTextured = 0;
+					//App->CL_Vm_TopBar->Toggle_Textures_Flag = 0;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOff_Bmp);
+				}
+				else
+				{
+					App->SBC_Equity->RenderListener->ShowTextured = 1;
+					//App->CL_Vm_TopBar->Toggle_Textures_Flag = 1;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOn_Bmp);
+				}
+			}
+			return TRUE;
+		}
+
+		//-------------------------------------------------------- Show Faces
+		if (LOWORD(wParam) == IDC_TBSHOWFACES)
+		{
+			if (App->SBC_Equity->Model_Loaded == 1)
+			{
+				HWND Temp = GetDlgItem(hDlg, IDC_TBSHOWFACES);
+
+				if (App->SBC_Equity->RenderListener->ShowFaces == 1)
+				{
+					App->SBC_Equity->RenderListener->ShowFaces = 0;
+					//App->CL_Vm_TopBar->Toggle_Faces_Flag = 0;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
+				}
+				else
+				{
+					App->SBC_Equity->RenderListener->ShowFaces = 1;
+					//App->CL_Vm_TopBar->Toggle_Faces_Flag = 1;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOn_Bmp);
+				}
 			}
 			return TRUE;
 		}

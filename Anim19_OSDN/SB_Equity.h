@@ -7,6 +7,8 @@ public:
 
 	bool StartMeshDesign();
 
+	bool Model_Loaded;
+
 	Ogre::SceneNode*		MvNode;
 
 	ManualObject*		GridManual;
