@@ -17,7 +17,7 @@ public:
 	char Pref_WE_Path_FileName[1024];		//World Editor/RFpro File 3ds
 
 	char Pref_Ogre_JustFileName[255];		//Ogre File for Update
-	char Pref_Ogre_Path_FileName[1024];		//Ogre File for Update Location
+	char Pref_Ogre_Path[1024];		//Ogre File for Update Location
 
 protected:
 

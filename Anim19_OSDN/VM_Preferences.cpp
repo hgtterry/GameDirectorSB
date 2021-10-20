@@ -12,7 +12,7 @@ VM_Preferences::VM_Preferences()
 	strcpy(Pref_WE_Path_FileName, "Not_Set");
 
 	strcpy(Pref_Ogre_JustFileName, "Not_Set");
-	strcpy(Pref_Ogre_Path_FileName, "Not_Set");
+	strcpy(Pref_Ogre_Path, "Not_Set");
 }
 
 
@@ -49,7 +49,7 @@ bool VM_Preferences::Write_Preferences()
 	fprintf(WriteScene, "%s%s\n", "Pref_Txl_Path_FileName=", Pref_Txl_Path_FileName);
 
 	fprintf(WriteScene, "%s%s\n", "Pref_Ogre_JustFileName=", Pref_Ogre_JustFileName);
-	fprintf(WriteScene, "%s%s\n", "Pref_Ogre_Path_FileName=", Pref_Ogre_Path_FileName);
+	fprintf(WriteScene, "%s%s\n", "Pref_Ogre_Path_FileName=", Pref_Ogre_Path);
 
 	fprintf(WriteScene, "%s\n", " ");
 	fclose(WriteScene);
@@ -92,7 +92,7 @@ bool VM_Preferences::Read_Preferences()
 	strcpy(Pref_Ogre_JustFileName, chr_Tag2);
 
 	App->Cl_Ini->GetString("WE_Fast_Load", "Pref_Ogre_Path_FileName", chr_Tag2, 1024);
-	strcpy(Pref_Ogre_Path_FileName, chr_Tag2);
+	strcpy(Pref_Ogre_Path, chr_Tag2);
 
 	//App->Say(chr_Tag1);
 
