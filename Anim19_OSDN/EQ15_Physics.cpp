@@ -161,10 +161,18 @@ void EQ15_Physics::Update_Model(void)
 
 	App->Say("Model 3ds imported");
 
-	App->CL_Vm_Exporter->Ogre3D_Model();
+	//-----------------------------------------------------------------------------------
 
-	App->CL_Importer->Bullet_Load_Room("Ogre3D   *.mesh\0*.mesh\0", "Ogre3D");
-	//App->CL_Bullet_AddRoom->AddToScene();
+	App->CL_Vm_Exporter->Ogre3D_Model(); // Convert to Ogre
+
+	//-----------------------------------------------------------------------------------
+
+	//App->CL_Importer->Bullet_Load_Room("Ogre3D   *.mesh\0*.mesh\0", "Ogre3D");
+
+	strcpy(App->CL_Vm_Model->Model_FolderPath, App->Cl_Vm_Preferences->Pref_Ogre_Path);
+	strcpy(App->CL_Vm_Model->FileName, App->Cl_Vm_Preferences->Pref_Ogre_JustFileName);
+
+	App->CL_Bullet_AddRoom->AddToScene();
 
 	App->Say("Model Updated");
 }

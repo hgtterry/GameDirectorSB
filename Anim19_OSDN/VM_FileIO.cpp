@@ -362,6 +362,7 @@ int __stdcall VM_FileIO::BrowseCallbackProc(HWND  hwnd, UINT  uMsg, LPARAM  lPar
 		}
 		else
 			strcpy(App->CL_Vm_FileIO->szSelectedDir, szDir);
+			strcat(App->CL_Vm_FileIO->szSelectedDir,"\\");
 	}
 
 	return 0;
@@ -375,7 +376,6 @@ bool VM_FileIO::Create_Output_Folder(char* Extension)
 	strcpy(OutputFolder, "");
 
 	strcpy(OutputFolder, App->CL_Vm_FileIO->szSelectedDir);
-	strcat(OutputFolder, "\\");
 	strcat(OutputFolder, App->CL_Vm_Model->JustName);
 	strcat(OutputFolder, Extension);
 	strcat(OutputFolder, "\\");

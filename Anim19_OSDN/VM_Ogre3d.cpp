@@ -73,10 +73,7 @@ bool VM_Ogre3d::CreateDirectoryMesh(void)
 
 	strcat(NewDirectory, "_Ogre");
 
-	strcat(App->CL_Vm_FileIO->szSelectedDir, "\\");
 	strcat(App->CL_Vm_FileIO->szSelectedDir, NewDirectory);
-
-	//App->Say(App->CL_Vm_FileIO->szSelectedDir);
 
 	if (_mkdir(App->CL_Vm_FileIO->szSelectedDir) == 0)
 	{
