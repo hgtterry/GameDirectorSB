@@ -210,14 +210,14 @@ bool GD19_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 		Pos = App->Cl_Player->Player_Node->getPosition();
 		//Ogre::Quaternion  CQ = App->Cl_Player->Player_Node->getOrientation();
 
-		//mmPitch = App->Cl_Player->CameraPitch->getOrientation().getPitch();
+		mmPitch = App->Cl_Player->CameraPitch->getOrientation().getPitch();
 		mYaw = App->Cl_Player->Player_Node->getOrientation().getYaw();
 		Pos.y = Pos.y + App->Cl_Player->PlayerHeight;
 
 		App->Cl19_Ogre->mCamera->setPosition(Pos);
 		App->Cl19_Ogre->mCamera->setOrientation(Ogre::Quaternion(1, 0, 0, 0));
 		App->Cl19_Ogre->mCamera->yaw(mYaw);
-		//App->Cl19_Ogre->mCamera->pitch(mmPitch);
+		App->Cl19_Ogre->mCamera->pitch(mmPitch);
 		App->Cl19_Ogre->mCamera->yaw(Ogre::Degree(180));
 	}
 

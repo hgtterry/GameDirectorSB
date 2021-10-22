@@ -5,8 +5,6 @@ public:
 	GD19_Player(void);
 	~GD19_Player(void);
 
-	void Initialize_New(const Ogre::Vector3 p, float mass, float radius, float height);
-
 	void SetUp(void);
 	void Load_Player(void);
 

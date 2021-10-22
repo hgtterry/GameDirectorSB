@@ -146,51 +146,6 @@ void GD19_Player::Initialize(const Ogre::Vector3 p, float mass, float radius, fl
 }
 
 // *************************************************************************
-// *	  					Initialize_New Terry Bernie					   *
-// *************************************************************************
-void GD19_Player::Initialize_New(const Ogre::Vector3 p, float mass, float radius, float height)
-{
-	// Bug been Called Twice
-	// ------------------- Ogre
-	Player_Ent = App->Cl19_Ogre->mSceneMgr->createEntity("Player_1", "Sinbad.mesh", App->Cl19_Ogre->PermResourceGroup);
-	Player_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	Player_Node->attachObject(Player_Ent);
-	Player_Node->setPosition(p.x, p.y, p.z);
-
-	// ------------------------ Bulet
-	btVector3 pos = btVector3(p.x, p.y, p.z);
-	btVector3 inertia = btVector3(0, 0, 0);
-	btQuaternion rot = btQuaternion(1, 0, 0, 0);
-	btDefaultMotionState* state = new btDefaultMotionState(btTransform(rot, pos));
-
-	//mShape = new btSphereShape(btScalar(radius));
-	mShape = new btCapsuleShape(btScalar(radius), btScalar(height));
-	mObject = new btRigidBody(mass, state, mShape, inertia);
-	mObject->setActivationState(DISABLE_DEACTIVATION);
-	mObject->setAngularFactor(0.0);
-
-	mObject->setUserPointer(Player_Node);
-
-	mObject->setUserIndex(Enums::Usage_Player);
-
-
-	int f = mObject->getCollisionFlags();
-	mObject->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
-
-	App->Cl_Bullet->dynamicsWorld->addRigidBody(mObject);
-
-	// Save for later
-	Current_Position = Player_Node->getPosition();
-	Physics_Position = mObject->getWorldTransform().getOrigin();
-	Physics_Rotation = mObject->getWorldTransform().getRotation();
-
-	PlayerAdded = 1;
-
-	btCollisionWorld* Poo = NULL;
-	PostStep(Poo);
-}
-
-// *************************************************************************
 // *	  					Adjust_CapsuleTerry Bernie					   *
 // *************************************************************************
 void GD19_Player::Adjust_Capsule(void)
