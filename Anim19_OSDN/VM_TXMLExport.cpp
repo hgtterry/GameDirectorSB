@@ -778,7 +778,7 @@ bool VM_XMLExport::StartRenderToXML(int LTextureFormat)
 	strcat(RunFile, "\\");
 	strcat(RunFile, "OgreXmlConverter.exe");
 
-	App->Say("Converted");
+	//App->Say("Converted");
 
 	ShellExecute(0, "open", RunFile, XmlMeshFileName,NULL, SW_SHOW);
 	//remove("OgreXMLConverter.log");
