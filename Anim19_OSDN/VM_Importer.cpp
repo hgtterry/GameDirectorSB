@@ -226,7 +226,7 @@ bool VM_Importer::Bullet_Load_Room(char* Extension, char* Extension2)
 
 	//Set_Equity();
 
-	App->Cl19_Ogre->OgreListener->CameraMode = 0;
+	App->Cl19_Ogre->OgreListener->CameraMode = Enums::CamDetached;
 
 	App->Cl19_Ogre->mCamera->setPosition(Ogre::Vector3(0, 0, 0));
 	App->Cl19_Ogre->mCamera->lookAt(Ogre::Vector3(0, 0, 0));

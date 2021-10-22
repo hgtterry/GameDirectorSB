@@ -207,36 +207,18 @@ bool GD19_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 		Ogre::Radian mmPitch;
 		Ogre::Radian mYaw;
 
-		if (FollowPlayer == 1)
-		{
-			Pos = App->Cl_Player->Player_Node->getPosition();
-			//Ogre::Quaternion  CQ = App->Cl_Player->Player_Node->getOrientation();
+		Pos = App->Cl_Player->Player_Node->getPosition();
+		//Ogre::Quaternion  CQ = App->Cl_Player->Player_Node->getOrientation();
 
-			mmPitch = App->Cl_Player->CameraPitch->getOrientation().getPitch();
-			mYaw = App->Cl_Player->Player_Node->getOrientation().getYaw();
-			Pos.y = Pos.y + App->Cl_Player->PlayerHeight;
-
-		}
-		else
-		{
-			btVector3 Centre;
-			Centre = App->Cl_Scene_Data->Cl_Object[Object_ToFollow]->bt_body->getWorldTransform().getOrigin();
-			Pos.x = Centre.getX();
-			Pos.y = Centre.getY();
-			Pos.z = Centre.getZ();
-
-			//mmPitch = App->Cl_Scene_Data->Cl_Object[Object_ToFollow]->OgreNode->getOrientation().getPitch();
-			mYaw = App->Cl_Scene_Data->Cl_Object[Object_ToFollow]->OgreNode->getOrientation().getYaw();
-			Pos.y = Pos.y + App->Cl_Player->PlayerHeight;
-		}
+		//mmPitch = App->Cl_Player->CameraPitch->getOrientation().getPitch();
+		mYaw = App->Cl_Player->Player_Node->getOrientation().getYaw();
+		Pos.y = Pos.y + App->Cl_Player->PlayerHeight;
 
 		App->Cl19_Ogre->mCamera->setPosition(Pos);
 		App->Cl19_Ogre->mCamera->setOrientation(Ogre::Quaternion(1, 0, 0, 0));
 		App->Cl19_Ogre->mCamera->yaw(mYaw);
 		//App->Cl19_Ogre->mCamera->pitch(mmPitch);
 		App->Cl19_Ogre->mCamera->yaw(Ogre::Degree(180));
-
-
 	}
 
 	App->Cl_Keyboard->Keyboard_Monitor(evt.timeSinceLastFrame);
@@ -261,11 +243,7 @@ bool GD19_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 
 	if (Pl_LeftMouseDown == 1 && GD_CameraMode == Enums::CamDetached)
 	{
-
-		if (!ImGui::GetIO().WantCaptureMouse)
-		{
-			SetCursorPos(500, 500);
-		}
+		SetCursorPos(500, 500);
 	}
 
 	// Right Mouse

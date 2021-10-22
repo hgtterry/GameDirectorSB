@@ -84,23 +84,8 @@ void GD19_Player::Load_Player(void)
 {
 	Initialize(StartPos,Capsule_Mass, Capsule_Radius,Capsule_Height);
 
-//	App->Cl_FileView_V2->Add_Player_Name(App->Cl_Player->PlayerName);
+	CameraPitch = App->Cl19_Ogre->mSceneMgr->createCamera("PlayerPitch");
 
-//	CameraPitch = App->Cl_Ogre->mSceneMgr->createCamera("PlayerPitch");
-	
-	//Player_Ent->getSkeleton()->setBlendMode(ANIMBLEND_CUMULATIVE);
-
-	//// Get the two halves of the idle animation.
-	//App->Cl19_Ogre->OgreListener->Animate_State = Player_Ent->getAnimationState("IdleBase");
-	//App->Cl19_Ogre->OgreListener->Animate_State2 = Player_Ent->getAnimationState("IdleTop");
-
-	//// Enable both of them and set them to loop.
-	//App->Cl19_Ogre->OgreListener->Animate_State->setLoop(true);
-	//App->Cl19_Ogre->OgreListener->Animate_State2->setLoop(true);
-	//App->Cl19_Ogre->OgreListener->Animate_State->setEnabled(true);
-	//App->Cl19_Ogre->OgreListener->Animate_State2->setEnabled(true);
-
-	//App->Cl19_Ogre->OgreListener->Animate_Ogre = 1;
 }
 
 // *************************************************************************

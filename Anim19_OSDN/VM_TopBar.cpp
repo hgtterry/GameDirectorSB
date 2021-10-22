@@ -871,6 +871,26 @@ LRESULT CALLBACK VM_TopBar::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPara
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_FIRST_MODE)
+		{
+			App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamFirst;
+			/*App->CL_Vm_TopBar->Toggle_World_Flag = 1;
+			App->CL_Vm_TopBar->Toggle_Model_Flag = 0;
+			RedrawWindow(App->CL_Vm_TopBar->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);*/
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_FREECAM)
+		{
+			//App->Debug_Text();
+			App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
+			/*App->CL_Vm_TopBar->Toggle_World_Flag = 1;
+			App->CL_Vm_TopBar->Toggle_Model_Flag = 0;
+			RedrawWindow(App->CL_Vm_TopBar->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);*/
+			return TRUE;
+		}
+
+		
 		return FALSE;
 	}
 
