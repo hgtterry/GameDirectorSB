@@ -88,8 +88,9 @@ GD19_App::GD19_App(void)
 	CL_WE_Listener_E15 = nullptr;
 
 	// ---------------------------------------------------- 18/10/21
-	SBC_Equity = nullptr;
-	SBC_XMLConverter = nullptr;
+	SBC_Equity =		nullptr;
+	SBC_XMLConverter =	nullptr;
+	SBC_Player =		nullptr;
 
 	Fdlg = nullptr;
 	hInst = nullptr;
@@ -246,8 +247,9 @@ bool GD19_App::InitApp(void)
 
 	// ---------------------------------------------------- 18/10/21
 		
-	SBC_Equity = new SB_Equity();
-	SBC_XMLConverter = new SB_XMLConverter();
+	SBC_Equity =		new SB_Equity();
+	SBC_XMLConverter =	new SB_XMLConverter();		
+	SBC_Player =		new SB_Player();
 
 	SetBrushes_Fonts();
 
