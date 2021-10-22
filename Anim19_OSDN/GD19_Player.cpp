@@ -65,16 +65,16 @@ void GD19_Player::SetUp(void)
 	Player_Ent->getSkeleton()->setBlendMode(ANIMBLEND_CUMULATIVE);
 
 	// Get the two halves of the idle animation.
-	App->Cl19_Ogre->OgreListener->Animate_State = Player_Ent->getAnimationState("IdleBase");
-	App->Cl19_Ogre->OgreListener->Animate_State2 = Player_Ent->getAnimationState("IdleTop");
+	//App->Cl19_Ogre->OgreListener->Animate_State = Player_Ent->getAnimationState("IdleBase");
+	//App->Cl19_Ogre->OgreListener->Animate_State2 = Player_Ent->getAnimationState("IdleTop");
 
-	// Enable both of them and set them to loop.
-	App->Cl19_Ogre->OgreListener->Animate_State->setLoop(true);
-	App->Cl19_Ogre->OgreListener->Animate_State2->setLoop(true);
-	App->Cl19_Ogre->OgreListener->Animate_State->setEnabled(true);
-	App->Cl19_Ogre->OgreListener->Animate_State2->setEnabled(true);
+	//// Enable both of them and set them to loop.
+	//App->Cl19_Ogre->OgreListener->Animate_State->setLoop(true);
+	//App->Cl19_Ogre->OgreListener->Animate_State2->setLoop(true);
+	//App->Cl19_Ogre->OgreListener->Animate_State->setEnabled(true);
+	//App->Cl19_Ogre->OgreListener->Animate_State2->setEnabled(true);
 
-	App->Cl19_Ogre->OgreListener->Animate_Ogre = 1;
+	//App->Cl19_Ogre->OgreListener->Animate_Ogre = 1;
 }
 
 // *************************************************************************
@@ -124,6 +124,8 @@ void GD19_Player::Initialize(const Ogre::Vector3 p, float mass, float radius, fl
 	Player_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Player_Node->attachObject(Player_Ent); 
 	Player_Node->setPosition(p.x, p.y, p.z);
+
+	Player_Node->setVisible(false);
 
 	// ------------------------ Bulet
 	btVector3 pos = btVector3(p.x, p.y, p.z);

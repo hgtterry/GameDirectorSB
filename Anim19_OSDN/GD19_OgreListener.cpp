@@ -162,6 +162,16 @@ bool GD19_OgreListener::frameStarted(const FrameEvent& evt)
 			App->Cl_Bullet->dynamicsWorld->stepSimulation(evt.timeSinceLastFrame * 2); //suppose you have 60 frames per second	
 		}
 
+		if (GD_Run_Physics == 1 && App->Cl_Player->PlayerAdded == 1)
+		{
+			btTransform trans;
+			App->Cl_Player->mObject->getMotionState()->getWorldTransform(trans);
+			btQuaternion orientation = trans.getRotation();
+			App->Cl_Player->Player_Node->setPosition(Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ()));
+			App->Cl_Player->Player_Node->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
+			App->Cl_Player->Player_Node->pitch(Ogre::Degree(180));
+		}
+
 	}
 
 	return true;
@@ -182,6 +192,24 @@ bool GD19_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 	{
 		App->CL_WE_Listener_E15->WE_RenderingQueued(evt);
 		return 1;
+	}
+
+
+	Ogre::Vector3 Pos;
+	Ogre::Radian mmPitch;
+	Ogre::Radian mYaw;
+
+	if (App->Cl_Player->PlayerAdded == 1)
+	{
+		Pos = App->Cl_Player->Player_Node->getPosition();
+		//mmPitch = App->Cl_Player->CameraPitch->getOrientation().getPitch();
+		mYaw = App->Cl_Player->Player_Node->getOrientation().getYaw();
+		Pos.y = Pos.y + App->Cl_Player->PlayerHeight;
+
+		App->Cl19_Ogre->mCamera->setPosition(Pos);
+		App->Cl19_Ogre->mCamera->setOrientation(Ogre::Quaternion(1, 0, 0, 0));
+		App->Cl19_Ogre->mCamera->yaw(mYaw);
+		App->Cl19_Ogre->mCamera->yaw(Ogre::Degree(180));
 	}
 
 	if (CameraMode == 0)
