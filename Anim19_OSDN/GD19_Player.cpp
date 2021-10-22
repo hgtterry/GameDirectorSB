@@ -62,7 +62,7 @@ void GD19_Player::SetUp(void)
 	Initialize(StartPos,Capsule_Mass, Capsule_Radius,Capsule_Height);
 	CameraPitch = App->Cl19_Ogre->mSceneMgr->createCamera("PlayerPitch");
 
-	Player_Ent->getSkeleton()->setBlendMode(ANIMBLEND_CUMULATIVE);
+	//Player_Ent->getSkeleton()->setBlendMode(ANIMBLEND_CUMULATIVE);
 
 	// Get the two halves of the idle animation.
 	//App->Cl19_Ogre->OgreListener->Animate_State = Player_Ent->getAnimationState("IdleBase");
