@@ -1428,7 +1428,7 @@ LRESULT CALLBACK GD19_Dialogs::Projection_Proc(HWND hDlg, UINT message, WPARAM w
 
 			if (Location_Index > -1)
 			{
-				App->Cl_Player->Goto_Location(Location_Index);
+				App->SBC_Player->Goto_Location(Location_Index);
 
 				HWND temp = GetDlgItem(hDlg, IDC_CKMOVECAM);
 				int test = SendMessage(temp, BM_GETCHECK, 0, 0);
@@ -1468,7 +1468,7 @@ LRESULT CALLBACK GD19_Dialogs::Projection_Proc(HWND hDlg, UINT message, WPARAM w
 			}
 
 			strcpy(buf, App->Cl_Dialogs->Chr_Text);
-			App->Cl_Player->Save_Location(buf);
+			App->SBC_Player->Save_Location(buf);
 
 			SendDlgItemMessage(hDlg, IDC_LSTLOCATIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)(LPCTSTR)buf);
 			return TRUE;

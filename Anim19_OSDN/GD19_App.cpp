@@ -40,7 +40,6 @@ GD19_App::GD19_App(void)
 
 	Cl_Scene_Data =		nullptr;
 	Cl_Bullet =			nullptr;
-	Cl_Player =			nullptr;
 	Cl_Collision =		nullptr;
 	Cl_Ini =			nullptr;
 	Cl_SoundMgr =		nullptr;
@@ -196,7 +195,6 @@ bool GD19_App::InitApp(void)
 
 	Cl_Scene_Data =		new GD19_Scene_Data();
 	Cl_Bullet =			new GD19_Bullet();		
-	Cl_Player =			new GD19_Player();
 	Cl_Collision =		new GD19_Collision();
 	Cl_Ini =			new T_Ini();
 	Cl_SoundMgr =		new GD19_SoundMgr();

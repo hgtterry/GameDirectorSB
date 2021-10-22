@@ -103,7 +103,7 @@ LRESULT CALLBACK EQ15_Physics::Start_Physics_Proc(HWND hDlg, UINT message, WPARA
 
 		if (LOWORD(wParam) == IDC_BTPHYTEST)
 		{
-			int f = App->Cl_Player->mObject->getCollisionFlags();
+			int f = App->SBC_Player->mObject->getCollisionFlags();
 
 			if (App->Cl19_Ogre->OgreListener->GD_Dubug_Physics == 0)
 			{
@@ -111,16 +111,16 @@ LRESULT CALLBACK EQ15_Physics::Start_Physics_Proc(HWND hDlg, UINT message, WPARA
 				App->Cl19_Ogre->OgreListener->GD_Run_Physics = 1;
 				App->Cl19_Ogre->BulletListener->ShowDebug = 1;
 
-				App->Cl_Player->ShowDebug = 1;
-				App->Cl_Player->mObject->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+				App->SBC_Player->ShowDebug = 1;
+				App->SBC_Player->mObject->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 			}
 			else
 			{
 				App->Cl19_Ogre->OgreListener->GD_Dubug_Physics = 0;
 				App->Cl19_Ogre->OgreListener->GD_Run_Physics = 0;
 				App->Cl19_Ogre->BulletListener->ShowDebug = 0;
-				App->Cl_Player->ShowDebug = 0;
-				App->Cl_Player->mObject->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+				App->SBC_Player->ShowDebug = 0;
+				App->SBC_Player->mObject->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 			}
 			return TRUE;
 		}

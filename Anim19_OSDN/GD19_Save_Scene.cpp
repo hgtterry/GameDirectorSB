@@ -67,13 +67,13 @@ bool GD19_Save_Scene::Write_NewScene()
 	// Player
 	fprintf(WriteScene, "%s\n", " ");
 	fprintf(WriteScene, "%s\n", "[Player]");
-	fprintf(WriteScene, "%s%s\n", "Name=", App->Cl_Player->PlayerName);
-	fprintf(WriteScene, "%s%f,%f,%f\n", "Start_Position=", App->Cl_Player->StartPos.x, App->Cl_Player->StartPos.y, App->Cl_Player->StartPos.z);
+	fprintf(WriteScene, "%s%s\n", "Name=", App->SBC_Player->PlayerName);
+	fprintf(WriteScene, "%s%f,%f,%f\n", "Start_Position=", App->SBC_Player->StartPos.x, App->SBC_Player->StartPos.y, App->SBC_Player->StartPos.z);
 
 	fprintf(WriteScene, "%s%s\n", "Shape=", "Capsule");
-	fprintf(WriteScene, "%s%f\n", "Mass=", App->Cl_Player->Capsule_Mass);
-	fprintf(WriteScene, "%s%f\n", "Radius=", App->Cl_Player->Capsule_Radius);
-	fprintf(WriteScene, "%s%f\n", "Height=", App->Cl_Player->Capsule_Height);
+	fprintf(WriteScene, "%s%f\n", "Mass=", App->SBC_Player->Capsule_Mass);
+	fprintf(WriteScene, "%s%f\n", "Radius=", App->SBC_Player->Capsule_Radius);
+	fprintf(WriteScene, "%s%f\n", "Height=", App->SBC_Player->Capsule_Height);
 
 
 	// Environment
@@ -254,15 +254,15 @@ bool GD19_Save_Scene::WritePlayerSetup_New()
 	// Player
 	fprintf(WriteScene, "%s\n", " ");
 	fprintf(WriteScene, "%s\n", "[Player]");
-	fprintf(WriteScene, "%s%s\n", "Name=", App->Cl_Player->PlayerName);
-	fprintf(WriteScene, "%s%f,%f,%f\n", "Start_Position=", App->Cl_Player->StartPos.x, App->Cl_Player->StartPos.y, App->Cl_Player->StartPos.z);
+	fprintf(WriteScene, "%s%s\n", "Name=", App->SBC_Player->PlayerName);
+	fprintf(WriteScene, "%s%f,%f,%f\n", "Start_Position=", App->SBC_Player->StartPos.x, App->SBC_Player->StartPos.y, App->SBC_Player->StartPos.z);
 
 	fprintf(WriteScene, "%s%s\n", "Shape=", "Capsule");
-	fprintf(WriteScene, "%s%f\n", "Mass=", App->Cl_Player->Capsule_Mass);
-	fprintf(WriteScene, "%s%f\n", "Radius=", App->Cl_Player->Capsule_Radius);
-	fprintf(WriteScene, "%s%f\n", "Height=", App->Cl_Player->Capsule_Height);
-	fprintf(WriteScene, "%s%f\n", "Ground_Speed=", App->Cl_Player->Ground_speed);
-	fprintf(WriteScene, "%s%f\n", "Cam_Height=", App->Cl_Player->PlayerHeight);
+	fprintf(WriteScene, "%s%f\n", "Mass=", App->SBC_Player->Capsule_Mass);
+	fprintf(WriteScene, "%s%f\n", "Radius=", App->SBC_Player->Capsule_Radius);
+	fprintf(WriteScene, "%s%f\n", "Height=", App->SBC_Player->Capsule_Height);
+	fprintf(WriteScene, "%s%f\n", "Ground_Speed=", App->SBC_Player->Ground_speed);
+	fprintf(WriteScene, "%s%f\n", "Cam_Height=", App->SBC_Player->PlayerHeight);
 
 	return 1;
 }

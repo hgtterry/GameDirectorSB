@@ -92,7 +92,7 @@ void EQ15_Bullet_AddRoom::AddToScene(void)
 
 	Object->Usage = Enums::Usage_Room;
 
-	App->Cl_Player->Load_Player();
+	App->SBC_Player->Load_Player();
 
 	App->Cl_Grid->Grid_SetVisible(1);
 }

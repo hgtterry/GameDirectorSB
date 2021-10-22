@@ -35,11 +35,11 @@ void GD_Keyboard::Keyboard_Monitor(float deltaTime)
 	}
 
 	//------------------------------------------------ Space Key - Jump and Selection
-	if (GetAsyncKeyState(VK_SPACE) < 0 && App->Cl_Player->PlayerAdded == 1)
+	if (GetAsyncKeyState(VK_SPACE) < 0 && App->SBC_Player->PlayerAdded == 1)
 	{
 		if (App->Cl19_Ogre->OgreListener->GD_Selection_Mode == 0)
 		{
-			App->Cl_Player->Jump(Ogre::Vector3(1, 1, 0), 1.2);
+			App->SBC_Player->Jump(Ogre::Vector3(1, 1, 0), 1.2);
 		}
 		else
 		{
@@ -54,7 +54,7 @@ void GD_Keyboard::Keyboard_Monitor(float deltaTime)
 
 		if (App->Cl19_Ogre->OgreListener->Pl_Entity_Name == "Player_1")
 		{
-			App->Cl_FileView->SelectItem(App->Cl_Player->ListViewItem);
+			App->Cl_FileView->SelectItem(App->SBC_Player->ListViewItem);
 		}
 		else
 		{
@@ -70,36 +70,36 @@ void GD_Keyboard::Keyboard_Monitor(float deltaTime)
 	}
 
 	//------------------------------------------------ Forward
-	if (GetAsyncKeyState(VK_UP) < 0 && App->Cl_Player->PlayerAdded == 1 && App->Cl19_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
+	if (GetAsyncKeyState(VK_UP) < 0 && App->SBC_Player->PlayerAdded == 1 && App->Cl19_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
 	{
-		App->Cl_Player->Forward(deltaTime);
-		App->Cl_Player->IsMOving = 1;
+		App->SBC_Player->Forward(deltaTime);
+		App->SBC_Player->IsMOving = 1;
 	}
 	else
 	{
-		if (App->Cl_Player->PlayerAdded == 1 && App->Cl_Player->IsMOving == 1 && App->Cl19_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
+		if (App->SBC_Player->PlayerAdded == 1 && App->SBC_Player->IsMOving == 1 && App->Cl19_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
 		{
-			App->Cl_Player->Stop();
-			App->Cl_Player->IsMOving = 0;
+			App->SBC_Player->Stop();
+			App->SBC_Player->IsMOving = 0;
 		}
 	}
 	//------------------------------------------------ Back
-	if (GetAsyncKeyState(VK_DOWN) < 0 && App->Cl_Player->PlayerAdded == 1 && App->Cl19_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
+	if (GetAsyncKeyState(VK_DOWN) < 0 && App->SBC_Player->PlayerAdded == 1 && App->Cl19_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
 	{
-		App->Cl_Player->Back();
-		App->Cl_Player->IsMOving_Back = 1;
+		App->SBC_Player->Back();
+		App->SBC_Player->IsMOving_Back = 1;
 	}
 	else
 	{
-		if (App->Cl_Player->PlayerAdded == 1 && App->Cl_Player->IsMOving_Back == 1 && App->Cl19_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
+		if (App->SBC_Player->PlayerAdded == 1 && App->SBC_Player->IsMOving_Back == 1 && App->Cl19_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
 		{
-			App->Cl_Player->Stop();
-			App->Cl_Player->IsMOving_Back = 0;
+			App->SBC_Player->Stop();
+			App->SBC_Player->IsMOving_Back = 0;
 		}
 	}
 
 	//------------------------------------------------ Turn Right
-	if (GetAsyncKeyState(VK_RIGHT) < 0 && App->Cl_Player->PlayerAdded == 1)
+	if (GetAsyncKeyState(VK_RIGHT) < 0 && App->SBC_Player->PlayerAdded == 1)
 	{
 		App->Cl19_Ogre->OgreListener->toggleTimer -= deltaTime;
 
@@ -112,14 +112,14 @@ void GD_Keyboard::Keyboard_Monitor(float deltaTime)
 
 			float Delta = App->Cl_Utilities->DegreesToRadians(1);
 
-			App->Cl_Player->Rotate(Rotate, false);
+			App->SBC_Player->Rotate(Rotate, false);
 
 			App->Cl19_Ogre->OgreListener->toggleTimer = 0.01;
 		}
 	}
 
 	//------------------------------------------------ Turn Left
-	if (GetAsyncKeyState(VK_LEFT) < 0 && App->Cl_Player->PlayerAdded == 1)
+	if (GetAsyncKeyState(VK_LEFT) < 0 && App->SBC_Player->PlayerAdded == 1)
 	{
 		App->Cl19_Ogre->OgreListener->toggleTimer -= deltaTime;
 
@@ -132,7 +132,7 @@ void GD_Keyboard::Keyboard_Monitor(float deltaTime)
 
 			float Delta = App->Cl_Utilities->DegreesToRadians(1);
 
-			App->Cl_Player->Rotate(Rotate, false);
+			App->SBC_Player->Rotate(Rotate, false);
 
 			App->Cl19_Ogre->OgreListener->toggleTimer = 0.01;
 		}
@@ -170,17 +170,17 @@ void GD_Keyboard::Keyboard_Monitor(float deltaTime)
 		}
 		/*else
 		{
-			if (App->Cl_Player->PlayerAdded == 1)
+			if (App->SBC_Player->PlayerAdded == 1)
 			{
-				App->Cl_Player->IsMOving = 1;
-				App->Cl_Player->Forward(deltaTime);
+				App->SBC_Player->IsMOving = 1;
+				App->SBC_Player->Forward(deltaTime);
 			}
 			else
 			{
-				if (App->Cl_Player->IsMOving == 1)
+				if (App->SBC_Player->IsMOving == 1)
 				{
-					App->Cl_Player->Stop();
-					App->Cl_Player->IsMOving = 0;
+					App->SBC_Player->Stop();
+					App->SBC_Player->IsMOving = 0;
 				}
 			}
 		}*/
@@ -195,11 +195,11 @@ void GD_Keyboard::Keyboard_Monitor(float deltaTime)
 		}
 		else
 		{
-			if (App->Cl_Player->PlayerAdded == 1)
+			if (App->SBC_Player->PlayerAdded == 1)
 			{
 
-				App->Cl_Player->Forward(deltaTime);
-				App->Cl_Player->IsMOving = 1;
+				App->SBC_Player->Forward(deltaTime);
+				App->SBC_Player->IsMOving = 1;
 			}
 		}
 	}
@@ -209,10 +209,10 @@ void GD_Keyboard::Keyboard_Monitor(float deltaTime)
 		{
 
 		}
-		else if (App->Cl_Player->PlayerAdded == 1 && App->Cl_Player->IsMOving == 1)
+		else if (App->SBC_Player->PlayerAdded == 1 && App->SBC_Player->IsMOving == 1)
 		{
-			App->Cl_Player->Stop();
-			App->Cl_Player->IsMOving = 0;
+			App->SBC_Player->Stop();
+			App->SBC_Player->IsMOving = 0;
 		}
 	}
 
@@ -224,9 +224,9 @@ void GD_Keyboard::Keyboard_Monitor(float deltaTime)
 		}
 		/*else
 		{
-		if (App->Cl_Player->PlayerAdded == 1)
+		if (App->SBC_Player->PlayerAdded == 1)
 		{
-		App->Cl_Player->Back();
+		App->SBC_Player->Back();
 		}
 		}*/
 	}
@@ -241,10 +241,10 @@ void GD_Keyboard::Keyboard_Monitor(float deltaTime)
 		}
 		else
 		{
-			if (App->Cl_Player->PlayerAdded == 1)
+			if (App->SBC_Player->PlayerAdded == 1)
 			{
-				App->Cl_Player->Back();
-				App->Cl_Player->IsMOving_Back = 1;
+				App->SBC_Player->Back();
+				App->SBC_Player->IsMOving_Back = 1;
 			}
 		}
 	}
@@ -254,10 +254,10 @@ void GD_Keyboard::Keyboard_Monitor(float deltaTime)
 		{
 
 		}
-		else if (App->Cl_Player->PlayerAdded == 1 && App->Cl_Player->IsMOving_Back == 1)
+		else if (App->SBC_Player->PlayerAdded == 1 && App->SBC_Player->IsMOving_Back == 1)
 		{
-			App->Cl_Player->Stop();
-			App->Cl_Player->IsMOving_Back = 0;
+			App->SBC_Player->Stop();
+			App->SBC_Player->IsMOving_Back = 0;
 		}
 	}
 
@@ -270,10 +270,10 @@ void GD_Keyboard::Keyboard_Monitor(float deltaTime)
 		}
 		else
 		{
-			if (App->Cl_Player->PlayerAdded == 1)
+			if (App->SBC_Player->PlayerAdded == 1)
 			{
-				App->Cl_Player->Move_Right();
-				App->Cl_Player->IsMOving_Right = 1;
+				App->SBC_Player->Move_Right();
+				App->SBC_Player->IsMOving_Right = 1;
 			}
 		}
 	}
@@ -283,10 +283,10 @@ void GD_Keyboard::Keyboard_Monitor(float deltaTime)
 		{
 
 		}
-		else if (App->Cl_Player->PlayerAdded == 1 && App->Cl_Player->IsMOving_Right == 1)
+		else if (App->SBC_Player->PlayerAdded == 1 && App->SBC_Player->IsMOving_Right == 1)
 		{
-			App->Cl_Player->Stop();
-			App->Cl_Player->IsMOving_Right = 0;
+			App->SBC_Player->Stop();
+			App->SBC_Player->IsMOving_Right = 0;
 		}
 	}
 
@@ -299,10 +299,10 @@ void GD_Keyboard::Keyboard_Monitor(float deltaTime)
 		}
 		else
 		{
-			if (App->Cl_Player->PlayerAdded == 1)
+			if (App->SBC_Player->PlayerAdded == 1)
 			{
-				App->Cl_Player->Move_Left();
-				App->Cl_Player->IsMOving_Left = 1;
+				App->SBC_Player->Move_Left();
+				App->SBC_Player->IsMOving_Left = 1;
 			}
 		}
 	}
@@ -312,10 +312,10 @@ void GD_Keyboard::Keyboard_Monitor(float deltaTime)
 		{
 
 		}
-		else if (App->Cl_Player->PlayerAdded == 1 && App->Cl_Player->IsMOving_Left == 1)
+		else if (App->SBC_Player->PlayerAdded == 1 && App->SBC_Player->IsMOving_Left == 1)
 		{
-			App->Cl_Player->Stop();
-			App->Cl_Player->IsMOving_Left = 0;
+			App->SBC_Player->Stop();
+			App->SBC_Player->IsMOving_Left = 0;
 		}
 	}
 

@@ -519,21 +519,21 @@ LRESULT CALLBACK GD19_Properties::GD_Properties_Proc(HWND hDlg, UINT message, WP
 
 			if (App->Cl_Object_Props->Is_Player == 1)
 			{
-				int f = App->Cl_Player->mObject->getCollisionFlags();
+				int f = App->SBC_Player->mObject->getCollisionFlags();
 
-				if (App->Cl_Player->ShowDebug == 1)
+				if (App->SBC_Player->ShowDebug == 1)
 				{
 				//	App->Cl19_Ogre->RenderListener->ShowDebug = 0;
 					App->Cl_Object_Props->ToggleObjectDebug = 0;
-					App->Cl_Player->ShowDebug = 0;
-					App->Cl_Player->mObject->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+					App->SBC_Player->ShowDebug = 0;
+					App->SBC_Player->mObject->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 				}
 				else
 				{
 				//	App->Cl19_Ogre->RenderListener->ShowDebug = 1;
 					App->Cl_Object_Props->ToggleObjectDebug = 1;
-					App->Cl_Player->ShowDebug = 1;
-					App->Cl_Player->mObject->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+					App->SBC_Player->ShowDebug = 1;
+					App->SBC_Player->mObject->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 				}
 				return 1;
 			}
@@ -1381,7 +1381,7 @@ bool GD19_Properties::Update_ListView_Player()
 	int index = App->Cl_Properties->Current_Selected_Object;
 
 	char buff[255];
-	strcpy(buff, App->Cl_Player->PlayerName);
+	strcpy(buff, App->SBC_Player->PlayerName);
 	strcat(buff, "   (Player)");
 	SetDlgItemText(App->Cl_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
 
@@ -1392,12 +1392,12 @@ bool GD19_Properties::Update_ListView_Player()
 	char chr_StartPosY[100];
 	char chr_StartPosZ[100];
 
-	sprintf(chr_Speed, "%.3f ", App->Cl_Player->Ground_speed);
-	sprintf(chr_Height, "%.3f ", App->Cl_Player->PlayerHeight);
+	sprintf(chr_Speed, "%.3f ", App->SBC_Player->Ground_speed);
+	sprintf(chr_Height, "%.3f ", App->SBC_Player->PlayerHeight);
 
-	sprintf(chr_StartPosX, "%.3f ", App->Cl_Player->StartPos.x);
-	sprintf(chr_StartPosY, "%.3f ", App->Cl_Player->StartPos.y);
-	sprintf(chr_StartPosZ, "%.3f ", App->Cl_Player->StartPos.z);
+	sprintf(chr_StartPosX, "%.3f ", App->SBC_Player->StartPos.x);
+	sprintf(chr_StartPosY, "%.3f ", App->SBC_Player->StartPos.y);
+	sprintf(chr_StartPosZ, "%.3f ", App->SBC_Player->StartPos.z);
 
 	const int NUM_ITEMS = 9;
 	const int NUM_COLS = 2;
@@ -1406,7 +1406,7 @@ bool GD19_Properties::Update_ListView_Player()
 	memset(&pitem, 0, sizeof(LV_ITEM));
 	pitem.mask = LVIF_TEXT;
 
-	grid[0][0] = "Name",			grid[1][0] = App->Cl_Player->PlayerName;
+	grid[0][0] = "Name",			grid[1][0] = App->SBC_Player->PlayerName;
 	grid[0][1] = "Mode",			grid[1][1] = "1st_Person";
 	grid[0][2] = " ",				grid[1][2] = " ";
 	grid[0][3] = "Ground Speed",	grid[1][3] = chr_Speed;
@@ -1450,7 +1450,7 @@ bool GD19_Properties::Update_ListView_Player_Physics()
 	int index = App->Cl_Properties->Current_Selected_Object;
 
 	char buff[255];
-	strcpy(buff, App->Cl_Player->PlayerName);
+	strcpy(buff, App->SBC_Player->PlayerName);
 	strcat(buff, "   (Physics)");
 	SetDlgItemText(App->Cl_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
 
@@ -1464,10 +1464,10 @@ bool GD19_Properties::Update_ListView_Player_Physics()
 	char chr_Radius[100];
 	char chr_Height[100];
 
-	sprintf(chr_Mass, "%.3f ", App->Cl_Player->Capsule_Mass);
-	//sprintf(chr_Mass,"%.3f ",App->GDCL_Player->mObject->getGravity().getY());
-	sprintf(chr_Radius, "%.3f ", App->Cl_Player->Capsule_Radius);
-	sprintf(chr_Height, "%.3f ", App->Cl_Player->Capsule_Height);
+	sprintf(chr_Mass, "%.3f ", App->SBC_Player->Capsule_Mass);
+	//sprintf(chr_Mass,"%.3f ",App->GDSBC_Player->mObject->getGravity().getY());
+	sprintf(chr_Radius, "%.3f ", App->SBC_Player->Capsule_Radius);
+	sprintf(chr_Height, "%.3f ", App->SBC_Player->Capsule_Height);
 
 
 	const int NUM_ITEMS = 7;
@@ -1477,7 +1477,7 @@ bool GD19_Properties::Update_ListView_Player_Physics()
 	memset(&pitem, 0, sizeof(LV_ITEM));
 	pitem.mask = LVIF_TEXT;
 
-	grid[0][0] = "Name",		grid[1][0] = App->Cl_Player->PlayerName;
+	grid[0][0] = "Name",		grid[1][0] = App->SBC_Player->PlayerName;
 	grid[0][1] = "Type",		grid[1][1] = chr_PhysicsType;
 	grid[0][2] = "Shape ",		grid[1][2] = chr_PhysicsShape;
 	grid[0][3] = " ",			grid[1][3] = " ";
@@ -1684,7 +1684,7 @@ bool GD19_Properties::Edit_Player_Onclick(LPARAM lParam)
 	if (result == 0)
 	{
 		strcpy(App->Cl_Dialogs->btext, "Change Object Name");
-		strcpy(App->Cl_Dialogs->Chr_Text, App->Cl_Player->PlayerName);
+		strcpy(App->Cl_Dialogs->Chr_Text, App->SBC_Player->PlayerName);
 
 		App->Cl_Dialogs->Dialog_Text(1);
 
@@ -1694,7 +1694,7 @@ bool GD19_Properties::Edit_Player_Onclick(LPARAM lParam)
 		}
 
 		// Needs Duplicate Name test 
-		strcpy(App->Cl_Player->PlayerName, App->Cl_Dialogs->Chr_Text);
+		strcpy(App->SBC_Player->PlayerName, App->Cl_Dialogs->Chr_Text);
 
 		App->Cl_FileView->ChangeItem_Name(NULL, App->Cl_Dialogs->Chr_Text);
 		Update_ListView_Player();
@@ -1704,7 +1704,7 @@ bool GD19_Properties::Edit_Player_Onclick(LPARAM lParam)
 	if (result == 0)
 	{
 		char chr_Value[10];
-		sprintf(chr_Value, "%.3f ", App->Cl_Player->Ground_speed);
+		sprintf(chr_Value, "%.3f ", App->SBC_Player->Ground_speed);
 
 		strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
 		strcpy(App->Cl_Dialogs->btext, "Ground Speed");
@@ -1712,7 +1712,7 @@ bool GD19_Properties::Edit_Player_Onclick(LPARAM lParam)
 		App->Cl_Dialogs->Dialog_Float();
 		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
 
-		App->Cl_Player->Ground_speed = App->Cl_Dialogs->mFloat;
+		App->SBC_Player->Ground_speed = App->Cl_Dialogs->mFloat;
 		Update_ListView_Player();
 
 		return 1;
@@ -1722,7 +1722,7 @@ bool GD19_Properties::Edit_Player_Onclick(LPARAM lParam)
 	if (result == 0)
 	{
 		char chr_Value[10];
-		sprintf(chr_Value, "%.3f ", App->Cl_Player->PlayerHeight);
+		sprintf(chr_Value, "%.3f ", App->SBC_Player->PlayerHeight);
 
 		strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
 
@@ -1731,7 +1731,7 @@ bool GD19_Properties::Edit_Player_Onclick(LPARAM lParam)
 		App->Cl_Dialogs->Dialog_Float();
 		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
 
-		App->Cl_Player->PlayerHeight = App->Cl_Dialogs->mFloat;
+		App->SBC_Player->PlayerHeight = App->Cl_Dialogs->mFloat;
 		Update_ListView_Player();
 		return 1;
 	}
@@ -1740,7 +1740,7 @@ bool GD19_Properties::Edit_Player_Onclick(LPARAM lParam)
 	if (result == 0)
 	{
 		char chr_Value[10];
-		sprintf(chr_Value, "%.3f ", App->Cl_Player->StartPos.x);
+		sprintf(chr_Value, "%.3f ", App->SBC_Player->StartPos.x);
 
 		strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
 
@@ -1749,7 +1749,7 @@ bool GD19_Properties::Edit_Player_Onclick(LPARAM lParam)
 		App->Cl_Dialogs->Dialog_Float();
 		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
 
-		App->Cl_Player->StartPos.x = App->Cl_Dialogs->mFloat;
+		App->SBC_Player->StartPos.x = App->Cl_Dialogs->mFloat;
 		App->Cl_Scene_Data->S_Player_Locations[0]->Current_Position.x = App->Cl_Dialogs->mFloat;
 		App->Cl_Scene_Data->S_Player_Locations[0]->Physics_Position.setX(App->Cl_Dialogs->mFloat);
 		Update_ListView_Player();
@@ -1763,7 +1763,7 @@ bool GD19_Properties::Edit_Player_Onclick(LPARAM lParam)
 	{
 		
 		char chr_Value[10];
-		sprintf(chr_Value, "%.3f ", App->Cl_Player->StartPos.y);
+		sprintf(chr_Value, "%.3f ", App->SBC_Player->StartPos.y);
 
 		strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
 
@@ -1772,7 +1772,7 @@ bool GD19_Properties::Edit_Player_Onclick(LPARAM lParam)
 		App->Cl_Dialogs->Dialog_Float();
 		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
 
-		App->Cl_Player->StartPos.y = App->Cl_Dialogs->mFloat;
+		App->SBC_Player->StartPos.y = App->Cl_Dialogs->mFloat;
 		App->Cl_Scene_Data->S_Player_Locations[0]->Current_Position.y = App->Cl_Dialogs->mFloat;
 		App->Cl_Scene_Data->S_Player_Locations[0]->Physics_Position.setY(App->Cl_Dialogs->mFloat);
 		Update_ListView_Player();
@@ -1785,7 +1785,7 @@ bool GD19_Properties::Edit_Player_Onclick(LPARAM lParam)
 	if (result == 0)
 	{
 		char chr_Value[10];
-		sprintf(chr_Value, "%.3f ", App->Cl_Player->StartPos.z);
+		sprintf(chr_Value, "%.3f ", App->SBC_Player->StartPos.z);
 
 		strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
 
@@ -1794,7 +1794,7 @@ bool GD19_Properties::Edit_Player_Onclick(LPARAM lParam)
 		App->Cl_Dialogs->Dialog_Float();
 		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
 
-		App->Cl_Player->StartPos.z = App->Cl_Dialogs->mFloat;
+		App->SBC_Player->StartPos.z = App->Cl_Dialogs->mFloat;
 		App->Cl_Scene_Data->S_Player_Locations[0]->Current_Position.z = App->Cl_Dialogs->mFloat;
 		App->Cl_Scene_Data->S_Player_Locations[0]->Physics_Position.setZ(App->Cl_Dialogs->mFloat);
 		Update_ListView_Player();
@@ -1823,7 +1823,7 @@ bool GD19_Properties::Edit_Player_Physics_Onclick(LPARAM lParam)
 	if (result == 0)
 	{
 		char chr_Radius[10];
-		sprintf(chr_Radius, "%.3f ", App->Cl_Player->mObject->getInvMass());
+		sprintf(chr_Radius, "%.3f ", App->SBC_Player->mObject->getInvMass());
 
 		strcpy(App->Cl_Dialogs->Chr_Float, chr_Radius);
 		strcpy(App->Cl_Dialogs->btext, "Player Physics Mass");
@@ -1832,7 +1832,7 @@ bool GD19_Properties::Edit_Player_Physics_Onclick(LPARAM lParam)
 		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
 
 
-		App->Cl_Player->mObject->setMassProps(App->Cl_Dialogs->mFloat, btVector3(0, 0, 0));
+		App->SBC_Player->mObject->setMassProps(App->Cl_Dialogs->mFloat, btVector3(0, 0, 0));
 
 		Update_ListView_Player_Physics();
 
@@ -1843,7 +1843,7 @@ bool GD19_Properties::Edit_Player_Physics_Onclick(LPARAM lParam)
 	if (result == 0)
 	{
 		char chr_Radius[10];
-		sprintf(chr_Radius, "%.3f ", App->Cl_Player->Capsule_Radius);
+		sprintf(chr_Radius, "%.3f ", App->SBC_Player->Capsule_Radius);
 
 		strcpy(App->Cl_Dialogs->Chr_Float, chr_Radius);
 		strcpy(App->Cl_Dialogs->btext, "Player Physics Shape Radius");
@@ -1854,11 +1854,11 @@ bool GD19_Properties::Edit_Player_Physics_Onclick(LPARAM lParam)
 			return TRUE; 
 		}
 
-		App->Cl_Player->Capsule_Radius = App->Cl_Dialogs->mFloat;
+		App->SBC_Player->Capsule_Radius = App->Cl_Dialogs->mFloat;
 
 		Update_ListView_Player_Physics();
 
-		App->Cl_Player->Adjust_Capsule();
+		App->SBC_Player->Adjust_Capsule();
 		return 1;
 	}
 
@@ -1866,7 +1866,7 @@ bool GD19_Properties::Edit_Player_Physics_Onclick(LPARAM lParam)
 	if (result == 0)
 	{
 		char chr_Height[10];
-		sprintf(chr_Height, "%.3f ", App->Cl_Player->Capsule_Height);
+		sprintf(chr_Height, "%.3f ", App->SBC_Player->Capsule_Height);
 
 		strcpy(App->Cl_Dialogs->Chr_Float, chr_Height);
 		strcpy(App->Cl_Dialogs->btext, "Player Physics Shape Height");
@@ -1874,9 +1874,9 @@ bool GD19_Properties::Edit_Player_Physics_Onclick(LPARAM lParam)
 		App->Cl_Dialogs->Dialog_Float();
 		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
 
-		App->Cl_Player->Capsule_Height = App->Cl_Dialogs->mFloat;
+		App->SBC_Player->Capsule_Height = App->Cl_Dialogs->mFloat;
 
-		App->Cl_Player->Adjust_Capsule();
+		App->SBC_Player->Adjust_Capsule();
 		return 1;
 	}
 	return 1;

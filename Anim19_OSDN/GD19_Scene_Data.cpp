@@ -209,20 +209,20 @@ void GD19_Scene_Data::ClearScene(void)
 	{
 		App->Cl19_Ogre->OgreListener->Animate_Ogre = 0;
 
-		if(App->Cl_Player->PlayerAdded == 1)
+		if(App->SBC_Player->PlayerAdded == 1)
 		{
-			App->Cl_Player->PlayerAdded = 0;
+			App->SBC_Player->PlayerAdded = 0;
 			App->Cl19_Ogre->OgreListener->Animate_State->setEnabled(false);
 			App->Cl19_Ogre->OgreListener->Animate_State2->setEnabled(false);
 			App->Cl19_Ogre->OgreListener->Animate_State = NULL;
 			App->Cl19_Ogre->OgreListener->Animate_State2 = NULL;
 
 
-			App->Cl_Player->Player_Node->detachAllObjects();  // Remove Player
-			App->Cl19_Ogre->mSceneMgr->destroySceneNode(App->Cl_Player->Player_Node);
-			App->Cl19_Ogre->mSceneMgr->destroyEntity(App->Cl_Player->Player_Ent);
-			App->Cl_Player->Player_Node = NULL;
-			App->Cl_Player->Player_Ent = NULL;
+			App->SBC_Player->Player_Node->detachAllObjects();  // Remove Player
+			App->Cl19_Ogre->mSceneMgr->destroySceneNode(App->SBC_Player->Player_Node);
+			App->Cl19_Ogre->mSceneMgr->destroyEntity(App->SBC_Player->Player_Ent);
+			App->SBC_Player->Player_Node = NULL;
+			App->SBC_Player->Player_Ent = NULL;
 		}
 
 		
@@ -580,7 +580,7 @@ bool GD19_Scene_Data::Start_Scene()
 
 	strcpy(Cl_Object[Index]->Name,"Main_Room2");
 
-	App->Cl_Player->SetUp();
+	App->SBC_Player->SetUp();
 	
 	App->Cl19_Ogre->OgreListener->GD_Dubug_Physics = 1;
 

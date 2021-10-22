@@ -583,7 +583,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		//------------------------- Mode
 		case ID_MODE_FREECAM:
 		{
-			if (App->Cl_Player->PlayerAdded == 1)
+			if (App->SBC_Player->PlayerAdded == 1)
 			{
 				App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
 			}
@@ -592,7 +592,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		case ID_MODE_FIRSTPERSON:
 		{
-			if (App->Cl_Player->PlayerAdded == 1)
+			if (App->SBC_Player->PlayerAdded == 1)
 			{
 				App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamFirst;
 			}

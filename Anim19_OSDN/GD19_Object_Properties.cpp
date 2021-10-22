@@ -290,19 +290,19 @@ LRESULT CALLBACK GD19_Object_Properties::GD_Properties_Proc(HWND hDlg, UINT mess
 		
 				if(App->Cl_Object_Props->Is_Player == 1)
 				{
-					int f = App->Cl_Player->mObject->getCollisionFlags();
+					int f = App->SBC_Player->mObject->getCollisionFlags();
 
-					if(App->Cl_Player->ShowDebug == 1)
+					if(App->SBC_Player->ShowDebug == 1)
 					{
 						App->Cl_Object_Props->ToggleObjectDebug = 0;
-						App->Cl_Player->ShowDebug = 0;
-						App->Cl_Player->mObject->setCollisionFlags(f^btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+						App->SBC_Player->ShowDebug = 0;
+						App->SBC_Player->mObject->setCollisionFlags(f^btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 					}
 					else
 					{
 						App->Cl_Object_Props->ToggleObjectDebug = 1;
-						App->Cl_Player->ShowDebug = 1;
-						App->Cl_Player->mObject->setCollisionFlags(f^btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+						App->SBC_Player->ShowDebug = 1;
+						App->SBC_Player->mObject->setCollisionFlags(f^btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 					}
 					return 1;
 				}

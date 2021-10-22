@@ -111,39 +111,39 @@ void GD19_Load_Scene::Load_Scene40()
 // *************************************************************************
 bool GD19_Load_Scene::Load_Player40()
 {
-	char chr_Tag1[1024];
-	float x = 0;
-	float y = 0;
-	float z = 0;
+	//char chr_Tag1[1024];
+	//float x = 0;
+	//float y = 0;
+	//float z = 0;
 
-	// Name
-	App->Cl_Ini->GetString("Player", "Name", chr_Tag1, 1024);
-	strcpy(App->Cl_Player->PlayerName, chr_Tag1);
-	
-	// Position
-	App->Cl_Ini->GetString("Player", "Start_Position", chr_Tag1, 1024);
-	sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
-	App->Cl_Player->StartPos.x = x;
-	App->Cl_Player->StartPos.y = y;
-	App->Cl_Player->StartPos.z = z;
+	//// Name
+	//App->Cl_Ini->GetString("Player", "Name", chr_Tag1, 1024);
+	//strcpy(App->SBC_Player->PlayerName, chr_Tag1);
+	//
+	//// Position
+	//App->Cl_Ini->GetString("Player", "Start_Position", chr_Tag1, 1024);
+	//sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+	//App->Cl_Player->StartPos.x = x;
+	//App->Cl_Player->StartPos.y = y;
+	//App->Cl_Player->StartPos.z = z;
 
-	App->Cl_Ini->GetString("Player", "Shape", chr_Tag1, 1024); // Capsule
+	//App->Cl_Ini->GetString("Player", "Shape", chr_Tag1, 1024); // Capsule
 
-	x = App->Cl_Ini->Get_Float("Player", "Mass");
-	y = App->Cl_Ini->Get_Float("Player", "Radius");
-	z = App->Cl_Ini->Get_Float("Player", "Height");
+	//x = App->Cl_Ini->Get_Float("Player", "Mass");
+	//y = App->Cl_Ini->Get_Float("Player", "Radius");
+	//z = App->Cl_Ini->Get_Float("Player", "Height");
 
-	App->Cl_Player->Capsule_Mass = x;
-	App->Cl_Player->Capsule_Radius = y;
-	App->Cl_Player->Capsule_Height = z;
+	//App->Cl_Player->Capsule_Mass = x;
+	//App->Cl_Player->Capsule_Radius = y;
+	//App->Cl_Player->Capsule_Height = z;
 
-	x = App->Cl_Ini->Get_Float("Player", "Ground_Speed");
-	if (x == 0) { x = 2.220; }
-	App->Cl_Player->Ground_speed = x;
+	//x = App->Cl_Ini->Get_Float("Player", "Ground_Speed");
+	//if (x == 0) { x = 2.220; }
+	//App->Cl_Player->Ground_speed = x;
 
-	x = App->Cl_Ini->Get_Float("Player", "Cam_Height");
-	if (x == 0) { x = 6.00; }
-	App->Cl_Player->PlayerHeight = x;
+	//x = App->Cl_Ini->Get_Float("Player", "Cam_Height");
+	//if (x == 0) { x = 6.00; }
+	//App->Cl_Player->PlayerHeight = x;
 
 	return 1;
 }
@@ -580,7 +580,7 @@ bool GD19_Load_Scene::Populate_Level40()
 
 	if(App->Cl_Scene_Data->S_LoadOptions[0]->Has_Player == 1)
 	{
-		App->Cl_Player->Load_Player();
+		App->SBC_Player->Load_Player();
 	}
 
 	if(App->Cl_Scene_Data->S_LoadOptions[0]->Has_Objects == 1)
@@ -590,7 +590,7 @@ bool GD19_Load_Scene::Populate_Level40()
 
 	if(App->Cl_Scene_Data->S_LoadOptions[0]->Has_Player == 1)
 	{
-		App->Cl_Player->PlayerAdded = 1;
+		App->SBC_Player->PlayerAdded = 1;
 	}
 
 	App->Cl_Scene_Data->SceneLoaded = 1;

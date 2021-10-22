@@ -35,7 +35,6 @@ ebopster
 #include "GD19_Save_Scene.h"
 #include "GD19_Scene_Data.h"
 #include "GD19_Bullet.h"
-#include "GD19_Player.h"
 #include "GD19_Collision.h"
 #include "GD19_Ini.h"
 #include "GD19_SoundMgr.h"
@@ -105,7 +104,6 @@ public:
 	
 	GD19_Scene_Data*	Cl_Scene_Data;
 	GD19_Bullet*		Cl_Bullet;
-	GD19_Player*		Cl_Player;
 	GD19_Collision*		Cl_Collision;
 	T_Ini*				Cl_Ini;
 	GD19_SoundMgr*		Cl_SoundMgr;

@@ -130,13 +130,13 @@ void GD19_Bullet::Reset_Physics(void)
 		Count++;
 	}
 	
-	if(App->Cl_Player->PlayerAdded == 1)// && GD_Reset_Player == 1)
+	if(App->SBC_Player->PlayerAdded == 1)// && GD_Reset_Player == 1)
 	{
 		btVector3 zeroVector(0,0,0);
 
-		x = App->Cl_Player->StartPos.x;
-		y = App->Cl_Player->StartPos.y;
-		z = App->Cl_Player->StartPos.z;
+		x = App->SBC_Player->StartPos.x;
+		y = App->SBC_Player->StartPos.y;
+		z = App->SBC_Player->StartPos.z;
 		btVector3 initialPosition(x,y,z);
 
 		btTransform startTransform;
@@ -144,13 +144,13 @@ void GD19_Bullet::Reset_Physics(void)
 		startTransform.setRotation(btQuaternion(1.0f, 0.0f, 0.0f, 0.0f));
 		startTransform.setOrigin(initialPosition);
 
-		App->Cl_Player->mObject->clearForces();
-		App->Cl_Player->mObject->setLinearVelocity(zeroVector);
-		App->Cl_Player->mObject->setAngularVelocity(zeroVector);
+		App->SBC_Player->mObject->clearForces();
+		App->SBC_Player->mObject->setLinearVelocity(zeroVector);
+		App->SBC_Player->mObject->setAngularVelocity(zeroVector);
 
-		App->Cl_Player->mObject->setWorldTransform(startTransform);
-		App->Cl_Player->mObject->getMotionState()->setWorldTransform(startTransform);
-		App->Cl_Player->mObject->activate(true);
+		App->SBC_Player->mObject->setWorldTransform(startTransform);
+		App->SBC_Player->mObject->getMotionState()->setWorldTransform(startTransform);
+		App->SBC_Player->mObject->activate(true);
 	}
 
 	App->Cl19_Ogre->OgreListener->GD_Run_Physics = 1;

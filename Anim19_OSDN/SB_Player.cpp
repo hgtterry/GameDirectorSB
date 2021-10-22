@@ -564,9 +564,9 @@ void SB_Player::Save_Location(char* name)
 
 
 	strcpy(App->Cl_Scene_Data->S_Player_Locations[Count]->Name, name);
-	App->Cl_Scene_Data->S_Player_Locations[Count]->Current_Position = App->Cl_Player->Player_Node->getPosition();
-	App->Cl_Scene_Data->S_Player_Locations[Count]->Physics_Position = App->Cl_Player->mObject->getWorldTransform().getOrigin();
-	App->Cl_Scene_Data->S_Player_Locations[Count]->Physics_Rotation = App->Cl_Player->mObject->getWorldTransform().getRotation();
+	App->Cl_Scene_Data->S_Player_Locations[Count]->Current_Position = App->SBC_Player->Player_Node->getPosition();
+	App->Cl_Scene_Data->S_Player_Locations[Count]->Physics_Position = App->SBC_Player->mObject->getWorldTransform().getOrigin();
+	App->Cl_Scene_Data->S_Player_Locations[Count]->Physics_Rotation = App->SBC_Player->mObject->getWorldTransform().getRotation();
 	App->Cl_Scene_Data->Player_Location_Count++;
 
 }
