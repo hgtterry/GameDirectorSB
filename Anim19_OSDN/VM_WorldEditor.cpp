@@ -195,10 +195,11 @@ LRESULT CALLBACK VM_WorldEditor::WE_import_Proc(HWND hDlg, UINT message, WPARAM 
 
 			App->CL_Vm_Model->Model_Type = LoadedFile_Assimp;
 
-			App->Cl_Vm_WorldEditor->LoadFile();
+			App->Cl_Vm_WorldEditor->LoadTextures_TXL();
 
-			App->CL_Importer->Set_Equity();
+			//App->CL_Importer->Set_Equity();
 
+			App->CL_Vm_Model->Model_Loaded = 1;
 			App->Cl_Vm_WorldEditor->Adjust();
 			
 			EndDialog(hDlg, LOWORD(wParam));
@@ -226,11 +227,9 @@ LRESULT CALLBACK VM_WorldEditor::WE_import_Proc(HWND hDlg, UINT message, WPARAM 
 // *************************************************************************
 void VM_WorldEditor::Adjust()
 {
-
 	App->Cl_Vm_Dimensions->Rotate_Z_Model(90);
 	App->Cl_Vm_Dimensions->Rotate_X_Model(-90);
 	App->Cl_Vm_Dimensions->Centre_Model_Mid();
-	App->Cl_Grid->Reset_View();
 }
 
 // *************************************************************************
@@ -245,7 +244,7 @@ void VM_WorldEditor::Change_Textures()
 		return;
 	}
 
-	LoadFile();
+	LoadTextures_TXL();
 }
 
 // *************************************************************************
@@ -299,9 +298,9 @@ bool VM_WorldEditor::NonFatalError(const char *Msg, ...)
 }
 
 // *************************************************************************
-// *						LoadFile  Terry Flanigan 			  		   *
+// *					LoadTextures_TXL  Terry Flanigan 				   *
 // *************************************************************************
-bool VM_WorldEditor::LoadFile()
+bool VM_WorldEditor::LoadTextures_TXL()
 {
 	geVFile *			VFS = NULL;
 	geVFile_Finder *	Finder = NULL;

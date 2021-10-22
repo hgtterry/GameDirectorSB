@@ -35,7 +35,7 @@ public:
 	void Change_Textures();
 	bool Start_WE_import();
 
-	bool LoadFile();
+	bool LoadTextures_TXL();
 
 	bool Txt_OpenFile(char* Extension, char* Title, char* StartDirectory);
 

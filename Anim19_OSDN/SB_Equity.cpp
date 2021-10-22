@@ -218,6 +218,12 @@ LRESULT CALLBACK SB_Equity::MeshDesign_Proc(HWND hDlg, UINT message, WPARAM wPar
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_BTEQCONVERT)
+		{
+			App->SBC_Equity->Convert_Model();
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == ID_IMPORT_WORLDEDITOR)
 		{
 			App->CL_Importer->WorldEditor_Loader();
@@ -646,8 +652,6 @@ void SB_Equity::Close_OgreWindow(void)
 // *************************************************************************
 void SB_Equity::Update_Model(void)
 {
-	App->CL_Vm_Model->Clear_ModelData();
-
 	App->Cl_Vm_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
 
 	bool Test = App->Cl_Vm_Assimp->LoadFile(App->Cl_Vm_Preferences->Pref_WE_Path_FileName);
@@ -657,18 +661,22 @@ void SB_Equity::Update_Model(void)
 		return;
 	}
 
-	strcpy(App->CL_Vm_FileIO->Model_Path_FileName, App->Cl_Vm_Preferences->Pref_WE_Path_FileName);
-	strcpy(App->CL_Vm_FileIO->Model_FileName, App->Cl_Vm_Preferences->Pref_WE_JustFileName);
-
-	App->CL_Vm_Model->Set_Paths();
-
 	App->CL_Vm_Model->Model_Type = LoadedFile_Assimp;
 
-	App->Cl_Vm_WorldEditor->LoadFile();
-
-	App->CL_Importer->Set_Equity();
+	App->Cl_Vm_WorldEditor->LoadTextures_TXL();
 
 	App->Cl_Vm_WorldEditor->Adjust();
 
 	App->Say("Model Updated");
 }
+
+// *************************************************************************
+// *					Convert_Model Terry Flanigan					   *
+// *************************************************************************
+void SB_Equity::Convert_Model(void)
+{
+	App->CL_Vm_Exporter->Ogre3D_Model();
+
+	App->Say("Converted");
+}
+

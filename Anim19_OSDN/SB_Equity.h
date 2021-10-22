@@ -37,6 +37,7 @@ protected:
 	void Hair_Update(bool Create);
 
 	void Update_Model(void);
+	void Convert_Model(void);
 
 	HWND MeshView_Hwnd;
 	HWND MeshViewDialog_Hwnd;

@@ -61,22 +61,5 @@ void VM_Exporter::Ogre3D_Model(void)
 
 	if (Test == 0) { return; }
 
-	/*if (App->CL_Vm_Model->ItsAnOgreModel == 1)
-	{
-		App->Cl_Export_Ogre3D->Start_OgreExportOptions();
-		if (App->Cl_Export_Ogre3D->ExportOptions_Cancled == 1) { return; }
-	}
-
-
-	if (App->CL_Vm_Model->ItsAnOgreModel == 1)
-	{
-		App->Cl_Export_Ogre3D->Export_OgreToOgre();
-		App->CL_Dialogs->Message("Ogre3D Model Saved successfully");
-		return;
-	}*/
-	//else
-	//{
-		App->Cl_Vm_Ogre3d->Export_AssimpToOgre();
-		App->Say("Ogre3D Model Saved successfully");
-	//}
+	App->Cl_Vm_Ogre3d->Export_AssimpToOgre();	
 }

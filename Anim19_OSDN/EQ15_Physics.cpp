@@ -135,40 +135,6 @@ LRESULT CALLBACK EQ15_Physics::Start_Physics_Proc(HWND hDlg, UINT message, WPARA
 // *************************************************************************
 void EQ15_Physics::Update_Model(void)
 {
-	App->CL_Vm_Model->Clear_ModelData();
-
-	App->Cl_Vm_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
-
-	bool Test = App->Cl_Vm_Assimp->LoadFile(App->Cl_Vm_Preferences->Pref_WE_Path_FileName);
-	if (Test == 0)
-	{
-		App->Say("Failed To Load");
-		return;
-	}
-
-	strcpy(App->CL_Vm_FileIO->Model_Path_FileName, App->Cl_Vm_Preferences->Pref_WE_Path_FileName);
-	strcpy(App->CL_Vm_FileIO->Model_FileName, App->Cl_Vm_Preferences->Pref_WE_JustFileName);
-
-	App->CL_Vm_Model->Set_Paths();
-
-	App->CL_Vm_Model->Model_Type = LoadedFile_Assimp;
-
-	App->Cl_Vm_WorldEditor->LoadFile();
-
-	App->CL_Importer->Set_Equity();
-
-	App->Cl_Vm_WorldEditor->Adjust();
-
-	App->Say("Model 3ds imported");
-
-	//-----------------------------------------------------------------------------------
-
-	App->CL_Vm_Exporter->Ogre3D_Model(); // Convert to Ogre
-
-	//-----------------------------------------------------------------------------------
-
-	//App->CL_Importer->Bullet_Load_Room("Ogre3D   *.mesh\0*.mesh\0", "Ogre3D");
-
 	strcpy(App->CL_Vm_Model->Model_FolderPath, App->Cl_Vm_Preferences->Pref_Ogre_Path);
 	strcpy(App->CL_Vm_Model->FileName, App->Cl_Vm_Preferences->Pref_Ogre_JustFileName);
 
