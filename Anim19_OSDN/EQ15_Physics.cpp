@@ -138,7 +138,7 @@ void EQ15_Physics::Update_Model(void)
 	strcpy(App->CL_Vm_Model->Model_FolderPath, App->Cl_Vm_Preferences->Pref_Ogre_Path);
 	strcpy(App->CL_Vm_Model->FileName, App->Cl_Vm_Preferences->Pref_Ogre_JustFileName);
 
-	App->CL_Bullet_AddRoom->AddToScene();
+	App->CL_Bullet_AddRoom->AddToScene(0);
 
 	App->Say("Model Updated");
 }

@@ -5,7 +5,7 @@ public:
 	EQ15_Bullet_AddRoom();
 	~EQ15_Bullet_AddRoom();
 
-	void AddToScene(void);
+	void AddToScene(bool Create_Player);
 	bool Add_New_Room(void);
 
 protected:

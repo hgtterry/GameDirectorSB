@@ -39,7 +39,7 @@ EQ15_Bullet_AddRoom::~EQ15_Bullet_AddRoom()
 // *************************************************************************
 // *					AddToScene Terry Flanigan 						   *
 // *************************************************************************
-void EQ15_Bullet_AddRoom::AddToScene(void)
+void EQ15_Bullet_AddRoom::AddToScene(bool Create_Player)
 {
 	int Index = 0;// App->Cl_Scene_Data->ObjectCount;
 
@@ -92,7 +92,10 @@ void EQ15_Bullet_AddRoom::AddToScene(void)
 
 	Object->Usage = Enums::Usage_Room;
 
-	App->SBC_Player->Load_Player();
+	if (Create_Player == 1)
+	{
+		App->SBC_Player->Load_Player();
+	}
 
 	App->Cl_Grid->Grid_SetVisible(1);
 }

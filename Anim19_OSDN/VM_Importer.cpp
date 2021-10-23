@@ -218,7 +218,7 @@ bool VM_Importer::Bullet_Load_Room(char* Extension, char* Extension2)
 	App->CL_Vm_Model->Set_Paths();
 
 
-	App->CL_Bullet_AddRoom->AddToScene(); // Load Ogre Model
+	App->CL_Bullet_AddRoom->AddToScene(1); // Load Ogre Model
 
 
 

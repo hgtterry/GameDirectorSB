@@ -792,6 +792,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			App->SBC_Player->ShowDebug = 1;
 			App->SBC_Player->mObject->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
+			ShowWindow(App->CL_Physics_E15->PhysicsPannel_Hwnd, SW_SHOW);
+
 			return 1;
 		}
 
