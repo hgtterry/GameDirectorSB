@@ -40,17 +40,17 @@ SB_Player::SB_Player()
 	IsMOving_Left = 0;
 
 	mOnGround = 1;
-	Ground_speed = 2.2;
-	PlayerHeight = 6.0;
-	TurnRate = 0.02;
+	Ground_speed = 4.2;
+	PlayerHeight =16.0;
+	TurnRate = 0.04;
 
 	StartPos.x = 0;
 	StartPos.y = -50;
 	StartPos.z = 0;
 
 	Capsule_Mass = 1.0;
-	Capsule_Radius = 1.4;
-	Capsule_Height = 7.0;
+	Capsule_Radius = 4.4;
+	Capsule_Height = 17.0;
 
 	strcpy(PlayerName, "Player_1");
 
