@@ -125,7 +125,7 @@ bool GD19_OgreListener::frameStarted(const FrameEvent& evt)
 
 		App->Cl19_Ogre->m_imgui.NewFrame(evt.timeSinceLastFrame, (float)View_Width, (float)View_Height);
 
-		if (Show_ImGui_Panels == 1)
+		//if (Show_ImGui_Panels == 1)
 		{
 			if (ImGui_Render_Tab == Enums::ImGui_Camera)
 			{
@@ -182,6 +182,8 @@ bool GD19_OgreListener::frameStarted(const FrameEvent& evt)
 // *************************************************************************
 bool GD19_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 {
+	App->Cl19_Ogre->m_imgui.render();
+
 	if (App->CL_Vm_ImGui->Show_Progress_Bar == 1)
 	{
 		App->Cl19_Ogre->m_imgui.render();
