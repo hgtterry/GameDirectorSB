@@ -43,8 +43,8 @@ VM_TopBar::VM_TopBar()
 	Toggle_Play_Flag = 0;
 
 	// Camera
-	Toggle_Model_Flag = 1;
-	Toggle_World_Flag = 0;
+	Toggle_FreeCam_Flag = 1;
+	Toggle_FirstCam_Flag = 0;
 
 	// Dimensions - >ImGui Flags
 	
@@ -75,8 +75,8 @@ void VM_TopBar::Reset_Class()
 	Toggle_Play_Flag = 0;
 
 	// Camera
-	Toggle_Model_Flag = 1;
-	Toggle_World_Flag = 0;
+	Toggle_FreeCam_Flag = 1;
+	Toggle_FirstCam_Flag = 0;
 
 	Reset_Main_Controls();
 	TogglePlayBmp();
@@ -753,8 +753,8 @@ LRESULT CALLBACK VM_TopBar::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPara
 	{
 		SendDlgItemMessage(hDlg, IDC_TBRESETVIEW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_TBZOOM, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		/*SendDlgItemMessage(hDlg, IDC_TBMODEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_TBWORLD, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));*/
+		SendDlgItemMessage(hDlg, IDC_FIRST_MODE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_FREECAM, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BTMOUSESPEED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_FULLSCREEN, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
@@ -770,33 +770,19 @@ LRESULT CALLBACK VM_TopBar::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPara
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		/*if (some_item->idFrom == IDC_SELECTION && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_FREECAM && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->Cl_ToolBar->Selection_Active);
+			App->Custom_Button_Toggle(item, App->CL_Vm_TopBar->Toggle_FreeCam_Flag);
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_SHOWMESHPOINTS && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_FIRST_MODE && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->Cl_ToolBar->FreeCam_Active);
-			return CDRF_DODEFAULT;
-		}*/
-
-		/*if (some_item->idFrom == IDC_TBMODEL && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_Vm_TopBar->Toggle_Model_Flag);
+			App->Custom_Button_Toggle(item, App->CL_Vm_TopBar->Toggle_FirstCam_Flag);
 			return CDRF_DODEFAULT;
 		}
-
-		if (some_item->idFrom == IDC_TBWORLD && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_Vm_TopBar->Toggle_World_Flag);
-			return CDRF_DODEFAULT;
-		}*/
 
 		if (some_item->idFrom == IDC_TBZOOM && some_item->code == NM_CUSTOMDRAW)
 		{
@@ -875,20 +861,22 @@ LRESULT CALLBACK VM_TopBar::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPara
 
 		if (LOWORD(wParam) == IDC_FIRST_MODE)
 		{
-			App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamFirst;
-			/*App->CL_Vm_TopBar->Toggle_World_Flag = 1;
-			App->CL_Vm_TopBar->Toggle_Model_Flag = 0;
-			RedrawWindow(App->CL_Vm_TopBar->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);*/
+			if (App->SBC_Player->PlayerAdded == 1)
+			{
+				App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamFirst;
+				App->CL_Vm_TopBar->Toggle_FirstCam_Flag = 1;
+				App->CL_Vm_TopBar->Toggle_FreeCam_Flag = 0;
+				RedrawWindow(App->CL_Vm_TopBar->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			}
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_FREECAM)
 		{
-			//App->Debug_Text();
 			App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
-			/*App->CL_Vm_TopBar->Toggle_World_Flag = 1;
-			App->CL_Vm_TopBar->Toggle_Model_Flag = 0;
-			RedrawWindow(App->CL_Vm_TopBar->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);*/
+			App->CL_Vm_TopBar->Toggle_FirstCam_Flag = 0;
+			App->CL_Vm_TopBar->Toggle_FreeCam_Flag = 1;
+			RedrawWindow(App->CL_Vm_TopBar->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
 		}
 

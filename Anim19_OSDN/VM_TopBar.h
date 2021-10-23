@@ -81,8 +81,8 @@ protected:
 	bool Toggle_Tabs_Editors_Flag;
 
 	// Camera
-	bool Toggle_Model_Flag;
-	bool Toggle_World_Flag;
+	bool Toggle_FirstCam_Flag;
+	bool Toggle_FreeCam_Flag;
 
 	// Dimensions - >ImGui Flags
 	
