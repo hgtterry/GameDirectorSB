@@ -251,7 +251,7 @@ bool GD19_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 	// Right Mouse
 	if (Pl_LeftMouseDown == 0 && Pl_RightMouseDown == 1)
 	{
-		//Capture_RightMouse();
+		Capture_RightMouse_World();
 	}
 
 	MoveCamera();

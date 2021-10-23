@@ -777,7 +777,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		case ID_FILE_LOADLEVEL:
 		{
-			App->Cl_Load_Scene->OpenScene(true);
+			//App->Cl_Load_Scene->OpenScene(true);
+
+			App->CL_Importer->Bullet_Load_Room("Ogre3D   *.mesh\0*.mesh\0", "Ogre3D");
+			strcpy(App->Cl_Vm_Preferences->Pref_Ogre_JustFileName, App->CL_Vm_Model->FileName);
+			strcpy(App->Cl_Vm_Preferences->Pref_Ogre_Path, App->CL_Vm_Model->Model_FolderPath);
+			App->Cl_Vm_Preferences->Write_Preferences();
+			// -----------------------------------------------------
+			int f = App->SBC_Player->mObject->getCollisionFlags();
+			App->Cl19_Ogre->OgreListener->GD_Dubug_Physics = 1;
+			App->Cl19_Ogre->OgreListener->GD_Run_Physics = 1;
+			App->Cl19_Ogre->BulletListener->ShowDebug = 1;
+
+			App->SBC_Player->ShowDebug = 1;
+			App->SBC_Player->mObject->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+
 			return 1;
 		}
 

@@ -563,6 +563,8 @@ LRESULT CALLBACK VM_TopBar::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM wP
 
 			App->Cl19_Ogre->OgreListener->ImGui_Render_Tab = Enums::ImGui_Camera;
 
+			ShowWindow(App->CL_Physics_E15->PhysicsPannel_Hwnd, SW_SHOW);
+
 			RedrawWindow(App->CL_Vm_TopBar->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
 		}
@@ -751,8 +753,8 @@ LRESULT CALLBACK VM_TopBar::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPara
 	{
 		SendDlgItemMessage(hDlg, IDC_TBRESETVIEW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_TBZOOM, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_TBMODEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_TBWORLD, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		/*SendDlgItemMessage(hDlg, IDC_TBMODEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_TBWORLD, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));*/
 		SendDlgItemMessage(hDlg, IDC_BTMOUSESPEED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_FULLSCREEN, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
@@ -782,7 +784,7 @@ LRESULT CALLBACK VM_TopBar::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPara
 			return CDRF_DODEFAULT;
 		}*/
 
-		if (some_item->idFrom == IDC_TBMODEL && some_item->code == NM_CUSTOMDRAW)
+		/*if (some_item->idFrom == IDC_TBMODEL && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle(item, App->CL_Vm_TopBar->Toggle_Model_Flag);
@@ -794,7 +796,7 @@ LRESULT CALLBACK VM_TopBar::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPara
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle(item, App->CL_Vm_TopBar->Toggle_World_Flag);
 			return CDRF_DODEFAULT;
-		}
+		}*/
 
 		if (some_item->idFrom == IDC_TBZOOM && some_item->code == NM_CUSTOMDRAW)
 		{
@@ -853,23 +855,23 @@ LRESULT CALLBACK VM_TopBar::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPara
 			return TRUE;
 		}
 
-		if (LOWORD(wParam) == IDC_TBMODEL)
+		/*if (LOWORD(wParam) == IDC_TBMODEL)
 		{
 			App->Cl19_Ogre->OgreListener->CameraMode = 1;
 			App->CL_Vm_TopBar->Toggle_Model_Flag = 1;
 			App->CL_Vm_TopBar->Toggle_World_Flag = 0;
 			RedrawWindow(App->CL_Vm_TopBar->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
-		}
+		}*/
 
-		if (LOWORD(wParam) == IDC_TBWORLD)
+		/*if (LOWORD(wParam) == IDC_TBWORLD)
 		{
 			App->Cl19_Ogre->OgreListener->CameraMode = 0;
 			App->CL_Vm_TopBar->Toggle_World_Flag = 1;
 			App->CL_Vm_TopBar->Toggle_Model_Flag = 0;
 			RedrawWindow(App->CL_Vm_TopBar->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
-		}
+		}*/
 
 		if (LOWORD(wParam) == IDC_FIRST_MODE)
 		{
