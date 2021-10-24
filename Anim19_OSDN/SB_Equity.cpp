@@ -231,6 +231,25 @@ LRESULT CALLBACK SB_Equity::MeshDesign_Proc(HWND hDlg, UINT message, WPARAM wPar
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == ID_IMPORT_EQ_WAVEFRONTOBJ)
+		{
+			App->CL_Importer->Assimp_Loader("Wavefront OBJ   *.obj\0*.obj\0", "Wavefront OBJ");
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == ID_IMPORT_EQ_GENESIS3D)
+		{
+			App->CL_Importer->Genesis3D_Loader();
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == ID_IMPORT_EQ_COLLADADAE)
+		{
+			App->CL_Importer->Assimp_Loader("Collada DAE   *.dae\0*.dae\0", "Collada DAE");
+			return TRUE;
+		}
+
+
 		if (LOWORD(wParam) == ID_OGRE3D_MESH32842)
 		{
 			App->CL_Vm_Exporter->Ogre3D_Model();

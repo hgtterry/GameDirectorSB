@@ -245,27 +245,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return 1;
 		}
 
-		case ID_IMPORT_GENESIS3D:
-		{
-			App->CL_Importer->Genesis3D_Loader();
-			return 1;
-		}
-
-		case ID_IMPORT_WAVEFRONTOBJ:
-		{
-			App->CL_Importer->Assimp_Loader("Wavefront OBJ   *.obj\0*.obj\0", "Wavefront OBJ");
-			return 1;
-		}
-
 		case ID_IMPORT_AUTODESK3DS:
 		{
 			App->CL_Importer->Assimp_Loader("Autodesk 3DS   *.3ds\0*.3ds\0", "Autodesk 3DS");
-			return 1;
-		}
-
-		case ID_IMPORT_COLLADADAE:
-		{
-			App->CL_Importer->Assimp_Loader("Collada DAE   *.dae\0*.dae\0", "Collada DAE");
 			return 1;
 		}
 
