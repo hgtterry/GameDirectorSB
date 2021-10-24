@@ -249,7 +249,24 @@ LRESULT CALLBACK SB_Equity::MeshDesign_Proc(HWND hDlg, UINT message, WPARAM wPar
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == ID_IMPORT_EQ_DOOM3MD5MESH)
+		{
+			App->CL_Importer->Assimp_Loader("Doom3  *.md5mesh\0*.md5mesh\0", "Doom3");
+			return TRUE;
+		}
 
+		if (LOWORD(wParam) == ID_IMPORT_EQ_AUTODESK3DS)
+		{
+			App->CL_Importer->Assimp_Loader("Autodesk 3DS   *.3ds\0*.3ds\0", "Autodesk 3DS");
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == ID_OGRE3D_EQ_MESH)
+		{
+			App->CL_Importer->Ogre_Loader("Ogre3D   *.mesh\0*.mesh\0", "Ogre3D");
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == ID_OGRE3D_MESH32842)
 		{
 			App->CL_Vm_Exporter->Ogre3D_Model();

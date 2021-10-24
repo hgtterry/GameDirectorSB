@@ -245,24 +245,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return 1;
 		}
 
-		case ID_IMPORT_AUTODESK3DS:
-		{
-			App->CL_Importer->Assimp_Loader("Autodesk 3DS   *.3ds\0*.3ds\0", "Autodesk 3DS");
-			return 1;
-		}
-
-		case ID_IMPORT_DOOM3MD5MESH:
-		{
-			App->CL_Importer->Assimp_Loader("Doom3  *.md5mesh\0*.md5mesh\0", "Doom3");
-			return 1;
-		}
-
-		case ID_OGRE3D_MESH32834:
-		{
-			App->CL_Importer->Ogre_Loader("Ogre3D   *.mesh\0*.mesh\0", "Ogre3D");
-			return 1;
-		}
-
 		// Exporters
 		case ID_EXPORT_GENESIS3D:
 		{
