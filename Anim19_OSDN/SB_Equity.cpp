@@ -224,6 +224,8 @@ LRESULT CALLBACK SB_Equity::MeshDesign_Proc(HWND hDlg, UINT message, WPARAM wPar
 			return TRUE;
 		}
 
+
+		// ----------------------------------------------------------- Importers
 		if (LOWORD(wParam) == ID_IMPORT_WORLDEDITOR)
 		{
 			App->CL_Importer->WorldEditor_Loader();
@@ -266,7 +268,8 @@ LRESULT CALLBACK SB_Equity::MeshDesign_Proc(HWND hDlg, UINT message, WPARAM wPar
 			App->CL_Importer->Ogre_Loader("Ogre3D   *.mesh\0*.mesh\0", "Ogre3D");
 			return TRUE;
 		}
-		
+
+		// ----------------------------------------------------------- Exporters
 		if (LOWORD(wParam) == ID_OGRE3D_MESH32842)
 		{
 			App->CL_Vm_Exporter->Ogre3D_Model();
