@@ -769,14 +769,21 @@ void SB_Equity::Convert_Model(void)
 void SB_Equity::Set_Equity(void)
 {
 	App->CL_Vm_Model->Model_Loaded = 1;
+	App->SBC_Equity->Model_Loaded = 1;
 
-	App->Cl_Grid->Zoom();
+	//App->Cl_Grid->Zoom();
 
 
-	App->CL_Vm_Groups->Update_Groups_Dialog(0);
+	//App->CL_Vm_Groups->Update_Groups_Dialog(0);
+	HWND Temp = GetDlgItem(MeshViewDialog_Hwnd, IDC_TBSHOWTEXTURE);
+	//App->SBC_Equity->Toggle_Textures_Flag = 1;
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOn_Bmp);
 
-	App->CL_Vm_TopBar->ToggleTexturesBmp(1);
-	App->Set_Main_TitleBar();
+	char TitleBar[260];
+	strcpy(TitleBar, App->Version);
+	strcat(TitleBar, "    ");
+	strcat(TitleBar, App->CL_Vm_Model->Path_FileName);
+	SetWindowText(MeshViewDialog_Hwnd, TitleBar);
 
 	App->Cl19_Ogre->RenderFrame();
 }

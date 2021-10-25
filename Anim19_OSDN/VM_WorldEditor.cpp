@@ -197,12 +197,12 @@ LRESULT CALLBACK VM_WorldEditor::WE_import_Proc(HWND hDlg, UINT message, WPARAM 
 
 			App->Cl_Vm_WorldEditor->LoadTextures_TXL();
 
-			//App->CL_Importer->Set_Equity();
-
 			App->CL_Vm_Model->Model_Loaded = 1;
 			App->Cl_Vm_WorldEditor->Adjust();
 			
 			EndDialog(hDlg, LOWORD(wParam));
+
+			App->SBC_Equity->Set_Equity();
 
 			App->Say("Model Loaded");
 			return TRUE;

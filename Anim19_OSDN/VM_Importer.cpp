@@ -39,7 +39,8 @@ bool VM_Importer::Assimp_Loader(char* Extension, char* Extension2)
 
 	App->CL_Vm_Model->Model_Type = LoadedFile_Assimp;
 	
-	Set_Equity();
+	//Set_Equity();
+	App->SBC_Equity->Set_Equity();
 
 	App->Say("Model Loaded");
 	return 1;
