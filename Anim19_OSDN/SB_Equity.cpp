@@ -591,6 +591,7 @@ bool SB_Equity::Set_OgreWindow(void)
 	MvEnt = mSceneMgrMeshView->createEntity("MVTest", "axes.mesh");
 	MvNode = mSceneMgrMeshView->getRootSceneNode()->createChildSceneNode();
 	MvNode->attachObject(MvEnt);
+	MvNode->setVisible(false);
 
 	mSceneMgrMeshView->setAmbientLight(ColourValue(0.7, 0.7, 0.7));
 
@@ -599,12 +600,6 @@ bool SB_Equity::Set_OgreWindow(void)
 	light->setType(Light::LT_POINT);
 	light->setPosition(-10, 40, 20);
 	light->setSpecularColour(ColourValue::White);
-
-	Ogre::Vector3 Centre = MvEnt->getBoundingBox().getCenter();
-	Ogre::Real Radius = MvEnt->getBoundingRadius();
-
-	App->CL_WE_Listener_E15->WE_Cam->setPosition(0, Centre.y, -Radius*(Real(2.5)));
-	App->CL_WE_Listener_E15->WE_Cam->lookAt(0, Centre.y, 0);
 
 	manObj = mSceneMgrMeshView->createManualObject("sampleArea2");
 	ModelNode = mSceneMgrMeshView->getRootSceneNode()->createChildSceneNode();

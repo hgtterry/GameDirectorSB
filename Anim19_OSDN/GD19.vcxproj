@@ -199,6 +199,7 @@
     <ClInclude Include="GD_spdlog.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SB_Equity.h" />
+    <ClInclude Include="SB_Import.h" />
     <ClInclude Include="SB_Player.h" />
     <ClInclude Include="SB_XMLConverter.h" />
     <ClInclude Include="stdafx.h" />
@@ -271,6 +272,7 @@
     <ClCompile Include="GD_Keyboard.cpp" />
     <ClCompile Include="GD_spdlog.cpp" />
     <ClCompile Include="SB_Equity.cpp" />
+    <ClCompile Include="SB_Import.cpp" />
     <ClCompile Include="SB_Player.cpp" />
     <ClCompile Include="SB_XMLConverter.cpp" />
     <ClCompile Include="stdafx.cpp">
