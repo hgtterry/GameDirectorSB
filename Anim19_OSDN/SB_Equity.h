@@ -5,7 +5,7 @@ public:
 	SB_Equity();
 	~SB_Equity();
 
-	bool StartMeshDesign();
+	bool Start_Equity();
 	void Set_Equity(void);;
 
 	void Reset_View(void);
@@ -30,7 +30,7 @@ public:
 
 protected:
 
-	static LRESULT CALLBACK MeshDesign_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Init_Bmps_Globals(void);
 
@@ -43,12 +43,23 @@ protected:
 	void Update_Model(void);
 	void Convert_Model(void);
 
+	void Zoom(void);
+
 	HWND MeshView_Hwnd;
 	HWND MeshViewDialog_Hwnd;
 
 	bool ShowGridFlag;
 	bool ShowDivisions;
 	bool ShowHair;
+
+	bool Toggle_Faces_Flag;
+	bool Toggle_Textures_Flag;
+	bool Toggle_Points_Flag;
+	bool Toggle_Bones_Flag;
+	bool Toggle_Normals_Flag;
+	bool Toggle_BBox_Flag;
+	bool Toggle_Grid_Flag;
+	bool Toggle_Hair_Flag;
 
 	int XAxis_min;
 	int	XAxis_max;

@@ -26,6 +26,16 @@ SB_Equity::SB_Equity()
 	ShowDivisions = 1;
 	ShowHair = 1;
 
+	// Main Controls
+	Toggle_Faces_Flag = 0;
+	Toggle_Textures_Flag = 0;
+	Toggle_Points_Flag = 0;
+	Toggle_Bones_Flag = 0;
+	Toggle_Normals_Flag = 0;
+	Toggle_BBox_Flag = 0;
+	Toggle_Grid_Flag = 1;
+	Toggle_Hair_Flag = 1;
+
 	YAxis_min = -8;
 	YAxis_max = 8;
 
@@ -60,13 +70,13 @@ SB_Equity::~SB_Equity()
 }
 
 // *************************************************************************
-// *				StartMeshDesign  Terry	Bernie						   *
+// *					Start_Equity  Terry	Bernie						   *
 // *************************************************************************
-bool SB_Equity::StartMeshDesign()
+bool SB_Equity::Start_Equity()
 {
 	App->RenderBackGround = 1;
 
-	DialogBox(App->hInst, (LPCTSTR)IDD_EQUITY, App->Fdlg, (DLGPROC)MeshDesign_Proc);
+	DialogBox(App->hInst, (LPCTSTR)IDD_EQUITY, App->Fdlg, (DLGPROC)Equity_Proc);
 
 	App->RenderBackGround = 0;
 	App->Cl19_Ogre->OgreListener->Equity_Running = 0;
@@ -75,9 +85,9 @@ bool SB_Equity::StartMeshDesign()
 }
 
 // *************************************************************************
-// *						MeshDesign_Proc Terry Bernie				   *
+// *						Equity_Proc Terry Bernie				   *
 // *************************************************************************
-LRESULT CALLBACK SB_Equity::MeshDesign_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK SB_Equity::Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
@@ -127,26 +137,33 @@ LRESULT CALLBACK SB_Equity::MeshDesign_Proc(HWND hDlg, UINT message, WPARAM wPar
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		/*if (some_item->idFrom == IDC_CONE && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_TBSHOWTEXTURE && some_item->code == NM_CUSTOMDRAW)
 		{
-		LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-		App->Custom_Button_Toggle(item, App->Cl_Mesh_Viewer->Selected_Shape_Cone);
-		return CDRF_DODEFAULT;
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->SBC_Equity->Toggle_Textures_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_TBSHOWFACES && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->SBC_Equity->Toggle_Faces_Flag);
+			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
 		{
-		LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-		App->Custom_Button_Normal(item);
-		return CDRF_DODEFAULT;
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
 		{
-		LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-		App->Custom_Button_Normal(item);
-		return CDRF_DODEFAULT;
-		}*/
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
 
 		return CDRF_DODEFAULT;
 	}
@@ -354,14 +371,14 @@ LRESULT CALLBACK SB_Equity::MeshDesign_Proc(HWND hDlg, UINT message, WPARAM wPar
 				if (App->SBC_Equity->RenderListener->ShowTextured == 1)
 				{
 					App->SBC_Equity->RenderListener->ShowTextured = 0;
-					//App->CL_Vm_TopBar->Toggle_Textures_Flag = 0;
+					App->SBC_Equity->Toggle_Textures_Flag = 0;
 
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOff_Bmp);
 				}
 				else
 				{
 					App->SBC_Equity->RenderListener->ShowTextured = 1;
-					//App->CL_Vm_TopBar->Toggle_Textures_Flag = 1;
+					App->SBC_Equity->Toggle_Textures_Flag = 1;
 
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOn_Bmp);
 				}
@@ -379,14 +396,14 @@ LRESULT CALLBACK SB_Equity::MeshDesign_Proc(HWND hDlg, UINT message, WPARAM wPar
 				if (App->SBC_Equity->RenderListener->ShowFaces == 1)
 				{
 					App->SBC_Equity->RenderListener->ShowFaces = 0;
-					//App->CL_Vm_TopBar->Toggle_Faces_Flag = 0;
+					App->SBC_Equity->Toggle_Faces_Flag = 0;
 
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
 				}
 				else
 				{
 					App->SBC_Equity->RenderListener->ShowFaces = 1;
-					//App->CL_Vm_TopBar->Toggle_Faces_Flag = 1;
+					App->SBC_Equity->Toggle_Faces_Flag = 1;
 
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOn_Bmp);
 				}
@@ -771,12 +788,12 @@ void SB_Equity::Set_Equity(void)
 	App->CL_Vm_Model->Model_Loaded = 1;
 	App->SBC_Equity->Model_Loaded = 1;
 
-	//App->Cl_Grid->Zoom();
-
+	Zoom();
 
 	//App->CL_Vm_Groups->Update_Groups_Dialog(0);
+
 	HWND Temp = GetDlgItem(MeshViewDialog_Hwnd, IDC_TBSHOWTEXTURE);
-	//App->SBC_Equity->Toggle_Textures_Flag = 1;
+	App->SBC_Equity->Toggle_Textures_Flag = 1;
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOn_Bmp);
 
 	char TitleBar[260];
@@ -789,7 +806,7 @@ void SB_Equity::Set_Equity(void)
 }
 
 // *************************************************************************
-// *	  				Reset_View Terry Bernie							   *
+// *	  				Reset_View Terry Flanigan						   *
 // *************************************************************************
 void SB_Equity::Reset_View(void)
 {
@@ -801,6 +818,35 @@ void SB_Equity::Reset_View(void)
 
 	App->CL_WE_Listener_E15->WE_Cam->setPosition(Ogre::Vector3(0, 90, 100));
 	App->CL_WE_Listener_E15->WE_Cam->lookAt(Ogre::Vector3(0, 30, 0));
+
+}
+
+// *************************************************************************
+// *						Zoom Terry Flanigan							   *
+// *************************************************************************
+void SB_Equity::Zoom(void)
+{
+	if (App->CL_Vm_Model->Model_Loaded == 1)
+	{
+		Reset_View();
+
+		App->CL_WE_Listener_E15->WE_Cam->setPosition(App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].x, App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].y, App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].z);
+
+		Ogre::Vector3 Move;
+		Move.x = 0;
+		Move.y = 0;
+		
+		if (App->CL_Vm_Model->S_BoundingBox[0]->Size[0].z > App->CL_Vm_Model->S_BoundingBox[0]->Size[0].y)
+		{
+			Move.z = App->CL_Vm_Model->S_BoundingBox[0]->Size[0].z * 2;
+		}
+		else
+		{
+			Move.z = App->CL_Vm_Model->S_BoundingBox[0]->Size[0].y * 2;
+		}
+
+		App->CL_WE_Listener_E15->WE_Cam->moveRelative(Move);
+	}
 
 }
 

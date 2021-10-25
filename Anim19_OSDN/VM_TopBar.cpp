@@ -1619,7 +1619,7 @@ LRESULT CALLBACK VM_TopBar::Editors_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 	{
 		if (LOWORD(wParam) == IDC_EDITORS_WE)
 		{
-			App->SBC_Equity->StartMeshDesign();
+			App->SBC_Equity->Start_Equity();
 			return TRUE;
 		}
 
