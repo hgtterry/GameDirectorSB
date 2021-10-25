@@ -102,7 +102,7 @@ bool SB_Import::Genesis3D_Loader(void)
 
 	App->CL_Vm_Model->Model_Type = LoadedFile_Actor;
 
-	Set_Equity();
+	App->SBC_Equity->Set_Equity();
 
 	App->Say("Model Loaded");
 
@@ -130,7 +130,7 @@ bool SB_Import::Ogre_Loader(char* Extension, char* Extension2)
 
 	App->CL_Vm_Model->Model_Type = LoadedFile_Assimp;
 
-	Set_Equity();
+	App->SBC_Equity->Set_Equity();
 
 	App->Say("Model Loaded");
 	return 1;
@@ -149,8 +149,6 @@ void SB_Import::Reload_FromResentFiles(char* ResentPathAndFile)
 		App->Say(" Can Not Find File:- This may be due to it has been deleted or renamed");
 		return;
 	}
-
-
 
 	App->CL_Vm_Model->Clear_ModelData();
 
@@ -183,13 +181,12 @@ void SB_Import::Reload_FromResentFiles(char* ResentPathAndFile)
 
 		App->CL_Vm_Model->Model_Type = LoadedFile_Actor;
 
-		Set_Equity();
+		App->SBC_Equity->Set_Equity();
 
 		App->Say("Model Loaded");
 
 		return;
 	}
-
 
 	// Fall through fo assimp
 	bool Test = App->Cl_Vm_Assimp->LoadFile(ResentPathAndFile);
@@ -201,28 +198,10 @@ void SB_Import::Reload_FromResentFiles(char* ResentPathAndFile)
 
 	App->CL_Vm_Model->Model_Type = LoadedFile_Assimp;
 
-	Set_Equity();
+	App->SBC_Equity->Set_Equity();
 
 	App->Say("Model Loaded");
 
-}
-
-// *************************************************************************
-// *						Set_Equity Terry Bernie						   *
-// *************************************************************************
-void SB_Import::Set_Equity(void)
-{
-	App->CL_Vm_Model->Model_Loaded = 1;
-
-	App->Cl_Grid->Zoom();
-
-
-	App->CL_Vm_Groups->Update_Groups_Dialog(0);
-
-	App->CL_Vm_TopBar->ToggleTexturesBmp(1);
-	App->Set_Main_TitleBar();
-
-	App->Cl19_Ogre->RenderFrame();
 }
 
 // *************************************************************************
@@ -241,14 +220,7 @@ bool SB_Import::Bullet_Load_Room(char* Extension, char* Extension2)
 
 	App->CL_Vm_Model->Set_Paths();
 
-
-	App->CL_Bullet_AddRoom->AddToScene(1); // Load Ogre Model
-
-
-
-										   //App->CL_Vm_Model->Model_Type = LoadedFile_Assimp;
-
-										   //Set_Equity();
+	App->CL_Bullet_AddRoom->AddToScene(1);
 
 	App->Cl19_Ogre->OgreListener->CameraMode = Enums::CamDetached;
 
