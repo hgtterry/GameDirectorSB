@@ -246,47 +246,24 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		}
 
 		// Exporters
-		case ID_EXPORT_GENESIS3D:
-		{
-			App->CL_Vm_Exporter->Actor_Model();
-			return 1;
-		}
+	
+		//case ID_OGRE3D_TEST:
+		//{
+		//	//App->CL_Vm_Exporter->Actor_Model();
+		//	App->Say("Here");
 
-		case ID_OGRE3D_TEST:
-		{
-			//App->CL_Vm_Exporter->Actor_Model();
-			App->Say("Here");
+		//	char Path[1024];
+		//	strcpy(Path, App->EquityDirecory_FullPath);;
+		//	strcat(Path, "\\");
+		//	strcat(Path, "Data");
+		//	strcat(Path, "\\");
+		//	strcat(Path, "Test.mesh");
+		//	App->Say(Path);
+		//	App->CL_Vm_Model->CreateMeshFile("Test.mesh");
+		//	return 1;
+		//}
 
-			char Path[1024];
-			strcpy(Path, App->EquityDirecory_FullPath);;
-			strcat(Path, "\\");
-			strcat(Path, "Data");
-			strcat(Path, "\\");
-			strcat(Path, "Test.mesh");
-			App->Say(Path);
-			App->CL_Vm_Model->CreateMeshFile("Test.mesh");
-			return 1;
-		}
-
-		case ID_OGRE3D_MESH:
-		{
-			App->CL_Vm_Exporter->Ogre3D_Model();
-			return 1;
-		}
-
-		case ID_EQUITY_DATAFILE:
-		{
-			App->Cl_Vm_File_Equity->SaveFile("Data Files   *.edf\0*.edf\0*", "Data Files", App->CL_Vm_Model->JustName);
-
-			if (_stricmp(App->Cl_Vm_File_Equity->mPath_FileName + strlen(App->Cl_Vm_File_Equity->mPath_FileName) - 4, ".edf") != 0)
-			{
-				strcat(App->Cl_Vm_File_Equity->mPath_FileName, ".edf");
-			}
-
-			App->Cl_Vm_File_Equity->WriteData_File();
-			return 1;
-		}
-
+	
 		case ID_FILE_CLEAR:
 		{
 			App->CL_Vm_Model->Clear_ModelData();
@@ -727,12 +704,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		}
 
 		//------------------------- Menu File
-		case ID_FILE_CLEARLEVEL:
-		{
-			App->Cl_Scene_Data->ClearScene();
-			return 1;
-		}
-
+		
 		case ID_FILE_SAVELEVELAS:
 		{
 			App->Cl_Save_Scene->SaveGDScene_40(true);

@@ -184,6 +184,19 @@ LRESULT CALLBACK SB_Equity::MeshDesign_Proc(HWND hDlg, UINT message, WPARAM wPar
 		return 1;
 	}
 
+	case WM_LBUTTONUP:
+	{
+		if (App->OgreStarted == 1)
+		{
+			ReleaseCapture();
+			App->CL_WE_Listener_E15->Pl_LeftMouseDown = 0;
+			SetCursor(App->CUR);
+			return 1;
+		}
+
+		return 1;
+	}
+
 	case WM_RBUTTONUP:
 	{
 		if (App->OgreStarted == 1)
@@ -197,13 +210,15 @@ LRESULT CALLBACK SB_Equity::MeshDesign_Proc(HWND hDlg, UINT message, WPARAM wPar
 		return 1;
 	}
 
-	case WM_LBUTTONUP:
+	case WM_RBUTTONDOWN: // BERNIE_HEAR_FIRE 
 	{
+
 		if (App->OgreStarted == 1)
 		{
-			ReleaseCapture();
-			App->CL_WE_Listener_E15->Pl_LeftMouseDown = 0;
-			SetCursor(App->CUR);
+			SetCapture(App->SBC_Equity->MeshViewDialog_Hwnd);// Bernie
+			SetCursorPos(500, 500);
+			App->CL_WE_Listener_E15->Pl_RightMouseDown = 1;
+			App->CUR = SetCursor(NULL);
 			return 1;
 		}
 
@@ -276,6 +291,33 @@ LRESULT CALLBACK SB_Equity::MeshDesign_Proc(HWND hDlg, UINT message, WPARAM wPar
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == ID_EXPORT_EQ_GENESIS3D)
+		{
+			App->CL_Vm_Exporter->Actor_Model();
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == ID_EXPORT_EQ_EQUITY)
+		{
+			App->Cl_Vm_File_Equity->SaveFile("Data Files   *.edf\0*.edf\0*", "Data Files", App->CL_Vm_Model->JustName);
+
+			if (_stricmp(App->Cl_Vm_File_Equity->mPath_FileName + strlen(App->Cl_Vm_File_Equity->mPath_FileName) - 4, ".edf") != 0)
+			{
+				strcat(App->Cl_Vm_File_Equity->mPath_FileName, ".edf");
+			}
+
+			App->Cl_Vm_File_Equity->WriteData_File();
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == ID_FILE_EQ_CLEARMODEL)
+		{
+			App->Debug_Text();
+			//App->Cl_Scene_Data->ClearScene();
+			return TRUE;
+		}
+
+		
 		//-------------------------------------------------------- Show Hair
 		if (LOWORD(wParam) == IDC_TBSHOWHAIR)
 		{
@@ -557,6 +599,7 @@ bool SB_Equity::Set_OgreWindow(void)
 	RenderListener = new VM_Render();
 	mSceneMgrMeshView->addRenderQueueListener(RenderListener);
 
+	Reset_View();
 	App->Cl19_Ogre->OgreListener->GD_MeshViewer_Running = 1; // Must be Last
 
 	return 1;
@@ -717,5 +760,39 @@ void SB_Equity::Convert_Model(void)
 	App->CL_Vm_Exporter->Ogre3D_Model();
 
 	App->Say("Converted");
+}
+
+// *************************************************************************
+// *						Set_Equity Terry Bernie						   *
+// *************************************************************************
+void SB_Equity::Set_Equity(void)
+{
+	App->CL_Vm_Model->Model_Loaded = 1;
+
+	App->Cl_Grid->Zoom();
+
+
+	App->CL_Vm_Groups->Update_Groups_Dialog(0);
+
+	App->CL_Vm_TopBar->ToggleTexturesBmp(1);
+	App->Set_Main_TitleBar();
+
+	App->Cl19_Ogre->RenderFrame();
+}
+
+// *************************************************************************
+// *	  				Reset_View Terry Bernie							   *
+// *************************************************************************
+void SB_Equity::Reset_View(void)
+{
+	GridNode->setPosition(0, 0, 0);
+	GridNode->resetOrientation();
+
+	HairNode->setPosition(0, 0, 0);
+	HairNode->resetOrientation();
+
+	App->CL_WE_Listener_E15->WE_Cam->setPosition(Ogre::Vector3(0, 90, 100));
+	App->CL_WE_Listener_E15->WE_Cam->lookAt(Ogre::Vector3(0, 30, 0));
+
 }
 

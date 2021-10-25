@@ -6,6 +6,10 @@ public:
 	~SB_Equity();
 
 	bool StartMeshDesign();
+	void Set_Equity(void);;
+
+	void Reset_View(void);
+
 
 	bool Model_Loaded;
 

@@ -19,6 +19,7 @@ protected:
 	void MoveCamera(void);
 
 	bool Capture_LeftMouse_Model(void);
+	bool Capture_RightMouse_Model(void);
 
 	Radian		mRotX;
 	Radian		mRotY;
