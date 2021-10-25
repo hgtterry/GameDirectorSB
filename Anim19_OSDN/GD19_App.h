@@ -57,8 +57,6 @@ ebopster
 #include "GD_Keyboard.h"
 
 // Vima19 19/03/20
-
-#include "VM_Importer.h"
 #include "VM_Genisis3D.h"
 #include "VM_Model.h"
 #include "VM_Textures.h"
@@ -128,7 +126,6 @@ public:
 	GD_Keyboard*		Cl_Keyboard;
 
 	// Vima19 19/03/20
-	VM_Importer*		CL_Importer;
 	VM_Genisis3D*		CL_Vm_Genesis3D;
 	VM_Model*			CL_Vm_Model;
 	VM_Textures*		CL_Vm_Textures;

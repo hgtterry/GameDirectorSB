@@ -260,44 +260,44 @@ LRESULT CALLBACK SB_Equity::Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 		// ----------------------------------------------------------- Importers
 		if (LOWORD(wParam) == ID_IMPORT_WORLDEDITOR)
 		{
-			App->CL_Importer->WorldEditor_Loader();
+			App->SBC_Import->WorldEditor_Loader();
 			App->SBC_Equity->Model_Loaded = 1;
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == ID_IMPORT_EQ_WAVEFRONTOBJ)
 		{
-			App->CL_Importer->Assimp_Loader("Wavefront OBJ   *.obj\0*.obj\0", "Wavefront OBJ");
+			App->SBC_Import->Assimp_Loader("Wavefront OBJ   *.obj\0*.obj\0", "Wavefront OBJ");
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == ID_IMPORT_EQ_GENESIS3D)
 		{
-			App->CL_Importer->Genesis3D_Loader();
+			App->SBC_Import->Genesis3D_Loader();
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == ID_IMPORT_EQ_COLLADADAE)
 		{
-			App->CL_Importer->Assimp_Loader("Collada DAE   *.dae\0*.dae\0", "Collada DAE");
+			App->SBC_Import->Assimp_Loader("Collada DAE   *.dae\0*.dae\0", "Collada DAE");
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == ID_IMPORT_EQ_DOOM3MD5MESH)
 		{
-			App->CL_Importer->Assimp_Loader("Doom3  *.md5mesh\0*.md5mesh\0", "Doom3");
+			App->SBC_Import->Assimp_Loader("Doom3  *.md5mesh\0*.md5mesh\0", "Doom3");
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == ID_IMPORT_EQ_AUTODESK3DS)
 		{
-			App->CL_Importer->Assimp_Loader("Autodesk 3DS   *.3ds\0*.3ds\0", "Autodesk 3DS");
+			App->SBC_Import->Assimp_Loader("Autodesk 3DS   *.3ds\0*.3ds\0", "Autodesk 3DS");
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == ID_OGRE3D_EQ_MESH)
 		{
-			App->CL_Importer->Ogre_Loader("Ogre3D   *.mesh\0*.mesh\0", "Ogre3D");
+			App->SBC_Import->Ogre_Loader("Ogre3D   *.mesh\0*.mesh\0", "Ogre3D");
 			return TRUE;
 		}
 

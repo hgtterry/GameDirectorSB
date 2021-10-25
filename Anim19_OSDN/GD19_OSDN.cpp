@@ -301,56 +301,56 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			char mFileName[1024];
 			strcpy(mFileName, App->CL_Vm_FileIO->mPreviousFiles[7].c_str());
-			App->CL_Importer->Reload_FromResentFiles(mFileName);
+			App->SBC_Import->Reload_FromResentFiles(mFileName);
 			return 1;
 		}
 		case 5000 + 6: // 2
 		{
 			char mFileName[1024];
 			strcpy(mFileName, App->CL_Vm_FileIO->mPreviousFiles[6].c_str());
-			App->CL_Importer->Reload_FromResentFiles(mFileName);
+			App->SBC_Import->Reload_FromResentFiles(mFileName);
 			return 1;
 		}
 		case 5000 + 5: // 3
 		{
 			char mFileName[1024];
 			strcpy(mFileName, App->CL_Vm_FileIO->mPreviousFiles[5].c_str());
-			App->CL_Importer->Reload_FromResentFiles(mFileName);
+			App->SBC_Import->Reload_FromResentFiles(mFileName);
 			return 1;
 		}
 		case 5000 + 4: // 4
 		{
 			char mFileName[1024];
 			strcpy(mFileName, App->CL_Vm_FileIO->mPreviousFiles[4].c_str());
-			App->CL_Importer->Reload_FromResentFiles(mFileName);
+			App->SBC_Import->Reload_FromResentFiles(mFileName);
 			return 1;
 		}
 		case 5000 + 3: // 5
 		{
 			char mFileName[1024];
 			strcpy(mFileName, App->CL_Vm_FileIO->mPreviousFiles[3].c_str());
-			App->CL_Importer->Reload_FromResentFiles(mFileName);
+			App->SBC_Import->Reload_FromResentFiles(mFileName);
 			return 1;
 		}
 		case 5000 + 2: // 6
 		{
 			char mFileName[1024];
 			strcpy(mFileName, App->CL_Vm_FileIO->mPreviousFiles[2].c_str());
-			App->CL_Importer->Reload_FromResentFiles(mFileName);
+			App->SBC_Import->Reload_FromResentFiles(mFileName);
 			return 1;
 		}
 		case 5000 + 1: // 7
 		{
 			char mFileName[1024];
 			strcpy(mFileName, App->CL_Vm_FileIO->mPreviousFiles[1].c_str());
-			App->CL_Importer->Reload_FromResentFiles(mFileName);
+			App->SBC_Import->Reload_FromResentFiles(mFileName);
 			return 1;
 		}
 		case 5000 + 0: // 8
 		{
 			char mFileName[1024];
 			strcpy(mFileName, App->CL_Vm_FileIO->mPreviousFiles[0].c_str());
-			App->CL_Importer->Reload_FromResentFiles(mFileName);
+			App->SBC_Import->Reload_FromResentFiles(mFileName);
 			return 1;
 		}
 
@@ -715,7 +715,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			//App->Cl_Load_Scene->OpenScene(true);
 
-			App->CL_Importer->Bullet_Load_Room("Ogre3D   *.mesh\0*.mesh\0", "Ogre3D");
+			App->SBC_Import->Bullet_Load_Room("Ogre3D   *.mesh\0*.mesh\0", "Ogre3D");
 			strcpy(App->Cl_Vm_Preferences->Pref_Ogre_JustFileName, App->CL_Vm_Model->FileName);
 			strcpy(App->Cl_Vm_Preferences->Pref_Ogre_Path, App->CL_Vm_Model->Model_FolderPath);
 			App->Cl_Vm_Preferences->Write_Preferences();
