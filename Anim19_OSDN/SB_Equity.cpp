@@ -69,7 +69,7 @@ bool SB_Equity::StartMeshDesign()
 	DialogBox(App->hInst, (LPCTSTR)IDD_EQUITY, App->Fdlg, (DLGPROC)MeshDesign_Proc);
 
 	App->RenderBackGround = 0;
-	App->Cl19_Ogre->OgreListener->GD_MeshViewer_Running = 0;
+	App->Cl19_Ogre->OgreListener->Equity_Running = 0;
 	Close_OgreWindow();
 	return 1;
 }
@@ -600,7 +600,8 @@ bool SB_Equity::Set_OgreWindow(void)
 	mSceneMgrMeshView->addRenderQueueListener(RenderListener);
 
 	Reset_View();
-	App->Cl19_Ogre->OgreListener->GD_MeshViewer_Running = 1; // Must be Last
+
+	App->Cl19_Ogre->OgreListener->Equity_Running = 1; // Must be Last
 
 	return 1;
 }

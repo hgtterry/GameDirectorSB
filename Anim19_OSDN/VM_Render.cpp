@@ -164,7 +164,7 @@ void VM_Render::renderQueueEnded(Ogre::uint8 queueGroupId, const String& invocat
 // *************************************************************************
 void VM_Render::PreRender()
 {
-	if (App->Cl19_Ogre->OgreListener->GD_MeshViewer_Running == 0)
+	if (App->Cl19_Ogre->OgreListener->Equity_Running == 0)
 	{
 		return;
 	}
@@ -178,7 +178,7 @@ void VM_Render::PreRender()
 	glPushMatrix();
 	glLoadIdentity(); //Texture addressing should start out as direct.
 
-	if (App->Cl19_Ogre->OgreListener->GD_MeshViewer_Running == 1)
+	if (App->Cl19_Ogre->OgreListener->Equity_Running == 1)
 	{
 		RenderSystem* renderSystem = App->SBC_Equity->manObj->_getManager()->getDestinationRenderSystem();
 		Node* parentNode = App->SBC_Equity->manObj->getParentNode();
@@ -203,7 +203,7 @@ void VM_Render::PreRender()
 	}
 
 	//Set a clear pass to give the renderer a clear renderstate
-	if (App->Cl19_Ogre->OgreListener->GD_MeshViewer_Running == 1)
+	if (App->Cl19_Ogre->OgreListener->Equity_Running == 1)
 	{
 		App->SBC_Equity->mSceneMgrMeshView->_setPass(clearPass, true, false);
 	}
@@ -237,7 +237,7 @@ void VM_Render::PostRender()
 // *************************************************************************
 void VM_Render::Render_Loop()
 {
-	if (App->Cl19_Ogre->OgreListener->GD_MeshViewer_Running == 0)
+	if (App->Cl19_Ogre->OgreListener->Equity_Running == 0)
 	{
 		return;
 	}

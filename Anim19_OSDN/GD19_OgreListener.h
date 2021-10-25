@@ -95,7 +95,7 @@ public:
 
 	bool	GD_Run_Physics;
 	bool	GD_Dubug_Physics;
-	bool	GD_MeshViewer_Running;
+	bool	Equity_Running;
 	float	GD_SpinRate;
 	bool	GD_Selection_Mode;
 	bool	Show_ImGui_Panels;

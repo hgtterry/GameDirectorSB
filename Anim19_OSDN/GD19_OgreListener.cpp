@@ -55,7 +55,7 @@ GD19_OgreListener::GD19_OgreListener(void)
 
 	GD_Run_Physics = 0;
 	GD_Dubug_Physics = 0;
-	GD_MeshViewer_Running = 0;
+	Equity_Running = 0;
 	GD_SpinRate = 1;
 	GD_Selection_Mode = 0;
 
@@ -115,7 +115,7 @@ bool GD19_OgreListener::frameStarted(const FrameEvent& evt)
 		return true;
 	}
 
-	if (GD_MeshViewer_Running == 1)
+	if (Equity_Running == 1)
 	{
 		return true;
 	}
@@ -190,7 +190,7 @@ bool GD19_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 		return 1;
 	}
 
-	if (GD_MeshViewer_Running == 1)
+	if (Equity_Running == 1)
 	{
 		App->CL_WE_Listener_E15->WE_RenderingQueued(evt);
 		return 1;

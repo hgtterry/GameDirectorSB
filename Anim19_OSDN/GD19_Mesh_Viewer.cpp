@@ -107,7 +107,7 @@ bool GD19_Mesh_Viewer::StartMeshViewer()
 	
 	DialogBox(App->hInst,(LPCTSTR)IDD_GD_MESHVIEWER,App->Fdlg,(DLGPROC)MeshViewer_Proc);
 
-	App->Cl19_Ogre->OgreListener->GD_MeshViewer_Running = 0;
+	App->Cl19_Ogre->OgreListener->Equity_Running = 0;
 	Close_OgreWindow();
 
 	//App->Cl19_Ogre->OgreListener->showDebugOverlay(true);
@@ -213,7 +213,7 @@ LRESULT CALLBACK GD19_Mesh_Viewer::MeshViewer_Proc(HWND hDlg, UINT message, WPAR
 				App->Cl_Mesh_Viewer->Enable_TypeButtons(1);
 			}
 
-			App->Cl19_Ogre->OgreListener->GD_MeshViewer_Running = 1;
+			App->Cl19_Ogre->OgreListener->Equity_Running = 1;
 
 			
 			return TRUE;
@@ -627,7 +627,7 @@ LRESULT CALLBACK GD19_Mesh_Viewer::MeshViewer_Proc(HWND hDlg, UINT message, WPAR
 
 				App->Cl_Objects_New->Dispatcher_New_Object();
 				
-				App->Cl19_Ogre->OgreListener->GD_MeshViewer_Running = 0;
+				App->Cl19_Ogre->OgreListener->Equity_Running = 0;
 
 				EndDialog(hDlg, LOWORD(wParam));
 				return TRUE;
@@ -644,7 +644,7 @@ LRESULT CALLBACK GD19_Mesh_Viewer::MeshViewer_Proc(HWND hDlg, UINT message, WPAR
 					App->Cl_Mesh_Viewer->Last_MeshFile[0] = 0;
 				}
 
-				App->Cl19_Ogre->OgreListener->GD_MeshViewer_Running = 0;
+				App->Cl19_Ogre->OgreListener->Equity_Running = 0;
 				EndDialog(hDlg, LOWORD(wParam));
 				return TRUE;
 			}
