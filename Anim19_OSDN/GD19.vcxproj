@@ -201,6 +201,7 @@
     <ClInclude Include="SB_Equity.h" />
     <ClInclude Include="SB_Import.h" />
     <ClInclude Include="SB_Player.h" />
+    <ClInclude Include="SB_Project.h" />
     <ClInclude Include="SB_XMLConverter.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -273,6 +274,7 @@
     <ClCompile Include="SB_Equity.cpp" />
     <ClCompile Include="SB_Import.cpp" />
     <ClCompile Include="SB_Player.cpp" />
+    <ClCompile Include="SB_Project.cpp" />
     <ClCompile Include="SB_XMLConverter.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

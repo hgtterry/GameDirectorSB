@@ -87,6 +87,7 @@ ebopster
 #include "SB_XMLConverter.h"
 #include "SB_Player.h"
 #include "SB_Import.h"
+#include "SB_Project.h"
 
 class GD19_App
 {
@@ -156,6 +157,7 @@ public:
 	SB_XMLConverter*		SBC_XMLConverter;
 	SB_Player*				SBC_Player;
 	SB_Import*				SBC_Import;
+	SB_Project*				SBC_Project;
 
 	GD19_App(void);
 	~GD19_App(void);

@@ -591,7 +591,7 @@ bool SB_Equity::Set_OgreWindow(void)
 	App->CL_WE_Listener_E15->WE_Cam = mSceneMgrMeshView->createCamera("CameraMV");
 	App->CL_WE_Listener_E15->WE_Cam->setPosition(Ogre::Vector3(0, 0, 0));
 	App->CL_WE_Listener_E15->WE_Cam->setNearClipDistance(0.1);
-	App->CL_WE_Listener_E15->WE_Cam->setFarClipDistance(1000);
+	App->CL_WE_Listener_E15->WE_Cam->setFarClipDistance(5000);
 
 	Ogre::Viewport* vp = MeshView_Window->addViewport(App->CL_WE_Listener_E15->WE_Cam);
 	App->CL_WE_Listener_E15->WE_Cam->setAspectRatio(Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));

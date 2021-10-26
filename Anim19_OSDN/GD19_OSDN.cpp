@@ -245,6 +245,32 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return 1;
 		}
 
+		case ID_OPEN_PROJECT:
+		{
+			App->Debug_Text();
+			return 1;
+		}
+
+		case ID_OPEN_SCENE:
+		{
+			App->Debug_Text();
+			return 1;
+		}
+		
+		case ID_NEW_PROJECT:
+		{
+			App->SBC_Project->Create_Project();
+			return 1;
+		}
+
+		case ID_NEW_SCENE:
+		{
+			App->Debug_Text();
+			return 1;
+		}
+
+		
+
 		// Exporters
 	
 		//case ID_OGRE3D_TEST:

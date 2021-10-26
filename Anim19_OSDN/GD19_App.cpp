@@ -90,6 +90,7 @@ GD19_App::GD19_App(void)
 	SBC_XMLConverter =	nullptr;
 	SBC_Player =		nullptr;
 	SBC_Import =		nullptr;
+	SBC_Project =		nullptr;
 
 	Fdlg = nullptr;
 	hInst = nullptr;
@@ -248,6 +249,7 @@ bool GD19_App::InitApp(void)
 	SBC_XMLConverter =	new SB_XMLConverter();		
 	SBC_Player =		new SB_Player();		
 	SBC_Import =		new SB_Import();
+	SBC_Project =		new SB_Project();
 
 	SetBrushes_Fonts();
 
