@@ -29,6 +29,12 @@ distribution.
 
 SB_Project::SB_Project()
 {
+	strcpy(Project_Name,"Project_1");
+	strcpy(Project_Path,App->EquityDirecory_FullPath);
+
+	strcpy(Project_FullPath, App->EquityDirecory_FullPath);
+	strcat(Project_FullPath, "\\");
+	strcat(Project_FullPath, Project_Name);
 }
 
 
@@ -45,7 +51,7 @@ bool SB_Project::Create_Project()
 	return 1;
 }
 // *************************************************************************
-// *					Dialog_GameModeStart_Dlg_Proc	  				   *
+// *				Create_Project_Proc Terry Flanigan	  				   *
 // *************************************************************************
 LRESULT CALLBACK SB_Project::Create_Project_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -53,8 +59,25 @@ LRESULT CALLBACK SB_Project::Create_Project_Proc(HWND hDlg, UINT message, WPARAM
 	{
 	case WM_INITDIALOG:
 	{
-		App->Cl_Dialogs->Canceled = 0;
+		SendDlgItemMessage(hDlg, IDC_STPJFOLDERPATH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
+		SetDlgItemText(hDlg, IDC_EDPROJECTNAME, (LPCTSTR)App->SBC_Project->Project_Name);
+		SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->Project_FullPath);
+
 		return TRUE;
+	}
+
+	case WM_CTLCOLORSTATIC:
+	{
+
+		if (GetDlgItem(hDlg, IDC_STPJFOLDERPATH) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->Brush_White;
+		}
+		return FALSE;
 	}
 
 	case WM_CTLCOLORDLG:

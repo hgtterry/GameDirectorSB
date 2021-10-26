@@ -30,6 +30,10 @@ public:
 
 	bool SB_Project::Create_Project();
 
+	char Project_Name[255];
+	char Project_Path[1024];
+	char Project_FullPath[1024];
+
 protected:
 
 	static LRESULT CALLBACK Create_Project_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
