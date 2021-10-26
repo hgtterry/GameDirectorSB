@@ -411,6 +411,20 @@ LRESULT CALLBACK SB_Equity::Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 			return TRUE;
 		}
 
+		
+
+		if (LOWORD(wParam) == IDC_BTEQRESET)
+		{
+			App->SBC_Equity->Reset_View();
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BTEQZOOM)
+		{
+			App->SBC_Equity->Zoom();
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == IDOK)
 		{
 			EndDialog(hDlg, LOWORD(wParam));
