@@ -28,14 +28,26 @@ public:
 	SB_Project();
 	~SB_Project();
 
-	bool SB_Project::Create_Project();
+	bool Start_Create_Project();
 
 	char Project_Name[255];
 	char Project_Path[1024];
 	char Project_FullPath[1024];
 
+	char Project_Ini_FilePath[1024];
+
+	char Level_Folder_Path[1024];
+
 protected:
 
 	static LRESULT CALLBACK Create_Project_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	bool Create_Project();
+
+	bool Set_Paths();
+	bool Write_Project_Ini();
+	bool Create_Level_Folder();
+
+	FILE *Write_Ini;
 };
 

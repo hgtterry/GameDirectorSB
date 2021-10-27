@@ -259,7 +259,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		
 		case ID_NEW_PROJECT:
 		{
-			App->SBC_Project->Create_Project();
+			App->SBC_Project->Start_Create_Project();
 			return 1;
 		}
 

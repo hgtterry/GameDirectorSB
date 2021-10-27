@@ -26,10 +26,9 @@ distribution.
 #include "resource.h"
 #include "SB_Project.h"
 
-
 SB_Project::SB_Project()
 {
-	strcpy(Project_Name,"Project_1");
+	strcpy(Project_Name,"Project1");
 	strcpy(Project_Path,App->EquityDirecory_FullPath);
 	strcat(Project_Path, "\\");
 	strcat(Project_Path, "Projects\\");
@@ -39,6 +38,12 @@ SB_Project::SB_Project()
 	strcat(Project_FullPath, "Projects");
 	strcat(Project_FullPath, "\\");
 	strcat(Project_FullPath, Project_Name);
+	strcat(Project_FullPath, "_Prj");
+
+	Project_Ini_FilePath[0] = 0;
+	Level_Folder_Path[0] = 0;
+	Write_Ini = NULL;
+
 }
 
 
@@ -47,13 +52,14 @@ SB_Project::~SB_Project()
 }
 
 // *************************************************************************
-// *	  				Create_Project Terry Flanigan					   *
+// *	  				Start_Create_Project Terry Flanigan				   *
 // *************************************************************************
-bool SB_Project::Create_Project()
+bool SB_Project::Start_Create_Project()
 {
 	DialogBox(App->hInst, (LPCTSTR)IDD_PROJECT, App->Fdlg, (DLGPROC)Create_Project_Proc);
 	return 1;
 }
+
 // *************************************************************************
 // *				Create_Project_Proc Terry Flanigan	  				   *
 // *************************************************************************
@@ -153,6 +159,7 @@ LRESULT CALLBACK SB_Project::Create_Project_Proc(HWND hDlg, UINT message, WPARAM
 
 			strcpy(App->SBC_Project->Project_FullPath, App->CL_Vm_FileIO->szSelectedDir);
 			strcat(App->SBC_Project->Project_FullPath, App->SBC_Project->Project_Name);
+			strcat(App->SBC_Project->Project_FullPath, "_Prj");
 
 			strcpy(App->SBC_Project->Project_Path, App->CL_Vm_FileIO->szSelectedDir);
 
@@ -172,6 +179,7 @@ LRESULT CALLBACK SB_Project::Create_Project_Proc(HWND hDlg, UINT message, WPARAM
 
 			strcpy(App->SBC_Project->Project_FullPath, App->SBC_Project->Project_Path);
 			strcat(App->SBC_Project->Project_FullPath, App->SBC_Project->Project_Name);
+			strcat(App->SBC_Project->Project_FullPath, "_Prj");
 
 			SetDlgItemText(hDlg, IDC_STPROJECTNAME, (LPCTSTR)App->SBC_Project->Project_Name);
 			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->Project_FullPath);
@@ -187,6 +195,7 @@ LRESULT CALLBACK SB_Project::Create_Project_Proc(HWND hDlg, UINT message, WPARAM
 
 		if (LOWORD(wParam) == IDOK)
 		{
+			App->SBC_Project->Create_Project();
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -194,4 +203,138 @@ LRESULT CALLBACK SB_Project::Create_Project_Proc(HWND hDlg, UINT message, WPARAM
 
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *	  				Create_Project Terry Flanigan					   *
+// *************************************************************************
+bool SB_Project::Create_Project()
+{
+
+
+	if (_mkdir(App->SBC_Project->Project_FullPath) == 0)
+	{
+		_chdir(App->SBC_Project->Project_FullPath);
+	}
+	else
+	{
+		
+	}
+
+	Set_Paths();
+
+	Write_Project_Ini();
+
+	Create_Level_Folder();
+
+	App->Say("Created");
+	return 1;
+}
+
+// *************************************************************************
+// *	  					Set_Paths Terry Flanigan					   *
+// *************************************************************************
+bool SB_Project::Set_Paths()
+{
+	Project_Ini_FilePath[0] = 0;
+
+	strcpy(Project_Ini_FilePath, App->SBC_Project->Project_FullPath);
+	strcat(Project_Ini_FilePath, "\\");
+	strcat(Project_Ini_FilePath, "Project.eif");
+
+	strcpy(Level_Folder_Path, App->SBC_Project->Project_FullPath);
+	strcat(Level_Folder_Path, "\\");
+	strcat(Level_Folder_Path, "Level_1");
+	return 1;
+}
+
+// *************************************************************************
+// *	  				Write_Project_Ini Terry Flanigan				   *
+// *************************************************************************
+bool SB_Project::Write_Project_Ini()
+{
+	
+	Write_Ini = NULL;
+
+	Write_Ini = fopen(Project_Ini_FilePath, "wt");
+
+	if (!Write_Ini)
+	{
+		App->Say("Cant Create File");
+		return 0;
+	}
+
+	fprintf(Write_Ini, "%s\n", "[Files]");
+	fprintf(Write_Ini, "%s%s\n", "Project_Name=", App->SBC_Project->Project_Name);
+	fprintf(Write_Ini, "%s%s\n", "Folder_Path=", App->SBC_Project->Project_FullPath);
+
+	fclose(Write_Ini);
+	
+	return 1;
+}
+
+// *************************************************************************
+// *	  				Create_Level_Folder Terry Flanigan				   *
+// *************************************************************************
+bool SB_Project::Create_Level_Folder()
+{
+
+	if (_mkdir(Level_Folder_Path) == 0)
+	{
+		_chdir(Level_Folder_Path);
+
+	}
+	else
+	{
+		//App->Say("Directory already exsits");
+		
+	}
+	
+	char Source[1024];
+	char Destination[1024];
+
+	strcpy(Source, "C:\\Users\\Equity\\Desktop\\Equity15\\Bin\\Data\\World_Ogre\\World.mesh");
+
+	strcpy(Destination, Level_Folder_Path);
+	strcat(Destination, "\\");
+	strcat(Destination, "World.mesh");
+	
+	CopyFile(Source, Destination,true);
+
+	// --------------------------------------------------------------------
+	strcpy(Source, "C:\\Users\\Equity\\Desktop\\Equity15\\Bin\\Data\\World_Ogre\\World.material");
+
+	strcpy(Destination, Level_Folder_Path);
+	strcat(Destination, "\\");
+	strcat(Destination, "World.material");
+	
+	CopyFile(Source, Destination, true);
+
+	// --------------------------------------------------------------------
+	strcpy(Source, "C:\\Users\\Equity\\Desktop\\Equity15\\Bin\\Data\\World_Ogre\\Wall.bmp");
+
+	strcpy(Destination, Level_Folder_Path);
+	strcat(Destination, "\\");
+	strcat(Destination, "Wall.bmp");
+	
+	CopyFile(Source, Destination, true);
+
+	// --------------------------------------------------------------------
+	strcpy(Source, "C:\\Users\\Equity\\Desktop\\Equity15\\Bin\\Data\\World_Ogre\\stfloor1.bmp");
+
+	strcpy(Destination, Level_Folder_Path);
+	strcat(Destination, "\\");
+	strcat(Destination, "stfloor1.bmp");
+	
+	CopyFile(Source, Destination, true);
+
+	// --------------------------------------------------------------------
+	strcpy(Source, "C:\\Users\\Equity\\Desktop\\Equity15\\Bin\\Data\\World_Ogre\\concrete.bmp");
+
+	strcpy(Destination, Level_Folder_Path);
+	strcat(Destination, "\\");
+	strcat(Destination, "concrete.bmp");
+	
+	CopyFile(Source, Destination, true);
+	return 1;
 }
