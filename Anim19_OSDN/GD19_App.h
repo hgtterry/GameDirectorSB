@@ -88,6 +88,7 @@ ebopster
 #include "SB_Player.h"
 #include "SB_Import.h"
 #include "SB_Project.h"
+#include "SB_Dialogs.h"
 
 class GD19_App
 {
@@ -158,6 +159,7 @@ public:
 	SB_Player*				SBC_Player;
 	SB_Import*				SBC_Import;
 	SB_Project*				SBC_Project;
+	SB_Dialogs*				SBC_Dialogs;
 
 	GD19_App(void);
 	~GD19_App(void);

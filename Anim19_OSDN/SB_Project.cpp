@@ -34,6 +34,8 @@ SB_Project::SB_Project()
 
 	strcpy(Project_FullPath, App->EquityDirecory_FullPath);
 	strcat(Project_FullPath, "\\");
+	strcat(Project_FullPath, "Projects");
+	strcat(Project_FullPath, "\\");
 	strcat(Project_FullPath, Project_Name);
 }
 
@@ -60,8 +62,11 @@ LRESULT CALLBACK SB_Project::Create_Project_Proc(HWND hDlg, UINT message, WPARAM
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_STPJFOLDERPATH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STPROJECTNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_STPN, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
-		SetDlgItemText(hDlg, IDC_EDPROJECTNAME, (LPCTSTR)App->SBC_Project->Project_Name);
+		SetDlgItemText(hDlg, IDC_STPROJECTNAME, (LPCTSTR)App->SBC_Project->Project_Name);
 		SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->Project_FullPath);
 
 		return TRUE;
@@ -76,6 +81,22 @@ LRESULT CALLBACK SB_Project::Create_Project_Proc(HWND hDlg, UINT message, WPARAM
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->Brush_White;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STPROJECTNAME) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->Brush_White;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STPN) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
 		}
 		return FALSE;
 	}
@@ -114,20 +135,33 @@ LRESULT CALLBACK SB_Project::Create_Project_Proc(HWND hDlg, UINT message, WPARAM
 	}
 	case WM_COMMAND:
 
-		/*if (LOWORD(wParam) == IDC_STARTCUR)
+		if (LOWORD(wParam) == IDC_BTPJBROWSE)
 		{
-			App->Cl_Dialogs->Canceled = 0;
-			EndDialog(hDlg, LOWORD(wParam));
-			return 1;
+			strcpy(App->CL_Vm_FileIO->BrowserMessage, "Select Folder To Place New Project a sub folder will be created");
+			int Test = App->CL_Vm_FileIO->StartBrowser("");
+
+			if (Test == 0){return true;}
+
+			strcpy(App->SBC_Project->Project_FullPath, App->CL_Vm_FileIO->szSelectedDir);
+			strcat(App->SBC_Project->Project_FullPath, App->SBC_Project->Project_Name);
+
+			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->Project_FullPath);
+
+			return TRUE;
 		}
 
-		if (LOWORD(wParam) == IDC_STARTLEVEL)
+		if (LOWORD(wParam) == IDC_BTCHANGE)
 		{
-			App->Cl_Bullet->Reset_Physics();
-			App->Cl_Dialogs->Canceled = 0;
-			EndDialog(hDlg, LOWORD(wParam));
-		}*/
+			strcpy(App->SBC_Dialogs->btext, "Change Project Name");
+			strcpy(App->SBC_Dialogs->Chr_Text, App->SBC_Project->Project_Name);
 
+			App->SBC_Dialogs->Dialog_Text();
+
+			strcpy(App->SBC_Project->Project_Name,App->SBC_Dialogs->Chr_Text);
+
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == IDCANCEL)
 		{
 			EndDialog(hDlg, LOWORD(wParam));

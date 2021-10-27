@@ -91,6 +91,7 @@ GD19_App::GD19_App(void)
 	SBC_Player =		nullptr;
 	SBC_Import =		nullptr;
 	SBC_Project =		nullptr;
+	SBC_Dialogs =		nullptr;
 
 	Fdlg = nullptr;
 	hInst = nullptr;
@@ -250,6 +251,7 @@ bool GD19_App::InitApp(void)
 	SBC_Player =		new SB_Player();		
 	SBC_Import =		new SB_Import();
 	SBC_Project =		new SB_Project();
+	SBC_Dialogs =		new SB_Dialogs();
 
 	SetBrushes_Fonts();
 

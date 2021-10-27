@@ -260,6 +260,7 @@ LRESULT CALLBACK GD19_Dialogs::Dialog_Int_Proc(HWND hDlg, UINT message, WPARAM w
 	}
     return FALSE;
 }
+
 // *************************************************************************
 // *	  				 Dialog_Text	Terry Bernie					   *
 // *************************************************************************
