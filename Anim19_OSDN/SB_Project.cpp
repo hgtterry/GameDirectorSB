@@ -31,6 +31,8 @@ SB_Project::SB_Project()
 {
 	strcpy(Project_Name,"Project_1");
 	strcpy(Project_Path,App->EquityDirecory_FullPath);
+	strcat(Project_Path, "\\");
+	strcat(Project_Path, "Projects\\");
 
 	strcpy(Project_FullPath, App->EquityDirecory_FullPath);
 	strcat(Project_FullPath, "\\");
@@ -145,6 +147,8 @@ LRESULT CALLBACK SB_Project::Create_Project_Proc(HWND hDlg, UINT message, WPARAM
 			strcpy(App->SBC_Project->Project_FullPath, App->CL_Vm_FileIO->szSelectedDir);
 			strcat(App->SBC_Project->Project_FullPath, App->SBC_Project->Project_Name);
 
+			strcpy(App->SBC_Project->Project_Path, App->CL_Vm_FileIO->szSelectedDir);
+
 			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->Project_FullPath);
 
 			return TRUE;
@@ -158,6 +162,12 @@ LRESULT CALLBACK SB_Project::Create_Project_Proc(HWND hDlg, UINT message, WPARAM
 			App->SBC_Dialogs->Dialog_Text();
 
 			strcpy(App->SBC_Project->Project_Name,App->SBC_Dialogs->Chr_Text);
+
+			strcpy(App->SBC_Project->Project_FullPath, App->SBC_Project->Project_Path);
+			strcat(App->SBC_Project->Project_FullPath, App->SBC_Project->Project_Name);
+
+			SetDlgItemText(hDlg, IDC_STPROJECTNAME, (LPCTSTR)App->SBC_Project->Project_Name);
+			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->Project_FullPath);
 
 			return TRUE;
 		}
