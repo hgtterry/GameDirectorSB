@@ -227,6 +227,13 @@ bool SB_Project::Create_Project()
 
 	Create_Level_Folder();
 
+	Add_World();
+
+	strcpy(App->CL_Vm_Model->Model_FolderPath, Level_Folder_Path);
+	strcpy(App->CL_Vm_Model->FileName, "World.mesh");
+
+	App->CL_Bullet_AddRoom->AddToScene(1);
+
 	App->Say("Created");
 	return 1;
 }
@@ -290,6 +297,14 @@ bool SB_Project::Create_Level_Folder()
 		
 	}
 	
+	return 1;
+}
+
+// *************************************************************************
+// *	  					Add_World Terry Flanigan					   *
+// *************************************************************************
+bool SB_Project::Add_World()
+{
 	char Source[1024];
 	char Destination[1024];
 
@@ -298,8 +313,8 @@ bool SB_Project::Create_Level_Folder()
 	strcpy(Destination, Level_Folder_Path);
 	strcat(Destination, "\\");
 	strcat(Destination, "World.mesh");
-	
-	CopyFile(Source, Destination,true);
+
+	CopyFile(Source, Destination, true);
 
 	// --------------------------------------------------------------------
 	strcpy(Source, "C:\\Users\\Equity\\Desktop\\Equity15\\Bin\\Data\\World_Ogre\\World.material");
@@ -307,7 +322,7 @@ bool SB_Project::Create_Level_Folder()
 	strcpy(Destination, Level_Folder_Path);
 	strcat(Destination, "\\");
 	strcat(Destination, "World.material");
-	
+
 	CopyFile(Source, Destination, true);
 
 	// --------------------------------------------------------------------
@@ -316,7 +331,7 @@ bool SB_Project::Create_Level_Folder()
 	strcpy(Destination, Level_Folder_Path);
 	strcat(Destination, "\\");
 	strcat(Destination, "Wall.bmp");
-	
+
 	CopyFile(Source, Destination, true);
 
 	// --------------------------------------------------------------------
@@ -325,7 +340,7 @@ bool SB_Project::Create_Level_Folder()
 	strcpy(Destination, Level_Folder_Path);
 	strcat(Destination, "\\");
 	strcat(Destination, "stfloor1.bmp");
-	
+
 	CopyFile(Source, Destination, true);
 
 	// --------------------------------------------------------------------
@@ -334,7 +349,8 @@ bool SB_Project::Create_Level_Folder()
 	strcpy(Destination, Level_Folder_Path);
 	strcat(Destination, "\\");
 	strcat(Destination, "concrete.bmp");
-	
+
 	CopyFile(Source, Destination, true);
+
 	return 1;
 }

@@ -47,6 +47,8 @@ protected:
 	bool Set_Paths();
 	bool Write_Project_Ini();
 	bool Create_Level_Folder();
+	bool Add_World();
+
 
 	FILE *Write_Ini;
 };
