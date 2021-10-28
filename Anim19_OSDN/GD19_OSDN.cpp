@@ -741,15 +741,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			//App->Cl_Load_Scene->OpenScene(true);
 
-			App->SBC_Import->Bullet_Load_Room("Ogre3D   *.mesh\0*.mesh\0", "Ogre3D");
-			strcpy(App->Cl_Vm_Preferences->Pref_Ogre_JustFileName, App->CL_Vm_Model->FileName);
-			strcpy(App->Cl_Vm_Preferences->Pref_Ogre_Path, App->CL_Vm_Model->Model_FolderPath);
-			App->Cl_Vm_Preferences->Write_Preferences();
-			// -----------------------------------------------------
+			//App->SBC_Import->Bullet_Load_Room("Ogre3D   *.mesh\0*.mesh\0", "Ogre3D");
+			App->SBC_Import->Load_Scene("Level   *.SBLevel\0*.SBLevel\0", "Level");
+			//strcpy(App->Cl_Vm_Preferences->Pref_Ogre_JustFileName, App->CL_Vm_Model->FileName);
+			//strcpy(App->Cl_Vm_Preferences->Pref_Ogre_Path, App->CL_Vm_Model->Model_FolderPath);
 
-			App->SBC_Physics->Enable_Physics(1);
-			
-			ShowWindow(App->SBC_Physics->PhysicsPannel_Hwnd, SW_SHOW);
+			//App->Cl_Vm_Preferences->Write_Preferences();
+			//// -----------------------------------------------------
+
+			//App->SBC_Physics->Enable_Physics(1);
+			//
+			//ShowWindow(App->SBC_Physics->PhysicsPannel_Hwnd, SW_SHOW);
 
 			return 1;
 		}

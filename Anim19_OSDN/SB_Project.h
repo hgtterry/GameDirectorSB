@@ -29,6 +29,7 @@ public:
 	~SB_Project();
 
 	bool Start_Create_Project();
+	bool Load_Scene(char* Folder, char* File);
 
 	char Project_Name[255];
 	char Project_Path[1024];
@@ -39,6 +40,10 @@ public:
 	char Level_Folder_Path[1024];
 
 	char Level_Folder_Path_World[1024];
+
+	char Level_FileName[255];
+	char Level_Path_FileName[1024];
+	char Level_JustPath[1024];
 
 protected:
 

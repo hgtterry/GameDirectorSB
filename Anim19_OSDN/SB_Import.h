@@ -35,6 +35,8 @@ public:
 
 	bool Bullet_Load_Room(char* Extension, char* Extension2);
 
+	bool Load_Scene(char* Extension, char* Extension2);
+
 	void Reload_FromResentFiles(char* ResentPathAndFile);
 };
 

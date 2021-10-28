@@ -449,3 +449,25 @@ bool SB_Project::Add_World()
 
 	return 1;
 }
+
+// *************************************************************************
+// *	  					Load_Scene Terry Flanigan					   *
+// *************************************************************************
+bool SB_Project::Load_Scene(char* Folder, char* File)
+{
+	strcpy(Level_FileName, App->CL_Vm_FileIO->Model_FileName);
+	strcpy(Level_Path_FileName, App->CL_Vm_FileIO->Model_Path_FileName);
+
+	// Get Texure path assumed at this point to be where model is
+	int len1 = strlen(Level_FileName);
+	int len2 = strlen(Level_Path_FileName);
+	strcpy(Level_JustPath, Level_Path_FileName);
+
+	Level_JustPath[len2 - len1] = 0;
+
+
+	App->Say(Level_FileName);
+	App->Say(Level_Path_FileName);
+	App->Say(Level_JustPath);
+	return 1;
+}
