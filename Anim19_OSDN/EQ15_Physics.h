@@ -7,7 +7,7 @@ public:
 
 	bool Start_Physics_Pannel();
 	
-
+	void Enable_Physics(void);
 
 	HWND PhysicsPannel_Hwnd;
 

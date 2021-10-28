@@ -234,6 +234,8 @@ bool SB_Project::Create_Project()
 
 	App->CL_Bullet_AddRoom->AddToScene(1);
 
+	App->CL_Physics_E15->Enable_Physics();
+
 	App->Say("Created");
 	return 1;
 }

@@ -142,3 +142,18 @@ void EQ15_Physics::Update_Model(void)
 
 	App->Say("Model Updated");
 }
+
+// *************************************************************************
+// *					Enable_Physics Terry Flanigan					   *
+// *************************************************************************
+void EQ15_Physics::Enable_Physics(void)
+{
+	int f = App->SBC_Player->mObject->getCollisionFlags();
+
+	App->Cl19_Ogre->OgreListener->GD_Dubug_Physics = 1;
+	App->Cl19_Ogre->OgreListener->GD_Run_Physics = 1;
+	App->Cl19_Ogre->BulletListener->ShowDebug = 1;
+
+	App->SBC_Player->ShowDebug = 1;
+	App->SBC_Player->mObject->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+}
