@@ -46,6 +46,7 @@ SB_Project::SB_Project()
 
 	Write_Ini = NULL;
 	Write_Player_Ini = NULL;
+	WriteFile = NULL;
 
 }
 
@@ -235,7 +236,7 @@ bool SB_Project::Create_Project()
 	strcpy(App->CL_Vm_Model->Model_FolderPath, Level_Folder_Path_World);
 	strcpy(App->CL_Vm_Model->FileName, "World.mesh");
 
-	App->CL_Bullet_AddRoom->AddToScene(1); // Load world into scene
+	App->CL_Bullet_AddRoom->AddToScene(1); // Load First room into scene
 
 	App->SBC_Physics->Enable_Physics(1);
 
@@ -363,6 +364,34 @@ bool SB_Project::Write_Player()
 	fprintf(Write_Player_Ini, "%s%f\n", "Cam_Height=", App->SBC_Player->PlayerHeight);
 	
 	fclose(Write_Player_Ini);
+
+	// ===============================================================
+	WriteFile = NULL;
+
+	File[0] = 0;
+
+	strcpy(File, Level_Folder_Path);
+	strcat(File, "\\");
+	strcat(File, "Level.SBLevel");
+
+
+	WriteFile = fopen(File, "wt");
+
+	if (!WriteFile)
+	{
+		App->Say("Cant Create File");
+		return 0;
+	}
+
+	fprintf(WriteFile, "%s\n", "[Version_Data]");
+	fprintf(WriteFile, "%s%s\n", "Version=", "V1.2");
+
+	fprintf(WriteFile, "%s\n", " ");
+
+	fprintf(WriteFile, "%s\n", "[Levels]");
+	fprintf(WriteFile, "%s%s\n", "Scene1=", "World1");
+
+	fclose(WriteFile);
 	return 1;
 }
 

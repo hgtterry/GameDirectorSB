@@ -55,5 +55,6 @@ protected:
 
 	FILE *Write_Ini;
 	FILE *Write_Player_Ini;
+	FILE *WriteFile;
 };
 
