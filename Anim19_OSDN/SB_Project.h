@@ -45,6 +45,10 @@ public:
 	char Level_Path_FileName[1024];
 	char Level_JustPath[1024];
 
+	char Scene_FileName[255];
+	char Scene_Path_FileName[1024];
+	char Scene_JustPath[1024];
+
 protected:
 
 	static LRESULT CALLBACK Create_Project_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);

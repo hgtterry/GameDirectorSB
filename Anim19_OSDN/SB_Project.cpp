@@ -44,6 +44,10 @@ SB_Project::SB_Project()
 	Level_Folder_Path[0] = 0;
 	Level_Folder_Path_World[0] = 0;
 
+	Scene_FileName[0] = 0;
+	Scene_Path_FileName[0] = 0;
+	Scene_JustPath[0] = 0;
+
 	Write_Ini = NULL;
 	Write_Player_Ini = NULL;
 	WriteFile = NULL;
@@ -389,7 +393,8 @@ bool SB_Project::Write_Player()
 	fprintf(WriteFile, "%s\n", " ");
 
 	fprintf(WriteFile, "%s\n", "[Levels]");
-	fprintf(WriteFile, "%s%s\n", "Scene1=", "World1");
+	fprintf(WriteFile, "%s%s\n", "Folder=", "World1");
+	fprintf(WriteFile, "%s%s\n", "File=", "World.mesh");
 
 	fclose(WriteFile);
 	return 1;
@@ -403,7 +408,8 @@ bool SB_Project::Add_World()
 	char Source[1024];
 	char Destination[1024];
 
-	strcpy(Source, "C:\\Users\\Equity\\Desktop\\Equity15\\Bin\\Data\\World_Ogre\\World.mesh");
+	strcpy(Source, App->EquityDirecory_FullPath);
+	strcat(Source, "\\Data\\World_Ogre\\World.mesh");
 
 	strcpy(Destination, Level_Folder_Path_World);
 	strcat(Destination, "\\");
@@ -412,7 +418,8 @@ bool SB_Project::Add_World()
 	CopyFile(Source, Destination, true);
 
 	// --------------------------------------------------------------------
-	strcpy(Source, "C:\\Users\\Equity\\Desktop\\Equity15\\Bin\\Data\\World_Ogre\\World.material");
+	strcpy(Source, App->EquityDirecory_FullPath);
+	strcat(Source, "\\Data\\World_Ogre\\World.material");
 
 	strcpy(Destination, Level_Folder_Path_World);
 	strcat(Destination, "\\");
@@ -421,7 +428,8 @@ bool SB_Project::Add_World()
 	CopyFile(Source, Destination, true);
 
 	// --------------------------------------------------------------------
-	strcpy(Source, "C:\\Users\\Equity\\Desktop\\Equity15\\Bin\\Data\\World_Ogre\\Wall.bmp");
+	strcpy(Source, App->EquityDirecory_FullPath);
+	strcat(Source, "\\Data\\World_Ogre\\Wall.bmp");
 
 	strcpy(Destination, Level_Folder_Path_World);
 	strcat(Destination, "\\");
@@ -430,7 +438,8 @@ bool SB_Project::Add_World()
 	CopyFile(Source, Destination, true);
 
 	// --------------------------------------------------------------------
-	strcpy(Source, "C:\\Users\\Equity\\Desktop\\Equity15\\Bin\\Data\\World_Ogre\\stfloor1.bmp");
+	strcpy(Source, App->EquityDirecory_FullPath);
+	strcat(Source, "\\Data\\World_Ogre\\stfloor1.bmp");
 
 	strcpy(Destination, Level_Folder_Path_World);
 	strcat(Destination, "\\");
@@ -439,7 +448,8 @@ bool SB_Project::Add_World()
 	CopyFile(Source, Destination, true);
 
 	// --------------------------------------------------------------------
-	strcpy(Source, "C:\\Users\\Equity\\Desktop\\Equity15\\Bin\\Data\\World_Ogre\\concrete.bmp");
+	strcpy(Source, App->EquityDirecory_FullPath);
+	strcat(Source, "\\Data\\World_Ogre\\concrete.bmp");
 
 	strcpy(Destination, Level_Folder_Path_World);
 	strcat(Destination, "\\");
@@ -465,9 +475,32 @@ bool SB_Project::Load_Scene(char* Folder, char* File)
 
 	Level_JustPath[len2 - len1] = 0;
 
+	// ------------------------------------------------------------------- 
 
-	App->Say(Level_FileName);
-	App->Say(Level_Path_FileName);
-	App->Say(Level_JustPath);
+	char chr_Tag1[1024];
+	char chr_Tag2[1024];
+
+	chr_Tag1[0] = 0;
+	chr_Tag2[0] = 0;
+
+	App->Cl_Ini->SetPathName(Level_Path_FileName);
+
+	App->Cl_Ini->GetString("Version_Data", "Version", chr_Tag1, 1024);
+	
+
+	App->Cl_Ini->GetString("Levels", "Folder", chr_Tag1, 1024);
+	strcpy(Scene_JustPath, Level_JustPath);
+	strcat(Scene_JustPath, chr_Tag1);
+
+	App->Cl_Ini->GetString("Levels", "File", chr_Tag2, 1024);
+
+
+	strcpy(App->CL_Vm_Model->Model_FolderPath, Scene_JustPath);
+	strcpy(App->CL_Vm_Model->FileName, chr_Tag2);
+
+	App->CL_Bullet_AddRoom->AddToScene(1); // Load First room into scene
+
+	App->SBC_Physics->Enable_Physics(1);
+
 	return 1;
 }
