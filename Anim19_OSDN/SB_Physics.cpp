@@ -30,6 +30,8 @@ distribution.
 SB_Physics::SB_Physics()
 {
 	PhysicsPannel_Hwnd = nullptr;
+
+	Toggle_Enable_Flag = 0;
 }
 
 
@@ -57,11 +59,7 @@ LRESULT CALLBACK SB_Physics::Start_Physics_Proc(HWND hDlg, UINT message, WPARAM 
 	case WM_INITDIALOG:
 	{
 
-		/*SendDlgItemMessage(hDlg, IDC_RGGROUPNAME, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_RGTEXTURENAME, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
-
-		SendDlgItemMessage(hDlg, IDC_INFO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_CHANGETEXTURE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));*/
+		SendDlgItemMessage(hDlg, IDC_BTPHYTEST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 	}
 
@@ -92,6 +90,13 @@ LRESULT CALLBACK SB_Physics::Start_Physics_Proc(HWND hDlg, UINT message, WPARAM 
 	case WM_NOTIFY:
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_BTPHYTEST && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->SBC_Physics->Toggle_Enable_Flag);
+			return CDRF_DODEFAULT;
+		}
 
 		return CDRF_DODEFAULT;
 	}
@@ -171,4 +176,7 @@ void SB_Physics::Enable_Physics(bool Enable)
 	App->SBC_Player->ShowDebug = Enable;
 
 	App->SBC_Player->mObject->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+
+	App->SBC_Physics->Toggle_Enable_Flag = Enable;
+	RedrawWindow(App->SBC_Physics->PhysicsPannel_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }

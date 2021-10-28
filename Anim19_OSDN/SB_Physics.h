@@ -39,5 +39,7 @@ protected:
 	static LRESULT CALLBACK Start_Physics_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Update_Model(void);
+
+	bool Toggle_Enable_Flag;
 };
 
