@@ -1,23 +1,46 @@
+/*
+Copyright (c) 2021 Stage Builder and Equity -- Inflanite Software W.T.Flanigan H.C.Flanigan
+
+This software is provided 'as-is', without any express or implied
+warranty. In no event will the authors be held liable for any damages
+arising from the use of this software.
+
+Permission is granted to anyone to use this software for any purpose,
+including commercial applications, and to alter it and redistribute it
+freely, subject to the following restrictions:
+
+1. The origin of this software must not be misrepresented; you must not
+claim that you wrote the original software. If you use this software
+in a product, an acknowledgment in the product documentation would be
+appreciated but is not required.
+
+2. Altered source versions must be plainly marked as such, and must not be
+misrepresented as being the original software.
+
+3. This notice may not be removed or altered from any source
+distribution.
+*/
+
 #include "stdafx.h"
 #include "GD19_App.h"
 #include "resource.h"
-#include "EQ15_Physics.h"
+#include "SB_Physics.h"
 
 
-EQ15_Physics::EQ15_Physics()
+SB_Physics::SB_Physics()
 {
 	PhysicsPannel_Hwnd = nullptr;
 }
 
 
-EQ15_Physics::~EQ15_Physics()
+SB_Physics::~SB_Physics()
 {
 }
 
 // *************************************************************************
 // *				Start_Physics_Pannel Terry Flanigan		  		 	   *
 // *************************************************************************
-bool EQ15_Physics::Start_Physics_Pannel()
+bool SB_Physics::Start_Physics_Pannel()
 {
 	PhysicsPannel_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PHYSICSPANEL, App->Fdlg, (DLGPROC)Start_Physics_Proc);
 	ShowWindow(PhysicsPannel_Hwnd, 0);
@@ -27,7 +50,7 @@ bool EQ15_Physics::Start_Physics_Pannel()
 // *************************************************************************
 // *						Groups_Proc Terry Bernie		  			   *
 // *************************************************************************
-LRESULT CALLBACK EQ15_Physics::Start_Physics_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK SB_Physics::Start_Physics_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
@@ -46,10 +69,10 @@ LRESULT CALLBACK EQ15_Physics::Start_Physics_Proc(HWND hDlg, UINT message, WPARA
 	{
 		/*if (GetDlgItem(hDlg, IDC_RGGROUPNAME) == (HWND)lParam)
 		{
-			SetBkColor((HDC)wParam, RGB(0, 255, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
+		SetBkColor((HDC)wParam, RGB(0, 255, 0));
+		SetTextColor((HDC)wParam, RGB(0, 0, 0));
+		SetBkMode((HDC)wParam, TRANSPARENT);
+		return (UINT)App->AppBackground;
 		}*/
 
 		return FALSE;
@@ -62,7 +85,7 @@ LRESULT CALLBACK EQ15_Physics::Start_Physics_Proc(HWND hDlg, UINT message, WPARA
 
 	case WM_CLOSE:
 	{
-		ShowWindow(App->CL_Physics_E15->PhysicsPannel_Hwnd, 0);
+		ShowWindow(App->SBC_Physics->PhysicsPannel_Hwnd, 0);
 
 		break;
 	}
@@ -97,7 +120,7 @@ LRESULT CALLBACK EQ15_Physics::Start_Physics_Proc(HWND hDlg, UINT message, WPARA
 
 		if (LOWORD(wParam) == IDC_BTUPDATEMODEL)
 		{
-			App->CL_Physics_E15->Update_Model();
+			App->SBC_Physics->Update_Model();
 			return TRUE;
 		}
 
@@ -107,20 +130,11 @@ LRESULT CALLBACK EQ15_Physics::Start_Physics_Proc(HWND hDlg, UINT message, WPARA
 
 			if (App->Cl19_Ogre->OgreListener->GD_Dubug_Physics == 0)
 			{
-				App->Cl19_Ogre->OgreListener->GD_Dubug_Physics = 1;
-				App->Cl19_Ogre->OgreListener->GD_Run_Physics = 1;
-				App->Cl19_Ogre->BulletListener->ShowDebug = 1;
-
-				App->SBC_Player->ShowDebug = 1;
-				App->SBC_Player->mObject->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+				App->SBC_Physics->Enable_Physics(1);
 			}
 			else
 			{
-				App->Cl19_Ogre->OgreListener->GD_Dubug_Physics = 0;
-				App->Cl19_Ogre->OgreListener->GD_Run_Physics = 0;
-				App->Cl19_Ogre->BulletListener->ShowDebug = 0;
-				App->SBC_Player->ShowDebug = 0;
-				App->SBC_Player->mObject->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+				App->SBC_Physics->Enable_Physics(0);
 			}
 			return TRUE;
 		}
@@ -133,7 +147,7 @@ LRESULT CALLBACK EQ15_Physics::Start_Physics_Proc(HWND hDlg, UINT message, WPARA
 // *************************************************************************
 // *				Update_Model (Terry Bernie)							   *
 // *************************************************************************
-void EQ15_Physics::Update_Model(void)
+void SB_Physics::Update_Model(void)
 {
 	strcpy(App->CL_Vm_Model->Model_FolderPath, App->Cl_Vm_Preferences->Pref_Ogre_Path);
 	strcpy(App->CL_Vm_Model->FileName, App->Cl_Vm_Preferences->Pref_Ogre_JustFileName);
@@ -146,14 +160,15 @@ void EQ15_Physics::Update_Model(void)
 // *************************************************************************
 // *					Enable_Physics Terry Flanigan					   *
 // *************************************************************************
-void EQ15_Physics::Enable_Physics(void)
+void SB_Physics::Enable_Physics(bool Enable)
 {
 	int f = App->SBC_Player->mObject->getCollisionFlags();
 
-	App->Cl19_Ogre->OgreListener->GD_Dubug_Physics = 1;
-	App->Cl19_Ogre->OgreListener->GD_Run_Physics = 1;
-	App->Cl19_Ogre->BulletListener->ShowDebug = 1;
+	App->Cl19_Ogre->OgreListener->GD_Dubug_Physics = Enable;
+	App->Cl19_Ogre->OgreListener->GD_Run_Physics = Enable;
+	App->Cl19_Ogre->BulletListener->ShowDebug = Enable;
 
-	App->SBC_Player->ShowDebug = 1;
+	App->SBC_Player->ShowDebug = Enable;
+
 	App->SBC_Player->mObject->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 }

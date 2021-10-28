@@ -160,7 +160,6 @@
   <ItemGroup>
     <ClInclude Include="EQ15_Bullet_AddRoom.h" />
     <ClInclude Include="EQ15_Ogre_Import.h" />
-    <ClInclude Include="EQ15_Physics.h" />
     <ClInclude Include="EQ15_WE_Listener.h" />
     <ClInclude Include="GD19_Bullet.h" />
     <ClInclude Include="GD19_Collision.h" />
@@ -201,6 +200,7 @@
     <ClInclude Include="SB_Dialogs.h" />
     <ClInclude Include="SB_Equity.h" />
     <ClInclude Include="SB_Import.h" />
+    <ClInclude Include="SB_Physics.h" />
     <ClInclude Include="SB_Player.h" />
     <ClInclude Include="SB_Project.h" />
     <ClInclude Include="SB_XMLConverter.h" />
@@ -235,7 +235,6 @@
     <ClCompile Include="Common\imGui\ImGui_cpp\imgui_widgets.cpp" />
     <ClCompile Include="EQ15_Bullet_AddRoom.cpp" />
     <ClCompile Include="EQ15_Ogre_Import.cpp" />
-    <ClCompile Include="EQ15_Physics.cpp" />
     <ClCompile Include="EQ15_WE_Listener.cpp" />
     <ClCompile Include="GD19_Bullet.cpp" />
     <ClCompile Include="GD19_Collision.cpp" />
@@ -275,6 +274,7 @@
     <ClCompile Include="SB_Dialogs.cpp" />
     <ClCompile Include="SB_Equity.cpp" />
     <ClCompile Include="SB_Import.cpp" />
+    <ClCompile Include="SB_Physics.cpp" />
     <ClCompile Include="SB_Player.cpp" />
     <ClCompile Include="SB_Project.cpp" />
     <ClCompile Include="SB_XMLConverter.cpp" />

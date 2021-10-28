@@ -78,8 +78,6 @@ ebopster
 // ---------------------------------------------------- 15/10/21
 #include "EQ15_Ogre_Import.h"
 #include "EQ15_Bullet_AddRoom.h"
-#include "EQ15_Physics.h"
-
 #include "EQ15_WE_Listener.h"
 
 // ---------------------------------------------------- 18/10/21
@@ -89,6 +87,7 @@ ebopster
 #include "SB_Import.h"
 #include "SB_Project.h"
 #include "SB_Dialogs.h"
+#include "SB_Physics.h"
 
 class GD19_App
 {
@@ -149,8 +148,6 @@ public:
 	// ---------------------------------------------------- 15/10/21
 	EQ15_Ogre_Import*		CL_Ogre_Import_E15;
 	EQ15_Bullet_AddRoom*	CL_Bullet_AddRoom;
-	EQ15_Physics*			CL_Physics_E15;
-
 	EQ15_WE_Listener*		CL_WE_Listener_E15;
 
 	// ---------------------------------------------------- 18/10/21
@@ -160,6 +157,7 @@ public:
 	SB_Import*				SBC_Import;
 	SB_Project*				SBC_Project;
 	SB_Dialogs*				SBC_Dialogs;
+	SB_Physics*				SBC_Physics;
 
 	GD19_App(void);
 	~GD19_App(void);

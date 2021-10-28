@@ -563,7 +563,7 @@ LRESULT CALLBACK VM_TopBar::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM wP
 
 			App->Cl19_Ogre->OgreListener->ImGui_Render_Tab = Enums::ImGui_Camera;
 
-			ShowWindow(App->CL_Physics_E15->PhysicsPannel_Hwnd, SW_SHOW);
+			ShowWindow(App->SBC_Physics->PhysicsPannel_Hwnd, SW_SHOW);
 
 			RedrawWindow(App->CL_Vm_TopBar->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
@@ -616,7 +616,7 @@ LRESULT CALLBACK VM_TopBar::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM wP
 			App->CL_Vm_TopBar->Hide_Tabs();
 			
 			ShowWindow(App->CL_Vm_TopBar->Physics_TB_hWnd, SW_SHOW);
-			ShowWindow(App->CL_Physics_E15->PhysicsPannel_Hwnd, SW_SHOW);
+			ShowWindow(App->SBC_Physics->PhysicsPannel_Hwnd, SW_SHOW);
 
 			App->CL_Vm_TopBar->Toggle_Tabs_Shapes_Flag = 1;
 
@@ -658,7 +658,7 @@ void VM_TopBar::Hide_Tabs(void)
 	ShowWindow(App->CL_Vm_TopBar->Editors_TB_hWnd, SW_HIDE);
 	
 	ShowWindow(App->CL_Vm_Groups->RightGroups_Hwnd, 0);
-	ShowWindow(App->CL_Physics_E15->PhysicsPannel_Hwnd,0);
+	ShowWindow(App->SBC_Physics->PhysicsPannel_Hwnd,0);
 
 	Toggle_Tabs_Old_Flag = 0;
 	Toggle_Tabs_Motions_Flag = 0;
