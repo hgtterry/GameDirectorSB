@@ -38,6 +38,8 @@ public:
 
 	char Level_Folder_Path[1024];
 
+	char Level_Folder_Path_World[1024];
+
 protected:
 
 	static LRESULT CALLBACK Create_Project_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
@@ -48,8 +50,10 @@ protected:
 	bool Write_Project_Ini();
 	bool Create_Level_Folder();
 	bool Add_World();
+	bool Write_Player();
 
 
 	FILE *Write_Ini;
+	FILE *Write_Player_Ini;
 };
 

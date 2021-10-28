@@ -42,7 +42,10 @@ SB_Project::SB_Project()
 
 	Project_Ini_FilePath[0] = 0;
 	Level_Folder_Path[0] = 0;
+	Level_Folder_Path_World[0] = 0;
+
 	Write_Ini = NULL;
+	Write_Player_Ini = NULL;
 
 }
 
@@ -227,12 +230,12 @@ bool SB_Project::Create_Project()
 
 	Create_Level_Folder();
 
-	Add_World();
+	Add_World(); // Create First room Not Loaded
 
-	strcpy(App->CL_Vm_Model->Model_FolderPath, Level_Folder_Path);
+	strcpy(App->CL_Vm_Model->Model_FolderPath, Level_Folder_Path_World);
 	strcpy(App->CL_Vm_Model->FileName, "World.mesh");
 
-	App->CL_Bullet_AddRoom->AddToScene(1);
+	App->CL_Bullet_AddRoom->AddToScene(1); // Load world into scene
 
 	App->SBC_Physics->Enable_Physics(1);
 
@@ -287,7 +290,13 @@ bool SB_Project::Write_Project_Ini()
 // *************************************************************************
 bool SB_Project::Create_Level_Folder()
 {
+	Level_Folder_Path_World[0] = 0;
 
+	strcpy(Level_Folder_Path_World, Level_Folder_Path);
+	strcat(Level_Folder_Path_World, "\\");
+	strcat(Level_Folder_Path_World, "World1");
+
+	// First Level Folder
 	if (_mkdir(Level_Folder_Path) == 0)
 	{
 		_chdir(Level_Folder_Path);
@@ -298,7 +307,62 @@ bool SB_Project::Create_Level_Folder()
 		//App->Say("Directory already exsits");
 		
 	}
+
+	// First world Folder
+	if (_mkdir(Level_Folder_Path_World) == 0)
+	{
+		_chdir(Level_Folder_Path);
+
+	}
+	else
+	{
+		//App->Say("Directory already exsits");
+
+	}
+
+	Write_Player();
 	
+	return 1;
+}
+
+// *************************************************************************
+// *	  					Write_Player Terry Flanigan					   *
+// *************************************************************************
+bool SB_Project::Write_Player()
+{
+	char File[1024];
+
+	strcpy(File, Level_Folder_Path);
+	strcat(File, "\\");
+	strcat(File, "Player1.ply");
+
+	Write_Player_Ini = NULL;
+
+	Write_Player_Ini = fopen(File, "wt");
+
+	if (!Write_Player_Ini)
+	{
+		App->Say("Cant Create File");
+		return 0;
+	}
+
+	fprintf(Write_Player_Ini, "%s\n", "[Version_Data]");
+	fprintf(Write_Player_Ini, "%s%s\n", "Version=", "V1.2");
+
+	fprintf(Write_Player_Ini, "%s\n", " ");
+
+	fprintf(Write_Player_Ini, "%s\n", "[Player]");
+	fprintf(Write_Player_Ini, "%s%s\n", "Player_Name=", App->SBC_Player->PlayerName);
+
+	fprintf(Write_Player_Ini, "%s%f,%f,%f\n", "Start_Position=", App->SBC_Player->StartPos.x, App->SBC_Player->StartPos.y, App->SBC_Player->StartPos.z);
+	fprintf(Write_Player_Ini, "%s%s\n", "Shape=", "Capsule");
+	fprintf(Write_Player_Ini, "%s%f\n", "Mass=", App->SBC_Player->Capsule_Mass);
+	fprintf(Write_Player_Ini, "%s%f\n", "Radius=", App->SBC_Player->Capsule_Radius);
+	fprintf(Write_Player_Ini, "%s%f\n", "Height=", App->SBC_Player->Capsule_Height);
+	fprintf(Write_Player_Ini, "%s%f\n", "Ground_Speed=", App->SBC_Player->Ground_speed);
+	fprintf(Write_Player_Ini, "%s%f\n", "Cam_Height=", App->SBC_Player->PlayerHeight);
+	
+	fclose(Write_Player_Ini);
 	return 1;
 }
 
@@ -312,7 +376,7 @@ bool SB_Project::Add_World()
 
 	strcpy(Source, "C:\\Users\\Equity\\Desktop\\Equity15\\Bin\\Data\\World_Ogre\\World.mesh");
 
-	strcpy(Destination, Level_Folder_Path);
+	strcpy(Destination, Level_Folder_Path_World);
 	strcat(Destination, "\\");
 	strcat(Destination, "World.mesh");
 
@@ -321,7 +385,7 @@ bool SB_Project::Add_World()
 	// --------------------------------------------------------------------
 	strcpy(Source, "C:\\Users\\Equity\\Desktop\\Equity15\\Bin\\Data\\World_Ogre\\World.material");
 
-	strcpy(Destination, Level_Folder_Path);
+	strcpy(Destination, Level_Folder_Path_World);
 	strcat(Destination, "\\");
 	strcat(Destination, "World.material");
 
@@ -330,7 +394,7 @@ bool SB_Project::Add_World()
 	// --------------------------------------------------------------------
 	strcpy(Source, "C:\\Users\\Equity\\Desktop\\Equity15\\Bin\\Data\\World_Ogre\\Wall.bmp");
 
-	strcpy(Destination, Level_Folder_Path);
+	strcpy(Destination, Level_Folder_Path_World);
 	strcat(Destination, "\\");
 	strcat(Destination, "Wall.bmp");
 
@@ -339,7 +403,7 @@ bool SB_Project::Add_World()
 	// --------------------------------------------------------------------
 	strcpy(Source, "C:\\Users\\Equity\\Desktop\\Equity15\\Bin\\Data\\World_Ogre\\stfloor1.bmp");
 
-	strcpy(Destination, Level_Folder_Path);
+	strcpy(Destination, Level_Folder_Path_World);
 	strcat(Destination, "\\");
 	strcat(Destination, "stfloor1.bmp");
 
@@ -348,7 +412,7 @@ bool SB_Project::Add_World()
 	// --------------------------------------------------------------------
 	strcpy(Source, "C:\\Users\\Equity\\Desktop\\Equity15\\Bin\\Data\\World_Ogre\\concrete.bmp");
 
-	strcpy(Destination, Level_Folder_Path);
+	strcpy(Destination, Level_Folder_Path_World);
 	strcat(Destination, "\\");
 	strcat(Destination, "concrete.bmp");
 
