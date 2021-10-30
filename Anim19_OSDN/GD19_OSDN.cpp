@@ -92,7 +92,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	App->SetMainWinCentre();
 	App->Cl_FileView->Init_FileView();
-	ShowWindow(App->ListPanel, 0);
+	ShowWindow(App->ListPanel, 1);
 
 	ShowWindow(App->MainHwnd, nCmdShow);
 	//ShowWindow(App->MainHwnd, SW_MAXIMIZE);
@@ -1052,6 +1052,8 @@ LRESULT CALLBACK ListPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM l
 	{
 		App->Cl_FileView->FileView_Active = 1;
 		ShowWindow(hDlg, 1);
+
+		SendDlgItemMessage(hDlg, IDC_TREE1, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		CheckMenuItem(App->mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND | MF_CHECKED);
 		return TRUE;
