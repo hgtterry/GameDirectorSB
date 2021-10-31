@@ -494,13 +494,68 @@ bool SB_Project::Load_Scene(char* Folder, char* File)
 
 	App->Cl_Ini->GetString("Levels", "File", chr_Tag2, 1024);
 
-
 	strcpy(App->CL_Vm_Model->Model_FolderPath, Scene_JustPath);
 	strcpy(App->CL_Vm_Model->FileName, chr_Tag2);
+
+	Load_Player();
 
 	App->CL_Bullet_AddRoom->AddToScene(1); // Load First room into scene
 
 	App->SBC_Physics->Enable_Physics(1);
 
+	return 1;
+}
+
+// *************************************************************************
+// *	  				Load_Player Terry Flanigan						   *
+// *************************************************************************
+bool SB_Project::Load_Player()
+{
+	char chr_Tag1[1024];
+	char chr_Tag2[1024];
+
+	chr_Tag1[0] = 0;
+	chr_Tag2[0] = 0;
+
+	// ------------------------------------------------------------------- 
+	char Path[1024];
+	strcpy(Path, Level_JustPath);
+	strcat(Path, "Player1.ply");
+
+	// ------------------------------------------------------------------- 
+
+
+	App->Cl_Ini->SetPathName(Path);
+
+	App->Cl_Ini->GetString("Version_Data", "Version", chr_Tag1, 1024);
+	App->Say(chr_Tag1);
+
+	App->Cl_Ini->GetString("Player", "Player_Name", chr_Tag1, 1024);
+	App->Say(chr_Tag1);
+
+	//// Position
+	//App->Cl_Ini->GetString("Player", "Start_Position", chr_Tag1, 1024);
+	//sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+	//App->Cl_Player->StartPos.x = x;
+	//App->Cl_Player->StartPos.y = y;
+	//App->Cl_Player->StartPos.z = z;
+
+	//App->Cl_Ini->GetString("Player", "Shape", chr_Tag1, 1024); // Capsule
+
+	//x = App->Cl_Ini->Get_Float("Player", "Mass");
+	//y = App->Cl_Ini->Get_Float("Player", "Radius");
+	//z = App->Cl_Ini->Get_Float("Player", "Height");
+
+	//App->Cl_Player->Capsule_Mass = x;
+	//App->Cl_Player->Capsule_Radius = y;
+	//App->Cl_Player->Capsule_Height = z;
+
+	//x = App->Cl_Ini->Get_Float("Player", "Ground_Speed");
+	//if (x == 0) { x = 2.220; }
+	//App->Cl_Player->Ground_speed = x;
+
+	//x = App->Cl_Ini->Get_Float("Player", "Cam_Height");
+	//if (x == 0) { x = 6.00; }
+	//App->Cl_Player->PlayerHeight = x;
 	return 1;
 }

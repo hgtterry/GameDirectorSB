@@ -61,6 +61,8 @@ protected:
 	bool Add_World();
 	bool Write_Player();
 
+	bool SB_Project::Load_Player();
+
 
 	FILE *Write_Ini;
 	FILE *Write_Player_Ini;
