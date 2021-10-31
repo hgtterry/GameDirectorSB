@@ -485,7 +485,7 @@ void EQ15_Ogre_Import::Get_Textures(void)
 	char MatName[255];
 	char TextureName[255];
 	char SubMeshName[255];
-	char buf[255];
+	//char buf[255];
 
 	strcpy(SubMeshName, "SubMesh_");
 

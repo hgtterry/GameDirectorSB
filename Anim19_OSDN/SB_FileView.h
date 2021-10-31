@@ -27,5 +27,41 @@ class SB_FileView
 public:
 	SB_FileView();
 	~SB_FileView();
+
+	void Start_FileView(void);
+	void Init_FileView(void);
+
+protected:
+
+	static LRESULT CALLBACK ListPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	void AddRootFolder(void);
+	void MoreFoldersD(void);
+	void ExpandRoot(void);
+
+	TV_INSERTSTRUCT tvinsert;
+
+	HIMAGELIST hImageList;
+	HBITMAP hBitMap;
+
+	HTREEITEM Root;
+	HTREEITEM GD_ProjectFolder;
+	HTREEITEM GD_ObjectsFolder;
+	HTREEITEM GD_LevelFolder;
+	HTREEITEM GD_CameraFolder;
+	HTREEITEM GD_TriggerFolder;
+	HTREEITEM GD_EntitiesFolder;
+	HTREEITEM GD_Entities_Sound_Folder;
+	HTREEITEM GD_Entities_Message_Folder;
+	HTREEITEM GD_Entities_Move_Folder;
+	HTREEITEM GD_Collectables_Folder;
+	HTREEITEM GD_Teleporters_Folder;
+	HTREEITEM GD_Environment_Folder;
+	HTREEITEM GD_Area_Change_Folder;
+	HTREEITEM GD_Level_Change_Folder;
+	HTREEITEM GD_Particles_Folder;
+
+	HTREEITEM GD_Player;
+	HTREEITEM GD_Rooms;
 };
 

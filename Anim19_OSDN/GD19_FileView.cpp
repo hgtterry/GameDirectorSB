@@ -64,170 +64,6 @@ GD19_FileView::~GD19_FileView()
 }
 
 // *************************************************************************
-// *						Init_FileView Terry Bernie					   *
-// *************************************************************************
-void GD19_FileView::Init_FileView(void)
-{
-	InitCommonControls();	    // make our tree control to work
-
-								////====================================================//
-	hImageList = ImageList_Create(16, 16, FALSE, 6, 0); // Zero Index
-
-														//--------- Grayed Folder Closed Open 0 1
-	hBitMap = LoadBitmap(App->hInst, MAKEINTRESOURCE(IDB_FILEINACTIVE));
-	ImageList_Add(hImageList, hBitMap, NULL);
-	DeleteObject(hBitMap);
-
-	//--------- Green Folder Closed Open 2 3
-	hBitMap = LoadBitmap(App->hInst, MAKEINTRESOURCE(IDB_TREE));
-	ImageList_Add(hImageList, hBitMap, NULL);
-	DeleteObject(hBitMap);
-
-	//--------- Uselected File Open 4
-	hBitMap = LoadBitmap(App->hInst, MAKEINTRESOURCE(IDB_FILE));
-	ImageList_Add(hImageList, hBitMap, (HBITMAP)NULL);
-	DeleteObject(hBitMap);
-
-	//--------- Selected File Open 5
-	hBitMap = LoadBitmap(App->hInst, MAKEINTRESOURCE(IDB_FILESELECTED));
-	ImageList_Add(hImageList, hBitMap, (HBITMAP)NULL);
-	DeleteObject(hBitMap);
-
-	SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_SETIMAGELIST, 0, (LPARAM)hImageList);
-
-	HWND Temp = GetDlgItem(App->ListPanel, IDC_TREE1);
-	TreeView_DeleteAllItems(Temp);
-
-
-	TreeView_SetBkColor(Temp, (COLORREF)RGB(255, 255, 255));
-
-	AddRootFolder();
-	MoreFoldersD(); //  Folders under root 
-	ExpandRoot();
-}
-
-// *************************************************************************
-// *			AddRootFolder Terry Bernie			 				 	   *
-// *************************************************************************
-void GD19_FileView::AddRootFolder(void)
-{
-	tvinsert.hParent = Root;			// top most level no need handle
-	tvinsert.hInsertAfter = TVI_LAST; // work as root level
-	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
-	tvinsert.item.pszText = "Test Project";
-	tvinsert.item.iImage = 0;
-	tvinsert.item.iSelectedImage = 1;
-	GD_ProjectFolder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
-}
-
-// *************************************************************************
-// *						MoreFoldersD Terry Bernie 				 	   *
-// *************************************************************************
-void GD19_FileView::MoreFoldersD(void) // last folder level
-{
-	//------------------------------------------------------- Mesh
-	tvinsert.hParent = GD_ProjectFolder;
-	tvinsert.hInsertAfter = TVI_LAST;
-	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
-	tvinsert.item.pszText = LevelName;
-	tvinsert.item.iImage = 2;
-	tvinsert.item.iSelectedImage = 3;
-	GD_LevelFolder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
-
-	////------------------------------------------------------- Camera
-	tvinsert.hParent = GD_LevelFolder;
-	tvinsert.hInsertAfter = TVI_LAST;
-	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
-	tvinsert.item.pszText = "Camera";
-	tvinsert.item.iImage = 2;
-	tvinsert.item.iSelectedImage = 3;
-	GD_CameraFolder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
-
-	tvinsert.hParent = GD_LevelFolder;
-	tvinsert.hInsertAfter = TVI_LAST;
-	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
-	tvinsert.item.pszText = "Player";
-	tvinsert.item.iImage = 2;
-	tvinsert.item.iSelectedImage = 3;
-	GD_Player = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
-
-	tvinsert.hParent = GD_LevelFolder;
-	tvinsert.hInsertAfter = TVI_LAST;
-	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
-	tvinsert.item.pszText = "Area";
-	tvinsert.item.iImage = 2;
-	tvinsert.item.iSelectedImage = 3;
-	GD_Rooms = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
-
-	tvinsert.hParent = GD_LevelFolder;
-	tvinsert.hInsertAfter = TVI_LAST;
-	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
-	tvinsert.item.pszText = "Objects";
-	tvinsert.item.iImage = 2;
-	tvinsert.item.iSelectedImage = 3;
-	GD_ObjectsFolder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
-
-	tvinsert.hParent = GD_LevelFolder;
-	tvinsert.hInsertAfter = TVI_LAST;
-	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
-	tvinsert.item.pszText = "Entities";
-	tvinsert.item.iImage = 2;
-	tvinsert.item.iSelectedImage = 3;
-	GD_EntitiesFolder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
-
-	tvinsert.hParent = GD_EntitiesFolder;
-	tvinsert.hInsertAfter = TVI_LAST;
-	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
-	tvinsert.item.pszText = "Sounds";
-	tvinsert.item.iImage = 2;
-	tvinsert.item.iSelectedImage = 3;
-	GD_Entities_Sound_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
-
-	tvinsert.hParent = GD_EntitiesFolder;
-	tvinsert.hInsertAfter = TVI_LAST;
-	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
-	tvinsert.item.pszText = "Messages";
-	tvinsert.item.iImage = 2;
-	tvinsert.item.iSelectedImage = 3;
-	GD_Entities_Message_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
-
-	tvinsert.hParent = GD_EntitiesFolder;
-	tvinsert.hInsertAfter = TVI_LAST;
-	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
-	tvinsert.item.pszText = "Move_Entities";
-	tvinsert.item.iImage = 2;
-	tvinsert.item.iSelectedImage = 3;
-	GD_Entities_Move_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
-
-	tvinsert.hParent = GD_EntitiesFolder;
-	tvinsert.hInsertAfter = TVI_LAST;
-	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
-	tvinsert.item.pszText = "Collectables";
-	tvinsert.item.iImage = 2;
-	tvinsert.item.iSelectedImage = 3;
-	GD_Collectables_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
-
-	//----------------------------------------------------
-	tvinsert.hParent = GD_EntitiesFolder;
-	tvinsert.hInsertAfter = TVI_LAST;
-	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
-	tvinsert.item.pszText = "Teleporters";
-	tvinsert.item.iImage = 2;
-	tvinsert.item.iSelectedImage = 3;
-	GD_Teleporters_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
-
-	//----------------------------------------------------
-	tvinsert.hParent = GD_EntitiesFolder;
-	tvinsert.hInsertAfter = TVI_LAST;
-	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
-	tvinsert.item.pszText = "Particles";
-	tvinsert.item.iImage = 2;
-	tvinsert.item.iSelectedImage = 3;
-	GD_Particles_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
-
-}
-
-// *************************************************************************
 // *					Get_Selection Terry Bernie					 	   *
 // *************************************************************************
 void GD19_FileView::Get_Selection(LPNMHDR lParam)
@@ -889,19 +725,6 @@ void GD19_FileView::Get_Selection(LPNMHDR lParam)
 }
 
 // *************************************************************************
-// *					ExpandRoot Terry Bernie							   *
-// *************************************************************************
-void GD19_FileView::ExpandRoot(void)
-{
-	HWND Temp = GetDlgItem(App->ListPanel, IDC_TREE1);
-	HTREEITEM i = TreeView_GetSelection(Temp);
-
-	TreeView_Expand(Temp, GD_ProjectFolder, TVE_EXPAND);
-	TreeView_Expand(Temp, GD_LevelFolder, TVE_EXPAND);
-	TreeView_Expand(Temp, GD_EntitiesFolder, TVE_EXPAND);
-}
-
-// *************************************************************************
 // *					Add_PlayeFile Terry Bernie					 	   *
 // *************************************************************************
 HTREEITEM GD19_FileView::Add_PlayerFile(char *SFileName, int Index)
@@ -987,9 +810,9 @@ void GD19_FileView::Delete_AllItems()
 	GD_Entities_Sound_Folder = NULL;
 	GD_Entities_Message_Folder = NULL;
 
-	AddRootFolder();
-	MoreFoldersD(); //  Folders under root 
-	ExpandRoot();
+	//AddRootFolder();
+	//MoreFoldersD(); //  Folders under root 
+	//ExpandRoot();
 }
 
 // *************************************************************************

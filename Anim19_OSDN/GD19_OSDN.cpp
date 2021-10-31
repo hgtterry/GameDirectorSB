@@ -39,7 +39,6 @@ INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
 LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 LRESULT CALLBACK ViewerMain_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-LRESULT CALLBACK ListPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 LRESULT CALLBACK PleaseWait_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 int Block_Call = 0;
@@ -87,11 +86,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 //	HBITMAP hBitMap = LoadBitmap(App->hInst, MAKEINTRESOURCE(IDB_FILEINACTIVE));
 //	SetMenuItemBitmaps(App->mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND, 0, hBitMap);
 
-	App->ListPanel = CreateDialog(App->hInst, (LPCTSTR)IDD_LIST, App->MainHwnd, (DLGPROC)ListPanel_Proc);
+	App->SBC_FileView->Start_FileView();
+
 	App->Cl_Panels->Resize_FileView();
 
 	App->SetMainWinCentre();
-	App->Cl_FileView->Init_FileView();
+
+	App->SBC_FileView->Init_FileView();
+
 	ShowWindow(App->ListPanel, 1);
 
 	ShowWindow(App->MainHwnd, nCmdShow);
@@ -1037,123 +1039,6 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 		}break;
 	}
 
-	return FALSE;
-}
-
-// *************************************************************************
-// *					ListPanel_Proc_Proc Terry Bernie 				   *
-// *************************************************************************
-LRESULT CALLBACK ListPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
-{
-	switch (message)
-	{
-
-	case WM_INITDIALOG: // Bernie as the dialog is created
-	{
-		App->Cl_FileView->FileView_Active = 1;
-		ShowWindow(hDlg, 1);
-
-		SendDlgItemMessage(hDlg, IDC_TREE1, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
-		CheckMenuItem(App->mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND | MF_CHECKED);
-		return TRUE;
-	}
-
-	case WM_CTLCOLORDLG:
-	{
-		return (LONG)App->DialogBackGround;
-	}
-
-	case WM_SIZE:
-	{
-		App->Cl_Panels->Resize_FileView();
-	}break;
-
-	case WM_NOTIFY:
-	{
-		LPNMHDR nmhdr = (LPNMHDR)lParam;
-		if (nmhdr->idFrom == IDC_TREE1)
-		{
-			switch (nmhdr->code)
-			{
-
-			case TVN_SELCHANGED:
-			{
-				App->Cl_FileView->Get_Selection((LPNMHDR)lParam);
-			}
-			}
-		}
-
-		LPNMHDR some_item = (LPNMHDR)lParam;
-
-		if (some_item->idFrom == IDC_ENVIONMENT && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_LEVELS && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->Cl_FileView->Level_But_Active);
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_STOCK && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->Cl_FileView->Stock_But_Active);
-			return CDRF_DODEFAULT;
-		}
-
-		return 1;
-	}
-	case WM_COMMAND:
-	{
-		if (LOWORD(wParam) == IDC_LEVELS)
-		{
-			App->Cl_FileView->Level_But_Active = 1;
-			App->Cl_FileView->Stock_But_Active = 0;
-			App->RedrawWindow_Dlg(hDlg);
-
-			ShowWindow(GetDlgItem(App->ListPanel, IDC_TREE1), 1);
-
-			//App->GDCL_FileView->HideRightPanes();
-			//ShowWindow(App->GD_Properties_Hwnd, 1);*/
-
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDC_STOCK)
-		{
-			/*App->Cl_FileView->HideRightPanes();
-			ShowWindow(App->GD_Stock_Hwnd, 1);*/
-			App->Cl_Stock->Start_Stock_Dialog();
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDC_ENVIONMENT)
-		{
-			App->Cl_Environment->Start_Environment();
-			return TRUE;
-		}
-		break;
-	}
-
-	case WM_CLOSE:
-	{
-		App->Cl_FileView->FileView_Active = 0;
-		ShowWindow(App->ListPanel, 0);
-
-		HMENU mMenu = GetMenu(App->MainHwnd);
-		CheckMenuItem(mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND | MF_UNCHECKED);
-
-		break;
-	}
-
-	break;
-	}
 	return FALSE;
 }
 
