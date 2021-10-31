@@ -199,6 +199,7 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SB_Dialogs.h" />
     <ClInclude Include="SB_Equity.h" />
+    <ClInclude Include="SB_FileView.h" />
     <ClInclude Include="SB_Import.h" />
     <ClInclude Include="SB_Physics.h" />
     <ClInclude Include="SB_Player.h" />
@@ -273,6 +274,7 @@
     <ClCompile Include="GD_spdlog.cpp" />
     <ClCompile Include="SB_Dialogs.cpp" />
     <ClCompile Include="SB_Equity.cpp" />
+    <ClCompile Include="SB_FileView.cpp" />
     <ClCompile Include="SB_Import.cpp" />
     <ClCompile Include="SB_Physics.cpp" />
     <ClCompile Include="SB_Player.cpp" />
