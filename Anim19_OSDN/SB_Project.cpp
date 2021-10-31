@@ -285,6 +285,12 @@ bool SB_Project::Write_Project_Ini()
 	fprintf(Write_Ini, "%s%s\n", "Project_Name=", App->SBC_Project->Project_Name);
 	fprintf(Write_Ini, "%s%s\n", "Folder_Path=", App->SBC_Project->Project_FullPath);
 
+	fprintf(Write_Ini, "%s\n", "[Player]");
+	fprintf(Write_Ini, "%s%s\n", "Player_File=","Player1.ply");
+	
+	fprintf(Write_Ini, "%s\n", "[Camere]");
+	fprintf(Write_Ini, "%s%s\n", "Camera_File=", "Cam1.cam");
+
 	fclose(Write_Ini);
 	
 	return 1;
@@ -395,6 +401,16 @@ bool SB_Project::Write_Player()
 	fprintf(WriteFile, "%s\n", "[Levels]");
 	fprintf(WriteFile, "%s%s\n", "Folder=", "World1");
 	fprintf(WriteFile, "%s%s\n", "File=", "World.mesh");
+
+	fprintf(WriteFile, "%s\n", " ");
+
+	fprintf(WriteFile, "%s\n", "[Player]");
+	fprintf(WriteFile, "%s%s\n", "Player_File=", "Player1.ply");
+
+	fprintf(WriteFile, "%s\n", " ");
+
+	fprintf(WriteFile, "%s\n", "[Camere]");
+	fprintf(WriteFile, "%s%s\n", "Camera_File=", "Cam1.cam");
 
 	fclose(WriteFile);
 	return 1;
@@ -514,6 +530,10 @@ bool SB_Project::Load_Player()
 	char chr_Tag1[1024];
 	char chr_Tag2[1024];
 
+	float x = 0;
+	float y = 0;
+	float z = 0;
+
 	chr_Tag1[0] = 0;
 	chr_Tag2[0] = 0;
 
@@ -531,31 +551,31 @@ bool SB_Project::Load_Player()
 	App->Say(chr_Tag1);
 
 	App->Cl_Ini->GetString("Player", "Player_Name", chr_Tag1, 1024);
-	App->Say(chr_Tag1);
+	
 
 	//// Position
-	//App->Cl_Ini->GetString("Player", "Start_Position", chr_Tag1, 1024);
-	//sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
-	//App->Cl_Player->StartPos.x = x;
-	//App->Cl_Player->StartPos.y = y;
-	//App->Cl_Player->StartPos.z = z;
+	App->Cl_Ini->GetString("Player", "Start_Position", chr_Tag1, 1024);
+	sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+	App->SBC_Player->StartPos.x = x;
+	App->SBC_Player->StartPos.y = y;
+	App->SBC_Player->StartPos.z = z;
 
-	//App->Cl_Ini->GetString("Player", "Shape", chr_Tag1, 1024); // Capsule
+	App->Cl_Ini->GetString("Player", "Shape", chr_Tag1, 1024); // Capsule
 
-	//x = App->Cl_Ini->Get_Float("Player", "Mass");
-	//y = App->Cl_Ini->Get_Float("Player", "Radius");
-	//z = App->Cl_Ini->Get_Float("Player", "Height");
+	x = App->Cl_Ini->Get_Float("Player", "Mass");
+	y = App->Cl_Ini->Get_Float("Player", "Radius");
+	z = App->Cl_Ini->Get_Float("Player", "Height");
 
-	//App->Cl_Player->Capsule_Mass = x;
-	//App->Cl_Player->Capsule_Radius = y;
-	//App->Cl_Player->Capsule_Height = z;
+	App->SBC_Player->Capsule_Mass = x;
+	App->SBC_Player->Capsule_Radius = y;
+	App->SBC_Player->Capsule_Height = z;
 
-	//x = App->Cl_Ini->Get_Float("Player", "Ground_Speed");
+	x = App->Cl_Ini->Get_Float("Player", "Ground_Speed");
 	//if (x == 0) { x = 2.220; }
-	//App->Cl_Player->Ground_speed = x;
+	App->SBC_Player->Ground_speed = x;
 
-	//x = App->Cl_Ini->Get_Float("Player", "Cam_Height");
+	x = App->Cl_Ini->Get_Float("Player", "Cam_Height");
 	//if (x == 0) { x = 6.00; }
-	//App->Cl_Player->PlayerHeight = x;
+	App->SBC_Player->PlayerHeight = x;
 	return 1;
 }
