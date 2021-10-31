@@ -28,8 +28,6 @@ public:
 	GD19_FileView();
 	~GD19_FileView();
 
-	void Get_Selection(LPNMHDR lParam);
-	
 	void ChangeItem_Name_Stock(HTREEITEM Folder, char* FolderName);
 	void ChangeItem_Name(HTREEITEM Folder, char* New_Name);
 

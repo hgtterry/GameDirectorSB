@@ -105,7 +105,7 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 			case TVN_SELCHANGED:
 			{
-				App->Cl_FileView->Get_Selection((LPNMHDR)lParam);
+				App->SBC_FileView->Get_Selection((LPNMHDR)lParam);
 			}
 			}
 		}
@@ -358,5 +358,680 @@ void SB_FileView::ExpandRoot(void)
 	TreeView_Expand(Temp, GD_ProjectFolder, TVE_EXPAND);
 	TreeView_Expand(Temp, GD_LevelFolder, TVE_EXPAND);
 	TreeView_Expand(Temp, GD_EntitiesFolder, TVE_EXPAND);
+}
+
+// *************************************************************************
+// *					Get_Selection Terry Bernie					 	   *
+// *************************************************************************
+void SB_FileView::Get_Selection(LPNMHDR lParam)
+{
+
+	strcpy(FileView_Folder, "");
+	strcpy(FileView_File, "");
+
+	int Index = 0;
+	HWND Temp = GetDlgItem(App->ListPanel, IDC_TREE1);
+	HTREEITEM i = TreeView_GetSelection(Temp);
+
+	TVITEM item;
+	item.hItem = i;
+	item.pszText = FileView_Folder;
+	item.cchTextMax = sizeof(FileView_Folder);
+	item.mask = TVIF_TEXT | TVIF_PARAM;
+	TreeView_GetItem(((LPNMHDR)lParam)->hwndFrom, &item);
+	Index = item.lParam;
+
+	HTREEITEM p = TreeView_GetParent(Temp, i);
+
+	TVITEM item1;
+	item1.hItem = p;
+	item1.pszText = FileView_File;
+	item1.cchTextMax = sizeof(FileView_File);
+	item1.mask = TVIF_TEXT;
+	TreeView_GetItem(((LPNMHDR)lParam)->hwndFrom, &item1);
+
+	App->Say(FileView_Folder);
+	App->Say(FileView_File);
+	///App->Cl_Properties->Enable_Test_Button(0);
+	///App->Cl_Properties->Enable_Delete_Button(0);
+
+	//--------------------------------------------------------------------------
+
+	if (!strcmp(FileView_Folder, "Area")) // Folder
+	{
+
+		App->Cl_Dialogs->YesNo("Add Object", "Do you want to add a new Area/Building now");
+		bool Doit = App->Cl_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+			App->Cl_Mesh_Viewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Area; // 0; // Objects
+			App->Cl_Mesh_Viewer->StartMeshViewer();
+			App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
+		}
+		else
+		{
+
+		}
+
+		return;
+	}
+
+	if (!strcmp(FileView_File, "Area"))
+	{
+		HideRightPanes();
+		ShowWindow(App->GD_Properties_Hwnd, 1);
+
+		App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
+
+		App->Cl_Object_Props->Edit_Type = Enums::Edit_Mesh_Object;
+
+		App->Cl_Properties->Edit_Category = Enums::Edit_Mesh_Object;
+		App->Cl_Properties->Current_Selected_Object = Index;
+		App->Cl_Properties->Update_Transform_Dlg();
+
+		if (App->Cl_Properties->Edit_Physics == 0)
+		{
+			App->Cl_Properties->Update_ListView_Objects();
+		}
+		else
+		{
+			App->Cl_Properties->Update_ListView_Physics();
+		}
+
+		App->Cl_Visuals->MarkerBB_Addjust(Index);
+
+		return;
+
+	}
+
+	if (!strcmp(FileView_Folder, "Objects")) // Folder
+	{
+		if (App->Cl_Scene_Data->Scene_Has_Area == 0)
+		{
+			App->Say("An Area or Building must be Added Firest");
+
+			return;
+		}
+
+		App->Cl_Dialogs->YesNo("Add Object", "Do you want to add a new Object now");
+		bool Doit = App->Cl_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+			App->Cl_Mesh_Viewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Objects; // 0; // Objects; // Objects
+			App->Cl_Mesh_Viewer->StartMeshViewer();
+			App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
+		}
+
+		return;
+	}
+	if (!strcmp(FileView_File, "Objects"))
+	{
+		HideRightPanes();
+		ShowWindow(App->GD_Properties_Hwnd, 1);
+		App->Cl_Properties->Enable_Delete_Button(1);
+
+		App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
+
+		App->Cl_Object_Props->Edit_Type = Enums::Edit_Mesh_Object;
+
+		App->Cl_Properties->Edit_Category = Enums::Edit_Mesh_Object;
+		App->Cl_Properties->Current_Selected_Object = Index;
+		App->Cl_Properties->Update_Transform_Dlg();
+
+
+		if (App->Cl_Properties->Edit_Physics == 0)
+		{
+			App->Cl_Properties->Update_ListView_Objects();
+		}
+		else
+		{
+			App->Cl_Properties->Update_ListView_Physics();
+		}
+
+		App->Cl_Visuals->MarkerBB_Addjust(Index);
+
+		return;
+	}
+
+	if (!strcmp(FileView_Folder, "Player"))
+	{
+		App->Cl_Object_Props->Is_Player = 1; // Mark as Player selected
+
+		App->Cl_Properties->Enable_Delete_Button(0);
+
+		App->Cl_Properties->Edit_Category = Enums::Edit_Player;
+		App->Cl_Properties->Current_Selected_Object = Index;
+		//App->CL10_Properties->Update_Transform_Dlg();
+
+		App->Debug_Text();
+		if (App->Cl_Properties->Edit_Physics == 0)
+		{
+			App->Cl_Properties->Update_ListView_Player();
+		}
+		else
+		{
+			App->Cl_Properties->Update_ListView_Player_Physics();
+		}
+		return;
+	}
+
+
+	if (!strcmp(FileView_Folder, "Sounds")) // Folder
+	{
+		if (App->Cl_Scene_Data->Scene_Has_Area == 0)
+		{
+			App->Say("An Area or Building must be Added Firest");
+
+			return;
+		}
+
+		App->Cl_Dialogs->YesNo("Add Entity", "Do you want to add a new Sound Entity now");
+		bool Doit = App->Cl_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+			App->Cl_Objects_New->Add_New_SoundEntity();
+		}
+
+		return;
+	}
+	if (!strcmp(FileView_File, "Sounds"))
+	{
+		HideRightPanes();
+		ShowWindow(App->GD_Properties_Hwnd, 1);
+
+		App->Cl_Properties->Enable_Delete_Button(1);
+
+		App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
+
+		App->Cl_Properties->Is_Player = 0;
+		App->Cl_Properties->Edit_Category = Enums::Edit_Sounds;
+		App->Cl_Properties->Current_Selected_Object = Index;
+		App->Cl_Properties->Update_Transform_Dlg();
+
+
+		if (App->Cl_Properties->Edit_Physics == 0)
+		{
+			App->Cl_Properties->Update_ListView_Sounds();
+		}
+		else
+		{
+			App->Cl_Properties->Update_ListView_Physics();
+		}
+
+		App->Cl_Visuals->MarkerBB_Addjust(Index);
+
+		return;
+	}
+
+	// Messages
+	if (!strcmp(FileView_Folder, "Messages")) // Folder
+	{
+		if (App->Cl_Scene_Data->Scene_Has_Area == 0)
+		{
+			App->Say("An Area or Building must be Added Firest");
+
+			return;
+		}
+
+		App->Cl_Dialogs->YesNo("Add Entity", "Do you want to add a new Message Entity now");
+		bool Doit = App->Cl_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+			App->Cl_Objects_New->Add_New_MessageEntity();
+		}
+
+		return;
+	}
+
+	if (!strcmp(FileView_File, "Messages"))
+	{
+		HideRightPanes();
+		ShowWindow(App->GD_Properties_Hwnd, 1);
+
+		App->Cl_Properties->Enable_Delete_Button(1);
+
+		App->Cl_Object_Props->Edit_Type = Enums::Edit_Message;
+
+		App->Cl_Properties->Is_Player = 0; // Mark as Object selected
+		App->Cl_Properties->Edit_Category = Enums::Edit_Message;
+		App->Cl_Properties->Current_Selected_Object = Index;
+		App->Cl_Properties->Update_Transform_Dlg();
+
+
+
+		if (App->Cl_Properties->Edit_Physics == 0)
+		{
+			App->Cl_Properties->Update_ListView_Messages();
+		}
+		else
+		{
+			App->Cl_Properties->Update_ListView_Physics();
+		}
+
+		App->Cl_Visuals->MarkerBB_Addjust(Index);
+
+		return;
+	}
+
+	// Move Entities
+	if (!strcmp(FileView_Folder, "Move_Entities")) // Folder
+	{
+		if (App->Cl_Scene_Data->Scene_Has_Area == 0)
+		{
+			App->Say("An Area or Building must be Added First");
+
+			return;
+		}
+
+		App->Cl_Dialogs->YesNo("Add Entity", "Do you want to add a new Move Entity now");
+		bool Doit = App->Cl_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+			App->Cl_Objects_New->Add_New_MoveEntity();
+		}
+
+		return;
+	}
+	if (!strcmp(FileView_File, "Move_Entities"))
+	{
+		HideRightPanes();
+		ShowWindow(App->GD_Properties_Hwnd, 1);
+
+		App->Cl_Properties->Enable_Delete_Button(1);
+
+		App->Cl_Object_Props->Edit_Type = Enums::Edit_Move_Entity;
+		App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
+
+		App->Cl_Properties->Enable_Test_Button(1);
+		App->Cl_Properties->Is_Player = 0; // Mark as Object selected
+
+		App->Cl_Properties->Edit_Category = Enums::Edit_Move_Entity;
+		App->Cl_Properties->Current_Selected_Object = Index;
+		App->Cl_Properties->Update_Transform_Dlg();
+
+
+		if (App->Cl_Properties->Edit_Physics == 0)
+		{
+			App->Cl_Properties->Update_ListView_Move_Entities();
+		}
+		else
+		{
+			App->Cl_Properties->Update_ListView_Physics();
+		}
+
+		App->Cl_Visuals->MarkerBB_Addjust(Index);
+
+		return;
+	}
+
+	// *************************************************************************
+	// *				Collectables	Terry Bernie 					 	   *
+	// *************************************************************************
+	if (!strcmp(FileView_Folder, "Collectables")) // Folder
+	{
+		if (App->Cl_Scene_Data->Scene_Has_Area == 0)
+		{
+			App->Say("An Area or Building must be Added Firest");
+
+			return;
+		}
+
+		App->Cl_Dialogs->YesNo("Add Entity", "Do you want to add a new Collectable Entity now");
+		bool Doit = App->Cl_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+			App->Cl_Mesh_Viewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Collectables;; // Collectables
+			App->Cl_Mesh_Viewer->StartMeshViewer();
+			App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
+												 //App->Cl__Add_NewObject->Add_Collectable_Entity();
+		}
+
+		return;
+	}
+	if (!strcmp(FileView_File, "Collectables"))
+	{
+		HideRightPanes();
+		ShowWindow(App->GD_Properties_Hwnd, 1);
+
+		App->Cl_Properties->Enable_Delete_Button(1);
+
+		App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
+
+		App->Cl_Object_Props->Selected_Object_Index = Index;
+		App->Cl_Visuals->MarkerBB_Addjust(Index);
+
+
+		App->Cl_Properties->Edit_Category = Enums::Edit_Collectable;
+		App->Cl_Properties->Current_Selected_Object = Index;
+		App->Cl_Properties->Update_Transform_Dlg();
+
+
+		if (App->Cl_Properties->Edit_Physics == 0)
+		{
+			App->Cl_Properties->Update_ListView_Collectables();
+		}
+		else
+		{
+			App->Cl_Properties->Update_ListView_Physics();
+		}
+
+		if (App->Cl_Object_Props->Edit_Type == Enums::Edit_Player)
+		{
+			App->Cl_Object_Props->Edit_Type = Enums::Edit_Mesh_Object;
+			App->Cl_Object_Props->Update_Properties_Mesh();
+			return;
+		}
+
+		if (App->Cl_Object_Props->Edit_Type == Enums::Edit_Mesh_Object)
+		{
+			App->Cl_Object_Props->Update_Properties_Mesh();
+			return;
+		}
+
+		if (App->Cl_Object_Props->Edit_Type == Enums::Edit_Physics_Object)
+		{
+			App->Cl_Object_Props->Update_Properties_Physics();
+			return;
+		}
+		return;
+	}
+
+	// *************************************************************************
+	// *				"Teleporters	Terry Bernie 					 	   *
+	// *************************************************************************
+	if (!strcmp(FileView_Folder, "Teleporters")) // Folder
+	{
+		if (App->Cl_Scene_Data->Scene_Has_Area == 0)
+		{
+			App->Say("An Area or Building must be Added Firest");
+
+			return;
+		}
+
+		App->Cl_Dialogs->YesNo("Add Entity", "Do you want to add a new Telport Entity now");
+		bool Doit = App->Cl_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+			App->Cl_Objects_New->Add_New_TeleportEntity();
+		}
+
+		return;
+	}
+	if (!strcmp(FileView_File, "Teleporters"))
+	{
+		HideRightPanes();
+		ShowWindow(App->GD_Properties_Hwnd, 1);
+
+		App->Cl_Properties->Enable_Delete_Button(1);
+
+		App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
+
+		App->Cl_Object_Props->Selected_Object_Index = Index;
+		App->Cl_Visuals->MarkerBB_Addjust(Index);
+
+
+		App->Cl_Properties->Edit_Category = Enums::Edit_Teleport;
+		App->Cl_Properties->Current_Selected_Object = Index;
+		App->Cl_Properties->Update_Transform_Dlg();
+
+
+		if (App->Cl_Properties->Edit_Physics == 0)
+		{
+			App->Cl_Properties->Update_ListView_Teleport();
+		}
+		else
+		{
+			App->Cl_Properties->Update_ListView_Physics();
+		}
+
+		if (App->Cl_Object_Props->Edit_Type == Enums::Edit_Player)
+		{
+			App->Cl_Object_Props->Edit_Type = Enums::Edit_Mesh_Object;
+			App->Cl_Object_Props->Update_Properties_Mesh();
+			return;
+		}
+
+		if (App->Cl_Object_Props->Edit_Type == Enums::Edit_Mesh_Object)
+		{
+			App->Cl_Object_Props->Update_Properties_Mesh();
+			return;
+		}
+
+		if (App->Cl_Object_Props->Edit_Type == Enums::Edit_Physics_Object)
+		{
+			App->Cl_Object_Props->Update_Properties_Physics();
+			return;
+		}
+		return;
+	}
+
+
+	// *************************************************************************
+	// *					Particles	Terry Bernie 					 	   *
+	// *************************************************************************
+	if (!strcmp(FileView_Folder, "Particles")) // Folder
+	{
+		if (App->Cl_Scene_Data->Scene_Has_Area == 0)
+		{
+			App->Say("An Area or Building must be Added Firest");
+			return;
+		}
+
+
+		App->Cl_Dialogs->YesNo("Add Entity", "Do you want to add a new Particle Entity now");
+		bool Doit = App->Cl_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+			App->Cl_Objects_New->Add_New_Particle();
+		}
+
+		return;
+	}
+	if (!strcmp(FileView_File, "Particles"))
+	{
+
+		HideRightPanes();
+		ShowWindow(App->GD_Properties_Hwnd, 1);
+
+		App->Cl_Properties->Enable_Delete_Button(1);
+
+		App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
+
+		App->Cl_Object_Props->Selected_Object_Index = Index;
+		App->Cl_Visuals->MarkerBB_Addjust(Index);
+
+
+		App->Cl_Properties->Edit_Category = Enums::Edit_Particles;
+		App->Cl_Properties->Current_Selected_Object = Index;
+
+		App->Cl_Properties->Update_Transform_Dlg();
+
+
+
+		if (App->Cl_Properties->Edit_Physics == 0)
+		{
+			App->Cl_Properties->Update_ListView_Particles();
+		}
+		else
+		{
+			App->Cl_Properties->Update_ListView_Physics();
+		}
+
+		return;
+	}
+	// *************************************************************************
+	// *				"Environment	Terry Bernie 					 	   *
+	// *************************************************************************
+	if (!strcmp(FileView_Folder, "Environment")) // Folder
+	{
+		if (App->Cl_Scene_Data->Scene_Has_Area == 0)
+		{
+			App->Say("An Area or Building must be Added Firest");
+			return;
+		}
+
+
+		//App->CL_Dialogs->YesNo("Add Entity", "Do you want to add a new Environment Entity now");
+		App->Cl_Dialogs->YesNo("Add Entity", "Not Available Yet Next Release");
+		bool Doit = App->Cl_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+			//App->CL10_Objects_New->Add_New_EnvironmentEntity();
+		}
+
+		return;
+	}
+	if (!strcmp(FileView_File, "Environment"))
+	{
+
+		HideRightPanes();
+		ShowWindow(App->GD_Properties_Hwnd, 1);
+
+		App->Cl_Properties->Enable_Delete_Button(1);
+
+		App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
+
+		App->Cl_Object_Props->Selected_Object_Index = Index;
+		App->Cl_Visuals->MarkerBB_Addjust(Index);
+
+
+		App->Cl_Properties->Edit_Category = Enums::Edit_Environment;
+		App->Cl_Properties->Current_Selected_Object = Index;
+
+		App->Cl_Properties->Update_Transform_Dlg();
+
+
+		if (App->Cl_Properties->Edit_Physics == 0)
+		{
+			App->Cl_Properties->Update_ListView_Environment();
+		}
+		else
+		{
+			App->Cl_Properties->Update_ListView_Physics();
+		}
+
+		return;
+	}
+
+	// *************************************************************************
+	// *				Area_Change Terry Bernie 						 	   *
+	// *************************************************************************
+	if (!strcmp(FileView_Folder, "Area_Change")) // Folder
+	{
+		if (App->Cl_Scene_Data->Scene_Has_Area == 0)
+		{
+			App->Say("An Area or Building must be Added Firest");
+			return;
+		}
+
+		//App->CL_Dialogs->YesNo("Add Entity", "Do you want to add a new Area Change Entity now");
+		App->Cl_Dialogs->YesNo("Add Entity", "Not Available Yet Next Release");
+		bool Doit = App->Cl_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+			//App->CL10_Objects_New->Add_New_Area_Change();
+		}
+
+		return;
+	}
+	if (!strcmp(FileView_File, "Area_Change"))
+	{
+
+		HideRightPanes();
+		ShowWindow(App->GD_Properties_Hwnd, 1);
+
+		App->Cl_Properties->Enable_Delete_Button(1);
+
+		App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
+
+		App->Cl_Object_Props->Selected_Object_Index = Index;
+		App->Cl_Visuals->MarkerBB_Addjust(Index);
+
+
+		App->Cl_Properties->Edit_Category = Enums::Edit_Area_Change;
+		App->Cl_Properties->Current_Selected_Object = Index;
+
+		App->Cl_Properties->Update_Transform_Dlg();
+
+
+		if (App->Cl_Properties->Edit_Physics == 0)
+		{
+			App->Cl_Properties->Update_ListView_Environment();
+		}
+		else
+		{
+			App->Cl_Properties->Update_ListView_Physics();
+		}
+
+		return;
+	}
+
+
+	// *************************************************************************
+	// *				Change_Level Terry Bernie 						 	   *
+	// *************************************************************************
+	if (!strcmp(FileView_Folder, "Change_Level")) // Folder
+	{
+		if (App->Cl_Scene_Data->Scene_Has_Area == 0)
+		{
+			App->Say("An Area or Building must be Added Firest");
+			return;
+		}
+
+
+		//App->CL_Dialogs->YesNo("Add Entity", "Do you want to add a new Change Level Entity now");
+		App->Cl_Dialogs->YesNo("Add Entity", "Not Available Yet Next Release");
+		bool Doit = App->Cl_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+			//App->CL10_Objects_New->Add_New_Change_Level();
+		}
+
+		return;
+	}
+	if (!strcmp(FileView_File, "Change_Level"))
+	{
+
+		HideRightPanes();
+		ShowWindow(App->GD_Properties_Hwnd, 1);
+
+		App->Cl_Properties->Enable_Delete_Button(1);
+
+		App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
+
+		App->Cl_Object_Props->Selected_Object_Index = Index;
+		App->Cl_Visuals->MarkerBB_Addjust(Index);
+
+
+		App->Cl_Properties->Edit_Category = Enums::Edit_Change_Level;
+		App->Cl_Properties->Current_Selected_Object = Index;
+
+		App->Cl_Properties->Update_Transform_Dlg();
+
+
+		if (App->Cl_Properties->Edit_Physics == 0)
+		{
+			App->Cl_Properties->Update_ListView_Environment();
+		}
+		else
+		{
+			App->Cl_Properties->Update_ListView_Physics();
+		}
+
+		return;
+	}
+
+}
+
+// *************************************************************************
+// *					HideRightPanes Terry Bernie 					   *
+// *************************************************************************
+void SB_FileView::HideRightPanes(void)
+{
+	if (App->Cl_Scene_Data->SceneLoaded == 1)
+	{
+		ShowWindow(App->GD_Properties_Hwnd, 0);
+		///	ShowWindow(App->GD_Stock_Hwnd, 0);
+	}
 }
 

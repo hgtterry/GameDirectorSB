@@ -1375,7 +1375,7 @@ bool GD19_Properties::Update_ListView_Player()
 {
 	if (App->Cl_Scene_Data->SceneLoaded == 0)
 	{
-		return 1;
+	//	return 1;
 	}
 
 	int index = App->Cl_Properties->Current_Selected_Object;
@@ -1444,7 +1444,7 @@ bool GD19_Properties::Update_ListView_Player_Physics()
 {
 	if (App->Cl_Scene_Data->SceneLoaded == 0)
 	{
-		return 1;
+		//return 1;
 	}
 
 	int index = App->Cl_Properties->Current_Selected_Object;

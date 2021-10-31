@@ -38,6 +38,8 @@ protected:
 	void AddRootFolder(void);
 	void MoreFoldersD(void);
 	void ExpandRoot(void);
+	void Get_Selection(LPNMHDR lParam);
+	void HideRightPanes(void);
 
 	TV_INSERTSTRUCT tvinsert;
 
@@ -63,5 +65,9 @@ protected:
 
 	HTREEITEM GD_Player;
 	HTREEITEM GD_Rooms;
+
+	char LevelName[255];
+	char FileView_Folder[255];
+	char FileView_File[255];
 };
 
