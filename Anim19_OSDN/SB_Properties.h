@@ -29,6 +29,7 @@ public:
 	~SB_Properties();
 
 	bool Update_ListView_Player();
+	bool Update_ListView_Player_Physics();
 	bool Edit_Player_Onclick(LPARAM lParam);
 
 protected:

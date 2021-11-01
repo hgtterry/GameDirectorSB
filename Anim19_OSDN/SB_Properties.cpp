@@ -105,6 +105,74 @@ bool SB_Properties::Update_ListView_Player()
 }
 
 // *************************************************************************
+// *				Update_ListView_Player_Physics	Terry Berni		 	   *
+// *************************************************************************
+bool SB_Properties::Update_ListView_Player_Physics()
+{
+	if (App->Cl_Scene_Data->SceneLoaded == 0)
+	{
+		//return 1;
+	}
+
+	int index = App->Cl_Properties->Current_Selected_Object;
+
+	char buff[255];
+	strcpy(buff, App->SBC_Player->PlayerName);
+	strcat(buff, "   (Physics)");
+	SetDlgItemText(App->Cl_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
+
+	char chr_PhysicsType[100];
+	strcpy(chr_PhysicsType, "Dynamic");
+
+	char chr_PhysicsShape[100];
+	strcpy(chr_PhysicsShape, "Capsule");
+
+	char chr_Mass[100];
+	char chr_Radius[100];
+	char chr_Height[100];
+
+	sprintf(chr_Mass, "%.3f ", App->SBC_Player->Capsule_Mass);
+	//sprintf(chr_Mass,"%.3f ",App->GDSBC_Player->mObject->getGravity().getY());
+	sprintf(chr_Radius, "%.3f ", App->SBC_Player->Capsule_Radius);
+	sprintf(chr_Height, "%.3f ", App->SBC_Player->Capsule_Height);
+
+
+	const int NUM_ITEMS = 7;
+	const int NUM_COLS = 2;
+	std::string grid[NUM_COLS][NUM_ITEMS]; // string table
+	LV_ITEM pitem;
+	memset(&pitem, 0, sizeof(LV_ITEM));
+	pitem.mask = LVIF_TEXT;
+
+	grid[0][0] = "Name", grid[1][0] = App->SBC_Player->PlayerName;
+	grid[0][1] = "Type", grid[1][1] = chr_PhysicsType;
+	grid[0][2] = "Shape ", grid[1][2] = chr_PhysicsShape;
+	grid[0][3] = " ", grid[1][3] = " ";
+	grid[0][4] = "Mass", grid[1][4] = chr_Mass;
+	grid[0][5] = "Radius", grid[1][5] = chr_Radius;
+	grid[0][6] = "Height", grid[1][6] = chr_Height;
+
+	ListView_DeleteAllItems(App->Cl_Properties->Properties_hLV);
+
+	for (DWORD row = 0; row < NUM_ITEMS; row++)
+	{
+		pitem.iItem = row;
+		pitem.pszText = const_cast<char*>(grid[0][row].c_str());
+		ListView_InsertItem(App->Cl_Properties->Properties_hLV, &pitem);
+
+		//ListView_SetItemText
+
+		for (DWORD col = 1; col < NUM_COLS; col++)
+		{
+			ListView_SetItemText(App->Cl_Properties->Properties_hLV, row, col,
+				const_cast<char*>(grid[col][row].c_str()));
+		}
+	}
+
+	return 1;
+}
+
+// *************************************************************************
 // *				Edit_Player_Onclick  Terry Bernie					   *
 // *************************************************************************
 bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)

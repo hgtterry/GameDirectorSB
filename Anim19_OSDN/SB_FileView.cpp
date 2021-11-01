@@ -513,7 +513,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		}
 		else
 		{
-			App->Cl_Properties->Update_ListView_Player_Physics();
+			App->SBC_Properties->Update_ListView_Player_Physics();
 		}
 		return;
 	}

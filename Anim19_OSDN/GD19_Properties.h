@@ -38,7 +38,6 @@ public:
 	bool Update_ListView_Sounds();
 	bool Update_ListView_Collectables();
 	bool Update_ListView_Physics();
-	bool Update_ListView_Player_Physics();
 	
 	bool Update_ListView_Teleport();
 	bool Update_ListView_Environment();

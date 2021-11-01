@@ -158,6 +158,8 @@ void SB_Player::Adjust_Capsule(void)
 {
 	mShape = new btCapsuleShape(btScalar(Capsule_Radius), btScalar(Capsule_Height));
 	mObject->setCollisionShape(mShape);
+
+	
 }
 
 // *************************************************************************

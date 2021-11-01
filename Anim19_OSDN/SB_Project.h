@@ -46,7 +46,7 @@ public:
 
 	char Level_FileName[255];
 	char Level_Path_FileName[1024];
-	char Level_JustPath[1024];
+	//char Level_JustPath[1024];
 
 	char Scene_FileName[255];
 	char Scene_Path_FileName[1024];

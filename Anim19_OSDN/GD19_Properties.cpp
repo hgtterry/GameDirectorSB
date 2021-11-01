@@ -426,94 +426,28 @@ LRESULT CALLBACK GD19_Properties::GD_Properties_Proc(HWND hDlg, UINT message, WP
 			}
 			return 1;
 		}
+
+		if (LOWORD(wParam) == IDC_BTOBJECT)
+		{
+			if (App->SBC_Project->Scene_Loaded == 1)
+			{
+				App->Cl_Properties->Edit_Physics = 0;
+				App->SBC_Properties->Update_ListView_Player();
+				
+			}
+			return 1;
+		}
+
+		if (LOWORD(wParam) == IDC_BTPHYSICS)
+		{
+			if (App->SBC_Project->Scene_Loaded == 1)
+			{
+				App->Cl_Properties->Edit_Physics = 1;
+				App->SBC_Properties->Update_ListView_Player_Physics();
+			}
+			return 1;
+		}
 		
-		
-//
-//	///	if (LOWORD(wParam) == IDC_BUTEDITPOS)
-//		{
-//			App->Cl_Dimensions->Start_Postion();
-//			return 1;
-//		}
-//
-//	///	if (LOWORD(wParam) == IDC_BUTEDITROT)
-//		{
-//			App->Cl_Dimensions->Start_Rotation_Dlg();
-//			return 1;
-//		}
-//
-//	///	if (LOWORD(wParam) == IDC_BUTEDITSCALE)
-//		{
-//			App->Cl_Dimensions->Start_Scale_Dlg();
-//			return 1;
-//		}
-//
-//	///	if (LOWORD(wParam) == IDC_BUTTRANSFORM)
-//		{
-//			// wheres the but
-//			return 1;
-//		}
-//
-/////		if (LOWORD(wParam) == IDC_OBJECT_SEL)
-//		{
-//			App->Cl_Object_Props->Object_Selection = 1;
-//			App->Cl_Object_Props->Physics_Selection = 0;
-//			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-//
-//			App->Cl_Properties->Edit_Physics = 0;
-//
-//			if (App->Cl_Object_Props->Is_Player == 0)
-//			{
-//				// Sounds
-//				if (App->Cl_Properties->Edit_Category == Enums::Edit_Sounds)
-//				{
-//					App->Cl_Properties->Update_ListView_Sounds();
-//					return 1;
-//				}
-//				if (App->Cl_Properties->Edit_Category == Enums::Edit_Message)
-//				{
-//					App->Cl_Properties->Update_ListView_Messages();
-//					return 1;
-//				}
-//				if (App->Cl_Properties->Edit_Category == Enums::Edit_Move_Entity)
-//				{
-//					App->Cl_Properties->Update_ListView_Move_Entities();
-//					return 1;
-//				}
-//				if (App->Cl_Properties->Edit_Category == Enums::Edit_Collectable)
-//				{
-//					App->Cl_Properties->Update_ListView_Collectables();
-//					return 1;
-//				}
-//
-//				App->Cl_Properties->Update_ListView_Objects();
-//			}
-//			else
-//			{
-//				App->Cl_Properties->Update_ListView_Player();
-//			}
-//			return 1;
-//		}
-//
-/////		if (LOWORD(wParam) == IDC_PHYSICS_SEL)
-//		{
-//			App->Cl_Object_Props->Object_Selection = 0;
-//			App->Cl_Object_Props->Physics_Selection = 1;
-//			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-//
-//			App->Cl_Properties->Edit_Physics = 1;
-//
-//			if (App->Cl_Object_Props->Is_Player == 0)
-//			{
-//				App->Cl_Properties->Update_ListView_Physics();
-//			}
-//			else
-//			{
-//				App->Cl_Properties->Update_ListView_Player_Physics();
-//			}
-//
-//			return 1;
-//		}
-//
 		if (LOWORD(wParam) == IDC_PHYSICSDEBUG)
 		{
 			/*if (App->Cl19_Ogre->RenderListener->ShowDebug == 1)
@@ -1379,73 +1313,6 @@ bool GD19_Properties::Update_ListView_Physics()
 }
 
 // *************************************************************************
-// *				Update_ListView_Player_Physics	Terry Berni		 	   *
-// *************************************************************************
-bool GD19_Properties::Update_ListView_Player_Physics()
-{
-	if (App->Cl_Scene_Data->SceneLoaded == 0)
-	{
-		//return 1;
-	}
-
-	int index = App->Cl_Properties->Current_Selected_Object;
-
-	char buff[255];
-	strcpy(buff, App->SBC_Player->PlayerName);
-	strcat(buff, "   (Physics)");
-	SetDlgItemText(App->Cl_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
-
-	char chr_PhysicsType[100];
-	strcpy(chr_PhysicsType, "Dynamic");
-
-	char chr_PhysicsShape[100];
-	strcpy(chr_PhysicsShape, "Capsule");
-
-	char chr_Mass[100];
-	char chr_Radius[100];
-	char chr_Height[100];
-
-	sprintf(chr_Mass, "%.3f ", App->SBC_Player->Capsule_Mass);
-	//sprintf(chr_Mass,"%.3f ",App->GDSBC_Player->mObject->getGravity().getY());
-	sprintf(chr_Radius, "%.3f ", App->SBC_Player->Capsule_Radius);
-	sprintf(chr_Height, "%.3f ", App->SBC_Player->Capsule_Height);
-
-
-	const int NUM_ITEMS = 7;
-	const int NUM_COLS = 2;
-	std::string grid[NUM_COLS][NUM_ITEMS]; // string table
-	LV_ITEM pitem;
-	memset(&pitem, 0, sizeof(LV_ITEM));
-	pitem.mask = LVIF_TEXT;
-
-	grid[0][0] = "Name",		grid[1][0] = App->SBC_Player->PlayerName;
-	grid[0][1] = "Type",		grid[1][1] = chr_PhysicsType;
-	grid[0][2] = "Shape ",		grid[1][2] = chr_PhysicsShape;
-	grid[0][3] = " ",			grid[1][3] = " ";
-	grid[0][4] = "Mass",		grid[1][4] = chr_Mass;
-	grid[0][5] = "Radius",		grid[1][5] = chr_Radius;
-	grid[0][6] = "Height",		grid[1][6] = chr_Height;
-
-	ListView_DeleteAllItems(Properties_hLV);
-
-	for (DWORD row = 0; row < NUM_ITEMS; row++)
-	{
-		pitem.iItem = row;
-		pitem.pszText = const_cast<char*>(grid[0][row].c_str());
-		ListView_InsertItem(Properties_hLV, &pitem);
-
-		//ListView_SetItemText
-
-		for (DWORD col = 1; col < NUM_COLS; col++)
-		{
-			ListView_SetItemText(Properties_hLV, row, col,
-				const_cast<char*>(grid[col][row].c_str()));
-		}
-	}
-
-	return 1;
-}
-// *************************************************************************
 // *			ListView_OnClickOptions  Terry Bernie			 		   *
 // *************************************************************************
 void GD19_Properties::ListView_OnClickOptions(LPARAM lParam)
@@ -1637,7 +1504,7 @@ bool GD19_Properties::Edit_Player_Physics_Onclick(LPARAM lParam)
 
 		App->SBC_Player->mObject->setMassProps(App->Cl_Dialogs->mFloat, btVector3(0, 0, 0));
 
-		Update_ListView_Player_Physics();
+		App->SBC_Properties->Update_ListView_Player_Physics();
 
 		return 1;
 	}
@@ -1659,7 +1526,7 @@ bool GD19_Properties::Edit_Player_Physics_Onclick(LPARAM lParam)
 
 		App->SBC_Player->Capsule_Radius = App->Cl_Dialogs->mFloat;
 
-		Update_ListView_Player_Physics();
+		App->SBC_Properties->Update_ListView_Player_Physics();
 
 		App->SBC_Player->Adjust_Capsule();
 		return 1;
@@ -1678,6 +1545,8 @@ bool GD19_Properties::Edit_Player_Physics_Onclick(LPARAM lParam)
 		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
 
 		App->SBC_Player->Capsule_Height = App->Cl_Dialogs->mFloat;
+
+		App->SBC_Properties->Update_ListView_Player_Physics();
 
 		App->SBC_Player->Adjust_Capsule();
 		return 1;

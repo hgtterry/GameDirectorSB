@@ -502,10 +502,8 @@ bool SB_Project::Load_Scene(char* Folder, char* File)
 	// Get Texure path assumed at this point to be where model is
 	int len1 = strlen(Level_FileName);
 	int len2 = strlen(Level_Path_FileName);
-	strcpy(Level_JustPath, Level_Path_FileName);
-	Level_JustPath[len2 - len1] = 0;
-
-	strcpy(Level_Folder_Path, Level_JustPath);
+	strcpy(Level_Folder_Path, Level_Path_FileName);
+	Level_Folder_Path[len2 - len1] = 0;
 
 	// ------------------------------------------------------------------- 
 
@@ -521,7 +519,7 @@ bool SB_Project::Load_Scene(char* Folder, char* File)
 	
 
 	App->Cl_Ini->GetString("Levels", "Folder", chr_Tag1, 1024);
-	strcpy(Scene_JustPath, Level_JustPath);
+	strcpy(Scene_JustPath, Level_Folder_Path);
 	strcat(Scene_JustPath, chr_Tag1);
 
 	App->Cl_Ini->GetString("Levels", "File", chr_Tag2, 1024);
@@ -557,7 +555,7 @@ bool SB_Project::Load_Player()
 
 	// ------------------------------------------------------------------- 
 	char Path[1024];
-	strcpy(Path, Level_JustPath);
+	strcpy(Path, Level_Folder_Path);
 	strcat(Path, "Player1.ply");
 
 	// ------------------------------------------------------------------- 
