@@ -49,6 +49,9 @@ public:
 	char Scene_Path_FileName[1024];
 	char Scene_JustPath[1024];
 
+	bool Scene_Loaded;
+	bool Project_Loaded;
+
 protected:
 
 	static LRESULT CALLBACK Create_Project_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);

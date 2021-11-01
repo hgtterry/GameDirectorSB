@@ -40,7 +40,7 @@ bool GD19_Load_Scene::OpenScene(bool AskForScene)
 
 	File_Is_Loading = 0; // Signal File is Loaded 
 
-	App->Cl_FileView->Redraw_FileView(); // Leave this call here for the Moment
+	App->SBC_FileView->Redraw_FileView(); // Leave this call here for the Moment
 
 	if (App->Cl_Scene_Data->ObjectCount > 1)
 	{

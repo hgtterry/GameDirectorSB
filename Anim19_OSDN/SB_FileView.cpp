@@ -153,9 +153,12 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 		if (LOWORD(wParam) == IDC_STOCK)
 		{
-			/*App->Cl_FileView->HideRightPanes();
-			ShowWindow(App->GD_Stock_Hwnd, 1);*/
-			App->Cl_Stock->Start_Stock_Dialog();
+			if (App->SBC_Project->Scene_Loaded == 1)
+			{
+				/*App->Cl_FileView->HideRightPanes();
+				ShowWindow(App->GD_Stock_Hwnd, 1);*/
+				App->Cl_Stock->Start_Stock_Dialog();
+			}
 			return TRUE;
 		}
 
@@ -210,7 +213,7 @@ void SB_FileView::Init_FileView(void)
 
 	//--------- Selected File Open 5
 	hBitMap = LoadBitmap(App->hInst, MAKEINTRESOURCE(IDB_FILESELECTED));
-	ImageList_Add(hImageList, App->Cl_FileView->hBitMap, (HBITMAP)NULL);
+	ImageList_Add(hImageList, hBitMap, (HBITMAP)NULL);
 	DeleteObject(hBitMap);
 
 	SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_SETIMAGELIST, 0, (LPARAM)hImageList);
@@ -1051,4 +1054,12 @@ HTREEITEM SB_FileView::Add_PlayerFile(char *SFileName, int Index)
 	//TreeView_Select(Temp2,Temp,TVGN_CARET);
 
 	return Temp;
+}
+
+// *************************************************************************
+// *						Redraw_FileView Terry Bernie			 	   *
+// *************************************************************************
+void SB_FileView::Redraw_FileView()
+{
+	App->RedrawWindow_Dlg(GetDlgItem(App->ListPanel, IDC_TREE1));
 }

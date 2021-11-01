@@ -31,6 +31,8 @@ public:
 	void Start_FileView(void);
 	void Init_FileView(void);
 
+	void Redraw_FileView();
+
 	HTREEITEM Add_PlayerFile(char *SFileName, int Index);
 
 protected:

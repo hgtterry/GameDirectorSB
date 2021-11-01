@@ -47,8 +47,7 @@ public:
 	HTREEITEM Add_Teleport(char* SFileName, int Index);
 
 	HTREEITEM Add_PlayerFile(char *SFileName, int Index);
-	void Redraw_FileView();
-
+	
 	HTREEITEM Root;
 	HTREEITEM GD_ProjectFolder;
 	HTREEITEM GD_ObjectsFolder;

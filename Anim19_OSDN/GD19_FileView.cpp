@@ -85,14 +85,6 @@ HTREEITEM GD19_FileView::Add_PlayerFile(char *SFileName, int Index)
 }
 
 // *************************************************************************
-// *						Redraw_FileView Terry Bernie			 	   *
-// *************************************************************************
-void GD19_FileView::Redraw_FileView()
-{
-	App->RedrawWindow_Dlg(GetDlgItem(App->ListPanel, IDC_TREE1));
-}
-
-// *************************************************************************
 // *						ChangeItem_Name_Stock Terry Bernie		 	   *
 // *************************************************************************
 void GD19_FileView::ChangeItem_Name_Stock(HTREEITEM Folder, char* FolderName)
