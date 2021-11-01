@@ -247,7 +247,9 @@ bool SB_Project::Create_Project()
 
 	App->SBC_Physics->Enable_Physics(1);
 
-	App->Say("Created");
+	Scene_Loaded = 1;
+
+	App->Say("Scene Created");
 	return 1;
 }
 
@@ -334,6 +336,7 @@ bool SB_Project::Create_Level_Folder()
 
 	}
 
+	Write_Level_File();
 	Write_Player();
 	
 	return 1;
@@ -357,6 +360,7 @@ bool SB_Project::Write_Player()
 	if (!Write_Player_Ini)
 	{
 		App->Say("Cant Create File");
+		App->Say(File);
 		return 0;
 	}
 
@@ -378,10 +382,18 @@ bool SB_Project::Write_Player()
 	
 	fclose(Write_Player_Ini);
 
-	// ===============================================================
-	WriteFile = NULL;
+	return 1;
+}
 
+// *************************************************************************
+// *	  				Write_Level_File Terry Flanigan					   *
+// *************************************************************************
+bool SB_Project::Write_Level_File()
+{
+	char File[1024];
 	File[0] = 0;
+
+	WriteFile = NULL;
 
 	strcpy(File, Level_Folder_Path);
 	strcat(File, "\\");
@@ -491,8 +503,9 @@ bool SB_Project::Load_Scene(char* Folder, char* File)
 	int len1 = strlen(Level_FileName);
 	int len2 = strlen(Level_Path_FileName);
 	strcpy(Level_JustPath, Level_Path_FileName);
-
 	Level_JustPath[len2 - len1] = 0;
+
+	strcpy(Level_Folder_Path, Level_JustPath);
 
 	// ------------------------------------------------------------------- 
 
@@ -521,6 +534,8 @@ bool SB_Project::Load_Scene(char* Folder, char* File)
 	App->CL_Bullet_AddRoom->AddToScene(1); // Load First room into scene
 
 	App->SBC_Physics->Enable_Physics(1);
+
+	Scene_Loaded = 1;
 
 	return 1;
 }
@@ -551,7 +566,7 @@ bool SB_Project::Load_Player()
 	App->Cl_Ini->SetPathName(Path);
 
 	App->Cl_Ini->GetString("Version_Data", "Version", chr_Tag1, 1024);
-	App->Say(chr_Tag1);
+	
 
 	App->Cl_Ini->GetString("Player", "Player_Name", chr_Tag1, 1024);
 	

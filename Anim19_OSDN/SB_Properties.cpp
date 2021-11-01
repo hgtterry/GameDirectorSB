@@ -187,8 +187,8 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
 
 		App->SBC_Player->StartPos.x = App->Cl_Dialogs->mFloat;
-		App->Cl_Scene_Data->S_Player_Locations[0]->Current_Position.x = App->Cl_Dialogs->mFloat;
-		App->Cl_Scene_Data->S_Player_Locations[0]->Physics_Position.setX(App->Cl_Dialogs->mFloat);
+		//App->Cl_Scene_Data->S_Player_Locations[0]->Current_Position.x = App->Cl_Dialogs->mFloat;
+		//App->Cl_Scene_Data->S_Player_Locations[0]->Physics_Position.setX(App->Cl_Dialogs->mFloat);
 		Update_ListView_Player();
 
 		App->Cl_Bullet->Reset_Physics();
@@ -210,8 +210,8 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
 
 		App->SBC_Player->StartPos.y = App->Cl_Dialogs->mFloat;
-		App->Cl_Scene_Data->S_Player_Locations[0]->Current_Position.y = App->Cl_Dialogs->mFloat;
-		App->Cl_Scene_Data->S_Player_Locations[0]->Physics_Position.setY(App->Cl_Dialogs->mFloat);
+		//App->Cl_Scene_Data->S_Player_Locations[0]->Current_Position.y = App->Cl_Dialogs->mFloat;
+		//App->Cl_Scene_Data->S_Player_Locations[0]->Physics_Position.setY(App->Cl_Dialogs->mFloat);
 		Update_ListView_Player();
 
 		App->Cl_Bullet->Reset_Physics();
@@ -232,11 +232,12 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
 
 		App->SBC_Player->StartPos.z = App->Cl_Dialogs->mFloat;
-		App->Cl_Scene_Data->S_Player_Locations[0]->Current_Position.z = App->Cl_Dialogs->mFloat;
-		App->Cl_Scene_Data->S_Player_Locations[0]->Physics_Position.setZ(App->Cl_Dialogs->mFloat);
+		//App->Cl_Scene_Data->S_Player_Locations[0]->Current_Position.z = App->Cl_Dialogs->mFloat;
+		//App->Cl_Scene_Data->S_Player_Locations[0]->Physics_Position.setZ(App->Cl_Dialogs->mFloat);
 		Update_ListView_Player();
 
 		App->Cl_Bullet->Reset_Physics();
+
 		return 1;
 	}
 

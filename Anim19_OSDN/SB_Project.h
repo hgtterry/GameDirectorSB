@@ -31,6 +31,9 @@ public:
 	bool Start_Create_Project();
 	bool Load_Scene(char* Folder, char* File);
 
+	bool Write_Level_File();
+	bool Write_Player();
+
 	char Project_Name[255];
 	char Project_Path[1024];
 	char Project_FullPath[1024];
@@ -62,7 +65,7 @@ protected:
 	bool Write_Project_Ini();
 	bool Create_Level_Folder();
 	bool Add_World();
-	bool Write_Player();
+	
 
 	bool SB_Project::Load_Player();
 

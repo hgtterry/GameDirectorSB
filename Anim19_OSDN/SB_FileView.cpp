@@ -496,6 +496,9 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 	if (!strcmp(FileView_File, "Player"))
 	{
+		HideRightPanes();
+		ShowWindow(App->Cl_Properties->Properties_Dlg_hWnd, 1);
+
 		App->Cl_Object_Props->Is_Player = 1; // Mark as Player selected
 
 		App->Cl_Properties->Enable_Delete_Button(0);

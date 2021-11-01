@@ -417,6 +417,16 @@ LRESULT CALLBACK GD19_Properties::GD_Properties_Proc(HWND hDlg, UINT message, WP
 			return 1;
 		}
 
+		if (LOWORD(wParam) == IDC_BTSAVE)
+		{
+			if (App->SBC_Project->Scene_Loaded == 1)
+			{
+				App->SBC_Project->Write_Player();
+				App->Say("Player Saved");
+			}
+			return 1;
+		}
+		
 		
 //
 //	///	if (LOWORD(wParam) == IDC_BUTEDITPOS)
