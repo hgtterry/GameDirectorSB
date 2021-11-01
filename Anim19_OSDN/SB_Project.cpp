@@ -577,5 +577,7 @@ bool SB_Project::Load_Player()
 	x = App->Cl_Ini->Get_Float("Player", "Cam_Height");
 	//if (x == 0) { x = 6.00; }
 	App->SBC_Player->PlayerHeight = x;
+
+	HTREEITEM Temp = App->SBC_FileView->Add_PlayerFile("Player",0);
 	return 1;
 }

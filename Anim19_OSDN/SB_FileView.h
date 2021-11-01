@@ -31,6 +31,8 @@ public:
 	void Start_FileView(void);
 	void Init_FileView(void);
 
+	HTREEITEM Add_PlayerFile(char *SFileName, int Index);
+
 protected:
 
 	static LRESULT CALLBACK ListPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
