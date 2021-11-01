@@ -27,5 +27,12 @@ class SB_Properties
 public:
 	SB_Properties();
 	~SB_Properties();
+
+	bool Update_ListView_Player();
+	bool Edit_Player_Onclick(LPARAM lParam);
+
+protected:
+
+	//bool Edit_Player_Onclick(LPARAM lParam);
 };
 

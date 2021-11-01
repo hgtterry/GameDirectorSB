@@ -390,8 +390,6 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 	item1.mask = TVIF_TEXT;
 	TreeView_GetItem(((LPNMHDR)lParam)->hwndFrom, &item1);
 
-	App->Say(FileView_Folder);
-	App->Say(FileView_File);
 	///App->Cl_Properties->Enable_Test_Button(0);
 	///App->Cl_Properties->Enable_Delete_Button(0);
 
@@ -503,10 +501,9 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		App->Cl_Properties->Current_Selected_Object = Index;
 		//App->CL10_Properties->Update_Transform_Dlg();
 
-		App->Debug_Text();
 		if (App->Cl_Properties->Edit_Physics == 0)
 		{
-			App->Cl_Properties->Update_ListView_Player();
+			App->SBC_Properties->Update_ListView_Player();
 		}
 		else
 		{

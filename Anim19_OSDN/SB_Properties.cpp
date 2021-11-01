@@ -35,3 +35,210 @@ SB_Properties::SB_Properties()
 SB_Properties::~SB_Properties()
 {
 }
+
+// *************************************************************************
+// *				Update_ListView_Player	Terry Bernie 			 	   *
+// *************************************************************************
+bool SB_Properties::Update_ListView_Player()
+{
+	if (App->Cl_Scene_Data->SceneLoaded == 0)
+	{
+		//	return 1;
+	}
+
+	int index = App->Cl_Properties->Current_Selected_Object;
+
+	char buff[255];
+	strcpy(buff, App->SBC_Player->PlayerName);
+	strcat(buff, "   (Player)");
+	SetDlgItemText(App->Cl_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
+
+	char chr_Speed[100];
+	char chr_Height[100];
+	char chr_StartPosX[100];
+	char chr_StartPosY[100];
+	char chr_StartPosZ[100];
+
+	sprintf(chr_Speed, "%.3f ", App->SBC_Player->Ground_speed);
+	sprintf(chr_Height, "%.3f ", App->SBC_Player->PlayerHeight);
+
+	sprintf(chr_StartPosX, "%.3f ", App->SBC_Player->StartPos.x);
+	sprintf(chr_StartPosY, "%.3f ", App->SBC_Player->StartPos.y);
+	sprintf(chr_StartPosZ, "%.3f ", App->SBC_Player->StartPos.z);
+
+	const int NUM_ITEMS = 9;
+	const int NUM_COLS = 2;
+	std::string grid[NUM_COLS][NUM_ITEMS]; // string table
+	LV_ITEM pitem;
+	memset(&pitem, 0, sizeof(LV_ITEM));
+	pitem.mask = LVIF_TEXT;
+
+	grid[0][0] = "Name", grid[1][0] = App->SBC_Player->PlayerName;
+	grid[0][1] = "Mode", grid[1][1] = "1st_Person";
+	grid[0][2] = " ", grid[1][2] = " ";
+	grid[0][3] = "Ground Speed", grid[1][3] = chr_Speed;
+	grid[0][4] = "Player Height", grid[1][4] = chr_Height;
+	grid[0][5] = " ", grid[1][5] = " ";
+	grid[0][6] = "Start Pos_X", grid[1][6] = chr_StartPosX;
+	grid[0][7] = "Start Pos_Y", grid[1][7] = chr_StartPosY;
+	grid[0][8] = "Start Pos_Z", grid[1][8] = chr_StartPosZ;
+
+
+	ListView_DeleteAllItems(App->Cl_Properties->Properties_hLV);
+
+	for (DWORD row = 0; row < NUM_ITEMS; row++)
+	{
+		pitem.iItem = row;
+		pitem.pszText = const_cast<char*>(grid[0][row].c_str());
+		ListView_InsertItem(App->Cl_Properties->Properties_hLV, &pitem);
+
+		//ListView_SetItemText
+
+		for (DWORD col = 1; col < NUM_COLS; col++)
+		{
+			ListView_SetItemText(App->Cl_Properties->Properties_hLV, row, col,
+				const_cast<char*>(grid[col][row].c_str()));
+		}
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *				Edit_Player_Onclick  Terry Bernie					   *
+// *************************************************************************
+bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
+{
+	int Index = App->Cl_Properties->Current_Selected_Object; // Get Selected Object Index 
+	int result = 1;
+	int test;
+
+	LPNMLISTVIEW poo = (LPNMLISTVIEW)lParam;
+	test = poo->iItem;
+	ListView_GetItemText(App->Cl_Properties->Properties_hLV, test, 0, App->Cl_Properties->btext, 20);
+
+	result = strcmp(App->Cl_Properties->btext, "Name");
+	if (result == 0)
+	{
+		strcpy(App->Cl_Dialogs->btext, "Change Object Name");
+		strcpy(App->Cl_Dialogs->Chr_Text, App->SBC_Player->PlayerName);
+
+		App->Cl_Dialogs->Dialog_Text(1);
+
+		if (App->Cl_Dialogs->Canceled == 1)
+		{
+			return TRUE;
+		}
+
+		// Needs Duplicate Name test 
+		strcpy(App->SBC_Player->PlayerName, App->Cl_Dialogs->Chr_Text);
+
+		App->Cl_FileView->ChangeItem_Name(NULL, App->Cl_Dialogs->Chr_Text);
+		Update_ListView_Player();
+	}
+
+	result = strcmp(App->Cl_Properties->btext, "Ground Speed");
+	if (result == 0)
+	{
+		char chr_Value[10];
+		sprintf(chr_Value, "%.3f ", App->SBC_Player->Ground_speed);
+
+		strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
+		strcpy(App->Cl_Dialogs->btext, "Ground Speed");
+
+		App->Cl_Dialogs->Dialog_Float();
+		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
+
+		App->SBC_Player->Ground_speed = App->Cl_Dialogs->mFloat;
+		Update_ListView_Player();
+
+		return 1;
+	}
+
+	result = strcmp(App->Cl_Properties->btext, "Player Height");
+	if (result == 0)
+	{
+		char chr_Value[10];
+		sprintf(chr_Value, "%.3f ", App->SBC_Player->PlayerHeight);
+
+		strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
+
+		strcpy(App->Cl_Dialogs->btext, "Player Height");
+
+		App->Cl_Dialogs->Dialog_Float();
+		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
+
+		App->SBC_Player->PlayerHeight = App->Cl_Dialogs->mFloat;
+		Update_ListView_Player();
+		return 1;
+	}
+
+	result = strcmp(App->Cl_Properties->btext, "Start Pos_X");
+	if (result == 0)
+	{
+		char chr_Value[10];
+		sprintf(chr_Value, "%.3f ", App->SBC_Player->StartPos.x);
+
+		strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
+
+		strcpy(App->Cl_Dialogs->btext, "Player Start Pos X");
+
+		App->Cl_Dialogs->Dialog_Float();
+		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
+
+		App->SBC_Player->StartPos.x = App->Cl_Dialogs->mFloat;
+		App->Cl_Scene_Data->S_Player_Locations[0]->Current_Position.x = App->Cl_Dialogs->mFloat;
+		App->Cl_Scene_Data->S_Player_Locations[0]->Physics_Position.setX(App->Cl_Dialogs->mFloat);
+		Update_ListView_Player();
+
+		App->Cl_Bullet->Reset_Physics();
+		return 1;
+	}
+
+	result = strcmp(App->Cl_Properties->btext, "Start Pos_Y");
+	if (result == 0)
+	{
+
+		char chr_Value[10];
+		sprintf(chr_Value, "%.3f ", App->SBC_Player->StartPos.y);
+
+		strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
+
+		strcpy(App->Cl_Dialogs->btext, "Player Start Pos Y");
+
+		App->Cl_Dialogs->Dialog_Float();
+		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
+
+		App->SBC_Player->StartPos.y = App->Cl_Dialogs->mFloat;
+		App->Cl_Scene_Data->S_Player_Locations[0]->Current_Position.y = App->Cl_Dialogs->mFloat;
+		App->Cl_Scene_Data->S_Player_Locations[0]->Physics_Position.setY(App->Cl_Dialogs->mFloat);
+		Update_ListView_Player();
+
+		App->Cl_Bullet->Reset_Physics();
+		return 1;
+	}
+
+	result = strcmp(App->Cl_Properties->btext, "Start Pos_Z");
+	if (result == 0)
+	{
+		char chr_Value[10];
+		sprintf(chr_Value, "%.3f ", App->SBC_Player->StartPos.z);
+
+		strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
+
+		strcpy(App->Cl_Dialogs->btext, "Player Start Pos Z");
+
+		App->Cl_Dialogs->Dialog_Float();
+		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
+
+		App->SBC_Player->StartPos.z = App->Cl_Dialogs->mFloat;
+		App->Cl_Scene_Data->S_Player_Locations[0]->Current_Position.z = App->Cl_Dialogs->mFloat;
+		App->Cl_Scene_Data->S_Player_Locations[0]->Physics_Position.setZ(App->Cl_Dialogs->mFloat);
+		Update_ListView_Player();
+
+		App->Cl_Bullet->Reset_Physics();
+		return 1;
+	}
+
+	return 1;
+}

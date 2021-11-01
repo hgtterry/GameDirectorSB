@@ -39,12 +39,11 @@ public:
 	bool Update_ListView_Collectables();
 	bool Update_ListView_Physics();
 	bool Update_ListView_Player_Physics();
-	bool Update_ListView_Player();
+	
 	bool Update_ListView_Teleport();
 	bool Update_ListView_Environment();
 	bool Update_ListView_Particles();
 
-	bool Edit_Player_Onclick(LPARAM lParam);
 	bool Edit_Player_Physics_Onclick(LPARAM lParam);
 
 	bool Edit_Object_OnClick(LPARAM lParam);
@@ -76,6 +75,7 @@ public:
 	HWND Properties_hLV;
 	HWND Properties_Dlg_hWnd;
 	int Edit_Category;
+	char btext[255];
 
 protected:
 
@@ -83,8 +83,5 @@ protected:
 
 	void Create_Properties_hLV(void);
 
-	char btext[255];
-
-	
 };
 
