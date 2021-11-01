@@ -93,6 +93,7 @@ GD19_App::GD19_App(void)
 	SBC_Dialogs =		nullptr;
 	SBC_Physics =		nullptr;
 	SBC_FileView =		nullptr;
+	SBC_Properties =	nullptr;
 
 	Fdlg = nullptr;
 	hInst = nullptr;
@@ -254,6 +255,7 @@ bool GD19_App::InitApp(void)
 	SBC_Dialogs =		new SB_Dialogs();
 	SBC_Physics =		new SB_Physics();
 	SBC_FileView =		new SB_FileView();
+	SBC_Properties =	new SB_Properties();
 
 	SetBrushes_Fonts();
 
