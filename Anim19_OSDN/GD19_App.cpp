@@ -94,6 +94,7 @@ GD19_App::GD19_App(void)
 	SBC_Physics =		nullptr;
 	SBC_FileView =		nullptr;
 	SBC_Properties =	nullptr;
+	SBC_Camera =		nullptr;
 
 	Fdlg = nullptr;
 	hInst = nullptr;
@@ -256,6 +257,7 @@ bool GD19_App::InitApp(void)
 	SBC_Physics =		new SB_Physics();
 	SBC_FileView =		new SB_FileView();
 	SBC_Properties =	new SB_Properties();
+	SBC_Camera =		new SB_Camera();
 
 	SetBrushes_Fonts();
 
