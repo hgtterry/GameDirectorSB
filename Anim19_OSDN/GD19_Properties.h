@@ -82,5 +82,8 @@ protected:
 
 	void Create_Properties_hLV(void);
 
+	bool Toggle_Objects_Flag;
+	bool Toggle_Physics_Flag;
+
 };
 

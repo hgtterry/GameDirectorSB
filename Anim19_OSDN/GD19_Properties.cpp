@@ -45,6 +45,9 @@ GD19_Properties::GD19_Properties(void)
 
 	Properties_Dlg_Active = 0;
 
+	Toggle_Objects_Flag = 1;
+	Toggle_Physics_Flag = 0;
+
 }
 
 GD19_Properties::~GD19_Properties(void)
@@ -81,18 +84,11 @@ LRESULT CALLBACK GD19_Properties::GD_Properties_Proc(HWND hDlg, UINT message, WP
 	{
 	case WM_INITDIALOG:
 	{
-		// all
 		SendDlgItemMessage(hDlg, IDC_STOBJECTNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		/*SendDlgItemMessage(hDlg, IDC_STTRANSFORM, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 
-		SendDlgItemMessage(hDlg, IDC_STVALUE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_STITEM, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
-		HWND Temp = GetDlgItem(hDlg, IDC_BTHELP);
-		SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_InfoSmall_Bmp);
-
-		Temp = GetDlgItem(hDlg, IDC_BTHELPENTITY);
-		SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_InfoSmall_Bmp);*/
+		SendDlgItemMessage(hDlg, IDC_BTOBJECT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BTPHYSICS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 
 		App->Cl_Object_Props->Edit_Type = Enums::Edit_Mesh_Object;
 
@@ -276,20 +272,20 @@ LRESULT CALLBACK GD19_Properties::GD_Properties_Proc(HWND hDlg, UINT message, WP
 			return CDRF_DODEFAULT;
 		}
 		
-	//	// ------------------------------------------ 
-	/////	if (some_item->idFrom == IDC_OBJECT_SEL && some_item->code == NM_CUSTOMDRAW)
-	//	{
-	//		LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-	//		App->Custom_Button_Toggle(item, App->Cl_Object_Props->Object_Selection);
-	//		return CDRF_DODEFAULT;
-	//	}
+		// ------------------------------------------ 
+		if (some_item->idFrom == IDC_BTOBJECT && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->Cl_Properties->Toggle_Objects_Flag);
+			return CDRF_DODEFAULT;
+		}
 
-	/////	if (some_item->idFrom == IDC_PHYSICS_SEL && some_item->code == NM_CUSTOMDRAW)
-	//	{
-	//		LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-	//		App->Custom_Button_Toggle(item, App->Cl_Object_Props->Physics_Selection);
-	//		return CDRF_DODEFAULT;
-	//	}
+		if (some_item->idFrom == IDC_BTPHYSICS && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->Cl_Properties->Toggle_Physics_Flag);
+			return CDRF_DODEFAULT;
+		}
 
 		if (some_item->idFrom == IDC_PHYSICSDEBUG && some_item->code == NM_CUSTOMDRAW)
 		{
@@ -433,7 +429,10 @@ LRESULT CALLBACK GD19_Properties::GD_Properties_Proc(HWND hDlg, UINT message, WP
 			{
 				App->Cl_Properties->Edit_Physics = 0;
 				App->SBC_Properties->Update_ListView_Player();
-				
+
+				App->Cl_Properties->Toggle_Objects_Flag = 1;
+				App->Cl_Properties->Toggle_Physics_Flag = 0;
+				RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			}
 			return 1;
 		}
@@ -444,9 +443,14 @@ LRESULT CALLBACK GD19_Properties::GD_Properties_Proc(HWND hDlg, UINT message, WP
 			{
 				App->Cl_Properties->Edit_Physics = 1;
 				App->SBC_Properties->Update_ListView_Player_Physics();
+
+				App->Cl_Properties->Toggle_Objects_Flag = 0;
+				App->Cl_Properties->Toggle_Physics_Flag = 1;
+				RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			}
 			return 1;
 		}
+		
 		
 		if (LOWORD(wParam) == IDC_PHYSICSDEBUG)
 		{
