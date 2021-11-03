@@ -819,13 +819,13 @@ LRESULT CALLBACK VM_TopBar::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPara
 	{
 		if (LOWORD(wParam) == IDC_TBRESETVIEW)
 		{
-			App->Cl_Grid->Reset_View();
+			App->SBC_Camera->Reset_View();
 			return 1;
 		}
 
 		if (LOWORD(wParam) == IDC_TBZOOM)
 		{
-			App->Cl_Grid->Zoom();
+			App->SBC_Camera->Zoom();
 			return 1;
 		}
 

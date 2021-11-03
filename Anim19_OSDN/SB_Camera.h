@@ -27,5 +27,8 @@ class SB_Camera
 public:
 	SB_Camera();
 	~SB_Camera();
+
+	void Reset_View(void);
+	void Zoom(void);
 };
 

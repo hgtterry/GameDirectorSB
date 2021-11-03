@@ -89,7 +89,7 @@ GD19_Grid::~GD19_Grid(void)
 // *************************************************************************
 void GD19_Grid::Reset_Class()
 {
-	Reset_View();
+	App->SBC_Camera->Reset_View();
 }
 
 // *************************************************************************
@@ -231,56 +231,6 @@ void GD19_Grid::Grid_SetVisible(bool Option)
 void GD19_Grid::Hair_SetVisible(bool Option)
 {
 	HairNode->setVisible(Option);
-}
-
-// *************************************************************************
-// *	  				Reset_View Terry Bernie							   *
-// *************************************************************************
-void GD19_Grid::Reset_View(void)
-{
-	GridNode->setPosition(0, 0, 0);
-	GridNode->resetOrientation();
-
-	HairNode->setPosition(0, 0, 0);
-	HairNode->resetOrientation();
-
-	//App->Cl19_Ogre->RenderListener->RX = 0;
-	//App->Cl19_Ogre->RenderListener->RZ = 0;
-
-	App->Cl19_Ogre->mCamera->setPosition(Ogre::Vector3(0, 90, 100));
-	App->Cl19_Ogre->mCamera->lookAt(Ogre::Vector3(0, 30, 0));
-
-	//Zoom();
-
-}
-
-// *************************************************************************
-// *				Zoom   Terry Bernie								   *
-// *************************************************************************
-void GD19_Grid::Zoom(void)
-{
-	if (App->CL_Vm_Model->Model_Loaded == 1)
-	{
-		App->Cl_Grid->Reset_View();
-		App->Cl19_Ogre->mCamera->setPosition(App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].x, App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].y, App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].z);
-
-		Ogre::Vector3 Move;
-		Move.x = 0;
-		Move.y = 0;//App->CL_Model_Data->S_BoundingBox[0]->Size[0].y;
-				   //Move.z = App->CL_Model_Data->S_BoundingBox[0]->Size[0].y*2;
-
-		if (App->CL_Vm_Model->S_BoundingBox[0]->Size[0].z > App->CL_Vm_Model->S_BoundingBox[0]->Size[0].y)
-		{
-			Move.z = App->CL_Vm_Model->S_BoundingBox[0]->Size[0].z * 2;
-		}
-		else
-		{
-			Move.z = App->CL_Vm_Model->S_BoundingBox[0]->Size[0].y * 2;
-		}
-
-		App->Cl19_Ogre->mCamera->moveRelative(Move);
-	}
-
 }
 
 // *************************************************************************

@@ -314,7 +314,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		case ID_CAMERA_RESET:
 		{
-			App->Cl_Grid->Reset_View();
+			App->SBC_Camera->Reset_View();
 			return 1;
 		}
 
