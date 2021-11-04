@@ -148,6 +148,7 @@ BEGIN_MESSAGE_MAP(CFusionDoc, CDocument)
 	ON_COMMAND(ID_BRUSH_PRIMITIVES_ARCH, OnBrushPrimitivesArch)
 	ON_COMMAND(ID_BRUSH_PRIMITIVES_CONE, OnBrushPrimitivesCone)
 	ON_COMMAND(ID_FILE_IMPORT, OnFileImport)
+	ON_COMMAND(ID_FILE_EXPORT_AUTODESK3DS, OnFileImport) // Here
 	ON_COMMAND(ID_TOOLS_BRUSH_ATTRIBUTES, OnToolsBrushAttributes)
 	ON_UPDATE_COMMAND_UI(ID_TOOLS_BRUSH_ATTRIBUTES, OnUpdateToolsBrushAttributes)
 	ON_COMMAND(ID_TOOLS_FACE_ATTRIBUTES, OnToolsFaceAttributes)
@@ -216,10 +217,12 @@ CFusionDoc::CFusionDoc() : CDocument (),
 	mCurrentBitmap (0), NumSelEntities (0), //mTextureBrowserOpen (0), 
 	mCurrentGroup (0), TempShearTemplate (NULL), PlaceObjectFlag (FALSE),
 	pSelFaces (NULL), pSelBrushes (NULL), pTempSelBrushes (NULL)
+
 {
 	const char *DefaultWadName;
 	const Prefs  *pPrefs = GetPrefs ();
 
+	App = new SB_App();
 
 	DefaultWadName = Prefs_GetTxlName (pPrefs);
 
@@ -6251,6 +6254,7 @@ void CFusionDoc::OnFileOpen()
 
 void CFusionDoc::OnFileImport() 
 {
+	App->Say("Here");
 	static const char FDTitle[] = "Import";
 	CFileDialog dlg(TRUE, "3dt", NULL, OFN_OVERWRITEPROMPT,	"GEDIT Files (*.3DT)|*.3DT||");
 

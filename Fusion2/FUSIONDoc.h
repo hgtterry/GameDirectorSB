@@ -38,6 +38,8 @@
 #include "mainfrm.h"
 #include "undostack.h"
 
+#include "SB_App.h"
+
 #define WINDOW_TOP_VIEW 0
 #define WINDOW_FRONT_VIEW 1
 #define WINDOW_SIDE_VIEW 2
@@ -110,6 +112,8 @@ protected: // create from serialization only
 
 public:
 	Level *pLevel;
+
+	SB_App*	App;
 
 	//states and stats
 	int	NumSelEntities;

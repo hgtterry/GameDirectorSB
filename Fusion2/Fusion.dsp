@@ -168,6 +168,10 @@ SOURCE=.\array.c
 # End Source File
 # Begin Source File
 
+SOURCE=.\bbbb.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\box3d.c
 # End Source File
 # Begin Source File
@@ -352,6 +356,10 @@ SOURCE=.\render.c
 # End Source File
 # Begin Source File
 
+SOURCE=.\SB_App.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\SelBrushList.c
 # End Source File
 # Begin Source File
@@ -369,6 +377,10 @@ SOURCE=.\stack.c
 # Begin Source File
 
 SOURCE=.\TextureDialog.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\TezTest.cpp
 # End Source File
 # Begin Source File
 
@@ -401,6 +413,10 @@ SOURCE=.\ActivationWatch.h
 # Begin Source File
 
 SOURCE=.\array.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\bbbb.h
 # End Source File
 # Begin Source File
 
@@ -600,6 +616,10 @@ SOURCE=.\resource.hm
 # End Source File
 # Begin Source File
 
+SOURCE=.\SB_App.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\SelBrushList.h
 # End Source File
 # Begin Source File
@@ -621,6 +641,10 @@ SOURCE=.\StdAfx.h
 # Begin Source File
 
 SOURCE=.\TextureDialog.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\TezTest.h
 # End Source File
 # Begin Source File
 
