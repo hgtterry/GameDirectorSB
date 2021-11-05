@@ -6,6 +6,7 @@
 #include "fusion.h"
 #include "SB_App.h"
 #include "FUSIONDoc.h"
+#include "MainFrm.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -21,6 +22,10 @@ SB_App::SB_App()
 {
 		NumSelEntities = 0;
 		EqutyTab_Hwnd = NULL;
+
+	//	pDoc = CMainFrame::GetCurrentDoc();
+
+	//	pDoc = CFusionDoc::App;
 }
 
 SB_App::~SB_App()
@@ -48,9 +53,9 @@ void SB_App::Say(const char* Message)
 // *************************************************************************
 bool SB_App::Start_EquityTab()
 {
-
+//	HWND hwnd = GetDlgItem(IDD_TABDIALOG,0);
 	//EqutyTab_Hwnd = 
-	DialogBox(NULL,(LPCTSTR)IDD_EQUITYTAB,NULL,(DLGPROC)EquityTab_Proc);
+	CreateDialog(NULL,(LPCTSTR)IDD_EQUITYTAB,NULL,(DLGPROC)EquityTab_Proc);
 	return 1;
 }
 // *************************************************************************
@@ -62,16 +67,26 @@ LRESULT CALLBACK SB_App::EquityTab_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 	{
 		case WM_INITDIALOG:
 			{	
-			//	CFusionDoc *pDoc;
-			//	pDoc = (CFusionDoc*)pActiveChild->GetActiveDocument();
+				App->EqutyTab_Hwnd = hDlg;
 
-			//	pDoc->App->Say("Test");
+				char buf[255];
+				_itoa(App->NumSelEntities,buf,10);
+		
+				SetDlgItemText(hDlg,IDC_STSELECT,(LPCTSTR)buf);
 				return TRUE;
 			}
 	
 
 		case WM_COMMAND:
 			{
+				
+				
+				if (LOWORD(wParam) == IDC_BTUPDATE) 
+				{
+					App->UpdateTab_Dialog(hDlg);
+					return TRUE;
+				}
+				
 				if (LOWORD(wParam) == IDOK) 
 				{
 					//EndDialog(hDlg, LOWORD(wParam));
@@ -88,4 +103,25 @@ LRESULT CALLBACK SB_App::EquityTab_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 
 	}
     return FALSE;
+}
+
+// *************************************************************************
+// *	  					 Init Terry Flanigan						   *
+// *************************************************************************
+bool SB_App::Init()
+{
+
+	Say("init");
+	return 1;
+}
+
+// *************************************************************************
+// *	  				UpdateTab_Dialog Terry Flanigan					   *
+// *************************************************************************
+bool SB_App::UpdateTab_Dialog(HWND hDlg)
+{
+	char buf[255];
+	_itoa(NumSelEntities,buf,10);
+	SetDlgItemText(hDlg,IDC_STSELECT,(LPCTSTR)buf);
+	return 1;
 }

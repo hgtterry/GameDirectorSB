@@ -228,6 +228,7 @@ CFusionDoc::CFusionDoc() : CDocument (),
 
 	App = new SB_App();
 
+
 	DefaultWadName = Prefs_GetTxlName (pPrefs);
 
 	strcpy (LastPath, Prefs_GetProjectDir (pPrefs));
@@ -2614,7 +2615,6 @@ static geBoolean fdocSelectBrush (Brush *pBrush, void *lParam)
 
 void CFusionDoc::SelectAll (void)
 {
-	App->Say("here");
 	DoGeneralSelect ();
 
 	App->NumSelEntities = 0;
@@ -5674,6 +5674,7 @@ void CFusionDoc::OnUpdateBrushSubtractfromworld(CCmdUI* pCmdUI)
 				  (SelFaceList_GetSize (pSelFaces) == 0) && 
 				  (App->NumSelEntities == 0));
 	pCmdUI->Enable (EnableFlag);
+
 }
 
 void CFusionDoc::OnUpdateThingAttributes(CCmdUI* pCmdUI) 

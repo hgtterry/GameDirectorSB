@@ -409,6 +409,7 @@
 #define IDC_GROUPFILE                   1293
 #define IDC_EXPORTLIGHTS                1294
 #define IDC_STSELECT                    1295
+#define IDC_BTUPDATE                    1296
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772
 #define ID_BRUSH_PRIMITIVES_SPHEROID    32773
@@ -532,7 +533,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        237
 #define _APS_NEXT_COMMAND_VALUE         32972
-#define _APS_NEXT_CONTROL_VALUE         1296
+#define _APS_NEXT_CONTROL_VALUE         1297
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

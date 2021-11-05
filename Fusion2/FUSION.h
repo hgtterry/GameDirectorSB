@@ -30,6 +30,7 @@
 #include "MainFrm.h"
 #include "activationwatch.h"
 #include "prefs.h"
+#include "SB_App.h"
 
 #include <afxmt.h>	// required for single-instance checking
 
@@ -45,6 +46,8 @@
 
 #define FUSION_INIFILE_NAME "Gedit.ini"
 
+	
+
 class CFusionApp : public CWinApp
 {
 public:
@@ -57,6 +60,8 @@ public:
 	const Prefs * GetPreferences( void ) { return pResolvedPrefs; } ;
 	CEvent* pNewInstanceEvent;
 	CEvent* pShutdownEvent;
+
+//	SB_App*	App;
 
 // Overrides
 	// ClassWizard generated virtual function overrides
@@ -102,6 +107,7 @@ private:
 	CFusionDoc* pFusionDoc;
 	void ResolvePreferencesPaths ();
 };
+
 
 /////////////////////////////////////////////////////////////////////////////
 #endif // Prevent multiple inclusion

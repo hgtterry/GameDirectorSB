@@ -3,7 +3,7 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
-#include "fusion.h"
+#include "resource.h"       // main symbols
 #include "bbbb.h"
 
 #ifdef _DEBUG

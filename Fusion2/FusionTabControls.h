@@ -68,6 +68,7 @@ public:
 	CBrushGroupDialog	*GrpTab;
 	CModelDialog		*ModelTab;
 	CSkyDialog			*SkyTab;
+	CStatic				m_TextureImage;
 
 // Attributes
 public:

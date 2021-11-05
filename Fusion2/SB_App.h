@@ -23,12 +23,16 @@ public:
 
 	HWND EqutyTab_Hwnd;
 
+	bool Init();
+
+	bool UpdateTab_Dialog(HWND hDlg);
+	
 protected:
 
 	static LRESULT CALLBACK EquityTab_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 };
 
-//extern SB_App* App;
+extern SB_App* App;
 
 #endif // !defined(AFX_SB_APP_H__32FF1015_03E8_4EB9_BE5C_D9E4748043B5__INCLUDED_)

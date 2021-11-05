@@ -1863,6 +1863,7 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,102,71,50,14
     LTEXT           "Static",IDC_STSELECT,15,20,70,18,SS_CENTERIMAGE | 
                     WS_BORDER
+    PUSHBUTTON      "Update",IDC_BTUPDATE,107,23,50,14
 END
 
 

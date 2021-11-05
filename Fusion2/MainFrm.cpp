@@ -156,11 +156,11 @@ void CMainFrame::OnUpdateSelInfo(CCmdUI *pCmdUI)
 		int NumSelFaces = SelFaceList_GetSize (pDoc->pSelFaces);
 		int NumSelBrushes = SelBrushList_GetSize (pDoc->pSelBrushes);
 
-		etxt.Format("Ent: %d", pDoc->App->NumSelEntities);
+		etxt.Format("Ent: %d", App->NumSelEntities);
 		btxt.Format(" Brsh: %d", NumSelBrushes);
 		ftxt.Format(" Face: %d", NumSelFaces);
 		Text.Format("%s%s%s",
-			pDoc->App->NumSelEntities ? etxt : "",
+			App->NumSelEntities ? etxt : "",
 			NumSelBrushes ? btxt : "",
 			NumSelFaces ? ftxt : "");
 

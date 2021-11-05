@@ -131,6 +131,9 @@ static const int NumTabs = sizeof (Tabs) / sizeof (TabItem);
 
 BOOL CFusionTabControls::CreateTabs()
 {
+
+	HWND TC = CFusionTabControls::GetSafeHwnd();
+	//mpMainFrame
 	int tab;
 
 	for (tab = 0; tab < NumTabs; ++tab)
