@@ -221,6 +221,7 @@ void CFusionTabControls::UpdateTabs()
 	GrpTab->ShowWindow(SW_HIDE);
 	ModelTab->ShowWindow(SW_HIDE);
 	SkyTab->ShowWindow (SW_HIDE);
+	App->Show_Dialog(0);
 
 	//	This one should always be invisible.  Even to start out with...
 	m_pTextureDialog->ShowWindow( SW_HIDE );
@@ -265,6 +266,10 @@ void CFusionTabControls::UpdateTabs()
 
 		case SKY_TAB :
 			SkyTab->ShowWindow (SW_SHOW);
+			break;
+			
+		case EQUITY_TAB :
+			App->Show_Dialog(1);
 			break;
 	}
 

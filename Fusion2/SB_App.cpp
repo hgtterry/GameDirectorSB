@@ -53,9 +53,11 @@ void SB_App::Say(const char* Message)
 // *************************************************************************
 bool SB_App::Start_EquityTab()
 {
-//	HWND hwnd = GetDlgItem(IDD_TABDIALOG,0);
-	//EqutyTab_Hwnd = 
-	CreateDialog(NULL,(LPCTSTR)IDD_EQUITYTAB,NULL,(DLGPROC)EquityTab_Proc);
+	EqutyTab_Hwnd = NULL;
+
+	EqutyTab_Hwnd = CreateDialog(NULL,(LPCTSTR)IDD_EQUITYTAB,NULL,(DLGPROC)EquityTab_Proc);
+	Show_Dialog(0);
+
 	return 1;
 }
 // *************************************************************************
@@ -123,5 +125,14 @@ bool SB_App::UpdateTab_Dialog(HWND hDlg)
 	char buf[255];
 	_itoa(NumSelEntities,buf,10);
 	SetDlgItemText(hDlg,IDC_STSELECT,(LPCTSTR)buf);
+	return 1;
+}
+
+// *************************************************************************
+// *	  				Show_Dialog Terry Flanigan						   *
+// *************************************************************************
+bool SB_App::Show_Dialog(bool flag)
+{
+	ShowWindow(EqutyTab_Hwnd,flag);
 	return 1;
 }

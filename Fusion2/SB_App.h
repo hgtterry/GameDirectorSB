@@ -19,13 +19,15 @@ public:
 
 	bool Start_EquityTab();
 
-	int	NumSelEntities;
-
-	HWND EqutyTab_Hwnd;
-
 	bool Init();
 
 	bool UpdateTab_Dialog(HWND hDlg);
+
+	bool Show_Dialog(bool flag);
+
+	int	NumSelEntities;
+
+	HWND EqutyTab_Hwnd;
 	
 protected:
 

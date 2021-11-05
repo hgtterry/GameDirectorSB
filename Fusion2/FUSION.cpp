@@ -347,7 +347,7 @@ BOOL CFusionApp::InitInstance()
 #endif
 
 	pMainFrame->IsStartingApp = 0;
-
+	App->Start_EquityTab();
 	return TRUE;
 }
 
