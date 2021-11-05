@@ -1854,6 +1854,17 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,103,71,50,14
 END
 
+IDD_EQUITYTAB DIALOG DISCARDABLE  0, 0, 186, 92
+STYLE DS_SYSMODAL | DS_MODALFRAME | DS_NOFAILCREATE | WS_POPUP | WS_VISIBLE | 
+    WS_CAPTION
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,37,71,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,102,71,50,14
+    LTEXT           "Static",IDC_STSELECT,15,20,70,18,SS_CENTERIMAGE | 
+                    WS_BORDER
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -1872,6 +1883,14 @@ BEGIN
     END
 
     IDD_PROP_TEXT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 179
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 85
+    END
+
+    IDD_EQUITYTAB, DIALOG
     BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 179

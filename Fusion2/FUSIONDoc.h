@@ -113,7 +113,7 @@ protected: // create from serialization only
 public:
 	Level *pLevel;
 
-	SB_App*	App;
+	 SB_App*	App;
 
 	//states and stats
 //	int	NumSelEntities;

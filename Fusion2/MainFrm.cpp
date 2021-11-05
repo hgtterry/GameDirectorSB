@@ -38,7 +38,6 @@
 
 #include "Fusion.h"		// major icko!!
 #include "ChildFrm.h"
-//#include "SB_App.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW

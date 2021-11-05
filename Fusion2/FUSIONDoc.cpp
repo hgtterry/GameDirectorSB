@@ -6280,7 +6280,7 @@ void CFusionDoc::OnFileImport()
 
 void CFusionDoc::Test() 
 {
-	App->Say("Here");
+	App->Start_EquityTab();
 }
 
 geBoolean	CFusionDoc::LoadLeakFile(const char *Filename)

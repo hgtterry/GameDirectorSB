@@ -17,7 +17,15 @@ public:
 
 	void Say(const char* Message);
 
+	bool Start_EquityTab();
+
 	int	NumSelEntities;
+
+	HWND EqutyTab_Hwnd;
+
+protected:
+
+	static LRESULT CALLBACK EquityTab_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 };
 
