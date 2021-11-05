@@ -116,7 +116,7 @@ public:
 	SB_App*	App;
 
 	//states and stats
-	int	NumSelEntities;
+//	int	NumSelEntities;
 
 	int mShowSelectedFaces;
 	int mCurrentTool, mCurrentBitmap, mShowBrush, mModeTool;
@@ -370,6 +370,9 @@ protected:
 	afx_msg void OnBrushPrimitivesArch();
 	afx_msg void OnBrushPrimitivesCone();
 	afx_msg void OnFileImport();
+
+	afx_msg void Test(); // Equity 15 051121
+
 	afx_msg void OnToolsBrushAttributes();
 	afx_msg void OnUpdateToolsBrushAttributes(CCmdUI* pCmdUI);
 	afx_msg void OnToolsFaceAttributes();

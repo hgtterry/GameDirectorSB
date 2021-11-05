@@ -21,6 +21,7 @@
 /****************************************************************************************/
 
 #include "stdafx.h"
+
 #include "MainFrm.h"
 
 #include "resource.h"
@@ -37,7 +38,7 @@
 
 #include "Fusion.h"		// major icko!!
 #include "ChildFrm.h"
-
+//#include "SB_App.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -156,11 +157,11 @@ void CMainFrame::OnUpdateSelInfo(CCmdUI *pCmdUI)
 		int NumSelFaces = SelFaceList_GetSize (pDoc->pSelFaces);
 		int NumSelBrushes = SelBrushList_GetSize (pDoc->pSelBrushes);
 
-		etxt.Format("Ent: %d", pDoc->NumSelEntities);
+		etxt.Format("Ent: %d", pDoc->App->NumSelEntities);
 		btxt.Format(" Brsh: %d", NumSelBrushes);
 		ftxt.Format(" Face: %d", NumSelFaces);
 		Text.Format("%s%s%s",
-			pDoc->NumSelEntities ? etxt : "",
+			pDoc->App->NumSelEntities ? etxt : "",
 			NumSelBrushes ? btxt : "",
 			NumSelFaces ? ftxt : "");
 

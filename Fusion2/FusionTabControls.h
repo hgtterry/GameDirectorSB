@@ -40,6 +40,7 @@ class CSkyDialog;
 #define CONSOLE_TAB			3
 #define MODEL_TAB			4
 #define SKY_TAB				5
+#define EQUITY_TAB			6
 
 
 #define FTC_BORDER_SIZE_TOP		4

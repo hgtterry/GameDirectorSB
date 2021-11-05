@@ -369,6 +369,13 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "&About GEdit...",             ID_APP_ABOUT
     END
+    POPUP "Equity"
+    BEGIN
+        POPUP "Test"
+        BEGIN
+            MENUITEM "Dialog",                      ID_EQUITY_TEST_DIALOG
+        END
+    END
 END
 
 

@@ -123,7 +123,8 @@ static const TabItem Tabs[] =
 	{GROUP_TAB,			"Groups"},
 	{CONSOLE_TAB,		"Console"},
 	{MODEL_TAB,			"Models"},
-	{SKY_TAB,			"Sky"}
+	{SKY_TAB,			"Sky"},
+	{EQUITY_TAB,		"Equity"}
 };
 	 
 static const int NumTabs = sizeof (Tabs) / sizeof (TabItem);

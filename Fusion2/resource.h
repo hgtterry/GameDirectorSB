@@ -521,6 +521,7 @@
 #define IDS_ENTITY_WARNING              32968
 #define ID_FILE_EXPORT3DS               32969
 #define ID_FILE_EXPORT_AUTODESK3DS      32970
+#define ID_EQUITY_TEST_DIALOG           32971
 
 // Next default values for new objects
 // 
@@ -528,7 +529,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        236
-#define _APS_NEXT_COMMAND_VALUE         32971
+#define _APS_NEXT_COMMAND_VALUE         32972
 #define _APS_NEXT_CONTROL_VALUE         1295
 #define _APS_NEXT_SYMED_VALUE           112
 #endif

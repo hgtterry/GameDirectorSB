@@ -17,8 +17,10 @@ public:
 
 	void Say(const char* Message);
 
+	int	NumSelEntities;
+
 };
 
-extern SB_App* App;
+//extern SB_App* App;
 
 #endif // !defined(AFX_SB_APP_H__32FF1015_03E8_4EB9_BE5C_D9E4748043B5__INCLUDED_)

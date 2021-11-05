@@ -148,7 +148,11 @@ BEGIN_MESSAGE_MAP(CFusionDoc, CDocument)
 	ON_COMMAND(ID_BRUSH_PRIMITIVES_ARCH, OnBrushPrimitivesArch)
 	ON_COMMAND(ID_BRUSH_PRIMITIVES_CONE, OnBrushPrimitivesCone)
 	ON_COMMAND(ID_FILE_IMPORT, OnFileImport)
-	ON_COMMAND(ID_FILE_EXPORT_AUTODESK3DS, OnFileImport) // Here
+
+
+	ON_COMMAND(ID_FILE_EXPORT_AUTODESK3DS, OnFileImport) // Equity 15 051121
+	ON_COMMAND(ID_EQUITY_TEST_DIALOG,Test) 
+
 	ON_COMMAND(ID_TOOLS_BRUSH_ATTRIBUTES, OnToolsBrushAttributes)
 	ON_UPDATE_COMMAND_UI(ID_TOOLS_BRUSH_ATTRIBUTES, OnUpdateToolsBrushAttributes)
 	ON_COMMAND(ID_TOOLS_FACE_ATTRIBUTES, OnToolsFaceAttributes)
@@ -214,7 +218,7 @@ CFusionDoc::CFusionDoc() : CDocument (),
 	/*mpTextureView (NULL), */mWorldBsp (NULL), mActiveView (-1), mCurrentEntity (-1),
 	mModeTool (ID_TOOLS_TEMPLATE), mAdjustMode (ADJUST_MODE_BRUSH),
 	mCurrentTool (ID_TOOLS_BRUSH_SCALEBRUSH), mShowBrush (TRUE), mConstrainHollows (GE_TRUE),
-	mCurrentBitmap (0), NumSelEntities (0), //mTextureBrowserOpen (0), 
+	mCurrentBitmap (0), //App->NumSelEntities (0), //mTextureBrowserOpen (0), 
 	mCurrentGroup (0), TempShearTemplate (NULL), PlaceObjectFlag (FALSE),
 	pSelFaces (NULL), pSelBrushes (NULL), pTempSelBrushes (NULL)
 
@@ -1123,7 +1127,7 @@ void CFusionDoc::CopySelectedBrushes(void)
 		}
 	}
 
-	ConPrintf("Cloned %d Brushes, %d Entities.\n", NumSelBrushes, NumSelEntities);
+	ConPrintf("Cloned %d Brushes, %d Entities.\n", NumSelBrushes, App->NumSelEntities);
 
 	// Copying items places the new items in the same group, so we must update the UI
 	mpMainFrame->m_wndTabControls->GrpTab->UpdateTabDisplay( this ) ;
@@ -2510,7 +2514,7 @@ void CFusionDoc::SelectEntity
 	if (!pEntity->IsSelected ())
 	{
 		pEntity->Select ();
-		++NumSelEntities;
+		++App->NumSelEntities;
 	}
 }
 
@@ -2524,7 +2528,7 @@ void CFusionDoc::DeselectEntity
 	if (pEntity->IsSelected ())
 	{
 		pEntity->DeSelect ();
-		--NumSelEntities;
+		--App->NumSelEntities;
 		assert (NumSelEntities >= 0);
 	}
 }
@@ -2610,9 +2614,10 @@ static geBoolean fdocSelectBrush (Brush *pBrush, void *lParam)
 
 void CFusionDoc::SelectAll (void)
 {
+	App->Say("here");
 	DoGeneralSelect ();
 
-	NumSelEntities = 0;
+	App->NumSelEntities = 0;
 	Level_EnumEntities (pLevel, this, ::fdocSelectEntity);
 	Level_EnumBrushes (pLevel, this, ::fdocSelectBrush);	
 
@@ -2660,7 +2665,7 @@ void CFusionDoc::DeleteEntity(int EntityIndex)
 	DeselectEntity (&(*Entities)[EntityIndex]);
 	Entities->RemoveAt( EntityIndex );
 	SelState&=(~ENTITYCLEAR);
-	SelState|=(NumSelEntities >1)? MULTIENTITY : (NumSelEntities+1)<<7;
+	SelState|=(App->NumSelEntities >1)? MULTIENTITY : (App->NumSelEntities+1)<<7;
 }
 
 void CFusionDoc::AdjustEntityAngle( const ViewVars * v, const geFloat dx )
@@ -4609,7 +4614,7 @@ void CFusionDoc::UpdateSelected(void)
 
 	SelState=(NumSelBrushes > 1)? MULTIBRUSH : NumSelBrushes;
 	SelState|=(NumSelFaces >1)? MULTIFACE : (NumSelFaces+1)<<3;
-	SelState|=(NumSelEntities >1)? MULTIENTITY : (NumSelEntities+1)<<7;
+	SelState|=(App->NumSelEntities >1)? MULTIENTITY : (App->NumSelEntities+1)<<7;
 
 
 	if(mModeTool==ID_GENERALSELECT)
@@ -5656,7 +5661,7 @@ void CFusionDoc::SelectGroupBrushes
 BOOL CFusionDoc::OneBrushSelectedOnly(void)
 {
 	return ((mModeTool==ID_TOOLS_TEMPLATE) || 
-			((SelBrushList_GetSize (pSelBrushes)==1) && (NumSelEntities == 0) &&
+			((SelBrushList_GetSize (pSelBrushes)==1) && (App->NumSelEntities == 0) &&
 			 (SelFaceList_GetSize (pSelFaces) == 0)));
 }
 
@@ -5667,7 +5672,7 @@ void CFusionDoc::OnUpdateBrushSubtractfromworld(CCmdUI* pCmdUI)
 	EnableFlag = ((mModeTool==ID_GENERALSELECT) && 
 				  (SelBrushList_GetSize (pSelBrushes)==1) &&
 				  (SelFaceList_GetSize (pSelFaces) == 0) && 
-				  (NumSelEntities == 0));
+				  (App->NumSelEntities == 0));
 	pCmdUI->Enable (EnableFlag);
 }
 
@@ -6271,6 +6276,11 @@ void CFusionDoc::OnFileImport()
 			ImportFile (Name, &loc);
 		}
 	}
+}
+
+void CFusionDoc::Test() 
+{
+	App->Say("Here");
 }
 
 geBoolean	CFusionDoc::LoadLeakFile(const char *Filename)

@@ -18,7 +18,7 @@ static char THIS_FILE[]=__FILE__;
 
 SB_App::SB_App()
 {
-
+		NumSelEntities = 0;
 }
 
 SB_App::~SB_App()
@@ -34,6 +34,9 @@ void SB_App::Say(const char* Message)
 	char text[1024];
 	strcpy(text, Message);
 
-	MessageBox (NULL,text, "Equity15", MB_ICONEXCLAMATION | MB_OK);
+	char num[255];
+	_itoa(NumSelEntities,num,10);
+
+	MessageBox (NULL,text,num, MB_ICONEXCLAMATION | MB_OK);
 //	App->Cl_Dialogs->Message(text);
 }
