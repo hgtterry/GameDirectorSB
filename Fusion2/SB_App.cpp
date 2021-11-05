@@ -20,17 +20,57 @@ static char THIS_FILE[]=__FILE__;
 
 SB_App::SB_App()
 {
-		NumSelEntities = 0;
-		EqutyTab_Hwnd = NULL;
+	NumSelEntities = 0;
+	EqutyTab_Hwnd = NULL;
+	
+	AppBackground = 0;
+	BlackBrush = 0;
+	Brush_Blue = 0;
+	Brush_White = 0;
+	Brush_Green = 0;
+	Brush_But_Normal = 0;
+	Brush_But_Hover = 0;
+	Brush_But_Pressed = 0;
+	Brush_Red = 0;
+	Brush_Tabs = 0;
+	Brush_Tabs_UnSelected = 0;
+	DialogBackGround = 0;
 
-	//	pDoc = CMainFrame::GetCurrentDoc();
-
-	//	pDoc = CFusionDoc::App;
+	Font_CB12 = 0;
+	Font_CB15 = 0;
+	Font_CB15_Bold = 0;
+	Font_Arial20 = 0;
 }
 
 SB_App::~SB_App()
 {
 
+}
+
+// *************************************************************************
+// *					SetBrushes_Fonts Terry Flanigan					   *
+// *************************************************************************
+void SB_App::SetBrushes_Fonts(void)
+{
+	AppBackground = CreateSolidBrush(RGB(213, 222, 242));
+	DialogBackGround = CreateSolidBrush(RGB(208, 230, 252));
+
+	BlackBrush = CreateSolidBrush(RGB(0, 0, 0));
+	Brush_White = CreateSolidBrush(RGB(255, 255, 255));
+	Brush_Red = CreateSolidBrush(RGB(252, 85, 63));
+	Brush_Green = CreateSolidBrush(RGB(0, 255, 0));
+	Brush_Blue = CreateSolidBrush(RGB(0, 180, 255));
+
+	Brush_But_Normal = CreateSolidBrush(RGB(255, 255, 150));
+	Brush_But_Hover = CreateSolidBrush(RGB(255, 255, 200));
+	Brush_But_Pressed = CreateSolidBrush(RGB(240, 240, 190));
+	Brush_Tabs = CreateSolidBrush(RGB(255, 255, 255));
+	Brush_Tabs_UnSelected = CreateSolidBrush(RGB(190, 190, 190));
+
+	Font_CB12 = CreateFont(-12, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
+	Font_CB15 = CreateFont(-15, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
+	Font_Arial20 = CreateFont(-20, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Arial");
+	Font_CB15_Bold = CreateFont(-15, 0, 0, 0, FW_BOLD, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
 }
 
 // *************************************************************************
@@ -69,6 +109,8 @@ LRESULT CALLBACK SB_App::EquityTab_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 	{
 		case WM_INITDIALOG:
 			{	
+				SendDlgItemMessage(hDlg,IDC_STSELECT, WM_SETFONT, (WPARAM)App->Font_CB15,MAKELPARAM(TRUE, 0));
+
 				App->EqutyTab_Hwnd = hDlg;
 
 				char buf[255];
@@ -77,7 +119,22 @@ LRESULT CALLBACK SB_App::EquityTab_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 				SetDlgItemText(hDlg,IDC_STSELECT,(LPCTSTR)buf);
 				return TRUE;
 			}
+		case WM_CTLCOLORSTATIC:
+			{
+				if (GetDlgItem(hDlg, IDC_STSELECT) == (HWND)lParam)
+				{
+					SetBkColor((HDC)wParam, RGB(0, 255, 0));
+					SetTextColor((HDC)wParam, RGB(0, 0, 0));
+					SetBkMode((HDC)wParam, TRANSPARENT);
+					return (UINT)App->Brush_White;
+				}
+				return FALSE;
+			}
 	
+		case WM_CTLCOLORDLG:
+			{
+				return (LONG)App->Brush_Green;
+			}
 
 		case WM_COMMAND:
 			{
@@ -112,8 +169,7 @@ LRESULT CALLBACK SB_App::EquityTab_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 // *************************************************************************
 bool SB_App::Init()
 {
-
-	Say("init");
+	SetBrushes_Fonts();
 	return 1;
 }
 

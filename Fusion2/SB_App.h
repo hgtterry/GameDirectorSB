@@ -20,6 +20,7 @@ public:
 	bool Start_EquityTab();
 
 	bool Init();
+	void SetBrushes_Fonts(void);
 
 	bool UpdateTab_Dialog(HWND hDlg);
 
@@ -28,6 +29,24 @@ public:
 	int	NumSelEntities;
 
 	HWND EqutyTab_Hwnd;
+
+	HBRUSH AppBackground;
+	HBRUSH DialogBackGround;
+	HBRUSH BlackBrush;
+	HBRUSH Brush_White;
+	HBRUSH Brush_Red;
+	HBRUSH Brush_Blue;
+	HBRUSH Brush_Green;
+	HBRUSH Brush_But_Pressed;
+	HBRUSH Brush_But_Normal;
+	HBRUSH Brush_But_Hover;
+	HBRUSH Brush_Tabs;
+	HBRUSH Brush_Tabs_UnSelected;
+
+	HFONT Font_CB12;
+	HFONT Font_CB15;
+	HFONT Font_Arial20;
+	HFONT Font_CB15_Bold;
 	
 protected:
 

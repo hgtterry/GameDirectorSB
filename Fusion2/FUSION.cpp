@@ -68,10 +68,7 @@ END_MESSAGE_MAP()
 CFusionApp::CFusionApp()
 {
 		App = new SB_App();
-
-	//	App->Init(SB_App App);
-	// TODO: add construction code here,
-	// Place all significant initialization in InitInstance
+		App->Init();
 }
 
 //	Destruction...

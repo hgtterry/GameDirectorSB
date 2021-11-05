@@ -23,6 +23,8 @@
 //  or project specific include files that are used frequently, but
 //      are changed infrequently
 //
+
+
 #ifndef STDAFX_H
 #define STDAFX_H
 
@@ -47,5 +49,7 @@
 
 // re-enable warnings except 4514
 #pragma warning(default : 4201 4214 4115)
+
+//#pragma comment(linker,"/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='x86' publicKeyToken='6595b64144ccf1df' language='*'\"")
 
 #endif
