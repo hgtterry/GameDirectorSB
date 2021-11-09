@@ -197,6 +197,7 @@
     <ClInclude Include="GD_Keyboard.h" />
     <ClInclude Include="GD_spdlog.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="SB_3DT.h" />
     <ClInclude Include="SB_Camera.h" />
     <ClInclude Include="SB_Dialogs.h" />
     <ClInclude Include="SB_Equity.h" />
@@ -274,6 +275,7 @@
     <ClCompile Include="GD_Bt_Render.cpp" />
     <ClCompile Include="GD_Keyboard.cpp" />
     <ClCompile Include="GD_spdlog.cpp" />
+    <ClCompile Include="SB_3DT.cpp" />
     <ClCompile Include="SB_Camera.cpp" />
     <ClCompile Include="SB_Dialogs.cpp" />
     <ClCompile Include="SB_Equity.cpp" />
