@@ -40,6 +40,7 @@ SB_App::SB_App()
 	Font_CB15 = 0;
 	Font_CB15_Bold = 0;
 	Font_Arial20 = 0;
+	Show_Dialog_Flag = 0;
 }
 
 SB_App::~SB_App()
@@ -96,8 +97,6 @@ bool SB_App::Start_EquityTab()
 	EqutyTab_Hwnd = NULL;
 
 	EqutyTab_Hwnd = CreateDialog(NULL,(LPCTSTR)IDD_EQUITYTAB,NULL,(DLGPROC)EquityTab_Proc);
-	Show_Dialog(0);
-
 	return 1;
 }
 // *************************************************************************
@@ -189,6 +188,6 @@ bool SB_App::UpdateTab_Dialog(HWND hDlg)
 // *************************************************************************
 bool SB_App::Show_Dialog(bool flag)
 {
-	ShowWindow(EqutyTab_Hwnd,flag);
+//	ShowWindow(EqutyTab_Hwnd,flag);
 	return 1;
 }

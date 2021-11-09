@@ -1825,6 +1825,24 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_UK
 
 /////////////////////////////////////////////////////////////////////////////
 //
+// Bitmap
+//
+
+IDR_EQUITY              BITMAP  DISCARDABLE     "res\\bmp00001.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Toolbar
+//
+
+IDR_EQUITY TOOLBAR DISCARDABLE  16, 15
+BEGIN
+    BUTTON      ID_TOOLEQUITY
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
 // Dialog
 //
 
@@ -1854,14 +1872,16 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,103,71,50,14
 END
 
-IDD_EQUITYTAB DIALOG DISCARDABLE  0, 0, 186, 92
-STYLE DS_SYSMODAL | DS_MODALFRAME | DS_NOFAILCREATE | WS_POPUP | WS_CAPTION
+IDD_EQUITYTAB DIALOG DISCARDABLE  0, 0, 186, 309
+STYLE DS_SYSMODAL | DS_MODALFRAME | DS_NOFAILCREATE | WS_POPUP | WS_VISIBLE | 
+    WS_CAPTION
 CAPTION "Equity"
 FONT 8, "MS Sans Serif"
 BEGIN
     LTEXT           "Static",IDC_STSELECT,15,20,70,18,SS_CENTERIMAGE | 
                     WS_BORDER
     PUSHBUTTON      "Update",IDC_BTUPDATE,107,23,50,14
+    PUSHBUTTON      "Select All",IDC_EQSELECTALL,16,86,50,14
 END
 
 
@@ -1894,7 +1914,7 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 179
         TOPMARGIN, 7
-        BOTTOMMARGIN, 85
+        BOTTOMMARGIN, 302
     END
 END
 #endif    // APSTUDIO_INVOKED

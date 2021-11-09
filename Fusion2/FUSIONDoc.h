@@ -320,6 +320,12 @@ protected:
 	afx_msg void OnUpdateEditRedo(CCmdUI* pCmdUI);
 	afx_msg void OnEntitiesEditor();
 	afx_msg void OnEntitiesShow();
+
+	// *************************************************************************
+	// *						Equity Terry Flanigan						   *
+	// *************************************************************************
+
+
 	afx_msg void OnUpdateEntitiesShow(CCmdUI* pCmdUI);
 	afx_msg void OnViewShowAllGroups();
 	afx_msg void OnViewShowCurrentGroup();
@@ -368,9 +374,6 @@ protected:
 	afx_msg void OnBrushPrimitivesArch();
 	afx_msg void OnBrushPrimitivesCone();
 	afx_msg void OnFileImport();
-
-	afx_msg void Test(); // Equity 15 051121
-
 	afx_msg void OnToolsBrushAttributes();
 	afx_msg void OnUpdateToolsBrushAttributes(CCmdUI* pCmdUI);
 	afx_msg void OnToolsFaceAttributes();

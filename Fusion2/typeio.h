@@ -36,6 +36,19 @@
   Write an untyped block.  Why?  Because we may want to compress
   blocks at some point.
 */
+
+geBoolean TypeIO_WriteUshort
+	(
+	  FILE *f,
+	  unsigned short i
+	);
+
+geBoolean TypeIO_WriteUChar
+	(
+	  FILE *f,
+	  unsigned char c
+	);
+
 geBoolean TypeIO_WriteBlock
 	(
 	  FILE *f,

@@ -66,6 +66,8 @@ FaceList	*FaceList_CreateFromFile(Parse3dt *Parser, int VersionMajor, int Versio
 geBoolean	FaceList_WriteToMap(const FaceList *pList, FILE *f);
 geBoolean	FaceList_WriteToQuakeMap(const FaceList *pList, FILE *f);
 
+geBoolean	FaceList_ExportTo3ds(const FaceList *pList, FILE *f, int BrushCount, int SubBrushCount);
+
 #ifdef __cplusplus
 	}
 #endif

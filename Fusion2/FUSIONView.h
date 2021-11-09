@@ -121,6 +121,7 @@ protected:
 	afx_msg void OnDeselectall();
 	afx_msg void OnUpdateDeselectall(CCmdUI* pCmdUI);
 	afx_msg void OnSelectall();
+	afx_msg void OnViewShowEquity();
 	afx_msg void OnUpdateSelectall(CCmdUI* pCmdUI);
 	afx_msg void OnToolsScaleworld();
 	afx_msg void OnToolsBrushMakenewest();

@@ -111,6 +111,7 @@ void Level_Destroy (Level **ppLevel);
 
 geBoolean Level_WriteToFile (Level *pLevel, const char *Filename);
 
+geBoolean Level_ExportTo3ds(Level *pLevel, const char *Filename, BrushList *BList, int ExpSelected, geBoolean ExpLights, int GroupID);
 
 CEntityArray *Level_GetEntities (Level *pLevel);
 BrushList *Level_GetBrushes (Level *pLevel);

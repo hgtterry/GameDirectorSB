@@ -278,6 +278,12 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;      // fail to create
 	}
 
+	if( !CreatEquityBar() )
+	{
+		TRACE0("Failed to create group toolbar\n");
+		return -1;      // fail to create
+	}
+
 	//	CHANGE!	04/03/97	John Moore
 	if( !CreateTabBar() )
 	{
@@ -424,6 +430,23 @@ BOOL CMainFrame::CreateStyleBar()
 	return TRUE;
 }
 
+// *************************************************************************
+// *						CreatEquityBar Terry Flaniagn				   *
+// *************************************************************************
+BOOL CMainFrame::CreatEquityBar()
+{
+
+	if (!m_wndEquityBar.Create(this, WS_CHILD|WS_VISIBLE|CBRS_TOP|
+			CBRS_TOOLTIPS|CBRS_FLYBY, IDR_EQUITY ) ||
+		!m_wndEquityBar.LoadToolBar(IDR_EQUITY) )
+	{
+		TRACE0("Failed to create groupbar\n");
+		App->Say("Failed");
+		return FALSE;       // fail to create
+	}
+
+	return TRUE;
+}
 
 BOOL CMainFrame::CreateGroupBar()
 {					

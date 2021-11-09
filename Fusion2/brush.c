@@ -4169,3 +4169,70 @@ void	Brush_EnumFaces (Brush *b, void *lParam, Brush_FaceCallback Callback)
 	}
 }
 
+// *************************************************************************
+// *	  		 geBoolean Brush_GetUsedTextures Terry Flanigan			   *
+// *************************************************************************
+/*geBoolean Brush_GetUsedTextures(const Brush *b, geBoolean *UsedTex, CWadFile * WadFile)
+{
+	assert(UsedTex);
+	assert(b);
+
+	switch (b->Type)
+	{
+		case	BRUSH_MULTI:
+			return BrushList_GetUsedTextures(b->BList, UsedTex, WadFile);
+
+		case	BRUSH_LEAF:
+			if(b->BList)
+				return BrushList_GetUsedTextures(b->BList, UsedTex, WadFile);
+			else
+			{
+				if(!(b->Flags&(BRUSH_HOLLOW|BRUSH_HOLLOWCUT|BRUSH_SUBTRACT)))
+					return FaceList_GetUsedTextures(b->Faces, UsedTex, WadFile);
+			}
+			break;
+
+		case	BRUSH_CSG:
+			if(!(b->Flags&(BRUSH_HOLLOW|BRUSH_HOLLOWCUT|BRUSH_SUBTRACT)))
+				return FaceList_GetUsedTextures(b->Faces, UsedTex, WadFile);
+			break;
+		default :
+			assert (0);		// invalid brush type
+			break;
+	}
+	return GE_TRUE;
+}*/
+
+/*geBoolean Brush_ExportTo3ds(const Brush *b, FILE *ofile)
+{
+	assert(ofile);
+	assert(b);
+
+	switch (b->Type)
+	{
+		case	BRUSH_MULTI:
+			return BrushList_ExportTo3ds (b->BList, ofile, GE_TRUE);
+
+		case	BRUSH_LEAF:
+			if(b->BList)
+				return BrushList_ExportTo3ds (b->BList, ofile, GE_TRUE);
+			else
+			{
+			//	if(!(b->Flags&(BRUSH_HOLLOW|BRUSH_HOLLOWCUT|BRUSH_SUBTRACT)))
+			//		return FaceList_ExportTo3ds(b->Faces, ofile, BrushCount, SubBrushCount);
+			//	else if((b->Flags&BRUSH_SUBTRACT)&&!(b->Flags&(BRUSH_HOLLOW|BRUSH_HOLLOWCUT)))
+				//	BrushCount--;
+			}
+			break;
+
+		case	BRUSH_CSG:
+			if(!(b->Flags&(BRUSH_HOLLOW|BRUSH_HOLLOWCUT|BRUSH_SUBTRACT)))
+			//	return FaceList_ExportTo3ds(b->Faces, ofile, BrushCount, SubBrushCount);
+			break;
+		default :
+			assert (0);		// invalid brush type
+			break;
+	}
+	return GE_TRUE;
+}*/
+

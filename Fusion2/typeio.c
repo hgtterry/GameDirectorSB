@@ -503,3 +503,21 @@ geBoolean TypeIO_ReadXForm3dText
 		TypeIO_ReadVec3dText (f, &pXfm->Translation)
 	);
 }
+
+geBoolean TypeIO_WriteUshort
+	(
+	  FILE *f,
+	  unsigned short i
+	)
+{
+	return TypeIO_WriteBlock (f, &i, sizeof (i));
+}
+
+geBoolean TypeIO_WriteUChar
+	(
+	  FILE *f,
+	  unsigned char c
+	)
+{
+	return TypeIO_WriteBlock (f, &c, sizeof (c));
+}

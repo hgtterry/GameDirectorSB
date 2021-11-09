@@ -89,7 +89,12 @@ BEGIN_MESSAGE_MAP(CFusionView, CView)
 	ON_COMMAND(ID_BRUSH_GROUPS_ADDTOGROUP, OnBrushGroupsAddtogroup)
 	ON_COMMAND(ID_DESELECTALL, OnDeselectall)
 	ON_UPDATE_COMMAND_UI(ID_DESELECTALL, OnUpdateDeselectall)
+
 	ON_COMMAND(ID_SELECTALL, OnSelectall)
+
+	ON_COMMAND(ID_EQUITY_TEST_DIALOG, OnSelectall)
+	ON_UPDATE_COMMAND_UI(ID_EQUITY_TEST_DIALOG, OnUpdateSelectall)
+
 	ON_UPDATE_COMMAND_UI(ID_SELECTALL, OnUpdateSelectall)
 	ON_COMMAND(ID_TOOLS_SCALEWORLD, OnToolsScaleworld)
 	ON_COMMAND(ID_TOOLS_BRUSH_MAKENEWEST, OnToolsBrushMakenewest)
@@ -2075,6 +2080,17 @@ void CFusionView::OnSelectall()
 	
 	pDoc->SelectAll () ;
 	pDoc->UpdateAllViews( UAV_ALL3DVIEWS, NULL ) ;
+
+	if (App->Show_Dialog_Flag == 1)
+	{
+		App->Show_Dialog_Flag = 0;
+		App->Show_Dialog(0);
+	}
+	else
+	{
+		App->Show_Dialog_Flag = 1;
+		App->Show_Dialog(1);
+	}
 }
 
 void CFusionView::OnUpdateSelectall(CCmdUI* pCmdUI) 
@@ -2123,6 +2139,23 @@ LRESULT CFusionView::OnCompileDone (WPARAM wParam, LPARAM lParam)
 		}
 	}
 	return 0;
+}
+
+// *************************************************************************
+// *					OnViewShowEquity Terry Flanigan					   *
+// *************************************************************************
+void CFusionView::OnViewShowEquity() 
+{
+	if (App->Show_Dialog_Flag == 1)
+	{
+		App->Show_Dialog_Flag = 0;
+		App->Show_Dialog(0);
+	}
+	else
+	{
+		App->Show_Dialog_Flag = 1;
+		App->Show_Dialog(1);
+	}
 }
 
 void CFusionView::OnToolsScaleworld() 

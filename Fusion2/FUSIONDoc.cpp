@@ -101,6 +101,11 @@ BEGIN_MESSAGE_MAP(CFusionDoc, CDocument)
 	ON_COMMAND(ID_ENTITIES_EDITOR, OnEntitiesEditor)
 	ON_COMMAND(ID_ENTITIES_SHOW, OnEntitiesShow)
 	ON_UPDATE_COMMAND_UI(ID_ENTITIES_SHOW, OnUpdateEntitiesShow)
+
+	// *************************************************************************
+	// *						Equity Terry Flanigan						   *
+	// *************************************************************************
+
 	ON_COMMAND(ID_VIEW_SHOW_ALLGROUPS, OnViewShowAllGroups)
 	ON_COMMAND(ID_VIEW_SHOW_CURRENTGROUP, OnViewShowCurrentGroup)
 	ON_COMMAND(ID_VIEW_SHOW_VISIBLEGROUPS, OnViewShowVisibleGroups)
@@ -148,11 +153,6 @@ BEGIN_MESSAGE_MAP(CFusionDoc, CDocument)
 	ON_COMMAND(ID_BRUSH_PRIMITIVES_ARCH, OnBrushPrimitivesArch)
 	ON_COMMAND(ID_BRUSH_PRIMITIVES_CONE, OnBrushPrimitivesCone)
 	ON_COMMAND(ID_FILE_IMPORT, OnFileImport)
-
-
-	ON_COMMAND(ID_FILE_EXPORT_AUTODESK3DS, OnFileImport) // Equity 15 051121
-	ON_COMMAND(ID_EQUITY_TEST_DIALOG,Test) 
-
 	ON_COMMAND(ID_TOOLS_BRUSH_ATTRIBUTES, OnToolsBrushAttributes)
 	ON_UPDATE_COMMAND_UI(ID_TOOLS_BRUSH_ATTRIBUTES, OnUpdateToolsBrushAttributes)
 	ON_COMMAND(ID_TOOLS_FACE_ATTRIBUTES, OnToolsFaceAttributes)
@@ -6232,6 +6232,8 @@ void CFusionDoc::SelectTab( int nTabIndex )
 
 void CFusionDoc::OnFileOpen() 
 {
+	App->Say("CFusionDoc::OnFileOpen() ");
+
 	static const char	FDTitle[]	="Open";
 
 	CFileDialog dlg(TRUE, "3dt", NULL, OFN_HIDEREADONLY	| OFN_OVERWRITEPROMPT,
@@ -6277,11 +6279,6 @@ void CFusionDoc::OnFileImport()
 			ImportFile (Name, &loc);
 		}
 	}
-}
-
-void CFusionDoc::Test() 
-{
-	App->Show_Dialog(1);
 }
 
 geBoolean	CFusionDoc::LoadLeakFile(const char *Filename)
@@ -6376,6 +6373,8 @@ static geBoolean fdocCheckAddFace (FaceList **ppList, Face *f)
 
 geBoolean	CFusionDoc::LoadMapFile(const char *FileName)
 {
+	App->Say("LoadMapFile");
+
 	FaceList	*fl, *mfl;
 	Face		*f;
 	Brush		*b;

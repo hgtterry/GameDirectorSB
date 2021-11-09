@@ -30,6 +30,8 @@
 #include "box3d.h"
 #include "parse3dt.h"
 
+//#include "WadFile.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -137,6 +139,8 @@ void		Brush_WriteToQuakeMap(const Brush *b, FILE *ofile);
 geBoolean	Brush_Write(const Brush *b, FILE *ofile);
 Brush		*Brush_CreateFromFile(Parse3dt *Parser, int VersionMajor, int VersionMinor, const char **Expected);
 
+//geBoolean BrushList_ExportTo3ds (BrushList *BList, FILE *ofile, geBoolean SubBrush);
+//geBoolean	Brush_GetUsedTextures(const Brush *b, geBoolean *UsedTex, CWadFile * WadFile);
 //operations
 void		Brush_Resize(Brush *b, float dx, float dy, int sides, int inidx, geVec3d *fnscale, int *ScaleNum);
 void		Brush_ResizeFinal(Brush *b, int sides, int inidx, geVec3d *fnscale);

@@ -97,6 +97,7 @@
 #define IDD_EXPORT3DSDIALOG             234
 #define IDD_PROP_TEXT                   235
 #define IDD_EQUITYTAB                   236
+#define IDR_EQUITY                      241
 #define IDC_RESET_ALL                   1000
 #define IDC_EDIT1                       1001
 #define IDC_EDIT10                      1002
@@ -410,6 +411,7 @@
 #define IDC_EXPORTLIGHTS                1294
 #define IDC_STSELECT                    1295
 #define IDC_BTUPDATE                    1296
+#define IDC_EQSELECTALL                 1297
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772
 #define ID_BRUSH_PRIMITIVES_SPHEROID    32773
@@ -525,15 +527,16 @@
 #define ID_FILE_EXPORT3DS               32969
 #define ID_FILE_EXPORT_AUTODESK3DS      32970
 #define ID_EQUITY_TEST_DIALOG           32971
+#define ID_TOOLEQUITY                   32972
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        237
-#define _APS_NEXT_COMMAND_VALUE         32972
-#define _APS_NEXT_CONTROL_VALUE         1297
+#define _APS_NEXT_RESOURCE_VALUE        243
+#define _APS_NEXT_COMMAND_VALUE         32973
+#define _APS_NEXT_CONTROL_VALUE         1298
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

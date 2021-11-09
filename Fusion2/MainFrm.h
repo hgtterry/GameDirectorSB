@@ -68,6 +68,7 @@ public:
 	void LoadComboBox();
 	BOOL CreateStyleBar();
 	BOOL CreateGroupBar() ;
+	BOOL CreatEquityBar();
 	CMainFrame();
 	void SelectTab( int nTabIndex ) ;
 	CFusionDoc *GetCurrentDoc (void);
@@ -99,6 +100,7 @@ protected:  // control bar embedded members
 	CToolBar    m_wndToolBar;
 	CStyleBar	m_wndBrushToolBar;
 	CStyleBar	m_wndGroupBar ;
+	CStyleBar	m_wndEquityBar ;
 
 	//	CHANGE!	04/03/97	John Moore
 	//	This is the dockable control bar for our tabs...

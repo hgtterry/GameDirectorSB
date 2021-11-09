@@ -47,6 +47,8 @@ public:
 	HFONT Font_CB15;
 	HFONT Font_Arial20;
 	HFONT Font_CB15_Bold;
+
+	bool Show_Dialog_Flag;
 	
 protected:
 

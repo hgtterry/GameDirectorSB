@@ -684,6 +684,10 @@ SOURCE=.\res\arrow.cur
 # End Source File
 # Begin Source File
 
+SOURCE=.\res\bmp00001.bmp
+# End Source File
+# Begin Source File
+
 SOURCE=.\res\camera.bmp
 # End Source File
 # Begin Source File
