@@ -28,6 +28,13 @@ distribution.
 
 SB_Camera::SB_Camera()
 {
+	CamPos_X = 0;
+	CamPos_Y = 90;
+	CamPos_Z = 100;
+
+	LookAt_X = 0;
+	LookAt_Y = 30;
+	LookAt_Z = 0;
 }
 
 
@@ -49,6 +56,15 @@ void SB_Camera::Reset_View(void)
 	App->Cl19_Ogre->mCamera->setPosition(Ogre::Vector3(0, 90, 100));
 	App->Cl19_Ogre->mCamera->lookAt(Ogre::Vector3(0, 30, 0));
 
+}
+
+// *************************************************************************
+// *	  				Set_Camera Terry Bernie							   *
+// *************************************************************************
+void SB_Camera::Set_Camera(void)
+{
+	App->Cl19_Ogre->mCamera->setPosition(Ogre::Vector3(CamPos_X, CamPos_Y, CamPos_Z));
+	App->Cl19_Ogre->mCamera->lookAt(Ogre::Vector3(LookAt_X, LookAt_Y, LookAt_Z));
 }
 
 // *************************************************************************

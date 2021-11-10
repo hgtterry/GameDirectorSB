@@ -30,5 +30,15 @@ public:
 
 	void Reset_View(void);
 	void Zoom(void);
+
+	void Set_Camera(void);
+
+	float CamPos_X;
+	float CamPos_Y;
+	float CamPos_Z;
+
+	float LookAt_X;
+	float LookAt_Y;
+	float LookAt_Z;
 };
 

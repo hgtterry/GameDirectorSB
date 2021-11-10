@@ -33,6 +33,7 @@ public:
 
 	bool Write_Level_File();
 	bool Write_Player();
+	bool Write_Camera();
 
 	char Project_Name[255];
 	char Project_Path[1024];
@@ -67,7 +68,8 @@ protected:
 	bool Add_World();
 	
 
-	bool SB_Project::Load_Player();
+	bool Load_Player();
+	bool Read_Camera();
 
 
 	FILE *Write_Ini;
