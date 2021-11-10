@@ -68,7 +68,7 @@ protected:
 	bool Add_World();
 	
 
-	bool Load_Player();
+	bool Read_Player();
 	bool Read_Camera();
 
 

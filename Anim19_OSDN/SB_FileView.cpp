@@ -1060,6 +1060,27 @@ HTREEITEM SB_FileView::Add_PlayerFile(char *SFileName, int Index)
 }
 
 // *************************************************************************
+// *						Add_Camera Terry Bernie					 	   *
+// *************************************************************************
+HTREEITEM SB_FileView::Add_Camera(char *SFileName, int Index)
+{
+	HWND Temp2 = GetDlgItem(App->ListPanel, IDC_TREE1);
+
+	tvinsert.hParent = GD_CameraFolder;
+	tvinsert.hInsertAfter = TVI_LAST;
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE | TVIF_PARAM;
+	tvinsert.item.pszText = SFileName;
+	tvinsert.item.iImage = 4;
+	tvinsert.item.iSelectedImage = 5;
+	tvinsert.item.lParam = Index;
+	HTREEITEM Temp = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+
+	//TreeView_Select(Temp2,Temp,TVGN_CARET);
+
+	return Temp;
+}
+
+// *************************************************************************
 // *						Redraw_FileView Terry Bernie			 	   *
 // *************************************************************************
 void SB_FileView::Redraw_FileView()

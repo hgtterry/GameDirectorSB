@@ -567,7 +567,8 @@ bool SB_Project::Load_Scene(char* Folder, char* File)
 	strcpy(App->CL_Vm_Model->Model_FolderPath, Scene_JustPath);
 	strcpy(App->CL_Vm_Model->FileName, chr_Tag2);
 
-	Load_Player();
+	Read_Player();
+	Read_Camera();
 
 	App->CL_Bullet_AddRoom->AddToScene(1); // Load First room into scene
 
@@ -579,9 +580,9 @@ bool SB_Project::Load_Scene(char* Folder, char* File)
 }
 
 // *************************************************************************
-// *	  				Load_Player Terry Flanigan						   *
+// *	  				Read_Player Terry Flanigan						   *
 // *************************************************************************
-bool SB_Project::Load_Player()
+bool SB_Project::Read_Player()
 {
 	char chr_Tag1[1024];
 	char chr_Tag2[1024];
@@ -600,15 +601,12 @@ bool SB_Project::Load_Player()
 
 	// ------------------------------------------------------------------- 
 
-
 	App->Cl_Ini->SetPathName(Path);
 
 	App->Cl_Ini->GetString("Version_Data", "Version", chr_Tag1, 1024);
 	
-
 	App->Cl_Ini->GetString("Player", "Player_Name", chr_Tag1, 1024);
 	
-
 	//// Position
 	App->Cl_Ini->GetString("Player", "Start_Position", chr_Tag1, 1024);
 	sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
@@ -661,41 +659,28 @@ bool SB_Project::Read_Camera()
 
 	// ------------------------------------------------------------------- 
 
-
 	App->Cl_Ini->SetPathName(Path);
 
 	App->Cl_Ini->GetString("Version_Data", "Version", chr_Tag1, 1024);
 
+	App->Cl_Ini->GetString("Camera", "Camera_Name", chr_Tag1, 1024);
 
-	App->Cl_Ini->GetString("Player", "Player_Name", chr_Tag1, 1024);
 
-
-	//// Position
-	App->Cl_Ini->GetString("Player", "Start_Position", chr_Tag1, 1024);
+	// Position
+	App->Cl_Ini->GetString("Camera", "Start_Position", chr_Tag1, 1024);
 	sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
-	App->SBC_Player->StartPos.x = x;
-	App->SBC_Player->StartPos.y = y;
-	App->SBC_Player->StartPos.z = z;
+	App->SBC_Camera->CamPos_X = x;
+	App->SBC_Camera->CamPos_Y = y;
+	App->SBC_Camera->CamPos_Z = z;
 
-	App->Cl_Ini->GetString("Player", "Shape", chr_Tag1, 1024); // Capsule
+	// Position
+	App->Cl_Ini->GetString("Camera", "Look_At", chr_Tag1, 1024);
+	sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+	App->SBC_Camera->LookAt_X = x;
+	App->SBC_Camera->LookAt_Y = y;
+	App->SBC_Camera->LookAt_Z = z;
 
-	x = App->Cl_Ini->Get_Float("Player", "Mass");
-	y = App->Cl_Ini->Get_Float("Player", "Radius");
-	z = App->Cl_Ini->Get_Float("Player", "Height");
-
-	App->SBC_Player->Capsule_Mass = x;
-	App->SBC_Player->Capsule_Radius = y;
-	App->SBC_Player->Capsule_Height = z;
-
-	x = App->Cl_Ini->Get_Float("Player", "Ground_Speed");
-	//if (x == 0) { x = 2.220; }
-	App->SBC_Player->Ground_speed = x;
-
-	x = App->Cl_Ini->Get_Float("Player", "Cam_Height");
-	//if (x == 0) { x = 6.00; }
-	App->SBC_Player->PlayerHeight = x;
-
-	HTREEITEM Temp = App->SBC_FileView->Add_PlayerFile("Player", 0);
+	HTREEITEM Temp = App->SBC_FileView->Add_Camera("Camera", 0);
 	App->SBC_FileView->Redraw_FileView();
 	return 1;
 }
