@@ -518,6 +518,23 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		return;
 	}
 
+	if (!strcmp(FileView_File, "Camera"))
+	{
+		HideRightPanes();
+		ShowWindow(App->Cl_Properties->Properties_Dlg_hWnd, 1);
+		//App->Cl_Object_Props->Is_Player = 1; // Mark as Player selected
+
+		//App->Cl_Properties->Enable_Delete_Button(0);
+
+		App->Cl_Properties->Edit_Category = Enums::Edit_Camera;
+
+		App->Cl_Properties->Current_Selected_Object = Index;
+
+		App->SBC_Properties->Update_ListView_Camera();
+		
+		return;
+	}
+
 
 	if (!strcmp(FileView_Folder, "Sounds")) // Folder
 	{

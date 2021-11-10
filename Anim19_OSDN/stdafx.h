@@ -112,7 +112,8 @@ namespace Enums
 		Edit_Environment = 9,
 		Edit_Area_Change = 10,
 		Edit_Change_Level = 11,
-		Edit_Particles = 12
+		Edit_Particles = 12,
+		Edit_Camera = 13
 	};
 
 	enum Usage
@@ -311,7 +312,7 @@ namespace Enums
 }
 
 
-#define debug2 App->Say("Debug")
+#define Debug1 App->Debug_Text();
 
 #define Func_DLog(...) App->Cl_ImGui->ImGui_Test_Log(__VA_ARGS__)
 

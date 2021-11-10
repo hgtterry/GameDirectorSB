@@ -1321,6 +1321,14 @@ bool GD19_Properties::Update_ListView_Physics()
 // *************************************************************************
 void GD19_Properties::ListView_OnClickOptions(LPARAM lParam)
 {
+	// Player
+	if (App->Cl_Properties->Edit_Category == Enums::Edit_Camera)
+	{
+		App->SBC_Properties->Edit_Camera_Onclick(lParam);
+
+		return;
+	}
+
 	// Teleport
 	if (App->Cl_Properties->Edit_Category == Enums::Edit_Teleport)
 	{

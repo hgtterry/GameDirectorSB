@@ -311,3 +311,217 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 
 	return 1;
 }
+
+// *************************************************************************
+// *				Update_ListView_Camera	Terry Bernie 			 	   *
+// *************************************************************************
+bool SB_Properties::Update_ListView_Camera()
+{
+	if (App->Cl_Scene_Data->SceneLoaded == 0)
+	{
+		//	return 1;
+	}
+
+	int index = App->Cl_Properties->Current_Selected_Object;
+
+	char buff[255];
+	strcpy(buff, App->SBC_Player->PlayerName);
+	strcat(buff, "   (Camera)");
+	SetDlgItemText(App->Cl_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
+
+	char chr_Pos_X[100];
+	char chr_Pos_Y[100];
+	char chr_Pos_Z[100];
+
+	char chr_LookAT_X[100];
+	char chr_LookAT_Y[100];
+	char chr_LookAT_Z[100];
+	
+	sprintf(chr_Pos_X, "%.3f ", App->SBC_Camera->CamPos_X);
+	sprintf(chr_Pos_Y, "%.3f ", App->SBC_Camera->CamPos_Y);
+	sprintf(chr_Pos_Z, "%.3f ", App->SBC_Camera->CamPos_Z);
+
+	sprintf(chr_LookAT_X, "%.3f ", App->SBC_Camera->LookAt_X);
+	sprintf(chr_LookAT_Y, "%.3f ", App->SBC_Camera->LookAt_Y);
+	sprintf(chr_LookAT_Z, "%.3f ", App->SBC_Camera->LookAt_Z);
+
+
+	const int NUM_ITEMS = 7;
+	const int NUM_COLS = 2;
+	std::string grid[NUM_COLS][NUM_ITEMS]; // string table
+	LV_ITEM pitem;
+	memset(&pitem, 0, sizeof(LV_ITEM));
+	pitem.mask = LVIF_TEXT;
+
+	grid[0][0] = "Pos_X",		grid[1][0] = chr_Pos_X;
+	grid[0][1] = "Pos_Y",		grid[1][1] = chr_Pos_Y;
+	grid[0][2] = "Pos_Z",		grid[1][2] = chr_Pos_Z;
+	grid[0][3] = " ",			grid[1][3] = " ";
+	grid[0][4] = "LookAt_X",	grid[1][4] = chr_LookAT_X;
+	grid[0][5] = "LookAt_Y",	grid[1][5] = chr_LookAT_Y;
+	grid[0][6] = "LookAt_Z",	grid[1][6] = chr_LookAT_X;
+	
+
+	ListView_DeleteAllItems(App->Cl_Properties->Properties_hLV);
+
+	for (DWORD row = 0; row < NUM_ITEMS; row++)
+	{
+		pitem.iItem = row;
+		pitem.pszText = const_cast<char*>(grid[0][row].c_str());
+		ListView_InsertItem(App->Cl_Properties->Properties_hLV, &pitem);
+
+		//ListView_SetItemText
+
+		for (DWORD col = 1; col < NUM_COLS; col++)
+		{
+			ListView_SetItemText(App->Cl_Properties->Properties_hLV, row, col,
+				const_cast<char*>(grid[col][row].c_str()));
+		}
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *				Edit_Camera_Onclick  Terry Bernie					   *
+// *************************************************************************
+bool SB_Properties::Edit_Camera_Onclick(LPARAM lParam)
+{
+	int Index = App->Cl_Properties->Current_Selected_Object; // Get Selected Object Index 
+	int result = 1;
+	int test;
+
+	LPNMLISTVIEW poo = (LPNMLISTVIEW)lParam;
+	test = poo->iItem;
+	ListView_GetItemText(App->Cl_Properties->Properties_hLV, test, 0, App->Cl_Properties->btext, 20);
+
+	result = strcmp(App->Cl_Properties->btext, "Name");
+	if (result == 0)
+	{
+		strcpy(App->Cl_Dialogs->btext, "Change Object Name");
+		strcpy(App->Cl_Dialogs->Chr_Text, App->SBC_Player->PlayerName);
+
+		App->Cl_Dialogs->Dialog_Text(1);
+
+		if (App->Cl_Dialogs->Canceled == 1)
+		{
+			return TRUE;
+		}
+
+		// Needs Duplicate Name test 
+		strcpy(App->SBC_Player->PlayerName, App->Cl_Dialogs->Chr_Text);
+
+		App->Cl_FileView->ChangeItem_Name(NULL, App->Cl_Dialogs->Chr_Text);
+		Update_ListView_Player();
+	}
+
+	result = strcmp(App->Cl_Properties->btext, "Pos_X");
+	if (result == 0)
+	{
+		char chr_Value[10];
+		sprintf(chr_Value, "%.3f ", App->SBC_Camera->CamPos_X);
+
+		strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
+		strcpy(App->Cl_Dialogs->btext, "Position X");
+
+		App->Cl_Dialogs->Dialog_Float();
+		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
+
+		App->SBC_Camera->CamPos_X = App->Cl_Dialogs->mFloat;
+		Update_ListView_Camera();
+
+		return 1;
+	}
+
+	result = strcmp(App->Cl_Properties->btext, "Pos_Y");
+	if (result == 0)
+	{
+		char chr_Value[10];
+		sprintf(chr_Value, "%.3f ", App->SBC_Camera->CamPos_Y);
+
+		strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
+		strcpy(App->Cl_Dialogs->btext, "Position Y");
+
+		App->Cl_Dialogs->Dialog_Float();
+		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
+
+		App->SBC_Camera->CamPos_Y = App->Cl_Dialogs->mFloat;
+		Update_ListView_Camera();
+
+		return 1;
+	}
+
+	result = strcmp(App->Cl_Properties->btext, "Pos_Z");
+	if (result == 0)
+	{
+		char chr_Value[10];
+		sprintf(chr_Value, "%.3f ", App->SBC_Camera->CamPos_Z);
+
+		strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
+		strcpy(App->Cl_Dialogs->btext, "Position Z");
+
+		App->Cl_Dialogs->Dialog_Float();
+		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
+
+		App->SBC_Camera->CamPos_Z = App->Cl_Dialogs->mFloat;
+		Update_ListView_Camera();
+
+		return 1;
+	}
+
+	result = strcmp(App->Cl_Properties->btext, "LookAt_X");
+	if (result == 0)
+	{
+		char chr_Value[10];
+		sprintf(chr_Value, "%.3f ", App->SBC_Camera->LookAt_X);
+
+		strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
+		strcpy(App->Cl_Dialogs->btext, "Look At X");
+
+		App->Cl_Dialogs->Dialog_Float();
+		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
+
+		App->SBC_Camera->LookAt_X = App->Cl_Dialogs->mFloat;
+		Update_ListView_Camera();
+
+		return 1;
+	}
+
+	result = strcmp(App->Cl_Properties->btext, "LookAt_Y");
+	if (result == 0)
+	{
+		char chr_Value[10];
+		sprintf(chr_Value, "%.3f ", App->SBC_Camera->LookAt_Y);
+
+		strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
+		strcpy(App->Cl_Dialogs->btext, "Look At Y");
+
+		App->Cl_Dialogs->Dialog_Float();
+		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
+
+		App->SBC_Camera->LookAt_Y = App->Cl_Dialogs->mFloat;
+		Update_ListView_Camera();
+
+		return 1;
+	}
+	
+	result = strcmp(App->Cl_Properties->btext, "LookAt_Z");
+	if (result == 0)
+	{
+		char chr_Value[10];
+		sprintf(chr_Value, "%.3f ", App->SBC_Camera->LookAt_Z);
+
+		strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
+		strcpy(App->Cl_Dialogs->btext, "Look At Z");
+
+		App->Cl_Dialogs->Dialog_Float();
+		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
+
+		App->SBC_Camera->LookAt_Z = App->Cl_Dialogs->mFloat;
+		Update_ListView_Camera();
+
+		return 1;
+	}
+
+	return 1;
+}

@@ -32,6 +32,9 @@ public:
 	bool Update_ListView_Player_Physics();
 	bool Edit_Player_Onclick(LPARAM lParam);
 
+	bool Update_ListView_Camera();
+	bool Edit_Camera_Onclick(LPARAM lParam);
+
 protected:
 
 	//bool Edit_Player_Onclick(LPARAM lParam);

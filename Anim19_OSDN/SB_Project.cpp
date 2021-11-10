@@ -573,6 +573,7 @@ bool SB_Project::Load_Scene(char* Folder, char* File)
 	App->CL_Bullet_AddRoom->AddToScene(1); // Load First room into scene
 
 	App->SBC_Physics->Enable_Physics(1);
+	App->SBC_Camera->Set_Camera();
 
 	Scene_Loaded = 1;
 
