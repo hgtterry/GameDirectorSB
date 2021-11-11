@@ -359,7 +359,7 @@ bool SB_Properties::Update_ListView_Camera()
 	grid[0][3] = " ",			grid[1][3] = " ";
 	grid[0][4] = "LookAt_X",	grid[1][4] = chr_LookAT_X;
 	grid[0][5] = "LookAt_Y",	grid[1][5] = chr_LookAT_Y;
-	grid[0][6] = "LookAt_Z",	grid[1][6] = chr_LookAT_X;
+	grid[0][6] = "LookAt_Z",	grid[1][6] = chr_LookAT_Z;
 	
 
 	ListView_DeleteAllItems(App->Cl_Properties->Properties_hLV);
