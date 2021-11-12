@@ -498,15 +498,13 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 	{
 		HideRightPanes();
 		ShowWindow(App->Cl_Properties->Properties_Dlg_hWnd, 1);
+		App->SBC_Player->Hide_Player_Dlg(1);
 
 		App->Cl_Object_Props->Is_Player = 1; // Mark as Player selected
 
-		App->Cl_Properties->Enable_Delete_Button(0);
-
 		App->Cl_Properties->Edit_Category = Enums::Edit_Player;
 		App->Cl_Properties->Current_Selected_Object = Index;
-		//App->CL10_Properties->Update_Transform_Dlg();
-
+		
 		if (App->Cl_Properties->Edit_Physics == 0)
 		{
 			App->SBC_Properties->Update_ListView_Player();
@@ -522,10 +520,8 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 	{
 		HideRightPanes();
 		ShowWindow(App->Cl_Properties->Properties_Dlg_hWnd, 1);
-		//App->Cl_Object_Props->Is_Player = 1; // Mark as Player selected
-
-		//App->Cl_Properties->Enable_Delete_Button(0);
-
+		App->SBC_Camera->Hide_Cam_Dlg(1);
+		
 		App->Cl_Properties->Edit_Category = Enums::Edit_Camera;
 
 		App->Cl_Properties->Current_Selected_Object = Index;
@@ -1051,8 +1047,11 @@ void SB_FileView::HideRightPanes(void)
 	if (App->Cl_Scene_Data->SceneLoaded == 1)
 	{
 		ShowWindow(App->GD_Properties_Hwnd, 0);
-		///	ShowWindow(App->GD_Stock_Hwnd, 0);
+		
 	}
+
+	App->SBC_Camera->Hide_Cam_Dlg(0);
+	App->SBC_Player->Hide_Player_Dlg(0);
 }
 
 // *************************************************************************

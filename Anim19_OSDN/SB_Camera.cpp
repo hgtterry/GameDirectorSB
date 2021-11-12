@@ -23,11 +23,14 @@ distribution.
 
 #include "stdafx.h"
 #include "GD19_App.h"
+#include "resource.h"
 #include "SB_Camera.h"
 
 
 SB_Camera::SB_Camera()
 {
+	Cam_Props_HWND = nullptr;
+
 	CamPos_X = 0;
 	CamPos_Y = 90;
 	CamPos_Z = 100;
@@ -40,6 +43,70 @@ SB_Camera::SB_Camera()
 
 SB_Camera::~SB_Camera()
 {
+}
+
+// *************************************************************************
+// *	  			Start_Camera_PropsPanel Terry Bernie				   *
+// *************************************************************************
+bool SB_Camera::Start_Camera_PropsPanel()
+{
+	
+	Cam_Props_HWND = CreateDialog(App->hInst,(LPCTSTR)IDD_PROPS_CAMERA,App->Cl_Properties->Properties_Dlg_hWnd,(DLGPROC)Camera_PropsPanel_Proc);
+	return 1;
+}
+// *************************************************************************
+// *		  	Camera_PropsPanel_Proc  Terry Bernie					   *
+// *************************************************************************
+LRESULT CALLBACK SB_Camera::Camera_PropsPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		App->SetTitleBar(hDlg);
+		return TRUE;
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_NOTIFY:
+	{
+	
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+		/*if (LOWORD(wParam) == IDOK)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}*/
+
+		break;
+	}
+	return FALSE;
+}
+
+// *************************************************************************
+// *					Hide_Cam_Dlg Terry Bernie 						   *
+// *************************************************************************
+void SB_Camera::Hide_Cam_Dlg(bool Show)
+{
+		ShowWindow(Cam_Props_HWND, Show);
 }
 
 // *************************************************************************

@@ -22,12 +22,15 @@ distribution.
 */
 
 #include "stdafx.h"
+#include "resource.h"
 #include "GD19_App.h"
 #include "SB_Player.h"
 
 
 SB_Player::SB_Player()
 {
+	Player_Props_HWND = nullptr;
+
 	ShowDebug = 0;
 	PlayerAdded = 0;
 
@@ -73,6 +76,69 @@ SB_Player::SB_Player()
 
 SB_Player::~SB_Player()
 {
+}
+
+// *************************************************************************
+// *	  			Start_Player_PropsPanel Terry Bernie				   *
+// *************************************************************************
+bool SB_Player::Start_Player_PropsPanel()
+{
+
+	Player_Props_HWND = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_PLAYER, App->Cl_Properties->Properties_Dlg_hWnd, (DLGPROC)Player_PropsPanel_Proc);
+	return 1;
+}
+// *************************************************************************
+// *		  	Player_PropsPanel_Proc  Terry Bernie					   *
+// *************************************************************************
+LRESULT CALLBACK SB_Player::Player_PropsPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		return TRUE;
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_NOTIFY:
+	{
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+		if (LOWORD(wParam) == IDOK)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		break;
+	}
+	return FALSE;
+}
+
+// *************************************************************************
+// *					Hide_Player_Dlg Terry Bernie 					   *
+// *************************************************************************
+void SB_Player::Hide_Player_Dlg(bool Show)
+{
+	ShowWindow(Player_Props_HWND, Show);
 }
 
 // *************************************************************************

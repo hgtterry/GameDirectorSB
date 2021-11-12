@@ -28,6 +28,9 @@ public:
 	SB_Player();
 	~SB_Player();
 
+	bool Start_Player_PropsPanel();
+	void Hide_Player_Dlg(bool Show);
+
 	void SetUp(void);
 	void Load_Player(void);
 
@@ -87,6 +90,8 @@ public:
 
 	float Forward_Timer;
 
+	HWND Player_Props_HWND;
+
 	// Strucure to be
 	Ogre::Vector3 Current_Position;
 	btVector3 Physics_Position;
@@ -97,6 +102,9 @@ public:
 
 protected:
 
+	static LRESULT CALLBACK Player_PropsPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
 	void Initialize(const Ogre::Vector3 p, float mass, float radius, float height);
+	
 };
 

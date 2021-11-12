@@ -28,6 +28,9 @@ public:
 	SB_Camera();
 	~SB_Camera();
 
+	bool Start_Camera_PropsPanel();
+	void Hide_Cam_Dlg(bool Show);
+
 	void Reset_View(void);
 	void Zoom(void);
 
@@ -40,5 +43,11 @@ public:
 	float LookAt_X;
 	float LookAt_Y;
 	float LookAt_Z;
+
+	HWND Cam_Props_HWND;
+
+protected:
+
+	static LRESULT CALLBACK Camera_PropsPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 };
 

@@ -113,6 +113,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	App->CL_Vm_TopBar->Start_TopBar_Globals();
 
+	App->SBC_Camera->Start_Camera_PropsPanel();
+	App->SBC_Player->Start_Player_PropsPanel();
+
 	//CheckMenuItem(App->mMenu, ID_WINDOW_SHOWFPSSHORT, MF_BYCOMMAND | MF_CHECKED);
 	//CheckMenuItem(App->mMenu, ID_GRID_DIVISIONS, MF_BYCOMMAND | MF_CHECKED);
 
