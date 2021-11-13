@@ -29,6 +29,8 @@ public:
 	~SB_Project();
 
 	bool Start_Create_Project();
+
+	bool Load_Scene_Auto();
 	bool Load_Scene(char* Folder, char* File);
 
 	bool Write_Level_File();

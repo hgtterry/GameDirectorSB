@@ -532,6 +532,31 @@ bool SB_Project::Add_World()
 }
 
 // *************************************************************************
+// *					Load_Scene_Auto   Terry Bernie  				   *
+// *************************************************************************
+bool SB_Project::Load_Scene_Auto()
+{
+	char Tag1[1024];
+	int ObjectsCount = 0;
+	int TagFloat = 0;
+	int TagInt = 0;
+
+	char StartFile[1024];
+	strcpy(StartFile, App->EquityDirecory_FullPath);
+	strcat(StartFile, "\\");
+	strcat(StartFile, "Data\\StartUp.gcf");
+
+	App->Cl_Ini->SetPathName(StartFile);
+
+	App->Cl_Ini->GetString("Startup", "Scene_FileName", App->CL_Vm_FileIO->Model_FileName, 1024);
+	App->Cl_Ini->GetString("Startup", "Scene_Path_FileName", App->CL_Vm_FileIO->Model_Path_FileName,1024);
+
+	Load_Scene(App->CL_Vm_FileIO->Model_Path_FileName, App->CL_Vm_FileIO->Model_FileName);
+
+	return 1;
+}
+
+// *************************************************************************
 // *	  					Load_Scene Terry Flanigan					   *
 // *************************************************************************
 bool SB_Project::Load_Scene(char* Folder, char* File)
@@ -571,6 +596,12 @@ bool SB_Project::Load_Scene(char* Folder, char* File)
 	Read_Camera();
 
 	App->CL_Bullet_AddRoom->AddToScene(1); // Load First room into scene
+
+	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
+
+	HTREEITEM Temp = App->SBC_FileView->Add_Area("Area", 0);
+	App->SBC_FileView->Redraw_FileView();
+
 
 	App->SBC_Physics->Enable_Physics(1);
 	App->SBC_Camera->Set_Camera();

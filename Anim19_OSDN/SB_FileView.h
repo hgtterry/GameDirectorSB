@@ -35,6 +35,7 @@ public:
 
 	HTREEITEM Add_PlayerFile(char *SFileName, int Index);
 	HTREEITEM Add_Camera(char *SFileName, int Index);
+	HTREEITEM Add_Area(char *SFileName, int Index);
 
 protected:
 

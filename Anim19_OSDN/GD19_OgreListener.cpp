@@ -36,7 +36,8 @@ GD19_OgreListener::GD19_OgreListener(void)
 	StopOgre = 0;
 	ShowFPS = 1;
 
-	GD_CameraMode = Enums::CamDetached;
+	GD_CameraMode = Enums::CamNone;
+
 	Pl_mDummyTranslateVector = Ogre::Vector3::ZERO;
 
 	mMoveScale = 0;
@@ -239,7 +240,7 @@ bool GD19_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 		}
 		else
 		{
-			Capture_Mouse_Free();
+			Capture_Mouse_Free();	
 		}
 	}
 

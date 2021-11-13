@@ -274,8 +274,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return 1;
 		}
 
+		case ID_FILE_QUICKLOAD:
+		{
+			App->SBC_Project->Load_Scene_Auto();
+			return 1;
+		}
 		
-
+		
 		// Exporters
 	
 		//case ID_OGRE3D_TEST:
