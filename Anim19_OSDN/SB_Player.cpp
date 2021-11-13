@@ -42,6 +42,9 @@ SB_Player::SB_Player()
 	IsMOving_Right = 0;
 	IsMOving_Left = 0;
 
+	Toggle_Objects_Flag = 1;
+	Toggle_Physics_Flag = 0;
+
 	mOnGround = 1;
 	Ground_speed = 4.2;
 	PlayerHeight =16.0;
@@ -111,21 +114,105 @@ LRESULT CALLBACK SB_Player::Player_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 
 	case WM_NOTIFY:
 	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
 
+		if (some_item->idFrom == IDC_BTLOOKAT && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_INFODETAILS && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		// ------------------------------------------ 
+		if (some_item->idFrom == IDC_BTOBJECT && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->SBC_Player->Toggle_Objects_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BTPHYSICS && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->SBC_Player->Toggle_Physics_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_PHYSICSDEBUG && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->Cl_Object_Props->ToggleObjectDebug);
+			return CDRF_DODEFAULT;
+		}
+		if (some_item->idFrom == IDC_BUTDIMENSIONS && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			//			App->Custom_Button_Toggle(item, App->Cl_ImGui->Show_ImGui_Dimensions);
+			return CDRF_DODEFAULT;
+		}
 		return CDRF_DODEFAULT;
 	}
 
 	case WM_COMMAND:
-		if (LOWORD(wParam) == IDOK)
+
+		if (LOWORD(wParam) == IDC_BTSAVE)
 		{
-			EndDialog(hDlg, LOWORD(wParam));
-			return TRUE;
+			if (App->SBC_Project->Scene_Loaded == 1)
+			{
+				App->SBC_Project->Write_Player();
+				App->Say("Player Saved");
+			}
+			return 1;
 		}
 
-		if (LOWORD(wParam) == IDCANCEL)
+		if (LOWORD(wParam) == IDC_BTOBJECT)
 		{
-			EndDialog(hDlg, LOWORD(wParam));
-			return TRUE;
+			if (App->SBC_Project->Scene_Loaded == 1)
+			{
+				App->Cl_Properties->Edit_Physics = 0;
+				App->SBC_Properties->Update_ListView_Player();
+
+				App->SBC_Player->Toggle_Objects_Flag = 1;
+				App->SBC_Player->Toggle_Physics_Flag = 0;
+				RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			}
+			return 1;
+		}
+
+		if (LOWORD(wParam) == IDC_BTPHYSICS)
+		{
+			if (App->SBC_Project->Scene_Loaded == 1)
+			{
+				App->Cl_Properties->Edit_Physics = 1;
+				App->SBC_Properties->Update_ListView_Player_Physics();
+
+				App->SBC_Player->Toggle_Objects_Flag = 0;
+				App->SBC_Player->Toggle_Physics_Flag = 1;
+				RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			}
+			return 1;
+		}
+
+		if (LOWORD(wParam) == IDC_BTLOOKAT)
+		{
+
+			App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
+
+			//RedrawWindow(App->Cl_ToolBar->TB_1, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			int Index = App->Cl_Properties->Current_Selected_Object;
+			Ogre::Vector3 Centre = App->Cl_Scene_Data->Cl_Object[Index]->OgreNode->getAttachedObject(0)->getBoundingBox().getCenter();
+			Ogre::Vector3 WS = App->Cl_Scene_Data->Cl_Object[Index]->OgreNode->convertLocalToWorldPosition(Centre);
+			App->Cl19_Ogre->mCamera->setPosition(WS);
+
+			return 1;
 		}
 
 		break;

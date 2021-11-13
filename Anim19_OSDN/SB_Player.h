@@ -77,6 +77,9 @@ public:
 
 	bool is_Animated;
 
+	bool Toggle_Objects_Flag;
+	bool Toggle_Physics_Flag;
+
 	bool ShowDebug;
 	bool PlayerAdded;
 	float Ground_speed;

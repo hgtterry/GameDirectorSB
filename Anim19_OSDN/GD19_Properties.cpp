@@ -44,10 +44,6 @@ GD19_Properties::GD19_Properties(void)
 	Is_Player = 0;
 
 	Properties_Dlg_Active = 0;
-
-	Toggle_Objects_Flag = 1;
-	Toggle_Physics_Flag = 0;
-
 }
 
 GD19_Properties::~GD19_Properties(void)
@@ -97,21 +93,7 @@ LRESULT CALLBACK GD19_Properties::GD_Properties_Proc(HWND hDlg, UINT message, WP
 
 	case WM_CTLCOLORSTATIC:
 	{
-		/// all
-		//if (GetDlgItem(hDlg, IDC_STVALUE) == (HWND)lParam)
-		//{
-		//	SetBkColor((HDC)wParam, RGB(0, 255, 0));
-		//	SetTextColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetBkMode((HDC)wParam, TRANSPARENT);
-		//	return (UINT)App->DialogBackGround;
-		//}
-		//if (GetDlgItem(hDlg, IDC_STITEM) == (HWND)lParam)
-		//{
-		//	SetBkColor((HDC)wParam, RGB(0, 255, 0));
-		//	SetTextColor((HDC)wParam, RGB(0, 0, 0));
-		//	SetBkMode((HDC)wParam, TRANSPARENT);
-		//	return (UINT)App->DialogBackGround;
-		//}
+		
 		if (GetDlgItem(hDlg, IDC_STOBJECTNAME) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
@@ -192,15 +174,6 @@ LRESULT CALLBACK GD19_Properties::GD_Properties_Proc(HWND hDlg, UINT message, WP
 			return (UINT)App->Brush_White;
 		}
 
-		////--------------------------------------------
-		//if (GetDlgItem(hDlg, IDC_STTRANSFORM) == (HWND)lParam)
-		//{
-		//	SetBkColor((HDC)wParam, RGB(0, 255, 0));
-		//	SetTextColor((HDC)wParam, RGB(0, 0, 255));
-		//	SetBkMode((HDC)wParam, TRANSPARENT);
-		//	return (UINT)App->DialogBackGround;
-		//}
-
 		return FALSE;
 	}
 
@@ -222,83 +195,6 @@ LRESULT CALLBACK GD19_Properties::GD_Properties_Proc(HWND hDlg, UINT message, WP
 	case WM_NOTIFY:
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
-
-	/////	if (some_item->idFrom == IDC_BTTEST && some_item->code == NM_CUSTOMDRAW)
-	//	{
-	//		LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-	//		App->Custom_Button_Normal(item);
-	//		return CDRF_DODEFAULT;
-	//	}
-	//	// ------------------------------------------ 
-	/////	if (some_item->idFrom == IDC_BUTTRANSFORM && some_item->code == NM_CUSTOMDRAW)
-	//	{
-	//		LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-	//		App->Custom_Button_Normal(item);
-	//		return CDRF_DODEFAULT;
-	//	}
-	//	// ------------------------------------------ 
-	/////	if (some_item->idFrom == IDC_BUTEDITPOS && some_item->code == NM_CUSTOMDRAW)
-	//	{
-	//		LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-	//		App->Custom_Button_Normal(item);
-	//		return CDRF_DODEFAULT;
-	//	}
-
-	/////	if (some_item->idFrom == IDC_BUTEDITROT && some_item->code == NM_CUSTOMDRAW)
-	//	{
-	//		LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-	//		App->Custom_Button_Normal(item);
-	//		return CDRF_DODEFAULT;
-	//	}
-
-	/////	if (some_item->idFrom == IDC_BUTEDITSCALE && some_item->code == NM_CUSTOMDRAW)
-	//	{
-	//		LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-	//		App->Custom_Button_Normal(item);
-	//		return CDRF_DODEFAULT;
-	//	}
-
-		if (some_item->idFrom == IDC_BTLOOKAT && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_INFODETAILS && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
-			return CDRF_DODEFAULT;
-		}
-		
-		// ------------------------------------------ 
-		if (some_item->idFrom == IDC_BTOBJECT && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->Cl_Properties->Toggle_Objects_Flag);
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_BTPHYSICS && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->Cl_Properties->Toggle_Physics_Flag);
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_PHYSICSDEBUG && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->Cl_Object_Props->ToggleObjectDebug);
-			return CDRF_DODEFAULT;
-		}
-		if (some_item->idFrom == IDC_BUTDIMENSIONS && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-//			App->Custom_Button_Toggle(item, App->Cl_ImGui->Show_ImGui_Dimensions);
-			return CDRF_DODEFAULT;
-		}
 
 		if (some_item->hwndFrom == App->Cl_Properties->Properties_hLV)
 		{
@@ -364,157 +260,7 @@ LRESULT CALLBACK GD19_Properties::GD_Properties_Proc(HWND hDlg, UINT message, WP
 //			return 1;
 //		}
 //
-		if (LOWORD(wParam) == IDC_BTLOOKAT)
-		{
-
-			//App->Cl_ToolBar->FreeCam_Active = 1;
-			//App->Cl_ToolBar->FirstPerson_Active = 0;
-			App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
-
-			//RedrawWindow(App->Cl_ToolBar->TB_1, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-
-			int Index = App->Cl_Properties->Current_Selected_Object;
-			Ogre::Vector3 Centre = App->Cl_Scene_Data->Cl_Object[Index]->OgreNode->getAttachedObject(0)->getBoundingBox().getCenter();
-			Ogre::Vector3 WS = App->Cl_Scene_Data->Cl_Object[Index]->OgreNode->convertLocalToWorldPosition(Centre);
-			App->Cl19_Ogre->mCamera->setPosition(WS);
-
-			return 1;
-		}
-
-	
-		if (LOWORD(wParam) == IDC_INFODETAILS)
-		{
-
-		/*	if (App->Cl_ImGui->Show_Object_Data == 1)
-			{
-				App->Cl_ImGui->Show_Object_Data = 0;
-			}
-			else
-			{
-				App->Cl_ImGui->Update_StaticData();
-				App->Cl_ImGui->Show_Object_Data = 1;
-			}*/
-
-			return 1;
-		}
-
-		if (LOWORD(wParam) == IDC_BUTDIMENSIONS)
-		{
-
-			/*if (App->Cl_ImGui->Show_ImGui_Dimensions == 1)
-			{
-				App->Cl_ImGui->Show_ImGui_Dimensions = 0;
-			}
-			else
-			{
-				App->Cl_ImGui->Show_ImGui_Dimensions = 1;
-			}*/
-			
-			return 1;
-		}
-
-		if (LOWORD(wParam) == IDC_BTSAVE)
-		{
-			if (App->SBC_Project->Scene_Loaded == 1)
-			{
-				App->SBC_Project->Write_Player();
-				App->Say("Player Saved");
-			}
-			return 1;
-		}
-
-		if (LOWORD(wParam) == IDC_BTOBJECT)
-		{
-			if (App->SBC_Project->Scene_Loaded == 1)
-			{
-				App->Cl_Properties->Edit_Physics = 0;
-				App->SBC_Properties->Update_ListView_Player();
-
-				App->Cl_Properties->Toggle_Objects_Flag = 1;
-				App->Cl_Properties->Toggle_Physics_Flag = 0;
-				RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-			}
-			return 1;
-		}
-
-		if (LOWORD(wParam) == IDC_BTPHYSICS)
-		{
-			if (App->SBC_Project->Scene_Loaded == 1)
-			{
-				App->Cl_Properties->Edit_Physics = 1;
-				App->SBC_Properties->Update_ListView_Player_Physics();
-
-				App->Cl_Properties->Toggle_Objects_Flag = 0;
-				App->Cl_Properties->Toggle_Physics_Flag = 1;
-				RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-			}
-			return 1;
-		}
 		
-		
-		if (LOWORD(wParam) == IDC_PHYSICSDEBUG)
-		{
-			/*if (App->Cl19_Ogre->RenderListener->ShowDebug == 1)
-			{
-				App->Cl19_Ogre->RenderListener->ShowDebug = 0;
-				App->Cl_Object_Props->ToggleObjectDebug = 0;
-			}
-			else
-			{
-				App->Cl19_Ogre->RenderListener->ShowDebug = 1;
-				App->Cl_Object_Props->ToggleObjectDebug = 1;
-			}*/
-
-			if (App->Cl_Object_Props->Is_Player == 1)
-			{
-				int f = App->SBC_Player->mObject->getCollisionFlags();
-
-				if (App->SBC_Player->ShowDebug == 1)
-				{
-				//	App->Cl19_Ogre->RenderListener->ShowDebug = 0;
-					App->Cl_Object_Props->ToggleObjectDebug = 0;
-					App->SBC_Player->ShowDebug = 0;
-					App->SBC_Player->mObject->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
-				}
-				else
-				{
-				//	App->Cl19_Ogre->RenderListener->ShowDebug = 1;
-					App->Cl_Object_Props->ToggleObjectDebug = 1;
-					App->SBC_Player->ShowDebug = 1;
-					App->SBC_Player->mObject->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
-				}
-				return 1;
-			}
-			else
-			{
-				int Index = App->Cl_Properties->Current_Selected_Object;
-
-				if (App->Cl_Scene_Data->Cl_Object[Index]->Physics_Valid == 1)
-				{
-					int f = App->Cl_Scene_Data->Cl_Object[Index]->bt_body->getCollisionFlags();
-
-					if (App->Cl_Scene_Data->Cl_Object[Index]->Show_Debug == 1)
-					{
-						//App->Cl19_Ogre->RenderListener->ShowDebug = 0;
-						App->Cl_Object_Props->ToggleObjectDebug = 0;
-						App->Cl_Scene_Data->Cl_Object[Index]->Show_Debug = 0;
-						App->Cl_Scene_Data->Cl_Object[Index]->bt_body->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
-					}
-					else
-					{
-						//App->Cl19_Ogre->RenderListener->ShowDebug = 1;
-						App->Cl_Object_Props->ToggleObjectDebug = 1;
-						App->Cl_Scene_Data->Cl_Object[Index]->Show_Debug = 1;
-						App->Cl_Scene_Data->Cl_Object[Index]->bt_body->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
-					}
-				}
-
-				return 1;
-			}
-
-			return 1;
-		}
-
 		break;
 	}
 	}
