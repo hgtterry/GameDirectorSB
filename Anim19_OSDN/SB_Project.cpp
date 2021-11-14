@@ -608,6 +608,8 @@ bool SB_Project::Load_Scene()
 
 	Scene_Loaded = 1;
 
+	App->Set_Main_TitleBar(App->CL_Vm_FileIO->Model_Path_FileName);
+
 	return 1;
 }
 

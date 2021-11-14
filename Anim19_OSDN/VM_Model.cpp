@@ -167,7 +167,7 @@ void VM_Model::Clear_ModelData(void)
 	App->CL_Vm_ImGui->Reset_Class();
 	App->CL_Vm_TopBar->Reset_Class();
 
-	App->Set_Main_TitleBar();
+	App->Set_Main_TitleBar(" ");
 
 	//--------------------- Reset Equity
 	//App->CL_FileView->HideRightPanes(1);

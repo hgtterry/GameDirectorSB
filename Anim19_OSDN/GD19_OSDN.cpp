@@ -126,7 +126,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	App->Cl_Vm_Preferences->Read_Preferences(); // Read Preferences
 
-	App->Set_Main_TitleBar();
+	App->Set_Main_TitleBar(" ");
 
 	SetTimer(App->MainHwnd, 1, 1, NULL);
 

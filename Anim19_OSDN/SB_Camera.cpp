@@ -64,7 +64,9 @@ LRESULT CALLBACK SB_Camera::Camera_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 	{
 	case WM_INITDIALOG:
 	{
-		App->SetTitleBar(hDlg);
+		SendDlgItemMessage(hDlg, IDC_BTCAMSAVE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BTCAMGOTO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
@@ -80,22 +82,41 @@ LRESULT CALLBACK SB_Camera::Camera_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 	case WM_NOTIFY:
 	{
 	
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_BTCAMSAVE && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BTCAMGOTO && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
 		return CDRF_DODEFAULT;
 	}
 
 	case WM_COMMAND:
-		/*if (LOWORD(wParam) == IDOK)
+
+		if (LOWORD(wParam) == IDC_BTCAMSAVE)
 		{
-			EndDialog(hDlg, LOWORD(wParam));
+			App->SBC_Project->Write_Camera();
+			App->Say("Camera Saved");
 			return TRUE;
 		}
 
-		if (LOWORD(wParam) == IDCANCEL)
+		if (LOWORD(wParam) == IDC_BTCAMGOTO)
 		{
-			EndDialog(hDlg, LOWORD(wParam));
+			App->SBC_Camera->Set_Camera();
 			return TRUE;
-		}*/
-
+		}
+		
+		
 		break;
 	}
 	return FALSE;

@@ -178,7 +178,7 @@ public:
 	void RedrawWindow_Dlg(HWND hDlg);
 
 	void SetTitleBar(HWND hDlg);
-	void Set_Main_TitleBar(void);
+	void Set_Main_TitleBar(char * PathFile);
 
 	void GetPriority_Class();
 
