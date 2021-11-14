@@ -551,7 +551,7 @@ bool SB_Project::Load_Scene_Auto()
 	App->Cl_Ini->GetString("Startup", "Scene_FileName", App->CL_Vm_FileIO->Model_FileName, 1024);
 	App->Cl_Ini->GetString("Startup", "Scene_Path_FileName", App->CL_Vm_FileIO->Model_Path_FileName,1024);
 
-	Load_Scene(App->CL_Vm_FileIO->Model_Path_FileName, App->CL_Vm_FileIO->Model_FileName);
+	Load_Scene();
 
 	return 1;
 }
@@ -559,12 +559,12 @@ bool SB_Project::Load_Scene_Auto()
 // *************************************************************************
 // *	  					Load_Scene Terry Flanigan					   *
 // *************************************************************************
-bool SB_Project::Load_Scene(char* Folder, char* File)
+bool SB_Project::Load_Scene()
 {
 	strcpy(Level_FileName, App->CL_Vm_FileIO->Model_FileName);
 	strcpy(Level_Path_FileName, App->CL_Vm_FileIO->Model_Path_FileName);
 
-	// Get Texure path assumed at this point to be where model is
+	// Get path no file 
 	int len1 = strlen(Level_FileName);
 	int len2 = strlen(Level_Path_FileName);
 	strcpy(Level_Folder_Path, Level_Path_FileName);

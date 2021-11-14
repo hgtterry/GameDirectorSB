@@ -31,7 +31,7 @@ public:
 	bool Start_Create_Project();
 
 	bool Load_Scene_Auto();
-	bool Load_Scene(char* Folder, char* File);
+	bool Load_Scene();
 
 	bool Write_Level_File();
 	bool Write_Player();

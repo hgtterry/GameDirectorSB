@@ -244,7 +244,7 @@ bool SB_Import::Load_Scene(char* Extension, char* Extension2)
 		return 1;
 	}
 
-	App->SBC_Project->Load_Scene(App->CL_Vm_FileIO->Model_Path_FileName, App->CL_Vm_FileIO->Model_FileName);
+	App->SBC_Project->Load_Scene();
 
 	//App->CL_Vm_Model->Clear_ModelData();
 
@@ -258,6 +258,6 @@ bool SB_Import::Load_Scene(char* Extension, char* Extension2)
 	App->Cl19_Ogre->mCamera->lookAt(Ogre::Vector3(0, 0, 0));
 	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;*/
 
-	App->Say("Model Loaded");
+	App->Say("Scene Loaded");
 	return 1;
 }
