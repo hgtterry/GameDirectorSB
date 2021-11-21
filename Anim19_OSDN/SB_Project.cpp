@@ -415,7 +415,7 @@ bool SB_Project::Write_Camera()
 	fprintf(WriteFile, "%s\n", " ");
 
 	fprintf(WriteFile, "%s\n", "[Camera]");
-	fprintf(WriteFile, "%s%s\n", "Camera_Name=", "Camera_1");
+	fprintf(WriteFile, "%s%s\n", "Camera_Name=", App->SBC_Camera->Camera_Name);
 
 	fprintf(WriteFile, "%s%f,%f,%f\n", "Start_Position=", App->SBC_Camera->CamPos_X, App->SBC_Camera->CamPos_Y, App->SBC_Camera->CamPos_Z);
 	fprintf(WriteFile, "%s%f,%f,%f\n", "Look_At=", App->SBC_Camera->LookAt_X, App->SBC_Camera->LookAt_Y, App->SBC_Camera->LookAt_Z);
@@ -537,7 +537,6 @@ bool SB_Project::Add_World()
 // *************************************************************************
 bool SB_Project::Load_Scene_Auto()
 {
-	char Tag1[1024];
 	int ObjectsCount = 0;
 	int TagFloat = 0;
 	int TagInt = 0;
@@ -673,7 +672,7 @@ bool SB_Project::Read_Player()
 	//if (x == 0) { x = 6.00; }
 	App->SBC_Player->PlayerHeight = x;
 
-	HTREEITEM Temp = App->SBC_FileView->Add_PlayerFile(App->SBC_Player->Player_Name,0);
+	App->SBC_Player->ListViewItem = App->SBC_FileView->Add_PlayerFile(App->SBC_Player->Player_Name,0);
 	App->SBC_FileView->Redraw_FileView();
 	return 1;
 }
@@ -705,7 +704,7 @@ bool SB_Project::Read_Camera()
 	App->Cl_Ini->GetString("Version_Data", "Version", chr_Tag1, 1024);
 
 	App->Cl_Ini->GetString("Camera", "Camera_Name", chr_Tag1, 1024);
-
+	strcpy(App->SBC_Camera->Camera_Name, chr_Tag1);
 
 	// Position
 	App->Cl_Ini->GetString("Camera", "Start_Position", chr_Tag1, 1024);
@@ -721,7 +720,7 @@ bool SB_Project::Read_Camera()
 	App->SBC_Camera->LookAt_Y = y;
 	App->SBC_Camera->LookAt_Z = z;
 
-	HTREEITEM Temp = App->SBC_FileView->Add_Camera("Camera", 0);
+	App->SBC_Camera->ListViewItem = App->SBC_FileView->Add_Camera(App->SBC_Camera->Camera_Name, 0);
 	App->SBC_FileView->Redraw_FileView();
 	return 1;
 }

@@ -201,7 +201,7 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 		// Needs Duplicate Name test 
 		strcpy(App->SBC_Player->Player_Name, App->Cl_Dialogs->Chr_Text);
 
-		App->Cl_FileView->ChangeItem_Name(NULL, App->Cl_Dialogs->Chr_Text);
+		App->SBC_FileView->Change_Item_Name(App->SBC_Player->ListViewItem, App->Cl_Dialogs->Chr_Text);
 		Update_ListView_Player();
 	}
 
@@ -325,7 +325,7 @@ bool SB_Properties::Update_ListView_Camera()
 	int index = App->Cl_Properties->Current_Selected_Object;
 
 	char buff[255];
-	strcpy(buff, App->SBC_Player->Player_Name);
+	strcpy(buff, App->SBC_Camera->Camera_Name);
 	strcat(buff, "   (Camera)");
 	SetDlgItemText(App->Cl_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
 
@@ -346,20 +346,22 @@ bool SB_Properties::Update_ListView_Camera()
 	sprintf(chr_LookAT_Z, "%.3f ", App->SBC_Camera->LookAt_Z);
 
 
-	const int NUM_ITEMS = 7;
+	const int NUM_ITEMS = 9;
 	const int NUM_COLS = 2;
 	std::string grid[NUM_COLS][NUM_ITEMS]; // string table
 	LV_ITEM pitem;
 	memset(&pitem, 0, sizeof(LV_ITEM));
 	pitem.mask = LVIF_TEXT;
 
-	grid[0][0] = "Pos_X",		grid[1][0] = chr_Pos_X;
-	grid[0][1] = "Pos_Y",		grid[1][1] = chr_Pos_Y;
-	grid[0][2] = "Pos_Z",		grid[1][2] = chr_Pos_Z;
-	grid[0][3] = " ",			grid[1][3] = " ";
-	grid[0][4] = "LookAt_X",	grid[1][4] = chr_LookAT_X;
-	grid[0][5] = "LookAt_Y",	grid[1][5] = chr_LookAT_Y;
-	grid[0][6] = "LookAt_Z",	grid[1][6] = chr_LookAT_Z;
+	grid[0][0] = "Name",		grid[1][0] = App->SBC_Camera->Camera_Name;
+	grid[0][1] = " ",			grid[1][1] = " ";
+	grid[0][2] = "Pos_X",		grid[1][2] = chr_Pos_X;
+	grid[0][3] = "Pos_Y",		grid[1][3] = chr_Pos_Y;
+	grid[0][4] = "Pos_Z",		grid[1][4] = chr_Pos_Z;
+	grid[0][5] = " ",			grid[1][5] = " ";
+	grid[0][6] = "LookAt_X",	grid[1][6] = chr_LookAT_X;
+	grid[0][7] = "LookAt_Y",	grid[1][7] = chr_LookAT_Y;
+	grid[0][8] = "LookAt_Z",	grid[1][8] = chr_LookAT_Z;
 	
 
 	ListView_DeleteAllItems(App->Cl_Properties->Properties_hLV);
@@ -399,7 +401,7 @@ bool SB_Properties::Edit_Camera_Onclick(LPARAM lParam)
 	if (result == 0)
 	{
 		strcpy(App->Cl_Dialogs->btext, "Change Object Name");
-		strcpy(App->Cl_Dialogs->Chr_Text, App->SBC_Player->Player_Name);
+		strcpy(App->Cl_Dialogs->Chr_Text, App->SBC_Camera->Camera_Name);
 
 		App->Cl_Dialogs->Dialog_Text(1);
 
@@ -409,10 +411,10 @@ bool SB_Properties::Edit_Camera_Onclick(LPARAM lParam)
 		}
 
 		// Needs Duplicate Name test 
-		strcpy(App->SBC_Player->Player_Name, App->Cl_Dialogs->Chr_Text);
+		strcpy(App->SBC_Camera->Camera_Name, App->Cl_Dialogs->Chr_Text);
 
-		App->Cl_FileView->ChangeItem_Name(NULL, App->Cl_Dialogs->Chr_Text);
-		Update_ListView_Player();
+		App->Cl_FileView->ChangeItem_Name(App->SBC_Camera->ListViewItem, App->Cl_Dialogs->Chr_Text);
+		Update_ListView_Camera();
 	}
 
 	result = strcmp(App->Cl_Properties->btext, "Pos_X");

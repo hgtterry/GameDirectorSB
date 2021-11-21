@@ -38,6 +38,10 @@ SB_Camera::SB_Camera()
 	LookAt_X = 0;
 	LookAt_Y = 30;
 	LookAt_Z = 0;
+
+	strcpy(Camera_Name, "Cam_1");
+
+	ListViewItem = nullptr;
 }
 
 

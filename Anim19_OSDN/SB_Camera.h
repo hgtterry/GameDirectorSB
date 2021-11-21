@@ -44,7 +44,11 @@ public:
 	float LookAt_Y;
 	float LookAt_Z;
 
+	char Camera_Name[255];	// Camera Name [211121]
+
 	HWND Cam_Props_HWND;
+
+	HTREEITEM ListViewItem; // Holder for File view item [211121]
 
 protected:
 
