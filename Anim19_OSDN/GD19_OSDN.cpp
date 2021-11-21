@@ -827,15 +827,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_CLOSE:
 	{
 
-		/*App->CL_Dialogs->YesNo("Close GameDirector", "Are you sure");
-		if (App->GDCL_Dialogs->Canceled == 1)
+		App->Cl_Dialogs->YesNo("Close GameDirector", "Are you sure");
+		if (App->Cl_Dialogs->Canceled == 1)
 		{
 			break;
-		}*/
+		}
+
 		if (App->Cl19_Ogre->OgreListener->StopOgre == 0)
 		{
 			App->Cl19_Ogre->OgreListener->StopOgre = 1;
 		}
+
 		PostQuitMessage(0);
 		break;
 	}
