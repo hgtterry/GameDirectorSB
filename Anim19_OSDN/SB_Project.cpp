@@ -44,7 +44,8 @@ SB_Project::SB_Project()
 	Level_Folder_Path[0] = 0;
 	Level_Folder_Path_World[0] = 0;
 
-	Scene_FileName[0] = 0;
+	strcpy(Level_FileName, "No Level");
+
 	Scene_Path_FileName[0] = 0;
 	Scene_JustPath[0] = 0;
 
@@ -591,6 +592,8 @@ bool SB_Project::Load_Scene()
 
 	strcpy(App->CL_Vm_Model->Model_FolderPath, Scene_JustPath);
 	strcpy(App->CL_Vm_Model->FileName, chr_Tag2);
+
+	strcpy(Level_FileName, chr_Tag2); // 21/11/21
 
 	Read_Player();
 	Read_Camera();

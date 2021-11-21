@@ -237,7 +237,7 @@ void SB_FileView::AddRootFolder(void)
 	tvinsert.hParent = Root;			// top most level no need handle
 	tvinsert.hInsertAfter = TVI_LAST; // work as root level
 	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
-	tvinsert.item.pszText = "Test Project rr";
+	tvinsert.item.pszText = "No Project";
 	tvinsert.item.iImage = 0;
 	tvinsert.item.iSelectedImage = 1;
 	GD_ProjectFolder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
@@ -248,11 +248,11 @@ void SB_FileView::AddRootFolder(void)
 // *************************************************************************
 void SB_FileView::MoreFoldersD(void) // last folder level
 {
-	//------------------------------------------------------- Mesh
+	//------------------------------------------------------- Level 
 	tvinsert.hParent = GD_ProjectFolder;
 	tvinsert.hInsertAfter = TVI_LAST;
 	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
-	tvinsert.item.pszText = "LevelName";
+	tvinsert.item.pszText = App->SBC_Project->Level_FileName;
 	tvinsert.item.iImage = 2;
 	tvinsert.item.iSelectedImage = 3;
 	GD_LevelFolder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
