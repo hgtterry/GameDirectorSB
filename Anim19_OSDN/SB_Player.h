@@ -60,7 +60,7 @@ public:
 	Ogre::Entity*		Player_Ent;
 	Ogre::SceneNode*	Player_Node;
 
-	char PlayerName[255];
+	char Player_Name[255];	// Player Name [211121]
 	bool mOnGround;
 	bool IsMOving;
 	bool IsMOving_Back;

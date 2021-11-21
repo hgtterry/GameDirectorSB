@@ -49,7 +49,7 @@ bool SB_Properties::Update_ListView_Player()
 	int index = App->Cl_Properties->Current_Selected_Object;
 
 	char buff[255];
-	strcpy(buff, App->SBC_Player->PlayerName);
+	strcpy(buff, App->SBC_Player->Player_Name);
 	strcat(buff, "   (Player)");
 	SetDlgItemText(App->Cl_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
 
@@ -73,7 +73,7 @@ bool SB_Properties::Update_ListView_Player()
 	memset(&pitem, 0, sizeof(LV_ITEM));
 	pitem.mask = LVIF_TEXT;
 
-	grid[0][0] = "Name", grid[1][0] = App->SBC_Player->PlayerName;
+	grid[0][0] = "Name", grid[1][0] = App->SBC_Player->Player_Name;
 	grid[0][1] = "Mode", grid[1][1] = "1st_Person";
 	grid[0][2] = " ", grid[1][2] = " ";
 	grid[0][3] = "Ground Speed", grid[1][3] = chr_Speed;
@@ -117,7 +117,7 @@ bool SB_Properties::Update_ListView_Player_Physics()
 	int index = App->Cl_Properties->Current_Selected_Object;
 
 	char buff[255];
-	strcpy(buff, App->SBC_Player->PlayerName);
+	strcpy(buff, App->SBC_Player->Player_Name);
 	strcat(buff, "   (Physics)");
 	SetDlgItemText(App->Cl_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
 
@@ -144,7 +144,7 @@ bool SB_Properties::Update_ListView_Player_Physics()
 	memset(&pitem, 0, sizeof(LV_ITEM));
 	pitem.mask = LVIF_TEXT;
 
-	grid[0][0] = "Name", grid[1][0] = App->SBC_Player->PlayerName;
+	grid[0][0] = "Name", grid[1][0] = App->SBC_Player->Player_Name;
 	grid[0][1] = "Type", grid[1][1] = chr_PhysicsType;
 	grid[0][2] = "Shape ", grid[1][2] = chr_PhysicsShape;
 	grid[0][3] = " ", grid[1][3] = " ";
@@ -188,8 +188,8 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 	result = strcmp(App->Cl_Properties->btext, "Name");
 	if (result == 0)
 	{
-		strcpy(App->Cl_Dialogs->btext, "Change Object Name");
-		strcpy(App->Cl_Dialogs->Chr_Text, App->SBC_Player->PlayerName);
+		strcpy(App->Cl_Dialogs->btext, "Change Player Name");
+		strcpy(App->Cl_Dialogs->Chr_Text, App->SBC_Player->Player_Name);
 
 		App->Cl_Dialogs->Dialog_Text(1);
 
@@ -199,7 +199,7 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 		}
 
 		// Needs Duplicate Name test 
-		strcpy(App->SBC_Player->PlayerName, App->Cl_Dialogs->Chr_Text);
+		strcpy(App->SBC_Player->Player_Name, App->Cl_Dialogs->Chr_Text);
 
 		App->Cl_FileView->ChangeItem_Name(NULL, App->Cl_Dialogs->Chr_Text);
 		Update_ListView_Player();
@@ -325,7 +325,7 @@ bool SB_Properties::Update_ListView_Camera()
 	int index = App->Cl_Properties->Current_Selected_Object;
 
 	char buff[255];
-	strcpy(buff, App->SBC_Player->PlayerName);
+	strcpy(buff, App->SBC_Player->Player_Name);
 	strcat(buff, "   (Camera)");
 	SetDlgItemText(App->Cl_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
 
@@ -399,7 +399,7 @@ bool SB_Properties::Edit_Camera_Onclick(LPARAM lParam)
 	if (result == 0)
 	{
 		strcpy(App->Cl_Dialogs->btext, "Change Object Name");
-		strcpy(App->Cl_Dialogs->Chr_Text, App->SBC_Player->PlayerName);
+		strcpy(App->Cl_Dialogs->Chr_Text, App->SBC_Player->Player_Name);
 
 		App->Cl_Dialogs->Dialog_Text(1);
 
@@ -409,7 +409,7 @@ bool SB_Properties::Edit_Camera_Onclick(LPARAM lParam)
 		}
 
 		// Needs Duplicate Name test 
-		strcpy(App->SBC_Player->PlayerName, App->Cl_Dialogs->Chr_Text);
+		strcpy(App->SBC_Player->Player_Name, App->Cl_Dialogs->Chr_Text);
 
 		App->Cl_FileView->ChangeItem_Name(NULL, App->Cl_Dialogs->Chr_Text);
 		Update_ListView_Player();

@@ -58,7 +58,7 @@ SB_Player::SB_Player()
 	Capsule_Radius = 4.4;
 	Capsule_Height = 17.0;
 
-	strcpy(PlayerName, "Player_1");
+	strcpy(Player_Name, "Player_1");
 
 	ColisionIndex = 0;
 	Last_ColisionIndex = 0;

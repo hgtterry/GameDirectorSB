@@ -372,7 +372,7 @@ bool SB_Project::Write_Player()
 	fprintf(Write_Player_Ini, "%s\n", " ");
 
 	fprintf(Write_Player_Ini, "%s\n", "[Player]");
-	fprintf(Write_Player_Ini, "%s%s\n", "Player_Name=", App->SBC_Player->PlayerName);
+	fprintf(Write_Player_Ini, "%s%s\n", "Player_Name=", App->SBC_Player->Player_Name);
 
 	fprintf(Write_Player_Ini, "%s%f,%f,%f\n", "Start_Position=", App->SBC_Player->StartPos.x, App->SBC_Player->StartPos.y, App->SBC_Player->StartPos.z);
 	fprintf(Write_Player_Ini, "%s%s\n", "Shape=", "Capsule");
@@ -645,6 +645,8 @@ bool SB_Project::Read_Player()
 	App->Cl_Ini->GetString("Version_Data", "Version", chr_Tag1, 1024);
 	
 	App->Cl_Ini->GetString("Player", "Player_Name", chr_Tag1, 1024);
+
+	strcpy(App->SBC_Player->Player_Name, chr_Tag1);
 	
 	//// Position
 	App->Cl_Ini->GetString("Player", "Start_Position", chr_Tag1, 1024);
@@ -671,7 +673,7 @@ bool SB_Project::Read_Player()
 	//if (x == 0) { x = 6.00; }
 	App->SBC_Player->PlayerHeight = x;
 
-	HTREEITEM Temp = App->SBC_FileView->Add_PlayerFile("Player",0);
+	HTREEITEM Temp = App->SBC_FileView->Add_PlayerFile(App->SBC_Player->Player_Name,0);
 	App->SBC_FileView->Redraw_FileView();
 	return 1;
 }
