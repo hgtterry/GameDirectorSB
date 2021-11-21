@@ -43,17 +43,17 @@ public:
 
 	char Project_Ini_FilePath[1024];
 
-	char Level_Folder_Path[1024];
-
 	char Level_Folder_Path_World[1024];
 
-	//char Level_FileName[255];
-	char Level_Path_FileName[1024];
-	//char Level_JustPath[1024];
+	// --------------------------------------------------------------------------- 
+	char Level_File_Name[255];			// Level File Name ( 211121 )
+	char Level_Path_File_Name[1024];	// Level Path and File Name  ( 211121 )
+	char Level_Folder_Path[1024];		// Level Just Path and BackSlash  ( 211121 )
 
-	char Level_FileName[255];  // This One 21/11/21
 
-	char Scene_Path_FileName[1024];
+	char Scene_Path_FileName[1024]; 
+
+
 	char Scene_JustPath[1024];
 
 	bool Scene_Loaded;

@@ -252,7 +252,7 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	tvinsert.hParent = GD_ProjectFolder;
 	tvinsert.hInsertAfter = TVI_LAST;
 	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
-	tvinsert.item.pszText = App->SBC_Project->Level_FileName;
+	tvinsert.item.pszText = App->SBC_Project->Level_File_Name;
 	tvinsert.item.iImage = 2;
 	tvinsert.item.iSelectedImage = 3;
 	GD_LevelFolder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
@@ -1123,4 +1123,30 @@ HTREEITEM SB_FileView::Add_Camera(char *SFileName, int Index)
 void SB_FileView::Redraw_FileView()
 {
 	App->RedrawWindow_Dlg(GetDlgItem(App->ListPanel, IDC_TREE1));
+}
+
+// *************************************************************************
+// *					Change_Level_Name Terry Bernie 					   *
+// *************************************************************************
+void SB_FileView::Change_Level_Name(void)
+{
+	TVITEM Sitem;
+	Sitem.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	Sitem.hItem = GD_LevelFolder;
+	Sitem.pszText = App->SBC_Project->Level_File_Name;
+	Sitem.iImage = 3;
+	Sitem.iSelectedImage = 3;
+	SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_SETITEM, 0, (LPARAM)(const LPTVITEM)&Sitem);
+}
+
+// *************************************************************************
+// *						Change_Item_Name Terry Bernie			 	   *
+// *************************************************************************
+void SB_FileView::Change_Item_Name(HTREEITEM Folder, char *FolderName)
+{
+	TVITEM Sitem;
+	Sitem.mask = TVIF_TEXT;
+	Sitem.hItem = Folder;
+	Sitem.pszText = FolderName;
+	SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_SETITEM, 0, (LPARAM)(const LPTVITEM)&Sitem);
 }

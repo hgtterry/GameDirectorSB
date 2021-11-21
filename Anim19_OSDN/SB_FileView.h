@@ -33,6 +33,9 @@ public:
 
 	void Redraw_FileView();
 
+	void Change_Level_Name(void);
+	void Change_Item_Name(HTREEITEM Folder, char *FolderName);
+
 	HTREEITEM Add_PlayerFile(char *SFileName, int Index);
 	HTREEITEM Add_Camera(char *SFileName, int Index);
 	HTREEITEM Add_Area(char *SFileName, int Index);
