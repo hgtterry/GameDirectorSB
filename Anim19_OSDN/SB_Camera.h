@@ -48,7 +48,7 @@ public:
 
 	HWND Cam_Props_HWND;
 
-	HTREEITEM ListViewItem; // Holder for File view item [211121]
+	HTREEITEM FileViewItem; // Holder for Camera File view item [211121]
 
 protected:
 

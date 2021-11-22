@@ -100,7 +100,7 @@ public:
 	btVector3 Physics_Position;
 	btQuaternion Physics_Rotation;
 
-	HTREEITEM ListViewItem;
+	HTREEITEM FileViewItem; // Holder for Player File view item [211121]
 
 
 protected:

@@ -74,6 +74,8 @@ SB_Player::SB_Player()
 	Current_Position.ZERO;
 	Physics_Position.setZero();
 	Physics_Rotation = btQuaternion(1, 0, 0, 0);
+
+	FileViewItem = nullptr;
 }
 
 

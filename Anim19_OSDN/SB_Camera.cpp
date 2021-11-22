@@ -41,7 +41,7 @@ SB_Camera::SB_Camera()
 
 	strcpy(Camera_Name, "Cam_1");
 
-	ListViewItem = nullptr;
+	FileViewItem = nullptr;
 }
 
 

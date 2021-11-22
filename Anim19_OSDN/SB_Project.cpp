@@ -672,7 +672,7 @@ bool SB_Project::Read_Player()
 	//if (x == 0) { x = 6.00; }
 	App->SBC_Player->PlayerHeight = x;
 
-	App->SBC_Player->ListViewItem = App->SBC_FileView->Add_PlayerFile(App->SBC_Player->Player_Name,0);
+	App->SBC_Player->FileViewItem = App->SBC_FileView->Add_PlayerFile(App->SBC_Player->Player_Name,0);
 	App->SBC_FileView->Redraw_FileView();
 	return 1;
 }
@@ -720,7 +720,7 @@ bool SB_Project::Read_Camera()
 	App->SBC_Camera->LookAt_Y = y;
 	App->SBC_Camera->LookAt_Z = z;
 
-	App->SBC_Camera->ListViewItem = App->SBC_FileView->Add_Camera(App->SBC_Camera->Camera_Name, 0);
+	App->SBC_Camera->FileViewItem = App->SBC_FileView->Add_Camera(App->SBC_Camera->Camera_Name, 0);
 	App->SBC_FileView->Redraw_FileView();
 	return 1;
 }
