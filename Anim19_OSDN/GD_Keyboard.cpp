@@ -54,7 +54,7 @@ void GD_Keyboard::Keyboard_Monitor(float deltaTime)
 
 		if (App->Cl19_Ogre->OgreListener->Pl_Entity_Name == "Player_1")
 		{
-			App->Cl_FileView->SelectItem(App->SBC_Player->ListViewItem);
+			App->Cl_FileView->SelectItem(App->SBC_Player->FileViewItem);
 		}
 		else
 		{

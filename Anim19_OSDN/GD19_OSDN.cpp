@@ -279,7 +279,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			App->SBC_Project->Load_Scene_Auto();
 			return 1;
 		}
-		
+
+		case ID_FILE_CLEARLEVEL32869:
+		{
+			App->SBC_Project->Clear_Level();
+			return 1;
+		}
 		
 		// Exporters
 	

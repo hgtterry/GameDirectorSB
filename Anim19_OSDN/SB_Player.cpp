@@ -274,9 +274,10 @@ void SB_Player::Initialize(const Ogre::Vector3 p, float mass, float radius, floa
 	{
 		App->Cl19_Ogre->mSceneMgr->destroySceneNode(Player_Node);
 		App->Cl19_Ogre->mSceneMgr->destroyEntity(Player_Ent);
+		App->Cl19_Ogre->mSceneMgr->destroyCamera(CameraPitch);
 		Player_Ent = nullptr;
 		Player_Node = nullptr;
-
+		CameraPitch = nullptr;
 	}
 
 	Player_Ent = App->Cl19_Ogre->mSceneMgr->createEntity("Player_1", "axes.mesh", App->Cl19_Ogre->PermResourceGroup);
