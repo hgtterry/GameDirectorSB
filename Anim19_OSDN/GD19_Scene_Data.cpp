@@ -298,7 +298,7 @@ void GD19_Scene_Data::ClearScene(void)
 
 	SceneLoaded = 0;
 
-	App->Cl_FileView->Delete_AllItems();
+	App->SBC_FileView->Delete_AllItems();
 }
 
 // *************************************************************************

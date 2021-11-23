@@ -32,7 +32,6 @@ public:
 	void ChangeItem_Name(HTREEITEM Folder, char* New_Name);
 
 	void DeleteItem();
-	void Delete_AllItems();
 
 	void Select_Item(int Index);
 	bool SelectItem(HTREEITEM TreeItem);

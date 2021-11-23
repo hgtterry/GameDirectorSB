@@ -1150,3 +1150,27 @@ void SB_FileView::Change_Item_Name(HTREEITEM Folder, char *FolderName)
 	Sitem.pszText = FolderName;
 	SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_SETITEM, 0, (LPARAM)(const LPTVITEM)&Sitem);
 }
+
+// *************************************************************************
+// *						Delete_AllItems Terry Bernie			 	   *
+// *************************************************************************
+void SB_FileView::Delete_AllItems()
+{
+	TreeView_DeleteAllItems(GetDlgItem(App->ListPanel, IDC_TREE1));
+
+	Root = 0;
+	GD_ProjectFolder = NULL;
+	GD_ObjectsFolder = NULL;
+	GD_LevelFolder = NULL;
+	GD_CameraFolder = NULL;
+	GD_TriggerFolder = NULL;
+	GD_EntitiesFolder = NULL;
+	GD_Entities_Sound_Folder = NULL;
+	GD_Entities_Message_Folder = NULL;
+
+	strcpy(App->SBC_Project->Level_File_Name, "No Level");
+
+	AddRootFolder();
+	MoreFoldersD(); //  Folders under root 
+	ExpandRoot();
+}

@@ -125,28 +125,6 @@ void GD19_FileView::DeleteItem()
 }
 
 // *************************************************************************
-// *						Delete_AllItems Terry Bernie			 	   *
-// *************************************************************************
-void GD19_FileView::Delete_AllItems()
-{
-	TreeView_DeleteAllItems(GetDlgItem(App->ListPanel, IDC_TREE1));
-
-	Root = 0;
-	GD_ProjectFolder = NULL;
-	GD_ObjectsFolder = NULL;
-	GD_LevelFolder = NULL;
-	GD_CameraFolder = NULL;
-	GD_TriggerFolder = NULL;
-	GD_EntitiesFolder = NULL;
-	GD_Entities_Sound_Folder = NULL;
-	GD_Entities_Message_Folder = NULL;
-
-	//AddRootFolder();
-	//MoreFoldersD(); //  Folders under root 
-	//ExpandRoot();
-}
-
-// *************************************************************************
 // *						Select_Item Terry Bernie				 	   *
 // *************************************************************************
 void GD19_FileView::Select_Item(int Index)

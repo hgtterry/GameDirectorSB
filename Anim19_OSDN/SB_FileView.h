@@ -36,6 +36,9 @@ public:
 	void Change_Level_Name(void);
 	void Change_Item_Name(HTREEITEM Folder, char *FolderName);
 
+	// Delete All items and Reset file View [231121]
+	void Delete_AllItems();
+
 	HTREEITEM Add_PlayerFile(char *SFileName, int Index);
 	HTREEITEM Add_Camera(char *SFileName, int Index);
 	HTREEITEM Add_Area(char *SFileName, int Index);

@@ -30,6 +30,7 @@ public:
 
 	bool Start_Physics_Pannel();
 
+	// Enable Disable Physics [231121]
 	void Enable_Physics(bool Enable);
 
 	HWND PhysicsPannel_Hwnd;

@@ -574,7 +574,7 @@ bool GD19_Load_Scene::Populate_Level40()
 {
 	strcpy(App->Cl_FileView->LevelName, App->Cl_Scene_Data->S_Scene[0]->LevelName);
 
-	App->Cl_FileView->Delete_AllItems(); // Bit Bruttle
+	App->SBC_FileView->Delete_AllItems(); // Bit Bruttle
 
 	App->Cl_Environment->Load_Environment();
 

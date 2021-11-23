@@ -178,5 +178,6 @@ void SB_Physics::Enable_Physics(bool Enable)
 	App->SBC_Player->mObject->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
 	App->SBC_Physics->Toggle_Enable_Flag = Enable;
+
 	RedrawWindow(App->SBC_Physics->PhysicsPannel_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }

@@ -68,7 +68,49 @@ SB_Project::~SB_Project()
 // *************************************************************************
 bool SB_Project::Clear_Level()
 {
-	Debug1
+
+	// Equity Related
+	App->SBC_Physics->Enable_Physics(0);
+
+	App->SBC_FileView->Delete_AllItems();
+	App->Set_Main_TitleBar(" ");
+
+	// Ogre Related
+	int Index = 0;// App->Cl_Scene_Data->ObjectCount;
+	if (App->Cl_Scene_Data->Cl_Object[Index])
+	{
+		if (App->Cl_Scene_Data->Cl_Object[Index]->OgreEntity && App->Cl_Scene_Data->Cl_Object[Index]->OgreNode)
+		{
+			App->Cl_Scene_Data->Cl_Object[Index]->OgreNode->detachAllObjects();
+			App->Cl19_Ogre->mSceneMgr->destroySceneNode(App->Cl_Scene_Data->Cl_Object[Index]->OgreNode);
+			App->Cl19_Ogre->mSceneMgr->destroyEntity(App->Cl_Scene_Data->Cl_Object[Index]->OgreEntity);
+			App->Cl_Scene_Data->Cl_Object[Index]->OgreEntity = NULL;
+			App->Cl_Scene_Data->Cl_Object[Index]->OgreNode = NULL;
+
+			delete App->Cl_Scene_Data->Cl_Object[Index];
+			App->Cl_Scene_Data->Cl_Object[Index] = nullptr;
+		}
+	}
+
+	if (App->SBC_Player->Player_Ent && App->SBC_Player->Player_Node)
+	{
+		App->Cl19_Ogre->mSceneMgr->destroySceneNode(App->SBC_Player->Player_Node);
+		App->Cl19_Ogre->mSceneMgr->destroyEntity(App->SBC_Player->Player_Ent);
+		App->Cl19_Ogre->mSceneMgr->destroyCamera(App->SBC_Player->CameraPitch);
+		App->SBC_Player->Player_Ent = nullptr;
+		App->SBC_Player->Player_Node = nullptr;
+		App->SBC_Player->CameraPitch = nullptr;
+	}
+
+	// Bullet Related
+	int i;
+	for (i = App->Cl_Bullet->dynamicsWorld->getNumCollisionObjects() - 1; i >= 0; i--)
+	{
+		btCollisionObject* obj = App->Cl_Bullet->dynamicsWorld->getCollisionObjectArray()[i];
+		App->Cl_Bullet->dynamicsWorld->removeCollisionObject(obj);
+		delete obj;
+	}
+
 	return 1;
 }
 
