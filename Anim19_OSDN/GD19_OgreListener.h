@@ -94,7 +94,7 @@ public:
 	bool		Pl_RightMouseDown;
 
 	bool	GD_Run_Physics;
-	bool	GD_Dubug_Physics;
+	bool	Dubug_Physics_Draw; // Draw Physics Debug Global Flag [211121]
 	bool	Equity_Running;
 	float	GD_SpinRate;
 	bool	GD_Selection_Mode;

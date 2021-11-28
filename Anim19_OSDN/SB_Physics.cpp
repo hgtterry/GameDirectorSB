@@ -133,7 +133,7 @@ LRESULT CALLBACK SB_Physics::Start_Physics_Proc(HWND hDlg, UINT message, WPARAM 
 		{
 			int f = App->SBC_Player->mObject->getCollisionFlags();
 
-			if (App->Cl19_Ogre->OgreListener->GD_Dubug_Physics == 0)
+			if (App->Cl19_Ogre->OgreListener->Dubug_Physics_Draw == 0)
 			{
 				App->SBC_Physics->Enable_Physics(1);
 			}
@@ -169,7 +169,7 @@ void SB_Physics::Enable_Physics(bool Enable)
 {
 	int f = App->SBC_Player->mObject->getCollisionFlags();
 
-	App->Cl19_Ogre->OgreListener->GD_Dubug_Physics = Enable;
+	App->Cl19_Ogre->OgreListener->Dubug_Physics_Draw = Enable;
 	App->Cl19_Ogre->OgreListener->GD_Run_Physics = Enable;
 	App->Cl19_Ogre->BulletListener->ShowDebug = Enable;
 

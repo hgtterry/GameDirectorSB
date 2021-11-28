@@ -337,6 +337,24 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return 1;
 		}
 
+		// ------------------------------------- Debug Physics Draw
+		case ID_PHYSICS_DRAWDEBUG:
+		{
+			Debug1
+			if (App->Cl19_Ogre->OgreListener->Dubug_Physics_Draw == 1)
+			{
+				App->Cl19_Ogre->OgreListener->Dubug_Physics_Draw = 0;
+			}
+			else
+			{
+				App->Cl19_Ogre->OgreListener->Dubug_Physics_Draw = 1;
+			}
+
+			return 1;
+		}
+
+		
+
 		// ------------------------------------- Recent Files
 		case 5000 + 7: // Top Recent Files 1
 		{

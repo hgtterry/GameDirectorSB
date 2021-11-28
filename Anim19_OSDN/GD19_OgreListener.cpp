@@ -55,7 +55,7 @@ GD19_OgreListener::GD19_OgreListener(void)
 	Pl_Cent500Y = 500;
 
 	GD_Run_Physics = 0;
-	GD_Dubug_Physics = 0;
+	Dubug_Physics_Draw = 0;
 	Equity_Running = 0;
 	GD_SpinRate = 1;
 	GD_Selection_Mode = 0;
@@ -152,7 +152,7 @@ bool GD19_OgreListener::frameStarted(const FrameEvent& evt)
 
 		}
 
-		if (GD_Dubug_Physics == 1)
+		if (Dubug_Physics_Draw == 1)
 		{
 			App->Cl_Bullet->dynamicsWorld->debugDrawWorld();
 		}

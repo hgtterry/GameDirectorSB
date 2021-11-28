@@ -202,7 +202,7 @@ void GD19_Scene_Data::ClearScene(void)
 	App->Cl19_Ogre->OgreListener->GD_Run_Physics = 0;
 	///App->RedrawWindow_Dlg(App->Physics_Console_Hwnd);
 
-	App->Cl19_Ogre->OgreListener->GD_Dubug_Physics = 0;
+	App->Cl19_Ogre->OgreListener->Dubug_Physics_Draw = 0;
 
 
 	if (App->Cl19_Ogre->mSceneMgr!=NULL)
@@ -333,7 +333,7 @@ bool GD19_Scene_Data::GameMode(void)
 
 	App->Cl_Visuals->BoxNode->setVisible(false);
 
-	App->Cl19_Ogre->OgreListener->GD_Dubug_Physics = 0;
+	App->Cl19_Ogre->OgreListener->Dubug_Physics_Draw = 0;
 
 	Show_Entities(false); // Hide All Visible Trigers
 
@@ -391,7 +391,7 @@ bool GD19_Scene_Data::EditorMode(void)
 	/*App->Select_C->BoxNode->setVisible(true);
 	App->Select_C->Gizmo->setVisible(true);*/
 
-	App->Cl19_Ogre->OgreListener->GD_Dubug_Physics = 1;
+	App->Cl19_Ogre->OgreListener->Dubug_Physics_Draw = 1;
 	Show_Entities(true); // Show All Visible Trigers
 
 	App->Cl19_Ogre->OgreListener->GD_CameraMode = CurrentCamMode;
@@ -582,7 +582,7 @@ bool GD19_Scene_Data::Start_Scene()
 
 	App->SBC_Player->SetUp();
 	
-	App->Cl19_Ogre->OgreListener->GD_Dubug_Physics = 1;
+	App->Cl19_Ogre->OgreListener->Dubug_Physics_Draw = 1;
 
 	App->Cl19_Ogre->OgreListener->GD_Run_Physics = 1;
 
