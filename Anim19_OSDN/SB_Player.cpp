@@ -32,6 +32,8 @@ SB_Player::SB_Player()
 	Player_Props_HWND = nullptr;
 
 	ShowDebug = 0;
+	Show_Physics_Debug = 1;
+
 	PlayerAdded = 0;
 
 	Player_Ent = NULL;
@@ -107,6 +109,8 @@ LRESULT CALLBACK SB_Player::Player_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 		SendDlgItemMessage(hDlg, IDC_BTOBJECT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BTPHYSICS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+		SendDlgItemMessage(hDlg, IDC_PHYSICSDEBUG, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
@@ -163,7 +167,7 @@ LRESULT CALLBACK SB_Player::Player_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 		if (some_item->idFrom == IDC_PHYSICSDEBUG && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->Cl_Object_Props->ToggleObjectDebug);
+			App->Custom_Button_Toggle(item, App->SBC_Player->Show_Physics_Debug);
 			return CDRF_DODEFAULT;
 		}
 		if (some_item->idFrom == IDC_BUTDIMENSIONS && some_item->code == NM_CUSTOMDRAW)
@@ -229,6 +233,29 @@ LRESULT CALLBACK SB_Player::Player_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 
 			return 1;
 		}
+
+		if (LOWORD(wParam) == IDC_PHYSICSDEBUG)
+		{
+			int f = App->SBC_Player->mObject->getCollisionFlags();
+
+			if (App->SBC_Player->Show_Physics_Debug == 1)
+			{
+				App->SBC_Player->Show_Physics_Debug = 0;
+				App->SBC_Player->mObject->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+
+				App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 0;
+				App->Cl19_Ogre->RenderFrame();
+				App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 1;
+			}
+			else
+			{
+				App->SBC_Player->Show_Physics_Debug = 1;
+				App->SBC_Player->mObject->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+			}
+			
+			return 1;
+		}
+
 
 		break;
 	}

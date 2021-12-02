@@ -81,6 +81,7 @@ public:
 	bool Toggle_Physics_Flag;
 
 	bool ShowDebug;
+	bool Show_Physics_Debug; // Show Physics Debug For Player [021221]
 	bool PlayerAdded;
 	float Ground_speed;
 

@@ -92,6 +92,7 @@ ebopster
 #include "SB_Properties.h"
 #include "SB_Camera.h"
 #include "SB_3DT.h"
+#include "SB_Aera.h"
 
 
 class GD19_App
@@ -167,6 +168,7 @@ public:
 	SB_Properties*			SBC_Properties;
 	SB_Camera*				SBC_Camera;
 	SB_3DT*					SBC_3DT;
+	SB_Aera*				SBC_Aera;
 
 	GD19_App(void);
 	~GD19_App(void);
