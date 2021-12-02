@@ -29,9 +29,97 @@ distribution.
 
 SB_Aera::SB_Aera()
 {
+	Area_Props_HWND = nullptr;
 }
 
 
 SB_Aera::~SB_Aera()
 {
 }
+
+// *************************************************************************
+// *	  				Start_Area_PropsPanel Terry Bernie				   *
+// *************************************************************************
+bool SB_Aera::Start_Area_PropsPanel()
+{
+
+	Area_Props_HWND = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_AERA, App->Cl_Properties->Properties_Dlg_hWnd, (DLGPROC)Area_PropsPanel_Proc);
+	return 1;
+}
+// *************************************************************************
+// *				Area_PropsPanel_Proc  Terry Bernie					   *
+// *************************************************************************
+LRESULT CALLBACK SB_Aera::Area_PropsPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		
+		SendDlgItemMessage(hDlg, IDC_PHYSICSDEBUG, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		return TRUE;
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->DialogBackGround;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_PHYSICSAREADEBUG && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->SBC_Player->Show_Physics_Debug);
+			return CDRF_DODEFAULT;
+		}
+		
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+
+		if (LOWORD(wParam) == IDC_PHYSICSAREADEBUG)
+		{
+			int f = App->SBC_Player->mObject->getCollisionFlags();
+
+			if (App->SBC_Player->Show_Physics_Debug == 1)
+			{
+				App->SBC_Player->Show_Physics_Debug = 0;
+				App->SBC_Player->mObject->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+
+				App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 0;
+				App->Cl19_Ogre->RenderFrame();
+				App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 1;
+			}
+			else
+			{
+				App->SBC_Player->Show_Physics_Debug = 1;
+				App->SBC_Player->mObject->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+			}
+
+			return 1;
+		}
+
+
+		break;
+	}
+	return FALSE;
+}
+
+// *************************************************************************
+// *						Hide_Area_Dlg Terry Bernie 					   *
+// *************************************************************************
+void SB_Aera::Hide_Area_Dlg(bool Show)
+{
+	ShowWindow(Area_Props_HWND, Show);
+}
+

@@ -27,5 +27,14 @@ class SB_Aera
 public:
 	SB_Aera();
 	~SB_Aera();
+
+	bool Start_Area_PropsPanel();
+	void Hide_Area_Dlg(bool Show);
+
+	HWND Area_Props_HWND;
+
+protected:
+
+	static LRESULT CALLBACK Area_PropsPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 };
 

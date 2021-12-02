@@ -401,18 +401,18 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 	if (!strcmp(FileView_Folder, "Area")) // Folder
 	{
 
-		App->Cl_Dialogs->YesNo("Add Object", "Do you want to add a new Area/Building now");
-		bool Doit = App->Cl_Dialogs->Canceled;
-		if (Doit == 0)
-		{
-			App->Cl_Mesh_Viewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Area; // 0; // Objects
-			App->Cl_Mesh_Viewer->StartMeshViewer();
-			App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
-		}
-		else
-		{
+		//App->Cl_Dialogs->YesNo("Add Object", "Do you want to add a new Area/Building now");
+		//bool Doit = App->Cl_Dialogs->Canceled;
+		//if (Doit == 0)
+		//{
+		//	App->Cl_Mesh_Viewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Area; // 0; // Objects
+		//	App->Cl_Mesh_Viewer->StartMeshViewer();
+		//	App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
+		//}
+		//else
+		//{
 
-		}
+		//}
 
 		return;
 	}
@@ -421,25 +421,27 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 	{
 		HideRightPanes();
 		ShowWindow(App->GD_Properties_Hwnd, 1);
+		App->SBC_Aera->Hide_Area_Dlg(1);
 
-		App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
 
-		App->Cl_Object_Props->Edit_Type = Enums::Edit_Mesh_Object;
+		//App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
 
-		App->Cl_Properties->Edit_Category = Enums::Edit_Mesh_Object;
-		App->Cl_Properties->Current_Selected_Object = Index;
-		App->Cl_Properties->Update_Transform_Dlg();
+		//App->Cl_Object_Props->Edit_Type = Enums::Edit_Mesh_Object;
 
-		if (App->Cl_Properties->Edit_Physics == 0)
-		{
-			App->Cl_Properties->Update_ListView_Objects();
-		}
-		else
-		{
-			App->Cl_Properties->Update_ListView_Physics();
-		}
+		//App->Cl_Properties->Edit_Category = Enums::Edit_Mesh_Object;
+		//App->Cl_Properties->Current_Selected_Object = Index;
+		//App->Cl_Properties->Update_Transform_Dlg();
 
-		App->Cl_Visuals->MarkerBB_Addjust(Index);
+		//if (App->Cl_Properties->Edit_Physics == 0)
+		//{
+		//	App->Cl_Properties->Update_ListView_Objects();
+		//}
+		//else
+		//{
+		//	App->Cl_Properties->Update_ListView_Physics();
+		//}
+
+		//App->Cl_Visuals->MarkerBB_Addjust(Index);
 
 		return;
 
@@ -955,6 +957,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 		HideRightPanes();
 		ShowWindow(App->GD_Properties_Hwnd, 1);
+		App->SBC_Aera->Hide_Area_Dlg(1);
 
 		App->Cl_Properties->Enable_Delete_Button(1);
 
@@ -1052,6 +1055,7 @@ void SB_FileView::HideRightPanes(void)
 
 	App->SBC_Camera->Hide_Cam_Dlg(0);
 	App->SBC_Player->Hide_Player_Dlg(0);
+	App->SBC_Aera->Hide_Area_Dlg(0);
 }
 
 // *************************************************************************

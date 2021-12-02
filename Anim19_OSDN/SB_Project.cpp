@@ -654,7 +654,7 @@ bool SB_Project::Load_Scene()
 	//          File View Stuff
 	App->SBC_FileView->Change_Level_Name();
 
-	HTREEITEM Temp = App->SBC_FileView->Add_Area("Area", 0);
+	HTREEITEM Temp = App->SBC_FileView->Add_Area("Area_1", 0);
 	App->SBC_FileView->Redraw_FileView();
 
 	//  Start Level
