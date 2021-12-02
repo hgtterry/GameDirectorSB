@@ -55,7 +55,7 @@ GD_Bt_Render::GD_Bt_Render(void)
 	Show_HideGroup = 0;
 	Show_Crosshair = 0;
 
-	ShowDebug = 0;
+	Render_Debug_Flag = 0;
 	FirstDebug = 0;
 
 	TestLight();
@@ -359,23 +359,11 @@ void GD_Bt_Render::Render_Debug_Bullet()
 }
 
 // *************************************************************************
-// *					Translate Terry Bernie							   *
-// *************************************************************************
-void GD_Bt_Render::Translate(void)
-{
-	
-	//glRotatef(RX,1.0,0.0,0.0); // Rotations of the object 
-
-	//glRotatef(RZ,0.0,1.0,0.0);
-	//glRotatef(0.0,0.0,0.0,1.0);
-}
-
-// *************************************************************************
 // *						Render_Debug Terry Bernie	   				   *
 // *************************************************************************
 bool GD_Bt_Render::Render_Debug(void)
 {
-	if (ShowDebug == 1)
+	if (Render_Debug_Flag == 1)
 	{
 		
 		if (V_Count > 0)
@@ -399,23 +387,24 @@ bool GD_Bt_Render::Render_Debug(void)
 	}
 	else
 	{
-		btDebug_Manual->beginUpdate(0);
-		btDebug_Manual->position(0,0,0);
-		btDebug_Manual->colour(ColourMain);
-		btDebug_Manual->position(0,0,0);
-		btDebug_Manual->colour(ColourMain);
-		btDebug_Manual->end();
+		Clear_Debug_Render();
 	}
 
 	V_Count = 0;
 	return 1;
 }
 
-
 // *************************************************************************
-// *				Render_BoundingBoxModel Terry Bernie	  			   *
+// *					Clear_Debug_Render   Terry Bernie				   *
 // *************************************************************************
-void GD_Bt_Render::Render_BoundingBoxModel(void)
+void GD_Bt_Render::Clear_Debug_Render()
 {
-	
+
+	btDebug_Manual->beginUpdate(0);
+	btDebug_Manual->position(0, 0, 0);
+	btDebug_Manual->colour(ColourMain);
+	btDebug_Manual->position(0, 0, 0);
+	btDebug_Manual->colour(ColourMain);
+	btDebug_Manual->end();
 }
+

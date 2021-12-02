@@ -355,13 +355,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		case ID_PHYSICS_RENDER:
 		{
 			
-				if (App->Cl19_Ogre->BulletListener->ShowDebug == 1)
+				if (App->Cl19_Ogre->BulletListener->Render_Debug_Flag == 1)
 				{
-					App->Cl19_Ogre->BulletListener->ShowDebug = 0;
+					App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 0;
 				}
 				else
 				{
-					App->Cl19_Ogre->BulletListener->ShowDebug = 1;
+					App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 1;
 				}
 
 			return 1;

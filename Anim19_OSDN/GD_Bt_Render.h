@@ -111,7 +111,7 @@ public:
 	bool ShowOnlySubMesh;
 	bool Show_HideGroup;
 	bool Show_Crosshair;
-	bool ShowDebug;
+	bool Render_Debug_Flag; // Stop/Start Render Physics debug shapes [021221]
 
 	void TestLight(void);
 
@@ -135,11 +135,11 @@ protected:
 	void PostRender();
 	
 	void Render_Debug_Bullet();
-	void Translate(void);
-
+	
 	bool Render_Debug(void);
 
-	void Render_BoundingBoxModel(void);
+	// Clear Debug Render to Zero [021221]
+	void Clear_Debug_Render();
 
 };
 
