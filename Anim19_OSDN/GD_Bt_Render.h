@@ -1,30 +1,29 @@
-/*	
-	Copyright (c) Equity10 2016 HGT Software W.T.Flanigan B.Parkin H.C.Flanigan
+/*
+Copyright (c) 2021 Stage Builder and Equity -- Inflanite Software W.T.Flanigan H.C.Flanigan
 
-	This software is provided 'as-is', without any express or implied
-	warranty. In no event will the authors be held liable for any damages
-	arising from the use of this software.
+This software is provided 'as-is', without any express or implied
+warranty. In no event will the authors be held liable for any damages
+arising from the use of this software.
 
-	Permission is granted to anyone to use this software for any purpose,
-	including commercial applications, and to alter it and redistribute it
-	freely, subject to the following restrictions:
+Permission is granted to anyone to use this software for any purpose,
+including commercial applications, and to alter it and redistribute it
+freely, subject to the following restrictions:
 
-	1. The origin of this software must not be misrepresented; you must not
-	claim that you wrote the original software. If you use this software
-	in a product, an acknowledgment in the product documentation would be
-	appreciated but is not required.
+1. The origin of this software must not be misrepresented; you must not
+claim that you wrote the original software. If you use this software
+in a product, an acknowledgment in the product documentation would be
+appreciated but is not required.
 
-	2. Altered source versions must be plainly marked as such, and must not be
-	misrepresented as being the original software.
+2. Altered source versions must be plainly marked as such, and must not be
+misrepresented as being the original software.
 
-	3. This notice may not be removed or altered from any source
-	distribution.
+3. This notice may not be removed or altered from any source
+distribution.
 */
 
 #pragma once
 
 #include "Ogre.h"
-//#include <d3d9.h>
 
 typedef struct Mvertex_type
 {
@@ -88,39 +87,12 @@ public:
 
 	Ogre::ColourValue ColourMain;
 
-	float RX;
-	float RZ;
-
-	float Hair_1PosX;
-	float Hair_1PosY;
-	float Hair_1PosZ;
-
-	float Hair_1RotX;
-	float Hair_1RotY;
-	float Hair_1RotZ;
-	//int SelectedJointIndex;
-
-	bool ShowTextured;
-	bool ShowMesh;
-	bool ShowBones;
-	bool ShowPoints;
-	bool ShowNormals;
-	bool ShowBoundingBox;
-	bool PlayActive;
-	bool Light_Activated;
-	bool ShowOnlySubMesh;
-	bool Show_HideGroup;
-	bool Show_Crosshair;
 	bool Render_Debug_Flag; // Stop/Start Render Physics debug shapes [021221]
-
-	void TestLight(void);
 
 	std::vector<Mvertex_type> vertex_Colour;
 	std::vector<Mvertex_type> vertex_From;
 	std::vector<Mvertex_type> vertex_To;
 
-	bool FirstDebug;
-	
 	int V_Count;
 
 protected:
