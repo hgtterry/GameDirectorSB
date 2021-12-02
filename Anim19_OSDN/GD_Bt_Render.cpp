@@ -399,12 +399,12 @@ bool GD_Bt_Render::Render_Debug(void)
 	}
 	else
 	{
-		/*btDebug_Manual->beginUpdate(0);
+		btDebug_Manual->beginUpdate(0);
 		btDebug_Manual->position(0,0,0);
 		btDebug_Manual->colour(ColourMain);
 		btDebug_Manual->position(0,0,0);
 		btDebug_Manual->colour(ColourMain);
-		btDebug_Manual->end();*/
+		btDebug_Manual->end();
 	}
 
 	V_Count = 0;
