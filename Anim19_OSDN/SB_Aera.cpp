@@ -30,6 +30,8 @@ distribution.
 SB_Aera::SB_Aera()
 {
 	Area_Props_HWND = nullptr;
+
+	Show_Physics_Debug = 0;
 }
 
 
@@ -57,7 +59,7 @@ LRESULT CALLBACK SB_Aera::Area_PropsPanel_Proc(HWND hDlg, UINT message, WPARAM w
 	case WM_INITDIALOG:
 	{
 		
-		SendDlgItemMessage(hDlg, IDC_PHYSICSDEBUG, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_PHYSICSAREADEBUG, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		return TRUE;
 	}
@@ -78,7 +80,7 @@ LRESULT CALLBACK SB_Aera::Area_PropsPanel_Proc(HWND hDlg, UINT message, WPARAM w
 		if (some_item->idFrom == IDC_PHYSICSAREADEBUG && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->SBC_Player->Show_Physics_Debug);
+			App->Custom_Button_Toggle(item, App->SBC_Aera->Show_Physics_Debug);
 			return CDRF_DODEFAULT;
 		}
 		
@@ -89,12 +91,12 @@ LRESULT CALLBACK SB_Aera::Area_PropsPanel_Proc(HWND hDlg, UINT message, WPARAM w
 
 		if (LOWORD(wParam) == IDC_PHYSICSAREADEBUG)
 		{
-			int f = App->SBC_Player->mObject->getCollisionFlags();
+			int f = App->Cl_Scene_Data->Cl_Object[0]->bt_body->getCollisionFlags();
 
-			if (App->SBC_Player->Show_Physics_Debug == 1)
+			if (App->SBC_Aera->Show_Physics_Debug == 1)
 			{
-				App->SBC_Player->Show_Physics_Debug = 0;
-				App->SBC_Player->mObject->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+				App->SBC_Aera->Show_Physics_Debug = 0;
+				App->Cl_Scene_Data->Cl_Object[0]->bt_body->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
 				App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 0;
 				App->Cl19_Ogre->RenderFrame();
@@ -102,8 +104,8 @@ LRESULT CALLBACK SB_Aera::Area_PropsPanel_Proc(HWND hDlg, UINT message, WPARAM w
 			}
 			else
 			{
-				App->SBC_Player->Show_Physics_Debug = 1;
-				App->SBC_Player->mObject->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+				App->SBC_Aera->Show_Physics_Debug = 1;
+				App->Cl_Scene_Data->Cl_Object[0]->bt_body->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 			}
 
 			return 1;
