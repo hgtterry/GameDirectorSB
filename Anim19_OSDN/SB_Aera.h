@@ -31,7 +31,7 @@ public:
 	bool Start_Area_PropsPanel();
 	void Hide_Area_Dlg(bool Show);
 
-	bool Show_Physics_Debug;
+	bool Show_Physics_Debug; // Show Physics Debug For Area [021221]
 
 	HWND Area_Props_HWND;
 
