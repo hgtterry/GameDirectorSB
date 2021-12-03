@@ -307,7 +307,7 @@ void SB_Player::Initialize(const Ogre::Vector3 p, float mass, float radius, floa
 		CameraPitch = nullptr;
 	}
 
-	Player_Ent = App->Cl19_Ogre->mSceneMgr->createEntity("Player_1", "axes.mesh", App->Cl19_Ogre->PermResourceGroup);
+	Player_Ent = App->Cl19_Ogre->mSceneMgr->createEntity("Player_1", "axes.mesh", App->Cl19_Ogre->Equity_Resource_Group);
 	Player_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Player_Node->attachObject(Player_Ent);
 	Player_Node->setPosition(p.x, p.y, p.z);
