@@ -44,7 +44,6 @@ GD19_App::GD19_App(void)
 	Cl_Ini =			nullptr;
 	Cl_SoundMgr =		nullptr;
 	Cl_Panels_Com =		nullptr;
-	Cl_Resources =		nullptr;
 	Cl_Visuals =		nullptr;
 	Cl_Objects_New =	nullptr;
 	Cl_Environment =	nullptr;
@@ -207,7 +206,6 @@ bool GD19_App::InitApp(void)
 	Cl_Ini =			new T_Ini();
 	Cl_SoundMgr =		new GD19_SoundMgr();
 	Cl_Panels_Com =		new GD19_Panel_Com();
-	Cl_Resources =		new GD19_Resources();
 	Cl_Visuals =		new GD19_Visuals();
 	Cl_Objects_New =	new GD19_Objects_New();	
 	Cl_Environment =	new GD19_Environment();

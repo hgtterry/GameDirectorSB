@@ -226,8 +226,8 @@ void GD19_Scene_Data::ClearScene(void)
 		}
 
 		
-		App->Cl_Resources->Unload_Materials();
-		App->Cl_Resources->Remove_OblectMesh();
+		App->SBC_Resources->Unload_Materials();
+		App->SBC_Resources->Remove_OblectMesh();
 
 	}
 	

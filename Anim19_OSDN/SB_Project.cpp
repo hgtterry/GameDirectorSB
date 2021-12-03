@@ -111,6 +111,12 @@ bool SB_Project::Clear_Level()
 		delete obj;
 	}
 
+	//App->SBC_Resources->Unload_Materials();
+	//App->SBC_Resources->Remove_OblectMesh();
+
+	App->SBC_Resources->Unload_Game_Resources();
+
+	App->Cl_Scene_Data->ObjectCount = 0;
 	return 1;
 }
 

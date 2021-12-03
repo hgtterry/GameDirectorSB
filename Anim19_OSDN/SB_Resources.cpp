@@ -826,3 +826,14 @@ void SB_Resources::Remove_OblectMesh(void)
 
 	return;
 }
+
+// *************************************************************************
+// *					Unload_Game_Resources Terry Bernie		 	 	   *
+// *************************************************************************
+void SB_Resources::Unload_Game_Resources(void)
+{
+	
+	Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->Cl19_Ogre->Level_Resource_Group);
+	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App->Cl19_Ogre->Level_Resource_Group);
+	return;
+}

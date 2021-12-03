@@ -186,7 +186,6 @@
     <ClInclude Include="GD19_Panel_Com.h" />
     <ClInclude Include="GD19_PB.h" />
     <ClInclude Include="GD19_Properties.h" />
-    <ClInclude Include="GD19_Resources.h" />
     <ClInclude Include="GD19_Save_Scene.h" />
     <ClInclude Include="GD19_Scene_Data.h" />
     <ClInclude Include="GD19_SoundMgr.h" />
@@ -267,7 +266,6 @@
     <ClCompile Include="GD19_Panel_Com.cpp" />
     <ClCompile Include="GD19_PB.cpp" />
     <ClCompile Include="GD19_Properties.cpp" />
-    <ClCompile Include="GD19_Resources.cpp" />
     <ClCompile Include="GD19_Save_Scene.cpp" />
     <ClCompile Include="GD19_Scene_Data.cpp" />
     <ClCompile Include="GD19_SoundMgr.cpp" />

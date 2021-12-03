@@ -64,12 +64,12 @@ void EQ15_Bullet_AddRoom::AddToScene(bool Create_Player)
 
 	GD19_Objects* Object = App->Cl_Scene_Data->Cl_Object[Index];
 
-	Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->Cl19_Ogre->TempResourceGroup);
-	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App->Cl19_Ogre->TempResourceGroup);
+	Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->Cl19_Ogre->Level_Resource_Group);
+	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App->Cl19_Ogre->Level_Resource_Group);
 
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(App->CL_Vm_Model->Model_FolderPath,
 		"FileSystem",
-		App->Cl19_Ogre->TempResourceGroup);
+		App->Cl19_Ogre->Level_Resource_Group);
 
 	try
 	{
@@ -80,7 +80,7 @@ void EQ15_Bullet_AddRoom::AddToScene(bool Create_Player)
 
 	}
 
-	Object->OgreEntity = App->Cl19_Ogre->mSceneMgr->createEntity("UserMesh", App->CL_Vm_Model->FileName, App->Cl19_Ogre->TempResourceGroup);
+	Object->OgreEntity = App->Cl19_Ogre->mSceneMgr->createEntity("UserMesh", App->CL_Vm_Model->FileName, App->Cl19_Ogre->Level_Resource_Group);
 	Object->OgreNode = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Object->OgreNode->attachObject(Object->OgreEntity);
 
@@ -98,6 +98,8 @@ void EQ15_Bullet_AddRoom::AddToScene(bool Create_Player)
 	}
 
 	App->Cl_Grid->Grid_SetVisible(1);
+
+	App->Cl_Scene_Data->ObjectCount++;
 }
 
 // *************************************************************************

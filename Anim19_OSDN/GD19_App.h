@@ -39,7 +39,6 @@ ebopster
 #include "GD19_Ini.h"
 #include "GD19_SoundMgr.h"
 #include "GD19_Panel_Com.h"
-#include "GD19_Resources.h"
 #include "GD19_Visuals.h"
 #include "GD19_Objects_New.h"
 #include "GD19_Environment.h"
@@ -115,7 +114,6 @@ public:
 	T_Ini*				Cl_Ini;
 	GD19_SoundMgr*		Cl_SoundMgr;
 	GD19_Panel_Com*		Cl_Panels_Com;
-	GD19_Resources*		Cl_Resources;
 	GD19_Visuals*		Cl_Visuals;
 	GD19_Objects_New*	Cl_Objects_New;
 	GD19_Environment*	Cl_Environment;

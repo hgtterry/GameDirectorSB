@@ -37,6 +37,7 @@ public:
 
 	void Unload_Materials(void);
 	void Remove_OblectMesh(void);
+	void Unload_Game_Resources(void);
 
 protected:
 	static LRESULT CALLBACK Resources_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);

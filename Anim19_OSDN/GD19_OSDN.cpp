@@ -583,7 +583,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		case ID_TOOLS_RESOURCEVIEWER:
 		{
-			App->Cl_Resources->Start_Resources();
+			App->SBC_Resources->Start_Resources();
 			return 1;
 		}
 

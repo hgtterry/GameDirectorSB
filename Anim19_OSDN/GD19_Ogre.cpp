@@ -46,7 +46,7 @@ GD19_Ogre::GD19_Ogre(void)
 	RenderListener = nullptr;
 
 	PermResourceGroup = "PermanentResourceGroup";
-	TempResourceGroup = "TemporyResourceGroup";
+	Level_Resource_Group = "Level_Resource_Group";
 
 }
 
@@ -121,7 +121,7 @@ bool GD19_Ogre::SetUpResources(void)
 	App->Cl_Utilities->ReverseBackSlash(Copy);
 	File = App->Cl_Utilities->Return_Chr;
 
-	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(TempResourceGroup);
+	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(Level_Resource_Group);
 	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(PermResourceGroup);
 
 	//-------------------------------- Zip Files
@@ -143,35 +143,6 @@ bool GD19_Ogre::SetUpResources(void)
 
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/Particles", "FileSystem",
 		PermResourceGroup);
-
-	//-------------------------------- Materials
-//	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/materials/Actor_scripts", "FileSystem",
-//		PermResourceGroup);
-
-
-	//-------------------------------- Textures
-	/*Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/textures", "FileSystem",
-		PermResourceGroup);
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/textures/Test", "FileSystem",
-		PermResourceGroup);
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/textures/misc", "FileSystem",
-		PermResourceGroup);
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/textures/Sinbad", "FileSystem",
-		PermResourceGroup);
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/textures/Hall", "FileSystem",
-		PermResourceGroup);*/
-
-
-
-	//-------------------------------- Actors/Mesh
-//	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/Actors", "FileSystem",
-//		PermResourceGroup);
-
-//	Get_Main_Folders();
-
-
-//	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/Levels/RF_Level1_Ogre", "FileSystem",
-//		PermResourceGroup);
 
 	return 1;
 }
