@@ -97,6 +97,7 @@ GD19_App::GD19_App(void)
 	SBC_Camera =		nullptr;
 	SBC_3DT =			nullptr;
 	SBC_Aera =			nullptr;
+	SBC_Resources =		nullptr;
 
 	Fdlg = nullptr;
 	hInst = nullptr;
@@ -262,6 +263,8 @@ bool GD19_App::InitApp(void)
 	SBC_Camera =		new SB_Camera();
 	SBC_3DT =			new SB_3DT();
 	SBC_Aera =			new SB_Aera();
+	SBC_Resources =		new SB_Resources();
+
 
 	SetBrushes_Fonts();
 
