@@ -30,37 +30,7 @@ public:
 
 	void Start_GD_Properties(void);
 
-	bool Update_Transform_Dlg();
-
-	bool Update_ListView_Objects();
-	bool Update_ListView_Messages();
-	bool Update_ListView_Move_Entities();
-	bool Update_ListView_Sounds();
-	bool Update_ListView_Collectables();
-	bool Update_ListView_Physics();
-	
-	bool Update_ListView_Teleport();
-	bool Update_ListView_Environment();
-	bool Update_ListView_Particles();
-
-	bool Edit_Player_Physics_Onclick(LPARAM lParam);
-
-	bool Edit_Object_OnClick(LPARAM lParam);
-	bool Edit_Sounds_OnClick(LPARAM lParam);
-	bool Edit_Messages_OnClick(LPARAM lParam);
-	bool Edit_Move_Entity_OnClick(LPARAM lParam);
-	bool Edit_Collectables_OnClick(LPARAM lParam);
-	bool Edit_Teleport_OnClick(LPARAM lParam);
-	bool Edit_Particles_OnClick(LPARAM lParam);
-	
-
-	void ListView_OnClickOptions(LPARAM lParam);
-
-	
 	bool ListView_Object_Physics_OnClick(LPARAM lParam);
-
-	void Enable_Test_Button(bool Enable);
-	void Enable_Delete_Button(bool Enable);
 
 	int Current_Selected_Object;
 

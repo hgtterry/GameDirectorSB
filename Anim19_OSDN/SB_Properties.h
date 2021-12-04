@@ -30,6 +30,8 @@ public:
 
 	void Reset_Class();
 
+	void Start_GD_Properties(void);
+
 	void Clear_Listview();
 
 	bool Update_ListView_Player();
@@ -39,8 +41,18 @@ public:
 	bool Update_ListView_Camera();
 	bool Edit_Camera_Onclick(LPARAM lParam);
 
+	bool Properties_Dlg_Active;
+
+	int Current_Selected_Object;
+
+	HWND Properties_Dlg_hWnd;
+	HWND Properties_hLV;
+
 protected:
 
-	//bool Edit_Player_Onclick(LPARAM lParam);
+	static LRESULT CALLBACK GD_Properties_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	void Create_Properties_hLV(void);
+	
 };
 

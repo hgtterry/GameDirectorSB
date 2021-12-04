@@ -457,26 +457,6 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		ShowWindow(App->GD_Properties_Hwnd, 1);
 		App->SBC_Aera->Hide_Area_Dlg(1);
 
-
-		//App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
-
-		//App->Cl_Object_Props->Edit_Type = Enums::Edit_Mesh_Object;
-
-		//App->Cl_Properties->Edit_Category = Enums::Edit_Mesh_Object;
-		//App->Cl_Properties->Current_Selected_Object = Index;
-		//App->Cl_Properties->Update_Transform_Dlg();
-
-		//if (App->Cl_Properties->Edit_Physics == 0)
-		//{
-		//	App->Cl_Properties->Update_ListView_Objects();
-		//}
-		//else
-		//{
-		//	App->Cl_Properties->Update_ListView_Physics();
-		//}
-
-		//App->Cl_Visuals->MarkerBB_Addjust(Index);
-
 		return;
 
 	}
@@ -505,7 +485,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 	{
 		HideRightPanes();
 		ShowWindow(App->GD_Properties_Hwnd, 1);
-		App->Cl_Properties->Enable_Delete_Button(1);
+//		App->Cl_Properties->Enable_Delete_Button(1);
 
 		App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
 
@@ -513,16 +493,16 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 		App->Cl_Properties->Edit_Category = Enums::Edit_Mesh_Object;
 		App->Cl_Properties->Current_Selected_Object = Index;
-		App->Cl_Properties->Update_Transform_Dlg();
+//		App->Cl_Properties->Update_Transform_Dlg();
 
 
 		if (App->Cl_Properties->Edit_Physics == 0)
 		{
-			App->Cl_Properties->Update_ListView_Objects();
+			//App->Cl_Properties->Update_ListView_Objects();
 		}
 		else
 		{
-			App->Cl_Properties->Update_ListView_Physics();
+			//App->Cl_Properties->Update_ListView_Physics();
 		}
 
 		App->Cl_Visuals->MarkerBB_Addjust(Index);
@@ -591,23 +571,23 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		HideRightPanes();
 		ShowWindow(App->GD_Properties_Hwnd, 1);
 
-		App->Cl_Properties->Enable_Delete_Button(1);
+//		App->Cl_Properties->Enable_Delete_Button(1);
 
 		App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
 
 		App->Cl_Properties->Is_Player = 0;
 		App->Cl_Properties->Edit_Category = Enums::Edit_Sounds;
 		App->Cl_Properties->Current_Selected_Object = Index;
-		App->Cl_Properties->Update_Transform_Dlg();
+//		App->Cl_Properties->Update_Transform_Dlg();
 
 
 		if (App->Cl_Properties->Edit_Physics == 0)
 		{
-			App->Cl_Properties->Update_ListView_Sounds();
+			//App->Cl_Properties->Update_ListView_Sounds();
 		}
 		else
 		{
-			App->Cl_Properties->Update_ListView_Physics();
+			//App->Cl_Properties->Update_ListView_Physics();
 		}
 
 		App->Cl_Visuals->MarkerBB_Addjust(Index);
@@ -640,24 +620,24 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		HideRightPanes();
 		ShowWindow(App->GD_Properties_Hwnd, 1);
 
-		App->Cl_Properties->Enable_Delete_Button(1);
+//		App->Cl_Properties->Enable_Delete_Button(1);
 
 		App->Cl_Object_Props->Edit_Type = Enums::Edit_Message;
 
 		App->Cl_Properties->Is_Player = 0; // Mark as Object selected
 		App->Cl_Properties->Edit_Category = Enums::Edit_Message;
 		App->Cl_Properties->Current_Selected_Object = Index;
-		App->Cl_Properties->Update_Transform_Dlg();
+//		App->Cl_Properties->Update_Transform_Dlg();
 
 
 
 		if (App->Cl_Properties->Edit_Physics == 0)
 		{
-			App->Cl_Properties->Update_ListView_Messages();
+			//App->Cl_Properties->Update_ListView_Messages();
 		}
 		else
 		{
-			App->Cl_Properties->Update_ListView_Physics();
+			//App->Cl_Properties->Update_ListView_Physics();
 		}
 
 		App->Cl_Visuals->MarkerBB_Addjust(Index);
@@ -689,26 +669,26 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		HideRightPanes();
 		ShowWindow(App->GD_Properties_Hwnd, 1);
 
-		App->Cl_Properties->Enable_Delete_Button(1);
+//		App->Cl_Properties->Enable_Delete_Button(1);
 
 		App->Cl_Object_Props->Edit_Type = Enums::Edit_Move_Entity;
 		App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
 
-		App->Cl_Properties->Enable_Test_Button(1);
+//		App->Cl_Properties->Enable_Test_Button(1);
 		App->Cl_Properties->Is_Player = 0; // Mark as Object selected
 
 		App->Cl_Properties->Edit_Category = Enums::Edit_Move_Entity;
 		App->Cl_Properties->Current_Selected_Object = Index;
-		App->Cl_Properties->Update_Transform_Dlg();
+//		App->Cl_Properties->Update_Transform_Dlg();
 
 
 		if (App->Cl_Properties->Edit_Physics == 0)
 		{
-			App->Cl_Properties->Update_ListView_Move_Entities();
+			//App->Cl_Properties->Update_ListView_Move_Entities();
 		}
 		else
 		{
-			App->Cl_Properties->Update_ListView_Physics();
+			//App->Cl_Properties->Update_ListView_Physics();
 		}
 
 		App->Cl_Visuals->MarkerBB_Addjust(Index);
@@ -745,7 +725,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		HideRightPanes();
 		ShowWindow(App->GD_Properties_Hwnd, 1);
 
-		App->Cl_Properties->Enable_Delete_Button(1);
+//		App->Cl_Properties->Enable_Delete_Button(1);
 
 		App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
 
@@ -755,16 +735,16 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 		App->Cl_Properties->Edit_Category = Enums::Edit_Collectable;
 		App->Cl_Properties->Current_Selected_Object = Index;
-		App->Cl_Properties->Update_Transform_Dlg();
+//		App->Cl_Properties->Update_Transform_Dlg();
 
 
 		if (App->Cl_Properties->Edit_Physics == 0)
 		{
-			App->Cl_Properties->Update_ListView_Collectables();
+			//App->Cl_Properties->Update_ListView_Collectables();
 		}
 		else
 		{
-			App->Cl_Properties->Update_ListView_Physics();
+			//App->Cl_Properties->Update_ListView_Physics();
 		}
 
 		if (App->Cl_Object_Props->Edit_Type == Enums::Edit_Player)
@@ -814,7 +794,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		HideRightPanes();
 		ShowWindow(App->GD_Properties_Hwnd, 1);
 
-		App->Cl_Properties->Enable_Delete_Button(1);
+//		App->Cl_Properties->Enable_Delete_Button(1);
 
 		App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
 
@@ -824,16 +804,16 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 		App->Cl_Properties->Edit_Category = Enums::Edit_Teleport;
 		App->Cl_Properties->Current_Selected_Object = Index;
-		App->Cl_Properties->Update_Transform_Dlg();
+//		App->Cl_Properties->Update_Transform_Dlg();
 
 
 		if (App->Cl_Properties->Edit_Physics == 0)
 		{
-			App->Cl_Properties->Update_ListView_Teleport();
+			//App->Cl_Properties->Update_ListView_Teleport();
 		}
 		else
 		{
-			App->Cl_Properties->Update_ListView_Physics();
+			//App->Cl_Properties->Update_ListView_Physics();
 		}
 
 		if (App->Cl_Object_Props->Edit_Type == Enums::Edit_Player)
@@ -885,7 +865,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		HideRightPanes();
 		ShowWindow(App->GD_Properties_Hwnd, 1);
 
-		App->Cl_Properties->Enable_Delete_Button(1);
+//		App->Cl_Properties->Enable_Delete_Button(1);
 
 		App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
 
@@ -896,17 +876,17 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		App->Cl_Properties->Edit_Category = Enums::Edit_Particles;
 		App->Cl_Properties->Current_Selected_Object = Index;
 
-		App->Cl_Properties->Update_Transform_Dlg();
+//		App->Cl_Properties->Update_Transform_Dlg();
 
 
 
 		if (App->Cl_Properties->Edit_Physics == 0)
 		{
-			App->Cl_Properties->Update_ListView_Particles();
+			//App->Cl_Properties->Update_ListView_Particles();
 		}
 		else
 		{
-			App->Cl_Properties->Update_ListView_Physics();
+			//App->Cl_Properties->Update_ListView_Physics();
 		}
 
 		return;
@@ -939,7 +919,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		HideRightPanes();
 		ShowWindow(App->GD_Properties_Hwnd, 1);
 
-		App->Cl_Properties->Enable_Delete_Button(1);
+//		App->Cl_Properties->Enable_Delete_Button(1);
 
 		App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
 
@@ -950,16 +930,16 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		App->Cl_Properties->Edit_Category = Enums::Edit_Environment;
 		App->Cl_Properties->Current_Selected_Object = Index;
 
-		App->Cl_Properties->Update_Transform_Dlg();
+//		App->Cl_Properties->Update_Transform_Dlg();
 
 
 		if (App->Cl_Properties->Edit_Physics == 0)
 		{
-			App->Cl_Properties->Update_ListView_Environment();
+			//App->Cl_Properties->Update_ListView_Environment();
 		}
 		else
 		{
-			App->Cl_Properties->Update_ListView_Physics();
+			//App->Cl_Properties->Update_ListView_Physics();
 		}
 
 		return;
@@ -993,7 +973,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		ShowWindow(App->GD_Properties_Hwnd, 1);
 		App->SBC_Aera->Hide_Area_Dlg(1);
 
-		App->Cl_Properties->Enable_Delete_Button(1);
+//		App->Cl_Properties->Enable_Delete_Button(1);
 
 		App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
 
@@ -1004,16 +984,16 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		App->Cl_Properties->Edit_Category = Enums::Edit_Area_Change;
 		App->Cl_Properties->Current_Selected_Object = Index;
 
-		App->Cl_Properties->Update_Transform_Dlg();
+//		App->Cl_Properties->Update_Transform_Dlg();
 
 
 		if (App->Cl_Properties->Edit_Physics == 0)
 		{
-			App->Cl_Properties->Update_ListView_Environment();
+			//App->Cl_Properties->Update_ListView_Environment();
 		}
 		else
 		{
-			App->Cl_Properties->Update_ListView_Physics();
+			//App->Cl_Properties->Update_ListView_Physics();
 		}
 
 		return;
@@ -1048,7 +1028,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		HideRightPanes();
 		ShowWindow(App->GD_Properties_Hwnd, 1);
 
-		App->Cl_Properties->Enable_Delete_Button(1);
+//		App->Cl_Properties->Enable_Delete_Button(1);
 
 		App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
 
@@ -1059,16 +1039,16 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		App->Cl_Properties->Edit_Category = Enums::Edit_Change_Level;
 		App->Cl_Properties->Current_Selected_Object = Index;
 
-		App->Cl_Properties->Update_Transform_Dlg();
+//		App->Cl_Properties->Update_Transform_Dlg();
 
 
 		if (App->Cl_Properties->Edit_Physics == 0)
 		{
-			App->Cl_Properties->Update_ListView_Environment();
+			//App->Cl_Properties->Update_ListView_Environment();
 		}
 		else
 		{
-			App->Cl_Properties->Update_ListView_Physics();
+			//App->Cl_Properties->Update_ListView_Physics();
 		}
 
 		return;

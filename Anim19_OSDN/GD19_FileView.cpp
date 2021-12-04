@@ -143,7 +143,7 @@ void GD19_FileView::Select_Item(int Index)
 
 		App->Cl_FileView->SelectItem(App->Cl_Scene_Data->Cl_Object[Index]->ListViewItem);
 		App->Cl_Properties->Edit_Category = Enums::Edit_Sounds;
-		App->Cl_Properties->Update_ListView_Sounds();
+		//App->Cl_Properties->Update_ListView_Sounds();
 		return;
 	}
 
@@ -152,7 +152,7 @@ void GD19_FileView::Select_Item(int Index)
 	{
 		App->Cl_FileView->SelectItem(App->Cl_Scene_Data->Cl_Object[Index]->ListViewItem);
 		App->Cl_Properties->Edit_Category = Enums::Edit_Message;
-		App->Cl_Properties->Update_ListView_Messages();
+		//App->Cl_Properties->Update_ListView_Messages();
 		return;
 	}
 
@@ -161,7 +161,7 @@ void GD19_FileView::Select_Item(int Index)
 	{
 		App->Cl_FileView->SelectItem(App->Cl_Scene_Data->Cl_Object[Index]->ListViewItem);
 		App->Cl_Properties->Edit_Category = Enums::Edit_Move_Entity;
-		App->Cl_Properties->Update_ListView_Move_Entities();
+		//App->Cl_Properties->Update_ListView_Move_Entities();
 		return;
 	}
 
@@ -170,7 +170,7 @@ void GD19_FileView::Select_Item(int Index)
 	{
 		App->Cl_FileView->SelectItem(App->Cl_Scene_Data->Cl_Object[Index]->ListViewItem);
 		App->Cl_Properties->Edit_Category = Enums::Edit_Collectable;
-		App->Cl_Properties->Update_ListView_Collectables();
+		//App->Cl_Properties->Update_ListView_Collectables();
 		return;
 	}
 
@@ -179,7 +179,7 @@ void GD19_FileView::Select_Item(int Index)
 	{
 		App->Cl_FileView->SelectItem(App->Cl_Scene_Data->Cl_Object[Index]->ListViewItem);
 		App->Cl_Properties->Edit_Category = Enums::Edit_Teleport;
-		App->Cl_Properties->Update_ListView_Teleport();
+		//App->Cl_Properties->Update_ListView_Teleport();
 		return;
 	}
 
@@ -190,15 +190,15 @@ void GD19_FileView::Select_Item(int Index)
 
 		App->Cl_FileView->SelectItem(App->Cl_Scene_Data->Cl_Object[Index]->ListViewItem);
 		App->Cl_Properties->Edit_Category = Enums::Edit_Mesh_Object;
-		App->Cl_Properties->Update_Transform_Dlg();
+//		App->Cl_Properties->Update_Transform_Dlg();
 
 		if (App->Cl_Properties->Edit_Physics == 0)
 		{
-			App->Cl_Properties->Update_ListView_Objects();
+			//App->Cl_Properties->Update_ListView_Objects();
 		}
 		else
 		{
-			App->Cl_Properties->Update_ListView_Physics();
+			//App->Cl_Properties->Update_ListView_Physics();
 		}
 
 		return;

@@ -725,7 +725,7 @@ LRESULT CALLBACK GD19_Dimensions::Postion_Proc(HWND hDlg, UINT message, WPARAM w
 
 			App->Cl_Visuals->MarkerBB_Addjust(App->Cl_Properties->Current_Selected_Object);
 
-			App->Cl_Properties->Update_Transform_Dlg();
+//			App->Cl_Properties->Update_Transform_Dlg();
 
 			if (App->Cl_Scene_Data->Cl_Object[App->Cl_Properties->Current_Selected_Object]->Type == Enums::Bullet_Type_Dynamic)
 			{
@@ -1437,7 +1437,7 @@ LRESULT CALLBACK GD19_Dimensions::Rotation_Proc(HWND hDlg, UINT message, WPARAM 
 
 			App->Cl_Visuals->MarkerBB_Addjust(App->Cl_Properties->Current_Selected_Object);
 
-			App->Cl_Properties->Update_Transform_Dlg();
+//			App->Cl_Properties->Update_Transform_Dlg();
 
 			if (App->Cl_Scene_Data->Cl_Object[App->Cl_Properties->Current_Selected_Object]->Type == Enums::Bullet_Type_Dynamic)
 			{
@@ -2393,7 +2393,7 @@ LRESULT CALLBACK GD19_Dimensions::Scale_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 			App->Cl_Visuals->MarkerBB_Addjust(App->Cl_Properties->Current_Selected_Object);
 
-			App->Cl_Properties->Update_Transform_Dlg();
+//			App->Cl_Properties->Update_Transform_Dlg();
 
 			if (App->Cl_Scene_Data->Cl_Object[Index]->Type == Enums::Bullet_Type_Dynamic)
 			{
