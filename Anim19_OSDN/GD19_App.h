@@ -46,7 +46,6 @@ ebopster
 #include "GD19_Mesh_Viewer.h"
 #include "GD19_Objects_Com.h"
 #include "GD19_Dimensions.h"
-#include "GD19_Properties.h"
 #include "GD19_Object_Properties.h"
 #include "GD19_Stock.h"
 #include "GD19_LookUps.h"
@@ -121,7 +120,6 @@ public:
 	GD19_Mesh_Viewer*	Cl_Mesh_Viewer;
 	GD19_Objects_Com*	Cl_Objects_Com;
 	GD19_Dimensions*	Cl_Dimensions;
-	GD19_Properties*	Cl_Properties;
 	GD19_Object_Properties* Cl_Object_Props;
 	GD19_Stock*			Cl_Stock;
 	GD19_LookUps*		Cl_LookUps;

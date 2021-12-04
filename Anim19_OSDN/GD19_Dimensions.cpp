@@ -118,14 +118,14 @@ LRESULT CALLBACK GD19_Dimensions::Postion_Proc(HWND hDlg, UINT message, WPARAM w
 
 		App->Cl_Dimensions->SetTransStepsOptions(hDlg);
 
-		if (App->Cl_Properties->Edit_Category == Enums::Edit_Player)
+		if (App->SBC_Properties->Edit_Category == Enums::Edit_Player)
 		{
 			App->Say("Player");
 		}
 		else
 		{
 			
-			App->Cl_Dimensions->Object_Index = App->Cl_Properties->Current_Selected_Object;
+			App->Cl_Dimensions->Object_Index = App->SBC_Properties->Current_Selected_Object;
 			int Index = App->Cl_Dimensions->Object_Index;
 
 			if (App->Cl_Scene_Data->Cl_Object[Index]->Type == Enums::Bullet_Type_Dynamic)
@@ -331,7 +331,7 @@ LRESULT CALLBACK GD19_Dimensions::Postion_Proc(HWND hDlg, UINT message, WPARAM w
 			int Index = App->Cl_Dimensions->Object_Index;
 			char ChrX[255];
 
-			if (App->Cl_Properties->Edit_Category == Enums::Edit_Player)
+			if (App->SBC_Properties->Edit_Category == Enums::Edit_Player)
 			{
 				App->Say("Player");
 			}
@@ -364,7 +364,7 @@ LRESULT CALLBACK GD19_Dimensions::Postion_Proc(HWND hDlg, UINT message, WPARAM w
 			int Index = App->Cl_Dimensions->Object_Index;
 			char ChrX[255];
 
-			if (App->Cl_Properties->Edit_Category == Enums::Edit_Player)
+			if (App->SBC_Properties->Edit_Category == Enums::Edit_Player)
 			{
 				App->Say("Player");
 			}
@@ -399,7 +399,7 @@ LRESULT CALLBACK GD19_Dimensions::Postion_Proc(HWND hDlg, UINT message, WPARAM w
 			int Index = App->Cl_Dimensions->Object_Index;
 			char ChrY[255];
 
-			if (App->Cl_Properties->Edit_Category == Enums::Edit_Player)
+			if (App->SBC_Properties->Edit_Category == Enums::Edit_Player)
 			{
 				App->Say("Player");
 			}
@@ -432,7 +432,7 @@ LRESULT CALLBACK GD19_Dimensions::Postion_Proc(HWND hDlg, UINT message, WPARAM w
 			int Index = App->Cl_Dimensions->Object_Index;
 			char ChrY[255];
 
-			if (App->Cl_Properties->Edit_Category == Enums::Edit_Player)
+			if (App->SBC_Properties->Edit_Category == Enums::Edit_Player)
 			{
 				App->Say("Player");
 			}
@@ -465,7 +465,7 @@ LRESULT CALLBACK GD19_Dimensions::Postion_Proc(HWND hDlg, UINT message, WPARAM w
 			int Index = App->Cl_Dimensions->Object_Index;
 			char ChrZ[255];
 
-			if (App->Cl_Properties->Edit_Category == Enums::Edit_Player)
+			if (App->SBC_Properties->Edit_Category == Enums::Edit_Player)
 			{
 				App->Say("Player");
 			}
@@ -499,7 +499,7 @@ LRESULT CALLBACK GD19_Dimensions::Postion_Proc(HWND hDlg, UINT message, WPARAM w
 			int Index = App->Cl_Dimensions->Object_Index;
 			char ChrZ[255];
 
-			if (App->Cl_Properties->Edit_Category == Enums::Edit_Player)
+			if (App->SBC_Properties->Edit_Category == Enums::Edit_Player)
 			{
 				App->Say("Player");
 			}
@@ -687,7 +687,7 @@ LRESULT CALLBACK GD19_Dimensions::Postion_Proc(HWND hDlg, UINT message, WPARAM w
 		// -------------- Exit Routines
 		if (LOWORD(wParam) == IDCANCEL) // Position
 		{
-			int Index = App->Cl_Properties->Current_Selected_Object;
+			int Index = App->SBC_Properties->Current_Selected_Object;
 
 			Ogre::Vector3 Pos;
 
@@ -723,11 +723,11 @@ LRESULT CALLBACK GD19_Dimensions::Postion_Proc(HWND hDlg, UINT message, WPARAM w
 
 			App->Cl_Dimensions->Position_Dlg_Active = 0;
 
-			App->Cl_Visuals->MarkerBB_Addjust(App->Cl_Properties->Current_Selected_Object);
+			App->Cl_Visuals->MarkerBB_Addjust(App->SBC_Properties->Current_Selected_Object);
 
-//			App->Cl_Properties->Update_Transform_Dlg();
+//			App->SBC_Properties->Update_Transform_Dlg();
 
-			if (App->Cl_Scene_Data->Cl_Object[App->Cl_Properties->Current_Selected_Object]->Type == Enums::Bullet_Type_Dynamic)
+			if (App->Cl_Scene_Data->Cl_Object[App->SBC_Properties->Current_Selected_Object]->Type == Enums::Bullet_Type_Dynamic)
 			{
 				App->Cl19_Ogre->OgreListener->GD_Run_Physics = 1;
 				App->Cl_Bullet->Reset_Physics();
@@ -739,7 +739,7 @@ LRESULT CALLBACK GD19_Dimensions::Postion_Proc(HWND hDlg, UINT message, WPARAM w
 
 ///		if (LOWORD(wParam) == IDC_CAN)
 		{
-			int Index = App->Cl_Properties->Current_Selected_Object;
+			int Index = App->SBC_Properties->Current_Selected_Object;
 
 			Ogre::Vector3 Pos;
 
@@ -798,13 +798,13 @@ LRESULT CALLBACK GD19_Dimensions::Rotation_Proc(HWND hDlg, UINT message, WPARAM 
 
 		App->Cl_Dimensions->SetRotationStepsOptions(hDlg);
 
-		if (App->Cl_Properties->Edit_Category == Enums::Edit_Player)
+		if (App->SBC_Properties->Edit_Category == Enums::Edit_Player)
 		{
 			App->Say("Player");
 		}
 		else
 		{
-			App->Cl_Dialogs->Object_Index = App->Cl_Properties->Current_Selected_Object;
+			App->Cl_Dialogs->Object_Index = App->SBC_Properties->Current_Selected_Object;
 			int Index = App->Cl_Dialogs->Object_Index;
 
 			if (App->Cl_Scene_Data->Cl_Object[Index]->Type == Enums::Bullet_Type_Dynamic)
@@ -999,7 +999,7 @@ LRESULT CALLBACK GD19_Dimensions::Rotation_Proc(HWND hDlg, UINT message, WPARAM 
 		{
 			int Index = App->Cl_Dialogs->Object_Index;
 			char ChrX[255];
-			if (App->Cl_Properties->Edit_Category == Enums::Edit_Player)
+			if (App->SBC_Properties->Edit_Category == Enums::Edit_Player)
 			{
 				App->Say("Player");
 			}
@@ -1038,7 +1038,7 @@ LRESULT CALLBACK GD19_Dimensions::Rotation_Proc(HWND hDlg, UINT message, WPARAM 
 			int Index = App->Cl_Dialogs->Object_Index;
 			char ChrX[255];
 
-			if (App->Cl_Properties->Edit_Category == Enums::Edit_Player)
+			if (App->SBC_Properties->Edit_Category == Enums::Edit_Player)
 			{
 				App->Say("Player");
 			}
@@ -1078,7 +1078,7 @@ LRESULT CALLBACK GD19_Dimensions::Rotation_Proc(HWND hDlg, UINT message, WPARAM 
 			int Index = App->Cl_Dialogs->Object_Index;
 			char ChrY[255];
 
-			if (App->Cl_Properties->Edit_Category == Enums::Edit_Player)
+			if (App->SBC_Properties->Edit_Category == Enums::Edit_Player)
 			{
 				App->Say("Player");
 			}
@@ -1118,7 +1118,7 @@ LRESULT CALLBACK GD19_Dimensions::Rotation_Proc(HWND hDlg, UINT message, WPARAM 
 			int Index = App->Cl_Dialogs->Object_Index;
 			char ChrY[255];
 
-			if (App->Cl_Properties->Edit_Category == Enums::Edit_Player)
+			if (App->SBC_Properties->Edit_Category == Enums::Edit_Player)
 			{
 				App->Say("Player");
 			}
@@ -1157,7 +1157,7 @@ LRESULT CALLBACK GD19_Dimensions::Rotation_Proc(HWND hDlg, UINT message, WPARAM 
 			int Index = App->Cl_Dialogs->Object_Index;
 			char ChrZ[255];
 
-			if (App->Cl_Properties->Edit_Category == Enums::Edit_Player)
+			if (App->SBC_Properties->Edit_Category == Enums::Edit_Player)
 			{
 				App->Say("Player");
 			}
@@ -1197,7 +1197,7 @@ LRESULT CALLBACK GD19_Dimensions::Rotation_Proc(HWND hDlg, UINT message, WPARAM 
 			int Index = App->Cl_Dialogs->Object_Index;
 			char ChrZ[255];
 
-			if (App->Cl_Properties->Edit_Category == Enums::Edit_Player)
+			if (App->SBC_Properties->Edit_Category == Enums::Edit_Player)
 			{
 				App->Say("Player");
 			}
@@ -1403,7 +1403,7 @@ LRESULT CALLBACK GD19_Dimensions::Rotation_Proc(HWND hDlg, UINT message, WPARAM 
 		// Exit Routines
 ///		if (LOWORD(wParam) == IDCANCEL) // Rotation
 		{
-			int Index = App->Cl_Properties->Current_Selected_Object;
+			int Index = App->SBC_Properties->Current_Selected_Object;
 			App->Cl_Scene_Data->Cl_Object[Index]->OgreNode->setOrientation(App->Cl_Dimensions->Last_Rotation);
 
 			float w = App->Cl_Dimensions->Last_Rotation.w;
@@ -1435,11 +1435,11 @@ LRESULT CALLBACK GD19_Dimensions::Rotation_Proc(HWND hDlg, UINT message, WPARAM 
 
 			App->Cl_Dimensions->Rotation_Dlg_Active = 0;
 
-			App->Cl_Visuals->MarkerBB_Addjust(App->Cl_Properties->Current_Selected_Object);
+			App->Cl_Visuals->MarkerBB_Addjust(App->SBC_Properties->Current_Selected_Object);
 
-//			App->Cl_Properties->Update_Transform_Dlg();
+//			App->SBC_Properties->Update_Transform_Dlg();
 
-			if (App->Cl_Scene_Data->Cl_Object[App->Cl_Properties->Current_Selected_Object]->Type == Enums::Bullet_Type_Dynamic)
+			if (App->Cl_Scene_Data->Cl_Object[App->SBC_Properties->Current_Selected_Object]->Type == Enums::Bullet_Type_Dynamic)
 			{
 				App->Cl19_Ogre->OgreListener->GD_Run_Physics = 1;
 				App->Cl_Bullet->Reset_Physics();
@@ -1451,7 +1451,7 @@ LRESULT CALLBACK GD19_Dimensions::Rotation_Proc(HWND hDlg, UINT message, WPARAM 
 
 ///		if (LOWORD(wParam) == IDC_CAN)
 		{
-			int Index = App->Cl_Properties->Current_Selected_Object;
+			int Index = App->SBC_Properties->Current_Selected_Object;
 			App->Cl_Scene_Data->Cl_Object[Index]->OgreNode->setOrientation(App->Cl_Dimensions->Last_Rotation);
 
 			float w = App->Cl_Dimensions->Last_Rotation.w;
@@ -1624,7 +1624,7 @@ LRESULT CALLBACK GD19_Dimensions::Scale_Proc(HWND hDlg, UINT message, WPARAM wPa
 	//	if (App->GDCL_Object_Props->Edit_Type == Enums::Edit_Mesh_Object)
 		{
 			//App->GDCL_Dialogs->Object_Index = App->GDCL_Object_Props->Selected_Object_Index;
-			App->Cl_Dialogs->Object_Index = App->Cl_Properties->Current_Selected_Object;
+			App->Cl_Dialogs->Object_Index = App->SBC_Properties->Current_Selected_Object;
 			int Index = App->Cl_Dialogs->Object_Index;
 
 			if (App->Cl_Scene_Data->Cl_Object[Index]->Type == Enums::Bullet_Type_Dynamic)
@@ -1852,7 +1852,7 @@ LRESULT CALLBACK GD19_Dimensions::Scale_Proc(HWND hDlg, UINT message, WPARAM wPa
 			int Index = App->Cl_Dialogs->Object_Index;
 			char ChrX[255];
 
-			if (App->Cl_Properties->Edit_Category == Enums::Edit_Player)
+			if (App->SBC_Properties->Edit_Category == Enums::Edit_Player)
 			{
 				App->Say("Player");
 			}
@@ -1934,7 +1934,7 @@ LRESULT CALLBACK GD19_Dimensions::Scale_Proc(HWND hDlg, UINT message, WPARAM wPa
 			int Index = App->Cl_Dialogs->Object_Index;
 			char ChrX[255];
 
-			if (App->Cl_Properties->Edit_Category == Enums::Edit_Player)
+			if (App->SBC_Properties->Edit_Category == Enums::Edit_Player)
 			{
 				App->Say("Player");
 			}
@@ -2018,7 +2018,7 @@ LRESULT CALLBACK GD19_Dimensions::Scale_Proc(HWND hDlg, UINT message, WPARAM wPa
 			int Index = App->Cl_Dialogs->Object_Index;
 			char ChrY[255];
 
-			if (App->Cl_Properties->Edit_Category == Enums::Edit_Player)
+			if (App->SBC_Properties->Edit_Category == Enums::Edit_Player)
 			{
 				App->Say("Player");
 			}
@@ -2056,7 +2056,7 @@ LRESULT CALLBACK GD19_Dimensions::Scale_Proc(HWND hDlg, UINT message, WPARAM wPa
 			int Index = App->Cl_Dialogs->Object_Index;
 			char ChrY[255];
 
-			if (App->Cl_Properties->Edit_Category == Enums::Edit_Player)
+			if (App->SBC_Properties->Edit_Category == Enums::Edit_Player)
 			{
 				App->Say("Player");
 			}
@@ -2094,7 +2094,7 @@ LRESULT CALLBACK GD19_Dimensions::Scale_Proc(HWND hDlg, UINT message, WPARAM wPa
 			int Index = App->Cl_Dialogs->Object_Index;
 			char ChrZ[255];
 
-			if (App->Cl_Properties->Edit_Category == Enums::Edit_Player)
+			if (App->SBC_Properties->Edit_Category == Enums::Edit_Player)
 			{
 				App->Say("Player");
 			}
@@ -2132,7 +2132,7 @@ LRESULT CALLBACK GD19_Dimensions::Scale_Proc(HWND hDlg, UINT message, WPARAM wPa
 			int Index = App->Cl_Dialogs->Object_Index;
 			char ChrZ[255];
 
-			if (App->Cl_Properties->Edit_Category == Enums::Edit_Player)
+			if (App->SBC_Properties->Edit_Category == Enums::Edit_Player)
 			{
 				App->Say("Player");
 			}
@@ -2333,7 +2333,7 @@ LRESULT CALLBACK GD19_Dimensions::Scale_Proc(HWND hDlg, UINT message, WPARAM wPa
 ///		if (LOWORD(wParam) == IDCANCEL) // Scale
 		{
 
-			int Index = App->Cl_Properties->Current_Selected_Object;
+			int Index = App->SBC_Properties->Current_Selected_Object;
 
 			Ogre::Vector3 Scale;
 
@@ -2391,9 +2391,9 @@ LRESULT CALLBACK GD19_Dimensions::Scale_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 			App->Cl_Dimensions->Scale_Dlg_Active = 0;
 
-			App->Cl_Visuals->MarkerBB_Addjust(App->Cl_Properties->Current_Selected_Object);
+			App->Cl_Visuals->MarkerBB_Addjust(App->SBC_Properties->Current_Selected_Object);
 
-//			App->Cl_Properties->Update_Transform_Dlg();
+//			App->SBC_Properties->Update_Transform_Dlg();
 
 			if (App->Cl_Scene_Data->Cl_Object[Index]->Type == Enums::Bullet_Type_Dynamic)
 			{
@@ -2407,7 +2407,7 @@ LRESULT CALLBACK GD19_Dimensions::Scale_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 ///		if (LOWORD(wParam) == IDC_CAN)
 		{
-			int Index = App->Cl_Properties->Current_Selected_Object;
+			int Index = App->SBC_Properties->Current_Selected_Object;
 
 			Ogre::Vector3 Scale;
 
@@ -2662,7 +2662,7 @@ bool GD19_Dimensions::ScaleObject(Ogre::Vector3 Direction)
 {
 	Ogre::Vector3 Scale;
 
-	int Index = App->Cl_Properties->Current_Selected_Object;
+	int Index = App->SBC_Properties->Current_Selected_Object;
 
 	GetCursorPos(&MousePoint);
 	float Pl_MouseX = (float)MousePoint.x;
@@ -2726,7 +2726,7 @@ bool GD19_Dimensions::MoveObject(Ogre::Vector3 Direction)
 	Ogre::Vector3 Pos;
 	Ogre::Vector3 Physics_Pos;
 
-	int Index = App->Cl_Properties->Current_Selected_Object;
+	int Index = App->SBC_Properties->Current_Selected_Object;
 
 	GetCursorPos(&MousePoint);
 	float Pl_MouseX = (float)MousePoint.x;

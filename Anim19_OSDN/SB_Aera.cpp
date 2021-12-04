@@ -45,7 +45,7 @@ SB_Aera::~SB_Aera()
 bool SB_Aera::Start_Area_PropsPanel()
 {
 
-	Area_Props_HWND = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_AERA, App->Cl_Properties->Properties_Dlg_hWnd, (DLGPROC)Area_PropsPanel_Proc);
+	Area_Props_HWND = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_AERA, App->SBC_Properties->Properties_Dlg_hWnd, (DLGPROC)Area_PropsPanel_Proc);
 	return 1;
 }
 // *************************************************************************

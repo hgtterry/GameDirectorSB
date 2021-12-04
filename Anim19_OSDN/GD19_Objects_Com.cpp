@@ -142,12 +142,12 @@ Ogre::Vector3 GD19_Objects_Com::Centre_of_Trimesh(int Object_Index)
 // *************************************************************************
 bool GD19_Objects_Com::Copy_Object()
 {
-	int Curr = App->Cl_Properties->Current_Selected_Object;
+	int Curr = App->SBC_Properties->Current_Selected_Object;
 
 	App->Cl_Dialogs->YesNo("Copy Object", App->Cl_Scene_Data->Cl_Object[Curr]->Name);
 	if (App->Cl_Dialogs->Canceled == 0)
 	{
-		CopyObject_Index = App->Cl_Properties->Current_Selected_Object;
+		CopyObject_Index = App->SBC_Properties->Current_Selected_Object;
 	}
 	
 	return 1;

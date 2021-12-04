@@ -151,7 +151,7 @@ bool GD19_Panels::Place_GlobalGroups(void)
 
 	hdwp = BeginDeferWindowPos(2);
 
-	DeferWindowPos(hdwp, App->Cl_Properties->Properties_Dlg_hWnd, NULL, p.x + widthX - 255, PosY + 5,
+	DeferWindowPos(hdwp, App->SBC_Properties->Properties_Dlg_hWnd, NULL, p.x + widthX - 255, PosY + 5,
 		0, 0, SWP_NOSIZE | SWP_NOZORDER);
 
 	///DeferWindowPos(hdwp, App->GD_Stock_Hwnd, NULL, p.x + widthX - 250, PosY + 10,

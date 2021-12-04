@@ -44,6 +44,12 @@ public:
 	bool Properties_Dlg_Active;
 
 	int Current_Selected_Object;
+	int Edit_Category;
+
+	bool Is_Player;
+	bool Edit_Physics;
+
+	char btext[255];
 
 	HWND Properties_Dlg_hWnd;
 	HWND Properties_hLV;

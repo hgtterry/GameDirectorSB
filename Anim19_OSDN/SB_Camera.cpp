@@ -55,7 +55,7 @@ SB_Camera::~SB_Camera()
 bool SB_Camera::Start_Camera_PropsPanel()
 {
 	
-	Cam_Props_HWND = CreateDialog(App->hInst,(LPCTSTR)IDD_PROPS_CAMERA,App->Cl_Properties->Properties_Dlg_hWnd,(DLGPROC)Camera_PropsPanel_Proc);
+	Cam_Props_HWND = CreateDialog(App->hInst,(LPCTSTR)IDD_PROPS_CAMERA,App->SBC_Properties->Properties_Dlg_hWnd,(DLGPROC)Camera_PropsPanel_Proc);
 	return 1;
 }
 // *************************************************************************

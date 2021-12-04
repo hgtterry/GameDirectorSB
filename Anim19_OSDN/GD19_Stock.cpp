@@ -167,7 +167,7 @@ void GD19_Stock::Update_Sound_Properties(void)
 // *************************************************************************
 int GD19_Stock::Edit_Message_Stock(LPARAM lParam)
 {
-	int Index = App->Cl_Properties->Current_Selected_Object; // Get Selected Object Index 
+	int Index = App->SBC_Properties->Current_Selected_Object; // Get Selected Object Index 
 	int result = 1;
 	int test;
 

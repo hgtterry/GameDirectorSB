@@ -104,7 +104,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	App->Cl_Panels->Place_GlobalGroups();
 	
 
-	App->Cl_Properties->Start_GD_Properties();
+	App->SBC_Properties->Start_GD_Properties();
 	App->CL_Vm_Groups->Start_Groups();
 	App->SBC_Physics->Start_Physics_Pannel();
 

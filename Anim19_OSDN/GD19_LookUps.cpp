@@ -243,74 +243,74 @@ char* GD19_LookUps::Get_Edit_Category_String(void)
 	strcpy(strcat2, "Undifined");
 
 	
-		if (App->Cl_Properties->Edit_Category == Enums::Edit_None)
+		if (App->SBC_Properties->Edit_Category == Enums::Edit_None)
 		{
 			strcpy(strcat2, "Edit_None");
 			return strcat2;
 		}
-		if (App->Cl_Properties->Edit_Category == Enums::Edit_Mesh_Object)
+		if (App->SBC_Properties->Edit_Category == Enums::Edit_Mesh_Object)
 		{
 			strcpy(strcat2, "Edit_Mesh_Object");
 			return strcat2;
 		}
-		if (App->Cl_Properties->Edit_Category == Enums::Edit_Physics_Object)
+		if (App->SBC_Properties->Edit_Category == Enums::Edit_Physics_Object)
 		{
 			strcpy(strcat2, "Edit_Physics_Object");
 			return strcat2;
 		}
-		if (App->Cl_Properties->Edit_Category == Enums::Edit_Player)
+		if (App->SBC_Properties->Edit_Category == Enums::Edit_Player)
 		{
 			strcpy(strcat2, "Edit_Player");
 			return strcat2;
 		}
-		if (App->Cl_Properties->Edit_Category == Enums::Edit_Message)
+		if (App->SBC_Properties->Edit_Category == Enums::Edit_Message)
 		{
 			strcpy(strcat2, "Edit_Message");
 			return strcat2;
 		}
-		if (App->Cl_Properties->Edit_Category == Enums::Edit_Move_Entity)
+		if (App->SBC_Properties->Edit_Category == Enums::Edit_Move_Entity)
 		{
 			strcpy(strcat2, "Edit_Move_Entity");
 			return strcat2;
 		}
 
-		if (App->Cl_Properties->Edit_Category == Enums::Edit_Sounds)
+		if (App->SBC_Properties->Edit_Category == Enums::Edit_Sounds)
 		{
 			strcpy(strcat2, "Edit_Sounds");
 			return strcat2;
 		}
 
-		if (App->Cl_Properties->Edit_Category == Enums::Edit_Collectable)
+		if (App->SBC_Properties->Edit_Category == Enums::Edit_Collectable)
 		{
 			strcpy(strcat2, "Edit_Collectable");
 			return strcat2;
 		}
 
-		if (App->Cl_Properties->Edit_Category == Enums::Edit_Teleport)
+		if (App->SBC_Properties->Edit_Category == Enums::Edit_Teleport)
 		{
 			strcpy(strcat2, "Edit_Teleport");
 			return strcat2;
 		}
 
-		if (App->Cl_Properties->Edit_Category == Enums::Edit_Environment)
+		if (App->SBC_Properties->Edit_Category == Enums::Edit_Environment)
 		{
 			strcpy(strcat2, "Edit_Environment");
 			return strcat2;
 		}
 
-		if (App->Cl_Properties->Edit_Category == Enums::Edit_Area_Change)
+		if (App->SBC_Properties->Edit_Category == Enums::Edit_Area_Change)
 		{
 			strcpy(strcat2, "Edit_Area_Change");
 			return strcat2;
 		}
 
-		if (App->Cl_Properties->Edit_Category == Enums::Edit_Change_Level)
+		if (App->SBC_Properties->Edit_Category == Enums::Edit_Change_Level)
 		{
 			strcpy(strcat2, "Edit_Change_Level");
 			return strcat2;
 		}
 
-		if (App->Cl_Properties->Edit_Category == Enums::Edit_Particles)
+		if (App->SBC_Properties->Edit_Category == Enums::Edit_Particles)
 		{
 			strcpy(strcat2, "Edit_Particles");
 			return strcat2;
@@ -327,7 +327,7 @@ char* GD19_LookUps::Get_Type_Category_String(void)
 	char strcat2[255];
 	strcpy(strcat2, "Undifined");
 
-	int index = App->Cl_Properties->Current_Selected_Object;
+	int index = App->SBC_Properties->Current_Selected_Object;
 
 	if (App->Cl_Scene_Data->Cl_Object[index]->Type == Enums::Bullet_Type_None)
 	{
@@ -379,7 +379,7 @@ char* GD19_LookUps::Get_Usage_Category_String(void)
 	char strcat2[255];
 	strcpy(strcat2, "Undifined");
 
-	int index = App->Cl_Properties->Current_Selected_Object;
+	int index = App->SBC_Properties->Current_Selected_Object;
 
 	if (App->Cl_Scene_Data->Cl_Object[index]->Usage == Enums::Usage_None)
 	{

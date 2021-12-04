@@ -132,9 +132,9 @@ void GD19_FileView::Select_Item(int Index)
 	HideRightPanes();
 	ShowWindow(App->GD_Properties_Hwnd, 1);
 
-	App->Cl_Properties->Is_Player = 0; // Mark as Object selected
+	App->SBC_Properties->Is_Player = 0; // Mark as Object selected
 
-	App->Cl_Properties->Current_Selected_Object = Index;
+	App->SBC_Properties->Current_Selected_Object = Index;
 
 	// Sounds
 	if (App->Cl_Scene_Data->Cl_Object[Index]->Usage == Enums::Usage_Sound)
@@ -142,7 +142,7 @@ void GD19_FileView::Select_Item(int Index)
 		//App->Cl_FileView_V2->Select_ObjectFV(Index);
 
 		App->Cl_FileView->SelectItem(App->Cl_Scene_Data->Cl_Object[Index]->ListViewItem);
-		App->Cl_Properties->Edit_Category = Enums::Edit_Sounds;
+		App->SBC_Properties->Edit_Category = Enums::Edit_Sounds;
 		//App->Cl_Properties->Update_ListView_Sounds();
 		return;
 	}
@@ -151,7 +151,7 @@ void GD19_FileView::Select_Item(int Index)
 	if (App->Cl_Scene_Data->Cl_Object[Index]->Usage == Enums::Usage_Message)
 	{
 		App->Cl_FileView->SelectItem(App->Cl_Scene_Data->Cl_Object[Index]->ListViewItem);
-		App->Cl_Properties->Edit_Category = Enums::Edit_Message;
+		App->SBC_Properties->Edit_Category = Enums::Edit_Message;
 		//App->Cl_Properties->Update_ListView_Messages();
 		return;
 	}
@@ -160,7 +160,7 @@ void GD19_FileView::Select_Item(int Index)
 	if (App->Cl_Scene_Data->Cl_Object[Index]->Usage == Enums::Usage_Move)
 	{
 		App->Cl_FileView->SelectItem(App->Cl_Scene_Data->Cl_Object[Index]->ListViewItem);
-		App->Cl_Properties->Edit_Category = Enums::Edit_Move_Entity;
+		App->SBC_Properties->Edit_Category = Enums::Edit_Move_Entity;
 		//App->Cl_Properties->Update_ListView_Move_Entities();
 		return;
 	}
@@ -169,7 +169,7 @@ void GD19_FileView::Select_Item(int Index)
 	if (App->Cl_Scene_Data->Cl_Object[Index]->Usage == Enums::Usage_Colectable)
 	{
 		App->Cl_FileView->SelectItem(App->Cl_Scene_Data->Cl_Object[Index]->ListViewItem);
-		App->Cl_Properties->Edit_Category = Enums::Edit_Collectable;
+		App->SBC_Properties->Edit_Category = Enums::Edit_Collectable;
 		//App->Cl_Properties->Update_ListView_Collectables();
 		return;
 	}
@@ -178,7 +178,7 @@ void GD19_FileView::Select_Item(int Index)
 	if (App->Cl_Scene_Data->Cl_Object[Index]->Usage == Enums::Usage_Teleport)
 	{
 		App->Cl_FileView->SelectItem(App->Cl_Scene_Data->Cl_Object[Index]->ListViewItem);
-		App->Cl_Properties->Edit_Category = Enums::Edit_Teleport;
+		App->SBC_Properties->Edit_Category = Enums::Edit_Teleport;
 		//App->Cl_Properties->Update_ListView_Teleport();
 		return;
 	}
@@ -189,10 +189,10 @@ void GD19_FileView::Select_Item(int Index)
 		//App->Cl_FileView_V2->Select_ObjectFV(Index);
 
 		App->Cl_FileView->SelectItem(App->Cl_Scene_Data->Cl_Object[Index]->ListViewItem);
-		App->Cl_Properties->Edit_Category = Enums::Edit_Mesh_Object;
+		App->SBC_Properties->Edit_Category = Enums::Edit_Mesh_Object;
 //		App->Cl_Properties->Update_Transform_Dlg();
 
-		if (App->Cl_Properties->Edit_Physics == 0)
+		if (App->SBC_Properties->Edit_Physics == 0)
 		{
 			//App->Cl_Properties->Update_ListView_Objects();
 		}

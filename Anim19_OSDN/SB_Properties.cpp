@@ -186,8 +186,8 @@ LRESULT CALLBACK SB_Properties::GD_Properties_Proc(HWND hDlg, UINT message, WPAR
 
 	case WM_CLOSE:
 	{
-		App->Cl_Properties->Properties_Dlg_Active = 0;
-		ShowWindow(App->Cl_Properties->Properties_Dlg_hWnd, 0);
+		App->SBC_Properties->Properties_Dlg_Active = 0;
+		ShowWindow(App->SBC_Properties->Properties_Dlg_hWnd, 0);
 
 		HMENU mMenu = GetMenu(App->MainHwnd);
 		///CheckMenuItem(mMenu, ID_WINDOW_SHOWMODELGLBAL, MF_BYCOMMAND | MF_UNCHECKED);
@@ -198,13 +198,13 @@ LRESULT CALLBACK SB_Properties::GD_Properties_Proc(HWND hDlg, UINT message, WPAR
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		if (some_item->hwndFrom == App->Cl_Properties->Properties_hLV)
+		if (some_item->hwndFrom == App->SBC_Properties->Properties_hLV)
 		{
 			switch (some_item->code)
 			{
 			case NM_CLICK:
 			{
-				//App->Cl_Properties->ListView_OnClickOptions(lParam);
+				//App->SBC_Properties->ListView_OnClickOptions(lParam);
 			}
 			}
 		}
@@ -272,7 +272,7 @@ void SB_Properties::Create_Properties_hLV(void)
 // *************************************************************************
 void SB_Properties::Clear_Listview()
 {
-	ListView_DeleteAllItems(App->Cl_Properties->Properties_hLV);
+	ListView_DeleteAllItems(App->SBC_Properties->Properties_hLV);
 }
 
 // *************************************************************************
@@ -285,12 +285,12 @@ bool SB_Properties::Update_ListView_Player()
 		//	return 1;
 	}
 
-	int index = App->Cl_Properties->Current_Selected_Object;
+	int index = App->SBC_Properties->Current_Selected_Object;
 
 	char buff[255];
 	strcpy(buff, App->SBC_Player->Player_Name);
 	strcat(buff, "   (Player)");
-	SetDlgItemText(App->Cl_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
+	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
 
 	char chr_Speed[100];
 	char chr_Height[100];
@@ -323,19 +323,19 @@ bool SB_Properties::Update_ListView_Player()
 	grid[0][8] = "Start Pos_Z", grid[1][8] = chr_StartPosZ;
 
 
-	ListView_DeleteAllItems(App->Cl_Properties->Properties_hLV);
+	ListView_DeleteAllItems(App->SBC_Properties->Properties_hLV);
 
 	for (DWORD row = 0; row < NUM_ITEMS; row++)
 	{
 		pitem.iItem = row;
 		pitem.pszText = const_cast<char*>(grid[0][row].c_str());
-		ListView_InsertItem(App->Cl_Properties->Properties_hLV, &pitem);
+		ListView_InsertItem(App->SBC_Properties->Properties_hLV, &pitem);
 
 		//ListView_SetItemText
 
 		for (DWORD col = 1; col < NUM_COLS; col++)
 		{
-			ListView_SetItemText(App->Cl_Properties->Properties_hLV, row, col,
+			ListView_SetItemText(App->SBC_Properties->Properties_hLV, row, col,
 				const_cast<char*>(grid[col][row].c_str()));
 		}
 	}
@@ -353,12 +353,12 @@ bool SB_Properties::Update_ListView_Player_Physics()
 		//return 1;
 	}
 
-	int index = App->Cl_Properties->Current_Selected_Object;
+	int index = App->SBC_Properties->Current_Selected_Object;
 
 	char buff[255];
 	strcpy(buff, App->SBC_Player->Player_Name);
 	strcat(buff, "   (Physics)");
-	SetDlgItemText(App->Cl_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
+	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
 
 	char chr_PhysicsType[100];
 	strcpy(chr_PhysicsType, "Dynamic");
@@ -391,19 +391,19 @@ bool SB_Properties::Update_ListView_Player_Physics()
 	grid[0][5] = "Radius", grid[1][5] = chr_Radius;
 	grid[0][6] = "Height", grid[1][6] = chr_Height;
 
-	ListView_DeleteAllItems(App->Cl_Properties->Properties_hLV);
+	ListView_DeleteAllItems(App->SBC_Properties->Properties_hLV);
 
 	for (DWORD row = 0; row < NUM_ITEMS; row++)
 	{
 		pitem.iItem = row;
 		pitem.pszText = const_cast<char*>(grid[0][row].c_str());
-		ListView_InsertItem(App->Cl_Properties->Properties_hLV, &pitem);
+		ListView_InsertItem(App->SBC_Properties->Properties_hLV, &pitem);
 
 		//ListView_SetItemText
 
 		for (DWORD col = 1; col < NUM_COLS; col++)
 		{
-			ListView_SetItemText(App->Cl_Properties->Properties_hLV, row, col,
+			ListView_SetItemText(App->SBC_Properties->Properties_hLV, row, col,
 				const_cast<char*>(grid[col][row].c_str()));
 		}
 	}
@@ -416,15 +416,15 @@ bool SB_Properties::Update_ListView_Player_Physics()
 // *************************************************************************
 bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 {
-	int Index = App->Cl_Properties->Current_Selected_Object; // Get Selected Object Index 
+	int Index = App->SBC_Properties->Current_Selected_Object; // Get Selected Object Index 
 	int result = 1;
 	int test;
 
 	LPNMLISTVIEW poo = (LPNMLISTVIEW)lParam;
 	test = poo->iItem;
-	ListView_GetItemText(App->Cl_Properties->Properties_hLV, test, 0, App->Cl_Properties->btext, 20);
+	ListView_GetItemText(App->SBC_Properties->Properties_hLV, test, 0, App->SBC_Properties->btext, 20);
 
-	result = strcmp(App->Cl_Properties->btext, "Name");
+	result = strcmp(App->SBC_Properties->btext, "Name");
 	if (result == 0)
 	{
 		strcpy(App->Cl_Dialogs->btext, "Change Player Name");
@@ -444,7 +444,7 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 		Update_ListView_Player();
 	}
 
-	result = strcmp(App->Cl_Properties->btext, "Ground Speed");
+	result = strcmp(App->SBC_Properties->btext, "Ground Speed");
 	if (result == 0)
 	{
 		char chr_Value[10];
@@ -462,7 +462,7 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 		return 1;
 	}
 
-	result = strcmp(App->Cl_Properties->btext, "Player Height");
+	result = strcmp(App->SBC_Properties->btext, "Player Height");
 	if (result == 0)
 	{
 		char chr_Value[10];
@@ -480,7 +480,7 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 		return 1;
 	}
 
-	result = strcmp(App->Cl_Properties->btext, "Start Pos_X");
+	result = strcmp(App->SBC_Properties->btext, "Start Pos_X");
 	if (result == 0)
 	{
 		char chr_Value[10];
@@ -502,7 +502,7 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 		return 1;
 	}
 
-	result = strcmp(App->Cl_Properties->btext, "Start Pos_Y");
+	result = strcmp(App->SBC_Properties->btext, "Start Pos_Y");
 	if (result == 0)
 	{
 
@@ -525,7 +525,7 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 		return 1;
 	}
 
-	result = strcmp(App->Cl_Properties->btext, "Start Pos_Z");
+	result = strcmp(App->SBC_Properties->btext, "Start Pos_Z");
 	if (result == 0)
 	{
 		char chr_Value[10];
@@ -561,12 +561,12 @@ bool SB_Properties::Update_ListView_Camera()
 		//	return 1;
 	}
 
-	int index = App->Cl_Properties->Current_Selected_Object;
+	int index = App->SBC_Properties->Current_Selected_Object;
 
 	char buff[255];
 	strcpy(buff, App->SBC_Camera->Camera_Name);
 	strcat(buff, "   (Camera)");
-	SetDlgItemText(App->Cl_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
+	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
 
 	char chr_Pos_X[100];
 	char chr_Pos_Y[100];
@@ -603,19 +603,19 @@ bool SB_Properties::Update_ListView_Camera()
 	grid[0][8] = "LookAt_Z",	grid[1][8] = chr_LookAT_Z;
 	
 
-	ListView_DeleteAllItems(App->Cl_Properties->Properties_hLV);
+	ListView_DeleteAllItems(App->SBC_Properties->Properties_hLV);
 
 	for (DWORD row = 0; row < NUM_ITEMS; row++)
 	{
 		pitem.iItem = row;
 		pitem.pszText = const_cast<char*>(grid[0][row].c_str());
-		ListView_InsertItem(App->Cl_Properties->Properties_hLV, &pitem);
+		ListView_InsertItem(App->SBC_Properties->Properties_hLV, &pitem);
 
 		//ListView_SetItemText
 
 		for (DWORD col = 1; col < NUM_COLS; col++)
 		{
-			ListView_SetItemText(App->Cl_Properties->Properties_hLV, row, col,
+			ListView_SetItemText(App->SBC_Properties->Properties_hLV, row, col,
 				const_cast<char*>(grid[col][row].c_str()));
 		}
 	}
@@ -628,15 +628,15 @@ bool SB_Properties::Update_ListView_Camera()
 // *************************************************************************
 bool SB_Properties::Edit_Camera_Onclick(LPARAM lParam)
 {
-	int Index = App->Cl_Properties->Current_Selected_Object; // Get Selected Object Index 
+	int Index = App->SBC_Properties->Current_Selected_Object; // Get Selected Object Index 
 	int result = 1;
 	int test;
 
 	LPNMLISTVIEW poo = (LPNMLISTVIEW)lParam;
 	test = poo->iItem;
-	ListView_GetItemText(App->Cl_Properties->Properties_hLV, test, 0, App->Cl_Properties->btext, 20);
+	ListView_GetItemText(App->SBC_Properties->Properties_hLV, test, 0, App->SBC_Properties->btext, 20);
 
-	result = strcmp(App->Cl_Properties->btext, "Name");
+	result = strcmp(App->SBC_Properties->btext, "Name");
 	if (result == 0)
 	{
 		strcpy(App->Cl_Dialogs->btext, "Change Object Name");
@@ -656,7 +656,7 @@ bool SB_Properties::Edit_Camera_Onclick(LPARAM lParam)
 		Update_ListView_Camera();
 	}
 
-	result = strcmp(App->Cl_Properties->btext, "Pos_X");
+	result = strcmp(App->SBC_Properties->btext, "Pos_X");
 	if (result == 0)
 	{
 		char chr_Value[10];
@@ -674,7 +674,7 @@ bool SB_Properties::Edit_Camera_Onclick(LPARAM lParam)
 		return 1;
 	}
 
-	result = strcmp(App->Cl_Properties->btext, "Pos_Y");
+	result = strcmp(App->SBC_Properties->btext, "Pos_Y");
 	if (result == 0)
 	{
 		char chr_Value[10];
@@ -692,7 +692,7 @@ bool SB_Properties::Edit_Camera_Onclick(LPARAM lParam)
 		return 1;
 	}
 
-	result = strcmp(App->Cl_Properties->btext, "Pos_Z");
+	result = strcmp(App->SBC_Properties->btext, "Pos_Z");
 	if (result == 0)
 	{
 		char chr_Value[10];
@@ -710,7 +710,7 @@ bool SB_Properties::Edit_Camera_Onclick(LPARAM lParam)
 		return 1;
 	}
 
-	result = strcmp(App->Cl_Properties->btext, "LookAt_X");
+	result = strcmp(App->SBC_Properties->btext, "LookAt_X");
 	if (result == 0)
 	{
 		char chr_Value[10];
@@ -728,7 +728,7 @@ bool SB_Properties::Edit_Camera_Onclick(LPARAM lParam)
 		return 1;
 	}
 
-	result = strcmp(App->Cl_Properties->btext, "LookAt_Y");
+	result = strcmp(App->SBC_Properties->btext, "LookAt_Y");
 	if (result == 0)
 	{
 		char chr_Value[10];
@@ -746,7 +746,7 @@ bool SB_Properties::Edit_Camera_Onclick(LPARAM lParam)
 		return 1;
 	}
 	
-	result = strcmp(App->Cl_Properties->btext, "LookAt_Z");
+	result = strcmp(App->SBC_Properties->btext, "LookAt_Z");
 	if (result == 0)
 	{
 		char chr_Value[10];

@@ -91,7 +91,7 @@ SB_Player::~SB_Player()
 bool SB_Player::Start_Player_PropsPanel()
 {
 
-	Player_Props_HWND = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_PLAYER, App->Cl_Properties->Properties_Dlg_hWnd, (DLGPROC)Player_PropsPanel_Proc);
+	Player_Props_HWND = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_PLAYER, App->SBC_Properties->Properties_Dlg_hWnd, (DLGPROC)Player_PropsPanel_Proc);
 	return 1;
 }
 // *************************************************************************
@@ -195,7 +195,7 @@ LRESULT CALLBACK SB_Player::Player_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 		{
 			if (App->SBC_Project->Scene_Loaded == 1)
 			{
-				App->Cl_Properties->Edit_Physics = 0;
+				App->SBC_Properties->Edit_Physics = 0;
 				App->SBC_Properties->Update_ListView_Player();
 
 				App->SBC_Player->Toggle_Objects_Flag = 1;
@@ -209,7 +209,7 @@ LRESULT CALLBACK SB_Player::Player_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 		{
 			if (App->SBC_Project->Scene_Loaded == 1)
 			{
-				App->Cl_Properties->Edit_Physics = 1;
+				App->SBC_Properties->Edit_Physics = 1;
 				App->SBC_Properties->Update_ListView_Player_Physics();
 
 				App->SBC_Player->Toggle_Objects_Flag = 0;
@@ -226,7 +226,7 @@ LRESULT CALLBACK SB_Player::Player_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 
 			//RedrawWindow(App->Cl_ToolBar->TB_1, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-			int Index = App->Cl_Properties->Current_Selected_Object;
+			int Index = App->SBC_Properties->Current_Selected_Object;
 			Ogre::Vector3 Centre = App->Cl_Scene_Data->Cl_Object[Index]->OgreNode->getAttachedObject(0)->getBoundingBox().getCenter();
 			Ogre::Vector3 WS = App->Cl_Scene_Data->Cl_Object[Index]->OgreNode->convertLocalToWorldPosition(Centre);
 			App->Cl19_Ogre->mCamera->setPosition(WS);
