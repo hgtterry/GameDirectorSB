@@ -73,6 +73,7 @@ bool SB_Project::Clear_Level()
 	
 	App->SBC_FileView->Reset_Class();
 	App->CL_Vm_TopBar->Reset_Class();
+	App->SBC_Properties->Reset_Class();
 
 	App->Set_Main_TitleBar(" ");
 

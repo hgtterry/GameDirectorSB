@@ -28,6 +28,10 @@ public:
 	SB_Properties();
 	~SB_Properties();
 
+	void Reset_Class();
+
+	void Clear_Listview();
+
 	bool Update_ListView_Player();
 	bool Update_ListView_Player_Physics();
 	bool Edit_Player_Onclick(LPARAM lParam);

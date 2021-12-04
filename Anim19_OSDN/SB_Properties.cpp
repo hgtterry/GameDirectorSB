@@ -37,6 +37,25 @@ SB_Properties::~SB_Properties()
 }
 
 // *************************************************************************
+// *						Reset_Class Terry Bernie				 	   *
+// *************************************************************************
+void SB_Properties::Reset_Class()
+{
+	App->SBC_Camera->Hide_Cam_Dlg(0);
+	App->SBC_Player->Hide_Player_Dlg(0);
+	App->SBC_Aera->Hide_Area_Dlg(0);
+	Clear_Listview();
+}
+
+// *************************************************************************
+// *					Clear_Listview Terry Bernie					 	   *
+// *************************************************************************
+void SB_Properties::Clear_Listview()
+{
+	ListView_DeleteAllItems(App->Cl_Properties->Properties_hLV);
+}
+
+// *************************************************************************
 // *				Update_ListView_Player	Terry Bernie 			 	   *
 // *************************************************************************
 bool SB_Properties::Update_ListView_Player()

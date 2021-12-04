@@ -59,6 +59,40 @@ SB_FileView::~SB_FileView()
 }
 
 // *************************************************************************
+// *						Reset_Class Terry Bernie				 	   *
+// *************************************************************************
+void SB_FileView::Reset_Class()
+{
+	TreeView_DeleteAllItems(GetDlgItem(App->ListPanel, IDC_TREE1));
+
+	Root = nullptr;
+	GD_ProjectFolder = nullptr;
+	GD_ObjectsFolder = nullptr;
+	GD_LevelFolder = nullptr;
+	GD_CameraFolder = nullptr;
+	GD_TriggerFolder = nullptr;
+	GD_EntitiesFolder = nullptr;
+	GD_Entities_Sound_Folder = nullptr;
+	GD_Entities_Message_Folder = nullptr;
+	GD_Entities_Move_Folder = nullptr;
+	GD_Collectables_Folder = nullptr;
+	GD_Teleporters_Folder = nullptr;
+	GD_Environment_Folder = nullptr;
+	GD_Area_Change_Folder = nullptr;
+	GD_Level_Change_Folder = nullptr;
+	GD_Particles_Folder = nullptr;
+
+	GD_Player = nullptr;
+	GD_Rooms = nullptr;
+
+	strcpy(App->SBC_Project->Level_File_Name, "No Level");
+
+	AddRootFolder();
+	MoreFoldersD(); //  Folders under root 
+	ExpandRoot();
+}
+
+// *************************************************************************
 //							Start_FileView Terry Flanigan					*
 // *************************************************************************
 void SB_FileView::Start_FileView(void)
@@ -1179,36 +1213,3 @@ void SB_FileView::Delete_AllItems()
 	ExpandRoot();
 }
 
-// *************************************************************************
-// *						Reset_Class Terry Bernie				 	   *
-// *************************************************************************
-void SB_FileView::Reset_Class()
-{
-	TreeView_DeleteAllItems(GetDlgItem(App->ListPanel, IDC_TREE1));
-
-	Root = nullptr;
-	GD_ProjectFolder = nullptr;
-	GD_ObjectsFolder = nullptr;
-	GD_LevelFolder = nullptr;
-	GD_CameraFolder = nullptr;
-	GD_TriggerFolder = nullptr;
-	GD_EntitiesFolder = nullptr;
-	GD_Entities_Sound_Folder = nullptr;
-	GD_Entities_Message_Folder = nullptr;
-	GD_Entities_Move_Folder = nullptr;
-	GD_Collectables_Folder = nullptr;
-	GD_Teleporters_Folder = nullptr;
-	GD_Environment_Folder = nullptr;
-	GD_Area_Change_Folder = nullptr;
-	GD_Level_Change_Folder = nullptr;
-	GD_Particles_Folder = nullptr;
-
-	GD_Player = nullptr;
-	GD_Rooms = nullptr;
-
-	strcpy(App->SBC_Project->Level_File_Name, "No Level");
-
-	AddRootFolder();
-	MoreFoldersD(); //  Folders under root 
-	ExpandRoot();
-}
