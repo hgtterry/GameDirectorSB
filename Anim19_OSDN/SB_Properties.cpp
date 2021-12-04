@@ -34,6 +34,13 @@ SB_Properties::SB_Properties()
 
 	Properties_Dlg_Active = 0;
 	Current_Selected_Object = 0;
+
+	btext[0] = 0;
+
+	Edit_Category = Enums::Edit_Mesh_Object;
+	Edit_Physics = 0;
+
+	Is_Player = 0;
 }
 
 
@@ -204,7 +211,7 @@ LRESULT CALLBACK SB_Properties::GD_Properties_Proc(HWND hDlg, UINT message, WPAR
 			{
 			case NM_CLICK:
 			{
-				//App->SBC_Properties->ListView_OnClickOptions(lParam);
+				App->SBC_Properties->ListView_OnClickOptions(lParam);
 			}
 			}
 		}
@@ -259,11 +266,40 @@ void SB_Properties::Create_Properties_hLV(void)
 		lvC.pszText = const_cast<char*>(headers[header].c_str());
 		ListView_InsertColumn(Properties_hLV, header, &lvC);
 	}
-	//HFONT Font;
-	//Font = CreateFont(-12, 0, 0, 0, FW_NORMAL, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Aerial Black");
+	
 	SendMessage(Properties_hLV, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-	//Update_ListView_Objects();
+	return;
+}
+
+// *************************************************************************
+// *			ListView_OnClickOptions  Terry Bernie			 		   *
+// *************************************************************************
+void SB_Properties::ListView_OnClickOptions(LPARAM lParam)
+{
+	// Camera
+	if (Edit_Category == Enums::Edit_Camera)
+	{
+		App->SBC_Properties->Edit_Camera_Onclick(lParam);
+
+		return;
+	}
+
+	// Player
+	if (Edit_Category == Enums::Edit_Player)
+	{
+		if (Edit_Physics == 0)
+		{
+			Edit_Player_Onclick(lParam);
+		}
+		else
+		{
+			Edit_Player_Physics_Onclick(lParam);
+		}
+
+		return;
+	}
+
 	return;
 }
 
@@ -416,7 +452,7 @@ bool SB_Properties::Update_ListView_Player_Physics()
 // *************************************************************************
 bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 {
-	int Index = App->SBC_Properties->Current_Selected_Object; // Get Selected Object Index 
+	int Index = App->SBC_Properties->Current_Selected_Object;
 	int result = 1;
 	int test;
 
@@ -548,6 +584,84 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 		return 1;
 	}
 
+	return 1;
+}
+
+// *************************************************************************
+// *				Edit_Player_Physics_Onclick  Terry Bernie					   *
+// *************************************************************************
+bool SB_Properties::Edit_Player_Physics_Onclick(LPARAM lParam)
+{
+	int Index = Current_Selected_Object; // Get Selected Object Index 
+	int result = 1;
+	int test;
+
+	LPNMLISTVIEW poo = (LPNMLISTVIEW)lParam;
+	test = poo->iItem;
+	ListView_GetItemText(Properties_hLV, test, 0, btext, 20);
+
+	result = strcmp(btext, "Mass");
+	if (result == 0)
+	{
+		char chr_Radius[10];
+		sprintf(chr_Radius, "%.3f ", App->SBC_Player->mObject->getInvMass());
+
+		strcpy(App->Cl_Dialogs->Chr_Float, chr_Radius);
+		strcpy(App->Cl_Dialogs->btext, "Player Physics Mass");
+
+		App->Cl_Dialogs->Dialog_Float();
+		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
+
+
+		App->SBC_Player->mObject->setMassProps(App->Cl_Dialogs->mFloat, btVector3(0, 0, 0));
+
+		App->SBC_Properties->Update_ListView_Player_Physics();
+
+		return 1;
+	}
+
+	result = strcmp(btext, "Radius");
+	if (result == 0)
+	{
+		char chr_Radius[10];
+		sprintf(chr_Radius, "%.3f ", App->SBC_Player->Capsule_Radius);
+
+		strcpy(App->Cl_Dialogs->Chr_Float, chr_Radius);
+		strcpy(App->Cl_Dialogs->btext, "Player Physics Shape Radius");
+
+		App->Cl_Dialogs->Dialog_Float();
+		if (App->Cl_Dialogs->Canceled == 1)
+		{
+			return TRUE;
+		}
+
+		App->SBC_Player->Capsule_Radius = App->Cl_Dialogs->mFloat;
+
+		App->SBC_Properties->Update_ListView_Player_Physics();
+
+		App->SBC_Player->Adjust_Capsule();
+		return 1;
+	}
+
+	result = strcmp(btext, "Height");
+	if (result == 0)
+	{
+		char chr_Height[10];
+		sprintf(chr_Height, "%.3f ", App->SBC_Player->Capsule_Height);
+
+		strcpy(App->Cl_Dialogs->Chr_Float, chr_Height);
+		strcpy(App->Cl_Dialogs->btext, "Player Physics Shape Height");
+
+		App->Cl_Dialogs->Dialog_Float();
+		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
+
+		App->SBC_Player->Capsule_Height = App->Cl_Dialogs->mFloat;
+
+		App->SBC_Properties->Update_ListView_Player_Physics();
+
+		App->SBC_Player->Adjust_Capsule();
+		return 1;
+	}
 	return 1;
 }
 

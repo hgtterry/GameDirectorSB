@@ -32,24 +32,22 @@ public:
 
 	void Start_GD_Properties(void);
 
-	void Clear_Listview();
-
+	void Clear_Listview(); 
+	
 	bool Update_ListView_Player();
 	bool Update_ListView_Player_Physics();
-	bool Edit_Player_Onclick(LPARAM lParam);
-
 	bool Update_ListView_Camera();
-	bool Edit_Camera_Onclick(LPARAM lParam);
 
+	
 	bool Properties_Dlg_Active;
 
-	int Current_Selected_Object;
-	int Edit_Category;
+	int Current_Selected_Object; // Object Index of Currently Selected Object [041221]
+
+	int Edit_Category; // Category of Currently Selected Object [041221]
 
 	bool Is_Player;
-	bool Edit_Physics;
 
-	char btext[255];
+	bool Edit_Physics; // Flag for Edit Physics or Object [041221]
 
 	HWND Properties_Dlg_hWnd;
 	HWND Properties_hLV;
@@ -59,6 +57,15 @@ protected:
 	static LRESULT CALLBACK GD_Properties_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Create_Properties_hLV(void);
+
+	void ListView_OnClickOptions(LPARAM lParam);
+
+	bool Edit_Player_Onclick(LPARAM lParam);
+	bool Edit_Player_Physics_Onclick(LPARAM lParam);
+
+	bool Edit_Camera_Onclick(LPARAM lParam);
+
+	char btext[20]; // ListView_GetItemText Text Holder for Compare [041221]
 	
 };
 
