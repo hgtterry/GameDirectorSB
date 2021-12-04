@@ -32,6 +32,7 @@ public:
 	void Init_FileView(void);
 
 	void Redraw_FileView();
+	void Reset_Class();
 
 	void Change_Level_Name(void);
 	void Change_Item_Name(HTREEITEM Folder, char *FolderName);

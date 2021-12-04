@@ -70,53 +70,65 @@ bool SB_Project::Clear_Level()
 {
 
 	// Equity Related
-	App->SBC_Physics->Enable_Physics(0);
+	
+	App->SBC_FileView->Reset_Class();
+	App->CL_Vm_TopBar->Reset_Class();
 
-	App->SBC_FileView->Delete_AllItems();
 	App->Set_Main_TitleBar(" ");
 
-	// Ogre Related
-	int Index = 0;// App->Cl_Scene_Data->ObjectCount;
-	if (App->Cl_Scene_Data->Cl_Object[Index])
+	if (Scene_Loaded == 1)
 	{
-		if (App->Cl_Scene_Data->Cl_Object[Index]->OgreEntity && App->Cl_Scene_Data->Cl_Object[Index]->OgreNode)
+		App->SBC_Physics->Enable_Physics(0);
+
+		// Ogre Related
+		int Index = 0;// App->Cl_Scene_Data->ObjectCount;
+		if (App->Cl_Scene_Data->Cl_Object[Index])
 		{
-			App->Cl_Scene_Data->Cl_Object[Index]->OgreNode->detachAllObjects();
-			App->Cl19_Ogre->mSceneMgr->destroySceneNode(App->Cl_Scene_Data->Cl_Object[Index]->OgreNode);
-			App->Cl19_Ogre->mSceneMgr->destroyEntity(App->Cl_Scene_Data->Cl_Object[Index]->OgreEntity);
-			App->Cl_Scene_Data->Cl_Object[Index]->OgreEntity = NULL;
-			App->Cl_Scene_Data->Cl_Object[Index]->OgreNode = NULL;
+			if (App->Cl_Scene_Data->Cl_Object[Index]->OgreEntity && App->Cl_Scene_Data->Cl_Object[Index]->OgreNode)
+			{
+				App->Cl_Scene_Data->Cl_Object[Index]->OgreNode->detachAllObjects();
+				App->Cl19_Ogre->mSceneMgr->destroySceneNode(App->Cl_Scene_Data->Cl_Object[Index]->OgreNode);
+				App->Cl19_Ogre->mSceneMgr->destroyEntity(App->Cl_Scene_Data->Cl_Object[Index]->OgreEntity);
+				App->Cl_Scene_Data->Cl_Object[Index]->OgreEntity = NULL;
+				App->Cl_Scene_Data->Cl_Object[Index]->OgreNode = NULL;
 
-			delete App->Cl_Scene_Data->Cl_Object[Index];
-			App->Cl_Scene_Data->Cl_Object[Index] = nullptr;
+				delete App->Cl_Scene_Data->Cl_Object[Index];
+				App->Cl_Scene_Data->Cl_Object[Index] = nullptr;
+			}
 		}
+
+		if (App->SBC_Player->Player_Ent && App->SBC_Player->Player_Node)
+		{
+			App->Cl19_Ogre->mSceneMgr->destroySceneNode(App->SBC_Player->Player_Node);
+			App->Cl19_Ogre->mSceneMgr->destroyEntity(App->SBC_Player->Player_Ent);
+			App->Cl19_Ogre->mSceneMgr->destroyCamera(App->SBC_Player->CameraPitch);
+			App->SBC_Player->Player_Ent = nullptr;
+			App->SBC_Player->Player_Node = nullptr;
+			App->SBC_Player->CameraPitch = nullptr;
+		}
+
+		// Bullet Related
+		int i;
+		for (i = App->Cl_Bullet->dynamicsWorld->getNumCollisionObjects() - 1; i >= 0; i--)
+		{
+			btCollisionObject* obj = App->Cl_Bullet->dynamicsWorld->getCollisionObjectArray()[i];
+			App->Cl_Bullet->dynamicsWorld->removeCollisionObject(obj);
+			delete obj;
+		}
+
+		//App->SBC_Resources->Unload_Materials();
+		//App->SBC_Resources->Remove_OblectMesh();
+
+		App->SBC_Resources->Unload_Game_Resources();
 	}
-
-	if (App->SBC_Player->Player_Ent && App->SBC_Player->Player_Node)
-	{
-		App->Cl19_Ogre->mSceneMgr->destroySceneNode(App->SBC_Player->Player_Node);
-		App->Cl19_Ogre->mSceneMgr->destroyEntity(App->SBC_Player->Player_Ent);
-		App->Cl19_Ogre->mSceneMgr->destroyCamera(App->SBC_Player->CameraPitch);
-		App->SBC_Player->Player_Ent = nullptr;
-		App->SBC_Player->Player_Node = nullptr;
-		App->SBC_Player->CameraPitch = nullptr;
-	}
-
-	// Bullet Related
-	int i;
-	for (i = App->Cl_Bullet->dynamicsWorld->getNumCollisionObjects() - 1; i >= 0; i--)
-	{
-		btCollisionObject* obj = App->Cl_Bullet->dynamicsWorld->getCollisionObjectArray()[i];
-		App->Cl_Bullet->dynamicsWorld->removeCollisionObject(obj);
-		delete obj;
-	}
-
-	//App->SBC_Resources->Unload_Materials();
-	//App->SBC_Resources->Remove_OblectMesh();
-
-	App->SBC_Resources->Unload_Game_Resources();
 
 	App->Cl_Scene_Data->ObjectCount = 0;
+
+	Scene_Loaded = 0;
+
+	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamNone;
+
+	App->SBC_Camera->Reset_View();
 	return 1;
 }
 
@@ -618,6 +630,8 @@ bool SB_Project::Load_Scene_Auto()
 // *************************************************************************
 bool SB_Project::Load_Scene()
 {
+	Clear_Level();
+
 	strcpy(Level_File_Name, App->CL_Vm_FileIO->Model_FileName);
 	strcpy(Level_Path_File_Name, App->CL_Vm_FileIO->Model_Path_FileName);
 
