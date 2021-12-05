@@ -37,6 +37,10 @@ public:
 	void Change_Level_Name(void);
 	void Change_Item_Name(HTREEITEM Folder, char *FolderName);
 
+	void DeleteItem();
+	void Select_Item(int Index);
+	bool SelectItem(HTREEITEM TreeItem);
+
 	// Delete All items and Reset file View [231121]
 	void Delete_AllItems();
 

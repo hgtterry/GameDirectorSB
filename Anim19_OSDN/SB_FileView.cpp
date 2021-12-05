@@ -1193,3 +1193,110 @@ void SB_FileView::Delete_AllItems()
 	ExpandRoot();
 }
 
+// *************************************************************************
+// *						DeleteItem  Terry Bernie 					   *
+// *************************************************************************
+void SB_FileView::DeleteItem()
+{
+	HWND Temp = GetDlgItem(App->ListPanel, IDC_TREE1);
+	HTREEITEM i = TreeView_GetSelection(Temp);
+	TreeView_DeleteItem(Temp, i);
+}
+
+// *************************************************************************
+// *						Select_Item Terry Bernie				 	   *
+// *************************************************************************
+void SB_FileView::Select_Item(int Index)
+{
+	HideRightPanes();
+	ShowWindow(App->GD_Properties_Hwnd, 1);
+
+	App->SBC_Properties->Is_Player = 0; // Mark as Object selected
+
+	App->SBC_Properties->Current_Selected_Object = Index;
+
+	// Sounds
+	if (App->Cl_Scene_Data->Cl_Object[Index]->Usage == Enums::Usage_Sound)
+	{
+		//App->Cl_FileView_V2->Select_ObjectFV(Index);
+
+		App->SBC_FileView->SelectItem(App->Cl_Scene_Data->Cl_Object[Index]->ListViewItem);
+		App->SBC_Properties->Edit_Category = Enums::Edit_Sounds;
+		//App->Cl_Properties->Update_ListView_Sounds();
+		return;
+	}
+
+	// Messages
+	if (App->Cl_Scene_Data->Cl_Object[Index]->Usage == Enums::Usage_Message)
+	{
+		App->SBC_FileView->SelectItem(App->Cl_Scene_Data->Cl_Object[Index]->ListViewItem);
+		App->SBC_Properties->Edit_Category = Enums::Edit_Message;
+		//App->Cl_Properties->Update_ListView_Messages();
+		return;
+	}
+
+	// Move Entity
+	if (App->Cl_Scene_Data->Cl_Object[Index]->Usage == Enums::Usage_Move)
+	{
+		App->SBC_FileView->SelectItem(App->Cl_Scene_Data->Cl_Object[Index]->ListViewItem);
+		App->SBC_Properties->Edit_Category = Enums::Edit_Move_Entity;
+		//App->Cl_Properties->Update_ListView_Move_Entities();
+		return;
+	}
+
+	// Collectables
+	if (App->Cl_Scene_Data->Cl_Object[Index]->Usage == Enums::Usage_Colectable)
+	{
+		App->SBC_FileView->SelectItem(App->Cl_Scene_Data->Cl_Object[Index]->ListViewItem);
+		App->SBC_Properties->Edit_Category = Enums::Edit_Collectable;
+		//App->Cl_Properties->Update_ListView_Collectables();
+		return;
+	}
+
+	// Teleports
+	if (App->Cl_Scene_Data->Cl_Object[Index]->Usage == Enums::Usage_Teleport)
+	{
+		App->SBC_FileView->SelectItem(App->Cl_Scene_Data->Cl_Object[Index]->ListViewItem);
+		App->SBC_Properties->Edit_Category = Enums::Edit_Teleport;
+		//App->Cl_Properties->Update_ListView_Teleport();
+		return;
+	}
+
+	// Fall Through
+	//if (App->Cl_Scene_Data->CL_Object[Index]->Usage == Enums::Usage_Object)
+	{
+		//App->Cl_FileView_V2->Select_ObjectFV(Index);
+
+		App->SBC_FileView->SelectItem(App->Cl_Scene_Data->Cl_Object[Index]->ListViewItem);
+		App->SBC_Properties->Edit_Category = Enums::Edit_Mesh_Object;
+		//		App->Cl_Properties->Update_Transform_Dlg();
+
+		if (App->SBC_Properties->Edit_Physics == 0)
+		{
+			//App->Cl_Properties->Update_ListView_Objects();
+		}
+		else
+		{
+			//App->Cl_Properties->Update_ListView_Physics();
+		}
+
+		return;
+	}
+}
+
+// *************************************************************************
+// *				SelectItem	Terry Bernie							   *
+// *************************************************************************
+bool SB_FileView::SelectItem(HTREEITEM TreeItem)
+{
+
+	HWND Temp = GetDlgItem(App->ListPanel, IDC_TREE1);
+
+	//if (Flags[0]->FileView_SceneLoaded == 1)
+	{
+		TreeView_Select(Temp, NULL, TVGN_CARET);
+		TreeView_Select(Temp, TreeItem, TVGN_CARET);
+	}
+	return 1;
+}
+

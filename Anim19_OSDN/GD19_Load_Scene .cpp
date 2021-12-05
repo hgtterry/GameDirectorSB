@@ -44,7 +44,7 @@ bool GD19_Load_Scene::OpenScene(bool AskForScene)
 
 	if (App->Cl_Scene_Data->ObjectCount > 1)
 	{
-		App->Cl_FileView->Select_Item(1);
+		App->SBC_FileView->Select_Item(1);
 	}
 	
 	return 1;

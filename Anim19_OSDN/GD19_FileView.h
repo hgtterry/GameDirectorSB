@@ -31,10 +31,6 @@ public:
 	void ChangeItem_Name_Stock(HTREEITEM Folder, char* FolderName);
 	void ChangeItem_Name(HTREEITEM Folder, char* New_Name);
 
-	void DeleteItem();
-
-	void Select_Item(int Index);
-	bool SelectItem(HTREEITEM TreeItem);
 	void HideRightPanes(void);
 
 	HTREEITEM Add_Room_Object(char* SFileName, int Index);

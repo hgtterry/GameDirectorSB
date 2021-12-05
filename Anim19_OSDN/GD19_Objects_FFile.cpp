@@ -145,7 +145,7 @@ bool GD19_Objects_FFile::Add_Object_FFile(int Object_Index)
 	
 	}
 
-	App->Cl_FileView->Select_Item(NULL);
+	App->SBC_FileView->Select_Item(NULL);
 	ShowWindow(App->GD_Properties_Hwnd, 1);
 	App->Cl19_Ogre->OgreListener->Dubug_Physics_Draw = 1;
 
