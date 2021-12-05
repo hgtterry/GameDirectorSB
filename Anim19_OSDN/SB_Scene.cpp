@@ -21,11 +21,16 @@ misrepresented as being the original software.
 distribution.
 */
 
-#pragma once
-class Base_Player
-{
-public:
-	Base_Player();
-	~Base_Player();
-};
+#include "stdafx.h"
+#include "GD19_App.h"
+#include "SB_Scene.h"
 
+
+SB_Scene::SB_Scene()
+{
+}
+
+
+SB_Scene::~SB_Scene()
+{
+}

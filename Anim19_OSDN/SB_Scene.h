@@ -20,12 +20,11 @@ misrepresented as being the original software.
 3. This notice may not be removed or altered from any source
 distribution.
 */
-
 #pragma once
-class Base_Player
+class SB_Scene
 {
 public:
-	Base_Player();
-	~Base_Player();
+	SB_Scene();
+	~SB_Scene();
 };
 
