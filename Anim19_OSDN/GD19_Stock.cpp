@@ -332,7 +332,7 @@ int GD19_Stock::Edit_Sound_Stock(LPARAM lParam)
 
 		strcpy(App->Cl_Scene_Data->St_Sounds[Index]->Name, App->Cl_Dialogs->Chr_Text);
 
-		App->Cl_FileView->ChangeItem_Name_Stock(NULL, App->Cl_Dialogs->Chr_Text);
+//		App->Cl_FileView->ChangeItem_Name_Stock(NULL, App->Cl_Dialogs->Chr_Text);
 
 		List_Sounds_Stock(App->Cl_Stock->ItemList_Hwnd);
 

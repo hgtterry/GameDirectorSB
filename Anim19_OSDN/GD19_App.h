@@ -29,7 +29,6 @@ ebopster
 #include "GD19_Ogre.h"
 #include "GD19_Utilities.h"
 #include "GD19_Grid.h"
-#include "GD19_FileView.h"
 #include "GD19_Panels.h"
 #include "GD19_Load_Scene.h"
 #include "GD19_Save_Scene.h"
@@ -102,7 +101,6 @@ public:
 	GD19_Ogre*			Cl19_Ogre;
 	GD19_Utilities*		Cl_Utilities;
 	GD19_Grid*			Cl_Grid;
-	GD19_FileView*		Cl_FileView;
 	GD19_Panels*		Cl_Panels;
 	GD19_Load_Scene*	Cl_Load_Scene;
 	GD19_Save_Scene*	Cl_Save_Scene;

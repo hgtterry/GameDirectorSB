@@ -766,7 +766,7 @@ bool SB_Properties::Edit_Camera_Onclick(LPARAM lParam)
 		// Needs Duplicate Name test 
 		strcpy(App->SBC_Camera->Camera_Name, App->Cl_Dialogs->Chr_Text);
 
-		App->Cl_FileView->ChangeItem_Name(App->SBC_Camera->FileViewItem, App->Cl_Dialogs->Chr_Text);
+		App->SBC_FileView->Change_Item_Name(App->SBC_Camera->FileViewItem, App->Cl_Dialogs->Chr_Text);
 		Update_ListView_Camera();
 	}
 

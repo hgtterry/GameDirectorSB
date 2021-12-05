@@ -163,15 +163,15 @@ bool GD19_Objects_New::Add_New_Object()
 
 	if (Object->Usage == Enums::Usage_Room) // Rooms
 	{
-		HTREEITEM Temp = App->Cl_FileView->Add_Room_Object(Object->Name, Index);
-		Object->ListViewItem = Temp;
+//		HTREEITEM Temp = App->Cl_FileView->Add_Room_Object(Object->Name, Index);
+//		Object->ListViewItem = Temp;
 		App->Cl_Scene_Data->Scene_Has_Area = 1;
 	}
 	else
 	{
 		Object->Folder = Enums::Folder_Objects;
-		HTREEITEM Temp = App->Cl_FileView->Add_MiscFile(App->Cl_Mesh_Viewer->Object_Name, Index);
-		Object->ListViewItem = Temp;
+//		HTREEITEM Temp = App->Cl_FileView->Add_MiscFile(App->Cl_Mesh_Viewer->Object_Name, Index);
+//		Object->ListViewItem = Temp;
 	}
 
 	

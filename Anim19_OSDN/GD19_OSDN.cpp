@@ -760,15 +760,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			ShowWindow(App->ListPanel, 1);
 
-			if (App->Cl_FileView->FileView_Active == 1)
+			if (App->SBC_FileView->FileView_Active == 1)
 			{
-				App->Cl_FileView->FileView_Active = 0;
+				App->SBC_FileView->FileView_Active = 0;
 				ShowWindow(App->ListPanel, 0);
 				CheckMenuItem(App->mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND | MF_UNCHECKED);
 			}
 			else
 			{
-				App->Cl_FileView->FileView_Active = 1;
+				App->SBC_FileView->FileView_Active = 1;
 				ShowWindow(App->ListPanel, 1);
 				CheckMenuItem(App->mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND | MF_CHECKED);
 			}

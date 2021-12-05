@@ -166,7 +166,6 @@
     <ClInclude Include="GD19_DIALOGS.h" />
     <ClInclude Include="GD19_Dimensions.h" />
     <ClInclude Include="GD19_Environment.h" />
-    <ClInclude Include="GD19_FileView.h" />
     <ClInclude Include="GD19_Grid.h" />
     <ClInclude Include="GD19_Ini.h" />
     <ClInclude Include="GD19_Load_Scene.h" />
@@ -245,7 +244,6 @@
     <ClCompile Include="GD19_DIALOGS.cpp" />
     <ClCompile Include="GD19_Dimensions.cpp" />
     <ClCompile Include="GD19_Environment.cpp" />
-    <ClCompile Include="GD19_FileView.cpp" />
     <ClCompile Include="GD19_Grid.cpp" />
     <ClCompile Include="GD19_Ini.cpp" />
     <ClCompile Include="GD19_Load_Scene .cpp" />

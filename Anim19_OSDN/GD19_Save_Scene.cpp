@@ -231,8 +231,8 @@ bool GD19_Save_Scene::SaveGDScene_40(bool AskForFile)
 
 	SetWindowText(App->MainHwnd, App->CL_Vm_FileIO->Full_Path_And_File);
 
-	strcpy(App->Cl_FileView->LevelName, App->Cl_Scene_Data->S_Scene[0]->LevelName);
-	App->Cl_FileView->ChangeItem_Name(App->Cl_FileView->GD_LevelFolder, App->Cl_Scene_Data->S_Scene[0]->LevelName);
+//	strcpy(App->Cl_FileView->LevelName, App->Cl_Scene_Data->S_Scene[0]->LevelName);
+//	App->Cl_FileView->ChangeItem_Name(App->Cl_FileView->GD_LevelFolder, App->Cl_Scene_Data->S_Scene[0]->LevelName);
 
 	if (AskForFile == 1)
 	{

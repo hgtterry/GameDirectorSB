@@ -32,7 +32,6 @@ GD19_App::GD19_App(void)
 	Cl19_Ogre =			nullptr;
 	Cl_Utilities =		nullptr;
 	Cl_Grid =			nullptr;
-	Cl_FileView =		nullptr;
 
 	Cl_Panels =			nullptr;
 	Cl_Load_Scene =		nullptr;
@@ -193,7 +192,6 @@ bool GD19_App::InitApp(void)
 	Cl19_Ogre =			new GD19_Ogre();
 	Cl_Utilities =		new GD19_Utilities();
 	Cl_Grid =			new GD19_Grid();
-	Cl_FileView =		new GD19_FileView();
 
 	Cl_Panels =			new GD19_Panels();
 	Cl_Load_Scene =		new GD19_Load_Scene();

@@ -41,8 +41,14 @@ public:
 	void Select_Item(int Index);
 	bool SelectItem(HTREEITEM TreeItem);
 
+	char LevelName[255];
+
 	// Delete All items and Reset file View [231121]
 	void Delete_AllItems();
+
+	bool FileView_Active;
+	bool Level_But_Active;
+	bool Stock_But_Active;
 
 	HTREEITEM Add_PlayerFile(char *SFileName, int Index);
 	HTREEITEM Add_Camera(char *SFileName, int Index);
@@ -83,7 +89,6 @@ protected:
 	HTREEITEM GD_Player;
 	HTREEITEM GD_Rooms;
 
-	char LevelName[255];
 	char FileView_Folder[255];
 	char FileView_File[255];
 };

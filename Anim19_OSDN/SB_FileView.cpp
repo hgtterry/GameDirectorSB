@@ -51,6 +51,11 @@ SB_FileView::SB_FileView()
 
 	hImageList = nullptr;
 	hBitMap = nullptr;
+
+	Level_But_Active = 1;
+	Stock_But_Active = 0;
+
+	FileView_Active = 0;
 }
 
 
@@ -110,7 +115,7 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 	case WM_INITDIALOG:
 	{
-		App->Cl_FileView->FileView_Active = 1;
+		App->SBC_FileView->FileView_Active = 1;
 		ShowWindow(hDlg, 1);
 
 		SendDlgItemMessage(hDlg, IDC_TREE1, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -156,14 +161,14 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 		if (some_item->idFrom == IDC_LEVELS && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->Cl_FileView->Level_But_Active);
+			App->Custom_Button_Toggle(item, App->SBC_FileView->Level_But_Active);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_STOCK && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->Cl_FileView->Stock_But_Active);
+			App->Custom_Button_Toggle(item, App->SBC_FileView->Stock_But_Active);
 			return CDRF_DODEFAULT;
 		}
 
@@ -173,8 +178,8 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 	{
 		if (LOWORD(wParam) == IDC_LEVELS)
 		{
-			App->Cl_FileView->Level_But_Active = 1;
-			App->Cl_FileView->Stock_But_Active = 0;
+			App->SBC_FileView->Level_But_Active = 1;
+			App->SBC_FileView->Stock_But_Active = 0;
 			App->RedrawWindow_Dlg(hDlg);
 
 			ShowWindow(GetDlgItem(App->ListPanel, IDC_TREE1), 1);
@@ -206,7 +211,7 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 	case WM_CLOSE:
 	{
-		App->Cl_FileView->FileView_Active = 0;
+		App->SBC_FileView->FileView_Active = 0;
 		ShowWindow(App->ListPanel, 0);
 
 		HMENU mMenu = GetMenu(App->MainHwnd);
