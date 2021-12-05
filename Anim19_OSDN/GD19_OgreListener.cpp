@@ -211,8 +211,7 @@ bool GD19_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 		Ogre::Radian mYaw;
 
 		Pos = App->SBC_Scene->SBC_Base_Player[0]->Player_Node->getPosition();
-		//Ogre::Quaternion  CQ = App->SBC_Player->Player_Node->getOrientation();
-
+		
 		mmPitch = App->SBC_Scene->SBC_Base_Player[0]->CameraPitch->getOrientation().getPitch();
 		mYaw = App->SBC_Scene->SBC_Base_Player[0]->Player_Node->getOrientation().getYaw();
 		Pos.y = Pos.y + App->SBC_Player->PlayerHeight;
@@ -774,8 +773,6 @@ bool GD19_OgreListener::Capture_LeftMouse_Model(void)
 bool GD19_OgreListener::Capture_Mouse_FirstPerson(void)
 {
 
-	/*if (Stop_PhysX_Render==0)
-	{*/
 	GetCursorPos(&Pl_pt);
 
 	Pl_MouseX = (int(Pl_pt.x));
@@ -828,7 +825,7 @@ bool GD19_OgreListener::Capture_Mouse_FirstPerson(void)
 		{
 			Pl_DeltaMouse = float(Pl_Cent500Y - Pl_MouseY);
 			Ogre::Radian pp = Degree(Pl_DeltaMouse * (float)0.03);
-			App->SBC_Scene->SBC_Base_Player[0]->CameraPitch->pitch(pp);//S_Player[0]->TurnRate);
+			App->SBC_Scene->SBC_Base_Player[0]->CameraPitch->pitch(pp);
 		}
 	}
 	else if (Pl_MouseY > Pl_Cent500Y)
@@ -839,12 +836,10 @@ bool GD19_OgreListener::Capture_Mouse_FirstPerson(void)
 		{
 			Pl_DeltaMouse = float(Pl_MouseY - Pl_Cent500Y);
 			Ogre::Radian pp = Degree(-Pl_DeltaMouse * (float)0.03);
-			App->SBC_Scene->SBC_Base_Player[0]->CameraPitch->pitch(pp);//S_Player[0]->TurnRate);
+			App->SBC_Scene->SBC_Base_Player[0]->CameraPitch->pitch(pp);
 		}
 	}
 
-	//	MoveCamera();
-	//}
 	return 1;
 }
 

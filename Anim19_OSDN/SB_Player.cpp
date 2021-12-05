@@ -93,6 +93,8 @@ void SB_Player::Add_Player(void)
 
 	Initialize(StartPos, Capsule_Mass, Capsule_Radius, Capsule_Height);
 
+	App->SBC_Scene->SBC_Base_Player[Index]->CameraPitch = App->Cl19_Ogre->mSceneMgr->createCamera("PlayerPitch");
+
 	App->SBC_Scene->Player_Count++;
 
 }
@@ -103,11 +105,6 @@ void SB_Player::Add_Player(void)
 void SB_Player::Load_Player(void)
 {
 	Add_Player();
-
-	int Index = App->SBC_Scene->Player_Count;
-
-	App->SBC_Scene->SBC_Base_Player[Index]->CameraPitch = App->Cl19_Ogre->mSceneMgr->createCamera("PlayerPitch");
-
 }
 
 // *************************************************************************
