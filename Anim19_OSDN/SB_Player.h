@@ -28,6 +28,8 @@ public:
 	SB_Player();
 	~SB_Player();
 
+	void Add_Player(void);
+
 	bool Start_Player_PropsPanel();
 	void Hide_Player_Dlg(bool Show);
 
@@ -52,13 +54,6 @@ public:
 
 	void Save_Location(char* name);
 	void Goto_Location(int Index);
-
-	btRigidBody *mObject;
-	btCollisionShape *mShape;
-
-	Ogre::Camera*		CameraPitch;
-	Ogre::Entity*		Player_Ent;
-	Ogre::SceneNode*	Player_Node;
 
 	char Player_Name[255];	// Player Name [211121]
 	bool mOnGround;

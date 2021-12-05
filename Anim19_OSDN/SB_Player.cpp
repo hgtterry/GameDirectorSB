@@ -36,9 +36,6 @@ SB_Player::SB_Player()
 
 	PlayerAdded = 0;
 
-	Player_Ent = NULL;
-	Player_Node = NULL;
-
 	IsMOving = 0;
 	IsMOving_Back = 0;
 	IsMOving_Right = 0;
@@ -83,6 +80,92 @@ SB_Player::SB_Player()
 
 SB_Player::~SB_Player()
 {
+}
+
+// *************************************************************************
+// *	  					Add_Player Bernie							   *
+// *************************************************************************
+void SB_Player::Add_Player(void)
+{
+	int Index = App->SBC_Scene->Player_Count;
+
+	App->SBC_Scene->SBC_Base_Player[Index] = new Base_Player();
+
+	Initialize(StartPos, Capsule_Mass, Capsule_Radius, Capsule_Height);
+
+	App->SBC_Scene->Player_Count++;
+
+}
+
+// *************************************************************************
+// *	  						Load_Player Terry Bernie				   *
+// *************************************************************************
+void SB_Player::Load_Player(void)
+{
+	Add_Player();
+
+	int Index = App->SBC_Scene->Player_Count;
+
+	App->SBC_Scene->SBC_Base_Player[Index]->CameraPitch = App->Cl19_Ogre->mSceneMgr->createCamera("PlayerPitch");
+
+}
+
+// *************************************************************************
+// *	  					Initialize Terry Bernie						   *
+// *************************************************************************
+void SB_Player::Initialize(const Ogre::Vector3 p, float mass, float radius, float height)
+{
+	int Index = App->SBC_Scene->Player_Count;
+
+	// ------------------- Ogre
+	if (App->SBC_Scene->SBC_Base_Player[Index]->Player_Ent && App->SBC_Scene->SBC_Base_Player[Index]->Player_Node)
+	{
+		App->Cl19_Ogre->mSceneMgr->destroySceneNode(App->SBC_Scene->SBC_Base_Player[Index]->Player_Node);
+		App->Cl19_Ogre->mSceneMgr->destroyEntity(App->SBC_Scene->SBC_Base_Player[Index]->Player_Ent);
+		App->Cl19_Ogre->mSceneMgr->destroyCamera(App->SBC_Scene->SBC_Base_Player[Index]->CameraPitch);
+		App->SBC_Scene->SBC_Base_Player[Index]->Player_Ent = nullptr;
+		App->SBC_Scene->SBC_Base_Player[Index]->Player_Node = nullptr;
+		App->SBC_Scene->SBC_Base_Player[Index]->CameraPitch = nullptr;
+	}
+
+	App->SBC_Scene->SBC_Base_Player[Index]->Player_Ent = App->Cl19_Ogre->mSceneMgr->createEntity("Player_1", "axes.mesh", App->Cl19_Ogre->Equity_Resource_Group);
+	App->SBC_Scene->SBC_Base_Player[Index]->Player_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	App->SBC_Scene->SBC_Base_Player[Index]->Player_Node->attachObject(App->SBC_Scene->SBC_Base_Player[Index]->Player_Ent);
+	App->SBC_Scene->SBC_Base_Player[Index]->Player_Node->setPosition(p.x, p.y, p.z);
+
+	App->SBC_Scene->SBC_Base_Player[Index]->Player_Node->setVisible(false);
+
+	// ------------------------ Bulet
+	btVector3 pos = btVector3(p.x, p.y, p.z);
+	btVector3 inertia = btVector3(0, 0, 0);
+	btQuaternion rot = btQuaternion(1, 0, 0, 0);
+	btDefaultMotionState *state = new btDefaultMotionState(btTransform(rot, pos));
+
+	//mShape = new btSphereShape(btScalar(radius));
+	App->SBC_Scene->SBC_Base_Player[Index]->mShape = new btCapsuleShape(btScalar(radius), btScalar(height));
+	App->SBC_Scene->SBC_Base_Player[Index]->mObject = new btRigidBody(mass, state, App->SBC_Scene->SBC_Base_Player[Index]->mShape, inertia);
+	App->SBC_Scene->SBC_Base_Player[Index]->mObject->setActivationState(DISABLE_DEACTIVATION);
+	App->SBC_Scene->SBC_Base_Player[Index]->mObject->setAngularFactor(0.0);
+
+	App->SBC_Scene->SBC_Base_Player[Index]->mObject->setUserPointer(App->SBC_Scene->SBC_Base_Player[Index]->Player_Node);
+
+	App->SBC_Scene->SBC_Base_Player[Index]->mObject->setUserIndex(Enums::Usage_Player);
+
+
+	int f = App->SBC_Scene->SBC_Base_Player[Index]->mObject->getCollisionFlags();
+	App->SBC_Scene->SBC_Base_Player[Index]->mObject->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+
+	App->Cl_Bullet->dynamicsWorld->addRigidBody(App->SBC_Scene->SBC_Base_Player[Index]->mObject);
+
+	// Save for later
+	Current_Position = App->SBC_Scene->SBC_Base_Player[Index]->Player_Node->getPosition();
+	Physics_Position = App->SBC_Scene->SBC_Base_Player[Index]->mObject->getWorldTransform().getOrigin();
+	Physics_Rotation = App->SBC_Scene->SBC_Base_Player[Index]->mObject->getWorldTransform().getRotation();
+
+	PlayerAdded = 1;
+
+	btCollisionWorld* Poo = NULL;
+	PostStep(Poo);
 }
 
 // *************************************************************************
@@ -236,12 +319,12 @@ LRESULT CALLBACK SB_Player::Player_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == IDC_PHYSICSDEBUG)
 		{
-			int f = App->SBC_Player->mObject->getCollisionFlags();
+			int f = App->SBC_Scene->SBC_Base_Player[0]->mObject->getCollisionFlags();
 
 			if (App->SBC_Player->Show_Physics_Debug == 1)
 			{
 				App->SBC_Player->Show_Physics_Debug = 0;
-				App->SBC_Player->mObject->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+				App->SBC_Scene->SBC_Base_Player[0]->mObject->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
 				App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 0;
 				App->Cl19_Ogre->RenderFrame();
@@ -250,7 +333,7 @@ LRESULT CALLBACK SB_Player::Player_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 			else
 			{
 				App->SBC_Player->Show_Physics_Debug = 1;
-				App->SBC_Player->mObject->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+				App->SBC_Scene->SBC_Base_Player[0]->mObject->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 			}
 			
 			return 1;
@@ -276,75 +359,7 @@ void SB_Player::Hide_Player_Dlg(bool Show)
 void SB_Player::SetUp(void)
 {
 	Initialize(StartPos, Capsule_Mass, Capsule_Radius, Capsule_Height);
-	CameraPitch = App->Cl19_Ogre->mSceneMgr->createCamera("PlayerPitch");
-}
-
-// *************************************************************************
-// *	  						Load_Player Terry Bernie				   *
-// *************************************************************************
-void SB_Player::Load_Player(void)
-{
-	Initialize(StartPos, Capsule_Mass, Capsule_Radius, Capsule_Height);
-
-	CameraPitch = App->Cl19_Ogre->mSceneMgr->createCamera("PlayerPitch");
-
-}
-
-// *************************************************************************
-// *	  					Initialize Terry Bernie						   *
-// *************************************************************************
-void SB_Player::Initialize(const Ogre::Vector3 p, float mass, float radius, float height)
-{
-	
-	// ------------------- Ogre
-	if (Player_Ent && Player_Node)
-	{
-		App->Cl19_Ogre->mSceneMgr->destroySceneNode(Player_Node);
-		App->Cl19_Ogre->mSceneMgr->destroyEntity(Player_Ent);
-		App->Cl19_Ogre->mSceneMgr->destroyCamera(CameraPitch);
-		Player_Ent = nullptr;
-		Player_Node = nullptr;
-		CameraPitch = nullptr;
-	}
-
-	Player_Ent = App->Cl19_Ogre->mSceneMgr->createEntity("Player_1", "axes.mesh", App->Cl19_Ogre->Equity_Resource_Group);
-	Player_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	Player_Node->attachObject(Player_Ent);
-	Player_Node->setPosition(p.x, p.y, p.z);
-
-	Player_Node->setVisible(false);
-
-	// ------------------------ Bulet
-	btVector3 pos = btVector3(p.x, p.y, p.z);
-	btVector3 inertia = btVector3(0, 0, 0);
-	btQuaternion rot = btQuaternion(1, 0, 0, 0);
-	btDefaultMotionState *state = new btDefaultMotionState(btTransform(rot, pos));
-
-	//mShape = new btSphereShape(btScalar(radius));
-	mShape = new btCapsuleShape(btScalar(radius), btScalar(height));
-	mObject = new btRigidBody(mass, state, mShape, inertia);
-	mObject->setActivationState(DISABLE_DEACTIVATION);
-	mObject->setAngularFactor(0.0);
-
-	mObject->setUserPointer(Player_Node);
-
-	mObject->setUserIndex(Enums::Usage_Player);
-
-
-	int f = mObject->getCollisionFlags();
-	mObject->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
-
-	App->Cl_Bullet->dynamicsWorld->addRigidBody(mObject);
-
-	// Save for later
-	Current_Position = Player_Node->getPosition();
-	Physics_Position = mObject->getWorldTransform().getOrigin();
-	Physics_Rotation = mObject->getWorldTransform().getRotation();
-
-	PlayerAdded = 1;
-
-	btCollisionWorld* Poo = NULL;
-	PostStep(Poo);
+	App->SBC_Scene->SBC_Base_Player[0]->CameraPitch = App->Cl19_Ogre->mSceneMgr->createCamera("PlayerPitch");
 }
 
 // *************************************************************************
@@ -352,8 +367,8 @@ void SB_Player::Initialize(const Ogre::Vector3 p, float mass, float radius, floa
 // *************************************************************************
 void SB_Player::Adjust_Capsule(void)
 {
-	mShape = new btCapsuleShape(btScalar(Capsule_Radius), btScalar(Capsule_Height));
-	mObject->setCollisionShape(mShape);
+	App->SBC_Scene->SBC_Base_Player[0]->mShape = new btCapsuleShape(btScalar(Capsule_Radius), btScalar(Capsule_Height));
+	App->SBC_Scene->SBC_Base_Player[0]->mObject->setCollisionShape(App->SBC_Scene->SBC_Base_Player[0]->mShape);
 
 	
 }
@@ -364,7 +379,7 @@ void SB_Player::Adjust_Capsule(void)
 void SB_Player::Stop(void)
 {
 
-	mObject->setLinearVelocity(btVector3(0, 0, 0));
+	App->SBC_Scene->SBC_Base_Player[0]->mObject->setLinearVelocity(btVector3(0, 0, 0));
 }
 
 // *************************************************************************
@@ -382,11 +397,11 @@ void SB_Player::Forward(float delta)
 
 			btVector3 vel;
 
-			btTransform xform = mObject->getWorldTransform();
-			btVector3 cur = mObject->getLinearVelocity();
+			btTransform xform = App->SBC_Scene->SBC_Base_Player[0]->mObject->getWorldTransform();
+			btVector3 cur = App->SBC_Scene->SBC_Base_Player[0]->mObject->getLinearVelocity();
 			btVector3 basis = xform.getBasis()[2];
 			vel = -Ground_speed * 10 * basis;
-			mObject->setLinearVelocity(btVector3(vel[0], cur[1], vel[2]));
+			App->SBC_Scene->SBC_Base_Player[0]->mObject->setLinearVelocity(btVector3(vel[0], cur[1], vel[2]));
 
 		}
 
@@ -403,12 +418,12 @@ void SB_Player::Move_Right(void)
 	{
 		btVector3 vel;
 
-		btTransform xform = mObject->getWorldTransform();
-		btVector3 cur = mObject->getLinearVelocity();
+		btTransform xform = App->SBC_Scene->SBC_Base_Player[0]->mObject->getWorldTransform();
+		btVector3 cur = App->SBC_Scene->SBC_Base_Player[0]->mObject->getLinearVelocity();
 		btVector3 basis = xform.getBasis()[2];
 		vel = -Ground_speed * 10 * basis;
 
-		mObject->setLinearVelocity(btVector3(vel[2], cur[1], -vel[0]));
+		App->SBC_Scene->SBC_Base_Player[0]->mObject->setLinearVelocity(btVector3(vel[2], cur[1], -vel[0]));
 
 		Check_Collisions();
 	}
@@ -423,12 +438,12 @@ void SB_Player::Move_Left(void)
 	{
 		btVector3 vel;
 
-		btTransform xform = mObject->getWorldTransform();
-		btVector3 cur = mObject->getLinearVelocity();
+		btTransform xform = App->SBC_Scene->SBC_Base_Player[0]->mObject->getWorldTransform();
+		btVector3 cur = App->SBC_Scene->SBC_Base_Player[0]->mObject->getLinearVelocity();
 		btVector3 basis = xform.getBasis()[2];
 		vel = -Ground_speed * 10 * basis;
 
-		mObject->setLinearVelocity(btVector3(-vel[2], cur[1], vel[0]));
+		App->SBC_Scene->SBC_Base_Player[0]->mObject->setLinearVelocity(btVector3(-vel[2], cur[1], vel[0]));
 
 		Check_Collisions();
 	}
@@ -443,11 +458,11 @@ void SB_Player::Back(void)
 	{
 		btVector3 vel;
 
-		btTransform xform = mObject->getWorldTransform();
-		btVector3 cur = mObject->getLinearVelocity();
+		btTransform xform = App->SBC_Scene->SBC_Base_Player[0]->mObject->getWorldTransform();
+		btVector3 cur = App->SBC_Scene->SBC_Base_Player[0]->mObject->getLinearVelocity();
 		btVector3 basis = xform.getBasis()[2];
 		vel = Ground_speed * 10 * basis;			 //cur[1],
-		mObject->setLinearVelocity(btVector3(vel[0], cur[1], vel[2]));
+		App->SBC_Scene->SBC_Base_Player[0]->mObject->setLinearVelocity(btVector3(vel[0], cur[1], vel[2]));
 		Check_Collisions();
 	}
 }
@@ -459,7 +474,7 @@ void SB_Player::Rotate(const Ogre::Vector3 axis, bool normalize)
 {
 	if (PlayerAdded == 1)
 	{
-		btTransform xform = mObject->getWorldTransform();
+		btTransform xform = App->SBC_Scene->SBC_Base_Player[0]->mObject->getWorldTransform();
 		btMatrix3x3 R = xform.getBasis();
 		R = R * btMatrix3x3(btQuaternion(btVector3(axis[0], axis[1], axis[2]), TurnRate));
 
@@ -470,7 +485,7 @@ void SB_Player::Rotate(const Ogre::Vector3 axis, bool normalize)
 		}
 
 		xform.setBasis(R);
-		mObject->setWorldTransform(xform);
+		App->SBC_Scene->SBC_Base_Player[0]->mObject->setWorldTransform(xform);
 	}
 }
 
@@ -481,7 +496,7 @@ void SB_Player::Rotate_FromCam(const Ogre::Vector3 axis, float delta, bool norma
 {
 	if (PlayerAdded == 1)
 	{
-		btTransform xform = mObject->getWorldTransform();
+		btTransform xform = App->SBC_Scene->SBC_Base_Player[0]->mObject->getWorldTransform();
 		btMatrix3x3 R = xform.getBasis();
 		R = R * btMatrix3x3(btQuaternion(btVector3(axis[0], axis[1], axis[2]), delta));
 
@@ -492,7 +507,7 @@ void SB_Player::Rotate_FromCam(const Ogre::Vector3 axis, float delta, bool norma
 		}
 
 		xform.setBasis(R);
-		mObject->setWorldTransform(xform);
+		App->SBC_Scene->SBC_Base_Player[0]->mObject->setWorldTransform(xform);
 	}
 }
 
@@ -501,10 +516,10 @@ void SB_Player::Rotate_FromCam(const Ogre::Vector3 axis, float delta, bool norma
 // *************************************************************************
 void SB_Player::Jump(const Ogre::Vector3 axis, float force)
 {
-	btVector3 pos = mObject->getWorldTransform().getOrigin();
+	btVector3 pos = App->SBC_Scene->SBC_Base_Player[0]->mObject->getWorldTransform().getOrigin();
 	pos[1] = pos[1] + 0.2;
 
-	mObject->getWorldTransform().setOrigin(btVector3(pos[0], pos[1], pos[2]));
+	App->SBC_Scene->SBC_Base_Player[0]->mObject->getWorldTransform().setOrigin(btVector3(pos[0], pos[1], pos[2]));
 
 }
 
@@ -762,9 +777,9 @@ void SB_Player::Save_Location(char* name)
 
 
 	strcpy(App->Cl_Scene_Data->S_Player_Locations[Count]->Name, name);
-	App->Cl_Scene_Data->S_Player_Locations[Count]->Current_Position = App->SBC_Player->Player_Node->getPosition();
-	App->Cl_Scene_Data->S_Player_Locations[Count]->Physics_Position = App->SBC_Player->mObject->getWorldTransform().getOrigin();
-	App->Cl_Scene_Data->S_Player_Locations[Count]->Physics_Rotation = App->SBC_Player->mObject->getWorldTransform().getRotation();
+	App->Cl_Scene_Data->S_Player_Locations[Count]->Current_Position = App->SBC_Scene->SBC_Base_Player[0]->Player_Node->getPosition();
+	App->Cl_Scene_Data->S_Player_Locations[Count]->Physics_Position = App->SBC_Scene->SBC_Base_Player[0]->mObject->getWorldTransform().getOrigin();
+	App->Cl_Scene_Data->S_Player_Locations[Count]->Physics_Rotation = App->SBC_Scene->SBC_Base_Player[0]->mObject->getWorldTransform().getRotation();
 	App->Cl_Scene_Data->Player_Location_Count++;
 
 }
@@ -775,9 +790,9 @@ void SB_Player::Save_Location(char* name)
 void SB_Player::Goto_Location(int Index)
 {
 
-	Player_Node->setPosition(App->Cl_Scene_Data->S_Player_Locations[Index]->Current_Position);
+	App->SBC_Scene->SBC_Base_Player[0]->Player_Node->setPosition(App->Cl_Scene_Data->S_Player_Locations[Index]->Current_Position);
 
-	mObject->getWorldTransform().setOrigin(App->Cl_Scene_Data->S_Player_Locations[Index]->Physics_Position);
+	App->SBC_Scene->SBC_Base_Player[0]->mObject->getWorldTransform().setOrigin(App->Cl_Scene_Data->S_Player_Locations[Index]->Physics_Position);
 
-	mObject->getWorldTransform().setRotation(App->Cl_Scene_Data->S_Player_Locations[Index]->Physics_Rotation);
+	App->SBC_Scene->SBC_Base_Player[0]->mObject->getWorldTransform().setRotation(App->Cl_Scene_Data->S_Player_Locations[Index]->Physics_Rotation);
 }

@@ -218,11 +218,11 @@ void GD19_Scene_Data::ClearScene(void)
 			App->Cl19_Ogre->OgreListener->Animate_State2 = NULL;
 
 
-			App->SBC_Player->Player_Node->detachAllObjects();  // Remove Player
-			App->Cl19_Ogre->mSceneMgr->destroySceneNode(App->SBC_Player->Player_Node);
-			App->Cl19_Ogre->mSceneMgr->destroyEntity(App->SBC_Player->Player_Ent);
-			App->SBC_Player->Player_Node = NULL;
-			App->SBC_Player->Player_Ent = NULL;
+			App->SBC_Scene->SBC_Base_Player[0]->Player_Node->detachAllObjects();  // Remove Player
+			App->Cl19_Ogre->mSceneMgr->destroySceneNode(App->SBC_Scene->SBC_Base_Player[0]->Player_Node);
+			App->Cl19_Ogre->mSceneMgr->destroyEntity(App->SBC_Scene->SBC_Base_Player[0]->Player_Ent);
+			App->SBC_Scene->SBC_Base_Player[0]->Player_Node = NULL;
+			App->SBC_Scene->SBC_Base_Player[0]->Player_Ent = NULL;
 		}
 
 		

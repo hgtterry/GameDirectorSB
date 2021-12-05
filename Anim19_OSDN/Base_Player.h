@@ -27,5 +27,12 @@ class Base_Player
 public:
 	Base_Player();
 	~Base_Player();
+
+	Ogre::Camera*		CameraPitch;
+	Ogre::Entity*		Player_Ent;
+	Ogre::SceneNode*	Player_Node;
+
+	btRigidBody *mObject;
+	btCollisionShape *mShape;
 };
 

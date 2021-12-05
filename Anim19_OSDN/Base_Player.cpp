@@ -28,6 +28,12 @@ distribution.
 
 Base_Player::Base_Player()
 {
+	CameraPitch =	nullptr;
+	Player_Ent =	nullptr;
+	Player_Node =	nullptr;
+
+	mObject =		nullptr;
+	mShape =		nullptr;
 }
 
 

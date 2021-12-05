@@ -144,13 +144,13 @@ void GD19_Bullet::Reset_Physics(void)
 		startTransform.setRotation(btQuaternion(1.0f, 0.0f, 0.0f, 0.0f));
 		startTransform.setOrigin(initialPosition);
 
-		App->SBC_Player->mObject->clearForces();
-		App->SBC_Player->mObject->setLinearVelocity(zeroVector);
-		App->SBC_Player->mObject->setAngularVelocity(zeroVector);
+		App->SBC_Scene->SBC_Base_Player[0]->mObject->clearForces();
+		App->SBC_Scene->SBC_Base_Player[0]->mObject->setLinearVelocity(zeroVector);
+		App->SBC_Scene->SBC_Base_Player[0]->mObject->setAngularVelocity(zeroVector);
 
-		App->SBC_Player->mObject->setWorldTransform(startTransform);
-		App->SBC_Player->mObject->getMotionState()->setWorldTransform(startTransform);
-		App->SBC_Player->mObject->activate(true);
+		App->SBC_Scene->SBC_Base_Player[0]->mObject->setWorldTransform(startTransform);
+		App->SBC_Scene->SBC_Base_Player[0]->mObject->getMotionState()->setWorldTransform(startTransform);
+		App->SBC_Scene->SBC_Base_Player[0]->mObject->activate(true);
 	}
 
 	App->Cl19_Ogre->OgreListener->GD_Run_Physics = 1;

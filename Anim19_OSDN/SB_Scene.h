@@ -20,11 +20,19 @@ misrepresented as being the original software.
 3. This notice may not be removed or altered from any source
 distribution.
 */
+
 #pragma once
+
+#include "Base_Player.h"
+
 class SB_Scene
 {
 public:
 	SB_Scene();
 	~SB_Scene();
+
+	Base_Player*			SBC_Base_Player[100];
+
+	int Player_Count;		// Actual Player Count Zero Based
 };
 

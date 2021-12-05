@@ -94,7 +94,7 @@ void EQ15_Bullet_AddRoom::AddToScene(bool Create_Player)
 
 	if (Create_Player == 1)
 	{
-		App->SBC_Player->Load_Player();
+		//App->SBC_Player->Load_Player();
 	}
 
 	App->Cl_Grid->Grid_SetVisible(1);

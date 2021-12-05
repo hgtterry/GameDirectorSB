@@ -98,14 +98,14 @@ bool SB_Project::Clear_Level()
 			}
 		}
 
-		if (App->SBC_Player->Player_Ent && App->SBC_Player->Player_Node)
+		if (App->SBC_Scene->SBC_Base_Player[0]->Player_Ent && App->SBC_Scene->SBC_Base_Player[0]->Player_Node)
 		{
-			App->Cl19_Ogre->mSceneMgr->destroySceneNode(App->SBC_Player->Player_Node);
-			App->Cl19_Ogre->mSceneMgr->destroyEntity(App->SBC_Player->Player_Ent);
-			App->Cl19_Ogre->mSceneMgr->destroyCamera(App->SBC_Player->CameraPitch);
-			App->SBC_Player->Player_Ent = nullptr;
-			App->SBC_Player->Player_Node = nullptr;
-			App->SBC_Player->CameraPitch = nullptr;
+			App->Cl19_Ogre->mSceneMgr->destroySceneNode(App->SBC_Scene->SBC_Base_Player[0]->Player_Node);
+			App->Cl19_Ogre->mSceneMgr->destroyEntity(App->SBC_Scene->SBC_Base_Player[0]->Player_Ent);
+			App->Cl19_Ogre->mSceneMgr->destroyCamera(App->SBC_Scene->SBC_Base_Player[0]->CameraPitch);
+			App->SBC_Scene->SBC_Base_Player[0]->Player_Ent = nullptr;
+			App->SBC_Scene->SBC_Base_Player[0]->Player_Node = nullptr;
+			App->SBC_Scene->SBC_Base_Player[0]->CameraPitch = nullptr;
 		}
 
 		// Bullet Related
@@ -668,6 +668,8 @@ bool SB_Project::Load_Scene()
 	Read_Camera();
 
 	App->CL_Bullet_AddRoom->AddToScene(1); // Load First room into scene
+
+	App->SBC_Player->Load_Player();
 
 	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
 

@@ -28,6 +28,10 @@ distribution.
 
 SB_Scene::SB_Scene()
 {
+	Player_Count = 0;
+
+	SBC_Base_Player[100] = { nullptr };
+
 }
 
 
