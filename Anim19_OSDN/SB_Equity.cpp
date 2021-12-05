@@ -97,7 +97,9 @@ LRESULT CALLBACK SB_Equity::Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 		HWND Ogre_Hwnd = GetDlgItem(hDlg, IDC_OGREWIN2);
 
 		App->SBC_Equity->MeshView_Hwnd = GetDlgItem(hDlg, IDC_OGREWIN2);
+
 		App->SBC_Equity->MeshViewDialog_Hwnd = hDlg;
+		App->CL_Vm_FileIO->LoadHistory_Equity();
 
 		App->SBC_Equity->Init_Bmps_Globals();
 

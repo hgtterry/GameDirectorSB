@@ -21,7 +21,10 @@ public:
 	bool Create_Output_Folder(char* Extension);
 
 	void Init_History();
+
 	void LoadHistory();
+	void LoadHistory_Equity();
+
 	void Save_FileHistory();
 	void RecentFileHistory_Update();
 	void ResentHistory_Clear();

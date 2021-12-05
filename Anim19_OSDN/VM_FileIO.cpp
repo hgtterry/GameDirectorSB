@@ -574,6 +574,67 @@ void VM_FileIO::ResentHistory_Clear()
 }
 
 // *************************************************************************
+// *					LoadHistory_Equity Terry Bernie					   *
+// *************************************************************************
+void VM_FileIO::LoadHistory_Equity()
+{
+	mPreviousFiles.resize(EQUITY_NUM_RECENT_FILES);
+
+	char buffer[1024];
+	char buf[1024];
+
+	strcpy(buf, UserData_Folder);
+	strcat(buf, "\\Vima19\\Vima19.ini");
+
+	ReadRecentFiles = fopen(buf, "rt");
+
+	if (!ReadRecentFiles)
+	{
+		App->Say("Cant Find Recent Files");
+		return;
+	}
+
+	// Read in File Names from RecentFiles.ini
+	for (unsigned int i = 0; i < EQUITY_NUM_RECENT_FILES; ++i)
+	{
+		memset(buffer, 0, 1024);
+		fgets(buffer, 1024, ReadRecentFiles);
+
+		char Path[1024];
+		strcpy(Path, buffer);
+		int Len = strlen(Path);
+		Path[Len - 1] = 0;
+
+		mPreviousFiles[i] = std::string(Path);
+	}
+
+	fclose(ReadRecentFiles);
+
+	mHistoryMenu = CreateMenu();
+
+	// Check for empty slots and gray out
+	for (int i = EQUITY_NUM_RECENT_FILES - 1; i >= 0; --i)
+	{
+		char szText[1024];
+		strcpy(szText, mPreviousFiles[i].c_str());
+
+		UINT iFlags = 0;
+		int Result = 0;
+		Result = strcmp("<empty>", szText);
+		if (Result == 0)
+		{
+			iFlags = MF_GRAYED | MF_DISABLED;
+		}
+
+		AppendMenu(mHistoryMenu, MF_STRING | iFlags, EQUITY_RECENT_FILE_ID(i), szText);
+	}
+
+	ModifyMenu(GetMenu(App->SBC_Equity->MeshViewDialog_Hwnd), ID_FILE_RECENTFILESEQ, MF_BYCOMMAND | MF_POPUP,
+		(UINT_PTR)mHistoryMenu, "Recent files");
+	return;
+}
+
+// *************************************************************************
 // *					Search_For_Folder Terry Bernie				 	   *
 // *************************************************************************
 bool VM_FileIO::Search_For_Folder(char* FolderPath)

@@ -28,6 +28,8 @@ public:
 
 	VM_Render*		RenderListener;
 
+	HWND MeshViewDialog_Hwnd;
+
 protected:
 
 	static LRESULT CALLBACK Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
@@ -46,7 +48,7 @@ protected:
 	void Zoom(void);
 
 	HWND MeshView_Hwnd;
-	HWND MeshViewDialog_Hwnd;
+	//HWND MeshViewDialog_Hwnd;
 
 	bool ShowGridFlag;
 	bool ShowDivisions;
@@ -88,5 +90,8 @@ protected:
 
 	Ogre::RenderWindow* MeshView_Window;
 	Ogre::SceneNode*	CamNode;
+
+#define EQUITY_NUM_RECENT_FILES2 0x8
+#define EQUITY_RECENT_FILE_ID2(_n_) (6000 + _n_)
 };
 
