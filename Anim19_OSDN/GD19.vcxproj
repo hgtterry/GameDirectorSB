@@ -158,6 +158,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Base_Player.h" />
     <ClInclude Include="EQ15_Bullet_AddRoom.h" />
     <ClInclude Include="EQ15_Ogre_Import.h" />
     <ClInclude Include="EQ15_WE_Listener.h" />
@@ -229,6 +230,7 @@
     <ClInclude Include="VM_WorldEditor.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Base_Player.cpp" />
     <ClCompile Include="CollisionTools.cpp" />
     <ClCompile Include="Common\imGui\ImGui_cpp\imgui.cpp" />
     <ClCompile Include="Common\imGui\ImGui_cpp\ImguiManager.cpp" />
