@@ -666,6 +666,21 @@ bool SB_Properties::Edit_Player_Physics_Onclick(LPARAM lParam)
 }
 
 // *************************************************************************
+// *				Update_ListView_Area	Terry Bernie 			 	   *
+// *************************************************************************
+bool SB_Properties::Update_ListView_Area()
+{
+	char buff[255];
+	strcpy(buff,"Area_1");
+	strcat(buff, "   (Area)");
+	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
+
+	ListView_DeleteAllItems(App->SBC_Properties->Properties_hLV);
+
+	return 1;
+}
+
+// *************************************************************************
 // *				Update_ListView_Camera	Terry Bernie 			 	   *
 // *************************************************************************
 bool SB_Properties::Update_ListView_Camera()

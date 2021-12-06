@@ -113,7 +113,8 @@ namespace Enums
 		Edit_Area_Change = 10,
 		Edit_Change_Level = 11,
 		Edit_Particles = 12,
-		Edit_Camera = 13
+		Edit_Camera = 13,
+		Edit_Area = 14
 	};
 
 	enum Usage
