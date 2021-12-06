@@ -62,6 +62,7 @@ protected:
 	bool Toggle_BBox_Flag;
 	bool Toggle_Grid_Flag;
 	bool Toggle_Hair_Flag;
+	bool Toggle_Light_Flag;
 
 	int XAxis_min;
 	int	XAxis_max;

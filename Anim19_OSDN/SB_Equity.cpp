@@ -35,6 +35,7 @@ SB_Equity::SB_Equity()
 	Toggle_BBox_Flag = 0;
 	Toggle_Grid_Flag = 1;
 	Toggle_Hair_Flag = 1;
+	Toggle_Light_Flag = 0;
 
 	YAxis_min = -8;
 	YAxis_max = 8;
@@ -93,6 +94,7 @@ LRESULT CALLBACK SB_Equity::Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 	{
 	case WM_INITDIALOG:
 	{
+		//SendDlgItemMessage(hDlg, IDC_3DSBROWSE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		HWND Ogre_Hwnd = GetDlgItem(hDlg, IDC_OGREWIN2);
 
@@ -152,6 +154,43 @@ LRESULT CALLBACK SB_Equity::Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 			App->Custom_Button_Toggle(item, App->SBC_Equity->Toggle_Faces_Flag);
 			return CDRF_DODEFAULT;
 		}
+
+		if (some_item->idFrom == IDC_TBPOINTS && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->SBC_Equity->Toggle_Points_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_TBSHOWBONES && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->SBC_Equity->Toggle_Bones_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_TBNORMALS && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->SBC_Equity->Toggle_Normals_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_TBBOUNDBOX && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->SBC_Equity->Toggle_BBox_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_TBLIGHT && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->SBC_Equity->Toggle_Light_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+
 
 		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
 		{
@@ -413,6 +452,137 @@ LRESULT CALLBACK SB_Equity::Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 			return TRUE;
 		}
 
+		//-------------------------------------------------------- Show Points
+		if (LOWORD(wParam) == IDC_TBPOINTS)
+		{
+			if (App->CL_Vm_Model->Model_Loaded == 1)
+			{
+				HWND Temp = GetDlgItem(hDlg, IDC_TBPOINTS);
+
+				if (App->SBC_Equity->RenderListener->ShowPoints == 1)
+				{
+					App->SBC_Equity->RenderListener->ShowPoints = 0;
+					App->SBC_Equity->Toggle_Points_Flag = 0;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshPointsOff_Bmp);
+				}
+				else
+				{
+					App->SBC_Equity->RenderListener->ShowPoints = 1;
+					App->SBC_Equity->Toggle_Points_Flag = 1;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshPointsOn_Bmp);
+				}
+			}
+			return TRUE;
+		}
+
+		//-------------------------------------------------------- Show Bones
+		if (LOWORD(wParam) == IDC_TBSHOWBONES)
+		{
+			if (App->CL_Vm_Model->Model_Loaded == 1)
+			{
+				if (App->CL_Vm_Model->BoneCount == 0)
+				{
+					App->Say("Model has no Bone/Joint structure.");
+					return FALSE;
+				}
+
+				HWND Temp = GetDlgItem(hDlg, IDC_TBSHOWBONES);
+
+				if (App->SBC_Equity->RenderListener->ShowBones == 1)
+				{
+					App->SBC_Equity->RenderListener->ShowBones = 0;
+					App->SBC_Equity->Toggle_Bones_Flag = 0;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BonesOff_Bmp);
+				}
+				else
+				{
+					App->SBC_Equity->RenderListener->ShowBones = 1;
+					App->SBC_Equity->Toggle_Bones_Flag = 1;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BonesOn_Bmp);
+				}
+			}
+			return TRUE;
+		}
+
+		//-------------------------------------------------------- Show Normals
+		if (LOWORD(wParam) == IDC_TBNORMALS)
+		{
+			if (App->CL_Vm_Model->Model_Loaded == 1)
+			{
+				HWND Temp = GetDlgItem(hDlg, IDC_TBNORMALS);
+
+				if (App->SBC_Equity->RenderListener->ShowNormals == 1)
+				{
+					App->SBC_Equity->RenderListener->ShowNormals = 0;
+					App->SBC_Equity->Toggle_Normals_Flag = 0;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_NormalsOff_Bmp);
+				}
+				else
+				{
+					App->SBC_Equity->RenderListener->ShowNormals = 1;
+					App->SBC_Equity->Toggle_Normals_Flag = 1;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_NormalsOn_Bmp);
+				}
+			}
+			return TRUE;
+		}
+
+		//-------------------------------------------------------- Show Bound Box
+		if (LOWORD(wParam) == IDC_TBBOUNDBOX)
+		{
+			if (App->CL_Vm_Model->Model_Loaded == 1)
+			{
+				HWND Temp = GetDlgItem(hDlg, IDC_TBBOUNDBOX);
+
+				if (App->SBC_Equity->RenderListener->ShowBoundingBox == 1)
+				{
+					App->SBC_Equity->RenderListener->ShowBoundingBox = 0;
+					App->SBC_Equity->Toggle_BBox_Flag = 0;
+
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOff_Bmp);
+				}
+				else
+				{
+					App->SBC_Equity->RenderListener->ShowBoundingBox = 1;
+					App->SBC_Equity->Toggle_BBox_Flag = 1;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOn_Bmp);
+				}
+			}
+			return TRUE;
+		}
+
+		//-------------------------------------------------------- Show Lights
+		if (LOWORD(wParam) == IDC_TBLIGHT)
+		{
+			if (App->CL_Vm_Model->Model_Loaded == 1)
+			{
+				HWND Temp = GetDlgItem(hDlg, IDC_TBLIGHT);
+
+				if (App->SBC_Equity->RenderListener->Light_Activated == 1)
+				{
+					App->SBC_Equity->RenderListener->Light_Activated = 0;
+					App->SBC_Equity->Toggle_Light_Flag = 0;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_LightsOff_Bmp);
+				}
+				else
+				{
+					App->SBC_Equity->RenderListener->Light_Activated = 1;
+					App->SBC_Equity->Toggle_Light_Flag = 1;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_LightsOn_Bmp);
+				}
+			}
+			return TRUE;
+		}
 		
 
 		if (LOWORD(wParam) == IDC_BTEQRESET)
