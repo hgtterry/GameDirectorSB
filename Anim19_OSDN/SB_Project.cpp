@@ -98,15 +98,7 @@ bool SB_Project::Clear_Level()
 			}
 		}
 
-		if (App->SBC_Scene->SBC_Base_Player[0]->Player_Ent && App->SBC_Scene->SBC_Base_Player[0]->Player_Node)
-		{
-			App->Cl19_Ogre->mSceneMgr->destroySceneNode(App->SBC_Scene->SBC_Base_Player[0]->Player_Node);
-			App->Cl19_Ogre->mSceneMgr->destroyEntity(App->SBC_Scene->SBC_Base_Player[0]->Player_Ent);
-			App->Cl19_Ogre->mSceneMgr->destroyCamera(App->SBC_Scene->SBC_Base_Player[0]->CameraPitch);
-			App->SBC_Scene->SBC_Base_Player[0]->Player_Ent = nullptr;
-			App->SBC_Scene->SBC_Base_Player[0]->Player_Node = nullptr;
-			App->SBC_Scene->SBC_Base_Player[0]->CameraPitch = nullptr;
-		}
+		App->SBC_Player->Reset_Class();
 
 		// Bullet Related
 		int i;

@@ -14,7 +14,7 @@
 #include "bitmap._h"
 #include "bitmap.__h"
 
-//#include <gdiplus.h>
+#pragma warning( disable : 4800)
 
 VM_Textures::VM_Textures()
 {

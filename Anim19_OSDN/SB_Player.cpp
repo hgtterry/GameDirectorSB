@@ -83,6 +83,38 @@ SB_Player::~SB_Player()
 }
 
 // *************************************************************************
+// *	  					Reset_Class Bernie							   *
+// *************************************************************************
+void SB_Player::Reset_Class(void)
+{
+	int Count = 0;
+
+	while (Count < App->SBC_Scene->Player_Count) // Remove Ogre Objects
+	{
+		if (App->SBC_Scene->SBC_Base_Player[Count])
+		{
+			if (App->SBC_Scene->SBC_Base_Player[Count]->Player_Ent && App->SBC_Scene->SBC_Base_Player[Count]->Player_Node)
+			{
+				App->Cl19_Ogre->mSceneMgr->destroySceneNode(App->SBC_Scene->SBC_Base_Player[Count]->Player_Node);
+				App->Cl19_Ogre->mSceneMgr->destroyEntity(App->SBC_Scene->SBC_Base_Player[Count]->Player_Ent);
+				App->Cl19_Ogre->mSceneMgr->destroyCamera(App->SBC_Scene->SBC_Base_Player[Count]->CameraPitch);
+				App->SBC_Scene->SBC_Base_Player[Count]->Player_Ent = nullptr;
+				App->SBC_Scene->SBC_Base_Player[Count]->Player_Node = nullptr;
+				App->SBC_Scene->SBC_Base_Player[Count]->CameraPitch = nullptr;
+			}
+
+			delete App->SBC_Scene->SBC_Base_Player[Count];
+			App->SBC_Scene->SBC_Base_Player[Count] = nullptr;
+		}
+
+		Count++;
+	}
+
+	App->SBC_Scene->Player_Count = 0;
+
+}
+
+// *************************************************************************
 // *	  					Add_Player Bernie							   *
 // *************************************************************************
 void SB_Player::Add_Player(void)

@@ -28,6 +28,8 @@ public:
 	SB_Player();
 	~SB_Player();
 
+	void Reset_Class(void);
+
 	void Add_Player(void);
 
 	bool Start_Player_PropsPanel();
