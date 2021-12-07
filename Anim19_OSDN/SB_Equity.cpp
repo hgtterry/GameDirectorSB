@@ -190,7 +190,19 @@ LRESULT CALLBACK SB_Equity::Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_TBSHOWHAIR && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->SBC_Equity->Toggle_Hair_Flag);
+			return CDRF_DODEFAULT;
+		}
 
+		if (some_item->idFrom == IDC_TBSHOWGRID && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->SBC_Equity->Toggle_Grid_Flag);
+			return CDRF_DODEFAULT;
+		}
 
 		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
 		{
@@ -385,8 +397,7 @@ LRESULT CALLBACK SB_Equity::Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 			{
 				App->Cl_Grid->ShowHair = 0;
 				App->SBC_Equity->HairNode->setVisible(false);
-
-				//App->CL_Vm_TopBar->Toggle_Hair_Flag = 0;
+				App->SBC_Equity->Toggle_Hair_Flag = 0;
 
 				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HairOff_Bmp);
 			}
@@ -394,14 +405,39 @@ LRESULT CALLBACK SB_Equity::Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 			{
 				App->Cl_Grid->ShowHair = 1;
 				App->SBC_Equity->HairNode->setVisible(true);
-
-				//App->CL_Vm_TopBar->Toggle_Hair_Flag = 1;
+				App->SBC_Equity->Toggle_Hair_Flag = 1;
 
 				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HairOn_Bmp);
 			}
 			return TRUE;
 		}
 
+		//-------------------------------------------------------- Show Grid
+		if (LOWORD(wParam) == IDC_TBSHOWGRID)
+		{
+			HWND Temp = GetDlgItem(hDlg, IDC_TBSHOWGRID);
+
+			if (App->Cl_Grid->ShowGridFlag == 1)
+			{
+				App->Cl_Grid->Grid_SetVisible(0);
+				App->Cl_Grid->ShowGridFlag = 0;
+
+				App->SBC_Equity->Toggle_Grid_Flag = 0;
+
+				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_GridOff_Bmp);
+			}
+			else
+			{
+				App->Cl_Grid->Grid_SetVisible(1);
+				App->Cl_Grid->ShowGridFlag = 1;
+
+				App->SBC_Equity->Toggle_Grid_Flag = 1;
+
+				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_GridOn_Bmp);
+
+			}
+			return TRUE;
+		}
 		//-------------------------------------------------------- Show Textures
 		if (LOWORD(wParam) == IDC_TBSHOWTEXTURE)
 		{
