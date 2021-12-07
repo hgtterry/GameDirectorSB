@@ -20,12 +20,6 @@ VM_TopBar::VM_TopBar()
 	MouseOption_DlgHwnd =	nullptr;
 
 	// Main Controls
-	Toggle_Faces_Flag = 0;
-	Toggle_Textures_Flag = 0;
-	Toggle_Points_Flag = 0;
-	Toggle_Bones_Flag = 0;
-	Toggle_Normals_Flag = 0;
-	Toggle_BBox_Flag = 0;
 	Toggle_Grid_Flag = 1;
 	Toggle_Hair_Flag = 1;
 
@@ -60,11 +54,7 @@ VM_TopBar::~VM_TopBar()
 // *************************************************************************
 void VM_TopBar::Reset_Class()
 {
-	Toggle_Faces_Flag = 0;
-	Toggle_Textures_Flag = 0;
-	Toggle_Points_Flag = 0;
-	Toggle_Bones_Flag = 0;
-
+	
 	Toggle_Tabs_Old_Flag = 1;
 	Toggle_Tabs_Motions_Flag = 0;
 	Toggle_Tabs_Dimensions_Flag = 0;
@@ -116,12 +106,6 @@ LRESULT CALLBACK VM_TopBar::TopBar_Globals_Proc(HWND hDlg, UINT message, WPARAM 
 	{
 		App->CL_Vm_TopBar->TabsHwnd = hDlg;
 	
-		SendDlgItemMessage(hDlg, IDC_TBSHOWFACES, WM_SETFONT, (WPARAM)App->Font_CB15_Bold, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_TBSHOWTEXTURE, WM_SETFONT, (WPARAM)App->Font_CB15_Bold, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_TBSHOWBONES, WM_SETFONT, (WPARAM)App->Font_CB15_Bold, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_TBNORMALS, WM_SETFONT, (WPARAM)App->Font_CB15_Bold, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_TBBOUNDBOX, WM_SETFONT, (WPARAM)App->Font_CB15_Bold, MAKELPARAM(TRUE, 0));
-		
 		App->CL_Vm_TopBar->Start_Tabs_Headers();
 		App->CL_Vm_TopBar->Start_Camera_TB();
 		App->CL_Vm_TopBar->Start_Motions_TB();
@@ -154,20 +138,6 @@ LRESULT CALLBACK VM_TopBar::TopBar_Globals_Proc(HWND hDlg, UINT message, WPARAM 
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		if (some_item->idFrom == IDC_TBSHOWTEXTURE && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_Vm_TopBar->Toggle_Textures_Flag);
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_TBSHOWFACES && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_Vm_TopBar->Toggle_Faces_Flag);
-			return CDRF_DODEFAULT;
-		}
-
 		if (some_item->idFrom == IDC_TBSHOWGRID && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
@@ -187,8 +157,7 @@ LRESULT CALLBACK VM_TopBar::TopBar_Globals_Proc(HWND hDlg, UINT message, WPARAM 
 
 	case WM_COMMAND:
 		
-		// -----------------------------------------------------
-
+		//-------------------------------------------------------- Show Grid
 		if (LOWORD(wParam) == IDC_TBSHOWGRID)
 		{
 			HWND Temp = GetDlgItem(hDlg, IDC_TBSHOWGRID);
@@ -215,6 +184,7 @@ LRESULT CALLBACK VM_TopBar::TopBar_Globals_Proc(HWND hDlg, UINT message, WPARAM 
 			return TRUE;
 		}
 
+		//-------------------------------------------------------- Show Hair
 		if (LOWORD(wParam) == IDC_TBSHOWHAIR)
 		{
 			HWND Temp = GetDlgItem(hDlg, IDC_TBSHOWHAIR);
@@ -240,55 +210,7 @@ LRESULT CALLBACK VM_TopBar::TopBar_Globals_Proc(HWND hDlg, UINT message, WPARAM 
 			return TRUE;
 		}
 
-
-		if (LOWORD(wParam) == IDC_TBSHOWTEXTURE)
-		{
-			if (App->CL_Vm_Model->Model_Loaded == 1)
-			{
-				HWND Temp = GetDlgItem(hDlg, IDC_TBSHOWTEXTURE);
-
-				if (App->Cl19_Ogre->RenderListener->ShowTextured == 1)
-				{
-					//App->Cl19_Ogre->RenderListener->ShowTextured = 0;
-					App->CL_Vm_TopBar->Toggle_Textures_Flag = 0;
-
-					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOff_Bmp);
-				}
-				else
-				{
-					//App->Cl19_Ogre->RenderListener->ShowTextured = 1;
-					App->CL_Vm_TopBar->Toggle_Textures_Flag = 1;
-
-					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOn_Bmp);
-				}
-			}
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDC_TBSHOWFACES)
-		{
-			if (App->CL_Vm_Model->Model_Loaded == 1)
-			{
-				HWND Temp = GetDlgItem(hDlg, IDC_TBSHOWFACES);
-
-				if (App->Cl19_Ogre->RenderListener->ShowFaces == 1)
-				{
-					App->Cl19_Ogre->RenderListener->ShowFaces = 0;
-					App->CL_Vm_TopBar->Toggle_Faces_Flag = 0;
-
-					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
-				}
-				else
-				{
-					App->Cl19_Ogre->RenderListener->ShowFaces = 1;
-					App->CL_Vm_TopBar->Toggle_Faces_Flag = 1;
-
-					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOn_Bmp);
-				}
-			}
-			return TRUE;
-		}
-
+		//-------------------------------------------------------- Show Info
 		if (LOWORD(wParam) == IDC_TBINFO)
 		{
 			if (App->CL_Vm_ImGui->Show_Model_Data == 1)
@@ -519,19 +441,8 @@ void VM_TopBar::Hide_Tabs(void)
 // *************************************************************************
 void VM_TopBar::Reset_Main_Controls(void)
 {
-	HWND Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWFACES);
-	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
-
-	Temp = GetDlgItem(TabsHwnd, IDC_TBPOINTS);
-	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshPointsOff_Bmp);
-
-	Temp = GetDlgItem(TabsHwnd, IDC_TBBOUNDBOX);
-	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOff_Bmp);
-
-	Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWBONES);
-	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BonesOff_Bmp);
-
-	Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWGRID);
+	
+	HWND Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWGRID);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_GridOn_Bmp);
 
 	Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWHAIR);
@@ -540,35 +451,8 @@ void VM_TopBar::Reset_Main_Controls(void)
 	Temp = GetDlgItem(TabsHwnd, IDC_TBINFO);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfo_Bmp);
 
-	Temp = GetDlgItem(TabsHwnd, IDC_TBNORMALS);
-	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_NormalsOff_Bmp);
-
-	Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWTEXTURE);
-	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOff_Bmp);
-
-	Temp = GetDlgItem(TabsHwnd, IDC_TBLIGHT);
-	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_LightsOff_Bmp);
-
 	// Main Controls
 	
-	Toggle_Textures_Flag = 0;
-	//App->Cl19_Ogre->RenderListener->ShowTextured = 0;
-
-	Toggle_Faces_Flag = 0;
-	//App->Cl19_Ogre->RenderListener->ShowFaces = 0;
-
-	Toggle_Points_Flag = 0;
-	//App->Cl19_Ogre->RenderListener->ShowPoints = 0;
-
-	Toggle_Bones_Flag = 0;
-	//App->Cl19_Ogre->RenderListener->ShowBones = 0;
-
-	Toggle_Normals_Flag = 0;
-	//App->Cl19_Ogre->RenderListener->ShowNormals = 0;
-
-	Toggle_BBox_Flag = 0;
-	//App->Cl19_Ogre->RenderListener->ShowBoundingBox = 0;
-
 	Toggle_Hair_Flag = 1;
 	App->Cl_Grid->ShowHair = 1;
 	App->Cl_Grid->Hair_SetVisible(1);
@@ -896,19 +780,8 @@ void VM_TopBar::Init_Bmps_Groups(void)
 // *************************************************************************
 void VM_TopBar::Init_Bmps_Globals(void)
 {
-	HWND Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWFACES);
-	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
-
-	Temp = GetDlgItem(TabsHwnd, IDC_TBPOINTS);
-	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshPointsOff_Bmp);
-
-	Temp = GetDlgItem(TabsHwnd, IDC_TBBOUNDBOX);
-	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOff_Bmp);
-
-	Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWBONES);
-	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BonesOff_Bmp);
-
-	Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWGRID);
+	
+	HWND Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWGRID);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_GridOn_Bmp);
 
 	Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWHAIR);
@@ -917,80 +790,7 @@ void VM_TopBar::Init_Bmps_Globals(void)
 	Temp = GetDlgItem(TabsHwnd, IDC_TBINFO);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfo_Bmp);
 
-	Temp = GetDlgItem(TabsHwnd, IDC_TBNORMALS);
-	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_NormalsOff_Bmp);
-
-	Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWTEXTURE);
-	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOff_Bmp);
-
-	Temp = GetDlgItem(TabsHwnd, IDC_TBLIGHT);
-	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_LightsOff_Bmp);
-
-
 	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
-
-	Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWTEXTURE);
-	TOOLINFO ti1 = { 0 };
-	ti1.cbSize = sizeof(ti1);
-	ti1.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
-	ti1.uId = (UINT_PTR)Temp;
-	ti1.lpszText = "Toggle Textures";
-	ti1.hwnd = App->MainHwnd;
-	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti1);
-
-	Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWFACES);
-	TOOLINFO ti2 = { 0 };
-	ti2.cbSize = sizeof(ti2);
-	ti2.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
-	ti2.uId = (UINT_PTR)Temp;
-	ti2.lpszText = "Toggle Faces";
-	ti2.hwnd = App->MainHwnd;
-	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti2);
-
-	Temp = GetDlgItem(TabsHwnd, IDC_TBPOINTS);
-	TOOLINFO ti3 = { 0 };
-	ti3.cbSize = sizeof(ti3);
-	ti3.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
-	ti3.uId = (UINT_PTR)Temp;
-	ti3.lpszText = "Toggle Points";
-	ti3.hwnd = App->MainHwnd;
-	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti3);
-
-	Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWBONES);
-	TOOLINFO ti4 = { 0 };
-	ti4.cbSize = sizeof(ti4);
-	ti4.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
-	ti4.uId = (UINT_PTR)Temp;
-	ti4.lpszText = "Toggle Bones";
-	ti4.hwnd = App->MainHwnd;
-	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti4);
-
-	Temp = GetDlgItem(TabsHwnd, IDC_TBNORMALS);
-	TOOLINFO ti5 = { 0 };
-	ti5.cbSize = sizeof(ti5);
-	ti5.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
-	ti5.uId = (UINT_PTR)Temp;
-	ti5.lpszText = "Toggle Normals";
-	ti5.hwnd = App->MainHwnd;
-	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti5);
-
-	Temp = GetDlgItem(TabsHwnd, IDC_TBBOUNDBOX);
-	TOOLINFO ti6 = { 0 };
-	ti6.cbSize = sizeof(ti6);
-	ti6.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
-	ti6.uId = (UINT_PTR)Temp;
-	ti6.lpszText = "Toggle Bounding Box";
-	ti6.hwnd = App->MainHwnd;
-	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti6);
-
-	Temp = GetDlgItem(TabsHwnd, IDC_TBLIGHT);
-	TOOLINFO ti7 = { 0 };
-	ti7.cbSize = sizeof(ti7);
-	ti7.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
-	ti7.uId = (UINT_PTR)Temp;
-	ti7.lpszText = "Toggle Lights";
-	ti7.hwnd = App->MainHwnd;
-	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti7);
 
 	Temp = GetDlgItem(TabsHwnd, IDC_TBINFO);
 	TOOLINFO ti8 = { 0 };
@@ -1086,7 +886,6 @@ void VM_TopBar::Init_Bmps_Motions(void)
 	ti5.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_Motions, TTM_ADDTOOL, 0, (LPARAM)&ti5);
 
-	// --------------------------------------------------- 
 }
 
 // *************************************************************************
@@ -1591,30 +1390,6 @@ void VM_TopBar::TogglePlayBmp(void)
 	{
 		SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_Playoff);
 	}
-}
-
-// *************************************************************************
-// *					ToggleTexturesBmp Inflanite					       *
-// *************************************************************************
-void VM_TopBar::ToggleTexturesBmp(bool Show)
-{
-	HWND Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWTEXTURE);
-
-	if (Show == 1)
-	{
-		//App->Cl19_Ogre->RenderListener->ShowTextured = 1;
-		App->CL_Vm_TopBar->Toggle_Textures_Flag = 1;
-
-		SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOn_Bmp);
-	}
-	else
-	{
-		//App->Cl19_Ogre->RenderListener->ShowTextured = 0;
-		App->CL_Vm_TopBar->Toggle_Textures_Flag = 0;
-
-		SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOff_Bmp);
-	}
-
 }
 
 // *************************************************************************
