@@ -104,6 +104,7 @@ LRESULT CALLBACK SB_Equity::Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 		App->SBC_Equity->MeshView_Hwnd = GetDlgItem(hDlg, IDC_OGREWIN2);
 
 		App->SBC_Equity->MeshViewDialog_Hwnd = hDlg;
+
 		App->CL_Vm_FileIO->LoadHistory_Equity();
 
 		App->SBC_Equity->Init_Bmps_Globals();
@@ -240,18 +241,32 @@ LRESULT CALLBACK SB_Equity::Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 		return 1;
 	}
 
-	case WM_LBUTTONDOWN: // BERNIE_HEAR_FIRE 
+	case WM_MOUSEMOVE: // ok up and running and we have a loop for mouse
 	{
+		
+		App->SBC_Equity->EB_imgui.mouseMoved();
 
-		if (App->OgreStarted == 1)
+		SetFocus(App->SBC_Equity->MeshView_Hwnd);
+		break;
+	}
+
+
+	case WM_LBUTTONDOWN:
+	{
+		App->SBC_Equity->EB_imgui.mousePressed();
+
+		if (!ImGui::GetIO().WantCaptureMouse)
 		{
+			if (App->OgreStarted == 1)
+			{
 
-			SetCapture(App->SBC_Equity->MeshViewDialog_Hwnd);// Bernie
-			SetCursorPos(500, 500);
-			App->CL_WE_Listener_E15->Pl_LeftMouseDown = 1;
-			App->CUR = SetCursor(NULL);
+				SetCapture(App->SBC_Equity->MeshViewDialog_Hwnd);// Bernie
+				SetCursorPos(500, 500);
+				App->CL_WE_Listener_E15->Pl_LeftMouseDown = 1;
+				App->CUR = SetCursor(NULL);
 
-			return 1;
+				return 1;
+			}
 		}
 
 		return 1;
@@ -259,6 +274,8 @@ LRESULT CALLBACK SB_Equity::Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 
 	case WM_LBUTTONUP:
 	{
+		App->SBC_Equity->EB_imgui.mouseReleased();
+
 		if (App->OgreStarted == 1)
 		{
 			ReleaseCapture();
