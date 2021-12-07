@@ -5,6 +5,27 @@
 
 EB_Listener::EB_Listener()
 {
+	mMoveScale = 0;
+	mMoveSensitivity = 50;
+	Wheel = 0;
+
+	Show_Model_Data = 0;
+
+	Pl_DeltaMouse = 0;
+	Pl_MouseX = 0;
+	Pl_MouseY = 0;
+	Pl_Cent500X = 500;
+	Pl_Cent500Y = 500;
+
+	mMoveSensitivityMouse = 50;
+
+	Pl_LeftMouseDown = 0;
+	Pl_RightMouseDown = 0;
+
+	WE_Cam = nullptr;
+
+	View_Height = 0;
+	View_Width = 0;
 }
 
 
