@@ -65,7 +65,7 @@ SB_Equity::SB_Equity()
 	ColourDivision = ColourValue(1, 1, 1, 0.4);
 
 	Use_Imgui = 1;
-	Show_Gui_Debug = 0;
+	Show_Gui_Debug = 1;
 }
 
 
@@ -637,13 +637,13 @@ LRESULT CALLBACK SB_Equity::Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 		//-------------------------------------------------------- Show Info
 		if (LOWORD(wParam) == IDC_EBINFO)
 		{
-			if (App->SBC_Equity->Show_Gui_Debug == 1)
+			if (App->CL_WE_Listener_E15->Show_Model_Data == 1)
 			{
-				App->SBC_Equity->Show_Gui_Debug = 0;
+				App->CL_WE_Listener_E15->Show_Model_Data = 0;
 			}
 			else
 			{
-				App->SBC_Equity->Show_Gui_Debug = 1;
+				App->CL_WE_Listener_E15->Show_Model_Data = 1;
 			}
 			return TRUE;
 		}

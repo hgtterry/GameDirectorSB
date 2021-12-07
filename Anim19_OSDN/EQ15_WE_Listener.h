@@ -8,9 +8,11 @@ public:
 	bool WE_RenderingQueued(const FrameEvent& evt);
 	bool frameStarted(const FrameEvent& evt);
 
-	int			Wheel;
-	bool		Pl_LeftMouseDown;
-	bool		Pl_RightMouseDown;
+	int		Wheel;
+	bool	Pl_LeftMouseDown;
+	bool	Pl_RightMouseDown;
+
+	bool	Show_Model_Data;
 
 	int		View_Height;
 	int		View_Width;
@@ -25,6 +27,9 @@ protected:
 	bool Capture_LeftMouse_Model(void);
 	bool Capture_RightMouse_Model(void);
 
+	void ImGui_Model_Data(void);
+	void Render_ImGui(void);
+
 	Radian		mRotX;
 	Radian		mRotY;
 	Vector3		mTranslateVector;
@@ -32,8 +37,8 @@ protected:
 	float		mMoveSensitivity;
 
 	float		Pl_DeltaMouse;
-	int Pl_MouseX;
-	int Pl_MouseY;
+	int			Pl_MouseX;
+	int			Pl_MouseY;
 
 	POINT		Pl_pt;
 	long		Pl_Cent500X;
