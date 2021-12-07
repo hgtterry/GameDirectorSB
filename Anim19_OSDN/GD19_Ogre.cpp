@@ -79,7 +79,7 @@ bool GD19_Ogre::InitOgre(void)
 	App->Cl_Visuals->Load_PickSight();
 	App->Cl_Grid->Load_Arrow();
 	
-	m_imgui.Init(mSceneMgr, RenderHwnd); // OIS mouse + keyboard
+	m_imgui.Init(mSceneMgr, RenderHwnd); 
 
 	
 	createFrameListener();

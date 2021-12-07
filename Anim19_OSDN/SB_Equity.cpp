@@ -63,6 +63,9 @@ SB_Equity::SB_Equity()
 	ColourHairY = ColourValue(0, 1, 0, 1);
 	ColourMain = ColourValue(0.7, 0.7, 0, 0.6);
 	ColourDivision = ColourValue(1, 1, 1, 0.4);
+
+	Use_Imgui = 1;
+	Show_Gui_Debug = 0;
 }
 
 
@@ -613,6 +616,20 @@ LRESULT CALLBACK SB_Equity::Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 			}
 			return TRUE;
 		}
+
+		//-------------------------------------------------------- Show Info
+		if (LOWORD(wParam) == IDC_EBINFO)
+		{
+			if (App->SBC_Equity->Show_Gui_Debug == 1)
+			{
+				App->SBC_Equity->Show_Gui_Debug = 0;
+			}
+			else
+			{
+				App->SBC_Equity->Show_Gui_Debug = 1;
+			}
+			return TRUE;
+		}
 		
 
 		if (LOWORD(wParam) == IDC_BTEQRESET)
@@ -667,7 +684,7 @@ void SB_Equity::Init_Bmps_Globals(void)
 	Temp = GetDlgItem(MeshViewDialog_Hwnd, IDC_TBSHOWHAIR);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HairOn_Bmp);
 
-	Temp = GetDlgItem(MeshViewDialog_Hwnd, IDC_TBINFO);
+	Temp = GetDlgItem(MeshViewDialog_Hwnd, IDC_EBINFO);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfo_Bmp);
 
 	Temp = GetDlgItem(MeshViewDialog_Hwnd, IDC_TBNORMALS);
@@ -830,6 +847,11 @@ bool SB_Equity::Set_OgreWindow(void)
 	Reset_View();
 
 	App->Cl19_Ogre->OgreListener->Equity_Running = 1; // Must be Last
+
+	if (Use_Imgui == 1)
+	{
+		EB_imgui.Init(mSceneMgrMeshView, MeshView_Hwnd);
+	}
 
 	return 1;
 }

@@ -30,6 +30,11 @@ public:
 
 	HWND MeshViewDialog_Hwnd;
 
+	OgreImGui  EB_imgui;
+
+	bool Use_Imgui;
+	bool Show_Gui_Debug;
+
 protected:
 
 	static LRESULT CALLBACK Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);

@@ -118,6 +118,17 @@ bool GD19_OgreListener::frameStarted(const FrameEvent& evt)
 
 	if (Equity_Running == 1)
 	{
+		if (App->SBC_Equity->Use_Imgui == 1)
+		{
+			App->SBC_Equity->EB_imgui.NewFrame(evt.timeSinceLastFrame, (float)1024, (float)768);
+
+			if (App->SBC_Equity->Show_Gui_Debug == 1)
+			{
+				ImGui::ShowDemoWindow();
+			}
+
+		}
+
 		return true;
 	}
 	else
@@ -183,8 +194,7 @@ bool GD19_OgreListener::frameStarted(const FrameEvent& evt)
 // *************************************************************************
 bool GD19_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 {
-	App->Cl19_Ogre->m_imgui.render();
-
+	
 	if (App->CL_Vm_ImGui->Show_Progress_Bar == 1)
 	{
 		App->Cl19_Ogre->m_imgui.render();
@@ -194,9 +204,16 @@ bool GD19_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 	if (Equity_Running == 1)
 	{
 		App->CL_WE_Listener_E15->WE_RenderingQueued(evt);
+
+		if (App->SBC_Equity->Use_Imgui == 1)
+		{
+			App->SBC_Equity->EB_imgui.render();
+		}
+
 		return 1;
 	}
 
+	App->Cl19_Ogre->m_imgui.render();
 
 	mRotX = 0;
 	mRotY = 0;
