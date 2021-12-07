@@ -393,9 +393,8 @@ LRESULT CALLBACK SB_Equity::Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 		{
 			HWND Temp = GetDlgItem(hDlg, IDC_TBSHOWHAIR);
 
-			if (App->Cl_Grid->ShowHair == 1)
+			if (App->SBC_Equity->Toggle_Hair_Flag == 1)
 			{
-				App->Cl_Grid->ShowHair = 0;
 				App->SBC_Equity->HairNode->setVisible(false);
 				App->SBC_Equity->Toggle_Hair_Flag = 0;
 
@@ -403,7 +402,6 @@ LRESULT CALLBACK SB_Equity::Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 			}
 			else
 			{
-				App->Cl_Grid->ShowHair = 1;
 				App->SBC_Equity->HairNode->setVisible(true);
 				App->SBC_Equity->Toggle_Hair_Flag = 1;
 
@@ -417,20 +415,16 @@ LRESULT CALLBACK SB_Equity::Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 		{
 			HWND Temp = GetDlgItem(hDlg, IDC_TBSHOWGRID);
 
-			if (App->Cl_Grid->ShowGridFlag == 1)
+			if (App->SBC_Equity->Toggle_Grid_Flag == 1)
 			{
-				App->Cl_Grid->Grid_SetVisible(0);
-				App->Cl_Grid->ShowGridFlag = 0;
-
+				App->SBC_Equity->GridNode->setVisible(false);
 				App->SBC_Equity->Toggle_Grid_Flag = 0;
 
 				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_GridOff_Bmp);
 			}
 			else
 			{
-				App->Cl_Grid->Grid_SetVisible(1);
-				App->Cl_Grid->ShowGridFlag = 1;
-
+				App->SBC_Equity->GridNode->setVisible(true);
 				App->SBC_Equity->Toggle_Grid_Flag = 1;
 
 				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_GridOn_Bmp);
