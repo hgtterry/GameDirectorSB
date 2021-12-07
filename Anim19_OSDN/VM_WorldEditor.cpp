@@ -18,7 +18,7 @@ VM_WorldEditor::~VM_WorldEditor()
 // *************************************************************************
 bool VM_WorldEditor::Start_WE_import()
 {
-	DialogBox(App->hInst, (LPCTSTR)IDD_WEQUICKLOAD, App->Fdlg, (DLGPROC)WE_import_Proc);
+	DialogBox(App->hInst, (LPCTSTR)IDD_WEQUICKLOAD, App->MainHwnd, (DLGPROC)WE_import_Proc);
 	return 1;
 }
 

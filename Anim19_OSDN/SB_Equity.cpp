@@ -83,6 +83,7 @@ bool SB_Equity::Start_Equity()
 	DialogBox(App->hInst, (LPCTSTR)IDD_EQUITY, App->Fdlg, (DLGPROC)Equity_Proc);
 
 	App->RenderBackGround = 0;
+
 	App->Cl19_Ogre->OgreListener->Equity_Running = 0;
 	Close_OgreWindow();
 	return 1;
@@ -246,7 +247,7 @@ LRESULT CALLBACK SB_Equity::Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 		
 		App->SBC_Equity->EB_imgui.mouseMoved();
 
-		SetFocus(App->SBC_Equity->MeshView_Hwnd);
+		//SetFocus(App->SBC_Equity->MeshView_Hwnd);
 		break;
 	}
 
