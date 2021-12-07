@@ -79,7 +79,6 @@ GD19_App::GD19_App(void)
 	// ---------------------------------------------------- 15/10/21
 	CL_Ogre_Import_E15 = nullptr;
 	CL_Bullet_AddRoom =  nullptr;
-	CL_WE_Listener_E15 = nullptr;
 
 	// ---------------------------------------------------- 07/12/21
 	EBC_Listener =		nullptr;
@@ -245,8 +244,7 @@ bool GD19_App::InitApp(void)
 	// ---------------------------------------------------- 15/10/21
 	CL_Ogre_Import_E15 =	new EQ15_Ogre_Import();
 	CL_Bullet_AddRoom =		new EQ15_Bullet_AddRoom();		
-	CL_WE_Listener_E15 =	new EQ15_WE_Listener();
-
+	
 	// ---------------------------------------------------- 07/12/21
 	EBC_Listener =			new EB_Listener();
 

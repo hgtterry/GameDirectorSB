@@ -183,8 +183,8 @@ void VM_Render::PreRender()
 		RenderSystem* renderSystem = App->SBC_Equity->manObj->_getManager()->getDestinationRenderSystem();
 		Node* parentNode = App->SBC_Equity->manObj->getParentNode();
 		renderSystem->_setWorldMatrix(parentNode->_getFullTransform());
-		renderSystem->_setViewMatrix(App->CL_WE_Listener_E15->WE_Cam->getViewMatrix());
-		renderSystem->_setProjectionMatrix(App->CL_WE_Listener_E15->WE_Cam->getProjectionMatrixRS());
+		renderSystem->_setViewMatrix(App->EBC_Listener->WE_Cam->getViewMatrix());
+		renderSystem->_setProjectionMatrix(App->EBC_Listener->WE_Cam->getProjectionMatrixRS());
 	}
 	else
 	{

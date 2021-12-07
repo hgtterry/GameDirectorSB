@@ -232,11 +232,11 @@ LRESULT CALLBACK SB_Equity::Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 
 		if (zDelta > 0)
 		{
-			App->CL_WE_Listener_E15->Wheel = -1;
+			App->EBC_Listener->Wheel = -1;
 		}
 		else if (zDelta < 0)
 		{
-			App->CL_WE_Listener_E15->Wheel = 1;
+			App->EBC_Listener->Wheel = 1;
 		}
 
 		return 1;
@@ -263,7 +263,7 @@ LRESULT CALLBACK SB_Equity::Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 
 				SetCapture(App->SBC_Equity->MeshViewDialog_Hwnd);// Bernie
 				SetCursorPos(500, 500);
-				App->CL_WE_Listener_E15->Pl_LeftMouseDown = 1;
+				App->EBC_Listener->Pl_LeftMouseDown = 1;
 				App->CUR = SetCursor(NULL);
 
 				return 1;
@@ -280,7 +280,7 @@ LRESULT CALLBACK SB_Equity::Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 		if (App->OgreStarted == 1)
 		{
 			ReleaseCapture();
-			App->CL_WE_Listener_E15->Pl_LeftMouseDown = 0;
+			App->EBC_Listener->Pl_LeftMouseDown = 0;
 			SetCursor(App->CUR);
 			return 1;
 		}
@@ -293,7 +293,7 @@ LRESULT CALLBACK SB_Equity::Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 		if (App->OgreStarted == 1)
 		{
 			ReleaseCapture();
-			App->CL_WE_Listener_E15->Pl_RightMouseDown = 0;
+			App->EBC_Listener->Pl_RightMouseDown = 0;
 			SetCursor(App->CUR);
 			return 1;
 		}
@@ -308,7 +308,7 @@ LRESULT CALLBACK SB_Equity::Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 		{
 			SetCapture(App->SBC_Equity->MeshViewDialog_Hwnd);// Bernie
 			SetCursorPos(500, 500);
-			App->CL_WE_Listener_E15->Pl_RightMouseDown = 1;
+			App->EBC_Listener->Pl_RightMouseDown = 1;
 			App->CUR = SetCursor(NULL);
 			return 1;
 		}
@@ -638,13 +638,13 @@ LRESULT CALLBACK SB_Equity::Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 		//-------------------------------------------------------- Show Info
 		if (LOWORD(wParam) == IDC_EBINFO)
 		{
-			if (App->CL_WE_Listener_E15->Show_Model_Data == 1)
+			if (App->EBC_Listener->Show_Model_Data == 1)
 			{
-				App->CL_WE_Listener_E15->Show_Model_Data = 0;
+				App->EBC_Listener->Show_Model_Data = 0;
 			}
 			else
 			{
-				App->CL_WE_Listener_E15->Show_Model_Data = 1;
+				App->EBC_Listener->Show_Model_Data = 1;
 			}
 			return TRUE;
 		}
@@ -825,18 +825,18 @@ bool SB_Equity::Set_OgreWindow(void)
 	mSceneMgrMeshView = App->Cl19_Ogre->mRoot->createSceneManager("DefaultSceneManager", "MeshViewGD");
 
 
-	App->CL_WE_Listener_E15->WE_Cam = mSceneMgrMeshView->createCamera("CameraMV");
-	App->CL_WE_Listener_E15->WE_Cam->setPosition(Ogre::Vector3(0, 0, 0));
-	App->CL_WE_Listener_E15->WE_Cam->setNearClipDistance(0.1);
-	App->CL_WE_Listener_E15->WE_Cam->setFarClipDistance(5000);
+	App->EBC_Listener->WE_Cam = mSceneMgrMeshView->createCamera("CameraMV");
+	App->EBC_Listener->WE_Cam->setPosition(Ogre::Vector3(0, 0, 0));
+	App->EBC_Listener->WE_Cam->setNearClipDistance(0.1);
+	App->EBC_Listener->WE_Cam->setFarClipDistance(5000);
 
-	Ogre::Viewport* vp = MeshView_Window->addViewport(App->CL_WE_Listener_E15->WE_Cam);
-	App->CL_WE_Listener_E15->WE_Cam->setAspectRatio(Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));
+	Ogre::Viewport* vp = MeshView_Window->addViewport(App->EBC_Listener->WE_Cam);
+	App->EBC_Listener->WE_Cam->setAspectRatio(Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));
 
 	vp->setBackgroundColour(ColourValue(0.5, 0.5, 0.5));
 
 	CamNode = mSceneMgrMeshView->getRootSceneNode()->createChildSceneNode("Camera_Node");
-	CamNode->attachObject(App->CL_WE_Listener_E15->WE_Cam);
+	CamNode->attachObject(App->EBC_Listener->WE_Cam);
 
 	//-------------------------------------------- 
 	MvEnt = mSceneMgrMeshView->createEntity("MVTest", "axes.mesh");
@@ -881,8 +881,8 @@ bool SB_Equity::Get_View_Height_Width(void)
 {
 	Ogre::Viewport* vp = MeshView_Window->getViewport(0);
 
-	App->CL_WE_Listener_E15->View_Width = vp->getActualWidth();
-	App->CL_WE_Listener_E15->View_Height = vp->getActualHeight();
+	App->EBC_Listener->View_Width = vp->getActualWidth();
+	App->EBC_Listener->View_Height = vp->getActualHeight();
 
 	return 1;
 }
@@ -1080,8 +1080,8 @@ void SB_Equity::Reset_View(void)
 	HairNode->setPosition(0, 0, 0);
 	HairNode->resetOrientation();
 
-	App->CL_WE_Listener_E15->WE_Cam->setPosition(Ogre::Vector3(0, 90, 100));
-	App->CL_WE_Listener_E15->WE_Cam->lookAt(Ogre::Vector3(0, 30, 0));
+	App->EBC_Listener->WE_Cam->setPosition(Ogre::Vector3(0, 90, 100));
+	App->EBC_Listener->WE_Cam->lookAt(Ogre::Vector3(0, 30, 0));
 
 }
 
@@ -1094,7 +1094,7 @@ void SB_Equity::Zoom(void)
 	{
 		Reset_View();
 
-		App->CL_WE_Listener_E15->WE_Cam->setPosition(App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].x, App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].y, App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].z);
+		App->EBC_Listener->WE_Cam->setPosition(App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].x, App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].y, App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].z);
 
 		Ogre::Vector3 Move;
 		Move.x = 0;
@@ -1109,7 +1109,7 @@ void SB_Equity::Zoom(void)
 			Move.z = App->CL_Vm_Model->S_BoundingBox[0]->Size[0].y * 2;
 		}
 
-		App->CL_WE_Listener_E15->WE_Cam->moveRelative(Move);
+		App->EBC_Listener->WE_Cam->moveRelative(Move);
 	}
 
 }

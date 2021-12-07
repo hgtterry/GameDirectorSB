@@ -118,7 +118,7 @@ bool GD19_OgreListener::frameStarted(const FrameEvent& evt)
 
 	if (Equity_Running == 1)
 	{
-		App->CL_WE_Listener_E15->frameStarted(evt);
+		App->EBC_Listener->frameStarted(evt);
 		return true;
 	}
 	else
@@ -193,7 +193,7 @@ bool GD19_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 
 	if (Equity_Running == 1)
 	{
-		App->CL_WE_Listener_E15->WE_RenderingQueued(evt);
+		App->EBC_Listener->WE_RenderingQueued(evt);
 
 		if (App->SBC_Equity->Use_Imgui == 1)
 		{
