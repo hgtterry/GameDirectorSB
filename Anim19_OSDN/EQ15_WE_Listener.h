@@ -6,10 +6,14 @@ public:
 	~EQ15_WE_Listener();
 
 	bool WE_RenderingQueued(const FrameEvent& evt);
+	bool frameStarted(const FrameEvent& evt);
 
 	int			Wheel;
 	bool		Pl_LeftMouseDown;
 	bool		Pl_RightMouseDown;
+
+	int		View_Height;
+	int		View_Width;
 
 	Ogre::Camera* WE_Cam;
 

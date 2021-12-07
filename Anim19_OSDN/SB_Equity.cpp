@@ -857,6 +857,19 @@ bool SB_Equity::Set_OgreWindow(void)
 }
 
 // *************************************************************************
+// *				Get_View_Height_Width (Terry Bernie)				   *
+// *************************************************************************
+bool SB_Equity::Get_View_Height_Width(void)
+{
+	Ogre::Viewport* vp = MeshView_Window->getViewport(0);
+
+	App->CL_WE_Listener_E15->View_Width = vp->getActualWidth();
+	App->CL_WE_Listener_E15->View_Height = vp->getActualHeight();
+
+	return 1;
+}
+
+// *************************************************************************
 // *	  					Grid_Update Terry Flanigan					   *
 // *************************************************************************
 void SB_Equity::Grid_Update(bool Create)
@@ -1082,4 +1095,5 @@ void SB_Equity::Zoom(void)
 	}
 
 }
+
 

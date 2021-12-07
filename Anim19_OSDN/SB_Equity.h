@@ -10,6 +10,7 @@ public:
 
 	void Reset_View(void);
 
+	bool Get_View_Height_Width(void);
 
 	bool Model_Loaded;
 

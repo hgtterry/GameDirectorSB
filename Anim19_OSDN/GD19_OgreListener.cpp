@@ -118,17 +118,7 @@ bool GD19_OgreListener::frameStarted(const FrameEvent& evt)
 
 	if (Equity_Running == 1)
 	{
-		if (App->SBC_Equity->Use_Imgui == 1)
-		{
-			App->SBC_Equity->EB_imgui.NewFrame(evt.timeSinceLastFrame, (float)1024, (float)768);
-
-			if (App->SBC_Equity->Show_Gui_Debug == 1)
-			{
-				ImGui::ShowDemoWindow();
-			}
-
-		}
-
+		App->CL_WE_Listener_E15->frameStarted(evt);
 		return true;
 	}
 	else

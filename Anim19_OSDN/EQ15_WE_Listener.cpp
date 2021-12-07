@@ -21,6 +21,9 @@ EQ15_WE_Listener::EQ15_WE_Listener()
 	Pl_RightMouseDown = 0;
 
 	WE_Cam = nullptr;
+
+	View_Height = 0;
+	View_Width = 0;
 }
 
 
@@ -28,16 +31,37 @@ EQ15_WE_Listener::~EQ15_WE_Listener()
 {
 }
 
+// *************************************************************************
+// *				frameStarted   Terry Bernie							   *
+// *************************************************************************
+bool EQ15_WE_Listener::frameStarted(const FrameEvent& evt)
+{
+
+	if (App->Cl19_Ogre->OgreListener->Equity_Running == 1)
+	{
+		if (App->SBC_Equity->Use_Imgui == 1)
+		{
+			App->SBC_Equity->Get_View_Height_Width();
+			App->SBC_Equity->EB_imgui.NewFrame(evt.timeSinceLastFrame, (float)View_Width, (float)View_Height);
+
+			if (App->SBC_Equity->Show_Gui_Debug == 1)
+			{
+				ImGui::ShowDemoWindow();
+			}
+
+		}
+
+		return true;
+	}
+
+	return true;
+}
 
 // *************************************************************************
 // *			WE_RenderingQueued   Terry Flanigan						   *
 // *************************************************************************
 bool EQ15_WE_Listener::WE_RenderingQueued(const FrameEvent& evt)
 {
-	/*Ogre::Radian Rotation_Speed;
-	Rotation_Speed = 1 / (float)57.3;
-	App->Cl_Vm_MeshDesign->MvNode->yaw(Rotation_Speed);*/
-	
 	ModelMode(evt.timeSinceLastFrame);
 	return 1;
 }
