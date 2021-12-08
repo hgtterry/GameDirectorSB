@@ -105,10 +105,6 @@ protected:
 	bool Toggle_FirstCam_Flag;
 	bool Toggle_FreeCam_Flag;
 
-	// Dimensions - >ImGui Flags
-
-
-
 	bool Toggle_GroupsOnly_Flag;
 };
 

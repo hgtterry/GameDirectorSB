@@ -111,7 +111,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	//App->Cl_Bullet->Start_Physics_Console(); // Atention
 	//App->Cl_Panels->MovePhysicsView();
 
-	App->CL_Vm_TopBar->Start_TopBar_Globals();
+	App->SBC_TopTabs->Start_TopBar_Globals();
 
 	App->SBC_Camera->Start_Camera_PropsPanel();
 	App->SBC_Player->Start_Player_PropsPanel();

@@ -165,7 +165,7 @@ void VM_Model::Clear_ModelData(void)
 	//App->Cl_Grid->Reset_Class();
 	App->CL_Vm_Genesis3D->Reset_Class();
 	App->CL_Vm_ImGui->Reset_Class();
-	App->CL_Vm_TopBar->Reset_Class();
+	App->SBC_TopTabs->Reset_Class();
 
 	App->Set_Main_TitleBar(" ");
 

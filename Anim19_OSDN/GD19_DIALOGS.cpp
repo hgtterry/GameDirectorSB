@@ -1076,7 +1076,7 @@ LRESULT CALLBACK GD19_Dialogs::Mouse_Sensitivity_Proc(HWND hDlg, UINT message, W
 		SendDlgItemMessage(hDlg, IDC_CKVERYSLOW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CKFAST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		App->CL_Vm_TopBar->MouseOption_DlgHwnd = hDlg;
+		App->SBC_TopTabs->MouseOption_DlgHwnd = hDlg;
 
 		return TRUE;
 	}
@@ -1160,7 +1160,7 @@ LRESULT CALLBACK GD19_Dialogs::Mouse_Sensitivity_Proc(HWND hDlg, UINT message, W
 			App->Cl19_Ogre->OgreListener->mMoveSensitivity = 5;
 			App->Cl19_Ogre->OgreListener->mMoveSensitivityMouse = 5;
 
-			App->CL_Vm_TopBar->UnCheck_All_MouseOption(hDlg);
+			App->SBC_TopTabs->UnCheck_All_MouseOption(hDlg);
 			App->Cl_Dialogs->Mouse_Slow2 = 1;
 
 			InvalidateRect(hDlg, NULL, false);
@@ -1173,7 +1173,7 @@ LRESULT CALLBACK GD19_Dialogs::Mouse_Sensitivity_Proc(HWND hDlg, UINT message, W
 			App->Cl19_Ogre->OgreListener->mMoveSensitivity = 1;
 			App->Cl19_Ogre->OgreListener->mMoveSensitivityMouse = 1;
 
-			App->CL_Vm_TopBar->UnCheck_All_MouseOption(hDlg);
+			App->SBC_TopTabs->UnCheck_All_MouseOption(hDlg);
 			App->Cl_Dialogs->Mouse_VerySlow2 = 1;
 
 			InvalidateRect(hDlg, NULL, false);

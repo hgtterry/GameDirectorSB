@@ -57,7 +57,6 @@ ebopster
 #include "VM_Genisis3D.h"
 #include "VM_Model.h"
 #include "VM_Textures.h"
-#include "VM_TopBar.h"
 #include "VM_Motions.h"
 #include "VM_Exporter.h"
 #include "VM_FileIO.h"
@@ -135,7 +134,6 @@ public:
 	VM_Genisis3D*		CL_Vm_Genesis3D;
 	VM_Model*			CL_Vm_Model;
 	VM_Textures*		CL_Vm_Textures;
-	VM_TopBar*			CL_Vm_TopBar;
 	VM_Motions*			CL_Vm_Motions;
 	VM_Exporter*		CL_Vm_Exporter;
 	VM_FileIO*			CL_Vm_FileIO;

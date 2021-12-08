@@ -98,10 +98,10 @@ void SB_TopTabs::Reset_Class()
 	//App->Cl19_Ogre->RenderListener->ShowOnlySubMesh = 0;
 
 	App->SBC_TopTabs->Hide_Tabs();
-	ShowWindow(App->CL_Vm_TopBar->Camera_TB_hWnd, SW_SHOW);
+	ShowWindow(App->SBC_TopTabs->Camera_TB_hWnd, SW_SHOW);
 	App->SBC_TopTabs->Toggle_Tabs_Old_Flag = 1;
 
-	RedrawWindow(App->CL_Vm_TopBar->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	RedrawWindow(App->SBC_TopTabs->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 	return;
 }
@@ -264,7 +264,7 @@ LRESULT CALLBACK SB_TopTabs::TopBar_Globals_Proc(HWND hDlg, UINT message, WPARAM
 // *************************************************************************
 void SB_TopTabs::Start_Tabs_Headers(void)
 {
-	Tabs_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_TAB, App->CL_Vm_TopBar->TabsHwnd, (DLGPROC)Tabs_Headers_Proc);
+	Tabs_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_TAB, App->SBC_TopTabs->TabsHwnd, (DLGPROC)Tabs_Headers_Proc);
 }
 
 // *************************************************************************
@@ -461,13 +461,13 @@ LRESULT CALLBACK SB_TopTabs::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM w
 // *************************************************************************
 void SB_TopTabs::Hide_Tabs(void)
 {
-	ShowWindow(App->CL_Vm_TopBar->Camera_TB_hWnd, SW_HIDE);
-	ShowWindow(App->CL_Vm_TopBar->Motions_TB_hWnd, SW_HIDE);
-	ShowWindow(App->CL_Vm_TopBar->Dimensions_TB_hWnd, SW_HIDE);
-	ShowWindow(App->CL_Vm_TopBar->Groups_TB_hWnd, SW_HIDE);
-	ShowWindow(App->CL_Vm_TopBar->Physics_TB_hWnd, SW_HIDE);
-	ShowWindow(App->CL_Vm_TopBar->Editors_TB_hWnd, SW_HIDE);
-	ShowWindow(App->CL_Vm_TopBar->File_TB_hWnd, SW_HIDE);
+	ShowWindow(Camera_TB_hWnd, SW_HIDE);
+	ShowWindow(Motions_TB_hWnd, SW_HIDE);
+	ShowWindow(Dimensions_TB_hWnd, SW_HIDE);
+	ShowWindow(Groups_TB_hWnd, SW_HIDE);
+	ShowWindow(Physics_TB_hWnd, SW_HIDE);
+	ShowWindow(Editors_TB_hWnd, SW_HIDE);
+	ShowWindow(File_TB_hWnd, SW_HIDE);
 
 	ShowWindow(App->CL_Vm_Groups->RightGroups_Hwnd, 0);
 	ShowWindow(App->SBC_Physics->PhysicsPannel_Hwnd, 0);
@@ -969,7 +969,7 @@ LRESULT CALLBACK SB_TopTabs::Motions_TB_Proc(HWND hDlg, UINT message, WPARAM wPa
 		if (some_item->idFrom == IDC_TBPLAY && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_Vm_TopBar->Toggle_Play_Flag);
+			App->Custom_Button_Toggle(item, App->SBC_TopTabs->Toggle_Play_Flag);
 			return CDRF_DODEFAULT;
 		}
 
@@ -1129,7 +1129,7 @@ LRESULT CALLBACK SB_TopTabs::Dimensions_TB_Proc(HWND hDlg, UINT message, WPARAM 
 				App->CL_Vm_ImGui->Show_Rotation = 1;
 			}
 
-			RedrawWindow(App->CL_Vm_TopBar->Dimensions_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			RedrawWindow(App->SBC_TopTabs->Dimensions_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
 		}
 
@@ -1145,7 +1145,7 @@ LRESULT CALLBACK SB_TopTabs::Dimensions_TB_Proc(HWND hDlg, UINT message, WPARAM 
 				App->CL_Vm_ImGui->Show_Position = 1;
 			}
 
-			RedrawWindow(App->CL_Vm_TopBar->Dimensions_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			RedrawWindow(App->SBC_TopTabs->Dimensions_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
 		}
 
@@ -1161,7 +1161,7 @@ LRESULT CALLBACK SB_TopTabs::Dimensions_TB_Proc(HWND hDlg, UINT message, WPARAM 
 				App->CL_Vm_ImGui->Show_Scale = 1;
 			}
 
-			RedrawWindow(App->CL_Vm_TopBar->Dimensions_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			RedrawWindow(App->SBC_TopTabs->Dimensions_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
 		}
 
