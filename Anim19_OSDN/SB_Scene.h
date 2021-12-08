@@ -34,5 +34,8 @@ public:
 	Base_Player*			SBC_Base_Player[100];
 
 	int Player_Count;		// Actual Player Count Zero Based
+
+	bool Scene_Loaded;
+	bool Player_Added; // Is there a vaild player in the level [081221]
 };
 

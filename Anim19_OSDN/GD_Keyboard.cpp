@@ -35,7 +35,7 @@ void GD_Keyboard::Keyboard_Monitor(float deltaTime)
 	}
 
 	//------------------------------------------------ Space Key - Jump and Selection
-	if (GetAsyncKeyState(VK_SPACE) < 0 && App->SBC_Player->PlayerAdded == 1)
+	if (GetAsyncKeyState(VK_SPACE) < 0 && App->SBC_Scene->Player_Added == 1)
 	{
 		if (App->Cl19_Ogre->OgreListener->GD_Selection_Mode == 0)
 		{
@@ -70,28 +70,28 @@ void GD_Keyboard::Keyboard_Monitor(float deltaTime)
 	}
 
 	//------------------------------------------------ Forward
-	if (GetAsyncKeyState(VK_UP) < 0 && App->SBC_Player->PlayerAdded == 1 && App->Cl19_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
+	if (GetAsyncKeyState(VK_UP) < 0 && App->SBC_Scene->Player_Added == 1 && App->Cl19_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
 	{
 		App->SBC_Player->Forward(deltaTime);
 		App->SBC_Player->IsMOving = 1;
 	}
 	else
 	{
-		if (App->SBC_Player->PlayerAdded == 1 && App->SBC_Player->IsMOving == 1 && App->Cl19_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
+		if (App->SBC_Scene->Player_Added == 1 && App->SBC_Player->IsMOving == 1 && App->Cl19_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
 		{
 			App->SBC_Player->Stop();
 			App->SBC_Player->IsMOving = 0;
 		}
 	}
 	//------------------------------------------------ Back
-	if (GetAsyncKeyState(VK_DOWN) < 0 && App->SBC_Player->PlayerAdded == 1 && App->Cl19_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
+	if (GetAsyncKeyState(VK_DOWN) < 0 && App->SBC_Scene->Player_Added == 1 && App->Cl19_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
 	{
 		App->SBC_Player->Back();
 		App->SBC_Player->IsMOving_Back = 1;
 	}
 	else
 	{
-		if (App->SBC_Player->PlayerAdded == 1 && App->SBC_Player->IsMOving_Back == 1 && App->Cl19_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
+		if (App->SBC_Scene->Player_Added == 1 && App->SBC_Player->IsMOving_Back == 1 && App->Cl19_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
 		{
 			App->SBC_Player->Stop();
 			App->SBC_Player->IsMOving_Back = 0;
@@ -99,7 +99,7 @@ void GD_Keyboard::Keyboard_Monitor(float deltaTime)
 	}
 
 	//------------------------------------------------ Turn Right
-	if (GetAsyncKeyState(VK_RIGHT) < 0 && App->SBC_Player->PlayerAdded == 1)
+	if (GetAsyncKeyState(VK_RIGHT) < 0 && App->SBC_Scene->Player_Added == 1)
 	{
 		App->Cl19_Ogre->OgreListener->toggleTimer -= deltaTime;
 
@@ -119,7 +119,7 @@ void GD_Keyboard::Keyboard_Monitor(float deltaTime)
 	}
 
 	//------------------------------------------------ Turn Left
-	if (GetAsyncKeyState(VK_LEFT) < 0 && App->SBC_Player->PlayerAdded == 1)
+	if (GetAsyncKeyState(VK_LEFT) < 0 && App->SBC_Scene->Player_Added == 1)
 	{
 		App->Cl19_Ogre->OgreListener->toggleTimer -= deltaTime;
 
@@ -195,7 +195,7 @@ void GD_Keyboard::Keyboard_Monitor(float deltaTime)
 		}
 		else
 		{
-			if (App->SBC_Player->PlayerAdded == 1)
+			if (App->SBC_Scene->Player_Added == 1)
 			{
 
 				App->SBC_Player->Forward(deltaTime);
@@ -209,7 +209,7 @@ void GD_Keyboard::Keyboard_Monitor(float deltaTime)
 		{
 
 		}
-		else if (App->SBC_Player->PlayerAdded == 1 && App->SBC_Player->IsMOving == 1)
+		else if (App->SBC_Scene->Player_Added == 1 && App->SBC_Player->IsMOving == 1)
 		{
 			App->SBC_Player->Stop();
 			App->SBC_Player->IsMOving = 0;
@@ -241,7 +241,7 @@ void GD_Keyboard::Keyboard_Monitor(float deltaTime)
 		}
 		else
 		{
-			if (App->SBC_Player->PlayerAdded == 1)
+			if (App->SBC_Scene->Player_Added == 1)
 			{
 				App->SBC_Player->Back();
 				App->SBC_Player->IsMOving_Back = 1;
@@ -254,7 +254,7 @@ void GD_Keyboard::Keyboard_Monitor(float deltaTime)
 		{
 
 		}
-		else if (App->SBC_Player->PlayerAdded == 1 && App->SBC_Player->IsMOving_Back == 1)
+		else if (App->SBC_Scene->Player_Added == 1 && App->SBC_Player->IsMOving_Back == 1)
 		{
 			App->SBC_Player->Stop();
 			App->SBC_Player->IsMOving_Back = 0;
@@ -270,7 +270,7 @@ void GD_Keyboard::Keyboard_Monitor(float deltaTime)
 		}
 		else
 		{
-			if (App->SBC_Player->PlayerAdded == 1)
+			if (App->SBC_Scene->Player_Added == 1)
 			{
 				App->SBC_Player->Move_Right();
 				App->SBC_Player->IsMOving_Right = 1;
@@ -283,7 +283,7 @@ void GD_Keyboard::Keyboard_Monitor(float deltaTime)
 		{
 
 		}
-		else if (App->SBC_Player->PlayerAdded == 1 && App->SBC_Player->IsMOving_Right == 1)
+		else if (App->SBC_Scene->Player_Added == 1 && App->SBC_Player->IsMOving_Right == 1)
 		{
 			App->SBC_Player->Stop();
 			App->SBC_Player->IsMOving_Right = 0;
@@ -299,7 +299,7 @@ void GD_Keyboard::Keyboard_Monitor(float deltaTime)
 		}
 		else
 		{
-			if (App->SBC_Player->PlayerAdded == 1)
+			if (App->SBC_Scene->Player_Added == 1)
 			{
 				App->SBC_Player->Move_Left();
 				App->SBC_Player->IsMOving_Left = 1;
@@ -312,7 +312,7 @@ void GD_Keyboard::Keyboard_Monitor(float deltaTime)
 		{
 
 		}
-		else if (App->SBC_Player->PlayerAdded == 1 && App->SBC_Player->IsMOving_Left == 1)
+		else if (App->SBC_Scene->Player_Added == 1 && App->SBC_Player->IsMOving_Left == 1)
 		{
 			App->SBC_Player->Stop();
 			App->SBC_Player->IsMOving_Left = 0;

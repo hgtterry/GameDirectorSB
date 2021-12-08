@@ -590,7 +590,7 @@ bool GD19_Load_Scene::Populate_Level40()
 
 	if(App->Cl_Scene_Data->S_LoadOptions[0]->Has_Player == 1)
 	{
-		App->SBC_Player->PlayerAdded = 1;
+		App->SBC_Scene->Player_Added = 1;
 	}
 
 	App->Cl_Scene_Data->SceneLoaded = 1;

@@ -21,6 +21,7 @@ public:
 	HWND Groups_TB_hWnd;
 	HWND Physics_TB_hWnd;
 	HWND Editors_TB_hWnd;
+	HWND File_TB_hWnd;
 
 	HWND MouseOption_DlgHwnd;
 
@@ -38,6 +39,7 @@ protected:
 	static LRESULT CALLBACK Groups_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Shapes_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Editors_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Files_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	static LRESULT CALLBACK Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
@@ -54,6 +56,7 @@ protected:
 	void Start_Groups_TB(void);
 	void Start_Shapes_TB(void);
 	void Start_Editors_TB(void);
+	void Start_Files_TB(void);
 
 	void Start_Tabs_Headers(void);
 
@@ -73,6 +76,7 @@ protected:
 	bool Toggle_Tabs_Groups_Flag;
 	bool Toggle_Tabs_Shapes_Flag;
 	bool Toggle_Tabs_Editors_Flag;
+	bool Toggle_Tabs_File_Flag;
 
 	// Camera
 	bool Toggle_FirstCam_Flag;

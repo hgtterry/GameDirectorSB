@@ -59,7 +59,6 @@ public:
 
 	char Scene_JustPath[1024];
 
-	bool Scene_Loaded;
 	bool Project_Loaded;
 
 protected:

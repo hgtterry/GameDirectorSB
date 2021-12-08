@@ -130,7 +130,7 @@ void GD19_Bullet::Reset_Physics(void)
 		Count++;
 	}
 	
-	if(App->SBC_Player->PlayerAdded == 1)// && GD_Reset_Player == 1)
+	if(App->SBC_Scene->Player_Added == 1)// && GD_Reset_Player == 1)
 	{
 		btVector3 zeroVector(0,0,0);
 

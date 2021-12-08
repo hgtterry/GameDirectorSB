@@ -209,9 +209,9 @@ void GD19_Scene_Data::ClearScene(void)
 	{
 		App->Cl19_Ogre->OgreListener->Animate_Ogre = 0;
 
-		if(App->SBC_Player->PlayerAdded == 1)
+		if(App->SBC_Scene->Player_Added == 1)
 		{
-			App->SBC_Player->PlayerAdded = 0;
+			App->SBC_Scene->Player_Added = 0;
 			App->Cl19_Ogre->OgreListener->Animate_State->setEnabled(false);
 			App->Cl19_Ogre->OgreListener->Animate_State2->setEnabled(false);
 			App->Cl19_Ogre->OgreListener->Animate_State = NULL;

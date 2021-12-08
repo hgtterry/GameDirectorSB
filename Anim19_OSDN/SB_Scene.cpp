@@ -32,6 +32,9 @@ SB_Scene::SB_Scene()
 
 	SBC_Base_Player[100] = { nullptr };
 
+	Scene_Loaded = 0;
+	Player_Added = 0;
+
 }
 
 

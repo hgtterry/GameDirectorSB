@@ -34,8 +34,6 @@ SB_Player::SB_Player()
 	ShowDebug = 0;
 	Show_Physics_Debug = 1;
 
-	PlayerAdded = 0;
-
 	IsMOving = 0;
 	IsMOving_Back = 0;
 	IsMOving_Right = 0;
@@ -111,6 +109,7 @@ void SB_Player::Reset_Class(void)
 	}
 
 	App->SBC_Scene->Player_Count = 0;
+	App->SBC_Scene->Player_Added = 0;
 
 }
 
@@ -191,7 +190,7 @@ void SB_Player::Initialize(const Ogre::Vector3 p, float mass, float radius, floa
 	Physics_Position = App->SBC_Scene->SBC_Base_Player[Index]->mObject->getWorldTransform().getOrigin();
 	Physics_Rotation = App->SBC_Scene->SBC_Base_Player[Index]->mObject->getWorldTransform().getRotation();
 
-	PlayerAdded = 1;
+	App->SBC_Scene->Player_Added = 1;
 
 	btCollisionWorld* Poo = NULL;
 	PostStep(Poo);
@@ -295,7 +294,7 @@ LRESULT CALLBACK SB_Player::Player_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == IDC_BTSAVE)
 		{
-			if (App->SBC_Project->Scene_Loaded == 1)
+			if (App->SBC_Scene->Scene_Loaded == 1)
 			{
 				App->SBC_Project->Write_Player();
 				App->Say("Player Saved");
@@ -305,7 +304,7 @@ LRESULT CALLBACK SB_Player::Player_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == IDC_BTOBJECT)
 		{
-			if (App->SBC_Project->Scene_Loaded == 1)
+			if (App->SBC_Scene->Scene_Loaded == 1)
 			{
 				App->SBC_Properties->Edit_Physics = 0;
 				App->SBC_Properties->Update_ListView_Player();
@@ -319,7 +318,7 @@ LRESULT CALLBACK SB_Player::Player_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == IDC_BTPHYSICS)
 		{
-			if (App->SBC_Project->Scene_Loaded == 1)
+			if (App->SBC_Scene->Scene_Loaded == 1)
 			{
 				App->SBC_Properties->Edit_Physics = 1;
 				App->SBC_Properties->Update_ListView_Player_Physics();
@@ -416,7 +415,7 @@ void SB_Player::Stop(void)
 // *************************************************************************
 void SB_Player::Forward(float delta)
 {
-	if (PlayerAdded == 1)
+	if (App->SBC_Scene->Player_Added == 1)
 	{
 		Forward_Timer -= delta;
 
@@ -443,7 +442,7 @@ void SB_Player::Forward(float delta)
 // *************************************************************************
 void SB_Player::Move_Right(void)
 {
-	if (PlayerAdded == 1)
+	if (App->SBC_Scene->Player_Added == 1)
 	{
 		btVector3 vel;
 
@@ -463,7 +462,7 @@ void SB_Player::Move_Right(void)
 // *************************************************************************
 void SB_Player::Move_Left(void)
 {
-	if (PlayerAdded == 1)
+	if (App->SBC_Scene->Player_Added == 1)
 	{
 		btVector3 vel;
 
@@ -483,7 +482,7 @@ void SB_Player::Move_Left(void)
 // *************************************************************************
 void SB_Player::Back(void)
 {
-	if (PlayerAdded == 1)
+	if (App->SBC_Scene->Player_Added == 1)
 	{
 		btVector3 vel;
 
@@ -501,7 +500,7 @@ void SB_Player::Back(void)
 // *************************************************************************
 void SB_Player::Rotate(const Ogre::Vector3 axis, bool normalize)
 {
-	if (PlayerAdded == 1)
+	if (App->SBC_Scene->Player_Added == 1)
 	{
 		btTransform xform = App->SBC_Scene->SBC_Base_Player[0]->mObject->getWorldTransform();
 		btMatrix3x3 R = xform.getBasis();
@@ -523,7 +522,7 @@ void SB_Player::Rotate(const Ogre::Vector3 axis, bool normalize)
 // *************************************************************************
 void SB_Player::Rotate_FromCam(const Ogre::Vector3 axis, float delta, bool normalize)
 {
-	if (PlayerAdded == 1)
+	if (App->SBC_Scene->Player_Added == 1)
 	{
 		btTransform xform = App->SBC_Scene->SBC_Base_Player[0]->mObject->getWorldTransform();
 		btMatrix3x3 R = xform.getBasis();

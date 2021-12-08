@@ -192,7 +192,7 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 		if (LOWORD(wParam) == IDC_STOCK)
 		{
-			if (App->SBC_Project->Scene_Loaded == 1)
+			if (App->SBC_Scene->Scene_Loaded == 1)
 			{
 				/*App->Cl_FileView->HideRightPanes();
 				ShowWindow(App->GD_Stock_Hwnd, 1);*/

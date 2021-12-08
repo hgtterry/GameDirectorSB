@@ -53,7 +53,6 @@ SB_Project::SB_Project()
 	Write_Player_Ini = NULL;
 	WriteFile = NULL;
 
-	Scene_Loaded = 0;
 	Project_Loaded = 0;
 
 }
@@ -77,7 +76,7 @@ bool SB_Project::Clear_Level()
 
 	App->Set_Main_TitleBar(" ");
 
-	if (Scene_Loaded == 1)
+	if (App->SBC_Scene->Scene_Loaded == 1)
 	{
 		App->SBC_Physics->Enable_Physics(0);
 
@@ -117,7 +116,7 @@ bool SB_Project::Clear_Level()
 
 	App->Cl_Scene_Data->ObjectCount = 0;
 
-	Scene_Loaded = 0;
+	App->SBC_Scene->Scene_Loaded = 0;
 
 	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamNone;
 
@@ -310,7 +309,7 @@ bool SB_Project::Create_Project()
 
 	App->SBC_Physics->Enable_Physics(1);
 
-	Scene_Loaded = 1;
+	App->SBC_Scene->Scene_Loaded = 1;
 
 	App->Say("Scene Created");
 	return 1;
@@ -676,7 +675,7 @@ bool SB_Project::Load_Scene()
 	App->SBC_Physics->Enable_Physics(1);
 	App->SBC_Camera->Set_Camera();
 
-	Scene_Loaded = 1;
+	App->SBC_Scene->Scene_Loaded = 1;
 
 	App->Set_Main_TitleBar(App->CL_Vm_FileIO->Model_Path_FileName);
 

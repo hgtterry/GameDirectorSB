@@ -1074,95 +1074,80 @@ void VM_ImGui::ImGui_Model_Data(void)
 {
 	ImGui::SetNextWindowSize(ImVec2(530, 250), ImGuiCond_FirstUseEver);
 
-	ImGui::OpenPopup("Model Data");
+	ImGui::OpenPopup("Level Data");
 
-	if (!ImGui::BeginPopupModal("Model Data", &Show_Model_Data, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize))
+	if (!ImGui::BeginPopupModal("Level Data", &Show_Model_Data, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize))
 	{
 		ImGui::EndPopup();
 	}
 	else
 	{
 
-		ImGui::Text("Model Name: = %s", App->CL_Vm_Model->JustName);
-		ImGui::Text("Model File Name: = %s", App->CL_Vm_Model->FileName);
-		ImGui::Text("Model Path: = %s", App->CL_Vm_Model->Model_FolderPath);
-		ImGui::Text("Texture Path: = %s", App->CL_Vm_Model->Texture_FolderPath);
-
-		ImGui::Spacing();
-
-		ImGui::Text("Vertices: = %i", App->CL_Vm_Model->VerticeCount);
-		ImGui::Text("Faces: = %i", App->CL_Vm_Model->FaceCount);
-		ImGui::Text("Normals: = %i", App->CL_Vm_Model->NormalsCount);
-		ImGui::Text("UVs: = %i", App->CL_Vm_Model->UVCount);
-
-		ImGui::Spacing();
-
-		ImGui::Text("Textures: = %i", App->CL_Vm_Model->TextureCount);
-
-		// ----------------------------- Textures
-		char Header[255];
-		int TextureCount = App->CL_Vm_Model->S_Texture[0]->UsedTextureCount;
-
-		sprintf(Header, "%s %i", "Textures", TextureCount);
-
-		if (ImGui::CollapsingHeader(Header))
-		{
-			int Count = 0;
-			while (Count < App->CL_Vm_Model->S_Texture[0]->UsedTextureCount)
-			{
-				//ImGui::Text("%s", App->CL_Vm_Model->S_TextureInfo[Count]->Text_FileName);
-				ImGui::Text("%s", App->CL_Vm_Model->S_MeshGroup[Count]->Text_FileName);
-				Count++;
-			}
-		}
-
+		ImGui::Text("Level Name: = %s", App->SBC_Project->Level_File_Name);
+		ImGui::Text("Level File Name: = %s", App->SBC_Project->Level_File_Name);
+		ImGui::Text("Level Path: = %s", App->SBC_Project->Level_Folder_Path);
 		
-
 		ImGui::Spacing();
 
-		// ----------------------------- Motions
-		int MotionCount = App->CL_Vm_Model->MotionCount;
-		sprintf(Header, "%s %i", "Motions", MotionCount);
+		// ----------------------------- Players
+		char Header[255];
+		int PlayerCount = App->SBC_Scene->Player_Count;
+		sprintf(Header, "%s %i", "Playes", PlayerCount);
 
 		if (ImGui::CollapsingHeader(Header))
 		{
 			int Count = 0;
-			while (Count < MotionCount)
+			while (Count < App->SBC_Scene->Player_Count)
 			{
-				ImGui::Text("%s", App->CL_Vm_Model->MotionNames_Data[Count].Name);
+				ImGui::Text("%s", App->SBC_Player->Player_Name);
 				Count++;
 			}
 		}
 
 		ImGui::Spacing();
 
-		// ----------------------------- Bones
-		int BoneCount = App->CL_Vm_Model->BoneCount;
-		sprintf(Header, "%s %i", "Bones", BoneCount);
+		// ----------------------------- App
+		sprintf(Header, "%s", "App");
 
 		if (ImGui::CollapsingHeader(Header))
 		{
-			int Count = 0;
-			while (Count < BoneCount)
-			{
-				ImGui::Text("%s", App->CL_Vm_Model->S_Bones[Count]->BoneName);
-				Count++;
-			}
+			
+			ImGui::Text("%s %i", "Level Loaded = ",App->SBC_Scene->Scene_Loaded);
+			ImGui::Text("%s %i", "Player Added = ", App->SBC_Scene->Player_Added);
+			ImGui::Text("%s %i", "Physics Running = ", App->Cl19_Ogre->OgreListener->GD_Run_Physics);
+			ImGui::Text("%s %i", "Physics Debuging = ", App->Cl19_Ogre->OgreListener->Dubug_Physics_Draw);
+
 		}
 
-		// ----------------------------- Groups
-		int GroupCount = App->CL_Vm_Model->GroupCount;
-		sprintf(Header, "%s %i", "Groups", GroupCount);
+		//ImGui::Spacing();
 
-		if (ImGui::CollapsingHeader(Header))
-		{
-			/*int Count = 0;
-			while (Count < BoneCount)
-			{
-			ImGui::Text("%s", App->CL_Vm_Model->S_Bones[Count]->BoneName);
-			Count++;
-			}*/
-		}
+		//// ----------------------------- Bones
+		//int BoneCount = App->CL_Vm_Model->BoneCount;
+		//sprintf(Header, "%s %i", "Bones", BoneCount);
+
+		//if (ImGui::CollapsingHeader(Header))
+		//{
+		//	int Count = 0;
+		//	while (Count < BoneCount)
+		//	{
+		//		ImGui::Text("%s", App->CL_Vm_Model->S_Bones[Count]->BoneName);
+		//		Count++;
+		//	}
+		//}
+
+		//// ----------------------------- Groups
+		//int GroupCount = App->CL_Vm_Model->GroupCount;
+		//sprintf(Header, "%s %i", "Groups", GroupCount);
+
+		//if (ImGui::CollapsingHeader(Header))
+		//{
+		//	/*int Count = 0;
+		//	while (Count < BoneCount)
+		//	{
+		//	ImGui::Text("%s", App->CL_Vm_Model->S_Bones[Count]->BoneName);
+		//	Count++;
+		//	}*/
+		//}
 
 
 		if (ImGui::Button("Close"))

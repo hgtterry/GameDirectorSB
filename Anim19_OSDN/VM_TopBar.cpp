@@ -16,6 +16,7 @@ VM_TopBar::VM_TopBar()
 	Groups_TB_hWnd =		nullptr;
 	Physics_TB_hWnd =		nullptr;
 	Editors_TB_hWnd =		nullptr;
+	File_TB_hWnd =			nullptr;
 
 	MouseOption_DlgHwnd =	nullptr;
 
@@ -29,6 +30,7 @@ VM_TopBar::VM_TopBar()
 	Toggle_Tabs_Groups_Flag = 0;
 	Toggle_Tabs_Shapes_Flag = 0;
 	Toggle_Tabs_Editors_Flag = 0;
+	Toggle_Tabs_File_Flag = 0;
 
 
 	Toggle_GroupsOnly_Flag = 0;
@@ -113,6 +115,7 @@ LRESULT CALLBACK VM_TopBar::TopBar_Globals_Proc(HWND hDlg, UINT message, WPARAM 
 		App->CL_Vm_TopBar->Start_Groups_TB();
 		App->CL_Vm_TopBar->Start_Shapes_TB();
 		App->CL_Vm_TopBar->Start_Editors_TB();
+		App->CL_Vm_TopBar->Start_Files_TB();
 		
 		return TRUE;
 	}
@@ -262,7 +265,8 @@ LRESULT CALLBACK VM_TopBar::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM wP
 		SendDlgItemMessage(hDlg, IDC_TBGROUPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_TBSHAPES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_TAB_EDITORS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		
+		SendDlgItemMessage(hDlg, IDC_TBFILE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		return TRUE;
 	}
 
@@ -317,11 +321,30 @@ LRESULT CALLBACK VM_TopBar::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM wP
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_TBFILE && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle_Tabs(item, App->CL_Vm_TopBar->Toggle_Tabs_File_Flag);
+			return CDRF_DODEFAULT;
+		}
+
 		return CDRF_DODEFAULT;
 	}
 
 	case WM_COMMAND:
 	{
+		if (LOWORD(wParam) == IDC_TBFILE)
+		{
+			
+			App->CL_Vm_TopBar->Hide_Tabs();
+			ShowWindow(App->CL_Vm_TopBar->File_TB_hWnd, SW_SHOW);
+			App->CL_Vm_TopBar->Toggle_Tabs_File_Flag = 1;
+
+			//App->Cl19_Ogre->OgreListener->ImGui_Render_Tab = Enums::ImGui_Camera;
+
+			RedrawWindow(App->CL_Vm_TopBar->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			return TRUE;
+		}
 
 		if (LOWORD(wParam) == IDC_TBOLD)
 		{
@@ -424,6 +447,7 @@ void VM_TopBar::Hide_Tabs(void)
 	ShowWindow(App->CL_Vm_TopBar->Groups_TB_hWnd, SW_HIDE);
 	ShowWindow(App->CL_Vm_TopBar->Physics_TB_hWnd, SW_HIDE);
 	ShowWindow(App->CL_Vm_TopBar->Editors_TB_hWnd, SW_HIDE);
+	ShowWindow(App->CL_Vm_TopBar->File_TB_hWnd, SW_HIDE);
 	
 	ShowWindow(App->CL_Vm_Groups->RightGroups_Hwnd, 0);
 	ShowWindow(App->SBC_Physics->PhysicsPannel_Hwnd,0);
@@ -434,6 +458,7 @@ void VM_TopBar::Hide_Tabs(void)
 	Toggle_Tabs_Groups_Flag = 0;
 	Toggle_Tabs_Shapes_Flag = 0;
 	Toggle_Tabs_Editors_Flag = 0;
+	Toggle_Tabs_File_Flag = 0;
 }
 
 // *************************************************************************
@@ -591,7 +616,7 @@ LRESULT CALLBACK VM_TopBar::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPara
 
 		if (LOWORD(wParam) == IDC_FIRST_MODE)
 		{
-			if (App->SBC_Player->PlayerAdded == 1)
+			if (App->SBC_Scene->Player_Added == 1)
 			{
 				App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamFirst;
 				App->CL_Vm_TopBar->Toggle_FirstCam_Flag = 1;
@@ -1268,21 +1293,63 @@ LRESULT CALLBACK VM_TopBar::Editors_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 			return TRUE;
 		}
 
-		/*if (LOWORD(wParam) == IDC_ONLYGROUP)
-		{
-		if (App->Cl19_Ogre->RenderListener->ShowOnlySubMesh == 1)
-		{
-		App->Cl19_Ogre->RenderListener->ShowOnlySubMesh = 0;
-		App->CL_Vm_TopBar->Toggle_GroupsOnly_Flag = 0;
-		}
-		else
-		{
-		App->Cl19_Ogre->RenderListener->ShowOnlySubMesh = 1;
-		App->CL_Vm_TopBar->Toggle_GroupsOnly_Flag = 1;
-		}
+		return FALSE;
+	}
+	}
+	return FALSE;
+}
+
+// *************************************************************************
+// *						Start_Files_TB Terry Flanigan				   *
+// *************************************************************************
+void VM_TopBar::Start_Files_TB(void)
+{
+	File_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_FILE, Tabs_TB_hWnd, (DLGPROC)Files_TB_Proc);
+	//Init_Bmps_Groups();
+}
+
+// *************************************************************************
+// *					Files_TB_Proc Terry Flanigan					   *
+// *************************************************************************
+LRESULT CALLBACK VM_TopBar::Files_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_EDITORS_WE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		return TRUE;
-		}*/
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->Brush_Tabs;
+	}
+
+	case WM_NOTIFY:
+	{
+
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_TBBTFILE && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+		if (LOWORD(wParam) == IDC_TBBTFILE)
+		{
+			Debug1
+			return TRUE;
+		}
 
 		return FALSE;
 	}

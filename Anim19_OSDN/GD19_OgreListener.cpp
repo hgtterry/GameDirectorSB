@@ -164,7 +164,7 @@ bool GD19_OgreListener::frameStarted(const FrameEvent& evt)
 			App->Cl_Bullet->dynamicsWorld->stepSimulation(evt.timeSinceLastFrame * 2); //suppose you have 60 frames per second	
 		}
 
-		if (GD_Run_Physics == 1 && App->SBC_Player->PlayerAdded == 1)
+		if (GD_Run_Physics == 1 && App->SBC_Scene->Player_Added == 1)
 		{
 			btTransform trans;
 			App->SBC_Scene->SBC_Base_Player[0]->mObject->getMotionState()->getWorldTransform(trans);
