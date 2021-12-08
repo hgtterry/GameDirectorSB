@@ -31,15 +31,12 @@ public:
 	bool Start_TopBar_Globals();
 	void Reset_Class();
 
-	void TogglePlayBmp(void);
-
 	void UnCheck_All_MouseOption(HWND hDlg);
 
 	HWND TabsHwnd;
 	HWND Camera_TB_hWnd;
 	HWND Tabs_TB_hWnd;
 
-	HWND Motions_TB_hWnd;
 	HWND Dimensions_TB_hWnd;
 	HWND Groups_TB_hWnd;
 	HWND Physics_TB_hWnd;
@@ -48,16 +45,12 @@ public:
 
 	HWND MouseOption_DlgHwnd;
 
-	// Motions
-	bool Toggle_Play_Flag;
-
 protected:
 
 	static LRESULT CALLBACK TopBar_Globals_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	static LRESULT CALLBACK Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
-	static LRESULT CALLBACK Motions_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Dimensions_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Groups_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Shapes_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
@@ -70,11 +63,9 @@ protected:
 
 	void Init_Bmps_Camera(void);
 	void Init_Bmps_Globals(void);
-	void Init_Bmps_Motions(void);
 	void Init_Bmps_Dimensions(void);
 	void Init_Bmps_Groups(void);
 
-	void Start_Motions_TB(void);
 	void Start_Dimensions_TB(void);
 	void Start_Groups_TB(void);
 	void Start_Shapes_TB(void);
@@ -94,7 +85,6 @@ protected:
 
 	// Tabs
 	bool Toggle_Tabs_Old_Flag;
-	bool Toggle_Tabs_Motions_Flag;
 	bool Toggle_Tabs_Dimensions_Flag;
 	bool Toggle_Tabs_Groups_Flag;
 	bool Toggle_Tabs_Shapes_Flag;

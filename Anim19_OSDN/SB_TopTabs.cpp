@@ -34,7 +34,6 @@ SB_TopTabs::SB_TopTabs()
 	Tabs_TB_hWnd = nullptr;
 
 	Camera_TB_hWnd = nullptr;
-	Motions_TB_hWnd = nullptr;
 	Dimensions_TB_hWnd = nullptr;
 	Groups_TB_hWnd = nullptr;
 	Physics_TB_hWnd = nullptr;
@@ -48,7 +47,6 @@ SB_TopTabs::SB_TopTabs()
 	Toggle_Hair_Flag = 1;
 
 	Toggle_Tabs_Old_Flag = 1;
-	Toggle_Tabs_Motions_Flag = 0;
 	Toggle_Tabs_Dimensions_Flag = 0;
 	Toggle_Tabs_Groups_Flag = 0;
 	Toggle_Tabs_Shapes_Flag = 0;
@@ -57,9 +55,6 @@ SB_TopTabs::SB_TopTabs()
 
 
 	Toggle_GroupsOnly_Flag = 0;
-
-	// Motions
-	Toggle_Play_Flag = 0;
 
 	// Camera
 	Toggle_FreeCam_Flag = 1;
@@ -78,25 +73,16 @@ void SB_TopTabs::Reset_Class()
 {
 
 	Toggle_Tabs_Old_Flag = 1;
-	Toggle_Tabs_Motions_Flag = 0;
 	Toggle_Tabs_Dimensions_Flag = 0;
 	Toggle_Tabs_Groups_Flag = 0;
 	Toggle_GroupsOnly_Flag = 0;
-
-	// Motions
-	Toggle_Play_Flag = 0;
 
 	// Camera
 	Toggle_FreeCam_Flag = 1;
 	Toggle_FirstCam_Flag = 0;
 
 	Reset_Main_Controls();
-	TogglePlayBmp();
-
-	// Dimensions - >ImGui Flags
-
-	//App->Cl19_Ogre->RenderListener->ShowOnlySubMesh = 0;
-
+	
 	App->SBC_TopTabs->Hide_Tabs();
 	ShowWindow(App->SBC_TopTabs->Camera_TB_hWnd, SW_SHOW);
 	App->SBC_TopTabs->Toggle_Tabs_Old_Flag = 1;
@@ -130,7 +116,6 @@ LRESULT CALLBACK SB_TopTabs::TopBar_Globals_Proc(HWND hDlg, UINT message, WPARAM
 
 		App->SBC_TopTabs->Start_Tabs_Headers();
 		App->SBC_TopTabs->Start_Camera_TB();
-		App->SBC_TopTabs->Start_Motions_TB();
 		App->SBC_TopTabs->Start_Dimensions_TB();
 		App->SBC_TopTabs->Start_Groups_TB();
 		App->SBC_TopTabs->Start_Shapes_TB();
@@ -280,7 +265,6 @@ LRESULT CALLBACK SB_TopTabs::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM w
 		SendDlgItemMessage(hDlg, IDC_CBMOTIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDC_TBOLD, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_TBMOTIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_TBDIMENSIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_TBGROUPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_TBSHAPES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -303,13 +287,6 @@ LRESULT CALLBACK SB_TopTabs::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM w
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle_Tabs(item, App->SBC_TopTabs->Toggle_Tabs_Old_Flag);
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_TBMOTIONS && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle_Tabs(item, App->SBC_TopTabs->Toggle_Tabs_Motions_Flag);
 			return CDRF_DODEFAULT;
 		}
 
@@ -374,25 +351,11 @@ LRESULT CALLBACK SB_TopTabs::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM w
 
 			App->Cl19_Ogre->OgreListener->ImGui_Render_Tab = Enums::ImGui_Camera;
 
-			ShowWindow(App->SBC_Physics->PhysicsPannel_Hwnd, SW_SHOW);
+			//ShowWindow(App->SBC_Physics->PhysicsPannel_Hwnd, SW_SHOW);
 
 			RedrawWindow(App->SBC_TopTabs->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
 		}
-
-		if (LOWORD(wParam) == IDC_TBMOTIONS)
-		{
-			App->SBC_TopTabs->Hide_Tabs();
-			ShowWindow(App->SBC_TopTabs->Motions_TB_hWnd, SW_SHOW);
-			App->SBC_TopTabs->Toggle_Tabs_Motions_Flag = 1;
-			App->CL_Vm_ImGui->Show_Motion_List = 1;
-
-			App->Cl19_Ogre->OgreListener->ImGui_Render_Tab = Enums::ImGui_Motions;
-
-			RedrawWindow(App->SBC_TopTabs->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-			return TRUE;
-		}
-
 
 		if (LOWORD(wParam) == IDC_TBDIMENSIONS)
 		{
@@ -427,7 +390,7 @@ LRESULT CALLBACK SB_TopTabs::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM w
 			App->SBC_TopTabs->Hide_Tabs();
 
 			ShowWindow(App->SBC_TopTabs->Physics_TB_hWnd, SW_SHOW);
-			ShowWindow(App->SBC_Physics->PhysicsPannel_Hwnd, SW_SHOW);
+			//ShowWindow(App->SBC_Physics->PhysicsPannel_Hwnd, SW_SHOW);
 
 			App->SBC_TopTabs->Toggle_Tabs_Shapes_Flag = 1;
 
@@ -462,7 +425,6 @@ LRESULT CALLBACK SB_TopTabs::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM w
 void SB_TopTabs::Hide_Tabs(void)
 {
 	ShowWindow(Camera_TB_hWnd, SW_HIDE);
-	ShowWindow(Motions_TB_hWnd, SW_HIDE);
 	ShowWindow(Dimensions_TB_hWnd, SW_HIDE);
 	ShowWindow(Groups_TB_hWnd, SW_HIDE);
 	ShowWindow(Physics_TB_hWnd, SW_HIDE);
@@ -473,7 +435,6 @@ void SB_TopTabs::Hide_Tabs(void)
 	ShowWindow(App->SBC_Physics->PhysicsPannel_Hwnd, 0);
 
 	Toggle_Tabs_Old_Flag = 0;
-	Toggle_Tabs_Motions_Flag = 0;
 	Toggle_Tabs_Dimensions_Flag = 0;
 	Toggle_Tabs_Groups_Flag = 0;
 	Toggle_Tabs_Shapes_Flag = 0;
@@ -615,24 +576,6 @@ LRESULT CALLBACK SB_TopTabs::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 			App->Cl19_Ogre->Go_FullScreen_Mode();
 			return TRUE;
 		}
-
-		/*if (LOWORD(wParam) == IDC_TBMODEL)
-		{
-		App->Cl19_Ogre->OgreListener->CameraMode = 1;
-		App->CL_Vm_TopBar->Toggle_Model_Flag = 1;
-		App->CL_Vm_TopBar->Toggle_World_Flag = 0;
-		RedrawWindow(App->CL_Vm_TopBar->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-		return TRUE;
-		}*/
-
-		/*if (LOWORD(wParam) == IDC_TBWORLD)
-		{
-		App->Cl19_Ogre->OgreListener->CameraMode = 0;
-		App->CL_Vm_TopBar->Toggle_World_Flag = 1;
-		App->CL_Vm_TopBar->Toggle_Model_Flag = 0;
-		RedrawWindow(App->CL_Vm_TopBar->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-		return TRUE;
-		}*/
 
 		if (LOWORD(wParam) == IDC_FIRST_MODE)
 		{
@@ -867,197 +810,6 @@ void SB_TopTabs::Init_Bmps_Globals(void)
 }
 
 // *************************************************************************
-// *						Init_Bmps_Motions Terry Bernie				   *
-// *************************************************************************
-void SB_TopTabs::Init_Bmps_Motions(void)
-{
-	HWND hTooltip_TB_Motions = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
-
-	// --------------------------------------------------- 
-	HWND Temp = GetDlgItem(Motions_TB_hWnd, IDC_TBPLAY);
-	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_Playoff);
-
-	Temp = GetDlgItem(Motions_TB_hWnd, IDC_TBSTOP);
-	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_PlayStop);
-
-	Temp = GetDlgItem(Motions_TB_hWnd, IDC_STEPTIMEBACK);
-	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_StepBack);
-
-	Temp = GetDlgItem(Motions_TB_hWnd, IDC_STEPTIMEPLUS);
-	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_StepForward);
-
-	Temp = GetDlgItem(Motions_TB_hWnd, IDC_TBPLAY);
-	TOOLINFO ti1 = { 0 };
-	ti1.cbSize = sizeof(ti1);
-	ti1.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
-	ti1.uId = (UINT_PTR)Temp;
-	ti1.lpszText = "Play Selected Motion";
-	ti1.hwnd = App->MainHwnd;
-	SendMessage(hTooltip_TB_Motions, TTM_ADDTOOL, 0, (LPARAM)&ti1);
-
-	Temp = GetDlgItem(Motions_TB_hWnd, IDC_TBSTOP);
-	TOOLINFO ti2 = { 0 };
-	ti2.cbSize = sizeof(ti2);
-	ti2.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
-	ti2.uId = (UINT_PTR)Temp;
-	ti2.lpszText = "Stop Selected Motion";
-	ti2.hwnd = App->MainHwnd;
-	SendMessage(hTooltip_TB_Motions, TTM_ADDTOOL, 0, (LPARAM)&ti2);
-
-	Temp = GetDlgItem(Motions_TB_hWnd, IDC_STEPTIMEBACK);
-	TOOLINFO ti3 = { 0 };
-	ti3.cbSize = sizeof(ti3);
-	ti3.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
-	ti3.uId = (UINT_PTR)Temp;
-	ti3.lpszText = "Step Motion Back";
-	ti3.hwnd = App->MainHwnd;
-	SendMessage(hTooltip_TB_Motions, TTM_ADDTOOL, 0, (LPARAM)&ti3);
-
-	Temp = GetDlgItem(Motions_TB_hWnd, IDC_STEPTIMEPLUS);
-	TOOLINFO ti4 = { 0 };
-	ti4.cbSize = sizeof(ti4);
-	ti4.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
-	ti4.uId = (UINT_PTR)Temp;
-	ti4.lpszText = "Step Motion Forward";
-	ti4.hwnd = App->MainHwnd;
-	SendMessage(hTooltip_TB_Motions, TTM_ADDTOOL, 0, (LPARAM)&ti4);
-
-	Temp = GetDlgItem(Motions_TB_hWnd, IDC_TBPOSE);
-	TOOLINFO ti5 = { 0 };
-	ti5.cbSize = sizeof(ti5);
-	ti5.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
-	ti5.uId = (UINT_PTR)Temp;
-	ti5.lpszText = "Reset to default Pose";
-	ti5.hwnd = App->MainHwnd;
-	SendMessage(hTooltip_TB_Motions, TTM_ADDTOOL, 0, (LPARAM)&ti5);
-
-}
-
-// *************************************************************************
-// *						Start_Motions_TB Terry						   *
-// *************************************************************************
-void SB_TopTabs::Start_Motions_TB(void)
-{
-	Motions_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_MOTIONS, Tabs_TB_hWnd, (DLGPROC)Motions_TB_Proc);
-	Init_Bmps_Motions();
-}
-
-// *************************************************************************
-// *								Motions_TB_Proc						   *
-// *************************************************************************
-LRESULT CALLBACK SB_TopTabs::Motions_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
-{
-
-	switch (message)
-	{
-	case WM_INITDIALOG:
-	{
-		SendDlgItemMessage(hDlg, IDC_CBMOTIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_TBPOSE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		return TRUE;
-	}
-
-	case WM_CTLCOLORDLG:
-	{
-		return (LONG)App->Brush_Tabs;
-	}
-
-	case WM_NOTIFY:
-	{
-		LPNMHDR some_item = (LPNMHDR)lParam;
-
-		if (some_item->idFrom == IDC_TBPLAY && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->SBC_TopTabs->Toggle_Play_Flag);
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_TBSTOP && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, 0);
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_STEPTIMEBACK && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, 0);
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_STEPTIMEPLUS && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, 0);
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_TBPOSE && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
-			return CDRF_DODEFAULT;
-		}
-
-		return CDRF_DODEFAULT;
-	}
-
-	case WM_COMMAND:
-	{
-		if (LOWORD(wParam) == IDC_TBPLAY) // Play Motion
-		{
-			App->CL_Vm_Motions->Play_SelectedMotion();
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDC_TBSTOP) // Stop Motion
-		{
-			App->CL_Vm_Motions->Stop_SelectedMotion();
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDC_TBPOSE) // Stop Motion
-		{
-			App->CL_Vm_Motions->Set_Pose();
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDC_STEPTIMEBACK)
-		{
-			if (App->CL_Vm_Model->MotionCount == 0) { return 1; }
-
-			if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
-			{
-				App->CL_Vm_Genesis3D->GetBoneMoveMent();
-				App->CL_Vm_Genesis3D->Animate(3);
-
-			}
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDC_STEPTIMEPLUS)
-		{
-
-			if (App->CL_Vm_Model->MotionCount == 0) { return 1; }
-
-			if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
-			{
-				App->CL_Vm_Genesis3D->GetBoneMoveMent();
-				App->CL_Vm_Genesis3D->Animate(2);
-
-			}
-			return TRUE;
-		}
-
-		return FALSE;
-	}
-	}
-	return FALSE;
-}
-
-// *************************************************************************
 // *						Start_Dimensions_TB Terry					   *
 // *************************************************************************
 void SB_TopTabs::Start_Dimensions_TB(void)
@@ -1199,8 +951,7 @@ LRESULT CALLBACK SB_TopTabs::Shapes_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 	{
 	case WM_INITDIALOG:
 	{
-		/*SendDlgItemMessage(hDlg, IDC_GRCHANGETEXTURE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_ONLYGROUP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));*/
+		
 		return TRUE;
 	}
 
@@ -1214,47 +965,14 @@ LRESULT CALLBACK SB_TopTabs::Shapes_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		/*if (some_item->idFrom == IDC_ONLYGROUP && some_item->code == NM_CUSTOMDRAW)
-		{
-		LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-		App->Custom_Button_Toggle(item, App->CL_Vm_TopBar->Toggle_GroupsOnly_Flag);
-		return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_GRCHANGETEXTURE && some_item->code == NM_CUSTOMDRAW)
-		{
-		LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-		App->Custom_Button_Normal(item);
-		return CDRF_DODEFAULT;
-		}*/
+		
 
 		return CDRF_DODEFAULT;
 	}
 
 	case WM_COMMAND:
 	{
-		/*if (LOWORD(wParam) == IDC_GRCHANGETEXTURE)
-		{
-		App->CL_Vm_Groups->ChangeTexture_ModelLocation();
-		return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDC_ONLYGROUP)
-		{
-		if (App->Cl19_Ogre->RenderListener->ShowOnlySubMesh == 1)
-		{
-		App->Cl19_Ogre->RenderListener->ShowOnlySubMesh = 0;
-		App->CL_Vm_TopBar->Toggle_GroupsOnly_Flag = 0;
-		}
-		else
-		{
-		App->Cl19_Ogre->RenderListener->ShowOnlySubMesh = 1;
-		App->CL_Vm_TopBar->Toggle_GroupsOnly_Flag = 1;
-		}
-
-		return TRUE;
-		}*/
-
+		
 		return FALSE;
 	}
 	}
@@ -1460,23 +1178,6 @@ LRESULT CALLBACK SB_TopTabs::Groups_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 	}
 	}
 	return FALSE;
-}
-
-// *************************************************************************
-// *					TogglePlayBmp Inflanite						       *
-// *************************************************************************
-void SB_TopTabs::TogglePlayBmp(void)
-{
-	HWND Temp = GetDlgItem(Motions_TB_hWnd, IDC_TBPLAY);
-
-	if (Toggle_Play_Flag == 1)
-	{
-		SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_PlayOn);
-	}
-	else
-	{
-		SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_Playoff);
-	}
 }
 
 // *************************************************************************
