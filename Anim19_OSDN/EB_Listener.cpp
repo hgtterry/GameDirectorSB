@@ -62,7 +62,7 @@ bool EB_Listener::frameStarted(const FrameEvent& evt)
 // *************************************************************************
 // *			WE_RenderingQueued   Terry Flanigan						   *
 // *************************************************************************
-bool EB_Listener::WE_RenderingQueued(const FrameEvent& evt)
+bool EB_Listener::RenderingQueued(const FrameEvent& evt)
 {
 	ModelMode(evt.timeSinceLastFrame);
 	return 1;

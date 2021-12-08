@@ -5,17 +5,17 @@ public:
 	EB_Listener();
 	~EB_Listener();
 
-	bool WE_RenderingQueued(const FrameEvent& evt);
-	bool frameStarted(const FrameEvent& evt);
+	bool RenderingQueued(const FrameEvent& evt); // Comes From Directly From Oger Render Listener [081221]
+	bool frameStarted(const FrameEvent& evt); // Comes From Directly From Oger Render Listener [081221]
 
 	int		Wheel;
-	bool	Pl_LeftMouseDown;
-	bool	Pl_RightMouseDown;
+	bool	Pl_LeftMouseDown;	// Triger Left Mouse Presed [081221]
+	bool	Pl_RightMouseDown;	// Triger Right Mouse Presed [081221]
 
-	bool	Show_Model_Data;
+	bool	Show_Model_Data; // Show Model Data ImGui [081221]
 
-	int		View_Height;
-	int		View_Width;
+	int		View_Height;	// Height of Render Window [081221]
+	int		View_Width;		// Width of Render Window [081221]
 
 	Ogre::Camera* WE_Cam;
 
