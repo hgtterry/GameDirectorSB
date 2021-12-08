@@ -94,6 +94,7 @@ ebopster
 #include "SB_Aera.h"
 #include "SB_Resources.h"
 #include "SB_Scene.h"
+#include "SB_TopTabs.h"
 
 
 class GD19_App
@@ -171,6 +172,7 @@ public:
 	SB_Aera*				SBC_Aera;
 	SB_Resources*			SBC_Resources;
 	SB_Scene*				SBC_Scene;
+	SB_TopTabs*				SBC_TopTabs; // Top Bar Tabs Class Level Editor [081221]
 
 
 	GD19_App(void);
