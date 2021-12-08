@@ -38,7 +38,6 @@ public:
 	HWND Tabs_TB_hWnd;
 
 	HWND Dimensions_TB_hWnd;
-	HWND Groups_TB_hWnd;
 	HWND Physics_TB_hWnd;
 	HWND Editors_TB_hWnd;
 	HWND File_TB_hWnd;
@@ -52,8 +51,7 @@ protected:
 	static LRESULT CALLBACK Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	static LRESULT CALLBACK Dimensions_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-	static LRESULT CALLBACK Groups_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-	static LRESULT CALLBACK Shapes_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Physics_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Editors_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Files_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
@@ -64,11 +62,9 @@ protected:
 	void Init_Bmps_Camera(void);
 	void Init_Bmps_Globals(void);
 	void Init_Bmps_Dimensions(void);
-	void Init_Bmps_Groups(void);
-
+	
 	void Start_Dimensions_TB(void);
-	void Start_Groups_TB(void);
-	void Start_Shapes_TB(void);
+	void Start_Physics_TB(void);
 	void Start_Editors_TB(void);
 	void Start_Files_TB(void);
 
@@ -86,7 +82,6 @@ protected:
 	// Tabs
 	bool Toggle_Tabs_Old_Flag;
 	bool Toggle_Tabs_Dimensions_Flag;
-	bool Toggle_Tabs_Groups_Flag;
 	bool Toggle_Tabs_Shapes_Flag;
 	bool Toggle_Tabs_Editors_Flag;
 	bool Toggle_Tabs_File_Flag;

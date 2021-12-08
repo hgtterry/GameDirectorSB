@@ -153,10 +153,10 @@ public:
 	EQ15_Bullet_AddRoom*	CL_Bullet_AddRoom;
 	
 	// ---------------------------------------------------- 07/12/21
-	EB_Listener*			EBC_Listener;
+	EB_Listener*			EBC_Listener;		// Listener for Equity Editor [081221]
 
 	// ---------------------------------------------------- 18/10/21
-	SB_Equity*				SBC_Equity;
+	SB_Equity*				SBC_Equity;			// Equity Editor [081221]
 	SB_XMLConverter*		SBC_XMLConverter;
 	SB_Player*				SBC_Player;
 	SB_Import*				SBC_Import;
@@ -168,9 +168,9 @@ public:
 	SB_Camera*				SBC_Camera;
 	SB_3DT*					SBC_3DT;
 	SB_Aera*				SBC_Aera;
-	SB_Resources*			SBC_Resources;
-	SB_Scene*				SBC_Scene;
-	SB_TopTabs*				SBC_TopTabs; // Top Bar Tabs Class Level Editor [081221]
+	SB_Resources*			SBC_Resources;		// Resources Class Used by the Level [081221]
+	SB_Scene*				SBC_Scene;			// Collection Class For Level [081221]
+	SB_TopTabs*				SBC_TopTabs;		// Top Bar Tabs Class Level Editor [081221]
 
 
 	GD19_App(void);

@@ -35,7 +35,6 @@ SB_TopTabs::SB_TopTabs()
 
 	Camera_TB_hWnd = nullptr;
 	Dimensions_TB_hWnd = nullptr;
-	Groups_TB_hWnd = nullptr;
 	Physics_TB_hWnd = nullptr;
 	Editors_TB_hWnd = nullptr;
 	File_TB_hWnd = nullptr;
@@ -46,13 +45,11 @@ SB_TopTabs::SB_TopTabs()
 	Toggle_Grid_Flag = 1;
 	Toggle_Hair_Flag = 1;
 
-	Toggle_Tabs_Old_Flag = 1;
+	Toggle_Tabs_Old_Flag = 0;
 	Toggle_Tabs_Dimensions_Flag = 0;
-	Toggle_Tabs_Groups_Flag = 0;
 	Toggle_Tabs_Shapes_Flag = 0;
 	Toggle_Tabs_Editors_Flag = 0;
-	Toggle_Tabs_File_Flag = 0;
-
+	Toggle_Tabs_File_Flag = 1;
 
 	Toggle_GroupsOnly_Flag = 0;
 
@@ -74,7 +71,6 @@ void SB_TopTabs::Reset_Class()
 
 	Toggle_Tabs_Old_Flag = 1;
 	Toggle_Tabs_Dimensions_Flag = 0;
-	Toggle_Tabs_Groups_Flag = 0;
 	Toggle_GroupsOnly_Flag = 0;
 
 	// Camera
@@ -84,7 +80,7 @@ void SB_TopTabs::Reset_Class()
 	Reset_Main_Controls();
 	
 	App->SBC_TopTabs->Hide_Tabs();
-	ShowWindow(App->SBC_TopTabs->Camera_TB_hWnd, SW_SHOW);
+	ShowWindow(App->SBC_TopTabs->File_TB_hWnd, SW_SHOW);
 	App->SBC_TopTabs->Toggle_Tabs_Old_Flag = 1;
 
 	RedrawWindow(App->SBC_TopTabs->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
@@ -117,8 +113,7 @@ LRESULT CALLBACK SB_TopTabs::TopBar_Globals_Proc(HWND hDlg, UINT message, WPARAM
 		App->SBC_TopTabs->Start_Tabs_Headers();
 		App->SBC_TopTabs->Start_Camera_TB();
 		App->SBC_TopTabs->Start_Dimensions_TB();
-		App->SBC_TopTabs->Start_Groups_TB();
-		App->SBC_TopTabs->Start_Shapes_TB();
+		App->SBC_TopTabs->Start_Physics_TB();
 		App->SBC_TopTabs->Start_Editors_TB();
 		App->SBC_TopTabs->Start_Files_TB();
 
@@ -266,7 +261,6 @@ LRESULT CALLBACK SB_TopTabs::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM w
 
 		SendDlgItemMessage(hDlg, IDC_TBOLD, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_TBDIMENSIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_TBGROUPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_TBSHAPES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_TAB_EDITORS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_TBFILE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -294,13 +288,6 @@ LRESULT CALLBACK SB_TopTabs::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM w
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle_Tabs(item, App->SBC_TopTabs->Toggle_Tabs_Dimensions_Flag);
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_TBGROUPS && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle_Tabs(item, App->SBC_TopTabs->Toggle_Tabs_Groups_Flag);
 			return CDRF_DODEFAULT;
 		}
 
@@ -369,22 +356,6 @@ LRESULT CALLBACK SB_TopTabs::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM w
 			return TRUE;
 		}
 
-		if (LOWORD(wParam) == IDC_TBGROUPS)
-		{
-			App->SBC_TopTabs->Hide_Tabs();
-
-			ShowWindow(App->SBC_TopTabs->Groups_TB_hWnd, SW_SHOW);
-			ShowWindow(App->CL_Vm_Groups->RightGroups_Hwnd, SW_SHOW);
-			App->CL_Vm_ImGui->Show_Group_List = 1;
-
-			App->SBC_TopTabs->Toggle_Tabs_Groups_Flag = 1;
-
-			App->Cl19_Ogre->OgreListener->ImGui_Render_Tab = Enums::ImGui_Groups;
-
-			RedrawWindow(App->SBC_TopTabs->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-			return TRUE;
-		}
-
 		if (LOWORD(wParam) == IDC_TBSHAPES)
 		{
 			App->SBC_TopTabs->Hide_Tabs();
@@ -426,7 +397,6 @@ void SB_TopTabs::Hide_Tabs(void)
 {
 	ShowWindow(Camera_TB_hWnd, SW_HIDE);
 	ShowWindow(Dimensions_TB_hWnd, SW_HIDE);
-	ShowWindow(Groups_TB_hWnd, SW_HIDE);
 	ShowWindow(Physics_TB_hWnd, SW_HIDE);
 	ShowWindow(Editors_TB_hWnd, SW_HIDE);
 	ShowWindow(File_TB_hWnd, SW_HIDE);
@@ -436,7 +406,6 @@ void SB_TopTabs::Hide_Tabs(void)
 
 	Toggle_Tabs_Old_Flag = 0;
 	Toggle_Tabs_Dimensions_Flag = 0;
-	Toggle_Tabs_Groups_Flag = 0;
 	Toggle_Tabs_Shapes_Flag = 0;
 	Toggle_Tabs_Editors_Flag = 0;
 	Toggle_Tabs_File_Flag = 0;
@@ -478,7 +447,7 @@ void SB_TopTabs::Start_Camera_TB(void)
 }
 
 // *************************************************************************
-// *								View_TB_Proc						   *
+// *								Camera_TB_Proc						   *
 // *************************************************************************
 LRESULT CALLBACK SB_TopTabs::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -733,37 +702,6 @@ void SB_TopTabs::Init_Bmps_Dimensions(void)
 }
 
 // *************************************************************************
-// *						Init_Bmps_Groups Terry Bernie				   *
-// *************************************************************************
-void SB_TopTabs::Init_Bmps_Groups(void)
-{
-	HWND hTooltip_TB_Gro = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
-
-	// --------------------------------------------------- 
-	HWND Temp = GetDlgItem(Groups_TB_hWnd, IDC_GRCHANGETEXTURE);
-
-	TOOLINFO ti = { 0 };
-	ti.cbSize = sizeof(ti);
-	ti.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
-	ti.uId = (UINT_PTR)Temp;
-	ti.lpszText = "Change Texture for Selected Group";
-	ti.hwnd = App->MainHwnd;
-	SendMessage(hTooltip_TB_Gro, TTM_ADDTOOL, 0, (LPARAM)&ti);
-
-	// --------------------------------------------------- 
-
-	Temp = GetDlgItem(Groups_TB_hWnd, IDC_ONLYGROUP);
-
-	TOOLINFO ti2 = { 0 };
-	ti2.cbSize = sizeof(ti2);
-	ti2.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
-	ti2.uId = (UINT_PTR)Temp;
-	ti2.lpszText = "Show Only Seleceted Group";
-	ti2.hwnd = App->MainHwnd;
-	SendMessage(hTooltip_TB_Gro, TTM_ADDTOOL, 0, (LPARAM)&ti2);
-}
-
-// *************************************************************************
 // *						Init_Bmps_Globals Terry Bernie				   *
 // *************************************************************************
 void SB_TopTabs::Init_Bmps_Globals(void)
@@ -923,28 +861,20 @@ LRESULT CALLBACK SB_TopTabs::Dimensions_TB_Proc(HWND hDlg, UINT message, WPARAM 
 	return FALSE;
 }
 
-// *************************************************************************
-// *						Start_Groups_TB Terry					   *
-// *************************************************************************
-void SB_TopTabs::Start_Groups_TB(void)
-{
-	Groups_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_GROUPS, Tabs_TB_hWnd, (DLGPROC)Groups_TB_Proc);
-	Init_Bmps_Groups();
-}
 
 // *************************************************************************
-// *						Start_Shapes_TB Terry						   *
+// *						Start_Physics_TB Terry						   *
 // *************************************************************************
-void SB_TopTabs::Start_Shapes_TB(void)
+void SB_TopTabs::Start_Physics_TB(void)
 {
-	Physics_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_PHYSICS, Tabs_TB_hWnd, (DLGPROC)Shapes_TB_Proc);
+	Physics_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_PHYSICS, Tabs_TB_hWnd, (DLGPROC)Physics_TB_Proc);
 	//Init_Bmps_Groups();
 }
 
 // *************************************************************************
 // *								Shapes_TB_Proc					   *
 // *************************************************************************
-LRESULT CALLBACK SB_TopTabs::Shapes_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK SB_TopTabs::Physics_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 
 	switch (message)
@@ -1056,7 +986,8 @@ LRESULT CALLBACK SB_TopTabs::Files_TB_Proc(HWND hDlg, UINT message, WPARAM wPara
 	{
 	case WM_INITDIALOG:
 	{
-		SendDlgItemMessage(hDlg, IDC_EDITORS_WE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_TBBTLOAD, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_TBBTQLOAD, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		return TRUE;
 	}
@@ -1071,7 +1002,14 @@ LRESULT CALLBACK SB_TopTabs::Files_TB_Proc(HWND hDlg, UINT message, WPARAM wPara
 
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		if (some_item->idFrom == IDC_TBBTFILE && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_TBBTLOAD && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_TBBTQLOAD && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
@@ -1083,96 +1021,19 @@ LRESULT CALLBACK SB_TopTabs::Files_TB_Proc(HWND hDlg, UINT message, WPARAM wPara
 
 	case WM_COMMAND:
 	{
-		if (LOWORD(wParam) == IDC_TBBTFILE)
+		if (LOWORD(wParam) == IDC_TBBTLOAD)
 		{
-			Debug1
-				return TRUE;
-		}
 
-		return FALSE;
-	}
-	}
-	return FALSE;
-}
-
-// *************************************************************************
-// *								Dimensions_TB_Proc					   *
-// *************************************************************************
-LRESULT CALLBACK SB_TopTabs::Groups_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
-{
-
-	switch (message)
-	{
-	case WM_INITDIALOG:
-	{
-		SendDlgItemMessage(hDlg, IDC_GRCHANGETEXTURE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_ONLYGROUP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		return TRUE;
-	}
-
-	case WM_CTLCOLORDLG:
-	{
-		return (LONG)App->Brush_Tabs;
-	}
-
-	case WM_NOTIFY:
-	{
-
-		LPNMHDR some_item = (LPNMHDR)lParam;
-
-		if (some_item->idFrom == IDC_ONLYGROUP && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->SBC_TopTabs->Toggle_GroupsOnly_Flag);
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_GRCHANGETEXTURE && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
-			return CDRF_DODEFAULT;
-		}
-
-		return CDRF_DODEFAULT;
-	}
-
-	case WM_COMMAND:
-	{
-		if (LOWORD(wParam) == IDC_GRCHANGETEXTURE)
-		{
-			App->CL_Vm_Groups->ChangeTexture_ModelLocation();
+			App->SBC_Import->Load_Scene("Level   *.SBLevel\0*.SBLevel\0", "Level");
 			return TRUE;
 		}
 
-		if (LOWORD(wParam) == IDC_ONLYGROUP)
+		if (LOWORD(wParam) == IDC_TBBTQLOAD)
 		{
-			/*if (App->Cl19_Ogre->RenderListener->ShowOnlySubMesh == 1)
-			{
-			App->Cl19_Ogre->RenderListener->ShowOnlySubMesh = 0;
-			App->CL_Vm_TopBar->Toggle_GroupsOnly_Flag = 0;
-			}
-			else
-			{
-			App->Cl19_Ogre->RenderListener->ShowOnlySubMesh = 1;
-			App->CL_Vm_TopBar->Toggle_GroupsOnly_Flag = 1;
-			}*/
 
+			App->SBC_Project->Load_Scene_Auto();
 			return TRUE;
 		}
-
-		//if (LOWORD(wParam) == IDC_TBSCALE) // Scale
-		//{
-		//	if (App->CL_Vm_ImGui->Show_Scale == 1)
-		//	{
-		//		App->CL_Vm_ImGui->Show_Scale = 0;
-		//	}
-		//	else
-		//	{
-		//		App->CL_Vm_ImGui->Show_Scale = 1;
-		//	}
-		//	return TRUE;
-		//}
 
 		return FALSE;
 	}
