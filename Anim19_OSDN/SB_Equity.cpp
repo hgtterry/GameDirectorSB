@@ -652,12 +652,6 @@ LRESULT CALLBACK SB_Equity::Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 		}
 		
 
-		if (LOWORD(wParam) == IDC_BTEQRESET)
-		{
-			App->SBC_Equity->Reset_View();
-			return TRUE;
-		}
-
 		if (LOWORD(wParam) == IDC_BTEQZOOM)
 		{
 			App->SBC_Equity->Zoom();
@@ -1082,8 +1076,13 @@ void SB_Equity::Reset_View(void)
 	HairNode->setPosition(0, 0, 0);
 	HairNode->resetOrientation();
 
+	App->SBC_Equity->RenderListener->RX = 0;
+	App->SBC_Equity->RenderListener->RZ = 0;
+
 	App->EBC_Listener->WE_Cam->setPosition(Ogre::Vector3(0, 90, 100));
 	App->EBC_Listener->WE_Cam->lookAt(Ogre::Vector3(0, 30, 0));
+
+
 
 }
 
