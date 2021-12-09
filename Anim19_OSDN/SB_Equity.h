@@ -9,6 +9,10 @@ public:
 	void Set_Equity(void);;
 
 	void Reset_View(void);
+	void Zoom(void);
+
+	void Update_Model(void);
+	void Convert_Model(void);
 
 	bool Get_View_Height_Width(void);
 
@@ -47,11 +51,6 @@ protected:
 
 	void Grid_Update(bool Create);
 	void Hair_Update(bool Create);
-
-	void Update_Model(void);
-	void Convert_Model(void);
-
-	void Zoom(void);
 
 	HWND MeshView_Hwnd;
 	//HWND MeshViewDialog_Hwnd;

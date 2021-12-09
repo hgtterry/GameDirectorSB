@@ -49,7 +49,7 @@ VM_Groups::~VM_Groups()
 // *************************************************************************
 bool VM_Groups::Start_Groups()
 {
-	RightGroups_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_RIGHTGROUPS, App->Fdlg, (DLGPROC)Groups_Proc);
+	RightGroups_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_RIGHTGROUPS, App->SBC_Equity->MeshViewDialog_Hwnd, (DLGPROC)Groups_Proc);
 	ShowWindow(RightGroups_Hwnd, 0);
 	return 1;
 }

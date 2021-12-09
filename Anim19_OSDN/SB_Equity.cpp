@@ -107,6 +107,7 @@ LRESULT CALLBACK SB_Equity::Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 		App->SBC_Equity->MeshViewDialog_Hwnd = hDlg;
 
 		App->EBC_TopTabs->Start_Tabs();
+		App->CL_Vm_Groups->Start_Groups();
 
 		App->CL_Vm_FileIO->LoadHistory_Equity();
 
@@ -319,19 +320,6 @@ LRESULT CALLBACK SB_Equity::Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 	}
 
 	case WM_COMMAND:
-
-		if (LOWORD(wParam) == IDC_BTUPDATE)
-		{
-			App->SBC_Equity->Update_Model();
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDC_BTEQCONVERT)
-		{
-			App->SBC_Equity->Convert_Model();
-			return TRUE;
-		}
-
 
 		// ----------------------------------------------------------- Importers
 		if (LOWORD(wParam) == ID_IMPORT_WORLDEDITOR)
@@ -648,13 +636,6 @@ LRESULT CALLBACK SB_Equity::Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 			{
 				App->EBC_Listener->Show_Model_Data = 1;
 			}
-			return TRUE;
-		}
-		
-
-		if (LOWORD(wParam) == IDC_BTEQZOOM)
-		{
-			App->SBC_Equity->Zoom();
 			return TRUE;
 		}
 		
