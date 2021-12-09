@@ -78,6 +78,7 @@ ebopster
 // ---------------------------------------------------- 07/12/21
 #include "EB_Listener.h"
 #include "EB_TopTabs.h"
+#include "EB_Groups.h"
 
 // ---------------------------------------------------- 18/10/21
 #include "SB_Equity.h"
@@ -156,6 +157,7 @@ public:
 	// ---------------------------------------------------- 07/12/21
 	EB_Listener*			EBC_Listener;		// Listener for Equity Editor [081221]
 	EB_TopTabs*				EBC_TopTabs;		// Top Bar Tabs Class Equity [091221]
+	EB_Groups*				EBC_Groups;			// Texture Viewer for Equity [091221]
 
 	// ---------------------------------------------------- 18/10/21
 	SB_Equity*				SBC_Equity;			// Equity Editor [081221]

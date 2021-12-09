@@ -82,6 +82,7 @@ GD19_App::GD19_App(void)
 	// ---------------------------------------------------- 07/12/21
 	EBC_Listener =		nullptr;
 	EBC_TopTabs =		nullptr;
+	EBC_Groups =		nullptr;
 
 	// ---------------------------------------------------- 18/10/21
 	SBC_Equity =		nullptr;
@@ -248,6 +249,7 @@ bool GD19_App::InitApp(void)
 	// ---------------------------------------------------- 07/12/21
 	EBC_Listener =			new EB_Listener();
 	EBC_TopTabs =			new EB_TopTabs();
+	EBC_Groups =			new EB_Groups();
 
 	// ---------------------------------------------------- 18/10/21
 		

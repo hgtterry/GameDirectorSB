@@ -159,6 +159,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base_Player.h" />
+    <ClInclude Include="EB_Groups.h" />
     <ClInclude Include="EB_Listener.h" />
     <ClInclude Include="EB_TopTabs.h" />
     <ClInclude Include="EQ15_Bullet_AddRoom.h" />
@@ -240,6 +241,7 @@
     <ClCompile Include="Common\imGui\ImGui_cpp\imgui_demo.cpp" />
     <ClCompile Include="Common\imGui\ImGui_cpp\imgui_draw.cpp" />
     <ClCompile Include="Common\imGui\ImGui_cpp\imgui_widgets.cpp" />
+    <ClCompile Include="EB_Groups.cpp" />
     <ClCompile Include="EB_Listener.cpp" />
     <ClCompile Include="EB_TopTabs.cpp" />
     <ClCompile Include="EQ15_Bullet_AddRoom.cpp" />
