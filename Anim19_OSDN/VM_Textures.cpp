@@ -605,7 +605,7 @@ bool VM_Textures::TexureToWinPreviewFullPath(int Index, char* FullPath)
 	char mFileName[1024];
 	strcpy(mFileName, FullPath);
 
-	HWND PreviewWnd = GetDlgItem(App->CL_Vm_Groups->RightGroups_Hwnd, IDC_BASETEXTURE2);
+	HWND PreviewWnd = GetDlgItem(App->EBC_Groups->RightGroups_Hwnd, IDC_BASETEXTURE2);
 	HDC	hDC = GetDC(PreviewWnd);
 
 	// ----------------------------------- Bitmap

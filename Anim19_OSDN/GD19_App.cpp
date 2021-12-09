@@ -66,7 +66,6 @@ GD19_App::GD19_App(void)
 	CL_Vm_FileIO =		nullptr;
 	CL_Vm_ImGui =		nullptr;
 	CL_Vm_TextLib =		nullptr;
-	CL_Vm_Groups =		nullptr;
 	Cl_Vm_Assimp =		nullptr;
 	Cl_Vm_Dimensions =	nullptr;
 	Cl_Vm_File_Equity =	nullptr;
@@ -233,7 +232,6 @@ bool GD19_App::InitApp(void)
 	CL_Vm_FileIO =		new VM_FileIO();
 	CL_Vm_ImGui =		new VM_ImGui();
 	CL_Vm_TextLib =		new VM_TextLib();
-	CL_Vm_Groups =		new VM_Groups();
 	Cl_Vm_Assimp =		new VM_Assimp();
 	Cl_Vm_Dimensions =	new VM_Dimensions();
 	Cl_Vm_File_Equity = new VM_File_Equity();

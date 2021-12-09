@@ -393,7 +393,7 @@ void SB_TopTabs::Hide_Tabs(void)
 	ShowWindow(Editors_TB_hWnd, SW_HIDE);
 	ShowWindow(File_TB_hWnd, SW_HIDE);
 
-	ShowWindow(App->CL_Vm_Groups->RightGroups_Hwnd, 0);
+	ShowWindow(App->EBC_Groups->RightGroups_Hwnd, 0);
 	ShowWindow(App->SBC_Physics->PhysicsPannel_Hwnd, 0);
 
 	Toggle_Tabs_Old_Flag = 0;

@@ -62,7 +62,6 @@ ebopster
 #include "VM_FileIO.h"
 #include "VM_ImGui.h"
 #include "VM_TextLib.h"
-#include "VM_Groups.h"
 #include "VM_Assimp.h"
 #include "VM_Dimensions.h"
 #include "VM_File_Equity.h"
@@ -141,7 +140,6 @@ public:
 	VM_FileIO*			CL_Vm_FileIO;
 	VM_ImGui*			CL_Vm_ImGui;
 	VM_TextLib*			CL_Vm_TextLib;
-	VM_Groups*			CL_Vm_Groups;
 	VM_Assimp*			Cl_Vm_Assimp;
 	VM_Dimensions*		Cl_Vm_Dimensions;
 	VM_File_Equity*		Cl_Vm_File_Equity;

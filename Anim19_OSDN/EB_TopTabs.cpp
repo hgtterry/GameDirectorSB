@@ -139,7 +139,7 @@ LRESULT CALLBACK EB_TopTabs::Tabs_Proc(HWND hDlg, UINT message, WPARAM wParam, L
 			App->EBC_TopTabs->Toggle_Tabs_Textures_Flag = 1;
 
 			//App->CL_Vm_Groups->Start_Groups();
-			ShowWindow(App->CL_Vm_Groups->RightGroups_Hwnd, SW_SHOW);
+			ShowWindow(App->EBC_Groups->RightGroups_Hwnd, SW_SHOW);
 
 			RedrawWindow(App->EBC_TopTabs->Tabs_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;

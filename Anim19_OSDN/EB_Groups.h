@@ -27,5 +27,26 @@ class EB_Groups
 public:
 	EB_Groups();
 	~EB_Groups();
+
+	bool Start_Groups();
+	void Update_Groups_Dialog(int Index);
+
+	bool ChangeTexture_ModelLocation(void);
+
+	int SelectedGroup;
+
+	HWND RightGroups_Hwnd;
+
+	HBITMAP	Sel_BaseBitmap;
+
+	long BasePicWidth;
+	long BasePicHeight;
+
+protected:
+
+	static LRESULT CALLBACK Groups_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static bool CALLBACK ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+
+	bool RenderTexture_Blit(HDC hDC, HBITMAP Bmp, const RECT *SourceRect, const RECT *DestRect);
 };
 

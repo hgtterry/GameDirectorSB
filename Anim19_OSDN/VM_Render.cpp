@@ -494,7 +494,7 @@ bool VM_Render::Assimp_Render_Textures(void)
 
 	if (ShowOnlySubMesh == 1) // Show Only Selected SubMesh
 	{
-		Assimp_Textured_Parts(App->CL_Vm_Groups->SelectedGroup);
+		Assimp_Textured_Parts(App->EBC_Groups->SelectedGroup);
 		glDisable(GL_TEXTURE_2D);
 		return 1;
 	}
@@ -897,7 +897,7 @@ bool VM_Render::RF_Render_Just_Group()
 	glColor3f(1, 1, 1);
 	glEnable(GL_ALPHA_TEST);
 
-	int SelectedIndex = App->CL_Vm_Model->S_TextureInfo[App->CL_Vm_Groups->SelectedGroup]->ActorMaterialIndex;
+	int SelectedIndex = App->CL_Vm_Model->S_TextureInfo[App->EBC_Groups->SelectedGroup]->ActorMaterialIndex;
 
 	while (Count<App->CL_Vm_Model->FaceCount)
 	{
