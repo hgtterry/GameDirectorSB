@@ -106,6 +106,8 @@ LRESULT CALLBACK SB_Equity::Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 
 		App->SBC_Equity->MeshViewDialog_Hwnd = hDlg;
 
+		App->EBC_TopTabs->Start_Tabs();
+
 		App->CL_Vm_FileIO->LoadHistory_Equity();
 
 		App->SBC_Equity->Init_Bmps_Globals();
