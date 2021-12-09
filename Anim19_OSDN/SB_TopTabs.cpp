@@ -121,14 +121,6 @@ LRESULT CALLBACK SB_TopTabs::TopBar_Globals_Proc(HWND hDlg, UINT message, WPARAM
 	}
 	case WM_CTLCOLORSTATIC:
 	{
-
-		/*if(GetDlgItem(hDlg,IDC_BANNER) == (HWND)lParam)
-		{
-		SetBkColor((HDC) wParam, RGB(0, 255, 0));
-		SetTextColor((HDC) wParam, RGB(0,0,255));
-		SetBkMode((HDC) wParam, TRANSPARENT);
-		return (UINT) App->AppBackground;
-		}*/
 		return FALSE;
 	}
 
