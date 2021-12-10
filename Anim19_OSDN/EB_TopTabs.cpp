@@ -377,12 +377,23 @@ LRESULT CALLBACK EB_TopTabs::Textures_ETB_Proc(HWND hDlg, UINT message, WPARAM w
 
 	case WM_COMMAND:
 	{
-		//if (LOWORD(wParam) == IDC_TBBTELOAD)
-		//{
-		//	Debug1
-		//		//App->SBC_Import->Load_Scene("Level   *.SBLevel\0*.SBLevel\0", "Level");
-		//		return TRUE;
-		//}
+		if (LOWORD(wParam) == IDC_CBTEXTURES)
+		{
+			switch (HIWORD(wParam)) // Find out what message it was
+			{
+			case CBN_DROPDOWN:
+				break;
+			case CBN_CLOSEUP:
+			{
+				HWND temp = GetDlgItem(hDlg, IDC_CBTEXTURES);
+				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
+				App->EBC_Groups->Update_Groups_Dialog(Index);
+				
+			}
+			}
+
+			return TRUE;
+		}
 
 		return FALSE;
 	}
