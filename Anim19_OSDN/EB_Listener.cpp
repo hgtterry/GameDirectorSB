@@ -370,7 +370,6 @@ void EB_Listener::ImGui_Model_Data(void)
 			int Count = 0;
 			while (Count < App->CL_Vm_Model->S_Texture[0]->UsedTextureCount)
 			{
-				//ImGui::Text("%s", App->CL_Vm_Model->S_TextureInfo[Count]->Text_FileName);
 				ImGui::Text("%s", App->CL_Vm_Model->S_MeshGroup[Count]->Text_FileName);
 				Count++;
 			}

@@ -1026,6 +1026,18 @@ void SB_Equity::Convert_Model(void)
 // *************************************************************************
 void SB_Equity::Set_Equity(void)
 {
+	// --------------------------------------------------------
+
+	int Count = 0;
+	while (Count < App->CL_Vm_Model->GroupCount)
+	{
+		SendMessage(App->EBC_TopTabs->TexturesCombo_Hwnd, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_Vm_Model->S_MeshGroup[Count]->Text_FileName);
+		Count++;
+	}
+	SendMessage(App->EBC_TopTabs->TexturesCombo_Hwnd, CB_SETCURSEL, 0, 0);
+
+	// --------------------------------------------------------
+
 	App->CL_Vm_Model->Model_Loaded = 1;
 	App->SBC_Equity->Model_Loaded = 1;
 

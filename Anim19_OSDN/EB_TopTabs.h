@@ -30,6 +30,8 @@ public:
 
 	void Start_Tabs(void);
 
+	HWND TexturesCombo_Hwnd;
+
 protected:
 
 	static LRESULT CALLBACK Tabs_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);

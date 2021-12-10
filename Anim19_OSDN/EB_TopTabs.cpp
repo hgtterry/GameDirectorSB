@@ -35,6 +35,8 @@ EB_TopTabs::EB_TopTabs()
 	Camera_ETB_hWnd =	nullptr;
 	Textures_ETB_hWnd = nullptr;
 
+	TexturesCombo_Hwnd = nullptr;
+
 	Toggle_Tabs_File_Flag = 1;
 	Toggle_Tabs_Cam_Flag = 0;
 	Toggle_Tabs_Textures_Flag = 0;
@@ -347,7 +349,9 @@ LRESULT CALLBACK EB_TopTabs::Textures_ETB_Proc(HWND hDlg, UINT message, WPARAM w
 	{
 	case WM_INITDIALOG:
 	{
-		//SendDlgItemMessage(hDlg, IDC_TBBTELOAD, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CBTEXTURES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		App->EBC_TopTabs->TexturesCombo_Hwnd = GetDlgItem(hDlg, IDC_CBTEXTURES);
 		return TRUE;
 	}
 
