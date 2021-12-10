@@ -415,3 +415,20 @@ void EB_TopTabs::Hide_Tabs(void)
 	Toggle_Tabs_Textures_Flag = 0;
 	
 }
+
+// *************************************************************************
+// *					Update_Textures_Combo Terry Berine				   *
+// *************************************************************************
+void EB_TopTabs::Update_Textures_Combo(void)
+{
+	SendMessage(TexturesCombo_Hwnd, CB_RESETCONTENT, 0, 0);
+
+	int Count = 0;
+	while (Count < App->CL_Vm_Model->GroupCount)
+	{
+		SendMessage(TexturesCombo_Hwnd, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_Vm_Model->S_MeshGroup[Count]->Text_FileName);
+		Count++;
+	}
+
+	SendMessage(TexturesCombo_Hwnd, CB_SETCURSEL, 0, 0);
+}

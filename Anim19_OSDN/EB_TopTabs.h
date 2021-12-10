@@ -30,6 +30,8 @@ public:
 
 	void Start_Tabs(void);
 
+	void Update_Textures_Combo(void);
+
 	HWND TexturesCombo_Hwnd;
 
 protected:

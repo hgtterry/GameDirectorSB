@@ -1026,24 +1026,14 @@ void SB_Equity::Convert_Model(void)
 // *************************************************************************
 void SB_Equity::Set_Equity(void)
 {
-	// --------------------------------------------------------
-
-	int Count = 0;
-	while (Count < App->CL_Vm_Model->GroupCount)
-	{
-		SendMessage(App->EBC_TopTabs->TexturesCombo_Hwnd, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CL_Vm_Model->S_MeshGroup[Count]->Text_FileName);
-		Count++;
-	}
-	SendMessage(App->EBC_TopTabs->TexturesCombo_Hwnd, CB_SETCURSEL, 0, 0);
-
-	// --------------------------------------------------------
+	App->EBC_TopTabs->Update_Textures_Combo();
 
 	App->CL_Vm_Model->Model_Loaded = 1;
 	App->SBC_Equity->Model_Loaded = 1;
 
 	Zoom();
 
-	//App->CL_Vm_Groups->Update_Groups_Dialog(0);
+	App->EBC_Groups->Update_Groups_Dialog(0);
 
 	HWND Temp = GetDlgItem(MeshViewDialog_Hwnd, IDC_TBSHOWTEXTURE);
 	App->SBC_Equity->Toggle_Textures_Flag = 1;
