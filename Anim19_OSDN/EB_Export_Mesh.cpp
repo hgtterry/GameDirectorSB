@@ -103,7 +103,7 @@ bool EB_Export_Mesh::Export_AssimpToOgre(void)
 	
 	CreateMaterialFile(mOgreScriptFileName);
 
-	StartRenderToXML(1);
+	Write_XML_File();
 
 	// ---------------------------------------------------- 
 	char SourceFile[1024];
@@ -137,9 +137,9 @@ bool EB_Export_Mesh::Export_AssimpToOgre(void)
 }
 
 // *************************************************************************
-// *							StartRenderToXML			   		   	   *
+// *							Write_XML_File				   		   	   *
 // *************************************************************************
-bool EB_Export_Mesh::StartRenderToXML(int LTextureFormat)
+bool EB_Export_Mesh::Write_XML_File()
 {
 
 	S_XMLStore[0] = new XMLStore_Type2;

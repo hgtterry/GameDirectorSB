@@ -67,7 +67,6 @@ ebopster
 #include "VM_File_Equity.h"
 #include "VM_WorldEditor.h"
 #include "VM_Preferences.h"
-#include "VM_Ogre3d.h"
 #include "VM_TXMLExport.h"
 
 // ---------------------------------------------------- 15/10/21
@@ -146,7 +145,6 @@ public:
 	VM_File_Equity*		Cl_Vm_File_Equity;
 	VM_WorldEditor*		Cl_Vm_WorldEditor;
 	VM_Preferences*		Cl_Vm_Preferences;
-	VM_Ogre3d*			Cl_Vm_Ogre3d;
 	VM_XMLExport*		Cl_Vm_XMLExport;
 
 	// ---------------------------------------------------- 15/10/21

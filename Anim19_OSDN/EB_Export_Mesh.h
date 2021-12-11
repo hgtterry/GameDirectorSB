@@ -88,11 +88,14 @@ public:
 	~EB_Export_Mesh();
 
 	bool Export_AssimpToOgre(void);
+
+protected:
+
 	bool CreateDirectoryMesh(void);
 	bool DecompileTextures(void);
 	void CreateMaterialFile(char* MatFileName);
 
-	bool StartRenderToXML(int LTextureFormat);
+	bool Write_XML_File(void);
 	bool RenderToXML(int GroupIndex);
 	bool WriteNewXML(int GroupIndex);
 	bool WriteSubMesh(int GroupIndex);

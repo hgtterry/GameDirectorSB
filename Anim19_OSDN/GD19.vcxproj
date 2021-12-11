@@ -229,7 +229,6 @@
     <ClInclude Include="VM_ImGui.h" />
     <ClInclude Include="VM_Model.h" />
     <ClInclude Include="VM_Motions.h" />
-    <ClInclude Include="VM_Ogre3d.h" />
     <ClInclude Include="VM_Preferences.h" />
     <ClInclude Include="VM_Render.h" />
     <ClInclude Include="VM_TextLib.h" />
@@ -316,7 +315,6 @@
     <ClCompile Include="VM_ImGui.cpp" />
     <ClCompile Include="VM_Model.cpp" />
     <ClCompile Include="VM_Motions.cpp" />
-    <ClCompile Include="VM_Ogre3d.cpp" />
     <ClCompile Include="VM_Preferences.cpp" />
     <ClCompile Include="VM_Render.cpp" />
     <ClCompile Include="VM_TextLib.cpp" />
