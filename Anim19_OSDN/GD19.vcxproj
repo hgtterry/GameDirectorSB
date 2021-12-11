@@ -130,8 +130,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>Common\lib\Release;Common\Bullet\lib;Common\irrKlang\Libs;Common\Genesis;Common\Soil\lib;Common\Devil\lib;Common\Assimp\Lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>comctl32.lib;genesis.lib;OgreMain.lib;OgreOverlay.lib;OgreTerrain.lib;opengl32.lib;glu32.lib;BulletDynamics.lib;BulletCollision.lib;LinearMath.lib;irrKlang.lib;SOIL.lib;DevIL.lib;ILU.lib;ILUT.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>Common\lib\Release;Common\Bullet\lib;Common\irrKlang\Libs;Common\Genesis;Common\Soil\lib;Common\Devil\lib;Common\Assimp\Lib;Common\Tiny</AdditionalLibraryDirectories>
+      <AdditionalDependencies>comctl32.lib;genesis.lib;OgreMain.lib;OgreOverlay.lib;OgreTerrain.lib;opengl32.lib;glu32.lib;BulletDynamics.lib;BulletCollision.lib;LinearMath.lib;irrKlang.lib;SOIL.lib;DevIL.lib;ILU.lib;ILUT.lib;assimp-vc140-mt.lib;Tiny.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)Equity15.exe</OutputFile>
       <IgnoreSpecificDefaultLibraries>LIBCMT.lib;libcpmt.lib</IgnoreSpecificDefaultLibraries>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
@@ -197,6 +197,9 @@
     <ClInclude Include="GD_Bt_Render.h" />
     <ClInclude Include="GD_Keyboard.h" />
     <ClInclude Include="GD_spdlog.h" />
+    <ClInclude Include="OgreXMLMeshSerializer.h" />
+    <ClInclude Include="OgreXMLPrerequisites.h" />
+    <ClInclude Include="OgreXMLSkeletonSerializer.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SB_3DT.h" />
     <ClInclude Include="SB_Aera.h" />
@@ -281,6 +284,8 @@
     <ClCompile Include="GD_Bt_Render.cpp" />
     <ClCompile Include="GD_Keyboard.cpp" />
     <ClCompile Include="GD_spdlog.cpp" />
+    <ClCompile Include="OgreXMLMeshSerializer.cpp" />
+    <ClCompile Include="OgreXMLSkeletonSerializer.cpp" />
     <ClCompile Include="SB_3DT.cpp" />
     <ClCompile Include="SB_Aera.cpp" />
     <ClCompile Include="SB_Camera.cpp" />

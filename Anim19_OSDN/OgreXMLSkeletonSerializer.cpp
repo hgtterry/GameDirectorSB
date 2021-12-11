@@ -25,7 +25,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -----------------------------------------------------------------------------
 */
-
+#include "stdafx.h"
 #include "OgreXMLSkeletonSerializer.h"
 #include "OgreSkeleton.h"
 #include "OgreAnimation.h"
@@ -56,7 +56,7 @@ namespace Ogre {
     {	
 		LogManager::getSingleton().logMessage("XMLSkeletonSerializer: reading XML data from " + filename + "...");
 
-		mXMLDoc = new TiXmlDocument(filename);
+		mXMLDoc = new TiXmlDocument(filename.c_str());
         mXMLDoc->LoadFile();
 
 		TiXmlElement* elem;
@@ -424,7 +424,7 @@ namespace Ogre {
         LogManager::getSingleton().logMessage("DOM populated, writing XML file..");
 
         // Write out to a file
-        if(! mXMLDoc->SaveFile(filename) )
+        if(! mXMLDoc->SaveFile(filename.c_str()) )
         {
             LogManager::getSingleton().logMessage("XMLSkeletonSerializer failed writing the XML file.", LML_CRITICAL);
         }
@@ -443,7 +443,7 @@ namespace Ogre {
 		
 		// Blend mode
 		String blendModeStr = pSkel->getBlendMode() == ANIMBLEND_CUMULATIVE ? "cumulative" : "average";
-		rootNode->SetAttribute("blendmode", blendModeStr);
+		rootNode->SetAttribute("blendmode", blendModeStr.c_str());
 
         TiXmlElement* bonesElem = 
             rootNode->InsertEndChild(TiXmlElement("bones"))->ToElement();
@@ -484,16 +484,16 @@ namespace Ogre {
         
         // Bone name & handle
         boneElem->SetAttribute("id", 
-            StringConverter::toString(pBone->getHandle()));
-        boneElem->SetAttribute("name", pBone->getName());
+            StringConverter::toString(pBone->getHandle()).c_str());
+        boneElem->SetAttribute("name", pBone->getName().c_str());
 
         // Position
         TiXmlElement* subNode = 
             boneElem->InsertEndChild(TiXmlElement("position"))->ToElement();
         Vector3 pos = pBone->getPosition();
-        subNode->SetAttribute("x", StringConverter::toString(pos.x));
-        subNode->SetAttribute("y", StringConverter::toString(pos.y));
-        subNode->SetAttribute("z", StringConverter::toString(pos.z));
+        subNode->SetAttribute("x", StringConverter::toString(pos.x).c_str());
+        subNode->SetAttribute("y", StringConverter::toString(pos.y).c_str());
+        subNode->SetAttribute("z", StringConverter::toString(pos.z).c_str());
         
         // Orientation 
         subNode = 
@@ -504,10 +504,10 @@ namespace Ogre {
         pBone->getOrientation().ToAngleAxis(angle, axis);
         TiXmlElement* axisNode = 
             subNode->InsertEndChild(TiXmlElement("axis"))->ToElement();
-        subNode->SetAttribute("angle", StringConverter::toString(angle.valueRadians()));
-        axisNode->SetAttribute("x", StringConverter::toString(axis.x));
-        axisNode->SetAttribute("y", StringConverter::toString(axis.y));
-        axisNode->SetAttribute("z", StringConverter::toString(axis.z));
+        subNode->SetAttribute("angle", StringConverter::toString(angle.valueRadians()).c_str());
+        axisNode->SetAttribute("x", StringConverter::toString(axis.x).c_str());
+        axisNode->SetAttribute("y", StringConverter::toString(axis.y).c_str());
+        axisNode->SetAttribute("z", StringConverter::toString(axis.z).c_str());
 
         // Scale optional
         Vector3 scale = pBone->getScale();
@@ -515,9 +515,9 @@ namespace Ogre {
         {
             TiXmlElement* scaleNode =
                 boneElem->InsertEndChild(TiXmlElement("scale"))->ToElement();
-            scaleNode->SetAttribute("x", StringConverter::toString(scale.x));
-            scaleNode->SetAttribute("y", StringConverter::toString(scale.y));
-            scaleNode->SetAttribute("z", StringConverter::toString(scale.z));
+            scaleNode->SetAttribute("x", StringConverter::toString(scale.x).c_str());
+            scaleNode->SetAttribute("y", StringConverter::toString(scale.y).c_str());
+            scaleNode->SetAttribute("z", StringConverter::toString(scale.z).c_str());
         }
 
 
@@ -539,8 +539,8 @@ namespace Ogre {
         boneParentNode->SetAttribute("parentid", StringConverter::toString(parentId));
 		*/
 		// Modifications: on stoque les noms./ 
-		boneParentNode->SetAttribute("bone", boneName);
-        boneParentNode->SetAttribute("parent", parentName);
+		boneParentNode->SetAttribute("bone", boneName.c_str());
+        boneParentNode->SetAttribute("parent", parentName.c_str());
 
     }
     //---------------------------------------------------------------------
@@ -550,16 +550,16 @@ namespace Ogre {
         TiXmlElement* animNode = 
             animsNode->InsertEndChild(TiXmlElement("animation"))->ToElement();
 
-        animNode->SetAttribute("name", anim->getName());
-        animNode->SetAttribute("length", StringConverter::toString(anim->getLength()));
+        animNode->SetAttribute("name", anim->getName().c_str());
+        animNode->SetAttribute("length", StringConverter::toString(anim->getLength()).c_str());
 		
 		// Optional base keyframe information
 		if (anim->getUseBaseKeyFrame())
 		{
 			TiXmlElement* baseInfoNode = 
 				animNode->InsertEndChild(TiXmlElement("baseinfo"))->ToElement();
-			baseInfoNode->SetAttribute("baseanimationname", anim->getBaseKeyFrameAnimationName());
-			baseInfoNode->SetAttribute("basekeyframetime", StringConverter::toString(anim->getBaseKeyFrameTime()));
+			baseInfoNode->SetAttribute("baseanimationname", anim->getBaseKeyFrameAnimationName().c_str());
+			baseInfoNode->SetAttribute("basekeyframetime", StringConverter::toString(anim->getBaseKeyFrameTime()).c_str());
 		}
 
         // Write all tracks
@@ -585,7 +585,7 @@ namespace Ogre {
         Bone* bone = (Bone*)track->getAssociatedNode();
         //unsigned short boneid = bone->getHandle();
 		String boneName = bone->getName();
-        trackNode->SetAttribute("bone", boneName);
+        trackNode->SetAttribute("bone", boneName.c_str());
 
         // Write all keyframes
         TiXmlElement* keysNode = 
@@ -602,14 +602,14 @@ namespace Ogre {
         TiXmlElement* keyNode = 
             keysNode->InsertEndChild(TiXmlElement("keyframe"))->ToElement();
 
-        keyNode->SetAttribute("time", StringConverter::toString(key->getTime()));
+        keyNode->SetAttribute("time", StringConverter::toString(key->getTime()).c_str());
 
         TiXmlElement* transNode = 
             keyNode->InsertEndChild(TiXmlElement("translate"))->ToElement();
         Vector3 trans = key->getTranslate();
-        transNode->SetAttribute("x", StringConverter::toString(trans.x));
-        transNode->SetAttribute("y", StringConverter::toString(trans.y));
-        transNode->SetAttribute("z", StringConverter::toString(trans.z));
+        transNode->SetAttribute("x", StringConverter::toString(trans.x).c_str());
+        transNode->SetAttribute("y", StringConverter::toString(trans.y).c_str());
+        transNode->SetAttribute("z", StringConverter::toString(trans.z).c_str());
 
         TiXmlElement* rotNode = 
             keyNode->InsertEndChild(TiXmlElement("rotate"))->ToElement();
@@ -619,10 +619,10 @@ namespace Ogre {
         key->getRotation().ToAngleAxis(angle, axis);
         TiXmlElement* axisNode = 
             rotNode->InsertEndChild(TiXmlElement("axis"))->ToElement();
-        rotNode->SetAttribute("angle", StringConverter::toString(angle.valueRadians()));
-        axisNode->SetAttribute("x", StringConverter::toString(axis.x));
-        axisNode->SetAttribute("y", StringConverter::toString(axis.y));
-        axisNode->SetAttribute("z", StringConverter::toString(axis.z));
+        rotNode->SetAttribute("angle", StringConverter::toString(angle.valueRadians()).c_str());
+        axisNode->SetAttribute("x", StringConverter::toString(axis.x).c_str());
+        axisNode->SetAttribute("y", StringConverter::toString(axis.y).c_str());
+        axisNode->SetAttribute("z", StringConverter::toString(axis.z).c_str());
 
         // Scale optional
         if (key->getScale() != Vector3::UNIT_SCALE)
@@ -630,9 +630,9 @@ namespace Ogre {
             TiXmlElement* scaleNode = 
                 keyNode->InsertEndChild(TiXmlElement("scale"))->ToElement();
 
-            scaleNode->SetAttribute("x", StringConverter::toString(key->getScale().x));
-            scaleNode->SetAttribute("y", StringConverter::toString(key->getScale().y));
-            scaleNode->SetAttribute("z", StringConverter::toString(key->getScale().z));
+            scaleNode->SetAttribute("x", StringConverter::toString(key->getScale().x).c_str());
+            scaleNode->SetAttribute("y", StringConverter::toString(key->getScale().y).c_str());
+            scaleNode->SetAttribute("z", StringConverter::toString(key->getScale().z).c_str());
         }
 
     }
@@ -642,8 +642,8 @@ namespace Ogre {
 	{
 		TiXmlElement* linkNode = 
 			linksNode->InsertEndChild(TiXmlElement("animationlink"))->ToElement();
-		linkNode->SetAttribute("skeletonName", link.skeletonName);
-		linkNode->SetAttribute("scale", StringConverter::toString(link.scale));
+		linkNode->SetAttribute("skeletonName", link.skeletonName.c_str());
+		linkNode->SetAttribute("scale", StringConverter::toString(link.scale).c_str());
 
 	}
 	//---------------------------------------------------------------------
