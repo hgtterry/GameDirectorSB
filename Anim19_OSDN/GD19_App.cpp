@@ -71,7 +71,6 @@ GD19_App::GD19_App(void)
 	Cl_Vm_File_Equity =	nullptr;
 	Cl_Vm_WorldEditor = nullptr;
 	Cl_Vm_Preferences = nullptr;
-	Cl_Vm_XMLExport =	nullptr;
 
 	// ---------------------------------------------------- 15/10/21
 	CL_Ogre_Import_E15 = nullptr;
@@ -236,7 +235,6 @@ bool GD19_App::InitApp(void)
 	Cl_Vm_File_Equity = new VM_File_Equity();
 	Cl_Vm_WorldEditor = new VM_WorldEditor();
 	Cl_Vm_Preferences = new VM_Preferences();
-	Cl_Vm_XMLExport =	new VM_XMLExport();
 
 	// ---------------------------------------------------- 15/10/21
 	CL_Ogre_Import_E15 =	new EQ15_Ogre_Import();

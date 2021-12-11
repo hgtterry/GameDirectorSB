@@ -233,7 +233,6 @@
     <ClInclude Include="VM_Render.h" />
     <ClInclude Include="VM_TextLib.h" />
     <ClInclude Include="VM_Textures.h" />
-    <ClInclude Include="VM_TXMLExport.h" />
     <ClInclude Include="VM_WorldEditor.h" />
   </ItemGroup>
   <ItemGroup>
@@ -319,7 +318,6 @@
     <ClCompile Include="VM_Render.cpp" />
     <ClCompile Include="VM_TextLib.cpp" />
     <ClCompile Include="VM_Textures.cpp" />
-    <ClCompile Include="VM_TXMLExport.cpp" />
     <ClCompile Include="VM_WorldEditor.cpp" />
   </ItemGroup>
   <ItemGroup>
