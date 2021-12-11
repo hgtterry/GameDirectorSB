@@ -82,7 +82,7 @@ GD19_App::GD19_App(void)
 	EBC_Listener =		nullptr;
 	EBC_TopTabs =		nullptr;
 	EBC_Groups =		nullptr;
-
+	EBC_Export_Mesh =	nullptr;
 	// ---------------------------------------------------- 18/10/21
 	SBC_Equity =		nullptr;
 	SBC_XMLConverter =	nullptr;
@@ -248,6 +248,7 @@ bool GD19_App::InitApp(void)
 	EBC_Listener =			new EB_Listener();
 	EBC_TopTabs =			new EB_TopTabs();
 	EBC_Groups =			new EB_Groups();
+	EBC_Export_Mesh =		new EB_Export_Mesh();
 
 	// ---------------------------------------------------- 18/10/21
 		
