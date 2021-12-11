@@ -51,6 +51,95 @@ EB_Export_Mesh::~EB_Export_Mesh()
 }
 
 // *************************************************************************
+// *	  				 Convert_To_Mesh	Terry Bernie				   *
+// *************************************************************************
+bool EB_Export_Mesh::Convert_To_Mesh()
+{
+	try
+	{
+		logMgr = new LogManager();
+
+		XmlOptions opts = parseArgs();
+
+		opts.source = Source_Path_FileName;
+		opts.dest = Dest_Path_FileName;
+
+		rgm = new ResourceGroupManager();
+		mth = new Math();
+		lodMgr = new LodStrategyManager();
+		meshMgr = new MeshManager();
+		matMgr = new MaterialManager();
+		matMgr->initialise();
+		skelMgr = new SkeletonManager();
+		meshSerializer = new MeshSerializer();
+		xmlMeshSerializer = new XMLMeshSerializer();
+		skeletonSerializer = new SkeletonSerializer();
+		xmlSkeletonSerializer = new XMLSkeletonSerializer();
+		bufferManager = new DefaultHardwareBufferManager(); // needed because we don't have a rendersystem
+
+		XMLToBinary(opts);
+
+	}
+	catch (Exception& e)
+	{
+
+		MessageBox(App->MainHwnd, "Failed", "Message", MB_OK);
+		return 1;
+	}
+
+	Pass::processPendingPassUpdates(); // make sure passes are cleaned up
+
+	delete xmlSkeletonSerializer;
+	delete skeletonSerializer;
+	delete xmlMeshSerializer;
+	delete meshSerializer;
+	delete skelMgr;
+	delete matMgr;
+	delete meshMgr;
+	delete bufferManager;
+	delete lodMgr;
+	delete mth;
+	delete rgm;
+	delete logMgr;
+
+	MessageBox(NULL, "Converted Terry 2", "Message", MB_OK);
+
+	return 0;
+}
+
+// *************************************************************************
+// *	  					 parseArgs	Terry Bernie					   *
+// *************************************************************************
+XmlOptions EB_Export_Mesh::parseArgs()
+{
+	XmlOptions opts;
+
+	opts.interactiveMode = false;
+	opts.lodValue = 250000;
+	opts.lodFixed = 0;
+	opts.lodPercent = 20;
+	opts.numLods = 0;
+	opts.nuextremityPoints = 0;
+	opts.mergeTexcoordResult = 0;
+	opts.mergeTexcoordToDestroy = 0;
+	opts.usePercent = true;
+	opts.generateEdgeLists = true;
+	opts.generateTangents = false;
+	opts.tangentSemantic = VES_TANGENT;
+	opts.tangentUseParity = false;
+	opts.tangentSplitMirrored = false;
+	opts.tangentSplitRotated = false;
+	opts.reorganiseBuffers = true;
+	opts.optimiseAnimations = true;
+	opts.quietMode = true;
+	opts.endian = Serializer::ENDIAN_NATIVE;
+	opts.source = " ";
+	opts.dest = " ";
+
+	return opts;
+}
+
+// *************************************************************************
 // *	  					 XMLToBinary	Terry Bernie				   *
 // *************************************************************************
 void EB_Export_Mesh::XMLToBinary(XmlOptions opts)

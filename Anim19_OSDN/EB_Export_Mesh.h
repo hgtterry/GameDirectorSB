@@ -73,7 +73,13 @@ public:
 	EB_Export_Mesh();
 	~EB_Export_Mesh();
 
+	bool Convert_To_Mesh();
+	XmlOptions parseArgs();
+
 	void XMLToBinary(XmlOptions opts);
+
+	char Source_Path_FileName[1024];
+	char Dest_Path_FileName[1024];
 
 	LogManager* logMgr;
 	Math* mth;
