@@ -36,6 +36,20 @@ distribution.
 using namespace std;
 using namespace Ogre;
 
+typedef struct {
+	vertex_type XMLvertex[MAX_VERTICES];
+	normal_type XMLnormal[MAX_VERTICES];
+	polygon_type XMLpolygon[MAX_POLYGONS];
+	mapcoord_type mapcoord[MAX_VERTICES];
+	int BeenAdded[MAX_VERTICES];
+	int SortedVerticeCount;
+	int SortedPolyCount;
+	int SortedVertIndex[MAX_VERTICES];
+	int SXMLCount;
+	int BoneIndex[MAX_VERTICES];
+
+} XMLStore_Type2;
+
 struct XmlOptions
 {
 	String source;
@@ -73,25 +87,52 @@ public:
 	EB_Export_Mesh();
 	~EB_Export_Mesh();
 
+	bool Export_AssimpToOgre(void);
+	bool CreateDirectoryMesh(void);
+	bool DecompileTextures(void);
+	void CreateMaterialFile(char* MatFileName);
+
+	bool StartRenderToXML(int LTextureFormat);
+	bool RenderToXML(int GroupIndex);
+	bool WriteNewXML(int GroupIndex);
+	bool WriteSubMesh(int GroupIndex);
+
 	bool Convert_To_Mesh();
+
 	XmlOptions parseArgs();
+	XMLStore_Type2 * S_XMLStore[1];
 
 	void XMLToBinary(XmlOptions opts);
 
 	char Source_Path_FileName[1024];
 	char Dest_Path_FileName[1024];
 
-	LogManager* logMgr;
-	Math* mth;
-	LodStrategyManager *lodMgr;
-	MaterialManager* matMgr;
-	SkeletonManager* skelMgr;
+	char mDecompileFolder[1024];
+
+	char mOgreMeshFileName[255];
+	char mOgreScriptFileName[255];
+	char mOgreSkellFileName[255];
+	char mOgreSkellTagName[255];
+
+	char XmlMeshFileName[256];
+	char XmlScriptFileName[256];
+	char XmlSkellFileName[256];
+	char XmlSkellTagName[256];
+
+	char mCurrentFolder[1024];
+
+	int DoSkell;
+
+	float nx;
+	float ny;
+	float nz;
+
+	float u;
+	float v;
+
 	MeshSerializer* meshSerializer;
 	XMLMeshSerializer* xmlMeshSerializer;
-	SkeletonSerializer* skeletonSerializer;
-	XMLSkeletonSerializer* xmlSkeletonSerializer;
-	DefaultHardwareBufferManager *bufferManager;
-	MeshManager* meshMgr;
-	ResourceGroupManager* rgm;
+	
+	FILE *WritePolyFile;
 };
 

@@ -56,10 +56,7 @@ void VM_Exporter::Ogre3D_Model(void)
 		return;
 	}
 
-	strcpy(App->CL_Vm_FileIO->BrowserMessage, "Select Folder To Place Ogre Files a sub folder will be created");
-	int Test = App->CL_Vm_FileIO->StartBrowser("");
+	//App->Cl_Vm_Ogre3d->Export_AssimpToOgre();	
 
-	if (Test == 0) { return; }
-
-	App->Cl_Vm_Ogre3d->Export_AssimpToOgre();	
+	App->EBC_Export_Mesh->Export_AssimpToOgre();
 }
