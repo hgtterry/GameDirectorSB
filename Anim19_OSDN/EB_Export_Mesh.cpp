@@ -101,12 +101,16 @@ bool EB_Export_Mesh::Export_AssimpToOgre(void)
 
 	DecompileTextures();
 	
-	//CreateMaterialFile(mOgreScriptFileName);
+	CreateMaterialFile(mOgreScriptFileName);
 
 	StartRenderToXML(1);
 
 	// ---------------------------------------------------- 
 	char SourceFile[1024];
+	char OldFile[1024];
+
+	strcpy(OldFile, XmlMeshFileName);
+
 	strcpy(SourceFile, mCurrentFolder);
 	strcat(SourceFile, "\\");
 	strcat(SourceFile, XmlMeshFileName);
@@ -123,12 +127,11 @@ bool EB_Export_Mesh::Export_AssimpToOgre(void)
 
 	strcpy(Dest_Path_FileName, DestFile);
 
-	//App->Say(Source_Path_FileName);
-	//App->Say(Dest_Path_FileName);
-
 	Convert_To_Mesh();
 	
 	App->Say("Converted");
+
+	remove(OldFile);
 
 	return 1;
 }
@@ -151,17 +154,13 @@ bool EB_Export_Mesh::StartRenderToXML(int LTextureFormat)
 	int Len = strlen(XmlFileName);
 	XmlFileName[Len - 4] = 0;
 
-
-
 	strcpy(XmlMeshFileName, XmlFileName);
 	strcpy(XmlScriptFileName, XmlFileName);
 	strcpy(XmlSkellFileName, XmlFileName);
 	strcpy(XmlSkellTagName, XmlFileName);
 
-
 	strcpy(XFIle, XmlFileName);
 
-	
 	strcat(XmlScriptFileName, "_");
 	strcat(XmlSkellTagName, "_");
 
@@ -208,18 +207,6 @@ bool EB_Export_Mesh::StartRenderToXML(int LTextureFormat)
 
 	}
 
-
-	//char RunFile[1024];
-
-	//strcpy(RunFile, App->EquityDirecory_FullPath);
-	//strcat(RunFile, "\\");
-	//strcat(RunFile, "OgreXmlConverter.exe");
-
-	////App->Say("Converted");
-
-	//ShellExecute(0, "open", RunFile, XmlMeshFileName, NULL, SW_SHOW);
-	//remove("OgreXMLConverter.log");
-	//remove(XmlMeshFileName);
 	return 1;
 }
 
@@ -563,8 +550,6 @@ bool EB_Export_Mesh::Convert_To_Mesh()
 	delete xmlMeshSerializer;
 	delete meshSerializer;
 	
-	MessageBox(NULL, "Converted Terry 2", "Message", MB_OK);
-
 	return 0;
 }
 
