@@ -131,7 +131,7 @@ bool EQ15_Bullet_AddRoom::Add_New_Room(void)
 	strcat(ATest, ConNum);
 
 	strcpy(PathFile, Object->MeshName);
-	Object->OgreEntity = App->Cl19_Ogre->mSceneMgr->createEntity(ATest, PathFile, App->Cl19_Ogre->Equity_Resource_Group);
+	Object->OgreEntity = App->Cl19_Ogre->mSceneMgr->createEntity(ATest, PathFile, App->Cl19_Ogre->App_Resource_Group);
 	Object->OgreNode = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Object->OgreNode->attachObject(Object->OgreEntity);
 

@@ -74,7 +74,7 @@ bool GD19_Objects_New::Add_New_Object()
 	strcat(ATest, ConNum);
 
 	strcpy(PathFile, Object->MeshName);
-	Object->OgreEntity = App->Cl19_Ogre->mSceneMgr->createEntity(ATest, PathFile, App->Cl19_Ogre->Equity_Resource_Group);
+	Object->OgreEntity = App->Cl19_Ogre->mSceneMgr->createEntity(ATest, PathFile, App->Cl19_Ogre->App_Resource_Group);
 	Object->OgreNode = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Object->OgreNode->attachObject(Object->OgreEntity);
 
@@ -211,7 +211,7 @@ bool GD19_Objects_New::Add_New_Area(void)
 	strcat(ATest, ConNum);
 
 	strcpy(PathFile, Object->MeshName);
-	Object->OgreEntity = App->Cl19_Ogre->mSceneMgr->createEntity(ATest, PathFile, App->Cl19_Ogre->Equity_Resource_Group);
+	Object->OgreEntity = App->Cl19_Ogre->mSceneMgr->createEntity(ATest, PathFile, App->Cl19_Ogre->App_Resource_Group);
 	Object->OgreNode = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Object->OgreNode->attachObject(Object->OgreEntity);
 
@@ -278,7 +278,7 @@ bool GD19_Objects_New::Add_New_CollectableEntity()
 	strcat(ATest, ConNum);
 
 	strcpy(PathFile, Object->MeshName);
-	Object->OgreEntity = App->Cl19_Ogre->mSceneMgr->createEntity(ATest, PathFile, App->Cl19_Ogre->Equity_Resource_Group);
+	Object->OgreEntity = App->Cl19_Ogre->mSceneMgr->createEntity(ATest, PathFile, App->Cl19_Ogre->App_Resource_Group);
 
 	Object->OgreNode = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Object->OgreNode->attachObject(Object->OgreEntity);
@@ -380,7 +380,7 @@ bool GD19_Objects_New::Add_New_MessageEntity()
 	strcpy(Object->MeshName, "Test_cube.mesh");
 	strcpy(Object->MeshName_FullPath, "Test_cube.mesh");
 
-	Object->OgreEntity = App->Cl19_Ogre->mSceneMgr->createEntity(ATest, "Test_cube.mesh", App->Cl19_Ogre->Equity_Resource_Group);
+	Object->OgreEntity = App->Cl19_Ogre->mSceneMgr->createEntity(ATest, "Test_cube.mesh", App->Cl19_Ogre->App_Resource_Group);
 	Object->OgreNode = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Object->OgreNode->attachObject(Object->OgreEntity);
 	Object->OgreNode->scale(1, 1, 1);
@@ -485,7 +485,7 @@ bool GD19_Objects_New::Add_New_MoveEntity()
 	strcpy(Object->MeshName, "DoorEntity_GD.mesh");
 	strcpy(Object->MeshName_FullPath, "DoorEntity_GD.mesh");
 
-	Object->OgreEntity = App->Cl19_Ogre->mSceneMgr->createEntity(ATest, "DoorEntity_GD.mesh", App->Cl19_Ogre->Equity_Resource_Group);
+	Object->OgreEntity = App->Cl19_Ogre->mSceneMgr->createEntity(ATest, "DoorEntity_GD.mesh", App->Cl19_Ogre->App_Resource_Group);
 	Object->OgreNode = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Object->OgreNode->attachObject(Object->OgreEntity);
 	Object->OgreNode->scale(1, 1, 1);
@@ -590,7 +590,7 @@ bool GD19_Objects_New::Add_New_SoundEntity()
 	strcpy(Object->MeshName, "SoundEntity_GD.mesh");
 	strcpy(Object->MeshName_FullPath, "SoundEntity_GD.mesh");
 
-	Object->OgreEntity = App->Cl19_Ogre->mSceneMgr->createEntity(ATest, "SoundEntity_GD.mesh", App->Cl19_Ogre->Equity_Resource_Group);
+	Object->OgreEntity = App->Cl19_Ogre->mSceneMgr->createEntity(ATest, "SoundEntity_GD.mesh", App->Cl19_Ogre->App_Resource_Group);
 	Object->OgreNode = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Object->OgreNode->attachObject(Object->OgreEntity);
 	Object->OgreNode->scale(1, 1, 1);
@@ -699,7 +699,7 @@ bool GD19_Objects_New::Add_New_TeleportEntity()
 	strcpy(Object->MeshName, "TeleportSend.mesh");
 	strcpy(Object->MeshName_FullPath, "TeleportSend.mesh");
 
-	Object->OgreEntity = App->Cl19_Ogre->mSceneMgr->createEntity(ATest, "TeleportSend.mesh", App->Cl19_Ogre->Equity_Resource_Group);
+	Object->OgreEntity = App->Cl19_Ogre->mSceneMgr->createEntity(ATest, "TeleportSend.mesh", App->Cl19_Ogre->App_Resource_Group);
 	Object->OgreNode = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Object->OgreNode->attachObject(Object->OgreEntity);
 	Object->OgreNode->scale(1, 1, 1);
@@ -804,7 +804,7 @@ bool GD19_Objects_New::Add_New_EnvironmentEntity()
 	strcpy(Object->MeshName, "GD10Env.mesh"); // Needs Chaning to Environment
 	strcpy(Object->MeshName_FullPath, "GD10Env.mesh");
 
-	Object->OgreEntity = App->Cl19_Ogre->mSceneMgr->createEntity(ATest, "GD10Env.mesh", App->Cl19_Ogre->Equity_Resource_Group);
+	Object->OgreEntity = App->Cl19_Ogre->mSceneMgr->createEntity(ATest, "GD10Env.mesh", App->Cl19_Ogre->App_Resource_Group);
 	Object->OgreNode = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Object->OgreNode->attachObject(Object->OgreEntity);
 	Object->OgreNode->scale(1, 1, 1);
@@ -906,7 +906,7 @@ bool GD19_Objects_New::Add_New_Area_Change()
 	strcpy(Object->MeshName, "GD10RoomChange.mesh"); // Needs Chaning to Environment
 	strcpy(Object->MeshName_FullPath, "GD10RoomChange.mesh");
 
-	Object->OgreEntity = App->Cl19_Ogre->mSceneMgr->createEntity(ATest, "GD10RoomChange.mesh", App->Cl19_Ogre->Equity_Resource_Group);
+	Object->OgreEntity = App->Cl19_Ogre->mSceneMgr->createEntity(ATest, "GD10RoomChange.mesh", App->Cl19_Ogre->App_Resource_Group);
 	Object->OgreNode = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Object->OgreNode->attachObject(Object->OgreEntity);
 	Object->OgreNode->scale(1, 1, 1);
@@ -1008,7 +1008,7 @@ bool GD19_Objects_New::Add_New_Change_Level()
 	strcpy(Object->MeshName, "TeleportRecieve.mesh"); // Needs Chaning to Environment
 	strcpy(Object->MeshName_FullPath, "TeleportRecieve.mesh");
 
-	Object->OgreEntity = App->Cl19_Ogre->mSceneMgr->createEntity(ATest, "TeleportRecieve.mesh", App->Cl19_Ogre->Equity_Resource_Group);
+	Object->OgreEntity = App->Cl19_Ogre->mSceneMgr->createEntity(ATest, "TeleportRecieve.mesh", App->Cl19_Ogre->App_Resource_Group);
 	Object->OgreNode = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Object->OgreNode->attachObject(Object->OgreEntity);
 	Object->OgreNode->scale(1, 1, 1);

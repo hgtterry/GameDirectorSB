@@ -97,7 +97,7 @@ void GD19_Grid::Reset_Class()
 // *************************************************************************
 void GD19_Grid::Load_Crosshair()
 {
-	Crosshair_Ent = App->Cl19_Ogre->mSceneMgr->createEntity("Crosshair", "axes.mesh", App->Cl19_Ogre->Equity_Resource_Group);
+	Crosshair_Ent = App->Cl19_Ogre->mSceneMgr->createEntity("Crosshair", "axes.mesh", App->Cl19_Ogre->App_Resource_Group);
 	Crosshair_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Crosshair_Node->attachObject(Crosshair_Ent);
 

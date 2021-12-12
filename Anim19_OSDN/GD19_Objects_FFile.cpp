@@ -75,7 +75,7 @@ bool GD19_Objects_FFile::Add_Object_FFile(int Object_Index)
 
 	strcpy(Mesh_File, Object->MeshName);
 
-	Object->OgreEntity = App->Cl19_Ogre->mSceneMgr->createEntity(ATest, Mesh_File, App->Cl19_Ogre->Equity_Resource_Group);
+	Object->OgreEntity = App->Cl19_Ogre->mSceneMgr->createEntity(ATest, Mesh_File, App->Cl19_Ogre->App_Resource_Group);
 	Object->OgreNode = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Object->OgreNode->attachObject(Object->OgreEntity);
 
@@ -172,7 +172,7 @@ bool GD19_Objects_FFile::Add_SoundEntity_FFile(int Object_Index)
 	strcat(ATest, ConNum);
 
 	//------------------ Add Ogre Mesh
-	Object->OgreEntity = App->Cl19_Ogre->mSceneMgr->createEntity(ATest, "SoundEntity_GD.mesh", App->Cl19_Ogre->Equity_Resource_Group);
+	Object->OgreEntity = App->Cl19_Ogre->mSceneMgr->createEntity(ATest, "SoundEntity_GD.mesh", App->Cl19_Ogre->App_Resource_Group);
 	Object->OgreNode = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Object->OgreNode->attachObject(Object->OgreEntity);
 	Object->OgreNode->scale(Object->Mesh_Scale);
@@ -244,7 +244,7 @@ bool GD19_Objects_FFile::Add_MessageEntity_FFile(int Object_Index)
 	strcat(ATest, ConNum);
 
 	//------------------ Add Ogre Mesh
-	Object->OgreEntity = App->Cl19_Ogre->mSceneMgr->createEntity(ATest, "Test_cube.mesh", App->Cl19_Ogre->Equity_Resource_Group);
+	Object->OgreEntity = App->Cl19_Ogre->mSceneMgr->createEntity(ATest, "Test_cube.mesh", App->Cl19_Ogre->App_Resource_Group);
 	Object->OgreNode = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Object->OgreNode->attachObject(Object->OgreEntity);
 	Object->OgreNode->scale(Object->Mesh_Scale);
@@ -334,7 +334,7 @@ bool GD19_Objects_FFile::Add_MoveEntity_FFile(int Object_Index)
 	strcat(ATest, ConNum);
 
 	//------------------ Add Ogre Mesh
-	Object->OgreEntity = App->Cl19_Ogre->mSceneMgr->createEntity(ATest, "DoorEntity_GD.mesh", App->Cl19_Ogre->Equity_Resource_Group);
+	Object->OgreEntity = App->Cl19_Ogre->mSceneMgr->createEntity(ATest, "DoorEntity_GD.mesh", App->Cl19_Ogre->App_Resource_Group);
 	Object->OgreNode = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Object->OgreNode->attachObject(Object->OgreEntity);
 	Object->OgreNode->scale(Object->Mesh_Scale);
@@ -410,7 +410,7 @@ bool GD19_Objects_FFile::Add_CollectableEntity_FFile(int Object_Index)
 
 	strcpy(Mesh_File, Object->MeshName);
 
-	Object->OgreEntity = App->Cl19_Ogre->mSceneMgr->createEntity(ATest, Mesh_File, App->Cl19_Ogre->Equity_Resource_Group);
+	Object->OgreEntity = App->Cl19_Ogre->mSceneMgr->createEntity(ATest, Mesh_File, App->Cl19_Ogre->App_Resource_Group);
 	Object->OgreNode = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Object->OgreNode->attachObject(Object->OgreEntity);
 
@@ -485,7 +485,7 @@ bool GD19_Objects_FFile::Add_TeleportEntity_FFile(int Object_Index)
 
 	strcpy(Mesh_File, Object->MeshName);
 
-	Object->OgreEntity = App->Cl19_Ogre->mSceneMgr->createEntity(ATest, Mesh_File, App->Cl19_Ogre->Equity_Resource_Group);
+	Object->OgreEntity = App->Cl19_Ogre->mSceneMgr->createEntity(ATest, Mesh_File, App->Cl19_Ogre->App_Resource_Group);
 	Object->OgreNode = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Object->OgreNode->attachObject(Object->OgreEntity);
 

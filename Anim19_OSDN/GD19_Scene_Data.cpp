@@ -568,7 +568,7 @@ bool GD19_Scene_Data::Start_Scene()
 	
 	strcpy(Cl_Object[Index]->MeshName,"RF_Level1.mesh");
 
-	Cl_Object[Index]->OgreEntity = App->Cl19_Ogre->mSceneMgr->createEntity("Start_Room","RF_Level1.mesh",App->Cl19_Ogre->Equity_Resource_Group);
+	Cl_Object[Index]->OgreEntity = App->Cl19_Ogre->mSceneMgr->createEntity("Start_Room","RF_Level1.mesh",App->Cl19_Ogre->App_Resource_Group);
 	Cl_Object[Index]->OgreNode = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Cl_Object[Index]->OgreNode->attachObject(Cl_Object[Index]->OgreEntity);
 	

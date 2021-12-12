@@ -45,7 +45,7 @@ GD19_Ogre::GD19_Ogre(void)
 
 	RenderListener = nullptr;
 
-	Equity_Resource_Group = "Equity_Resource_Group";
+	App_Resource_Group = "App_Resource_Group";
 	Level_Resource_Group = "Level_Resource_Group";
 
 }
@@ -122,27 +122,27 @@ bool GD19_Ogre::SetUpResources(void)
 	File = App->Cl_Utilities->Return_Chr;
 
 	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(Level_Resource_Group);
-	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(Equity_Resource_Group);
+	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App_Resource_Group);
 
 	//-------------------------------- Zip Files
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/OgreCore.zip", "Zip",
-		Equity_Resource_Group);
+		App_Resource_Group);
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/Equity.zip", "Zip",
-		Equity_Resource_Group);
+		App_Resource_Group);
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/GDCore.zip", "Zip",
-		Equity_Resource_Group);
+		App_Resource_Group);
 
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/Panels.zip", "Zip",
-		Equity_Resource_Group);
+		App_Resource_Group);
 
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/Zipper", "FileSystem",
-		Equity_Resource_Group);
+		App_Resource_Group);
 
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/fonts", "FileSystem",
-		Equity_Resource_Group);
+		App_Resource_Group);
 
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/Particles", "FileSystem",
-		Equity_Resource_Group);
+		App_Resource_Group);
 
 	return 1;
 }
@@ -180,7 +180,7 @@ bool GD19_Ogre::Get_Main_Folders()
 					strcpy(New_Path, Mesh_Path);
 					strcat(New_Path, FindFileData.cFileName);
 
-					Ogre::ResourceGroupManager::getSingleton().addResourceLocation(New_Path, "FileSystem", Equity_Resource_Group);
+					Ogre::ResourceGroupManager::getSingleton().addResourceLocation(New_Path, "FileSystem", App_Resource_Group);
 					Get_Sub_Folders(FindFileData.cFileName);
 				}
 
@@ -229,7 +229,7 @@ bool GD19_Ogre::Get_Sub_Folders(char* Sub_folder)
 					strcpy(New_Path, Mesh_Path);
 					strcat(New_Path, FindFileData.cFileName);
 
-					Ogre::ResourceGroupManager::getSingleton().addResourceLocation(New_Path, "FileSystem", Equity_Resource_Group);
+					Ogre::ResourceGroupManager::getSingleton().addResourceLocation(New_Path, "FileSystem", App_Resource_Group);
 
 				}
 

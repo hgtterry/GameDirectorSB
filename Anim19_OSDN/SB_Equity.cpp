@@ -321,6 +321,13 @@ LRESULT CALLBACK SB_Equity::Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 
 	case WM_COMMAND:
 
+		// ----------------------------------------------------------- Tools
+		if (LOWORD(wParam) == ID_TOOLS_ERESOURCEVIEWER)
+		{
+			App->SBC_Resources->Start_Resources();
+			return TRUE;
+		}
+
 		// ----------------------------------------------------------- Importers
 		if (LOWORD(wParam) == ID_IMPORT_WORLDEDITOR)
 		{
