@@ -121,6 +121,7 @@ bool GD19_Ogre::SetUpResources(void)
 	App->Cl_Utilities->ReverseBackSlash(Copy);
 	File = App->Cl_Utilities->Return_Chr;
 
+	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(Equity_Resource_Group);
 	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(Level_Resource_Group);
 	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App_Resource_Group);
 

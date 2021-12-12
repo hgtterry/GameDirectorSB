@@ -33,7 +33,7 @@ public:
 
 	VM_Render*		RenderListener;
 
-	HWND MeshViewDialog_Hwnd;
+	HWND MainWindow_Hwnd; // Main Equity Editor Window Handel (HWND) [121221]
 
 	OgreImGui  EB_imgui;
 
@@ -52,9 +52,8 @@ protected:
 	void Grid_Update(bool Create);
 	void Hair_Update(bool Create);
 
-	HWND MeshView_Hwnd;
-	//HWND MeshViewDialog_Hwnd;
-
+	HWND RenderWindow_Hwnd; // Equity Render Window Handel for Ogre (HWND) [121221]
+	
 	bool ShowGridFlag;
 	bool ShowDivisions;
 	bool ShowHair;

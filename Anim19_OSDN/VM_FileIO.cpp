@@ -629,7 +629,7 @@ void VM_FileIO::LoadHistory_Equity()
 		AppendMenu(mHistoryMenu, MF_STRING | iFlags, EQUITY_RECENT_FILE_ID(i), szText);
 	}
 
-	ModifyMenu(GetMenu(App->SBC_Equity->MeshViewDialog_Hwnd), ID_FILE_RECENTFILESEQ, MF_BYCOMMAND | MF_POPUP,
+	ModifyMenu(GetMenu(App->SBC_Equity->MainWindow_Hwnd), ID_FILE_RECENTFILESEQ, MF_BYCOMMAND | MF_POPUP,
 		(UINT_PTR)mHistoryMenu, "Recent files");
 	return;
 }

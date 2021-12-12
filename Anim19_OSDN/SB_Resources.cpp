@@ -42,9 +42,9 @@ SB_Resources::~SB_Resources()
 // *************************************************************************
 // *	  					Start_Resources Terry Bernie				   *
 // *************************************************************************
-void SB_Resources::Start_Resources(void)
+void SB_Resources::Start_Resources(HWND hDlg)
 {
-	DialogBox(App->hInst, (LPCTSTR)IDD_RESOURCESMATERIAL, App->Fdlg, (DLGPROC)Resources_Proc);
+	DialogBox(App->hInst, (LPCTSTR)IDD_RESOURCESMATERIAL,hDlg, (DLGPROC)Resources_Proc);
 }
 // *************************************************************************
 // *							Materials_Proc	  						   *

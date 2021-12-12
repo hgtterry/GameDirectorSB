@@ -52,7 +52,7 @@ EB_TopTabs::~EB_TopTabs()
 // *************************************************************************
 void EB_TopTabs::Start_Tabs(void)
 {
-	Tabs_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_ETB_TAB1, App->SBC_Equity->MeshViewDialog_Hwnd, (DLGPROC)Tabs_Proc);
+	Tabs_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_ETB_TAB1, App->SBC_Equity->MainWindow_Hwnd, (DLGPROC)Tabs_Proc);
 
 	Start_Files_ETB();
 	Start_Camera_ETB();

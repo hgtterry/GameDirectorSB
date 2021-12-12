@@ -50,7 +50,7 @@ EB_Groups::~EB_Groups()
 // *************************************************************************
 bool EB_Groups::Start_Groups()
 {
-	RightGroups_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_RIGHTGROUPS, App->SBC_Equity->MeshViewDialog_Hwnd, (DLGPROC)Groups_Proc);
+	RightGroups_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_RIGHTGROUPS, App->SBC_Equity->MainWindow_Hwnd, (DLGPROC)Groups_Proc);
 	ShowWindow(RightGroups_Hwnd, 0);
 	return 1;
 }

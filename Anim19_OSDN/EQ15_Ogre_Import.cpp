@@ -74,12 +74,12 @@ void EQ15_Ogre_Import::AddToScene(void)
 		App->Cl19_Ogre->OgreModel_Node = NULL;
 	}
 
-	Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->Cl19_Ogre->Level_Resource_Group);
-	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App->Cl19_Ogre->Level_Resource_Group);
+	Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->Cl19_Ogre->Equity_Resource_Group);
+	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App->Cl19_Ogre->Equity_Resource_Group);
 
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(App->CL_Vm_Model->Texture_FolderPath,
 		"FileSystem",
-		App->Cl19_Ogre->Level_Resource_Group);
+		App->Cl19_Ogre->Equity_Resource_Group);
 
 	try
 	{
@@ -90,7 +90,7 @@ void EQ15_Ogre_Import::AddToScene(void)
 
 	}
 
-	App->Cl19_Ogre->OgreModel_Ent = App->Cl19_Ogre->mSceneMgr->createEntity("EquityMesh", App->CL_Vm_Model->FileName, App->Cl19_Ogre->Level_Resource_Group);
+	App->Cl19_Ogre->OgreModel_Ent = App->Cl19_Ogre->mSceneMgr->createEntity("EquityMesh", App->CL_Vm_Model->FileName, App->Cl19_Ogre->Equity_Resource_Group);
 	App->Cl19_Ogre->OgreModel_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	App->Cl19_Ogre->OgreModel_Node->attachObject(App->Cl19_Ogre->OgreModel_Ent);
 

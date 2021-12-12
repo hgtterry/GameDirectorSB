@@ -28,7 +28,7 @@ public:
 	SB_Resources();
 	~SB_Resources();
 
-	void Start_Resources(void);
+	void Start_Resources(HWND hDlg);
 
 	void Start_List_Folders(HWND List, char *FileName, bool ListDlg);
 	void List_Folders(HWND List, char *StartFolder, char *FileName, bool ListDlg);

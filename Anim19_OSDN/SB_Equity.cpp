@@ -6,8 +6,8 @@
 
 SB_Equity::SB_Equity()
 {
-	MeshView_Hwnd = nullptr;
-	MeshViewDialog_Hwnd = nullptr;
+	RenderWindow_Hwnd = nullptr;
+	MainWindow_Hwnd = nullptr;
 
 	MeshView_Window = nullptr;
 	mSceneMgrMeshView = nullptr;
@@ -98,13 +98,10 @@ LRESULT CALLBACK SB_Equity::Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 	{
 	case WM_INITDIALOG:
 	{
-		//SendDlgItemMessage(hDlg, IDC_3DSBROWSE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		HWND Ogre_Hwnd = GetDlgItem(hDlg, IDC_OGREWIN2);
+		App->SBC_Equity->RenderWindow_Hwnd = GetDlgItem(hDlg, IDC_OGREWIN2);
 
-		App->SBC_Equity->MeshView_Hwnd = GetDlgItem(hDlg, IDC_OGREWIN2);
-
-		App->SBC_Equity->MeshViewDialog_Hwnd = hDlg;
+		App->SBC_Equity->MainWindow_Hwnd = hDlg;
 
 		App->EBC_TopTabs->Start_Tabs();
 		App->EBC_Groups->Start_Groups();
@@ -264,7 +261,7 @@ LRESULT CALLBACK SB_Equity::Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 			if (App->OgreStarted == 1)
 			{
 
-				SetCapture(App->SBC_Equity->MeshViewDialog_Hwnd);// Bernie
+				SetCapture(App->SBC_Equity->MainWindow_Hwnd);// Bernie
 				SetCursorPos(500, 500);
 				App->EBC_Listener->Pl_LeftMouseDown = 1;
 				App->CUR = SetCursor(NULL);
@@ -309,7 +306,7 @@ LRESULT CALLBACK SB_Equity::Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 
 		if (App->OgreStarted == 1)
 		{
-			SetCapture(App->SBC_Equity->MeshViewDialog_Hwnd);// Bernie
+			SetCapture(App->SBC_Equity->MainWindow_Hwnd);// Bernie
 			SetCursorPos(500, 500);
 			App->EBC_Listener->Pl_RightMouseDown = 1;
 			App->CUR = SetCursor(NULL);
@@ -324,7 +321,7 @@ LRESULT CALLBACK SB_Equity::Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 		// ----------------------------------------------------------- Tools
 		if (LOWORD(wParam) == ID_TOOLS_ERESOURCEVIEWER)
 		{
-			App->SBC_Resources->Start_Resources();
+			App->SBC_Resources->Start_Resources(App->SBC_Equity->MainWindow_Hwnd);
 			return TRUE;
 		}
 
@@ -668,40 +665,40 @@ LRESULT CALLBACK SB_Equity::Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 // *************************************************************************
 void SB_Equity::Init_Bmps_Globals(void)
 {
-	HWND Temp = GetDlgItem(MeshViewDialog_Hwnd, IDC_TBSHOWFACES);
+	HWND Temp = GetDlgItem(MainWindow_Hwnd, IDC_TBSHOWFACES);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
 
-	Temp = GetDlgItem(MeshViewDialog_Hwnd, IDC_TBPOINTS);
+	Temp = GetDlgItem(MainWindow_Hwnd, IDC_TBPOINTS);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshPointsOff_Bmp);
 
-	Temp = GetDlgItem(MeshViewDialog_Hwnd, IDC_TBBOUNDBOX);
+	Temp = GetDlgItem(MainWindow_Hwnd, IDC_TBBOUNDBOX);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOff_Bmp);
 
-	Temp = GetDlgItem(MeshViewDialog_Hwnd, IDC_TBSHOWBONES);
+	Temp = GetDlgItem(MainWindow_Hwnd, IDC_TBSHOWBONES);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BonesOff_Bmp);
 
-	Temp = GetDlgItem(MeshViewDialog_Hwnd, IDC_TBSHOWGRID);
+	Temp = GetDlgItem(MainWindow_Hwnd, IDC_TBSHOWGRID);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_GridOn_Bmp);
 
-	Temp = GetDlgItem(MeshViewDialog_Hwnd, IDC_TBSHOWHAIR);
+	Temp = GetDlgItem(MainWindow_Hwnd, IDC_TBSHOWHAIR);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HairOn_Bmp);
 
-	Temp = GetDlgItem(MeshViewDialog_Hwnd, IDC_EBINFO);
+	Temp = GetDlgItem(MainWindow_Hwnd, IDC_EBINFO);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfo_Bmp);
 
-	Temp = GetDlgItem(MeshViewDialog_Hwnd, IDC_TBNORMALS);
+	Temp = GetDlgItem(MainWindow_Hwnd, IDC_TBNORMALS);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_NormalsOff_Bmp);
 
-	Temp = GetDlgItem(MeshViewDialog_Hwnd, IDC_TBSHOWTEXTURE);
+	Temp = GetDlgItem(MainWindow_Hwnd, IDC_TBSHOWTEXTURE);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOff_Bmp);
 
-	Temp = GetDlgItem(MeshViewDialog_Hwnd, IDC_TBLIGHT);
+	Temp = GetDlgItem(MainWindow_Hwnd, IDC_TBLIGHT);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_LightsOff_Bmp);
 
 
 	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
 
-	Temp = GetDlgItem(MeshViewDialog_Hwnd, IDC_TBSHOWTEXTURE);
+	Temp = GetDlgItem(MainWindow_Hwnd, IDC_TBSHOWTEXTURE);
 	TOOLINFO ti1 = { 0 };
 	ti1.cbSize = sizeof(ti1);
 	ti1.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
@@ -710,7 +707,7 @@ void SB_Equity::Init_Bmps_Globals(void)
 	ti1.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti1);
 
-	Temp = GetDlgItem(MeshViewDialog_Hwnd, IDC_TBSHOWFACES);
+	Temp = GetDlgItem(MainWindow_Hwnd, IDC_TBSHOWFACES);
 	TOOLINFO ti2 = { 0 };
 	ti2.cbSize = sizeof(ti2);
 	ti2.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
@@ -719,7 +716,7 @@ void SB_Equity::Init_Bmps_Globals(void)
 	ti2.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti2);
 
-	Temp = GetDlgItem(MeshViewDialog_Hwnd, IDC_TBPOINTS);
+	Temp = GetDlgItem(MainWindow_Hwnd, IDC_TBPOINTS);
 	TOOLINFO ti3 = { 0 };
 	ti3.cbSize = sizeof(ti3);
 	ti3.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
@@ -728,7 +725,7 @@ void SB_Equity::Init_Bmps_Globals(void)
 	ti3.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti3);
 
-	Temp = GetDlgItem(MeshViewDialog_Hwnd, IDC_TBSHOWBONES);
+	Temp = GetDlgItem(MainWindow_Hwnd, IDC_TBSHOWBONES);
 	TOOLINFO ti4 = { 0 };
 	ti4.cbSize = sizeof(ti4);
 	ti4.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
@@ -737,7 +734,7 @@ void SB_Equity::Init_Bmps_Globals(void)
 	ti4.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti4);
 
-	Temp = GetDlgItem(MeshViewDialog_Hwnd, IDC_TBNORMALS);
+	Temp = GetDlgItem(MainWindow_Hwnd, IDC_TBNORMALS);
 	TOOLINFO ti5 = { 0 };
 	ti5.cbSize = sizeof(ti5);
 	ti5.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
@@ -746,7 +743,7 @@ void SB_Equity::Init_Bmps_Globals(void)
 	ti5.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti5);
 
-	Temp = GetDlgItem(MeshViewDialog_Hwnd, IDC_TBBOUNDBOX);
+	Temp = GetDlgItem(MainWindow_Hwnd, IDC_TBBOUNDBOX);
 	TOOLINFO ti6 = { 0 };
 	ti6.cbSize = sizeof(ti6);
 	ti6.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
@@ -755,7 +752,7 @@ void SB_Equity::Init_Bmps_Globals(void)
 	ti6.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti6);
 
-	Temp = GetDlgItem(MeshViewDialog_Hwnd, IDC_TBLIGHT);
+	Temp = GetDlgItem(MainWindow_Hwnd, IDC_TBLIGHT);
 	TOOLINFO ti7 = { 0 };
 	ti7.cbSize = sizeof(ti7);
 	ti7.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
@@ -764,7 +761,7 @@ void SB_Equity::Init_Bmps_Globals(void)
 	ti7.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti7);
 
-	Temp = GetDlgItem(MeshViewDialog_Hwnd, IDC_TBINFO);
+	Temp = GetDlgItem(MainWindow_Hwnd, IDC_TBINFO);
 	TOOLINFO ti8 = { 0 };
 	ti8.cbSize = sizeof(ti8);
 	ti8.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
@@ -773,7 +770,7 @@ void SB_Equity::Init_Bmps_Globals(void)
 	ti8.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti8);
 
-	Temp = GetDlgItem(MeshViewDialog_Hwnd, IDC_TBSHOWHAIR);
+	Temp = GetDlgItem(MainWindow_Hwnd, IDC_TBSHOWHAIR);
 	TOOLINFO ti9 = { 0 };
 	ti9.cbSize = sizeof(ti9);
 	ti9.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
@@ -782,7 +779,7 @@ void SB_Equity::Init_Bmps_Globals(void)
 	ti9.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti9);
 
-	Temp = GetDlgItem(MeshViewDialog_Hwnd, IDC_TBSHOWGRID);
+	Temp = GetDlgItem(MainWindow_Hwnd, IDC_TBSHOWGRID);
 	TOOLINFO ti10 = { 0 };
 	ti10.cbSize = sizeof(ti10);
 	ti10.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
@@ -802,7 +799,7 @@ bool SB_Equity::Set_OgreWindow(void)
 	Ogre::NameValuePairList options;
 
 	options["externalWindowHandle"] =
-		Ogre::StringConverter::toString((size_t)MeshView_Hwnd);
+		Ogre::StringConverter::toString((size_t)RenderWindow_Hwnd);
 
 	MeshView_Window = App->Cl19_Ogre->mRoot->createRenderWindow("MeshViewWin", 1024, 768, false, &options);
 
@@ -852,7 +849,7 @@ bool SB_Equity::Set_OgreWindow(void)
 
 	if (Use_Imgui == 1)
 	{
-		EB_imgui.Init(mSceneMgrMeshView, MeshView_Hwnd);
+		EB_imgui.Init(mSceneMgrMeshView, RenderWindow_Hwnd);
 	}
 
 	return 1;
@@ -1042,7 +1039,7 @@ void SB_Equity::Set_Equity(void)
 
 	App->EBC_Groups->Update_Groups_Dialog(0);
 
-	HWND Temp = GetDlgItem(MeshViewDialog_Hwnd, IDC_TBSHOWTEXTURE);
+	HWND Temp = GetDlgItem(MainWindow_Hwnd, IDC_TBSHOWTEXTURE);
 	App->SBC_Equity->Toggle_Textures_Flag = 1;
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOn_Bmp);
 
@@ -1050,7 +1047,7 @@ void SB_Equity::Set_Equity(void)
 	strcpy(TitleBar, App->Version);
 	strcat(TitleBar, "    ");
 	strcat(TitleBar, App->CL_Vm_Model->Path_FileName);
-	SetWindowText(MeshViewDialog_Hwnd, TitleBar);
+	SetWindowText(MainWindow_Hwnd, TitleBar);
 
 	App->Cl19_Ogre->RenderFrame();
 }
