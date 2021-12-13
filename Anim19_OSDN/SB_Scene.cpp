@@ -34,6 +34,7 @@ SB_Scene::SB_Scene()
 
 	Scene_Loaded = 0;
 	Player_Added = 0;
+	Area_Added = 0;
 
 }
 

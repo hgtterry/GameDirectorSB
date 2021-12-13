@@ -117,6 +117,8 @@ bool SB_Project::Clear_Level()
 	App->Cl_Scene_Data->ObjectCount = 0;
 
 	App->SBC_Scene->Scene_Loaded = 0;
+	App->SBC_Scene->Area_Added = 0;
+	App->SBC_Scene->Player_Added = 0;
 
 	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamNone;
 

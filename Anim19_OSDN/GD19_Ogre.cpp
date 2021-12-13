@@ -47,7 +47,7 @@ GD19_Ogre::GD19_Ogre(void)
 
 	App_Resource_Group = "App_Resource_Group";
 	Level_Resource_Group = "Level_Resource_Group";
-
+	Equity_Resource_Group = "Equity_Resource_Group";
 }
 
 GD19_Ogre::~GD19_Ogre(void)
@@ -83,15 +83,7 @@ bool GD19_Ogre::InitOgre(void)
 
 	
 	createFrameListener();
-	//App->Cl_Grid->Reset_View();
-
-
-	////Ogre::ResourceGroupManager::getSingleton().createResourceGroup(TempResourceGroup);
-
-	//CreateTextOverlay();
-
 	
-
 	return 1;
 }
 
@@ -134,6 +126,9 @@ bool GD19_Ogre::SetUpResources(void)
 		App_Resource_Group);
 
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/Panels.zip", "Zip",
+		App_Resource_Group);
+
+	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "Media/Cube_Ogre", "FileSystem",
 		App_Resource_Group);
 
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/Zipper", "FileSystem",

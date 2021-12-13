@@ -35,7 +35,8 @@ public:
 
 	int Player_Count;		// Actual Player Count Zero Based
 
-	bool Scene_Loaded;
-	bool Player_Added; // Is there a vaild player in the level [081221]
+	bool Scene_Loaded;	// Is the Scene Loaded [131221]
+	bool Player_Added;	// Is there a vaild player in the level [081221]
+	bool Area_Added;	// Is there a vaild Area or Room [131221]
 };
 
