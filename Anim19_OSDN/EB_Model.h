@@ -27,5 +27,9 @@ class EB_Model
 public:
 	EB_Model();
 	~EB_Model();
+
+	void Clear_ModelData(void);
+	void Reset_Class(void);
+	void Reset_Counters(void);
 };
 
