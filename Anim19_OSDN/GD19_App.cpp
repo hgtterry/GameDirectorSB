@@ -81,6 +81,8 @@ GD19_App::GD19_App(void)
 	EBC_TopTabs =		nullptr;
 	EBC_Groups =		nullptr;
 	EBC_Export_Mesh =	nullptr;
+	EBC_Model =			nullptr;
+
 	// ---------------------------------------------------- 18/10/21
 	SBC_Equity =		nullptr;
 	SBC_XMLConverter =	nullptr;
@@ -245,6 +247,7 @@ bool GD19_App::InitApp(void)
 	EBC_TopTabs =			new EB_TopTabs();
 	EBC_Groups =			new EB_Groups();
 	EBC_Export_Mesh =		new EB_Export_Mesh();
+	EBC_Model =				new EB_Model();
 
 	// ---------------------------------------------------- 18/10/21
 		
@@ -279,7 +282,7 @@ bool GD19_App::InitApp(void)
 	}
 	else
 	{
-		App->Say("Can not acceses user folder");
+		App->Say("Can not access user folder");
 	}
 
 	//char Udir2[1024];
@@ -570,7 +573,7 @@ bool GD19_App::Custom_Button_Normal(LPNMCUSTOMDRAW item)
 				return CDRF_DODEFAULT;
 			}
 
-			HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0)); // Idel 
+			HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0)); // Idle 
 
 			HGDIOBJ old_pen = SelectObject(item->hdc, pen);
 			HGDIOBJ old_brush = SelectObject(item->hdc, App->Brush_But_Normal);
@@ -601,7 +604,7 @@ bool GD19_App::Custom_Button_Toggle_Tabs(LPNMCUSTOMDRAW item, bool Toggle)
 	{
 		if (item->uItemState & CDIS_HOT) //Our mouse is over the button
 		{
-			//Select our color when the mouse hovers our button
+			//Select our colour when the mouse hovers our button
 
 			if (Toggle == 1)
 			{
@@ -627,7 +630,7 @@ bool GD19_App::Custom_Button_Toggle_Tabs(LPNMCUSTOMDRAW item, bool Toggle)
 			return CDRF_DODEFAULT;
 		}
 
-		//Select our color when our button is doing nothing
+		//Select our colour when our button is doing nothing
 
 		if (Toggle == 1)
 		{
@@ -666,7 +669,7 @@ bool GD19_App::Custom_Button_Toggle(LPNMCUSTOMDRAW item, bool Toggle)
 	{
 		if (item->uItemState & CDIS_HOT) //Our mouse is over the button
 		{
-			//Select our color when the mouse hovers our button
+			//Select our colour when the mouse hovers our button
 
 			if (Toggle == 1)
 			{
@@ -691,7 +694,7 @@ bool GD19_App::Custom_Button_Toggle(LPNMCUSTOMDRAW item, bool Toggle)
 			return CDRF_DODEFAULT;
 		}
 
-		//Select our color when our button is doing nothing
+		//Select our colour when our button is doing nothing
 
 		if (Toggle == 1)
 		{
@@ -797,7 +800,7 @@ bool GD19_App::Custom_Button_Green(LPNMCUSTOMDRAW item)
 				return CDRF_DODEFAULT;
 			}
 
-			HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0)); // Idel 
+			HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0)); // Idle 
 
 			HGDIOBJ old_pen = SelectObject(item->hdc, pen);
 			HGDIOBJ old_brush = SelectObject(item->hdc, App->Brush_Green);
@@ -858,7 +861,7 @@ bool GD19_App::Custom_Button_Blue(LPNMCUSTOMDRAW item)
 				return CDRF_DODEFAULT;
 			}
 
-			HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0)); // Idel 
+			HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0)); // Idle 
 
 			HGDIOBJ old_pen = SelectObject(item->hdc, pen);
 			HGDIOBJ old_brush = SelectObject(item->hdc, App->Brush_Blue);
@@ -920,7 +923,7 @@ bool GD19_App::Custom_Button_Red(LPNMCUSTOMDRAW item)
 				return CDRF_DODEFAULT;
 			}
 
-			HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0)); // Idel 
+			HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0)); // Idle 
 
 			HGDIOBJ old_pen = SelectObject(item->hdc, pen);
 			HGDIOBJ old_brush = SelectObject(item->hdc, App->Brush_Red);

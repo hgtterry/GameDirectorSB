@@ -1,5 +1,5 @@
 /*
-Copyright (c) Vima19 Inflanite Software W.T.Flanigan H.C.Flanigan
+Copyright (c) 2021 Scene Builder and Equity -- Inflanite Software W.T.Flanigan H.C.Flanigan
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -19,9 +19,6 @@ misrepresented as being the original software.
 
 3. This notice may not be removed or altered from any source
 distribution.
-
-https://sourceforge.net/projects/hazel25/
-ebopster
 */
 
 #pragma once
@@ -94,6 +91,7 @@ ebopster
 #include "SB_Resources.h"
 #include "SB_Scene.h"
 #include "SB_TopTabs.h"
+#include "EB_Model.h"
 
 
 class GD19_App
@@ -154,6 +152,7 @@ public:
 	EB_TopTabs*				EBC_TopTabs;		// Top Bar Tabs Class Equity [091221]
 	EB_Groups*				EBC_Groups;			// Texture Viewer for Equity [091221]
 	EB_Export_Mesh*			EBC_Export_Mesh;	// Converter/Exporter For Ogre Mesh [111221]
+	EB_Model*				EBC_Model;			// Collection Class For Model Equity [141221]
 
 	// ---------------------------------------------------- 18/10/21
 	SB_Equity*				SBC_Equity;			// Equity Editor [081221]

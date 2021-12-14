@@ -210,7 +210,7 @@ void VM_Model::Set_Paths(void)
 	strcpy(FileName, App->CL_Vm_FileIO->Model_FileName);
 	strcpy(Path_FileName, App->CL_Vm_FileIO->Model_Path_FileName);
 
-	// Get Texure path assumed at this point to be where model is
+	// Get Texture path assumed at this point to be where model is
 	int len1 = strlen(FileName);
 	int len2 = strlen(Path_FileName);
 	strcpy(Model_FolderPath, Path_FileName);
@@ -508,7 +508,7 @@ bool VM_Model::CreateMeshFile(char* MatFileName)
 		ogreSubMesh->vertexData->vertexStart = 0;
 		Ogre::VertexBufferBinding* bind = ogreSubMesh->vertexData->vertexBufferBinding;
 		Ogre::VertexDeclaration* decl = ogreSubMesh->vertexData->vertexDeclaration;
-		// Always 1 texture layer, 2D coords
+		// Always 1 texture layer, 2D cords
 #define POSITION_BINDING 0
 #define NORMAL_BINDING 1
 #define TEXCOORD_BINDING 2
