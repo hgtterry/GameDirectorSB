@@ -283,7 +283,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		case ID_FILE_CLEARLEVEL32869:
 		{
-			App->SBC_Project->Clear_Level();
+			App->SBC_Scene->Clear_Level();
 			return 1;
 		}
 		

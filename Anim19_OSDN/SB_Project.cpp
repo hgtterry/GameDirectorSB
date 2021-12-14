@@ -63,70 +63,6 @@ SB_Project::~SB_Project()
 }
 
 // *************************************************************************
-// *						Clear_Level Terry Flanigan					   *
-// *************************************************************************
-bool SB_Project::Clear_Level()
-{
-
-	// Equity Related
-	
-	App->SBC_FileView->Reset_Class();
-	App->SBC_TopTabs->Reset_Class();
-	App->SBC_Properties->Reset_Class();
-
-	App->Set_Main_TitleBar(" ");
-
-	if (App->SBC_Scene->Scene_Loaded == 1)
-	{
-		App->SBC_Physics->Enable_Physics(0);
-
-		// Ogre Related
-		int Index = 0;// App->Cl_Scene_Data->ObjectCount;
-		if (App->Cl_Scene_Data->Cl_Object[Index])
-		{
-			if (App->Cl_Scene_Data->Cl_Object[Index]->OgreEntity && App->Cl_Scene_Data->Cl_Object[Index]->OgreNode)
-			{
-				App->Cl_Scene_Data->Cl_Object[Index]->OgreNode->detachAllObjects();
-				App->Cl19_Ogre->mSceneMgr->destroySceneNode(App->Cl_Scene_Data->Cl_Object[Index]->OgreNode);
-				App->Cl19_Ogre->mSceneMgr->destroyEntity(App->Cl_Scene_Data->Cl_Object[Index]->OgreEntity);
-				App->Cl_Scene_Data->Cl_Object[Index]->OgreEntity = NULL;
-				App->Cl_Scene_Data->Cl_Object[Index]->OgreNode = NULL;
-
-				delete App->Cl_Scene_Data->Cl_Object[Index];
-				App->Cl_Scene_Data->Cl_Object[Index] = nullptr;
-			}
-		}
-
-		App->SBC_Player->Reset_Class();
-
-		// Bullet Related
-		int i;
-		for (i = App->Cl_Bullet->dynamicsWorld->getNumCollisionObjects() - 1; i >= 0; i--)
-		{
-			btCollisionObject* obj = App->Cl_Bullet->dynamicsWorld->getCollisionObjectArray()[i];
-			App->Cl_Bullet->dynamicsWorld->removeCollisionObject(obj);
-			delete obj;
-		}
-
-		//App->SBC_Resources->Unload_Materials();
-		//App->SBC_Resources->Remove_OblectMesh();
-
-		App->SBC_Resources->Unload_Game_Resources();
-	}
-
-	App->Cl_Scene_Data->ObjectCount = 0;
-
-	App->SBC_Scene->Scene_Loaded = 0;
-	App->SBC_Scene->Area_Added = 0;
-	App->SBC_Scene->Player_Added = 0;
-
-	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamNone;
-
-	App->SBC_Camera->Reset_View();
-	return 1;
-}
-
-// *************************************************************************
 // *	  				Start_Create_Project Terry Flanigan				   *
 // *************************************************************************
 bool SB_Project::Start_Create_Project()
@@ -624,7 +560,7 @@ bool SB_Project::Load_Scene_Auto()
 // *************************************************************************
 bool SB_Project::Load_Scene()
 {
-	Clear_Level();
+	App->SBC_Scene->Clear_Level();
 
 	strcpy(Level_File_Name, App->CL_Vm_FileIO->Model_FileName);
 	strcpy(Level_Path_File_Name, App->CL_Vm_FileIO->Model_Path_FileName);

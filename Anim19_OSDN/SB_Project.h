@@ -28,9 +28,6 @@ public:
 	SB_Project();
 	~SB_Project();
 
-	// Clear the level and set Equty Back to Start [221121]
-	bool Clear_Level();
-
 	bool Start_Create_Project();
 
 	bool Load_Scene_Auto();

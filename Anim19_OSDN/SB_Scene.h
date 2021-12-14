@@ -31,6 +31,8 @@ public:
 	SB_Scene();
 	~SB_Scene();
 
+	bool Clear_Level();
+
 	Base_Player*			SBC_Base_Player[100];
 
 	int Player_Count;		// Actual Player Count Zero Based
