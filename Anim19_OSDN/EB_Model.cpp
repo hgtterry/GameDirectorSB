@@ -65,8 +65,8 @@ void EB_Model::Clear_ModelData(void)
 	Reset_Class(); // Here
 				   //App->Cl_Grid->Reset_Class();
 	App->CL_Vm_Genesis3D->Reset_Class();
-	App->CL_Vm_ImGui->Reset_Class();
-	App->SBC_TopTabs->Reset_Class();
+	//App->CL_Vm_ImGui->Reset_Class();
+	//App->SBC_TopTabs->Reset_Class();
 
 	App->Set_Main_TitleBar(" ");
 
