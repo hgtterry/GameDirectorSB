@@ -78,6 +78,8 @@ SB_Equity::~SB_Equity()
 // *************************************************************************
 bool SB_Equity::Start_Equity()
 {
+	App->EBC_Options->Read_Preferences();
+
 	App->RenderBackGround = 1;
 
 	DialogBox(App->hInst, (LPCTSTR)IDD_EQUITY, App->Fdlg, (DLGPROC)Equity_Proc);

@@ -31,6 +31,9 @@ EB_Options::EB_Options()
 {
 	Main_Window_Hwnd =	nullptr;
 	FileView_Hwnd =		nullptr;
+
+	strcpy(Quick_Load_File_Chr, "C:\\Users\\Equity\\Desktop\\Models\\Obj_Models\\Cube.obj");
+	
 }
 
 
@@ -43,6 +46,8 @@ EB_Options::~EB_Options()
 // *************************************************************************
 bool EB_Options::Start_Options_Dialog()
 {
+	Read_Preferences();
+
 	DialogBox(App->hInst, (LPCTSTR)IDD_EQUITYOPTIONS, App->SBC_Equity->MainWindow_Hwnd, (DLGPROC)Options_Proc);
 
 	return 1;
@@ -120,8 +125,17 @@ LRESULT CALLBACK EB_Options::Options_Proc(HWND hDlg, UINT message, WPARAM wParam
 
 	case WM_COMMAND:
 	{
+		
+		if (LOWORD(wParam) == IDC_BTOPRESET)
+		{
+			App->EBC_Options->Reset_Options();
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDOK)
 		{
+			App->EBC_Options->Write_Preferences();
+
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -229,7 +243,9 @@ LRESULT CALLBACK EB_Options::QuickLoad_Proc(HWND hDlg, UINT message, WPARAM wPar
 	{
 		SendDlgItemMessage(hDlg, IDC_STTAGQLF, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STQLBOX, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		return TRUE;
+	
+		SetDlgItemText(hDlg, IDC_STQLBOX, (LPCTSTR)App->EBC_Options->Quick_Load_File_Chr);
+
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
@@ -284,9 +300,18 @@ LRESULT CALLBACK EB_Options::QuickLoad_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 	case WM_COMMAND:
 	{
-		/*if (LOWORD(wParam) == IDOK)
+		if (LOWORD(wParam) == IDC_BTQLBROWSE)
 		{
-			EndDialog(hDlg, LOWORD(wParam));
+			int Result = App->CL_Vm_FileIO->Vm_OpenFile("Model Files   *.*\0*.*\0", "Model Files",NULL);
+			if (Result == 0)
+			{
+				return 1;
+			}
+
+			strcpy(App->EBC_Options->Quick_Load_File_Chr, App->CL_Vm_FileIO->Model_Path_FileName);
+
+			SetDlgItemText(hDlg, IDC_STQLBOX, (LPCTSTR)App->EBC_Options->Quick_Load_File_Chr);
+
 			return TRUE;
 		}
 
@@ -294,12 +319,81 @@ LRESULT CALLBACK EB_Options::QuickLoad_Proc(HWND hDlg, UINT message, WPARAM wPar
 		{
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
-		}*/
+		}
 	}
 
 	break;
 
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *						Write_Preferences Terry Flanigan 			   *
+// *************************************************************************
+bool EB_Options::Reset_Options()
+{
+	strcpy(Quick_Load_File_Chr, "C:\\Users\\Equity\\Desktop\\Models\\Obj_Models\\Cube.obj");
+
+	Write_Preferences();
+	return 1;
+}
+
+// *************************************************************************
+// *						Write_Preferences Terry Flanigan 			   *
+// *************************************************************************
+bool EB_Options::Write_Preferences()
+{
+	WriteOptions_File = NULL;
+
+	char Preferences_Path[1024];
+
+	strcpy(Preferences_Path, App->EquityDirecory_FullPath);;
+	strcat(Preferences_Path, "\\");
+	strcat(Preferences_Path, "Data");
+	strcat(Preferences_Path, "\\");
+	strcat(Preferences_Path, "Equity_Options.ini");
+
+	WriteOptions_File = fopen(Preferences_Path, "wt");
+	if (!WriteOptions_File)
+	{
+		App->Say("Cant Create Save File");
+		return 0;
+	}
+
+	fprintf(WriteOptions_File, "%s\n", "[Equity_QL]");
+	fprintf(WriteOptions_File, "%s%s\n", "Quick_Load_File=", Quick_Load_File_Chr);
+	
+	fprintf(WriteOptions_File, "%s\n", " ");
+	fclose(WriteOptions_File);
+
+	return 1;
+}
+
+// *************************************************************************
+// *						Read_Preferences Terry Flanigan 			   *
+// *************************************************************************
+bool EB_Options::Read_Preferences()
+{
+	char chr_Tag1[1024];
+	char chr_Tag2[1024];
+
+	chr_Tag1[0] = 0;
+	chr_Tag2[0] = 0;
+
+	char Preferences_Path[1024];
+
+	strcpy(Preferences_Path, App->EquityDirecory_FullPath);
+	strcat(Preferences_Path, "\\");
+	strcat(Preferences_Path, "Data");
+	strcat(Preferences_Path, "\\");
+	strcat(Preferences_Path, "Equity_Options.ini");
+
+	App->Cl_Ini->SetPathName(Preferences_Path);
+
+	App->Cl_Ini->GetString("Equity_QL", "Quick_Load_File", chr_Tag1, 1024);
+	strcpy(Quick_Load_File_Chr, chr_Tag1);
+
+	return 1;
 }
 

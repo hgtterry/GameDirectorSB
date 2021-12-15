@@ -233,7 +233,7 @@ LRESULT CALLBACK EB_TopTabs::Files_ETB_Proc(HWND hDlg, UINT message, WPARAM wPar
 		if (LOWORD(wParam) == IDC_TBBTEQLOAD)
 		{
 			char mFileName[1024];
-			strcpy(mFileName,"C:\\Users\\Equity\\Desktop\\Models\\Obj_Models\\Cube.obj");
+			strcpy(mFileName,App->EBC_Options->Quick_Load_File_Chr);
 			App->SBC_Import->Reload_FromResentFiles(mFileName);
 
 			return TRUE;

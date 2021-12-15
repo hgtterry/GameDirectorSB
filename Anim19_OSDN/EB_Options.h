@@ -29,6 +29,9 @@ public:
 	~EB_Options();
 
 	bool Start_Options_Dialog();
+	bool Read_Preferences();
+
+	char Quick_Load_File_Chr[1024];
 
 protected:
 
@@ -42,6 +45,12 @@ protected:
 	void Get_Selection(LPNMHDR lParam);
 
 	bool Start_QuickLoad_Dialog();
+
+	bool Reset_Options();
+	bool Write_Preferences();
+	
+
+	FILE *WriteOptions_File;
 
 	HTREEITEM Root;
 	HTREEITEM FV_File;
