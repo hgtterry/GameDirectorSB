@@ -35,3 +35,83 @@ EB_Options::EB_Options()
 EB_Options::~EB_Options()
 {
 }
+
+// *************************************************************************
+// *	  				 Start_Options_Dialog	Terry Bernie			   *
+// *************************************************************************
+bool EB_Options::Start_Options_Dialog()
+{
+	DialogBox(App->hInst, (LPCTSTR)IDD_EQUITYOPTIONS, App->SBC_Equity->MainWindow_Hwnd, (DLGPROC)Options_Proc);
+
+	return 1;
+}
+
+// *************************************************************************
+// *					Options_Proc	Terry Bernie  					   *
+// *************************************************************************
+LRESULT CALLBACK EB_Options::Options_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		return TRUE;
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+		/*if (GetDlgItem(hDlg, IDC_TITLENAME) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}*/
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		/*if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}*/
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+		if (LOWORD(wParam) == IDOK)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+	}
+
+	break;
+
+	}
+	return FALSE;
+}

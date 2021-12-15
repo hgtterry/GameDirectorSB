@@ -27,5 +27,11 @@ class EB_Options
 public:
 	EB_Options();
 	~EB_Options();
+
+	bool Start_Options_Dialog();
+
+protected:
+
+	static LRESULT CALLBACK Options_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 };
 

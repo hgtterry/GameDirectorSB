@@ -325,6 +325,13 @@ LRESULT CALLBACK SB_Equity::Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 			return TRUE;
 		}
 
+		// ----------------------------------------------------------- Options
+		if (LOWORD(wParam) == ID_OPTIONS_ALL)
+		{
+			App->EBC_Options->Start_Options_Dialog();
+			return TRUE;
+		}
+
 		// ----------------------------------------------------------- Importers
 		if (LOWORD(wParam) == ID_IMPORT_WORLDEDITOR)
 		{
