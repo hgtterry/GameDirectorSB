@@ -33,5 +33,23 @@ public:
 protected:
 
 	static LRESULT CALLBACK Options_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK QuickLoad_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	HWND Main_Window_Hwnd;
+	HWND FileView_Hwnd;
+
+	void AddRootFolder(void);
+	void Get_Selection(LPNMHDR lParam);
+
+	bool Start_QuickLoad_Dialog();
+
+	HTREEITEM Root;
+	HTREEITEM FV_File;
+
+	TV_INSERTSTRUCT tvinsert;
+
+	char FileView_Folder[255];
+	char FileView_File[255];
+
 };
 
