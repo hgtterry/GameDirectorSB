@@ -281,14 +281,14 @@ LRESULT CALLBACK EB_Options::QuickLoad_Proc(HWND hDlg, UINT message, WPARAM wPar
 	
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		/*if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BTQLBROWSE && some_item->code == NM_CUSTOMDRAW)
 		{
-		LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-		App->Custom_Button_Normal(item);
-		return CDRF_DODEFAULT;
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
+		/*if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
 		{
 		LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 		App->Custom_Button_Normal(item);
