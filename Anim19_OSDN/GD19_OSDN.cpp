@@ -305,13 +305,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		//	return 1;
 		//}
 
-	
-		case ID_FILE_CLEAR:
-		{
-			App->CL_Vm_Model->Clear_ModelData();
-			return 1;
-		}
-
 		// Camera Mode
 		case ID_MODE_WORLD:
 		{
@@ -1309,7 +1302,7 @@ void StartOgre()
 // *************************************************************************
 void Close_App()
 {
-	App->CL_Vm_Model->Clear_ModelData();
+	App->EBC_Model->Clear_ModelData();
 
 	//App->Say("Exit");
 

@@ -46,7 +46,7 @@ bool SB_Import::Assimp_Loader(char* Extension, char* Extension2)
 		return 1;
 	}
 
-	App->CL_Vm_Model->Clear_ModelData();
+	App->EBC_Model->Clear_ModelData();
 
 	App->CL_Vm_Model->Set_Paths();
 
@@ -90,7 +90,7 @@ bool SB_Import::Genesis3D_Loader(void)
 		return 1;
 	}
 
-	App->CL_Vm_Model->Clear_ModelData();
+	App->EBC_Model->Clear_ModelData();
 
 	App->CL_Vm_Model->Set_Paths();
 
@@ -121,7 +121,7 @@ bool SB_Import::Ogre_Loader(char* Extension, char* Extension2)
 		return 1;
 	}
 
-	App->CL_Vm_Model->Clear_ModelData();
+	App->EBC_Model->Clear_ModelData();
 
 	App->CL_Vm_Model->Set_Paths();
 
@@ -150,7 +150,7 @@ void SB_Import::Reload_FromResentFiles(char* ResentPathAndFile)
 		return;
 	}
 
-	App->CL_Vm_Model->Clear_ModelData();
+	App->EBC_Model->Clear_ModelData();
 
 	strcpy(App->CL_Vm_FileIO->Model_Path_FileName, ResentPathAndFile);
 
@@ -216,7 +216,7 @@ bool SB_Import::Bullet_Load_Room(char* Extension, char* Extension2)
 		return 1;
 	}
 
-	App->CL_Vm_Model->Clear_ModelData();
+	App->EBC_Model->Clear_ModelData();
 
 	App->CL_Vm_Model->Set_Paths();
 

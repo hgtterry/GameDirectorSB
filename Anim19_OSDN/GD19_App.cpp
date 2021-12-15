@@ -82,6 +82,7 @@ GD19_App::GD19_App(void)
 	EBC_Groups =		nullptr;
 	EBC_Export_Mesh =	nullptr;
 	EBC_Model =			nullptr;
+	EBC_Options =		nullptr;
 
 	// ---------------------------------------------------- 18/10/21
 	SBC_Equity =		nullptr;
@@ -248,6 +249,7 @@ bool GD19_App::InitApp(void)
 	EBC_Groups =			new EB_Groups();
 	EBC_Export_Mesh =		new EB_Export_Mesh();
 	EBC_Model =				new EB_Model();
+	EBC_Options =			new EB_Options();
 
 	// ---------------------------------------------------- 18/10/21
 		
