@@ -158,6 +158,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Base_Area.h" />
     <ClInclude Include="Base_Player.h" />
     <ClInclude Include="EB_Export_Mesh.h" />
     <ClInclude Include="EB_Groups.h" />
@@ -237,6 +238,7 @@
     <ClInclude Include="VM_WorldEditor.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Base_Area.cpp" />
     <ClCompile Include="Base_Player.cpp" />
     <ClCompile Include="CollisionTools.cpp" />
     <ClCompile Include="Common\imGui\ImGui_cpp\imgui.cpp" />
