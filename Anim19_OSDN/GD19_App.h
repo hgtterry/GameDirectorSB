@@ -78,7 +78,6 @@ distribution.
 
 // ---------------------------------------------------- 18/10/21
 #include "SB_Equity.h"
-#include "SB_XMLConverter.h"
 #include "SB_Player.h"
 #include "SB_Import.h"
 #include "SB_Project.h"
@@ -158,7 +157,6 @@ public:
 
 	// ---------------------------------------------------- 18/10/21
 	SB_Equity*				SBC_Equity;			// Equity Editor [081221]
-	SB_XMLConverter*		SBC_XMLConverter;
 	SB_Player*				SBC_Player;
 	SB_Import*				SBC_Import;
 	SB_Project*				SBC_Project;
