@@ -596,7 +596,7 @@ bool SB_Project::Load_Scene()
 	Read_Player();
 	Read_Camera();
 
-	App->CL_Bullet_AddRoom->AddToScene(1); // Load First room into scene
+	App->SBC_Aera->Add_Area();
 
 	App->SBC_Player->Load_Player();
 

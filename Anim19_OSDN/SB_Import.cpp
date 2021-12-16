@@ -246,18 +246,6 @@ bool SB_Import::Load_Scene(char* Extension, char* Extension2)
 
 	App->SBC_Project->Load_Scene();
 
-	//App->CL_Vm_Model->Clear_ModelData();
-
-	/*App->CL_Vm_Model->Set_Paths();
-
-	App->CL_Bullet_AddRoom->AddToScene(1);
-
-	App->Cl19_Ogre->OgreListener->CameraMode = Enums::CamDetached;
-
-	App->Cl19_Ogre->mCamera->setPosition(Ogre::Vector3(0, 0, 0));
-	App->Cl19_Ogre->mCamera->lookAt(Ogre::Vector3(0, 0, 0));
-	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;*/
-
 	App->Say("Scene Loaded");
 	return 1;
 }

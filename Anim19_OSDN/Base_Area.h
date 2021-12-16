@@ -10,5 +10,22 @@ public:
 
 	btRigidBody *mObject;
 	btCollisionShape *mShape;
+
+	btBvhTriangleMeshShape* create_New_Trimesh(Ogre::Entity* ent);
+	void Collect_Object_Data(void);
+
+	Ogre::Vector3			Physics_Pos;
+	Ogre::Vector3			Physics_Rot;
+	Ogre::Vector3			Physics_Scale;
+
+	Ogre::Quaternion		Physics_Quat;
+
+	int Type;
+	int Shape;
+	int Usage;
+	int Folder;
+	int Object_ID;  // Unique Number
+
+	bool					Physics_Valid;
 };
 

@@ -24,6 +24,7 @@ distribution.
 #pragma once
 
 #include "Base_Player.h"
+#include "Base_Area.h"
 
 class SB_Scene
 {
@@ -34,8 +35,10 @@ public:
 	bool Clear_Level();
 
 	Base_Player*			SBC_Base_Player[100];
+	Base_Area*				SBC_Base_Area[100];
 
 	int Player_Count;		// Actual Player Count Zero Based
+	int Area_Count;			// Actual Area Count Zero Based [161221]
 
 	bool Scene_Loaded;	// Is the Scene Loaded [131221]
 	bool Player_Added;	// Is there a vaild player in the level [081221]

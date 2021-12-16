@@ -125,3 +125,66 @@ void SB_Aera::Hide_Area_Dlg(bool Show)
 	ShowWindow(Area_Props_HWND, Show);
 }
 
+// *************************************************************************
+// *					Add_Area Terry Flanigan 						   *
+// *************************************************************************
+void SB_Aera::Add_Area()
+{
+	int Index = App->SBC_Scene->Area_Count;
+
+
+	if (App->SBC_Scene->SBC_Base_Area[Index])
+	{
+		if (App->SBC_Scene->SBC_Base_Area[Index]->Area_Ent && App->SBC_Scene->SBC_Base_Area[Index]->Area_Node)
+		{
+			App->SBC_Scene->SBC_Base_Area[Index]->Area_Node->detachAllObjects();
+			App->Cl19_Ogre->mSceneMgr->destroySceneNode(App->SBC_Scene->SBC_Base_Area[Index]->Area_Node);
+			App->Cl19_Ogre->mSceneMgr->destroyEntity(App->SBC_Scene->SBC_Base_Area[Index]->Area_Ent);
+			App->SBC_Scene->SBC_Base_Area[Index]->Area_Ent = NULL;
+			App->SBC_Scene->SBC_Base_Area[Index]->Area_Node = NULL;
+
+			delete App->SBC_Scene->SBC_Base_Area[Index];
+			App->SBC_Scene->SBC_Base_Area[Index] = nullptr;
+		}
+	}
+
+	App->SBC_Scene->SBC_Base_Area[Index] = new Base_Area();
+	App->SBC_Scene->SBC_Base_Area[Index]->Object_ID = 0; //App->Cl_Scene_Data->Object_ID_Counter;
+
+	Base_Area* Object = App->SBC_Scene->SBC_Base_Area[Index];
+
+	Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->Cl19_Ogre->Level_Resource_Group);
+	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App->Cl19_Ogre->Level_Resource_Group);
+
+	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(App->CL_Vm_Model->Model_FolderPath,
+		"FileSystem",
+		App->Cl19_Ogre->Level_Resource_Group);
+
+	try
+	{
+		Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+	}
+	catch (...)
+	{
+
+	}
+
+	Object->Area_Ent = App->Cl19_Ogre->mSceneMgr->createEntity("UserMesh", App->CL_Vm_Model->FileName, App->Cl19_Ogre->Level_Resource_Group);
+	Object->Area_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	Object->Area_Node->attachObject(Object->Area_Ent);
+
+	Object->Area_Node->setVisible(true);
+	Object->Area_Node->setPosition(0, 0, 0);
+	Object->Area_Node->setScale(1, 1, 1);
+
+	Object->create_New_Trimesh(Object->Area_Ent);
+
+	Object->Usage = Enums::Usage_Room;
+
+	App->SBC_Scene->Area_Added = 1;
+
+	App->Cl_Grid->Grid_SetVisible(1);
+
+	App->Cl_Scene_Data->ObjectCount++;
+}
+

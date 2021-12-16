@@ -29,8 +29,10 @@ distribution.
 SB_Scene::SB_Scene()
 {
 	Player_Count = 0;
+	Area_Count = 0;
 
 	SBC_Base_Player[100] = { nullptr };
+	SBC_Base_Area[100] = { nullptr };
 
 	Scene_Loaded = 0;
 	Player_Added = 0;
@@ -92,9 +94,13 @@ bool SB_Scene::Clear_Level()
 
 	App->Cl_Scene_Data->ObjectCount = 0;
 
-	App->SBC_Scene->Scene_Loaded = 0;
-	App->SBC_Scene->Area_Added = 0;
-	App->SBC_Scene->Player_Added = 0;
+	Player_Count = 0;
+	Area_Count = 0;
+
+
+	Scene_Loaded = 0;
+	Area_Added = 0;
+	Player_Added = 0;
 
 	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamNone;
 
