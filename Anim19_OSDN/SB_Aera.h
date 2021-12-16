@@ -22,16 +22,23 @@ distribution.
 */
 
 #pragma once
+
+#include "Base_Area.h"
+
 class SB_Aera
 {
 public:
 	SB_Aera();
 	~SB_Aera();
 
+	void Reset_Class(void);
+
 	bool Start_Area_PropsPanel();
 	void Hide_Area_Dlg(bool Show);
 
 	void Add_Area();
+
+	btBvhTriangleMeshShape* create_New_Trimesh(Base_Area* Object);
 
 	bool Show_Physics_Debug; // Show Physics Debug For Area [021221]
 

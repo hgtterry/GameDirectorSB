@@ -61,24 +61,9 @@ bool SB_Scene::Clear_Level()
 	{
 		App->SBC_Physics->Enable_Physics(0);
 
-		// Ogre Related
-		int Index = 0;// App->Cl_Scene_Data->ObjectCount;
-		if (App->Cl_Scene_Data->Cl_Object[Index])
-		{
-			if (App->Cl_Scene_Data->Cl_Object[Index]->OgreEntity && App->Cl_Scene_Data->Cl_Object[Index]->OgreNode)
-			{
-				App->Cl_Scene_Data->Cl_Object[Index]->OgreNode->detachAllObjects();
-				App->Cl19_Ogre->mSceneMgr->destroySceneNode(App->Cl_Scene_Data->Cl_Object[Index]->OgreNode);
-				App->Cl19_Ogre->mSceneMgr->destroyEntity(App->Cl_Scene_Data->Cl_Object[Index]->OgreEntity);
-				App->Cl_Scene_Data->Cl_Object[Index]->OgreEntity = NULL;
-				App->Cl_Scene_Data->Cl_Object[Index]->OgreNode = NULL;
-
-				delete App->Cl_Scene_Data->Cl_Object[Index];
-				App->Cl_Scene_Data->Cl_Object[Index] = nullptr;
-			}
-		}
-
 		App->SBC_Player->Reset_Class();
+		App->SBC_Aera->Reset_Class();
+
 
 		// Bullet Related
 		int i;
@@ -96,7 +81,6 @@ bool SB_Scene::Clear_Level()
 
 	Player_Count = 0;
 	Area_Count = 0;
-
 
 	Scene_Loaded = 0;
 	Area_Added = 0;

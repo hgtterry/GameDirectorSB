@@ -11,7 +11,6 @@ public:
 	btRigidBody *mObject;
 	btCollisionShape *mShape;
 
-	btBvhTriangleMeshShape* create_New_Trimesh(Ogre::Entity* ent);
 	void Collect_Object_Data(void);
 
 	Ogre::Vector3			Physics_Pos;
