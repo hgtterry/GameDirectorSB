@@ -122,12 +122,12 @@ LRESULT CALLBACK SB_Aera::Area_PropsPanel_Proc(HWND hDlg, UINT message, WPARAM w
 
 		if (LOWORD(wParam) == IDC_PHYSICSAREADEBUG)
 		{
-			int f = App->Cl_Scene_Data->Cl_Object[0]->bt_body->getCollisionFlags();
+			int f = App->SBC_Scene->SBC_Base_Area[0]->Phys_Body->getCollisionFlags();
 
 			if (App->SBC_Aera->Show_Physics_Debug == 1)
 			{
 				App->SBC_Aera->Show_Physics_Debug = 0;
-				App->Cl_Scene_Data->Cl_Object[0]->bt_body->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+				App->SBC_Scene->SBC_Base_Area[0]->Phys_Body->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
 				App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 0;
 				App->Cl19_Ogre->RenderFrame();
@@ -136,7 +136,7 @@ LRESULT CALLBACK SB_Aera::Area_PropsPanel_Proc(HWND hDlg, UINT message, WPARAM w
 			else
 			{
 				App->SBC_Aera->Show_Physics_Debug = 1;
-				App->Cl_Scene_Data->Cl_Object[0]->bt_body->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+				App->SBC_Scene->SBC_Base_Area[0]->Phys_Body->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 			}
 
 			return 1;
@@ -208,7 +208,7 @@ void SB_Aera::Add_Area()
 	Object->Area_Node->setPosition(0, 0, 0);
 	Object->Area_Node->setScale(1, 1, 1);
 
-	create_New_Trimesh(Object);
+	create_Area_Trimesh(Object);
 
 	Object->Usage = Enums::Usage_Room;
 
@@ -220,9 +220,9 @@ void SB_Aera::Add_Area()
 }
 
 // *************************************************************************
-//						create_New_TrimeshTerry Bernie					   *
+//						create_Aera_TrimeshTerry Bernie					   *
 // *************************************************************************
-btBvhTriangleMeshShape* SB_Aera::create_New_Trimesh(Base_Area* Object)
+btBvhTriangleMeshShape* SB_Aera::create_Area_Trimesh(Base_Area* Object)
 {
 	int Index = App->SBC_Scene->Area_Count;
 
@@ -313,7 +313,6 @@ btBvhTriangleMeshShape* SB_Aera::create_New_Trimesh(Base_Area* Object)
 			i += 3;
 		}
 
-		//App->Say("here");
 	}
 
 	const bool useQuantizedAABB = true;
@@ -343,32 +342,32 @@ btBvhTriangleMeshShape* SB_Aera::create_New_Trimesh(Base_Area* Object)
 
 	btRigidBody::btRigidBodyConstructionInfo rigidBodyCI
 	(
-		0,  // mass
-		myMotionState,// initial position
-		mShape,      // collision shape of body
-		inertia   // local inertia
+		0,				// mass
+		myMotionState,	// initial position
+		mShape,			// collision shape of body
+		inertia			// local inertia
 	);
 
-	Object->mObject = new btRigidBody(rigidBodyCI);
-	Object->mObject->clearForces();
-	Object->mObject->setLinearVelocity(btVector3(0, 0, 0));
-	Object->mObject->setAngularVelocity(btVector3(0, 0, 0));
-	Object->mObject->setWorldTransform(startTransform);
+	Object->Phys_Body = new btRigidBody(rigidBodyCI);
+	Object->Phys_Body->clearForces();
+	Object->Phys_Body->setLinearVelocity(btVector3(0, 0, 0));
+	Object->Phys_Body->setAngularVelocity(btVector3(0, 0, 0));
+	Object->Phys_Body->setWorldTransform(startTransform);
 
-	Object->mObject->setCustomDebugColor(btVector3(0, 1, 1));
-	int f = Object->mObject->getCollisionFlags();
-	Object->mObject->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+	Object->Phys_Body->setCustomDebugColor(btVector3(0, 1, 1));
+	int f = Object->Phys_Body->getCollisionFlags();
+	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
 	Object->Type = Enums::Bullet_Type_Static;
 	Object->Shape = Enums::Shape_TriMesh;
 
 
-	Object->mObject->setUserIndex(123);
-	Object->mObject->setUserIndex2(Index);
+	Object->Phys_Body->setUserIndex(123);
+	Object->Phys_Body->setUserIndex2(Index);
 
 	Object->Collect_Object_Data();
 
-	App->Cl_Bullet->dynamicsWorld->addRigidBody(Object->mObject);
+	App->Cl_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
 	Object->Physics_Valid = 1;
 	return mShape;

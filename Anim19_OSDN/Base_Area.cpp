@@ -5,11 +5,11 @@
 
 Base_Area::Base_Area()
 {
-	Area_Ent =	nullptr;
-	Area_Node = nullptr;
+	Area_Ent =		nullptr;
+	Area_Node =		nullptr;
 
-	mObject =	nullptr;
-	mShape =	nullptr;
+	Phys_Body =		nullptr;
+	Phys_Shape =	nullptr;
 
 	/*strcpy(Name, "None");
 	strcpy(MeshName, "None");
@@ -119,17 +119,17 @@ void Base_Area::Collect_Object_Data(void)
 	float y = 0;
 	float z = 0;
 
-	x = mObject->getWorldTransform().getOrigin().getX();
-	y = mObject->getWorldTransform().getOrigin().getY();
-	z = mObject->getWorldTransform().getOrigin().getZ();
+	x = Phys_Body->getWorldTransform().getOrigin().getX();
+	y = Phys_Body->getWorldTransform().getOrigin().getY();
+	z = Phys_Body->getWorldTransform().getOrigin().getZ();
 
 	Physics_Pos.x = x;
 	Physics_Pos.y = y;
 	Physics_Pos.z = z;
 
-	x = mObject->getCollisionShape()->getLocalScaling().getX();
-	y = mObject->getCollisionShape()->getLocalScaling().getY();
-	z = mObject->getCollisionShape()->getLocalScaling().getZ();
+	x = Phys_Body->getCollisionShape()->getLocalScaling().getX();
+	y = Phys_Body->getCollisionShape()->getLocalScaling().getY();
+	z = Phys_Body->getCollisionShape()->getLocalScaling().getZ();
 
 	Physics_Scale.x = x;
 	Physics_Scale.y = y;

@@ -38,8 +38,6 @@ public:
 
 	void Add_Area();
 
-	btBvhTriangleMeshShape* create_New_Trimesh(Base_Area* Object);
-
 	bool Show_Physics_Debug; // Show Physics Debug For Area [021221]
 
 	HWND Area_Props_HWND;
@@ -47,5 +45,7 @@ public:
 protected:
 
 	static LRESULT CALLBACK Area_PropsPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	btBvhTriangleMeshShape* create_Area_Trimesh(Base_Area* Object);
 };
 

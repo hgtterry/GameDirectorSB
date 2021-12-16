@@ -8,8 +8,8 @@ public:
 	Ogre::Entity*		Area_Ent;
 	Ogre::SceneNode*	Area_Node;
 
-	btRigidBody *mObject;
-	btCollisionShape *mShape;
+	btRigidBody *Phys_Body;
+	btCollisionShape *Phys_Shape;
 
 	void Collect_Object_Data(void);
 
