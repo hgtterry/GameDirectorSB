@@ -49,9 +49,10 @@ SB_Project::SB_Project()
 	Scene_Path_FileName[0] = 0;
 	Scene_JustPath[0] = 0;
 
-	Write_Ini = NULL;
-	Write_Player_Ini = NULL;
-	WriteFile = NULL;
+	Write_Ini =			NULL;
+	Write_Player_Ini =	NULL;
+	WriteFile =			NULL;
+	Write_Object_Ini =	NULL;
 
 	Project_Loaded = 0;
 
@@ -243,7 +244,11 @@ bool SB_Project::Create_Project()
 	strcpy(App->CL_Vm_Model->Model_FolderPath, Level_Folder_Path_World);
 	strcpy(App->CL_Vm_Model->FileName, "World.mesh");
 
-	App->CL_Bullet_AddRoom->AddToScene(1); // Load First room into scene
+	//App->CL_Bullet_AddRoom->AddToScene(1); // Load First room into scene
+
+	App->SBC_Aera->Add_Area();
+
+	App->SBC_Player->Load_Player();
 
 	App->SBC_Physics->Enable_Physics(1);
 
@@ -376,6 +381,8 @@ bool SB_Project::Write_Objects()
 
 	fprintf(Write_Object_Ini, "%s\n", "[Objects]");
 	fprintf(Write_Object_Ini, "%s%i\n", "Objects_Count=", App->SBC_Scene->Object_Count);
+
+
 
 	fclose(Write_Object_Ini);
 
