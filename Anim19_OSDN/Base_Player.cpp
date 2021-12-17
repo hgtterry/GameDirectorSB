@@ -73,3 +73,57 @@ void Base_Player::Forward(float delta)
 
 	//Check_Collisions();
 }
+
+// *************************************************************************
+// *	  					Back Terry Bernie							   *
+// *************************************************************************
+void Base_Player::Back(void)
+{
+		btVector3 vel;
+
+		btTransform xform = Phys_Body->getWorldTransform();
+		btVector3 cur = Phys_Body->getLinearVelocity();
+		btVector3 basis = xform.getBasis()[2];
+		vel = Ground_speed * 10 * basis;			 //cur[1],
+		Phys_Body->setLinearVelocity(btVector3(vel[0], cur[1], vel[2]));
+
+		//Check_Collisions();
+}
+
+// *************************************************************************
+// *	  					Move_Left Terry Bernie						   *
+// *************************************************************************
+void Base_Player::Move_Left(void)
+{
+
+	btVector3 vel;
+
+	btTransform xform = Phys_Body->getWorldTransform();
+	btVector3 cur = Phys_Body->getLinearVelocity();
+	btVector3 basis = xform.getBasis()[2];
+	vel = -Ground_speed * 10 * basis;
+
+	Phys_Body->setLinearVelocity(btVector3(-vel[2], cur[1], vel[0]));
+
+	//Check_Collisions();
+}
+
+// *************************************************************************
+// *	  					Move_Right Terry Bernie						   *
+// *************************************************************************
+void Base_Player::Move_Right(void)
+{
+
+	btVector3 vel;
+
+	btTransform xform = Phys_Body->getWorldTransform();
+	btVector3 cur = Phys_Body->getLinearVelocity();
+	btVector3 basis = xform.getBasis()[2];
+	vel = -Ground_speed * 10 * basis;
+
+	Phys_Body->setLinearVelocity(btVector3(vel[2], cur[1], -vel[0]));
+
+	//Check_Collisions();
+	
+}
+

@@ -29,6 +29,10 @@ public:
 	~Base_Player();
 
 	void Forward(float delta);
+	void Back(void);
+
+	void Move_Left(void);
+	void Move_Right(void);
 
 	Ogre::Camera*		CameraPitch;
 	Ogre::Entity*		Player_Ent;

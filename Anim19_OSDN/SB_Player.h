@@ -38,12 +38,8 @@ public:
 	void SetUp(void);
 	void Load_Player(void);
 
-	void Move_Right(void);
-	void Move_Left(void);
-
 	void Stop(void);
 	
-	void Back(void);
 	void Rotate(const Ogre::Vector3 axis, bool normalize);
 	void Rotate_FromCam(const Ogre::Vector3 axis, float delta, bool normalize);
 	void Jump(const Ogre::Vector3 axis, float force);

@@ -416,64 +416,6 @@ void SB_Player::Stop(void)
 }
 
 // *************************************************************************
-// *	  					Move_Right Terry Bernie						   *
-// *************************************************************************
-void SB_Player::Move_Right(void)
-{
-	if (App->SBC_Scene->Player_Added == 1)
-	{
-		btVector3 vel;
-
-		btTransform xform = App->SBC_Scene->SBC_Base_Player[0]->Phys_Body->getWorldTransform();
-		btVector3 cur = App->SBC_Scene->SBC_Base_Player[0]->Phys_Body->getLinearVelocity();
-		btVector3 basis = xform.getBasis()[2];
-		vel = -Ground_speed * 10 * basis;
-
-		App->SBC_Scene->SBC_Base_Player[0]->Phys_Body->setLinearVelocity(btVector3(vel[2], cur[1], -vel[0]));
-
-		Check_Collisions();
-	}
-}
-
-// *************************************************************************
-// *	  					Move_Left Terry Bernie						   *
-// *************************************************************************
-void SB_Player::Move_Left(void)
-{
-	if (App->SBC_Scene->Player_Added == 1)
-	{
-		btVector3 vel;
-
-		btTransform xform = App->SBC_Scene->SBC_Base_Player[0]->Phys_Body->getWorldTransform();
-		btVector3 cur = App->SBC_Scene->SBC_Base_Player[0]->Phys_Body->getLinearVelocity();
-		btVector3 basis = xform.getBasis()[2];
-		vel = -Ground_speed * 10 * basis;
-
-		App->SBC_Scene->SBC_Base_Player[0]->Phys_Body->setLinearVelocity(btVector3(-vel[2], cur[1], vel[0]));
-
-		Check_Collisions();
-	}
-}
-
-// *************************************************************************
-// *	  					Back Terry Bernie							   *
-// *************************************************************************
-void SB_Player::Back(void)
-{
-	if (App->SBC_Scene->Player_Added == 1)
-	{
-		btVector3 vel;
-
-		btTransform xform = App->SBC_Scene->SBC_Base_Player[0]->Phys_Body->getWorldTransform();
-		btVector3 cur = App->SBC_Scene->SBC_Base_Player[0]->Phys_Body->getLinearVelocity();
-		btVector3 basis = xform.getBasis()[2];
-		vel = Ground_speed * 10 * basis;			 //cur[1],
-		App->SBC_Scene->SBC_Base_Player[0]->Phys_Body->setLinearVelocity(btVector3(vel[0], cur[1], vel[2]));
-		Check_Collisions();
-	}
-}
-
-// *************************************************************************
 // *	  					Rotate Terry Bernie							   *
 // *************************************************************************
 void SB_Player::Rotate(const Ogre::Vector3 axis, bool normalize)
