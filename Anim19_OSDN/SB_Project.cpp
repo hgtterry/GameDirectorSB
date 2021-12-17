@@ -293,8 +293,11 @@ bool SB_Project::Write_Project_Ini()
 	fprintf(Write_Ini, "%s\n", "[Player]");
 	fprintf(Write_Ini, "%s%s\n", "Player_File=","Player1.ply");
 	
-	fprintf(Write_Ini, "%s\n", "[Camere]");
+	fprintf(Write_Ini, "%s\n", "[Camera]");
 	fprintf(Write_Ini, "%s%s\n", "Camera_File=", "Cam1.cam");
+
+	fprintf(Write_Ini, "%s\n", "[Objects]");
+	fprintf(Write_Ini, "%s%s\n", "Camera_File=", "Objects.obf");
 
 	fclose(Write_Ini);
 	
@@ -339,6 +342,42 @@ bool SB_Project::Create_Level_Folder()
 	Write_Level_File();
 	Write_Player();
 	Write_Camera();
+	Write_Objects();
+
+	return 1;
+}
+
+// *************************************************************************
+// *	  					Write_Objects Terry Flanigan				   *
+// *************************************************************************
+bool SB_Project::Write_Objects()
+{
+	char File[1024];
+
+	strcpy(File, Level_Folder_Path);
+	strcat(File, "\\");
+	strcat(File, "Objects.obf");
+
+	Write_Object_Ini = NULL;
+
+	Write_Object_Ini = fopen(File, "wt");
+
+	if (!Write_Object_Ini)
+	{
+		App->Say("Cant Create File");
+		App->Say(File);
+		return 0;
+	}
+
+	fprintf(Write_Object_Ini, "%s\n", "[Version_Data]");
+	fprintf(Write_Object_Ini, "%s%s\n", "Version=", "V1.2");
+
+	fprintf(Write_Object_Ini, "%s\n", " ");
+
+	fprintf(Write_Object_Ini, "%s\n", "[Objects]");
+	fprintf(Write_Object_Ini, "%s%i\n", "Objects_Count=", App->SBC_Scene->Object_Count);
+
+	fclose(Write_Object_Ini);
 
 	return 1;
 }

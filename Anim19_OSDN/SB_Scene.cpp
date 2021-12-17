@@ -30,6 +30,7 @@ SB_Scene::SB_Scene()
 {
 	Player_Count = 0;
 	Area_Count = 0;
+	Object_Count = 0;
 
 	SBC_Base_Player[100] = { nullptr };
 	SBC_Base_Area[100] = { nullptr };

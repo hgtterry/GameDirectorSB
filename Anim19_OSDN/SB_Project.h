@@ -36,6 +36,7 @@ public:
 	bool Write_Level_File();
 	bool Write_Player();
 	bool Write_Camera();
+	bool Write_Objects();
 
 	char Project_Name[255];
 	char Project_Path[1024];
@@ -76,6 +77,7 @@ protected:
 
 	FILE *Write_Ini;
 	FILE *Write_Player_Ini;
+	FILE *Write_Object_Ini;
 	FILE *WriteFile;
 };
 
