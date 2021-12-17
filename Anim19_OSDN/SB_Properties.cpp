@@ -598,7 +598,7 @@ bool SB_Properties::Edit_Player_Physics_Onclick(LPARAM lParam)
 	if (result == 0)
 	{
 		char chr_Radius[10];
-		sprintf(chr_Radius, "%.3f ", App->SBC_Scene->SBC_Base_Player[0]->mObject->getInvMass());
+		sprintf(chr_Radius, "%.3f ", App->SBC_Scene->SBC_Base_Player[0]->Phys_Body->getInvMass());
 
 		strcpy(App->Cl_Dialogs->Chr_Float, chr_Radius);
 		strcpy(App->Cl_Dialogs->btext, "Player Physics Mass");
@@ -607,7 +607,7 @@ bool SB_Properties::Edit_Player_Physics_Onclick(LPARAM lParam)
 		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
 
 
-		App->SBC_Scene->SBC_Base_Player[0]->mObject->setMassProps(App->Cl_Dialogs->mFloat, btVector3(0, 0, 0));
+		App->SBC_Scene->SBC_Base_Player[0]->Phys_Body->setMassProps(App->Cl_Dialogs->mFloat, btVector3(0, 0, 0));
 
 		App->SBC_Properties->Update_ListView_Player_Physics();
 

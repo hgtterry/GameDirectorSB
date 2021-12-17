@@ -32,12 +32,15 @@ Base_Player::Base_Player()
 	Player_Ent =	nullptr;
 	Player_Node =	nullptr;
 
-	mObject =		nullptr;
-	mShape =		nullptr;
+	Phys_Body =		nullptr;
+	Phys_Shape =	nullptr;
 
 	StartPos.x = 0;
 	StartPos.y = -50;
 	StartPos.z = 0;
+
+	Forward_Timer = 0;
+	Ground_speed = 4.2;
 
 	strcpy(Player_Name, "No_Set");
 }
@@ -45,4 +48,28 @@ Base_Player::Base_Player()
 
 Base_Player::~Base_Player()
 {
+}
+
+// *************************************************************************
+// *	  					Forward Terry Bernie						   *
+// *************************************************************************
+void Base_Player::Forward(float delta)
+{
+	Forward_Timer -= delta;
+
+	if (Forward_Timer < 0)
+	{
+		Forward_Timer = 0.01; // 0.01
+
+		btVector3 vel;
+
+		btTransform xform = Phys_Body->getWorldTransform();
+		btVector3 cur = Phys_Body->getLinearVelocity();
+		btVector3 basis = xform.getBasis()[2];
+		vel = -Ground_speed * 10 * basis;
+		Phys_Body->setLinearVelocity(btVector3(vel[0], cur[1], vel[2]));
+
+	}
+
+	//Check_Collisions();
 }

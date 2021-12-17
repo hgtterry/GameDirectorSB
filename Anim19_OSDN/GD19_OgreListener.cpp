@@ -167,7 +167,7 @@ bool GD19_OgreListener::frameStarted(const FrameEvent& evt)
 		if (GD_Run_Physics == 1 && App->SBC_Scene->Player_Added == 1)
 		{
 			btTransform trans;
-			App->SBC_Scene->SBC_Base_Player[0]->mObject->getMotionState()->getWorldTransform(trans);
+			App->SBC_Scene->SBC_Base_Player[0]->Phys_Body->getMotionState()->getWorldTransform(trans);
 			btQuaternion orientation = trans.getRotation();
 			App->SBC_Scene->SBC_Base_Player[0]->Player_Node->setPosition(Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ()));
 			App->SBC_Scene->SBC_Base_Player[0]->Player_Node->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));

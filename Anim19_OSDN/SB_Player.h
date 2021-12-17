@@ -42,7 +42,7 @@ public:
 	void Move_Left(void);
 
 	void Stop(void);
-	void Forward(float delta);
+	
 	void Back(void);
 	void Rotate(const Ogre::Vector3 axis, bool normalize);
 	void Rotate_FromCam(const Ogre::Vector3 axis, float delta, bool normalize);

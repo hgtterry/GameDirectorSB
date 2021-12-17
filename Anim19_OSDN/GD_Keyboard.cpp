@@ -72,7 +72,7 @@ void GD_Keyboard::Keyboard_Monitor(float deltaTime)
 	//------------------------------------------------ Forward
 	if (GetAsyncKeyState(VK_UP) < 0 && App->SBC_Scene->Player_Added == 1 && App->Cl19_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
 	{
-		App->SBC_Player->Forward(deltaTime);
+		App->SBC_Scene->SBC_Base_Player[0]->Forward(deltaTime);
 		App->SBC_Player->IsMOving = 1;
 	}
 	else
@@ -198,7 +198,7 @@ void GD_Keyboard::Keyboard_Monitor(float deltaTime)
 			if (App->SBC_Scene->Player_Added == 1)
 			{
 
-				App->SBC_Player->Forward(deltaTime);
+				App->SBC_Scene->SBC_Base_Player[0]->Forward(deltaTime);
 				App->SBC_Player->IsMOving = 1;
 			}
 		}

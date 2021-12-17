@@ -28,14 +28,19 @@ public:
 	Base_Player();
 	~Base_Player();
 
+	void Forward(float delta);
+
 	Ogre::Camera*		CameraPitch;
 	Ogre::Entity*		Player_Ent;
 	Ogre::SceneNode*	Player_Node;
 
-	btRigidBody *mObject;
-	btCollisionShape *mShape;
+	btRigidBody *Phys_Body;
+	btCollisionShape *Phys_Shape;
 
 	Ogre::Vector3 StartPos;
+
+	float Forward_Timer;
+	float Ground_speed;
 
 	char Player_Name[255]; // Players Name must be unique [171221]
 };
