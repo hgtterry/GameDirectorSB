@@ -28,11 +28,17 @@ public:
 	Base_Player();
 	~Base_Player();
 
+	void Stop(void);
+	void Jump(const Ogre::Vector3 axis, float force);
+
 	void Forward(float delta);
 	void Back(void);
 
 	void Move_Left(void);
 	void Move_Right(void);
+
+	void Rotate(const Ogre::Vector3 axis, bool normalize);
+	void Rotate_FromCam(const Ogre::Vector3 axis, float delta, bool normalize);
 
 	Ogre::Camera*		CameraPitch;
 	Ogre::Entity*		Player_Ent;
@@ -45,6 +51,14 @@ public:
 
 	float Forward_Timer;
 	float Ground_speed;
+
+	float TurnRate;
+
+	bool mOnGround;
+	bool IsMOving;
+	bool IsMOving_Back;
+	bool IsMOving_Right;
+	bool IsMOving_Left;
 
 	char Player_Name[255]; // Players Name must be unique [171221]
 };

@@ -334,7 +334,7 @@ bool SB_Properties::Update_ListView_Player()
 	char chr_StartPosY[100];
 	char chr_StartPosZ[100];
 
-	sprintf(chr_Speed, "%.3f ", App->SBC_Player->Ground_speed);
+	sprintf(chr_Speed, "%.3f ", App->SBC_Scene->SBC_Base_Player[0]->Ground_speed);
 	sprintf(chr_Height, "%.3f ", App->SBC_Player->PlayerHeight);
 
 	sprintf(chr_StartPosX, "%.3f ", App->SBC_Scene->SBC_Base_Player[0]->StartPos.x);
@@ -392,7 +392,7 @@ bool SB_Properties::Update_ListView_Player_Physics()
 	int index = App->SBC_Properties->Current_Selected_Object;
 
 	char buff[255];
-	strcpy(buff, App->SBC_Player->Player_Name);
+	strcpy(buff, App->SBC_Scene->SBC_Base_Player[0]->Player_Name);
 	strcat(buff, "   (Physics)");
 	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
 
@@ -484,7 +484,7 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 	if (result == 0)
 	{
 		char chr_Value[10];
-		sprintf(chr_Value, "%.3f ", App->SBC_Player->Ground_speed);
+		sprintf(chr_Value, "%.3f ", App->SBC_Scene->SBC_Base_Player[0]->Ground_speed);
 
 		strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
 		strcpy(App->Cl_Dialogs->btext, "Ground Speed");
@@ -492,7 +492,7 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 		App->Cl_Dialogs->Dialog_Float();
 		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
 
-		App->SBC_Player->Ground_speed = App->Cl_Dialogs->mFloat;
+		App->SBC_Scene->SBC_Base_Player[0]->Ground_speed = App->Cl_Dialogs->mFloat;
 		Update_ListView_Player();
 
 		return 1;

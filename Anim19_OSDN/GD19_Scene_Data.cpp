@@ -580,7 +580,7 @@ bool GD19_Scene_Data::Start_Scene()
 
 	strcpy(Cl_Object[Index]->Name,"Main_Room2");
 
-	App->SBC_Player->SetUp();
+	//App->SBC_Player->SetUp();
 	
 	App->Cl19_Ogre->OgreListener->Dubug_Physics_Draw = 1;
 

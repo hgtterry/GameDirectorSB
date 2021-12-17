@@ -35,14 +35,8 @@ public:
 	bool Start_Player_PropsPanel();
 	void Hide_Player_Dlg(bool Show);
 
-	void SetUp(void);
 	void Load_Player(void);
 
-	void Stop(void);
-	
-	void Rotate(const Ogre::Vector3 axis, bool normalize);
-	void Rotate_FromCam(const Ogre::Vector3 axis, float delta, bool normalize);
-	void Jump(const Ogre::Vector3 axis, float force);
 	bool OnGround() const;
 
 	void Adjust_Capsule(void);
@@ -51,13 +45,6 @@ public:
 
 	void Save_Location(char* name);
 	void Goto_Location(int Index);
-
-	char Player_Name[255];	// Player Name [211121]
-	bool mOnGround;
-	bool IsMOving;
-	bool IsMOving_Back;
-	bool IsMOving_Right;
-	bool IsMOving_Left;
 
 	int Round;
 	float Distance;
@@ -73,16 +60,12 @@ public:
 	bool ShowDebug;
 	bool Show_Physics_Debug; // Show Physics Debug For Player [021221]
 	
-	float Ground_speed;
-
 	float PlayerHeight;
 	float TurnRate;
 
 	float Capsule_Mass;
 	float Capsule_Radius;
 	float Capsule_Height;
-
-	float Forward_Timer;
 
 	HWND Player_Props_HWND;
 

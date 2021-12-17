@@ -42,12 +42,40 @@ Base_Player::Base_Player()
 	Forward_Timer = 0;
 	Ground_speed = 4.2;
 
+	TurnRate = 0.04;
+
+	mOnGround = 1;
+	IsMOving = 0;
+	IsMOving_Back = 0;
+	IsMOving_Right = 0;
+	IsMOving_Left = 0;
+
 	strcpy(Player_Name, "No_Set");
 }
 
 
 Base_Player::~Base_Player()
 {
+}
+
+// *************************************************************************
+// *	  					Stop Terry Bernie							   *
+// *************************************************************************
+void Base_Player::Stop(void)
+{
+	Phys_Body->setLinearVelocity(btVector3(0, 0, 0));
+}
+
+// *************************************************************************
+// *	  					Jump Terry Bernie							   *
+// *************************************************************************
+void Base_Player::Jump(const Ogre::Vector3 axis, float force)
+{
+	btVector3 pos = Phys_Body->getWorldTransform().getOrigin();
+	pos[1] = pos[1] + 0.2;
+
+	Phys_Body->getWorldTransform().setOrigin(btVector3(pos[0], pos[1], pos[2]));
+
 }
 
 // *************************************************************************
@@ -125,5 +153,47 @@ void Base_Player::Move_Right(void)
 
 	//Check_Collisions();
 	
+}
+
+// *************************************************************************
+// *	  					Rotate Terry Bernie							   *
+// *************************************************************************
+void Base_Player::Rotate(const Ogre::Vector3 axis, bool normalize)
+{
+
+	btTransform xform = Phys_Body->getWorldTransform();
+	btMatrix3x3 R = xform.getBasis();
+	R = R * btMatrix3x3(btQuaternion(btVector3(axis[0], axis[1], axis[2]), TurnRate));
+
+	if (normalize) {
+		R[0].normalize();
+		R[2].normalize();
+		R[1] = R[0].cross(R[2]);
+	}
+
+	xform.setBasis(R);
+	Phys_Body->setWorldTransform(xform);
+	
+}
+
+// *************************************************************************
+// *	  					Rotate Terry Bernie							   *
+// *************************************************************************
+void Base_Player::Rotate_FromCam(const Ogre::Vector3 axis, float delta, bool normalize)
+{
+
+	btTransform xform = Phys_Body->getWorldTransform();
+	btMatrix3x3 R = xform.getBasis();
+	R = R * btMatrix3x3(btQuaternion(btVector3(axis[0], axis[1], axis[2]), delta));
+
+	if (normalize) {
+		R[0].normalize();
+		R[2].normalize();
+		R[1] = R[0].cross(R[2]);
+	}
+
+	xform.setBasis(R);
+	Phys_Body->setWorldTransform(xform);
+
 }
 

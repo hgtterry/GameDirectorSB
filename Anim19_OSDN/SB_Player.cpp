@@ -34,24 +34,15 @@ SB_Player::SB_Player()
 	ShowDebug = 0;
 	Show_Physics_Debug = 1;
 
-	IsMOving = 0;
-	IsMOving_Back = 0;
-	IsMOving_Right = 0;
-	IsMOving_Left = 0;
-
 	Toggle_Objects_Flag = 1;
 	Toggle_Physics_Flag = 0;
 
-	mOnGround = 1;
-	Ground_speed = 4.2;
 	PlayerHeight =16.0;
 	TurnRate = 0.04;
 
 	Capsule_Mass = 1.0;
 	Capsule_Radius = 4.4;
 	Capsule_Height = 17.0;
-
-	strcpy(Player_Name, "Player_1");
 
 	ColisionIndex = 0;
 	Last_ColisionIndex = 0;
@@ -61,8 +52,6 @@ SB_Player::SB_Player()
 	Life_Time = 0;
 
 	is_Animated = 0;
-
-	Forward_Timer = 0;
 
 	Current_Position.ZERO;
 	Physics_Position.setZero();
@@ -166,8 +155,6 @@ void SB_Player::Initialize(float mass, float radius, float height)
 	App->SBC_Scene->SBC_Base_Player[Index]->Player_Node->setPosition(Pos.x, Pos.y, Pos.z);
 
 	App->SBC_Scene->SBC_Base_Player[Index]->Player_Node->setVisible(false);
-
-	strcpy(App->SBC_Scene->SBC_Base_Player[Index]->Player_Name, Player_Name);
 
 	// ------------------------ Bulet
 	btVector3 pos = btVector3(Pos.x, Pos.y, Pos.z);
@@ -388,15 +375,6 @@ void SB_Player::Hide_Player_Dlg(bool Show)
 }
 
 // *************************************************************************
-// *	  						SetUp Terry Bernie						   *
-// *************************************************************************
-void SB_Player::SetUp(void)
-{
-	Initialize(Capsule_Mass, Capsule_Radius, Capsule_Height);
-	App->SBC_Scene->SBC_Base_Player[0]->CameraPitch = App->Cl19_Ogre->mSceneMgr->createCamera("PlayerPitch");
-}
-
-// *************************************************************************
 // *	  					Adjust_CapsuleTerry Bernie					   *
 // *************************************************************************
 void SB_Player::Adjust_Capsule(void)
@@ -407,76 +385,11 @@ void SB_Player::Adjust_Capsule(void)
 }
 
 // *************************************************************************
-// *	  					Stop Terry Bernie							   *
-// *************************************************************************
-void SB_Player::Stop(void)
-{
-
-	App->SBC_Scene->SBC_Base_Player[0]->Phys_Body->setLinearVelocity(btVector3(0, 0, 0));
-}
-
-// *************************************************************************
-// *	  					Rotate Terry Bernie							   *
-// *************************************************************************
-void SB_Player::Rotate(const Ogre::Vector3 axis, bool normalize)
-{
-	if (App->SBC_Scene->Player_Added == 1)
-	{
-		btTransform xform = App->SBC_Scene->SBC_Base_Player[0]->Phys_Body->getWorldTransform();
-		btMatrix3x3 R = xform.getBasis();
-		R = R * btMatrix3x3(btQuaternion(btVector3(axis[0], axis[1], axis[2]), TurnRate));
-
-		if (normalize) {
-			R[0].normalize();
-			R[2].normalize();
-			R[1] = R[0].cross(R[2]);
-		}
-
-		xform.setBasis(R);
-		App->SBC_Scene->SBC_Base_Player[0]->Phys_Body->setWorldTransform(xform);
-	}
-}
-
-// *************************************************************************
-// *	  					Rotate Terry Bernie							   *
-// *************************************************************************
-void SB_Player::Rotate_FromCam(const Ogre::Vector3 axis, float delta, bool normalize)
-{
-	if (App->SBC_Scene->Player_Added == 1)
-	{
-		btTransform xform = App->SBC_Scene->SBC_Base_Player[0]->Phys_Body->getWorldTransform();
-		btMatrix3x3 R = xform.getBasis();
-		R = R * btMatrix3x3(btQuaternion(btVector3(axis[0], axis[1], axis[2]), delta));
-
-		if (normalize) {
-			R[0].normalize();
-			R[2].normalize();
-			R[1] = R[0].cross(R[2]);
-		}
-
-		xform.setBasis(R);
-		App->SBC_Scene->SBC_Base_Player[0]->Phys_Body->setWorldTransform(xform);
-	}
-}
-
-// *************************************************************************
-// *	  					Jump Terry Bernie							   *
-// *************************************************************************
-void SB_Player::Jump(const Ogre::Vector3 axis, float force)
-{
-	btVector3 pos = App->SBC_Scene->SBC_Base_Player[0]->Phys_Body->getWorldTransform().getOrigin();
-	pos[1] = pos[1] + 0.2;
-
-	App->SBC_Scene->SBC_Base_Player[0]->Phys_Body->getWorldTransform().setOrigin(btVector3(pos[0], pos[1], pos[2]));
-
-}
-
-// *************************************************************************
 // *	  					Rotate Terry Bernie							   *
 // *************************************************************************
 bool SB_Player::OnGround() const
 {
-	return mOnGround;
+	return App->SBC_Scene->SBC_Base_Player[0]->mOnGround;
 }
 
 // need to use ray cast for ground collision to handle stair case

@@ -255,7 +255,7 @@ bool SB_Project::Create_Project()
 	App->SBC_FileView->Change_Level_Name();
 
 	App->SBC_Camera->FileViewItem = App->SBC_FileView->Add_Camera(App->SBC_Camera->Camera_Name, 0);
-	App->SBC_Player->FileViewItem = App->SBC_FileView->Add_PlayerFile(App->SBC_Player->Player_Name, 0);
+	App->SBC_Player->FileViewItem = App->SBC_FileView->Add_PlayerFile(App->SBC_Scene->SBC_Base_Player[0]->Player_Name, 0);
 	HTREEITEM Temp = App->SBC_FileView->Add_Area("Area_1", 0);
 	App->SBC_FileView->Redraw_FileView();
 
@@ -441,7 +441,7 @@ bool SB_Project::Write_Player()
 	fprintf(Write_Player_Ini, "%s%f\n", "Mass=", App->SBC_Player->Capsule_Mass);
 	fprintf(Write_Player_Ini, "%s%f\n", "Radius=", App->SBC_Player->Capsule_Radius);
 	fprintf(Write_Player_Ini, "%s%f\n", "Height=", App->SBC_Player->Capsule_Height);
-	fprintf(Write_Player_Ini, "%s%f\n", "Ground_Speed=", App->SBC_Player->Ground_speed);
+	fprintf(Write_Player_Ini, "%s%f\n", "Ground_Speed=", App->SBC_Scene->SBC_Base_Player[0]->Ground_speed);
 	fprintf(Write_Player_Ini, "%s%f\n", "Cam_Height=", App->SBC_Player->PlayerHeight);
 	
 	fclose(Write_Player_Ini);
@@ -713,7 +713,7 @@ bool SB_Project::Read_Player()
 
 	App->Cl_Ini->GetString("Player", "Player_Name", chr_Tag1, 1024);
 
-	strcpy(App->SBC_Player->Player_Name, chr_Tag1);
+	strcpy(App->SBC_Scene->SBC_Base_Player[0]->Player_Name, chr_Tag1);
 	
 	//// Position
 	App->Cl_Ini->GetString("Player", "Start_Position", chr_Tag1, 1024);
@@ -734,14 +734,14 @@ bool SB_Project::Read_Player()
 	App->SBC_Player->Capsule_Height = z;
 
 	x = App->Cl_Ini->Get_Float("Player", "Ground_Speed");
-	App->SBC_Player->Ground_speed = x;
+	App->SBC_Scene->SBC_Base_Player[0]->Ground_speed = x;
 
 	x = App->Cl_Ini->Get_Float("Player", "Cam_Height");
 	App->SBC_Player->PlayerHeight = x;
 
 	App->Cl_Bullet->Reset_Physics();
 
-	App->SBC_Player->FileViewItem = App->SBC_FileView->Add_PlayerFile(App->SBC_Player->Player_Name,0);
+	App->SBC_Player->FileViewItem = App->SBC_FileView->Add_PlayerFile(App->SBC_Scene->SBC_Base_Player[0]->Player_Name,0);
 	App->SBC_FileView->Redraw_FileView();
 	return 1;
 }
