@@ -371,7 +371,7 @@ bool SB_Project::Write_Player()
 	fprintf(Write_Player_Ini, "%s\n", " ");
 
 	fprintf(Write_Player_Ini, "%s\n", "[Player]");
-	fprintf(Write_Player_Ini, "%s%s\n", "Player_Name=", App->SBC_Player->Player_Name);
+	fprintf(Write_Player_Ini, "%s%s\n", "Player_Name=", App->SBC_Scene->SBC_Base_Player[0]->Player_Name);
 
 	fprintf(Write_Player_Ini, "%s%f,%f,%f\n", "Start_Position=", App->SBC_Player->StartPos.x, App->SBC_Player->StartPos.y, App->SBC_Player->StartPos.z);
 	fprintf(Write_Player_Ini, "%s%s\n", "Shape=", "Capsule");

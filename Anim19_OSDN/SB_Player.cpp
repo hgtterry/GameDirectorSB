@@ -163,6 +163,8 @@ void SB_Player::Initialize(const Ogre::Vector3 p, float mass, float radius, floa
 
 	App->SBC_Scene->SBC_Base_Player[Index]->Player_Node->setVisible(false);
 
+	strcpy(App->SBC_Scene->SBC_Base_Player[Index]->Player_Name, Player_Name);
+
 	// ------------------------ Bulet
 	btVector3 pos = btVector3(p.x, p.y, p.z);
 	btVector3 inertia = btVector3(0, 0, 0);
@@ -192,8 +194,8 @@ void SB_Player::Initialize(const Ogre::Vector3 p, float mass, float radius, floa
 
 	App->SBC_Scene->Player_Added = 1;
 
-	btCollisionWorld* Poo = NULL;
-	PostStep(Poo);
+	//btCollisionWorld* Poo = NULL;
+	//PostStep(Poo);
 }
 
 // *************************************************************************
@@ -562,13 +564,6 @@ bool SB_Player::OnGround() const
 // need to use ray cast for ground collision to handle stair case
 #define __RAYTEST__
 
-// *************************************************************************
-// *	  					PostStep Terry Bernie						   *
-// *************************************************************************
-void SB_Player::PostStep(btCollisionWorld *collisionWorld)
-{
-	
-}
 
 // *************************************************************************
 // *	  				Check_Collisions Terry Bernie					   *

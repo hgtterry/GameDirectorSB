@@ -51,7 +51,6 @@ public:
 
 	void Adjust_Capsule(void);
 
-	void PostStep(btCollisionWorld *collisionWorld);
 	void Check_Collisions(void);
 
 	void Save_Location(char* name);

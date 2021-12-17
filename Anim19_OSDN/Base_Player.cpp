@@ -34,6 +34,8 @@ Base_Player::Base_Player()
 
 	mObject =		nullptr;
 	mShape =		nullptr;
+
+	strcpy(Player_Name, "No_Set");
 }
 
 

@@ -34,5 +34,7 @@ public:
 
 	btRigidBody *mObject;
 	btCollisionShape *mShape;
+
+	char Player_Name[255]; // Players Name must be unique [171221]
 };
 
