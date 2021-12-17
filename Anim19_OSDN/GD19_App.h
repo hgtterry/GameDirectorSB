@@ -67,7 +67,6 @@ distribution.
 
 // ---------------------------------------------------- 15/10/21
 #include "EQ15_Ogre_Import.h"
-#include "EQ15_Bullet_AddRoom.h"
 
 // ---------------------------------------------------- 07/12/21
 #include "EB_Listener.h"
@@ -145,7 +144,6 @@ public:
 
 	// ---------------------------------------------------- 15/10/21
 	EQ15_Ogre_Import*		CL_Ogre_Import_E15;
-	EQ15_Bullet_AddRoom*	CL_Bullet_AddRoom;
 	
 	// ---------------------------------------------------- 07/12/21
 	EB_Listener*			EBC_Listener;		// Listener for Equity Editor [081221]

@@ -166,7 +166,6 @@
     <ClInclude Include="EB_Model.h" />
     <ClInclude Include="EB_Options.h" />
     <ClInclude Include="EB_TopTabs.h" />
-    <ClInclude Include="EQ15_Bullet_AddRoom.h" />
     <ClInclude Include="EQ15_Ogre_Import.h" />
     <ClInclude Include="GD19_Bullet.h" />
     <ClInclude Include="GD19_Collision.h" />
@@ -253,7 +252,6 @@
     <ClCompile Include="EB_Model.cpp" />
     <ClCompile Include="EB_Options.cpp" />
     <ClCompile Include="EB_TopTabs.cpp" />
-    <ClCompile Include="EQ15_Bullet_AddRoom.cpp" />
     <ClCompile Include="EQ15_Ogre_Import.cpp" />
     <ClCompile Include="GD19_Bullet.cpp" />
     <ClCompile Include="GD19_Collision.cpp" />

@@ -161,6 +161,12 @@ void SB_Aera::Hide_Area_Dlg(bool Show)
 // *************************************************************************
 void SB_Aera::Add_Area()
 {
+	//char ConNum[256];
+	//char ATest[256];
+	/*strcpy_s(ATest, "GDEnt_");
+	_itoa(Index, ConNum, 10);
+	strcat(ATest, ConNum);*/
+
 	int Index = App->SBC_Scene->Area_Count;
 
 
