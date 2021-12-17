@@ -68,7 +68,7 @@ bool GD19_Save_Scene::Write_NewScene()
 	fprintf(WriteScene, "%s\n", " ");
 	fprintf(WriteScene, "%s\n", "[Player]");
 	fprintf(WriteScene, "%s%s\n", "Name=", App->SBC_Player->Player_Name);
-	fprintf(WriteScene, "%s%f,%f,%f\n", "Start_Position=", App->SBC_Player->StartPos.x, App->SBC_Player->StartPos.y, App->SBC_Player->StartPos.z);
+//	fprintf(WriteScene, "%s%f,%f,%f\n", "Start_Position=", App->SBC_Player->StartPos.x, App->SBC_Player->StartPos.y, App->SBC_Player->StartPos.z);
 
 	fprintf(WriteScene, "%s%s\n", "Shape=", "Capsule");
 	fprintf(WriteScene, "%s%f\n", "Mass=", App->SBC_Player->Capsule_Mass);
@@ -255,7 +255,7 @@ bool GD19_Save_Scene::WritePlayerSetup_New()
 	fprintf(WriteScene, "%s\n", " ");
 	fprintf(WriteScene, "%s\n", "[Player]");
 	fprintf(WriteScene, "%s%s\n", "Name=", App->SBC_Player->Player_Name);
-	fprintf(WriteScene, "%s%f,%f,%f\n", "Start_Position=", App->SBC_Player->StartPos.x, App->SBC_Player->StartPos.y, App->SBC_Player->StartPos.z);
+//	fprintf(WriteScene, "%s%f,%f,%f\n", "Start_Position=", App->SBC_Player->StartPos.x, App->SBC_Player->StartPos.y, App->SBC_Player->StartPos.z);
 
 	fprintf(WriteScene, "%s%s\n", "Shape=", "Capsule");
 	fprintf(WriteScene, "%s%f\n", "Mass=", App->SBC_Player->Capsule_Mass);

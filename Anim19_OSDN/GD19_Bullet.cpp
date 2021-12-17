@@ -134,9 +134,10 @@ void GD19_Bullet::Reset_Physics(void)
 	{
 		btVector3 zeroVector(0,0,0);
 
-		x = App->SBC_Player->StartPos.x;
-		y = App->SBC_Player->StartPos.y;
-		z = App->SBC_Player->StartPos.z;
+		x = App->SBC_Scene->SBC_Base_Player[0]->StartPos.x;
+		y = App->SBC_Scene->SBC_Base_Player[0]->StartPos.y;
+		z = App->SBC_Scene->SBC_Base_Player[0]->StartPos.z;
+
 		btVector3 initialPosition(x,y,z);
 
 		btTransform startTransform;

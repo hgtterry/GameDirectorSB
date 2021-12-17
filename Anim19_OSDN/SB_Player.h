@@ -69,8 +69,6 @@ public:
 	int ColisionIndex;
 	int Last_ColisionIndex;
 
-	Ogre::Vector3 StartPos;
-
 	bool is_Animated;
 
 	bool Toggle_Objects_Flag;
@@ -104,7 +102,7 @@ protected:
 
 	static LRESULT CALLBACK Player_PropsPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
-	void Initialize(const Ogre::Vector3 p, float mass, float radius, float height);
+	void Initialize(float mass, float radius, float height);
 	
 };
 

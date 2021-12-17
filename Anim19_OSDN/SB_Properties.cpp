@@ -337,9 +337,9 @@ bool SB_Properties::Update_ListView_Player()
 	sprintf(chr_Speed, "%.3f ", App->SBC_Player->Ground_speed);
 	sprintf(chr_Height, "%.3f ", App->SBC_Player->PlayerHeight);
 
-	sprintf(chr_StartPosX, "%.3f ", App->SBC_Player->StartPos.x);
-	sprintf(chr_StartPosY, "%.3f ", App->SBC_Player->StartPos.y);
-	sprintf(chr_StartPosZ, "%.3f ", App->SBC_Player->StartPos.z);
+	sprintf(chr_StartPosX, "%.3f ", App->SBC_Scene->SBC_Base_Player[0]->StartPos.x);
+	sprintf(chr_StartPosY, "%.3f ", App->SBC_Scene->SBC_Base_Player[0]->StartPos.y);
+	sprintf(chr_StartPosZ, "%.3f ", App->SBC_Scene->SBC_Base_Player[0]->StartPos.z);
 
 	const int NUM_ITEMS = 9;
 	const int NUM_COLS = 2;
@@ -520,7 +520,7 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 	if (result == 0)
 	{
 		char chr_Value[10];
-		sprintf(chr_Value, "%.3f ", App->SBC_Player->StartPos.x);
+		sprintf(chr_Value, "%.3f ", App->SBC_Scene->SBC_Base_Player[0]->StartPos.x);
 
 		strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
 
@@ -529,9 +529,7 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 		App->Cl_Dialogs->Dialog_Float();
 		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
 
-		App->SBC_Player->StartPos.x = App->Cl_Dialogs->mFloat;
-		//App->Cl_Scene_Data->S_Player_Locations[0]->Current_Position.x = App->Cl_Dialogs->mFloat;
-		//App->Cl_Scene_Data->S_Player_Locations[0]->Physics_Position.setX(App->Cl_Dialogs->mFloat);
+		App->SBC_Scene->SBC_Base_Player[0]->StartPos.x = App->Cl_Dialogs->mFloat;
 		Update_ListView_Player();
 
 		App->Cl_Bullet->Reset_Physics();
@@ -543,7 +541,7 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 	{
 
 		char chr_Value[10];
-		sprintf(chr_Value, "%.3f ", App->SBC_Player->StartPos.y);
+		sprintf(chr_Value, "%.3f ", App->SBC_Scene->SBC_Base_Player[0]->StartPos.y);
 
 		strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
 
@@ -552,11 +550,8 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 		App->Cl_Dialogs->Dialog_Float();
 		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
 
-		App->SBC_Player->StartPos.y = App->Cl_Dialogs->mFloat;
-		//App->Cl_Scene_Data->S_Player_Locations[0]->Current_Position.y = App->Cl_Dialogs->mFloat;
-		//App->Cl_Scene_Data->S_Player_Locations[0]->Physics_Position.setY(App->Cl_Dialogs->mFloat);
-		Update_ListView_Player();
-
+		App->SBC_Scene->SBC_Base_Player[0]->StartPos.y = App->Cl_Dialogs->mFloat;
+	
 		App->Cl_Bullet->Reset_Physics();
 		return 1;
 	}
@@ -565,7 +560,7 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 	if (result == 0)
 	{
 		char chr_Value[10];
-		sprintf(chr_Value, "%.3f ", App->SBC_Player->StartPos.z);
+		sprintf(chr_Value, "%.3f ", App->SBC_Scene->SBC_Base_Player[0]->StartPos.z);
 
 		strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
 
@@ -574,9 +569,8 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 		App->Cl_Dialogs->Dialog_Float();
 		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
 
-		App->SBC_Player->StartPos.z = App->Cl_Dialogs->mFloat;
-		//App->Cl_Scene_Data->S_Player_Locations[0]->Current_Position.z = App->Cl_Dialogs->mFloat;
-		//App->Cl_Scene_Data->S_Player_Locations[0]->Physics_Position.setZ(App->Cl_Dialogs->mFloat);
+		App->SBC_Scene->SBC_Base_Player[0]->StartPos.z = App->Cl_Dialogs->mFloat;
+		
 		Update_ListView_Player();
 
 		App->Cl_Bullet->Reset_Physics();

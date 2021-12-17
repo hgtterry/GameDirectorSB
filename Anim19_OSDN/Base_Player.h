@@ -35,6 +35,8 @@ public:
 	btRigidBody *mObject;
 	btCollisionShape *mShape;
 
+	Ogre::Vector3 StartPos;
+
 	char Player_Name[255]; // Players Name must be unique [171221]
 };
 

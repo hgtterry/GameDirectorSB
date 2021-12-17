@@ -244,13 +244,24 @@ bool SB_Project::Create_Project()
 	strcpy(App->CL_Vm_Model->Model_FolderPath, Level_Folder_Path_World);
 	strcpy(App->CL_Vm_Model->FileName, "World.mesh");
 
-	//App->CL_Bullet_AddRoom->AddToScene(1); // Load First room into scene
-
 	App->SBC_Aera->Add_Area();
 
 	App->SBC_Player->Load_Player();
 
+	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
+
+
+	//          File View Stuff
+	App->SBC_FileView->Change_Level_Name();
+
+	App->SBC_Camera->FileViewItem = App->SBC_FileView->Add_Camera(App->SBC_Camera->Camera_Name, 0);
+	App->SBC_Player->FileViewItem = App->SBC_FileView->Add_PlayerFile(App->SBC_Player->Player_Name, 0);
+	HTREEITEM Temp = App->SBC_FileView->Add_Area("Area_1", 0);
+	App->SBC_FileView->Redraw_FileView();
+
+	//  Start Level
 	App->SBC_Physics->Enable_Physics(1);
+	App->SBC_Camera->Set_Camera();
 
 	App->SBC_Scene->Scene_Loaded = 1;
 
@@ -394,6 +405,7 @@ bool SB_Project::Write_Objects()
 // *************************************************************************
 bool SB_Project::Write_Player()
 {
+	Ogre::Vector3 Pos;
 	char File[1024];
 
 	strcpy(File, Level_Folder_Path);
@@ -416,10 +428,15 @@ bool SB_Project::Write_Player()
 
 	fprintf(Write_Player_Ini, "%s\n", " ");
 
+
 	fprintf(Write_Player_Ini, "%s\n", "[Player]");
 	fprintf(Write_Player_Ini, "%s%s\n", "Player_Name=", App->SBC_Scene->SBC_Base_Player[0]->Player_Name);
 
-	fprintf(Write_Player_Ini, "%s%f,%f,%f\n", "Start_Position=", App->SBC_Player->StartPos.x, App->SBC_Player->StartPos.y, App->SBC_Player->StartPos.z);
+	Pos.x = App->SBC_Scene->SBC_Base_Player[0]->StartPos.x;
+	Pos.y = App->SBC_Scene->SBC_Base_Player[0]->StartPos.y;
+	Pos.z = App->SBC_Scene->SBC_Base_Player[0]->StartPos.z;
+
+	fprintf(Write_Player_Ini, "%s%f,%f,%f\n", "Start_Position=", Pos.x, Pos.y, Pos.z);
 	fprintf(Write_Player_Ini, "%s%s\n", "Shape=", "Capsule");
 	fprintf(Write_Player_Ini, "%s%f\n", "Mass=", App->SBC_Player->Capsule_Mass);
 	fprintf(Write_Player_Ini, "%s%f\n", "Radius=", App->SBC_Player->Capsule_Radius);
@@ -644,7 +661,7 @@ bool SB_Project::Load_Scene()
 
 	App->SBC_Aera->Add_Area();
 
-	App->SBC_Player->Load_Player();
+	//App->SBC_Player->Load_Player();
 
 	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
 
@@ -692,6 +709,8 @@ bool SB_Project::Read_Player()
 
 	App->Cl_Ini->GetString("Version_Data", "Version", chr_Tag1, 1024);
 	
+	App->SBC_Player->Load_Player(); //**********************************
+
 	App->Cl_Ini->GetString("Player", "Player_Name", chr_Tag1, 1024);
 
 	strcpy(App->SBC_Player->Player_Name, chr_Tag1);
@@ -699,9 +718,10 @@ bool SB_Project::Read_Player()
 	//// Position
 	App->Cl_Ini->GetString("Player", "Start_Position", chr_Tag1, 1024);
 	sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
-	App->SBC_Player->StartPos.x = x;
-	App->SBC_Player->StartPos.y = y;
-	App->SBC_Player->StartPos.z = z;
+	App->SBC_Scene->SBC_Base_Player[0]->StartPos.x = x;
+	App->SBC_Scene->SBC_Base_Player[0]->StartPos.y = y;
+	App->SBC_Scene->SBC_Base_Player[0]->StartPos.z = z;
+
 
 	App->Cl_Ini->GetString("Player", "Shape", chr_Tag1, 1024); // Capsule
 
@@ -714,12 +734,12 @@ bool SB_Project::Read_Player()
 	App->SBC_Player->Capsule_Height = z;
 
 	x = App->Cl_Ini->Get_Float("Player", "Ground_Speed");
-	//if (x == 0) { x = 2.220; }
 	App->SBC_Player->Ground_speed = x;
 
 	x = App->Cl_Ini->Get_Float("Player", "Cam_Height");
-	//if (x == 0) { x = 6.00; }
 	App->SBC_Player->PlayerHeight = x;
+
+	App->Cl_Bullet->Reset_Physics();
 
 	App->SBC_Player->FileViewItem = App->SBC_FileView->Add_PlayerFile(App->SBC_Player->Player_Name,0);
 	App->SBC_FileView->Redraw_FileView();

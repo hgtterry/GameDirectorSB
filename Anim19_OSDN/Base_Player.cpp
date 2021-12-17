@@ -35,6 +35,10 @@ Base_Player::Base_Player()
 	mObject =		nullptr;
 	mShape =		nullptr;
 
+	StartPos.x = 0;
+	StartPos.y = -50;
+	StartPos.z = 0;
+
 	strcpy(Player_Name, "No_Set");
 }
 

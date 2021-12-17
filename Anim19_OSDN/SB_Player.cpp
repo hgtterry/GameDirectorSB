@@ -47,10 +47,6 @@ SB_Player::SB_Player()
 	PlayerHeight =16.0;
 	TurnRate = 0.04;
 
-	StartPos.x = 0;
-	StartPos.y = -50;
-	StartPos.z = 0;
-
 	Capsule_Mass = 1.0;
 	Capsule_Radius = 4.4;
 	Capsule_Height = 17.0;
@@ -113,22 +109,6 @@ void SB_Player::Reset_Class(void)
 
 }
 
-// *************************************************************************
-// *	  					Add_Player Bernie							   *
-// *************************************************************************
-void SB_Player::Add_Player(void)
-{
-	int Index = App->SBC_Scene->Player_Count;
-
-	App->SBC_Scene->SBC_Base_Player[Index] = new Base_Player();
-
-	Initialize(StartPos, Capsule_Mass, Capsule_Radius, Capsule_Height);
-
-	App->SBC_Scene->SBC_Base_Player[Index]->CameraPitch = App->Cl19_Ogre->mSceneMgr->createCamera("PlayerPitch");
-
-	App->SBC_Scene->Player_Count++;
-
-}
 
 // *************************************************************************
 // *	  						Load_Player Terry Bernie				   *
@@ -139,10 +119,29 @@ void SB_Player::Load_Player(void)
 }
 
 // *************************************************************************
+// *	  					Add_Player Bernie							   *
+// *************************************************************************
+void SB_Player::Add_Player(void)
+{
+	int Index = App->SBC_Scene->Player_Count;
+
+	App->SBC_Scene->SBC_Base_Player[Index] = new Base_Player();
+
+	Initialize(Capsule_Mass, Capsule_Radius, Capsule_Height);
+
+	App->SBC_Scene->SBC_Base_Player[Index]->CameraPitch = App->Cl19_Ogre->mSceneMgr->createCamera("PlayerPitch");
+
+	App->SBC_Scene->Player_Count++;
+
+}
+
+// *************************************************************************
 // *	  					Initialize Terry Bernie						   *
 // *************************************************************************
-void SB_Player::Initialize(const Ogre::Vector3 p, float mass, float radius, float height)
+void SB_Player::Initialize(float mass, float radius, float height)
 {
+	Ogre::Vector3 Pos;
+
 	int Index = App->SBC_Scene->Player_Count;
 
 	// ------------------- Ogre
@@ -159,14 +158,19 @@ void SB_Player::Initialize(const Ogre::Vector3 p, float mass, float radius, floa
 	App->SBC_Scene->SBC_Base_Player[Index]->Player_Ent = App->Cl19_Ogre->mSceneMgr->createEntity("Player_1", "axes.mesh", App->Cl19_Ogre->App_Resource_Group);
 	App->SBC_Scene->SBC_Base_Player[Index]->Player_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	App->SBC_Scene->SBC_Base_Player[Index]->Player_Node->attachObject(App->SBC_Scene->SBC_Base_Player[Index]->Player_Ent);
-	App->SBC_Scene->SBC_Base_Player[Index]->Player_Node->setPosition(p.x, p.y, p.z);
+
+	Pos.x = App->SBC_Scene->SBC_Base_Player[Index]->StartPos.x;
+	Pos.y = App->SBC_Scene->SBC_Base_Player[Index]->StartPos.y;
+	Pos.z = App->SBC_Scene->SBC_Base_Player[Index]->StartPos.z;
+
+	App->SBC_Scene->SBC_Base_Player[Index]->Player_Node->setPosition(Pos.x, Pos.y, Pos.z);
 
 	App->SBC_Scene->SBC_Base_Player[Index]->Player_Node->setVisible(false);
 
 	strcpy(App->SBC_Scene->SBC_Base_Player[Index]->Player_Name, Player_Name);
 
 	// ------------------------ Bulet
-	btVector3 pos = btVector3(p.x, p.y, p.z);
+	btVector3 pos = btVector3(Pos.x, Pos.y, Pos.z);
 	btVector3 inertia = btVector3(0, 0, 0);
 	btQuaternion rot = btQuaternion(1, 0, 0, 0);
 	btDefaultMotionState *state = new btDefaultMotionState(btTransform(rot, pos));
@@ -388,7 +392,7 @@ void SB_Player::Hide_Player_Dlg(bool Show)
 // *************************************************************************
 void SB_Player::SetUp(void)
 {
-	Initialize(StartPos, Capsule_Mass, Capsule_Radius, Capsule_Height);
+	Initialize(Capsule_Mass, Capsule_Radius, Capsule_Height);
 	App->SBC_Scene->SBC_Base_Player[0]->CameraPitch = App->Cl19_Ogre->mSceneMgr->createCamera("PlayerPitch");
 }
 
