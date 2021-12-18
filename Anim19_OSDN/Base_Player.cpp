@@ -42,6 +42,10 @@ Base_Player::Base_Player()
 	Forward_Timer = 0;
 	Ground_speed = 4.2;
 
+	Capsule_Mass = 1.0;
+	Capsule_Radius = 4.4;
+	Capsule_Height = 17.0;
+
 	TurnRate = 0.04;
 
 	mOnGround = 1;

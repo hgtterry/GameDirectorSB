@@ -61,10 +61,6 @@ public:
 	float PlayerHeight;
 	float TurnRate;
 
-	float Capsule_Mass;
-	float Capsule_Radius;
-	float Capsule_Height;
-
 	HWND Player_Props_HWND;
 
 	// Strucure to be
@@ -79,7 +75,7 @@ protected:
 
 	static LRESULT CALLBACK Player_PropsPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
-	void Initialize(float mass, float radius, float height);
+	void Initialize();
 	
 };
 

@@ -406,10 +406,10 @@ bool SB_Properties::Update_ListView_Player_Physics()
 	char chr_Radius[100];
 	char chr_Height[100];
 
-	sprintf(chr_Mass, "%.3f ", App->SBC_Player->Capsule_Mass);
+	sprintf(chr_Mass, "%.3f ", App->SBC_Scene->SBC_Base_Player[0]->Capsule_Mass);
 	//sprintf(chr_Mass,"%.3f ",App->GDSBC_Player->mObject->getGravity().getY());
-	sprintf(chr_Radius, "%.3f ", App->SBC_Player->Capsule_Radius);
-	sprintf(chr_Height, "%.3f ", App->SBC_Player->Capsule_Height);
+	sprintf(chr_Radius, "%.3f ", App->SBC_Scene->SBC_Base_Player[0]->Capsule_Radius);
+	sprintf(chr_Height, "%.3f ", App->SBC_Scene->SBC_Base_Player[0]->Capsule_Height);
 
 
 	const int NUM_ITEMS = 7;
@@ -618,7 +618,7 @@ bool SB_Properties::Edit_Player_Physics_Onclick(LPARAM lParam)
 	if (result == 0)
 	{
 		char chr_Radius[10];
-		sprintf(chr_Radius, "%.3f ", App->SBC_Player->Capsule_Radius);
+		sprintf(chr_Radius, "%.3f ", App->SBC_Scene->SBC_Base_Player[0]->Capsule_Radius);
 
 		strcpy(App->Cl_Dialogs->Chr_Float, chr_Radius);
 		strcpy(App->Cl_Dialogs->btext, "Player Physics Shape Radius");
@@ -629,7 +629,7 @@ bool SB_Properties::Edit_Player_Physics_Onclick(LPARAM lParam)
 			return TRUE;
 		}
 
-		App->SBC_Player->Capsule_Radius = App->Cl_Dialogs->mFloat;
+		App->SBC_Scene->SBC_Base_Player[0]->Capsule_Radius = App->Cl_Dialogs->mFloat;
 
 		App->SBC_Properties->Update_ListView_Player_Physics();
 
@@ -641,7 +641,7 @@ bool SB_Properties::Edit_Player_Physics_Onclick(LPARAM lParam)
 	if (result == 0)
 	{
 		char chr_Height[10];
-		sprintf(chr_Height, "%.3f ", App->SBC_Player->Capsule_Height);
+		sprintf(chr_Height, "%.3f ", App->SBC_Scene->SBC_Base_Player[0]->Capsule_Height);
 
 		strcpy(App->Cl_Dialogs->Chr_Float, chr_Height);
 		strcpy(App->Cl_Dialogs->btext, "Player Physics Shape Height");
@@ -649,7 +649,7 @@ bool SB_Properties::Edit_Player_Physics_Onclick(LPARAM lParam)
 		App->Cl_Dialogs->Dialog_Float();
 		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
 
-		App->SBC_Player->Capsule_Height = App->Cl_Dialogs->mFloat;
+		App->SBC_Scene->SBC_Base_Player[0]->Capsule_Height = App->Cl_Dialogs->mFloat;
 
 		App->SBC_Properties->Update_ListView_Player_Physics();
 

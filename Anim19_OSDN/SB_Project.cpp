@@ -459,9 +459,9 @@ bool SB_Project::Write_Player()
 
 		fprintf(Write_Player_Ini, "%s%f,%f,%f\n", "Start_Position=", Pos.x, Pos.y, Pos.z);
 		fprintf(Write_Player_Ini, "%s%s\n", "Shape=", "Capsule");
-		fprintf(Write_Player_Ini, "%s%f\n", "Mass=", App->SBC_Player->Capsule_Mass);
-		fprintf(Write_Player_Ini, "%s%f\n", "Radius=", App->SBC_Player->Capsule_Radius);
-		fprintf(Write_Player_Ini, "%s%f\n", "Height=", App->SBC_Player->Capsule_Height);
+		fprintf(Write_Player_Ini, "%s%f\n", "Mass=", App->SBC_Scene->SBC_Base_Player[Count]->Capsule_Mass);
+		fprintf(Write_Player_Ini, "%s%f\n", "Radius=", App->SBC_Scene->SBC_Base_Player[Count]->Capsule_Radius);
+		fprintf(Write_Player_Ini, "%s%f\n", "Height=", App->SBC_Scene->SBC_Base_Player[Count]->Capsule_Height);
 		fprintf(Write_Player_Ini, "%s%f\n", "Ground_Speed=", App->SBC_Scene->SBC_Base_Player[Count]->Ground_speed);
 		fprintf(Write_Player_Ini, "%s%f\n", "Cam_Height=", App->SBC_Player->PlayerHeight);
 
@@ -743,7 +743,7 @@ bool SB_Project::Read_Player()
 
 	while (Count < Int_Tag)
 	{
-		App->SBC_Player->Create_Player_Object(); //**********************************
+		App->SBC_Player->Create_Player_Object(); // Increments Player Counter 
 
 		strcpy(buff, "Player_");
 		_itoa(Count, Cbuff, 10);
@@ -767,9 +767,9 @@ bool SB_Project::Read_Player()
 		y = App->Cl_Ini->Get_Float(buff, "Radius");
 		z = App->Cl_Ini->Get_Float(buff, "Height");
 
-		App->SBC_Player->Capsule_Mass = x;
-		App->SBC_Player->Capsule_Radius = y;
-		App->SBC_Player->Capsule_Height = z;
+		App->SBC_Scene->SBC_Base_Player[Count]->Capsule_Mass = x;
+		App->SBC_Scene->SBC_Base_Player[Count]->Capsule_Radius = y;
+		App->SBC_Scene->SBC_Base_Player[Count]->Capsule_Height = z;
 
 		x = App->Cl_Ini->Get_Float(buff, "Ground_Speed");
 		App->SBC_Scene->SBC_Base_Player[Count]->Ground_speed = x;

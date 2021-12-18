@@ -40,10 +40,6 @@ SB_Player::SB_Player()
 	PlayerHeight =16.0;
 	TurnRate = 0.04;
 
-	Capsule_Mass = 1.0;
-	Capsule_Radius = 4.4;
-	Capsule_Height = 17.0;
-
 	ColisionIndex = 0;
 	Last_ColisionIndex = 0;
 
@@ -108,7 +104,7 @@ void SB_Player::Create_Player_Object(void)
 
 	App->SBC_Scene->SBC_Base_Player[Index] = new Base_Player();
 
-	Initialize(Capsule_Mass, Capsule_Radius, Capsule_Height);
+	Initialize();
 
 	App->SBC_Scene->SBC_Base_Player[Index]->CameraPitch = App->Cl19_Ogre->mSceneMgr->createCamera("PlayerPitch");
 
@@ -119,7 +115,7 @@ void SB_Player::Create_Player_Object(void)
 // *************************************************************************
 // *	  					Initialize Terry Bernie						   *
 // *************************************************************************
-void SB_Player::Initialize(float mass, float radius, float height)
+void SB_Player::Initialize()
 {
 	Ogre::Vector3 Pos;
 
@@ -155,8 +151,8 @@ void SB_Player::Initialize(float mass, float radius, float height)
 	btDefaultMotionState *state = new btDefaultMotionState(btTransform(rot, pos));
 
 	//mShape = new btSphereShape(btScalar(radius));
-	App->SBC_Scene->SBC_Base_Player[Index]->Phys_Shape = new btCapsuleShape(btScalar(radius), btScalar(height));
-	App->SBC_Scene->SBC_Base_Player[Index]->Phys_Body = new btRigidBody(mass, state, App->SBC_Scene->SBC_Base_Player[Index]->Phys_Shape, inertia);
+	App->SBC_Scene->SBC_Base_Player[Index]->Phys_Shape = new btCapsuleShape(btScalar(App->SBC_Scene->SBC_Base_Player[Index]->Capsule_Radius), btScalar(App->SBC_Scene->SBC_Base_Player[Index]->Capsule_Height));
+	App->SBC_Scene->SBC_Base_Player[Index]->Phys_Body = new btRigidBody(App->SBC_Scene->SBC_Base_Player[Index]->Capsule_Mass, state, App->SBC_Scene->SBC_Base_Player[Index]->Phys_Shape, inertia);
 	App->SBC_Scene->SBC_Base_Player[Index]->Phys_Body->setActivationState(DISABLE_DEACTIVATION);
 	App->SBC_Scene->SBC_Base_Player[Index]->Phys_Body->setAngularFactor(0.0);
 
@@ -371,7 +367,7 @@ void SB_Player::Hide_Player_Dlg(bool Show)
 // *************************************************************************
 void SB_Player::Adjust_Capsule(void)
 {
-	App->SBC_Scene->SBC_Base_Player[0]->Phys_Shape = new btCapsuleShape(btScalar(Capsule_Radius), btScalar(Capsule_Height));
+	App->SBC_Scene->SBC_Base_Player[0]->Phys_Shape = new btCapsuleShape(btScalar(App->SBC_Scene->SBC_Base_Player[0]->Capsule_Radius), btScalar(App->SBC_Scene->SBC_Base_Player[0]->Capsule_Height));
 	App->SBC_Scene->SBC_Base_Player[0]->Phys_Body->setCollisionShape(App->SBC_Scene->SBC_Base_Player[0]->Phys_Shape);
 
 }

@@ -54,6 +54,10 @@ public:
 
 	float TurnRate;
 
+	float Capsule_Mass;
+	float Capsule_Radius;
+	float Capsule_Height;
+
 	bool mOnGround;
 	bool IsMOving;
 	bool IsMOving_Back;
