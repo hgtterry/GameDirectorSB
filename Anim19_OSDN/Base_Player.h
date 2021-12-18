@@ -58,6 +58,8 @@ public:
 	float Capsule_Radius;
 	float Capsule_Height;
 
+	float PlayerHeight;
+
 	bool mOnGround;
 	bool IsMOving;
 	bool IsMOving_Back;

@@ -221,7 +221,7 @@ bool GD19_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 		
 		mmPitch = App->SBC_Scene->SBC_Base_Player[0]->CameraPitch->getOrientation().getPitch();
 		mYaw = App->SBC_Scene->SBC_Base_Player[0]->Player_Node->getOrientation().getYaw();
-		Pos.y = Pos.y + App->SBC_Player->PlayerHeight;
+		Pos.y = Pos.y + App->SBC_Scene->SBC_Base_Player[0]->PlayerHeight;
 
 		App->Cl19_Ogre->mCamera->setPosition(Pos);
 		App->Cl19_Ogre->mCamera->setOrientation(Ogre::Quaternion(1, 0, 0, 0));
@@ -370,7 +370,7 @@ void GD19_OgreListener::WorldMode(float DeltaTime)
 
 			mmPitch = App->SBC_Scene->SBC_Base_Player[0]->CameraPitch->getOrientation().getPitch();
 			mYaw = App->SBC_Scene->SBC_Base_Player[0]->Player_Node->getOrientation().getYaw();
-			Pos.y = Pos.y + App->SBC_Player->PlayerHeight;
+			Pos.y = Pos.y + App->SBC_Scene->SBC_Base_Player[0]->PlayerHeight;
 
 		}
 		else
@@ -383,7 +383,7 @@ void GD19_OgreListener::WorldMode(float DeltaTime)
 
 			//mmPitch = App->Cl_Scene_Data->Cl_Object[Object_ToFollow]->OgreNode->getOrientation().getPitch();
 			mYaw = App->Cl_Scene_Data->Cl_Object[Object_ToFollow]->OgreNode->getOrientation().getYaw();
-			Pos.y = Pos.y + App->SBC_Player->PlayerHeight;
+			Pos.y = Pos.y + App->SBC_Scene->SBC_Base_Player[0]->PlayerHeight;
 		}
 
 		App->Cl19_Ogre->mCamera->setPosition(Pos);

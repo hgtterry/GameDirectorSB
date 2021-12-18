@@ -262,7 +262,7 @@ bool GD19_Save_Scene::WritePlayerSetup_New()
 //	fprintf(WriteScene, "%s%f\n", "Radius=", App->SBC_Player->Capsule_Radius);
 //	fprintf(WriteScene, "%s%f\n", "Height=", App->SBC_Player->Capsule_Height);
 //	fprintf(WriteScene, "%s%f\n", "Ground_Speed=", App->SBC_Player->Ground_speed);
-	fprintf(WriteScene, "%s%f\n", "Cam_Height=", App->SBC_Player->PlayerHeight);
+//	fprintf(WriteScene, "%s%f\n", "Cam_Height=", App->SBC_Player->PlayerHeight);
 
 	return 1;
 }

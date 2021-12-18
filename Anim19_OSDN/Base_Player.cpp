@@ -46,6 +46,8 @@ Base_Player::Base_Player()
 	Capsule_Radius = 4.4;
 	Capsule_Height = 17.0;
 
+	PlayerHeight = 16.0;
+
 	TurnRate = 0.04;
 
 	mOnGround = 1;

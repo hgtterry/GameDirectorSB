@@ -463,7 +463,7 @@ bool SB_Project::Write_Player()
 		fprintf(Write_Player_Ini, "%s%f\n", "Radius=", App->SBC_Scene->SBC_Base_Player[Count]->Capsule_Radius);
 		fprintf(Write_Player_Ini, "%s%f\n", "Height=", App->SBC_Scene->SBC_Base_Player[Count]->Capsule_Height);
 		fprintf(Write_Player_Ini, "%s%f\n", "Ground_Speed=", App->SBC_Scene->SBC_Base_Player[Count]->Ground_speed);
-		fprintf(Write_Player_Ini, "%s%f\n", "Cam_Height=", App->SBC_Player->PlayerHeight);
+		fprintf(Write_Player_Ini, "%s%f\n", "Cam_Height=", App->SBC_Scene->SBC_Base_Player[Count]->PlayerHeight);
 
 		Count++;
 	}
@@ -775,7 +775,7 @@ bool SB_Project::Read_Player()
 		App->SBC_Scene->SBC_Base_Player[Count]->Ground_speed = x;
 
 		x = App->Cl_Ini->Get_Float(buff, "Cam_Height");
-		App->SBC_Player->PlayerHeight = x;
+		App->SBC_Scene->SBC_Base_Player[Count]->PlayerHeight = x;
 
 		App->SBC_Player->FileViewItem = App->SBC_FileView->Add_PlayerFile(App->SBC_Scene->SBC_Base_Player[Count]->Player_Name, Count);
 
