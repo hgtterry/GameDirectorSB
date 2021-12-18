@@ -715,6 +715,8 @@ bool SB_Project::Read_Player()
 	char chr_Tag1[1024];
 	char chr_Tag2[1024];
 
+	int Int_Tag = 0;
+
 	float x = 0;
 	float y = 0;
 	float z = 0;
@@ -733,40 +735,57 @@ bool SB_Project::Read_Player()
 
 	App->Cl_Ini->GetString("Version_Data", "Version", chr_Tag1, 1024);
 	
-	App->SBC_Player->Create_Player_Object(); //**********************************
+	Int_Tag = App->Cl_Ini->GetInt("Counters", "Player_Count", 0, 10);
 
-	App->Cl_Ini->GetString("Player", "Player_Name", chr_Tag1, 1024);
+	char Cbuff[255];
+	char buff[255];
+	int Count = 0;
 
-	strcpy(App->SBC_Scene->SBC_Base_Player[0]->Player_Name, chr_Tag1);
-	
-	//// Position
-	App->Cl_Ini->GetString("Player", "Start_Position", chr_Tag1, 1024);
-	sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
-	App->SBC_Scene->SBC_Base_Player[0]->StartPos.x = x;
-	App->SBC_Scene->SBC_Base_Player[0]->StartPos.y = y;
-	App->SBC_Scene->SBC_Base_Player[0]->StartPos.z = z;
+	while (Count < Int_Tag)
+	{
+		App->SBC_Player->Create_Player_Object(); //**********************************
+
+		strcpy(buff, "Player_");
+		_itoa(Count, Cbuff, 10);
+		strcat(buff, Cbuff);
+
+		App->Cl_Ini->GetString(buff, "Player_Name", chr_Tag1, 1024);
+
+		strcpy(App->SBC_Scene->SBC_Base_Player[Count]->Player_Name, chr_Tag1);
+
+		//// Position
+		App->Cl_Ini->GetString(buff, "Start_Position", chr_Tag1, 1024);
+		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+		App->SBC_Scene->SBC_Base_Player[Count]->StartPos.x = x;
+		App->SBC_Scene->SBC_Base_Player[Count]->StartPos.y = y;
+		App->SBC_Scene->SBC_Base_Player[Count]->StartPos.z = z;
 
 
-	App->Cl_Ini->GetString("Player", "Shape", chr_Tag1, 1024); // Capsule
+		App->Cl_Ini->GetString(buff, "Shape", chr_Tag1, 1024); // Capsule
 
-	x = App->Cl_Ini->Get_Float("Player", "Mass");
-	y = App->Cl_Ini->Get_Float("Player", "Radius");
-	z = App->Cl_Ini->Get_Float("Player", "Height");
+		x = App->Cl_Ini->Get_Float(buff, "Mass");
+		y = App->Cl_Ini->Get_Float(buff, "Radius");
+		z = App->Cl_Ini->Get_Float(buff, "Height");
 
-	App->SBC_Player->Capsule_Mass = x;
-	App->SBC_Player->Capsule_Radius = y;
-	App->SBC_Player->Capsule_Height = z;
+		App->SBC_Player->Capsule_Mass = x;
+		App->SBC_Player->Capsule_Radius = y;
+		App->SBC_Player->Capsule_Height = z;
 
-	x = App->Cl_Ini->Get_Float("Player", "Ground_Speed");
-	App->SBC_Scene->SBC_Base_Player[0]->Ground_speed = x;
+		x = App->Cl_Ini->Get_Float(buff, "Ground_Speed");
+		App->SBC_Scene->SBC_Base_Player[Count]->Ground_speed = x;
 
-	x = App->Cl_Ini->Get_Float("Player", "Cam_Height");
-	App->SBC_Player->PlayerHeight = x;
+		x = App->Cl_Ini->Get_Float(buff, "Cam_Height");
+		App->SBC_Player->PlayerHeight = x;
+
+		App->SBC_Player->FileViewItem = App->SBC_FileView->Add_PlayerFile(App->SBC_Scene->SBC_Base_Player[Count]->Player_Name, Count);
+
+		Count++;
+
+	}
+
+	App->SBC_FileView->Redraw_FileView();
 
 	App->Cl_Bullet->Reset_Physics();
-
-	App->SBC_Player->FileViewItem = App->SBC_FileView->Add_PlayerFile(App->SBC_Scene->SBC_Base_Player[0]->Player_Name,0);
-	App->SBC_FileView->Redraw_FileView();
 	return 1;
 }
 
