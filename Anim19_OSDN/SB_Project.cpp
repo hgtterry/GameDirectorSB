@@ -239,14 +239,20 @@ bool SB_Project::Create_Project()
 
 	Create_Level_Folder();
 
+	Write_Level_File();
+
+	App->SBC_Player->Create_Player_Object();
+	Write_Player();
+
+	Write_Camera();
+	Write_Objects();
+
 	Add_World(); // Create First room Not Loaded
 
 	strcpy(App->CL_Vm_Model->Model_FolderPath, Level_Folder_Path_World);
 	strcpy(App->CL_Vm_Model->FileName, "World.mesh");
 
 	App->SBC_Aera->Add_Area();
-
-	App->SBC_Player->Create_Player_Object();
 
 	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
 
@@ -354,11 +360,6 @@ bool SB_Project::Create_Level_Folder()
 		//App->Say("Directory already exsits");
 
 	}
-
-	Write_Level_File();
-	Write_Player();
-	Write_Camera();
-	Write_Objects();
 
 	return 1;
 }

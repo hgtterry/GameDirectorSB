@@ -750,9 +750,9 @@ bool GD19_Mesh_Viewer::Set_OgreWindow(void)
 	CamNode->attachObject( mCameraMeshView );
 
 	////-------------------------------------------- 
-	MvEnt = mSceneMgrMeshView->createEntity("MVTest","well.mesh");
+	/*MvEnt = mSceneMgrMeshView->createEntity("MVTest","well.mesh");
 	MvNode  = mSceneMgrMeshView->getRootSceneNode()->createChildSceneNode();
-	MvNode->attachObject(MvEnt);
+	MvNode->attachObject(MvEnt);*/
 
 	mSceneMgrMeshView->setAmbientLight(ColourValue(0.7, 0.7, 0.7));
 
