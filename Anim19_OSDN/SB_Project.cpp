@@ -241,10 +241,15 @@ bool SB_Project::Create_Project()
 
 	Write_Level_File();
 
+	// Player
 	App->SBC_Player->Create_Player_Object();
+	strcpy(App->SBC_Scene->SBC_Base_Player[0]->Player_Name,"Player_1");
 	Write_Player();
 
+	// Camera
 	Write_Camera();
+
+	// Objects
 	Write_Objects();
 
 	Add_World(); // Create First room Not Loaded
@@ -446,11 +451,6 @@ bool SB_Project::Write_Player()
 
 		fprintf(Write_Player_Ini, "%s\n", buff); // Header also Player name until changed by user
 
-		strcpy(buff, "Player_");
-		_itoa(Count, Cbuff, 10);
-		strcat(buff, Cbuff);
-		
-		strcpy(App->SBC_Scene->SBC_Base_Player[Count]->Player_Name, buff);
 		fprintf(Write_Player_Ini, "%s%s\n", "Player_Name=", App->SBC_Scene->SBC_Base_Player[Count]->Player_Name);
 
 		Pos.x = App->SBC_Scene->SBC_Base_Player[Count]->StartPos.x;
