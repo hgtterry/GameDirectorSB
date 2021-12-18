@@ -429,21 +429,44 @@ bool SB_Project::Write_Player()
 
 	fprintf(Write_Player_Ini, "%s\n", " ");
 
+	fprintf(Write_Player_Ini, "%s\n", "[Counters]");
+	fprintf(Write_Player_Ini, "%s%i\n", "Player_Count=",App->SBC_Scene->Player_Count);
 
-	fprintf(Write_Player_Ini, "%s\n", "[Player]");
-	fprintf(Write_Player_Ini, "%s%s\n", "Player_Name=", App->SBC_Scene->SBC_Base_Player[0]->Player_Name);
+	fprintf(Write_Player_Ini, "%s\n", " ");
 
-	Pos.x = App->SBC_Scene->SBC_Base_Player[0]->StartPos.x;
-	Pos.y = App->SBC_Scene->SBC_Base_Player[0]->StartPos.y;
-	Pos.z = App->SBC_Scene->SBC_Base_Player[0]->StartPos.z;
+	char Cbuff[255];
+	char buff[255];
+	int Count = 0;
+	while (Count < App->SBC_Scene->Player_Count)
+	{
+		strcpy(buff, "[Player_");
+		_itoa(Count, Cbuff, 10);
+		strcat(buff, Cbuff);
+		strcat(buff, "]");
 
-	fprintf(Write_Player_Ini, "%s%f,%f,%f\n", "Start_Position=", Pos.x, Pos.y, Pos.z);
-	fprintf(Write_Player_Ini, "%s%s\n", "Shape=", "Capsule");
-	fprintf(Write_Player_Ini, "%s%f\n", "Mass=", App->SBC_Player->Capsule_Mass);
-	fprintf(Write_Player_Ini, "%s%f\n", "Radius=", App->SBC_Player->Capsule_Radius);
-	fprintf(Write_Player_Ini, "%s%f\n", "Height=", App->SBC_Player->Capsule_Height);
-	fprintf(Write_Player_Ini, "%s%f\n", "Ground_Speed=", App->SBC_Scene->SBC_Base_Player[0]->Ground_speed);
-	fprintf(Write_Player_Ini, "%s%f\n", "Cam_Height=", App->SBC_Player->PlayerHeight);
+		fprintf(Write_Player_Ini, "%s\n", buff); // Header also Player name until changed by user
+
+		strcpy(buff, "Player_");
+		_itoa(Count, Cbuff, 10);
+		strcat(buff, Cbuff);
+		
+		strcpy(App->SBC_Scene->SBC_Base_Player[Count]->Player_Name, buff);
+		fprintf(Write_Player_Ini, "%s%s\n", "Player_Name=", App->SBC_Scene->SBC_Base_Player[Count]->Player_Name);
+
+		Pos.x = App->SBC_Scene->SBC_Base_Player[Count]->StartPos.x;
+		Pos.y = App->SBC_Scene->SBC_Base_Player[Count]->StartPos.y;
+		Pos.z = App->SBC_Scene->SBC_Base_Player[Count]->StartPos.z;
+
+		fprintf(Write_Player_Ini, "%s%f,%f,%f\n", "Start_Position=", Pos.x, Pos.y, Pos.z);
+		fprintf(Write_Player_Ini, "%s%s\n", "Shape=", "Capsule");
+		fprintf(Write_Player_Ini, "%s%f\n", "Mass=", App->SBC_Player->Capsule_Mass);
+		fprintf(Write_Player_Ini, "%s%f\n", "Radius=", App->SBC_Player->Capsule_Radius);
+		fprintf(Write_Player_Ini, "%s%f\n", "Height=", App->SBC_Player->Capsule_Height);
+		fprintf(Write_Player_Ini, "%s%f\n", "Ground_Speed=", App->SBC_Scene->SBC_Base_Player[Count]->Ground_speed);
+		fprintf(Write_Player_Ini, "%s%f\n", "Cam_Height=", App->SBC_Player->PlayerHeight);
+
+		Count++;
+	}
 	
 	fclose(Write_Player_Ini);
 
