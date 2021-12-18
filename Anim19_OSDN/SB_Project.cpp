@@ -246,7 +246,7 @@ bool SB_Project::Create_Project()
 
 	App->SBC_Aera->Add_Area();
 
-	App->SBC_Player->Load_Player();
+	App->SBC_Player->Create_Player_Object();
 
 	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
 
@@ -709,7 +709,7 @@ bool SB_Project::Read_Player()
 
 	App->Cl_Ini->GetString("Version_Data", "Version", chr_Tag1, 1024);
 	
-	App->SBC_Player->Load_Player(); //**********************************
+	App->SBC_Player->Create_Player_Object(); //**********************************
 
 	App->Cl_Ini->GetString("Player", "Player_Name", chr_Tag1, 1024);
 

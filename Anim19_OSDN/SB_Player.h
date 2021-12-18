@@ -30,12 +30,10 @@ public:
 
 	void Reset_Class(void);
 
-	void Add_Player(void);
+	void Create_Player_Object(void);
 
 	bool Start_Player_PropsPanel();
 	void Hide_Player_Dlg(bool Show);
-
-	void Load_Player(void);
 
 	bool OnGround() const;
 

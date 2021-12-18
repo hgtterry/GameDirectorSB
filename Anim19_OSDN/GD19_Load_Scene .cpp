@@ -580,7 +580,7 @@ bool GD19_Load_Scene::Populate_Level40()
 
 	if(App->Cl_Scene_Data->S_LoadOptions[0]->Has_Player == 1)
 	{
-		App->SBC_Player->Load_Player();
+//		App->SBC_Player->Load_Player();
 	}
 
 	if(App->Cl_Scene_Data->S_LoadOptions[0]->Has_Objects == 1)

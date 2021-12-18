@@ -100,17 +100,9 @@ void SB_Player::Reset_Class(void)
 
 
 // *************************************************************************
-// *	  						Load_Player Terry Bernie				   *
+// *	  					Create_Player_Object Bernie					   *
 // *************************************************************************
-void SB_Player::Load_Player(void)
-{
-	Add_Player();
-}
-
-// *************************************************************************
-// *	  					Add_Player Bernie							   *
-// *************************************************************************
-void SB_Player::Add_Player(void)
+void SB_Player::Create_Player_Object(void)
 {
 	int Index = App->SBC_Scene->Player_Count;
 
