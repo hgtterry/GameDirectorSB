@@ -121,14 +121,14 @@ void SB_Player::Initialize()
 	Base_Player* pBase = App->SBC_Scene->SBC_Base_Player[Index];
 
 	// ------------------- Ogre
-	if (App->SBC_Scene->SBC_Base_Player[Index]->Player_Ent && App->SBC_Scene->SBC_Base_Player[Index]->Player_Node)
+	if (pBase->Player_Ent && pBase->Player_Node)
 	{
-		App->Cl19_Ogre->mSceneMgr->destroySceneNode(App->SBC_Scene->SBC_Base_Player[Index]->Player_Node);
-		App->Cl19_Ogre->mSceneMgr->destroyEntity(App->SBC_Scene->SBC_Base_Player[Index]->Player_Ent);
-		App->Cl19_Ogre->mSceneMgr->destroyCamera(App->SBC_Scene->SBC_Base_Player[Index]->CameraPitch);
-		App->SBC_Scene->SBC_Base_Player[Index]->Player_Ent = nullptr;
-		App->SBC_Scene->SBC_Base_Player[Index]->Player_Node = nullptr;
-		App->SBC_Scene->SBC_Base_Player[Index]->CameraPitch = nullptr;
+		App->Cl19_Ogre->mSceneMgr->destroySceneNode(pBase->Player_Node);
+		App->Cl19_Ogre->mSceneMgr->destroyEntity(pBase->Player_Ent);
+		App->Cl19_Ogre->mSceneMgr->destroyCamera(pBase->CameraPitch);
+		pBase->Player_Ent = nullptr;
+		pBase->Player_Node = nullptr;
+		pBase->CameraPitch = nullptr;
 	}
 
 	pBase->Player_Ent = App->Cl19_Ogre->mSceneMgr->createEntity("Player_1", "axes.mesh", App->Cl19_Ogre->App_Resource_Group);
@@ -150,25 +150,25 @@ void SB_Player::Initialize()
 	btDefaultMotionState *state = new btDefaultMotionState(btTransform(rot, pos));
 
 	//mShape = new btSphereShape(btScalar(radius));
-	App->SBC_Scene->SBC_Base_Player[Index]->Phys_Shape = new btCapsuleShape(btScalar(App->SBC_Scene->SBC_Base_Player[Index]->Capsule_Radius), btScalar(App->SBC_Scene->SBC_Base_Player[Index]->Capsule_Height));
-	App->SBC_Scene->SBC_Base_Player[Index]->Phys_Body = new btRigidBody(App->SBC_Scene->SBC_Base_Player[Index]->Capsule_Mass, state, App->SBC_Scene->SBC_Base_Player[Index]->Phys_Shape, inertia);
-	App->SBC_Scene->SBC_Base_Player[Index]->Phys_Body->setActivationState(DISABLE_DEACTIVATION);
-	App->SBC_Scene->SBC_Base_Player[Index]->Phys_Body->setAngularFactor(0.0);
+	pBase->Phys_Shape = new btCapsuleShape(btScalar(pBase->Capsule_Radius), btScalar(pBase->Capsule_Height));
+	pBase->Phys_Body = new btRigidBody(pBase->Capsule_Mass, state, pBase->Phys_Shape, inertia);
+	pBase->Phys_Body->setActivationState(DISABLE_DEACTIVATION);
+	pBase->Phys_Body->setAngularFactor(0.0);
 
-	App->SBC_Scene->SBC_Base_Player[Index]->Phys_Body->setUserPointer(App->SBC_Scene->SBC_Base_Player[Index]->Player_Node);
+	pBase->Phys_Body->setUserPointer(pBase->Player_Node);
 
-	App->SBC_Scene->SBC_Base_Player[Index]->Phys_Body->setUserIndex(Enums::Usage_Player);
+	pBase->Phys_Body->setUserIndex(Enums::Usage_Player);
 
 
-	int f = App->SBC_Scene->SBC_Base_Player[Index]->Phys_Body->getCollisionFlags();
-	App->SBC_Scene->SBC_Base_Player[Index]->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+	int f = pBase->Phys_Body->getCollisionFlags();
+	pBase->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
-	App->Cl_Bullet->dynamicsWorld->addRigidBody(App->SBC_Scene->SBC_Base_Player[Index]->Phys_Body);
+	App->Cl_Bullet->dynamicsWorld->addRigidBody(pBase->Phys_Body);
 
 	// Save for later
-	Current_Position = App->SBC_Scene->SBC_Base_Player[Index]->Player_Node->getPosition();
-	Physics_Position = App->SBC_Scene->SBC_Base_Player[Index]->Phys_Body->getWorldTransform().getOrigin();
-	Physics_Rotation = App->SBC_Scene->SBC_Base_Player[Index]->Phys_Body->getWorldTransform().getRotation();
+	Current_Position = pBase->Player_Node->getPosition();
+	Physics_Position = pBase->Phys_Body->getWorldTransform().getOrigin();
+	Physics_Rotation = pBase->Phys_Body->getWorldTransform().getRotation();
 
 	App->SBC_Scene->Player_Added = 1;
 
