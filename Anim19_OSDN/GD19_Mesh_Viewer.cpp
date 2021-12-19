@@ -107,8 +107,8 @@ bool GD19_Mesh_Viewer::StartMeshViewer()
 	
 	DialogBox(App->hInst,(LPCTSTR)IDD_GD_MESHVIEWER,App->Fdlg,(DLGPROC)MeshViewer_Proc);
 
-	App->Cl19_Ogre->OgreListener->Equity_Running = 0;
-	Close_OgreWindow();
+	/*App->Cl19_Ogre->OgreListener->Equity_Running = 0;
+	Close_OgreWindow();*/
 
 	//App->Cl19_Ogre->OgreListener->showDebugOverlay(true);
 	//App->Cl19_Ogre->textArea->show();
@@ -143,18 +143,18 @@ LRESULT CALLBACK GD19_Mesh_Viewer::MeshViewer_Proc(HWND hDlg, UINT message, WPAR
 
 			HWND Ogre_Hwnd = GetDlgItem(hDlg,IDC_OGREWIN); 
 			App->Cl_Mesh_Viewer->MeshView_Hwnd = GetDlgItem(hDlg,IDC_OGREWIN);
-			App->Cl_Mesh_Viewer->Set_OgreWindow();
+			//App->Cl_Mesh_Viewer->Set_OgreWindow();
 
 			//App->Cl19_Ogre->textArea->hide();
 
-			Ogre::Root::getSingletonPtr()->renderOneFrame();
-			Ogre::Root::getSingletonPtr()->renderOneFrame();
+			//Ogre::Root::getSingletonPtr()->renderOneFrame();
+			//Ogre::Root::getSingletonPtr()->renderOneFrame();
 
 			HWND CB_hWnd = GetDlgItem(hDlg, IDC_CB_FOLDERS);
-			App->Cl_Mesh_Viewer->Get_Media_Folders_Actors(CB_hWnd); // Populate Combo
+			//App->Cl_Mesh_Viewer->Get_Media_Folders_Actors(CB_hWnd); // Populate Combo
 
 			
-			App->Cl_Mesh_Viewer->SelectStartFolder();
+			//App->Cl_Mesh_Viewer->SelectStartFolder();
 
 				App->Cl_Mesh_Viewer->SelectStatic = 0;
 				App->Cl_Mesh_Viewer->SelectDynamic = 0;
@@ -163,12 +163,12 @@ LRESULT CALLBACK GD19_Mesh_Viewer::MeshViewer_Proc(HWND hDlg, UINT message, WPAR
 				App->Cl_Mesh_Viewer->Enable_ShapeButtons(0);
 				App->Cl_Mesh_Viewer->Enable_TypeButtons(0);
 
-				App->Cl_Mesh_Viewer->Physics_Type = Enums::Bullet_Type_None;
+			//	App->Cl_Mesh_Viewer->Physics_Type = Enums::Bullet_Type_None;
 
 			char ConNum[256];
 			char ATest[256];
 
-			if (App->Cl_Mesh_Viewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables)
+			/*if (App->Cl_Mesh_Viewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables)
 			{
 				strcpy_s(ATest, "Collectable_");
 				_itoa(App->Cl_Scene_Data->ObjectCount, ConNum, 10);
@@ -181,9 +181,9 @@ LRESULT CALLBACK GD19_Mesh_Viewer::MeshViewer_Proc(HWND hDlg, UINT message, WPAR
 				App->Cl_Mesh_Viewer->Enable_ShapeButtons(1);
 				App->Cl_Mesh_Viewer->Physics_Type = Enums::Bullet_Type_Static;
 
-			}
+			}*/
 
-			if (App->Cl_Mesh_Viewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area) 
+			/*if (App->Cl_Mesh_Viewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area) 
 			{
 				SendMessage(GetDlgItem(hDlg, IDC_CB_FOLDERS), CB_SELECTSTRING, -1, (LPARAM)"Areas_Levels");
 				strcpy(App->Cl_Mesh_Viewer->Chr_CurrentFolder, App->EquityDirecory_FullPath);
@@ -200,9 +200,9 @@ LRESULT CALLBACK GD19_Mesh_Viewer::MeshViewer_Proc(HWND hDlg, UINT message, WPAR
 				App->Cl_Mesh_Viewer->Physics_Type = Enums::Bullet_Type_TriMesh;
 				ShowWindow(GetDlgItem(hDlg, IDC_TRIMESH), 1);
 
-			}
+			}*/
 
-			if (App->Cl_Mesh_Viewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Objects)
+			/*if (App->Cl_Mesh_Viewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Objects)
 			{
 				strcpy_s(ATest, "Object_");
 				_itoa(App->Cl_Scene_Data->ObjectCount, ConNum, 10);
@@ -211,9 +211,9 @@ LRESULT CALLBACK GD19_Mesh_Viewer::MeshViewer_Proc(HWND hDlg, UINT message, WPAR
 				strcpy(App->Cl_Mesh_Viewer->Object_Name, ATest);
 
 				App->Cl_Mesh_Viewer->Enable_TypeButtons(1);
-			}
+			}*/
 
-			App->Cl19_Ogre->OgreListener->Equity_Running = 1;
+			//App->Cl19_Ogre->OgreListener->Equity_Running = 1;
 
 			
 			return TRUE;
@@ -606,7 +606,7 @@ LRESULT CALLBACK GD19_Mesh_Viewer::MeshViewer_Proc(HWND hDlg, UINT message, WPAR
 			if (LOWORD(wParam) == IDOK) 
 			{
 				
-				if (App->Cl_Mesh_Viewer->Physics_Type == Enums::Bullet_Type_TriMesh)
+				/*if (App->Cl_Mesh_Viewer->Physics_Type == Enums::Bullet_Type_TriMesh)
 				{
 					
 				}
@@ -627,7 +627,7 @@ LRESULT CALLBACK GD19_Mesh_Viewer::MeshViewer_Proc(HWND hDlg, UINT message, WPAR
 
 				App->Cl_Objects_New->Dispatcher_New_Object();
 				
-				App->Cl19_Ogre->OgreListener->Equity_Running = 0;
+				App->Cl19_Ogre->OgreListener->Equity_Running = 0;*/
 
 				EndDialog(hDlg, LOWORD(wParam));
 				return TRUE;
@@ -635,7 +635,7 @@ LRESULT CALLBACK GD19_Mesh_Viewer::MeshViewer_Proc(HWND hDlg, UINT message, WPAR
 
 			if (LOWORD(wParam)== IDCANCEL) 
 			{
-				bool Test = App->Cl_Scene_Data->Is_Meshes_Used(App->Cl_Mesh_Viewer->Last_MeshFile);
+				/*bool Test = App->Cl_Scene_Data->Is_Meshes_Used(App->Cl_Mesh_Viewer->Last_MeshFile);
 				if (Test == 0)
 				{
 					Ogre::ResourcePtr ptr = Ogre::MeshManager::getSingleton().getByName(App->Cl_Mesh_Viewer->Last_MeshFile);
@@ -644,7 +644,7 @@ LRESULT CALLBACK GD19_Mesh_Viewer::MeshViewer_Proc(HWND hDlg, UINT message, WPAR
 					App->Cl_Mesh_Viewer->Last_MeshFile[0] = 0;
 				}
 
-				App->Cl19_Ogre->OgreListener->Equity_Running = 0;
+				App->Cl19_Ogre->OgreListener->Equity_Running = 0;*/
 				EndDialog(hDlg, LOWORD(wParam));
 				return TRUE;
 			}

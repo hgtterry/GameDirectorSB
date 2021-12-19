@@ -980,7 +980,8 @@ LRESULT CALLBACK SB_TopTabs::Files_TB_Proc(HWND hDlg, UINT message, WPARAM wPara
 	{
 		SendDlgItemMessage(hDlg, IDC_TBBTLOAD, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_TBBTQLOAD, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_TBBTRESOURCES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		return TRUE;
 	}
 
@@ -993,6 +994,13 @@ LRESULT CALLBACK SB_TopTabs::Files_TB_Proc(HWND hDlg, UINT message, WPARAM wPara
 	{
 
 		LPNMHDR some_item = (LPNMHDR)lParam;
+		
+		if (some_item->idFrom == IDC_TBBTRESOURCES && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
 
 		if (some_item->idFrom == IDC_TBBTLOAD && some_item->code == NM_CUSTOMDRAW)
 		{
@@ -1013,6 +1021,13 @@ LRESULT CALLBACK SB_TopTabs::Files_TB_Proc(HWND hDlg, UINT message, WPARAM wPara
 
 	case WM_COMMAND:
 	{
+
+		if (LOWORD(wParam) == IDC_TBBTRESOURCES)
+		{
+			App->Cl_Mesh_Viewer->StartMeshViewer();
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDC_TBBTLOAD)
 		{
 

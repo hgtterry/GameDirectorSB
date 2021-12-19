@@ -772,7 +772,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		
 		case ID_FILE_SAVELEVELAS:
 		{
-			App->Cl_Save_Scene->SaveGDScene_40(true);
+			//App->Cl_Save_Scene->SaveGDScene_40(true);
 			return 1;
 		}
 

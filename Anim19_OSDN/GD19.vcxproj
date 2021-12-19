@@ -36,7 +36,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
@@ -134,7 +134,7 @@
       <AdditionalDependencies>comctl32.lib;genesis.lib;OgreMain.lib;OgreOverlay.lib;OgreTerrain.lib;opengl32.lib;glu32.lib;BulletDynamics.lib;BulletCollision.lib;LinearMath.lib;irrKlang.lib;SOIL.lib;DevIL.lib;ILU.lib;ILUT.lib;assimp-vc140-mt.lib;Tiny.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)Equity15.exe</OutputFile>
       <IgnoreSpecificDefaultLibraries>LIBCMT.lib;libcpmt.lib</IgnoreSpecificDefaultLibraries>
-      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -174,7 +174,6 @@
     <ClInclude Include="GD19_Environment.h" />
     <ClInclude Include="GD19_Grid.h" />
     <ClInclude Include="GD19_Ini.h" />
-    <ClInclude Include="GD19_Load_Scene.h" />
     <ClInclude Include="GD19_LookUps.h" />
     <ClInclude Include="GD19_Mesh_Viewer.h" />
     <ClInclude Include="GD19_Objects.h" />
@@ -190,7 +189,6 @@
     <ClInclude Include="GD19_Panels.h" />
     <ClInclude Include="GD19_Panel_Com.h" />
     <ClInclude Include="GD19_PB.h" />
-    <ClInclude Include="GD19_Save_Scene.h" />
     <ClInclude Include="GD19_Scene_Data.h" />
     <ClInclude Include="GD19_SoundMgr.h" />
     <ClInclude Include="GD19_Stock.h" />
@@ -260,7 +258,6 @@
     <ClCompile Include="GD19_Environment.cpp" />
     <ClCompile Include="GD19_Grid.cpp" />
     <ClCompile Include="GD19_Ini.cpp" />
-    <ClCompile Include="GD19_Load_Scene .cpp" />
     <ClCompile Include="GD19_LookUps.cpp" />
     <ClCompile Include="GD19_Mesh_Viewer.cpp" />
     <ClCompile Include="GD19_Objects.cpp" />
@@ -276,7 +273,6 @@
     <ClCompile Include="GD19_Panels.cpp" />
     <ClCompile Include="GD19_Panel_Com.cpp" />
     <ClCompile Include="GD19_PB.cpp" />
-    <ClCompile Include="GD19_Save_Scene.cpp" />
     <ClCompile Include="GD19_Scene_Data.cpp" />
     <ClCompile Include="GD19_SoundMgr.cpp" />
     <ClCompile Include="GD19_Stock.cpp" />

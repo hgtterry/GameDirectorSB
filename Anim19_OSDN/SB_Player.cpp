@@ -37,8 +37,6 @@ SB_Player::SB_Player()
 	Toggle_Objects_Flag = 1;
 	Toggle_Physics_Flag = 0;
 
-	TurnRate = 0.04;
-
 	ColisionIndex = 0;
 	Last_ColisionIndex = 0;
 

@@ -609,7 +609,7 @@ bool GD19_Scene_Data::Start_Scene()
 	
 	Start_UpScene();
 	
-	App->Cl_Load_Scene->OpenScene(0);
+	//App->Cl_Load_Scene->OpenScene(0);
 	
 	//ShowWindow(App->GD_Properties_Hwnd,1);
 

@@ -34,9 +34,7 @@ GD19_App::GD19_App(void)
 	Cl_Grid =			nullptr;
 
 	Cl_Panels =			nullptr;
-	Cl_Load_Scene =		nullptr;
-	Cl_Save_Scene =		nullptr;
-
+	
 	Cl_Scene_Data =		nullptr;
 	Cl_Bullet =			nullptr;
 	Cl_Collision =		nullptr;
@@ -197,8 +195,6 @@ bool GD19_App::InitApp(void)
 	Cl_Grid =			new GD19_Grid();
 
 	Cl_Panels =			new GD19_Panels();
-	Cl_Load_Scene =		new GD19_Load_Scene();
-	Cl_Save_Scene =		new GD19_Save_Scene();
 
 	Cl_Scene_Data =		new GD19_Scene_Data();
 	Cl_Bullet =			new GD19_Bullet();		
