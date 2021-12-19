@@ -57,6 +57,8 @@ GD19_OgreListener::GD19_OgreListener(void)
 	GD_Run_Physics = 0;
 	Dubug_Physics_Draw = 0;
 	Equity_Running = 0;
+	MeshViewer_Running = 0;
+
 	GD_SpinRate = 1;
 	GD_Selection_Mode = 0;
 
@@ -107,6 +109,11 @@ void GD19_OgreListener::Reset_Class(void)
 // *************************************************************************
 bool GD19_OgreListener::frameStarted(const FrameEvent& evt)
 {
+	if (MeshViewer_Running == 1)
+	{
+		return 1;
+	}
+
 	if (App->CL_Vm_ImGui->Show_Progress_Bar == 1)
 	{
 		App->Cl19_Ogre->Get_View_Height_Width();
@@ -184,7 +191,11 @@ bool GD19_OgreListener::frameStarted(const FrameEvent& evt)
 // *************************************************************************
 bool GD19_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 {
-	
+	if (MeshViewer_Running == 1)
+	{
+		return 1;
+	}
+
 	if (App->CL_Vm_ImGui->Show_Progress_Bar == 1)
 	{
 		App->Cl19_Ogre->m_imgui.render();

@@ -95,7 +95,9 @@ public:
 
 	bool	GD_Run_Physics;
 	bool	Dubug_Physics_Draw; // Draw Physics Debug Global Flag [211121]
-	bool	Equity_Running;
+	bool	Equity_Running;		// Equity Editor Running [191221]
+	bool	MeshViewer_Running;	// Mesh Viewer Running [191221]
+
 	float	GD_SpinRate;
 	bool	GD_Selection_Mode;
 	bool	Show_ImGui_Panels;

@@ -107,8 +107,9 @@ bool GD19_Mesh_Viewer::StartMeshViewer()
 	
 	DialogBox(App->hInst,(LPCTSTR)IDD_GD_MESHVIEWER,App->Fdlg,(DLGPROC)MeshViewer_Proc);
 
-	/*App->Cl19_Ogre->OgreListener->Equity_Running = 0;
-	Close_OgreWindow();*/
+	App->Cl19_Ogre->OgreListener->MeshViewer_Running = 0;
+
+	Close_OgreWindow();
 
 	//App->Cl19_Ogre->OgreListener->showDebugOverlay(true);
 	//App->Cl19_Ogre->textArea->show();
@@ -143,7 +144,7 @@ LRESULT CALLBACK GD19_Mesh_Viewer::MeshViewer_Proc(HWND hDlg, UINT message, WPAR
 
 			HWND Ogre_Hwnd = GetDlgItem(hDlg,IDC_OGREWIN); 
 			App->Cl_Mesh_Viewer->MeshView_Hwnd = GetDlgItem(hDlg,IDC_OGREWIN);
-			//App->Cl_Mesh_Viewer->Set_OgreWindow();
+			App->Cl_Mesh_Viewer->Set_OgreWindow();
 
 			//App->Cl19_Ogre->textArea->hide();
 
@@ -213,7 +214,7 @@ LRESULT CALLBACK GD19_Mesh_Viewer::MeshViewer_Proc(HWND hDlg, UINT message, WPAR
 				App->Cl_Mesh_Viewer->Enable_TypeButtons(1);
 			}*/
 
-			//App->Cl19_Ogre->OgreListener->Equity_Running = 1;
+			App->Cl19_Ogre->OgreListener->MeshViewer_Running = 1;
 
 			
 			return TRUE;
@@ -750,9 +751,11 @@ bool GD19_Mesh_Viewer::Set_OgreWindow(void)
 	CamNode->attachObject( mCameraMeshView );
 
 	////-------------------------------------------- 
-	/*MvEnt = mSceneMgrMeshView->createEntity("MVTest","well.mesh");
-	MvNode  = mSceneMgrMeshView->getRootSceneNode()->createChildSceneNode();
-	MvNode->attachObject(MvEnt);*/
+	
+	MvEnt = mSceneMgrMeshView->createEntity("MVTest2", "axes.mesh");
+	MvNode = mSceneMgrMeshView->getRootSceneNode()->createChildSceneNode();
+	MvNode->attachObject(MvEnt);
+	MvNode->setVisible(true);
 
 	mSceneMgrMeshView->setAmbientLight(ColourValue(0.7, 0.7, 0.7));
 
