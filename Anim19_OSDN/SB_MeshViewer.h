@@ -1,19 +1,41 @@
+/*
+Copyright (c) 2021 Scene Builder and Equity -- Inflanite Software W.T.Flanigan H.C.Flanigan
+
+This software is provided 'as-is', without any express or implied
+warranty. In no event will the authors be held liable for any damages
+arising from the use of this software.
+
+Permission is granted to anyone to use this software for any purpose,
+including commercial applications, and to alter it and redistribute it
+freely, subject to the following restrictions:
+
+1. The origin of this software must not be misrepresented; you must not
+claim that you wrote the original software. If you use this software
+in a product, an acknowledgment in the product documentation would be
+appreciated but is not required.
+
+2. Altered source versions must be plainly marked as such, and must not be
+misrepresented as being the original software.
+
+3. This notice may not be removed or altered from any source
+distribution.
+*/
+
 #pragma once
 
-typedef struct Selection_type 
+typedef struct Selection_type2
 {
 	char Name[255];
 	char Type[255];
 	char Shape[255];
 
-}Selection_type;
+}Selection_type2;
 
-class GD19_Mesh_Viewer
+class SB_MeshViewer
 {
 public:
-	GD19_Mesh_Viewer(void);
-	~GD19_Mesh_Viewer(void);
-
+	SB_MeshViewer();
+	~SB_MeshViewer();
 	bool StartMeshViewer();
 
 	char Chr_CurrentFolder[1024];
@@ -22,7 +44,7 @@ public:
 	char Last_MeshFile[255];
 	Ogre::SceneNode*		MvNode;
 
-	Selection_type*			S_Selection[1];
+	Selection_type2*			S_Selection[1];
 
 	HWND MainDlgHwnd;
 	int Physics_Type;
@@ -52,9 +74,9 @@ protected:
 	void Close_OgreWindow(void);
 	void SelectStartFolder(void);
 
-	bool GetMeshFiles(char* Location,bool ResetList);
+	bool GetMeshFiles(char* Location, bool ResetList);
 	bool Get_Sub_Folders(char* Folder, HWND DropHwnd);
-	void ShowMesh(char* MeshFile,bool Update);
+	void ShowMesh(char* MeshFile, bool Update);
 
 	void Start_ShapeDialog();
 	void Reset_Shape_Flags();
@@ -72,13 +94,12 @@ protected:
 
 	HWND MeshView_Hwnd;
 	HWND ListHwnd;
-	
-	Ogre::Entity*			MvEnt; 
+
+	Ogre::Entity*			MvEnt;
 
 	Ogre::RenderWindow* MeshView_Window;
 	Ogre::SceneManager* mSceneMgrMeshView;
 	Ogre::Camera*		mCameraMeshView;
 	Ogre::SceneNode*	CamNode;
-
 };
 

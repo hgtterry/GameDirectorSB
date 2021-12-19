@@ -496,8 +496,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			bool Doit = App->Cl_Dialogs->Canceled;
 			if (Doit == 0)
 			{
-				App->Cl_Mesh_Viewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Objects; // Objects
-				App->Cl_Mesh_Viewer->StartMeshViewer();
+				App->SBC_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Objects; // Objects
+				App->SBC_MeshViewer->StartMeshViewer();
 				App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
 			}
 

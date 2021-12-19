@@ -118,6 +118,8 @@ void SB_Player::Initialize()
 
 	int Index = App->SBC_Scene->Player_Count;
 
+	Base_Player* pBase = App->SBC_Scene->SBC_Base_Player[Index];
+
 	// ------------------- Ogre
 	if (App->SBC_Scene->SBC_Base_Player[Index]->Player_Ent && App->SBC_Scene->SBC_Base_Player[Index]->Player_Node)
 	{
@@ -129,17 +131,17 @@ void SB_Player::Initialize()
 		App->SBC_Scene->SBC_Base_Player[Index]->CameraPitch = nullptr;
 	}
 
-	App->SBC_Scene->SBC_Base_Player[Index]->Player_Ent = App->Cl19_Ogre->mSceneMgr->createEntity("Player_1", "axes.mesh", App->Cl19_Ogre->App_Resource_Group);
-	App->SBC_Scene->SBC_Base_Player[Index]->Player_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	App->SBC_Scene->SBC_Base_Player[Index]->Player_Node->attachObject(App->SBC_Scene->SBC_Base_Player[Index]->Player_Ent);
+	pBase->Player_Ent = App->Cl19_Ogre->mSceneMgr->createEntity("Player_1", "axes.mesh", App->Cl19_Ogre->App_Resource_Group);
+	pBase->Player_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	pBase->Player_Node->attachObject(pBase->Player_Ent);
 
-	Pos.x = App->SBC_Scene->SBC_Base_Player[Index]->StartPos.x;
-	Pos.y = App->SBC_Scene->SBC_Base_Player[Index]->StartPos.y;
-	Pos.z = App->SBC_Scene->SBC_Base_Player[Index]->StartPos.z;
+	Pos.x = pBase->StartPos.x;
+	Pos.y = pBase->StartPos.y;
+	Pos.z = pBase->StartPos.z;
 
-	App->SBC_Scene->SBC_Base_Player[Index]->Player_Node->setPosition(Pos.x, Pos.y, Pos.z);
+	pBase->Player_Node->setPosition(Pos.x, Pos.y, Pos.z);
 
-	App->SBC_Scene->SBC_Base_Player[Index]->Player_Node->setVisible(false);
+	pBase->Player_Node->setVisible(false);
 
 	// ------------------------ Bulet
 	btVector3 pos = btVector3(Pos.x, Pos.y, Pos.z);

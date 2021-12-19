@@ -45,7 +45,7 @@ bool GD19_Objects_New::Add_New_Object()
 	int Index = App->Cl_Scene_Data->ObjectCount;
 	
 
-	/*if (App->GDCL_Mesh_Viewer->Physics_Type == Enums::Bullet_Type_Volume)
+	/*if (App->GDSBC_MeshViewer->Physics_Type == Enums::Bullet_Type_Volume)
 	{
 		Add_Physics_Volume_Box();
 		return 1;
@@ -59,9 +59,9 @@ bool GD19_Objects_New::Add_New_Object()
 
 	GD19_Objects* Object = App->Cl_Scene_Data->Cl_Object[Index];
 
-	strcpy(App->Cl_Scene_Data->Cl_Object[Index]->Name, App->Cl_Mesh_Viewer->Object_Name);
-	strcpy(App->Cl_Scene_Data->Cl_Object[Index]->MeshName, App->Cl_Mesh_Viewer->Selected_MeshFile);
-	strcpy(App->Cl_Scene_Data->Cl_Object[Index]->MeshName_FullPath, App->Cl_Mesh_Viewer->Selected_MeshFile);
+	strcpy(App->Cl_Scene_Data->Cl_Object[Index]->Name, App->SBC_MeshViewer->Object_Name);
+	strcpy(App->Cl_Scene_Data->Cl_Object[Index]->MeshName, App->SBC_MeshViewer->Selected_MeshFile);
+	strcpy(App->Cl_Scene_Data->Cl_Object[Index]->MeshName_FullPath, App->SBC_MeshViewer->Selected_MeshFile);
 
 	
 
@@ -88,33 +88,33 @@ bool GD19_Objects_New::Add_New_Object()
 	App->Cl_Scene_Data->SceneLoaded = 1;
 
 	//---------------------- Static
-	if (App->Cl_Mesh_Viewer->Physics_Type == Enums::Bullet_Type_Static)
+	if (App->SBC_MeshViewer->Physics_Type == Enums::Bullet_Type_Static)
 	{
-		if (App->Cl_Mesh_Viewer->Physics_Shape == Enums::Shape_Box)
+		if (App->SBC_MeshViewer->Physics_Shape == Enums::Shape_Box)
 		{
 			Add_New_Physics_Static_Box(false);
 			Object->Physics_Valid = 1;
 		}
 
-		if (App->Cl_Mesh_Viewer->Physics_Shape == Enums::Sphere)
+		if (App->SBC_MeshViewer->Physics_Shape == Enums::Sphere)
 		{
 			Add_New_Physics_Static_Sphere(false);
 			Object->Physics_Valid = 1;
 		}
 
-		if (App->Cl_Mesh_Viewer->Physics_Shape == Enums::Capsule)
+		if (App->SBC_MeshViewer->Physics_Shape == Enums::Capsule)
 		{
 			Add_New_Physics_Static_Capsule(false);
 			Object->Physics_Valid = 1;
 		}
 
-		if (App->Cl_Mesh_Viewer->Physics_Shape == Enums::Cylinder)
+		if (App->SBC_MeshViewer->Physics_Shape == Enums::Cylinder)
 		{
 			Add_New_Physics_Static_Cylinder(false);
 			Object->Physics_Valid = 1;
 		}
 
-		if (App->Cl_Mesh_Viewer->Physics_Shape == Enums::Cone)
+		if (App->SBC_MeshViewer->Physics_Shape == Enums::Cone)
 		{
 			Add_New_Physics_Static_Cone(false);
 			Object->Physics_Valid = 1;
@@ -122,33 +122,33 @@ bool GD19_Objects_New::Add_New_Object()
 	}
 
 	////---------------------- Dynamic
-	if (App->Cl_Mesh_Viewer->Physics_Type == Enums::Bullet_Type_Dynamic)
+	if (App->SBC_MeshViewer->Physics_Type == Enums::Bullet_Type_Dynamic)
 	{
-		if (App->Cl_Mesh_Viewer->Physics_Shape == Enums::Shape_Box)
+		if (App->SBC_MeshViewer->Physics_Shape == Enums::Shape_Box)
 		{
 			Add_New_Physics_Static_Box(true);
 			Object->Physics_Valid = 1;
 		}
 
-		if (App->Cl_Mesh_Viewer->Physics_Shape == Enums::Sphere)
+		if (App->SBC_MeshViewer->Physics_Shape == Enums::Sphere)
 		{
 			Add_New_Physics_Static_Sphere(true);
 			Object->Physics_Valid = 1;
 		}
 
-		if (App->Cl_Mesh_Viewer->Physics_Shape == Enums::Capsule)
+		if (App->SBC_MeshViewer->Physics_Shape == Enums::Capsule)
 		{
 			Add_New_Physics_Static_Capsule(true);
 			Object->Physics_Valid = 1;
 		}
 
-		if (App->Cl_Mesh_Viewer->Physics_Shape == Enums::Cylinder)
+		if (App->SBC_MeshViewer->Physics_Shape == Enums::Cylinder)
 		{
 			Add_New_Physics_Static_Cylinder(true);
 			Object->Physics_Valid = 1;
 		}
 
-		if (App->Cl_Mesh_Viewer->Physics_Shape == Enums::Cone)
+		if (App->SBC_MeshViewer->Physics_Shape == Enums::Cone)
 		{
 			Add_New_Physics_Static_Cone(true);
 			Object->Physics_Valid = 1;
@@ -156,7 +156,7 @@ bool GD19_Objects_New::Add_New_Object()
 	}
 
 	//---------------------- Tri_Mesh
-	if (App->Cl_Mesh_Viewer->Physics_Type == Enums::Bullet_Type_TriMesh)
+	if (App->SBC_MeshViewer->Physics_Type == Enums::Bullet_Type_TriMesh)
 	{
 		Object->create_New_Trimesh(Object->OgreEntity);
 	}
@@ -170,7 +170,7 @@ bool GD19_Objects_New::Add_New_Object()
 	else
 	{
 		Object->Folder = Enums::Folder_Objects;
-//		HTREEITEM Temp = App->Cl_FileView->Add_MiscFile(App->Cl_Mesh_Viewer->Object_Name, Index);
+//		HTREEITEM Temp = App->Cl_FileView->Add_MiscFile(App->SBC_MeshViewer->Object_Name, Index);
 //		Object->ListViewItem = Temp;
 	}
 
@@ -198,9 +198,9 @@ bool GD19_Objects_New::Add_New_Area(void)
 
 	GD19_Objects* Object = App->Cl_Scene_Data->Cl_Object[Index];
 
-	strcpy(Object->Name, App->Cl_Mesh_Viewer->Object_Name);
-	strcpy(Object->MeshName, App->Cl_Mesh_Viewer->Selected_MeshFile);
-	strcpy(Object->MeshName_FullPath, App->Cl_Mesh_Viewer->Selected_MeshFile);
+	strcpy(Object->Name, App->SBC_MeshViewer->Object_Name);
+	strcpy(Object->MeshName, App->SBC_MeshViewer->Selected_MeshFile);
+	strcpy(Object->MeshName_FullPath, App->SBC_MeshViewer->Selected_MeshFile);
 
 	char PathFile[256];
 	char ConNum[256];
@@ -249,7 +249,7 @@ bool GD19_Objects_New::Add_New_CollectableEntity()
 {
 	int Index = App->Cl_Scene_Data->ObjectCount;
 
-	if (App->Cl_Mesh_Viewer->Physics_Type == Enums::Bullet_Type_Volume)
+	if (App->SBC_MeshViewer->Physics_Type == Enums::Bullet_Type_Volume)
 	{
 		Add_Physics_Volume_Box();
 		return 1;
@@ -264,9 +264,9 @@ bool GD19_Objects_New::Add_New_CollectableEntity()
 
 	App->Cl_Scene_Data->Cl_Object[Index]->HasSound = 1;
 	
-	strcpy(App->Cl_Scene_Data->Cl_Object[Index]->Name, App->Cl_Mesh_Viewer->Object_Name);
-	strcpy(App->Cl_Scene_Data->Cl_Object[Index]->MeshName, App->Cl_Mesh_Viewer->Selected_MeshFile);
-	strcpy(App->Cl_Scene_Data->Cl_Object[Index]->MeshName_FullPath, App->Cl_Mesh_Viewer->Selected_MeshFile);
+	strcpy(App->Cl_Scene_Data->Cl_Object[Index]->Name, App->SBC_MeshViewer->Object_Name);
+	strcpy(App->Cl_Scene_Data->Cl_Object[Index]->MeshName, App->SBC_MeshViewer->Selected_MeshFile);
+	strcpy(App->Cl_Scene_Data->Cl_Object[Index]->MeshName_FullPath, App->SBC_MeshViewer->Selected_MeshFile);
 
 	char PathFile[256];
 	char ConNum[256];
@@ -295,33 +295,33 @@ bool GD19_Objects_New::Add_New_CollectableEntity()
 	App->Cl_Scene_Data->SceneLoaded = 1;
 
 	//---------------------- Static
-	if (App->Cl_Mesh_Viewer->Physics_Type == Enums::Bullet_Type_Static)
+	if (App->SBC_MeshViewer->Physics_Type == Enums::Bullet_Type_Static)
 	{
-		if (App->Cl_Mesh_Viewer->Physics_Shape == Enums::Shape_Box)
+		if (App->SBC_MeshViewer->Physics_Shape == Enums::Shape_Box)
 		{
 			Add_New_Physics_Static_Box(false);
 			Object->Physics_Valid = 1;
 		}
 
-		if (App->Cl_Mesh_Viewer->Physics_Shape == Enums::Sphere)
+		if (App->SBC_MeshViewer->Physics_Shape == Enums::Sphere)
 		{
 			Add_New_Physics_Static_Sphere(false);
 			Object->Physics_Valid = 1;
 		}
 
-		if (App->Cl_Mesh_Viewer->Physics_Shape == Enums::Capsule)
+		if (App->SBC_MeshViewer->Physics_Shape == Enums::Capsule)
 		{
 			Add_New_Physics_Static_Capsule(false);
 			Object->Physics_Valid = 1;
 		}
 
-		if (App->Cl_Mesh_Viewer->Physics_Shape == Enums::Cylinder)
+		if (App->SBC_MeshViewer->Physics_Shape == Enums::Cylinder)
 		{
 			Add_New_Physics_Static_Cylinder(false);
 			Object->Physics_Valid = 1;
 		}
 
-		if (App->Cl_Mesh_Viewer->Physics_Shape == Enums::Cone)
+		if (App->SBC_MeshViewer->Physics_Shape == Enums::Cone)
 		{
 			Add_New_Physics_Static_Cone(false);
 			Object->Physics_Valid = 1;
@@ -335,7 +335,7 @@ bool GD19_Objects_New::Add_New_CollectableEntity()
 	Object->Folder = Enums::Folder_Collectables;
 
 
-	//HTREEITEM Temp = App->Cl_FileView->Add_Collectable(App->Cl_Mesh_Viewer->Object_Name, Index);
+	//HTREEITEM Temp = App->Cl_FileView->Add_Collectable(App->SBC_MeshViewer->Object_Name, Index);
 	//Object->ListViewItem = Temp;
 
 	App->Cl_Scene_Data->ObjectCount++;  // Must be last line
@@ -1640,11 +1640,11 @@ void GD19_Objects_New::Add_New_Physics_Static_Cone(bool Dynamic)
 bool GD19_Objects_New::Dispatcher_New_Object()
 {
 	
-	if (App->Cl_Mesh_Viewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area) // Area
+	if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area) // Area
 	{
 		Add_New_Area();
 	}
-	else if (App->Cl_Mesh_Viewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables) // Collectables
+	else if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables) // Collectables
 	{
 		Add_New_CollectableEntity();
 	}

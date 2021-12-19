@@ -1024,7 +1024,7 @@ LRESULT CALLBACK SB_TopTabs::Files_TB_Proc(HWND hDlg, UINT message, WPARAM wPara
 
 		if (LOWORD(wParam) == IDC_TBBTRESOURCES)
 		{
-			App->Cl_Mesh_Viewer->StartMeshViewer();
+			App->SBC_MeshViewer->StartMeshViewer();
 			return TRUE;
 		}
 

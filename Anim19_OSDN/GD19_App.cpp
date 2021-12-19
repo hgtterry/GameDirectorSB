@@ -45,7 +45,7 @@ GD19_App::GD19_App(void)
 	Cl_Objects_New =	nullptr;
 	Cl_Environment =	nullptr;
 	Cl_Dialogs =		nullptr;
-	Cl_Mesh_Viewer =	nullptr;
+	
 	Cl_Objects_Com =	nullptr;
 	Cl_Dimensions =		nullptr;
 	Cl_Object_Props =	nullptr;
@@ -96,6 +96,7 @@ GD19_App::GD19_App(void)
 	SBC_Resources =		nullptr;
 	SBC_Scene =			nullptr;
 	SBC_TopTabs =		nullptr;
+	SBC_MeshViewer =	nullptr;
 
 	Fdlg = nullptr;
 	hInst = nullptr;
@@ -206,7 +207,7 @@ bool GD19_App::InitApp(void)
 	Cl_Objects_New =	new GD19_Objects_New();	
 	Cl_Environment =	new GD19_Environment();
 	Cl_Dialogs =		new GD19_Dialogs();
-	Cl_Mesh_Viewer =	new GD19_Mesh_Viewer();
+
 	Cl_Objects_Com =	new GD19_Objects_Com();
 	Cl_Dimensions =		new GD19_Dimensions();
 	Cl_Object_Props =	new GD19_Object_Properties();
@@ -260,7 +261,7 @@ bool GD19_App::InitApp(void)
 	SBC_Resources =		new SB_Resources();
 	SBC_Scene =			new SB_Scene();
 	SBC_TopTabs =		new SB_TopTabs();
-
+	SBC_MeshViewer =	new SB_MeshViewer();
 
 	SetBrushes_Fonts();
 

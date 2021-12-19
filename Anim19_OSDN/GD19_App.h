@@ -37,7 +37,6 @@ distribution.
 #include "GD19_Objects_New.h"
 #include "GD19_Environment.h"
 #include "GD19_DIALOGS.h"
-#include "GD19_Mesh_Viewer.h"
 #include "GD19_Objects_Com.h"
 #include "GD19_Dimensions.h"
 #include "GD19_Object_Properties.h"
@@ -88,7 +87,8 @@ distribution.
 #include "SB_Resources.h"
 #include "SB_Scene.h"
 #include "SB_TopTabs.h"
-#include "EB_Model.h"
+#include "EB_Model.h" // *******************
+#include "SB_MeshViewer.h"
 
 
 class GD19_App
@@ -111,7 +111,6 @@ public:
 	GD19_Objects_New*	Cl_Objects_New;
 	GD19_Environment*	Cl_Environment;
 	GD19_Dialogs*		Cl_Dialogs;
-	GD19_Mesh_Viewer*	Cl_Mesh_Viewer;
 	GD19_Objects_Com*	Cl_Objects_Com;
 	GD19_Dimensions*	Cl_Dimensions;
 	GD19_Object_Properties* Cl_Object_Props;
@@ -164,7 +163,7 @@ public:
 	SB_Resources*			SBC_Resources;		// Resources Class Used by the Level [081221]
 	SB_Scene*				SBC_Scene;			// Collection Class For Level [081221]
 	SB_TopTabs*				SBC_TopTabs;		// Top Bar Tabs Class Level Editor [081221]
-
+	SB_MeshViewer*			SBC_MeshViewer;
 
 	GD19_App(void);
 	~GD19_App(void);

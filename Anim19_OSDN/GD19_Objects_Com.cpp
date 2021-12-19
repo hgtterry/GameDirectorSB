@@ -215,11 +215,11 @@ bool GD19_Objects_Com::Pre_Paste()
 	strcpy(mName, App->Cl_Scene_Data->Cl_Object[CopyObject_Index]->Name);
 	strcat(mName, ConNum);
 
-	strcpy(App->Cl_Mesh_Viewer->Object_Name, mName);
-	strcpy(App->Cl_Mesh_Viewer->Selected_MeshFile, App->Cl_Scene_Data->Cl_Object[CopyObject_Index]->MeshName);
+	strcpy(App->SBC_MeshViewer->Object_Name, mName);
+	strcpy(App->SBC_MeshViewer->Selected_MeshFile, App->Cl_Scene_Data->Cl_Object[CopyObject_Index]->MeshName);
 
-	App->Cl_Mesh_Viewer->Physics_Type = App->Cl_Scene_Data->Cl_Object[CopyObject_Index]->Type;
-	App->Cl_Mesh_Viewer->Physics_Shape = App->Cl_Scene_Data->Cl_Object[CopyObject_Index]->Shape;
+	App->SBC_MeshViewer->Physics_Type = App->Cl_Scene_Data->Cl_Object[CopyObject_Index]->Type;
+	App->SBC_MeshViewer->Physics_Shape = App->Cl_Scene_Data->Cl_Object[CopyObject_Index]->Shape;
 	return 1;
 }
 
