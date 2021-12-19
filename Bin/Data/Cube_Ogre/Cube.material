@@ -1,0 +1,102 @@
+
+material Cube_Material_0
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture Mat01.bmp
+			}
+		}
+
+	}
+
+}
+
+material Cube_Material_1
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture Mat02.bmp
+			}
+		}
+
+	}
+
+}
+
+material Cube_Material_2
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture Mat03.bmp
+			}
+		}
+
+	}
+
+}
+
+material Cube_Material_3
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture Mat04.bmp
+			}
+		}
+
+	}
+
+}
+
+material Cube_Material_4
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture Mat05.bmp
+			}
+		}
+
+	}
+
+}
+
+material Cube_Material_5
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture Mat06.bmp
+			}
+		}
+
+	}
+
+}
