@@ -378,6 +378,12 @@ LRESULT CALLBACK GD19_Mesh_Viewer::MeshViewer_Proc(HWND hDlg, UINT message, WPAR
 		}
 
 		case WM_COMMAND:
+			
+			if (LOWORD(wParam) == IDC_MVBTADD)
+			{
+				Debug1
+				return TRUE;
+			}
 
 			if (LOWORD(wParam) == IDC_CB_FOLDERS)
 			{
