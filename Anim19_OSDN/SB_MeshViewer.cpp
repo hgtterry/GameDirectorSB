@@ -31,6 +31,7 @@ SB_MeshViewer::SB_MeshViewer()
 {
 	MeshView_Hwnd = NULL;
 	ListHwnd = NULL;
+	CB_hWnd = NULL;
 
 	MvEnt = NULL;
 	MvNode = NULL;
@@ -172,7 +173,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		//Ogre::Root::getSingletonPtr()->renderOneFrame();
 		//Ogre::Root::getSingletonPtr()->renderOneFrame();
 
-		HWND CB_hWnd = GetDlgItem(hDlg, IDC_CB_FOLDERS);
+		App->SBC_MeshViewer->CB_hWnd = GetDlgItem(hDlg, IDC_CB_FOLDERS);
 		//App->Cl_Mesh_Viewer->Get_Media_Folders_Actors(CB_hWnd); // Populate Combo
 
 
@@ -402,8 +403,18 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDC_MVBTADD)
 		{
-			Debug1
-				return TRUE;
+			App->SBC_MeshViewer->TempFolder[0] = 0;
+
+			strcpy(App->CL_Vm_FileIO->BrowserMessage, "Select Folder to Scan");
+			int Test = App->CL_Vm_FileIO->StartBrowser("");
+
+			strcpy(App->SBC_MeshViewer->TempFolder, App->CL_Vm_FileIO->szSelectedDir);
+
+			App->Say(App->SBC_MeshViewer->TempFolder);
+
+			App->SBC_MeshViewer->Get_Media_Folders_Actors(GetDlgItem(hDlg, IDC_CB_FOLDERS));
+
+			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_CB_FOLDERS)
@@ -1063,8 +1074,12 @@ bool SB_MeshViewer::Get_Media_Folders_Actors(HWND DropHwnd)
 	WIN32_FIND_DATA FindFileData;
 	HANDLE hFind;
 
-	strcpy(Path, App->EquityDirecory_FullPath);
-	strcat(Path, "\\Media\\Actors\\*.*");
+	/*strcpy(Path, App->EquityDirecory_FullPath);
+	strcat(Path, "\\Media\\Actors\\*.*");*/
+
+	strcpy(Path, TempFolder);
+	strcat(Path, "*.*");
+	App->Say(Path);
 
 	hFind = FindFirstFile(Path, &FindFileData);
 
@@ -1087,6 +1102,7 @@ bool SB_MeshViewer::Get_Media_Folders_Actors(HWND DropHwnd)
 	}
 
 	SendMessage(DropHwnd, CB_SETCURSEL, 0, 0);
+
 	return 0;
 }
 

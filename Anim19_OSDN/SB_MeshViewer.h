@@ -63,6 +63,8 @@ public:
 	int Media_Folders_Count;
 	std::vector<std::string> Media_Folders_Vec;
 
+	char TempFolder[1024];
+
 
 protected:
 
@@ -94,6 +96,7 @@ protected:
 
 	HWND MeshView_Hwnd;
 	HWND ListHwnd;
+	HWND CB_hWnd;
 
 	Ogre::Entity*			MvEnt;
 
