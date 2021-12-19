@@ -1085,7 +1085,7 @@ bool SB_MeshViewer::Get_Media_Folders_Actors(HWND DropHwnd)
 
 	if (hFind != INVALID_HANDLE_VALUE) {
 		do {
-			if (FindFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+			if (FindFileData.dwFileAttributes)
 			{
 				if (strcmp(FindFileData.cFileName, ".") == 0 || strcmp(FindFileData.cFileName, "..") == 0)
 				{
@@ -1093,7 +1093,7 @@ bool SB_MeshViewer::Get_Media_Folders_Actors(HWND DropHwnd)
 				}
 				else
 				{
-					SendMessage(DropHwnd, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)FindFileData.cFileName);
+					SendMessage(ListHwnd, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)FindFileData.cFileName);
 				}
 
 			}
