@@ -245,6 +245,7 @@ void SB_Properties::Create_Properties_hLV(void)
 
 	ListView_SetBkColor(Properties_hLV, RGB(255, 255, 255));
 	ListView_SetTextBkColor(Properties_hLV, RGB(255, 255, 255));
+	//listView.CheckBoxes
 
 	LV_COLUMN lvC;
 	memset(&lvC, 0, sizeof(LV_COLUMN));

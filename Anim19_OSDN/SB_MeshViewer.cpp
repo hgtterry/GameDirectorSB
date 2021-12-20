@@ -33,6 +33,10 @@ SB_MeshViewer::SB_MeshViewer()
 	ListHwnd = NULL;
 	CB_hWnd = NULL;
 
+	// Folders
+	Folders_MainWin_hWnd = NULL;
+	Properties_hLV = NULL;
+
 	MvEnt = NULL;
 	MvNode = NULL;
 
@@ -69,6 +73,11 @@ SB_MeshViewer::SB_MeshViewer()
 	Last_MeshFile[0] = 0;
 
 	Media_Folders_Count = 0;
+
+	Folder_Vec.resize(20);
+	strcpy(Folder_Vec[0].Folder_Path, App->EquityDirecory_FullPath);
+	strcat(Folder_Vec[0].Folder_Path, "\\Equity15\\Bin\\Data\\Cube_Ogre");
+	FolderList_Count = 1;
 }
 
 
@@ -400,6 +409,14 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 	}
 
 	case WM_COMMAND:
+
+		
+		if (LOWORD(wParam) == ID_FOLDERS_POO)
+		{
+
+			App->SBC_MeshViewer->Start_Folders();
+			return TRUE;
+		}
 
 		if (LOWORD(wParam) == IDC_MVBTADD)
 		{
@@ -1156,4 +1173,151 @@ bool SB_MeshViewer::Get_Sub_Folders(char* Folder, HWND DropHwnd)
 	}
 
 	return 0;
+}
+
+// *************************************************************************
+// *	  		Dialog_Int()  	Terry	Bernie							   *
+// *************************************************************************
+bool SB_MeshViewer::Start_Folders()
+{
+
+	DialogBox(App->hInst,(LPCTSTR)IDD_RESOURCEFOLDERS, MainDlgHwnd,(DLGPROC)Folders_Proc);
+	return 1;
+}
+// *************************************************************************
+// *        		Folders_Proc  Terry	Bernie							   *
+// *************************************************************************
+LRESULT CALLBACK SB_MeshViewer::Folders_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		App->SBC_MeshViewer->Folders_MainWin_hWnd = hDlg;
+
+		App->SBC_MeshViewer->Create_Properties_hLV();
+
+		return TRUE;
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+		if (LOWORD(wParam) == IDOK)
+		{
+			
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		break;
+	}
+	return FALSE;
+}
+
+// *************************************************************************
+// *					Create_Properties_hLV Terry Bernie				   *
+// *************************************************************************
+void SB_MeshViewer::Create_Properties_hLV(void)
+{
+	int NUM_COLS = 1;
+	Properties_hLV = CreateWindowEx(0, WC_LISTVIEW, "",
+		WS_CHILD | WS_VISIBLE | WS_BORDER | WS_VSCROLL | WS_VSCROLL | LVS_REPORT | LVS_NOCOLUMNHEADER | LVS_SHOWSELALWAYS, 7, 50,
+		700, 300, Folders_MainWin_hWnd, 0, App->hInst, NULL);
+
+	DWORD exStyles = LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES | LVS_EX_CHECKBOXES;
+
+	ListView_SetExtendedListViewStyleEx(Properties_hLV, exStyles, exStyles);
+
+	ListView_SetBkColor(Properties_hLV, RGB(255, 255, 255));
+	ListView_SetTextBkColor(Properties_hLV, RGB(255, 255, 255));
+	//listView.CheckBoxes
+
+	LV_COLUMN lvC;
+	memset(&lvC, 0, sizeof(LV_COLUMN));
+	lvC.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
+	lvC.fmt = LVCFMT_LEFT;  // left-align the column
+	std::string headers[] =
+	{
+		""
+	};
+	int headerSize[] =
+	{
+		1000
+	};
+
+	for (int header = 0; header < NUM_COLS; header++)
+	{
+		lvC.iSubItem = header;
+		lvC.cx = headerSize[header]; // width of the column, in pixels
+		lvC.pszText = const_cast<char*>(headers[header].c_str());
+		ListView_InsertColumn(Properties_hLV, header, &lvC);
+	}
+
+	SendMessage(Properties_hLV, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+	Update_ListView_Player();
+
+	return;
+}
+
+// *************************************************************************
+// *				Update_ListView_Player	Terry Bernie 			 	   *
+// *************************************************************************
+bool SB_MeshViewer::Update_ListView_Player()
+{
+
+	char chr_Speed[100];
+	
+	sprintf(chr_Speed, "%s ", App->SBC_Scene->SBC_Base_Player[0]->Ground_speed);
+	
+	const int NUM_ITEMS = 9;
+	const int NUM_COLS = 1;
+	std::string grid[NUM_COLS]; // string table
+	LV_ITEM pitem;
+	memset(&pitem, 0, sizeof(LV_ITEM));
+
+	int Count = 0;
+	while (Count < FolderList_Count)
+	{
+		pitem.mask = LVIF_TEXT;
+		pitem.iItem = Count;
+		pitem.pszText = Folder_Vec[Count].Folder_Path;
+		ListView_InsertItem(Properties_hLV, &pitem);
+		//ListView_SetItemText(Properties_hLV, 0, 0, "Test");
+
+		Count++;
+	}
+
+	
+	return 1;
 }

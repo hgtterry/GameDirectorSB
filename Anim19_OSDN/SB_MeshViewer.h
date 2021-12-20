@@ -23,6 +23,12 @@ distribution.
 
 #pragma once
 
+typedef struct Folder_Type
+{
+	char Folder_Path[1024];
+	bool Selected;
+}Folder_Type;
+
 typedef struct Selection_type2
 {
 	char Name[255];
@@ -70,6 +76,10 @@ protected:
 
 	static LRESULT CALLBACK MeshViewer_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK ShapeDialog_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Folders_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	std::vector<Folder_Type> Folder_Vec;
+	int FolderList_Count;
 
 	bool Clear_ButFlags();
 	bool Set_OgreWindow(void);
@@ -88,6 +98,15 @@ protected:
 
 	bool Get_Media_Folders_Actors(HWND DropHwnd);
 
+	//  Folders
+	bool Start_Folders();
+	void Create_Properties_hLV(void);
+	bool Update_ListView_Player();
+
+	HWND Folders_MainWin_hWnd;
+	HWND Properties_hLV;
+
+	//----------------------------------
 	bool Selected_Shape_Box;
 	bool Selected_Shape_Sphere;
 	bool Selected_Shape_Capsule;
@@ -97,6 +116,7 @@ protected:
 	HWND MeshView_Hwnd;
 	HWND ListHwnd;
 	HWND CB_hWnd;
+
 
 	Ogre::Entity*			MvEnt;
 
