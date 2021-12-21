@@ -128,8 +128,8 @@ bool GD19_Ogre::SetUpResources(void)
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/Panels.zip", "Zip",
 		App_Resource_Group);
 
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "Media/Cube_Ogre", "FileSystem",
-		App_Resource_Group);
+	//Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/Cube_Ogre", "FileSystem",
+	//	App_Resource_Group);
 
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/Zipper", "FileSystem",
 		App_Resource_Group);

@@ -76,8 +76,13 @@ SB_MeshViewer::SB_MeshViewer()
 
 	Folder_Vec.resize(20);
 	strcpy(Folder_Vec[0].Folder_Path, App->EquityDirecory_FullPath);
-	strcat(Folder_Vec[0].Folder_Path, "\\Equity15\\Bin\\Data\\Cube_Ogre");
+	strcat(Folder_Vec[0].Folder_Path, "\\Data\\Cube_Ogre");
 	FolderList_Count = 1;
+
+	strcpy(TempFolder, Folder_Vec[0].Folder_Path);
+	strcat(TempFolder, "\\*.*");
+
+	MV_Resource_Group = "MV_Resource_Group";
 }
 
 
@@ -136,6 +141,9 @@ bool SB_MeshViewer::StartMeshViewer()
 
 	App->RenderBackGround = 1;
 
+	Create_Resources_Group();
+	Add_Resources();
+	
 	DialogBox(App->hInst, (LPCTSTR)IDD_GD_MESHVIEWER, App->Fdlg, (DLGPROC)MeshViewer_Proc);
 
 	App->Cl19_Ogre->OgreListener->MeshViewer_Running = 0;
@@ -199,6 +207,8 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 		char ConNum[256];
 		char ATest[256];
+
+		App->SBC_MeshViewer->Get_Files(App->SBC_MeshViewer->ListHwnd);
 
 		/*if (App->Cl_Mesh_Viewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables)
 		{
@@ -410,7 +420,12 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 	case WM_COMMAND:
 
-		
+		if (LOWORD(wParam) == ID_TOOLS_MVRESOURCEVIEWER)
+		{
+			App->SBC_Resources->Start_Resources(App->SBC_MeshViewer->MainDlgHwnd);
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == ID_FOLDERS_POO)
 		{
 
@@ -427,9 +442,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 			strcpy(App->SBC_MeshViewer->TempFolder, App->CL_Vm_FileIO->szSelectedDir);
 
-			App->Say(App->SBC_MeshViewer->TempFolder);
-
-			App->SBC_MeshViewer->Get_Media_Folders_Actors(GetDlgItem(hDlg, IDC_CB_FOLDERS));
+			App->SBC_MeshViewer->Get_Files(GetDlgItem(hDlg, IDC_CB_FOLDERS));
 
 			return TRUE;
 		}
@@ -685,6 +698,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 			App->Cl19_Ogre->OgreListener->Equity_Running = 0;*/
 
+			App->SBC_MeshViewer->Delete_Resources_Group();
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -701,6 +715,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			}
 
 			App->Cl19_Ogre->OgreListener->Equity_Running = 0;*/
+			App->SBC_MeshViewer->Delete_Resources_Group();
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -806,8 +821,8 @@ bool SB_MeshViewer::Set_OgreWindow(void)
 	CamNode->attachObject(mCameraMeshView);
 
 	////-------------------------------------------- 
-
-	MvEnt = mSceneMgrMeshView->createEntity("MVTest2", "axes.mesh");
+	
+	MvEnt = mSceneMgrMeshView->createEntity("MVTest2", "Cube.mesh", App->SBC_MeshViewer->MV_Resource_Group);
 	MvNode = mSceneMgrMeshView->getRootSceneNode()->createChildSceneNode();
 	MvNode->attachObject(MvEnt);
 	MvNode->setVisible(true);
@@ -1082,17 +1097,14 @@ bool SB_MeshViewer::GetMeshFiles(char* Location, bool ResetList)
 }
 
 // *************************************************************************
-// *					Get_Media_FoldersActors Terry Berni			 	   *
+// *							Get_Files( Terry Bernie				 	   *
 // *************************************************************************
-bool SB_MeshViewer::Get_Media_Folders_Actors(HWND DropHwnd)
+bool SB_MeshViewer::Get_Files(HWND DropHwnd)
 {
 	char Path[1024];
 
 	WIN32_FIND_DATA FindFileData;
 	HANDLE hFind;
-
-	/*strcpy(Path, App->EquityDirecory_FullPath);
-	strcat(Path, "\\Media\\Actors\\*.*");*/
 
 	strcpy(Path, TempFolder);
 	strcat(Path, "*.*");
@@ -1110,7 +1122,10 @@ bool SB_MeshViewer::Get_Media_Folders_Actors(HWND DropHwnd)
 				}
 				else
 				{
-					SendMessage(ListHwnd, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)FindFileData.cFileName);
+					if (_stricmp(FindFileData.cFileName + strlen(FindFileData.cFileName) - 5, ".mesh") == 0)
+					{
+						SendMessage(ListHwnd, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)FindFileData.cFileName);
+					}
 				}
 
 			}
@@ -1118,7 +1133,7 @@ bool SB_MeshViewer::Get_Media_Folders_Actors(HWND DropHwnd)
 		FindClose(hFind);
 	}
 
-	SendMessage(DropHwnd, CB_SETCURSEL, 0, 0);
+//	SendMessage(DropHwnd, CB_SETCURSEL, 0, 0);
 
 	return 0;
 }
@@ -1285,15 +1300,15 @@ void SB_MeshViewer::Create_Properties_hLV(void)
 
 	SendMessage(Properties_hLV, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-	Update_ListView_Player();
+	Update_ListView();
 
 	return;
 }
 
 // *************************************************************************
-// *				Update_ListView_Player	Terry Bernie 			 	   *
+// *					Update_ListView	Terry Bernie 				 	   *
 // *************************************************************************
-bool SB_MeshViewer::Update_ListView_Player()
+bool SB_MeshViewer::Update_ListView()
 {
 
 	char chr_Speed[100];
@@ -1323,25 +1338,50 @@ bool SB_MeshViewer::Update_ListView_Player()
 }
 
 // *************************************************************************
+// *					Create_Resources_Group	Terry Bernie 		 	   *
+// *************************************************************************
+bool SB_MeshViewer::Create_Resources_Group()
+{
+
+	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(MV_Resource_Group);
+
+	return 1;
+}
+
+// *************************************************************************
 // *						Add_Resources	Terry Bernie 			 	   *
 // *************************************************************************
 bool SB_MeshViewer::Add_Resources()
 {
-	Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->Cl19_Ogre->Equity_Resource_Group);
-	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App->Cl19_Ogre->Equity_Resource_Group);
+	
+	int Count = 0;
+	while (Count < FolderList_Count)
+	{
+		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(Folder_Vec[Count].Folder_Path,
+			"FileSystem", MV_Resource_Group);
 
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(App->CL_Vm_Model->Texture_FolderPath,
-		"FileSystem",
-		App->Cl19_Ogre->Equity_Resource_Group);
+		Count++;
+	}
 
 	try
 	{
-		Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+		Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(MV_Resource_Group);
 	}
 	catch (...)
 	{
 
 	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *					Delete_Resources_Group	Terry Bernie 		 	   *
+// *************************************************************************
+bool SB_MeshViewer::Delete_Resources_Group()
+{
+
+	Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(MV_Resource_Group);
 
 	return 1;
 }

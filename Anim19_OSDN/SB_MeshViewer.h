@@ -96,17 +96,9 @@ protected:
 	void Enable_ShapeButtons(bool state);
 	void Enable_TypeButtons(bool state);
 
-	bool Get_Media_Folders_Actors(HWND DropHwnd);
+	bool Get_Files(HWND DropHwnd);
 
 	//  Folders
-	bool Start_Folders();
-	void Create_Properties_hLV(void);
-	bool Update_ListView_Player();
-	bool Add_Resources();
-
-	HWND Folders_MainWin_hWnd;
-	HWND Properties_hLV;
-
 	//----------------------------------
 	bool Selected_Shape_Box;
 	bool Selected_Shape_Sphere;
@@ -114,10 +106,22 @@ protected:
 	bool Selected_Shape_Cylinder;
 	bool Selected_Shape_Cone;
 
+	bool Start_Folders();
+	void Create_Properties_hLV(void);
+	bool Update_ListView();
+
+	bool Create_Resources_Group();
+	bool Add_Resources();
+	bool Delete_Resources_Group();
+
+	Ogre::String MV_Resource_Group;
+
+	HWND Folders_MainWin_hWnd;
+	HWND Properties_hLV;
+
 	HWND MeshView_Hwnd;
 	HWND ListHwnd;
 	HWND CB_hWnd;
-
 
 	Ogre::Entity*			MvEnt;
 
