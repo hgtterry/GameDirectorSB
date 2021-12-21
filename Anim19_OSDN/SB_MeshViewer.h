@@ -102,6 +102,7 @@ protected:
 	bool Start_Folders();
 	void Create_Properties_hLV(void);
 	bool Update_ListView_Player();
+	bool Add_Resources();
 
 	HWND Folders_MainWin_hWnd;
 	HWND Properties_hLV;

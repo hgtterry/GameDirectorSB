@@ -1321,3 +1321,27 @@ bool SB_MeshViewer::Update_ListView_Player()
 	
 	return 1;
 }
+
+// *************************************************************************
+// *						Add_Resources	Terry Bernie 			 	   *
+// *************************************************************************
+bool SB_MeshViewer::Add_Resources()
+{
+	Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->Cl19_Ogre->Equity_Resource_Group);
+	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App->Cl19_Ogre->Equity_Resource_Group);
+
+	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(App->CL_Vm_Model->Texture_FolderPath,
+		"FileSystem",
+		App->Cl19_Ogre->Equity_Resource_Group);
+
+	try
+	{
+		Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+	}
+	catch (...)
+	{
+
+	}
+
+	return 1;
+}
