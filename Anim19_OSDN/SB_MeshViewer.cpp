@@ -430,6 +430,14 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		{
 
 			App->SBC_MeshViewer->Start_Folders();
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_MVBTADDFOLDERS)
+		{
+			App->SBC_MeshViewer->Start_Folders();
+
 			return TRUE;
 		}
 
@@ -1241,6 +1249,25 @@ LRESULT CALLBACK SB_MeshViewer::Folders_Proc(HWND hDlg, UINT message, WPARAM wPa
 	}
 
 	case WM_COMMAND:
+
+		if (LOWORD(wParam) == IDC_BTFOLDERADD)
+		{
+			//App->SBC_MeshViewer->TempFolder[0] = 0;
+
+			strcpy(App->CL_Vm_FileIO->BrowserMessage, "Select Folder to Scan");
+			int Test = App->CL_Vm_FileIO->StartBrowser("");
+
+			strcpy(App->SBC_MeshViewer->TempFolder, App->CL_Vm_FileIO->szSelectedDir);
+
+			strcpy(App->SBC_MeshViewer->Folder_Vec[App->SBC_MeshViewer->FolderList_Count].Folder_Path, App->CL_Vm_FileIO->szSelectedDir);
+
+			App->SBC_MeshViewer->FolderList_Count++;
+
+			App->SBC_MeshViewer->Update_ListView();
+
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == IDOK)
 		{
 			
@@ -1311,13 +1338,8 @@ void SB_MeshViewer::Create_Properties_hLV(void)
 bool SB_MeshViewer::Update_ListView()
 {
 
-	char chr_Speed[100];
-	
-	sprintf(chr_Speed, "%s ", App->SBC_Scene->SBC_Base_Player[0]->Ground_speed);
-	
-	const int NUM_ITEMS = 9;
-	const int NUM_COLS = 1;
-	std::string grid[NUM_COLS]; // string table
+	ListView_DeleteAllItems(Properties_hLV);
+
 	LV_ITEM pitem;
 	memset(&pitem, 0, sizeof(LV_ITEM));
 
