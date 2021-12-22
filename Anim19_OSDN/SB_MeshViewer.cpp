@@ -76,11 +76,11 @@ SB_MeshViewer::SB_MeshViewer()
 
 	Folder_Vec.resize(20);
 	strcpy(Folder_Vec[0].Folder_Path, App->EquityDirecory_FullPath);
-	strcat(Folder_Vec[0].Folder_Path, "\\Data\\Cube_Ogre");
+	strcat(Folder_Vec[0].Folder_Path, "\\Data\\Cube_Ogre\\");
 	FolderList_Count = 1;
 
 	strcpy(TempFolder, Folder_Vec[0].Folder_Path);
-	strcat(TempFolder, "\\*.*");
+	//strcat(TempFolder, "\\*.*");
 
 	MV_Resource_Group = "MV_Resource_Group";
 }
@@ -174,14 +174,12 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		SendDlgItemMessage(hDlg, IDC_STNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STSHAPE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STTYPE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_CB_FOLDERS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STFOLDER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_SELECTEDNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_MVBTADDFOLDERS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		App->SBC_MeshViewer->ListHwnd = GetDlgItem(hDlg, IDC_LISTFILES);
 
-		HWND Ogre_Hwnd = GetDlgItem(hDlg, IDC_OGREWIN);
 		App->SBC_MeshViewer->MeshView_Hwnd = GetDlgItem(hDlg, IDC_OGREWIN);
 		App->SBC_MeshViewer->Set_OgreWindow();
 
@@ -190,11 +188,8 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		//Ogre::Root::getSingletonPtr()->renderOneFrame();
 		//Ogre::Root::getSingletonPtr()->renderOneFrame();
 
-		App->SBC_MeshViewer->CB_hWnd = GetDlgItem(hDlg, IDC_CB_FOLDERS);
 		//App->Cl_Mesh_Viewer->Get_Media_Folders_Actors(CB_hWnd); // Populate Combo
 
-
-		//App->Cl_Mesh_Viewer->SelectStartFolder();
 
 		App->SBC_MeshViewer->SelectStatic = 0;
 		App->SBC_MeshViewer->SelectDynamic = 0;
@@ -208,7 +203,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		char ConNum[256];
 		char ATest[256];
 
-		App->SBC_MeshViewer->Get_Files(App->SBC_MeshViewer->ListHwnd);
+		App->SBC_MeshViewer->Get_Files();
 
 		/*if (App->Cl_Mesh_Viewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables)
 		{
@@ -301,48 +296,17 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 	{
 		return (LONG)App->AppBackground;
 	}
-	case WM_HSCROLL:
-	{
-		/*HWND Slider =GetDlgItem(hDlg,IDC_SLIDERSPINRATE);
-		int pos=0;
-		pos=SendMessage(Slider, TBM_GETPOS, (WPARAM) 0,(LPARAM)0);
-
-		if (pos == 0){App->Ogre17->PhysicsFrameListener->SpinRate = 0;}
-		if (pos == 1){App->Ogre17->PhysicsFrameListener->SpinRate = 0.5;}
-		if (pos == 2){App->Ogre17->PhysicsFrameListener->SpinRate = 1;}
-		if (pos == 3){App->Ogre17->PhysicsFrameListener->SpinRate = 1.5;}
-		if (pos == 4){App->Ogre17->PhysicsFrameListener->SpinRate = 2;}
-		if (pos == 5){App->Ogre17->PhysicsFrameListener->SpinRate = 4;}*/
-
-		return 1;
-	}
-
+	
 	case WM_NOTIFY:
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		/*if (some_item->idFrom == IDC_MVMISC && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_MVBTADDFOLDERS && some_item->code == NM_CUSTOMDRAW)
 		{
-		LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-		App->Custom_Button_Toggle(item,App->Cl_Mesh_Viewer->ShowMisc);
-		return CDRF_DODEFAULT;
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
 		}
-
-		if (some_item->idFrom == IDC_MVBUILDINGS && some_item->code == NM_CUSTOMDRAW)
-		{
-		LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-		App->Custom_Button_Toggle(item,App->Cl_Mesh_Viewer->ShowBuildings);
-		return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_MVROOMS && some_item->code == NM_CUSTOMDRAW)
-		{
-		LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-		App->Custom_Button_Toggle(item,App->Cl_Mesh_Viewer->ShowRooms);
-		return CDRF_DODEFAULT;
-		}*/
-
-		//// ---------------------------------------------------------------------
 
 		if (some_item->idFrom == IDC_MVSTATIC && some_item->code == NM_CUSTOMDRAW)
 		{
@@ -441,120 +405,6 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			return TRUE;
 		}
 
-		if (LOWORD(wParam) == IDC_MVBTADD)
-		{
-			App->SBC_MeshViewer->TempFolder[0] = 0;
-
-			strcpy(App->CL_Vm_FileIO->BrowserMessage, "Select Folder to Scan");
-			int Test = App->CL_Vm_FileIO->StartBrowser("");
-
-			strcpy(App->SBC_MeshViewer->TempFolder, App->CL_Vm_FileIO->szSelectedDir);
-
-			App->SBC_MeshViewer->Get_Files(GetDlgItem(hDlg, IDC_CB_FOLDERS));
-
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDC_CB_FOLDERS)
-		{
-			switch (HIWORD(wParam)) // Find out what message it was
-			{
-			case CBN_DROPDOWN:
-				break;
-			case CBN_CLOSEUP:
-			{
-				char Get_Folder[1024];
-				HWND temp = GetDlgItem(hDlg, IDC_CB_FOLDERS);
-				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
-				SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)Get_Folder);
-
-				SendMessage(App->SBC_MeshViewer->ListHwnd, LB_RESETCONTENT, 0, 0);
-
-				strcpy(App->SBC_MeshViewer->Chr_CurrentFolder, App->EquityDirecory_FullPath);
-				strcat(App->SBC_MeshViewer->Chr_CurrentFolder, "\\Media\\Actors\\");
-				strcat(App->SBC_MeshViewer->Chr_CurrentFolder, Get_Folder);
-
-				// Get Meshes in Sub Folders of Folder
-				App->SBC_MeshViewer->Get_Sub_Folders(Get_Folder, App->SBC_MeshViewer->ListHwnd);
-
-				// Get Meshes in the Folder
-				strcat(App->SBC_MeshViewer->Chr_CurrentFolder, "\\*.mesh");
-
-				App->SBC_MeshViewer->GetMeshFiles(App->SBC_MeshViewer->Chr_CurrentFolder, false);
-
-			}
-			}
-
-			return TRUE;
-		}
-
-		//		if (LOWORD(wParam) == IDC_BTUSER)
-		//		{
-		//			/*char Resource_Folder[1024];
-		//			App->Cl_Mesh_Viewer->Clear_ButFlags();
-		//			App->Cl_Mesh_Viewer->ShowMisc = 1;
-		//			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-
-		//			App->Cl_Mesh_Viewer->Clear_ButFlags();
-		//			App->Cl_Mesh_Viewer->ShowMisc = 1;
-		//			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-
-		//			SendMessage(App->Cl_Mesh_Viewer->ListHwnd, LB_RESETCONTENT, 0, 0);*/
-		//		
-		//		//	int Count = 0;
-		//	/*		while (Count < App->Cl19_Ogre->UserFile_Count)
-		//			{
-		//				strcpy(Resource_Folder, App->Cl19_Ogre->User_File[Count].c_str());
-
-		//				strcpy(App->Cl_Mesh_Viewer->Chr_CurrentFolder, App->EquityDirecory_FullPath);
-		//				strcat(App->Cl_Mesh_Viewer->Chr_CurrentFolder, "\\Media\\Actors\\User\\");
-		//				strcat(App->Cl_Mesh_Viewer->Chr_CurrentFolder, Resource_Folder);
-		//				strcat(App->Cl_Mesh_Viewer->Chr_CurrentFolder,"\\*.mesh");
-
-		//				App->Cl_Mesh_Viewer->GetMeshFiles(App->Cl_Mesh_Viewer->Chr_CurrentFolder, false);
-
-		//				Count++;
-		//			}*/
-
-		//			return 1;
-		//		}
-
-		//		if (LOWORD(wParam) == IDC_MVMISC) 
-		//		{
-		//			App->Cl_Mesh_Viewer->Clear_ButFlags();
-		//			App->Cl_Mesh_Viewer->ShowMisc = 1;
-		//			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-
-		//			strcpy(App->Cl_Mesh_Viewer->Chr_CurrentFolder,App->EquityDirecory_FullPath);
-		//			strcat(App->Cl_Mesh_Viewer->Chr_CurrentFolder,"\\Media\\Actors\\Misc\\*.mesh");
-		//			App->Cl_Mesh_Viewer->GetMeshFiles(App->Cl_Mesh_Viewer->Chr_CurrentFolder,true);
-		//			return 1;
-		//		}
-
-		//		if (LOWORD(wParam) == IDC_MVBUILDINGS) 
-		//		{
-		//			App->Cl_Mesh_Viewer->Clear_ButFlags();
-		//			App->Cl_Mesh_Viewer->ShowBuildings = 1;
-		//			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-
-		//			strcpy(App->Cl_Mesh_Viewer->Chr_CurrentFolder,App->EquityDirecory_FullPath);
-		//			strcat(App->Cl_Mesh_Viewer->Chr_CurrentFolder,"\\Media\\Actors\\Buildings\\*.mesh");
-		//			App->Cl_Mesh_Viewer->GetMeshFiles(App->Cl_Mesh_Viewer->Chr_CurrentFolder,true);
-		//			return 1;
-		//		}
-
-		//		if (LOWORD(wParam) == IDC_MVROOMS) 
-		//		{
-		//			App->Cl_Mesh_Viewer->Clear_ButFlags();
-		//			App->Cl_Mesh_Viewer->ShowRooms = 1;
-		//			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-
-		//			strcpy(App->Cl_Mesh_Viewer->Chr_CurrentFolder,App->EquityDirecory_FullPath);
-		//			strcat(App->Cl_Mesh_Viewer->Chr_CurrentFolder,"\\Media\\Actors\\Rooms\\*.mesh");
-		//			App->Cl_Mesh_Viewer->GetMeshFiles(App->Cl_Mesh_Viewer->Chr_CurrentFolder,true);
-		//			return 1;
-		//		}
-		////		// ---------------------------------------------------------------------
 		if (LOWORD(wParam) == IDC_TRIMESH)
 		{
 			App->SBC_MeshViewer->Physics_Type = Enums::Bullet_Type_TriMesh;
@@ -569,13 +419,6 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 			return 1;
 		}
-
-		//		if (LOWORD(wParam) == IDC_TEST)
-		//		{
-		//			
-		//			App->SBC_MeshViewer->Physics_Type = Enums::Bullet_Type_Volume;
-		//			return 1;
-		//		}
 
 		if (LOWORD(wParam) == IDC_MVSTATIC)
 		{
@@ -732,16 +575,6 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 	}
 	return FALSE;
 }
-
-// *************************************************************************
-// *					SelectStartFolder Terry Bernie					   *
-// *************************************************************************
-void SB_MeshViewer::SelectStartFolder(void)
-{
-	GetMeshFiles(Chr_CurrentFolder, true);
-}
-
-
 
 // *************************************************************************
 // *					ShowMesh Terry Bernie							   *
@@ -1057,57 +890,9 @@ void SB_MeshViewer::Reset_Shape_Flags()
 }
 
 // *************************************************************************
-// *				GetMeshFiles   Terry Bernie							   *
-// *************************************************************************
-bool SB_MeshViewer::GetMeshFiles(char* Location, bool ResetList)
-{
-	if (ResetList == true)
-	{
-		SendMessage(ListHwnd, LB_RESETCONTENT, 0, 0);
-	}
-
-	WIN32_FIND_DATA ffd;
-	HANDLE hFind = INVALID_HANDLE_VALUE;
-
-	char SearchName[255];
-	strcpy(SearchName, Location);
-
-	hFind = FindFirstFile(SearchName, &ffd);
-	if (hFind == INVALID_HANDLE_VALUE)
-	{
-		return 0;
-	}
-
-	SendMessage(ListHwnd, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)ffd.cFileName);
-
-	while (FindNextFile(hFind, &ffd) != 0)
-	{
-		SendMessage(ListHwnd, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)ffd.cFileName);
-	}
-
-	SendMessage(ListHwnd, LB_SETCURSEL, 0, 0);
-
-	char buff[256];
-	int Index = 0;
-	Index = SendMessage(ListHwnd, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
-
-	if (Index == -1)
-	{
-		return 0;
-	}
-
-	SendMessage(ListHwnd, LB_GETTEXT, (WPARAM)0, (LPARAM)buff);
-
-	strcpy(Selected_MeshFile, buff);
-	ShowMesh(Selected_MeshFile, 1);
-
-	return 1;
-}
-
-// *************************************************************************
 // *							Get_Files( Terry Bernie				 	   *
 // *************************************************************************
-bool SB_MeshViewer::Get_Files(HWND DropHwnd)
+bool SB_MeshViewer::Get_Files()
 {
 	char Path[1024];
 
@@ -1116,8 +901,7 @@ bool SB_MeshViewer::Get_Files(HWND DropHwnd)
 
 	strcpy(Path, TempFolder);
 	strcat(Path, "*.*");
-	App->Say(Path);
-
+	
 	hFind = FindFirstFile(Path, &FindFileData);
 
 	if (hFind != INVALID_HANDLE_VALUE) {
@@ -1141,65 +925,12 @@ bool SB_MeshViewer::Get_Files(HWND DropHwnd)
 		FindClose(hFind);
 	}
 
-//	SendMessage(DropHwnd, CB_SETCURSEL, 0, 0);
-
 	return 0;
 }
 
-// *************************************************************************
-// *						Get_Sub_Folders Terry Berni				 	   *
-// *************************************************************************
-bool SB_MeshViewer::Get_Sub_Folders(char* Folder, HWND DropHwnd)
-{
-	char Path[1024];
-
-	WIN32_FIND_DATA FindFileData;
-	HANDLE hFind;
-
-	strcpy(Path, App->EquityDirecory_FullPath);
-	strcat(Path, "\\Media\\Actors\\");
-	strcat(Path, Folder);
-	strcat(Path, "\\*.*");
-
-	char Mesh_Path[1024];
-	strcpy(Mesh_Path, App->EquityDirecory_FullPath);
-	strcat(Mesh_Path, "\\Media\\Actors\\");
-	strcat(Mesh_Path, Folder);
-	strcat(Mesh_Path, "\\");
-
-	hFind = FindFirstFile(Path, &FindFileData);
-
-	//SendMessage(ListHwnd, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)FindFileData.cFileName);
-
-	if (hFind != INVALID_HANDLE_VALUE) {
-		do {
-			if (FindFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
-			{
-				if (strcmp(FindFileData.cFileName, ".") == 0 || strcmp(FindFileData.cFileName, "..") == 0)
-				{
-
-				}
-				else
-				{
-					char New_Path[1024];
-					strcpy(New_Path, Mesh_Path);
-					strcat(New_Path, FindFileData.cFileName);
-					strcat(New_Path, "\\*.mesh");
-
-					App->SBC_MeshViewer->GetMeshFiles(New_Path, false);
-
-				}
-
-			}
-		} while (FindNextFile(hFind, &FindFileData));
-		FindClose(hFind);
-	}
-
-	return 0;
-}
 
 // *************************************************************************
-// *	  		Dialog_Int()  	Terry	Bernie							   *
+// *	  				Start_Folders  	Terry	Bernie					   *
 // *************************************************************************
 bool SB_MeshViewer::Start_Folders()
 {
@@ -1252,8 +983,7 @@ LRESULT CALLBACK SB_MeshViewer::Folders_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 		if (LOWORD(wParam) == IDC_BTFOLDERADD)
 		{
-			//App->SBC_MeshViewer->TempFolder[0] = 0;
-
+			
 			strcpy(App->CL_Vm_FileIO->BrowserMessage, "Select Folder to Scan");
 			int Test = App->CL_Vm_FileIO->StartBrowser("");
 
@@ -1264,6 +994,8 @@ LRESULT CALLBACK SB_MeshViewer::Folders_Proc(HWND hDlg, UINT message, WPARAM wPa
 			App->SBC_MeshViewer->FolderList_Count++;
 
 			App->SBC_MeshViewer->Update_ListView();
+			App->SBC_MeshViewer->Get_Files();
+			App->SBC_MeshViewer->Add_Resources();
 
 			return TRUE;
 		}
@@ -1376,6 +1108,8 @@ bool SB_MeshViewer::Create_Resources_Group()
 bool SB_MeshViewer::Add_Resources()
 {
 	
+	Ogre::ResourceGroupManager::getSingleton().clearResourceGroup(MV_Resource_Group);
+
 	int Count = 0;
 	while (Count < FolderList_Count)
 	{

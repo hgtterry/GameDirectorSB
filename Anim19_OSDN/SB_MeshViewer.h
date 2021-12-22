@@ -84,10 +84,7 @@ protected:
 	bool Clear_ButFlags();
 	bool Set_OgreWindow(void);
 	void Close_OgreWindow(void);
-	void SelectStartFolder(void);
 
-	bool GetMeshFiles(char* Location, bool ResetList);
-	bool Get_Sub_Folders(char* Folder, HWND DropHwnd);
 	void ShowMesh(char* MeshFile, bool Update);
 
 	void Start_ShapeDialog();
@@ -96,7 +93,7 @@ protected:
 	void Enable_ShapeButtons(bool state);
 	void Enable_TypeButtons(bool state);
 
-	bool Get_Files(HWND DropHwnd);
+	bool Get_Files();
 
 	//  Folders
 	//----------------------------------
