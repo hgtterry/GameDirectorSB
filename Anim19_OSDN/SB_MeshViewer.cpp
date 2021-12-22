@@ -80,8 +80,7 @@ SB_MeshViewer::SB_MeshViewer()
 	FolderList_Count = 1;
 
 	strcpy(TempFolder, Folder_Vec[0].Folder_Path);
-	//strcat(TempFolder, "\\*.*");
-
+	
 	MV_Resource_Group = "MV_Resource_Group";
 }
 
@@ -148,7 +147,7 @@ bool SB_MeshViewer::StartMeshViewer()
 
 	App->Cl19_Ogre->OgreListener->MeshViewer_Running = 0;
 
-	Close_OgreWindow();
+	//Close_OgreWindow();
 
 	//App->Cl19_Ogre->OgreListener->showDebugOverlay(true);
 	//App->Cl19_Ogre->textArea->show();
@@ -549,6 +548,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 			App->Cl19_Ogre->OgreListener->Equity_Running = 0;*/
 
+			App->SBC_MeshViewer->Close_OgreWindow();
 			App->SBC_MeshViewer->Delete_Resources_Group();
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
@@ -556,6 +556,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
+			Debug1
 			/*bool Test = App->Cl_Scene_Data->Is_Meshes_Used(App->Cl_Mesh_Viewer->Last_MeshFile);
 			if (Test == 0)
 			{
@@ -566,6 +567,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			}
 
 			App->Cl19_Ogre->OgreListener->Equity_Running = 0;*/
+			App->SBC_MeshViewer->Close_OgreWindow();
 			App->SBC_MeshViewer->Delete_Resources_Group();
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
@@ -597,21 +599,21 @@ void SB_MeshViewer::ShowMesh(char* MeshFile, bool Update)
 		MvEnt = NULL;
 		MvNode = NULL;
 
-		if (DeleteAll == 1)
-		{
-			Ogre::ResourcePtr pp = Ogre::MeshManager::getSingleton().getByName(Last_MeshFile);
+		//if (DeleteAll == 1)
+		//{
+		//	Ogre::ResourcePtr pp = Ogre::MeshManager::getSingleton().getByName(Last_MeshFile);
 
-			if (pp.isNull()) // is loaded
-			{
+		//	if (pp.isNull()) // is loaded
+		//	{
 
-			}
-			else
-			{
-				Ogre::ResourcePtr ptr = Ogre::MeshManager::getSingleton().getByName(Last_MeshFile);
-				ptr->unload();
-				Ogre::MeshManager::getSingleton().remove(Last_MeshFile);
-			}
-		}
+		//	}
+		//	else
+		//	{
+		//		Ogre::ResourcePtr ptr = Ogre::MeshManager::getSingleton().getByName(Last_MeshFile);
+		//		ptr->unload();
+		//		Ogre::MeshManager::getSingleton().remove(Last_MeshFile);
+		//	}
+		//}
 	}
 
 	strcpy(Last_MeshFile, MeshFile);
@@ -948,6 +950,9 @@ LRESULT CALLBACK SB_MeshViewer::Folders_Proc(HWND hDlg, UINT message, WPARAM wPa
 	{
 	case WM_INITDIALOG:
 	{
+	
+		SendDlgItemMessage(hDlg, IDC_BTFOLDERADD, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		App->SBC_MeshViewer->Folders_MainWin_hWnd = hDlg;
 
 		App->SBC_MeshViewer->Create_Properties_hLV();
@@ -976,6 +981,20 @@ LRESULT CALLBACK SB_MeshViewer::Folders_Proc(HWND hDlg, UINT message, WPARAM wPa
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+		
+		if (some_item->idFrom == IDC_BTFOLDERADD && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+	
 		return CDRF_DODEFAULT;
 	}
 
@@ -994,8 +1013,8 @@ LRESULT CALLBACK SB_MeshViewer::Folders_Proc(HWND hDlg, UINT message, WPARAM wPa
 			App->SBC_MeshViewer->FolderList_Count++;
 
 			App->SBC_MeshViewer->Update_ListView();
-			App->SBC_MeshViewer->Get_Files();
-			App->SBC_MeshViewer->Add_Resources();
+			//App->SBC_MeshViewer->Get_Files();
+			//App->SBC_MeshViewer->Add_Resources();
 
 			return TRUE;
 		}
@@ -1003,6 +1022,10 @@ LRESULT CALLBACK SB_MeshViewer::Folders_Proc(HWND hDlg, UINT message, WPARAM wPa
 		if (LOWORD(wParam) == IDOK)
 		{
 			
+			//App->SBC_MeshViewer->Update_ListView();
+			App->SBC_MeshViewer->Get_Files();
+			App->SBC_MeshViewer->Add_Resources();
+
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -1025,8 +1048,8 @@ void SB_MeshViewer::Create_Properties_hLV(void)
 {
 	int NUM_COLS = 1;
 	Properties_hLV = CreateWindowEx(0, WC_LISTVIEW, "",
-		WS_CHILD | WS_VISIBLE | WS_BORDER | WS_VSCROLL | WS_VSCROLL | LVS_REPORT | LVS_NOCOLUMNHEADER | LVS_SHOWSELALWAYS, 7, 50,
-		700, 300, Folders_MainWin_hWnd, 0, App->hInst, NULL);
+		WS_CHILD | WS_VISIBLE | WS_BORDER | WS_VSCROLL | WS_VSCROLL | LVS_REPORT | LVS_NOCOLUMNHEADER | LVS_SHOWSELALWAYS, 2, 2,
+		820, 300, Folders_MainWin_hWnd, 0, App->hInst, NULL);
 
 	DWORD exStyles = LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES | LVS_EX_CHECKBOXES;
 
@@ -1046,7 +1069,7 @@ void SB_MeshViewer::Create_Properties_hLV(void)
 	};
 	int headerSize[] =
 	{
-		1000
+		820
 	};
 
 	for (int header = 0; header < NUM_COLS; header++)

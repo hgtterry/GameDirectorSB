@@ -114,17 +114,17 @@ LRESULT CALLBACK SB_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM wP
 		//	return TRUE;
 		//}
 
-		//if (LOWORD(wParam) == IDC_MATERIALS)
-		//{
-		//	App->GDCL_Resources->ShowAllMaterials();
-		//	return TRUE;
-		//}
+		if (LOWORD(wParam) == IDC_MATERIALS)
+		{
+			App->SBC_Resources->ShowAllMaterials();
+			return TRUE;
+		}
 
-		//if (LOWORD(wParam) == IDC_TEXTURES)
-		//{
-		//	App->GDCL_Resources->ShowAllTextures();
-		//	return TRUE;
-		//}
+		if (LOWORD(wParam) == IDC_TEXTURES)
+		{
+			App->SBC_Resources->ShowAllTextures();
+			return TRUE;
+		}
 
 		if (LOWORD(wParam) == IDC_MESH)
 		{
@@ -132,11 +132,11 @@ LRESULT CALLBACK SB_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM wP
 			return TRUE;
 		}
 
-		//if (LOWORD(wParam) == IDC_USED)
-		//{
-		//	App->GDCL_Resources->ShowUsedMaterials();
-		//	return TRUE;
-		//}
+		if (LOWORD(wParam) == IDC_USED)
+		{
+			App->SBC_Resources->ShowUsedMaterials();
+			return TRUE;
+		}
 
 		////if (LOWORD(wParam) == IDC_NOTUSED)
 		////{

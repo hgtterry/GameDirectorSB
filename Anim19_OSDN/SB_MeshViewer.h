@@ -25,15 +25,15 @@ distribution.
 
 typedef struct Folder_Type
 {
-	char Folder_Path[1024];
+	char Folder_Path[MAX_PATH];
 	bool Selected;
 }Folder_Type;
 
 typedef struct Selection_type2
 {
-	char Name[255];
-	char Type[255];
-	char Shape[255];
+	char Name[MAX_PATH];
+	char Type[MAX_PATH];
+	char Shape[MAX_PATH];
 
 }Selection_type2;
 
@@ -44,10 +44,11 @@ public:
 	~SB_MeshViewer();
 	bool StartMeshViewer();
 
-	char Chr_CurrentFolder[1024];
-	char Selected_MeshFile[1024];
-	char Object_Name[255];
-	char Last_MeshFile[255];
+	char Chr_CurrentFolder[MAX_PATH];
+	char Selected_MeshFile[MAX_PATH];
+	char Object_Name[MAX_PATH];
+	char Last_MeshFile[MAX_PATH];
+
 	Ogre::SceneNode*		MvNode;
 
 	Selection_type2*			S_Selection[1];
@@ -69,7 +70,7 @@ public:
 	int Media_Folders_Count;
 	std::vector<std::string> Media_Folders_Vec;
 
-	char TempFolder[1024];
+	char TempFolder[MAX_PATH];
 
 
 protected:
