@@ -89,8 +89,6 @@ protected:
 	bool Create_Detail_List();
 	bool Get_Details_hLV();
 
-	bool Get_Details(void);
-
 	void ShowMesh(char* MeshFile, bool Update);
 
 	void Start_ShapeDialog();
@@ -125,7 +123,7 @@ protected:
 
 	HWND MeshView_Hwnd;
 	HWND ListHwnd;
-	HWND List_Detail_Hwnd;
+	
 	HWND CB_hWnd;
 
 	Ogre::Entity*			MvEnt;

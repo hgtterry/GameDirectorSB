@@ -31,7 +31,6 @@ SB_MeshViewer::SB_MeshViewer()
 {
 	MeshView_Hwnd = nullptr;
 	ListHwnd = nullptr;
-	List_Detail_Hwnd = nullptr;
 	CB_hWnd = nullptr;
 	Detail_List_hLV = nullptr;
 	// Folders
@@ -180,7 +179,6 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		SendDlgItemMessage(hDlg, IDC_MVBTADDFOLDERS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		App->SBC_MeshViewer->ListHwnd = GetDlgItem(hDlg, IDC_LISTFILES);
-		App->SBC_MeshViewer->List_Detail_Hwnd = GetDlgItem(hDlg, IDC_LISTDETAIL);
 		
 		App->SBC_MeshViewer->MeshView_Hwnd = GetDlgItem(hDlg, IDC_OGREWIN);
 		App->SBC_MeshViewer->Set_OgreWindow();
@@ -518,8 +516,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 			strcpy(App->SBC_MeshViewer->Selected_MeshFile, buff);
 			App->SBC_MeshViewer->ShowMesh(App->SBC_MeshViewer->Selected_MeshFile, 1);
-			App->SBC_MeshViewer->Get_Details();
-			
+			App->SBC_MeshViewer->Get_Details_hLV();
 			return TRUE;
 
 		}
@@ -1168,62 +1165,14 @@ bool SB_MeshViewer::Delete_Resources_Group()
 }
 
 // *************************************************************************
-// *					Delete_Resources_Group	Terry Bernie 		 	   *
-// *************************************************************************
-bool SB_MeshViewer::Get_Details()
-{
-	SendMessage(List_Detail_Hwnd, LB_RESETCONTENT, 0, 0);
-
-	SendMessage(List_Detail_Hwnd, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)Selected_MeshFile);
-
-	Ogre::String st;
-	Ogre::MaterialPtr pp;
-
-	int SubMeshCount = MvEnt->getNumSubEntities();
-	int Count = 0;
-	
-	pp.setNull();
-	bool loaded = 0;
-
-	while (Count < SubMeshCount)
-	{
-		Ogre::SubMesh const *subMesh = MvEnt->getSubEntity(Count)->getSubMesh();
-		Ogre::String MatName = subMesh->getMaterialName();
-		
-		loaded = Ogre::MaterialManager::getSingleton().resourceExists(MatName);
-
-		if (loaded == 1)
-		{
-			pp = Ogre::MaterialManager::getSingleton().getByName(MatName, MV_Resource_Group);
-			st = pp->getOrigin();
-		}
-		else
-		{
-			st = "Not Loaded";
-		}
-
-		
-		
-		
-		SendMessage(List_Detail_Hwnd, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)MatName.c_str());
-		SendMessage(List_Detail_Hwnd, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)st.c_str());
-
-		Count++;
-	}
-
-	Get_Details_hLV();
-	return 1;
-}
-
-// *************************************************************************
-// *				CreateListGeneral_FX Terry Bernie					   *
+// *					Create_Detail_List Terry Bernie					   *
 // *************************************************************************
 bool SB_MeshViewer::Create_Detail_List()
 {
 	int NUM_COLS = 4;
 	Detail_List_hLV = CreateWindowEx(0, WC_LISTVIEW, "",
-		WS_CHILD | WS_VISIBLE | WS_BORDER | LVS_REPORT | LVS_SHOWSELALWAYS, 2, 600,
-		1100, 345, MainDlgHwnd, 0, App->hInst, NULL);
+		WS_CHILD | WS_VISIBLE | WS_BORDER | LVS_REPORT | LVS_SHOWSELALWAYS, 11, 490,
+		1120, 230, MainDlgHwnd, 0, App->hInst, NULL);
 
 	DWORD exStyles = LVS_EX_GRIDLINES;
 
@@ -1254,10 +1203,7 @@ bool SB_MeshViewer::Create_Detail_List()
 		lvC.pszText = const_cast<char*>(headers[header].c_str());
 		ListView_InsertColumn(Detail_List_hLV, header, &lvC);
 	}
-	HFONT Font;
-	Font = CreateFont(-12, 0, 0, 0, FW_NORMAL, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Aerial Black");
-	SendMessage(Detail_List_hLV, WM_SETFONT, (WPARAM)Font, MAKELPARAM(TRUE, 0));
-
+	SendMessage(Detail_List_hLV, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 	
 	//ShowAllTextures();
 	return 1;
@@ -1309,18 +1255,13 @@ bool SB_MeshViewer::Get_Details_hLV()
 		}
 
 
-
-
-		SendMessage(List_Detail_Hwnd, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)MatName.c_str());
-		SendMessage(List_Detail_Hwnd, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)st.c_str());
-
 		pitem.iItem = pRow;
 		pitem.pszText = pScriptName;
 
 		ListView_InsertItem(Detail_List_hLV, &pitem);
 		ListView_SetItemText(Detail_List_hLV, pRow, 1, pMaterialFile);
-		ListView_SetItemText(Detail_List_hLV, pRow, 2, pMaterialFile);
-		ListView_SetItemText(Detail_List_hLV, pRow, 3, "poo");
+		ListView_SetItemText(Detail_List_hLV, pRow, 2, "----");
+		ListView_SetItemText(Detail_List_hLV, pRow, 3, "----");
 
 		pRow++;
 		Count++;
