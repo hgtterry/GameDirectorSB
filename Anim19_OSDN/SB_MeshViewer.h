@@ -86,6 +86,8 @@ protected:
 	bool Set_OgreWindow(void);
 	void Close_OgreWindow(void);
 
+	bool Get_Details(void);
+
 	void ShowMesh(char* MeshFile, bool Update);
 
 	void Start_ShapeDialog();
@@ -119,6 +121,7 @@ protected:
 
 	HWND MeshView_Hwnd;
 	HWND ListHwnd;
+	HWND List_Detail_Hwnd;
 	HWND CB_hWnd;
 
 	Ogre::Entity*			MvEnt;

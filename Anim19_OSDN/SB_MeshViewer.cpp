@@ -29,9 +29,10 @@ distribution.
 
 SB_MeshViewer::SB_MeshViewer()
 {
-	MeshView_Hwnd = NULL;
-	ListHwnd = NULL;
-	CB_hWnd = NULL;
+	MeshView_Hwnd = nullptr;
+	ListHwnd = nullptr;
+	List_Detail_Hwnd = nullptr;
+	CB_hWnd = nullptr;
 
 	// Folders
 	Folders_MainWin_hWnd = NULL;
@@ -169,6 +170,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		App->SBC_MeshViewer->MainDlgHwnd = hDlg;
 
 		SendDlgItemMessage(hDlg, IDC_LISTFILES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_LISTDETAIL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_OBJECTNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STSHAPE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -178,7 +180,8 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		SendDlgItemMessage(hDlg, IDC_MVBTADDFOLDERS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		App->SBC_MeshViewer->ListHwnd = GetDlgItem(hDlg, IDC_LISTFILES);
-
+		App->SBC_MeshViewer->List_Detail_Hwnd = GetDlgItem(hDlg, IDC_LISTDETAIL);
+		
 		App->SBC_MeshViewer->MeshView_Hwnd = GetDlgItem(hDlg, IDC_OGREWIN);
 		App->SBC_MeshViewer->Set_OgreWindow();
 
@@ -514,10 +517,8 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 			strcpy(App->SBC_MeshViewer->Selected_MeshFile, buff);
 			App->SBC_MeshViewer->ShowMesh(App->SBC_MeshViewer->Selected_MeshFile, 1);
-
-			/*HWND temp = GetDlgItem(hDlg,IDC_CHECKSPIN);
-			SendMessage(temp,BM_SETCHECK,1,0);*/
-
+			App->SBC_MeshViewer->Get_Details();
+			
 			return TRUE;
 
 		}
@@ -1161,6 +1162,55 @@ bool SB_MeshViewer::Delete_Resources_Group()
 {
 
 	Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(MV_Resource_Group);
+
+	return 1;
+}
+
+// *************************************************************************
+// *					Delete_Resources_Group	Terry Bernie 		 	   *
+// *************************************************************************
+bool SB_MeshViewer::Get_Details()
+{
+	SendMessage(List_Detail_Hwnd, LB_RESETCONTENT, 0, 0);
+
+	SendMessage(List_Detail_Hwnd, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)Selected_MeshFile);
+
+	Ogre::String st;
+	Ogre::MaterialPtr pp;
+
+	int SubMeshCount = MvEnt->getNumSubEntities();
+	int Count = 0;
+	
+	pp.setNull();
+	bool loaded = 0;
+
+	while (Count < SubMeshCount)
+	{
+		Ogre::SubMesh const *subMesh = MvEnt->getSubEntity(Count)->getSubMesh();
+		Ogre::String MatName = subMesh->getMaterialName();
+		
+		loaded = Ogre::MaterialManager::getSingleton().resourceExists(MatName);
+
+		if (loaded == 1)
+		{
+			pp = Ogre::MaterialManager::getSingleton().getByName(MatName);
+			st = pp->getOrigin();
+		}
+		else
+		{
+			st = "Not Loaded";
+		}
+
+		
+		
+		
+		SendMessage(List_Detail_Hwnd, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)MatName.c_str());
+		SendMessage(List_Detail_Hwnd, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)st.c_str());
+
+		Count++;
+	}
+
+	
 
 	return 1;
 }
