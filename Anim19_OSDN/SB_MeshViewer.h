@@ -86,6 +86,9 @@ protected:
 	bool Set_OgreWindow(void);
 	void Close_OgreWindow(void);
 
+	bool Create_Detail_List();
+	bool Get_Details_hLV();
+
 	bool Get_Details(void);
 
 	void ShowMesh(char* MeshFile, bool Update);
@@ -118,6 +121,7 @@ protected:
 
 	HWND Folders_MainWin_hWnd;
 	HWND Properties_hLV;
+	HWND Detail_List_hLV;
 
 	HWND MeshView_Hwnd;
 	HWND ListHwnd;

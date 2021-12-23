@@ -33,7 +33,7 @@ SB_MeshViewer::SB_MeshViewer()
 	ListHwnd = nullptr;
 	List_Detail_Hwnd = nullptr;
 	CB_hWnd = nullptr;
-
+	Detail_List_hLV = nullptr;
 	// Folders
 	Folders_MainWin_hWnd = NULL;
 	Properties_hLV = NULL;
@@ -206,6 +206,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		char ATest[256];
 
 		App->SBC_MeshViewer->Get_Files();
+		App->SBC_MeshViewer->Create_Detail_List();
 
 		/*if (App->Cl_Mesh_Viewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables)
 		{
@@ -1193,7 +1194,7 @@ bool SB_MeshViewer::Get_Details()
 
 		if (loaded == 1)
 		{
-			pp = Ogre::MaterialManager::getSingleton().getByName(MatName);
+			pp = Ogre::MaterialManager::getSingleton().getByName(MatName, MV_Resource_Group);
 			st = pp->getOrigin();
 		}
 		else
@@ -1210,7 +1211,121 @@ bool SB_MeshViewer::Get_Details()
 		Count++;
 	}
 
+	Get_Details_hLV();
+	return 1;
+}
+
+// *************************************************************************
+// *				CreateListGeneral_FX Terry Bernie					   *
+// *************************************************************************
+bool SB_MeshViewer::Create_Detail_List()
+{
+	int NUM_COLS = 4;
+	Detail_List_hLV = CreateWindowEx(0, WC_LISTVIEW, "",
+		WS_CHILD | WS_VISIBLE | WS_BORDER | LVS_REPORT | LVS_SHOWSELALWAYS, 2, 600,
+		1100, 345, MainDlgHwnd, 0, App->hInst, NULL);
+
+	DWORD exStyles = LVS_EX_GRIDLINES;
+
+	ListView_SetExtendedListViewStyleEx(Detail_List_hLV, exStyles, exStyles);
+
+	ListView_SetBkColor(Detail_List_hLV, RGB(250, 250, 250));
+	ListView_SetTextBkColor(Detail_List_hLV, RGB(250, 250, 250));
+
+	LV_COLUMN lvC;
+	memset(&lvC, 0, sizeof(LV_COLUMN));
+	lvC.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
+	lvC.fmt = LVCFMT_LEFT;  // left-align the column
+	std::string headers[] =
+	{
+		"Script", "Material File","Used","Path"
+	};
+	int headerSize[] =
+	{
+		165,180,70,250
+	};
+
+	//Groups
+
+	for (int header = 0; header < NUM_COLS; header++)
+	{
+		lvC.iSubItem = header;
+		lvC.cx = headerSize[header]; // width of the column, in pixels
+		lvC.pszText = const_cast<char*>(headers[header].c_str());
+		ListView_InsertColumn(Detail_List_hLV, header, &lvC);
+	}
+	HFONT Font;
+	Font = CreateFont(-12, 0, 0, 0, FW_NORMAL, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Aerial Black");
+	SendMessage(Detail_List_hLV, WM_SETFONT, (WPARAM)Font, MAKELPARAM(TRUE, 0));
+
 	
+	//ShowAllTextures();
+	return 1;
+}
+
+// *************************************************************************
+// *					Get_Details_hLV Terry Bernie	 			 	   *
+// *************************************************************************
+bool SB_MeshViewer::Get_Details_hLV()
+{
+	LV_ITEM pitem;
+	memset(&pitem, 0, sizeof(LV_ITEM));
+	pitem.mask = LVIF_TEXT;
+
+	int	 pRow = 0;
+	char pScriptName[255];
+	char pMaterialFile[255];
+	char pUsed[255];
+	bool pIsLoaded = 0;
+
+	int SubMeshCount = MvEnt->getNumSubEntities();
+	int Count = 0;
+
+	Ogre::String st;
+	Ogre::MaterialPtr pp;
+
+	pp.setNull();
+	bool loaded = 0;
+
+	ListView_DeleteAllItems(Detail_List_hLV);
+
+	while (Count < SubMeshCount)
+	{
+		Ogre::SubMesh const *subMesh = MvEnt->getSubEntity(Count)->getSubMesh();
+		Ogre::String MatName = subMesh->getMaterialName();
+		strcpy(pScriptName, MatName.c_str());
+
+		loaded = Ogre::MaterialManager::getSingleton().resourceExists(MatName);
+
+		if (loaded == 1)
+		{
+			pp = Ogre::MaterialManager::getSingleton().getByName(MatName, MV_Resource_Group);
+			st = pp->getOrigin();
+			strcpy(pMaterialFile, st.c_str());
+		}
+		else
+		{
+			strcpy(pMaterialFile," Not Loaded");
+		}
+
+
+
+
+		SendMessage(List_Detail_Hwnd, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)MatName.c_str());
+		SendMessage(List_Detail_Hwnd, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)st.c_str());
+
+		pitem.iItem = pRow;
+		pitem.pszText = pScriptName;
+
+		ListView_InsertItem(Detail_List_hLV, &pitem);
+		ListView_SetItemText(Detail_List_hLV, pRow, 1, pMaterialFile);
+		ListView_SetItemText(Detail_List_hLV, pRow, 2, pMaterialFile);
+		ListView_SetItemText(Detail_List_hLV, pRow, 3, "poo");
+
+		pRow++;
+		Count++;
+	}
 
 	return 1;
 }
+
