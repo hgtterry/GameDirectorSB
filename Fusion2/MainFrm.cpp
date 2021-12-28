@@ -436,14 +436,14 @@ BOOL CMainFrame::CreateStyleBar()
 BOOL CMainFrame::CreatEquityBar()
 {
 
-	if (!m_wndEquityBar.Create(this, WS_CHILD|WS_VISIBLE|CBRS_TOP|
+/*	if (!m_wndEquityBar.Create(this, WS_CHILD|WS_VISIBLE|CBRS_TOP|
 			CBRS_TOOLTIPS|CBRS_FLYBY, IDR_EQUITY ) ||
 		!m_wndEquityBar.LoadToolBar(IDR_EQUITY) )
 	{
 		TRACE0("Failed to create groupbar\n");
 		App->Say("Failed");
 		return FALSE;       // fail to create
-	}
+	}*/
 
 	return TRUE;
 }

@@ -6,13 +6,7 @@
 --------------------Configuration: FUSION - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\Equity\AppData\Local\Temp\RSPACAA.tmp" with contents
-[
-/nologo /MT /W4 /GX /Ot /Oa /X /I "." /I ".\GenesisSDK\include" /I ".\TypeParser" /I "..\..\msdev60\include" /I "..\..\msdev60\mfc\include" /I "C:\Program Files (x86)\Microsoft Visual Studio\VC98\MFC\Include" /I "C:\Program Files (x86)\Microsoft Visual Studio\VC98\Include" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "WIN32_LEAN_AND_MEAN" /Fr".\Release/" /Fp".\Release/Fusion.pch" /YX"stdafx.h" /Fo".\Release/" /Fd".\Release/" /FD /c 
-"C:\Users\Equity\Desktop\Equity15\Fusion2\level.cpp"
-]
-Creating command line "cl.exe @C:\Users\Equity\AppData\Local\Temp\RSPACAA.tmp" 
-Creating temporary file "C:\Users\Equity\AppData\Local\Temp\RSPACAB.tmp" with contents
+Creating temporary file "C:\Users\Equity\AppData\Local\Temp\RSP53AD.tmp" with contents
 [
 nafxcw.lib libcmt.lib .\GenesisSDK\lib\genesis.lib advapi32.lib ctl3d32.lib comctl32.lib comdlg32.lib gdi32.lib kernel32.lib oldnames.lib ole32.lib oleaut32.lib oledlg.lib shell32.lib urlmon.lib user32.lib uuid.lib winmm.lib winspool.lib /nologo /subsystem:windows /incremental:no /pdb:".\Deliver/Fusion.pdb" /machine:I386 /nodefaultlib /out:".\Deliver/Fusion.exe" /libpath:"..\..\msdev60\lib" /libpath:"..\..\msdev60\mfc\lib" 
 .\Release\cparser.obj
@@ -51,6 +45,7 @@ nafxcw.lib libcmt.lib .\GenesisSDK\lib\genesis.lib advapi32.lib ctl3d32.lib comc
 .\Release\EntView.obj
 .\Release\face.obj
 .\Release\FaceAttributesDialog.obj
+.\Release\FaceList.obj
 .\Release\FilePath.obj
 .\Release\FUSION.obj
 .\Release\FUSIONDoc.obj
@@ -82,20 +77,13 @@ nafxcw.lib libcmt.lib .\GenesisSDK\lib\genesis.lib advapi32.lib ctl3d32.lib comc
 .\Release\util.obj
 .\Release\WadFile.obj
 .\Release\FUSION.res
-.\Release\FaceList.obj
 ]
-Creating command line "link.exe @C:\Users\Equity\AppData\Local\Temp\RSPACAB.tmp"
+Creating command line "link.exe @C:\Users\Equity\AppData\Local\Temp\RSP53AD.tmp"
 <h3>Output Window</h3>
-Compiling...
-level.cpp
-C:\Users\Equity\Desktop\Equity15\Fusion2\level.cpp(1694) : warning C4102: 'WriteDone' : unreferenced label
-C:\Users\Equity\Desktop\Equity15\Fusion2\level.cpp(1458) : warning C4100: 'GroupID' : unreferenced formal parameter
-C:\Users\Equity\Desktop\Equity15\Fusion2\level.cpp(1458) : warning C4100: 'ExpSelected' : unreferenced formal parameter
-C:\Users\Equity\Desktop\Equity15\Fusion2\level.cpp(1457) : warning C4100: 'BList' : unreferenced formal parameter
 Linking...
 LINK : warning LNK4089: all references to "OLEAUT32.dll" discarded by /OPT:REF
 LINK : warning LNK4089: all references to "ole32.dll" discarded by /OPT:REF
-Creating temporary file "C:\Users\Equity\AppData\Local\Temp\RSPB1AE.tmp" with contents
+Creating temporary file "C:\Users\Equity\AppData\Local\Temp\RSP5842.tmp" with contents
 [
 /nologo /o".\Deliver/Fusion.bsc" 
 .\Release\cparser.sbr
@@ -134,6 +122,7 @@ Creating temporary file "C:\Users\Equity\AppData\Local\Temp\RSPB1AE.tmp" with co
 .\Release\EntView.sbr
 .\Release\face.sbr
 .\Release\FaceAttributesDialog.sbr
+.\Release\FaceList.sbr
 .\Release\FilePath.sbr
 .\Release\FUSION.sbr
 .\Release\FUSIONDoc.sbr
@@ -163,16 +152,15 @@ Creating temporary file "C:\Users\Equity\AppData\Local\Temp\RSPB1AE.tmp" with co
 .\Release\typeio.sbr
 .\Release\undostack.sbr
 .\Release\util.sbr
-.\Release\WadFile.sbr
-.\Release\FaceList.sbr]
-Creating command line "bscmake.exe @C:\Users\Equity\AppData\Local\Temp\RSPB1AE.tmp"
+.\Release\WadFile.sbr]
+Creating command line "bscmake.exe @C:\Users\Equity\AppData\Local\Temp\RSP5842.tmp"
 Creating browse info file...
 <h3>Output Window</h3>
 
 
 
 <h3>Results</h3>
-Fusion.exe - 0 error(s), 6 warning(s)
+Fusion.exe - 0 error(s), 2 warning(s)
 </pre>
 </body>
 </html>

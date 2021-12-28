@@ -342,6 +342,14 @@ LRESULT CALLBACK SB_Equity::Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == ID_IMPORT_RFWORLD)
+		{
+			App->SBC_Import->Assimp_Loader("RF World   *.rfw\0*.rfw\0", "RF World rfw");
+			//App->SBC_Import->WorldEditor_Loader();
+			//App->SBC_Equity->Model_Loaded = 1;
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == ID_IMPORT_EQ_WAVEFRONTOBJ)
 		{
 			App->SBC_Import->Assimp_Loader("Wavefront OBJ   *.obj\0*.obj\0", "Wavefront OBJ");

@@ -1828,7 +1828,7 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_UK
 // Bitmap
 //
 
-IDR_EQUITY              BITMAP  DISCARDABLE     "res\\bmp00001.bmp"
+//IDR_EQUITY              BITMAP  DISCARDABLE     "res\\bmp00001.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
