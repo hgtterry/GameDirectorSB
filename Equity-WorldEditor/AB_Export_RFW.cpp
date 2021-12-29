@@ -143,10 +143,8 @@ bool AB_Export_RFW::Level_ExportTo_RFW(Level2 *pLevel, const char *Filename, Bru
 	// which textures are used?
 	BrushList_GetUsedTextures(BList, WrittenTex, pLevel->WadFile);
 
-	/*
-	We will squeeze in CHUNK_MAIN3DS, CHUNK_VERSION, CHUNK_EDIT3DS, CHUNK_MESH_VERSION
-	when we know the size of the file, so move the filepointer forward now
-	*/
+	const int FileLength = 11;
+
 	fseek(f, 32L, SEEK_SET);
 
 	// write all used materials to the file
@@ -155,10 +153,10 @@ bool AB_Export_RFW::Level_ExportTo_RFW(Level2 *pLevel, const char *Filename, Bru
 		if(WrittenTex[i])
 		{
 			// 3ds only allows DOS 8.3 file names, so cut the name if necessary
-			char matname[11];
+			char matname[FileLength];
 			int j,k;
-			strncpy (matname, pLevel->WadFile->mBitmaps[i].Name, 11);
-			matname[10] = '\0';
+			strncpy (matname, pLevel->WadFile->mBitmaps[i].Name, FileLength-1);
+			matname[FileLength-1] = '\0';
 			for(j=0;matname[j]!='\0';j++);
 
 			TypeIO_WriteUshort(f, CHUNK_MATBLOCK);

@@ -6,13 +6,8 @@
 --------------------Configuration: FUSION - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\Equity\AppData\Local\Temp\RSP59F3.tmp" with contents
-[
-/nologo /MT /W4 /GX /Ot /Oa /X /I "." /I ".\GenesisSDK\include" /I ".\TypeParser" /I "..\..\msdev60\include" /I "..\..\msdev60\mfc\include" /I "C:\Program Files (x86)\Microsoft Visual Studio\VC98\MFC\Include" /I "C:\Program Files (x86)\Microsoft Visual Studio\VC98\Include" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "WIN32_LEAN_AND_MEAN" /Fr".\Release/" /Fp".\Release/Fusion7.pch" /YX"stdafx.h" /Fo".\Release/" /Fd".\Release/" /FD /c 
-"C:\Users\Equity\Desktop\Equity15\Equity-WorldEditor\FUSIONDoc.cpp"
-]
-Creating command line "cl.exe @C:\Users\Equity\AppData\Local\Temp\RSP59F3.tmp" 
-Creating temporary file "C:\Users\Equity\AppData\Local\Temp\RSP59F4.tmp" with contents
+Creating command line "rc.exe /l 0x409 /x /fo".\Release/FUSION.res" /i "..\..\msdev60\include" /i "..\..\msdev60\mfc\include" /i "C:\Program Files (x86)\Microsoft Visual Studio\VC98\MFC\Include" /i "C:\Program Files (x86)\Microsoft Visual Studio\VC98\Include" /d "NDEBUG" "C:\Users\Equity\Desktop\Equity15\Equity-WorldEditor\FUSION.rc"" 
+Creating temporary file "C:\Users\Equity\AppData\Local\Temp\RSP7FF3.tmp" with contents
 [
 nafxcw.lib libcmt.lib .\GenesisSDK\lib\genesis.lib advapi32.lib ctl3d32.lib comctl32.lib comdlg32.lib gdi32.lib kernel32.lib oldnames.lib ole32.lib oleaut32.lib oledlg.lib shell32.lib urlmon.lib user32.lib uuid.lib winmm.lib winspool.lib /nologo /subsystem:windows /incremental:no /pdb:".\Deliver/Fusion7.pdb" /machine:I386 /out:".\Deliver/Fusion7.exe" /libpath:"..\..\msdev60\lib" /libpath:"..\..\msdev60\mfc\lib" 
 ".\Release\cparser.obj"
@@ -90,97 +85,15 @@ nafxcw.lib libcmt.lib .\GenesisSDK\lib\genesis.lib advapi32.lib ctl3d32.lib comc
 ".\Release\AB_App.obj"
 ".\Release\AB_Export_RFW.obj"
 ]
-Creating command line "link.exe @C:\Users\Equity\AppData\Local\Temp\RSP59F4.tmp"
+Creating command line "link.exe @C:\Users\Equity\AppData\Local\Temp\RSP7FF3.tmp"
 <h3>Output Window</h3>
-Compiling...
-FUSIONDoc.cpp
-C:\Users\Equity\Desktop\Equity15\Equity-WorldEditor\FUSIONDoc.cpp(2398) : warning C4100: 'pCmdUI' : unreferenced formal parameter
-Need to reverse plane?
+Compiling resources...
 Linking...
-Creating temporary file "C:\Users\Equity\AppData\Local\Temp\RSP62FD.tmp" with contents
-[
-/nologo /o".\Deliver/Fusion7.bsc" 
-".\Release\cparser.sbr"
-".\Release\cscanner.sbr"
-".\Release\Hash.sbr"
-".\Release\iden.sbr"
-".\Release\scanner.sbr"
-".\Release\symtab.sbr"
-".\Release\type.sbr"
-".\Release\about.sbr"
-".\Release\ActivationWatch.sbr"
-".\Release\array.sbr"
-".\Release\box3d.sbr"
-".\Release\brush.sbr"
-".\Release\BrushAttributesDialog.sbr"
-".\Release\BrushEntityDialog.sbr"
-".\Release\BrushGroupDialog.sbr"
-".\Release\BrushTemplate.sbr"
-".\Release\CapView.sbr"
-".\Release\ChildFrm.sbr"
-".\Release\ColorBtn.sbr"
-".\Release\CompileDialog.sbr"
-".\Release\Compiler.sbr"
-".\Release\ConsoleTab.sbr"
-".\Release\CreateArchDialog.sbr"
-".\Release\CreateBoxDialog.sbr"
-".\Release\CreateConeDialog.sbr"
-".\Release\CreateCylDialog.sbr"
-".\Release\CreateSpheroidDialog.sbr"
-".\Release\CreateStaircaseDialog.sbr"
-".\Release\EntitiesDialog.sbr"
-".\Release\Entity.sbr"
-".\Release\EntityTable.sbr"
-".\Release\EntityVisDlg.sbr"
-".\Release\EntTypeName.sbr"
-".\Release\EntView.sbr"
-".\Release\Export3dsDialog.sbr"
-".\Release\face.sbr"
-".\Release\FaceAttributesDialog.sbr"
-".\Release\FaceList.sbr"
-".\Release\FilePath.sbr"
-".\Release\FUSION.sbr"
-".\Release\FUSIONDoc.sbr"
-".\Release\FusionTabControls.sbr"
-".\Release\FUSIONView.sbr"
-".\Release\GridSizeDialog.sbr"
-".\Release\group.sbr"
-".\Release\KeyEditDlg.sbr"
-".\Release\level.sbr"
-".\Release\LevelOptions.sbr"
-".\Release\List.sbr"
-".\Release\MainFrm.sbr"
-".\Release\model.sbr"
-".\Release\ModelDialog.sbr"
-".\Release\MoveDialog.sbr"
-".\Release\NameWindow.sbr"
-".\Release\node.sbr"
-".\Release\Parse3dt.sbr"
-".\Release\PreferencesDialog.sbr"
-".\Release\Prefs.sbr"
-".\Release\render.sbr"
-".\Release\RotateDialog.sbr"
-".\Release\ScaleDialog.sbr"
-".\Release\SelBrushList.sbr"
-".\Release\SelFaceList.sbr"
-".\Release\SkyDialog.sbr"
-".\Release\stack.sbr"
-".\Release\TextureDialog.sbr"
-".\Release\TexturePacker.sbr"
-".\Release\typeio.sbr"
-".\Release\undostack.sbr"
-".\Release\util.sbr"
-".\Release\WadFile.sbr"
-".\Release\AB_App.sbr"
-".\Release\AB_Export_RFW.sbr"]
-Creating command line "bscmake.exe @C:\Users\Equity\AppData\Local\Temp\RSP62FD.tmp"
-Creating browse info file...
-<h3>Output Window</h3>
 
 
 
 <h3>Results</h3>
-Fusion7.exe - 0 error(s), 1 warning(s)
+Fusion7.exe - 0 error(s), 0 warning(s)
 </pre>
 </body>
 </html>

@@ -1417,7 +1417,7 @@ IDC_EYEDROPPER          CURSOR  DISCARDABLE     "res\\cursor1.cur"
 
 STRINGTABLE PRELOAD DISCARDABLE 
 BEGIN
-    IDR_MAINFRAME           "Genesis3D World Editor [ Equity 281221 ]"
+    IDR_MAINFRAME           "Genesis3D World Editor [ Equity 291221 ]"
     IDR_FUSIONTYPE          "Genesis3D World Editor\nWorld\nWorld\nWorld Files (*.3dt)\n.3dt\nWorldEditor.Document\nGenesis3D World Editor Document"
     IDS_LOAD_WARNING        "Some entities or brushes did not load properly, see console for details."
     IDS_NEWGROUP            "Group Name"
