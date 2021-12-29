@@ -159,6 +159,10 @@ SOURCE=.\AB_App.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\AB_Export_RFW.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\about.cpp
 # End Source File
 # Begin Source File
@@ -424,6 +428,10 @@ SOURCE=.\WadFile.cpp
 # Begin Source File
 
 SOURCE=.\AB_App.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\AB_Export_RFW.h
 # End Source File
 # Begin Source File
 

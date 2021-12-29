@@ -9,12 +9,21 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
+
+
+#include "AB_Export_RFW.h"
+
 class AB_App  
 {
 public:
+
+	AB_Export_RFW*			ABC_Export_RFW;
+
+
 	AB_App();
 	virtual ~AB_App();
 
+	bool AB_App::InitApp(void);
 	void Say(const char* Message);
 
 };

@@ -6,13 +6,13 @@
 --------------------Configuration: FUSION - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\Equity\AppData\Local\Temp\RSP689F.tmp" with contents
+Creating temporary file "C:\Users\Equity\AppData\Local\Temp\RSP59F3.tmp" with contents
 [
 /nologo /MT /W4 /GX /Ot /Oa /X /I "." /I ".\GenesisSDK\include" /I ".\TypeParser" /I "..\..\msdev60\include" /I "..\..\msdev60\mfc\include" /I "C:\Program Files (x86)\Microsoft Visual Studio\VC98\MFC\Include" /I "C:\Program Files (x86)\Microsoft Visual Studio\VC98\Include" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "WIN32_LEAN_AND_MEAN" /Fr".\Release/" /Fp".\Release/Fusion7.pch" /YX"stdafx.h" /Fo".\Release/" /Fd".\Release/" /FD /c 
 "C:\Users\Equity\Desktop\Equity15\Equity-WorldEditor\FUSIONDoc.cpp"
 ]
-Creating command line "cl.exe @C:\Users\Equity\AppData\Local\Temp\RSP689F.tmp" 
-Creating temporary file "C:\Users\Equity\AppData\Local\Temp\RSP68A0.tmp" with contents
+Creating command line "cl.exe @C:\Users\Equity\AppData\Local\Temp\RSP59F3.tmp" 
+Creating temporary file "C:\Users\Equity\AppData\Local\Temp\RSP59F4.tmp" with contents
 [
 nafxcw.lib libcmt.lib .\GenesisSDK\lib\genesis.lib advapi32.lib ctl3d32.lib comctl32.lib comdlg32.lib gdi32.lib kernel32.lib oldnames.lib ole32.lib oleaut32.lib oledlg.lib shell32.lib urlmon.lib user32.lib uuid.lib winmm.lib winspool.lib /nologo /subsystem:windows /incremental:no /pdb:".\Deliver/Fusion7.pdb" /machine:I386 /out:".\Deliver/Fusion7.exe" /libpath:"..\..\msdev60\lib" /libpath:"..\..\msdev60\mfc\lib" 
 ".\Release\cparser.obj"
@@ -88,15 +88,16 @@ nafxcw.lib libcmt.lib .\GenesisSDK\lib\genesis.lib advapi32.lib ctl3d32.lib comc
 ".\Release\WadFile.obj"
 ".\Release\FUSION.res"
 ".\Release\AB_App.obj"
+".\Release\AB_Export_RFW.obj"
 ]
-Creating command line "link.exe @C:\Users\Equity\AppData\Local\Temp\RSP68A0.tmp"
+Creating command line "link.exe @C:\Users\Equity\AppData\Local\Temp\RSP59F4.tmp"
 <h3>Output Window</h3>
 Compiling...
 FUSIONDoc.cpp
 C:\Users\Equity\Desktop\Equity15\Equity-WorldEditor\FUSIONDoc.cpp(2398) : warning C4100: 'pCmdUI' : unreferenced formal parameter
 Need to reverse plane?
 Linking...
-Creating temporary file "C:\Users\Equity\AppData\Local\Temp\RSP71B9.tmp" with contents
+Creating temporary file "C:\Users\Equity\AppData\Local\Temp\RSP62FD.tmp" with contents
 [
 /nologo /o".\Deliver/Fusion7.bsc" 
 ".\Release\cparser.sbr"
@@ -170,8 +171,9 @@ Creating temporary file "C:\Users\Equity\AppData\Local\Temp\RSP71B9.tmp" with co
 ".\Release\undostack.sbr"
 ".\Release\util.sbr"
 ".\Release\WadFile.sbr"
-".\Release\AB_App.sbr"]
-Creating command line "bscmake.exe @C:\Users\Equity\AppData\Local\Temp\RSP71B9.tmp"
+".\Release\AB_App.sbr"
+".\Release\AB_Export_RFW.sbr"]
+Creating command line "bscmake.exe @C:\Users\Equity\AppData\Local\Temp\RSP62FD.tmp"
 Creating browse info file...
 <h3>Output Window</h3>
 

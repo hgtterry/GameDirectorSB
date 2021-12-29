@@ -8657,7 +8657,8 @@ void CFusionDoc::ExportTo_RFW(const char *FileName, int ExpSelected, geBoolean E
 
 	BList = Level_GetBrushes (pLevel);
 	if(!ExpSelected&&!ExpFiles)
-		fResult = Level_ExportTo_RFW(pLevel, FileName, BList, ExpSelected, ExpLights, -1);
+		fResult = App->ABC_Export_RFW->Level_ExportTo_RFW(reinterpret_cast<tag_Level2 *> (pLevel), FileName, BList, ExpSelected, ExpLights, -1);
+	//	fResult = Level_ExportTo_RFW(pLevel, FileName, BList, ExpSelected, ExpLights, -1);
 	else
 	{
 		int i, GroupID, GroupCount;
@@ -8741,7 +8742,8 @@ void CFusionDoc::ExportTo_RFW(const char *FileName, int ExpSelected, geBoolean E
 				::FilePath_ChangeName(FileName, Name, NewFileName);
 			}
 
-			fResult = Level_ExportTo_RFW(pLevel, NewFileName, SBList, ExpSelected, ExpLights, GroupID);
+		//	fResult = Level_ExportTo_RFW(pLevel, NewFileName, SBList, ExpSelected, ExpLights, GroupID);
+			fResult =App->ABC_Export_RFW->Level_ExportTo_RFW(reinterpret_cast<tag_Level2 *> (pLevel), NewFileName, SBList, ExpSelected, ExpLights, GroupID);
 			if(!fResult)
 				ConPrintf("Error exporting group %i\n", i);
 			BrushList_Destroy(&SBList);

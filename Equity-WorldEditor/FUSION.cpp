@@ -188,7 +188,7 @@ AB_App *App = NULL;
 BOOL CFusionApp::InitInstance()
 {
 	App = new AB_App();
-
+	App->InitApp();
 	
 	char AppPath[MAX_PATH];
 	

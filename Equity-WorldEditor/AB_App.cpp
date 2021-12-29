@@ -2,16 +2,24 @@
 #include "stdafx.h"
 #include "AB_App.h"
 
-
-
 AB_App::AB_App()
 {
-
+	ABC_Export_RFW = NULL;
 }
 
 AB_App::~AB_App()
 {
 
+}
+
+// *************************************************************************
+// *						InitApp Inflanite							   *
+// *************************************************************************
+bool AB_App::InitApp(void)
+{	
+		ABC_Export_RFW  =			new AB_Export_RFW();
+
+	return 1;
 }
 
 // *************************************************************************
@@ -25,3 +33,4 @@ void AB_App::Say(const char* Message)
 
 //	App->Cl_Dialogs->Message(text);
 }
+
