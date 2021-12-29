@@ -145,7 +145,7 @@ LRESULT CALLBACK VM_WorldEditor::WE_import_Proc(HWND hDlg, UINT message, WPARAM 
 	{
 		if (LOWORD(wParam) == IDC_3DSBROWSE)
 		{
-			int Result = App->CL_Vm_FileIO->Vm_OpenFile("Autodesk 3DS   *.3ds\0*.3ds\0", "Autodesk 3DS", NULL);
+			int Result = App->CL_Vm_FileIO->Vm_OpenFile("RF World   *.rfw\0*.rfw\0", "RF World rfw", NULL);
 			if (Result == 0)
 			{
 				return 1;
