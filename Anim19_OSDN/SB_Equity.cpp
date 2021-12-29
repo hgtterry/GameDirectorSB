@@ -249,7 +249,7 @@ LRESULT CALLBACK SB_Equity::Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 		
 		App->SBC_Equity->EB_imgui.mouseMoved();
 
-		//SetFocus(App->SBC_Equity->MeshView_Hwnd);
+		SetFocus(App->SBC_Equity->RenderWindow_Hwnd);
 		break;
 	}
 
@@ -1085,8 +1085,6 @@ void SB_Equity::Reset_View(void)
 
 	App->EBC_Listener->WE_Cam->setPosition(Ogre::Vector3(0, 90, 100));
 	App->EBC_Listener->WE_Cam->lookAt(Ogre::Vector3(0, 30, 0));
-
-
 
 }
 
