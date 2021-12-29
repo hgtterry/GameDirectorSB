@@ -119,6 +119,7 @@ geBoolean Level_WriteToFile (Level *pLevel, const char *Filename);
 geBoolean Level_ExportTo3dtv1_32(Level *pLevel, const char *Filename);
 // changed QD 12/03
 geBoolean Level_ExportTo3ds(Level *pLevel, const char *Filename, BrushList *BList, int ExpSelected, geBoolean ExpLights, int GroupID);
+geBoolean Level_ExportTo_RFW(Level *pLevel, const char *Filename, BrushList *BList,int ExpSelected, geBoolean ExpLights, int GroupID); // [281221]
 // end change
 
 CEntityArray *Level_GetEntities (Level *pLevel);

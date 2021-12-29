@@ -1023,6 +1023,7 @@ geBoolean Brush_ExportTo3ds(const Brush *b, FILE *ofile)
 			}
 			break;
 
+		
 		case	BRUSH_CSG:
 			if(!(b->Flags&(BRUSH_HOLLOW|BRUSH_HOLLOWCUT|BRUSH_SUBTRACT)))
 				return FaceList_ExportTo3ds(b->Faces, ofile, BrushCount, SubBrushCount);

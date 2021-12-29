@@ -993,31 +993,31 @@ Level *Level_CreateFromFile (const char *FileName, const char **ErrMsg, const ch
 		Level_BrushListToTexels (pLevel);
 	}
 
-	if (!Level_LoadEntities (pLevel, Parser, VersionMajor, VersionMinor, &Expected)) goto DoneLoad;
+//	if (!Level_LoadEntities (pLevel, Parser, VersionMajor, VersionMinor, &Expected)) goto DoneLoad;
 
-	if ((VersionMajor > 1) || ((VersionMajor == 1) && (VersionMinor >= 2)))
-	{
-		if (!ModelList_Read (pLevel->ModelInfo.Models, NumModels, Parser, VersionMajor, VersionMinor, &Expected))
-		{
-			goto DoneLoad;
-		}
-	}
+//	if ((VersionMajor > 1) || ((VersionMajor == 1) && (VersionMinor >= 2)))
+//	{
+//		if (!ModelList_Read (pLevel->ModelInfo.Models, NumModels, Parser, VersionMajor, VersionMinor, &Expected))
+//		{
+//			goto DoneLoad;
+//		}
+//	}
 
 	// collapse model list so numbers are consecutive
 	Level_CollapseModels (pLevel, 1);
 
-	if ((VersionMajor > 1) || ((VersionMajor == 1) && (VersionMinor >= 3)))
-	{
-		if (!Group_ReadList (pLevel->Groups, NumGroups, Parser, VersionMajor, VersionMinor, &Expected ))
-		{
-			goto DoneLoad;
-		}
-	}
+//	if ((VersionMajor > 1) || ((VersionMajor == 1) && (VersionMinor >= 3)))
+//	{
+//		if (!Group_ReadList (pLevel->Groups, NumGroups, Parser, VersionMajor, VersionMinor, &Expected ))
+//		{
+//			goto DoneLoad;
+//		}
+//	}
 	// collapse the group list so numbers are consecutive
-	Level_CollapseGroups (pLevel, 1);
+//	Level_CollapseGroups (pLevel, 1);
 
 	// load sky information...
-	if ((VersionMajor > 1) || ((VersionMajor == 1) && (VersionMinor >= 12)))
+/*	if ((VersionMajor > 1) || ((VersionMajor == 1) && (VersionMinor >= 12)))
 	{
 		if (!Level_LoadSky (pLevel, Parser, VersionMajor, VersionMinor, &Expected)) goto DoneLoad;
 	}
@@ -1033,14 +1033,14 @@ Level *Level_CreateFromFile (const char *FileName, const char **ErrMsg, const ch
 		if (!Level_LoadViewInfo (pLevel, Parser, VersionMajor, VersionMinor, &Expected)) goto DoneLoad;
 		if (!Level_LoadBrushTemplates (pLevel, Parser, VersionMajor, VersionMinor, &Expected)) goto DoneLoad;
 		if (!Parse3dt_GetVec3d (Parser, (Expected = "TemplatePos"), &pLevel->TemplatePos)) goto DoneLoad;
-	}
+	}*/
 
 	// load level settings
-	if ((VersionMajor > 1) || ((VersionMajor == 1) && (VersionMinor >= 22)))
-	{
-		if (!Parse3dt_GetFloat (Parser, (Expected = "DrawScale"), &pLevel->DrawScale)) goto DoneLoad;
-		if (!Parse3dt_GetFloat (Parser, (Expected = "LightmapScale"), &pLevel->LightmapScale)) goto DoneLoad;
-	}
+//	if ((VersionMajor > 1) || ((VersionMajor == 1) && (VersionMinor >= 22)))
+//	{
+//		if (!Parse3dt_GetFloat (Parser, (Expected = "DrawScale"), &pLevel->DrawScale)) goto DoneLoad;
+//		if (!Parse3dt_GetFloat (Parser, (Expected = "LightmapScale"), &pLevel->LightmapScale)) goto DoneLoad;
+//	}
 
 	goto AllDone;
 
@@ -1232,6 +1232,9 @@ static geBoolean Level_ExportBrushTemplatesTo3dtv1_32
 }
 // end change
 
+// *************************************************************************
+// * Equity_Write_To_File				evel_WriteToFile 				   *
+// *************************************************************************
 geBoolean Level_WriteToFile (Level *pLevel, const char *Filename)
 {
 	FILE	*ArFile;
@@ -1278,23 +1281,24 @@ geBoolean Level_WriteToFile (Level *pLevel, const char *Filename)
 	if (fprintf(ArFile, "NumModels %d\n", ModelList_GetCount (pLevel->ModelInfo.Models)) < 0) goto WriteDone;
 	if (fprintf(ArFile, "NumGroups %d\n", Group_GetCount (pLevel->Groups)) < 0) goto WriteDone;
 	if (BrushList_Write (pLevel->Brushes, ArFile) == GE_FALSE) goto WriteDone;
-	if (Level_SaveEntities (pLevel->Entities, ArFile) == GE_FALSE) goto WriteDone;
-	if (ModelList_Write (pLevel->ModelInfo.Models, ArFile) == GE_FALSE) goto WriteDone;
-	if (Group_WriteList (pLevel->Groups, ArFile) == GE_FALSE) goto WriteDone;
-	if (Level_WriteSky (pLevel->SkyFaces, &pLevel->SkyRotationAxis, pLevel->SkyRotationSpeed, pLevel->SkyTextureScale, ArFile) == GE_FALSE) goto WriteDone;
-	if (Level_WriteCompileInfo (&pLevel->CompileParams, ArFile) == GE_FALSE) goto WriteDone;
-	if (fprintf (ArFile, "ShowGroups %d\n", pLevel->GroupVisSetting) < 0) goto WriteDone;
-	if (EntityViewList_WriteToFile (pLevel->pEntityView, ArFile) == GE_FALSE) goto WriteDone;
-	if (Level_WriteGridInfo (&pLevel->GridSettings, ArFile) == GE_FALSE) goto WriteDone;
-	if (fprintf (ArFile, "BspRebuild %d\n", pLevel->BspRebuildFlag) < 0) goto WriteDone;
-	if (Level_WriteViewInfo (pLevel->ViewInfo, ArFile) == GE_FALSE) goto WriteDone;
-	if (Level_WriteBrushTemplates (pLevel, ArFile) == GE_FALSE) goto WriteDone;
-	if (fprintf (ArFile, "TemplatePos %f %f %f\n", pLevel->TemplatePos.X, pLevel->TemplatePos.Y, pLevel->TemplatePos.Z) < 0) goto WriteDone;
+//	if (Level_SaveEntities (pLevel->Entities, ArFile) == GE_FALSE) goto WriteDone;
+//	if (ModelList_Write (pLevel->ModelInfo.Models, ArFile) == GE_FALSE) goto WriteDone;
+//	if (Group_WriteList (pLevel->Groups, ArFile) == GE_FALSE) goto WriteDone;
+//	if (Level_WriteSky (pLevel->SkyFaces, &pLevel->SkyRotationAxis, pLevel->SkyRotationSpeed, pLevel->SkyTextureScale, ArFile) == GE_FALSE) goto WriteDone;
+//	if (Level_WriteCompileInfo (&pLevel->CompileParams, ArFile) == GE_FALSE) goto WriteDone;
+//	if (fprintf (ArFile, "ShowGroups %d\n", pLevel->GroupVisSetting) < 0) goto WriteDone;
+//	if (EntityViewList_WriteToFile (pLevel->pEntityView, ArFile) == GE_FALSE) goto WriteDone;
+//	if (Level_WriteGridInfo (&pLevel->GridSettings, ArFile) == GE_FALSE) goto WriteDone;
+//	if (fprintf (ArFile, "BspRebuild %d\n", pLevel->BspRebuildFlag) < 0) goto WriteDone;
+//	if (Level_WriteViewInfo (pLevel->ViewInfo, ArFile) == GE_FALSE) goto WriteDone;
+//	if (Level_WriteBrushTemplates (pLevel, ArFile) == GE_FALSE) goto WriteDone;
+//	if (fprintf (ArFile, "TemplatePos %f %f %f\n", pLevel->TemplatePos.X, pLevel->TemplatePos.Y, pLevel->TemplatePos.Z) < 0) goto WriteDone;
 
 	// level options
-	if (fprintf (ArFile, "DrawScale %f\n", pLevel->DrawScale) < 0) goto WriteDone;
-	if (fprintf (ArFile, "LightmapScale %f\n", pLevel->LightmapScale) < 0) goto WriteDone;
+//	if (fprintf (ArFile, "DrawScale %f\n", pLevel->DrawScale) < 0) goto WriteDone;
+//	if (fprintf (ArFile, "LightmapScale %f\n", pLevel->LightmapScale) < 0) goto WriteDone;
 
+	fprintf (ArFile, "Equity %s\n", "V1.1");
 // changed QD Actors
 // add ActorBrushes to the List again
 	for (i = 0; i < pLevel->Entities->GetSize (); ++i)
@@ -1433,7 +1437,261 @@ WriteDone:
 
 #define MASTER_SCALE		0x0100
 
+// *************************************************************************
+// * Equity_Export_RFW			Level_ExportTo_RFW						   *
+// *************************************************************************
+geBoolean Level_ExportTo_RFW(Level *pLevel, const char *Filename, BrushList *BList,
+							int ExpSelected, geBoolean ExpLights, int GroupID)
+{
+	
+	FILE	*f;
+	geBoolean WriteRslt;
+	int size, i;
+	geBoolean *WrittenTex;
 
+	if(!pLevel) return GE_FALSE;
+	if(!Filename) return GE_FALSE;
+
+	// error checking required!
+	f = fopen(Filename, "wb");
+
+	if (!f)	return GE_FALSE;
+
+	WriteRslt = GE_FALSE;
+
+	// get the number of textures
+	WrittenTex=(geBoolean *)calloc(sizeof(geBoolean), pLevel->WadFile->mBitmapCount);
+	// which textures are used?
+	BrushList_GetUsedTextures(BList, WrittenTex, pLevel->WadFile);
+
+	/*
+	We will squeeze in CHUNK_MAIN3DS, CHUNK_VERSION, CHUNK_EDIT3DS, CHUNK_MESH_VERSION
+	when we know the size of the file, so move the filepointer forward now
+	*/
+	fseek(f, 32L, SEEK_SET);
+
+	// write all used materials to the file
+	for(i=0;i<pLevel->WadFile->mBitmapCount;i++)
+	{
+		if(WrittenTex[i])
+		{
+			// 3ds only allows DOS 8.3 file names, so cut the name if necessary
+			char matname[9];
+			int j,k;
+			strncpy (matname, pLevel->WadFile->mBitmaps[i].Name, 9);
+			matname[8] = '\0';
+			for(j=0;matname[j]!='\0';j++);
+
+			TypeIO_WriteUshort(f, CHUNK_MATBLOCK);
+			TypeIO_WriteInt(f, 6+6+j+1 +(3*15) + 102 +6 +8 +6+j+5 +8);
+
+			// write material name
+			TypeIO_WriteUshort(f, CHUNK_MATNAME);
+			TypeIO_WriteInt(f,(6+j+1));
+			for(k=0;k<=j;k++)
+				TypeIO_WriteUChar(f, matname[k]);
+
+			// ambient color
+			TypeIO_WriteUshort(f, CHUNK_MATAMB);		//0xA010  Ambient color
+			TypeIO_WriteInt(f,6+6+3);
+
+			TypeIO_WriteUshort(f, CHUNK_COLORRGB);
+			TypeIO_WriteInt(f,6+3);
+			TypeIO_WriteUChar(f, (char)120);
+			TypeIO_WriteUChar(f, (char)120);
+			TypeIO_WriteUChar(f, (char)120);
+
+			// diffuse color
+			TypeIO_WriteUshort(f, CHUNK_MATDIFF);		//0xA020  Diffuse color
+			TypeIO_WriteInt(f,6+6+3);
+
+			TypeIO_WriteUshort(f, CHUNK_COLORRGB);
+			TypeIO_WriteInt(f,6+3);
+			TypeIO_WriteUChar(f, (char)120);
+			TypeIO_WriteUChar(f, (char)120);
+			TypeIO_WriteUChar(f, (char)120);
+
+			// specular color
+			TypeIO_WriteUshort(f, CHUNK_MATSPEC);		//0xA030  Specular color
+			TypeIO_WriteInt(f,6+6+3);
+
+			TypeIO_WriteUshort(f, CHUNK_COLORRGB);
+			TypeIO_WriteInt(f,6+3);
+			TypeIO_WriteUChar(f, (char)120);
+			TypeIO_WriteUChar(f, (char)120);
+			TypeIO_WriteUChar(f, (char)120);
+
+			TypeIO_WriteUshort(f, CHUNK_MATSHININESS);
+			TypeIO_WriteInt(f,14);
+			TypeIO_WriteUshort(f, CHUNK_PERCENT);
+			TypeIO_WriteInt(f,8);
+			TypeIO_WriteUshort(f, 0);
+
+			TypeIO_WriteUshort(f, CHUNK_MATSHIN2PCT);
+			TypeIO_WriteInt(f,14);
+			TypeIO_WriteUshort(f, CHUNK_PERCENT);
+			TypeIO_WriteInt(f,8);
+			TypeIO_WriteUshort(f, 0);
+
+			TypeIO_WriteUshort(f, CHUNK_MATTRANS);
+			TypeIO_WriteInt(f,14);
+			TypeIO_WriteUshort(f, CHUNK_PERCENT);
+			TypeIO_WriteInt(f,8);
+			TypeIO_WriteUshort(f, 0);
+
+			TypeIO_WriteUshort(f, CHUNK_MATXPFALL);
+			TypeIO_WriteInt(f,14);
+			TypeIO_WriteUshort(f, CHUNK_PERCENT);
+			TypeIO_WriteInt(f,8);
+			TypeIO_WriteUshort(f, 0);
+
+			TypeIO_WriteUshort(f, CHUNK_MATREFBLUR);
+			TypeIO_WriteInt(f,14);
+			TypeIO_WriteUshort(f, CHUNK_PERCENT);
+			TypeIO_WriteInt(f,8);
+			TypeIO_WriteUshort(f, 0);
+
+			TypeIO_WriteUshort(f, CHUNK_MATSHADING);
+			TypeIO_WriteInt(f,8);
+			TypeIO_WriteUshort(f, 3);
+
+			TypeIO_WriteUshort(f, CHUNK_MATDECAL);
+			TypeIO_WriteInt(f,14);
+			TypeIO_WriteUshort(f, CHUNK_PERCENT);
+			TypeIO_WriteInt(f,8);
+			TypeIO_WriteUshort(f, 0);
+
+			TypeIO_WriteUshort(f, CHUNK_MATWIRESIZE);
+			TypeIO_WriteInt(f,10);
+			TypeIO_WriteFloat(f, 1.0f);
+
+			// texture map
+			TypeIO_WriteUshort(f, CHUNK_MAP);
+			TypeIO_WriteInt(f,6+8+6+j+5+8);
+
+			TypeIO_WriteUshort(f, CHUNK_PERCENT);
+			TypeIO_WriteInt(f,8);
+			TypeIO_WriteUshort(f, 100);
+
+			// write map name
+			TypeIO_WriteUshort(f, CHUNK_MAPNAME);
+			TypeIO_WriteInt(f, 6+j+5);
+			for(k=0;k<j;k++)
+				TypeIO_WriteUChar(f, matname[k]);
+			TypeIO_WriteUChar(f, '.');
+			if(geBitmap_HasAlpha(pLevel->WadFile->mBitmaps[i].bmp))
+			{
+				TypeIO_WriteUChar(f, 't');
+				TypeIO_WriteUChar(f, 'g');
+				TypeIO_WriteUChar(f, 'a');
+			}
+			else
+			{
+				TypeIO_WriteUChar(f, 'b');
+				TypeIO_WriteUChar(f, 'm');
+				TypeIO_WriteUChar(f, 'p');
+			}
+
+			TypeIO_WriteUChar(f, '\0');
+
+			TypeIO_WriteUshort(f, CHUNK_MAPTILING);
+			TypeIO_WriteInt(f,8);
+			TypeIO_WriteUshort(f, 0);
+		}
+	}
+
+	// write out the master scale
+	TypeIO_WriteUshort(f, MASTER_SCALE);
+	TypeIO_WriteInt(f, 10);
+	TypeIO_WriteFloat(f, 1.0f);
+
+	// export the brushes
+	if (BrushList_ExportTo3ds (BList, f, GE_FALSE) == GE_FALSE) goto WriteDone;
+
+// changed QD 12/03
+	int size_kf;
+	size_kf=0;
+
+	if(ExpLights)
+	{
+		int LCount, SLCount;
+		LCount = SLCount = 0;
+		// export the light entities
+		if (Level_ExportLightsTo3ds(pLevel->Entities, f, ExpSelected, GroupID, &LCount, &SLCount) == GE_FALSE) goto WriteDone;
+		// lights need keyframes or they will be placed at the origin by default
+		// baaah!!!
+
+		if(LCount>0||SLCount>0)
+		{
+			size_kf=6+21+14+10+LCount*110+SLCount*272;
+			TypeIO_WriteUshort(f, CHUNK_KEYFRAME);
+			TypeIO_WriteInt(f, size_kf);
+
+			TypeIO_WriteUshort(f, CHUNK_KF_HDR);
+			TypeIO_WriteInt(f, 21);
+			TypeIO_WriteUshort(f, 5);
+			TypeIO_WriteUChar(f, 'M');
+			TypeIO_WriteUChar(f, 'A');
+			TypeIO_WriteUChar(f, 'X');
+			TypeIO_WriteUChar(f, 'S');
+			TypeIO_WriteUChar(f, 'C');
+			TypeIO_WriteUChar(f, 'E');
+			TypeIO_WriteUChar(f, 'N');
+			TypeIO_WriteUChar(f, 'E');
+			TypeIO_WriteUChar(f, '\0');
+			TypeIO_WriteUChar(f, 'd');
+			TypeIO_WriteUChar(f, '\0');
+			TypeIO_WriteUshort(f, 0);
+
+			TypeIO_WriteUshort(f, CHUNK_KF_SEG);
+			TypeIO_WriteInt(f, 14);
+			TypeIO_WriteInt(f, 0);
+			TypeIO_WriteInt(f, 100);
+
+			TypeIO_WriteUshort(f, CHUNK_KF_CURTIME);
+			TypeIO_WriteInt(f, 10);
+			TypeIO_WriteInt(f, 0);
+
+			if (Level_ExportLightsKFTo3ds(pLevel->Entities, f, ExpSelected, GroupID) == GE_FALSE) goto WriteDone;
+		}
+	}
+// end change
+
+	size = ftell(f);
+
+	// move back to the bginning of the file
+	fseek(f, 0L, SEEK_SET );
+
+	TypeIO_WriteUshort(f,CHUNK_MAIN3DS);
+	TypeIO_WriteInt(f, size);
+
+	TypeIO_WriteUshort(f, CHUNK_VERSION);
+	TypeIO_WriteInt(f, 10);
+	TypeIO_WriteInt(f, 3);
+
+	TypeIO_WriteUshort(f,CHUNK_EDIT3DS);
+// changed QD 12/03
+	TypeIO_WriteInt(f, size-16-size_kf);
+// end change
+	TypeIO_WriteUshort(f,CHUNK_MESH_VERSION);
+	TypeIO_WriteInt(f, 10);
+	TypeIO_WriteInt(f, 3);
+
+	WriteRslt = GE_TRUE;
+
+WriteDone:
+
+	free(WrittenTex);
+
+	if (fclose(f) != 0) return GE_FALSE;
+
+// changed QD 12/03
+	if((size-size_kf)<=42)
+		_unlink(Filename);
+// end change
+
+	return WriteRslt;
+}
 // *************************************************************************
 // * Equity_Export_3DS			Level_ExportTo3ds						   *
 // *************************************************************************
