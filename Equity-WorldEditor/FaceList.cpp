@@ -432,11 +432,14 @@ static void write_char(FILE *file,char i)
 	fwrite(&i,1,sizeof(char),file);
 }
 
+// *************************************************************************
+// * Equity_Export_Face_List	FaceList_ExportTo3ds					   *
+// *************************************************************************
 geBoolean	FaceList_ExportTo3ds(const FaceList *pList, FILE *f, int BrushCount, int SubBrushCount)
 {
 	int i, j, k, num_faces, num_verts, num_mats, num_chars, curnum_verts;
 	int size_verts, size_faces, size_trimesh, size_objblock, size_name, size_mapuv, size_mats;
-	char matname[9];
+	char matname[10];
 	
 	char *matf=(char *)calloc(sizeof(char), pList->NumFaces);
 
@@ -462,8 +465,8 @@ geBoolean	FaceList_ExportTo3ds(const FaceList *pList, FILE *f, int BrushCount, i
 					matf[j]=1;
 			}
 
-			strncpy (matname, Face_GetTextureName(pList->Faces[i]), 9);
-			matname[8] = '\0';
+			strncpy (matname, Face_GetTextureName(pList->Faces[i]), 11);
+			matname[10] = '\0';
 			// get the number of characters for calculating size_mats
 			for(j=0;matname[j]!='\0';j++,num_chars++);
 		}
@@ -593,8 +596,8 @@ geBoolean	FaceList_ExportTo3ds(const FaceList *pList, FILE *f, int BrushCount, i
 				}
 			}
 	    
-			strncpy (matname, Face_GetTextureName(pList->Faces[i]), 9);
-			matname[8] = '\0';
+			strncpy (matname, Face_GetTextureName(pList->Faces[i]), 11);
+			matname[10] = '\0';
 			for(num_chars=0;matname[num_chars]!='\0';num_chars++);
 
 			write_ushort(f,CHUNK_MATLIST);

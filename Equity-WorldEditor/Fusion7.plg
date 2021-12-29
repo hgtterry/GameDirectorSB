@@ -6,13 +6,14 @@
 --------------------Configuration: FUSION - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\Equity\AppData\Local\Temp\RSP6D10.tmp" with contents
+Creating temporary file "C:\Users\Equity\AppData\Local\Temp\RSP6B95.tmp" with contents
 [
 /nologo /MT /W4 /GX /Ot /Oa /X /I "." /I ".\GenesisSDK\include" /I ".\TypeParser" /I "..\..\msdev60\include" /I "..\..\msdev60\mfc\include" /I "C:\Program Files (x86)\Microsoft Visual Studio\VC98\MFC\Include" /I "C:\Program Files (x86)\Microsoft Visual Studio\VC98\Include" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "WIN32_LEAN_AND_MEAN" /Fr".\Release/" /Fp".\Release/Fusion7.pch" /YX"stdafx.h" /Fo".\Release/" /Fd".\Release/" /FD /c 
+"C:\Users\Equity\Desktop\Equity15\Equity-WorldEditor\FaceList.cpp"
 "C:\Users\Equity\Desktop\Equity15\Equity-WorldEditor\level.cpp"
 ]
-Creating command line "cl.exe @C:\Users\Equity\AppData\Local\Temp\RSP6D10.tmp" 
-Creating temporary file "C:\Users\Equity\AppData\Local\Temp\RSP6D11.tmp" with contents
+Creating command line "cl.exe @C:\Users\Equity\AppData\Local\Temp\RSP6B95.tmp" 
+Creating temporary file "C:\Users\Equity\AppData\Local\Temp\RSP6B96.tmp" with contents
 [
 nafxcw.lib libcmt.lib .\GenesisSDK\lib\genesis.lib advapi32.lib ctl3d32.lib comctl32.lib comdlg32.lib gdi32.lib kernel32.lib oldnames.lib ole32.lib oleaut32.lib oledlg.lib shell32.lib urlmon.lib user32.lib uuid.lib winmm.lib winspool.lib /nologo /subsystem:windows /incremental:no /pdb:".\Deliver/Fusion7.pdb" /machine:I386 /out:".\Deliver/Fusion7.exe" /libpath:"..\..\msdev60\lib" /libpath:"..\..\msdev60\mfc\lib" 
 ".\Release\cparser.obj"
@@ -88,9 +89,10 @@ nafxcw.lib libcmt.lib .\GenesisSDK\lib\genesis.lib advapi32.lib ctl3d32.lib comc
 ".\Release\WadFile.obj"
 ".\Release\FUSION.res"
 ]
-Creating command line "link.exe @C:\Users\Equity\AppData\Local\Temp\RSP6D11.tmp"
+Creating command line "link.exe @C:\Users\Equity\AppData\Local\Temp\RSP6B96.tmp"
 <h3>Output Window</h3>
 Compiling...
+FaceList.cpp
 level.cpp
 C:\Program Files (x86)\Microsoft Visual Studio\VC98\MFC\Include\afxtempl.h(1566) : warning C4505: 'Level_LoadEntities' : unreferenced local function has been removed
         C:\Users\Equity\Desktop\Equity15\Equity-WorldEditor\level.cpp(121) : see declaration of 'Level_LoadEntities'
@@ -107,7 +109,7 @@ C:\Program Files (x86)\Microsoft Visual Studio\VC98\MFC\Include\afxtempl.h(1566)
 C:\Program Files (x86)\Microsoft Visual Studio\VC98\MFC\Include\afxtempl.h(1566) : warning C4505: 'Level_WriteBrushTemplates' : unreferenced local function has been removed
         C:\Users\Equity\Desktop\Equity15\Equity-WorldEditor\level.cpp(1202) : see declaration of 'Level_WriteBrushTemplates'
 Linking...
-Creating temporary file "C:\Users\Equity\AppData\Local\Temp\RSP72AF.tmp" with contents
+Creating temporary file "C:\Users\Equity\AppData\Local\Temp\RSP7461.tmp" with contents
 [
 /nologo /o".\Deliver/Fusion7.bsc" 
 ".\Release\cparser.sbr"
@@ -181,7 +183,7 @@ Creating temporary file "C:\Users\Equity\AppData\Local\Temp\RSP72AF.tmp" with co
 ".\Release\undostack.sbr"
 ".\Release\util.sbr"
 ".\Release\WadFile.sbr"]
-Creating command line "bscmake.exe @C:\Users\Equity\AppData\Local\Temp\RSP72AF.tmp"
+Creating command line "bscmake.exe @C:\Users\Equity\AppData\Local\Temp\RSP7461.tmp"
 Creating browse info file...
 <h3>Output Window</h3>
 

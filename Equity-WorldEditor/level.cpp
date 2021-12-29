@@ -1476,10 +1476,10 @@ geBoolean Level_ExportTo_RFW(Level *pLevel, const char *Filename, BrushList *BLi
 		if(WrittenTex[i])
 		{
 			// 3ds only allows DOS 8.3 file names, so cut the name if necessary
-			char matname[9];
+			char matname[11];
 			int j,k;
-			strncpy (matname, pLevel->WadFile->mBitmaps[i].Name, 9);
-			matname[8] = '\0';
+			strncpy (matname, pLevel->WadFile->mBitmaps[i].Name, 11);
+			matname[10] = '\0';
 			for(j=0;matname[j]!='\0';j++);
 
 			TypeIO_WriteUshort(f, CHUNK_MATBLOCK);
