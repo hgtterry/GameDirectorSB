@@ -179,8 +179,17 @@ void CFusionApp::ResolvePreferencesPaths (void)
 // end change
 }
 
+
+AB_App *App = NULL;
+
+// *************************************************************************
+// * Equity_InitInstance				InitInstance					   *
+// *************************************************************************
 BOOL CFusionApp::InitInstance()
 {
+	App = new AB_App();
+
+	
 	char AppPath[MAX_PATH];
 	
 	::GetModuleFileName (NULL, AppPath, MAX_PATH);

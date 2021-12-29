@@ -1443,7 +1443,7 @@ WriteDone:
 geBoolean Level_ExportTo_RFW(Level *pLevel, const char *Filename, BrushList *BList,
 							int ExpSelected, geBoolean ExpLights, int GroupID)
 {
-	
+
 	FILE	*f;
 	geBoolean WriteRslt;
 	int size, i;

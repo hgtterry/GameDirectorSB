@@ -15,6 +15,8 @@ public:
 	AB_App();
 	virtual ~AB_App();
 
+	void Say(const char* Message);
+
 };
 
 extern AB_App* App;

@@ -1,13 +1,8 @@
-// SB_App.cpp: implementation of the SB_App class.
-//
-//////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
 #include "AB_App.h"
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+
 
 AB_App::AB_App()
 {
@@ -17,4 +12,16 @@ AB_App::AB_App()
 AB_App::~AB_App()
 {
 
+}
+
+// *************************************************************************
+// *									Say								   *
+// *************************************************************************
+void AB_App::Say(const char* Message)
+{
+	char text[1024];
+	strcpy(text, Message);
+	MessageBox(NULL,Message,"Message",MB_OK);
+
+//	App->Cl_Dialogs->Message(text);
 }

@@ -8756,6 +8756,10 @@ void CFusionDoc::ExportTo_RFW(const char *FileName, int ExpSelected, geBoolean E
 		// ..have laying around for this file.
 		ConPrintf("Error exporting file\n");
 	}
+	else
+	{
+			App->Say("Exported");
+	}
 }
 
 // *************************************************************************

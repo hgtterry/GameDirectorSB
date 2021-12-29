@@ -35,6 +35,7 @@
 
 #include <afxmt.h>	// required for single-instance checking
 
+#include "AB_App.h"
 /////////////////////////////////////////////////////////////////////////////
 // CFusionApp:
 // See FUSION.cpp for the implementation of this class
