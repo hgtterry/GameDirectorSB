@@ -98,6 +98,9 @@ GD19_App::GD19_App(void)
 	SBC_TopTabs =		nullptr;
 	SBC_MeshViewer =	nullptr;
 
+	// ---------------------------------------------------- 29/12/21
+	Com_CDialogs =		nullptr;
+
 	Fdlg = nullptr;
 	hInst = nullptr;
 	MainHwnd = nullptr;
@@ -262,6 +265,8 @@ bool GD19_App::InitApp(void)
 	SBC_Scene =			new SB_Scene();
 	SBC_TopTabs =		new SB_TopTabs();
 	SBC_MeshViewer =	new SB_MeshViewer();
+		
+	Com_CDialogs =		new  Com_Diaolgs();
 
 	SetBrushes_Fonts();
 

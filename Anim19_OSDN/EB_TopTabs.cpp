@@ -312,6 +312,12 @@ LRESULT CALLBACK EB_TopTabs::Camera_ETB_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 	case WM_COMMAND:
 	{
+		if (LOWORD(wParam) == IDC_EQBTMOUSESPEED)
+		{
+			App->Com_CDialogs->Start_Mouse_Sensitivity(App->SBC_Equity->MainWindow_Hwnd);
+			return 1;
+		}
+
 		if (LOWORD(wParam) == IDC_ETBRESETVIEW)
 		{
 			App->SBC_Equity->Reset_View();

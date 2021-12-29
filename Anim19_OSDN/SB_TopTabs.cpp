@@ -528,7 +528,7 @@ LRESULT CALLBACK SB_TopTabs::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 		if (LOWORD(wParam) == IDC_BTMOUSESPEED)
 		{
-			App->Cl_Dialogs->Start_Mouse_Sensitivity();
+			App->Com_CDialogs->Start_Mouse_Sensitivity(App->Fdlg);
 			return TRUE;
 		}
 

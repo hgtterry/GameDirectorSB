@@ -18,8 +18,6 @@ public:
 	void YesNo(char *Text, char *Text2);
 	void Message(char *pString);
 
-	void Start_Mouse_Sensitivity();
-
 	bool GameMode_StartPosition_Dlg();
 
 	bool Canceled;
@@ -63,8 +61,6 @@ protected:
 
 	static LRESULT CALLBACK YesNo_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Message_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-
-	static LRESULT CALLBACK Mouse_Sensitivity_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Projection_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void List_Messages_Stock(HWND List);

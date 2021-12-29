@@ -17,6 +17,9 @@ public:
 	int		View_Height;	// Height of Render Window [081221]
 	int		View_Width;		// Width of Render Window [081221]
 
+	float		mMoveSensitivity;
+	float		mMoveSensitivityMouse;
+
 	Ogre::Camera* WE_Cam;
 
 protected:
@@ -34,7 +37,7 @@ protected:
 	Radian		mRotY;
 	Vector3		mTranslateVector;
 	float		mMoveScale;
-	float		mMoveSensitivity;
+	
 
 	float		Pl_DeltaMouse;
 	int			Pl_MouseX;
@@ -44,6 +47,5 @@ protected:
 	long		Pl_Cent500X;
 	long		Pl_Cent500Y;
 
-	float		mMoveSensitivityMouse;
 };
 

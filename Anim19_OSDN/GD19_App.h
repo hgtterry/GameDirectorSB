@@ -90,6 +90,7 @@ distribution.
 #include "EB_Model.h" // *******************
 #include "SB_MeshViewer.h"
 
+#include "Com_Diaolgs.h"
 
 class GD19_App
 {
@@ -164,6 +165,8 @@ public:
 	SB_Scene*				SBC_Scene;			// Collection Class For Level [081221]
 	SB_TopTabs*				SBC_TopTabs;		// Top Bar Tabs Class Level Editor [081221]
 	SB_MeshViewer*			SBC_MeshViewer;
+
+	Com_Diaolgs*			Com_CDialogs;		// Common Dialogs for App [291221]
 
 	GD19_App(void);
 	~GD19_App(void);
