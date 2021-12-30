@@ -155,14 +155,14 @@ LRESULT CALLBACK SB_Equity::Ogre3DEquity_Proc(HWND hDlg, UINT message, WPARAM wP
 		{
 			if (App->OgreStarted == 1)
 			{
-
-				SetCapture(App->ViewGLhWnd);// Bernie
+				SetCapture(App->ViewGLEquity_hWnd);// Bernie
 				SetCursorPos(500, 500);
-				App->Cl19_Ogre->OgreListener->Pl_RightMouseDown = 1;
+				App->EBC_Listener->Pl_RightMouseDown = 1;
 				App->CUR = SetCursor(NULL);
 				return 1;
 			}
 		}
+
 		return 1;
 	}
 	case WM_RBUTTONUP:
@@ -172,7 +172,7 @@ LRESULT CALLBACK SB_Equity::Ogre3DEquity_Proc(HWND hDlg, UINT message, WPARAM wP
 		if (App->OgreStarted == 1)
 		{
 			ReleaseCapture();
-			App->Cl19_Ogre->OgreListener->Pl_RightMouseDown = 0;
+			App->EBC_Listener->Pl_RightMouseDown = 0;
 			SetCursor(App->CUR);
 			return 1;
 		}
@@ -400,34 +400,6 @@ LRESULT CALLBACK SB_Equity::Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 		}
 
 		return CDRF_DODEFAULT;
-	}
-
-	case WM_RBUTTONUP:
-	{
-		if (App->OgreStarted == 1)
-		{
-			ReleaseCapture();
-			App->EBC_Listener->Pl_RightMouseDown = 0;
-			SetCursor(App->CUR);
-			return 1;
-		}
-
-		return 1;
-	}
-
-	case WM_RBUTTONDOWN: // BERNIE_HEAR_FIRE 
-	{
-
-		if (App->OgreStarted == 1)
-		{
-			SetCapture(App->SBC_Equity->MainWindow_Hwnd);// Bernie
-			SetCursorPos(500, 500);
-			App->EBC_Listener->Pl_RightMouseDown = 1;
-			App->CUR = SetCursor(NULL);
-			return 1;
-		}
-
-		return 1;
 	}
 
 	case WM_COMMAND:
