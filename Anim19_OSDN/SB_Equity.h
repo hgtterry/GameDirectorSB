@@ -43,6 +43,7 @@ public:
 protected:
 
 	static LRESULT CALLBACK Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Ogre3DEquity_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Init_Bmps_Globals(void);
 
@@ -52,8 +53,6 @@ protected:
 	void Grid_Update(bool Create);
 	void Hair_Update(bool Create);
 
-	HWND RenderWindow_Hwnd; // Equity Render Window Handel for Ogre (HWND) [121221]
-	
 	bool ShowGridFlag;
 	bool ShowDivisions;
 	bool ShowHair;

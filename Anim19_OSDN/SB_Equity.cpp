@@ -6,7 +6,7 @@
 
 SB_Equity::SB_Equity()
 {
-	RenderWindow_Hwnd = nullptr;
+
 	MainWindow_Hwnd = nullptr;
 
 	MeshView_Window = nullptr;
@@ -92,6 +92,180 @@ bool SB_Equity::Start_Equity()
 }
 
 // *************************************************************************
+// *					Ogre3DEquity_Proc Terry Bernie 					   *
+// *************************************************************************
+LRESULT CALLBACK SB_Equity::Ogre3DEquity_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+
+	case WM_INITDIALOG: // Bernie as the dialog is created
+	{
+		return TRUE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		if (App->OgreStarted == 0)
+		{
+			return (LONG)App->BlackBrush;
+		}
+	}
+	case WM_MOUSEWHEEL:
+	{
+		//if (App->FullScreen == 1)
+		{
+			int zDelta = (short)HIWORD(wParam);    // wheel rotation
+
+			if (zDelta > 0)
+			{
+				App->EBC_Listener->Wheel = -1;
+			}
+			else if (zDelta < 0)
+			{
+				App->EBC_Listener->Wheel = 1;
+			}
+			return 1;
+		}
+
+
+	}
+
+	case WM_MOUSEMOVE: // ok up and running and we have a loop for mouse
+	{
+
+		App->SBC_Equity->EB_imgui.mouseMoved();
+
+		SetFocus(App->ViewGLEquity_hWnd);
+
+		break;
+	}
+
+	// Right Mouse Button
+	case WM_RBUTTONDOWN: // BERNIE_HEAR_FIRE 
+	{
+		App->Cl19_Ogre->m_imgui.mousePressed();
+
+		if (ImGui::GetIO().WantCaptureMouse)
+		{
+			//App->Cl_FileView_V2->RightMouseDown = 1;
+		}
+
+		if (!ImGui::GetIO().WantCaptureMouse)
+		{
+			if (App->OgreStarted == 1)
+			{
+
+				SetCapture(App->ViewGLhWnd);// Bernie
+				SetCursorPos(500, 500);
+				App->Cl19_Ogre->OgreListener->Pl_RightMouseDown = 1;
+				App->CUR = SetCursor(NULL);
+				return 1;
+			}
+		}
+		return 1;
+	}
+	case WM_RBUTTONUP:
+	{
+		App->Cl19_Ogre->m_imgui.mouseReleased();
+
+		if (App->OgreStarted == 1)
+		{
+			ReleaseCapture();
+			App->Cl19_Ogre->OgreListener->Pl_RightMouseDown = 0;
+			SetCursor(App->CUR);
+			return 1;
+		}
+
+		return 1;
+	}
+	// Left Mouse Button
+	case WM_LBUTTONDOWN: // BERNIE_HEAR_FIRE 
+	{
+		//App->Cl19_Ogre->m_imgui.mousePressed();
+
+		//if (!ImGui::GetIO().WantCaptureMouse)
+		//{
+
+		//	{
+
+		//		if (App->OgreStarted == 1)
+		//		{
+		//			if (!ImGui::GetIO().WantCaptureMouse)
+		//			{
+		//				SetCapture(App->ViewGLhWnd);// Bernie
+		//				SetCursorPos(500, 500);
+		//				App->Cl19_Ogre->OgreListener->Pl_LeftMouseDown = 1;
+		//				App->CUR = SetCursor(NULL);
+		//			}
+		//			else
+		//			{
+		//				App->Cl19_Ogre->OgreListener->Pl_LeftMouseDown = 1;
+		//			}
+
+		//			return 1;
+		//		}
+		//	}
+		//}
+
+		App->SBC_Equity->EB_imgui.mousePressed();
+
+		if (!ImGui::GetIO().WantCaptureMouse)
+		{
+			if (App->OgreStarted == 1)
+			{
+
+				SetCapture(App->ViewGLEquity_hWnd);// Bernie
+				SetCursorPos(500, 500);
+				App->EBC_Listener->Pl_LeftMouseDown = 1;
+				App->CUR = SetCursor(NULL);
+
+				return 1;
+			}
+		}
+
+		return 1;
+	}
+
+	case WM_LBUTTONUP:
+	{
+		
+		App->SBC_Equity->EB_imgui.mouseReleased();
+
+		if (App->OgreStarted == 1)
+		{
+			ReleaseCapture();
+			App->EBC_Listener->Pl_LeftMouseDown = 0;
+			SetCursor(App->CUR);
+			return 1;
+		}
+
+		return 1;
+	}
+	case WM_KEYDOWN:
+		switch (wParam)
+		{
+		case 'C':
+			if (GetAsyncKeyState(VK_CONTROL))
+			{
+				//		App->CL10_Objects_Com->Copy_Object();
+				//		return 1;
+			}
+		case 'V':
+			if (GetAsyncKeyState(VK_CONTROL))
+			{
+				//		App->CL10_Objects_Com->Paste_Object();
+				//		return 1;
+			}
+			return 1;
+			//	// more keys here
+		}break;
+	}
+
+	return FALSE;
+}
+
+// *************************************************************************
 // *						Equity_Proc Terry Bernie				   *
 // *************************************************************************
 LRESULT CALLBACK SB_Equity::Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
@@ -101,7 +275,7 @@ LRESULT CALLBACK SB_Equity::Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 	case WM_INITDIALOG:
 	{
 
-		App->SBC_Equity->RenderWindow_Hwnd = GetDlgItem(hDlg, IDC_OGREWIN2);
+		App->ViewGLEquity_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_VIEWEREQUITY, hDlg, (DLGPROC)Ogre3DEquity_Proc);
 
 		App->SBC_Equity->MainWindow_Hwnd = hDlg;
 
@@ -226,68 +400,6 @@ LRESULT CALLBACK SB_Equity::Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 		}
 
 		return CDRF_DODEFAULT;
-	}
-
-	case WM_MOUSEWHEEL:
-	{
-		int zDelta = (short)HIWORD(wParam);    // wheel rotation
-
-		if (zDelta > 0)
-		{
-			App->EBC_Listener->Wheel = -1;
-		}
-		else if (zDelta < 0)
-		{
-			App->EBC_Listener->Wheel = 1;
-		}
-
-		return 1;
-	}
-
-	case WM_MOUSEMOVE: // ok up and running and we have a loop for mouse
-	{
-		
-		App->SBC_Equity->EB_imgui.mouseMoved();
-
-		SetFocus(App->SBC_Equity->RenderWindow_Hwnd);
-		break;
-	}
-
-
-	case WM_LBUTTONDOWN:
-	{
-		App->SBC_Equity->EB_imgui.mousePressed();
-
-		if (!ImGui::GetIO().WantCaptureMouse)
-		{
-			if (App->OgreStarted == 1)
-			{
-
-				SetCapture(App->SBC_Equity->MainWindow_Hwnd);// Bernie
-				SetCursorPos(500, 500);
-				App->EBC_Listener->Pl_LeftMouseDown = 1;
-				App->CUR = SetCursor(NULL);
-
-				return 1;
-			}
-		}
-
-		return 1;
-	}
-
-	case WM_LBUTTONUP:
-	{
-		App->SBC_Equity->EB_imgui.mouseReleased();
-
-		if (App->OgreStarted == 1)
-		{
-			ReleaseCapture();
-			App->EBC_Listener->Pl_LeftMouseDown = 0;
-			SetCursor(App->CUR);
-			return 1;
-		}
-
-		return 1;
 	}
 
 	case WM_RBUTTONUP:
@@ -816,7 +928,7 @@ bool SB_Equity::Set_OgreWindow(void)
 	Ogre::NameValuePairList options;
 
 	options["externalWindowHandle"] =
-		Ogre::StringConverter::toString((size_t)RenderWindow_Hwnd);
+		Ogre::StringConverter::toString((size_t)App->ViewGLEquity_hWnd);
 
 	MeshView_Window = App->Cl19_Ogre->mRoot->createRenderWindow("MeshViewWin", 1024, 768, false, &options);
 
@@ -866,7 +978,7 @@ bool SB_Equity::Set_OgreWindow(void)
 
 	if (Use_Imgui == 1)
 	{
-		EB_imgui.Init(mSceneMgrMeshView, RenderWindow_Hwnd);
+		EB_imgui.Init(mSceneMgrMeshView, App->ViewGLEquity_hWnd);
 	}
 
 	return 1;

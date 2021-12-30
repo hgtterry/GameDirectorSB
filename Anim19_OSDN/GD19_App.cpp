@@ -167,10 +167,13 @@ GD19_App::GD19_App(void)
 	Font_CB15_Bold = 0;
 	Font_Arial20 = 0;
 
-	ViewGLhWnd = nullptr;
-	ViewPLeaseWait = nullptr;
-	GD_Properties_Hwnd = nullptr;
-	Physics_Console_Hwnd = nullptr;
+	ViewGLhWnd =			nullptr;
+	ViewGLEquity_hWnd =		nullptr;
+
+
+	ViewPLeaseWait =		nullptr;
+	GD_Properties_Hwnd =	nullptr;
+	Physics_Console_Hwnd =	nullptr;
 
 	OgreStarted = 0;
 	Start_Scene_Loaded = 0;
