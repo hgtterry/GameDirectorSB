@@ -246,7 +246,6 @@ LRESULT CALLBACK SB_Equity::Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 			return 1;
 		}
 
-
 	}
 
 	case WM_MOUSEMOVE: // ok up and running and we have a loop for mouse

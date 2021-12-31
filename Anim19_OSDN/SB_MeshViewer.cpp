@@ -1003,7 +1003,7 @@ LRESULT CALLBACK SB_MeshViewer::Folders_Proc(HWND hDlg, UINT message, WPARAM wPa
 		{
 			
 			strcpy(App->CL_Vm_FileIO->BrowserMessage, "Select Folder to Scan");
-			int Test = App->CL_Vm_FileIO->StartBrowser("");
+			int Test = App->CL_Vm_FileIO->StartBrowser("",App->Fdlg);
 
 			strcpy(App->SBC_MeshViewer->TempFolder, App->CL_Vm_FileIO->szSelectedDir);
 

@@ -288,12 +288,12 @@ bool VM_FileIO::SearchFolders(char* Path, char* File)
 // *************************************************************************
 // *							StartBrowser   							   *
 // *************************************************************************
-bool VM_FileIO::StartBrowser(char* szInitDir)
+bool VM_FileIO::StartBrowser(char* szInitDir,HWND hDlg)
 {
 	TCHAR dname[MAX_PATH * 2];
 	IMalloc *imalloc; SHGetMalloc(&imalloc);
 	BROWSEINFO bi; ZeroMemory(&bi, sizeof(bi));
-	bi.hwndOwner = App->Fdlg;
+	bi.hwndOwner = hDlg;
 	bi.pszDisplayName = dname;
 	bi.lpszTitle = BrowserMessage;
 	bi.lParam = (LPARAM)szInitDir;

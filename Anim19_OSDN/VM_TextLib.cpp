@@ -303,7 +303,7 @@ LRESULT CALLBACK VM_TextLib::TextureLib_Proc(HWND hDlg, UINT message, WPARAM wPa
 			strcat(File, "_Textures");
 
 			strcpy(App->CL_Vm_FileIO->BrowserMessage, "Select Folder To Extract Textures");
-			int Test = App->CL_Vm_FileIO->StartBrowser("");
+			int Test = App->CL_Vm_FileIO->StartBrowser("", App->Fdlg);
 			if (Test == 0)
 			{
 				return 0;

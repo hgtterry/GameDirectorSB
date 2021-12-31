@@ -165,7 +165,7 @@ LRESULT CALLBACK SB_Project::Create_Project_Proc(HWND hDlg, UINT message, WPARAM
 		if (LOWORD(wParam) == IDC_BTPJBROWSE)
 		{
 			strcpy(App->CL_Vm_FileIO->BrowserMessage, "Select Folder To Place New Project a sub folder will be created");
-			int Test = App->CL_Vm_FileIO->StartBrowser("");
+			int Test = App->CL_Vm_FileIO->StartBrowser("", App->Fdlg);
 
 			if (Test == 0){return true;}
 

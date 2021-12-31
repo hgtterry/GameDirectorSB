@@ -82,7 +82,7 @@ bool EB_Export_Mesh::Export_AssimpToOgre(void)
 	mOgreSkellTagName[0] = 0;
 
 	strcpy(App->CL_Vm_FileIO->BrowserMessage, "Select Folder To Place Ogre Files a sub folder will be created");
-	int Test = App->CL_Vm_FileIO->StartBrowser("");
+	int Test = App->CL_Vm_FileIO->StartBrowser("",App->SBC_Equity->MainWindow_Hwnd);
 
 	if (Test == 0) { return 1; }
 

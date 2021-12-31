@@ -17,7 +17,7 @@ public:
 	bool Update_File_Info(char* Full_Path, char* File_Name);
 
 	bool SearchFolders(char* Path, char* File);
-	bool StartBrowser(char* szInitDir);
+	bool StartBrowser(char* szInitDir, HWND hDlg);
 	bool Create_Output_Folder(char* Extension);
 
 	void Init_History();
