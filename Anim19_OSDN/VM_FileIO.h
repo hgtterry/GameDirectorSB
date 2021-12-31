@@ -17,7 +17,7 @@ public:
 	bool Update_File_Info(char* Full_Path, char* File_Name);
 
 	bool SearchFolders(char* Path, char* File);
-	bool StartBrowser(char* szInitDir, HWND hDlg);
+	
 	bool Create_Output_Folder(char* Extension);
 
 	void Init_History();
@@ -50,7 +50,6 @@ public:
 	char Full_Path_And_File[1024];
 	char Just_FileName[1024];
 
-	char BrowserMessage[250];
 	TCHAR szSelectedDir[500];
 	char OutputFolder[1024];
 
@@ -64,7 +63,7 @@ public:
 	OPENFILENAME ofn;
 
 protected:
-	static int __stdcall BrowseCallbackProc(HWND  hwnd, UINT  uMsg, LPARAM  lParam, LPARAM  lpData);
+
 
 	FILE *WriteRecentFiles;
 	FILE *ReadRecentFiles;
