@@ -43,7 +43,6 @@ public:
 protected:
 
 	static LRESULT CALLBACK Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-	static LRESULT CALLBACK Ogre3DEquity_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Init_Bmps_Globals(void);
 
