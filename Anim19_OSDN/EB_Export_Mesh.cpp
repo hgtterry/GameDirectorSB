@@ -81,8 +81,8 @@ bool EB_Export_Mesh::Export_AssimpToOgre(void)
 	mOgreSkellFileName[0] = 0;
 	mOgreSkellTagName[0] = 0;
 
-	strcpy(App->CL_Vm_FileIO->BrowserMessage, "Select Folder To Place Ogre Files a sub folder will be created");
-	int Test = App->CL_Vm_FileIO->StartBrowser("",App->SBC_Equity->MainWindow_Hwnd);
+	strcpy(App->Com_CDialogs->BrowserMessage, "Select Folder To Place Ogre Files a sub folder will be created");
+	int Test = App->Com_CDialogs->StartBrowser("",App->SBC_Equity->MainWindow_Hwnd);
 
 	if (Test == 0) { return 1; }
 
@@ -496,16 +496,16 @@ bool EB_Export_Mesh::CreateDirectoryMesh(void)
 
 	strcat(NewDirectory, "_Ogre");
 
-	strcat(App->CL_Vm_FileIO->szSelectedDir, NewDirectory);
+	strcat(App->Com_CDialogs->szSelectedDir, NewDirectory);
 
-	if (_mkdir(App->CL_Vm_FileIO->szSelectedDir) == 0)
+	if (_mkdir(App->Com_CDialogs->szSelectedDir) == 0)
 	{
-		strcpy(mDecompileFolder, App->CL_Vm_FileIO->szSelectedDir);
-		_chdir(App->CL_Vm_FileIO->szSelectedDir);
+		strcpy(mDecompileFolder, App->Com_CDialogs->szSelectedDir);
+		_chdir(App->Com_CDialogs->szSelectedDir);
 	}
 	else
 	{
-		_chdir(App->CL_Vm_FileIO->szSelectedDir);
+		_chdir(App->Com_CDialogs->szSelectedDir);
 	}
 
 	_getcwd(mCurrentFolder, 1024);

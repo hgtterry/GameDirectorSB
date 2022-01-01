@@ -50,7 +50,6 @@ public:
 	char Full_Path_And_File[1024];
 	char Just_FileName[1024];
 
-	TCHAR szSelectedDir[500];
 	char OutputFolder[1024];
 
 	char UserData_Folder[1024];

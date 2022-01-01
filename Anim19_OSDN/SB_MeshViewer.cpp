@@ -1002,12 +1002,12 @@ LRESULT CALLBACK SB_MeshViewer::Folders_Proc(HWND hDlg, UINT message, WPARAM wPa
 		if (LOWORD(wParam) == IDC_BTFOLDERADD)
 		{
 			
-			strcpy(App->CL_Vm_FileIO->BrowserMessage, "Select Folder to Scan");
-			int Test = App->CL_Vm_FileIO->StartBrowser("",App->Fdlg);
+			strcpy(App->Com_CDialogs->BrowserMessage, "Select Folder to Scan");
+			int Test = App->Com_CDialogs->StartBrowser("",App->Fdlg);
 
-			strcpy(App->SBC_MeshViewer->TempFolder, App->CL_Vm_FileIO->szSelectedDir);
+			strcpy(App->SBC_MeshViewer->TempFolder, App->Com_CDialogs->szSelectedDir);
 
-			strcpy(App->SBC_MeshViewer->Folder_Vec[App->SBC_MeshViewer->FolderList_Count].Folder_Path, App->CL_Vm_FileIO->szSelectedDir);
+			strcpy(App->SBC_MeshViewer->Folder_Vec[App->SBC_MeshViewer->FolderList_Count].Folder_Path, App->Com_CDialogs->szSelectedDir);
 
 			App->SBC_MeshViewer->FolderList_Count++;
 

@@ -34,6 +34,7 @@ distribution.
 Com_Diaolgs::Com_Diaolgs()
 {
 	BrowserMessage[0] = 0;
+	szSelectedDir[0] = 0;
 }
 
 
@@ -236,6 +237,8 @@ LRESULT CALLBACK Com_Diaolgs::Mouse_Sensitivity_Proc(HWND hDlg, UINT message, WP
 // *************************************************************************
 bool Com_Diaolgs::StartBrowser(char* szInitDir, HWND hDlg)
 {
+	szSelectedDir[0] = 0;
+
 	TCHAR dname[MAX_PATH * 2];
 	IMalloc *imalloc; SHGetMalloc(&imalloc);
 	BROWSEINFO bi; ZeroMemory(&bi, sizeof(bi));
@@ -304,11 +307,13 @@ int __stdcall Com_Diaolgs::BrowseCallbackProc(HWND  hwnd, UINT  uMsg, LPARAM  lP
 		if (!bRet)
 		{
 			::EnableWindow(GetDlgItem(hwnd, IDOK), FALSE);
-			strcpy(App->CL_Vm_FileIO->szSelectedDir, "");
+			strcpy(App->Com_CDialogs->szSelectedDir, "");
 		}
 		else
-			strcpy(App->CL_Vm_FileIO->szSelectedDir, szDir);
-		strcat(App->CL_Vm_FileIO->szSelectedDir, "\\");
+		{
+			strcpy(App->Com_CDialogs->szSelectedDir, szDir);
+			strcat(App->Com_CDialogs->szSelectedDir, "\\");
+		}
 	}
 
 	return 0;

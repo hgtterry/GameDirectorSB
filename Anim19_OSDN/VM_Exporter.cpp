@@ -23,8 +23,8 @@ void VM_Exporter::Actor_Model(void)
 		return;
 	}
 
-	strcpy(App->CL_Vm_FileIO->BrowserMessage, "Select Folder To Place Decompiled Files a sub folder will be created");
-	int Test = App->CL_Vm_FileIO->StartBrowser("", App->Fdlg);
+	strcpy(App->Com_CDialogs->BrowserMessage, "Select Folder To Place Decompiled Files a sub folder will be created");
+	int Test = App->Com_CDialogs->StartBrowser("", App->Fdlg);
 
 	if (Test == 0)
 	{

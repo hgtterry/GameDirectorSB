@@ -286,96 +286,13 @@ bool VM_FileIO::SearchFolders(char* Path, char* File)
 }
 
 // *************************************************************************
-// *							StartBrowser   							   *
-// *************************************************************************
-bool VM_FileIO::StartBrowser(char* szInitDir,HWND hDlg)
-{
-	TCHAR dname[MAX_PATH * 2];
-	IMalloc *imalloc; SHGetMalloc(&imalloc);
-	BROWSEINFO bi; ZeroMemory(&bi, sizeof(bi));
-	bi.hwndOwner = hDlg;
-	bi.pszDisplayName = dname;
-	bi.lpszTitle = BrowserMessage;
-	bi.lParam = (LPARAM)szInitDir;
-	bi.ulFlags = BIF_RETURNONLYFSDIRS | BIF_USENEWUI;
-	bi.lpfn = BrowseCallbackProc;
-
-	CoInitialize(NULL);
-	ITEMIDLIST *pidl = SHBrowseForFolder(&bi);
-
-	if (pidl)
-	{
-		imalloc->Free(pidl);
-		imalloc->Release();
-		return 1;
-	}
-
-	imalloc->Free(pidl);
-	imalloc->Release();
-
-	return 0;
-}
-// *************************************************************************
-// *						BrowseCallbackProc   						   *
-// *************************************************************************
-int __stdcall VM_FileIO::BrowseCallbackProc(HWND  hwnd, UINT  uMsg, LPARAM  lParam, LPARAM  lpData)
-{
-	//Initialization callback message
-	if (uMsg == BFFM_INITIALIZED)
-	{
-		//SendMessage(hWnd, BFFM_SETSELECTION, 1, (LPARAM) szInitialPathName); 
-		SendMessage(hwnd, BFFM_SETSELECTION, TRUE, lpData);
-
-	}
-
-	//Selection change message - store the selected directory
-	if (uMsg == BFFM_SELCHANGED)
-	{
-		TCHAR szDir[MAX_PATH * 2] = { 0 };
-
-		// fail if non-filesystem
-		BOOL bRet = SHGetPathFromIDList((LPITEMIDLIST)lParam, szDir);
-		if (bRet)
-		{
-			//If the folder cannot be "read" then fail
-			if (_taccess(szDir, 00) != 0)
-			{
-				bRet = FALSE;
-			}
-			else
-			{
-				SHFILEINFO sfi;
-				::SHGetFileInfo((LPCTSTR)lParam, 0, &sfi, sizeof(sfi),
-					SHGFI_PIDL | SHGFI_ATTRIBUTES);
-
-				// fail if pidl is a link
-				if (sfi.dwAttributes & SFGAO_LINK)
-					bRet = FALSE;
-			}
-		}
-
-		// if invalid selection, disable the OK button
-		if (!bRet)
-		{
-			::EnableWindow(GetDlgItem(hwnd, IDOK), FALSE);
-			strcpy(App->CL_Vm_FileIO->szSelectedDir, "");
-		}
-		else
-			strcpy(App->CL_Vm_FileIO->szSelectedDir, szDir);
-			strcat(App->CL_Vm_FileIO->szSelectedDir,"\\");
-	}
-
-	return 0;
-}
-
-// *************************************************************************
 // *					Create_OutPut_Folder Terry Bernie			 	   *
 // *************************************************************************
 bool VM_FileIO::Create_Output_Folder(char* Extension)
 {
 	strcpy(OutputFolder, "");
 
-	strcpy(OutputFolder, App->CL_Vm_FileIO->szSelectedDir);
+	strcpy(OutputFolder, App->Com_CDialogs->szSelectedDir);
 	strcat(OutputFolder, App->CL_Vm_Model->JustName);
 	strcat(OutputFolder, Extension);
 	strcat(OutputFolder, "\\");

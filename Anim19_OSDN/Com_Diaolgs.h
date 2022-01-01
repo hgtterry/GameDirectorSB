@@ -31,7 +31,8 @@ public:
 	void Start_Mouse_Sensitivity(HWND hDlg);
 	bool StartBrowser(char* szInitDir, HWND hDlg);
 
-	char BrowserMessage[250];
+	char BrowserMessage[MAX_PATH];
+	TCHAR szSelectedDir[MAX_PATH];
 
 protected:
 

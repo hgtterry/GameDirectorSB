@@ -302,8 +302,8 @@ LRESULT CALLBACK VM_TextLib::TextureLib_Proc(HWND hDlg, UINT message, WPARAM wPa
 			_splitpath(App->CL_Vm_TextLib->p_Data->TXLFileName, NULL, NULL, File, NULL);
 			strcat(File, "_Textures");
 
-			strcpy(App->CL_Vm_FileIO->BrowserMessage, "Select Folder To Extract Textures");
-			int Test = App->CL_Vm_FileIO->StartBrowser("", App->Fdlg);
+			strcpy(App->Com_CDialogs->BrowserMessage, "Select Folder To Extract Textures");
+			int Test = App->Com_CDialogs->StartBrowser("", App->Fdlg);
 			if (Test == 0)
 			{
 				return 0;
@@ -1394,7 +1394,7 @@ bool VM_TextLib::TPack_ExtractAll()
 
 			if (NewBitmapList[i])
 			{
-				strcpy(szFile, App->CL_Vm_FileIO->szSelectedDir);
+				strcpy(szFile, App->Com_CDialogs->szSelectedDir);
 				strcat(szFile, "\\");
 				strcat(szFile, NewBitmapList[i]->Name);
 

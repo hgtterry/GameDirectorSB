@@ -164,16 +164,16 @@ LRESULT CALLBACK SB_Project::Create_Project_Proc(HWND hDlg, UINT message, WPARAM
 
 		if (LOWORD(wParam) == IDC_BTPJBROWSE)
 		{
-			strcpy(App->CL_Vm_FileIO->BrowserMessage, "Select Folder To Place New Project a sub folder will be created");
-			int Test = App->CL_Vm_FileIO->StartBrowser("", App->Fdlg);
+			strcpy(App->Com_CDialogs->BrowserMessage, "Select Folder To Place New Project a sub folder will be created");
+			int Test = App->Com_CDialogs->StartBrowser("", App->Fdlg);
 
 			if (Test == 0){return true;}
 
-			strcpy(App->SBC_Project->Project_FullPath, App->CL_Vm_FileIO->szSelectedDir);
+			strcpy(App->SBC_Project->Project_FullPath, App->Com_CDialogs->szSelectedDir);
 			strcat(App->SBC_Project->Project_FullPath, App->SBC_Project->Project_Name);
 			strcat(App->SBC_Project->Project_FullPath, "_Prj");
 
-			strcpy(App->SBC_Project->Project_Path, App->CL_Vm_FileIO->szSelectedDir);
+			strcpy(App->SBC_Project->Project_Path, App->Com_CDialogs->szSelectedDir);
 
 			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->Project_FullPath);
 
