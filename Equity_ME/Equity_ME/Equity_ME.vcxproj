@@ -153,11 +153,13 @@
   <ItemGroup>
     <ClInclude Include="Equity_ME.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="ME_App.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Equity_ME.cpp" />
+    <ClCompile Include="ME_App.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Equity_ME.rc" />
