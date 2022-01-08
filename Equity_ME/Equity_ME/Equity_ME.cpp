@@ -31,7 +31,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	//InitCommonControls();
 
 	App = new ME_App();
-	//_getcwd(App->EquityDirecory_FullPath, 1024);
+	_getcwd(App->EquityDirecory_FullPath, 1024);
 
 	//App->InitApp();
 
