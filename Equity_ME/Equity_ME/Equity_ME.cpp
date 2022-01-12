@@ -30,7 +30,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,_In_opt_ HINSTANCE hPrevInstance,
 
 	_getcwd(App->EquityDirecory_FullPath, 1024);
 
-
+	App->InitApp();
 
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
@@ -47,6 +47,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,_In_opt_ HINSTANCE hPrevInstance,
     {
         return FALSE;
     }
+
+	App->SetMainWin_Centre();
 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_EQUITY_ME));
 
@@ -95,18 +97,29 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 // *************************************************************************
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
-   hInst = hInstance; // Store instance handle in our global variable
+  
+   App->hInst; // Store instance handle in our global variable
 
-   HWND hWnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
+   App->MainHwnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
+	   0, 0, 1200, 800, NULL, NULL, hInstance, NULL);
 
-   if (!hWnd)
+   App->Fdlg = CreateDialog(App->hInst, (LPCTSTR)IDD_FILEVIEW, App->MainHwnd, NULL);// (DLGPROC)ViewerMain_Proc);
+
+   int cx = GetSystemMetrics(SM_CXSCREEN);
+   int cy = GetSystemMetrics(SM_CYSCREEN);
+   MoveWindow(App->Fdlg, 0, 0, cx, cy, TRUE);
+
+   App->ViewGLhWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_VIEWER3D, App->Fdlg, NULL);// (DLGPROC)Ogre3D_Proc);
+
+   //App->Cl19_Ogre->RenderHwnd = App->ViewGLhWnd;
+
+   if (!App->MainHwnd)
    {
       return FALSE;
    }
 
-   ShowWindow(hWnd, nCmdShow);
-   UpdateWindow(hWnd);
+   ShowWindow(App->MainHwnd, nCmdShow);
+   UpdateWindow(App->MainHwnd);
 
    return TRUE;
 }
