@@ -21,33 +21,16 @@ misrepresented as being the original software.
 distribution.
 */
 
-#pragma once
-
+#include "stdafx.h"
+#include "ME_App.h"
 #include "ME_Ogre.h"
 
-class ME_App
+
+ME_Ogre::ME_Ogre()
 {
-public:
-	ME_App();
-	~ME_App();
+}
 
-	ME_Ogre*			CL_Ogre;  // Ogre Main Class [120122]
 
-	bool InitApp(void);
-	bool SetMainWin_Centre(void);
-
-	void SetBrushes_Fonts(void);
-	bool ResizeOgre_Window(void);
-
-	HINSTANCE hInst;	// Store instance handle in our global variable [120122]
-
-	HWND MainHwnd;		// Main Window hWnd [120122]
-	HWND Fdlg;			// Main Window BackGround [120122]
-	HWND ViewGLhWnd;	// Ogre Render Window [120122]
-	
-	HBRUSH AppBackground;	// Main App Background Colour [120122]
-	HBRUSH BlackBrush;		// Black Brush Colour [120122]
-
-	char EquityDirecory_FullPath[MAX_PATH];
-};
-
+ME_Ogre::~ME_Ogre()
+{
+}

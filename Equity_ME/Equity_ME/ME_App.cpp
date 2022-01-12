@@ -1,13 +1,41 @@
+/*
+Copyright (c) 2022 Equity_ME Model Editor -- Inflanite Software W.T.Flanigan H.C.Flanigan
+
+This software is provided 'as-is', without any express or implied
+warranty. In no event will the authors be held liable for any damages
+arising from the use of this software.
+
+Permission is granted to anyone to use this software for any purpose,
+including commercial applications, and to alter it and redistribute it
+freely, subject to the following restrictions:
+
+1. The origin of this software must not be misrepresented; you must not
+claim that you wrote the original software. If you use this software
+in a product, an acknowledgment in the product documentation would be
+appreciated but is not required.
+
+2. Altered source versions must be plainly marked as such, and must not be
+misrepresented as being the original software.
+
+3. This notice may not be removed or altered from any source
+distribution.
+*/
+
 #include "stdafx.h"
 #include "ME_App.h"
 
 
 ME_App::ME_App()
 {
+	CL_Ogre =		nullptr;
+
 	hInst =			nullptr;
 
 	MainHwnd =		nullptr;
 	ViewGLhWnd =	nullptr;
+
+	AppBackground = nullptr;
+	BlackBrush =	nullptr;
 
 	EquityDirecory_FullPath[0] = 0;
 }
@@ -22,7 +50,7 @@ ME_App::~ME_App()
 // *************************************************************************
 bool ME_App::InitApp(void)
 {
-	
+	SetBrushes_Fonts();
 	return 1;
 }
 
@@ -44,3 +72,58 @@ bool ME_App::SetMainWin_Centre(void)
 
 	return 1;
 }
+
+// *************************************************************************
+// *					SetBrushes_Fonts Inflanite						   *
+// *************************************************************************
+void ME_App::SetBrushes_Fonts(void)
+{
+	AppBackground = CreateSolidBrush(RGB(213, 222, 242));
+	BlackBrush = CreateSolidBrush(RGB(0, 0, 0));
+}
+
+// *************************************************************************
+// *						Resize_OgreWin Inflanite					   *
+// *************************************************************************
+bool ME_App::ResizeOgre_Window(void)
+{
+	RECT rcl;
+
+	int WidthClient = 0;
+	int HeightClient;
+	int NewWidth = 0;
+	int NewHeight = 0;
+
+	GetClientRect(MainHwnd, &rcl);
+
+	WidthClient = rcl.right - rcl.left - 1010;
+	NewWidth = 417 + WidthClient + 200;
+
+	HeightClient = rcl.bottom - rcl.top;
+	NewHeight = HeightClient - 150;
+
+	//-----------------Ogre Window
+	SetWindowPos(ViewGLhWnd, NULL, 4, 80, NewWidth + 384, NewHeight + 68, SWP_NOZORDER);
+
+	/*if (App->OgreStarted == 1)
+	{
+		RECT rect;
+		GetClientRect(App->ViewGLhWnd, &rect);
+
+		if ((rect.bottom - rect.top) != 0 && App->Cl19_Ogre->mCamera != 0)
+		{
+			App->Cl19_Ogre->mWindow->windowMovedOrResized();
+			App->Cl19_Ogre->mCamera->setAspectRatio((Ogre::Real)App->Cl19_Ogre->mWindow->getWidth() / (Ogre::Real)App->Cl19_Ogre->mWindow->getHeight());
+			App->Cl19_Ogre->mCamera->yaw(Radian(0));
+			Root::getSingletonPtr()->renderOneFrame();
+		}
+
+	}*/
+
+	/*App->Cl_Panels->MovePhysicsView();
+	App->Cl_Panels->Move_FileView_Window();
+	App->Cl_Panels->Place_GlobalGroups();*/
+
+	return 1;
+}
+

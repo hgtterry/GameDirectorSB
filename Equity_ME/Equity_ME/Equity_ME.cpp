@@ -17,6 +17,9 @@ BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
+LRESULT CALLBACK ViewerMain_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
 ME_App *App = NULL;  // Main Global App [090122]
 
 // *************************************************************************
@@ -103,13 +106,13 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    App->MainHwnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
 	   0, 0, 1200, 800, NULL, NULL, hInstance, NULL);
 
-   App->Fdlg = CreateDialog(App->hInst, (LPCTSTR)IDD_FILEVIEW, App->MainHwnd, NULL);// (DLGPROC)ViewerMain_Proc);
+   App->Fdlg = CreateDialog(App->hInst, (LPCTSTR)IDD_FILEVIEW, App->MainHwnd, (DLGPROC)ViewerMain_Proc);
 
    int cx = GetSystemMetrics(SM_CXSCREEN);
    int cy = GetSystemMetrics(SM_CYSCREEN);
    MoveWindow(App->Fdlg, 0, 0, cx, cy, TRUE);
 
-   App->ViewGLhWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_VIEWER3D, App->Fdlg, NULL);// (DLGPROC)Ogre3D_Proc);
+   App->ViewGLhWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_VIEWER3D, App->Fdlg,(DLGPROC)Ogre3D_Proc);
 
    //App->Cl19_Ogre->RenderHwnd = App->ViewGLhWnd;
 
@@ -156,6 +159,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             EndPaint(hWnd, &ps);
         }
         break;
+
+	case WM_SIZE:
+	{
+		App->ResizeOgre_Window();
+
+	}break;
+
     case WM_DESTROY:
         PostQuitMessage(0);
         break;
@@ -185,4 +195,58 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
         break;
     }
     return (INT_PTR)FALSE;
+}
+
+// *************************************************************************
+// *					ViewerMain_Proc  (Terry Bernie)					   *
+// *************************************************************************
+LRESULT CALLBACK ViewerMain_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+
+	case WM_INITDIALOG:
+	{
+		return TRUE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+	case WM_COMMAND:
+	{
+
+	}
+	break;
+	}
+	return FALSE;
+}
+
+// *************************************************************************
+// *						Ogre3D_Proc  (Terry Bernie)					   *
+// *************************************************************************
+LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+
+	case WM_INITDIALOG:
+	{
+		return TRUE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->BlackBrush;;
+	}
+	case WM_COMMAND:
+	{
+
+	}
+	break;
+	}
+	return FALSE;
 }
