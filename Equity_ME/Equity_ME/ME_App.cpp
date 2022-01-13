@@ -28,6 +28,7 @@ distribution.
 ME_App::ME_App()
 {
 	CL_Ogre =		nullptr;
+	CL_Utilities =	nullptr;
 
 	hInst =			nullptr;
 
@@ -50,7 +51,8 @@ ME_App::~ME_App()
 // *************************************************************************
 bool ME_App::InitApp(void)
 {
-	CL_Ogre = new ME_Ogre();
+	CL_Ogre =		new ME_Ogre();
+	CL_Utilities =	new ME_Utilities();
 
 	SetBrushes_Fonts();
 	return 1;

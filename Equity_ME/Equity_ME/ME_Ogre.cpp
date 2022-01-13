@@ -29,6 +29,14 @@ distribution.
 ME_Ogre::ME_Ogre()
 {
 	Ogre_Started = 0;
+
+	Render_Hwnd =	nullptr;
+	mRoot =			nullptr;
+	mWindow =		nullptr;
+
+	App_Resource_Group = "App_Resource_Group";
+	Equity_Resource_Group = "Equity_Resource_Group";
+
 }
 
 
@@ -42,8 +50,8 @@ ME_Ogre::~ME_Ogre()
 bool ME_Ogre::Init_Ogre(void)
 {
 	Ogre_CreateRoot();
-	//SetUpResources();
-	//Configure();
+	SetUpResources();
+	Configure();
 	//chooseSceneManager();
 	//createCamera();
 	//createViewports();
@@ -80,4 +88,70 @@ bool ME_Ogre::Ogre_CreateRoot(void)
 	mRoot = OGRE_NEW Ogre::Root(pluginsPath, mResourcePath + "Equity_CFG.cfg", mResourcePath + "Equity_ME_LOG.log");
 
 	return 1;
+}
+
+// *************************************************************************
+// *				SetUpResources (Terry Bernie)						   *
+// *************************************************************************
+bool ME_Ogre::SetUpResources(void)
+{
+
+	Ogre::String File;
+	char Copy[1024];
+
+	strcpy(Copy, App->EquityDirecory_FullPath);
+	App->CL_Utilities->ReverseBackSlash(Copy);
+	File = App->CL_Utilities->Return_Chr;
+
+	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(Equity_Resource_Group);
+	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App_Resource_Group);
+
+	//-------------------------------- Zip Files
+	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/OgreCore.zip", "Zip",
+		App_Resource_Group);
+
+	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/Equity.zip", "Zip",
+		App_Resource_Group);
+
+	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/GDCore.zip", "Zip",
+		App_Resource_Group);
+
+	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/Panels.zip", "Zip",
+		App_Resource_Group);
+
+	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/Zipper", "FileSystem",
+		App_Resource_Group);
+
+	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/fonts", "FileSystem",
+		App_Resource_Group);
+
+	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/Particles", "FileSystem",
+		App_Resource_Group);
+
+	return 1;
+}
+
+// *************************************************************************
+// *				Configure (Terry Bernie)							   *
+// *************************************************************************
+bool ME_Ogre::Configure(void)
+{
+
+	Ogre::RenderSystem* rs = mRoot->getRenderSystemByName("OpenGL Rendering Subsystem");
+	if (!(rs->getName() == "OpenGL Rendering Subsystem"))
+	{
+		return false; //No RenderSystem found
+	}
+
+	mRoot->setRenderSystem(rs);
+
+	mWindow = mRoot->initialise(false);
+	Ogre::NameValuePairList options;
+
+	options["externalWindowHandle"] =
+		Ogre::StringConverter::toString((size_t)Render_Hwnd);
+
+	mWindow = mRoot->createRenderWindow("Main RenderWindow", 1024, 768, false, &options);
+
+	return true;
 }

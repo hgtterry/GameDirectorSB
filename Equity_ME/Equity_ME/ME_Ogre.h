@@ -40,9 +40,18 @@ public:
 	bool Init_Ogre(void);
 
 	bool Ogre_CreateRoot(void);
+	bool SetUpResources(void);
+	bool Configure(void);
+
+	HWND Render_Hwnd;
 
 	Ogre::Root* mRoot;
+	Ogre::RenderWindow* mWindow;
+
 	Ogre::String mResourcePath;
+
+	Ogre::String App_Resource_Group;		// App Resource Group
+	Ogre::String Equity_Resource_Group;		// Equity Resource Group 
 
 	bool Ogre_Started; // Has Ogre Started [130122]
 };
