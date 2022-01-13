@@ -50,6 +50,8 @@ ME_App::~ME_App()
 // *************************************************************************
 bool ME_App::InitApp(void)
 {
+	CL_Ogre = new ME_Ogre();
+
 	SetBrushes_Fonts();
 	return 1;
 }

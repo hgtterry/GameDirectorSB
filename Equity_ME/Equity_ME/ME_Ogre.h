@@ -27,5 +27,9 @@ class ME_Ogre
 public:
 	ME_Ogre();
 	~ME_Ogre();
+
+	bool Init_Ogre(void);
+
+	bool Ogre_Started; // Has Ogre Started [130122]
 };
 

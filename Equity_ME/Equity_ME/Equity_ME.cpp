@@ -20,6 +20,10 @@ INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 LRESULT CALLBACK ViewerMain_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
+int Block_Call = 0; // If Ogre Started block restart [130122]
+void Close_App();
+void Start_Ogre();
+
 ME_App *App = NULL;  // Main Global App [090122]
 
 // *************************************************************************
@@ -52,6 +56,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,_In_opt_ HINSTANCE hPrevInstance,
     }
 
 	App->SetMainWin_Centre();
+
+	SetTimer(App->MainHwnd, 1, 1, NULL);
 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_EQUITY_ME));
 
@@ -166,6 +172,31 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 	}break;
 
+	case WM_TIMER:
+		if (wParam == 1)
+		{
+			if (App->CL_Ogre->Ogre_Started == 0)
+			{
+				if (Block_Call == 0)
+				{
+					Block_Call = 1;
+					Start_Ogre();
+				}
+			}
+
+			//if (App->OgreStarted == 1 && App->Start_Scene_Loaded == 0)
+			//{
+			//	App->Start_Scene_Loaded = 1;
+			//}
+
+			////// Render behind windows
+			//if (App->RenderBackGround == 1 && App->OgreStarted == 1)
+			//{
+			//	Ogre::Root::getSingletonPtr()->renderOneFrame();
+			//}
+			break;
+		}
+
     case WM_DESTROY:
         PostQuitMessage(0);
         break;
@@ -240,7 +271,10 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 
 	case WM_CTLCOLORDLG:
 	{
-		return (LONG)App->BlackBrush;;
+		if (App->CL_Ogre->Ogre_Started == 0)
+		{
+			return (LONG)App->BlackBrush;
+		}
 	}
 	case WM_COMMAND:
 	{
@@ -249,4 +283,42 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 	break;
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *						StartOgre Terry Bernie			  	 		   *
+// *************************************************************************
+void Start_Ogre()
+{
+	App->CL_Ogre->Init_Ogre();
+
+	//Ogre::Root::getSingletonPtr()->renderOneFrame();
+	//EndDialog(App->ViewPLeaseWait, LOWORD(0));
+
+	App->CL_Ogre->Ogre_Started = 1;
+
+	App->ResizeOgre_Window();
+
+	//App->Cl19_Ogre->mRoot->startRendering();
+
+	/*Close_App();
+
+	SystemParametersInfo(SPI_SETSCREENSAVEACTIVE, TRUE, NULL, TRUE);
+	PostQuitMessage(0);*/
+}
+
+// *************************************************************************
+// *						Close_App Terry Bernie			  	 		   *
+// *************************************************************************
+void Close_App()
+{
+	//App->EBC_Model->Clear_ModelData();
+
+	/*if (App->Cl19_Ogre->mRoot)
+	{
+		delete App->Cl19_Ogre->mRoot;
+		App->Cl19_Ogre->mRoot = NULL;
+	}
+
+	ImGui::DestroyContext();*/
 }

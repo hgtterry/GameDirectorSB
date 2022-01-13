@@ -28,9 +28,43 @@ distribution.
 
 ME_Ogre::ME_Ogre()
 {
+	Ogre_Started = 0;
 }
 
 
 ME_Ogre::~ME_Ogre()
 {
+}
+
+// *************************************************************************
+// *						InitOgre Terry Bernie						   *
+// *************************************************************************
+bool ME_Ogre::Init_Ogre(void)
+{
+	//OgreCreateRoot();
+	//SetUpResources();
+	//Configure();
+	//chooseSceneManager();
+	//createCamera();
+	//createViewports();
+	//loadResources();
+
+	//manObj = mSceneMgr->createManualObject("sampleArea");
+	//ModelNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	//ModelNode->attachObject(manObj);
+
+	//// Set Up Grid Functions
+	//App->Cl_Grid->Grid_Update(1);
+	//App->Cl_Grid->Hair_Update(1);
+
+	//App->Cl_Grid->DummyNode = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	//App->Cl_Visuals->Load_PickSight();
+	//App->Cl_Grid->Load_Arrow();
+
+	//m_imgui.Init(mSceneMgr, RenderHwnd);
+
+
+	//createFrameListener();
+
+	return 1;
 }
