@@ -41,7 +41,7 @@ ME_Ogre::~ME_Ogre()
 // *************************************************************************
 bool ME_Ogre::Init_Ogre(void)
 {
-	//OgreCreateRoot();
+	Ogre_CreateRoot();
 	//SetUpResources();
 	//Configure();
 	//chooseSceneManager();
@@ -65,6 +65,19 @@ bool ME_Ogre::Init_Ogre(void)
 
 
 	//createFrameListener();
+
+	return 1;
+}
+
+// *************************************************************************
+// *				Ogre_CreateRoot (Terry Bernie)						   *
+// *************************************************************************
+bool ME_Ogre::Ogre_CreateRoot(void)
+{
+	Ogre::String pluginsPath;
+	pluginsPath = mResourcePath + "plugins.cfg";
+
+	mRoot = OGRE_NEW Ogre::Root(pluginsPath, mResourcePath + "Equity_CFG.cfg", mResourcePath + "Equity_ME_LOG.log");
 
 	return 1;
 }

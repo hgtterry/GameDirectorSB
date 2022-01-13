@@ -22,6 +22,15 @@ distribution.
 */
 
 #pragma once
+
+//#include "GD19_OgreListener.h"
+#include "OgreOverlaySystem.h"
+
+//#include "ImguiManager.h"
+
+//#include "GD_Bt_Render.h"
+//#include "VM_Render.h"
+
 class ME_Ogre
 {
 public:
@@ -29,6 +38,11 @@ public:
 	~ME_Ogre();
 
 	bool Init_Ogre(void);
+
+	bool Ogre_CreateRoot(void);
+
+	Ogre::Root* mRoot;
+	Ogre::String mResourcePath;
 
 	bool Ogre_Started; // Has Ogre Started [130122]
 };
