@@ -23,47 +23,20 @@ distribution.
 
 #pragma once
 
-//#include "GD19_OgreListener.h"
-#include "OgreOverlaySystem.h"
+#include "Ogre.h"
+#include "OgreOverlay.h"
+#include "OgreOverlayManager.h"
+#include "OgreRenderWindow.h"
 
-//#include "ImguiManager.h"
+//#include "CollisionTools.h"
+//#include "CustomTypes.h"
 
-//#include "GD_Bt_Render.h"
-//#include "VM_Render.h"
+using namespace Ogre;
 
-class ME_Ogre
+class ME_OgreListener : public FrameListener
 {
 public:
-	ME_Ogre();
-	~ME_Ogre();
-
-	bool Init_Ogre(void);
-
-	bool Ogre_CreateRoot(void);
-	bool SetUpResources(void);
-	bool Configure(void);
-	bool chooseSceneManager(void);
-	bool createCamera(void);
-	bool createViewports(void);
-	bool loadResources(void);
-	bool createFrameListener(void);
-
-	HWND Render_Hwnd;
-
-	Ogre::Root* mRoot;
-	Ogre::RenderWindow* mWindow;
-	Ogre::SceneManager* mSceneMgr;
-	Ogre::OverlaySystem *mOverlaySystem;
-	Ogre::Camera* mCamera;
-	//Ogre::Camera* PlacementCam;
-
-	//GD19_OgreListener*	OgreListener;
-
-	Ogre::String mResourcePath;
-
-	Ogre::String App_Resource_Group;		// App Resource Group
-	Ogre::String Equity_Resource_Group;		// Equity Resource Group 
-
-	bool Ogre_Started; // Has Ogre Started [130122]
+	ME_OgreListener();
+	~ME_OgreListener();
 };
 
