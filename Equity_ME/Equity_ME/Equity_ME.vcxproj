@@ -147,6 +147,7 @@
   <ItemGroup>
     <ClInclude Include="Equity_ME.h" />
     <ClInclude Include="ME_App.h" />
+    <ClInclude Include="ME_Grid.h" />
     <ClInclude Include="ME_Ogre.h" />
     <ClInclude Include="ME_OgreListener.h" />
     <ClInclude Include="ME_Utilities.h" />
@@ -157,6 +158,7 @@
   <ItemGroup>
     <ClCompile Include="Equity_ME.cpp" />
     <ClCompile Include="ME_App.cpp" />
+    <ClCompile Include="ME_Grid.cpp" />
     <ClCompile Include="ME_Ogre.cpp" />
     <ClCompile Include="ME_OgreListener.cpp" />
     <ClCompile Include="ME_Utilities.cpp" />

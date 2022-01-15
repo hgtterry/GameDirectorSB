@@ -21,39 +21,16 @@ misrepresented as being the original software.
 distribution.
 */
 
-#pragma once
-
-#include "ME_Ogre.h"
-#include "ME_Utilities.h"
+#include "stdafx.h"
+#include "ME_App.h"
 #include "ME_Grid.h"
 
-class ME_App
+
+ME_Grid::ME_Grid()
 {
-public:
-	ME_App();
-	~ME_App();
+}
 
-	ME_Ogre*			CL_Ogre;		// Ogre Main Class [120122]
-	ME_Utilities*		CL_Utilities;	// Maths String Routines [130122]
-	ME_Grid*			CL_Grid;		// Main Grid Routines [150122]
 
-	bool InitApp(void);
-	bool SetMainWin_Centre(void);
-
-	void SetBrushes_Fonts(void);
-	bool ResizeOgre_Window(void);
-
-	HINSTANCE hInst;	// Store instance handle in our global variable [120122]
-
-	HWND MainHwnd;		// Main Window hWnd [120122]
-	HWND Fdlg;			// Main Window BackGround [120122]
-	HWND ViewGLhWnd;	// Ogre Render Window [120122]
-	
-	HBRUSH AppBackground;	// Main App Background Colour [120122]
-	HBRUSH BlackBrush;		// Black Brush Colour [120122]
-
-	char EquityDirecory_FullPath[MAX_PATH];
-};
-
-extern ME_App* App;
-
+ME_Grid::~ME_Grid()
+{
+}

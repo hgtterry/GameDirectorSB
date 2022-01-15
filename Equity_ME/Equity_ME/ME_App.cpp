@@ -29,6 +29,7 @@ ME_App::ME_App()
 {
 	CL_Ogre =		nullptr;
 	CL_Utilities =	nullptr;
+	CL_Grid =		nullptr;
 
 	hInst =			nullptr;
 
@@ -53,6 +54,7 @@ bool ME_App::InitApp(void)
 {
 	CL_Ogre =		new ME_Ogre();
 	CL_Utilities =	new ME_Utilities();
+	CL_Grid =		new ME_Grid();
 
 	SetBrushes_Fonts();
 	return 1;
