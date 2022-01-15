@@ -36,6 +36,7 @@ ME_Ogre::ME_Ogre()
 	mSceneMgr =			nullptr;
 	mOverlaySystem =	nullptr;
 	mCamera =			nullptr;
+	Ogre_Listener =		nullptr;
 
 	App_Resource_Group = "App_Resource_Group";
 	Equity_Resource_Group = "Equity_Resource_Group";
@@ -237,8 +238,8 @@ bool ME_Ogre::loadResources(void)
 bool ME_Ogre::createFrameListener(void)
 {
 	//// Physics Frame Listener
-//	OgreListener = new GD19_OgreListener();
-//	mRoot->addFrameListener(OgreListener);
+	Ogre_Listener = new ME_OgreListener();
+	mRoot->addFrameListener(Ogre_Listener);
 
 	Ogre::String RenderSystemName = mSceneMgr->getDestinationRenderSystem()->getName();
 

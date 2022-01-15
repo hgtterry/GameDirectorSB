@@ -41,6 +41,8 @@ public:
 	void Hair_SetVisible(bool Option);
 	void Hair_DisplayGeneralCrossHair(float x, float y, float z, bool Option);
 
+protected:
+
 	Ogre::ColourValue ColourMain;
 	Ogre::ColourValue ColourHairZ;
 	Ogre::ColourValue ColourHairX;

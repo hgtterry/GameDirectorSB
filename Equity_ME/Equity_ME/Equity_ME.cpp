@@ -150,7 +150,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
                 break;
             case IDM_EXIT:
-                DestroyWindow(hWnd);
+				if (App->CL_Ogre->Ogre_Listener->Stop_Ogre == 0)
+				{
+					App->CL_Ogre->Ogre_Listener->Stop_Ogre = 1;
+				}
+				PostQuitMessage(0);
                 break;
             default:
                 return DefWindowProc(hWnd, message, wParam, lParam);
@@ -172,6 +176,24 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 	}break;
 
+	case WM_CLOSE:
+	{
+
+		//App->Cl_Dialogs->YesNo("Close GameDirector", "Are you sure");
+		/*if (App->Cl_Dialogs->Canceled == 1)
+		{
+			break;
+		}*/
+
+		if (App->CL_Ogre->Ogre_Listener->Stop_Ogre == 0)
+		{
+			App->CL_Ogre->Ogre_Listener->Stop_Ogre = 1;
+		}
+
+		PostQuitMessage(0);
+		break;
+	}
+
 	case WM_TIMER:
 		if (wParam == 1)
 		{
@@ -183,11 +205,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 					Start_Ogre();
 				}
 			}
-
-			//if (App->OgreStarted == 1 && App->Start_Scene_Loaded == 0)
-			//{
-			//	App->Start_Scene_Loaded = 1;
-			//}
 
 			////// Render behind windows
 			//if (App->RenderBackGround == 1 && App->OgreStarted == 1)

@@ -23,7 +23,7 @@ distribution.
 
 #pragma once
 
-//#include "GD19_OgreListener.h"
+#include "ME_OgreListener.h"
 #include "OgreOverlaySystem.h"
 
 //#include "ImguiManager.h"
@@ -57,7 +57,7 @@ public:
 	Ogre::Camera* mCamera;
 	//Ogre::Camera* PlacementCam;
 
-	//GD19_OgreListener*	OgreListener;
+	ME_OgreListener*	Ogre_Listener;
 
 	Ogre::String mResourcePath;
 

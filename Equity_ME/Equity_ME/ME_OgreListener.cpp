@@ -28,9 +28,24 @@ distribution.
 
 ME_OgreListener::ME_OgreListener()
 {
+	Stop_Ogre = 0;
 }
 
 
 ME_OgreListener::~ME_OgreListener()
 {
+}
+
+// *************************************************************************
+// *				frameEnded   Terry Bernie							   *
+// *************************************************************************
+bool ME_OgreListener::frameEnded(const FrameEvent& evt)
+{
+
+	if (Stop_Ogre == 1)
+	{
+		return false;
+	}
+
+	return true;
 }

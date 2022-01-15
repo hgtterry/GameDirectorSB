@@ -38,5 +38,9 @@ class ME_OgreListener : public FrameListener
 public:
 	ME_OgreListener();
 	~ME_OgreListener();
+
+	bool frameEnded(const FrameEvent& evt);
+
+	bool Stop_Ogre;  // Stop the Ogre Engine
 };
 
