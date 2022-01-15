@@ -73,7 +73,7 @@ bool ME_Ogre::Init_Ogre(void)
 	//App->Cl_Visuals->Load_PickSight();
 	//App->Cl_Grid->Load_Arrow();
 
-	//m_imgui.Init(mSceneMgr, RenderHwnd);
+	m_imgui.Init(mSceneMgr, Render_Hwnd);
 
 
 	createFrameListener();
@@ -257,6 +257,19 @@ bool ME_Ogre::createFrameListener(void)
 		App->Cl_Bullet->dynamicsWorld->setDebugDrawer(BulletListener);
 
 	}*/
+
+	return 1;
+}
+
+// *************************************************************************
+// *				Get_View_Height_Width (Terry Bernie)				   *
+// *************************************************************************
+bool ME_Ogre::Get_View_Height_Width(void)
+{
+	Ogre::Viewport* vp = mWindow->getViewport(0);
+
+	Ogre_Listener->View_Width = vp->getActualWidth();
+	Ogre_Listener->View_Height = vp->getActualHeight();
 
 	return 1;
 }

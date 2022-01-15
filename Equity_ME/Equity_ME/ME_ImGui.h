@@ -22,30 +22,26 @@ distribution.
 */
 
 #pragma once
-
-#include "Ogre.h"
-#include "OgreOverlay.h"
-#include "OgreOverlayManager.h"
-#include "OgreRenderWindow.h"
-
-//#include "CollisionTools.h"
-//#include "CustomTypes.h"
-
-using namespace Ogre;
-
-class ME_OgreListener : public FrameListener
+class ME_ImGui
 {
 public:
-	ME_OgreListener();
-	~ME_OgreListener();
+	ME_ImGui();
+	~ME_ImGui();
 
-	bool frameStarted(const FrameEvent& evt);
-	bool frameEnded(const FrameEvent& evt);
-	bool frameRenderingQueued(const FrameEvent& evt);
+	void Tabs_Render_Camera(void);
+	void ImGui_FPS(void);
 
-	bool Stop_Ogre;  // Stop the Ogre Engine [150122]
+	bool Show_FPS;  // Show Frames Per Second [150122]
+	bool StartPos;  // Position FPS Frame Flag [150122]
 
-	int		View_Height;	// Ogre window Height [150122]
-	int		View_Width;		// Ogre window WIdth [150122]
+protected:
+
+	void Load_Font(void);
+	void ImGui_Set_Colours(void);
+
+	ImFont* font0;
+	ImFont* font1;
+	ImFont* font2;
+	ImFont* fontDroid;
 };
 

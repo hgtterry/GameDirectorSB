@@ -26,7 +26,7 @@ distribution.
 #include "ME_OgreListener.h"
 #include "OgreOverlaySystem.h"
 
-//#include "ImguiManager.h"
+#include "ImguiManager.h"
 
 //#include "GD_Bt_Render.h"
 //#include "VM_Render.h"
@@ -48,6 +48,8 @@ public:
 	bool loadResources(void);
 	bool createFrameListener(void);
 
+	bool Get_View_Height_Width(void);
+
 	HWND Render_Hwnd;
 
 	Ogre::Root* mRoot;
@@ -65,5 +67,7 @@ public:
 	Ogre::String Equity_Resource_Group;		// Equity Resource Group 
 
 	bool Ogre_Started; // Has Ogre Started [130122]
+
+	OgreImGui  m_imgui;
 };
 

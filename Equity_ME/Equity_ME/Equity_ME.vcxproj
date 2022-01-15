@@ -114,7 +114,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\Anim19_OSDN\Common\include\OGRE;..\..\Anim19_OSDN\Common\include\OGRE\Terrain;..\..\Anim19_OSDN\Common\include\OGRE\Overlay;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\Anim19_OSDN\Common\include\OGRE;..\..\Anim19_OSDN\Common\include\OGRE\Terrain;..\..\Anim19_OSDN\Common\include\OGRE\Overlay;..\..\Anim19_OSDN\Common\imGui\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -148,6 +148,7 @@
     <ClInclude Include="Equity_ME.h" />
     <ClInclude Include="ME_App.h" />
     <ClInclude Include="ME_Grid.h" />
+    <ClInclude Include="ME_ImGui.h" />
     <ClInclude Include="ME_Ogre.h" />
     <ClInclude Include="ME_OgreListener.h" />
     <ClInclude Include="ME_Utilities.h" />
@@ -156,9 +157,16 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Anim19_OSDN\Common\imGui\ImGui_cpp\imgui.cpp" />
+    <ClCompile Include="..\..\Anim19_OSDN\Common\imGui\ImGui_cpp\ImguiManager.cpp" />
+    <ClCompile Include="..\..\Anim19_OSDN\Common\imGui\ImGui_cpp\ImguiRenderable.cpp" />
+    <ClCompile Include="..\..\Anim19_OSDN\Common\imGui\ImGui_cpp\imgui_demo.cpp" />
+    <ClCompile Include="..\..\Anim19_OSDN\Common\imGui\ImGui_cpp\imgui_draw.cpp" />
+    <ClCompile Include="..\..\Anim19_OSDN\Common\imGui\ImGui_cpp\imgui_widgets.cpp" />
     <ClCompile Include="Equity_ME.cpp" />
     <ClCompile Include="ME_App.cpp" />
     <ClCompile Include="ME_Grid.cpp" />
+    <ClCompile Include="ME_ImGui.cpp" />
     <ClCompile Include="ME_Ogre.cpp" />
     <ClCompile Include="ME_OgreListener.cpp" />
     <ClCompile Include="ME_Utilities.cpp" />

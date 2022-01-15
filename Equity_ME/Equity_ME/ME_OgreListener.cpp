@@ -29,11 +29,31 @@ distribution.
 ME_OgreListener::ME_OgreListener()
 {
 	Stop_Ogre = 0;
+
+	View_Height = 0;
+	View_Width = 0;
 }
 
 
 ME_OgreListener::~ME_OgreListener()
 {
+}
+
+// *************************************************************************
+// *				frameStarted   Terry Bernie							   *
+// *************************************************************************
+bool ME_OgreListener::frameStarted(const FrameEvent& evt)
+{
+	
+	App->CL_Ogre->Get_View_Height_Width();
+
+	App->CL_Ogre->m_imgui.NewFrame(evt.timeSinceLastFrame, (float)View_Width, (float)View_Height);
+
+	App->CL_ImGui->Tabs_Render_Camera();
+		
+	//ImGui::ShowDemoWindow();
+
+	return true;
 }
 
 // *************************************************************************
@@ -48,4 +68,15 @@ bool ME_OgreListener::frameEnded(const FrameEvent& evt)
 	}
 
 	return true;
+}
+
+// *************************************************************************
+// *			frameRenderingQueued   Terry Bernie						   *
+// *************************************************************************
+bool ME_OgreListener::frameRenderingQueued(const FrameEvent& evt)
+{
+	
+	App->CL_Ogre->m_imgui.render();
+
+	return 1;
 }
