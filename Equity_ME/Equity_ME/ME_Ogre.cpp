@@ -64,9 +64,9 @@ bool ME_Ogre::Init_Ogre(void)
 	//ModelNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	//ModelNode->attachObject(manObj);
 
-	//// Set Up Grid Functions
-	//App->Cl_Grid->Grid_Update(1);
-	//App->Cl_Grid->Hair_Update(1);
+	// Set Up Grid Functions
+	App->CL_Grid->Grid_Update(1);
+	App->CL_Grid->Hair_Update(1);
 
 	//App->Cl_Grid->DummyNode = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	//App->Cl_Visuals->Load_PickSight();

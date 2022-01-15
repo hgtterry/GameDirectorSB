@@ -292,19 +292,19 @@ void Start_Ogre()
 {
 	App->CL_Ogre->Init_Ogre();
 
-	//Ogre::Root::getSingletonPtr()->renderOneFrame();
+	Ogre::Root::getSingletonPtr()->renderOneFrame();
 	//EndDialog(App->ViewPLeaseWait, LOWORD(0));
 
 	App->CL_Ogre->Ogre_Started = 1;
 
 	App->ResizeOgre_Window();
 
-	//App->Cl19_Ogre->mRoot->startRendering();
+	App->CL_Ogre->mRoot->startRendering();
 
-	/*Close_App();
+	Close_App();
 
 	SystemParametersInfo(SPI_SETSCREENSAVEACTIVE, TRUE, NULL, TRUE);
-	PostQuitMessage(0);*/
+	PostQuitMessage(0);
 }
 
 // *************************************************************************
@@ -314,11 +314,11 @@ void Close_App()
 {
 	//App->EBC_Model->Clear_ModelData();
 
-	/*if (App->Cl19_Ogre->mRoot)
+	if (App->CL_Ogre->mRoot)
 	{
-		delete App->Cl19_Ogre->mRoot;
-		App->Cl19_Ogre->mRoot = NULL;
+		delete App->CL_Ogre->mRoot;
+		App->CL_Ogre->mRoot = NULL;
 	}
 
-	ImGui::DestroyContext();*/
+	//ImGui::DestroyContext();*/
 }
