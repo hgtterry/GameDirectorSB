@@ -42,7 +42,7 @@ ME_OgreListener::~ME_OgreListener()
 // *************************************************************************
 // *				frameStarted   Terry Bernie							   *
 // *************************************************************************
-bool ME_OgreListener::frameStarted(const FrameEvent& evt)
+bool ME_OgreListener::frameStarted(const Ogre::FrameEvent& evt)
 {
 	
 	App->CL_Ogre->Get_View_Height_Width();
@@ -59,7 +59,7 @@ bool ME_OgreListener::frameStarted(const FrameEvent& evt)
 // *************************************************************************
 // *				frameEnded   Terry Bernie							   *
 // *************************************************************************
-bool ME_OgreListener::frameEnded(const FrameEvent& evt)
+bool ME_OgreListener::frameEnded(const Ogre::FrameEvent& evt)
 {
 
 	if (Stop_Ogre == 1)
@@ -73,7 +73,7 @@ bool ME_OgreListener::frameEnded(const FrameEvent& evt)
 // *************************************************************************
 // *			frameRenderingQueued   Terry Bernie						   *
 // *************************************************************************
-bool ME_OgreListener::frameRenderingQueued(const FrameEvent& evt)
+bool ME_OgreListener::frameRenderingQueued(const Ogre::FrameEvent& evt)
 {
 	
 	App->CL_Ogre->m_imgui.render();

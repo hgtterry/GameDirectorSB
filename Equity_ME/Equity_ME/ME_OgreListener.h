@@ -23,25 +23,15 @@ distribution.
 
 #pragma once
 
-#include "Ogre.h"
-#include "OgreOverlay.h"
-#include "OgreOverlayManager.h"
-#include "OgreRenderWindow.h"
-
-//#include "CollisionTools.h"
-//#include "CustomTypes.h"
-
-using namespace Ogre;
-
-class ME_OgreListener : public FrameListener
+class ME_OgreListener : public Ogre::FrameListener
 {
 public:
 	ME_OgreListener();
 	~ME_OgreListener();
 
-	bool frameStarted(const FrameEvent& evt);
-	bool frameEnded(const FrameEvent& evt);
-	bool frameRenderingQueued(const FrameEvent& evt);
+	bool frameStarted(const Ogre::FrameEvent& evt);
+	bool frameEnded(const Ogre::FrameEvent& evt);
+	bool frameRenderingQueued(const Ogre::FrameEvent& evt);
 
 	bool Stop_Ogre;  // Stop the Ogre Engine [150122]
 

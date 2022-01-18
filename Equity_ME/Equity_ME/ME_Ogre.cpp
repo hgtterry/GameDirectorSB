@@ -182,7 +182,7 @@ bool ME_Ogre::chooseSceneManager(void)
 bool ME_Ogre::createCamera(void)
 {
 	mCamera = mSceneMgr->createCamera("MainCamera");
-	mCamera->setPosition(Ogre::Vector3(0, 90, 100));
+	mCamera->setPosition(Ogre::Vector3(0, 90, 150));
 	mCamera->lookAt(Ogre::Vector3(0, 30, 0));
 	mCamera->setNearClipDistance(Ogre::Real(0.1));
 	mCamera->setFarClipDistance(Ogre::Real(8000));
