@@ -41,6 +41,9 @@ public:
 	void Hair_SetVisible(bool Option);
 	void Hair_DisplayGeneralCrossHair(float x, float y, float z, bool Option);
 
+	Ogre::SceneNode*		GridNode;
+	Ogre::SceneNode*		HairNode;
+
 protected:
 
 	Ogre::ColourValue ColourMain;
@@ -66,10 +69,9 @@ protected:
 	int Scale_Z;
 
 	Ogre::ManualObject*		GridManual;
-	Ogre::SceneNode*		GridNode;
-
+	
 	Ogre::ManualObject*		HairManual;
-	Ogre::SceneNode*		HairNode;
+	
 
 	Ogre::SceneNode*		DummyNode;
 

@@ -37,5 +37,36 @@ public:
 
 	int		View_Height;	// Ogre window Height [150122]
 	int		View_Width;		// Ogre window WIdth [150122]
+
+protected:
+
+	void Model_Mode(float DeltaTime);
+	void MoveCamera(void);
+	bool Capture_LeftMouse_Model(void);
+	bool Capture_RightMouse_Model(void);
+
+	Ogre::Camera* mCam; // Copy Ogre Main Camera Handle [280122]
+
+	Ogre::Radian		mRotX; // Camera Rotation X [280122]
+	Ogre::Radian		mRotY; // Camera Rotation Y [280122]
+	Ogre::Vector3		mTranslateVector; // Camera Rotation XYZ[280122]
+
+	float mMoveSensitivity;
+	float mMoveScale;
+
+	int Pl_MouseX;
+	int Pl_MouseY;
+
+	POINT		Pl_pt;
+	long		Pl_Cent500X;
+	long		Pl_Cent500Y;
+
+	float		mMoveSensitivityMouse;
+	float		Pl_DeltaMouse;
+	bool		Pl_LeftMouseDown;
+	bool		Pl_RightMouseDown;
+	
+
+	int	Wheel;
 };
 
