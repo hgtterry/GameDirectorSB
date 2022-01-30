@@ -34,9 +34,12 @@ public:
 	bool frameRenderingQueued(const Ogre::FrameEvent& evt);
 
 	bool Stop_Ogre;  // Stop the Ogre Engine [150122]
+	bool Pl_LeftMouseDown;
+	bool Pl_RightMouseDown;
+	int	Wheel;
 
-	int		View_Height;	// Ogre window Height [150122]
-	int		View_Width;		// Ogre window WIdth [150122]
+	int	View_Height;	// Ogre window Height [150122]
+	int	View_Width;		// Ogre window WIdth [150122]
 
 protected:
 
@@ -63,10 +66,6 @@ protected:
 
 	float		mMoveSensitivityMouse;
 	float		Pl_DeltaMouse;
-	bool		Pl_LeftMouseDown;
-	bool		Pl_RightMouseDown;
-	
 
-	int	Wheel;
 };
 

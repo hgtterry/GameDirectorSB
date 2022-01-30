@@ -293,10 +293,113 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 			return (LONG)App->BlackBrush;
 		}
 	}
+
+	// Mouse Wheel
+	case WM_MOUSEWHEEL:
+	{
+
+		int zDelta = (short)HIWORD(wParam);    // wheel rotation
+
+		if (zDelta > 0)
+		{
+			App->CL_Ogre->Ogre_Listener->Wheel = -1;
+		}
+		else if (zDelta < 0)
+		{
+			App->CL_Ogre->Ogre_Listener->Wheel = 1;
+		}
+
+		return 1;
+
+	}
+
+	// Left Mouse Button
+	case WM_LBUTTONDOWN: // BERNIE_HEAR_FIRE 
+	{
+		App->CL_Ogre->m_imgui.mousePressed();
+
+		if (!ImGui::GetIO().WantCaptureMouse)
+		{
+
+			if (App->CL_Ogre->Ogre_Started == 1)
+			{
+				if (!ImGui::GetIO().WantCaptureMouse)
+				{
+					SetCapture(App->ViewGLhWnd);// Bernie
+					SetCursorPos(500, 500);
+					App->CL_Ogre->Ogre_Listener->Pl_LeftMouseDown = 1;
+					App->CUR = SetCursor(NULL);
+				}
+				else
+				{
+					App->CL_Ogre->Ogre_Listener->Pl_LeftMouseDown = 1;
+				}
+
+				return 1;
+			}
+
+		}
+
+		return 1;
+	}
+	case WM_LBUTTONUP:
+	{
+		App->CL_Ogre->m_imgui.mouseReleased();
+
+
+		if (App->CL_Ogre->Ogre_Started == 1)
+		{
+			ReleaseCapture();
+			App->CL_Ogre->Ogre_Listener->Pl_LeftMouseDown = 0;
+			SetCursor(App->CUR);
+
+			return 1;
+		}
+
+		return 1;
+	}
+
+	// Right Mouse Button
+	case WM_RBUTTONDOWN: // BERNIE_HEAR_FIRE 
+	{
+		App->CL_Ogre->m_imgui.mousePressed();
+
+		if (!ImGui::GetIO().WantCaptureMouse)
+		{
+			if (App->CL_Ogre->Ogre_Started == 1)
+			{
+
+				SetCapture(App->ViewGLhWnd);// Bernie
+				SetCursorPos(500, 500);
+				App->CL_Ogre->Ogre_Listener->Pl_RightMouseDown = 1;
+				App->CUR = SetCursor(NULL);
+
+				return 1;
+			}
+		}
+		return 1;
+	}
+	case WM_RBUTTONUP:
+	{
+		App->CL_Ogre->m_imgui.mouseReleased();
+
+		if (App->CL_Ogre->Ogre_Started == 1)
+		{
+			ReleaseCapture();
+			App->CL_Ogre->Ogre_Listener->Pl_RightMouseDown = 0;
+			SetCursor(App->CUR);
+
+			return 1;
+		}
+
+		return 1;
+	}
+
 	case WM_COMMAND:
 	{
 
 	}
+
 	break;
 	}
 	return FALSE;
