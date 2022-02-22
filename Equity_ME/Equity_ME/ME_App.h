@@ -27,6 +27,7 @@ distribution.
 #include "ME_Utilities.h"
 #include "ME_Grid.h"
 #include "ME_ImGui.h"
+#include "ME_Assimp.h"
 
 class ME_App
 {
@@ -38,6 +39,7 @@ public:
 	ME_Utilities*		CL_Utilities;	// Maths String Routines [130122]
 	ME_Grid*			CL_Grid;		// Main Grid Routines [150122]
 	ME_ImGui*			CL_ImGui;
+	ME_Assimp*			CL_Assimp;		// Assimp Model Importer[220222]
 
 	bool InitApp(void);
 	bool SetMainWin_Centre(void);

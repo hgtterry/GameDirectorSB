@@ -31,6 +31,7 @@ ME_App::ME_App()
 	CL_Utilities =	nullptr;
 	CL_Grid =		nullptr;
 	CL_ImGui =		nullptr;
+	CL_Assimp =		nullptr;
 
 	hInst =			nullptr;
 
@@ -57,6 +58,7 @@ bool ME_App::InitApp(void)
 	CL_Utilities =	new ME_Utilities();
 	CL_Grid =		new ME_Grid();
 	CL_ImGui =		new ME_ImGui();
+	CL_Assimp =		new ME_Assimp();
 
 	SetBrushes_Fonts();
 	return 1;

@@ -150,6 +150,7 @@
   <ItemGroup>
     <ClInclude Include="Equity_ME.h" />
     <ClInclude Include="ME_App.h" />
+    <ClInclude Include="ME_Assimp.h" />
     <ClInclude Include="ME_Grid.h" />
     <ClInclude Include="ME_ImGui.h" />
     <ClInclude Include="ME_Ogre.h" />
@@ -168,6 +169,7 @@
     <ClCompile Include="..\..\Anim19_OSDN\Common\imGui\ImGui_cpp\imgui_widgets.cpp" />
     <ClCompile Include="Equity_ME.cpp" />
     <ClCompile Include="ME_App.cpp" />
+    <ClCompile Include="ME_Assimp.cpp" />
     <ClCompile Include="ME_Grid.cpp" />
     <ClCompile Include="ME_ImGui.cpp" />
     <ClCompile Include="ME_Ogre.cpp" />
