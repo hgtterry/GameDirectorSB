@@ -34,3 +34,19 @@ ME_Assimp::ME_Assimp()
 ME_Assimp::~ME_Assimp()
 {
 }
+
+// *************************************************************************
+// *						logInfo Terry Bernie				  	 	   *
+// *************************************************************************
+void ME_Assimp::logInfo(std::string logString)
+{
+	Assimp::DefaultLogger::get()->info(logString.c_str());
+}
+
+// *************************************************************************
+// *						logDebug Terry Bernie				  	 	   *
+// *************************************************************************
+void ME_Assimp::logDebug(const char* logString)
+{
+	Assimp::DefaultLogger::get()->debug(logString);
+}

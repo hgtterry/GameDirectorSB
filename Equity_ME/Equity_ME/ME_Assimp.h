@@ -22,10 +22,25 @@ distribution.
 */
 
 #pragma once
+
+#include "cimport.h"
+//#include "Importer.hpp"
+//#include "Exporter.hpp"
+#include "PostProcess.h"
+#include "Scene.h"
+#include "DefaultLogger.hpp"
+#include "LogStream.hpp"
+#include "matrix4x4.h"
+
 class ME_Assimp
 {
 public:
 	ME_Assimp();
 	~ME_Assimp();
+
+protected:
+
+	void logInfo(std::string logString);
+	void logDebug(const char* logString);
 };
 
