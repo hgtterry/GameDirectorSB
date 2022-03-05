@@ -38,6 +38,11 @@ public:
 	ME_Assimp();
 	~ME_Assimp();
 
+	bool LoadFile(const char* pFile);
+
+	long int SelectedPreset;
+	int mTotalVertices;
+
 protected:
 
 	void logInfo(std::string logString);

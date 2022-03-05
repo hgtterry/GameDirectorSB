@@ -28,6 +28,8 @@ distribution.
 
 ME_Assimp::ME_Assimp()
 {
+	SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
+	mTotalVertices = 0;
 }
 
 
@@ -49,4 +51,42 @@ void ME_Assimp::logInfo(std::string logString)
 void ME_Assimp::logDebug(const char* logString)
 {
 	Assimp::DefaultLogger::get()->debug(logString);
+}
+
+// *************************************************************************
+// *						LoadFile Terry Bernie				  	 	   *
+// *************************************************************************
+bool ME_Assimp::LoadFile(const char* pFile)
+{
+
+	//SelectedPreset = GetUserPresets(); // See what user wants
+
+	const aiScene* scene = aiImportFile(pFile, SelectedPreset);
+
+	if (!scene)
+	{
+		char buf[1024];
+		strcpy(buf, aiGetErrorString());
+////		App->Say(buf);
+		return false;
+	}
+	else
+	{
+
+////	GetBasicInfo(scene);
+
+////		Create_MeshGroups(scene);
+
+////		Get_Group_VertCount(scene);
+
+////		StoreMeshData(scene);
+	
+////		LoadTextures();
+		
+////		App->CL_Vm_Model->Create_BondingBox_Model();
+
+	}
+
+	aiReleaseImport(scene);
+	return 1;
 }
