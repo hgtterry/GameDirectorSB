@@ -32,6 +32,7 @@ ME_App::ME_App()
 	CL_Grid =		nullptr;
 	CL_ImGui =		nullptr;
 	CL_Assimp =		nullptr;
+	CL_Import =		nullptr;
 
 	hInst =			nullptr;
 
@@ -59,6 +60,7 @@ bool ME_App::InitApp(void)
 	CL_Grid =		new ME_Grid();
 	CL_ImGui =		new ME_ImGui();
 	CL_Assimp =		new ME_Assimp();
+	CL_Import =		new ME_Import();
 
 	SetBrushes_Fonts();
 	return 1;
@@ -135,5 +137,15 @@ bool ME_App::ResizeOgre_Window(void)
 	App->Cl_Panels->Place_GlobalGroups();*/
 
 	return 1;
+}
+
+// *************************************************************************
+// *								Say_Win								   *
+// *************************************************************************
+void ME_App::Say_Win(const char* Message)
+{
+	char text[1024];
+	strcpy(text, Message);
+	MessageBox(MainHwnd, Message, "Message", MB_OK);
 }
 

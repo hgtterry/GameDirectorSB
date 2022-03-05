@@ -28,6 +28,7 @@ distribution.
 #include "ME_Grid.h"
 #include "ME_ImGui.h"
 #include "ME_Assimp.h"
+#include "ME_Import.h"
 
 class ME_App
 {
@@ -40,12 +41,15 @@ public:
 	ME_Grid*			CL_Grid;		// Main Grid Routines [150122]
 	ME_ImGui*			CL_ImGui;
 	ME_Assimp*			CL_Assimp;		// Assimp Model Importer[220222]
+	ME_Import*			CL_Import;		// Importer Class [050322]
 
 	bool InitApp(void);
 	bool SetMainWin_Centre(void);
 
 	void SetBrushes_Fonts(void);
 	bool ResizeOgre_Window(void);
+
+	void Say_Win(const char* Message);
 
 	HINSTANCE hInst;	// Store instance handle in our global variable [120122]
 

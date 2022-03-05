@@ -140,12 +140,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
     {
+
     case WM_COMMAND:
         {
             int wmId = LOWORD(wParam);
             // Parse the menu selections:
             switch (wmId)
             {
+
+			// Import
+			case ID_IMPORT_EQ_WAVEFRONTOBJ:
+			{
+				App->Say_Win("Here");
+				return 1;
+			}
+
             case IDM_ABOUT:
                 DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
                 break;
