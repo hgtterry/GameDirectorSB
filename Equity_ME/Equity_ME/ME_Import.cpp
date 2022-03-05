@@ -46,25 +46,30 @@ bool ME_Import::Assimp_Loader(char* Extension, char* Extension2)
 		return 1;
 	}
 
+	char Model_Path_And_File[MAX_PATH];
+	strcpy(Model_Path_And_File, App->CL_FileIO->Get_Model_Path_File_Name().c_str());
+
+	App->Say_Win(Model_Path_And_File);
+
 	//App->EBC_Model->Clear_ModelData();
 
 	//App->CL_Vm_Model->Set_Paths();
 
 
-	//App->Cl_Vm_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
+	App->CL_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
 
-	//bool Test = App->Cl_Vm_Assimp->LoadFile(App->CL_Vm_FileIO->Model_Path_FileName);
-	//if (Test == 0)
-	//{
-	//	App->Say("Failed To Load");
-	//	return 0;
-	//}
+	bool Test = App->CL_Assimp->LoadFile(Model_Path_And_File);
+	if (Test == 0)
+	{
+		App->Say_Win("Failed To Load");
+		return 0;
+	}
 
 	//App->CL_Vm_Model->Model_Type = LoadedFile_Assimp;
 
 	////Set_Equity();
 	//App->SBC_Equity->Set_Equity();
 
-	//App->Say("Model Loaded");
+	App->Say_Win("Model Loaded");
 	return 1;
 }

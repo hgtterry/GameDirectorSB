@@ -47,5 +47,7 @@ protected:
 
 	void logInfo(std::string logString);
 	void logDebug(const char* logString);
+
+	void  GetBasicInfo(const aiScene* pScene);
 };
 

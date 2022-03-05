@@ -24,6 +24,7 @@ distribution.
 #include "stdafx.h"
 #include "ME_App.h"
 #include "ME_FileIO.h"
+#include <string>
 
 
 ME_FileIO::ME_FileIO()
@@ -70,4 +71,20 @@ bool ME_FileIO::Open_File_Model(char* Extension, char* Title, char* StartDirecto
 		return 1;
 	}
 	return 0;
+}
+
+// *************************************************************************
+// *					Get_Model_File_Name Terry Flanigan				   *
+// *************************************************************************
+std::string ME_FileIO::Get_Model_File_Name()
+{
+	return Model_FileName;
+}
+
+// *************************************************************************
+// *				Get_Model_Path_File_Name Terry Flanigan				   *
+// *************************************************************************
+std::string ME_FileIO::Get_Model_Path_File_Name()
+{
+	return Model_Path_FileName;
 }

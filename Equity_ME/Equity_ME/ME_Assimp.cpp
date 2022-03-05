@@ -67,13 +67,13 @@ bool ME_Assimp::LoadFile(const char* pFile)
 	{
 		char buf[1024];
 		strcpy(buf, aiGetErrorString());
-////		App->Say(buf);
+		App->Say_Win(buf);
 		return false;
 	}
 	else
 	{
 
-////	GetBasicInfo(scene);
+	GetBasicInfo(scene);
 
 ////		Create_MeshGroups(scene);
 
@@ -89,4 +89,41 @@ bool ME_Assimp::LoadFile(const char* pFile)
 
 	aiReleaseImport(scene);
 	return 1;
+}
+
+// *************************************************************************
+// *						GetBasicInfo Terry Bernie			  	 	   *
+// *************************************************************************
+void  ME_Assimp::GetBasicInfo(const aiScene* pScene)
+{
+
+	bool test = pScene->HasMeshes();
+	if (test == 1)
+	{
+		App->CL_Vm_Model->GroupCount = pScene->mNumMeshes;
+		//App->CL_Vm_Model->HasMesh = 1;
+	}
+
+	test = pScene->HasMaterials();
+	if (test == 1)
+	{
+		int Hack = 0;
+
+		Hack = pScene->mNumMaterials;
+
+		if (Hack == 1)
+		{
+			App->CL_Vm_Model->TextureCount = pScene->mNumMaterials;
+		}
+		else
+		{
+			App->CL_Vm_Model->TextureCount = pScene->mNumMaterials - 1;
+		}
+	}
+
+	test = pScene->HasAnimations();
+	if (test == 1)
+	{
+		App->CL_Vm_Model->MotionCount = pScene->mNumAnimations;
+	}
 }

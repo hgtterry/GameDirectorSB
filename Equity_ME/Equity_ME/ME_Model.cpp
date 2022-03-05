@@ -21,23 +21,16 @@ misrepresented as being the original software.
 distribution.
 */
 
-#pragma once
-class ME_FileIO
+#include "stdafx.h"
+#include "ME_App.h"
+#include "ME_Model.h"
+
+
+ME_Model::ME_Model()
 {
-public:
-	ME_FileIO();
-	~ME_FileIO();
+}
 
-	bool Open_File_Model(char* Extension, char* Title, char* StartDirectory);
 
-	std::string Get_Model_File_Name();
-	std::string Get_Model_Path_File_Name();
-
-protected:
-
-	char Model_FileName[MAX_PATH];
-	char Model_Path_FileName[MAX_PATH];
-
-	OPENFILENAME ofn;
-};
-
+ME_Model::~ME_Model()
+{
+}

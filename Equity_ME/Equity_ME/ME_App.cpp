@@ -34,6 +34,7 @@ ME_App::ME_App()
 	CL_Assimp =		nullptr;
 	CL_Import =		nullptr;
 	CL_FileIO =		nullptr;
+	CL_Model =		nullptr;
 
 	hInst =			nullptr;
 
@@ -63,7 +64,7 @@ bool ME_App::InitApp(void)
 	CL_Assimp =		new ME_Assimp();
 	CL_Import =		new ME_Import();
 	CL_FileIO =		new ME_FileIO();
-
+	CL_Model =		new ME_Model();
 
 	SetBrushes_Fonts();
 	return 1;

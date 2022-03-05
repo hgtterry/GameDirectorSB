@@ -57,6 +57,9 @@
     <ClInclude Include="ME_FileIO.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ME_Model.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -108,6 +111,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ME_FileIO.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ME_Model.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
