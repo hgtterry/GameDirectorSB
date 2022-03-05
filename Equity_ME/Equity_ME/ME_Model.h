@@ -27,5 +27,15 @@ class ME_Model
 public:
 	ME_Model();
 	~ME_Model();
+
+	void Set_Groupt_Count(int Count);
+	void Set_Texture_Count(int Count);
+	void Set_Motion_Count(int Count);
+
+protected:
+
+	int GroupCount;
+	int TextureCount;
+	int MotionCount;
 };
 

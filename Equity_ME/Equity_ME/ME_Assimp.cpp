@@ -100,30 +100,30 @@ void  ME_Assimp::GetBasicInfo(const aiScene* pScene)
 	bool test = pScene->HasMeshes();
 	if (test == 1)
 	{
-		App->CL_Vm_Model->GroupCount = pScene->mNumMeshes;
+		App->CL_Model->Set_Groupt_Count(pScene->mNumMeshes);
 		//App->CL_Vm_Model->HasMesh = 1;
 	}
 
 	test = pScene->HasMaterials();
 	if (test == 1)
 	{
-		int Hack = 0;
+		int Mat = 0;
 
-		Hack = pScene->mNumMaterials;
+		Mat = pScene->mNumMaterials;
 
-		if (Hack == 1)
+		if (Mat > 0)
 		{
-			App->CL_Vm_Model->TextureCount = pScene->mNumMaterials;
+			App->CL_Model->Set_Texture_Count(pScene->mNumMaterials);
 		}
 		else
 		{
-			App->CL_Vm_Model->TextureCount = pScene->mNumMaterials - 1;
+			App->CL_Model->Set_Texture_Count(-1);
 		}
 	}
 
 	test = pScene->HasAnimations();
 	if (test == 1)
 	{
-		App->CL_Vm_Model->MotionCount = pScene->mNumAnimations;
+		App->CL_Model->Set_Motion_Count(pScene->mNumAnimations);
 	}
 }

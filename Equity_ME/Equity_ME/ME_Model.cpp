@@ -28,9 +28,36 @@ distribution.
 
 ME_Model::ME_Model()
 {
+	GroupCount = 0;
+	TextureCount = 0;
+	MotionCount = 0;
 }
 
 
 ME_Model::~ME_Model()
 {
+}
+
+// *************************************************************************
+// *						Set_Groupt_Count Terry Flanigan		  	 	   *
+// *************************************************************************
+void ME_Model::Set_Groupt_Count(int Count)
+{
+	GroupCount = Count;
+}
+
+// *************************************************************************
+// *						Set_Groupt_Count Terry Flanigan		  	 	   *
+// *************************************************************************
+void ME_Model::Set_Texture_Count(int Count)
+{
+	TextureCount = Count;
+}
+
+// *************************************************************************
+// *						Set_Groupt_Count Terry Flanigan		  	 	   *
+// *************************************************************************
+void ME_Model::Set_Motion_Count(int Count)
+{
+	MotionCount = Count;
 }
