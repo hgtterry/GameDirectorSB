@@ -29,6 +29,7 @@ distribution.
 #include "ME_ImGui.h"
 #include "ME_Assimp.h"
 #include "ME_Import.h"
+#include "ME_FileIO.h"
 
 class ME_App
 {
@@ -42,6 +43,7 @@ public:
 	ME_ImGui*			CL_ImGui;
 	ME_Assimp*			CL_Assimp;		// Assimp Model Importer[220222]
 	ME_Import*			CL_Import;		// Importer Class [050322]
+	ME_FileIO*			CL_FileIO;		// Windows Open/Save Routines [050322]
 
 	bool InitApp(void);
 	bool SetMainWin_Centre(void);

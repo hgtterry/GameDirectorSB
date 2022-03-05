@@ -148,10 +148,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             switch (wmId)
             {
 
-			// Import
+			// ------------------------------------------------------- Import
 			case ID_IMPORT_EQ_WAVEFRONTOBJ:
 			{
-				App->Say_Win("Here");
+				App->CL_Import->Assimp_Loader("Wavefront OBJ   *.obj\0*.obj\0", "Wavefront OBJ");
 				return 1;
 			}
 

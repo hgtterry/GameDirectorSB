@@ -22,12 +22,19 @@ distribution.
 */
 
 #pragma once
-class ME_Import
+class ME_FileIO
 {
 public:
-	ME_Import();
-	~ME_Import();
+	ME_FileIO();
+	~ME_FileIO();
 
-	bool Assimp_Loader(char* Extension, char* Extension2);
+	bool Open_File_Model(char* Extension, char* Title, char* StartDirectory);
+
+	char Model_FileName[MAX_PATH];
+	char Model_Path_FileName[MAX_PATH];
+
+protected:
+
+	OPENFILENAME ofn;
 };
 

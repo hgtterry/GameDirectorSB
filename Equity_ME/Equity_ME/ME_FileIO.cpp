@@ -23,48 +23,51 @@ distribution.
 
 #include "stdafx.h"
 #include "ME_App.h"
-#include "ME_Import.h"
+#include "ME_FileIO.h"
 
 
-ME_Import::ME_Import()
+ME_FileIO::ME_FileIO()
 {
+	Model_FileName[0] = 0;
+	Model_Path_FileName[0] = 0;
 }
 
 
-ME_Import::~ME_Import()
+ME_FileIO::~ME_FileIO()
 {
 }
 
 // *************************************************************************
-// *						Assimp_Loader Terry Bernie					   *
+// *						OpenFile Terry Bernie						   *
 // *************************************************************************
-bool ME_Import::Assimp_Loader(char* Extension, char* Extension2)
+bool ME_FileIO::Open_File_Model(char* Extension, char* Title, char* StartDirectory)
 {
-	int Result = App->CL_FileIO->Open_File_Model(Extension, Extension2, NULL);
-	if (Result == 0)
+	
+	Model_FileName[0] = 0;
+	Model_Path_FileName[0] = 0;
+
+	ZeroMemory(&ofn, sizeof(ofn));
+	ofn.lStructSize = sizeof(ofn);
+	ofn.hwndOwner = App->MainHwnd;
+	ofn.hInstance = App->hInst;
+	ofn.lpstrFile = Model_Path_FileName;						// full path and file name
+	ofn.nMaxFile = sizeof(Model_Path_FileName);
+	ofn.lpstrFilter = Extension;
+
+	ofn.nFilterIndex = 1;
+	ofn.lpstrFileTitle = Model_FileName;						// Just File Name
+	ofn.nMaxFileTitle = sizeof(Model_FileName);;
+	ofn.lpstrInitialDir = StartDirectory;
+	ofn.lpstrTitle = Title;
+	ofn.Flags = OFN_PATHMUSTEXIST |
+		OFN_FILEMUSTEXIST |
+		OFN_EXPLORER |
+		OFN_HIDEREADONLY |
+		OFN_FILEMUSTEXIST;
+
+	if (GetOpenFileName(&ofn) == TRUE)
 	{
 		return 1;
 	}
-
-	//App->EBC_Model->Clear_ModelData();
-
-	//App->CL_Vm_Model->Set_Paths();
-
-
-	//App->Cl_Vm_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
-
-	//bool Test = App->Cl_Vm_Assimp->LoadFile(App->CL_Vm_FileIO->Model_Path_FileName);
-	//if (Test == 0)
-	//{
-	//	App->Say("Failed To Load");
-	//	return 0;
-	//}
-
-	//App->CL_Vm_Model->Model_Type = LoadedFile_Assimp;
-
-	////Set_Equity();
-	//App->SBC_Equity->Set_Equity();
-
-	//App->Say("Model Loaded");
-	return 1;
+	return 0;
 }

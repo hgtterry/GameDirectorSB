@@ -33,6 +33,7 @@ ME_App::ME_App()
 	CL_ImGui =		nullptr;
 	CL_Assimp =		nullptr;
 	CL_Import =		nullptr;
+	CL_FileIO =		nullptr;
 
 	hInst =			nullptr;
 
@@ -61,6 +62,8 @@ bool ME_App::InitApp(void)
 	CL_ImGui =		new ME_ImGui();
 	CL_Assimp =		new ME_Assimp();
 	CL_Import =		new ME_Import();
+	CL_FileIO =		new ME_FileIO();
+
 
 	SetBrushes_Fonts();
 	return 1;
