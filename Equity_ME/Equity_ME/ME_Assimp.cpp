@@ -75,7 +75,7 @@ bool ME_Assimp::LoadFile(const char* pFile)
 
 	GetBasicInfo(scene);
 
-////		Create_MeshGroups(scene);
+	Create_MeshGroups(scene);
 
 ////		Get_Group_VertCount(scene);
 
@@ -125,5 +125,71 @@ void  ME_Assimp::GetBasicInfo(const aiScene* pScene)
 	if (test == 1)
 	{
 		App->CL_Model->Set_Motion_Count(pScene->mNumAnimations);
+	}
+}
+
+// *************************************************************************
+// *					Create_MeshGroups_ByIndex Terry Flanigan	 	   *
+// *************************************************************************
+void ME_Assimp::Create_MeshGroups(const aiScene* pScene)
+{
+
+	int Count = 0;
+
+	char GroupName[255];
+	char MaterialName[255];
+	char GroupNum[255];
+
+	//App->CL_Vm_Model->S_Texture[0]->UsedTextureCount = App->CL_Vm_Model->GroupCount;
+	//App->CL_Vm_Textures->CreateTextureInfo();
+
+	int mGroupCount = App->CL_Model->Get_Groupt_Count();
+
+	while (Count < mGroupCount)
+	{
+		aiMesh* mesh = pScene->mMeshes[Count];
+
+		App->CL_Vm_Model->Create_S_MeshGroup(Count);
+
+		_itoa(Count, GroupNum, 10);
+		strcpy(GroupName, "Group_");
+		strcat(GroupName, GroupNum);
+		strcpy(App->CL_Vm_Model->S_MeshGroup[Count]->GroupName, GroupName);
+
+		strcpy(MaterialName, "Material_");
+		strcat(MaterialName, GroupNum);
+		strcpy(App->CL_Vm_Model->S_MeshGroup[Count]->MaterialName, MaterialName);
+
+		////---------------
+
+		App->CL_Vm_Model->S_MeshGroup[Count]->GroupVertCount = 0;
+		App->CL_Vm_Model->S_MeshGroup[Count]->MaterialIndex = -1;
+
+		App->CL_Vm_Model->S_MeshGroup[Count]->MaterialIndex = Count;//= mesh->mMaterialIndex;
+
+		strcpy(App->CL_Vm_Model->S_MeshGroup[Count]->Text_FileName, "No_Texture");
+
+		App->CL_Vm_Model->S_MeshGroup[Count]->HasBones = mesh->HasBones();
+		App->CL_Vm_Model->S_MeshGroup[Count]->BoneCount = mesh->mNumBones;
+
+		/*if (App->S_MeshGroup[Count]->HasBones == 1)
+		{
+		mHasBones = 1;
+		}*/
+
+		// Get Texture Path/Name
+		aiString texPath;
+		aiMaterial* mtl = pScene->mMaterials[mesh->mMaterialIndex];
+		if (AI_SUCCESS == mtl->GetTexture(aiTextureType_DIFFUSE, 0, &texPath))
+		{
+			strcpy(App->CL_Vm_Model->S_MeshGroup[Count]->Text_FileName, texPath.C_Str());
+		}
+		else
+		{
+			strcpy(App->CL_Vm_Model->S_MeshGroup[Count]->Text_FileName, "No_Texture");
+			//App->CL_Model_Data->S_MeshGroup[Count]->MaterialIndex = -1;
+		}
+
+		Count++;
 	}
 }

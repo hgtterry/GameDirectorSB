@@ -48,6 +48,7 @@ protected:
 	void logInfo(std::string logString);
 	void logDebug(const char* logString);
 
-	void  GetBasicInfo(const aiScene* pScene);
+	void GetBasicInfo(const aiScene* pScene);
+	void Create_MeshGroups(const aiScene* pScene);
 };
 

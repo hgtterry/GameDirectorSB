@@ -148,6 +148,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Base_Group.h" />
     <ClInclude Include="Equity_ME.h" />
     <ClInclude Include="ME_App.h" />
     <ClInclude Include="ME_Assimp.h" />
@@ -170,6 +171,7 @@
     <ClCompile Include="..\..\Anim19_OSDN\Common\imGui\ImGui_cpp\imgui_demo.cpp" />
     <ClCompile Include="..\..\Anim19_OSDN\Common\imGui\ImGui_cpp\imgui_draw.cpp" />
     <ClCompile Include="..\..\Anim19_OSDN\Common\imGui\ImGui_cpp\imgui_widgets.cpp" />
+    <ClCompile Include="Base_Group.cpp" />
     <ClCompile Include="Equity_ME.cpp" />
     <ClCompile Include="ME_App.cpp" />
     <ClCompile Include="ME_Assimp.cpp" />

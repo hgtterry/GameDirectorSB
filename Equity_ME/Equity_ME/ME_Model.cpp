@@ -47,6 +47,14 @@ void ME_Model::Set_Groupt_Count(int Count)
 }
 
 // *************************************************************************
+// *						Get_Groupt_Count Terry Flanigan		  	 	   *
+// *************************************************************************
+int ME_Model::Get_Groupt_Count()
+{
+	return GroupCount;
+}
+
+// *************************************************************************
 // *						Set_Groupt_Count Terry Flanigan		  	 	   *
 // *************************************************************************
 void ME_Model::Set_Texture_Count(int Count)
