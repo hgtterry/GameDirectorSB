@@ -57,6 +57,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,_In_opt_ HINSTANCE hPrevInstance,
 
 	App->SetMainWin_Centre();
 
+	App->CL_TopBar->Start_TopBar();
+
 	SetTimer(App->MainHwnd, 1, 1, NULL);
 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_EQUITY_ME));

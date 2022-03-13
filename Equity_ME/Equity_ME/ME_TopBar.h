@@ -27,5 +27,13 @@ class ME_TopBar
 public:
 	ME_TopBar();
 	~ME_TopBar();
+
+	bool Start_TopBar();
+
+protected:
+
+	static LRESULT CALLBACK TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	HWND TabsHwnd;
 };
 
