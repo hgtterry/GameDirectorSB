@@ -21,28 +21,16 @@ misrepresented as being the original software.
 distribution.
 */
 
-#pragma once
+#include "stdafx.h"
+#include "ME_App.h"
+#include "ME_TopBar.h"
 
-#include "Base_Group.h"
 
-class ME_Model
+ME_TopBar::ME_TopBar()
 {
-public:
-	ME_Model();
-	~ME_Model();
+}
 
-	Base_Group*			Group[100];
 
-	void Set_Groupt_Count(int Count);
-	int Get_Groupt_Count();
-
-	void Set_Texture_Count(int Count);
-	void Set_Motion_Count(int Count);
-
-protected:
-
-	int GroupCount;
-	int TextureCount;
-	int MotionCount;
-};
-
+ME_TopBar::~ME_TopBar()
+{
+}

@@ -159,6 +159,7 @@
     <ClInclude Include="ME_Model.h" />
     <ClInclude Include="ME_Ogre.h" />
     <ClInclude Include="ME_OgreListener.h" />
+    <ClInclude Include="ME_TopBar.h" />
     <ClInclude Include="ME_Utilities.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -182,6 +183,7 @@
     <ClCompile Include="ME_Model.cpp" />
     <ClCompile Include="ME_Ogre.cpp" />
     <ClCompile Include="ME_OgreListener.cpp" />
+    <ClCompile Include="ME_TopBar.cpp" />
     <ClCompile Include="ME_Utilities.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

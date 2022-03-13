@@ -35,6 +35,7 @@ ME_App::ME_App()
 	CL_Import =		nullptr;
 	CL_FileIO =		nullptr;
 	CL_Model =		nullptr;
+	CL_TopBar =		nullptr;
 
 	hInst =			nullptr;
 
@@ -65,6 +66,7 @@ bool ME_App::InitApp(void)
 	CL_Import =		new ME_Import();
 	CL_FileIO =		new ME_FileIO();
 	CL_Model =		new ME_Model();
+	CL_TopBar =		new ME_TopBar();
 
 	SetBrushes_Fonts();
 	return 1;

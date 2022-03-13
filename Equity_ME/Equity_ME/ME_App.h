@@ -31,6 +31,7 @@ distribution.
 #include "ME_Import.h"
 #include "ME_FileIO.h"
 #include "ME_Model.h"
+#include "ME_TopBar.h"
 
 class ME_App
 {
@@ -46,7 +47,7 @@ public:
 	ME_Import*			CL_Import;		// Importer Class [050322]
 	ME_FileIO*			CL_FileIO;		// Windows Open/Save Routines [050322]
 	ME_Model*			CL_Model;		// Main Model Class [050322]
-
+	ME_TopBar*			CL_TopBar;		// Top Bar and Tabs [1350322]
 	bool InitApp(void);
 	bool SetMainWin_Centre(void);
 
