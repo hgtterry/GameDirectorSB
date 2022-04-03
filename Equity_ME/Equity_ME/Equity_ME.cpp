@@ -181,6 +181,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
         break;
 
+	case WM_MOVING:
+	{
+		App->ResizeOgre_Window();
+		Ogre::Root::getSingletonPtr()->renderOneFrame();
+		return 0;
+	}
+
 	case WM_SIZE:
 	{
 		App->ResizeOgre_Window();

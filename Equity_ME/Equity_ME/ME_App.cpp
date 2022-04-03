@@ -123,20 +123,20 @@ bool ME_App::ResizeOgre_Window(void)
 	//-----------------Ogre Window
 	SetWindowPos(ViewGLhWnd, NULL, 4, 80, NewWidth + 384, NewHeight + 68, SWP_NOZORDER);
 
-	/*if (App->OgreStarted == 1)
+	if (App->CL_Ogre->Ogre_Started == 1)
 	{
 		RECT rect;
 		GetClientRect(App->ViewGLhWnd, &rect);
 
-		if ((rect.bottom - rect.top) != 0 && App->Cl19_Ogre->mCamera != 0)
+		if ((rect.bottom - rect.top) != 0 && App->CL_Ogre->mCamera != 0)
 		{
-			App->Cl19_Ogre->mWindow->windowMovedOrResized();
-			App->Cl19_Ogre->mCamera->setAspectRatio((Ogre::Real)App->Cl19_Ogre->mWindow->getWidth() / (Ogre::Real)App->Cl19_Ogre->mWindow->getHeight());
-			App->Cl19_Ogre->mCamera->yaw(Radian(0));
-			Root::getSingletonPtr()->renderOneFrame();
+			App->CL_Ogre->mWindow->windowMovedOrResized();
+			App->CL_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CL_Ogre->mWindow->getWidth() / (Ogre::Real)App->CL_Ogre->mWindow->getHeight());
+			App->CL_Ogre->mCamera->yaw(Ogre::Radian(0));
+			Ogre::Root::getSingletonPtr()->renderOneFrame();
 		}
 
-	}*/
+	}
 
 	/*App->Cl_Panels->MovePhysicsView();
 	App->Cl_Panels->Move_FileView_Window();
