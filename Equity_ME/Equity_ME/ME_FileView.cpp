@@ -11,6 +11,9 @@ ME_FileView::ME_FileView()
 	GD_ModelFolder =	nullptr;;
 	GD_GroupsFolder =	nullptr;;
 
+	strcpy(FileView_Folder, "");
+	strcpy(FileView_File, "");
+
 	FileView_Active = 0;
 }
 
@@ -68,7 +71,7 @@ LRESULT CALLBACK ME_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 			case TVN_SELCHANGED:
 			{
-				//App->SBC_FileView->Get_Selection((LPNMHDR)lParam);
+				App->CL_FileView->Get_Selection((LPNMHDR)lParam);
 			}
 			}
 		}
@@ -188,4 +191,77 @@ void ME_FileView::ExpandRoot(void)
 	TreeView_Expand(Temp, GD_ProjectFolder, TVE_EXPAND);
 	TreeView_Expand(Temp, GD_ModelFolder, TVE_EXPAND);
 	TreeView_Expand(Temp, GD_GroupsFolder, TVE_EXPAND);
+}
+
+// *************************************************************************
+// *						Add_Group Terry Flanigan				 	   *
+// *************************************************************************
+HTREEITEM ME_FileView::Add_Group(char *SFileName, int Index)
+{
+	tvinsert.hParent = GD_GroupsFolder;
+	tvinsert.hInsertAfter = TVI_LAST;
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE | TVIF_PARAM;
+	tvinsert.item.pszText = SFileName;
+	tvinsert.item.iImage = 4;
+	tvinsert.item.iSelectedImage = 5;
+	tvinsert.item.lParam = Index;
+	HTREEITEM Temp = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+
+	return Temp;
+}
+
+// *************************************************************************
+// *					Get_Selection Terry Bernie					 	   *
+// *************************************************************************
+void ME_FileView::Get_Selection(LPNMHDR lParam)
+{
+
+	strcpy(FileView_Folder, "");
+	strcpy(FileView_File, "");
+
+	int Index = 0;
+	HWND Temp = GetDlgItem(App->ListPanel, IDC_TREE1);
+	HTREEITEM i = TreeView_GetSelection(Temp);
+
+	TVITEM item;
+	item.hItem = i;
+	item.pszText = FileView_Folder;
+	item.cchTextMax = sizeof(FileView_Folder);
+	item.mask = TVIF_TEXT | TVIF_PARAM;
+	TreeView_GetItem(((LPNMHDR)lParam)->hwndFrom, &item);
+	Index = item.lParam;
+
+	HTREEITEM p = TreeView_GetParent(Temp, i);
+
+	TVITEM item1;
+	item1.hItem = p;
+	item1.pszText = FileView_File;
+	item1.cchTextMax = sizeof(FileView_File);
+	item1.mask = TVIF_TEXT;
+	TreeView_GetItem(((LPNMHDR)lParam)->hwndFrom, &item1);
+
+	//--------------------------------------------------------------------------
+
+	if (!strcmp(FileView_Folder, "Groups")) // Folder
+	{
+
+		return;
+	}
+
+	if (!strcmp(FileView_File, "Groups"))
+	{
+		App->Say_Win(FileView_Folder);
+
+		/*HideRightPanes();
+		ShowWindow(App->GD_Properties_Hwnd, 1);
+		App->SBC_Aera->Hide_Area_Dlg(1);
+
+		App->SBC_Properties->Edit_Category = Enums::Edit_Area;
+
+		App->SBC_Properties->Update_ListView_Area();*/
+
+		return;
+
+	}
+
 }
