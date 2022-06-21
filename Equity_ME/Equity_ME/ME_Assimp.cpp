@@ -190,7 +190,7 @@ void ME_Assimp::Create_MeshGroups(const aiScene* pScene)
 		//	//App->CL_Model_Data->S_MeshGroup[Count]->MaterialIndex = -1;
 		//}
 
-		App->CL_FileView->Add_Group(GroupName, Count);
+		App->CL_FileView->Add_Group(App->CL_Model->Group[Count]->GroupName, Count);
 
 		Count++;
 	}

@@ -250,7 +250,7 @@ void ME_FileView::Get_Selection(LPNMHDR lParam)
 
 	if (!strcmp(FileView_File, "Groups"))
 	{
-		App->Say_Win(FileView_Folder);
+		App->Say_Win(App->CL_Model->Group[Index]->GroupName);
 
 		/*HideRightPanes();
 		ShowWindow(App->GD_Properties_Hwnd, 1);
