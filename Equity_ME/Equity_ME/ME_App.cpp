@@ -42,6 +42,7 @@ ME_App::ME_App()
 
 	MainHwnd =		nullptr;
 	ViewGLhWnd =	nullptr;
+	ListPanel =		nullptr;
 
 	AppBackground = nullptr;
 	BlackBrush =	nullptr;

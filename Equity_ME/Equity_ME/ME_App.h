@@ -64,6 +64,7 @@ public:
 	HWND MainHwnd;		// Main Window hWnd [120122]
 	HWND Fdlg;			// Main Window BackGround [120122]
 	HWND ViewGLhWnd;	// Ogre Render Window [120122]
+	HWND ListPanel;		
 	
 	HBRUSH AppBackground;	// Main App Background Colour [120122]
 	HBRUSH BlackBrush;		// Black Brush Colour [120122]
