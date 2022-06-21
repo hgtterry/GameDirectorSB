@@ -55,11 +55,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,_In_opt_ HINSTANCE hPrevInstance,
         return FALSE;
     }
 
-	App->CL_FileView->Start_FileView();	//Start Main File View Groups [210622]
-
 	App->SetMainWin_Centre();
 
+	App->CL_FileView->Start_FileView();		//Start Main File View Groups [210622]
 	App->CL_TopBar->Start_TopBar();
+
+
 
 	SetTimer(App->MainHwnd, 1, 1, NULL);
 
