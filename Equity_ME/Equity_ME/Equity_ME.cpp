@@ -57,6 +57,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,_In_opt_ HINSTANCE hPrevInstance,
 
 	App->SetMainWin_Centre();
 
+	App->mMenu = GetMenu(App->MainHwnd);
+
 	App->CL_FileView->Start_FileView();		//Start Main File View Groups [210622]
 	App->CL_TopBar->Start_TopBar();
 
@@ -160,6 +162,25 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				return 1;
 			}
 
+			case ID_WINDOWS_FILEVIEW:
+			{
+				ShowWindow(App->ListPanel, 1);
+
+				if (App->CL_FileView->FileView_Active == 1)
+				{
+					App->CL_FileView->FileView_Active = 0;
+					ShowWindow(App->ListPanel, 0);
+					CheckMenuItem(App->mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND | MF_UNCHECKED);
+				}
+				else
+				{
+					App->CL_FileView->FileView_Active = 1;
+					ShowWindow(App->ListPanel, 1);
+					CheckMenuItem(App->mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND | MF_CHECKED);
+				}
+				return 1;
+			}
+
             case IDM_ABOUT:
                 DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
                 break;
@@ -172,7 +193,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 break;
             default:
                 return DefWindowProc(hWnd, message, wParam, lParam);
-            }
+			}
+
+	
         }
         break;
     case WM_PAINT:

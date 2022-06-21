@@ -47,6 +47,8 @@ ME_App::ME_App()
 	AppBackground = nullptr;
 	BlackBrush =	nullptr;
 
+	mMenu = 0;
+
 	Font_CB15 = 0;
 
 	EquityDirecory_FullPath[0] = 0;

@@ -44,8 +44,7 @@ LRESULT CALLBACK ME_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 		SendDlgItemMessage(hDlg, IDC_TREE1, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		HMENU mMenu = GetMenu(App->MainHwnd);
-		CheckMenuItem(mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND | MF_CHECKED);
+		CheckMenuItem(App->mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND | MF_CHECKED);
 		return TRUE;
 	}
 
@@ -78,20 +77,7 @@ LRESULT CALLBACK ME_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 	}
 	case WM_COMMAND:
 	{
-		//if (LOWORD(wParam) == IDC_LEVELS)
-		//{
-		//	App->SBC_FileView->Level_But_Active = 1;
-		//	App->SBC_FileView->Stock_But_Active = 0;
-		//	App->RedrawWindow_Dlg(hDlg);
-
-		//	ShowWindow(GetDlgItem(App->ListPanel, IDC_TREE1), 1);
-
-		//	//App->GDCL_FileView->HideRightPanes();
-		//	//ShowWindow(App->GD_Properties_Hwnd, 1);*/
-
-		//	return TRUE;
-		//}
-
+	
 		break;
 	}
 
@@ -100,8 +86,7 @@ LRESULT CALLBACK ME_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 		App->CL_FileView->FileView_Active = 0;
 		ShowWindow(App->ListPanel, 0);
 
-		HMENU mMenu = GetMenu(App->MainHwnd);
-		CheckMenuItem(mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND | MF_UNCHECKED);
+		CheckMenuItem(App->mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND | MF_UNCHECKED);
 
 		break;
 	}
@@ -155,7 +140,7 @@ void ME_FileView::Init_FileView(void)
 }
 
 // *************************************************************************
-// *			AddRootFolder Terry Bernie			 				 	   *
+// *					AddRootFolder Terry Flanigan				 	   *
 // *************************************************************************
 void ME_FileView::AddRootFolder(void)
 {
@@ -169,7 +154,7 @@ void ME_FileView::AddRootFolder(void)
 }
 
 // *************************************************************************
-// *						MoreFoldersD Terry Bernie 				 	   *
+// *						MoreFoldersD Terry Flanigan 			 	   *
 // *************************************************************************
 void ME_FileView::MoreFoldersD(void) // last folder level
 {
@@ -193,7 +178,7 @@ void ME_FileView::MoreFoldersD(void) // last folder level
 }
 
 // *************************************************************************
-// *					ExpandRoot Terry Bernie							   *
+// *					ExpandRoot Terry Flanigan						   *
 // *************************************************************************
 void ME_FileView::ExpandRoot(void)
 {

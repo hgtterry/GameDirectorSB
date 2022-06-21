@@ -71,6 +71,7 @@ public:
 
 	HFONT Font_CB15;
 
+	HMENU mMenu;
 	HCURSOR CUR;
 
 	char EquityDirecory_FullPath[MAX_PATH];
