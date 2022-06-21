@@ -153,6 +153,7 @@
     <ClInclude Include="ME_App.h" />
     <ClInclude Include="ME_Assimp.h" />
     <ClInclude Include="ME_FileIO.h" />
+    <ClInclude Include="ME_FileView.h" />
     <ClInclude Include="ME_Grid.h" />
     <ClInclude Include="ME_ImGui.h" />
     <ClInclude Include="ME_Import.h" />
@@ -177,6 +178,7 @@
     <ClCompile Include="ME_App.cpp" />
     <ClCompile Include="ME_Assimp.cpp" />
     <ClCompile Include="ME_FileIO.cpp" />
+    <ClCompile Include="ME_FileView.cpp" />
     <ClCompile Include="ME_Grid.cpp" />
     <ClCompile Include="ME_ImGui.cpp" />
     <ClCompile Include="ME_Import.cpp" />

@@ -36,6 +36,7 @@ ME_App::ME_App()
 	CL_FileIO =		nullptr;
 	CL_Model =		nullptr;
 	CL_TopBar =		nullptr;
+	CL_FileView =	nullptr;
 
 	hInst =			nullptr;
 
@@ -67,6 +68,7 @@ bool ME_App::InitApp(void)
 	CL_FileIO =		new ME_FileIO();
 	CL_Model =		new ME_Model();
 	CL_TopBar =		new ME_TopBar();
+	CL_FileView =	new ME_FileView();
 
 	SetBrushes_Fonts();
 	return 1;

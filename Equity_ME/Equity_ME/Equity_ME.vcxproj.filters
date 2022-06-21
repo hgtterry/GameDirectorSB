@@ -66,6 +66,9 @@
     <ClInclude Include="ME_TopBar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ME_FileView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -126,6 +129,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ME_TopBar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ME_FileView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
