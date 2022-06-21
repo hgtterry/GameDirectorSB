@@ -69,6 +69,8 @@ public:
 	HBRUSH AppBackground;	// Main App Background Colour [120122]
 	HBRUSH BlackBrush;		// Black Brush Colour [120122]
 
+	HFONT Font_CB15;
+
 	HCURSOR CUR;
 
 	char EquityDirecory_FullPath[MAX_PATH];

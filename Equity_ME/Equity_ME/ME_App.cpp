@@ -47,6 +47,8 @@ ME_App::ME_App()
 	AppBackground = nullptr;
 	BlackBrush =	nullptr;
 
+	Font_CB15 = 0;
+
 	EquityDirecory_FullPath[0] = 0;
 }
 
@@ -101,6 +103,8 @@ void ME_App::SetBrushes_Fonts(void)
 {
 	AppBackground = CreateSolidBrush(RGB(213, 222, 242));
 	BlackBrush = CreateSolidBrush(RGB(0, 0, 0));
+
+	Font_CB15 = CreateFont(-15, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
 }
 
 // *************************************************************************

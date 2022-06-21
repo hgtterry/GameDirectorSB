@@ -6,8 +6,10 @@
 
 ME_FileView::ME_FileView()
 {
-	Root = nullptr;
-	GD_ProjectFolder = nullptr;
+	Root =				nullptr;
+	GD_ProjectFolder =	nullptr;
+	GD_ModelFolder =	nullptr;;
+	GD_GroupsFolder =	nullptr;;
 
 	FileView_Active = 0;
 }
@@ -40,9 +42,10 @@ LRESULT CALLBACK ME_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 		App->CL_FileView->FileView_Active = 1;
 		ShowWindow(hDlg, 1);
 
-		//SendDlgItemMessage(hDlg, IDC_TREE1, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_TREE1, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		//CheckMenuItem(App->mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND | MF_CHECKED);
+		HMENU mMenu = GetMenu(App->MainHwnd);
+		CheckMenuItem(mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND | MF_CHECKED);
 		return TRUE;
 	}
 
@@ -97,8 +100,8 @@ LRESULT CALLBACK ME_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 		App->CL_FileView->FileView_Active = 0;
 		ShowWindow(App->ListPanel, 0);
 
-		//HMENU mMenu = GetMenu(App->MainHwnd);
-		//CheckMenuItem(mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND | MF_UNCHECKED);
+		HMENU mMenu = GetMenu(App->MainHwnd);
+		CheckMenuItem(mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND | MF_UNCHECKED);
 
 		break;
 	}
@@ -147,8 +150,8 @@ void ME_FileView::Init_FileView(void)
 	TreeView_SetBkColor(Temp, (COLORREF)RGB(255, 255, 255));
 
 	AddRootFolder();
-	//MoreFoldersD(); //  Folders under root 
-	//ExpandRoot();
+	MoreFoldersD(); //  Folders under root 
+	ExpandRoot();
 }
 
 // *************************************************************************
@@ -163,4 +166,41 @@ void ME_FileView::AddRootFolder(void)
 	tvinsert.item.iImage = 0;
 	tvinsert.item.iSelectedImage = 1;
 	GD_ProjectFolder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+}
+
+// *************************************************************************
+// *						MoreFoldersD Terry Bernie 				 	   *
+// *************************************************************************
+void ME_FileView::MoreFoldersD(void) // last folder level
+{
+	//------------------------------------------------------- Level 
+	tvinsert.hParent = GD_ProjectFolder;
+	tvinsert.hInsertAfter = TVI_LAST;
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	tvinsert.item.pszText = "Test";// App->SBC_Project->Level_File_Name;
+	tvinsert.item.iImage = 2;
+	tvinsert.item.iSelectedImage = 3;
+	GD_ModelFolder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+
+	////------------------------------------------------------- Camera
+	tvinsert.hParent = GD_ModelFolder;
+	tvinsert.hInsertAfter = TVI_LAST;
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	tvinsert.item.pszText = "Groups";
+	tvinsert.item.iImage = 2;
+	tvinsert.item.iSelectedImage = 3;
+	GD_GroupsFolder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+}
+
+// *************************************************************************
+// *					ExpandRoot Terry Bernie							   *
+// *************************************************************************
+void ME_FileView::ExpandRoot(void)
+{
+	HWND Temp = GetDlgItem(App->ListPanel, IDC_TREE1);
+	HTREEITEM i = TreeView_GetSelection(Temp);
+
+	TreeView_Expand(Temp, GD_ProjectFolder, TVE_EXPAND);
+	TreeView_Expand(Temp, GD_ModelFolder, TVE_EXPAND);
+	TreeView_Expand(Temp, GD_GroupsFolder, TVE_EXPAND);
 }
