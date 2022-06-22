@@ -59,8 +59,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,_In_opt_ HINSTANCE hPrevInstance,
 
 	App->mMenu = GetMenu(App->MainHwnd);
 
-	App->CL_FileView->Start_FileView();		//Start Main File View Groups [210622]
 	App->CL_TopBar->Start_TopBar();
+	App->CL_FileView->Start_FileView();		//Start Main File View Groups [210622]
+	App->CL_Groups->Start_Groups();
 
 
 
