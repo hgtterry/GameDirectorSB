@@ -37,6 +37,7 @@ ME_App::ME_App()
 	CL_Model =		nullptr;
 	CL_TopBar =		nullptr;
 	CL_FileView =	nullptr;
+	CL_Groups =		nullptr;
 
 	hInst =			nullptr;
 
@@ -74,6 +75,7 @@ bool ME_App::InitApp(void)
 	CL_Model =		new ME_Model();
 	CL_TopBar =		new ME_TopBar();
 	CL_FileView =	new ME_FileView();
+	CL_Groups =		new ME_Groups();
 
 	SetBrushes_Fonts();
 	return 1;
