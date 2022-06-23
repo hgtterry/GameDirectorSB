@@ -72,6 +72,9 @@
     <ClInclude Include="ME_Groups.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ME_Panels.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -138,6 +141,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ME_Groups.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ME_Panels.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

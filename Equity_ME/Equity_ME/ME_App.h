@@ -34,6 +34,7 @@ distribution.
 #include "ME_TopBar.h"
 #include "ME_FileView.h"
 #include "ME_Groups.h"
+#include "ME_Panels.h"
 
 class ME_App
 {
@@ -52,6 +53,7 @@ public:
 	ME_TopBar*			CL_TopBar;		// Top Bar and Tabs [130322]
 	ME_FileView*		CL_FileView;	// FileView [210622]
 	ME_Groups*			CL_Groups;		// Groups  [220622]
+	ME_Panels*			CL_Panels;		// Panels  [220623]
 
 	bool InitApp(void);
 	bool SetMainWin_Centre(void);

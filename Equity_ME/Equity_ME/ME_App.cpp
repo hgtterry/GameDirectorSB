@@ -38,6 +38,7 @@ ME_App::ME_App()
 	CL_TopBar =		nullptr;
 	CL_FileView =	nullptr;
 	CL_Groups =		nullptr;
+	CL_Panels =		nullptr;
 
 	hInst =			nullptr;
 
@@ -76,6 +77,7 @@ bool ME_App::InitApp(void)
 	CL_TopBar =		new ME_TopBar();
 	CL_FileView =	new ME_FileView();
 	CL_Groups =		new ME_Groups();
+	CL_Panels =		new ME_Panels();
 
 	SetBrushes_Fonts();
 	return 1;
