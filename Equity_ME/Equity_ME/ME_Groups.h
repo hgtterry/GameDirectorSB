@@ -6,6 +6,9 @@ public:
 	~ME_Groups();
 
 	bool Start_Groups();
+	bool Update_Groups();
+
+	int Selected_Group;
 
 	HWND RightGroups_Hwnd;
 

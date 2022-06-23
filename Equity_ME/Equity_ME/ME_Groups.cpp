@@ -7,6 +7,8 @@
 ME_Groups::ME_Groups()
 {
 	RightGroups_Hwnd = nullptr;
+
+	Selected_Group = 0;
 }
 
 
@@ -111,4 +113,16 @@ LRESULT CALLBACK ME_Groups::Groups_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *					Update_Groups  Terry Flanigan		  		 	   *
+// *************************************************************************
+bool ME_Groups::Update_Groups()
+{
+	int Index = Selected_Group;
+
+	SetDlgItemText(RightGroups_Hwnd, IDC_RGGROUPNAME, App->CL_Model->Group[Index]->GroupName);
+
+	return 1;
 }

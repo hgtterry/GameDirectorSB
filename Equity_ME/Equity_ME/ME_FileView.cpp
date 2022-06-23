@@ -250,18 +250,12 @@ void ME_FileView::Get_Selection(LPNMHDR lParam)
 
 	if (!strcmp(FileView_File, "Groups"))
 	{
-		App->Say_Win(App->CL_Model->Group[Index]->GroupName);
+		
+		App->CL_Groups->Selected_Group = Index;
 
-		/*HideRightPanes();
-		ShowWindow(App->GD_Properties_Hwnd, 1);
-		App->SBC_Aera->Hide_Area_Dlg(1);
-
-		App->SBC_Properties->Edit_Category = Enums::Edit_Area;
-
-		App->SBC_Properties->Update_ListView_Area();*/
+		App->CL_Groups->Update_Groups();
 
 		return;
-
 	}
 
 }
