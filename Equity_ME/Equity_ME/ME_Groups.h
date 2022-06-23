@@ -10,10 +10,19 @@ public:
 
 	int Selected_Group;
 
+	bool RightGroups_Visable;
+
 	HWND RightGroups_Hwnd;
+
+	HBITMAP	Sel_BaseBitmap;
+	long BasePicWidth;
+	long BasePicHeight;
 
 protected:
 
 	static LRESULT CALLBACK Groups_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static bool CALLBACK ViewerBasePic(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+
+	bool RenderTexture_Blit(HDC hDC, HBITMAP Bmp, const RECT *SourceRect, const RECT *DestRect);
 };
 

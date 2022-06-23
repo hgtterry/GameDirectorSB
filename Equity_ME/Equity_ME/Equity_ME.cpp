@@ -182,6 +182,27 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				return 1;
 			}
 
+			case ID_WINDOWS_GROUPS:
+			{
+				ShowWindow(App->CL_Groups->RightGroups_Hwnd, 1);
+
+				if (App->CL_Groups->RightGroups_Visable == 1)
+				{
+					App->CL_Groups->RightGroups_Visable = 0;
+					ShowWindow(App->CL_Groups->RightGroups_Hwnd, 0);
+					CheckMenuItem(App->mMenu, ID_WINDOWS_GROUPS, MF_BYCOMMAND | MF_UNCHECKED);
+				}
+				else
+				{
+					App->CL_Groups->RightGroups_Visable = 1;
+					ShowWindow(App->CL_Groups->RightGroups_Hwnd, 1);
+					CheckMenuItem(App->mMenu, ID_WINDOWS_GROUPS, MF_BYCOMMAND | MF_CHECKED);
+				}
+				return 1;
+			}
+
+			
+
             case IDM_ABOUT:
                 DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
                 break;
