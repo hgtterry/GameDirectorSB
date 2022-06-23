@@ -145,17 +145,20 @@ bool ME_App::ResizeOgre_Window(void)
 
 		if ((rect.bottom - rect.top) != 0 && App->CL_Ogre->mCamera != 0)
 		{
-			App->CL_Ogre->mWindow->windowMovedOrResized();
+			
 			App->CL_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CL_Ogre->mWindow->getWidth() / (Ogre::Real)App->CL_Ogre->mWindow->getHeight());
 			App->CL_Ogre->mCamera->yaw(Ogre::Radian(0));
+
+			App->CL_Ogre->mWindow->windowMovedOrResized();
+
 			Ogre::Root::getSingletonPtr()->renderOneFrame();
 		}
 
 	}
 
-	/*App->Cl_Panels->MovePhysicsView();
-	App->Cl_Panels->Move_FileView_Window();
-	App->Cl_Panels->Place_GlobalGroups();*/
+	//App->Cl_Panels->MovePhysicsView();
+	App->CL_Panels->Move_FileView_Window();
+	App->CL_Panels->Place_GlobalGroups();
 
 	return 1;
 }

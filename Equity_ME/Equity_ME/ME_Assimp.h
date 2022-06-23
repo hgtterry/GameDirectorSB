@@ -50,5 +50,6 @@ protected:
 
 	void GetBasicInfo(const aiScene* pScene);
 	void Create_MeshGroups(const aiScene* pScene);
+	void LoadTextures();
 };
 

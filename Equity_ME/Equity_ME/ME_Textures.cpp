@@ -11,6 +11,8 @@
 ME_Textures::ME_Textures()
 {
 	ilInit();
+
+	JustFileName[0] = 0;
 }
 
 
@@ -42,10 +44,10 @@ bool ME_Textures::TexureToWinPreviewFullPath(int Index, char* FullPath)
 		if (App->CL_Model->Group[Index]->Base_Bitmap == NULL)
 		{
 			//CreateDummyTexture();
-			App->CL_Model->Group[Index]->Base_Bitmap = (HBITMAP)LoadImage(NULL, "Etemp.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
-			remove("Etemp.bmp");
+			//App->CL_Model->Group[Index]->Base_Bitmap = (HBITMAP)LoadImage(NULL, "Etemp.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+			//remove("Etemp.bmp");
 
-			App->CL_Model->Group[Index]->Bitmap_Loaded = 1;
+			//App->CL_Model->Group[Index]->Bitmap_Loaded = 1;
 		}
 		else
 		{
@@ -69,4 +71,45 @@ bool ME_Textures::TexureToWinPreviewFullPath(int Index, char* FullPath)
 	//remove(buf);
 
 	return 1;
+}
+
+// *************************************************************************
+// *						CheckPath Terry Bernie	   					   *
+// *************************************************************************
+void ME_Textures::Strip_JustFileName(char *pString, char *FileName)
+{
+	int Count = 0;
+	int Mark = 0;
+	bool Test = 0;
+
+	JustFileName[0] = 0;
+
+	while (*pString != 0)
+	{
+		if (*pString == '\\' || *pString == '/')
+		{
+			Test = 1;
+			Mark = Count;
+		}
+
+		Count++;
+		pString++;
+	}
+
+	if (Mark == 0 && Test == 0)
+	{
+		strcpy(JustFileName, FileName);
+	}
+	else
+	{
+		if (Mark == 0 && Test == 1)
+		{
+			Mark = 1;
+			strcpy(JustFileName, (FileName + Mark));
+		}
+		else
+		{
+			strcpy(JustFileName, (FileName + Mark) + 1);
+		}
+	}
 }

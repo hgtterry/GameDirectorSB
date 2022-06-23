@@ -63,7 +63,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,_In_opt_ HINSTANCE hPrevInstance,
 	App->CL_FileView->Start_FileView();		//Start Main File View Groups [210622]
 	App->CL_Groups->Start_Groups();
 
-
+	App->CL_Panels->Move_FileView_Window();
+	App->CL_Panels->Place_GlobalGroups();
 
 	SetTimer(App->MainHwnd, 1, 1, NULL);
 
@@ -229,17 +230,51 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
         break;
 
+	case WM_MOUSEWHEEL:
+	{
+		int zDelta = (short)HIWORD(wParam);    // wheel rotation
+
+		if (zDelta > 0)
+		{
+			App->CL_Ogre->Ogre_Listener->Wheel = -1;
+		}
+		else if (zDelta < 0)
+		{
+			App->CL_Ogre->Ogre_Listener->Wheel = 1;
+		}
+
+		return 1;
+	}
+
 	case WM_MOVING:
 	{
-		App->ResizeOgre_Window();
+		App->CL_Panels->Move_FileView_Window();
+		App->CL_Panels->Place_GlobalGroups();
 		Ogre::Root::getSingletonPtr()->renderOneFrame();
 		return 0;
 	}
 
 	case WM_SIZE:
 	{
-		App->ResizeOgre_Window();
+		App->CL_Panels->Resize();
+		
+		if (App->CL_Ogre->Ogre_Started == 1)
+		{
+			RECT rect;
+			GetClientRect(App->ViewGLhWnd, &rect);
 
+			if ((rect.bottom - rect.top) != 0 && App->CL_Ogre->mCamera != 0)
+			{
+				App->CL_Ogre->mWindow->windowMovedOrResized();
+				App->CL_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CL_Ogre->mWindow->getWidth() / (Ogre::Real)App->CL_Ogre->mWindow->getHeight());
+				App->CL_Ogre->mCamera->yaw(Ogre::Radian(0));
+				Ogre::Root::getSingletonPtr()->renderOneFrame();
+			}
+		}
+
+		App->CL_Panels->Move_FileView_Window();
+		App->CL_Panels->Place_GlobalGroups();
+		
 	}break;
 
 	case WM_CLOSE:

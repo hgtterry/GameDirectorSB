@@ -197,6 +197,7 @@ bool ME_Groups::Update_Groups()
 	int Index = Selected_Group;
 
 	SetDlgItemText(RightGroups_Hwnd, IDC_RGGROUPNAME, App->CL_Model->Group[Index]->GroupName);
+	SetDlgItemText(RightGroups_Hwnd, IDC_RGTEXTURENAME, App->CL_Model->Group[Index]->Text_FileName);
 
 	RightGroups_Visable = 1;
 	ShowWindow(RightGroups_Hwnd, 1);
