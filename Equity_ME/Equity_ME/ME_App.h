@@ -35,6 +35,7 @@ distribution.
 #include "ME_FileView.h"
 #include "ME_Groups.h"
 #include "ME_Panels.h"
+#include "ME_Textures.h"
 
 class ME_App
 {
@@ -54,6 +55,7 @@ public:
 	ME_FileView*		CL_FileView;	// FileView [210622]
 	ME_Groups*			CL_Groups;		// Groups  [220622]
 	ME_Panels*			CL_Panels;		// Panels  [220623]
+	ME_Textures*		CL_Textures;		// Textures [220623]
 
 	bool InitApp(void);
 	bool SetMainWin_Centre(void);
