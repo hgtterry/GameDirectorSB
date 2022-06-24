@@ -186,8 +186,7 @@ void ME_FileView::MoreFoldersD(void) // last folder level
 void ME_FileView::ExpandRoot(void)
 {
 	HWND Temp = GetDlgItem(App->ListPanel, IDC_TREE1);
-	HTREEITEM i = TreeView_GetSelection(Temp);
-
+	
 	TreeView_Expand(Temp, GD_ProjectFolder, TVE_EXPAND);
 	TreeView_Expand(Temp, GD_ModelFolder, TVE_EXPAND);
 	TreeView_Expand(Temp, GD_GroupsFolder, TVE_EXPAND);
@@ -257,5 +256,18 @@ void ME_FileView::Get_Selection(LPNMHDR lParam)
 
 		return;
 	}
+}
 
+// *************************************************************************
+// *				SelectItem	Terry Bernie							   *
+// *************************************************************************
+void ME_FileView::SelectItem(HTREEITEM TreeItem)
+{
+
+	HWND Temp = GetDlgItem(App->ListPanel, IDC_TREE1);
+
+	{
+		TreeView_Select(Temp, NULL, TVGN_CARET);
+		TreeView_Select(Temp, TreeItem, TVGN_CARET);
+	}
 }

@@ -17,6 +17,8 @@ Base_Group::Base_Group()
 	MaterialIndex = 0;
 
 	Base_Bitmap = NULL;
+
+	ListView_Item = NULL;
 }
 
 

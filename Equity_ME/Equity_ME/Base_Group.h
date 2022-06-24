@@ -18,5 +18,7 @@ public:
 	bool Bitmap_Loaded;
 
 	HBITMAP Base_Bitmap;
+
+	HTREEITEM ListView_Item;
 };
 

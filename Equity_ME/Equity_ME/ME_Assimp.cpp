@@ -73,21 +73,25 @@ bool ME_Assimp::LoadFile(const char* pFile)
 	else
 	{
 
-	GetBasicInfo(scene);
+		GetBasicInfo(scene);
 
-	Create_MeshGroups(scene);
+		Create_MeshGroups(scene);
 
-////		Get_Group_VertCount(scene);
+		////		Get_Group_VertCount(scene);
 
-////		StoreMeshData(scene);
-	
-	LoadTextures();
-		
-////		App->CL_Vm_Model->Create_BondingBox_Model();
+		////		StoreMeshData(scene);
+
+		LoadTextures();
+
+		////		App->CL_Vm_Model->Create_BondingBox_Model();
 
 	}
 
 	aiReleaseImport(scene);
+
+	App->CL_FileView->ExpandRoot();
+	App->CL_FileView->SelectItem(App->CL_Model->Group[0]->ListView_Item);  // Select First Group
+
 	return 1;
 }
 
@@ -193,7 +197,7 @@ void ME_Assimp::Create_MeshGroups(const aiScene* pScene)
 		}
 
 		// FileView
-		App->CL_FileView->Add_Group(App->CL_Model->Group[Count]->GroupName, Count);
+		App->CL_Model->Group[Count]->ListView_Item = App->CL_FileView->Add_Group(App->CL_Model->Group[Count]->GroupName, Count);
 
 		Count++;
 	}
@@ -241,8 +245,6 @@ void ME_Assimp::LoadTextures()
 			char ImageFullPath[1024];
 			strcpy(ImageFullPath, App->CL_Model->Texture_FolderPath);
 			strcat(ImageFullPath, App->CL_Model->Group[Count]->Text_FileName);
-
-			App->Say_Win(ImageFullPath);
 
 			strcpy(App->CL_Model->Group[v]->Texture_PathFileName, ImageFullPath);
 			//strcpy(App->CL_Textures->TextureFileName, ImageFullPath);

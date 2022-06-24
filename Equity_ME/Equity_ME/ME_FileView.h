@@ -7,8 +7,9 @@ public:
 
 	void Start_FileView(void);
 	void Init_FileView(void);
-
+	void ExpandRoot(void);
 	void Get_Selection(LPNMHDR lParam);
+	void SelectItem(HTREEITEM TreeItem);
 
 	HTREEITEM Add_Group(char *SFileName, int Index);
 
@@ -20,8 +21,7 @@ protected:
 
 	void AddRootFolder(void);
 	void MoreFoldersD(void); // last folder level
-	void ExpandRoot(void);
-
+	
 	char FileView_Folder[256];
 	char FileView_File[256];
 
