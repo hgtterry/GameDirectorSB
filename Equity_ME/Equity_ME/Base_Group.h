@@ -9,6 +9,9 @@ public:
 	char MaterialName[255];
 	char Text_FileName[255];			// Just Texture File Name ie Texture.bmp
 
+	char Texture_FolderPath[MAX_PATH];
+	char Texture_PathFileName[MAX_PATH];
+
 	int GroupVertCount;
 	int MaterialIndex;
 

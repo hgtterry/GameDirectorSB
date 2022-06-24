@@ -178,6 +178,8 @@ void ME_Assimp::Create_MeshGroups(const aiScene* pScene)
 		}*/
 
 		// Get Texture Path/Name
+		strcpy(App->CL_Model->Group[Count]->Texture_FolderPath, App->CL_Model->Texture_FolderPath); // Back Slash remains
+
 		aiString texPath;
 		aiMaterial* mtl = pScene->mMaterials[mesh->mMaterialIndex];
 		if (AI_SUCCESS == mtl->GetTexture(aiTextureType_DIFFUSE, 0, &texPath))
@@ -202,6 +204,7 @@ void ME_Assimp::Create_MeshGroups(const aiScene* pScene)
 // *************************************************************************
 void ME_Assimp::LoadTextures()
 {
+	
 	int v = 0;
 	int Count = 0;
 
@@ -237,18 +240,19 @@ void ME_Assimp::LoadTextures()
 
 			char ImageFullPath[1024];
 			strcpy(ImageFullPath, App->CL_Model->Texture_FolderPath);
-	//		strcat(ImageFullPath, App->CL_Vm_Textures->JustFileName);
+			strcat(ImageFullPath, App->CL_Model->Group[Count]->Text_FileName);
 
+			App->Say_Win(ImageFullPath);
 
-	//		strcpy(App->CL_Vm_Model->S_MeshGroup[v]->Text_PathFileName, ImageFullPath);
-	//		strcpy(App->CL_Vm_Textures->TextureFileName, ImageFullPath);
+			strcpy(App->CL_Model->Group[v]->Texture_PathFileName, ImageFullPath);
+			//strcpy(App->CL_Textures->TextureFileName, ImageFullPath);
 
-	//		App->CL_Vm_Textures->TexureToWinPreviewFullPath(v, ImageFullPath);
+			App->CL_Textures->TexureToWinPreviewFullPath(v, ImageFullPath);
 	//		App->CL_Vm_Textures->Soil_DecodeTextures(MatIndex); // ??
 
 			v++;
 		}
-	//	else
+		else
 		{
 
 	//		App->CL_Vm_Textures->CreateDummyTexture();

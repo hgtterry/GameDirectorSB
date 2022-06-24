@@ -91,7 +91,7 @@ void ME_Model::Set_Paths(void)
 	Model_FolderPath[len2 - len1] = 0;
 
 	strcpy(Texture_FolderPath, Model_FolderPath); // Back Slash remains
-
+	
 	strcpy(JustName, FileName);
 	int Len = strlen(JustName);
 	JustName[Len - 4] = 0;

@@ -26,7 +26,7 @@ ME_Textures::~ME_Textures()
 bool ME_Textures::TexureToWinPreviewFullPath(int Index, char* FullPath)
 {
 	//ilutGetBmpInfo(BITMAPINFO *Info);
-
+	
 	char mFileName[1024];
 	strcpy(mFileName, FullPath);
 
@@ -53,6 +53,17 @@ bool ME_Textures::TexureToWinPreviewFullPath(int Index, char* FullPath)
 		{
 			App->CL_Model->Group[Index]->Bitmap_Loaded = 1;
 		}
+
+		return 1;
+	}
+
+	// ------------------------------------ JPEG
+	if (stricmp(mFileName + strlen(mFileName) - 4, ".JPG") == 0)
+	{
+		App->CL_Model->Group[Index]->Base_Bitmap = ilutWinLoadImage(mFileName, hDC);
+		ReleaseDC(PreviewWnd, hDC);
+
+		App->CL_Model->Group[Index]->Bitmap_Loaded = 1;
 
 		return 1;
 	}

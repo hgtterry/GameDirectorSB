@@ -203,16 +203,16 @@ bool ME_Groups::Update_Groups()
 	ShowWindow(RightGroups_Hwnd, 1);
 	CheckMenuItem(App->mMenu, ID_WINDOWS_GROUPS, MF_BYCOMMAND | MF_CHECKED);
 
-	//Sel_BaseBitmap = App->CL_Model->Group[Index]->Base_Bitmap;
+	Sel_BaseBitmap = App->CL_Model->Group[Index]->Base_Bitmap;
 
-	/*BITMAP bm;
+	BITMAP bm;
 	GetObject(Sel_BaseBitmap, sizeof(bm), &bm);
 
 	BasePicWidth = bm.bmWidth;
 	BasePicHeight = bm.bmHeight;
 
 	ShowWindow(GetDlgItem(RightGroups_Hwnd, IDC_BASETEXTURE2), 0);
-	ShowWindow(GetDlgItem(RightGroups_Hwnd, IDC_BASETEXTURE2), 1);*/
+	ShowWindow(GetDlgItem(RightGroups_Hwnd, IDC_BASETEXTURE2), 1);
 
 	return 1;
 }
