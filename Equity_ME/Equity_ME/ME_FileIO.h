@@ -30,13 +30,15 @@ public:
 
 	bool Open_File_Model(char* Extension, char* Title, char* StartDirectory);
 
+	char Model_FileName[MAX_PATH];
+	char Model_Path_FileName[MAX_PATH];
+
 	std::string Get_Model_File_Name();
 	std::string Get_Model_Path_File_Name();
 
 protected:
 
-	char Model_FileName[MAX_PATH];
-	char Model_Path_FileName[MAX_PATH];
+	
 
 	OPENFILENAME ofn;
 };

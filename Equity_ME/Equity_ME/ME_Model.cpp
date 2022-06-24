@@ -31,6 +31,12 @@ ME_Model::ME_Model()
 	GroupCount = 0;
 	TextureCount = 0;
 	MotionCount = 0;
+
+	FileName[0] = 0;
+	Path_FileName[0] = 0;
+	Model_FolderPath[0] = 0;
+	Texture_FolderPath[0] = 0;
+	JustName[0] = 0;
 }
 
 
@@ -68,4 +74,27 @@ void ME_Model::Set_Texture_Count(int Count)
 void ME_Model::Set_Motion_Count(int Count)
 {
 	MotionCount = Count;
+}
+
+// *************************************************************************
+// *						Set_Paths Terry Bernie						   *
+// *************************************************************************
+void ME_Model::Set_Paths(void)
+{
+	strcpy(FileName, App->CL_FileIO->Model_FileName);
+	strcpy(Path_FileName, App->CL_FileIO->Model_Path_FileName);
+
+	// Get Texture path assumed at this point to be where model is
+	int len1 = strlen(FileName);
+	int len2 = strlen(Path_FileName);
+	strcpy(Model_FolderPath, Path_FileName);
+	Model_FolderPath[len2 - len1] = 0;
+
+	strcpy(Texture_FolderPath, Model_FolderPath); // Back Slash remains
+
+	strcpy(JustName, FileName);
+	int Len = strlen(JustName);
+	JustName[Len - 4] = 0;
+
+	//App->CL_Vm_FileIO->RecentFileHistory_Update();
 }

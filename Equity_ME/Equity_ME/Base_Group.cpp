@@ -10,6 +10,9 @@ Base_Group::Base_Group()
 
 	Bitmap_Loaded = 0;
 
+	GroupVertCount = 0;
+	MaterialIndex = 0;
+
 	Base_Bitmap = NULL;
 }
 

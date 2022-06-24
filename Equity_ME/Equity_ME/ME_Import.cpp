@@ -53,7 +53,7 @@ bool ME_Import::Assimp_Loader(char* Extension, char* Extension2)
 
 	//App->EBC_Model->Clear_ModelData();
 
-	//App->CL_Vm_Model->Set_Paths();
+	App->CL_Model->Set_Paths();
 
 
 	App->CL_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;

@@ -162,10 +162,10 @@ void ME_Assimp::Create_MeshGroups(const aiScene* pScene)
 
 		////---------------
 
-		//App->CL_Vm_Model->S_MeshGroup[Count]->GroupVertCount = 0;
-		//App->CL_Vm_Model->S_MeshGroup[Count]->MaterialIndex = -1;
+		App->CL_Model->Group[Count]->GroupVertCount = 0;
+		App->CL_Model->Group[Count]->MaterialIndex = -1;
 
-		//App->CL_Vm_Model->S_MeshGroup[Count]->MaterialIndex = Count;//= mesh->mMaterialIndex;
+		App->CL_Model->Group[Count]->MaterialIndex = Count;
 
 		strcpy(App->CL_Model->Group[Count]->Text_FileName, "No_Texture");
 
@@ -187,9 +187,10 @@ void ME_Assimp::Create_MeshGroups(const aiScene* pScene)
 		else
 		{
 			strcpy(App->CL_Model->Group[Count]->Text_FileName, "No_Texture");
-			//App->CL_Model_Data->S_MeshGroup[Count]->MaterialIndex = -1;
+			App->CL_Model->Group[Count]->MaterialIndex = -1;
 		}
 
+		// FileView
 		App->CL_FileView->Add_Group(App->CL_Model->Group[Count]->GroupName, Count);
 
 		Count++;
@@ -220,10 +221,11 @@ void ME_Assimp::LoadTextures()
 	//	//	strcat(App->CL_Vm_Model->Texture_FullPath, App->CL_Vm_Textures->JustFileName);
 
 
-	//	int Test = strcmp(App->CL_Vm_Textures->JustFileName, "No_Texture");
-	//	if (Test != 0) // Dose not equal 
-	//	{
-	//		int MatIndex = App->CL_Vm_Model->S_MeshGroup[Count]->MaterialIndex;
+		int Test = strcmp(App->CL_Textures->JustFileName, "No_Texture");
+		if (Test != 0) // Dose not equal 
+		{
+			int MatIndex = App->CL_Model->Group[Count]->MaterialIndex;
+
 	//		App->CL_Vm_Model->S_TextureInfo[Count]->ActorMaterialIndex = MatIndex;
 
 	//		strcpy(App->CL_Vm_Model->S_TextureInfo[Count]->MaterialName, App->CL_Vm_Textures->JustFileName);
@@ -233,8 +235,8 @@ void ME_Assimp::LoadTextures()
 
 	//		strcpy(App->CL_Vm_Model->S_MeshGroup[v]->Text_FileName, App->CL_Vm_Textures->JustFileName);
 
-	//		char ImageFullPath[1024];
-	//		strcpy(ImageFullPath, App->CL_Vm_Model->Texture_FolderPath);
+			char ImageFullPath[1024];
+			strcpy(ImageFullPath, App->CL_Model->Texture_FolderPath);
 	//		strcat(ImageFullPath, App->CL_Vm_Textures->JustFileName);
 
 
@@ -244,10 +246,10 @@ void ME_Assimp::LoadTextures()
 	//		App->CL_Vm_Textures->TexureToWinPreviewFullPath(v, ImageFullPath);
 	//		App->CL_Vm_Textures->Soil_DecodeTextures(MatIndex); // ??
 
-	//		v++;
-	//	}
+			v++;
+		}
 	//	else
-	//	{
+		{
 
 	//		App->CL_Vm_Textures->CreateDummyTexture();
 
@@ -272,8 +274,8 @@ void ME_Assimp::LoadTextures()
 
 	//		remove(ImageFullPath);
 
-	//		v++;
-	//	}
+			v++;
+		}
 		Count++;
 	}
 
