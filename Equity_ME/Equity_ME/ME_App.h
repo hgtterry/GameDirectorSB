@@ -76,6 +76,7 @@ public:
 	HBRUSH BlackBrush;		// Black Brush Colour [120122]
 
 	HFONT Font_CB15;
+	HFONT Font_CB18;
 
 	HMENU mMenu;
 	HCURSOR CUR;

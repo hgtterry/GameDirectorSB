@@ -53,6 +53,7 @@ ME_App::ME_App()
 	mMenu = 0;
 
 	Font_CB15 = 0;
+	Font_CB18 = 0;
 
 	EquityDirecory_FullPath[0] = 0;
 }
@@ -113,6 +114,7 @@ void ME_App::SetBrushes_Fonts(void)
 	BlackBrush = CreateSolidBrush(RGB(0, 0, 0));
 
 	Font_CB15 = CreateFont(-15, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
+	Font_CB18 = CreateFont(-18, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
 }
 
 // *************************************************************************
@@ -145,13 +147,11 @@ bool ME_App::ResizeOgre_Window(void)
 
 		if ((rect.bottom - rect.top) != 0 && App->CL_Ogre->mCamera != 0)
 		{
-			
+			App->CL_Ogre->mWindow->windowMovedOrResized();
 			App->CL_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CL_Ogre->mWindow->getWidth() / (Ogre::Real)App->CL_Ogre->mWindow->getHeight());
 			App->CL_Ogre->mCamera->yaw(Ogre::Radian(0));
 
-			App->CL_Ogre->mWindow->windowMovedOrResized();
-
-			Ogre::Root::getSingletonPtr()->renderOneFrame();
+			Root::getSingletonPtr()->renderOneFrame();
 		}
 
 	}

@@ -63,6 +63,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,_In_opt_ HINSTANCE hPrevInstance,
 	App->CL_FileView->Start_FileView();		//Start Main File View Groups [210622]
 	App->CL_Groups->Start_Groups();
 
+	ShowWindow(App->MainHwnd, nCmdShow);
+	UpdateWindow(App->MainHwnd);
+
 	App->CL_Panels->Move_FileView_Window();
 	App->CL_Panels->Place_GlobalGroups();
 
@@ -136,7 +139,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
       return FALSE;
    }
 
-   ShowWindow(App->MainHwnd, nCmdShow);
+   //ShowWindow(App->MainHwnd, nCmdShow);
    UpdateWindow(App->MainHwnd);
 
    return TRUE;
@@ -157,6 +160,44 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             switch (wmId)
             {
 
+			// ------------------------------------------------------- Views
+			case ID_VIEW_OGRERESETVIEW:
+				{
+
+				App->CL_Grid->GridNode->setPosition(0, 0, 0);
+				App->CL_Grid->GridNode->resetOrientation();
+
+				App->CL_Grid->HairNode->setPosition(0, 0, 0);
+				App->CL_Grid->HairNode->resetOrientation();
+
+				App->CL_Ogre->mCamera->setPosition(Ogre::Vector3(0, 90, 100));
+				App->CL_Ogre->mCamera->lookAt(Ogre::Vector3(0, 30, 0));
+
+					return 1;
+				}
+
+			// ------------------------------------------------------- Debug
+			case ID_DEBUG_GENERAL:
+			{
+				
+				if (App->CL_Ogre->Ogre_Started == 1)
+				{
+					RECT rect;
+					GetClientRect(App->ViewGLhWnd, &rect);
+
+					if ((rect.bottom - rect.top) != 0 && App->CL_Ogre->mCamera != 0)
+					{
+						App->CL_Ogre->mWindow->windowMovedOrResized();
+						App->CL_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CL_Ogre->mWindow->getWidth() / (Ogre::Real)App->CL_Ogre->mWindow->getHeight());
+						//App->CL_Ogre->mCamera->yaw(Ogre::Radian(0));
+						Ogre::Root::getSingletonPtr()->renderOneFrame();
+						App->Say_Win("Done");
+					}
+				}
+
+				return 1;
+			}
+				
 			// ------------------------------------------------------- Import
 			case ID_IMPORT_EQ_WAVEFRONTOBJ:
 			{
@@ -248,33 +289,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 	case WM_MOVING:
 	{
-		App->CL_Panels->Move_FileView_Window();
-		App->CL_Panels->Place_GlobalGroups();
+		App->ResizeOgre_Window();
 		Ogre::Root::getSingletonPtr()->renderOneFrame();
 		return 0;
 	}
 
 	case WM_SIZE:
 	{
-		App->CL_Panels->Resize();
-		
-		if (App->CL_Ogre->Ogre_Started == 1)
-		{
-			RECT rect;
-			GetClientRect(App->ViewGLhWnd, &rect);
-
-			if ((rect.bottom - rect.top) != 0 && App->CL_Ogre->mCamera != 0)
-			{
-				App->CL_Ogre->mWindow->windowMovedOrResized();
-				App->CL_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CL_Ogre->mWindow->getWidth() / (Ogre::Real)App->CL_Ogre->mWindow->getHeight());
-				App->CL_Ogre->mCamera->yaw(Ogre::Radian(0));
-				Ogre::Root::getSingletonPtr()->renderOneFrame();
-			}
-		}
-
-		App->CL_Panels->Move_FileView_Window();
-		App->CL_Panels->Place_GlobalGroups();
-		
+		App->ResizeOgre_Window();
 	}break;
 
 	case WM_CLOSE:

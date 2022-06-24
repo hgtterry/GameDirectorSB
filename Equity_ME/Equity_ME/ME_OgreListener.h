@@ -23,6 +23,16 @@ distribution.
 
 #pragma once
 
+#include "Ogre.h"
+#include "OgreOverlay.h"
+#include "OgreOverlayManager.h"
+#include "OgreRenderWindow.h"
+
+//#include "CollisionTools.h"
+//#include "CustomTypes.h"
+
+using namespace Ogre;
+
 class ME_OgreListener : public Ogre::FrameListener
 {
 public:
