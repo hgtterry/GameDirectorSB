@@ -204,6 +204,9 @@
     <ResourceCompile Include="Equity_ME.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\..\Anim19_OSDN\Resource\Dummy.bmp" />
+    <Image Include="bitmap1.bmp" />
+    <Image Include="bitmap2.bmp" />
     <Image Include="Equity_ME.ico" />
     <Image Include="small.ico" />
   </ItemGroup>
