@@ -415,21 +415,25 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 		{
 			return (LONG)App->BlackBrush;
 		}
+
+		return false;
 	}
 
 	// Mouse Wheel
 	case WM_MOUSEWHEEL:
 	{
-
-		int zDelta = (short)HIWORD(wParam);    // wheel rotation
-
-		if (zDelta > 0)
+		if (App->CL_Ogre->Ogre_Listener->Pl_LeftMouseDown == 0)
 		{
-			App->CL_Ogre->Ogre_Listener->Wheel = -1;
-		}
-		else if (zDelta < 0)
-		{
-			App->CL_Ogre->Ogre_Listener->Wheel = 1;
+			int zDelta = (short)HIWORD(wParam);    // wheel rotation
+
+			if (zDelta > 0)
+			{
+				App->CL_Ogre->Ogre_Listener->Wheel = -1;
+			}
+			else if (zDelta < 0)
+			{
+				App->CL_Ogre->Ogre_Listener->Wheel = 1;
+			}
 		}
 
 		return 1;
