@@ -25,8 +25,9 @@ ME_Textures::~ME_Textures()
 // *************************************************************************
 bool ME_Textures::TexureToWinPreviewFullPath(int Index, char* FullPath)
 {
-	//ilutGetBmpInfo(BITMAPINFO *Info);
-	
+	//BITMAPINFO    *bmiData;
+	//ilutGetBmpInfo(bmiData);
+
 	char mFileName[1024];
 	strcpy(mFileName, FullPath);
 
