@@ -355,34 +355,22 @@ void ME_Assimp::LoadTextures()
 
 		strcpy(App->CL_Model->Group[Count]->Text_FileName, App->CL_Textures->JustFileName);
 
-
-	//	strcpy(App->CL_Vm_Model->Texture_FolderPath, App->CL_Vm_Model->Texture_FolderPath);
-	//	//	strcat(App->CL_Vm_Model->Texture_FullPath, App->CL_Vm_Textures->JustFileName);
-
+		//	strcat(App->CL_Vm_Model->Texture_FullPath, App->CL_Vm_Textures->JustFileName);
 
 		int Test = strcmp(App->CL_Textures->JustFileName, "No_Texture");
 		if (Test != 0) // Dose not equal 
 		{
 			int MatIndex = App->CL_Model->Group[Count]->MaterialIndex;
 
-	//		App->CL_Vm_Model->S_TextureInfo[Count]->ActorMaterialIndex = MatIndex;
-
-	//		strcpy(App->CL_Vm_Model->S_TextureInfo[Count]->MaterialName, App->CL_Vm_Textures->JustFileName);
-
-
-	//		App->CL_Vm_Model->S_MeshGroup[v]->Soil_TextureIndex = MatIndex;
-
-	//		strcpy(App->CL_Vm_Model->S_MeshGroup[v]->Text_FileName, App->CL_Vm_Textures->JustFileName);
-
 			char ImageFullPath[1024];
 			strcpy(ImageFullPath, App->CL_Model->Texture_FolderPath);
 			strcat(ImageFullPath, App->CL_Model->Group[Count]->Text_FileName);
 
 			strcpy(App->CL_Model->Group[v]->Texture_PathFileName, ImageFullPath);
-			//strcpy(App->CL_Textures->TextureFileName, ImageFullPath);
+			strcpy(App->CL_Textures->TextureFileName, ImageFullPath);
 
 			App->CL_Textures->TexureToWinPreviewFullPath(v, ImageFullPath);
-	//		App->CL_Vm_Textures->Soil_DecodeTextures(MatIndex); // ??
+			App->CL_Textures->Soil_DecodeTextures(MatIndex); // ??
 
 			v++;
 		}

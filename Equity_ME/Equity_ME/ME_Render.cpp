@@ -40,8 +40,8 @@ ME_Render::ME_Render()
 	Hair_1RotZ = 0;
 
 
-	ShowTextured = 0;
-	ShowFaces = 1;
+	ShowTextured = 1;
+	ShowFaces = 0;
 	ShowBones = 0;
 	ShowPoints = 0;
 	ShowNormals = 0;
@@ -220,19 +220,19 @@ void ME_Render::Render_Loop()
 	Translate();
 
 
-	// ---------------------- Textured
-	//if (App->CL_Model->Model_Loaded == 1 && ShowTextured == 1)
-	//{
-	//	glEnable(GL_DEPTH_TEST);
-	//	glShadeModel(GL_SMOOTH);
+	 //---------------------- Textured
+	if (App->CL_Model->Model_Loaded == 1 && ShowTextured == 1)
+	{
+		glEnable(GL_DEPTH_TEST);
+		glShadeModel(GL_SMOOTH);
 
-	//	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-	//	//if (App->CL_Vm_Model->Model_Type == LoadedFile_Assimp)
-	//	{
-	//		Assimp_Render_Textures();
-	//	}
-	//}
+		//if (App->CL_Vm_Model->Model_Type == LoadedFile_Assimp)
+		{
+			Assimp_Render_Textures();
+		}
+	}
 
 	// ---------------------- Mesh
 	if (App->CL_Model->Model_Loaded == 1 && ShowFaces == 1)
@@ -333,6 +333,7 @@ bool ME_Render::Assimp_Render_Faces(void)
 	int Count = 0;
 
 	glColor3f(1, 1, 1);
+
 	int GroupCount = App->CL_Model->Get_Groupt_Count();
 
 	while (Count<GroupCount)
@@ -428,14 +429,14 @@ bool ME_Render::Render_As_Points_Parts(int Count)
 // *************************************************************************
 bool ME_Render::Assimp_Render_Textures(void)
 {
-	//int Count = 0;
-	//glEnable(GL_BLEND);
-	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	int Count = 0;
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	//glEnable(GL_TEXTURE_2D);
-	//glColor3f(1, 1, 1);
+	glEnable(GL_TEXTURE_2D);
+	glColor3f(1, 1, 1);
 
-	////glLineWidth(10);
+	//glLineWidth(10);
 
 	//if (ShowOnlySubMesh == 1) // Show Only Selected SubMesh
 	//{
@@ -444,31 +445,33 @@ bool ME_Render::Assimp_Render_Textures(void)
 	//	return 1;
 	//}
 
-	////if (Show_HideGroup == 1) // Hide Selected SubMesh
-	////{
-	////	while (Count<App->CL_Vm_Model->GroupCount)
-	////	{
-	////		if (App->CL_Right_Groups->SelectedGroup == Count)
-	////		{
-	////		}
-	////		else
-	////		{
-	////			Render_As_Textured_Parts(Count);
-	////		}
-	////		Count++;
-	////	}
-
-	////	glDisable(GL_TEXTURE_2D);
-	////	return 1;
-	////}
-
-	//while (Count<App->CL_Vm_Model->GroupCount)
+	//if (Show_HideGroup == 1) // Hide Selected SubMesh
 	//{
-	//	Assimp_Textured_Parts(Count);
-	//	Count++;
+	//	while (Count<App->CL_Vm_Model->GroupCount)
+	//	{
+	//		if (App->CL_Right_Groups->SelectedGroup == Count)
+	//		{
+	//		}
+	//		else
+	//		{
+	//			Render_As_Textured_Parts(Count);
+	//		}
+	//		Count++;
+	//	}
+
+	//	glDisable(GL_TEXTURE_2D);
+	//	return 1;
 	//}
 
-	//glDisable(GL_TEXTURE_2D);
+	int GroupCount = App->CL_Model->Get_Groupt_Count();
+
+	while (Count < GroupCount)
+	{
+		Assimp_Textured_Parts(Count);
+		Count++;
+	}
+
+	glDisable(GL_TEXTURE_2D);
 
 	return 1;
 }
@@ -477,53 +480,53 @@ bool ME_Render::Assimp_Render_Textures(void)
 // *************************************************************************
 bool ME_Render::Assimp_Textured_Parts(int Count)
 {
-	//int VertCount = 0;
-	//int A = 0;
-	//int B = 0;
-	//int C = 0;
+	int VertCount = 0;
+	int A = 0;
+	int B = 0;
+	int C = 0;
 
-	//if (App->CL_Vm_Model->S_MeshGroup[Count]->MaterialIndex>-1)
-	//{
-	//	glEnable(GL_TEXTURE_2D);
-	//	glColor3f(1, 1, 1);
+	if (App->CL_Model->Group[Count]->MaterialIndex > -1)
+	{
+		glEnable(GL_TEXTURE_2D);
+		glColor3f(1, 1, 1);
 
-	//	glBindTexture(GL_TEXTURE_2D, App->CL_Vm_Textures->g_Texture[App->CL_Vm_Model->S_MeshGroup[Count]->MaterialIndex]);
-	//}
-	//else
-	//{
-	//	glDisable(GL_TEXTURE_2D);
-	//}
+		glBindTexture(GL_TEXTURE_2D, App->CL_Textures->g_Texture[App->CL_Model->Group[Count]->MaterialIndex]);
+	}
+	else
+	{
+		glDisable(GL_TEXTURE_2D);
+	}
 
-	//while (VertCount<App->CL_Vm_Model->S_MeshGroup[Count]->GroupFaceCount)
-	//{
-	//	A = App->CL_Vm_Model->S_MeshGroup[Count]->Face_Data[VertCount].a;
-	//	B = App->CL_Vm_Model->S_MeshGroup[Count]->Face_Data[VertCount].b;
-	//	C = App->CL_Vm_Model->S_MeshGroup[Count]->Face_Data[VertCount].c;
+	while (VertCount<App->CL_Model->Group[Count]->GroupFaceCount)
+	{
+		A = App->CL_Model->Group[Count]->Face_Data[VertCount].a;
+		B = App->CL_Model->Group[Count]->Face_Data[VertCount].b;
+		C = App->CL_Model->Group[Count]->Face_Data[VertCount].c;
 
-	//	glBegin(GL_POLYGON);
+		glBegin(GL_POLYGON);
 
-	//	//-----------------------------------------------
-	//	glTexCoord2f(App->CL_Vm_Model->S_MeshGroup[Count]->MapCord_Data[A].u, App->CL_Vm_Model->S_MeshGroup[Count]->MapCord_Data[A].v);
-	//	glNormal3fv(&App->CL_Vm_Model->S_MeshGroup[Count]->Normal_Data[A].x);
-	//	glVertex3fv(&App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[A].x);
-	//	//VertCount++;
+		//-----------------------------------------------
+		glTexCoord2f(App->CL_Model->Group[Count]->MapCord_Data[A].u, App->CL_Model->Group[Count]->MapCord_Data[A].v);
+		glNormal3fv(&App->CL_Model->Group[Count]->Normal_Data[A].x);
+		glVertex3fv(&App->CL_Model->Group[Count]->vertex_Data[A].x);
+		//VertCount++;
 
-	//	//-----------------------------------------------
-	//	glTexCoord2f(App->CL_Vm_Model->S_MeshGroup[Count]->MapCord_Data[B].u, App->CL_Vm_Model->S_MeshGroup[Count]->MapCord_Data[B].v);
-	//	glNormal3fv(&App->CL_Vm_Model->S_MeshGroup[Count]->Normal_Data[B].x);
-	//	glVertex3fv(&App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[B].x);
-	//	//VertCount++;
+		//-----------------------------------------------
+		glTexCoord2f(App->CL_Model->Group[Count]->MapCord_Data[B].u, App->CL_Model->Group[Count]->MapCord_Data[B].v);
+		glNormal3fv(&App->CL_Model->Group[Count]->Normal_Data[B].x);
+		glVertex3fv(&App->CL_Model->Group[Count]->vertex_Data[B].x);
+		//VertCount++;
 
-	//	//-----------------------------------------------
-	//	glTexCoord2f(App->CL_Vm_Model->S_MeshGroup[Count]->MapCord_Data[C].u, App->CL_Vm_Model->S_MeshGroup[Count]->MapCord_Data[C].v);
-	//	glNormal3fv(&App->CL_Vm_Model->S_MeshGroup[Count]->Normal_Data[C].x);
-	//	glVertex3fv(&App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[C].x);
-	//	VertCount++;
-	//	//-----------------------------------------------
+		//-----------------------------------------------
+		glTexCoord2f(App->CL_Model->Group[Count]->MapCord_Data[C].u, App->CL_Model->Group[Count]->MapCord_Data[C].v);
+		glNormal3fv(&App->CL_Model->Group[Count]->Normal_Data[C].x);
+		glVertex3fv(&App->CL_Model->Group[Count]->vertex_Data[C].x);
+		VertCount++;
+		//-----------------------------------------------
 
-	//	glEnd();
+		glEnd();
 
-	//}
+	}
 
 	return 1;
 }

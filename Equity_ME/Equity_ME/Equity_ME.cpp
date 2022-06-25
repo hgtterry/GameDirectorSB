@@ -179,13 +179,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			// ------------------------------------------------------- Debug
 			case ID_DEBUG_RENDER:
 			{
-				if (App->CL_Ogre->RenderListener->ShowFaces == 1)
+				if (App->CL_Ogre->RenderListener->ShowTextured == 1)
 				{
-					App->CL_Ogre->RenderListener->ShowFaces = 0;
+					App->CL_Ogre->RenderListener->ShowTextured = 0;
 				}
 				else
 				{
-					App->CL_Ogre->RenderListener->ShowFaces = 1;
+					App->CL_Ogre->RenderListener->ShowTextured = 1;
 				}
 
 				return 1;	
