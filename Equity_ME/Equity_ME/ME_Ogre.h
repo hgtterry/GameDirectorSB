@@ -28,8 +28,8 @@ distribution.
 
 #include "ImguiManager.h"
 
-//#include "GD_Bt_Render.h"
-//#include "VM_Render.h"
+#include "ME_Render.h"
+
 
 class ME_Ogre
 {
@@ -57,9 +57,14 @@ public:
 	Ogre::SceneManager* mSceneMgr;
 	Ogre::OverlaySystem *mOverlaySystem;
 	Ogre::Camera* mCamera;
+
+	Ogre::ManualObject *manObj;
+	Ogre::SceneNode*	ModelNode;
+
 	//Ogre::Camera* PlacementCam;
 
 	ME_OgreListener*	Ogre_Listener;
+	ME_Render*  RenderListener;
 
 	Ogre::String mResourcePath;
 

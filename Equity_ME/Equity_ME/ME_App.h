@@ -36,7 +36,6 @@ distribution.
 #include "ME_Groups.h"
 #include "ME_Panels.h"
 #include "ME_Textures.h"
-#include "ME_Render.h"
 
 class ME_App
 {
@@ -57,7 +56,6 @@ public:
 	ME_Groups*			CL_Groups;		// Groups  [220622]
 	ME_Panels*			CL_Panels;		// Panels  [220623]
 	ME_Textures*		CL_Textures;	// Textures [220623]
-	ME_Render*			CL_Render;		// Model Rendering [220625]
 
 	bool InitApp(void);
 	bool SetMainWin_Centre(void);

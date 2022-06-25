@@ -37,6 +37,11 @@ ME_Ogre::ME_Ogre()
 	mOverlaySystem =	nullptr;
 	mCamera =			nullptr;
 	Ogre_Listener =		nullptr;
+	RenderListener =	nullptr;
+
+	/*manObj = mSceneMgr->createManualObject("sampleArea");
+	ModelNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	ModelNode->attachObject(manObj);*/
 
 	App_Resource_Group = "App_Resource_Group";
 	Equity_Resource_Group = "Equity_Resource_Group";
@@ -241,22 +246,13 @@ bool ME_Ogre::createFrameListener(void)
 	Ogre_Listener = new ME_OgreListener();
 	mRoot->addFrameListener(Ogre_Listener);
 
-	Ogre::String RenderSystemName = mSceneMgr->getDestinationRenderSystem()->getName();
-
-//	RenderListener = NULL;
-	//BulletListener = NULL;
-
-	/*if ("OpenGL Rendering Subsystem" == RenderSystemName)
+	String RenderSystemName = mSceneMgr->getDestinationRenderSystem()->getName();
+	RenderListener = NULL;
+	if ("OpenGL Rendering Subsystem" == RenderSystemName)
 	{
-		BulletListener = new GD_Bt_Render();
-
-		mSceneMgr->addRenderQueueListener(BulletListener);
-
-		BulletListener->setDebugMode(BulletListener->getDebugMode()
-			| btIDebugDraw::DBG_MAX_DEBUG_DRAW_MODE);
-		App->Cl_Bullet->dynamicsWorld->setDebugDrawer(BulletListener);
-
-	}*/
+		RenderListener = new ME_Render();
+		mSceneMgr->addRenderQueueListener(RenderListener);
+	}
 
 	return 1;
 }

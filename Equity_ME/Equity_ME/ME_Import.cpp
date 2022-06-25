@@ -69,5 +69,7 @@ bool ME_Import::Assimp_Loader(char* Extension, char* Extension2)
 	//App->SBC_Equity->Set_Equity();
 
 	App->Say_Win("Model Loaded");
+	App->CL_Model->Model_Loaded = 1;
+
 	return 1;
 }

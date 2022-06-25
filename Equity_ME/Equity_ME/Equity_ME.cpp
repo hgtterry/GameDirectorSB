@@ -177,24 +177,23 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				}
 
 			// ------------------------------------------------------- Debug
+			case ID_DEBUG_RENDER:
+			{
+				if (App->CL_Ogre->RenderListener->ShowFaces == 1)
+				{
+					App->CL_Ogre->RenderListener->ShowFaces = 0;
+				}
+				else
+				{
+					App->CL_Ogre->RenderListener->ShowFaces = 1;
+				}
+
+				return 1;	
+			}
+
 			case ID_DEBUG_GENERAL:
 			{
 				
-				if (App->CL_Ogre->Ogre_Started == 1)
-				{
-					RECT rect;
-					GetClientRect(App->ViewGLhWnd, &rect);
-
-					if ((rect.bottom - rect.top) != 0 && App->CL_Ogre->mCamera != 0)
-					{
-						App->CL_Ogre->mWindow->windowMovedOrResized();
-						App->CL_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CL_Ogre->mWindow->getWidth() / (Ogre::Real)App->CL_Ogre->mWindow->getHeight());
-						//App->CL_Ogre->mCamera->yaw(Ogre::Radian(0));
-						Ogre::Root::getSingletonPtr()->renderOneFrame();
-						App->Say_Win("Done");
-					}
-				}
-
 				return 1;
 			}
 				

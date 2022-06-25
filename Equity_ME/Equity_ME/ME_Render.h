@@ -22,10 +22,79 @@ distribution.
 */
 
 #pragma once
-class ME_Render
+
+#include "Ogre.h"
+
+class ME_Render : public RenderQueueListener
 {
 public:
 	ME_Render();
 	~ME_Render();
+
+	void Reset_Class(void);
+
+	float RX;
+	float RZ;
+
+	float Hair_1PosX;
+	float Hair_1PosY;
+	float Hair_1PosZ;
+
+	float Hair_1RotX;
+	float Hair_1RotY;
+	float Hair_1RotZ;
+	//int SelectedJointIndex;
+
+	bool ShowTextured;
+	bool ShowFaces;
+	bool ShowBones;
+	bool ShowPoints;
+	bool ShowNormals;
+	bool ShowBoundingBox;
+	bool PlayActive;
+	bool Light_Activated;
+	bool ShowOnlySubMesh;
+	bool Show_HideGroup;
+	bool Show_Crosshair;
+
+	void TestLight(void);
+
+protected:
+
+	virtual void renderQueueStarted(Ogre::uint8 queueGroupId, const String& invocation,
+		bool& skipThisInvocation);
+
+	virtual void renderQueueEnded(Ogre::uint8 queueGroupId, const String& invocation,
+		bool& repeatThisInvocation);
+
+	void PreRender();
+	void PostRender();
+	void Render_Loop();
+	void Translate(void);
+
+	bool Assimp_Render_Textures(void);
+	bool Assimp_Textured_Parts(int Count);
+
+	bool Assimp_Render_Points(void);
+	bool Render_As_Points_Parts(int Count);
+
+	bool Assimp_Render_Faces(void);
+	bool Assimp_Face_Parts(int Count);
+
+	void Assimp_Render_Normals(void);
+	void Render_As_Normals_Parts(int Count);
+
+	bool As_RenderBones();
+
+	void Render_BoundingBoxModel(void);
+
+	bool RenderPoints(void);
+	bool RenderMeshOnly(void);
+
+	bool RF_Render_All_Groups();
+	bool RF_Render_Just_Group();
+	void RF_Render_Normals(void);
+
+	void RenderCrossHair(void);
 };
 
