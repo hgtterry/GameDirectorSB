@@ -40,6 +40,7 @@ ME_App::ME_App()
 	CL_Groups =		nullptr;
 	CL_Panels =		nullptr;
 	CL_Textures =	nullptr;
+	CL_Render =		nullptr;
 
 	hInst =			nullptr;
 
@@ -81,6 +82,7 @@ bool ME_App::InitApp(void)
 	CL_Groups =		new ME_Groups();
 	CL_Panels =		new ME_Panels();
 	CL_Textures =	new ME_Textures();
+	CL_Render =		new ME_Render();
 
 	SetBrushes_Fonts();
 	return 1;

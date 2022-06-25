@@ -162,6 +162,7 @@
     <ClInclude Include="ME_Ogre.h" />
     <ClInclude Include="ME_OgreListener.h" />
     <ClInclude Include="ME_Panels.h" />
+    <ClInclude Include="ME_Render.h" />
     <ClInclude Include="ME_Textures.h" />
     <ClInclude Include="ME_TopBar.h" />
     <ClInclude Include="ME_Utilities.h" />
@@ -190,6 +191,7 @@
     <ClCompile Include="ME_Ogre.cpp" />
     <ClCompile Include="ME_OgreListener.cpp" />
     <ClCompile Include="ME_Panels.cpp" />
+    <ClCompile Include="ME_Render.cpp" />
     <ClCompile Include="ME_Textures.cpp" />
     <ClCompile Include="ME_TopBar.cpp" />
     <ClCompile Include="ME_Utilities.cpp" />

@@ -243,7 +243,7 @@ bool ME_Ogre::createFrameListener(void)
 
 	Ogre::String RenderSystemName = mSceneMgr->getDestinationRenderSystem()->getName();
 
-	//RenderListener = NULL;
+//	RenderListener = NULL;
 	//BulletListener = NULL;
 
 	/*if ("OpenGL Rendering Subsystem" == RenderSystemName)
