@@ -121,7 +121,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
   
-   App->hInst; // Store instance handle in our global variable
+   App->hInst = hInstance; // Store instance handle in our global variable
 
    App->MainHwnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
 	   0, 0, 1200, 800, NULL, NULL, hInstance, NULL);

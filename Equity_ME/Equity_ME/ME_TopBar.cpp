@@ -44,7 +44,7 @@ ME_TopBar::~ME_TopBar()
 // *************************************************************************
 bool ME_TopBar::Start_TopBar()
 {
-	CreateDialog(App->hInst, (LPCTSTR)IDD_TOPBAR, App->Fdlg, (DLGPROC)TopBar_Proc);
+	App->CL_TopBar->TabsHwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TOPBAR, App->Fdlg, (DLGPROC)TopBar_Proc);
 	Init_Bmps_Globals();
 	return 1;
 }
@@ -59,7 +59,7 @@ LRESULT CALLBACK ME_TopBar::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 	{
 	case WM_INITDIALOG:
 	{
-		App->CL_TopBar->TabsHwnd = hDlg;
+		//App->CL_TopBar->TabsHwnd = hDlg;
 
 		/*App->SBC_TopTabs->Start_Tabs_Headers();
 		App->SBC_TopTabs->Start_Camera_TB();
