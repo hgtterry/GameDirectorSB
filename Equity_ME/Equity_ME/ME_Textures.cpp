@@ -7,6 +7,7 @@
 #include "ilu.h"
 #include "ilut.h"
 
+#pragma warning( disable : 4800)
 
 ME_Textures::ME_Textures()
 {
@@ -65,9 +66,21 @@ bool ME_Textures::TexureToWinPreviewFullPath(int Index, char* FullPath)
 		App->CL_Model->Group[Index]->Base_Bitmap = ilutWinLoadImage(mFileName, hDC);
 		ReleaseDC(PreviewWnd, hDC);
 
-		App->CL_Model->Group[Index]->Bitmap_Loaded = 1;
+		if (App->CL_Model->Group[Index]->Base_Bitmap == NULL)
+		{
+
+			LoadDummyTexture(Index);
+			App->CL_Model->Group[Index]->Bitmap_Loaded = -1;
+
+			return 1;
+		}
+		else
+		{
+			App->CL_Model->Group[Index]->Bitmap_Loaded = 1;
+		}
 
 		return 1;
+
 	}
 	
 	LoadDummyTexture(Index);

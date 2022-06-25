@@ -77,9 +77,9 @@ bool ME_Assimp::LoadFile(const char* pFile)
 
 		Create_MeshGroups(scene);
 
-		////		Get_Group_VertCount(scene);
+		Get_Group_VertCount(scene);
 
-		////		StoreMeshData(scene);
+		StoreMeshData(scene);
 
 		LoadTextures();
 
@@ -93,6 +93,85 @@ bool ME_Assimp::LoadFile(const char* pFile)
 	App->CL_FileView->SelectItem(App->CL_Model->Group[0]->ListView_Item);  // Select First Group
 
 	return 1;
+}
+
+// *************************************************************************
+// *					StoreMeshData Terry Bernie Hazel			   	   *
+// *************************************************************************
+void ME_Assimp::StoreMeshData(const aiScene* pScene)
+{
+	int FaceNum = 0;
+	int FaceIndexNum = 0;
+	mTotalVertices = 0;
+	int GroupCount = 0;
+	unsigned int t = 0;
+	unsigned int i = 0;
+	int VC = 0;
+
+	int mGroupCount = App->CL_Model->Get_Groupt_Count();
+
+	while (GroupCount < mGroupCount)
+	{
+		aiMesh* mesh = pScene->mMeshes[GroupCount];
+
+		VC = 0;
+		t = 0;
+
+		App->CL_Model->Group[GroupCount]->GroupFaceCount = mesh->mNumFaces;
+		App->CL_Model->Group[GroupCount]->FaceIndex_Data.resize(mesh->mNumFaces * 3);
+
+		App->CL_Model->Group[GroupCount]->Face_Data.resize(mesh->mNumFaces);
+
+		while (t < mesh->mNumFaces)
+		{
+			aiFace* face = &mesh->mFaces[t];
+
+			i = 0;
+			while (i<face->mNumIndices) // Triangulated Each face has 3 Indices
+			{
+				int vertexIndex = face->mIndices[i];
+
+				App->CL_Model->Group[GroupCount]->vertex_Data[vertexIndex].x = mesh->mVertices[vertexIndex].x;
+				App->CL_Model->Group[GroupCount]->vertex_Data[vertexIndex].y = mesh->mVertices[vertexIndex].y;
+				App->CL_Model->Group[GroupCount]->vertex_Data[vertexIndex].z = mesh->mVertices[vertexIndex].z;
+
+
+				if (mesh->HasNormals())
+				{
+					App->CL_Model->Group[GroupCount]->Normal_Data[vertexIndex].x = mesh->mNormals[vertexIndex].x;
+					App->CL_Model->Group[GroupCount]->Normal_Data[vertexIndex].y = mesh->mNormals[vertexIndex].y;
+					App->CL_Model->Group[GroupCount]->Normal_Data[vertexIndex].z = mesh->mNormals[vertexIndex].z;
+				}
+
+				//		App->CL_Model_Data->S_MeshGroup[Count]->FaceIndices[VC] = FaceNum;
+
+				if (mesh->HasTextureCoords(0))
+				{
+					App->CL_Model->Group[GroupCount]->MapCord_Data[vertexIndex].u = mesh->mTextureCoords[0][vertexIndex].x;
+					App->CL_Model->Group[GroupCount]->MapCord_Data[vertexIndex].v = 1 - mesh->mTextureCoords[0][vertexIndex].y;
+				}
+
+				VC++;
+				i++;
+				FaceNum++;
+			}
+
+			App->CL_Model->Group[GroupCount]->Face_Data[t].a = face->mIndices[0];
+			App->CL_Model->Group[GroupCount]->Face_Data[t].b = face->mIndices[1];
+			App->CL_Model->Group[GroupCount]->Face_Data[t].c = face->mIndices[2];
+
+			App->CL_Model->Group[GroupCount]->FaceIndex_Data[t].Index = FaceIndexNum;
+
+			FaceIndexNum++;
+
+			t++;
+		}
+
+		App->CL_Model->Group[GroupCount]->GroupVertCount = mesh->mNumVertices;
+
+		mTotalVertices = mTotalVertices + mesh->mNumVertices;
+		GroupCount++;
+	}
 }
 
 // *************************************************************************
@@ -130,6 +209,59 @@ void  ME_Assimp::GetBasicInfo(const aiScene* pScene)
 	{
 		App->CL_Model->Set_Motion_Count(pScene->mNumAnimations);
 	}
+}
+
+// *************************************************************************
+// *					Get_Group_VertCount Terry Bernie		  	 	   *
+// *************************************************************************
+void ME_Assimp::Get_Group_VertCount(const aiScene* pScene)
+{
+	int Count = 0;
+	unsigned int t = 0;
+	unsigned int i = 0;
+	int VC = 0;
+	int mTotalVertices = 0;
+	int mTotalFaces = 0;
+
+	int mGroupCount = App->CL_Model->Get_Groupt_Count();
+
+	while (Count < mGroupCount)
+	{
+		aiMesh* mesh = pScene->mMeshes[Count];
+
+		VC = 0;
+		t = 0;
+
+		mTotalFaces = mTotalFaces + mesh->mNumFaces;
+
+		App->CL_Model->Group[Count]->GroupFaceCount = mesh->mNumFaces;
+
+		while (t < mesh->mNumFaces)
+		{
+			aiFace* face = &mesh->mFaces[t];
+
+			i = 0;
+			while (i<face->mNumIndices)
+			{
+				VC++;
+				i++;
+			}
+
+			t++;
+		}
+
+		App->CL_Model->Group[Count]->vertex_Data.resize(VC);
+		App->CL_Model->Group[Count]->Normal_Data.resize(VC);
+		App->CL_Model->Group[Count]->MapCord_Data.resize(VC);
+		App->CL_Model->Group[Count]->Face_Data.resize(VC);
+
+		mTotalVertices = mTotalVertices + mesh->mNumVertices;
+		Count++;
+	}
+
+	App->CL_Model->VerticeCount = mTotalVertices;
+	App->CL_Model->FaceCount = mTotalFaces;
+
 }
 
 // *************************************************************************

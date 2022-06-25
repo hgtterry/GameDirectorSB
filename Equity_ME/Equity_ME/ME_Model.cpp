@@ -30,6 +30,9 @@ ME_Model::ME_Model()
 {
 	GroupCount = 0;
 	TextureCount = 0;
+	VerticeCount = 0;			// Model Vertice Count 
+	FaceCount = 0;				// Model Face Count 
+
 	MotionCount = 0;
 
 	FileName[0] = 0;

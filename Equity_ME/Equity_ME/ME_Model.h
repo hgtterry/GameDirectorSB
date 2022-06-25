@@ -25,6 +25,7 @@ distribution.
 
 #include "Base_Group.h"
 
+
 class ME_Model
 {
 public:
@@ -45,6 +46,9 @@ public:
 	char JustName[MAX_PATH];
 
 	void Set_Paths(void);
+
+	int VerticeCount;			// Group Vertice Count 
+	int FaceCount;				// Group Face Count 
 
 protected:
 

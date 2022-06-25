@@ -1,4 +1,15 @@
 #pragma once
+
+typedef struct vertex_type
+{
+	float x, y, z;
+}vertex_type;
+
+typedef struct polygon_type { int a, b, c, Group; }polygon_type;
+typedef struct normal_type { float x, y, z; }normal_type;
+typedef struct mapcoord_type { float u, v; }mapcoord_type;
+typedef struct int_type { int Index; }int_type;
+
 class Base_Group
 {
 public:
@@ -13,9 +24,18 @@ public:
 	char Texture_PathFileName[MAX_PATH];
 
 	int GroupVertCount;
+	int GroupFaceCount;
+
 	int MaterialIndex;
 
+	
 	bool Bitmap_Loaded;
+
+	std::vector<vertex_type> vertex_Data;	// XYZ
+	std::vector<polygon_type> Face_Data;	// ABC
+	std::vector<normal_type> Normal_Data;
+	std::vector<mapcoord_type> MapCord_Data;
+	std::vector<int_type> FaceIndex_Data;
 
 	HBITMAP Base_Bitmap;
 
