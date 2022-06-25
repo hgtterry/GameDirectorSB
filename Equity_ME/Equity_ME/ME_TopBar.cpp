@@ -30,6 +30,8 @@ distribution.
 ME_TopBar::ME_TopBar()
 {
 	TabsHwnd = nullptr;
+
+	Show_Model_Data = 0;
 }
 
 
@@ -43,7 +45,7 @@ ME_TopBar::~ME_TopBar()
 bool ME_TopBar::Start_TopBar()
 {
 	CreateDialog(App->hInst, (LPCTSTR)IDD_TOPBAR, App->Fdlg, (DLGPROC)TopBar_Proc);
-	//Init_Bmps_Globals();
+	Init_Bmps_Globals();
 	return 1;
 }
 
@@ -82,14 +84,14 @@ LRESULT CALLBACK ME_TopBar::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		/*if (some_item->idFrom == IDC_TBSHOWGRID && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_TBINFO && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->SBC_TopTabs->Toggle_Grid_Flag);
+			App->Custom_Button_Toggle(item, App->CL_TopBar->Show_Model_Data);
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_TBSHOWHAIR && some_item->code == NM_CUSTOMDRAW)
+		/*if (some_item->idFrom == IDC_TBSHOWHAIR && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle(item, App->SBC_TopTabs->Toggle_Hair_Flag);
@@ -155,17 +157,18 @@ LRESULT CALLBACK ME_TopBar::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 		}
 
 		//-------------------------------------------------------- Show Info
-		//if (LOWORD(wParam) == IDC_TBINFO)
+		if (LOWORD(wParam) == IDC_TBINFO)
 		{
-			/*if (App->CL_Vm_ImGui->Show_Model_Data == 1)
+			if (App->CL_TopBar->Show_Model_Data == 1)
 			{
-				App->CL_Vm_ImGui->Show_Model_Data = 0;
+				App->CL_TopBar->Show_Model_Data = 0;
 			}
 			else
 			{
-				App->CL_Vm_ImGui->Show_Model_Data = 1;
-			}*/
-			//return TRUE;
+				App->CL_TopBar->Show_Model_Data = 1;
+			}
+
+			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDCANCEL)
@@ -178,4 +181,50 @@ LRESULT CALLBACK ME_TopBar::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 		break;
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *						Init_Bmps_Globals Terry Bernie				   *
+// *************************************************************************
+void ME_TopBar::Init_Bmps_Globals(void)
+{
+
+	/*HWND Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWGRID);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_GridOn_Bmp);
+
+	Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWHAIR);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HairOn_Bmp);*/
+
+	HWND Temp = GetDlgItem(TabsHwnd, IDC_TBINFO);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfo_Bmp);
+
+	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
+
+	Temp = GetDlgItem(TabsHwnd, IDC_TBINFO);
+	TOOLINFO ti8 = { 0 };
+	ti8.cbSize = sizeof(ti8);
+	ti8.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti8.uId = (UINT_PTR)Temp;
+	ti8.lpszText = "Show Model Information";
+	ti8.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti8);
+
+	/*Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWHAIR);
+	TOOLINFO ti9 = { 0 };
+	ti9.cbSize = sizeof(ti9);
+	ti9.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti9.uId = (UINT_PTR)Temp;
+	ti9.lpszText = "Toggle Main Cross Hair";
+	ti9.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti9);
+
+	Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWGRID);
+	TOOLINFO ti10 = { 0 };
+	ti10.cbSize = sizeof(ti10);
+	ti10.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti10.uId = (UINT_PTR)Temp;
+	ti10.lpszText = "Toggle Main Grid";
+	ti10.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti10);*/
+
 }

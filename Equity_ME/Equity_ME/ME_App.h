@@ -60,8 +60,12 @@ public:
 	bool InitApp(void);
 	bool SetMainWin_Centre(void);
 
+	void LoadProgramResource(void);
 	void SetBrushes_Fonts(void);
 	bool ResizeOgre_Window(void);
+
+	bool Custom_Button_Toggle(LPNMCUSTOMDRAW item, bool Toggle);
+	HBRUSH CreateGradientBrush(COLORREF top, COLORREF bottom, LPNMCUSTOMDRAW item);
 
 	void Say_Win(const char* Message);
 
@@ -74,9 +78,13 @@ public:
 	
 	HBRUSH AppBackground;	// Main App Background Colour [120122]
 	HBRUSH BlackBrush;		// Black Brush Colour [120122]
+	HBRUSH Brush_White;		// Black Brush Colour [120122]
+	HBRUSH Brush_Green;		// Black Brush Colour [120122]
 
 	HFONT Font_CB15;
 	HFONT Font_CB18;
+
+	HANDLE Hnd_ModelInfo_Bmp;		// Bitmap for button Model Info Screen
 
 	HMENU mMenu;
 	HCURSOR CUR;

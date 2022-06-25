@@ -34,6 +34,10 @@ protected:
 
 	static LRESULT CALLBACK TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
+	void Init_Bmps_Globals(void);
+
+	bool Show_Model_Data;
+
 	HWND TabsHwnd;
 };
 

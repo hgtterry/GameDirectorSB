@@ -55,6 +55,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,_In_opt_ HINSTANCE hPrevInstance,
         return FALSE;
     }
 
+	App->LoadProgramResource();
+
 	App->SetMainWin_Centre();
 
 	App->mMenu = GetMenu(App->MainHwnd);

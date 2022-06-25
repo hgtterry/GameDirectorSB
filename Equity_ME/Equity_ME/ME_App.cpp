@@ -22,6 +22,7 @@ distribution.
 */
 
 #include "stdafx.h"
+#include "resource.h"
 #include "ME_App.h"
 
 
@@ -49,11 +50,15 @@ ME_App::ME_App()
 
 	AppBackground = nullptr;
 	BlackBrush =	nullptr;
+	Brush_White =	nullptr;
+	Brush_Green =	nullptr;
 
 	mMenu = 0;
 
 	Font_CB15 = 0;
 	Font_CB18 = 0;
+
+	Hnd_ModelInfo_Bmp = NULL;
 
 	EquityDirecory_FullPath[0] = 0;
 }
@@ -106,12 +111,67 @@ bool ME_App::SetMainWin_Centre(void)
 }
 
 // *************************************************************************
+// *				LoadProgramResource  ( Terry Bernie )			  	   *
+// *************************************************************************
+void ME_App::LoadProgramResource(void)
+{
+
+	////	Hnd_PinOff = LoadBitmap(hInst, (LPCTSTR)IDB_PINOFF);
+	////	Hnd_PinOn = LoadBitmap(hInst, (LPCTSTR)IDB_PINON);
+	//Hnd_FullScreen_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_FULLSCREEN);
+	////	Hnd_FlipWindingOrder = LoadBitmap(hInst, (LPCTSTR)IDB_FLIPWINDINGORDER);
+
+	//Hnd_MouseSensitivity_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_MOUSESENSITIVITY);
+	////	Hnd_Projection_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_PROJECTION);
+
+	////Hnd_Info_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_INFO);
+	////Hnd_InfoSmall_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_INFOSMALL);
+
+	//Hnd_Playoff = LoadBitmap(App->hInst, (LPCTSTR)IDB_MOTPLAYOFF);
+	//Hnd_PlayOn = LoadBitmap(App->hInst, (LPCTSTR)IDB_MOTPLAYON);
+	//Hnd_PlayStop = LoadBitmap(App->hInst, (LPCTSTR)IDB_MOTSTOP);
+	//Hnd_StepBack = LoadBitmap(App->hInst, (LPCTSTR)IDB_STEPBACK);
+	//Hnd_StepForward = LoadBitmap(App->hInst, (LPCTSTR)IDB_STEPFORWARD);
+
+	//Hnd_MeshOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_MESHON);
+	//Hnd_MeshOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_MESHOFF);
+
+	//Hnd_MeshPointsOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_MESHPOINTSON);
+	//Hnd_MeshPointsOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_MESHPOINTSOFF);
+
+	//Hnd_BBOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_BONDINGBOXON);
+	//Hnd_BBOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_BONDINGBOXOFF);
+
+	//Hnd_BonesOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_BONESON);
+	//Hnd_BonesOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_BONESOFF);
+
+	//Hnd_GridOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_GRIDON);
+	//Hnd_GridOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_GRIDOFF);
+
+	//Hnd_HairOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_HAIRON);
+	//Hnd_HairOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_HAIROFF);
+
+	//Hnd_TexturesOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_TEXTURESON);
+	//Hnd_TexturesOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_TEXTURESOFF);
+
+	//Hnd_NormalsOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_NORMALSON);
+	//Hnd_NormalsOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_NORMALSOFF);
+
+	//Hnd_LightsOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_LIGHTON);
+	//Hnd_LightsOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_LIGHTOFF);
+
+	Hnd_ModelInfo_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_TB_MODELDATA);
+}
+// *************************************************************************
 // *					SetBrushes_Fonts Inflanite						   *
 // *************************************************************************
 void ME_App::SetBrushes_Fonts(void)
 {
 	AppBackground = CreateSolidBrush(RGB(213, 222, 242));
+
 	BlackBrush = CreateSolidBrush(RGB(0, 0, 0));
+	Brush_White = CreateSolidBrush(RGB(255, 255, 255));
+	Brush_Green = CreateSolidBrush(RGB(0, 255, 0));
 
 	Font_CB15 = CreateFont(-15, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
 	Font_CB18 = CreateFont(-18, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
@@ -172,4 +232,105 @@ void ME_App::Say_Win(const char* Message)
 	strcpy(text, Message);
 	MessageBox(MainHwnd, Message, "Message", MB_OK);
 }
+
+// *************************************************************************
+// *					Custom_Button Terry Bernie   			 	 	   *
+// *************************************************************************
+bool ME_App::Custom_Button_Toggle(LPNMCUSTOMDRAW item, bool Toggle)
+{
+	static HBRUSH defaultbrush = NULL;
+	static HBRUSH hotbrush = NULL;
+	static HBRUSH selectbrush = NULL;
+
+	{
+		if (item->uItemState & CDIS_HOT) //Our mouse is over the button
+		{
+			//Select our colour when the mouse hovers our button
+
+			if (Toggle == 1)
+			{
+				hotbrush = CreateGradientBrush(RGB(0, 240, 0), RGB(0, 240, 0), item);
+			}
+			else
+			{
+				hotbrush = CreateGradientBrush(RGB(240, 240, 240), RGB(240, 240, 240), item);;
+			}
+
+			HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0));
+
+			HGDIOBJ old_pen = SelectObject(item->hdc, pen);
+			HGDIOBJ old_brush = SelectObject(item->hdc, hotbrush);
+
+			RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 0, 0);
+
+			SelectObject(item->hdc, old_pen);
+			SelectObject(item->hdc, old_brush);
+			DeleteObject(pen);
+
+			return CDRF_DODEFAULT;
+		}
+
+		//Select our colour when our button is doing nothing
+
+		if (Toggle == 1)
+		{
+			defaultbrush = App->Brush_Green;
+		}
+		else
+		{
+			defaultbrush = App->Brush_White;
+		}
+
+		HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0));
+
+		HGDIOBJ old_pen = SelectObject(item->hdc, pen);
+		HGDIOBJ old_brush = SelectObject(item->hdc, defaultbrush);
+
+		RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 0, 0);
+
+		SelectObject(item->hdc, old_pen);
+		SelectObject(item->hdc, old_brush);
+		DeleteObject(pen);
+
+		return CDRF_DODEFAULT;
+	}
+
+	return CDRF_DODEFAULT;
+}
+
+// *************************************************************************
+// *						CreateGradientBrush					 	 	   *
+// *************************************************************************
+HBRUSH ME_App::CreateGradientBrush(COLORREF top, COLORREF bottom, LPNMCUSTOMDRAW item)
+{
+	HBRUSH Brush = NULL;
+	HDC hdcmem = CreateCompatibleDC(item->hdc);
+	HBITMAP hbitmap = CreateCompatibleBitmap(item->hdc, item->rc.right - item->rc.left, item->rc.bottom - item->rc.top);
+	SelectObject(hdcmem, hbitmap);
+
+	int r1 = GetRValue(top), r2 = GetRValue(bottom), g1 = GetGValue(top), g2 = GetGValue(bottom), b1 = GetBValue(top), b2 = GetBValue(bottom);
+	for (int i = 0; i < item->rc.bottom - item->rc.top; i++)
+	{
+		RECT temp;
+		int r, g, b;
+		r = int(r1 + double(i * (r2 - r1) / item->rc.bottom - item->rc.top));
+		g = int(g1 + double(i * (g2 - g1) / item->rc.bottom - item->rc.top));
+		b = int(b1 + double(i * (b2 - b1) / item->rc.bottom - item->rc.top));
+		Brush = CreateSolidBrush(RGB(r, g, b));
+		temp.left = 0;
+		temp.top = i;
+		temp.right = item->rc.right - item->rc.left;
+		temp.bottom = i + 1;
+		FillRect(hdcmem, &temp, Brush);
+		DeleteObject(Brush);
+	}
+	HBRUSH pattern = CreatePatternBrush(hbitmap);
+
+	DeleteDC(hdcmem);
+	DeleteObject(Brush);
+	DeleteObject(hbitmap);
+
+	return pattern;
+}
+
 
