@@ -174,5 +174,8 @@
     <Image Include="..\..\Anim19_OSDN\Resource\Dummy.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Resource\Dummy.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

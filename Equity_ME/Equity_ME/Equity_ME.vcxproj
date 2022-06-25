@@ -208,6 +208,7 @@
     <Image Include="bitmap1.bmp" />
     <Image Include="bitmap2.bmp" />
     <Image Include="Equity_ME.ico" />
+    <Image Include="Resource\Dummy.bmp" />
     <Image Include="small.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -8,7 +8,7 @@ public:
 	bool TexureToWinPreviewFullPath(int Index, char* FullPath);
 	void Strip_JustFileName(char *pString, char *FileName);
 
-	bool CreateDummyTexture(void);
+	bool LoadDummyTexture(int Index);
 
 	char JustFileName[MAX_PATH];
 
