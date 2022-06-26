@@ -33,13 +33,25 @@ public:
 protected:
 
 	static LRESULT CALLBACK TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Group_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Init_Bmps_Globals(void);
+
+	void Start_Tabs_Headers(void);
+	void Start_Group_TB(void);
+	void Init_Bmps_Group(void);
 
 	bool Show_Model_Data;
 	bool Toggle_Grid_Flag;
 	bool Toggle_BBox_Flag;
 
+	bool Toggle_Tabs_Group_Flag;
+
+	bool Toggle_GroupInfo_Flag;
+
 	HWND TabsHwnd;
+	HWND Tabs_TB_hWnd;
+	HWND Group_TB_hWnd;
 };
 

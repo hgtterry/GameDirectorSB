@@ -313,7 +313,7 @@
 //}
 
 
-//#define Debug1 App->Debug_Text();
+#define Debug App->Say_Win("Debug");
 //
 //#define Func_DLog(...) App->Cl_ImGui->ImGui_Test_Log(__VA_ARGS__)
 //

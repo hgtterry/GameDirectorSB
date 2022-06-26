@@ -65,6 +65,8 @@ public:
 	bool ResizeOgre_Window(void);
 
 	bool Custom_Button_Toggle(LPNMCUSTOMDRAW item, bool Toggle);
+	bool Custom_Button_Toggle_Tabs(LPNMCUSTOMDRAW item, bool Toggle);
+
 	HBRUSH CreateGradientBrush(COLORREF top, COLORREF bottom, LPNMCUSTOMDRAW item);
 
 	void Say_Win(const char* Message);
@@ -80,6 +82,9 @@ public:
 	HBRUSH BlackBrush;		// Black Brush Colour [120122]
 	HBRUSH Brush_White;		// Black Brush Colour [120122]
 	HBRUSH Brush_Green;		// Black Brush Colour [120122]
+
+	HBRUSH Brush_Tabs;
+	HBRUSH Brush_Tabs_UnSelected;
 
 	HFONT Font_CB15;
 	HFONT Font_CB18;

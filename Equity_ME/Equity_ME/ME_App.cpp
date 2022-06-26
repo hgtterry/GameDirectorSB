@@ -53,6 +53,9 @@ ME_App::ME_App()
 	Brush_White =	nullptr;
 	Brush_Green =	nullptr;
 
+	Brush_Tabs = nullptr;
+	Brush_Tabs_UnSelected = nullptr;
+
 	mMenu = 0;
 
 	Font_CB15 = 0;
@@ -177,6 +180,9 @@ void ME_App::SetBrushes_Fonts(void)
 	Brush_White = CreateSolidBrush(RGB(255, 255, 255));
 	Brush_Green = CreateSolidBrush(RGB(0, 255, 0));
 
+	Brush_Tabs = CreateSolidBrush(RGB(255, 255, 255));
+	Brush_Tabs_UnSelected = CreateSolidBrush(RGB(190, 190, 190));
+
 	Font_CB15 = CreateFont(-15, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
 	Font_CB18 = CreateFont(-18, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
 }
@@ -286,6 +292,72 @@ bool ME_App::Custom_Button_Toggle(LPNMCUSTOMDRAW item, bool Toggle)
 		}
 
 		HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0));
+
+		HGDIOBJ old_pen = SelectObject(item->hdc, pen);
+		HGDIOBJ old_brush = SelectObject(item->hdc, defaultbrush);
+
+		RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 0, 0);
+
+		SelectObject(item->hdc, old_pen);
+		SelectObject(item->hdc, old_brush);
+		DeleteObject(pen);
+
+		return CDRF_DODEFAULT;
+	}
+
+	return CDRF_DODEFAULT;
+}
+
+// *************************************************************************
+// *		Custom_Button_Toggle_Tabs Terry Bernie   			 	 	   *
+// *************************************************************************
+bool ME_App::Custom_Button_Toggle_Tabs(LPNMCUSTOMDRAW item, bool Toggle)
+{
+	static HBRUSH defaultbrush = NULL;
+	static HBRUSH hotbrush = NULL;
+	static HBRUSH selectbrush = NULL;
+
+	{
+		if (item->uItemState & CDIS_HOT) //Our mouse is over the button
+		{
+			//Select our colour when the mouse hovers our button
+
+			if (Toggle == 1)
+			{
+				hotbrush = CreateGradientBrush(RGB(240, 240, 240), RGB(240, 240, 240), item);
+			}
+			else
+			{
+				//hotbrush = Brush_Tabs_UnSelected; // Unselected 
+				hotbrush = CreateGradientBrush(RGB(240, 240, 240), RGB(240, 240, 240), item);;
+			}
+
+			HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(240, 240, 240));
+
+			HGDIOBJ old_pen = SelectObject(item->hdc, pen);
+			HGDIOBJ old_brush = SelectObject(item->hdc, hotbrush);
+
+			RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 0, 0);
+
+			SelectObject(item->hdc, old_pen);
+			SelectObject(item->hdc, old_brush);
+			DeleteObject(pen);
+
+			return CDRF_DODEFAULT;
+		}
+
+		//Select our colour when our button is doing nothing
+
+		if (Toggle == 1)
+		{
+			defaultbrush = App->Brush_Tabs; // Selected
+		}
+		else
+		{
+			defaultbrush = Brush_Tabs_UnSelected; // Unselected 
+		}
+
+		HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(255, 255, 255));
 
 		HGDIOBJ old_pen = SelectObject(item->hdc, pen);
 		HGDIOBJ old_brush = SelectObject(item->hdc, defaultbrush);

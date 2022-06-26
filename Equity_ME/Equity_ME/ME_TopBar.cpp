@@ -30,10 +30,15 @@ distribution.
 ME_TopBar::ME_TopBar()
 {
 	TabsHwnd = nullptr;
+	Tabs_TB_hWnd = nullptr;
+	Group_TB_hWnd = nullptr;
 
 	Show_Model_Data = 0;
 	Toggle_Grid_Flag = 1;
 	Toggle_BBox_Flag = 0;
+
+	Toggle_Tabs_Group_Flag = 1;
+	Toggle_GroupInfo_Flag = 0;
 }
 
 
@@ -46,7 +51,7 @@ ME_TopBar::~ME_TopBar()
 // *************************************************************************
 bool ME_TopBar::Start_TopBar()
 {
-	App->CL_TopBar->TabsHwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TOPBAR, App->Fdlg, (DLGPROC)TopBar_Proc);
+	TabsHwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TOPBAR, App->Fdlg, (DLGPROC)TopBar_Proc);
 	Init_Bmps_Globals();
 	return 1;
 }
@@ -61,14 +66,10 @@ LRESULT CALLBACK ME_TopBar::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 	{
 	case WM_INITDIALOG:
 	{
-		//App->CL_TopBar->TabsHwnd = hDlg;
+		App->CL_TopBar->TabsHwnd = hDlg;
 
-		/*App->SBC_TopTabs->Start_Tabs_Headers();
-		App->SBC_TopTabs->Start_Camera_TB();
-		App->SBC_TopTabs->Start_Dimensions_TB();
-		App->SBC_TopTabs->Start_Physics_TB();
-		App->SBC_TopTabs->Start_Editors_TB();
-		App->SBC_TopTabs->Start_Files_TB();*/
+		App->CL_TopBar->Start_Tabs_Headers();
+		App->CL_TopBar->Start_Group_TB();
 
 		return TRUE;
 	}
@@ -265,5 +266,153 @@ void ME_TopBar::Init_Bmps_Globals(void)
 	ti6.lpszText = "Toggle Bounding Box";
 	ti6.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti6);
+}
+
+// *************************************************************************
+// *						Start_Tabs_Headers Terry					   *
+// *************************************************************************
+void ME_TopBar::Start_Tabs_Headers(void)
+{
+	Tabs_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_TAB, TabsHwnd, (DLGPROC)Tabs_Headers_Proc);
+}
+
+// *************************************************************************
+// *							Tabs_Headers_Proc_Proc					   *
+// *************************************************************************
+LRESULT CALLBACK ME_TopBar::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_TBGROUP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		return TRUE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_TBGROUP && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle_Tabs(item, App->CL_TopBar->Toggle_Tabs_Group_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+		if (LOWORD(wParam) == IDC_TBGROUP)
+		{
+			//App->SBC_TopTabs->Hide_Tabs();
+			//ShowWindow(App->SBC_TopTabs->File_TB_hWnd, SW_SHOW);
+			//App->SBC_TopTabs->Toggle_Tabs_File_Flag = 1;
+
+			////App->Cl19_Ogre->OgreListener->ImGui_Render_Tab = Enums::ImGui_Camera;
+
+			//RedrawWindow(App->SBC_TopTabs->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			return TRUE;
+		}
+
+	}
+	}
+	return FALSE;
+}
+
+// *************************************************************************
+// *						Start_Group_TB Terry Flanigan				   *
+// *************************************************************************
+void ME_TopBar::Start_Group_TB(void)
+{
+	Group_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_GROUP, Tabs_TB_hWnd, (DLGPROC)Group_TB_Proc);
+	Init_Bmps_Group();
+}
+
+// *************************************************************************
+// *								Camera_TB_Proc						   *
+// *************************************************************************
+LRESULT CALLBACK ME_TopBar::Group_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_BTGROUPINFO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		return TRUE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->Brush_Tabs;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_BTGROUPINFO && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_TopBar->Toggle_GroupInfo_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+		if (LOWORD(wParam) == IDC_BTGROUPINFO)
+		{
+			if (App->CL_TopBar->Toggle_GroupInfo_Flag == 1)
+			{
+				App->CL_TopBar->Toggle_GroupInfo_Flag = 0;
+			}
+			else
+			{
+				App->CL_TopBar->Toggle_GroupInfo_Flag = 1;
+			}
+			
+			return 1;
+		}
+
+		return FALSE;
+	}
+
+	}
+	return FALSE;
+}
+
+// *************************************************************************
+// *						Init_Bmps_Group Terry Bernie				   *
+// *************************************************************************
+void ME_TopBar::Init_Bmps_Group(void)
+{
+	HWND hTooltip_TB_1 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
+
+	// --------------------------------------------------- 
+	HWND Temp = GetDlgItem(Group_TB_hWnd, IDC_BTGROUPINFO);
+
+	TOOLINFO ti = { 0 };
+	ti.cbSize = sizeof(ti);
+	ti.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti.uId = (UINT_PTR)Temp;
+	ti.lpszText = "Show Group Information";
+	ti.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_1, TTM_ADDTOOL, 0, (LPARAM)&ti);
+
+	// --------------------------------------------------- 
 
 }
