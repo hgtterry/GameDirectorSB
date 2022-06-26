@@ -41,7 +41,8 @@ ME_App::ME_App()
 	CL_Groups =		nullptr;
 	CL_Panels =		nullptr;
 	CL_Textures =	nullptr;
-	
+	CL_Dialogs =	nullptr;
+
 	hInst =			nullptr;
 
 	MainHwnd =		nullptr;
@@ -93,6 +94,7 @@ bool ME_App::InitApp(void)
 	CL_Groups =		new ME_Groups();
 	CL_Panels =		new ME_Panels();
 	CL_Textures =	new ME_Textures();
+	CL_Dialogs =	new ME_Dialogs();
 	
 	SetBrushes_Fonts();
 	return 1;

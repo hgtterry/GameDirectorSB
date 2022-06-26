@@ -152,6 +152,7 @@
     <ClInclude Include="Equity_ME.h" />
     <ClInclude Include="ME_App.h" />
     <ClInclude Include="ME_Assimp.h" />
+    <ClInclude Include="ME_Dialogs.h" />
     <ClInclude Include="ME_FileIO.h" />
     <ClInclude Include="ME_FileView.h" />
     <ClInclude Include="ME_Grid.h" />
@@ -181,6 +182,7 @@
     <ClCompile Include="Equity_ME.cpp" />
     <ClCompile Include="ME_App.cpp" />
     <ClCompile Include="ME_Assimp.cpp" />
+    <ClCompile Include="ME_Dialogs.cpp" />
     <ClCompile Include="ME_FileIO.cpp" />
     <ClCompile Include="ME_FileView.cpp" />
     <ClCompile Include="ME_Grid.cpp" />
