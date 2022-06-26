@@ -376,15 +376,13 @@ LRESULT CALLBACK ME_TopBar::Group_TB_Proc(HWND hDlg, UINT message, WPARAM wParam
 	{
 		if (LOWORD(wParam) == IDC_BTGROUPINFO)
 		{
-			if (App->CL_TopBar->Toggle_GroupInfo_Flag == 1)
-			{
-				App->CL_TopBar->Toggle_GroupInfo_Flag = 0;
-			}
-			else
-			{
-				App->CL_TopBar->Toggle_GroupInfo_Flag = 1;
-			}
-			
+			App->CL_TopBar->Toggle_GroupInfo_Flag = 1;
+
+			App->CL_Dialogs->Show_GroupData();
+
+			App->CL_TopBar->Toggle_GroupInfo_Flag = 0;
+			RedrawWindow(App->CL_TopBar->Group_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
 			return 1;
 		}
 
