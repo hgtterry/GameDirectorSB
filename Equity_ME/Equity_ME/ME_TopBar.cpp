@@ -33,6 +33,7 @@ ME_TopBar::ME_TopBar()
 
 	Show_Model_Data = 0;
 	Toggle_Grid_Flag = 1;
+	Toggle_BBox_Flag = 0;
 }
 
 
@@ -96,6 +97,13 @@ LRESULT CALLBACK ME_TopBar::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle(item, App->CL_TopBar->Toggle_Grid_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_TBBOUNDBOX && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_TopBar->Toggle_BBox_Flag);
 			return CDRF_DODEFAULT;
 		}
 
@@ -172,13 +180,31 @@ LRESULT CALLBACK ME_TopBar::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 			return TRUE;
 		}
 
-		if (LOWORD(wParam) == IDCANCEL)
+		//-------------------------------------------------------- Show Bound Box
+		if (LOWORD(wParam) == IDC_TBBOUNDBOX)
 		{
+			if (App->CL_Model->Model_Loaded == 1)
+			{
+				HWND Temp = GetDlgItem(hDlg, IDC_TBBOUNDBOX);
 
-			EndDialog(hDlg, LOWORD(wParam));
+				if (App->CL_Ogre->RenderListener->ShowBoundingBox == 1)
+				{
+					App->CL_Ogre->RenderListener->ShowBoundingBox = 0;
+					App->CL_TopBar->Toggle_BBox_Flag = 0;
+
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOff_Bmp);
+				}
+				else
+				{
+					App->CL_Ogre->RenderListener->ShowBoundingBox = 1;
+					App->CL_TopBar->Toggle_BBox_Flag = 1;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOn_Bmp);
+				}
+			}
 			return TRUE;
 		}
-
 		break;
 	}
 	return FALSE;
@@ -198,6 +224,9 @@ void ME_TopBar::Init_Bmps_Globals(void)
 
 	Temp = GetDlgItem(TabsHwnd, IDC_TBINFO);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfo_Bmp);
+
+	Temp = GetDlgItem(TabsHwnd, IDC_TBBOUNDBOX);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOff_Bmp);
 
 	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
 
@@ -227,5 +256,14 @@ void ME_TopBar::Init_Bmps_Globals(void)
 	ti10.lpszText = "Toggle Main Grid";
 	ti10.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti10);
+
+	Temp = GetDlgItem(TabsHwnd, IDC_TBBOUNDBOX);
+	TOOLINFO ti6 = { 0 };
+	ti6.cbSize = sizeof(ti6);
+	ti6.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti6.uId = (UINT_PTR)Temp;
+	ti6.lpszText = "Toggle Bounding Box";
+	ti6.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti6);
 
 }

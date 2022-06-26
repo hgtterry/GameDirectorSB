@@ -61,6 +61,8 @@ ME_App::ME_App()
 	Hnd_ModelInfo_Bmp = NULL;
 	Hnd_GridOn_Bmp = NULL;
 	Hnd_GridOff_Bmp = NULL;
+	Hnd_BBOn_Bmp = NULL;
+	Hnd_BBOff_Bmp = NULL;
 
 	EquityDirecory_FullPath[0] = 0;
 }
@@ -141,8 +143,8 @@ void ME_App::LoadProgramResource(void)
 	//Hnd_MeshPointsOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_MESHPOINTSON);
 	//Hnd_MeshPointsOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_MESHPOINTSOFF);
 
-	//Hnd_BBOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_BONDINGBOXON);
-	//Hnd_BBOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_BONDINGBOXOFF);
+	Hnd_BBOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_BONDINGBOXON);
+	Hnd_BBOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_BONDINGBOXOFF);
 
 	//Hnd_BonesOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_BONESON);
 	//Hnd_BonesOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_BONESOFF);

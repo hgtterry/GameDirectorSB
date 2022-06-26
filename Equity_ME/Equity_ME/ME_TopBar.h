@@ -38,6 +38,7 @@ protected:
 
 	bool Show_Model_Data;
 	bool Toggle_Grid_Flag;
+	bool Toggle_BBox_Flag;
 
 	HWND TabsHwnd;
 };

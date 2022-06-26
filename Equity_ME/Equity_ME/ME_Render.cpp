@@ -277,18 +277,18 @@ void ME_Render::Render_Loop()
 	//	}
 	//}
 
-	//// ---------------------- Bounding Box
-	//if (App->CL_Vm_Model->Model_Loaded == 1 && ShowBoundingBox == 1)
-	//{
-	//	//if (App->CL_Vm_Model->Model_Type == LoadedFile_Obj)
-	//	{
-	//		Render_BoundingBoxModel();
-	//	}
-	//	/*if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
-	//	{
-	//	RenderPoints();
-	//	}*/
-	//}
+	// ---------------------- Bounding Box
+	if (App->CL_Model->Model_Loaded == 1 && ShowBoundingBox == 1)
+	{
+		//if (App->CL_Vm_Model->Model_Type == LoadedFile_Obj)
+		{
+			Render_BoundingBoxModel();
+		}
+		/*if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
+		{
+		RenderPoints();
+		}*/
+	}
 
 	//// ---------------------- Bones
 	//if (App->CL_Vm_Model->Model_Loaded == 1 && ShowBones == 1)
@@ -702,13 +702,13 @@ bool ME_Render::As_RenderBones()
 // *************************************************************************
 void ME_Render::Render_BoundingBoxModel(void)
 {
-	/*float m_xMin = App->CL_Vm_Model->S_BoundingBox[0]->BB_Min[0].x;
-	float m_yMin = App->CL_Vm_Model->S_BoundingBox[0]->BB_Min[0].y;
-	float m_zMin = App->CL_Vm_Model->S_BoundingBox[0]->BB_Min[0].z;
+	float m_xMin = App->CL_Model->S_BoundingBox[0]->BB_Min[0].x;
+	float m_yMin = App->CL_Model->S_BoundingBox[0]->BB_Min[0].y;
+	float m_zMin = App->CL_Model->S_BoundingBox[0]->BB_Min[0].z;
 
-	float m_xMax = App->CL_Vm_Model->S_BoundingBox[0]->BB_Max[0].x;
-	float m_yMax = App->CL_Vm_Model->S_BoundingBox[0]->BB_Max[0].y;
-	float m_zMax = App->CL_Vm_Model->S_BoundingBox[0]->BB_Max[0].z;
+	float m_xMax = App->CL_Model->S_BoundingBox[0]->BB_Max[0].x;
+	float m_yMax = App->CL_Model->S_BoundingBox[0]->BB_Max[0].y;
+	float m_zMax = App->CL_Model->S_BoundingBox[0]->BB_Max[0].z;
 
 	glDisable(GL_TEXTURE_2D);
 	glColor3f(1.0f, 0.0f, 0.0f);
@@ -751,7 +751,7 @@ void ME_Render::Render_BoundingBoxModel(void)
 	glVertex3f(m_xMax, m_yMax, m_zMax);
 
 	glEnd();
-	glEnable(GL_TEXTURE_2D);*/
+	glEnable(GL_TEXTURE_2D);
 }
 
 // *************************************************************************

@@ -192,5 +192,11 @@
     <Image Include="Resource\MenuBar\GridOn.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Resource\MenuBar\BondingBoxOn.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource\MenuBar\BondingBoxOff.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

@@ -25,6 +25,13 @@ distribution.
 
 #include "Base_Group.h"
 
+typedef struct AABB_Type {
+	vertex_type BB_Max[1];
+	vertex_type BB_Min[1];
+	vertex_type Size[1];
+	vertex_type Centre[1];
+	float radius;
+} AABB_Type;
 
 class ME_Model
 {
@@ -38,12 +45,15 @@ public:
 	int Get_Groupt_Count();
 	void Set_Texture_Count(int Count);
 	void Set_Motion_Count(int Count);
+	void Create_BondingBox_Model(void);
 
 	char FileName[MAX_PATH];
 	char Path_FileName[MAX_PATH];
 	char Model_FolderPath[MAX_PATH];
 	char Texture_FolderPath[MAX_PATH];
 	char JustName[MAX_PATH];
+
+	AABB_Type*				S_BoundingBox[1];
 
 	void Set_Paths(void);
 
