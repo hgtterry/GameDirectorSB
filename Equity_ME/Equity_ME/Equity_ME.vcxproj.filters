@@ -186,5 +186,11 @@
     <Image Include="Resource\MenuBar\ModelData.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Resource\MenuBar\GridOff.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource\MenuBar\GridOn.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

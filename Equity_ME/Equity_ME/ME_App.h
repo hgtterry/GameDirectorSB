@@ -84,6 +84,8 @@ public:
 	HFONT Font_CB15;
 	HFONT Font_CB18;
 
+	HANDLE Hnd_GridOn_Bmp;
+	HANDLE Hnd_GridOff_Bmp;
 	HANDLE Hnd_ModelInfo_Bmp;		// Bitmap for button Model Info Screen
 
 	HMENU mMenu;

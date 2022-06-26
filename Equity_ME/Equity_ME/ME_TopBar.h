@@ -37,6 +37,7 @@ protected:
 	void Init_Bmps_Globals(void);
 
 	bool Show_Model_Data;
+	bool Toggle_Grid_Flag;
 
 	HWND TabsHwnd;
 };

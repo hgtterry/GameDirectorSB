@@ -32,6 +32,7 @@ ME_TopBar::ME_TopBar()
 	TabsHwnd = nullptr;
 
 	Show_Model_Data = 0;
+	Toggle_Grid_Flag = 1;
 }
 
 
@@ -91,12 +92,12 @@ LRESULT CALLBACK ME_TopBar::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 			return CDRF_DODEFAULT;
 		}
 
-		/*if (some_item->idFrom == IDC_TBSHOWHAIR && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_TBSHOWGRID && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->SBC_TopTabs->Toggle_Hair_Flag);
+			App->Custom_Button_Toggle(item, App->CL_TopBar->Toggle_Grid_Flag);
 			return CDRF_DODEFAULT;
-		}*/
+		}
 
 		return CDRF_DODEFAULT;
 	}
@@ -104,30 +105,30 @@ LRESULT CALLBACK ME_TopBar::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 	case WM_COMMAND:
 
 		//-------------------------------------------------------- Show Grid
-		//if (LOWORD(wParam) == IDC_TBSHOWGRID)
+		if (LOWORD(wParam) == IDC_TBSHOWGRID)
 		{
-			/*HWND Temp = GetDlgItem(hDlg, IDC_TBSHOWGRID);
+			HWND Temp = GetDlgItem(hDlg, IDC_TBSHOWGRID);
 
-			if (App->Cl_Grid->ShowGridFlag == 1)
+			if (App->CL_Grid->ShowGridFlag == 1)
 			{
-				App->Cl_Grid->Grid_SetVisible(0);
-				App->Cl_Grid->ShowGridFlag = 0;
+				App->CL_Grid->Grid_SetVisible(0);
+				App->CL_Grid->ShowGridFlag = 0;
 
-				App->SBC_TopTabs->Toggle_Grid_Flag = 0;
+				App->CL_TopBar->Toggle_Grid_Flag = 0;
 
 				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_GridOff_Bmp);
 			}
 			else
 			{
-				App->Cl_Grid->Grid_SetVisible(1);
-				App->Cl_Grid->ShowGridFlag = 1;
+				App->CL_Grid->Grid_SetVisible(1);
+				App->CL_Grid->ShowGridFlag = 1;
 
-				App->SBC_TopTabs->Toggle_Grid_Flag = 1;
+				App->CL_TopBar->Toggle_Grid_Flag = 1;
 
 				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_GridOn_Bmp);
 
-			}*/
-			//return TRUE;
+			}
+			return TRUE;
 		}
 
 		//-------------------------------------------------------- Show Hair
@@ -189,13 +190,13 @@ LRESULT CALLBACK ME_TopBar::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 void ME_TopBar::Init_Bmps_Globals(void)
 {
 
-	/*HWND Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWGRID);
+	HWND Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWGRID);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_GridOn_Bmp);
 
-	Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWHAIR);
+	/*Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWHAIR);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HairOn_Bmp);*/
 
-	HWND Temp = GetDlgItem(TabsHwnd, IDC_TBINFO);
+	Temp = GetDlgItem(TabsHwnd, IDC_TBINFO);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfo_Bmp);
 
 	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
@@ -216,7 +217,7 @@ void ME_TopBar::Init_Bmps_Globals(void)
 	ti9.uId = (UINT_PTR)Temp;
 	ti9.lpszText = "Toggle Main Cross Hair";
 	ti9.hwnd = App->MainHwnd;
-	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti9);
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti9);*/
 
 	Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWGRID);
 	TOOLINFO ti10 = { 0 };
@@ -225,6 +226,6 @@ void ME_TopBar::Init_Bmps_Globals(void)
 	ti10.uId = (UINT_PTR)Temp;
 	ti10.lpszText = "Toggle Main Grid";
 	ti10.hwnd = App->MainHwnd;
-	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti10);*/
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti10);
 
 }

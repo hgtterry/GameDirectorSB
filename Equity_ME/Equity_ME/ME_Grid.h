@@ -41,6 +41,9 @@ public:
 	void Hair_SetVisible(bool Option);
 	void Hair_DisplayGeneralCrossHair(float x, float y, float z, bool Option);
 
+	bool ShowHair;
+	bool ShowGridFlag;
+
 	Ogre::SceneNode*		GridNode;
 	Ogre::SceneNode*		HairNode;
 
@@ -84,9 +87,7 @@ protected:
 	Ogre::Entity*		Selection_Ent;
 	Ogre::SceneNode*	Selection_Node;
 
-	bool ShowGridFlag;
 	bool ShowDivisions;
-	bool ShowHair;
-
+	
 };
 

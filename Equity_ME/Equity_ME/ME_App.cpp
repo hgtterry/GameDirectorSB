@@ -59,6 +59,8 @@ ME_App::ME_App()
 	Font_CB18 = 0;
 
 	Hnd_ModelInfo_Bmp = NULL;
+	Hnd_GridOn_Bmp = NULL;
+	Hnd_GridOff_Bmp = NULL;
 
 	EquityDirecory_FullPath[0] = 0;
 }
@@ -145,8 +147,8 @@ void ME_App::LoadProgramResource(void)
 	//Hnd_BonesOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_BONESON);
 	//Hnd_BonesOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_BONESOFF);
 
-	//Hnd_GridOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_GRIDON);
-	//Hnd_GridOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_GRIDOFF);
+	Hnd_GridOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_GRIDON);
+	Hnd_GridOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_GRIDOFF);
 
 	//Hnd_HairOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_HAIRON);
 	//Hnd_HairOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_HAIROFF);

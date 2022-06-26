@@ -141,7 +141,6 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
       return FALSE;
    }
 
-   //ShowWindow(App->MainHwnd, nCmdShow);
    UpdateWindow(App->MainHwnd);
 
    return TRUE;
