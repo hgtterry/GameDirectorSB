@@ -23,7 +23,7 @@ public:
 	char Texture_FolderPath[MAX_PATH];
 	char Texture_PathFileName[MAX_PATH];
 
-	int GroupVertCount;
+	int GroupVertCount;	// Group Vertice Count
 	int GroupFaceCount;
 
 	int MaterialIndex;
@@ -31,10 +31,10 @@ public:
 	
 	bool Bitmap_Loaded;
 
-	std::vector<vertex_type> vertex_Data;	// XYZ
-	std::vector<polygon_type> Face_Data;	// ABC
-	std::vector<normal_type> Normal_Data;
-	std::vector<mapcoord_type> MapCord_Data;
+	std::vector<vertex_type> vertex_Data;		// XYZ
+	std::vector<polygon_type> Face_Data;		// ABC
+	std::vector<normal_type> Normal_Data;		// XYZ
+	std::vector<mapcoord_type> MapCord_Data;	// UV
 	std::vector<int_type> FaceIndex_Data;
 
 	HBITMAP Base_Bitmap;
