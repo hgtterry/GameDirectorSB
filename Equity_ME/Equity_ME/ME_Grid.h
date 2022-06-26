@@ -41,6 +41,9 @@ public:
 	void Hair_SetVisible(bool Option);
 	void Hair_DisplayGeneralCrossHair(float x, float y, float z, bool Option);
 
+	void Zoom(void);
+	void ME_Grid::Reset_View(void);
+
 	bool ShowHair;
 	bool ShowGridFlag;
 

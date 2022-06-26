@@ -264,3 +264,46 @@ void ME_Grid::Move_Arrow(Ogre::Vector3 pos)
 	Arrow_Node->setVisible(true);
 	Arrow_Node->setPosition(pos);
 }
+
+// *************************************************************************
+// *						Zoom Terry Flanigan							   *
+// *************************************************************************
+void ME_Grid::Zoom(void)
+{
+	if (App->CL_Model->Model_Loaded == 1)
+	{
+		Reset_View();
+
+		App->CL_Ogre->mCamera->setPosition(App->CL_Model->S_BoundingBox[0]->Centre[0].x, App->CL_Model->S_BoundingBox[0]->Centre[0].y, App->CL_Model->S_BoundingBox[0]->Centre[0].z);
+
+		Ogre::Vector3 Move;
+		Move.x = 0;
+		Move.y = 0;
+
+		if (App->CL_Model->S_BoundingBox[0]->Size[0].z > App->CL_Model->S_BoundingBox[0]->Size[0].y)
+		{
+			Move.z = App->CL_Model->S_BoundingBox[0]->Size[0].z * 4;
+		}
+		else
+		{
+			Move.z = App->CL_Model->S_BoundingBox[0]->Size[0].y * 4;
+		}
+
+		App->CL_Ogre->mCamera->moveRelative(Move);
+	}
+}
+
+// *************************************************************************
+// *					Reset_View Terry Flanigan						   *
+// *************************************************************************
+void ME_Grid::Reset_View(void)
+{
+	App->CL_Grid->GridNode->setPosition(0, 0, 0);
+	App->CL_Grid->GridNode->resetOrientation();
+
+	App->CL_Grid->HairNode->setPosition(0, 0, 0);
+	App->CL_Grid->HairNode->resetOrientation();
+
+	App->CL_Ogre->mCamera->setPosition(Ogre::Vector3(0, 90, 100));
+	App->CL_Ogre->mCamera->lookAt(Ogre::Vector3(0, 30, 0));
+}
