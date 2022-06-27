@@ -46,6 +46,7 @@ public:
 	void Set_Texture_Count(int Count);
 	void Set_Motion_Count(int Count);
 	void Create_BondingBox_Model(void);
+	bool GetBoundingBoxModel_Update(void);
 
 	char FileName[MAX_PATH];
 	char Path_FileName[MAX_PATH];

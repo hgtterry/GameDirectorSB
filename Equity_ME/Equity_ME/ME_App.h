@@ -37,6 +37,7 @@ distribution.
 #include "ME_Panels.h"
 #include "ME_Textures.h"
 #include "ME_Dialogs.h"
+#include "ME_Dimensions.h"
 
 class ME_App
 {
@@ -58,6 +59,7 @@ public:
 	ME_Panels*			CL_Panels;		// Panels  [220623]
 	ME_Textures*		CL_Textures;	// Textures [220623]
 	ME_Dialogs*			CL_Dialogs;		// Common Dialogs [220626]
+	ME_Dimensions*		CL_Dimensions;	// Scale Position Rotation [220627]
 
 	bool InitApp(void);
 	bool SetMainWin_Centre(void);

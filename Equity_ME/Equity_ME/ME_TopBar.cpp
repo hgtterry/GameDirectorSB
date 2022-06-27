@@ -31,7 +31,9 @@ ME_TopBar::ME_TopBar()
 {
 	TabsHwnd = nullptr;
 	Tabs_TB_hWnd = nullptr;
+
 	Group_TB_hWnd = nullptr;
+	Model_TB_hWnd = nullptr;
 
 	Show_Model_Data = 0;
 	Toggle_Grid_Flag = 1;
@@ -39,6 +41,8 @@ ME_TopBar::ME_TopBar()
 	Toggle_Faces_Flag = 0;
 
 	Toggle_Tabs_Group_Flag = 1;
+	Toggle_Tabs_Model_Flag = 0;
+
 	Toggle_GroupInfo_Flag = 0;
 }
 
@@ -71,6 +75,7 @@ LRESULT CALLBACK ME_TopBar::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 
 		App->CL_TopBar->Start_Tabs_Headers();
 		App->CL_TopBar->Start_Group_TB();
+		App->CL_TopBar->Start_Model_TB();
 
 		return TRUE;
 	}
@@ -294,6 +299,7 @@ LRESULT CALLBACK ME_TopBar::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM wP
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_TBGROUP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_TBMODEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		return TRUE;
 	}
@@ -314,6 +320,13 @@ LRESULT CALLBACK ME_TopBar::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM wP
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_TBMODEL && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle_Tabs(item, App->CL_TopBar->Toggle_Tabs_Model_Flag);
+			return CDRF_DODEFAULT;
+		}
+
 		return CDRF_DODEFAULT;
 	}
 
@@ -321,19 +334,39 @@ LRESULT CALLBACK ME_TopBar::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM wP
 	{
 		if (LOWORD(wParam) == IDC_TBGROUP)
 		{
-			//App->SBC_TopTabs->Hide_Tabs();
-			//ShowWindow(App->SBC_TopTabs->File_TB_hWnd, SW_SHOW);
-			//App->SBC_TopTabs->Toggle_Tabs_File_Flag = 1;
+			App->CL_TopBar->Hide_Tabs();
+			ShowWindow(App->CL_TopBar->Group_TB_hWnd, SW_SHOW);
+			App->CL_TopBar->Toggle_Tabs_Group_Flag = 1;
 
-			////App->Cl19_Ogre->OgreListener->ImGui_Render_Tab = Enums::ImGui_Camera;
+			RedrawWindow(App->CL_TopBar->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			return TRUE;
+		}
 
-			//RedrawWindow(App->SBC_TopTabs->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+		if (LOWORD(wParam) == IDC_TBMODEL)
+		{
+			App->CL_TopBar->Hide_Tabs();
+			ShowWindow(App->CL_TopBar->Model_TB_hWnd, SW_SHOW);
+			App->CL_TopBar->Toggle_Tabs_Model_Flag = 1;
+
+			RedrawWindow(App->CL_TopBar->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
 		}
 
 	}
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *						Hide_Tabs Terry Berine						   *
+// *************************************************************************
+void ME_TopBar::Hide_Tabs(void)
+{
+	ShowWindow(Group_TB_hWnd, SW_HIDE);
+	ShowWindow(Model_TB_hWnd, SW_HIDE);
+
+	Toggle_Tabs_Group_Flag = 0;
+	Toggle_Tabs_Model_Flag = 0;
 }
 
 // *************************************************************************
@@ -422,5 +455,66 @@ void ME_TopBar::Init_Bmps_Group(void)
 	SendMessage(hTooltip_TB_1, TTM_ADDTOOL, 0, (LPARAM)&ti);
 
 	// --------------------------------------------------- 
+}
 
+// *************************************************************************
+// *						Start_Model_TB Terry Flanigan				   *
+// *************************************************************************
+void ME_TopBar::Start_Model_TB(void)
+{
+	Model_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_MODEL, Tabs_TB_hWnd, (DLGPROC)Model_TB_Proc);
+	//Init_Bmps_Group();
+}
+
+// *************************************************************************
+// *								Camera_TB_Proc						   *
+// *************************************************************************
+LRESULT CALLBACK ME_TopBar::Model_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_BTMODELCENTRE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		return TRUE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->Brush_Tabs;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_BTMODELCENTRE && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_TopBar->Toggle_GroupInfo_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+		if (LOWORD(wParam) == IDC_BTMODELCENTRE)
+		{
+			if (App->CL_Model->Model_Loaded == 1)
+			{
+				App->CL_Dimensions->Centre_Model_Mid();
+			}
+
+			return 1;
+		}
+
+		return FALSE;
+	}
+
+	}
+	return FALSE;
 }

@@ -42,6 +42,7 @@ ME_App::ME_App()
 	CL_Panels =		nullptr;
 	CL_Textures =	nullptr;
 	CL_Dialogs =	nullptr;
+	CL_Dimensions = nullptr;
 
 	hInst =			nullptr;
 
@@ -99,6 +100,8 @@ bool ME_App::InitApp(void)
 	CL_Panels =		new ME_Panels();
 	CL_Textures =	new ME_Textures();
 	CL_Dialogs =	new ME_Dialogs();
+	CL_Dimensions = new ME_Dimensions();
+	
 	
 	SetBrushes_Fonts();
 	return 1;

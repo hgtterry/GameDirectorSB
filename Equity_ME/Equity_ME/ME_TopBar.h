@@ -35,6 +35,7 @@ protected:
 	static LRESULT CALLBACK TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Group_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Model_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Init_Bmps_Globals(void);
 
@@ -42,17 +43,23 @@ protected:
 	void Start_Group_TB(void);
 	void Init_Bmps_Group(void);
 
+	void Start_Model_TB(void);
+
+	void Hide_Tabs(void);
+
 	bool Show_Model_Data;
 	bool Toggle_Grid_Flag;
 	bool Toggle_BBox_Flag;
 	bool Toggle_Faces_Flag;
 
 	bool Toggle_Tabs_Group_Flag;
+	bool Toggle_Tabs_Model_Flag;
 
 	bool Toggle_GroupInfo_Flag;
 
 	HWND TabsHwnd;
 	HWND Tabs_TB_hWnd;
 	HWND Group_TB_hWnd;
+	HWND Model_TB_hWnd;
 };
 
