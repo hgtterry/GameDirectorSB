@@ -60,6 +60,8 @@ public:
 	int VerticeCount;			// Group Vertice Count 
 	int FaceCount;				// Group Face Count 
 
+	int Model_Type;
+
 	bool Model_Loaded;
 protected:
 

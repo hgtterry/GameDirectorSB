@@ -228,7 +228,7 @@ void ME_Render::Render_Loop()
 
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-		//if (App->CL_Vm_Model->Model_Type == LoadedFile_Assimp)
+		if (App->CL_Model->Model_Type == Enums::LoadedFile_Assimp)
 		{
 			Assimp_Render_Textures();
 		}
@@ -239,7 +239,7 @@ void ME_Render::Render_Loop()
 	{
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-		//if (App->CL_Vm_Model->Model_Type == LoadedFile_Assimp)
+		if (App->CL_Model->Model_Type == Enums::LoadedFile_Assimp)
 		{
 			Assimp_Render_Faces();
 		}

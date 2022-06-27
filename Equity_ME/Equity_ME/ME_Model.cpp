@@ -36,6 +36,7 @@ ME_Model::ME_Model()
 	MotionCount = 0;
 
 	Model_Loaded = 0;
+	Model_Type = Enums::LoadedFile_None;
 
 	FileName[0] = 0;
 	Path_FileName[0] = 0;

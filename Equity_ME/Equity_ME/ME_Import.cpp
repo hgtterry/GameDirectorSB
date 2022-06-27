@@ -63,7 +63,7 @@ bool ME_Import::Assimp_Loader(char* Extension, char* Extension2)
 		return 0;
 	}
 
-	//App->CL_Vm_Model->Model_Type = LoadedFile_Assimp;
+	App->CL_Model->Model_Type = Enums::LoadedFile_Assimp;
 
 	App->CL_Model->Model_Loaded = 1;
 	App->CL_Grid->Zoom();
