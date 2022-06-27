@@ -84,34 +84,6 @@ LRESULT CALLBACK ME_TopBar::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 		return (LONG)App->AppBackground;
 	}
 
-	case WM_NOTIFY:
-	{
-		LPNMHDR some_item = (LPNMHDR)lParam;
-
-		if (some_item->idFrom == IDC_TBINFO && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_TopBar->Show_Model_Data);
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_TBSHOWGRID && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_TopBar->Toggle_Grid_Flag);
-			return CDRF_DODEFAULT;
-		}
-
-		/*if (some_item->idFrom == IDC_TBBOUNDBOX && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_TopBar->Toggle_BBox_Flag);
-			return CDRF_DODEFAULT;
-		}*/
-
-		return CDRF_DODEFAULT;
-	}
-
 	case WM_COMMAND:
 
 		//-------------------------------------------------------- Show Grid
@@ -142,29 +114,25 @@ LRESULT CALLBACK ME_TopBar::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 		}
 
 		//-------------------------------------------------------- Show Hair
-		//if (LOWORD(wParam) == IDC_TBSHOWHAIR)
+		if (LOWORD(wParam) == IDC_TBSHOWHAIR)
 		{
-			//HWND Temp = GetDlgItem(hDlg, IDC_TBSHOWHAIR);
+			HWND Temp = GetDlgItem(hDlg, IDC_TBSHOWHAIR);
 
-			/*if (App->Cl_Grid->ShowHair == 1)
+			if (App->CL_Grid->ShowHair == 1)
 			{
-				App->Cl_Grid->ShowHair = 0;
-				App->Cl_Grid->Hair_SetVisible(0);
-
-				App->SBC_TopTabs->Toggle_Hair_Flag = 0;
+				App->CL_Grid->ShowHair = 0;
+				App->CL_Grid->Hair_SetVisible(0);
 
 				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HairOff_Bmp);
 			}
 			else
 			{
-				App->Cl_Grid->ShowHair = 1;
-				App->Cl_Grid->Hair_SetVisible(1);
-
-				App->SBC_TopTabs->Toggle_Hair_Flag = 1;
+				App->CL_Grid->ShowHair = 1;
+				App->CL_Grid->Hair_SetVisible(1);
 
 				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HairOn_Bmp);
-			}*/
-			//return TRUE;
+			}
+			return TRUE;
 		}
 
 		//-------------------------------------------------------- Show Info
@@ -247,8 +215,8 @@ void ME_TopBar::Init_Bmps_Globals(void)
 	HWND Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWGRID);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_GridOn_Bmp);
 
-	/*Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWHAIR);
-	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HairOn_Bmp);*/
+	Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWHAIR);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HairOn_Bmp);
 
 	Temp = GetDlgItem(TabsHwnd, IDC_TBINFO);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfo_Bmp);
@@ -270,14 +238,14 @@ void ME_TopBar::Init_Bmps_Globals(void)
 	ti8.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti8);
 
-	/*Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWHAIR);
+	Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWHAIR);
 	TOOLINFO ti9 = { 0 };
 	ti9.cbSize = sizeof(ti9);
 	ti9.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
 	ti9.uId = (UINT_PTR)Temp;
 	ti9.lpszText = "Toggle Main Cross Hair";
 	ti9.hwnd = App->MainHwnd;
-	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti9);*/
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti9);
 
 	Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWGRID);
 	TOOLINFO ti10 = { 0 };

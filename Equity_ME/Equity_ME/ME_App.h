@@ -98,6 +98,8 @@ public:
 	HANDLE Hnd_BBOff_Bmp;
 	HANDLE Hnd_MeshOn_Bmp;
 	HANDLE Hnd_MeshOff_Bmp;
+	HANDLE Hnd_HairOn_Bmp;
+	HANDLE Hnd_HairOff_Bmp;
 
 	HMENU mMenu;
 	HCURSOR CUR;

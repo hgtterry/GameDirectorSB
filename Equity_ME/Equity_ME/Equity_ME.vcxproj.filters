@@ -216,5 +216,11 @@
     <Image Include="Resource\MenuBar\ShowMeshOn.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Resource\MenuBar\TargetOn.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource\MenuBar\TargetOff.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
