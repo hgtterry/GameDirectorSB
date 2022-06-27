@@ -197,7 +197,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				
 				return 1;
 			}
-				
+
+			// ------------------------------------------------------- File
+			case ID_FILE_CLEARMODEL:
+			{
+				App->CL_Model->Clear_Model_And_Reset();
+				return 1;
+			}
+			
 			// ------------------------------------------------------- Import
 			case ID_IMPORT_EQ_WAVEFRONTOBJ:
 			{

@@ -5,6 +5,8 @@ public:
 	ME_Groups();
 	~ME_Groups();
 
+	void Reset_Class(void);
+
 	bool Start_Groups();
 	bool Update_Groups();
 

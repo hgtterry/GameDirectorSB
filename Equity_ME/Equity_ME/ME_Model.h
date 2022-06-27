@@ -41,12 +41,16 @@ public:
 
 	Base_Group*			Group[100];
 
+	void Reset_Class(void);
+
 	void Set_Groupt_Count(int Count);
 	int Get_Groupt_Count();
 	void Set_Texture_Count(int Count);
 	void Set_Motion_Count(int Count);
 	void Create_BondingBox_Model(void);
 	bool GetBoundingBoxModel_Update(void);
+
+	void Clear_Model_And_Reset(void);
 
 	char FileName[MAX_PATH];
 	char Path_FileName[MAX_PATH];

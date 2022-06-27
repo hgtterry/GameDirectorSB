@@ -22,6 +22,23 @@ ME_Groups::~ME_Groups()
 }
 
 // *************************************************************************
+// *					Reaet_Class Terry Flanigan						   *
+// *************************************************************************
+void ME_Groups::Reset_Class(void)
+{
+	Selected_Group = 0;
+	Sel_BaseBitmap = nullptr;
+	BasePicWidth = 0;
+	BasePicHeight = 0;
+
+	ShowWindow(GetDlgItem(RightGroups_Hwnd, IDC_BASETEXTURE2), 0);
+	ShowWindow(GetDlgItem(RightGroups_Hwnd, IDC_BASETEXTURE2), 1);
+
+	SetDlgItemText(RightGroups_Hwnd, IDC_RGGROUPNAME, "Group Name");
+	SetDlgItemText(RightGroups_Hwnd, IDC_RGTEXTURENAME, "Texture Name");
+}
+
+// *************************************************************************
 // *							Start_Groups				  		 	   *
 // *************************************************************************
 bool ME_Groups::Start_Groups()

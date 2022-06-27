@@ -8,8 +8,8 @@ ME_FileView::ME_FileView()
 {
 	Root =				nullptr;
 	GD_ProjectFolder =	nullptr;
-	GD_ModelFolder =	nullptr;;
-	GD_GroupsFolder =	nullptr;;
+	GD_ModelFolder =	nullptr;
+	GD_GroupsFolder =	nullptr;
 
 	strcpy(FileView_Folder, "");
 	strcpy(FileView_File, "");
@@ -22,6 +22,13 @@ ME_FileView::~ME_FileView()
 {
 }
 
+// *************************************************************************
+// *					Reaet_Class Terry Flanigan						   *
+// *************************************************************************
+void ME_FileView::Reset_Class(void)
+{
+	Delete_AllItems();
+}
 // *************************************************************************
 //							Start_FileView Terry Flanigan					*
 // *************************************************************************
@@ -270,4 +277,23 @@ void ME_FileView::SelectItem(HTREEITEM TreeItem)
 		TreeView_Select(Temp, NULL, TVGN_CARET);
 		TreeView_Select(Temp, TreeItem, TVGN_CARET);
 	}
+}
+
+// *************************************************************************
+// *						Delete_AllItems Terry Bernie			 	   *
+// *************************************************************************
+void ME_FileView::Delete_AllItems()
+{
+	TreeView_DeleteAllItems(GetDlgItem(App->ListPanel, IDC_TREE1));
+
+	Root = nullptr;
+	GD_ProjectFolder = nullptr;
+	GD_ModelFolder = nullptr;;
+	GD_GroupsFolder = nullptr;;
+	
+	//strcpy(App->SBC_Project->Level_File_Name, "No Level");
+
+	AddRootFolder();
+	MoreFoldersD(); //  Folders under root 
+	ExpandRoot();
 }

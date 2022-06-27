@@ -48,8 +48,61 @@ ME_Model::ME_Model()
 
 ME_Model::~ME_Model()
 {
+
 }
 
+// *************************************************************************
+// *					Reaet_Class Terry Flanigan						   *
+// *************************************************************************
+void ME_Model::Reset_Class(void)
+{
+	Model_Loaded = 0;
+	Model_Type = Enums::LoadedFile_None;
+
+	int Count = 0;
+	int Index = GroupCount;
+
+	//--------------------- Clear Groups
+	while (Count < Index)
+	{
+		if (Group[Count] != NULL)
+		{
+			Group[Count]->vertex_Data.clear();
+			Group[Count]->vertex_Data.resize(0);
+			Group[Count]->Face_Data.resize(0);
+			Group[Count]->Normal_Data.resize(0);
+			Group[Count]->MapCord_Data.resize(0);
+
+
+			if (Group[Count]->Base_Bitmap)
+			{
+				DeleteObject(Group[Count]->Base_Bitmap);
+			}
+
+			delete Group[Count];
+			Group[Count] = NULL;
+		}
+		Count++;
+	}
+
+	//--------------------- Clear Bounding box data
+	if (S_BoundingBox[0] != NULL)
+	{
+		delete S_BoundingBox[0];
+		S_BoundingBox[0] = NULL;
+	}
+
+	FileName[0] = 0;
+	Path_FileName[0] = 0;
+	Model_FolderPath[0] = 0;
+	Texture_FolderPath[0] = 0;
+	JustName[0] = 0;
+	GroupCount = 0;
+	TextureCount = 0;
+	VerticeCount = 0;
+	FaceCount = 0;
+	MotionCount = 0;
+}
 // *************************************************************************
 // *						Set_Groupt_Count Terry Flanigan		  	 	   *
 // *************************************************************************
@@ -197,3 +250,18 @@ bool ME_Model::GetBoundingBoxModel_Update(void)
 
 	return 1;
 }
+
+// *************************************************************************
+// *					Clear Model and Reste Terry Flanigan			   *
+// *************************************************************************
+void ME_Model::Clear_Model_And_Reset(void)
+{
+	Reset_Class(); // Reset this Class
+	
+	App->CL_FileView->Reset_Class(); // Reset List View
+
+	App->CL_Groups->Reset_Class();
+	
+	App->CL_Grid->Reset_Class();
+}
+

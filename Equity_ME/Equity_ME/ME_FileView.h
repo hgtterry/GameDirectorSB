@@ -5,11 +5,14 @@ public:
 	ME_FileView();
 	~ME_FileView();
 
+	void Reset_Class(void);
+
 	void Start_FileView(void);
 	void Init_FileView(void);
 	void ExpandRoot(void);
 	void Get_Selection(LPNMHDR lParam);
 	void SelectItem(HTREEITEM TreeItem);
+	void Delete_AllItems();
 
 	HTREEITEM Add_Group(char *SFileName, int Index);
 
