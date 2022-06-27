@@ -36,6 +36,7 @@ ME_TopBar::ME_TopBar()
 	Show_Model_Data = 0;
 	Toggle_Grid_Flag = 1;
 	Toggle_BBox_Flag = 0;
+	Toggle_Faces_Flag = 0;
 
 	Toggle_Tabs_Group_Flag = 1;
 	Toggle_GroupInfo_Flag = 0;
@@ -101,12 +102,12 @@ LRESULT CALLBACK ME_TopBar::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_TBBOUNDBOX && some_item->code == NM_CUSTOMDRAW)
+		/*if (some_item->idFrom == IDC_TBBOUNDBOX && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle(item, App->CL_TopBar->Toggle_BBox_Flag);
 			return CDRF_DODEFAULT;
-		}
+		}*/
 
 		return CDRF_DODEFAULT;
 	}
@@ -181,6 +182,32 @@ LRESULT CALLBACK ME_TopBar::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_TBSHOWFACES)
+		{
+			if (App->CL_Model->Model_Loaded == 1)
+			{
+				HWND Temp = GetDlgItem(hDlg, IDC_TBSHOWFACES);
+
+				if (App->CL_Ogre->RenderListener->ShowFaces == 1)
+				{
+				if (App->CL_Ogre->RenderListener->ShowFaces == 1)
+					App->CL_Ogre->RenderListener->ShowFaces = 0;
+
+					App->CL_TopBar->Toggle_Faces_Flag = 0;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
+				}
+				else
+				{
+					App->CL_Ogre->RenderListener->ShowFaces = 1;
+					App->CL_TopBar->Toggle_Faces_Flag = 1;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOn_Bmp);
+				}
+			}
+			return TRUE;
+		}
+
 		//-------------------------------------------------------- Show Bound Box
 		if (LOWORD(wParam) == IDC_TBBOUNDBOX)
 		{
@@ -229,6 +256,9 @@ void ME_TopBar::Init_Bmps_Globals(void)
 	Temp = GetDlgItem(TabsHwnd, IDC_TBBOUNDBOX);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOff_Bmp);
 
+	Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWFACES);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
+	
 	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
 
 	Temp = GetDlgItem(TabsHwnd, IDC_TBINFO);
@@ -259,13 +289,22 @@ void ME_TopBar::Init_Bmps_Globals(void)
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti10);
 
 	Temp = GetDlgItem(TabsHwnd, IDC_TBBOUNDBOX);
-	TOOLINFO ti6 = { 0 };
-	ti6.cbSize = sizeof(ti6);
-	ti6.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
-	ti6.uId = (UINT_PTR)Temp;
-	ti6.lpszText = "Toggle Bounding Box";
-	ti6.hwnd = App->MainHwnd;
-	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti6);
+	TOOLINFO ti11 = { 0 };
+	ti11.cbSize = sizeof(ti11);
+	ti11.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti11.uId = (UINT_PTR)Temp;
+	ti11.lpszText = "Toggle Bounding Box";
+	ti11.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti11);
+
+	Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWFACES);
+	TOOLINFO ti12 = { 0 };
+	ti12.cbSize = sizeof(ti12);
+	ti12.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti12.uId = (UINT_PTR)Temp;
+	ti12.lpszText = "Toggle Faces";
+	ti12.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti12);
 }
 
 // *************************************************************************

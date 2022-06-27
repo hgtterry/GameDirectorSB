@@ -96,6 +96,8 @@ public:
 	HANDLE Hnd_ModelInfo_Bmp;		// Bitmap for button Model Info Screen
 	HANDLE Hnd_BBOn_Bmp;
 	HANDLE Hnd_BBOff_Bmp;
+	HANDLE Hnd_MeshOn_Bmp;
+	HANDLE Hnd_MeshOff_Bmp;
 
 	HMENU mMenu;
 	HCURSOR CUR;

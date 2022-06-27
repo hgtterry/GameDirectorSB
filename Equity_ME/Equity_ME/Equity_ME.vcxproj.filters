@@ -207,5 +207,14 @@
     <Image Include="resource\menubar\bitmap1.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Resource\MenuBar\MeshPointsOn.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource\MenuBar\ShowMeshOff.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource\MenuBar\ShowMeshOn.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
