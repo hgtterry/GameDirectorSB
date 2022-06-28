@@ -55,6 +55,10 @@ ME_App::ME_App()
 	Brush_White =	nullptr;
 	Brush_Green =	nullptr;
 
+	Brush_But_Pressed = nullptr;;
+	Brush_But_Normal =	nullptr;;
+	Brush_But_Hover =	nullptr;;
+
 	Brush_Tabs = nullptr;
 	Brush_Tabs_UnSelected = nullptr;
 
@@ -189,6 +193,10 @@ void ME_App::SetBrushes_Fonts(void)
 	Brush_White = CreateSolidBrush(RGB(255, 255, 255));
 	Brush_Green = CreateSolidBrush(RGB(0, 255, 0));
 
+	Brush_But_Normal = CreateSolidBrush(RGB(255, 255, 150));
+	Brush_But_Hover = CreateSolidBrush(RGB(255, 255, 200));
+	Brush_But_Pressed = CreateSolidBrush(RGB(240, 240, 190));
+
 	Brush_Tabs = CreateSolidBrush(RGB(255, 255, 255));
 	Brush_Tabs_UnSelected = CreateSolidBrush(RGB(190, 190, 190));
 
@@ -250,6 +258,67 @@ void ME_App::Say_Win(const char* Message)
 	char text[1024];
 	strcpy(text, Message);
 	MessageBox(MainHwnd, Message, "Message", MB_OK);
+}
+
+// *************************************************************************
+// *					Custom_Button_Normal Terry Bernie   		  	   *
+// *************************************************************************
+bool ME_App::Custom_Button_Normal(LPNMCUSTOMDRAW item)
+{
+	{
+		if (item->uItemState & CDIS_SELECTED) // Push Down
+		{
+			//Create pen for button border
+			HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0));
+
+			//Select our brush into hDC
+			HGDIOBJ old_pen = SelectObject(item->hdc, pen);
+			HGDIOBJ old_brush = SelectObject(item->hdc, App->Brush_But_Pressed);
+
+			RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
+
+			//Clean up
+			SelectObject(item->hdc, old_pen);
+			SelectObject(item->hdc, old_brush);
+			DeleteObject(pen);
+
+			return CDRF_DODEFAULT;
+		}
+		else
+		{
+			if (item->uItemState & CDIS_HOT) //Our mouse is over the button
+			{
+
+				HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0));
+
+				HGDIOBJ old_pen = SelectObject(item->hdc, pen);
+				HGDIOBJ old_brush = SelectObject(item->hdc, App->Brush_But_Hover);
+
+				RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
+
+				SelectObject(item->hdc, old_pen);
+				SelectObject(item->hdc, old_brush);
+				DeleteObject(pen);
+
+				return CDRF_DODEFAULT;
+			}
+
+			HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0)); // Idle 
+
+			HGDIOBJ old_pen = SelectObject(item->hdc, pen);
+			HGDIOBJ old_brush = SelectObject(item->hdc, App->Brush_But_Normal);
+
+			RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 7, 7);
+
+			SelectObject(item->hdc, old_pen);
+			SelectObject(item->hdc, old_brush);
+			DeleteObject(pen);
+
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
 }
 
 // *************************************************************************

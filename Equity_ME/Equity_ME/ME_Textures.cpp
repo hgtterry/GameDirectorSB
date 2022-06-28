@@ -191,7 +191,27 @@ bool ME_Textures::TexureToWinPreviewFullPath(int Index, char* FullPath)
 		}
 
 		return 1;
+	}
 
+	// ------------------------------------ DDS
+	if (stricmp(mFileName + strlen(mFileName) - 4, ".DDS") == 0)
+	{
+		App->CL_Model->Group[Index]->Base_Bitmap = ilutWinLoadImage(mFileName, hDC);
+		ReleaseDC(PreviewWnd, hDC);
+
+		if (App->CL_Model->Group[Index]->Base_Bitmap == NULL)
+		{
+
+			LoadDummyTexture(Index);
+
+			return 1;
+		}
+		else
+		{
+			App->CL_Model->Group[Index]->Bitmap_Loaded = 1;
+		}
+
+		return 1;
 	}
 
 	// ------------------------------------ TGA
@@ -302,9 +322,7 @@ bool ME_Textures::ChangeTexture_Model(void)
 		strcpy(App->CL_Model->Group[Index]->Text_FileName, App->CL_FileIO->Texture_FileName);
 		strcpy(App->CL_Model->Group[Index]->Texture_PathFileName, App->CL_FileIO->Texture_Path_FileName);
 
-
-		
-		//Update_Groups_Dialog(Index);
+		App->CL_Groups->Update_Groups();
 
 		return 1;
 	}
