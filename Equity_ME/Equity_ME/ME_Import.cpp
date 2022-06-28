@@ -70,6 +70,7 @@ bool ME_Import::Assimp_Loader(char* Extension, char* Extension2)
 
 	////Set_Equity();
 	//App->SBC_Equity->Set_Equity();
+	Ogre::Root::getSingletonPtr()->renderOneFrame();
 
 	App->Say_Win("Model Loaded");
 	

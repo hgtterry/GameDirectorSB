@@ -86,3 +86,13 @@ bool ME_Panels::Resize(void)
 	
 	return 1;
 }
+
+// *************************************************************************
+// *					Enable Paneles Terry Flanigan					   *
+// *************************************************************************
+void ME_Panels::Enable_Panels(int show)
+{
+	EnableWindow(App->ListPanel, show);
+	EnableWindow(App->CL_Groups->RightGroups_Hwnd, show);
+}
+

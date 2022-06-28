@@ -10,6 +10,7 @@ public:
 
 	bool Resize(void);
 
+	void Enable_Panels(int show);
 private:
 
 };
