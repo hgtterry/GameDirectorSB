@@ -161,8 +161,7 @@ bool ME_Textures::TexureToWinPreviewFullPath(int Index, char* FullPath)
 		{
 			
 			LoadDummyTexture(Index);
-			App->CL_Model->Group[Index]->Bitmap_Loaded = -1;
-
+		
 			return 1;
 		}
 		else
@@ -183,8 +182,7 @@ bool ME_Textures::TexureToWinPreviewFullPath(int Index, char* FullPath)
 		{
 
 			LoadDummyTexture(Index);
-			App->CL_Model->Group[Index]->Bitmap_Loaded = -1;
-
+			
 			return 1;
 		}
 		else
@@ -196,7 +194,7 @@ bool ME_Textures::TexureToWinPreviewFullPath(int Index, char* FullPath)
 
 	}
 
-	// ------------------------------------ JPEG
+	// ------------------------------------ TGA
 	if (stricmp(mFileName + strlen(mFileName) - 4, ".tga") == 0)
 	{
 		App->CL_Model->Group[Index]->Base_Bitmap = ilutWinLoadImage(mFileName, hDC);
@@ -206,8 +204,7 @@ bool ME_Textures::TexureToWinPreviewFullPath(int Index, char* FullPath)
 		{
 
 			LoadDummyTexture(Index);
-			App->CL_Model->Group[Index]->Bitmap_Loaded = -1;
-
+			
 			return 1;
 		}
 		else
@@ -271,19 +268,12 @@ void ME_Textures::Strip_JustFileName(char *pString, char *FileName)
 // *************************************************************************
 bool ME_Textures::LoadDummyTexture(int Index)
 {
-	char File[MAX_PATH];
+	
+	App->CL_Model->Group[Index]->Base_Bitmap = LoadBitmap(App->hInst, MAKEINTRESOURCE(IDB_DUMMY));
+	
+	strcpy(App->CL_Model->Group[Index]->Texture_PathFileName, "Internal Texture Import Failed");
+	strcpy(App->CL_Model->Group[Index]->Text_FileName, "Dummy.bmp");
 
-	strcpy(File, App->EquityDirecory_FullPath);
-	strcat(File, "\\");
-	strcat(File, "Data\\");
-	strcat(File, "Dummy.bmp");
-
-	HWND PreviewWnd = GetDlgItem(App->CL_Groups->RightGroups_Hwnd, IDC_BASETEXTURE2);
-	HDC	hDC = GetDC(PreviewWnd);
-
-	App->CL_Model->Group[Index]->Base_Bitmap = ilutWinLoadImage(File, hDC);
-
-	ReleaseDC(PreviewWnd, hDC);
-
+	App->CL_Model->Group[Index]->Bitmap_Loaded = -1;
 	return 1;
 }
