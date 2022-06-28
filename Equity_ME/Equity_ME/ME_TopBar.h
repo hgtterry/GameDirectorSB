@@ -57,6 +57,10 @@ protected:
 
 	bool Toggle_GroupInfo_Flag;
 
+	bool Toggle_Group_ONLY_Flag;
+	bool Toggle_Group_HIDE_Flag;
+	bool Toggle_Group_ALL_Flag;
+
 	HWND TabsHwnd;
 	HWND Tabs_TB_hWnd;
 	HWND Group_TB_hWnd;

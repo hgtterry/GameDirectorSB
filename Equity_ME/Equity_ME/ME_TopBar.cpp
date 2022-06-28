@@ -43,6 +43,10 @@ ME_TopBar::ME_TopBar()
 	Toggle_Tabs_Group_Flag = 1;
 	Toggle_Tabs_Model_Flag = 0;
 
+	Toggle_Group_ONLY_Flag = 0;
+	Toggle_Group_HIDE_Flag = 0;
+	Toggle_Group_ALL_Flag = 1;
+
 	Toggle_GroupInfo_Flag = 0;
 }
 
@@ -390,6 +394,11 @@ LRESULT CALLBACK ME_TopBar::Group_TB_Proc(HWND hDlg, UINT message, WPARAM wParam
 	{
 		SendDlgItemMessage(hDlg, IDC_BTGROUPINFO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+		SendDlgItemMessage(hDlg, IDC_BTONLYGROUP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BTHIDEGROUP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BTALLGROUPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		
 		return TRUE;
 	}
 
@@ -409,6 +418,27 @@ LRESULT CALLBACK ME_TopBar::Group_TB_Proc(HWND hDlg, UINT message, WPARAM wParam
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BTONLYGROUP && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_TopBar->Toggle_Group_ONLY_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BTHIDEGROUP && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_TopBar->Toggle_Group_HIDE_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BTALLGROUPS && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_TopBar->Toggle_Group_ALL_Flag);
+			return CDRF_DODEFAULT;
+		}
+
 		return CDRF_DODEFAULT;
 	}
 
@@ -424,6 +454,50 @@ LRESULT CALLBACK ME_TopBar::Group_TB_Proc(HWND hDlg, UINT message, WPARAM wParam
 
 				App->CL_TopBar->Toggle_GroupInfo_Flag = 0;
 				RedrawWindow(App->CL_TopBar->Group_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			}
+
+			return 1;
+		}
+
+		if (LOWORD(wParam) == IDC_BTONLYGROUP)
+		{
+			if (App->CL_TopBar->Toggle_Group_ONLY_Flag == 1)
+			{
+				App->CL_TopBar->Toggle_Group_ONLY_Flag = 0;
+			}
+			else
+			{
+				App->CL_TopBar->Toggle_Group_ONLY_Flag = 1;
+			}
+			return 1;
+		}
+
+		if (LOWORD(wParam) == IDC_BTHIDEGROUP)
+		{
+			//HWND temp = GetDlgItem(hDlg, IDC_CKHIDEGROUP);
+			//HWND temp1 = GetDlgItem(hDlg, IDC_CKSHOWONLYGROUPS);
+
+			if (App->CL_TopBar->Toggle_Group_HIDE_Flag == 1)
+			{
+				App->CL_TopBar->Toggle_Group_HIDE_Flag = 0;
+			}
+			else
+			{
+				App->CL_TopBar->Toggle_Group_HIDE_Flag = 1;
+			}
+
+			return 1;
+		}
+
+		if (LOWORD(wParam) == IDC_BTALLGROUPS)
+		{
+			if (App->CL_TopBar->Toggle_Group_ALL_Flag == 1)
+			{
+				App->CL_TopBar->Toggle_Group_ALL_Flag = 0;
+			}
+			else
+			{
+				App->CL_TopBar->Toggle_Group_ALL_Flag = 1;
 			}
 
 			return 1;
