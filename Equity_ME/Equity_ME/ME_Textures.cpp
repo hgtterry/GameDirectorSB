@@ -139,9 +139,7 @@ bool ME_Textures::Soil_Load_Texture(UINT textureArray[], LPSTR strFileName, int 
 // *************************************************************************
 bool ME_Textures::TexureToWinPreviewFullPath(int Index, char* FullPath)
 {
-	//BITMAPINFO    *bmiData;
-	//ilutGetBmpInfo(bmiData);
-
+	
 	char mFileName[1024];
 	strcpy(mFileName, FullPath);
 
@@ -166,6 +164,12 @@ bool ME_Textures::TexureToWinPreviewFullPath(int Index, char* FullPath)
 		}
 		else
 		{
+			BITMAPINFO    bmiData;
+			ilutGetBmpInfo(&bmiData);
+		
+			App->CL_Model->Group[Index]->Depth = bmiData.bmiHeader.biBitCount;
+			App->CL_Model->Group[Index]->Width = bmiData.bmiHeader.biWidth;
+			App->CL_Model->Group[Index]->Height = bmiData.bmiHeader.biHeight;
 			App->CL_Model->Group[Index]->Bitmap_Loaded = 1;
 		}
 
@@ -187,6 +191,12 @@ bool ME_Textures::TexureToWinPreviewFullPath(int Index, char* FullPath)
 		}
 		else
 		{
+			BITMAPINFO    bmiData;
+			ilutGetBmpInfo(&bmiData);
+
+			App->CL_Model->Group[Index]->Depth = bmiData.bmiHeader.biBitCount;
+			App->CL_Model->Group[Index]->Width = bmiData.bmiHeader.biWidth;
+			App->CL_Model->Group[Index]->Height = bmiData.bmiHeader.biHeight;
 			App->CL_Model->Group[Index]->Bitmap_Loaded = 1;
 		}
 
@@ -208,6 +218,12 @@ bool ME_Textures::TexureToWinPreviewFullPath(int Index, char* FullPath)
 		}
 		else
 		{
+			BITMAPINFO    bmiData;
+			ilutGetBmpInfo(&bmiData);
+
+			App->CL_Model->Group[Index]->Depth = bmiData.bmiHeader.biBitCount;
+			App->CL_Model->Group[Index]->Width = bmiData.bmiHeader.biWidth;
+			App->CL_Model->Group[Index]->Height = bmiData.bmiHeader.biHeight;
 			App->CL_Model->Group[Index]->Bitmap_Loaded = 1;
 		}
 
@@ -215,7 +231,7 @@ bool ME_Textures::TexureToWinPreviewFullPath(int Index, char* FullPath)
 	}
 
 	// ------------------------------------ TGA
-	if (stricmp(mFileName + strlen(mFileName) - 4, ".tga") == 0)
+	if (stricmp(mFileName + strlen(mFileName) - 4, ".TGA") == 0)
 	{
 		App->CL_Model->Group[Index]->Base_Bitmap = ilutWinLoadImage(mFileName, hDC);
 		ReleaseDC(PreviewWnd, hDC);
@@ -229,6 +245,12 @@ bool ME_Textures::TexureToWinPreviewFullPath(int Index, char* FullPath)
 		}
 		else
 		{
+			BITMAPINFO    bmiData;
+			ilutGetBmpInfo(&bmiData);
+
+			App->CL_Model->Group[Index]->Depth = bmiData.bmiHeader.biBitCount;
+			App->CL_Model->Group[Index]->Width = bmiData.bmiHeader.biWidth;
+			App->CL_Model->Group[Index]->Height = bmiData.bmiHeader.biHeight;
 			App->CL_Model->Group[Index]->Bitmap_Loaded = 1;
 		}
 
@@ -293,6 +315,10 @@ bool ME_Textures::LoadDummyTexture(int Index)
 	
 	strcpy(App->CL_Model->Group[Index]->Texture_PathFileName, "Internal Texture Import Failed");
 	strcpy(App->CL_Model->Group[Index]->Text_FileName, "Dummy.bmp");
+
+	App->CL_Model->Group[Index]->Depth = 8;
+	App->CL_Model->Group[Index]->Width = 256;
+	App->CL_Model->Group[Index]->Height = 256;
 
 	App->CL_Model->Group[Index]->Bitmap_Loaded = -1;
 	return 1;

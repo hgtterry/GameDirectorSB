@@ -28,6 +28,9 @@ public:
 
 	int MaterialIndex;
 
+	int Depth;
+	long Height;
+	long Width;
 	
 	bool Bitmap_Loaded;
 
