@@ -285,11 +285,11 @@ void ME_Grid::Zoom(void)
 
 		if (App->CL_Model->S_BoundingBox[0]->Size[0].z > App->CL_Model->S_BoundingBox[0]->Size[0].y)
 		{
-			Move.z = App->CL_Model->S_BoundingBox[0]->Size[0].z * 4;
+			Move.z = App->CL_Model->S_BoundingBox[0]->Size[0].z * 2;
 		}
 		else
 		{
-			Move.z = App->CL_Model->S_BoundingBox[0]->Size[0].y * 4;
+			Move.z = App->CL_Model->S_BoundingBox[0]->Size[0].y * 2;
 		}
 
 		App->CL_Ogre->mCamera->moveRelative(Move);

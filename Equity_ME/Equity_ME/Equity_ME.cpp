@@ -163,19 +163,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 			// ------------------------------------------------------- Views
 			case ID_VIEW_OGRERESETVIEW:
-				{
+			{
 
-				App->CL_Grid->GridNode->setPosition(0, 0, 0);
-				App->CL_Grid->GridNode->resetOrientation();
+				App->CL_Grid->Reset_View();
 
-				App->CL_Grid->HairNode->setPosition(0, 0, 0);
-				App->CL_Grid->HairNode->resetOrientation();
-
-				App->CL_Ogre->mCamera->setPosition(Ogre::Vector3(0, 90, 100));
-				App->CL_Ogre->mCamera->lookAt(Ogre::Vector3(0, 30, 0));
-
-					return 1;
-				}
+				return 1;
+			}
 
 			// ------------------------------------------------------- Debug
 			case ID_DEBUG_RENDER:
