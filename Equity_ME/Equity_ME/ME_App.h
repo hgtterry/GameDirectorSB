@@ -107,6 +107,8 @@ public:
 	HANDLE Hnd_MeshOff_Bmp;
 	HANDLE Hnd_HairOn_Bmp;
 	HANDLE Hnd_HairOff_Bmp;
+	HANDLE Hnd_TexturesOn_Bmp;
+	HANDLE Hnd_TexturesOff_Bmp;
 
 	HMENU mMenu;
 	HCURSOR CUR;

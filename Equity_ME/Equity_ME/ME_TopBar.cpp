@@ -185,6 +185,29 @@ LRESULT CALLBACK ME_TopBar::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 			return TRUE;
 		}
 
+		//-------------------------------------------------------- Show Textures
+		if (LOWORD(wParam) == IDC_BTSHOWTEXTURES)
+		{
+			if (App->CL_Model->Model_Loaded == 1)
+			{
+				HWND Temp = GetDlgItem(hDlg, IDC_BTSHOWTEXTURES);
+
+				if (App->CL_Ogre->RenderListener->ShowTextured == 1)
+				{
+					App->CL_Ogre->RenderListener->ShowTextured = 0;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOff_Bmp);
+				}
+				else
+				{
+					App->CL_Ogre->RenderListener->ShowTextured = 1;
+					
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOn_Bmp);
+				}
+			}
+			return TRUE;
+		}
+
 		//-------------------------------------------------------- Show Bound Box
 		if (LOWORD(wParam) == IDC_TBBOUNDBOX)
 		{
@@ -236,6 +259,9 @@ void ME_TopBar::Init_Bmps_Globals(void)
 	Temp = GetDlgItem(TabsHwnd, IDC_TBSHOWFACES);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
 	
+	Temp = GetDlgItem(TabsHwnd, IDC_BTSHOWTEXTURES);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOff_Bmp);
+	
 	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
 
 	Temp = GetDlgItem(TabsHwnd, IDC_TBINFO);
@@ -282,6 +308,16 @@ void ME_TopBar::Init_Bmps_Globals(void)
 	ti12.lpszText = "Toggle Faces";
 	ti12.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti12);
+
+	Temp = GetDlgItem(TabsHwnd, IDC_BTSHOWTEXTURES);
+	TOOLINFO ti13 = { 0 };
+	ti13.cbSize = sizeof(ti13);
+	ti13.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti13.uId = (UINT_PTR)Temp;
+	ti13.lpszText = "Toggle Textures";
+	ti13.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti13);
+
 }
 
 // *************************************************************************

@@ -76,6 +76,8 @@ ME_App::ME_App()
 	Hnd_MeshOff_Bmp = NULL;
 	Hnd_HairOn_Bmp = NULL;
 	Hnd_HairOff_Bmp = NULL;
+	Hnd_TexturesOn_Bmp = NULL;
+	Hnd_TexturesOff_Bmp = NULL;
 
 	EquityDirecory_FullPath[0] = 0;
 }
@@ -171,8 +173,8 @@ void ME_App::LoadProgramResource(void)
 	Hnd_HairOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_HAIRON);
 	Hnd_HairOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_HAIROFF);
 
-	//Hnd_TexturesOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_TEXTURESON);
-	//Hnd_TexturesOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_TEXTURESOFF);
+	Hnd_TexturesOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_TEXTURESON);
+	Hnd_TexturesOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_TEXTURESOFF);
 
 	//Hnd_NormalsOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_NORMALSON);
 	//Hnd_NormalsOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_NORMALSOFF);
