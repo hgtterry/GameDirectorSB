@@ -157,11 +157,11 @@ void ME_Render::PreRender()
 	glPushMatrix();
 	glLoadIdentity(); //Texture addressing should start out as direct.
 
-	/*RenderSystem* renderSystem = App->CL_Ogre->manObj->_getManager()->getDestinationRenderSystem();
+	RenderSystem* renderSystem = App->CL_Ogre->manObj->_getManager()->getDestinationRenderSystem();
 	Node* parentNode = App->CL_Ogre->manObj->getParentNode();
 	renderSystem->_setWorldMatrix(parentNode->_getFullTransform());
 	renderSystem->_setViewMatrix(App->CL_Ogre->mCamera->getViewMatrix());
-	renderSystem->_setProjectionMatrix(App->CL_Ogre->mCamera->getProjectionMatrixRS());*/
+	renderSystem->_setProjectionMatrix(App->CL_Ogre->mCamera->getProjectionMatrixRS());
 
 	static Pass* clearPass = NULL;
 	if (!clearPass)

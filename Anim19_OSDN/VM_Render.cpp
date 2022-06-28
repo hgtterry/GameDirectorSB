@@ -180,11 +180,11 @@ void VM_Render::PreRender()
 
 	if (App->Cl19_Ogre->OgreListener->Equity_Running == 1)
 	{
-		RenderSystem* renderSystem = App->SBC_Equity->manObj->_getManager()->getDestinationRenderSystem();
+		/*RenderSystem* renderSystem = App->SBC_Equity->manObj->_getManager()->getDestinationRenderSystem();
 		Node* parentNode = App->SBC_Equity->manObj->getParentNode();
 		renderSystem->_setWorldMatrix(parentNode->_getFullTransform());
 		renderSystem->_setViewMatrix(App->EBC_Listener->WE_Cam->getViewMatrix());
-		renderSystem->_setProjectionMatrix(App->EBC_Listener->WE_Cam->getProjectionMatrixRS());
+		renderSystem->_setProjectionMatrix(App->EBC_Listener->WE_Cam->getProjectionMatrixRS());*/
 	}
 	else
 	{

@@ -66,9 +66,9 @@ bool ME_Ogre::Init_Ogre(void)
 	createViewports();
 	loadResources();
 
-	//manObj = mSceneMgr->createManualObject("sampleArea");
-	//ModelNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	//ModelNode->attachObject(manObj);
+	manObj = mSceneMgr->createManualObject("sampleArea");
+	ModelNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	ModelNode->attachObject(manObj);
 
 	// Set Up Grid Functions
 	App->CL_Grid->Grid_Update(1);

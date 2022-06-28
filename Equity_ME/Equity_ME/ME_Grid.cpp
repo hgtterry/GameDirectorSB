@@ -307,6 +307,9 @@ void ME_Grid::Reset_View(void)
 	App->CL_Grid->HairNode->setPosition(0, 0, 0);
 	App->CL_Grid->HairNode->resetOrientation();
 
+	App->CL_Ogre->RenderListener->RX = 0;
+	App->CL_Ogre->RenderListener->RZ = 0;
+
 	App->CL_Ogre->mCamera->setPosition(Ogre::Vector3(0, 90, 100));
 	App->CL_Ogre->mCamera->lookAt(Ogre::Vector3(0, 30, 0));
 }
