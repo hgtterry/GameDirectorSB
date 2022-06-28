@@ -29,9 +29,13 @@ public:
 	~ME_FileIO();
 
 	bool Open_File_Model(char* Extension, char* Title, char* StartDirectory);
+	bool OpenTextureFile(char* Title, char* StartDirectory, bool SaveLocation);
 
 	char Model_FileName[MAX_PATH];
 	char Model_Path_FileName[MAX_PATH];
+
+	char Texture_FileName[MAX_PATH];
+	char Texture_Path_FileName[MAX_PATH];
 
 	std::string Get_Model_File_Name();
 	std::string Get_Model_Path_File_Name();

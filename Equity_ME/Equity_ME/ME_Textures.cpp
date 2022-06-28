@@ -277,3 +277,36 @@ bool ME_Textures::LoadDummyTexture(int Index)
 	App->CL_Model->Group[Index]->Bitmap_Loaded = -1;
 	return 1;
 }
+
+// *************************************************************************
+// *					ChangeTexture_Model Terry Flanigan				   *
+// *************************************************************************
+bool ME_Textures::ChangeTexture_Model(void)
+{
+
+	int test = 0;
+
+	//------------------------------------------------------------ Assimp
+	if (App->CL_Model->Model_Type == Enums::LoadedFile_Assimp)
+	{
+
+		test = App->CL_FileIO->OpenTextureFile("Equity10 Replace Texture", NULL, NULL);
+		if (test == 0) { return 0; }
+
+		// Render Texture
+		int Index = App->CL_Groups->Selected_Group;
+
+		TexureToWinPreviewFullPath(Index, App->CL_FileIO->Texture_Path_FileName);
+		Soil_Load_Texture(g_Texture, App->CL_FileIO->Texture_Path_FileName, Index);
+																																		
+		strcpy(App->CL_Model->Group[Index]->Text_FileName, App->CL_FileIO->Texture_FileName);
+		strcpy(App->CL_Model->Group[Index]->Texture_PathFileName, App->CL_FileIO->Texture_Path_FileName);
+
+
+		
+		//Update_Groups_Dialog(Index);
+
+		return 1;
+	}
+	return 1;
+}

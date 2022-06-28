@@ -11,6 +11,7 @@ public:
 	void Strip_JustFileName(char *pString, char *FileName);
 
 	bool LoadDummyTexture(int Index);
+	bool ChangeTexture_Model(void);
 
 	char JustFileName[MAX_PATH];
 	char TextureFileName[MAX_PATH];

@@ -121,7 +121,15 @@ LRESULT CALLBACK ME_Groups::Groups_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 
 	case WM_COMMAND:
 	{
+		if (LOWORD(wParam) == IDC_BTCHANGETEXTURE)
+		{
+			if (App->CL_Model->Model_Loaded == 1)
+			{
+				App->CL_Textures->ChangeTexture_Model();
 
+			}
+			return TRUE;
+		}
 	}
 
 	}
