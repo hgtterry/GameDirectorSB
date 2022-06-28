@@ -205,6 +205,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				return 1;
 			}
 
+			case ID_IMPORT_AUTODESK3DS:
+			{
+				App->CL_Import->Assimp_Loader("Autodesk 3DS   *.3ds\0*.3ds\0", "Autodesk 3DS");
+				return 1;
+			}
+			
+			// ------------------------------------------------------- Windows
 			case ID_WINDOWS_FILEVIEW:
 			{
 				ShowWindow(App->ListPanel, 1);
