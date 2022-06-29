@@ -67,6 +67,13 @@ namespace Enums
 		LoadedFile_Ogre = 3,
 		LoadedFile_STL = 4
 	};
+
+	enum Show_List
+	{
+		Show_List_None = 0,
+		Show_List_Group = 1,
+		Show_List_Model = 2,
+	};
 }
 
 

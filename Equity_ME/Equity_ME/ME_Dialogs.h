@@ -7,9 +7,12 @@ public:
 
 	bool Show_GroupData();
 
+	int What_List;
+
 protected:
 
 	static LRESULT CALLBACK GroupData_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
+	void List_GroupData(HWND hDlg);
 };
 

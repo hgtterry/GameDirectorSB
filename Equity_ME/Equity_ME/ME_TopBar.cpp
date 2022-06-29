@@ -497,29 +497,33 @@ LRESULT CALLBACK ME_TopBar::Group_TB_Proc(HWND hDlg, UINT message, WPARAM wParam
 
 		if (LOWORD(wParam) == IDC_BTONLYGROUP)
 		{
-			if (App->CL_TopBar->Toggle_Group_ONLY_Flag == 1)
-			{
-				App->CL_TopBar->Toggle_Group_ONLY_Flag = 0;
-			}
-			else
+			if (App->CL_Model->Model_Loaded == 1)
 			{
 				App->CL_TopBar->Toggle_Group_ONLY_Flag = 1;
+				App->CL_TopBar->Toggle_Group_HIDE_Flag = 0;
+				App->CL_TopBar->Toggle_Group_ALL_Flag = 0;
+
+				App->CL_Ogre->RenderListener->Show_HideGroup = 0;
+				App->CL_Ogre->RenderListener->ShowOnlySubMesh = 1;
+
+				RedrawWindow(App->CL_TopBar->Group_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			}
+
 			return 1;
 		}
 
 		if (LOWORD(wParam) == IDC_BTHIDEGROUP)
 		{
-			//HWND temp = GetDlgItem(hDlg, IDC_CKHIDEGROUP);
-			//HWND temp1 = GetDlgItem(hDlg, IDC_CKSHOWONLYGROUPS);
-
-			if (App->CL_TopBar->Toggle_Group_HIDE_Flag == 1)
-			{
-				App->CL_TopBar->Toggle_Group_HIDE_Flag = 0;
-			}
-			else
+			if (App->CL_Model->Model_Loaded == 1)
 			{
 				App->CL_TopBar->Toggle_Group_HIDE_Flag = 1;
+				App->CL_TopBar->Toggle_Group_ONLY_Flag = 0;
+				App->CL_TopBar->Toggle_Group_ALL_Flag = 0;
+
+				App->CL_Ogre->RenderListener->ShowOnlySubMesh = 0;
+				App->CL_Ogre->RenderListener->Show_HideGroup = 1;
+
+				RedrawWindow(App->CL_TopBar->Group_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			}
 
 			return 1;
@@ -527,13 +531,16 @@ LRESULT CALLBACK ME_TopBar::Group_TB_Proc(HWND hDlg, UINT message, WPARAM wParam
 
 		if (LOWORD(wParam) == IDC_BTALLGROUPS)
 		{
-			if (App->CL_TopBar->Toggle_Group_ALL_Flag == 1)
-			{
-				App->CL_TopBar->Toggle_Group_ALL_Flag = 0;
-			}
-			else
+			if (App->CL_Model->Model_Loaded == 1)
 			{
 				App->CL_TopBar->Toggle_Group_ALL_Flag = 1;
+				App->CL_TopBar->Toggle_Group_HIDE_Flag = 0;
+				App->CL_TopBar->Toggle_Group_ONLY_Flag = 0;
+
+				App->CL_Ogre->RenderListener->ShowOnlySubMesh = 0;
+				App->CL_Ogre->RenderListener->Show_HideGroup = 0;
+
+				RedrawWindow(App->CL_TopBar->Group_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			}
 
 			return 1;

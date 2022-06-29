@@ -438,33 +438,35 @@ bool ME_Render::Assimp_Render_Textures(void)
 
 	//glLineWidth(10);
 
-	//if (ShowOnlySubMesh == 1) // Show Only Selected SubMesh
-	//{
-	//	Assimp_Textured_Parts(App->EBC_Groups->SelectedGroup);
-	//	glDisable(GL_TEXTURE_2D);
-	//	return 1;
-	//}
-
-	//if (Show_HideGroup == 1) // Hide Selected SubMesh
-	//{
-	//	while (Count<App->CL_Vm_Model->GroupCount)
-	//	{
-	//		if (App->CL_Right_Groups->SelectedGroup == Count)
-	//		{
-	//		}
-	//		else
-	//		{
-	//			Render_As_Textured_Parts(Count);
-	//		}
-	//		Count++;
-	//	}
-
-	//	glDisable(GL_TEXTURE_2D);
-	//	return 1;
-	//}
-
 	int GroupCount = App->CL_Model->Get_Groupt_Count();
 
+	if (ShowOnlySubMesh == 1) // Show Only Selected SubMesh
+	{
+		Assimp_Textured_Parts(App->CL_Groups->Selected_Group);
+		glDisable(GL_TEXTURE_2D);
+		return 1;
+	}
+
+	Count = 0;
+	if (Show_HideGroup == 1) // Hide Selected SubMesh
+	{
+		while (Count < GroupCount)
+		{
+			if (App->CL_Groups->Selected_Group == Count)
+			{
+			}
+			else
+			{
+				Assimp_Textured_Parts(Count);
+			}
+			Count++;
+		}
+
+		glDisable(GL_TEXTURE_2D);
+		return 1;
+	}
+
+	Count = 0;
 	while (Count < GroupCount)
 	{
 		Assimp_Textured_Parts(Count);

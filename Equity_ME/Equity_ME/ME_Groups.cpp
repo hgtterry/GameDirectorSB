@@ -141,7 +141,10 @@ LRESULT CALLBACK ME_Groups::Groups_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 			if (App->CL_Model->Model_Loaded == 1)
 			{
 				App->CL_Panels->Enable_Panels(0);
+
+				App->CL_Dialogs->What_List = Enums::Show_List_Group;
 				App->CL_Dialogs->Show_GroupData();
+
 				App->CL_Panels->Enable_Panels(1);
 			}
 			return TRUE;
