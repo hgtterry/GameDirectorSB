@@ -143,7 +143,7 @@ LRESULT CALLBACK ME_Groups::Groups_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 				App->CL_Panels->Enable_Panels(0);
 
 				App->CL_Dialogs->What_List = Enums::Show_List_Group;
-				App->CL_Dialogs->Show_GroupData();
+				App->CL_Dialogs->Show_ListData();
 
 				App->CL_Panels->Enable_Panels(1);
 			}

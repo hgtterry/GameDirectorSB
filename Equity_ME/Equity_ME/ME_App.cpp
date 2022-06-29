@@ -68,6 +68,7 @@ ME_App::ME_App()
 	Font_CB18 = 0;
 
 	Hnd_ModelInfo_Bmp = NULL;
+	Hnd_ModelInfoOn_Bmp = NULL;
 	Hnd_GridOn_Bmp = NULL;
 	Hnd_GridOff_Bmp = NULL;
 	Hnd_BBOn_Bmp = NULL;
@@ -183,6 +184,7 @@ void ME_App::LoadProgramResource(void)
 	//Hnd_LightsOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_LIGHTOFF);
 
 	Hnd_ModelInfo_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_TB_MODELDATA);
+	Hnd_ModelInfoOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_TB_MODELDATAON);
 }
 // *************************************************************************
 // *					SetBrushes_Fonts Inflanite						   *

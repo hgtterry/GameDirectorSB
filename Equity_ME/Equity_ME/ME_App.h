@@ -101,6 +101,7 @@ public:
 	HANDLE Hnd_GridOn_Bmp;
 	HANDLE Hnd_GridOff_Bmp;
 	HANDLE Hnd_ModelInfo_Bmp;		// Bitmap for button Model Info Screen
+	HANDLE Hnd_ModelInfoOn_Bmp;
 	HANDLE Hnd_BBOn_Bmp;
 	HANDLE Hnd_BBOff_Bmp;
 	HANDLE Hnd_MeshOn_Bmp;

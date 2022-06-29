@@ -38,7 +38,7 @@ ME_Model::ME_Model()
 	Model_Loaded = 0;
 	Model_Type = Enums::LoadedFile_None;
 
-	FileName[0] = 0;
+	strcpy (FileName,"No Model Loaded");
 	Path_FileName[0] = 0;
 	Model_FolderPath[0] = 0;
 	Texture_FolderPath[0] = 0;

@@ -222,6 +222,7 @@
     <Image Include="Resource\MenuBar\GridOn.bmp" />
     <Image Include="Resource\MenuBar\MeshPointsOn.bmp" />
     <Image Include="Resource\MenuBar\ModelData.bmp" />
+    <Image Include="Resource\MenuBar\ModelDataOn.bmp" />
     <Image Include="Resource\MenuBar\ShowMeshOff.bmp" />
     <Image Include="Resource\MenuBar\ShowMeshOn.bmp" />
     <Image Include="Resource\MenuBar\TargetOff.bmp" />

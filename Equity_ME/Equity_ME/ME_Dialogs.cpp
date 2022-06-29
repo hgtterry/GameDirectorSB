@@ -15,9 +15,9 @@ ME_Dialogs::~ME_Dialogs()
 }
 
 // *************************************************************************
-// *	  				Show_GroupData Terry Flanigan					   *
+// *	  				Show_ListData Terry Flanigan					   *
 // *************************************************************************
-bool ME_Dialogs::Show_GroupData()
+bool ME_Dialogs::Show_ListData()
 {
 	DialogBox(App->hInst, (LPCTSTR)IDD_GROUPDATA, App->Fdlg, (DLGPROC)GroupData_Proc);
 
@@ -40,6 +40,12 @@ LRESULT CALLBACK ME_Dialogs::GroupData_Proc(HWND hDlg, UINT message, WPARAM wPar
 		if (App->CL_Dialogs->What_List == Enums::Show_List_Group)
 		{
 			App->CL_Dialogs->List_GroupData(hDlg);
+			return TRUE;
+		}
+
+		if (App->CL_Dialogs->What_List == Enums::Show_List_Model)
+		{
+			App->CL_Dialogs->List_ModelData(hDlg);
 			return TRUE;
 		}
 
@@ -119,4 +125,24 @@ void ME_Dialogs::List_GroupData(HWND hDlg)
 
 	sprintf(buf, "%s%i x %i", "Dimensions = ", App->CL_Model->Group[Index]->Width, App->CL_Model->Group[Index]->Height);
 	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+}
+
+// *************************************************************************
+// *	  				List_ModelData Terry Flanigan					   *
+// *************************************************************************
+void ME_Dialogs::List_ModelData(HWND hDlg)
+{
+
+	char buf[255];
+	
+	sprintf(buf, "%s", "Model Info");
+	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+	sprintf(buf, "%s", "    ");
+	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+	//----------------------- 
+	sprintf(buf, "%s%s", "Model Name = ", App->CL_Model->FileName);
+	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
 }

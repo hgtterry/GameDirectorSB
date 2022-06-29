@@ -147,15 +147,18 @@ LRESULT CALLBACK ME_TopBar::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 		//-------------------------------------------------------- Show Info
 		if (LOWORD(wParam) == IDC_TBINFO)
 		{
-			if (App->CL_TopBar->Show_Model_Data == 1)
-			{
-				App->CL_TopBar->Show_Model_Data = 0;
-			}
-			else
-			{
-				App->CL_TopBar->Show_Model_Data = 1;
-			}
+			HWND Temp = GetDlgItem(hDlg, IDC_TBINFO);
 
+			SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfoOn_Bmp);
+
+			App->CL_Panels->Enable_Panels(0);
+
+			App->CL_Dialogs->What_List = Enums::Show_List_Model;
+			App->CL_Dialogs->Show_ListData();
+
+			App->CL_Panels->Enable_Panels(1);
+
+			SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfo_Bmp);
 			return TRUE;
 		}
 
@@ -480,21 +483,7 @@ LRESULT CALLBACK ME_TopBar::Group_TB_Proc(HWND hDlg, UINT message, WPARAM wParam
 
 	case WM_COMMAND:
 	{
-		if (LOWORD(wParam) == IDC_BTGROUPINFO)
-		{
-			if (App->CL_Model->Model_Loaded == 1)
-			{
-				App->CL_TopBar->Toggle_GroupInfo_Flag = 1;
-
-				App->CL_Dialogs->Show_GroupData();
-
-				App->CL_TopBar->Toggle_GroupInfo_Flag = 0;
-				RedrawWindow(App->CL_TopBar->Group_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-			}
-
-			return 1;
-		}
-
+	
 		if (LOWORD(wParam) == IDC_BTONLYGROUP)
 		{
 			if (App->CL_Model->Model_Loaded == 1)

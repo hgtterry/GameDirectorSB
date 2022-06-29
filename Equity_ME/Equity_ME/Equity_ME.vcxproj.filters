@@ -234,5 +234,8 @@
     <Image Include="Resource\MenuBar\TexturesOff.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Resource\MenuBar\ModelDataOn.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
