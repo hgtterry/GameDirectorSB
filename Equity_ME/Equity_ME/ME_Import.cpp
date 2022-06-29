@@ -46,7 +46,7 @@ bool ME_Import::Assimp_Loader(char* Extension, char* Extension2)
 		return 1;
 	}
 
-	//App->CL_Model->Clear_Model_And_Reset();
+	App->CL_Model->Clear_Model_And_Reset();
 
 	char Model_Path_And_File[MAX_PATH];
 	strcpy(Model_Path_And_File, App->CL_FileIO->Get_Model_Path_File_Name().c_str());

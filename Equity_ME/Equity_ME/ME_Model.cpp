@@ -39,10 +39,19 @@ ME_Model::ME_Model()
 	Model_Type = Enums::LoadedFile_None;
 
 	strcpy (FileName,"No Model Loaded");
-	Path_FileName[0] = 0;
-	Model_FolderPath[0] = 0;
-	Texture_FolderPath[0] = 0;
+	strcpy (Path_FileName, "No Model Loaded");
+	strcpy (Model_FolderPath, "No Model Loaded");
+	strcpy (Texture_FolderPath, "No Model Loaded");
 	JustName[0] = 0;
+
+	S_BoundingBox[0] = nullptr;
+
+	int Count = 0;
+	while (Count < 99)
+	{
+		Group[Count] = nullptr;
+		Count++;
+	}
 }
 
 
@@ -65,7 +74,7 @@ void ME_Model::Reset_Class(void)
 	//--------------------- Clear Groups
 	while (Count < Index)
 	{
-		if (Group[Count] != NULL)
+		if (Group[Count] != nullptr)
 		{
 			Group[Count]->vertex_Data.clear();
 			Group[Count]->vertex_Data.resize(0);
@@ -80,16 +89,16 @@ void ME_Model::Reset_Class(void)
 			}
 
 			delete Group[Count];
-			Group[Count] = NULL;
+			Group[Count] = nullptr;
 		}
 		Count++;
 	}
 
 	//--------------------- Clear Bounding box data
-	if (S_BoundingBox[0] != NULL)
+	if (S_BoundingBox[0] != nullptr)
 	{
 		delete S_BoundingBox[0];
-		S_BoundingBox[0] = NULL;
+		S_BoundingBox[0] = nullptr;
 	}
 
 	FileName[0] = 0;

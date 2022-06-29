@@ -197,11 +197,6 @@ void ME_Render::PostRender()
 // *************************************************************************
 void ME_Render::Render_Loop()
 {
-	/*if (App->CL_Ogre->Ogre_Listener->Equity_Running == 0)
-	{
-		return;
-	}*/
-
 	GLboolean depthTestEnabled = glIsEnabled(GL_DEPTH_TEST);
 	glDisable(GL_DEPTH_TEST);
 	GLboolean stencilTestEnabled = glIsEnabled(GL_STENCIL_TEST);
