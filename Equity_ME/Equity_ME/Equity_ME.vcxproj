@@ -154,6 +154,7 @@
     <ClInclude Include="ME_Assimp.h" />
     <ClInclude Include="ME_Dialogs.h" />
     <ClInclude Include="ME_Dimensions.h" />
+    <ClInclude Include="ME_Export.h" />
     <ClInclude Include="ME_Export_Object.h" />
     <ClInclude Include="ME_FileIO.h" />
     <ClInclude Include="ME_FileView.h" />
@@ -186,6 +187,7 @@
     <ClCompile Include="ME_Assimp.cpp" />
     <ClCompile Include="ME_Dialogs.cpp" />
     <ClCompile Include="ME_Dimensions.cpp" />
+    <ClCompile Include="ME_Export.cpp" />
     <ClCompile Include="ME_Export_Object.cpp" />
     <ClCompile Include="ME_FileIO.cpp" />
     <ClCompile Include="ME_FileView.cpp" />

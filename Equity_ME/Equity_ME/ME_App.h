@@ -38,7 +38,10 @@ distribution.
 #include "ME_Textures.h"
 #include "ME_Dialogs.h"
 #include "ME_Dimensions.h"
+
+#include "ME_Export.h"
 #include "ME_Export_Object.h"
+
 
 class ME_App
 {
@@ -62,6 +65,7 @@ public:
 	ME_Dialogs*			CL_Dialogs;		// Common Dialogs [220626]
 	ME_Dimensions*		CL_Dimensions;	// Scale Position Rotation [220627]
 
+	ME_Export*			CL_Export;		// Exporters [220630]
 	ME_Export_Object*	CL_Export_Object;
 
 	bool InitApp(void);

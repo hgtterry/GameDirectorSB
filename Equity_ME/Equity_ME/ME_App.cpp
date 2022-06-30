@@ -44,6 +44,7 @@ ME_App::ME_App()
 	CL_Dialogs =	nullptr;
 	CL_Dimensions = nullptr;
 	CL_Export_Object = nullptr;
+	CL_Export =		nullptr;
 
 	hInst =			nullptr;
 
@@ -110,6 +111,7 @@ bool ME_App::InitApp(void)
 	CL_Dialogs =	new ME_Dialogs();
 	CL_Dimensions = new ME_Dimensions();
 	CL_Export_Object = new ME_Export_Object();
+	CL_Export =		new ME_Export();
 	
 	SetBrushes_Fonts();
 	return 1;
