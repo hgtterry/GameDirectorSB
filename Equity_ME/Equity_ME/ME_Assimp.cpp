@@ -276,9 +276,6 @@ void ME_Assimp::Create_MeshGroups(const aiScene* pScene)
 	char MaterialName[255];
 	char GroupNum[255];
 
-	//App->CL_Vm_Model->S_Texture[0]->UsedTextureCount = App->CL_Vm_Model->GroupCount;
-	//App->CL_Vm_Textures->CreateTextureInfo();
-
 	int mGroupCount = App->CL_Model->Get_Groupt_Count();
 
 	while (Count < mGroupCount)
@@ -318,6 +315,9 @@ void ME_Assimp::Create_MeshGroups(const aiScene* pScene)
 
 		aiString texPath;
 		aiMaterial* mtl = pScene->mMaterials[mesh->mMaterialIndex];
+
+		strcpy(App->CL_Model->Group[Count]->MaterialName, mtl->GetName().C_Str());
+
 		if (AI_SUCCESS == mtl->GetTexture(aiTextureType_DIFFUSE, 0, &texPath))
 		{
 			strcpy(App->CL_Model->Group[Count]->Text_FileName, texPath.C_Str());

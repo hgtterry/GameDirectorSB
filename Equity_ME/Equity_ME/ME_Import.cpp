@@ -68,8 +68,13 @@ bool ME_Import::Assimp_Loader(char* Extension, char* Extension2)
 	App->CL_Model->Model_Loaded = 1;
 	App->CL_Grid->Zoom();
 
+	char TitleBar[260];
+	strcpy(TitleBar, "Equity_ME");
+	strcat(TitleBar, "    ");
+	strcat(TitleBar, App->CL_Model->Path_FileName);
+	SetWindowText(App->MainHwnd, TitleBar);
+
 	////Set_Equity();
-	//App->SBC_Equity->Set_Equity();
 	Ogre::Root::getSingletonPtr()->renderOneFrame();
 
 	App->Say_Win("Model Loaded");

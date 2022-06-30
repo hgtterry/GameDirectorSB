@@ -241,36 +241,22 @@ void ME_Render::Render_Loop()
 	}
 
 	// ---------------------- Points
-	//if (App->CL_Vm_Model->Model_Loaded == 1 && ShowPoints == 1)
-	//{
-	//	//glPolygonMode (GL_FRONT_AND_BACK, GL_LINE);
-
-	//	if (App->CL_Vm_Model->Model_Type == LoadedFile_Assimp)
-	//	{
-	//		Assimp_Render_Points();
-	//	}
-
-	//	if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
-	//	{
-	//		RenderPoints();
-	//	}
-	//}
+	if (App->CL_Model->Model_Loaded == 1 && ShowPoints == 1)
+	{
+		if (App->CL_Model->Model_Type == Enums::LoadedFile_Assimp)
+		{
+			Assimp_Render_Points();
+		}
+	}
 
 	//// ---------------------- Normals
-	//if (App->CL_Vm_Model->Model_Loaded == 1 && ShowNormals == 1)
-	//{
-	//	//glPolygonMode (GL_FRONT_AND_BACK, GL_LINE);
-
-	//	if (App->CL_Vm_Model->Model_Type == LoadedFile_Assimp)
-	//	{
-	//		Assimp_Render_Normals();
-	//	}
-
-	//	if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
-	//	{
-	//		RF_Render_Normals();
-	//	}
-	//}
+	if (App->CL_Model->Model_Loaded == 1 && ShowNormals == 1)
+	{
+		if (App->CL_Model->Model_Type == Enums::LoadedFile_Assimp)
+		{
+			Assimp_Render_Normals();
+		}
+	}
 
 	// ---------------------- Bounding Box
 	if (App->CL_Model->Model_Loaded == 1 && ShowBoundingBox == 1)
@@ -381,15 +367,17 @@ bool ME_Render::Assimp_Face_Parts(int Count)
 // *************************************************************************
 bool ME_Render::Assimp_Render_Points(void)
 {
-	/*int Count = 0;
+	int Count = 0;
 
 	glColor3f(1.0f, 1.0f, 0.0f);
 
-	while (Count<App->CL_Vm_Model->GroupCount)
+	int GroupCount = App->CL_Model->Get_Groupt_Count();
+
+	while (Count < GroupCount)
 	{
 		Render_As_Points_Parts(Count);
 		Count++;
-	}*/
+	}
 
 	return 1;
 }
@@ -398,22 +386,24 @@ bool ME_Render::Assimp_Render_Points(void)
 // *************************************************************************
 bool ME_Render::Render_As_Points_Parts(int Count)
 {
-	/*glPointSize(5);
+	glPointSize(5);
 
 	int VertCount = 0;
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-	while (VertCount<App->CL_Vm_Model->S_MeshGroup[Count]->GroupVertCount)
+	int GroupVertCount = App->CL_Model->Group[Count]->GroupVertCount;
+
+	while (VertCount < GroupVertCount)
 	{
 		glBegin(GL_POINTS);
 
-		glVertex3fv(&App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].x);
+		glVertex3fv(&App->CL_Model->Group[Count]->vertex_Data[VertCount].x);
 
 		glEnd();
 
 		VertCount++;
-	}*/
+	}
 
 	return 1;
 }
@@ -533,15 +523,17 @@ bool ME_Render::Assimp_Textured_Parts(int Count)
 // *************************************************************************
 void ME_Render::Assimp_Render_Normals(void)
 {
-	/*int Count = 0;
+	int Count = 0;
 
 	glColor3f(1, 1, 1);
 
-	while (Count < App->CL_Vm_Model->GroupCount)
+	int GroupCount = App->CL_Model->Get_Groupt_Count();
+
+	while (Count < GroupCount)
 	{
 		Render_As_Normals_Parts(Count);
 		Count++;
-	}*/
+	}
 }
 // *************************************************************************
 // *					Render_AsNormals_Part Terry Bernie	   			   *
@@ -550,22 +542,22 @@ void ME_Render::Render_As_Normals_Parts(int Count)
 {
 #define Scaler 2
 
-	//int VertCount = 0;
+	int VertCount = 0;
 
-	//glPointSize(3);
-	//glBegin(GL_LINES);
+	glPointSize(3);
+	glBegin(GL_LINES);
 
-	//while (VertCount<App->CL_Vm_Model->S_MeshGroup[Count]->GroupVertCount)
-	//{
-	//	//-----------------------------------------------
-	//	glVertex3fv(&App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].x);
+	while (VertCount<App->CL_Model->Group[Count]->GroupVertCount)
+	{
+		//-----------------------------------------------
+		glVertex3fv(&App->CL_Model->Group[Count]->vertex_Data[VertCount].x);
 
-	//	glVertex3f(App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].x + App->CL_Vm_Model->S_MeshGroup[Count]->Normal_Data[VertCount].x*Scaler,
-	//		App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].y + App->CL_Vm_Model->S_MeshGroup[Count]->Normal_Data[VertCount].y*Scaler,
-	//		App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].z + App->CL_Vm_Model->S_MeshGroup[Count]->Normal_Data[VertCount].z*Scaler);
-	//	VertCount++;
+		glVertex3f(App->CL_Model->Group[Count]->vertex_Data[VertCount].x + App->CL_Model->Group[Count]->Normal_Data[VertCount].x*Scaler,
+			App->CL_Model->Group[Count]->vertex_Data[VertCount].y + App->CL_Model->Group[Count]->Normal_Data[VertCount].y*Scaler,
+			App->CL_Model->Group[Count]->vertex_Data[VertCount].z + App->CL_Model->Group[Count]->Normal_Data[VertCount].z*Scaler);
+		VertCount++;
 
-	//}
+	}
 
 	glEnd();
 }

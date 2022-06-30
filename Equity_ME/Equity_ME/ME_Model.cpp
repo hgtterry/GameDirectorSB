@@ -272,5 +272,7 @@ void ME_Model::Clear_Model_And_Reset(void)
 	App->CL_Groups->Reset_Class();
 	
 	App->CL_Grid->Reset_Class();
+
+	SetWindowText(App->MainHwnd, "Equity_ME");
 }
 

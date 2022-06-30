@@ -210,7 +210,76 @@ LRESULT CALLBACK ME_TopBar::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 			}
 			return TRUE;
 		}
+		
+		//-------------------------------------------------------- Show Normals
+		if (LOWORD(wParam) == IDC_BTSHOWNORMALS)
+		{
+			if (App->CL_Model->Model_Loaded == 1)
+			{
+				HWND Temp = GetDlgItem(hDlg, IDC_BTSHOWNORMALS);
 
+				if (App->CL_Ogre->RenderListener->ShowNormals == 1)
+				{
+					App->CL_Ogre->RenderListener->ShowNormals = 0;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_NormalsOff_Bmp);
+				}
+				else
+				{
+					App->CL_Ogre->RenderListener->ShowNormals = 1;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_NormalsOn_Bmp);
+				}
+			}
+			return TRUE;
+		}
+
+		//-------------------------------------------------------- Show Light
+		if (LOWORD(wParam) == IDC_BTSHOWLIGHT)
+		{
+			if (App->CL_Model->Model_Loaded == 1)
+			{
+				HWND Temp = GetDlgItem(hDlg, IDC_BTSHOWLIGHT);
+
+				if (App->CL_Ogre->RenderListener->Light_Activated == 1)
+				{
+					App->CL_Ogre->RenderListener->Light_Activated = 0;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_LightsOff_Bmp);
+				}
+				else
+				{
+					App->CL_Ogre->RenderListener->Light_Activated = 1;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_LightsOn_Bmp);
+				}
+			}
+			return TRUE;
+		}
+
+		//-------------------------------------------------------- Show Points
+		if (LOWORD(wParam) == IDC_BTSHOWPOINTS)
+		{
+			if (App->CL_Model->Model_Loaded == 1)
+			{
+				HWND Temp = GetDlgItem(hDlg, IDC_BTSHOWPOINTS);
+
+				if (App->CL_Ogre->RenderListener->ShowPoints == 1)
+				{
+					App->CL_Ogre->RenderListener->ShowPoints = 0;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshPointsOff_Bmp);
+				}
+				else
+				{
+					App->CL_Ogre->RenderListener->ShowPoints = 1;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshPointsOn_Bmp);
+				}
+			}
+			return TRUE;
+		}
+		
 		//-------------------------------------------------------- Show Bound Box
 		if (LOWORD(wParam) == IDC_TBBOUNDBOX)
 		{
@@ -264,6 +333,19 @@ void ME_TopBar::Init_Bmps_Globals(void)
 	
 	Temp = GetDlgItem(TabsHwnd, IDC_BTSHOWTEXTURES);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOff_Bmp);
+	
+	Temp = GetDlgItem(TabsHwnd, IDC_BTSHOWPOINTS);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshPointsOff_Bmp);
+
+	Temp = GetDlgItem(TabsHwnd, IDC_BTSHOWBONES);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BonesOff_Bmp);
+
+	Temp = GetDlgItem(TabsHwnd, IDC_BTSHOWNORMALS);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_NormalsOff_Bmp);
+
+	Temp = GetDlgItem(TabsHwnd, IDC_BTSHOWLIGHT);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_LightsOff_Bmp);
+
 	
 	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
 
@@ -488,12 +570,23 @@ LRESULT CALLBACK ME_TopBar::Group_TB_Proc(HWND hDlg, UINT message, WPARAM wParam
 		{
 			if (App->CL_Model->Model_Loaded == 1)
 			{
-				App->CL_TopBar->Toggle_Group_ONLY_Flag = 1;
-				App->CL_TopBar->Toggle_Group_HIDE_Flag = 0;
-				App->CL_TopBar->Toggle_Group_ALL_Flag = 0;
+				if (App->CL_TopBar->Toggle_Group_ONLY_Flag == 1)
+				{
+					App->CL_TopBar->Toggle_Group_ONLY_Flag = 0;
+					App->CL_TopBar->Toggle_Group_ALL_Flag = 1;
 
-				App->CL_Ogre->RenderListener->Show_HideGroup = 0;
-				App->CL_Ogre->RenderListener->ShowOnlySubMesh = 1;
+					App->CL_Ogre->RenderListener->Show_HideGroup = 0;
+					App->CL_Ogre->RenderListener->ShowOnlySubMesh = 0;
+				}
+				else
+				{
+					App->CL_TopBar->Toggle_Group_ONLY_Flag = 1;
+					App->CL_TopBar->Toggle_Group_HIDE_Flag = 0;
+					App->CL_TopBar->Toggle_Group_ALL_Flag = 0;
+
+					App->CL_Ogre->RenderListener->Show_HideGroup = 0;
+					App->CL_Ogre->RenderListener->ShowOnlySubMesh = 1;
+				}
 
 				RedrawWindow(App->CL_TopBar->Group_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			}
@@ -505,13 +598,25 @@ LRESULT CALLBACK ME_TopBar::Group_TB_Proc(HWND hDlg, UINT message, WPARAM wParam
 		{
 			if (App->CL_Model->Model_Loaded == 1)
 			{
-				App->CL_TopBar->Toggle_Group_HIDE_Flag = 1;
-				App->CL_TopBar->Toggle_Group_ONLY_Flag = 0;
-				App->CL_TopBar->Toggle_Group_ALL_Flag = 0;
+				if (App->CL_TopBar->Toggle_Group_HIDE_Flag == 1)
+				{
+					App->CL_TopBar->Toggle_Group_HIDE_Flag = 0;
+					App->CL_TopBar->Toggle_Group_ALL_Flag = 1;
 
-				App->CL_Ogre->RenderListener->ShowOnlySubMesh = 0;
-				App->CL_Ogre->RenderListener->Show_HideGroup = 1;
+					App->CL_Ogre->RenderListener->ShowOnlySubMesh = 0;
+					App->CL_Ogre->RenderListener->Show_HideGroup = 0;
+				}
+				else
+				{
+					App->CL_TopBar->Toggle_Group_HIDE_Flag = 1;
+					App->CL_TopBar->Toggle_Group_ONLY_Flag = 0;
+					App->CL_TopBar->Toggle_Group_ALL_Flag = 0;
 
+					App->CL_Ogre->RenderListener->ShowOnlySubMesh = 0;
+					App->CL_Ogre->RenderListener->Show_HideGroup = 1;
+
+				}
+				
 				RedrawWindow(App->CL_TopBar->Group_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			}
 
