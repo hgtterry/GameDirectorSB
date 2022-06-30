@@ -117,6 +117,14 @@ public:
 	HANDLE Hnd_HairOff_Bmp;
 	HANDLE Hnd_TexturesOn_Bmp;
 	HANDLE Hnd_TexturesOff_Bmp;
+	HANDLE Hnd_MeshPointsOn_Bmp;
+	HANDLE Hnd_MeshPointsOff_Bmp;
+	HANDLE Hnd_BonesOn_Bmp;
+	HANDLE Hnd_BonesOff_Bmp;
+	HANDLE Hnd_NormalsOn_Bmp;
+	HANDLE Hnd_NormalsOff_Bmp;
+	HANDLE Hnd_LightsOn_Bmp;
+	HANDLE Hnd_LightsOff_Bmp;
 
 	HMENU mMenu;
 	HCURSOR CUR;

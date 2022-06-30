@@ -249,5 +249,23 @@
     <Image Include="Resource\MenuBar\ModelDataOn.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Resource\MenuBar\MeshPointsOff.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource\MenuBar\BonesOn.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource\MenuBar\BonesOff.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource\MenuBar\bitmap2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource\MenuBar\LightOn.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource\MenuBar\LightOff.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
