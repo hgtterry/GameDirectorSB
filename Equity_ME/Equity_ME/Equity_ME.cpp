@@ -210,6 +210,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				App->CL_Import->Assimp_Loader("Autodesk 3DS   *.3ds\0*.3ds\0", "Autodesk 3DS");
 				return 1;
 			}
+
+			// ------------------------------------------------------- Export
+			case ID_EXPORT_WAVEFRONTOBJ:
+			{
+				App->CL_Export->Object_Model();
+				return 1;
+			}
 			
 			// ------------------------------------------------------- Windows
 			case ID_WINDOWS_FILEVIEW:
