@@ -24,6 +24,9 @@ distribution.
 #include "stdafx.h"
 #include "ME_App.h"
 #include "ME_FileIO.h"
+#include <shellapi.h>
+#include "Shlobj.h"
+#include "io.h"
 #include <string>
 
 
@@ -34,6 +37,9 @@ ME_FileIO::ME_FileIO()
 
 	Texture_FileName[0] = 0;
 	Texture_Path_FileName[0] = 0;
+
+	BrowserMessage[0] = 0;
+	szSelectedDir[0] = 0;
 }
 
 
@@ -124,4 +130,86 @@ std::string ME_FileIO::Get_Model_File_Name()
 std::string ME_FileIO::Get_Model_Path_File_Name()
 {
 	return Model_Path_FileName;
+}
+
+// *************************************************************************
+// *							StartBrowser   							   *
+// *************************************************************************
+bool ME_FileIO::StartBrowser(char* szInitDir)
+{
+	TCHAR dname[MAX_PATH * 2];
+	IMalloc *imalloc; SHGetMalloc(&imalloc);
+	BROWSEINFO bi; ZeroMemory(&bi, sizeof(bi));
+	bi.hwndOwner = App->Fdlg;
+	bi.pszDisplayName = dname;
+	bi.lpszTitle = BrowserMessage;
+	bi.lParam = (LPARAM)szInitDir;
+	bi.ulFlags = BIF_RETURNONLYFSDIRS | BIF_USENEWUI;
+	bi.lpfn = BrowseCallbackProc;
+
+	CoInitialize(NULL);
+	ITEMIDLIST *pidl = SHBrowseForFolder(&bi);
+
+	if (pidl)
+	{
+		imalloc->Free(pidl);
+		imalloc->Release();
+		return 1;
+	}
+
+	imalloc->Free(pidl);
+	imalloc->Release();
+
+	return 0;
+}
+// *************************************************************************
+// *						BrowseCallbackProc   						   *
+// *************************************************************************
+int __stdcall ME_FileIO::BrowseCallbackProc(HWND  hwnd, UINT  uMsg, LPARAM  lParam, LPARAM  lpData)
+{
+	//Initialization callback message
+	if (uMsg == BFFM_INITIALIZED)
+	{
+		//SendMessage(hWnd, BFFM_SETSELECTION, 1, (LPARAM) szInitialPathName); 
+		SendMessage(hwnd, BFFM_SETSELECTION, TRUE, lpData);
+
+	}
+
+	//Selection change message - store the selected directory
+	if (uMsg == BFFM_SELCHANGED)
+	{
+		TCHAR szDir[MAX_PATH * 2] = { 0 };
+
+		// fail if non-filesystem
+		BOOL bRet = SHGetPathFromIDList((LPITEMIDLIST)lParam, szDir);
+		if (bRet)
+		{
+			//If the folder cannot be "read" then fail
+			if (_taccess(szDir, 00) != 0)
+			{
+				bRet = FALSE;
+			}
+			else
+			{
+				SHFILEINFO sfi;
+				::SHGetFileInfo((LPCTSTR)lParam, 0, &sfi, sizeof(sfi),
+					SHGFI_PIDL | SHGFI_ATTRIBUTES);
+
+				// fail if pidl is a link
+				if (sfi.dwAttributes & SFGAO_LINK)
+					bRet = FALSE;
+			}
+		}
+
+		// if invalid selection, disable the OK button
+		if (!bRet)
+		{
+			::EnableWindow(GetDlgItem(hwnd, IDOK), FALSE);
+			strcpy(App->CL_FileIO->szSelectedDir, "");
+		}
+		else
+			strcpy(App->CL_FileIO->szSelectedDir, szDir);
+	}
+
+	return 0;
 }

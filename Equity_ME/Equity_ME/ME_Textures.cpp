@@ -354,3 +354,35 @@ bool ME_Textures::ChangeTexture_Model(void)
 	}
 	return 1;
 }
+
+// *************************************************************************
+// *				DecompileTextures Terry Bernie Hazel 		   	   	   *
+// *************************************************************************
+bool ME_Textures::DecompileTextures(char* Path)
+{
+	int MatCount = App->CL_Model->Get_Groupt_Count();
+	char FileName[255];
+	char FilePath[1024];
+
+	int Loop = 0;
+	while (Loop < MatCount)
+	{
+		strcpy(FileName, App->CL_Model->Group[Loop]->Text_FileName);
+
+		int Len = strlen(FileName);
+		FileName[Len - 4] = 0;
+		strcat(FileName, ".jpg");
+
+		strcpy(FilePath, Path);
+		strcat(FilePath, FileName);
+
+		HBITMAP Data;
+
+		Data = App->CL_Model->Group[Loop]->Base_Bitmap;
+
+		ilutWinSaveImage(FilePath, Data);
+
+		Loop++;
+	}
+	return 1;
+}

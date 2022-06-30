@@ -10,6 +10,8 @@ public:
 	bool TexureToWinPreviewFullPath(int Index, char* FullPath);
 	void Strip_JustFileName(char *pString, char *FileName);
 
+	bool DecompileTextures(char* Path);
+
 	bool LoadDummyTexture(int Index);
 	bool ChangeTexture_Model(void);
 
