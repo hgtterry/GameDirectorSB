@@ -34,6 +34,9 @@ public:
 	bool Show_FPS;  // Show Frames Per Second [150122]
 	bool StartPos;  // Position FPS Frame Flag [150122]
 
+	void ImGui_Rotation(void);
+
+	bool Show_Rotation;
 protected:
 
 	void Load_Font(void);

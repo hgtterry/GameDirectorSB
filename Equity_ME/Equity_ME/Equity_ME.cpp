@@ -465,6 +465,15 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 	}
 
 	// Mouse Wheel
+	case WM_MOUSEMOVE: // ok up and running and we have a loop for mouse
+	{
+
+		App->CL_Ogre->m_imgui.mouseMoved();
+
+		SetFocus(App->ViewGLhWnd);
+		break;
+	}
+
 	case WM_MOUSEWHEEL:
 	{
 		if (App->CL_Ogre->Ogre_Listener->Pl_LeftMouseDown == 0)

@@ -1149,7 +1149,8 @@ void VM_ImGui::ImGui_Model_Data(void)
 		//	Count++;
 		//	}*/
 		//}
-
+		ImGui::Spacing();
+		ImGui::Spacing();
 
 		if (ImGui::Button("Close"))
 		{

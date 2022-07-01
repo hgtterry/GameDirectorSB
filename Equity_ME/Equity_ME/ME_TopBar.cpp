@@ -45,6 +45,8 @@ ME_TopBar::ME_TopBar()
 	Toggle_Tabs_Model_Flag = 0;
 	Toggle_Tabs_Camera_Flag = 0;
 
+	Toggle_Dimensions_Flag = 0;
+
 	Toggle_Group_ONLY_Flag = 0;
 	Toggle_Group_HIDE_Flag = 0;
 	Toggle_Group_ALL_Flag = 1;
@@ -712,7 +714,8 @@ LRESULT CALLBACK ME_TopBar::Model_TB_Proc(HWND hDlg, UINT message, WPARAM wParam
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_BTMODELCENTRE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_BTTBDIMENSIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		return TRUE;
 	}
 
@@ -732,6 +735,13 @@ LRESULT CALLBACK ME_TopBar::Model_TB_Proc(HWND hDlg, UINT message, WPARAM wParam
 			return CDRF_DODEFAULT;
 		}
 
+		if(some_item->idFrom == IDC_BTTBDIMENSIONS && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_TopBar->Toggle_Dimensions_Flag);
+			return CDRF_DODEFAULT;
+		}
+
 		return CDRF_DODEFAULT;
 	}
 
@@ -742,6 +752,27 @@ LRESULT CALLBACK ME_TopBar::Model_TB_Proc(HWND hDlg, UINT message, WPARAM wParam
 			if (App->CL_Model->Model_Loaded == 1)
 			{
 				App->CL_Dimensions->Centre_Model_Mid();
+			}
+
+			return 1;
+		}
+
+		if (LOWORD(wParam) == IDC_BTTBDIMENSIONS)
+		{
+			//if (App->CL_Model->Model_Loaded == 1)
+			{
+				if (App->CL_ImGui->Show_Rotation == 1)
+				{
+					App->CL_TopBar->Toggle_Dimensions_Flag = 0;
+					App->CL_ImGui->Show_Rotation = 0;
+					App->CL_Panels->Show_Panels(1);
+				}
+				else
+				{
+					App->CL_TopBar->Toggle_Dimensions_Flag = 1;
+					App->CL_ImGui->Show_Rotation = 1;
+					App->CL_Panels->Show_Panels(0);
+				}
 			}
 
 			return 1;

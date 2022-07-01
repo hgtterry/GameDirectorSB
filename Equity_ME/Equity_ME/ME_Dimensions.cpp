@@ -5,6 +5,9 @@
 
 ME_Dimensions::ME_Dimensions()
 {
+	Model_X_Rotation = 90;
+	Model_Y_Rotation = 90;
+	Model_Z_Rotation = 90;
 }
 
 

@@ -12,6 +12,10 @@ public:
 	void ME_Dimensions::Rotate_Y_Model(float Y);
 	void ME_Dimensions::Rotate_Z_Model(float Z);
 
+	float Model_X_Rotation;
+	float Model_Y_Rotation;
+	float Model_Z_Rotation;
+
 protected:
 
 };

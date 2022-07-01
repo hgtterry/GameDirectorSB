@@ -30,6 +30,10 @@ public:
 
 	bool Start_TopBar();
 
+	bool Toggle_Dimensions_Flag;
+
+	HWND Model_TB_hWnd;
+
 protected:
 
 	static LRESULT CALLBACK TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
@@ -67,7 +71,6 @@ protected:
 	HWND TabsHwnd;
 	HWND Tabs_TB_hWnd;
 	HWND Group_TB_hWnd;
-	HWND Model_TB_hWnd;
 	HWND Camera_TB_hWnd;
 };
 

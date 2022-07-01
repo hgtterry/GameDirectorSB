@@ -11,6 +11,7 @@ public:
 	bool Resize(void);
 
 	void Enable_Panels(int show);
+	void Show_Panels(int show);
 private:
 
 };

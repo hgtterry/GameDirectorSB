@@ -96,3 +96,12 @@ void ME_Panels::Enable_Panels(int show)
 	EnableWindow(App->CL_Groups->RightGroups_Hwnd, show);
 }
 
+// *************************************************************************
+// *					Show Paneles Terry Flanigan					   *
+// *************************************************************************
+void ME_Panels::Show_Panels(int show)
+{
+	ShowWindow(App->ListPanel, show);
+	ShowWindow(App->CL_Groups->RightGroups_Hwnd, show);
+}
+
