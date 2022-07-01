@@ -43,5 +43,220 @@ void ME_Dimensions::Centre_Model_Mid(void)
 		App->CL_Model->GetBoundingBoxModel_Update();
 		
 	}
+}
 
+// *************************************************************************
+// *	  				Centre_Model_Base Terry Bernie					   *
+// *************************************************************************
+void ME_Dimensions::Centre_Model_Base(void)
+{
+	if (App->CL_Model->Model_Loaded == 1)
+	{
+
+		float X = -App->CL_Model->S_BoundingBox[0]->Centre[0].x;
+		float Y = -App->CL_Model->S_BoundingBox[0]->Centre[0].y + App->CL_Model->S_BoundingBox[0]->Size[0].y / 2;
+		float Z = -App->CL_Model->S_BoundingBox[0]->Centre[0].z;
+
+
+		int Count = 0;
+		int VertCount = 0;
+
+		int GroupCount = App->CL_Model->Get_Groupt_Count();
+
+		while (Count < GroupCount)
+		{
+			VertCount = 0;
+			while (VertCount < App->CL_Model->Group[Count]->GroupVertCount)
+			{
+				App->CL_Model->Group[Count]->vertex_Data[VertCount].x += X;
+				App->CL_Model->Group[Count]->vertex_Data[VertCount].y += Y;
+				App->CL_Model->Group[Count]->vertex_Data[VertCount].z += Z;
+				VertCount++;
+			}
+			Count++;
+		}
+
+		App->CL_Model->GetBoundingBoxModel_Update();
+	}
+}
+
+// *************************************************************************
+// *	  					Rotate_X_Model Terry Bernie					   *
+// *************************************************************************
+void ME_Dimensions::Rotate_X_Model(float X)
+{
+	if (App->CL_Model->Model_Loaded == 1)
+	{
+
+		Ogre::Vector3 Centre;
+
+		Centre.x = App->CL_Model->S_BoundingBox[0]->Centre[0].x;
+		Centre.y = App->CL_Model->S_BoundingBox[0]->Centre[0].y;
+		Centre.z = App->CL_Model->S_BoundingBox[0]->Centre[0].z;
+
+		Ogre::Vector3 Rotate;
+		Rotate.x = X;
+		Rotate.y = 0;
+		Rotate.z = 0;
+
+		int Count = 0;
+		int VertCount = 0;
+
+		int GroupCount = App->CL_Model->Get_Groupt_Count();
+
+		while (Count < GroupCount)
+		{
+			VertCount = 0;
+			while (VertCount < App->CL_Model->Group[Count]->GroupVertCount)
+			{
+				Ogre::Vector3 VertPos;
+				Ogre::Vector3 RotatedVert;
+
+				VertPos.x = App->CL_Model->Group[Count]->vertex_Data[VertCount].x;
+				VertPos.y = App->CL_Model->Group[Count]->vertex_Data[VertCount].y;
+				VertPos.z = App->CL_Model->Group[Count]->vertex_Data[VertCount].z;
+
+				if (Rotate.x != 0) // Dont bother if Zero
+				{
+					RotatedVert = (Ogre::Quaternion(Ogre::Degree(Rotate.x), Ogre::Vector3::UNIT_Y)*(VertPos - Centre));
+				}
+				else
+				{
+					RotatedVert = VertPos - Centre;
+				}
+
+				RotatedVert += Centre;
+
+				App->CL_Model->Group[Count]->vertex_Data[VertCount].x = RotatedVert.x;
+				App->CL_Model->Group[Count]->vertex_Data[VertCount].y = RotatedVert.y;
+				App->CL_Model->Group[Count]->vertex_Data[VertCount].z = RotatedVert.z;
+
+				VertCount++;
+			}
+			Count++;
+		}
+
+		App->CL_Model->GetBoundingBoxModel_Update();
+	}
+}
+
+// *************************************************************************
+// *	  				Rotate_Y_Model Terry Bernie						   *
+// *************************************************************************
+void ME_Dimensions::Rotate_Y_Model(float Y)
+{
+	if (App->CL_Model->Model_Loaded == 1)
+	{
+	
+		Ogre::Vector3 Centre;
+
+		Centre.x = App->CL_Model->S_BoundingBox[0]->Centre[0].x;
+		Centre.y = App->CL_Model->S_BoundingBox[0]->Centre[0].y;
+		Centre.z = App->CL_Model->S_BoundingBox[0]->Centre[0].z;
+
+		Ogre::Vector3 Rotate;
+		Rotate.x = 0;
+		Rotate.y = Y;
+		Rotate.z = 0;
+
+
+		int Count = 0;
+		int VertCount = 0;
+
+		int GroupCount = App->CL_Model->Get_Groupt_Count();
+
+		while (Count < GroupCount)
+		{
+			VertCount = 0;
+			while (VertCount < App->CL_Model->Group[Count]->GroupVertCount)
+			{
+				Ogre::Vector3 VertPos;
+				Ogre::Vector3 RotatedVert;
+
+				VertPos.x = App->CL_Model->Group[Count]->vertex_Data[VertCount].x;
+				VertPos.y = App->CL_Model->Group[Count]->vertex_Data[VertCount].y;
+				VertPos.z = App->CL_Model->Group[Count]->vertex_Data[VertCount].z;
+
+				if (Rotate.y != 0) // Dont bother if Zero
+				{
+					RotatedVert = (Ogre::Quaternion(Ogre::Degree(Rotate.y), Ogre::Vector3::UNIT_Z)*(VertPos - Centre));
+				}
+				else
+				{
+					RotatedVert = VertPos - Centre;
+				}
+
+				RotatedVert += Centre;
+
+				App->CL_Model->Group[Count]->vertex_Data[VertCount].x = RotatedVert.x;
+				App->CL_Model->Group[Count]->vertex_Data[VertCount].y = RotatedVert.y;
+				App->CL_Model->Group[Count]->vertex_Data[VertCount].z = RotatedVert.z;
+
+				VertCount++;
+			}
+			Count++;
+		}
+		App->CL_Model->GetBoundingBoxModel_Update();
+	}
+}
+
+// *************************************************************************
+// *	  				Rotate_Z_Model Terry Bernie						   *
+// *************************************************************************
+void ME_Dimensions::Rotate_Z_Model(float Z)
+{
+	if (App->CL_Model->Model_Loaded == 1)
+	{
+
+		Ogre::Vector3 Centre;
+
+		Centre.x = App->CL_Model->S_BoundingBox[0]->Centre[0].x;
+		Centre.y = App->CL_Model->S_BoundingBox[0]->Centre[0].y;
+		Centre.z = App->CL_Model->S_BoundingBox[0]->Centre[0].z;
+
+		Ogre::Vector3 Rotate;
+		Rotate.x = 0;
+		Rotate.y = 0;
+		Rotate.z = Z;
+
+
+		int Count = 0;
+		int VertCount = 0;
+
+		int GroupCount = App->CL_Model->Get_Groupt_Count();
+
+		while (Count < GroupCount)
+		{
+			VertCount = 0;
+			while (VertCount < App->CL_Model->Group[Count]->GroupVertCount)
+			{
+				Ogre::Vector3 VertPos;
+				Ogre::Vector3 RotatedVert;
+
+				VertPos.x = App->CL_Model->Group[Count]->vertex_Data[VertCount].x;
+				VertPos.y = App->CL_Model->Group[Count]->vertex_Data[VertCount].y;
+				VertPos.z = App->CL_Model->Group[Count]->vertex_Data[VertCount].z;
+
+				if (Rotate.z != 0) // Dont bother if Zero
+				{
+					RotatedVert = (Ogre::Quaternion(Ogre::Degree(Rotate.z), Ogre::Vector3::UNIT_X)*(VertPos - Centre));
+				}
+				else
+				{
+					RotatedVert = VertPos - Centre;
+				}
+
+				RotatedVert += Centre;
+
+				App->CL_Model->Group[Count]->vertex_Data[VertCount].x = RotatedVert.x;
+				App->CL_Model->Group[Count]->vertex_Data[VertCount].y = RotatedVert.y;
+				App->CL_Model->Group[Count]->vertex_Data[VertCount].z = RotatedVert.z;
+
+				VertCount++;
+			}
+			Count++;
+		}
+
+		App->CL_Model->GetBoundingBoxModel_Update();
+	}
 }

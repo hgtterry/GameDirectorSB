@@ -197,6 +197,37 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				App->CL_Model->Clear_Model_And_Reset();
 				return 1;
 			}
+
+			// ------------------------------------------------------- Tools
+			case ID_CENTRE_MIDDLE:
+			{
+				App->CL_Dimensions->Centre_Model_Mid();
+				return 1;
+			}
+
+			case ID_CENTRE_BASE:
+			{
+				App->CL_Dimensions->Centre_Model_Base();
+				return 1;
+			}
+
+			case ID_MODEL_ROTATEX:
+			{
+				App->CL_Dimensions->Rotate_X_Model(90);
+				return 1;
+			}
+
+			case ID_MODEL_ROTATEY:
+			{
+				App->CL_Dimensions->Rotate_Y_Model(90);
+				return 1;
+			}
+
+			case ID_MODEL_ROTATEZ:
+			{
+				App->CL_Dimensions->Rotate_Z_Model(90);
+				return 1;
+			}
 			
 			// ------------------------------------------------------- Import
 			case ID_IMPORT_EQ_WAVEFRONTOBJ:
