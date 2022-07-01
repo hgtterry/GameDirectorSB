@@ -51,6 +51,9 @@ public:
 	int	View_Height;	// Ogre window Height [150122]
 	int	View_Width;		// Ogre window WIdth [150122]
 
+	float mMoveSensitivity;
+	float mMoveSensitivityMouse;
+
 protected:
 
 	void Model_Mode(float DeltaTime);
@@ -64,7 +67,6 @@ protected:
 	Ogre::Radian		mRotY; // Camera Rotation Y [280122]
 	Ogre::Vector3		mTranslateVector; // Camera Rotation XYZ[280122]
 
-	float mMoveSensitivity;
 	float mMoveScale;
 
 	int Pl_MouseX;
@@ -74,7 +76,6 @@ protected:
 	long		Pl_Cent500X;
 	long		Pl_Cent500Y;
 
-	float		mMoveSensitivityMouse;
 	float		Pl_DeltaMouse;
 
 };

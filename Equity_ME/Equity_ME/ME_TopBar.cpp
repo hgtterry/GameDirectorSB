@@ -80,6 +80,7 @@ LRESULT CALLBACK ME_TopBar::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 		App->CL_TopBar->TabsHwnd = hDlg;
 
 		App->CL_TopBar->Start_Tabs_Headers();
+
 		App->CL_TopBar->Start_Group_TB();
 		App->CL_TopBar->Start_Model_TB();
 		App->CL_TopBar->Start_Camera_TB();
@@ -514,6 +515,7 @@ void ME_TopBar::Hide_Tabs(void)
 
 	Toggle_Tabs_Group_Flag = 0;
 	Toggle_Tabs_Model_Flag = 0;
+	Toggle_Tabs_Camera_Flag = 0;
 }
 
 // *************************************************************************
@@ -526,7 +528,7 @@ void ME_TopBar::Start_Group_TB(void)
 }
 
 // *************************************************************************
-// *								Camera_TB_Proc						   *
+// *								Group_TB_Proc						   *
 // *************************************************************************
 LRESULT CALLBACK ME_TopBar::Group_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -700,7 +702,7 @@ void ME_TopBar::Start_Model_TB(void)
 }
 
 // *************************************************************************
-// *								Camera_TB_Proc						   *
+// *								Model_TB_Proc						   *
 // *************************************************************************
 LRESULT CALLBACK ME_TopBar::Model_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -726,7 +728,7 @@ LRESULT CALLBACK ME_TopBar::Model_TB_Proc(HWND hDlg, UINT message, WPARAM wParam
 		if (some_item->idFrom == IDC_BTMODELCENTRE && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_TopBar->Toggle_GroupInfo_Flag);
+			App->Custom_Button_Toggle(item, 0);
 			return CDRF_DODEFAULT;
 		}
 
@@ -771,7 +773,8 @@ LRESULT CALLBACK ME_TopBar::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPara
 	{
 	case WM_INITDIALOG:
 	{
-		SendDlgItemMessage(hDlg, IDC_BTTPZOOM, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BTTBRESETVIEW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BTTBSPEED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		return TRUE;
 	}
@@ -785,10 +788,17 @@ LRESULT CALLBACK ME_TopBar::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPara
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		if (some_item->idFrom == IDC_BTTPZOOM && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BTTBRESETVIEW && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_TopBar->Toggle_GroupInfo_Flag);
+			App->Custom_Button_Toggle(item, 0);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BTTBSPEED && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, 0);
 			return CDRF_DODEFAULT;
 		}
 
@@ -797,17 +807,22 @@ LRESULT CALLBACK ME_TopBar::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPara
 
 	case WM_COMMAND:
 	{
-		if (LOWORD(wParam) == IDC_BTTPZOOM)
+		if (LOWORD(wParam) == IDC_BTTBRESETVIEW)
 		{
-			Debug
-			/*if (App->CL_Model->Model_Loaded == 1)
-			{
-				App->CL_Dimensions->Centre_Model_Mid();
-			}*/
-
+			App->CL_Grid->Reset_View();
 			return 1;
 		}
 
+		if (LOWORD(wParam) == IDC_BTTBSPEED)
+		{
+			App->CL_Panels->Enable_Panels(0);
+
+			App->CL_Dialogs->Start_Speed_Camera();
+
+			App->CL_Panels->Enable_Panels(1);
+			return 1;
+		}
+		
 		return FALSE;
 	}
 
