@@ -17,5 +17,12 @@ protected:
 
 	void List_GroupData(HWND hDlg);
 	void List_ModelData(HWND hDlg);
+
+	void UnCheck_All_SpeedMouseOption();
+
+	bool Mouse_Normal;
+	bool Mouse_Slow;
+	bool Mouse_VerySlow;
+	bool Mouse_Fast;
 };
 

@@ -68,6 +68,7 @@ ME_App::ME_App()
 
 	Font_CB15 = 0;
 	Font_CB18 = 0;
+	Font_Arial20 = 0;
 
 	Hnd_ModelInfo_Bmp = NULL;
 	Hnd_ModelInfoOn_Bmp = NULL;
@@ -217,6 +218,8 @@ void ME_App::SetBrushes_Fonts(void)
 
 	Font_CB15 = CreateFont(-15, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
 	Font_CB18 = CreateFont(-18, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
+	Font_Arial20 = CreateFont(-20, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Arial");
+
 }
 
 // *************************************************************************

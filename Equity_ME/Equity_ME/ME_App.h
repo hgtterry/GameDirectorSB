@@ -104,6 +104,7 @@ public:
 
 	HFONT Font_CB15;
 	HFONT Font_CB18;
+	HFONT Font_Arial20;
 
 	HANDLE Hnd_GridOn_Bmp;
 	HANDLE Hnd_GridOff_Bmp;

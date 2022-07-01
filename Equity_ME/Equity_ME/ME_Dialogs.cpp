@@ -7,6 +7,11 @@
 ME_Dialogs::ME_Dialogs()
 {
 	What_List = Enums::Show_List_None;
+
+	Mouse_Normal = 1;
+	Mouse_Slow = 0;
+	Mouse_VerySlow = 0;
+	Mouse_Fast = 0;
 }
 
 
@@ -188,14 +193,12 @@ LRESULT CALLBACK ME_Dialogs::Speed_Camera_Proc(HWND hDlg, UINT message, WPARAM w
 	{
 	case WM_INITDIALOG:
 	{
-		//SendDlgItemMessage(hDlg, IDC_STBANNER, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STBANNER, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 
-		//SendDlgItemMessage(hDlg, IDC_CKNORMAL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_CKSLOW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_CKVERYSLOW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CKNORMAL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CKSLOW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CKVERYSLOW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CKFAST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
-		//App->SBC_TopTabs->MouseOption_DlgHwnd = hDlg;
 
 		return TRUE;
 	}
@@ -221,54 +224,55 @@ LRESULT CALLBACK ME_Dialogs::Speed_Camera_Proc(HWND hDlg, UINT message, WPARAM w
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		/*if (some_item->idFrom == IDC_CKNORMAL && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_CKNORMAL && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->Cl_Dialogs->Mouse_Normal2);
+			App->Custom_Button_Toggle(item, App->CL_Dialogs->Mouse_Normal);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_CKSLOW && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->Cl_Dialogs->Mouse_Slow2);
+			App->Custom_Button_Toggle(item, App->CL_Dialogs->Mouse_Slow);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_CKVERYSLOW && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->Cl_Dialogs->Mouse_VerySlow2);
+			App->Custom_Button_Toggle(item, App->CL_Dialogs->Mouse_VerySlow);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_CKFAST && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->Cl_Dialogs->Mouse_Fast2);
+			App->Custom_Button_Toggle(item, App->CL_Dialogs->Mouse_Fast);
 			return CDRF_DODEFAULT;
-		}*/
+		}
+
+		if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
 
 		return CDRF_DODEFAULT;
 	}
 
 	case WM_COMMAND:
 
-		/*if (LOWORD(wParam) == IDC_CKNORMAL)
+		if (LOWORD(wParam) == IDC_CKNORMAL)
 		{
-			if (App->Cl19_Ogre->OgreListener->Equity_Running == 1)
-			{
-				App->EBC_Listener->mMoveSensitivity = 50;
-				App->EBC_Listener->mMoveSensitivityMouse = 50;
-			}
-			else
-			{
-				App->Cl19_Ogre->OgreListener->mMoveSensitivity = 50;
-				App->Cl19_Ogre->OgreListener->mMoveSensitivityMouse = 50;
-			}
+			
+			App->CL_Ogre->Ogre_Listener->mMoveSensitivity = 50;
+			App->CL_Ogre->Ogre_Listener->mMoveSensitivityMouse = 50;
+			
 
-			App->SBC_TopTabs->UnCheck_All_MouseOption(hDlg);
-			App->Cl_Dialogs->Mouse_Normal2 = 1;
+			App->CL_Dialogs->UnCheck_All_SpeedMouseOption();
+			App->CL_Dialogs->Mouse_Normal = 1;
 
 			InvalidateRect(hDlg, NULL, false);
 			EndDialog(hDlg, LOWORD(wParam));
@@ -277,19 +281,12 @@ LRESULT CALLBACK ME_Dialogs::Speed_Camera_Proc(HWND hDlg, UINT message, WPARAM w
 
 		if (LOWORD(wParam) == IDC_CKSLOW)
 		{
-			if (App->Cl19_Ogre->OgreListener->Equity_Running == 1)
-			{
-				App->EBC_Listener->mMoveSensitivity = 5;
-				App->EBC_Listener->mMoveSensitivityMouse = 5;
-			}
-			else
-			{
-				App->Cl19_Ogre->OgreListener->mMoveSensitivity = 5;
-				App->Cl19_Ogre->OgreListener->mMoveSensitivityMouse = 5;
-			}
-
-			App->SBC_TopTabs->UnCheck_All_MouseOption(hDlg);
-			App->Cl_Dialogs->Mouse_Slow2 = 1;
+			
+			App->CL_Ogre->Ogre_Listener->mMoveSensitivity = 5;
+			App->CL_Ogre->Ogre_Listener->mMoveSensitivityMouse = 5;
+			
+			App->CL_Dialogs->UnCheck_All_SpeedMouseOption();
+			App->CL_Dialogs->Mouse_Slow = 1;
 
 			InvalidateRect(hDlg, NULL, false);
 			EndDialog(hDlg, LOWORD(wParam));
@@ -298,24 +295,18 @@ LRESULT CALLBACK ME_Dialogs::Speed_Camera_Proc(HWND hDlg, UINT message, WPARAM w
 
 		if (LOWORD(wParam) == IDC_CKVERYSLOW)
 		{
-			if (App->Cl19_Ogre->OgreListener->Equity_Running == 1)
-			{
-				App->EBC_Listener->mMoveSensitivity = 1;
-				App->EBC_Listener->mMoveSensitivityMouse = 1;
-			}
-			else
-			{
-				App->Cl19_Ogre->OgreListener->mMoveSensitivity = 1;
-				App->Cl19_Ogre->OgreListener->mMoveSensitivityMouse = 1;
-			}
+			
+			App->CL_Ogre->Ogre_Listener->mMoveSensitivity = 1;
+			App->CL_Ogre->Ogre_Listener->mMoveSensitivityMouse = 1;
+			
 
-			App->SBC_TopTabs->UnCheck_All_MouseOption(hDlg);
-			App->Cl_Dialogs->Mouse_VerySlow2 = 1;
+			App->CL_Dialogs->UnCheck_All_SpeedMouseOption();
+			App->CL_Dialogs->Mouse_VerySlow = 1;
 
 			InvalidateRect(hDlg, NULL, false);
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
-		}*/
+		}
 
 		if (LOWORD(wParam) == IDC_CKFAST)
 		{
@@ -323,6 +314,9 @@ LRESULT CALLBACK ME_Dialogs::Speed_Camera_Proc(HWND hDlg, UINT message, WPARAM w
 			App->CL_Ogre->Ogre_Listener->mMoveSensitivity = 250;
 			App->CL_Ogre->Ogre_Listener->mMoveSensitivityMouse = 250;
 			
+			App->CL_Dialogs->UnCheck_All_SpeedMouseOption();
+			App->CL_Dialogs->Mouse_Fast = 1;
+
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -335,4 +329,15 @@ LRESULT CALLBACK ME_Dialogs::Speed_Camera_Proc(HWND hDlg, UINT message, WPARAM w
 		break;
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *				UnCheck_All_SpeedMouseOption Terry Flanigan			   *
+// *************************************************************************
+void ME_Dialogs::UnCheck_All_SpeedMouseOption()
+{
+	Mouse_Normal = 0;
+	Mouse_Slow = 0;
+	Mouse_VerySlow = 0;
+	Mouse_Fast = 0;
 }
