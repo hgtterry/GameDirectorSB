@@ -190,32 +190,24 @@ void ME_ImGui::ImGui_Rotation(void)
 		ImGui::PushButtonRepeat(true);
 		if (ImGui::ArrowButton("##leftPosX", ImGuiDir_Left))
 		{
-		//	/*if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
-		//	{
-		//		App->CL_Vm_Genesis3D->Actor_Position.X += Model_XTranslate;
-		//		App->CL_Vm_Genesis3D->MoveActor();
-		//	}*/
+			App->CL_Dimensions->Translate_Model(-App->CL_Dimensions->Model_X_Position, 0, 0);
 		}
 
 		ImGui::SameLine(0.0f, spacingPos);
 		if (ImGui::ArrowButton("##rightPosX", ImGuiDir_Right))
 		{
-		///*	if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
-		//	{
-		//		App->CL_Vm_Genesis3D->Actor_Position.X -= Model_XTranslate;
-		//		App->CL_Vm_Genesis3D->MoveActor();
-		//	}*/
+			App->CL_Dimensions->Translate_Model(App->CL_Dimensions->Model_X_Position, 0, 0);
 		}
 		ImGui::PopButtonRepeat();
 
 		ImGui::SameLine();
 		ImGui::SetNextItemWidth(100);
-		const char* XitemsPosX[] = { "1", "2", "5", "10", "20" };
-		static int XitemPosX = 1;
+		const char* XitemsPosX[] = { "0.001","0.01","0.1","1", "2", "5", "10", "20" };
+		static int XitemPosX = 3;
 		bool ChangedPos = ImGui::Combo("Step Pos X", &XitemPosX, XitemsPosX, IM_ARRAYSIZE(XitemsPosX));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
 		if (ChangedPos == 1)
 		{
-			//Model_XTranslate = (float)atof(XitemsX[XitemX]);
+			App->CL_Dimensions->Model_X_Position = (float)atof(XitemsPosX[XitemPosX]);
 		}
 
 		// ------------------------------------------ Position y
@@ -226,31 +218,23 @@ void ME_ImGui::ImGui_Rotation(void)
 		ImGui::PushButtonRepeat(true);
 		if (ImGui::ArrowButton("##leftPosY", ImGuiDir_Left))
 		{
-			/*if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
-			{
-				App->CL_Vm_Genesis3D->Actor_Position.Y += Model_YTranslate;
-				App->CL_Vm_Genesis3D->MoveActor();
-			}*/
+			App->CL_Dimensions->Translate_Model(0,-App->CL_Dimensions->Model_Y_Position, 0);
 		}
 		ImGui::SameLine(0.0f, spacingPos2);
 		if (ImGui::ArrowButton("##rightPosY", ImGuiDir_Right))
 		{
-			/*if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
-			{
-				App->CL_Vm_Genesis3D->Actor_Position.Y -= Model_YTranslate;
-				App->CL_Vm_Genesis3D->MoveActor();
-			}*/
+			App->CL_Dimensions->Translate_Model(0, App->CL_Dimensions->Model_Y_Position, 0);
 		}
 		ImGui::PopButtonRepeat();
 
 		ImGui::SameLine();
 		ImGui::SetNextItemWidth(100);
-		const char* XitemsPosY[] = { "1", "2", "5", "10", "20" };
-		static int XitemPosY = 1;
+		const char* XitemsPosY[] = { "0.001","0.01","0.1","1", "2", "5", "10", "20" };
+		static int XitemPosY = 3;
 		bool ChangedPosY = ImGui::Combo("Step Pos Y", &XitemPosY, XitemsPosY, IM_ARRAYSIZE(XitemsPosY));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
 		if (ChangedPosY == 1)
 		{
-			//Model_YTranslate = (float)atof(XitemsY[XitemY]);
+			App->CL_Dimensions->Model_Y_Position = (float)atof(XitemsPosY[XitemPosY]);
 		}
 
 		// ------------------------------------------ Position z
@@ -261,31 +245,23 @@ void ME_ImGui::ImGui_Rotation(void)
 		ImGui::PushButtonRepeat(true);
 		if (ImGui::ArrowButton("##leftPosZ", ImGuiDir_Left))
 		{
-			/*if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
-			{
-				App->CL_Vm_Genesis3D->Actor_Position.Z += Model_ZTranslate;
-				App->CL_Vm_Genesis3D->MoveActor();
-			}*/
+			App->CL_Dimensions->Translate_Model( 0, 0, -App->CL_Dimensions->Model_Z_Position);
 		}
 		ImGui::SameLine(0.0f, spacingPos3);
 		if (ImGui::ArrowButton("##rightPosZ", ImGuiDir_Right))
 		{
-			/*if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
-			{
-				App->CL_Vm_Genesis3D->Actor_Position.Z -= Model_ZTranslate;
-				App->CL_Vm_Genesis3D->MoveActor();
-			}*/
+			App->CL_Dimensions->Translate_Model(0, 0, App->CL_Dimensions->Model_Z_Position);
 		}
 		ImGui::PopButtonRepeat();
 
 		ImGui::SameLine();
 		ImGui::SetNextItemWidth(100);
-		const char* XitemsPosZ[] = { "1", "2", "5", "10", "20" };
-		static int XitemPosZ = 1;
+		const char* XitemsPosZ[] = { "0.001","0.01","0.1","1", "2", "5", "10", "20" };
+		static int XitemPosZ = 3;
 		bool ChangedPosZ = ImGui::Combo("Step Pos Z", &XitemPosZ, XitemsPosZ, IM_ARRAYSIZE(XitemsPosZ));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
 		if (ChangedPosZ == 1)
 		{
-			//Model_ZTranslate = (float)atof(XitemsZ[XitemZ]);
+			App->CL_Dimensions->Model_Z_Position = (float)atof(XitemsPosZ[XitemPosZ]);
 		}
 
 		ImGui::Spacing();

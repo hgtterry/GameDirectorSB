@@ -8,6 +8,10 @@ ME_Dimensions::ME_Dimensions()
 	Model_X_Rotation = 90;
 	Model_Y_Rotation = 90;
 	Model_Z_Rotation = 90;
+
+	Model_X_Position = 1;
+	Model_Y_Position = 1;
+	Model_Z_Position = 1;
 }
 
 
@@ -255,6 +259,35 @@ void ME_Dimensions::Rotate_Z_Model(float Z)
 				App->CL_Model->Group[Count]->vertex_Data[VertCount].y = RotatedVert.y;
 				App->CL_Model->Group[Count]->vertex_Data[VertCount].z = RotatedVert.z;
 
+				VertCount++;
+			}
+			Count++;
+		}
+
+		App->CL_Model->GetBoundingBoxModel_Update();
+	}
+}
+
+// *************************************************************************
+// *	  				Translate_Model Terry Bernie					   *
+// *************************************************************************
+void ME_Dimensions::Translate_Model(float X, float Y, float Z)
+{
+	if (App->CL_Model->Model_Loaded == 1)
+	{
+		int Count = 0;
+		int VertCount = 0;
+
+		int GroupCount = App->CL_Model->Get_Groupt_Count();
+
+		while (Count < GroupCount)
+		{
+			VertCount = 0;
+			while (VertCount < App->CL_Model->Group[Count]->GroupVertCount)
+			{
+				App->CL_Model->Group[Count]->vertex_Data[VertCount].x += X;
+				App->CL_Model->Group[Count]->vertex_Data[VertCount].y += Y;
+				App->CL_Model->Group[Count]->vertex_Data[VertCount].z += Z;
 				VertCount++;
 			}
 			Count++;
