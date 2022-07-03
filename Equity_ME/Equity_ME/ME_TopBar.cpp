@@ -759,18 +759,18 @@ LRESULT CALLBACK ME_TopBar::Model_TB_Proc(HWND hDlg, UINT message, WPARAM wParam
 
 		if (LOWORD(wParam) == IDC_BTTBDIMENSIONS)
 		{
-			//if (App->CL_Model->Model_Loaded == 1)
+			//if (App->CL_Model->Model_Loaded == 1) // Check_Here
 			{
-				if (App->CL_ImGui->Show_Rotation == 1)
+				if (App->CL_ImGui->Show_Dimensions == 1)
 				{
 					App->CL_TopBar->Toggle_Dimensions_Flag = 0;
-					App->CL_ImGui->Show_Rotation = 0;
+					App->CL_ImGui->Show_Dimensions = 0;
 					App->CL_Panels->Show_Panels(1);
 				}
 				else
 				{
 					App->CL_TopBar->Toggle_Dimensions_Flag = 1;
-					App->CL_ImGui->Show_Rotation = 1;
+					App->CL_ImGui->Show_Dimensions = 1;
 					App->CL_Panels->Show_Panels(0);
 				}
 			}

@@ -13,6 +13,7 @@ public:
 	void Rotate_Z_Model(float Z);
 
 	void Translate_Model(float X, float Y, float Z);
+	void Scale_Model(bool Mode, float X, float Y, float Z);
 
 	float Model_X_Rotation;
 	float Model_Y_Rotation;
@@ -21,6 +22,12 @@ public:
 	float Model_X_Position;
 	float Model_Y_Position;
 	float Model_Z_Position;
+
+	float Model_XScale;
+	float Model_YScale;
+	float Model_ZScale;
+
+	bool LockAxis;
 
 protected:
 

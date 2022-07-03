@@ -38,7 +38,7 @@ ME_ImGui::ME_ImGui()
 
 	Show_FPS = 1;
 	StartPos = 0;
-	Show_Rotation = 0;
+	Show_Dimensions = 0;
 }
 
 
@@ -128,9 +128,9 @@ void ME_ImGui::Tabs_Render_Camera(void)
 		ImGui_FPS();
 	}
 
-	if (Show_Rotation == 1)
+	if (Show_Dimensions == 1)
 	{
-		ImGui_Rotation();
+		ImGui_Dimensions();
 	}
 }
 
@@ -161,13 +161,15 @@ void ME_ImGui::ImGui_FPS(void)
 }
 
 // *************************************************************************
-// *						ImGui_Rotation  Terry Bernie				   *
+// *						ImGui_Dimensions  Terry Bernie				   *
 // *************************************************************************
-void ME_ImGui::ImGui_Rotation(void)
+void ME_ImGui::ImGui_Dimensions(void)
 {
 	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
 
-	if (!ImGui::Begin("Rotation2", &Show_Rotation, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
+	ImGuiStyle* style = &ImGui::GetStyle();
+
+	if (!ImGui::Begin("Rotation2", &Show_Dimensions, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
 	{
 		ImGui::End();
 	}
@@ -183,11 +185,15 @@ void ME_ImGui::ImGui_Rotation(void)
 		ImGui::Spacing();
 
 		// ---------------------------------------------------------------------------------- Position X
+		style->Colors[ImGuiCol_Text] = ImVec4(0.0f, 0.0f, 1.0f, 1.00f);
 		ImGui::Text("X ");
+		style->Colors[ImGuiCol_Text] = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
 		ImGui::SameLine();
+		
 
 		float spacingPos = ImGui::GetStyle().ItemInnerSpacing.x;
 		ImGui::PushButtonRepeat(true);
+
 		if (ImGui::ArrowButton("##leftPosX", ImGuiDir_Left))
 		{
 			App->CL_Dimensions->Translate_Model(-App->CL_Dimensions->Model_X_Position, 0, 0);
@@ -211,11 +217,14 @@ void ME_ImGui::ImGui_Rotation(void)
 		}
 
 		// ------------------------------------------ Position y
+		style->Colors[ImGuiCol_Text] = ImVec4(0.0f, 1.0f, 0.0f, 1.00f);
 		ImGui::Text("Y ");
+		style->Colors[ImGuiCol_Text] = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
 		ImGui::SameLine();
 
 		float spacingPos2 = ImGui::GetStyle().ItemInnerSpacing.x;
 		ImGui::PushButtonRepeat(true);
+
 		if (ImGui::ArrowButton("##leftPosY", ImGuiDir_Left))
 		{
 			App->CL_Dimensions->Translate_Model(0,-App->CL_Dimensions->Model_Y_Position, 0);
@@ -238,11 +247,14 @@ void ME_ImGui::ImGui_Rotation(void)
 		}
 
 		// ------------------------------------------ Position z
+		style->Colors[ImGuiCol_Text] = ImVec4(1.0f, 0.0f, 0.0f, 1.00f);
 		ImGui::Text("Z ");
+		style->Colors[ImGuiCol_Text] = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
 		ImGui::SameLine();
 
 		float spacingPos3 = ImGui::GetStyle().ItemInnerSpacing.x;
 		ImGui::PushButtonRepeat(true);
+
 		if (ImGui::ArrowButton("##leftPosZ", ImGuiDir_Left))
 		{
 			App->CL_Dimensions->Translate_Model( 0, 0, -App->CL_Dimensions->Model_Z_Position);
@@ -263,6 +275,8 @@ void ME_ImGui::ImGui_Rotation(void)
 		{
 			App->CL_Dimensions->Model_Z_Position = (float)atof(XitemsPosZ[XitemPosZ]);
 		}
+
+		style->Colors[ImGuiCol_Text] = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
 
 		ImGui::Spacing();
 		ImGui::Indent();
@@ -392,14 +406,101 @@ void ME_ImGui::ImGui_Rotation(void)
 			App->CL_Dimensions->Model_Z_Rotation = (float)atof(XitemsZ[XitemZ]);
 		}
 
+		ImGui::Text("Scale");
+		ImGui::Separator();
+		ImGui::Spacing();
+
+		// ---------------------------------------------------------------------------------- Scale X
+		ImGui::Text("X ");
+		ImGui::SameLine();
+
+		float spacingScalePosX = ImGui::GetStyle().ItemInnerSpacing.x;
+		ImGui::PushButtonRepeat(true);
+		if (ImGui::ArrowButton("##leftScaleX", ImGuiDir_Left))
+		{
+			App->CL_Dimensions->Scale_Model(1, 0.5, 0.5,0.5);
+		}
+
+		ImGui::SameLine(0.0f, spacingScalePosX);
+		if (ImGui::ArrowButton("##rightScaleX", ImGuiDir_Right))
+		{
+			App->CL_Dimensions->Scale_Model(0, 0.5, 0.5, 0.5);
+		}
+		ImGui::PopButtonRepeat();
+
+		ImGui::SameLine();
+		ImGui::SetNextItemWidth(100);
+		const char* XitemsScaleX[] = { "0.001","0.01","0.1","1", "2", "5", "10", "20" };
+		static int XitemScaleX = 3;
+		bool ChangedScaleX = ImGui::Combo("Step Scale X", &XitemScaleX, XitemsScaleX, IM_ARRAYSIZE(XitemsScaleX));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
+		if (ChangedScaleX == 1)
+		{
+			App->CL_Dimensions->Model_X_Position = (float)atof(XitemsPosX[XitemScaleX]);
+		}
+
+		// ---------------------------------------------------------------------------------- Scale Y
+		ImGui::Text("Y ");
+		ImGui::SameLine();
+
+		float spacingScalePosY = ImGui::GetStyle().ItemInnerSpacing.x;
+		ImGui::PushButtonRepeat(true);
+		if (ImGui::ArrowButton("##leftScaleY", ImGuiDir_Left))
+		{
+			App->CL_Dimensions->Translate_Model(-App->CL_Dimensions->Model_X_Position, 0, 0);
+		}
+
+		ImGui::SameLine(0.0f, spacingScalePosY);
+		if (ImGui::ArrowButton("##rightScaleY", ImGuiDir_Right))
+		{
+			App->CL_Dimensions->Translate_Model(App->CL_Dimensions->Model_X_Position, 0, 0);
+		}
+		ImGui::PopButtonRepeat();
+
+		ImGui::SameLine();
+		ImGui::SetNextItemWidth(100);
+		const char* XitemsScaleY[] = { "0.001","0.01","0.1","1", "2", "5", "10", "20" };
+		static int XitemScaleY = 3;
+		bool ChangedScaleY = ImGui::Combo("Step Scale X", &XitemScaleY, XitemsScaleY, IM_ARRAYSIZE(XitemsScaleY));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
+		if (ChangedScaleY == 1)
+		{
+			App->CL_Dimensions->Model_X_Position = (float)atof(XitemsPosX[XitemScaleY]);
+		}
+
+		// ---------------------------------------------------------------------------------- Scale Z
+		ImGui::Text("Z ");
+		ImGui::SameLine();
+
+		float spacingScalePosZ = ImGui::GetStyle().ItemInnerSpacing.x;
+		ImGui::PushButtonRepeat(true);
+		if (ImGui::ArrowButton("##leftScaleZ", ImGuiDir_Left))
+		{
+			App->CL_Dimensions->Translate_Model(-App->CL_Dimensions->Model_X_Position, 0, 0);
+		}
+
+		ImGui::SameLine(0.0f, spacingScalePosZ);
+		if (ImGui::ArrowButton("##rightScaleZ", ImGuiDir_Right))
+		{
+			App->CL_Dimensions->Translate_Model(App->CL_Dimensions->Model_X_Position, 0, 0);
+		}
+		ImGui::PopButtonRepeat();
+
+		ImGui::SameLine();
+		ImGui::SetNextItemWidth(100);
+		const char* XitemsScaleZ[] = { "0.001","0.01","0.1","1", "2", "5", "10", "20" };
+		static int XitemScaleZ = 3;
+		bool ChangedScaleZ = ImGui::Combo("Step Scale X", &XitemScaleZ, XitemsScaleZ, IM_ARRAYSIZE(XitemsScaleZ));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
+		if (ChangedScaleZ == 1)
+		{
+			App->CL_Dimensions->Model_X_Position = (float)atof(XitemsPosX[XitemScaleZ]);
+		}
+
 		if (ImGui::Button("Close"))
 		{
-			Show_Rotation = 0;
+			Show_Dimensions = 0;
 			App->CL_Panels->Show_Panels(1);
 			App->CL_TopBar->Toggle_Dimensions_Flag = 0;
 			RedrawWindow(App->CL_TopBar->Model_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 		}
-
 		ImGui::End();
 	}
 }
