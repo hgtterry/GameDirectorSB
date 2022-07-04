@@ -35,6 +35,8 @@ protected:
 
 	HTREEITEM GD_ModelFolder;
 	HTREEITEM GD_GroupsFolder;
+
+	HIMAGELIST hImageList;
 };
 
 

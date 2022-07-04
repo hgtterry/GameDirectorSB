@@ -308,67 +308,70 @@ void ME_Dimensions::Translate_Model(float X, float Y, float Z)
 // *************************************************************************
 void ME_Dimensions::Scale_Model(bool Mode, float X, float Y, float Z)
 {
-	if (LockAxis == 1)
+	if (App->CL_Model->Model_Loaded == 1)
 	{
-		float Timeser = 1 / Model_XScale;
-		Ogre::Vector3 Scale;
-
-		if (Mode == 1)
+		if (LockAxis == 1)
 		{
-			Scale.x = Model_XScale * 4;
-			Scale.y = Model_YScale * 4;
-			Scale.z = Model_ZScale * 4;
+			float Timeser = 1 / Model_XScale;
+			Ogre::Vector3 Scale;
+
+			if (Mode == 1)
+			{
+				Scale.x = Model_XScale * 4;
+				Scale.y = Model_YScale * 4;
+				Scale.z = Model_ZScale * 4;
+			}
+			else
+			{
+				Scale.x = Model_XScale;
+				Scale.y = Model_YScale;
+				Scale.z = Model_ZScale;
+			}
+
+			int Count = 0;
+			int VertCount = 0;
+
+			int GroupCount = App->CL_Model->Get_Groupt_Count();
+
+			while (Count < GroupCount)
+			{
+				VertCount = 0;
+				while (VertCount < App->CL_Model->Group[Count]->GroupVertCount)
+				{
+					App->CL_Model->Group[Count]->vertex_Data[VertCount].x *= Scale.x;
+					App->CL_Model->Group[Count]->vertex_Data[VertCount].y *= Scale.y;
+					App->CL_Model->Group[Count]->vertex_Data[VertCount].z *= Scale.z;
+					VertCount++;
+				}
+				Count++;
+			}
+
+			App->CL_Model->GetBoundingBoxModel_Update();
+
 		}
 		else
 		{
-			Scale.x = Model_XScale;
-			Scale.y = Model_YScale;
-			Scale.z = Model_ZScale;
-		}
+			Ogre::Vector3 Scale;
 
-		int Count = 0;
-		int VertCount = 0;
+			int Count = 0;
+			int VertCount = 0;
 
-		int GroupCount = App->CL_Model->Get_Groupt_Count();
+			int GroupCount = App->CL_Model->Get_Groupt_Count();
 
-		while (Count < GroupCount)
-		{
-			VertCount = 0;
-			while (VertCount < App->CL_Model->Group[Count]->GroupVertCount)
+			while (Count < GroupCount)
 			{
-				App->CL_Model->Group[Count]->vertex_Data[VertCount].x *= Scale.x;
-				App->CL_Model->Group[Count]->vertex_Data[VertCount].y *= Scale.y;
-				App->CL_Model->Group[Count]->vertex_Data[VertCount].z *= Scale.z;
-				VertCount++;
+				VertCount = 0;
+				while (VertCount < App->CL_Model->Group[Count]->GroupVertCount)
+				{
+					App->CL_Model->Group[Count]->vertex_Data[VertCount].x *= X;
+					App->CL_Model->Group[Count]->vertex_Data[VertCount].y *= Y;
+					App->CL_Model->Group[Count]->vertex_Data[VertCount].z *= Z;
+					VertCount++;
+				}
+				Count++;
 			}
-			Count++;
+
+			App->CL_Model->GetBoundingBoxModel_Update();
 		}
-
-		App->CL_Model->GetBoundingBoxModel_Update();
-
-	}
-	else
-	{
-		Ogre::Vector3 Scale;
-
-		int Count = 0;
-		int VertCount = 0;
-
-		int GroupCount = App->CL_Model->Get_Groupt_Count();
-
-		while (Count < GroupCount)
-		{
-			VertCount = 0;
-			while (VertCount <  App->CL_Model->Group[Count]->GroupVertCount)
-			{
-				App->CL_Model->Group[Count]->vertex_Data[VertCount].x *= X;
-				App->CL_Model->Group[Count]->vertex_Data[VertCount].y *= Y;
-				App->CL_Model->Group[Count]->vertex_Data[VertCount].z *= Z;
-				VertCount++;
-			}
-			Count++;
-		}
-
-		App->CL_Model->GetBoundingBoxModel_Update();
 	}
 }

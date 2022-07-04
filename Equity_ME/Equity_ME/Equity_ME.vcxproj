@@ -219,6 +219,10 @@
     <Image Include="bitmap2.bmp" />
     <Image Include="Equity_ME.ico" />
     <Image Include="Resource\Dummy.bmp" />
+    <Image Include="Resource\FileView\File.bmp" />
+    <Image Include="Resource\FileView\FileInactive.bmp" />
+    <Image Include="Resource\FileView\FIleSelected.bmp" />
+    <Image Include="Resource\FileView\Folder.bmp" />
     <Image Include="resource\menubar\bitmap1.bmp" />
     <Image Include="Resource\MenuBar\bitmap2.bmp" />
     <Image Include="Resource\MenuBar\BondingBoxOff.bmp" />

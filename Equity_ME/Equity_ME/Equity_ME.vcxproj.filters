@@ -267,5 +267,17 @@
     <Image Include="Resource\MenuBar\LightOff.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Resource\FileView\FileInactive.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource\FileView\Folder.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource\FileView\File.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource\FileView\FIleSelected.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

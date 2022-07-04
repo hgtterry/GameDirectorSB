@@ -47,6 +47,7 @@ public:
 	int Get_Groupt_Count();
 	void Set_Texture_Count(int Count);
 	void Set_Motion_Count(int Count);
+	void Create_Mesh_Group(int Index);
 	void Create_BondingBox_Model(void);
 	bool GetBoundingBoxModel_Update(void);
 

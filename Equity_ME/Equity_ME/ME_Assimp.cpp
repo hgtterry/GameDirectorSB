@@ -282,7 +282,7 @@ void ME_Assimp::Create_MeshGroups(const aiScene* pScene)
 	{
 		aiMesh* mesh = pScene->mMeshes[Count];
 
-		App->CL_Model->Group[Count] = new Base_Group();
+		App->CL_Model->Create_Mesh_Group(Count);
 
 		_itoa(Count, GroupNum, 10);
 		strcpy(GroupName, "Group_");

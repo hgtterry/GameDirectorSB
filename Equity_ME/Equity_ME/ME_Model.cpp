@@ -168,6 +168,21 @@ void ME_Model::Set_Paths(void)
 }
 
 // *************************************************************************
+// *					Create_Mesh_Group Terry Flanigan		  	 	   *
+// *************************************************************************
+void ME_Model::Create_Mesh_Group(int Index)
+{
+	if (Group[Index] != nullptr)
+	{
+		delete Group[Index];
+		Group[Index] = nullptr;
+	}
+
+	App->CL_Model->Group[Index] = new Base_Group();
+
+}
+
+// *************************************************************************
 // *				Create_BondingBox_Model Terry Bernie				   *
 // *************************************************************************
 void ME_Model::Create_BondingBox_Model(void)
@@ -201,7 +216,6 @@ void ME_Model::Create_BondingBox_Model(void)
 		}
 		Count++;
 	}
-
 
 	S_BoundingBox[0]->Size[0].x = (fabs(S_BoundingBox[0]->BB_Max[0].x - S_BoundingBox[0]->BB_Min[0].x));
 	S_BoundingBox[0]->Size[0].y = (fabs(S_BoundingBox[0]->BB_Max[0].y - S_BoundingBox[0]->BB_Min[0].y));
@@ -246,7 +260,6 @@ bool ME_Model::GetBoundingBoxModel_Update(void)
 		Count++;
 	}
 
-
 	S_BoundingBox[0]->Size[0].x = (fabs(S_BoundingBox[0]->BB_Max[0].x - S_BoundingBox[0]->BB_Min[0].x));
 	S_BoundingBox[0]->Size[0].y = (fabs(S_BoundingBox[0]->BB_Max[0].y - S_BoundingBox[0]->BB_Min[0].y));
 	S_BoundingBox[0]->Size[0].z = (fabs(S_BoundingBox[0]->BB_Max[0].z - S_BoundingBox[0]->BB_Min[0].z));
@@ -272,6 +285,8 @@ void ME_Model::Clear_Model_And_Reset(void)
 	App->CL_Groups->Reset_Class();
 	
 	App->CL_Grid->Reset_Class();
+
+	App->CL_TopBar->Reset_Class();
 
 	SetWindowText(App->MainHwnd, "Equity_ME");
 }

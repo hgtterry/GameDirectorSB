@@ -41,8 +41,8 @@ ME_TopBar::ME_TopBar()
 	Toggle_BBox_Flag = 0;
 	Toggle_Faces_Flag = 0;
 
-	Toggle_Tabs_Group_Flag = 1;
-	Toggle_Tabs_Model_Flag = 0;
+	Toggle_Tabs_Group_Flag = 0;
+	Toggle_Tabs_Model_Flag = 1;
 	Toggle_Tabs_Camera_Flag = 0;
 
 	Toggle_Dimensions_Flag = 0;
@@ -57,6 +57,30 @@ ME_TopBar::ME_TopBar()
 
 ME_TopBar::~ME_TopBar()
 {
+}
+
+// *************************************************************************
+// *					Reaet_Class Terry Flanigan						   *
+// *************************************************************************
+void ME_TopBar::Reset_Class(void)
+{
+	Hide_Tabs();
+
+	Toggle_Dimensions_Flag = 0;
+	Toggle_Group_ONLY_Flag = 0;
+	Toggle_Group_HIDE_Flag = 0;
+	Toggle_Group_ALL_Flag = 1;
+	Toggle_GroupInfo_Flag = 0;
+
+	Toggle_Tabs_Model_Flag = 1;
+
+	ShowWindow(Model_TB_hWnd, SW_SHOW);
+
+	App->CL_TopBar->Toggle_Dimensions_Flag = 0;
+	App->CL_ImGui->Show_Dimensions = 0;
+	App->CL_Panels->Show_Panels(1);
+
+	RedrawWindow(App->CL_TopBar->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 
 // *************************************************************************
@@ -749,7 +773,6 @@ LRESULT CALLBACK ME_TopBar::Model_TB_Proc(HWND hDlg, UINT message, WPARAM wParam
 	{
 	case WM_INITDIALOG:
 	{
-		SendDlgItemMessage(hDlg, IDC_BTMODELCENTRE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BTTBDIMENSIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		return TRUE;
@@ -764,13 +787,6 @@ LRESULT CALLBACK ME_TopBar::Model_TB_Proc(HWND hDlg, UINT message, WPARAM wParam
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		if (some_item->idFrom == IDC_BTMODELCENTRE && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, 0);
-			return CDRF_DODEFAULT;
-		}
-
 		if(some_item->idFrom == IDC_BTTBDIMENSIONS && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
@@ -783,16 +799,6 @@ LRESULT CALLBACK ME_TopBar::Model_TB_Proc(HWND hDlg, UINT message, WPARAM wParam
 
 	case WM_COMMAND:
 	{
-		if (LOWORD(wParam) == IDC_BTMODELCENTRE)
-		{
-			if (App->CL_Model->Model_Loaded == 1)
-			{
-				App->CL_Dimensions->Centre_Model_Mid();
-			}
-
-			return 1;
-		}
-
 		if (LOWORD(wParam) == IDC_BTTBDIMENSIONS)
 		{
 			//if (App->CL_Model->Model_Loaded == 1) // Check_Here

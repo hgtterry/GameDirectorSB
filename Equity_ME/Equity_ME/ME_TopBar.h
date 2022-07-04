@@ -28,6 +28,8 @@ public:
 	ME_TopBar();
 	~ME_TopBar();
 
+	void Reset_Class(void);
+
 	bool Start_TopBar();
 
 	bool Toggle_Dimensions_Flag;
