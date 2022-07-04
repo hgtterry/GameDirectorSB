@@ -396,7 +396,7 @@ void ME_TopBar::Init_Bmps_Globals(void)
 	ti12.cbSize = sizeof(ti12);
 	ti12.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
 	ti12.uId = (UINT_PTR)Temp;
-	ti12.lpszText = "Toggle Faces";
+	ti12.lpszText = "Toggle Show Faces";
 	ti12.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti12);
 
@@ -405,10 +405,46 @@ void ME_TopBar::Init_Bmps_Globals(void)
 	ti13.cbSize = sizeof(ti13);
 	ti13.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
 	ti13.uId = (UINT_PTR)Temp;
-	ti13.lpszText = "Toggle Textures";
+	ti13.lpszText = "Toggle Show Textures";
 	ti13.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti13);
 
+	Temp = GetDlgItem(TabsHwnd, IDC_BTSHOWPOINTS);
+	TOOLINFO ti14 = { 0 };
+	ti14.cbSize = sizeof(ti14);
+	ti14.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti14.uId = (UINT_PTR)Temp;
+	ti14.lpszText = "Toggle Show Mesh Points";
+	ti14.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti14);
+	
+	Temp = GetDlgItem(TabsHwnd, IDC_BTSHOWBONES);
+	TOOLINFO ti15 = { 0 };
+	ti15.cbSize = sizeof(ti15);
+	ti15.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti15.uId = (UINT_PTR)Temp;
+	ti15.lpszText = "Toggle Show Bones";
+	ti15.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti15);
+
+	Temp = GetDlgItem(TabsHwnd, IDC_BTSHOWNORMALS);
+	TOOLINFO ti16 = { 0 };
+	ti16.cbSize = sizeof(ti16);
+	ti16.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti16.uId = (UINT_PTR)Temp;
+	ti16.lpszText = "Toggle Show Normals";
+	ti16.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti16);
+	
+	Temp = GetDlgItem(TabsHwnd, IDC_BTSHOWLIGHT);
+	TOOLINFO ti17 = { 0 };
+	ti17.cbSize = sizeof(ti17);
+	ti17.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti17.uId = (UINT_PTR)Temp;
+	ti17.lpszText = "Toggle Show Light";
+	ti17.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti17);
+	
 }
 
 // *************************************************************************
