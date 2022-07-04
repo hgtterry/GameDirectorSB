@@ -418,13 +418,13 @@ void ME_ImGui::ImGui_Dimensions(void)
 		ImGui::PushButtonRepeat(true);
 		if (ImGui::ArrowButton("##leftScaleX", ImGuiDir_Left))
 		{
-			App->CL_Dimensions->Scale_Model(1, 0.5, 0.5,0.5);
+			App->CL_Dimensions->Scale_Model(1, 0.5*4, 1,1);
 		}
 
 		ImGui::SameLine(0.0f, spacingScalePosX);
 		if (ImGui::ArrowButton("##rightScaleX", ImGuiDir_Right))
 		{
-			App->CL_Dimensions->Scale_Model(0, 0.5, 0.5, 0.5);
+			App->CL_Dimensions->Scale_Model(0, 0.5, 1,1);
 		}
 		ImGui::PopButtonRepeat();
 
@@ -446,13 +446,13 @@ void ME_ImGui::ImGui_Dimensions(void)
 		ImGui::PushButtonRepeat(true);
 		if (ImGui::ArrowButton("##leftScaleY", ImGuiDir_Left))
 		{
-			App->CL_Dimensions->Translate_Model(-App->CL_Dimensions->Model_X_Position, 0, 0);
+			App->CL_Dimensions->Scale_Model(1, 1, 0.5*4, 1);
 		}
 
 		ImGui::SameLine(0.0f, spacingScalePosY);
 		if (ImGui::ArrowButton("##rightScaleY", ImGuiDir_Right))
 		{
-			App->CL_Dimensions->Translate_Model(App->CL_Dimensions->Model_X_Position, 0, 0);
+			App->CL_Dimensions->Scale_Model(1, 1, 0.5, 1);
 		}
 		ImGui::PopButtonRepeat();
 
@@ -460,7 +460,7 @@ void ME_ImGui::ImGui_Dimensions(void)
 		ImGui::SetNextItemWidth(100);
 		const char* XitemsScaleY[] = { "0.001","0.01","0.1","1", "2", "5", "10", "20" };
 		static int XitemScaleY = 3;
-		bool ChangedScaleY = ImGui::Combo("Step Scale X", &XitemScaleY, XitemsScaleY, IM_ARRAYSIZE(XitemsScaleY));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
+		bool ChangedScaleY = ImGui::Combo("Step Scale Y", &XitemScaleY, XitemsScaleY, IM_ARRAYSIZE(XitemsScaleY));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
 		if (ChangedScaleY == 1)
 		{
 			App->CL_Dimensions->Model_X_Position = (float)atof(XitemsPosX[XitemScaleY]);
@@ -474,13 +474,13 @@ void ME_ImGui::ImGui_Dimensions(void)
 		ImGui::PushButtonRepeat(true);
 		if (ImGui::ArrowButton("##leftScaleZ", ImGuiDir_Left))
 		{
-			App->CL_Dimensions->Translate_Model(-App->CL_Dimensions->Model_X_Position, 0, 0);
+			App->CL_Dimensions->Scale_Model(1, 1, 1,0.5*4);
 		}
 
 		ImGui::SameLine(0.0f, spacingScalePosZ);
 		if (ImGui::ArrowButton("##rightScaleZ", ImGuiDir_Right))
 		{
-			App->CL_Dimensions->Translate_Model(App->CL_Dimensions->Model_X_Position, 0, 0);
+			App->CL_Dimensions->Scale_Model(1, 1, 1, 0.5);
 		}
 		ImGui::PopButtonRepeat();
 
@@ -488,7 +488,7 @@ void ME_ImGui::ImGui_Dimensions(void)
 		ImGui::SetNextItemWidth(100);
 		const char* XitemsScaleZ[] = { "0.001","0.01","0.1","1", "2", "5", "10", "20" };
 		static int XitemScaleZ = 3;
-		bool ChangedScaleZ = ImGui::Combo("Step Scale X", &XitemScaleZ, XitemsScaleZ, IM_ARRAYSIZE(XitemsScaleZ));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
+		bool ChangedScaleZ = ImGui::Combo("Step Scale Z", &XitemScaleZ, XitemsScaleZ, IM_ARRAYSIZE(XitemsScaleZ));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
 		if (ChangedScaleZ == 1)
 		{
 			App->CL_Dimensions->Model_X_Position = (float)atof(XitemsPosX[XitemScaleZ]);

@@ -13,7 +13,7 @@ ME_Dimensions::ME_Dimensions()
 	Model_Y_Position = 1;
 	Model_Z_Position = 1;
 
-	LockAxis = 1;
+	LockAxis = 0;
 
 	Model_XScale = 0.5;
 	Model_YScale = 0.5;
@@ -350,9 +350,6 @@ void ME_Dimensions::Scale_Model(bool Mode, float X, float Y, float Z)
 	else
 	{
 		Ogre::Vector3 Scale;
-		Scale.x = X;
-		Scale.y = Y;
-		Scale.z = Z;
 
 		int Count = 0;
 		int VertCount = 0;
@@ -364,9 +361,9 @@ void ME_Dimensions::Scale_Model(bool Mode, float X, float Y, float Z)
 			VertCount = 0;
 			while (VertCount <  App->CL_Model->Group[Count]->GroupVertCount)
 			{
-				App->CL_Model->Group[Count]->vertex_Data[VertCount].x *= Scale.x;
-				App->CL_Model->Group[Count]->vertex_Data[VertCount].y *= Scale.y;
-				App->CL_Model->Group[Count]->vertex_Data[VertCount].z *= Scale.z;
+				App->CL_Model->Group[Count]->vertex_Data[VertCount].x *= X;
+				App->CL_Model->Group[Count]->vertex_Data[VertCount].y *= Y;
+				App->CL_Model->Group[Count]->vertex_Data[VertCount].z *= Z;
 				VertCount++;
 			}
 			Count++;
