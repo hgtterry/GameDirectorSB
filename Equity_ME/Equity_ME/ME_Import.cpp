@@ -77,6 +77,8 @@ bool ME_Import::Assimp_Loader(char* Extension, char* Extension2)
 	////Set_Equity();
 	Ogre::Root::getSingletonPtr()->renderOneFrame();
 
+	App->CL_FileView->Change_Level_Name();
+
 	App->Say_Win("Model Loaded");
 	
 	return 1;

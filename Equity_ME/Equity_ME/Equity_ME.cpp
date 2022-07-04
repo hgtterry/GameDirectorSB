@@ -242,6 +242,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				return 1;
 			}
 
+			case ID_IMPORT_BLENDERBLEND:
+			{
+				App->CL_Import->Assimp_Loader("Blender   *.blend\0*.blend\0", "Blender");
+				return 1;
+			}
+			
 			// ------------------------------------------------------- Export
 			case ID_EXPORT_WAVEFRONTOBJ:
 			{

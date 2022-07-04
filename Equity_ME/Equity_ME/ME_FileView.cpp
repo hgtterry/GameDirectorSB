@@ -175,7 +175,7 @@ void ME_FileView::MoreFoldersD(void) // last folder level
 	tvinsert.hParent = GD_ProjectFolder;
 	tvinsert.hInsertAfter = TVI_LAST;
 	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
-	tvinsert.item.pszText = "Test";// App->SBC_Project->Level_File_Name;
+	tvinsert.item.pszText = App->CL_Model->FileName;
 	tvinsert.item.iImage = 2;
 	tvinsert.item.iSelectedImage = 3;
 	GD_ModelFolder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
@@ -299,4 +299,18 @@ void ME_FileView::Delete_AllItems()
 	AddRootFolder();
 	MoreFoldersD(); //  Folders under root 
 	ExpandRoot();
+}
+
+// *************************************************************************
+// *					Change_Level_Name Terry Bernie 					   *
+// *************************************************************************
+void ME_FileView::Change_Level_Name(void)
+{
+	TVITEM Sitem;
+	Sitem.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	Sitem.hItem = GD_ModelFolder;
+	Sitem.pszText = App->CL_Model->FileName;
+	Sitem.iImage = 3;
+	Sitem.iSelectedImage = 3;
+	SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_SETITEM, 0, (LPARAM)(const LPTVITEM)&Sitem);
 }

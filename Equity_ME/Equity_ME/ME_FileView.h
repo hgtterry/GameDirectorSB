@@ -13,6 +13,7 @@ public:
 	void Get_Selection(LPNMHDR lParam);
 	void SelectItem(HTREEITEM TreeItem);
 	void Delete_AllItems();
+	void Change_Level_Name(void);
 
 	HTREEITEM Add_Group(char *SFileName, int Index);
 
