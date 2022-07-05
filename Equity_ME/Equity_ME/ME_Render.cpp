@@ -277,11 +277,11 @@ void ME_Render::Render_Loop()
 	//	As_RenderBones();
 	//}
 
-	//// ---------------------- Crosshair
-	//if (Show_Crosshair == 1)
-	//{
-	//	RenderCrossHair();
-	//}
+	// ---------------------- Crosshair
+	if (Show_Crosshair == 1)
+	{
+		RenderCrossHair();
+	}
 
 
 	if (depthTestEnabled)
@@ -943,8 +943,9 @@ bool ME_Render::RenderPoints(void)
 void ME_Render::RenderCrossHair(void)
 {
 	glDisable(GL_TEXTURE_2D);
-	glDisable(GL_DEPTH_TEST);
+	//glDisable(GL_DEPTH_TEST);
 
+	//float Length = App->CL_Model->S_BoundingBox[0]->radius * 2;
 	float Length = 40;
 	glLineWidth(3);
 

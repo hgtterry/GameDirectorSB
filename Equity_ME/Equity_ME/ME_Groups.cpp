@@ -81,7 +81,7 @@ LRESULT CALLBACK ME_Groups::Groups_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 	{
 	case WM_INITDIALOG:
 	{
-
+		SendDlgItemMessage(hDlg, IDC_STMATERIAL, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_RGGROUPNAME, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_RGTEXTURENAME, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 
@@ -108,6 +108,13 @@ LRESULT CALLBACK ME_Groups::Groups_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 			return (UINT)App->AppBackground;
 		}
 
+		if (GetDlgItem(hDlg, IDC_STMATERIAL) == (HWND)lParam)
+		{
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+	
 		return FALSE;
 	}
 
@@ -271,6 +278,8 @@ bool ME_Groups::Update_Groups()
 	int Index = Selected_Group;
 
 	SetDlgItemText(RightGroups_Hwnd, IDC_RGGROUPNAME, App->CL_Model->Group[Index]->GroupName);
+
+	SetDlgItemText(RightGroups_Hwnd, IDC_STMATERIAL, App->CL_Model->Group[Index]->MaterialName);
 	SetDlgItemText(RightGroups_Hwnd, IDC_RGTEXTURENAME, App->CL_Model->Group[Index]->Text_FileName);
 
 	RightGroups_Visable = 1;

@@ -46,5 +46,9 @@ protected:
 	ImFont* font1;
 	ImFont* font2;
 	ImFont* fontDroid;
+
+	bool PosX_Selected;
+	bool PosY_Selected;
+	bool PosZ_Selected;
 };
 

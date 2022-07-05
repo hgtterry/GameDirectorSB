@@ -39,6 +39,10 @@ ME_ImGui::ME_ImGui()
 	Show_FPS = 1;
 	StartPos = 0;
 	Show_Dimensions = 0;
+
+	PosX_Selected = 1;
+	PosY_Selected = 0;
+	PosZ_Selected = 0;
 }
 
 
@@ -175,112 +179,127 @@ void ME_ImGui::ImGui_Dimensions(void)
 	}
 	else
 	{
+		App->CL_Ogre->RenderListener->Show_Crosshair = 1;
+
 		ImGui::Text("Position");
 		ImGui::Separator();
 		ImGui::Spacing();
 
-		//geVec3d pos = App->CL_Vm_Genesis3D->Actor_Position;
-		//ImGui::Text("X %.3f Y %.3f Z %.3f", pos.X, pos.Y, pos.Z);
+		Ogre::Vector3 pos;
+		if (App->CL_Model->Model_Type == Enums::LoadedFile_Assimp)
+		{
+			pos.x = App->CL_Model->S_BoundingBox[0]->Centre->x;
+			pos.y = App->CL_Model->S_BoundingBox[0]->Centre->y;
+			pos.z = App->CL_Model->S_BoundingBox[0]->Centre->z;
+
+			App->CL_Ogre->RenderListener->Hair_1PosX = pos.x;
+			App->CL_Ogre->RenderListener->Hair_1PosY = pos.y;
+			App->CL_Ogre->RenderListener->Hair_1PosZ = pos.z;
+		}
+
+		ImGui::Indent();
+		ImGui::Indent();
+		ImGui::Text("X %.3f Y %.3f Z %.3f", pos.x, pos.y, pos.z);
 
 		ImGui::Spacing();
 
-		// ---------------------------------------------------------------------------------- Position X
-		style->Colors[ImGuiCol_Text] = ImVec4(0.0f, 0.0f, 1.0f, 1.00f);
-		ImGui::Text("X ");
-		style->Colors[ImGuiCol_Text] = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
+		// ----------------------------------------------------------------------------- Position
+
+		float spacingX = ImGui::GetStyle().ItemInnerSpacing.x;
+		ImGui::PushButtonRepeat(true);
+		if (ImGui::ArrowButton("##leftXX", ImGuiDir_Left))
+		{
+			if (App->CL_Model->Model_Type == Enums::LoadedFile_Assimp)
+			{
+				if (PosX_Selected == 1)
+				{
+					App->CL_Dimensions->Translate_Model(-App->CL_Dimensions->Model_X_Position, 0, 0);
+				}
+
+				if (PosY_Selected == 1)
+				{
+					App->CL_Dimensions->Translate_Model(0, -App->CL_Dimensions->Model_X_Position, 0);
+				}
+
+				if (PosZ_Selected == 1)
+				{
+					App->CL_Dimensions->Translate_Model(0, 0, -App->CL_Dimensions->Model_X_Position);
+				}
+			}
+		}
+
+		ImGui::SameLine(0.0f, spacingX);
+		if (ImGui::ArrowButton("##rightXX", ImGuiDir_Right))
+		{
+			if (App->CL_Model->Model_Type == Enums::LoadedFile_Assimp)
+			{
+				if (PosX_Selected == 1)
+				{
+					App->CL_Dimensions->Translate_Model(App->CL_Dimensions->Model_X_Position, 0, 0);
+				}
+
+				if (PosY_Selected == 1)
+				{
+					App->CL_Dimensions->Translate_Model(0, App->CL_Dimensions->Model_X_Position, 0);
+				}
+
+				if (PosZ_Selected == 1)
+				{
+					App->CL_Dimensions->Translate_Model(0, 0, App->CL_Dimensions->Model_X_Position);
+				}
+			}
+		}
+		ImGui::PopButtonRepeat();
+
 		ImGui::SameLine();
+		ImGui::SetNextItemWidth(100);
+		const char* XitemsPosXX[] = { "0.001","0.01","0.1","1", "2", "5", "10", "20" };
+		static int XitemPosXX = 3;
+		bool ChangedPosX = ImGui::Combo("Step Pos", &XitemPosXX, XitemsPosXX, IM_ARRAYSIZE(XitemsPosXX));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
+		if (ChangedPosX == 1)
+		{
+			App->CL_Dimensions->Model_X_Position = (float)atof(XitemsPosXX[XitemPosXX]);
+		}
+
+		// ----------------------------------------------------------------------------- Pos X
+		ImGui::Indent();
+
+		style->Colors[ImGuiCol_FrameBg] = ImVec4(0.0f, 0.0f, 1.0f, 1.00f);
+		ImGui::Checkbox("X", &PosX_Selected);
+		if (PosX_Selected == 1)
+		{
+			PosY_Selected = 0;
+			PosZ_Selected = 0;
+		}
+		style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
+		//------------------------------------------------------------------------------- Pos Y
+		ImGui::SameLine();
+		style->Colors[ImGuiCol_FrameBg] = ImVec4(0.0f, 1.0f, 0.0f, 1.00f);
+		ImGui::Checkbox("Y", &PosY_Selected);
+		style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
+
+		if (PosY_Selected)
+		{
+			PosX_Selected = 0;
+			PosZ_Selected = 0;
+		}
+
+		//------------------------------------------------------------------------------- Pos Z
+		ImGui::SameLine();
+		style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 0.0f, 0.0f, 1.00f);
+		ImGui::Checkbox("Z", &PosZ_Selected);
+		if (PosZ_Selected)
+		{
+			PosX_Selected = 0;
+			PosY_Selected = 0;
+		}
+		style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
 		
 
-		float spacingPos = ImGui::GetStyle().ItemInnerSpacing.x;
-		ImGui::PushButtonRepeat(true);
-
-		if (ImGui::ArrowButton("##leftPosX", ImGuiDir_Left))
-		{
-			App->CL_Dimensions->Translate_Model(-App->CL_Dimensions->Model_X_Position, 0, 0);
-		}
-
-		ImGui::SameLine(0.0f, spacingPos);
-		if (ImGui::ArrowButton("##rightPosX", ImGuiDir_Right))
-		{
-			App->CL_Dimensions->Translate_Model(App->CL_Dimensions->Model_X_Position, 0, 0);
-		}
-		ImGui::PopButtonRepeat();
-
-		ImGui::SameLine();
-		ImGui::SetNextItemWidth(100);
-		const char* XitemsPosX[] = { "0.001","0.01","0.1","1", "2", "5", "10", "20" };
-		static int XitemPosX = 3;
-		bool ChangedPos = ImGui::Combo("Step Pos X", &XitemPosX, XitemsPosX, IM_ARRAYSIZE(XitemsPosX));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
-		if (ChangedPos == 1)
-		{
-			App->CL_Dimensions->Model_X_Position = (float)atof(XitemsPosX[XitemPosX]);
-		}
-
-		// ------------------------------------------ Position y
-		style->Colors[ImGuiCol_Text] = ImVec4(0.0f, 1.0f, 0.0f, 1.00f);
-		ImGui::Text("Y ");
-		style->Colors[ImGuiCol_Text] = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
-		ImGui::SameLine();
-
-		float spacingPos2 = ImGui::GetStyle().ItemInnerSpacing.x;
-		ImGui::PushButtonRepeat(true);
-
-		if (ImGui::ArrowButton("##leftPosY", ImGuiDir_Left))
-		{
-			App->CL_Dimensions->Translate_Model(0,-App->CL_Dimensions->Model_Y_Position, 0);
-		}
-		ImGui::SameLine(0.0f, spacingPos2);
-		if (ImGui::ArrowButton("##rightPosY", ImGuiDir_Right))
-		{
-			App->CL_Dimensions->Translate_Model(0, App->CL_Dimensions->Model_Y_Position, 0);
-		}
-		ImGui::PopButtonRepeat();
-
-		ImGui::SameLine();
-		ImGui::SetNextItemWidth(100);
-		const char* XitemsPosY[] = { "0.001","0.01","0.1","1", "2", "5", "10", "20" };
-		static int XitemPosY = 3;
-		bool ChangedPosY = ImGui::Combo("Step Pos Y", &XitemPosY, XitemsPosY, IM_ARRAYSIZE(XitemsPosY));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
-		if (ChangedPosY == 1)
-		{
-			App->CL_Dimensions->Model_Y_Position = (float)atof(XitemsPosY[XitemPosY]);
-		}
-
-		// ------------------------------------------ Position z
-		style->Colors[ImGuiCol_Text] = ImVec4(1.0f, 0.0f, 0.0f, 1.00f);
-		ImGui::Text("Z ");
-		style->Colors[ImGuiCol_Text] = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
-		ImGui::SameLine();
-
-		float spacingPos3 = ImGui::GetStyle().ItemInnerSpacing.x;
-		ImGui::PushButtonRepeat(true);
-
-		if (ImGui::ArrowButton("##leftPosZ", ImGuiDir_Left))
-		{
-			App->CL_Dimensions->Translate_Model( 0, 0, -App->CL_Dimensions->Model_Z_Position);
-		}
-		ImGui::SameLine(0.0f, spacingPos3);
-		if (ImGui::ArrowButton("##rightPosZ", ImGuiDir_Right))
-		{
-			App->CL_Dimensions->Translate_Model(0, 0, App->CL_Dimensions->Model_Z_Position);
-		}
-		ImGui::PopButtonRepeat();
-
-		ImGui::SameLine();
-		ImGui::SetNextItemWidth(100);
-		const char* XitemsPosZ[] = { "0.001","0.01","0.1","1", "2", "5", "10", "20" };
-		static int XitemPosZ = 3;
-		bool ChangedPosZ = ImGui::Combo("Step Pos Z", &XitemPosZ, XitemsPosZ, IM_ARRAYSIZE(XitemsPosZ));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
-		if (ChangedPosZ == 1)
-		{
-			App->CL_Dimensions->Model_Z_Position = (float)atof(XitemsPosZ[XitemPosZ]);
-		}
-
 		style->Colors[ImGuiCol_Text] = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
 
 		ImGui::Spacing();
-		ImGui::Indent();
-		ImGui::Indent();
+		ImGui::Unindent();
 
 		if (ImGui::Button("Middle of Bounding Box", ImVec2(200, 40)))
 		{
@@ -512,7 +531,10 @@ void ME_ImGui::ImGui_Dimensions(void)
 			App->CL_Panels->Show_Panels(1);
 			App->CL_TopBar->Toggle_Dimensions_Flag = 0;
 			RedrawWindow(App->CL_TopBar->Model_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			App->CL_Ogre->RenderListener->Show_Crosshair = 0;
 		}
+
 		ImGui::End();
 	}
 }
