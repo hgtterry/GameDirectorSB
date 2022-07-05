@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022 Equity_ME Model Editor -- Inflanite Software W.T.Flanigan H.C.Flanigan
+Copyright (c) 2022 Equity_ME Model Editor -- HGT Software W.T.Flanigan H.C.Flanigan
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -79,7 +79,7 @@ bool ME_Import::Assimp_Loader(char* Extension, char* Extension2)
 
 	App->CL_FileView->Change_Level_Name();
 
-	App->Say_Win("Model Loaded");
+	App->Say("Model Loaded");
 	
 	return 1;
 }

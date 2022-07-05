@@ -279,6 +279,16 @@ void ME_App::Say_Win(const char* Message)
 }
 
 // *************************************************************************
+// *									Say								   *
+// *************************************************************************
+void ME_App::Say(const char* Message)
+{
+	char text[1024];
+	strcpy(text, Message);
+	App->CL_Dialogs->Message(text);
+}
+
+// *************************************************************************
 // *					Custom_Button_Normal Terry Bernie   		  	   *
 // *************************************************************************
 bool ME_App::Custom_Button_Normal(LPNMCUSTOMDRAW item)

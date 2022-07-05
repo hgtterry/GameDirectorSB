@@ -73,6 +73,7 @@ namespace Enums
 		Show_List_None = 0,
 		Show_List_Group = 1,
 		Show_List_Model = 2,
+		Show_List_App = 3
 	};
 }
 

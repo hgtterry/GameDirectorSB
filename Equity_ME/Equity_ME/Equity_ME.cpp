@@ -191,6 +191,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				return 1;
 			}
 
+			case ID_DEBUG_APPDATA:
+			{
+				App->CL_Dialogs->What_List = Enums::Show_List_App;
+				App->CL_Dialogs->Show_ListData();
+				return 1;
+			}
+			
 			// ------------------------------------------------------- File
 			case ID_FILE_CLEARMODEL:
 			{

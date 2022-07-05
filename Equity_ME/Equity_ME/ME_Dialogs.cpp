@@ -1,3 +1,26 @@
+/*
+Copyright (c) 2022 Equity_ME Model Editor -- HGT Software W.T.Flanigan H.C.Flanigan
+
+This software is provided 'as-is', without any express or implied
+warranty. In no event will the authors be held liable for any damages
+arising from the use of this software.
+
+Permission is granted to anyone to use this software for any purpose,
+including commercial applications, and to alter it and redistribute it
+freely, subject to the following restrictions:
+
+1. The origin of this software must not be misrepresented; you must not
+claim that you wrote the original software. If you use this software
+in a product, an acknowledgment in the product documentation would be
+appreciated but is not required.
+
+2. Altered source versions must be plainly marked as such, and must not be
+misrepresented as being the original software.
+
+3. This notice may not be removed or altered from any source
+distribution.
+*/
+
 #include "stdafx.h"
 #include "ME_App.h"
 #include "resource.h"
@@ -12,6 +35,8 @@ ME_Dialogs::ME_Dialogs()
 	Mouse_Slow = 0;
 	Mouse_VerySlow = 0;
 	Mouse_Fast = 0;
+
+	Message_Text[0] = 0;
 }
 
 
@@ -29,7 +54,7 @@ bool ME_Dialogs::Show_ListData()
 	return 1;
 }
 // *************************************************************************
-// *        		GroupData_Proc  Terry	Bernie						   *
+// *        		GroupData_Proc  Terry Flanigan						   *
 // *************************************************************************
 LRESULT CALLBACK ME_Dialogs::GroupData_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -51,6 +76,12 @@ LRESULT CALLBACK ME_Dialogs::GroupData_Proc(HWND hDlg, UINT message, WPARAM wPar
 		if (App->CL_Dialogs->What_List == Enums::Show_List_Model)
 		{
 			App->CL_Dialogs->List_ModelData(hDlg);
+			return TRUE;
+		}
+
+		if (App->CL_Dialogs->What_List == Enums::Show_List_App)
+		{
+			App->CL_Dialogs->List_App_Data(hDlg);
 			return TRUE;
 		}
 
@@ -174,6 +205,37 @@ void ME_Dialogs::List_ModelData(HWND hDlg)
 
 	sprintf(buf, "%s%i", "Groups = ", App->CL_Model->Get_Groupt_Count());
 	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+}
+
+// *************************************************************************
+// *	  				List_App_Data Terry Flanigan					   *
+// *************************************************************************
+void ME_Dialogs::List_App_Data(HWND hDlg)
+{
+
+	char buf[255];
+
+	sprintf(buf, "%s", "App Info");
+	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+	sprintf(buf, "%s", "    ");
+	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+	int Count = 0;
+	while (Count < 99)
+	{
+
+		sprintf(buf, "%i %s%i",Count ,"Group Hwnd = ", App->CL_Model->Group[Count]);
+		SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+		Count++;
+	}
+
+	sprintf(buf, "%s", "    ");
+	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+	sprintf(buf, "%i %s%i", Count, "BB Hwnd = ", App->CL_Model->S_BoundingBox[0]);
+	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	
 }
 
 // *************************************************************************
@@ -340,4 +402,85 @@ void ME_Dialogs::UnCheck_All_SpeedMouseOption()
 	Mouse_Slow = 0;
 	Mouse_VerySlow = 0;
 	Mouse_Fast = 0;
+}
+
+// *************************************************************************
+// *	  				Message Terry Flanigan							   *
+// *************************************************************************
+void ME_Dialogs::Message(char *pString)
+{
+	strcpy(Message_Text, pString);
+	DialogBox(App->hInst, (LPCTSTR)IDD_MESSAGE, App->Fdlg, (DLGPROC)Message_Proc);
+}
+// *************************************************************************
+// *        			Message_Proc  Terry	Flanigan					   *
+// *************************************************************************
+LRESULT CALLBACK ME_Dialogs::Message_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		HFONT Font;
+		Font = CreateFont(-20, 0, 0, 0, FW_BOLD, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
+		SendDlgItemMessage(hDlg, IDC_STTEXT, WM_SETFONT, (WPARAM)Font, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BANNER, WM_SETFONT, (WPARAM)Font, MAKELPARAM(TRUE, 0));
+
+		SetDlgItemText(hDlg, IDC_STTEXT, App->CL_Dialogs->Message_Text);
+
+		return TRUE;
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+		if (GetDlgItem(hDlg, IDC_BANNER) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+		if (GetDlgItem(hDlg, IDC_STTEXT) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+		return CDRF_DODEFAULT;
+	}
+	case WM_COMMAND:
+		if (LOWORD(wParam) == IDOK)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		break;
+	}
+	return FALSE;
 }
