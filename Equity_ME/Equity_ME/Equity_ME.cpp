@@ -254,11 +254,23 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				App->CL_Import->Assimp_Loader("Blender   *.blend\0*.blend\0", "Blender");
 				return 1;
 			}
+
+			case ID_IMPORT_MILKSHAPEMS3D:
+			{
+				App->CL_Import->Assimp_Loader("MilkShape Files   *.ms3d\0*.ms3d\0", "Load MilkShape File");
+				return 1;
+			}
 			
 			// ------------------------------------------------------- Export
 			case ID_EXPORT_WAVEFRONTOBJ:
 			{
 				App->CL_Export->Object_Model();
+				return 1;
+			}
+
+			case ID_MILKSHAPEMS3D_MESH:
+			{
+				Debug
 				return 1;
 			}
 			
