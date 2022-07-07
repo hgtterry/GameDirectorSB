@@ -43,8 +43,10 @@ ME_App::ME_App()
 	CL_Textures =	nullptr;
 	CL_Dialogs =	nullptr;
 	CL_Dimensions = nullptr;
+
+	CL_Export = nullptr;
 	CL_Export_Object = nullptr;
-	CL_Export =		nullptr;
+	CL_Export_Milk = nullptr;
 
 	hInst =			nullptr;
 
@@ -119,9 +121,12 @@ bool ME_App::InitApp(void)
 	CL_Textures =	new ME_Textures();
 	CL_Dialogs =	new ME_Dialogs();
 	CL_Dimensions = new ME_Dimensions();
+
+	CL_Export = new ME_Export();
 	CL_Export_Object = new ME_Export_Object();
-	CL_Export =		new ME_Export();
-	
+	CL_Export_Milk = new ME_Export_Milkshape();
+
+
 	SetBrushes_Fonts();
 	return 1;
 }

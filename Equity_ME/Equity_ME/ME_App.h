@@ -41,6 +41,7 @@ distribution.
 
 #include "ME_Export.h"
 #include "ME_Export_Object.h"
+#include "ME_Export_Milkshape.h"
 
 
 class ME_App
@@ -49,24 +50,25 @@ public:
 	ME_App();
 	~ME_App();
 
-	ME_Ogre*			CL_Ogre;		// Ogre Main Class [120122]
-	ME_Utilities*		CL_Utilities;	// Maths String Routines [130122]
-	ME_Grid*			CL_Grid;		// Main Grid Routines [150122]
+	ME_Ogre*			CL_Ogre;			// Ogre Main Class [120122]
+	ME_Utilities*		CL_Utilities;		// Maths String Routines [130122]
+	ME_Grid*			CL_Grid;			// Main Grid Routines [150122]
 	ME_ImGui*			CL_ImGui;
-	ME_Assimp*			CL_Assimp;		// Assimp Model Importer[220222]
-	ME_Import*			CL_Import;		// Importer Class [050322]
-	ME_FileIO*			CL_FileIO;		// Windows Open/Save Routines [050322]
-	ME_Model*			CL_Model;		// Main Model Class [050322]
-	ME_TopBar*			CL_TopBar;		// Top Bar and Tabs [130322]
-	ME_FileView*		CL_FileView;	// FileView [210622]
-	ME_Groups*			CL_Groups;		// Groups  [220622]
-	ME_Panels*			CL_Panels;		// Panels  [220623]
-	ME_Textures*		CL_Textures;	// Textures [220623]
-	ME_Dialogs*			CL_Dialogs;		// Common Dialogs [220626]
-	ME_Dimensions*		CL_Dimensions;	// Scale Position Rotation [220627]
+	ME_Assimp*			CL_Assimp;			// Assimp Model Importer[220222]
+	ME_Import*			CL_Import;			// Importer Class [050322]
+	ME_FileIO*			CL_FileIO;			// Windows Open/Save Routines [050322]
+	ME_Model*			CL_Model;			// Main Model Class [050322]
+	ME_TopBar*			CL_TopBar;			// Top Bar and Tabs [130322]
+	ME_FileView*		CL_FileView;		// FileView [210622]
+	ME_Groups*			CL_Groups;			// Groups  [220622]
+	ME_Panels*			CL_Panels;			// Panels  [220623]
+	ME_Textures*		CL_Textures;		// Textures [220623]
+	ME_Dialogs*			CL_Dialogs;			// Common Dialogs [220626]
+	ME_Dimensions*		CL_Dimensions;		// Scale Position Rotation [220627]
 
-	ME_Export*			CL_Export;		// Exporters [220630]
+	ME_Export*			CL_Export;			// Exporters [220630]
 	ME_Export_Object*	CL_Export_Object;
+	ME_Export_Milkshape* CL_Export_Milk;	// Milkshape Exporter [070722]
 
 	bool InitApp(void);
 	bool SetMainWin_Centre(void);
