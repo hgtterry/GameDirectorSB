@@ -29,6 +29,7 @@ public:
 	~ME_Export();
 
 	void Object_Model(void);
+	void Milkshape_Model(void);
 
 protected:
 

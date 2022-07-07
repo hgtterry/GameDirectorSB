@@ -42,8 +42,7 @@ void ME_Export::Object_Model(void)
 {
 	if (App->CL_Model->Model_Loaded == 0)
 	{
-		//App->CL_Dialogs->Message("No Model Loaded to Export");
-		App->Say_Win("No Model Loaded to Export");
+		App->Say("No Model Loaded to Export");
 		return;
 	}
 
@@ -51,7 +50,19 @@ void ME_Export::Object_Model(void)
 
 	if (test == 1)
 	{
-		//App->CL_Dialogs->Message("Wavefront Object file Created successfully");
-		App->Say_Win("Wavefront Object file Created successfully");
+		App->Say("Wavefront Object file Created successfully");
+	}
+}
+
+// *************************************************************************
+// *					Milkshape_Model Terry Bernie					   *
+// *************************************************************************
+void ME_Export::Milkshape_Model(void)
+{
+	if (App->CL_Model->Model_Loaded == 1)
+	{
+		App->CL_Export_Milk->Export_To_Milk(0);
+
+		return;
 	}
 }

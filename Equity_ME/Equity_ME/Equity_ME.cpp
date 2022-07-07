@@ -270,7 +270,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 			case ID_MILKSHAPEMS3D_MESH:
 			{
-				Debug
+				App->CL_Export->Milkshape_Model();
 				return 1;
 			}
 			

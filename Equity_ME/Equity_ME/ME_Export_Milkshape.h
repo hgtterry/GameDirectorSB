@@ -21,11 +21,52 @@ misrepresented as being the original software.
 distribution.
 */
 
+#ifndef word
+typedef unsigned short word;
+#endif // word
+
+typedef struct
+{
+	char    id[10];                                     // always "MS3D000000"
+	int     version;                                    // 4
+} Cms3d_header_t;
+
+struct Cms3d_Vector3_t
+{
+	byte    flags;                                      // SELECTED | SELECTED2 | HIDDEN
+	float   Vector3[3];                                  // x, y, z
+	char    jointId;                                     // -1 = no joint
+	byte    referenceCount;
+};
+
+struct Cms3d_triangle_t
+{
+	word    flags;                                      // SELECTED | SELECTED2 | HIDDEN
+	word    Vector3Indices[3];                           //
+	float   Vector3Normals[3][3];                        //
+	float   s[3];                                       // texture coord s 
+	float   t[3];                                       // texture coord t
+	byte    smoothingGroup;                             // 1 - 32
+	byte    groupIndex;                                 //
+};
+
 #pragma once
 class ME_Export_Milkshape
 {
 public:
 	ME_Export_Milkshape();
 	~ME_Export_Milkshape();
+
+	bool Export_To_Milk(bool DoMotions);
+
+protected:
+
+	bool Write_MILKFile_Assimp(void);
+	void Write_MILKHeader(void);
+	bool WriteMILKMesh_Assimp(void);
+
+	char OutputFolder[MAX_PATH];
+
+	FILE *WriteMILK;
 };
 

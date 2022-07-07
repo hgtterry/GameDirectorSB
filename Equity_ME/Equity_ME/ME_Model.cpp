@@ -112,6 +112,97 @@ void ME_Model::Reset_Class(void)
 	FaceCount = 0;
 	MotionCount = 0;
 }
+
+// *************************************************************************
+// *					Convert_To_GlobalMesh  Terry Bernie   	  	 	   *
+// *************************************************************************
+void ME_Model::Convert_To_GlobalMesh(void)
+{
+	int Count = 0;
+	int GroupVertCount = 0;
+	int GroupFaceCount = 0;
+	int VC = 0;
+
+	int Offset = 0;
+
+	App->CL_Model->vertex_Data.resize(App->CL_Model->VerticeCount);
+	App->CL_Model->Face_Data.resize(App->CL_Model->FaceCount);
+
+	App->CL_Model->Normal_Data.resize(App->CL_Model->VerticeCount);
+	App->CL_Model->MapCord_Data.resize(App->CL_Model->VerticeCount);
+	App->CL_Model->MatIndex_Data.resize(App->CL_Model->VerticeCount);
+
+	
+	while (Count < GroupCount)
+	{
+		GroupVertCount = 0;
+
+		while (GroupVertCount < App->CL_Model->Group[Count]->GroupVertCount)
+		{
+			App->CL_Model->vertex_Data[VC].x = App->CL_Model->Group[Count]->vertex_Data[GroupVertCount].x;
+			App->CL_Model->vertex_Data[VC].y = App->CL_Model->Group[Count]->vertex_Data[GroupVertCount].y;
+			App->CL_Model->vertex_Data[VC].z = App->CL_Model->Group[Count]->vertex_Data[GroupVertCount].z;
+
+			App->CL_Model->MapCord_Data[VC].u = App->CL_Model->Group[Count]->MapCord_Data[GroupVertCount].u;
+			App->CL_Model->MapCord_Data[VC].v = App->CL_Model->Group[Count]->MapCord_Data[GroupVertCount].v;
+
+			App->CL_Model->Normal_Data[VC].x = App->CL_Model->Group[Count]->Normal_Data[GroupVertCount].x;
+			App->CL_Model->Normal_Data[VC].y = App->CL_Model->Group[Count]->Normal_Data[GroupVertCount].y;
+			App->CL_Model->Normal_Data[VC].z = App->CL_Model->Group[Count]->Normal_Data[GroupVertCount].z;
+
+			VC++;
+
+			GroupVertCount++;
+		}
+
+		Count++;
+	}
+
+
+	VC = 0;
+	Count = 0;
+	int mFaceCount = 0;
+	while (Count < GroupCount)
+	{
+		mFaceCount = 0;
+		while (mFaceCount < App->CL_Model->Group[Count]->GroupFaceCount)
+		{
+
+			App->CL_Model->Face_Data[VC].Group = Count;
+
+			App->CL_Model->Face_Data[VC].a = App->CL_Model->Group[Count]->Face_Data[mFaceCount].a + Offset;
+			App->CL_Model->Face_Data[VC].b = App->CL_Model->Group[Count]->Face_Data[mFaceCount].b + Offset;
+			App->CL_Model->Face_Data[VC].c = App->CL_Model->Group[Count]->Face_Data[mFaceCount].c + Offset;
+
+
+			VC++;
+			mFaceCount++;
+		}
+
+		Offset = Offset + App->CL_Model->Group[Count]->GroupVertCount;
+		Count++;
+
+	}
+
+
+	VC = 0;
+	Count = 0;
+	while (Count < GroupCount)
+	{
+		GroupFaceCount = 0;
+
+		while (GroupFaceCount < App->CL_Model->Group[Count]->GroupFaceCount)
+		{
+			App->CL_Model->MatIndex_Data[VC] = App->CL_Model->Group[Count]->MaterialIndex;
+
+			VC++;
+			GroupFaceCount++;
+		}
+
+		Count++;
+	}
+}
+
 // *************************************************************************
 // *						Set_Groupt_Count Terry Flanigan		  	 	   *
 // *************************************************************************

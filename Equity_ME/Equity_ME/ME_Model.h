@@ -33,6 +33,7 @@ typedef struct AABB_Type {
 	float radius;
 } AABB_Type;
 
+
 class ME_Model
 {
 public:
@@ -43,6 +44,7 @@ public:
 
 	void Reset_Class(void);
 
+	void Convert_To_GlobalMesh(void);
 	void Set_Groupt_Count(int Count);
 	int Get_Groupt_Count();
 	void Set_Texture_Count(int Count);
@@ -69,6 +71,13 @@ public:
 	int Model_Type;
 
 	bool Model_Loaded;
+
+	std::vector<vertex_type> vertex_Data;
+	std::vector<polygon_type> Face_Data;
+	std::vector<normal_type> Normal_Data;
+	std::vector<mapcoord_type> MapCord_Data;
+	std::vector<int> MatIndex_Data;
+
 protected:
 
 	int GroupCount;
