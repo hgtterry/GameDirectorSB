@@ -108,20 +108,26 @@ bool ME_Textures::Soil_Load_Texture(UINT textureArray[], LPSTR strFileName, int 
 
 	if (textureArray[textureID] == 0) // Fall back attemp to convert and load or Bail
 	{
-		char File[260];
-		strcpy(File, App->EquityDirecory_FullPath);
-		strcat(File, "\\");
-		strcat(File, "Data\\");
-		strcat(File, "Dummy.bmp");
-		Soil_Load_Texture(g_Texture, File, textureID);
+		Texture_To_Bmp(strFileName);
 
 		textureArray[textureID] = SOIL_load_OGL_texture
 		(
-			File,
+			"Etemp.bmp",
 			SOIL_LOAD_AUTO,
 			SOIL_CREATE_NEW_ID,
 			SOIL_FLAG_TEXTURE_REPEATS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_MIPMAPS
 		);
+		remove("Etemp.bmp");
+
+		if (textureArray[textureID] == 0)
+		{
+			const char* test = SOIL_last_result();
+			char buff[255];
+			strcpy(buff, test);
+			App->Say(buff);
+			return 0;
+		}
+
 	}
 	
 	glBindTexture(GL_TEXTURE_2D, textureArray[textureID]);
@@ -129,8 +135,16 @@ bool ME_Textures::Soil_Load_Texture(UINT textureArray[], LPSTR strFileName, int 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 
-	////glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	return 1;
+}
 
+// *************************************************************************
+// *							Texture_To_Bmp				  		 	   *
+// *************************************************************************
+bool ME_Textures::Texture_To_Bmp(char* File)
+{
+	ilLoadImage(File);
+	ilSaveImage("Etemp.bmp");
 	return 1;
 }
 

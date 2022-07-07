@@ -14,7 +14,7 @@ public:
 
 	bool LoadDummyTexture(int Index);
 	bool ChangeTexture_Model(void);
-
+	bool Texture_To_Bmp(char* File);
 	char JustFileName[MAX_PATH];
 	char TextureFileName[MAX_PATH];
 	UINT  g_Texture[300];
