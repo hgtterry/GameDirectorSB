@@ -21,6 +21,9 @@ misrepresented as being the original software.
 distribution.
 */
 
+#pragma once
+#include <pshpack1.h>
+
 #ifndef word
 typedef unsigned short word;
 #endif // word
@@ -50,7 +53,31 @@ struct Cms3d_triangle_t
 	byte    groupIndex;                                 //
 };
 
-#pragma once
+typedef struct
+{
+	byte            flags;                              // SELECTED | HIDDEN
+	char            name[32];                           //
+	word            numtriangles;                       //
+	word			triangleIndices[65535];					// the groups group the triangles
+	char            materialIndex;                      // -1 = no material
+} Cms3d_group_t;
+
+typedef struct
+{
+	char            name[32];                           //
+	float           ambient[4];                         //
+	float           diffuse[4];                         //
+	float           specular[4];                        //
+	float           emissive[4];                        //
+	float           shininess;                          // 0.0f - 128.0f
+	float           transparency;                       // 0.0f - 1.0f
+	char            mode;                               // 0, 1, 2 is unused now
+	char            texture[128];                        // texture.bmp
+	char            alphamap[128];                       // alpha.bmp
+} Cms3d_material_t;
+
+#include <poppack.h>
+
 class ME_Export_Milkshape
 {
 public:
@@ -61,11 +88,22 @@ public:
 
 protected:
 
-	bool Write_MILKFile_Assimp(void);
-	void Write_MILKHeader(void);
-	bool WriteMILKMesh_Assimp(void);
+	bool Write_MILK_File_Assimp(void);
+	void Write_MILK_Header(void);
+	bool Write_MILK_Mesh_Assimp(void);
+	bool Write_MILK_Groups_Assimp(void);
+	bool Sort_Groups_Assimp(void);
+	bool Write_MILK_Texures_Assimp(void);
+	bool Get_Material_Name_Assimp(int Loop);
+	bool CleanUp(void);
+
+	inline void SetVec4(float *target, float x, float y, float z, float w);
 
 	char OutputFolder[MAX_PATH];
+	char Text_FileName[MAX_PATH];
+	char MaterialName[MAX_PATH];
+
+	Cms3d_group_t * TGroup[200];
 
 	FILE *WriteMILK;
 };

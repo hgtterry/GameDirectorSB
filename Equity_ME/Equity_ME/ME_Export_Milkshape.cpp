@@ -29,6 +29,8 @@ distribution.
 ME_Export_Milkshape::ME_Export_Milkshape()
 {
 	OutputFolder[0] = 0;
+	Text_FileName[0] = 0;
+	MaterialName[0] = 0;
 
 	WriteMILK = nullptr;
 }
@@ -69,7 +71,7 @@ bool ME_Export_Milkshape::Export_To_Milk(bool DoMotions)
 	{
 		App->CL_Textures->DecompileTextures(OutputFolder);
 
-		Write_MILKFile_Assimp();
+		Write_MILK_File_Assimp();
 	}
 
 	//CleanUp();
@@ -80,7 +82,7 @@ bool ME_Export_Milkshape::Export_To_Milk(bool DoMotions)
 // *************************************************************************
 // *					Write_MILKFile_Assimp   Terry Flanigan		 	   *
 // *************************************************************************
-bool ME_Export_Milkshape::Write_MILKFile_Assimp(void)
+bool ME_Export_Milkshape::Write_MILK_File_Assimp(void)
 {
 	char buf[244];
 	strcpy(buf, OutputFolder);
@@ -96,7 +98,7 @@ bool ME_Export_Milkshape::Write_MILKFile_Assimp(void)
 
 	word Zero = 0;
 
-	Write_MILKHeader();
+	Write_MILK_Header();
 
 	float mFrames = 0;
 	float CurrentTime = 0;
@@ -105,9 +107,9 @@ bool ME_Export_Milkshape::Write_MILKFile_Assimp(void)
 
 	App->CL_Model->Convert_To_GlobalMesh();
 
-	WriteMILKMesh_Assimp();
-//	WriteMILKGroups_Assimp();
-//	WriteMILKTexures_Assimp();
+	Write_MILK_Mesh_Assimp();
+	Write_MILK_Groups_Assimp();
+	Write_MILK_Texures_Assimp();
 
 	fwrite(&mFrames, sizeof(float), 1, WriteMILK);
 	fwrite(&CurrentTime, sizeof(float), 1, WriteMILK);
@@ -123,7 +125,7 @@ bool ME_Export_Milkshape::Write_MILKFile_Assimp(void)
 // *************************************************************************
 // *					Write_MILKHeader Terry Flanigan				 	   *
 // *************************************************************************
-void ME_Export_Milkshape::Write_MILKHeader(void)
+void ME_Export_Milkshape::Write_MILK_Header(void)
 {
 	Cms3d_header_t header;
 
@@ -135,7 +137,7 @@ void ME_Export_Milkshape::Write_MILKHeader(void)
 // *************************************************************************
 // *					WriteMILKMesh   Terry Bernie					 	   *
 // *************************************************************************
-bool ME_Export_Milkshape::WriteMILKMesh_Assimp(void)
+bool ME_Export_Milkshape::Write_MILK_Mesh_Assimp(void)
 {
 
 	word numMesh = App->CL_Model->VerticeCount;
@@ -215,5 +217,153 @@ bool ME_Export_Milkshape::WriteMILKMesh_Assimp(void)
 		Count++;
 	}
 
+	return 1;
+}
+
+// *************************************************************************
+// *					WriteMILKGroups_Assimp   Terry Bernie		 	   *
+// *************************************************************************
+bool ME_Export_Milkshape::Write_MILK_Groups_Assimp(void)
+{
+
+	Sort_Groups_Assimp();
+
+	word numGroups = App->CL_Model->Get_Groupt_Count();
+
+	fwrite(&numGroups, 2, 1, WriteMILK);
+
+	int Count = 0;
+	int GroupCount = App->CL_Model->Get_Groupt_Count();
+	while (Count < GroupCount)
+	{
+		fwrite(&TGroup[Count]->flags, sizeof(byte), 1, WriteMILK);
+		fwrite(&TGroup[Count]->name, sizeof(char), 32, WriteMILK);
+		fwrite(&TGroup[Count]->numtriangles, sizeof(word), 1, WriteMILK);
+
+		for (int j = 0; j < TGroup[Count]->numtriangles; j++)
+		{
+			fwrite(&TGroup[Count]->triangleIndices[j], 2, 1, WriteMILK);
+		}
+
+		fwrite(&TGroup[Count]->materialIndex, 1, 1, WriteMILK);
+
+		Count++;
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *							SortGroups 25/05/04   					   *
+// *************************************************************************
+bool ME_Export_Milkshape::Sort_Groups_Assimp(void)
+{
+	int IndiceCount = 0;
+	int VertCount = 0;
+	int Count = 0;
+	int GroupCount = App->CL_Model->Get_Groupt_Count();
+
+	while (Count < GroupCount)
+	{
+		TGroup[Count] = new Cms3d_group_t;
+		TGroup[Count]->flags = 0;
+		TGroup[Count]->materialIndex = App->CL_Model->Group[Count]->MaterialIndex;// -1;Count;//-1;
+		strcpy(TGroup[Count]->name, App->CL_Model->Group[Count]->GroupName);
+
+		VertCount = 0;
+		IndiceCount = 0;
+
+		while (VertCount < App->CL_Model->Group[Count]->GroupFaceCount)
+		{
+
+			TGroup[Count]->triangleIndices[IndiceCount] = App->CL_Model->Group[Count]->FaceIndex_Data[VertCount].Index;
+
+			IndiceCount++;
+			VertCount++;
+		}
+
+		TGroup[Count]->numtriangles = IndiceCount;
+
+		Count++;
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *					WriteMILKTexures   03/10/08					 	   *
+// *************************************************************************
+bool ME_Export_Milkshape::Write_MILK_Texures_Assimp(void)
+{
+	word numMaterials = App->CL_Model->Get_Groupt_Count();
+
+	fwrite(&numMaterials, 2, 1, WriteMILK);
+
+	Cms3d_material_t mat;
+
+	int Count = 0;
+	int MatCount = App->CL_Model->Get_Groupt_Count();
+
+	while (Count<MatCount)
+	{
+		Get_Material_Name_Assimp(Count);
+		strcpy(mat.name, MaterialName);
+		SetVec4(mat.diffuse, 1, 1, 1, 1);
+		SetVec4(mat.ambient, 1, 1, 1, 1);
+		SetVec4(mat.specular, 0, 0, 0, 1);
+		SetVec4(mat.emissive, 0, 0, 0, 1);
+		mat.shininess = 0;
+		mat.transparency = 1;
+		mat.mode = 0;
+
+
+		int Len = strlen(Text_FileName);
+		Text_FileName[Len - 4] = 0;
+		strcat(Text_FileName, ".jpg");
+
+		strcpy(mat.texture, Text_FileName);
+		strcpy(mat.alphamap, "");
+
+		fwrite(&mat, sizeof(Cms3d_material_t), 1, WriteMILK);
+		Count++;
+	}
+	return 1;
+}
+
+// *************************************************************************
+// *					GetMaterialName   03/10/08					 	   *
+// *************************************************************************
+bool ME_Export_Milkshape::Get_Material_Name_Assimp(int Loop)
+{
+
+	strcpy(MaterialName, App->CL_Model->Group[Loop]->MaterialName);
+	strcpy(Text_FileName, App->CL_Model->Group[Loop]->Text_FileName);
+	return 1;
+}
+
+// *************************************************************************
+// *							SetVec4  Terry Bernie   				   *
+// *************************************************************************
+inline void ME_Export_Milkshape::SetVec4(float *target, float x, float y, float z, float w)
+{
+	target[0] = x;
+	target[1] = y;
+	target[2] = z;
+	target[3] = w;
+}
+
+// *************************************************************************
+// *					CleanUp Terry Bernie						 	   *
+// *************************************************************************
+bool ME_Export_Milkshape::CleanUp(void)
+{
+	/*int t = 0;
+	while (t < GroupCount)
+	{
+		if (TGroup[t]) { delete TGroup[t]; TGroup[t] = NULL; }
+		t++;
+	}
+
+	GroupCount = 0;*/
 	return 1;
 }
