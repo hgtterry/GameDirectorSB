@@ -272,6 +272,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				return 1;
 			}
 
+			case ID_IMPORT_GENESIS3DACT:
+			{
+				App->CL_Import->RFActor_Loader();
+				return 1;
+			}
+			
 			// ------------------------------------------------------- Export
 			case ID_EXPORT_WAVEFRONTOBJ:
 			{

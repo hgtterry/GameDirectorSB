@@ -22,13 +22,39 @@ distribution.
 */
 
 #pragma once
-class ME_Import
+
+#include "Genesis.h"
+#include "ram.h"
+#include "strblock.h"
+#include "Puppet.h"
+
+#include "body.h"
+#include "quatern.h"
+#include "ram.h"
+#include "strblock.h"
+#include "vph.h"
+#include "mkbody.h"
+#include "bitmap.h"
+
+class ME_Genesis3D
 {
 public:
-	ME_Import();
-	~ME_Import();
+	ME_Genesis3D();
+	~ME_Genesis3D();
 
-	bool Assimp_Loader(char* Extension, char* Extension2);
-	bool RFActor_Loader(void);
+	void LoadActor(void);
+
+protected:
+
+	bool AddActor(char* FileName);
+
+	bool BuildActor(geActor *Actor);
+
+	gePuppet *CreatePuppet(geVFile *TextureFS, const geBody *B);
+	geBodyInst* CreateGeometry(const geBody *B);
+
+	geActor_Def* ActorDef_Memory;
+	geBody* ActorBody_Memory;
+	geActor * TestActor;
 };
 

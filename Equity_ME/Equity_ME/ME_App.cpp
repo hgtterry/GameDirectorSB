@@ -48,6 +48,9 @@ ME_App::ME_App()
 	CL_Export_Object = nullptr;
 	CL_Export_Milk = nullptr;
 
+	CL_Genesis3D = nullptr;
+
+	//----------------------------------------------
 	hInst =			nullptr;
 
 	MainHwnd =		nullptr;
@@ -126,7 +129,8 @@ bool ME_App::InitApp(void)
 	CL_Export_Object = new ME_Export_Object();
 	CL_Export_Milk = new ME_Export_Milkshape();
 
-
+	CL_Genesis3D = new ME_Genesis3D();
+	
 	SetBrushes_Fonts();
 	return 1;
 }

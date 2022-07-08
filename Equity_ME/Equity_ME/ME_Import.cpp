@@ -80,3 +80,38 @@ bool ME_Import::Assimp_Loader(char* Extension, char* Extension2)
 	
 	return 1;
 }
+
+// *************************************************************************
+// *					RFActor_Loader Terry Terry Berine				   *
+// *************************************************************************
+bool ME_Import::RFActor_Loader(void)
+{
+	int Result = App->CL_FileIO->Open_File_Model("RF Actor   *.act\0*.act\0", "RF Actor", NULL);
+	if (Result == 0)
+	{
+		return 1;
+	}
+
+	
+	App->CL_Model->Clear_Model_And_Reset();
+
+	char Model_Path_And_File[MAX_PATH];
+	strcpy(Model_Path_And_File, App->CL_FileIO->Get_Model_Path_File_Name().c_str());
+
+	App->CL_Model->Set_Paths();
+
+	//App->CL_Genesis_Import->LoadActor();
+
+	/*App->CL_Model_Data->Model_Type = LoadedFile_Actor;
+
+	Set_Equity();
+
+	App->CL_Model_Data->Model_Loaded = 1;
+
+	App->Cl_Grid->Zoom();
+
+	App->Cl_Ogre->Loading_Text("Loading Finished", 0);*/
+
+	App->Say("Model Loaded");
+	return 1;
+}

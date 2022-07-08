@@ -43,6 +43,8 @@ distribution.
 #include "ME_Export_Object.h"
 #include "ME_Export_Milkshape.h"
 
+#include "ME_Genesis3D.h"
+
 
 class ME_App
 {
@@ -69,6 +71,8 @@ public:
 	ME_Export*			CL_Export;			// Exporters [220630]
 	ME_Export_Object*	CL_Export_Object;
 	ME_Export_Milkshape* CL_Export_Milk;	// Milkshape Exporter [070722]
+
+	ME_Genesis3D*		CL_Genesis3D;		// All Things Genesis/RF [080722]
 
 	bool InitApp(void);
 	bool SetMainWin_Centre(void);

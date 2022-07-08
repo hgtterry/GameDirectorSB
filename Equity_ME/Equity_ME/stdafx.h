@@ -25,10 +25,10 @@
 
 #define NOMINMAX
 #include <windows.h>
-//#include <Genesis.h>
+#include <Genesis.h>
 //#include "btBulletDynamicsCommon.h"
 // C RunTime Header Files
-//#include <stdint.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <malloc.h>
 #include <memory.h>
@@ -55,7 +55,7 @@
 #include <gl/gl.h>
 #include <gl/glu.h>
 
-//#include "Gen_Structures.h"
+#include "Gen_Structures.h"
 
 namespace Enums
 {
