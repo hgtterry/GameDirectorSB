@@ -239,28 +239,39 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			// ------------------------------------------------------- Import
 			case ID_IMPORT_EQ_WAVEFRONTOBJ:
 			{
+				App->CL_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
 				App->CL_Import->Assimp_Loader("Wavefront OBJ   *.obj\0*.obj\0", "Wavefront OBJ");
 				return 1;
 			}
 
 			case ID_IMPORT_AUTODESK3DS:
 			{
+				App->CL_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
 				App->CL_Import->Assimp_Loader("Autodesk 3DS   *.3ds\0*.3ds\0", "Autodesk 3DS");
 				return 1;
 			}
 
 			case ID_IMPORT_BLENDERBLEND:
 			{
+				App->CL_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
 				App->CL_Import->Assimp_Loader("Blender   *.blend\0*.blend\0", "Blender");
 				return 1;
 			}
 
 			case ID_IMPORT_MILKSHAPEMS3D:
 			{
+				App->CL_Assimp->SelectedPreset = 8 + 8388608 + 64;
 				App->CL_Import->Assimp_Loader("MilkShape Files   *.ms3d\0*.ms3d\0", "Load MilkShape File");
 				return 1;
 			}
-			
+
+			case ID_IMPORT_COLLADADAE:
+			{
+				App->CL_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
+				App->CL_Import->Assimp_Loader("Collada DAE   *.dae\0*.dae\0", "Collada DAE");
+				return 1;
+			}
+
 			// ------------------------------------------------------- Export
 			case ID_EXPORT_WAVEFRONTOBJ:
 			{
