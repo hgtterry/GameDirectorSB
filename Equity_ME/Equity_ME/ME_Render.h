@@ -57,6 +57,8 @@ public:
 	bool Show_HideGroup;
 	bool Show_Crosshair;
 
+	bool RenderByTexture();
+
 	void TestLight(void);
 
 protected:

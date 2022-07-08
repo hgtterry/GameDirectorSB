@@ -223,6 +223,11 @@ void ME_Render::Render_Loop()
 
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
+		if (App->CL_Model->Model_Type == Enums::LoadedFile_Actor)
+		{
+			RenderByTexture();
+		}
+
 		if (App->CL_Model->Model_Type == Enums::LoadedFile_Assimp)
 		{
 			Assimp_Render_Textures();
@@ -992,4 +997,73 @@ void ME_Render::RenderCrossHair(void)
 	glVertex3f(0, 0, 0);
 	glVertex3f(0, Length, 0);
 	glEnd();
+}
+
+// *************************************************************************
+// *					RenderByTexture  ( Terry Bernie ) 				   *
+// *************************************************************************
+bool ME_Render::RenderByTexture()
+{
+	const geBody_Triangle *SF;
+	SF = App->CL_Genesis3D->ActorDef_Memory->Body->SkinFaces[GE_BODY_HIGHEST_LOD].FaceArray;
+
+	int Count = 0;
+	int MatIndex;
+	int UVIndex = 0;
+
+	float x = 0;
+	float y = 0;
+	float z = 0;
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	glEnable(GL_TEXTURE_2D);
+	glColor3f(1, 1, 1);
+	glEnable(GL_ALPHA_TEST);
+
+	while (Count<App->CL_Model->FaceCount)
+	{
+		//MatIndex = App->CL_Genesis_Import->ActorDef_Memory->Body->SkinFaces[GE_BODY_HIGHEST_LOD].FaceArray[Count].MaterialIndex;
+		MatIndex = App->CL_Model->MatIndex_Data[Count];
+
+		glBindTexture(GL_TEXTURE_2D, App->CL_Textures->g_Texture[MatIndex]);
+
+		glBegin(GL_POLYGON);
+
+		x = App->CL_Model->vertex_Data[App->CL_Model->Face_Data[Count].a].x;
+		y = App->CL_Model->vertex_Data[App->CL_Model->Face_Data[Count].a].y;
+		z = App->CL_Model->vertex_Data[App->CL_Model->Face_Data[Count].a].z;
+
+
+		glNormal3f(App->CL_Model->Normal_Data[SF[Count].NormalIndex[0]].x, App->CL_Model->Normal_Data[SF[Count].NormalIndex[0]].y, App->CL_Model->Normal_Data[SF[Count].NormalIndex[0]].z);
+		glTexCoord2f(App->CL_Model->MapCord_Data[App->CL_Model->Face_Data[Count].a].u, App->CL_Model->MapCord_Data[App->CL_Model->Face_Data[Count].a].v);
+		glVertex3f(x, y, z);//Vertex definition
+
+		x = App->CL_Model->vertex_Data[App->CL_Model->Face_Data[Count].b].x;
+		y = App->CL_Model->vertex_Data[App->CL_Model->Face_Data[Count].b].y;
+		z = App->CL_Model->vertex_Data[App->CL_Model->Face_Data[Count].b].z;
+
+
+		glNormal3f(App->CL_Model->Normal_Data[SF[Count].NormalIndex[1]].x, App->CL_Model->Normal_Data[SF[Count].NormalIndex[1]].y, App->CL_Model->Normal_Data[SF[Count].NormalIndex[1]].z);
+		glTexCoord2f(App->CL_Model->MapCord_Data[App->CL_Model->Face_Data[Count].b].u, App->CL_Model->MapCord_Data[App->CL_Model->Face_Data[Count].b].v);
+		glVertex3f(x, y, z);
+
+		x = App->CL_Model->vertex_Data[App->CL_Model->Face_Data[Count].c].x;
+		y = App->CL_Model->vertex_Data[App->CL_Model->Face_Data[Count].c].y;
+		z = App->CL_Model->vertex_Data[App->CL_Model->Face_Data[Count].c].z;
+
+		glNormal3f(App->CL_Model->Normal_Data[SF[Count].NormalIndex[2]].x, App->CL_Model->Normal_Data[SF[Count].NormalIndex[2]].y, App->CL_Model->Normal_Data[SF[Count].NormalIndex[2]].z);
+		glTexCoord2f(App->CL_Model->MapCord_Data[App->CL_Model->Face_Data[Count].c].u, App->CL_Model->MapCord_Data[App->CL_Model->Face_Data[Count].c].v);
+		glVertex3f(x, y, z);
+
+		glEnd();
+
+		Count++;
+	}
+
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_ALPHA_TEST);
+
+	return 1;
 }

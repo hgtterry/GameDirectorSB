@@ -63,8 +63,10 @@ void ME_Genesis3D::LoadActor(void)
 
 	AddActor(App->CL_Model->Path_FileName);
 
-	SetCounters();
+	
 
+	SetCounters();
+	
 	//	ListMotions();
 
 	GetDefaultBones();
@@ -147,7 +149,7 @@ bool ME_Genesis3D::LoadActorTextures(void)
 	CreateTextureInfo();		// Create Empty Texture Structures
 	FillTextureInfo();			// Populate Structures
 								// ----------------------------------------------------------------- All Textures
-
+	
 	App->CL_Model->GroupCount = App->CL_Model->S_Texture[0]->UsedTextureCount;
 
 	while (Count < App->CL_Model->S_Texture[0]->UsedTextureCount)

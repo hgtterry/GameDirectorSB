@@ -100,18 +100,25 @@ bool ME_Import::RFActor_Loader(void)
 
 	App->CL_Model->Set_Paths();
 
-	//App->CL_Genesis_Import->LoadActor();
+	App->CL_Genesis3D->LoadActor();
 
-	/*App->CL_Model_Data->Model_Type = LoadedFile_Actor;
+	App->CL_Model->Model_Type = Enums::LoadedFile_Actor;
 
-	Set_Equity();
+	App->CL_Model->Model_Loaded = 1;
+	App->CL_Grid->Zoom();
 
-	App->CL_Model_Data->Model_Loaded = 1;
+	char TitleBar[260];
+	strcpy(TitleBar, "Equity_ME");
+	strcat(TitleBar, "    ");
+	strcat(TitleBar, App->CL_Model->Path_FileName);
+	SetWindowText(App->MainHwnd, TitleBar);
 
-	App->Cl_Grid->Zoom();
+	////Set_Equity();
+	Ogre::Root::getSingletonPtr()->renderOneFrame();
 
-	App->Cl_Ogre->Loading_Text("Loading Finished", 0);*/
+	App->CL_FileView->Change_Level_Name();
 
 	App->Say("Model Loaded");
+
 	return 1;
 }

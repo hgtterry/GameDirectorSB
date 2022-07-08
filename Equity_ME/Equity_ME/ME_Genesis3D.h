@@ -44,6 +44,8 @@ public:
 
 	void LoadActor(void);
 
+	geActor_Def* ActorDef_Memory;
+
 protected:
 
 	bool AddActor(char* FileName);
@@ -78,7 +80,6 @@ protected:
 	void CreateTextureInfo(void);
 	bool FillTextureInfo(void);
 
-	geActor_Def* ActorDef_Memory;
 	geBody* ActorBody_Memory;
 	geActor * TestActor;
 

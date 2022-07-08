@@ -28,6 +28,12 @@ distribution.
 
 ME_Model::ME_Model()
 {
+	S_Texture[0] = NULL;
+	S_Texture[0] = new Texture_Type;
+	S_Texture[0]->TextureCount = 1;
+	S_Texture[0]->UsedTextureCount = 0;
+	strcpy(S_Texture[0]->TextureName[0].Name, "Test.bmp");
+
 	GroupCount = 0;
 	TextureCount = 0;
 	VerticeCount = 0;			// Model Vertice Count 
