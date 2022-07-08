@@ -53,7 +53,7 @@ void ME_Dimensions::Centre_Model_Mid(void)
 			Count++;
 		}
 
-		App->CL_Model->GetBoundingBoxModel_Update();
+		App->CL_Model->Set_BondingBox_Model(0);
 		
 	}
 }
@@ -89,7 +89,7 @@ void ME_Dimensions::Centre_Model_Base(void)
 			Count++;
 		}
 
-		App->CL_Model->GetBoundingBoxModel_Update();
+		App->CL_Model->Set_BondingBox_Model(0);
 	}
 }
 
@@ -149,7 +149,7 @@ void ME_Dimensions::Rotate_X_Model(float X)
 			Count++;
 		}
 
-		App->CL_Model->GetBoundingBoxModel_Update();
+		App->CL_Model->Set_BondingBox_Model(0);
 	}
 }
 
@@ -209,7 +209,7 @@ void ME_Dimensions::Rotate_Y_Model(float Y)
 			}
 			Count++;
 		}
-		App->CL_Model->GetBoundingBoxModel_Update();
+		App->CL_Model->Set_BondingBox_Model(0);
 	}
 }
 
@@ -270,7 +270,7 @@ void ME_Dimensions::Rotate_Z_Model(float Z)
 			Count++;
 		}
 
-		App->CL_Model->GetBoundingBoxModel_Update();
+		App->CL_Model->Set_BondingBox_Model(0);
 	}
 }
 
@@ -299,7 +299,7 @@ void ME_Dimensions::Translate_Model(float X, float Y, float Z)
 			Count++;
 		}
 
-		App->CL_Model->GetBoundingBoxModel_Update();
+		App->CL_Model->Set_BondingBox_Model(0);
 	}
 }
 
@@ -346,7 +346,7 @@ void ME_Dimensions::Scale_Model(bool Mode, float X, float Y, float Z)
 				Count++;
 			}
 
-			App->CL_Model->GetBoundingBoxModel_Update();
+			App->CL_Model->Set_BondingBox_Model(0);
 
 		}
 		else
@@ -371,7 +371,7 @@ void ME_Dimensions::Scale_Model(bool Mode, float X, float Y, float Z)
 				Count++;
 			}
 
-			App->CL_Model->GetBoundingBoxModel_Update();
+			App->CL_Model->Set_BondingBox_Model(0);
 		}
 	}
 }

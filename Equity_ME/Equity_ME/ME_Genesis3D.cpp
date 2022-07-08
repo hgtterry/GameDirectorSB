@@ -73,7 +73,7 @@ void ME_Genesis3D::LoadActor(void)
 
 	LoadActorTextures();
 
-	GetBoundingBoxModel_Create();
+	Set_BondingBox_Model(1); // Create
 
 	//FileView_AddMotions();
 
@@ -81,12 +81,16 @@ void ME_Genesis3D::LoadActor(void)
 }
 
 // *************************************************************************
-// *				GetBoundingBoxModel_Create Terry Bernie				   *
+// *					Set_BondingBox_Model Terry Flanigan				   *
 // *************************************************************************
-bool ME_Genesis3D::GetBoundingBoxModel_Create(void)
+bool ME_Genesis3D::Set_BondingBox_Model(bool Create)
 {
 
-	App->CL_Model->S_BoundingBox[0] = new AABB_Type;
+	if (Create == 1)
+	{
+		App->CL_Model->S_BoundingBox[0] = new AABB_Type;
+
+	}
 
 	App->CL_Model->S_BoundingBox[0]->BB_Min[0].x = App->CL_Model->vertex_Data[0].x;
 	App->CL_Model->S_BoundingBox[0]->BB_Min[0].y = App->CL_Model->vertex_Data[0].y;
@@ -98,8 +102,7 @@ bool ME_Genesis3D::GetBoundingBoxModel_Create(void)
 
 	int Count = 0;
 	int VertCount = 0;
-	//while (Count<App->S_Counters[0]->GroupCount)
-	//{
+	
 	VertCount = 0;
 	while (VertCount < App->CL_Model->VerticeCount)
 	{
@@ -124,6 +127,7 @@ bool ME_Genesis3D::GetBoundingBoxModel_Create(void)
 
 	return 1;
 }
+
 
 // *************************************************************************
 // *						LoadActorTextures							   *
@@ -200,7 +204,7 @@ bool ME_Genesis3D::LoadActorTextures(void)
 		DeleteFile((LPCTSTR)TempTextureFile_TGA);
 	}
 
-	//Update_Model_File_View();
+	Update_Model_File_View();
 
 	return 1;
 }
@@ -577,53 +581,13 @@ bool ME_Genesis3D::Animate(int Do)
 
 	if (App->CL_Model->Model_Loaded == 1)
 	{
-		GetBoundingBoxModel_Update();
+		Set_BondingBox_Model(0); // Update
 	}
 
 	return 1;
 }
 
-// *************************************************************************
-// *				GetBoundingBoxModel_Create Terry Bernie				   *
-// *************************************************************************
-bool ME_Genesis3D::GetBoundingBoxModel_Update(void)
-{
 
-	App->CL_Model->S_BoundingBox[0]->BB_Min[0].x = App->CL_Model->vertex_Data[0].x;
-	App->CL_Model->S_BoundingBox[0]->BB_Min[0].y = App->CL_Model->vertex_Data[0].y;
-	App->CL_Model->S_BoundingBox[0]->BB_Min[0].z = App->CL_Model->vertex_Data[0].z;
-
-	App->CL_Model->S_BoundingBox[0]->BB_Max[0].x = App->CL_Model->vertex_Data[0].x;
-	App->CL_Model->S_BoundingBox[0]->BB_Max[0].y = App->CL_Model->vertex_Data[0].y;
-	App->CL_Model->S_BoundingBox[0]->BB_Max[0].z = App->CL_Model->vertex_Data[0].z;
-
-	int Count = 0;
-	int VertCount = 0;
-
-	VertCount = 0;
-	while (VertCount < App->CL_Model->VerticeCount)
-	{
-		if (App->CL_Model->vertex_Data[VertCount].x < App->CL_Model->S_BoundingBox[0]->BB_Min[0].x) App->CL_Model->S_BoundingBox[0]->BB_Min[0].x = App->CL_Model->vertex_Data[VertCount].x;
-		if (App->CL_Model->vertex_Data[VertCount].y < App->CL_Model->S_BoundingBox[0]->BB_Min[0].y) App->CL_Model->S_BoundingBox[0]->BB_Min[0].y = App->CL_Model->vertex_Data[VertCount].y;
-		if (App->CL_Model->vertex_Data[VertCount].z < App->CL_Model->S_BoundingBox[0]->BB_Min[0].z) App->CL_Model->S_BoundingBox[0]->BB_Min[0].z = App->CL_Model->vertex_Data[VertCount].z;
-		if (App->CL_Model->vertex_Data[VertCount].x > App->CL_Model->S_BoundingBox[0]->BB_Max[0].x) App->CL_Model->S_BoundingBox[0]->BB_Max[0].x = App->CL_Model->vertex_Data[VertCount].x;
-		if (App->CL_Model->vertex_Data[VertCount].y > App->CL_Model->S_BoundingBox[0]->BB_Max[0].y) App->CL_Model->S_BoundingBox[0]->BB_Max[0].y = App->CL_Model->vertex_Data[VertCount].y;
-		if (App->CL_Model->vertex_Data[VertCount].z > App->CL_Model->S_BoundingBox[0]->BB_Max[0].z)App->CL_Model->S_BoundingBox[0]->BB_Max[0].z = App->CL_Model->vertex_Data[VertCount].z;
-		VertCount++;
-	}
-
-	App->CL_Model->S_BoundingBox[0]->Size[0].x = (fabs(App->CL_Model->S_BoundingBox[0]->BB_Max[0].x - App->CL_Model->S_BoundingBox[0]->BB_Min[0].x));
-	App->CL_Model->S_BoundingBox[0]->Size[0].y = (fabs(App->CL_Model->S_BoundingBox[0]->BB_Max[0].y - App->CL_Model->S_BoundingBox[0]->BB_Min[0].y));
-	App->CL_Model->S_BoundingBox[0]->Size[0].z = (fabs(App->CL_Model->S_BoundingBox[0]->BB_Max[0].z - App->CL_Model->S_BoundingBox[0]->BB_Min[0].z));
-
-	App->CL_Model->S_BoundingBox[0]->radius = (App->CL_Model->S_BoundingBox[0]->Size[0].x>App->CL_Model->S_BoundingBox[0]->Size[0].z) ? App->CL_Model->S_BoundingBox[0]->Size[0].z / 2.0f : App->CL_Model->S_BoundingBox[0]->Size[0].x / 2.0f;
-
-	App->CL_Model->S_BoundingBox[0]->Centre[0].x = (App->CL_Model->S_BoundingBox[0]->BB_Min[0].x + App->CL_Model->S_BoundingBox[0]->BB_Max[0].x) / 2.0f;
-	App->CL_Model->S_BoundingBox[0]->Centre[0].y = (App->CL_Model->S_BoundingBox[0]->BB_Min[0].y + App->CL_Model->S_BoundingBox[0]->BB_Max[0].y) / 2.0f;
-	App->CL_Model->S_BoundingBox[0]->Centre[0].z = (App->CL_Model->S_BoundingBox[0]->BB_Min[0].z + App->CL_Model->S_BoundingBox[0]->BB_Max[0].z) / 2.0f;
-
-	return 1;
-}
 
 // *************************************************************************
 // *						RenderActor Terry Bernie	   		  	 	   *
@@ -961,4 +925,46 @@ geBodyInst* ME_Genesis3D::CreateGeometry(const geBody *B)
 	BI->FaceCount = 0;
 
 	return BI;
+}
+
+// *************************************************************************
+// *				Update_Model_File_View Terry Bernie					   *
+// *************************************************************************
+bool ME_Genesis3D::Update_Model_File_View(void)
+{
+	if (App->CL_Model->TextureCount == 0) { return 0; }
+
+	char GroupName[255];
+	char GroupNum[255];
+
+	const char *MaterialName;
+	char Temp[256];
+	int Loop = 0;
+
+	//CheckTexureNames();
+
+	while (Loop < App->CL_Model->S_Texture[0]->UsedTextureCount)
+	{
+		MaterialName = geStrBlock_GetString(ActorDef_Memory->Body->MaterialNames, Loop);//BT_Texture[0]->MatIndex[Loop].Index);
+		strcpy(Temp, MaterialName);
+
+		itoa(Loop, GroupNum, 10);
+		strcpy(GroupName, "Group_");
+		strcat(GroupName, GroupNum);
+		strcpy(App->CL_Model->Group[Loop]->GroupName, GroupName);
+
+		//---------- Add Group N + Tetxure File Name
+		char buff[255];
+		strcpy(buff, App->CL_Model->Group[Loop]->GroupName);
+		strcat(buff, " -> ");
+		strcat(buff, App->CL_Model->Group[Loop]->Text_FileName);
+
+		App->CL_Model->Group[Loop]->ListView_Item = App->CL_FileView->Add_Group(App->CL_Model->Group[Loop]->GroupName, Loop);
+		Loop++;
+	}
+
+	//App->CL_FileView->Set_FolderActive(App->CL_FileView->HT_TexturesFolder);
+	//App->CL_FileView->Set_FolderActive(App->CL_FileView->HT_Textures_Mapped_Folder);
+
+	return 1;
 }

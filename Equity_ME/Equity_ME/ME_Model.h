@@ -98,8 +98,9 @@ public:
 	void Set_Texture_Count(int Count);
 	void Set_Motion_Count(int Count);
 	void Create_Mesh_Group(int Index);
-	void Create_BondingBox_Model(void);
-	bool GetBoundingBoxModel_Update(void);
+
+	// 1 = Create and Update   0 = just Update
+	void Set_BondingBox_Model(bool Create);
 
 	void Clear_Model_And_Reset(void);
 

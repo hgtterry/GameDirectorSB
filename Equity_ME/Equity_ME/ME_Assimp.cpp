@@ -83,7 +83,7 @@ bool ME_Assimp::LoadFile(const char* pFile)
 
 		LoadTextures();
 
-		App->CL_Model->Create_BondingBox_Model();
+		App->CL_Model->Set_BondingBox_Model(1); // Create
 
 	}
 

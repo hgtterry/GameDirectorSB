@@ -71,14 +71,15 @@ protected:
 
 	bool Animate(int Do);
 
-	bool GetBoundingBoxModel_Create(void);
-	bool GetBoundingBoxModel_Update(void);
-
+	bool Set_BondingBox_Model(bool Create);
+	
 	bool GetUVs();
 
 	bool SetTexture_Type(void);
 	void CreateTextureInfo(void);
 	bool FillTextureInfo(void);
+
+	bool Update_Model_File_View(void);
 
 	geBody* ActorBody_Memory;
 	geActor * TestActor;
