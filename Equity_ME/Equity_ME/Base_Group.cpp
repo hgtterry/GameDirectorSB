@@ -38,6 +38,7 @@ Base_Group::Base_Group()
 
 	GroupVertCount = 0;
 	MaterialIndex = 0;
+	Soil_TextureIndex = 0;
 
 	Base_Bitmap = NULL;
 

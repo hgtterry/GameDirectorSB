@@ -47,14 +47,47 @@ public:
 protected:
 
 	bool AddActor(char* FileName);
+	void SetCounters(void);
+	bool GetDefaultBones(void);
+	bool LoadActorTextures(void);
 
 	bool BuildActor(geActor *Actor);
 
 	gePuppet *CreatePuppet(geVFile *TextureFS, const geBody *B);
 	geBodyInst* CreateGeometry(const geBody *B);
+	bool RenderActor(const gePuppet *P, const gePose *Joints);
+
+	geBodyInst_Geometry* GetGeometry(
+		const geBodyInst *BI,
+		const geVec3d *ScaleVector,
+		const geXFArray *BoneTransformArray,
+		int LevelOfDetail);
+
+	geBodyInst_Geometry* TGetGeometryPrep(geBodyInst *BI, int LevelOfDetail);
+
+	void TPostScale(const geXForm3d *M, const geVec3d *S, geXForm3d *Scaled);
+
+	bool Animate(int Do);
+
+	bool GetBoundingBoxModel_Create(void);
+	bool GetBoundingBoxModel_Update(void);
+
+	bool GetUVs();
+
+	bool SetTexture_Type(void);
+	void CreateTextureInfo(void);
+	bool FillTextureInfo(void);
 
 	geActor_Def* ActorDef_Memory;
 	geBody* ActorBody_Memory;
 	geActor * TestActor;
+
+	float m_CurrentPose;
+	float FrameSpeed;
+	float AnimationSpeed;
+
+	char MotionName[255];
+	char TempTextureFile_BMP[MAX_PATH];
+	char TempTextureFile_TGA[MAX_PATH];
 };
 

@@ -50,6 +50,7 @@ public:
 	int GroupFaceCount;
 
 	int MaterialIndex;
+	int Soil_TextureIndex;
 
 	int Depth;
 	long Height;

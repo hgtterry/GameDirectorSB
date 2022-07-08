@@ -32,6 +32,10 @@ ME_Model::ME_Model()
 	TextureCount = 0;
 	VerticeCount = 0;			// Model Vertice Count 
 	FaceCount = 0;				// Model Face Count 
+	NormalsCount = 0;
+	TextureCount = 0;
+	MotionCount = 0;
+	BoneCount = 0;
 
 	MotionCount = 0;
 
