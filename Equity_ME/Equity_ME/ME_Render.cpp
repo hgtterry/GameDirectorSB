@@ -253,6 +253,11 @@ void ME_Render::Render_Loop()
 	// ---------------------- Points
 	if (App->CL_Model->Model_Loaded == 1 && ShowPoints == 1)
 	{
+		if (App->CL_Model->Model_Type == Enums::LoadedFile_Actor)
+		{
+			RF_Render_Points();
+		}
+
 		if (App->CL_Model->Model_Type == Enums::LoadedFile_Assimp)
 		{
 			Assimp_Render_Points();
@@ -924,25 +929,25 @@ bool ME_Render::RF_Render_Faces(void)
 }
 
 // *************************************************************************
-// *					RenderPoints Terry Bernie						   *
+// *					RF_Render_Points Terry Bernie					   *
 // *************************************************************************
-bool ME_Render::RenderPoints(void)
+bool ME_Render::RF_Render_Points(void)
 {
-	/*int Count = 0;
+	int Count = 0;
 	glPointSize(5);
 
 	glColor3f(1.0f, 1.0f, 0.0f);
 
-	while (Count < App->CL_Vm_Model->VerticeCount)
+	while (Count < App->CL_Model->VerticeCount)
 	{
 		glBegin(GL_POINTS);
 
-		glVertex3fv(&App->CL_Vm_Model->vertex_Data[Count].x);
+		glVertex3fv(&App->CL_Model->vertex_Data[Count].x);
 
 		glEnd();
 
 		Count++;
-	}*/
+	}
 
 	return 1;
 }

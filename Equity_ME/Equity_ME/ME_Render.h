@@ -88,8 +88,7 @@ protected:
 
 	void Render_BoundingBoxModel(void);
 
-	bool RenderPoints(void);
-
+	bool RF_Render_Points(void);
 	bool RF_Render_Faces(void);
 	bool RF_Render_All_Groups();
 	bool RF_Render_Just_Group();
