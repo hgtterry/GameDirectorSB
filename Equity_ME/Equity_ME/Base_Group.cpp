@@ -37,6 +37,10 @@ Base_Group::Base_Group()
 	Bitmap_Loaded = 0;
 
 	GroupVertCount = 0;
+
+	IndicesCount = 0; // Ogre
+	BoneAssignMentCount = 0; // Ogre
+
 	MaterialIndex = 0;
 	Soil_TextureIndex = 0;
 

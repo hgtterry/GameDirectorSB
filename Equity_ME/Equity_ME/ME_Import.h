@@ -30,6 +30,7 @@ public:
 
 	bool Assimp_Loader(char* Extension, char* Extension2);
 	bool RFActor_Loader(void);
+	bool Ogre_Loader(char* Extension, char* Extension2);
 
 protected:
 

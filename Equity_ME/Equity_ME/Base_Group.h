@@ -32,6 +32,7 @@ typedef struct polygon_type { int a, b, c, Group; }polygon_type;
 typedef struct normal_type { float x, y, z; }normal_type;
 typedef struct mapcoord_type { float u, v; }mapcoord_type;
 typedef struct int_type { int Index; }int_type;
+typedef struct float_type { float Float1; }float_type;
 
 class Base_Group
 {
@@ -48,7 +49,7 @@ public:
 
 	int GroupVertCount;	// Group Vertice Count
 	int GroupFaceCount;
-
+	int IndicesCount; // Ogre
 	int MaterialIndex;
 	int Soil_TextureIndex;
 
@@ -63,6 +64,12 @@ public:
 	std::vector<normal_type> Normal_Data;		// XYZ
 	std::vector<mapcoord_type> MapCord_Data;	// UV
 	std::vector<int_type> FaceIndex_Data;
+
+	std::vector<int_type> BoneIndex_Data; // Ogre
+	std::vector<int_type> BA_BoneIndex_Data; // Ogre
+	std::vector<int_type> BA_BoneVertexIndex_Data; // Ogre
+	std::vector<float_type> BA_Weight_Data; // Ogre
+	int BoneAssignMentCount; // Ogre
 
 	HBITMAP Base_Bitmap;
 

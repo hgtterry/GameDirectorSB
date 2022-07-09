@@ -213,3 +213,30 @@ int __stdcall ME_FileIO::BrowseCallbackProc(HWND  hwnd, UINT  uMsg, LPARAM  lPar
 
 	return 0;
 }
+
+// *************************************************************************
+// *					SearchFolders Terry Bernie			 		 	   *
+// *************************************************************************
+bool ME_FileIO::SearchFolders(char* Path, char* File)
+{
+	char pSearchPath[1024];
+
+	WIN32_FIND_DATA FindFileData;
+	HANDLE hFind;
+
+	strcpy(pSearchPath, Path);
+	strcat(pSearchPath, File);
+
+	hFind = FindFirstFile(pSearchPath, &FindFileData);
+	if (hFind == INVALID_HANDLE_VALUE)
+	{
+		return 0;
+	}
+	else
+	{
+		FindClose(hFind);
+		return 1;
+	}
+
+	return 0;
+}

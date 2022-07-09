@@ -291,7 +291,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				App->CL_Import->RFActor_Loader();
 				return 1;
 			}
-			
+
+			case ID_OGRE3D_MESHMESH:
+			{
+				App->CL_Import->Ogre_Loader("Ogre3D   *.mesh\0*.mesh\0", "Ogre3D");
+				return 1;
+			}
+
 			// ------------------------------------------------------- Export
 			case ID_EXPORT_WAVEFRONTOBJ:
 			{

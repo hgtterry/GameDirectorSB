@@ -122,4 +122,72 @@ bool ME_Import::RFActor_Loader(void)
 	return 1;
 }
 
+// *************************************************************************
+// *						Ogre_Loader Terry Bernie					   *
+// *************************************************************************
+bool ME_Import::Ogre_Loader(char* Extension, char* Extension2)
+{
+	int Result = App->CL_FileIO->Open_File_Model(Extension, Extension2, NULL);
+	if (Result == 0)
+	{
+		return 1;
+	}
+
+	App->CL_Model->Clear_Model_And_Reset();
+
+	char Model_Path_And_File[MAX_PATH];
+	strcpy(Model_Path_And_File, App->CL_FileIO->Get_Model_Path_File_Name().c_str());
+
+	App->CL_Model->Set_Paths();
+
+	// Just for Ogre3d
+	strcpy(App->CL_Model->JustName, App->CL_Model->FileName);
+	int Len = strlen(App->CL_Model->JustName);
+	App->CL_Model->JustName[Len - 5] = 0;
+
+
+	App->CL_Ogre3D->Load_OgreModel(); // Load Ogre Model
+
+	App->CL_Model->Model_Type = Enums::LoadedFile_Assimp;
+
+	//App->CL_Model_Data->Render_Mode = Render_As_Assimp;
+
+	//App->CL_Model_Data->ItsAnOgreModel = 1;
+
+	App->CL_Model->Model_Loaded = 1;
+
+	//App->Cl_Grid->Zoom();
+
+	//App->Cl_Ogre->Loading_Text("Loading Finished", 0);
+
+	//Set_Equity();
+
+	Ogre::Root::getSingletonPtr()->renderOneFrame();
+	Ogre::Root::getSingletonPtr()->renderOneFrame();
+
+	//-------------------------------
+	//if (App->CL_Import_Ogre->NoMaterialFileFound == 1)
+	//{
+	//	App->CL_Dialogs->YesNo("No Textures", "Do you want to load an Ogre Config File now");
+	//	bool Doit = App->CL_Dialogs->Canceled;
+	//	if (Doit == 0)
+	//	{
+	//		/*char LookBuf[1024];
+	//		strcpy(LookBuf,App->CL_Model_Data->Model_FullPath);
+
+	//		int test = App->CL_FileIO->SearchFolders(LookBuf,"resources.cfg");
+	//		if (test == 1)*/
+	//		{
+	//			App->Cl_Importer->Ogre_ResourceFile_Loader("Ogre Config   *.cfg\0*.cfg\0", "Ogre Config");
+	//		}
+	//	}
+	//	else
+	//	{
+	//		return 1;
+	//	}
+	//}
+
+	return 1;
+}
+
 
