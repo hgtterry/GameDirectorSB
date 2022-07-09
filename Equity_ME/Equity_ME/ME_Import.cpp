@@ -36,6 +36,33 @@ ME_Import::~ME_Import()
 }
 
 // *************************************************************************
+// *						Set_Equity Terry Flanigan					   *
+// *************************************************************************
+void ME_Import::Set_Equity(void)
+{
+	App->CL_Model->Model_Loaded = 1;
+	App->CL_Grid->Zoom();
+
+	char TitleBar[260];
+	strcpy(TitleBar, "Equity_ME");
+	strcat(TitleBar, "    ");
+	strcat(TitleBar, App->CL_Model->Path_FileName);
+	SetWindowText(App->MainHwnd, TitleBar);
+
+	////Set_Equity();
+	Ogre::Root::getSingletonPtr()->renderOneFrame();
+
+	App->CL_FileView->Change_Level_Name();
+
+	App->CL_TopBar->Set_Loaded();
+
+	App->CL_FileView->ExpandRoot();
+	App->CL_FileView->SelectItem(App->CL_Model->Group[0]->ListView_Item);  // Select First Group
+
+	App->Say("Model Loaded");
+}
+
+// *************************************************************************
 // *						Assimp_Loader Terry Bernie					   *
 // *************************************************************************
 bool ME_Import::Assimp_Loader(char* Extension, char* Extension2)
@@ -43,7 +70,7 @@ bool ME_Import::Assimp_Loader(char* Extension, char* Extension2)
 	int Result = App->CL_FileIO->Open_File_Model(Extension, Extension2, NULL);
 	if (Result == 0)
 	{
-		return 1;
+		return 0;
 	}
 
 	App->CL_Model->Clear_Model_And_Reset();
@@ -62,21 +89,7 @@ bool ME_Import::Assimp_Loader(char* Extension, char* Extension2)
 
 	App->CL_Model->Model_Type = Enums::LoadedFile_Assimp;
 
-	App->CL_Model->Model_Loaded = 1;
-	App->CL_Grid->Zoom();
-
-	char TitleBar[260];
-	strcpy(TitleBar, "Equity_ME");
-	strcat(TitleBar, "    ");
-	strcat(TitleBar, App->CL_Model->Path_FileName);
-	SetWindowText(App->MainHwnd, TitleBar);
-
-	////Set_Equity();
-	Ogre::Root::getSingletonPtr()->renderOneFrame();
-
-	App->CL_FileView->Change_Level_Name();
-
-	App->Say("Model Loaded");
+	Set_Equity();
 	
 	return 1;
 }
@@ -89,7 +102,7 @@ bool ME_Import::RFActor_Loader(void)
 	int Result = App->CL_FileIO->Open_File_Model("RF Actor   *.act\0*.act\0", "RF Actor", NULL);
 	if (Result == 0)
 	{
-		return 1;
+		return 0;
 	}
 
 	
@@ -104,21 +117,9 @@ bool ME_Import::RFActor_Loader(void)
 
 	App->CL_Model->Model_Type = Enums::LoadedFile_Actor;
 
-	App->CL_Model->Model_Loaded = 1;
-	App->CL_Grid->Zoom();
-
-	char TitleBar[260];
-	strcpy(TitleBar, "Equity_ME");
-	strcat(TitleBar, "    ");
-	strcat(TitleBar, App->CL_Model->Path_FileName);
-	SetWindowText(App->MainHwnd, TitleBar);
-
-	////Set_Equity();
-	Ogre::Root::getSingletonPtr()->renderOneFrame();
-
-	App->CL_FileView->Change_Level_Name();
-
-	App->Say("Model Loaded");
+	Set_Equity();
 
 	return 1;
 }
+
+

@@ -76,14 +76,12 @@ protected:
 
 	bool Assimp_Render_Textures(void);
 	bool Assimp_Textured_Parts(int Count);
-
 	bool Assimp_Render_Points(void);
 	bool Render_As_Points_Parts(int Count);
-
 	bool Assimp_Render_Faces(void);
 	bool Assimp_Face_Parts(int Count);
-
 	void Assimp_Render_Normals(void);
+
 	void Render_As_Normals_Parts(int Count);
 
 	bool As_RenderBones();
@@ -91,11 +89,12 @@ protected:
 	void Render_BoundingBoxModel(void);
 
 	bool RenderPoints(void);
-	bool RenderMeshOnly(void);
 
+	bool RF_Render_Faces(void);
 	bool RF_Render_All_Groups();
 	bool RF_Render_Just_Group();
 	void RF_Render_Normals(void);
+	
 
 	void RenderCrossHair(void);
 };

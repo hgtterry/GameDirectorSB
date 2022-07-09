@@ -29,6 +29,7 @@ public:
 	~ME_TopBar();
 
 	void Reset_Class(void);
+	void Set_Loaded();
 
 	bool Start_TopBar();
 

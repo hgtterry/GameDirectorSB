@@ -14,8 +14,12 @@ public:
 	void SelectItem(HTREEITEM TreeItem);
 	void Delete_AllItems();
 	void Change_Level_Name(void);
+	void Set_FolderActive(HTREEITEM Folder);
 
 	HTREEITEM Add_Group(char *SFileName, int Index);
+
+	HTREEITEM GD_GroupsFolder;
+	HTREEITEM GD_AnimationFolder;
 
 	bool FileView_Active;
 
@@ -35,7 +39,7 @@ protected:
 	HTREEITEM GD_ProjectFolder;
 
 	HTREEITEM GD_ModelFolder;
-	HTREEITEM GD_GroupsFolder;
+	
 
 	HIMAGELIST hImageList;
 };

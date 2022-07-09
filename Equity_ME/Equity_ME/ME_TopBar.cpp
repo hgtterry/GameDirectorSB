@@ -86,6 +86,16 @@ void ME_TopBar::Reset_Class(void)
 // *************************************************************************
 // *	  				Start_TopBar_Globals  	Terry					   *
 // *************************************************************************
+void ME_TopBar::Set_Loaded()
+{
+	HWND Temp = GetDlgItem(TabsHwnd, IDC_BTSHOWTEXTURES);
+	App->CL_Ogre->RenderListener->ShowTextured = 1;
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOn_Bmp);
+}
+
+// *************************************************************************
+// *	  				Start_TopBar_Globals  	Terry					   *
+// *************************************************************************
 bool ME_TopBar::Start_TopBar()
 {
 	TabsHwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TOPBAR, App->Fdlg, (DLGPROC)TopBar_Proc);
@@ -305,6 +315,29 @@ LRESULT CALLBACK ME_TopBar::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 					App->CL_Ogre->RenderListener->ShowPoints = 1;
 
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshPointsOn_Bmp);
+				}
+			}
+			return TRUE;
+		}
+
+		//-------------------------------------------------------- Show Bones
+		if (LOWORD(wParam) == IDC_BTSHOWBONES)
+		{
+			if (App->CL_Model->Model_Loaded == 1)
+			{
+				HWND Temp = GetDlgItem(hDlg, IDC_BTSHOWBONES);
+
+				if (App->CL_Ogre->RenderListener->ShowBones == 1)
+				{
+					App->CL_Ogre->RenderListener->ShowBones = 0;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BonesOff_Bmp);
+				}
+				else
+				{
+					App->CL_Ogre->RenderListener->ShowBones = 1;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BonesOn_Bmp);
 				}
 			}
 			return TRUE;

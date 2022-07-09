@@ -10,6 +10,7 @@ ME_FileView::ME_FileView()
 	GD_ProjectFolder =	nullptr;
 	GD_ModelFolder =	nullptr;
 	GD_GroupsFolder =	nullptr;
+	GD_AnimationFolder = nullptr;
 
 	strcpy(FileView_Folder, "");
 	strcpy(FileView_File, "");
@@ -176,18 +177,27 @@ void ME_FileView::MoreFoldersD(void) // last folder level
 	tvinsert.hInsertAfter = TVI_LAST;
 	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
 	tvinsert.item.pszText = App->CL_Model->FileName;
-	tvinsert.item.iImage = 2;
-	tvinsert.item.iSelectedImage = 3;
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
 	GD_ModelFolder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
 
-	////------------------------------------------------------- Camera
+	////------------------------------------------------------- Groups
 	tvinsert.hParent = GD_ModelFolder;
 	tvinsert.hInsertAfter = TVI_LAST;
 	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
 	tvinsert.item.pszText = "Groups";
-	tvinsert.item.iImage = 2;
-	tvinsert.item.iSelectedImage = 3;
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
 	GD_GroupsFolder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+
+	////------------------------------------------------------- Groups
+	tvinsert.hParent = GD_ModelFolder;
+	tvinsert.hInsertAfter = TVI_LAST;
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	tvinsert.item.pszText = "Animations";
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
+	GD_AnimationFolder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
 }
 
 // *************************************************************************
@@ -312,5 +322,20 @@ void ME_FileView::Change_Level_Name(void)
 	Sitem.pszText = App->CL_Model->FileName;
 	Sitem.iImage = 3;
 	Sitem.iSelectedImage = 3;
+	SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_SETITEM, 0, (LPARAM)(const LPTVITEM)&Sitem);
+}
+
+// *************************************************************************
+// *					Set_FolderActive Terry Bernie				 	   *
+// *************************************************************************
+void ME_FileView::Set_FolderActive(HTREEITEM Folder)
+{
+	TVITEM Sitem;
+
+	Sitem.mask = TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	Sitem.hItem = Folder;
+	Sitem.iImage = 3;
+	Sitem.iSelectedImage = 3;
+
 	SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_SETITEM, 0, (LPARAM)(const LPTVITEM)&Sitem);
 }

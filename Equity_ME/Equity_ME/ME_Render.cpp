@@ -239,6 +239,11 @@ void ME_Render::Render_Loop()
 	{
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
+		if (App->CL_Model->Model_Type == Enums::LoadedFile_Actor)
+		{
+			RF_Render_Faces();
+		}
+
 		if (App->CL_Model->Model_Type == Enums::LoadedFile_Assimp)
 		{
 			Assimp_Render_Faces();
@@ -257,6 +262,11 @@ void ME_Render::Render_Loop()
 	//// ---------------------- Normals
 	if (App->CL_Model->Model_Loaded == 1 && ShowNormals == 1)
 	{
+		if (App->CL_Model->Model_Type == Enums::LoadedFile_Actor)
+		{
+			RF_Render_Normals();
+		}
+
 		if (App->CL_Model->Model_Type == Enums::LoadedFile_Assimp)
 		{
 			Assimp_Render_Normals();
@@ -277,10 +287,10 @@ void ME_Render::Render_Loop()
 	}
 
 	//// ---------------------- Bones
-	//if (App->CL_Vm_Model->Model_Loaded == 1 && ShowBones == 1)
-	//{
-	//	As_RenderBones();
-	//}
+	if (App->CL_Model->Model_Loaded == 1 && ShowBones == 1)
+	{
+		As_RenderBones();
+	}
 
 	// ---------------------- Crosshair
 	if (Show_Crosshair == 1)
@@ -574,54 +584,54 @@ void ME_Render::RF_Render_Normals(void)
 {
 #define t 2
 
-	//geBody_Index V1;
-	//geBody_Index V2;
-	//geBody_Index V3;
+	geBody_Index V1;
+	geBody_Index V2;
+	geBody_Index V3;
 
-	//const geBody_Triangle *SF;
+	const geBody_Triangle *SF;
 
-	//SF = App->CL_Vm_Genesis3D->ActorDef_Memory->Body->SkinFaces[GE_BODY_HIGHEST_LOD].FaceArray;
+	SF = App->CL_Genesis3D->ActorDef_Memory->Body->SkinFaces[GE_BODY_HIGHEST_LOD].FaceArray;
 
-	//int Start = 0;
-	//glPointSize(3);//PointSize
-	//glBegin(GL_LINES);
+	int Start = 0;
+	glPointSize(3);//PointSize
+	glBegin(GL_LINES);
 
-	//while (Start < App->CL_Vm_Model->FaceCount)
-	//{
+	while (Start < App->CL_Model->FaceCount)
+	{
 
-	//	glColor3f(1, 1, 0);
+		glColor3f(1, 1, 0);
 
-	//	int indexA = App->CL_Vm_Model->Face_Data[Start].a;
-	//	int indexB = App->CL_Vm_Model->Face_Data[Start].b;
-	//	int indexC = App->CL_Vm_Model->Face_Data[Start].c;
+		int indexA = App->CL_Model->Face_Data[Start].a;
+		int indexB = App->CL_Model->Face_Data[Start].b;
+		int indexC = App->CL_Model->Face_Data[Start].c;
 
-	//	V1 = SF[Start].NormalIndex[0];
-	//	V2 = SF[Start].NormalIndex[1];
-	//	V3 = SF[Start].NormalIndex[2];
+		V1 = SF[Start].NormalIndex[0];
+		V2 = SF[Start].NormalIndex[1];
+		V3 = SF[Start].NormalIndex[2];
 
 
-	//	glVertex3f(App->CL_Vm_Model->vertex_Data[indexA].x, App->CL_Vm_Model->vertex_Data[indexA].y, App->CL_Vm_Model->vertex_Data[indexA].z);
+		glVertex3f(App->CL_Model->vertex_Data[indexA].x, App->CL_Model->vertex_Data[indexA].y, App->CL_Model->vertex_Data[indexA].z);
 
-	//	glVertex3f(App->CL_Vm_Model->vertex_Data[indexA].x + App->CL_Vm_Model->Normal_Data[V1].x*t,
-	//		App->CL_Vm_Model->vertex_Data[indexA].y + App->CL_Vm_Model->Normal_Data[V1].y*t,
-	//		App->CL_Vm_Model->vertex_Data[indexA].z + App->CL_Vm_Model->Normal_Data[V1].z*t);
+		glVertex3f(App->CL_Model->vertex_Data[indexA].x + App->CL_Model->Normal_Data[V1].x*t,
+			App->CL_Model->vertex_Data[indexA].y + App->CL_Model->Normal_Data[V1].y*t,
+			App->CL_Model->vertex_Data[indexA].z + App->CL_Model->Normal_Data[V1].z*t);
 
-	//	glVertex3f(App->CL_Vm_Model->vertex_Data[indexB].x, App->CL_Vm_Model->vertex_Data[indexB].y, App->CL_Vm_Model->vertex_Data[indexB].z);
+		glVertex3f(App->CL_Model->vertex_Data[indexB].x, App->CL_Model->vertex_Data[indexB].y, App->CL_Model->vertex_Data[indexB].z);
 
-	//	glVertex3f(App->CL_Vm_Model->vertex_Data[indexB].x + App->CL_Vm_Model->Normal_Data[V2].x*t,
-	//		App->CL_Vm_Model->vertex_Data[indexB].y + App->CL_Vm_Model->Normal_Data[V2].y*t,
-	//		App->CL_Vm_Model->vertex_Data[indexB].z + App->CL_Vm_Model->Normal_Data[V2].z*t);
+		glVertex3f(App->CL_Model->vertex_Data[indexB].x + App->CL_Model->Normal_Data[V2].x*t,
+			App->CL_Model->vertex_Data[indexB].y + App->CL_Model->Normal_Data[V2].y*t,
+			App->CL_Model->vertex_Data[indexB].z + App->CL_Model->Normal_Data[V2].z*t);
 
-	//	glVertex3f(App->CL_Vm_Model->vertex_Data[indexC].x, App->CL_Vm_Model->vertex_Data[indexC].y, App->CL_Vm_Model->vertex_Data[indexC].z);
+		glVertex3f(App->CL_Model->vertex_Data[indexC].x, App->CL_Model->vertex_Data[indexC].y, App->CL_Model->vertex_Data[indexC].z);
 
-	//	glVertex3f(App->CL_Vm_Model->vertex_Data[indexC].x + App->CL_Vm_Model->Normal_Data[V3].x*t,
-	//		App->CL_Vm_Model->vertex_Data[indexC].y + App->CL_Vm_Model->Normal_Data[V3].y*t,
-	//		App->CL_Vm_Model->vertex_Data[indexC].z + App->CL_Vm_Model->Normal_Data[V3].z*t);
+		glVertex3f(App->CL_Model->vertex_Data[indexC].x + App->CL_Model->Normal_Data[V3].x*t,
+			App->CL_Model->vertex_Data[indexC].y + App->CL_Model->Normal_Data[V3].y*t,
+			App->CL_Model->vertex_Data[indexC].z + App->CL_Model->Normal_Data[V3].z*t);
 
-	//	Start++;
-	//}
+		Start++;
+	}
 
-	//glEnd();
+	glEnd();
 }
 
 // *************************************************************************
@@ -630,63 +640,63 @@ void ME_Render::RF_Render_Normals(void)
 bool ME_Render::As_RenderBones()
 {
 
-	//glDisable(GL_TEXTURE_2D);
-	//glDisable(GL_DEPTH_TEST);
-	//int Start = 0;
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_DEPTH_TEST);
+	int Start = 0;
 
-	//glColor3f(1, 1, 0);
-	//glPointSize(6);//PointSize
-	//int Point = 0;
+	glColor3f(1, 1, 0);
+	glPointSize(6);//PointSize
+	int Point = 0;
 
-	//while (Start<App->CL_Vm_Model->BoneCount)
-	//{
+	while (Start<App->CL_Model->BoneCount)
+	{
 
-	//	if (App->CL_Vm_Model->S_Bones[Start]->Parent == -1)
-	//	{
-	//		glColor3f(1, 0, 0);			// Root Joint Colour
-	//	}
-	//	else { glColor3f(0, 0, 1); }		// Joint Colours
+		if (App->CL_Model->S_Bones[Start]->Parent == -1)
+		{
+			glColor3f(1, 0, 0);			// Root Joint Colour
+		}
+		else { glColor3f(0, 0, 1); }		// Joint Colours
 
-	//	glBegin(GL_POINTS);
-	//	glVertex3f(App->CL_Vm_Model->S_Bones[Start]->TranslationStart.X,
-	//		App->CL_Vm_Model->S_Bones[Start]->TranslationStart.Y,
-	//		App->CL_Vm_Model->S_Bones[Start]->TranslationStart.Z);
+		glBegin(GL_POINTS);
+		glVertex3f(App->CL_Model->S_Bones[Start]->TranslationStart.X,
+			App->CL_Model->S_Bones[Start]->TranslationStart.Y,
+			App->CL_Model->S_Bones[Start]->TranslationStart.Z);
 
-	//	glEnd();
-	//	Start++;
-	//}
+		glEnd();
+		Start++;
+	}
 
-	//Start = 0;
-	//while (Start<App->CL_Vm_Model->BoneCount)
-	//{
+	Start = 0;
+	while (Start<App->CL_Model->BoneCount)
+	{
 
-	//	if (App->CL_Vm_Model->S_Bones[Start]->Parent == -1)
-	//	{
-	//		glColor3f(1, 0, 0);			// Root Joint Color Again Both the same
-	//		glBegin(GL_POINTS);
-	//		glVertex3f(App->CL_Vm_Model->S_Bones[Start]->TranslationStart.X,
-	//			App->CL_Vm_Model->S_Bones[Start]->TranslationStart.Y,
-	//			App->CL_Vm_Model->S_Bones[Start]->TranslationStart.Z);
-	//		glEnd();
-	//	}
-	//	else
-	//	{
-	//		glLineWidth(3);
-	//		glBegin(GL_LINES);
-	//		glColor3f(1, 1, 0);			// Bone Colours Between Joints
-	//		glVertex3f(App->CL_Vm_Model->S_Bones[Start]->TranslationStart.X,
-	//			App->CL_Vm_Model->S_Bones[Start]->TranslationStart.Y,
-	//			App->CL_Vm_Model->S_Bones[Start]->TranslationStart.Z);
+		if (App->CL_Model->S_Bones[Start]->Parent == -1)
+		{
+			glColor3f(1, 0, 0);			// Root Joint Color Again Both the same
+			glBegin(GL_POINTS);
+			glVertex3f(App->CL_Model->S_Bones[Start]->TranslationStart.X,
+				App->CL_Model->S_Bones[Start]->TranslationStart.Y,
+				App->CL_Model->S_Bones[Start]->TranslationStart.Z);
+			glEnd();
+		}
+		else
+		{
+			glLineWidth(3);
+			glBegin(GL_LINES);
+			glColor3f(1, 1, 0);			// Bone Colours Between Joints
+			glVertex3f(App->CL_Model->S_Bones[Start]->TranslationStart.X,
+				App->CL_Model->S_Bones[Start]->TranslationStart.Y,
+				App->CL_Model->S_Bones[Start]->TranslationStart.Z);
 
-	//		glVertex3f(App->CL_Vm_Model->S_Bones[App->CL_Vm_Model->S_Bones[Start]->Parent]->TranslationStart.X,
-	//			App->CL_Vm_Model->S_Bones[App->CL_Vm_Model->S_Bones[Start]->Parent]->TranslationStart.Y,
-	//			App->CL_Vm_Model->S_Bones[App->CL_Vm_Model->S_Bones[Start]->Parent]->TranslationStart.Z);
+			glVertex3f(App->CL_Model->S_Bones[App->CL_Model->S_Bones[Start]->Parent]->TranslationStart.X,
+				App->CL_Model->S_Bones[App->CL_Model->S_Bones[Start]->Parent]->TranslationStart.Y,
+				App->CL_Model->S_Bones[App->CL_Model->S_Bones[Start]->Parent]->TranslationStart.Z);
 
-	//		glEnd();
-	//	}
+			glEnd();
+		}
 
-	//	Start++;
-	//}
+		Start++;
+	}
 
 	return 1;
 }
@@ -891,29 +901,24 @@ bool ME_Render::RF_Render_Just_Group()
 }
 
 // *************************************************************************
-// *					RenderMeshPartOnly Terry Bernie	   				   *
+// *					RF_Render_Faces Terry Bernie	   				   *
 // *************************************************************************
-bool ME_Render::RenderMeshOnly(void)
+bool ME_Render::RF_Render_Faces(void)
 {
-	//int Count = 0;
-	//int MatIndex = 0;
+	int Count = 0;
+	int MatIndex = 0;
 
-	//glColor3f(0.9f, 0.9f, 0.9f);
-	//while (Count<App->CL_Vm_Model->FaceCount)
-	//{
-	//	//MatIndex = App->CL_Vm_Model->MatIndex_Data[Count];
+	glColor3f(0.9f, 0.9f, 0.9f);
+	while (Count < App->CL_Model->FaceCount)
+	{
+		glBegin(GL_POLYGON);
+		glVertex3f(App->CL_Model->vertex_Data[App->CL_Model->Face_Data[Count].a].x, App->CL_Model->vertex_Data[App->CL_Model->Face_Data[Count].a].y, App->CL_Model->vertex_Data[App->CL_Model->Face_Data[Count].a].z);
+		glVertex3f(App->CL_Model->vertex_Data[App->CL_Model->Face_Data[Count].b].x, App->CL_Model->vertex_Data[App->CL_Model->Face_Data[Count].b].y, App->CL_Model->vertex_Data[App->CL_Model->Face_Data[Count].b].z);
+		glVertex3f(App->CL_Model->vertex_Data[App->CL_Model->Face_Data[Count].c].x, App->CL_Model->vertex_Data[App->CL_Model->Face_Data[Count].c].y, App->CL_Model->vertex_Data[App->CL_Model->Face_Data[Count].c].z);
+		glEnd();
 
-	//	//if (MatIndex == App->CL_Vm_Groups->SelectedGroup)
-	//	{
-	//		glBegin(GL_POLYGON);
-	//		glVertex3f(App->CL_Vm_Model->vertex_Data[App->CL_Vm_Model->Face_Data[Count].a].x, App->CL_Vm_Model->vertex_Data[App->CL_Vm_Model->Face_Data[Count].a].y, App->CL_Vm_Model->vertex_Data[App->CL_Vm_Model->Face_Data[Count].a].z);
-	//		glVertex3f(App->CL_Vm_Model->vertex_Data[App->CL_Vm_Model->Face_Data[Count].b].x, App->CL_Vm_Model->vertex_Data[App->CL_Vm_Model->Face_Data[Count].b].y, App->CL_Vm_Model->vertex_Data[App->CL_Vm_Model->Face_Data[Count].b].z);
-	//		glVertex3f(App->CL_Vm_Model->vertex_Data[App->CL_Vm_Model->Face_Data[Count].c].x, App->CL_Vm_Model->vertex_Data[App->CL_Vm_Model->Face_Data[Count].c].y, App->CL_Vm_Model->vertex_Data[App->CL_Vm_Model->Face_Data[Count].c].z);
-	//		glEnd();
-	//	}
-
-	//	Count++;
-	//}
+		Count++;
+	}
 
 	return 1;
 }

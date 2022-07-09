@@ -963,8 +963,7 @@ bool ME_Genesis3D::Update_Model_File_View(void)
 		Loop++;
 	}
 
-	//App->CL_FileView->Set_FolderActive(App->CL_FileView->HT_TexturesFolder);
-	//App->CL_FileView->Set_FolderActive(App->CL_FileView->HT_Textures_Mapped_Folder);
-
+	App->CL_FileView->Set_FolderActive(App->CL_FileView->GD_GroupsFolder);
+	
 	return 1;
 }

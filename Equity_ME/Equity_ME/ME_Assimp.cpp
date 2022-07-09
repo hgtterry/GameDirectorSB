@@ -89,9 +89,6 @@ bool ME_Assimp::LoadFile(const char* pFile)
 
 	aiReleaseImport(scene);
 
-	App->CL_FileView->ExpandRoot();
-	App->CL_FileView->SelectItem(App->CL_Model->Group[0]->ListView_Item);  // Select First Group
-
 	return 1;
 }
 
@@ -333,6 +330,8 @@ void ME_Assimp::Create_MeshGroups(const aiScene* pScene)
 
 		Count++;
 	}
+
+	App->CL_FileView->Set_FolderActive(App->CL_FileView->GD_GroupsFolder);
 }
 
 // *************************************************************************

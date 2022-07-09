@@ -30,5 +30,10 @@ public:
 
 	bool Assimp_Loader(char* Extension, char* Extension2);
 	bool RFActor_Loader(void);
+
+protected:
+
+	void Set_Equity(void);
+
 };
 
