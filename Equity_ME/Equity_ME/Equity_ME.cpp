@@ -197,7 +197,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				App->CL_Dialogs->Show_ListData();
 				return 1;
 			}
-			
+
+			case ID_DEBUG_SHOWIMGUIDEMO:
+			{
+				if (App->CL_ImGui->Show_ImGui_Test == 1)
+				{
+					App->CL_ImGui->Show_ImGui_Test = 0;
+				}
+				else
+				{
+					App->CL_ImGui->Show_ImGui_Test = 1;
+				}
+
+				return 1;
+			}
+
 			// ------------------------------------------------------- File
 			case ID_FILE_CLEARMODEL:
 			{

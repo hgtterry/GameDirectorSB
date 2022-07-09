@@ -49,6 +49,7 @@ ME_App::ME_App()
 	CL_Export_Milk = nullptr;
 
 	CL_Genesis3D = nullptr;
+	CL_Ogre3D = nullptr;
 
 	//----------------------------------------------
 	hInst =			nullptr;
@@ -130,6 +131,7 @@ bool ME_App::InitApp(void)
 	CL_Export_Milk = new ME_Export_Milkshape();
 
 	CL_Genesis3D = new ME_Genesis3D();
+	CL_Ogre3D = new ME_Ogre3D();
 	
 	SetBrushes_Fonts();
 	return 1;

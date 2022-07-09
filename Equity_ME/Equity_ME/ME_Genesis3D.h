@@ -81,6 +81,9 @@ protected:
 
 	bool Update_Model_File_View(void);
 
+	bool FileView_AddMotions(void);
+	bool GetMotion(char *mMotionName);
+
 	geBody* ActorBody_Memory;
 	geActor * TestActor;
 

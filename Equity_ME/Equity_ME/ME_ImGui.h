@@ -37,6 +37,8 @@ public:
 	void ImGui_Dimensions(void);
 
 	bool Show_Dimensions;
+	bool Show_ImGui_Test;
+
 protected:
 
 	void Load_Font(void);

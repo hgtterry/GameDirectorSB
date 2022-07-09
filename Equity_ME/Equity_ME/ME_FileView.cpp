@@ -230,6 +230,21 @@ HTREEITEM ME_FileView::Add_Group(char *SFileName, int Index)
 }
 
 // *************************************************************************
+// *					AddMotionFile Terry Bernie					 	   *
+// *************************************************************************
+void ME_FileView::Add_MotionFile(char *SFileName, int Index)
+{
+	tvinsert.hParent = GD_AnimationFolder;
+	tvinsert.hInsertAfter = TVI_LAST;
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE | TVIF_PARAM;
+	tvinsert.item.pszText = SFileName;
+	tvinsert.item.iImage = 4;
+	tvinsert.item.iSelectedImage = 5;
+	tvinsert.item.lParam = Index;
+	SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+}
+
+// *************************************************************************
 // *					Get_Selection Terry Bernie					 	   *
 // *************************************************************************
 void ME_FileView::Get_Selection(LPNMHDR lParam)

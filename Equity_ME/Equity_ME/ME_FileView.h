@@ -17,6 +17,7 @@ public:
 	void Set_FolderActive(HTREEITEM Folder);
 
 	HTREEITEM Add_Group(char *SFileName, int Index);
+	void Add_MotionFile(char *SFileName, int Index);
 
 	HTREEITEM GD_GroupsFolder;
 	HTREEITEM GD_AnimationFolder;

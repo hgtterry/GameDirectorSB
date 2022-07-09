@@ -39,6 +39,7 @@ ME_ImGui::ME_ImGui()
 	Show_FPS = 1;
 	StartPos = 0;
 	Show_Dimensions = 0;
+	Show_ImGui_Test = 0;
 
 	PosX_Selected = 1;
 	PosY_Selected = 0;
@@ -136,6 +137,11 @@ void ME_ImGui::Tabs_Render_Camera(void)
 	{
 		ImGui_Dimensions();
 	}
+
+	if (Show_ImGui_Test == 1)
+	{
+		ImGui::ShowDemoWindow();
+	}
 }
 
 // *************************************************************************
@@ -158,8 +164,13 @@ void ME_ImGui::ImGui_FPS(void)
 
 		ImGui::Spacing();
 		ImGui::Text("FPS average %.0f", ImGui::GetIO().Framerate);
-		//ImGui::PopFont();
-
+		
+		/*ImGuiIO& io = ImGui::GetIO();
+		ImTextureID my_tex_id = &App->CL_Textures->g_Texture[2];
+		float my_tex_w = (float)io.Fonts->TexWidth;
+		float my_tex_h = (float)io.Fonts->TexHeight;
+		ImGui::ImageButton(my_tex_id, ImVec2(64, 64) , ImVec2(0, 0), ImVec2(1,1), 1, ImVec4(0.0f, 0.0f, 0.0f, 1.0f));*/
+		
 		ImGui::End();
 	}
 }

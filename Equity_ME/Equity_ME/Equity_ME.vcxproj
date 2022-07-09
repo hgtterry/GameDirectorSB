@@ -167,6 +167,7 @@
     <ClInclude Include="ME_Import.h" />
     <ClInclude Include="ME_Model.h" />
     <ClInclude Include="ME_Ogre.h" />
+    <ClInclude Include="ME_Ogre3D.h" />
     <ClInclude Include="ME_OgreListener.h" />
     <ClInclude Include="ME_Panels.h" />
     <ClInclude Include="ME_Render.h" />
@@ -202,6 +203,7 @@
     <ClCompile Include="ME_Import.cpp" />
     <ClCompile Include="ME_Model.cpp" />
     <ClCompile Include="ME_Ogre.cpp" />
+    <ClCompile Include="ME_Ogre3D.cpp" />
     <ClCompile Include="ME_OgreListener.cpp" />
     <ClCompile Include="ME_Panels.cpp" />
     <ClCompile Include="ME_Render.cpp" />

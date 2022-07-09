@@ -75,7 +75,7 @@ void ME_Genesis3D::LoadActor(void)
 
 	Set_BondingBox_Model(1); // Create
 
-	//FileView_AddMotions();
+	FileView_AddMotions();
 
 	//App->CL_Model_Data->HasMesh = 1;
 }
@@ -965,5 +965,66 @@ bool ME_Genesis3D::Update_Model_File_View(void)
 
 	App->CL_FileView->Set_FolderActive(App->CL_FileView->GD_GroupsFolder);
 	
+	return 1;
+}
+
+// *************************************************************************
+// *					FileView_AddMotions Terry Bernie			 	   *
+// *************************************************************************
+bool ME_Genesis3D::FileView_AddMotions(void)
+{
+
+	if (App->CL_Model->MotionCount = 0)
+	{
+		return 0;
+	}
+	else
+	{
+		const char *TempMotionName;
+		int Loop = 0;
+		char buf[500];
+
+		if (App->CL_Model->MotionCount > 0)
+		{
+			TempMotionName = geActor_GetMotionName(ActorDef_Memory, 0);
+			strcpy(MotionName, TempMotionName);
+
+			GetMotion(MotionName);
+			//	strcpy(App->CL_Motions->SelectedMotion, MotionName);
+			//	SetDlgItemText(App->CentralView_Hwnd,IDC_STMOTIONFILE,(LPCTSTR)MotionName);*/
+			App->CL_FileView->Set_FolderActive(App->CL_FileView->GD_AnimationFolder);
+		}
+
+		while (Loop < App->CL_Model->MotionCount)
+		{
+			TempMotionName = geActor_GetMotionName(ActorDef_Memory, Loop);
+			strcpy(buf, TempMotionName);
+
+			App->CL_FileView->Add_MotionFile(buf, Loop);
+			Loop++;
+		}
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *					GetEndTime  ( Terry Bernie ) 					   *
+// *************************************************************************
+bool ME_Genesis3D::GetMotion(char *mMotionName)
+{
+	geMotion* Motion = NULL;
+	float StartTime = 0;
+	float EndTime = 0;
+
+	strcpy(MotionName, mMotionName);
+
+	Motion = geActor_GetMotionByName(ActorDef_Memory, MotionName);
+
+	geMotion_GetTimeExtents(Motion, &StartTime, &EndTime);
+	FrameSpeed = EndTime;
+
+//	App->CL_Motions->Current_StartTime = StartTime;
+//	App->CL_Motions->Current_EndTime = EndTime;
 	return 1;
 }
