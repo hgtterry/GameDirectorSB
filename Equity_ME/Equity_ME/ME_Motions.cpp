@@ -211,3 +211,65 @@ bool ME_Motions::Update_Motions()
 	
 	return 1;
 }
+
+// *************************************************************************
+// *					Play_SelectedMotion Terry Bernie				   *
+// *************************************************************************
+void ME_Motions::Play_SelectedMotion(void)
+{
+	//------------------------------------------------------- RF Model
+	if (App->CL_Model->Model_Loaded == 0) { return; }
+	if (App->CL_Model->MotionCount == 0) { return; }
+
+	if (App->CL_Model->Model_Type == Enums::LoadedFile_Actor)
+	{
+		App->CL_Genesis3D->m_CurrentPose = 0; // Reset to frame 0;
+		App->CL_Genesis3D->GetMotion(App->CL_Genesis3D->MotionName);
+
+		App->CL_Ogre->RenderListener->PlayActive = 1;
+
+		//App->CL_Motions->PlayButtonActive = 1;
+		//App->CL_Motions->TogglePlayBmp();
+	}
+
+	//------------------------------------------------------- Ogre3D Model
+	if (App->CL_Model->ItsAnOgreModel == 1)
+	{
+		//App->CL_Ogre->Ogre_Listener->Animate_State = App->CL_Ogre3D->OgreModel_Ent->getAnimationState(Selected_Motion_Name);
+		//App->CL_Ogre->Ogre_Listener->Animate_State->setEnabled(true);
+		//App->CL_Ogre->Ogre_Listener->Animate_Ogre = 1;
+		//OgreMotionIsPlaying = 1;
+
+		//App->CL_Motions->AnimationExtract_Mesh(1); // Get Default Pose Mesh
+		//App->CL_Ogre->OgreListener->Animate_Ogre = 1;
+		//App->CL_Motions->PlayButtonActive = 1;
+		//App->CL_Motions->TogglePlayBmp();
+	}
+}
+
+// *************************************************************************
+// *					Stop_SelectedMotion Terry Bernie				   *
+// *************************************************************************
+void ME_Motions::Stop_SelectedMotion(void)
+{
+	if (App->CL_Model->Model_Loaded == 0) { return; }
+	if (App->CL_Model->MotionCount == 0) { return; }
+
+	//------------------------------------------------------- RF Model
+	if (App->CL_Model->Model_Type == Enums::LoadedFile_Actor)
+	{
+		App->CL_Ogre->RenderListener->PlayActive = 0;
+		//App->CL_Motions->PlayButtonActive = 0;
+		//App->CL_Motions->TogglePlayBmp();
+	}
+	//------------------------------------------------------- Ogre3D Model
+	if (App->CL_Model->ItsAnOgreModel == 1)
+	{
+		/*App->Cl_Ogre->OgreListener->Animate_Ogre = 0;
+		App->Cl_Ogre->OgreListener->Animate_State->setEnabled(false);
+		OgreMotionIsPlaying = 0;
+
+		App->CL_Motions->PlayButtonActive = 0;
+		App->CL_Motions->TogglePlayBmp();*/
+	}
+}

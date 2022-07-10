@@ -125,17 +125,25 @@ void ME_Render::renderQueueStarted(Ogre::uint8 queueGroupId, const String& invoc
 // *************************************************************************
 void ME_Render::renderQueueEnded(Ogre::uint8 queueGroupId, const String& invocation, bool& repeatThisInvocation)
 {
-	/*if (App->CL_Vm_ImGui->Show_Progress_Bar == 1)
-	{
-		return;
-	}*/
-
 	if (queueGroupId != RENDER_QUEUE_MAIN)
 	{
 		return;
 	}
 
-	
+	if (PlayActive == 1)
+	{
+		if (App->CL_Model->Model_Type == Enums::LoadedFile_Actor)
+		{
+			App->CL_Genesis3D->GetBoneMoveMent();	// Update Bones 
+			App->CL_Genesis3D->Animate(1);
+
+			/*if (App->Cl_Ogre->RenderListener->Show_Crosshair == 1)
+			{
+				App->Cl_Bones->Move_BoneCrosshair();
+			}*/
+		}
+	}
+
 	PreRender();
 
 

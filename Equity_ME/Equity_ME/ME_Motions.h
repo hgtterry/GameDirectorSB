@@ -30,6 +30,8 @@ public:
 
 	bool Start_Motions_Dialog();
 	bool Update_Motions();
+	void Play_SelectedMotion(void);
+	void Stop_SelectedMotion(void);
 
 	char Selected_Motion_Name[255];
 	char Decode_MotionByName[255];

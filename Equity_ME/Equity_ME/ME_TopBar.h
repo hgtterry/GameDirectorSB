@@ -44,7 +44,7 @@ protected:
 	static LRESULT CALLBACK Group_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Model_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-
+	static LRESULT CALLBACK Amimation_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	void Init_Bmps_Globals(void);
 
 	void Start_Tabs_Headers(void);
@@ -53,6 +53,7 @@ protected:
 
 	void Start_Model_TB(void);
 	void Start_Camera_TB(void);
+	void Start_Amimation_TB(void);
 
 	void Hide_Tabs(void);
 
@@ -64,6 +65,7 @@ protected:
 	bool Toggle_Tabs_Group_Flag;
 	bool Toggle_Tabs_Model_Flag;
 	bool Toggle_Tabs_Camera_Flag;
+	bool Toggle_Tabs_Animation_Flag;
 
 	bool Toggle_GroupInfo_Flag;
 
@@ -75,5 +77,6 @@ protected:
 	HWND Tabs_TB_hWnd;
 	HWND Group_TB_hWnd;
 	HWND Camera_TB_hWnd;
+	HWND Animation_TB_hWnd;
 };
 

@@ -43,8 +43,8 @@ ME_Genesis3D::ME_Genesis3D()
 	TestActor = nullptr;
 
 	FrameSpeed = (float)1.15;;
-	m_CurrentPose = NULL;
-	AnimationSpeed = (float)0.005;
+	m_CurrentPose = 0;
+	AnimationSpeed = (float)0.001;
 
 	TempTextureFile_BMP[0] = 0;
 	TempTextureFile_TGA[0] = 0;
@@ -1029,4 +1029,38 @@ bool ME_Genesis3D::GetMotion(char *mMotionName)
 	App->CL_Motions->Current_StartTime = StartTime;
 	App->CL_Motions->Current_EndTime = EndTime;
 	return 1;
+}
+
+// *************************************************************************
+// *					GetBoneMoveMent Terry Bernie	   			  	   *
+// *************************************************************************
+void ME_Genesis3D::GetBoneMoveMent(void)
+{
+	const char *BoneNameQ;
+	int pb;
+	int BoneCount = 0;
+	geXForm3d  A;
+	geXForm3d  B;
+	geVec3d Angels;
+
+	BoneCount = geBody_GetBoneCount(ActorDef_Memory->Body);
+
+	int Count = 0;
+	while (Count<BoneCount)
+	{
+		geBody_GetBone(ActorDef_Memory->Body, Count, &BoneNameQ, &A, &pb);
+		geActor_GetBoneTransform(TestActor, BoneNameQ, &B);
+
+		geXForm3d_GetEulerAngles(&B, &Angels);
+
+		App->CL_Model->S_Bones[Count]->Boneverts.x = B.Translation.X;
+		App->CL_Model->S_Bones[Count]->Boneverts.y = B.Translation.Y;
+		App->CL_Model->S_Bones[Count]->Boneverts.z = B.Translation.Z;
+
+		App->CL_Model->S_Bones[Count]->TranslationStart.X = B.Translation.X;
+		App->CL_Model->S_Bones[Count]->TranslationStart.Y = B.Translation.Y;
+		App->CL_Model->S_Bones[Count]->TranslationStart.Z = B.Translation.Z;
+
+		Count++;
+	}
 }

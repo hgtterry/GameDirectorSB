@@ -44,8 +44,14 @@ public:
 
 	void LoadActor(void);
 	bool GetMotion(char *mMotionName);
+	bool Animate(int Do);
+	void GetBoneMoveMent(void);
 
 	geActor_Def* ActorDef_Memory;
+
+	float m_CurrentPose;
+
+	char MotionName[255];
 
 protected:
 
@@ -70,8 +76,6 @@ protected:
 
 	void TPostScale(const geXForm3d *M, const geVec3d *S, geXForm3d *Scaled);
 
-	bool Animate(int Do);
-
 	bool Set_BondingBox_Model(bool Create);
 	
 	bool GetUVs();
@@ -88,11 +92,9 @@ protected:
 	geBody* ActorBody_Memory;
 	geActor * TestActor;
 
-	float m_CurrentPose;
 	float FrameSpeed;
 	float AnimationSpeed;
 
-	char MotionName[255];
 	char TempTextureFile_BMP[MAX_PATH];
 	char TempTextureFile_TGA[MAX_PATH];
 };
