@@ -54,6 +54,8 @@ public:
 	float mMoveSensitivity;
 	float mMoveSensitivityMouse;
 
+	Ogre::AnimationState*   Animate_State;
+
 protected:
 
 	void Model_Mode(float DeltaTime);

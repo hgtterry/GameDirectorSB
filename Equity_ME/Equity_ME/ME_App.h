@@ -92,6 +92,8 @@ public:
 
 	void Say(const char* Message);
 	void Say_Win(const char* Message);
+	void Say_Int(int Value);
+	void Say_Float(float Value);
 
 	HINSTANCE hInst;	// Store instance handle in our global variable [120122]
 

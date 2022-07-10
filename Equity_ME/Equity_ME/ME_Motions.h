@@ -27,5 +27,15 @@ class ME_Motions
 public:
 	ME_Motions();
 	~ME_Motions();
+
+	char Selected_Motion_Name[255];
+	char Decode_MotionByName[255];
+
+	float Current_StartTime;
+	float Current_EndTime;
+
+protected:
+
+
 };
 

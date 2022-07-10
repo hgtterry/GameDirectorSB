@@ -292,6 +292,27 @@ void ME_App::Say_Win(const char* Message)
 }
 
 // *************************************************************************
+// *								Say_Int								   *
+// *************************************************************************
+void ME_App::Say_Int(int Value)
+{
+	char buf[255];
+	itoa(Value, buf, 10);
+	MessageBox(MainHwnd, buf, "Equity Notice", MB_OK);
+}
+
+// *************************************************************************
+// *							Say_Float								   *
+// *************************************************************************
+void ME_App::Say_Float(float Value)
+{
+	std::string ff;
+	char buf[255];
+	sprintf(buf, "%f", Value);
+	MessageBox(MainHwnd, buf, "Equity Notice", MB_OK);
+}
+
+// *************************************************************************
 // *									Say								   *
 // *************************************************************************
 void ME_App::Say(const char* Message)

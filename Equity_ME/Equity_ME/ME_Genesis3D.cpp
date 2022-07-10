@@ -973,8 +973,8 @@ bool ME_Genesis3D::Update_Model_File_View(void)
 // *************************************************************************
 bool ME_Genesis3D::FileView_AddMotions(void)
 {
-
-	if (App->CL_Model->MotionCount = 0)
+	
+	if (App->CL_Model->MotionCount == 0)
 	{
 		return 0;
 	}
@@ -990,8 +990,10 @@ bool ME_Genesis3D::FileView_AddMotions(void)
 			strcpy(MotionName, TempMotionName);
 
 			GetMotion(MotionName);
-			//	strcpy(App->CL_Motions->SelectedMotion, MotionName);
-			//	SetDlgItemText(App->CentralView_Hwnd,IDC_STMOTIONFILE,(LPCTSTR)MotionName);*/
+			strcpy(App->CL_Motions->Selected_Motion_Name, MotionName);
+
+			//SetDlgItemText(App->CentralView_Hwnd,IDC_STMOTIONFILE,(LPCTSTR)MotionName);*/
+
 			App->CL_FileView->Set_FolderActive(App->CL_FileView->GD_AnimationFolder);
 		}
 
@@ -1024,7 +1026,7 @@ bool ME_Genesis3D::GetMotion(char *mMotionName)
 	geMotion_GetTimeExtents(Motion, &StartTime, &EndTime);
 	FrameSpeed = EndTime;
 
-//	App->CL_Motions->Current_StartTime = StartTime;
-//	App->CL_Motions->Current_EndTime = EndTime;
+	App->CL_Motions->Current_StartTime = StartTime;
+	App->CL_Motions->Current_EndTime = EndTime;
 	return 1;
 }

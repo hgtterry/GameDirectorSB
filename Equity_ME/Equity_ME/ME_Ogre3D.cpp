@@ -48,19 +48,20 @@ bool ME_Ogre3D::Load_OgreModel(void)
 
 	Get_Textures();
 
-	/*bool SkellAnimation = App->CL_Ogre->OgreModel_Ent->hasSkeleton();
-	Ogre::SkeletonInstance *skeletonInstance = App->CL_Ogre->OgreModel_Ent->getSkeleton();
+	bool SkellAnimation = OgreModel_Ent->hasSkeleton();
+	Ogre::SkeletonInstance *skeletonInstance = OgreModel_Ent->getSkeleton();
 
 	if (skeletonInstance && SkellAnimation == 1)
 	{
-		if (App->CL_Model_Data->MotionCount > 0)
+		if (App->CL_Model->MotionCount > 0)
 		{
 			Ogre::Animation *animation = skeletonInstance->getAnimation(0);
-			strcpy(App->CL_Motions->SelectedMotion, animation->getName().c_str());
-			strcpy(App->CL_Motions->Decode_MotionByName, App->CL_Motions->SelectedMotion);
-			App->CL_Ogre->OgreListener->Animate_State = App->CL_Ogre->OgreModel_Ent->getAnimationState(App->CL_Motions->SelectedMotion);
+			strcpy(App->CL_Motions->Selected_Motion_Name, animation->getName().c_str());
+
+			strcpy(App->CL_Motions->Decode_MotionByName, App->CL_Motions->Selected_Motion_Name);
+			App->CL_Ogre->Ogre_Listener->Animate_State = OgreModel_Ent->getAnimationState(App->CL_Motions->Selected_Motion_Name);
 		}
-	}*/
+	}
 
 	return 1;
 }
@@ -621,7 +622,6 @@ void ME_Ogre3D::Get_Motions(void)
 				strcpy(AniName, animation->getName().c_str());
 
 				App->CL_FileView->Add_MotionFile(AniName, Count);
-				//App->C_Dialogs->PBar_Nudge();
 				Count = i;
 			}
 

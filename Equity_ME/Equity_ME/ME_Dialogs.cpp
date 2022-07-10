@@ -205,6 +205,9 @@ void ME_Dialogs::List_ModelData(HWND hDlg)
 
 	sprintf(buf, "%s%i", "Groups = ", App->CL_Model->Get_Groupt_Count());
 	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+	sprintf(buf, "%s%i", "Motions = ", App->CL_Model->MotionCount);
+	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 }
 
 // *************************************************************************

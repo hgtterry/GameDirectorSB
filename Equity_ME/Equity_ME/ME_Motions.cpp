@@ -28,6 +28,11 @@ distribution.
 
 ME_Motions::ME_Motions()
 {
+	Current_StartTime = 0;
+	Current_EndTime = 0;
+
+	Selected_Motion_Name[0] = 0;
+	Decode_MotionByName[0] = 0;
 }
 
 

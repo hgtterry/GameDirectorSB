@@ -52,6 +52,8 @@ ME_OgreListener::ME_OgreListener()
 
 	View_Height = 0;
 	View_Width = 0;
+
+	Animate_State = nullptr;
 }
 
 
