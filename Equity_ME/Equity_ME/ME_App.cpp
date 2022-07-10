@@ -50,6 +50,7 @@ ME_App::ME_App()
 
 	CL_Genesis3D = nullptr;
 	CL_Ogre3D = nullptr;
+	CL_Motions = nullptr;
 
 	//----------------------------------------------
 	hInst =			nullptr;
@@ -129,7 +130,8 @@ bool ME_App::InitApp(void)
 	CL_Export = new ME_Export();
 	CL_Export_Object = new ME_Export_Object();
 	CL_Export_Milk = new ME_Export_Milkshape();
-
+	CL_Motions = new ME_Motions();
+	
 	CL_Genesis3D = new ME_Genesis3D();
 	CL_Ogre3D = new ME_Ogre3D();
 	

@@ -45,6 +45,7 @@ distribution.
 
 #include "ME_Genesis3D.h"
 #include "ME_Ogre3D.h"
+#include "ME_Motions.h"
 
 class ME_App
 {
@@ -74,6 +75,7 @@ public:
 
 	ME_Genesis3D*		CL_Genesis3D;		// All Things Genesis/RF [080722]
 	ME_Ogre3D*			CL_Ogre3D;
+	ME_Motions*			CL_Motions;			// Motions [100722]
 
 	bool InitApp(void);
 	bool SetMainWin_Centre(void);
