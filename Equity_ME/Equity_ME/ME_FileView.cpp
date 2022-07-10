@@ -287,8 +287,27 @@ void ME_FileView::Get_Selection(LPNMHDR lParam)
 		
 		App->CL_Groups->Selected_Group = Index;
 
+		App->CL_Panels->Hide_Panels();
 		App->CL_Groups->Update_Groups();
 
+		return;
+	}
+
+	if (!strcmp(FileView_Folder, "Animations")) // Folder
+	{
+
+		return;
+	}
+
+	if (!strcmp(FileView_File, "Animations"))
+	{
+		App->CL_Panels->Hide_Panels();
+
+		strcpy(App->CL_Motions->Selected_Motion_Name, FileView_Folder);
+		App->CL_Motions->Selected_Motion_FV_Index = Index;
+
+		App->CL_Motions->Update_Motions();
+		
 		return;
 	}
 }

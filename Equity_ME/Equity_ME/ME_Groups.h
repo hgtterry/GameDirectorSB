@@ -30,7 +30,7 @@ public:
 
 	void Reset_Class(void);
 
-	bool Start_Groups();
+	bool Start_Groups_Dialog();
 	bool Update_Groups();
 
 	int Selected_Group;

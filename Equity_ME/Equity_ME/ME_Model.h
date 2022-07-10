@@ -127,6 +127,7 @@ public:
 	int GroupCount;
 
 	bool Model_Loaded;
+	bool ItsAnOgreModel;
 
 	std::vector<vertex_type> vertex_Data;
 	std::vector<polygon_type> Face_Data;

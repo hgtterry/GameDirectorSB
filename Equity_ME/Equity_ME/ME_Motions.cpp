@@ -23,13 +23,20 @@ distribution.
 
 #include "stdafx.h"
 #include "ME_App.h"
+#include "resource.h"
 #include "ME_Motions.h"
 
 
 ME_Motions::ME_Motions()
 {
+	RightMotions_Hwnd = nullptr;
+
 	Current_StartTime = 0;
 	Current_EndTime = 0;
+
+	RightMotions_Visable = 0;
+
+	Selected_Motion_FV_Index = 0;
 
 	Selected_Motion_Name[0] = 0;
 	Decode_MotionByName[0] = 0;
@@ -38,4 +45,169 @@ ME_Motions::ME_Motions()
 
 ME_Motions::~ME_Motions()
 {
+}
+
+// *************************************************************************
+// *				Start_Motions_Dialog Terry Flanigan		  		 	   *
+// *************************************************************************
+bool ME_Motions::Start_Motions_Dialog()
+{
+	RightMotions_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_RIGHTMOTIONS, App->MainHwnd, (DLGPROC)Motions_Proc);
+	RightMotions_Visable = 0;
+
+	return 1;
+}
+
+// *************************************************************************
+// *						Groups_Proc Terry Bernie		  			   *
+// *************************************************************************
+LRESULT CALLBACK ME_Motions::Motions_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_RGMOTIONNAME, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_STSTART, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STEND, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STARTTIME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ENDTTIME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+	}
+
+	case WM_CTLCOLORSTATIC:
+	{
+		if (GetDlgItem(hDlg, IDC_RGMOTIONNAME) == (HWND)lParam)
+		{
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STSTART) == (HWND)lParam)
+		{
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STEND) == (HWND)lParam)
+		{
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STARTTIME) == (HWND)lParam)
+		{
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_ENDTTIME) == (HWND)lParam)
+		{
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_CLOSE:
+	{
+		ShowWindow(App->CL_Motions->RightMotions_Hwnd, 0);
+		App->CL_Motions->RightMotions_Visable = 0;
+		//CheckMenuItem(App->mMenu, ID_WINDOWS_GROUPS, MF_BYCOMMAND | MF_UNCHECKED);*/
+		break;
+	}
+
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		/*if (some_item->idFrom == IDC_BTCHANGETEXTURE && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BTGROUPINFO && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}*/
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+		/*if (LOWORD(wParam) == IDC_BTCHANGETEXTURE)
+		{
+			if (App->CL_Model->Model_Loaded == 1)
+			{
+				App->CL_Panels->Enable_Panels(0);
+				App->CL_Textures->ChangeTexture_Model();
+				App->CL_Panels->Enable_Panels(1);
+			}
+			return TRUE;
+		}*/
+	}
+
+	}
+	return FALSE;
+}
+
+// *************************************************************************
+// *					Update_Motions  Terry Flanigan		  		 	   *
+// *************************************************************************
+bool ME_Motions::Update_Motions()
+{
+
+	if (App->CL_Model->Model_Type == Enums::LoadedFile_Actor)
+	{
+		App->CL_Genesis3D->GetMotion(Selected_Motion_Name);
+	}
+
+	if (App->CL_Model->ItsAnOgreModel == 1)
+	{
+		Ogre::SkeletonInstance *skeletonInstance = App->CL_Ogre3D->OgreModel_Ent->getSkeleton();
+		if (skeletonInstance)
+		{
+			if (App->CL_Model->MotionCount > 0)
+			{
+				Ogre::Animation *Animation = skeletonInstance->getAnimation(Selected_Motion_Name);
+				
+				Current_StartTime = 0.00;
+				Current_EndTime = Animation->getLength();
+				
+			}
+		}
+	}
+
+	SetDlgItemText(RightMotions_Hwnd, IDC_RGMOTIONNAME, Selected_Motion_Name);
+
+
+	char buf[20];
+	sprintf(buf, "%f", Current_StartTime);
+	SetDlgItemText(RightMotions_Hwnd, IDC_STARTTIME, buf);
+	
+	sprintf(buf, "%f", Current_EndTime);
+	SetDlgItemText(RightMotions_Hwnd, IDC_ENDTTIME, buf);
+	
+	RightMotions_Visable = 1;
+	ShowWindow(RightMotions_Hwnd, 1);
+	
+	return 1;
 }

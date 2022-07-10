@@ -7,9 +7,10 @@ public:
 
 	bool Load_OgreModel(void);
 
+	Ogre::Entity*		OgreModel_Ent;
+
 protected:
 
-	Ogre::Entity*		OgreModel_Ent;
 	Ogre::SceneNode*	OgreModel_Node;
 
 	void AddToScene(void);

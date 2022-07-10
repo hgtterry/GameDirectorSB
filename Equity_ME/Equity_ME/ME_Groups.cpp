@@ -64,7 +64,7 @@ void ME_Groups::Reset_Class(void)
 // *************************************************************************
 // *							Start_Groups				  		 	   *
 // *************************************************************************
-bool ME_Groups::Start_Groups()
+bool ME_Groups::Start_Groups_Dialog()
 {
 	RightGroups_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_RIGHTGROUPS, App->MainHwnd, (DLGPROC)Groups_Proc);
 	ShowWindow(RightGroups_Hwnd, 1);

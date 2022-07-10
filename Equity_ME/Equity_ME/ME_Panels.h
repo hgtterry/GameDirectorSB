@@ -12,6 +12,8 @@ public:
 
 	void Enable_Panels(int show);
 	void Show_Panels(int show);
+	void Hide_Panels();
+
 private:
 
 };

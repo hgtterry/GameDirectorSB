@@ -28,14 +28,21 @@ public:
 	ME_Motions();
 	~ME_Motions();
 
+	bool Start_Motions_Dialog();
+	bool Update_Motions();
+
 	char Selected_Motion_Name[255];
 	char Decode_MotionByName[255];
+
+	int Selected_Motion_FV_Index; // FIleView Index
 
 	float Current_StartTime;
 	float Current_EndTime;
 
+	bool RightMotions_Visable;
+	HWND RightMotions_Hwnd;
 protected:
 
-
+	static LRESULT CALLBACK Motions_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 };
 

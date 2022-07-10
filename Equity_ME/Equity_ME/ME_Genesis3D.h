@@ -43,6 +43,7 @@ public:
 	~ME_Genesis3D();
 
 	void LoadActor(void);
+	bool GetMotion(char *mMotionName);
 
 	geActor_Def* ActorDef_Memory;
 
@@ -82,7 +83,7 @@ protected:
 	bool Update_Model_File_View(void);
 
 	bool FileView_AddMotions(void);
-	bool GetMotion(char *mMotionName);
+	
 
 	geBody* ActorBody_Memory;
 	geActor * TestActor;

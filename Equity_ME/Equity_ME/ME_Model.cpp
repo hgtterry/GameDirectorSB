@@ -44,7 +44,7 @@ ME_Model::ME_Model()
 	BoneCount = 0;
 
 	MotionCount = 0;
-
+	ItsAnOgreModel = 0;
 	Model_Loaded = 0;
 	Model_Type = Enums::LoadedFile_None;
 
@@ -121,6 +121,8 @@ void ME_Model::Reset_Class(void)
 	VerticeCount = 0;
 	FaceCount = 0;
 	MotionCount = 0;
+
+	ItsAnOgreModel = 0;
 }
 
 // *************************************************************************

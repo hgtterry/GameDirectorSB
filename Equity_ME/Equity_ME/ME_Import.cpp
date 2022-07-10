@@ -152,15 +152,13 @@ bool ME_Import::Ogre_Loader(char* Extension, char* Extension2)
 
 	//App->CL_Model_Data->Render_Mode = Render_As_Assimp;
 
-	//App->CL_Model_Data->ItsAnOgreModel = 1;
+	App->CL_Model->ItsAnOgreModel = 1;
 
 	App->CL_Model->Model_Loaded = 1;
 
-	//App->Cl_Grid->Zoom();
+	App->CL_Grid->Zoom();
 
-	//App->Cl_Ogre->Loading_Text("Loading Finished", 0);
-
-	//Set_Equity();
+	Set_Equity();
 
 	Ogre::Root::getSingletonPtr()->renderOneFrame();
 	Ogre::Root::getSingletonPtr()->renderOneFrame();

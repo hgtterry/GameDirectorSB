@@ -63,7 +63,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,_In_opt_ HINSTANCE hPrevInstance,
 
 	App->CL_TopBar->Start_TopBar();
 	App->CL_FileView->Start_FileView();		//Start Main File View Groups [210622]
-	App->CL_Groups->Start_Groups();
+	App->CL_Groups->Start_Groups_Dialog();
+	App->CL_Motions->Start_Motions_Dialog();
 
 	ShowWindow(App->MainHwnd, nCmdShow);
 	UpdateWindow(App->MainHwnd);

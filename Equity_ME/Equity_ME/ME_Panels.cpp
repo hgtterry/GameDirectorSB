@@ -56,7 +56,9 @@ bool ME_Panels::Place_GlobalGroups(void)
 	DeferWindowPos(hdwp, App->CL_Groups->RightGroups_Hwnd, NULL, p.x + widthX - 295, PosY + 5,
 		0, 0, SWP_NOSIZE | SWP_NOZORDER);
 
-	
+	DeferWindowPos(hdwp, App->CL_Motions->RightMotions_Hwnd, NULL, p.x + widthX - 295, PosY + 5,
+		0, 0, SWP_NOSIZE | SWP_NOZORDER);
+
 	return EndDeferWindowPos(hdwp);
 }
 
@@ -106,3 +108,14 @@ void ME_Panels::Show_Panels(int show)
 	ShowWindow(App->CL_Groups->RightGroups_Hwnd, show);
 }
 
+// *************************************************************************
+// *					Hide_Panels Terry Flanigan						   *
+// *************************************************************************
+void ME_Panels::Hide_Panels()
+{
+	ShowWindow(App->CL_Groups->RightGroups_Hwnd,false);
+	App->CL_Groups->RightGroups_Visable = 0;
+
+	ShowWindow(App->CL_Motions->RightMotions_Hwnd, false);
+	App->CL_Motions->RightMotions_Visable = 0;
+}
