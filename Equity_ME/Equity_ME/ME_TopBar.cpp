@@ -1022,3 +1022,15 @@ LRESULT CALLBACK ME_TopBar::Amimation_TB_Proc(HWND hDlg, UINT message, WPARAM wP
 	}
 	return FALSE;
 }
+
+// *************************************************************************
+// *					Show_Animation_TB Terry Flanigan	`			   *
+// *************************************************************************
+void ME_TopBar::Show_Animation_TB(void)
+{
+	Hide_Tabs();
+	ShowWindow(Animation_TB_hWnd, SW_SHOW);
+	Toggle_Tabs_Animation_Flag = 1;
+
+	RedrawWindow(Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+}

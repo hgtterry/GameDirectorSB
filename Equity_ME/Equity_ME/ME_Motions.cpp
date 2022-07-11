@@ -209,6 +209,8 @@ bool ME_Motions::Update_Motions()
 	RightMotions_Visable = 1;
 	ShowWindow(RightMotions_Hwnd, 1);
 	
+	App->CL_TopBar->Show_Animation_TB();
+	
 	return 1;
 }
 
@@ -266,11 +268,11 @@ void ME_Motions::Stop_SelectedMotion(void)
 	//------------------------------------------------------- Ogre3D Model
 	if (App->CL_Model->ItsAnOgreModel == 1)
 	{
-		/*App->Cl_Ogre->OgreListener->Animate_Ogre = 0;
-		App->Cl_Ogre->OgreListener->Animate_State->setEnabled(false);
-		OgreMotionIsPlaying = 0;
+		App->CL_Ogre->Ogre_Listener->Animate_Ogre = 0;
+		App->CL_Ogre->Ogre_Listener->Animate_State->setEnabled(false);
+		//OgreMotionIsPlaying = 0;
 
-		App->CL_Motions->PlayButtonActive = 0;
-		App->CL_Motions->TogglePlayBmp();*/
+		//App->CL_Motions->PlayButtonActive = 0;
+		//App->CL_Motions->TogglePlayBmp();
 	}
 }

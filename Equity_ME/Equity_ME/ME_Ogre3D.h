@@ -13,6 +13,8 @@ public:
 		int SubMesh,
 		bool DefaultPose);
 
+	bool UpdateBones_Orge(bool Reset);
+
 	Ogre::Entity*		OgreModel_Ent;
 
 protected:

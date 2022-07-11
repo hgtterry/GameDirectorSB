@@ -35,6 +35,8 @@ public:
 
 	bool Toggle_Dimensions_Flag;
 
+	void Show_Animation_TB(void);
+
 	HWND Model_TB_hWnd;
 
 protected:

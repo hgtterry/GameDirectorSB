@@ -789,6 +789,43 @@ void ME_Ogre3D::Get_AnimationInstance(Ogre::MeshPtr mesh,
 }
 
 // *************************************************************************
+// *							 UpdateBones_Orge						   *
+// *************************************************************************
+bool ME_Ogre3D::UpdateBones_Orge(bool Reset)
+{
+	int Loop = 0;
+	if (!OgreModel_Ent)
+	{
+		return 0;
+	}
+
+	Ogre::SkeletonInstance *skeletonInstance = OgreModel_Ent->getSkeleton();
+
+	if (skeletonInstance)
+	{
+		if (Reset == 1)
+		{
+			skeletonInstance->reset(false);
+		}
+
+		Ogre::Skeleton::BoneIterator itor = skeletonInstance->getBoneIterator();
+		while (itor.hasMoreElements())
+		{
+			Ogre::Bone *bone = itor.getNext();
+
+			App->CL_Model->S_Bones[Loop]->TranslationStart.X = bone->_getDerivedPosition().x;
+			App->CL_Model->S_Bones[Loop]->TranslationStart.Y = bone->_getDerivedPosition().y;
+			App->CL_Model->S_Bones[Loop]->TranslationStart.Z = bone->_getDerivedPosition().z;
+
+			//App->CL_Model_Data->S_Bones[Loop]->TranslationStart.X = bone->_getDerivedOrientation().
+
+			Loop++;
+		}
+	}
+	return 1;
+}
+
+// *************************************************************************
 // *	  					Get_Textures Terry Bernie					   *
 // *************************************************************************
 void ME_Ogre3D::Get_Textures(void)

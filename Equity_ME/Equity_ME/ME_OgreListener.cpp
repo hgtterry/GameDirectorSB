@@ -78,7 +78,7 @@ bool ME_OgreListener::frameStarted(const Ogre::FrameEvent& evt)
 	if (Animate_Ogre == 1 && App->CL_Model->ItsAnOgreModel == 1)
 	{
 		Animate_State->addTime(evt.timeSinceLastFrame * AnimationScale);
-		//App->CL_Bones->UpdateBones_Orge(0);
+		App->CL_Ogre3D->UpdateBones_Orge(0);
 
 		//if (App->CL_Model->HasMesh == 1)
 		{
