@@ -55,7 +55,9 @@ protected:
 
 	void Start_Model_TB(void);
 	void Start_Camera_TB(void);
+
 	void Start_Amimation_TB(void);
+	void Init_Bmps_Motions(void);
 
 	void Hide_Tabs(void);
 

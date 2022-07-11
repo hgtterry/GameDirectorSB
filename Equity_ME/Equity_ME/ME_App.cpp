@@ -97,6 +97,9 @@ ME_App::ME_App()
 	Hnd_NormalsOff_Bmp = NULL;
 	Hnd_LightsOn_Bmp = NULL;
 	Hnd_LightsOff_Bmp = NULL;
+	Hnd_PlayOff_Bmp = NULL;
+	Hnd_PlayOn_Bmp = NULL;
+	Hnd_PlayStop_Bmp = NULL;
 
 	EquityDirecory_FullPath[0] = 0;
 }
@@ -175,9 +178,9 @@ void ME_App::LoadProgramResource(void)
 	////Hnd_Info_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_INFO);
 	////Hnd_InfoSmall_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_INFOSMALL);
 
-	//Hnd_Playoff = LoadBitmap(App->hInst, (LPCTSTR)IDB_MOTPLAYOFF);
+	Hnd_PlayOff_Bmp = LoadBitmap(App->hInst, (LPCTSTR)IDB_MOTPLAYOFF);
 	//Hnd_PlayOn = LoadBitmap(App->hInst, (LPCTSTR)IDB_MOTPLAYON);
-	//Hnd_PlayStop = LoadBitmap(App->hInst, (LPCTSTR)IDB_MOTSTOP);
+	Hnd_PlayStop_Bmp = LoadBitmap(App->hInst, (LPCTSTR)IDB_MOTSTOP);
 	//Hnd_StepBack = LoadBitmap(App->hInst, (LPCTSTR)IDB_STEPBACK);
 	//Hnd_StepForward = LoadBitmap(App->hInst, (LPCTSTR)IDB_STEPFORWARD);
 

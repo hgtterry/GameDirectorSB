@@ -252,6 +252,8 @@
     <Image Include="Resource\MenuBar\TargetOn.bmp" />
     <Image Include="Resource\MenuBar\TexturesOff.bmp" />
     <Image Include="Resource\MenuBar\TexturesOn.bmp" />
+    <Image Include="Resource\Motions\Tplay.bmp" />
+    <Image Include="Resource\Motions\Tstop.bmp" />
     <Image Include="small.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

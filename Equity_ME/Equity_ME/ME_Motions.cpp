@@ -194,6 +194,8 @@ bool ME_Motions::Update_Motions()
 				
 			}
 		}
+
+		Change_SelectedMotion(Selected_Motion_Name);
 	}
 
 	SetDlgItemText(RightMotions_Hwnd, IDC_RGMOTIONNAME, Selected_Motion_Name);
@@ -212,6 +214,32 @@ bool ME_Motions::Update_Motions()
 	App->CL_TopBar->Show_Animation_TB();
 	
 	return 1;
+}
+
+// *************************************************************************
+// *					Change_SelectedMotion Terry Bernie				   *
+// *************************************************************************
+void ME_Motions::Change_SelectedMotion(char* mMotionName)
+{
+	bool retsart = 0;
+
+	if (App->CL_Ogre->Ogre_Listener->Animate_Ogre == 1)
+	{
+		retsart = 1;
+	}
+
+	App->CL_Ogre->Ogre_Listener->Animate_Ogre = 0;
+
+	Stop_SelectedMotion();
+
+	App->CL_Ogre->Ogre_Listener->Animate_State = App->CL_Ogre3D->OgreModel_Ent->getAnimationState(mMotionName);
+	//App->CL_Motions->Goto_KeyFrame_Ogre(0);
+
+	if (retsart == 1)
+	{
+		App->CL_Ogre->Ogre_Listener->Animate_State->setEnabled(true);
+		App->CL_Ogre->Ogre_Listener->Animate_Ogre = 1;
+	}
 }
 
 // *************************************************************************

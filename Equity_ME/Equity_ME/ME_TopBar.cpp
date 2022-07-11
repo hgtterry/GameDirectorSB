@@ -965,7 +965,7 @@ LRESULT CALLBACK ME_TopBar::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPara
 void ME_TopBar::Start_Amimation_TB(void)
 {
 	Animation_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_ANIMATION, Tabs_TB_hWnd, (DLGPROC)Amimation_TB_Proc);
-	//Init_Bmps_Group();
+	Init_Bmps_Motions();
 }
 
 // *************************************************************************
@@ -1021,6 +1021,39 @@ LRESULT CALLBACK ME_TopBar::Amimation_TB_Proc(HWND hDlg, UINT message, WPARAM wP
 
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *				Init_Bmps_Motions Terry Flanigan				       *
+// *************************************************************************
+void ME_TopBar::Init_Bmps_Motions(void)
+{
+	HWND Temp = GetDlgItem(Animation_TB_hWnd, IDC_BTPLAYMOTION);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_PlayOff_Bmp);
+
+	Temp = GetDlgItem(Animation_TB_hWnd, IDC_BTSTOPMOTION);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_PlayStop_Bmp);
+
+	HWND hTooltip_TB_MOT = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
+
+	Temp = GetDlgItem(Animation_TB_hWnd, IDC_BTPLAYMOTION);
+	TOOLINFO ti1 = { 0 };
+	ti1.cbSize = sizeof(ti1);
+	ti1.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti1.uId = (UINT_PTR)Temp;
+	ti1.lpszText = "Play Selected Motion";
+	ti1.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_MOT, TTM_ADDTOOL, 0, (LPARAM)&ti1);
+
+	Temp = GetDlgItem(Animation_TB_hWnd, IDC_BTSTOPMOTION);
+	TOOLINFO ti2 = { 0 };
+	ti2.cbSize = sizeof(ti2);
+	ti2.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti2.uId = (UINT_PTR)Temp;
+	ti2.lpszText = "Stop Selected Motion";
+	ti2.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_MOT, TTM_ADDTOOL, 0, (LPARAM)&ti2);
+
 }
 
 // *************************************************************************

@@ -303,5 +303,11 @@
     <Image Include="Resource\FileView\FIleSelected.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Resource\Motions\Tplay.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resource\Motions\Tstop.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

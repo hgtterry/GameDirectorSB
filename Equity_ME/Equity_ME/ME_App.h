@@ -138,6 +138,10 @@ public:
 	HANDLE Hnd_NormalsOff_Bmp;
 	HANDLE Hnd_LightsOn_Bmp;
 	HANDLE Hnd_LightsOff_Bmp;
+	HANDLE Hnd_PlayOff_Bmp;
+	HANDLE Hnd_PlayOn_Bmp;
+	HANDLE Hnd_PlayStop_Bmp;
+
 
 	HMENU mMenu;
 	HCURSOR CUR;
