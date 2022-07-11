@@ -54,6 +54,8 @@ ME_OgreListener::ME_OgreListener()
 	View_Width = 0;
 
 	Animate_State = nullptr;
+	Animate_Ogre = 0;
+	AnimationScale = 1;
 }
 
 
@@ -73,7 +75,24 @@ bool ME_OgreListener::frameStarted(const Ogre::FrameEvent& evt)
 
 	App->CL_ImGui->Tabs_Render_Camera();
 		
-	//ImGui::ShowDemoWindow();
+	if (Animate_Ogre == 1 && App->CL_Model->ItsAnOgreModel == 1)
+	{
+		Animate_State->addTime(evt.timeSinceLastFrame * AnimationScale);
+		//App->CL_Bones->UpdateBones_Orge(0);
+
+		//if (App->CL_Model->HasMesh == 1)
+		{
+			App->CL_Ogre3D->AnimationExtract_Mesh(0);
+			App->CL_Model->Set_BondingBox_Model(0);
+		}
+
+		App->CL_Ogre3D->OgreModel_Ent->_updateAnimation();
+
+		/*if (App->Cl_Ogre->RenderListener->Show_Crosshair == 1)
+		{
+			App->Cl_Bones->Move_BoneCrosshair();
+		}*/
+	}
 
 	return true;
 }

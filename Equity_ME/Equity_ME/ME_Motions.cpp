@@ -235,13 +235,14 @@ void ME_Motions::Play_SelectedMotion(void)
 	//------------------------------------------------------- Ogre3D Model
 	if (App->CL_Model->ItsAnOgreModel == 1)
 	{
-		//App->CL_Ogre->Ogre_Listener->Animate_State = App->CL_Ogre3D->OgreModel_Ent->getAnimationState(Selected_Motion_Name);
-		//App->CL_Ogre->Ogre_Listener->Animate_State->setEnabled(true);
-		//App->CL_Ogre->Ogre_Listener->Animate_Ogre = 1;
+		App->CL_Ogre->Ogre_Listener->Animate_State = App->CL_Ogre3D->OgreModel_Ent->getAnimationState(Selected_Motion_Name);
+		App->CL_Ogre->Ogre_Listener->Animate_State->setEnabled(true);
+		App->CL_Ogre->Ogre_Listener->Animate_Ogre = 1;
+
 		//OgreMotionIsPlaying = 1;
 
-		//App->CL_Motions->AnimationExtract_Mesh(1); // Get Default Pose Mesh
-		//App->CL_Ogre->OgreListener->Animate_Ogre = 1;
+		App->CL_Ogre3D->AnimationExtract_Mesh(1); // Get Default Pose Mesh
+		App->CL_Ogre->Ogre_Listener->Animate_Ogre = 1;
 		//App->CL_Motions->PlayButtonActive = 1;
 		//App->CL_Motions->TogglePlayBmp();
 	}

@@ -7,6 +7,12 @@ public:
 
 	bool Load_OgreModel(void);
 
+	bool AnimationExtract_Mesh(bool DefaultPose);
+	void Get_AnimationInstance(Ogre::MeshPtr mesh, size_t &vertex_count, Ogre::Vector3* &vertices, size_t &index_count,
+		unsigned long* &indices,
+		int SubMesh,
+		bool DefaultPose);
+
 	Ogre::Entity*		OgreModel_Ent;
 
 protected:

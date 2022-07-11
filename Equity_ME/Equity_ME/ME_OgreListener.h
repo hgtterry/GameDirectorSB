@@ -48,6 +48,9 @@ public:
 	bool Pl_RightMouseDown;
 	int	Wheel;
 
+	bool Animate_Ogre;
+	float AnimationScale;
+
 	int	View_Height;	// Ogre window Height [150122]
 	int	View_Width;		// Ogre window WIdth [150122]
 
