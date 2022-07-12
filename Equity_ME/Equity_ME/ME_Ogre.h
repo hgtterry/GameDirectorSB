@@ -49,6 +49,7 @@ public:
 	bool createFrameListener(void);
 
 	bool Get_View_Height_Width(void);
+	void GetVersion_OpenGL(char* buff);
 
 	HWND Render_Hwnd;
 

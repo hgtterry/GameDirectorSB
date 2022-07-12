@@ -1189,7 +1189,7 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 		SendDlgItemMessage(hDlg, IDC_LISTABOUT, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
 		
 		SendDlgItemMessage(hDlg, IDC_LISTABOUT, LB_ADDSTRING, (WPARAM)0, (LPARAM)" "); // Space
-		App->Cl19_Ogre->GetVersion(buff);
+		App->Cl19_Ogre->GetVersion_OpenGL(buff);
 		SendDlgItemMessage(hDlg, IDC_LISTABOUT, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
 
 		return (INT_PTR)TRUE;

@@ -225,7 +225,7 @@ void ME_Dialogs::List_App_Data(HWND hDlg)
 	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
 	int Count = 0;
-	while (Count < 99)
+	while (Count < 20)
 	{
 
 		sprintf(buf, "%i %s%i",Count ,"Group Hwnd = ", App->CL_Model->Group[Count]);
@@ -237,6 +237,13 @@ void ME_Dialogs::List_App_Data(HWND hDlg)
 	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
 	sprintf(buf, "%i %s%i", Count, "BB Hwnd = ", App->CL_Model->S_BoundingBox[0]);
+	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+	App->CL_Ogre->Get_View_Height_Width();
+	sprintf(buf, "%s %i", "With = ", App->CL_Ogre->Ogre_Listener->View_Width);
+	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+	sprintf(buf, "%s %i", "Height = ", App->CL_Ogre->Ogre_Listener->View_Height);
 	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 	
 }

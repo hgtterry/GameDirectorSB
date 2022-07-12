@@ -269,3 +269,28 @@ bool ME_Ogre::Get_View_Height_Width(void)
 
 	return 1;
 }
+
+// *************************************************************************
+// *					GetVersion (Terry Bernie)						   *
+// *************************************************************************
+void ME_Ogre::GetVersion_OpenGL(char* buff)
+{
+	int  major = mRoot->getRenderSystem()->getDriverVersion().major;
+	int  minor = mRoot->getRenderSystem()->getDriverVersion().minor;
+
+	Ogre::String name = mRoot->getRenderSystem()->getName();
+
+	char c_GLVer[256];
+	strcpy(c_GLVer, name.c_str());
+
+	char cMajor[20];
+	char cMinor[20];
+	_itoa(major, cMajor, 10);
+	_itoa(minor, cMinor, 10);
+	strcpy(buff, " ");
+	strcat(buff, c_GLVer);
+	strcat(buff, " ");
+	strcat(buff, cMajor);
+	strcat(buff, ".");
+	strcat(buff, cMinor);
+}

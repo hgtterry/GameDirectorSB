@@ -459,11 +459,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 // *************************************************************************
 INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
-    UNREFERENCED_PARAMETER(lParam);
-    switch (message)
-    {
-    case WM_INITDIALOG:
-        return (INT_PTR)TRUE;
+	UNREFERENCED_PARAMETER(lParam);
+	switch (message)
+	{
+
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_STNAME, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_LISTABOUT, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STPROGRAMER, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+
+		char buff[255];
+		App->CL_Ogre->GetVersion_OpenGL(buff);
+		SendDlgItemMessage(hDlg, IDC_LISTABOUT, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
+		return (INT_PTR)TRUE;
+	}
 
     case WM_COMMAND:
         if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)

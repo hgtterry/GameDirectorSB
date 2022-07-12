@@ -446,7 +446,7 @@ bool GD19_Ogre::Get_View_Height_Width(void)
 // *************************************************************************
 // *					GetVersion (Terry Bernie)						   *
 // *************************************************************************
-void GD19_Ogre::GetVersion(char* buff)
+void GD19_Ogre::GetVersion_OpenGL(char* buff)
 {
 	int  major = mRoot->getRenderSystem()->getDriverVersion().major;
 	int  minor = mRoot->getRenderSystem()->getDriverVersion().minor;
