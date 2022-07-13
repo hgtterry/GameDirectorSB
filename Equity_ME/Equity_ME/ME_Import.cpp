@@ -59,6 +59,8 @@ void ME_Import::Set_Equity(void)
 	App->CL_FileView->ExpandRoot();
 	App->CL_FileView->SelectItem(App->CL_Model->Group[0]->ListView_Item);  // Select First Group
 
+	App->CL_Grid->Zoom();
+
 	App->Say("Model Loaded");
 }
 
@@ -156,8 +158,6 @@ bool ME_Import::Ogre_Loader(char* Extension, char* Extension2)
 
 	App->CL_Model->Model_Loaded = 1;
 
-	App->CL_Grid->Zoom();
-
 	Set_Equity();
 
 	Ogre::Root::getSingletonPtr()->renderOneFrame();
@@ -219,26 +219,16 @@ void ME_Import::Reload_FromResentFiles(char* ResentPathAndFile)
 
 	App->CL_Model->Set_Paths();
 
-	//_chdir(App->CL_Model_Data->Model_FullPath);
-
+	
 	//--------------------------------------------------------------- Genesis Actor
 	if (_stricmp(mJustFileName + strlen(mJustFileName) - 4, ".act") == 0)
 	{
-		//App->CL_Vm_Model->Clear_ModelData();
 
-		/*bool test = App->CL_Genesis3D->LoadActor();
-		if (test == 0)
-		{
-			return;
-		}
-
+		App->CL_Genesis3D->LoadActor();
+		
 		App->CL_Model->Model_Type = Enums::LoadedFile_Actor;
 
-		Set_Equity();*/
-
-		App->Say("Model Loaded");
-
-		App->Say("WIP");
+		Set_Equity();
 
 		return;
 	}
@@ -254,8 +244,6 @@ void ME_Import::Reload_FromResentFiles(char* ResentPathAndFile)
 	App->CL_Model->Model_Type = Enums::LoadedFile_Assimp;
 
 	Set_Equity();
-
-	App->Say("Model Loaded");
 
 }
 

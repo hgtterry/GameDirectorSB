@@ -267,7 +267,7 @@ void ME_Model::Set_Paths(void)
 	int Len = strlen(JustName);
 	JustName[Len - 4] = 0;
 
-	//App->CL_Vm_FileIO->RecentFileHistory_Update();
+	App->CL_FileIO->RecentFileHistory_Update();
 }
 
 // *************************************************************************

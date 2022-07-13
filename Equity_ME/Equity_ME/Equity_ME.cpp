@@ -410,6 +410,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				App->CL_Import->Reload_FromResentFiles(mFileName);
 				return 1;
 			}
+
+			case ID_FILE_CLEARRESENTFILES:
+			{
+				App->CL_FileIO->ResentHistory_Clear();
+				return 1;
+			}
+			
 			//---------------------------------------------------------------------------- System
             case IDM_ABOUT:
                 DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
