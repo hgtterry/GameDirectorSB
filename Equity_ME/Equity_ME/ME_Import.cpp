@@ -188,4 +188,75 @@ bool ME_Import::Ogre_Loader(char* Extension, char* Extension2)
 	return 1;
 }
 
+// *************************************************************************
+// *					Reload_FromResentFiles Terry Bernie				   *
+// *************************************************************************
+void ME_Import::Reload_FromResentFiles(char* ResentPathAndFile)
+{
+
+	// Check Recent File Exsists
+	bool Result = App->CL_FileIO->Search_For_Folder(ResentPathAndFile);
+	if (Result == 0)
+	{
+		App->Say(" Can Not Find File:- This may be due to it has been deleted or renamed");
+		return;
+	}
+
+	App->CL_Model->Clear_Model_And_Reset();
+
+	strcpy(App->CL_FileIO->Model_Path_FileName, ResentPathAndFile);
+
+	char mPathAndFile[1024];
+	char mJustFileName[1024];
+
+	strcpy(mPathAndFile, ResentPathAndFile); // Full Path and File
+
+	App->CL_FileIO->CheckPath(mPathAndFile, mPathAndFile);
+
+	strcpy(mJustFileName, App->CL_FileIO->JustFileName); // Just File Name
+
+	strcpy(App->CL_FileIO->Model_FileName, mJustFileName);
+
+	App->CL_Model->Set_Paths();
+
+	//_chdir(App->CL_Model_Data->Model_FullPath);
+
+	//--------------------------------------------------------------- Genesis Actor
+	if (_stricmp(mJustFileName + strlen(mJustFileName) - 4, ".act") == 0)
+	{
+		//App->CL_Vm_Model->Clear_ModelData();
+
+		/*bool test = App->CL_Genesis3D->LoadActor();
+		if (test == 0)
+		{
+			return;
+		}
+
+		App->CL_Model->Model_Type = Enums::LoadedFile_Actor;
+
+		Set_Equity();*/
+
+		App->Say("Model Loaded");
+
+		App->Say("WIP");
+
+		return;
+	}
+
+	// Fall through fo assimp
+	bool Test = App->CL_Assimp->LoadFile(ResentPathAndFile);
+	if (Test == 0)
+	{
+		App->Say("Can Not Load File");
+		return;
+	}
+
+	App->CL_Model->Model_Type = Enums::LoadedFile_Assimp;
+
+	Set_Equity();
+
+	App->Say("Model Loaded");
+
+}
+
 

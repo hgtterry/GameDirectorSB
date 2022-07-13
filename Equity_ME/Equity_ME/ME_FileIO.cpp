@@ -38,6 +38,7 @@ ME_FileIO::ME_FileIO()
 
 	Texture_FileName[0] = 0;
 	Texture_Path_FileName[0] = 0;
+	JustFileName[0] = 0;
 
 	BrowserMessage[0] = 0;
 	szSelectedDir[0] = 0;
@@ -268,6 +269,47 @@ bool ME_FileIO::Search_For_Folder(char* FolderPath)
 	}
 
 	return 0;
+}
+
+// *************************************************************************
+// *						CheckPath Terry Bernie	   					   *
+// *************************************************************************
+void ME_FileIO::CheckPath(char *pString, char *FileName)
+{
+	JustFileName[0] = 0;
+
+	int Count = 0;
+	int Mark = 0;
+	bool Test = 0;
+
+	while (*pString != 0)
+	{
+		if (*pString == '\\' || *pString == '/')
+		{
+			Test = 1;
+			Mark = Count;
+		}
+
+		Count++;
+		pString++;
+	}
+
+	if (Mark == 0 && Test == 0)
+	{
+		strcpy(JustFileName, FileName);
+	}
+	else
+	{
+		if (Mark == 0 && Test == 1)
+		{
+			Mark = 1;
+			strcpy(JustFileName, (FileName + Mark));
+		}
+		else
+		{
+			strcpy(JustFileName, (FileName + Mark) + 1);
+		}
+	}
 }
 
 // *************************************************************************

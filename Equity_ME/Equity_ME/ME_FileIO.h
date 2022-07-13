@@ -33,6 +33,7 @@ public:
 	bool StartBrowser(char* szInitDir);
 	bool SearchFolders(char* Path, char* File);
 	bool Search_For_Folder(char* FolderPath);
+	void CheckPath(char *pString, char *FileName);
 
 	void Init_History();
 	void LoadHistory();
@@ -47,16 +48,18 @@ public:
 	char Texture_FileName[MAX_PATH];
 	char Texture_Path_FileName[MAX_PATH];
 	char UserData_Folder[MAX_PATH];
+	char JustFileName[MAX_PATH];
 
 	std::string Get_Model_File_Name();
 	std::string Get_Model_Path_File_Name();
 
 	char BrowserMessage[MAX_PATH];
 	TCHAR szSelectedDir[MAX_PATH];
+
+	std::vector<std::string> mPreviousFiles;
+
 protected:
 	static int __stdcall BrowseCallbackProc(HWND  hwnd, UINT  uMsg, LPARAM  lParam, LPARAM  lpData);
-	
-	std::vector<std::string> mPreviousFiles;
 
 	FILE *WriteRecentFiles;
 	FILE *ReadRecentFiles;
