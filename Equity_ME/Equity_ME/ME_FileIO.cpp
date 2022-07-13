@@ -440,8 +440,8 @@ void ME_FileIO::RecentFileHistory_Update()
 // *************************************************************************
 void ME_FileIO::ResentHistory_Clear()
 {
-	//App->Cl_Dialogs->YesNo("Delete file history.", "Are you sure all File history will be Deleted Procede.");
-//	if (App->Cl_Dialogs->Canceled == 1)
+	App->CL_Dialogs->YesNo("Delete file history.", "Are you sure all File history will be Deleted Procede.");
+	if (App->CL_Dialogs->Canceled == 1)
 	{
 		return;
 	}

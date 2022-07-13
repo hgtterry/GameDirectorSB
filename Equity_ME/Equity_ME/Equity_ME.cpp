@@ -72,6 +72,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,_In_opt_ HINSTANCE hPrevInstance,
 	App->CL_Panels->Move_FileView_Window();
 	App->CL_Panels->Place_GlobalGroups();
 
+	App->CL_FileIO->Init_History();
+
 	SetTimer(App->MainHwnd, 1, 1, NULL);
 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_EQUITY_ME));
