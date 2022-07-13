@@ -44,6 +44,9 @@ protected:
 	void Load_Font(void);
 	void ImGui_Set_Colours(void);
 
+	void ImGui_Rotation(void);
+	void ImGui_Position(void);
+
 	ImFont* font0;
 	ImFont* font1;
 	ImFont* font2;

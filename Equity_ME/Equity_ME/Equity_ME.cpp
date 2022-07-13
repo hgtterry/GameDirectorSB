@@ -472,7 +472,16 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 
 		SendDlgItemMessage(hDlg, IDC_STCOPYRIGHT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+
+		//--------------------------------
+
 		char buff[255];
+
+		sprintf(buff, "%s%s", " Build:- ", App->Version);
+		SendDlgItemMessage(hDlg, IDC_LISTABOUT, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
+		
+		SendDlgItemMessage(hDlg, IDC_LISTABOUT, LB_ADDSTRING, (WPARAM)0, (LPARAM)" ");
+
 		App->CL_Ogre->GetVersion_OpenGL(buff);
 		SendDlgItemMessage(hDlg, IDC_LISTABOUT, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
 		return (INT_PTR)TRUE;

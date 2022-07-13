@@ -32,12 +32,21 @@ public:
 	bool OpenTextureFile(char* Title, char* StartDirectory, bool SaveLocation);
 	bool StartBrowser(char* szInitDir);
 	bool SearchFolders(char* Path, char* File);
+	bool Search_For_Folder(char* FolderPath);
+
+	void Init_History();
+	void LoadHistory();
+	void Save_FileHistory();
+	void RecentFileHistory_Update();
+	void ResentHistory_Clear();
+	void LoadHistory_Equity();
 
 	char Model_FileName[MAX_PATH];
 	char Model_Path_FileName[MAX_PATH];
 
 	char Texture_FileName[MAX_PATH];
 	char Texture_Path_FileName[MAX_PATH];
+	char UserData_Folder[MAX_PATH];
 
 	std::string Get_Model_File_Name();
 	std::string Get_Model_Path_File_Name();
@@ -47,6 +56,15 @@ public:
 protected:
 	static int __stdcall BrowseCallbackProc(HWND  hwnd, UINT  uMsg, LPARAM  lParam, LPARAM  lpData);
 	
+	std::vector<std::string> mPreviousFiles;
+
+	FILE *WriteRecentFiles;
+	FILE *ReadRecentFiles;
+
+	HMENU mHistoryMenu;
+
+#define EQUITY_NUM_RECENT_FILES 0x8
+#define EQUITY_RECENT_FILE_ID(_n_) (5000 + _n_)
 
 	OPENFILENAME ofn;
 };

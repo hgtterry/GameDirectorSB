@@ -147,6 +147,7 @@ public:
 	HCURSOR CUR;
 
 	char EquityDirecory_FullPath[MAX_PATH];
+	char Version[255];
 };
 
 extern ME_App* App;

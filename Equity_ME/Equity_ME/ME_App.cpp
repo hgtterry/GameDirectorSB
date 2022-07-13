@@ -24,7 +24,7 @@ distribution.
 #include "stdafx.h"
 #include "resource.h"
 #include "ME_App.h"
-
+#include "Shlobj.h"
 
 ME_App::ME_App()
 {
@@ -102,6 +102,7 @@ ME_App::ME_App()
 	Hnd_PlayStop_Bmp = NULL;
 
 	EquityDirecory_FullPath[0] = 0;
+	Version[0] = 0;
 }
 
 
@@ -139,6 +140,21 @@ bool ME_App::InitApp(void)
 	CL_Ogre3D = new ME_Ogre3D();
 	
 	SetBrushes_Fonts();
+
+	LoadString(hInst, IDS_APP_TITLE, Version, 255);
+
+	char Udir[1024];
+	wchar_t* path = new wchar_t[128];
+	if (SUCCEEDED(SHGetKnownFolderPath(FOLDERID_LocalAppData, 0, NULL, &path)))//KF_FLAG_CREATE
+	{
+		wsprintf(Udir, "%ls", path);
+		CoTaskMemFree(path);
+		strcpy(App->CL_FileIO->UserData_Folder, Udir);
+	}
+	else
+	{
+		App->Say("Can not access user folder");
+	}
 	return 1;
 }
 
