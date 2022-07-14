@@ -41,6 +41,7 @@ ME_Import::~ME_Import()
 void ME_Import::Set_Equity(void)
 {
 	App->CL_Model->Model_Loaded = 1;
+
 	App->CL_Grid->Zoom();
 
 	char TitleBar[260];
@@ -229,6 +230,51 @@ void ME_Import::Reload_FromResentFiles(char* ResentPathAndFile)
 		App->CL_Model->Model_Type = Enums::LoadedFile_Actor;
 
 		Set_Equity();
+
+		return;
+	}
+
+	//--------------------------------------------------------------- Orge3D Model
+	if (stricmp(mJustFileName + strlen(mJustFileName) - 5, ".mesh") == 0)
+	{
+		
+		App->CL_Ogre3D->Load_OgreModel(); // Load Ogre Model
+
+											   // Just for Ogre3d
+		strcpy(App->CL_Model->JustName, App->CL_Model->FileName);
+		int Len = strlen(App->CL_Model->JustName);
+		App->CL_Model->JustName[Len - 5] = 0;
+
+		App->CL_Model->Model_Type = Enums::LoadedFile_Assimp;
+		
+		App->CL_Model->ItsAnOgreModel = 1;
+		
+		Set_Equity();
+
+		Ogre::Root::getSingletonPtr()->renderOneFrame();
+		Ogre::Root::getSingletonPtr()->renderOneFrame();
+
+		//-------------------------------
+		//if (App->CL_Import_Ogre->NoMaterialFileFound == 1)
+		//{
+		//	App->CL_Dialogs->YesNo("No Textures", "Do you want to load an Ogre Config File now");
+		//	bool Doit = App->CL_Dialogs->Canceled;
+		//	if (Doit == 0)
+		//	{
+		//		/*char LookBuf[1024];
+		//		strcpy(LookBuf,App->CL_Model_Data->Model_FullPath);
+
+		//		int test = App->CL_FileIO->SearchFolders(LookBuf,"resources.cfg");
+		//		if (test == 1)*/
+		//		{
+		//			App->Cl_Importer->Ogre_ResourceFile_Loader("Ogre Config   *.cfg\0*.cfg\0", "Ogre Config");
+		//		}
+		//	}
+		//	else
+		//	{
+		//		return;
+		//	}
+		//}
 
 		return;
 	}
