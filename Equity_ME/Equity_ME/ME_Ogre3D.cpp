@@ -149,6 +149,8 @@ void ME_Ogre3D::Create_MeshGroups()
 
 	App->CL_Model->TextureCount = SubMeshCount;
 	App->CL_Model->GroupCount = SubMeshCount;
+
+	App->CL_FileView->Set_FolderActive(App->CL_FileView->GD_GroupsFolder);
 }
 
 // *************************************************************************
