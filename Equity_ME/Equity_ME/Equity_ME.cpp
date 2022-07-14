@@ -462,14 +462,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 	case WM_MOVING:
 	{
-		App->ResizeOgre_Window();
+		App->CL_Panels->ResizeOgre_Window();
 		Ogre::Root::getSingletonPtr()->renderOneFrame();
 		return 0;
 	}
 
 	case WM_SIZE:
 	{
-		App->ResizeOgre_Window();
+		App->CL_Panels->ResizeOgre_Window();
 	}break;
 
 	case WM_CLOSE:
@@ -781,7 +781,7 @@ void Start_Ogre()
 
 	App->CL_Ogre->Ogre_Started = 1;
 
-	App->ResizeOgre_Window();
+	App->CL_Panels->ResizeOgre_Window();
 
 	App->CL_Ogre->mRoot->startRendering();
 

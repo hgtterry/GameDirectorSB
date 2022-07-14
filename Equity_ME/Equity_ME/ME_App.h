@@ -82,8 +82,7 @@ public:
 
 	void LoadProgramResource(void);
 	void SetBrushes_Fonts(void);
-	bool ResizeOgre_Window(void);
-
+	
 	bool Custom_Button_Toggle(LPNMCUSTOMDRAW item, bool Toggle);
 	bool Custom_Button_Toggle_Tabs(LPNMCUSTOMDRAW item, bool Toggle);
 	bool Custom_Button_Normal(LPNMCUSTOMDRAW item);

@@ -10,6 +10,8 @@ public:
 
 	bool Resize(void);
 
+	bool ResizeOgre_Window(void);
+
 	void Enable_Panels(int show);
 	void Show_Panels(int show);
 	void Hide_Panels();

@@ -14,6 +14,51 @@ ME_Panels::~ME_Panels()
 }
 
 // *************************************************************************
+// *						Resize_OgreWin Inflanite					   *
+// *************************************************************************
+bool ME_Panels::ResizeOgre_Window(void)
+{
+	RECT rcl;
+
+	int WidthClient = 0;
+	int HeightClient;
+	int NewWidth = 0;
+	int NewHeight = 0;
+
+	GetClientRect(App->MainHwnd, &rcl);
+
+	WidthClient = rcl.right - rcl.left - 1010;
+	NewWidth = 417 + WidthClient + 200;
+
+	HeightClient = rcl.bottom - rcl.top;
+	NewHeight = HeightClient - 150;
+
+	//-----------------Ogre Window
+	SetWindowPos(App->ViewGLhWnd, NULL, 4, 80, NewWidth + 384, NewHeight + 68, SWP_NOZORDER);
+
+	if (App->CL_Ogre->Ogre_Started == 1)
+	{
+		RECT rect;
+		GetClientRect(App->ViewGLhWnd, &rect);
+
+		if ((rect.bottom - rect.top) != 0 && App->CL_Ogre->mCamera != 0)
+		{
+			App->CL_Ogre->mWindow->windowMovedOrResized();
+			App->CL_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CL_Ogre->mWindow->getWidth() / (Ogre::Real)App->CL_Ogre->mWindow->getHeight());
+			App->CL_Ogre->mCamera->yaw(Ogre::Radian(0));
+
+			Root::getSingletonPtr()->renderOneFrame();
+		}
+
+	}
+
+	Move_FileView_Window();
+	Place_GlobalGroups();
+
+	return 1;
+}
+
+// *************************************************************************
 // *						Move_FileView_Window Terry Bernie			   *
 // *************************************************************************
 bool ME_Panels::Move_FileView_Window(void)
@@ -28,6 +73,8 @@ bool ME_Panels::Move_FileView_Window(void)
 	SetWindowPos(App->ListPanel, NULL, PosX + 0, PosY + 5,
 		0, 0, SWP_NOSIZE | SWP_NOZORDER);
 
+	SetWindowPos(App->CL_TopBar->Tabs_TB_hWnd, NULL, 220, 2,
+		0, 0, SWP_NOSIZE | SWP_NOZORDER);
 	return 1;
 }
 
@@ -51,7 +98,7 @@ bool ME_Panels::Place_GlobalGroups(void)
 	int PosX = p.x;
 	int PosY = p.y;
 
-	hdwp = BeginDeferWindowPos(2);
+	hdwp = BeginDeferWindowPos(5);
 
 	DeferWindowPos(hdwp, App->CL_Groups->RightGroups_Hwnd, NULL, p.x + widthX - 295, PosY + 5,
 		0, 0, SWP_NOSIZE | SWP_NOZORDER);

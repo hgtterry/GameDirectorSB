@@ -37,8 +37,10 @@ public:
 
 	void Show_Animation_TB(void);
 
+	HWND TabsHwnd;
+	HWND Tabs_TB_hWnd;
 	HWND Model_TB_hWnd;
-
+	
 protected:
 
 	static LRESULT CALLBACK TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
@@ -77,8 +79,6 @@ protected:
 	bool Toggle_Group_HIDE_Flag;
 	bool Toggle_Group_ALL_Flag;
 
-	HWND TabsHwnd;
-	HWND Tabs_TB_hWnd;
 	HWND Group_TB_hWnd;
 	HWND Camera_TB_hWnd;
 	HWND Animation_TB_hWnd;
