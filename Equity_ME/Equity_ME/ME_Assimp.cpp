@@ -318,6 +318,7 @@ void ME_Assimp::Create_MeshGroups(const aiScene* pScene)
 		if (AI_SUCCESS == mtl->GetTexture(aiTextureType_DIFFUSE, 0, &texPath))
 		{
 			strcpy(App->CL_Model->Group[Count]->Text_FileName, texPath.C_Str());
+			strcpy(App->CL_Model->Group[Count]->Equity_Text_FileName, texPath.C_Str());
 		}
 		else
 		{

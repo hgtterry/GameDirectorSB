@@ -205,10 +205,6 @@ LRESULT CALLBACK ME_Equity_SB::WE_import_Proc(HWND hDlg, UINT message, WPARAM wP
 
 			App->CL_Model->Clear_Model_And_Reset();
 
-			strcpy(App->CL_FileIO->Model_Path_FileName, App->CL_Prefs->Pref_WE_Path_FileName);
-			strcpy(App->CL_FileIO->Model_FileName, App->CL_Prefs->Pref_WE_JustFileName);
-
-			App->CL_Model->Set_Paths();
 
 			App->CL_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
 
@@ -219,15 +215,20 @@ LRESULT CALLBACK ME_Equity_SB::WE_import_Proc(HWND hDlg, UINT message, WPARAM wP
 				return 0;
 			}
 
+			strcpy(App->CL_FileIO->Model_Path_FileName, App->CL_Prefs->Pref_WE_Path_FileName);
+			strcpy(App->CL_FileIO->Model_FileName, App->CL_Prefs->Pref_WE_JustFileName);
+
+			App->CL_Model->Set_Paths();
+
 			App->CL_Model->Model_Type = Enums::LoadedFile_Assimp;
 
 			App->CL_Equity_SB->LoadTextures_TXL();
 
-			//App->Cl_Vm_WorldEditor->Adjust();
-
-			EndDialog(hDlg, LOWORD(wParam));
+			App->CL_Equity_SB->Adjust();
 
 			App->CL_Import->Set_Equity();
+
+			EndDialog(hDlg, LOWORD(wParam));
 
 			return TRUE;
 		}
@@ -244,6 +245,16 @@ LRESULT CALLBACK ME_Equity_SB::WE_import_Proc(HWND hDlg, UINT message, WPARAM wP
 
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *						Adjust Terry Flanigan						   *
+// *************************************************************************
+void ME_Equity_SB::Adjust()
+{
+	App->CL_Dimensions->Rotate_Z_Model(90);
+	App->CL_Dimensions->Rotate_X_Model(-90);
+	App->CL_Dimensions->Centre_Model_Mid();
 }
 
 // *************************************************************************
@@ -295,8 +306,10 @@ bool ME_Equity_SB::LoadTextures_TXL()
 		geVFile_FinderGetProperties(Finder, &Properties);
 
 		strcpy(BitMap_Names[NameCount].Name, Properties.Name);
+
 		NameCount++;
 
+		
 		/*if (!AddTexture(VFS, Properties.Name))
 		{
 		geVFile_Close(VFS);
@@ -304,11 +317,29 @@ bool ME_Equity_SB::LoadTextures_TXL()
 		}*/
 	}
 
+	Copy_Texture_Names();
+
 	Check_for_Textures(VFS);
 
 	geVFile_Close(VFS);
 
 	return 1;
+}
+
+// *************************************************************************
+// *	  			Copy_Texture_Names Terry Bernie						   *
+// *************************************************************************
+void ME_Equity_SB::Copy_Texture_Names()
+{
+	int Count = 0;
+	int GroupCount = App->CL_Model->GroupCount;
+
+	while (Count < GroupCount)
+	{
+		strcpy(App->CL_Model->Group[Count]->Text_FileName, App->CL_Model->Group[Count]->Equity_Text_FileName);
+
+		Count++;
+	}
 }
 
 // *************************************************************************
@@ -323,7 +354,7 @@ int ME_Equity_SB::Check_for_Textures(geVFile *BaseFile)
 
 	while (Count < GroupCount)
 	{
-		strcpy(JustName, App->CL_Model->Group[Count]->Text_FileName);
+		strcpy(JustName, App->CL_Model->Group[Count]->Equity_Text_FileName);
 		int Len = strlen(JustName);
 		JustName[Len - 4] = 0;
 
