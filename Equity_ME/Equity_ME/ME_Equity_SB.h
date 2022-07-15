@@ -28,5 +28,12 @@ class ME_Equity_SB
 public:
 	ME_Equity_SB();
 	~ME_Equity_SB();
+
+	bool Start_WE_import();
+
+protected:
+		
+	static LRESULT CALLBACK WE_import_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
 };
 

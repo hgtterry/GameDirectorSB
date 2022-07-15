@@ -297,8 +297,9 @@ void ME_Import::Reload_FromResentFiles(char* ResentPathAndFile)
 // *************************************************************************
 bool ME_Import::WorldEditor_Loader(void)
 {
-	Debug
-	//App->Cl_Vm_WorldEditor->Start_WE_import();
+
+	App->CL_Equity_SB->Start_WE_import();
+
 	return 1;
 }
 

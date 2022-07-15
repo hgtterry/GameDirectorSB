@@ -35,3 +35,213 @@ ME_Equity_SB::ME_Equity_SB()
 ME_Equity_SB::~ME_Equity_SB()
 {
 }
+
+// *************************************************************************
+// *	  				 Start_WE_import	Terry Flanigan				   *
+// *************************************************************************
+bool ME_Equity_SB::Start_WE_import()
+{
+	DialogBox(App->hInst, (LPCTSTR)IDD_WEQUICKLOAD, App->MainHwnd, (DLGPROC)WE_import_Proc);
+	return 1;
+}
+
+// *************************************************************************
+// *					WE_import_Proc	Terry Flanigan 					   *
+// *************************************************************************
+LRESULT CALLBACK ME_Equity_SB::WE_import_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+
+		SendDlgItemMessage(hDlg, IDC_STWEPATHFILE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STTXLFILEPATH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		/*SendDlgItemMessage(hDlg, IDC_STQLOGREFILE, WM_SETFONT, (WPARAM)App->Font_CB12, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STQLOGREPATH, WM_SETFONT, (WPARAM)App->Font_CB12, MAKELPARAM(TRUE, 0));*/
+
+		/*SetDlgItemText(hDlg, IDC_STWEPATHFILE, (LPCTSTR)App->Cl_Vm_Preferences->Pref_WE_Path_FileName);
+		SetDlgItemText(hDlg, IDC_STTXLFILEPATH, (LPCTSTR)App->Cl_Vm_Preferences->Pref_Txl_Path_FileName);
+
+		SetDlgItemText(hDlg, IDC_STQLOGREFILE, (LPCTSTR)App->Cl_Vm_Preferences->Pref_Ogre_JustFileName);
+		SetDlgItemText(hDlg, IDC_STQLOGREPATH, (LPCTSTR)App->Cl_Vm_Preferences->Pref_Ogre_Path);*/
+
+		return TRUE;
+	}
+
+	case WM_CTLCOLORSTATIC:
+	{
+		/*if (GetDlgItem(hDlg, IDC_STQLOGREFILE) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->Brush_White;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STQLOGREPATH) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->Brush_White;
+		}*/
+
+		if (GetDlgItem(hDlg, IDC_STWEPATHFILE) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->Brush_White;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STTXLFILEPATH) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->Brush_White;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STATICTXL) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STATICWE) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_3DSBROWSE && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_TXLBROWSE && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+		if (LOWORD(wParam) == IDC_3DSBROWSE)
+		{
+			/*int Result = App->CL_Vm_FileIO->Vm_OpenFile("RF World   *.rfw\0*.rfw\0", "RF World rfw", NULL);
+			if (Result == 0)
+			{
+				return 1;
+			}
+
+			strcpy(App->Cl_Vm_Preferences->Pref_WE_Path_FileName, App->CL_Vm_FileIO->Model_Path_FileName);
+			strcpy(App->Cl_Vm_Preferences->Pref_WE_JustFileName, App->CL_Vm_FileIO->Model_FileName);
+
+			SetDlgItemText(hDlg, IDC_STWEPATHFILE, (LPCTSTR)App->Cl_Vm_Preferences->Pref_WE_Path_FileName);*/
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_TXLBROWSE)
+		{
+
+			//int test = App->Cl_Vm_WorldEditor->Txt_OpenFile("Texture Libary   *.txl\0*.txl\0", "Texure Editor", NULL);// S_Prefs[0]->TXLFolder);
+			//if (test == 0)
+			//{
+			//	return 1;
+			//}
+
+			//strcpy(App->Cl_Vm_Preferences->Pref_Txl_Path_FileName, App->Cl_Vm_WorldEditor->Txt_Path_FileName);
+
+			//SetDlgItemText(hDlg, IDC_STTXLFILEPATH, (LPCTSTR)App->Cl_Vm_Preferences->Pref_Txl_Path_FileName);
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDOK)
+		{
+			/*App->Cl_Vm_Preferences->Write_Preferences();
+
+			App->EBC_Model->Clear_ModelData();
+
+			App->Cl_Vm_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
+
+			bool Test = App->Cl_Vm_Assimp->LoadFile(App->Cl_Vm_Preferences->Pref_WE_Path_FileName);
+			if (Test == 0)
+			{
+				App->Say("Failed To Load");
+				return 0;
+			}
+
+			strcpy(App->CL_Vm_FileIO->Model_Path_FileName, App->Cl_Vm_Preferences->Pref_WE_Path_FileName);
+			strcpy(App->CL_Vm_FileIO->Model_FileName, App->Cl_Vm_Preferences->Pref_WE_JustFileName);
+
+			App->CL_Vm_Model->Set_Paths();
+
+			App->CL_Vm_Model->Model_Type = LoadedFile_Assimp;
+
+			App->Cl_Vm_WorldEditor->LoadTextures_TXL();
+
+			App->CL_Vm_Model->Model_Loaded = 1;
+			App->Cl_Vm_WorldEditor->Adjust();*/
+
+			EndDialog(hDlg, LOWORD(wParam));
+
+			//App->SBC_Equity->Set_Equity();
+
+			App->Say("Model Loaded");
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+	}
+
+	break;
+
+	}
+	return FALSE;
+}
