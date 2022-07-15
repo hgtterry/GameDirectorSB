@@ -60,10 +60,10 @@ LRESULT CALLBACK ME_Equity_SB::WE_import_Proc(HWND hDlg, UINT message, WPARAM wP
 		/*SendDlgItemMessage(hDlg, IDC_STQLOGREFILE, WM_SETFONT, (WPARAM)App->Font_CB12, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STQLOGREPATH, WM_SETFONT, (WPARAM)App->Font_CB12, MAKELPARAM(TRUE, 0));*/
 
-		/*SetDlgItemText(hDlg, IDC_STWEPATHFILE, (LPCTSTR)App->Cl_Vm_Preferences->Pref_WE_Path_FileName);
-		SetDlgItemText(hDlg, IDC_STTXLFILEPATH, (LPCTSTR)App->Cl_Vm_Preferences->Pref_Txl_Path_FileName);
+		SetDlgItemText(hDlg, IDC_STWEPATHFILE, (LPCTSTR)App->CL_Prefs->Pref_WE_Path_FileName);
+		SetDlgItemText(hDlg, IDC_STTXLFILEPATH, (LPCTSTR)App->CL_Prefs->Pref_Txl_Path_FileName);
 
-		SetDlgItemText(hDlg, IDC_STQLOGREFILE, (LPCTSTR)App->Cl_Vm_Preferences->Pref_Ogre_JustFileName);
+		/*SetDlgItemText(hDlg, IDC_STQLOGREFILE, (LPCTSTR)App->Cl_Vm_Preferences->Pref_Ogre_JustFileName);
 		SetDlgItemText(hDlg, IDC_STQLOGREPATH, (LPCTSTR)App->Cl_Vm_Preferences->Pref_Ogre_Path);*/
 
 		return TRUE;
@@ -167,16 +167,16 @@ LRESULT CALLBACK ME_Equity_SB::WE_import_Proc(HWND hDlg, UINT message, WPARAM wP
 	{
 		if (LOWORD(wParam) == IDC_3DSBROWSE)
 		{
-			/*int Result = App->CL_Vm_FileIO->Vm_OpenFile("RF World   *.rfw\0*.rfw\0", "RF World rfw", NULL);
+			int Result = App->CL_FileIO->Open_File_Model("RF World   *.rfw\0*.rfw\0", "RF World rfw", NULL);
 			if (Result == 0)
 			{
 				return 1;
 			}
 
-			strcpy(App->Cl_Vm_Preferences->Pref_WE_Path_FileName, App->CL_Vm_FileIO->Model_Path_FileName);
-			strcpy(App->Cl_Vm_Preferences->Pref_WE_JustFileName, App->CL_Vm_FileIO->Model_FileName);
+			strcpy(App->CL_Prefs->Pref_WE_Path_FileName, App->CL_FileIO->Model_Path_FileName);
+			strcpy(App->CL_Prefs->Pref_WE_JustFileName, App->CL_FileIO->Model_FileName);
 
-			SetDlgItemText(hDlg, IDC_STWEPATHFILE, (LPCTSTR)App->Cl_Vm_Preferences->Pref_WE_Path_FileName);*/
+			SetDlgItemText(hDlg, IDC_STWEPATHFILE, (LPCTSTR)App->CL_Prefs->Pref_WE_Path_FileName);
 
 			return TRUE;
 		}
