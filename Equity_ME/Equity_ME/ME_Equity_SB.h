@@ -23,6 +23,8 @@ distribution.
 
 #pragma once
 
+typedef struct Char_type2 { char Name[256]; }Char_type2;
+
 class ME_Equity_SB
 {
 public:
@@ -35,5 +37,14 @@ protected:
 		
 	static LRESULT CALLBACK WE_import_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
+	bool LoadTextures_TXL();
+	int Check_for_Textures(geVFile *BaseFile);
+	bool Check_in_Txl(char *FileName);
+	bool AddTexture(geVFile *BaseFile, const char *Path, int GroupIndex);
+	HBITMAP CreateHBitmapFromgeBitmap(geBitmap *Bitmap, HDC hdc);
+
+	int NameCount;
+
+	std::vector<Char_type2> BitMap_Names;
 };
 

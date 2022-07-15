@@ -29,6 +29,8 @@ distribution.
 
 ME_Equity_SB::ME_Equity_SB()
 {
+
+	NameCount = 0;
 }
 
 
@@ -219,9 +221,8 @@ LRESULT CALLBACK ME_Equity_SB::WE_import_Proc(HWND hDlg, UINT message, WPARAM wP
 
 			App->CL_Model->Model_Type = Enums::LoadedFile_Assimp;
 
-			//App->Cl_Vm_WorldEditor->LoadTextures_TXL();
+			App->CL_Equity_SB->LoadTextures_TXL();
 
-			//App->CL_Vm_Model->Model_Loaded = 1;
 			//App->Cl_Vm_WorldEditor->Adjust();
 
 			EndDialog(hDlg, LOWORD(wParam));
@@ -243,4 +244,287 @@ LRESULT CALLBACK ME_Equity_SB::WE_import_Proc(HWND hDlg, UINT message, WPARAM wP
 
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *					LoadTextures_TXL  Terry Flanigan 				   *
+// *************************************************************************
+bool ME_Equity_SB::LoadTextures_TXL()
+{
+	geVFile *			VFS = NULL;
+	geVFile_Finder *	Finder = NULL;
+	geVFile_Finder *	FinderCount = NULL;
+
+	NameCount = 0;
+
+	VFS = geVFile_OpenNewSystem(NULL, GE_VFILE_TYPE_VIRTUAL, App->CL_Prefs->Pref_Txl_Path_FileName, NULL, GE_VFILE_OPEN_READONLY | GE_VFILE_OPEN_DIRECTORY);
+	if (!VFS)
+	{
+		App->Say("Could not open file");
+		return 0;
+	}
+
+	FinderCount = geVFile_CreateFinder(VFS, "*.*");
+	if (!FinderCount)
+	{
+		App->Say("Could not load textures from");
+		geVFile_Close(VFS);
+		return 0;
+	}
+
+	while (geVFile_FinderGetNextFile(FinderCount) != GE_FALSE)
+	{
+
+
+	}
+
+	Finder = geVFile_CreateFinder(VFS, "*.*");
+	if (!Finder)
+	{
+		App->Say("Could not load textures from 2 ");
+		geVFile_Close(VFS);
+		return 0;
+	}
+
+	BitMap_Names.resize(100);
+
+	while (geVFile_FinderGetNextFile(Finder) != GE_FALSE)
+	{
+		geVFile_Properties	Properties;
+
+		geVFile_FinderGetProperties(Finder, &Properties);
+
+		strcpy(BitMap_Names[NameCount].Name, Properties.Name);
+		NameCount++;
+
+		/*if (!AddTexture(VFS, Properties.Name))
+		{
+		geVFile_Close(VFS);
+		return 0;
+		}*/
+	}
+
+	Check_for_Textures(VFS);
+
+	geVFile_Close(VFS);
+
+	return 1;
+}
+
+// *************************************************************************
+// *	  			Check_for_Textures Terry Bernie						   *
+// *************************************************************************
+int ME_Equity_SB::Check_for_Textures(geVFile *BaseFile)
+{
+	int Count = 0;
+	int GroupCount = App->CL_Model->GroupCount;
+
+	char JustName[255];
+
+	while (Count < GroupCount)
+	{
+		strcpy(JustName, App->CL_Model->Group[Count]->Text_FileName);
+		int Len = strlen(JustName);
+		JustName[Len - 4] = 0;
+
+		bool test = Check_in_Txl(JustName);
+
+		if (test == 1)
+		{
+			if (!AddTexture(BaseFile, JustName, Count))
+			{
+				App->Say("Error");
+				return 0;
+			}
+		}
+		else
+		{
+			App->Say("unMatched");
+			App->Say(JustName);
+		}
+
+		Count++;
+	}
+
+	return -1;
+}
+
+// *************************************************************************
+// *	  			Check_in_Txl Terry Bernie							   *
+// *************************************************************************
+bool ME_Equity_SB::Check_in_Txl(char *FileName)
+{
+	int loop = 0;
+	int TxlNameCount = NameCount;
+
+	while (loop < TxlNameCount)
+	{
+		int Result = 1;
+		Result = strcmp(FileName, BitMap_Names[loop].Name);
+		if (Result == 0)
+		{
+			return 1;
+		}
+
+		loop++;
+	}
+
+	return 0;
+}
+
+// *************************************************************************
+// *						AddTexture  06/06/08 				  		   *
+// *************************************************************************
+bool ME_Equity_SB::AddTexture(geVFile *BaseFile, const char *Path, int GroupIndex)
+{
+
+	geBitmap *		Bitmap;
+
+	geVFile *		File;
+	char			FileName[_MAX_FNAME];
+	char *			Name;
+
+	Bitmap = NULL;
+	File = NULL;
+
+	_splitpath(Path, NULL, NULL, FileName, NULL);
+	Name = _strdup(FileName);
+	if (!Name)
+	{
+		App->Say_Win("Memory allocation error processing %s");
+		return FALSE;
+	}
+
+	if (BaseFile)
+		File = geVFile_Open(BaseFile, Path, GE_VFILE_OPEN_READONLY);
+	else
+		File = geVFile_OpenNewSystem(NULL, GE_VFILE_TYPE_DOS, Path, NULL, GE_VFILE_OPEN_READONLY);
+
+	if (!File)
+	{
+		//NonFatalError("Could not open %s", Path);
+		App->Say_Win("Could not open %s");
+		return TRUE;
+	}
+
+	Bitmap = geBitmap_CreateFromFile(File);
+
+	HWND	PreviewWnd;
+	HBITMAP	hbm;
+	HDC		hDC;
+
+	PreviewWnd = GetDlgItem(App->CL_Groups->RightGroups_Hwnd, IDC_BASETEXTURE2);
+	hDC = GetDC(PreviewWnd);
+	hbm = CreateHBitmapFromgeBitmap(Bitmap, hDC);
+
+	App->CL_Model->Group[GroupIndex]->Base_Bitmap = hbm;
+
+
+	/*if (!Bitmap)
+	{
+	NonFatalError("%s is not a valid bitmap", Path);
+	return TRUE;
+	}*/
+
+	char TempTextureFile_BMP[1024];
+	strcpy(TempTextureFile_BMP, App->EquityDirecory_FullPath);
+	strcat(TempTextureFile_BMP, "\\");
+	strcat(TempTextureFile_BMP, "TextureLoad.bmp");
+
+	App->CL_Textures->Genesis_WriteToBmp(Bitmap, TempTextureFile_BMP);
+
+	App->CL_Textures->Soil_Load_Texture(App->CL_Textures->g_Texture, TempTextureFile_BMP, GroupIndex);
+
+	geVFile_Close(File);
+
+	DeleteFile((LPCTSTR)TempTextureFile_BMP);
+
+	return TRUE;
+}
+
+// *************************************************************************
+// *				CreateHBitmapFromgeBitmap  06/06/08 		  		   *
+// *************************************************************************
+HBITMAP ME_Equity_SB::CreateHBitmapFromgeBitmap(geBitmap *Bitmap, HDC hdc)
+{
+	geBitmap * Lock;
+	gePixelFormat Format;
+	geBitmap_Info info;
+	HBITMAP hbm = NULL;
+
+	// <> choose format to be 8,16,or 24, whichever is closest to Bitmap
+	Format = GE_PIXELFORMAT_24BIT_BGR;
+
+	if (geBitmap_GetBits(Bitmap))
+	{
+		Lock = Bitmap;
+	}
+	else
+	{
+		if (!geBitmap_LockForRead(Bitmap, &Lock, 0, 0, Format, GE_FALSE, 0))
+		{
+			return NULL;
+		}
+	}
+
+	geBitmap_GetInfo(Lock, &info, NULL);
+
+	if (info.Format != Format)
+		return NULL;
+
+	{
+		void * bits;
+		BITMAPINFOHEADER bmih;
+		int pelbytes;
+
+		pelbytes = gePixelFormat_BytesPerPel(Format);
+		bits = geBitmap_GetBits(Lock);
+
+		bmih.biSize = sizeof(bmih);
+		bmih.biHeight = -info.Height;
+		bmih.biPlanes = 1;
+		bmih.biBitCount = 24;
+		bmih.biCompression = BI_RGB;
+		bmih.biSizeImage = 0;
+		bmih.biXPelsPerMeter = bmih.biYPelsPerMeter = 10000;
+		bmih.biClrUsed = bmih.biClrImportant = 0;
+
+		if ((info.Stride*pelbytes) == (((info.Stride*pelbytes) + 3)&(~3)))
+		{
+			bmih.biWidth = info.Stride;
+			hbm = CreateDIBitmap(hdc, &bmih, CBM_INIT, bits, (BITMAPINFO *)&bmih, DIB_RGB_COLORS);
+		}
+		else
+		{
+			void * newbits;
+			int Stride;
+
+			bmih.biWidth = info.Width;
+			Stride = (((info.Width*pelbytes) + 3)&(~3));
+			newbits = geRam_Allocate(Stride * info.Height);
+			if (newbits)
+			{
+				char *newptr, *oldptr;
+				int y;
+
+				newptr = (char *)newbits;
+				oldptr = (char *)bits;
+				for (y = 0; y < info.Height; y++)
+				{
+					memcpy(newptr, oldptr, (info.Width)*pelbytes);
+					oldptr += info.Stride*pelbytes;
+					newptr += Stride;
+				}
+				hbm = CreateDIBitmap(hdc, &bmih, CBM_INIT, newbits, (BITMAPINFO *)&bmih, DIB_RGB_COLORS);
+				geRam_Free(newbits);
+			}
+		}
+	}
+
+	if (Lock != Bitmap)
+	{
+		geBitmap_UnLock(Lock);
+	}
+
+	return hbm;
 }
