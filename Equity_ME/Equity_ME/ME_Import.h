@@ -28,6 +28,8 @@ public:
 	ME_Import();
 	~ME_Import();
 
+	void Set_Equity(void);
+
 	bool Assimp_Loader(char* Extension, char* Extension2);
 	bool RFActor_Loader(void);
 	bool Ogre_Loader(char* Extension, char* Extension2);
@@ -36,8 +38,6 @@ public:
 	void Reload_FromResentFiles(char* ResentPathAndFile);
 
 protected:
-
-	void Set_Equity(void);
 
 };
 

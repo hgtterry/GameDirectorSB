@@ -199,36 +199,35 @@ LRESULT CALLBACK ME_Equity_SB::WE_import_Proc(HWND hDlg, UINT message, WPARAM wP
 
 		if (LOWORD(wParam) == IDOK)
 		{
-			/*App->Cl_Vm_Preferences->Write_Preferences();
+			//App->Cl_Vm_Preferences->Write_Preferences();
 
-			App->EBC_Model->Clear_ModelData();
+			App->CL_Model->Clear_Model_And_Reset();
 
-			App->Cl_Vm_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
+			strcpy(App->CL_FileIO->Model_Path_FileName, App->CL_Prefs->Pref_WE_Path_FileName);
+			strcpy(App->CL_FileIO->Model_FileName, App->CL_Prefs->Pref_WE_JustFileName);
 
-			bool Test = App->Cl_Vm_Assimp->LoadFile(App->Cl_Vm_Preferences->Pref_WE_Path_FileName);
+			App->CL_Model->Set_Paths();
+
+			App->CL_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
+
+			bool Test = App->CL_Assimp->LoadFile(App->CL_Prefs->Pref_WE_Path_FileName);
 			if (Test == 0)
 			{
 				App->Say("Failed To Load");
 				return 0;
 			}
 
-			strcpy(App->CL_Vm_FileIO->Model_Path_FileName, App->Cl_Vm_Preferences->Pref_WE_Path_FileName);
-			strcpy(App->CL_Vm_FileIO->Model_FileName, App->Cl_Vm_Preferences->Pref_WE_JustFileName);
+			App->CL_Model->Model_Type = Enums::LoadedFile_Assimp;
 
-			App->CL_Vm_Model->Set_Paths();
+			//App->Cl_Vm_WorldEditor->LoadTextures_TXL();
 
-			App->CL_Vm_Model->Model_Type = LoadedFile_Assimp;
-
-			App->Cl_Vm_WorldEditor->LoadTextures_TXL();
-
-			App->CL_Vm_Model->Model_Loaded = 1;
-			App->Cl_Vm_WorldEditor->Adjust();*/
+			//App->CL_Vm_Model->Model_Loaded = 1;
+			//App->Cl_Vm_WorldEditor->Adjust();
 
 			EndDialog(hDlg, LOWORD(wParam));
 
-			//App->SBC_Equity->Set_Equity();
+			App->CL_Import->Set_Equity();
 
-			App->Say("Model Loaded");
 			return TRUE;
 		}
 
