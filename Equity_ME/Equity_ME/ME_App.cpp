@@ -52,6 +52,8 @@ ME_App::ME_App()
 	CL_Ogre3D = nullptr;
 	CL_Motions = nullptr;
 	CL_Equity_SB = nullptr;
+	CL_Prefs = nullptr;
+	CL_Ini = nullptr;
 
 	//----------------------------------------------
 	hInst =			nullptr;
@@ -140,7 +142,10 @@ bool ME_App::InitApp(void)
 	CL_Genesis3D = new ME_Genesis3D();
 	CL_Ogre3D = new ME_Ogre3D();
 	CL_Equity_SB = new ME_Equity_SB();
-	
+	CL_Prefs = new ME_Preferences();
+	CL_Ini = new T_Ini();
+
+	// ----------------------------------------------
 	SetBrushes_Fonts();
 
 	LoadString(hInst, IDS_APP_TITLE, Version, 255);

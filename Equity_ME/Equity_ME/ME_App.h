@@ -47,6 +47,8 @@ distribution.
 #include "ME_Ogre3D.h"
 #include "ME_Motions.h"
 #include "ME_Equity_SB.h"
+#include "ME_Preferences.h"
+#include "ME_Ini.h"
 
 class ME_App
 {
@@ -78,6 +80,8 @@ public:
 	ME_Ogre3D*			CL_Ogre3D;
 	ME_Motions*			CL_Motions;			// Motions [100722]
 	ME_Equity_SB*		CL_Equity_SB;		// Equity_SB World Editor
+	ME_Preferences*		CL_Prefs;
+	T_Ini*				CL_Ini;
 
 	bool InitApp(void);
 	bool SetMainWin_Centre(void);

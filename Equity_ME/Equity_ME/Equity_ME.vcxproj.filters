@@ -108,6 +108,12 @@
     <ClInclude Include="ME_Equity_SB.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ME_Preferences.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ME_Ini.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -210,6 +216,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ME_Equity_SB.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ME_Preferences.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ME_Ini.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
