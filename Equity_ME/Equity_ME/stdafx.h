@@ -75,8 +75,16 @@ namespace Enums
 		Show_List_Model = 2,
 		Show_List_App = 3
 	};
-}
 
+	enum ImGui_Render
+	{
+		ImGui_Render_None = 0,
+		ImGui_Render_Group = 1,
+		ImGui_Render_Model = 2,
+		ImGui_Render_Animation = 3,
+		ImGui_Render_Camera = 4
+	};
+}
 
 #define Debug App->Say_Win("Debug");
 //

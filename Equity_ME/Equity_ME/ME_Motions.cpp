@@ -213,6 +213,8 @@ bool ME_Motions::Update_Motions()
 	
 	App->CL_TopBar->Show_Animation_TB();
 	
+	App->CL_Ogre->Ogre_Listener->ImGui_Render_Tab = Enums::ImGui_Render_Model;
+
 	return 1;
 }
 

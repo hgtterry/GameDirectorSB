@@ -50,6 +50,8 @@ ME_OgreListener::ME_OgreListener()
 	Pl_DeltaMouse = 0;
 	mMoveSensitivityMouse = 50;
 
+	ImGui_Render = 1;
+	ImGui_Render_Tab = 2;
 	View_Height = 0;
 	View_Width = 0;
 
@@ -69,12 +71,24 @@ ME_OgreListener::~ME_OgreListener()
 bool ME_OgreListener::frameStarted(const Ogre::FrameEvent& evt)
 {
 	
-	App->CL_Ogre->Get_View_Height_Width();
+	if (ImGui_Render == 1)
+	{
+		App->CL_Ogre->Get_View_Height_Width();
 
-	App->CL_Ogre->m_imgui.NewFrame(evt.timeSinceLastFrame, (float)View_Width, (float)View_Height);
+		App->CL_Ogre->m_imgui.NewFrame(evt.timeSinceLastFrame, (float)View_Width, (float)View_Height);
 
-	App->CL_ImGui->Tabs_Render_Camera();
-		
+		App->CL_ImGui->Render_FPS();
+
+		if (ImGui_Render_Tab == Enums::ImGui_Render_Model)
+		{
+			App->CL_ImGui->ImGui_Render_Model();
+		}
+	}
+
+
+	
+
+
 	if (Animate_Ogre == 1 && App->CL_Model->ItsAnOgreModel == 1)
 	{
 		Animate_State->addTime(evt.timeSinceLastFrame * AnimationScale);

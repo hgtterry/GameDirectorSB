@@ -44,11 +44,39 @@ ME_ImGui::ME_ImGui()
 	PosX_Selected = 1;
 	PosY_Selected = 0;
 	PosZ_Selected = 0;
+
 }
 
 
 ME_ImGui::~ME_ImGui()
 {
+}
+
+// *************************************************************************
+// *					Render_FPS  Terry Flanigan				   *
+// *************************************************************************
+void ME_ImGui::Render_FPS(void)
+{
+	if (Show_FPS == 1)
+	{
+		ImGui_FPS();
+	}
+
+	if (Show_ImGui_Test == 1)
+	{
+		ImGui::ShowDemoWindow();
+	}
+}
+
+// *************************************************************************
+// *					Render_FPS  Terry Flanigan				   *
+// *************************************************************************
+void ME_ImGui::ImGui_Render_Model(void)
+{
+	if (Show_Dimensions == 1)
+	{
+		ImGui_Dimensions();
+	}
 }
 
 // *************************************************************************
@@ -123,26 +151,6 @@ void ME_ImGui::ImGui_Set_Colours(void)
 	colors[ImGuiCol_ModalWindowDimBg] = ImVec4(0.20f, 0.20f, 0.20f, 0.35f);
 }
 
-// *************************************************************************
-// *					Tabs_Render_Camera  Terry Bernie				   *
-// *************************************************************************
-void ME_ImGui::Tabs_Render_Camera(void)
-{
-	if (Show_FPS == 1)
-	{
-		ImGui_FPS();
-	}
-
-	if (Show_Dimensions == 1)
-	{
-		ImGui_Dimensions();
-	}
-
-	if (Show_ImGui_Test == 1)
-	{
-		ImGui::ShowDemoWindow();
-	}
-}
 
 // *************************************************************************
 // *						ImGui_FPS  Terry Bernie						   *

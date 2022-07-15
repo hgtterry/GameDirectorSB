@@ -582,6 +582,11 @@ LRESULT CALLBACK ME_TopBar::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM wP
 			App->CL_TopBar->Toggle_Tabs_Group_Flag = 1;
 
 			RedrawWindow(App->CL_TopBar->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			App->CL_Ogre->Ogre_Listener->ImGui_Render_Tab = Enums::ImGui_Render_Group;
+
+			App->CL_Panels->Show_Panels(1);
+
 			return TRUE;
 		}
 
@@ -592,6 +597,18 @@ LRESULT CALLBACK ME_TopBar::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM wP
 			App->CL_TopBar->Toggle_Tabs_Model_Flag = 1;
 
 			RedrawWindow(App->CL_TopBar->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			App->CL_Ogre->Ogre_Listener->ImGui_Render_Tab = Enums::ImGui_Render_Model;
+
+			if (App->CL_ImGui->Show_Dimensions == 1)
+			{
+				App->CL_Panels->Show_Panels(0);
+			}
+			else
+			{
+				App->CL_Panels->Show_Panels(1);
+			}
+
 			return TRUE;
 		}
 
@@ -602,6 +619,11 @@ LRESULT CALLBACK ME_TopBar::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM wP
 			App->CL_TopBar->Toggle_Tabs_Camera_Flag = 1;
 
 			RedrawWindow(App->CL_TopBar->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			App->CL_Ogre->Ogre_Listener->ImGui_Render_Tab = Enums::ImGui_Render_Camera;
+
+			App->CL_Panels->Show_Panels(1);
+
 			return TRUE;
 		}
 
@@ -612,6 +634,11 @@ LRESULT CALLBACK ME_TopBar::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM wP
 			App->CL_TopBar->Toggle_Tabs_Animation_Flag = 1;
 
 			RedrawWindow(App->CL_TopBar->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			App->CL_Ogre->Ogre_Listener->ImGui_Render_Tab = Enums::ImGui_Render_Animation;
+
+			App->CL_Panels->Show_Panels(1);
+
 			return TRUE;
 		}
 

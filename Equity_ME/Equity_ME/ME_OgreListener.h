@@ -51,6 +51,8 @@ public:
 	bool Animate_Ogre;
 	float AnimationScale;
 
+	bool ImGui_Render;
+	int ImGui_Render_Tab;
 	int	View_Height;	// Ogre window Height [150122]
 	int	View_Width;		// Ogre window WIdth [150122]
 

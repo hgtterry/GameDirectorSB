@@ -28,7 +28,9 @@ public:
 	ME_ImGui();
 	~ME_ImGui();
 
-	void Tabs_Render_Camera(void);
+	void Render_FPS(void);
+	void ImGui_Render_Model(void);
+
 	void ImGui_FPS(void);
 
 	bool Show_FPS;  // Show Frames Per Second [150122]
