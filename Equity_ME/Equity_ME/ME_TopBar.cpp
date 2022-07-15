@@ -891,12 +891,16 @@ LRESULT CALLBACK ME_TopBar::Model_TB_Proc(HWND hDlg, UINT message, WPARAM wParam
 					App->CL_TopBar->Toggle_Dimensions_Flag = 0;
 					App->CL_ImGui->Show_Dimensions = 0;
 					App->CL_Panels->Show_Panels(1);
+
+					App->CL_Ogre->Ogre_Listener->ImGui_Render_Tab = Enums::ImGui_Render_None;
 				}
 				else
 				{
 					App->CL_TopBar->Toggle_Dimensions_Flag = 1;
 					App->CL_ImGui->Show_Dimensions = 1;
 					App->CL_Panels->Show_Panels(0);
+
+					App->CL_Ogre->Ogre_Listener->ImGui_Render_Tab = Enums::ImGui_Render_Model;
 				}
 			}
 

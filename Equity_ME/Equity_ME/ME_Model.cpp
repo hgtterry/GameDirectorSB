@@ -348,6 +348,8 @@ void ME_Model::Clear_Model_And_Reset(void)
 
 	App->CL_TopBar->Reset_Class();
 
+	App->CL_Ogre->Ogre_Listener->ImGui_Render_Tab = Enums::ImGui_Render_Model;
+
 	SetWindowText(App->MainHwnd, "Equity_ME");
 }
 

@@ -51,7 +51,7 @@ ME_OgreListener::ME_OgreListener()
 	mMoveSensitivityMouse = 50;
 
 	ImGui_Render = 1;
-	ImGui_Render_Tab = 2;
+	ImGui_Render_Tab = Enums::ImGui_Render_Model;
 	View_Height = 0;
 	View_Width = 0;
 
