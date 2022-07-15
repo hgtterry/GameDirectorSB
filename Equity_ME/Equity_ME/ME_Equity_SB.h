@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022 Equity_ME Model Editor -- HGT Software W.T.Flanigan H.C.Flanigan
+Copyright (c) 2022 Equity_ME Model Editor -- Inflanite Software W.T.Flanigan H.C.Flanigan
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -22,22 +22,11 @@ distribution.
 */
 
 #pragma once
-class ME_Import
+
+class ME_Equity_SB
 {
 public:
-	ME_Import();
-	~ME_Import();
-
-	bool Assimp_Loader(char* Extension, char* Extension2);
-	bool RFActor_Loader(void);
-	bool Ogre_Loader(char* Extension, char* Extension2);
-	bool WorldEditor_Loader(void);
-
-	void Reload_FromResentFiles(char* ResentPathAndFile);
-
-protected:
-
-	void Set_Equity(void);
-
+	ME_Equity_SB();
+	~ME_Equity_SB();
 };
 

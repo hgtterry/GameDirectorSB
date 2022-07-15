@@ -51,6 +51,7 @@ ME_App::ME_App()
 	CL_Genesis3D = nullptr;
 	CL_Ogre3D = nullptr;
 	CL_Motions = nullptr;
+	CL_Equity_SB = nullptr;
 
 	//----------------------------------------------
 	hInst =			nullptr;
@@ -138,6 +139,7 @@ bool ME_App::InitApp(void)
 	
 	CL_Genesis3D = new ME_Genesis3D();
 	CL_Ogre3D = new ME_Ogre3D();
+	CL_Equity_SB = new ME_Equity_SB();
 	
 	SetBrushes_Fonts();
 

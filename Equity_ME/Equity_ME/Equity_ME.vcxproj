@@ -155,6 +155,7 @@
     <ClInclude Include="ME_Assimp.h" />
     <ClInclude Include="ME_Dialogs.h" />
     <ClInclude Include="ME_Dimensions.h" />
+    <ClInclude Include="ME_Equity_SB.h" />
     <ClInclude Include="ME_Export.h" />
     <ClInclude Include="ME_Export_Milkshape.h" />
     <ClInclude Include="ME_Export_Object.h" />
@@ -192,6 +193,7 @@
     <ClCompile Include="ME_Assimp.cpp" />
     <ClCompile Include="ME_Dialogs.cpp" />
     <ClCompile Include="ME_Dimensions.cpp" />
+    <ClCompile Include="ME_Equity_SB.cpp" />
     <ClCompile Include="ME_Export.cpp" />
     <ClCompile Include="ME_Export_Milkshape.cpp" />
     <ClCompile Include="ME_Export_Object.cpp" />

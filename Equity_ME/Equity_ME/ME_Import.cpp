@@ -290,7 +290,16 @@ void ME_Import::Reload_FromResentFiles(char* ResentPathAndFile)
 	App->CL_Model->Model_Type = Enums::LoadedFile_Assimp;
 
 	Set_Equity();
+}
 
+// *************************************************************************
+// *					WorldEditor_Loader Terry Terry Berine			   *
+// *************************************************************************
+bool ME_Import::WorldEditor_Loader(void)
+{
+	Debug
+	//App->Cl_Vm_WorldEditor->Start_WE_import();
+	return 1;
 }
 
 
