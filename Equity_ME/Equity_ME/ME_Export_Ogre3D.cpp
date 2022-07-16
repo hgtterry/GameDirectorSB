@@ -1,5 +1,18 @@
 #include "stdafx.h"
 #include "ME_App.h"
+
+#include "Ogre.h"
+#include "OgreXMLMeshSerializer.h"
+#include "OgreMeshSerializer.h"
+#include "OgreXMLSkeletonSerializer.h"
+#include "OgreSkeletonSerializer.h"
+#include "OgreXMLPrerequisites.h"
+#include "OgreDefaultHardwareBufferManager.h"
+#include "OgreProgressiveMeshGenerator.h"
+#include "OgreDistanceLodStrategy.h"
+#include <iostream>
+#include <sys/stat.h>
+
 #include "ME_Export_Ogre3D.h"
 
 

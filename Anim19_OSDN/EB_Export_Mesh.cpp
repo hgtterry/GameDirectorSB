@@ -33,7 +33,7 @@ distribution.
 #include "OgreDefaultHardwareBufferManager.h"
 #include "OgreProgressiveMeshGenerator.h"
 #include "OgreDistanceLodStrategy.h"
-#include <iostream>
+//#include <iostream>
 #include <sys/stat.h>
 
 #include "EB_Export_Mesh.h"

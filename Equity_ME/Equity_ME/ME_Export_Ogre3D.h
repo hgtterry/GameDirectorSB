@@ -3,6 +3,15 @@
 #include "Ogre.h"
 #include "OgreXMLMeshSerializer.h"
 #include "OgreMeshSerializer.h"
+#include "OgreXMLSkeletonSerializer.h"
+#include "OgreSkeletonSerializer.h"
+#include "OgreXMLPrerequisites.h"
+#include "OgreDefaultHardwareBufferManager.h"
+#include "OgreProgressiveMeshGenerator.h"
+#include "OgreDistanceLodStrategy.h"
+
+using namespace std;
+using namespace Ogre;
 
 #define MAX_VERTICES 100000
 #define MAX_POLYGONS 100000
