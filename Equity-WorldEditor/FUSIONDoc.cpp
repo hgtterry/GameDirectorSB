@@ -133,7 +133,7 @@ BEGIN_MESSAGE_MAP(CFusionDoc, CDocument)
 	ON_UPDATE_COMMAND_UI(ID_EDIT_PASTE, OnUpdateEditPaste)
 	ON_COMMAND(ID_EDIT_CUT, OnEditCut)
 	ON_UPDATE_COMMAND_UI(ID_EDIT_CUT, OnUpdateEditCut)
-	ON_COMMAND(ID_COMPILE, OnCompile)
+//	ON_COMMAND(ID_COMPILE, OnCompile)
 	ON_UPDATE_COMMAND_UI(ID_BRUSH_SUBTRACTFROMWORLD, OnUpdateBrushSubtractfromworld)
 	ON_UPDATE_COMMAND_UI(ID_ENTITIES_EDITOR, OnUpdateEntitiesEditor)
 	ON_COMMAND(ID_NEW_LIB_OBJECT, OnNewLibObject)
@@ -8770,8 +8770,11 @@ void CFusionDoc::OnFileExport()
 {
 // changed QD 12/03
 	static const char FDTitle[] = "Export";
+//	CFileDialog dlg(FALSE, "3dt", NULL, (OFN_OVERWRITEPROMPT | OFN_HIDEREADONLY | OFN_NOREADONLYRETURN | OFN_PATHMUSTEXIST | OFN_NOREADONLYRETURN),
+								//	"World Files (*.3dt)|*.3dt|Map Files (*.map)|*.map|World Files v1.32 (*.3dt)|*.3dt|Autodesk (*.3ds)|*.3ds|Equity Room (*.ebr)|*.ebr|All Files (*.*)|*.*||");
+
 	CFileDialog dlg(FALSE, "3dt", NULL, (OFN_OVERWRITEPROMPT | OFN_HIDEREADONLY | OFN_NOREADONLYRETURN | OFN_PATHMUSTEXIST | OFN_NOREADONLYRETURN),
-									"World Files (*.3dt)|*.3dt|Map Files (*.map)|*.map|World Files v1.32 (*.3dt)|*.3dt|Autodesk (*.3ds)|*.3ds|Equity Room (*.ebr)|*.ebr|All Files (*.*)|*.*||");
+									"Equity Room (*.ebr)|*.ebr|Map Files (*.map)|*.map|World Files v1.32 (*.3dt)|*.3dt|Autodesk (*.3ds)|*.3ds|World Files (*.3dt)|*.3dt|All Files (*.*)|*.*||");
 
 	dlg.m_ofn.lpstrTitle = FDTitle;	
 	if (dlg.DoModal () == IDOK)
@@ -8779,7 +8782,13 @@ void CFusionDoc::OnFileExport()
 		switch(dlg.m_ofn.nFilterIndex)
 		{
 		case 1 :
-			ExportWorldFile(dlg.GetPathName());
+			{
+				CExport3dsDialog ExpDlg;
+				if (ExpDlg.DoModal () == IDOK)
+				{
+					ExportTo_RFW(dlg.GetPathName(), ExpDlg.m_ExportAll, ExpDlg.m_ExportLights, ExpDlg.m_GroupFile);
+				}
+			}
 			break;
 		case 2 :
 			ExportMapFile(dlg.GetPathName());
@@ -8799,11 +8808,7 @@ void CFusionDoc::OnFileExport()
 			}
 		case 5 :
 			{
-				CExport3dsDialog ExpDlg;
-				if (ExpDlg.DoModal () == IDOK)
-				{
-					ExportTo_RFW(dlg.GetPathName(), ExpDlg.m_ExportAll, ExpDlg.m_ExportLights, ExpDlg.m_GroupFile);
-				}
+				ExportWorldFile(dlg.GetPathName());
 			}
 // end change
 		}

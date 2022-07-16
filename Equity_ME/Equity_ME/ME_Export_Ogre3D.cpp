@@ -111,7 +111,7 @@ bool ME_Export_Ogre3D::Export_AssimpToOgre(void)
 
 	App->Say("Converted");
 
-	//remove(OldFile);
+	remove(OldFile);
 
 	return 1;
 }
@@ -585,10 +585,6 @@ bool ME_Export_Ogre3D::CreateDirectoryMesh(void)
 
 	_getcwd(mCurrentFolder, 1024);
 
-
-	App->Say(App->CL_FileIO->szSelectedDir);
-	App->Say(mCurrentFolder);
-
 	return 1;
 }
 
@@ -884,13 +880,18 @@ bool ME_Export_Ogre3D::WriteSubMesh(int GroupIndex)
 
 
 	//------------------------------- texture
-
+	char MaterialNumber[255];
 	char SubMesh[256];
 	strcpy(SubMesh, "        <submesh material=\"");
 
-	strcpy(MatName, App->CL_Model->JustName);
+	/*strcpy(MatName, App->CL_Model->JustName);
 	strcat(MatName, "_");
-	strcat(MatName, App->CL_Model->Group[GroupIndex]->MaterialName);
+	strcat(MatName, App->CL_Model->Group[GroupIndex]->MaterialName);*/
+
+	_itoa(GroupIndex, MaterialNumber, 10);
+	strcpy(MatName, App->CL_Model->JustName);
+	strcat(MatName, "_Material_");
+	strcat(MatName, MaterialNumber);
 
 	fprintf(WritePolyFile, "%s%s%s %s\n", SubMesh, MatName, "\" usesharedvertices=\"false\"", "use32bitindexes=\"false\" operationtype=\"triangle_list\">");
 
