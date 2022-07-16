@@ -45,8 +45,15 @@ protected:
 	void Copy_Texture_Names();
 	void Adjust();
 
+	bool Txt_OpenFile(char* Extension, char* Title, char* StartDirectory);
+
 	int NameCount;
 
 	std::vector<Char_type2> BitMap_Names;
+
+	char Txt_FileName[255];
+	char Txt_Path_FileName[1024];
+
+	OPENFILENAME ofn;
 };
 

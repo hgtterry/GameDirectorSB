@@ -186,15 +186,15 @@ LRESULT CALLBACK ME_Equity_SB::WE_import_Proc(HWND hDlg, UINT message, WPARAM wP
 		if (LOWORD(wParam) == IDC_TXLBROWSE)
 		{
 
-			//int test = App->Cl_Vm_WorldEditor->Txt_OpenFile("Texture Libary   *.txl\0*.txl\0", "Texure Editor", NULL);// S_Prefs[0]->TXLFolder);
-			//if (test == 0)
-			//{
-			//	return 1;
-			//}
+			int test = App->CL_Equity_SB->Txt_OpenFile("Texture Libary   *.txl\0*.txl\0", "Texure Editor", NULL);// S_Prefs[0]->TXLFolder);
+			if (test == 0)
+			{
+				return 1;
+			}
 
-			//strcpy(App->Cl_Vm_Preferences->Pref_Txl_Path_FileName, App->Cl_Vm_WorldEditor->Txt_Path_FileName);
+			strcpy(App->CL_Prefs->Pref_Txl_Path_FileName, App->CL_Equity_SB->Txt_Path_FileName);
 
-			//SetDlgItemText(hDlg, IDC_STTXLFILEPATH, (LPCTSTR)App->Cl_Vm_Preferences->Pref_Txl_Path_FileName);
+			SetDlgItemText(hDlg, IDC_STTXLFILEPATH, (LPCTSTR)App->CL_Prefs->Pref_Txl_Path_FileName);
 
 			return TRUE;
 		}
@@ -224,11 +224,11 @@ LRESULT CALLBACK ME_Equity_SB::WE_import_Proc(HWND hDlg, UINT message, WPARAM wP
 
 			App->CL_Equity_SB->LoadTextures_TXL();
 
-			App->CL_Equity_SB->Adjust();
+			EndDialog(hDlg, LOWORD(wParam));
 
 			App->CL_Import->Set_Equity();
 
-			EndDialog(hDlg, LOWORD(wParam));
+			App->CL_Equity_SB->Adjust();
 
 			return TRUE;
 		}
@@ -558,4 +558,38 @@ HBITMAP ME_Equity_SB::CreateHBitmapFromgeBitmap(geBitmap *Bitmap, HDC hdc)
 	}
 
 	return hbm;
+}
+
+// *************************************************************************
+// *					Txt_OpenFile Terry Flanigan						   *
+// *************************************************************************
+bool ME_Equity_SB::Txt_OpenFile(char* Extension, char* Title, char* StartDirectory)
+{
+	strcpy(Txt_FileName, "");
+	strcpy(Txt_Path_FileName, "");
+
+	ZeroMemory(&ofn, sizeof(ofn));
+	ofn.lStructSize = sizeof(ofn);
+	ofn.hwndOwner = App->MainHwnd;
+	ofn.hInstance = App->hInst;
+	ofn.lpstrFile = Txt_Path_FileName;						// full path and file name
+	ofn.nMaxFile = sizeof(Txt_Path_FileName);
+	ofn.lpstrFilter = Extension;
+
+	ofn.nFilterIndex = 1;
+	ofn.lpstrFileTitle = Txt_FileName;						// Just File Name
+	ofn.nMaxFileTitle = sizeof(Txt_FileName);;
+	ofn.lpstrInitialDir = StartDirectory;
+	ofn.lpstrTitle = Title;
+	ofn.Flags = OFN_PATHMUSTEXIST |
+		OFN_FILEMUSTEXIST |
+		OFN_EXPLORER |
+		OFN_HIDEREADONLY |
+		OFN_FILEMUSTEXIST;
+
+	if (GetOpenFileName(&ofn) == TRUE)
+	{
+		return 1;
+	}
+	return 0;
 }
