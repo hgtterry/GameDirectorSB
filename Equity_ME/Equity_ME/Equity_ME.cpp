@@ -320,6 +320,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				App->CL_Export->Milkshape_Model();
 				return 1;
 			}
+
+			case ID_OGRE3D_MESH:
+			{
+				App->CL_Export->Ogre3D_Model();
+				return 1;
+			}
 			
 			// ------------------------------------------------------- Windows
 			case ID_WINDOWS_FILEVIEW:

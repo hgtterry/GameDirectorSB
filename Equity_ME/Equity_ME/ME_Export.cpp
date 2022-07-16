@@ -72,7 +72,6 @@ void ME_Export::Milkshape_Model(void)
 // *************************************************************************
 void ME_Export::Ogre3D_Model(void)
 {
-
 	if (App->CL_Model->Model_Loaded == 0)
 	{
 		App->Say("No Model Loaded to Export");
@@ -85,7 +84,5 @@ void ME_Export::Ogre3D_Model(void)
 		return;
 	}
 
-	//App->Cl_Vm_Ogre3d->Export_AssimpToOgre();	
-
-	App->EBC_Export_Mesh->Export_AssimpToOgre();
+	App->CL_Export_Ogre3D->Export_AssimpToOgre();
 }

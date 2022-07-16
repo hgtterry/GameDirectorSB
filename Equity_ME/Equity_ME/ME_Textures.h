@@ -28,6 +28,11 @@ public:
 	ME_Textures();
 	~ME_Textures();
 
+	bool HBITMAP_TO_BmpFile(HBITMAP Bitmap, char* Filename, char* SaveFolder);
+	bool Jpg_To_Tga24(char* File);
+	bool Jpg_To_png24(char* File);
+	bool Bmp_To_Jpg(char* File);
+
 	bool Soil_DecodeTextures(int TextureID);
 	bool Soil_Load_Texture(UINT textureArray[], LPSTR strFileName, int textureID);
 	bool TexureToWinPreviewFullPath(int Index, char* FullPath);
