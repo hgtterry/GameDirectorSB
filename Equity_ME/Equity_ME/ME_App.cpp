@@ -54,6 +54,7 @@ ME_App::ME_App()
 	CL_Equity_SB = nullptr;
 	CL_Prefs = nullptr;
 	CL_Ini = nullptr;
+	CL_Export_Ogre3D = nullptr;
 
 	//----------------------------------------------
 	hInst =			nullptr;
@@ -144,7 +145,8 @@ bool ME_App::InitApp(void)
 	CL_Equity_SB = new ME_Equity_SB();
 	CL_Prefs = new ME_Preferences();
 	CL_Ini = new T_Ini();
-
+	CL_Export_Ogre3D = new ME_Export_Ogre3D();
+	
 	// ----------------------------------------------
 	SetBrushes_Fonts();
 

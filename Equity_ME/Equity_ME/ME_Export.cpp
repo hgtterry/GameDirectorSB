@@ -66,3 +66,26 @@ void ME_Export::Milkshape_Model(void)
 		return;
 	}
 }
+
+// *************************************************************************
+// *					Ogre3D_Model Terry Bernie						   *
+// *************************************************************************
+void ME_Export::Ogre3D_Model(void)
+{
+
+	if (App->CL_Model->Model_Loaded == 0)
+	{
+		App->Say("No Model Loaded to Export");
+		return;
+	}
+
+	if (App->CL_Model->Model_Type == Enums::LoadedFile_Actor)
+	{
+		App->Say("Not available for the Actor format just yet.");
+		return;
+	}
+
+	//App->Cl_Vm_Ogre3d->Export_AssimpToOgre();	
+
+	App->EBC_Export_Mesh->Export_AssimpToOgre();
+}

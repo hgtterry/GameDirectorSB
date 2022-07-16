@@ -30,6 +30,7 @@ public:
 
 	void Object_Model(void);
 	void Milkshape_Model(void);
+	void Ogre3D_Model(void);
 
 protected:
 

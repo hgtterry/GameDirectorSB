@@ -49,6 +49,7 @@ distribution.
 #include "ME_Equity_SB.h"
 #include "ME_Preferences.h"
 #include "ME_Ini.h"
+#include "ME_Export_Ogre3D.h"
 
 class ME_App
 {
@@ -82,6 +83,7 @@ public:
 	ME_Equity_SB*		CL_Equity_SB;		// Equity_SB World Editor
 	ME_Preferences*		CL_Prefs;
 	T_Ini*				CL_Ini;
+	ME_Export_Ogre3D*	CL_Export_Ogre3D;
 
 	bool InitApp(void);
 	bool SetMainWin_Centre(void);
