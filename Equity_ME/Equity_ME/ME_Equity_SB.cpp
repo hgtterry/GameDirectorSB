@@ -169,7 +169,7 @@ LRESULT CALLBACK ME_Equity_SB::WE_import_Proc(HWND hDlg, UINT message, WPARAM wP
 	{
 		if (LOWORD(wParam) == IDC_3DSBROWSE)
 		{
-			int Result = App->CL_FileIO->Open_File_Model("RF World   *.rfw\0*.rfw\0", "RF World rfw", NULL);
+			int Result = App->CL_FileIO->Open_File_Model("Equity Room   *.ebr\0*.ebr\0", "Equity Room ebr", NULL);
 			if (Result == 0)
 			{
 				return 1;
@@ -201,7 +201,7 @@ LRESULT CALLBACK ME_Equity_SB::WE_import_Proc(HWND hDlg, UINT message, WPARAM wP
 
 		if (LOWORD(wParam) == IDOK)
 		{
-			//App->Cl_Vm_Preferences->Write_Preferences();
+			App->CL_Prefs->Write_Preferences();
 
 			App->CL_Model->Clear_Model_And_Reset();
 

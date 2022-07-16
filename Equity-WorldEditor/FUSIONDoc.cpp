@@ -8771,7 +8771,7 @@ void CFusionDoc::OnFileExport()
 // changed QD 12/03
 	static const char FDTitle[] = "Export";
 	CFileDialog dlg(FALSE, "3dt", NULL, (OFN_OVERWRITEPROMPT | OFN_HIDEREADONLY | OFN_NOREADONLYRETURN | OFN_PATHMUSTEXIST | OFN_NOREADONLYRETURN),
-									"World Files (*.3dt)|*.3dt|Map Files (*.map)|*.map|World Files v1.32 (*.3dt)|*.3dt|Autodesk (*.3ds)|*.3ds|RF World (*.rfw)|*.rfw|All Files (*.*)|*.*||");
+									"World Files (*.3dt)|*.3dt|Map Files (*.map)|*.map|World Files v1.32 (*.3dt)|*.3dt|Autodesk (*.3ds)|*.3ds|Equity Room (*.ebr)|*.ebr|All Files (*.*)|*.*||");
 
 	dlg.m_ofn.lpstrTitle = FDTitle;	
 	if (dlg.DoModal () == IDOK)

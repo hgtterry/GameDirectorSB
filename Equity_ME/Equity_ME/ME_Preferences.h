@@ -6,6 +6,7 @@ public:
 	~ME_Preferences();
 
 	bool Read_Preferences();
+	bool Write_Preferences();
 
 	char Pref_Txl_FileName[MAX_PATH];
 	char Pref_Txl_Path_FileName[MAX_PATH];
@@ -18,6 +19,6 @@ public:
 
 protected:
 
-
+	FILE *WriteScene;
 };
 
