@@ -91,6 +91,7 @@ distribution.
 #include "SB_MeshViewer.h"
 
 #include "Com_Diaolgs.h"
+#include "SB_Import_Room.h"
 
 class GD19_App
 {
@@ -167,7 +168,8 @@ public:
 	SB_MeshViewer*			SBC_MeshViewer;
 
 	Com_Diaolgs*			Com_CDialogs;		// Common Dialogs for App [291221]
-
+	SB_Import_Room*			SBC_Import_Room;
+	// ----------------------------------- 
 	GD19_App(void);
 	~GD19_App(void);
 

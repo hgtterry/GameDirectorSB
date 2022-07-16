@@ -208,6 +208,7 @@
     <ClInclude Include="SB_Equity.h" />
     <ClInclude Include="SB_FileView.h" />
     <ClInclude Include="SB_Import.h" />
+    <ClInclude Include="SB_Import_Room.h" />
     <ClInclude Include="SB_MeshViewer.h" />
     <ClInclude Include="SB_Physics.h" />
     <ClInclude Include="SB_Player.h" />
@@ -291,6 +292,7 @@
     <ClCompile Include="SB_Equity.cpp" />
     <ClCompile Include="SB_FileView.cpp" />
     <ClCompile Include="SB_Import.cpp" />
+    <ClCompile Include="SB_Import_Room.cpp" />
     <ClCompile Include="SB_MeshViewer.cpp" />
     <ClCompile Include="SB_Physics.cpp" />
     <ClCompile Include="SB_Player.cpp" />
