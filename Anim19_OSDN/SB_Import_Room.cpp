@@ -20,6 +20,53 @@ SB_Import_Room::~SB_Import_Room()
 {
 }
 
+// *************************************************************************
+// *						Room_Loader Terry Bernie					   *
+// *************************************************************************
+bool SB_Import_Room::Room_Loader(char* Extension, char* Extension2)
+{
+	int Result = Open_Room_File(Extension, Extension2, NULL);
+	if (Result == 0)
+	{
+		return 1;
+	}
+
+	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(TempResourceGroup);
+	//App->EBC_Model->Clear_ModelData();
+
+	Set_Paths();
+
+	AddToScene();
+	
+	App->CL_Vm_Model->Model_Loaded = 1;
+	//App->CL_Vm_Model->Model_Type = LoadedFile_Assimp;
+
+	//App->SBC_Equity->Set_Equity();
+
+	App->Say("Model Loaded ff");
+	return 1;
+}
+
+// *************************************************************************
+// *						Set_Paths Terry Bernie						   *
+// *************************************************************************
+void SB_Import_Room::Set_Paths(void)
+{
+	char Model_FolderPath[255];
+	char Path_FileName[255];
+
+	strcpy(FileName, Room_FileName);
+	strcpy(Path_FileName, Room_Path_FileName);
+
+	// Get Texture path assumed at this point to be where model is
+	int len1 = strlen(FileName);
+	int len2 = strlen(Path_FileName);
+	strcpy(Model_FolderPath, Path_FileName);
+	Model_FolderPath[len2 - len1] = 0;
+
+	strcpy(Texture_FolderPath, Model_FolderPath);
+
+}
 
 // *************************************************************************
 // *					AddToScene Terry Bernie 						   *

@@ -5,13 +5,15 @@ public:
 	SB_Import_Room();
 	~SB_Import_Room();
 
-	void SB_Import_Room::AddToScene(void);
+	bool Room_Loader(char* Extension, char* Extension2);
 
 	Ogre::Entity*		OgreModel_Ent;
 
 protected:
 
+	void AddToScene(void);
 	bool Open_Room_File(char* Extension, char* Title, char* StartDirectory);
+	void Set_Paths(void);
 
 	Ogre::SceneNode* OgreModel_Node;
 

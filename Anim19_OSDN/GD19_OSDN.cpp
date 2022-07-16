@@ -251,6 +251,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return 1;
 		}
 
+		// ------------------------------------------------------------
 		case ID_OPEN_PROJECT:
 		{
 			App->Debug_Text();
@@ -262,7 +263,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			App->Debug_Text();
 			return 1;
 		}
+
+		case ID_IMPORT_ROOM:
+		{
+			App->SBC_Import_Room->Room_Loader("Ogre3D   *.mesh\0*.mesh\0", "Ogre3D");
+			return 1;
+		}
 		
+		// ------------------------------------------------------------
 		case ID_NEW_PROJECT:
 		{
 			App->SBC_Project->Start_Create_Project();
