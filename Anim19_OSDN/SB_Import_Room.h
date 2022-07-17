@@ -7,15 +7,12 @@ public:
 
 	bool Room_Loader(char* Extension, char* Extension2);
 
-	Ogre::Entity*		OgreModel_Ent;
-
 protected:
 
 	void AddToScene(void);
 	bool Open_Room_File(char* Extension, char* Title, char* StartDirectory);
 	void Set_Paths(void);
-
-	Ogre::SceneNode* OgreModel_Node;
+	btBvhTriangleMeshShape* create_Area_Trimesh(Base_Area* Object);
 
 	Ogre::String TempResourceGroup;   // Tempory Reosource Group
 

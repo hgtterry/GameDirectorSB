@@ -6,9 +6,6 @@
 
 SB_Import_Room::SB_Import_Room()
 {
-	OgreModel_Ent = nullptr;
-	OgreModel_Node = nullptr;
-
 	Room_FileName[0] = 0,
 	Room_Path_FileName[0] = 0,
 
@@ -73,15 +70,27 @@ void SB_Import_Room::Set_Paths(void)
 // *************************************************************************
 void SB_Import_Room::AddToScene(void)
 {
+	int Index = App->SBC_Scene->Area_Count;
 
-	if (OgreModel_Ent && OgreModel_Node)
+	if (App->SBC_Scene->SBC_Base_Area[Index])
 	{
-		OgreModel_Node->detachAllObjects();
-		App->Cl19_Ogre->mSceneMgr->destroySceneNode(OgreModel_Node);
-		App->Cl19_Ogre->mSceneMgr->destroyEntity(OgreModel_Ent);
-		OgreModel_Ent = nullptr;
-		OgreModel_Node = nullptr;
+		if (App->SBC_Scene->SBC_Base_Area[Index]->Area_Ent && App->SBC_Scene->SBC_Base_Area[Index]->Area_Node)
+		{
+			App->SBC_Scene->SBC_Base_Area[Index]->Area_Node->detachAllObjects();
+			App->Cl19_Ogre->mSceneMgr->destroySceneNode(App->SBC_Scene->SBC_Base_Area[Index]->Area_Node);
+			App->Cl19_Ogre->mSceneMgr->destroyEntity(App->SBC_Scene->SBC_Base_Area[Index]->Area_Ent);
+			App->SBC_Scene->SBC_Base_Area[Index]->Area_Ent = NULL;
+			App->SBC_Scene->SBC_Base_Area[Index]->Area_Node = NULL;
+
+			delete App->SBC_Scene->SBC_Base_Area[Index];
+			App->SBC_Scene->SBC_Base_Area[Index] = nullptr;
+		}
 	}
+
+	App->SBC_Scene->SBC_Base_Area[Index] = new Base_Area();
+	App->SBC_Scene->SBC_Base_Area[Index]->Object_ID = 0; //App->Cl_Scene_Data->Object_ID_Counter;
+
+	Base_Area* Object = App->SBC_Scene->SBC_Base_Area[Index];
 
 	Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(TempResourceGroup);
 	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(TempResourceGroup);
@@ -99,13 +108,185 @@ void SB_Import_Room::AddToScene(void)
 
 	}
 
-	OgreModel_Ent = App->Cl19_Ogre->mSceneMgr->createEntity("UserMesh", FileName, TempResourceGroup);
-	OgreModel_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	OgreModel_Node->attachObject(OgreModel_Ent);
+	Object->Area_Ent = App->Cl19_Ogre->mSceneMgr->createEntity("UserMesh", FileName, App->Cl19_Ogre->Level_Resource_Group);
+	Object->Area_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	Object->Area_Node->attachObject(Object->Area_Ent);
 
-	OgreModel_Node->setVisible(true);
-	OgreModel_Node->setPosition(0, 0, 0);
-	OgreModel_Node->setScale(1, 1, 1);
+	Object->Area_Node->setVisible(true);
+	Object->Area_Node->setPosition(0, 0, 0);
+	Object->Area_Node->setScale(1, 1, 1);
+
+	create_Area_Trimesh(Object);
+
+	Object->Usage = Enums::Usage_Room;
+
+	App->SBC_Scene->Area_Added = 1;
+
+	App->Cl_Grid->Grid_SetVisible(1);
+
+	App->SBC_Scene->Area_Count++;
+
+	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
+
+	App->SBC_Player->Create_Player_Object();
+	App->Cl_Bullet->Reset_Physics();
+	App->SBC_Physics->Enable_Physics(1);
+
+	App->SBC_Scene->Scene_Loaded = 1;
+}
+
+// *************************************************************************
+//						create_Aera_TrimeshTerry Bernie					   *
+// *************************************************************************
+btBvhTriangleMeshShape* SB_Import_Room::create_Area_Trimesh(Base_Area* Object)
+{
+	int Index = App->SBC_Scene->Area_Count;
+
+	// Get the mesh from the entity
+	Ogre::MeshPtr myMesh = Object->Area_Ent->getMesh();
+	Ogre::Mesh::SubMeshIterator SubMeshIter = myMesh->getSubMeshIterator();
+
+	// Create the triangle mesh
+	btTriangleMesh* triMesh = NULL;
+	btVector3 vert0, vert1, vert2;
+	int i = 0;
+
+	while (SubMeshIter.hasMoreElements())
+	{
+		i = 0;
+		Ogre::SubMesh* subMesh = SubMeshIter.getNext();
+		Ogre::IndexData* indexData = subMesh->indexData;
+		Ogre::VertexData* vertexData = subMesh->vertexData;
+
+		// -------------------------------------------------------
+		// Get the position element
+		const Ogre::VertexElement* posElem = vertexData->vertexDeclaration->findElementBySemantic(Ogre::VES_POSITION);
+		// Get a pointer to the vertex buffer
+		Ogre::HardwareVertexBufferSharedPtr vBuffer = vertexData->vertexBufferBinding->getBuffer(posElem->getSource());
+		// Get a pointer to the index buffer
+		Ogre::HardwareIndexBufferSharedPtr iBuffer = indexData->indexBuffer;
+
+		// -------------------------------------------------------
+		// The vertices and indices used to create the triangle mesh
+		std::vector<Ogre::Vector3> vertices;
+		vertices.reserve(vertexData->vertexCount);
+		std::vector<unsigned long> indices;
+		indices.reserve(indexData->indexCount);
+
+		// -------------------------------------------------------
+		// Lock the Vertex Buffer (READ ONLY)
+		unsigned char* vertex = static_cast<unsigned char*> (vBuffer->lock(Ogre::HardwareBuffer::HBL_READ_ONLY));
+		float* pReal = NULL;
+
+		for (size_t j = 0; j < vertexData->vertexCount; ++j, vertex += vBuffer->getVertexSize()) {
+			posElem->baseVertexPointerToElement(vertex, &pReal);
+			Ogre::Vector3 pt(pReal[0], pReal[1], pReal[2]);
+
+			vertices.push_back(pt);
+		}
+		vBuffer->unlock();
+		// -------------------------------------------------------
+		bool use32bitindexes = (iBuffer->getType() == Ogre::HardwareIndexBuffer::IT_32BIT);
+
+		// -------------------------------------------------------
+		// Lock the Index Buffer (READ ONLY)
+		unsigned long* pLong = static_cast<unsigned long*> (iBuffer->lock(Ogre::HardwareBuffer::HBL_READ_ONLY));
+		unsigned short* pShort = reinterpret_cast<unsigned short*> (pLong);
+
+		if (use32bitindexes) {
+			for (size_t k = 0; k < indexData->indexCount; ++k) {
+				//
+				indices.push_back(pLong[k]);
+			}
+		}
+		else {
+			for (size_t k = 0; k < indexData->indexCount; ++k) {
+				//
+				indices.push_back(static_cast<unsigned long> (pShort[k]));
+			}
+		}
+		iBuffer->unlock();
+
+		// -------------------------------------------------------
+		// We now have vertices and indices ready to go
+		// ----
+
+		if (triMesh == nullptr)
+		{
+			triMesh = new btTriangleMesh(use32bitindexes);
+		}
+
+		for (size_t y = 0; y < indexData->indexCount / 3; y++) {
+			// Set each vertex
+			vert0.setValue(vertices[indices[i]].x, vertices[indices[i]].y, vertices[indices[i]].z);
+			vert1.setValue(vertices[indices[i + 1]].x, vertices[indices[i + 1]].y, vertices[indices[i + 1]].z);
+			vert2.setValue(vertices[indices[i + 2]].x, vertices[indices[i + 2]].y, vertices[indices[i + 2]].z);
+
+			// Add the triangle into the triangle mesh
+			triMesh->addTriangle(vert0, vert1, vert2);
+
+			// Increase index count
+			i += 3;
+		}
+
+	}
+
+	const bool useQuantizedAABB = true;
+	btBvhTriangleMeshShape* mShape = new btBvhTriangleMeshShape(triMesh, false, true);
+	//mShape->buildOptimizedBvh();
+
+	float x = Object->Area_Node->getPosition().x;
+	float y = Object->Area_Node->getPosition().y;
+	float z = Object->Area_Node->getPosition().z;
+
+	Object->Physics_Pos = Ogre::Vector3(x, y, z);
+	Object->Physics_Rot = Ogre::Vector3(0, 0, 0);
+	Object->Physics_Quat = Ogre::Quaternion(1, 0, 0, 0);
+
+	btVector3 inertia(0, 0, 0);
+	mShape->calculateLocalInertia(0.0, inertia);
+
+	btTransform startTransform;
+	startTransform.setIdentity();
+	startTransform.setRotation(btQuaternion(0.0f, 0.0f, 0.0f, 1));
+	btVector3 initialPosition(x, y, z);
+	startTransform.setOrigin(initialPosition);
+
+	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
+
+	//myMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 0, 0)));
+
+	btRigidBody::btRigidBodyConstructionInfo rigidBodyCI
+	(
+		0,				// mass
+		myMotionState,	// initial position
+		mShape,			// collision shape of body
+		inertia			// local inertia
+	);
+
+	Object->Phys_Body = new btRigidBody(rigidBodyCI);
+	Object->Phys_Body->clearForces();
+	Object->Phys_Body->setLinearVelocity(btVector3(0, 0, 0));
+	Object->Phys_Body->setAngularVelocity(btVector3(0, 0, 0));
+	Object->Phys_Body->setWorldTransform(startTransform);
+
+	Object->Phys_Body->setCustomDebugColor(btVector3(0, 1, 1));
+	int f = Object->Phys_Body->getCollisionFlags();
+	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+
+	Object->Type = Enums::Bullet_Type_Static;
+	Object->Shape = Enums::Shape_TriMesh;
+
+
+	Object->Phys_Body->setUserIndex(123);
+	Object->Phys_Body->setUserIndex2(Index);
+
+	Object->Collect_Object_Data();
+
+	App->Cl_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
+
+	Object->Physics_Valid = 1;
+	return mShape;
 }
 
 // *************************************************************************
