@@ -132,6 +132,9 @@ void SB_Import_Room::AddToScene(void)
 	App->Cl_Bullet->Reset_Physics();
 	App->SBC_Physics->Enable_Physics(1);
 
+	App->SBC_Player->FileViewItem = App->SBC_FileView->Add_PlayerFile("Player", 0);
+	App->SBC_FileView->Redraw_FileView();
+
 	App->SBC_Scene->Scene_Loaded = 1;
 }
 
