@@ -88,9 +88,14 @@ void SB_Import_Room::AddToScene(void)
 	}
 
 	App->SBC_Scene->SBC_Base_Area[Index] = new Base_Area();
-	App->SBC_Scene->SBC_Base_Area[Index]->Object_ID = 0; //App->Cl_Scene_Data->Object_ID_Counter;
+	Base_Area* Area = App->SBC_Scene->SBC_Base_Area[Index];
 
-	Base_Area* Object = App->SBC_Scene->SBC_Base_Area[Index];
+	Area->Object_ID = 0; //App->Cl_Scene_Data->Object_ID_Counter;
+	strcpy(Area->Area_FileName, FileName);
+	strcpy(Area->Area_Resource_Path, Texture_FolderPath); // with back slash
+
+	App->Say(Area->Area_FileName);
+	App->Say(Area->Area_Resource_Path);
 
 	Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(TempResourceGroup);
 	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(TempResourceGroup);
@@ -108,17 +113,17 @@ void SB_Import_Room::AddToScene(void)
 
 	}
 
-	Object->Area_Ent = App->Cl19_Ogre->mSceneMgr->createEntity("UserMesh", FileName, App->Cl19_Ogre->Level_Resource_Group);
-	Object->Area_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	Object->Area_Node->attachObject(Object->Area_Ent);
+	Area->Area_Ent = App->Cl19_Ogre->mSceneMgr->createEntity("UserMesh", Area->Area_FileName, App->Cl19_Ogre->Level_Resource_Group);
+	Area->Area_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	Area->Area_Node->attachObject(Area->Area_Ent);
 
-	Object->Area_Node->setVisible(true);
-	Object->Area_Node->setPosition(0, 0, 0);
-	Object->Area_Node->setScale(1, 1, 1);
+	Area->Area_Node->setVisible(true);
+	Area->Area_Node->setPosition(0, 0, 0);
+	Area->Area_Node->setScale(1, 1, 1);
 
-	create_Area_Trimesh(Object);
+	create_Area_Trimesh(Area);
 
-	Object->Usage = Enums::Usage_Room;
+	Area->Usage = Enums::Usage_Room;
 
 	App->SBC_Scene->Area_Added = 1;
 

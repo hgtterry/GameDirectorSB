@@ -11,30 +11,7 @@ Base_Area::Base_Area()
 	Phys_Body =		nullptr;
 	Phys_Shape =	nullptr;
 
-	/*strcpy(Name, "None");
-	strcpy(MeshName, "None");
-	strcpy(MeshName_FullPath, "None");*/
-
-	// Actor Scale ------------------------------------------------------
-	//Mesh_Scale.x = 1;
-	//Mesh_Scale.y = 1;
-	//Mesh_Scale.z = 1;
-
-	//// Actor Pos
-	//Mesh_Pos.x = 0;
-	//Mesh_Pos.y = 0;
-	//Mesh_Pos.z = 0;
-
-	//// Actor Rotation
-	//Mesh_Rot.x = 0;
-	//Mesh_Rot.y = 0;
-	//Mesh_Rot.z = 0;
-
-	//// Actor Quat
-	//Mesh_Quat.w = 1;
-	//Mesh_Quat.x = 0;
-	//Mesh_Quat.y = 0;
-	//Mesh_Quat.z = 0;
+	
 
 	// Physics Scale ------------------------------------------------------
 	Physics_Scale.x = 1;
@@ -50,11 +27,6 @@ Base_Area::Base_Area()
 	Physics_Rot.x = 0;
 	Physics_Rot.y = 0;
 	Physics_Rot.z = 0;
-
-	// Physics Size
-	/*Physics_Size.x = 0;
-	Physics_Size.y = 0;
-	Physics_Size.z = 0;*/
 
 	// Physics Quat
 	Physics_Quat.w = 1;
@@ -72,34 +44,11 @@ Base_Area::Base_Area()
 	// Object Shape
 	Shape = -1;
 
-	// Flag it is valid
-	/*Deleted = 0;
-
-	Show_Debug = 0;
-	bt_body = NULL;
-	IsInCollision = 0;
-
-	Triggered = 0;
-
-	HasSound = 0;*/
-
-	/*strcpy(Entity[0].mTextItem, "Welcome");
-	strcpy(Entity[0].Stock_mName, "None");
-	Entity[0].Stock_mIndex = 0;
-
-	Re_Trigger = 1;
-
-	ListViewItem = NULL;*/
-
 	Object_ID = 0; // THis Needs Checking
 
-	/*Sound_ID_v2 = 0;
-	Play_v2 = 1;
-
-	Ogre_Particle = nullptr;
-
-	OgreNode = nullptr;
-	OgreEntity = nullptr;*/
+	Area_FileName[0] = 0;
+	Area_Path_And_FileName[0] = 0;
+	Area_Resource_Path[0] = 0;
 }
 
 

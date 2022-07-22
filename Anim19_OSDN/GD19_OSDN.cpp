@@ -294,6 +294,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			App->SBC_Scene->Clear_Level();
 			return 1;
 		}
+
+		case ID_FILE_SAVEPROJECT:
+		{
+			App->SBC_Project->Start_Create_Project();
+			return 1;
+		}
 		
 		// Exporters
 	
