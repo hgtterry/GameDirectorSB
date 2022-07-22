@@ -36,11 +36,26 @@ bool SB_Import_Room::Room_Loader(char* Extension, char* Extension2)
 	AddToScene();
 	
 	App->CL_Vm_Model->Model_Loaded = 1;
-	//App->CL_Vm_Model->Model_Type = LoadedFile_Assimp;
 
-	//App->SBC_Equity->Set_Equity();
+	App->SBC_Scene->Area_Added = 1;
 
-	App->Say("Model Loaded ff");
+	App->Cl_Grid->Grid_SetVisible(1);
+
+	App->SBC_Scene->Area_Count++;
+
+	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
+
+	App->SBC_Player->Create_Player_Object();
+
+	App->Cl_Bullet->Reset_Physics();
+	App->SBC_Physics->Enable_Physics(1);
+
+	App->SBC_Player->FileViewItem = App->SBC_FileView->Add_PlayerFile("Player", 0);
+	App->SBC_FileView->Redraw_FileView();
+
+	App->SBC_Scene->Scene_Loaded = 1;
+
+	App->Say("Model Loaded");
 	return 1;
 }
 
@@ -94,9 +109,6 @@ void SB_Import_Room::AddToScene(void)
 	strcpy(Area->Area_FileName, FileName);
 	strcpy(Area->Area_Resource_Path, Texture_FolderPath); // with back slash
 
-	App->Say(Area->Area_FileName);
-	App->Say(Area->Area_Resource_Path);
-
 	Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(TempResourceGroup);
 	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(TempResourceGroup);
 
@@ -125,22 +137,6 @@ void SB_Import_Room::AddToScene(void)
 
 	Area->Usage = Enums::Usage_Room;
 
-	App->SBC_Scene->Area_Added = 1;
-
-	App->Cl_Grid->Grid_SetVisible(1);
-
-	App->SBC_Scene->Area_Count++;
-
-	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
-
-	App->SBC_Player->Create_Player_Object();
-	App->Cl_Bullet->Reset_Physics();
-	App->SBC_Physics->Enable_Physics(1);
-
-	App->SBC_Player->FileViewItem = App->SBC_FileView->Add_PlayerFile("Player", 0);
-	App->SBC_FileView->Redraw_FileView();
-
-	App->SBC_Scene->Scene_Loaded = 1;
 }
 
 // *************************************************************************

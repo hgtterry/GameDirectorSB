@@ -207,7 +207,10 @@ LRESULT CALLBACK SB_Project::Create_Project_Proc(HWND hDlg, UINT message, WPARAM
 
 		if (LOWORD(wParam) == IDOK)
 		{
-			App->SBC_Project->Create_Project();
+			//App->SBC_Project->Create_Project();
+
+			App->SBC_Project->Save_Project();
+
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -834,5 +837,68 @@ bool SB_Project::Read_Camera()
 
 	App->SBC_Camera->FileViewItem = App->SBC_FileView->Add_Camera(App->SBC_Camera->Camera_Name, 0);
 	App->SBC_FileView->Redraw_FileView();
+	return 1;
+}
+
+// *************************************************************************
+// *	  				Save_Project Terry Flanigan						   *
+// *************************************************************************
+bool SB_Project::Save_Project()
+{
+
+
+	if (_mkdir(App->SBC_Project->Project_FullPath) == 0)
+	{
+		_chdir(App->SBC_Project->Project_FullPath);
+	}
+	else
+	{
+
+	}
+
+	Set_Paths();
+
+	Write_Project_Ini();
+
+	Create_Level_Folder();
+
+	Write_Level_File();
+
+	//// Player
+	//App->SBC_Player->Create_Player_Object();
+	//strcpy(App->SBC_Scene->SBC_Base_Player[0]->Player_Name, "Player_1");
+	//Write_Player();
+
+	//// Camera
+	//Write_Camera();
+
+	//// Objects
+	//Write_Objects();
+
+	//Add_World(); // Create First room Not Loaded
+
+	//strcpy(App->CL_Vm_Model->Model_FolderPath, Level_Folder_Path_World);
+	//strcpy(App->CL_Vm_Model->FileName, "World.mesh");
+
+	//App->SBC_Aera->Add_Area();
+
+	//App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
+
+
+	////          File View Stuff
+	//App->SBC_FileView->Change_Level_Name();
+
+	//App->SBC_Camera->FileViewItem = App->SBC_FileView->Add_Camera(App->SBC_Camera->Camera_Name, 0);
+	//App->SBC_Player->FileViewItem = App->SBC_FileView->Add_PlayerFile(App->SBC_Scene->SBC_Base_Player[0]->Player_Name, 0);
+	//HTREEITEM Temp = App->SBC_FileView->Add_Area("Area_1", 0);
+	//App->SBC_FileView->Redraw_FileView();
+
+	////  Start Level
+	//App->SBC_Physics->Enable_Physics(1);
+	//App->SBC_Camera->Set_Camera();
+
+	//App->SBC_Scene->Scene_Loaded = 1;
+
+	App->Say("Scene Created");
 	return 1;
 }

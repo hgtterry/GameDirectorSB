@@ -172,8 +172,6 @@ void SB_Player::Initialize()
 
 	App->SBC_Scene->Player_Added = 1;
 
-	//btCollisionWorld* Poo = NULL;
-	//PostStep(Poo);
 }
 
 // *************************************************************************
