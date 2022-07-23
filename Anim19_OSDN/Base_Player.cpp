@@ -56,7 +56,7 @@ Base_Player::Base_Player()
 	IsMOving_Right = 0;
 	IsMOving_Left = 0;
 
-	strcpy(Player_Name, "No_Set");
+	strcpy(Player_Name, "Player_1");
 }
 
 

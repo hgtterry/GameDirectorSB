@@ -42,6 +42,7 @@ SB_Project::SB_Project()
 
 	strcpy(m_Level_Name,"Level_1");
 	m_Level_Folder_Path[0] = 0;
+	m_Players_Folder_Path[0] = 0;
 
 	Project_Ini_FilePath[0] = 0;
 	Level_Folder_Path[0] = 0;
@@ -865,10 +866,17 @@ bool SB_Project::Save_Project()
 
 	_chdir(m_Level_Folder_Path);
 
-	//if (App->Cl_Scene_Data->Scene_Has_Area == 1)
+	if (App->SBC_Scene->Area_Added == 1)
 	{
 		Save_Aera_Folder();
 	}
+
+	if (App->SBC_Scene->Player_Added == 1)
+	{
+		Save_Players_Folder();
+	}
+
+
 	//Write_Level_File();
 
 	//// Player
@@ -935,14 +943,20 @@ bool SB_Project::Save_Project_Ini()
 	fprintf(Write_Ini, "%s%s\n", "Project_Name=", App->SBC_Project->Project_Name);
 	fprintf(Write_Ini, "%s%s\n", "Folder_Path=", App->SBC_Project->Project_FullPath);
 
-	fprintf(Write_Ini, "%s\n", "[Player]");
+	fprintf(Write_Ini, "%s\n", "[Players]");
+	fprintf(Write_Ini, "%s%i\n", "Players_Count=", App->SBC_Scene->Player_Count);
 	fprintf(Write_Ini, "%s%s\n", "Player_File=", "Player1.ply");
+
+	fprintf(Write_Ini, "%s\n", "[Aeras]");
+	fprintf(Write_Ini, "%s%i\n", "Aeras_Count=", App->SBC_Scene->Area_Count);
+	fprintf(Write_Ini, "%s%s\n", "Aeras_File=", "Aeras.aer");
 
 	fprintf(Write_Ini, "%s\n", "[Camera]");
 	fprintf(Write_Ini, "%s%s\n", "Camera_File=", "Cam1.cam");
 
 	fprintf(Write_Ini, "%s\n", "[Objects]");
-	fprintf(Write_Ini, "%s%s\n", "Camera_File=", "Objects.obf");
+	fprintf(Write_Ini, "%s%i\n", "Objects_Count=", App->SBC_Scene->Object_Count);
+	fprintf(Write_Ini, "%s%s\n", "Objects_File=", "Objects.obf");
 
 	fclose(Write_Ini);
 
@@ -962,7 +976,6 @@ bool SB_Project::Save_Level_Folder()
 	if (_mkdir(m_Level_Folder_Path) == 0)
 	{
 		_chdir(m_Level_Folder_Path);
-
 	}
 	else
 	{
@@ -983,17 +996,172 @@ bool SB_Project::Save_Aera_Folder()
 	strcat(m_Aera_Folder_Path, "\\");
 	strcat(m_Aera_Folder_Path,"Aeras");
 
-	// First Level Folder
+	
 	if (_mkdir(m_Aera_Folder_Path) == 0)
 	{
-		_chdir(m_Level_Folder_Path);
+		_chdir(m_Aera_Folder_Path);
+	}
+	else
+	{
+		_chdir(m_Aera_Folder_Path);
+	}
+
+	Save_Aeras_Data();
+
+	_chdir(m_Level_Folder_Path); // Return to Level Folder
+	return 1;
+}
+
+// *************************************************************************
+// *	  				Save_Aeras_Data Terry Flanigan					   *
+// *************************************************************************
+bool SB_Project::Save_Aeras_Data()
+{
+	Ogre::Vector3 Pos;
+	char File[1024];
+
+	strcpy(File, m_Aera_Folder_Path);
+	strcat(File, "\\");
+	strcat(File, "Aeras.aer");
+
+	Write_Player_Ini = nullptr;
+
+	Write_Player_Ini = fopen(File, "wt");
+
+	if (!Write_Player_Ini)
+	{
+		App->Say("Cant Create File");
+		App->Say(File);
+		return 0;
+	}
+
+	fprintf(Write_Player_Ini, "%s\n", "[Version_Data]");
+	fprintf(Write_Player_Ini, "%s%s\n", "Version=", "V1.2");
+
+	fprintf(Write_Player_Ini, "%s\n", " ");
+
+	fprintf(Write_Player_Ini, "%s\n", "[Counters]");
+	fprintf(Write_Player_Ini, "%s%i\n", "Aeras_Count=", App->SBC_Scene->Area_Count);
+
+	fprintf(Write_Player_Ini, "%s\n", " ");
+
+	char Cbuff[255];
+	char buff[255];
+	int Count = 0;
+	while (Count < App->SBC_Scene->Area_Count)
+	{
+		strcpy(buff, "[Aera_");
+		_itoa(Count, Cbuff, 10);
+		strcat(buff, Cbuff);
+		strcat(buff, "]");
+
+		fprintf(Write_Player_Ini, "%s\n", buff); // Header also Player name until changed by user
+
+		fprintf(Write_Player_Ini, "%s%s\n", "Aera_Name=", App->SBC_Scene->SBC_Base_Area[Count]->Area_FileName); // Change
+
+		fprintf(Write_Player_Ini, "%s%s\n", "Aera_File=", App->SBC_Scene->SBC_Base_Area[Count]->Area_FileName);
+		fprintf(Write_Player_Ini, "%s%s\n", "Aera_Path_File=", App->SBC_Scene->SBC_Base_Area[Count]->Area_Path_And_FileName);
+		fprintf(Write_Player_Ini, "%s%s\n", "Aera_Resource_Path=", App->SBC_Scene->SBC_Base_Area[Count]->Area_Resource_Path);
+
+		Count++;
+	}
+
+	fclose(Write_Player_Ini);
+
+	return 1;
+}
+
+// *************************************************************************
+// *	  				Save_Players_Folder Terry Flanigan				   *
+// *************************************************************************
+bool SB_Project::Save_Players_Folder()
+{
+	m_Players_Folder_Path[0] = 0;
+
+	strcpy(m_Players_Folder_Path, m_Level_Folder_Path);
+	strcat(m_Players_Folder_Path, "\\");
+	strcat(m_Players_Folder_Path, "Players");
+
+
+	if (_mkdir(m_Players_Folder_Path) == 0)
+	{
+		_chdir(m_Players_Folder_Path);
 
 	}
 	else
 	{
-		
-		_chdir(m_Level_Folder_Path);
+		_chdir(m_Players_Folder_Path);
 	}
+
+	Save_Player_Data();
+
+	_chdir(m_Level_Folder_Path); // Return to Level Folder
+	return 1;
+}
+
+// *************************************************************************
+// *	  				Save_Player_Data Terry Flanigan					   *
+// *************************************************************************
+bool SB_Project::Save_Player_Data()
+{
+	Ogre::Vector3 Pos;
+	char File[1024];
+
+	strcpy(File, m_Players_Folder_Path);
+	strcat(File, "\\");
+	strcat(File, "Players.ply");
+
+	Write_Player_Ini = nullptr;
+
+	Write_Player_Ini = fopen(File, "wt");
+
+	if (!Write_Player_Ini)
+	{
+		App->Say("Cant Create File");
+		App->Say(File);
+		return 0;
+	}
+
+	fprintf(Write_Player_Ini, "%s\n", "[Version_Data]");
+	fprintf(Write_Player_Ini, "%s%s\n", "Version=", "V1.2");
+
+	fprintf(Write_Player_Ini, "%s\n", " ");
+
+	fprintf(Write_Player_Ini, "%s\n", "[Counters]");
+	fprintf(Write_Player_Ini, "%s%i\n", "Player_Count=", App->SBC_Scene->Player_Count);
+
+	fprintf(Write_Player_Ini, "%s\n", " ");
+
+	char Cbuff[255];
+	char buff[255];
+	int Count = 0;
+	while (Count < App->SBC_Scene->Player_Count)
+	{
+		strcpy(buff, "[Player_");
+		_itoa(Count, Cbuff, 10);
+		strcat(buff, Cbuff);
+		strcat(buff, "]");
+
+		fprintf(Write_Player_Ini, "%s\n", buff); // Header also Player name until changed by user
+
+		fprintf(Write_Player_Ini, "%s%s\n", "Player_Name=", App->SBC_Scene->SBC_Base_Player[Count]->Player_Name);
+
+		Pos.x = App->SBC_Scene->SBC_Base_Player[Count]->StartPos.x;
+		Pos.y = App->SBC_Scene->SBC_Base_Player[Count]->StartPos.y;
+		Pos.z = App->SBC_Scene->SBC_Base_Player[Count]->StartPos.z;
+
+		fprintf(Write_Player_Ini, "%s%f,%f,%f\n", "Start_Position=", Pos.x, Pos.y, Pos.z);
+		fprintf(Write_Player_Ini, "%s%s\n", "Shape=", "Capsule");
+		fprintf(Write_Player_Ini, "%s%f\n", "Mass=", App->SBC_Scene->SBC_Base_Player[Count]->Capsule_Mass);
+		fprintf(Write_Player_Ini, "%s%f\n", "Radius=", App->SBC_Scene->SBC_Base_Player[Count]->Capsule_Radius);
+		fprintf(Write_Player_Ini, "%s%f\n", "Height=", App->SBC_Scene->SBC_Base_Player[Count]->Capsule_Height);
+		fprintf(Write_Player_Ini, "%s%f\n", "Ground_Speed=", App->SBC_Scene->SBC_Base_Player[Count]->Ground_speed);
+		fprintf(Write_Player_Ini, "%s%f\n", "Cam_Height=", App->SBC_Scene->SBC_Base_Player[Count]->PlayerHeight);
+
+		Count++;
+	}
+
+	fclose(Write_Player_Ini);
 
 	return 1;
 }

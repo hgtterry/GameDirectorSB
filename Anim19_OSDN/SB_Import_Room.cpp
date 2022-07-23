@@ -46,16 +46,18 @@ bool SB_Import_Room::Room_Loader(char* Extension, char* Extension2)
 	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
 
 	App->SBC_Player->Create_Player_Object();
+	strcpy(App->SBC_Scene->SBC_Base_Player[0]->Player_Name, "Player_1");
 
 	App->Cl_Bullet->Reset_Physics();
 	App->SBC_Physics->Enable_Physics(1);
 
-	App->SBC_Player->FileViewItem = App->SBC_FileView->Add_PlayerFile("Player", 0);
+	App->SBC_Player->FileViewItem = App->SBC_FileView->Add_PlayerFile("Player_1", 0);
+	App->SBC_FileView->Add_Area("Area_1", 0);
 	App->SBC_FileView->Redraw_FileView();
 
 	App->SBC_Scene->Scene_Loaded = 1;
 
-	App->Cl_Scene_Data->Scene_Has_Area = 1;
+	App->SBC_Scene->Area_Added = 1;
 
 	App->Say("Model Loaded");
 	return 1;
