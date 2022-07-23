@@ -31,6 +31,9 @@ public:
 	bool Start_Create_Project();
 
 	bool Save_Project();
+	bool Save_Project_Ini();
+	bool Save_Level_Folder();
+	bool Save_Aera_Folder();
 
 	bool Load_Scene_Auto();
 	bool Load_Scene();
@@ -48,10 +51,18 @@ public:
 
 	char Level_Folder_Path_World[1024];
 
+
+
+	char m_Level_Name[MAX_PATH];
+	char m_Aera_Folder_Path[MAX_PATH];
+	char m_Level_Folder_Path[MAX_PATH];		// Level Just Path
+
+
+
 	// --------------------------------------------------------------------------- 
-	char Level_File_Name[255];			// Level File Name ( 211121 )
-	char Level_Path_File_Name[1024];	// Level Path and File Name  ( 211121 )
-	char Level_Folder_Path[1024];		// Level Just Path and BackSlash  ( 211121 )
+	char Level_File_Name[MAX_PATH];			// Level File Name ( 211121 )
+	char Level_Path_File_Name[MAX_PATH];	// Level Path and File Name  ( 211121 )
+	char Level_Folder_Path[MAX_PATH];		// Level Just Path
 
 
 	char Scene_Path_FileName[1024]; 

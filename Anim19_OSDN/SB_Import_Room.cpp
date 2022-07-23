@@ -55,6 +55,8 @@ bool SB_Import_Room::Room_Loader(char* Extension, char* Extension2)
 
 	App->SBC_Scene->Scene_Loaded = 1;
 
+	App->Cl_Scene_Data->Scene_Has_Area = 1;
+
 	App->Say("Model Loaded");
 	return 1;
 }

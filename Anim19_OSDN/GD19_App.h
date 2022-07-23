@@ -199,6 +199,7 @@ public:
 	void Debug_Text();
 	void Say(const char* Message);
 	void Say_Int(int Value);
+	void Say_Win(const char* Message);
 
 	bool Start_Scene_Loaded;
 	bool FullScreen;

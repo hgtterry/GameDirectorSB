@@ -40,6 +40,9 @@ SB_Project::SB_Project()
 	strcat(Project_FullPath, Project_Name);
 	strcat(Project_FullPath, "_Prj");
 
+	strcpy(m_Level_Name,"Level_1");
+	m_Level_Folder_Path[0] = 0;
+
 	Project_Ini_FilePath[0] = 0;
 	Level_Folder_Path[0] = 0;
 	Level_Folder_Path_World[0] = 0;
@@ -853,16 +856,20 @@ bool SB_Project::Save_Project()
 	}
 	else
 	{
-
+		_chdir(App->SBC_Project->Project_FullPath);
 	}
 
-	Set_Paths();
+	Save_Project_Ini();
 
-	Write_Project_Ini();
+	Save_Level_Folder();
 
-	Create_Level_Folder();
+	_chdir(m_Level_Folder_Path);
 
-	Write_Level_File();
+	//if (App->Cl_Scene_Data->Scene_Has_Area == 1)
+	{
+		Save_Aera_Folder();
+	}
+	//Write_Level_File();
 
 	//// Player
 	//App->SBC_Player->Create_Player_Object();
@@ -900,5 +907,93 @@ bool SB_Project::Save_Project()
 	//App->SBC_Scene->Scene_Loaded = 1;
 
 	App->Say("Scene Created");
+	return 1;
+}
+
+// *************************************************************************
+// *	  					Save_Project_Ini Terry Flanigan				   *
+// *************************************************************************
+bool SB_Project::Save_Project_Ini()
+{
+	Project_Ini_FilePath[0] = 0;
+
+	strcpy(Project_Ini_FilePath, App->SBC_Project->Project_FullPath);
+	strcat(Project_Ini_FilePath, "\\");
+	strcat(Project_Ini_FilePath, "Project.SBProj");
+
+	Write_Ini = nullptr;
+
+	Write_Ini = fopen(Project_Ini_FilePath, "wt");
+
+	if (!Write_Ini)
+	{
+		App->Say("Cant Create File");
+		return 0;
+	}
+
+	fprintf(Write_Ini, "%s\n", "[Files]");
+	fprintf(Write_Ini, "%s%s\n", "Project_Name=", App->SBC_Project->Project_Name);
+	fprintf(Write_Ini, "%s%s\n", "Folder_Path=", App->SBC_Project->Project_FullPath);
+
+	fprintf(Write_Ini, "%s\n", "[Player]");
+	fprintf(Write_Ini, "%s%s\n", "Player_File=", "Player1.ply");
+
+	fprintf(Write_Ini, "%s\n", "[Camera]");
+	fprintf(Write_Ini, "%s%s\n", "Camera_File=", "Cam1.cam");
+
+	fprintf(Write_Ini, "%s\n", "[Objects]");
+	fprintf(Write_Ini, "%s%s\n", "Camera_File=", "Objects.obf");
+
+	fclose(Write_Ini);
+
+	return 1;
+}
+
+// *************************************************************************
+// *	  				Save_Level_Folder Terry Flanigan				   *
+// *************************************************************************
+bool SB_Project::Save_Level_Folder()
+{
+	strcpy(m_Level_Folder_Path, App->SBC_Project->Project_FullPath);
+	strcat(m_Level_Folder_Path, "\\");
+	strcat(m_Level_Folder_Path, m_Level_Name);
+
+	// First Level Folder
+	if (_mkdir(m_Level_Folder_Path) == 0)
+	{
+		_chdir(m_Level_Folder_Path);
+
+	}
+	else
+	{
+		_chdir(m_Level_Folder_Path);
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *	  				Save_Aera_Folder Terry Flanigan				   *
+// *************************************************************************
+bool SB_Project::Save_Aera_Folder()
+{
+	m_Aera_Folder_Path[0] = 0;
+
+	strcpy(m_Aera_Folder_Path, m_Level_Folder_Path);
+	strcat(m_Aera_Folder_Path, "\\");
+	strcat(m_Aera_Folder_Path,"Aeras");
+
+	// First Level Folder
+	if (_mkdir(m_Aera_Folder_Path) == 0)
+	{
+		_chdir(m_Level_Folder_Path);
+
+	}
+	else
+	{
+		
+		_chdir(m_Level_Folder_Path);
+	}
+
 	return 1;
 }
