@@ -19,6 +19,7 @@
 
 #pragma comment(lib, "legacy_stdio_definitions.lib")
 
+#define _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING  1
 //typedef unsigned long  uint32;
 
 #include "targetver.h"

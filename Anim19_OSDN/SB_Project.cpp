@@ -1249,8 +1249,27 @@ bool SB_Project::Load_Project()
 // *************************************************************************
 bool SB_Project::Load_Project_Aera()
 {
-	
+	char chr_Tag1[MAX_PATH];
 
-	App->Say(Level_Folder_Path);
+	char Area_Ini_Path[MAX_PATH];
+	char Area_Path[MAX_PATH];
+
+	char Mesh_FileName[MAX_PATH];
+	char Resource_Location[MAX_PATH];
+
+	strcpy(Area_Ini_Path, Level_Folder_Path);
+	strcat(Area_Ini_Path, "Level_1");
+	strcat(Area_Ini_Path, "\\");
+	strcat(Area_Ini_Path, "Aeras");
+	strcat(Area_Ini_Path, "\\");
+	strcat(Area_Ini_Path, "Aeras.aer");
+
+	App->Cl_Ini->SetPathName(Area_Ini_Path);
+
+	App->Cl_Ini->GetString("Aera_0", "Aera_File", Mesh_FileName, MAX_PATH);
+	App->Cl_Ini->GetString("Aera_0", "Aera_Resource_Path", Resource_Location, MAX_PATH);
+
+	App->SBC_Aera->Add_Aera_To_Project(0, Mesh_FileName, Resource_Location);
+
 	return 1;
 }
