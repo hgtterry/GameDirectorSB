@@ -1208,6 +1208,9 @@ bool SB_Project::Load_Project()
 		Load_Project_Aera();
 	}
 
+	App->Cl_Ini->SetPathName(m_Ini_Path_File_Name);
+
+
 	/*App->Cl_Ini->GetString("Levels", "Folder", chr_Tag1, 1024);
 	strcpy(Scene_JustPath, Level_Folder_Path);
 	strcat(Scene_JustPath, chr_Tag1);
@@ -1249,15 +1252,13 @@ bool SB_Project::Load_Project()
 // *************************************************************************
 bool SB_Project::Load_Project_Aera()
 {
-	char chr_Tag1[MAX_PATH];
-
 	char Area_Ini_Path[MAX_PATH];
-	char Area_Path[MAX_PATH];
-
+	
 	char Mesh_FileName[MAX_PATH];
 	char Resource_Location[MAX_PATH];
 
 	strcpy(Area_Ini_Path, Level_Folder_Path);
+
 	strcat(Area_Ini_Path, "Level_1");
 	strcat(Area_Ini_Path, "\\");
 	strcat(Area_Ini_Path, "Aeras");
@@ -1271,5 +1272,6 @@ bool SB_Project::Load_Project_Aera()
 
 	App->SBC_Aera->Add_Aera_To_Project(0, Mesh_FileName, Resource_Location);
 
+	HTREEITEM Temp = App->SBC_FileView->Add_Area("Area_1", 0);
 	return 1;
 }
