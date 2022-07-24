@@ -254,7 +254,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		// ------------------------------------------------------------
 		case ID_OPEN_PROJECT:
 		{
-			App->Debug_Text();
+			App->SBC_Import->Load_Scene("Project   *.SBProj\0*.SBProj\0", "Project");
 			return 1;
 		}
 

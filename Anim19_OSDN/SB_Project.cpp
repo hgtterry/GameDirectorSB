@@ -654,6 +654,9 @@ bool SB_Project::Load_Scene_Auto()
 // *************************************************************************
 bool SB_Project::Load_Scene()
 {
+	Debug1
+		return 1;
+
 	App->SBC_Scene->Clear_Level();
 
 	strcpy(Level_File_Name, App->CL_Vm_FileIO->Model_FileName);
