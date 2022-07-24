@@ -28,8 +28,7 @@ bool SB_Import_Room::Room_Loader(char* Extension, char* Extension2)
 		return 1;
 	}
 
-	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(TempResourceGroup);
-	//App->EBC_Model->Clear_ModelData();
+	App->SBC_Scene->Clear_Level();
 
 	Set_Paths();
 
@@ -113,7 +112,12 @@ void SB_Import_Room::AddToScene(void)
 	strcpy(Area->Area_FileName, FileName);
 	strcpy(Area->Area_Resource_Path, Texture_FolderPath); // with back slash
 
-	Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(TempResourceGroup);
+	bool Test = Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(TempResourceGroup);
+	if (Test == 1)
+	{
+		Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(TempResourceGroup);
+	}
+
 	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(TempResourceGroup);
 
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(Texture_FolderPath,

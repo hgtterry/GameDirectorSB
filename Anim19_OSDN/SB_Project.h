@@ -40,6 +40,9 @@ public:
 	bool Save_Players_Folder();
 	bool Save_Player_Data();
 
+	bool Load_Project();
+	bool Load_Project_Aera();
+
 	bool Load_Scene_Auto();
 	bool Load_Scene();
 
@@ -62,6 +65,8 @@ public:
 	char m_Aera_Folder_Path[MAX_PATH];
 	char m_Level_Folder_Path[MAX_PATH];		// Level Just Path
 	char m_Players_Folder_Path[MAX_PATH];
+
+	char m_Ini_Path_File_Name[MAX_PATH];
 
 
 	// --------------------------------------------------------------------------- 

@@ -244,7 +244,7 @@ bool SB_Import::Load_Scene(char* Extension, char* Extension2)
 		return 1;
 	}
 
-	App->SBC_Project->Load_Scene();
+	App->SBC_Project->Load_Project();
 
 	App->Say("Scene Loaded");
 	return 1;
