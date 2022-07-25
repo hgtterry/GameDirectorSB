@@ -41,6 +41,7 @@ SB_Project::SB_Project()
 	strcat(Project_FullPath, "_Prj");
 
 	strcpy(m_Level_Name,"Level_1");
+
 	m_Level_Folder_Path[0] = 0;
 	m_Players_Folder_Path[0] = 0;
 
@@ -101,7 +102,8 @@ LRESULT CALLBACK SB_Project::Create_Project_Proc(HWND hDlg, UINT message, WPARAM
 
 		SetDlgItemText(hDlg, IDC_STPROJECTNAME, (LPCTSTR)App->SBC_Project->Project_Name);
 		SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->Project_FullPath);
-
+		SetDlgItemText(hDlg, IDC_STLEVELNAME, (LPCTSTR)App->SBC_Project->m_Level_Name);
+		
 		return TRUE;
 	}
 
@@ -226,6 +228,22 @@ LRESULT CALLBACK SB_Project::Create_Project_Proc(HWND hDlg, UINT message, WPARAM
 
 			SetDlgItemText(hDlg, IDC_STPROJECTNAME, (LPCTSTR)App->SBC_Project->Project_Name);
 			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->Project_FullPath);
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BTCHANGELEVEL)
+		{
+			strcpy(App->SBC_Dialogs->btext, "Change Level Name");
+			strcpy(App->SBC_Dialogs->Chr_Text, App->SBC_Project->m_Level_Name);
+
+			App->SBC_Dialogs->Dialog_Text();
+
+			strcpy(App->SBC_Project->m_Level_Name, App->SBC_Dialogs->Chr_Text);
+
+
+			SetDlgItemText(hDlg, IDC_STLEVELNAME, (LPCTSTR)App->SBC_Project->m_Level_Name);
+			
 
 			return TRUE;
 		}
@@ -978,6 +996,7 @@ bool SB_Project::Save_Project_Ini()
 	fprintf(Write_Ini, "%s\n", "[Files]");
 	fprintf(Write_Ini, "%s%s\n", "Project_Name=", App->SBC_Project->Project_Name);
 	fprintf(Write_Ini, "%s%s\n", "Folder_Path=", App->SBC_Project->Project_FullPath);
+	fprintf(Write_Ini, "%s%s\n", "Level_Name=", App->SBC_Project->m_Level_Name);
 
 	fprintf(Write_Ini, "%s\n", "[Players]");
 	fprintf(Write_Ini, "%s%i\n", "Players_Count=", App->SBC_Scene->Player_Count);
@@ -1228,6 +1247,8 @@ bool SB_Project::Load_Project()
 	
 	App->Cl_Ini->GetString("Version_Data", "Version", chr_Tag1, 1024);
 
+	App->Cl_Ini->GetString("Files", "Level_Name", m_Level_Name, 1024);
+
 	Int1 = App->Cl_Ini->GetInt("Aeras", "Aeras_Count", 0,10);
 	
 	if (Int1 == 1)
@@ -1286,7 +1307,7 @@ bool SB_Project::Load_Project_Aera()
 
 	strcpy(Area_Ini_Path, Level_Folder_Path);
 
-	strcat(Area_Ini_Path, "Level_1");
+	strcat(Area_Ini_Path, m_Level_Name);
 	strcat(Area_Ini_Path, "\\");
 	strcat(Area_Ini_Path, "Aeras");
 	strcat(Area_Ini_Path, "\\");
