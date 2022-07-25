@@ -87,11 +87,15 @@ LRESULT CALLBACK SB_Project::Create_Project_Proc(HWND hDlg, UINT message, WPARAM
 	{
 		SendDlgItemMessage(hDlg, IDC_STPJFOLDERPATH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STPROJECTNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_STLEVELNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		SendDlgItemMessage(hDlg, IDC_STPATH, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STPN, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_STLN, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		
 		SendDlgItemMessage(hDlg, IDC_BTCHANGE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BTCHANGELEVEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		SendDlgItemMessage(hDlg, IDC_BTPJBROWSE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 
@@ -120,6 +124,14 @@ LRESULT CALLBACK SB_Project::Create_Project_Proc(HWND hDlg, UINT message, WPARAM
 			return (UINT)App->Brush_White;
 		}
 
+		if (GetDlgItem(hDlg, IDC_STLEVELNAME) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->Brush_White;
+		}
+
 		if (GetDlgItem(hDlg, IDC_STPN) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
@@ -128,6 +140,14 @@ LRESULT CALLBACK SB_Project::Create_Project_Proc(HWND hDlg, UINT message, WPARAM
 			return (UINT)App->AppBackground;
 		}
 
+		if (GetDlgItem(hDlg, IDC_STLN) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+		
 		if (GetDlgItem(hDlg, IDC_STPATH) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
@@ -148,6 +168,13 @@ LRESULT CALLBACK SB_Project::Create_Project_Proc(HWND hDlg, UINT message, WPARAM
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
 		if (some_item->idFrom == IDC_BTCHANGE && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BTCHANGELEVEL && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);

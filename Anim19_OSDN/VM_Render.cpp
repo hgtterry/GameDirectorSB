@@ -678,7 +678,7 @@ void VM_Render::RF_Render_Normals(void)
 
 		Start++;
 	}
-
+	
 	glEnd(); 
 }
 
