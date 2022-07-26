@@ -40,6 +40,7 @@ public:
 	int Player_Count;		// Actual Player Count Zero Based
 	int Area_Count;			// Actual Area Count Zero Based [161221]
 	int Object_Count;		// Actual Object Count Zero Based [171221]
+	int Camera_Count;		// Actual Object Count Zero Based [171221]
 
 	bool Scene_Loaded;	// Is the Scene Loaded [131221]
 	bool Player_Added;	// Is there a vaild player in the level [081221]

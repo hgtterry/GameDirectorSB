@@ -999,17 +999,14 @@ bool SB_Project::Save_Project_Ini()
 	fprintf(Write_Ini, "%s%s\n", "Folder_Path=", App->SBC_Project->Project_FullPath);
 	fprintf(Write_Ini, "%s%s\n", "Level_Name=", App->SBC_Project->m_Level_Name);
 
+	fprintf(Write_Ini, "%s\n", " ");
+
 	fprintf(Write_Ini, "%s\n", "[Options]");
-	fprintf(Write_Ini, "%s%i\n", "Players_Count=", App->SBC_Scene->Player_Count);
 	fprintf(Write_Ini, "%s%i\n", "Aeras_Count=", App->SBC_Scene->Area_Count);
+	fprintf(Write_Ini, "%s%i\n", "Players_Count=", App->SBC_Scene->Player_Count);
+	fprintf(Write_Ini, "%s%i\n", "Cameras_Count=", App->SBC_Scene->Camera_Count);
 	fprintf(Write_Ini, "%s%i\n", "Objects_Count=", App->SBC_Scene->Object_Count);
 
-	//fprintf(Write_Ini, "%s\n", "[Camera]");
-	//fprintf(Write_Ini, "%s%s\n", "Camera_File=", "Cam1.cam");
-
-	
-	fprintf(Write_Ini, "%s%i\n", "Objects_Count=", App->SBC_Scene->Object_Count);
-	
 	fclose(Write_Ini);
 
 	return 1;
@@ -1253,7 +1250,9 @@ bool SB_Project::Load_Project()
 
 	Options->Has_Aera = App->Cl_Ini->GetInt("Options", "Aeras_Count", 0,10);
 	Options->Has_Player = App->Cl_Ini->GetInt("Options", "Players_Count", 0, 10);
-	
+	Options->Has_Camera = App->Cl_Ini->GetInt("Options", "Cameras_Count", 0, 10);
+	Options->Has_Objects = App->Cl_Ini->GetInt("Options", "Objects_Count", 0, 10);
+
 	// ------------------------------------- Aera
 	if (Options->Has_Aera > 0)
 	{
@@ -1268,6 +1267,18 @@ bool SB_Project::Load_Project()
 
 		App->Cl_Bullet->Reset_Physics();
 		App->SBC_Physics->Enable_Physics(1);
+	}
+
+	// ------------------------------------- Camera
+	if (Options->Has_Camera > 0)
+	{
+		
+	}
+
+	// ------------------------------------- Objects
+	if (Options->Has_Objects > 0)
+	{
+
 	}
 
 	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
