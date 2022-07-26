@@ -22,6 +22,16 @@ distribution.
 */
 
 #pragma once
+
+// ------------------------ Load Options
+typedef struct Load_Options
+{
+	int Has_Aera;
+	int Has_Player;
+	int Has_Camera;
+
+}Load_Options;
+
 class SB_Project
 {
 public:

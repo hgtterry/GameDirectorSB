@@ -26,6 +26,7 @@ distribution.
 #include "resource.h"
 #include "SB_Project.h"
 
+
 SB_Project::SB_Project()
 {
 	strcpy(Project_Name,"Project1");
@@ -998,21 +999,17 @@ bool SB_Project::Save_Project_Ini()
 	fprintf(Write_Ini, "%s%s\n", "Folder_Path=", App->SBC_Project->Project_FullPath);
 	fprintf(Write_Ini, "%s%s\n", "Level_Name=", App->SBC_Project->m_Level_Name);
 
-	fprintf(Write_Ini, "%s\n", "[Players]");
+	fprintf(Write_Ini, "%s\n", "[Options]");
 	fprintf(Write_Ini, "%s%i\n", "Players_Count=", App->SBC_Scene->Player_Count);
-	fprintf(Write_Ini, "%s%s\n", "Player_File=", "Player1.ply");
-
-	fprintf(Write_Ini, "%s\n", "[Aeras]");
 	fprintf(Write_Ini, "%s%i\n", "Aeras_Count=", App->SBC_Scene->Area_Count);
-	fprintf(Write_Ini, "%s%s\n", "Aeras_File=", "Aeras.aer");
-
-	fprintf(Write_Ini, "%s\n", "[Camera]");
-	fprintf(Write_Ini, "%s%s\n", "Camera_File=", "Cam1.cam");
-
-	fprintf(Write_Ini, "%s\n", "[Objects]");
 	fprintf(Write_Ini, "%s%i\n", "Objects_Count=", App->SBC_Scene->Object_Count);
-	fprintf(Write_Ini, "%s%s\n", "Objects_File=", "Objects.obf");
 
+	//fprintf(Write_Ini, "%s\n", "[Camera]");
+	//fprintf(Write_Ini, "%s%s\n", "Camera_File=", "Cam1.cam");
+
+	
+	fprintf(Write_Ini, "%s%i\n", "Objects_Count=", App->SBC_Scene->Object_Count);
+	
 	fclose(Write_Ini);
 
 	return 1;
@@ -1235,6 +1232,11 @@ bool SB_Project::Load_Project()
 	Level_Folder_Path[len2 - len1] = 0;
 
 	// ------------------------------------------------------------------- 
+	Load_Options* Options = new Load_Options;
+
+	Options->Has_Aera = 0;
+	Options->Has_Player = 0;
+	Options->Has_Camera = 0;
 
 	int Int1 = 0;
 	char chr_Tag1[1024];
@@ -1249,22 +1251,26 @@ bool SB_Project::Load_Project()
 
 	App->Cl_Ini->GetString("Files", "Level_Name", m_Level_Name, 1024);
 
-	Int1 = App->Cl_Ini->GetInt("Aeras", "Aeras_Count", 0,10);
+	Options->Has_Aera = App->Cl_Ini->GetInt("Options", "Aeras_Count", 0,10);
+	Options->Has_Player = App->Cl_Ini->GetInt("Options", "Players_Count", 0, 10);
 	
-	if (Int1 == 1)
+	// ------------------------------------- Aera
+	if (Options->Has_Aera > 0)
 	{
 		Load_Project_Aera();
 	}
 
-	App->Cl_Ini->SetPathName(m_Ini_Path_File_Name);
+	// ------------------------------------- Player
+	if (Options->Has_Player > 0)
+	{
+		App->SBC_Player->Create_Player_Object();
+		strcpy(App->SBC_Scene->SBC_Base_Player[0]->Player_Name, "Player_1");
 
-	App->SBC_Player->Create_Player_Object();
-	strcpy(App->SBC_Scene->SBC_Base_Player[0]->Player_Name, "Player_1");
+		App->Cl_Bullet->Reset_Physics();
+		App->SBC_Physics->Enable_Physics(1);
+	}
 
 	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
-
-	App->Cl_Bullet->Reset_Physics();
-	App->SBC_Physics->Enable_Physics(1);
 
 	App->SBC_Player->FileViewItem = App->SBC_FileView->Add_PlayerFile("Player_1", 0);
 	
@@ -1304,6 +1310,8 @@ bool SB_Project::Load_Project()
 	//App->SBC_Camera->Set_Camera();
 
 	//App->SBC_Scene->Scene_Loaded = 1;
+
+	delete Options;
 
 	App->Set_Main_TitleBar(App->CL_Vm_FileIO->Model_Path_FileName);
 
