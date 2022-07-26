@@ -1258,6 +1258,21 @@ bool SB_Project::Load_Project()
 
 	App->Cl_Ini->SetPathName(m_Ini_Path_File_Name);
 
+	App->SBC_Player->Create_Player_Object();
+	strcpy(App->SBC_Scene->SBC_Base_Player[0]->Player_Name, "Player_1");
+
+	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
+
+	App->Cl_Bullet->Reset_Physics();
+	App->SBC_Physics->Enable_Physics(1);
+
+	App->SBC_Player->FileViewItem = App->SBC_FileView->Add_PlayerFile("Player_1", 0);
+	
+	App->SBC_FileView->Redraw_FileView();
+
+	App->SBC_Scene->Scene_Loaded = 1;
+
+	App->SBC_Scene->Area_Added = 1;
 
 	/*App->Cl_Ini->GetString("Levels", "Folder", chr_Tag1, 1024);
 	strcpy(Scene_JustPath, Level_Folder_Path);
