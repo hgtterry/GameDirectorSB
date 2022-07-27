@@ -867,26 +867,26 @@ bool SB_Project::Read_Camera()
 
 	// ------------------------------------------------------------------- 
 
-	App->Cl_Ini->SetPathName(Path);
+	//App->Cl_Ini->SetPathName(Path);
 
-	App->Cl_Ini->GetString("Version_Data", "Version", chr_Tag1, 1024);
+	//App->Cl_Ini->GetString("Version_Data", "Version", chr_Tag1, 1024);
 
-	App->Cl_Ini->GetString("Camera", "Camera_Name", chr_Tag1, 1024);
-	strcpy(App->SBC_Camera->Camera_Name, chr_Tag1);
+	//App->Cl_Ini->GetString("Camera", "Camera_Name", chr_Tag1, 1024);
+	//strcpy(App->SBC_Camera->Camera_Name, chr_Tag1);
 
-	// Position
-	App->Cl_Ini->GetString("Camera", "Start_Position", chr_Tag1, 1024);
-	sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
-	App->SBC_Camera->CamPos_X = x;
-	App->SBC_Camera->CamPos_Y = y;
-	App->SBC_Camera->CamPos_Z = z;
+	//// Position
+	//App->Cl_Ini->GetString("Camera", "Start_Position", chr_Tag1, 1024);
+	//sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+	//App->SBC_Camera->CamPos_X = x;
+	//App->SBC_Camera->CamPos_Y = y;
+	//App->SBC_Camera->CamPos_Z = z;
 
-	// Position
-	App->Cl_Ini->GetString("Camera", "Look_At", chr_Tag1, 1024);
-	sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
-	App->SBC_Camera->LookAt_X = x;
-	App->SBC_Camera->LookAt_Y = y;
-	App->SBC_Camera->LookAt_Z = z;
+	//// Position
+	//App->Cl_Ini->GetString("Camera", "Look_At", chr_Tag1, 1024);
+	//sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+	//App->SBC_Camera->LookAt_X = x;
+	//App->SBC_Camera->LookAt_Y = y;
+	//App->SBC_Camera->LookAt_Z = z;
 
 	App->SBC_Camera->FileViewItem = App->SBC_FileView->Add_Camera(App->SBC_Camera->Camera_Name, 0);
 	App->SBC_FileView->Redraw_FileView();
@@ -1301,7 +1301,7 @@ bool SB_Project::Load_Project()
 	strcpy(App->CL_Vm_Model->FileName, chr_Tag2);*/
 
 	//Read_Player();
-	//Read_Camera();
+	Read_Camera();
 
 	//App->SBC_Aera->Add_Area();
 

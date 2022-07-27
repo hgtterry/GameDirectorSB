@@ -141,7 +141,7 @@ void SB_Player::Initialize()
 
 	pBase->Player_Node->setPosition(Pos.x, Pos.y, Pos.z);
 
-	pBase->Player_Node->setVisible(false);
+	pBase->Player_Node->setVisible(true);
 
 	// ------------------------ Bulet
 	btVector3 pos = btVector3(Pos.x, Pos.y, Pos.z);
