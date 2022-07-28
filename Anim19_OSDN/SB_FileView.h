@@ -34,6 +34,7 @@ public:
 	void Redraw_FileView();
 	void Reset_Class();
 
+	void Change_Project_Name(void);
 	void Change_Level_Name(void);
 	void Change_Item_Name(HTREEITEM Folder, char *FolderName);
 

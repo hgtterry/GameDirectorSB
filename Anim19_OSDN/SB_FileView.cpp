@@ -276,7 +276,7 @@ void SB_FileView::AddRootFolder(void)
 	tvinsert.hParent = Root;			// top most level no need handle
 	tvinsert.hInsertAfter = TVI_LAST; // work as root level
 	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
-	tvinsert.item.pszText = "No Project";
+	tvinsert.item.pszText = App->SBC_Project->m_Project_Name;
 	tvinsert.item.iImage = 0;
 	tvinsert.item.iSelectedImage = 1;
 	GD_ProjectFolder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
@@ -291,9 +291,9 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	tvinsert.hParent = GD_ProjectFolder;
 	tvinsert.hInsertAfter = TVI_LAST;
 	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
-	tvinsert.item.pszText = App->SBC_Project->Level_File_Name;
-	tvinsert.item.iImage = 2;
-	tvinsert.item.iSelectedImage = 3;
+	tvinsert.item.pszText = App->SBC_Project->m_Level_Name;
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
 	GD_LevelFolder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
 
 	////------------------------------------------------------- Camera
@@ -301,8 +301,8 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	tvinsert.hInsertAfter = TVI_LAST;
 	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
 	tvinsert.item.pszText = "Camera";
-	tvinsert.item.iImage = 2;
-	tvinsert.item.iSelectedImage = 3;
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
 	GD_CameraFolder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
 
 	tvinsert.hParent = GD_LevelFolder;
@@ -1153,14 +1153,28 @@ void SB_FileView::Redraw_FileView()
 }
 
 // *************************************************************************
-// *					Change_Level_Name Terry Bernie 					   *
+// *					Change_Level_Name Terry Flanigan 				   *
 // *************************************************************************
 void SB_FileView::Change_Level_Name(void)
 {
 	TVITEM Sitem;
 	Sitem.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
 	Sitem.hItem = GD_LevelFolder;
-	Sitem.pszText = App->SBC_Project->Level_File_Name;
+	Sitem.pszText = App->SBC_Project->m_Level_Name;
+	Sitem.iImage = 3;
+	Sitem.iSelectedImage = 3;
+	SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_SETITEM, 0, (LPARAM)(const LPTVITEM)&Sitem);
+}
+
+// *************************************************************************
+// *					Change_Project_Name Terry Flanigan 				   *
+// *************************************************************************
+void SB_FileView::Change_Project_Name(void)
+{
+	TVITEM Sitem;
+	Sitem.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	Sitem.hItem = GD_ProjectFolder;
+	Sitem.pszText = App->SBC_Project->m_Project_Name;
 	Sitem.iImage = 3;
 	Sitem.iSelectedImage = 3;
 	SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_SETITEM, 0, (LPARAM)(const LPTVITEM)&Sitem);

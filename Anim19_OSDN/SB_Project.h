@@ -71,7 +71,7 @@ public:
 	char Level_Folder_Path_World[1024];
 
 
-
+	char m_Project_Name[MAX_PATH];
 	char m_Level_Name[MAX_PATH];
 	char m_Aera_Folder_Path[MAX_PATH];
 	char m_Level_Folder_Path[MAX_PATH];		// Level Just Path

@@ -41,7 +41,8 @@ SB_Project::SB_Project()
 	strcat(Project_FullPath, Project_Name);
 	strcat(Project_FullPath, "_Prj");
 
-	strcpy(m_Level_Name,"Level_1");
+	strcpy(m_Project_Name, "No Project");
+	strcpy(m_Level_Name,"No Level");
 
 	m_Level_Folder_Path[0] = 0;
 	m_Players_Folder_Path[0] = 0;
@@ -91,9 +92,9 @@ LRESULT CALLBACK SB_Project::Create_Project_Proc(HWND hDlg, UINT message, WPARAM
 		SendDlgItemMessage(hDlg, IDC_STPROJECTNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STLEVELNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
-		SendDlgItemMessage(hDlg, IDC_STPATH, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_STPN, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_STLN, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STPATH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STPN, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STLN, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SendDlgItemMessage(hDlg, IDC_BTCHANGE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BTCHANGELEVEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -138,15 +139,15 @@ LRESULT CALLBACK SB_Project::Create_Project_Proc(HWND hDlg, UINT message, WPARAM
 		if (GetDlgItem(hDlg, IDC_STPN) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
 		}
 
 		if (GetDlgItem(hDlg, IDC_STLN) == (HWND)lParam)
 		{
-			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkColor((HDC)wParam, RGB(0, 0, 255));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
 		}
@@ -154,7 +155,7 @@ LRESULT CALLBACK SB_Project::Create_Project_Proc(HWND hDlg, UINT message, WPARAM
 		if (GetDlgItem(hDlg, IDC_STPATH) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
 		}
@@ -1246,7 +1247,11 @@ bool SB_Project::Load_Project()
 	
 	App->Cl_Ini->GetString("Version_Data", "Version", chr_Tag1, 1024);
 
-	App->Cl_Ini->GetString("Files", "Level_Name", m_Level_Name, 1024);
+	App->Cl_Ini->GetString("Files", "Level_Name", m_Level_Name, MAX_PATH);
+	App->Cl_Ini->GetString("Files", "Project_Name", m_Project_Name, MAX_PATH);
+
+	App->SBC_FileView->Change_Level_Name();
+	App->SBC_FileView->Change_Project_Name();
 
 	Options->Has_Aera = App->Cl_Ini->GetInt("Options", "Aeras_Count", 0,10);
 	Options->Has_Player = App->Cl_Ini->GetInt("Options", "Players_Count", 0, 10);
