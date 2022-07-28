@@ -53,6 +53,7 @@ public:
 
 	bool Load_Project();
 	bool Load_Project_Aera();
+	bool Load_Project_Player();
 
 	bool Load_Scene_Auto();
 	bool Load_Scene();

@@ -309,16 +309,16 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	tvinsert.hInsertAfter = TVI_LAST;
 	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
 	tvinsert.item.pszText = "Player";
-	tvinsert.item.iImage = 2;
-	tvinsert.item.iSelectedImage = 3;
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
 	GD_Player = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
 
 	tvinsert.hParent = GD_LevelFolder;
 	tvinsert.hInsertAfter = TVI_LAST;
 	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
 	tvinsert.item.pszText = "Area";
-	tvinsert.item.iImage = 2;
-	tvinsert.item.iSelectedImage = 3;
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
 	GD_Rooms = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
 
 	tvinsert.hParent = GD_LevelFolder;
@@ -1321,5 +1321,20 @@ bool SB_FileView::SelectItem(HTREEITEM TreeItem)
 		TreeView_Select(Temp, TreeItem, TVGN_CARET);
 	}
 	return 1;
+}
+
+// *************************************************************************
+// *					Set_FolderActive Terry Bernie				 	   *
+// *************************************************************************
+void SB_FileView::Set_FolderActive(HTREEITEM Folder)
+{
+	TVITEM Sitem;
+
+	Sitem.mask = TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	Sitem.hItem = Folder;
+	Sitem.iImage = 3;
+	Sitem.iSelectedImage = 3;
+
+	SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_SETITEM, 0, (LPARAM)(const LPTVITEM)&Sitem);
 }
 

@@ -1267,11 +1267,7 @@ bool SB_Project::Load_Project()
 	// ------------------------------------- Player
 	if (Options->Has_Player > 0)
 	{
-		App->SBC_Player->Create_Player_Object();
-		strcpy(App->SBC_Scene->SBC_Base_Player[0]->Player_Name, "Player_1");
-
-		App->Cl_Bullet->Reset_Physics();
-		App->SBC_Physics->Enable_Physics(1);
+		Load_Project_Player();
 	}
 
 	// ------------------------------------- Camera
@@ -1287,8 +1283,6 @@ bool SB_Project::Load_Project()
 	}
 
 	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
-
-	App->SBC_Player->FileViewItem = App->SBC_FileView->Add_PlayerFile("Player_1", 0);
 	
 	App->SBC_FileView->Redraw_FileView();
 
@@ -1307,7 +1301,7 @@ bool SB_Project::Load_Project()
 
 	//Read_Player();
 	Read_Camera();
-
+	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->GD_CameraFolder);
 	//App->SBC_Aera->Add_Area();
 
 	////App->SBC_Player->Load_Player();
@@ -1360,5 +1354,24 @@ bool SB_Project::Load_Project_Aera()
 	App->SBC_Aera->Add_Aera_To_Project(0, Mesh_FileName, Resource_Location);
 
 	HTREEITEM Temp = App->SBC_FileView->Add_Area("Area_1", 0);
+
+	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->GD_Rooms);
+	return 1;
+}
+
+// *************************************************************************
+// *	  				Load_Project_Player Terry Flanigan				   *
+// *************************************************************************
+bool SB_Project::Load_Project_Player()
+{
+	App->SBC_Player->Create_Player_Object();
+	strcpy(App->SBC_Scene->SBC_Base_Player[0]->Player_Name, "Player_1");
+
+	App->SBC_Player->FileViewItem = App->SBC_FileView->Add_PlayerFile("Player_1", 0);
+
+	App->Cl_Bullet->Reset_Physics();
+	App->SBC_Physics->Enable_Physics(1);
+
+	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->GD_Player);
 	return 1;
 }

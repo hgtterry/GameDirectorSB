@@ -38,6 +38,8 @@ public:
 	void Change_Level_Name(void);
 	void Change_Item_Name(HTREEITEM Folder, char *FolderName);
 
+	void Set_FolderActive(HTREEITEM Folder);
+
 	void DeleteItem();
 	void Select_Item(int Index);
 	bool SelectItem(HTREEITEM TreeItem);
@@ -54,6 +56,11 @@ public:
 	HTREEITEM Add_PlayerFile(char *SFileName, int Index);
 	HTREEITEM Add_Camera(char *SFileName, int Index);
 	HTREEITEM Add_Area(char *SFileName, int Index);
+
+	HTREEITEM GD_Player;
+	HTREEITEM GD_Rooms;
+	HTREEITEM GD_LevelFolder;
+	HTREEITEM GD_CameraFolder;
 
 protected:
 
@@ -73,8 +80,6 @@ protected:
 	HTREEITEM Root;
 	HTREEITEM GD_ProjectFolder;
 	HTREEITEM GD_ObjectsFolder;
-	HTREEITEM GD_LevelFolder;
-	HTREEITEM GD_CameraFolder;
 	HTREEITEM GD_TriggerFolder;
 	HTREEITEM GD_EntitiesFolder;
 	HTREEITEM GD_Entities_Sound_Folder;
@@ -87,8 +92,6 @@ protected:
 	HTREEITEM GD_Level_Change_Folder;
 	HTREEITEM GD_Particles_Folder;
 
-	HTREEITEM GD_Player;
-	HTREEITEM GD_Rooms;
 
 	char FileView_Folder[255];
 	char FileView_File[255];
