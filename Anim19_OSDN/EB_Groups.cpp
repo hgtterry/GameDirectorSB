@@ -367,8 +367,6 @@ bool EB_Groups::ChangeTexture_ModelLocation(void)
 		App->CL_Vm_Textures->TexureToWinPreviewFullPath(SelectedGroup, App->CL_Vm_FileIO->Texture_Path_FileName);
 		Update_Groups_Dialog(SelectedGroup);
 
-		App->EBC_TopTabs->Update_Textures_Combo();
-
 		return 1;
 	}
 
@@ -428,8 +426,6 @@ bool EB_Groups::ChangeTexture_ModelLocation(void)
 		//		remove("Etemp.bmp");
 
 		//	}
-
-		App->EBC_TopTabs->Update_Textures_Combo();
 
 	}
 

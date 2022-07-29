@@ -200,8 +200,8 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 		//	App->SBC_MeshViewer->Physics_Type = Enums::Bullet_Type_None;
 
-		char ConNum[256];
-		char ATest[256];
+//		char ConNum[256];
+//		char ATest[256];
 
 		App->SBC_MeshViewer->Get_Files();
 		App->SBC_MeshViewer->Create_Detail_List();
@@ -1221,7 +1221,7 @@ bool SB_MeshViewer::Get_Details_hLV()
 	int	 pRow = 0;
 	char pScriptName[255];
 	char pMaterialFile[255];
-	char pUsed[255];
+//	char pUsed[255];
 	bool pIsLoaded = 0;
 
 	int SubMeshCount = MvEnt->getNumSubEntities();

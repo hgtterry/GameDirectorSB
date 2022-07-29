@@ -78,6 +78,8 @@ SB_Equity::~SB_Equity()
 // *************************************************************************
 bool SB_Equity::Start_Equity()
 {
+	return 1;
+
 	App->EBC_Options->Read_Preferences();
 
 	App->RenderBackGround = 1;
@@ -105,7 +107,6 @@ LRESULT CALLBACK SB_Equity::Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 		
 		App->SBC_Equity->MainWindow_Hwnd = hDlg;
 
-		App->EBC_TopTabs->Start_Tabs();
 		App->EBC_Groups->Start_Groups();
 
 		App->CL_Vm_FileIO->LoadHistory_Equity();
@@ -1055,8 +1056,6 @@ void SB_Equity::Convert_Model(void)
 // *************************************************************************
 void SB_Equity::Set_Equity(void)
 {
-	App->EBC_TopTabs->Update_Textures_Combo();
-
 	App->CL_Vm_Model->Model_Loaded = 1;
 	App->SBC_Equity->Model_Loaded = 1;
 

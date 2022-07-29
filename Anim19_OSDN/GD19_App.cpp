@@ -75,7 +75,6 @@ GD19_App::GD19_App(void)
 
 	// ---------------------------------------------------- 07/12/21
 	EBC_Listener =		nullptr;
-	EBC_TopTabs =		nullptr;
 	EBC_Groups =		nullptr;
 	EBC_Export_Mesh =	nullptr;
 	EBC_Model =			nullptr;
@@ -245,7 +244,6 @@ bool GD19_App::InitApp(void)
 	
 	// ---------------------------------------------------- 07/12/21
 	EBC_Listener =			new EB_Listener();
-	EBC_TopTabs =			new EB_TopTabs();
 	EBC_Groups =			new EB_Groups();
 	EBC_Export_Mesh =		new EB_Export_Mesh();
 	EBC_Model =				new EB_Model();
