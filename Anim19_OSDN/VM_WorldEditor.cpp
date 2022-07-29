@@ -463,7 +463,7 @@ bool VM_WorldEditor::AddTexture(geVFile *BaseFile, const char *Path,int GroupInd
 	HBITMAP	hbm;
 	HDC		hDC;
 
-	PreviewWnd = GetDlgItem(App->EBC_Groups->RightGroups_Hwnd, IDC_BASETEXTURE2);
+	PreviewWnd = 0;//GetDlgItem(App->EBC_Groups->RightGroups_Hwnd, IDC_BASETEXTURE2);
 	hDC = GetDC(PreviewWnd);
 	hbm = CreateHBitmapFromgeBitmap(Bitmap, hDC);
 

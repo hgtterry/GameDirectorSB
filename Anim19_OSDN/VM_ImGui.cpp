@@ -945,7 +945,6 @@ void VM_ImGui::ImGui_GroupList(void)
 
 		if (Block == 1)
 		{
-			App->EBC_Groups->Update_Groups_Dialog(selected_Players);
 			Block = 0;
 		}
 
@@ -1032,31 +1031,6 @@ void VM_ImGui::ImGui_Texture_Data(void)
 
 		//ImGui::SetWindowPos(ImVec2(400, 40));
 		//ImGui::SetWindowSize(ImVec2(350, 90));
-
-
-
-		ImGui::Text("Texture Name: = %s", App->CL_Vm_Model->S_TextureInfo[App->EBC_Groups->SelectedGroup]->MaterialName);
-		ImGui::Text("Mat Index: = %i", App->CL_Vm_Model->S_TextureInfo[App->EBC_Groups->SelectedGroup]->ActorMaterialIndex);
-		ImGui::Text("Has Bitmap: = %i", App->CL_Vm_Model->S_TextureInfo[App->EBC_Groups->SelectedGroup]->HasGEBitmap);
-		
-		ImGui::Separator();
-		ImGui::Spacing();
-
-		ImGui::Text("Width: = %i", App->CL_Vm_Model->S_TextureInfo[App->EBC_Groups->SelectedGroup]->GEWitdth);
-		ImGui::Text("Height: = %i", App->CL_Vm_Model->S_TextureInfo[App->EBC_Groups->SelectedGroup]->GEHeight);
-
-		ImGui::Separator();
-		ImGui::Spacing();
-
-		ImGui::Text("Red: = %0.3f", App->CL_Vm_Model->S_TextureInfo[App->EBC_Groups->SelectedGroup]->R);
-		ImGui::Text("Green: = %0.3f", App->CL_Vm_Model->S_TextureInfo[App->EBC_Groups->SelectedGroup]->G);
-		ImGui::Text("Blue: = %0.3f", App->CL_Vm_Model->S_TextureInfo[App->EBC_Groups->SelectedGroup]->B);
-		
-		App->CL_Vm_Textures->GetFormat(App->CL_Vm_Model->S_TextureInfo[App->EBC_Groups->SelectedGroup]->GEFormat);
-		ImGui::Text("Format: = %s", App->CL_Vm_Textures->GEFormatString);
-
-		ImGui::Separator();
-		ImGui::Spacing();
 
 		if (ImGui::Button("Close"))
 		{

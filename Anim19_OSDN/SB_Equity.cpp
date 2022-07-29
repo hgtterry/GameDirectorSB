@@ -107,8 +107,6 @@ LRESULT CALLBACK SB_Equity::Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 		
 		App->SBC_Equity->MainWindow_Hwnd = hDlg;
 
-		App->EBC_Groups->Start_Groups();
-
 		App->CL_Vm_FileIO->LoadHistory_Equity();
 
 		App->SBC_Equity->Init_Bmps_Globals();
@@ -1060,8 +1058,6 @@ void SB_Equity::Set_Equity(void)
 	App->SBC_Equity->Model_Loaded = 1;
 
 	Zoom();
-
-	App->EBC_Groups->Update_Groups_Dialog(0);
 
 	HWND Temp = GetDlgItem(MainWindow_Hwnd, IDC_TBSHOWTEXTURE);
 	App->SBC_Equity->Toggle_Textures_Flag = 1;

@@ -74,8 +74,7 @@ GD19_App::GD19_App(void)
 	CL_Ogre_Import_E15 = nullptr;
 
 	// ---------------------------------------------------- 07/12/21
-	EBC_Listener =		nullptr;
-	EBC_Groups =		nullptr;
+	//EBC_Listener =		nullptr;
 	EBC_Export_Mesh =	nullptr;
 	EBC_Model =			nullptr;
 	EBC_Options =		nullptr;
@@ -244,7 +243,6 @@ bool GD19_App::InitApp(void)
 	
 	// ---------------------------------------------------- 07/12/21
 	EBC_Listener =			new EB_Listener();
-	EBC_Groups =			new EB_Groups();
 	EBC_Export_Mesh =		new EB_Export_Mesh();
 	EBC_Model =				new EB_Model();
 	EBC_Options =			new EB_Options();

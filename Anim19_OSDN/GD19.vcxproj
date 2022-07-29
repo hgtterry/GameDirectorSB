@@ -162,7 +162,6 @@
     <ClInclude Include="Base_Player.h" />
     <ClInclude Include="Com_Diaolgs.h" />
     <ClInclude Include="EB_Export_Mesh.h" />
-    <ClInclude Include="EB_Groups.h" />
     <ClInclude Include="EB_Listener.h" />
     <ClInclude Include="EB_Model.h" />
     <ClInclude Include="EB_Options.h" />
@@ -247,7 +246,6 @@
     <ClCompile Include="Common\imGui\ImGui_cpp\imgui_widgets.cpp" />
     <ClCompile Include="Com_Diaolgs.cpp" />
     <ClCompile Include="EB_Export_Mesh.cpp" />
-    <ClCompile Include="EB_Groups.cpp" />
     <ClCompile Include="EB_Listener.cpp" />
     <ClCompile Include="EB_Model.cpp" />
     <ClCompile Include="EB_Options.cpp" />

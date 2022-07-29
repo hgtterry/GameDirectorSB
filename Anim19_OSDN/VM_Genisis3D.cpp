@@ -1040,8 +1040,6 @@ bool VM_Genisis3D::Import_LoadActorTextures(void)
 		DeleteFile((LPCTSTR)TempTextureFile_TGA);
 	}
 
-	App->EBC_Groups->Update_Groups_Dialog(0);
-
 	return 1;
 }
 
@@ -1945,8 +1943,6 @@ bool VM_Genisis3D::ChangeTexture(char* TextureFile)
 	}
 
 	int textureID = 0;
-
-	textureID = App->CL_Vm_Model->S_TextureInfo[App->EBC_Groups->SelectedGroup]->ActorMaterialIndex;
 
 	geBody_SetMaterial(ActorDef_Memory->Body, textureID, Bmp, 255, 255, 255);
 
