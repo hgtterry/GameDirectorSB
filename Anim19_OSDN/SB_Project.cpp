@@ -260,7 +260,7 @@ LRESULT CALLBACK SB_Project::Create_Project_Proc(HWND hDlg, UINT message, WPARAM
 		{
 			//App->SBC_Project->Create_Project();
 
-			App->SBC_Project->Save_Project();
+			App->SBC_Project->N_Save_Project();
 
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
@@ -897,7 +897,7 @@ bool SB_Project::Read_Camera()
 // *************************************************************************
 // *	  				Save_Project Terry Flanigan						   *
 // *************************************************************************
-bool SB_Project::Save_Project()
+bool SB_Project::N_Save_Project()
 {
 
 
@@ -910,20 +910,20 @@ bool SB_Project::Save_Project()
 		_chdir(App->SBC_Project->Project_FullPath);
 	}
 
-	Save_Project_Ini();
+	N_Save_Project_Ini();
 
-	Save_Level_Folder();
+	N_Save_Level_Folder();
 
 	_chdir(m_Level_Folder_Path);
 
 	if (App->SBC_Scene->Area_Added == 1)
 	{
-		Save_Aera_Folder();
+		N_Save_Aera_Folder();
 	}
 
 	if (App->SBC_Scene->Player_Added == 1)
 	{
-		Save_Players_Folder();
+		N_Save_Players_Folder();
 	}
 
 
@@ -964,7 +964,7 @@ bool SB_Project::Save_Project()
 
 	//App->SBC_Scene->Scene_Loaded = 1;
 
-	App->Say("Scene Created");
+	App->Say("Scene Created jj");
 	return 1;
 }
 
@@ -972,7 +972,7 @@ bool SB_Project::Save_Project()
 // *************************************************************************
 // *	  					Save_Project_Ini Terry Flanigan				   *
 // *************************************************************************
-bool SB_Project::Save_Project_Ini()
+bool SB_Project::N_Save_Project_Ini()
 {
 	Project_Ini_FilePath[0] = 0;
 
@@ -1016,7 +1016,7 @@ bool SB_Project::Save_Project_Ini()
 // *************************************************************************
 // *	  				Save_Level_Folder Terry Flanigan				   *
 // *************************************************************************
-bool SB_Project::Save_Level_Folder()
+bool SB_Project::N_Save_Level_Folder()
 {
 	strcpy(m_Level_Folder_Path, App->SBC_Project->Project_FullPath);
 	strcat(m_Level_Folder_Path, "\\");
@@ -1038,7 +1038,7 @@ bool SB_Project::Save_Level_Folder()
 // *************************************************************************
 // *	  				Save_Aera_Folder Terry Flanigan				   *
 // *************************************************************************
-bool SB_Project::Save_Aera_Folder()
+bool SB_Project::N_Save_Aera_Folder()
 {
 	m_Aera_Folder_Path[0] = 0;
 
@@ -1056,7 +1056,7 @@ bool SB_Project::Save_Aera_Folder()
 		_chdir(m_Aera_Folder_Path);
 	}
 
-	Save_Aeras_Data();
+	N_Save_Aeras_Data();
 
 	_chdir(m_Level_Folder_Path); // Return to Level Folder
 	return 1;
@@ -1065,7 +1065,7 @@ bool SB_Project::Save_Aera_Folder()
 // *************************************************************************
 // *	  				Save_Aeras_Data Terry Flanigan					   *
 // *************************************************************************
-bool SB_Project::Save_Aeras_Data()
+bool SB_Project::N_Save_Aeras_Data()
 {
 	Ogre::Vector3 Pos;
 	char File[1024];
@@ -1124,7 +1124,7 @@ bool SB_Project::Save_Aeras_Data()
 // *************************************************************************
 // *	  				Save_Players_Folder Terry Flanigan				   *
 // *************************************************************************
-bool SB_Project::Save_Players_Folder()
+bool SB_Project::N_Save_Players_Folder()
 {
 	m_Players_Folder_Path[0] = 0;
 
@@ -1137,7 +1137,7 @@ bool SB_Project::Save_Players_Folder()
 	
 	_chdir(m_Players_Folder_Path);
 
-	Save_Player_Data();
+	N_Save_Player_Data();
 
 	_chdir(m_Level_Folder_Path); // Return to Level Folder
 	return 1;
@@ -1146,7 +1146,7 @@ bool SB_Project::Save_Players_Folder()
 // *************************************************************************
 // *	  				Save_Player_Data Terry Flanigan					   *
 // *************************************************************************
-bool SB_Project::Save_Player_Data()
+bool SB_Project::N_Save_Player_Data()
 {
 	Ogre::Vector3 Pos;
 	char File[1024];
@@ -1213,7 +1213,7 @@ bool SB_Project::Save_Player_Data()
 // *************************************************************************
 // *	  					Load_Project Terry Flanigan					   *
 // *************************************************************************
-bool SB_Project::Load_Project()
+bool SB_Project::N_Load_Project()
 {
 	m_Ini_Path_File_Name[0] = 0;
 
@@ -1261,13 +1261,13 @@ bool SB_Project::Load_Project()
 	// ------------------------------------- Aera
 	if (Options->Has_Aera > 0)
 	{
-		Load_Project_Aera();
+		N_Load_Project_Aera();
 	}
 
 	// ------------------------------------- Player
 	if (Options->Has_Player > 0)
 	{
-		Load_Project_Player();
+		N_Load_Project_Player();
 	}
 
 	// ------------------------------------- Camera
@@ -1331,7 +1331,7 @@ bool SB_Project::Load_Project()
 // *************************************************************************
 // *	  					Load_Project_Aera Terry Flanigan			   *
 // *************************************************************************
-bool SB_Project::Load_Project_Aera()
+bool SB_Project::N_Load_Project_Aera()
 {
 	char Area_Ini_Path[MAX_PATH];
 	
@@ -1362,7 +1362,7 @@ bool SB_Project::Load_Project_Aera()
 // *************************************************************************
 // *	  				Load_Project_Player Terry Flanigan				   *
 // *************************************************************************
-bool SB_Project::Load_Project_Player()
+bool SB_Project::N_Load_Project_Player()
 {
 	App->SBC_Player->Create_Player_Object();
 	strcpy(App->SBC_Scene->SBC_Base_Player[0]->Player_Name, "Player_1");

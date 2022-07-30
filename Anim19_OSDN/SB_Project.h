@@ -41,19 +41,29 @@ public:
 
 	bool Start_Create_Project();
 
-	bool Save_Project();
-	bool Save_Project_Ini();
-	bool Save_Level_Folder();
+	bool N_Save_Project();
+	bool N_Save_Project_Ini();
+	bool N_Save_Level_Folder();
 
-	bool Save_Aera_Folder();
-	bool Save_Aeras_Data();
+	bool N_Save_Aera_Folder();
+	bool N_Save_Aeras_Data();
 
-	bool Save_Players_Folder();
-	bool Save_Player_Data();
+	bool N_Save_Players_Folder();
+	bool N_Save_Player_Data();
 
-	bool Load_Project();
-	bool Load_Project_Aera();
-	bool Load_Project_Player();
+	bool N_Load_Project();
+	bool N_Load_Project_Aera();
+	bool N_Load_Project_Player();
+
+	char m_Project_Name[MAX_PATH];
+	char m_Level_Name[MAX_PATH];
+	char m_Aera_Folder_Path[MAX_PATH];
+	char m_Level_Folder_Path[MAX_PATH];		// Level Just Path
+	char m_Players_Folder_Path[MAX_PATH];
+
+	char m_Ini_Path_File_Name[MAX_PATH];
+
+	//------------------------------------------------ 
 
 	bool Load_Scene_Auto();
 	bool Load_Scene();
@@ -70,15 +80,6 @@ public:
 	char Project_Ini_FilePath[1024];
 
 	char Level_Folder_Path_World[1024];
-
-
-	char m_Project_Name[MAX_PATH];
-	char m_Level_Name[MAX_PATH];
-	char m_Aera_Folder_Path[MAX_PATH];
-	char m_Level_Folder_Path[MAX_PATH];		// Level Just Path
-	char m_Players_Folder_Path[MAX_PATH];
-
-	char m_Ini_Path_File_Name[MAX_PATH];
 
 
 	// --------------------------------------------------------------------------- 
