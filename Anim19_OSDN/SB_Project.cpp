@@ -52,9 +52,6 @@ SB_Project::SB_Project()
 
 	strcpy(Level_File_Name, "No Level");
 
-	Scene_Path_FileName[0] = 0;
-	Scene_JustPath[0] = 0;
-
 	Write_Ini =			NULL;
 	Write_Player_Ini =	NULL;
 	WriteFile =			NULL;
@@ -724,7 +721,7 @@ bool SB_Project::Load_Scene_Auto()
 // *************************************************************************
 bool SB_Project::Load_Scene()
 {
-	Debug1
+	
 		return 1;
 
 	App->SBC_Scene->Clear_Level();
@@ -752,12 +749,12 @@ bool SB_Project::Load_Scene()
 	
 
 	App->Cl_Ini->GetString("Levels", "Folder", chr_Tag1, 1024);
-	strcpy(Scene_JustPath, Level_Folder_Path);
-	strcat(Scene_JustPath, chr_Tag1);
+	//strcpy(Scene_JustPath, Level_Folder_Path);
+	//strcat(Scene_JustPath, chr_Tag1);
 
 	App->Cl_Ini->GetString("Levels", "File", chr_Tag2, 1024);
 
-	strcpy(App->CL_Vm_Model->Model_FolderPath, Scene_JustPath);
+	//strcpy(App->CL_Vm_Model->Model_FolderPath, Scene_JustPath);
 	strcpy(App->CL_Vm_Model->FileName, chr_Tag2);
 
 	Read_Player();

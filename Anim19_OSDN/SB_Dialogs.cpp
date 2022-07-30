@@ -31,6 +31,8 @@ SB_Dialogs::SB_Dialogs()
 {
 	Canceled = 0;
 
+	What_List = 0;
+
 	btext[0] = 0;
 	Chr_Text[0] = 0;
 }
@@ -137,4 +139,111 @@ LRESULT CALLBACK SB_Dialogs::Dialog_Text_Proc(HWND hDlg, UINT message, WPARAM wP
 
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *	  				Show_ListData Terry Flanigan					   *
+// *************************************************************************
+bool SB_Dialogs::Show_List_Data()
+{
+	DialogBox(App->hInst, (LPCTSTR)IDD_LISTDATA, App->Fdlg, (DLGPROC)GroupData_Proc);
+
+	return 1;
+}
+// *************************************************************************
+// *        		GroupData_Proc  Terry Flanigan						   *
+// *************************************************************************
+LRESULT CALLBACK SB_Dialogs::GroupData_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_LISTGROUP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+
+		if (App->SBC_Dialogs->What_List == Enums::Show_List_Project)
+		{
+			App->SBC_Dialogs->List_App_Project(hDlg);
+			return TRUE;
+		}
+
+		if (App->SBC_Dialogs->What_List == Enums::Show_List_Model)
+		{
+			//App->SBC_Dialogs->List_ModelData(hDlg);
+			return TRUE;
+		}
+
+		if (App->SBC_Dialogs->What_List == Enums::Show_List_App)
+		{
+			//App->SBC_Dialogs->List_App_Data(hDlg);
+			return TRUE;
+		}
+
+		return TRUE;
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+		if (LOWORD(wParam) == IDOK)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		break;
+	}
+	return FALSE;
+}
+
+// *************************************************************************
+// *	  				List_App_Project Terry Flanigan					   *
+// *************************************************************************
+void SB_Dialogs::List_App_Project(HWND hDlg)
+{
+
+	//char buf[255];
+
+	//sprintf(buf, "%s", "App Info");
+	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)App->SBC_Project->Project_Path);
+
+	//sprintf(buf, "%s", "    ");
+	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)App->SBC_Project->Level_File_Name);
+
+	/*sprintf(buf, "%s", "    ");
+	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+	sprintf(buf, "%i %s%i", Count, "BB Hwnd = ", App->CL_Model->S_BoundingBox[0]);
+	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+	App->CL_Ogre->Get_View_Height_Width();
+	sprintf(buf, "%s %i", "With = ", App->CL_Ogre->Ogre_Listener->View_Width);
+	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+	sprintf(buf, "%s %i", "Height = ", App->CL_Ogre->Ogre_Listener->View_Height);
+	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);*/
+
 }

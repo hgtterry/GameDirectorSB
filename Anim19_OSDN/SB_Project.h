@@ -87,12 +87,6 @@ public:
 	char Level_Path_File_Name[MAX_PATH];	// Level Path and File Name  ( 211121 )
 	char Level_Folder_Path[MAX_PATH];		// Level Just Path
 
-
-	char Scene_Path_FileName[1024]; 
-
-
-	char Scene_JustPath[1024];
-
 	bool Project_Loaded;
 
 protected:

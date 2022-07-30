@@ -555,7 +555,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
-			Debug1
+			
 			/*bool Test = App->Cl_Scene_Data->Is_Meshes_Used(App->Cl_Mesh_Viewer->Last_MeshFile);
 			if (Test == 0)
 			{

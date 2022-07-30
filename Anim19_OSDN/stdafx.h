@@ -311,10 +311,18 @@ namespace Enums
 		ImGui_Dimensions = 3,
 		ImGui_Groups = 4
 	};
+
+	enum Show_List
+	{
+		Show_List_None = 0,
+		Show_List_Project = 1,
+		Show_List_Model = 2,
+		Show_List_App = 3
+	};
 }
 
 
-#define Debug1 App->Debug_Text();
+#define Debug App->Debug_Text();
 
 #define Func_DLog(...) App->Cl_ImGui->ImGui_Test_Log(__VA_ARGS__)
 

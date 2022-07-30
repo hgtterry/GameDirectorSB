@@ -231,6 +231,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return 1;
 		}
 
+		case ID_APP_PROJECT:
+		{
+			App->SBC_Dialogs->What_List = Enums::Show_List_Project;
+			App->SBC_Dialogs->Show_List_Data();
+			return 1;
+		}
+
 		case ID_TEST_PROGRESSBAR:
 		{
 			if (App->CL_Vm_ImGui->Show_Progress_Bar == 0)

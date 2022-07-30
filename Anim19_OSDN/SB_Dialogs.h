@@ -28,15 +28,21 @@ public:
 	SB_Dialogs();
 	~SB_Dialogs();
 
-	bool SB_Dialogs::Dialog_Text();
+	bool Dialog_Text();
+	bool Show_List_Data();
 
 	bool Canceled;
 
+	int What_List;
+	
 	char btext[255];
 	char Chr_Text[255];
 
 protected:
 
 	static LRESULT CALLBACK Dialog_Text_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK GroupData_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	void List_App_Project(HWND hDlg);
 };
 
