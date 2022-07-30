@@ -85,7 +85,6 @@ distribution.
 #include "SB_Resources.h"
 #include "SB_Scene.h"
 #include "SB_TopTabs.h"
-#include "EB_Model.h" // *******************
 #include "SB_MeshViewer.h"
 
 #include "Com_Diaolgs.h"
@@ -143,7 +142,6 @@ public:
 	// ---------------------------------------------------- 07/12/21
 	EB_Listener*			EBC_Listener;		// Listener for Equity Editor [081221]
 	EB_Export_Mesh*			EBC_Export_Mesh;	// Converter/Exporter For Ogre Mesh [111221]
-	EB_Model*				EBC_Model;			// Collection Class For Model Equity [141221]
 	EB_Options*				EBC_Options;		// Dialogs for Equity [151221]
 
 	// ---------------------------------------------------- 18/10/21

@@ -177,8 +177,6 @@ LRESULT CALLBACK VM_WorldEditor::WE_import_Proc(HWND hDlg, UINT message, WPARAM 
 		{
 			App->Cl_Vm_Preferences->Write_Preferences();
 
-			App->EBC_Model->Clear_ModelData();
-
 			App->Cl_Vm_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
 
 			bool Test = App->Cl_Vm_Assimp->LoadFile(App->Cl_Vm_Preferences->Pref_WE_Path_FileName);

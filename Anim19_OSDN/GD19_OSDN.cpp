@@ -1316,7 +1316,6 @@ void StartOgre()
 // *************************************************************************
 void Close_App()
 {
-	App->EBC_Model->Clear_ModelData();
 
 	//App->Say("Exit");
 

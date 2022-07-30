@@ -418,7 +418,6 @@ LRESULT CALLBACK SB_Equity::Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 		if (LOWORD(wParam) == ID_FILE_EQ_CLEARMODEL)
 		{
 			App->Debug_Text();
-			App->EBC_Model->Clear_ModelData();
 			return TRUE;
 		}
 
