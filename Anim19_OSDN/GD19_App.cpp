@@ -264,7 +264,7 @@ bool GD19_App::InitApp(void)
 
 	LoadString(hInst, IDS_APP_TITLE, Version, 255);
 
-	char Udir[1024];
+	char Udir[MAX_PATH];
 	wchar_t* path = new wchar_t[128];
 	if (SUCCEEDED(SHGetKnownFolderPath(FOLDERID_LocalAppData, 0, NULL, &path)))//KF_FLAG_CREATE
 	{
@@ -277,14 +277,18 @@ bool GD19_App::InitApp(void)
 		App->Say("Can not access user folder");
 	}
 
-	//char Udir2[1024];
-	//wchar_t* path2 = new wchar_t[128];
-	//if (SUCCEEDED(SHGetKnownFolderPath(FOLDERID_Desktop, 0, NULL, &path2)))//KF_FLAG_CREATE
-	//{
-	//	wsprintf(Udir2, "%ls", path2);
-	//	CoTaskMemFree(path2);
-	//	strcpy(DeskTop_Folder, Udir2);
-	//}
+	char Deskdir[MAX_PATH];
+	wchar_t* d_path = new wchar_t[128];
+	if (SUCCEEDED(SHGetKnownFolderPath(FOLDERID_Desktop, 0, NULL, &d_path)))//KF_FLAG_CREATE
+	{
+		wsprintf(Deskdir, "%ls", d_path);
+		CoTaskMemFree(d_path);
+		strcpy(App->CL_Vm_FileIO->DeskTop_Folder, Deskdir);
+	}
+	else
+	{
+		App->Say("Can not access user folder");
+	}
 
 	strcpy(ETemp_Folder, EquityDirecory_FullPath);
 	strcat(ETemp_Folder, "\\Data\\ETemp.bmp");

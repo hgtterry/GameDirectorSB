@@ -52,7 +52,8 @@ public:
 
 	char OutputFolder[1024];
 
-	char UserData_Folder[1024];
+	char UserData_Folder[MAX_PATH];
+	char DeskTop_Folder[MAX_PATH];
 
 	char JustFileName[256];
 

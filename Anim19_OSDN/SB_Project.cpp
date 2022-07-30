@@ -248,6 +248,23 @@ LRESULT CALLBACK SB_Project::Create_Project_Proc(HWND hDlg, UINT message, WPARAM
 
 			return TRUE;
 		}
+
+		if (LOWORD(wParam) == IDC_BTDESKTOP)
+		{
+			
+			strcpy(App->SBC_Project->m_Project_Full_Path, App->CL_Vm_FileIO->DeskTop_Folder);
+			strcat(App->SBC_Project->m_Project_Full_Path, "\\");
+			strcat(App->SBC_Project->m_Project_Full_Path, App->SBC_Project->m_Project_Name);
+			strcat(App->SBC_Project->m_Project_Full_Path, "_Prj");
+
+			strcpy(App->SBC_Project->Project_Path, App->CL_Vm_FileIO->DeskTop_Folder);
+			strcat(App->SBC_Project->Project_Path, "\\");
+
+			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Full_Path);
+
+			return TRUE;
+		}
+		
 		
 		if (LOWORD(wParam) == IDCANCEL)
 		{
@@ -923,47 +940,18 @@ bool SB_Project::N_Save_Project()
 	if (App->SBC_Scene->Player_Added == 1)
 	{
 		N_Save_Players_Folder();
+
+		App->SBC_Player->FileViewItem = App->SBC_FileView->Add_PlayerFile("Player_1", 0);
+		App->SBC_FileView->Set_FolderActive(App->SBC_FileView->GD_Player);
+
 	}
 
+	App->SBC_FileView->Change_Level_Name();
+	App->SBC_FileView->Change_Project_Name();
 
-	//Write_Level_File();
+	App->Set_Main_TitleBar(App->CL_Vm_FileIO->Model_Path_FileName);
 
-	//// Player
-	//App->SBC_Player->Create_Player_Object();
-	//strcpy(App->SBC_Scene->SBC_Base_Player[0]->Player_Name, "Player_1");
-	//Write_Player();
-
-	//// Camera
-	//Write_Camera();
-
-	//// Objects
-	//Write_Objects();
-
-	//Add_World(); // Create First room Not Loaded
-
-	//strcpy(App->CL_Vm_Model->Model_FolderPath, Level_Folder_Path_World);
-	//strcpy(App->CL_Vm_Model->FileName, "World.mesh");
-
-	//App->SBC_Aera->Add_Area();
-
-	//App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
-
-
-	////          File View Stuff
-	//App->SBC_FileView->Change_Level_Name();
-
-	//App->SBC_Camera->FileViewItem = App->SBC_FileView->Add_Camera(App->SBC_Camera->Camera_Name, 0);
-	//App->SBC_Player->FileViewItem = App->SBC_FileView->Add_PlayerFile(App->SBC_Scene->SBC_Base_Player[0]->Player_Name, 0);
-	//HTREEITEM Temp = App->SBC_FileView->Add_Area("Area_1", 0);
-	//App->SBC_FileView->Redraw_FileView();
-
-	////  Start Level
-	//App->SBC_Physics->Enable_Physics(1);
-	//App->SBC_Camera->Set_Camera();
-
-	//App->SBC_Scene->Scene_Loaded = 1;
-
-	App->Say("Scene Created jj");
+	App->Say("Scene Created");
 	return 1;
 }
 
