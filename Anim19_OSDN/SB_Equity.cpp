@@ -1020,22 +1020,7 @@ void SB_Equity::Close_OgreWindow(void)
 // *************************************************************************
 void SB_Equity::Update_Model(void)
 {
-	App->Cl_Vm_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
-
-	bool Test = App->Cl_Vm_Assimp->LoadFile(App->Cl_Vm_Preferences->Pref_WE_Path_FileName);
-	if (Test == 0)
-	{
-		App->Say("Failed To Load");
-		return;
-	}
-
-	App->CL_Vm_Model->Model_Type = LoadedFile_Assimp;
-
-	App->Cl_Vm_WorldEditor->LoadTextures_TXL();
-
-	App->Cl_Vm_WorldEditor->Adjust();
-
-	App->Say("Model Updated");
+	
 }
 
 // *************************************************************************

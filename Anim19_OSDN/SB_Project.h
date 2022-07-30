@@ -61,6 +61,8 @@ public:
 	char m_Level_Folder_Path[MAX_PATH];		// Level Just Path
 	char m_Players_Folder_Path[MAX_PATH];
 
+	char m_Project_Full_Path[MAX_PATH];
+
 	char m_Ini_Path_File_Name[MAX_PATH];
 
 	//------------------------------------------------ 
@@ -74,7 +76,6 @@ public:
 	bool Write_Objects();
 
 	char Project_Path[1024];
-	char Project_FullPath[1024];
 
 	char Project_Ini_FilePath[1024];
 

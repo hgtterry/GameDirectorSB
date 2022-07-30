@@ -33,12 +33,12 @@ SB_Project::SB_Project()
 	strcat(Project_Path, "\\");
 	strcat(Project_Path, "Projects\\");
 
-	strcpy(Project_FullPath, App->EquityDirecory_FullPath);
-	strcat(Project_FullPath, "\\");
-	strcat(Project_FullPath, "Projects");
-	strcat(Project_FullPath, "\\");
-	strcat(Project_FullPath, "No Project?");
-	strcat(Project_FullPath, "_Prj");
+	strcpy(m_Project_Full_Path, App->EquityDirecory_FullPath);
+	strcat(m_Project_Full_Path, "\\");
+	strcat(m_Project_Full_Path, "Projects");
+	strcat(m_Project_Full_Path, "\\");
+	strcat(m_Project_Full_Path, "No Project?");
+	strcat(m_Project_Full_Path, "_Prj");
 
 	strcpy(m_Project_Name, "No Project");
 	strcpy(m_Level_Name,"No Level");
@@ -102,7 +102,7 @@ LRESULT CALLBACK SB_Project::Create_Project_Proc(HWND hDlg, UINT message, WPARAM
 		
 
 		SetDlgItemText(hDlg, IDC_STPROJECTNAME, (LPCTSTR)App->SBC_Project->m_Project_Name);
-		SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->Project_FullPath);
+		SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Full_Path);
 		SetDlgItemText(hDlg, IDC_STLEVELNAME, (LPCTSTR)App->SBC_Project->m_Level_Name);
 		
 		return TRUE;
@@ -203,13 +203,13 @@ LRESULT CALLBACK SB_Project::Create_Project_Proc(HWND hDlg, UINT message, WPARAM
 
 			if (Test == 0){return true;}
 
-			strcpy(App->SBC_Project->Project_FullPath, App->Com_CDialogs->szSelectedDir);
-			strcat(App->SBC_Project->Project_FullPath, App->SBC_Project->m_Project_Name);
-			strcat(App->SBC_Project->Project_FullPath, "_Prj");
+			strcpy(App->SBC_Project->m_Project_Full_Path, App->Com_CDialogs->szSelectedDir);
+			strcat(App->SBC_Project->m_Project_Full_Path, App->SBC_Project->m_Project_Name);
+			strcat(App->SBC_Project->m_Project_Full_Path, "_Prj");
 
 			strcpy(App->SBC_Project->Project_Path, App->Com_CDialogs->szSelectedDir);
 
-			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->Project_FullPath);
+			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Full_Path);
 
 			return TRUE;
 		}
@@ -223,12 +223,12 @@ LRESULT CALLBACK SB_Project::Create_Project_Proc(HWND hDlg, UINT message, WPARAM
 
 			strcpy(App->SBC_Project->m_Project_Name,App->SBC_Dialogs->Chr_Text);
 
-			strcpy(App->SBC_Project->Project_FullPath, App->SBC_Project->Project_Path);
-			strcat(App->SBC_Project->Project_FullPath, App->SBC_Project->m_Project_Name);
-			strcat(App->SBC_Project->Project_FullPath, "_Prj");
+			strcpy(App->SBC_Project->m_Project_Full_Path, App->SBC_Project->Project_Path);
+			strcat(App->SBC_Project->m_Project_Full_Path, App->SBC_Project->m_Project_Name);
+			strcat(App->SBC_Project->m_Project_Full_Path, "_Prj");
 
 			SetDlgItemText(hDlg, IDC_STPROJECTNAME, (LPCTSTR)App->SBC_Project->m_Project_Name);
-			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->Project_FullPath);
+			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Full_Path);
 
 			return TRUE;
 		}
@@ -277,9 +277,9 @@ bool SB_Project::Create_Project()
 {
 
 
-	if (_mkdir(App->SBC_Project->Project_FullPath) == 0)
+	if (_mkdir(App->SBC_Project->m_Project_Full_Path) == 0)
 	{
-		_chdir(App->SBC_Project->Project_FullPath);
+		_chdir(App->SBC_Project->m_Project_Full_Path);
 	}
 	else
 	{
@@ -340,11 +340,11 @@ bool SB_Project::Set_Paths()
 {
 	Project_Ini_FilePath[0] = 0;
 
-	strcpy(Project_Ini_FilePath, App->SBC_Project->Project_FullPath);
+	strcpy(Project_Ini_FilePath, App->SBC_Project->m_Project_Full_Path);
 	strcat(Project_Ini_FilePath, "\\");
 	strcat(Project_Ini_FilePath, "Project.eif");
 
-	strcpy(Level_Folder_Path, App->SBC_Project->Project_FullPath);
+	strcpy(Level_Folder_Path, App->SBC_Project->m_Project_Full_Path);
 	strcat(Level_Folder_Path, "\\");
 	strcat(Level_Folder_Path, "Level_1");
 	return 1;
@@ -368,7 +368,7 @@ bool SB_Project::Write_Project_Ini()
 
 	fprintf(Write_Ini, "%s\n", "[Files]");
 	fprintf(Write_Ini, "%s%s\n", "Project_Name=", App->SBC_Project->m_Project_Name);
-	fprintf(Write_Ini, "%s%s\n", "Folder_Path=", App->SBC_Project->Project_FullPath);
+	fprintf(Write_Ini, "%s%s\n", "Folder_Path=", App->SBC_Project->m_Project_Full_Path);
 
 	fprintf(Write_Ini, "%s\n", "[Player]");
 	fprintf(Write_Ini, "%s%s\n", "Player_File=","Player1.ply");
@@ -900,13 +900,13 @@ bool SB_Project::N_Save_Project()
 {
 
 
-	if (_mkdir(App->SBC_Project->Project_FullPath) == 0)
+	if (_mkdir(App->SBC_Project->m_Project_Full_Path) == 0)
 	{
-		_chdir(App->SBC_Project->Project_FullPath);
+		_chdir(App->SBC_Project->m_Project_Full_Path);
 	}
 	else
 	{
-		_chdir(App->SBC_Project->Project_FullPath);
+		_chdir(App->SBC_Project->m_Project_Full_Path);
 	}
 
 	N_Save_Project_Ini();
@@ -975,7 +975,7 @@ bool SB_Project::N_Save_Project_Ini()
 {
 	Project_Ini_FilePath[0] = 0;
 
-	strcpy(Project_Ini_FilePath, App->SBC_Project->Project_FullPath);
+	strcpy(Project_Ini_FilePath, App->SBC_Project->m_Project_Full_Path);
 	strcat(Project_Ini_FilePath, "\\");
 	strcat(Project_Ini_FilePath, "Project.SBProj");
 
@@ -996,8 +996,8 @@ bool SB_Project::N_Save_Project_Ini()
 
 	fprintf(Write_Ini, "%s\n", "[Files]");
 	fprintf(Write_Ini, "%s%s\n", "Project_Name=", App->SBC_Project->m_Project_Name);
-	fprintf(Write_Ini, "%s%s\n", "Folder_Path=", App->SBC_Project->Project_FullPath);
 	fprintf(Write_Ini, "%s%s\n", "Level_Name=", App->SBC_Project->m_Level_Name);
+	fprintf(Write_Ini, "%s%s\n", "Folder_Path=", App->SBC_Project->m_Project_Full_Path);
 
 	fprintf(Write_Ini, "%s\n", " ");
 
@@ -1017,7 +1017,7 @@ bool SB_Project::N_Save_Project_Ini()
 // *************************************************************************
 bool SB_Project::N_Save_Level_Folder()
 {
-	strcpy(m_Level_Folder_Path, App->SBC_Project->Project_FullPath);
+	strcpy(m_Level_Folder_Path, App->SBC_Project->m_Project_Full_Path);
 	strcat(m_Level_Folder_Path, "\\");
 	strcat(m_Level_Folder_Path, m_Level_Name);
 

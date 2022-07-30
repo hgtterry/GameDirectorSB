@@ -40,30 +40,7 @@ SB_Import::~SB_Import()
 // *************************************************************************
 bool SB_Import::Assimp_Loader(char* Extension, char* Extension2)
 {
-	int Result = App->CL_Vm_FileIO->Vm_OpenFile(Extension, Extension2, NULL);
-	if (Result == 0)
-	{
-		return 1;
-	}
-
-	App->CL_Vm_Model->Set_Paths();
-
-
-	App->Cl_Vm_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
-
-	bool Test = App->Cl_Vm_Assimp->LoadFile(App->CL_Vm_FileIO->Model_Path_FileName);
-	if (Test == 0)
-	{
-		App->Say("Failed To Load");
-		return 0;
-	}
-
-	App->CL_Vm_Model->Model_Type = LoadedFile_Assimp;
-
-	//Set_Equity();
-	App->SBC_Equity->Set_Equity();
-
-	App->Say("Model Loaded");
+	
 	return 1;
 }
 
@@ -184,26 +161,7 @@ void SB_Import::Reload_FromResentFiles(char* ResentPathAndFile)
 	//_chdir(App->CL_Model_Data->Model_FullPath);
 
 	//--------------------------------------------------------------- Genesis Actor
-	if (_stricmp(mJustFileName + strlen(mJustFileName) - 4, ".act") == 0)
-	{
-		//App->CL_Vm_Model->Clear_ModelData();
-
-		App->CL_Vm_Model->Model_Type = LoadedFile_Actor;
-
-		App->SBC_Equity->Set_Equity();
-
-		App->Say("Model Loaded");
-
-		return;
-	}
-
-	// Fall through fo assimp
-	bool Test = App->Cl_Vm_Assimp->LoadFile(ResentPathAndFile);
-	if (Test == 0)
-	{
-		App->Say("Can Not Load File");
-		return;
-	}
+	
 
 	App->CL_Vm_Model->Model_Type = LoadedFile_Assimp;
 
