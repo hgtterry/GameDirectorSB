@@ -49,7 +49,7 @@ bool SB_Import::Assimp_Loader(char* Extension, char* Extension2)
 // *************************************************************************
 bool SB_Import::WorldEditor_Loader(void)
 {
-	App->Cl_Vm_WorldEditor->Start_WE_import();
+	
 	return 1;
 }
 

@@ -64,7 +64,6 @@ GD19_App::GD19_App(void)
 	CL_Vm_TextLib =		nullptr;
 	Cl_Vm_Dimensions =	nullptr;
 	Cl_Vm_File_Equity =	nullptr;
-	Cl_Vm_WorldEditor = nullptr;
 	Cl_Vm_Preferences = nullptr;
 
 	// ---------------------------------------------------- 15/10/21
@@ -228,7 +227,6 @@ bool GD19_App::InitApp(void)
 	CL_Vm_TextLib =		new VM_TextLib();
 	Cl_Vm_Dimensions =	new VM_Dimensions();
 	Cl_Vm_File_Equity = new VM_File_Equity();
-	Cl_Vm_WorldEditor = new VM_WorldEditor();
 	Cl_Vm_Preferences = new VM_Preferences();
 
 	// ---------------------------------------------------- 15/10/21

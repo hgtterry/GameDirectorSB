@@ -56,7 +56,6 @@ distribution.
 #include "VM_TextLib.h"
 #include "VM_Dimensions.h"
 #include "VM_File_Equity.h"
-#include "VM_WorldEditor.h"
 #include "VM_Preferences.h"
 
 // ---------------------------------------------------- 15/10/21
@@ -127,7 +126,6 @@ public:
 	VM_TextLib*			CL_Vm_TextLib;
 	VM_Dimensions*		Cl_Vm_Dimensions;
 	VM_File_Equity*		Cl_Vm_File_Equity;
-	VM_WorldEditor*		Cl_Vm_WorldEditor;
 	VM_Preferences*		Cl_Vm_Preferences;
 
 	// ---------------------------------------------------- 15/10/21
