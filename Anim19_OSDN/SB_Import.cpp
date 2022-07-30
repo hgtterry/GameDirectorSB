@@ -90,11 +90,6 @@ bool SB_Import::Genesis3D_Loader(void)
 
 	App->CL_Vm_Model->Set_Paths();
 
-	bool test = App->CL_Vm_Genesis3D->Import_LoadActor();
-	if (test == 0)
-	{
-		return 0;
-	}
 
 	App->CL_Vm_Model->Model_Type = LoadedFile_Actor;
 
@@ -192,12 +187,6 @@ void SB_Import::Reload_FromResentFiles(char* ResentPathAndFile)
 	if (_stricmp(mJustFileName + strlen(mJustFileName) - 4, ".act") == 0)
 	{
 		//App->CL_Vm_Model->Clear_ModelData();
-
-		bool test = App->CL_Vm_Genesis3D->Import_LoadActor();
-		if (test == 0)
-		{
-			return;
-		}
 
 		App->CL_Vm_Model->Model_Type = LoadedFile_Actor;
 

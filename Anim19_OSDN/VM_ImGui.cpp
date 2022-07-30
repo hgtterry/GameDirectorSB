@@ -360,8 +360,7 @@ void VM_ImGui::ImGui_Rotation2(void)
 		ImGui::Separator();
 		ImGui::Spacing();
 
-		geVec3d pos = App->CL_Vm_Genesis3D->Actor_Rotation;
-		ImGui::Text("X %.3f Y %.3f Z %.3f", pos.X, pos.Y, pos.Z);
+		
 
 		ImGui::Spacing();
 
@@ -375,8 +374,7 @@ void VM_ImGui::ImGui_Rotation2(void)
 		{
 			if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
 			{
-				App->CL_Vm_Genesis3D->Actor_Rotation.X += App->Cl_Vm_Dimensions->Model_X_Rotation;
-				App->CL_Vm_Genesis3D->MoveActor();
+				
 			}
 
 			if (App->CL_Vm_Model->Model_Type == LoadedFile_Assimp)
@@ -390,8 +388,7 @@ void VM_ImGui::ImGui_Rotation2(void)
 		{
 			if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
 			{
-				App->CL_Vm_Genesis3D->Actor_Rotation.X -= App->Cl_Vm_Dimensions->Model_X_Rotation;
-				App->CL_Vm_Genesis3D->MoveActor();
+				
 			}
 
 			if (App->CL_Vm_Model->Model_Type == LoadedFile_Assimp)
@@ -422,8 +419,7 @@ void VM_ImGui::ImGui_Rotation2(void)
 		{
 			if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
 			{
-				App->CL_Vm_Genesis3D->Actor_Rotation.Y += App->Cl_Vm_Dimensions->Model_Y_Rotation;
-				App->CL_Vm_Genesis3D->MoveActor();
+				
 			}
 
 			if (App->CL_Vm_Model->Model_Type == LoadedFile_Assimp)
@@ -436,8 +432,7 @@ void VM_ImGui::ImGui_Rotation2(void)
 		{
 			if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
 			{
-				App->CL_Vm_Genesis3D->Actor_Rotation.Y -= App->Cl_Vm_Dimensions->Model_Y_Rotation;
-				App->CL_Vm_Genesis3D->MoveActor();
+				
 			}
 
 			if (App->CL_Vm_Model->Model_Type == LoadedFile_Assimp)
@@ -468,8 +463,7 @@ void VM_ImGui::ImGui_Rotation2(void)
 		{
 			if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
 			{
-				App->CL_Vm_Genesis3D->Actor_Rotation.Z += App->Cl_Vm_Dimensions->Model_Z_Rotation;
-				App->CL_Vm_Genesis3D->MoveActor();
+				
 			}
 
 			if (App->CL_Vm_Model->Model_Type == LoadedFile_Assimp)
@@ -482,8 +476,7 @@ void VM_ImGui::ImGui_Rotation2(void)
 		{
 			if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
 			{
-				App->CL_Vm_Genesis3D->Actor_Rotation.Z -= App->Cl_Vm_Dimensions->Model_Z_Rotation;
-				App->CL_Vm_Genesis3D->MoveActor();
+				
 			}
 
 			if (App->CL_Vm_Model->Model_Type == LoadedFile_Assimp)
@@ -536,9 +529,6 @@ void VM_ImGui::ImGui_Position(void)
 		ImGui::Text("Position");
 		ImGui::Separator();
 		ImGui::Spacing();
-
-		geVec3d pos = App->CL_Vm_Genesis3D->Actor_Position;
-		ImGui::Text("X %.3f Y %.3f Z %.3f", pos.X, pos.Y, pos.Z);
 	
 		ImGui::Spacing();
 
@@ -552,8 +542,7 @@ void VM_ImGui::ImGui_Position(void)
 		{
 			if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
 			{
-				App->CL_Vm_Genesis3D->Actor_Position.X += Model_XTranslate;
-				App->CL_Vm_Genesis3D->MoveActor();
+				
 			}
 		}
 
@@ -562,8 +551,7 @@ void VM_ImGui::ImGui_Position(void)
 		{
 			if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
 			{
-				App->CL_Vm_Genesis3D->Actor_Position.X -= Model_XTranslate;
-				App->CL_Vm_Genesis3D->MoveActor();
+				
 			}
 		}
 		ImGui::PopButtonRepeat();
@@ -588,8 +576,7 @@ void VM_ImGui::ImGui_Position(void)
 		{
 			if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
 			{
-				App->CL_Vm_Genesis3D->Actor_Position.Y += Model_YTranslate;
-				App->CL_Vm_Genesis3D->MoveActor();
+				
 			}
 		}
 		ImGui::SameLine(0.0f, spacing2);
@@ -597,8 +584,7 @@ void VM_ImGui::ImGui_Position(void)
 		{
 			if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
 			{
-				App->CL_Vm_Genesis3D->Actor_Position.Y -= Model_YTranslate;
-				App->CL_Vm_Genesis3D->MoveActor();
+				
 			}
 		}
 		ImGui::PopButtonRepeat();
@@ -623,8 +609,7 @@ void VM_ImGui::ImGui_Position(void)
 		{
 			if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
 			{
-				App->CL_Vm_Genesis3D->Actor_Position.Z += Model_ZTranslate;
-				App->CL_Vm_Genesis3D->MoveActor();
+				
 			}
 		}
 		ImGui::SameLine(0.0f, spacing3);
@@ -632,8 +617,7 @@ void VM_ImGui::ImGui_Position(void)
 		{
 			if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
 			{
-				App->CL_Vm_Genesis3D->Actor_Position.Z -= Model_ZTranslate;
-				App->CL_Vm_Genesis3D->MoveActor();
+				
 			}
 		}
 		ImGui::PopButtonRepeat();
@@ -700,7 +684,7 @@ void VM_ImGui::ImGui_Scale(void)
 
 				if (App->CL_Vm_Model->Model_Loaded == 1)
 				{
-					App->CL_Vm_Genesis3D->ScaleActor(Delta, Delta, Delta);
+					
 					//Ogre::Vector3 Scale = App->Cl_Scene_Data->Cl_Object[index]->Mesh_Scale;
 					//Scale.x += Delta;
 					//Scale.y += Delta;
@@ -726,7 +710,7 @@ void VM_ImGui::ImGui_Scale(void)
 
 				if (App->CL_Vm_Model->Model_Loaded == 1)
 				{
-					App->CL_Vm_Genesis3D->ScaleActor(Delta, Delta, Delta);
+					
 					//Scale.x -= Delta;
 					//Scale.y -= Delta;
 					//Scale.z -= Delta;
@@ -976,8 +960,6 @@ void VM_ImGui::ImGui_MotionList(void)
 		int MotionCount = App->CL_Vm_Model->MotionCount;
 		ImGui::Text("Motion Count %i", MotionCount);
 
-		ImGui::Text("Current %f", App->CL_Vm_Genesis3D->m_CurrentPose);
-
 		ImGui::Separator();
 		ImGui::Spacing();
 
@@ -996,16 +978,7 @@ void VM_ImGui::ImGui_MotionList(void)
 
 		if (Block_Motion == 1)
 		{
-			char buff[255];
-			strcpy(buff, App->CL_Vm_Model->MotionNames_Data[selected_Motion].Name);
-
-			App->CL_Vm_Genesis3D->GetMotion(buff);
-
-			strcpy(App->CL_Vm_Genesis3D->MotionName, buff);
-
-			App->CL_Vm_Genesis3D->m_CurrentPose = 0;
-
-			Block_Motion = 0;
+			
 		}
 
 		ImGui::End();

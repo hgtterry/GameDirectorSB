@@ -223,7 +223,6 @@
     <ClInclude Include="VM_Exporter.h" />
     <ClInclude Include="VM_FileIO.h" />
     <ClInclude Include="VM_File_Equity.h" />
-    <ClInclude Include="VM_Genisis3D.h" />
     <ClInclude Include="VM_ImGui.h" />
     <ClInclude Include="VM_Model.h" />
     <ClInclude Include="VM_Preferences.h" />
@@ -305,7 +304,6 @@
     <ClCompile Include="VM_Exporter.cpp" />
     <ClCompile Include="VM_FileIO.cpp" />
     <ClCompile Include="VM_File_Equity.cpp" />
-    <ClCompile Include="VM_Genisis3D.cpp" />
     <ClCompile Include="VM_ImGui.cpp" />
     <ClCompile Include="VM_Model.cpp" />
     <ClCompile Include="VM_Preferences.cpp" />
