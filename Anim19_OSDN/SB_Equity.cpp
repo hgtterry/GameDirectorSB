@@ -404,14 +404,7 @@ LRESULT CALLBACK SB_Equity::Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 
 		if (LOWORD(wParam) == ID_EXPORT_EQ_EQUITY)
 		{
-			App->Cl_Vm_File_Equity->SaveFile("Data Files   *.edf\0*.edf\0*", "Data Files", App->CL_Vm_Model->JustName);
-
-			if (_stricmp(App->Cl_Vm_File_Equity->mPath_FileName + strlen(App->Cl_Vm_File_Equity->mPath_FileName) - 4, ".edf") != 0)
-			{
-				strcat(App->Cl_Vm_File_Equity->mPath_FileName, ".edf");
-			}
-
-			App->Cl_Vm_File_Equity->WriteData_File();
+			
 			return TRUE;
 		}
 

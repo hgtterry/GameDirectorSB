@@ -55,7 +55,6 @@ distribution.
 #include "VM_ImGui.h"
 #include "VM_TextLib.h"
 #include "VM_Dimensions.h"
-#include "VM_File_Equity.h"
 #include "VM_Preferences.h"
 
 // ---------------------------------------------------- 15/10/21
@@ -125,7 +124,6 @@ public:
 	VM_ImGui*			CL_Vm_ImGui;
 	VM_TextLib*			CL_Vm_TextLib;
 	VM_Dimensions*		Cl_Vm_Dimensions;
-	VM_File_Equity*		Cl_Vm_File_Equity;
 	VM_Preferences*		Cl_Vm_Preferences;
 
 	// ---------------------------------------------------- 15/10/21
