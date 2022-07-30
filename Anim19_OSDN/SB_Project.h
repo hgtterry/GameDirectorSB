@@ -73,7 +73,6 @@ public:
 	bool Write_Camera();
 	bool Write_Objects();
 
-	char Project_Name[255];
 	char Project_Path[1024];
 	char Project_FullPath[1024];
 
