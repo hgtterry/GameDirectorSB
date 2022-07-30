@@ -303,8 +303,6 @@ bool VM_Genisis3D::GetMotion(char *mMotionName)
 	geMotion_GetTimeExtents(Motion, &StartTime, &EndTime);
 	Frame_End_Time = EndTime;
 
-	App->CL_Vm_Motions->Current_StartTime = StartTime;
-	App->CL_Vm_Motions->Current_EndTime = EndTime;
 	return 1;
 }
 

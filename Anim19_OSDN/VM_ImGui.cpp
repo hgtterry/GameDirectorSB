@@ -976,7 +976,6 @@ void VM_ImGui::ImGui_MotionList(void)
 		int MotionCount = App->CL_Vm_Model->MotionCount;
 		ImGui::Text("Motion Count %i", MotionCount);
 
-		ImGui::Text("Time %f", App->CL_Vm_Motions->Current_EndTime);
 		ImGui::Text("Current %f", App->CL_Vm_Genesis3D->m_CurrentPose);
 
 		ImGui::Separator();

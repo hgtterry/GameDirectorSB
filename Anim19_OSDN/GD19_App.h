@@ -51,7 +51,6 @@ distribution.
 #include "VM_Genisis3D.h"
 #include "VM_Model.h"
 #include "VM_Textures.h"
-#include "VM_Motions.h"
 #include "VM_Exporter.h"
 #include "VM_FileIO.h"
 #include "VM_ImGui.h"
@@ -125,7 +124,6 @@ public:
 	VM_Genisis3D*		CL_Vm_Genesis3D;
 	VM_Model*			CL_Vm_Model;
 	VM_Textures*		CL_Vm_Textures;
-	VM_Motions*			CL_Vm_Motions;
 	VM_Exporter*		CL_Vm_Exporter;
 	VM_FileIO*			CL_Vm_FileIO;
 	VM_ImGui*			CL_Vm_ImGui;

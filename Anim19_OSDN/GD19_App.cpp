@@ -59,7 +59,6 @@ GD19_App::GD19_App(void)
 	CL_Vm_Genesis3D =	nullptr;
 	CL_Vm_Model =		nullptr;
 	CL_Vm_Textures =	nullptr;
-	CL_Vm_Motions =		nullptr;
 	CL_Vm_Exporter =	nullptr;
 	CL_Vm_FileIO =		nullptr;
 	CL_Vm_ImGui =		nullptr;
@@ -226,7 +225,6 @@ bool GD19_App::InitApp(void)
 	CL_Vm_Genesis3D =	new VM_Genisis3D();		
 	CL_Vm_Model =		new VM_Model();
 	CL_Vm_Textures =	new VM_Textures();
-	CL_Vm_Motions =		new VM_Motions();
 	CL_Vm_Exporter =	new VM_Exporter();
 	CL_Vm_FileIO =		new VM_FileIO();
 	CL_Vm_ImGui =		new VM_ImGui();
