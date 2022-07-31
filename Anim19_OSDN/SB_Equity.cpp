@@ -392,13 +392,13 @@ LRESULT CALLBACK SB_Equity::Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 		// ----------------------------------------------------------- Exporters
 		if (LOWORD(wParam) == ID_OGRE3D_MESH32842)
 		{
-			App->CL_Vm_Exporter->Ogre3D_Model();
+			
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == ID_EXPORT_EQ_GENESIS3D)
 		{
-			App->CL_Vm_Exporter->Actor_Model();
+			
 			return TRUE;
 		}
 
@@ -1021,9 +1021,7 @@ void SB_Equity::Update_Model(void)
 // *************************************************************************
 void SB_Equity::Convert_Model(void)
 {
-	App->CL_Vm_Exporter->Ogre3D_Model();
-
-	App->Say("Converted");
+	
 }
 
 // *************************************************************************

@@ -58,7 +58,6 @@ GD19_App::GD19_App(void)
 	// Vima19 19/03/20
 	CL_Vm_Model =		nullptr;
 	CL_Vm_Textures =	nullptr;
-	CL_Vm_Exporter =	nullptr;
 	CL_Vm_FileIO =		nullptr;
 	CL_Vm_ImGui =		nullptr;
 	CL_Vm_TextLib =		nullptr;
@@ -220,7 +219,6 @@ bool GD19_App::InitApp(void)
 	// Vima19 19/03/20
 	CL_Vm_Model =		new VM_Model();
 	CL_Vm_Textures =	new VM_Textures();
-	CL_Vm_Exporter =	new VM_Exporter();
 	CL_Vm_FileIO =		new VM_FileIO();
 	CL_Vm_ImGui =		new VM_ImGui();
 	CL_Vm_TextLib =		new VM_TextLib();
