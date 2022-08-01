@@ -65,6 +65,7 @@ public:
 
 	char m_Ini_Path_File_Name[MAX_PATH];
 
+	char m_Project_Sub_Folder[MAX_PATH]; // Curent Default Project Location not including project folder
 	//------------------------------------------------ 
 
 	bool Load_Scene_Auto();
@@ -75,8 +76,6 @@ public:
 	bool Write_Camera();
 	bool Write_Objects();
 
-	char Project_Path[1024];
-
 	char Project_Ini_FilePath[1024];
 
 	char Level_Folder_Path_World[1024];
@@ -85,7 +84,7 @@ public:
 	// --------------------------------------------------------------------------- 
 	char Level_File_Name[MAX_PATH];			// Level File Name ( 211121 )
 	char Level_Path_File_Name[MAX_PATH];	// Level Path and File Name  ( 211121 )
-	char Level_Folder_Path[MAX_PATH];		// Level Just Path
+	//char Level_Folder_Path[MAX_PATH];		// Level Just Path
 
 	bool Project_Loaded;
 

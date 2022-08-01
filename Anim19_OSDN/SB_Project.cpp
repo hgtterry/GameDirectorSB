@@ -29,9 +29,9 @@ distribution.
 
 SB_Project::SB_Project()
 {
-	strcpy(Project_Path,App->EquityDirecory_FullPath);
-	strcat(Project_Path, "\\");
-	strcat(Project_Path, "Projects\\");
+	strcpy(m_Project_Sub_Folder,App->EquityDirecory_FullPath);
+	strcat(m_Project_Sub_Folder, "\\");
+	strcat(m_Project_Sub_Folder, "Projects\\");
 
 	strcpy(m_Project_Full_Path, App->EquityDirecory_FullPath);
 	strcat(m_Project_Full_Path, "\\");
@@ -47,7 +47,6 @@ SB_Project::SB_Project()
 	m_Players_Folder_Path[0] = 0;
 
 	Project_Ini_FilePath[0] = 0;
-	Level_Folder_Path[0] = 0;
 	Level_Folder_Path_World[0] = 0;
 
 	strcpy(Level_File_Name, "No Level");
@@ -211,7 +210,7 @@ LRESULT CALLBACK SB_Project::Create_Project_Proc(HWND hDlg, UINT message, WPARAM
 			strcat(App->SBC_Project->m_Project_Full_Path, App->SBC_Project->m_Project_Name);
 			strcat(App->SBC_Project->m_Project_Full_Path, "_Prj");
 
-			strcpy(App->SBC_Project->Project_Path, App->Com_CDialogs->szSelectedDir);
+			strcpy(App->SBC_Project->m_Project_Sub_Folder, App->Com_CDialogs->szSelectedDir);
 
 			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Full_Path);
 
@@ -227,7 +226,7 @@ LRESULT CALLBACK SB_Project::Create_Project_Proc(HWND hDlg, UINT message, WPARAM
 
 			strcpy(App->SBC_Project->m_Project_Name,App->SBC_Dialogs->Chr_Text);
 
-			strcpy(App->SBC_Project->m_Project_Full_Path, App->SBC_Project->Project_Path);
+			strcpy(App->SBC_Project->m_Project_Full_Path, App->SBC_Project->m_Project_Sub_Folder);
 			strcat(App->SBC_Project->m_Project_Full_Path, App->SBC_Project->m_Project_Name);
 			strcat(App->SBC_Project->m_Project_Full_Path, "_Prj");
 
@@ -261,8 +260,8 @@ LRESULT CALLBACK SB_Project::Create_Project_Proc(HWND hDlg, UINT message, WPARAM
 			strcat(App->SBC_Project->m_Project_Full_Path, App->SBC_Project->m_Project_Name);
 			strcat(App->SBC_Project->m_Project_Full_Path, "_Prj");
 
-			strcpy(App->SBC_Project->Project_Path, App->CL_Vm_FileIO->DeskTop_Folder);
-			strcat(App->SBC_Project->Project_Path, "\\");
+			strcpy(App->SBC_Project->m_Project_Sub_Folder, App->CL_Vm_FileIO->DeskTop_Folder);
+			strcat(App->SBC_Project->m_Project_Sub_Folder, "\\");
 
 			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Full_Path);
 
@@ -365,9 +364,9 @@ bool SB_Project::Set_Paths()
 	strcat(Project_Ini_FilePath, "\\");
 	strcat(Project_Ini_FilePath, "Project.eif");
 
-	strcpy(Level_Folder_Path, App->SBC_Project->m_Project_Full_Path);
-	strcat(Level_Folder_Path, "\\");
-	strcat(Level_Folder_Path, "Level_1");
+	strcpy(m_Project_Sub_Folder, App->SBC_Project->m_Project_Full_Path);
+	strcat(m_Project_Sub_Folder, "\\");
+	strcat(m_Project_Sub_Folder, "Level_1");
 	return 1;
 }
 
@@ -412,14 +411,14 @@ bool SB_Project::Create_Level_Folder()
 {
 	Level_Folder_Path_World[0] = 0;
 
-	strcpy(Level_Folder_Path_World, Level_Folder_Path);
+	strcpy(Level_Folder_Path_World, m_Project_Sub_Folder);
 	strcat(Level_Folder_Path_World, "\\");
 	strcat(Level_Folder_Path_World, "World1");
 
 	// First Level Folder
-	if (_mkdir(Level_Folder_Path) == 0)
+	if (_mkdir(m_Project_Sub_Folder) == 0)
 	{
-		_chdir(Level_Folder_Path);
+		_chdir(m_Project_Sub_Folder);
 
 	}
 	else
@@ -431,7 +430,7 @@ bool SB_Project::Create_Level_Folder()
 	// First world Folder
 	if (_mkdir(Level_Folder_Path_World) == 0)
 	{
-		_chdir(Level_Folder_Path);
+		_chdir(m_Project_Sub_Folder);
 
 	}
 	else
@@ -450,7 +449,7 @@ bool SB_Project::Write_Objects()
 {
 	char File[1024];
 
-	strcpy(File, Level_Folder_Path);
+	strcpy(File, m_Project_Sub_Folder);
 	strcat(File, "\\");
 	strcat(File, "Objects.obf");
 
@@ -488,7 +487,7 @@ bool SB_Project::Write_Player()
 	Ogre::Vector3 Pos;
 	char File[1024];
 
-	strcpy(File, Level_Folder_Path);
+	strcpy(File, m_Project_Sub_Folder);
 	strcat(File, "\\");
 	strcat(File, "Player1.ply");
 
@@ -554,7 +553,7 @@ bool SB_Project::Write_Camera()
 {
 	char File[1024];
 
-	strcpy(File, Level_Folder_Path);
+	strcpy(File, m_Project_Sub_Folder);
 	strcat(File, "\\");
 	strcat(File, "Camera1.cam");
 
@@ -596,7 +595,7 @@ bool SB_Project::Write_Level_File()
 
 	WriteFile = NULL;
 
-	strcpy(File, Level_Folder_Path);
+	strcpy(File, m_Project_Sub_Folder);
 	strcat(File, "\\");
 	strcat(File, "Level.SBLevel");
 
@@ -732,8 +731,8 @@ bool SB_Project::Load_Scene()
 	// Get path no file 
 	int len1 = strlen(Level_File_Name);
 	int len2 = strlen(Level_Path_File_Name);
-	strcpy(Level_Folder_Path, Level_Path_File_Name);
-	Level_Folder_Path[len2 - len1] = 0;
+	strcpy(m_Project_Sub_Folder, Level_Path_File_Name);
+	m_Project_Sub_Folder[len2 - len1] = 0;
 
 	// ------------------------------------------------------------------- 
 
@@ -803,7 +802,7 @@ bool SB_Project::Read_Player()
 
 	// ------------------------------------------------------------------- 
 	char Path[1024];
-	strcpy(Path, Level_Folder_Path);
+	strcpy(Path, m_Project_Sub_Folder);
 	strcat(Path, "Player1.ply");
 
 	// ------------------------------------------------------------------- 
@@ -883,7 +882,7 @@ bool SB_Project::Read_Camera()
 
 	// ------------------------------------------------------------------- 
 	char Path[1024];
-	strcpy(Path, Level_Folder_Path);
+	strcpy(Path, m_Project_Sub_Folder);
 	strcat(Path, "Camera1.cam");
 
 	// ------------------------------------------------------------------- 
@@ -1217,8 +1216,8 @@ bool SB_Project::N_Load_Project()
 	// Get path no file 
 	int len1 = strlen(Level_File_Name);
 	int len2 = strlen(Level_Path_File_Name);
-	strcpy(Level_Folder_Path, Level_Path_File_Name);
-	Level_Folder_Path[len2 - len1] = 0;
+	strcpy(m_Project_Sub_Folder, Level_Path_File_Name);
+	m_Project_Sub_Folder[len2 - len1] = 0;
 
 	// ------------------------------------------------------------------- 
 	Load_Options* Options = new Load_Options;
@@ -1329,7 +1328,7 @@ bool SB_Project::N_Load_Project_Aera()
 	char Mesh_FileName[MAX_PATH];
 	char Resource_Location[MAX_PATH];
 
-	strcpy(Area_Ini_Path, Level_Folder_Path);
+	strcpy(Area_Ini_Path, m_Project_Sub_Folder);
 
 	strcat(Area_Ini_Path, m_Level_Name);
 	strcat(Area_Ini_Path, "\\");

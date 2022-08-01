@@ -228,10 +228,10 @@ void SB_Dialogs::List_App_Project(HWND hDlg)
 	//char buf[255];
 
 	//sprintf(buf, "%s", "App Info");
-	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)App->SBC_Project->Project_Path);
+	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)App->SBC_Project->m_Project_Sub_Folder);
 
 	//sprintf(buf, "%s", "    ");
-	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)App->SBC_Project->Level_File_Name);
+	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)App->SBC_Project->m_Project_Full_Path);
 
 	/*sprintf(buf, "%s", "    ");
 	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
