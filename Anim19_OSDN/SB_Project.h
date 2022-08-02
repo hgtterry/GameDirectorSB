@@ -61,11 +61,11 @@ public:
 	char m_Level_Folder_Path[MAX_PATH];		// Level Just Path
 	char m_Players_Folder_Path[MAX_PATH];
 
+	char m_Project_Sub_Folder[MAX_PATH]; // Curent Default Project Location not including project folder
 	char m_Project_Full_Path[MAX_PATH];
 
 	char m_Ini_Path_File_Name[MAX_PATH];
 
-	char m_Project_Sub_Folder[MAX_PATH]; // Curent Default Project Location not including project folder
 	//------------------------------------------------ 
 
 	bool Load_Scene_Auto();
@@ -83,9 +83,7 @@ public:
 
 	// --------------------------------------------------------------------------- 
 	char Level_File_Name[MAX_PATH];			// Level File Name ( 211121 )
-	char Level_Path_File_Name[MAX_PATH];	// Level Path and File Name  ( 211121 )
-	//char Level_Folder_Path[MAX_PATH];		// Level Just Path
-
+	
 	bool Project_Loaded;
 
 protected:
@@ -102,7 +100,6 @@ protected:
 
 	bool Read_Player();
 	bool Read_Camera();
-
 
 	FILE *Write_Ini;
 	FILE *Write_Player_Ini;

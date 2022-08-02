@@ -40,8 +40,8 @@ SB_Project::SB_Project()
 	strcat(m_Project_Full_Path, "No Project?");
 	strcat(m_Project_Full_Path, "_Prj");
 
-	strcpy(m_Project_Name, "No Project");
-	strcpy(m_Level_Name,"No Level");
+	strcpy(m_Project_Name, "No_Project");
+	strcpy(m_Level_Name,"No_Level");
 
 	m_Level_Folder_Path[0] = 0;
 	m_Players_Folder_Path[0] = 0;
@@ -726,12 +726,12 @@ bool SB_Project::Load_Scene()
 	App->SBC_Scene->Clear_Level();
 
 	strcpy(Level_File_Name, App->CL_Vm_FileIO->Model_FileName);
-	strcpy(Level_Path_File_Name, App->CL_Vm_FileIO->Model_Path_FileName);
+	strcpy(m_Project_Full_Path, App->CL_Vm_FileIO->Model_Path_FileName);
 
 	// Get path no file 
 	int len1 = strlen(Level_File_Name);
-	int len2 = strlen(Level_Path_File_Name);
-	strcpy(m_Project_Sub_Folder, Level_Path_File_Name);
+	int len2 = strlen(m_Project_Full_Path);
+	strcpy(m_Project_Sub_Folder, m_Project_Full_Path);
 	m_Project_Sub_Folder[len2 - len1] = 0;
 
 	// ------------------------------------------------------------------- 
@@ -742,7 +742,7 @@ bool SB_Project::Load_Scene()
 	chr_Tag1[0] = 0;
 	chr_Tag2[0] = 0;
 
-	App->Cl_Ini->SetPathName(Level_Path_File_Name);
+	App->Cl_Ini->SetPathName(m_Project_Full_Path);
 
 	App->Cl_Ini->GetString("Version_Data", "Version", chr_Tag1, 1024);
 	
@@ -1210,13 +1210,13 @@ bool SB_Project::N_Load_Project()
 	App->SBC_Scene->Clear_Level();
 
 	strcpy(Level_File_Name, App->CL_Vm_FileIO->Model_FileName);
-	strcpy(Level_Path_File_Name, App->CL_Vm_FileIO->Model_Path_FileName);
+	strcpy(m_Project_Full_Path, App->CL_Vm_FileIO->Model_Path_FileName);
 	strcpy(m_Ini_Path_File_Name, App->CL_Vm_FileIO->Model_Path_FileName);
 
 	// Get path no file 
 	int len1 = strlen(Level_File_Name);
-	int len2 = strlen(Level_Path_File_Name);
-	strcpy(m_Project_Sub_Folder, Level_Path_File_Name);
+	int len2 = strlen(m_Project_Full_Path);
+	strcpy(m_Project_Sub_Folder, m_Project_Full_Path);
 	m_Project_Sub_Folder[len2 - len1] = 0;
 
 	// ------------------------------------------------------------------- 
@@ -1365,3 +1365,4 @@ bool SB_Project::N_Load_Project_Player()
 	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->GD_Player);
 	return 1;
 }
+
