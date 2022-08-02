@@ -99,9 +99,9 @@ LRESULT CALLBACK SB_Project::Create_Project_Proc(HWND hDlg, UINT message, WPARAM
 
 
 		SetDlgItemText(hDlg, IDC_STPROJECTNAME, (LPCTSTR)App->SBC_Project->m_Project_Name);
-		SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Full_Path);
 		SetDlgItemText(hDlg, IDC_STLEVELNAME, (LPCTSTR)App->SBC_Project->m_Level_Name);
-		
+		SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Level_Folder_Path);
+
 		return TRUE;
 	}
 
@@ -1213,12 +1213,14 @@ bool SB_Project::N_Load_Project()
 	strcpy(m_Project_Full_Path, App->CL_Vm_FileIO->Model_Path_FileName);
 	strcpy(m_Ini_Path_File_Name, App->CL_Vm_FileIO->Model_Path_FileName);
 
+	strcpy(m_Level_Folder_Path, App->CL_Vm_FileIO->Model_Path_FileName);
+	
 	// Get path no file 
 	int len1 = strlen(Level_File_Name);
 	int len2 = strlen(m_Project_Full_Path);
 	strcpy(m_Project_Sub_Folder, m_Project_Full_Path);
 	m_Project_Sub_Folder[len2 - len1] = 0;
-
+	
 	// ------------------------------------------------------------------- 
 	Load_Options* Options = new Load_Options;
 

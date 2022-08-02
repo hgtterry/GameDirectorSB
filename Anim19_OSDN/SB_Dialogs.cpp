@@ -225,25 +225,15 @@ LRESULT CALLBACK SB_Dialogs::GroupData_Proc(HWND hDlg, UINT message, WPARAM wPar
 void SB_Dialogs::List_App_Project(HWND hDlg)
 {
 
-	//char buf[255];
+	char buf[255];
 
-	//sprintf(buf, "%s", "App Info");
-	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)App->SBC_Project->m_Project_Sub_Folder);
-
-	//sprintf(buf, "%s", "    ");
-	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)App->SBC_Project->m_Project_Full_Path);
-
-	/*sprintf(buf, "%s", "    ");
+	sprintf(buf, "%s %s", "Full Path", App->SBC_Project->m_Project_Full_Path);
 	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
-	sprintf(buf, "%i %s%i", Count, "BB Hwnd = ", App->CL_Model->S_BoundingBox[0]);
+	sprintf(buf, "%s %s", "Project Location", App->SBC_Project->m_Project_Location);
 	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
-	App->CL_Ogre->Get_View_Height_Width();
-	sprintf(buf, "%s %i", "With = ", App->CL_Ogre->Ogre_Listener->View_Width);
+	sprintf(buf, "%s %s", "Project Sub Folder", App->SBC_Project->m_Project_Sub_Folder);
 	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
-	sprintf(buf, "%s %i", "Height = ", App->CL_Ogre->Ogre_Listener->View_Height);
-	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);*/
 
 }
