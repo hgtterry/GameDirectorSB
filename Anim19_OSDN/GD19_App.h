@@ -56,9 +56,6 @@ distribution.
 #include "VM_Dimensions.h"
 #include "VM_Preferences.h"
 
-// ---------------------------------------------------- 15/10/21
-#include "EQ15_Ogre_Import.h"
-
 // ---------------------------------------------------- 07/12/21
 #include "EB_Options.h"
 
@@ -121,9 +118,6 @@ public:
 	VM_Dimensions*		Cl_Vm_Dimensions;
 	VM_Preferences*		Cl_Vm_Preferences;
 
-	// ---------------------------------------------------- 15/10/21
-	EQ15_Ogre_Import*		CL_Ogre_Import_E15;
-	
 	// ---------------------------------------------------- 07/12/21
 	EB_Options*				EBC_Options;		// Dialogs for Equity [151221]
 

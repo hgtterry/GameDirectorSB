@@ -64,9 +64,6 @@ GD19_App::GD19_App(void)
 	Cl_Vm_Dimensions =	nullptr;
 	Cl_Vm_Preferences = nullptr;
 
-	// ---------------------------------------------------- 15/10/21
-	CL_Ogre_Import_E15 = nullptr;
-
 	// ---------------------------------------------------- 07/12/21
 	//EBC_Listener =		nullptr;
 	EBC_Options =		nullptr;
@@ -223,9 +220,6 @@ bool GD19_App::InitApp(void)
 	Cl_Vm_Dimensions =	new VM_Dimensions();
 	Cl_Vm_Preferences = new VM_Preferences();
 
-	// ---------------------------------------------------- 15/10/21
-	CL_Ogre_Import_E15 =	new EQ15_Ogre_Import();
-	
 	// ---------------------------------------------------- 07/12/21
 
 	EBC_Options =			new EB_Options();
