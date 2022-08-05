@@ -948,7 +948,7 @@ LRESULT CALLBACK SB_TopTabs::Editors_TB_Proc(HWND hDlg, UINT message, WPARAM wPa
 	{
 		if (LOWORD(wParam) == IDC_EDITORS_WE)
 		{
-			App->SBC_Equity->Start_Equity();
+//			App->SBC_Equity->Start_Equity();
 			return TRUE;
 		}
 

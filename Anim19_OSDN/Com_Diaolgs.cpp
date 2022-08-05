@@ -136,8 +136,8 @@ LRESULT CALLBACK Com_Diaolgs::Mouse_Sensitivity_Proc(HWND hDlg, UINT message, WP
 		{
 			if (App->Cl19_Ogre->OgreListener->Equity_Running == 1)
 			{
-				App->EBC_Listener->mMoveSensitivity = 50;
-				App->EBC_Listener->mMoveSensitivityMouse = 50;
+				//App->EBC_Listener->mMoveSensitivity = 50;
+				//App->EBC_Listener->mMoveSensitivityMouse = 50;
 			}
 			else
 			{
@@ -157,8 +157,8 @@ LRESULT CALLBACK Com_Diaolgs::Mouse_Sensitivity_Proc(HWND hDlg, UINT message, WP
 		{
 			if (App->Cl19_Ogre->OgreListener->Equity_Running == 1)
 			{
-				App->EBC_Listener->mMoveSensitivity = 5;
-				App->EBC_Listener->mMoveSensitivityMouse = 5;
+				//App->EBC_Listener->mMoveSensitivity = 5;
+				//App->EBC_Listener->mMoveSensitivityMouse = 5;
 			}
 			else
 			{
@@ -178,8 +178,8 @@ LRESULT CALLBACK Com_Diaolgs::Mouse_Sensitivity_Proc(HWND hDlg, UINT message, WP
 		{
 			if (App->Cl19_Ogre->OgreListener->Equity_Running == 1)
 			{
-				App->EBC_Listener->mMoveSensitivity = 1;
-				App->EBC_Listener->mMoveSensitivityMouse = 1;
+				//App->EBC_Listener->mMoveSensitivity = 1;
+				//App->EBC_Listener->mMoveSensitivityMouse = 1;
 			}
 			else
 			{
@@ -199,8 +199,8 @@ LRESULT CALLBACK Com_Diaolgs::Mouse_Sensitivity_Proc(HWND hDlg, UINT message, WP
 		{
 			if (App->Cl19_Ogre->OgreListener->Equity_Running == 1)
 			{
-				App->EBC_Listener->mMoveSensitivity = 250;
-				App->EBC_Listener->mMoveSensitivityMouse = 250;
+				//App->EBC_Listener->mMoveSensitivity = 250;
+				//App->EBC_Listener->mMoveSensitivityMouse = 250;
 			}
 			else
 			{

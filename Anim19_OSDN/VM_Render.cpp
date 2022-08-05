@@ -204,7 +204,7 @@ void VM_Render::PreRender()
 	//Set a clear pass to give the renderer a clear renderstate
 	if (App->Cl19_Ogre->OgreListener->Equity_Running == 1)
 	{
-		App->SBC_Equity->mSceneMgrMeshView->_setPass(clearPass, true, false);
+		//App->SBC_Equity->mSceneMgrMeshView->_setPass(clearPass, true, false);
 	}
 	else
 	{

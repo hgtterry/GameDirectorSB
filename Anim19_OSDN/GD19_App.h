@@ -60,11 +60,9 @@ distribution.
 #include "EQ15_Ogre_Import.h"
 
 // ---------------------------------------------------- 07/12/21
-#include "EB_Listener.h"
 #include "EB_Options.h"
 
 // ---------------------------------------------------- 18/10/21
-#include "SB_Equity.h"
 #include "SB_Player.h"
 #include "SB_Import.h"
 #include "SB_Project.h"
@@ -127,11 +125,10 @@ public:
 	EQ15_Ogre_Import*		CL_Ogre_Import_E15;
 	
 	// ---------------------------------------------------- 07/12/21
-	EB_Listener*			EBC_Listener;		// Listener for Equity Editor [081221]
 	EB_Options*				EBC_Options;		// Dialogs for Equity [151221]
 
 	// ---------------------------------------------------- 18/10/21
-	SB_Equity*				SBC_Equity;			// Equity Editor [081221]
+
 	SB_Player*				SBC_Player;
 	SB_Import*				SBC_Import;
 	SB_Project*				SBC_Project;

@@ -48,7 +48,7 @@ bool EB_Options::Start_Options_Dialog()
 {
 	Read_Preferences();
 
-	DialogBox(App->hInst, (LPCTSTR)IDD_EQUITYOPTIONS, App->SBC_Equity->MainWindow_Hwnd, (DLGPROC)Options_Proc);
+	//DialogBox(App->hInst, (LPCTSTR)IDD_EQUITYOPTIONS, App->SBC_Equity->MainWindow_Hwnd, (DLGPROC)Options_Proc);
 
 	return 1;
 }

@@ -161,7 +161,6 @@
     <ClInclude Include="Base_Area.h" />
     <ClInclude Include="Base_Player.h" />
     <ClInclude Include="Com_Diaolgs.h" />
-    <ClInclude Include="EB_Listener.h" />
     <ClInclude Include="EB_Options.h" />
     <ClInclude Include="EQ15_Ogre_Import.h" />
     <ClInclude Include="GD19_Bullet.h" />
@@ -198,7 +197,6 @@
     <ClInclude Include="SB_Aera.h" />
     <ClInclude Include="SB_Camera.h" />
     <ClInclude Include="SB_Dialogs.h" />
-    <ClInclude Include="SB_Equity.h" />
     <ClInclude Include="SB_FileView.h" />
     <ClInclude Include="SB_Import.h" />
     <ClInclude Include="SB_Import_Room.h" />
@@ -232,7 +230,6 @@
     <ClCompile Include="Common\imGui\ImGui_cpp\imgui_draw.cpp" />
     <ClCompile Include="Common\imGui\ImGui_cpp\imgui_widgets.cpp" />
     <ClCompile Include="Com_Diaolgs.cpp" />
-    <ClCompile Include="EB_Listener.cpp" />
     <ClCompile Include="EB_Options.cpp" />
     <ClCompile Include="EQ15_Ogre_Import.cpp" />
     <ClCompile Include="GD19_Bullet.cpp" />
@@ -268,7 +265,6 @@
     <ClCompile Include="SB_Aera.cpp" />
     <ClCompile Include="SB_Camera.cpp" />
     <ClCompile Include="SB_Dialogs.cpp" />
-    <ClCompile Include="SB_Equity.cpp" />
     <ClCompile Include="SB_FileView.cpp" />
     <ClCompile Include="SB_Import.cpp" />
     <ClCompile Include="SB_Import_Room.cpp" />

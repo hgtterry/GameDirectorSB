@@ -70,7 +70,7 @@ bool SB_Import::Genesis3D_Loader(void)
 
 	App->CL_Vm_Model->Model_Type = LoadedFile_Actor;
 
-	App->SBC_Equity->Set_Equity();
+//	App->SBC_Equity->Set_Equity();
 
 	App->Say("Model Loaded");
 
@@ -97,7 +97,7 @@ bool SB_Import::Ogre_Loader(char* Extension, char* Extension2)
 
 	App->CL_Vm_Model->Model_Type = LoadedFile_Assimp;
 
-	App->SBC_Equity->Set_Equity();
+//	App->SBC_Equity->Set_Equity();
 
 	App->Say("Model Loaded");
 	return 1;
@@ -165,7 +165,7 @@ void SB_Import::Reload_FromResentFiles(char* ResentPathAndFile)
 
 	App->CL_Vm_Model->Model_Type = LoadedFile_Assimp;
 
-	App->SBC_Equity->Set_Equity();
+//	App->SBC_Equity->Set_Equity();
 
 	App->Say("Model Loaded");
 

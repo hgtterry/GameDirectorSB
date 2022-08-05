@@ -72,7 +72,6 @@ GD19_App::GD19_App(void)
 	EBC_Options =		nullptr;
 
 	// ---------------------------------------------------- 18/10/21
-	SBC_Equity =		nullptr;
 	SBC_Player =		nullptr;
 	SBC_Import =		nullptr;
 	SBC_Project =		nullptr;
@@ -228,12 +227,11 @@ bool GD19_App::InitApp(void)
 	CL_Ogre_Import_E15 =	new EQ15_Ogre_Import();
 	
 	// ---------------------------------------------------- 07/12/21
-	EBC_Listener =			new EB_Listener();
+
 	EBC_Options =			new EB_Options();
 
 	// ---------------------------------------------------- 18/10/21
 		
-	SBC_Equity =		new SB_Equity();
 	SBC_Player =		new SB_Player();		
 	SBC_Import =		new SB_Import();
 	SBC_Project =		new SB_Project();
