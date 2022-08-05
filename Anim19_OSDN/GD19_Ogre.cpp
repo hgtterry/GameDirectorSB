@@ -43,8 +43,6 @@ GD19_Ogre::GD19_Ogre(void)
 	OgreModel_Ent =  nullptr;
 	OgreModel_Node = nullptr;
 
-	RenderListener = nullptr;
-
 	App_Resource_Group = "App_Resource_Group";
 	Level_Resource_Group = "Level_Resource_Group";
 	Equity_Resource_Group = "Equity_Resource_Group";
@@ -352,7 +350,6 @@ bool GD19_Ogre::createFrameListener(void)
 
 	String RenderSystemName = mSceneMgr->getDestinationRenderSystem()->getName();
 	
-	RenderListener = NULL;
 	BulletListener = NULL;
 
 	if ("OpenGL Rendering Subsystem" == RenderSystemName)

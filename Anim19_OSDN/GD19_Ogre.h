@@ -29,7 +29,6 @@ distribution.
 #include "ImguiManager.h"
 
 #include "GD_Bt_Render.h"
-#include "VM_Render.h"
 
 class GD19_Ogre
 {
@@ -81,7 +80,6 @@ public:
 	Ogre::OverlaySystem *mOverlaySystem;
 
 	GD19_OgreListener*	OgreListener;
-	VM_Render*		RenderListener;
 	GD_Bt_Render*	BulletListener;
 
 	OgreImGui  m_imgui;
