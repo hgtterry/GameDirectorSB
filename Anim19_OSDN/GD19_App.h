@@ -61,7 +61,6 @@ distribution.
 
 // ---------------------------------------------------- 07/12/21
 #include "EB_Listener.h"
-#include "EB_Export_Mesh.h"
 #include "EB_Options.h"
 
 // ---------------------------------------------------- 18/10/21
@@ -129,7 +128,6 @@ public:
 	
 	// ---------------------------------------------------- 07/12/21
 	EB_Listener*			EBC_Listener;		// Listener for Equity Editor [081221]
-	EB_Export_Mesh*			EBC_Export_Mesh;	// Converter/Exporter For Ogre Mesh [111221]
 	EB_Options*				EBC_Options;		// Dialogs for Equity [151221]
 
 	// ---------------------------------------------------- 18/10/21

@@ -69,7 +69,6 @@ GD19_App::GD19_App(void)
 
 	// ---------------------------------------------------- 07/12/21
 	//EBC_Listener =		nullptr;
-	EBC_Export_Mesh =	nullptr;
 	EBC_Options =		nullptr;
 
 	// ---------------------------------------------------- 18/10/21
@@ -230,7 +229,6 @@ bool GD19_App::InitApp(void)
 	
 	// ---------------------------------------------------- 07/12/21
 	EBC_Listener =			new EB_Listener();
-	EBC_Export_Mesh =		new EB_Export_Mesh();
 	EBC_Options =			new EB_Options();
 
 	// ---------------------------------------------------- 18/10/21

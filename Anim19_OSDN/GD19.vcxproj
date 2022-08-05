@@ -161,7 +161,6 @@
     <ClInclude Include="Base_Area.h" />
     <ClInclude Include="Base_Player.h" />
     <ClInclude Include="Com_Diaolgs.h" />
-    <ClInclude Include="EB_Export_Mesh.h" />
     <ClInclude Include="EB_Listener.h" />
     <ClInclude Include="EB_Options.h" />
     <ClInclude Include="EQ15_Ogre_Import.h" />
@@ -194,9 +193,6 @@
     <ClInclude Include="GD_Bt_Render.h" />
     <ClInclude Include="GD_Keyboard.h" />
     <ClInclude Include="GD_spdlog.h" />
-    <ClInclude Include="OgreXMLMeshSerializer.h" />
-    <ClInclude Include="OgreXMLPrerequisites.h" />
-    <ClInclude Include="OgreXMLSkeletonSerializer.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SB_3DT.h" />
     <ClInclude Include="SB_Aera.h" />
@@ -216,8 +212,6 @@
     <ClInclude Include="SB_TopTabs.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="tinystr.h" />
-    <ClInclude Include="tinyxml.h" />
     <ClInclude Include="VM_Dimensions.h" />
     <ClInclude Include="VM_FileIO.h" />
     <ClInclude Include="VM_ImGui.h" />
@@ -238,7 +232,6 @@
     <ClCompile Include="Common\imGui\ImGui_cpp\imgui_draw.cpp" />
     <ClCompile Include="Common\imGui\ImGui_cpp\imgui_widgets.cpp" />
     <ClCompile Include="Com_Diaolgs.cpp" />
-    <ClCompile Include="EB_Export_Mesh.cpp" />
     <ClCompile Include="EB_Listener.cpp" />
     <ClCompile Include="EB_Options.cpp" />
     <ClCompile Include="EQ15_Ogre_Import.cpp" />
@@ -271,8 +264,6 @@
     <ClCompile Include="GD_Bt_Render.cpp" />
     <ClCompile Include="GD_Keyboard.cpp" />
     <ClCompile Include="GD_spdlog.cpp" />
-    <ClCompile Include="OgreXMLMeshSerializer.cpp" />
-    <ClCompile Include="OgreXMLSkeletonSerializer.cpp" />
     <ClCompile Include="SB_3DT.cpp" />
     <ClCompile Include="SB_Aera.cpp" />
     <ClCompile Include="SB_Camera.cpp" />
