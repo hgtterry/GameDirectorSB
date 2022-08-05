@@ -1201,6 +1201,23 @@ bool SB_Project::N_Save_Player_Data()
 }
 
 // *************************************************************************
+// *	  					N_Set_Paths Terry Flanigan					   *
+// *************************************************************************
+void SB_Project::N_Set_Paths()
+{
+	strcpy(Level_File_Name, App->CL_Vm_FileIO->Model_FileName);
+	strcpy(m_Project_Full_Path, App->CL_Vm_FileIO->Model_Path_FileName);
+	strcpy(m_Ini_Path_File_Name, App->CL_Vm_FileIO->Model_Path_FileName);
+
+	strcpy(m_Level_Folder_Path, App->CL_Vm_FileIO->Model_Path_FileName);
+
+	// Get path no file 
+	int len1 = strlen(Level_File_Name);
+	int len2 = strlen(m_Project_Full_Path);
+	strcpy(m_Project_Sub_Folder, m_Project_Full_Path);
+	m_Project_Sub_Folder[len2 - len1] = 0;
+}
+// *************************************************************************
 // *	  					Load_Project Terry Flanigan					   *
 // *************************************************************************
 bool SB_Project::N_Load_Project()
@@ -1209,17 +1226,7 @@ bool SB_Project::N_Load_Project()
 
 	App->SBC_Scene->Clear_Level();
 
-	strcpy(Level_File_Name, App->CL_Vm_FileIO->Model_FileName);
-	strcpy(m_Project_Full_Path, App->CL_Vm_FileIO->Model_Path_FileName);
-	strcpy(m_Ini_Path_File_Name, App->CL_Vm_FileIO->Model_Path_FileName);
-
-	strcpy(m_Level_Folder_Path, App->CL_Vm_FileIO->Model_Path_FileName);
-	
-	// Get path no file 
-	int len1 = strlen(Level_File_Name);
-	int len2 = strlen(m_Project_Full_Path);
-	strcpy(m_Project_Sub_Folder, m_Project_Full_Path);
-	m_Project_Sub_Folder[len2 - len1] = 0;
+	N_Set_Paths();
 	
 	// ------------------------------------------------------------------- 
 	Load_Options* Options = new Load_Options;

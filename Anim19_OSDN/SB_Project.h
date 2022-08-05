@@ -98,6 +98,7 @@ protected:
 	bool Create_Level_Folder();
 	bool Add_World();
 	
+	void N_Set_Paths();
 
 	bool Read_Player();
 	bool Read_Camera();
