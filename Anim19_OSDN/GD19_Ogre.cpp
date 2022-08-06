@@ -362,9 +362,6 @@ bool GD19_Ogre::createFrameListener(void)
 			| btIDebugDraw::DBG_MAX_DEBUG_DRAW_MODE);
 		App->Cl_Bullet->dynamicsWorld->setDebugDrawer(BulletListener);
 
-		/*RenderListener = new VM_Render();
-		mSceneMgr->addRenderQueueListener(RenderListener);*/
-		
 	}
 
 	return 1;
