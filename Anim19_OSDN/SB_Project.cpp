@@ -40,6 +40,8 @@ SB_Project::SB_Project()
 	strcat(m_Project_Full_Path, "No Project?");
 	strcat(m_Project_Full_Path, "_Prj");
 
+	strcat(m_Project_Folder, m_Project_Full_Path);
+
 	strcpy(m_Project_Name, "No_Project");
 	strcpy(m_Level_Name,"No_Level");
 
@@ -100,7 +102,7 @@ LRESULT CALLBACK SB_Project::Create_Project_Proc(HWND hDlg, UINT message, WPARAM
 
 		SetDlgItemText(hDlg, IDC_STPROJECTNAME, (LPCTSTR)App->SBC_Project->m_Project_Name);
 		SetDlgItemText(hDlg, IDC_STLEVELNAME, (LPCTSTR)App->SBC_Project->m_Level_Name);
-		SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Level_Folder_Path);
+		SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Folder);
 
 		return TRUE;
 	}
@@ -206,13 +208,13 @@ LRESULT CALLBACK SB_Project::Create_Project_Proc(HWND hDlg, UINT message, WPARAM
 
 			if (Test == 0){return true;}
 
-			strcpy(App->SBC_Project->m_Project_Full_Path, App->Com_CDialogs->szSelectedDir);
-			strcat(App->SBC_Project->m_Project_Full_Path, App->SBC_Project->m_Project_Name);
-			strcat(App->SBC_Project->m_Project_Full_Path, "_Prj");
+			strcpy(App->SBC_Project->m_Project_Folder, App->Com_CDialogs->szSelectedDir);
+			strcat(App->SBC_Project->m_Project_Folder, App->SBC_Project->m_Project_Name);
+			strcat(App->SBC_Project->m_Project_Folder, "_Prj");
 
 			strcpy(App->SBC_Project->m_Project_Sub_Folder, App->Com_CDialogs->szSelectedDir);
 
-			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Full_Path);
+			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Folder);
 
 			return TRUE;
 		}
@@ -226,12 +228,12 @@ LRESULT CALLBACK SB_Project::Create_Project_Proc(HWND hDlg, UINT message, WPARAM
 
 			strcpy(App->SBC_Project->m_Project_Name,App->SBC_Dialogs->Chr_Text);
 
-			strcpy(App->SBC_Project->m_Project_Full_Path, App->SBC_Project->m_Project_Sub_Folder);
-			strcat(App->SBC_Project->m_Project_Full_Path, App->SBC_Project->m_Project_Name);
-			strcat(App->SBC_Project->m_Project_Full_Path, "_Prj");
+			strcpy(App->SBC_Project->m_Project_Folder, App->SBC_Project->m_Project_Sub_Folder);
+			strcat(App->SBC_Project->m_Project_Folder, App->SBC_Project->m_Project_Name);
+			strcat(App->SBC_Project->m_Project_Folder, "_Prj");
 
 			SetDlgItemText(hDlg, IDC_STPROJECTNAME, (LPCTSTR)App->SBC_Project->m_Project_Name);
-			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Full_Path);
+			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Folder);
 
 			return TRUE;
 		}
@@ -255,15 +257,15 @@ LRESULT CALLBACK SB_Project::Create_Project_Proc(HWND hDlg, UINT message, WPARAM
 		if (LOWORD(wParam) == IDC_BTDESKTOP)
 		{
 			
-			strcpy(App->SBC_Project->m_Project_Full_Path, App->CL_Vm_FileIO->DeskTop_Folder);
-			strcat(App->SBC_Project->m_Project_Full_Path, "\\");
-			strcat(App->SBC_Project->m_Project_Full_Path, App->SBC_Project->m_Project_Name);
-			strcat(App->SBC_Project->m_Project_Full_Path, "_Prj");
+			strcpy(App->SBC_Project->m_Project_Folder, App->CL_Vm_FileIO->DeskTop_Folder);
+			strcat(App->SBC_Project->m_Project_Folder, "\\");
+			strcat(App->SBC_Project->m_Project_Folder, App->SBC_Project->m_Project_Name);
+			strcat(App->SBC_Project->m_Project_Folder, "_Prj");
 
 			strcpy(App->SBC_Project->m_Project_Sub_Folder, App->CL_Vm_FileIO->DeskTop_Folder);
 			strcat(App->SBC_Project->m_Project_Sub_Folder, "\\");
 
-			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Full_Path);
+			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Folder);
 
 			return TRUE;
 		}
@@ -920,14 +922,18 @@ bool SB_Project::N_Save_Project()
 {
 
 
-	if (_mkdir(App->SBC_Project->m_Project_Full_Path) == 0)
+	if (_mkdir(App->SBC_Project->m_Project_Folder) == 0)
 	{
-		_chdir(App->SBC_Project->m_Project_Full_Path);
+		_chdir(App->SBC_Project->m_Project_Folder);
 	}
 	else
 	{
-		_chdir(App->SBC_Project->m_Project_Full_Path);
+		_chdir(App->SBC_Project->m_Project_Folder);
 	}
+
+	App->Say_Win(m_Project_Folder);
+
+	return 1;
 
 	N_Save_Project_Ini();
 
@@ -1008,7 +1014,7 @@ bool SB_Project::N_Save_Project_Ini()
 // *************************************************************************
 bool SB_Project::N_Save_Level_Folder()
 {
-	strcpy(m_Level_Folder_Path, App->SBC_Project->m_Project_Full_Path);
+	strcpy(m_Level_Folder_Path, App->SBC_Project->m_Project_Folder);
 	strcat(m_Level_Folder_Path, "\\");
 	strcat(m_Level_Folder_Path, m_Level_Name);
 
@@ -1215,7 +1221,13 @@ void SB_Project::N_Set_Paths()
 	int len1 = strlen(Level_File_Name);
 	int len2 = strlen(m_Project_Full_Path);
 	strcpy(m_Project_Sub_Folder, m_Project_Full_Path);
-	m_Project_Sub_Folder[len2 - len1] = 0;
+	m_Project_Sub_Folder[len2 - (len1+1)] = 0;
+
+	
+
+	strcpy(m_Project_Folder, m_Project_Sub_Folder);
+
+	App->Say(m_Project_Folder);
 }
 // *************************************************************************
 // *	  					Load_Project Terry Flanigan					   *
