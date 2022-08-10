@@ -33,14 +33,12 @@ SB_Project::SB_Project()
 	strcat(m_Project_Sub_Folder, "\\");
 	strcat(m_Project_Sub_Folder, "Projects\\");
 
-	strcpy(m_Project_Full_Path, App->EquityDirecory_FullPath);
-	strcat(m_Project_Full_Path, "\\");
-	strcat(m_Project_Full_Path, "Projects");
-	strcat(m_Project_Full_Path, "\\");
-	strcat(m_Project_Full_Path, "No Project?");
-	strcat(m_Project_Full_Path, "_Prj");
-
-	strcat(m_Project_Folder, m_Project_Full_Path);
+	strcpy(m_Project_Folder_Path, App->EquityDirecory_FullPath);
+	strcat(m_Project_Folder_Path, "\\");
+	strcat(m_Project_Folder_Path, "Projects");
+	strcat(m_Project_Folder_Path, "\\");
+	strcat(m_Project_Folder_Path, "No Project?");
+	strcat(m_Project_Folder_Path, "_Prj");
 
 	strcpy(m_Project_Name, "No_Project");
 	strcpy(m_Level_Name,"No_Level");
@@ -102,7 +100,7 @@ LRESULT CALLBACK SB_Project::Create_Project_Proc(HWND hDlg, UINT message, WPARAM
 
 		SetDlgItemText(hDlg, IDC_STPROJECTNAME, (LPCTSTR)App->SBC_Project->m_Project_Name);
 		SetDlgItemText(hDlg, IDC_STLEVELNAME, (LPCTSTR)App->SBC_Project->m_Level_Name);
-		SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Folder);
+		SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Folder_Path);
 
 		return TRUE;
 	}
@@ -208,13 +206,13 @@ LRESULT CALLBACK SB_Project::Create_Project_Proc(HWND hDlg, UINT message, WPARAM
 
 			if (Test == 0){return true;}
 
-			strcpy(App->SBC_Project->m_Project_Folder, App->Com_CDialogs->szSelectedDir);
-			strcat(App->SBC_Project->m_Project_Folder, App->SBC_Project->m_Project_Name);
-			strcat(App->SBC_Project->m_Project_Folder, "_Prj");
+			strcpy(App->SBC_Project->m_Project_Folder_Path, App->Com_CDialogs->szSelectedDir);
+			strcat(App->SBC_Project->m_Project_Folder_Path, App->SBC_Project->m_Project_Name);
+			strcat(App->SBC_Project->m_Project_Folder_Path, "_Prj");
 
 			strcpy(App->SBC_Project->m_Project_Sub_Folder, App->Com_CDialogs->szSelectedDir);
 
-			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Folder);
+			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Folder_Path);
 
 			return TRUE;
 		}
@@ -228,12 +226,12 @@ LRESULT CALLBACK SB_Project::Create_Project_Proc(HWND hDlg, UINT message, WPARAM
 
 			strcpy(App->SBC_Project->m_Project_Name,App->SBC_Dialogs->Chr_Text);
 
-			strcpy(App->SBC_Project->m_Project_Folder, App->SBC_Project->m_Project_Sub_Folder);
-			strcat(App->SBC_Project->m_Project_Folder, App->SBC_Project->m_Project_Name);
-			strcat(App->SBC_Project->m_Project_Folder, "_Prj");
+			strcpy(App->SBC_Project->m_Project_Folder_Path, App->SBC_Project->m_Project_Sub_Folder);
+			strcat(App->SBC_Project->m_Project_Folder_Path, App->SBC_Project->m_Project_Name);
+			strcat(App->SBC_Project->m_Project_Folder_Path, "_Prj");
 
 			SetDlgItemText(hDlg, IDC_STPROJECTNAME, (LPCTSTR)App->SBC_Project->m_Project_Name);
-			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Folder);
+			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Folder_Path);
 
 			return TRUE;
 		}
@@ -257,15 +255,15 @@ LRESULT CALLBACK SB_Project::Create_Project_Proc(HWND hDlg, UINT message, WPARAM
 		if (LOWORD(wParam) == IDC_BTDESKTOP)
 		{
 			
-			strcpy(App->SBC_Project->m_Project_Folder, App->CL_Vm_FileIO->DeskTop_Folder);
-			strcat(App->SBC_Project->m_Project_Folder, "\\");
-			strcat(App->SBC_Project->m_Project_Folder, App->SBC_Project->m_Project_Name);
-			strcat(App->SBC_Project->m_Project_Folder, "_Prj");
+			strcpy(App->SBC_Project->m_Project_Folder_Path, App->CL_Vm_FileIO->DeskTop_Folder);
+			strcat(App->SBC_Project->m_Project_Folder_Path, "\\");
+			strcat(App->SBC_Project->m_Project_Folder_Path, App->SBC_Project->m_Project_Name);
+			strcat(App->SBC_Project->m_Project_Folder_Path, "_Prj");
 
 			strcpy(App->SBC_Project->m_Project_Sub_Folder, App->CL_Vm_FileIO->DeskTop_Folder);
 			strcat(App->SBC_Project->m_Project_Sub_Folder, "\\");
 
-			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Folder);
+			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Folder_Path);
 
 			return TRUE;
 		}
@@ -299,9 +297,9 @@ bool SB_Project::Create_Project()
 {
 
 
-	if (_mkdir(App->SBC_Project->m_Project_Full_Path) == 0)
+	if (_mkdir(App->SBC_Project->m_Project_Folder_Path) == 0)
 	{
-		_chdir(App->SBC_Project->m_Project_Full_Path);
+		_chdir(App->SBC_Project->m_Project_Folder_Path);
 	}
 	else
 	{
@@ -362,11 +360,11 @@ bool SB_Project::Set_Paths()
 {
 	Project_Ini_FilePath[0] = 0;
 
-	strcpy(Project_Ini_FilePath, App->SBC_Project->m_Project_Full_Path);
+	strcpy(Project_Ini_FilePath, App->SBC_Project->m_Project_Folder_Path);
 	strcat(Project_Ini_FilePath, "\\");
 	strcat(Project_Ini_FilePath, "Project.eif");
 
-	strcpy(m_Project_Sub_Folder, App->SBC_Project->m_Project_Full_Path);
+	strcpy(m_Project_Sub_Folder, App->SBC_Project->m_Project_Folder_Path);
 	strcat(m_Project_Sub_Folder, "\\");
 	strcat(m_Project_Sub_Folder, "Level_1");
 	return 1;
@@ -390,7 +388,7 @@ bool SB_Project::Write_Project_Ini()
 
 	fprintf(Write_Ini, "%s\n", "[Files]");
 	fprintf(Write_Ini, "%s%s\n", "Project_Name=", App->SBC_Project->m_Project_Name);
-	fprintf(Write_Ini, "%s%s\n", "Folder_Path=", App->SBC_Project->m_Project_Full_Path);
+	fprintf(Write_Ini, "%s%s\n", "Folder_Path=", App->SBC_Project->m_Project_Folder_Path);
 
 	fprintf(Write_Ini, "%s\n", "[Player]");
 	fprintf(Write_Ini, "%s%s\n", "Player_File=","Player1.ply");
@@ -728,12 +726,12 @@ bool SB_Project::Load_Scene()
 	App->SBC_Scene->Clear_Level();
 
 	strcpy(Level_File_Name, App->CL_Vm_FileIO->Model_FileName);
-	strcpy(m_Project_Full_Path, App->CL_Vm_FileIO->Model_Path_FileName);
+	strcpy(m_Project_Folder_Path, App->CL_Vm_FileIO->Model_Path_FileName);
 
 	// Get path no file 
 	int len1 = strlen(Level_File_Name);
-	int len2 = strlen(m_Project_Full_Path);
-	strcpy(m_Project_Sub_Folder, m_Project_Full_Path);
+	int len2 = strlen(m_Project_Folder_Path);
+	strcpy(m_Project_Sub_Folder, m_Project_Folder_Path);
 	m_Project_Sub_Folder[len2 - len1] = 0;
 
 	// ------------------------------------------------------------------- 
@@ -744,7 +742,7 @@ bool SB_Project::Load_Scene()
 	chr_Tag1[0] = 0;
 	chr_Tag2[0] = 0;
 
-	App->Cl_Ini->SetPathName(m_Project_Full_Path);
+	App->Cl_Ini->SetPathName(m_Project_Folder_Path);
 
 	App->Cl_Ini->GetString("Version_Data", "Version", chr_Tag1, 1024);
 	
@@ -922,18 +920,16 @@ bool SB_Project::N_Save_Project()
 {
 
 
-	if (_mkdir(App->SBC_Project->m_Project_Folder) == 0)
+	if (_mkdir(m_Project_Folder_Path) == 0)
 	{
-		_chdir(App->SBC_Project->m_Project_Folder);
+		_chdir(m_Project_Folder_Path);
 	}
 	else
 	{
-		_chdir(App->SBC_Project->m_Project_Folder);
+		_chdir(m_Project_Folder_Path);
 	}
 
-	App->Say_Win(m_Project_Folder);
-
-	return 1;
+	App->Say_Win(m_Project_Folder_Path);
 
 	N_Save_Project_Ini();
 
@@ -972,7 +968,7 @@ bool SB_Project::N_Save_Project_Ini()
 {
 	Project_Ini_FilePath[0] = 0;
 
-	strcpy(Project_Ini_FilePath, App->SBC_Project->m_Project_Full_Path);
+	strcpy(Project_Ini_FilePath, m_Project_Folder_Path);
 	strcat(Project_Ini_FilePath, "\\");
 	strcat(Project_Ini_FilePath, "Project.SBProj");
 
@@ -994,7 +990,7 @@ bool SB_Project::N_Save_Project_Ini()
 	fprintf(Write_Ini, "%s\n", "[Files]");
 	fprintf(Write_Ini, "%s%s\n", "Project_Name=", App->SBC_Project->m_Project_Name);
 	fprintf(Write_Ini, "%s%s\n", "Level_Name=", App->SBC_Project->m_Level_Name);
-	fprintf(Write_Ini, "%s%s\n", "Folder_Path=", App->SBC_Project->m_Project_Full_Path);
+	fprintf(Write_Ini, "%s%s\n", "Folder_Path=", App->SBC_Project->m_Project_Folder_Path);
 
 	fprintf(Write_Ini, "%s\n", " ");
 
@@ -1014,7 +1010,7 @@ bool SB_Project::N_Save_Project_Ini()
 // *************************************************************************
 bool SB_Project::N_Save_Level_Folder()
 {
-	strcpy(m_Level_Folder_Path, App->SBC_Project->m_Project_Folder);
+	strcpy(m_Level_Folder_Path, m_Project_Folder_Path);
 	strcat(m_Level_Folder_Path, "\\");
 	strcat(m_Level_Folder_Path, m_Level_Name);
 
@@ -1212,22 +1208,22 @@ bool SB_Project::N_Save_Player_Data()
 void SB_Project::N_Set_Paths()
 {
 	strcpy(Level_File_Name, App->CL_Vm_FileIO->Model_FileName);
-	strcpy(m_Project_Full_Path, App->CL_Vm_FileIO->Model_Path_FileName);
+	strcpy(m_Project_Folder_Path, App->CL_Vm_FileIO->Model_Path_FileName);
 	strcpy(m_Ini_Path_File_Name, App->CL_Vm_FileIO->Model_Path_FileName);
 
 	strcpy(m_Level_Folder_Path, App->CL_Vm_FileIO->Model_Path_FileName);
 
 	// Get path no file 
 	int len1 = strlen(Level_File_Name);
-	int len2 = strlen(m_Project_Full_Path);
-	strcpy(m_Project_Sub_Folder, m_Project_Full_Path);
+	int len2 = strlen(m_Project_Folder_Path);
+	strcpy(m_Project_Sub_Folder, m_Project_Folder_Path);
 	m_Project_Sub_Folder[len2 - (len1+1)] = 0;
 
 	
 
-	strcpy(m_Project_Folder, m_Project_Sub_Folder);
+	strcpy(m_Project_Folder_Path, m_Project_Sub_Folder);
 
-	App->Say(m_Project_Folder);
+	App->Say(m_Project_Folder_Path);
 }
 // *************************************************************************
 // *	  					Load_Project Terry Flanigan					   *
@@ -1349,15 +1345,20 @@ bool SB_Project::N_Load_Project_Aera()
 	char Mesh_FileName[MAX_PATH];
 	char Resource_Location[MAX_PATH];
 
-	strcpy(Area_Ini_Path, m_Project_Sub_Folder);
+	strcpy(Area_Ini_Path, m_Project_Folder_Path);
+	strcat(Area_Ini_Path, "\\");
 
 	strcat(Area_Ini_Path, m_Level_Name);
 	strcat(Area_Ini_Path, "\\");
+
 	strcat(Area_Ini_Path, "Aeras");
 	strcat(Area_Ini_Path, "\\");
+
 	strcat(Area_Ini_Path, "Aeras.aer");
 
 	App->Cl_Ini->SetPathName(Area_Ini_Path);
+
+	App->Say_Win(Area_Ini_Path);
 
 	App->Cl_Ini->GetString("Aera_0", "Aera_File", Mesh_FileName, MAX_PATH);
 	App->Cl_Ini->GetString("Aera_0", "Aera_Resource_Path", Resource_Location, MAX_PATH);

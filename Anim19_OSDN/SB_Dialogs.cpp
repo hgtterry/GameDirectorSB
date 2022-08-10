@@ -227,13 +227,13 @@ void SB_Dialogs::List_App_Project(HWND hDlg)
 
 	char buf[255];
 
-	sprintf(buf, "%s %s", "Project Location", App->SBC_Project->m_Project_Folder);
+	sprintf(buf, "%s %s", "Project Location", App->SBC_Project->m_Project_Folder_Path);
 	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
-	sprintf(buf, "%s %s", "Full Path", App->SBC_Project->m_Project_Full_Path);
-	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	//sprintf(buf, "%s %s", "Full Path", App->SBC_Project->m_Project_Full_Path);
+	//SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
-	sprintf(buf, "%s %s", "Project Sub Folder", App->SBC_Project->m_Project_Sub_Folder);
-	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	//sprintf(buf, "%s %s", "Project Sub Folder", App->SBC_Project->m_Project_Sub_Folder);
+	//SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
 }

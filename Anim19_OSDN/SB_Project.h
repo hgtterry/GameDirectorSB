@@ -62,14 +62,13 @@ public:
 	char m_Players_Folder_Path[MAX_PATH];
 
 	char m_Project_Sub_Folder[MAX_PATH];	// Curent Default Project Location not including project folder
-	char m_Project_Full_Path[MAX_PATH];		// Curent Default Project Location including project folder and File Name
-
+	
 	char m_Ini_Path_File_Name[MAX_PATH];
 
 
 	//------------------------------------------------  Good
 
-	char m_Project_Folder[MAX_PATH];		// Full Path Project folder Location
+	char m_Project_Folder_Path[MAX_PATH];		// Project folder Location Full Path [10/08/22]
 
 	//------------------------------------------------ 
 
