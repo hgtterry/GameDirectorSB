@@ -443,7 +443,6 @@ void SB_Aera::Add_Aera_To_Project(int Index,char* FileName,char* Resource_Locati
 	create_Area_Trimesh_New(Index,Area);
 
 	Area->Usage = Enums::Usage_Room;
-
 }
 
 // *************************************************************************

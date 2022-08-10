@@ -929,8 +929,6 @@ bool SB_Project::N_Save_Project()
 		_chdir(m_Project_Folder_Path);
 	}
 
-	App->Say_Win(m_Project_Folder_Path);
-
 	N_Save_Project_Ini();
 
 	N_Save_Level_Folder();
@@ -1219,11 +1217,8 @@ void SB_Project::N_Set_Paths()
 	strcpy(m_Project_Sub_Folder, m_Project_Folder_Path);
 	m_Project_Sub_Folder[len2 - (len1+1)] = 0;
 
-	
-
 	strcpy(m_Project_Folder_Path, m_Project_Sub_Folder);
 
-	App->Say(m_Project_Folder_Path);
 }
 // *************************************************************************
 // *	  					Load_Project Terry Flanigan					   *
@@ -1269,6 +1264,8 @@ bool SB_Project::N_Load_Project()
 	if (Options->Has_Aera > 0)
 	{
 		N_Load_Project_Aera();
+		App->SBC_Scene->Area_Count++;
+		App->SBC_Scene->Area_Added = 1;
 	}
 
 	// ------------------------------------- Player
@@ -1357,8 +1354,6 @@ bool SB_Project::N_Load_Project_Aera()
 	strcat(Area_Ini_Path, "Aeras.aer");
 
 	App->Cl_Ini->SetPathName(Area_Ini_Path);
-
-	App->Say_Win(Area_Ini_Path);
 
 	App->Cl_Ini->GetString("Aera_0", "Aera_File", Mesh_FileName, MAX_PATH);
 	App->Cl_Ini->GetString("Aera_0", "Aera_Resource_Path", Resource_Location, MAX_PATH);
