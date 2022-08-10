@@ -56,10 +56,8 @@ GD19_App::GD19_App(void)
 	Cl_Keyboard =		nullptr;
 
 	// Vima19 19/03/20
-	CL_Vm_Textures =	nullptr;
 	CL_Vm_FileIO =		nullptr;
 	CL_Vm_ImGui =		nullptr;
-	CL_Vm_TextLib =		nullptr;
 	Cl_Vm_Dimensions =	nullptr;
 	Cl_Vm_Preferences = nullptr;
 
@@ -211,10 +209,8 @@ bool GD19_App::InitApp(void)
 	Cl_Keyboard =		new GD_Keyboard();
 
 	// Vima19 19/03/20
-	CL_Vm_Textures =	new VM_Textures();
 	CL_Vm_FileIO =		new VM_FileIO();
 	CL_Vm_ImGui =		new VM_ImGui();
-	CL_Vm_TextLib =		new VM_TextLib();
 	Cl_Vm_Dimensions =	new VM_Dimensions();
 	Cl_Vm_Preferences = new VM_Preferences();
 

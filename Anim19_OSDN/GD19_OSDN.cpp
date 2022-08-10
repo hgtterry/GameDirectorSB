@@ -348,7 +348,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		case ID_TOOLS_TEXTURELIB:
 		{
-			App->CL_Vm_TextLib->Start_TexturePack();
+			//App->CL_Vm_TextLib->Start_TexturePack();
 			return 1;
 		}
 

@@ -48,10 +48,8 @@ distribution.
 #include "GD_Keyboard.h"
 
 // Vima19 19/03/20
-#include "VM_Textures.h"
 #include "VM_FileIO.h"
 #include "VM_ImGui.h"
-#include "VM_TextLib.h"
 #include "VM_Dimensions.h"
 #include "VM_Preferences.h"
 
@@ -109,10 +107,8 @@ public:
 	GD_Keyboard*		Cl_Keyboard;
 
 	// Vima19 19/03/20
-	VM_Textures*		CL_Vm_Textures;
 	VM_FileIO*			CL_Vm_FileIO;
 	VM_ImGui*			CL_Vm_ImGui;
-	VM_TextLib*			CL_Vm_TextLib;
 	VM_Dimensions*		Cl_Vm_Dimensions;
 	VM_Preferences*		Cl_Vm_Preferences;
 

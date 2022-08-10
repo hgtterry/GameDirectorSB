@@ -57,13 +57,13 @@ typedef struct
 	float r, g, b, a;
 } GE_RGBA;
 
-typedef struct
-{
-	int32	Left;
-	int32	Right;
-	int32	Top;
-	int32	Bottom;
-} GE_Rect;
+//typedef struct
+//{
+//	int32	Left;
+//	int32	Right;
+//	int32	Top;
+//	int32	Bottom;
+//} GE_Rect;
 
 typedef struct
 {

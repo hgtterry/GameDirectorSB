@@ -867,30 +867,7 @@ void VM_ImGui::ImGui_Scale(void)
 // *************************************************************************
 void VM_ImGui::ImGui_Image(void)
 {
-	//ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
-
-	if (!ImGui::Begin("Image", &Show_Image, ImGuiWindowFlags_NoSavedSettings))
-	{
-		ImGui::End();
-	}
-	else
-	{
-		if (App->CL_Vm_Textures->g_Texture[0] == NULL)
-		{
-
-		}
-		else
-		{
-			
-			/*int MatIndex = App->CL_Vm_Model->MatIndex_Data[0];
-			glBindTexture(GL_TEXTURE_2D, App->CL_Vm_Textures->g_Texture[MatIndex]);
-
-			ImGui::Text("pointer = %p", App->CL_Vm_Textures->g_Texture[MatIndex]);
-			ImGui::Text("size = %d x %d", 256, 256);
-			ImGui::Image((void*)(intptr_t)App->CL_Vm_Textures->g_Texture[MatIndex], ImVec2(256.0f, 256.0f));
-			ImGui::End();*/
-		}
-	}
+	
 }
 
 // *************************************************************************
