@@ -348,169 +348,169 @@ bool VM_ImGui::Nudge()
 // *************************************************************************
 void VM_ImGui::ImGui_Rotation2(void)
 {
-	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
+	//ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
 
-	if (!ImGui::Begin("Rotation2", &Show_Rotation, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
-	{
-		ImGui::End();
-	}
-	else
-	{
-		ImGui::Text("Rotation");
-		ImGui::Separator();
-		ImGui::Spacing();
+	//if (!ImGui::Begin("Rotation2", &Show_Rotation, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
+	//{
+	//	ImGui::End();
+	//}
+	//else
+	//{
+	//	ImGui::Text("Rotation");
+	//	ImGui::Separator();
+	//	ImGui::Spacing();
 
-		
+	//	
 
-		ImGui::Spacing();
+	//	ImGui::Spacing();
 
-		// ------------------------------------------ Rotation X
-		ImGui::Text("X ");
-		ImGui::SameLine();
+	//	// ------------------------------------------ Rotation X
+	//	ImGui::Text("X ");
+	//	ImGui::SameLine();
 
-		float spacing = ImGui::GetStyle().ItemInnerSpacing.x;
-		ImGui::PushButtonRepeat(true);
-		if (ImGui::ArrowButton("##left", ImGuiDir_Left))
-		{
-			if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
-			{
-				
-			}
+	//	float spacing = ImGui::GetStyle().ItemInnerSpacing.x;
+	//	ImGui::PushButtonRepeat(true);
+	//	if (ImGui::ArrowButton("##left", ImGuiDir_Left))
+	//	{
+	//		if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
+	//		{
+	//			
+	//		}
 
-			if (App->CL_Vm_Model->Model_Type == LoadedFile_Assimp)
-			{
-				App->Cl_Vm_Dimensions->Rotate_X_Model(App->Cl_Vm_Dimensions->Model_X_Rotation);
-			}
-		}
+	//		if (App->CL_Vm_Model->Model_Type == LoadedFile_Assimp)
+	//		{
+	//			App->Cl_Vm_Dimensions->Rotate_X_Model(App->Cl_Vm_Dimensions->Model_X_Rotation);
+	//		}
+	//	}
 
-		ImGui::SameLine(0.0f, spacing);
-		if (ImGui::ArrowButton("##right", ImGuiDir_Right))
-		{
-			if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
-			{
-				
-			}
+	//	ImGui::SameLine(0.0f, spacing);
+	//	if (ImGui::ArrowButton("##right", ImGuiDir_Right))
+	//	{
+	//		if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
+	//		{
+	//			
+	//		}
 
-			if (App->CL_Vm_Model->Model_Type == LoadedFile_Assimp)
-			{
-				App->Cl_Vm_Dimensions->Rotate_X_Model(-App->Cl_Vm_Dimensions->Model_X_Rotation);
-			}
-		}
-		ImGui::PopButtonRepeat();
+	//		if (App->CL_Vm_Model->Model_Type == LoadedFile_Assimp)
+	//		{
+	//			App->Cl_Vm_Dimensions->Rotate_X_Model(-App->Cl_Vm_Dimensions->Model_X_Rotation);
+	//		}
+	//	}
+	//	ImGui::PopButtonRepeat();
 
-		//------------------------------------------------------------------------------
-		ImGui::SameLine();
-		ImGui::SetNextItemWidth(100);
-		const char* XitemsX[] = { "0.5", "1", "10", "45", "90", "180" };
-		static int XitemX = 4;
-		bool Changed = ImGui::Combo("Step X", &XitemX, XitemsX, IM_ARRAYSIZE(XitemsX));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
-		if (Changed == 1)
-		{
-			App->Cl_Vm_Dimensions->Model_X_Rotation = (float)atof(XitemsX[XitemX]);
-		}
+	//	//------------------------------------------------------------------------------
+	//	ImGui::SameLine();
+	//	ImGui::SetNextItemWidth(100);
+	//	const char* XitemsX[] = { "0.5", "1", "10", "45", "90", "180" };
+	//	static int XitemX = 4;
+	//	bool Changed = ImGui::Combo("Step X", &XitemX, XitemsX, IM_ARRAYSIZE(XitemsX));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
+	//	if (Changed == 1)
+	//	{
+	//		App->Cl_Vm_Dimensions->Model_X_Rotation = (float)atof(XitemsX[XitemX]);
+	//	}
 
-		// ------------------------------------------ Rotation y
-		ImGui::Text("Y ");
-		ImGui::SameLine();
+	//	// ------------------------------------------ Rotation y
+	//	ImGui::Text("Y ");
+	//	ImGui::SameLine();
 
-		float spacing2 = ImGui::GetStyle().ItemInnerSpacing.x;
-		ImGui::PushButtonRepeat(true);
-		if (ImGui::ArrowButton("##leftY", ImGuiDir_Left))
-		{
-			if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
-			{
-				
-			}
+	//	float spacing2 = ImGui::GetStyle().ItemInnerSpacing.x;
+	//	ImGui::PushButtonRepeat(true);
+	//	if (ImGui::ArrowButton("##leftY", ImGuiDir_Left))
+	//	{
+	//		if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
+	//		{
+	//			
+	//		}
 
-			if (App->CL_Vm_Model->Model_Type == LoadedFile_Assimp)
-			{
-				App->Cl_Vm_Dimensions->Rotate_Y_Model(App->Cl_Vm_Dimensions->Model_Y_Rotation);
-			}
-		}
-		ImGui::SameLine(0.0f, spacing2);
-		if (ImGui::ArrowButton("##rightY", ImGuiDir_Right))
-		{
-			if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
-			{
-				
-			}
+	//		if (App->CL_Vm_Model->Model_Type == LoadedFile_Assimp)
+	//		{
+	//			App->Cl_Vm_Dimensions->Rotate_Y_Model(App->Cl_Vm_Dimensions->Model_Y_Rotation);
+	//		}
+	//	}
+	//	ImGui::SameLine(0.0f, spacing2);
+	//	if (ImGui::ArrowButton("##rightY", ImGuiDir_Right))
+	//	{
+	//		if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
+	//		{
+	//			
+	//		}
 
-			if (App->CL_Vm_Model->Model_Type == LoadedFile_Assimp)
-			{
-				App->Cl_Vm_Dimensions->Rotate_Y_Model(-App->Cl_Vm_Dimensions->Model_Y_Rotation);
-			}
-		}
-		ImGui::PopButtonRepeat();
+	//		if (App->CL_Vm_Model->Model_Type == LoadedFile_Assimp)
+	//		{
+	//			App->Cl_Vm_Dimensions->Rotate_Y_Model(-App->Cl_Vm_Dimensions->Model_Y_Rotation);
+	//		}
+	//	}
+	//	ImGui::PopButtonRepeat();
 
-		//------------------------------------------------------------------------------
-		ImGui::SameLine();
-		ImGui::SetNextItemWidth(100);
-		const char* XitemsY[] = { "0.5", "1", "10", "45", "90", "180" };
-		static int XitemY = 4;
-		bool ChangedY = ImGui::Combo("Step Y", &XitemY, XitemsY, IM_ARRAYSIZE(XitemsY));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
-		if (ChangedY == 1)
-		{
-			App->Cl_Vm_Dimensions->Model_Y_Rotation = (float)atof(XitemsY[XitemY]);
-		}
+	//	//------------------------------------------------------------------------------
+	//	ImGui::SameLine();
+	//	ImGui::SetNextItemWidth(100);
+	//	const char* XitemsY[] = { "0.5", "1", "10", "45", "90", "180" };
+	//	static int XitemY = 4;
+	//	bool ChangedY = ImGui::Combo("Step Y", &XitemY, XitemsY, IM_ARRAYSIZE(XitemsY));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
+	//	if (ChangedY == 1)
+	//	{
+	//		App->Cl_Vm_Dimensions->Model_Y_Rotation = (float)atof(XitemsY[XitemY]);
+	//	}
 
-		// ------------------------------------------ Rotation z
-		ImGui::Text("Z ");
-		ImGui::SameLine();
+	//	// ------------------------------------------ Rotation z
+	//	ImGui::Text("Z ");
+	//	ImGui::SameLine();
 
-		float spacing3 = ImGui::GetStyle().ItemInnerSpacing.x;
-		ImGui::PushButtonRepeat(true);
-		if (ImGui::ArrowButton("##leftZ", ImGuiDir_Left))
-		{
-			if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
-			{
-				
-			}
+	//	float spacing3 = ImGui::GetStyle().ItemInnerSpacing.x;
+	//	ImGui::PushButtonRepeat(true);
+	//	if (ImGui::ArrowButton("##leftZ", ImGuiDir_Left))
+	//	{
+	//		if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
+	//		{
+	//			
+	//		}
 
-			if (App->CL_Vm_Model->Model_Type == LoadedFile_Assimp)
-			{
-				App->Cl_Vm_Dimensions->Rotate_Z_Model(App->Cl_Vm_Dimensions->Model_Z_Rotation);
-			}
-		}
-		ImGui::SameLine(0.0f, spacing3);
-		if (ImGui::ArrowButton("##rightZ", ImGuiDir_Right))
-		{
-			if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
-			{
-				
-			}
+	//		if (App->CL_Vm_Model->Model_Type == LoadedFile_Assimp)
+	//		{
+	//			App->Cl_Vm_Dimensions->Rotate_Z_Model(App->Cl_Vm_Dimensions->Model_Z_Rotation);
+	//		}
+	//	}
+	//	ImGui::SameLine(0.0f, spacing3);
+	//	if (ImGui::ArrowButton("##rightZ", ImGuiDir_Right))
+	//	{
+	//		if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
+	//		{
+	//			
+	//		}
 
-			if (App->CL_Vm_Model->Model_Type == LoadedFile_Assimp)
-			{
-				App->Cl_Vm_Dimensions->Rotate_Z_Model(-App->Cl_Vm_Dimensions->Model_Z_Rotation);
-			}
-		}
-		ImGui::PopButtonRepeat();
+	//		if (App->CL_Vm_Model->Model_Type == LoadedFile_Assimp)
+	//		{
+	//			App->Cl_Vm_Dimensions->Rotate_Z_Model(-App->Cl_Vm_Dimensions->Model_Z_Rotation);
+	//		}
+	//	}
+	//	ImGui::PopButtonRepeat();
 
-		ImGui::SameLine();
-		ImGui::SetNextItemWidth(100);
-		const char* XitemsZ[] = { "0.5", "1", "10", "45", "90", "180" };
-		static int XitemZ = 4;
-		bool ChangedZ = ImGui::Combo("Step Z", &XitemZ, XitemsZ, IM_ARRAYSIZE(XitemsZ));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
-		if (ChangedZ == 1)
-		{
-			App->Cl_Vm_Dimensions->Model_Z_Rotation = (float)atof(XitemsZ[XitemZ]);
-		}
+	//	ImGui::SameLine();
+	//	ImGui::SetNextItemWidth(100);
+	//	const char* XitemsZ[] = { "0.5", "1", "10", "45", "90", "180" };
+	//	static int XitemZ = 4;
+	//	bool ChangedZ = ImGui::Combo("Step Z", &XitemZ, XitemsZ, IM_ARRAYSIZE(XitemsZ));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
+	//	if (ChangedZ == 1)
+	//	{
+	//		App->Cl_Vm_Dimensions->Model_Z_Rotation = (float)atof(XitemsZ[XitemZ]);
+	//	}
 
-		// ----------------------------- 
-		/*ImGui::Spacing();
-		ImGui::Indent();
-		if (ImGui::Button("Middle of Bounding Box", ImVec2(200, 40)))
-		{
-			App->Cl_Vm_Dimensions->Centre_Model_Mid();
-		}
+	//	// ----------------------------- 
+	//	/*ImGui::Spacing();
+	//	ImGui::Indent();
+	//	if (ImGui::Button("Middle of Bounding Box", ImVec2(200, 40)))
+	//	{
+	//		App->Cl_Vm_Dimensions->Centre_Model_Mid();
+	//	}
 
-		if (ImGui::Button("Base of Bounding Box", ImVec2(200, 40)))
-		{
-			App->Cl_Vm_Dimensions->Centre_Model_Base();
-		}*/
+	//	if (ImGui::Button("Base of Bounding Box", ImVec2(200, 40)))
+	//	{
+	//		App->Cl_Vm_Dimensions->Centre_Model_Base();
+	//	}*/
 
-		ImGui::End();
-	}
+	//	ImGui::End();
+	//}
 }
 
 // *************************************************************************
@@ -518,134 +518,134 @@ void VM_ImGui::ImGui_Rotation2(void)
 // *************************************************************************
 void VM_ImGui::ImGui_Position(void)
 {
-	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
+	//ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
 
-	if (!ImGui::Begin("Position", &Show_Position, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
-	{
-		ImGui::End();
-	}
-	else
-	{
-		ImGui::Text("Position");
-		ImGui::Separator();
-		ImGui::Spacing();
-	
-		ImGui::Spacing();
+	//if (!ImGui::Begin("Position", &Show_Position, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
+	//{
+	//	ImGui::End();
+	//}
+	//else
+	//{
+	//	ImGui::Text("Position");
+	//	ImGui::Separator();
+	//	ImGui::Spacing();
+	//
+	//	ImGui::Spacing();
 
-		// ------------------------------------------ Position X
-		ImGui::Text("X ");
-		ImGui::SameLine();
+	//	// ------------------------------------------ Position X
+	//	ImGui::Text("X ");
+	//	ImGui::SameLine();
 
-		float spacing = ImGui::GetStyle().ItemInnerSpacing.x;
-		ImGui::PushButtonRepeat(true);
-		if (ImGui::ArrowButton("##left", ImGuiDir_Left))
-		{
-			if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
-			{
-				
-			}
-		}
+	//	float spacing = ImGui::GetStyle().ItemInnerSpacing.x;
+	//	ImGui::PushButtonRepeat(true);
+	//	if (ImGui::ArrowButton("##left", ImGuiDir_Left))
+	//	{
+	//		if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
+	//		{
+	//			
+	//		}
+	//	}
 
-		ImGui::SameLine(0.0f, spacing);
-		if (ImGui::ArrowButton("##right", ImGuiDir_Right))
-		{
-			if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
-			{
-				
-			}
-		}
-		ImGui::PopButtonRepeat();
+	//	ImGui::SameLine(0.0f, spacing);
+	//	if (ImGui::ArrowButton("##right", ImGuiDir_Right))
+	//	{
+	//		if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
+	//		{
+	//			
+	//		}
+	//	}
+	//	ImGui::PopButtonRepeat();
 
-		ImGui::SameLine();
-		ImGui::SetNextItemWidth(100);
-		const char* XitemsX[] = { "1", "2", "5", "10", "20" };
-		static int XitemX = 1;
-		bool Changed = ImGui::Combo("Step X", &XitemX, XitemsX, IM_ARRAYSIZE(XitemsX));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
-		if (Changed == 1)
-		{
-			Model_XTranslate = (float)atof(XitemsX[XitemX]);
-		}
+	//	ImGui::SameLine();
+	//	ImGui::SetNextItemWidth(100);
+	//	const char* XitemsX[] = { "1", "2", "5", "10", "20" };
+	//	static int XitemX = 1;
+	//	bool Changed = ImGui::Combo("Step X", &XitemX, XitemsX, IM_ARRAYSIZE(XitemsX));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
+	//	if (Changed == 1)
+	//	{
+	//		Model_XTranslate = (float)atof(XitemsX[XitemX]);
+	//	}
 
-		// ------------------------------------------ Position y
-		ImGui::Text("Y ");
-		ImGui::SameLine();
+	//	// ------------------------------------------ Position y
+	//	ImGui::Text("Y ");
+	//	ImGui::SameLine();
 
-		float spacing2 = ImGui::GetStyle().ItemInnerSpacing.x;
-		ImGui::PushButtonRepeat(true);
-		if (ImGui::ArrowButton("##leftY", ImGuiDir_Left))
-		{
-			if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
-			{
-				
-			}
-		}
-		ImGui::SameLine(0.0f, spacing2);
-		if (ImGui::ArrowButton("##rightY", ImGuiDir_Right))
-		{
-			if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
-			{
-				
-			}
-		}
-		ImGui::PopButtonRepeat();
+	//	float spacing2 = ImGui::GetStyle().ItemInnerSpacing.x;
+	//	ImGui::PushButtonRepeat(true);
+	//	if (ImGui::ArrowButton("##leftY", ImGuiDir_Left))
+	//	{
+	//		if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
+	//		{
+	//			
+	//		}
+	//	}
+	//	ImGui::SameLine(0.0f, spacing2);
+	//	if (ImGui::ArrowButton("##rightY", ImGuiDir_Right))
+	//	{
+	//		if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
+	//		{
+	//			
+	//		}
+	//	}
+	//	ImGui::PopButtonRepeat();
 
-		ImGui::SameLine();
-		ImGui::SetNextItemWidth(100);
-		const char* XitemsY[] = { "1", "2", "5", "10", "20" };
-		static int XitemY = 1;
-		bool ChangedY = ImGui::Combo("Step Y", &XitemY, XitemsY, IM_ARRAYSIZE(XitemsY));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
-		if (ChangedY == 1)
-		{
-			Model_YTranslate = (float)atof(XitemsY[XitemY]);
-		}
+	//	ImGui::SameLine();
+	//	ImGui::SetNextItemWidth(100);
+	//	const char* XitemsY[] = { "1", "2", "5", "10", "20" };
+	//	static int XitemY = 1;
+	//	bool ChangedY = ImGui::Combo("Step Y", &XitemY, XitemsY, IM_ARRAYSIZE(XitemsY));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
+	//	if (ChangedY == 1)
+	//	{
+	//		Model_YTranslate = (float)atof(XitemsY[XitemY]);
+	//	}
 
-		// ------------------------------------------ Position z
-		ImGui::Text("Z ");
-		ImGui::SameLine();
+	//	// ------------------------------------------ Position z
+	//	ImGui::Text("Z ");
+	//	ImGui::SameLine();
 
-		float spacing3 = ImGui::GetStyle().ItemInnerSpacing.x;
-		ImGui::PushButtonRepeat(true);
-		if (ImGui::ArrowButton("##leftZ", ImGuiDir_Left))
-		{
-			if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
-			{
-				
-			}
-		}
-		ImGui::SameLine(0.0f, spacing3);
-		if (ImGui::ArrowButton("##rightZ", ImGuiDir_Right))
-		{
-			if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
-			{
-				
-			}
-		}
-		ImGui::PopButtonRepeat();
+	//	float spacing3 = ImGui::GetStyle().ItemInnerSpacing.x;
+	//	ImGui::PushButtonRepeat(true);
+	//	if (ImGui::ArrowButton("##leftZ", ImGuiDir_Left))
+	//	{
+	//		if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
+	//		{
+	//			
+	//		}
+	//	}
+	//	ImGui::SameLine(0.0f, spacing3);
+	//	if (ImGui::ArrowButton("##rightZ", ImGuiDir_Right))
+	//	{
+	//		if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
+	//		{
+	//			
+	//		}
+	//	}
+	//	ImGui::PopButtonRepeat();
 
-		ImGui::SameLine();
-		ImGui::SetNextItemWidth(100);
-		const char* XitemsZ[] = { "1", "2", "5", "10", "20" };
-		static int XitemZ = 1;
-		bool ChangedZ = ImGui::Combo("Step Z", &XitemZ, XitemsZ, IM_ARRAYSIZE(XitemsZ));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
-		if (ChangedZ == 1)
-		{
-			Model_ZTranslate = (float)atof(XitemsZ[XitemZ]);
-		}
-	
-		ImGui::Spacing();
-		ImGui::Indent();
-		if (ImGui::Button("Middle of Bounding Box",ImVec2(200,40)))
-		{
-			App->Cl_Vm_Dimensions->Centre_Model_Mid();
-		}
+	//	ImGui::SameLine();
+	//	ImGui::SetNextItemWidth(100);
+	//	const char* XitemsZ[] = { "1", "2", "5", "10", "20" };
+	//	static int XitemZ = 1;
+	//	bool ChangedZ = ImGui::Combo("Step Z", &XitemZ, XitemsZ, IM_ARRAYSIZE(XitemsZ));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
+	//	if (ChangedZ == 1)
+	//	{
+	//		Model_ZTranslate = (float)atof(XitemsZ[XitemZ]);
+	//	}
+	//
+	//	ImGui::Spacing();
+	//	ImGui::Indent();
+	//	if (ImGui::Button("Middle of Bounding Box",ImVec2(200,40)))
+	//	{
+	//		App->Cl_Vm_Dimensions->Centre_Model_Mid();
+	//	}
 
-		if (ImGui::Button("Base of Bounding Box", ImVec2(200, 40)))
-		{
-			App->Cl_Vm_Dimensions->Centre_Model_Base();
-		}
+	//	if (ImGui::Button("Base of Bounding Box", ImVec2(200, 40)))
+	//	{
+	//		App->Cl_Vm_Dimensions->Centre_Model_Base();
+	//	}
 
-		ImGui::End();
-	}
+	//	ImGui::End();
+	//}
 }
 
 // *************************************************************************
@@ -653,212 +653,212 @@ void VM_ImGui::ImGui_Position(void)
 // *************************************************************************
 void VM_ImGui::ImGui_Scale(void)
 {
-	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
+	//ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
 
-	if (!ImGui::Begin("Scale", &Show_Scale , ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
-	{
-		ImGui::End();
-	}
-	else
-	{
-		ImGui::Text("Scale");
-		ImGui::Separator();
-		ImGui::Spacing();
+	//if (!ImGui::Begin("Scale", &Show_Scale , ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
+	//{
+	//	ImGui::End();
+	//}
+	//else
+	//{
+	//	ImGui::Text("Scale");
+	//	ImGui::Separator();
+	//	ImGui::Spacing();
 
-		ImGui::SameLine();
-		ImGui::Checkbox("Lock Axis", &App->Cl_Dimensions->Set_ScaleLock);
-		if (App->Cl_Dimensions->Set_ScaleLock == 1)
-		{
-			/*Ogre::Vector3 scale = App->Cl_Scene_Data->Cl_Object[index]->OgreNode->getScale();
-			ImGui::Text("X %.3f Y %.3f Z %.3f", scale.x, scale.y, scale.z);*/
-			ImGui::Spacing();
+	//	ImGui::SameLine();
+	//	ImGui::Checkbox("Lock Axis", &App->Cl_Dimensions->Set_ScaleLock);
+	//	if (App->Cl_Dimensions->Set_ScaleLock == 1)
+	//	{
+	//		/*Ogre::Vector3 scale = App->Cl_Scene_Data->Cl_Object[index]->OgreNode->getScale();
+	//		ImGui::Text("X %.3f Y %.3f Z %.3f", scale.x, scale.y, scale.z);*/
+	//		ImGui::Spacing();
 
-			ImGui::Text("All ");
-			ImGui::SameLine();
+	//		ImGui::Text("All ");
+	//		ImGui::SameLine();
 
-			float spacingSX = ImGui::GetStyle().ItemInnerSpacing.x;
-			ImGui::PushButtonRepeat(true);
-			if (ImGui::ArrowButton("##LeftSX", ImGuiDir_Left))
-			{
-				float Delta = 0.5;// App->Cl_Dimensions->Model_XScale;
+	//		float spacingSX = ImGui::GetStyle().ItemInnerSpacing.x;
+	//		ImGui::PushButtonRepeat(true);
+	//		if (ImGui::ArrowButton("##LeftSX", ImGuiDir_Left))
+	//		{
+	//			float Delta = 0.5;// App->Cl_Dimensions->Model_XScale;
 
-				if (App->CL_Vm_Model->Model_Loaded == 1)
-				{
-					
-					//Ogre::Vector3 Scale = App->Cl_Scene_Data->Cl_Object[index]->Mesh_Scale;
-					//Scale.x += Delta;
-					//Scale.y += Delta;
-					//Scale.z += Delta;
-					//App->Cl_Scene_Data->Cl_Object[index]->Mesh_Scale = Scale;
-					//App->Cl_Scene_Data->Cl_Object[index]->OgreNode->setScale(Scale);
+	//			if (App->CL_Vm_Model->Model_Loaded == 1)
+	//			{
+	//				
+	//				//Ogre::Vector3 Scale = App->Cl_Scene_Data->Cl_Object[index]->Mesh_Scale;
+	//				//Scale.x += Delta;
+	//				//Scale.y += Delta;
+	//				//Scale.z += Delta;
+	//				//App->Cl_Scene_Data->Cl_Object[index]->Mesh_Scale = Scale;
+	//				//App->Cl_Scene_Data->Cl_Object[index]->OgreNode->setScale(Scale);
 
-					//Scale = App->Cl_Scene_Data->Cl_Object[index]->Physics_Scale;
-					//Scale.x += Delta;
-					//Scale.y += Delta;
-					//Scale.z += Delta;
-					//App->Cl_Scene_Data->Cl_Object[index]->Physics_Scale = Scale;
-					//App->Cl_Scene_Data->Cl_Object[index]->bt_body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+	//				//Scale = App->Cl_Scene_Data->Cl_Object[index]->Physics_Scale;
+	//				//Scale.x += Delta;
+	//				//Scale.y += Delta;
+	//				//Scale.z += Delta;
+	//				//App->Cl_Scene_Data->Cl_Object[index]->Physics_Scale = Scale;
+	//				//App->Cl_Scene_Data->Cl_Object[index]->bt_body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
 
-					////App->Cl_Dimensions->Set_Physics_Position(index);
-					//App->Cl_Dimensions->UpDate_Physics_And_Visuals(index);
-				}
-			}
-			ImGui::SameLine(0.0f, spacingSX);
-			if (ImGui::ArrowButton("##rightSX", ImGuiDir_Right))
-			{
-				float Delta = 1;// App->Cl_Dimensions->Model_XScale;
+	//				////App->Cl_Dimensions->Set_Physics_Position(index);
+	//				//App->Cl_Dimensions->UpDate_Physics_And_Visuals(index);
+	//			}
+	//		}
+	//		ImGui::SameLine(0.0f, spacingSX);
+	//		if (ImGui::ArrowButton("##rightSX", ImGuiDir_Right))
+	//		{
+	//			float Delta = 1;// App->Cl_Dimensions->Model_XScale;
 
-				if (App->CL_Vm_Model->Model_Loaded == 1)
-				{
-					
-					//Scale.x -= Delta;
-					//Scale.y -= Delta;
-					//Scale.z -= Delta;
-					//App->Cl_Scene_Data->Cl_Object[index]->Mesh_Scale = Scale;
-					//App->Cl_Scene_Data->Cl_Object[index]->OgreNode->setScale(Scale);
+	//			if (App->CL_Vm_Model->Model_Loaded == 1)
+	//			{
+	//				
+	//				//Scale.x -= Delta;
+	//				//Scale.y -= Delta;
+	//				//Scale.z -= Delta;
+	//				//App->Cl_Scene_Data->Cl_Object[index]->Mesh_Scale = Scale;
+	//				//App->Cl_Scene_Data->Cl_Object[index]->OgreNode->setScale(Scale);
 
-					//Scale = App->Cl_Scene_Data->Cl_Object[index]->Physics_Scale;
-					//Scale.x -= Delta;
-					//Scale.y -= Delta;
-					//Scale.z -= Delta;
-					//App->Cl_Scene_Data->Cl_Object[index]->Physics_Scale = Scale;
-					//App->Cl_Scene_Data->Cl_Object[index]->bt_body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+	//				//Scale = App->Cl_Scene_Data->Cl_Object[index]->Physics_Scale;
+	//				//Scale.x -= Delta;
+	//				//Scale.y -= Delta;
+	//				//Scale.z -= Delta;
+	//				//App->Cl_Scene_Data->Cl_Object[index]->Physics_Scale = Scale;
+	//				//App->Cl_Scene_Data->Cl_Object[index]->bt_body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
 
-					////App->Cl_Dimensions->Set_Physics_Position(index);
-					//App->Cl_Dimensions->UpDate_Physics_And_Visuals(index);
-				}
-			}
-			ImGui::PopButtonRepeat();
-		}
-		else
-		{
-			/*Ogre::Vector3 scale = App->Cl_Scene_Data->Cl_Object[index]->OgreNode->getScale();
-			ImGui::Text("X %.3f Y %.3f Z %.3f", scale.x, scale.y, scale.z);*/
-			ImGui::Spacing();
+	//				////App->Cl_Dimensions->Set_Physics_Position(index);
+	//				//App->Cl_Dimensions->UpDate_Physics_And_Visuals(index);
+	//			}
+	//		}
+	//		ImGui::PopButtonRepeat();
+	//	}
+	//	else
+	//	{
+	//		/*Ogre::Vector3 scale = App->Cl_Scene_Data->Cl_Object[index]->OgreNode->getScale();
+	//		ImGui::Text("X %.3f Y %.3f Z %.3f", scale.x, scale.y, scale.z);*/
+	//		ImGui::Spacing();
 
-			// Scale X
-			ImGui::Text("X ");
-			ImGui::SameLine();
+	//		// Scale X
+	//		ImGui::Text("X ");
+	//		ImGui::SameLine();
 
-			if (ImGui::Button("SX + "))
-			{
-				//float Delta = 0.2;// App->Cl_Dimensions->Model_XScale;
-				//Ogre::Vector3 Scale = App->Cl_Scene_Data->Cl_Object[index]->Mesh_Scale;
-				//Scale.x += Delta;
-				//App->Cl_Scene_Data->Cl_Object[index]->Mesh_Scale = Scale;
-				//App->Cl_Scene_Data->Cl_Object[index]->OgreNode->setScale(Scale);
+	//		if (ImGui::Button("SX + "))
+	//		{
+	//			//float Delta = 0.2;// App->Cl_Dimensions->Model_XScale;
+	//			//Ogre::Vector3 Scale = App->Cl_Scene_Data->Cl_Object[index]->Mesh_Scale;
+	//			//Scale.x += Delta;
+	//			//App->Cl_Scene_Data->Cl_Object[index]->Mesh_Scale = Scale;
+	//			//App->Cl_Scene_Data->Cl_Object[index]->OgreNode->setScale(Scale);
 
-				//Scale = App->Cl_Scene_Data->Cl_Object[index]->Physics_Scale;
-				//Scale.x += Delta;
-				//App->Cl_Scene_Data->Cl_Object[index]->Physics_Scale = Scale;
-				//App->Cl_Scene_Data->Cl_Object[index]->bt_body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+	//			//Scale = App->Cl_Scene_Data->Cl_Object[index]->Physics_Scale;
+	//			//Scale.x += Delta;
+	//			//App->Cl_Scene_Data->Cl_Object[index]->Physics_Scale = Scale;
+	//			//App->Cl_Scene_Data->Cl_Object[index]->bt_body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
 
-				//App->Cl_Dimensions->Set_Physics_Position(index);
-				//App->Cl_Dimensions->UpDate_Physics_And_Visuals(index);
-			}
+	//			//App->Cl_Dimensions->Set_Physics_Position(index);
+	//			//App->Cl_Dimensions->UpDate_Physics_And_Visuals(index);
+	//		}
 
-			ImGui::SameLine();
+	//		ImGui::SameLine();
 
-			if (ImGui::Button("SX - "))
-			{
-				//float Delta = 0.2;// App->Cl_Dimensions->Model_XScale;
-				//Ogre::Vector3 Scale = App->Cl_Scene_Data->Cl_Object[index]->Mesh_Scale;
-				//Scale.x -= Delta;
-				//App->Cl_Scene_Data->Cl_Object[index]->Mesh_Scale = Scale;
-				//App->Cl_Scene_Data->Cl_Object[index]->OgreNode->setScale(Scale);
+	//		if (ImGui::Button("SX - "))
+	//		{
+	//			//float Delta = 0.2;// App->Cl_Dimensions->Model_XScale;
+	//			//Ogre::Vector3 Scale = App->Cl_Scene_Data->Cl_Object[index]->Mesh_Scale;
+	//			//Scale.x -= Delta;
+	//			//App->Cl_Scene_Data->Cl_Object[index]->Mesh_Scale = Scale;
+	//			//App->Cl_Scene_Data->Cl_Object[index]->OgreNode->setScale(Scale);
 
-				//Scale = App->Cl_Scene_Data->Cl_Object[index]->Physics_Scale;
-				//Scale.x -= Delta;
-				//App->Cl_Scene_Data->Cl_Object[index]->Physics_Scale = Scale;
-				//App->Cl_Scene_Data->Cl_Object[index]->bt_body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+	//			//Scale = App->Cl_Scene_Data->Cl_Object[index]->Physics_Scale;
+	//			//Scale.x -= Delta;
+	//			//App->Cl_Scene_Data->Cl_Object[index]->Physics_Scale = Scale;
+	//			//App->Cl_Scene_Data->Cl_Object[index]->bt_body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
 
-				//App->Cl_Dimensions->Set_Physics_Position(index);
-				//App->Cl_Dimensions->UpDate_Physics_And_Visuals(index);
+	//			//App->Cl_Dimensions->Set_Physics_Position(index);
+	//			//App->Cl_Dimensions->UpDate_Physics_And_Visuals(index);
 
-			}
+	//		}
 
-			// Scale Y
-			ImGui::Text("Y ");
-			ImGui::SameLine();
+	//		// Scale Y
+	//		ImGui::Text("Y ");
+	//		ImGui::SameLine();
 
-			if (ImGui::Button("SY + "))
-			{
-				//float Delta = 0.2;// App->Cl_Dimensions->Model_XScale;
-				//Ogre::Vector3 Scale = App->Cl_Scene_Data->Cl_Object[index]->Mesh_Scale;
-				//Scale.y += Delta;
-				//App->Cl_Scene_Data->Cl_Object[index]->Mesh_Scale = Scale;
-				//App->Cl_Scene_Data->Cl_Object[index]->OgreNode->setScale(Scale);
+	//		if (ImGui::Button("SY + "))
+	//		{
+	//			//float Delta = 0.2;// App->Cl_Dimensions->Model_XScale;
+	//			//Ogre::Vector3 Scale = App->Cl_Scene_Data->Cl_Object[index]->Mesh_Scale;
+	//			//Scale.y += Delta;
+	//			//App->Cl_Scene_Data->Cl_Object[index]->Mesh_Scale = Scale;
+	//			//App->Cl_Scene_Data->Cl_Object[index]->OgreNode->setScale(Scale);
 
-				//Scale = App->Cl_Scene_Data->Cl_Object[index]->Physics_Scale;
-				//Scale.y += Delta;
-				//App->Cl_Scene_Data->Cl_Object[index]->Physics_Scale = Scale;
-				//App->Cl_Scene_Data->Cl_Object[index]->bt_body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+	//			//Scale = App->Cl_Scene_Data->Cl_Object[index]->Physics_Scale;
+	//			//Scale.y += Delta;
+	//			//App->Cl_Scene_Data->Cl_Object[index]->Physics_Scale = Scale;
+	//			//App->Cl_Scene_Data->Cl_Object[index]->bt_body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
 
-				//App->Cl_Dimensions->Set_Physics_Position(index);
-				//App->Cl_Dimensions->UpDate_Physics_And_Visuals(index);
-			}
+	//			//App->Cl_Dimensions->Set_Physics_Position(index);
+	//			//App->Cl_Dimensions->UpDate_Physics_And_Visuals(index);
+	//		}
 
-			ImGui::SameLine();
+	//		ImGui::SameLine();
 
-			if (ImGui::Button("SY - "))
-			{
-				//float Delta = 0.2;// App->Cl_Dimensions->Model_XScale;
-				//Ogre::Vector3 Scale = App->Cl_Scene_Data->Cl_Object[index]->Mesh_Scale;
-				//Scale.y -= Delta;
-				//App->Cl_Scene_Data->Cl_Object[index]->Mesh_Scale = Scale;
-				//App->Cl_Scene_Data->Cl_Object[index]->OgreNode->setScale(Scale);
+	//		if (ImGui::Button("SY - "))
+	//		{
+	//			//float Delta = 0.2;// App->Cl_Dimensions->Model_XScale;
+	//			//Ogre::Vector3 Scale = App->Cl_Scene_Data->Cl_Object[index]->Mesh_Scale;
+	//			//Scale.y -= Delta;
+	//			//App->Cl_Scene_Data->Cl_Object[index]->Mesh_Scale = Scale;
+	//			//App->Cl_Scene_Data->Cl_Object[index]->OgreNode->setScale(Scale);
 
-				//Scale = App->Cl_Scene_Data->Cl_Object[index]->Physics_Scale;
-				//Scale.y -= Delta;
-				//App->Cl_Scene_Data->Cl_Object[index]->Physics_Scale = Scale;
-				//App->Cl_Scene_Data->Cl_Object[index]->bt_body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+	//			//Scale = App->Cl_Scene_Data->Cl_Object[index]->Physics_Scale;
+	//			//Scale.y -= Delta;
+	//			//App->Cl_Scene_Data->Cl_Object[index]->Physics_Scale = Scale;
+	//			//App->Cl_Scene_Data->Cl_Object[index]->bt_body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
 
-				//App->Cl_Dimensions->Set_Physics_Position(index);
-				//App->Cl_Dimensions->UpDate_Physics_And_Visuals(index);
-			}
+	//			//App->Cl_Dimensions->Set_Physics_Position(index);
+	//			//App->Cl_Dimensions->UpDate_Physics_And_Visuals(index);
+	//		}
 
-			// Scale Z
-			ImGui::Text("Z ");
-			ImGui::SameLine();
+	//		// Scale Z
+	//		ImGui::Text("Z ");
+	//		ImGui::SameLine();
 
-			if (ImGui::Button("SZ + "))
-			{
-				//float Delta = 0.2;// App->Cl_Dimensions->Model_XScale;
-				//Ogre::Vector3 Scale = App->Cl_Scene_Data->Cl_Object[index]->Mesh_Scale;
-				//Scale.z += Delta;
-				//App->Cl_Scene_Data->Cl_Object[index]->Mesh_Scale = Scale;
-				//App->Cl_Scene_Data->Cl_Object[index]->OgreNode->setScale(Scale);
+	//		if (ImGui::Button("SZ + "))
+	//		{
+	//			//float Delta = 0.2;// App->Cl_Dimensions->Model_XScale;
+	//			//Ogre::Vector3 Scale = App->Cl_Scene_Data->Cl_Object[index]->Mesh_Scale;
+	//			//Scale.z += Delta;
+	//			//App->Cl_Scene_Data->Cl_Object[index]->Mesh_Scale = Scale;
+	//			//App->Cl_Scene_Data->Cl_Object[index]->OgreNode->setScale(Scale);
 
-				//Scale = App->Cl_Scene_Data->Cl_Object[index]->Physics_Scale;
-				//Scale.z += Delta;
-				//App->Cl_Scene_Data->Cl_Object[index]->Physics_Scale = Scale;
-				//App->Cl_Scene_Data->Cl_Object[index]->bt_body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+	//			//Scale = App->Cl_Scene_Data->Cl_Object[index]->Physics_Scale;
+	//			//Scale.z += Delta;
+	//			//App->Cl_Scene_Data->Cl_Object[index]->Physics_Scale = Scale;
+	//			//App->Cl_Scene_Data->Cl_Object[index]->bt_body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
 
-				//App->Cl_Dimensions->Set_Physics_Position(index);
-				//App->Cl_Dimensions->UpDate_Physics_And_Visuals(index);
-			}
+	//			//App->Cl_Dimensions->Set_Physics_Position(index);
+	//			//App->Cl_Dimensions->UpDate_Physics_And_Visuals(index);
+	//		}
 
-			ImGui::SameLine();
+	//		ImGui::SameLine();
 
-			if (ImGui::Button("SZ - "))
-			{
-				//float Delta = 0.2;// App->Cl_Dimensions->Model_XScale;
-				//Ogre::Vector3 Scale = App->Cl_Scene_Data->Cl_Object[index]->Mesh_Scale;
-				//Scale.z -= Delta;
-				//App->Cl_Scene_Data->Cl_Object[index]->Mesh_Scale = Scale;
-				//App->Cl_Scene_Data->Cl_Object[index]->OgreNode->setScale(Scale);
+	//		if (ImGui::Button("SZ - "))
+	//		{
+	//			//float Delta = 0.2;// App->Cl_Dimensions->Model_XScale;
+	//			//Ogre::Vector3 Scale = App->Cl_Scene_Data->Cl_Object[index]->Mesh_Scale;
+	//			//Scale.z -= Delta;
+	//			//App->Cl_Scene_Data->Cl_Object[index]->Mesh_Scale = Scale;
+	//			//App->Cl_Scene_Data->Cl_Object[index]->OgreNode->setScale(Scale);
 
-				//Scale = App->Cl_Scene_Data->Cl_Object[index]->Physics_Scale;
-				//Scale.z -= Delta;
-				//App->Cl_Scene_Data->Cl_Object[index]->Physics_Scale = Scale;
-				//App->Cl_Scene_Data->Cl_Object[index]->bt_body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+	//			//Scale = App->Cl_Scene_Data->Cl_Object[index]->Physics_Scale;
+	//			//Scale.z -= Delta;
+	//			//App->Cl_Scene_Data->Cl_Object[index]->Physics_Scale = Scale;
+	//			//App->Cl_Scene_Data->Cl_Object[index]->bt_body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
 
-				//App->Cl_Dimensions->Set_Physics_Position(index);
-				//App->Cl_Dimensions->UpDate_Physics_And_Visuals(index);
-			}
-		}
-		ImGui::End();
-	}
+	//			//App->Cl_Dimensions->Set_Physics_Position(index);
+	//			//App->Cl_Dimensions->UpDate_Physics_And_Visuals(index);
+	//		}
+	//	}
+	//	ImGui::End();
+	//}
 }
 
 
@@ -898,48 +898,7 @@ void VM_ImGui::ImGui_Image(void)
 // *************************************************************************
 void VM_ImGui::ImGui_GroupList(void)
 {
-	static int selected_Players = 0;
-
-	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
-
-	if (!ImGui::Begin("Groups", &Show_Group_List, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize))
-	{
-		ImGui::End();
-	}
-	else
-	{
-		int GroupCount = App->CL_Vm_Model->GroupCount;
-		ImGui::Text("Group Count %i", GroupCount);
-
-		ImGui::Separator();
-		ImGui::Spacing();
-
-		int Count = 0;
-		while (Count < GroupCount)
-		{
-			ImGui::Bullet();
-			if (ImGui::Selectable(App->CL_Vm_Model->S_MeshGroup[Count]->GroupName, selected_Players == Count))
-			{
-				selected_Players = Count;
-				Block = 1;
-			}
-
-			Count++;
-		}
-
-		if (Block == 1)
-		{
-			Block = 0;
-		}
-
-		if (Reset_Groups == 1)
-		{
-			selected_Players = 0;
-			Reset_Groups = 0;
-		}
-
-		ImGui::End();
-	}
+	
 }
 
 // *************************************************************************
@@ -947,42 +906,7 @@ void VM_ImGui::ImGui_GroupList(void)
 // *************************************************************************
 void VM_ImGui::ImGui_MotionList(void)
 {
-	static int selected_Motion = 0;
-
-	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
-
-	if (!ImGui::Begin("Motions", &Show_Motion_List, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize))
-	{
-		ImGui::End();
-	}
-	else
-	{
-		int MotionCount = App->CL_Vm_Model->MotionCount;
-		ImGui::Text("Motion Count %i", MotionCount);
-
-		ImGui::Separator();
-		ImGui::Spacing();
-
-		int Count = 0;
-		while (Count < MotionCount)
-		{
-			ImGui::Bullet();
-			if (ImGui::Selectable(App->CL_Vm_Model->MotionNames_Data[Count].Name, selected_Motion == Count))
-			{
-				selected_Motion = Count;
-				Block_Motion = 1;
-			}
-
-			Count++;
-		}
-
-		if (Block_Motion == 1)
-		{
-			
-		}
-
-		ImGui::End();
-	}
+	
 }
 
 // *************************************************************************

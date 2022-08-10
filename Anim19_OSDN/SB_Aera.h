@@ -36,8 +36,6 @@ public:
 	bool Start_Area_PropsPanel();
 	void Hide_Area_Dlg(bool Show);
 
-	void Add_Area();
-
 	bool Show_Physics_Debug; // Show Physics Debug For Area [021221]
 
 	void Add_Aera_To_Project(int Index, char* FileName, char* Resource_Location);

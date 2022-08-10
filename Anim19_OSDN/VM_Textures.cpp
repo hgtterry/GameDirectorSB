@@ -313,93 +313,93 @@ int VM_Textures::Genesis_WriteToBmp(geBitmap *bmp, char *filename)
 // *************************************************************************
 bool VM_Textures::Soil_DecodeTextures(int TextureID)
 {
-	int Index = 0;
-	int Dont = 0;
-	int jpg = 0;
-	int DontAdd = 0;
-	int AddDummy = 0;
+	//int Index = 0;
+	//int Dont = 0;
+	//int jpg = 0;
+	//int DontAdd = 0;
+	//int AddDummy = 0;
 
-	char buf[1024];
-	strcpy(buf, App->CL_Vm_Model->Texture_FolderPath);
-	strcat(buf, "Etemp.bmp");
+	//char buf[1024];
+	//strcpy(buf, App->CL_Vm_Model->Texture_FolderPath);
+	//strcat(buf, "Etemp.bmp");
 
-	// ----------------------------------- Bitmap
-	if (_stricmp(TextureFileName + strlen(TextureFileName) - 4, ".BMP") == 0)
-	{
-		////S_TextureInfo[Count] = new GLTextureInfo_Type; // Need To Populate
+	//// ----------------------------------- Bitmap
+	//if (_stricmp(TextureFileName + strlen(TextureFileName) - 4, ".BMP") == 0)
+	//{
+	//	////S_TextureInfo[Count] = new GLTextureInfo_Type; // Need To Populate
 
-		int Test = Soil_Load_Texture(g_Texture, TextureFileName, TextureID);
-		if (Test == 0)
-		{
-			CreateDummyTexture();
-			Soil_Load_Texture(g_Texture, buf, TextureID);
-			//remove(buf);
-		}
+	//	int Test = Soil_Load_Texture(g_Texture, TextureFileName, TextureID);
+	//	if (Test == 0)
+	//	{
+	//		CreateDummyTexture();
+	//		Soil_Load_Texture(g_Texture, buf, TextureID);
+	//		//remove(buf);
+	//	}
 
-		return 1;
-	}
-	// ------------------------------------ JPEG
-	if (_stricmp(TextureFileName + strlen(TextureFileName) - 4, ".JPG") == 0)
-	{
-		//S_TextureInfo[Count] = new GLTextureInfo_Type; // Need To Populate
+	//	return 1;
+	//}
+	//// ------------------------------------ JPEG
+	//if (_stricmp(TextureFileName + strlen(TextureFileName) - 4, ".JPG") == 0)
+	//{
+	//	//S_TextureInfo[Count] = new GLTextureInfo_Type; // Need To Populate
 
-		int Test = Soil_Load_Texture(g_Texture, TextureFileName, TextureID);
-		if (Test == 0)
-		{
-			CreateDummyTexture();
-			Soil_Load_Texture(g_Texture, buf, TextureID);
-			//remove(buf);
-		}
+	//	int Test = Soil_Load_Texture(g_Texture, TextureFileName, TextureID);
+	//	if (Test == 0)
+	//	{
+	//		CreateDummyTexture();
+	//		Soil_Load_Texture(g_Texture, buf, TextureID);
+	//		//remove(buf);
+	//	}
 
-		return 1;
-	}
-	// ------------------------------------ TGA
-	if (_stricmp(TextureFileName + strlen(TextureFileName) - 4, ".TGA") == 0)
-	{
-		//S_TextureInfo[Count] = new GLTextureInfo_Type; // Need To Populate
+	//	return 1;
+	//}
+	//// ------------------------------------ TGA
+	//if (_stricmp(TextureFileName + strlen(TextureFileName) - 4, ".TGA") == 0)
+	//{
+	//	//S_TextureInfo[Count] = new GLTextureInfo_Type; // Need To Populate
 
-		int Test = Soil_Load_Texture(g_Texture, TextureFileName, TextureID);
-		if (Test == 0)
-		{
-			CreateDummyTexture();
-			Soil_Load_Texture(g_Texture, buf, TextureID);
-			//remove(buf);
-		}
+	//	int Test = Soil_Load_Texture(g_Texture, TextureFileName, TextureID);
+	//	if (Test == 0)
+	//	{
+	//		CreateDummyTexture();
+	//		Soil_Load_Texture(g_Texture, buf, TextureID);
+	//		//remove(buf);
+	//	}
 
-		return 1;
-	}
-	// ------------------------------------ DDS
-	if (_stricmp(TextureFileName + strlen(TextureFileName) - 4, ".DDS") == 0)
-	{
-		//S_TextureInfo[Count] = new GLTextureInfo_Type; // Need To Populate
+	//	return 1;
+	//}
+	//// ------------------------------------ DDS
+	//if (_stricmp(TextureFileName + strlen(TextureFileName) - 4, ".DDS") == 0)
+	//{
+	//	//S_TextureInfo[Count] = new GLTextureInfo_Type; // Need To Populate
 
-		int Test = Soil_Load_Texture(g_Texture, TextureFileName, TextureID);
-		if (Test == 0)
-		{
-			CreateDummyTexture();
-			Soil_Load_Texture(g_Texture, buf, TextureID);
-			//remove(buf);
-		}
-		return 1;
-	}
-	// ------------------------------------ PNG
-	if (_stricmp(TextureFileName + strlen(TextureFileName) - 4, ".PNG") == 0)
-	{
-		//S_TextureInfo[Count] = new GLTextureInfo_Type; // Need To Populate
+	//	int Test = Soil_Load_Texture(g_Texture, TextureFileName, TextureID);
+	//	if (Test == 0)
+	//	{
+	//		CreateDummyTexture();
+	//		Soil_Load_Texture(g_Texture, buf, TextureID);
+	//		//remove(buf);
+	//	}
+	//	return 1;
+	//}
+	//// ------------------------------------ PNG
+	//if (_stricmp(TextureFileName + strlen(TextureFileName) - 4, ".PNG") == 0)
+	//{
+	//	//S_TextureInfo[Count] = new GLTextureInfo_Type; // Need To Populate
 
-		int Test = Soil_Load_Texture(g_Texture, TextureFileName, TextureID);
-		if (Test == 0)
-		{
-			CreateDummyTexture();
-			Soil_Load_Texture(g_Texture, buf, TextureID);
-			//remove(buf);
-		}
-		return 1;
-	}
+	//	int Test = Soil_Load_Texture(g_Texture, TextureFileName, TextureID);
+	//	if (Test == 0)
+	//	{
+	//		CreateDummyTexture();
+	//		Soil_Load_Texture(g_Texture, buf, TextureID);
+	//		//remove(buf);
+	//	}
+	//	return 1;
+	//}
 
-	CreateDummyTexture();
-	Soil_Load_Texture(g_Texture, buf, TextureID);
-	remove(buf);
+	//CreateDummyTexture();
+	//Soil_Load_Texture(g_Texture, buf, TextureID);
+	//remove(buf);
 
 	return 1;
 }
@@ -409,52 +409,52 @@ bool VM_Textures::Soil_DecodeTextures(int TextureID)
 // *************************************************************************
 bool VM_Textures::Soil_Load_Texture(UINT textureArray[], LPSTR strFileName, int textureID)
 {
-	textureArray[textureID] = SOIL_load_OGL_texture
-	(
-		strFileName,
-		SOIL_LOAD_AUTO,
-		SOIL_CREATE_NEW_ID,
-		SOIL_FLAG_TEXTURE_REPEATS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_MIPMAPS
-	);
+	//textureArray[textureID] = SOIL_load_OGL_texture
+	//(
+	//	strFileName,
+	//	SOIL_LOAD_AUTO,
+	//	SOIL_CREATE_NEW_ID,
+	//	SOIL_FLAG_TEXTURE_REPEATS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_MIPMAPS
+	//);
 
-	if (textureArray[textureID] == 0) // Fall back attemp to convert and load or Bail
-	{
-		//App->Say("Soil Fail 2");
-		
-		CreateDummyTexture();
-		char buf[1024];
-		strcpy(buf, App->CL_Vm_Model->Texture_FolderPath);
-		strcat(buf, "Etemp.bmp");
+	//if (textureArray[textureID] == 0) // Fall back attemp to convert and load or Bail
+	//{
+	//	//App->Say("Soil Fail 2");
+	//	
+	//	CreateDummyTexture();
+	//	char buf[1024];
+	//	strcpy(buf, App->CL_Vm_Model->Texture_FolderPath);
+	//	strcat(buf, "Etemp.bmp");
 
-		textureArray[textureID] = SOIL_load_OGL_texture
-		(
+	//	textureArray[textureID] = SOIL_load_OGL_texture
+	//	(
 
-			buf,
-			SOIL_LOAD_AUTO,
-			SOIL_CREATE_NEW_ID,
-			SOIL_FLAG_TEXTURE_REPEATS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_MIPMAPS
-			
-		);
+	//		buf,
+	//		SOIL_LOAD_AUTO,
+	//		SOIL_CREATE_NEW_ID,
+	//		SOIL_FLAG_TEXTURE_REPEATS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_MIPMAPS
+	//		
+	//	);
 
-		remove(buf);
+	//	remove(buf);
 
-		if (textureArray[textureID] == 0)
-		{
-			const char* test = SOIL_last_result();
-			char buff[255];
-			strcpy(buff, test);
-			strcat(buff, "- Soil Message");
-			App->Say(buff);
-			return 0;
-		}
-	}
+	//	if (textureArray[textureID] == 0)
+	//	{
+	//		const char* test = SOIL_last_result();
+	//		char buff[255];
+	//		strcpy(buff, test);
+	//		strcat(buff, "- Soil Message");
+	//		App->Say(buff);
+	//		return 0;
+	//	}
+	//}
 
-	glBindTexture(GL_TEXTURE_2D, textureArray[textureID]);
+	//glBindTexture(GL_TEXTURE_2D, textureArray[textureID]);
 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	////glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
 	return 1;
 }
@@ -480,7 +480,7 @@ bool VM_Textures::Soil_Load_Texture(UINT textureArray[], LPSTR strFileName, int 
 // *************************************************************************
 bool VM_Textures::Ogre_LoadImage(const Ogre::String& tex_ext, const Ogre::String& texture_path,int Index)
 {
-	bool image_loaded = false;
+	/*bool image_loaded = false;
 
 	std::ifstream ifs(texture_path.c_str(), std::ios::binary | std::ios::in);
 	if (ifs.is_open())
@@ -504,10 +504,10 @@ bool VM_Textures::Ogre_LoadImage(const Ogre::String& tex_ext, const Ogre::String
 			image_loaded = true;
 		}
 
-		ifs.close();
-	}
+		ifs.close();*/
+	//}
 
-	return image_loaded;
+	return 0;
 }
 
 // *************************************************************************
@@ -602,107 +602,107 @@ bool VM_Textures::TexureToWinPreviewFullPath(int Index, char* FullPath)
 {
 	//ilutGetBmpInfo(BITMAPINFO *Info);
 
-	char mFileName[1024];
-	strcpy(mFileName, FullPath);
+	//char mFileName[1024];
+	//strcpy(mFileName, FullPath);
 
-	HWND PreviewWnd = 0;// GetDlgItem(App->EBC_Groups->RightGroups_Hwnd, IDC_BASETEXTURE2);
-	HDC	hDC = GetDC(PreviewWnd);
+	//HWND PreviewWnd = 0;// GetDlgItem(App->EBC_Groups->RightGroups_Hwnd, IDC_BASETEXTURE2);
+	//HDC	hDC = GetDC(PreviewWnd);
 
-	// ----------------------------------- Bitmap
-	if (_stricmp(mFileName + strlen(mFileName) - 4, ".BMP") == 0)
-	{
-		App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap = NULL;
+	//// ----------------------------------- Bitmap
+	//if (_stricmp(mFileName + strlen(mFileName) - 4, ".BMP") == 0)
+	//{
+	//	App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap = NULL;
 
-		App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap = ilutWinLoadImage(mFileName, hDC);
-		ReleaseDC(PreviewWnd, hDC);
+	//	App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap = ilutWinLoadImage(mFileName, hDC);
+	//	ReleaseDC(PreviewWnd, hDC);
 
-		if (App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap == NULL)
-		{
-			CreateDummyTexture();
-			App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap = (HBITMAP)LoadImage(NULL, "Etemp.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
-			remove("Etemp.bmp");
+	//	if (App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap == NULL)
+	//	{
+	//		CreateDummyTexture();
+	//		App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap = (HBITMAP)LoadImage(NULL, "Etemp.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+	//		remove("Etemp.bmp");
 
-			App->CL_Vm_Model->S_MeshGroup[Index]->Bitmap_Loaded = 1;
-		}
-		else
-		{
-			App->CL_Vm_Model->S_MeshGroup[Index]->Bitmap_Loaded = 1;
-		}
-		
-		return 1;
-	}
-	// ------------------------------------ TGA
-	if (_stricmp(mFileName + strlen(mFileName) - 4, ".TGA") == 0)
-	{
-		
-		int Test = Ogre_LoadImage("tga", mFileName, Index);
-		if (Test == 0)
-		{
-			App->Say("Failed to load image tga");
-		}
+	//		App->CL_Vm_Model->S_MeshGroup[Index]->Bitmap_Loaded = 1;
+	//	}
+	//	else
+	//	{
+	//		App->CL_Vm_Model->S_MeshGroup[Index]->Bitmap_Loaded = 1;
+	//	}
+	//	
+	//	return 1;
+	//}
+	//// ------------------------------------ TGA
+	//if (_stricmp(mFileName + strlen(mFileName) - 4, ".TGA") == 0)
+	//{
+	//	
+	//	int Test = Ogre_LoadImage("tga", mFileName, Index);
+	//	if (Test == 0)
+	//	{
+	//		App->Say("Failed to load image tga");
+	//	}
 
-		App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap = (HBITMAP)LoadImage(NULL, "Etemp.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+	//	App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap = (HBITMAP)LoadImage(NULL, "Etemp.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
 
-		remove("Etemp.bmp");
-		return 1;
-	}
-	// ------------------------------------ JPEG
-	if (_stricmp(mFileName + strlen(mFileName) - 4, ".JPG") == 0)
-	{
-		
-		int Test = Ogre_LoadImage("jpg", mFileName, Index);
-		if (Test == 0)
-		{
-			App->Say("Failed to load image jpg");
-		}
+	//	remove("Etemp.bmp");
+	//	return 1;
+	//}
+	//// ------------------------------------ JPEG
+	//if (_stricmp(mFileName + strlen(mFileName) - 4, ".JPG") == 0)
+	//{
+	//	
+	//	int Test = Ogre_LoadImage("jpg", mFileName, Index);
+	//	if (Test == 0)
+	//	{
+	//		App->Say("Failed to load image jpg");
+	//	}
 
-		App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap = (HBITMAP)LoadImage(NULL,"Etemp.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
-		
-		remove("Etemp.bmp");
-		return 1;
-	}
-	// ------------------------------------ DDS
-	if (_stricmp(mFileName + strlen(mFileName) - 4, ".DDS") == 0)
-	{
-		int Test = Ogre_LoadImage("dds", mFileName, Index);
-		if (Test == 0)
-		{
-			App->Say("Failed to load image dds");
-		}
+	//	App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap = (HBITMAP)LoadImage(NULL,"Etemp.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+	//	
+	//	remove("Etemp.bmp");
+	//	return 1;
+	//}
+	//// ------------------------------------ DDS
+	//if (_stricmp(mFileName + strlen(mFileName) - 4, ".DDS") == 0)
+	//{
+	//	int Test = Ogre_LoadImage("dds", mFileName, Index);
+	//	if (Test == 0)
+	//	{
+	//		App->Say("Failed to load image dds");
+	//	}
 
-		App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap = (HBITMAP)LoadImage(NULL, "Etemp.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+	//	App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap = (HBITMAP)LoadImage(NULL, "Etemp.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
 
-		remove("Etemp.bmp");
-		return 1;
-	}
-	// ------------------------------------ PNG
-	if (_stricmp(mFileName + strlen(mFileName) - 4, ".PNG") == 0)
-	{
-		int Test = Ogre_LoadImage("png", mFileName, Index);
-		if (Test == 0)
-		{
-			App->Say("Failed to load image png");
-		}
+	//	remove("Etemp.bmp");
+	//	return 1;
+	//}
+	//// ------------------------------------ PNG
+	//if (_stricmp(mFileName + strlen(mFileName) - 4, ".PNG") == 0)
+	//{
+	//	int Test = Ogre_LoadImage("png", mFileName, Index);
+	//	if (Test == 0)
+	//	{
+	//		App->Say("Failed to load image png");
+	//	}
 
-		App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap = (HBITMAP)LoadImage(NULL, "Etemp.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+	//	App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap = (HBITMAP)LoadImage(NULL, "Etemp.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
 
-		remove("Etemp.bmp");
-		return 1;
-	}
+	//	remove("Etemp.bmp");
+	//	return 1;
+	//}
 
-	
-	// if all fails dummy texture here 
+	//
+	//// if all fails dummy texture here 
 
-	//CreateDummyTexture();
+	////CreateDummyTexture();
 
-	//char buf[1024];
-	//strcpy(buf,App->EquityDirecory_FullPath);
-	//strcat(buf,"\\");
-	//strcat(buf,"Etemp.bmp");
+	////char buf[1024];
+	////strcpy(buf,App->EquityDirecory_FullPath);
+	////strcat(buf,"\\");
+	////strcat(buf,"Etemp.bmp");
 
-	////App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap = ilLoadImage("Etemp.bmp");
-	////Soil_Load_Texture(g_Texture,buf,TextureID);
-	//remove(buf);
+	//////App->CL_Vm_Model->S_MeshGroup[Index]->Base_Bitmap = ilLoadImage("Etemp.bmp");
+	//////Soil_Load_Texture(g_Texture,buf,TextureID);
+	////remove(buf);
 
 	return 1;
 }
@@ -740,147 +740,147 @@ bool VM_Textures::RemoveFile(char* Filename, char* Folder)
 // *************************************************************************
 bool VM_Textures::CreateDummyTexture(void)
 {
-	HBITMAP hbmpTemp;
-	hbmpTemp = LoadBitmap(App->hInst, MAKEINTRESOURCE(IDB_DUMMY));
+	//HBITMAP hbmpTemp;
+	//hbmpTemp = LoadBitmap(App->hInst, MAKEINTRESOURCE(IDB_DUMMY));
 
-	HDC	hdcTemp;
-	BITMAP bmp;
-	PBITMAPINFO pbmi;
-	WORD cClrBits;
-	HANDLE hf;
-	BITMAPFILEHEADER hdr;
-	PBITMAPINFOHEADER pbih;
-	LPBYTE lpBits;
-	DWORD dwTotal;
-	DWORD cb;
-	BYTE *hp;
-	DWORD dwTmp;
+	//HDC	hdcTemp;
+	//BITMAP bmp;
+	//PBITMAPINFO pbmi;
+	//WORD cClrBits;
+	//HANDLE hf;
+	//BITMAPFILEHEADER hdr;
+	//PBITMAPINFOHEADER pbih;
+	//LPBYTE lpBits;
+	//DWORD dwTotal;
+	//DWORD cb;
+	//BYTE *hp;
+	//DWORD dwTmp;
 
-	hdcTemp = CreateCompatibleDC(GetDC(0));
-	if (!hdcTemp)
-	{
-		App->Say("Compatible Faild");
-		return 0;
-	}
+	//hdcTemp = CreateCompatibleDC(GetDC(0));
+	//if (!hdcTemp)
+	//{
+	//	App->Say("Compatible Faild");
+	//	return 0;
+	//}
 
-	if (!GetObject(hbmpTemp, sizeof(BITMAP), (LPSTR)&bmp))
+	//if (!GetObject(hbmpTemp, sizeof(BITMAP), (LPSTR)&bmp))
 
-	{
-		App->Say("Failed 3");
-		return 0;
-	}
+	//{
+	//	App->Say("Failed 3");
+	//	return 0;
+	//}
 
-	cClrBits = (WORD)(bmp.bmPlanes * bmp.bmBitsPixel);
-	if (cClrBits == 1)
-		cClrBits = 1;
-	else if (cClrBits <= 4)
-		cClrBits = 4;
-	else if (cClrBits <= 8)
-		cClrBits = 8;
-	else if (cClrBits <= 16)
-		cClrBits = 16;
-	else if (cClrBits <= 24)
-		cClrBits = 24;
-	else cClrBits = 32;
-
-
-	if (cClrBits != 24)
-		pbmi = (PBITMAPINFO)LocalAlloc(LPTR,
-			sizeof(BITMAPINFOHEADER) + sizeof(RGBQUAD) * (1 << cClrBits));
-	else
-		pbmi = (PBITMAPINFO)LocalAlloc(LPTR, sizeof(BITMAPINFOHEADER));
-
-	// Initialize the fields in the BITMAPINFO structure. 
-
-	pbmi->bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
-	pbmi->bmiHeader.biWidth = bmp.bmWidth;
-	pbmi->bmiHeader.biHeight = bmp.bmHeight;
-	pbmi->bmiHeader.biPlanes = bmp.bmPlanes;
-	pbmi->bmiHeader.biBitCount = bmp.bmBitsPixel;
-	if (cClrBits < 24)
-		pbmi->bmiHeader.biClrUsed = (1 << cClrBits);
+	//cClrBits = (WORD)(bmp.bmPlanes * bmp.bmBitsPixel);
+	//if (cClrBits == 1)
+	//	cClrBits = 1;
+	//else if (cClrBits <= 4)
+	//	cClrBits = 4;
+	//else if (cClrBits <= 8)
+	//	cClrBits = 8;
+	//else if (cClrBits <= 16)
+	//	cClrBits = 16;
+	//else if (cClrBits <= 24)
+	//	cClrBits = 24;
+	//else cClrBits = 32;
 
 
-	pbmi->bmiHeader.biCompression = BI_RGB;
+	//if (cClrBits != 24)
+	//	pbmi = (PBITMAPINFO)LocalAlloc(LPTR,
+	//		sizeof(BITMAPINFOHEADER) + sizeof(RGBQUAD) * (1 << cClrBits));
+	//else
+	//	pbmi = (PBITMAPINFO)LocalAlloc(LPTR, sizeof(BITMAPINFOHEADER));
 
-	pbmi->bmiHeader.biSizeImage = (pbmi->bmiHeader.biWidth + 7) / 8 * pbmi->bmiHeader.biHeight * cClrBits;
+	//// Initialize the fields in the BITMAPINFO structure. 
 
-	pbmi->bmiHeader.biClrImportant = 0;
-
-	pbih = (PBITMAPINFOHEADER)pbmi;
-	lpBits = (LPBYTE)GlobalAlloc(GMEM_FIXED, pbih->biSizeImage);
-
-	if (!lpBits)
-	{
-		App->Say("writeBMP::Could not allocate memory");
-		return 0;
-	}
-
-	if (!GetDIBits(hdcTemp, HBITMAP(hbmpTemp), 0, (WORD)pbih->biHeight, lpBits, pbmi,
-		DIB_RGB_COLORS))
-	{
-		App->Say("writeBMP::GetDIB error");
-		return 0;
-	}
-
-	char buf[1024];
-	strcpy(buf, App->CL_Vm_Model->Texture_FolderPath);
-	strcat(buf, "Etemp.bmp");
-
-	hf = CreateFile(buf, GENERIC_READ | GENERIC_WRITE, (DWORD)0,
-		NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL,
-		(HANDLE)NULL);
-
-	/*hf = CreateFile(App->ETemp_Folder, GENERIC_READ | GENERIC_WRITE, (DWORD)0,
-		NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL,
-		(HANDLE)NULL);*/
-
-	if (hf == INVALID_HANDLE_VALUE)
-	{
-		App->Say("Could not create file for writing");
-		return 0;
-	}
-	hdr.bfType = 0x4d42; // 0x42 = "B" 0x4d = "M" 
-
-	hdr.bfSize = (DWORD)(sizeof(BITMAPFILEHEADER) +
-		pbih->biSize + pbih->biClrUsed
-		* sizeof(RGBQUAD) + pbih->biSizeImage);
-	hdr.bfReserved1 = 0;
-	hdr.bfReserved2 = 0;
+	//pbmi->bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+	//pbmi->bmiHeader.biWidth = bmp.bmWidth;
+	//pbmi->bmiHeader.biHeight = bmp.bmHeight;
+	//pbmi->bmiHeader.biPlanes = bmp.bmPlanes;
+	//pbmi->bmiHeader.biBitCount = bmp.bmBitsPixel;
+	//if (cClrBits < 24)
+	//	pbmi->bmiHeader.biClrUsed = (1 << cClrBits);
 
 
-	hdr.bfOffBits = (DWORD) sizeof(BITMAPFILEHEADER) +
-		pbih->biSize + pbih->biClrUsed
-		* sizeof(RGBQUAD);
+	//pbmi->bmiHeader.biCompression = BI_RGB;
 
-	if (!WriteFile(hf, (LPVOID)&hdr, sizeof(BITMAPFILEHEADER),
-		(LPDWORD)&dwTmp, NULL)) {
-		App->Say("Could not write in to file");
-		return 0;
-	}
+	//pbmi->bmiHeader.biSizeImage = (pbmi->bmiHeader.biWidth + 7) / 8 * pbmi->bmiHeader.biHeight * cClrBits;
 
-	if (!WriteFile(hf, (LPVOID)pbih, sizeof(BITMAPINFOHEADER)
-		+ pbih->biClrUsed * sizeof(RGBQUAD),
-		(LPDWORD)&dwTmp, (NULL))) {
-		App->Say("Could not write in to file");
-		return 0;
-	}
+	//pbmi->bmiHeader.biClrImportant = 0;
 
-	dwTotal = cb = pbih->biSizeImage;
-	hp = lpBits;
-	if (!WriteFile(hf, (LPSTR)hp, (int)cb, (LPDWORD)&dwTmp, NULL)) {
-		App->Say("Could not write in to file");
-		return 0;
-	}
+	//pbih = (PBITMAPINFOHEADER)pbmi;
+	//lpBits = (LPBYTE)GlobalAlloc(GMEM_FIXED, pbih->biSizeImage);
 
-	if (!CloseHandle(hf)) {
-		App->Say("Could not close file");
-		return 0;
-	}
+	//if (!lpBits)
+	//{
+	//	App->Say("writeBMP::Could not allocate memory");
+	//	return 0;
+	//}
 
-	GlobalFree((HGLOBAL)lpBits);
-	DeleteObject(hbmpTemp);
-	DeleteDC(hdcTemp);
+	//if (!GetDIBits(hdcTemp, HBITMAP(hbmpTemp), 0, (WORD)pbih->biHeight, lpBits, pbmi,
+	//	DIB_RGB_COLORS))
+	//{
+	//	App->Say("writeBMP::GetDIB error");
+	//	return 0;
+	//}
+
+	//char buf[1024];
+	//strcpy(buf, App->CL_Vm_Model->Texture_FolderPath);
+	//strcat(buf, "Etemp.bmp");
+
+	//hf = CreateFile(buf, GENERIC_READ | GENERIC_WRITE, (DWORD)0,
+	//	NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL,
+	//	(HANDLE)NULL);
+
+	///*hf = CreateFile(App->ETemp_Folder, GENERIC_READ | GENERIC_WRITE, (DWORD)0,
+	//	NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL,
+	//	(HANDLE)NULL);*/
+
+	//if (hf == INVALID_HANDLE_VALUE)
+	//{
+	//	App->Say("Could not create file for writing");
+	//	return 0;
+	//}
+	//hdr.bfType = 0x4d42; // 0x42 = "B" 0x4d = "M" 
+
+	//hdr.bfSize = (DWORD)(sizeof(BITMAPFILEHEADER) +
+	//	pbih->biSize + pbih->biClrUsed
+	//	* sizeof(RGBQUAD) + pbih->biSizeImage);
+	//hdr.bfReserved1 = 0;
+	//hdr.bfReserved2 = 0;
+
+
+	//hdr.bfOffBits = (DWORD) sizeof(BITMAPFILEHEADER) +
+	//	pbih->biSize + pbih->biClrUsed
+	//	* sizeof(RGBQUAD);
+
+	//if (!WriteFile(hf, (LPVOID)&hdr, sizeof(BITMAPFILEHEADER),
+	//	(LPDWORD)&dwTmp, NULL)) {
+	//	App->Say("Could not write in to file");
+	//	return 0;
+	//}
+
+	//if (!WriteFile(hf, (LPVOID)pbih, sizeof(BITMAPINFOHEADER)
+	//	+ pbih->biClrUsed * sizeof(RGBQUAD),
+	//	(LPDWORD)&dwTmp, (NULL))) {
+	//	App->Say("Could not write in to file");
+	//	return 0;
+	//}
+
+	//dwTotal = cb = pbih->biSizeImage;
+	//hp = lpBits;
+	//if (!WriteFile(hf, (LPSTR)hp, (int)cb, (LPDWORD)&dwTmp, NULL)) {
+	//	App->Say("Could not write in to file");
+	//	return 0;
+	//}
+
+	//if (!CloseHandle(hf)) {
+	//	App->Say("Could not close file");
+	//	return 0;
+	//}
+
+	//GlobalFree((HGLOBAL)lpBits);
+	//DeleteObject(hbmpTemp);
+	//DeleteDC(hdcTemp);
 
 	return 1;
 }
@@ -929,27 +929,7 @@ void VM_Textures::Strip_JustFileName(char *pString, char *FileName)
 // *************************************************************************
 void VM_Textures::CreateTextureInfo(void)
 {
-	int Count = 0;
-
-	while (Count < App->CL_Vm_Model->S_Texture[0]->UsedTextureCount)
-	{
-		App->CL_Vm_Model->S_TextureInfo[Count] = new GLTextureInfo_Type;
-		App->CL_Vm_Model->S_TextureInfo[Count]->Tga = 0;
-		App->CL_Vm_Model->S_TextureInfo[Count]->type = 0;
-		App->CL_Vm_Model->S_TextureInfo[Count]->texID = 0;
-		App->CL_Vm_Model->S_TextureInfo[Count]->ActorMaterialIndex = 0;
-		App->CL_Vm_Model->S_TextureInfo[Count]->Bitmap = nullptr;
-
-		App->CL_Vm_Model->S_TextureInfo[Count]->R = 0;
-		App->CL_Vm_Model->S_TextureInfo[Count]->G = 0;
-		App->CL_Vm_Model->S_TextureInfo[Count]->B = 0;
-
-		strcpy(App->CL_Vm_Model->S_TextureInfo[Count]->MaterialName, "Unkown");
-
-		App->CL_Vm_Model->S_TextureInfo[Count]->GEHasAlpha = 0;
-
-		Count++;
-	}
+	
 }
 
 // *************************************************************************

@@ -164,26 +164,26 @@ void SB_Camera::Set_Camera(void)
 // *************************************************************************
 void SB_Camera::Zoom(void)
 {
-	if (App->CL_Vm_Model->Model_Loaded == 1)
-	{
-		Reset_View();
-		App->Cl19_Ogre->mCamera->setPosition(App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].x, App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].y, App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].z);
+	//if (App->CL_Vm_Model->Model_Loaded == 1)
+	//{
+	//	Reset_View();
+	//	App->Cl19_Ogre->mCamera->setPosition(App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].x, App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].y, App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].z);
 
-		Ogre::Vector3 Move;
-		Move.x = 0;
-		Move.y = 0;//App->CL_Model_Data->S_BoundingBox[0]->Size[0].y;
-				   //Move.z = App->CL_Model_Data->S_BoundingBox[0]->Size[0].y*2;
+	//	Ogre::Vector3 Move;
+	//	Move.x = 0;
+	//	Move.y = 0;//App->CL_Model_Data->S_BoundingBox[0]->Size[0].y;
+	//			   //Move.z = App->CL_Model_Data->S_BoundingBox[0]->Size[0].y*2;
 
-		if (App->CL_Vm_Model->S_BoundingBox[0]->Size[0].z > App->CL_Vm_Model->S_BoundingBox[0]->Size[0].y)
-		{
-			Move.z = App->CL_Vm_Model->S_BoundingBox[0]->Size[0].z * 2;
-		}
-		else
-		{
-			Move.z = App->CL_Vm_Model->S_BoundingBox[0]->Size[0].y * 2;
-		}
+	//	if (App->CL_Vm_Model->S_BoundingBox[0]->Size[0].z > App->CL_Vm_Model->S_BoundingBox[0]->Size[0].y)
+	//	{
+	//		Move.z = App->CL_Vm_Model->S_BoundingBox[0]->Size[0].z * 2;
+	//	}
+	//	else
+	//	{
+	//		Move.z = App->CL_Vm_Model->S_BoundingBox[0]->Size[0].y * 2;
+	//	}
 
-		App->Cl19_Ogre->mCamera->moveRelative(Move);
-	}
+	//	App->Cl19_Ogre->mCamera->moveRelative(Move);
+	//}
 
 }

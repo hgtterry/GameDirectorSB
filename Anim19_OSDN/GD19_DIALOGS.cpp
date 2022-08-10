@@ -1375,12 +1375,7 @@ LRESULT CALLBACK GD19_Dialogs::Start_DataView_Proc(HWND hDlg, UINT message, WPAR
 		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
 		////----------------------- 
-		sprintf(buf,"%s%s","File Name ",App->CL_Vm_Model->FileName);
-		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
-		sprintf(buf, "%s%s", "GDSceneName    ", App->CL_Vm_Model->Path_FileName);
-		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
+	
 		sprintf(buf, "%s%s", "Level Directory   ", App->LevelDirectory);
 		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 

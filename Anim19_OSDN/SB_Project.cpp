@@ -327,10 +327,10 @@ bool SB_Project::Create_Project()
 
 	Add_World(); // Create First room Not Loaded
 
-	strcpy(App->CL_Vm_Model->Model_FolderPath, Level_Folder_Path_World);
-	strcpy(App->CL_Vm_Model->FileName, "World.mesh");
+	//strcpy(App->CL_Vm_Model->Model_FolderPath, Level_Folder_Path_World);
+	//strcpy(App->CL_Vm_Model->FileName, "World.mesh");
 
-	App->SBC_Aera->Add_Area();
+	//App->SBC_Aera->Add_Area();
 
 	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
 
@@ -723,62 +723,62 @@ bool SB_Project::Load_Scene()
 	
 		return 1;
 
-	App->SBC_Scene->Clear_Level();
+	//App->SBC_Scene->Clear_Level();
 
-	strcpy(Level_File_Name, App->CL_Vm_FileIO->Model_FileName);
-	strcpy(m_Project_Folder_Path, App->CL_Vm_FileIO->Model_Path_FileName);
+	//strcpy(Level_File_Name, App->CL_Vm_FileIO->Model_FileName);
+	//strcpy(m_Project_Folder_Path, App->CL_Vm_FileIO->Model_Path_FileName);
 
-	// Get path no file 
-	int len1 = strlen(Level_File_Name);
-	int len2 = strlen(m_Project_Folder_Path);
-	strcpy(m_Project_Sub_Folder, m_Project_Folder_Path);
-	m_Project_Sub_Folder[len2 - len1] = 0;
+	//// Get path no file 
+	//int len1 = strlen(Level_File_Name);
+	//int len2 = strlen(m_Project_Folder_Path);
+	//strcpy(m_Project_Sub_Folder, m_Project_Folder_Path);
+	//m_Project_Sub_Folder[len2 - len1] = 0;
 
-	// ------------------------------------------------------------------- 
+	//// ------------------------------------------------------------------- 
 
-	char chr_Tag1[1024];
-	char chr_Tag2[1024];
+	//char chr_Tag1[1024];
+	//char chr_Tag2[1024];
 
-	chr_Tag1[0] = 0;
-	chr_Tag2[0] = 0;
+	//chr_Tag1[0] = 0;
+	//chr_Tag2[0] = 0;
 
-	App->Cl_Ini->SetPathName(m_Project_Folder_Path);
+	//App->Cl_Ini->SetPathName(m_Project_Folder_Path);
 
-	App->Cl_Ini->GetString("Version_Data", "Version", chr_Tag1, 1024);
-	
+	//App->Cl_Ini->GetString("Version_Data", "Version", chr_Tag1, 1024);
+	//
 
-	App->Cl_Ini->GetString("Levels", "Folder", chr_Tag1, 1024);
-	//strcpy(Scene_JustPath, Level_Folder_Path);
-	//strcat(Scene_JustPath, chr_Tag1);
+	//App->Cl_Ini->GetString("Levels", "Folder", chr_Tag1, 1024);
+	////strcpy(Scene_JustPath, Level_Folder_Path);
+	////strcat(Scene_JustPath, chr_Tag1);
 
-	App->Cl_Ini->GetString("Levels", "File", chr_Tag2, 1024);
+	//App->Cl_Ini->GetString("Levels", "File", chr_Tag2, 1024);
 
-	//strcpy(App->CL_Vm_Model->Model_FolderPath, Scene_JustPath);
-	strcpy(App->CL_Vm_Model->FileName, chr_Tag2);
+	////strcpy(App->CL_Vm_Model->Model_FolderPath, Scene_JustPath);
+	//strcpy(App->CL_Vm_Model->FileName, chr_Tag2);
 
-	Read_Player();
-	Read_Camera();
+	//Read_Player();
+	//Read_Camera();
 
-	App->SBC_Aera->Add_Area();
+	//App->SBC_Aera->Add_Area();
 
-	//App->SBC_Player->Load_Player();
+	////App->SBC_Player->Load_Player();
 
-	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
+	//App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
 
 
-	//          File View Stuff
-	App->SBC_FileView->Change_Level_Name();
+	////          File View Stuff
+	//App->SBC_FileView->Change_Level_Name();
 
-	HTREEITEM Temp = App->SBC_FileView->Add_Area("Area_1", 0);
-	App->SBC_FileView->Redraw_FileView();
+	//HTREEITEM Temp = App->SBC_FileView->Add_Area("Area_1", 0);
+	//App->SBC_FileView->Redraw_FileView();
 
-	//  Start Level
-	App->SBC_Physics->Enable_Physics(1);
-	App->SBC_Camera->Set_Camera();
+	////  Start Level
+	//App->SBC_Physics->Enable_Physics(1);
+	//App->SBC_Camera->Set_Camera();
 
-	App->SBC_Scene->Scene_Loaded = 1;
+	//App->SBC_Scene->Scene_Loaded = 1;
 
-	App->Set_Main_TitleBar(App->CL_Vm_FileIO->Model_Path_FileName);
+	//App->Set_Main_TitleBar(App->CL_Vm_FileIO->Model_Path_FileName);
 
 	return 1;
 }

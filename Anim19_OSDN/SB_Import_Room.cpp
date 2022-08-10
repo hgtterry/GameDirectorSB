@@ -34,7 +34,7 @@ bool SB_Import_Room::Room_Loader(char* Extension, char* Extension2)
 
 	AddToScene();
 	
-	App->CL_Vm_Model->Model_Loaded = 1;
+	//App->CL_Vm_Model->Model_Loaded = 1;
 
 	App->SBC_Scene->Area_Added = 1;
 

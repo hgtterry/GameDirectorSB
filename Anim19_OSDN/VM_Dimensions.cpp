@@ -53,7 +53,7 @@ void VM_Dimensions::Reset_Class(void)
 // *************************************************************************
 void VM_Dimensions::Centre_Model_Mid(void)
 {
-	if (App->CL_Vm_Model->Model_Loaded == 1)
+	/*if (App->CL_Vm_Model->Model_Loaded == 1)
 	{
 		float X = -App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].x;
 		float Y = -App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].y;
@@ -82,7 +82,7 @@ void VM_Dimensions::Centre_Model_Mid(void)
 
 			App->CL_Vm_Model->GetBoundingBoxModel_Update();
 		}
-	}
+	}*/
 
 	/*Ogre::Root::getSingletonPtr()->renderOneFrame();
 	Ogre::Root::getSingletonPtr()->renderOneFrame();
@@ -94,40 +94,40 @@ void VM_Dimensions::Centre_Model_Mid(void)
 // *************************************************************************
 void VM_Dimensions::Centre_Model_Base(void)
 {
-	if (App->CL_Vm_Model->Model_Loaded == 1)
-	{
+	//if (App->CL_Vm_Model->Model_Loaded == 1)
+	//{
 
-		float X = -App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].x;
-		float Y = -App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].y + App->CL_Vm_Model->S_BoundingBox[0]->Size[0].y / 2;
-		float Z = -App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].z;
+	//	float X = -App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].x;
+	//	float Y = -App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].y + App->CL_Vm_Model->S_BoundingBox[0]->Size[0].y / 2;
+	//	float Z = -App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].z;
 
-		if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
-		{
-			/*App->CL_Export_Actor->Actor_Position.X = 0;
-			App->CL_Export_Actor->Actor_Position.Y = 0;
-			App->CL_Export_Actor->Actor_Position.Z = 0;
-			App->CL_Export_Actor->MoveActor();*/
-		}
-		else
-		{
-			int Count = 0;
-			int VertCount = 0;
-			while (Count < App->CL_Vm_Model->GroupCount)
-			{
-				VertCount = 0;
-				while (VertCount < App->CL_Vm_Model->S_MeshGroup[Count]->GroupVertCount)
-				{
-					App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].x += X;
-					App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].y += Y;
-					App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].z += Z;
-					VertCount++;
-				}
-				Count++;
-			}
+	//	if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
+	//	{
+	//		/*App->CL_Export_Actor->Actor_Position.X = 0;
+	//		App->CL_Export_Actor->Actor_Position.Y = 0;
+	//		App->CL_Export_Actor->Actor_Position.Z = 0;
+	//		App->CL_Export_Actor->MoveActor();*/
+	//	}
+	//	else
+	//	{
+	//		int Count = 0;
+	//		int VertCount = 0;
+	//		while (Count < App->CL_Vm_Model->GroupCount)
+	//		{
+	//			VertCount = 0;
+	//			while (VertCount < App->CL_Vm_Model->S_MeshGroup[Count]->GroupVertCount)
+	//			{
+	//				App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].x += X;
+	//				App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].y += Y;
+	//				App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].z += Z;
+	//				VertCount++;
+	//			}
+	//			Count++;
+	//		}
 
-			App->CL_Vm_Model->GetBoundingBoxModel_Update();
-		}
-	}
+	//		App->CL_Vm_Model->GetBoundingBoxModel_Update();
+	//	}
+	//}
 }
 
 // *************************************************************************
@@ -135,53 +135,53 @@ void VM_Dimensions::Centre_Model_Base(void)
 // *************************************************************************
 void VM_Dimensions::Rotate_X_Model(float X)
 {
-	Ogre::Vector3 Centre;
+	//Ogre::Vector3 Centre;
 
-	Centre.x = App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].x;
-	Centre.y = App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].y;
-	Centre.z = App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].z;
+	//Centre.x = App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].x;
+	//Centre.y = App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].y;
+	//Centre.z = App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].z;
 
-	Ogre::Vector3 Rotate;
-	Rotate.x = X;
-	Rotate.y = 0;
-	Rotate.z = 0;
+	//Ogre::Vector3 Rotate;
+	//Rotate.x = X;
+	//Rotate.y = 0;
+	//Rotate.z = 0;
 
-	int Count = 0;
-	int VertCount = 0;
+	//int Count = 0;
+	//int VertCount = 0;
 
-	while (Count < App->CL_Vm_Model->GroupCount)
-	{
-		VertCount = 0;
-		while (VertCount < App->CL_Vm_Model->S_MeshGroup[Count]->GroupVertCount)
-		{
-			Ogre::Vector3 VertPos;
-			Ogre::Vector3 RotatedVert;
+	//while (Count < App->CL_Vm_Model->GroupCount)
+	//{
+	//	VertCount = 0;
+	//	while (VertCount < App->CL_Vm_Model->S_MeshGroup[Count]->GroupVertCount)
+	//	{
+	//		Ogre::Vector3 VertPos;
+	//		Ogre::Vector3 RotatedVert;
 
-			VertPos.x = App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].x;
-			VertPos.y = App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].y;
-			VertPos.z = App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].z;
+	//		VertPos.x = App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].x;
+	//		VertPos.y = App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].y;
+	//		VertPos.z = App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].z;
 
-			if (Rotate.x != 0) // Dont bother if Zero
-			{
-				RotatedVert = (Ogre::Quaternion(Ogre::Degree(Rotate.x), Ogre::Vector3::UNIT_Y)*(VertPos - Centre));
-			}
-			else
-			{
-				RotatedVert = VertPos - Centre;
-			}
+	//		if (Rotate.x != 0) // Dont bother if Zero
+	//		{
+	//			RotatedVert = (Ogre::Quaternion(Ogre::Degree(Rotate.x), Ogre::Vector3::UNIT_Y)*(VertPos - Centre));
+	//		}
+	//		else
+	//		{
+	//			RotatedVert = VertPos - Centre;
+	//		}
 
-			RotatedVert += Centre;
+	//		RotatedVert += Centre;
 
-			App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].x = RotatedVert.x;
-			App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].y = RotatedVert.y;
-			App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].z = RotatedVert.z;
+	//		App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].x = RotatedVert.x;
+	//		App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].y = RotatedVert.y;
+	//		App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].z = RotatedVert.z;
 
-			VertCount++;
-		}
-		Count++;
-	}
+	//		VertCount++;
+	//	}
+	//	Count++;
+	//}
 
-	App->CL_Vm_Model->GetBoundingBoxModel_Update();
+	//App->CL_Vm_Model->GetBoundingBoxModel_Update();
 }
 
 // *************************************************************************
@@ -189,55 +189,55 @@ void VM_Dimensions::Rotate_X_Model(float X)
 // *************************************************************************
 void VM_Dimensions::Rotate_Y_Model(float Y)
 {
-	Ogre::Vector3 Min;
-	Ogre::Vector3 Max;
-	Ogre::Vector3 Centre;
+	//Ogre::Vector3 Min;
+	//Ogre::Vector3 Max;
+	//Ogre::Vector3 Centre;
 
-	Centre.x = App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].x;
-	Centre.y = App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].y;
-	Centre.z = App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].z;
+	//Centre.x = App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].x;
+	//Centre.y = App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].y;
+	//Centre.z = App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].z;
 
-	Ogre::Vector3 Rotate;
-	Rotate.x = 0;
-	Rotate.y = Y;
-	Rotate.z = 0;
+	//Ogre::Vector3 Rotate;
+	//Rotate.x = 0;
+	//Rotate.y = Y;
+	//Rotate.z = 0;
 
 
-	int Count = 0;
-	int VertCount = 0;
+	//int Count = 0;
+	//int VertCount = 0;
 
-	while (Count < App->CL_Vm_Model->GroupCount)
-	{
-		VertCount = 0;
-		while (VertCount < App->CL_Vm_Model->S_MeshGroup[Count]->GroupVertCount)
-		{
-			Ogre::Vector3 VertPos;
-			Ogre::Vector3 RotatedVert;
+	//while (Count < App->CL_Vm_Model->GroupCount)
+	//{
+	//	VertCount = 0;
+	//	while (VertCount < App->CL_Vm_Model->S_MeshGroup[Count]->GroupVertCount)
+	//	{
+	//		Ogre::Vector3 VertPos;
+	//		Ogre::Vector3 RotatedVert;
 
-			VertPos.x = App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].x;
-			VertPos.y = App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].y;
-			VertPos.z = App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].z;
+	//		VertPos.x = App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].x;
+	//		VertPos.y = App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].y;
+	//		VertPos.z = App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].z;
 
-			if (Rotate.y != 0) // Dont bother if Zero
-			{
-				RotatedVert = (Ogre::Quaternion(Ogre::Degree(Rotate.y), Ogre::Vector3::UNIT_Z)*(VertPos - Centre));
-			}
-			else
-			{
-				RotatedVert = VertPos - Centre;
-			}
+	//		if (Rotate.y != 0) // Dont bother if Zero
+	//		{
+	//			RotatedVert = (Ogre::Quaternion(Ogre::Degree(Rotate.y), Ogre::Vector3::UNIT_Z)*(VertPos - Centre));
+	//		}
+	//		else
+	//		{
+	//			RotatedVert = VertPos - Centre;
+	//		}
 
-			RotatedVert += Centre;
+	//		RotatedVert += Centre;
 
-			App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].x = RotatedVert.x;
-			App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].y = RotatedVert.y;
-			App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].z = RotatedVert.z;
+	//		App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].x = RotatedVert.x;
+	//		App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].y = RotatedVert.y;
+	//		App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].z = RotatedVert.z;
 
-			VertCount++;
-		}
-		Count++;
-	}
-	App->CL_Vm_Model->GetBoundingBoxModel_Update();
+	//		VertCount++;
+	//	}
+	//	Count++;
+	//}
+	//App->CL_Vm_Model->GetBoundingBoxModel_Update();
 }
 
 // *************************************************************************
@@ -245,54 +245,54 @@ void VM_Dimensions::Rotate_Y_Model(float Y)
 // *************************************************************************
 void VM_Dimensions::Rotate_Z_Model(float Z)
 {
-	Ogre::Vector3 Min;
-	Ogre::Vector3 Max;
-	Ogre::Vector3 Centre;
+	//Ogre::Vector3 Min;
+	//Ogre::Vector3 Max;
+	//Ogre::Vector3 Centre;
 
-	Centre.x = App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].x;
-	Centre.y = App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].y;
-	Centre.z = App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].z;
+	//Centre.x = App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].x;
+	//Centre.y = App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].y;
+	//Centre.z = App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].z;
 
-	Ogre::Vector3 Rotate;
-	Rotate.x = 0;
-	Rotate.y = 0;
-	Rotate.z = Z;
+	//Ogre::Vector3 Rotate;
+	//Rotate.x = 0;
+	//Rotate.y = 0;
+	//Rotate.z = Z;
 
 
-	int Count = 0;
-	int VertCount = 0;
+	//int Count = 0;
+	//int VertCount = 0;
 
-	while (Count < App->CL_Vm_Model->GroupCount)
-	{
-		VertCount = 0;
-		while (VertCount < App->CL_Vm_Model->S_MeshGroup[Count]->GroupVertCount)
-		{
-			Ogre::Vector3 VertPos;
-			Ogre::Vector3 RotatedVert;
+	//while (Count < App->CL_Vm_Model->GroupCount)
+	//{
+	//	VertCount = 0;
+	//	while (VertCount < App->CL_Vm_Model->S_MeshGroup[Count]->GroupVertCount)
+	//	{
+	//		Ogre::Vector3 VertPos;
+	//		Ogre::Vector3 RotatedVert;
 
-			VertPos.x = App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].x;
-			VertPos.y = App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].y;
-			VertPos.z = App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].z;
+	//		VertPos.x = App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].x;
+	//		VertPos.y = App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].y;
+	//		VertPos.z = App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].z;
 
-			if (Rotate.z != 0) // Dont bother if Zero
-			{
-				RotatedVert = (Ogre::Quaternion(Ogre::Degree(Rotate.z), Ogre::Vector3::UNIT_X)*(VertPos - Centre));
-			}
-			else
-			{
-				RotatedVert = VertPos - Centre;
-			}
+	//		if (Rotate.z != 0) // Dont bother if Zero
+	//		{
+	//			RotatedVert = (Ogre::Quaternion(Ogre::Degree(Rotate.z), Ogre::Vector3::UNIT_X)*(VertPos - Centre));
+	//		}
+	//		else
+	//		{
+	//			RotatedVert = VertPos - Centre;
+	//		}
 
-			RotatedVert += Centre;
+	//		RotatedVert += Centre;
 
-			App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].x = RotatedVert.x;
-			App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].y = RotatedVert.y;
-			App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].z = RotatedVert.z;
+	//		App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].x = RotatedVert.x;
+	//		App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].y = RotatedVert.y;
+	//		App->CL_Vm_Model->S_MeshGroup[Count]->vertex_Data[VertCount].z = RotatedVert.z;
 
-			VertCount++;
-		}
-		Count++;
-	}
+	//		VertCount++;
+	//	}
+	//	Count++;
+	//}
 
-	App->CL_Vm_Model->GetBoundingBoxModel_Update();
+	//App->CL_Vm_Model->GetBoundingBoxModel_Update();
 }

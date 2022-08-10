@@ -59,20 +59,7 @@ bool SB_Import::WorldEditor_Loader(void)
 bool SB_Import::Genesis3D_Loader(void)
 {
 
-	int Result = App->CL_Vm_FileIO->Vm_OpenFile("RF Actor   *.act\0*.act\0", "RF Actor", NULL);
-	if (Result == 0)
-	{
-		return 1;
-	}
-
-	App->CL_Vm_Model->Set_Paths();
-
-
-	App->CL_Vm_Model->Model_Type = LoadedFile_Actor;
-
-//	App->SBC_Equity->Set_Equity();
-
-	App->Say("Model Loaded");
+	
 
 	return 1;
 }
@@ -83,23 +70,7 @@ bool SB_Import::Genesis3D_Loader(void)
 bool SB_Import::Ogre_Loader(char* Extension, char* Extension2)
 {
 
-	int Result = App->CL_Vm_FileIO->Vm_OpenFile(Extension, Extension2, NULL);
-	if (Result == 0)
-	{
-		return 1;
-	}
-
-
-	App->CL_Vm_Model->Set_Paths();
-
-
-//	App->CL_Ogre_Import_E15->Load_OgreModel(); // Load Ogre Model
-
-//	App->CL_Vm_Model->Model_Type = LoadedFile_Assimp;
-
-//	App->SBC_Equity->Set_Equity();
-
-	App->Say("Model Loaded");
+	
 	return 1;
 }
 
@@ -156,14 +127,14 @@ void SB_Import::Reload_FromResentFiles(char* ResentPathAndFile)
 
 	strcpy(App->CL_Vm_FileIO->Model_FileName, mJustFileName);
 
-	App->CL_Vm_Model->Set_Paths();
+	
 
 	//_chdir(App->CL_Model_Data->Model_FullPath);
 
 	//--------------------------------------------------------------- Genesis Actor
 	
 
-	App->CL_Vm_Model->Model_Type = LoadedFile_Assimp;
+	
 
 //	App->SBC_Equity->Set_Equity();
 

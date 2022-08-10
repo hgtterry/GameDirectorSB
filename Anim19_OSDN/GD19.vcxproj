@@ -212,7 +212,6 @@
     <ClInclude Include="VM_Dimensions.h" />
     <ClInclude Include="VM_FileIO.h" />
     <ClInclude Include="VM_ImGui.h" />
-    <ClInclude Include="VM_Model.h" />
     <ClInclude Include="VM_Preferences.h" />
     <ClInclude Include="VM_TextLib.h" />
     <ClInclude Include="VM_Textures.h" />
@@ -282,7 +281,6 @@
     <ClCompile Include="VM_Dimensions.cpp" />
     <ClCompile Include="VM_FileIO.cpp" />
     <ClCompile Include="VM_ImGui.cpp" />
-    <ClCompile Include="VM_Model.cpp" />
     <ClCompile Include="VM_Preferences.cpp" />
     <ClCompile Include="VM_TextLib.cpp" />
     <ClCompile Include="VM_Textures.cpp" />
