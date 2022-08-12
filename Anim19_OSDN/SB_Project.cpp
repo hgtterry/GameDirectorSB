@@ -58,6 +58,9 @@ SB_Project::SB_Project()
 
 	Project_Loaded = 0;
 	m_Create_Flag = 0;
+
+	test = "poo";
+
 }
 
 
@@ -323,22 +326,34 @@ bool SB_Project::Create_Project()
 {
 
 
-	if (_mkdir(App->SBC_Project->m_Project_Folder_Path) == 0)
+	if (_mkdir(m_Project_Folder_Path) == 0)
 	{
-		_chdir(App->SBC_Project->m_Project_Folder_Path);
+		_chdir(m_Project_Folder_Path);
 	}
 	else
 	{
-		
+		_chdir(m_Project_Folder_Path);
 	}
 
-	Set_Paths();
+	//Set_Paths();
+	//N_Set_Paths();
+	//Write_Project_Ini();
+	N_Save_Project_Ini();
 
-	Write_Project_Ini();
+	N_Save_Level_Folder();
 
-	Create_Level_Folder();
+	_chdir(m_Level_Folder_Path);
 
-	Write_Level_File();
+
+	N_Save_Aera_Folder();
+	
+	N_Save_Players_Folder();
+
+	return 1;
+
+	//Create_Level_Folder();
+
+	//Write_Level_File();
 
 	// Player
 	App->SBC_Player->Create_Player_Object();

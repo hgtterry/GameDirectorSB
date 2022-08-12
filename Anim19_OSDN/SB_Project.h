@@ -84,6 +84,7 @@ public:
 
 	char Level_Folder_Path_World[1024];
 
+	string test;
 
 	// --------------------------------------------------------------------------- 
 	char Level_File_Name[MAX_PATH];			// Level File Name ( 211121 )
