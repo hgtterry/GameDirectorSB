@@ -227,6 +227,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			App->Say("ok");
 
 			remove(App->ETemp_Folder);*/
+			App->Say(App->CL_Vm_ImGui->poo());
 
 			return 1;
 		}
@@ -280,7 +281,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		// ------------------------------------------------------------
 		case ID_NEW_PROJECT:
 		{
-			App->SBC_Project->Start_Create_Project();
+			App->SBC_Project->Start_Save_Project_Dialog(1);
 			return 1;
 		}
 
@@ -304,7 +305,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		case ID_FILE_SAVEPROJECT:
 		{
-			App->SBC_Project->Start_Create_Project();
+			App->SBC_Project->Start_Save_Project_Dialog(0);
 			return 1;
 		}
 		

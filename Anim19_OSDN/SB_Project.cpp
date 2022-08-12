@@ -57,7 +57,7 @@ SB_Project::SB_Project()
 	Write_Object_Ini =	NULL;
 
 	Project_Loaded = 0;
-
+	m_Create_Flag = 0;
 }
 
 
@@ -66,10 +66,12 @@ SB_Project::~SB_Project()
 }
 
 // *************************************************************************
-// *	  				Start_Create_Project Terry Flanigan				   *
+// *	  			Start_Save_Project_Dialog Terry Flanigan			   *
 // *************************************************************************
-bool SB_Project::Start_Create_Project()
+bool SB_Project::Start_Save_Project_Dialog(bool Create)
 {
+	m_Create_Flag = Create;
+
 	DialogBox(App->hInst, (LPCTSTR)IDD_PROJECT, App->Fdlg, (DLGPROC)Create_Project_Proc);
 	return 1;
 }
@@ -96,11 +98,21 @@ LRESULT CALLBACK SB_Project::Create_Project_Proc(HWND hDlg, UINT message, WPARAM
 
 		SendDlgItemMessage(hDlg, IDC_BTPJBROWSE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BTDESKTOP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_STBANNER, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 
 		SetDlgItemText(hDlg, IDC_STPROJECTNAME, (LPCTSTR)App->SBC_Project->m_Project_Name);
 		SetDlgItemText(hDlg, IDC_STLEVELNAME, (LPCTSTR)App->SBC_Project->m_Level_Name);
 		SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Folder_Path);
+
+		if (App->SBC_Project->m_Create_Flag == 1)
+		{
+			SetDlgItemText(hDlg, IDC_STBANNER, (LPCTSTR)"Create Project");
+		}
+		else
+		{
+			SetDlgItemText(hDlg, IDC_STBANNER, (LPCTSTR)"Save Project As");
+		}
+		
 
 		return TRUE;
 	}
@@ -149,6 +161,14 @@ LRESULT CALLBACK SB_Project::Create_Project_Proc(HWND hDlg, UINT message, WPARAM
 		}
 		
 		if (GetDlgItem(hDlg, IDC_STPATH) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STBANNER) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 255));
@@ -277,9 +297,15 @@ LRESULT CALLBACK SB_Project::Create_Project_Proc(HWND hDlg, UINT message, WPARAM
 
 		if (LOWORD(wParam) == IDOK)
 		{
-			//App->SBC_Project->Create_Project();
-
-			App->SBC_Project->N_Save_Project();
+		
+			if (App->SBC_Project->m_Create_Flag == 1)
+			{
+				App->SBC_Project->Create_Project();
+			}
+			else
+			{
+				App->SBC_Project->N_Save_Project();
+			}
 
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;

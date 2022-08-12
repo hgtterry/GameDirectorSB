@@ -39,7 +39,7 @@ public:
 	SB_Project();
 	~SB_Project();
 
-	bool Start_Create_Project();
+	bool Start_Save_Project_Dialog(bool Create);
 
 	bool N_Save_Project();
 	bool N_Save_Project_Ini();
@@ -105,6 +105,8 @@ protected:
 
 	bool Read_Player();
 	bool Read_Camera();
+
+	bool m_Create_Flag;
 
 	FILE *Write_Ini;
 	FILE *Write_Player_Ini;

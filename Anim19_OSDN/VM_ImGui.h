@@ -71,5 +71,8 @@ public:
 	bool Block;
 	bool Block_Motion;
 	bool Reset_Groups;
+
+	char test[250];
+	char* poo();
 };
 

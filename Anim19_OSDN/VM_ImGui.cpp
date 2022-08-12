@@ -40,6 +40,8 @@ VM_ImGui::VM_ImGui()
 	progress = 0;
 	Progress_Count = 0;
 	Progress_Delta = 0;
+
+	strcpy(test, "poopoo");
 }
 
 
@@ -1006,4 +1008,10 @@ void VM_ImGui::ImGui_Model_Data(void)
 
 		ImGui::EndPopup();
 	}
+}
+
+
+char* VM_ImGui::poo()
+{
+	return test;
 }
