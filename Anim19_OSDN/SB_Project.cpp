@@ -57,7 +57,6 @@ SB_Project::SB_Project()
 	Write_Object_Ini =	NULL;
 
 	Project_Loaded = 0;
-	m_Create_Flag = 0;
 
 	test = "poo";
 
@@ -71,10 +70,8 @@ SB_Project::~SB_Project()
 // *************************************************************************
 // *	  			Start_Save_Project_Dialog Terry Flanigan			   *
 // *************************************************************************
-bool SB_Project::Start_Save_Project_Dialog(bool Create)
+bool SB_Project::Start_Save_Project_Dialog()
 {
-	m_Create_Flag = Create;
-
 	DialogBox(App->hInst, (LPCTSTR)IDD_PROJECT, App->Fdlg, (DLGPROC)Create_Project_Proc);
 	return 1;
 }
@@ -107,14 +104,9 @@ LRESULT CALLBACK SB_Project::Create_Project_Proc(HWND hDlg, UINT message, WPARAM
 		SetDlgItemText(hDlg, IDC_STLEVELNAME, (LPCTSTR)App->SBC_Project->m_Level_Name);
 		SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Folder_Path);
 
-		if (App->SBC_Project->m_Create_Flag == 1)
-		{
-			SetDlgItemText(hDlg, IDC_STBANNER, (LPCTSTR)"Create Project");
-		}
-		else
-		{
-			SetDlgItemText(hDlg, IDC_STBANNER, (LPCTSTR)"Save Project As");
-		}
+		
+		SetDlgItemText(hDlg, IDC_STBANNER, (LPCTSTR)"Save Project As");
+		
 		
 
 		return TRUE;
@@ -300,16 +292,8 @@ LRESULT CALLBACK SB_Project::Create_Project_Proc(HWND hDlg, UINT message, WPARAM
 
 		if (LOWORD(wParam) == IDOK)
 		{
-		
-			if (App->SBC_Project->m_Create_Flag == 1)
-			{
-				App->SBC_Project->Create_Project();
-			}
-			else
-			{
-				App->SBC_Project->N_Save_Project();
-			}
-
+			App->SBC_Project->N_Save_Project();
+			
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -317,170 +301,6 @@ LRESULT CALLBACK SB_Project::Create_Project_Proc(HWND hDlg, UINT message, WPARAM
 
 	}
 	return FALSE;
-}
-
-// *************************************************************************
-// *	  				Create_Project Terry Flanigan					   *
-// *************************************************************************
-bool SB_Project::Create_Project()
-{
-
-
-	if (_mkdir(m_Project_Folder_Path) == 0)
-	{
-		_chdir(m_Project_Folder_Path);
-	}
-	else
-	{
-		_chdir(m_Project_Folder_Path);
-	}
-
-	//Set_Paths();
-	//N_Set_Paths();
-	//Write_Project_Ini();
-	N_Save_Project_Ini();
-
-	N_Save_Level_Folder();
-
-	_chdir(m_Level_Folder_Path);
-
-
-	N_Save_Aera_Folder();
-	
-	N_Save_Players_Folder();
-
-	return 1;
-
-	//Create_Level_Folder();
-
-	//Write_Level_File();
-
-	// Player
-	App->SBC_Player->Create_Player_Object();
-	strcpy(App->SBC_Scene->SBC_Base_Player[0]->Player_Name,"Player_1");
-	Write_Player();
-
-	// Camera
-	Write_Camera();
-
-	// Objects
-	Write_Objects();
-
-	Add_World(); // Create First room Not Loaded
-
-	//strcpy(App->CL_Vm_Model->Model_FolderPath, Level_Folder_Path_World);
-	//strcpy(App->CL_Vm_Model->FileName, "World.mesh");
-
-	//App->SBC_Aera->Add_Area();
-
-	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
-
-
-	//          File View Stuff
-	App->SBC_FileView->Change_Level_Name();
-
-	App->SBC_Camera->FileViewItem = App->SBC_FileView->Add_Camera(App->SBC_Camera->Camera_Name, 0);
-	App->SBC_Player->FileViewItem = App->SBC_FileView->Add_PlayerFile(App->SBC_Scene->SBC_Base_Player[0]->Player_Name, 0);
-	HTREEITEM Temp = App->SBC_FileView->Add_Area("Area_1", 0);
-	App->SBC_FileView->Redraw_FileView();
-
-	//  Start Level
-	App->SBC_Physics->Enable_Physics(1);
-	App->SBC_Camera->Set_Camera();
-
-	App->SBC_Scene->Scene_Loaded = 1;
-
-	App->Say("Scene Created");
-	return 1;
-}
-
-// *************************************************************************
-// *	  					Set_Paths Terry Flanigan					   *
-// *************************************************************************
-bool SB_Project::Set_Paths()
-{
-	Project_Ini_FilePath[0] = 0;
-
-	strcpy(Project_Ini_FilePath, App->SBC_Project->m_Project_Folder_Path);
-	strcat(Project_Ini_FilePath, "\\");
-	strcat(Project_Ini_FilePath, "Project.eif");
-
-	strcpy(m_Project_Sub_Folder, App->SBC_Project->m_Project_Folder_Path);
-	strcat(m_Project_Sub_Folder, "\\");
-	strcat(m_Project_Sub_Folder, "Level_1");
-	return 1;
-}
-
-// *************************************************************************
-// *	  				Write_Project_Ini Terry Flanigan				   *
-// *************************************************************************
-bool SB_Project::Write_Project_Ini()
-{
-	
-	Write_Ini = NULL;
-
-	Write_Ini = fopen(Project_Ini_FilePath, "wt");
-
-	if (!Write_Ini)
-	{
-		App->Say("Cant Create File");
-		return 0;
-	}
-
-	fprintf(Write_Ini, "%s\n", "[Files]");
-	fprintf(Write_Ini, "%s%s\n", "Project_Name=", App->SBC_Project->m_Project_Name);
-	fprintf(Write_Ini, "%s%s\n", "Folder_Path=", App->SBC_Project->m_Project_Folder_Path);
-
-	fprintf(Write_Ini, "%s\n", "[Player]");
-	fprintf(Write_Ini, "%s%s\n", "Player_File=","Player1.ply");
-	
-	fprintf(Write_Ini, "%s\n", "[Camera]");
-	fprintf(Write_Ini, "%s%s\n", "Camera_File=", "Cam1.cam");
-
-	fprintf(Write_Ini, "%s\n", "[Objects]");
-	fprintf(Write_Ini, "%s%s\n", "Camera_File=", "Objects.obf");
-
-	fclose(Write_Ini);
-	
-	return 1;
-}
-
-// *************************************************************************
-// *	  				Create_Level_Folder Terry Flanigan				   *
-// *************************************************************************
-bool SB_Project::Create_Level_Folder()
-{
-	Level_Folder_Path_World[0] = 0;
-
-	strcpy(Level_Folder_Path_World, m_Project_Sub_Folder);
-	strcat(Level_Folder_Path_World, "\\");
-	strcat(Level_Folder_Path_World, "World1");
-
-	// First Level Folder
-	if (_mkdir(m_Project_Sub_Folder) == 0)
-	{
-		_chdir(m_Project_Sub_Folder);
-
-	}
-	else
-	{
-		//App->Say("Directory already exsits");
-		
-	}
-
-	// First world Folder
-	if (_mkdir(Level_Folder_Path_World) == 0)
-	{
-		_chdir(m_Project_Sub_Folder);
-
-	}
-	else
-	{
-		//App->Say("Directory already exsits");
-
-	}
-
-	return 1;
 }
 
 // *************************************************************************
@@ -669,158 +489,6 @@ bool SB_Project::Write_Level_File()
 	fprintf(WriteFile, "%s%s\n", "Camera_File=", "Cam1.cam");
 
 	fclose(WriteFile);
-	return 1;
-}
-
-// *************************************************************************
-// *	  					Add_World Terry Flanigan					   *
-// *************************************************************************
-bool SB_Project::Add_World()
-{
-	char Source[1024];
-	char Destination[1024];
-
-	strcpy(Source, App->EquityDirecory_FullPath);
-	strcat(Source, "\\Data\\World_Ogre\\World.mesh");
-
-	strcpy(Destination, Level_Folder_Path_World);
-	strcat(Destination, "\\");
-	strcat(Destination, "World.mesh");
-
-	CopyFile(Source, Destination, true);
-
-	// --------------------------------------------------------------------
-	strcpy(Source, App->EquityDirecory_FullPath);
-	strcat(Source, "\\Data\\World_Ogre\\World.material");
-
-	strcpy(Destination, Level_Folder_Path_World);
-	strcat(Destination, "\\");
-	strcat(Destination, "World.material");
-
-	CopyFile(Source, Destination, true);
-
-	// --------------------------------------------------------------------
-	strcpy(Source, App->EquityDirecory_FullPath);
-	strcat(Source, "\\Data\\World_Ogre\\Wall.bmp");
-
-	strcpy(Destination, Level_Folder_Path_World);
-	strcat(Destination, "\\");
-	strcat(Destination, "Wall.bmp");
-
-	CopyFile(Source, Destination, true);
-
-	// --------------------------------------------------------------------
-	strcpy(Source, App->EquityDirecory_FullPath);
-	strcat(Source, "\\Data\\World_Ogre\\stfloor1.bmp");
-
-	strcpy(Destination, Level_Folder_Path_World);
-	strcat(Destination, "\\");
-	strcat(Destination, "stfloor1.bmp");
-
-	CopyFile(Source, Destination, true);
-
-	// --------------------------------------------------------------------
-	strcpy(Source, App->EquityDirecory_FullPath);
-	strcat(Source, "\\Data\\World_Ogre\\concrete.bmp");
-
-	strcpy(Destination, Level_Folder_Path_World);
-	strcat(Destination, "\\");
-	strcat(Destination, "concrete.bmp");
-
-	CopyFile(Source, Destination, true);
-
-	return 1;
-}
-
-// *************************************************************************
-// *					Load_Scene_Auto   Terry Bernie  				   *
-// *************************************************************************
-bool SB_Project::Load_Scene_Auto()
-{
-	int ObjectsCount = 0;
-	int TagFloat = 0;
-	int TagInt = 0;
-
-	char StartFile[1024];
-	strcpy(StartFile, App->EquityDirecory_FullPath);
-	strcat(StartFile, "\\");
-	strcat(StartFile, "Data\\StartUp.gcf");
-
-	App->Cl_Ini->SetPathName(StartFile);
-
-	App->Cl_Ini->GetString("Startup", "Scene_FileName", App->CL_Vm_FileIO->Model_FileName, 1024);
-	App->Cl_Ini->GetString("Startup", "Scene_Path_FileName", App->CL_Vm_FileIO->Model_Path_FileName,1024);
-
-	Load_Scene();
-
-	return 1;
-}
-
-// *************************************************************************
-// *	  					Load_Scene Terry Flanigan					   *
-// *************************************************************************
-bool SB_Project::Load_Scene()
-{
-	
-		return 1;
-
-	//App->SBC_Scene->Clear_Level();
-
-	//strcpy(Level_File_Name, App->CL_Vm_FileIO->Model_FileName);
-	//strcpy(m_Project_Folder_Path, App->CL_Vm_FileIO->Model_Path_FileName);
-
-	//// Get path no file 
-	//int len1 = strlen(Level_File_Name);
-	//int len2 = strlen(m_Project_Folder_Path);
-	//strcpy(m_Project_Sub_Folder, m_Project_Folder_Path);
-	//m_Project_Sub_Folder[len2 - len1] = 0;
-
-	//// ------------------------------------------------------------------- 
-
-	//char chr_Tag1[1024];
-	//char chr_Tag2[1024];
-
-	//chr_Tag1[0] = 0;
-	//chr_Tag2[0] = 0;
-
-	//App->Cl_Ini->SetPathName(m_Project_Folder_Path);
-
-	//App->Cl_Ini->GetString("Version_Data", "Version", chr_Tag1, 1024);
-	//
-
-	//App->Cl_Ini->GetString("Levels", "Folder", chr_Tag1, 1024);
-	////strcpy(Scene_JustPath, Level_Folder_Path);
-	////strcat(Scene_JustPath, chr_Tag1);
-
-	//App->Cl_Ini->GetString("Levels", "File", chr_Tag2, 1024);
-
-	////strcpy(App->CL_Vm_Model->Model_FolderPath, Scene_JustPath);
-	//strcpy(App->CL_Vm_Model->FileName, chr_Tag2);
-
-	//Read_Player();
-	//Read_Camera();
-
-	//App->SBC_Aera->Add_Area();
-
-	////App->SBC_Player->Load_Player();
-
-	//App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
-
-
-	////          File View Stuff
-	//App->SBC_FileView->Change_Level_Name();
-
-	//HTREEITEM Temp = App->SBC_FileView->Add_Area("Area_1", 0);
-	//App->SBC_FileView->Redraw_FileView();
-
-	////  Start Level
-	//App->SBC_Physics->Enable_Physics(1);
-	//App->SBC_Camera->Set_Camera();
-
-	//App->SBC_Scene->Scene_Loaded = 1;
-
-	//App->Set_Main_TitleBar(App->CL_Vm_FileIO->Model_Path_FileName);
-
 	return 1;
 }
 

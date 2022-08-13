@@ -39,7 +39,7 @@ public:
 	SB_Project();
 	~SB_Project();
 
-	bool Start_Save_Project_Dialog(bool Create);
+	bool Start_Save_Project_Dialog();
 
 	bool N_Save_Project();
 	bool N_Save_Project_Ini();
@@ -72,9 +72,6 @@ public:
 
 	//------------------------------------------------ 
 
-	bool Load_Scene_Auto();
-	bool Load_Scene();
-
 	bool Write_Level_File();
 	bool Write_Player();
 	bool Write_Camera();
@@ -95,19 +92,10 @@ protected:
 
 	static LRESULT CALLBACK Create_Project_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
-	bool Create_Project();
-
-	bool Set_Paths();
-	bool Write_Project_Ini();
-	bool Create_Level_Folder();
-	bool Add_World();
-	
 	void N_Set_Paths();
 
 	bool Read_Player();
 	bool Read_Camera();
-
-	bool m_Create_Flag;
 
 	FILE *Write_Ini;
 	FILE *Write_Player_Ini;

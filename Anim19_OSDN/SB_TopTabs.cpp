@@ -1037,7 +1037,7 @@ LRESULT CALLBACK SB_TopTabs::Files_TB_Proc(HWND hDlg, UINT message, WPARAM wPara
 		if (LOWORD(wParam) == IDC_TBBTQLOAD)
 		{
 
-			App->SBC_Project->Load_Scene_Auto();
+			//App->SBC_Project->Load_Scene_Auto();
 			return TRUE;
 		}
 

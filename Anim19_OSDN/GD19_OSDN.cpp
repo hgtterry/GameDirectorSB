@@ -281,7 +281,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		// ------------------------------------------------------------
 		case ID_NEW_PROJECT:
 		{
-			App->SBC_Project->Start_Save_Project_Dialog(1);
+			App->SBC_Project->Start_Save_Project_Dialog();
 			return 1;
 		}
 
@@ -293,7 +293,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		case ID_FILE_QUICKLOAD:
 		{
-			App->SBC_Project->Load_Scene_Auto();
+//			App->SBC_Project->Load_Scene_Auto();
 			return 1;
 		}
 
@@ -305,28 +305,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		case ID_FILE_SAVEPROJECT:
 		{
-			App->SBC_Project->Start_Save_Project_Dialog(0);
+			App->SBC_Project->Start_Save_Project_Dialog();
 			return 1;
 		}
 		
-		// Exporters
-	
-		//case ID_OGRE3D_TEST:
-		//{
-		//	//App->CL_Vm_Exporter->Actor_Model();
-		//	App->Say("Here");
-
-		//	char Path[1024];
-		//	strcpy(Path, App->EquityDirecory_FullPath);;
-		//	strcat(Path, "\\");
-		//	strcat(Path, "Data");
-		//	strcat(Path, "\\");
-		//	strcat(Path, "Test.mesh");
-		//	App->Say(Path);
-		//	App->CL_Vm_Model->CreateMeshFile("Test.mesh");
-		//	return 1;
-		//}
-
 		// Camera Mode
 		case ID_MODE_WORLD:
 		{
