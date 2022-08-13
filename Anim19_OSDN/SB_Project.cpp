@@ -29,16 +29,16 @@ distribution.
 
 SB_Project::SB_Project()
 {
-	strcpy(m_Project_Sub_Folder,App->EquityDirecory_FullPath);
+	/*strcpy(m_Project_Sub_Folder,App->EquityDirecory_FullPath);
 	strcat(m_Project_Sub_Folder, "\\");
-	strcat(m_Project_Sub_Folder, "Projects\\");
+	strcat(m_Project_Sub_Folder, "Projects\\");*/
 
-	strcpy(m_Project_Folder_Path, App->EquityDirecory_FullPath);
-	strcat(m_Project_Folder_Path, "\\");
-	strcat(m_Project_Folder_Path, "Projects");
-	strcat(m_Project_Folder_Path, "\\");
-	strcat(m_Project_Folder_Path, "No Project?");
-	strcat(m_Project_Folder_Path, "_Prj");
+	strcpy(m_Project_Sub_Folder, App->EquityDirecory_FullPath);
+	strcat(m_Project_Sub_Folder, "\\");
+	strcat(m_Project_Sub_Folder, "Projects");
+	strcat(m_Project_Sub_Folder, "\\");
+	strcat(m_Project_Sub_Folder, "No Project?");
+	strcat(m_Project_Sub_Folder, "_Prj");
 
 	strcpy(m_Project_Name, "Project_X");
 	strcpy(m_Level_Name,"Level_X");
@@ -98,7 +98,7 @@ LRESULT CALLBACK SB_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message, W
 
 		SetDlgItemText(hDlg, IDC_STPROJECTNAME, (LPCTSTR)App->SBC_Project->m_Project_Name);
 		SetDlgItemText(hDlg, IDC_STLEVELNAME, (LPCTSTR)App->SBC_Project->m_Level_Name);
-		SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Folder_Path);
+		SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Sub_Folder);
 
 		
 		SetDlgItemText(hDlg, IDC_STBANNER, (LPCTSTR)"Save Project As");
@@ -217,13 +217,12 @@ LRESULT CALLBACK SB_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message, W
 
 			if (Test == 0){return true;}
 
-			strcpy(App->SBC_Project->m_Project_Folder_Path, App->Com_CDialogs->szSelectedDir);
-			strcat(App->SBC_Project->m_Project_Folder_Path, App->SBC_Project->m_Project_Name);
-			strcat(App->SBC_Project->m_Project_Folder_Path, "_Prj");
-
 			strcpy(App->SBC_Project->m_Project_Sub_Folder, App->Com_CDialogs->szSelectedDir);
+			strcat(App->SBC_Project->m_Project_Sub_Folder, App->SBC_Project->m_Project_Name);
+			strcat(App->SBC_Project->m_Project_Sub_Folder, "_Prj");
 
-			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Folder_Path);
+	
+			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Sub_Folder);
 
 			return TRUE;
 		}
@@ -235,14 +234,25 @@ LRESULT CALLBACK SB_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message, W
 
 			App->SBC_Dialogs->Dialog_Text();
 
+			if (App->SBC_Dialogs->Canceled == 1)
+			{
+				return TRUE;
+			}
+	
+			int len1 = strlen(App->SBC_Project->m_Project_Sub_Folder);
+			int len2 = strlen(App->SBC_Project->m_Project_Name);
+			App->SBC_Project->m_Project_Sub_Folder[len1 - (len2+5)] = 0;
+
+			
 			strcpy(App->SBC_Project->m_Project_Name,App->SBC_Dialogs->Chr_Text);
 
-			strcpy(App->SBC_Project->m_Project_Folder_Path, App->SBC_Project->m_Project_Sub_Folder);
-			strcat(App->SBC_Project->m_Project_Folder_Path, App->SBC_Project->m_Project_Name);
-			strcat(App->SBC_Project->m_Project_Folder_Path, "_Prj");
+			strcpy(App->SBC_Project->m_Project_Sub_Folder, App->SBC_Project->m_Project_Sub_Folder);
+			strcat(App->SBC_Project->m_Project_Sub_Folder, "\\");
+			strcat(App->SBC_Project->m_Project_Sub_Folder, App->SBC_Project->m_Project_Name);
+			strcat(App->SBC_Project->m_Project_Sub_Folder, "_Prj");
 
 			SetDlgItemText(hDlg, IDC_STPROJECTNAME, (LPCTSTR)App->SBC_Project->m_Project_Name);
-			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Folder_Path);
+			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Sub_Folder);
 
 			return TRUE;
 		}
@@ -266,15 +276,12 @@ LRESULT CALLBACK SB_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message, W
 		if (LOWORD(wParam) == IDC_BTDESKTOP)
 		{
 			
-			strcpy(App->SBC_Project->m_Project_Folder_Path, App->CL_Vm_FileIO->DeskTop_Folder);
-			strcat(App->SBC_Project->m_Project_Folder_Path, "\\");
-			strcat(App->SBC_Project->m_Project_Folder_Path, App->SBC_Project->m_Project_Name);
-			strcat(App->SBC_Project->m_Project_Folder_Path, "_Prj");
-
 			strcpy(App->SBC_Project->m_Project_Sub_Folder, App->CL_Vm_FileIO->DeskTop_Folder);
 			strcat(App->SBC_Project->m_Project_Sub_Folder, "\\");
+			strcat(App->SBC_Project->m_Project_Sub_Folder, App->SBC_Project->m_Project_Name);
+			strcat(App->SBC_Project->m_Project_Sub_Folder, "_Prj");
 
-			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Folder_Path);
+			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Sub_Folder);
 
 			return TRUE;
 		}
@@ -306,13 +313,13 @@ bool SB_Project::Save_Project()
 {
 
 
-	if (_mkdir(m_Project_Folder_Path) == 0)
+	if (_mkdir(m_Project_Sub_Folder) == 0)
 	{
-		_chdir(m_Project_Folder_Path);
+		_chdir(m_Project_Sub_Folder);
 	}
 	else
 	{
-		_chdir(m_Project_Folder_Path);
+		_chdir(m_Project_Sub_Folder);
 	}
 
 	Save_Project_Ini();
@@ -352,7 +359,7 @@ bool SB_Project::Save_Project_Ini()
 {
 	m_Ini_Path_File_Name[0] = 0;
 
-	strcpy(m_Ini_Path_File_Name, m_Project_Folder_Path);
+	strcpy(m_Ini_Path_File_Name, m_Project_Sub_Folder);
 	strcat(m_Ini_Path_File_Name, "\\");
 	strcat(m_Ini_Path_File_Name, "Project.SBProj");
 
@@ -374,7 +381,7 @@ bool SB_Project::Save_Project_Ini()
 	fprintf(WriteFile, "%s\n", "[Files]");
 	fprintf(WriteFile, "%s%s\n", "Project_Name=", App->SBC_Project->m_Project_Name);
 	fprintf(WriteFile, "%s%s\n", "Level_Name=", App->SBC_Project->m_Level_Name);
-	fprintf(WriteFile, "%s%s\n", "Folder_Path=", App->SBC_Project->m_Project_Folder_Path);
+	fprintf(WriteFile, "%s%s\n", "Folder_Path=", App->SBC_Project->m_Project_Sub_Folder);
 
 	fprintf(WriteFile, "%s\n", " ");
 
@@ -394,7 +401,7 @@ bool SB_Project::Save_Project_Ini()
 // *************************************************************************
 bool SB_Project::Save_Level_Folder()
 {
-	strcpy(m_Level_Folder_Path, m_Project_Folder_Path);
+	strcpy(m_Level_Folder_Path, m_Project_Sub_Folder);
 	strcat(m_Level_Folder_Path, "\\");
 	strcat(m_Level_Folder_Path, m_Level_Name);
 
@@ -457,7 +464,7 @@ bool SB_Project::Save_Aeras_Data()
 	if (!WriteFile)
 	{
 		App->Say("Cant Create File");
-		App->Say(File);
+		App->Say_Win(File);
 		return 0;
 	}
 
@@ -538,7 +545,7 @@ bool SB_Project::Save_Player_Data()
 	if (!WriteFile)
 	{
 		App->Say("Cant Create File");
-		App->Say(File);
+		App->Say_Win(File);
 		return 0;
 	}
 
@@ -592,18 +599,16 @@ bool SB_Project::Save_Player_Data()
 void SB_Project::Set_Paths()
 {
 	strcpy(m_Level_File_Name, App->CL_Vm_FileIO->Model_FileName);
-	strcpy(m_Project_Folder_Path, App->CL_Vm_FileIO->Model_Path_FileName);
+	strcpy(m_Project_Sub_Folder, App->CL_Vm_FileIO->Model_Path_FileName);
 	strcpy(m_Ini_Path_File_Name, App->CL_Vm_FileIO->Model_Path_FileName);
 
 	strcpy(m_Level_Folder_Path, App->CL_Vm_FileIO->Model_Path_FileName);
 
 	// Get path no file 
 	int len1 = strlen(m_Level_File_Name);
-	int len2 = strlen(m_Project_Folder_Path);
-	strcpy(m_Project_Sub_Folder, m_Project_Folder_Path);
+	int len2 = strlen(m_Project_Sub_Folder);
+	strcpy(m_Project_Sub_Folder, m_Project_Sub_Folder);
 	m_Project_Sub_Folder[len2 - (len1+1)] = 0;
-
-	strcpy(m_Project_Folder_Path, m_Project_Sub_Folder);
 
 }
 // *************************************************************************
@@ -726,7 +731,7 @@ bool SB_Project::Load_Project_Aera()
 	char Mesh_FileName[MAX_PATH];
 	char Resource_Location[MAX_PATH];
 
-	strcpy(Area_Ini_Path, m_Project_Folder_Path);
+	strcpy(Area_Ini_Path, m_Project_Sub_Folder);
 	strcat(Area_Ini_Path, "\\");
 
 	strcat(Area_Ini_Path, m_Level_Name);

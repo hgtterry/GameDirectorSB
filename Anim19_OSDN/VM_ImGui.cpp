@@ -1049,7 +1049,7 @@ void VM_ImGui::ImGui_App_Data(void)
 		char Header[255];
 		// ----------------------------- Project
 		
-			ImGui::Text("Project Folder Location: = %s", App->SBC_Project->m_Project_Folder_Path);
+			//ImGui::Text("Project Folder Location: = %s", App->SBC_Project->m_Project_Folder_Path);
 		
 		
 		ImGui::Spacing();

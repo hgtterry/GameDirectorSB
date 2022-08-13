@@ -53,10 +53,6 @@ public:
 	
 	char m_Ini_Path_File_Name[MAX_PATH];
 
-	//------------------------------------------------  Good
-	char m_Project_Folder_Path[MAX_PATH];		// Project folder Location Full Path [10/08/22]
-
-	
 	string test;
 
 	bool Project_Loaded;

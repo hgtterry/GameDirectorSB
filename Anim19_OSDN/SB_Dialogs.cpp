@@ -45,6 +45,8 @@ SB_Dialogs::~SB_Dialogs()
 // *************************************************************************
 bool SB_Dialogs::Dialog_Text()
 {
+	Canceled = 0;
+
 	DialogBox(App->hInst, (LPCTSTR)IDD_PROP_TEXT, App->Fdlg, (DLGPROC)Dialog_Text_Proc);
 
 	return 1;

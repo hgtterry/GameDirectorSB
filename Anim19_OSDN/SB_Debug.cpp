@@ -102,8 +102,27 @@ void SB_Debug::ImGui_Debug_Project(void)
 	}
 	else
 	{
-		ImGui::Text("Project Folder Location: = %s", App->SBC_Project->m_Project_Folder_Path);
+		
+		ImGui::Text("Project Loaded: = %i", App->SBC_Scene->Scene_Loaded);
 
+		ImGui::Text(" ");
+
+		ImGui::Text("Project Name: = %s", App->SBC_Project->m_Project_Name);
+		ImGui::Text("Level Name: = %s", App->SBC_Project->m_Level_Name);
+		ImGui::Text("Level File Name: = %s", App->SBC_Project->m_Level_File_Name);
+
+		ImGui::Text(" ");
+
+		ImGui::Text("Aera Folder Path: = %s", App->SBC_Project->m_Aera_Folder_Path);
+		ImGui::Text("Level Folder Path: = %s", App->SBC_Project->m_Level_Folder_Path);
+		ImGui::Text("Player Folder Path: = %s", App->SBC_Project->m_Players_Folder_Path);
+		
+		ImGui::Text(" ");
+
+		//ImGui::Text("Project Folder Location: = %s", App->SBC_Project->m_Project_Folder_Path);
+		ImGui::Text("Ini Location: = %s", App->SBC_Project->m_Ini_Path_File_Name);
+		ImGui::Text("Sub Folder Location: = %s", App->SBC_Project->m_Project_Sub_Folder);
+		
 		ImGui::Spacing();
 		ImGui::Spacing();
 
