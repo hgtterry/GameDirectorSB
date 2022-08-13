@@ -39,24 +39,12 @@ public:
 	SB_Project();
 	~SB_Project();
 
+	bool Load_Project();
 	bool Start_Save_Project_Dialog();
-
-	bool N_Save_Project();
-	bool N_Save_Project_Ini();
-	bool N_Save_Level_Folder();
-
-	bool N_Save_Aera_Folder();
-	bool N_Save_Aeras_Data();
-
-	bool N_Save_Players_Folder();
-	bool N_Save_Player_Data();
-
-	bool N_Load_Project();
-	bool N_Load_Project_Aera();
-	bool N_Load_Project_Player();
 
 	char m_Project_Name[MAX_PATH];
 	char m_Level_Name[MAX_PATH];
+	char m_Level_File_Name[MAX_PATH];
 	char m_Aera_Folder_Path[MAX_PATH];
 	char m_Level_Folder_Path[MAX_PATH];		// Level Just Path
 	char m_Players_Folder_Path[MAX_PATH];
@@ -65,34 +53,33 @@ public:
 	
 	char m_Ini_Path_File_Name[MAX_PATH];
 
-
 	//------------------------------------------------  Good
-
 	char m_Project_Folder_Path[MAX_PATH];		// Project folder Location Full Path [10/08/22]
 
-	//------------------------------------------------ 
-
-	char Project_Ini_FilePath[1024];
-
-	char Level_Folder_Path_World[1024];
-
+	
 	string test;
 
-	// --------------------------------------------------------------------------- 
-	char Level_File_Name[MAX_PATH];			// Level File Name ( 211121 )
-	
 	bool Project_Loaded;
 
 protected:
 
 	static LRESULT CALLBACK Save_Project_Dialog_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
-	bool N_Load_Project_Camera();
-	void N_Set_Paths();
+	bool Save_Project();
+	bool Save_Project_Ini();
+	bool Save_Level_Folder();
 
-	FILE *Write_Ini;
-	FILE *Write_Player_Ini;
-	FILE *Write_Object_Ini;
+	bool Save_Aera_Folder();
+	bool Save_Aeras_Data();
+
+	bool Save_Players_Folder();
+	bool Save_Player_Data();
+
+	bool Load_Project_Aera();
+	bool Load_Project_Player();
+	bool Load_Project_Camera();
+	void Set_Paths();
+
 	FILE *WriteFile;
 };
 

@@ -40,21 +40,17 @@ SB_Project::SB_Project()
 	strcat(m_Project_Folder_Path, "No Project?");
 	strcat(m_Project_Folder_Path, "_Prj");
 
-	strcpy(m_Project_Name, "No_Project");
-	strcpy(m_Level_Name,"No_Level");
+	strcpy(m_Project_Name, "Project_X");
+	strcpy(m_Level_Name,"Level_X");
 
 	m_Level_Folder_Path[0] = 0;
 	m_Players_Folder_Path[0] = 0;
 
-	Project_Ini_FilePath[0] = 0;
-	Level_Folder_Path_World[0] = 0;
+	m_Ini_Path_File_Name[0] = 0;
+	
+	strcpy(m_Level_File_Name, "No Level");
 
-	strcpy(Level_File_Name, "No Level");
-
-	Write_Ini =			NULL;
-	Write_Player_Ini =	NULL;
 	WriteFile =			NULL;
-	Write_Object_Ini =	NULL;
 
 	Project_Loaded = 0;
 
@@ -292,7 +288,7 @@ LRESULT CALLBACK SB_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message, W
 
 		if (LOWORD(wParam) == IDOK)
 		{
-			App->SBC_Project->N_Save_Project();
+			App->SBC_Project->Save_Project();
 			
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
@@ -306,7 +302,7 @@ LRESULT CALLBACK SB_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message, W
 // *************************************************************************
 // *	  				Save_Project Terry Flanigan						   *
 // *************************************************************************
-bool SB_Project::N_Save_Project()
+bool SB_Project::Save_Project()
 {
 
 
@@ -319,20 +315,20 @@ bool SB_Project::N_Save_Project()
 		_chdir(m_Project_Folder_Path);
 	}
 
-	N_Save_Project_Ini();
+	Save_Project_Ini();
 
-	N_Save_Level_Folder();
+	Save_Level_Folder();
 
 	_chdir(m_Level_Folder_Path);
 
 	if (App->SBC_Scene->Area_Added == 1)
 	{
-		N_Save_Aera_Folder();
+		Save_Aera_Folder();
 	}
 
 	if (App->SBC_Scene->Player_Added == 1)
 	{
-		N_Save_Players_Folder();
+		Save_Players_Folder();
 
 		App->SBC_Player->FileViewItem = App->SBC_FileView->Add_PlayerFile("Player_1", 0);
 		App->SBC_FileView->Set_FolderActive(App->SBC_FileView->GD_Player);
@@ -352,43 +348,43 @@ bool SB_Project::N_Save_Project()
 // *************************************************************************
 // *	  					Save_Project_Ini Terry Flanigan				   *
 // *************************************************************************
-bool SB_Project::N_Save_Project_Ini()
+bool SB_Project::Save_Project_Ini()
 {
-	Project_Ini_FilePath[0] = 0;
+	m_Ini_Path_File_Name[0] = 0;
 
-	strcpy(Project_Ini_FilePath, m_Project_Folder_Path);
-	strcat(Project_Ini_FilePath, "\\");
-	strcat(Project_Ini_FilePath, "Project.SBProj");
+	strcpy(m_Ini_Path_File_Name, m_Project_Folder_Path);
+	strcat(m_Ini_Path_File_Name, "\\");
+	strcat(m_Ini_Path_File_Name, "Project.SBProj");
 
-	Write_Ini = nullptr;
+	WriteFile = nullptr;
 
-	Write_Ini = fopen(Project_Ini_FilePath, "wt");
+	WriteFile = fopen(m_Ini_Path_File_Name, "wt");
 
-	if (!Write_Ini)
+	if (!WriteFile)
 	{
 		App->Say("Cant Create File");
 		return 0;
 	}
 
-	fprintf(Write_Ini, "%s\n", "[Version_Data]");
-	fprintf(Write_Ini, "%s%s\n", "Version=", "V1.2");
+	fprintf(WriteFile, "%s\n", "[Version_Data]");
+	fprintf(WriteFile, "%s%s\n", "Version=", "V1.2");
 
-	fprintf(Write_Ini, "%s\n", " ");
+	fprintf(WriteFile, "%s\n", " ");
 
-	fprintf(Write_Ini, "%s\n", "[Files]");
-	fprintf(Write_Ini, "%s%s\n", "Project_Name=", App->SBC_Project->m_Project_Name);
-	fprintf(Write_Ini, "%s%s\n", "Level_Name=", App->SBC_Project->m_Level_Name);
-	fprintf(Write_Ini, "%s%s\n", "Folder_Path=", App->SBC_Project->m_Project_Folder_Path);
+	fprintf(WriteFile, "%s\n", "[Files]");
+	fprintf(WriteFile, "%s%s\n", "Project_Name=", App->SBC_Project->m_Project_Name);
+	fprintf(WriteFile, "%s%s\n", "Level_Name=", App->SBC_Project->m_Level_Name);
+	fprintf(WriteFile, "%s%s\n", "Folder_Path=", App->SBC_Project->m_Project_Folder_Path);
 
-	fprintf(Write_Ini, "%s\n", " ");
+	fprintf(WriteFile, "%s\n", " ");
 
-	fprintf(Write_Ini, "%s\n", "[Options]");
-	fprintf(Write_Ini, "%s%i\n", "Aeras_Count=", App->SBC_Scene->Area_Count);
-	fprintf(Write_Ini, "%s%i\n", "Players_Count=", App->SBC_Scene->Player_Count);
-	fprintf(Write_Ini, "%s%i\n", "Cameras_Count=", App->SBC_Scene->Camera_Count);
-	fprintf(Write_Ini, "%s%i\n", "Objects_Count=", App->SBC_Scene->Object_Count);
+	fprintf(WriteFile, "%s\n", "[Options]");
+	fprintf(WriteFile, "%s%i\n", "Aeras_Count=", App->SBC_Scene->Area_Count);
+	fprintf(WriteFile, "%s%i\n", "Players_Count=", App->SBC_Scene->Player_Count);
+	fprintf(WriteFile, "%s%i\n", "Cameras_Count=", App->SBC_Scene->Camera_Count);
+	fprintf(WriteFile, "%s%i\n", "Objects_Count=", App->SBC_Scene->Object_Count);
 
-	fclose(Write_Ini);
+	fclose(WriteFile);
 
 	return 1;
 }
@@ -396,7 +392,7 @@ bool SB_Project::N_Save_Project_Ini()
 // *************************************************************************
 // *	  				Save_Level_Folder Terry Flanigan				   *
 // *************************************************************************
-bool SB_Project::N_Save_Level_Folder()
+bool SB_Project::Save_Level_Folder()
 {
 	strcpy(m_Level_Folder_Path, m_Project_Folder_Path);
 	strcat(m_Level_Folder_Path, "\\");
@@ -418,7 +414,7 @@ bool SB_Project::N_Save_Level_Folder()
 // *************************************************************************
 // *	  				Save_Aera_Folder Terry Flanigan				   *
 // *************************************************************************
-bool SB_Project::N_Save_Aera_Folder()
+bool SB_Project::Save_Aera_Folder()
 {
 	m_Aera_Folder_Path[0] = 0;
 
@@ -436,7 +432,7 @@ bool SB_Project::N_Save_Aera_Folder()
 		_chdir(m_Aera_Folder_Path);
 	}
 
-	N_Save_Aeras_Data();
+	Save_Aeras_Data();
 
 	_chdir(m_Level_Folder_Path); // Return to Level Folder
 	return 1;
@@ -445,7 +441,7 @@ bool SB_Project::N_Save_Aera_Folder()
 // *************************************************************************
 // *	  				Save_Aeras_Data Terry Flanigan					   *
 // *************************************************************************
-bool SB_Project::N_Save_Aeras_Data()
+bool SB_Project::Save_Aeras_Data()
 {
 	Ogre::Vector3 Pos;
 	char File[1024];
@@ -454,26 +450,26 @@ bool SB_Project::N_Save_Aeras_Data()
 	strcat(File, "\\");
 	strcat(File, "Aeras.aer");
 
-	Write_Player_Ini = nullptr;
+	WriteFile = nullptr;
 
-	Write_Player_Ini = fopen(File, "wt");
+	WriteFile = fopen(File, "wt");
 
-	if (!Write_Player_Ini)
+	if (!WriteFile)
 	{
 		App->Say("Cant Create File");
 		App->Say(File);
 		return 0;
 	}
 
-	fprintf(Write_Player_Ini, "%s\n", "[Version_Data]");
-	fprintf(Write_Player_Ini, "%s%s\n", "Version=", "V1.2");
+	fprintf(WriteFile, "%s\n", "[Version_Data]");
+	fprintf(WriteFile, "%s%s\n", "Version=", "V1.2");
 
-	fprintf(Write_Player_Ini, "%s\n", " ");
+	fprintf(WriteFile, "%s\n", " ");
 
-	fprintf(Write_Player_Ini, "%s\n", "[Counters]");
-	fprintf(Write_Player_Ini, "%s%i\n", "Aeras_Count=", App->SBC_Scene->Area_Count);
+	fprintf(WriteFile, "%s\n", "[Counters]");
+	fprintf(WriteFile, "%s%i\n", "Aeras_Count=", App->SBC_Scene->Area_Count);
 
-	fprintf(Write_Player_Ini, "%s\n", " ");
+	fprintf(WriteFile, "%s\n", " ");
 
 	char Cbuff[255];
 	char buff[255];
@@ -485,18 +481,18 @@ bool SB_Project::N_Save_Aeras_Data()
 		strcat(buff, Cbuff);
 		strcat(buff, "]");
 
-		fprintf(Write_Player_Ini, "%s\n", buff); // Header also Player name until changed by user
+		fprintf(WriteFile, "%s\n", buff); // Header also Player name until changed by user
 
-		fprintf(Write_Player_Ini, "%s%s\n", "Aera_Name=", App->SBC_Scene->SBC_Base_Area[Count]->Area_FileName); // Change
+		fprintf(WriteFile, "%s%s\n", "Aera_Name=", App->SBC_Scene->SBC_Base_Area[Count]->Area_FileName); // Change
 
-		fprintf(Write_Player_Ini, "%s%s\n", "Aera_File=", App->SBC_Scene->SBC_Base_Area[Count]->Area_FileName);
-		fprintf(Write_Player_Ini, "%s%s\n", "Aera_Path_File=", App->SBC_Scene->SBC_Base_Area[Count]->Area_Path_And_FileName);
-		fprintf(Write_Player_Ini, "%s%s\n", "Aera_Resource_Path=", App->SBC_Scene->SBC_Base_Area[Count]->Area_Resource_Path);
+		fprintf(WriteFile, "%s%s\n", "Aera_File=", App->SBC_Scene->SBC_Base_Area[Count]->Area_FileName);
+		fprintf(WriteFile, "%s%s\n", "Aera_Path_File=", App->SBC_Scene->SBC_Base_Area[Count]->Area_Path_And_FileName);
+		fprintf(WriteFile, "%s%s\n", "Aera_Resource_Path=", App->SBC_Scene->SBC_Base_Area[Count]->Area_Resource_Path);
 
 		Count++;
 	}
 
-	fclose(Write_Player_Ini);
+	fclose(WriteFile);
 
 	return 1;
 }
@@ -504,7 +500,7 @@ bool SB_Project::N_Save_Aeras_Data()
 // *************************************************************************
 // *	  				Save_Players_Folder Terry Flanigan				   *
 // *************************************************************************
-bool SB_Project::N_Save_Players_Folder()
+bool SB_Project::Save_Players_Folder()
 {
 	m_Players_Folder_Path[0] = 0;
 
@@ -517,7 +513,7 @@ bool SB_Project::N_Save_Players_Folder()
 	
 	_chdir(m_Players_Folder_Path);
 
-	N_Save_Player_Data();
+	Save_Player_Data();
 
 	_chdir(m_Level_Folder_Path); // Return to Level Folder
 	return 1;
@@ -526,7 +522,7 @@ bool SB_Project::N_Save_Players_Folder()
 // *************************************************************************
 // *	  				Save_Player_Data Terry Flanigan					   *
 // *************************************************************************
-bool SB_Project::N_Save_Player_Data()
+bool SB_Project::Save_Player_Data()
 {
 	Ogre::Vector3 Pos;
 	char File[1024];
@@ -535,26 +531,26 @@ bool SB_Project::N_Save_Player_Data()
 	strcat(File, "\\");
 	strcat(File, "Players.ply");
 
-	Write_Player_Ini = nullptr;
+	WriteFile = nullptr;
 
-	Write_Player_Ini = fopen(File, "wt");
+	WriteFile = fopen(File, "wt");
 
-	if (!Write_Player_Ini)
+	if (!WriteFile)
 	{
 		App->Say("Cant Create File");
 		App->Say(File);
 		return 0;
 	}
 
-	fprintf(Write_Player_Ini, "%s\n", "[Version_Data]");
-	fprintf(Write_Player_Ini, "%s%s\n", "Version=", "V1.2");
+	fprintf(WriteFile, "%s\n", "[Version_Data]");
+	fprintf(WriteFile, "%s%s\n", "Version=", "V1.2");
 
-	fprintf(Write_Player_Ini, "%s\n", " ");
+	fprintf(WriteFile, "%s\n", " ");
 
-	fprintf(Write_Player_Ini, "%s\n", "[Counters]");
-	fprintf(Write_Player_Ini, "%s%i\n", "Player_Count=", App->SBC_Scene->Player_Count);
+	fprintf(WriteFile, "%s\n", "[Counters]");
+	fprintf(WriteFile, "%s%i\n", "Player_Count=", App->SBC_Scene->Player_Count);
 
-	fprintf(Write_Player_Ini, "%s\n", " ");
+	fprintf(WriteFile, "%s\n", " ");
 
 	char Cbuff[255];
 	char buff[255];
@@ -566,43 +562,43 @@ bool SB_Project::N_Save_Player_Data()
 		strcat(buff, Cbuff);
 		strcat(buff, "]");
 
-		fprintf(Write_Player_Ini, "%s\n", buff); // Header also Player name until changed by user
+		fprintf(WriteFile, "%s\n", buff); // Header also Player name until changed by user
 
-		fprintf(Write_Player_Ini, "%s%s\n", "Player_Name=", App->SBC_Scene->SBC_Base_Player[Count]->Player_Name);
+		fprintf(WriteFile, "%s%s\n", "Player_Name=", App->SBC_Scene->SBC_Base_Player[Count]->Player_Name);
 
 		Pos.x = App->SBC_Scene->SBC_Base_Player[Count]->StartPos.x;
 		Pos.y = App->SBC_Scene->SBC_Base_Player[Count]->StartPos.y;
 		Pos.z = App->SBC_Scene->SBC_Base_Player[Count]->StartPos.z;
 
-		fprintf(Write_Player_Ini, "%s%f,%f,%f\n", "Start_Position=", Pos.x, Pos.y, Pos.z);
-		fprintf(Write_Player_Ini, "%s%s\n", "Shape=", "Capsule");
-		fprintf(Write_Player_Ini, "%s%f\n", "Mass=", App->SBC_Scene->SBC_Base_Player[Count]->Capsule_Mass);
-		fprintf(Write_Player_Ini, "%s%f\n", "Radius=", App->SBC_Scene->SBC_Base_Player[Count]->Capsule_Radius);
-		fprintf(Write_Player_Ini, "%s%f\n", "Height=", App->SBC_Scene->SBC_Base_Player[Count]->Capsule_Height);
-		fprintf(Write_Player_Ini, "%s%f\n", "Ground_Speed=", App->SBC_Scene->SBC_Base_Player[Count]->Ground_speed);
-		fprintf(Write_Player_Ini, "%s%f\n", "Cam_Height=", App->SBC_Scene->SBC_Base_Player[Count]->PlayerHeight);
+		fprintf(WriteFile, "%s%f,%f,%f\n", "Start_Position=", Pos.x, Pos.y, Pos.z);
+		fprintf(WriteFile, "%s%s\n", "Shape=", "Capsule");
+		fprintf(WriteFile, "%s%f\n", "Mass=", App->SBC_Scene->SBC_Base_Player[Count]->Capsule_Mass);
+		fprintf(WriteFile, "%s%f\n", "Radius=", App->SBC_Scene->SBC_Base_Player[Count]->Capsule_Radius);
+		fprintf(WriteFile, "%s%f\n", "Height=", App->SBC_Scene->SBC_Base_Player[Count]->Capsule_Height);
+		fprintf(WriteFile, "%s%f\n", "Ground_Speed=", App->SBC_Scene->SBC_Base_Player[Count]->Ground_speed);
+		fprintf(WriteFile, "%s%f\n", "Cam_Height=", App->SBC_Scene->SBC_Base_Player[Count]->PlayerHeight);
 
 		Count++;
 	}
 
-	fclose(Write_Player_Ini);
+	fclose(WriteFile);
 
 	return 1;
 }
 
 // *************************************************************************
-// *	  					N_Set_Paths Terry Flanigan					   *
+// *	  					Set_Paths Terry Flanigan					   *
 // *************************************************************************
-void SB_Project::N_Set_Paths()
+void SB_Project::Set_Paths()
 {
-	strcpy(Level_File_Name, App->CL_Vm_FileIO->Model_FileName);
+	strcpy(m_Level_File_Name, App->CL_Vm_FileIO->Model_FileName);
 	strcpy(m_Project_Folder_Path, App->CL_Vm_FileIO->Model_Path_FileName);
 	strcpy(m_Ini_Path_File_Name, App->CL_Vm_FileIO->Model_Path_FileName);
 
 	strcpy(m_Level_Folder_Path, App->CL_Vm_FileIO->Model_Path_FileName);
 
 	// Get path no file 
-	int len1 = strlen(Level_File_Name);
+	int len1 = strlen(m_Level_File_Name);
 	int len2 = strlen(m_Project_Folder_Path);
 	strcpy(m_Project_Sub_Folder, m_Project_Folder_Path);
 	m_Project_Sub_Folder[len2 - (len1+1)] = 0;
@@ -613,13 +609,13 @@ void SB_Project::N_Set_Paths()
 // *************************************************************************
 // *	  					Load_Project Terry Flanigan					   *
 // *************************************************************************
-bool SB_Project::N_Load_Project()
+bool SB_Project::Load_Project()
 {
 	m_Ini_Path_File_Name[0] = 0;
 
 	App->SBC_Scene->Clear_Level();
 
-	N_Set_Paths();
+	Set_Paths();
 	
 	// ------------------------------------------------------------------- 
 	Load_Options* Options = new Load_Options;
@@ -653,7 +649,7 @@ bool SB_Project::N_Load_Project()
 	// ------------------------------------- Aera
 	if (Options->Has_Aera > 0)
 	{
-		N_Load_Project_Aera();
+		Load_Project_Aera();
 		App->SBC_Scene->Area_Count++;
 		App->SBC_Scene->Area_Added = 1;
 	}
@@ -661,7 +657,7 @@ bool SB_Project::N_Load_Project()
 	// ------------------------------------- Player
 	if (Options->Has_Player > 0)
 	{
-		N_Load_Project_Player();
+		Load_Project_Player();
 	}
 
 	// ------------------------------------- Camera
@@ -694,7 +690,7 @@ bool SB_Project::N_Load_Project()
 	strcpy(App->CL_Vm_Model->FileName, chr_Tag2);*/
 
 	//Read_Player();
-	N_Load_Project_Camera();
+	Load_Project_Camera();
 	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->GD_CameraFolder);
 	//App->SBC_Aera->Add_Area();
 
@@ -725,7 +721,7 @@ bool SB_Project::N_Load_Project()
 // *************************************************************************
 // *	  					Load_Project_Aera Terry Flanigan			   *
 // *************************************************************************
-bool SB_Project::N_Load_Project_Aera()
+bool SB_Project::Load_Project_Aera()
 {
 	char Area_Ini_Path[MAX_PATH];
 	
@@ -759,7 +755,7 @@ bool SB_Project::N_Load_Project_Aera()
 // *************************************************************************
 // *	  				Load_Project_Player Terry Flanigan				   *
 // *************************************************************************
-bool SB_Project::N_Load_Project_Player()
+bool SB_Project::Load_Project_Player()
 {
 	App->SBC_Player->Create_Player_Object();
 	strcpy(App->SBC_Scene->SBC_Base_Player[0]->Player_Name, "Player_1");
@@ -776,7 +772,7 @@ bool SB_Project::N_Load_Project_Player()
 // *************************************************************************
 // *	  			N_Load_Project_Camera Terry Flanigan				   *
 // *************************************************************************
-bool SB_Project::N_Load_Project_Camera()
+bool SB_Project::Load_Project_Camera()
 {
 	char chr_Tag1[1024];
 	char chr_Tag2[1024];

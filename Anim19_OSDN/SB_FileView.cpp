@@ -90,7 +90,7 @@ void SB_FileView::Reset_Class()
 	GD_Player = nullptr;
 	GD_Rooms = nullptr;
 
-	strcpy(App->SBC_Project->Level_File_Name, "No Level");
+	strcpy(App->SBC_Project->m_Level_File_Name, "No Level");
 
 	AddRootFolder();
 	MoreFoldersD(); //  Folders under root 
@@ -1209,7 +1209,7 @@ void SB_FileView::Delete_AllItems()
 	GD_Entities_Sound_Folder = NULL;
 	GD_Entities_Message_Folder = NULL;
 
-	strcpy(App->SBC_Project->Level_File_Name, "No Level");
+	strcpy(App->SBC_Project->m_Level_File_Name, "No Level");
 
 	AddRootFolder();
 	MoreFoldersD(); //  Folders under root 
