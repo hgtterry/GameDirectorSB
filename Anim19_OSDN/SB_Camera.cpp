@@ -109,7 +109,7 @@ LRESULT CALLBACK SB_Camera::Camera_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == IDC_BTCAMSAVE)
 		{
-			App->SBC_Project->Write_Camera();
+			//App->SBC_Project->Write_Camera();
 			App->Say("Camera Saved");
 			return TRUE;
 		}

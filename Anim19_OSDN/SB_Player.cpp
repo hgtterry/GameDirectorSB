@@ -274,7 +274,7 @@ LRESULT CALLBACK SB_Player::Player_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 		{
 			if (App->SBC_Scene->Scene_Loaded == 1)
 			{
-				App->SBC_Project->Write_Player();
+				//App->SBC_Project->Write_Player();
 				App->Say("Player Saved");
 			}
 			return 1;

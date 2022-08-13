@@ -72,11 +72,6 @@ public:
 
 	//------------------------------------------------ 
 
-	bool Write_Level_File();
-	bool Write_Player();
-	bool Write_Camera();
-	bool Write_Objects();
-
 	char Project_Ini_FilePath[1024];
 
 	char Level_Folder_Path_World[1024];
@@ -90,12 +85,10 @@ public:
 
 protected:
 
-	static LRESULT CALLBACK Create_Project_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Save_Project_Dialog_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
+	bool N_Load_Project_Camera();
 	void N_Set_Paths();
-
-	bool Read_Player();
-	bool Read_Camera();
 
 	FILE *Write_Ini;
 	FILE *Write_Player_Ini;

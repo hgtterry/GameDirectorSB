@@ -72,14 +72,14 @@ SB_Project::~SB_Project()
 // *************************************************************************
 bool SB_Project::Start_Save_Project_Dialog()
 {
-	DialogBox(App->hInst, (LPCTSTR)IDD_PROJECT, App->Fdlg, (DLGPROC)Create_Project_Proc);
+	DialogBox(App->hInst, (LPCTSTR)IDD_PROJECT, App->Fdlg, (DLGPROC)Save_Project_Dialog_Proc);
 	return 1;
 }
 
 // *************************************************************************
-// *				Create_Project_Proc Terry Flanigan	  				   *
+// *				Save_Project_Dialog_Proc Terry Flanigan	  			   *
 // *************************************************************************
-LRESULT CALLBACK SB_Project::Create_Project_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK SB_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
@@ -301,325 +301,6 @@ LRESULT CALLBACK SB_Project::Create_Project_Proc(HWND hDlg, UINT message, WPARAM
 
 	}
 	return FALSE;
-}
-
-// *************************************************************************
-// *	  					Write_Objects Terry Flanigan				   *
-// *************************************************************************
-bool SB_Project::Write_Objects()
-{
-	char File[1024];
-
-	strcpy(File, m_Project_Sub_Folder);
-	strcat(File, "\\");
-	strcat(File, "Objects.obf");
-
-	Write_Object_Ini = NULL;
-
-	Write_Object_Ini = fopen(File, "wt");
-
-	if (!Write_Object_Ini)
-	{
-		App->Say("Cant Create File");
-		App->Say(File);
-		return 0;
-	}
-
-	fprintf(Write_Object_Ini, "%s\n", "[Version_Data]");
-	fprintf(Write_Object_Ini, "%s%s\n", "Version=", "V1.2");
-
-	fprintf(Write_Object_Ini, "%s\n", " ");
-
-	fprintf(Write_Object_Ini, "%s\n", "[Objects]");
-	fprintf(Write_Object_Ini, "%s%i\n", "Objects_Count=", App->SBC_Scene->Object_Count);
-
-
-
-	fclose(Write_Object_Ini);
-
-	return 1;
-}
-
-// *************************************************************************
-// *	  					Write_Player Terry Flanigan					   *
-// *************************************************************************
-bool SB_Project::Write_Player()
-{
-	Ogre::Vector3 Pos;
-	char File[1024];
-
-	strcpy(File, m_Project_Sub_Folder);
-	strcat(File, "\\");
-	strcat(File, "Player1.ply");
-
-	Write_Player_Ini = NULL;
-
-	Write_Player_Ini = fopen(File, "wt");
-
-	if (!Write_Player_Ini)
-	{
-		App->Say("Cant Create File");
-		App->Say(File);
-		return 0;
-	}
-
-	fprintf(Write_Player_Ini, "%s\n", "[Version_Data]");
-	fprintf(Write_Player_Ini, "%s%s\n", "Version=", "V1.2");
-
-	fprintf(Write_Player_Ini, "%s\n", " ");
-
-	fprintf(Write_Player_Ini, "%s\n", "[Counters]");
-	fprintf(Write_Player_Ini, "%s%i\n", "Player_Count=",App->SBC_Scene->Player_Count);
-
-	fprintf(Write_Player_Ini, "%s\n", " ");
-
-	char Cbuff[255];
-	char buff[255];
-	int Count = 0;
-	while (Count < App->SBC_Scene->Player_Count)
-	{
-		strcpy(buff, "[Player_");
-		_itoa(Count, Cbuff, 10);
-		strcat(buff, Cbuff);
-		strcat(buff, "]");
-
-		fprintf(Write_Player_Ini, "%s\n", buff); // Header also Player name until changed by user
-
-		fprintf(Write_Player_Ini, "%s%s\n", "Player_Name=", App->SBC_Scene->SBC_Base_Player[Count]->Player_Name);
-
-		Pos.x = App->SBC_Scene->SBC_Base_Player[Count]->StartPos.x;
-		Pos.y = App->SBC_Scene->SBC_Base_Player[Count]->StartPos.y;
-		Pos.z = App->SBC_Scene->SBC_Base_Player[Count]->StartPos.z;
-
-		fprintf(Write_Player_Ini, "%s%f,%f,%f\n", "Start_Position=", Pos.x, Pos.y, Pos.z);
-		fprintf(Write_Player_Ini, "%s%s\n", "Shape=", "Capsule");
-		fprintf(Write_Player_Ini, "%s%f\n", "Mass=", App->SBC_Scene->SBC_Base_Player[Count]->Capsule_Mass);
-		fprintf(Write_Player_Ini, "%s%f\n", "Radius=", App->SBC_Scene->SBC_Base_Player[Count]->Capsule_Radius);
-		fprintf(Write_Player_Ini, "%s%f\n", "Height=", App->SBC_Scene->SBC_Base_Player[Count]->Capsule_Height);
-		fprintf(Write_Player_Ini, "%s%f\n", "Ground_Speed=", App->SBC_Scene->SBC_Base_Player[Count]->Ground_speed);
-		fprintf(Write_Player_Ini, "%s%f\n", "Cam_Height=", App->SBC_Scene->SBC_Base_Player[Count]->PlayerHeight);
-
-		Count++;
-	}
-	
-	fclose(Write_Player_Ini);
-
-	return 1;
-}
-
-// *************************************************************************
-// *	  					Write_Camera Terry Flanigan					   *
-// *************************************************************************
-bool SB_Project::Write_Camera()
-{
-	char File[1024];
-
-	strcpy(File, m_Project_Sub_Folder);
-	strcat(File, "\\");
-	strcat(File, "Camera1.cam");
-
-	WriteFile = NULL;
-
-	WriteFile = fopen(File, "wt");
-
-	if (!WriteFile)
-	{
-		App->Say("Cant Create File");
-		App->Say(File);
-		return 0;
-	}
-
-	fprintf(WriteFile, "%s\n", "[Version_Data]");
-	fprintf(WriteFile, "%s%s\n", "Version=", "V1.2");
-
-	fprintf(WriteFile, "%s\n", " ");
-
-	fprintf(WriteFile, "%s\n", "[Camera]");
-	fprintf(WriteFile, "%s%s\n", "Camera_Name=", App->SBC_Camera->Camera_Name);
-
-	fprintf(WriteFile, "%s%f,%f,%f\n", "Start_Position=", App->SBC_Camera->CamPos_X, App->SBC_Camera->CamPos_Y, App->SBC_Camera->CamPos_Z);
-	fprintf(WriteFile, "%s%f,%f,%f\n", "Look_At=", App->SBC_Camera->LookAt_X, App->SBC_Camera->LookAt_Y, App->SBC_Camera->LookAt_Z);
-
-	
-
-	fclose(WriteFile);
-
-	return 1;
-}
-// *************************************************************************
-// *	  				Write_Level_File Terry Flanigan					   *
-// *************************************************************************
-bool SB_Project::Write_Level_File()
-{
-	char File[1024];
-	File[0] = 0;
-
-	WriteFile = NULL;
-
-	strcpy(File, m_Project_Sub_Folder);
-	strcat(File, "\\");
-	strcat(File, "Level.SBLevel");
-
-
-	WriteFile = fopen(File, "wt");
-
-	if (!WriteFile)
-	{
-		App->Say("Cant Create File");
-		return 0;
-	}
-
-	fprintf(WriteFile, "%s\n", "[Version_Data]");
-	fprintf(WriteFile, "%s%s\n", "Version=", "V1.2");
-
-	fprintf(WriteFile, "%s\n", " ");
-
-	fprintf(WriteFile, "%s\n", "[Levels]");
-	fprintf(WriteFile, "%s%s\n", "Folder=", "World1");
-	fprintf(WriteFile, "%s%s\n", "File=", "World.mesh");
-
-	fprintf(WriteFile, "%s\n", " ");
-
-	fprintf(WriteFile, "%s\n", "[Player]");
-	fprintf(WriteFile, "%s%s\n", "Player_File=", "Player1.ply");
-
-	fprintf(WriteFile, "%s\n", " ");
-
-	fprintf(WriteFile, "%s\n", "[Camere]");
-	fprintf(WriteFile, "%s%s\n", "Camera_File=", "Cam1.cam");
-
-	fclose(WriteFile);
-	return 1;
-}
-
-// *************************************************************************
-// *	  				Read_Player Terry Flanigan						   *
-// *************************************************************************
-bool SB_Project::Read_Player()
-{
-	char chr_Tag1[1024];
-	char chr_Tag2[1024];
-
-	int Int_Tag = 0;
-
-	float x = 0;
-	float y = 0;
-	float z = 0;
-
-	chr_Tag1[0] = 0;
-	chr_Tag2[0] = 0;
-
-	// ------------------------------------------------------------------- 
-	char Path[1024];
-	strcpy(Path, m_Project_Sub_Folder);
-	strcat(Path, "Player1.ply");
-
-	// ------------------------------------------------------------------- 
-
-	App->Cl_Ini->SetPathName(Path);
-
-	App->Cl_Ini->GetString("Version_Data", "Version", chr_Tag1, 1024);
-	
-	Int_Tag = App->Cl_Ini->GetInt("Counters", "Player_Count", 0, 10);
-
-	char Cbuff[255];
-	char buff[255];
-	int Count = 0;
-
-	while (Count < Int_Tag)
-	{
-		App->SBC_Player->Create_Player_Object(); // Increments Player Counter 
-
-		strcpy(buff, "Player_");
-		_itoa(Count, Cbuff, 10);
-		strcat(buff, Cbuff);
-
-		App->Cl_Ini->GetString(buff, "Player_Name", chr_Tag1, 1024);
-
-		strcpy(App->SBC_Scene->SBC_Base_Player[Count]->Player_Name, chr_Tag1);
-
-		//// Position
-		App->Cl_Ini->GetString(buff, "Start_Position", chr_Tag1, 1024);
-		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
-		App->SBC_Scene->SBC_Base_Player[Count]->StartPos.x = x;
-		App->SBC_Scene->SBC_Base_Player[Count]->StartPos.y = y;
-		App->SBC_Scene->SBC_Base_Player[Count]->StartPos.z = z;
-
-
-		App->Cl_Ini->GetString(buff, "Shape", chr_Tag1, 1024); // Capsule
-
-		x = App->Cl_Ini->Get_Float(buff, "Mass");
-		y = App->Cl_Ini->Get_Float(buff, "Radius");
-		z = App->Cl_Ini->Get_Float(buff, "Height");
-
-		App->SBC_Scene->SBC_Base_Player[Count]->Capsule_Mass = x;
-		App->SBC_Scene->SBC_Base_Player[Count]->Capsule_Radius = y;
-		App->SBC_Scene->SBC_Base_Player[Count]->Capsule_Height = z;
-
-		x = App->Cl_Ini->Get_Float(buff, "Ground_Speed");
-		App->SBC_Scene->SBC_Base_Player[Count]->Ground_speed = x;
-
-		x = App->Cl_Ini->Get_Float(buff, "Cam_Height");
-		App->SBC_Scene->SBC_Base_Player[Count]->PlayerHeight = x;
-
-		App->SBC_Player->FileViewItem = App->SBC_FileView->Add_PlayerFile(App->SBC_Scene->SBC_Base_Player[Count]->Player_Name, Count);
-
-		Count++;
-
-	}
-
-	App->SBC_FileView->Redraw_FileView();
-
-	App->Cl_Bullet->Reset_Physics();
-	return 1;
-}
-
-// *************************************************************************
-// *	  				Read_Camera Terry Flanigan						   *
-// *************************************************************************
-bool SB_Project::Read_Camera()
-{
-	char chr_Tag1[1024];
-	char chr_Tag2[1024];
-
-	float x = 0;
-	float y = 0;
-	float z = 0;
-
-	chr_Tag1[0] = 0;
-	chr_Tag2[0] = 0;
-
-	// ------------------------------------------------------------------- 
-	char Path[1024];
-	strcpy(Path, m_Project_Sub_Folder);
-	strcat(Path, "Camera1.cam");
-
-	// ------------------------------------------------------------------- 
-
-	//App->Cl_Ini->SetPathName(Path);
-
-	//App->Cl_Ini->GetString("Version_Data", "Version", chr_Tag1, 1024);
-
-	//App->Cl_Ini->GetString("Camera", "Camera_Name", chr_Tag1, 1024);
-	//strcpy(App->SBC_Camera->Camera_Name, chr_Tag1);
-
-	//// Position
-	//App->Cl_Ini->GetString("Camera", "Start_Position", chr_Tag1, 1024);
-	//sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
-	//App->SBC_Camera->CamPos_X = x;
-	//App->SBC_Camera->CamPos_Y = y;
-	//App->SBC_Camera->CamPos_Z = z;
-
-	//// Position
-	//App->Cl_Ini->GetString("Camera", "Look_At", chr_Tag1, 1024);
-	//sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
-	//App->SBC_Camera->LookAt_X = x;
-	//App->SBC_Camera->LookAt_Y = y;
-	//App->SBC_Camera->LookAt_Z = z;
-
-	App->SBC_Camera->FileViewItem = App->SBC_FileView->Add_Camera(App->SBC_Camera->Camera_Name, 0);
-	App->SBC_FileView->Redraw_FileView();
-	return 1;
 }
 
 // *************************************************************************
@@ -1013,7 +694,7 @@ bool SB_Project::N_Load_Project()
 	strcpy(App->CL_Vm_Model->FileName, chr_Tag2);*/
 
 	//Read_Player();
-	Read_Camera();
+	N_Load_Project_Camera();
 	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->GD_CameraFolder);
 	//App->SBC_Aera->Add_Area();
 
@@ -1089,6 +770,54 @@ bool SB_Project::N_Load_Project_Player()
 	App->SBC_Physics->Enable_Physics(1);
 
 	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->GD_Player);
+	return 1;
+}
+
+// *************************************************************************
+// *	  			N_Load_Project_Camera Terry Flanigan				   *
+// *************************************************************************
+bool SB_Project::N_Load_Project_Camera()
+{
+	char chr_Tag1[1024];
+	char chr_Tag2[1024];
+
+	float x = 0;
+	float y = 0;
+	float z = 0;
+
+	chr_Tag1[0] = 0;
+	chr_Tag2[0] = 0;
+
+	// ------------------------------------------------------------------- 
+	char Path[1024];
+	strcpy(Path, m_Project_Sub_Folder);
+	strcat(Path, "Camera1.cam");
+
+	// ------------------------------------------------------------------- 
+
+	//App->Cl_Ini->SetPathName(Path);
+
+	//App->Cl_Ini->GetString("Version_Data", "Version", chr_Tag1, 1024);
+
+	//App->Cl_Ini->GetString("Camera", "Camera_Name", chr_Tag1, 1024);
+	//strcpy(App->SBC_Camera->Camera_Name, chr_Tag1);
+
+	//// Position
+	//App->Cl_Ini->GetString("Camera", "Start_Position", chr_Tag1, 1024);
+	//sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+	//App->SBC_Camera->CamPos_X = x;
+	//App->SBC_Camera->CamPos_Y = y;
+	//App->SBC_Camera->CamPos_Z = z;
+
+	//// Position
+	//App->Cl_Ini->GetString("Camera", "Look_At", chr_Tag1, 1024);
+	//sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+	//App->SBC_Camera->LookAt_X = x;
+	//App->SBC_Camera->LookAt_Y = y;
+	//App->SBC_Camera->LookAt_Z = z;
+
+	App->SBC_Camera->FileViewItem = App->SBC_FileView->Add_Camera(App->SBC_Camera->Camera_Name, 0);
+	App->SBC_FileView->Redraw_FileView();
 	return 1;
 }
 
