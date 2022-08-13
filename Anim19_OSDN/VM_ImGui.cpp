@@ -1102,6 +1102,10 @@ void VM_ImGui::ImGui_App_Data(void)
 			ImGui::Text("%s %f", "Pos_X = ", App->Cl19_Ogre->mCamera->getPosition().x);
 			ImGui::Text("%s %f", "Pos_Y = ", App->Cl19_Ogre->mCamera->getPosition().y);
 			ImGui::Text("%s %f", "Pos_Z = ", App->Cl19_Ogre->mCamera->getPosition().z);
+
+			ImGui::Text("%s %f", "Rot_X = ", App->Cl19_Ogre->mCamera->getOrientation().x);
+			ImGui::Text("%s %f", "Rot_Y = ", App->Cl19_Ogre->mCamera->getOrientation().y);
+			ImGui::Text("%s %f", "Rot_Z = ", App->Cl19_Ogre->mCamera->getOrientation().z);
 		}
 
 		ImGui::Spacing();

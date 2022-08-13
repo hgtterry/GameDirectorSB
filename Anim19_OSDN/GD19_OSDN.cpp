@@ -232,7 +232,33 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return 1;
 		}
 
-		// ----------------------------------- Debug App
+		// ----------------------------------- Debug
+
+		case ID_DEBUG_CAMERA:
+		{
+			if (App->SBC_Debug->Show_Debug_Camera == 1)
+			{
+				App->SBC_Debug->Show_Debug_Camera = 0;
+			}
+			else
+			{
+				App->SBC_Debug->Show_Debug_Camera = 1;
+			}
+			return 1;
+		}
+
+		case ID_DEBUG_PROJECT:
+		{
+			if (App->SBC_Debug->Show_Debug_Project == 1)
+			{
+				App->SBC_Debug->Show_Debug_Project = 0;
+			}
+			else
+			{
+				App->SBC_Debug->Show_Debug_Project = 1;
+			}
+			return 1;
+		}
 
 		case ID_DEBUG_APP32891:
 		{

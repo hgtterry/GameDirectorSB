@@ -156,6 +156,11 @@ bool GD19_OgreListener::frameStarted(const FrameEvent& evt)
 				App->CL_Vm_ImGui->Tabs_Render_Groups();
 			}
 
+			if (App->SBC_Debug->Allow_Debug == 1)
+			{
+				App->SBC_Debug->Debug_Render_Loop();
+			}
+
 			//ImGui::ShowDemoWindow();
 
 		}
