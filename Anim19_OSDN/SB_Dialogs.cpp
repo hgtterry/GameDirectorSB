@@ -170,15 +170,9 @@ LRESULT CALLBACK SB_Dialogs::GroupData_Proc(HWND hDlg, UINT message, WPARAM wPar
 			return TRUE;
 		}
 
-		if (App->SBC_Dialogs->What_List == Enums::Show_List_Model)
+		if (App->SBC_Dialogs->What_List == Enums::Show_List_Scene)
 		{
-			//App->SBC_Dialogs->List_ModelData(hDlg);
-			return TRUE;
-		}
-
-		if (App->SBC_Dialogs->What_List == Enums::Show_List_App)
-		{
-			//App->SBC_Dialogs->List_App_Data(hDlg);
+			App->SBC_Dialogs->List_App_Scene(hDlg);
 			return TRUE;
 		}
 
@@ -232,10 +226,44 @@ void SB_Dialogs::List_App_Project(HWND hDlg)
 	sprintf(buf, "%s", App->SBC_Project->m_Project_Folder_Path);
 	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
-	//sprintf(buf, "%s %s", "Full Path", App->SBC_Project->m_Project_Full_Path);
-	//SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+}
 
-	//sprintf(buf, "%s %s", "Project Sub Folder", App->SBC_Project->m_Project_Sub_Folder);
-	//SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+// *************************************************************************
+// *	  				List_App_Scene Terry Flanigan					   *
+// *************************************************************************
+void SB_Dialogs::List_App_Scene(HWND hDlg)
+{
 
+	char buf[255];
+
+	sprintf(buf, "%s %i", "Scene Loaded = ", App->SBC_Scene->Scene_Loaded);
+	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)" ");
+
+	sprintf(buf, "%s %i", "Player Added = ", App->SBC_Scene->Player_Added);
+	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	sprintf(buf, "%s %i","Count = ", App->SBC_Scene->Player_Count);
+	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)" ");
+
+	sprintf(buf, "%s %i", "Aera Added = ", App->SBC_Scene->Area_Added);
+	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	sprintf(buf, "%s %i", "Count = ",App->SBC_Scene->Area_Count);
+	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)" ");
+
+	sprintf(buf, "%s %i", "Camera Added = ", App->SBC_Scene->Camera_Added);
+	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	sprintf(buf, "%s %i", "Count = ", App->SBC_Scene->Camera_Count);
+	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)" ");
+
+	sprintf(buf, "%s %i", "Objects Added = ", App->SBC_Scene->Objects_Added);
+	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	sprintf(buf, "%s %i", "Count = ", App->SBC_Scene->Object_Count);
+	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 }

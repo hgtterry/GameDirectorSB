@@ -650,8 +650,6 @@ bool SB_Project::Load_Project()
 	if (Options->Has_Aera > 0)
 	{
 		Load_Project_Aera();
-		App->SBC_Scene->Area_Count++;
-		App->SBC_Scene->Area_Added = 1;
 	}
 
 	// ------------------------------------- Player
@@ -663,7 +661,7 @@ bool SB_Project::Load_Project()
 	// ------------------------------------- Camera
 	if (Options->Has_Camera > 0)
 	{
-		
+		App->SBC_Scene->Camera_Added = 1;
 	}
 
 	// ------------------------------------- Objects

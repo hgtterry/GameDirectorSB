@@ -275,7 +275,7 @@ LRESULT CALLBACK SB_Player::Player_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 			if (App->SBC_Scene->Scene_Loaded == 1)
 			{
 				//App->SBC_Project->Write_Player();
-				App->Say("Player Saved");
+				//App->Say("Player Saved");
 			}
 			return 1;
 		}
@@ -311,14 +311,14 @@ LRESULT CALLBACK SB_Player::Player_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 		if (LOWORD(wParam) == IDC_BTLOOKAT)
 		{
 
-			App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
+			//App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
 
-			//RedrawWindow(App->Cl_ToolBar->TB_1, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			//    //RedrawWindow(App->Cl_ToolBar->TB_1, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-			int Index = App->SBC_Properties->Current_Selected_Object;
-			Ogre::Vector3 Centre = App->Cl_Scene_Data->Cl_Object[Index]->OgreNode->getAttachedObject(0)->getBoundingBox().getCenter();
-			Ogre::Vector3 WS = App->Cl_Scene_Data->Cl_Object[Index]->OgreNode->convertLocalToWorldPosition(Centre);
-			App->Cl19_Ogre->mCamera->setPosition(WS);
+			//int Index = App->SBC_Properties->Current_Selected_Object;
+			//Ogre::Vector3 Centre = App->Cl_Scene_Data->Cl_Object[Index]->OgreNode->getAttachedObject(0)->getBoundingBox().getCenter();
+			//Ogre::Vector3 WS = App->Cl_Scene_Data->Cl_Object[Index]->OgreNode->convertLocalToWorldPosition(Centre);
+			//App->Cl19_Ogre->mCamera->setPosition(WS);
 
 			return 1;
 		}

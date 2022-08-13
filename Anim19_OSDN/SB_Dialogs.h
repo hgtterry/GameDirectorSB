@@ -44,5 +44,6 @@ protected:
 	static LRESULT CALLBACK GroupData_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void List_App_Project(HWND hDlg);
+	void List_App_Scene(HWND hDlg);
 };
 

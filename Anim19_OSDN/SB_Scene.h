@@ -37,13 +37,20 @@ public:
 	Base_Player*			SBC_Base_Player[100];
 	Base_Area*				SBC_Base_Area[100];
 
+	bool Scene_Loaded;	// Is the Scene Loaded [131221]
+
 	int Player_Count;		// Actual Player Count Zero Based
 	int Area_Count;			// Actual Area Count Zero Based [161221]
 	int Object_Count;		// Actual Object Count Zero Based [171221]
 	int Camera_Count;		// Actual Object Count Zero Based [171221]
 
-	bool Scene_Loaded;	// Is the Scene Loaded [131221]
 	bool Player_Added;	// Is there a vaild player in the level [081221]
 	bool Area_Added;	// Is there a vaild Area or Room [131221]
+	bool Camera_Added;	// Is there a vaild Area or Room [131221]
+	bool Objects_Added;
+
+protected:
+
+	void Reset_Class();
 };
 

@@ -28,6 +28,11 @@ distribution.
 
 SB_Scene::SB_Scene()
 {
+	Scene_Loaded = 0;
+	Player_Added = 0;
+	Area_Added = 0;
+	Camera_Added = 0;
+
 	Player_Count = 0;
 	Area_Count = 0;
 	Object_Count = 0;
@@ -36,16 +41,28 @@ SB_Scene::SB_Scene()
 	SBC_Base_Player[100] = { nullptr };
 	SBC_Base_Area[100] = { nullptr };
 	SBC_Base_Area[0] = nullptr;
-
-	Scene_Loaded = 0;
-	Player_Added = 0;
-	Area_Added = 0;
-
 }
 
 
 SB_Scene::~SB_Scene()
 {
+
+}
+
+// *************************************************************************
+// *						Reset_Class Terry Flanigan					   *
+// *************************************************************************
+void SB_Scene::Reset_Class()
+{
+	Scene_Loaded = 0;
+	Area_Added = 0;
+	Player_Added = 0;
+	Camera_Added = 0;
+
+	Player_Count = 0;
+	Area_Count = 0;
+	Camera_Count = 0;
+	Object_Count = 0;
 }
 
 // *************************************************************************
@@ -82,13 +99,8 @@ bool SB_Scene::Clear_Level()
 
 	App->Cl_Scene_Data->ObjectCount = 0;
 
-	Player_Count = 0;
-	Area_Count = 0;
-
-	Scene_Loaded = 0;
-	Area_Added = 0;
-	Player_Added = 0;
-
+	Reset_Class(); // This One
+	
 	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamNone;
 
 	App->SBC_Camera->Reset_View();

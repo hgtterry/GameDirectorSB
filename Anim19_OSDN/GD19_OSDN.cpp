@@ -232,12 +232,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return 1;
 		}
 
+		// ----------------------------------- Debug App
 		case ID_APP_PROJECT:
 		{
 			App->SBC_Dialogs->What_List = Enums::Show_List_Project;
 			App->SBC_Dialogs->Show_List_Data();
 			return 1;
 		}
+
+		case ID_APP_SCENE:
+		{
+			App->SBC_Dialogs->What_List = Enums::Show_List_Scene;
+			App->SBC_Dialogs->Show_List_Data();
+			return 1;
+		}
+
+		
 
 		case ID_TEST_PROGRESSBAR:
 		{
