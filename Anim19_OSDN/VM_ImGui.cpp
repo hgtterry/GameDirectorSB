@@ -1048,22 +1048,40 @@ void VM_ImGui::ImGui_App_Data(void)
 	{
 		char Header[255];
 		// ----------------------------- Project
-		sprintf(Header, "%s", "Project");
+		
+			ImGui::Text("Project Folder Location: = %s", App->SBC_Project->m_Project_Folder_Path);
+		
+		
+		ImGui::Spacing();
+
+		// ----------------------------- Scene
+		sprintf(Header, "%s", "Scene");
 
 		if (ImGui::CollapsingHeader(Header))
 		{
-			ImGui::Text("Level Name: = %s", App->SBC_Project->m_Level_File_Name);
-			ImGui::Text("Level File Name: = %s", App->SBC_Project->m_Level_File_Name);
-			ImGui::Text("Level Path: = %s", App->SBC_Project->m_Project_Sub_Folder);
+			ImGui::Text("%s %i", "Scene Loaded = ", App->SBC_Scene->Scene_Loaded);
+
+			ImGui::Text("%s %i", "Player Added = ", App->SBC_Scene->Player_Added);
+			ImGui::Text("%s %i", "Player Count = ", App->SBC_Scene->Player_Count);
+
+			ImGui::Text("%s %i", "Aera Added = ", App->SBC_Scene->Player_Added);
+			ImGui::Text("%s %i", "Aera Count = ", App->SBC_Scene->Area_Count);
+
+			ImGui::Text("%s %i", "Camera Added = ", App->SBC_Scene->Camera_Added);
+			ImGui::Text("%s %i", "Camera Count = ", App->SBC_Scene->Camera_Count);
+
+			ImGui::Text("%s %i", "Objects Added = ", App->SBC_Scene->Objects_Added);
+			ImGui::Text("%s %i", "Objects Count = ", App->SBC_Scene->Object_Count);
+
+			ImGui::Text("%s %i", "Physics Running = ", App->Cl19_Ogre->OgreListener->GD_Run_Physics);
+			ImGui::Text("%s %i", "Physics Debuging = ", App->Cl19_Ogre->OgreListener->Dubug_Physics_Draw);
 
 		}
-		
-		ImGui::Spacing();
 
 		// ----------------------------- Players
 
 		int PlayerCount = App->SBC_Scene->Player_Count;
-		sprintf(Header, "%s %i", "Playes", PlayerCount);
+		sprintf(Header, "%s %i", "Players", PlayerCount);
 
 		if (ImGui::CollapsingHeader(Header))
 		{
@@ -1077,49 +1095,17 @@ void VM_ImGui::ImGui_App_Data(void)
 
 		ImGui::Spacing();
 
-		// ----------------------------- Scene
-		sprintf(Header, "%s", "Scene");
-
+		// ----------------------------- Camera
+		sprintf(Header, "%s", "Camera");
 		if (ImGui::CollapsingHeader(Header))
 		{
-			ImGui::Text("%s %i", "Player Count = ", App->SBC_Scene->Player_Count);
-			ImGui::Text("%s %i", "Area Count = ", App->SBC_Scene->Area_Count);
-			ImGui::Text("%s %i", "Level Loaded = ", App->SBC_Scene->Scene_Loaded);
-			ImGui::Text("%s %i", "Player Added = ", App->SBC_Scene->Player_Added);
-			ImGui::Text("%s %i", "Physics Running = ", App->Cl19_Ogre->OgreListener->GD_Run_Physics);
-			ImGui::Text("%s %i", "Physics Debuging = ", App->Cl19_Ogre->OgreListener->Dubug_Physics_Draw);
-
+			ImGui::Text("%s %f", "Pos_X = ", App->Cl19_Ogre->mCamera->getPosition().x);
+			ImGui::Text("%s %f", "Pos_Y = ", App->Cl19_Ogre->mCamera->getPosition().y);
+			ImGui::Text("%s %f", "Pos_Z = ", App->Cl19_Ogre->mCamera->getPosition().z);
 		}
 
-		//ImGui::Spacing();
+		ImGui::Spacing();
 
-		//// ----------------------------- Bones
-		//int BoneCount = App->CL_Vm_Model->BoneCount;
-		//sprintf(Header, "%s %i", "Bones", BoneCount);
-
-		//if (ImGui::CollapsingHeader(Header))
-		//{
-		//	int Count = 0;
-		//	while (Count < BoneCount)
-		//	{
-		//		ImGui::Text("%s", App->CL_Vm_Model->S_Bones[Count]->BoneName);
-		//		Count++;
-		//	}
-		//}
-
-		//// ----------------------------- Groups
-		//int GroupCount = App->CL_Vm_Model->GroupCount;
-		//sprintf(Header, "%s %i", "Groups", GroupCount);
-
-		//if (ImGui::CollapsingHeader(Header))
-		//{
-		//	/*int Count = 0;
-		//	while (Count < BoneCount)
-		//	{
-		//	ImGui::Text("%s", App->CL_Vm_Model->S_Bones[Count]->BoneName);
-		//	Count++;
-		//	}*/
-		//}
 		ImGui::Spacing();
 		ImGui::Spacing();
 
