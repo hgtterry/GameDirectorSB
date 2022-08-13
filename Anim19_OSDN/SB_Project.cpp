@@ -29,10 +29,7 @@ distribution.
 
 SB_Project::SB_Project()
 {
-	/*strcpy(m_Project_Sub_Folder,App->EquityDirecory_FullPath);
-	strcat(m_Project_Sub_Folder, "\\");
-	strcat(m_Project_Sub_Folder, "Projects\\");*/
-
+	
 	strcpy(m_Project_Sub_Folder, App->EquityDirecory_FullPath);
 	strcat(m_Project_Sub_Folder, "\\");
 	strcat(m_Project_Sub_Folder, "Projects");
@@ -41,20 +38,20 @@ SB_Project::SB_Project()
 	strcat(m_Project_Sub_Folder, "_Prj");
 
 	strcpy(m_Project_Name, "Project_X");
-	strcpy(m_Level_Name,"Level_X");
+	strcpy(m_Level_Name, "Level_X");
 
 	m_Level_Folder_Path[0] = 0;
 	m_Players_Folder_Path[0] = 0;
 
 	m_Ini_Path_File_Name[0] = 0;
 	
-	strcpy(m_Level_File_Name, "No Level");
+	m_Level_File_Name[0] = 0;
 
 	WriteFile =			NULL;
 
 	Project_Loaded = 0;
 
-	test = "poo";
+	test = "Char Test";
 
 }
 
@@ -100,11 +97,8 @@ LRESULT CALLBACK SB_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message, W
 		SetDlgItemText(hDlg, IDC_STLEVELNAME, (LPCTSTR)App->SBC_Project->m_Level_Name);
 		SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Sub_Folder);
 
-		
 		SetDlgItemText(hDlg, IDC_STBANNER, (LPCTSTR)"Save Project As");
 		
-		
-
 		return TRUE;
 	}
 
@@ -351,7 +345,6 @@ bool SB_Project::Save_Project()
 	return 1;
 }
 
-//------------------------------------------------------------------------------------------ NEW 24/07/22
 // *************************************************************************
 // *	  					Save_Project_Ini Terry Flanigan				   *
 // *************************************************************************
