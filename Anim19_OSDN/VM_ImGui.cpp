@@ -1038,9 +1038,9 @@ void VM_ImGui::ImGui_App_Data(void)
 {
 	ImGui::SetNextWindowSize(ImVec2(530, 250), ImGuiCond_FirstUseEver);
 
-	ImGui::OpenPopup("Level Data");
+	//ImGui::OpenPopup("Level Data");
 
-	if (!ImGui::BeginPopupModal("Level Data", &Show_App_Data, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize))
+	if (!ImGui::Begin("App Data", &Show_App_Data, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize))
 	{
 		ImGui::EndPopup();
 	}
@@ -1111,10 +1111,10 @@ void VM_ImGui::ImGui_App_Data(void)
 
 		if (ImGui::Button("Close"))
 		{
-			Show_Model_Data = 0;
+			Show_App_Data = 0;
 		}
 
-		ImGui::EndPopup();
+		ImGui::End();
 	}
 }
 char* VM_ImGui::poo()
