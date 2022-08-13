@@ -233,21 +233,19 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		}
 
 		// ----------------------------------- Debug App
-		case ID_APP_PROJECT:
+
+		case ID_DEBUG_APP32891:
 		{
-			App->SBC_Dialogs->What_List = Enums::Show_List_Project;
-			App->SBC_Dialogs->Show_List_Data();
+			if (App->CL_Vm_ImGui->Show_App_Data == 1)
+			{
+				App->CL_Vm_ImGui->Show_App_Data = 0;
+			}
+			else
+			{
+				App->CL_Vm_ImGui->Show_App_Data = 1;
+			}
 			return 1;
 		}
-
-		case ID_APP_SCENE:
-		{
-			App->SBC_Dialogs->What_List = Enums::Show_List_Scene;
-			App->SBC_Dialogs->Show_List_Data();
-			return 1;
-		}
-
-		
 
 		case ID_TEST_PROGRESSBAR:
 		{

@@ -20,7 +20,9 @@ public:
 	void ImGui_GroupList(void);
 	void ImGui_MotionList(void);
 	void ImGui_Texture_Data(void);
+
 	void ImGui_Model_Data(void);
+	void ImGui_App_Data(void);
 
 	void Tabs_Render_Camera(void);
 	void Tabs_Render_Motions(void);
@@ -51,6 +53,7 @@ public:
 	bool Show_Motion_List;
 	bool Show_ImGui_TextureData;
 	bool Show_Model_Data;
+	bool Show_App_Data;
 
 	ImFont* font0;
 	ImFont* font1;

@@ -25,6 +25,7 @@ VM_ImGui::VM_ImGui()
 	Show_Motion_List = 0;
 	Show_ImGui_TextureData = 0;
 	Show_Model_Data = 0;
+	Show_App_Data = 0;
 	Show_Progress_Bar = 0;
 
 	Model_XTranslate = 2;
@@ -157,6 +158,11 @@ void VM_ImGui::Tabs_Render_Camera(void)
 		ImGui_Model_Data();
 	}
 
+	if (Show_App_Data == 1)
+	{
+		ImGui_App_Data();
+	}
+
 	if (Show_ImGui_Test == 1)
 	{
 		ImGui::ShowDemoWindow();
@@ -178,6 +184,11 @@ void VM_ImGui::Tabs_Render_Motions(void)
 		ImGui_Model_Data();
 	}
 
+	if (Show_App_Data == 1)
+	{
+		ImGui_App_Data();
+	}
+
 	if (Show_Motion_List == 1)
 	{
 		ImGui_MotionList();
@@ -197,6 +208,11 @@ void VM_ImGui::Tabs_Render_Dimensions(void)
 	if (Show_Model_Data == 1)
 	{
 		ImGui_Model_Data();
+	}
+
+	if (Show_App_Data == 1)
+	{
+		ImGui_App_Data();
 	}
 
 	if (Show_Rotation == 1)
@@ -228,6 +244,11 @@ void VM_ImGui::Tabs_Render_Groups(void)
 	if (Show_Model_Data == 1)
 	{
 		ImGui_Model_Data();
+	}
+
+	if (Show_App_Data == 1)
+	{
+		ImGui_App_Data();
 	}
 
 	if (Show_ImGui_TextureData == 1)
@@ -1010,7 +1031,106 @@ void VM_ImGui::ImGui_Model_Data(void)
 	}
 }
 
+// *************************************************************************
+// *					ImGui_App_Data  Terry Bernie					   *
+// *************************************************************************
+void VM_ImGui::ImGui_App_Data(void)
+{
+	ImGui::SetNextWindowSize(ImVec2(530, 250), ImGuiCond_FirstUseEver);
 
+	ImGui::OpenPopup("Level Data");
+
+	if (!ImGui::BeginPopupModal("Level Data", &Show_App_Data, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize))
+	{
+		ImGui::EndPopup();
+	}
+	else
+	{
+		char Header[255];
+		// ----------------------------- Project
+		sprintf(Header, "%s", "Project");
+
+		if (ImGui::CollapsingHeader(Header))
+		{
+			ImGui::Text("Level Name: = %s", App->SBC_Project->m_Level_File_Name);
+			ImGui::Text("Level File Name: = %s", App->SBC_Project->m_Level_File_Name);
+			ImGui::Text("Level Path: = %s", App->SBC_Project->m_Project_Sub_Folder);
+
+		}
+		
+		ImGui::Spacing();
+
+		// ----------------------------- Players
+
+		int PlayerCount = App->SBC_Scene->Player_Count;
+		sprintf(Header, "%s %i", "Playes", PlayerCount);
+
+		if (ImGui::CollapsingHeader(Header))
+		{
+			int Count = 0;
+			while (Count < App->SBC_Scene->Player_Count)
+			{
+				ImGui::Text("%s", App->SBC_Scene->SBC_Base_Player[0]->Player_Name);
+				Count++;
+			}
+		}
+
+		ImGui::Spacing();
+
+		// ----------------------------- Scene
+		sprintf(Header, "%s", "Scene");
+
+		if (ImGui::CollapsingHeader(Header))
+		{
+			ImGui::Text("%s %i", "Player Count = ", App->SBC_Scene->Player_Count);
+			ImGui::Text("%s %i", "Area Count = ", App->SBC_Scene->Area_Count);
+			ImGui::Text("%s %i", "Level Loaded = ", App->SBC_Scene->Scene_Loaded);
+			ImGui::Text("%s %i", "Player Added = ", App->SBC_Scene->Player_Added);
+			ImGui::Text("%s %i", "Physics Running = ", App->Cl19_Ogre->OgreListener->GD_Run_Physics);
+			ImGui::Text("%s %i", "Physics Debuging = ", App->Cl19_Ogre->OgreListener->Dubug_Physics_Draw);
+
+		}
+
+		//ImGui::Spacing();
+
+		//// ----------------------------- Bones
+		//int BoneCount = App->CL_Vm_Model->BoneCount;
+		//sprintf(Header, "%s %i", "Bones", BoneCount);
+
+		//if (ImGui::CollapsingHeader(Header))
+		//{
+		//	int Count = 0;
+		//	while (Count < BoneCount)
+		//	{
+		//		ImGui::Text("%s", App->CL_Vm_Model->S_Bones[Count]->BoneName);
+		//		Count++;
+		//	}
+		//}
+
+		//// ----------------------------- Groups
+		//int GroupCount = App->CL_Vm_Model->GroupCount;
+		//sprintf(Header, "%s %i", "Groups", GroupCount);
+
+		//if (ImGui::CollapsingHeader(Header))
+		//{
+		//	/*int Count = 0;
+		//	while (Count < BoneCount)
+		//	{
+		//	ImGui::Text("%s", App->CL_Vm_Model->S_Bones[Count]->BoneName);
+		//	Count++;
+		//	}*/
+		//}
+		ImGui::Spacing();
+		ImGui::Spacing();
+
+		if (ImGui::Button("Close"))
+		{
+			Show_Model_Data = 0;
+		}
+
+		ImGui::EndPopup();
+	}
+}
 char* VM_ImGui::poo()
 {
 	return test;
