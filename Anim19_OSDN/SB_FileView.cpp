@@ -325,48 +325,48 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	tvinsert.hInsertAfter = TVI_LAST;
 	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
 	tvinsert.item.pszText = "Objects";
-	tvinsert.item.iImage = 2;
-	tvinsert.item.iSelectedImage = 3;
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
 	GD_ObjectsFolder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
 
 	tvinsert.hParent = GD_LevelFolder;
 	tvinsert.hInsertAfter = TVI_LAST;
 	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
 	tvinsert.item.pszText = "Entities";
-	tvinsert.item.iImage = 2;
-	tvinsert.item.iSelectedImage = 3;
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
 	GD_EntitiesFolder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
 
 	tvinsert.hParent = GD_EntitiesFolder;
 	tvinsert.hInsertAfter = TVI_LAST;
 	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
 	tvinsert.item.pszText = "Sounds";
-	tvinsert.item.iImage = 2;
-	tvinsert.item.iSelectedImage = 3;
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
 	GD_Entities_Sound_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
 
 	tvinsert.hParent = GD_EntitiesFolder;
 	tvinsert.hInsertAfter = TVI_LAST;
 	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
 	tvinsert.item.pszText = "Messages";
-	tvinsert.item.iImage = 2;
-	tvinsert.item.iSelectedImage = 3;
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
 	GD_Entities_Message_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
 
 	tvinsert.hParent = GD_EntitiesFolder;
 	tvinsert.hInsertAfter = TVI_LAST;
 	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
 	tvinsert.item.pszText = "Move_Entities";
-	tvinsert.item.iImage = 2;
-	tvinsert.item.iSelectedImage = 3;
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
 	GD_Entities_Move_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
 
 	tvinsert.hParent = GD_EntitiesFolder;
 	tvinsert.hInsertAfter = TVI_LAST;
 	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
 	tvinsert.item.pszText = "Collectables";
-	tvinsert.item.iImage = 2;
-	tvinsert.item.iSelectedImage = 3;
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
 	GD_Collectables_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
 
 	//----------------------------------------------------
@@ -374,8 +374,8 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	tvinsert.hInsertAfter = TVI_LAST;
 	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
 	tvinsert.item.pszText = "Teleporters";
-	tvinsert.item.iImage = 2;
-	tvinsert.item.iSelectedImage = 3;
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
 	GD_Teleporters_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
 
 	//----------------------------------------------------
@@ -383,8 +383,8 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	tvinsert.hInsertAfter = TVI_LAST;
 	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
 	tvinsert.item.pszText = "Particles";
-	tvinsert.item.iImage = 2;
-	tvinsert.item.iSelectedImage = 3;
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
 	GD_Particles_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
 
 }

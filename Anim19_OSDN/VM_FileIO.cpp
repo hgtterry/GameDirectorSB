@@ -309,7 +309,7 @@ void VM_FileIO::Init_History()
 	char DirCheck[1024];
 	strcpy(DirCheck, UserData_Folder);
 	strcat(DirCheck, "\\");
-	strcat(DirCheck, "Vima19");
+	strcat(DirCheck, "Equity");
 
 	bool check = 0;
 	check = Search_For_Folder(DirCheck);
@@ -338,7 +338,7 @@ void VM_FileIO::LoadHistory()
 	char buf[1024];
 
 	strcpy(buf, UserData_Folder);
-	strcat(buf, "\\Vima19\\Vima19.ini");
+	strcat(buf, "\\Equity\\Equity_SB.ini");
 
 	ReadRecentFiles = fopen(buf, "rt");
 
@@ -398,7 +398,7 @@ void VM_FileIO::Save_FileHistory()
 
 	char buf[1024];
 	strcpy(buf, UserData_Folder);
-	strcat(buf, "\\Vima19\\Vima19.ini");
+	strcat(buf, "\\Equity\\Equity_SB.ini");
 
 
 	WriteRecentFiles = fopen(buf, "wt");
@@ -426,39 +426,39 @@ void VM_FileIO::Save_FileHistory()
 // *************************************************************************
 void VM_FileIO::RecentFileHistory_Update()
 {
-	//if (!mHistoryMenu)return;
+	if (!mHistoryMenu)return;
 
-	//std::string sz = std::string(App->CL_Vm_Model->Path_FileName);
-	//if (mPreviousFiles[EQUITY_NUM_RECENT_FILES - 1] == sz)return;
+	std::string sz = std::string(App->CL_Vm_FileIO->Model_Path_FileName);
+	if (mPreviousFiles[EQUITY_NUM_RECENT_FILES - 1] == sz)return;
 
-	//// add the new file to the list of recent files
-	//for (unsigned int i = 0; i < EQUITY_NUM_RECENT_FILES - 1; ++i)
-	//{
-	//	mPreviousFiles[i] = mPreviousFiles[i + 1];
-	//}
+	// add the new file to the list of recent files
+	for (unsigned int i = 0; i < EQUITY_NUM_RECENT_FILES - 1; ++i)
+	{
+		mPreviousFiles[i] = mPreviousFiles[i + 1];
+	}
 
-	//mPreviousFiles[EQUITY_NUM_RECENT_FILES - 1] = sz;
+	mPreviousFiles[EQUITY_NUM_RECENT_FILES - 1] = sz;
 
-	//// Check for empty slots and gray out
-	//for (int i = EQUITY_NUM_RECENT_FILES - 1; i >= 0; --i)
-	//{
-	//	char szText[1024];
-	//	strcpy(szText, mPreviousFiles[i].c_str());
+	// Check for empty slots and gray out
+	for (int i = EQUITY_NUM_RECENT_FILES - 1; i >= 0; --i)
+	{
+		char szText[1024];
+		strcpy(szText, mPreviousFiles[i].c_str());
 
-	//	UINT iFlags = 0;
-	//	int Result = 0;
-	//	Result = strcmp("<empty>", szText);
-	//	if (Result == 0)
-	//	{
-	//		iFlags = MF_GRAYED | MF_DISABLED;
-	//	}
+		UINT iFlags = 0;
+		int Result = 0;
+		Result = strcmp("<empty>", szText);
+		if (Result == 0)
+		{
+			iFlags = MF_GRAYED | MF_DISABLED;
+		}
 
-	//	ModifyMenu(mHistoryMenu, EQUITY_RECENT_FILE_ID(i),
-	//		MF_STRING | MF_BYCOMMAND | iFlags, EQUITY_RECENT_FILE_ID(i), szText);
-	//}
+		ModifyMenu(mHistoryMenu, EQUITY_RECENT_FILE_ID(i),
+			MF_STRING | MF_BYCOMMAND | iFlags, EQUITY_RECENT_FILE_ID(i), szText);
+	}
 
-	//// Save Changes
-	//Save_FileHistory();
+	// Save Changes
+	Save_FileHistory();
 
 	return;
 }

@@ -710,7 +710,7 @@ bool SB_Project::Load_Project()
 	delete Options;
 
 	App->Set_Main_TitleBar(App->CL_Vm_FileIO->Model_Path_FileName);
-
+	App->CL_Vm_FileIO->RecentFileHistory_Update();
 	return 1;
 }
 

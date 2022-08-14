@@ -399,7 +399,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return 1;
 		}
 
-		// ------------------------------------- Recent Files
+		// ------------------------------------- Recent Projects
+
+		case ID_FILE_CLEARRESENTPROJECTS:
+		{
+			App->CL_Vm_FileIO->ResentHistory_Clear();
+			return 1;
+		}
+
 		case 5000 + 7: // Top Recent Files 1
 		{
 			char mFileName[1024];
