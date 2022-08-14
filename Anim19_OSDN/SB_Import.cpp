@@ -94,16 +94,7 @@ void SB_Import::Reload_FromResentFiles(char* ResentPathAndFile)
 
 	strcpy(App->SBC_FileIO->Project_File_Name, mJustFileName);
 
-	
-
-	//_chdir(App->CL_Model_Data->Model_FullPath);
-
-	//--------------------------------------------------------------- Genesis Actor
-	
-
-	
-
-//	App->SBC_Equity->Set_Equity();
+	App->SBC_Project->Load_Project();
 
 	App->Say("Model Loaded");
 
