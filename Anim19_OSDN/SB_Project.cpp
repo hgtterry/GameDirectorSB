@@ -270,7 +270,7 @@ LRESULT CALLBACK SB_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message, W
 		if (LOWORD(wParam) == IDC_BTDESKTOP)
 		{
 			
-			strcpy(App->SBC_Project->m_Project_Sub_Folder, App->CL_Vm_FileIO->DeskTop_Folder);
+			strcpy(App->SBC_Project->m_Project_Sub_Folder, App->SBC_FileIO->DeskTop_Folder);
 			strcat(App->SBC_Project->m_Project_Sub_Folder, "\\");
 			strcat(App->SBC_Project->m_Project_Sub_Folder, App->SBC_Project->m_Project_Name);
 			strcat(App->SBC_Project->m_Project_Sub_Folder, "_Prj");
@@ -710,7 +710,7 @@ bool SB_Project::Load_Project()
 	delete Options;
 
 	App->Set_Main_TitleBar(App->SBC_FileIO->Project_Path_File_Name);
-	App->CL_Vm_FileIO->RecentFileHistory_Update();
+	App->SBC_FileIO->RecentFileHistory_Update();
 	return 1;
 }
 

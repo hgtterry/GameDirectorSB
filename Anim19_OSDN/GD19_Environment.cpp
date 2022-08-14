@@ -847,13 +847,13 @@ bool GD19_Environment::Props_OnClick(LPARAM lParam)
 	result = strcmp(btext, "Colour");
 	if (result == 0)
 	{
-		App->CL_Vm_FileIO->GetColor();
+		App->SBC_FileIO->GetColor();
 		
-		if (App->CL_Vm_FileIO->Cannceled == 0)
+		if (App->SBC_FileIO->Cannceled == 0)
 		{
-			int Red = GetRValue(App->CL_Vm_FileIO->color.rgbResult);
-			int Green = GetGValue(App->CL_Vm_FileIO->color.rgbResult);
-			int Blue = GetBValue(App->CL_Vm_FileIO->color.rgbResult);
+			int Red = GetRValue(App->SBC_FileIO->color.rgbResult);
+			int Green = GetGValue(App->SBC_FileIO->color.rgbResult);
+			int Blue = GetBValue(App->SBC_FileIO->color.rgbResult);
 
 			App->Cl_Scene_Data->S_Scene[0]->Fog[0].Colour.x = (float)Red / 256;
 			App->Cl_Scene_Data->S_Scene[0]->Fog[0].Colour.y = (float)Green / 256;;
@@ -887,13 +887,13 @@ bool GD19_Environment::Props_OnClick(LPARAM lParam)
 	{
 
 		//strcpy_s(TextInt,App->GDCL_Scene_Data->S_Scene[0]->Fog[0].Mode);
-		App->CL_Vm_FileIO->GetColor();
+		App->SBC_FileIO->GetColor();
 
-		if (App->CL_Vm_FileIO->Cannceled == 0)
+		if (App->SBC_FileIO->Cannceled == 0)
 		{
-			int Red = GetRValue(App->CL_Vm_FileIO->color.rgbResult);
-			int Green = GetGValue(App->CL_Vm_FileIO->color.rgbResult);
-			int Blue = GetBValue(App->CL_Vm_FileIO->color.rgbResult);
+			int Red = GetRValue(App->SBC_FileIO->color.rgbResult);
+			int Green = GetGValue(App->SBC_FileIO->color.rgbResult);
+			int Blue = GetBValue(App->SBC_FileIO->color.rgbResult);
 
 			App->Cl_Scene_Data->S_Scene[0]->AmbientColour = Ogre::Vector3((float)Red/256,(float)Green/256,(float)Blue/256);
 
@@ -910,13 +910,13 @@ bool GD19_Environment::Props_OnClick(LPARAM lParam)
 	{
 
 	//	strcpy_s(TextInt,App->GDCL_Scene_Data->S_Scene[0]->Fog[0].Mode);
-		App->CL_Vm_FileIO->GetColor();
+		App->SBC_FileIO->GetColor();
 
-		if (App->CL_Vm_FileIO->Cannceled==0)
+		if (App->SBC_FileIO->Cannceled==0)
 		{
-			int Red=GetRValue(App->CL_Vm_FileIO->color.rgbResult);
-			int Green=GetGValue(App->CL_Vm_FileIO->color.rgbResult);
-			int Blue=GetBValue(App->CL_Vm_FileIO->color.rgbResult);
+			int Red=GetRValue(App->SBC_FileIO->color.rgbResult);
+			int Green=GetGValue(App->SBC_FileIO->color.rgbResult);
+			int Blue=GetBValue(App->SBC_FileIO->color.rgbResult);
 
 			App->Cl_Scene_Data->S_Scene[0]->DiffuseColour = Ogre::Vector3((float)Red/256,(float)Green/256,(float)Blue/256);
 
@@ -933,13 +933,13 @@ bool GD19_Environment::Props_OnClick(LPARAM lParam)
 	{
 
 	//	strcpy_s(TextInt,App->GDCL_Scene_Data->S_Scene[0]->Fog[0].Mode);
-		App->CL_Vm_FileIO->GetColor();
+		App->SBC_FileIO->GetColor();
 
-		if (App->CL_Vm_FileIO->Cannceled==0)
+		if (App->SBC_FileIO->Cannceled==0)
 		{
-			int Red=GetRValue(App->CL_Vm_FileIO->color.rgbResult);
-			int Green=GetGValue(App->CL_Vm_FileIO->color.rgbResult);
-			int Blue=GetBValue(App->CL_Vm_FileIO->color.rgbResult);
+			int Red=GetRValue(App->SBC_FileIO->color.rgbResult);
+			int Green=GetGValue(App->SBC_FileIO->color.rgbResult);
+			int Blue=GetBValue(App->SBC_FileIO->color.rgbResult);
 
 			App->Cl_Scene_Data->S_Scene[0]->SpecularColour = Ogre::Vector3((float)Red/256,(float)Green/256,(float)Blue/256);
 

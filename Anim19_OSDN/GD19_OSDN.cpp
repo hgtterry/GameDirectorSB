@@ -123,7 +123,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	App->Cl_Bullet->Init_Bullet();
 	App->Cl_Scene_Data->Init_Scene();
 
-	App->CL_Vm_FileIO->Init_History();
+	App->SBC_FileIO->Init_History();
 
 	App->Cl_Vm_Preferences->Read_Preferences(); // Read Preferences
 
@@ -403,63 +403,63 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		case ID_FILE_CLEARRESENTPROJECTS:
 		{
-			App->CL_Vm_FileIO->ResentHistory_Clear();
+			App->SBC_FileIO->ResentHistory_Clear();
 			return 1;
 		}
 
 		case 5000 + 7: // Top Recent Files 1
 		{
 			char mFileName[1024];
-			strcpy(mFileName, App->CL_Vm_FileIO->mPreviousFiles[7].c_str());
+			strcpy(mFileName, App->SBC_FileIO->mPreviousFiles[7].c_str());
 			App->SBC_Import->Reload_FromResentFiles(mFileName);
 			return 1;
 		}
 		case 5000 + 6: // 2
 		{
 			char mFileName[1024];
-			strcpy(mFileName, App->CL_Vm_FileIO->mPreviousFiles[6].c_str());
+			strcpy(mFileName, App->SBC_FileIO->mPreviousFiles[6].c_str());
 			App->SBC_Import->Reload_FromResentFiles(mFileName);
 			return 1;
 		}
 		case 5000 + 5: // 3
 		{
 			char mFileName[1024];
-			strcpy(mFileName, App->CL_Vm_FileIO->mPreviousFiles[5].c_str());
+			strcpy(mFileName, App->SBC_FileIO->mPreviousFiles[5].c_str());
 			App->SBC_Import->Reload_FromResentFiles(mFileName);
 			return 1;
 		}
 		case 5000 + 4: // 4
 		{
 			char mFileName[1024];
-			strcpy(mFileName, App->CL_Vm_FileIO->mPreviousFiles[4].c_str());
+			strcpy(mFileName, App->SBC_FileIO->mPreviousFiles[4].c_str());
 			App->SBC_Import->Reload_FromResentFiles(mFileName);
 			return 1;
 		}
 		case 5000 + 3: // 5
 		{
 			char mFileName[1024];
-			strcpy(mFileName, App->CL_Vm_FileIO->mPreviousFiles[3].c_str());
+			strcpy(mFileName, App->SBC_FileIO->mPreviousFiles[3].c_str());
 			App->SBC_Import->Reload_FromResentFiles(mFileName);
 			return 1;
 		}
 		case 5000 + 2: // 6
 		{
 			char mFileName[1024];
-			strcpy(mFileName, App->CL_Vm_FileIO->mPreviousFiles[2].c_str());
+			strcpy(mFileName, App->SBC_FileIO->mPreviousFiles[2].c_str());
 			App->SBC_Import->Reload_FromResentFiles(mFileName);
 			return 1;
 		}
 		case 5000 + 1: // 7
 		{
 			char mFileName[1024];
-			strcpy(mFileName, App->CL_Vm_FileIO->mPreviousFiles[1].c_str());
+			strcpy(mFileName, App->SBC_FileIO->mPreviousFiles[1].c_str());
 			App->SBC_Import->Reload_FromResentFiles(mFileName);
 			return 1;
 		}
 		case 5000 + 0: // 8
 		{
 			char mFileName[1024];
-			strcpy(mFileName, App->CL_Vm_FileIO->mPreviousFiles[0].c_str());
+			strcpy(mFileName, App->SBC_FileIO->mPreviousFiles[0].c_str());
 			App->SBC_Import->Reload_FromResentFiles(mFileName);
 			return 1;
 		}

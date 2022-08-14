@@ -74,7 +74,7 @@ void SB_Import::Reload_FromResentFiles(char* ResentPathAndFile)
 {
 
 	// Check Recent File Exsists
-	bool Result = App->CL_Vm_FileIO->Search_For_Folder(ResentPathAndFile);
+	bool Result = App->SBC_FileIO->Search_For_Folder(ResentPathAndFile);
 	if (Result == 0)
 	{
 		App->Say(" Can Not Find File:- This may be due to it has been deleted or renamed");
@@ -89,8 +89,8 @@ void SB_Import::Reload_FromResentFiles(char* ResentPathAndFile)
 
 	strcpy(mPathAndFile, ResentPathAndFile); // Full Path and File
 
-	App->CL_Vm_FileIO->CheckPath(mPathAndFile, mPathAndFile);
-	strcpy(mJustFileName, App->CL_Vm_FileIO->JustFileName); // Just File Name
+	App->SBC_FileIO->CheckPath(mPathAndFile, mPathAndFile);
+	strcpy(mJustFileName, App->SBC_FileIO->JustFileName); // Just File Name
 
 	strcpy(App->SBC_FileIO->Project_File_Name, mJustFileName);
 

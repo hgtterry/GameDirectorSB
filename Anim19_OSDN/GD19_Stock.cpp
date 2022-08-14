@@ -225,14 +225,14 @@ int GD19_Stock::Edit_Message_Stock(LPARAM lParam)
 	result = strcmp(btext, "Text Colour");
 	if (result == 0)
 	{
-		App->CL_Vm_FileIO->GetColor();
+		App->SBC_FileIO->GetColor();
 
-		if (App->CL_Vm_FileIO->Cannceled == 0)
+		if (App->SBC_FileIO->Cannceled == 0)
 		{
 
-			float Red = (float)GetRValue(App->CL_Vm_FileIO->color.rgbResult)/ 256;
-			float Green = (float)GetGValue(App->CL_Vm_FileIO->color.rgbResult)/ 256;
-			float Blue = (float)GetBValue(App->CL_Vm_FileIO->color.rgbResult)/ 256;
+			float Red = (float)GetRValue(App->SBC_FileIO->color.rgbResult)/ 256;
+			float Green = (float)GetGValue(App->SBC_FileIO->color.rgbResult)/ 256;
+			float Blue = (float)GetBValue(App->SBC_FileIO->color.rgbResult)/ 256;
 
 			App->Cl_Scene_Data->S_Messages[Selected_Stock_Index]->Colour.x = Red;
 			App->Cl_Scene_Data->S_Messages[Selected_Stock_Index]->Colour.y = Green;
@@ -562,14 +562,14 @@ int GD19_Stock::Edit_Panel_Stock(LPARAM lParam)
 	result = strcmp(btext, "Text_Colour");
 	if (result == 0)
 	{
-		App->CL_Vm_FileIO->GetColor();
+		App->SBC_FileIO->GetColor();
 
-		if (App->CL_Vm_FileIO->Cannceled == 0)
+		if (App->SBC_FileIO->Cannceled == 0)
 		{
 
-			float Red = (float)GetRValue(App->CL_Vm_FileIO->color.rgbResult) / 256;
-			float Green = (float)GetGValue(App->CL_Vm_FileIO->color.rgbResult) / 256;
-			float Blue = (float)GetBValue(App->CL_Vm_FileIO->color.rgbResult) / 256;
+			float Red = (float)GetRValue(App->SBC_FileIO->color.rgbResult) / 256;
+			float Green = (float)GetGValue(App->SBC_FileIO->color.rgbResult) / 256;
+			float Blue = (float)GetBValue(App->SBC_FileIO->color.rgbResult) / 256;
 
 			App->Cl_Panels_Com->Set_Text_Colour(Red, Green, Blue, Index);
 

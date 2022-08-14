@@ -29,11 +29,38 @@ public:
 	~SB_FileIO();
 
 	bool Open_Project_File(char* Extension, char* Title, char* StartDirectory);
+	bool SearchFolders(char* Path, char* File);
+	bool Search_For_Folder(char* FolderPath);
+	void CheckPath(char *pString, char *FileName);
+	bool GetColor();
+
+	void  Init_History(); // p
+	void  LoadHistory();
+	void  Save_FileHistory();
+	void  RecentFileHistory_Update(); //p
+	void  ResentHistory_Clear(); // p
 
 	char Project_File_Name[MAX_PATH];
 	char Project_Path_File_Name[MAX_PATH];
+	char JustFileName[MAX_PATH];
 
+	char UserData_Folder[MAX_PATH];
+	char DeskTop_Folder[MAX_PATH];
 
+	bool Cannceled;
+
+	std::vector<std::string> mPreviousFiles;
+
+	CHOOSECOLOR color;
 	OPENFILENAME ofn;
+
+	FILE *WriteRecentFiles;
+	FILE *ReadRecentFiles;
+
+	HMENU mHistoryMenu;
+
+#define EQUITY_NUM_RECENT_FILES 0x8
+#define EQUITY_RECENT_FILE_ID(_n_) (5000 + _n_)
+
 };
 

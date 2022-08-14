@@ -56,7 +56,6 @@ GD19_App::GD19_App(void)
 	Cl_Keyboard =		nullptr;
 
 	// Vima19 19/03/20
-	CL_Vm_FileIO =		nullptr;
 	CL_Vm_ImGui =		nullptr;
 	Cl_Vm_Dimensions =	nullptr;
 	Cl_Vm_Preferences = nullptr;
@@ -211,7 +210,6 @@ bool GD19_App::InitApp(void)
 	Cl_Keyboard =		new GD_Keyboard();
 
 	// Vima19 19/03/20
-	CL_Vm_FileIO =		new VM_FileIO();
 	CL_Vm_ImGui =		new VM_ImGui();
 	Cl_Vm_Dimensions =	new VM_Dimensions();
 	Cl_Vm_Preferences = new VM_Preferences();
@@ -252,7 +250,7 @@ bool GD19_App::InitApp(void)
 	{
 		wsprintf(Udir, "%ls", path);
 		CoTaskMemFree(path);
-		strcpy(App->CL_Vm_FileIO->UserData_Folder, Udir);
+		strcpy(App->SBC_FileIO->UserData_Folder, Udir);
 	}
 	else
 	{
@@ -265,7 +263,7 @@ bool GD19_App::InitApp(void)
 	{
 		wsprintf(Deskdir, "%ls", d_path);
 		CoTaskMemFree(d_path);
-		strcpy(App->CL_Vm_FileIO->DeskTop_Folder, Deskdir);
+		strcpy(App->SBC_FileIO->DeskTop_Folder, Deskdir);
 	}
 	else
 	{

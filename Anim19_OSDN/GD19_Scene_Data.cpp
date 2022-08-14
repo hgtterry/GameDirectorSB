@@ -622,7 +622,7 @@ bool GD19_Scene_Data::Start_Scene()
 // *************************************************************************
 bool GD19_Scene_Data::Start_UpScene()
 {
-	char StartFile[1024];
+	/*char StartFile[1024];
 	strcpy(StartFile, App->EquityDirecory_FullPath);
 	strcat(StartFile, "\\");
 	strcat(StartFile, "Data\\StartUp.gcf");
@@ -653,7 +653,7 @@ bool GD19_Scene_Data::Start_UpScene()
 		App->Cl_Ini->GetString("Startup", "Scene_FileName", App->CL_Vm_FileIO->Scene_FileName,1024);
 		App->Cl_Ini->GetString("Startup", "Scene_Path_FileName", App->CL_Vm_FileIO->Scene_Path_FileName,1024);
 		return 1;
-	}
+	}*/
 
 
 	return 0;
