@@ -82,6 +82,7 @@ GD19_App::GD19_App(void)
 	SBC_MeshViewer =	nullptr;
 	SBC_Import_Room =	nullptr;
 	SBC_Debug =			nullptr;
+	SBC_FileIO =		nullptr;
 	// ---------------------------------------------------- 29/12/21
 	Com_CDialogs =		nullptr;
 
@@ -238,6 +239,7 @@ bool GD19_App::InitApp(void)
 	SBC_Import_Room =	new SB_Import_Room();
 	Com_CDialogs =		new  Com_Diaolgs();
 	SBC_Debug =			new SB_Debug();
+	SBC_FileIO =		new SB_FileIO();
 	
 	//-----------------------------------------------------
 	SetBrushes_Fonts();

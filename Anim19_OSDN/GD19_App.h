@@ -72,6 +72,7 @@ distribution.
 #include "SB_TopTabs.h"
 #include "SB_MeshViewer.h"
 #include "SB_Debug.h"
+#include "SB_FileIO.h"
 
 #include "Com_Diaolgs.h"
 #include "SB_Import_Room.h"
@@ -133,9 +134,10 @@ public:
 	SB_TopTabs*				SBC_TopTabs;		// Top Bar Tabs Class Level Editor [081221]
 	SB_MeshViewer*			SBC_MeshViewer;
 	SB_Debug*				SBC_Debug;
+	SB_FileIO*				SBC_FileIO;
+	SB_Import_Room*			SBC_Import_Room;
 
 	Com_Diaolgs*			Com_CDialogs;		// Common Dialogs for App [291221]
-	SB_Import_Room*			SBC_Import_Room;
 	// ----------------------------------- 
 	GD19_App(void);
 	~GD19_App(void);
