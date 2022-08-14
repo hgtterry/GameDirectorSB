@@ -34,11 +34,9 @@ public:
 	void CheckPath(char *pString, char *FileName);
 	bool GetColor();
 
-	void  Init_History(); // p
-	void  LoadHistory();
-	void  Save_FileHistory();
-	void  RecentFileHistory_Update(); //p
-	void  ResentHistory_Clear(); // p
+	void  Init_History();
+	void  RecentFileHistory_Update();
+	void  ResentHistory_Clear();
 
 	char Project_File_Name[MAX_PATH];
 	char Project_Path_File_Name[MAX_PATH];
@@ -52,6 +50,12 @@ public:
 	std::vector<std::string> mPreviousFiles;
 
 	CHOOSECOLOR color;
+
+protected:
+
+	void  LoadHistory();
+	void  Save_FileHistory();
+
 	OPENFILENAME ofn;
 
 	FILE *WriteRecentFiles;
