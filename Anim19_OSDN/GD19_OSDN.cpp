@@ -296,7 +296,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		// ------------------------------------------------------------
 		case ID_OPEN_PROJECT:
 		{
-			App->SBC_Import->Load_Scene("Project   *.SBProj\0*.SBProj\0", "Project");
+			App->SBC_Import->Load_Project("Project   *.SBProj\0*.SBProj\0", "Project");
 			return 1;
 		}
 
@@ -826,7 +826,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			//App->Cl_Load_Scene->OpenScene(true);
 
 			//App->SBC_Import->Bullet_Load_Room("Ogre3D   *.mesh\0*.mesh\0", "Ogre3D");
-			App->SBC_Import->Load_Scene("Level   *.SBLevel\0*.SBLevel\0", "Level");
+			App->SBC_Import->Load_Project("Level   *.SBLevel\0*.SBLevel\0", "Level");
 			//strcpy(App->Cl_Vm_Preferences->Pref_Ogre_JustFileName, App->CL_Vm_Model->FileName);
 			//strcpy(App->Cl_Vm_Preferences->Pref_Ogre_Path, App->CL_Vm_Model->Model_FolderPath);
 

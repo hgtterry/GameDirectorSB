@@ -339,7 +339,7 @@ bool SB_Project::Save_Project()
 	App->SBC_FileView->Change_Level_Name();
 	App->SBC_FileView->Change_Project_Name();
 
-	App->Set_Main_TitleBar(App->CL_Vm_FileIO->Model_Path_FileName);
+	App->Set_Main_TitleBar(App->SBC_FileIO->Project_Path_File_Name);
 
 	App->Say("Scene Created");
 	return 1;
@@ -591,11 +591,11 @@ bool SB_Project::Save_Player_Data()
 // *************************************************************************
 void SB_Project::Set_Paths()
 {
-	strcpy(m_Level_File_Name, App->CL_Vm_FileIO->Model_FileName);
-	strcpy(m_Project_Sub_Folder, App->CL_Vm_FileIO->Model_Path_FileName);
-	strcpy(m_Ini_Path_File_Name, App->CL_Vm_FileIO->Model_Path_FileName);
+	strcpy(m_Level_File_Name, App->SBC_FileIO->Project_File_Name);
+	strcpy(m_Project_Sub_Folder, App->SBC_FileIO->Project_Path_File_Name);
+	strcpy(m_Ini_Path_File_Name, App->SBC_FileIO->Project_Path_File_Name);
 
-	strcpy(m_Level_Folder_Path, App->CL_Vm_FileIO->Model_Path_FileName);
+	strcpy(m_Level_Folder_Path, App->SBC_FileIO->Project_Path_File_Name);
 
 	// Get path no file 
 	int len1 = strlen(m_Level_File_Name);
@@ -709,7 +709,7 @@ bool SB_Project::Load_Project()
 
 	delete Options;
 
-	App->Set_Main_TitleBar(App->CL_Vm_FileIO->Model_Path_FileName);
+	App->Set_Main_TitleBar(App->SBC_FileIO->Project_Path_File_Name);
 	App->CL_Vm_FileIO->RecentFileHistory_Update();
 	return 1;
 }

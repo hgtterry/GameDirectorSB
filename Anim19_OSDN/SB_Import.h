@@ -28,12 +28,8 @@ public:
 	SB_Import();
 	~SB_Import();
 
-	bool Assimp_Loader(char* Extension, char* Extension2);
-	bool Genesis3D_Loader(void);
-	bool WorldEditor_Loader(void);
-	bool Ogre_Loader(char* Extension, char* Extension2);
 	bool Room_Loader(char* Extension, char* Extension2);
-	bool Load_Scene(char* Extension, char* Extension2);
+	bool Load_Project(char* Extension, char* Extension2);
 
 	void Reload_FromResentFiles(char* ResentPathAndFile);
 };

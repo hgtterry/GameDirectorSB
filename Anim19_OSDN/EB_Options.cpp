@@ -300,7 +300,7 @@ LRESULT CALLBACK EB_Options::QuickLoad_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 	case WM_COMMAND:
 	{
-		if (LOWORD(wParam) == IDC_BTQLBROWSE)
+		/*if (LOWORD(wParam) == IDC_BTQLBROWSE)
 		{
 			int Result = App->CL_Vm_FileIO->Vm_OpenFile("Model Files   *.*\0*.*\0", "Model Files",NULL);
 			if (Result == 0)
@@ -313,7 +313,7 @@ LRESULT CALLBACK EB_Options::QuickLoad_Proc(HWND hDlg, UINT message, WPARAM wPar
 			SetDlgItemText(hDlg, IDC_STQLBOX, (LPCTSTR)App->EBC_Options->Quick_Load_File_Chr);
 
 			return TRUE;
-		}
+		}*/
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{

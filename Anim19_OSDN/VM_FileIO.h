@@ -5,7 +5,6 @@ public:
 	VM_FileIO();
 	~VM_FileIO();
 
-	bool Vm_OpenFile(char* Extension, char* Title, char* StartDirectory);
 	bool OpenTextureFile(char* Title, char* StartDirectory, bool SaveLocation);
 
 	bool OpenFile(char* Extension, char* Title, char* StartDirectory);
@@ -39,9 +38,6 @@ public:
 
 	char Scene_FileName[255];
 	char Scene_Path_FileName[1024];
-
-	char Model_FileName[255];
-	char Model_Path_FileName[1024];
 
 	char mSaveFileCom[255];
 	char mSavePathFileCom[255];

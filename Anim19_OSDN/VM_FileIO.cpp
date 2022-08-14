@@ -14,8 +14,6 @@ VM_FileIO::VM_FileIO()
 	Scene_FileName[0] = 0;
 	Scene_Path_FileName[0] = 0;
 
-	Model_FileName[0] = 0;
-	Model_Path_FileName[0] = 0;
 	JustFileName[0] = 0;
 
 	Cannceled = 0;
@@ -26,39 +24,6 @@ VM_FileIO::~VM_FileIO()
 {
 }
 
-// *************************************************************************
-// *					Vm_OpenFile Terry Bernie						   *
-// *************************************************************************
-bool VM_FileIO::Vm_OpenFile(char* Extension, char* Title, char* StartDirectory)
-{
-	strcpy(Model_FileName, "");
-	strcpy(Model_Path_FileName, "");
-
-	ZeroMemory(&ofn, sizeof(ofn));
-	ofn.lStructSize = sizeof(ofn);
-	ofn.hwndOwner = App->MainHwnd;
-	ofn.hInstance = App->hInst;
-	ofn.lpstrFile = Model_Path_FileName;						// full path and file name
-	ofn.nMaxFile = sizeof(Model_Path_FileName);
-	ofn.lpstrFilter = Extension;
-
-	ofn.nFilterIndex = 1;
-	ofn.lpstrFileTitle = Model_FileName;						// Just File Name
-	ofn.nMaxFileTitle = sizeof(Model_FileName);;
-	ofn.lpstrInitialDir = StartDirectory;
-	ofn.lpstrTitle = Title;
-	ofn.Flags = OFN_PATHMUSTEXIST |
-		OFN_FILEMUSTEXIST |
-		OFN_EXPLORER |
-		OFN_HIDEREADONLY |
-		OFN_FILEMUSTEXIST;
-
-	if (GetOpenFileName(&ofn) == TRUE)
-	{
-		return 1;
-	}
-	return 0;
-}
 
 // *************************************************************************
 // *					OpenFile Terry Bernie							   *
@@ -428,7 +393,7 @@ void VM_FileIO::RecentFileHistory_Update()
 {
 	if (!mHistoryMenu)return;
 
-	std::string sz = std::string(App->CL_Vm_FileIO->Model_Path_FileName);
+	std::string sz = std::string(App->SBC_FileIO->Project_Path_File_Name);
 	if (mPreviousFiles[EQUITY_NUM_RECENT_FILES - 1] == sz)return;
 
 	// add the new file to the list of recent files

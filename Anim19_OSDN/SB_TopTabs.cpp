@@ -1030,7 +1030,7 @@ LRESULT CALLBACK SB_TopTabs::Files_TB_Proc(HWND hDlg, UINT message, WPARAM wPara
 		if (LOWORD(wParam) == IDC_TBBTLOAD)
 		{
 
-			App->SBC_Import->Load_Scene("Level   *.SBLevel\0*.SBLevel\0", "Level");
+			App->SBC_Import->Load_Project("Level   *.SBLevel\0*.SBLevel\0", "Level");
 			return TRUE;
 		}
 

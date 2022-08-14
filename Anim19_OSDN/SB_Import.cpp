@@ -36,41 +36,20 @@ SB_Import::~SB_Import()
 }
 
 // *************************************************************************
-// *						Assimp_Loader Terry Bernie					   *
+// *						Load_Project Terry Flanigan   				   *
 // *************************************************************************
-bool SB_Import::Assimp_Loader(char* Extension, char* Extension2)
-{
-	
-	return 1;
-}
-
-// *************************************************************************
-// *					WorldEditor_Loader Terry Terry Berine			   *
-// *************************************************************************
-bool SB_Import::WorldEditor_Loader(void)
-{
-	
-	return 1;
-}
-
-// *************************************************************************
-// *						Genesis3D Terry Terry Berine				   *
-// *************************************************************************
-bool SB_Import::Genesis3D_Loader(void)
+bool SB_Import::Load_Project(char* Extension, char* Extension2)
 {
 
-	
+	int Result = App->SBC_FileIO->Open_Project_File(Extension, Extension2, NULL);
+	if (Result == 0)
+	{
+		return 1;
+	}
 
-	return 1;
-}
+	App->SBC_Project->Load_Project();
 
-// *************************************************************************
-// *						Ogre_Loader Terry Bernie					   *
-// *************************************************************************
-bool SB_Import::Ogre_Loader(char* Extension, char* Extension2)
-{
-
-	
+	App->Say("Scene Loaded");
 	return 1;
 }
 
@@ -79,24 +58,12 @@ bool SB_Import::Ogre_Loader(char* Extension, char* Extension2)
 // *************************************************************************
 bool SB_Import::Room_Loader(char* Extension, char* Extension2)
 {
-	int Result = App->CL_Vm_FileIO->Vm_OpenFile(Extension, Extension2, NULL);
+	int Result = App->SBC_FileIO->Open_Project_File(Extension, Extension2, NULL);
 	if (Result == 0)
 	{
 		return 1;
 	}
 
-	//App->EBC_Model->Clear_ModelData();
-
-	//App->CL_Vm_Model->Set_Paths();
-
-
-	//App->CL_Ogre_Import_E15->Load_OgreModel(); // Load Ogre Model
-
-	//App->CL_Vm_Model->Model_Type = LoadedFile_Assimp;
-
-	//App->SBC_Equity->Set_Equity();
-
-	//App->Say("Model Loaded");
 	return 1;
 }
 
@@ -115,7 +82,7 @@ void SB_Import::Reload_FromResentFiles(char* ResentPathAndFile)
 	}
 
 
-	strcpy(App->CL_Vm_FileIO->Model_Path_FileName, ResentPathAndFile);
+	strcpy(App->SBC_FileIO->Project_Path_File_Name, ResentPathAndFile);
 
 	char mPathAndFile[1024];
 	char mJustFileName[1024];
@@ -125,7 +92,7 @@ void SB_Import::Reload_FromResentFiles(char* ResentPathAndFile)
 	App->CL_Vm_FileIO->CheckPath(mPathAndFile, mPathAndFile);
 	strcpy(mJustFileName, App->CL_Vm_FileIO->JustFileName); // Just File Name
 
-	strcpy(App->CL_Vm_FileIO->Model_FileName, mJustFileName);
+	strcpy(App->SBC_FileIO->Project_File_Name, mJustFileName);
 
 	
 
@@ -142,22 +109,3 @@ void SB_Import::Reload_FromResentFiles(char* ResentPathAndFile)
 
 }
 
-
-
-// *************************************************************************
-// *						Load_Scene Terry Flanigan   				   *
-// *************************************************************************
-bool SB_Import::Load_Scene(char* Extension, char* Extension2)
-{
-
-	int Result = App->CL_Vm_FileIO->Vm_OpenFile(Extension, Extension2, NULL);
-	if (Result == 0)
-	{
-		return 1;
-	}
-
-	App->SBC_Project->Load_Project();
-
-	App->Say("Scene Loaded");
-	return 1;
-}
