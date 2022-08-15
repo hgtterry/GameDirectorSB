@@ -201,6 +201,9 @@ public:
 	HBRUSH Brush_Tabs;
 	HBRUSH Brush_Tabs_UnSelected;
 
+	HBRUSH Brush_Button;
+	HBRUSH Brush_Button_Hover;
+
 	HANDLE Hnd_PinOff;
 	HANDLE Hnd_PinOn;
 	HANDLE Hnd_FlipWindingOrder; // 

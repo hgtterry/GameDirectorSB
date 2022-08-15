@@ -108,6 +108,10 @@ GD19_App::GD19_App(void)
 	Brush_Red = 0;
 	Brush_Tabs = 0;
 	Brush_Tabs_UnSelected = 0;
+
+	Brush_Button = 0;
+	Brush_Button_Hover = 0;
+
 	DialogBackGround = 0;
 
 	Hnd_PinOff = NULL;
@@ -378,6 +382,9 @@ void GD19_App::SetBrushes_Fonts(void)
 	Brush_But_Pressed = CreateSolidBrush(RGB(240, 240, 190));
 	Brush_Tabs = CreateSolidBrush(RGB(255, 255, 255));
 	Brush_Tabs_UnSelected = CreateSolidBrush(RGB(190, 190, 190));
+
+	Brush_Button = CreateSolidBrush(RGB(65, 147, 245));
+	Brush_Button_Hover = CreateSolidBrush(RGB(153, 204, 255));
 
 	Font_CB12 = CreateFont(-12, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
 	Font_CB15 = CreateFont(-15, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
@@ -659,11 +666,11 @@ bool GD19_App::Custom_Button_Toggle(LPNMCUSTOMDRAW item, bool Toggle)
 
 			if (Toggle == 1)
 			{
-				hotbrush = CreateGradientBrush(RGB(0, 240, 0), RGB(0, 240, 0), item);
+				hotbrush = CreateSolidBrush(RGB(154, 255, 154));
 			}
 			else
 			{
-				hotbrush = CreateGradientBrush(RGB(240, 240, 240), RGB(240, 240, 240), item);;
+				hotbrush = App->Brush_Button_Hover;
 			}
 
 			HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0));
@@ -684,11 +691,11 @@ bool GD19_App::Custom_Button_Toggle(LPNMCUSTOMDRAW item, bool Toggle)
 
 		if (Toggle == 1)
 		{
-			defaultbrush = App->Brush_Green;
+			defaultbrush = CreateSolidBrush(RGB(204, 255, 204));;
 		}
 		else
 		{
-			defaultbrush = App->Brush_White;
+			defaultbrush = App->DialogBackGround;
 		}
 
 		HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0));
