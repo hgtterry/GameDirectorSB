@@ -541,134 +541,151 @@ void VM_ImGui::ImGui_Rotation2(void)
 // *************************************************************************
 void VM_ImGui::ImGui_Position(void)
 {
-	//ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
 
-	//if (!ImGui::Begin("Position", &Show_Position, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
-	//{
-	//	ImGui::End();
-	//}
-	//else
-	//{
-	//	ImGui::Text("Position");
-	//	ImGui::Separator();
-	//	ImGui::Spacing();
-	//
-	//	ImGui::Spacing();
+	if (!ImGui::Begin("Position", &Show_Position, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
+	{
+		ImGui::End();
+	}
+	else
+	{
+		ImGui::Text("Position");
+		ImGui::Separator();
+		ImGui::Spacing();
+	
+		ImGui::Spacing();
 
-	//	// ------------------------------------------ Position X
-	//	ImGui::Text("X ");
-	//	ImGui::SameLine();
+		// ------------------------------------------ Position X
+		ImGui::Text("X ");
+		ImGui::SameLine();
 
-	//	float spacing = ImGui::GetStyle().ItemInnerSpacing.x;
-	//	ImGui::PushButtonRepeat(true);
-	//	if (ImGui::ArrowButton("##left", ImGuiDir_Left))
-	//	{
-	//		if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
-	//		{
-	//			
-	//		}
-	//	}
+		float spacing = ImGui::GetStyle().ItemInnerSpacing.x;
+		ImGui::PushButtonRepeat(true);
+		if (ImGui::ArrowButton("##left", ImGuiDir_Left))
+		{
+			
+			float x = App->SBC_Scene->SBC_Base_Area[0]->Area_Node->getPosition().x;
+			float y = App->SBC_Scene->SBC_Base_Area[0]->Area_Node->getPosition().y;
+			float z = App->SBC_Scene->SBC_Base_Area[0]->Area_Node->getPosition().z;
 
-	//	ImGui::SameLine(0.0f, spacing);
-	//	if (ImGui::ArrowButton("##right", ImGuiDir_Right))
-	//	{
-	//		if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
-	//		{
-	//			
-	//		}
-	//	}
-	//	ImGui::PopButtonRepeat();
+			x = x - Model_XTranslate;
 
-	//	ImGui::SameLine();
-	//	ImGui::SetNextItemWidth(100);
-	//	const char* XitemsX[] = { "1", "2", "5", "10", "20" };
-	//	static int XitemX = 1;
-	//	bool Changed = ImGui::Combo("Step X", &XitemX, XitemsX, IM_ARRAYSIZE(XitemsX));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
-	//	if (Changed == 1)
-	//	{
-	//		Model_XTranslate = (float)atof(XitemsX[XitemX]);
-	//	}
+			App->SBC_Scene->SBC_Base_Area[0]->Area_Node->setPosition(x, y, z);
+			
+		}
 
-	//	// ------------------------------------------ Position y
-	//	ImGui::Text("Y ");
-	//	ImGui::SameLine();
+		ImGui::SameLine(0.0f, spacing);
+		if (ImGui::ArrowButton("##right", ImGuiDir_Right))
+		{
+			float x = App->SBC_Scene->SBC_Base_Area[0]->Area_Node->getPosition().x;
+			float y = App->SBC_Scene->SBC_Base_Area[0]->Area_Node->getPosition().y;
+			float z = App->SBC_Scene->SBC_Base_Area[0]->Area_Node->getPosition().z;
 
-	//	float spacing2 = ImGui::GetStyle().ItemInnerSpacing.x;
-	//	ImGui::PushButtonRepeat(true);
-	//	if (ImGui::ArrowButton("##leftY", ImGuiDir_Left))
-	//	{
-	//		if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
-	//		{
-	//			
-	//		}
-	//	}
-	//	ImGui::SameLine(0.0f, spacing2);
-	//	if (ImGui::ArrowButton("##rightY", ImGuiDir_Right))
-	//	{
-	//		if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
-	//		{
-	//			
-	//		}
-	//	}
-	//	ImGui::PopButtonRepeat();
+			x = x + Model_XTranslate;
 
-	//	ImGui::SameLine();
-	//	ImGui::SetNextItemWidth(100);
-	//	const char* XitemsY[] = { "1", "2", "5", "10", "20" };
-	//	static int XitemY = 1;
-	//	bool ChangedY = ImGui::Combo("Step Y", &XitemY, XitemsY, IM_ARRAYSIZE(XitemsY));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
-	//	if (ChangedY == 1)
-	//	{
-	//		Model_YTranslate = (float)atof(XitemsY[XitemY]);
-	//	}
+			App->SBC_Scene->SBC_Base_Area[0]->Area_Node->setPosition(x, y, z);
 
-	//	// ------------------------------------------ Position z
-	//	ImGui::Text("Z ");
-	//	ImGui::SameLine();
+		}
 
-	//	float spacing3 = ImGui::GetStyle().ItemInnerSpacing.x;
-	//	ImGui::PushButtonRepeat(true);
-	//	if (ImGui::ArrowButton("##leftZ", ImGuiDir_Left))
-	//	{
-	//		if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
-	//		{
-	//			
-	//		}
-	//	}
-	//	ImGui::SameLine(0.0f, spacing3);
-	//	if (ImGui::ArrowButton("##rightZ", ImGuiDir_Right))
-	//	{
-	//		if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
-	//		{
-	//			
-	//		}
-	//	}
-	//	ImGui::PopButtonRepeat();
+		ImGui::PopButtonRepeat();
 
-	//	ImGui::SameLine();
-	//	ImGui::SetNextItemWidth(100);
-	//	const char* XitemsZ[] = { "1", "2", "5", "10", "20" };
-	//	static int XitemZ = 1;
-	//	bool ChangedZ = ImGui::Combo("Step Z", &XitemZ, XitemsZ, IM_ARRAYSIZE(XitemsZ));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
-	//	if (ChangedZ == 1)
-	//	{
-	//		Model_ZTranslate = (float)atof(XitemsZ[XitemZ]);
-	//	}
-	//
-	//	ImGui::Spacing();
-	//	ImGui::Indent();
-	//	if (ImGui::Button("Middle of Bounding Box",ImVec2(200,40)))
-	//	{
-	//		App->Cl_Vm_Dimensions->Centre_Model_Mid();
-	//	}
+		ImGui::SameLine();
+		ImGui::SetNextItemWidth(100);
+		const char* XitemsX[] = { "1", "2", "5", "10", "20" };
+		static int XitemX = 1;
+		bool Changed = ImGui::Combo("Step X", &XitemX, XitemsX, IM_ARRAYSIZE(XitemsX));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
+		if (Changed == 1)
+		{
+			Model_XTranslate = (float)atof(XitemsX[XitemX]);
+		}
 
-	//	if (ImGui::Button("Base of Bounding Box", ImVec2(200, 40)))
-	//	{
-	//		App->Cl_Vm_Dimensions->Centre_Model_Base();
-	//	}
+		// ------------------------------------------ Position y
+		ImGui::Text("Y ");
+		ImGui::SameLine();
 
-	//	ImGui::End();
-	//}
+		float spacing2 = ImGui::GetStyle().ItemInnerSpacing.x;
+		ImGui::PushButtonRepeat(true);
+		if (ImGui::ArrowButton("##leftY", ImGuiDir_Left))
+		{
+			float x = App->SBC_Scene->SBC_Base_Area[0]->Area_Node->getPosition().x;
+			float y = App->SBC_Scene->SBC_Base_Area[0]->Area_Node->getPosition().y;
+			float z = App->SBC_Scene->SBC_Base_Area[0]->Area_Node->getPosition().z;
+
+			y = y - Model_YTranslate;
+
+			App->SBC_Scene->SBC_Base_Area[0]->Area_Node->setPosition(x, y, z);
+		}
+		ImGui::SameLine(0.0f, spacing2);
+		if (ImGui::ArrowButton("##rightY", ImGuiDir_Right))
+		{
+			float x = App->SBC_Scene->SBC_Base_Area[0]->Area_Node->getPosition().x;
+			float y = App->SBC_Scene->SBC_Base_Area[0]->Area_Node->getPosition().y;
+			float z = App->SBC_Scene->SBC_Base_Area[0]->Area_Node->getPosition().z;
+
+			y = y + Model_YTranslate;
+
+			App->SBC_Scene->SBC_Base_Area[0]->Area_Node->setPosition(x, y, z);
+
+		}
+		ImGui::PopButtonRepeat();
+
+		ImGui::SameLine();
+		ImGui::SetNextItemWidth(100);
+		const char* XitemsY[] = { "1", "2", "5", "10", "20" };
+		static int XitemY = 1;
+		bool ChangedY = ImGui::Combo("Step Y", &XitemY, XitemsY, IM_ARRAYSIZE(XitemsY));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
+		if (ChangedY == 1)
+		{
+			Model_YTranslate = (float)atof(XitemsY[XitemY]);
+		}
+
+		// ------------------------------------------ Position z
+		ImGui::Text("Z ");
+		ImGui::SameLine();
+
+		float spacing3 = ImGui::GetStyle().ItemInnerSpacing.x;
+		ImGui::PushButtonRepeat(true);
+		if (ImGui::ArrowButton("##leftZ", ImGuiDir_Left))
+		{
+			//if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
+			{
+				
+			}
+		}
+		ImGui::SameLine(0.0f, spacing3);
+		if (ImGui::ArrowButton("##rightZ", ImGuiDir_Right))
+		{
+			//if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
+			{
+				
+			}
+		}
+		ImGui::PopButtonRepeat();
+
+		ImGui::SameLine();
+		ImGui::SetNextItemWidth(100);
+		const char* XitemsZ[] = { "1", "2", "5", "10", "20" };
+		static int XitemZ = 1;
+		bool ChangedZ = ImGui::Combo("Step Z", &XitemZ, XitemsZ, IM_ARRAYSIZE(XitemsZ));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
+		if (ChangedZ == 1)
+		{
+			Model_ZTranslate = (float)atof(XitemsZ[XitemZ]);
+		}
+	
+		ImGui::Spacing();
+		ImGui::Indent();
+		if (ImGui::Button("Middle of Bounding Box",ImVec2(200,40)))
+		{
+			App->Cl_Vm_Dimensions->Centre_Model_Mid();
+		}
+
+		if (ImGui::Button("Base of Bounding Box", ImVec2(200, 40)))
+		{
+			App->Cl_Vm_Dimensions->Centre_Model_Base();
+		}
+
+		ImGui::End();
+	}
 }
 
 // *************************************************************************

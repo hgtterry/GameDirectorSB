@@ -489,6 +489,11 @@ bool SB_Project::Save_Aeras_Data()
 		fprintf(WriteFile, "%s%s\n", "Aera_Path_File=", App->SBC_Scene->SBC_Base_Area[Count]->Area_Path_And_FileName);
 		fprintf(WriteFile, "%s%s\n", "Aera_Resource_Path=", App->SBC_Scene->SBC_Base_Area[Count]->Area_Resource_Path);
 
+		fprintf(WriteFile, "%s\n", "[Position]");
+		fprintf(WriteFile, "%s%f\n", "Pos_X=", App->SBC_Scene->SBC_Base_Area[Count]->Area_Node->getPosition().x);
+		fprintf(WriteFile, "%s%f\n", "Pos_Y=", App->SBC_Scene->SBC_Base_Area[Count]->Area_Node->getPosition().y);
+		fprintf(WriteFile, "%s%f\n", "Pos_Z=", App->SBC_Scene->SBC_Base_Area[Count]->Area_Node->getPosition().z);
+
 		Count++;
 	}
 
@@ -741,6 +746,14 @@ bool SB_Project::Load_Project_Aera()
 	App->Cl_Ini->GetString("Aera_0", "Aera_Resource_Path", Resource_Location, MAX_PATH);
 
 	App->SBC_Aera->Add_Aera_To_Project(0, Mesh_FileName, Resource_Location);
+
+	float x = App->Cl_Ini->Get_Float("Position", " Pos_X");
+	float y = App->Cl_Ini->Get_Float("Position", " Pos_Y");
+	float z = App->Cl_Ini->Get_Float("Position", " Pos_Z");
+
+	App->SBC_Scene->SBC_Base_Area[0]->Area_Node->setPosition(x, y, z);
+
+
 
 	HTREEITEM Temp = App->SBC_FileView->Add_Area("Area_1", 0);
 
