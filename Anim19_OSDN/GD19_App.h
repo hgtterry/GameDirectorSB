@@ -159,8 +159,6 @@ public:
 
 	bool Custom_Button_Toggle_Tabs(LPNMCUSTOMDRAW item, bool Toggle);
 
-	HBRUSH CreateGradientBrush(COLORREF top, COLORREF bottom, LPNMCUSTOMDRAW item);
-
 	void LoadProgramResource(void);
 
 	void Debug_Text();

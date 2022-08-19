@@ -552,7 +552,7 @@ bool GD19_App::Custom_Button_Normal(LPNMCUSTOMDRAW item)
 			if (item->uItemState & CDIS_HOT) //Our mouse is over the button
 			{
 
-				HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0));
+				HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 255, 0));
 
 				HGDIOBJ old_pen = SelectObject(item->hdc, pen);
 				HGDIOBJ old_brush = SelectObject(item->hdc, App->Brush_But_Hover);
@@ -571,7 +571,7 @@ bool GD19_App::Custom_Button_Normal(LPNMCUSTOMDRAW item)
 			HGDIOBJ old_pen = SelectObject(item->hdc, pen);
 			HGDIOBJ old_brush = SelectObject(item->hdc, App->Brush_But_Normal);
 
-			RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 7, 7);
+			RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
 
 			SelectObject(item->hdc, old_pen);
 			SelectObject(item->hdc, old_brush);
@@ -601,12 +601,12 @@ bool GD19_App::Custom_Button_Toggle_Tabs(LPNMCUSTOMDRAW item, bool Toggle)
 
 			if (Toggle == 1)
 			{
-				hotbrush = CreateGradientBrush(RGB(240, 240, 240), RGB(240, 240, 240), item);
+				hotbrush = CreateSolidBrush(RGB(240, 240, 240));
 			}
 			else
 			{
 				//hotbrush = Brush_Tabs_UnSelected; // Unselected 
-				hotbrush = CreateGradientBrush(RGB(240, 240, 240), RGB(240, 240, 240), item);;
+				hotbrush = CreateSolidBrush(RGB(240, 240, 240));
 			}
 
 			HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(240, 240, 240));
@@ -714,42 +714,6 @@ bool GD19_App::Custom_Button_Toggle(LPNMCUSTOMDRAW item, bool Toggle)
 
 	return CDRF_DODEFAULT;
 }
-
-// *************************************************************************
-// *						CreateGradientBrush					 	 	   *
-// *************************************************************************
-HBRUSH GD19_App::CreateGradientBrush(COLORREF top, COLORREF bottom, LPNMCUSTOMDRAW item)
-{
-	HBRUSH Brush = NULL;
-	HDC hdcmem = CreateCompatibleDC(item->hdc);
-	HBITMAP hbitmap = CreateCompatibleBitmap(item->hdc, item->rc.right - item->rc.left, item->rc.bottom - item->rc.top);
-	SelectObject(hdcmem, hbitmap);
-
-	int r1 = GetRValue(top), r2 = GetRValue(bottom), g1 = GetGValue(top), g2 = GetGValue(bottom), b1 = GetBValue(top), b2 = GetBValue(bottom);
-	for (int i = 0; i < item->rc.bottom - item->rc.top; i++)
-	{
-		RECT temp;
-		int r, g, b;
-		r = int(r1 + double(i * (r2 - r1) / item->rc.bottom - item->rc.top));
-		g = int(g1 + double(i * (g2 - g1) / item->rc.bottom - item->rc.top));
-		b = int(b1 + double(i * (b2 - b1) / item->rc.bottom - item->rc.top));
-		Brush = CreateSolidBrush(RGB(r, g, b));
-		temp.left = 0;
-		temp.top = i;
-		temp.right = item->rc.right - item->rc.left;
-		temp.bottom = i + 1;
-		FillRect(hdcmem, &temp, Brush);
-		DeleteObject(Brush);
-	}
-	HBRUSH pattern = CreatePatternBrush(hbitmap);
-
-	DeleteDC(hdcmem);
-	DeleteObject(Brush);
-	DeleteObject(hbitmap);
-
-	return pattern;
-}
-
 
 // *************************************************************************
 // *					Custom_Button_Green Terry Bernie   			  	   *
