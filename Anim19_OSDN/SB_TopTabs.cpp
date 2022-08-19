@@ -45,7 +45,7 @@ SB_TopTabs::SB_TopTabs()
 	Toggle_Grid_Flag = 1;
 	Toggle_Hair_Flag = 1;
 
-	Toggle_Tabs_Old_Flag = 0;
+	Toggle_Tabs_Camera_Flag = 0;
 	Toggle_Tabs_Dimensions_Flag = 0;
 	Toggle_Tabs_Shapes_Flag = 0;
 	Toggle_Tabs_Editors_Flag = 0;
@@ -68,8 +68,6 @@ SB_TopTabs::~SB_TopTabs()
 // *************************************************************************
 void SB_TopTabs::Reset_Class()
 {
-
-	Toggle_Tabs_Old_Flag = 1;
 	Toggle_Tabs_Dimensions_Flag = 0;
 	Toggle_GroupsOnly_Flag = 0;
 
@@ -81,7 +79,31 @@ void SB_TopTabs::Reset_Class()
 	
 	App->SBC_TopTabs->Hide_Tabs();
 	ShowWindow(App->SBC_TopTabs->File_TB_hWnd, SW_SHOW);
-	App->SBC_TopTabs->Toggle_Tabs_Old_Flag = 1;
+	Toggle_Tabs_File_Flag = 1;
+
+	RedrawWindow(App->SBC_TopTabs->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+	return;
+}
+
+// *************************************************************************
+// *	  					Loaded_Project Terry Flanigan				   *
+// *************************************************************************
+void SB_TopTabs::Project_Loaded_Reset()
+{
+	Toggle_Tabs_Camera_Flag = 1;
+	Toggle_Tabs_Dimensions_Flag = 0;
+	Toggle_GroupsOnly_Flag = 0;
+
+	// Camera
+	Toggle_FreeCam_Flag = 1;
+	Toggle_FirstCam_Flag = 0;
+
+	Reset_Main_Controls();
+
+	App->SBC_TopTabs->Hide_Tabs();
+	ShowWindow(App->SBC_TopTabs->Camera_TB_hWnd, SW_SHOW);
+	Toggle_Tabs_Camera_Flag = 1;
 
 	RedrawWindow(App->SBC_TopTabs->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
@@ -272,7 +294,7 @@ LRESULT CALLBACK SB_TopTabs::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM w
 		if (some_item->idFrom == IDC_TBOLD && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle_Tabs(item, App->SBC_TopTabs->Toggle_Tabs_Old_Flag);
+			App->Custom_Button_Toggle_Tabs(item, App->SBC_TopTabs->Toggle_Tabs_Camera_Flag);
 			return CDRF_DODEFAULT;
 		}
 
@@ -326,7 +348,7 @@ LRESULT CALLBACK SB_TopTabs::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM w
 		{
 			App->SBC_TopTabs->Hide_Tabs();
 			ShowWindow(App->SBC_TopTabs->Camera_TB_hWnd, SW_SHOW);
-			App->SBC_TopTabs->Toggle_Tabs_Old_Flag = 1;
+			App->SBC_TopTabs->Toggle_Tabs_Camera_Flag = 1;
 
 			App->Cl19_Ogre->OgreListener->ImGui_Render_Tab = Enums::ImGui_Camera;
 
@@ -395,7 +417,7 @@ void SB_TopTabs::Hide_Tabs(void)
 
 	ShowWindow(App->SBC_Physics->PhysicsPannel_Hwnd, 0);
 
-	Toggle_Tabs_Old_Flag = 0;
+	Toggle_Tabs_Camera_Flag = 0;
 	Toggle_Tabs_Dimensions_Flag = 0;
 	Toggle_Tabs_Shapes_Flag = 0;
 	Toggle_Tabs_Editors_Flag = 0;

@@ -30,6 +30,7 @@ public:
 
 	bool Start_TopBar_Globals();
 	void Reset_Class();
+	void Project_Loaded_Reset();
 
 	void UnCheck_All_MouseOption(HWND hDlg);
 
@@ -80,7 +81,7 @@ protected:
 	bool Toggle_Hair_Flag;
 
 	// Tabs
-	bool Toggle_Tabs_Old_Flag;
+	bool Toggle_Tabs_Camera_Flag;
 	bool Toggle_Tabs_Dimensions_Flag;
 	bool Toggle_Tabs_Shapes_Flag;
 	bool Toggle_Tabs_Editors_Flag;
