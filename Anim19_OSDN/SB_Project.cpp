@@ -761,7 +761,8 @@ bool SB_Project::Load_Project_Aera()
 	sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
 
 	App->SBC_Scene->SBC_Base_Area[0]->Area_Node->setPosition(x, y, z);
-
+	App->SBC_Scene->SBC_Base_Area[0]->Phys_Body->getWorldTransform().setOrigin(btVector3(x, y, z));
+	App->SBC_Scene->SBC_Base_Area[0]->Physics_Pos = Ogre::Vector3(x, y, z);
 
 
 	HTREEITEM Temp = App->SBC_FileView->Add_Area("Area_1", 0);

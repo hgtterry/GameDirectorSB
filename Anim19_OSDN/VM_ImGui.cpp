@@ -564,27 +564,27 @@ void VM_ImGui::ImGui_Position(void)
 		if (ImGui::ArrowButton("##left", ImGuiDir_Left))
 		{
 			
-			float x = App->SBC_Scene->SBC_Base_Area[0]->Area_Node->getPosition().x;
-			float y = App->SBC_Scene->SBC_Base_Area[0]->Area_Node->getPosition().y;
-			float z = App->SBC_Scene->SBC_Base_Area[0]->Area_Node->getPosition().z;
+			Ogre::Vector3 MesPos = App->SBC_Scene->SBC_Base_Area[0]->Area_Node->getPosition();
 
-			x = x - Model_XTranslate;
+			MesPos.x = MesPos.x - Model_XTranslate;
 
-			App->SBC_Scene->SBC_Base_Area[0]->Area_Node->setPosition(x, y, z);
+			App->SBC_Scene->SBC_Base_Area[0]->Area_Node->setPosition(MesPos);
 			
+			App->SBC_Scene->SBC_Base_Area[0]->Phys_Body->getWorldTransform().setOrigin(btVector3(MesPos.x, MesPos.y, MesPos.z));
+			App->SBC_Scene->SBC_Base_Area[0]->Physics_Pos = MesPos;
 		}
 
 		ImGui::SameLine(0.0f, spacing);
 		if (ImGui::ArrowButton("##right", ImGuiDir_Right))
 		{
-			float x = App->SBC_Scene->SBC_Base_Area[0]->Area_Node->getPosition().x;
-			float y = App->SBC_Scene->SBC_Base_Area[0]->Area_Node->getPosition().y;
-			float z = App->SBC_Scene->SBC_Base_Area[0]->Area_Node->getPosition().z;
+			Ogre::Vector3 MesPos = App->SBC_Scene->SBC_Base_Area[0]->Area_Node->getPosition();
 
-			x = x + Model_XTranslate;
+			MesPos.x = MesPos.x + Model_XTranslate;
 
-			App->SBC_Scene->SBC_Base_Area[0]->Area_Node->setPosition(x, y, z);
+			App->SBC_Scene->SBC_Base_Area[0]->Area_Node->setPosition(MesPos);
 
+			App->SBC_Scene->SBC_Base_Area[0]->Phys_Body->getWorldTransform().setOrigin(btVector3(MesPos.x, MesPos.y, MesPos.z));
+			App->SBC_Scene->SBC_Base_Area[0]->Physics_Pos = MesPos;
 		}
 
 		ImGui::PopButtonRepeat();
@@ -607,24 +607,26 @@ void VM_ImGui::ImGui_Position(void)
 		ImGui::PushButtonRepeat(true);
 		if (ImGui::ArrowButton("##leftY", ImGuiDir_Left))
 		{
-			float x = App->SBC_Scene->SBC_Base_Area[0]->Area_Node->getPosition().x;
-			float y = App->SBC_Scene->SBC_Base_Area[0]->Area_Node->getPosition().y;
-			float z = App->SBC_Scene->SBC_Base_Area[0]->Area_Node->getPosition().z;
+			Ogre::Vector3 MesPos = App->SBC_Scene->SBC_Base_Area[0]->Area_Node->getPosition();
 
-			y = y - Model_YTranslate;
+			MesPos.y = MesPos.y - Model_XTranslate;
 
-			App->SBC_Scene->SBC_Base_Area[0]->Area_Node->setPosition(x, y, z);
+			App->SBC_Scene->SBC_Base_Area[0]->Area_Node->setPosition(MesPos);
+
+			App->SBC_Scene->SBC_Base_Area[0]->Phys_Body->getWorldTransform().setOrigin(btVector3(MesPos.x, MesPos.y, MesPos.z));
+			App->SBC_Scene->SBC_Base_Area[0]->Physics_Pos = MesPos;
 		}
 		ImGui::SameLine(0.0f, spacing2);
 		if (ImGui::ArrowButton("##rightY", ImGuiDir_Right))
 		{
-			float x = App->SBC_Scene->SBC_Base_Area[0]->Area_Node->getPosition().x;
-			float y = App->SBC_Scene->SBC_Base_Area[0]->Area_Node->getPosition().y;
-			float z = App->SBC_Scene->SBC_Base_Area[0]->Area_Node->getPosition().z;
+			Ogre::Vector3 MesPos = App->SBC_Scene->SBC_Base_Area[0]->Area_Node->getPosition();
 
-			y = y + Model_YTranslate;
+			MesPos.y = MesPos.y + Model_XTranslate;
 
-			App->SBC_Scene->SBC_Base_Area[0]->Area_Node->setPosition(x, y, z);
+			App->SBC_Scene->SBC_Base_Area[0]->Area_Node->setPosition(MesPos);
+
+			App->SBC_Scene->SBC_Base_Area[0]->Phys_Body->getWorldTransform().setOrigin(btVector3(MesPos.x, MesPos.y, MesPos.z));
+			App->SBC_Scene->SBC_Base_Area[0]->Physics_Pos = MesPos;
 
 		}
 		ImGui::PopButtonRepeat();
@@ -647,18 +649,27 @@ void VM_ImGui::ImGui_Position(void)
 		ImGui::PushButtonRepeat(true);
 		if (ImGui::ArrowButton("##leftZ", ImGuiDir_Left))
 		{
-			//if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
-			{
-				
-			}
+			Ogre::Vector3 MesPos = App->SBC_Scene->SBC_Base_Area[0]->Area_Node->getPosition();
+
+			MesPos.z = MesPos.z - Model_ZTranslate;
+
+			App->SBC_Scene->SBC_Base_Area[0]->Area_Node->setPosition(MesPos);
+
+			App->SBC_Scene->SBC_Base_Area[0]->Phys_Body->getWorldTransform().setOrigin(btVector3(MesPos.x, MesPos.y, MesPos.z));
+			App->SBC_Scene->SBC_Base_Area[0]->Physics_Pos = MesPos;
+			
 		}
 		ImGui::SameLine(0.0f, spacing3);
 		if (ImGui::ArrowButton("##rightZ", ImGuiDir_Right))
 		{
-			//if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
-			{
-				
-			}
+			Ogre::Vector3 MesPos = App->SBC_Scene->SBC_Base_Area[0]->Area_Node->getPosition();
+
+			MesPos.z = MesPos.z + Model_ZTranslate;
+
+			App->SBC_Scene->SBC_Base_Area[0]->Area_Node->setPosition(MesPos);
+
+			App->SBC_Scene->SBC_Base_Area[0]->Phys_Body->getWorldTransform().setOrigin(btVector3(MesPos.x, MesPos.y, MesPos.z));
+			App->SBC_Scene->SBC_Base_Area[0]->Physics_Pos = MesPos;
 		}
 		ImGui::PopButtonRepeat();
 
