@@ -473,6 +473,11 @@ bool SB_Project::Save_Aeras_Data()
 
 	char Cbuff[255];
 	char buff[255];
+
+	float x = 0;
+	float y = 0;
+	float z = 0;
+
 	int Count = 0;
 	while (Count < App->SBC_Scene->Area_Count)
 	{
@@ -490,9 +495,11 @@ bool SB_Project::Save_Aeras_Data()
 		fprintf(WriteFile, "%s%s\n", "Aera_Resource_Path=", App->SBC_Scene->SBC_Base_Area[Count]->Area_Resource_Path);
 
 		fprintf(WriteFile, "%s\n", "[Position]");
-		fprintf(WriteFile, "%s%f\n", "Pos_X=", App->SBC_Scene->SBC_Base_Area[Count]->Area_Node->getPosition().x);
-		fprintf(WriteFile, "%s%f\n", "Pos_Y=", App->SBC_Scene->SBC_Base_Area[Count]->Area_Node->getPosition().y);
-		fprintf(WriteFile, "%s%f\n", "Pos_Z=", App->SBC_Scene->SBC_Base_Area[Count]->Area_Node->getPosition().z);
+		x = App->SBC_Scene->SBC_Base_Area[Count]->Area_Node->getPosition().x;
+		y = App->SBC_Scene->SBC_Base_Area[Count]->Area_Node->getPosition().y;
+		z = App->SBC_Scene->SBC_Base_Area[Count]->Area_Node->getPosition().z;
+
+		fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Pos=", x, y, z);
 
 		Count++;
 	}
@@ -725,9 +732,12 @@ bool SB_Project::Load_Project()
 bool SB_Project::Load_Project_Aera()
 {
 	char Area_Ini_Path[MAX_PATH];
-	
+	char chr_Tag1[1024];
 	char Mesh_FileName[MAX_PATH];
 	char Resource_Location[MAX_PATH];
+	float x = 0;
+	float y = 0;
+	float z = 0;
 
 	strcpy(Area_Ini_Path, m_Project_Sub_Folder);
 	strcat(Area_Ini_Path, "\\");
@@ -747,9 +757,8 @@ bool SB_Project::Load_Project_Aera()
 
 	App->SBC_Aera->Add_Aera_To_Project(0, Mesh_FileName, Resource_Location);
 
-	float x = App->Cl_Ini->Get_Float("Position", " Pos_X");
-	float y = App->Cl_Ini->Get_Float("Position", " Pos_Y");
-	float z = App->Cl_Ini->Get_Float("Position", " Pos_Z");
+	App->Cl_Ini->GetString("Position", "Mesh_Pos", chr_Tag1, 1024);
+	sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
 
 	App->SBC_Scene->SBC_Base_Area[0]->Area_Node->setPosition(x, y, z);
 
