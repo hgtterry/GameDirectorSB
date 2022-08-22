@@ -92,5 +92,7 @@ protected:
 	bool Toggle_FreeCam_Flag;
 
 	bool Toggle_GroupsOnly_Flag;
+
+	bool Toggle_Physics_On_Flag;
 };
 

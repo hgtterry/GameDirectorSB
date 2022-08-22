@@ -56,6 +56,10 @@ SB_TopTabs::SB_TopTabs()
 	// Camera
 	Toggle_FreeCam_Flag = 1;
 	Toggle_FirstCam_Flag = 0;
+
+	// Physics
+	Toggle_Physics_On_Flag = 1;
+
 }
 
 
@@ -894,7 +898,9 @@ LRESULT CALLBACK SB_TopTabs::Physics_TB_Proc(HWND hDlg, UINT message, WPARAM wPa
 	{
 	case WM_INITDIALOG:
 	{
-		
+		SendDlgItemMessage(hDlg, IDC_BT_RESETPHYSICS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_PHYSICSON, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		return TRUE;
 	}
 
@@ -908,7 +914,19 @@ LRESULT CALLBACK SB_TopTabs::Physics_TB_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		
+		if (some_item->idFrom == IDC_BT_RESETPHYSICS && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_PHYSICSON && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->SBC_TopTabs->Toggle_Physics_On_Flag);
+			return CDRF_DODEFAULT;
+		}
 
 		return CDRF_DODEFAULT;
 	}
@@ -921,6 +939,30 @@ LRESULT CALLBACK SB_TopTabs::Physics_TB_Proc(HWND hDlg, UINT message, WPARAM wPa
 			if (App->SBC_Scene->Scene_Loaded == 1)
 			{
 				App->Cl_Bullet->Reset_Physics();
+			}
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_PHYSICSON) // Physics On/Off
+		{
+
+			if (App->SBC_Scene->Scene_Loaded == 1)
+			{
+				if (App->Cl_Bullet->GD_Physics_On == 1)
+				{
+					App->Cl_Bullet->GD_Physics_On = 0;
+					App->Cl19_Ogre->OgreListener->GD_Run_Physics = 0;
+
+					App->SBC_TopTabs->Toggle_Physics_On_Flag = 0;
+				}
+				else
+				{
+					App->Cl_Bullet->GD_Physics_On = 1;
+					App->Cl19_Ogre->OgreListener->GD_Run_Physics = 1;
+
+					App->SBC_TopTabs->Toggle_Physics_On_Flag = 1;
+				}
 			}
 
 			return TRUE;
