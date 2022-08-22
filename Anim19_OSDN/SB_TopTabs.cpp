@@ -915,6 +915,16 @@ LRESULT CALLBACK SB_TopTabs::Physics_TB_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 	case WM_COMMAND:
 	{
+		if (LOWORD(wParam) == IDC_BT_RESETPHYSICS) // Reset Physics
+		{
+
+			if (App->SBC_Scene->Scene_Loaded == 1)
+			{
+				App->Cl_Bullet->Reset_Physics();
+			}
+
+			return TRUE;
+		}
 		
 		return FALSE;
 	}
