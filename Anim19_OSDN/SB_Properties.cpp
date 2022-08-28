@@ -711,9 +711,11 @@ bool SB_Properties::Edit_Player_Physics_Onclick(LPARAM lParam)
 // *************************************************************************
 bool SB_Properties::Update_ListView_Area()
 {
+	int Index = 0;// Current_Selected_Object; // Get Selected Object Index 
+
 	char buff[255];
 	strcpy(buff,"Area ");
-	strcat(buff, App->SBC_Scene->SBC_Base_Area[0]->Area_Name);
+	strcat(buff, App->SBC_Scene->SBC_Base_Area[Index]->Area_Name);
 	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
 
 	const int NUM_ITEMS = 3;
@@ -723,8 +725,8 @@ bool SB_Properties::Update_ListView_Area()
 	memset(&pitem, 0, sizeof(LV_ITEM));
 	pitem.mask = LVIF_TEXT;
 
-	grid[0][0] = "Name", grid[1][0] = App->SBC_Scene->SBC_Base_Area[0]->Area_Name;
-	grid[0][1] = "Mesh File", grid[1][1] = App->SBC_Scene->SBC_Base_Area[0]->Area_FileName;
+	grid[0][0] = "Name", grid[1][0] = App->SBC_Scene->SBC_Base_Area[Index]->Area_Name;
+	grid[0][1] = "Mesh File", grid[1][1] = App->SBC_Scene->SBC_Base_Area[Index]->Area_FileName;
 
 	ListView_DeleteAllItems(Properties_hLV);
 

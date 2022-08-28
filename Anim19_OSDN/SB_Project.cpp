@@ -736,6 +736,7 @@ bool SB_Project::Load_Project_Aera()
 	char Area_Name[1024];
 	char Mesh_FileName[MAX_PATH];
 	char Resource_Location[MAX_PATH];
+	int Area_Count = 0;
 	float x = 0;
 	float y = 0;
 	float z = 0;
@@ -753,27 +754,33 @@ bool SB_Project::Load_Project_Aera()
 
 	App->Cl_Ini->SetPathName(Area_Ini_Path);
 
-	//fprintf(WriteFile, "%s\n", "[Counters]");
-	//fprintf(WriteFile, "%s%i\n", "Aeras_Count=", App->SBC_Scene->Area_Count);
+	Area_Count = App->Cl_Ini->GetInt("Counters","Aeras_Count", 0);
+	
+	int Count = 0;
 
-	App->Cl_Ini->GetString("Aera_0", "Aera_Name", Area_Name, MAX_PATH);
-	App->Cl_Ini->GetString("Aera_0", "Aera_File", Mesh_FileName, MAX_PATH);
-	App->Cl_Ini->GetString("Aera_0", "Aera_Resource_Path", Resource_Location, MAX_PATH);
+	while (Count < Area_Count)
+	{
 
-	App->SBC_Aera->Add_Aera_To_Project(0, Mesh_FileName, Resource_Location);
+		App->Cl_Ini->GetString("Aera_0", "Aera_Name", Area_Name, MAX_PATH);
+		App->Cl_Ini->GetString("Aera_0", "Aera_File", Mesh_FileName, MAX_PATH);
+		App->Cl_Ini->GetString("Aera_0", "Aera_Resource_Path", Resource_Location, MAX_PATH);
 
-	App->Cl_Ini->GetString("Position", "Mesh_Pos", chr_Tag1, 1024);
-	sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+		App->SBC_Aera->Add_Aera_To_Project(Count, Mesh_FileName, Resource_Location);
 
-	App->SBC_Scene->SBC_Base_Area[0]->Area_Node->setPosition(x, y, z);
-	App->SBC_Scene->SBC_Base_Area[0]->Phys_Body->getWorldTransform().setOrigin(btVector3(x, y, z));
-	App->SBC_Scene->SBC_Base_Area[0]->Physics_Pos = Ogre::Vector3(x, y, z);
+		App->Cl_Ini->GetString("Position", "Mesh_Pos", chr_Tag1, 1024);
+		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
 
-	strcpy(App->SBC_Scene->SBC_Base_Area[0]->Area_Name, Area_Name);
-	App->SBC_Scene->SBC_Base_Area[0]->FileViewItem = App->SBC_FileView->Add_Area(Area_Name, 0);
+		App->SBC_Scene->SBC_Base_Area[Count]->Area_Node->setPosition(x, y, z);
+		App->SBC_Scene->SBC_Base_Area[Count]->Phys_Body->getWorldTransform().setOrigin(btVector3(x, y, z));
+		App->SBC_Scene->SBC_Base_Area[Count]->Physics_Pos = Ogre::Vector3(x, y, z);
+
+		strcpy(App->SBC_Scene->SBC_Base_Area[Count]->Area_Name, Area_Name);
+		App->SBC_Scene->SBC_Base_Area[Count]->FileViewItem = App->SBC_FileView->Add_Area(Area_Name, Count);
+
+		Count++;
+	}
 
 	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->GD_Rooms);
-
 
 	return 1;
 }
