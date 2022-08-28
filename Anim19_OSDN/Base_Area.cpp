@@ -44,7 +44,9 @@ Base_Area::Base_Area()
 	// Object Shape
 	Shape = -1;
 
-	Object_ID = 0; // THis Needs Checking
+	Object_ID = 0; // This Needs Checking
+
+	strcpy(Area_Name, "Room_1");
 
 	Area_FileName[0] = 0;
 	Area_Path_And_FileName[0] = 0;

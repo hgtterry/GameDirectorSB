@@ -25,6 +25,8 @@ public:
 	int Folder;
 	int Object_ID;  // Unique Number
 
+	char Area_Name[100];
+
 	char Area_FileName[MAX_PATH];
 	char Area_Path_And_FileName[MAX_PATH];
 	char Area_Resource_Path[MAX_PATH];

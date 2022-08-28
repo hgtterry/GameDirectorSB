@@ -278,6 +278,14 @@ void SB_Properties::Create_Properties_hLV(void)
 // *************************************************************************
 void SB_Properties::ListView_OnClickOptions(LPARAM lParam)
 {
+	// Area
+	if (Edit_Category == Enums::Edit_Area)
+	{
+		App->SBC_Properties->Edit_Area_Onclick(lParam);
+
+		return;
+	}
+
 	// Camera
 	if (Edit_Category == Enums::Edit_Camera)
 	{
@@ -443,6 +451,43 @@ bool SB_Properties::Update_ListView_Player_Physics()
 			ListView_SetItemText(App->SBC_Properties->Properties_hLV, row, col,
 				const_cast<char*>(grid[col][row].c_str()));
 		}
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *					Edit_Area_Onclick  Terry Flanigan				   *
+// *************************************************************************
+bool SB_Properties::Edit_Area_Onclick(LPARAM lParam)
+{
+	int Index = 0;// App->SBC_Properties->Current_Selected_Object;
+	int result = 1;
+	int test;
+
+	LPNMLISTVIEW poo = (LPNMLISTVIEW)lParam;
+	test = poo->iItem;
+	ListView_GetItemText(App->SBC_Properties->Properties_hLV, test, 0, App->SBC_Properties->btext, 20);
+
+	result = strcmp(App->SBC_Properties->btext, "Name");
+	if (result == 0)
+	{
+		Debug
+		//strcpy(App->Cl_Dialogs->btext, "Change Player Name");
+		//strcpy(App->Cl_Dialogs->Chr_Text, App->SBC_Scene->SBC_Base_Player[0]->Player_Name);
+
+		//App->Cl_Dialogs->Dialog_Text(1);
+
+		//if (App->Cl_Dialogs->Canceled == 1)
+		//{
+		//	return TRUE;
+		//}
+
+		//// Needs Duplicate Name test 
+		//strcpy(App->SBC_Scene->SBC_Base_Player[0]->Player_Name, App->Cl_Dialogs->Chr_Text);
+
+		//App->SBC_FileView->Change_Item_Name(App->SBC_Player->FileViewItem, App->Cl_Dialogs->Chr_Text);
+		//Update_ListView_Player();
 	}
 
 	return 1;
@@ -666,11 +711,36 @@ bool SB_Properties::Edit_Player_Physics_Onclick(LPARAM lParam)
 bool SB_Properties::Update_ListView_Area()
 {
 	char buff[255];
-	strcpy(buff,"Area_1");
-	strcat(buff, "   (Area)");
-	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
+	strcpy(buff,"Area ");
+	strcat(buff, App->SBC_Scene->SBC_Base_Area[0]->Area_Name);
+	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
 
-	ListView_DeleteAllItems(App->SBC_Properties->Properties_hLV);
+	const int NUM_ITEMS = 3;
+	const int NUM_COLS = 2;
+	std::string grid[NUM_COLS][NUM_ITEMS]; // string table
+	LV_ITEM pitem;
+	memset(&pitem, 0, sizeof(LV_ITEM));
+	pitem.mask = LVIF_TEXT;
+
+	grid[0][0] = "Name", grid[1][0] = App->SBC_Scene->SBC_Base_Area[0]->Area_Name;
+	grid[0][1] = "Mesh File", grid[1][1] = App->SBC_Scene->SBC_Base_Area[0]->Area_FileName;
+
+	ListView_DeleteAllItems(Properties_hLV);
+
+	for (DWORD row = 0; row < NUM_ITEMS; row++)
+	{
+		pitem.iItem = row;
+		pitem.pszText = const_cast<char*>(grid[0][row].c_str());
+		ListView_InsertItem(Properties_hLV, &pitem);
+
+		//ListView_SetItemText
+
+		for (DWORD col = 1; col < NUM_COLS; col++)
+		{
+			ListView_SetItemText(Properties_hLV, row, col,
+				const_cast<char*>(grid[col][row].c_str()));
+		}
+	}
 
 	return 1;
 }
