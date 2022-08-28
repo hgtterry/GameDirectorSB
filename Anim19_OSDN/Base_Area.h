@@ -31,6 +31,8 @@ public:
 	char Area_Path_And_FileName[MAX_PATH];
 	char Area_Resource_Path[MAX_PATH];
 
+	HTREEITEM FileViewItem;			// Holder for Area File view item [211121]
+
 	bool					Physics_Valid;
 };
 

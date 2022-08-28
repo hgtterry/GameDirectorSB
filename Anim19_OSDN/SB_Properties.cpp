@@ -463,31 +463,30 @@ bool SB_Properties::Edit_Area_Onclick(LPARAM lParam)
 {
 	int Index = 0;// App->SBC_Properties->Current_Selected_Object;
 	int result = 1;
-	int test;
+	int List_Index;
 
-	LPNMLISTVIEW poo = (LPNMLISTVIEW)lParam;
-	test = poo->iItem;
-	ListView_GetItemText(App->SBC_Properties->Properties_hLV, test, 0, App->SBC_Properties->btext, 20);
+	LPNMLISTVIEW List = (LPNMLISTVIEW)lParam;
+	List_Index = List->iItem;
+	ListView_GetItemText(Properties_hLV, List_Index, 0, btext, 20);
 
 	result = strcmp(App->SBC_Properties->btext, "Name");
 	if (result == 0)
 	{
-		Debug
-		//strcpy(App->Cl_Dialogs->btext, "Change Player Name");
-		//strcpy(App->Cl_Dialogs->Chr_Text, App->SBC_Scene->SBC_Base_Player[0]->Player_Name);
+		strcpy(App->Cl_Dialogs->btext, "Change Area Name");
+		strcpy(App->Cl_Dialogs->Chr_Text, App->SBC_Scene->SBC_Base_Area[Index]->Area_Name);
 
-		//App->Cl_Dialogs->Dialog_Text(1);
+		App->Cl_Dialogs->Dialog_Text(1);
 
-		//if (App->Cl_Dialogs->Canceled == 1)
-		//{
-		//	return TRUE;
-		//}
+		if (App->Cl_Dialogs->Canceled == 1)
+		{
+			return TRUE;
+		}
 
-		//// Needs Duplicate Name test 
-		//strcpy(App->SBC_Scene->SBC_Base_Player[0]->Player_Name, App->Cl_Dialogs->Chr_Text);
+		// Needs Duplicate Name test 
+		strcpy(App->SBC_Scene->SBC_Base_Area[Index]->Area_Name, App->Cl_Dialogs->Chr_Text);
 
-		//App->SBC_FileView->Change_Item_Name(App->SBC_Player->FileViewItem, App->Cl_Dialogs->Chr_Text);
-		//Update_ListView_Player();
+		App->SBC_FileView->Change_Item_Name(App->SBC_Scene->SBC_Base_Area[Index]->FileViewItem, App->SBC_Scene->SBC_Base_Area[Index]->Area_Name);
+		Update_ListView_Area();
 	}
 
 	return 1;

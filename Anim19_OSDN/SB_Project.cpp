@@ -488,7 +488,7 @@ bool SB_Project::Save_Aeras_Data()
 
 		fprintf(WriteFile, "%s\n", buff); // Header also Player name until changed by user
 
-		fprintf(WriteFile, "%s%s\n", "Aera_Name=", App->SBC_Scene->SBC_Base_Area[Count]->Area_FileName); // Change
+		fprintf(WriteFile, "%s%s\n", "Aera_Name=", App->SBC_Scene->SBC_Base_Area[Count]->Area_Name); // Change
 
 		fprintf(WriteFile, "%s%s\n", "Aera_File=", App->SBC_Scene->SBC_Base_Area[Count]->Area_FileName);
 		fprintf(WriteFile, "%s%s\n", "Aera_Path_File=", App->SBC_Scene->SBC_Base_Area[Count]->Area_Path_And_FileName);
@@ -733,6 +733,7 @@ bool SB_Project::Load_Project_Aera()
 {
 	char Area_Ini_Path[MAX_PATH];
 	char chr_Tag1[1024];
+	char Area_Name[1024];
 	char Mesh_FileName[MAX_PATH];
 	char Resource_Location[MAX_PATH];
 	float x = 0;
@@ -752,6 +753,7 @@ bool SB_Project::Load_Project_Aera()
 
 	App->Cl_Ini->SetPathName(Area_Ini_Path);
 
+	App->Cl_Ini->GetString("Aera_0", "Aera_Name", Area_Name, MAX_PATH);
 	App->Cl_Ini->GetString("Aera_0", "Aera_File", Mesh_FileName, MAX_PATH);
 	App->Cl_Ini->GetString("Aera_0", "Aera_Resource_Path", Resource_Location, MAX_PATH);
 
@@ -765,7 +767,7 @@ bool SB_Project::Load_Project_Aera()
 	App->SBC_Scene->SBC_Base_Area[0]->Physics_Pos = Ogre::Vector3(x, y, z);
 
 
-	HTREEITEM Temp = App->SBC_FileView->Add_Area("Area_1", 0);
+	App->SBC_Scene->SBC_Base_Area[0]->FileViewItem = App->SBC_FileView->Add_Area(Area_Name, 0);
 
 	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->GD_Rooms);
 	return 1;
