@@ -465,6 +465,8 @@ bool SB_Properties::Edit_Area_Onclick(LPARAM lParam)
 	int result = 1;
 	int List_Index;
 
+	Base_Area* Area = App->SBC_Scene->SBC_Base_Area[Index];
+
 	LPNMLISTVIEW List = (LPNMLISTVIEW)lParam;
 	List_Index = List->iItem;
 	ListView_GetItemText(Properties_hLV, List_Index, 0, btext, 20);
@@ -473,7 +475,7 @@ bool SB_Properties::Edit_Area_Onclick(LPARAM lParam)
 	if (result == 0)
 	{
 		strcpy(App->Cl_Dialogs->btext, "Change Area Name");
-		strcpy(App->Cl_Dialogs->Chr_Text, App->SBC_Scene->SBC_Base_Area[Index]->Area_Name);
+		strcpy(App->Cl_Dialogs->Chr_Text, Area->Area_Name);
 
 		App->Cl_Dialogs->Dialog_Text(1);
 
@@ -483,9 +485,9 @@ bool SB_Properties::Edit_Area_Onclick(LPARAM lParam)
 		}
 
 		// Needs Duplicate Name test 
-		strcpy(App->SBC_Scene->SBC_Base_Area[Index]->Area_Name, App->Cl_Dialogs->Chr_Text);
+		strcpy(Area->Area_Name, App->Cl_Dialogs->Chr_Text);
 
-		App->SBC_FileView->Change_Item_Name(App->SBC_Scene->SBC_Base_Area[Index]->FileViewItem, App->SBC_Scene->SBC_Base_Area[Index]->Area_Name);
+		App->SBC_FileView->Change_Item_Name(Area->FileViewItem, Area->Area_Name);
 		Update_ListView_Area();
 	}
 

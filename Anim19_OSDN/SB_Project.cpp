@@ -753,6 +753,9 @@ bool SB_Project::Load_Project_Aera()
 
 	App->Cl_Ini->SetPathName(Area_Ini_Path);
 
+	//fprintf(WriteFile, "%s\n", "[Counters]");
+	//fprintf(WriteFile, "%s%i\n", "Aeras_Count=", App->SBC_Scene->Area_Count);
+
 	App->Cl_Ini->GetString("Aera_0", "Aera_Name", Area_Name, MAX_PATH);
 	App->Cl_Ini->GetString("Aera_0", "Aera_File", Mesh_FileName, MAX_PATH);
 	App->Cl_Ini->GetString("Aera_0", "Aera_Resource_Path", Resource_Location, MAX_PATH);
@@ -766,10 +769,12 @@ bool SB_Project::Load_Project_Aera()
 	App->SBC_Scene->SBC_Base_Area[0]->Phys_Body->getWorldTransform().setOrigin(btVector3(x, y, z));
 	App->SBC_Scene->SBC_Base_Area[0]->Physics_Pos = Ogre::Vector3(x, y, z);
 
-
+	strcpy(App->SBC_Scene->SBC_Base_Area[0]->Area_Name, Area_Name);
 	App->SBC_Scene->SBC_Base_Area[0]->FileViewItem = App->SBC_FileView->Add_Area(Area_Name, 0);
 
 	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->GD_Rooms);
+
+
 	return 1;
 }
 
