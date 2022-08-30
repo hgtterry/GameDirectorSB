@@ -1110,8 +1110,18 @@ LRESULT CALLBACK SB_TopTabs::Files_TB_Proc(HWND hDlg, UINT message, WPARAM wPara
 
 		if (LOWORD(wParam) == IDC_TBBTQLOAD)
 		{
+			char StartFile[1024];
+			strcpy(StartFile, App->EquityDirecory_FullPath);
+			strcat(StartFile, "\\");
+			strcat(StartFile, "Data\\StartUp.gcf");
 
-			//App->SBC_Project->Load_Scene_Auto();
+			App->Cl_Ini->SetPathName(StartFile);
+
+			char buff[1024];
+			App->Cl_Ini->GetString("Startup", "Scene_Path_FileName", buff, 1024);
+
+			App->SBC_Import->Reload_FromResentFiles(buff);
+
 			return TRUE;
 		}
 

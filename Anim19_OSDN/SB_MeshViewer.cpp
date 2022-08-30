@@ -204,7 +204,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 //		char ATest[256];
 
 		App->SBC_MeshViewer->Get_Files();
-		App->SBC_MeshViewer->Create_Detail_List();
+		//App->SBC_MeshViewer->Create_Detail_List();
 
 		/*if (App->Cl_Mesh_Viewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables)
 		{
@@ -524,13 +524,13 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		if (LOWORD(wParam) == IDOK)
 		{
 
-			/*if (App->Cl_Mesh_Viewer->Physics_Type == Enums::Bullet_Type_TriMesh)
+			if (App->SBC_MeshViewer->Physics_Type == Enums::Bullet_Type_TriMesh)
 			{
 
 			}
-			else if(App->Cl_Mesh_Viewer->Physics_Type == Enums::Bullet_Type_None || App->Cl_Mesh_Viewer->Physics_Shape == Enums::NoShape)
+			else if(App->SBC_MeshViewer->Physics_Type == Enums::Bullet_Type_None || App->SBC_MeshViewer->Physics_Shape == Enums::NoShape)
 			{
-			if (App->Cl_Mesh_Viewer->Physics_Type == Enums::Bullet_Type_TriMesh)
+			if (App->SBC_MeshViewer->Physics_Type == Enums::Bullet_Type_TriMesh)
 			{
 			break;
 			}
@@ -541,11 +541,11 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 			char buff[255];
 			GetDlgItemText(hDlg,IDC_OBJECTNAME,(LPTSTR)buff,256);
-			strcpy(App->Cl_Mesh_Viewer->Object_Name,buff);
+			strcpy(App->SBC_MeshViewer->Object_Name,buff);
 
 			App->Cl_Objects_New->Dispatcher_New_Object();
 
-			App->Cl19_Ogre->OgreListener->Equity_Running = 0;*/
+			App->Cl19_Ogre->OgreListener->Equity_Running = 0;
 
 			App->SBC_MeshViewer->Close_OgreWindow();
 			App->SBC_MeshViewer->Delete_Resources_Group();

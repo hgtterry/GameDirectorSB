@@ -1,7 +1,7 @@
 [Startup]
 Default=0
-Scene_FileName=Level.SBLevel
-Scene_Path_FileName=C:\Users\Equity\Desktop\Project1_Prj\Level_1\Level.SBLevel
+Scene_FileName=Project.SBProj
+Scene_Path_FileName=C:\Users\Equity\Desktop\Project_X_Prj\Project.SBProj
 [Config]
 Full_Screen=1
 Project_Path=C:\Users\Terry\Desktop

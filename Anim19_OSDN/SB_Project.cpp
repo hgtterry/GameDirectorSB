@@ -790,6 +790,7 @@ bool SB_Project::Load_Project_Aera()
 // *************************************************************************
 bool SB_Project::Load_Project_Player()
 {
+	int Players_Count = 0;
 	char Player_Name[MAX_PATH];
 	char Player_Ini_Path[MAX_PATH];
 
@@ -806,13 +807,24 @@ bool SB_Project::Load_Project_Player()
 
 	App->Cl_Ini->SetPathName(Player_Ini_Path);
 
-	App->Cl_Ini->GetString("Player_0", "Player_Name", Player_Name,MAX_PATH);
+	Players_Count = App->Cl_Ini->GetInt("Counters", "Player_Count", 0);
+
+	int Count = 0;
+
+	while (Count < Players_Count)
+	{
+
+		App->Cl_Ini->GetString("Player_0", "Player_Name", Player_Name, MAX_PATH);
 
 
-	App->SBC_Player->Create_Player_Object();
-	strcpy(App->SBC_Scene->SBC_Base_Player[0]->Player_Name, Player_Name);
+		App->SBC_Player->Create_Player_Object();
+		strcpy(App->SBC_Scene->SBC_Base_Player[Count]->Player_Name, Player_Name);
 
-	App->SBC_Player->FileViewItem = App->SBC_FileView->Add_PlayerFile(Player_Name, 0);
+		App->SBC_Player->FileViewItem = App->SBC_FileView->Add_PlayerFile(Player_Name, Count);
+
+		Count++;
+
+	}
 
 	App->Cl_Bullet->Reset_Physics();
 	App->SBC_Physics->Enable_Physics(1);

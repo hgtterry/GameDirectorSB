@@ -805,7 +805,7 @@ LRESULT CALLBACK GD19_Scene_Data::Dialog_GetUserFile_Proc(HWND hDlg, UINT messag
 	case WM_COMMAND:
 		if (LOWORD(wParam) == IDC_BTBROWSE)
 		{
-			bool test = App->Cl_Scene_Data->Open_Project_Dlg("Level   *.SBLevel\0*.SBLevel\0", "Scene File", NULL);
+			bool test = App->Cl_Scene_Data->Open_Project_Dlg("Project   *.SBProj\0*.SBProj\0", "Project File", NULL);
 			if (test == 0)
 			{
 				return 0;
