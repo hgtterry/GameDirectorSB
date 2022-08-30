@@ -624,6 +624,7 @@ bool SB_Project::Load_Project()
 	m_Ini_Path_File_Name[0] = 0;
 
 	App->SBC_Scene->Clear_Level();
+	App->SBC_Scene->Create_Resources_Group();
 
 	Set_Paths();
 	

@@ -340,28 +340,9 @@ void SB_Aera::Add_Aera_To_Project(int Index,char* FileName,char* Resource_Locati
 	strcpy(Area->Area_FileName, FileName);
 	strcpy(Area->Area_Resource_Path, Resource_Location); // with back slash
 
-	bool Test = Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(App->SBC_Import_Room->TempResourceGroup);
-	if (Test == 1)
-	{
-		Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->SBC_Import_Room->TempResourceGroup);
-	}
-
-	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App->SBC_Import_Room->TempResourceGroup);
-
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(Resource_Location,
-		"FileSystem",
-		App->SBC_Import_Room->TempResourceGroup);
-
-	try
-	{
-		Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
-	}
-	catch (...)
-	{
-
-	}
-
-	Area->Area_Ent = App->Cl19_Ogre->mSceneMgr->createEntity("UserMesh", Area->Area_FileName, App->Cl19_Ogre->Level_Resource_Group);
+	App->SBC_Scene->Add_Resource_Location(Resource_Location);
+	
+	Area->Area_Ent = App->Cl19_Ogre->mSceneMgr->createEntity("UserMesh", Area->Area_FileName, App->SBC_Scene->Project_Resource_Group);
 	Area->Area_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Area->Area_Node->attachObject(Area->Area_Ent);
 

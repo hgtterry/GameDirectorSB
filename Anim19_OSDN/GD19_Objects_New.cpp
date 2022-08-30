@@ -42,9 +42,8 @@ GD19_Objects_New::~GD19_Objects_New(void)
 // *************************************************************************
 bool GD19_Objects_New::Add_New_Object()
 {
-	int Index = App->Cl_Scene_Data->ObjectCount;
+	int Index =  App->SBC_Scene->Object_Count;
 	
-
 	/*if (App->GDSBC_MeshViewer->Physics_Type == Enums::Bullet_Type_Volume)
 	{
 		Add_Physics_Volume_Box();
@@ -63,18 +62,21 @@ bool GD19_Objects_New::Add_New_Object()
 	strcpy(App->Cl_Scene_Data->Cl_Object[Index]->MeshName, App->SBC_MeshViewer->Selected_MeshFile);
 	strcpy(App->Cl_Scene_Data->Cl_Object[Index]->MeshName_FullPath, App->SBC_MeshViewer->Selected_MeshFile);
 
-	
-
 	char PathFile[256];
 	char ConNum[256];
 	char ATest[256];
 	
+	
+	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(App->SBC_MeshViewer->Folder_Vec[0].Folder_Path, "FileSystem", App->SBC_Scene->Project_Resource_Group);
+	Ogre::ResourceGroupManager::getSingleton().clearResourceGroup(App->SBC_Scene->Project_Resource_Group);
+	Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(App->SBC_Scene->Project_Resource_Group);
+
 	strcpy_s(ATest, "GDEnt_");
 	_itoa(Index, ConNum, 10);
 	strcat(ATest, ConNum);
 
-	strcpy(PathFile, Object->MeshName);
-	Object->OgreEntity = App->Cl19_Ogre->mSceneMgr->createEntity(ATest, PathFile, App->Cl19_Ogre->App_Resource_Group);
+	strcpy(PathFile,Object->MeshName);
+	Object->OgreEntity = App->Cl19_Ogre->mSceneMgr->createEntity(ATest, PathFile, App->SBC_Scene->Project_Resource_Group);
 	Object->OgreNode = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Object->OgreNode->attachObject(Object->OgreEntity);
 
@@ -87,6 +89,9 @@ bool GD19_Objects_New::Add_New_Object()
 
 	App->Cl_Scene_Data->SceneLoaded = 1;
 
+	App->SBC_Scene->Object_Count++;
+
+	return 1;
 	//---------------------- Static
 	if (App->SBC_MeshViewer->Physics_Type == Enums::Bullet_Type_Static)
 	{

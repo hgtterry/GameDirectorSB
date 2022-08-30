@@ -71,7 +71,7 @@ public:
 	std::vector<std::string> Media_Folders_Vec;
 
 	char TempFolder[MAX_PATH];
-
+	std::vector<Folder_Type> Folder_Vec;
 
 protected:
 
@@ -79,7 +79,7 @@ protected:
 	static LRESULT CALLBACK ShapeDialog_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Folders_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
-	std::vector<Folder_Type> Folder_Vec;
+	
 	int FolderList_Count;
 
 	bool Clear_ButFlags();

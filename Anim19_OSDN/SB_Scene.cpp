@@ -28,6 +28,9 @@ distribution.
 
 SB_Scene::SB_Scene()
 {
+	Project_Resource_Group = "Project_Resource_Group";
+	Test_Resource_Group = "Test_Resource_Group";
+
 	Scene_Loaded = 0;
 	Player_Added = 0;
 	Area_Added = 0;
@@ -104,5 +107,55 @@ bool SB_Scene::Clear_Level()
 	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamNone;
 
 	App->SBC_Camera->Reset_View();
+
+	Delete_Resources_Group();
 	return 1;
 }
+
+// *************************************************************************
+// *					Create_Resources_Group	Terry Bernie 		 	   *
+// *************************************************************************
+bool SB_Scene::Create_Resources_Group()
+{
+
+	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(Project_Resource_Group);
+	//Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(App->SBC_Scene->Project_Resource_Group);
+	return 1;
+}
+
+// *************************************************************************
+// *					Delete_Resources_Group	Terry Bernie 		 	   *
+// *************************************************************************
+bool SB_Scene::Delete_Resources_Group()
+{
+
+	bool Test = Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(Project_Resource_Group);
+
+	if (Test == 1)
+	{
+		Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(Project_Resource_Group);
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *					Add_Resource_Location	Terry Bernie 		 	   *
+// *************************************************************************
+bool SB_Scene::Add_Resource_Location(char* Resource_Location)
+{
+
+	//bool Test = Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(Project_Resource_Group);
+
+	//if (Test == 1)
+	{
+		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(Resource_Location, "FileSystem", Project_Resource_Group);
+	}
+
+	Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(Project_Resource_Group);
+
+	return 1;
+}
+
+
+

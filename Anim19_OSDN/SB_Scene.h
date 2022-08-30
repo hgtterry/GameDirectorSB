@@ -33,6 +33,10 @@ public:
 	~SB_Scene();
 
 	bool Clear_Level();
+	bool Create_Resources_Group();
+	bool Delete_Resources_Group();
+	bool Add_Resource_Location(char* Resource_Location);
+	
 
 	Base_Player*			SBC_Base_Player[100];
 	Base_Area*				SBC_Base_Area[100];
@@ -48,6 +52,9 @@ public:
 	bool Area_Added;	// Is there a vaild Area or Room [131221]
 	bool Camera_Added;	// Is there a vaild Area or Room [131221]
 	bool Objects_Added;
+
+	Ogre::String Project_Resource_Group;
+	Ogre::String Test_Resource_Group;
 
 protected:
 

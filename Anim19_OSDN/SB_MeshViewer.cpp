@@ -205,8 +205,8 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 		//	App->SBC_MeshViewer->Physics_Type = Enums::Bullet_Type_None;
 
-//		char ConNum[256];
-//		char ATest[256];
+		char ConNum[256];
+		char ATest[256];
 
 		App->SBC_MeshViewer->Get_Files();
 		//App->SBC_MeshViewer->Create_Detail_List();
@@ -245,16 +245,16 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 		}*/
 
-		/*if (App->Cl_Mesh_Viewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Objects)
+		if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Objects)
 		{
 		strcpy_s(ATest, "Object_");
 		_itoa(App->Cl_Scene_Data->ObjectCount, ConNum, 10);
 		strcat(ATest, ConNum);
 		SetDlgItemText(hDlg, IDC_OBJECTNAME, ATest);
-		strcpy(App->Cl_Mesh_Viewer->Object_Name, ATest);
+		strcpy(App->SBC_MeshViewer->Object_Name, ATest);
 
-		App->Cl_Mesh_Viewer->Enable_TypeButtons(1);
-		}*/
+		App->SBC_MeshViewer->Enable_TypeButtons(1);
+		}
 
 		App->Cl19_Ogre->OgreListener->MeshViewer_Running = 1;
 
@@ -575,12 +575,20 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			GetDlgItemText(hDlg,IDC_OBJECTNAME,(LPTSTR)buff,256);
 			strcpy(App->SBC_MeshViewer->Object_Name,buff);
 
-			App->Cl_Objects_New->Dispatcher_New_Object();
+			//App->SBC_Scene->Delete_Resources_Group();
+			//App->SBC_Scene->Create_Resources_Group();
+			//App->SBC_Scene->Add_Resource_Location_Test("C:\\Users\\Equity\\Desktop\\Equity15\\Bin\\Media_New\\Walls\\");
 
+	
+		
 			App->Cl19_Ogre->OgreListener->Equity_Running = 0;
 
 			App->SBC_MeshViewer->Close_OgreWindow();
 			App->SBC_MeshViewer->Delete_Resources_Group();
+
+			//App->SBC_Scene->Add_Resource_Location("C:\\Users\\Equity\\Desktop\\Equity15\\Bin\\Media_New\\Walls\\");
+			App->Cl_Objects_New->Dispatcher_New_Object();
+
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
