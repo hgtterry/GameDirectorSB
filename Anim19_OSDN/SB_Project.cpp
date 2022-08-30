@@ -732,7 +732,7 @@ bool SB_Project::Load_Project()
 bool SB_Project::Load_Project_Aera()
 {
 	char Area_Ini_Path[MAX_PATH];
-	char chr_Tag1[1024];
+	char chr_Tag1[MAX_PATH];
 	char Area_Name[1024];
 	char Mesh_FileName[MAX_PATH];
 	char Resource_Location[MAX_PATH];
@@ -790,10 +790,29 @@ bool SB_Project::Load_Project_Aera()
 // *************************************************************************
 bool SB_Project::Load_Project_Player()
 {
-	App->SBC_Player->Create_Player_Object();
-	strcpy(App->SBC_Scene->SBC_Base_Player[0]->Player_Name, "Player_1");
+	char Player_Name[MAX_PATH];
+	char Player_Ini_Path[MAX_PATH];
 
-	App->SBC_Player->FileViewItem = App->SBC_FileView->Add_PlayerFile("Player_1", 0);
+	strcpy(Player_Ini_Path, m_Project_Sub_Folder);
+	strcat(Player_Ini_Path, "\\");
+
+	strcat(Player_Ini_Path, m_Level_Name);
+	strcat(Player_Ini_Path, "\\");
+
+	strcat(Player_Ini_Path, "Players");
+	strcat(Player_Ini_Path, "\\");
+
+	strcat(Player_Ini_Path, "Players.ply");
+
+	App->Cl_Ini->SetPathName(Player_Ini_Path);
+
+	App->Cl_Ini->GetString("Player_0", "Player_Name", Player_Name,MAX_PATH);
+
+
+	App->SBC_Player->Create_Player_Object();
+	strcpy(App->SBC_Scene->SBC_Base_Player[0]->Player_Name, Player_Name);
+
+	App->SBC_Player->FileViewItem = App->SBC_FileView->Add_PlayerFile(Player_Name, 0);
 
 	App->Cl_Bullet->Reset_Physics();
 	App->SBC_Physics->Enable_Physics(1);
