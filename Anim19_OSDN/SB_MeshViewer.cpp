@@ -69,14 +69,14 @@ SB_MeshViewer::SB_MeshViewer()
 	// ------------------------------------------------ 
 
 	strcpy(Chr_CurrentFolder, App->EquityDirecory_FullPath);
-	strcat(Chr_CurrentFolder, "\\Media\\Actors\\Ammo\\*.mesh");
+	strcat(Chr_CurrentFolder, "\\Media_New\\Walls");
 	Last_MeshFile[0] = 0;
 
 	Media_Folders_Count = 0;
 
 	Folder_Vec.resize(20);
 	strcpy(Folder_Vec[0].Folder_Path, App->EquityDirecory_FullPath);
-	strcat(Folder_Vec[0].Folder_Path, "\\Data\\Cube_Ogre\\");
+	strcat(Folder_Vec[0].Folder_Path, "\\Media_New\\Walls\\");
 	FolderList_Count = 1;
 
 	strcpy(TempFolder, Folder_Vec[0].Folder_Path);
@@ -178,6 +178,11 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		SendDlgItemMessage(hDlg, IDC_SELECTEDNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_MVBTADDFOLDERS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+		SendDlgItemMessage(hDlg, IDC_ST_CURRENTFOLDER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
+		SetDlgItemText(hDlg, IDC_ST_CURRENTFOLDER, App->SBC_MeshViewer->Chr_CurrentFolder);
+		SetWindowText(hDlg, App->SBC_MeshViewer->Chr_CurrentFolder);
+
 		App->SBC_MeshViewer->ListHwnd = GetDlgItem(hDlg, IDC_LISTFILES);
 		
 		App->SBC_MeshViewer->MeshView_Hwnd = GetDlgItem(hDlg, IDC_OGREWIN);
@@ -195,8 +200,8 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		App->SBC_MeshViewer->SelectDynamic = 0;
 		App->SBC_MeshViewer->SelectTriMesh = 0;
 
-		App->SBC_MeshViewer->Enable_ShapeButtons(0);
-		App->SBC_MeshViewer->Enable_TypeButtons(0);
+		App->SBC_MeshViewer->Enable_ShapeButtons(1);
+		App->SBC_MeshViewer->Enable_TypeButtons(1);
 
 		//	App->SBC_MeshViewer->Physics_Type = Enums::Bullet_Type_None;
 
@@ -290,6 +295,14 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			return (UINT)App->AppBackground;
 		}
 
+		if (GetDlgItem(hDlg, IDC_ST_CURRENTFOLDER) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->Brush_White;
+		}
+		
 		return FALSE;
 	}
 
@@ -384,6 +397,25 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 	}
 
 	case WM_COMMAND:
+
+		
+		if (LOWORD(wParam) == IDC_BT_FOLDERBROWSE)
+		{
+			strcpy(App->Com_CDialogs->BrowserMessage, "Select Folder");
+			int Test = App->Com_CDialogs->StartBrowser(App->SBC_MeshViewer->Chr_CurrentFolder, App->Fdlg);
+
+			if (Test == 0) { return true; }
+
+			SetDlgItemText(hDlg, IDC_ST_CURRENTFOLDER, App->Com_CDialogs->szSelectedDir);
+			SetWindowText(hDlg, App->Com_CDialogs->szSelectedDir);
+
+			strcpy(App->SBC_MeshViewer->Folder_Vec[0].Folder_Path, App->Com_CDialogs->szSelectedDir);
+			strcpy(App->SBC_MeshViewer->TempFolder, App->Com_CDialogs->szSelectedDir);
+			
+			App->SBC_MeshViewer->Get_Files();
+			App->SBC_MeshViewer->Add_Resources();
+			return TRUE;
+		}
 
 		if (LOWORD(wParam) == ID_TOOLS_MVRESOURCEVIEWER)
 		{
@@ -528,15 +560,15 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			{
 
 			}
-			else if(App->SBC_MeshViewer->Physics_Type == Enums::Bullet_Type_None || App->SBC_MeshViewer->Physics_Shape == Enums::NoShape)
+			else if (App->SBC_MeshViewer->Physics_Type == Enums::Bullet_Type_None || App->SBC_MeshViewer->Physics_Shape == Enums::NoShape)
 			{
-			if (App->SBC_MeshViewer->Physics_Type == Enums::Bullet_Type_TriMesh)
-			{
-			break;
-			}
+				if (App->SBC_MeshViewer->Physics_Type == Enums::Bullet_Type_TriMesh)
+				{
+					break;
+				}
 
-			App->Say("No Type or Shape Selected");
-			return TRUE;
+				App->Say("No Type or Shape Selected");
+				return TRUE;
 			}
 
 			char buff[255];
@@ -555,17 +587,17 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
-			
-			/*bool Test = App->Cl_Scene_Data->Is_Meshes_Used(App->Cl_Mesh_Viewer->Last_MeshFile);
+			bool Test = App->Cl_Scene_Data->Is_Meshes_Used(App->SBC_MeshViewer->Last_MeshFile);
+
 			if (Test == 0)
 			{
-			Ogre::ResourcePtr ptr = Ogre::MeshManager::getSingleton().getByName(App->Cl_Mesh_Viewer->Last_MeshFile);
-			ptr->unload();
-			Ogre::MeshManager::getSingleton().remove(App->Cl_Mesh_Viewer->Last_MeshFile);
-			App->Cl_Mesh_Viewer->Last_MeshFile[0] = 0;
+				Ogre::ResourcePtr ptr = Ogre::MeshManager::getSingleton().getByName(App->SBC_MeshViewer->Last_MeshFile);
+				ptr->unload();
+				Ogre::MeshManager::getSingleton().remove(App->SBC_MeshViewer->Last_MeshFile);
+				App->SBC_MeshViewer->Last_MeshFile[0] = 0;
 			}
 
-			App->Cl19_Ogre->OgreListener->Equity_Running = 0;*/
+			App->Cl19_Ogre->OgreListener->Equity_Running = 0;
 			App->SBC_MeshViewer->Close_OgreWindow();
 			App->SBC_MeshViewer->Delete_Resources_Group();
 			EndDialog(hDlg, LOWORD(wParam));
@@ -664,7 +696,7 @@ bool SB_MeshViewer::Set_OgreWindow(void)
 
 	////-------------------------------------------- 
 	
-	MvEnt = mSceneMgrMeshView->createEntity("MVTest2", "Cube.mesh", App->SBC_MeshViewer->MV_Resource_Group);
+	MvEnt = mSceneMgrMeshView->createEntity("MVTest2", "Wall_1.mesh", App->SBC_MeshViewer->MV_Resource_Group);
 	MvNode = mSceneMgrMeshView->getRootSceneNode()->createChildSceneNode();
 	MvNode->attachObject(MvEnt);
 	MvNode->setVisible(true);
@@ -895,6 +927,8 @@ void SB_MeshViewer::Reset_Shape_Flags()
 // *************************************************************************
 bool SB_MeshViewer::Get_Files()
 {
+	SendMessage(ListHwnd, LB_RESETCONTENT, 0, 0);
+
 	char Path[1024];
 
 	WIN32_FIND_DATA FindFileData;
@@ -923,6 +957,7 @@ bool SB_MeshViewer::Get_Files()
 
 			}
 		} while (FindNextFile(hFind, &FindFileData));
+
 		FindClose(hFind);
 	}
 
