@@ -159,6 +159,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base_Area.h" />
+    <ClInclude Include="Base_Object.h" />
     <ClInclude Include="Base_Player.h" />
     <ClInclude Include="Com_Diaolgs.h" />
     <ClInclude Include="EB_Options.h" />
@@ -217,6 +218,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Base_Area.cpp" />
+    <ClCompile Include="Base_Object.cpp" />
     <ClCompile Include="Base_Player.cpp" />
     <ClCompile Include="CollisionTools.cpp" />
     <ClCompile Include="Common\imGui\ImGui_cpp\imgui.cpp" />
