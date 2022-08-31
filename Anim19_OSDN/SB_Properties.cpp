@@ -321,6 +321,83 @@ void SB_Properties::Clear_Listview()
 }
 
 // *************************************************************************
+// *			Update_ListView_Objects	Terry Bernie 				 	   *
+// *************************************************************************
+bool SB_Properties::Update_ListView_Objects()
+{
+	/*if (App->GDCL_Scene_Data->SceneLoaded == 0)
+	{
+		return 1;
+	}*/
+
+	int index = App->SBC_Properties->Current_Selected_Object;
+
+	char chr_Scale[100];
+
+	char chr_PosX[100];
+	char chr_PosY[100];
+	char chr_PosZ[100];
+
+	char chr_RotX[100];
+	char chr_RotY[100];
+	char chr_RotZ[100];
+
+	char chr_Total[100];
+
+	char Num[255];
+	_itoa(index, Num, 10);
+
+	char buff[255];
+	strcpy(buff, App->Cl_Scene_Data->Cl_Object[index]->Name);
+	strcat(buff, "   (Object) ");
+	strcat(buff, Num);
+	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
+
+	sprintf(chr_Scale, "%.3f", "2");//CL_Object[index]->MeshScale.x);
+
+	sprintf(chr_PosX, "%.3f", "2");//CL_Object[index]->MeshPos.x);
+	sprintf(chr_PosY, "%.3f", "2");//CL_Object[index]->MeshPos.y);
+	sprintf(chr_PosZ, "%.3f", "2");//CL_Object[index]->MeshPos.z);
+
+	sprintf(chr_RotX, "%.3f", "2");//CL_Object[index]->MeshRot.x);
+	sprintf(chr_RotY, "%.3f", "2");// CL_Object[index]->MeshRot.y);
+	sprintf(chr_RotZ, "%.3f", "2");//CL_Object[index]->MeshRot.z);
+
+	sprintf(chr_Total, "%i", "2");//TotalCollectableCount);
+
+
+	const int NUM_ITEMS = 3;
+	const int NUM_COLS = 2;
+	std::string grid[NUM_COLS][NUM_ITEMS]; // string table
+	LV_ITEM pitem;
+	memset(&pitem, 0, sizeof(LV_ITEM));
+	pitem.mask = LVIF_TEXT;
+
+	grid[0][0] = "Name", grid[1][0] = App->Cl_Scene_Data->Cl_Object[index]->Name;
+	grid[0][1] = "Mesh File", grid[1][1] = App->Cl_Scene_Data->Cl_Object[index]->MeshName;
+
+
+	ListView_DeleteAllItems(Properties_hLV);
+
+	for (DWORD row = 0; row < NUM_ITEMS; row++)
+	{
+		pitem.iItem = row;
+		pitem.pszText = const_cast<char*>(grid[0][row].c_str());
+		ListView_InsertItem(Properties_hLV, &pitem);
+
+		//ListView_SetItemText
+
+		for (DWORD col = 1; col < NUM_COLS; col++)
+		{
+			ListView_SetItemText(Properties_hLV, row, col,
+				const_cast<char*>(grid[col][row].c_str()));
+		}
+	}
+
+	return 1;
+}
+
+// *************************************************************************
 // *				Update_ListView_Player	Terry Bernie 			 	   *
 // *************************************************************************
 bool SB_Properties::Update_ListView_Player()

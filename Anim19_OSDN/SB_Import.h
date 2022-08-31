@@ -32,5 +32,7 @@ public:
 	bool Load_Project(char* Extension, char* Extension2);
 
 	void Reload_FromResentFiles(char* ResentPathAndFile);
+
+	bool Quick_Load_Flag;
 };
 

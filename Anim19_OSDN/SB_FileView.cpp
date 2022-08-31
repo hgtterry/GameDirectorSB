@@ -472,12 +472,12 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 	if (!strcmp(FileView_Folder, "Objects")) // Folder
 	{
-		/*if (App->SBC_Scene->Area_Added == 0)
+		if (App->SBC_Scene->Area_Added == 0)
 		{
 			App->Say("An Area or Building must be Added Firest");
 
 			return;
-		}*/
+		}
 
 		App->Cl_Dialogs->YesNo("Add Object", "Do you want to add a new Object now");
 		bool Doit = App->Cl_Dialogs->Canceled;
@@ -507,14 +507,14 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 		if (App->SBC_Properties->Edit_Physics == 0)
 		{
-			//App->SBC_Properties->Update_ListView_Objects();
+			App->SBC_Properties->Update_ListView_Objects();
 		}
 		else
 		{
 			//App->SBC_Properties->Update_ListView_Physics();
 		}
 
-		App->Cl_Visuals->MarkerBB_Addjust(Index);
+		//App->Cl_Visuals->MarkerBB_Addjust(Index);
 
 		return;
 	}

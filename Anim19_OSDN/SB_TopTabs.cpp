@@ -1120,7 +1120,9 @@ LRESULT CALLBACK SB_TopTabs::Files_TB_Proc(HWND hDlg, UINT message, WPARAM wPara
 			char buff[1024];
 			App->Cl_Ini->GetString("Startup", "Scene_Path_FileName", buff, 1024);
 
+			App->SBC_Import->Quick_Load_Flag = 1;
 			App->SBC_Import->Reload_FromResentFiles(buff);
+			App->SBC_Import->Quick_Load_Flag = 0;
 
 			return TRUE;
 		}

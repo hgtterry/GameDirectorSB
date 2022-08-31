@@ -38,7 +38,7 @@ public:
 	bool Update_ListView_Player_Physics();
 	bool Update_ListView_Camera();
 	bool Update_ListView_Area();
-
+	bool Update_ListView_Objects();
 	
 	bool Properties_Dlg_Active;
 

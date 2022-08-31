@@ -28,6 +28,7 @@ distribution.
 
 SB_Import::SB_Import()
 {
+	Quick_Load_Flag = 0;
 }
 
 
@@ -102,7 +103,10 @@ void SB_Import::Reload_FromResentFiles(char* ResentPathAndFile)
 	App->SBC_TopTabs->Project_Loaded_Reset();
 	App->Cl19_Ogre->RenderFrame();
 	
-	App->Say("Model Loaded");
+	if (Quick_Load_Flag == 0)
+	{
+		App->Say("Model Loaded");
+	}
 
 }
 
