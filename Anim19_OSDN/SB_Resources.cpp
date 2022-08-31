@@ -58,9 +58,8 @@ LRESULT CALLBACK SB_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM wP
 
 		App->SetTitleBar(hDlg);
 
-		HFONT Font;
-		Font = CreateFont(-15, 0, 0, 0, FW_BOLD, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Aerial Black");
-
+		SendDlgItemMessage(hDlg, IDC_BT_PRJRESOURCES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 
 		////App->GDC_DlgResources->SelectedResource = 0;
 		App->SBC_Resources->CreateListGeneral_FX(hDlg);
@@ -81,19 +80,12 @@ LRESULT CALLBACK SB_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM wP
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		/*if (some_item->idFrom == IDC_MESHMATERIALS && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BT_PRJRESOURCES && some_item->code == NM_CUSTOMDRAW)
 		{
-		LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-		App->Custom_Button_Toggle(item,App->GDCL_Resources->Active_MeshMaterials);
-		return CDRF_DODEFAULT;
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
 		}
-
-		if (some_item->idFrom == IDC_TEXTURES && some_item->code == NM_CUSTOMDRAW)
-		{
-		LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-		App->Custom_Button_Toggle(item,App->GDCL_Resources->Active_Textures);
-		return CDRF_DODEFAULT;
-		}*/
 
 		return CDRF_DODEFAULT;
 	}
@@ -138,6 +130,12 @@ LRESULT CALLBACK SB_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM wP
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_BT_PRJRESOURCES)
+		{
+			App->SBC_Resources->Show_Project_Res();
+			return TRUE;
+		}
+		
 		////if (LOWORD(wParam) == IDC_NOTUSED)
 		////{
 		////	App->GDC_DlgResources->ShowNotUsedMaterials();
@@ -440,6 +438,79 @@ bool SB_Resources::ShowAllTextures()
 		pRow++;
 
 		TextureIterator.moveNext();
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *					Show_Project_Res Terry Flanigan	 			 	   *
+// *************************************************************************
+bool SB_Resources::Show_Project_Res()
+{
+
+	bool Test = Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(App->SBC_Scene->Project_Resource_Group);
+
+	if (Test == 1)
+	{
+
+		Ogre::String st;
+		int NUM_COLS = 4;
+
+		LV_ITEM pitem;
+		memset(&pitem, 0, sizeof(LV_ITEM));
+		pitem.mask = LVIF_TEXT;
+
+		ListView_DeleteAllItems(FX_General_hLV);
+
+		LV_COLUMN lvC;
+		memset(&lvC, 0, sizeof(LV_COLUMN));
+		lvC.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
+		lvC.fmt = LVCFMT_LEFT;  // left-align the column
+		std::string headers[] =
+		{
+			"Resource Group", "Path","Type"," "
+		};
+		int headerSize[] =
+		{
+			165,280,170,250
+		};
+
+		for (int header = 0; header < NUM_COLS; header++)
+		{
+			lvC.iSubItem = header;
+			lvC.cx = headerSize[header]; // width of the column, in pixels
+			lvC.pszText = const_cast<char*>(headers[header].c_str());
+			ListView_SetColumn(FX_General_hLV, header, &lvC);
+		}
+
+		int	 pRow = 0;
+		char pPath[MAX_PATH];
+		char chr_Type[255];
+
+		Ogre::ResourceGroupManager::LocationList resLocationsList = Ogre::ResourceGroupManager::getSingleton().getResourceLocationList(App->SBC_Scene->Project_Resource_Group);
+		Ogre::ResourceGroupManager::LocationList::iterator it = resLocationsList.begin();
+		Ogre::ResourceGroupManager::LocationList::iterator itEnd = resLocationsList.end();
+
+		for (; it != itEnd; ++it)
+		{
+			pitem.iItem = pRow;
+			pitem.pszText = "Project_Resource_Group";
+
+			strcpy(pPath, (*it)->archive->getName().c_str());
+			strcpy(chr_Type, (*it)->archive->getType().c_str());
+
+			ListView_InsertItem(FX_General_hLV, &pitem);
+			ListView_SetItemText(FX_General_hLV, pRow, 1, pPath);
+			ListView_SetItemText(FX_General_hLV, pRow, 2, chr_Type);
+			ListView_SetItemText(FX_General_hLV, pRow, 3, " ");
+		}
+	}
+	else
+	{
+		App->Say("No Project Loaded");
+
+		return 0;
 	}
 
 	return 1;

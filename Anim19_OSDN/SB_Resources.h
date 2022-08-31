@@ -39,6 +39,8 @@ public:
 	void Remove_OblectMesh(void);
 	void Unload_Game_Resources(void);
 
+	bool Show_Project_Res();
+
 protected:
 	static LRESULT CALLBACK Resources_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
