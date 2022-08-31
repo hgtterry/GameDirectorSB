@@ -29,8 +29,7 @@ distribution.
 SB_Scene::SB_Scene()
 {
 	Project_Resource_Group = "Project_Resource_Group";
-	Test_Resource_Group = "Test_Resource_Group";
-
+	
 	Scene_Loaded = 0;
 	Player_Added = 0;
 	Area_Added = 0;

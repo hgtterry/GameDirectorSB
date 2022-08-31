@@ -54,8 +54,7 @@ public:
 	bool Objects_Added;
 
 	Ogre::String Project_Resource_Group;
-	Ogre::String Test_Resource_Group;
-
+	
 protected:
 
 	void Reset_Class();
