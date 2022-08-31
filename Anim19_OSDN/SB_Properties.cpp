@@ -348,9 +348,12 @@ bool SB_Properties::Update_ListView_Objects()
 	_itoa(index, Num, 10);
 
 	char buff[255];
-	strcpy(buff, App->Cl_Scene_Data->Cl_Object[index]->Name);
-	strcat(buff, "   (Object) ");
+	strcpy(buff, App->SBC_Scene->B_Object[index]->Name);
+	strcat(buff, "   (Object-");
 	strcat(buff, Num);
+	strcat(buff, ")");
+
+
 	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
 
 	sprintf(chr_Scale, "%.3f", "2");//CL_Object[index]->MeshScale.x);
@@ -373,8 +376,8 @@ bool SB_Properties::Update_ListView_Objects()
 	memset(&pitem, 0, sizeof(LV_ITEM));
 	pitem.mask = LVIF_TEXT;
 
-	grid[0][0] = "Name", grid[1][0] = App->Cl_Scene_Data->Cl_Object[index]->Name;
-	grid[0][1] = "Mesh File", grid[1][1] = App->Cl_Scene_Data->Cl_Object[index]->MeshName;
+	grid[0][0] = "Name", grid[1][0] = App->SBC_Scene->B_Object[index]->Name;
+	grid[0][1] = "Mesh File", grid[1][1] = App->SBC_Scene->B_Object[index]->MeshName;
 
 
 	ListView_DeleteAllItems(Properties_hLV);

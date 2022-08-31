@@ -248,8 +248,9 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Objects)
 		{
 		strcpy_s(ATest, "Object_");
-		_itoa(App->Cl_Scene_Data->ObjectCount, ConNum, 10);
+		_itoa(App->SBC_Scene->Object_Count, ConNum, 10);
 		strcat(ATest, ConNum);
+
 		SetDlgItemText(hDlg, IDC_OBJECTNAME, ATest);
 		strcpy(App->SBC_MeshViewer->Object_Name, ATest);
 
