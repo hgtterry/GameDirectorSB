@@ -80,7 +80,9 @@ SB_MeshViewer::SB_MeshViewer()
 	FolderList_Count = 1;
 
 	strcpy(TempFolder, Folder_Vec[0].Folder_Path);
-	
+
+	strcpy(Selected_MeshFile, "Wall_1.mesh");
+
 	MV_Resource_Group = "MV_Resource_Group";
 }
 
@@ -139,6 +141,9 @@ bool SB_MeshViewer::StartMeshViewer()
 	Last_MeshFile[0] = 0;
 
 	App->RenderBackGround = 1;
+
+	strcpy(Folder_Vec[0].Folder_Path, App->EquityDirecory_FullPath);
+	strcat(Folder_Vec[0].Folder_Path, "\\Media_New\\Walls\\");
 
 	Create_Resources_Group();
 	Add_Resources();
@@ -400,24 +405,6 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 	case WM_COMMAND:
 
 		
-		if (LOWORD(wParam) == IDC_BT_FOLDERBROWSE)
-		{
-			strcpy(App->Com_CDialogs->BrowserMessage, "Select Folder");
-			int Test = App->Com_CDialogs->StartBrowser(App->SBC_MeshViewer->Chr_CurrentFolder, App->Fdlg);
-
-			if (Test == 0) { return true; }
-
-			SetDlgItemText(hDlg, IDC_ST_CURRENTFOLDER, App->Com_CDialogs->szSelectedDir);
-			SetWindowText(hDlg, App->Com_CDialogs->szSelectedDir);
-
-			strcpy(App->SBC_MeshViewer->Folder_Vec[0].Folder_Path, App->Com_CDialogs->szSelectedDir);
-			strcpy(App->SBC_MeshViewer->TempFolder, App->Com_CDialogs->szSelectedDir);
-			
-			App->SBC_MeshViewer->Get_Files();
-			App->SBC_MeshViewer->Add_Resources();
-			return TRUE;
-		}
-
 		if (LOWORD(wParam) == ID_TOOLS_MVRESOURCEVIEWER)
 		{
 			App->SBC_Resources->Start_Resources(App->SBC_MeshViewer->MainDlgHwnd);
@@ -533,6 +520,25 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		}
 
 		// ---------------------------------------------------------------------
+		if (LOWORD(wParam) == IDC_BT_FOLDERBROWSE)
+		{
+			strcpy(App->Com_CDialogs->BrowserMessage, "Select Folder");
+			int Test = App->Com_CDialogs->StartBrowser(App->SBC_MeshViewer->Chr_CurrentFolder, App->Fdlg);
+
+			if (Test == 0) { return true; }
+
+			SetDlgItemText(hDlg, IDC_ST_CURRENTFOLDER, App->Com_CDialogs->szSelectedDir);
+			SetWindowText(hDlg, App->Com_CDialogs->szSelectedDir);
+
+			strcpy(App->SBC_MeshViewer->Folder_Vec[0].Folder_Path, App->Com_CDialogs->szSelectedDir);
+			strcpy(App->SBC_MeshViewer->TempFolder, App->Com_CDialogs->szSelectedDir);
+
+			
+			App->SBC_MeshViewer->Add_Resources();
+			App->SBC_MeshViewer->Get_Files();
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDC_LISTFILES)
 		{
 			char buff[256];
@@ -705,7 +711,7 @@ bool SB_MeshViewer::Set_OgreWindow(void)
 
 	////-------------------------------------------- 
 	
-	MvEnt = mSceneMgrMeshView->createEntity("MVTest2", "Wall_1.mesh", App->SBC_MeshViewer->MV_Resource_Group);
+	MvEnt = mSceneMgrMeshView->createEntity("MVTest2", Selected_MeshFile, MV_Resource_Group);
 	MvNode = mSceneMgrMeshView->getRootSceneNode()->createChildSceneNode();
 	MvNode->attachObject(MvEnt);
 	MvNode->setVisible(true);
@@ -970,6 +976,13 @@ bool SB_MeshViewer::Get_Files()
 		FindClose(hFind);
 	}
 
+	char buff[256];
+	SendDlgItemMessage(MainDlgHwnd, IDC_LISTFILES, LB_GETTEXT, (WPARAM)0, (LPARAM)buff);
+	SetDlgItemText(MainDlgHwnd, IDC_SELECTEDNAME, buff);
+
+	strcpy(App->SBC_MeshViewer->Selected_MeshFile, buff);
+	App->SBC_MeshViewer->ShowMesh(App->SBC_MeshViewer->Selected_MeshFile, 1);
+	//App->SBC_MeshViewer->Get_Details_hLV();
 	return 0;
 }
 

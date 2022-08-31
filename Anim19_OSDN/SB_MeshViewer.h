@@ -126,7 +126,7 @@ protected:
 	
 	HWND CB_hWnd;
 
-	Ogre::Entity*			MvEnt;
+	Ogre::Entity*		MvEnt;
 
 	Ogre::RenderWindow* MeshView_Window;
 	Ogre::SceneManager* mSceneMgrMeshView;
