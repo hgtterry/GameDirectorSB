@@ -56,11 +56,13 @@ public:
 	HTREEITEM Add_PlayerFile(char *SFileName, int Index);
 	HTREEITEM Add_Camera(char *SFileName, int Index);
 	HTREEITEM Add_Area(char *SFileName, int Index);
+	HTREEITEM Add_ObjectFile(char *SFileName, int Index);
 
 	HTREEITEM GD_Player;
 	HTREEITEM GD_Rooms;
 	HTREEITEM GD_LevelFolder;
 	HTREEITEM GD_CameraFolder;
+	HTREEITEM GD_ObjectsFolder;
 
 protected:
 
@@ -79,7 +81,6 @@ protected:
 
 	HTREEITEM Root;
 	HTREEITEM GD_ProjectFolder;
-	HTREEITEM GD_ObjectsFolder;
 	HTREEITEM GD_TriggerFolder;
 	HTREEITEM GD_EntitiesFolder;
 	HTREEITEM GD_Entities_Sound_Folder;

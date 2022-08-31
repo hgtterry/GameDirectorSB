@@ -89,9 +89,6 @@ bool GD19_Objects_New::Add_New_Object()
 
 	App->Cl_Scene_Data->SceneLoaded = 1;
 
-	App->SBC_Scene->Object_Count++;
-
-	return 1;
 	//---------------------- Static
 	if (App->SBC_MeshViewer->Physics_Type == Enums::Bullet_Type_Static)
 	{
@@ -175,14 +172,14 @@ bool GD19_Objects_New::Add_New_Object()
 	else
 	{
 		Object->Folder = Enums::Folder_Objects;
-//		HTREEITEM Temp = App->Cl_FileView->Add_MiscFile(App->SBC_MeshViewer->Object_Name, Index);
-//		Object->ListViewItem = Temp;
+		HTREEITEM Temp = App->SBC_FileView->Add_ObjectFile(App->SBC_MeshViewer->Object_Name, Index);
+		Object->ListViewItem = Temp;
 	}
 
 	
 	ShowWindow(App->GD_Properties_Hwnd, 1);
 
-	App->Cl_Scene_Data->ObjectCount++;  // Must be last line
+	App->SBC_Scene->Object_Count++;  // Must be last line
 
 	return 1;
 }

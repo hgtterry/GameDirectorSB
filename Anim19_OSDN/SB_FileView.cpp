@@ -1082,6 +1082,30 @@ void SB_FileView::HideRightPanes(void)
 }
 
 // *************************************************************************
+// *					Add_ObjectFile Terry Flanigan				 	   *
+// *************************************************************************
+HTREEITEM SB_FileView::Add_ObjectFile(char *SFileName, int Index)
+{
+	HWND Temp2 = GetDlgItem(App->ListPanel, IDC_TREE1);
+
+	tvinsert.hParent = GD_ObjectsFolder;
+	tvinsert.hInsertAfter = TVI_LAST;
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE | TVIF_PARAM;
+	tvinsert.item.pszText = SFileName;
+	tvinsert.item.iImage = 4;
+	tvinsert.item.iSelectedImage = 5;
+	tvinsert.item.lParam = Index;
+	HTREEITEM Temp = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+
+	/*if (App->Cl_Load_Scene->File_Is_Loading == 0)
+	{
+		TreeView_Select(Temp2, Temp, TVGN_CARET);
+	}*/
+
+	return Temp;
+}
+
+// *************************************************************************
 // *					Add_PlayeFile Terry Bernie					 	   *
 // *************************************************************************
 HTREEITEM SB_FileView::Add_PlayerFile(char *SFileName, int Index)
