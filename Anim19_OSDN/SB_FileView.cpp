@@ -494,6 +494,8 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 	{
 		HideRightPanes();
 		ShowWindow(App->GD_Properties_Hwnd, 1);
+		App->SBC_Object->Hide_Object_Dlg(1);
+
 //		App->SBC_Properties->Enable_Delete_Button(1);
 
 		App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
@@ -1070,7 +1072,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 // *************************************************************************
 void SB_FileView::HideRightPanes(void)
 {
-	if (App->Cl_Scene_Data->SceneLoaded == 1)
+	if (App->SBC_Scene->Scene_Loaded == 1)
 	{
 		ShowWindow(App->GD_Properties_Hwnd, 0);
 		
@@ -1079,6 +1081,7 @@ void SB_FileView::HideRightPanes(void)
 	App->SBC_Camera->Hide_Cam_Dlg(0);
 	App->SBC_Player->Hide_Player_Dlg(0);
 	App->SBC_Aera->Hide_Area_Dlg(0);
+	App->SBC_Object->Hide_Object_Dlg(0);
 }
 
 // *************************************************************************

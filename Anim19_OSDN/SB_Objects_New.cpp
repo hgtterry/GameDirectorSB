@@ -89,14 +89,7 @@ bool SB_Objects_New::Add_New_Object()
 
 	App->Cl_Scene_Data->SceneLoaded = 1;
 
-	// Test
-	Object->Folder = Enums::Folder_Objects;
-	HTREEITEM Temp = App->SBC_FileView->Add_ObjectFile(App->SBC_MeshViewer->Object_Name, Index);
-	Object->ListViewItem = Temp;
-
-	App->SBC_Scene->Object_Count++;  // Must be last line
-	return 1;
-
+	
 	//---------------------- Static
 	if (App->SBC_MeshViewer->Physics_Type == Enums::Bullet_Type_Static)
 	{
@@ -106,7 +99,7 @@ bool SB_Objects_New::Add_New_Object()
 			Object->Physics_Valid = 1;
 		}
 
-		if (App->SBC_MeshViewer->Physics_Shape == Enums::Sphere)
+		/*if (App->SBC_MeshViewer->Physics_Shape == Enums::Sphere)
 		{
 			Add_New_Physics_Static_Sphere(false);
 			Object->Physics_Valid = 1;
@@ -128,13 +121,13 @@ bool SB_Objects_New::Add_New_Object()
 		{
 			Add_New_Physics_Static_Cone(false);
 			Object->Physics_Valid = 1;
-		}
+		}*/
 	}
 
 	////---------------------- Dynamic
 	if (App->SBC_MeshViewer->Physics_Type == Enums::Bullet_Type_Dynamic)
 	{
-		if (App->SBC_MeshViewer->Physics_Shape == Enums::Shape_Box)
+		/*if (App->SBC_MeshViewer->Physics_Shape == Enums::Shape_Box)
 		{
 			Add_New_Physics_Static_Box(true);
 			Object->Physics_Valid = 1;
@@ -162,7 +155,7 @@ bool SB_Objects_New::Add_New_Object()
 		{
 			Add_New_Physics_Static_Cone(true);
 			Object->Physics_Valid = 1;
-		}
+		}*/
 	}
 
 	//---------------------- Tri_Mesh
@@ -1209,8 +1202,9 @@ bool SB_Objects_New::Add_New_Particle()
 // *************************************************************************
 void SB_Objects_New::Add_New_Physics_Static_Box(bool Dynamic)
 {
-	int Index = App->Cl_Scene_Data->ObjectCount;
-	GD19_Objects* Object = App->Cl_Scene_Data->Cl_Object[Index];
+	int Index = App->SBC_Scene->Object_Count;
+
+	Base_Object* Object = App->SBC_Scene->B_Object[Index];
 
 	if (Dynamic == 1)
 	{
@@ -1224,7 +1218,10 @@ void SB_Objects_New::Add_New_Physics_Static_Box(bool Dynamic)
 		Object->Shape = Enums::Shape_Box;
 	}
 
-	Ogre::Vector3 Centre = Object->Get_BoundingBox_World_Centre();
+	AxisAlignedBox worldAAB = Object->Object_Ent->getBoundingBox();
+	worldAAB.transformAffine(Object->Object_Node->_getFullTransform());
+	Ogre::Vector3 Centre = worldAAB.getCenter();
+	
 
 	Object->Physics_Pos = Ogre::Vector3(Centre.x, Centre.y, Centre.z);
 
@@ -1247,7 +1244,7 @@ void SB_Objects_New::Add_New_Physics_Static_Box(bool Dynamic)
 
 	startTransform.setOrigin(initialPosition);
 
-	Ogre::Vector3 Size = App->Cl_Objects_Com->GetMesh_BB_Size(Object->OgreNode);
+	Ogre::Vector3 Size = App->Cl_Objects_Com->GetMesh_BB_Size(Object->Object_Node);
 	float sx = Size.x / 2;
 	float sy = Size.y / 2;
 	float sz = Size.z / 2;
@@ -1263,34 +1260,34 @@ void SB_Objects_New::Add_New_Physics_Static_Box(bool Dynamic)
 
 	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, newRigidShape, localInertia);
 
-	Object->bt_body = new btRigidBody(rbInfo);
-	Object->bt_body->setRestitution(1.0);
-	Object->bt_body->setFriction(1.5);
-	Object->bt_body->setUserPointer(Object->OgreNode);
-	Object->bt_body->setWorldTransform(startTransform);
+	Object->Phys_Body = new btRigidBody(rbInfo);
+	Object->Phys_Body->setRestitution(1.0);
+	Object->Phys_Body->setFriction(1.5);
+	Object->Phys_Body->setUserPointer(Object->Object_Node);
+	Object->Phys_Body->setWorldTransform(startTransform);
 
 	if (Dynamic == 1)
 	{
 		Object->Usage = Enums::Usage_Dynamic;
-		Object->bt_body->setUserIndex(Enums::Usage_Dynamic);
-		Object->bt_body->setUserIndex2(Index);
+		Object->Phys_Body->setUserIndex(Enums::Usage_Dynamic);
+		Object->Phys_Body->setUserIndex2(Index);
 	}
 	else
 	{
 		Object->Usage = Enums::Usage_Static;
-		Object->bt_body->setUserIndex(Enums::Usage_Static);
-		Object->bt_body->setUserIndex2(Index);
+		Object->Phys_Body->setUserIndex(Enums::Usage_Static);
+		Object->Phys_Body->setUserIndex2(Index);
 	}
 
-	Object->bt_body->setCustomDebugColor(btVector3(0, 1, 1));
+	Object->Phys_Body->setCustomDebugColor(btVector3(0, 1, 1));
 
-	int f = Object->bt_body->getCollisionFlags();
-	Object->bt_body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+	int f = Object->Phys_Body->getCollisionFlags();
+	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
-	Object->Collect_Object_Data();
+	//Object->Collect_Object_Data();
 
 
-	App->Cl_Bullet->dynamicsWorld->addRigidBody(Object->bt_body);
+	App->Cl_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 }
 
 

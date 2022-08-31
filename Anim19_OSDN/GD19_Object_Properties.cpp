@@ -30,8 +30,8 @@ GD19_Object_Properties::~GD19_Object_Properties(void)
 // *************************************************************************
 void GD19_Object_Properties::Start_GD_Properties(void)
 {
-	///App->GD_Properties_Hwnd = CreateDialog(App->hInst,(LPCTSTR)IDD_GD_PROPERTIRS,App->Fdlg,(DLGPROC)GD_Properties_Proc);
-	///ShowWindow(App->GD_Properties_Hwnd,0);
+	//App->GD_Properties_Hwnd = CreateDialog(App->hInst,(LPCTSTR)IDD_GD_PROPERTIRS,App->Fdlg,(DLGPROC)GD_Properties_Proc);
+	//ShowWindow(App->GD_Properties_Hwnd,0);
 
 	Set_DataView();
 	
