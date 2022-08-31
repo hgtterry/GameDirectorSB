@@ -82,6 +82,7 @@ GD19_App::GD19_App(void)
 	SBC_Debug =			nullptr;
 	SBC_FileIO =		nullptr;
 	SBC_Objects_New =	nullptr;
+	SBC_Object =		nullptr;
 	// ---------------------------------------------------- 29/12/21
 	Com_CDialogs =		nullptr;
 
@@ -242,7 +243,8 @@ bool GD19_App::InitApp(void)
 	SBC_Debug =			new SB_Debug();
 	SBC_FileIO =		new SB_FileIO();
 	SBC_Objects_New =	new SB_Objects_New();
-
+	SBC_Object =		new SB_Object();
+	
 	//-----------------------------------------------------
 	SetBrushes_Fonts();
 

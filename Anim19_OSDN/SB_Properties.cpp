@@ -325,11 +325,6 @@ void SB_Properties::Clear_Listview()
 // *************************************************************************
 bool SB_Properties::Update_ListView_Objects()
 {
-	/*if (App->GDCL_Scene_Data->SceneLoaded == 0)
-	{
-		return 1;
-	}*/
-
 	int index = App->SBC_Properties->Current_Selected_Object;
 
 	char chr_Scale[100];
@@ -356,7 +351,7 @@ bool SB_Properties::Update_ListView_Objects()
 
 	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
 
-	sprintf(chr_Scale, "%.3f", "2");//CL_Object[index]->MeshScale.x);
+	sprintf(chr_Scale, "%.3f", App->SBC_Scene->B_Object[index]->Mesh_Scale.x);
 
 	sprintf(chr_PosX, "%.3f", "2");//CL_Object[index]->MeshPos.x);
 	sprintf(chr_PosY, "%.3f", "2");//CL_Object[index]->MeshPos.y);
@@ -369,15 +364,18 @@ bool SB_Properties::Update_ListView_Objects()
 	sprintf(chr_Total, "%i", "2");//TotalCollectableCount);
 
 
-	const int NUM_ITEMS = 3;
+	const int NUM_ITEMS = 4;
 	const int NUM_COLS = 2;
 	std::string grid[NUM_COLS][NUM_ITEMS]; // string table
 	LV_ITEM pitem;
 	memset(&pitem, 0, sizeof(LV_ITEM));
 	pitem.mask = LVIF_TEXT;
 
-	grid[0][0] = "Name", grid[1][0] = App->SBC_Scene->B_Object[index]->Name;
-	grid[0][1] = "Mesh File", grid[1][1] = App->SBC_Scene->B_Object[index]->MeshName;
+	grid[0][0] = "Name",		grid[1][0] = App->SBC_Scene->B_Object[index]->Name;
+	grid[0][1] = "Mesh File",	grid[1][1] = App->SBC_Scene->B_Object[index]->MeshName;
+	grid[0][2] = " ",			grid[1][2] = " ";
+	grid[0][3] = "Scale",		grid[1][3] = chr_Scale;
+
 
 
 	ListView_DeleteAllItems(Properties_hLV);
