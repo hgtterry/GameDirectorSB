@@ -167,37 +167,37 @@ bool GD19_Objects_Com::Paste_Object()
 	if (App->Cl_Scene_Data->Cl_Object[CopyObject_Index]->Usage == Enums::Usage_Sound)
 	{
 		Pre_Paste();
-		App->Cl_Objects_New->Add_New_SoundEntity();
+		App->SBC_Objects_New->Add_New_SoundEntity();
 		Post_Paste();
 	}
 	else if (App->Cl_Scene_Data->Cl_Object[CopyObject_Index]->Usage == Enums::Usage_Message)
 	{
 		Pre_Paste();
-		App->Cl_Objects_New->Add_New_MessageEntity();
+		App->SBC_Objects_New->Add_New_MessageEntity();
 		Post_Paste();
 	}
 	else if (App->Cl_Scene_Data->Cl_Object[CopyObject_Index]->Usage == Enums::Usage_Move)
 	{
 		Pre_Paste();
-		App->Cl_Objects_New->Add_New_MoveEntity();
+		App->SBC_Objects_New->Add_New_MoveEntity();
 		Post_Paste();
 	}
 	else if (App->Cl_Scene_Data->Cl_Object[CopyObject_Index]->Usage == Enums::Usage_Colectable)
 	{
 		Pre_Paste();
-		App->Cl_Objects_New->Add_New_CollectableEntity();
+		App->SBC_Objects_New->Add_New_CollectableEntity();
 		Post_Paste();
 	}
 	else if (App->Cl_Scene_Data->Cl_Object[CopyObject_Index]->Usage == Enums::Usage_Teleport)
 	{
 		Pre_Paste();
-		App->Cl_Objects_New->Add_New_TeleportEntity();
+		App->SBC_Objects_New->Add_New_TeleportEntity();
 		Post_Paste();
 	}
 	else
 	{
 		Pre_Paste();
-		App->Cl_Objects_New->Add_New_Object(); // Create Object
+		App->SBC_Objects_New->Add_New_Object(); // Create Object
 		Post_Paste();	
 	}
 	

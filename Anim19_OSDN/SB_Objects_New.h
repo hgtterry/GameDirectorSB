@@ -23,13 +23,13 @@
 
  
 #pragma once
-class GD19_Objects_New
+class SB_Objects_New
 {
 public:
-	GD19_Objects_New(void);
-	~GD19_Objects_New(void);
+	SB_Objects_New(void);
+	~SB_Objects_New(void);
 
-	bool GD19_Objects_New::Dispatcher_New_Object();
+	bool Dispatcher_New_Object();
 
 	bool Add_New_Object();
 	bool Add_New_CollectableEntity();

@@ -570,7 +570,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		bool Doit = App->Cl_Dialogs->Canceled;
 		if (Doit == 0)
 		{
-			App->Cl_Objects_New->Add_New_SoundEntity();
+			App->SBC_Objects_New->Add_New_SoundEntity();
 		}
 
 		return;
@@ -618,7 +618,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		bool Doit = App->Cl_Dialogs->Canceled;
 		if (Doit == 0)
 		{
-			App->Cl_Objects_New->Add_New_MessageEntity();
+			App->SBC_Objects_New->Add_New_MessageEntity();
 		}
 
 		return;
@@ -668,7 +668,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		bool Doit = App->Cl_Dialogs->Canceled;
 		if (Doit == 0)
 		{
-			App->Cl_Objects_New->Add_New_MoveEntity();
+			App->SBC_Objects_New->Add_New_MoveEntity();
 		}
 
 		return;
@@ -793,7 +793,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		bool Doit = App->Cl_Dialogs->Canceled;
 		if (Doit == 0)
 		{
-			App->Cl_Objects_New->Add_New_TeleportEntity();
+			App->SBC_Objects_New->Add_New_TeleportEntity();
 		}
 
 		return;
@@ -863,7 +863,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		bool Doit = App->Cl_Dialogs->Canceled;
 		if (Doit == 0)
 		{
-			App->Cl_Objects_New->Add_New_Particle();
+			App->SBC_Objects_New->Add_New_Particle();
 		}
 
 		return;

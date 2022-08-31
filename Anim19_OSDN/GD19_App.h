@@ -34,7 +34,6 @@ distribution.
 #include "GD19_SoundMgr.h"
 #include "GD19_Panel_Com.h"
 #include "GD19_Visuals.h"
-#include "GD19_Objects_New.h"
 #include "GD19_Environment.h"
 #include "GD19_DIALOGS.h"
 #include "GD19_Objects_Com.h"
@@ -72,6 +71,7 @@ distribution.
 #include "SB_MeshViewer.h"
 #include "SB_Debug.h"
 #include "SB_FileIO.h"
+#include "SB_Objects_New.h"
 
 #include "Com_Diaolgs.h"
 #include "SB_Import_Room.h"
@@ -93,7 +93,6 @@ public:
 	GD19_SoundMgr*		Cl_SoundMgr;
 	GD19_Panel_Com*		Cl_Panels_Com;
 	GD19_Visuals*		Cl_Visuals;
-	GD19_Objects_New*	Cl_Objects_New;
 	GD19_Environment*	Cl_Environment;
 	GD19_Dialogs*		Cl_Dialogs;
 	GD19_Objects_Com*	Cl_Objects_Com;
@@ -134,6 +133,7 @@ public:
 	SB_Debug*				SBC_Debug;
 	SB_FileIO*				SBC_FileIO;
 	SB_Import_Room*			SBC_Import_Room;
+	SB_Objects_New*			SBC_Objects_New;
 
 	Com_Diaolgs*			Com_CDialogs;		// Common Dialogs for App [291221]
 	// ----------------------------------- 

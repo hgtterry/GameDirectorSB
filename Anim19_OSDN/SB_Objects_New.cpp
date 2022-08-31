@@ -23,24 +23,24 @@
 
 #include "StdAfx.h"
 #include "GD19_App.h"
-#include "GD19_Objects_New.h"
+#include "SB_Objects_New.h"
 
 #include <BulletCollision\CollisionDispatch\btGhostObject.h>
 
 #pragma warning( disable : 4482)
 
-GD19_Objects_New::GD19_Objects_New(void)
+SB_Objects_New::SB_Objects_New(void)
 {
 }
 
-GD19_Objects_New::~GD19_Objects_New(void)
+SB_Objects_New::~SB_Objects_New(void)
 {
 }
 
 // *************************************************************************
 //								Add_New_Object Terry					   *
 // *************************************************************************
-bool GD19_Objects_New::Add_New_Object()
+bool SB_Objects_New::Add_New_Object()
 {
 	int Index =  App->SBC_Scene->Object_Count;
 	
@@ -187,7 +187,7 @@ bool GD19_Objects_New::Add_New_Object()
 // *************************************************************************
 //							Add_New_Area Terry							   *
 // *************************************************************************
-bool GD19_Objects_New::Add_New_Area(void)
+bool SB_Objects_New::Add_New_Area(void)
 {
 	int Index = App->Cl_Scene_Data->ObjectCount;
 
@@ -247,7 +247,7 @@ bool GD19_Objects_New::Add_New_Area(void)
 // *************************************************************************
 //						Add_New_CollectableEntity Terry Bernie			   *
 // *************************************************************************
-bool GD19_Objects_New::Add_New_CollectableEntity()
+bool SB_Objects_New::Add_New_CollectableEntity()
 {
 	int Index = App->Cl_Scene_Data->ObjectCount;
 
@@ -347,7 +347,7 @@ bool GD19_Objects_New::Add_New_CollectableEntity()
 // *************************************************************************
 //						Add_New_MessageEntity Terry Bernie				   *
 // *************************************************************************
-bool GD19_Objects_New::Add_New_MessageEntity()
+bool SB_Objects_New::Add_New_MessageEntity()
 {
 	int Index = App->Cl_Scene_Data->ObjectCount;
 
@@ -445,7 +445,7 @@ bool GD19_Objects_New::Add_New_MessageEntity()
 // *************************************************************************
 //						Add_New_MoveEntity Terry Bernie					   *
 // *************************************************************************
-bool GD19_Objects_New::Add_New_MoveEntity()
+bool SB_Objects_New::Add_New_MoveEntity()
 {
 	int Index = App->Cl_Scene_Data->ObjectCount;
 
@@ -552,7 +552,7 @@ bool GD19_Objects_New::Add_New_MoveEntity()
 // *************************************************************************
 //						Add_New_SoundEntity Terry Bernie				   *
 // *************************************************************************
-bool GD19_Objects_New::Add_New_SoundEntity()
+bool SB_Objects_New::Add_New_SoundEntity()
 {
 	int Index = App->Cl_Scene_Data->ObjectCount;
 
@@ -655,7 +655,7 @@ bool GD19_Objects_New::Add_New_SoundEntity()
 // *************************************************************************
 //						Add_New_TeleportEntity Terry Bernie			   *
 // *************************************************************************
-bool GD19_Objects_New::Add_New_TeleportEntity()
+bool SB_Objects_New::Add_New_TeleportEntity()
 {
 	int Index = App->Cl_Scene_Data->ObjectCount;
 
@@ -764,7 +764,7 @@ bool GD19_Objects_New::Add_New_TeleportEntity()
 // *************************************************************************
 //						Add_New_EnvironmentEntity Terry Bernie			   *
 // *************************************************************************
-bool GD19_Objects_New::Add_New_EnvironmentEntity()
+bool SB_Objects_New::Add_New_EnvironmentEntity()
 {
 	int Index = App->Cl_Scene_Data->ObjectCount;
 
@@ -869,7 +869,7 @@ bool GD19_Objects_New::Add_New_EnvironmentEntity()
 // *************************************************************************
 //						 Add_New_Area_Change Terry Bernie			   *
 // *************************************************************************
-bool GD19_Objects_New::Add_New_Area_Change()
+bool SB_Objects_New::Add_New_Area_Change()
 {
 	int Index = App->Cl_Scene_Data->ObjectCount;
 
@@ -971,7 +971,7 @@ bool GD19_Objects_New::Add_New_Area_Change()
 // *************************************************************************
 //						Add_New_Change_Level Terry Bernie			   *
 // *************************************************************************
-bool GD19_Objects_New::Add_New_Change_Level()
+bool SB_Objects_New::Add_New_Change_Level()
 {
 	int Index = App->Cl_Scene_Data->ObjectCount;
 
@@ -1073,7 +1073,7 @@ bool GD19_Objects_New::Add_New_Change_Level()
 // *************************************************************************
 //								Add_New_Particle Terry					   *
 // *************************************************************************
-bool GD19_Objects_New::Add_New_Particle()
+bool SB_Objects_New::Add_New_Particle()
 {
 	int Index = App->Cl_Scene_Data->ObjectCount;
 
@@ -1199,7 +1199,7 @@ bool GD19_Objects_New::Add_New_Particle()
 // *************************************************************************
 //						Add_New_Physics_Static_Box Terry Bernie			   *
 // *************************************************************************
-void GD19_Objects_New::Add_New_Physics_Static_Box(bool Dynamic)
+void SB_Objects_New::Add_New_Physics_Static_Box(bool Dynamic)
 {
 	int Index = App->Cl_Scene_Data->ObjectCount;
 	GD19_Objects* Object = App->Cl_Scene_Data->Cl_Object[Index];
@@ -1289,7 +1289,7 @@ void GD19_Objects_New::Add_New_Physics_Static_Box(bool Dynamic)
 // *************************************************************************
 //					Add_New_Physics_Static_Sphere Terry Bernie			   *
 // *************************************************************************
-void GD19_Objects_New::Add_New_Physics_Static_Sphere(bool Dynamic)
+void SB_Objects_New::Add_New_Physics_Static_Sphere(bool Dynamic)
 {
 	int Index = App->Cl_Scene_Data->ObjectCount;
 	GD19_Objects* Object = App->Cl_Scene_Data->Cl_Object[Index];
@@ -1373,7 +1373,7 @@ void GD19_Objects_New::Add_New_Physics_Static_Sphere(bool Dynamic)
 // *************************************************************************
 //					Add_New_Physics_Static_Capsule Terry Bernie			   *
 // *************************************************************************
-void GD19_Objects_New::Add_New_Physics_Static_Capsule(bool Dynamic)
+void SB_Objects_New::Add_New_Physics_Static_Capsule(bool Dynamic)
 {
 	int Index = App->Cl_Scene_Data->ObjectCount;
 	GD19_Objects* Object = App->Cl_Scene_Data->Cl_Object[Index];
@@ -1463,7 +1463,7 @@ void GD19_Objects_New::Add_New_Physics_Static_Capsule(bool Dynamic)
 // *************************************************************************
 //					Add_New_Physics_Static_Cylinder Terry Bernie		   *
 // *************************************************************************
-void GD19_Objects_New::Add_New_Physics_Static_Cylinder(bool Dynamic)
+void SB_Objects_New::Add_New_Physics_Static_Cylinder(bool Dynamic)
 {
 	int Index = App->Cl_Scene_Data->ObjectCount;
 	GD19_Objects* Object = App->Cl_Scene_Data->Cl_Object[Index];
@@ -1551,7 +1551,7 @@ void GD19_Objects_New::Add_New_Physics_Static_Cylinder(bool Dynamic)
 // *************************************************************************
 //					Add_PhysicsNew__Static_Cone Terry Bernie			   *
 // *************************************************************************
-void GD19_Objects_New::Add_New_Physics_Static_Cone(bool Dynamic)
+void SB_Objects_New::Add_New_Physics_Static_Cone(bool Dynamic)
 {
 	int Index = App->Cl_Scene_Data->ObjectCount;
 	GD19_Objects* Object = App->Cl_Scene_Data->Cl_Object[Index];
@@ -1639,7 +1639,7 @@ void GD19_Objects_New::Add_New_Physics_Static_Cone(bool Dynamic)
 // *************************************************************************
 //						Dispatcher_New_Object Terry Bernie				   *
 // *************************************************************************
-bool GD19_Objects_New::Dispatcher_New_Object()
+bool SB_Objects_New::Dispatcher_New_Object()
 {
 	
 	if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area) // Area
@@ -1660,7 +1660,7 @@ bool GD19_Objects_New::Dispatcher_New_Object()
 // *************************************************************************
 //						Add_Physics_Volume_Box Terry Bernie				   *
 // *************************************************************************
-void GD19_Objects_New::Add_Physics_Volume_Box()
+void SB_Objects_New::Add_Physics_Volume_Box()
 {
 	int Index = App->Cl_Scene_Data->ObjectCount;
 
@@ -1686,7 +1686,7 @@ void GD19_Objects_New::Add_Physics_Volume_Box()
 // *************************************************************************
 //							Add_Stock_Message Terry Bernie				   *
 // *************************************************************************
-void GD19_Objects_New::Add_Stock_Message()
+void SB_Objects_New::Add_Stock_Message()
 {
 	char ConNum[256];
 	char AName[256];
@@ -1747,7 +1747,7 @@ void GD19_Objects_New::Add_Stock_Message()
 // *************************************************************************
 //							Add_Stock_Sound Terry Bernie				   *
 // *************************************************************************
-void GD19_Objects_New::Add_Stock_Sound()
+void SB_Objects_New::Add_Stock_Sound()
 {
 	char ConNum[256];
 	char AName[256];
@@ -1780,7 +1780,7 @@ void GD19_Objects_New::Add_Stock_Sound()
 // *************************************************************************
 //							Add_Stock_Panel Terry Bernie				   *
 // *************************************************************************
-void GD19_Objects_New::Add_Stock_Panel()
+void SB_Objects_New::Add_Stock_Panel()
 {
 	// Add New Panel Object 310719 // Needs Moving
 	int Panel_Number = App->Cl_Panels_Com->Create_Panel();
@@ -1792,7 +1792,7 @@ void GD19_Objects_New::Add_Stock_Panel()
 // *************************************************************************
 //					Get_BoundingBox_World_Centre Terry Bernie			   *
 // *************************************************************************
-Ogre::Vector3 GD19_Objects_New::Get_BoundingBox_World_Centre(int Object_Index)
+Ogre::Vector3 SB_Objects_New::Get_BoundingBox_World_Centre(int Object_Index)
 {
 	AxisAlignedBox worldAAB = App->Cl_Scene_Data->Cl_Object[Object_Index]->OgreEntity->getBoundingBox();
 	worldAAB.transformAffine(App->Cl_Scene_Data->Cl_Object[Object_Index]->OgreNode->_getFullTransform());

@@ -1068,7 +1068,7 @@ LRESULT CALLBACK GD19_Stock::Stock_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 			bool Doit = App->Cl_Dialogs->Canceled;
 			if (Doit == 0)
 			{
-				App->Cl_Objects_New->Add_Stock_Sound();
+				App->SBC_Objects_New->Add_Stock_Sound();
 				App->Cl_Stock->List_Sounds_Stock(App->Cl_Stock->ItemList_Hwnd);
 
 				int SI = App->Cl_Scene_Data->Stock_Sound_Count - 1;

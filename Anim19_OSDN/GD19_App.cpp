@@ -42,7 +42,6 @@ GD19_App::GD19_App(void)
 	Cl_SoundMgr =		nullptr;
 	Cl_Panels_Com =		nullptr;
 	Cl_Visuals =		nullptr;
-	Cl_Objects_New =	nullptr;
 	Cl_Environment =	nullptr;
 	Cl_Dialogs =		nullptr;
 	
@@ -82,6 +81,7 @@ GD19_App::GD19_App(void)
 	SBC_Import_Room =	nullptr;
 	SBC_Debug =			nullptr;
 	SBC_FileIO =		nullptr;
+	SBC_Objects_New =	nullptr;
 	// ---------------------------------------------------- 29/12/21
 	Com_CDialogs =		nullptr;
 
@@ -198,7 +198,6 @@ bool GD19_App::InitApp(void)
 	Cl_SoundMgr =		new GD19_SoundMgr();
 	Cl_Panels_Com =		new GD19_Panel_Com();
 	Cl_Visuals =		new GD19_Visuals();
-	Cl_Objects_New =	new GD19_Objects_New();	
 	Cl_Environment =	new GD19_Environment();
 	Cl_Dialogs =		new GD19_Dialogs();
 
@@ -242,7 +241,8 @@ bool GD19_App::InitApp(void)
 	Com_CDialogs =		new  Com_Diaolgs();
 	SBC_Debug =			new SB_Debug();
 	SBC_FileIO =		new SB_FileIO();
-	
+	SBC_Objects_New =	new SB_Objects_New();
+
 	//-----------------------------------------------------
 	SetBrushes_Fonts();
 
