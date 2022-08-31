@@ -50,17 +50,17 @@ bool SB_Objects_New::Add_New_Object()
 		return 1;
 	}*/
 
-	App->Cl_Scene_Data->Cl_Object[Index] = new GD19_Objects();
-	App->Cl_Scene_Data->Cl_Object[Index]->Object_ID = App->Cl_Scene_Data->Object_ID_Counter;
-
+	App->SBC_Scene->B_Object[Index] = new Base_Object();
+	App->SBC_Scene->B_Object[Index]->Object_ID = App->Cl_Scene_Data->Object_ID_Counter;
+	
 	// Only on newly created objects
 	App->Cl_Scene_Data->Object_ID_Counter++;
 
-	GD19_Objects* Object = App->Cl_Scene_Data->Cl_Object[Index];
+	Base_Object* Object = App->SBC_Scene->B_Object[Index];
 
-	strcpy(App->Cl_Scene_Data->Cl_Object[Index]->Name, App->SBC_MeshViewer->Object_Name);
-	strcpy(App->Cl_Scene_Data->Cl_Object[Index]->MeshName, App->SBC_MeshViewer->Selected_MeshFile);
-	strcpy(App->Cl_Scene_Data->Cl_Object[Index]->MeshName_FullPath, App->SBC_MeshViewer->Selected_MeshFile);
+	strcpy(Object->Name, App->SBC_MeshViewer->Object_Name);
+	strcpy(Object->MeshName, App->SBC_MeshViewer->Selected_MeshFile);
+	strcpy(Object->MeshName_FullPath, App->SBC_MeshViewer->Selected_MeshFile);
 
 	char PathFile[256];
 	char ConNum[256];
@@ -76,18 +76,26 @@ bool SB_Objects_New::Add_New_Object()
 	strcat(ATest, ConNum);
 
 	strcpy(PathFile,Object->MeshName);
-	Object->OgreEntity = App->Cl19_Ogre->mSceneMgr->createEntity(ATest, PathFile, App->SBC_Scene->Project_Resource_Group);
-	Object->OgreNode = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	Object->OgreNode->attachObject(Object->OgreEntity);
+	Object->Object_Ent = App->Cl19_Ogre->mSceneMgr->createEntity(ATest, PathFile, App->SBC_Scene->Project_Resource_Group);
+	Object->Object_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	Object->Object_Node->attachObject(Object->Object_Ent);
 
-	Object->OgreNode->setVisible(true);
-	Object->OgreNode->setScale(Object->Mesh_Scale);
+	Object->Object_Node->setVisible(true);
+	Object->Object_Node->setScale(Object->Mesh_Scale);
 
-	Ogre::Vector3 Pos = Object->GetPlacement();
+	Ogre::Vector3 Pos = Ogre::Vector3(1, 1, 1);// Object->GetPlacement();
 	Object->Mesh_Pos = Pos;
-	Object->OgreNode->setPosition(Pos);
+	Object->Object_Node->setPosition(Pos);
 
 	App->Cl_Scene_Data->SceneLoaded = 1;
+
+	// Test
+	Object->Folder = Enums::Folder_Objects;
+	HTREEITEM Temp = App->SBC_FileView->Add_ObjectFile(App->SBC_MeshViewer->Object_Name, Index);
+	Object->ListViewItem = Temp;
+
+	App->SBC_Scene->Object_Count++;  // Must be last line
+	return 1;
 
 	//---------------------- Static
 	if (App->SBC_MeshViewer->Physics_Type == Enums::Bullet_Type_Static)
@@ -160,7 +168,7 @@ bool SB_Objects_New::Add_New_Object()
 	//---------------------- Tri_Mesh
 	if (App->SBC_MeshViewer->Physics_Type == Enums::Bullet_Type_TriMesh)
 	{
-		Object->create_New_Trimesh(Object->OgreEntity);
+//		Object->create_New_Trimesh(Object->OgreEntity);
 	}
 
 	if (Object->Usage == Enums::Usage_Room) // Rooms
