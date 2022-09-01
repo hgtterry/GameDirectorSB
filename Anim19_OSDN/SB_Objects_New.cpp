@@ -87,6 +87,8 @@ bool SB_Objects_New::Add_New_Object()
 	Object->Mesh_Pos = Pos;
 	Object->Object_Node->setPosition(Pos);
 
+	strcpy(Object->Mesh_Resource_Path, App->SBC_MeshViewer->Folder_Vec[0].Folder_Path); // Resource Path
+
 	App->Cl_Scene_Data->SceneLoaded = 1;
 
 	

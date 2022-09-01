@@ -48,6 +48,8 @@ public:
 	char m_Aera_Folder_Path[MAX_PATH];
 	char m_Level_Folder_Path[MAX_PATH];		// Level Just Path
 	char m_Players_Folder_Path[MAX_PATH];
+	char m_Objects_Folder_Path[MAX_PATH];
+
 
 	char m_Project_Sub_Folder[MAX_PATH];	// Curent Default Project Location not including project folder
 	
@@ -70,6 +72,9 @@ protected:
 
 	bool Save_Players_Folder();
 	bool Save_Player_Data();
+
+	bool Save_Objects_Folder();
+	bool Save_Objects_Data();
 
 	bool Load_Project_Aera();
 	bool Load_Project_Player();

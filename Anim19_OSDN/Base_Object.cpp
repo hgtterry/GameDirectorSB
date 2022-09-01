@@ -48,6 +48,7 @@ bool Base_Object::Init_Object(void)
 	strcpy(Name, "None");
 	strcpy(MeshName, "None");
 	strcpy(MeshName_FullPath, "None");
+	Mesh_Resource_Path[0] = 0;
 
 	// Actor Scale ------------------------------------------------------
 	Mesh_Scale.x = 1;

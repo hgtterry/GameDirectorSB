@@ -39,6 +39,7 @@ public:
 	char Name[255];
 	char MeshName[255];				// Mesh Name Mesh.mesh
 	char MeshName_FullPath[255];
+	char Mesh_Resource_Path[255];
 
 	//------------------------------ Description
 	int Type;

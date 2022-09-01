@@ -42,6 +42,7 @@ SB_Project::SB_Project()
 
 	m_Level_Folder_Path[0] = 0;
 	m_Players_Folder_Path[0] = 0;
+	m_Objects_Folder_Path[0] = 0;
 
 	m_Ini_Path_File_Name[0] = 0;
 	
@@ -336,6 +337,8 @@ bool SB_Project::Save_Project()
 
 	}
 
+	Save_Objects_Folder();
+
 	App->SBC_FileView->Change_Level_Name();
 	App->SBC_FileView->Change_Project_Name();
 
@@ -407,6 +410,99 @@ bool SB_Project::Save_Level_Folder()
 	{
 		_chdir(m_Level_Folder_Path);
 	}
+
+	return 1;
+}
+
+
+// *************************************************************************
+// *	  				Save_Objects_Folder Terry Flanigan				   *
+// *************************************************************************
+bool SB_Project::Save_Objects_Folder()
+{
+	m_Objects_Folder_Path[0] = 0;
+
+	strcpy(m_Objects_Folder_Path, m_Level_Folder_Path);
+	strcat(m_Objects_Folder_Path, "\\");
+	strcat(m_Objects_Folder_Path, "Objects");
+
+
+	_mkdir(m_Objects_Folder_Path);
+
+	_chdir(m_Objects_Folder_Path);
+
+	Save_Objects_Data();
+
+	_chdir(m_Level_Folder_Path); // Return to Level Folder
+	return 1;
+}
+
+// *************************************************************************
+// *	  				Save_Objects_Data Terry Flanigan				   *
+// *************************************************************************
+bool SB_Project::Save_Objects_Data()
+{
+	Ogre::Vector3 Pos;
+	char File[1024];
+
+	strcpy(File, m_Objects_Folder_Path);
+	strcat(File, "\\");
+	strcat(File, "Objects.efd");
+
+	WriteFile = nullptr;
+
+	WriteFile = fopen(File, "wt");
+
+	if (!WriteFile)
+	{
+		App->Say("Cant Create File");
+		App->Say_Win(File);
+		return 0;
+	}
+
+	fprintf(WriteFile, "%s\n", "[Version_Data]");
+	fprintf(WriteFile, "%s%s\n", "Version=", "V1.2");
+
+	fprintf(WriteFile, "%s\n", " ");
+
+	fprintf(WriteFile, "%s\n", "[Counters]");
+	fprintf(WriteFile, "%s%i\n", "Aeras_Count=", App->SBC_Scene->Object_Count);
+
+	fprintf(WriteFile, "%s\n", " ");
+
+	char Cbuff[255];
+	char buff[255];
+
+	float x = 0;
+	float y = 0;
+	float z = 0;
+
+	int Count = 0;
+	while (Count < App->SBC_Scene->Object_Count)
+	{
+		strcpy(buff, "[Object_");
+		_itoa(Count, Cbuff, 10);
+		strcat(buff, Cbuff);
+		strcat(buff, "]");
+
+		fprintf(WriteFile, "%s\n", buff); // Header also Player name until changed by user
+
+		fprintf(WriteFile, "%s%s\n", "Mesh_Name=", App->SBC_Scene->B_Object[Count]->Name); // Change
+
+		fprintf(WriteFile, "%s%s\n", "Mesh_File=", App->SBC_Scene->B_Object[Count]->MeshName);
+		fprintf(WriteFile, "%s%s\n", "Mesh_Resource_Path=", App->SBC_Scene->B_Object[Count]->Mesh_Resource_Path);
+
+		fprintf(WriteFile, "%s\n", "[Position]");
+		x = App->SBC_Scene->B_Object[Count]->Object_Node->getPosition().x;
+		y = App->SBC_Scene->B_Object[Count]->Object_Node->getPosition().y;
+		z = App->SBC_Scene->B_Object[Count]->Object_Node->getPosition().z;
+
+		fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Pos=", x, y, z);
+
+		Count++;
+	}
+
+	fclose(WriteFile);
 
 	return 1;
 }

@@ -1,0 +1,83 @@
+material ropes02.mat/TWOSIDE/TEXFACE/bridgeropes.png
+{
+	technique
+	{
+		pass
+		{
+			cull_hardware none
+			cull_software none
+			
+			lighting off
+			scene_blend alpha_blend
+		      	depth_write on
+		      	alpha_rejection greater 128
+			texture_unit
+			{
+				texture bridgeropes.png
+			}
+		}
+
+	}
+}
+material ropes01.mat/TWOSIDE/TEXFACE/bridgeropes.png
+{
+	technique
+	{
+		pass
+		{
+			cull_hardware none
+			cull_software none
+			
+			lighting off
+			scene_blend alpha_blend
+		      	depth_write on
+		      	alpha_rejection greater 128	
+			texture_unit
+			{
+				texture bridgeropes.png
+			}
+		}
+
+	}
+}
+material pole.01.mat/TEXFACE/pole.end.jpg
+{
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{
+				texture pole.end.jpg
+			}
+		}
+	}
+}
+material steps.mat/TEXFACE/steps.jpg
+{
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{
+				texture steps.jpg
+			}
+		}
+	}
+}
+material pole.01.mat/TEXFACE/pole.jpg
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture pole.jpg
+			}
+		}
+
+	}
+}
