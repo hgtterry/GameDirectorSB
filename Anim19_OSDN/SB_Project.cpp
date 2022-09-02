@@ -466,7 +466,7 @@ bool SB_Project::Save_Objects_Data()
 	fprintf(WriteFile, "%s\n", " ");
 
 	fprintf(WriteFile, "%s\n", "[Counters]");
-	fprintf(WriteFile, "%s%i\n", "Aeras_Count=", App->SBC_Scene->Object_Count);
+	fprintf(WriteFile, "%s%i\n", "Objects_Count=", App->SBC_Scene->Object_Count);
 
 	fprintf(WriteFile, "%s\n", " ");
 
@@ -773,7 +773,7 @@ bool SB_Project::Load_Project()
 	// ------------------------------------- Objects
 	if (Options->Has_Objects > 0)
 	{
-
+		Load_Project_Objects();
 	}
 
 	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
@@ -819,6 +819,67 @@ bool SB_Project::Load_Project()
 
 	App->Set_Main_TitleBar(App->SBC_FileIO->Project_Path_File_Name);
 	App->SBC_FileIO->RecentFileHistory_Update();
+	return 1;
+}
+
+// *************************************************************************
+// *	  				Load_Project_Objects Terry Flanigan				   *
+// *************************************************************************
+bool SB_Project::Load_Project_Objects()
+{
+	char Area_Ini_Path[MAX_PATH];
+	char chr_Tag1[MAX_PATH];
+	char Area_Name[1024];
+	char Mesh_FileName[MAX_PATH];
+	char Resource_Location[MAX_PATH];
+	int Object_Count = 0;
+	float x = 0;
+	float y = 0;
+	float z = 0;
+
+	strcpy(Area_Ini_Path, m_Project_Sub_Folder);
+	strcat(Area_Ini_Path, "\\");
+
+	strcat(Area_Ini_Path, m_Level_Name);
+	strcat(Area_Ini_Path, "\\");
+
+	strcat(Area_Ini_Path, "Objects");
+	strcat(Area_Ini_Path, "\\");
+
+	strcat(Area_Ini_Path, "Objects.efd");
+
+	App->Cl_Ini->SetPathName(Area_Ini_Path);
+
+	Object_Count = App->Cl_Ini->GetInt("Counters", "Objects_Count", 0);
+
+	App->Say_Int(Object_Count);
+
+	int Count = 0;
+
+	while (Count < Object_Count)
+	{
+
+		/*App->Cl_Ini->GetString("Aera_0", "Aera_Name", Area_Name, MAX_PATH);
+		App->Cl_Ini->GetString("Aera_0", "Aera_File", Mesh_FileName, MAX_PATH);
+		App->Cl_Ini->GetString("Aera_0", "Aera_Resource_Path", Resource_Location, MAX_PATH);
+
+		App->SBC_Aera->Add_Aera_To_Project(Count, Mesh_FileName, Resource_Location);
+
+		App->Cl_Ini->GetString("Position", "Mesh_Pos", chr_Tag1, 1024);
+		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+
+		App->SBC_Scene->SBC_Base_Area[Count]->Area_Node->setPosition(x, y, z);
+		App->SBC_Scene->SBC_Base_Area[Count]->Phys_Body->getWorldTransform().setOrigin(btVector3(x, y, z));
+		App->SBC_Scene->SBC_Base_Area[Count]->Physics_Pos = Ogre::Vector3(x, y, z);
+
+		strcpy(App->SBC_Scene->SBC_Base_Area[Count]->Area_Name, Area_Name);
+		App->SBC_Scene->SBC_Base_Area[Count]->FileViewItem = App->SBC_FileView->Add_Area(Area_Name, Count);*/
+
+		Count++;
+	}
+
+	//App->SBC_FileView->Set_FolderActive(App->SBC_FileView->GD_Rooms);
+
 	return 1;
 }
 

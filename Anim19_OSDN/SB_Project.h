@@ -79,6 +79,8 @@ protected:
 	bool Load_Project_Aera();
 	bool Load_Project_Player();
 	bool Load_Project_Camera();
+	bool Load_Project_Objects();
+
 	void Set_Paths();
 
 	FILE *WriteFile;
