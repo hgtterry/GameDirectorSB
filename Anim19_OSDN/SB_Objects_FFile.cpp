@@ -1,20 +1,20 @@
 #include "StdAfx.h"
 #include "GD19_App.h"
-#include "GD19_Objects_FFile.h"
+#include "SB_Objects_FFile.h"
 
-GD19_Objects_FFile::GD19_Objects_FFile(void)
+SB_Objects_FFile::SB_Objects_FFile(void)
 {
 	
 }
 
-GD19_Objects_FFile::~GD19_Objects_FFile(void)
+SB_Objects_FFile::~SB_Objects_FFile(void)
 {
 }
 
 // *************************************************************************
 //					Add_Objects_FromFile Terry Bernie					   *
 // *************************************************************************
-bool GD19_Objects_FFile::Add_Objects_FromFile() // From File
+bool SB_Objects_FFile::Add_Objects_FromFile() // From File
 {
 	/*char ConNum[256];
 	char ATest[256];
@@ -60,7 +60,7 @@ bool GD19_Objects_FFile::Add_Objects_FromFile() // From File
 	return 1;
 }
 
-bool GD19_Objects_FFile::Add_Object_FFile(int Object_Index)
+bool SB_Objects_FFile::Add_Object_FFile(int Object_Index)
 {
 	char ConNum[256];
 	char ATest[256];
@@ -155,7 +155,7 @@ bool GD19_Objects_FFile::Add_Object_FFile(int Object_Index)
 // *************************************************************************
 //						Add_SoundEntity Terry Bernie					   *
 // *************************************************************************
-bool GD19_Objects_FFile::Add_SoundEntity_FFile(int Object_Index)
+bool SB_Objects_FFile::Add_SoundEntity_FFile(int Object_Index)
 {
 	char ConNum[256];
 	char ATest[256];
@@ -228,7 +228,7 @@ bool GD19_Objects_FFile::Add_SoundEntity_FFile(int Object_Index)
 // *************************************************************************
 //						Add_MessageEntity Terry Bernie					   *
 // *************************************************************************
-bool GD19_Objects_FFile::Add_MessageEntity_FFile(int Object_Index)
+bool SB_Objects_FFile::Add_MessageEntity_FFile(int Object_Index)
 {
 	char ConNum[256];
 	char ATest[256];
@@ -304,7 +304,7 @@ bool GD19_Objects_FFile::Add_MessageEntity_FFile(int Object_Index)
 // *************************************************************************
 //						Add_MoveEntity Terry Bernie						   *
 // *************************************************************************
-bool GD19_Objects_FFile::Add_MoveEntity_FFile(int Object_Index)
+bool SB_Objects_FFile::Add_MoveEntity_FFile(int Object_Index)
 {
 	int Index = Object_Index;
 	GD19_Objects* Object = App->Cl_Scene_Data->Cl_Object[Index];
@@ -394,7 +394,7 @@ bool GD19_Objects_FFile::Add_MoveEntity_FFile(int Object_Index)
 // *************************************************************************
 //				Add_CollectableEntity_FFile Terry Bernie				   *
 // *************************************************************************
-bool GD19_Objects_FFile::Add_CollectableEntity_FFile(int Object_Index)
+bool SB_Objects_FFile::Add_CollectableEntity_FFile(int Object_Index)
 {
 	char ConNum[256];
 	char ATest[256];
@@ -468,7 +468,7 @@ bool GD19_Objects_FFile::Add_CollectableEntity_FFile(int Object_Index)
 // *************************************************************************
 //						Add_TeleportEntity_FFile Terry Bernie			   *
 // *************************************************************************
-bool GD19_Objects_FFile::Add_TeleportEntity_FFile(int Object_Index)
+bool SB_Objects_FFile::Add_TeleportEntity_FFile(int Object_Index)
 {
 	char ConNum[256];
 	char ATest[256];
@@ -544,7 +544,7 @@ bool GD19_Objects_FFile::Add_TeleportEntity_FFile(int Object_Index)
 // *************************************************************************
 //					Add_Physics_Static_Box_FFile Terry Bernie			   *
 // *************************************************************************
-void GD19_Objects_FFile::Add_Physics_Static_Box_FFile(bool Dynamic, int Object_Index)
+void SB_Objects_FFile::Add_Physics_Static_Box_FFile(bool Dynamic, int Object_Index)
 {
 	int Index = Object_Index;
 	GD19_Objects* Object = App->Cl_Scene_Data->Cl_Object[Index];
@@ -589,7 +589,7 @@ void GD19_Objects_FFile::Add_Physics_Static_Box_FFile(bool Dynamic, int Object_I
 // *************************************************************************
 //						Add_Physics_Static_Sphere Terry Bernie			   *
 // *************************************************************************
-void GD19_Objects_FFile::Add_Physics_Static_Sphere_FFile(bool Dynamic, int Object_Index)
+void SB_Objects_FFile::Add_Physics_Static_Sphere_FFile(bool Dynamic, int Object_Index)
 {
 	int Index = Object_Index;
 	GD19_Objects* Object = App->Cl_Scene_Data->Cl_Object[Index];
@@ -634,7 +634,7 @@ void GD19_Objects_FFile::Add_Physics_Static_Sphere_FFile(bool Dynamic, int Objec
 // *************************************************************************
 //					Add_Physics_Static_Capsule_FFile Terry Bernie		   *
 // *************************************************************************
-void GD19_Objects_FFile::Add_Physics_Static_Capsule_FFile(bool Dynamic, int Object_Index)
+void SB_Objects_FFile::Add_Physics_Static_Capsule_FFile(bool Dynamic, int Object_Index)
 {
 	int Index = Object_Index;
 	GD19_Objects* Object = App->Cl_Scene_Data->Cl_Object[Index];
@@ -679,7 +679,7 @@ void GD19_Objects_FFile::Add_Physics_Static_Capsule_FFile(bool Dynamic, int Obje
 // *************************************************************************
 //						Add_Physics_Capsule_Cylinder Terry Bernie		   *
 // *************************************************************************
-void GD19_Objects_FFile::Add_Physics_Static_Cylinder_FFile(bool Dynamic, int Object_Index)
+void SB_Objects_FFile::Add_Physics_Static_Cylinder_FFile(bool Dynamic, int Object_Index)
 {
 	int Index = Object_Index;
 	GD19_Objects* Object = App->Cl_Scene_Data->Cl_Object[Index];
@@ -724,7 +724,7 @@ void GD19_Objects_FFile::Add_Physics_Static_Cylinder_FFile(bool Dynamic, int Obj
 // *************************************************************************
 //					Add_Physics_Static_Cone_FFile Terry Bernie			   *
 // *************************************************************************
-void GD19_Objects_FFile::Add_Physics_Static_Cone_FFile(bool Dynamic, int Object_Index)
+void SB_Objects_FFile::Add_Physics_Static_Cone_FFile(bool Dynamic, int Object_Index)
 {
 	int Index = Object_Index;
 	GD19_Objects* Object = App->Cl_Scene_Data->Cl_Object[Index];

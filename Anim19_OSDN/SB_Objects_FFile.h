@@ -1,9 +1,9 @@
 #pragma once
-class GD19_Objects_FFile
+class SB_Objects_FFile
 {
 public:
-	GD19_Objects_FFile(void);
-	~GD19_Objects_FFile(void);
+	SB_Objects_FFile(void);
+	~SB_Objects_FFile(void);
 
 	bool Add_Objects_FromFile(); // From File
 	bool Add_Object_FFile(int Object_Index);

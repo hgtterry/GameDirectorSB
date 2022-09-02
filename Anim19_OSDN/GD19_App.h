@@ -41,7 +41,6 @@ distribution.
 #include "GD19_Object_Properties.h"
 #include "GD19_Stock.h"
 #include "GD19_LookUps.h"
-#include "GD19_Objects_FFile.h"
 #include "GD_spdlog.h"
 #include "GD19_PB.h"
 #include "GD_Keyboard.h"
@@ -72,6 +71,7 @@ distribution.
 #include "SB_Debug.h"
 #include "SB_FileIO.h"
 #include "SB_Objects_New.h"
+#include "SB_Objects_FFile.h"
 #include "SB_Object.h"
 
 #include "Com_Diaolgs.h"
@@ -101,8 +101,6 @@ public:
 	GD19_Object_Properties* Cl_Object_Props;
 	GD19_Stock*			Cl_Stock;
 	GD19_LookUps*		Cl_LookUps;
-	
-	GD19_Objects_FFile*	Cl_Objects_FFile;
 	GD_spdlog*			Cl_spdlog;
 	GD19_PB*			Cl_PB;
 	GD_Keyboard*		Cl_Keyboard;
@@ -135,6 +133,7 @@ public:
 	SB_FileIO*				SBC_FileIO;
 	SB_Import_Room*			SBC_Import_Room;
 	SB_Objects_New*			SBC_Objects_New;
+	SB_Objects_FFile*		SBC_Objects_FFile;
 	SB_Object*				SBC_Object;
 
 	Com_Diaolgs*			Com_CDialogs;		// Common Dialogs for App [291221]

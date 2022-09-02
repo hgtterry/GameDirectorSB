@@ -173,7 +173,6 @@
     <ClInclude Include="GD19_LookUps.h" />
     <ClInclude Include="GD19_Objects.h" />
     <ClInclude Include="GD19_Objects_Com.h" />
-    <ClInclude Include="GD19_Objects_FFile.h" />
     <ClInclude Include="GD19_Object_Properties.h" />
     <ClInclude Include="GD19_OSDN.h" />
     <ClInclude Include="GD19_App.h" />
@@ -203,6 +202,7 @@
     <ClInclude Include="SB_Import_Room.h" />
     <ClInclude Include="SB_MeshViewer.h" />
     <ClInclude Include="SB_Object.h" />
+    <ClInclude Include="SB_Objects_FFile.h" />
     <ClInclude Include="SB_Objects_New.h" />
     <ClInclude Include="SB_Physics.h" />
     <ClInclude Include="SB_Player.h" />
@@ -240,7 +240,6 @@
     <ClCompile Include="GD19_LookUps.cpp" />
     <ClCompile Include="GD19_Objects.cpp" />
     <ClCompile Include="GD19_Objects_Com.cpp" />
-    <ClCompile Include="GD19_Objects_FFile.cpp" />
     <ClCompile Include="GD19_Object_Properties.cpp" />
     <ClCompile Include="GD19_OSDN.cpp" />
     <ClCompile Include="GD19_App.cpp" />
@@ -269,6 +268,7 @@
     <ClCompile Include="SB_Import_Room.cpp" />
     <ClCompile Include="SB_MeshViewer.cpp" />
     <ClCompile Include="SB_Object.cpp" />
+    <ClCompile Include="SB_Objects_FFile.cpp" />
     <ClCompile Include="SB_Objects_New.cpp" />
     <ClCompile Include="SB_Physics.cpp" />
     <ClCompile Include="SB_Player.cpp" />
