@@ -60,6 +60,7 @@ bool SB_Objects_New::Add_New_Object()
 
 	strcpy(Object->Mesh_Name, App->SBC_MeshViewer->Object_Name);
 	strcpy(Object->Mesh_FileName, App->SBC_MeshViewer->Selected_MeshFile);
+	strcpy(Object->Mesh_Resource_Path, App->SBC_MeshViewer->Folder_Vec[0].Folder_Path);
 
 	char PathFile[256];
 	char ConNum[256];

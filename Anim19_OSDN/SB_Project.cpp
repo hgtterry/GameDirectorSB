@@ -489,7 +489,7 @@ bool SB_Project::Save_Objects_Data()
 
 		fprintf(WriteFile, "%s%s\n", "Mesh_Name=", App->SBC_Scene->B_Object[Count]->Mesh_Name); // Change
 
-		fprintf(WriteFile, "%s%s\n", "Mesh_File=", App->SBC_Scene->B_Object[Count]->Mesh_Name);
+		fprintf(WriteFile, "%s%s\n", "Mesh_File=", App->SBC_Scene->B_Object[Count]->Mesh_FileName);
 		fprintf(WriteFile, "%s%s\n", "Mesh_Resource_Path=", App->SBC_Scene->B_Object[Count]->Mesh_Resource_Path);
 
 		x = App->SBC_Scene->B_Object[Count]->Object_Node->getPosition().x;
