@@ -36,10 +36,9 @@ public:
 	btRigidBody			*Phys_Body;
 	btCollisionShape	*Phys_Shape;
 
-	char Name[255];
-	char MeshName[255];				// Mesh Name Mesh.mesh
-	char MeshName_FullPath[255];
-	char Mesh_Resource_Path[255];
+	char Mesh_Name[MAX_PATH];				// Mesh Name Mesh.mesh
+	char Mesh_FileName[MAX_PATH];
+	char Mesh_Resource_Path[MAX_PATH];
 
 	//------------------------------ Description
 	int Type;

@@ -58,24 +58,20 @@ bool SB_Objects_New::Add_New_Object()
 
 	Base_Object* Object = App->SBC_Scene->B_Object[Index];
 
-	strcpy(Object->Name, App->SBC_MeshViewer->Object_Name);
-	strcpy(Object->MeshName, App->SBC_MeshViewer->Selected_MeshFile);
-	strcpy(Object->MeshName_FullPath, App->SBC_MeshViewer->Selected_MeshFile);
+	strcpy(Object->Mesh_Name, App->SBC_MeshViewer->Object_Name);
+	strcpy(Object->Mesh_FileName, App->SBC_MeshViewer->Selected_MeshFile);
 
 	char PathFile[256];
 	char ConNum[256];
 	char ATest[256];
 	
+	App->SBC_Scene->Add_Resource_Location(App->SBC_MeshViewer->Folder_Vec[0].Folder_Path);
 	
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(App->SBC_MeshViewer->Folder_Vec[0].Folder_Path, "FileSystem", App->SBC_Scene->Project_Resource_Group);
-	Ogre::ResourceGroupManager::getSingleton().clearResourceGroup(App->SBC_Scene->Project_Resource_Group);
-	Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(App->SBC_Scene->Project_Resource_Group);
-
 	strcpy_s(ATest, "GDEnt_");
 	_itoa(Index, ConNum, 10);
 	strcat(ATest, ConNum);
 
-	strcpy(PathFile,Object->MeshName);
+	strcpy(PathFile,Object->Mesh_FileName);
 	Object->Object_Ent = App->Cl19_Ogre->mSceneMgr->createEntity(ATest, PathFile, App->SBC_Scene->Project_Resource_Group);
 	Object->Object_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Object->Object_Node->attachObject(Object->Object_Ent);

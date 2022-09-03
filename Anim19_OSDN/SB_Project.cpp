@@ -487,9 +487,9 @@ bool SB_Project::Save_Objects_Data()
 
 		fprintf(WriteFile, "%s\n", buff); // Header also Player name until changed by user
 
-		fprintf(WriteFile, "%s%s\n", "Mesh_Name=", App->SBC_Scene->B_Object[Count]->Name); // Change
+		fprintf(WriteFile, "%s%s\n", "Mesh_Name=", App->SBC_Scene->B_Object[Count]->Mesh_Name); // Change
 
-		fprintf(WriteFile, "%s%s\n", "Mesh_File=", App->SBC_Scene->B_Object[Count]->MeshName);
+		fprintf(WriteFile, "%s%s\n", "Mesh_File=", App->SBC_Scene->B_Object[Count]->Mesh_Name);
 		fprintf(WriteFile, "%s%s\n", "Mesh_Resource_Path=", App->SBC_Scene->B_Object[Count]->Mesh_Resource_Path);
 
 		x = App->SBC_Scene->B_Object[Count]->Object_Node->getPosition().x;
@@ -774,6 +774,7 @@ bool SB_Project::Load_Project()
 	if (Options->Has_Objects > 0)
 	{
 		Load_Project_Objects();
+		App->SBC_Objects_FFile->Add_Objects_FromFile();
 	}
 
 	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
@@ -827,56 +828,52 @@ bool SB_Project::Load_Project()
 // *************************************************************************
 bool SB_Project::Load_Project_Objects()
 {
-	char Area_Ini_Path[MAX_PATH];
-	char chr_Tag1[MAX_PATH];
-	char Area_Name[1024];
-	char Mesh_FileName[MAX_PATH];
-	char Resource_Location[MAX_PATH];
+	char Object_Ini_Path[MAX_PATH];
+	
 	int Object_Count = 0;
+
 	float x = 0;
 	float y = 0;
 	float z = 0;
 
-	strcpy(Area_Ini_Path, m_Project_Sub_Folder);
-	strcat(Area_Ini_Path, "\\");
+	strcpy(Object_Ini_Path, m_Project_Sub_Folder);
+	strcat(Object_Ini_Path, "\\");
 
-	strcat(Area_Ini_Path, m_Level_Name);
-	strcat(Area_Ini_Path, "\\");
+	strcat(Object_Ini_Path, m_Level_Name);
+	strcat(Object_Ini_Path, "\\");
 
-	strcat(Area_Ini_Path, "Objects");
-	strcat(Area_Ini_Path, "\\");
+	strcat(Object_Ini_Path, "Objects");
+	strcat(Object_Ini_Path, "\\");
 
-	strcat(Area_Ini_Path, "Objects.efd");
+	strcat(Object_Ini_Path, "Objects.efd");
 
-	App->Cl_Ini->SetPathName(Area_Ini_Path);
+	App->Cl_Ini->SetPathName(Object_Ini_Path);
 
 	Object_Count = App->Cl_Ini->GetInt("Counters", "Objects_Count", 0);
-
-	App->Say_Int(Object_Count);
 
 	int Count = 0;
 
 	while (Count < Object_Count)
 	{
+		char n_buff[255];
+		char buff[255];
+		strcpy(buff, "Object_");
+		_itoa(Count, n_buff, 10);
+		strcat(buff, n_buff);
 
-		/*App->Cl_Ini->GetString("Aera_0", "Aera_Name", Area_Name, MAX_PATH);
-		App->Cl_Ini->GetString("Aera_0", "Aera_File", Mesh_FileName, MAX_PATH);
-		App->Cl_Ini->GetString("Aera_0", "Aera_Resource_Path", Resource_Location, MAX_PATH);
+		App->SBC_Scene->B_Object[Count] = new Base_Object();
+		Base_Object* Object = App->SBC_Scene->B_Object[Count];
 
-		App->SBC_Aera->Add_Aera_To_Project(Count, Mesh_FileName, Resource_Location);
-
-		App->Cl_Ini->GetString("Position", "Mesh_Pos", chr_Tag1, 1024);
-		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
-
-		App->SBC_Scene->SBC_Base_Area[Count]->Area_Node->setPosition(x, y, z);
-		App->SBC_Scene->SBC_Base_Area[Count]->Phys_Body->getWorldTransform().setOrigin(btVector3(x, y, z));
-		App->SBC_Scene->SBC_Base_Area[Count]->Physics_Pos = Ogre::Vector3(x, y, z);
-
-		strcpy(App->SBC_Scene->SBC_Base_Area[Count]->Area_Name, Area_Name);
-		App->SBC_Scene->SBC_Base_Area[Count]->FileViewItem = App->SBC_FileView->Add_Area(Area_Name, Count);*/
+		App->Cl_Ini->GetString(buff, "Mesh_Name", Object->Mesh_Name, MAX_PATH);
+		App->Cl_Ini->GetString(buff, "Mesh_File", Object->Mesh_FileName, MAX_PATH);
+		App->Cl_Ini->GetString(buff, "Mesh_Resource_Path", Object->Mesh_Resource_Path, MAX_PATH);
+		
+		App->SBC_Scene->Add_Resource_Location(Object->Mesh_Resource_Path);
 
 		Count++;
 	}
+
+	App->SBC_Scene->Object_Count = Count;
 
 	//App->SBC_FileView->Set_FolderActive(App->SBC_FileView->GD_Rooms);
 

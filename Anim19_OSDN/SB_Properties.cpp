@@ -343,7 +343,7 @@ bool SB_Properties::Update_ListView_Objects()
 	_itoa(index, Num, 10);
 
 	char buff[255];
-	strcpy(buff, App->SBC_Scene->B_Object[index]->Name);
+	strcpy(buff, App->SBC_Scene->B_Object[index]->Mesh_Name);
 	strcat(buff, "   (Object-");
 	strcat(buff, Num);
 	strcat(buff, ")");
@@ -371,8 +371,8 @@ bool SB_Properties::Update_ListView_Objects()
 	memset(&pitem, 0, sizeof(LV_ITEM));
 	pitem.mask = LVIF_TEXT;
 
-	grid[0][0] = "Name",		grid[1][0] = App->SBC_Scene->B_Object[index]->Name;
-	grid[0][1] = "Mesh File",	grid[1][1] = App->SBC_Scene->B_Object[index]->MeshName;
+	grid[0][0] = "Name",		grid[1][0] = App->SBC_Scene->B_Object[index]->Mesh_Name;
+	grid[0][1] = "Mesh File",	grid[1][1] = App->SBC_Scene->B_Object[index]->Mesh_FileName;
 	grid[0][2] = " ",			grid[1][2] = " ";
 	grid[0][3] = "Scale",		grid[1][3] = chr_Scale;
 

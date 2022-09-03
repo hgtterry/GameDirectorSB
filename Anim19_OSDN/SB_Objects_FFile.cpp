@@ -21,35 +21,36 @@ bool SB_Objects_FFile::Add_Objects_FromFile() // From File
 	char Name[255];
 	char Mesh_File[255];*/
 
-	int Object_Count = App->Cl_Scene_Data->ObjectCount;
+	int Object_Count = App->SBC_Scene->Object_Count;
 	int Count = 0;
 
 	while (Count < Object_Count)
 	{
-		if (App->Cl_Scene_Data->Cl_Object[Count]->Usage == Enums::Usage_Sound)
-		{
-			Add_SoundEntity_FFile(Count);
-		}
-		else if (App->Cl_Scene_Data->Cl_Object[Count]->Usage == Enums::Usage_Message)
-		{
-			Add_MessageEntity_FFile(Count);
-		}
-		else if (App->Cl_Scene_Data->Cl_Object[Count]->Usage == Enums::Usage_Move)
-		{
-			Add_MoveEntity_FFile(Count);
-		}
-		else if (App->Cl_Scene_Data->Cl_Object[Count]->Usage == Enums::Usage_Colectable)
-		{
-			Add_CollectableEntity_FFile(Count);
-		}
-		else if (App->Cl_Scene_Data->Cl_Object[Count]->Usage == Enums::Usage_Teleport)
-		{
-			Add_TeleportEntity_FFile(Count);
-		}
-		else
-		{
+		//if (App->Cl_Scene_Data->Cl_Object[Count]->Usage == Enums::Usage_Sound)
+		//{
+		//	//Add_SoundEntity_FFile(Count);
+		//}
+		//else if (App->Cl_Scene_Data->Cl_Object[Count]->Usage == Enums::Usage_Message)
+		//{
+		//	//Add_MessageEntity_FFile(Count);
+		//}
+		//else if (App->Cl_Scene_Data->Cl_Object[Count]->Usage == Enums::Usage_Move)
+		//{
+		//	//Add_MoveEntity_FFile(Count);
+		//}
+		//else if (App->Cl_Scene_Data->Cl_Object[Count]->Usage == Enums::Usage_Colectable)
+		//{
+		//	//Add_CollectableEntity_FFile(Count);
+		//}
+		//else if (App->Cl_Scene_Data->Cl_Object[Count]->Usage == Enums::Usage_Teleport)
+		//{
+		//	//Add_TeleportEntity_FFile(Count);
+		//}
+		//else
+		//{
+			
 			Add_Object_FFile(Count);
-		}
+		//}
 
 		Count++;
 	}
@@ -66,30 +67,31 @@ bool SB_Objects_FFile::Add_Object_FFile(int Object_Index)
 	char ATest[256];
 	char Mesh_File[255];
 	int Count = Object_Index;
-
-	GD19_Objects* Object = App->Cl_Scene_Data->Cl_Object[Count];
-
+	
+	Base_Object* Object = App->SBC_Scene->B_Object[Count];
+	
 	strcpy(ATest, "GDEnt_");
 	_itoa(Count, ConNum, 10);
 	strcat(ATest, ConNum);
 
-	strcpy(Mesh_File, Object->MeshName);
+	strcpy(Mesh_File, Object->Mesh_FileName);
 
-	Object->OgreEntity = App->Cl19_Ogre->mSceneMgr->createEntity(ATest, Mesh_File, App->Cl19_Ogre->App_Resource_Group);
-	Object->OgreNode = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	Object->OgreNode->attachObject(Object->OgreEntity);
+	Object->Object_Ent = App->Cl19_Ogre->mSceneMgr->createEntity(ATest, Mesh_File, App->SBC_Scene->Project_Resource_Group);
+	Object->Object_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	Object->Object_Node->attachObject(Object->Object_Ent);
 
-	Object->OgreNode->setVisible(true);
-	Object->OgreNode->setScale(Object->Mesh_Scale);
+	Object->Object_Node->setVisible(true);
+	//Object->Object_Node->setScale(Object->Mesh_Scale);
 
-	Ogre::Vector3 Pos = Object->Mesh_Pos;
-	Ogre::Quaternion Rot = Object->Mesh_Quat;
+	//Ogre::Vector3 Pos = Object->Mesh_Pos;
+	//Ogre::Quaternion Rot = Object->Mesh_Quat;
 
-	Object->OgreNode->setOrientation(Rot);
-	Object->OgreNode->setPosition(Pos);
+	//Object->Object_Node->setOrientation(Rot);
+	//Object->Object_Node->setPosition(Pos);
+
 
 	//---------------------- Static and Dynamic
-	if (Object->Type == Enums::Bullet_Type_Static || Object->Type == Enums::Bullet_Type_Dynamic)
+	/*if (Object->Type == Enums::Bullet_Type_Static || Object->Type == Enums::Bullet_Type_Dynamic)
 	{
 		if (Object->Shape == Enums::Shape_Box)
 		{
@@ -120,34 +122,33 @@ bool SB_Objects_FFile::Add_Object_FFile(int Object_Index)
 			Add_Physics_Static_Cone_FFile(false, Count);
 			Object->Physics_Valid = 1;
 		}
-	}
+	}*/
 
 	//---------------------- Tri_Mesh
-	if (Object->Shape == Enums::Shape_TriMesh)
-	{
-		Object->createTrimesh(Object->OgreEntity, Count);
-		Object->Physics_Valid = 1;
-	}
+//	if (Object->Shape == Enums::Shape_TriMesh)
+//	{
+//		//Object->createTrimesh(Object->OgreEntity, Count);
+//		//Object->Physics_Valid = 1;
+//	}
+//
+//	if (Object->Usage == Enums::Usage_Room) // Rooms
+//	{
+////		HTREEITEM Temp = App->Cl_FileView->Add_Room_Object(Object->Name, Count);
+////		Object->ListViewItem = Temp;
+//
+//
+//		App->Cl_Scene_Data->Scene_Has_Area = 1;
+//	}
+//	else
+//	{
+		HTREEITEM Temp = App->SBC_FileView->Add_ObjectFile(Object->Mesh_Name, Count);
+		Object->ListViewItem = Temp;
 
-	if (Object->Usage == Enums::Usage_Room) // Rooms
-	{
-//		HTREEITEM Temp = App->Cl_FileView->Add_Room_Object(Object->Name, Count);
-//		Object->ListViewItem = Temp;
+	//}
 
-
-		App->Cl_Scene_Data->Scene_Has_Area = 1;
-	}
-	else
-	{
-//		HTREEITEM Temp = App->Cl_FileView->Add_MiscFile(Object->Name, Count);
-//		Object->ListViewItem = Temp;
-
-	
-	}
-
-	App->SBC_FileView->Select_Item(NULL);
+	/*App->SBC_FileView->Select_Item(NULL);
 	ShowWindow(App->GD_Properties_Hwnd, 1);
-	App->Cl19_Ogre->OgreListener->Dubug_Physics_Draw = 1;
+	App->Cl19_Ogre->OgreListener->Dubug_Physics_Draw = 1;*/
 
 	return 1;
 }

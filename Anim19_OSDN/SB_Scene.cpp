@@ -143,16 +143,10 @@ bool SB_Scene::Delete_Resources_Group()
 // *************************************************************************
 bool SB_Scene::Add_Resource_Location(char* Resource_Location)
 {
-
-	//bool Test = Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(Project_Resource_Group);
-
-	//if (Test == 1)
-	{
-		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(Resource_Location, "FileSystem", Project_Resource_Group);
-	}
-
+	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(Resource_Location, "FileSystem", Project_Resource_Group);
+	Ogre::ResourceGroupManager::getSingleton().clearResourceGroup(Project_Resource_Group);
 	Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(Project_Resource_Group);
-
+	
 	return 1;
 }
 

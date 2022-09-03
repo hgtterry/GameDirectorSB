@@ -45,9 +45,8 @@ bool Base_Object::Init_Object(void)
 	Phys_Body = nullptr;
 	Phys_Shape = nullptr;
 
-	strcpy(Name, "None");
-	strcpy(MeshName, "None");
-	strcpy(MeshName_FullPath, "None");
+	strcpy(Mesh_Name, "None");
+	strcpy(Mesh_FileName, "None");
 	Mesh_Resource_Path[0] = 0;
 
 	// Actor Scale ------------------------------------------------------
