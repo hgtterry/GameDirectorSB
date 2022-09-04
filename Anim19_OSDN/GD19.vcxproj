@@ -202,6 +202,7 @@
     <ClInclude Include="SB_Import_Room.h" />
     <ClInclude Include="SB_MeshViewer.h" />
     <ClInclude Include="SB_Object.h" />
+    <ClInclude Include="SB_Objects_Create.h" />
     <ClInclude Include="SB_Objects_FFile.h" />
     <ClInclude Include="SB_Objects_New.h" />
     <ClInclude Include="SB_Physics.h" />
@@ -268,6 +269,7 @@
     <ClCompile Include="SB_Import_Room.cpp" />
     <ClCompile Include="SB_MeshViewer.cpp" />
     <ClCompile Include="SB_Object.cpp" />
+    <ClCompile Include="SB_Objects_Create.cpp" />
     <ClCompile Include="SB_Objects_FFile.cpp" />
     <ClCompile Include="SB_Objects_New.cpp" />
     <ClCompile Include="SB_Physics.cpp" />

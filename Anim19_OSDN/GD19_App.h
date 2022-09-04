@@ -73,6 +73,7 @@ distribution.
 #include "SB_Objects_New.h"
 #include "SB_Objects_FFile.h"
 #include "SB_Object.h"
+#include "SB_Objects_Create.h"
 
 #include "Com_Diaolgs.h"
 #include "SB_Import_Room.h"
@@ -135,6 +136,7 @@ public:
 	SB_Objects_New*			SBC_Objects_New;
 	SB_Objects_FFile*		SBC_Objects_FFile;
 	SB_Object*				SBC_Object;
+	SB_Objects_Create*		SBC_Objects_Create;
 
 	Com_Diaolgs*			Com_CDialogs;		// Common Dialogs for App [291221]
 	// ----------------------------------- 

@@ -91,13 +91,13 @@ bool SB_Objects_FFile::Add_Object_FFile(int Object_Index)
 
 
 	//---------------------- Static and Dynamic
-	/*if (Object->Type == Enums::Bullet_Type_Static || Object->Type == Enums::Bullet_Type_Dynamic)
+	if (Object->Type == Enums::Bullet_Type_Static || Object->Type == Enums::Bullet_Type_Dynamic)
 	{
-		if (Object->Shape == Enums::Shape_Box)
-		{
-			Add_Physics_Static_Box_FFile(false, Count);
-			Object->Physics_Valid = 1;
-		}
+		/*if (Object->Shape == Enums::Shape_Box)
+		{*/
+//			Add_Physics_Static_Box_FFile(false, Count);
+//			Object->Physics_Valid = 1;
+		/*}
 
 		if (Object->Shape == Enums::Sphere)
 		{
@@ -121,8 +121,8 @@ bool SB_Objects_FFile::Add_Object_FFile(int Object_Index)
 		{
 			Add_Physics_Static_Cone_FFile(false, Count);
 			Object->Physics_Valid = 1;
-		}
-	}*/
+		}*/
+	}
 
 	//---------------------- Tri_Mesh
 //	if (Object->Shape == Enums::Shape_TriMesh)

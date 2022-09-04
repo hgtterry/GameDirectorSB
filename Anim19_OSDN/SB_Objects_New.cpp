@@ -94,6 +94,9 @@ bool SB_Objects_New::Add_New_Object()
 	{
 		if (App->SBC_MeshViewer->Physics_Shape == Enums::Shape_Box)
 		{
+			Object->Type = Enums::Bullet_Type_Static;
+			Object->Shape = Enums::Shape_Box;
+
 			Add_New_Physics_Static_Box(false);
 			Object->Physics_Valid = 1;
 		}
@@ -126,13 +129,16 @@ bool SB_Objects_New::Add_New_Object()
 	////---------------------- Dynamic
 	if (App->SBC_MeshViewer->Physics_Type == Enums::Bullet_Type_Dynamic)
 	{
-		/*if (App->SBC_MeshViewer->Physics_Shape == Enums::Shape_Box)
+		if (App->SBC_MeshViewer->Physics_Shape == Enums::Shape_Box)
 		{
+			Object->Type = Enums::Bullet_Type_Dynamic;
+			Object->Shape = Enums::Shape_Box;
+
 			Add_New_Physics_Static_Box(true);
 			Object->Physics_Valid = 1;
 		}
 
-		if (App->SBC_MeshViewer->Physics_Shape == Enums::Sphere)
+		/*if (App->SBC_MeshViewer->Physics_Shape == Enums::Sphere)
 		{
 			Add_New_Physics_Static_Sphere(true);
 			Object->Physics_Valid = 1;
@@ -1207,14 +1213,14 @@ void SB_Objects_New::Add_New_Physics_Static_Box(bool Dynamic)
 
 	if (Dynamic == 1)
 	{
-		Object->Type = Enums::Bullet_Type_Dynamic;
-		Object->Shape = Enums::Shape_Box;
+		/*Object->Type = Enums::Bullet_Type_Dynamic;
+		Object->Shape = Enums::Shape_Box;*/
 
 	}
 	else
 	{
-		Object->Type = Enums::Bullet_Type_Static;
-		Object->Shape = Enums::Shape_Box;
+		/*Object->Type = Enums::Bullet_Type_Static;
+		Object->Shape = Enums::Shape_Box;*/
 	}
 
 	AxisAlignedBox worldAAB = Object->Object_Ent->getBoundingBox();
