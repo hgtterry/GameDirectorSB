@@ -29,9 +29,6 @@ public:
 	SB_Objects_New(void);
 	~SB_Objects_New(void);
 
-	bool Dispatcher_New_Object();
-
-	bool Add_New_Object();
 	bool Add_New_CollectableEntity();
 	bool Add_New_MessageEntity();
 	bool Add_New_MoveEntity();

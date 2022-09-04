@@ -197,7 +197,7 @@ bool GD19_Objects_Com::Paste_Object()
 	else
 	{
 		Pre_Paste();
-		App->SBC_Objects_New->Add_New_Object(); // Create Object
+		//App->SBC_Objects_New->Add_New_Object(); // Create Object
 		Post_Paste();	
 	}
 	

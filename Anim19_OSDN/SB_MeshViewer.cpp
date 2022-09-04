@@ -593,8 +593,9 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			App->SBC_MeshViewer->Close_OgreWindow();
 			App->SBC_MeshViewer->Delete_Resources_Group();
 
-			//App->SBC_Scene->Add_Resource_Location("C:\\Users\\Equity\\Desktop\\Equity15\\Bin\\Media_New\\Walls\\");
-			App->SBC_Objects_New->Dispatcher_New_Object();
+			App->SBC_Objects_Create->Dispatcher_New();
+
+			//App->SBC_Objects_New->Dispatcher_New_Object();
 
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
