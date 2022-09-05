@@ -7,6 +7,9 @@ public:
 	~SB_Objects_Create(void);
 
 	bool Dispatcher_New();
+	void Update_MV_Details();
+
+	char m_ResourcePath[MAX_PATH];
 
 protected:
 

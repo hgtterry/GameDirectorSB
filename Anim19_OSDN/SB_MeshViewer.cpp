@@ -593,6 +593,8 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			App->SBC_MeshViewer->Close_OgreWindow();
 			App->SBC_MeshViewer->Delete_Resources_Group();
 
+			App->SBC_Objects_Create->Update_MV_Details();
+
 			App->SBC_Objects_Create->Dispatcher_New();
 
 			//App->SBC_Objects_New->Dispatcher_New_Object();

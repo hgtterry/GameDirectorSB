@@ -4,6 +4,7 @@
 
 SB_Objects_Create::SB_Objects_Create(void)
 {
+	m_ResourcePath[0] = 0;
 }
 
 SB_Objects_Create::~SB_Objects_Create(void)
@@ -32,6 +33,14 @@ bool SB_Objects_Create::Dispatcher_New()
 }
 
 // *************************************************************************
+//							Update_MV_Details Terry Flanigan			   *
+// *************************************************************************
+void SB_Objects_Create::Update_MV_Details()
+{
+	strcpy(m_ResourcePath, App->SBC_MeshViewer->Folder_Vec[0].Folder_Path);
+}
+
+// *************************************************************************
 //								Add_New_Object Terry					   *
 // *************************************************************************
 bool SB_Objects_Create::Add_New_Object()
@@ -54,13 +63,13 @@ bool SB_Objects_Create::Add_New_Object()
 
 	strcpy(Object->Mesh_Name, App->SBC_MeshViewer->Object_Name);
 	strcpy(Object->Mesh_FileName, App->SBC_MeshViewer->Selected_MeshFile);
-	strcpy(Object->Mesh_Resource_Path, App->SBC_MeshViewer->Folder_Vec[0].Folder_Path);
+	strcpy(Object->Mesh_Resource_Path, m_ResourcePath);
 
 	char PathFile[256];
 	char ConNum[256];
 	char ATest[256];
 
-	App->SBC_Scene->Add_Resource_Location(App->SBC_MeshViewer->Folder_Vec[0].Folder_Path);
+	App->SBC_Scene->Add_Resource_Location(m_ResourcePath);
 
 	strcpy_s(ATest, "GDEnt_");
 	_itoa(Index, ConNum, 10);
@@ -77,8 +86,6 @@ bool SB_Objects_Create::Add_New_Object()
 	Ogre::Vector3 Pos = Ogre::Vector3(1, 1, 1);// Object->GetPlacement();
 	Object->Mesh_Pos = Pos;
 	Object->Object_Node->setPosition(Pos);
-
-	strcpy(Object->Mesh_Resource_Path, App->SBC_MeshViewer->Folder_Vec[0].Folder_Path); // Resource Path
 
 	App->Cl_Scene_Data->SceneLoaded = 1;
 
