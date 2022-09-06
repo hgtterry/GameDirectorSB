@@ -37,7 +37,16 @@ bool SB_Objects_Create::Dispatcher_New()
 // *************************************************************************
 void SB_Objects_Create::Update_MV_Details()
 {
+	int Index = App->SBC_Scene->Object_Count;
+
 	strcpy(m_ResourcePath, App->SBC_MeshViewer->Folder_Vec[0].Folder_Path);
+
+	App->SBC_Scene->B_Object[Index] = new Base_Object();
+	App->SBC_Scene->B_Object[Index]->Object_ID = App->Cl_Scene_Data->Object_ID_Counter;
+
+	App->SBC_Objects_Create->Dispatcher_New();
+
+	App->SBC_Scene->Object_Count++;  // Must be last line
 }
 
 // *************************************************************************
@@ -46,16 +55,11 @@ void SB_Objects_Create::Update_MV_Details()
 bool SB_Objects_Create::Add_New_Object()
 {
 	int Index = App->SBC_Scene->Object_Count;
-
-	/*if (App->GDSBC_MeshViewer->Physics_Type == Enums::Bullet_Type_Volume)
-	{
-		Add_Physics_Volume_Box();
-		return 1;
-	}*/
-
-	App->SBC_Scene->B_Object[Index] = new Base_Object();
-	App->SBC_Scene->B_Object[Index]->Object_ID = App->Cl_Scene_Data->Object_ID_Counter;
-
+	char Mesh_File[255];
+	char PathFile[256];
+	char ConNum[256];
+	char Ogre_Name[256];
+	
 	// Only on newly created objects
 	App->Cl_Scene_Data->Object_ID_Counter++;
 
@@ -65,18 +69,15 @@ bool SB_Objects_Create::Add_New_Object()
 	strcpy(Object->Mesh_FileName, App->SBC_MeshViewer->Selected_MeshFile);
 	strcpy(Object->Mesh_Resource_Path, m_ResourcePath);
 
-	char PathFile[256];
-	char ConNum[256];
-	char ATest[256];
-
 	App->SBC_Scene->Add_Resource_Location(m_ResourcePath);
 
-	strcpy_s(ATest, "GDEnt_");
+	strcpy_s(Ogre_Name, "GDEnt_");
 	_itoa(Index, ConNum, 10);
-	strcat(ATest, ConNum);
+	strcat(Ogre_Name, ConNum);
 
-	strcpy(PathFile, Object->Mesh_FileName);
-	Object->Object_Ent = App->Cl19_Ogre->mSceneMgr->createEntity(ATest, PathFile, App->SBC_Scene->Project_Resource_Group);
+	strcpy(Mesh_File ,Object->Mesh_FileName);
+
+	Object->Object_Ent = App->Cl19_Ogre->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->SBC_Scene->Project_Resource_Group);
 	Object->Object_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Object->Object_Node->attachObject(Object->Object_Ent);
 
@@ -185,8 +186,6 @@ bool SB_Objects_Create::Add_New_Object()
 
 
 	ShowWindow(App->GD_Properties_Hwnd, 1);
-
-	App->SBC_Scene->Object_Count++;  // Must be last line
 
 	return 1;
 }
