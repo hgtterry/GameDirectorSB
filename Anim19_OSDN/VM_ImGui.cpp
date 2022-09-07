@@ -1205,6 +1205,7 @@ void VM_ImGui::ImGui_Dimensions(void)
 	}
 	else
 	{
+		int Index = App->SBC_Properties->Current_Selected_Object;
 		//App->CL_Ogre->RenderListener->Show_Crosshair = 1;
 
 
@@ -1232,18 +1233,17 @@ void VM_ImGui::ImGui_Dimensions(void)
 // *************************************************************************
 void VM_ImGui::ImGui_Position2(void)
 {
+	int Index = App->SBC_Properties->Current_Selected_Object;
+
+	Ogre::Vector3 Pos = App->SBC_Scene->B_Object[Index]->Object_Node->getPosition();
+
 	ImGuiStyle* style = &ImGui::GetStyle();
 
 	ImGui::Text("Position");
 	ImGui::Separator();
 	ImGui::Spacing();
 
-	Ogre::Vector3 pos;
-	pos.x = 0;
-	pos.y = 0;
-	pos.z = 0;
-
-	//if (App-> == Enums::LoadedFile_Assimp)
+	if (App->SBC_Scene->Scene_Loaded == 1)
 	{
 		/*pos.x = App->CL_Model->S_BoundingBox[0]->Centre->x;
 		pos.y = App->CL_Model->S_BoundingBox[0]->Centre->y;
@@ -1256,54 +1256,68 @@ void VM_ImGui::ImGui_Position2(void)
 
 	ImGui::Indent();
 	ImGui::Indent();
-	ImGui::Text("X %.3f Y %.3f Z %.3f", pos.x, pos.y, pos.z);
+	ImGui::Text("X %.3f Y %.3f Z %.3f", Pos.x, Pos.y, Pos.z);
 
 	ImGui::Spacing();
 
 	// ----------------------------------------------------------------------------- Position
-
+	
 	float spacingX = ImGui::GetStyle().ItemInnerSpacing.x;
 	ImGui::PushButtonRepeat(true);
 	if (ImGui::ArrowButton("##leftXX", ImGuiDir_Left))
 	{
-		//if (App->CL_Model->Model_Type == Enums::LoadedFile_Assimp)
+		if (App->SBC_Scene->Scene_Loaded == 1)
 		{
-			/*if (PosX_Selected == 1)
+			if (PosX_Selected == 1)
 			{
-				App->CL_Dimensions->Translate_Model(-App->CL_Dimensions->Model_X_Position, 0, 0);
+				Pos.x = Pos.x - 1;
+				App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
+				//App->CL_Dimensions->Translate_Model(-App->CL_Dimensions->Model_X_Position, 0, 0);
 			}
 
 			if (PosY_Selected == 1)
 			{
-				App->CL_Dimensions->Translate_Model(0, -App->CL_Dimensions->Model_X_Position, 0);
+				Pos.y = Pos.y + 1;
+				App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
+
+				//App->CL_Dimensions->Translate_Model(0, -App->CL_Dimensions->Model_X_Position, 0);
 			}
 
 			if (PosZ_Selected == 1)
 			{
-				App->CL_Dimensions->Translate_Model(0, 0, -App->CL_Dimensions->Model_X_Position);
-			}*/
+				Pos.z = Pos.z - 1;
+				App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
+				//App->CL_Dimensions->Translate_Model(0, 0, -App->CL_Dimensions->Model_X_Position);
+			}
 		}
 	}
 
 	ImGui::SameLine(0.0f, spacingX);
 	if (ImGui::ArrowButton("##rightXX", ImGuiDir_Right))
 	{
-		//if (App->CL_Model->Model_Type == Enums::LoadedFile_Assimp)
+		if (App->SBC_Scene->Scene_Loaded == 1)
 		{
-			/*if (PosX_Selected == 1)
+			if (PosX_Selected == 1)
 			{
-				App->CL_Dimensions->Translate_Model(App->CL_Dimensions->Model_X_Position, 0, 0);
+				Ogre::Vector3 Pos = App->SBC_Scene->B_Object[Index]->Object_Node->getPosition();
+				Pos.x = Pos.x + 1;
+				App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
+				//App->CL_Dimensions->Translate_Model(App->CL_Dimensions->Model_X_Position, 0, 0);
 			}
 
 			if (PosY_Selected == 1)
 			{
-				App->CL_Dimensions->Translate_Model(0, App->CL_Dimensions->Model_X_Position, 0);
+				Pos.y = Pos.y - 1;
+				App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
+				//App->CL_Dimensions->Translate_Model(0, App->CL_Dimensions->Model_X_Position, 0);
 			}
 
 			if (PosZ_Selected == 1)
 			{
-				App->CL_Dimensions->Translate_Model(0, 0, App->CL_Dimensions->Model_X_Position);
-			}*/
+				Pos.z = Pos.z + 1;
+				App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
+				//App->CL_Dimensions->Translate_Model(0, 0, App->CL_Dimensions->Model_X_Position);
+			}
 		}
 	}
 	ImGui::PopButtonRepeat();
