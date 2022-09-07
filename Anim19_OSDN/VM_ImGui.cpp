@@ -1272,6 +1272,12 @@ void VM_ImGui::ImGui_Position2(void)
 			{
 				Pos.x = Pos.x - 1;
 				App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
+
+				AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
+				worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
+				Ogre::Vector3 Centre = worldAAB.getCenter();
+				App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+				
 				//App->CL_Dimensions->Translate_Model(-App->CL_Dimensions->Model_X_Position, 0, 0);
 			}
 
@@ -1280,6 +1286,10 @@ void VM_ImGui::ImGui_Position2(void)
 				Pos.y = Pos.y + 1;
 				App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
 
+				AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
+				worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
+				Ogre::Vector3 Centre = worldAAB.getCenter();
+				App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
 				//App->CL_Dimensions->Translate_Model(0, -App->CL_Dimensions->Model_X_Position, 0);
 			}
 
@@ -1287,6 +1297,11 @@ void VM_ImGui::ImGui_Position2(void)
 			{
 				Pos.z = Pos.z - 1;
 				App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
+
+				AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
+				worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
+				Ogre::Vector3 Centre = worldAAB.getCenter();
+				App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
 				//App->CL_Dimensions->Translate_Model(0, 0, -App->CL_Dimensions->Model_X_Position);
 			}
 		}
@@ -1299,9 +1314,13 @@ void VM_ImGui::ImGui_Position2(void)
 		{
 			if (PosX_Selected == 1)
 			{
-				Ogre::Vector3 Pos = App->SBC_Scene->B_Object[Index]->Object_Node->getPosition();
 				Pos.x = Pos.x + 1;
 				App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
+
+				AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
+				worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
+				Ogre::Vector3 Centre = worldAAB.getCenter();
+				App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
 				//App->CL_Dimensions->Translate_Model(App->CL_Dimensions->Model_X_Position, 0, 0);
 			}
 
@@ -1309,6 +1328,11 @@ void VM_ImGui::ImGui_Position2(void)
 			{
 				Pos.y = Pos.y - 1;
 				App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
+
+				AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
+				worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
+				Ogre::Vector3 Centre = worldAAB.getCenter();
+				App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
 				//App->CL_Dimensions->Translate_Model(0, App->CL_Dimensions->Model_X_Position, 0);
 			}
 
@@ -1316,6 +1340,11 @@ void VM_ImGui::ImGui_Position2(void)
 			{
 				Pos.z = Pos.z + 1;
 				App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
+
+				AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
+				worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
+				Ogre::Vector3 Centre = worldAAB.getCenter();
+				App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
 				//App->CL_Dimensions->Translate_Model(0, 0, App->CL_Dimensions->Model_X_Position);
 			}
 		}
