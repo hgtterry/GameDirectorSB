@@ -1302,7 +1302,7 @@ void VM_ImGui::ImGui_Position2(void)
 				worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
 				Ogre::Vector3 Centre = worldAAB.getCenter();
 				App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
-				//App->CL_Dimensions->Translate_Model(0, 0, -App->CL_Dimensions->Model_X_Position);
+				//App->Cl_Vm_Dimensions->Translate_Model(0, 0, -App->CL_Dimensions->Model_X_Position);
 			}
 		}
 	}

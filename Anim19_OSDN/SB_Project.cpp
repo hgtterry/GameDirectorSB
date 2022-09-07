@@ -832,7 +832,7 @@ bool SB_Project::Load_Project()
 bool SB_Project::Load_Project_Objects()
 {
 	char Object_Ini_Path[MAX_PATH];
-	
+	char chr_Tag1[MAX_PATH];
 	int Object_Count = 0;
 
 	float x = 0;
@@ -873,6 +873,10 @@ bool SB_Project::Load_Project_Objects()
 		
 		Object->Type = App->Cl_Ini->GetInt(buff, "Object_Type", 0);
 		Object->Shape = App->Cl_Ini->GetInt(buff, "Object_Shape", 0);
+
+		App->Cl_Ini->GetString(buff, "Mesh_Pos", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+		App->SBC_Scene->B_Object[Count]->Mesh_Pos = Ogre::Vector3(x, y, z);
 
 		App->SBC_Scene->Add_Resource_Location(Object->Mesh_Resource_Path);
 

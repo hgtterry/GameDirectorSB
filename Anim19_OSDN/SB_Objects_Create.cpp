@@ -87,9 +87,7 @@ bool SB_Objects_Create::Add_New_Object(int Index)
 	Object->Object_Node->setVisible(true);
 	Object->Object_Node->setScale(Object->Mesh_Scale);
 
-	Ogre::Vector3 Pos = Ogre::Vector3(1, 1, 1);// Object->GetPlacement();
-	Object->Mesh_Pos = Pos;
-	Object->Object_Node->setPosition(Pos);
+	Object->Object_Node->setPosition(Object->Mesh_Pos);
 
 	App->Cl_Scene_Data->SceneLoaded = 1;
 
