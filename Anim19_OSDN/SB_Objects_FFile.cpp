@@ -49,7 +49,7 @@ bool SB_Objects_FFile::Add_Objects_FromFile() // From File
 		//else
 		//{
 			
-			Add_Object_FFile(Count);
+			App->SBC_Objects_Create->Add_New_Object(Count);
 		//}
 
 		Count++;
@@ -61,101 +61,7 @@ bool SB_Objects_FFile::Add_Objects_FromFile() // From File
 	return 1;
 }
 
-bool SB_Objects_FFile::Add_Object_FFile(int Object_Index)
-{
-	App->SBC_Objects_Create->Add_New_Object(Object_Index);
 
-	return 1;
-
-	char ConNum[256];
-	char ATest[256];
-	char Mesh_File[255];
-	int Count = Object_Index;
-	
-	Base_Object* Object = App->SBC_Scene->B_Object[Count];
-	
-	strcpy(ATest, "GDEnt_");
-	_itoa(Count, ConNum, 10);
-	strcat(ATest, ConNum);
-
-	strcpy(Mesh_File, Object->Mesh_FileName);
-
-	Object->Object_Ent = App->Cl19_Ogre->mSceneMgr->createEntity(ATest, Mesh_File, App->SBC_Scene->Project_Resource_Group);
-	Object->Object_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	Object->Object_Node->attachObject(Object->Object_Ent);
-
-	Object->Object_Node->setVisible(true);
-	//Object->Object_Node->setScale(Object->Mesh_Scale);
-
-	//Ogre::Vector3 Pos = Object->Mesh_Pos;
-	//Ogre::Quaternion Rot = Object->Mesh_Quat;
-
-	//Object->Object_Node->setOrientation(Rot);
-	//Object->Object_Node->setPosition(Pos);
-
-	return 1;
-	//---------------------- Static and Dynamic
-	if (Object->Type == Enums::Bullet_Type_Static || Object->Type == Enums::Bullet_Type_Dynamic)
-	{
-		/*if (Object->Shape == Enums::Shape_Box)
-		{*/
-//			Add_Physics_Static_Box_FFile(false, Count);
-//			Object->Physics_Valid = 1;
-		/*}
-
-		if (Object->Shape == Enums::Sphere)
-		{
-			Add_Physics_Static_Sphere_FFile(false, Count);
-			Object->Physics_Valid = 1;
-		}
-
-		if (Object->Shape == Enums::Capsule)
-		{
-			Add_Physics_Static_Capsule_FFile(false, Count);
-			Object->Physics_Valid = 1;
-		}
-
-		if (Object->Shape == Enums::Cylinder)
-		{
-			Add_Physics_Static_Cylinder_FFile(false, Count);
-			Object->Physics_Valid = 1;
-		}
-
-		if (Object->Shape == Enums::Cone)
-		{
-			Add_Physics_Static_Cone_FFile(false, Count);
-			Object->Physics_Valid = 1;
-		}*/
-	}
-
-	//---------------------- Tri_Mesh
-//	if (Object->Shape == Enums::Shape_TriMesh)
-//	{
-//		//Object->createTrimesh(Object->OgreEntity, Count);
-//		//Object->Physics_Valid = 1;
-//	}
-//
-//	if (Object->Usage == Enums::Usage_Room) // Rooms
-//	{
-////		HTREEITEM Temp = App->Cl_FileView->Add_Room_Object(Object->Name, Count);
-////		Object->ListViewItem = Temp;
-//
-//
-//		App->Cl_Scene_Data->Scene_Has_Area = 1;
-//	}
-//	else
-//	{
-		HTREEITEM Temp = App->SBC_FileView->Add_ObjectFile(Object->Mesh_Name, Count);
-		Object->ListViewItem = Temp;
-
-	//}
-
-	/*App->SBC_FileView->Select_Item(NULL);
-	ShowWindow(App->GD_Properties_Hwnd, 1);
-	App->Cl19_Ogre->OgreListener->Dubug_Physics_Draw = 1;*/
-
-	return 1;
-}
 
 // *************************************************************************
 //						Add_SoundEntity Terry Bernie					   *
@@ -433,7 +339,7 @@ bool SB_Objects_FFile::Add_CollectableEntity_FFile(int Object_Index)
 	{
 		if (Object->Shape == Enums::Shape_Box)
 		{
-			Add_Physics_Static_Box_FFile(false, Count);
+			//Add_Physics_Static_Box_FFile(false, Count);
 			Object->Physics_Valid = 1;
 		}
 
@@ -508,7 +414,7 @@ bool SB_Objects_FFile::Add_TeleportEntity_FFile(int Object_Index)
 	{
 		if (Object->Shape == Enums::Shape_Box)
 		{
-			Add_Physics_Static_Box_FFile(false, Count);
+			//Add_Physics_Static_Box_FFile(false, Count);
 			Object->Physics_Valid = 1;
 		}
 
@@ -541,54 +447,7 @@ bool SB_Objects_FFile::Add_TeleportEntity_FFile(int Object_Index)
 //	HTREEITEM Temp = App->Cl_FileView->Add_Teleport(Object->Name, Count);
 //	Object->ListViewItem = Temp;
 
-	
-
 	return 1;
-}
-
-// *************************************************************************
-//					Add_Physics_Static_Box_FFile Terry Bernie			   *
-// *************************************************************************
-void SB_Objects_FFile::Add_Physics_Static_Box_FFile(bool Dynamic, int Object_Index)
-{
-	int Index = Object_Index;
-	GD19_Objects* Object = App->Cl_Scene_Data->Cl_Object[Index];
-
-	btTransform mStartTransform = App->Cl_Objects_Com->Set_Physics_PosRot(Index); // Get Physics Position And Rotation Transform
-
-	btScalar mass;
-	mass = Object->Physics_Mass;
-
-	btVector3 localInertia(0, 0, 0);
-
-	Ogre::Vector3 Size = Object->Physics_Size; // --------- Size
-
-	btCollisionShape* newRigidShape = new btBoxShape(btVector3(Size.x, Size.y, Size.z));
-	newRigidShape->calculateLocalInertia(mass, localInertia);
-
-	App->Cl_Bullet->collisionShapes.push_back(newRigidShape);
-
-	btDefaultMotionState* myMotionState = new btDefaultMotionState(mStartTransform);
-
-	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, newRigidShape, localInertia);
-
-	Object->bt_body = new btRigidBody(rbInfo);
-	Object->bt_body->setRestitution(1.0);
-	Object->bt_body->setFriction(1.5);
-	Object->bt_body->setUserPointer(Object->OgreNode);
-	Object->bt_body->setWorldTransform(mStartTransform);
-
-	Object->bt_body->setCustomDebugColor(btVector3(0, 1, 1));
-
-	int f = Object->bt_body->getCollisionFlags();
-	Object->bt_body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
-
-	App->Cl_Objects_Com->Set_Physics_Scale(Index); // Set Physics Scale
-
-	Object->bt_body->setUserIndex(Object->Usage);
-	Object->bt_body->setUserIndex2(Index);
-
-	App->Cl_Bullet->dynamicsWorld->addRigidBody(Object->bt_body);
 }
 
 // *************************************************************************

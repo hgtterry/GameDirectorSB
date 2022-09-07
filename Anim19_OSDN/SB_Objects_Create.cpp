@@ -41,6 +41,7 @@ void SB_Objects_Create::Update_MV_Details()
 	int Index = App->SBC_Scene->Object_Count;
 
 	strcpy(m_ResourcePath, App->SBC_MeshViewer->Folder_Vec[0].Folder_Path);
+	App->SBC_Scene->Add_Resource_Location(m_ResourcePath);
 
 	App->SBC_Scene->B_Object[Index] = new Base_Object();
 	
@@ -72,7 +73,6 @@ bool SB_Objects_Create::Add_New_Object(int Index)
 	
 	Base_Object* Object = App->SBC_Scene->B_Object[Index];
 
-	App->SBC_Scene->Add_Resource_Location(m_ResourcePath);
 
 	strcpy_s(Ogre_Name, "GDEnt_");
 	_itoa(Index, ConNum, 10);
