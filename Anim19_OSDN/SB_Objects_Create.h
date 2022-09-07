@@ -8,7 +8,7 @@ public:
 
 	bool Dispatcher_New();
 	void Update_MV_Details();
-	bool Add_New_Object();
+	bool Add_New_Object(int Index);
 
 	char m_ResourcePath[MAX_PATH];
 

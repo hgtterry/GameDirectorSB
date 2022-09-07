@@ -63,7 +63,7 @@ bool SB_Objects_FFile::Add_Objects_FromFile() // From File
 
 bool SB_Objects_FFile::Add_Object_FFile(int Object_Index)
 {
-	App->SBC_Objects_Create->Add_New_Object();
+	App->SBC_Objects_Create->Add_New_Object(Object_Index);
 
 	return 1;
 
@@ -93,7 +93,7 @@ bool SB_Objects_FFile::Add_Object_FFile(int Object_Index)
 	//Object->Object_Node->setOrientation(Rot);
 	//Object->Object_Node->setPosition(Pos);
 
-
+	return 1;
 	//---------------------- Static and Dynamic
 	if (Object->Type == Enums::Bullet_Type_Static || Object->Type == Enums::Bullet_Type_Dynamic)
 	{

@@ -16,6 +16,7 @@ SB_Objects_Create::~SB_Objects_Create(void)
 // *************************************************************************
 bool SB_Objects_Create::Dispatcher_New()
 {
+	int Index = App->SBC_Scene->Object_Count;
 
 	if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area) // Area
 	{
@@ -27,7 +28,7 @@ bool SB_Objects_Create::Dispatcher_New()
 	}
 	else
 	{
-		Add_New_Object();
+		Add_New_Object(Index);
 	}
 	return 1;
 }
@@ -44,6 +45,7 @@ void SB_Objects_Create::Update_MV_Details()
 	App->SBC_Scene->B_Object[Index] = new Base_Object();
 	
 	Base_Object* Object = App->SBC_Scene->B_Object[Index];
+
 	Object->Object_ID = App->Cl_Scene_Data->Object_ID_Counter;
 
 	strcpy(Object->Mesh_Name, App->SBC_MeshViewer->Object_Name);
@@ -51,23 +53,20 @@ void SB_Objects_Create::Update_MV_Details()
 	strcpy(Object->Mesh_Resource_Path, m_ResourcePath);
 
 	App->SBC_Objects_Create->Dispatcher_New();
-
+	
+	App->Cl_Scene_Data->Object_ID_Counter++;
 	App->SBC_Scene->Object_Count++;  // Must be last line
 }
 
 // *************************************************************************
 //								Add_New_Object Terry					   *
 // *************************************************************************
-bool SB_Objects_Create::Add_New_Object()
+bool SB_Objects_Create::Add_New_Object(int Index)
 {
-	int Index = App->SBC_Scene->Object_Count;
 	char Mesh_File[255];
 	char ConNum[256];
 	char Ogre_Name[256];
 	
-	// Only on newly created objects
-	App->Cl_Scene_Data->Object_ID_Counter++;
-
 	Base_Object* Object = App->SBC_Scene->B_Object[Index];
 
 	App->SBC_Scene->Add_Resource_Location(m_ResourcePath);
@@ -90,6 +89,10 @@ bool SB_Objects_Create::Add_New_Object()
 	Object->Object_Node->setPosition(Pos);
 
 	App->Cl_Scene_Data->SceneLoaded = 1;
+
+	Object->Folder = Enums::Folder_Objects;
+	HTREEITEM Temp = App->SBC_FileView->Add_ObjectFile(App->SBC_MeshViewer->Object_Name, Index);
+	Object->ListViewItem = Temp;
 
 	return 1;
 	//---------------------- Static
