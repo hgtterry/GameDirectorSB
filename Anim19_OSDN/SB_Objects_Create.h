@@ -8,12 +8,12 @@ public:
 
 	bool Dispatcher_New();
 	void Update_MV_Details();
+	bool Add_New_Object();
 
 	char m_ResourcePath[MAX_PATH];
 
 protected:
 
-	bool Add_New_Object();
 	void Add_New_Physics_Static_Box(bool Dynamic);
 };
 

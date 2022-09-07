@@ -42,7 +42,13 @@ void SB_Objects_Create::Update_MV_Details()
 	strcpy(m_ResourcePath, App->SBC_MeshViewer->Folder_Vec[0].Folder_Path);
 
 	App->SBC_Scene->B_Object[Index] = new Base_Object();
-	App->SBC_Scene->B_Object[Index]->Object_ID = App->Cl_Scene_Data->Object_ID_Counter;
+	
+	Base_Object* Object = App->SBC_Scene->B_Object[Index];
+	Object->Object_ID = App->Cl_Scene_Data->Object_ID_Counter;
+
+	strcpy(Object->Mesh_Name, App->SBC_MeshViewer->Object_Name);
+	strcpy(Object->Mesh_FileName, App->SBC_MeshViewer->Selected_MeshFile);
+	strcpy(Object->Mesh_Resource_Path, m_ResourcePath);
 
 	App->SBC_Objects_Create->Dispatcher_New();
 
@@ -56,7 +62,6 @@ bool SB_Objects_Create::Add_New_Object()
 {
 	int Index = App->SBC_Scene->Object_Count;
 	char Mesh_File[255];
-	char PathFile[256];
 	char ConNum[256];
 	char Ogre_Name[256];
 	
@@ -64,10 +69,6 @@ bool SB_Objects_Create::Add_New_Object()
 	App->Cl_Scene_Data->Object_ID_Counter++;
 
 	Base_Object* Object = App->SBC_Scene->B_Object[Index];
-
-	strcpy(Object->Mesh_Name, App->SBC_MeshViewer->Object_Name);
-	strcpy(Object->Mesh_FileName, App->SBC_MeshViewer->Selected_MeshFile);
-	strcpy(Object->Mesh_Resource_Path, m_ResourcePath);
 
 	App->SBC_Scene->Add_Resource_Location(m_ResourcePath);
 
@@ -90,7 +91,7 @@ bool SB_Objects_Create::Add_New_Object()
 
 	App->Cl_Scene_Data->SceneLoaded = 1;
 
-
+	return 1;
 	//---------------------- Static
 	if (App->SBC_MeshViewer->Physics_Type == Enums::Bullet_Type_Static)
 	{

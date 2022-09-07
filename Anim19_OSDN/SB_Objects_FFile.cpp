@@ -63,6 +63,10 @@ bool SB_Objects_FFile::Add_Objects_FromFile() // From File
 
 bool SB_Objects_FFile::Add_Object_FFile(int Object_Index)
 {
+	App->SBC_Objects_Create->Add_New_Object();
+
+	return 1;
+
 	char ConNum[256];
 	char ATest[256];
 	char Mesh_File[255];
