@@ -492,6 +492,9 @@ bool SB_Project::Save_Objects_Data()
 		fprintf(WriteFile, "%s%s\n", "Mesh_File=", App->SBC_Scene->B_Object[Count]->Mesh_FileName);
 		fprintf(WriteFile, "%s%s\n", "Mesh_Resource_Path=", App->SBC_Scene->B_Object[Count]->Mesh_Resource_Path);
 
+		fprintf(WriteFile, "%s%i\n", "Object_Type=", App->SBC_Scene->B_Object[Count]->Type);
+		fprintf(WriteFile, "%s%i\n", "Object_Shape=", App->SBC_Scene->B_Object[Count]->Shape);
+
 		x = App->SBC_Scene->B_Object[Count]->Object_Node->getPosition().x;
 		y = App->SBC_Scene->B_Object[Count]->Object_Node->getPosition().y;
 		z = App->SBC_Scene->B_Object[Count]->Object_Node->getPosition().z;
@@ -868,6 +871,9 @@ bool SB_Project::Load_Project_Objects()
 		App->Cl_Ini->GetString(buff, "Mesh_File", Object->Mesh_FileName, MAX_PATH);
 		App->Cl_Ini->GetString(buff, "Mesh_Resource_Path", Object->Mesh_Resource_Path, MAX_PATH);
 		
+		Object->Type = App->Cl_Ini->GetInt(buff, "Object_Type", 0);
+		Object->Shape = App->Cl_Ini->GetInt(buff, "Object_Shape", 0);
+
 		App->SBC_Scene->Add_Resource_Location(Object->Mesh_Resource_Path);
 
 		Count++;

@@ -14,6 +14,6 @@ public:
 
 protected:
 
-	void Add_New_Physics_Static_Box(bool Dynamic);
+	void Add_New_Physics_Static_Box(int Index);
 };
 

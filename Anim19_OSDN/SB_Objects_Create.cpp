@@ -52,6 +52,9 @@ void SB_Objects_Create::Update_MV_Details()
 	strcpy(Object->Mesh_FileName, App->SBC_MeshViewer->Selected_MeshFile);
 	strcpy(Object->Mesh_Resource_Path, m_ResourcePath);
 
+	Object->Type = App->SBC_MeshViewer->Physics_Type;
+	Object->Shape = App->SBC_MeshViewer->Physics_Shape;
+
 	App->SBC_Objects_Create->Dispatcher_New();
 	
 	App->Cl_Scene_Data->Object_ID_Counter++;
@@ -90,20 +93,13 @@ bool SB_Objects_Create::Add_New_Object(int Index)
 
 	App->Cl_Scene_Data->SceneLoaded = 1;
 
-	Object->Folder = Enums::Folder_Objects;
-	HTREEITEM Temp = App->SBC_FileView->Add_ObjectFile(App->SBC_MeshViewer->Object_Name, Index);
-	Object->ListViewItem = Temp;
-
-	return 1;
+	
 	//---------------------- Static
-	if (App->SBC_MeshViewer->Physics_Type == Enums::Bullet_Type_Static)
+	if (Object->Type == Enums::Bullet_Type_Static)
 	{
-		if (App->SBC_MeshViewer->Physics_Shape == Enums::Shape_Box)
+		if (Object->Shape == Enums::Shape_Box)
 		{
-			Object->Type = Enums::Bullet_Type_Static;
-			Object->Shape = Enums::Shape_Box;
-
-			Add_New_Physics_Static_Box(false);
+			Add_New_Physics_Static_Box(Index);
 			Object->Physics_Valid = 1;
 		}
 
@@ -184,7 +180,7 @@ bool SB_Objects_Create::Add_New_Object(int Index)
 	else
 	{
 		Object->Folder = Enums::Folder_Objects;
-		HTREEITEM Temp = App->SBC_FileView->Add_ObjectFile(App->SBC_MeshViewer->Object_Name, Index);
+		HTREEITEM Temp = App->SBC_FileView->Add_ObjectFile(Object->Mesh_Name, Index);
 		Object->ListViewItem = Temp;
 	}
 
@@ -197,23 +193,10 @@ bool SB_Objects_Create::Add_New_Object(int Index)
 // *************************************************************************
 //						Add_New_Physics_Static_Box Terry Bernie			   *
 // *************************************************************************
-void SB_Objects_Create::Add_New_Physics_Static_Box(bool Dynamic)
+void SB_Objects_Create::Add_New_Physics_Static_Box(int Index)
 {
-	int Index = App->SBC_Scene->Object_Count;
 
 	Base_Object* Object = App->SBC_Scene->B_Object[Index];
-
-	if (Dynamic == 1)
-	{
-		/*Object->Type = Enums::Bullet_Type_Dynamic;
-		Object->Shape = Enums::Shape_Box;*/
-
-	}
-	else
-	{
-		/*Object->Type = Enums::Bullet_Type_Static;
-		Object->Shape = Enums::Shape_Box;*/
-	}
 
 	AxisAlignedBox worldAAB = Object->Object_Ent->getBoundingBox();
 	worldAAB.transformAffine(Object->Object_Node->_getFullTransform());
@@ -227,14 +210,8 @@ void SB_Objects_Create::Add_New_Physics_Static_Box(bool Dynamic)
 	startTransform.setRotation(btQuaternion(0.0f, 0.0f, 0.0f, 1));
 
 	btScalar mass;
-	if (Dynamic == 1)
-	{
-		mass = 1.0f;
-	}
-	else
-	{
-		mass = 0.0f;
-	}
+	mass = 0.0f;
+	
 
 	btVector3 localInertia(0, 0, 0);
 	btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
@@ -263,18 +240,18 @@ void SB_Objects_Create::Add_New_Physics_Static_Box(bool Dynamic)
 	Object->Phys_Body->setUserPointer(Object->Object_Node);
 	Object->Phys_Body->setWorldTransform(startTransform);
 
-	if (Dynamic == 1)
+	/*if (Dynamic == 1)
 	{
 		Object->Usage = Enums::Usage_Dynamic;
 		Object->Phys_Body->setUserIndex(Enums::Usage_Dynamic);
 		Object->Phys_Body->setUserIndex2(Index);
 	}
 	else
-	{
+	{*/
 		Object->Usage = Enums::Usage_Static;
 		Object->Phys_Body->setUserIndex(Enums::Usage_Static);
 		Object->Phys_Body->setUserIndex2(Index);
-	}
+	//}
 
 	Object->Phys_Body->setCustomDebugColor(btVector3(0, 1, 1));
 
