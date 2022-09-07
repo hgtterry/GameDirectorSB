@@ -10,10 +10,12 @@ public:
 	void Update_MV_Details();
 	bool Add_New_Object(int Index);
 
-	char m_ResourcePath[MAX_PATH];
+	
 
 protected:
 
 	void Add_New_Physics_Static_Box(int Index);
+
+	char m_ResourcePath[MAX_PATH];
 };
 

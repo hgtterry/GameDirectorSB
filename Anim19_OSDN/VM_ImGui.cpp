@@ -17,6 +17,7 @@ VM_ImGui::VM_ImGui()
 	StartPos_PB = 0;
 	Show_FPS = 1;
 	Show_ImGui_Test = 0;
+	Show_Dimensions = 0;
 	Show_Rotation = 0;
 	Show_Position = 0;
 	Show_Scale = 0;
@@ -41,6 +42,10 @@ VM_ImGui::VM_ImGui()
 	progress = 0;
 	Progress_Count = 0;
 	Progress_Delta = 0;
+
+	PosX_Selected = 1;
+	PosY_Selected = 0;
+	PosZ_Selected = 0;
 
 	strcpy(test, "poopoo");
 }
@@ -167,6 +172,16 @@ void VM_ImGui::Tabs_Render_Camera(void)
 	{
 		ImGui::ShowDemoWindow();
 	}
+
+	if (Show_Position == 1)
+	{
+		ImGui_Position();
+	}
+
+	if (Show_Dimensions == 1)
+	{
+		ImGui_Dimensions();
+	}
 }
 
 // *************************************************************************
@@ -192,6 +207,11 @@ void VM_ImGui::Tabs_Render_Motions(void)
 	if (Show_Motion_List == 1)
 	{
 		ImGui_MotionList();
+	}
+
+	if (Show_Dimensions == 1)
+	{
+		ImGui_Dimensions();
 	}
 }
 
@@ -229,6 +249,11 @@ void VM_ImGui::Tabs_Render_Dimensions(void)
 	{
 		ImGui_Scale();
 	}
+
+	if (Show_Dimensions == 1)
+	{
+		ImGui_Dimensions();
+	}
 }
 
 // *************************************************************************
@@ -259,6 +284,16 @@ void VM_ImGui::Tabs_Render_Groups(void)
 	if (Show_Group_List == 1)
 	{
 		ImGui_GroupList();
+	}
+
+	if (Show_Position == 1)
+	{
+		ImGui_Position();
+	}
+
+	if (Show_Dimensions == 1)
+	{
+		ImGui_Dimensions();
 	}
 
 }
@@ -541,7 +576,7 @@ void VM_ImGui::ImGui_Rotation2(void)
 // *************************************************************************
 void VM_ImGui::ImGui_Position(void)
 {
-	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowPos(ImVec2(250, 10), ImGuiCond_FirstUseEver);
 
 	if (!ImGui::Begin("Position", &Show_Position, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
 	{
@@ -1153,4 +1188,185 @@ void VM_ImGui::ImGui_App_Data(void)
 char* VM_ImGui::poo()
 {
 	return test;
+}
+
+// *************************************************************************
+// *						ImGui_Dimensions  Terry Bernie				   *
+// *************************************************************************
+void VM_ImGui::ImGui_Dimensions(void)
+{
+	ImGui::SetNextWindowPos(ImVec2(250, 10), ImGuiCond_FirstUseEver);
+
+	ImGuiStyle* style = &ImGui::GetStyle();
+
+	if (!ImGui::Begin("Rotation2", &Show_Dimensions, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
+	{
+		ImGui::End();
+	}
+	else
+	{
+		//App->CL_Ogre->RenderListener->Show_Crosshair = 1;
+
+
+		//*************************************************************************************** Rotation
+		ImGui_Position2();
+
+		//ImGui_Rotation();
+
+		if (ImGui::Button("Close"))
+		{
+			Show_Dimensions = 0;
+			//App->CL_Panels->Show_Panels(1);
+			//App->CL_TopBar->Toggle_Dimensions_Flag = 0;
+			//RedrawWindow(App->CL_TopBar->Model_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			//App->CL_Ogre->RenderListener->Show_Crosshair = 0;
+		}
+
+		ImGui::End();
+	}
+}
+
+// *************************************************************************
+// *						ImGui_Position2  Terry Bernie				   *
+// *************************************************************************
+void VM_ImGui::ImGui_Position2(void)
+{
+	ImGuiStyle* style = &ImGui::GetStyle();
+
+	ImGui::Text("Position");
+	ImGui::Separator();
+	ImGui::Spacing();
+
+	Ogre::Vector3 pos;
+	pos.x = 0;
+	pos.y = 0;
+	pos.z = 0;
+
+	//if (App-> == Enums::LoadedFile_Assimp)
+	{
+		/*pos.x = App->CL_Model->S_BoundingBox[0]->Centre->x;
+		pos.y = App->CL_Model->S_BoundingBox[0]->Centre->y;
+		pos.z = App->CL_Model->S_BoundingBox[0]->Centre->z;
+
+		App->CL_Ogre->RenderListener->Hair_1PosX = pos.x;
+		App->CL_Ogre->RenderListener->Hair_1PosY = pos.y;
+		App->CL_Ogre->RenderListener->Hair_1PosZ = pos.z;*/
+	}
+
+	ImGui::Indent();
+	ImGui::Indent();
+	ImGui::Text("X %.3f Y %.3f Z %.3f", pos.x, pos.y, pos.z);
+
+	ImGui::Spacing();
+
+	// ----------------------------------------------------------------------------- Position
+
+	float spacingX = ImGui::GetStyle().ItemInnerSpacing.x;
+	ImGui::PushButtonRepeat(true);
+	if (ImGui::ArrowButton("##leftXX", ImGuiDir_Left))
+	{
+		//if (App->CL_Model->Model_Type == Enums::LoadedFile_Assimp)
+		{
+			/*if (PosX_Selected == 1)
+			{
+				App->CL_Dimensions->Translate_Model(-App->CL_Dimensions->Model_X_Position, 0, 0);
+			}
+
+			if (PosY_Selected == 1)
+			{
+				App->CL_Dimensions->Translate_Model(0, -App->CL_Dimensions->Model_X_Position, 0);
+			}
+
+			if (PosZ_Selected == 1)
+			{
+				App->CL_Dimensions->Translate_Model(0, 0, -App->CL_Dimensions->Model_X_Position);
+			}*/
+		}
+	}
+
+	ImGui::SameLine(0.0f, spacingX);
+	if (ImGui::ArrowButton("##rightXX", ImGuiDir_Right))
+	{
+		//if (App->CL_Model->Model_Type == Enums::LoadedFile_Assimp)
+		{
+			/*if (PosX_Selected == 1)
+			{
+				App->CL_Dimensions->Translate_Model(App->CL_Dimensions->Model_X_Position, 0, 0);
+			}
+
+			if (PosY_Selected == 1)
+			{
+				App->CL_Dimensions->Translate_Model(0, App->CL_Dimensions->Model_X_Position, 0);
+			}
+
+			if (PosZ_Selected == 1)
+			{
+				App->CL_Dimensions->Translate_Model(0, 0, App->CL_Dimensions->Model_X_Position);
+			}*/
+		}
+	}
+	ImGui::PopButtonRepeat();
+
+	ImGui::SameLine();
+	ImGui::SetNextItemWidth(100);
+	const char* XitemsPosXX[] = { "0.001","0.01","0.1","1", "2", "5", "10", "20" };
+	static int XitemPosXX = 3;
+	bool ChangedPosX = ImGui::Combo("Step Pos", &XitemPosXX, XitemsPosXX, IM_ARRAYSIZE(XitemsPosXX));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
+	if (ChangedPosX == 1)
+	{
+		//App->CL_Dimensions->Model_X_Position = (float)atof(XitemsPosXX[XitemPosXX]);
+	}
+
+	// ----------------------------------------------------------------------------- Pos X
+	ImGui::Indent();
+
+	style->Colors[ImGuiCol_FrameBg] = ImVec4(0.0f, 0.0f, 1.0f, 1.00f);
+	ImGui::Checkbox("X", &PosX_Selected);
+	if (PosX_Selected == 1)
+	{
+		PosY_Selected = 0;
+		PosZ_Selected = 0;
+	}
+	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
+	//------------------------------------------------------------------------------- Pos Y
+	ImGui::SameLine();
+	style->Colors[ImGuiCol_FrameBg] = ImVec4(0.0f, 1.0f, 0.0f, 1.00f);
+	ImGui::Checkbox("Y", &PosY_Selected);
+	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
+
+	if (PosY_Selected)
+	{
+		PosX_Selected = 0;
+		PosZ_Selected = 0;
+	}
+
+	//------------------------------------------------------------------------------- Pos Z
+	ImGui::SameLine();
+	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 0.0f, 0.0f, 1.00f);
+	ImGui::Checkbox("Z", &PosZ_Selected);
+	if (PosZ_Selected)
+	{
+		PosX_Selected = 0;
+		PosY_Selected = 0;
+	}
+	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
+
+
+	style->Colors[ImGuiCol_Text] = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
+
+	ImGui::Spacing();
+	ImGui::Unindent();
+
+	/*if (ImGui::Button("Middle of Bounding Box", ImVec2(200, 40)))
+	{
+		App->CL_Dimensions->Centre_Model_Mid();
+	}
+
+	if (ImGui::Button("Base of Bounding Box", ImVec2(200, 40)))
+	{
+		App->CL_Dimensions->Centre_Model_Base();
+	}*/
+	ImGui::Unindent();
+	ImGui::Unindent();
 }

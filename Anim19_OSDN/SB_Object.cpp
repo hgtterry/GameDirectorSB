@@ -62,7 +62,8 @@ LRESULT CALLBACK SB_Object::Object_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 	{
 
 		SendDlgItemMessage(hDlg, IDC_PHYSICSOBJECTDEBUG, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_BT_POSITION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
@@ -86,6 +87,14 @@ LRESULT CALLBACK SB_Object::Object_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_POSITION && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_Vm_ImGui->Show_Dimensions);
+			return CDRF_DODEFAULT;
+		}
+
+		
 		return CDRF_DODEFAULT;
 	}
 
@@ -115,6 +124,19 @@ LRESULT CALLBACK SB_Object::Object_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 			return 1;
 		}
 
+		if (LOWORD(wParam) == IDC_BT_POSITION)
+		{
+			
+			if (App->CL_Vm_ImGui->Show_Dimensions == 1)
+			{
+				App->CL_Vm_ImGui->Show_Dimensions = 0;
+			}
+			else
+			{
+				App->CL_Vm_ImGui->Show_Dimensions = 1;
+			}
+			return 1;
+		}
 
 		break;
 	}

@@ -34,7 +34,10 @@ public:
 	void Stop_ProgressBar(void);
 	void Set_ProgressCount(float Count);
 	bool Nudge();
-	
+
+	void ImGui_Dimensions(void);
+	void ImGui_Position2(void);
+
 	bool StartPos;
 
 	bool StartPos_PB;
@@ -44,7 +47,7 @@ public:
 
 	bool Show_Progress_Bar;
 
-
+	bool Show_Dimensions;
 	bool Show_Rotation;
 	bool Show_Position;
 	bool Show_Scale;
@@ -77,5 +80,11 @@ public:
 
 	char test[250];
 	char* poo();
+
+protected:
+
+	bool PosX_Selected;
+	bool PosY_Selected;
+	bool PosZ_Selected;
 };
 
