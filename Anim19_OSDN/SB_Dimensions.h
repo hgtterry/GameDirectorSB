@@ -30,6 +30,7 @@ public:
 	~SB_Dimensions();
 
 	void ImGui_Dimensions(void);
+	void UpDate_Physics_And_Visuals(int Index);
 
 	bool Show_Dimensions;
 
@@ -38,7 +39,6 @@ protected:
 	void ImGui_Position(void);
 	void ImGui_Scale(void);
 
-	void UpDate_Physics_And_Visuals(int Index);
 	void Set_Physics_Position(int Index);
 
 	bool PosX_Selected;

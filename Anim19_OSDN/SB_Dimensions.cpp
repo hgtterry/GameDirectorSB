@@ -274,6 +274,8 @@ void SB_Dimensions::ImGui_Scale(void)
 	ImGui::Separator();
 	ImGui::Spacing();
 
+	float X = 0;
+
 	if (App->SBC_Scene->Scene_Loaded == 1)
 	{
 		/*pos.x = App->CL_Model->S_BoundingBox[0]->Centre->x;
@@ -306,7 +308,16 @@ void SB_Dimensions::ImGui_Scale(void)
 				Scale.z = Scale.z + Model_Scale_Delta;
 
 				App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
-				App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x/2, Scale.y/2, Scale.z/2));
+
+				//Scale = App->SBC_Scene->B_Object[Index]->Physics_Scale;
+				/*Ogre::Vector3 Scale2 = Ogre::Vector3(App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->getLocalScaling());
+
+				Scale2.x += (Model_Scale_Delta - 0.04);
+				Scale2.y += (Model_Scale_Delta - 0.04);;
+				Scale2.z += (Model_Scale_Delta - 0.04);;*/
+				//App->SBC_Scene->B_Object[Index]->Physics_Scale = Scale2;
+
+				App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
 				UpDate_Physics_And_Visuals(Index);
 			}
 			else
@@ -357,11 +368,20 @@ void SB_Dimensions::ImGui_Scale(void)
 		{
 			if (Scale_Lock == 1)
 			{
+				float xSum;
 				Scale.x = Scale.x - Model_Scale_Delta;
 				Scale.y = Scale.y - Model_Scale_Delta;
 				Scale.z = Scale.z - Model_Scale_Delta;
 				App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
-				App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x/2, Scale.y/2, Scale.z/2));
+
+				/*xSum = (Scale.x * 0.04)*2;
+				Scale.x = Scale.x - xSum;
+				Scale.y = Scale.y - xSum;
+				Scale.z = Scale.z - xSum;*/
+
+				//float Margin = App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->getMargin();
+				//App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setMargin(25);
+				App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
 				UpDate_Physics_And_Visuals(Index);
 
 			}

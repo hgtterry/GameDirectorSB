@@ -86,7 +86,7 @@ bool SB_Objects_Create::Add_New_Object(int Index)
 
 	Object->Object_Node->setVisible(true);
 
-	Object->Object_Node->setScale(Object->Mesh_Scale);
+	//Object->Object_Node->setScale(Object->Mesh_Scale);
 
 	Object->Object_Node->setPosition(Object->Mesh_Pos);
 
@@ -99,6 +99,11 @@ bool SB_Objects_Create::Add_New_Object(int Index)
 		if (Object->Shape == Enums::Shape_Box)
 		{
 			Add_New_Physics_Static_Box(Index);
+			Object->Object_Node->setScale(Object->Mesh_Scale);
+
+			Ogre::Vector3 Scale = Object->Object_Node->getScale();
+			App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+			App->SBC_Dimensions->UpDate_Physics_And_Visuals(Index);
 			Object->Physics_Valid = 1;
 		}
 
