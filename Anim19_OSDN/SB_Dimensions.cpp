@@ -34,6 +34,10 @@ SB_Dimensions::SB_Dimensions()
 		PosY_Selected = 0;
 		PosZ_Selected = 0;
 
+		ScaleX_Selected = 1;
+		ScaleY_Selected = 0;
+		ScaleZ_Selected = 0;
+
 		Model_X_Delta = 1;
 	
 }
@@ -65,6 +69,7 @@ void SB_Dimensions::ImGui_Dimensions(void)
 
 		//*************************************************************************************** Rotation
 		ImGui_Position();
+		ImGui_Scale();
 
 		//ImGui_Rotation();
 
@@ -259,7 +264,7 @@ void SB_Dimensions::ImGui_Scale(void)
 {
 	int Index = App->SBC_Properties->Current_Selected_Object;
 
-	Ogre::Vector3 Pos = App->SBC_Scene->B_Object[Index]->Object_Node->getPosition();
+	Ogre::Vector3 Scale = App->SBC_Scene->B_Object[Index]->Object_Node->getScale();
 
 	ImGuiStyle* style = &ImGui::GetStyle();
 
@@ -280,11 +285,11 @@ void SB_Dimensions::ImGui_Scale(void)
 
 	ImGui::Indent();
 	ImGui::Indent();
-	ImGui::Text("X %.3f Y %.3f Z %.3f", Pos.x, Pos.y, Pos.z);
+	ImGui::Text("X %.3f Y %.3f Z %.3f", Scale.x, Scale.y, Scale.z);
 
 	ImGui::Spacing();
 
-	// ----------------------------------------------------------------------------- Position
+	// ----------------------------------------------------------------------------- Scale
 
 	float spacingX = ImGui::GetStyle().ItemInnerSpacing.x;
 	ImGui::PushButtonRepeat(true);
@@ -292,10 +297,10 @@ void SB_Dimensions::ImGui_Scale(void)
 	{
 		if (App->SBC_Scene->Scene_Loaded == 1)
 		{
-			if (PosX_Selected == 1)
+			if (ScaleX_Selected == 1)
 			{
-				Pos.x = Pos.x - 1;
-				App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
+				Scale.x = Scale.x - 1;
+				App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
 
 				AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
 				worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
@@ -305,10 +310,10 @@ void SB_Dimensions::ImGui_Scale(void)
 				//App->CL_Dimensions->Translate_Model(-App->CL_Dimensions->Model_X_Position, 0, 0);
 			}
 
-			if (PosY_Selected == 1)
+			if (ScaleY_Selected == 1)
 			{
-				Pos.y = Pos.y + 1;
-				App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
+				Scale.y = Scale.y + 1;
+				App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
 
 				AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
 				worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
@@ -317,10 +322,10 @@ void SB_Dimensions::ImGui_Scale(void)
 				//App->CL_Dimensions->Translate_Model(0, -App->CL_Dimensions->Model_X_Position, 0);
 			}
 
-			if (PosZ_Selected == 1)
+			if (ScaleZ_Selected == 1)
 			{
-				Pos.z = Pos.z - 1;
-				App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
+				Scale.z = Scale.z - 1;
+				App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
 
 				AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
 				worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
@@ -336,10 +341,10 @@ void SB_Dimensions::ImGui_Scale(void)
 	{
 		if (App->SBC_Scene->Scene_Loaded == 1)
 		{
-			if (PosX_Selected == 1)
+			if (ScaleX_Selected == 1)
 			{
-				Pos.x = Pos.x + 1;
-				App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
+				Scale.x = Scale.x + 1;
+				App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
 
 				AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
 				worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
@@ -348,10 +353,10 @@ void SB_Dimensions::ImGui_Scale(void)
 				//App->CL_Dimensions->Translate_Model(App->CL_Dimensions->Model_X_Position, 0, 0);
 			}
 
-			if (PosY_Selected == 1)
+			if (ScaleY_Selected == 1)
 			{
-				Pos.y = Pos.y - 1;
-				App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
+				Scale.y = Scale.y - 1;
+				App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
 
 				AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
 				worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
@@ -360,10 +365,10 @@ void SB_Dimensions::ImGui_Scale(void)
 				//App->CL_Dimensions->Translate_Model(0, App->CL_Dimensions->Model_X_Position, 0);
 			}
 
-			if (PosZ_Selected == 1)
+			if (ScaleZ_Selected == 1)
 			{
-				Pos.z = Pos.z + 1;
-				App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
+				Scale.z = Scale.z + 1;
+				App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
 
 				AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
 				worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
@@ -377,10 +382,10 @@ void SB_Dimensions::ImGui_Scale(void)
 
 	ImGui::SameLine();
 	ImGui::SetNextItemWidth(100);
-	const char* XitemsPosXX[] = { "0.001","0.01","0.1","1", "2", "5", "10", "20" };
-	static int XitemPosXX = 3;
-	bool ChangedPosX = ImGui::Combo("Step Pos", &XitemPosXX, XitemsPosXX, IM_ARRAYSIZE(XitemsPosXX));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
-	if (ChangedPosX == 1)
+	const char* XitemsScaleXX[] = { "0.001","0.01","0.1","1", "2", "5", "10", "20" };
+	static int XitemScaleXX = 3;
+	bool ChangedScaleX = ImGui::Combo("Step Scale", &XitemScaleXX, XitemsScaleXX, IM_ARRAYSIZE(XitemsScaleXX));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
+	if (ChangedScaleX == 1)
 	{
 		//App->CL_Dimensions->Model_X_Position = (float)atof(XitemsPosXX[XitemPosXX]);
 	}
@@ -389,33 +394,33 @@ void SB_Dimensions::ImGui_Scale(void)
 	ImGui::Indent();
 
 	style->Colors[ImGuiCol_FrameBg] = ImVec4(0.0f, 0.0f, 1.0f, 1.00f);
-	ImGui::Checkbox("X", &PosX_Selected);
-	if (PosX_Selected == 1)
+	ImGui::Checkbox("X", &ScaleX_Selected);
+	if (ScaleX_Selected == 1)
 	{
-		PosY_Selected = 0;
-		PosZ_Selected = 0;
+		ScaleY_Selected = 0;
+		ScaleZ_Selected = 0;
 	}
 	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
 	//------------------------------------------------------------------------------- Pos Y
 	ImGui::SameLine();
 	style->Colors[ImGuiCol_FrameBg] = ImVec4(0.0f, 1.0f, 0.0f, 1.00f);
-	ImGui::Checkbox("Y", &PosY_Selected);
+	ImGui::Checkbox("Y", &ScaleY_Selected);
 	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
 
-	if (PosY_Selected)
+	if (ScaleY_Selected)
 	{
-		PosX_Selected = 0;
-		PosZ_Selected = 0;
+		ScaleX_Selected = 0;
+		ScaleZ_Selected = 0;
 	}
 
 	//------------------------------------------------------------------------------- Pos Z
 	ImGui::SameLine();
 	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 0.0f, 0.0f, 1.00f);
-	ImGui::Checkbox("Z", &PosZ_Selected);
-	if (PosZ_Selected)
+	ImGui::Checkbox("Z", &ScaleZ_Selected);
+	if (ScaleZ_Selected)
 	{
-		PosX_Selected = 0;
-		PosY_Selected = 0;
+		ScaleX_Selected = 0;
+		ScaleY_Selected = 0;
 	}
 	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
 

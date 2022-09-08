@@ -42,6 +42,10 @@ protected:
 	bool PosY_Selected;
 	bool PosZ_Selected;
 
+	bool ScaleX_Selected;
+	bool ScaleY_Selected;
+	bool ScaleZ_Selected;
+
 	float Model_X_Delta;
 };
 
