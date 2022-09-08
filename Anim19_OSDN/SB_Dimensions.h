@@ -46,6 +46,7 @@ protected:
 	bool ScaleY_Selected;
 	bool ScaleZ_Selected;
 
-	float Model_X_Delta;
+	float Model_Pos_Delta;
+	float Model_Scale_Delta;
 };
 
