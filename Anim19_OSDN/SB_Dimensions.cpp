@@ -77,7 +77,7 @@ void SB_Dimensions::ImGui_Dimensions(void)
 }
 
 // *************************************************************************
-// *						ImGui_Position2  Terry Bernie				   *
+// *						ImGui_Position Terry Flanigan				   *
 // *************************************************************************
 void SB_Dimensions::ImGui_Position(void)
 {

@@ -29,11 +29,12 @@ public:
 	SB_Dimensions();
 	~SB_Dimensions();
 
+	void ImGui_Dimensions(void);
+
 	bool Show_Dimensions;
 
 protected:
 
-	void ImGui_Dimensions(void);
 	void ImGui_Position(void);
 
 	bool PosX_Selected;

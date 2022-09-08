@@ -90,7 +90,7 @@ LRESULT CALLBACK SB_Object::Object_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 		if (some_item->idFrom == IDC_BT_POSITION && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_Vm_ImGui->Show_Dimensions);
+			App->Custom_Button_Toggle(item, App->SBC_Dimensions->Show_Dimensions);
 			return CDRF_DODEFAULT;
 		}
 
@@ -127,13 +127,13 @@ LRESULT CALLBACK SB_Object::Object_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 		if (LOWORD(wParam) == IDC_BT_POSITION)
 		{
 			
-			if (App->CL_Vm_ImGui->Show_Dimensions == 1)
+			if (App->SBC_Dimensions->Show_Dimensions == 1)
 			{
-				App->CL_Vm_ImGui->Show_Dimensions = 0;
+				App->SBC_Dimensions->Show_Dimensions = 0;
 			}
 			else
 			{
-				App->CL_Vm_ImGui->Show_Dimensions = 1;
+				App->SBC_Dimensions->Show_Dimensions = 1;
 			}
 			return 1;
 		}
