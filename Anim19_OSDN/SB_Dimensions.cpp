@@ -27,15 +27,21 @@ distribution.
 
 SB_Dimensions::SB_Dimensions()
 {
-	Show_Dimensions = 0;
+	
+		Show_Dimensions = 0;
 
-	PosX_Selected = 1;
-	PosY_Selected = 0;
-	PosZ_Selected = 0;
+		PosX_Selected = 1;
+		PosY_Selected = 0;
+		PosZ_Selected = 0;
+
+		Model_X_Delta = 1;
+	
 }
 
 SB_Dimensions::~SB_Dimensions()
 {
+	
+
 }
 
 // *************************************************************************
@@ -88,6 +94,176 @@ void SB_Dimensions::ImGui_Position(void)
 	ImGuiStyle* style = &ImGui::GetStyle();
 
 	ImGui::Text("Position");
+	ImGui::Separator();
+	ImGui::Spacing();
+
+	if (App->SBC_Scene->Scene_Loaded == 1)
+	{
+		/*pos.x = App->CL_Model->S_BoundingBox[0]->Centre->x;
+		pos.y = App->CL_Model->S_BoundingBox[0]->Centre->y;
+		pos.z = App->CL_Model->S_BoundingBox[0]->Centre->z;
+
+		App->CL_Ogre->RenderListener->Hair_1PosX = pos.x;
+		App->CL_Ogre->RenderListener->Hair_1PosY = pos.y;
+		App->CL_Ogre->RenderListener->Hair_1PosZ = pos.z;*/
+	}
+
+	ImGui::Indent();
+	ImGui::Indent();
+	ImGui::Text("X %.3f Y %.3f Z %.3f", Pos.x, Pos.y, Pos.z);
+
+	ImGui::Spacing();
+
+	// ----------------------------------------------------------------------------- Position
+
+	float spacingX = ImGui::GetStyle().ItemInnerSpacing.x;
+	ImGui::PushButtonRepeat(true);
+	if (ImGui::ArrowButton("##leftXX", ImGuiDir_Left))
+	{
+		if (App->SBC_Scene->Scene_Loaded == 1)
+		{
+			if (PosX_Selected == 1)
+			{
+				Pos.x = Pos.x - Model_X_Delta;
+				App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
+
+				AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
+				worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
+				Ogre::Vector3 Centre = worldAAB.getCenter();
+				App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+			}
+
+			if (PosY_Selected == 1)
+			{
+				Pos.y = Pos.y + Model_X_Delta;
+				App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
+
+				AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
+				worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
+				Ogre::Vector3 Centre = worldAAB.getCenter();
+				App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+			}
+
+			if (PosZ_Selected == 1)
+			{
+				Pos.z = Pos.z - Model_X_Delta;
+				App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
+
+				AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
+				worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
+				Ogre::Vector3 Centre = worldAAB.getCenter();
+				App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+			}
+		}
+	}
+
+	ImGui::SameLine(0.0f, spacingX);
+	if (ImGui::ArrowButton("##rightXX", ImGuiDir_Right))
+	{
+		if (App->SBC_Scene->Scene_Loaded == 1)
+		{
+			if (PosX_Selected == 1)
+			{
+				Pos.x = Pos.x + Model_X_Delta;
+				App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
+
+				AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
+				worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
+				Ogre::Vector3 Centre = worldAAB.getCenter();
+				App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+			}
+
+			if (PosY_Selected == 1)
+			{
+				Pos.y = Pos.y - Model_X_Delta;
+				App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
+
+				AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
+				worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
+				Ogre::Vector3 Centre = worldAAB.getCenter();
+				App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+			}
+
+			if (PosZ_Selected == 1)
+			{
+				Pos.z = Pos.z + Model_X_Delta;
+				App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
+
+				AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
+				worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
+				Ogre::Vector3 Centre = worldAAB.getCenter();
+				App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+			}
+		}
+	}
+	ImGui::PopButtonRepeat();
+
+	ImGui::SameLine();
+	ImGui::SetNextItemWidth(100);
+	const char* XitemsPosXX[] = { "0.001","0.01","0.1","1", "2", "5", "10", "20" };
+	static int XitemPosXX = 3;
+	bool ChangedPosX = ImGui::Combo("Step Pos", &XitemPosXX, XitemsPosXX, IM_ARRAYSIZE(XitemsPosXX));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
+	if (ChangedPosX == 1)
+	{
+		Model_X_Delta = (float)atof(XitemsPosXX[XitemPosXX]);
+	}
+
+	// ----------------------------------------------------------------------------- Pos X
+	ImGui::Indent();
+
+	style->Colors[ImGuiCol_FrameBg] = ImVec4(0.0f, 0.0f, 1.0f, 1.00f);
+	ImGui::Checkbox("X", &PosX_Selected);
+	if (PosX_Selected == 1)
+	{
+		PosY_Selected = 0;
+		PosZ_Selected = 0;
+	}
+	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
+	//------------------------------------------------------------------------------- Pos Y
+	ImGui::SameLine();
+	style->Colors[ImGuiCol_FrameBg] = ImVec4(0.0f, 1.0f, 0.0f, 1.00f);
+	ImGui::Checkbox("Y", &PosY_Selected);
+	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
+
+	if (PosY_Selected)
+	{
+		PosX_Selected = 0;
+		PosZ_Selected = 0;
+	}
+
+	//------------------------------------------------------------------------------- Pos Z
+	ImGui::SameLine();
+	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 0.0f, 0.0f, 1.00f);
+	ImGui::Checkbox("Z", &PosZ_Selected);
+	if (PosZ_Selected)
+	{
+		PosX_Selected = 0;
+		PosY_Selected = 0;
+	}
+	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
+
+
+	style->Colors[ImGuiCol_Text] = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
+
+	ImGui::Spacing();
+	ImGui::Unindent();
+
+	ImGui::Unindent();
+	ImGui::Unindent();
+}
+
+// *************************************************************************
+// *						ImGui_Scale Terry Flanigan					   *
+// *************************************************************************
+void SB_Dimensions::ImGui_Scale(void)
+{
+	int Index = App->SBC_Properties->Current_Selected_Object;
+
+	Ogre::Vector3 Pos = App->SBC_Scene->B_Object[Index]->Object_Node->getPosition();
+
+	ImGuiStyle* style = &ImGui::GetStyle();
+
+	ImGui::Text("Scale");
 	ImGui::Separator();
 	ImGui::Spacing();
 
@@ -249,15 +425,6 @@ void SB_Dimensions::ImGui_Position(void)
 	ImGui::Spacing();
 	ImGui::Unindent();
 
-	/*if (ImGui::Button("Middle of Bounding Box", ImVec2(200, 40)))
-	{
-		App->CL_Dimensions->Centre_Model_Mid();
-	}
-
-	if (ImGui::Button("Base of Bounding Box", ImVec2(200, 40)))
-	{
-		App->CL_Dimensions->Centre_Model_Base();
-	}*/
 	ImGui::Unindent();
 	ImGui::Unindent();
 }

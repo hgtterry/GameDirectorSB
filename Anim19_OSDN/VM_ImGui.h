@@ -79,8 +79,6 @@ public:
 
 protected:
 
-	bool PosX_Selected;
-	bool PosY_Selected;
-	bool PosZ_Selected;
+	
 };
 

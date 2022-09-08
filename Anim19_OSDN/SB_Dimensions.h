@@ -36,9 +36,12 @@ public:
 protected:
 
 	void ImGui_Position(void);
+	void ImGui_Scale(void);
 
 	bool PosX_Selected;
 	bool PosY_Selected;
 	bool PosZ_Selected;
+
+	float Model_X_Delta;
 };
 

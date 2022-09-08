@@ -42,10 +42,6 @@ VM_ImGui::VM_ImGui()
 	Progress_Count = 0;
 	Progress_Delta = 0;
 
-	PosX_Selected = 1;
-	PosY_Selected = 0;
-	PosZ_Selected = 0;
-
 	strcpy(test, "poopoo");
 }
 
