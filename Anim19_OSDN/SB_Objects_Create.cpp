@@ -85,6 +85,7 @@ bool SB_Objects_Create::Add_New_Object(int Index)
 	Object->Object_Node->attachObject(Object->Object_Ent);
 
 	Object->Object_Node->setVisible(true);
+
 	Object->Object_Node->setScale(Object->Mesh_Scale);
 
 	Object->Object_Node->setPosition(Object->Mesh_Pos);
