@@ -38,6 +38,9 @@ protected:
 	void ImGui_Position(void);
 	void ImGui_Scale(void);
 
+	void UpDate_Physics_And_Visuals(int Index);
+	void Set_Physics_Position(int Index);
+
 	bool PosX_Selected;
 	bool PosY_Selected;
 	bool PosZ_Selected;

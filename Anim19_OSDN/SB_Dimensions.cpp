@@ -306,6 +306,8 @@ void SB_Dimensions::ImGui_Scale(void)
 				Scale.z = Scale.z + Model_Scale_Delta;
 
 				App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
+				App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x/2, Scale.y/2, Scale.z/2));
+				UpDate_Physics_And_Visuals(Index);
 			}
 			else
 			{
@@ -317,9 +319,8 @@ void SB_Dimensions::ImGui_Scale(void)
 					AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
 					worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
 					Ogre::Vector3 Centre = worldAAB.getCenter();
-					App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
-
-					//App->CL_Dimensions->Translate_Model(-App->CL_Dimensions->Model_X_Position, 0, 0);
+					App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Scale.x/2, Scale.y/2, Scale.z/2));
+					UpDate_Physics_And_Visuals(Index);
 				}
 
 				if (ScaleY_Selected == 1)
@@ -360,6 +361,9 @@ void SB_Dimensions::ImGui_Scale(void)
 				Scale.y = Scale.y - Model_Scale_Delta;
 				Scale.z = Scale.z - Model_Scale_Delta;
 				App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
+				App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x/2, Scale.y/2, Scale.z/2));
+				UpDate_Physics_And_Visuals(Index);
+
 			}
 			else
 			{
@@ -459,4 +463,24 @@ void SB_Dimensions::ImGui_Scale(void)
 
 	ImGui::Unindent();
 	ImGui::Unindent();
+}
+
+// *************************************************************************
+// *				UpDate_Physics_And_Visuals Terry Flanigtan		 	   *
+// *************************************************************************
+void SB_Dimensions::UpDate_Physics_And_Visuals(int Index)
+{
+	Set_Physics_Position(Index);
+	//App->Cl_Visuals->MarkerBB_Addjust(Index);
+}
+
+// *************************************************************************
+// *	  				Set_Physics_Position Terry Flanigan				   *
+// *************************************************************************
+void SB_Dimensions::Set_Physics_Position(int Index)
+{
+	AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
+	worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
+	Ogre::Vector3 Centre = worldAAB.getCenter();
+	App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
 }
