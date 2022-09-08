@@ -40,6 +40,8 @@ SB_Dimensions::SB_Dimensions()
 
 		Model_Pos_Delta = 1;
 		Model_Scale_Delta = 0.1;
+
+		Scale_Lock = 1;
 }
 
 SB_Dimensions::~SB_Dimensions()
@@ -297,41 +299,52 @@ void SB_Dimensions::ImGui_Scale(void)
 	{
 		if (App->SBC_Scene->Scene_Loaded == 1)
 		{
-			if (ScaleX_Selected == 1)
+			if (Scale_Lock == 1)
 			{
-				Scale.x = Scale.x - Model_Scale_Delta;
-				App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
-
-				AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
-				worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
-				Ogre::Vector3 Centre = worldAAB.getCenter();
-				App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
-
-				//App->CL_Dimensions->Translate_Model(-App->CL_Dimensions->Model_X_Position, 0, 0);
-			}
-
-			if (ScaleY_Selected == 1)
-			{
+				Scale.x = Scale.x + Model_Scale_Delta;
 				Scale.y = Scale.y + Model_Scale_Delta;
-				App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
+				Scale.z = Scale.z + Model_Scale_Delta;
 
-				AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
-				worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
-				Ogre::Vector3 Centre = worldAAB.getCenter();
-				App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
-				//App->CL_Dimensions->Translate_Model(0, -App->CL_Dimensions->Model_X_Position, 0);
+				App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
 			}
-
-			if (ScaleZ_Selected == 1)
+			else
 			{
-				Scale.z = Scale.z - Model_Scale_Delta;
-				App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
+				if (ScaleX_Selected == 1)
+				{
+					Scale.x = Scale.x - Model_Scale_Delta;
+					App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
 
-				AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
-				worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
-				Ogre::Vector3 Centre = worldAAB.getCenter();
-				App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
-				//App->Cl_Vm_Dimensions->Translate_Model(0, 0, -App->CL_Dimensions->Model_X_Position);
+					AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
+					worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
+					Ogre::Vector3 Centre = worldAAB.getCenter();
+					App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+
+					//App->CL_Dimensions->Translate_Model(-App->CL_Dimensions->Model_X_Position, 0, 0);
+				}
+
+				if (ScaleY_Selected == 1)
+				{
+					Scale.y = Scale.y + Model_Scale_Delta;
+					App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
+
+					AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
+					worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
+					Ogre::Vector3 Centre = worldAAB.getCenter();
+					App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+					//App->CL_Dimensions->Translate_Model(0, -App->CL_Dimensions->Model_X_Position, 0);
+				}
+
+				if (ScaleZ_Selected == 1)
+				{
+					Scale.z = Scale.z - Model_Scale_Delta;
+					App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
+
+					AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
+					worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
+					Ogre::Vector3 Centre = worldAAB.getCenter();
+					App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+					//App->Cl_Vm_Dimensions->Translate_Model(0, 0, -App->CL_Dimensions->Model_X_Position);
+				}
 			}
 		}
 	}
@@ -341,40 +354,50 @@ void SB_Dimensions::ImGui_Scale(void)
 	{
 		if (App->SBC_Scene->Scene_Loaded == 1)
 		{
-			if (ScaleX_Selected == 1)
+			if (Scale_Lock == 1)
 			{
-				Scale.x = Scale.x + Model_Scale_Delta;
-				App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
-
-				AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
-				worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
-				Ogre::Vector3 Centre = worldAAB.getCenter();
-				App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
-				//App->CL_Dimensions->Translate_Model(App->CL_Dimensions->Model_X_Position, 0, 0);
-			}
-
-			if (ScaleY_Selected == 1)
-			{
+				Scale.x = Scale.x - Model_Scale_Delta;
 				Scale.y = Scale.y - Model_Scale_Delta;
+				Scale.z = Scale.z - Model_Scale_Delta;
 				App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
-
-				AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
-				worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
-				Ogre::Vector3 Centre = worldAAB.getCenter();
-				App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
-				//App->CL_Dimensions->Translate_Model(0, App->CL_Dimensions->Model_X_Position, 0);
 			}
-
-			if (ScaleZ_Selected == 1)
+			else
 			{
-				Scale.z = Scale.z + Model_Scale_Delta;
-				App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
+				if (ScaleX_Selected == 1)
+				{
+					Scale.x = Scale.x + Model_Scale_Delta;
+					App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
 
-				AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
-				worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
-				Ogre::Vector3 Centre = worldAAB.getCenter();
-				App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
-				//App->CL_Dimensions->Translate_Model(0, 0, App->CL_Dimensions->Model_X_Position);
+					AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
+					worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
+					Ogre::Vector3 Centre = worldAAB.getCenter();
+					App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+					//App->CL_Dimensions->Translate_Model(App->CL_Dimensions->Model_X_Position, 0, 0);
+				}
+
+				if (ScaleY_Selected == 1)
+				{
+					Scale.y = Scale.y - Model_Scale_Delta;
+					App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
+
+					AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
+					worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
+					Ogre::Vector3 Centre = worldAAB.getCenter();
+					App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+					//App->CL_Dimensions->Translate_Model(0, App->CL_Dimensions->Model_X_Position, 0);
+				}
+
+				if (ScaleZ_Selected == 1)
+				{
+					Scale.z = Scale.z + Model_Scale_Delta;
+					App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
+
+					AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
+					worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
+					Ogre::Vector3 Centre = worldAAB.getCenter();
+					App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+					//App->CL_Dimensions->Translate_Model(0, 0, App->CL_Dimensions->Model_X_Position);
+				}
 			}
 		}
 	}
@@ -424,6 +447,10 @@ void SB_Dimensions::ImGui_Scale(void)
 	}
 	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
 
+	ImGui::Checkbox("Lock Axis", &Scale_Lock);
+	{
+
+	}
 
 	style->Colors[ImGuiCol_Text] = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
 

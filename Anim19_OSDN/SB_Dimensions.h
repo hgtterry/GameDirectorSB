@@ -45,6 +45,7 @@ protected:
 	bool ScaleX_Selected;
 	bool ScaleY_Selected;
 	bool ScaleZ_Selected;
+	bool Scale_Lock;
 
 	float Model_Pos_Delta;
 	float Model_Scale_Delta;
