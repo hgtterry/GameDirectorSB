@@ -309,6 +309,16 @@ void SB_Properties::ListView_OnClickOptions(LPARAM lParam)
 		return;
 	}
 
+	// Objects
+	if (Edit_Category == Enums::Edit_Mesh_Object)
+	{
+		if (Edit_Physics == 0)
+		{
+			Edit_Object_Onclick(lParam);
+		}
+		return;
+	}
+
 	return;
 }
 
@@ -529,6 +539,44 @@ bool SB_Properties::Update_ListView_Player_Physics()
 			ListView_SetItemText(App->SBC_Properties->Properties_hLV, row, col,
 				const_cast<char*>(grid[col][row].c_str()));
 		}
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *					Edit_Object_Onclick  Terry Flanigan				   *
+// *************************************************************************
+bool SB_Properties::Edit_Object_Onclick(LPARAM lParam)
+{
+	int Index = App->SBC_Properties->Current_Selected_Object;
+	int result = 1;
+	int List_Index;
+
+	Base_Object* Object = App->SBC_Scene->B_Object[Index];
+
+	LPNMLISTVIEW List = (LPNMLISTVIEW)lParam;
+	List_Index = List->iItem;
+	ListView_GetItemText(Properties_hLV, List_Index, 0, btext, 20);
+
+	result = strcmp(App->SBC_Properties->btext, "Name");
+	if (result == 0)
+	{
+		strcpy(App->Cl_Dialogs->btext, "Change Area Name");
+		strcpy(App->Cl_Dialogs->Chr_Text, Object->Mesh_Name);
+
+		App->Cl_Dialogs->Dialog_Text(1);
+
+		if (App->Cl_Dialogs->Canceled == 1)
+		{
+			return TRUE;
+		}
+
+		// Needs Duplicate Name test 
+		strcpy(Object->Mesh_Name, App->Cl_Dialogs->Chr_Text);
+
+		App->SBC_FileView->Change_Item_Name(Object->ListViewItem, Object->Mesh_Name);
+		Update_ListView_Objects();
 	}
 
 	return 1;

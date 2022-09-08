@@ -39,7 +39,7 @@ SB_Dimensions::SB_Dimensions()
 		ScaleZ_Selected = 0;
 
 		Model_Pos_Delta = 1;
-		Model_Scale_Delta = 0.1;
+		Model_Scale_Delta = 0.01;
 
 		Scale_Lock = 1;
 }
@@ -308,17 +308,9 @@ void SB_Dimensions::ImGui_Scale(void)
 				Scale.z = Scale.z + Model_Scale_Delta;
 
 				App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
-
-				//Scale = App->SBC_Scene->B_Object[Index]->Physics_Scale;
-				/*Ogre::Vector3 Scale2 = Ogre::Vector3(App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->getLocalScaling());
-
-				Scale2.x += (Model_Scale_Delta - 0.04);
-				Scale2.y += (Model_Scale_Delta - 0.04);;
-				Scale2.z += (Model_Scale_Delta - 0.04);;*/
-				//App->SBC_Scene->B_Object[Index]->Physics_Scale = Scale2;
-
 				App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
 				UpDate_Physics_And_Visuals(Index);
+
 			}
 			else
 			{
@@ -343,7 +335,7 @@ void SB_Dimensions::ImGui_Scale(void)
 					worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
 					Ogre::Vector3 Centre = worldAAB.getCenter();
 					App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
-					//App->CL_Dimensions->Translate_Model(0, -App->CL_Dimensions->Model_X_Position, 0);
+				
 				}
 
 				if (ScaleZ_Selected == 1)
@@ -355,7 +347,7 @@ void SB_Dimensions::ImGui_Scale(void)
 					worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
 					Ogre::Vector3 Centre = worldAAB.getCenter();
 					App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
-					//App->Cl_Vm_Dimensions->Translate_Model(0, 0, -App->CL_Dimensions->Model_X_Position);
+					
 				}
 			}
 		}
@@ -368,19 +360,11 @@ void SB_Dimensions::ImGui_Scale(void)
 		{
 			if (Scale_Lock == 1)
 			{
-				float xSum;
 				Scale.x = Scale.x - Model_Scale_Delta;
 				Scale.y = Scale.y - Model_Scale_Delta;
 				Scale.z = Scale.z - Model_Scale_Delta;
+
 				App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
-
-				/*xSum = (Scale.x * 0.04)*2;
-				Scale.x = Scale.x - xSum;
-				Scale.y = Scale.y - xSum;
-				Scale.z = Scale.z - xSum;*/
-
-				//float Margin = App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->getMargin();
-				//App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setMargin(25);
 				App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
 				UpDate_Physics_And_Visuals(Index);
 
@@ -396,7 +380,7 @@ void SB_Dimensions::ImGui_Scale(void)
 					worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
 					Ogre::Vector3 Centre = worldAAB.getCenter();
 					App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
-					//App->CL_Dimensions->Translate_Model(App->CL_Dimensions->Model_X_Position, 0, 0);
+					
 				}
 
 				if (ScaleY_Selected == 1)
@@ -408,7 +392,7 @@ void SB_Dimensions::ImGui_Scale(void)
 					worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
 					Ogre::Vector3 Centre = worldAAB.getCenter();
 					App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
-					//App->CL_Dimensions->Translate_Model(0, App->CL_Dimensions->Model_X_Position, 0);
+					
 				}
 
 				if (ScaleZ_Selected == 1)
@@ -420,7 +404,7 @@ void SB_Dimensions::ImGui_Scale(void)
 					worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
 					Ogre::Vector3 Centre = worldAAB.getCenter();
 					App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
-					//App->CL_Dimensions->Translate_Model(0, 0, App->CL_Dimensions->Model_X_Position);
+					
 				}
 			}
 		}
@@ -430,7 +414,7 @@ void SB_Dimensions::ImGui_Scale(void)
 	ImGui::SameLine();
 	ImGui::SetNextItemWidth(100);
 	const char* XitemsScaleXX[] = { "0.001","0.01","0.1","1", "2", "5", "10", "20" };
-	static int XitemScaleXX = 2;
+	static int XitemScaleXX = 1;
 	bool ChangedScaleX = ImGui::Combo("Step Scale", &XitemScaleXX, XitemsScaleXX, IM_ARRAYSIZE(XitemsScaleXX));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
 	if (ChangedScaleX == 1)
 	{

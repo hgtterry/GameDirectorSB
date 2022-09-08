@@ -64,6 +64,7 @@ protected:
 	bool Edit_Area_Onclick(LPARAM lParam);
 	bool Edit_Player_Onclick(LPARAM lParam);
 	bool Edit_Player_Physics_Onclick(LPARAM lParam);
+	bool Edit_Object_Onclick(LPARAM lParam);
 
 	bool Edit_Camera_Onclick(LPARAM lParam);
 
