@@ -173,10 +173,8 @@ void VM_ImGui::Tabs_Render_Camera(void)
 		ImGui_Position();
 	}
 
-	if (App->SBC_Dimensions->Show_Dimensions == 1)
-	{
-		App->SBC_Dimensions->ImGui_Dimensions();
-	}
+	App->SBC_Dimensions->Dimesions_Select();
+	
 }
 
 // *************************************************************************
@@ -204,10 +202,7 @@ void VM_ImGui::Tabs_Render_Motions(void)
 		ImGui_MotionList();
 	}
 
-	if (App->SBC_Dimensions->Show_Dimensions == 1)
-	{
-		App->SBC_Dimensions->ImGui_Dimensions();
-	}
+	App->SBC_Dimensions->Dimesions_Select();
 }
 
 // *************************************************************************
@@ -245,10 +240,7 @@ void VM_ImGui::Tabs_Render_Dimensions(void)
 		ImGui_Scale();
 	}
 
-	if (App->SBC_Dimensions->Show_Dimensions == 1)
-	{
-		App->SBC_Dimensions->ImGui_Dimensions();
-	}
+	App->SBC_Dimensions->Dimesions_Select();
 }
 
 // *************************************************************************
@@ -286,10 +278,7 @@ void VM_ImGui::Tabs_Render_Groups(void)
 		ImGui_Position();
 	}
 
-	if (App->SBC_Dimensions->Show_Dimensions == 1)
-	{
-		App->SBC_Dimensions->ImGui_Dimensions();
-	}
+	App->SBC_Dimensions->Dimesions_Select();
 
 }
 

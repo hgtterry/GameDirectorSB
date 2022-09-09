@@ -30,6 +30,10 @@ SB_Dimensions::SB_Dimensions()
 	
 		Show_Dimensions = 0;
 
+		Show_Position = 0;
+		Show_Scale = 0;
+		Show_Rotation = 0;
+
 		PosX_Selected = 1;
 		PosY_Selected = 0;
 		PosZ_Selected = 0;
@@ -38,8 +42,13 @@ SB_Dimensions::SB_Dimensions()
 		ScaleY_Selected = 0;
 		ScaleZ_Selected = 0;
 
+		RotationX_Selected = 1;
+		RotationY_Selected = 0;
+		RotationZ_Selected = 0;
+
 		Model_Pos_Delta = 1;
 		Model_Scale_Delta = 0.01;
+		Model_Rotation_Delta = 0.5;
 
 		Scale_Lock = 1;
 }
@@ -51,7 +60,23 @@ SB_Dimensions::~SB_Dimensions()
 }
 
 // *************************************************************************
-// *						ImGui_Dimensions  Terry Bernie				   *
+// *					Dimesions_Select  Terry Flanigan				   *
+// *************************************************************************
+void SB_Dimensions::Dimesions_Select(void)
+{
+	if (Show_Position == 1 || Show_Scale == 1 || Show_Rotation == 1)
+	{
+		Show_Dimensions = 1;
+		App->SBC_Dimensions->ImGui_Dimensions();
+	}
+	else
+	{
+		Show_Dimensions = 0;
+	}
+}
+
+// *************************************************************************
+// *						ImGui_Dimensions  Terry Flanigan			   *
 // *************************************************************************
 void SB_Dimensions::ImGui_Dimensions(void)
 {
@@ -68,13 +93,21 @@ void SB_Dimensions::ImGui_Dimensions(void)
 		int Index = App->SBC_Properties->Current_Selected_Object;
 		//App->CL_Ogre->RenderListener->Show_Crosshair = 1;
 
+		if (Show_Position == 1)
+		{
+			ImGui_Position();
+		}
 
-		//*************************************************************************************** Rotation
-		ImGui_Position();
-		ImGui_Scale();
+		if (Show_Scale == 1)
+		{
+			ImGui_Scale();
+		}
 
-		//ImGui_Rotation();
-
+		if (Show_Rotation == 1)
+		{
+			ImGui_Rotation();
+		}
+		
 		if (ImGui::Button("Close"))
 		{
 			Show_Dimensions = 0;
@@ -459,6 +492,178 @@ void SB_Dimensions::ImGui_Scale(void)
 	{
 
 	}
+
+	style->Colors[ImGuiCol_Text] = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
+
+	ImGui::Spacing();
+	ImGui::Unindent();
+
+	ImGui::Unindent();
+	ImGui::Unindent();
+}
+
+// *************************************************************************
+// *						ImGui_Rotation Terry Flanigan				   *
+// *************************************************************************
+void SB_Dimensions::ImGui_Rotation(void)
+{
+	int Index = App->SBC_Properties->Current_Selected_Object;
+
+	Ogre::Vector3 RotD = App->SBC_Scene->B_Object[Index]->Mesh_Rot;
+
+	ImGuiStyle* style = &ImGui::GetStyle();
+
+	ImGui::Text("Rotation");
+	ImGui::Separator();
+	ImGui::Spacing();
+
+	float X = 0;
+
+	if (App->SBC_Scene->Scene_Loaded == 1)
+	{
+		/*pos.x = App->CL_Model->S_BoundingBox[0]->Centre->x;
+		pos.y = App->CL_Model->S_BoundingBox[0]->Centre->y;
+		pos.z = App->CL_Model->S_BoundingBox[0]->Centre->z;
+
+		App->CL_Ogre->RenderListener->Hair_1PosX = pos.x;
+		App->CL_Ogre->RenderListener->Hair_1PosY = pos.y;
+		App->CL_Ogre->RenderListener->Hair_1PosZ = pos.z;*/
+	}
+
+	ImGui::Indent();
+	ImGui::Indent();
+	ImGui::Text("X %.3f Y %.3f Z %.3f", RotD.x, RotD.y, RotD.z);
+
+	ImGui::Spacing();
+
+	// ----------------------------------------------------------------------------- Scale
+
+	float spacingX = ImGui::GetStyle().ItemInnerSpacing.x;
+	ImGui::PushButtonRepeat(true);
+	if (ImGui::ArrowButton("##leftRX", ImGuiDir_Left))
+	{
+		if (App->SBC_Scene->Scene_Loaded == 1)
+		{
+
+			if (RotationX_Selected == 1)
+			{
+				App->SBC_Scene->B_Object[Index]->Object_Node->pitch(Radian(Ogre::Degree(Model_Rotation_Delta)));
+				App->SBC_Scene->B_Object[Index]->Mesh_Rot.x += Model_Rotation_Delta;
+				App->SBC_Scene->B_Object[Index]->Mesh_Quat = App->SBC_Scene->B_Object[Index]->Object_Node->getOrientation();
+
+				App->SBC_Scene->B_Object[Index]->Physics_Rot.x += Model_Rotation_Delta;
+				App->SBC_Scene->B_Object[Index]->Physics_Quat = App->SBC_Scene->B_Object[Index]->Object_Node->getOrientation();
+				
+				float w = App->SBC_Scene->B_Object[Index]->Physics_Quat.w;
+				float x = App->SBC_Scene->B_Object[Index]->Physics_Quat.x;
+				float y = App->SBC_Scene->B_Object[Index]->Physics_Quat.y;
+				float z = App->SBC_Scene->B_Object[Index]->Physics_Quat.z;
+				
+				App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
+
+				UpDate_Physics_And_Visuals(Index);
+			}
+
+			if (RotationY_Selected == 1)
+			{
+				
+
+			}
+
+			if (RotationZ_Selected == 1)
+			{
+				
+
+			}
+
+		}
+	}
+
+	ImGui::SameLine(0.0f, spacingX);
+	if (ImGui::ArrowButton("##rightRX", ImGuiDir_Right))
+	{
+		if (App->SBC_Scene->Scene_Loaded == 1)
+		{
+			
+				if (RotationX_Selected == 1)
+				{
+					App->SBC_Scene->B_Object[Index]->Object_Node->pitch(Radian(Ogre::Degree(-Model_Rotation_Delta)));
+					App->SBC_Scene->B_Object[Index]->Mesh_Rot.x -= Model_Rotation_Delta;
+					App->SBC_Scene->B_Object[Index]->Mesh_Quat = App->SBC_Scene->B_Object[Index]->Object_Node->getOrientation();
+
+					App->SBC_Scene->B_Object[Index]->Physics_Rot.x -= Model_Rotation_Delta;
+					App->SBC_Scene->B_Object[Index]->Physics_Quat = App->SBC_Scene->B_Object[Index]->Object_Node->getOrientation();
+
+					float w = App->SBC_Scene->B_Object[Index]->Physics_Quat.w;
+					float x = App->SBC_Scene->B_Object[Index]->Physics_Quat.x;
+					float y = App->SBC_Scene->B_Object[Index]->Physics_Quat.y;
+					float z = App->SBC_Scene->B_Object[Index]->Physics_Quat.z;
+
+					App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
+
+					UpDate_Physics_And_Visuals(Index);
+
+				}
+
+				if (RotationY_Selected == 1)
+				{
+					
+
+				}
+
+				if (RotationZ_Selected == 1)
+				{
+					
+
+				}
+			
+		}
+	}
+
+	ImGui::PopButtonRepeat();
+	ImGui::SameLine();
+	ImGui::SetNextItemWidth(100);
+	const char* XitemsRotXX[] = { "0.001","0.01","0.1","1", "2", "5", "10", "20" };
+	static int XitemRotXX = 1;
+	bool ChangedRotX = ImGui::Combo("Step Rot", &XitemRotXX, XitemsRotXX, IM_ARRAYSIZE(XitemsRotXX));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
+	if (ChangedRotX == 1)
+	{
+		Model_Rotation_Delta = (float)atof(XitemsRotXX[XitemRotXX]);
+	}
+
+	// ----------------------------------------------------------------------------- Rotation X
+	ImGui::Indent();
+
+	style->Colors[ImGuiCol_FrameBg] = ImVec4(0.0f, 0.0f, 1.0f, 1.00f);
+	ImGui::Checkbox("RX", &RotationX_Selected);
+	if (RotationX_Selected == 1)
+	{
+		RotationY_Selected = 0;
+		RotationZ_Selected = 0;
+	}
+	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
+	//------------------------------------------------------------------------------- Rotation Y
+	ImGui::SameLine();
+	style->Colors[ImGuiCol_FrameBg] = ImVec4(0.0f, 1.0f, 0.0f, 1.00f);
+	ImGui::Checkbox("RY", &RotationY_Selected);
+	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
+
+	if (RotationY_Selected)
+	{
+		RotationX_Selected = 0;
+		RotationZ_Selected = 0;
+	}
+
+	//------------------------------------------------------------------------------- Rotation Z
+	ImGui::SameLine();
+	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 0.0f, 0.0f, 1.00f);
+	ImGui::Checkbox("RZ", &RotationZ_Selected);
+	if (RotationZ_Selected)
+	{
+		RotationX_Selected = 0;
+		RotationY_Selected = 0;
+	}
+	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
 
 	style->Colors[ImGuiCol_Text] = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
 

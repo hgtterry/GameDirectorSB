@@ -63,8 +63,8 @@ LRESULT CALLBACK SB_Object::Object_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 
 		SendDlgItemMessage(hDlg, IDC_PHYSICSOBJECTDEBUG, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_POSITION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_ROTATION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_GOTO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		
 		
 		return TRUE;
 	}
@@ -152,17 +152,45 @@ LRESULT CALLBACK SB_Object::Object_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 		if (LOWORD(wParam) == IDC_BT_POSITION)
 		{
 			
-			if (App->SBC_Dimensions->Show_Dimensions == 1)
+			if (App->SBC_Dimensions->Show_Position == 1)
 			{
-				App->SBC_Dimensions->Show_Dimensions = 0;
+				App->SBC_Dimensions->Show_Position = 0;
 			}
 			else
 			{
-				App->SBC_Dimensions->Show_Dimensions = 1;
+				App->SBC_Dimensions->Show_Position = 1;
 			}
 			return 1;
 		}
 
+		if (LOWORD(wParam) == IDC_BT_SCALE)
+		{
+
+			if (App->SBC_Dimensions->Show_Scale == 1)
+			{
+				App->SBC_Dimensions->Show_Scale = 0;
+			}
+			else
+			{
+				App->SBC_Dimensions->Show_Scale = 1;
+			}
+			return 1;
+		}
+		
+		if (LOWORD(wParam) == IDC_BT_ROTATION)
+		{
+
+			if (App->SBC_Dimensions->Show_Rotation == 1)
+			{
+				App->SBC_Dimensions->Show_Rotation = 0;
+			}
+			else
+			{
+				App->SBC_Dimensions->Show_Rotation = 1;
+			}
+			return 1;
+		}
+		
 		break;
 	}
 	return FALSE;

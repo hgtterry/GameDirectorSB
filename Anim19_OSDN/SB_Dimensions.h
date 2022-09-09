@@ -31,13 +31,19 @@ public:
 
 	void ImGui_Dimensions(void);
 	void UpDate_Physics_And_Visuals(int Index);
+	void Dimesions_Select(void);
 
 	bool Show_Dimensions;
+
+	bool Show_Position;
+	bool Show_Scale;
+	bool Show_Rotation;
 
 protected:
 
 	void ImGui_Position(void);
 	void ImGui_Scale(void);
+	void ImGui_Rotation(void);
 
 	void Set_Physics_Position(int Index);
 
@@ -48,9 +54,15 @@ protected:
 	bool ScaleX_Selected;
 	bool ScaleY_Selected;
 	bool ScaleZ_Selected;
+
+	bool RotationX_Selected;
+	bool RotationY_Selected;
+	bool RotationZ_Selected;
+
 	bool Scale_Lock;
 
 	float Model_Pos_Delta;
 	float Model_Scale_Delta;
+	float Model_Rotation_Delta;
 };
 

@@ -138,5 +138,5 @@ void GD19_Visuals::MarkerBB_Addjust(int Index)
 	BoxNode->setOrientation(Rot);
 	BoxNode->setVisible(true);
 
-	//App->Cl_Grid->Move_Arrow(WS);
+	App->Cl_Grid->Move_Arrow(WS);
 }
