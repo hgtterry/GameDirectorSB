@@ -111,9 +111,11 @@ void SB_Dimensions::ImGui_Dimensions(void)
 		if (ImGui::Button("Close"))
 		{
 			Show_Dimensions = 0;
-			//App->CL_Panels->Show_Panels(1);
-			//App->CL_TopBar->Toggle_Dimensions_Flag = 0;
-			//RedrawWindow(App->CL_TopBar->Model_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			Show_Position = 0;
+			Show_Scale = 0;
+			Show_Rotation = 0;
+
+			RedrawWindow(App->SBC_Object->Object_PropDlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 			//App->CL_Ogre->RenderListener->Show_Crosshair = 0;
 		}

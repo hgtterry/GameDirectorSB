@@ -695,11 +695,11 @@ bool GD19_App::Custom_Button_Toggle(LPNMCUSTOMDRAW item, bool Toggle)
 
 		if (Toggle == 1)
 		{
-			defaultbrush = CreateSolidBrush(RGB(204, 255, 204));;
+			defaultbrush = CreateSolidBrush(RGB(0, 255,0));
 		}
 		else
 		{
-			defaultbrush = App->DialogBackGround;
+			defaultbrush = CreateSolidBrush(RGB(200, 200, 200));
 		}
 
 		HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0));
