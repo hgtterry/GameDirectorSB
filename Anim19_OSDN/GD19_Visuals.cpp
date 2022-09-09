@@ -123,17 +123,20 @@ bool GD19_Visuals::MarkerBB_Update(float Depth,float Height,float Width)
 void GD19_Visuals::MarkerBB_Addjust(int Index)
 {
 
-	Ogre::Vector3 Position = App->Cl_Scene_Data->Cl_Object[Index]->OgreNode->getPosition();
-	Ogre::Quaternion Rot = App->Cl_Scene_Data->Cl_Object[Index]->OgreNode->getOrientation();
-	Ogre::Vector3 Size = App->Cl_Objects_Com->GetMesh_BB_Size(App->Cl_Scene_Data->Cl_Object[Index]->OgreNode);
+	Base_Object* Object = App->SBC_Scene->B_Object[Index];
+
+	Ogre::Vector3 Position = Object->Object_Node->getPosition();
+	Ogre::Quaternion Rot = Object->Object_Node->getOrientation();
+
+	Ogre::Vector3 Size = App->Cl_Objects_Com->GetMesh_BB_Size(Object->Object_Node);
 	MarkerBB_Update(Size.x/2,Size.y/2,Size.z/2);
 
-	Ogre::Vector3 Centre = App->Cl_Scene_Data->Cl_Object[Index]->OgreNode->getAttachedObject(0)->getBoundingBox().getCenter();
-	Ogre::Vector3 WS = App->Cl_Scene_Data->Cl_Object[Index]->OgreNode->convertLocalToWorldPosition(Centre);
+	Ogre::Vector3 Centre = Object->Object_Node->getAttachedObject(0)->getBoundingBox().getCenter();
+	Ogre::Vector3 WS = Object->Object_Node->convertLocalToWorldPosition(Centre);
 
 	BoxNode->setPosition(WS);
 	BoxNode->setOrientation(Rot);
 	BoxNode->setVisible(true);
 
-	App->Cl_Grid->Move_Arrow(WS);
+	//App->Cl_Grid->Move_Arrow(WS);
 }

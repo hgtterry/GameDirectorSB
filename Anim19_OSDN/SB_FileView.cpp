@@ -509,6 +509,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 		if (App->SBC_Properties->Edit_Physics == 0)
 		{
+			App->Cl_Visuals->MarkerBB_Addjust(Index);
 			App->SBC_Properties->Update_ListView_Objects();
 		}
 		else
