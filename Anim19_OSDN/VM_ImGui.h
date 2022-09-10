@@ -49,6 +49,7 @@ public:
 	bool Show_ImGui_TextureData;
 	bool Show_Model_Data;
 	bool Show_App_Data;
+	bool Show_Object_Data;
 
 	ImFont* font0;
 	ImFont* font1;
@@ -75,6 +76,6 @@ public:
 
 protected:
 
-	
+	void ImGui_Object_Data(void);
 };
 

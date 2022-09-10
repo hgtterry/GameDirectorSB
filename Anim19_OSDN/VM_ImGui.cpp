@@ -27,6 +27,7 @@ VM_ImGui::VM_ImGui()
 	Show_Model_Data = 0;
 	Show_App_Data = 0;
 	Show_Progress_Bar = 0;
+	Show_Object_Data = 0;
 
 	Model_XTranslate = 2;
 	Model_YTranslate = 2;
@@ -63,6 +64,7 @@ void VM_ImGui::Reset_Class(void)
 	Show_Rotation = 0;
 	Show_Position = 0;
 	Show_Scale = 0;
+	Show_Object_Data = 0;
 
 	Model_XTranslate = 2;
 	Model_YTranslate = 2;
@@ -173,6 +175,11 @@ void VM_ImGui::Tabs_Render_Camera(void)
 		
 	}
 
+	if (Show_Object_Data == 1)
+	{
+		ImGui_Object_Data();
+	}
+	
 	App->SBC_Dimensions->Dimesions_Select();
 	
 }
@@ -200,6 +207,11 @@ void VM_ImGui::Tabs_Render_Motions(void)
 	if (Show_Motion_List == 1)
 	{
 		ImGui_MotionList();
+	}
+
+	if (Show_Object_Data == 1)
+	{
+		ImGui_Object_Data();
 	}
 
 	App->SBC_Dimensions->Dimesions_Select();
@@ -240,6 +252,11 @@ void VM_ImGui::Tabs_Render_Dimensions(void)
 		
 	}
 
+	if (Show_Object_Data == 1)
+	{
+		ImGui_Object_Data();
+	}
+
 	App->SBC_Dimensions->Dimesions_Select();
 }
 
@@ -276,6 +293,11 @@ void VM_ImGui::Tabs_Render_Groups(void)
 	if (Show_Position == 1)
 	{
 		
+	}
+
+	if (Show_Object_Data == 1)
+	{
+		ImGui_Object_Data();
 	}
 
 	App->SBC_Dimensions->Dimesions_Select();
@@ -625,6 +647,77 @@ void VM_ImGui::ImGui_App_Data(void)
 char* VM_ImGui::poo()
 {
 	return test;
+}
+
+// *************************************************************************
+// *					ImGui_Object_Data  Terry Bernie					   *
+// *************************************************************************
+void VM_ImGui::ImGui_Object_Data(void)
+{
+	ImGui::SetNextWindowSize(ImVec2(530, 250), ImGuiCond_FirstUseEver);
+
+	ImGui::OpenPopup("Level Data");
+
+	float w = 0;
+	float x = 0;
+	float y = 0;
+	float z = 0;
+	
+	if (!ImGui::BeginPopupModal("Level Data", &Show_Object_Data, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize))
+	{
+		ImGui::EndPopup();
+	}
+	else
+	{
+		int Index = App->SBC_Properties->Current_Selected_Object;
+
+		ImGui::Text("Name: = %s", App->SBC_Scene->B_Object[Index]->Mesh_Name);
+		ImGui::Text("Mesh File Name: = %s", App->SBC_Scene->B_Object[Index]->Mesh_FileName);
+		ImGui::Text("Path: = %s", App->SBC_Scene->B_Object[Index]->Mesh_Resource_Path);
+		ImGui::Spacing();
+
+		x = App->SBC_Scene->B_Object[Index]->Object_Node->getPosition().x;
+		y = App->SBC_Scene->B_Object[Index]->Object_Node->getPosition().y;
+		z = App->SBC_Scene->B_Object[Index]->Object_Node->getPosition().z;
+		ImGui::Text("Mesh_Pos: = %f,%f,%f", x, y, z);
+		
+		x = App->SBC_Scene->B_Object[Index]->Object_Node->getScale().x;
+		y = App->SBC_Scene->B_Object[Index]->Object_Node->getScale().y;
+		z = App->SBC_Scene->B_Object[Index]->Object_Node->getScale().z;
+		ImGui::Text("Mesh_Scale: = %f,%f,%f", x, y, z);
+
+		w = App->SBC_Scene->B_Object[Index]->Mesh_Quat.w;
+		x = App->SBC_Scene->B_Object[Index]->Mesh_Quat.x;
+		y = App->SBC_Scene->B_Object[Index]->Mesh_Quat.y;
+		z = App->SBC_Scene->B_Object[Index]->Mesh_Quat.z;
+		ImGui::Text("Mesh_Quat: = %f,%f,%f,%f", w, x, y, z);
+
+		ImGui::Spacing();
+		ImGui::Spacing();
+
+		x = App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().getOrigin().getX();
+		y = App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().getOrigin().getY();
+		z = App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().getOrigin().getZ();
+		ImGui::Text("Physics_Pos: = %f,%f,%f", x, y, z);
+
+		x = App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->getLocalScaling().getX();
+		y = App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->getLocalScaling().getY();
+		z = App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->getLocalScaling().getZ();
+		ImGui::Text("Physics_Scale: = %f,%f,%f", x, y, z);
+
+		w = App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().getRotation().getW();
+		x = App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().getRotation().getX();
+		y = App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().getRotation().getY();;
+		z = App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().getRotation().getZ();;
+		ImGui::Text("Physics_Quat: = %f,%f,%f,%f", w, x, y, z);
+
+		if (ImGui::Button("Close"))
+		{
+			Show_Object_Data = 0;
+		}
+
+		ImGui::EndPopup();
+	}
 }
 
 

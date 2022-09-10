@@ -38,7 +38,7 @@ bool GD19_Visuals::MarkerBB_Setup(void)
 	//BoxManual->begin("BaseWhiteNoLighting", RenderOperation::OT_TRIANGLE_FAN);
 
 	BoxManual->colour(0,1,0);
-
+	
     BoxManual->position(-BoxWidth, -BoxHeight, BoxDepth);
     BoxManual->position( BoxWidth, -BoxHeight, BoxDepth);
     BoxManual->position( BoxWidth,  BoxHeight, BoxDepth);

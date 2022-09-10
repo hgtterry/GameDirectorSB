@@ -524,8 +524,8 @@ bool SB_Project::Save_Objects_Data()
 		// Physics_Quat
 		w = App->SBC_Scene->B_Object[Count]->Phys_Body->getWorldTransform().getRotation().getW();
 		x = App->SBC_Scene->B_Object[Count]->Phys_Body->getWorldTransform().getRotation().getX();
-		y = App->SBC_Scene->B_Object[Count]->Phys_Body->getWorldTransform().getRotation().getY();;
-		z = App->SBC_Scene->B_Object[Count]->Phys_Body->getWorldTransform().getRotation().getZ();;
+		y = App->SBC_Scene->B_Object[Count]->Phys_Body->getWorldTransform().getRotation().getY();
+		z = App->SBC_Scene->B_Object[Count]->Phys_Body->getWorldTransform().getRotation().getZ();
 		fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Physics_Quat=", w, x, y, z);
 
 		fprintf(WriteFile, "%s\n", " ");

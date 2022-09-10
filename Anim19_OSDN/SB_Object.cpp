@@ -151,7 +151,14 @@ LRESULT CALLBACK SB_Object::Object_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == IDC_BT_DETAIL)
 		{
-			Debug
+			if (App->CL_Vm_ImGui->Show_Object_Data == 1)
+			{
+				App->CL_Vm_ImGui->Show_Object_Data = 0;
+			}
+			else
+			{
+				App->CL_Vm_ImGui->Show_Object_Data = 1;
+			}
 			return 1;
 		}
 
