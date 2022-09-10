@@ -86,7 +86,6 @@ bool SB_Objects_Create::Add_New_Object(int Index)
 
 	Object->Object_Node->setVisible(true);
 
-	//Object->Object_Node->setScale(Object->Mesh_Scale);
 	Object->Object_Node->setOrientation(Object->Mesh_Quat);
 	Object->Object_Node->setPosition(Object->Mesh_Pos);
 
@@ -211,7 +210,10 @@ void SB_Objects_Create::Add_New_Physics_Static_Box(int Index)
 
 	btTransform startTransform;
 	startTransform.setIdentity();
-	startTransform.setRotation(btQuaternion(0.0f, 0.0f, 0.0f, 1));
+	startTransform.setRotation(btQuaternion(Object->Physics_Quat.x, 
+		Object->Physics_Quat.y, 
+		Object->Physics_Quat.z, 
+		Object->Physics_Quat.w));
 
 	btScalar mass;
 	mass = 0.0f;
@@ -264,7 +266,7 @@ void SB_Objects_Create::Add_New_Physics_Static_Box(int Index)
 
 	//Object->Collect_Object_Data();
 
-
 	App->Cl_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
+
 }
 

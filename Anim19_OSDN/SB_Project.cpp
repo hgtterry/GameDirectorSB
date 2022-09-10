@@ -502,22 +502,31 @@ bool SB_Project::Save_Objects_Data()
 		z = App->SBC_Scene->B_Object[Count]->Object_Node->getPosition().z;
 		fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Pos=", x, y, z);
 
-		// Scale
+		// Mesh_Scale
 		x = App->SBC_Scene->B_Object[Count]->Object_Node->getScale().x;
 		y = App->SBC_Scene->B_Object[Count]->Object_Node->getScale().y;
 		z = App->SBC_Scene->B_Object[Count]->Object_Node->getScale().z;
 		fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Scale=", x, y, z);
 
+		// Mesh_Rot
 		x = App->SBC_Scene->B_Object[Count]->Mesh_Rot.x;
 		y = App->SBC_Scene->B_Object[Count]->Mesh_Rot.y;
 		z = App->SBC_Scene->B_Object[Count]->Mesh_Rot.z;
 		fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Rot=", x, y, z);
 
+		// Mesh_Quat
 		w = App->SBC_Scene->B_Object[Count]->Mesh_Quat.w;
 		x = App->SBC_Scene->B_Object[Count]->Mesh_Quat.x;
 		y = App->SBC_Scene->B_Object[Count]->Mesh_Quat.y;
 		z = App->SBC_Scene->B_Object[Count]->Mesh_Quat.z;
 		fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Mesh_Quat=", w, x, y, z);
+
+		// Physics_Quat
+		w = App->SBC_Scene->B_Object[Count]->Phys_Body->getWorldTransform().getRotation().getW();
+		x = App->SBC_Scene->B_Object[Count]->Phys_Body->getWorldTransform().getRotation().getX();
+		y = App->SBC_Scene->B_Object[Count]->Phys_Body->getWorldTransform().getRotation().getY();;
+		z = App->SBC_Scene->B_Object[Count]->Phys_Body->getWorldTransform().getRotation().getZ();;
+		fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Physics_Quat=", w, x, y, z);
 
 		fprintf(WriteFile, "%s\n", " ");
 
@@ -918,6 +927,15 @@ bool SB_Project::Load_Project_Objects()
 		App->SBC_Scene->B_Object[Count]->Mesh_Quat.x = x;
 		App->SBC_Scene->B_Object[Count]->Mesh_Quat.y = y;
 		App->SBC_Scene->B_Object[Count]->Mesh_Quat.z = z;
+
+		// Physics_Quat
+		App->Cl_Ini->GetString(buff, "Physics_Quat", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f,%f", &w, &x, &y, &z);
+
+		App->SBC_Scene->B_Object[Count]->Physics_Quat.w = w;
+		App->SBC_Scene->B_Object[Count]->Physics_Quat.x = x;
+		App->SBC_Scene->B_Object[Count]->Physics_Quat.y = y;
+		App->SBC_Scene->B_Object[Count]->Physics_Quat.z = z;
 
 		App->SBC_Scene->Add_Resource_Location(Object->Mesh_Resource_Path);
 
