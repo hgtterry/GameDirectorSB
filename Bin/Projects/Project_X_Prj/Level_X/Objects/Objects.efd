@@ -2,7 +2,7 @@
 Version=V1.2
  
 [Counters]
-Objects_Count=3
+Objects_Count=4
  
 [Object_0]
 Mesh_Name=Object_0
@@ -36,4 +36,15 @@ Mesh_Pos=-50.000000,0.000000,0.000000
 Mesh_Scale=1.000000,1.000000,1.000000
 Mesh_Rot=0.000000,95.000000,0.000000
 Mesh_Quat=0.675603,0.000000,0.737292,0.000000
+ 
+[Object_3]
+Mesh_Name=Bridge
+Mesh_File=hang.bridge.01.mesh
+Mesh_Resource_Path=C:\Users\Equity\Desktop\Equity15\Bin\Media_New\Structure\
+Object_Type=2
+Object_Shape=1
+Mesh_Pos=0.000000,-67.000000,0.000000
+Mesh_Scale=1.000000,1.000000,1.000000
+Mesh_Rot=0.000000,-90.000000,0.000000
+Mesh_Quat=0.707120,0.000000,-0.707120,0.000000
  

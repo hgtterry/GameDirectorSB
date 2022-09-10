@@ -56,7 +56,7 @@ SB_Scene::~SB_Scene()
 // *************************************************************************
 void SB_Scene::Reset_Class()
 {
-	int i;
+	int i; // Remove Physics Objects
 	for (i = App->Cl_Bullet->dynamicsWorld->getNumCollisionObjects() - 1; i >= 0; i--)
 	{
 		btCollisionObject* obj = App->Cl_Bullet->dynamicsWorld->getCollisionObjectArray()[i];
@@ -64,8 +64,8 @@ void SB_Scene::Reset_Class()
 		delete obj;
 	}
 
-	int Count = 0;
-	while (Count < Object_Count) // Remove Ogre Objects
+	int Count = 0; // Remove Ogre Objects
+	while (Count < Object_Count) 
 	{
 		if (B_Object[Count]->Object_Node && B_Object[Count]->Object_Ent)
 		{
@@ -82,8 +82,8 @@ void SB_Scene::Reset_Class()
 		Count++;
 	}
 
-	Count = 0;
-	while (Count < Object_Count) // Remove Object Classes
+	Count = 0; // Remove Object Classes
+	while (Count < Object_Count)
 	{
 		if (B_Object[Count])
 		{
@@ -94,6 +94,7 @@ void SB_Scene::Reset_Class()
 		Count++;
 	}
 
+	// Zero Counters
 	Scene_Loaded = 0;
 	Area_Added = 0;
 	Player_Added = 0;
