@@ -654,16 +654,16 @@ char* VM_ImGui::poo()
 // *************************************************************************
 void VM_ImGui::ImGui_Object_Data(void)
 {
-	ImGui::SetNextWindowSize(ImVec2(530, 250), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowSize(ImVec2(530, 150), ImGuiCond_FirstUseEver);
 
-	ImGui::OpenPopup("Level Data");
+	ImGui::OpenPopup("Object Data");
 
 	float w = 0;
 	float x = 0;
 	float y = 0;
 	float z = 0;
 	
-	if (!ImGui::BeginPopupModal("Level Data", &Show_Object_Data, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize))
+	if (!ImGui::BeginPopupModal("Object Data", &Show_Object_Data, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize))
 	{
 		ImGui::EndPopup();
 	}
@@ -674,6 +674,12 @@ void VM_ImGui::ImGui_Object_Data(void)
 		ImGui::Text("Name: = %s", App->SBC_Scene->B_Object[Index]->Mesh_Name);
 		ImGui::Text("Mesh File Name: = %s", App->SBC_Scene->B_Object[Index]->Mesh_FileName);
 		ImGui::Text("Path: = %s", App->SBC_Scene->B_Object[Index]->Mesh_Resource_Path);
+		ImGui::Text("Type: = %i", App->SBC_Scene->B_Object[Index]->Type);
+		ImGui::Text("Shape: = %i", App->SBC_Scene->B_Object[Index]->Shape);
+		ImGui::Text("Usage: = %i", App->SBC_Scene->B_Object[Index]->Usage);
+		ImGui::Text("Object_ID: = %i", App->SBC_Scene->B_Object[Index]->Object_ID);
+
+		ImGui::Spacing();
 		ImGui::Spacing();
 
 		x = App->SBC_Scene->B_Object[Index]->Object_Node->getPosition().x;
@@ -694,6 +700,9 @@ void VM_ImGui::ImGui_Object_Data(void)
 
 		ImGui::Spacing();
 		ImGui::Spacing();
+
+		ImGui::Text("Physics_Mass: = %f", App->SBC_Scene->B_Object[Index]->Physics_Mass);
+		ImGui::Text("Physics_Restitution: = %f", App->SBC_Scene->B_Object[Index]->Physics_Restitution);
 
 		x = App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().getOrigin().getX();
 		y = App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().getOrigin().getY();

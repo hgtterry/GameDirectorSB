@@ -343,7 +343,7 @@ void SB_Dimensions::ImGui_Scale(void)
 
 	ImGui::Indent();
 	ImGui::Indent();
-	ImGui::Text("X %.3f Y %.3f Z %.3f", Scale.x, Scale.y, Scale.z);
+	ImGui::Text("X %.4f Y %.4f Z %.4f", Scale.x, Scale.y, Scale.z);
 
 	ImGui::Spacing();
 
