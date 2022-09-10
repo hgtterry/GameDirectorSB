@@ -473,6 +473,7 @@ bool SB_Project::Save_Objects_Data()
 	char Cbuff[255];
 	char buff[255];
 
+	float w = 0;
 	float x = 0;
 	float y = 0;
 	float z = 0;
@@ -506,6 +507,19 @@ bool SB_Project::Save_Objects_Data()
 		y = App->SBC_Scene->B_Object[Count]->Object_Node->getScale().y;
 		z = App->SBC_Scene->B_Object[Count]->Object_Node->getScale().z;
 		fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Scale=", x, y, z);
+
+		x = App->SBC_Scene->B_Object[Count]->Mesh_Rot.x;
+		y = App->SBC_Scene->B_Object[Count]->Mesh_Rot.y;
+		z = App->SBC_Scene->B_Object[Count]->Mesh_Rot.z;
+		fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Rot=", x, y, z);
+
+		w = App->SBC_Scene->B_Object[Count]->Mesh_Quat.w;
+		x = App->SBC_Scene->B_Object[Count]->Mesh_Quat.x;
+		y = App->SBC_Scene->B_Object[Count]->Mesh_Quat.y;
+		z = App->SBC_Scene->B_Object[Count]->Mesh_Quat.z;
+		fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Mesh_Quat=", w, x, y, z);
+
+		fprintf(WriteFile, "%s\n", " ");
 
 		Count++;
 	}

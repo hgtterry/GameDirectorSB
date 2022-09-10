@@ -5,7 +5,9 @@ Version=V1.2
 Aeras_Count=1
  
 [Aera_0]
-Aera_Name=Test1.mesh
+Aera_Name=Start_Room
 Aera_File=Test1.mesh
 Aera_Path_File=
 Aera_Resource_Path=C:\Users\Equity\Desktop\Test1_Ogre\
+[Position]
+Mesh_Pos=-12.000000,36.000000,-166.000000
