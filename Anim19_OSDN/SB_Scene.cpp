@@ -56,6 +56,44 @@ SB_Scene::~SB_Scene()
 // *************************************************************************
 void SB_Scene::Reset_Class()
 {
+	int i;
+	for (i = App->Cl_Bullet->dynamicsWorld->getNumCollisionObjects() - 1; i >= 0; i--)
+	{
+		btCollisionObject* obj = App->Cl_Bullet->dynamicsWorld->getCollisionObjectArray()[i];
+		App->Cl_Bullet->dynamicsWorld->removeCollisionObject(obj);
+		delete obj;
+	}
+
+	int Count = 0;
+	while (Count < Object_Count) // Remove Ogre Objects
+	{
+		if (B_Object[Count]->Object_Node && B_Object[Count]->Object_Ent)
+		{
+			B_Object[Count]->Object_Node->detachAllObjects();
+
+			App->Cl19_Ogre->mSceneMgr->destroySceneNode(B_Object[Count]->Object_Node);
+
+			App->Cl19_Ogre->mSceneMgr->destroyEntity(B_Object[Count]->Object_Ent);
+
+			B_Object[Count]->Object_Node = NULL;
+			B_Object[Count]->Object_Ent = NULL;
+		}
+
+		Count++;
+	}
+
+	Count = 0;
+	while (Count < Object_Count) // Remove Object Classes
+	{
+		if (B_Object[Count])
+		{
+			delete B_Object[Count];
+			B_Object[Count] = NULL;
+		}
+
+		Count++;
+	}
+
 	Scene_Loaded = 0;
 	Area_Added = 0;
 	Player_Added = 0;
