@@ -173,6 +173,7 @@ void SB_Dimensions::ImGui_Position(void)
 				worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
 				Ogre::Vector3 Centre = worldAAB.getCenter();
 				App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+				UpDate_Physics_And_Visuals(Index);
 			}
 
 			if (PosY_Selected == 1)
@@ -184,6 +185,7 @@ void SB_Dimensions::ImGui_Position(void)
 				worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
 				Ogre::Vector3 Centre = worldAAB.getCenter();
 				App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+				UpDate_Physics_And_Visuals(Index);
 			}
 
 			if (PosZ_Selected == 1)
@@ -195,6 +197,7 @@ void SB_Dimensions::ImGui_Position(void)
 				worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
 				Ogre::Vector3 Centre = worldAAB.getCenter();
 				App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+				UpDate_Physics_And_Visuals(Index);
 			}
 		}
 	}
@@ -213,6 +216,7 @@ void SB_Dimensions::ImGui_Position(void)
 				worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
 				Ogre::Vector3 Centre = worldAAB.getCenter();
 				App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+				UpDate_Physics_And_Visuals(Index);
 			}
 
 			if (PosY_Selected == 1)
@@ -224,6 +228,7 @@ void SB_Dimensions::ImGui_Position(void)
 				worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
 				Ogre::Vector3 Centre = worldAAB.getCenter();
 				App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+				UpDate_Physics_And_Visuals(Index);
 			}
 
 			if (PosZ_Selected == 1)
@@ -235,6 +240,7 @@ void SB_Dimensions::ImGui_Position(void)
 				worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
 				Ogre::Vector3 Centre = worldAAB.getCenter();
 				App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+				UpDate_Physics_And_Visuals(Index);
 			}
 		}
 	}
@@ -591,7 +597,21 @@ void SB_Dimensions::ImGui_Rotation(void)
 
 			if (RotationZ_Selected == 1)
 			{
-				
+				App->SBC_Scene->B_Object[Index]->Object_Node->roll(Radian(Ogre::Degree(Model_Rotation_Delta)));
+				App->SBC_Scene->B_Object[Index]->Mesh_Rot.y += Model_Rotation_Delta;
+				App->SBC_Scene->B_Object[Index]->Mesh_Quat = App->SBC_Scene->B_Object[Index]->Object_Node->getOrientation();
+
+				App->SBC_Scene->B_Object[Index]->Physics_Rot.y += Model_Rotation_Delta;
+				App->SBC_Scene->B_Object[Index]->Physics_Quat = App->SBC_Scene->B_Object[Index]->Object_Node->getOrientation();
+
+				float w = App->SBC_Scene->B_Object[Index]->Physics_Quat.w;
+				float x = App->SBC_Scene->B_Object[Index]->Physics_Quat.x;
+				float y = App->SBC_Scene->B_Object[Index]->Physics_Quat.y;
+				float z = App->SBC_Scene->B_Object[Index]->Physics_Quat.z;
+
+				App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
+
+				UpDate_Physics_And_Visuals(Index);
 
 			}
 
@@ -646,7 +666,21 @@ void SB_Dimensions::ImGui_Rotation(void)
 
 				if (RotationZ_Selected == 1)
 				{
-					
+					App->SBC_Scene->B_Object[Index]->Object_Node->roll(Radian(Ogre::Degree(-Model_Rotation_Delta)));
+					App->SBC_Scene->B_Object[Index]->Mesh_Rot.y -= Model_Rotation_Delta;
+					App->SBC_Scene->B_Object[Index]->Mesh_Quat = App->SBC_Scene->B_Object[Index]->Object_Node->getOrientation();
+
+					App->SBC_Scene->B_Object[Index]->Physics_Rot.y -= Model_Rotation_Delta;
+					App->SBC_Scene->B_Object[Index]->Physics_Quat = App->SBC_Scene->B_Object[Index]->Object_Node->getOrientation();
+
+					float w = App->SBC_Scene->B_Object[Index]->Physics_Quat.w;
+					float x = App->SBC_Scene->B_Object[Index]->Physics_Quat.x;
+					float y = App->SBC_Scene->B_Object[Index]->Physics_Quat.y;
+					float z = App->SBC_Scene->B_Object[Index]->Physics_Quat.z;
+
+					App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
+
+					UpDate_Physics_And_Visuals(Index);
 
 				}
 			
@@ -713,7 +747,7 @@ void SB_Dimensions::ImGui_Rotation(void)
 void SB_Dimensions::UpDate_Physics_And_Visuals(int Index)
 {
 	Set_Physics_Position(Index);
-	//App->Cl_Visuals->MarkerBB_Addjust(Index);
+	App->Cl_Visuals->MarkerBB_Addjust(Index);
 }
 
 // *************************************************************************
