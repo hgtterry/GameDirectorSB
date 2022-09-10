@@ -513,6 +513,9 @@ void SB_Dimensions::ImGui_Rotation(void)
 
 	Ogre::Vector3 RotD = App->SBC_Scene->B_Object[Index]->Mesh_Rot;
 
+	//Ogre::Real poo = (Ogre::Real(App->SBC_Scene->B_Object[Index]->Object_Node->getOrientation().getPitch()));
+	////RotD.x = poo;
+
 	ImGuiStyle* style = &ImGui::GetStyle();
 
 	ImGui::Text("Rotation");
@@ -568,7 +571,21 @@ void SB_Dimensions::ImGui_Rotation(void)
 
 			if (RotationY_Selected == 1)
 			{
-				
+				App->SBC_Scene->B_Object[Index]->Object_Node->yaw(Radian(Ogre::Degree(Model_Rotation_Delta)));
+				App->SBC_Scene->B_Object[Index]->Mesh_Rot.y += Model_Rotation_Delta;
+				App->SBC_Scene->B_Object[Index]->Mesh_Quat = App->SBC_Scene->B_Object[Index]->Object_Node->getOrientation();
+
+				App->SBC_Scene->B_Object[Index]->Physics_Rot.y += Model_Rotation_Delta;
+				App->SBC_Scene->B_Object[Index]->Physics_Quat = App->SBC_Scene->B_Object[Index]->Object_Node->getOrientation();
+
+				float w = App->SBC_Scene->B_Object[Index]->Physics_Quat.w;
+				float x = App->SBC_Scene->B_Object[Index]->Physics_Quat.x;
+				float y = App->SBC_Scene->B_Object[Index]->Physics_Quat.y;
+				float z = App->SBC_Scene->B_Object[Index]->Physics_Quat.z;
+
+				App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
+
+				UpDate_Physics_And_Visuals(Index);
 
 			}
 
@@ -609,7 +626,21 @@ void SB_Dimensions::ImGui_Rotation(void)
 
 				if (RotationY_Selected == 1)
 				{
-					
+					App->SBC_Scene->B_Object[Index]->Object_Node->yaw(Radian(Ogre::Degree(-Model_Rotation_Delta)));
+					App->SBC_Scene->B_Object[Index]->Mesh_Rot.y -= Model_Rotation_Delta;
+					App->SBC_Scene->B_Object[Index]->Mesh_Quat = App->SBC_Scene->B_Object[Index]->Object_Node->getOrientation();
+
+					App->SBC_Scene->B_Object[Index]->Physics_Rot.y -= Model_Rotation_Delta;
+					App->SBC_Scene->B_Object[Index]->Physics_Quat = App->SBC_Scene->B_Object[Index]->Object_Node->getOrientation();
+
+					float w = App->SBC_Scene->B_Object[Index]->Physics_Quat.w;
+					float x = App->SBC_Scene->B_Object[Index]->Physics_Quat.x;
+					float y = App->SBC_Scene->B_Object[Index]->Physics_Quat.y;
+					float z = App->SBC_Scene->B_Object[Index]->Physics_Quat.z;
+
+					App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
+
+					UpDate_Physics_And_Visuals(Index);
 
 				}
 
