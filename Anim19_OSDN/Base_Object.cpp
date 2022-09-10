@@ -59,12 +59,12 @@ bool Base_Object::Init_Object(void)
 	Mesh_Pos.y = 0;
 	Mesh_Pos.z = 0;
 
-	// Actor Rotation
+	// Mesh Rotation
 	Mesh_Rot.x = 0;
 	Mesh_Rot.y = 0;
 	Mesh_Rot.z = 0;
 
-	// Actor Quat
+	// Mesh Quat
 	Mesh_Quat.w = 1;
 	Mesh_Quat.x = 0;
 	Mesh_Quat.y = 0;

@@ -87,7 +87,7 @@ bool SB_Objects_Create::Add_New_Object(int Index)
 	Object->Object_Node->setVisible(true);
 
 	//Object->Object_Node->setScale(Object->Mesh_Scale);
-
+	Object->Object_Node->setOrientation(Object->Mesh_Quat);
 	Object->Object_Node->setPosition(Object->Mesh_Pos);
 
 	App->Cl_Scene_Data->SceneLoaded = 1;

@@ -855,6 +855,7 @@ bool SB_Project::Load_Project_Objects()
 	char chr_Tag1[MAX_PATH];
 	int Object_Count = 0;
 
+	float w = 0;
 	float x = 0;
 	float y = 0;
 	float z = 0;
@@ -903,6 +904,20 @@ bool SB_Project::Load_Project_Objects()
 		App->Cl_Ini->GetString(buff, "Mesh_Scale", chr_Tag1, MAX_PATH);
 		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
 		App->SBC_Scene->B_Object[Count]->Mesh_Scale = Ogre::Vector3(x, y, z);
+
+		// Rotation
+		App->Cl_Ini->GetString(buff, "Mesh_Rot", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+		App->SBC_Scene->B_Object[Count]->Mesh_Rot = Ogre::Vector3(x, y, z);
+
+		// Mesh_Quat
+		App->Cl_Ini->GetString(buff, "Mesh_Quat", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f,%f", &w, &x, &y, &z);
+
+		App->SBC_Scene->B_Object[Count]->Mesh_Quat.w = w;
+		App->SBC_Scene->B_Object[Count]->Mesh_Quat.x = x;
+		App->SBC_Scene->B_Object[Count]->Mesh_Quat.y = y;
+		App->SBC_Scene->B_Object[Count]->Mesh_Quat.z = z;
 
 		App->SBC_Scene->Add_Resource_Location(Object->Mesh_Resource_Path);
 
