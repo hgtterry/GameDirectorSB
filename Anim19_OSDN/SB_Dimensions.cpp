@@ -92,6 +92,7 @@ void SB_Dimensions::ImGui_Dimensions(void)
 	{
 		int Index = App->SBC_Properties->Current_Selected_Object;
 		//App->CL_Ogre->RenderListener->Show_Crosshair = 1;
+	
 
 		if (Show_Position == 1)
 		{
@@ -136,6 +137,12 @@ void SB_Dimensions::ImGui_Position(void)
 	ImGuiStyle* style = &ImGui::GetStyle();
 
 	ImGui::Text("Position");
+	ImGui::Separator();
+	ImGui::Spacing();
+
+	ImGui::Text("Current Selected Object = %i", App->SBC_Properties->Current_Selected_Object);
+	ImGui::Text("Object Name: = %s", App->SBC_Scene->B_Object[Index]->Mesh_Name);
+	ImGui::Spacing();
 	ImGui::Separator();
 	ImGui::Spacing();
 
@@ -312,6 +319,12 @@ void SB_Dimensions::ImGui_Scale(void)
 	ImGuiStyle* style = &ImGui::GetStyle();
 
 	ImGui::Text("Scale");
+	ImGui::Separator();
+	ImGui::Spacing();
+
+	ImGui::Text("Current Selected Object = %i", App->SBC_Properties->Current_Selected_Object);
+	ImGui::Text("Object Name: = %s", App->SBC_Scene->B_Object[Index]->Mesh_Name);
+	ImGui::Spacing();
 	ImGui::Separator();
 	ImGui::Spacing();
 
@@ -525,6 +538,12 @@ void SB_Dimensions::ImGui_Rotation(void)
 	ImGuiStyle* style = &ImGui::GetStyle();
 
 	ImGui::Text("Rotation");
+	ImGui::Separator();
+	ImGui::Spacing();
+
+	ImGui::Text("Current Selected Object = %i", App->SBC_Properties->Current_Selected_Object);
+	ImGui::Text("Object Name: = %s", App->SBC_Scene->B_Object[Index]->Mesh_Name);
+	ImGui::Spacing();
 	ImGui::Separator();
 	ImGui::Spacing();
 

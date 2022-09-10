@@ -34,7 +34,6 @@ SB_TopTabs::SB_TopTabs()
 	Tabs_TB_hWnd = nullptr;
 
 	Camera_TB_hWnd = nullptr;
-	Dimensions_TB_hWnd = nullptr;
 	Physics_TB_hWnd = nullptr;
 	Editors_TB_hWnd = nullptr;
 	File_TB_hWnd = nullptr;
@@ -138,7 +137,6 @@ LRESULT CALLBACK SB_TopTabs::TopBar_Globals_Proc(HWND hDlg, UINT message, WPARAM
 
 		App->SBC_TopTabs->Start_Tabs_Headers();
 		App->SBC_TopTabs->Start_Camera_TB();
-		App->SBC_TopTabs->Start_Dimensions_TB();
 		App->SBC_TopTabs->Start_Physics_TB();
 		App->SBC_TopTabs->Start_Editors_TB();
 		App->SBC_TopTabs->Start_Files_TB();
@@ -362,18 +360,6 @@ LRESULT CALLBACK SB_TopTabs::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM w
 			return TRUE;
 		}
 
-		if (LOWORD(wParam) == IDC_TBDIMENSIONS)
-		{
-			App->SBC_TopTabs->Hide_Tabs();
-			ShowWindow(App->SBC_TopTabs->Dimensions_TB_hWnd, SW_SHOW);
-			App->SBC_TopTabs->Toggle_Tabs_Dimensions_Flag = 1;
-
-			App->Cl19_Ogre->OgreListener->ImGui_Render_Tab = Enums::ImGui_Dimensions;
-
-			RedrawWindow(App->SBC_TopTabs->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-			return TRUE;
-		}
-
 		if (LOWORD(wParam) == IDC_TBSHAPES)
 		{
 			App->SBC_TopTabs->Hide_Tabs();
@@ -414,7 +400,6 @@ LRESULT CALLBACK SB_TopTabs::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM w
 void SB_TopTabs::Hide_Tabs(void)
 {
 	ShowWindow(Camera_TB_hWnd, SW_HIDE);
-	ShowWindow(Dimensions_TB_hWnd, SW_HIDE);
 	ShowWindow(Physics_TB_hWnd, SW_HIDE);
 	ShowWindow(Editors_TB_hWnd, SW_HIDE);
 	ShowWindow(File_TB_hWnd, SW_HIDE);
@@ -674,49 +659,7 @@ void SB_TopTabs::Init_Bmps_Camera(void)
 
 }
 
-// *************************************************************************
-// *						Init_Bmps_Dimensions Terry Bernie			   *
-// *************************************************************************
-void SB_TopTabs::Init_Bmps_Dimensions(void)
-{
-	HWND hTooltip_TB_Dim = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
 
-	// --------------------------------------------------- 
-	HWND Temp = GetDlgItem(Dimensions_TB_hWnd, IDC_TBROTATION);
-
-	TOOLINFO ti = { 0 };
-	ti.cbSize = sizeof(ti);
-	ti.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
-	ti.uId = (UINT_PTR)Temp;
-	ti.lpszText = "Rotate Model";
-	ti.hwnd = App->MainHwnd;
-	SendMessage(hTooltip_TB_Dim, TTM_ADDTOOL, 0, (LPARAM)&ti);
-
-	// --------------------------------------------------- 
-
-	Temp = GetDlgItem(Dimensions_TB_hWnd, IDC_TBSCALE);
-
-	TOOLINFO ti2 = { 0 };
-	ti2.cbSize = sizeof(ti2);
-	ti2.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
-	ti2.uId = (UINT_PTR)Temp;
-	ti2.lpszText = "Scale Model";
-	ti2.hwnd = App->MainHwnd;
-	SendMessage(hTooltip_TB_Dim, TTM_ADDTOOL, 0, (LPARAM)&ti2);
-
-	// --------------------------------------------------- 
-
-	Temp = GetDlgItem(Dimensions_TB_hWnd, IDC_TBPOSITION);
-
-	TOOLINFO ti3 = { 0 };
-	ti3.cbSize = sizeof(ti3);
-	ti3.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
-	ti3.uId = (UINT_PTR)Temp;
-	ti3.lpszText = "Position Model";
-	ti3.hwnd = App->MainHwnd;
-	SendMessage(hTooltip_TB_Dim, TTM_ADDTOOL, 0, (LPARAM)&ti3);
-
-}
 
 // *************************************************************************
 // *						Init_Bmps_Globals Terry Bernie				   *
@@ -762,120 +705,6 @@ void SB_TopTabs::Init_Bmps_Globals(void)
 	ti10.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti10);
 
-}
-
-// *************************************************************************
-// *						Start_Dimensions_TB Terry					   *
-// *************************************************************************
-void SB_TopTabs::Start_Dimensions_TB(void)
-{
-	Dimensions_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_DIMENSIONS, Tabs_TB_hWnd, (DLGPROC)Dimensions_TB_Proc);
-	Init_Bmps_Dimensions();
-}
-
-// *************************************************************************
-// *								Dimensions_TB_Proc					   *
-// *************************************************************************
-LRESULT CALLBACK SB_TopTabs::Dimensions_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
-{
-
-	switch (message)
-	{
-	case WM_INITDIALOG:
-	{
-		SendDlgItemMessage(hDlg, IDC_TBROTATION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_TBPOSITION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_TBSCALE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		return TRUE;
-	}
-
-	case WM_CTLCOLORDLG:
-	{
-		return (LONG)App->Brush_Tabs;
-	}
-
-	case WM_NOTIFY:
-	{
-		LPNMHDR some_item = (LPNMHDR)lParam;
-
-		if (some_item->idFrom == IDC_TBROTATION && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_Vm_ImGui->Show_Rotation);
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_TBPOSITION && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_Vm_ImGui->Show_Position);
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_TBSCALE && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_Vm_ImGui->Show_Scale);
-			return CDRF_DODEFAULT;
-		}
-
-		return CDRF_DODEFAULT;
-	}
-
-	case WM_COMMAND:
-	{
-		if (LOWORD(wParam) == IDC_TBROTATION) // Rotation
-		{
-
-			if (App->CL_Vm_ImGui->Show_Rotation == 1)
-			{
-				App->CL_Vm_ImGui->Show_Rotation = 0;
-			}
-			else
-			{
-				App->CL_Vm_ImGui->Show_Rotation = 1;
-			}
-
-			RedrawWindow(App->SBC_TopTabs->Dimensions_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDC_TBPOSITION) // Position
-		{
-
-			if (App->CL_Vm_ImGui->Show_Position == 1)
-			{
-				App->CL_Vm_ImGui->Show_Position = 0;
-			}
-			else
-			{
-				App->CL_Vm_ImGui->Show_Position = 1;
-			}
-
-			RedrawWindow(App->SBC_TopTabs->Dimensions_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDC_TBSCALE) // Scale
-		{
-
-			if (App->CL_Vm_ImGui->Show_Scale == 1)
-			{
-				App->CL_Vm_ImGui->Show_Scale = 0;
-			}
-			else
-			{
-				App->CL_Vm_ImGui->Show_Scale = 1;
-			}
-
-			RedrawWindow(App->SBC_TopTabs->Dimensions_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-			return TRUE;
-		}
-
-		return FALSE;
-	}
-	}
-	return FALSE;
 }
 
 
