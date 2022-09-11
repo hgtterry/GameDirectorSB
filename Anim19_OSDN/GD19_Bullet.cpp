@@ -79,15 +79,15 @@ void GD19_Bullet::Reset_Physics(void)
 	float z = 0;
 
 	int Count = 0;
-	while (Count < App->Cl_Scene_Data->ObjectCount)
+	while (Count < App->SBC_Scene->Object_Count)
 	{
-		/*if(App->Cl_Scene_Data->Cl_Object[Count]->Usage == Enums::Usage_Dynamic)
+		if(App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Dynamic)
 		{
 			btVector3 zeroVector(0,0,0);
 
-			x = App->Cl_Scene_Data->Cl_Object[Count]->Physics_Pos.x;
-			y = App->Cl_Scene_Data->Cl_Object[Count]->Physics_Pos.y;
-			z = App->Cl_Scene_Data->Cl_Object[Count]->Physics_Pos.z;
+			x = App->SBC_Scene->B_Object[Count]->Physics_Pos.x;
+			y = App->SBC_Scene->B_Object[Count]->Physics_Pos.y;
+			z = App->SBC_Scene->B_Object[Count]->Physics_Pos.z;
 			btVector3 initialPosition(x,y,z);
 
 			btTransform startTransform;
@@ -95,14 +95,14 @@ void GD19_Bullet::Reset_Physics(void)
 			startTransform.setRotation(btQuaternion(0.0f, 0.0f, 0.0f, 1.0f));
 			startTransform.setOrigin(initialPosition);
 
-			App->Cl_Scene_Data->Cl_Object[Count]->bt_body->clearForces();
-			App->Cl_Scene_Data->Cl_Object[Count]->bt_body->setLinearVelocity(zeroVector);
-			App->Cl_Scene_Data->Cl_Object[Count]->bt_body->setAngularVelocity(zeroVector);
+			App->SBC_Scene->B_Object[Count]->Phys_Body->clearForces();
+			App->SBC_Scene->B_Object[Count]->Phys_Body->setLinearVelocity(zeroVector);
+			App->SBC_Scene->B_Object[Count]->Phys_Body->setAngularVelocity(zeroVector);
 
-			App->Cl_Scene_Data->Cl_Object[Count]->bt_body->setWorldTransform(startTransform);
-			App->Cl_Scene_Data->Cl_Object[Count]->bt_body->getMotionState()->setWorldTransform(startTransform);
-			App->Cl_Scene_Data->Cl_Object[Count]->bt_body->activate(true);
-		}*/
+			App->SBC_Scene->B_Object[Count]->Phys_Body->setWorldTransform(startTransform);
+			App->SBC_Scene->B_Object[Count]->Phys_Body->getMotionState()->setWorldTransform(startTransform);
+			App->SBC_Scene->B_Object[Count]->Phys_Body->activate(true);
+		}
 
 		/*if(App->GDCL_Scene_Data->CL_Object[Count]->Usage == Enums::Usage_Sound)
 		{

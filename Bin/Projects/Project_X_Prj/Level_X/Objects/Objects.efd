@@ -2,7 +2,7 @@
 Version=V1.2
  
 [Counters]
-Objects_Count=4
+Objects_Count=5
  
 [Object_0]
 Mesh_Name=Object_0
@@ -51,4 +51,16 @@ Mesh_Scale=1.000000,1.000000,1.000000
 Mesh_Rot=0.000000,-90.000000,0.000000
 Mesh_Quat=0.707107,0.000000,-0.707107,0.000000
 Physics_Quat=0.707107,0.000000,-0.707107,0.000000
+ 
+[Object_4]
+Mesh_Name=Object_4
+Mesh_File=Steepslope.mesh
+Mesh_Resource_Path=C:\Users\Equity\Desktop\Equity15\Bin\Media_New\Structure\
+Object_Type=1
+Object_Shape=1
+Mesh_Pos=22.000000,0.000000,0.000000
+Mesh_Scale=1.000000,1.000000,1.000000
+Mesh_Rot=0.000000,0.000000,0.000000
+Mesh_Quat=1.000000,0.000000,0.000000,0.000000
+Physics_Quat=1.000000,-0.000003,0.000010,0.000000
  
