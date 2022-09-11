@@ -160,7 +160,7 @@ void GD19_Bullet::Reset_Physics(void)
 		App->SBC_Scene->SBC_Base_Player[0]->Phys_Body->activate(true);
 	}
 
-	App->Cl19_Ogre->OgreListener->GD_Run_Physics = 1;
+	//App->Cl19_Ogre->OgreListener->GD_Run_Physics = 1;
 }
 
 // *************************************************************************
