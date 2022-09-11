@@ -74,6 +74,7 @@ void GD19_Bullet::Reset_Physics(void)
 {
 	App->Cl19_Ogre->OgreListener->GD_Run_Physics = 0;
 
+	float w = 1;
 	float x = 0;
 	float y = 0;
 	float z = 0;
@@ -92,7 +93,12 @@ void GD19_Bullet::Reset_Physics(void)
 
 			btTransform startTransform;
 			startTransform.setIdentity();
-			startTransform.setRotation(btQuaternion(0.0f, 0.0f, 0.0f, 1.0f));
+	
+			startTransform.setRotation(btQuaternion(App->SBC_Scene->B_Object[Count]->Physics_Quat.x,
+				App->SBC_Scene->B_Object[Count]->Physics_Quat.y,
+				App->SBC_Scene->B_Object[Count]->Physics_Quat.z,
+				App->SBC_Scene->B_Object[Count]->Physics_Quat.w));
+
 			startTransform.setOrigin(initialPosition);
 
 			App->SBC_Scene->B_Object[Count]->Phys_Body->clearForces();

@@ -1631,8 +1631,8 @@ void SB_Objects_New::Add_Stock_Panel()
 // *************************************************************************
 Ogre::Vector3 SB_Objects_New::Get_BoundingBox_World_Centre(int Object_Index)
 {
-	AxisAlignedBox worldAAB = App->Cl_Scene_Data->Cl_Object[Object_Index]->OgreEntity->getBoundingBox();
-	worldAAB.transformAffine(App->Cl_Scene_Data->Cl_Object[Object_Index]->OgreNode->_getFullTransform());
+	AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Object_Index]->Object_Ent->getBoundingBox();
+	worldAAB.transformAffine(App->SBC_Scene->B_Object[Object_Index]->Object_Node->_getFullTransform());
 	Ogre::Vector3 Centre = worldAAB.getCenter();
 
 	return Centre;
