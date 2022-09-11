@@ -97,7 +97,7 @@ bool SB_Objects_Create::Add_New_Object(int Index)
 	{
 		if (Object->Shape == Enums::Shape_Box)
 		{
-			Add_New_Physics_Static_Box(Index);
+			Add_New_Physics_Static_Box(false,Index);
 			Object->Object_Node->setScale(Object->Mesh_Scale);
 
 			Ogre::Vector3 Scale = Object->Object_Node->getScale();
@@ -139,7 +139,7 @@ bool SB_Objects_Create::Add_New_Object(int Index)
 			Object->Type = Enums::Bullet_Type_Dynamic;
 			Object->Shape = Enums::Shape_Box;
 
-			Add_New_Physics_Static_Box(true);
+			Add_New_Physics_Static_Box(true,Index);
 			Object->Physics_Valid = 1;
 		}
 
@@ -196,10 +196,22 @@ bool SB_Objects_Create::Add_New_Object(int Index)
 // *************************************************************************
 //						Add_New_Physics_Static_Box Terry Bernie			   *
 // *************************************************************************
-void SB_Objects_Create::Add_New_Physics_Static_Box(int Index)
+void SB_Objects_Create::Add_New_Physics_Static_Box(bool Dynamic,int Index)
 {
 
 	Base_Object* Object = App->SBC_Scene->B_Object[Index];
+
+	if (Dynamic == 1)
+	{
+		Object->Type = Enums::Bullet_Type_Dynamic;
+		Object->Shape = Enums::Shape_Box;
+
+	}
+	else
+	{
+		Object->Type = Enums::Bullet_Type_Static;
+		Object->Shape = Enums::Shape_Box;
+	}
 
 	AxisAlignedBox worldAAB = Object->Object_Ent->getBoundingBox();
 	worldAAB.transformAffine(Object->Object_Node->_getFullTransform());
@@ -216,7 +228,14 @@ void SB_Objects_Create::Add_New_Physics_Static_Box(int Index)
 		Object->Physics_Quat.w));
 
 	btScalar mass;
-	mass = 0.0f;
+	if (Dynamic == 1)
+	{
+		mass = 1.0f;
+	}
+	else
+	{
+		mass = 0.0f;
+	}
 	
 
 	btVector3 localInertia(0, 0, 0);
@@ -246,18 +265,18 @@ void SB_Objects_Create::Add_New_Physics_Static_Box(int Index)
 	Object->Phys_Body->setUserPointer(Object->Object_Node);
 	Object->Phys_Body->setWorldTransform(startTransform);
 
-	/*if (Dynamic == 1)
+	if (Dynamic == 1)
 	{
 		Object->Usage = Enums::Usage_Dynamic;
 		Object->Phys_Body->setUserIndex(Enums::Usage_Dynamic);
 		Object->Phys_Body->setUserIndex2(Index);
 	}
 	else
-	{*/
+	{
 		Object->Usage = Enums::Usage_Static;
 		Object->Phys_Body->setUserIndex(Enums::Usage_Static);
 		Object->Phys_Body->setUserIndex2(Index);
-	//}
+	}
 
 	Object->Phys_Body->setCustomDebugColor(btVector3(0, 1, 1));
 
