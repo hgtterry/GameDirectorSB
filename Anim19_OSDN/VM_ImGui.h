@@ -31,7 +31,10 @@ public:
 	void Set_ProgressCount(float Count);
 	bool Nudge();
 
-	void Get_Type(int Type);
+	bool Update_Types();
+	bool Get_Type(int Index);
+	bool Get_Shape(int Index);
+	bool Get_Usage(int Index);
 
 	bool StartPos;
 
@@ -73,8 +76,9 @@ public:
 	bool Block_Motion;
 	bool Reset_Groups;
 
-	char test[250];
-	char* poo();
+	char Chr_Type[32];
+	char Chr_Shape[32];
+	char Chr_Usage[32];
 
 protected:
 

@@ -228,8 +228,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			App->Say("ok");
 
 			remove(App->ETemp_Folder);*/
-			App->Say(App->CL_Vm_ImGui->poo());
-
+		
 			return 1;
 		}
 
