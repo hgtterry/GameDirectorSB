@@ -31,6 +31,8 @@ public:
 	void Set_ProgressCount(float Count);
 	bool Nudge();
 
+	void Get_Type(int Type);
+
 	bool StartPos;
 
 	bool StartPos_PB;
