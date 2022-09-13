@@ -10,9 +10,9 @@ Mesh_File=Wall_1.mesh
 Mesh_Resource_Path=C:\Users\Equity\Desktop\Equity15\Bin\Media_New\Walls\
 Object_Type=1
 Object_Shape=1
-Mesh_Pos=38.000000,-39.000000,0.000000
+Mesh_Pos=13.374298,37.116486,-5.883064
 Mesh_Scale=1.000000,1.000000,1.000000
 Mesh_Rot=0.000000,32.000000,0.000000
 Mesh_Quat=0.927297,-0.062378,0.357053,0.093786
-Physics_Quat=0.927272,-0.062376,0.357044,0.093784
+Physics_Quat=0.635983,-0.635982,0.309073,0.309073
  

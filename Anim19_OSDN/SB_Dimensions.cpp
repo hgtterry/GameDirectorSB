@@ -175,6 +175,7 @@ void SB_Dimensions::ImGui_Position(void)
 			{
 				Pos.x = Pos.x - Model_Pos_Delta;
 				App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
+				App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
 
 				AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
 				worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
@@ -187,6 +188,7 @@ void SB_Dimensions::ImGui_Position(void)
 			{
 				Pos.y = Pos.y + Model_Pos_Delta;
 				App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
+				App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
 
 				AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
 				worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
@@ -199,6 +201,7 @@ void SB_Dimensions::ImGui_Position(void)
 			{
 				Pos.z = Pos.z - Model_Pos_Delta;
 				App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
+				App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
 
 				AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
 				worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
@@ -218,6 +221,7 @@ void SB_Dimensions::ImGui_Position(void)
 			{
 				Pos.x = Pos.x + Model_Pos_Delta;
 				App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
+				App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
 
 				AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
 				worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
@@ -230,6 +234,7 @@ void SB_Dimensions::ImGui_Position(void)
 			{
 				Pos.y = Pos.y - Model_Pos_Delta;
 				App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
+				App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
 
 				AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
 				worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
@@ -242,6 +247,7 @@ void SB_Dimensions::ImGui_Position(void)
 			{
 				Pos.z = Pos.z + Model_Pos_Delta;
 				App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
+				App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
 
 				AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
 				worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
@@ -778,4 +784,5 @@ void SB_Dimensions::Set_Physics_Position(int Index)
 	worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
 	Ogre::Vector3 Centre = worldAAB.getCenter();
 	App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+	App->SBC_Scene->B_Object[Index]->Physics_Pos = Centre;
 }

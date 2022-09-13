@@ -108,6 +108,10 @@ void GD19_Bullet::Reset_Physics(void)
 			App->SBC_Scene->B_Object[Count]->Phys_Body->setWorldTransform(startTransform);
 			App->SBC_Scene->B_Object[Count]->Phys_Body->getMotionState()->setWorldTransform(startTransform);
 			App->SBC_Scene->B_Object[Count]->Phys_Body->activate(true);
+
+			App->SBC_Scene->B_Object[Count]->Object_Node->setPosition(App->SBC_Scene->B_Object[Count]->Mesh_Pos);
+			App->SBC_Scene->B_Object[Count]->Object_Node->setOrientation(App->SBC_Scene->B_Object[Count]->Mesh_Quat);
+
 		}
 
 		/*if(App->GDCL_Scene_Data->CL_Object[Count]->Usage == Enums::Usage_Sound)

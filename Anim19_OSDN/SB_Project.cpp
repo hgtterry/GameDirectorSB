@@ -497,9 +497,9 @@ bool SB_Project::Save_Objects_Data()
 		fprintf(WriteFile, "%s%i\n", "Object_Shape=", App->SBC_Scene->B_Object[Count]->Shape);
 
 		// Position
-		x = App->SBC_Scene->B_Object[Count]->Object_Node->getPosition().x;
-		y = App->SBC_Scene->B_Object[Count]->Object_Node->getPosition().y;
-		z = App->SBC_Scene->B_Object[Count]->Object_Node->getPosition().z;
+		x = App->SBC_Scene->B_Object[Count]->Mesh_Pos.x;
+		y = App->SBC_Scene->B_Object[Count]->Mesh_Pos.y;
+		z = App->SBC_Scene->B_Object[Count]->Mesh_Pos.z;
 		fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Pos=", x, y, z);
 
 		// Mesh_Scale
