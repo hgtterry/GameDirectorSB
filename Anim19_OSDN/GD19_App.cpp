@@ -670,7 +670,7 @@ bool GD19_App::Custom_Button_Toggle(LPNMCUSTOMDRAW item, bool Toggle)
 			{
 				hotbrush = CreateSolidBrush(RGB(154, 255, 154));
 			}
-			else
+			else // Unselected
 			{
 				hotbrush = App->Brush_Button_Hover;
 			}
@@ -689,15 +689,15 @@ bool GD19_App::Custom_Button_Toggle(LPNMCUSTOMDRAW item, bool Toggle)
 			return CDRF_DODEFAULT;
 		}
 
-		//Select our colour when our button is doing nothing
+		//Select our colour when our button is doing nothing 
 
 		if (Toggle == 1)
 		{
-			defaultbrush = CreateSolidBrush(RGB(0, 255,0));
+			defaultbrush = CreateSolidBrush(RGB(154, 255, 154));
 		}
-		else
+		else // Unselected
 		{
-			defaultbrush = CreateSolidBrush(RGB(200, 200, 200));
+			defaultbrush = CreateSolidBrush(RGB(220, 220, 220));
 		}
 
 		HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0));

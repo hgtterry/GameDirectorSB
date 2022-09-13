@@ -6,7 +6,7 @@ material Wall_1/HL_Wall
          {
              texture_unit
              {
-                 texture ST_Wall.dds
+                 texture wall.jpg
              }
          }
     }
