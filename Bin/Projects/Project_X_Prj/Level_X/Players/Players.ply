@@ -6,7 +6,7 @@ Player_Count=1
  
 [Player_0]
 Player_Name=Terry
-Start_Position=0.000000,-50.000000,0.000000
+Start_Position=50.000000,-50.000000,0.000000
 Shape=Capsule
 Mass=1.000000
 Radius=4.400000

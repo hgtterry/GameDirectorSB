@@ -708,14 +708,15 @@ bool SB_Project::Save_Player_Data()
 		Pos.x = App->SBC_Scene->SBC_Base_Player[Count]->StartPos.x;
 		Pos.y = App->SBC_Scene->SBC_Base_Player[Count]->StartPos.y;
 		Pos.z = App->SBC_Scene->SBC_Base_Player[Count]->StartPos.z;
-
 		fprintf(WriteFile, "%s%f,%f,%f\n", "Start_Position=", Pos.x, Pos.y, Pos.z);
+
 		fprintf(WriteFile, "%s%s\n", "Shape=", "Capsule");
 		fprintf(WriteFile, "%s%f\n", "Mass=", App->SBC_Scene->SBC_Base_Player[Count]->Capsule_Mass);
 		fprintf(WriteFile, "%s%f\n", "Radius=", App->SBC_Scene->SBC_Base_Player[Count]->Capsule_Radius);
 		fprintf(WriteFile, "%s%f\n", "Height=", App->SBC_Scene->SBC_Base_Player[Count]->Capsule_Height);
 		fprintf(WriteFile, "%s%f\n", "Ground_Speed=", App->SBC_Scene->SBC_Base_Player[Count]->Ground_speed);
 		fprintf(WriteFile, "%s%f\n", "Cam_Height=", App->SBC_Scene->SBC_Base_Player[Count]->PlayerHeight);
+
 
 		Count++;
 	}
@@ -1016,6 +1017,11 @@ bool SB_Project::Load_Project_Player()
 	int Players_Count = 0;
 	char Player_Name[MAX_PATH];
 	char Player_Ini_Path[MAX_PATH];
+	char chr_Tag1[MAX_PATH];
+
+	float x = 0;
+	float y = 0;
+	float z = 0;
 
 	strcpy(Player_Ini_Path, m_Project_Sub_Folder);
 	strcat(Player_Ini_Path, "\\");
@@ -1033,15 +1039,27 @@ bool SB_Project::Load_Project_Player()
 	Players_Count = App->Cl_Ini->GetInt("Counters", "Player_Count", 0);
 
 	int Count = 0;
+	char Cbuff[255];
+	char buff[255];
 
 	while (Count < Players_Count)
 	{
-
-		App->Cl_Ini->GetString("Player_0", "Player_Name", Player_Name, MAX_PATH);
-
-
+		strcpy(buff, "Player_");
+		_itoa(Count, Cbuff, 10);
+		strcat(buff, Cbuff);
+	
 		App->SBC_Player->Create_Player_Object();
+
+		App->Cl_Ini->GetString(buff, "Player_Name", Player_Name, MAX_PATH);
 		strcpy(App->SBC_Scene->SBC_Base_Player[Count]->Player_Name, Player_Name);
+
+
+		App->Cl_Ini->GetString(buff, "Start_Position", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+		App->SBC_Scene->SBC_Base_Player[Count]->StartPos = Ogre::Vector3(x, y, z);
+
+
+
 
 		App->SBC_Player->FileViewItem = App->SBC_FileView->Add_PlayerFile(Player_Name, Count);
 
