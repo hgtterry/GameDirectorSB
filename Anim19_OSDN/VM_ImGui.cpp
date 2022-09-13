@@ -42,10 +42,6 @@ VM_ImGui::VM_ImGui()
 	progress = 0;
 	Progress_Count = 0;
 	Progress_Delta = 0;
-
-	strcpy(Chr_Type, "None");
-	strcpy(Chr_Shape, "None");
-	strcpy(Chr_Usage, "None");
 }
 
 
@@ -672,9 +668,9 @@ void VM_ImGui::ImGui_Object_Data(void)
 		ImGui::Text("Name: = %s", App->SBC_Scene->B_Object[Index]->Mesh_Name);
 		ImGui::Text("Mesh File Name: = %s", App->SBC_Scene->B_Object[Index]->Mesh_FileName);
 		ImGui::Text("Path: = %s", App->SBC_Scene->B_Object[Index]->Mesh_Resource_Path);
-		ImGui::Text("Type: = %s", Chr_Type);
-		ImGui::Text("Shape: = %s", Chr_Shape);
-		ImGui::Text("Usage: = %s", Chr_Usage);
+		ImGui::Text("Type: = %s", App->SBC_Object->Chr_Type);
+		ImGui::Text("Shape: = %s", App->SBC_Object->Chr_Shape);
+		ImGui::Text("Usage: = %s", App->SBC_Object->Chr_Usage);
 		ImGui::Text("Object_ID: = %i", App->SBC_Scene->B_Object[Index]->Object_ID);
 
 		ImGui::Spacing();
@@ -727,105 +723,5 @@ void VM_ImGui::ImGui_Object_Data(void)
 	}
 }
 
-// *************************************************************************
-// *					Update_Types  Terry Flanigan					   *
-// *************************************************************************
-bool VM_ImGui::Update_Types()
-{
-	int Index = App->SBC_Properties->Current_Selected_Object;
-
-	Get_Type(Index);
-	Get_Shape(Index);
-	Get_Usage(Index);
-
-	return 0;
-}
-
-// *************************************************************************
-// *						Get_Type  Terry Flanigan					   *
-// *************************************************************************
-bool VM_ImGui::Get_Type(int Index)
-{
-	int Type = App->SBC_Scene->B_Object[Index]->Type;
-
-	switch (Type)
-	{
-
-	case Enums::Bullet_Type_Dynamic:
-	{
-		strcpy(Chr_Type, "Dynamic");
-		return 1;
-	}
-	case Enums::Bullet_Type_Static:
-	{
-		strcpy(Chr_Type, "Static");
-		return 1;
-	}
-
-	break;
-
-	}
-
-	strcpy(Chr_Type, "None");
-	return 0;
-}
-
-// *************************************************************************
-// *						Get_Shape  Terry Flanigan					   *
-// *************************************************************************
-bool VM_ImGui::Get_Shape(int Index)
-{
-	int Shape = App->SBC_Scene->B_Object[Index]->Shape;
-
-	switch (Shape)
-	{
-
-	case Enums::Bullet_Type_Dynamic:
-	{
-		strcpy(Chr_Shape, "Dynamic");
-		return 1;
-	}
-	case Enums::Bullet_Type_Static:
-	{
-		strcpy(Chr_Shape, "Static");
-		return 1;
-	}
-
-	break;
-
-	}
-
-	strcpy(Chr_Shape, "None");
-	return 0;
-}
-
-// *************************************************************************
-// *						Get_Usage  Terry Flanigan					   *
-// *************************************************************************
-bool VM_ImGui::Get_Usage(int Index)
-{
-	int Usage = App->SBC_Scene->B_Object[Index]->Usage;
-
-	switch (Usage)
-	{
-
-	case Enums::Bullet_Type_Dynamic:
-	{
-		strcpy(Chr_Usage, "Dynamic");
-		return 1;
-	}
-	case Enums::Bullet_Type_Static:
-	{
-		strcpy(Chr_Usage, "Static");
-		return 1;
-	}
-
-	break;
-
-	}
-
-	strcpy(Chr_Usage, "None");
-	return 0;
-}
 
 

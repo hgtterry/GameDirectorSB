@@ -170,7 +170,7 @@ void SB_Physics::Enable_Physics(bool Enable)
 	int f = App->SBC_Scene->SBC_Base_Player[0]->Phys_Body->getCollisionFlags();
 
 	App->Cl19_Ogre->OgreListener->Dubug_Physics_Draw = Enable;
-	App->Cl19_Ogre->OgreListener->GD_Run_Physics = Enable;
+	//App->Cl19_Ogre->OgreListener->GD_Run_Physics = Enable;
 	App->Cl19_Ogre->BulletListener->Render_Debug_Flag = Enable;
 
 	App->SBC_Player->ShowDebug = Enable;

@@ -225,10 +225,7 @@ void SB_Objects_Create::Add_New_Physics_Static_Box(bool Dynamic,int Index)
 
 	btTransform startTransform;
 	startTransform.setIdentity();
-	startTransform.setRotation(btQuaternion(Object->Physics_Quat.x, 
-		Object->Physics_Quat.y, 
-		Object->Physics_Quat.z, 
-		Object->Physics_Quat.w));
+	startTransform.setRotation(btQuaternion(0, 0, 0, 1));
 
 	btScalar mass;
 	if (Dynamic == 1)
@@ -289,6 +286,14 @@ void SB_Objects_Create::Add_New_Physics_Static_Box(bool Dynamic,int Index)
 	//Object->Collect_Object_Data();
 
 	App->Cl_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
+
+	App->SBC_Scene->B_Object[Index]->Physics_Quat = App->SBC_Scene->B_Object[Index]->Object_Node->getOrientation();
+
+	float w = App->SBC_Scene->B_Object[Index]->Physics_Quat.w;
+	float x = App->SBC_Scene->B_Object[Index]->Physics_Quat.x;
+	float y = App->SBC_Scene->B_Object[Index]->Physics_Quat.y;
+	float z = App->SBC_Scene->B_Object[Index]->Physics_Quat.z;
+	App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
 
 }
 

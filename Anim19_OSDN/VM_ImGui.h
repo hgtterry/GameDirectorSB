@@ -31,11 +31,6 @@ public:
 	void Set_ProgressCount(float Count);
 	bool Nudge();
 
-	bool Update_Types();
-	bool Get_Type(int Index);
-	bool Get_Shape(int Index);
-	bool Get_Usage(int Index);
-
 	bool StartPos;
 
 	bool StartPos_PB;
@@ -76,10 +71,7 @@ public:
 	bool Block_Motion;
 	bool Reset_Groups;
 
-	char Chr_Type[32];
-	char Chr_Shape[32];
-	char Chr_Usage[32];
-
+	
 protected:
 
 	void ImGui_Object_Data(void);

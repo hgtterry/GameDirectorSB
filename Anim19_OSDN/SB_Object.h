@@ -31,6 +31,12 @@ public:
 	void Start_Object_PropsPanel(void);
 	void Hide_Object_Dlg(bool Show);
 
+	bool Update_Types();
+
+	char Chr_Type[32];
+	char Chr_Shape[32];
+	char Chr_Usage[32];
+
 	HWND Object_PropDlg_Hwnd;
 
 protected:
@@ -38,5 +44,9 @@ protected:
 	static LRESULT CALLBACK Object_PropsPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	bool Show_Physics_Debug;
+
+	bool Get_Type(int Index);
+	bool Get_Shape(int Index);
+	bool Get_Usage(int Index);
 };
 

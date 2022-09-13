@@ -505,7 +505,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		App->SBC_Properties->Edit_Category = Enums::Edit_Mesh_Object;
 		App->SBC_Properties->Current_Selected_Object = Index;
 //		App->SBC_Properties->Update_Transform_Dlg();
-
+		App->SBC_Object->Update_Types();
 
 		if (App->SBC_Properties->Edit_Physics == 0)
 		{
