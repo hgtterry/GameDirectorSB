@@ -20,6 +20,7 @@ public:
 	void ImGui_Model_Data(void);
 	void ImGui_App_Data(void);
 
+	void ImGui_Render_Loop(void);
 	void Tabs_Render_Camera(void);
 	void Tabs_Render_Motions(void);
 	void Tabs_Render_Dimensions(void);

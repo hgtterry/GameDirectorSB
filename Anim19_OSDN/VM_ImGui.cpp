@@ -144,6 +144,38 @@ void VM_ImGui::ImGui_Set_Colours(void)
 }
 
 // *************************************************************************
+// *					ImGui_Render_Loop  Terry Flanigan				   *
+// *************************************************************************
+void VM_ImGui::ImGui_Render_Loop(void)
+{
+	if (Show_FPS == 1)
+	{
+		ImGui_FPS();
+	}
+
+	if (Show_Model_Data == 1)
+	{
+		ImGui_Model_Data();
+	}
+
+	if (Show_App_Data == 1)
+	{
+		ImGui_App_Data();
+	}
+
+	if (Show_ImGui_Test == 1)
+	{
+		ImGui::ShowDemoWindow();
+	}
+
+	if (Show_Object_Data == 1)
+	{
+		ImGui_Object_Data();
+	}
+
+}
+
+// *************************************************************************
 // *					Tabs_Render_Camera  Terry Bernie				   *
 // *************************************************************************
 void VM_ImGui::Tabs_Render_Camera(void)
@@ -178,8 +210,6 @@ void VM_ImGui::Tabs_Render_Camera(void)
 		ImGui_Object_Data();
 	}
 	
-	App->SBC_Dimensions->Dimesions_Select();
-	
 }
 
 // *************************************************************************
@@ -211,8 +241,6 @@ void VM_ImGui::Tabs_Render_Motions(void)
 	{
 		ImGui_Object_Data();
 	}
-
-	App->SBC_Dimensions->Dimesions_Select();
 }
 
 // *************************************************************************
@@ -255,7 +283,6 @@ void VM_ImGui::Tabs_Render_Dimensions(void)
 		ImGui_Object_Data();
 	}
 
-	App->SBC_Dimensions->Dimesions_Select();
 }
 
 // *************************************************************************
@@ -297,8 +324,6 @@ void VM_ImGui::Tabs_Render_Groups(void)
 	{
 		ImGui_Object_Data();
 	}
-
-	App->SBC_Dimensions->Dimesions_Select();
 
 }
 
@@ -676,14 +701,14 @@ void VM_ImGui::ImGui_Object_Data(void)
 		ImGui::Spacing();
 		ImGui::Spacing();
 
-		x = App->SBC_Scene->B_Object[Index]->Object_Node->getPosition().x;
-		y = App->SBC_Scene->B_Object[Index]->Object_Node->getPosition().y;
-		z = App->SBC_Scene->B_Object[Index]->Object_Node->getPosition().z;
+		x = App->SBC_Scene->B_Object[Index]->Mesh_Pos.x;
+		y = App->SBC_Scene->B_Object[Index]->Mesh_Pos.y;
+		z = App->SBC_Scene->B_Object[Index]->Mesh_Pos.z;
 		ImGui::Text("Mesh_Pos: = %f,%f,%f", x, y, z);
 		
-		x = App->SBC_Scene->B_Object[Index]->Object_Node->getScale().x;
-		y = App->SBC_Scene->B_Object[Index]->Object_Node->getScale().y;
-		z = App->SBC_Scene->B_Object[Index]->Object_Node->getScale().z;
+		x = App->SBC_Scene->B_Object[Index]->Mesh_Scale.x;
+		y = App->SBC_Scene->B_Object[Index]->Mesh_Scale.y;
+		z = App->SBC_Scene->B_Object[Index]->Mesh_Scale.z;
 		ImGui::Text("Mesh_Scale: = %f,%f,%f", x, y, z);
 
 		w = App->SBC_Scene->B_Object[Index]->Mesh_Quat.w;
@@ -698,20 +723,20 @@ void VM_ImGui::ImGui_Object_Data(void)
 		ImGui::Text("Physics_Mass: = %f", App->SBC_Scene->B_Object[Index]->Physics_Mass);
 		ImGui::Text("Physics_Restitution: = %f", App->SBC_Scene->B_Object[Index]->Physics_Restitution);
 
-		x = App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().getOrigin().getX();
-		y = App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().getOrigin().getY();
-		z = App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().getOrigin().getZ();
+		x = App->SBC_Scene->B_Object[Index]->Physics_Pos.x;
+		y = App->SBC_Scene->B_Object[Index]->Physics_Pos.y;
+		z = App->SBC_Scene->B_Object[Index]->Physics_Pos.z;
 		ImGui::Text("Physics_Pos: = %f,%f,%f", x, y, z);
 
-		x = App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->getLocalScaling().getX();
-		y = App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->getLocalScaling().getY();
-		z = App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->getLocalScaling().getZ();
+		x = App->SBC_Scene->B_Object[Index]->Physics_Scale.x;
+		y = App->SBC_Scene->B_Object[Index]->Physics_Scale.y;
+		z = App->SBC_Scene->B_Object[Index]->Physics_Scale.z;
 		ImGui::Text("Physics_Scale: = %f,%f,%f", x, y, z);
 
-		w = App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().getRotation().getW();
-		x = App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().getRotation().getX();
-		y = App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().getRotation().getY();;
-		z = App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().getRotation().getZ();;
+		w = App->SBC_Scene->B_Object[Index]->Physics_Quat.w;
+		x = App->SBC_Scene->B_Object[Index]->Physics_Quat.x;
+		y = App->SBC_Scene->B_Object[Index]->Physics_Quat.y;
+		z = App->SBC_Scene->B_Object[Index]->Physics_Quat.z;
 		ImGui::Text("Physics_Quat: = %f,%f,%f,%f", w, x, y, z);
 
 		if (ImGui::Button("Close"))
@@ -724,4 +749,40 @@ void VM_ImGui::ImGui_Object_Data(void)
 }
 
 
-
+//x = App->SBC_Scene->B_Object[Index]->Object_Node->getPosition().x;
+//y = App->SBC_Scene->B_Object[Index]->Object_Node->getPosition().y;
+//z = App->SBC_Scene->B_Object[Index]->Object_Node->getPosition().z;
+//ImGui::Text("Mesh_Pos: = %f,%f,%f", x, y, z);
+//
+//x = App->SBC_Scene->B_Object[Index]->Object_Node->getScale().x;
+//y = App->SBC_Scene->B_Object[Index]->Object_Node->getScale().y;
+//z = App->SBC_Scene->B_Object[Index]->Object_Node->getScale().z;
+//ImGui::Text("Mesh_Scale: = %f,%f,%f", x, y, z);
+//
+//w = App->SBC_Scene->B_Object[Index]->Mesh_Quat.w;
+//x = App->SBC_Scene->B_Object[Index]->Mesh_Quat.x;
+//y = App->SBC_Scene->B_Object[Index]->Mesh_Quat.y;
+//z = App->SBC_Scene->B_Object[Index]->Mesh_Quat.z;
+//ImGui::Text("Mesh_Quat: = %f,%f,%f,%f", w, x, y, z);
+//
+//ImGui::Spacing();
+//ImGui::Spacing();
+//
+//ImGui::Text("Physics_Mass: = %f", App->SBC_Scene->B_Object[Index]->Physics_Mass);
+//ImGui::Text("Physics_Restitution: = %f", App->SBC_Scene->B_Object[Index]->Physics_Restitution);
+//
+//x = App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().getOrigin().getX();
+//y = App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().getOrigin().getY();
+//z = App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().getOrigin().getZ();
+//ImGui::Text("Physics_Pos: = %f,%f,%f", x, y, z);
+//
+//x = App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->getLocalScaling().getX();
+//y = App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->getLocalScaling().getY();
+//z = App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->getLocalScaling().getZ();
+//ImGui::Text("Physics_Scale: = %f,%f,%f", x, y, z);
+//
+//w = App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().getRotation().getW();
+//x = App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().getRotation().getX();
+//y = App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().getRotation().getY();;
+//z = App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().getRotation().getZ();;
+//ImGui::Text("Physics_Quat: = %f,%f,%f,%f", w, x, y, z);
