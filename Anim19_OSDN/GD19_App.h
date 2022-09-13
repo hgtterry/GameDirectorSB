@@ -258,11 +258,12 @@ public:
 
 	bool OgreStarted;
 	
-	char EquityDirecory_FullPath[1024];
+	char EquityDirecory_FullPath[MAX_PATH];
 	char Version[100];
-	char LevelDirectory[1024];
-	char DeskTop_Folder[1024];
-	char ETemp_Folder[1024];
+	char LevelDirectory[MAX_PATH];
+	char DeskTop_Folder[MAX_PATH];
+	char ETemp_Folder[MAX_PATH];
+	char Default_Project[MAX_PATH];
 
 };
 

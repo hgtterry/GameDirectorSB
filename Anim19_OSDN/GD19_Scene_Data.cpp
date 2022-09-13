@@ -821,6 +821,7 @@ LRESULT CALLBACK GD19_Scene_Data::Dialog_GetUserFile_Proc(HWND hDlg, UINT messag
 			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
 			if (test == BST_CHECKED)
 			{
+				SetDlgItemText(hDlg, IDC_STUSERFILE, (LPTSTR)App->Default_Project);
 				EnableWindow(GetDlgItem(hDlg, IDC_STUSERFILE), 0);
 				EnableWindow(GetDlgItem(hDlg, IDC_BTBROWSE), 0);
 				return 1;
@@ -847,6 +848,14 @@ LRESULT CALLBACK GD19_Scene_Data::Dialog_GetUserFile_Proc(HWND hDlg, UINT messag
 				{
 					App->Say("Error Writing 1");
 				}
+
+				test2 = App->Cl_Ini->WriteString("Startup", "Scene_Path_FileName", App->Default_Project);
+				SetDlgItemText(hDlg, IDC_STUSERFILE, (LPTSTR)App->Default_Project);
+				if (test2 == 0)
+				{
+					App->Say("Error Writing 1");
+				}
+
 			}
 			else
 			{

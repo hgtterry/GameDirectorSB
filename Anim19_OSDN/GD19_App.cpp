@@ -279,6 +279,9 @@ bool GD19_App::InitApp(void)
 	strcpy(ETemp_Folder, EquityDirecory_FullPath);
 	strcat(ETemp_Folder, "\\Data\\ETemp.bmp");
 
+	strcpy(Default_Project, EquityDirecory_FullPath);
+	strcat(Default_Project, "\\Projects\\Project_X_Prj\\Project.SBProj");
+	
 	return 1;
 }
 
