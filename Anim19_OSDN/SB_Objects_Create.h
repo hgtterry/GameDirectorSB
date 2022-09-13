@@ -15,6 +15,7 @@ public:
 protected:
 
 	void Add_New_Physics_Static_Box(bool Dynamic,int Index);
+	void Add_New_Physics_Static_Sphere(bool Dynamic);
 
 	char m_ResourcePath[MAX_PATH];
 };

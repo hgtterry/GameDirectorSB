@@ -98,6 +98,7 @@ bool SB_Objects_Create::Add_New_Object(int Index)
 		if (Object->Shape == Enums::Shape_Box)
 		{
 			Add_New_Physics_Static_Box(false,Index);
+
 			Object->Object_Node->setScale(Object->Mesh_Scale);
 
 			Ogre::Vector3 Scale = Object->Object_Node->getScale();
@@ -106,13 +107,13 @@ bool SB_Objects_Create::Add_New_Object(int Index)
 			Object->Physics_Valid = 1;
 		}
 
-		/*if (App->SBC_MeshViewer->Physics_Shape == Enums::Sphere)
+		if (App->SBC_MeshViewer->Physics_Shape == Enums::Sphere)
 		{
 			Add_New_Physics_Static_Sphere(false);
 			Object->Physics_Valid = 1;
 		}
 
-		if (App->SBC_MeshViewer->Physics_Shape == Enums::Capsule)
+		/*if (App->SBC_MeshViewer->Physics_Shape == Enums::Capsule)
 		{
 			Add_New_Physics_Static_Capsule(false);
 			Object->Physics_Valid = 1;
@@ -294,6 +295,92 @@ void SB_Objects_Create::Add_New_Physics_Static_Box(bool Dynamic,int Index)
 	float y = App->SBC_Scene->B_Object[Index]->Physics_Quat.y;
 	float z = App->SBC_Scene->B_Object[Index]->Physics_Quat.z;
 	App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
+}
 
+// *************************************************************************
+//					Add_New_Physics_Static_Sphere Terry Flaniagn		   *
+// *************************************************************************
+void SB_Objects_Create::Add_New_Physics_Static_Sphere(bool Dynamic)
+{
+	int Index = App->SBC_Scene->Object_Count;
+
+	Base_Object* Object = App->SBC_Scene->B_Object[Index];
+
+	if (Dynamic == 1)
+	{
+		Object->Type = Enums::Bullet_Type_Dynamic;
+		Object->Shape = Enums::Sphere;
+
+	}
+	else
+	{
+		Object->Type = Enums::Bullet_Type_Static;
+		Object->Shape = Enums::Sphere;
+	}
+
+	AxisAlignedBox worldAAB = Object->Object_Ent->getBoundingBox();
+	worldAAB.transformAffine(Object->Object_Node->_getFullTransform());
+	Ogre::Vector3 Centre = worldAAB.getCenter();
+
+	Object->Physics_Pos = Ogre::Vector3(Centre.x, Centre.y, Centre.z);
+
+	btTransform startTransform;
+	startTransform.setIdentity();
+	startTransform.setRotation(btQuaternion(0.0f, 0.0f, 0.0f, 1));
+
+	btScalar mass;
+
+	if (Dynamic == 1)
+	{
+		mass = 1.0f;
+	}
+	else
+	{
+		mass = 0.0f;
+	}
+
+	btVector3 localInertia(0, 0, 0);
+	btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
+
+	startTransform.setOrigin(initialPosition);
+
+	float Radius = App->Cl_Objects_Com->GetMesh_BB_Radius(Object->Object_Node);
+	Object->Physics_Size = Ogre::Vector3(Radius, 0, 0);
+
+	btCollisionShape* newRigidShape = new btSphereShape(Radius);
+	newRigidShape->calculateLocalInertia(mass, localInertia);
+
+	App->Cl_Bullet->collisionShapes.push_back(newRigidShape);
+
+	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
+
+	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, newRigidShape, localInertia);
+
+	Object->Phys_Body = new btRigidBody(rbInfo);
+	Object->Phys_Body->setRestitution(1.0);
+	Object->Phys_Body->setFriction(1.5);
+	Object->Phys_Body->setUserPointer(Object->Object_Node);
+	Object->Phys_Body->setWorldTransform(startTransform);
+
+	if (Dynamic == 1)
+	{
+		Object->Usage = Enums::Usage_Dynamic;
+		Object->Phys_Body->setUserIndex(Enums::Usage_Dynamic);
+		Object->Phys_Body->setUserIndex2(Index);
+	}
+	else
+	{
+		Object->Usage = Enums::Usage_Static;
+		Object->Phys_Body->setUserIndex(Enums::Usage_Static);
+		Object->Phys_Body->setUserIndex2(Index);
+	}
+
+	Object->Phys_Body->setCustomDebugColor(btVector3(0, 1, 1));
+	int f = Object->Phys_Body->getCollisionFlags();
+	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+
+	//Object->Collect_Object_Data();
+
+	App->Cl_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 }
 
