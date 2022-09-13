@@ -132,7 +132,7 @@ void SB_Dimensions::ImGui_Position(void)
 {
 	int Index = App->SBC_Properties->Current_Selected_Object;
 
-	Ogre::Vector3 Pos = App->SBC_Scene->B_Object[Index]->Object_Node->getPosition();
+	Ogre::Vector3 Pos = App->SBC_Scene->B_Object[Index]->Mesh_Pos;
 
 	ImGuiStyle* style = &ImGui::GetStyle();
 
@@ -320,7 +320,7 @@ void SB_Dimensions::ImGui_Scale(void)
 {
 	int Index = App->SBC_Properties->Current_Selected_Object;
 
-	Ogre::Vector3 Scale = App->SBC_Scene->B_Object[Index]->Object_Node->getScale();
+	Ogre::Vector3 Scale = App->SBC_Scene->B_Object[Index]->Mesh_Scale;
 
 	ImGuiStyle* style = &ImGui::GetStyle();
 
@@ -368,9 +368,12 @@ void SB_Dimensions::ImGui_Scale(void)
 				Scale.z = Scale.z + Model_Scale_Delta;
 
 				App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
-				App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
-				UpDate_Physics_And_Visuals(Index);
+				App->SBC_Scene->B_Object[Index]->Mesh_Scale = Scale;
 
+				App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+				App->SBC_Scene->B_Object[Index]->Physics_Scale = Scale;
+
+				UpDate_Physics_And_Visuals(Index);
 			}
 			else
 			{
@@ -425,9 +428,12 @@ void SB_Dimensions::ImGui_Scale(void)
 				Scale.z = Scale.z - Model_Scale_Delta;
 
 				App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
-				App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
-				UpDate_Physics_And_Visuals(Index);
+				App->SBC_Scene->B_Object[Index]->Mesh_Scale = Scale;
 
+				App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+				App->SBC_Scene->B_Object[Index]->Physics_Scale = Scale;
+
+				UpDate_Physics_And_Visuals(Index);
 			}
 			else
 			{

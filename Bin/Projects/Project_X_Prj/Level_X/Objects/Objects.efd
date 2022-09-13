@@ -2,7 +2,7 @@
 Version=V1.2
  
 [Counters]
-Objects_Count=1
+Objects_Count=2
  
 [Object_0]
 Mesh_Name=Object_0
@@ -11,8 +11,20 @@ Mesh_Resource_Path=C:\Users\Equity\Desktop\Equity15\Bin\Media_New\Walls\
 Object_Type=1
 Object_Shape=1
 Mesh_Pos=13.374298,37.116486,-5.883064
+Mesh_Scale=2.559999,2.559999,2.559999
+Mesh_Rot=-47.000000,32.000000,0.000000
+Mesh_Quat=0.825500,-0.426956,0.290037,0.228378
+Physics_Quat=0.825492,-0.426952,0.290034,0.228376
+ 
+[Object_1]
+Mesh_Name=Object_1
+Mesh_File=well.mesh
+Mesh_Resource_Path=C:\Users\Equity\Desktop\Equity15\Bin\Media_New\Structure\
+Object_Type=2
+Object_Shape=1
+Mesh_Pos=0.000000,-20.000000,0.000000
 Mesh_Scale=1.000000,1.000000,1.000000
-Mesh_Rot=0.000000,32.000000,0.000000
-Mesh_Quat=0.927297,-0.062378,0.357053,0.093786
-Physics_Quat=0.635983,-0.635982,0.309073,0.309073
+Mesh_Rot=0.000000,0.000000,0.000000
+Mesh_Quat=1.000000,0.000000,0.000000,0.000000
+Physics_Quat=1.000000,0.000000,0.000000,0.000000
  

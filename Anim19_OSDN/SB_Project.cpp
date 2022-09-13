@@ -503,9 +503,9 @@ bool SB_Project::Save_Objects_Data()
 		fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Pos=", x, y, z);
 
 		// Mesh_Scale
-		x = App->SBC_Scene->B_Object[Count]->Object_Node->getScale().x;
-		y = App->SBC_Scene->B_Object[Count]->Object_Node->getScale().y;
-		z = App->SBC_Scene->B_Object[Count]->Object_Node->getScale().z;
+		x = App->SBC_Scene->B_Object[Count]->Mesh_Scale.x;
+		y = App->SBC_Scene->B_Object[Count]->Mesh_Scale.y;
+		z = App->SBC_Scene->B_Object[Count]->Mesh_Scale.z;
 		fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Scale=", x, y, z);
 
 		// Mesh_Rot
@@ -522,10 +522,10 @@ bool SB_Project::Save_Objects_Data()
 		fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Mesh_Quat=", w, x, y, z);
 
 		// Physics_Quat
-		w = App->SBC_Scene->B_Object[Count]->Phys_Body->getWorldTransform().getRotation().getW();
-		x = App->SBC_Scene->B_Object[Count]->Phys_Body->getWorldTransform().getRotation().getX();
-		y = App->SBC_Scene->B_Object[Count]->Phys_Body->getWorldTransform().getRotation().getY();
-		z = App->SBC_Scene->B_Object[Count]->Phys_Body->getWorldTransform().getRotation().getZ();
+		w = App->SBC_Scene->B_Object[Count]->Physics_Quat.w;
+		x = App->SBC_Scene->B_Object[Count]->Physics_Quat.x;
+		y = App->SBC_Scene->B_Object[Count]->Physics_Quat.y;
+		z = App->SBC_Scene->B_Object[Count]->Physics_Quat.z;
 		fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Physics_Quat=", w, x, y, z);
 
 		fprintf(WriteFile, "%s\n", " ");
