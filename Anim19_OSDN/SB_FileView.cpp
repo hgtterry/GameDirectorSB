@@ -26,6 +26,9 @@ distribution.
 #include "resource.h"
 #include "SB_FileView.h"
 
+#define IDM_FILE_NEW 1
+#define IDM_FILE_DELETE 2
+#define IDM_FILE_RENAME 3
 
 SB_FileView::SB_FileView()
 {
@@ -134,6 +137,52 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 		App->Cl_Panels->Resize_FileView();
 	}break;
 
+	case WM_CONTEXTMENU:
+	{
+		
+		RECT rcTree;
+		HWND hwndTV;
+		HTREEITEM htvItem;
+		TVHITTESTINFO htInfo = { 0 };
+		POINT pt;
+		GetCursorPos(&pt);
+
+		long xPos = pt.x;   // x position from message, in screen coordinates
+		long yPos = pt.y;   // y position from message, in screen coordinates 
+
+		hwndTV = GetDlgItem(hDlg, IDC_TREE1);         // get the tree view 
+		GetWindowRect(hwndTV, &rcTree);              // get its window coordinates
+		htInfo.pt.x = xPos - rcTree.left;              // convert to client coordinates
+		htInfo.pt.y = yPos - rcTree.top;
+
+		if (htvItem = TreeView_HitTest(hwndTV, &htInfo)) {    // hit test
+			TreeView_SelectItem(hwndTV, htvItem);           // success; select the item
+			
+			if (!strcmp(App->SBC_FileView->FileView_Folder, "Objects")) // Folder
+			{
+				App->SBC_FileView->hMenu = CreatePopupMenu();
+				AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_NEW, L"&New");
+				/*AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_OPEN, L"&Open");
+				AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
+				AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_QUIT, L"&Quit");*/
+				TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+				DestroyMenu(App->SBC_FileView->hMenu);
+			}
+			
+			if (!strcmp(App->SBC_FileView->FileView_File, "Objects"))
+			{
+				App->SBC_FileView->hMenu = CreatePopupMenu();
+				//AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_NEW, L"&New");
+				AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
+				AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
+				AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
+				TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+				DestroyMenu(App->SBC_FileView->hMenu);
+			}
+		}
+		break;
+	}
+
 	case WM_NOTIFY:
 	{
 		LPNMHDR nmhdr = (LPNMHDR)lParam;
@@ -146,6 +195,7 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 			{
 				App->SBC_FileView->Get_Selection((LPNMHDR)lParam);
 			}
+
 			}
 		}
 
@@ -176,6 +226,31 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 	}
 	case WM_COMMAND:
 	{
+	
+		if (LOWORD(wParam) == IDM_FILE_NEW)
+		{
+
+			//App->Say(App->SBC_FileView->FileView_Folder);
+			if (App->SBC_Scene->Area_Added == 0)
+			{
+				App->Say("An Area or Building must be Added Firest");
+
+				return TRUE;
+			}
+
+			App->Cl_Dialogs->YesNo("Add Object", "Do you want to add a new Object now");
+
+			bool Doit = App->Cl_Dialogs->Canceled;
+			if (Doit == 0)
+			{
+				App->SBC_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Objects; // 0; // Objects; // Objects
+				App->SBC_MeshViewer->StartMeshViewer();
+				App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
+			}
+
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDC_LEVELS)
 		{
 			App->SBC_FileView->Level_But_Active = 1;
@@ -472,21 +547,21 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 	if (!strcmp(FileView_Folder, "Objects")) // Folder
 	{
-		if (App->SBC_Scene->Area_Added == 0)
-		{
-			App->Say("An Area or Building must be Added Firest");
+		//if (App->SBC_Scene->Area_Added == 0)
+		//{
+		//	App->Say("An Area or Building must be Added Firest");
 
-			return;
-		}
+		//	return;
+		//}
 
-		App->Cl_Dialogs->YesNo("Add Object", "Do you want to add a new Object now");
-		bool Doit = App->Cl_Dialogs->Canceled;
-		if (Doit == 0)
-		{
-			App->SBC_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Objects; // 0; // Objects; // Objects
-			App->SBC_MeshViewer->StartMeshViewer();
-			App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
-		}
+		//App->Cl_Dialogs->YesNo("Add Object", "Do you want to add a new Object now");
+		//bool Doit = App->Cl_Dialogs->Canceled;
+		//if (Doit == 0)
+		//{
+		//	App->SBC_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Objects; // 0; // Objects; // Objects
+		//	App->SBC_MeshViewer->StartMeshViewer();
+		//	App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
+		//}
 
 		return;
 	}

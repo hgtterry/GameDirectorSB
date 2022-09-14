@@ -64,6 +64,7 @@ public:
 	HTREEITEM GD_CameraFolder;
 	HTREEITEM GD_ObjectsFolder;
 
+	HMENU hMenu;
 protected:
 
 	static LRESULT CALLBACK ListPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
