@@ -422,17 +422,17 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 				strcpy(App->SBC_MeshViewer->Chr_CurrentFolder, App->EquityDirecory_FullPath);
 				strcat(App->SBC_MeshViewer->Chr_CurrentFolder, "\\Media_New\\");
 				strcat(App->SBC_MeshViewer->Chr_CurrentFolder, Get_Folder);
-
-				// Get Meshes in Sub Folders of Folder
-				App->SBC_MeshViewer->Get_Sub_Folders(Get_Folder, App->SBC_MeshViewer->ListHwnd);
-
-				// Get Meshes in the Folder
-				strcat(App->SBC_MeshViewer->Chr_CurrentFolder, "\\*.mesh");
-
-				App->SBC_MeshViewer->GetMeshFiles(App->SBC_MeshViewer->Chr_CurrentFolder, false);
+				strcat(App->SBC_MeshViewer->Chr_CurrentFolder, "\\");
 
 				SetDlgItemText(hDlg, IDC_ST_CURRENTFOLDER, App->SBC_MeshViewer->Chr_CurrentFolder);
 				SetWindowText(hDlg, App->SBC_MeshViewer->Chr_CurrentFolder);
+
+				strcpy(App->SBC_MeshViewer->Folder_Vec[0].Folder_Path, App->SBC_MeshViewer->Chr_CurrentFolder);
+				strcpy(App->SBC_MeshViewer->TempFolder, App->SBC_MeshViewer->Chr_CurrentFolder);
+
+				App->SBC_MeshViewer->Add_Resources();
+				App->SBC_MeshViewer->Get_Files();
+
 			}
 			}
 

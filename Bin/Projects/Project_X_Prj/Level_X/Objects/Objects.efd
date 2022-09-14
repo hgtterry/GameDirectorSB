@@ -2,7 +2,7 @@
 Version=V1.2
  
 [Counters]
-Objects_Count=6
+Objects_Count=7
  
 [Object_0]
 Mesh_Name=Test_Dynamic
@@ -72,6 +72,18 @@ Object_Type=1
 Object_Shape=3
 Mesh_Pos=0.000000,0.000000,-145.000000
 Mesh_Scale=3.029998,3.029998,3.029998
+Mesh_Rot=0.000000,0.000000,0.000000
+Mesh_Quat=1.000000,0.000000,0.000000,0.000000
+Physics_Quat=1.000000,0.000000,0.000000,0.000000
+ 
+[Object_6]
+Mesh_Name=Object_6
+Mesh_File=table-with-leaning-feet.mesh
+Mesh_Resource_Path=C:\Users\Equity\Desktop\Equity15\Bin\Media_New\Misc\
+Object_Type=1
+Object_Shape=1
+Mesh_Pos=1.000000,-18.000000,-167.000000
+Mesh_Scale=1.000000,1.000000,1.000000
 Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
