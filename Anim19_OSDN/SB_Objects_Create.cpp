@@ -12,6 +12,55 @@ SB_Objects_Create::~SB_Objects_Create(void)
 }
 
 // *************************************************************************
+//					Add_Objects_FromFile Terry Bernie					   *
+// *************************************************************************
+bool SB_Objects_Create::Add_Objects_From_File() // From File
+{
+	/*char ConNum[256];
+	char ATest[256];
+	char Name[255];
+	char Mesh_File[255];*/
+
+	int Object_Count = App->SBC_Scene->Object_Count;
+	int Count = 0;
+
+	while (Count < Object_Count)
+	{
+		//if (App->Cl_Scene_Data->Cl_Object[Count]->Usage == Enums::Usage_Sound)
+		//{
+		//	//Add_SoundEntity_FFile(Count);
+		//}
+		//else if (App->Cl_Scene_Data->Cl_Object[Count]->Usage == Enums::Usage_Message)
+		//{
+		//	//Add_MessageEntity_FFile(Count);
+		//}
+		//else if (App->Cl_Scene_Data->Cl_Object[Count]->Usage == Enums::Usage_Move)
+		//{
+		//	//Add_MoveEntity_FFile(Count);
+		//}
+		//else if (App->Cl_Scene_Data->Cl_Object[Count]->Usage == Enums::Usage_Colectable)
+		//{
+		//	//Add_CollectableEntity_FFile(Count);
+		//}
+		//else if (App->Cl_Scene_Data->Cl_Object[Count]->Usage == Enums::Usage_Teleport)
+		//{
+		//	//Add_TeleportEntity_FFile(Count);
+		//}
+		//else
+		//{
+
+		App->SBC_Objects_Create->Add_New_Object(Count);
+		//}
+
+		Count++;
+	}
+
+	/*App->Cl_FileView->Select_Item(NULL);
+	ShowWindow(App->GD_Properties_Hwnd,1);
+	App->Cl_Ogre->OgreListener->GD_Dubug_Physics = 1;*/
+	return 1;
+}
+// *************************************************************************
 //							Dispatcher_New Terry Flanigan				   *
 // *************************************************************************
 bool SB_Objects_Create::Dispatcher_New()
@@ -150,18 +199,25 @@ bool SB_Objects_Create::Add_New_Object(int Index)
 
 			Ogre::Vector3 Scale = Object->Object_Node->getScale();
 			App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+			
 			App->SBC_Dimensions->UpDate_Physics_And_Visuals(Index);
 
 			Object->Physics_Valid = 1;
 		}
 
-		/*if (App->SBC_MeshViewer->Physics_Shape == Enums::Sphere)
+		if (Object->Shape == Enums::Sphere)
 		{
-			Add_New_Physics_Static_Sphere(true);
+			Add_New_Physics_Static_Sphere(true, Index);
+			Object->Object_Node->setScale(Object->Mesh_Scale);
+
+			Ogre::Vector3 Scale = Object->Object_Node->getScale();
+			App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+			
+			App->SBC_Dimensions->UpDate_Physics_And_Visuals(Index);
 			Object->Physics_Valid = 1;
 		}
 
-		if (App->SBC_MeshViewer->Physics_Shape == Enums::Capsule)
+		/*if (App->SBC_MeshViewer->Physics_Shape == Enums::Capsule)
 		{
 			Add_New_Physics_Static_Capsule(true);
 			Object->Physics_Valid = 1;

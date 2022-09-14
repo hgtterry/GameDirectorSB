@@ -6,6 +6,7 @@ public:
 	SB_Objects_Create(void);
 	~SB_Objects_Create(void);
 
+	bool Add_Objects_From_File(); // From File
 	bool Dispatcher_New();
 	void Update_MV_Details();
 	bool Add_New_Object(int Index);

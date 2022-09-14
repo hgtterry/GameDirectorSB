@@ -807,7 +807,7 @@ bool SB_Project::Load_Project()
 	if (Options->Has_Objects > 0)
 	{
 		Load_Project_Objects();
-		App->SBC_Objects_FFile->Add_Objects_FromFile();
+		App->SBC_Objects_Create->Add_Objects_From_File();
 	}
 
 	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;

@@ -5,8 +5,6 @@ public:
 	SB_Objects_FFile(void);
 	~SB_Objects_FFile(void);
 
-	bool Add_Objects_FromFile(); // From File
-	
 	bool Add_SoundEntity_FFile(int Object_Index);
 	bool Add_MessageEntity_FFile(int Object_Index);
 	bool Add_MoveEntity_FFile(int Object_Index);

@@ -2,7 +2,7 @@
 Version=V1.2
  
 [Counters]
-Objects_Count=3
+Objects_Count=5
  
 [Object_0]
 Mesh_Name=Test_Dynamic
@@ -36,6 +36,30 @@ Object_Type=2
 Object_Shape=2
 Mesh_Pos=-44.000000,0.000000,0.000000
 Mesh_Scale=2.129999,2.129999,2.129999
+Mesh_Rot=0.000000,0.000000,0.000000
+Mesh_Quat=1.000000,0.000000,0.000000,0.000000
+Physics_Quat=1.000000,0.000000,0.000000,0.000000
+ 
+[Object_3]
+Mesh_Name=Logs
+Mesh_File=wood_logs.mesh
+Mesh_Resource_Path=C:\Users\Equity\Desktop\Equity15\Bin\Media_New\Balls\
+Object_Type=2
+Object_Shape=1
+Mesh_Pos=0.000000,-119.000000,0.000000
+Mesh_Scale=1.000000,1.000000,1.000000
+Mesh_Rot=0.000000,0.000000,0.000000
+Mesh_Quat=1.000000,0.000000,0.000000,0.000000
+Physics_Quat=1.000000,0.000000,0.000000,0.000000
+ 
+[Object_4]
+Mesh_Name=Ball_Dynamic
+Mesh_File=basketball.mesh
+Mesh_Resource_Path=C:\Users\Equity\Desktop\Equity15\Bin\Media_New\Balls\
+Object_Type=1
+Object_Shape=2
+Mesh_Pos=77.000000,0.000000,0.000000
+Mesh_Scale=2.169999,2.169999,2.169999
 Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000

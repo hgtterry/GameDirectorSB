@@ -12,58 +12,6 @@ SB_Objects_FFile::~SB_Objects_FFile(void)
 }
 
 // *************************************************************************
-//					Add_Objects_FromFile Terry Bernie					   *
-// *************************************************************************
-bool SB_Objects_FFile::Add_Objects_FromFile() // From File
-{
-	/*char ConNum[256];
-	char ATest[256];
-	char Name[255];
-	char Mesh_File[255];*/
-
-	int Object_Count = App->SBC_Scene->Object_Count;
-	int Count = 0;
-
-	while (Count < Object_Count)
-	{
-		//if (App->Cl_Scene_Data->Cl_Object[Count]->Usage == Enums::Usage_Sound)
-		//{
-		//	//Add_SoundEntity_FFile(Count);
-		//}
-		//else if (App->Cl_Scene_Data->Cl_Object[Count]->Usage == Enums::Usage_Message)
-		//{
-		//	//Add_MessageEntity_FFile(Count);
-		//}
-		//else if (App->Cl_Scene_Data->Cl_Object[Count]->Usage == Enums::Usage_Move)
-		//{
-		//	//Add_MoveEntity_FFile(Count);
-		//}
-		//else if (App->Cl_Scene_Data->Cl_Object[Count]->Usage == Enums::Usage_Colectable)
-		//{
-		//	//Add_CollectableEntity_FFile(Count);
-		//}
-		//else if (App->Cl_Scene_Data->Cl_Object[Count]->Usage == Enums::Usage_Teleport)
-		//{
-		//	//Add_TeleportEntity_FFile(Count);
-		//}
-		//else
-		//{
-			
-			App->SBC_Objects_Create->Add_New_Object(Count);
-		//}
-
-		Count++;
-	}
-
-	/*App->Cl_FileView->Select_Item(NULL);
-	ShowWindow(App->GD_Properties_Hwnd,1);
-	App->Cl_Ogre->OgreListener->GD_Dubug_Physics = 1;*/
-	return 1;
-}
-
-
-
-// *************************************************************************
 //						Add_SoundEntity Terry Bernie					   *
 // *************************************************************************
 bool SB_Objects_FFile::Add_SoundEntity_FFile(int Object_Index)
