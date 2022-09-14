@@ -107,9 +107,17 @@ bool SB_Objects_Create::Add_New_Object(int Index)
 			Object->Physics_Valid = 1;
 		}
 
-		if (App->SBC_MeshViewer->Physics_Shape == Enums::Sphere)
+		if (Object->Shape == Enums::Sphere)
 		{
-			Add_New_Physics_Static_Sphere(false);
+			
+			Add_New_Physics_Static_Sphere(false, Index);
+
+			Object->Object_Node->setScale(Object->Mesh_Scale);
+
+			Ogre::Vector3 Scale = Object->Object_Node->getScale();
+			App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+			App->SBC_Dimensions->UpDate_Physics_And_Visuals(Index);
+
 			Object->Physics_Valid = 1;
 		}
 
@@ -300,12 +308,10 @@ void SB_Objects_Create::Add_New_Physics_Static_Box(bool Dynamic,int Index)
 // *************************************************************************
 //					Add_New_Physics_Static_Sphere Terry Flaniagn		   *
 // *************************************************************************
-void SB_Objects_Create::Add_New_Physics_Static_Sphere(bool Dynamic)
+void SB_Objects_Create::Add_New_Physics_Static_Sphere(bool Dynamic, int Index)
 {
-	int Index = App->SBC_Scene->Object_Count;
-
 	Base_Object* Object = App->SBC_Scene->B_Object[Index];
-
+	
 	if (Dynamic == 1)
 	{
 		Object->Type = Enums::Bullet_Type_Dynamic;
@@ -338,6 +344,7 @@ void SB_Objects_Create::Add_New_Physics_Static_Sphere(bool Dynamic)
 	{
 		mass = 0.0f;
 	}
+	
 
 	btVector3 localInertia(0, 0, 0);
 	btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
