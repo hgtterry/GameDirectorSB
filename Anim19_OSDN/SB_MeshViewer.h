@@ -115,6 +115,10 @@ protected:
 	bool Add_Resources();
 	bool Delete_Resources_Group();
 
+	bool Get_Media_Folders_Actors(HWND DropHwnd);
+	bool Get_Sub_Folders(char* Folder, HWND DropHwnd);
+	bool GetMeshFiles(char* Location, bool ResetList);
+
 	Ogre::String MV_Resource_Group;
 
 	HWND Folders_MainWin_hWnd;
