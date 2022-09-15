@@ -389,3 +389,15 @@ void SB_Object::Rename_Object(int Index)
 
 	App->SBC_FileView->Change_Item_Name(Object->ListViewItem, Object->Mesh_Name);
 }
+
+// *************************************************************************
+//					Get_BoundingBox_World_Centre Terry Bernie			   *
+// *************************************************************************
+Ogre::Vector3 SB_Object::Get_BoundingBox_World_Centre(int Object_Index)
+{
+	AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Object_Index]->Object_Ent->getBoundingBox();
+	worldAAB.transformAffine(App->SBC_Scene->B_Object[Object_Index]->Object_Node->_getFullTransform());
+	Ogre::Vector3 Centre = worldAAB.getCenter();
+
+	return Centre;
+}

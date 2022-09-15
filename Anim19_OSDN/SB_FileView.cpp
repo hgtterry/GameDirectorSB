@@ -672,7 +672,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 	if (!strcmp(FileView_Folder, "Sounds")) // Folder
 	{
-		if (App->Cl_Scene_Data->Scene_Has_Area == 0)
+		/*if (App->Cl_Scene_Data->Scene_Has_Area == 0)
 		{
 			App->Say("An Area or Building must be Added Firest");
 
@@ -684,7 +684,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		if (Doit == 0)
 		{
 			App->SBC_Objects_New->Add_New_SoundEntity();
-		}
+		}*/
 
 		return;
 	}
@@ -731,7 +731,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		bool Doit = App->Cl_Dialogs->Canceled;
 		if (Doit == 0)
 		{
-			App->SBC_Objects_New->Add_New_MessageEntity();
+			//App->SBC_Objects_New->Add_New_MessageEntity();
 		}
 
 		return;
@@ -781,7 +781,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		bool Doit = App->Cl_Dialogs->Canceled;
 		if (Doit == 0)
 		{
-			App->SBC_Objects_New->Add_New_MoveEntity();
+			//App->SBC_Objects_New->Add_New_MoveEntity();
 		}
 
 		return;
@@ -906,7 +906,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		bool Doit = App->Cl_Dialogs->Canceled;
 		if (Doit == 0)
 		{
-			App->SBC_Objects_New->Add_New_TeleportEntity();
+			//App->SBC_Objects_New->Add_New_TeleportEntity();
 		}
 
 		return;
@@ -976,7 +976,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		bool Doit = App->Cl_Dialogs->Canceled;
 		if (Doit == 0)
 		{
-			App->SBC_Objects_New->Add_New_Particle();
+			//App->SBC_Objects_New->Add_New_Particle();
 		}
 
 		return;

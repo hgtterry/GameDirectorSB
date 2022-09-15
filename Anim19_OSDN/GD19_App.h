@@ -69,8 +69,6 @@ distribution.
 #include "SB_MeshViewer.h"
 #include "SB_Debug.h"
 #include "SB_FileIO.h"
-#include "SB_Objects_New.h"
-#include "SB_Objects_FFile.h"
 #include "SB_Object.h"
 #include "SB_Objects_Create.h"
 #include "SB_Dimensions.h"
@@ -132,8 +130,6 @@ public:
 	SB_Debug*				SBC_Debug;
 	SB_FileIO*				SBC_FileIO;
 	SB_Import_Room*			SBC_Import_Room;
-	SB_Objects_New*			SBC_Objects_New;
-	SB_Objects_FFile*		SBC_Objects_FFile;
 	SB_Object*				SBC_Object;
 	SB_Objects_Create*		SBC_Objects_Create;
 	SB_Dimensions*			SBC_Dimensions;

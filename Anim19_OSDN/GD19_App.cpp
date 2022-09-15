@@ -79,8 +79,6 @@ GD19_App::GD19_App(void)
 	SBC_Import_Room =	nullptr;
 	SBC_Debug =			nullptr;
 	SBC_FileIO =		nullptr;
-	SBC_Objects_New =	nullptr;
-	SBC_Objects_FFile = nullptr;
 	SBC_Object =		nullptr;
 	SBC_Objects_Create = nullptr;
 	SBC_Dimensions =	nullptr;
@@ -239,8 +237,6 @@ bool GD19_App::InitApp(void)
 	Com_CDialogs =		new  Com_Diaolgs();
 	SBC_Debug =			new SB_Debug();
 	SBC_FileIO =		new SB_FileIO();
-	SBC_Objects_New =	new SB_Objects_New();
-	SBC_Objects_FFile = new SB_Objects_FFile();
 	SBC_Object =		new SB_Object();
 	SBC_Objects_Create = new SB_Objects_Create();
 	SBC_Dimensions =	new SB_Dimensions();

@@ -204,8 +204,6 @@
     <ClInclude Include="SB_MeshViewer.h" />
     <ClInclude Include="SB_Object.h" />
     <ClInclude Include="SB_Objects_Create.h" />
-    <ClInclude Include="SB_Objects_FFile.h" />
-    <ClInclude Include="SB_Objects_New.h" />
     <ClInclude Include="SB_Physics.h" />
     <ClInclude Include="SB_Player.h" />
     <ClInclude Include="SB_Project.h" />
@@ -271,8 +269,6 @@
     <ClCompile Include="SB_MeshViewer.cpp" />
     <ClCompile Include="SB_Object.cpp" />
     <ClCompile Include="SB_Objects_Create.cpp" />
-    <ClCompile Include="SB_Objects_FFile.cpp" />
-    <ClCompile Include="SB_Objects_New.cpp" />
     <ClCompile Include="SB_Physics.cpp" />
     <ClCompile Include="SB_Player.cpp" />
     <ClCompile Include="SB_Project.cpp" />

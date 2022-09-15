@@ -603,9 +603,9 @@ bool GD19_Scene_Data::Start_Scene()
 	
 	//App->Cl_Object_Props->Update_Properties_Mesh();
 
-	App->SBC_Objects_New->Add_Stock_Message();
+//	App->SBC_Objects_New->Add_Stock_Message();
 	//App->CL10_Objects_New->Add_Stock_Sound();
-	App->SBC_Objects_New->Add_Stock_Panel();
+//	App->SBC_Objects_New->Add_Stock_Panel();
 	
 	Start_UpScene();
 	

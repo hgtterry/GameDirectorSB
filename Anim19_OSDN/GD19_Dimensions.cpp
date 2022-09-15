@@ -2518,15 +2518,15 @@ void GD19_Dimensions::Set_Physics_Position(int Index)
 
 	if (App->Cl_Scene_Data->Cl_Object[Index]->Shape == Enums::Shape_TriMesh)
 	{
-		Ogre::Vector3 Centre = App->Cl_Scene_Data->Cl_Object[Index]->OgreNode->getPosition();
-		App->Cl_Scene_Data->Cl_Object[Index]->bt_body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
-		App->Cl_Scene_Data->Cl_Object[Index]->Physics_Pos = Centre;
+		//Ogre::Vector3 Centre = App->Cl_Scene_Data->Cl_Object[Index]->OgreNode->getPosition();
+		//App->Cl_Scene_Data->Cl_Object[Index]->bt_body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+		//App->Cl_Scene_Data->Cl_Object[Index]->Physics_Pos = Centre;
 	}
 	else
 	{
-		Ogre::Vector3 Centre = App->SBC_Objects_New->Get_BoundingBox_World_Centre(Index);
-		App->Cl_Scene_Data->Cl_Object[Index]->bt_body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
-		App->Cl_Scene_Data->Cl_Object[Index]->Physics_Pos = Centre;
+		//Ogre::Vector3 Centre = App->SBC_Objects_New->Get_BoundingBox_World_Centre(Index);
+		//App->Cl_Scene_Data->Cl_Object[Index]->bt_body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+		//App->Cl_Scene_Data->Cl_Object[Index]->Physics_Pos = Centre;
 	}
 }
 

@@ -158,48 +158,48 @@ bool GD19_Objects_Com::Copy_Object()
 // *************************************************************************
 bool GD19_Objects_Com::Paste_Object()
 {
-	App->Cl_Dialogs->YesNo("Paste Object", App->Cl_Scene_Data->Cl_Object[CopyObject_Index]->Name);
-	if (App->Cl_Dialogs->Canceled == 1)
-	{
-		return 1;
-	}
+	//App->Cl_Dialogs->YesNo("Paste Object", App->Cl_Scene_Data->Cl_Object[CopyObject_Index]->Name);
+	//if (App->Cl_Dialogs->Canceled == 1)
+	//{
+	//	return 1;
+	//}
 
-	if (App->Cl_Scene_Data->Cl_Object[CopyObject_Index]->Usage == Enums::Usage_Sound)
-	{
-		Pre_Paste();
-		App->SBC_Objects_New->Add_New_SoundEntity();
-		Post_Paste();
-	}
-	else if (App->Cl_Scene_Data->Cl_Object[CopyObject_Index]->Usage == Enums::Usage_Message)
-	{
-		Pre_Paste();
-		App->SBC_Objects_New->Add_New_MessageEntity();
-		Post_Paste();
-	}
-	else if (App->Cl_Scene_Data->Cl_Object[CopyObject_Index]->Usage == Enums::Usage_Move)
-	{
-		Pre_Paste();
-		App->SBC_Objects_New->Add_New_MoveEntity();
-		Post_Paste();
-	}
-	else if (App->Cl_Scene_Data->Cl_Object[CopyObject_Index]->Usage == Enums::Usage_Colectable)
-	{
-		Pre_Paste();
-		App->SBC_Objects_New->Add_New_CollectableEntity();
-		Post_Paste();
-	}
-	else if (App->Cl_Scene_Data->Cl_Object[CopyObject_Index]->Usage == Enums::Usage_Teleport)
-	{
-		Pre_Paste();
-		App->SBC_Objects_New->Add_New_TeleportEntity();
-		Post_Paste();
-	}
-	else
-	{
-		Pre_Paste();
-		//App->SBC_Objects_New->Add_New_Object(); // Create Object
-		Post_Paste();	
-	}
+	//if (App->Cl_Scene_Data->Cl_Object[CopyObject_Index]->Usage == Enums::Usage_Sound)
+	//{
+	//	Pre_Paste();
+	//	App->SBC_Objects_New->Add_New_SoundEntity();
+	//	Post_Paste();
+	//}
+	//else if (App->Cl_Scene_Data->Cl_Object[CopyObject_Index]->Usage == Enums::Usage_Message)
+	//{
+	//	Pre_Paste();
+	//	App->SBC_Objects_New->Add_New_MessageEntity();
+	//	Post_Paste();
+	//}
+	//else if (App->Cl_Scene_Data->Cl_Object[CopyObject_Index]->Usage == Enums::Usage_Move)
+	//{
+	//	Pre_Paste();
+	//	App->SBC_Objects_New->Add_New_MoveEntity();
+	//	Post_Paste();
+	//}
+	//else if (App->Cl_Scene_Data->Cl_Object[CopyObject_Index]->Usage == Enums::Usage_Colectable)
+	//{
+	//	Pre_Paste();
+	//	App->SBC_Objects_New->Add_New_CollectableEntity();
+	//	Post_Paste();
+	//}
+	//else if (App->Cl_Scene_Data->Cl_Object[CopyObject_Index]->Usage == Enums::Usage_Teleport)
+	//{
+	//	Pre_Paste();
+	//	App->SBC_Objects_New->Add_New_TeleportEntity();
+	//	Post_Paste();
+	//}
+	//else
+	//{
+	//	Pre_Paste();
+	//	//App->SBC_Objects_New->Add_New_Object(); // Create Object
+	//	Post_Paste();	
+	//}
 	
 	return 1;
 }

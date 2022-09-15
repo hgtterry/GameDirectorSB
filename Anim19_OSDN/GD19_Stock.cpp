@@ -1064,7 +1064,7 @@ LRESULT CALLBACK GD19_Stock::Stock_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 
 		if (LOWORD(wParam) == IDC_BTADD)
 		{
-			App->Cl_Dialogs->YesNo("Add Object", "Do you want to add a new Stock Sound now");
+			/*App->Cl_Dialogs->YesNo("Add Object", "Do you want to add a new Stock Sound now");
 			bool Doit = App->Cl_Dialogs->Canceled;
 			if (Doit == 0)
 			{
@@ -1082,7 +1082,7 @@ LRESULT CALLBACK GD19_Stock::Stock_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 
 				App->Cl_Stock->Update_Sound_Properties();
 
-			}
+			}*/
 			return TRUE;
 		}
 

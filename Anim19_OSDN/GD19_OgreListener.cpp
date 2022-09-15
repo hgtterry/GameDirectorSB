@@ -203,7 +203,7 @@ bool GD19_OgreListener::frameStarted(const FrameEvent& evt)
 						App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Ogre::Vector3(x, y, z));
 						App->SBC_Scene->B_Object[Index]->Object_Node->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
 
-						Ogre::Vector3 WC = App->SBC_Objects_New->Get_BoundingBox_World_Centre(Index);
+						Ogre::Vector3 WC = App->SBC_Object->Get_BoundingBox_World_Centre(Index);
 
 						Ogre::Vector3 NewPos = Ogre::Vector3(x, y, z) - WC;
 						App->SBC_Scene->B_Object[Index]->Object_Node->setPosition((Ogre::Vector3(x, y, z)) + NewPos);
