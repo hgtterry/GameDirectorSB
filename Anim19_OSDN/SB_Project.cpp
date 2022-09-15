@@ -465,9 +465,6 @@ bool SB_Project::Save_Objects_Data()
 
 	fprintf(WriteFile, "%s\n", " ");
 
-	fprintf(WriteFile, "%s\n", "[Counters]");
-	fprintf(WriteFile, "%s%i\n", "Objects_Count=", App->SBC_Scene->Object_Count);
-
 	fprintf(WriteFile, "%s\n", " ");
 
 	char Cbuff[255];
@@ -478,60 +475,69 @@ bool SB_Project::Save_Objects_Data()
 	float y = 0;
 	float z = 0;
 
+	int new_Count = 0;
+
 	int Count = 0;
 	while (Count < App->SBC_Scene->Object_Count)
 	{
-		strcpy(buff, "[Object_");
-		_itoa(Count, Cbuff, 10);
-		strcat(buff, Cbuff);
-		strcat(buff, "]");
+		if (App->SBC_Scene->B_Object[Count]->Deleted == 0)
+		{
+			strcpy(buff, "[Object_");
+			_itoa(new_Count, Cbuff, 10);
+			strcat(buff, Cbuff);
+			strcat(buff, "]");
 
-		fprintf(WriteFile, "%s\n", buff); // Header also Player name until changed by user
+			fprintf(WriteFile, "%s\n", buff); // Header also Player name until changed by user
 
-		fprintf(WriteFile, "%s%s\n", "Mesh_Name=", App->SBC_Scene->B_Object[Count]->Mesh_Name); // Change
+			fprintf(WriteFile, "%s%s\n", "Mesh_Name=", App->SBC_Scene->B_Object[Count]->Mesh_Name); // Change
 
-		fprintf(WriteFile, "%s%s\n", "Mesh_File=", App->SBC_Scene->B_Object[Count]->Mesh_FileName);
-		fprintf(WriteFile, "%s%s\n", "Mesh_Resource_Path=", App->SBC_Scene->B_Object[Count]->Mesh_Resource_Path);
+			fprintf(WriteFile, "%s%s\n", "Mesh_File=", App->SBC_Scene->B_Object[Count]->Mesh_FileName);
+			fprintf(WriteFile, "%s%s\n", "Mesh_Resource_Path=", App->SBC_Scene->B_Object[Count]->Mesh_Resource_Path);
 
-		fprintf(WriteFile, "%s%i\n", "Object_Type=", App->SBC_Scene->B_Object[Count]->Type);
-		fprintf(WriteFile, "%s%i\n", "Object_Shape=", App->SBC_Scene->B_Object[Count]->Shape);
+			fprintf(WriteFile, "%s%i\n", "Object_Type=", App->SBC_Scene->B_Object[Count]->Type);
+			fprintf(WriteFile, "%s%i\n", "Object_Shape=", App->SBC_Scene->B_Object[Count]->Shape);
 
-		// Position
-		x = App->SBC_Scene->B_Object[Count]->Mesh_Pos.x;
-		y = App->SBC_Scene->B_Object[Count]->Mesh_Pos.y;
-		z = App->SBC_Scene->B_Object[Count]->Mesh_Pos.z;
-		fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Pos=", x, y, z);
+			// Position
+			x = App->SBC_Scene->B_Object[Count]->Mesh_Pos.x;
+			y = App->SBC_Scene->B_Object[Count]->Mesh_Pos.y;
+			z = App->SBC_Scene->B_Object[Count]->Mesh_Pos.z;
+			fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Pos=", x, y, z);
 
-		// Mesh_Scale
-		x = App->SBC_Scene->B_Object[Count]->Mesh_Scale.x;
-		y = App->SBC_Scene->B_Object[Count]->Mesh_Scale.y;
-		z = App->SBC_Scene->B_Object[Count]->Mesh_Scale.z;
-		fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Scale=", x, y, z);
+			// Mesh_Scale
+			x = App->SBC_Scene->B_Object[Count]->Mesh_Scale.x;
+			y = App->SBC_Scene->B_Object[Count]->Mesh_Scale.y;
+			z = App->SBC_Scene->B_Object[Count]->Mesh_Scale.z;
+			fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Scale=", x, y, z);
 
-		// Mesh_Rot
-		x = App->SBC_Scene->B_Object[Count]->Mesh_Rot.x;
-		y = App->SBC_Scene->B_Object[Count]->Mesh_Rot.y;
-		z = App->SBC_Scene->B_Object[Count]->Mesh_Rot.z;
-		fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Rot=", x, y, z);
+			// Mesh_Rot
+			x = App->SBC_Scene->B_Object[Count]->Mesh_Rot.x;
+			y = App->SBC_Scene->B_Object[Count]->Mesh_Rot.y;
+			z = App->SBC_Scene->B_Object[Count]->Mesh_Rot.z;
+			fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Rot=", x, y, z);
 
-		// Mesh_Quat
-		w = App->SBC_Scene->B_Object[Count]->Mesh_Quat.w;
-		x = App->SBC_Scene->B_Object[Count]->Mesh_Quat.x;
-		y = App->SBC_Scene->B_Object[Count]->Mesh_Quat.y;
-		z = App->SBC_Scene->B_Object[Count]->Mesh_Quat.z;
-		fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Mesh_Quat=", w, x, y, z);
+			// Mesh_Quat
+			w = App->SBC_Scene->B_Object[Count]->Mesh_Quat.w;
+			x = App->SBC_Scene->B_Object[Count]->Mesh_Quat.x;
+			y = App->SBC_Scene->B_Object[Count]->Mesh_Quat.y;
+			z = App->SBC_Scene->B_Object[Count]->Mesh_Quat.z;
+			fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Mesh_Quat=", w, x, y, z);
 
-		// Physics_Quat
-		w = App->SBC_Scene->B_Object[Count]->Physics_Quat.w;
-		x = App->SBC_Scene->B_Object[Count]->Physics_Quat.x;
-		y = App->SBC_Scene->B_Object[Count]->Physics_Quat.y;
-		z = App->SBC_Scene->B_Object[Count]->Physics_Quat.z;
-		fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Physics_Quat=", w, x, y, z);
+			// Physics_Quat
+			w = App->SBC_Scene->B_Object[Count]->Physics_Quat.w;
+			x = App->SBC_Scene->B_Object[Count]->Physics_Quat.x;
+			y = App->SBC_Scene->B_Object[Count]->Physics_Quat.y;
+			z = App->SBC_Scene->B_Object[Count]->Physics_Quat.z;
+			fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Physics_Quat=", w, x, y, z);
 
-		fprintf(WriteFile, "%s\n", " ");
+			fprintf(WriteFile, "%s\n", " ");
+			new_Count++;
+		}
 
 		Count++;
 	}
+
+	fprintf(WriteFile, "%s\n", "[Counters]");
+	fprintf(WriteFile, "%s%i\n", "Objects_Count=", new_Count);
 
 	fclose(WriteFile);
 
