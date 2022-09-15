@@ -251,6 +251,15 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDM_FILE_RENAME)
+		{
+
+			App->SBC_Object->Rename_Object(App->SBC_Properties->Current_Selected_Object);
+			App->SBC_Properties->Update_ListView_Objects();
+
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == IDC_LEVELS)
 		{
 			App->SBC_FileView->Level_But_Active = 1;

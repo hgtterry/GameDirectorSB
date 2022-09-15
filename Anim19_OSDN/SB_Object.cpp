@@ -366,3 +366,26 @@ bool SB_Object::Get_Usage(int Index)
 	strcpy(Chr_Usage, "None");
 	return 0;
 }
+
+// *************************************************************************
+// *					Rename_Object Terry Flanigan					   *
+// *************************************************************************
+void SB_Object::Rename_Object(int Index)
+{
+	Base_Object* Object = App->SBC_Scene->B_Object[Index];
+
+	strcpy(App->Cl_Dialogs->btext, "Change Object Name");
+	strcpy(App->Cl_Dialogs->Chr_Text, Object->Mesh_Name);
+
+	App->Cl_Dialogs->Dialog_Text(1);
+
+	if (App->Cl_Dialogs->Canceled == 1)
+	{
+		return;
+	}
+
+	// Needs Duplicate Name test 
+	strcpy(Object->Mesh_Name, App->Cl_Dialogs->Chr_Text);
+
+	App->SBC_FileView->Change_Item_Name(Object->ListViewItem, Object->Mesh_Name);
+}

@@ -30,6 +30,7 @@ public:
 
 	void Start_Object_PropsPanel(void);
 	void Hide_Object_Dlg(bool Show);
+	void Rename_Object(int Index);
 
 	bool Update_Types();
 

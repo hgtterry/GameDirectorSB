@@ -562,20 +562,7 @@ bool SB_Properties::Edit_Object_Onclick(LPARAM lParam)
 	result = strcmp(App->SBC_Properties->btext, "Name");
 	if (result == 0)
 	{
-		strcpy(App->Cl_Dialogs->btext, "Change Area Name");
-		strcpy(App->Cl_Dialogs->Chr_Text, Object->Mesh_Name);
-
-		App->Cl_Dialogs->Dialog_Text(1);
-
-		if (App->Cl_Dialogs->Canceled == 1)
-		{
-			return TRUE;
-		}
-
-		// Needs Duplicate Name test 
-		strcpy(Object->Mesh_Name, App->Cl_Dialogs->Chr_Text);
-
-		App->SBC_FileView->Change_Item_Name(Object->ListViewItem, Object->Mesh_Name);
+		App->SBC_Object->Rename_Object(Index);
 		Update_ListView_Objects();
 	}
 

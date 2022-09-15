@@ -41,7 +41,7 @@ Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
  
 [Object_3]
-Mesh_Name=Logs
+Mesh_Name=Logs_Static
 Mesh_File=wood_logs.mesh
 Mesh_Resource_Path=C:\Users\Equity\Desktop\Equity15\Bin\Media_New\Balls\
 Object_Type=2
@@ -77,7 +77,7 @@ Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
  
 [Object_6]
-Mesh_Name=Object_6
+Mesh_Name=Table2
 Mesh_File=table-with-leaning-feet.mesh
 Mesh_Resource_Path=C:\Users\Equity\Desktop\Equity15\Bin\Media_New\Misc\
 Object_Type=1
