@@ -15,9 +15,11 @@ public:
 
 protected:
 
-	void Add_New_Physics_Static_Box(bool Dynamic,int Index);
-	void Add_New_Physics_Static_Sphere(bool Dynamic, int Index);
-	void Add_New_Physics_Static_Capsule(bool Dynamic, int Index);
+	void Add_Physics_Box(bool Dynamic,int Index);
+	void Add_Physics_Sphere(bool Dynamic, int Index);
+	void Add_Physics_Capsule(bool Dynamic, int Index);
+	void Add_Physics_Cylinder(bool Dynamic, int Index);
+	void Add_Physics_Cone(bool Dynamic, int Index);
 
 	char m_ResourcePath[MAX_PATH];
 };

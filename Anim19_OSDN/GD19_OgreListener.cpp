@@ -240,6 +240,9 @@ bool GD19_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 {
 	if (MeshViewer_Running == 1)
 	{
+		Ogre::Radian Rotation_Speed;
+		Rotation_Speed = GD_SpinRate / (float)57.3;
+		App->SBC_MeshViewer->MvNode->yaw(Rotation_Speed);
 		return 1;
 	}
 

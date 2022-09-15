@@ -146,10 +146,9 @@ bool SB_Objects_Create::Add_New_Object(int Index)
 	{
 		if (Object->Shape == Enums::Shape_Box)
 		{
-			Add_New_Physics_Static_Box(false,Index);
+			Add_Physics_Box(false,Index);
 
 			Object->Object_Node->setScale(Object->Mesh_Scale);
-
 			Ogre::Vector3 Scale = Object->Object_Node->getScale();
 			App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
 			App->SBC_Dimensions->UpDate_Physics_And_Visuals(Index);
@@ -159,10 +158,9 @@ bool SB_Objects_Create::Add_New_Object(int Index)
 		if (Object->Shape == Enums::Sphere)
 		{
 			
-			Add_New_Physics_Static_Sphere(false, Index);
+			Add_Physics_Sphere(false, Index);
 
 			Object->Object_Node->setScale(Object->Mesh_Scale);
-
 			Ogre::Vector3 Scale = Object->Object_Node->getScale();
 			App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
 			App->SBC_Dimensions->UpDate_Physics_And_Visuals(Index);
@@ -172,10 +170,9 @@ bool SB_Objects_Create::Add_New_Object(int Index)
 
 		if (Object->Shape == Enums::Capsule)
 		{
-			Add_New_Physics_Static_Capsule(false, Index);
+			Add_Physics_Capsule(false, Index);
 
 			Object->Object_Node->setScale(Object->Mesh_Scale);
-
 			Ogre::Vector3 Scale = Object->Object_Node->getScale();
 			App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
 			App->SBC_Dimensions->UpDate_Physics_And_Visuals(Index);
@@ -183,17 +180,29 @@ bool SB_Objects_Create::Add_New_Object(int Index)
 			Object->Physics_Valid = 1;
 		}
 
-		/*if (App->SBC_MeshViewer->Physics_Shape == Enums::Cylinder)
+		if (Object->Shape == Enums::Cylinder)
 		{
-			Add_New_Physics_Static_Cylinder(false);
+			Add_Physics_Cylinder(false, Index);
+
+			Object->Object_Node->setScale(Object->Mesh_Scale);
+			Ogre::Vector3 Scale = Object->Object_Node->getScale();
+			App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+			App->SBC_Dimensions->UpDate_Physics_And_Visuals(Index);
+
 			Object->Physics_Valid = 1;
 		}
 
-		if (App->SBC_MeshViewer->Physics_Shape == Enums::Cone)
+		if (Object->Shape == Enums::Cone)
 		{
-			Add_New_Physics_Static_Cone(false);
+			Add_Physics_Cone(false,Index);
+
+			Object->Object_Node->setScale(Object->Mesh_Scale);
+			Ogre::Vector3 Scale = Object->Object_Node->getScale();
+			App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+			App->SBC_Dimensions->UpDate_Physics_And_Visuals(Index);
+
 			Object->Physics_Valid = 1;
-		}*/
+		}
 	}
 
 	////---------------------- Dynamic
@@ -201,12 +210,11 @@ bool SB_Objects_Create::Add_New_Object(int Index)
 	{
 		if (Object->Shape == Enums::Shape_Box)
 		{
-			Add_New_Physics_Static_Box(true,Index);
-			Object->Object_Node->setScale(Object->Mesh_Scale);
+			Add_Physics_Box(true,Index);
 
+			Object->Object_Node->setScale(Object->Mesh_Scale);
 			Ogre::Vector3 Scale = Object->Object_Node->getScale();
 			App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
-			
 			App->SBC_Dimensions->UpDate_Physics_And_Visuals(Index);
 
 			Object->Physics_Valid = 1;
@@ -214,41 +222,51 @@ bool SB_Objects_Create::Add_New_Object(int Index)
 
 		if (Object->Shape == Enums::Sphere)
 		{
-			Add_New_Physics_Static_Sphere(true, Index);
-			Object->Object_Node->setScale(Object->Mesh_Scale);
+			Add_Physics_Sphere(true, Index);
 
+			Object->Object_Node->setScale(Object->Mesh_Scale);
 			Ogre::Vector3 Scale = Object->Object_Node->getScale();
 			App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
-			
 			App->SBC_Dimensions->UpDate_Physics_And_Visuals(Index);
+
 			Object->Physics_Valid = 1;
 		}
 
 		if (Object->Shape == Enums::Capsule)
 		{
-			Add_New_Physics_Static_Capsule(true, Index);
+			Add_Physics_Capsule(true, Index);
 
 			Object->Object_Node->setScale(Object->Mesh_Scale);
-
 			Ogre::Vector3 Scale = Object->Object_Node->getScale();
 			App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
-
 			App->SBC_Dimensions->UpDate_Physics_And_Visuals(Index);
 
 			Object->Physics_Valid = 1;
 		}
 
-		/*if (App->SBC_MeshViewer->Physics_Shape == Enums::Cylinder)
+		if (Object->Shape == Enums::Cylinder)
 		{
-			Add_New_Physics_Static_Cylinder(true);
+			Add_Physics_Cylinder(true,Index);
+
+			Object->Object_Node->setScale(Object->Mesh_Scale);
+			Ogre::Vector3 Scale = Object->Object_Node->getScale();
+			App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+			App->SBC_Dimensions->UpDate_Physics_And_Visuals(Index);
+
 			Object->Physics_Valid = 1;
 		}
 
-		if (App->SBC_MeshViewer->Physics_Shape == Enums::Cone)
+		if (Object->Shape == Enums::Cone)
 		{
-			Add_New_Physics_Static_Cone(true);
+			Add_Physics_Cone(true,Index);
+
+			Object->Object_Node->setScale(Object->Mesh_Scale);
+			Ogre::Vector3 Scale = Object->Object_Node->getScale();
+			App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+			App->SBC_Dimensions->UpDate_Physics_And_Visuals(Index);
+
 			Object->Physics_Valid = 1;
-		}*/
+		}
 	}
 
 	//---------------------- Tri_Mesh
@@ -277,9 +295,9 @@ bool SB_Objects_Create::Add_New_Object(int Index)
 }
 
 // *************************************************************************
-//						Add_New_Physics_Static_Box Terry Bernie			   *
+//							Add_Physics_Box Terry Bernie				   *
 // *************************************************************************
-void SB_Objects_Create::Add_New_Physics_Static_Box(bool Dynamic,int Index)
+void SB_Objects_Create::Add_Physics_Box(bool Dynamic,int Index)
 {
 
 	Base_Object* Object = App->SBC_Scene->B_Object[Index];
@@ -377,9 +395,9 @@ void SB_Objects_Create::Add_New_Physics_Static_Box(bool Dynamic,int Index)
 }
 
 // *************************************************************************
-//					Add_New_Physics_Static_Sphere Terry Flaniagn		   *
+//						Add_Physics_Sphere Terry Flaniagn				   *
 // *************************************************************************
-void SB_Objects_Create::Add_New_Physics_Static_Sphere(bool Dynamic, int Index)
+void SB_Objects_Create::Add_Physics_Sphere(bool Dynamic, int Index)
 {
 	Base_Object* Object = App->SBC_Scene->B_Object[Index];
 	
@@ -463,9 +481,9 @@ void SB_Objects_Create::Add_New_Physics_Static_Sphere(bool Dynamic, int Index)
 }
 
 // *************************************************************************
-//					Add_New_Physics_Static_Capsule Terry Bernie			   *
+//						Add_Physics_Capsule Terry Bernie				   *
 // *************************************************************************
-void SB_Objects_Create::Add_New_Physics_Static_Capsule(bool Dynamic, int Index)
+void SB_Objects_Create::Add_Physics_Capsule(bool Dynamic, int Index)
 {
 	Base_Object* Object = App->SBC_Scene->B_Object[Index];
 
@@ -554,3 +572,179 @@ void SB_Objects_Create::Add_New_Physics_Static_Capsule(bool Dynamic, int Index)
 	App->Cl_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 }
 
+// *************************************************************************
+//						Add_Physics_Cylinder Terry Flanigan				   *
+// *************************************************************************
+void SB_Objects_Create::Add_Physics_Cylinder(bool Dynamic, int Index)
+{
+	Base_Object* Object = App->SBC_Scene->B_Object[Index];
+
+	if (Dynamic == 1)
+	{
+		Object->Type = Enums::Bullet_Type_Dynamic;
+		Object->Shape = Enums::Cylinder;
+	}
+	else
+	{
+		Object->Type = Enums::Bullet_Type_Static;
+		Object->Shape = Enums::Cylinder;
+	}
+
+	AxisAlignedBox worldAAB = Object->Object_Ent->getBoundingBox();
+	worldAAB.transformAffine(Object->Object_Node->_getFullTransform());
+	Ogre::Vector3 Centre = worldAAB.getCenter();
+	//Ogre::Vector3 Centre = Object->Get_BoundingBox_World_Centre();
+
+	Object->Physics_Pos = Ogre::Vector3(Centre.x, Centre.y, Centre.z);
+
+	btTransform startTransform;
+	startTransform.setIdentity();
+	startTransform.setRotation(btQuaternion(0.0f, 0.0f, 0.0f, 1));
+
+	btScalar mass;
+	if (Dynamic == 1)
+	{
+		mass = 1.0f;
+	}
+	else
+	{
+		mass = 0.0f;
+	}
+
+	btVector3 localInertia(0, 0, 0);
+	btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
+
+	startTransform.setOrigin(initialPosition);
+
+	Ogre::Vector3 Size = App->Cl_Objects_Com->GetMesh_BB_Size(Object->Object_Node);
+	float sx = Size.x / 2;
+	float sy = Size.y / 2;
+	float sz = Size.z / 2;
+
+	float Radius = App->Cl_Objects_Com->GetMesh_BB_Radius(Object->Object_Node);
+	Object->Physics_Size = Ogre::Vector3(sx, sy, sz);
+
+	btCollisionShape* newRigidShape = new btCylinderShape(btVector3(sx, sy, sz));
+	newRigidShape->calculateLocalInertia(mass, localInertia);
+
+	App->Cl_Bullet->collisionShapes.push_back(newRigidShape);
+
+	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
+
+	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, newRigidShape, localInertia);
+
+	Object->Phys_Body = new btRigidBody(rbInfo);
+	Object->Phys_Body->setRestitution(1.0);
+	Object->Phys_Body->setFriction(1.5);
+	Object->Phys_Body->setUserPointer(Object->Object_Node);
+	Object->Phys_Body->setWorldTransform(startTransform);
+
+	Object->Phys_Body->setCustomDebugColor(btVector3(0, 1, 1));
+
+	if (Dynamic == 1)
+	{
+		Object->Usage = Enums::Usage_Dynamic;
+		Object->Phys_Body->setUserIndex(Enums::Usage_Dynamic);
+		Object->Phys_Body->setUserIndex2(Index);
+	}
+	else
+	{
+		Object->Usage = Enums::Usage_Static;
+		Object->Phys_Body->setUserIndex(Enums::Usage_Static);
+		Object->Phys_Body->setUserIndex2(Index);
+	}
+
+	int f = Object->Phys_Body->getCollisionFlags();
+	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+
+	//Object->Collect_Object_Data();
+
+	App->Cl_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
+}
+
+// *************************************************************************
+//					Add_PhysicsNew__Static_Cone Terry Bernie			   *
+// *************************************************************************
+void SB_Objects_Create::Add_Physics_Cone(bool Dynamic,int Index)
+{
+	Base_Object* Object = App->SBC_Scene->B_Object[Index];
+
+	if (Dynamic == 1)
+	{
+		Object->Type = Enums::Bullet_Type_Dynamic;
+		Object->Shape = Enums::Cone;
+	}
+	else
+	{
+		Object->Type = Enums::Bullet_Type_Static;
+		Object->Shape = Enums::Cone;
+	}
+
+	Ogre::Vector3 Centre = App->SBC_Object->Get_BoundingBox_World_Centre(Index);
+
+	Object->Physics_Pos = Ogre::Vector3(Centre.x, Centre.y, Centre.z);
+
+	btTransform startTransform;
+	startTransform.setIdentity();
+	startTransform.setRotation(btQuaternion(0.0f, 0.0f, 0.0f, 1));
+
+	btScalar mass;
+	if (Dynamic == 1)
+	{
+		mass = 1.0f;
+	}
+	else
+	{
+		mass = 0.0f;
+	}
+
+	btVector3 localInertia(0, 0, 0);
+	btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
+
+	startTransform.setOrigin(initialPosition);
+
+	Ogre::Vector3 Size = App->Cl_Objects_Com->GetMesh_BB_Size(Object->Object_Node);
+	float sx = Size.x / 2;
+	float sy = Size.y;// / 2;
+	float sz = Size.z / 2;
+
+	float Radius = App->Cl_Objects_Com->GetMesh_BB_Radius(Object->Object_Node);
+	Object->Physics_Size = Ogre::Vector3(Radius, sy, 0);
+
+	btCollisionShape* newRigidShape = new btConeShape(Radius, sy);
+	newRigidShape->calculateLocalInertia(mass, localInertia);
+
+	App->Cl_Bullet->collisionShapes.push_back(newRigidShape);
+
+	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
+
+	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, newRigidShape, localInertia);
+
+	Object->Phys_Body = new btRigidBody(rbInfo);
+	Object->Phys_Body->setRestitution(1.0);
+	Object->Phys_Body->setFriction(1.5);
+	Object->Phys_Body->setUserPointer(Object->Object_Node);
+	Object->Phys_Body->setWorldTransform(startTransform);
+
+	Object->Phys_Body->setCustomDebugColor(btVector3(0, 1, 1));
+
+	if (Dynamic == 1)
+	{
+		Object->Usage = Enums::Usage_Dynamic;
+		Object->Phys_Body->setUserIndex(Enums::Usage_Dynamic);
+		Object->Phys_Body->setUserIndex2(Index);
+	}
+	else
+	{
+		Object->Usage = Enums::Usage_Static;
+		Object->Phys_Body->setUserIndex(Enums::Usage_Static);
+		Object->Phys_Body->setUserIndex2(Index);
+	}
+
+	int f = Object->Phys_Body->getCollisionFlags();
+	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+
+	//Object->Collect_Object_Data();
+
+	App->Cl_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
+}
