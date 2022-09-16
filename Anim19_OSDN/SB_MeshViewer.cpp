@@ -153,7 +153,6 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		SendDlgItemMessage(hDlg, IDC_SELECTEDNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SendDlgItemMessage(hDlg, IDC_LISTFILES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_LISTDETAIL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_OBJECTNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STSHAPE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -190,14 +189,14 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 	
 		if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Objects)
 		{
-		strcpy_s(ATest, "Object_");
-		_itoa(App->SBC_Scene->Object_Count, ConNum, 10);
-		strcat(ATest, ConNum);
+			strcpy_s(ATest, "Object_");
+			_itoa(App->SBC_Scene->Object_Count, ConNum, 10);
+			strcat(ATest, ConNum);
 
-		SetDlgItemText(hDlg, IDC_OBJECTNAME, ATest);
-		strcpy(App->SBC_MeshViewer->Object_Name, ATest);
+			SetDlgItemText(hDlg, IDC_OBJECTNAME, ATest);
+			strcpy(App->SBC_MeshViewer->Object_Name, ATest);
 
-		App->SBC_MeshViewer->Enable_TypeButtons(1);
+			App->SBC_MeshViewer->Enable_TypeButtons(1);
 		}
 
 		App->Cl19_Ogre->OgreListener->MeshViewer_Running = 1;

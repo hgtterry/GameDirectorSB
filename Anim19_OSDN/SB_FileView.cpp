@@ -29,6 +29,8 @@ distribution.
 #define IDM_FILE_NEW 1
 #define IDM_FILE_DELETE 2
 #define IDM_FILE_RENAME 3
+#define IDM_COPY 4
+#define IDM_PASTE 5
 
 SB_FileView::SB_FileView()
 {
@@ -162,9 +164,6 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 			{
 				App->SBC_FileView->hMenu = CreatePopupMenu();
 				AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_NEW, L"&New");
-				/*AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_OPEN, L"&Open");
-				AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
-				AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_QUIT, L"&Quit");*/
 				TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
 				DestroyMenu(App->SBC_FileView->hMenu);
 			}
@@ -172,8 +171,10 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 			if (!strcmp(App->SBC_FileView->FileView_File, "Objects"))
 			{
 				App->SBC_FileView->hMenu = CreatePopupMenu();
-				//AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_NEW, L"&New");
+
 				AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
+				AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_COPY, L"&Copy");
+				AppendMenuW(App->SBC_FileView->hMenu, MF_STRING| MF_GRAYED, IDM_PASTE, L"&Paste");
 				AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
 				AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
 				TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
@@ -226,6 +227,12 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 	}
 	case WM_COMMAND:
 	{
+		if (LOWORD(wParam) == IDM_COPY)
+		{
+			Debug
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDM_FILE_DELETE)
 		{
 			/*int Num = App->Cl_Bullet->dynamicsWorld->getNumCollisionObjects();
@@ -252,7 +259,7 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 			App->Say_Int(Num);*/
 			return TRUE;
 		}
-		
+
 		if (LOWORD(wParam) == IDM_FILE_NEW)
 		{
 
