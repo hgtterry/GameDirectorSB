@@ -89,7 +89,7 @@ void SB_Objects_Create::Update_MV_Details()
 {
 	int Index = App->SBC_Scene->Object_Count;
 
-	strcpy(m_ResourcePath, App->SBC_MeshViewer->Folder_Vec[0].Folder_Path);
+	strcpy(m_ResourcePath, App->SBC_MeshViewer->mResource_Folder);
 	App->SBC_Scene->Add_Resource_Location(m_ResourcePath);
 
 	App->SBC_Scene->B_Object[Index] = new Base_Object();

@@ -50,5 +50,17 @@ Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
  
+[Object_4]
+Mesh_Name=Object_4
+Mesh_File=table-with-leaning-feet.mesh
+Mesh_Resource_Path=C:\Users\Equity\Desktop\Equity15\Bin\Media_New\Misc\
+Object_Type=1
+Object_Shape=5
+Mesh_Pos=84.000000,0.000000,0.000000
+Mesh_Scale=0.370001,0.370001,0.370001
+Mesh_Rot=-1.500000,40.500000,0.000000
+Mesh_Quat=0.936574,-0.013789,0.000497,0.350232
+Physics_Quat=0.936574,-0.013789,0.000497,0.350232
+ 
 [Counters]
-Objects_Count=4
+Objects_Count=5

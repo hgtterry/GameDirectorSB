@@ -72,13 +72,9 @@ SB_MeshViewer::SB_MeshViewer()
 
 	Media_Folders_Count = 0;
 
-	Folder_Vec.resize(20);
-	strcpy(Folder_Vec[0].Folder_Path, App->EquityDirecory_FullPath);
-	strcat(Folder_Vec[0].Folder_Path, "\\Media_New\\Walls\\");
-	FolderList_Count = 1;
-
-	strcpy(TempFolder, Folder_Vec[0].Folder_Path);
-
+	strcpy(mResource_Folder, App->EquityDirecory_FullPath);
+	strcat(mResource_Folder, "\\Media_New\\Walls\\");
+	
 	strcpy(Selected_MeshFile, "Wall_1.mesh");
 
 	MV_Resource_Group = "MV_Resource_Group";
@@ -87,17 +83,6 @@ SB_MeshViewer::SB_MeshViewer()
 
 SB_MeshViewer::~SB_MeshViewer()
 {
-}
-
-// *************************************************************************
-// *					Clear_ButFlags Terry Bernie						   *
-// *************************************************************************
-bool SB_MeshViewer::Clear_ButFlags()
-{
-	ShowRooms = 0;
-	ShowBuildings = 0;
-	ShowMisc = 0;
-	return 1;
 }
 
 // *************************************************************************
@@ -140,11 +125,11 @@ bool SB_MeshViewer::StartMeshViewer()
 
 	App->RenderBackGround = 1;
 
-	strcpy(Folder_Vec[0].Folder_Path, App->EquityDirecory_FullPath);
-	strcat(Folder_Vec[0].Folder_Path, "\\Media_New\\Walls\\");
+	strcpy(mResource_Folder, App->EquityDirecory_FullPath);
+	strcat(mResource_Folder, "\\Media_New\\Walls\\");
 
 	Create_Resources_Group();
-	Add_Resources();
+	//Add_Resources();
 	
 	DialogBox(App->hInst, (LPCTSTR)IDD_GD_MESHVIEWER, App->Fdlg, (DLGPROC)MeshViewer_Proc);
 
@@ -190,10 +175,6 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		App->SBC_MeshViewer->MeshView_Hwnd = GetDlgItem(hDlg, IDC_OGREWIN);
 		App->SBC_MeshViewer->Set_OgreWindow();
 
-		//App->Cl19_Ogre->textArea->hide();
-
-		//Ogre::Root::getSingletonPtr()->renderOneFrame();
-		//Ogre::Root::getSingletonPtr()->renderOneFrame();
 		HWND CB_hWnd = GetDlgItem(hDlg, IDC_CB_FOLDERS);
 		App->SBC_MeshViewer->Get_Media_Folders_Actors(CB_hWnd); // Populate Combo
 
@@ -417,9 +398,8 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 				SetDlgItemText(hDlg, IDC_ST_CURRENTFOLDER, App->SBC_MeshViewer->Chr_CurrentFolder);
 				SetWindowText(hDlg, App->SBC_MeshViewer->Chr_CurrentFolder);
 
-				strcpy(App->SBC_MeshViewer->Folder_Vec[0].Folder_Path, App->SBC_MeshViewer->Chr_CurrentFolder);
-				strcpy(App->SBC_MeshViewer->TempFolder, App->SBC_MeshViewer->Chr_CurrentFolder);
-
+				strcpy(App->SBC_MeshViewer->mResource_Folder, App->SBC_MeshViewer->Chr_CurrentFolder);
+				
 				App->SBC_MeshViewer->Add_Resources();
 				App->SBC_MeshViewer->Get_Files();
 
@@ -441,8 +421,8 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			SetDlgItemText(hDlg, IDC_ST_CURRENTFOLDER, App->Com_CDialogs->szSelectedDir);
 			SetWindowText(hDlg, App->Com_CDialogs->szSelectedDir);
 
-			strcpy(App->SBC_MeshViewer->Folder_Vec[0].Folder_Path, App->Com_CDialogs->szSelectedDir);
-			strcpy(App->SBC_MeshViewer->TempFolder, App->Com_CDialogs->szSelectedDir);
+			strcpy(App->SBC_MeshViewer->mResource_Folder, App->Com_CDialogs->szSelectedDir);
+			//strcpy(App->SBC_MeshViewer->TempFolder, App->Com_CDialogs->szSelectedDir);
 
 
 			App->SBC_MeshViewer->Add_Resources();
@@ -784,7 +764,7 @@ bool SB_MeshViewer::Get_Files()
 	WIN32_FIND_DATA FindFileData;
 	HANDLE hFind;
 
-	strcpy(Path, TempFolder);
+	strcpy(Path, mResource_Folder);
 	strcat(Path, "*.*");
 	
 	hFind = FindFirstFile(Path, &FindFileData);
@@ -837,27 +817,12 @@ bool SB_MeshViewer::Create_Resources_Group()
 // *************************************************************************
 bool SB_MeshViewer::Add_Resources()
 {
-	
 	Ogre::ResourceGroupManager::getSingleton().clearResourceGroup(MV_Resource_Group);
 
-	int Count = 0;
-	while (Count < FolderList_Count)
-	{
-		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(Folder_Vec[Count].Folder_Path,
-			"FileSystem", MV_Resource_Group);
+	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mResource_Folder,"FileSystem", MV_Resource_Group);
 
-		Count++;
-	}
-
-	try
-	{
-		Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(MV_Resource_Group);
-	}
-	catch (...)
-	{
-
-	}
-
+	Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(MV_Resource_Group);
+	
 	return 1;
 }
 

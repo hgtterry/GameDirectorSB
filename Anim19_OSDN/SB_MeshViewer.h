@@ -23,18 +23,12 @@ distribution.
 
 #pragma once
 
-typedef struct Folder_Type
-{
-	char Folder_Path[MAX_PATH];
-	bool Selected;
-}Folder_Type;
-
-
 class SB_MeshViewer
 {
 public:
 	SB_MeshViewer();
 	~SB_MeshViewer();
+
 	bool StartMeshViewer();
 
 	char Chr_CurrentFolder[MAX_PATH];
@@ -60,18 +54,12 @@ public:
 
 	int Media_Folders_Count;
 	
-	char TempFolder[MAX_PATH];
-
-	std::vector<Folder_Type> Folder_Vec;
+	char mResource_Folder[MAX_PATH];
 
 protected:
 
 	static LRESULT CALLBACK MeshViewer_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	
-	
-	int FolderList_Count;
-
-	bool Clear_ButFlags();
 	bool Set_OgreWindow(void);
 	void Close_OgreWindow(void);
 
