@@ -15,6 +15,8 @@ public:
 
 protected:
 
+	void Set_Physics(int Index);
+
 	void Add_Physics_Box(bool Dynamic,int Index);
 	void Add_Physics_Sphere(bool Dynamic, int Index);
 	void Add_Physics_Capsule(bool Dynamic, int Index);
