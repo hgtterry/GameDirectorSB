@@ -33,10 +33,7 @@ SB_MeshViewer::SB_MeshViewer()
 	ListHwnd = nullptr;
 	CB_hWnd = nullptr;
 	Detail_List_hLV = nullptr;
-	// Folders
-	Folders_MainWin_hWnd = NULL;
-	Properties_hLV = NULL;
-
+	
 	MvEnt = NULL;
 	MvNode = NULL;
 
@@ -66,12 +63,8 @@ SB_MeshViewer::SB_MeshViewer()
 
 	// ------------------------------------------------ 
 
-	strcpy(Chr_CurrentFolder, App->EquityDirecory_FullPath);
-	strcat(Chr_CurrentFolder, "\\Media_New\\Walls");
 	Last_MeshFile[0] = 0;
-
-	Media_Folders_Count = 0;
-
+	
 	strcpy(mResource_Folder, App->EquityDirecory_FullPath);
 	strcat(mResource_Folder, "\\Media_New\\Walls\\");
 	
@@ -167,8 +160,9 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		SendDlgItemMessage(hDlg, IDC_CB_FOLDERS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_CURRENTFOLDER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
-		SetDlgItemText(hDlg, IDC_ST_CURRENTFOLDER, App->SBC_MeshViewer->Chr_CurrentFolder);
-		SetWindowText(hDlg, App->SBC_MeshViewer->Chr_CurrentFolder);
+		SetDlgItemText(hDlg, IDC_ST_CURRENTFOLDER, App->SBC_MeshViewer->mResource_Folder);
+
+		SetWindowText(hDlg, App->SBC_MeshViewer->mResource_Folder);
 
 		App->SBC_MeshViewer->ListHwnd = GetDlgItem(hDlg, IDC_LISTFILES);
 		
@@ -390,16 +384,14 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 				SendMessage(App->SBC_MeshViewer->ListHwnd, LB_RESETCONTENT, 0, 0);
 
-				strcpy(App->SBC_MeshViewer->Chr_CurrentFolder, App->EquityDirecory_FullPath);
-				strcat(App->SBC_MeshViewer->Chr_CurrentFolder, "\\Media_New\\");
-				strcat(App->SBC_MeshViewer->Chr_CurrentFolder, Get_Folder);
-				strcat(App->SBC_MeshViewer->Chr_CurrentFolder, "\\");
+				strcpy(App->SBC_MeshViewer->mResource_Folder, App->EquityDirecory_FullPath);
+				strcat(App->SBC_MeshViewer->mResource_Folder, "\\Media_New\\");
+				strcat(App->SBC_MeshViewer->mResource_Folder, Get_Folder);
+				strcat(App->SBC_MeshViewer->mResource_Folder, "\\");
 
-				SetDlgItemText(hDlg, IDC_ST_CURRENTFOLDER, App->SBC_MeshViewer->Chr_CurrentFolder);
-				SetWindowText(hDlg, App->SBC_MeshViewer->Chr_CurrentFolder);
+				SetDlgItemText(hDlg, IDC_ST_CURRENTFOLDER, App->SBC_MeshViewer->mResource_Folder);
+				SetWindowText(hDlg, App->SBC_MeshViewer->mResource_Folder);
 
-				strcpy(App->SBC_MeshViewer->mResource_Folder, App->SBC_MeshViewer->Chr_CurrentFolder);
-				
 				App->SBC_MeshViewer->Add_Resources();
 				App->SBC_MeshViewer->Get_Files();
 
@@ -413,7 +405,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		if (LOWORD(wParam) == IDC_BT_FOLDERBROWSE)
 		{
 			strcpy(App->Com_CDialogs->BrowserMessage, "Select Folder");
-			int Test = App->Com_CDialogs->StartBrowser(App->SBC_MeshViewer->Chr_CurrentFolder, App->Fdlg);
+			int Test = App->Com_CDialogs->StartBrowser(App->SBC_MeshViewer->mResource_Folder, App->Fdlg);
 
 			if (Test == 0) { return true; }
 
@@ -551,7 +543,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			SetDlgItemText(hDlg, IDC_SELECTEDNAME, buff);
 
 			strcpy(App->SBC_MeshViewer->Selected_MeshFile, buff);
-			App->SBC_MeshViewer->ShowMesh(App->SBC_MeshViewer->Selected_MeshFile, 1);
+			App->SBC_MeshViewer->ShowMesh(App->SBC_MeshViewer->Selected_MeshFile);
 			App->SBC_MeshViewer->Get_Details_hLV();
 			return TRUE;
 
@@ -612,6 +604,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			App->Cl19_Ogre->OgreListener->Equity_Running = 0;
 			App->SBC_MeshViewer->Close_OgreWindow();
 			App->SBC_MeshViewer->Delete_Resources_Group();
+
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -624,16 +617,8 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 // *************************************************************************
 // *					ShowMesh Terry Bernie							   *
 // *************************************************************************
-void SB_MeshViewer::ShowMesh(char* MeshFile, bool Update)
+void SB_MeshViewer::ShowMesh(char* MeshFile)
 {
-	bool DeleteAll = 0;
-
-	bool Test = App->Cl_Scene_Data->Is_Meshes_Used(Last_MeshFile);
-	if (Test == 0)
-	{
-		DeleteAll = 1;
-	}
-
 	if (MvEnt && MvNode)
 	{
 		MvNode->detachAllObjects();
@@ -641,25 +626,7 @@ void SB_MeshViewer::ShowMesh(char* MeshFile, bool Update)
 		mSceneMgrMeshView->destroyEntity(MvEnt);
 		MvEnt = NULL;
 		MvNode = NULL;
-
-		//if (DeleteAll == 1)
-		//{
-		//	Ogre::ResourcePtr pp = Ogre::MeshManager::getSingleton().getByName(Last_MeshFile);
-
-		//	if (pp.isNull()) // is loaded
-		//	{
-
-		//	}
-		//	else
-		//	{
-		//		Ogre::ResourcePtr ptr = Ogre::MeshManager::getSingleton().getByName(Last_MeshFile);
-		//		ptr->unload();
-		//		Ogre::MeshManager::getSingleton().remove(Last_MeshFile);
-		//	}
-		//}
 	}
-
-	strcpy(Last_MeshFile, MeshFile);
 
 	MvEnt = mSceneMgrMeshView->createEntity(MeshFile);
 	MvNode = mSceneMgrMeshView->getRootSceneNode()->createChildSceneNode();
@@ -672,8 +639,6 @@ void SB_MeshViewer::ShowMesh(char* MeshFile, bool Update)
 
 	mCameraMeshView->setPosition(0, Centre.y, -Radius*2.5);
 	mCameraMeshView->lookAt(0, Centre.y, 0);
-
-	//Flags[0]->MeshViewer_SpinObject = 1; // NEED TO CHECK FOR VALID OBJECT
 
 	//	Check_HasAnimations();
 }
@@ -796,7 +761,7 @@ bool SB_MeshViewer::Get_Files()
 	SetDlgItemText(MainDlgHwnd, IDC_SELECTEDNAME, buff);
 
 	strcpy(App->SBC_MeshViewer->Selected_MeshFile, buff);
-	App->SBC_MeshViewer->ShowMesh(App->SBC_MeshViewer->Selected_MeshFile, 1);
+	App->SBC_MeshViewer->ShowMesh(App->SBC_MeshViewer->Selected_MeshFile);
 	//App->SBC_MeshViewer->Get_Details_hLV();
 	return 0;
 }
@@ -837,50 +802,7 @@ bool SB_MeshViewer::Delete_Resources_Group()
 	return 1;
 }
 
-// *************************************************************************
-// *					Create_Detail_List Terry Bernie					   *
-// *************************************************************************
-bool SB_MeshViewer::Create_Detail_List()
-{
-	int NUM_COLS = 4;
-	Detail_List_hLV = CreateWindowEx(0, WC_LISTVIEW, "",
-		WS_CHILD | WS_VISIBLE | WS_BORDER | LVS_REPORT | LVS_SHOWSELALWAYS, 11, 490,
-		1120, 230, MainDlgHwnd, 0, App->hInst, NULL);
 
-	DWORD exStyles = LVS_EX_GRIDLINES;
-
-	ListView_SetExtendedListViewStyleEx(Detail_List_hLV, exStyles, exStyles);
-
-	ListView_SetBkColor(Detail_List_hLV, RGB(250, 250, 250));
-	ListView_SetTextBkColor(Detail_List_hLV, RGB(250, 250, 250));
-
-	LV_COLUMN lvC;
-	memset(&lvC, 0, sizeof(LV_COLUMN));
-	lvC.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
-	lvC.fmt = LVCFMT_LEFT;  // left-align the column
-	std::string headers[] =
-	{
-		"Script", "Material File","Used","Path"
-	};
-	int headerSize[] =
-	{
-		165,180,70,250
-	};
-
-	//Groups
-
-	for (int header = 0; header < NUM_COLS; header++)
-	{
-		lvC.iSubItem = header;
-		lvC.cx = headerSize[header]; // width of the column, in pixels
-		lvC.pszText = const_cast<char*>(headers[header].c_str());
-		ListView_InsertColumn(Detail_List_hLV, header, &lvC);
-	}
-	SendMessage(Detail_List_hLV, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-	
-	//ShowAllTextures();
-	return 1;
-}
 
 // *************************************************************************
 // *					Get_Details_hLV Terry Bernie	 			 	   *
@@ -1075,7 +997,7 @@ bool SB_MeshViewer::GetMeshFiles(char* Location, bool ResetList)
 	SendMessage(ListHwnd, LB_GETTEXT, (WPARAM)0, (LPARAM)buff);
 
 	strcpy(Selected_MeshFile, buff);
-	ShowMesh(Selected_MeshFile, 1);
+	ShowMesh(Selected_MeshFile);
 
 	return 1;
 }

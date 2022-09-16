@@ -31,14 +31,14 @@ public:
 
 	bool StartMeshViewer();
 
-	char Chr_CurrentFolder[MAX_PATH];
+	char mResource_Folder[MAX_PATH];
 	char Selected_MeshFile[MAX_PATH];
 	char Object_Name[MAX_PATH];
 	char Last_MeshFile[MAX_PATH];
 
 	Ogre::SceneNode*		MvNode;
-
 	HWND MainDlgHwnd;
+
 	int Physics_Type;
 	int Physics_Shape;
 
@@ -47,15 +47,10 @@ public:
 	bool SelectDynamic;
 	bool SelectStatic;
 	bool SelectTriMesh;
-
-
 	bool ShowMisc;
+
 	int Mesh_Viewer_Mode;
-
-	int Media_Folders_Count;
 	
-	char mResource_Folder[MAX_PATH];
-
 protected:
 
 	static LRESULT CALLBACK MeshViewer_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
@@ -63,10 +58,9 @@ protected:
 	bool Set_OgreWindow(void);
 	void Close_OgreWindow(void);
 
-	bool Create_Detail_List();
 	bool Get_Details_hLV();
 
-	void ShowMesh(char* MeshFile, bool Update);
+	void ShowMesh(char* MeshFile);
 
 	void Reset_Shape_Flags();
 
@@ -93,8 +87,6 @@ protected:
 
 	Ogre::String MV_Resource_Group;
 
-	HWND Folders_MainWin_hWnd;
-	HWND Properties_hLV;
 	HWND Detail_List_hLV;
 
 	HWND MeshView_Hwnd;
