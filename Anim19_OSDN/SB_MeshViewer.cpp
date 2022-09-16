@@ -50,8 +50,6 @@ SB_MeshViewer::SB_MeshViewer()
 	ShowMisc = 0;
 	Mesh_Viewer_Mode = 0; // 0 = Defaulet Objects 1 = Collectables
 
-	S_Selection[0] = new Selection_type2();
-
 	// ------------------------------------------------ 
 	Physics_Type = Enums::Bullet_Type_Dynamic;
 	Physics_Shape = Enums::NoShape;
@@ -181,7 +179,6 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		SendDlgItemMessage(hDlg, IDC_STTYPE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STFOLDER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_SELECTEDNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_MVBTADDFOLDERS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CB_FOLDERS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_CURRENTFOLDER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
@@ -320,13 +317,6 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 	case WM_NOTIFY:
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
-
-		if (some_item->idFrom == IDC_MVBTADDFOLDERS && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
-			return CDRF_DODEFAULT;
-		}
 
 		if (some_item->idFrom == IDC_MVSTATIC && some_item->code == NM_CUSTOMDRAW)
 		{
@@ -468,14 +458,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		if (LOWORD(wParam) == ID_FOLDERS_POO)
 		{
 
-			App->SBC_MeshViewer->Start_Folders();
-
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDC_MVBTADDFOLDERS)
-		{
-			App->SBC_MeshViewer->Start_Folders();
+			//App->SBC_MeshViewer->Start_Folders();
 
 			return TRUE;
 		}
@@ -636,7 +619,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
-			bool Test = App->Cl_Scene_Data->Is_Meshes_Used(App->SBC_MeshViewer->Last_MeshFile);
+			/*bool Test = App->Cl_Scene_Data->Is_Meshes_Used(App->SBC_MeshViewer->Last_MeshFile);
 
 			if (Test == 0)
 			{
@@ -644,7 +627,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 				ptr->unload();
 				Ogre::MeshManager::getSingleton().remove(App->SBC_MeshViewer->Last_MeshFile);
 				App->SBC_MeshViewer->Last_MeshFile[0] = 0;
-			}
+			}*/
 
 			App->Cl19_Ogre->OgreListener->Equity_Running = 0;
 			App->SBC_MeshViewer->Close_OgreWindow();
@@ -778,188 +761,6 @@ void SB_MeshViewer::Close_OgreWindow(void)
 }
 
 // *************************************************************************
-// *	  					Start_ShapeDialog Terry Bernie				   *
-// *************************************************************************
-void SB_MeshViewer::Start_ShapeDialog()
-{
-	///	DialogBox(App->hInst,(LPCTSTR)IDD_PHYSICSSHAPE,MainDlgHwnd,(DLGPROC)ShapeDialog_Proc);
-}
-
-// *************************************************************************
-// *					ShapeDialog_Proc Terry Bernie 					   *
-// *************************************************************************
-LRESULT CALLBACK SB_MeshViewer::ShapeDialog_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
-{
-	switch (message)
-	{
-
-	case WM_INITDIALOG: // Bernie as the dialog is created
-	{
-		/*HFONT Font;
-		Font = CreateFont( -15,0,0,0,FW_BOLD,0,0,0,0,OUT_TT_ONLY_PRECIS ,0,0,0, "Aerial Black");
-		SendDlgItemMessage(hDlg,IDC_STWAIT, WM_SETFONT, (WPARAM)Font, MAKELPARAM(TRUE, 0));
-
-		App->PLeaseWaitMessage_Hwnd = GetDlgItem(hDlg,IDC_STPROGRESS);*/
-
-		//App->Cl_Grid->StartThread();
-		return TRUE;
-	}
-
-	case WM_CTLCOLORDLG:
-	{
-		return (LONG)App->AppBackground;
-	}
-	case WM_NOTIFY:
-	{
-		LPNMHDR some_item = (LPNMHDR)lParam;
-
-		///      if (some_item->idFrom == IDC_BOX && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->SBC_MeshViewer->Selected_Shape_Box);
-			return CDRF_DODEFAULT;
-		}
-
-		///	if (some_item->idFrom == IDC_SPHERE && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->SBC_MeshViewer->Selected_Shape_Sphere);
-			return CDRF_DODEFAULT;
-		}
-
-		///		if (some_item->idFrom == IDC_CAPSULE && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->SBC_MeshViewer->Selected_Shape_Capsule);
-			return CDRF_DODEFAULT;
-		}
-
-		///		if (some_item->idFrom == IDC_CYLINDER && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->SBC_MeshViewer->Selected_Shape_Cylinder);
-			return CDRF_DODEFAULT;
-		}
-
-		///		if (some_item->idFrom == IDC_CONE && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->SBC_MeshViewer->Selected_Shape_Cone);
-			return CDRF_DODEFAULT;
-		}
-
-		// ---------------------------------------------------------------------
-		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
-			return CDRF_DODEFAULT;
-		}
-
-		return CDRF_DODEFAULT;
-	}
-	case WM_CTLCOLORSTATIC:
-	{
-		/*if(GetDlgItem(hDlg,IDC_STWAIT) == (HWND)lParam)
-		{
-		SetBkColor((HDC) wParam, RGB(0, 255, 0));
-		SetTextColor((HDC) wParam, RGB(0,255,0));
-		SetBkMode((HDC) wParam, TRANSPARENT);
-		return (UINT) App->BlackBrush;
-		}
-
-		if(GetDlgItem(hDlg,IDC_STPROGRESS) == (HWND)lParam)
-		{
-		SetBkColor((HDC) wParam, RGB(0, 255, 0));
-		SetTextColor((HDC) wParam, RGB(0,255,0));
-		SetBkMode((HDC) wParam, TRANSPARENT);
-		return (UINT) App->BlackBrush;
-		}*/
-		return FALSE;
-	}
-
-	case WM_COMMAND:
-	{
-		///		if (LOWORD(wParam) == IDC_BOX) 
-		{
-			App->SBC_MeshViewer->Reset_Shape_Flags();
-			App->SBC_MeshViewer->Selected_Shape_Box = 1;
-			App->RedrawWindow_Dlg(hDlg);
-
-			App->SBC_MeshViewer->Physics_Shape = Enums::Shape_Box;
-			return TRUE;
-		}
-
-		///		if (LOWORD(wParam) == IDC_SPHERE) 
-		{
-			App->SBC_MeshViewer->Reset_Shape_Flags();
-			App->SBC_MeshViewer->Selected_Shape_Sphere = 1;
-			App->RedrawWindow_Dlg(hDlg);
-
-			App->SBC_MeshViewer->Physics_Shape = Enums::Sphere;
-			return TRUE;
-		}
-
-		///		if (LOWORD(wParam) == IDC_CAPSULE) 
-		{
-			App->SBC_MeshViewer->Reset_Shape_Flags();
-			App->SBC_MeshViewer->Selected_Shape_Capsule = 1;
-			App->RedrawWindow_Dlg(hDlg);
-
-			App->SBC_MeshViewer->Physics_Shape = Enums::Capsule;
-			return TRUE;
-		}
-
-		///		if (LOWORD(wParam) == IDC_CYLINDER) 
-		{
-			App->SBC_MeshViewer->Reset_Shape_Flags();
-			App->SBC_MeshViewer->Selected_Shape_Cylinder = 1;
-			App->RedrawWindow_Dlg(hDlg);
-
-			App->SBC_MeshViewer->Physics_Shape = Enums::Cylinder;
-			return TRUE;
-		}
-
-		///		if (LOWORD(wParam) == IDC_CONE) 
-		{
-			App->SBC_MeshViewer->Reset_Shape_Flags();
-			App->SBC_MeshViewer->Selected_Shape_Cone = 1;
-			App->RedrawWindow_Dlg(hDlg);
-
-			App->SBC_MeshViewer->Physics_Shape = Enums::Cone;
-			return TRUE;
-		}
-
-		//--------------------------------------
-
-		if (LOWORD(wParam) == IDOK)
-		{
-			EndDialog(hDlg, LOWORD(wParam));
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDCANCEL)
-		{
-
-			EndDialog(hDlg, LOWORD(wParam));
-			return TRUE;
-		}
-	}
-
-	break;
-	}
-
-	return FALSE;
-}
-
-// *************************************************************************
 // *	  					Reset_Shape_Flags Terry Bernie				   *
 // *************************************************************************
 void SB_MeshViewer::Reset_Shape_Flags()
@@ -1018,190 +819,6 @@ bool SB_MeshViewer::Get_Files()
 	App->SBC_MeshViewer->ShowMesh(App->SBC_MeshViewer->Selected_MeshFile, 1);
 	//App->SBC_MeshViewer->Get_Details_hLV();
 	return 0;
-}
-
-
-// *************************************************************************
-// *	  				Start_Folders  	Terry	Bernie					   *
-// *************************************************************************
-bool SB_MeshViewer::Start_Folders()
-{
-
-	DialogBox(App->hInst,(LPCTSTR)IDD_RESOURCEFOLDERS, MainDlgHwnd,(DLGPROC)Folders_Proc);
-	return 1;
-}
-// *************************************************************************
-// *        		Folders_Proc  Terry	Bernie							   *
-// *************************************************************************
-LRESULT CALLBACK SB_MeshViewer::Folders_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
-{
-
-	switch (message)
-	{
-	case WM_INITDIALOG:
-	{
-	
-		SendDlgItemMessage(hDlg, IDC_BTFOLDERADD, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
-		App->SBC_MeshViewer->Folders_MainWin_hWnd = hDlg;
-
-		App->SBC_MeshViewer->Create_Properties_hLV();
-
-		return TRUE;
-	}
-	case WM_CTLCOLORSTATIC:
-	{
-
-		return FALSE;
-	}
-
-	case WM_CTLCOLORDLG:
-	{
-		return (LONG)App->AppBackground;
-	}
-
-	case WM_NOTIFY:
-	{
-		LPNMHDR some_item = (LPNMHDR)lParam;
-
-		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
-			return CDRF_DODEFAULT;
-		}
-		
-		if (some_item->idFrom == IDC_BTFOLDERADD && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
-			return CDRF_DODEFAULT;
-		}
-	
-		return CDRF_DODEFAULT;
-	}
-
-	case WM_COMMAND:
-
-		if (LOWORD(wParam) == IDC_BTFOLDERADD)
-		{
-			
-			strcpy(App->Com_CDialogs->BrowserMessage, "Select Folder to Scan");
-			int Test = App->Com_CDialogs->StartBrowser("",App->Fdlg);
-
-			strcpy(App->SBC_MeshViewer->TempFolder, App->Com_CDialogs->szSelectedDir);
-
-			strcpy(App->SBC_MeshViewer->Folder_Vec[App->SBC_MeshViewer->FolderList_Count].Folder_Path, App->Com_CDialogs->szSelectedDir);
-
-			App->SBC_MeshViewer->FolderList_Count++;
-
-			App->SBC_MeshViewer->Update_ListView();
-			//App->SBC_MeshViewer->Get_Files();
-			//App->SBC_MeshViewer->Add_Resources();
-
-			return TRUE;
-		}
-		
-		if (LOWORD(wParam) == IDOK)
-		{
-			
-			//App->SBC_MeshViewer->Update_ListView();
-			App->SBC_MeshViewer->Get_Files();
-			App->SBC_MeshViewer->Add_Resources();
-
-			EndDialog(hDlg, LOWORD(wParam));
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDCANCEL)
-		{
-			EndDialog(hDlg, LOWORD(wParam));
-			return TRUE;
-		}
-
-		break;
-	}
-	return FALSE;
-}
-
-// *************************************************************************
-// *					Create_Properties_hLV Terry Bernie				   *
-// *************************************************************************
-void SB_MeshViewer::Create_Properties_hLV(void)
-{
-	int NUM_COLS = 1;
-	Properties_hLV = CreateWindowEx(0, WC_LISTVIEW, "",
-		WS_CHILD | WS_VISIBLE | WS_BORDER | WS_VSCROLL | WS_VSCROLL | LVS_REPORT | LVS_NOCOLUMNHEADER | LVS_SHOWSELALWAYS, 2, 2,
-		820, 300, Folders_MainWin_hWnd, 0, App->hInst, NULL);
-
-	DWORD exStyles = LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES | LVS_EX_CHECKBOXES;
-
-	ListView_SetExtendedListViewStyleEx(Properties_hLV, exStyles, exStyles);
-
-	ListView_SetBkColor(Properties_hLV, RGB(255, 255, 255));
-	ListView_SetTextBkColor(Properties_hLV, RGB(255, 255, 255));
-	//listView.CheckBoxes
-
-	LV_COLUMN lvC;
-	memset(&lvC, 0, sizeof(LV_COLUMN));
-	lvC.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
-	lvC.fmt = LVCFMT_LEFT;  // left-align the column
-	std::string headers[] =
-	{
-		""
-	};
-	int headerSize[] =
-	{
-		820
-	};
-
-	for (int header = 0; header < NUM_COLS; header++)
-	{
-		lvC.iSubItem = header;
-		lvC.cx = headerSize[header]; // width of the column, in pixels
-		lvC.pszText = const_cast<char*>(headers[header].c_str());
-		ListView_InsertColumn(Properties_hLV, header, &lvC);
-	}
-
-	SendMessage(Properties_hLV, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
-	Update_ListView();
-
-	return;
-}
-
-// *************************************************************************
-// *					Update_ListView	Terry Bernie 				 	   *
-// *************************************************************************
-bool SB_MeshViewer::Update_ListView()
-{
-
-	ListView_DeleteAllItems(Properties_hLV);
-
-	LV_ITEM pitem;
-	memset(&pitem, 0, sizeof(LV_ITEM));
-
-	int Count = 0;
-	while (Count < FolderList_Count)
-	{
-		pitem.mask = LVIF_TEXT;
-		pitem.iItem = Count;
-		pitem.pszText = Folder_Vec[Count].Folder_Path;
-		ListView_InsertItem(Properties_hLV, &pitem);
-		//ListView_SetItemText(Properties_hLV, 0, 0, "Test");
-
-		Count++;
-	}
-
-	
-	return 1;
 }
 
 // *************************************************************************

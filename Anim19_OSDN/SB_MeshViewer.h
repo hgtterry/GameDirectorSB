@@ -29,13 +29,6 @@ typedef struct Folder_Type
 	bool Selected;
 }Folder_Type;
 
-typedef struct Selection_type2
-{
-	char Name[MAX_PATH];
-	char Type[MAX_PATH];
-	char Shape[MAX_PATH];
-
-}Selection_type2;
 
 class SB_MeshViewer
 {
@@ -50,8 +43,6 @@ public:
 	char Last_MeshFile[MAX_PATH];
 
 	Ogre::SceneNode*		MvNode;
-
-	Selection_type2*			S_Selection[1];
 
 	HWND MainDlgHwnd;
 	int Physics_Type;
@@ -68,17 +59,15 @@ public:
 	int Mesh_Viewer_Mode;
 
 	int Media_Folders_Count;
-	std::vector<std::string> Media_Folders_Vec;
-
+	
 	char TempFolder[MAX_PATH];
+
 	std::vector<Folder_Type> Folder_Vec;
 
 protected:
 
 	static LRESULT CALLBACK MeshViewer_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-	static LRESULT CALLBACK ShapeDialog_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-	static LRESULT CALLBACK Folders_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-
+	
 	
 	int FolderList_Count;
 
@@ -91,7 +80,6 @@ protected:
 
 	void ShowMesh(char* MeshFile, bool Update);
 
-	void Start_ShapeDialog();
 	void Reset_Shape_Flags();
 
 	void Enable_ShapeButtons(bool state);
@@ -106,10 +94,6 @@ protected:
 	bool Selected_Shape_Capsule;
 	bool Selected_Shape_Cylinder;
 	bool Selected_Shape_Cone;
-
-	bool Start_Folders();
-	void Create_Properties_hLV(void);
-	bool Update_ListView();
 
 	bool Create_Resources_Group();
 	bool Add_Resources();
