@@ -46,6 +46,7 @@ protected:
 	static LRESULT CALLBACK Object_PropsPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	bool Show_Physics_Debug;
+	bool Show_Mesh_Debug;
 
 	bool Get_Type(int Index);
 	bool Get_Shape(int Index);

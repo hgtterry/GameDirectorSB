@@ -247,6 +247,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return 1;
 		}
 
+		case ID_DEBUG_MESHVIEWER:
+		{
+			App->SBC_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Objects; // 0; // Objects; // Objects
+			App->SBC_MeshViewer->StartMeshViewer();
+			return 1;
+		}
+		
 		case ID_DEBUG_PROJECT:
 		{
 			if (App->SBC_Debug->Show_Debug_Project == 1)

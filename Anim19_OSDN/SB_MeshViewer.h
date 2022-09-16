@@ -42,12 +42,9 @@ public:
 	int Physics_Type;
 	int Physics_Shape;
 
-	bool ShowRooms;
-	bool ShowBuildings;
 	bool SelectDynamic;
 	bool SelectStatic;
 	bool SelectTriMesh;
-	bool ShowMisc;
 
 	int Mesh_Viewer_Mode;
 	
@@ -82,7 +79,6 @@ protected:
 	bool Delete_Resources_Group();
 
 	bool Get_Media_Folders_Actors(HWND DropHwnd);
-	bool Get_Sub_Folders(char* Folder, HWND DropHwnd);
 	bool GetMeshFiles(char* Location, bool ResetList);
 
 	Ogre::String MV_Resource_Group;

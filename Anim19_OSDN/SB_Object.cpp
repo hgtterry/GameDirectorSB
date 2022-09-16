@@ -31,6 +31,7 @@ SB_Object::SB_Object(void)
 	Object_PropDlg_Hwnd = nullptr;
 
 	Show_Physics_Debug = 0;
+	Show_Mesh_Debug = 1;
 }
 
 SB_Object::~SB_Object(void)
@@ -60,7 +61,7 @@ LRESULT CALLBACK SB_Object::Object_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 	{
 	case WM_INITDIALOG:
 	{
-
+		SendDlgItemMessage(hDlg, IDC_BT_SHOWMESH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_PHYSICSOBJECTDEBUG, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_POSITION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_ROTATION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -119,11 +120,35 @@ LRESULT CALLBACK SB_Object::Object_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 			return CDRF_DODEFAULT;
 		}
 
-		
+		if (some_item->idFrom == IDC_BT_SHOWMESH && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->SBC_Object->Show_Mesh_Debug);
+			return CDRF_DODEFAULT;
+		}
+
 		return CDRF_DODEFAULT;
 	}
 
 	case WM_COMMAND:
+
+		if (LOWORD(wParam) == IDC_BT_SHOWMESH)
+		{
+			int Index = App->SBC_Properties->Current_Selected_Object;
+
+			if (App->SBC_Object->Show_Mesh_Debug == 1)
+			{
+				App->SBC_Scene->B_Object[Index]->Object_Node->setVisible(false);
+				App->SBC_Object->Show_Mesh_Debug = 0;
+			}
+			else
+			{
+				App->SBC_Scene->B_Object[Index]->Object_Node->setVisible(true);
+				App->SBC_Object->Show_Mesh_Debug = 1;
+			}
+
+			return 1;
+		}
 
 		if (LOWORD(wParam) == IDC_PHYSICSOBJECTDEBUG)
 		{

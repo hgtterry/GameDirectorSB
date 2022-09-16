@@ -42,9 +42,6 @@ SB_MeshViewer::SB_MeshViewer()
 	mCameraMeshView = NULL;
 	CamNode = NULL;
 
-	ShowRooms = 1;
-	ShowBuildings = 0;
-	ShowMisc = 0;
 	Mesh_Viewer_Mode = 0; // 0 = Defaulet Objects 1 = Collectables
 
 	// ------------------------------------------------ 
@@ -122,7 +119,7 @@ bool SB_MeshViewer::StartMeshViewer()
 	strcat(mResource_Folder, "\\Media_New\\Walls\\");
 
 	Create_Resources_Group();
-	//Add_Resources();
+	Add_Resources();
 	
 	DialogBox(App->hInst, (LPCTSTR)IDD_GD_MESHVIEWER, App->Fdlg, (DLGPROC)MeshViewer_Proc);
 
@@ -149,6 +146,12 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 		App->SBC_MeshViewer->MainDlgHwnd = hDlg;
 
+		SendDlgItemMessage(hDlg, IDC_MVSTATIC, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_DYNAMIC, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_FOLDERBROWSE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BOX, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_SELECTEDNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		SendDlgItemMessage(hDlg, IDC_LISTFILES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_LISTDETAIL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_OBJECTNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -156,7 +159,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		SendDlgItemMessage(hDlg, IDC_STSHAPE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STTYPE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STFOLDER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_SELECTEDNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		SendDlgItemMessage(hDlg, IDC_CB_FOLDERS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_CURRENTFOLDER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
@@ -180,48 +183,11 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		App->SBC_MeshViewer->Enable_ShapeButtons(1);
 		App->SBC_MeshViewer->Enable_TypeButtons(1);
 
-		//	App->SBC_MeshViewer->Physics_Type = Enums::Bullet_Type_None;
-
 		char ConNum[256];
 		char ATest[256];
 
 		App->SBC_MeshViewer->Get_Files();
-		//App->SBC_MeshViewer->Create_Detail_List();
-
-		/*if (App->Cl_Mesh_Viewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables)
-		{
-		strcpy_s(ATest, "Collectable_");
-		_itoa(App->Cl_Scene_Data->ObjectCount, ConNum, 10);
-		strcat(ATest, ConNum);
-		SetDlgItemText(hDlg, IDC_OBJECTNAME, ATest);
-		strcpy(App->Cl_Mesh_Viewer->Object_Name, ATest);
-
-		ShowWindow(GetDlgItem(hDlg, IDC_MVSTATIC),1);
-		App->Cl_Mesh_Viewer->SelectStatic = 1;
-		App->Cl_Mesh_Viewer->Enable_ShapeButtons(1);
-		App->Cl_Mesh_Viewer->Physics_Type = Enums::Bullet_Type_Static;
-
-		}*/
-
-		/*if (App->Cl_Mesh_Viewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area)
-		{
-		SendMessage(GetDlgItem(hDlg, IDC_CB_FOLDERS), CB_SELECTSTRING, -1, (LPARAM)"Areas_Levels");
-		strcpy(App->Cl_Mesh_Viewer->Chr_CurrentFolder, App->EquityDirecory_FullPath);
-		strcat(App->Cl_Mesh_Viewer->Chr_CurrentFolder, "\\Media\\Actors\\Areas_Levels\\*.mesh");
-		App->Cl_Mesh_Viewer->SelectStartFolder();
-
-		strcpy_s(ATest, "Area_");
-		_itoa(App->Cl_Scene_Data->ObjectCount, ConNum, 10);
-		strcat(ATest, ConNum);
-		SetDlgItemText(hDlg, IDC_OBJECTNAME, ATest);
-		strcpy(App->Cl_Mesh_Viewer->Object_Name, ATest);
-
-		App->Cl_Mesh_Viewer->SelectTriMesh = 1;
-		App->Cl_Mesh_Viewer->Physics_Type = Enums::Bullet_Type_TriMesh;
-		ShowWindow(GetDlgItem(hDlg, IDC_TRIMESH), 1);
-
-		}*/
-
+	
 		if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Objects)
 		{
 		strcpy_s(ATest, "Object_");
@@ -280,6 +246,14 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->Brush_White;
 		}
+
+		if (GetDlgItem(hDlg, IDC_SELECTEDNAME) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->Brush_White;
+		}
 		
 		return FALSE;
 	}
@@ -293,13 +267,20 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
+		if (some_item->idFrom == IDC_BT_FOLDERBROWSE && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
 		if (some_item->idFrom == IDC_MVSTATIC && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle(item, App->SBC_MeshViewer->SelectStatic);
 			return CDRF_DODEFAULT;
 		}
-
+		
 		if (some_item->idFrom == IDC_DYNAMIC && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
@@ -414,9 +395,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			SetWindowText(hDlg, App->Com_CDialogs->szSelectedDir);
 
 			strcpy(App->SBC_MeshViewer->mResource_Folder, App->Com_CDialogs->szSelectedDir);
-			//strcpy(App->SBC_MeshViewer->TempFolder, App->Com_CDialogs->szSelectedDir);
-
-
+			
 			App->SBC_MeshViewer->Add_Resources();
 			App->SBC_MeshViewer->Get_Files();
 			return TRUE;
@@ -460,7 +439,6 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 			App->SBC_MeshViewer->Enable_ShapeButtons(true);
 
-			//App->GDCL_Mesh_Viewer->Start_ShapeDialog();
 			return 1;
 		}
 
@@ -473,7 +451,6 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			App->RedrawWindow_Dlg(hDlg);
 
 			App->SBC_MeshViewer->Enable_ShapeButtons(true);
-			//App->GDSBC_MeshViewer->Start_ShapeDialog();
 			return 1;
 		}
 
@@ -899,58 +876,6 @@ bool SB_MeshViewer::Get_Media_Folders_Actors(HWND DropHwnd)
 	}
 
 	SendMessage(DropHwnd, CB_SETCURSEL, 0, 0);
-	return 0;
-}
-
-// *************************************************************************
-// *						Get_Sub_Folders Terry Berni				 	   *
-// *************************************************************************
-bool SB_MeshViewer::Get_Sub_Folders(char* Folder, HWND DropHwnd)
-{
-	char Path[1024];
-
-	WIN32_FIND_DATA FindFileData;
-	HANDLE hFind;
-
-	strcpy(Path, App->EquityDirecory_FullPath);
-	strcat(Path, "\\Media_New\\");
-	strcat(Path, Folder);
-	strcat(Path, "\\*.*");
-
-	char Mesh_Path[1024];
-	strcpy(Mesh_Path, App->EquityDirecory_FullPath);
-	strcat(Mesh_Path, "\\Media_New\\");
-	strcat(Mesh_Path, Folder);
-	strcat(Mesh_Path, "\\");
-
-	hFind = FindFirstFile(Path, &FindFileData);
-
-	//SendMessage(ListHwnd, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)FindFileData.cFileName);
-
-	if (hFind != INVALID_HANDLE_VALUE) {
-		do {
-			if (FindFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
-			{
-				if (strcmp(FindFileData.cFileName, ".") == 0 || strcmp(FindFileData.cFileName, "..") == 0)
-				{
-
-				}
-				else
-				{
-					char New_Path[1024];
-					strcpy(New_Path, Mesh_Path);
-					strcat(New_Path, FindFileData.cFileName);
-					strcat(New_Path, "\\*.mesh");
-
-					GetMeshFiles(New_Path, false);
-
-				}
-
-			}
-		} while (FindNextFile(hFind, &FindFileData));
-		FindClose(hFind);
-	}
-
 	return 0;
 }
 
