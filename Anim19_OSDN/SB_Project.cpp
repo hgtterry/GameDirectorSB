@@ -783,9 +783,6 @@ bool SB_Project::Load_Project()
 	App->Cl_Ini->GetString("Files", "Level_Name", m_Level_Name, MAX_PATH);
 	App->Cl_Ini->GetString("Files", "Project_Name", m_Project_Name, MAX_PATH);
 
-	App->SBC_FileView->Change_Level_Name();
-	App->SBC_FileView->Change_Project_Name();
-
 	Options->Has_Aera = App->Cl_Ini->GetInt("Options", "Aeras_Count", 0,10);
 	Options->Has_Player = App->Cl_Ini->GetInt("Options", "Players_Count", 0, 10);
 	Options->Has_Camera = App->Cl_Ini->GetInt("Options", "Cameras_Count", 0, 10);
@@ -794,13 +791,14 @@ bool SB_Project::Load_Project()
 	// ------------------------------------- Aera
 	if (Options->Has_Aera > 0)
 	{
-		Load_Project_Aera();
+		bool test = Load_Project_Aera();
+		if (test == 0){return 0;}
 	}
 
 	// ------------------------------------- Player
 	if (Options->Has_Player > 0)
 	{
-		Load_Project_Player();
+		bool test = Load_Project_Player();
 	}
 
 	// ------------------------------------- Camera
@@ -816,13 +814,18 @@ bool SB_Project::Load_Project()
 		App->SBC_Objects_Create->Add_Objects_From_File();
 	}
 
+	
+
 	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
 	
+	App->SBC_FileView->Change_Level_Name();
+	App->SBC_FileView->Change_Project_Name();
 	App->SBC_FileView->Redraw_FileView();
 
+	
+	App->SBC_Scene->Area_Added = 1;
 	App->SBC_Scene->Scene_Loaded = 1;
 
-	App->SBC_Scene->Area_Added = 1;
 
 	Load_Project_Camera();
 	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->GD_CameraFolder);
@@ -966,6 +969,14 @@ bool SB_Project::Load_Project_Aera()
 		App->Cl_Ini->GetString("Aera_0", "Aera_Name", Area_Name, MAX_PATH);
 		App->Cl_Ini->GetString("Aera_0", "Aera_File", Mesh_FileName, MAX_PATH);
 		App->Cl_Ini->GetString("Aera_0", "Aera_Resource_Path", Resource_Location, MAX_PATH);
+
+		bool test = App->SBC_FileIO->Directory_Vaild(Resource_Location);
+	
+		if (test == 0)
+		{
+			App->Say_Win("Cant find Area Folder/Location");
+			return 0;
+		}
 
 		App->SBC_Aera->Add_Aera_To_Project(Count, Mesh_FileName, Resource_Location);
 

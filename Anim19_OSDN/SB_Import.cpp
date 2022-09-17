@@ -48,12 +48,20 @@ bool SB_Import::Load_Project(char* Extension, char* Extension2)
 		return 1;
 	}
 
-	App->SBC_Project->Load_Project();
+	bool test = App->SBC_Project->Load_Project();
 
 	App->SBC_TopTabs->Project_Loaded_Reset();
 	App->Cl19_Ogre->RenderFrame();
 	
-	App->Say("Scene Loaded");
+	if (test == 1)
+	{
+		App->Say("Project Loaded");
+	}
+	else
+	{
+		App->Say("Project Failed to Load");
+	}
+	
 	return 1;
 }
 
@@ -98,14 +106,21 @@ void SB_Import::Reload_FromResentFiles(char* ResentPathAndFile)
 
 	strcpy(App->SBC_FileIO->Project_File_Name, mJustFileName);
 
-	App->SBC_Project->Load_Project();
+	bool test = App->SBC_Project->Load_Project();
 
 	App->SBC_TopTabs->Project_Loaded_Reset();
 	App->Cl19_Ogre->RenderFrame();
 	
 	if (Quick_Load_Flag == 0)
 	{
-		App->Say("Model Loaded");
+		if (test == 1)
+		{
+			App->Say("Project Loaded");
+		}
+		else
+		{
+			App->Say("Project Failed to Load");
+		}
 	}
 
 }

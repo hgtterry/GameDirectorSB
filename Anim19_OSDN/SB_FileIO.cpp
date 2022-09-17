@@ -333,6 +333,17 @@ bool SB_FileIO::Search_For_Folder(char* FolderPath)
 }
 
 // *************************************************************************
+// *					Directory_Vaild Terry Flanigan	   				   *
+// *************************************************************************
+bool SB_FileIO::Directory_Vaild(LPCTSTR szPath)
+{
+	DWORD dwAttrib = GetFileAttributes(szPath);
+
+	return (dwAttrib != INVALID_FILE_ATTRIBUTES &&
+		(dwAttrib & FILE_ATTRIBUTE_DIRECTORY));
+}
+
+// *************************************************************************
 // *						CheckPath Terry Bernie	   					   *
 // *************************************************************************
 void SB_FileIO::CheckPath(char *pString, char *FileName)

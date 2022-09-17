@@ -33,6 +33,7 @@ public:
 	bool Search_For_Folder(char* FolderPath);
 	void CheckPath(char *pString, char *FileName);
 	bool GetColor();
+	bool Directory_Vaild(LPCTSTR szPath);
 
 	void  Init_History();
 	void  RecentFileHistory_Update();
