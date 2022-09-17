@@ -436,9 +436,10 @@ void SB_Object::Copy_Object(int Object_Index)
 
 	char ConNum[256];
 	char NewName[MAX_PATH];
+	int Object_Count = App->SBC_Scene->Object_Count;
 
 	strcpy_s(NewName, "Object_");
-	_itoa(App->SBC_Scene->Object_Count, ConNum, 10);
+	_itoa(Object_Count, ConNum, 10);
 	strcat(NewName, ConNum);
 
 	strcpy(App->Cl_Dialogs->btext, "New Object Name");
@@ -451,10 +452,25 @@ void SB_Object::Copy_Object(int Object_Index)
 		return ;
 	}
 
-	strcpy(NewName, App->Cl_Dialogs->Chr_Text);
+	App->SBC_Scene->B_Object[Object_Count] = new Base_Object();
+	Base_Object* New_Object = App->SBC_Scene->B_Object[Object_Count];
 
+	strcpy(New_Object->Mesh_Name, App->Cl_Dialogs->Chr_Text);
+	strcpy(New_Object->Mesh_FileName, Object->Mesh_FileName);
+	strcpy(New_Object->Mesh_Resource_Path, Object->Mesh_Resource_Path);
 
+	New_Object->Type = Object->Type;
+	New_Object->Shape = Object->Shape;
 
+	New_Object->Mesh_Pos = Object->Mesh_Pos;
+	New_Object->Mesh_Scale = Object->Mesh_Scale;
+	New_Object->Mesh_Rot = Object->Mesh_Rot;
+	New_Object->Mesh_Quat = Object->Mesh_Quat;
+	New_Object->Physics_Quat = Object->Physics_Quat;
+
+	App->SBC_Objects_Create->Add_New_Object(Object_Count);
+
+	App->SBC_Scene->Object_Count++;
 
 	App->Say("Copied");
 }
