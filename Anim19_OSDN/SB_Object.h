@@ -34,6 +34,7 @@ public:
 	Ogre::Vector3 Get_BoundingBox_World_Centre(int Object_Index);
 
 	bool Update_Types();
+	void Copy_Object(int Object_Index);
 
 	char Chr_Type[32];
 	char Chr_Shape[32];

@@ -229,7 +229,8 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 	{
 		if (LOWORD(wParam) == IDM_COPY)
 		{
-			Debug
+			App->SBC_Object->Copy_Object(App->SBC_Properties->Current_Selected_Object);
+
 			return TRUE;
 		}
 

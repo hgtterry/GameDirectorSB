@@ -426,3 +426,35 @@ Ogre::Vector3 SB_Object::Get_BoundingBox_World_Centre(int Object_Index)
 
 	return Centre;
 }
+
+// *************************************************************************
+//					Get_BoundingBox_World_Centre Terry Bernie			   *
+// *************************************************************************
+void SB_Object::Copy_Object(int Object_Index)
+{
+	Base_Object* Object = App->SBC_Scene->B_Object[Object_Index];
+
+	char ConNum[256];
+	char NewName[MAX_PATH];
+
+	strcpy_s(NewName, "Object_");
+	_itoa(App->SBC_Scene->Object_Count, ConNum, 10);
+	strcat(NewName, ConNum);
+
+	strcpy(App->Cl_Dialogs->btext, "New Object Name");
+	strcpy(App->Cl_Dialogs->Chr_Text, NewName);
+
+	App->Cl_Dialogs->Dialog_Text(1);
+
+	if (App->Cl_Dialogs->Canceled == 1)
+	{
+		return ;
+	}
+
+	strcpy(NewName, App->Cl_Dialogs->Chr_Text);
+
+
+
+
+	App->Say("Copied");
+}
