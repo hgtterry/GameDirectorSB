@@ -824,37 +824,9 @@ bool SB_Project::Load_Project()
 
 	App->SBC_Scene->Area_Added = 1;
 
-	/*App->Cl_Ini->GetString("Levels", "Folder", chr_Tag1, 1024);
-	strcpy(Scene_JustPath, Level_Folder_Path);
-	strcat(Scene_JustPath, chr_Tag1);
-
-	App->Cl_Ini->GetString("Levels", "File", chr_Tag2, 1024);
-
-	strcpy(App->CL_Vm_Model->Model_FolderPath, Scene_JustPath);
-	strcpy(App->CL_Vm_Model->FileName, chr_Tag2);*/
-
-	//Read_Player();
 	Load_Project_Camera();
 	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->GD_CameraFolder);
-	//App->SBC_Aera->Add_Area();
-
-	////App->SBC_Player->Load_Player();
-
-	//App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
-
-
-	////          File View Stuff
-	//App->SBC_FileView->Change_Level_Name();
-
-	//HTREEITEM Temp = App->SBC_FileView->Add_Area("Area_1", 0);
-	//App->SBC_FileView->Redraw_FileView();
-
-	////  Start Level
-	//App->SBC_Physics->Enable_Physics(1);
-	//App->SBC_Camera->Set_Camera();
-
-	//App->SBC_Scene->Scene_Loaded = 1;
-
+	
 	delete Options;
 
 	App->Set_Main_TitleBar(App->SBC_FileIO->Project_Path_File_Name);

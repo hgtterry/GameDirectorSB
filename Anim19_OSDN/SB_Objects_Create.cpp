@@ -55,9 +55,16 @@ bool SB_Objects_Create::Add_Objects_From_File() // From File
 		Count++;
 	}
 
-	/*App->Cl_FileView->Select_Item(NULL);
-	ShowWindow(App->GD_Properties_Hwnd,1);
-	App->Cl_Ogre->OgreListener->GD_Dubug_Physics = 1;*/
+	if (Object_Count > 0)
+	{
+		App->SBC_FileView->Set_FolderActive(App->SBC_FileView->GD_ObjectsFolder);
+		ShowWindow(App->SBC_Properties->Properties_Dlg_hWnd, 1);
+		App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[0]->ListViewItem);
+	}
+
+	//App->Cl_FileView->Select_Item(NULL);
+	
+
 	return 1;
 }
 // *************************************************************************

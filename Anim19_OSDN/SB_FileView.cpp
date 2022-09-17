@@ -610,7 +610,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 	if (!strcmp(FileView_File, "Objects"))
 	{
 		HideRightPanes();
-		ShowWindow(App->GD_Properties_Hwnd, 1);
+		ShowWindow(App->SBC_Properties->Properties_Dlg_hWnd, 1);
 		App->SBC_Object->Hide_Object_Dlg(1);
 
 //		App->SBC_Properties->Enable_Delete_Button(1);
@@ -1192,8 +1192,7 @@ void SB_FileView::HideRightPanes(void)
 {
 	if (App->SBC_Scene->Scene_Loaded == 1)
 	{
-		ShowWindow(App->GD_Properties_Hwnd, 0);
-		
+		//ShowWindow(App->SBC_Properties->Properties_Dlg_hWnd, 0);	
 	}
 
 	App->SBC_Camera->Hide_Cam_Dlg(0);
