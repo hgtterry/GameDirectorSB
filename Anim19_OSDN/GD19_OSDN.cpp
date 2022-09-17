@@ -247,6 +247,30 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return 1;
 		}
 
+		case ID_DEBUG_RESTOREAPP:
+		{
+			App->Cl_Dialogs->YesNo("Close GameDirector", "Are you sure");
+			if (App->Cl_Dialogs->Canceled == 0)
+			{
+				char buf[1024];
+				strcpy(buf, App->SBC_FileIO->UserData_Folder);
+				strcat(buf, "\\Equity\\Equity_SB.ini");
+
+				remove(buf);
+
+				char DirCheck[1024];
+				strcpy(DirCheck, App->SBC_FileIO->UserData_Folder);
+				strcat(DirCheck, "\\");
+				strcat(DirCheck, "Equity");
+
+				RemoveDirectory(DirCheck);
+
+				App->Say("Done");
+			}
+
+			return 1;
+		}
+		
 		case ID_DEBUG_MESHVIEWER:
 		{
 			App->SBC_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Objects; // 0; // Objects; // Objects
