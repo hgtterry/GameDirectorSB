@@ -434,7 +434,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		case ID_FILE_CLEARRESENTPROJECTS:
 		{
-			App->SBC_FileIO->ResentHistory_Clear();
+			App->SBC_FileIO->ResentHistory_Clear(0);
 			return 1;
 		}
 

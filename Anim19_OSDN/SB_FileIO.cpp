@@ -94,9 +94,18 @@ void  SB_FileIO::Init_History()
 		mPreviousFiles.resize(EQUITY_NUM_RECENT_FILES);
 
 		CreateDirectory(DirCheck, NULL);
-		ResentHistory_Clear(); // Set all slots to Empty
+
+		char buf[1024];
+		strcpy(buf, UserData_Folder);
+		strcat(buf, "\\Equity\\Equity_SB.ini");
+		WriteRecentFiles = fopen(buf, "wt");
+		fclose(WriteRecentFiles);
+
+		ResentHistory_Clear(1); // Set all slots to Empty
 		Save_FileHistory();
 		LoadHistory();
+
+		App->Say("Recent File History Created");
 	}
 	else
 	{
@@ -165,39 +174,6 @@ void  SB_FileIO::LoadHistory()
 }
 
 // *************************************************************************
-// *					Save_FileHistory Terry Bernie					   *
-// *************************************************************************
-void  SB_FileIO::Save_FileHistory()
-{
-
-	//	WriteRecentFiles = 0;
-
-	char buf[1024];
-	strcpy(buf, UserData_Folder);
-	strcat(buf, "\\Equity\\Equity_SB.ini");
-
-
-	WriteRecentFiles = fopen(buf, "wt");
-
-	if (!WriteRecentFiles)
-	{
-		App->Say("Why Cant Find Recent Files");
-		return;
-	}
-
-	// Save out to RecentFile.ini
-	for (unsigned int i = 0; i < EQUITY_NUM_RECENT_FILES; ++i)
-	{
-		char szName[1024];
-		strcpy(szName, mPreviousFiles[i].c_str());
-
-		fprintf(WriteRecentFiles, "%s\n", szName);
-	}
-
-	fclose(WriteRecentFiles);
-	return;
-}
-// *************************************************************************
 // *					RecentFileHistory_Update Terry Bernie			   *
 // *************************************************************************
 void  SB_FileIO::RecentFileHistory_Update()
@@ -241,12 +217,15 @@ void  SB_FileIO::RecentFileHistory_Update()
 // *************************************************************************
 // *			ResentHistory_Clear Terry Bernie Hazel Nathan			   *
 // *************************************************************************
-void  SB_FileIO::ResentHistory_Clear()
+void  SB_FileIO::ResentHistory_Clear(bool FirstTime)
 {
-	App->Cl_Dialogs->YesNo("Delete file history.", "Are you sure all File history will be Deleted Procede.");
-	if (App->Cl_Dialogs->Canceled == 1)
+	if (FirstTime == 0)
 	{
-		return;
+		App->Cl_Dialogs->YesNo("Delete file history.", "Are you sure all File history will be Deleted Procede.");
+		if (App->Cl_Dialogs->Canceled == 1)
+		{
+			return;
+		}
 	}
 
 	// Set all slots to <empty>
@@ -264,6 +243,40 @@ void  SB_FileIO::ResentHistory_Clear()
 
 	// Save Changes
 	Save_FileHistory();
+}
+
+// *************************************************************************
+// *					Save_FileHistory Terry Bernie					   *
+// *************************************************************************
+void  SB_FileIO::Save_FileHistory()
+{
+
+	//	WriteRecentFiles = 0;
+
+	char buf[1024];
+	strcpy(buf, UserData_Folder);
+	strcat(buf, "\\Equity\\Equity_SB.ini");
+
+
+	WriteRecentFiles = fopen(buf, "wt");
+
+	if (!WriteRecentFiles)
+	{
+		App->Say("Why Cant Find Recent Files");
+		return;
+	}
+
+	// Save out to RecentFile.ini
+	for (unsigned int i = 0; i < EQUITY_NUM_RECENT_FILES; ++i)
+	{
+		char szName[1024];
+		strcpy(szName, mPreviousFiles[i].c_str());
+
+		fprintf(WriteRecentFiles, "%s\n", szName);
+	}
+
+	fclose(WriteRecentFiles);
+	return;
 }
 
 // *************************************************************************

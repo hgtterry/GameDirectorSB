@@ -36,7 +36,7 @@ public:
 
 	void  Init_History();
 	void  RecentFileHistory_Update();
-	void  ResentHistory_Clear();
+	void  ResentHistory_Clear(bool FirstTime);
 
 	char Project_File_Name[MAX_PATH];
 	char Project_Path_File_Name[MAX_PATH];
