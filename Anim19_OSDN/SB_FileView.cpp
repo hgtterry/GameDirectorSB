@@ -332,10 +332,9 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 		App->SBC_FileView->FileView_Active = 0;
 		ShowWindow(App->ListPanel, 0);
 
-		HMENU mMenu = GetMenu(App->MainHwnd);
-		CheckMenuItem(mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND | MF_UNCHECKED);
+		CheckMenuItem(App->mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND | MF_UNCHECKED);
 
-		break;
+		return TRUE;
 	}
 
 	break;
