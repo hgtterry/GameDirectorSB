@@ -35,7 +35,7 @@ public:
 	char Selected_MeshFile[MAX_PATH];
 	char Object_Name[MAX_PATH];
 	char Last_MeshFile[MAX_PATH];
-
+	
 	Ogre::SceneNode*		MvNode;
 	HWND MainDlgHwnd;
 

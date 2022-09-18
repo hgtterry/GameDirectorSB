@@ -94,7 +94,7 @@ void SB_Debug::ImGui_Debug_Camera(void)
 // *************************************************************************
 void SB_Debug::ImGui_Debug_Project(void)
 {
-	ImGui::SetNextWindowPos(ImVec2(500, 30), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowPos(ImVec2(250, 30), ImGuiCond_FirstUseEver);
 
 	if (!ImGui::Begin("Project_Debug", &Show_Debug_Project, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize))
 	{
@@ -103,28 +103,32 @@ void SB_Debug::ImGui_Debug_Project(void)
 	else
 	{
 		
-		ImGui::Text("Project Loaded: = %i", App->SBC_Scene->Scene_Loaded);
+		ImGui::Text("Sub_Folder: = %s", App->SBC_Project->m_Project_Sub_Folder);
+		ImGui::Text("Asset_Path: = %s", App->SBC_Project->m_Objects_Assets_Path);
 
-		ImGui::Text(" ");
-
-		ImGui::Text("Project Name: = %s", App->SBC_Project->m_Project_Name);
-		ImGui::Text("Level Name: = %s", App->SBC_Project->m_Level_Name);
-		ImGui::Text("Level File Name: = %s", App->SBC_Project->m_Level_File_Name);
-
-		ImGui::Text(" ");
-
-		ImGui::Text("Aera Folder Path: = %s", App->SBC_Project->m_Aera_Folder_Path);
-		ImGui::Text("Level Folder Path: = %s", App->SBC_Project->m_Level_Folder_Path);
-		ImGui::Text("Player Folder Path: = %s", App->SBC_Project->m_Players_Folder_Path);
+		ImGui::Text("SourceFile: = %s", App->SBC_Objects_Create->SourceFile);
+		ImGui::Text("DestFile: = %s", App->SBC_Objects_Create->DestinationFile);
 		
-		ImGui::Text(" ");
+		//ImGui::Text(" ");
 
-		//ImGui::Text("Project Folder Location: = %s", App->SBC_Project->m_Project_Folder_Path);
-		ImGui::Text("Ini Location: = %s", App->SBC_Project->m_Ini_Path_File_Name);
-		ImGui::Text("Sub Folder Location: = %s", App->SBC_Project->m_Project_Sub_Folder);
-		
-		ImGui::Spacing();
-		ImGui::Spacing();
+		//ImGui::Text("Project Name: = %s", App->SBC_Project->m_Project_Name);
+		//ImGui::Text("Level Name: = %s", App->SBC_Project->m_Level_Name);
+		//ImGui::Text("Level File Name: = %s", App->SBC_Project->m_Level_File_Name);
+
+		//ImGui::Text(" ");
+
+		//ImGui::Text("Aera Folder Path: = %s", App->SBC_Project->m_Aera_Folder_Path);
+		//ImGui::Text("Level Folder Path: = %s", App->SBC_Project->m_Level_Folder_Path);
+		//ImGui::Text("Player Folder Path: = %s", App->SBC_Project->m_Players_Folder_Path);
+		//
+		//ImGui::Text(" ");
+
+		////ImGui::Text("Project Folder Location: = %s", App->SBC_Project->m_Project_Folder_Path);
+		//ImGui::Text("Ini Location: = %s", App->SBC_Project->m_Ini_Path_File_Name);
+		//ImGui::Text("Sub Folder Location: = %s", App->SBC_Project->m_Project_Sub_Folder);
+		//
+		//ImGui::Spacing();
+		//ImGui::Spacing();
 
 		if (ImGui::Button("Close"))
 		{

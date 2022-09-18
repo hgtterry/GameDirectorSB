@@ -543,23 +543,17 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 				return TRUE;
 			}
 
+
 			char buff[255];
 			GetDlgItemText(hDlg,IDC_OBJECTNAME,(LPTSTR)buff,256);
 			strcpy(App->SBC_MeshViewer->Object_Name,buff);
 
-			//App->SBC_Scene->Delete_Resources_Group();
-			//App->SBC_Scene->Create_Resources_Group();
-			//App->SBC_Scene->Add_Resource_Location_Test("C:\\Users\\Equity\\Desktop\\Equity15\\Bin\\Media_New\\Walls\\");
-
-	
-		
 			App->Cl19_Ogre->OgreListener->Equity_Running = 0;
 
 			App->SBC_MeshViewer->Close_OgreWindow();
 			App->SBC_MeshViewer->Delete_Resources_Group();
 
 			App->SBC_Objects_Create->Update_MV_Details();
-
 
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;

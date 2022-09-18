@@ -11,7 +11,8 @@ public:
 	void Update_MV_Details();
 	bool Add_New_Object(int Index);
 
-	
+	char DestinationFile[MAX_PATH];
+	char SourceFile[MAX_PATH];
 
 protected:
 

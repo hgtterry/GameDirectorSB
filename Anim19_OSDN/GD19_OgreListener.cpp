@@ -161,6 +161,7 @@ bool GD19_OgreListener::frameStarted(const FrameEvent& evt)
 				App->SBC_Debug->Debug_Render_Loop();
 			}*/
 			App->CL_Vm_ImGui->ImGui_Render_Loop();
+			App->SBC_Debug->Debug_Render_Loop();
 			App->SBC_Dimensions->Dimesions_Select();
 
 			//ImGui::ShowDemoWindow();

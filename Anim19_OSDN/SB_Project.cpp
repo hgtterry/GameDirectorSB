@@ -30,6 +30,8 @@ distribution.
 SB_Project::SB_Project()
 {
 	
+	strcpy(m_Objects_Assets_Path,"None");
+
 	strcpy(m_Project_Sub_Folder, App->EquityDirecory_FullPath);
 	strcat(m_Project_Sub_Folder, "\\");
 	strcat(m_Project_Sub_Folder, "Projects");
@@ -436,7 +438,7 @@ bool SB_Project::Save_Objects_Folder()
 	strcat(m_Objects_Assets_Path, "Objects\\Assets");
 
 	_mkdir(m_Objects_Assets_Path);
-	
+	strcat(m_Objects_Assets_Path, "\\");
 
 	Save_Objects_Data();
 
@@ -469,7 +471,7 @@ bool SB_Project::Save_Objects_Data()
 
 	fprintf(WriteFile, "%s\n", "[Version_Data]");
 	fprintf(WriteFile, "%s%s\n", "Version=", "V1.2");
-	fprintf(WriteFile, "%s%s\n","Asset_Path", m_Objects_Assets_Path);
+	
 	fprintf(WriteFile, "%s\n", " ");
 
 	fprintf(WriteFile, "%s\n", " ");
@@ -849,6 +851,8 @@ bool SB_Project::Load_Project()
 // *************************************************************************
 bool SB_Project::Load_Project_Objects()
 {
+	m_Objects_Assets_Path[0] = 0;
+
 	char Object_Ini_Path[MAX_PATH];
 	char chr_Tag1[MAX_PATH];
 	int Object_Count = 0;
@@ -866,6 +870,12 @@ bool SB_Project::Load_Project_Objects()
 
 	strcat(Object_Ini_Path, "Objects");
 	strcat(Object_Ini_Path, "\\");
+
+	//Assets Path Relative
+	strcpy(m_Objects_Assets_Path, Object_Ini_Path);
+	strcat(m_Objects_Assets_Path, "Assets");
+	strcat(m_Objects_Assets_Path, "\\");
+	//---------------------------------------------------
 
 	strcat(Object_Ini_Path, "Objects.efd");
 
