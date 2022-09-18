@@ -49,7 +49,7 @@ public:
 	char m_Level_Folder_Path[MAX_PATH];		// Level Just Path
 	char m_Players_Folder_Path[MAX_PATH];
 	char m_Objects_Folder_Path[MAX_PATH];
-
+	char m_Objects_Assets_Path[MAX_PATH];
 
 	char m_Project_Sub_Folder[MAX_PATH];	// Curent Default Project Location not including project folder
 	

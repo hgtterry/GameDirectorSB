@@ -421,6 +421,7 @@ bool SB_Project::Save_Level_Folder()
 bool SB_Project::Save_Objects_Folder()
 {
 	m_Objects_Folder_Path[0] = 0;
+	m_Objects_Assets_Path[0] = 0;
 
 	strcpy(m_Objects_Folder_Path, m_Level_Folder_Path);
 	strcat(m_Objects_Folder_Path, "\\");
@@ -428,8 +429,14 @@ bool SB_Project::Save_Objects_Folder()
 
 
 	_mkdir(m_Objects_Folder_Path);
-
 	_chdir(m_Objects_Folder_Path);
+
+	strcpy(m_Objects_Assets_Path, m_Level_Folder_Path);
+	strcat(m_Objects_Assets_Path, "\\");
+	strcat(m_Objects_Assets_Path, "Objects\\Assets");
+
+	_mkdir(m_Objects_Assets_Path);
+	
 
 	Save_Objects_Data();
 
@@ -462,7 +469,7 @@ bool SB_Project::Save_Objects_Data()
 
 	fprintf(WriteFile, "%s\n", "[Version_Data]");
 	fprintf(WriteFile, "%s%s\n", "Version=", "V1.2");
-
+	fprintf(WriteFile, "%s%s\n","Asset_Path", m_Objects_Assets_Path);
 	fprintf(WriteFile, "%s\n", " ");
 
 	fprintf(WriteFile, "%s\n", " ");
