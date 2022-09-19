@@ -32,8 +32,7 @@ SB_MeshViewer::SB_MeshViewer()
 	MeshView_Hwnd = nullptr;
 	ListHwnd = nullptr;
 	CB_hWnd = nullptr;
-	Detail_List_hLV = nullptr;
-	
+
 	MvEnt = NULL;
 	MvNode = NULL;
 
@@ -349,6 +348,14 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 	case WM_COMMAND:
 
+		if (LOWORD(wParam) == IDC_BT_PROPERTIES)
+		{
+
+			App->SBC_MeshViewer->Start_Properties_ListBox();
+
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDC_CB_FOLDERS)
 		{
 			switch (HIWORD(wParam)) // Find out what message it was
@@ -519,8 +526,11 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			SetDlgItemText(hDlg, IDC_SELECTEDNAME, buff);
 
 			strcpy(App->SBC_MeshViewer->Selected_MeshFile, buff);
+
+			App->SBC_MeshViewer->Add_Resources();
+
 			App->SBC_MeshViewer->ShowMesh(App->SBC_MeshViewer->Selected_MeshFile);
-			App->SBC_MeshViewer->Get_Details_hLV();
+			
 			return TRUE;
 
 		}
@@ -772,69 +782,6 @@ bool SB_MeshViewer::Delete_Resources_Group()
 	return 1;
 }
 
-
-
-// *************************************************************************
-// *					Get_Details_hLV Terry Bernie	 			 	   *
-// *************************************************************************
-bool SB_MeshViewer::Get_Details_hLV()
-{
-	LV_ITEM pitem;
-	memset(&pitem, 0, sizeof(LV_ITEM));
-	pitem.mask = LVIF_TEXT;
-
-	int	 pRow = 0;
-	char pScriptName[255];
-	char pMaterialFile[255];
-//	char pUsed[255];
-	bool pIsLoaded = 0;
-
-	int SubMeshCount = MvEnt->getNumSubEntities();
-	int Count = 0;
-
-	Ogre::String st;
-	Ogre::MaterialPtr pp;
-
-	pp.setNull();
-	bool loaded = 0;
-
-	ListView_DeleteAllItems(Detail_List_hLV);
-
-	while (Count < SubMeshCount)
-	{
-		Ogre::SubMesh const *subMesh = MvEnt->getSubEntity(Count)->getSubMesh();
-		Ogre::String MatName = subMesh->getMaterialName();
-		strcpy(pScriptName, MatName.c_str());
-
-		loaded = Ogre::MaterialManager::getSingleton().resourceExists(MatName);
-
-		if (loaded == 1)
-		{
-			pp = Ogre::MaterialManager::getSingleton().getByName(MatName, MV_Resource_Group);
-			st = pp->getOrigin();
-			strcpy(pMaterialFile, st.c_str());
-		}
-		else
-		{
-			strcpy(pMaterialFile," Not Loaded");
-		}
-
-
-		pitem.iItem = pRow;
-		pitem.pszText = pScriptName;
-
-		ListView_InsertItem(Detail_List_hLV, &pitem);
-		ListView_SetItemText(Detail_List_hLV, pRow, 1, pMaterialFile);
-		ListView_SetItemText(Detail_List_hLV, pRow, 2, "----");
-		ListView_SetItemText(Detail_List_hLV, pRow, 3, "----");
-
-		pRow++;
-		Count++;
-	}
-
-	return 1;
-}
-
 // *************************************************************************
 // *					Get_Media_FoldersActors Terry Berni			 	   *
 // *************************************************************************
@@ -918,5 +865,118 @@ bool SB_MeshViewer::GetMeshFiles(char* Location, bool ResetList)
 	ShowMesh(Selected_MeshFile);
 
 	return 1;
+}
+
+// *************************************************************************
+// *	  				Start_Gen_ListBox TerryFlanigan					   *
+// *************************************************************************
+void SB_MeshViewer::Start_Properties_ListBox()
+{
+	DialogBox(App->hInst,(LPCTSTR)IDD_LISTDATA, MainDlgHwnd,(DLGPROC)Properties_ListBox_Proc);
+}
+
+// *************************************************************************
+// *				Properties_ListBox_Proc Terry Flanigan				   *
+// *************************************************************************
+LRESULT CALLBACK SB_MeshViewer::Properties_ListBox_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_LISTGROUP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
+		HWND List = GetDlgItem(hDlg, IDC_LISTGROUP);
+		ListView_DeleteAllItems(List);
+
+
+		int SubMeshCount = App->SBC_MeshViewer->MvEnt->getNumSubEntities();
+		//int Count = 0;
+		char pScriptName[255];
+		char pMaterialFile[255];
+		Ogre::String st;
+		Ogre::MaterialPtr pp;
+
+		pp.setNull();
+		bool loaded = 0;
+		//SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->SBC_MeshViewer->MvEnt->getSubEntity(0)->getMaterialName().c_str());
+
+		Ogre::SubMesh const *subMesh = App->SBC_MeshViewer->MvEnt->getSubEntity(0)->getSubMesh();
+		Ogre::String MatName = subMesh->getMaterialName();
+		strcpy(pScriptName, MatName.c_str());
+
+		loaded = Ogre::MaterialManager::getSingleton().resourceExists(MatName);
+
+		if (loaded == 1)
+		{
+			pp = Ogre::MaterialManager::getSingleton().getByName(MatName, App->SBC_MeshViewer->MV_Resource_Group);
+			st = pp->getOrigin();
+			strcpy(pMaterialFile, st.c_str());
+
+			SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)pMaterialFile);
+		}
+		else
+		{
+			strcpy(pMaterialFile, " Not Loaded");
+		}
+
+		
+
+		Ogre::ResourcePtr ppp;
+		Ogre::ResourceManager::ResourceMapIterator TextureIterator = Ogre::TextureManager::getSingleton().getResourceIterator();
+
+		while (TextureIterator.hasMoreElements())
+		{
+			//strcpy(pScriptName,(static_cast<Ogre::MaterialPtr>(TextureIterator.peekNextValue()))->getName().c_str());
+
+			if (TextureIterator.peekNextValue()->getGroup() == App->SBC_MeshViewer->MV_Resource_Group)
+			{
+				
+				
+
+				strcpy(pScriptName, TextureIterator.peekNextValue()->getName().c_str());
+				SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)pScriptName);
+				ppp = Ogre::TextureManager::getSingleton().getByName(pScriptName);
+			}
+
+			TextureIterator.moveNext();
+		}
+
+		return TRUE;
+	}
+
+	
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	break;
+	case WM_CTLCOLORSTATIC:
+	{
+
+		return FALSE;
+	}
+
+	case WM_COMMAND:
+	{
+		if (LOWORD(wParam) == IDOK)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		break;
+	}
+	}
+	return FALSE;
 }
 

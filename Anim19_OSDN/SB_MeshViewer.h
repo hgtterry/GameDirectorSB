@@ -51,11 +51,10 @@ public:
 protected:
 
 	static LRESULT CALLBACK MeshViewer_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-	
+	static LRESULT CALLBACK Properties_ListBox_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
 	bool Set_OgreWindow(void);
 	void Close_OgreWindow(void);
-
-	bool Get_Details_hLV();
 
 	void ShowMesh(char* MeshFile);
 
@@ -66,6 +65,7 @@ protected:
 
 	bool Get_Files();
 
+	void Start_Properties_ListBox();
 	//  Folders
 	//----------------------------------
 	bool Selected_Shape_Box;
@@ -82,8 +82,6 @@ protected:
 	bool GetMeshFiles(char* Location, bool ResetList);
 
 	Ogre::String MV_Resource_Group;
-
-	HWND Detail_List_hLV;
 
 	HWND MeshView_Hwnd;
 	HWND ListHwnd;
