@@ -40,6 +40,9 @@ SB_Player::SB_Player()
 	ColisionIndex = 0;
 	Last_ColisionIndex = 0;
 
+	Col_numManifolds = 0;
+	Col_Player_Index = 0;
+
 	Round = 0;
 	Distance = 0;
 	Life_Time = 0;
@@ -269,6 +272,20 @@ LRESULT CALLBACK SB_Player::Player_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 	}
 
 	case WM_COMMAND:
+
+		if (LOWORD(wParam) == IDC_BT_COLLISIONS)
+		{
+			if (App->CL_Vm_ImGui->Show_Collision_Debug == 1)
+			{
+				App->CL_Vm_ImGui->Show_Collision_Debug = 0;
+			}
+			else
+			{
+				App->CL_Vm_ImGui->Show_Collision_Debug = 1;
+			}
+
+			return 1;
+		}
 
 		if (LOWORD(wParam) == IDC_BTSAVE)
 		{
@@ -600,6 +617,37 @@ void SB_Player::Check_Collisions(void)
 	}
 }
 
+// *************************************************************************
+// *	  				Check_Collisions_New Terry Flanigan				   *
+// *************************************************************************
+void SB_Player::Check_Collisions_New(void)
+{
+	Col_Player_Index = 0;
+	Col_Usage_Index = 0;
+	Col_numManifolds = 0;
+
+	/* Browse all collision pairs */
+	Col_numManifolds = App->Cl_Bullet->dynamicsWorld->getDispatcher()->getNumManifolds();
+
+	for (int i = 0; i < Col_numManifolds; i++)
+	{
+		btPersistentManifold* contactManifold = App->Cl_Bullet->dynamicsWorld->getDispatcher()->getManifoldByIndexInternal(i);
+		btCollisionObject* obA = (btCollisionObject*)(contactManifold->getBody0());
+		btCollisionObject* obB = (btCollisionObject*)(contactManifold->getBody1());
+
+		Col_Player_Index = obA->getUserIndex(); // Should Be Player
+		ColisionIndex = obB->getUserIndex2();
+
+		if (Col_Player_Index == Enums::Usage_Player)
+		{
+			Life_Time = 0;
+			ColisionIndex = obB->getUserIndex2(); // Object Index
+
+			Col_Usage_Index = obB->getUserIndex();
+		}
+
+	}
+}
 // *************************************************************************
 // *	  					Save_Location Terry							   *
 // *************************************************************************

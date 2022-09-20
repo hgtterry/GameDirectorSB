@@ -60,7 +60,8 @@ SB_MeshViewer::SB_MeshViewer()
 	// ------------------------------------------------ 
 
 	Last_MeshFile[0] = 0;
-	
+	m_Material_File[0] = 0;
+
 	strcpy(mResource_Folder, App->EquityDirecory_FullPath);
 	strcat(mResource_Folder, "\\Media_New\\Walls\\");
 	
@@ -890,9 +891,10 @@ LRESULT CALLBACK SB_MeshViewer::Properties_ListBox_Proc(HWND hDlg, UINT message,
 		HWND List = GetDlgItem(hDlg, IDC_LISTGROUP);
 		ListView_DeleteAllItems(List);
 
+		App->SBC_MeshViewer->m_Material_File[0] = 0;
 
 		int SubMeshCount = App->SBC_MeshViewer->MvEnt->getNumSubEntities();
-		//int Count = 0;
+		char test[255];
 		char pScriptName[255];
 		char pMaterialFile[255];
 		Ogre::String st;
@@ -914,15 +916,21 @@ LRESULT CALLBACK SB_MeshViewer::Properties_ListBox_Proc(HWND hDlg, UINT message,
 			st = pp->getOrigin();
 			strcpy(pMaterialFile, st.c_str());
 
-			SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)pMaterialFile);
+			strcpy(test, "Loaded:- ");
+			strcat(test, pMaterialFile);
+			SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)test);
+
+			strcpy(App->SBC_MeshViewer->m_Material_File, pMaterialFile);
+
 		}
 		else
 		{
-			strcpy(pMaterialFile, " Not Loaded");
+			strcpy(test, "Not Loaded:- ");
+			strcat(test, pMaterialFile);
+			SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)test);
 		}
 
 		
-		char test[255];
 		Ogre::ResourcePtr ppp;
 		Ogre::ResourceManager::ResourceMapIterator TextureIterator = Ogre::TextureManager::getSingleton().getResourceIterator();
 

@@ -875,6 +875,8 @@ bool SB_Project::Load_Project_Objects()
 	strcpy(m_Objects_Assets_Path, Object_Ini_Path);
 	strcat(m_Objects_Assets_Path, "Assets");
 	strcat(m_Objects_Assets_Path, "\\");
+
+	App->SBC_Scene->Add_Resource_Location(m_Objects_Assets_Path);
 	//---------------------------------------------------
 
 	strcat(Object_Ini_Path, "Objects.efd");
@@ -942,8 +944,6 @@ bool SB_Project::Load_Project_Objects()
 	}
 
 	App->SBC_Scene->Object_Count = Count;
-
-	//App->SBC_FileView->Set_FolderActive(App->SBC_FileView->GD_Rooms);
 
 	return 1;
 }
