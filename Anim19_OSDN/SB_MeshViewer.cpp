@@ -922,7 +922,7 @@ LRESULT CALLBACK SB_MeshViewer::Properties_ListBox_Proc(HWND hDlg, UINT message,
 		}
 
 		
-
+		char test[255];
 		Ogre::ResourcePtr ppp;
 		Ogre::ResourceManager::ResourceMapIterator TextureIterator = Ogre::TextureManager::getSingleton().getResourceIterator();
 
@@ -933,11 +933,23 @@ LRESULT CALLBACK SB_MeshViewer::Properties_ListBox_Proc(HWND hDlg, UINT message,
 			if (TextureIterator.peekNextValue()->getGroup() == App->SBC_MeshViewer->MV_Resource_Group)
 			{
 				
-				
-
 				strcpy(pScriptName, TextureIterator.peekNextValue()->getName().c_str());
-				SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)pScriptName);
 				ppp = Ogre::TextureManager::getSingleton().getByName(pScriptName);
+
+				if (ppp->isLoaded() == 1)
+				{
+					
+					strcpy(test, "Loaded:- ");
+					strcat(test, pScriptName);
+					SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)test);
+				}
+				else
+				{
+					strcpy(test, "Not Loaded:- ");
+					strcat(test, pScriptName);
+					SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)test);
+				}
+
 			}
 
 			TextureIterator.moveNext();
