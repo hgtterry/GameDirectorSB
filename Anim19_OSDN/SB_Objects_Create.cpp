@@ -690,6 +690,104 @@ void SB_Objects_Create::Add_Physics_Cone(bool Dynamic,int Index)
 }
 
 // *************************************************************************
+//						Add_MessageEntity Terry Bernie					   *
+// *************************************************************************
+bool SB_Objects_Create::Add_Message_Entity(int Object_Index)
+{
+	int Index = App->Cl_Scene_Data->ObjectCount;
+
+	App->Cl_Scene_Data->Cl_Object[Index] = new GD19_Objects();
+	App->Cl_Scene_Data->Cl_Object[Index]->Object_ID = App->Cl_Scene_Data->Object_ID_Counter;
+
+	// Only on newly created objects
+	App->Cl_Scene_Data->Object_ID_Counter++;
+
+	GD19_Objects* Object = App->Cl_Scene_Data->Cl_Object[Index];
+
+	strcpy(App->Cl_Scene_Data->Cl_Object[Index]->Entity[0].mTextItem, "Test Text");
+
+	App->Cl_Scene_Data->Cl_Object[Index]->Type = Enums::Bullet_Type_Static;
+	App->Cl_Scene_Data->Cl_Object[Index]->Shape = Enums::Shape_Box;
+
+	strcpy(App->Cl_Scene_Data->Cl_Object[Index]->MeshName, "Test_cube.mesh");
+
+	char ConNum[256];
+	char ATest[256];
+	char Name[256];
+
+	strcpy_s(Name, "Message_");
+	_itoa(Index, ConNum, 10);
+	strcat(Name, ConNum);
+
+	strcpy_s(ATest, "GDEnt_");
+	_itoa(Index, ConNum, 10);
+	strcat(ATest, ConNum);
+
+	strcpy(Object->Name, Name);
+	strcpy(Object->MeshName, "Test_cube.mesh");
+	strcpy(Object->MeshName_FullPath, "Test_cube.mesh");
+
+	Object->OgreEntity = App->Cl19_Ogre->mSceneMgr->createEntity(ATest, "Test_cube.mesh", App->Cl19_Ogre->App_Resource_Group);
+	Object->OgreNode = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	Object->OgreNode->attachObject(Object->OgreEntity);
+	Object->OgreNode->scale(1, 1, 1);
+
+	Ogre::Vector3 Pos = Object->GetPlacement();
+	Object->Mesh_Pos = Pos;
+	Object->OgreNode->setPosition(Pos);
+	//------------------
+
+	Ogre::Vector3 Size = App->Cl_Objects_Com->GetMesh_BB_Size(Object->OgreNode);
+	float sx = Size.x / 2;
+	float sy = Size.y / 2; // Size by Bounding Box
+	float sz = Size.z / 2;
+
+	Object->Physics_Size = Ogre::Vector3(sx, sy, sz);
+
+	btCollisionShape* newRigidShape = new btBoxShape(btVector3(sx, sy, sz));
+	newRigidShape->calculateLocalInertia(0, btVector3(0, 0, 0));
+
+	btTransform startTransform;
+	startTransform.setIdentity();
+	startTransform.setRotation(btQuaternion(0.0f, 0.0f, 0.0f, 1));
+
+	Ogre::Vector3 Centre = Object->Get_BoundingBox_World_Centre();
+	Object->Physics_Pos = Ogre::Vector3(Centre.x, Centre.y, Centre.z);
+
+	btVector3 initialPosition(btVector3(Centre.x, Centre.y, Centre.z));
+	startTransform.setOrigin(initialPosition);
+
+	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
+
+	btRigidBody::btRigidBodyConstructionInfo rbInfo(0, myMotionState, newRigidShape, btVector3(0, 0, 0));
+
+	Object->bt_body = new btRigidBody(rbInfo);
+	Object->bt_body->setRestitution(1.0);
+	Object->bt_body->setFriction(1.5);
+	Object->bt_body->setUserPointer(Object->OgreNode);
+	Object->bt_body->setWorldTransform(startTransform);
+
+	Object->bt_body->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT | btCollisionObject::CF_NO_CONTACT_RESPONSE);
+
+	Object->Usage = Enums::Usage_Message;
+	Object->bt_body->setUserIndex(Enums::Usage_Message);
+	Object->bt_body->setUserIndex2(Index);
+
+	App->Cl_Bullet->dynamicsWorld->addRigidBody(Object->bt_body);
+
+	Object->Folder = Enums::Folder_Message_Entity;
+	Object->Physics_Valid = 1;
+
+	///HTREEITEM Temp = App->Cl_FileView->Add_Message_Entity(Object->Name, Index);
+	///Object->ListViewItem = Temp;
+
+	ShowWindow(App->GD_Properties_Hwnd, 1);
+
+	App->Cl_Scene_Data->ObjectCount++;  // Must be last line
+	return 1;
+}
+
+// *************************************************************************
 //							Set_Physics Terry Bernie					   *
 // *************************************************************************
 void SB_Objects_Create::Set_Physics(int Index)

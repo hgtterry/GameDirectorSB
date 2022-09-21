@@ -11,6 +11,8 @@ public:
 	void Update_MV_Details();
 	bool Add_New_Object(int Index);
 
+	bool SB_Objects_Create::Add_Message_Entity(int Object_Index);
+
 	char DestinationFile[MAX_PATH];
 	char SourceFile[MAX_PATH];
 
