@@ -82,6 +82,7 @@ void Base_Player::Jump(const Ogre::Vector3 axis, float force)
 
 	Phys_Body->getWorldTransform().setOrigin(btVector3(pos[0], pos[1], pos[2]));
 
+	App->SBC_Player->Check_Collisions_New();
 }
 
 // *************************************************************************

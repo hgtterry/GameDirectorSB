@@ -109,11 +109,7 @@ void GD19_OgreListener::Reset_Class(void)
 // *************************************************************************
 bool GD19_OgreListener::frameStarted(const FrameEvent& evt)
 {
-	if (MeshViewer_Running == 1)
-	{
-		return 1;
-	}
-
+	
 	if (App->CL_Vm_ImGui->Show_Progress_Bar == 1)
 	{
 		App->Cl19_Ogre->Get_View_Height_Width();
@@ -123,50 +119,42 @@ bool GD19_OgreListener::frameStarted(const FrameEvent& evt)
 		return true;
 	}
 
-	if (Equity_Running == 1)
-	{
-		//App->EBC_Listener->frameStarted(evt);
-		return true;
-	}
-	else
-	{
-		App->Cl19_Ogre->Get_View_Height_Width();
+	App->Cl19_Ogre->Get_View_Height_Width();
 
-		App->Cl19_Ogre->m_imgui.NewFrame(evt.timeSinceLastFrame, (float)View_Width, (float)View_Height);
+	App->Cl19_Ogre->m_imgui.NewFrame(evt.timeSinceLastFrame, (float)View_Width, (float)View_Height);
 
-		//if (Show_ImGui_Panels == 1)
+	//if (Show_ImGui_Panels == 1)
+
+		/*if (ImGui_Render_Tab == Enums::ImGui_Camera)
 		{
-			/*if (ImGui_Render_Tab == Enums::ImGui_Camera)
-			{
-				App->CL_Vm_ImGui->Tabs_Render_Camera();
-			}
-
-			if (ImGui_Render_Tab == Enums::ImGui_Motions)
-			{
-				App->CL_Vm_ImGui->Tabs_Render_Motions();
-			}
-
-			if (ImGui_Render_Tab == Enums::ImGui_Dimensions)
-			{
-				App->CL_Vm_ImGui->Tabs_Render_Dimensions();
-			}
-
-			if (ImGui_Render_Tab == Enums::ImGui_Groups)
-			{
-				App->CL_Vm_ImGui->Tabs_Render_Groups();
-			}
-
-			if (App->SBC_Debug->Allow_Debug == 1)
-			{
-				App->SBC_Debug->Debug_Render_Loop();
-			}*/
-			App->CL_Vm_ImGui->ImGui_Render_Loop();
-			App->SBC_Debug->Debug_Render_Loop();
-			App->SBC_Dimensions->Dimesions_Select();
-
-			//ImGui::ShowDemoWindow();
-
+			App->CL_Vm_ImGui->Tabs_Render_Camera();
 		}
+
+		if (ImGui_Render_Tab == Enums::ImGui_Motions)
+		{
+			App->CL_Vm_ImGui->Tabs_Render_Motions();
+		}
+
+		if (ImGui_Render_Tab == Enums::ImGui_Dimensions)
+		{
+			App->CL_Vm_ImGui->Tabs_Render_Dimensions();
+		}
+
+		if (ImGui_Render_Tab == Enums::ImGui_Groups)
+		{
+			App->CL_Vm_ImGui->Tabs_Render_Groups();
+		}
+
+		if (App->SBC_Debug->Allow_Debug == 1)
+		{
+			App->SBC_Debug->Debug_Render_Loop();
+		}*/
+	App->CL_Vm_ImGui->ImGui_Render_Loop();
+	App->SBC_Debug->Debug_Render_Loop();
+	App->SBC_Dimensions->Dimesions_Select();
+
+	//ImGui::ShowDemoWindow();
+
 
 		if (Dubug_Physics_Draw == 1)
 		{
@@ -229,8 +217,7 @@ bool GD19_OgreListener::frameStarted(const FrameEvent& evt)
 			App->SBC_Scene->SBC_Base_Player[0]->Player_Node->pitch(Ogre::Degree(180));
 		}
 
-	}
-
+	
 	return true;
 }
 
@@ -250,18 +237,6 @@ bool GD19_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 	if (App->CL_Vm_ImGui->Show_Progress_Bar == 1)
 	{
 		App->Cl19_Ogre->m_imgui.render();
-		return 1;
-	}
-
-	if (Equity_Running == 1)
-	{
-		/*App->EBC_Listener->RenderingQueued(evt);
-
-		if (App->SBC_Equity->Use_Imgui == 1)
-		{
-			App->SBC_Equity->EB_imgui.render();
-		}*/
-
 		return 1;
 	}
 

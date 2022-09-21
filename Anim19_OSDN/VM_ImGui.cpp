@@ -377,7 +377,7 @@ void VM_ImGui::ImGui_Collision_Debug(void)
 
 		ImGui::Text("Manifolds %i", App->SBC_Player->Col_numManifolds);
 		ImGui::Text("PlayerIndex %i", App->SBC_Player->Col_Player_Index);
-		ImGui::Text("Collision %i", App->SBC_Player->ColisionIndex);
+		ImGui::Text("Object_ID %i", App->SBC_Player->Col_Object_Index);
 		ImGui::Text("Usage %i", App->SBC_Player->Col_Usage_Index);
 
 		if (ImGui::Button("Close"))

@@ -37,7 +37,7 @@ SB_Player::SB_Player()
 	Toggle_Objects_Flag = 1;
 	Toggle_Physics_Flag = 0;
 
-	ColisionIndex = 0;
+	Col_Object_Index = 0;
 	Last_ColisionIndex = 0;
 
 	Col_numManifolds = 0;
@@ -420,7 +420,7 @@ void SB_Player::Check_Collisions(void)
 		{
 			Life_Time = 0;
 			//Distance = 0;
-			ColisionIndex = obB->getUserIndex2(); // Object Index
+			Col_Object_Index = obB->getUserIndex2(); // Object Index
 
 			UsageIndex = obB->getUserIndex();
 
@@ -439,17 +439,17 @@ void SB_Player::Check_Collisions(void)
 
 					if (Round < 0)
 					{
-						if (App->Cl_Scene_Data->Cl_Object[ColisionIndex]->Triggered == 0)
+						if (App->Cl_Scene_Data->Cl_Object[Col_Object_Index]->Triggered == 0)
 						{
 							///App->Cl_Scene_Data->Sound_Entity(ColisionIndex);
-							Last_ColisionIndex = ColisionIndex;
+							Last_ColisionIndex = Col_Object_Index;
 						}
 					}
 					else if (Life_Time < 10)
 					{
-						if (App->Cl_Scene_Data->Cl_Object[ColisionIndex]->Triggered == 1)
+						if (App->Cl_Scene_Data->Cl_Object[Col_Object_Index]->Triggered == 1)
 						{
-							App->Cl_Scene_Data->Cl_Object[ColisionIndex]->Triggered = 0;
+							App->Cl_Scene_Data->Cl_Object[Col_Object_Index]->Triggered = 0;
 						}
 					}
 				}
@@ -470,18 +470,18 @@ void SB_Player::Check_Collisions(void)
 
 					if (Round < 0)
 					{
-						if (App->Cl_Scene_Data->Cl_Object[ColisionIndex]->Triggered == 0)
+						if (App->Cl_Scene_Data->Cl_Object[Col_Object_Index]->Triggered == 0)
 						{
-							App->Cl_Collision->Message_Entity(ColisionIndex);
+							App->Cl_Collision->Message_Entity(Col_Object_Index);
 						}
 					}
 					else if (Round == 0)
 					{
-						if (App->Cl_Scene_Data->Cl_Object[ColisionIndex]->Triggered == 1)
+						if (App->Cl_Scene_Data->Cl_Object[Col_Object_Index]->Triggered == 1)
 						{
-							int Stock_Index = App->Cl_Scene_Data->Cl_Object[ColisionIndex]->Entity[0].Stock_mIndex;
+							int Stock_Index = App->Cl_Scene_Data->Cl_Object[Col_Object_Index]->Entity[0].Stock_mIndex;
 							App->Cl_Panels_Com->Show_Overlay(0, Stock_Index);
-							App->Cl_Scene_Data->Cl_Object[ColisionIndex]->Triggered = 0;
+							App->Cl_Scene_Data->Cl_Object[Col_Object_Index]->Triggered = 0;
 						}
 					}
 				}
@@ -502,14 +502,14 @@ void SB_Player::Check_Collisions(void)
 
 					if (Round < 0)
 					{
-						if (App->Cl_Scene_Data->Cl_Object[ColisionIndex]->Triggered == 0)
+						if (App->Cl_Scene_Data->Cl_Object[Col_Object_Index]->Triggered == 0)
 						{
-							App->Cl_Collision->Move_Entity(ColisionIndex);
+							App->Cl_Collision->Move_Entity(Col_Object_Index);
 						}
 					}
 					else if (Round == 0)
 					{
-						if (App->Cl_Scene_Data->Cl_Object[ColisionIndex]->Triggered == 1)
+						if (App->Cl_Scene_Data->Cl_Object[Col_Object_Index]->Triggered == 1)
 						{
 							/*int Stock_Index = App->GDCL_Scene_Data->CL_Object[ColisionIndex]->Entity[0].Stock_mIndex;
 							App->GDCL_Scene_Data->S_Messages[Stock_Index]->overlay->hide();
@@ -525,7 +525,7 @@ void SB_Player::Check_Collisions(void)
 				int numContacts = contactManifold->getNumContacts();
 				for (int j = 0; j < numContacts; j++)
 				{
-					App->Cl_Collision->Do_Collectable(ColisionIndex);
+					App->Cl_Collision->Do_Collectable(Col_Object_Index);
 					btManifoldPoint& pt = contactManifold->getContactPoint(j);
 
 					Life_Time = pt.getLifeTime();
@@ -534,15 +534,15 @@ void SB_Player::Check_Collisions(void)
 
 					if (Round < 0)
 					{
-						if (App->Cl_Scene_Data->Cl_Object[ColisionIndex]->Triggered == 0)
+						if (App->Cl_Scene_Data->Cl_Object[Col_Object_Index]->Triggered == 0)
 						{
 
-							App->Cl_Collision->Do_Collectable(ColisionIndex);
+							App->Cl_Collision->Do_Collectable(Col_Object_Index);
 						}
 					}
 					else if (Round == 0)
 					{
-						if (App->Cl_Scene_Data->Cl_Object[ColisionIndex]->Triggered == 1)
+						if (App->Cl_Scene_Data->Cl_Object[Col_Object_Index]->Triggered == 1)
 						{
 
 						}
@@ -556,7 +556,7 @@ void SB_Player::Check_Collisions(void)
 				int numContacts = contactManifold->getNumContacts();
 				for (int j = 0; j < numContacts; j++)
 				{
-					App->Cl_Collision->Do_Teleport(ColisionIndex);
+					App->Cl_Collision->Do_Teleport(Col_Object_Index);
 					btManifoldPoint& pt = contactManifold->getContactPoint(j);
 
 					Life_Time = pt.getLifeTime();
@@ -565,7 +565,7 @@ void SB_Player::Check_Collisions(void)
 
 					if (Round < 0)
 					{
-						if (App->Cl_Scene_Data->Cl_Object[ColisionIndex]->Triggered == 0)
+						if (App->Cl_Scene_Data->Cl_Object[Col_Object_Index]->Triggered == 0)
 						{
 
 							///	App->Cl_Scene_Data->Do_Teleport(ColisionIndex);
@@ -573,7 +573,7 @@ void SB_Player::Check_Collisions(void)
 					}
 					else if (Round == 0)
 					{
-						if (App->Cl_Scene_Data->Cl_Object[ColisionIndex]->Triggered == 1)
+						if (App->Cl_Scene_Data->Cl_Object[Col_Object_Index]->Triggered == 1)
 						{
 
 						}
@@ -596,18 +596,18 @@ void SB_Player::Check_Collisions(void)
 
 					if (Round < 0)
 					{
-						if (App->Cl_Scene_Data->Cl_Object[ColisionIndex]->Triggered == 0)
+						if (App->Cl_Scene_Data->Cl_Object[Col_Object_Index]->Triggered == 0)
 						{
 
-							App->Cl_Collision->Do_Environment(ColisionIndex);
-							Last_ColisionIndex = ColisionIndex;
+							App->Cl_Collision->Do_Environment(Col_Object_Index);
+							Last_ColisionIndex = Col_Object_Index;
 						}
 					}
 					else if (Round < 10)
 					{
-						if (App->Cl_Scene_Data->Cl_Object[ColisionIndex]->Triggered == 1)
+						if (App->Cl_Scene_Data->Cl_Object[Col_Object_Index]->Triggered == 1)
 						{
-							App->Cl_Scene_Data->Cl_Object[ColisionIndex]->Triggered = 0;
+							App->Cl_Scene_Data->Cl_Object[Col_Object_Index]->Triggered = 0;
 						}
 					}
 				}
@@ -635,18 +635,24 @@ void SB_Player::Check_Collisions_New(void)
 		btCollisionObject* obA = (btCollisionObject*)(contactManifold->getBody0());
 		btCollisionObject* obB = (btCollisionObject*)(contactManifold->getBody1());
 
-		Col_Player_Index = obA->getUserIndex(); // Should Be Player
-		ColisionIndex = obB->getUserIndex2();
+		Col_Player_Index = obA->getUserIndex();  // Should Be Player
+		Col_Object_Index = obB->getUserIndex2(); // Object Index
 
 		if (Col_Player_Index == Enums::Usage_Player)
 		{
-			Life_Time = 0;
-			ColisionIndex = obB->getUserIndex2(); // Object Index
-
+			Col_Object_Index = obB->getUserIndex2(); // Object Index
 			Col_Usage_Index = obB->getUserIndex();
+			if (Col_Usage_Index == 123)
+			{
+				App->CL_Vm_ImGui->Show_Collision_Debug = 0;
+			}
+			else
+			{
+				App->CL_Vm_ImGui->Show_Collision_Debug = 1;
+			}
 		}
-
 	}
+
 }
 // *************************************************************************
 // *	  					Save_Location Terry							   *

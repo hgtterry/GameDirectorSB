@@ -420,6 +420,30 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_LISTFILES)
+		{
+			char buff[256];
+			int Index = 0;
+			Index = SendDlgItemMessage(hDlg, IDC_LISTFILES, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+
+			if (Index == -1)
+			{
+				return 1;
+			}
+
+			SendDlgItemMessage(hDlg, IDC_LISTFILES, LB_GETTEXT, (WPARAM)Index, (LPARAM)buff);
+			SetDlgItemText(hDlg, IDC_SELECTEDNAME, buff);
+
+			strcpy(App->SBC_MeshViewer->Selected_MeshFile, buff);
+
+			App->SBC_MeshViewer->Add_Resources();
+
+			App->SBC_MeshViewer->ShowMesh(App->SBC_MeshViewer->Selected_MeshFile);
+
+			return TRUE;
+
+		}
+
 		// ---------------------------------------------------------------------
 		if (LOWORD(wParam) == IDC_BT_FOLDERBROWSE)
 		{
@@ -543,30 +567,6 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			return TRUE;
 		}
 
-		if (LOWORD(wParam) == IDC_LISTFILES)
-		{
-			char buff[256];
-			int Index = 0;
-			Index = SendDlgItemMessage(hDlg, IDC_LISTFILES, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
-
-			if (Index == -1)
-			{
-				return 1;
-			}
-
-			SendDlgItemMessage(hDlg, IDC_LISTFILES, LB_GETTEXT, (WPARAM)Index, (LPARAM)buff);
-			SetDlgItemText(hDlg, IDC_SELECTEDNAME, buff);
-
-			strcpy(App->SBC_MeshViewer->Selected_MeshFile, buff);
-
-			App->SBC_MeshViewer->Add_Resources();
-
-			App->SBC_MeshViewer->ShowMesh(App->SBC_MeshViewer->Selected_MeshFile);
-			
-			return TRUE;
-
-		}
-
 		if (LOWORD(wParam) == IDOK)
 		{
 
@@ -590,7 +590,8 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			GetDlgItemText(hDlg,IDC_OBJECTNAME,(LPTSTR)buff,256);
 			strcpy(App->SBC_MeshViewer->Object_Name,buff);
 
-			App->Cl19_Ogre->OgreListener->Equity_Running = 0;
+			App->Cl19_Ogre->OgreListener->MeshViewer_Running = 0;
+
 
 			App->SBC_MeshViewer->Close_OgreWindow();
 			App->SBC_MeshViewer->Delete_Resources_Group();
@@ -601,22 +602,26 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			return TRUE;
 		}
 
+
 		if (LOWORD(wParam) == IDCANCEL)
 		{
-			/*bool Test = App->Cl_Scene_Data->Is_Meshes_Used(App->SBC_MeshViewer->Last_MeshFile);
-
-			if (Test == 0)
+			
+			App->Cl19_Ogre->OgreListener->MeshViewer_Running = 0;
+			
+			/*if (App->SBC_MeshViewer->MvEnt && App->SBC_MeshViewer->MvNode)
 			{
-				Ogre::ResourcePtr ptr = Ogre::MeshManager::getSingleton().getByName(App->SBC_MeshViewer->Last_MeshFile);
-				ptr->unload();
-				Ogre::MeshManager::getSingleton().remove(App->SBC_MeshViewer->Last_MeshFile);
-				App->SBC_MeshViewer->Last_MeshFile[0] = 0;
+				App->SBC_MeshViewer->MvNode->detachAllObjects();
+				App->SBC_MeshViewer->mSceneMgrMeshView->destroySceneNode(App->SBC_MeshViewer->MvNode);
+				App->SBC_MeshViewer->mSceneMgrMeshView->destroyEntity(App->SBC_MeshViewer->MvEnt);
+				App->SBC_MeshViewer->MvEnt = NULL;
+				App->SBC_MeshViewer->MvNode = NULL;
 			}*/
 
-			App->Cl19_Ogre->OgreListener->Equity_Running = 0;
+			//Debug
 			App->SBC_MeshViewer->Close_OgreWindow();
+			
 			App->SBC_MeshViewer->Delete_Resources_Group();
-
+			
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}

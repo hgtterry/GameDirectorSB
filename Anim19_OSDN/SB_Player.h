@@ -48,11 +48,11 @@ public:
 	int Col_numManifolds;
 	int Col_Player_Index;
 	int Col_Usage_Index;
+	int Col_Object_Index;
 
 	int Round;
 	float Distance;
 	int Life_Time;
-	int ColisionIndex;
 	int Last_ColisionIndex;
 
 	bool is_Animated;
