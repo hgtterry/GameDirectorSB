@@ -64,8 +64,9 @@ SB_MeshViewer::SB_MeshViewer()
 
 	strcpy(mResource_Folder, App->EquityDirecory_FullPath);
 	strcat(mResource_Folder, "\\Media_New\\Walls\\");
-	
 	strcpy(Selected_MeshFile, "Wall_1.mesh");
+
+	strcpy(m_Current_Folder, "Structure");
 
 	MV_Resource_Group = "MV_Resource_Group";
 }
@@ -135,6 +136,34 @@ bool SB_MeshViewer::StartMeshViewer()
 }
 
 // *************************************************************************
+// *					Set_ResourceMesh_File  Terry Flanigan			   *
+// *************************************************************************
+void SB_MeshViewer::Set_ResourceMesh_File(HWND hDlg)
+{
+	char buff[MAX_PATH];
+
+	strcpy(App->SBC_MeshViewer->mResource_Folder, App->EquityDirecory_FullPath);
+	strcat(App->SBC_MeshViewer->mResource_Folder, "\\Media_New\\");
+	strcat(App->SBC_MeshViewer->mResource_Folder, App->SBC_MeshViewer->m_Current_Folder);
+	strcat(App->SBC_MeshViewer->mResource_Folder, "\\");
+
+	SetDlgItemText(hDlg, IDC_ST_CURRENTFOLDER, App->SBC_MeshViewer->mResource_Folder);
+	SetWindowText(hDlg, App->SBC_MeshViewer->mResource_Folder);
+
+	App->SBC_MeshViewer->Add_Resources();
+	App->SBC_MeshViewer->Get_Files();
+
+	HWND temp = GetDlgItem(hDlg, IDC_CB_FOLDERS);
+	SendMessage(temp, CB_SELECTSTRING, -1, LPARAM(App->SBC_MeshViewer->m_Current_Folder));
+	
+
+	SendDlgItemMessage(hDlg, IDC_LISTFILES, LB_GETTEXT, (WPARAM)0, (LPARAM)buff);
+	SetDlgItemText(hDlg, IDC_SELECTEDNAME, buff);
+
+	strcpy(App->SBC_MeshViewer->Selected_MeshFile, buff);
+}
+
+// *************************************************************************
 // *						MeshViewer_Proc Terry Bernie				   *
 // *************************************************************************
 LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
@@ -172,8 +201,10 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		App->SBC_MeshViewer->Set_OgreWindow();
 
 		HWND CB_hWnd = GetDlgItem(hDlg, IDC_CB_FOLDERS);
+
 		App->SBC_MeshViewer->Get_Media_Folders_Actors(CB_hWnd); // Populate Combo
 
+		App->SBC_MeshViewer->Set_ResourceMesh_File(hDlg);
 
 		App->SBC_MeshViewer->SelectStatic = 0;
 		App->SBC_MeshViewer->SelectDynamic = 0;
@@ -365,16 +396,16 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 				break;
 			case CBN_CLOSEUP:
 			{
-				char Get_Folder[1024];
+		
 				HWND temp = GetDlgItem(hDlg, IDC_CB_FOLDERS);
 				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
-				SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)Get_Folder);
+				SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)App->SBC_MeshViewer->m_Current_Folder);
 
 				SendMessage(App->SBC_MeshViewer->ListHwnd, LB_RESETCONTENT, 0, 0);
 
 				strcpy(App->SBC_MeshViewer->mResource_Folder, App->EquityDirecory_FullPath);
 				strcat(App->SBC_MeshViewer->mResource_Folder, "\\Media_New\\");
-				strcat(App->SBC_MeshViewer->mResource_Folder, Get_Folder);
+				strcat(App->SBC_MeshViewer->mResource_Folder, App->SBC_MeshViewer->m_Current_Folder);
 				strcat(App->SBC_MeshViewer->mResource_Folder, "\\");
 
 				SetDlgItemText(hDlg, IDC_ST_CURRENTFOLDER, App->SBC_MeshViewer->mResource_Folder);

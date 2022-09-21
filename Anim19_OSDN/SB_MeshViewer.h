@@ -36,6 +36,7 @@ public:
 	char Object_Name[MAX_PATH];
 	char Last_MeshFile[MAX_PATH];
 	char m_Material_File[MAX_PATH];
+	char m_Current_Folder[MAX_PATH];
 
 	Ogre::SceneNode*		MvNode;
 	HWND MainDlgHwnd;
@@ -53,6 +54,8 @@ protected:
 
 	static LRESULT CALLBACK MeshViewer_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Properties_ListBox_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	void Set_ResourceMesh_File(HWND hDlg);
 
 	bool Set_OgreWindow(void);
 	void Close_OgreWindow(void);
