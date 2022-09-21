@@ -57,6 +57,7 @@ public:
 	HTREEITEM Add_Camera(char *SFileName, int Index);
 	HTREEITEM Add_Area(char *SFileName, int Index);
 	HTREEITEM Add_ObjectFile(char *SFileName, int Index);
+	HTREEITEM Add_Message_Entity(char *SFileName, int Index);
 
 	HTREEITEM GD_Player;
 	HTREEITEM GD_Rooms;

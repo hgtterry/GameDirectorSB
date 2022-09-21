@@ -747,7 +747,8 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 	if (!strcmp(FileView_File, "Messages"))
 	{
 		HideRightPanes();
-		ShowWindow(App->GD_Properties_Hwnd, 1);
+		ShowWindow(App->SBC_Properties->Properties_Dlg_hWnd, 1);
+		App->SBC_Object->Hide_Object_Dlg(1);
 
 //		App->SBC_Properties->Enable_Delete_Button(1);
 
@@ -1284,6 +1285,30 @@ HTREEITEM SB_FileView::Add_Camera(char *SFileName, int Index)
 	HTREEITEM Temp = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
 
 	//TreeView_Select(Temp2,Temp,TVGN_CARET);
+
+	return Temp;
+}
+
+// *************************************************************************
+// *					Add_Message_Entity Terry Bernie				 	   *
+// *************************************************************************
+HTREEITEM SB_FileView::Add_Message_Entity(char *SFileName, int Index)
+{
+	HWND Temp2 = GetDlgItem(App->ListPanel, IDC_TREE1);
+
+	tvinsert.hParent = GD_Entities_Message_Folder;
+	tvinsert.hInsertAfter = TVI_LAST;
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE | TVIF_PARAM;
+	tvinsert.item.pszText = SFileName;
+	tvinsert.item.iImage = 4;
+	tvinsert.item.iSelectedImage = 5;
+	tvinsert.item.lParam = Index;
+	HTREEITEM Temp = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+
+	//if (App->Cl_Load_Scene->File_Is_Loading == 0)
+	//{
+	//	TreeView_Select(Temp2, Temp, TVGN_CARET);
+	//}
 
 	return Temp;
 }

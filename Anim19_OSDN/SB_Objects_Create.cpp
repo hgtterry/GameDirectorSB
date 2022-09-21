@@ -694,15 +694,15 @@ void SB_Objects_Create::Add_Physics_Cone(bool Dynamic,int Index)
 // *************************************************************************
 bool SB_Objects_Create::Add_Message_Entity(int Object_Index)
 {
-	int Index = App->SBC_Scene->Entity_Count;
+	int Index = App->SBC_Scene->Object_Count;
 
-	App->SBC_Scene->B_Entity[Index] = new Base_Entity();
+	App->SBC_Scene->B_Object[Index] = new Base_Object();
 	//App->SBC_Scene->B_Entity[Index]->Object_ID = App->SBC_Scene->Object_ID_Counter;
 	
 	// Only on newly created objects
 	//App->Cl_Scene_Data->Object_ID_Counter++;
 
-	Base_Entity* Object = App->SBC_Scene->B_Entity[Index];
+	Base_Object* Object = App->SBC_Scene->B_Object[Index];
 	
 	//strcpy(App->Cl_Scene_Data->Cl_Object[Index]->Entity[0].mTextItem, "Test Text");
 
@@ -736,9 +736,7 @@ bool SB_Objects_Create::Add_Message_Entity(int Object_Index)
 	//Object->Mesh_Pos = Pos;
 	Object->Object_Node->setPosition(0,0,0);
 	//------------------
-
-	return 1;
-
+	
 	Ogre::Vector3 Size = App->Cl_Objects_Com->GetMesh_BB_Size(Object->Object_Node);
 	float sx = Size.x / 2;
 	float sy = Size.y / 2; // Size by Bounding Box
@@ -781,12 +779,13 @@ bool SB_Objects_Create::Add_Message_Entity(int Object_Index)
 	Object->Folder = Enums::Folder_Message_Entity;
 	Object->Physics_Valid = 1;
 
-	//HTREEITEM Temp = App->Cl_FileView->Add_Message_Entity(Object->Name, Index);
-	//Object->ListViewItem = Temp;
+	HTREEITEM Temp = App->SBC_FileView->Add_Message_Entity(Object->Mesh_Name, Index);
+	Object->ListViewItem = Temp;
 
-	ShowWindow(App->GD_Properties_Hwnd, 1);
+	//ShowWindow(App->GD_Properties_Hwnd, 1);
 
-	App->Cl_Scene_Data->ObjectCount++;  // Must be last line
+	App->SBC_Scene->Object_Count++;
+	
 	return 1;
 }
 

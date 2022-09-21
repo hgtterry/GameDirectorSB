@@ -23,7 +23,7 @@ material Material02
 			depth_write off
              texture_unit
              {
-                 texture Mat1.dds
+                 texture MessageEnt.dds
              }
          }
     }
