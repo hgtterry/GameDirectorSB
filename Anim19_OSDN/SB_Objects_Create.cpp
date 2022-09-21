@@ -698,18 +698,18 @@ bool SB_Objects_Create::Add_Message_Entity(int Object_Index)
 
 	App->SBC_Scene->B_Entity[Index] = new Base_Entity();
 	//App->SBC_Scene->B_Entity[Index]->Object_ID = App->SBC_Scene->Object_ID_Counter;
-
+	
 	// Only on newly created objects
-	App->Cl_Scene_Data->Object_ID_Counter++;
+	//App->Cl_Scene_Data->Object_ID_Counter++;
 
 	Base_Entity* Object = App->SBC_Scene->B_Entity[Index];
-
+	
 	//strcpy(App->Cl_Scene_Data->Cl_Object[Index]->Entity[0].mTextItem, "Test Text");
 
 	Object->Type = Enums::Bullet_Type_Static;
 	Object->Shape = Enums::Shape_Box;
 
-	strcpy(App->Cl_Scene_Data->Cl_Object[Index]->MeshName, "Test_cube.mesh");
+	//strcpy(App->Cl_Scene_Data->Cl_Object[Index]->MeshName, "Test_cube.mesh");
 
 	char ConNum[256];
 	char ATest[256];

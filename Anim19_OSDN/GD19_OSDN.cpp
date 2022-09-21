@@ -591,18 +591,18 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 			return 1;
 		}*/
-
-		/*case ID_ADDITEM_MESSAGE:
+		
+		case ID_ADDITEM_MESSAGE:
 		{
-			App->CL_Dialogs->YesNo("Add Entity", "Do you want to add a new Message Entity now");
+			/*App->SBC_Dialogs->YesNo("Add Entity", "Do you want to add a new Message Entity now");
 			bool Doit = App->GDCL_Dialogs->Canceled;
 			if (Doit == 0)
-			{
-				App->CL10_Objects_New->Add_New_MessageEntity();
-			}
-
+			{*/
+				App->SBC_Objects_Create->Add_Message_Entity(0);
+			//}
+			
 			return 1;
-		}*/
+		}
 
 		/*case ID_ADDITEM_MOVER:
 		{
