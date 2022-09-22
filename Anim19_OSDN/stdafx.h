@@ -317,6 +317,15 @@ namespace Enums
 		Show_List_App = 3,
 		Show_List_Scene = 4
 	};
+
+	enum FileView_Context
+	{
+		FileView_None = 0,
+		FileView_Objects_Folder = 1,
+		FileView_Objects_File = 2,
+		FileView_Messages_Folder = 3,
+		FileView_Messages_File = 4
+	};
 }
 
 

@@ -39,7 +39,8 @@ public:
 	bool Update_ListView_Camera();
 	bool Update_ListView_Area();
 	bool Update_ListView_Objects();
-	
+	bool Update_ListView_Messages();
+
 	bool Properties_Dlg_Active;
 
 	int Current_Selected_Object; // Object Index of Currently Selected Object [041221]

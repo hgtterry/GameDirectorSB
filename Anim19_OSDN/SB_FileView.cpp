@@ -60,6 +60,8 @@ SB_FileView::SB_FileView()
 	Level_But_Active = 1;
 	Stock_But_Active = 0;
 
+	Context_Selection = Enums::FileView_None;
+
 	FileView_Active = 0;
 }
 
@@ -141,46 +143,8 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 	case WM_CONTEXTMENU:
 	{
-		
-		RECT rcTree;
-		HWND hwndTV;
-		HTREEITEM htvItem;
-		TVHITTESTINFO htInfo = { 0 };
-		POINT pt;
-		GetCursorPos(&pt);
+		App->SBC_FileView->Context_Menu(hDlg);
 
-		long xPos = pt.x;   // x position from message, in screen coordinates
-		long yPos = pt.y;   // y position from message, in screen coordinates 
-
-		hwndTV = GetDlgItem(hDlg, IDC_TREE1);         // get the tree view 
-		GetWindowRect(hwndTV, &rcTree);              // get its window coordinates
-		htInfo.pt.x = xPos - rcTree.left;              // convert to client coordinates
-		htInfo.pt.y = yPos - rcTree.top;
-
-		if (htvItem = TreeView_HitTest(hwndTV, &htInfo)) {    // hit test
-			TreeView_SelectItem(hwndTV, htvItem);           // success; select the item
-			
-			if (!strcmp(App->SBC_FileView->FileView_Folder, "Objects")) // Folder
-			{
-				App->SBC_FileView->hMenu = CreatePopupMenu();
-				AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_NEW, L"&New");
-				TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
-				DestroyMenu(App->SBC_FileView->hMenu);
-			}
-			
-			if (!strcmp(App->SBC_FileView->FileView_File, "Objects"))
-			{
-				App->SBC_FileView->hMenu = CreatePopupMenu();
-
-				AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
-				AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_COPY, L"&Copy");
-				AppendMenuW(App->SBC_FileView->hMenu, MF_STRING| MF_GRAYED, IDM_PASTE, L"&Paste");
-				AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
-				AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
-				TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
-				DestroyMenu(App->SBC_FileView->hMenu);
-			}
-		}
 		break;
 	}
 
@@ -263,25 +227,7 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 		if (LOWORD(wParam) == IDM_FILE_NEW)
 		{
-
-			//App->Say(App->SBC_FileView->FileView_Folder);
-			if (App->SBC_Scene->Area_Added == 0)
-			{
-				App->Say("An Area or Building must be Added Firest");
-
-				return TRUE;
-			}
-
-			App->Cl_Dialogs->YesNo("Add Object", "Do you want to add a new Object now");
-
-			bool Doit = App->Cl_Dialogs->Canceled;
-			if (Doit == 0)
-			{
-				App->SBC_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Objects; // 0; // Objects; // Objects
-				App->SBC_MeshViewer->StartMeshViewer();
-				App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
-			}
-
+			App->SBC_FileView->Context_New(hDlg);
 			return TRUE;
 		}
 
@@ -727,25 +673,14 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 	// Messages
 	if (!strcmp(FileView_Folder, "Messages")) // Folder
 	{
-		if (App->Cl_Scene_Data->Scene_Has_Area == 0)
-		{
-			App->Say("An Area or Building must be Added Firest");
-
-			return;
-		}
-
-		App->Cl_Dialogs->YesNo("Add Entity", "Do you want to add a new Message Entity now");
-		bool Doit = App->Cl_Dialogs->Canceled;
-		if (Doit == 0)
-		{
-			//App->SBC_Objects_New->Add_New_MessageEntity();
-		}
-
+		App->SBC_FileView->Context_Selection = Enums::FileView_Messages_Folder;
 		return;
 	}
 
 	if (!strcmp(FileView_File, "Messages"))
 	{
+		App->SBC_FileView->Context_Selection = Enums::FileView_Messages_File;
+
 		HideRightPanes();
 		ShowWindow(App->SBC_Properties->Properties_Dlg_hWnd, 1);
 		App->SBC_Object->Hide_Object_Dlg(1);
@@ -1506,4 +1441,116 @@ void SB_FileView::Set_FolderActive(HTREEITEM Folder)
 
 	SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_SETITEM, 0, (LPARAM)(const LPTVITEM)&Sitem);
 }
+
+// *************************************************************************
+// *						Context_Menu Terry Flanigan				 	   *
+// *************************************************************************
+void SB_FileView::Context_Menu(HWND hDlg)
+{
+	RECT rcTree;
+	HWND hwndTV;
+	HTREEITEM htvItem;
+	TVHITTESTINFO htInfo = { 0 };
+	POINT pt;
+	GetCursorPos(&pt);
+
+	long xPos = pt.x;   // x position from message, in screen coordinates
+	long yPos = pt.y;   // y position from message, in screen coordinates 
+
+	hwndTV = GetDlgItem(hDlg, IDC_TREE1);         // get the tree view 
+	GetWindowRect(hwndTV, &rcTree);              // get its window coordinates
+	htInfo.pt.x = xPos - rcTree.left;              // convert to client coordinates
+	htInfo.pt.y = yPos - rcTree.top;
+
+	if (htvItem = TreeView_HitTest(hwndTV, &htInfo)) {    // hit test
+		TreeView_SelectItem(hwndTV, htvItem);           // success; select the item
+
+		if (!strcmp(App->SBC_FileView->FileView_Folder, "Objects")) // Folder
+		{
+			App->SBC_FileView->hMenu = CreatePopupMenu();
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_NEW, L"&New");
+			TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+			DestroyMenu(App->SBC_FileView->hMenu);
+			Context_Selection = Enums::FileView_Objects_Folder;
+		}
+
+		if (!strcmp(App->SBC_FileView->FileView_File, "Objects"))
+		{
+			App->SBC_FileView->hMenu = CreatePopupMenu();
+
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_COPY, L"&Copy");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
+			TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+			DestroyMenu(App->SBC_FileView->hMenu);
+			Context_Selection = Enums::FileView_Objects_File;
+		}
+
+		if (!strcmp(App->SBC_FileView->FileView_Folder, "Messages")) // Folder
+		{
+			App->SBC_FileView->hMenu = CreatePopupMenu();
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_NEW, L"&New");
+			TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+			DestroyMenu(App->SBC_FileView->hMenu);
+			Context_Selection = Enums::FileView_Messages_Folder;
+		}
+
+		if (!strcmp(App->SBC_FileView->FileView_File, "Messages"))
+		{
+			App->SBC_FileView->hMenu = CreatePopupMenu();
+
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_COPY, L"&Copy");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
+			TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+			DestroyMenu(App->SBC_FileView->hMenu);
+			Context_Selection = Enums::FileView_Messages_File;
+		}
+	}
+}
+
+// *************************************************************************
+// *						Context_New Terry Flanigan				 	   *
+// *************************************************************************
+void SB_FileView::Context_New(HWND hDlg)
+{
+	if (App->SBC_Scene->Area_Added == 0)
+	{
+		App->Say("An Area or Building must be Added Firest");
+
+		return;
+	}
+
+
+	if (App->SBC_FileView->Context_Selection == Enums::FileView_Objects_Folder)
+	{
+		App->Cl_Dialogs->YesNo("Add Object", "Do you want to add a new Object now");
+
+		bool Doit = App->Cl_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+			App->SBC_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Objects; // 0; // Objects; // Objects
+			App->SBC_MeshViewer->StartMeshViewer();
+			App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
+		}
+	}
+
+	if (App->SBC_FileView->Context_Selection == Enums::FileView_Messages_Folder)
+	{
+		App->Cl_Dialogs->YesNo("Add Message", "Do you want to add a new Message now");
+
+		bool Doit = App->Cl_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+			App->SBC_Objects_Create->Add_Message_Entity(0);
+			App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
+		}
+	}
+
+}
+
 

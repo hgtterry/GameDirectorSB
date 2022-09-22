@@ -76,6 +76,9 @@ protected:
 	void Get_Selection(LPNMHDR lParam);
 	void HideRightPanes(void);
 
+	void Context_Menu(HWND hDlg);
+	void Context_New(HWND hDlg);
+
 	TV_INSERTSTRUCT tvinsert;
 
 	HIMAGELIST hImageList;
@@ -95,6 +98,7 @@ protected:
 	HTREEITEM GD_Level_Change_Folder;
 	HTREEITEM GD_Particles_Folder;
 
+	int Context_Selection;
 
 	char FileView_Folder[255];
 	char FileView_File[255];
