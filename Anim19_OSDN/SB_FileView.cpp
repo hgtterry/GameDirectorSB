@@ -698,7 +698,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 		if (App->SBC_Properties->Edit_Physics == 0)
 		{
-			//App->SBC_Properties->Update_ListView_Messages();
+			App->SBC_Properties->Update_ListView_Messages();
 		}
 		else
 		{
@@ -1546,7 +1546,7 @@ void SB_FileView::Context_New(HWND hDlg)
 		bool Doit = App->Cl_Dialogs->Canceled;
 		if (Doit == 0)
 		{
-			App->SBC_Objects_Create->Add_Message_Entity(0);
+			App->SBC_Objects_Create->Add_New_Message();
 			App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
 		}
 	}

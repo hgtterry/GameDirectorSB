@@ -690,13 +690,27 @@ void SB_Objects_Create::Add_Physics_Cone(bool Dynamic,int Index)
 }
 
 // *************************************************************************
-//						Add_MessageEntity Terry Bernie					   *
+//						Add_New_Message Terry Bernie					   *
 // *************************************************************************
-bool SB_Objects_Create::Add_Message_Entity(int Object_Index)
+bool SB_Objects_Create::Add_New_Message()
 {
 	int Index = App->SBC_Scene->Object_Count;
 
 	App->SBC_Scene->B_Object[Index] = new Base_Object();
+
+	Add_Message_Entity(Index);
+
+	App->SBC_Scene->Object_Count++;
+
+	return 1;
+}
+
+// *************************************************************************
+//						Add_MessageEntity Terry Bernie					   *
+// *************************************************************************
+bool SB_Objects_Create::Add_Message_Entity(int Index)
+{
+	
 	//App->SBC_Scene->B_Entity[Index]->Object_ID = App->SBC_Scene->Object_ID_Counter;
 	
 	// Only on newly created objects
@@ -784,8 +798,7 @@ bool SB_Objects_Create::Add_Message_Entity(int Object_Index)
 
 	//ShowWindow(App->GD_Properties_Hwnd, 1);
 
-	App->SBC_Scene->Object_Count++;
-	
+	Set_Physics(Index);
 	return 1;
 }
 

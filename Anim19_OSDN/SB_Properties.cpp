@@ -569,38 +569,38 @@ bool SB_Properties::Update_ListView_Messages()
 	int index = App->SBC_Properties->Current_Selected_Object;
 
 	char buff[255];
-	strcpy(buff, App->Cl_Scene_Data->Cl_Object[index]->Name);
+	strcpy(buff, App->SBC_Scene->B_Object[index]->Mesh_Name);
 	strcat(buff, "   (Message)");
 	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
 
 	char chr_ReTrigger[100];
 
 	int StockIndex = 0;// App->SBC_Scene->B_Object[index]->Entity[0].Stock_mIndex;
-	sprintf(chr_ReTrigger, "%i ", App->Cl_Scene_Data->Cl_Object[index]->Re_Trigger);
+	//sprintf(chr_ReTrigger, "%i ", App->SBC_Scene->B_Object[index]->Re_Trigger);
 
 	char chr_FontSize[100];
 	char chr_TextColour[100];
 	char chr_PosVert[100];
 	char chr_PosHoz[100];
 
-	sprintf(chr_FontSize, "%i ", App->Cl_Scene_Data->S_Messages[StockIndex]->Font_Size);
+	/*sprintf(chr_FontSize, "%i ", App->Cl_Scene_Data->S_Messages[StockIndex]->Font_Size);
 	sprintf(chr_TextColour, "%.2f %.2f %.2f", App->Cl_Scene_Data->S_Messages[StockIndex]->Colour.x, App->Cl_Scene_Data->S_Messages[StockIndex]->Colour.y, App->Cl_Scene_Data->S_Messages[StockIndex]->Colour.z);
 	sprintf(chr_PosVert, "%.2f ", App->Cl_Scene_Data->S_Messages[StockIndex]->Pos_Vert);
-	sprintf(chr_PosHoz, "%.2f ", App->Cl_Scene_Data->S_Messages[StockIndex]->Pos_Hoz);
+	sprintf(chr_PosHoz, "%.2f ", App->Cl_Scene_Data->S_Messages[StockIndex]->Pos_Hoz);*/
 
-	// new sound
-	char chr_Play[100];
-	if (App->Cl_Scene_Data->Cl_Object[index]->Play_v2 == 1)
-	{
-		strcpy(chr_Play, "True");
-	}
-	else
-	{
-		strcpy(chr_Play, "False");
-	}
-	char chr_Stock_Sound[100];
-	int sndIndex = App->Cl_Scene_Data->Cl_Object[index]->Sound_ID_v2;
-	strcpy(chr_Stock_Sound, App->Cl_Scene_Data->St_Sounds[sndIndex]->Name);
+	//// new sound
+	//char chr_Play[100];
+	//if (App->Cl_Scene_Data->Cl_Object[index]->Play_v2 == 1)
+	//{
+	//	strcpy(chr_Play, "True");
+	//}
+	//else
+	//{
+	//	strcpy(chr_Play, "False");
+	//}
+	//char chr_Stock_Sound[100];
+	//int sndIndex = App->SBC_Scene->B_Object[index]->Sound_ID_v2;
+	//strcpy(chr_Stock_Sound, App->Cl_Scene_Data->St_Sounds[sndIndex]->Name);
 
 	const int NUM_ITEMS = 14;
 	const int NUM_COLS = 2;
@@ -612,17 +612,17 @@ bool SB_Properties::Update_ListView_Messages()
 	grid[0][0] = "Name",			grid[1][0] = App->SBC_Scene->B_Object[index]->Mesh_Name;
 	grid[0][1] = " ",				grid[1][1] = " ";
 	grid[0][2] = "Message", grid[1][2] = "poo";// App->SBC_Scene->B_Object[index]->Entity[0].mTextItem;
-	grid[0][3] = "Message_Stock",	grid[1][3] = App->Cl_Panels_Com->Get_Panel_Name(StockIndex);//App->GDCL_Scene_Data->S_Messages[StockIndex]->Name;
+	grid[0][3] = "Message_Stock",	grid[1][3] = " "; //App->Cl_Panels_Com->Get_Panel_Name(StockIndex);//App->GDCL_Scene_Data->S_Messages[StockIndex]->Name;
 	grid[0][4] = " ",				grid[1][4] = " ";
-	grid[0][5] = "Font Size",		grid[1][5] = chr_FontSize;
-	grid[0][6] = "Text Colour",		grid[1][6] = chr_TextColour;
-	grid[0][7] = "Pos Vertical",	grid[1][7] = chr_PosVert;
-	grid[0][8] = "Pos Horizontal",	grid[1][8] = chr_PosHoz;
+	grid[0][5] = "Font Size",		grid[1][5] = " "; //chr_FontSize;
+	grid[0][6] = "Text Colour",		grid[1][6] = " "; //chr_TextColour;
+	grid[0][7] = "Pos Vertical",	grid[1][7] = " "; //chr_PosVert;
+	grid[0][8] = "Pos Horizontal",	grid[1][8] = " "; //chr_PosHoz;
 	grid[0][9] = " ",				grid[1][9] = " ";
-	grid[0][10] = "Re-Trigger",		grid[1][10] = chr_ReTrigger;
+	grid[0][10] = "Re-Trigger",		grid[1][10] = " "; //chr_ReTrigger;
 	grid[0][11] = " ",				grid[1][11] = " ";
-	grid[0][12] = "Stock_Snd",		grid[1][12] = chr_Stock_Sound;
-	grid[0][13] = "Play",			grid[1][13] = chr_Play;
+	grid[0][12] = "Stock_Snd",		grid[1][12] = " "; //chr_Stock_Sound;
+	grid[0][13] = "Play",			grid[1][13] = " "; //chr_Play;
 
 
 	ListView_DeleteAllItems(Properties_hLV);
