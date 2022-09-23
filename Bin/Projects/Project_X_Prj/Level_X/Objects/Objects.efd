@@ -26,17 +26,5 @@ Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
  
-[Object_2]
-Mesh_Name=Message_2
-Mesh_File=Test_cube.mesh
-Mesh_Resource_Path=
-Object_Type=2
-Object_Shape=1
-Mesh_Pos=-88.000000,-110.000000,0.000000
-Mesh_Scale=1.000000,1.000000,1.000000
-Mesh_Rot=0.000000,0.000000,0.000000
-Mesh_Quat=1.000000,0.000000,0.000000,0.000000
-Physics_Quat=1.000000,0.000000,0.000000,0.000000
- 
 [Counters]
-Objects_Count=3
+Objects_Count=2

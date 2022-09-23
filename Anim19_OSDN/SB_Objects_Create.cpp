@@ -264,7 +264,6 @@ void SB_Objects_Create::Add_Physics_Box(bool Dynamic,int Index)
 	worldAAB.transformAffine(Object->Object_Node->_getFullTransform());
 	Ogre::Vector3 Centre = worldAAB.getCenter();
 
-
 	Object->Physics_Pos = Ogre::Vector3(Centre.x, Centre.y, Centre.z);
 
 	btTransform startTransform;
@@ -284,7 +283,6 @@ void SB_Objects_Create::Add_Physics_Box(bool Dynamic,int Index)
 
 	btVector3 localInertia(0, 0, 0);
 	btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
-
 	startTransform.setOrigin(initialPosition);
 
 	Ogre::Vector3 Size = App->Cl_Objects_Com->GetMesh_BB_Size(Object->Object_Node);
@@ -694,14 +692,27 @@ void SB_Objects_Create::Add_Physics_Cone(bool Dynamic,int Index)
 // *************************************************************************
 bool SB_Objects_Create::Add_New_Message()
 {
+	char B_Name[MAX_PATH];
+	char ConNum[MAX_PATH];
+
 	int Index = App->SBC_Scene->Object_Count;
 
 	App->SBC_Scene->B_Object[Index] = new Base_Object();
 
+	App->SBC_Scene->B_Object[Index]->Type = Enums::Bullet_Type_Static;
+	App->SBC_Scene->B_Object[Index]->Shape = Enums::Shape_Box;
+	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_FileName, "Test_cube.mesh");
+
+	strcpy_s(B_Name, "Message_");
+	_itoa(Index, ConNum, 10);
+	strcat(B_Name, ConNum);
+	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_Name, B_Name);
+
 	Add_Message_Entity(Index);
 
-	App->SBC_Scene->Object_Count++;
+	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[Index]->ListViewItem);
 
+	App->SBC_Scene->Object_Count++;
 	return 1;
 }
 
@@ -710,45 +721,30 @@ bool SB_Objects_Create::Add_New_Message()
 // *************************************************************************
 bool SB_Objects_Create::Add_Message_Entity(int Index)
 {
-	
-	//App->SBC_Scene->B_Entity[Index]->Object_ID = App->SBC_Scene->Object_ID_Counter;
-	
-	// Only on newly created objects
-	//App->Cl_Scene_Data->Object_ID_Counter++;
+	char Mesh_File[255];
+	char ConNum[256];
+	char Ogre_Name[256];
 
 	Base_Object* Object = App->SBC_Scene->B_Object[Index];
-	
-	//strcpy(App->Cl_Scene_Data->Cl_Object[Index]->Entity[0].mTextItem, "Test Text");
 
-	Object->Type = Enums::Bullet_Type_Static;
-	Object->Shape = Enums::Shape_Box;
-
-	//strcpy(App->Cl_Scene_Data->Cl_Object[Index]->MeshName, "Test_cube.mesh");
-
-	char ConNum[256];
-	char ATest[256];
-	char Name[256];
-
-	strcpy_s(Name, "Message_");
+	strcpy_s(Ogre_Name, "GDEnt_");
 	_itoa(Index, ConNum, 10);
-	strcat(Name, ConNum);
+	strcat(Ogre_Name, ConNum);
 
-	strcpy_s(ATest, "GDEntity_");
-	_itoa(Index, ConNum, 10);
-	strcat(ATest, ConNum);
+	strcpy(Mesh_File, Object->Mesh_FileName);
 
-	strcpy(Object->Mesh_Name, Name);
-	strcpy(Object->Mesh_FileName, "Test_cube.mesh");
-	//strcpy(Object->MeshName_FullPath, "Test_cube.mesh");
-
-	Object->Object_Ent = App->Cl19_Ogre->mSceneMgr->createEntity(ATest, "Test_cube.mesh", App->Cl19_Ogre->App_Resource_Group);
+	Object->Object_Ent = App->Cl19_Ogre->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->Cl19_Ogre->App_Resource_Group);
 	Object->Object_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Object->Object_Node->attachObject(Object->Object_Ent);
-	Object->Object_Node->scale(1, 1, 1);
 
-	//Ogre::Vector3 Pos = Object->GetPlacement();
-	//Object->Mesh_Pos = Pos;
-	Object->Object_Node->setPosition(0,0,0);
+	Object->Object_Node->setVisible(true);
+
+	Object->Object_Node->setOrientation(Object->Mesh_Quat);
+	Object->Object_Node->setPosition(Object->Mesh_Pos);
+
+	App->Cl_Scene_Data->SceneLoaded = 1;
+
+
 	//------------------
 	
 	Ogre::Vector3 Size = App->Cl_Objects_Com->GetMesh_BB_Size(Object->Object_Node);
@@ -765,7 +761,9 @@ bool SB_Objects_Create::Add_Message_Entity(int Index)
 	startTransform.setIdentity();
 	startTransform.setRotation(btQuaternion(0.0f, 0.0f, 0.0f, 1));
 
-	Ogre::Vector3 Centre = App->SBC_Object->Get_BoundingBox_World_Centre(Index);
+	AxisAlignedBox worldAAB = Object->Object_Ent->getBoundingBox();
+	worldAAB.transformAffine(Object->Object_Node->_getFullTransform());
+	Ogre::Vector3 Centre = worldAAB.getCenter();
 
 	Object->Physics_Pos = Ogre::Vector3(Centre.x, Centre.y, Centre.z);
 
@@ -782,7 +780,7 @@ bool SB_Objects_Create::Add_Message_Entity(int Index)
 	Object->Phys_Body->setUserPointer(Object->Object_Node);
 	Object->Phys_Body->setWorldTransform(startTransform);
 
-	Object->Phys_Body->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT | btCollisionObject::CF_NO_CONTACT_RESPONSE);
+	Object->Phys_Body->setCollisionFlags(btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT | btCollisionObject::CF_KINEMATIC_OBJECT | btCollisionObject::CF_NO_CONTACT_RESPONSE);
 
 	Object->Usage = Enums::Usage_Message;
 	Object->Phys_Body->setUserIndex(Enums::Usage_Message);
@@ -795,8 +793,6 @@ bool SB_Objects_Create::Add_Message_Entity(int Index)
 
 	HTREEITEM Temp = App->SBC_FileView->Add_Message_Entity(Object->Mesh_Name, Index);
 	Object->ListViewItem = Temp;
-
-	//ShowWindow(App->GD_Properties_Hwnd, 1);
 
 	Set_Physics(Index);
 	return 1;
