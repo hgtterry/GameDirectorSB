@@ -384,6 +384,12 @@ bool SB_Object::Get_Usage(int Index)
 		return 1;
 	}
 
+	case Enums::Usage_Message:
+	{
+		strcpy(Chr_Usage, "Usage_Message");
+		return 1;
+	}
+
 	break;
 
 	}

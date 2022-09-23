@@ -26,31 +26,31 @@ bool SB_Objects_Create::Add_Objects_From_File() // From File
 
 	while (Count < Object_Count)
 	{
-		//if (App->Cl_Scene_Data->Cl_Object[Count]->Usage == Enums::Usage_Sound)
-		//{
-		//	//Add_SoundEntity_FFile(Count);
-		//}
-		//else if (App->Cl_Scene_Data->Cl_Object[Count]->Usage == Enums::Usage_Message)
-		//{
-		//	//Add_MessageEntity_FFile(Count);
-		//}
-		//else if (App->Cl_Scene_Data->Cl_Object[Count]->Usage == Enums::Usage_Move)
-		//{
-		//	//Add_MoveEntity_FFile(Count);
-		//}
-		//else if (App->Cl_Scene_Data->Cl_Object[Count]->Usage == Enums::Usage_Colectable)
-		//{
-		//	//Add_CollectableEntity_FFile(Count);
-		//}
-		//else if (App->Cl_Scene_Data->Cl_Object[Count]->Usage == Enums::Usage_Teleport)
-		//{
-		//	//Add_TeleportEntity_FFile(Count);
-		//}
-		//else
-		//{
-
-		App->SBC_Objects_Create->Add_New_Object(Count);
-		//}
+		if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Sound)
+		{
+			//Add_SoundEntity_FFile(Count);
+		}
+		else if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Message)
+		{
+			Add_Message_Entity(Count);
+			Debug
+		}
+		else if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Move)
+		{
+			//Add_MoveEntity_FFile(Count);
+		}
+		else if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Colectable)
+		{
+			//Add_CollectableEntity_FFile(Count);
+		}
+		else if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Teleport)
+		{
+			//Add_TeleportEntity_FFile(Count);
+		}
+		else
+		{
+			App->SBC_Objects_Create->Add_New_Object(Count);
+		}
 
 		Count++;
 	}
@@ -701,6 +701,7 @@ bool SB_Objects_Create::Add_New_Message()
 
 	App->SBC_Scene->B_Object[Index]->Type = Enums::Bullet_Type_Static;
 	App->SBC_Scene->B_Object[Index]->Shape = Enums::Shape_Box;
+
 	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_FileName, "Test_cube.mesh");
 
 	strcpy_s(B_Name, "Message_");
@@ -727,6 +728,8 @@ bool SB_Objects_Create::Add_Message_Entity(int Index)
 
 	Base_Object* Object = App->SBC_Scene->B_Object[Index];
 
+	// ----------------- Mesh
+
 	strcpy_s(Ogre_Name, "GDEnt_");
 	_itoa(Index, ConNum, 10);
 	strcat(Ogre_Name, ConNum);
@@ -744,22 +747,7 @@ bool SB_Objects_Create::Add_Message_Entity(int Index)
 
 	App->Cl_Scene_Data->SceneLoaded = 1;
 
-
-	//------------------
-	
-	Ogre::Vector3 Size = App->Cl_Objects_Com->GetMesh_BB_Size(Object->Object_Node);
-	float sx = Size.x / 2;
-	float sy = Size.y / 2; // Size by Bounding Box
-	float sz = Size.z / 2;
-
-	Object->Physics_Size = Ogre::Vector3(sx, sy, sz);
-
-	btCollisionShape* newRigidShape = new btBoxShape(btVector3(sx, sy, sz));
-	newRigidShape->calculateLocalInertia(0, btVector3(0, 0, 0));
-
-	btTransform startTransform;
-	startTransform.setIdentity();
-	startTransform.setRotation(btQuaternion(0.0f, 0.0f, 0.0f, 1));
+	// ----------------- Physics
 
 	AxisAlignedBox worldAAB = Object->Object_Ent->getBoundingBox();
 	worldAAB.transformAffine(Object->Object_Node->_getFullTransform());
@@ -767,12 +755,32 @@ bool SB_Objects_Create::Add_Message_Entity(int Index)
 
 	Object->Physics_Pos = Ogre::Vector3(Centre.x, Centre.y, Centre.z);
 
-	btVector3 initialPosition(btVector3(Centre.x, Centre.y, Centre.z));
+	btTransform startTransform;
+	startTransform.setIdentity();
+	startTransform.setRotation(btQuaternion(0, 0, 0, 1));
+
+	btScalar mass;
+	mass = 0.0f;
+	
+	btVector3 localInertia(0, 0, 0);
+	btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
 	startTransform.setOrigin(initialPosition);
+
+	Ogre::Vector3 Size = App->Cl_Objects_Com->GetMesh_BB_Size(Object->Object_Node);
+	float sx = Size.x / 2;
+	float sy = Size.y / 2;
+	float sz = Size.z / 2;
+
+	Object->Physics_Size = Ogre::Vector3(sx, sy, sz);
+
+	btCollisionShape* newRigidShape = new btBoxShape(btVector3(sx, sy, sz));
+	newRigidShape->calculateLocalInertia(mass, localInertia);
+
+	App->Cl_Bullet->collisionShapes.push_back(newRigidShape);
 
 	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
 
-	btRigidBody::btRigidBodyConstructionInfo rbInfo(0, myMotionState, newRigidShape, btVector3(0, 0, 0));
+	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, newRigidShape, localInertia);
 
 	Object->Phys_Body = new btRigidBody(rbInfo);
 	Object->Phys_Body->setRestitution(1.0);
@@ -780,21 +788,26 @@ bool SB_Objects_Create::Add_Message_Entity(int Index)
 	Object->Phys_Body->setUserPointer(Object->Object_Node);
 	Object->Phys_Body->setWorldTransform(startTransform);
 
-	Object->Phys_Body->setCollisionFlags(btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT | btCollisionObject::CF_KINEMATIC_OBJECT | btCollisionObject::CF_NO_CONTACT_RESPONSE);
-
 	Object->Usage = Enums::Usage_Message;
 	Object->Phys_Body->setUserIndex(Enums::Usage_Message);
 	Object->Phys_Body->setUserIndex2(Index);
 
+	Object->Phys_Body->setCustomDebugColor(btVector3(0, 1, 1));
+
+	int f = Object->Phys_Body->getCollisionFlags();
+
+	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT 
+		| btCollisionObject::CF_KINEMATIC_OBJECT 
+		| btCollisionObject::CF_NO_CONTACT_RESPONSE);
+	
+
 	App->Cl_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
-	Object->Folder = Enums::Folder_Message_Entity;
-	Object->Physics_Valid = 1;
+	Set_Physics(Index);
 
 	HTREEITEM Temp = App->SBC_FileView->Add_Message_Entity(Object->Mesh_Name, Index);
 	Object->ListViewItem = Temp;
 
-	Set_Physics(Index);
 	return 1;
 }
 

@@ -505,6 +505,7 @@ bool SB_Project::Save_Objects_Data()
 
 			fprintf(WriteFile, "%s%i\n", "Object_Type=", App->SBC_Scene->B_Object[Count]->Type);
 			fprintf(WriteFile, "%s%i\n", "Object_Shape=", App->SBC_Scene->B_Object[Count]->Shape);
+			fprintf(WriteFile, "%s%i\n", "Object_Usage=", App->SBC_Scene->B_Object[Count]->Usage);
 
 			// Position
 			x = App->SBC_Scene->B_Object[Count]->Mesh_Pos.x;
@@ -902,10 +903,12 @@ bool SB_Project::Load_Project_Objects()
 		App->Cl_Ini->GetString(buff, "Mesh_File", Object->Mesh_FileName, MAX_PATH);
 		App->Cl_Ini->GetString(buff, "Mesh_Resource_Path", Object->Mesh_Resource_Path, MAX_PATH);
 		
+		// Types
 		Object->Type = App->Cl_Ini->GetInt(buff, "Object_Type", 0);
 		Object->Shape = App->Cl_Ini->GetInt(buff, "Object_Shape", 0);
+		Object->Usage = App->Cl_Ini->GetInt(buff, "Object_Usage", 0);
 
-		// Position
+		// Pos
 		App->Cl_Ini->GetString(buff, "Mesh_Pos", chr_Tag1, MAX_PATH);
 		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
 		App->SBC_Scene->B_Object[Count]->Mesh_Pos = Ogre::Vector3(x, y, z);
