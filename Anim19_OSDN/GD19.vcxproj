@@ -167,7 +167,6 @@
     <ClInclude Include="GD19_Bullet.h" />
     <ClInclude Include="GD19_Collision.h" />
     <ClInclude Include="GD19_DIALOGS.h" />
-    <ClInclude Include="GD19_Dimensions.h" />
     <ClInclude Include="GD19_Environment.h" />
     <ClInclude Include="GD19_Grid.h" />
     <ClInclude Include="GD19_Ini.h" />
@@ -234,7 +233,6 @@
     <ClCompile Include="GD19_Bullet.cpp" />
     <ClCompile Include="GD19_Collision.cpp" />
     <ClCompile Include="GD19_DIALOGS.cpp" />
-    <ClCompile Include="GD19_Dimensions.cpp" />
     <ClCompile Include="GD19_Environment.cpp" />
     <ClCompile Include="GD19_Grid.cpp" />
     <ClCompile Include="GD19_Ini.cpp" />

@@ -241,7 +241,7 @@ LRESULT CALLBACK GD19_Object_Properties::GD_Properties_Proc(HWND hDlg, UINT mess
 
 		//	if (LOWORD(wParam) == IDC_OBJECT_SEL)
 			{
-				App->Cl_Object_Props->Object_Selection = 1;
+				/*App->Cl_Object_Props->Object_Selection = 1;
 				App->Cl_Object_Props->Physics_Selection = 0;
 				RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
@@ -260,7 +260,7 @@ LRESULT CALLBACK GD19_Object_Properties::GD_Properties_Proc(HWND hDlg, UINT mess
 				else
 				{
 					App->Cl_Object_Props->Update_Properties_Player();
-				}
+				}*/
 				return 1;
 			}
 
@@ -308,7 +308,7 @@ LRESULT CALLBACK GD19_Object_Properties::GD_Properties_Proc(HWND hDlg, UINT mess
 				}
 				else
 				{
-					int Index = App->Cl_Object_Props->Selected_Object_Index;
+					/*int Index = App->Cl_Object_Props->Selected_Object_Index;
 
 					if (App->Cl_Scene_Data->Cl_Object[Index]->Physics_Valid == 1)
 					{
@@ -326,7 +326,7 @@ LRESULT CALLBACK GD19_Object_Properties::GD_Properties_Proc(HWND hDlg, UINT mess
 							App->Cl_Scene_Data->Cl_Object[Index]->Show_Debug = 1;
 							App->Cl_Scene_Data->Cl_Object[Index]->bt_body->setCollisionFlags(f^btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 						}
-					}
+					}*/
 
 					return 1;
 				}

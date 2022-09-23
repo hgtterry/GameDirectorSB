@@ -31,7 +31,7 @@ Ogre::Vector3 GD19_Objects_Com::GetMesh_Center(int Index, SceneNode* mNode)
 // *************************************************************************
 bool GD19_Objects_Com::GetMesh_BB_Data(int SL, Ogre::SceneNode* Node)
 {
-	Ogre::Vector3 Dimen = GetMesh_BB_Size(Node);
+	/*Ogre::Vector3 Dimen = GetMesh_BB_Size(Node);
 
 	App->Cl_Scene_Data->Cl_Object[SL]->Mesh_BB_Width = Dimen.x;
 	App->Cl_Scene_Data->Cl_Object[SL]->Mesh_BB_Height = Dimen.y;
@@ -40,7 +40,7 @@ bool GD19_Objects_Com::GetMesh_BB_Data(int SL, Ogre::SceneNode* Node)
 	App->Cl_Scene_Data->Cl_Object[SL]->Mesh_BB_Quat = Node->getOrientation();
 
 	Ogre::Vector3 Cent = GetMesh_Center(SL, Node);
-	App->Cl_Scene_Data->Cl_Object[SL]->Mesh_BB_Center = Cent;
+	App->Cl_Scene_Data->Cl_Object[SL]->Mesh_BB_Center = Cent;*/
 	return 1;
 }
 
@@ -82,20 +82,20 @@ btTransform GD19_Objects_Com::Set_Physics_PosRot(int Object_Index)
 	int Index = Object_Index;
 
 	btTransform startTransform;
-	startTransform.setIdentity();
+	//startTransform.setIdentity();
 
-	//------------ Position
-	float x = App->Cl_Scene_Data->Cl_Object[Index]->Physics_Pos.x;
-	float y = App->Cl_Scene_Data->Cl_Object[Index]->Physics_Pos.y;
-	float z = App->Cl_Scene_Data->Cl_Object[Index]->Physics_Pos.z;
-	startTransform.setOrigin(btVector3(x, y, z));
+	////------------ Position
+	//float x = App->Cl_Scene_Data->Cl_Object[Index]->Physics_Pos.x;
+	//float y = App->Cl_Scene_Data->Cl_Object[Index]->Physics_Pos.y;
+	//float z = App->Cl_Scene_Data->Cl_Object[Index]->Physics_Pos.z;
+	//startTransform.setOrigin(btVector3(x, y, z));
 
-	//------------ Rotation
-	float rw = App->Cl_Scene_Data->Cl_Object[Index]->Physics_Quat.w;
-	float rx = App->Cl_Scene_Data->Cl_Object[Index]->Physics_Quat.x;
-	float ry = App->Cl_Scene_Data->Cl_Object[Index]->Physics_Quat.y;
-	float rz = App->Cl_Scene_Data->Cl_Object[Index]->Physics_Quat.z;
-	startTransform.setRotation(btQuaternion(rx, ry, rz, rw));
+	////------------ Rotation
+	//float rw = App->Cl_Scene_Data->Cl_Object[Index]->Physics_Quat.w;
+	//float rx = App->Cl_Scene_Data->Cl_Object[Index]->Physics_Quat.x;
+	//float ry = App->Cl_Scene_Data->Cl_Object[Index]->Physics_Quat.y;
+	//float rz = App->Cl_Scene_Data->Cl_Object[Index]->Physics_Quat.z;
+	//startTransform.setRotation(btQuaternion(rx, ry, rz, rw));
 
 	return startTransform;
 }
@@ -105,20 +105,20 @@ btTransform GD19_Objects_Com::Set_Physics_PosRot(int Object_Index)
 // *************************************************************************
 void GD19_Objects_Com::Set_Physics_Scale(int Object_Index)
 {
-	int Index = Object_Index;
+	//int Index = Object_Index;
 
-	//------------ Scale
-	float sx = App->Cl_Scene_Data->Cl_Object[Index]->Physics_Scale.x;
-	float sy = App->Cl_Scene_Data->Cl_Object[Index]->Physics_Scale.y;
-	float sz = App->Cl_Scene_Data->Cl_Object[Index]->Physics_Scale.z;
-	App->Cl_Scene_Data->Cl_Object[Index]->bt_body->getCollisionShape()->setLocalScaling(btVector3(sx, sy, sz));
+	////------------ Scale
+	//float sx = App->Cl_Scene_Data->Cl_Object[Index]->Physics_Scale.x;
+	//float sy = App->Cl_Scene_Data->Cl_Object[Index]->Physics_Scale.y;
+	//float sz = App->Cl_Scene_Data->Cl_Object[Index]->Physics_Scale.z;
+	//App->Cl_Scene_Data->Cl_Object[Index]->bt_body->getCollisionShape()->setLocalScaling(btVector3(sx, sy, sz));
 }
 
 // *************************************************************************
 //						Set_Physics_Scale Terry Bernie					   *
 // *************************************************************************
 Ogre::Vector3 GD19_Objects_Com::Centre_of_Trimesh(int Object_Index)
-{
+{/*
 	int Index = Object_Index;
 
 	Ogre::Vector3 Position = App->Cl_Scene_Data->Cl_Object[Index]->OgreNode->getPosition();
@@ -127,12 +127,12 @@ Ogre::Vector3 GD19_Objects_Com::Centre_of_Trimesh(int Object_Index)
 	
 
 	Ogre::Vector3 Centre = App->Cl_Scene_Data->Cl_Object[Index]->OgreNode->getAttachedObject(0)->getBoundingBox().getCenter();
-	Ogre::Vector3 WS = App->Cl_Scene_Data->Cl_Object[Index]->OgreNode->convertLocalToWorldPosition(Centre);
+	Ogre::Vector3 WS = App->Cl_Scene_Data->Cl_Object[Index]->OgreNode->convertLocalToWorldPosition(Centre);*/
 
 	Ogre::Vector3 Newpos;
-	Newpos.x = WS.x;
+	/*Newpos.x = WS.x;
 	Newpos.y = -WS.y;
-	Newpos.z = WS.z;
+	Newpos.z = WS.z;*/
 
 	return Newpos;
 }
@@ -142,13 +142,13 @@ Ogre::Vector3 GD19_Objects_Com::Centre_of_Trimesh(int Object_Index)
 // *************************************************************************
 bool GD19_Objects_Com::Copy_Object()
 {
-	int Curr = App->SBC_Properties->Current_Selected_Object;
+	/*int Curr = App->SBC_Properties->Current_Selected_Object;
 
 	App->Cl_Dialogs->YesNo("Copy Object", App->Cl_Scene_Data->Cl_Object[Curr]->Name);
 	if (App->Cl_Dialogs->Canceled == 0)
 	{
 		CopyObject_Index = App->SBC_Properties->Current_Selected_Object;
-	}
+	}*/
 	
 	return 1;
 }
@@ -209,7 +209,7 @@ bool GD19_Objects_Com::Paste_Object()
 // *************************************************************************
 bool GD19_Objects_Com::Pre_Paste()
 {
-	char mName[1024];
+	/*char mName[1024];
 	char ConNum[256];
 	_itoa(App->Cl_Scene_Data->ObjectCount, ConNum, 10);
 	strcpy(mName, App->Cl_Scene_Data->Cl_Object[CopyObject_Index]->Name);
@@ -219,7 +219,7 @@ bool GD19_Objects_Com::Pre_Paste()
 	strcpy(App->SBC_MeshViewer->Selected_MeshFile, App->Cl_Scene_Data->Cl_Object[CopyObject_Index]->MeshName);
 
 	App->SBC_MeshViewer->Physics_Type = App->Cl_Scene_Data->Cl_Object[CopyObject_Index]->Type;
-	App->SBC_MeshViewer->Physics_Shape = App->Cl_Scene_Data->Cl_Object[CopyObject_Index]->Shape;
+	App->SBC_MeshViewer->Physics_Shape = App->Cl_Scene_Data->Cl_Object[CopyObject_Index]->Shape;*/
 	return 1;
 }
 
@@ -228,53 +228,53 @@ bool GD19_Objects_Com::Pre_Paste()
 // *************************************************************************
 bool GD19_Objects_Com::Post_Paste()
 {
-	int Index = App->Cl_Scene_Data->ObjectCount - 1; // Need to go one back as it as been incremented
-	GD19_Objects* Object = App->Cl_Scene_Data->Cl_Object[Index];
+	//int Index = App->Cl_Scene_Data->ObjectCount - 1; // Need to go one back as it as been incremented
+	//GD19_Objects* Object = App->Cl_Scene_Data->Cl_Object[Index];
 
-	// Ogre Rotation
-	Object->OgreNode->setOrientation(App->Cl_Scene_Data->Cl_Object[CopyObject_Index]->Mesh_Quat);
-	Object->Mesh_Quat = App->Cl_Scene_Data->Cl_Object[CopyObject_Index]->Mesh_Quat;
+	//// Ogre Rotation
+	//Object->OgreNode->setOrientation(App->Cl_Scene_Data->Cl_Object[CopyObject_Index]->Mesh_Quat);
+	//Object->Mesh_Quat = App->Cl_Scene_Data->Cl_Object[CopyObject_Index]->Mesh_Quat;
 
-	// Ogre Scale
-	Object->OgreNode->setScale(App->Cl_Scene_Data->Cl_Object[CopyObject_Index]->Mesh_Scale);
-	Object->Mesh_Scale = App->Cl_Scene_Data->Cl_Object[CopyObject_Index]->Mesh_Scale;
+	//// Ogre Scale
+	//Object->OgreNode->setScale(App->Cl_Scene_Data->Cl_Object[CopyObject_Index]->Mesh_Scale);
+	//Object->Mesh_Scale = App->Cl_Scene_Data->Cl_Object[CopyObject_Index]->Mesh_Scale;
 
-	// Ogre Pos
-	Ogre::Vector3 Pos = App->Cl_Scene_Data->Cl_Object[CopyObject_Index]->Mesh_Pos;
+	//// Ogre Pos
+	//Ogre::Vector3 Pos = App->Cl_Scene_Data->Cl_Object[CopyObject_Index]->Mesh_Pos;
 
-	Pos.x = Pos.x + 5;
-	Pos.z = Pos.z + 5;
-	Object->OgreNode->setPosition(Pos);
-	Object->Mesh_Pos = Pos;
+	//Pos.x = Pos.x + 5;
+	//Pos.z = Pos.z + 5;
+	//Object->OgreNode->setPosition(Pos);
+	//Object->Mesh_Pos = Pos;
 
 
 
-	Object->Physics_Size = App->Cl_Scene_Data->Cl_Object[CopyObject_Index]->Physics_Size;
-	Object->Physics_Pos = App->Cl_Scene_Data->Cl_Object[CopyObject_Index]->Physics_Pos;
-	Object->Physics_Quat = App->Cl_Scene_Data->Cl_Object[CopyObject_Index]->Physics_Quat;
-	Object->Physics_Rot = App->Cl_Scene_Data->Cl_Object[CopyObject_Index]->Physics_Rot;
+	//Object->Physics_Size = App->Cl_Scene_Data->Cl_Object[CopyObject_Index]->Physics_Size;
+	//Object->Physics_Pos = App->Cl_Scene_Data->Cl_Object[CopyObject_Index]->Physics_Pos;
+	//Object->Physics_Quat = App->Cl_Scene_Data->Cl_Object[CopyObject_Index]->Physics_Quat;
+	//Object->Physics_Rot = App->Cl_Scene_Data->Cl_Object[CopyObject_Index]->Physics_Rot;
 
-	//Physics Scale
-	Object->Physics_Scale = App->Cl_Scene_Data->Cl_Object[CopyObject_Index]->Physics_Scale;
-	Ogre::Vector3 Scale = Object->Physics_Scale;
-	Object->bt_body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+	////Physics Scale
+	//Object->Physics_Scale = App->Cl_Scene_Data->Cl_Object[CopyObject_Index]->Physics_Scale;
+	//Ogre::Vector3 Scale = Object->Physics_Scale;
+	//Object->bt_body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
 
-	// Physics Pos
-	Ogre::Vector3 Pos2 = App->Cl_Scene_Data->Cl_Object[Index]->Mesh_Pos;
-	Pos2.x += 15;
-	App->Cl_Scene_Data->Cl_Object[Index]->Mesh_Pos = Pos2;
-	App->Cl_Scene_Data->Cl_Object[Index]->OgreNode->setPosition(Pos2);
+	//// Physics Pos
+	//Ogre::Vector3 Pos2 = App->Cl_Scene_Data->Cl_Object[Index]->Mesh_Pos;
+	//Pos2.x += 15;
+	//App->Cl_Scene_Data->Cl_Object[Index]->Mesh_Pos = Pos2;
+	//App->Cl_Scene_Data->Cl_Object[Index]->OgreNode->setPosition(Pos2);
 
-	// Physics Rotation
-	float w = App->Cl_Scene_Data->Cl_Object[Index]->Physics_Quat.w;
-	float x = App->Cl_Scene_Data->Cl_Object[Index]->Physics_Quat.x;
-	float y = App->Cl_Scene_Data->Cl_Object[Index]->Physics_Quat.y;
-	float z = App->Cl_Scene_Data->Cl_Object[Index]->Physics_Quat.z;
-	App->Cl_Scene_Data->Cl_Object[Index]->bt_body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
+	//// Physics Rotation
+	//float w = App->Cl_Scene_Data->Cl_Object[Index]->Physics_Quat.w;
+	//float x = App->Cl_Scene_Data->Cl_Object[Index]->Physics_Quat.x;
+	//float y = App->Cl_Scene_Data->Cl_Object[Index]->Physics_Quat.y;
+	//float z = App->Cl_Scene_Data->Cl_Object[Index]->Physics_Quat.z;
+	//App->Cl_Scene_Data->Cl_Object[Index]->bt_body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
 
-	App->Cl_Dimensions->UpDate_Physics_And_Visuals(Index);
-	App->Cl_Dimensions->UpDate_Physics_And_Visuals(Index);
+	//App->Cl_Dimensions->UpDate_Physics_And_Visuals(Index);
+	//App->Cl_Dimensions->UpDate_Physics_And_Visuals(Index);
 
-	App->Cl_Visuals->MarkerBB_Addjust(Index);
+	//App->Cl_Visuals->MarkerBB_Addjust(Index);
 	return 1;
 }

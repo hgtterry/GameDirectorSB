@@ -437,7 +437,7 @@ void SB_Player::Check_Collisions(void)
 					Distance = pt.getDistance();
 					Round = (int)Distance;
 
-					if (Round < 0)
+					/*if (Round < 0)
 					{
 						if (App->Cl_Scene_Data->Cl_Object[Col_Object_Index]->Triggered == 0)
 						{
@@ -451,7 +451,7 @@ void SB_Player::Check_Collisions(void)
 						{
 							App->Cl_Scene_Data->Cl_Object[Col_Object_Index]->Triggered = 0;
 						}
-					}
+					}*/
 				}
 			}
 
@@ -468,7 +468,7 @@ void SB_Player::Check_Collisions(void)
 					Distance = pt.getDistance();
 					Round = (int)Distance;
 
-					if (Round < 0)
+					/*if (Round < 0)
 					{
 						if (App->Cl_Scene_Data->Cl_Object[Col_Object_Index]->Triggered == 0)
 						{
@@ -483,7 +483,7 @@ void SB_Player::Check_Collisions(void)
 							App->Cl_Panels_Com->Show_Overlay(0, Stock_Index);
 							App->Cl_Scene_Data->Cl_Object[Col_Object_Index]->Triggered = 0;
 						}
-					}
+					}*/
 				}
 			}
 
@@ -500,22 +500,22 @@ void SB_Player::Check_Collisions(void)
 					Distance = pt.getDistance();
 					Round = (int)Distance;
 
-					if (Round < 0)
-					{
-						if (App->Cl_Scene_Data->Cl_Object[Col_Object_Index]->Triggered == 0)
-						{
-							App->Cl_Collision->Move_Entity(Col_Object_Index);
-						}
-					}
-					else if (Round == 0)
-					{
-						if (App->Cl_Scene_Data->Cl_Object[Col_Object_Index]->Triggered == 1)
-						{
-							/*int Stock_Index = App->GDCL_Scene_Data->CL_Object[ColisionIndex]->Entity[0].Stock_mIndex;
-							App->GDCL_Scene_Data->S_Messages[Stock_Index]->overlay->hide();
-							App->GDCL_Scene_Data->CL_Object[ColisionIndex]->Triggered = 0;*/
-						}
-					}
+					//if (Round < 0)
+					//{
+					//	if (App->Cl_Scene_Data->Cl_Object[Col_Object_Index]->Triggered == 0)
+					//	{
+					//		App->Cl_Collision->Move_Entity(Col_Object_Index);
+					//	}
+					//}
+					//else if (Round == 0)
+					//{
+					//	if (App->Cl_Scene_Data->Cl_Object[Col_Object_Index]->Triggered == 1)
+					//	{
+					//		/*int Stock_Index = App->GDCL_Scene_Data->CL_Object[ColisionIndex]->Entity[0].Stock_mIndex;
+					//		App->GDCL_Scene_Data->S_Messages[Stock_Index]->overlay->hide();
+					//		App->GDCL_Scene_Data->CL_Object[ColisionIndex]->Triggered = 0;*/
+					//	}
+					//}
 				}
 			}
 
@@ -532,7 +532,7 @@ void SB_Player::Check_Collisions(void)
 					Distance = pt.getDistance();
 					Round = (int)Distance;
 
-					if (Round < 0)
+					/*if (Round < 0)
 					{
 						if (App->Cl_Scene_Data->Cl_Object[Col_Object_Index]->Triggered == 0)
 						{
@@ -546,7 +546,7 @@ void SB_Player::Check_Collisions(void)
 						{
 
 						}
-					}
+					}*/
 				}
 			}
 
@@ -563,7 +563,7 @@ void SB_Player::Check_Collisions(void)
 					Distance = pt.getDistance();
 					Round = (int)Distance;
 
-					if (Round < 0)
+					/*if (Round < 0)
 					{
 						if (App->Cl_Scene_Data->Cl_Object[Col_Object_Index]->Triggered == 0)
 						{
@@ -577,7 +577,7 @@ void SB_Player::Check_Collisions(void)
 						{
 
 						}
-					}
+					}*/
 				}
 			}
 
@@ -594,7 +594,7 @@ void SB_Player::Check_Collisions(void)
 					Distance = pt.getDistance();
 					Round = (int)Distance;
 
-					if (Round < 0)
+					/*if (Round < 0)
 					{
 						if (App->Cl_Scene_Data->Cl_Object[Col_Object_Index]->Triggered == 0)
 						{
@@ -609,7 +609,7 @@ void SB_Player::Check_Collisions(void)
 						{
 							App->Cl_Scene_Data->Cl_Object[Col_Object_Index]->Triggered = 0;
 						}
-					}
+					}*/
 				}
 			}
 		}

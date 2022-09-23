@@ -28,17 +28,17 @@ GD19_Collision::~GD19_Collision(void)
 // *************************************************************************
 bool GD19_Collision::Sound_Entity(int Index)
 {
-	if (App->Cl_Scene_Data->Cl_Object[Index]->Re_Trigger == false && App->Cl_Scene_Data->Cl_Object[Index]->Triggered == 1) // Retrigger Yes No
-	{
-		return 1;
-	}
+	//if (App->Cl_Scene_Data->Cl_Object[Index]->Re_Trigger == false && App->Cl_Scene_Data->Cl_Object[Index]->Triggered == 1) // Retrigger Yes No
+	//{
+	//	return 1;
+	//}
 
-	if (App->Cl_Scene_Data->Cl_Object[Index]->Triggered == 1) // Retrigger Yes No
-	{
-		return 1;
-	}
+	//if (App->Cl_Scene_Data->Cl_Object[Index]->Triggered == 1) // Retrigger Yes No
+	//{
+	//	return 1;
+	//}
 
-	Play_Sound(Index);
+	//Play_Sound(Index);
 	
 	return 1;
 }
@@ -48,33 +48,33 @@ bool GD19_Collision::Sound_Entity(int Index)
 // *************************************************************************
 bool GD19_Collision::Message_Entity(int Index)
 {
-	if (App->Cl_Scene_Data->Cl_Object[Index]->Re_Trigger == false && App->Cl_Scene_Data->Cl_Object[Index]->Triggered == 1) // Retrigger Yes No
-	{
-		return 1;
-	}
+	//if (App->Cl_Scene_Data->Cl_Object[Index]->Re_Trigger == false && App->Cl_Scene_Data->Cl_Object[Index]->Triggered == 1) // Retrigger Yes No
+	//{
+	//	return 1;
+	//}
 
-	if (App->Cl_Scene_Data->Cl_Object[Index]->Triggered == 1) // Retrigger Yes No
-	{
-		return 1;
-	}
-	
+	//if (App->Cl_Scene_Data->Cl_Object[Index]->Triggered == 1) // Retrigger Yes No
+	//{
+	//	return 1;
+	//}
+	//
 
-	
-	int result = 0;
-	result = strcmp(App->Cl_Scene_Data->Cl_Object[Index]->Entity[0].mTextItem, "None");
-	if (result != 0)
-	{
-		
-		int Stock_Index = App->Cl_Scene_Data->Cl_Object[Index]->Entity[0].Stock_mIndex;
-		App->Cl_Panels_Com->Set_User_Text(App->Cl_Scene_Data->Cl_Object[Index]->Entity[0].mTextItem, Stock_Index);
+	//
+	//int result = 0;
+	//result = strcmp(App->Cl_Scene_Data->Cl_Object[Index]->Entity[0].mTextItem, "None");
+	//if (result != 0)
+	//{
+	//	
+	//	int Stock_Index = App->Cl_Scene_Data->Cl_Object[Index]->Entity[0].Stock_mIndex;
+	//	App->Cl_Panels_Com->Set_User_Text(App->Cl_Scene_Data->Cl_Object[Index]->Entity[0].mTextItem, Stock_Index);
 
-		App->Cl_Panels_Com->Show_Overlay(1, Stock_Index);
+	//	App->Cl_Panels_Com->Show_Overlay(1, Stock_Index);
 
-		Play_Sound(Index);
+	//	Play_Sound(Index);
 
-		App->Cl_Scene_Data->Cl_Object[Index]->Triggered = 1;
-	}
-	Play_Sound(Index);
+	//	App->Cl_Scene_Data->Cl_Object[Index]->Triggered = 1;
+	//}
+	//Play_Sound(Index);
 	return 1;
 }
 
@@ -84,9 +84,9 @@ bool GD19_Collision::Message_Entity(int Index)
 bool GD19_Collision::Do_Collectable(int Index)
 {
 	
-	App->Cl_Scene_Data->Cl_Object[Index]->OgreEntity->setVisible(0);
+	/*App->Cl_Scene_Data->Cl_Object[Index]->OgreEntity->setVisible(0);
 	App->Cl_Scene_Data->Cl_Object[Index]->OgreNode->setPosition(100,100,100);
-	App->Cl_Scene_Data->Cl_Object[Index]->bt_body->getWorldTransform().setOrigin(btVector3(100, 100, 100));
+	App->Cl_Scene_Data->Cl_Object[Index]->bt_body->getWorldTransform().setOrigin(btVector3(100, 100, 100));*/
 
 	/*if (App->GDCL_Scene_Data->CL_Object[Index]->HasSound == 1)
 	{
@@ -110,12 +110,12 @@ bool GD19_Collision::Do_Collectable(int Index)
 // *************************************************************************
 bool GD19_Collision::Do_Teleport(int Index)
 {
-	App->SBC_Scene->SBC_Base_Player[0]->Player_Node->setPosition(App->Cl_Scene_Data->Cl_Object[Index]->S_Teleport[0]->Player_Position);
+	/*App->SBC_Scene->SBC_Base_Player[0]->Player_Node->setPosition(App->Cl_Scene_Data->Cl_Object[Index]->S_Teleport[0]->Player_Position);
 	App->SBC_Scene->SBC_Base_Player[0]->Phys_Body->getWorldTransform().setOrigin(App->Cl_Scene_Data->Cl_Object[Index]->S_Teleport[0]->Physics_Position);
 	App->SBC_Scene->SBC_Base_Player[0]->Phys_Body->getWorldTransform().setRotation(App->Cl_Scene_Data->Cl_Object[Index]->S_Teleport[0]->Physics_Rotation);
 
 	
-	Play_Sound(Index);
+	Play_Sound(Index);*/
 
 	return 1;
 }
@@ -125,31 +125,31 @@ bool GD19_Collision::Do_Teleport(int Index)
 // *************************************************************************
 bool GD19_Collision::Do_Environment(int Index)
 {
-	if (App->Cl_Scene_Data->Cl_Object[Index]->Re_Trigger == false && App->Cl_Scene_Data->Cl_Object[Index]->Triggered == 1) // Retrigger Yes No
-	{
-		return 1;
-	}
+	//if (App->Cl_Scene_Data->Cl_Object[Index]->Re_Trigger == false && App->Cl_Scene_Data->Cl_Object[Index]->Triggered == 1) // Retrigger Yes No
+	//{
+	//	return 1;
+	//}
 
-	if (App->Cl_Scene_Data->Cl_Object[Index]->Triggered == 1) // Retrigger Yes No
-	{
-		return 1;
-	}
+	//if (App->Cl_Scene_Data->Cl_Object[Index]->Triggered == 1) // Retrigger Yes No
+	//{
+	//	return 1;
+	//}
 
-	if (App->Cl_Scene_Data->Cl_Object[Index]->HasSound == 1)
-	{
-		if (App->Cl_Scene_Data->Cl_Object[Index]->S_Environment[0]->FogOn == 0)
-		{
-			App->Cl_Scene_Data->Cl_Object[Index]->S_Environment[0]->FogOn = 1;
-			App->Cl_Environment->EnableFog(true);
-		}
-		else
-		{
-			App->Cl_Scene_Data->Cl_Object[Index]->S_Environment[0]->FogOn = 0;
-			App->Cl_Environment->EnableFog(false);
-		}
+	//if (App->Cl_Scene_Data->Cl_Object[Index]->HasSound == 1)
+	//{
+	//	if (App->Cl_Scene_Data->Cl_Object[Index]->S_Environment[0]->FogOn == 0)
+	//	{
+	//		App->Cl_Scene_Data->Cl_Object[Index]->S_Environment[0]->FogOn = 1;
+	//		App->Cl_Environment->EnableFog(true);
+	//	}
+	//	else
+	//	{
+	//		App->Cl_Scene_Data->Cl_Object[Index]->S_Environment[0]->FogOn = 0;
+	//		App->Cl_Environment->EnableFog(false);
+	//	}
 
-			Play_Sound(Index);
-	}
+	//		Play_Sound(Index);
+	//}
 
 	return 1;
 }
@@ -160,55 +160,55 @@ bool GD19_Collision::Do_Environment(int Index)
 bool GD19_Collision::Move_Entity(int Index)
 {
 
-	if (App->Cl_Scene_Data->Cl_Object[Index]->Triggered == 1) // Retrigger Yes No
-	{
-		return 1;
-	}
+	//if (App->Cl_Scene_Data->Cl_Object[Index]->Triggered == 1) // Retrigger Yes No
+	//{
+	//	return 1;
+	//}
 
-	App->Cl_Scene_Data->Cl_Object[Index]->Triggered = 1;
+	//App->Cl_Scene_Data->Cl_Object[Index]->Triggered = 1;
 
-	Ogre::Vector3 M_Pos;
-	Ogre::Vector3 P_Pos;
-	ObjectIndex = Index;
+	//Ogre::Vector3 M_Pos;
+	//Ogre::Vector3 P_Pos;
+	//ObjectIndex = Index;
 
-	int ObjectToMove = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Object_Index;
+	//int ObjectToMove = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Object_Index;
 
-	if (App->Cl_Scene_Data->Cl_Object[ObjectToMove]->Deleted == 0)
-	{
+	//if (App->Cl_Scene_Data->Cl_Object[ObjectToMove]->Deleted == 0)
+	//{
 
-		M_Pos = App->Cl_Scene_Data->Cl_Object[ObjectToMove]->Mesh_Pos;
-		P_Pos = App->Cl_Scene_Data->Cl_Object[ObjectToMove]->Physics_Pos;
+	//	M_Pos = App->Cl_Scene_Data->Cl_Object[ObjectToMove]->Mesh_Pos;
+	//	P_Pos = App->Cl_Scene_Data->Cl_Object[ObjectToMove]->Physics_Pos;
 
-		App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos = Ogre::Vector3(M_Pos);
-		App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->PhysicsPos = Ogre::Vector3(P_Pos);
+	//	App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos = Ogre::Vector3(M_Pos);
+	//	App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->PhysicsPos = Ogre::Vector3(P_Pos);
 
-		x = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.x;
-		y = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.y;
-		z = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.z;
+	//	x = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.x;
+	//	y = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.y;
+	//	z = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.z;
 
-		px = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->PhysicsPos.x;
-		py = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->PhysicsPos.y;
-		pz = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->PhysicsPos.z;
+	//	px = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->PhysicsPos.x;
+	//	py = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->PhysicsPos.y;
+	//	pz = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->PhysicsPos.z;
 
-		if (App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->WhatDirection == Enums::Axis_x)
-		{
-			FinalPosition = x + App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Distance;
-		}
+	//	if (App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->WhatDirection == Enums::Axis_x)
+	//	{
+	//		FinalPosition = x + App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Distance;
+	//	}
 
-		if (App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->WhatDirection == Enums::Axis_y)
-		{
-			FinalPosition = y + App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Distance;
-		}
+	//	if (App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->WhatDirection == Enums::Axis_y)
+	//	{
+	//		FinalPosition = y + App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Distance;
+	//	}
 
-		if (App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->WhatDirection == Enums::Axis_z)
-		{
-			FinalPosition = z + App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Distance;
-		}
+	//	if (App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->WhatDirection == Enums::Axis_z)
+	//	{
+	//		FinalPosition = z + App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Distance;
+	//	}
 
-		Play_Sound(Index);
+	//	Play_Sound(Index);
 
-		DoMove = 1; // Trigger Ogre Listener to update
-	}
+	//	DoMove = 1; // Trigger Ogre Listener to update
+	//}
 
 	return 1;
 }
@@ -218,169 +218,169 @@ bool GD19_Collision::Move_Entity(int Index)
 // *************************************************************************
 void GD19_Collision::MoveObject(Ogre::Real Time)
 {
-	if (App->Cl_Scene_Data->Cl_Object[ObjectIndex]->Deleted == 0)
-	{
-		// X Axis
-		if (App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->WhatDirection == Enums::Axis_x)
-		{
+	//if (App->Cl_Scene_Data->Cl_Object[ObjectIndex]->Deleted == 0)
+	//{
+	//	// X Axis
+	//	if (App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->WhatDirection == Enums::Axis_x)
+	//	{
 
-			if (App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->IsNegative == false)
-			{
-				int ObjectToMove = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Object_Index;
+	//		if (App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->IsNegative == false)
+	//		{
+	//			int ObjectToMove = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Object_Index;
 
-				App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.x += App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Speed * Time;
-				App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->PhysicsPos.x += App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Speed * Time;
+	//			App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.x += App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Speed * Time;
+	//			App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->PhysicsPos.x += App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Speed * Time;
 
-				x = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.x;
-				px = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->PhysicsPos.x;
+	//			x = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.x;
+	//			px = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->PhysicsPos.x;
 
-				App->Cl_Scene_Data->Cl_Object[ObjectToMove]->OgreNode->setPosition(x, y, z);
-				App->Cl_Scene_Data->Cl_Object[ObjectToMove]->bt_body->getWorldTransform().setOrigin(btVector3(px, py, pz));
+	//			App->Cl_Scene_Data->Cl_Object[ObjectToMove]->OgreNode->setPosition(x, y, z);
+	//			App->Cl_Scene_Data->Cl_Object[ObjectToMove]->bt_body->getWorldTransform().setOrigin(btVector3(px, py, pz));
 
-				if (App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.x > FinalPosition)
-				{
+	//			if (App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.x > FinalPosition)
+	//			{
 
-					/*App->GDCL_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile->stop();
-					App->GDCL_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile->drop();
-					App->GDCL_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile = NULL;*/
+	//				/*App->GDCL_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile->stop();
+	//				App->GDCL_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile->drop();
+	//				App->GDCL_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile = NULL;*/
 
-					DoMove = 0; // Stop Listener
-				}
+	//				DoMove = 0; // Stop Listener
+	//			}
 
-				return;
-			}
-			else
-			{
-				int ObjectToMove = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Object_Index;
+	//			return;
+	//		}
+	//		else
+	//		{
+	//			int ObjectToMove = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Object_Index;
 
-				App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.x -= App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Speed * Time;
-				App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->PhysicsPos.x -= App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Speed * Time;
+	//			App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.x -= App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Speed * Time;
+	//			App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->PhysicsPos.x -= App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Speed * Time;
 
-				x = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.x;
-				px = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->PhysicsPos.x;
+	//			x = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.x;
+	//			px = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->PhysicsPos.x;
 
-				App->Cl_Scene_Data->Cl_Object[ObjectToMove]->OgreNode->setPosition(x, y, z);
-				App->Cl_Scene_Data->Cl_Object[ObjectToMove]->bt_body->getWorldTransform().setOrigin(btVector3(px, py, pz));
+	//			App->Cl_Scene_Data->Cl_Object[ObjectToMove]->OgreNode->setPosition(x, y, z);
+	//			App->Cl_Scene_Data->Cl_Object[ObjectToMove]->bt_body->getWorldTransform().setOrigin(btVector3(px, py, pz));
 
-				if (App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.x < FinalPosition)
-				{
-					/*App->Cl_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile->stop();
-					App->Cl_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile->drop();
-					App->Cl_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile = NULL;*/
+	//			if (App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.x < FinalPosition)
+	//			{
+	//				/*App->Cl_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile->stop();
+	//				App->Cl_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile->drop();
+	//				App->Cl_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile = NULL;*/
 
-					DoMove = 0; // Stop Listener
-				}
+	//				DoMove = 0; // Stop Listener
+	//			}
 
-				return;
-			}
-		}
+	//			return;
+	//		}
+	//	}
 
-		// Y Axis
-		if (App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->WhatDirection == Enums::Axis_y)
-		{
-			if (App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->IsNegative == false)
-			{
-				int ObjectToMove = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Object_Index;
+	//	// Y Axis
+	//	if (App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->WhatDirection == Enums::Axis_y)
+	//	{
+	//		if (App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->IsNegative == false)
+	//		{
+	//			int ObjectToMove = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Object_Index;
 
-				App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.y += App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Speed * Time;
-				App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->PhysicsPos.y += App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Speed * Time;
+	//			App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.y += App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Speed * Time;
+	//			App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->PhysicsPos.y += App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Speed * Time;
 
-				y = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.y;
-				py = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->PhysicsPos.y;
+	//			y = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.y;
+	//			py = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->PhysicsPos.y;
 
-				App->Cl_Scene_Data->Cl_Object[ObjectToMove]->OgreNode->setPosition(x, y, z);
-				App->Cl_Scene_Data->Cl_Object[ObjectToMove]->bt_body->getWorldTransform().setOrigin(btVector3(px, py, pz));
+	//			App->Cl_Scene_Data->Cl_Object[ObjectToMove]->OgreNode->setPosition(x, y, z);
+	//			App->Cl_Scene_Data->Cl_Object[ObjectToMove]->bt_body->getWorldTransform().setOrigin(btVector3(px, py, pz));
 
-				if (App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.y > FinalPosition)
-				{
-					/*App->Cl_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile->stop();
-					App->Cl_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile->drop();
-					App->Cl_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile = NULL;*/
+	//			if (App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.y > FinalPosition)
+	//			{
+	//				/*App->Cl_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile->stop();
+	//				App->Cl_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile->drop();
+	//				App->Cl_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile = NULL;*/
 
-					DoMove = 0; // Stop Listener
-				}
+	//				DoMove = 0; // Stop Listener
+	//			}
 
-				return;
-			}
-			else
-			{
-				int ObjectToMove = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Object_Index;
+	//			return;
+	//		}
+	//		else
+	//		{
+	//			int ObjectToMove = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Object_Index;
 
-				App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.y -= App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Speed * Time;
-				App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->PhysicsPos.y -= App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Speed * Time;
+	//			App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.y -= App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Speed * Time;
+	//			App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->PhysicsPos.y -= App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Speed * Time;
 
-				y = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.y;
-				py = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->PhysicsPos.y;
+	//			y = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.y;
+	//			py = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->PhysicsPos.y;
 
-				App->Cl_Scene_Data->Cl_Object[ObjectToMove]->OgreNode->setPosition(x, y, z);
-				App->Cl_Scene_Data->Cl_Object[ObjectToMove]->bt_body->getWorldTransform().setOrigin(btVector3(px, py, pz));
+	//			App->Cl_Scene_Data->Cl_Object[ObjectToMove]->OgreNode->setPosition(x, y, z);
+	//			App->Cl_Scene_Data->Cl_Object[ObjectToMove]->bt_body->getWorldTransform().setOrigin(btVector3(px, py, pz));
 
-				if (App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.y < FinalPosition)
-				{
-					/*App->GDCL_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile->stop();
-					App->GDCL_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile->drop();
-					App->GDCL_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile = NULL;*/
+	//			if (App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.y < FinalPosition)
+	//			{
+	//				/*App->GDCL_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile->stop();
+	//				App->GDCL_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile->drop();
+	//				App->GDCL_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile = NULL;*/
 
-					DoMove = 0; // Stop Listener
-				}
+	//				DoMove = 0; // Stop Listener
+	//			}
 
-				return;
-			}
-		}
+	//			return;
+	//		}
+	//	}
 
-		// Z Axis
-		if (App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->WhatDirection == Enums::Axis_z)
-		{
-			if (App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->IsNegative == false)
-			{
-				int ObjectToMove = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Object_Index;
+	//	// Z Axis
+	//	if (App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->WhatDirection == Enums::Axis_z)
+	//	{
+	//		if (App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->IsNegative == false)
+	//		{
+	//			int ObjectToMove = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Object_Index;
 
-				App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.z += App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Speed * Time;
-				App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->PhysicsPos.z += App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Speed * Time;
+	//			App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.z += App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Speed * Time;
+	//			App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->PhysicsPos.z += App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Speed * Time;
 
-				z = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.z;
-				pz = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->PhysicsPos.z;
+	//			z = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.z;
+	//			pz = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->PhysicsPos.z;
 
-				App->Cl_Scene_Data->Cl_Object[ObjectToMove]->OgreNode->setPosition(x, y, z);
-				App->Cl_Scene_Data->Cl_Object[ObjectToMove]->bt_body->getWorldTransform().setOrigin(btVector3(px, py, pz));
+	//			App->Cl_Scene_Data->Cl_Object[ObjectToMove]->OgreNode->setPosition(x, y, z);
+	//			App->Cl_Scene_Data->Cl_Object[ObjectToMove]->bt_body->getWorldTransform().setOrigin(btVector3(px, py, pz));
 
-				if (App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.z > FinalPosition)
-				{
-					/*App->GDCL_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile->stop();
-					App->GDCL_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile->drop();
-					App->GDCL_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile = NULL;*/
+	//			if (App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.z > FinalPosition)
+	//			{
+	//				/*App->GDCL_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile->stop();
+	//				App->GDCL_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile->drop();
+	//				App->GDCL_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile = NULL;*/
 
-					DoMove = 0; // Stop Listener
-				}
+	//				DoMove = 0; // Stop Listener
+	//			}
 
-				return;
-			}
-			else
-			{
-				int ObjectToMove = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Object_Index;
+	//			return;
+	//		}
+	//		else
+	//		{
+	//			int ObjectToMove = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Object_Index;
 
-				App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.z -= App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Speed * Time;
-				App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->PhysicsPos.z -= App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Speed * Time;
+	//			App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.z -= App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Speed * Time;
+	//			App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->PhysicsPos.z -= App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Speed * Time;
 
-				z = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.z;
-				pz = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->PhysicsPos.z;
+	//			z = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.z;
+	//			pz = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->PhysicsPos.z;
 
-				App->Cl_Scene_Data->Cl_Object[ObjectToMove]->OgreNode->setPosition(x, y, z);
-				App->Cl_Scene_Data->Cl_Object[ObjectToMove]->bt_body->getWorldTransform().setOrigin(btVector3(px, py, pz));
+	//			App->Cl_Scene_Data->Cl_Object[ObjectToMove]->OgreNode->setPosition(x, y, z);
+	//			App->Cl_Scene_Data->Cl_Object[ObjectToMove]->bt_body->getWorldTransform().setOrigin(btVector3(px, py, pz));
 
-				if (App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.z < FinalPosition)
-				{
-					/*App->GDCL_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile->stop();
-					App->GDCL_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile->drop();
-					App->GDCL_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile = NULL;*/
+	//			if (App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.z < FinalPosition)
+	//			{
+	//				/*App->GDCL_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile->stop();
+	//				App->GDCL_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile->drop();
+	//				App->GDCL_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile = NULL;*/
 
-					DoMove = 0; // Stop Listener
-				}
+	//				DoMove = 0; // Stop Listener
+	//			}
 
-				return;
-			}
-		}
-	}
+	//			return;
+	//		}
+	//	}
+	//}
 
 	return;
 }
@@ -391,7 +391,7 @@ void GD19_Collision::MoveObject(Ogre::Real Time)
 bool GD19_Collision::Play_Sound(int Index)
 {
 
-	if (App->Cl_Scene_Data->Cl_Object[Index]->HasSound == 1 && App->Cl_Scene_Data->Cl_Object[Index]->Play_v2 == 1)
+	/*if (App->Cl_Scene_Data->Cl_Object[Index]->HasSound == 1 && App->Cl_Scene_Data->Cl_Object[Index]->Play_v2 == 1)
 	{
 		char buff[1024];
 		strcpy(buff, App->Cl_SoundMgr->Default_Folder);
@@ -406,7 +406,7 @@ bool GD19_Collision::Play_Sound(int Index)
 		App->Cl_Scene_Data->St_Sounds[SndIndex]->SndFile->setIsPaused(false);
 
 		App->Cl_Scene_Data->Cl_Object[Index]->Triggered = 1;
-	}
+	}*/
 
 	return 1;
 }

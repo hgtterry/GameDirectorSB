@@ -13,8 +13,6 @@ public:
 	void Start_Gen_ListBox(int ListType);
 	void Start_Projection();
 
-	void Start_DataView();
-
 	void YesNo(char *Text, char *Text2);
 	void Message(char *pString);
 

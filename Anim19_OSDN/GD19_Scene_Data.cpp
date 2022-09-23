@@ -45,8 +45,6 @@ bool GD19_Scene_Data::Init_Class(void)
 	Locations_ID_Counter = 2000; //Locations 2000 to 3000
 	StockSounds_ID_Counter = 3000; // Stock sounds 3000 to 4000
 
-	Cl_Object[0] = nullptr;
-
 	return 1;
 }
 
@@ -114,7 +112,7 @@ void GD19_Scene_Data::SetObjectDefaults(int Index)
 // *************************************************************************
 void GD19_Scene_Data::Set_Move_Defaults(int Index)
 {
-	Cl_Object[Index]->S_MoveType->IsNegative = 1;
+	/*Cl_Object[Index]->S_MoveType->IsNegative = 1;
 	Cl_Object[Index]->S_MoveType->Distance = -50;
 	Cl_Object[Index]->S_MoveType->Newpos = 0;
 	Cl_Object[Index]->S_MoveType->Speed = 10.0;
@@ -123,7 +121,7 @@ void GD19_Scene_Data::Set_Move_Defaults(int Index)
 	Cl_Object[Index]->S_MoveType->Object_ID = 0;
 	Cl_Object[Index]->S_MoveType->Triggered = 0;
 	Cl_Object[Index]->S_MoveType->Re_Trigger = 0;
-	strcpy(Cl_Object[Index]->S_MoveType->Object_Name,"None");
+	strcpy(Cl_Object[Index]->S_MoveType->Object_Name,"None");*/
 	return;
 }
 // *************************************************************************
@@ -245,11 +243,11 @@ void GD19_Scene_Data::ClearScene(void)
 	int Count = 0;
 	while (Count < ObjectCount) // Remove Ogre Objects
 	{
-		if(Cl_Object[Count])
+		/*if(Cl_Object[Count])
 		{
 			delete Cl_Object[Count];
 			Cl_Object[Count] = NULL;
-		}
+		}*/
 
 		Count++;
 	}
@@ -417,7 +415,7 @@ bool GD19_Scene_Data::EditorMode(void)
 // *************************************************************************
 bool GD19_Scene_Data::Show_Entities(bool YesNo)
 {
-	int Count = 0;
+	/*int Count = 0;
 	while (Count < ObjectCount)
 	{
 		if (Cl_Object[Count]->Deleted == 0)
@@ -444,7 +442,7 @@ bool GD19_Scene_Data::Show_Entities(bool YesNo)
 			}
 		}
 		Count++;
-	}
+	}*/
 	return 1;
 }
 
@@ -453,28 +451,28 @@ bool GD19_Scene_Data::Show_Entities(bool YesNo)
 // *************************************************************************
 bool GD19_Scene_Data::Is_Meshes_Used(char* Name)
 {
-	int Count = 0;
-	int Total = ObjectCount;
+	//int Count = 0;
+	//int Total = ObjectCount;
 
-	if (strcmp(Name, "Sinbad.mesh") == 0) // Needs to be Actual Player Mesh
-	{
-		return 1;
-	}
+	//if (strcmp(Name, "Sinbad.mesh") == 0) // Needs to be Actual Player Mesh
+	//{
+	//	return 1;
+	//}
 
-	while (Count < Total)
-	{
-		if (Cl_Object[Count]->Deleted == 0)
-		{
-			int Result = 1;
-			Result = strcmp(Cl_Object[Count]->MeshName, Name);
-			if (Result == 0)
-			{
-				return 1;
-			}
-		}
+	//while (Count < Total)
+	//{
+	//	if (Cl_Object[Count]->Deleted == 0)
+	//	{
+	//		int Result = 1;
+	//		Result = strcmp(Cl_Object[Count]->MeshName, Name);
+	//		if (Result == 0)
+	//		{
+	//			return 1;
+	//		}
+	//	}
 
-		Count++;
-	}
+	//	Count++;
+	//}
 
 	return 0;
 }
@@ -484,7 +482,7 @@ bool GD19_Scene_Data::Is_Meshes_Used(char* Name)
 // *************************************************************************
 int GD19_Scene_Data::GetJustIndex_ByName(char* Name)
 {
-	int Count=0;
+	/*int Count=0;
 	int Total = ObjectCount;
 
 	while (Count < Total)
@@ -500,7 +498,7 @@ int GD19_Scene_Data::GetJustIndex_ByName(char* Name)
 		}
 
 		Count++;
-	}
+	}*/
 
 	return -1;
 }
@@ -510,7 +508,7 @@ int GD19_Scene_Data::GetJustIndex_ByName(char* Name)
 // *************************************************************************
 void GD19_Scene_Data::Reset_Triggers(void)
 {
-	Ogre::Vector3 M_Pos;
+	/*Ogre::Vector3 M_Pos;
 	Ogre::Vector3 P_Pos;
 	
 	int Count=0;
@@ -550,7 +548,7 @@ void GD19_Scene_Data::Reset_Triggers(void)
 		}
 
 		Count++;
-	}
+	}*/
 }
 
 // *************************************************************************
@@ -559,59 +557,59 @@ void GD19_Scene_Data::Reset_Triggers(void)
 bool GD19_Scene_Data::Start_Scene()
 {
 	// ------------------------------ Things needed
-	App->Cl_Visuals->MarkerBB_Setup();
-	// --------------------------------------------
-
-	int Index = ObjectCount;
-
-	Cl_Object[Index] = new GD19_Objects();
-	
-	strcpy(Cl_Object[Index]->MeshName,"RF_Level1.mesh");
-
-	Cl_Object[Index]->OgreEntity = App->Cl19_Ogre->mSceneMgr->createEntity("Start_Room","RF_Level1.mesh",App->Cl19_Ogre->App_Resource_Group);
-	Cl_Object[Index]->OgreNode = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	Cl_Object[Index]->OgreNode->attachObject(Cl_Object[Index]->OgreEntity);
-	
-	Cl_Object[Index]->OgreNode->setVisible(true);
-	Cl_Object[Index]->OgreNode->setScale(Cl_Object[Index]->Mesh_Scale);
-	Cl_Object[Index]->OgreNode->setPosition(57.000000, -47.000000, -107.000000);
-
-	Cl_Object[Index]->Mesh_Pos = Ogre::Vector3(57.000000, -47.000000, -107.000000);
-
-	strcpy(Cl_Object[Index]->Name,"Main_Room2");
-
-	//App->SBC_Player->SetUp();
-	
-	App->Cl19_Ogre->OgreListener->Dubug_Physics_Draw = 1;
-
-	App->Cl19_Ogre->OgreListener->GD_Run_Physics = 1;
-
-	
-	App->Cl_SoundMgr->SndFile = App->Cl_SoundMgr->SoundEngine->play2D("Media\\Sounds\\Welcome.ogg",false,true,true);
-	App->Cl_SoundMgr->SndFile->setVolume(App->Cl_SoundMgr->SndVolume);
-	App->Cl_SoundMgr->SndFile->setIsPaused(false);
-
-	S_LoadOptions[0]->Has_Objects = 1;
-	S_LoadOptions[0]->Has_Player = 1;
-
-	
-
-	SceneLoaded = 1;
-
-	ObjectCount++;  // Must be last line
-	
-	
-	//App->Cl_Object_Props->Update_Properties_Mesh();
-
-//	App->SBC_Objects_New->Add_Stock_Message();
-	//App->CL10_Objects_New->Add_Stock_Sound();
-//	App->SBC_Objects_New->Add_Stock_Panel();
-	
-	Start_UpScene();
-	
-	//App->Cl_Load_Scene->OpenScene(0);
-	
-	//ShowWindow(App->GD_Properties_Hwnd,1);
+//	App->Cl_Visuals->MarkerBB_Setup();
+//	// --------------------------------------------
+//
+//	int Index = ObjectCount;
+//
+//	Cl_Object[Index] = new GD19_Objects();
+//	
+//	strcpy(Cl_Object[Index]->MeshName,"RF_Level1.mesh");
+//
+//	Cl_Object[Index]->OgreEntity = App->Cl19_Ogre->mSceneMgr->createEntity("Start_Room","RF_Level1.mesh",App->Cl19_Ogre->App_Resource_Group);
+//	Cl_Object[Index]->OgreNode = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+//	Cl_Object[Index]->OgreNode->attachObject(Cl_Object[Index]->OgreEntity);
+//	
+//	Cl_Object[Index]->OgreNode->setVisible(true);
+//	Cl_Object[Index]->OgreNode->setScale(Cl_Object[Index]->Mesh_Scale);
+//	Cl_Object[Index]->OgreNode->setPosition(57.000000, -47.000000, -107.000000);
+//
+//	Cl_Object[Index]->Mesh_Pos = Ogre::Vector3(57.000000, -47.000000, -107.000000);
+//
+//	strcpy(Cl_Object[Index]->Name,"Main_Room2");
+//
+//	//App->SBC_Player->SetUp();
+//	
+//	App->Cl19_Ogre->OgreListener->Dubug_Physics_Draw = 1;
+//
+//	App->Cl19_Ogre->OgreListener->GD_Run_Physics = 1;
+//
+//	
+//	App->Cl_SoundMgr->SndFile = App->Cl_SoundMgr->SoundEngine->play2D("Media\\Sounds\\Welcome.ogg",false,true,true);
+//	App->Cl_SoundMgr->SndFile->setVolume(App->Cl_SoundMgr->SndVolume);
+//	App->Cl_SoundMgr->SndFile->setIsPaused(false);
+//
+//	S_LoadOptions[0]->Has_Objects = 1;
+//	S_LoadOptions[0]->Has_Player = 1;
+//
+//	
+//
+//	SceneLoaded = 1;
+//
+//	ObjectCount++;  // Must be last line
+//	
+//	
+//	//App->Cl_Object_Props->Update_Properties_Mesh();
+//
+////	App->SBC_Objects_New->Add_Stock_Message();
+//	//App->CL10_Objects_New->Add_Stock_Sound();
+////	App->SBC_Objects_New->Add_Stock_Panel();
+//	
+//	Start_UpScene();
+//	
+//	//App->Cl_Load_Scene->OpenScene(0);
+//	
+//	//ShowWindow(App->GD_Properties_Hwnd,1);
 
 	return 1;
 
@@ -899,17 +897,17 @@ LRESULT CALLBACK GD19_Scene_Data::Dialog_GetUserFile_Proc(HWND hDlg, UINT messag
 // *************************************************************************
 bool GD19_Scene_Data::Delete_Object(int Index)
 {
-	Cl_Object[Index]->OgreNode->setVisible(false);
+	//Cl_Object[Index]->OgreNode->setVisible(false);
 
-	/*App->GDCL_Scene_Data->CL_Object[Index]->OgreNode->detachAllObjects();
-	App->Cl_Ogre->mSceneMgr->destroySceneNode(App->GDCL_Scene_Data->CL_Object[Index]->OgreNode);
-	App->Cl_Ogre->mSceneMgr->destroyEntity(App->GDCL_Scene_Data->CL_Object[Index]->OgreEntity);
+	///*App->GDCL_Scene_Data->CL_Object[Index]->OgreNode->detachAllObjects();
+	//App->Cl_Ogre->mSceneMgr->destroySceneNode(App->GDCL_Scene_Data->CL_Object[Index]->OgreNode);
+	//App->Cl_Ogre->mSceneMgr->destroyEntity(App->GDCL_Scene_Data->CL_Object[Index]->OgreEntity);
 
-	App->GDCL_Scene_Data->CL_Object[Index]->OgreEntity = 0;
-	App->GDCL_Scene_Data->CL_Object[Index]->OgreNode = 0;*/
+	//App->GDCL_Scene_Data->CL_Object[Index]->OgreEntity = 0;
+	//App->GDCL_Scene_Data->CL_Object[Index]->OgreNode = 0;*/
 
-	App->Cl_Bullet->dynamicsWorld->removeRigidBody(Cl_Object[Index]->bt_body);
-	Cl_Object[Index]->bt_body = 0;
+	//App->Cl_Bullet->dynamicsWorld->removeRigidBody(Cl_Object[Index]->bt_body);
+	//Cl_Object[Index]->bt_body = 0;
 	
 	return 1;
 }

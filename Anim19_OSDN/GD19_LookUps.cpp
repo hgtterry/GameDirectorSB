@@ -40,7 +40,7 @@ GD19_LookUps::~GD19_LookUps(void)
 // *************************************************************************
 int GD19_LookUps::Check_Objects_CheckNames(char* Name)
 {
-	int Count = 0;
+	/*int Count = 0;
 	int Total = App->Cl_Scene_Data->ObjectCount;
 	while (Count < Total)
 	{
@@ -55,7 +55,7 @@ int GD19_LookUps::Check_Objects_CheckNames(char* Name)
 			}
 		}
 		Count++;
-	}
+	}*/
 	return 0;
 }
 
@@ -153,40 +153,40 @@ int GD19_LookUps::Stock_Sound_GetCount(void)
 // *************************************************************************
 bool GD19_LookUps::Check_Usage(int Index)
 {
-	char Selected_Object_Name[1024];
+	//char Selected_Object_Name[1024];
 
-	strcpy(Selected_Object_Name, App->Cl_Scene_Data->Cl_Object[Index]->Name);
-	bool Delete_It = 0;
-	
-	// check movers
-	int Count = 0;
-	while (Count < App->Cl_Scene_Data->ObjectCount)
-	{
-		if (App->Cl_Scene_Data->Cl_Object[Count]->Deleted == 0)
-		{
-			if (App->Cl_Scene_Data->Cl_Object[Count]->Usage == Enums::Usage_Move)
-			{
-				char Mover_Name[1024];
-				strcpy(Mover_Name, App->Cl_Scene_Data->Cl_Object[Count]->S_MoveType->Object_Name);
+	//strcpy(Selected_Object_Name, App->Cl_Scene_Data->Cl_Object[Index]->Name);
+	//bool Delete_It = 0;
+	//
+	//// check movers
+	//int Count = 0;
+	//while (Count < App->Cl_Scene_Data->ObjectCount)
+	//{
+	//	if (App->Cl_Scene_Data->Cl_Object[Count]->Deleted == 0)
+	//	{
+	//		if (App->Cl_Scene_Data->Cl_Object[Count]->Usage == Enums::Usage_Move)
+	//		{
+	//			char Mover_Name[1024];
+	//			strcpy(Mover_Name, App->Cl_Scene_Data->Cl_Object[Count]->S_MoveType->Object_Name);
 
-				int Result = 1;
-				Result = strcmp(Selected_Object_Name, Mover_Name);
+	//			int Result = 1;
+	//			Result = strcmp(Selected_Object_Name, Mover_Name);
 
-				if (Result == 0)
-				{
-					Delete_It = 0;
-					return 0;
-				}
-				else
-				{
-					Delete_It = 1;
-				}
+	//			if (Result == 0)
+	//			{
+	//				Delete_It = 0;
+	//				return 0;
+	//			}
+	//			else
+	//			{
+	//				Delete_It = 1;
+	//			}
 
-			}
-		}
+	//		}
+	//	}
 
-		Count++;
-	}
+	//	Count++;
+	//}
 	
 	return 1;
 }
@@ -196,7 +196,7 @@ bool GD19_LookUps::Check_Usage(int Index)
 // *************************************************************************
 int GD19_LookUps::GetIndex_From_ID(int Object_ID)
 {
-	int Count = 0;
+	/*int Count = 0;
 	while (Count < App->Cl_Scene_Data->ObjectCount)
 	{
 		if (App->Cl_Scene_Data->Cl_Object[Count]->Deleted == 0)
@@ -210,7 +210,7 @@ int GD19_LookUps::GetIndex_From_ID(int Object_ID)
 		}
 
 		Count++;
-	}
+	}*/
 
 	return -1;
 }
@@ -221,7 +221,7 @@ int GD19_LookUps::GetIndex_From_ID(int Object_ID)
 int GD19_LookUps::Get_AdjustedCount(void)
 {
 	int New_Count = 0;
-	int Count = 0;
+	/*int Count = 0;
 	int Total = App->Cl_Scene_Data->ObjectCount;
 	while (Count < Total)
 	{
@@ -230,7 +230,7 @@ int GD19_LookUps::Get_AdjustedCount(void)
 			New_Count++;
 		}
 		Count++;
-	}
+	}*/
 	return New_Count;
 }
 
@@ -325,7 +325,7 @@ char* GD19_LookUps::Get_Edit_Category_String(void)
 char* GD19_LookUps::Get_Type_Category_String(void)
 {
 	char strcat2[255];
-	strcpy(strcat2, "Undifined");
+	/*strcpy(strcat2, "Undifined");
 
 	int index = App->SBC_Properties->Current_Selected_Object;
 
@@ -366,7 +366,7 @@ char* GD19_LookUps::Get_Type_Category_String(void)
 	{
 		strcpy(strcat2, "Bullet_Type_Volume");
 		return strcat2;
-	}
+	}*/
 
 	return strcat2;
 }
@@ -377,7 +377,7 @@ char* GD19_LookUps::Get_Type_Category_String(void)
 char* GD19_LookUps::Get_Usage_Category_String(void)
 {
 	char strcat2[255];
-	strcpy(strcat2, "Undifined");
+	/*strcpy(strcat2, "Undifined");
 
 	int index = App->SBC_Properties->Current_Selected_Object;
 
@@ -511,7 +511,7 @@ char* GD19_LookUps::Get_Usage_Category_String(void)
 	{
 		strcpy(strcat2, "Usage_RoomChange");
 		return strcat2;
-	}
+	}*/
 
 	return strcat2;
 }

@@ -810,15 +810,15 @@ void SB_Resources::List_MeshMaterials(HWND List)
 	{
 		char MeshName[255];
 
-		strcpy(MeshName, App->Cl_Scene_Data->Cl_Object[Count]->MeshName);
+		strcpy(MeshName, App->SBC_Scene->B_Object[Count]->Mesh_Name);
 		SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)MeshName);
 
-		int SubMeshCount = App->Cl_Scene_Data->Cl_Object[Count]->OgreEntity->getNumSubEntities();
+		int SubMeshCount = App->SBC_Scene->B_Object[Count]->Object_Ent->getNumSubEntities();
 		int Index = 0;
 		while (Index < SubMeshCount)
 		{
 			char MaterialName[1024];
-			Ogre::SubMesh const *subMesh = App->Cl_Scene_Data->Cl_Object[Count]->OgreEntity->getSubEntity(Index)->getSubMesh();
+			Ogre::SubMesh const *subMesh = App->SBC_Scene->B_Object[Count]->Object_Ent->getSubEntity(Index)->getSubMesh();
 			strcpy(MaterialName, subMesh->getMaterialName().c_str());
 			SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)MaterialName);
 			Index++;
@@ -838,27 +838,27 @@ void SB_Resources::List_MeshMaterials(HWND List)
 // *************************************************************************
 void SB_Resources::Unload_Materials(void)
 {
-	int Count = 0;
-	while (Count < App->Cl_Scene_Data->ObjectCount) // Remove Objects Materials
-	{
-		char MeshName[255];
+	//int Count = 0;
+	//while (Count < App->Cl_Scene_Data->ObjectCount) // Remove Objects Materials
+	//{
+	//	char MeshName[255];
 
-		strcpy(MeshName, App->Cl_Scene_Data->Cl_Object[Count]->MeshName);
+	//	strcpy(MeshName, App->Cl_Scene_Data->Cl_Object[Count]->MeshName);
 
-		int SubMeshCount = App->Cl_Scene_Data->Cl_Object[Count]->OgreEntity->getNumSubEntities();
-		int Index = 0;
-		while (Index < SubMeshCount)
-		{
-			char MaterialName[1024];
-			Ogre::SubMesh const *subMesh = App->Cl_Scene_Data->Cl_Object[Count]->OgreEntity->getSubEntity(Index)->getSubMesh();
-			strcpy(MaterialName, subMesh->getMaterialName().c_str());
-			Ogre::MaterialManager::getSingleton().unload(MaterialName);
+	//	int SubMeshCount = App->Cl_Scene_Data->Cl_Object[Count]->OgreEntity->getNumSubEntities();
+	//	int Index = 0;
+	//	while (Index < SubMeshCount)
+	//	{
+	//		char MaterialName[1024];
+	//		Ogre::SubMesh const *subMesh = App->Cl_Scene_Data->Cl_Object[Count]->OgreEntity->getSubEntity(Index)->getSubMesh();
+	//		strcpy(MaterialName, subMesh->getMaterialName().c_str());
+	//		Ogre::MaterialManager::getSingleton().unload(MaterialName);
 
-			Index++;
-		}
+	//		Index++;
+	//	}
 
-		Count++;
-	}
+	//	Count++;
+	//}
 
 	return;
 }
@@ -868,32 +868,32 @@ void SB_Resources::Unload_Materials(void)
 // *************************************************************************
 void SB_Resources::Remove_OblectMesh(void)
 {
-	int Count = 0;
-	while (Count < App->Cl_Scene_Data->ObjectCount) // Remove Ogre Objects
-	{
-		if (App->Cl_Scene_Data->Cl_Object[Count]->OgreNode && App->Cl_Scene_Data->Cl_Object[Count]->OgreEntity)
-		{
-			App->Cl_Scene_Data->Cl_Object[Count]->OgreNode->detachAllObjects();
+	//int Count = 0;
+	//while (Count < App->Cl_Scene_Data->ObjectCount) // Remove Ogre Objects
+	//{
+	//	if (App->Cl_Scene_Data->Cl_Object[Count]->OgreNode && App->Cl_Scene_Data->Cl_Object[Count]->OgreEntity)
+	//	{
+	//		App->Cl_Scene_Data->Cl_Object[Count]->OgreNode->detachAllObjects();
 
-			App->Cl19_Ogre->mSceneMgr->destroySceneNode(App->Cl_Scene_Data->Cl_Object[Count]->OgreNode);
+	//		App->Cl19_Ogre->mSceneMgr->destroySceneNode(App->Cl_Scene_Data->Cl_Object[Count]->OgreNode);
 
-			App->Cl19_Ogre->mSceneMgr->destroyEntity(App->Cl_Scene_Data->Cl_Object[Count]->OgreEntity);
+	//		App->Cl19_Ogre->mSceneMgr->destroyEntity(App->Cl_Scene_Data->Cl_Object[Count]->OgreEntity);
 
-			App->Cl_Scene_Data->Cl_Object[Count]->OgreNode = NULL;
-			App->Cl_Scene_Data->Cl_Object[Count]->OgreEntity = NULL;
-		}
+	//		App->Cl_Scene_Data->Cl_Object[Count]->OgreNode = NULL;
+	//		App->Cl_Scene_Data->Cl_Object[Count]->OgreEntity = NULL;
+	//	}
 
-		// --------------------------------------------------------------------- 
-		bool Test = Ogre::MeshManager::getSingleton().getByName(App->Cl_Scene_Data->Cl_Object[Count]->MeshName).isNull();
-		if (Test == 0) // is loaded
-		{
-			Ogre::ResourcePtr ptr = Ogre::MeshManager::getSingleton().getByName(App->Cl_Scene_Data->Cl_Object[Count]->MeshName);
-			ptr->unload();
-			Ogre::MeshManager::getSingleton().remove(App->Cl_Scene_Data->Cl_Object[Count]->MeshName);
-		}
+	//	// --------------------------------------------------------------------- 
+	//	bool Test = Ogre::MeshManager::getSingleton().getByName(App->Cl_Scene_Data->Cl_Object[Count]->MeshName).isNull();
+	//	if (Test == 0) // is loaded
+	//	{
+	//		Ogre::ResourcePtr ptr = Ogre::MeshManager::getSingleton().getByName(App->Cl_Scene_Data->Cl_Object[Count]->MeshName);
+	//		ptr->unload();
+	//		Ogre::MeshManager::getSingleton().remove(App->Cl_Scene_Data->Cl_Object[Count]->MeshName);
+	//	}
 
-		Count++;
-	}
+	//	Count++;
+	//}
 
 	return;
 }

@@ -688,7 +688,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		//------------------------- Data
 		case ID_DATA_SCENEDATA:
 		{
-			App->Cl_Dialogs->Start_DataView();
+			//App->Cl_Dialogs->Start_DataView();
 			return 1;
 		}
 		//------------------------- Menu Windows

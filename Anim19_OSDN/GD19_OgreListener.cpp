@@ -384,98 +384,98 @@ bool GD19_OgreListener::Capture_LeftMouse(void)
 // *************************************************************************
 void GD19_OgreListener::WorldMode(float DeltaTime)
 {
-	float start = DeltaTime;
+	//float start = DeltaTime;
 
-	App->Cl19_Ogre->m_imgui.render();
+	//App->Cl19_Ogre->m_imgui.render();
 
-	mRotX = 0;
-	mRotY = 0;
-	mTranslateVector = Ogre::Vector3::ZERO;
+	//mRotX = 0;
+	//mRotY = 0;
+	//mTranslateVector = Ogre::Vector3::ZERO;
 
-	mMoveScale = mMoveSensitivity  * DeltaTime;
+	//mMoveScale = mMoveSensitivity  * DeltaTime;
 
-	if (GD_CameraMode == Enums::CamFirst)
-	{
-		Ogre::Vector3 Pos;
-		Ogre::Radian mmPitch;
-		Ogre::Radian mYaw;
+	//if (GD_CameraMode == Enums::CamFirst)
+	//{
+	//	Ogre::Vector3 Pos;
+	//	Ogre::Radian mmPitch;
+	//	Ogre::Radian mYaw;
 
-		if (FollowPlayer == 1)
-		{
-			Pos = App->SBC_Scene->SBC_Base_Player[0]->Player_Node->getPosition();
-			//Ogre::Quaternion  CQ = App->SBC_Player->Player_Node->getOrientation();
+	//	if (FollowPlayer == 1)
+	//	{
+	//		Pos = App->SBC_Scene->SBC_Base_Player[0]->Player_Node->getPosition();
+	//		//Ogre::Quaternion  CQ = App->SBC_Player->Player_Node->getOrientation();
 
-			mmPitch = App->SBC_Scene->SBC_Base_Player[0]->CameraPitch->getOrientation().getPitch();
-			mYaw = App->SBC_Scene->SBC_Base_Player[0]->Player_Node->getOrientation().getYaw();
-			Pos.y = Pos.y + App->SBC_Scene->SBC_Base_Player[0]->PlayerHeight;
+	//		mmPitch = App->SBC_Scene->SBC_Base_Player[0]->CameraPitch->getOrientation().getPitch();
+	//		mYaw = App->SBC_Scene->SBC_Base_Player[0]->Player_Node->getOrientation().getYaw();
+	//		Pos.y = Pos.y + App->SBC_Scene->SBC_Base_Player[0]->PlayerHeight;
 
-		}
-		else
-		{
-			btVector3 Centre;
-			Centre = App->Cl_Scene_Data->Cl_Object[Object_ToFollow]->bt_body->getWorldTransform().getOrigin();
-			Pos.x = Centre.getX();
-			Pos.y = Centre.getY();
-			Pos.z = Centre.getZ();
+	//	}
+	//	else
+	//	{
+	//		btVector3 Centre;
+	//		Centre = App->Cl_Scene_Data->Cl_Object[Object_ToFollow]->bt_body->getWorldTransform().getOrigin();
+	//		Pos.x = Centre.getX();
+	//		Pos.y = Centre.getY();
+	//		Pos.z = Centre.getZ();
 
-			//mmPitch = App->Cl_Scene_Data->Cl_Object[Object_ToFollow]->OgreNode->getOrientation().getPitch();
-			mYaw = App->Cl_Scene_Data->Cl_Object[Object_ToFollow]->OgreNode->getOrientation().getYaw();
-			Pos.y = Pos.y + App->SBC_Scene->SBC_Base_Player[0]->PlayerHeight;
-		}
+	//		//mmPitch = App->Cl_Scene_Data->Cl_Object[Object_ToFollow]->OgreNode->getOrientation().getPitch();
+	//		mYaw = App->Cl_Scene_Data->Cl_Object[Object_ToFollow]->OgreNode->getOrientation().getYaw();
+	//		Pos.y = Pos.y + App->SBC_Scene->SBC_Base_Player[0]->PlayerHeight;
+	//	}
 
-		App->Cl19_Ogre->mCamera->setPosition(Pos);
-		App->Cl19_Ogre->mCamera->setOrientation(Ogre::Quaternion(1, 0, 0, 0));
-		App->Cl19_Ogre->mCamera->yaw(mYaw);
-		//App->Cl19_Ogre->mCamera->pitch(mmPitch);
-		App->Cl19_Ogre->mCamera->yaw(Ogre::Degree(180));
-	}
+	//	App->Cl19_Ogre->mCamera->setPosition(Pos);
+	//	App->Cl19_Ogre->mCamera->setOrientation(Ogre::Quaternion(1, 0, 0, 0));
+	//	App->Cl19_Ogre->mCamera->yaw(mYaw);
+	//	//App->Cl19_Ogre->mCamera->pitch(mmPitch);
+	//	App->Cl19_Ogre->mCamera->yaw(Ogre::Degree(180));
+	//}
 
-	App->Cl_Keyboard->Keyboard_Monitor(DeltaTime);
+	//App->Cl_Keyboard->Keyboard_Monitor(DeltaTime);
 
-	if (GetAsyncKeyState(VK_ESCAPE) < 0) // Back to full Screen;
-	{
-		App->Cl19_Ogre->ExitFullScreen();
-	}
+	//if (GetAsyncKeyState(VK_ESCAPE) < 0) // Back to full Screen;
+	//{
+	//	App->Cl19_Ogre->ExitFullScreen();
+	//}
 
-	// Left Mouse
-	if (Pl_LeftMouseDown == 1 && Pl_RightMouseDown == 0)
-	{
-		if (GD_CameraMode == Enums::CamFirst)
-		{
-			//Capture_Mouse_FirstPerson_World();
-			SetCursorPos(500, 500);
-		}
-		else if (GD_CameraMode == Enums::CamNone)
-		{
-			Capture_LeftMouse_World();
-		}
-		else
-		{
-			//Capture_Mouse_Free_World();
-		}
-	}
+	//// Left Mouse
+	//if (Pl_LeftMouseDown == 1 && Pl_RightMouseDown == 0)
+	//{
+	//	if (GD_CameraMode == Enums::CamFirst)
+	//	{
+	//		//Capture_Mouse_FirstPerson_World();
+	//		SetCursorPos(500, 500);
+	//	}
+	//	else if (GD_CameraMode == Enums::CamNone)
+	//	{
+	//		Capture_LeftMouse_World();
+	//	}
+	//	else
+	//	{
+	//		//Capture_Mouse_Free_World();
+	//	}
+	//}
 
-	if (Pl_LeftMouseDown == 1 && GD_CameraMode == Enums::CamDetached)
-	{
+	//if (Pl_LeftMouseDown == 1 && GD_CameraMode == Enums::CamDetached)
+	//{
 
-		if (!ImGui::GetIO().WantCaptureMouse)
-		{
-			SetCursorPos(500, 500);
-		}
-	}
+	//	if (!ImGui::GetIO().WantCaptureMouse)
+	//	{
+	//		SetCursorPos(500, 500);
+	//	}
+	//}
 
-	// Right Mouse
-	if (Pl_LeftMouseDown == 0 && Pl_RightMouseDown == 1)
-	{
-		Capture_RightMouse_World();
-	}
+	//// Right Mouse
+	//if (Pl_LeftMouseDown == 0 && Pl_RightMouseDown == 1)
+	//{
+	//	Capture_RightMouse_World();
+	//}
 
-	MoveCamera();
+	//MoveCamera();
 
-	if (App->Cl_Collision->DoMove == 1)
-	{
-		App->Cl_Collision->MoveObject(DeltaTime);
-	}
+	//if (App->Cl_Collision->DoMove == 1)
+	//{
+	//	App->Cl_Collision->MoveObject(DeltaTime);
+	//}
 }
 
 // *************************************************************************
@@ -1117,7 +1117,7 @@ bool GD19_OgreListener::SelectEntity_World(void)
 						App->Cl_Visuals->MarkerBB_Addjust(IntNum);
 						Selected_Entity_Index = IntNum;
 						OverlayElement* guiName = OverlayManager::getSingleton().getOverlayElement("Core/ObjectName");
-						guiName->setCaption(App->Cl_Scene_Data->Cl_Object[IntNum]->Name);
+						//guiName->setCaption(App->Cl_Scene_Data->Cl_Object[IntNum]->Name);
 						mNameOverlay->show();
 						return 1;
 					}

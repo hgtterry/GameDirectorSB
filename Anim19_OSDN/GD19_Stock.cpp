@@ -64,60 +64,60 @@ void GD19_Stock::ListView_OnClickOptions(LPARAM lParam)
 // *************************************************************************
 void GD19_Stock::Update_Message_Properties(void)
 {
-	int Index = Selected_Stock_Index2;
-	
-	char buf[255];
-	strcpy(buf,App->Cl_Scene_Data->Cl_Object[Index]->Name);
-	
-	char chr_FontSize[100];
-	char chr_TextColour[100];
-	char chr_PosVert[100];
-	char chr_PosHoz[100];
+	//int Index = Selected_Stock_Index2;
+	//
+	//char buf[255];
+	//strcpy(buf,App->Cl_Scene_Data->Cl_Object[Index]->Name);
+	//
+	//char chr_FontSize[100];
+	//char chr_TextColour[100];
+	//char chr_PosVert[100];
+	//char chr_PosHoz[100];
 
-	sprintf(chr_FontSize,"%i ",App->Cl_Scene_Data->S_Messages[Index]->Font_Size);
-	sprintf(chr_TextColour,"%.2f %.2f %.2f",App->Cl_Scene_Data->S_Messages[Index]->Colour.x,App->Cl_Scene_Data->S_Messages[Index]->Colour.y,App->Cl_Scene_Data->S_Messages[Index]->Colour.z);
-	sprintf(chr_PosVert,"%.2f ",App->Cl_Scene_Data->S_Messages[Index]->Pos_Vert);
-	sprintf(chr_PosHoz,"%.2f ",App->Cl_Scene_Data->S_Messages[Index]->Pos_Hoz);
+	//sprintf(chr_FontSize,"%i ",App->Cl_Scene_Data->S_Messages[Index]->Font_Size);
+	//sprintf(chr_TextColour,"%.2f %.2f %.2f",App->Cl_Scene_Data->S_Messages[Index]->Colour.x,App->Cl_Scene_Data->S_Messages[Index]->Colour.y,App->Cl_Scene_Data->S_Messages[Index]->Colour.z);
+	//sprintf(chr_PosVert,"%.2f ",App->Cl_Scene_Data->S_Messages[Index]->Pos_Vert);
+	//sprintf(chr_PosHoz,"%.2f ",App->Cl_Scene_Data->S_Messages[Index]->Pos_Hoz);
 
 
-	const int NUM_ITEMS = 14;
-	const int NUM_COLS = 2;
-	std::string grid[NUM_COLS][NUM_ITEMS]; // string table
-	LV_ITEM pitem;
-	memset(&pitem, 0, sizeof(LV_ITEM));
-	pitem.mask = LVIF_TEXT;
+	//const int NUM_ITEMS = 14;
+	//const int NUM_COLS = 2;
+	//std::string grid[NUM_COLS][NUM_ITEMS]; // string table
+	//LV_ITEM pitem;
+	//memset(&pitem, 0, sizeof(LV_ITEM));
+	//pitem.mask = LVIF_TEXT;
 
-	grid[0][0] = "Name",				grid[1][0] = App->Cl_Scene_Data->S_Messages[Index]->Name;
-	grid[0][1] = "Default Text",		grid[1][1] = App->Cl_Scene_Data->S_Messages[Index]->Default_Text;
-	grid[0][2] = "Font Size",			grid[1][2] = chr_FontSize;
-	grid[0][3] = "Text Colour",			grid[1][3] = chr_TextColour;
-	grid[0][4] = " ",					grid[1][4] = " ";//chr_PosY;
-	grid[0][5] = "Pos Vertical",		grid[1][5] = chr_PosVert;
-	grid[0][6] = "Pos Horizontal",		grid[1][6] = chr_PosHoz;
-	grid[0][7] = " ",					grid[1][7] = " ";//chr_RotX;
-	grid[0][8] = " ",					grid[1][8] = " ";//chr_RotY;
-	grid[0][9] = " ",					grid[1][9] = " ";//chr_RotZ;
-	grid[0][10] = " ",					grid[1][10] = " ";
-	grid[0][11] = " ",					grid[1][11] = " ";//chr_ScaleX;
-	grid[0][12] = " ",					grid[1][12] = " ";//chr_ScaleY;
-	grid[0][13] = " ",					grid[1][13] = " ";//chr_ScaleZ;
+	//grid[0][0] = "Name",				grid[1][0] = App->Cl_Scene_Data->S_Messages[Index]->Name;
+	//grid[0][1] = "Default Text",		grid[1][1] = App->Cl_Scene_Data->S_Messages[Index]->Default_Text;
+	//grid[0][2] = "Font Size",			grid[1][2] = chr_FontSize;
+	//grid[0][3] = "Text Colour",			grid[1][3] = chr_TextColour;
+	//grid[0][4] = " ",					grid[1][4] = " ";//chr_PosY;
+	//grid[0][5] = "Pos Vertical",		grid[1][5] = chr_PosVert;
+	//grid[0][6] = "Pos Horizontal",		grid[1][6] = chr_PosHoz;
+	//grid[0][7] = " ",					grid[1][7] = " ";//chr_RotX;
+	//grid[0][8] = " ",					grid[1][8] = " ";//chr_RotY;
+	//grid[0][9] = " ",					grid[1][9] = " ";//chr_RotZ;
+	//grid[0][10] = " ",					grid[1][10] = " ";
+	//grid[0][11] = " ",					grid[1][11] = " ";//chr_ScaleX;
+	//grid[0][12] = " ",					grid[1][12] = " ";//chr_ScaleY;
+	//grid[0][13] = " ",					grid[1][13] = " ";//chr_ScaleZ;
 
-	ListView_DeleteAllItems(Stock_Properties_hLV);
+	//ListView_DeleteAllItems(Stock_Properties_hLV);
 
-	for (DWORD row = 0; row < NUM_ITEMS; row++)
-	{
-		pitem.iItem = row;
-		pitem.pszText = const_cast<char*>(grid[0][row].c_str());
-		ListView_InsertItem(Stock_Properties_hLV, &pitem);
+	//for (DWORD row = 0; row < NUM_ITEMS; row++)
+	//{
+	//	pitem.iItem = row;
+	//	pitem.pszText = const_cast<char*>(grid[0][row].c_str());
+	//	ListView_InsertItem(Stock_Properties_hLV, &pitem);
 
-		//ListView_SetItemText
+	//	//ListView_SetItemText
 
-		for (DWORD col = 1; col < NUM_COLS; col++)
-		{
-			ListView_SetItemText(Stock_Properties_hLV, row, col,
-				const_cast<char*>(grid[col][row].c_str()));
-		}
-	}
+	//	for (DWORD col = 1; col < NUM_COLS; col++)
+	//	{
+	//		ListView_SetItemText(Stock_Properties_hLV, row, col,
+	//			const_cast<char*>(grid[col][row].c_str()));
+	//	}
+	//}
 }
 
 // *************************************************************************
@@ -125,41 +125,41 @@ void GD19_Stock::Update_Message_Properties(void)
 // *************************************************************************
 void GD19_Stock::Update_Sound_Properties(void)
 {
-	int Index = Selected_Stock_Index2;
+	//int Index = Selected_Stock_Index2;
 
-	char buf[255];
-	strcpy(buf,App->Cl_Scene_Data->Cl_Object[Index]->Name);
+	//char buf[255];
+	//strcpy(buf,App->Cl_Scene_Data->Cl_Object[Index]->Name);
 
-	char chr_Volume[100];
-	sprintf(chr_Volume, "%.3f", App->Cl_Scene_Data->St_Sounds[Index]->Volume * 100);
-	
-	const int NUM_ITEMS = 3;
-	const int NUM_COLS = 2;
-	std::string grid[NUM_COLS][NUM_ITEMS]; // string table
-	LV_ITEM pitem;
-	memset(&pitem, 0, sizeof(LV_ITEM));
-	pitem.mask = LVIF_TEXT;
+	//char chr_Volume[100];
+	//sprintf(chr_Volume, "%.3f", App->Cl_Scene_Data->St_Sounds[Index]->Volume * 100);
+	//
+	//const int NUM_ITEMS = 3;
+	//const int NUM_COLS = 2;
+	//std::string grid[NUM_COLS][NUM_ITEMS]; // string table
+	//LV_ITEM pitem;
+	//memset(&pitem, 0, sizeof(LV_ITEM));
+	//pitem.mask = LVIF_TEXT;
 
-	grid[0][0] = "Name",				grid[1][0] = App->Cl_Scene_Data->St_Sounds[Index]->Name;
-	grid[0][1] = "Sound",				grid[1][1] = App->Cl_Scene_Data->St_Sounds[Index]->SoundFile;
-	grid[0][2] = "Volume",				grid[1][2] = chr_Volume;
-	
-	ListView_DeleteAllItems(Stock_Properties_hLV);
+	//grid[0][0] = "Name",				grid[1][0] = App->Cl_Scene_Data->St_Sounds[Index]->Name;
+	//grid[0][1] = "Sound",				grid[1][1] = App->Cl_Scene_Data->St_Sounds[Index]->SoundFile;
+	//grid[0][2] = "Volume",				grid[1][2] = chr_Volume;
+	//
+	//ListView_DeleteAllItems(Stock_Properties_hLV);
 
-	for (DWORD row = 0; row < NUM_ITEMS; row++)
-	{
-		pitem.iItem = row;
-		pitem.pszText = const_cast<char*>(grid[0][row].c_str());
-		ListView_InsertItem(Stock_Properties_hLV, &pitem);
+	//for (DWORD row = 0; row < NUM_ITEMS; row++)
+	//{
+	//	pitem.iItem = row;
+	//	pitem.pszText = const_cast<char*>(grid[0][row].c_str());
+	//	ListView_InsertItem(Stock_Properties_hLV, &pitem);
 
-		//ListView_SetItemText
+	//	//ListView_SetItemText
 
-		for (DWORD col = 1; col < NUM_COLS; col++)
-		{
-			ListView_SetItemText(Stock_Properties_hLV, row, col,
-				const_cast<char*>(grid[col][row].c_str()));
-		}
-	}
+	//	for (DWORD col = 1; col < NUM_COLS; col++)
+	//	{
+	//		ListView_SetItemText(Stock_Properties_hLV, row, col,
+	//			const_cast<char*>(grid[col][row].c_str()));
+	//	}
+	//}
 }
 
 // *************************************************************************

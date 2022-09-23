@@ -292,8 +292,6 @@ public:
 	Stock_Sound_type*		St_Sounds[200];
 	Player_Location_type*	S_Player_Locations[20];
 
-	GD19_Objects*			Cl_Object[100];
-
 	int Player_Location_Count;
 	int ObjectCount;
 	int Stock_Messgae_Count;

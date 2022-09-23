@@ -1343,72 +1343,72 @@ void SB_FileView::Select_Item(int Index)
 	App->SBC_Properties->Current_Selected_Object = Index;
 
 	// Sounds
-	if (App->Cl_Scene_Data->Cl_Object[Index]->Usage == Enums::Usage_Sound)
-	{
-		//App->Cl_FileView_V2->Select_ObjectFV(Index);
+	//if (App->Cl_Scene_Data->Cl_Object[Index]->Usage == Enums::Usage_Sound)
+	//{
+	//	//App->Cl_FileView_V2->Select_ObjectFV(Index);
 
-		App->SBC_FileView->SelectItem(App->Cl_Scene_Data->Cl_Object[Index]->ListViewItem);
-		App->SBC_Properties->Edit_Category = Enums::Edit_Sounds;
-		//App->Cl_Properties->Update_ListView_Sounds();
-		return;
-	}
+	//	App->SBC_FileView->SelectItem(App->Cl_Scene_Data->Cl_Object[Index]->ListViewItem);
+	//	App->SBC_Properties->Edit_Category = Enums::Edit_Sounds;
+	//	//App->Cl_Properties->Update_ListView_Sounds();
+	//	return;
+	//}
 
-	// Messages
-	if (App->Cl_Scene_Data->Cl_Object[Index]->Usage == Enums::Usage_Message)
-	{
-		App->SBC_FileView->SelectItem(App->Cl_Scene_Data->Cl_Object[Index]->ListViewItem);
-		App->SBC_Properties->Edit_Category = Enums::Edit_Message;
-		//App->Cl_Properties->Update_ListView_Messages();
-		return;
-	}
+	//// Messages
+	//if (App->Cl_Scene_Data->Cl_Object[Index]->Usage == Enums::Usage_Message)
+	//{
+	//	App->SBC_FileView->SelectItem(App->Cl_Scene_Data->Cl_Object[Index]->ListViewItem);
+	//	App->SBC_Properties->Edit_Category = Enums::Edit_Message;
+	//	//App->Cl_Properties->Update_ListView_Messages();
+	//	return;
+	//}
 
-	// Move Entity
-	if (App->Cl_Scene_Data->Cl_Object[Index]->Usage == Enums::Usage_Move)
-	{
-		App->SBC_FileView->SelectItem(App->Cl_Scene_Data->Cl_Object[Index]->ListViewItem);
-		App->SBC_Properties->Edit_Category = Enums::Edit_Move_Entity;
-		//App->Cl_Properties->Update_ListView_Move_Entities();
-		return;
-	}
+	//// Move Entity
+	//if (App->Cl_Scene_Data->Cl_Object[Index]->Usage == Enums::Usage_Move)
+	//{
+	//	App->SBC_FileView->SelectItem(App->Cl_Scene_Data->Cl_Object[Index]->ListViewItem);
+	//	App->SBC_Properties->Edit_Category = Enums::Edit_Move_Entity;
+	//	//App->Cl_Properties->Update_ListView_Move_Entities();
+	//	return;
+	//}
 
-	// Collectables
-	if (App->Cl_Scene_Data->Cl_Object[Index]->Usage == Enums::Usage_Colectable)
-	{
-		App->SBC_FileView->SelectItem(App->Cl_Scene_Data->Cl_Object[Index]->ListViewItem);
-		App->SBC_Properties->Edit_Category = Enums::Edit_Collectable;
-		//App->Cl_Properties->Update_ListView_Collectables();
-		return;
-	}
+	//// Collectables
+	//if (App->Cl_Scene_Data->Cl_Object[Index]->Usage == Enums::Usage_Colectable)
+	//{
+	//	App->SBC_FileView->SelectItem(App->Cl_Scene_Data->Cl_Object[Index]->ListViewItem);
+	//	App->SBC_Properties->Edit_Category = Enums::Edit_Collectable;
+	//	//App->Cl_Properties->Update_ListView_Collectables();
+	//	return;
+	//}
 
-	// Teleports
-	if (App->Cl_Scene_Data->Cl_Object[Index]->Usage == Enums::Usage_Teleport)
-	{
-		App->SBC_FileView->SelectItem(App->Cl_Scene_Data->Cl_Object[Index]->ListViewItem);
-		App->SBC_Properties->Edit_Category = Enums::Edit_Teleport;
-		//App->Cl_Properties->Update_ListView_Teleport();
-		return;
-	}
+	//// Teleports
+	//if (App->Cl_Scene_Data->Cl_Object[Index]->Usage == Enums::Usage_Teleport)
+	//{
+	//	App->SBC_FileView->SelectItem(App->Cl_Scene_Data->Cl_Object[Index]->ListViewItem);
+	//	App->SBC_Properties->Edit_Category = Enums::Edit_Teleport;
+	//	//App->Cl_Properties->Update_ListView_Teleport();
+	//	return;
+	//}
 
-	// Fall Through
-	//if (App->Cl_Scene_Data->CL_Object[Index]->Usage == Enums::Usage_Object)
-	{
-		//App->Cl_FileView_V2->Select_ObjectFV(Index);
+	//// Fall Through
+	////if (App->Cl_Scene_Data->CL_Object[Index]->Usage == Enums::Usage_Object)
+	//{
+	//	//App->Cl_FileView_V2->Select_ObjectFV(Index);
 
-		App->SBC_FileView->SelectItem(App->Cl_Scene_Data->Cl_Object[Index]->ListViewItem);
-		App->SBC_Properties->Edit_Category = Enums::Edit_Mesh_Object;
-		//		App->Cl_Properties->Update_Transform_Dlg();
+	//	App->SBC_FileView->SelectItem(App->Cl_Scene_Data->Cl_Object[Index]->ListViewItem);
+	//	App->SBC_Properties->Edit_Category = Enums::Edit_Mesh_Object;
+	//	//		App->Cl_Properties->Update_Transform_Dlg();
 
-		if (App->SBC_Properties->Edit_Physics == 0)
-		{
-			//App->Cl_Properties->Update_ListView_Objects();
-		}
-		else
-		{
-			//App->Cl_Properties->Update_ListView_Physics();
-		}
+	//	if (App->SBC_Properties->Edit_Physics == 0)
+	//	{
+	//		//App->Cl_Properties->Update_ListView_Objects();
+	//	}
+	//	else
+	//	{
+	//		//App->Cl_Properties->Update_ListView_Physics();
+	//	}
 
-		return;
-	}
+	//	return;
+	//}
 }
 
 // *************************************************************************
