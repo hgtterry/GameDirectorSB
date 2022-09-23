@@ -403,7 +403,7 @@ void VM_ImGui::ImGui_Collision_Debug(void)
 void VM_ImGui::ImGui_Text_Message(void)
 {
 	ImGui::SetNextWindowPos(ImVec2(App->SBC_Scene->B_Object[Object_Index]->Message_Pos_x, 
-		App->SBC_Scene->B_Object[Object_Index]->Message_Pos_y), ImGuiCond_FirstUseEver);
+		App->SBC_Scene->B_Object[Object_Index]->Message_Pos_y));
 
 
 	if (!ImGui::Begin("Text_Debug", &Show_Test_Text, ImGuiWindowFlags_NoSavedSettings 
@@ -419,9 +419,21 @@ void VM_ImGui::ImGui_Text_Message(void)
 
 		ImGui::Spacing();
 
+		ImFont* font = ImGui::GetFont();
 
-		ImGui::Text(App->SBC_Scene->B_Object[Object_Index]->Message_Text);
+			ImGui::PushFont(font);
+			//ImVec2 sz = ImGui::CalcTextSize("poo");
+			ImGui::PopFont();
+			float canvasWidth = ImGui::GetWindowContentRegionWidth();
+			float origScale = font->Scale;
+			font->Scale = 1.5;
+			ImGui::PushFont(font);
+			//ImGui::Text("%s", "poo");
+			ImGui::PopFont();
+			font->Scale = origScale;
 		
+		
+		ImGui::Text(App->SBC_Scene->B_Object[Object_Index]->Message_Text);
 
 		ImGui::End();
 	}
@@ -764,6 +776,11 @@ void VM_ImGui::ImGui_Object_Data(void)
 	else
 	{
 		int Index = App->SBC_Properties->Current_Selected_Object;
+		/*ImGuiIO& io = ImGui::GetIO();
+		ImFont* font = io.Fonts->Fonts[0];
+		ImGui::PushID((void*)font);
+		io.FontDefault = font;
+		ImGui::PopID();*/
 
 		ImGui::Text("Name: = %s", App->SBC_Scene->B_Object[Index]->Mesh_Name);
 		ImGui::Text("Mesh File Name: = %s", App->SBC_Scene->B_Object[Index]->Mesh_FileName);

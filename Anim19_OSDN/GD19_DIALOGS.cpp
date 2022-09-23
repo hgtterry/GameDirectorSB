@@ -166,7 +166,7 @@ bool GD19_Dialogs::Dialog_Int()
 
 	Active_Dlg_Int = 1;
 
-	//DialogBox(App->hInst,(LPCTSTR)IDD_EDITFLOAT,App->Fdlg,(DLGPROC)Dialog_Int_Proc);
+	DialogBox(App->hInst,(LPCTSTR)IDD_EDITFLOAT,App->Fdlg,(DLGPROC)Dialog_Int_Proc);
 	return 1;
 }
 // *************************************************************************
@@ -188,9 +188,9 @@ LRESULT CALLBACK GD19_Dialogs::Dialog_Int_Proc(HWND hDlg, UINT message, WPARAM w
 		//	SendDlgItemMessage(hDlg,IDC_EDIT1, WM_SETFONT, (WPARAM)App->Font_CB15,MAKELPARAM(TRUE, 0));
 			
 
-		//	SetDlgItemText(hDlg,IDC_BANNER,(LPCTSTR)App->Cl_Dialogs->btext);
+			SetDlgItemText(hDlg,IDC_BANNER,(LPCTSTR)App->Cl_Dialogs->btext);
 
-		//	SetDlgItemText(hDlg,IDC_EDIT1,(LPCTSTR)App->Cl_Dialogs->Chr_Int);
+			SetDlgItemText(hDlg,IDC_EDIT1,(LPCTSTR)App->Cl_Dialogs->Chr_Int);
 			
 			return TRUE;
 		}
@@ -238,7 +238,7 @@ LRESULT CALLBACK GD19_Dialogs::Dialog_Int_Proc(HWND hDlg, UINT message, WPARAM w
 			{
 				char buff[256];
 				int result=0;
-			//	GetDlgItemText(hDlg,IDC_EDIT1,(LPTSTR)buff,256);
+				GetDlgItemText(hDlg,IDC_EDIT1,(LPTSTR)buff,256);
 				strcpy(App->Cl_Dialogs->Chr_Int,buff);
 				App->Cl_Dialogs->mInt = atoi(buff);
 

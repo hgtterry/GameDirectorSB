@@ -319,6 +319,15 @@ void SB_Properties::ListView_OnClickOptions(LPARAM lParam)
 		return;
 	}
 
+	// Messages
+	if (Edit_Category == Enums::Edit_Message)
+	{
+		if (Edit_Physics == 0)
+		{
+			Edit_Messages_OnClick(lParam);
+		}
+		return;
+	}
 	return;
 }
 
@@ -826,6 +835,129 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 
 		return 1;
 	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *				Edit_Messages_OnClick  Terry Bernie					   *
+// *************************************************************************
+bool SB_Properties::Edit_Messages_OnClick(LPARAM lParam)
+{
+	int Index = App->SBC_Properties->Current_Selected_Object; // Get Selected Object Index 
+	int result = 1;
+	int test;
+
+	LPNMLISTVIEW poo = (LPNMLISTVIEW)lParam;
+	test = poo->iItem;
+	ListView_GetItemText(Properties_hLV, test, 0, btext, 20);
+
+	// Name
+	result = strcmp(btext, "Name");
+	if (result == 0)
+	{
+		strcpy(App->Cl_Dialogs->btext, "Change Object Name");
+		strcpy(App->Cl_Dialogs->Chr_Text, App->SBC_Scene->B_Object[Index]->Mesh_Name);
+
+		App->Cl_Dialogs->Dialog_Text(Enums::Check_Names_Objects);
+
+		if (App->Cl_Dialogs->Canceled == 1)
+		{
+			return TRUE;
+		}
+
+		strcpy(App->SBC_Scene->B_Object[Index]->Mesh_Name, App->Cl_Dialogs->Chr_Text);
+
+		//App->Cl_FileView->ChangeItem_Name(NULL, App->Cl_Dialogs->Chr_Text);
+		Update_ListView_Messages();
+	}
+
+	// Message
+	result = strcmp(btext, "Message");
+	if (result == 0)
+	{
+		strcpy(App->Cl_Dialogs->btext, "Change Text");
+		strcpy(App->Cl_Dialogs->Chr_Text, App->SBC_Scene->B_Object[Index]->Message_Text);
+
+		App->Cl_Dialogs->Dialog_Text(0);
+
+		if (App->Cl_Dialogs->Canceled == 1)
+		{
+			return TRUE;
+		}
+
+		strcpy(App->SBC_Scene->B_Object[Index]->Message_Text, App->Cl_Dialogs->Chr_Text);
+		strcpy(App->Cl_Dialogs->Chr_Text, App->Cl_Dialogs->Chr_Text);
+
+		Update_ListView_Messages();
+		return 1;
+	}
+
+	// Pos Vertical
+	result = strcmp(btext, "Pos Vertical");
+	if (result == 0)
+	{
+		strcpy(App->Cl_Dialogs->btext, "Pos Vertical");
+		char buff[256];
+		sprintf(buff, "%i", App->SBC_Scene->B_Object[Index]->Message_Pos_y);
+		strcpy(App->Cl_Dialogs->Chr_Int, buff);
+
+		App->Cl_Dialogs->Dialog_Int();
+
+		if (App->Cl_Dialogs->Canceled == 1)
+		{
+			return TRUE;
+		}
+
+		App->SBC_Scene->B_Object[Index]->Message_Pos_y = App->Cl_Dialogs->mInt;
+		
+		Update_ListView_Messages();
+		return 1;
+	}
+
+	// Pos Vertical
+	result = strcmp(btext, "Pos Horizontal");
+	if (result == 0)
+	{
+		strcpy(App->Cl_Dialogs->btext, "Pos Vertical");
+		char buff[256];
+		sprintf(buff, "%i", App->SBC_Scene->B_Object[Index]->Message_Pos_x);
+		strcpy(App->Cl_Dialogs->Chr_Int, buff);
+
+		App->Cl_Dialogs->Dialog_Int();
+
+		if (App->Cl_Dialogs->Canceled == 1)
+		{
+			return TRUE;
+		}
+
+		App->SBC_Scene->B_Object[Index]->Message_Pos_x = App->Cl_Dialogs->mInt;
+
+		Update_ListView_Messages();
+		return 1;
+	}
+
+
+
+	//// Message stock
+	//result = strcmp(btext, "Message_Stock");
+	//if (result == 0)
+	//{
+	//	App->Cl_Dialogs->Start_Gen_ListBox(Enums::ListBox_Stock_Messages);
+
+	//	Update_ListView_Messages();
+	//	return 1;
+	//}
+
+	//// Re Trigger
+	//result = strcmp(btext, "Re-Trigger");
+	//if (result == 0)
+	//{
+	//	App->Say("Re-Trigger");
+	//	//App->GDCL_Dialogs->Start_Postion();
+
+	//	return 1;
+	//}
 
 	return 1;
 }
