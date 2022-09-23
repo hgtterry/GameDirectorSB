@@ -77,6 +77,7 @@ public:
 	bool Block_Motion;
 	bool Reset_Groups;
 
+	int Object_Index;
 	
 protected:
 

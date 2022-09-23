@@ -48,24 +48,10 @@ bool SB_Collision::Message_Entity(int Index)
 		return 1;
 	}
 
+	//-----------------  Do Action
+	App->CL_Vm_ImGui->Object_Index = Index;
 	App->CL_Vm_ImGui->Show_Test_Text = 1;
 	App->SBC_Scene->B_Object[Index]->Triggered = 1;
 
-	/*int result = 0;
-	result = strcmp(App->Cl_Scene_Data->Cl_Object[Index]->Entity[0].mTextItem, "None");
-	if (result != 0)
-	{*/
-
-		/*int Stock_Index = App->Cl_Scene_Data->Cl_Object[Index]->Entity[0].Stock_mIndex;
-		App->Cl_Panels_Com->Set_User_Text(App->Cl_Scene_Data->Cl_Object[Index]->Entity[0].mTextItem, Stock_Index);
-
-		App->Cl_Panels_Com->Show_Overlay(1, Stock_Index);
-
-		Play_Sound(Index);
-
-		App->Cl_Scene_Data->Cl_Object[Index]->Triggered = 1;*/
-	//}
-	
-	//Play_Sound(Index);
 	return 1;
 }

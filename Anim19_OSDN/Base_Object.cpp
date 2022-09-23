@@ -105,10 +105,15 @@ bool Base_Object::Init_Object(void)
 
 	ListViewItem = NULL;
 
-	Object_ID = 0; // THis Needs Checking
+	Object_ID = 0; // This Needs Checking
 	Deleted = 0;
+
 
 	Collision = 0;
 	Triggered = 0;
+
+	strcpy(Message_Text, "This is in the Object");
+	Message_Pos_x = 530;
+	Message_Pos_y = 5;
 	return 1;
 }

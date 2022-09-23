@@ -44,6 +44,8 @@ VM_ImGui::VM_ImGui()
 	progress = 0;
 	Progress_Count = 0;
 	Progress_Delta = 0;
+
+	Object_Index = 0;
 }
 
 
@@ -400,9 +402,15 @@ void VM_ImGui::ImGui_Collision_Debug(void)
 // *************************************************************************
 void VM_ImGui::ImGui_Text_Message(void)
 {
-	ImGui::SetNextWindowPos(ImVec2(530, 50), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowPos(ImVec2(App->SBC_Scene->B_Object[Object_Index]->Message_Pos_x, 
+		App->SBC_Scene->B_Object[Object_Index]->Message_Pos_y), ImGuiCond_FirstUseEver);
 
-	if (!ImGui::Begin("Text_Debug", &Show_Test_Text, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize))
+
+	if (!ImGui::Begin("Text_Debug", &Show_Test_Text, ImGuiWindowFlags_NoSavedSettings 
+		| ImGuiWindowFlags_AlwaysAutoResize 
+		| ImGuiWindowFlags_NoMove 
+		| ImGuiWindowFlags_NoResize 
+		| ImGuiWindowFlags_NoTitleBar))
 	{
 		ImGui::End();
 	}
@@ -411,8 +419,10 @@ void VM_ImGui::ImGui_Text_Message(void)
 
 		ImGui::Spacing();
 
-		ImGui::Text("Test Message");
+
+		ImGui::Text(App->SBC_Scene->B_Object[Object_Index]->Message_Text);
 		
+
 		ImGui::End();
 	}
 }
