@@ -47,6 +47,8 @@ public:
 	int Folder;
 	int Object_ID;  // Unique Number
 
+	bool					Collision;
+	bool					Triggered;
 	//------------------------------ Mesh
 	Ogre::Vector3			Mesh_Scale;
 	Ogre::Vector3			Mesh_Pos;

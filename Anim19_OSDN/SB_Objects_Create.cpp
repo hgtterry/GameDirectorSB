@@ -33,7 +33,7 @@ bool SB_Objects_Create::Add_Objects_From_File() // From File
 		else if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Message)
 		{
 			Add_Message_Entity(Count);
-			Debug
+			App->SBC_FileView->Set_FolderActive(App->SBC_FileView->GD_Entities_Message_Folder);
 		}
 		else if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Move)
 		{
@@ -714,6 +714,8 @@ bool SB_Objects_Create::Add_New_Message()
 	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[Index]->ListViewItem);
 
 	App->SBC_Scene->Object_Count++;
+
+	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->GD_Entities_Message_Folder);
 	return 1;
 }
 

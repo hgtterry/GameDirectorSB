@@ -26,7 +26,6 @@ distribution.
 #include "Base_Player.h"
 #include "Base_Area.h"
 #include "Base_Object.h"
-#include "Base_Entity.h"
 
 class SB_Scene
 {
@@ -43,8 +42,7 @@ public:
 	Base_Player*			SBC_Base_Player[100];
 	Base_Area*				SBC_Base_Area[100];
 	Base_Object*			B_Object[100];
-	Base_Entity*			B_Entity[100];
-
+	
 	bool Scene_Loaded;	// Is the Scene Loaded [131221]
 
 	int Player_Count;		// Actual Player Count Zero Based

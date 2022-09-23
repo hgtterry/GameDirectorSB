@@ -108,5 +108,7 @@ bool Base_Object::Init_Object(void)
 	Object_ID = 0; // THis Needs Checking
 	Deleted = 0;
 
+	Collision = 0;
+	Triggered = 0;
 	return 1;
 }

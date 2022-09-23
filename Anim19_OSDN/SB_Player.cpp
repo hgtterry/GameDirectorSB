@@ -622,6 +622,7 @@ void SB_Player::Check_Collisions(void)
 // *************************************************************************
 void SB_Player::Check_Collisions_New(void)
 {
+	int UsageIndex = 0;
 	Col_Player_Index = 0;
 	Col_Usage_Index = 0;
 	Col_numManifolds = 0;
@@ -638,10 +639,12 @@ void SB_Player::Check_Collisions_New(void)
 		Col_Player_Index = obA->getUserIndex();  // Should Be Player
 		Col_Object_Index = obB->getUserIndex2(); // Object Index
 
+		UsageIndex = obB->getUserIndex();
 		if (Col_Player_Index == Enums::Usage_Player)
 		{
 			Col_Object_Index = obB->getUserIndex2(); // Object Index
 			Col_Usage_Index = obB->getUserIndex();
+
 			if (Col_Usage_Index == 123)
 			{
 				App->CL_Vm_ImGui->Show_Collision_Debug = 0;
@@ -649,6 +652,42 @@ void SB_Player::Check_Collisions_New(void)
 			else
 			{
 				App->CL_Vm_ImGui->Show_Collision_Debug = 1;
+
+				Col_Usage_Index = obB->getUserIndex();
+
+				// -------------------- Message Collision
+				if (Col_Usage_Index == Enums::Usage_Message)
+				{
+				
+					int numContacts = contactManifold->getNumContacts();
+					for (int j = 0; j < numContacts; j++)
+					{
+						btManifoldPoint& pt = contactManifold->getContactPoint(j);
+
+						Life_Time = pt.getLifeTime();
+						Distance = pt.getDistance();
+						Round = (int)Distance;
+
+						if (Round < 0)
+						{
+							if (App->SBC_Scene->B_Object[Col_Object_Index]->Triggered == 0)
+							{
+								App->SBC_Collision->Message_Entity(Col_Object_Index);
+							}
+						}
+						else if (Round == 0)
+						{
+							if (App->SBC_Scene->B_Object[Col_Object_Index]->Triggered == 1)
+							{
+								App->CL_Vm_ImGui->Show_Test_Text = 0;
+								App->SBC_Scene->B_Object[Col_Object_Index]->Triggered = 0;
+
+							}
+						}
+					}
+				}
+
+				// -------------------- 
 			}
 		}
 	}

@@ -71,6 +71,7 @@ distribution.
 #include "SB_Object.h"
 #include "SB_Objects_Create.h"
 #include "SB_Dimensions.h"
+#include "SB_Collision.h"
 
 #include "Com_Diaolgs.h"
 #include "SB_Import_Room.h"
@@ -131,6 +132,7 @@ public:
 	SB_Object*				SBC_Object;
 	SB_Objects_Create*		SBC_Objects_Create;
 	SB_Dimensions*			SBC_Dimensions;
+	SB_Collision*			SBC_Collision;
 
 	Com_Diaolgs*			Com_CDialogs;		// Common Dialogs for App [291221]
 	// ----------------------------------- 

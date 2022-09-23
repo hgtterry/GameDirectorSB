@@ -81,6 +81,8 @@ GD19_App::GD19_App(void)
 	SBC_Object =		nullptr;
 	SBC_Objects_Create = nullptr;
 	SBC_Dimensions =	nullptr;
+	SBC_Collision =		nullptr;
+
 	// ---------------------------------------------------- 29/12/21
 	Com_CDialogs =		nullptr;
 
@@ -238,6 +240,7 @@ bool GD19_App::InitApp(void)
 	SBC_Object =		new SB_Object();
 	SBC_Objects_Create = new SB_Objects_Create();
 	SBC_Dimensions =	new SB_Dimensions();
+	SBC_Collision =		new SB_Collision();
 	
 	//-----------------------------------------------------
 	SetBrushes_Fonts();

@@ -64,6 +64,7 @@ public:
 	HTREEITEM GD_LevelFolder;
 	HTREEITEM GD_CameraFolder;
 	HTREEITEM GD_ObjectsFolder;
+	HTREEITEM GD_Entities_Message_Folder;
 
 	HMENU hMenu;
 protected:
@@ -89,7 +90,6 @@ protected:
 	HTREEITEM GD_TriggerFolder;
 	HTREEITEM GD_EntitiesFolder;
 	HTREEITEM GD_Entities_Sound_Folder;
-	HTREEITEM GD_Entities_Message_Folder;
 	HTREEITEM GD_Entities_Move_Folder;
 	HTREEITEM GD_Collectables_Folder;
 	HTREEITEM GD_Teleporters_Folder;

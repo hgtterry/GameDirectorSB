@@ -159,7 +159,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base_Area.h" />
-    <ClInclude Include="Base_Entity.h" />
     <ClInclude Include="Base_Object.h" />
     <ClInclude Include="Base_Player.h" />
     <ClInclude Include="Com_Diaolgs.h" />
@@ -194,6 +193,7 @@
     <ClInclude Include="SB_3DT.h" />
     <ClInclude Include="SB_Aera.h" />
     <ClInclude Include="SB_Camera.h" />
+    <ClInclude Include="SB_Collision.h" />
     <ClInclude Include="SB_Debug.h" />
     <ClInclude Include="SB_Dialogs.h" />
     <ClInclude Include="SB_Dimensions.h" />
@@ -218,7 +218,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Base_Area.cpp" />
-    <ClCompile Include="Base_Entity.cpp" />
     <ClCompile Include="Base_Object.cpp" />
     <ClCompile Include="Base_Player.cpp" />
     <ClCompile Include="CollisionTools.cpp" />
@@ -259,6 +258,7 @@
     <ClCompile Include="SB_3DT.cpp" />
     <ClCompile Include="SB_Aera.cpp" />
     <ClCompile Include="SB_Camera.cpp" />
+    <ClCompile Include="SB_Collision.cpp" />
     <ClCompile Include="SB_Debug.cpp" />
     <ClCompile Include="SB_Dialogs.cpp" />
     <ClCompile Include="SB_Dimensions.cpp" />
