@@ -30,5 +30,7 @@ public:
 	~SB_Collision();
 
 	bool Message_Entity(int Index);
+	bool Play_Sound(int Index);
+
 };
 

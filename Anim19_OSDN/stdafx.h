@@ -324,7 +324,9 @@ namespace Enums
 		FileView_Objects_Folder = 1,
 		FileView_Objects_File = 2,
 		FileView_Messages_Folder = 3,
-		FileView_Messages_File = 4
+		FileView_Messages_File = 4,
+		FileView_Sounds_Folder = 5,
+		FileView_Sounds_File = 6
 	};
 }
 

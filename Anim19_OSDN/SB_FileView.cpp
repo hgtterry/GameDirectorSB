@@ -625,24 +625,13 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 	if (!strcmp(FileView_Folder, "Sounds")) // Folder
 	{
-		if (App->SBC_Scene->Scene_Loaded == 0)
-		{
-			App->Say("An Area or Building must be Added Firest");
-
-			return;
-		}
-
-		App->Cl_Dialogs->YesNo("Add Entity", "Do you want to add a new Sound Entity now");
-		bool Doit = App->Cl_Dialogs->Canceled;
-		if (Doit == 0)
-		{
-			App->SBC_Objects_Create->Add_New_Sound();
-		}
-
+		App->SBC_FileView->Context_Selection = Enums::FileView_Sounds_Folder;
 		return;
 	}
 	if (!strcmp(FileView_File, "Sounds"))
 	{
+		App->SBC_FileView->Context_Selection = Enums::FileView_Sounds_File;
+
 		HideRightPanes();
 		ShowWindow(App->GD_Properties_Hwnd, 1);
 		App->SBC_Object->Hide_Object_Dlg(1);
@@ -1527,6 +1516,29 @@ void SB_FileView::Context_Menu(HWND hDlg)
 			DestroyMenu(App->SBC_FileView->hMenu);
 			Context_Selection = Enums::FileView_Messages_File;
 		}
+
+		if (!strcmp(App->SBC_FileView->FileView_Folder, "Sounds")) // Folder
+		{
+			App->SBC_FileView->hMenu = CreatePopupMenu();
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_NEW, L"&New");
+			TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+			DestroyMenu(App->SBC_FileView->hMenu);
+			Context_Selection = Enums::FileView_Sounds_Folder;
+		}
+
+		if (!strcmp(App->SBC_FileView->FileView_File, "Sounds"))
+		{
+			App->SBC_FileView->hMenu = CreatePopupMenu();
+
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_COPY, L"&Copy");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
+			TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+			DestroyMenu(App->SBC_FileView->hMenu);
+			Context_Selection = Enums::FileView_Sounds_File;
+		}
 	}
 }
 
@@ -1545,7 +1557,7 @@ void SB_FileView::Context_New(HWND hDlg)
 
 	if (App->SBC_FileView->Context_Selection == Enums::FileView_Objects_Folder)
 	{
-		App->Cl_Dialogs->YesNo("Add Object", "Do you want to add a new Object now");
+		App->Cl_Dialogs->YesNo("Add Object", "Do you want to add a new Object Entity");
 
 		bool Doit = App->Cl_Dialogs->Canceled;
 		if (Doit == 0)
@@ -1558,12 +1570,24 @@ void SB_FileView::Context_New(HWND hDlg)
 
 	if (App->SBC_FileView->Context_Selection == Enums::FileView_Messages_Folder)
 	{
-		App->Cl_Dialogs->YesNo("Add Message", "Do you want to add a new Message now");
+		App->Cl_Dialogs->YesNo("Add Message", "Do you want to add a new Message Entity");
 
 		bool Doit = App->Cl_Dialogs->Canceled;
 		if (Doit == 0)
 		{
 			App->SBC_Objects_Create->Add_New_Message();
+			App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
+		}
+	}
+
+	if (App->SBC_FileView->Context_Selection == Enums::FileView_Sounds_Folder)
+	{
+		App->Cl_Dialogs->YesNo("Add Message", "Do you want to add a new Sound Entity");
+
+		bool Doit = App->Cl_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+			App->SBC_Objects_Create->Add_New_Sound();
 			App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
 		}
 	}

@@ -34,7 +34,7 @@ SB_Collision::~SB_Collision()
 }
 
 // *************************************************************************
-// *						Message_Entity Terry Bernie					   *
+// *			Message_Entity:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 bool SB_Collision::Message_Entity(int Index)
 {
@@ -52,6 +52,30 @@ bool SB_Collision::Message_Entity(int Index)
 	App->CL_Vm_ImGui->Object_Index = Index;
 	App->CL_Vm_ImGui->Show_Test_Text = 1;
 	App->SBC_Scene->B_Object[Index]->Triggered = 1;
+
+	return 1;
+}
+
+// **************************************************************************
+// *				Play_Sound:- Terry and Hazel Flanigan 2022				*
+// **************************************************************************
+bool SB_Collision::Play_Sound(int Index)
+{
+
+	//if (App->Cl_Scene_Data->Cl_Object[Index]->HasSound == 1 && App->Cl_Scene_Data->Cl_Object[Index]->Play_v2 == 1)
+	{
+		char buff[1024];
+		strcpy(buff, App->SBC_SoundMgr->Default_Folder);
+		strcat(buff, "\\Media\\Sounds\\");
+
+		strcat(buff, App->SBC_Scene->B_Object[Index]->Sound_File);
+
+		App->SBC_SoundMgr->SndFile = App->SBC_SoundMgr->SoundEngine->play2D(buff, false, true, true);
+		App->SBC_SoundMgr->SndFile->setVolume(0.5);
+		App->SBC_SoundMgr->SndFile->setIsPaused(false);
+
+		App->SBC_Scene->B_Object[Index]->Triggered = 1;
+	}
 
 	return 1;
 }
