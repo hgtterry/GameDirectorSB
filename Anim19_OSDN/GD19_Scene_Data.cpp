@@ -167,7 +167,7 @@ void GD19_Scene_Data::SetScene_Defaults(void)
 	S_Scene[0]->SpecularColour.z = 0;
 
 	// Sound
-	strcpy(S_Scene[0]->Sound[0].SoundFileAndPath,App->Cl_SoundMgr->Default_Folder);
+	strcpy(S_Scene[0]->Sound[0].SoundFileAndPath,App->SBC_SoundMgr->Default_Folder);
 	strcat(S_Scene[0]->Sound[0].SoundFileAndPath,"\\Media\\Sounds\\");
 	strcat(S_Scene[0]->Sound[0].SoundFileAndPath,"The_Sun.ogg");
 	strcpy(S_Scene[0]->Sound[0].SoundFile,"The_Sun.ogg");
@@ -279,9 +279,9 @@ void GD19_Scene_Data::ClearScene(void)
 	}
 
 
-	App->Cl_SoundMgr->Sound_File.resize(0);
-	App->Cl_SoundMgr->Sound_File.shrink_to_fit();
-	App->Cl_SoundMgr->SoundFile_Count = 0;
+	App->SBC_SoundMgr->Sound_File.resize(0);
+	App->SBC_SoundMgr->Sound_File.shrink_to_fit();
+	App->SBC_SoundMgr->SoundFile_Count = 0;
 
 	
 	//App->GDCL_Scene_Data->Init_Class();
@@ -317,7 +317,7 @@ bool GD19_Scene_Data::GameMode(void)
 		result = strcmp(S_Scene[0]->Sound[0].SoundFile, "None");
 		if (result == 1) // Could be Unsafe 
 		{
-			S_Scene[0]->Sound[0].SndFile = App->Cl_SoundMgr->SoundEngine->play2D(S_Scene[0]->Sound[0].SoundFileAndPath,
+			S_Scene[0]->Sound[0].SndFile = App->SBC_SoundMgr->SoundEngine->play2D(S_Scene[0]->Sound[0].SoundFileAndPath,
 				S_Scene[0]->Sound[0].Loop,true,true);
 
 			S_Scene[0]->Sound[0].SndFile->setVolume(S_Scene[0]->Sound[0].Volume);

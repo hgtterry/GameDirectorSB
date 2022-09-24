@@ -31,7 +31,6 @@ distribution.
 #include "GD19_Bullet.h"
 #include "GD19_Collision.h"
 #include "GD19_Ini.h"
-#include "GD19_SoundMgr.h"
 #include "GD19_Panel_Com.h"
 #include "GD19_Visuals.h"
 #include "GD19_Environment.h"
@@ -72,6 +71,7 @@ distribution.
 #include "SB_Objects_Create.h"
 #include "SB_Dimensions.h"
 #include "SB_Collision.h"
+#include "SB_SoundMgr.h"
 
 #include "Com_Diaolgs.h"
 #include "SB_Import_Room.h"
@@ -90,7 +90,6 @@ public:
 	GD19_Bullet*		Cl_Bullet;
 	GD19_Collision*		Cl_Collision;
 	T_Ini*				Cl_Ini;
-	GD19_SoundMgr*		Cl_SoundMgr;
 	GD19_Panel_Com*		Cl_Panels_Com;
 	GD19_Visuals*		Cl_Visuals;
 	GD19_Environment*	Cl_Environment;
@@ -133,6 +132,7 @@ public:
 	SB_Objects_Create*		SBC_Objects_Create;
 	SB_Dimensions*			SBC_Dimensions;
 	SB_Collision*			SBC_Collision;
+	SB_SoundMgr*			SBC_SoundMgr;
 
 	Com_Diaolgs*			Com_CDialogs;		// Common Dialogs for App [291221]
 	// ----------------------------------- 

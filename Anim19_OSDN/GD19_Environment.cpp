@@ -955,19 +955,19 @@ bool GD19_Environment::Props_OnClick(LPARAM lParam)
 	result = strcmp(btext, "Track");
 	if (result == 0)
 	{
-		strcpy(App->Cl_SoundMgr->mSoundFile,App->Cl_Scene_Data->S_Scene[0]->Sound[0].SoundFile);
-		App->Cl_SoundMgr->SndVolume = App->Cl_Scene_Data->S_Scene[0]->Sound[0].Volume;
-		App->Cl_SoundMgr->Dialog_SoundFile();
+		strcpy(App->SBC_SoundMgr->mSoundFile,App->Cl_Scene_Data->S_Scene[0]->Sound[0].SoundFile);
+		App->SBC_SoundMgr->SndVolume = App->Cl_Scene_Data->S_Scene[0]->Sound[0].Volume;
+		App->SBC_SoundMgr->Dialog_SoundFile();
 
 		//if (App->Class_Dlg_Com->Canceled == 0)
 		{
 			
-			strcpy(App->Cl_Scene_Data->S_Scene[0]->Sound[0].SoundFile,App->Cl_SoundMgr->mSoundFile);
+			strcpy(App->Cl_Scene_Data->S_Scene[0]->Sound[0].SoundFile,App->SBC_SoundMgr->mSoundFile);
 
-			strcpy(App->Cl_Scene_Data->S_Scene[0]->Sound[0].SoundFileAndPath,App->Cl_SoundMgr->Default_Folder);
+			strcpy(App->Cl_Scene_Data->S_Scene[0]->Sound[0].SoundFileAndPath,App->SBC_SoundMgr->Default_Folder);
 			strcat(App->Cl_Scene_Data->S_Scene[0]->Sound[0].SoundFileAndPath,"\\Media\\Sounds\\");
-			strcat(App->Cl_Scene_Data->S_Scene[0]->Sound[0].SoundFileAndPath,App->Cl_SoundMgr->mSoundFile);
-			App->Cl_Scene_Data->S_Scene[0]->Sound[0].Volume = App->Cl_SoundMgr->SndVolume;
+			strcat(App->Cl_Scene_Data->S_Scene[0]->Sound[0].SoundFileAndPath,App->SBC_SoundMgr->mSoundFile);
+			App->Cl_Scene_Data->S_Scene[0]->Sound[0].Volume = App->SBC_SoundMgr->SndVolume;
 
 			App->Cl_Scene_Data->S_Scene[0]->Sound[0].Play = 1;
 
@@ -976,6 +976,7 @@ bool GD19_Environment::Props_OnClick(LPARAM lParam)
 		}
 		return 1;
 	}
+
 	result = strcmp(btext, "Play");
 	if (result == 0)
 	{

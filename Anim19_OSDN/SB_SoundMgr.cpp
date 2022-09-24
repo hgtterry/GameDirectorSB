@@ -4,7 +4,7 @@
 #include "GD19_SoundMgr.h"
 
 
-GD19_SoundMgr::GD19_SoundMgr(void)
+SB_SoundMgr::SB_SoundMgr(void)
 {
 	SoundEngine = irrklang::createIrrKlangDevice();
 	SndFile = NULL;
@@ -19,14 +19,14 @@ GD19_SoundMgr::GD19_SoundMgr(void)
 }
 
 
-GD19_SoundMgr::~GD19_SoundMgr(void)
+SB_SoundMgr::~SB_SoundMgr(void)
 {
 }
 
 // *************************************************************************
 // *	  		Dialog_SoundFile()		Terry Bernie					   *
 // *************************************************************************
-bool GD19_SoundMgr::Dialog_SoundFile()
+bool SB_SoundMgr::Dialog_SoundFile()
 {
 	IsCancelled = 0;
 
@@ -36,7 +36,7 @@ bool GD19_SoundMgr::Dialog_SoundFile()
 // *************************************************************************
 // *			Dialog_SoundFile_Proc  	Terry Bernie					   *
 // *************************************************************************
-LRESULT CALLBACK GD19_SoundMgr::Dialog_SoundFile_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK SB_SoundMgr::Dialog_SoundFile_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 				
 	switch (message)
@@ -53,18 +53,18 @@ LRESULT CALLBACK GD19_SoundMgr::Dialog_SoundFile_Proc(HWND hDlg, UINT message, W
 
 			SetDlgItemText(hDlg,IDC_TITLENAME,(LPCTSTR)"Sound Player");
 
-			SetDlgItemText(hDlg,IDC_EDITINT,(LPCTSTR)App->Cl_SoundMgr->mSoundFile);
+			SetDlgItemText(hDlg,IDC_EDITINT,(LPCTSTR)App->SBC_SoundMgr->mSoundFile);
 
-			App->Cl_SoundMgr->GetSoundFiles(hDlg,"*.ogg");
-			App->Cl_SoundMgr->GetSoundFiles(hDlg,"*.wav");
+			App->SBC_SoundMgr->GetSoundFiles(hDlg,"*.ogg");
+			App->SBC_SoundMgr->GetSoundFiles(hDlg,"*.wav");
 
-			int Sel = SendMessage(GetDlgItem(hDlg, IDC_SOUNDLIST), LB_SELECTSTRING, -1, (LPARAM)App->Cl_SoundMgr->Current_Object_Sound);
+			int Sel = SendMessage(GetDlgItem(hDlg, IDC_SOUNDLIST), LB_SELECTSTRING, -1, (LPARAM)App->SBC_SoundMgr->Current_Object_Sound);
 
 			char buff[255];
 			SendDlgItemMessage(hDlg, IDC_SOUNDLIST, LB_GETTEXT, (WPARAM)Sel, (LPARAM)buff);
 			SetDlgItemText(hDlg, IDC_EDITINT, (LPTSTR)buff);
 
-			int VolPer = int(App->Cl_SoundMgr->SndVolume*10);
+			int VolPer = int(App->SBC_SoundMgr->SndVolume*10);
 
 			HWND Slider =GetDlgItem(hDlg,IDC_SLVOLUME);	
 			SendMessage(Slider, TBM_SETRANGE, (WPARAM) TRUE,(LPARAM) MAKELONG(0,10));  
@@ -140,8 +140,8 @@ LRESULT CALLBACK GD19_SoundMgr::Dialog_SoundFile_Proc(HWND hDlg, UINT message, W
 			SetDlgItemText(hDlg,IDC_VOLBOX,(LPCTSTR)buf);
 
 			float sum2 = float(Percent) / 100;
-			App->Cl_SoundMgr->SndVolume = sum2;
-			App->Cl_SoundMgr->SndFile->setVolume(sum2);
+			App->SBC_SoundMgr->SndVolume = sum2;
+			App->SBC_SoundMgr->SndFile->setVolume(sum2);
 
 			return 1;
 		}
@@ -178,21 +178,21 @@ LRESULT CALLBACK GD19_SoundMgr::Dialog_SoundFile_Proc(HWND hDlg, UINT message, W
 			
 			if (LOWORD(wParam) == IDC_BT_STOP)
 			{
-				App->Cl_SoundMgr->SndFile->stop();
+				App->SBC_SoundMgr->SndFile->stop();
 
 				return TRUE;
 			}
 
 			if (LOWORD(wParam) == IDC_BT_PAUSE)
 			{
-				bool Paused = App->Cl_SoundMgr->SndFile->getIsPaused();
+				bool Paused = App->SBC_SoundMgr->SndFile->getIsPaused();
 				if (Paused == 1)
 				{
-					App->Cl_SoundMgr->SndFile->setIsPaused(0);
+					App->SBC_SoundMgr->SndFile->setIsPaused(0);
 				}
 				else
 				{
-					App->Cl_SoundMgr->SndFile->setIsPaused(1);
+					App->SBC_SoundMgr->SndFile->setIsPaused(1);
 				}
 
 				return TRUE;
@@ -218,39 +218,39 @@ LRESULT CALLBACK GD19_SoundMgr::Dialog_SoundFile_Proc(HWND hDlg, UINT message, W
 			
 			if (LOWORD(wParam) == IDOK) 
 			{
-				if (App->Cl_SoundMgr->SndFile==NULL)
+				if (App->SBC_SoundMgr->SndFile==NULL)
 				{
 				}
 				else
 				{
-					App->Cl_SoundMgr->SndFile->stop();
-					App->Cl_SoundMgr->SndFile=NULL;
+					App->SBC_SoundMgr->SndFile->stop();
+					App->SBC_SoundMgr->SndFile=NULL;
 				}
 
-				App->Cl_SoundMgr->IsCancelled = 0;
+				App->SBC_SoundMgr->IsCancelled = 0;
 
 				char file[256];
 				GetDlgItemText(hDlg,IDC_EDITINT,(LPTSTR)file,256);
-				strcpy(App->Cl_SoundMgr->mSoundFile,file);
-				App->Cl_SoundMgr->Remeber_SoundFile(file);
+				strcpy(App->SBC_SoundMgr->mSoundFile,file);
+				App->SBC_SoundMgr->Remeber_SoundFile(file);
 				EndDialog(hDlg, LOWORD(wParam));
 				return TRUE;
 			}
 
 			if (LOWORD(wParam)== IDCANCEL) 
 			{
-				if (App->Cl_SoundMgr->SndFile == NULL)
+				if (App->SBC_SoundMgr->SndFile == NULL)
 				{
 				}
 				else
 				{
-					App->Cl_SoundMgr->SndFile->stop();
-					App->Cl_SoundMgr->SndFile->drop();
-					App->Cl_SoundMgr->SndFile = NULL;
+					App->SBC_SoundMgr->SndFile->stop();
+					App->SBC_SoundMgr->SndFile->drop();
+					App->SBC_SoundMgr->SndFile = NULL;
 
 				}
 
-				App->Cl_SoundMgr->IsCancelled = 1;
+				App->SBC_SoundMgr->IsCancelled = 1;
 				EndDialog(hDlg, LOWORD(wParam));
 				return TRUE;
 			}
@@ -260,13 +260,13 @@ LRESULT CALLBACK GD19_SoundMgr::Dialog_SoundFile_Proc(HWND hDlg, UINT message, W
 				char file[256];
 				GetDlgItemText(hDlg,IDC_EDITINT,(LPTSTR)file,256);
 
-				if (App->Cl_SoundMgr->SndFile==NULL)
+				if (App->SBC_SoundMgr->SndFile==NULL)
 				{
 				}
 				else
 				{
-					App->Cl_SoundMgr->SndFile->stop();
-					App->Cl_SoundMgr->SndFile=NULL;
+					App->SBC_SoundMgr->SndFile->stop();
+					App->SBC_SoundMgr->SndFile=NULL;
 				}
 
 				int result=1;
@@ -285,13 +285,13 @@ LRESULT CALLBACK GD19_SoundMgr::Dialog_SoundFile_Proc(HWND hDlg, UINT message, W
 					else
 					{
 						char buff[1024];
-						strcpy(buff,App->Cl_SoundMgr->Default_Folder);
+						strcpy(buff,App->SBC_SoundMgr->Default_Folder);
 						strcat(buff,"\\Media\\Sounds\\");
 						strcat(buff,file);
 
-						App->Cl_SoundMgr->SndFile = App->Cl_SoundMgr->SoundEngine->play2D(buff,false,true,true);
-						App->Cl_SoundMgr->SndFile->setVolume(App->Cl_SoundMgr->SndVolume);
-						App->Cl_SoundMgr->SndFile->setIsPaused(false);
+						App->SBC_SoundMgr->SndFile = App->SBC_SoundMgr->SoundEngine->play2D(buff,false,true,true);
+						App->SBC_SoundMgr->SndFile->setVolume(App->SBC_SoundMgr->SndVolume);
+						App->SBC_SoundMgr->SndFile->setIsPaused(false);
 					}
 				}
 				return TRUE;
@@ -305,7 +305,7 @@ LRESULT CALLBACK GD19_SoundMgr::Dialog_SoundFile_Proc(HWND hDlg, UINT message, W
 // *************************************************************************
 // *	  			InitSound_Defaults Terry Bernie						   *
 // *************************************************************************
-bool GD19_SoundMgr::InitSound_Defaults(int Index)
+bool SB_SoundMgr::InitSound_Defaults(int Index)
 {
 	//S_Object[Index]->Sound[0].Data0 = 0;
 	//S_Object[Index]->Sound[0].Data1 = 0;
@@ -320,7 +320,7 @@ bool GD19_SoundMgr::InitSound_Defaults(int Index)
 // *************************************************************************
 // *					GetSoundFiles Terry Bernie						   *
 // *************************************************************************
-bool GD19_SoundMgr::GetSoundFiles(HWND hDlg,char *Extention)
+bool SB_SoundMgr::GetSoundFiles(HWND hDlg,char *Extention)
 {
 	HWND ListHwnd = GetDlgItem(hDlg,IDC_SOUNDLIST); 
 
@@ -347,7 +347,7 @@ bool GD19_SoundMgr::GetSoundFiles(HWND hDlg,char *Extention)
 // *************************************************************************
 // *					Remeber_SoundFile Terry Bernie					   *
 // *************************************************************************
-bool GD19_SoundMgr::Remeber_SoundFile(char* File)
+bool SB_SoundMgr::Remeber_SoundFile(char* File)
 {
 	Sound_File.push_back(File);
 	SoundFile_Count = Sound_File.size();

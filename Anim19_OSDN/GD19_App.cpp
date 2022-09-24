@@ -39,7 +39,6 @@ GD19_App::GD19_App(void)
 	Cl_Bullet =			nullptr;
 	Cl_Collision =		nullptr;
 	Cl_Ini =			nullptr;
-	Cl_SoundMgr =		nullptr;
 	Cl_Panels_Com =		nullptr;
 	Cl_Visuals =		nullptr;
 	Cl_Environment =	nullptr;
@@ -82,7 +81,7 @@ GD19_App::GD19_App(void)
 	SBC_Objects_Create = nullptr;
 	SBC_Dimensions =	nullptr;
 	SBC_Collision =		nullptr;
-
+	SBC_SoundMgr =		nullptr;
 	// ---------------------------------------------------- 29/12/21
 	Com_CDialogs =		nullptr;
 
@@ -196,7 +195,6 @@ bool GD19_App::InitApp(void)
 	Cl_Bullet =			new GD19_Bullet();		
 	Cl_Collision =		new GD19_Collision();
 	Cl_Ini =			new T_Ini();
-	Cl_SoundMgr =		new GD19_SoundMgr();
 	Cl_Panels_Com =		new GD19_Panel_Com();
 	Cl_Visuals =		new GD19_Visuals();
 	Cl_Environment =	new GD19_Environment();
@@ -241,7 +239,8 @@ bool GD19_App::InitApp(void)
 	SBC_Objects_Create = new SB_Objects_Create();
 	SBC_Dimensions =	new SB_Dimensions();
 	SBC_Collision =		new SB_Collision();
-	
+	SBC_SoundMgr =		new SB_SoundMgr();
+
 	//-----------------------------------------------------
 	SetBrushes_Fonts();
 

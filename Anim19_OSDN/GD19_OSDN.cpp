@@ -646,7 +646,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		//------------------------- Tools
 		case ID_TOOLS_SOUNDPLAYER:
 		{
-			App->Cl_SoundMgr->Dialog_SoundFile();
+			App->SBC_SoundMgr->Dialog_SoundFile();
 			return 1;
 		}
 

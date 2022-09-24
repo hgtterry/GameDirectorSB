@@ -182,7 +182,6 @@
     <ClInclude Include="GD19_Panel_Com.h" />
     <ClInclude Include="GD19_PB.h" />
     <ClInclude Include="GD19_Scene_Data.h" />
-    <ClInclude Include="GD19_SoundMgr.h" />
     <ClInclude Include="GD19_Stock.h" />
     <ClInclude Include="GD19_Utilities.h" />
     <ClInclude Include="GD19_Visuals.h" />
@@ -210,6 +209,7 @@
     <ClInclude Include="SB_Properties.h" />
     <ClInclude Include="SB_Resources.h" />
     <ClInclude Include="SB_Scene.h" />
+    <ClInclude Include="SB_SoundMgr.h" />
     <ClInclude Include="SB_TopTabs.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -248,7 +248,6 @@
     <ClCompile Include="GD19_Panel_Com.cpp" />
     <ClCompile Include="GD19_PB.cpp" />
     <ClCompile Include="GD19_Scene_Data.cpp" />
-    <ClCompile Include="GD19_SoundMgr.cpp" />
     <ClCompile Include="GD19_Stock.cpp" />
     <ClCompile Include="GD19_Utilities.cpp" />
     <ClCompile Include="GD19_Visuals.cpp" />
@@ -275,6 +274,7 @@
     <ClCompile Include="SB_Properties.cpp" />
     <ClCompile Include="SB_Resources.cpp" />
     <ClCompile Include="SB_Scene.cpp" />
+    <ClCompile Include="SB_SoundMgr.cpp" />
     <ClCompile Include="SB_TopTabs.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

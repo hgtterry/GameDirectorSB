@@ -344,14 +344,14 @@ int GD19_Stock::Edit_Sound_Stock(LPARAM lParam)
 	if (result == 0)
 	{
 
-		strcpy(App->Cl_SoundMgr->Current_Object_Sound, App->Cl_Scene_Data->St_Sounds[Index]->SoundFile);
+		strcpy(App->SBC_SoundMgr->Current_Object_Sound, App->Cl_Scene_Data->St_Sounds[Index]->SoundFile);
 
-		App->Cl_SoundMgr->Dialog_SoundFile();
+		App->SBC_SoundMgr->Dialog_SoundFile();
 
-		if (App->Cl_SoundMgr->IsCancelled == 0)
+		if (App->SBC_SoundMgr->IsCancelled == 0)
 		{
-			strcpy(App->Cl_Scene_Data->St_Sounds[Index]->SoundFile, App->Cl_SoundMgr->mSoundFile);
-			App->Cl_Scene_Data->St_Sounds[Index]->Volume = App->Cl_SoundMgr->SndVolume;
+			strcpy(App->Cl_Scene_Data->St_Sounds[Index]->SoundFile, App->SBC_SoundMgr->mSoundFile);
+			App->Cl_Scene_Data->St_Sounds[Index]->Volume = App->SBC_SoundMgr->SndVolume;
 		}
 
 		Update_Sound_Properties();
@@ -364,14 +364,14 @@ int GD19_Stock::Edit_Sound_Stock(LPARAM lParam)
 	if (result == 0)
 	{
 
-		strcpy(App->Cl_SoundMgr->Current_Object_Sound, App->Cl_Scene_Data->St_Sounds[Index]->SoundFile);
+		strcpy(App->SBC_SoundMgr->Current_Object_Sound, App->Cl_Scene_Data->St_Sounds[Index]->SoundFile);
 
-		App->Cl_SoundMgr->Dialog_SoundFile();
+		App->SBC_SoundMgr->Dialog_SoundFile();
 
-		if (App->Cl_SoundMgr->IsCancelled == 0)
+		if (App->SBC_SoundMgr->IsCancelled == 0)
 		{
-			strcpy(App->Cl_Scene_Data->St_Sounds[Index]->SoundFile, App->Cl_SoundMgr->mSoundFile);
-			App->Cl_Scene_Data->St_Sounds[Index]->Volume = App->Cl_SoundMgr->SndVolume;
+			strcpy(App->Cl_Scene_Data->St_Sounds[Index]->SoundFile, App->SBC_SoundMgr->mSoundFile);
+			App->Cl_Scene_Data->St_Sounds[Index]->Volume = App->SBC_SoundMgr->SndVolume;
 		}
 
 		Update_Sound_Properties();
@@ -739,11 +739,11 @@ void GD19_Stock::Test_Sound(int Index)
 	int mIndex = Index;
 
 	char buff[1024];
-	strcpy(buff, App->Cl_SoundMgr->Default_Folder);
+	strcpy(buff, App->SBC_SoundMgr->Default_Folder);
 	strcat(buff, "\\Media\\Sounds\\");
 	strcat(buff, App->Cl_Scene_Data->St_Sounds[mIndex]->SoundFile);
 
-	App->Cl_Scene_Data->St_Sounds[mIndex]->SndFile = App->Cl_SoundMgr->SoundEngine->play2D(buff, false, true, true);
+	App->Cl_Scene_Data->St_Sounds[mIndex]->SndFile = App->SBC_SoundMgr->SoundEngine->play2D(buff, false, true, true);
 	App->Cl_Scene_Data->St_Sounds[mIndex]->SndFile->setVolume(App->Cl_Scene_Data->St_Sounds[mIndex]->Volume);
 	App->Cl_Scene_Data->St_Sounds[mIndex]->SndFile->setIsPaused(false);
 	

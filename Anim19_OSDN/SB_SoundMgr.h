@@ -1,10 +1,10 @@
 #pragma once
 
-class GD19_SoundMgr
+class SB_SoundMgr
 {
 public:
-	GD19_SoundMgr(void);
-	~GD19_SoundMgr(void);
+	SB_SoundMgr(void);
+	~SB_SoundMgr(void);
 
 	static LRESULT CALLBACK Dialog_SoundFile_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
