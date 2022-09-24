@@ -719,9 +719,9 @@ bool SB_Objects_Create::Add_New_Message()
 	return 1;
 }
 
-// *************************************************************************
-//						Add_MessageEntity Terry Bernie					   *
-// *************************************************************************
+// **************************************************************************
+// *		Add_MessageEntity:- Terry and Hazel Flanigan 2022				*
+// **************************************************************************
 bool SB_Objects_Create::Add_Message_Entity(int Index)
 {
 	char Mesh_File[255];
@@ -810,6 +810,228 @@ bool SB_Objects_Create::Add_Message_Entity(int Index)
 	HTREEITEM Temp = App->SBC_FileView->Add_Message_Entity(Object->Mesh_Name, Index);
 	Object->ListViewItem = Temp;
 
+	return 1;
+}
+
+// *************************************************************************
+// *				Add_New_Sound:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+bool SB_Objects_Create::Add_New_Sound()
+{
+	char B_Name[MAX_PATH];
+	char ConNum[MAX_PATH];
+
+	int Index = App->SBC_Scene->Object_Count;
+
+	App->SBC_Scene->B_Object[Index] = new Base_Object();
+
+	App->SBC_Scene->B_Object[Index]->Type = Enums::Bullet_Type_Static;
+	App->SBC_Scene->B_Object[Index]->Shape = Enums::Shape_Box;
+
+	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_FileName, "SoundEntity_GD.mesh");
+
+	strcpy_s(B_Name, "Sound_");
+	_itoa(Index, ConNum, 10);
+	strcat(B_Name, ConNum);
+	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_Name, B_Name);
+
+	Add_Sound_Entity(Index);
+
+	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[Index]->ListViewItem);
+
+	App->SBC_Scene->Object_Count++;
+
+	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->GD_Entities_Message_Folder);
+	return 1;
+}
+
+// *************************************************************************
+// *				Add_Sound_Entity:- Terry and Hazel Flanigan	2022	   *
+// *************************************************************************
+bool SB_Objects_Create::Add_Sound_Entity(int Index)
+{
+	char Mesh_File[255];
+	char ConNum[256];
+	char Ogre_Name[256];
+
+	Base_Object* Object = App->SBC_Scene->B_Object[Index];
+
+	// ----------------- Mesh
+
+	strcpy_s(Ogre_Name, "GDEnt_");
+	_itoa(Index, ConNum, 10);
+	strcat(Ogre_Name, ConNum);
+
+	strcpy(Mesh_File, Object->Mesh_FileName);
+
+	Object->Object_Ent = App->Cl19_Ogre->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->Cl19_Ogre->App_Resource_Group);
+	Object->Object_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	Object->Object_Node->attachObject(Object->Object_Ent);
+
+	Object->Object_Node->setVisible(true);
+
+	Object->Object_Node->setOrientation(Object->Mesh_Quat);
+	Object->Object_Node->setPosition(Object->Mesh_Pos);
+
+	App->Cl_Scene_Data->SceneLoaded = 1;
+
+	// ----------------- Physics
+
+	AxisAlignedBox worldAAB = Object->Object_Ent->getBoundingBox();
+	worldAAB.transformAffine(Object->Object_Node->_getFullTransform());
+	Ogre::Vector3 Centre = worldAAB.getCenter();
+
+	Object->Physics_Pos = Ogre::Vector3(Centre.x, Centre.y, Centre.z);
+
+	btTransform startTransform;
+	startTransform.setIdentity();
+	startTransform.setRotation(btQuaternion(0, 0, 0, 1));
+
+	btScalar mass;
+	mass = 0.0f;
+
+	btVector3 localInertia(0, 0, 0);
+	btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
+	startTransform.setOrigin(initialPosition);
+
+	Ogre::Vector3 Size = App->Cl_Objects_Com->GetMesh_BB_Size(Object->Object_Node);
+	float sx = Size.x / 2;
+	float sy = Size.y / 2;
+	float sz = Size.z / 2;
+
+	Object->Physics_Size = Ogre::Vector3(sx, sy, sz);
+
+	btCollisionShape* newRigidShape = new btBoxShape(btVector3(sx, sy, sz));
+	newRigidShape->calculateLocalInertia(mass, localInertia);
+
+	App->Cl_Bullet->collisionShapes.push_back(newRigidShape);
+
+	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
+
+	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, newRigidShape, localInertia);
+
+	Object->Phys_Body = new btRigidBody(rbInfo);
+	Object->Phys_Body->setRestitution(1.0);
+	Object->Phys_Body->setFriction(1.5);
+	Object->Phys_Body->setUserPointer(Object->Object_Node);
+	Object->Phys_Body->setWorldTransform(startTransform);
+
+	Object->Usage = Enums::Usage_Message;
+	Object->Phys_Body->setUserIndex(Enums::Usage_Message);
+	Object->Phys_Body->setUserIndex2(Index);
+
+	Object->Phys_Body->setCustomDebugColor(btVector3(0, 1, 1));
+
+	int f = Object->Phys_Body->getCollisionFlags();
+
+	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT
+		| btCollisionObject::CF_KINEMATIC_OBJECT
+		| btCollisionObject::CF_NO_CONTACT_RESPONSE);
+
+
+	App->Cl_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
+
+	Set_Physics(Index);
+
+	HTREEITEM Temp = App->SBC_FileView->Add_Message_Entity(Object->Mesh_Name, Index);
+	Object->ListViewItem = Temp;
+
+	//------------------------------------------------------------------
+	//int Index = App->Cl_Scene_Data->ObjectCount;
+
+	//App->Cl_Scene_Data->Cl_Object[Index] = new GD19_Objects();
+	//App->Cl_Scene_Data->Cl_Object[Index]->Object_ID = App->Cl_Scene_Data->Object_ID_Counter;
+
+	//// Only on newly created objects
+	//App->Cl_Scene_Data->Object_ID_Counter++;
+
+	//GD19_Objects* Object = App->Cl_Scene_Data->Cl_Object[Index];
+
+	//strcpy(App->Cl_Scene_Data->Cl_Object[Index]->Entity[0].mTextItem, "Welcome.ogg");
+	//strcpy(App->Cl_Scene_Data->Cl_Object[Index]->Entity[0].mFileAndPath, App->Cl_SoundMgr->Default_Folder);
+	//strcat(App->Cl_Scene_Data->Cl_Object[Index]->Entity[0].mFileAndPath, "\\Media\\Sounds\\");
+	//strcat(App->Cl_Scene_Data->Cl_Object[Index]->Entity[0].mFileAndPath, "Welcome.ogg");
+
+	//App->Cl_Scene_Data->Cl_Object[Index]->HasSound = 1;
+
+	//App->Cl_Scene_Data->Cl_Object[Index]->Type = Enums::Bullet_Type_Static;
+	//App->Cl_Scene_Data->Cl_Object[Index]->Shape = Enums::Shape_Box;
+
+	//strcpy(App->Cl_Scene_Data->Cl_Object[Index]->MeshName, "SoundEntity_GD.mesh");
+
+	//char ConNum[256];
+	//char ATest[256];
+	//char Name[256];
+
+	//strcpy_s(Name, "Sound_");
+	//_itoa(Index, ConNum, 10);
+	//strcat(Name, ConNum);
+
+	//strcpy_s(ATest, "GDEnt_");
+	//_itoa(Index, ConNum, 10);
+	//strcat(ATest, ConNum);
+
+	//strcpy(Object->Name, Name);
+	//strcpy(Object->MeshName, "SoundEntity_GD.mesh");
+	//strcpy(Object->MeshName_FullPath, "SoundEntity_GD.mesh");
+
+	//Object->OgreEntity = App->Cl19_Ogre->mSceneMgr->createEntity(ATest, "SoundEntity_GD.mesh", App->Cl19_Ogre->PermResourceGroup);
+	//Object->OgreNode = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	//Object->OgreNode->attachObject(Object->OgreEntity);
+	//Object->OgreNode->scale(1, 1, 1);
+
+	//Ogre::Vector3 Pos = Object->GetPlacement();
+	//Object->Mesh_Pos = Pos;
+	//Object->OgreNode->setPosition(Pos);
+	////------------------
+
+	//Ogre::Vector3 Size = App->Cl_Objects_Com->GetMesh_BB_Size(Object->OgreNode);
+	//float sx = Size.x / 2;
+	//float sy = Size.y / 2; // Size by Bounding Box
+	//float sz = Size.z / 2;
+
+	//Object->Physics_Size = Ogre::Vector3(sx, sy, sz);
+
+	//btCollisionShape* newRigidShape = new btBoxShape(btVector3(sx, sy, sz));
+	//newRigidShape->calculateLocalInertia(0, btVector3(0, 0, 0));
+
+	//btTransform startTransform;
+	//startTransform.setIdentity();
+	//startTransform.setRotation(btQuaternion(0.0f, 0.0f, 0.0f, 1));
+
+	//Ogre::Vector3 Centre = Object->Get_BoundingBox_World_Centre();
+	//Object->Physics_Pos = Ogre::Vector3(Centre.x, Centre.y, Centre.z);
+
+	//btVector3 initialPosition(btVector3(Centre.x, Centre.y, Centre.z));
+	//startTransform.setOrigin(initialPosition);
+
+	//btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
+
+	//btRigidBody::btRigidBodyConstructionInfo rbInfo(0, myMotionState, newRigidShape, btVector3(0, 0, 0));
+
+	//Object->bt_body = new btRigidBody(rbInfo);
+	//Object->bt_body->setRestitution(1.0);
+	//Object->bt_body->setFriction(1.5);
+	//Object->bt_body->setUserPointer(Object->OgreNode);
+	//Object->bt_body->setWorldTransform(startTransform);
+
+	//Object->bt_body->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT | btCollisionObject::CF_NO_CONTACT_RESPONSE);
+
+	//Object->Usage = Enums::Usage_Sound;
+	//Object->bt_body->setUserIndex(Enums::Usage_Sound);
+	//Object->bt_body->setUserIndex2(Index);
+
+	//App->Cl_Bullet->dynamicsWorld->addRigidBody(Object->bt_body);
+
+	//Object->Folder = Enums::Folder_Sound_Entity;
+	//Object->Physics_Valid = 1;
+
+	/////HTREEITEM Temp = App->Cl_FileView->Add_Sound_Entity(Object->Name, Index);
+	/////Object->ListViewItem = Temp;
+
+	//ShowWindow(App->GD_Properties_Hwnd, 1);
+
+	//App->Cl_Scene_Data->ObjectCount++;  // Must be last line
 	return 1;
 }
 

@@ -76,6 +76,8 @@ distribution.
 #include "Com_Diaolgs.h"
 #include "SB_Import_Room.h"
 
+// :- Terry and Hazel Flanigan 2022
+
 class GD19_App
 {
 

@@ -11,7 +11,7 @@ public:
 	void Update_MV_Details();
 	bool Add_New_Object(int Index);
 	bool Add_New_Message();
-
+	bool Add_New_Sound();
 
 	char DestinationFile[MAX_PATH];
 	char SourceFile[MAX_PATH];
@@ -27,6 +27,7 @@ protected:
 	void Add_Physics_Cone(bool Dynamic, int Index);
 
 	bool Add_Message_Entity(int Index);
+	bool Add_Sound_Entity(int Index);
 
 	char m_ResourcePath[MAX_PATH];
 };
