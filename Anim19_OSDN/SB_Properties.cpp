@@ -643,6 +643,75 @@ bool SB_Properties::Update_ListView_Messages()
 }
 
 // *************************************************************************
+// *			Update_ListView_Sounds:- Terry and Hazel Flanigan 2022     *
+// *************************************************************************
+bool SB_Properties::Update_ListView_Sounds()
+{
+	if (App->SBC_Scene->Scene_Loaded == 0)
+	{
+		return 1;
+	}
+
+	int index = Current_Selected_Object;
+
+	char buff[255];
+	strcpy(buff, App->SBC_Scene->B_Object[index]->Mesh_Name);
+	strcat(buff, "   (Sound)");
+	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
+
+
+	// new sound
+	/*char chr_Play[100];
+	if (App->Cl_Scene_Data->Cl_Object[index]->Play_v2 == 1)
+	{
+		strcpy(chr_Play, "True");
+	}
+	else
+	{
+		strcpy(chr_Play, "False");
+	}*/
+
+	/*char chr_Stock_Sound[100];
+	int sndIndex = App->Cl_Scene_Data->Cl_Object[index]->Sound_ID_v2;
+	strcpy(chr_Stock_Sound, App->Cl_Scene_Data->St_Sounds[sndIndex]->Name);
+
+	int StockIndex = App->Cl_Scene_Data->Cl_Object[index]->Entity[0].Stock_mIndex;*/
+
+	const int NUM_ITEMS = 4;
+	const int NUM_COLS = 2;
+	std::string grid[NUM_COLS][NUM_ITEMS]; // string table
+	LV_ITEM pitem;
+	memset(&pitem, 0, sizeof(LV_ITEM));
+	pitem.mask = LVIF_TEXT;
+
+	grid[0][0] = "Name",	grid[1][0] = App->SBC_Scene->B_Object[index]->Mesh_Name;
+	grid[0][1] = " ",		grid[1][1] = " ";
+	grid[0][2] = "Sound",	grid[1][2] = App->SBC_Scene->B_Object[index]->Sound_File;
+	grid[0][3] = "Play",	grid[1][3] = " ";// chr_Play;
+
+
+	ListView_DeleteAllItems(Properties_hLV);
+
+	for (DWORD row = 0; row < NUM_ITEMS; row++)
+	{
+		pitem.iItem = row;
+		pitem.pszText = const_cast<char*>(grid[0][row].c_str());
+		ListView_InsertItem(Properties_hLV, &pitem);
+
+		//ListView_SetItemText
+
+		for (DWORD col = 1; col < NUM_COLS; col++)
+		{
+			ListView_SetItemText(Properties_hLV, row, col,
+				const_cast<char*>(grid[col][row].c_str()));
+		}
+	}
+
+	return 1;
+}
+
+
+// *************************************************************************
 // *					Edit_Object_Onclick  Terry Flanigan				   *
 // *************************************************************************
 bool SB_Properties::Edit_Object_Onclick(LPARAM lParam)

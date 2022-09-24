@@ -80,9 +80,13 @@ public:
 	bool					Triggered;
 
 	//------------------------------ Message Entity
-
-	char Message_Text[255];
+	char Message_Text[MAX_PATH];
 	int Message_Pos_x;
 	int Message_Pos_y;
+
+	//------------------------------ Sound Entity
+	bool HasSound;
+	char Sound_File[MAX_PATH];
+	char Sound_Path[MAX_PATH];
 };
 

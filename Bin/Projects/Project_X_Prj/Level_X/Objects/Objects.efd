@@ -3,33 +3,19 @@ Version=V1.2
  
  
 [Object_0]
-Mesh_Name=Message_0
-Mesh_File=Test_cube.mesh
+Mesh_Name=Sound_0
+Mesh_File=SoundEntity_GD.mesh
 Mesh_Resource_Path=
 Object_Type=2
 Object_Shape=1
-Object_Usage=13
-Mesh_Pos=-34.000000,-127.000000,0.000000
-Mesh_Scale=1.000000,1.000000,1.000000
-Mesh_Rot=0.000000,0.000000,0.000000
-Mesh_Quat=1.000000,0.000000,0.000000,0.000000
-Physics_Quat=1.000000,0.000000,0.000000,0.000000
-Message_Text=poop
-Message_Pos_X=535
-Message_Pos_Y=50
- 
-[Object_1]
-Mesh_Name=Object_1
-Mesh_File=well.mesh
-Mesh_Resource_Path=C:\Users\Equity\Desktop\Equity_SB\Bin\Media_New\Structure\
-Object_Type=2
-Object_Shape=1
-Object_Usage=1
-Mesh_Pos=0.000000,0.000000,0.000000
-Mesh_Scale=1.000000,1.000000,1.000000
-Mesh_Rot=0.000000,0.000000,0.000000
-Mesh_Quat=1.000000,0.000000,0.000000,0.000000
-Physics_Quat=1.000000,0.000000,0.000000,0.000000
+Object_Usage=15
+Mesh_Pos=-59.000000,-127.000000,0.000000
+Mesh_Scale=1.689999,1.689999,1.689999
+Mesh_Rot=0.000000,-28.000000,0.000000
+Mesh_Quat=0.970301,0.000000,-0.241923,0.000000
+Physics_Quat=0.970301,0.000000,-0.241923,0.000000
+Sound_File=Welcome.ogg
+Sound_Path=C:\Users\Equity\Desktop\Equity_SB\Bin\Media\Sounds\Welcome.ogg
  
 [Counters]
-Objects_Count=2
+Objects_Count=1

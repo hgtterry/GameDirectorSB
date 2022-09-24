@@ -645,20 +645,17 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 	{
 		HideRightPanes();
 		ShowWindow(App->GD_Properties_Hwnd, 1);
-
-//		App->SBC_Properties->Enable_Delete_Button(1);
+		App->SBC_Object->Hide_Object_Dlg(1);
 
 		App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
 
 		App->SBC_Properties->Is_Player = 0;
 		App->SBC_Properties->Edit_Category = Enums::Edit_Sounds;
 		App->SBC_Properties->Current_Selected_Object = Index;
-//		App->SBC_Properties->Update_Transform_Dlg();
-
 
 		if (App->SBC_Properties->Edit_Physics == 0)
 		{
-			//App->SBC_Properties->Update_ListView_Sounds();
+			App->SBC_Properties->Update_ListView_Sounds();
 		}
 		else
 		{
@@ -685,15 +682,11 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		ShowWindow(App->SBC_Properties->Properties_Dlg_hWnd, 1);
 		App->SBC_Object->Hide_Object_Dlg(1);
 
-//		App->SBC_Properties->Enable_Delete_Button(1);
-
 		App->Cl_Object_Props->Edit_Type = Enums::Edit_Message;
 
 		App->SBC_Properties->Is_Player = 0; // Mark as Object selected
 		App->SBC_Properties->Edit_Category = Enums::Edit_Message;
 		App->SBC_Properties->Current_Selected_Object = Index;
-//		App->SBC_Properties->Update_Transform_Dlg();
-
 
 
 		if (App->SBC_Properties->Edit_Physics == 0)
@@ -1232,6 +1225,30 @@ HTREEITEM SB_FileView::Add_Message_Entity(char *SFileName, int Index)
 	HWND Temp2 = GetDlgItem(App->ListPanel, IDC_TREE1);
 
 	tvinsert.hParent = GD_Entities_Message_Folder;
+	tvinsert.hInsertAfter = TVI_LAST;
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE | TVIF_PARAM;
+	tvinsert.item.pszText = SFileName;
+	tvinsert.item.iImage = 4;
+	tvinsert.item.iSelectedImage = 5;
+	tvinsert.item.lParam = Index;
+	HTREEITEM Temp = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+
+	//if (App->Cl_Load_Scene->File_Is_Loading == 0)
+	//{
+	//	TreeView_Select(Temp2, Temp, TVGN_CARET);
+	//}
+
+	return Temp;
+}
+
+// *************************************************************************
+// *		Add_Sound_Entity:- Terry and Hazel Flanigan 2022		 	   *
+// *************************************************************************
+HTREEITEM SB_FileView::Add_Sound_Entity(char *SFileName, int Index)
+{
+	HWND Temp2 = GetDlgItem(App->ListPanel, IDC_TREE1);
+
+	tvinsert.hParent = GD_Entities_Sound_Folder;
 	tvinsert.hInsertAfter = TVI_LAST;
 	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE | TVIF_PARAM;
 	tvinsert.item.pszText = SFileName;

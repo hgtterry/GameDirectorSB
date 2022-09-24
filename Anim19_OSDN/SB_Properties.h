@@ -40,6 +40,7 @@ public:
 	bool Update_ListView_Area();
 	bool Update_ListView_Objects();
 	bool Update_ListView_Messages();
+	bool Update_ListView_Sounds();
 
 	bool Properties_Dlg_Active;
 

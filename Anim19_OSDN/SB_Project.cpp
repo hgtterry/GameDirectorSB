@@ -546,6 +546,13 @@ bool SB_Project::Save_Objects_Data()
 				fprintf(WriteFile, "%s%i\n", "Message_Pos_Y=", App->SBC_Scene->B_Object[Count]->Message_Pos_y);
 			}
 
+			//---------------------------------------------------------------------------------- Sound Entity
+			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Sound)
+			{
+				fprintf(WriteFile, "%s%s\n", "Sound_File=", App->SBC_Scene->B_Object[Count]->Sound_File);
+				fprintf(WriteFile, "%s%s\n", "Sound_Path=", App->SBC_Scene->B_Object[Count]->Sound_Path);
+			}
+
 			fprintf(WriteFile, "%s\n", " ");
 			new_Count++;
 		}
@@ -953,12 +960,17 @@ bool SB_Project::Load_Project_Objects()
 		//---------------------------------------------------------------------------------- Message Entity
 		if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Message)
 		{
-			Debug
 			App->Cl_Ini->GetString(buff, "Message_Text", Object->Message_Text, MAX_PATH);
 			Object->Message_Pos_x = App->Cl_Ini->GetInt(buff, "Message_Pos_X", 0);
 			Object->Message_Pos_y = App->Cl_Ini->GetInt(buff, "Message_Pos_Y", 0);
 		}
 
+		//---------------------------------------------------------------------------------- Sound Entity
+		if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Sound)
+		{
+			App->Cl_Ini->GetString(buff, "Sound_File", Object->Sound_File, MAX_PATH);
+			App->Cl_Ini->GetString(buff, "Sound_Path", Object->Sound_Path, MAX_PATH);
+		}
 		Count++;
 	}
 

@@ -58,6 +58,7 @@ public:
 	HTREEITEM Add_Area(char *SFileName, int Index);
 	HTREEITEM Add_ObjectFile(char *SFileName, int Index);
 	HTREEITEM Add_Message_Entity(char *SFileName, int Index);
+	HTREEITEM Add_Sound_Entity(char *SFileName, int Index);
 
 	HTREEITEM GD_Player;
 	HTREEITEM GD_Rooms;
@@ -65,6 +66,7 @@ public:
 	HTREEITEM GD_CameraFolder;
 	HTREEITEM GD_ObjectsFolder;
 	HTREEITEM GD_Entities_Message_Folder;
+	HTREEITEM GD_Entities_Sound_Folder;
 
 	HMENU hMenu;
 protected:
@@ -89,7 +91,6 @@ protected:
 	HTREEITEM GD_ProjectFolder;
 	HTREEITEM GD_TriggerFolder;
 	HTREEITEM GD_EntitiesFolder;
-	HTREEITEM GD_Entities_Sound_Folder;
 	HTREEITEM GD_Entities_Move_Folder;
 	HTREEITEM GD_Collectables_Folder;
 	HTREEITEM GD_Teleporters_Folder;
