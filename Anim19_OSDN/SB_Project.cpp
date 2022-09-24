@@ -538,6 +538,13 @@ bool SB_Project::Save_Objects_Data()
 			y = App->SBC_Scene->B_Object[Count]->Physics_Quat.y;
 			z = App->SBC_Scene->B_Object[Count]->Physics_Quat.z;
 			fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Physics_Quat=", w, x, y, z);
+			//---------------------------------------------------------------------------------- Message Entity
+			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Message)
+			{
+				fprintf(WriteFile, "%s%s\n", "Message_Text=", App->SBC_Scene->B_Object[Count]->Message_Text);
+				fprintf(WriteFile, "%s%i\n", "Message_Pos_X=", App->SBC_Scene->B_Object[Count]->Message_Pos_x);
+				fprintf(WriteFile, "%s%i\n", "Message_Pos_Y=", App->SBC_Scene->B_Object[Count]->Message_Pos_y);
+			}
 
 			fprintf(WriteFile, "%s\n", " ");
 			new_Count++;

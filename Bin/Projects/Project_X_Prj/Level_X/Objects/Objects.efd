@@ -14,6 +14,22 @@ Mesh_Scale=1.000000,1.000000,1.000000
 Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
+Message_Text=This is in the Object
+Message_Pos_X=530
+Message_Pos_Y=5
+ 
+[Object_1]
+Mesh_Name=Object_1
+Mesh_File=well.mesh
+Mesh_Resource_Path=C:\Users\Equity\Desktop\Equity_SB\Bin\Media_New\Structure\
+Object_Type=2
+Object_Shape=1
+Object_Usage=1
+Mesh_Pos=0.000000,0.000000,0.000000
+Mesh_Scale=1.000000,1.000000,1.000000
+Mesh_Rot=0.000000,0.000000,0.000000
+Mesh_Quat=1.000000,0.000000,0.000000,0.000000
+Physics_Quat=1.000000,0.000000,0.000000,0.000000
  
 [Counters]
-Objects_Count=1
+Objects_Count=2
