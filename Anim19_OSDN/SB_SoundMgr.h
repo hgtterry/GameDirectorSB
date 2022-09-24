@@ -27,5 +27,9 @@ public:
 
 	int SoundFile_Count;
 	std::vector<std::string> Sound_File;
+
+protected:
+
+	char m_Current_Sound_file[MAX_PATH];
 };
 

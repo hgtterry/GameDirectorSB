@@ -15,6 +15,9 @@ SB_SoundMgr::SB_SoundMgr(void)
 
 	SoundFile_Count = 0;
 	Current_Object_Sound[0] = 0;
+
+	m_Current_Sound_file[0] = 0;
+
 	IsCancelled = 0;
 }
 
@@ -53,16 +56,21 @@ LRESULT CALLBACK SB_SoundMgr::Dialog_SoundFile_Proc(HWND hDlg, UINT message, WPA
 
 			SetDlgItemText(hDlg,IDC_TITLENAME,(LPCTSTR)"Sound Player");
 
-			SetDlgItemText(hDlg,IDC_EDITINT,(LPCTSTR)App->SBC_SoundMgr->mSoundFile);
-
+			
 			App->SBC_SoundMgr->GetSoundFiles(hDlg,"*.ogg");
 			App->SBC_SoundMgr->GetSoundFiles(hDlg,"*.wav");
 
-			int Sel = SendMessage(GetDlgItem(hDlg, IDC_SOUNDLIST), LB_SELECTSTRING, -1, (LPARAM)App->SBC_SoundMgr->Current_Object_Sound);
+			char Sound[MAX_PATH];
+			HWND ListHwnd = GetDlgItem(hDlg, IDC_SOUNDLIST);
+			SendMessage(ListHwnd, LB_SETCURSEL, 0, (LPARAM)(LPCTSTR)0);
+			SendDlgItemMessage(hDlg, IDC_SOUNDLIST, LB_GETTEXT, (WPARAM) 0, (LPARAM)Sound);
+			SetDlgItemText(hDlg, IDC_EDITINT, (LPTSTR)Sound);
+			
+			//int Sel = SendMessage(GetDlgItem(hDlg, IDC_SOUNDLIST), LB_SELECTSTRING, -1, (LPARAM)App->SBC_SoundMgr->Current_Object_Sound);
 
-			char buff[255];
-			SendDlgItemMessage(hDlg, IDC_SOUNDLIST, LB_GETTEXT, (WPARAM)Sel, (LPARAM)buff);
-			SetDlgItemText(hDlg, IDC_EDITINT, (LPTSTR)buff);
+			//char buff[255];
+			//SendDlgItemMessage(hDlg, IDC_SOUNDLIST, LB_GETTEXT, (WPARAM)Sel, (LPARAM)buff);
+			//SetDlgItemText(hDlg, IDC_EDITINT, (LPTSTR)buff);
 
 			int VolPer = int(App->SBC_SoundMgr->SndVolume*10);
 
@@ -257,8 +265,8 @@ LRESULT CALLBACK SB_SoundMgr::Dialog_SoundFile_Proc(HWND hDlg, UINT message, WPA
 
 			if (LOWORD(wParam)== IDC_PLAY) 
 			{
-				char file[256];
-				GetDlgItemText(hDlg,IDC_EDITINT,(LPTSTR)file,256);
+		
+				GetDlgItemText(hDlg,IDC_EDITINT,(LPTSTR)App->SBC_SoundMgr->m_Current_Sound_file,MAX_PATH);
 
 				if (App->SBC_SoundMgr->SndFile==NULL)
 				{
@@ -270,26 +278,26 @@ LRESULT CALLBACK SB_SoundMgr::Dialog_SoundFile_Proc(HWND hDlg, UINT message, WPA
 				}
 
 				int result=1;
-				result = strcmp(file,"");
+				result = strcmp(App->SBC_SoundMgr->m_Current_Sound_file,"");
 				if (result == 0)
 				{
 
 				}
 				else
 				{
-					result = strcmp(file,"None");
+					result = strcmp(App->SBC_SoundMgr->m_Current_Sound_file,"None");
 					if (result == 0)
 					{
 
 					}
 					else
 					{
-						char buff[1024];
-						strcpy(buff,App->SBC_SoundMgr->Default_Folder);
-						strcat(buff,"\\Media\\Sounds\\");
-						strcat(buff,file);
+						char Sound[1024];
+						strcpy(Sound,App->SBC_SoundMgr->Default_Folder);
+						strcat(Sound,"\\Media\\Sounds\\");
+						strcat(Sound, App->SBC_SoundMgr->m_Current_Sound_file);
 
-						App->SBC_SoundMgr->SndFile = App->SBC_SoundMgr->SoundEngine->play2D(buff,false,true,true);
+						App->SBC_SoundMgr->SndFile = App->SBC_SoundMgr->SoundEngine->play2D(Sound,false,true,true);
 						App->SBC_SoundMgr->SndFile->setVolume(App->SBC_SoundMgr->SndVolume);
 						App->SBC_SoundMgr->SndFile->setIsPaused(false);
 					}
