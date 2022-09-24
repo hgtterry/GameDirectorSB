@@ -139,8 +139,10 @@ LRESULT CALLBACK GD19_SoundMgr::Dialog_SoundFile_Proc(HWND hDlg, UINT message, W
 			sprintf(buf,"%i",Percent);
 			SetDlgItemText(hDlg,IDC_VOLBOX,(LPCTSTR)buf);
 
-			float sum = float(pos)/10;
-			App->Cl_SoundMgr->SndVolume = sum;
+			float sum2 = float(Percent) / 100;
+			App->Cl_SoundMgr->SndVolume = sum2;
+			App->Cl_SoundMgr->SndFile->setVolume(sum2);
+
 			return 1;
 		}
 
@@ -172,6 +174,30 @@ LRESULT CALLBACK GD19_SoundMgr::Dialog_SoundFile_Proc(HWND hDlg, UINT message, W
 			}break;
 
 		case WM_COMMAND:
+
+			
+			if (LOWORD(wParam) == IDC_BT_STOP)
+			{
+				App->Cl_SoundMgr->SndFile->stop();
+
+				return TRUE;
+			}
+
+			if (LOWORD(wParam) == IDC_BT_PAUSE)
+			{
+				bool Paused = App->Cl_SoundMgr->SndFile->getIsPaused();
+				if (Paused == 1)
+				{
+					App->Cl_SoundMgr->SndFile->setIsPaused(0);
+				}
+				else
+				{
+					App->Cl_SoundMgr->SndFile->setIsPaused(1);
+				}
+
+				return TRUE;
+			}
+			
 			if (LOWORD(wParam) == IDC_SOUNDLIST) 
 			{
 				char buff[256];
