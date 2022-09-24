@@ -950,6 +950,15 @@ bool SB_Project::Load_Project_Objects()
 
 		App->SBC_Scene->Add_Resource_Location(Object->Mesh_Resource_Path);
 
+		//---------------------------------------------------------------------------------- Message Entity
+		if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Message)
+		{
+			Debug
+			App->Cl_Ini->GetString(buff, "Message_Text", Object->Message_Text, MAX_PATH);
+			Object->Message_Pos_x = App->Cl_Ini->GetInt(buff, "Message_Pos_X", 0);
+			Object->Message_Pos_y = App->Cl_Ini->GetInt(buff, "Message_Pos_Y", 0);
+		}
+
 		Count++;
 	}
 

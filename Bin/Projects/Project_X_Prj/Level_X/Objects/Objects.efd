@@ -14,9 +14,9 @@ Mesh_Scale=1.000000,1.000000,1.000000
 Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
-Message_Text=This is in the Object
-Message_Pos_X=530
-Message_Pos_Y=5
+Message_Text=poop
+Message_Pos_X=535
+Message_Pos_Y=50
  
 [Object_1]
 Mesh_Name=Object_1
