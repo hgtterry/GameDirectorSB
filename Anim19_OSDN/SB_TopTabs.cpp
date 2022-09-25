@@ -879,7 +879,7 @@ LRESULT CALLBACK SB_TopTabs::Game_TB_Proc(HWND hDlg, UINT message, WPARAM wParam
 				return 1;
 			}
 
-			//App->Cl_Scene_Data->GameMode();
+			App->SBC_Scene->Game_Mode();
 			return TRUE;
 		}
 

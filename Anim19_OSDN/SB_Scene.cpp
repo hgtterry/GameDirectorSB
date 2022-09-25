@@ -195,5 +195,151 @@ bool SB_Scene::Add_Resource_Location(char* Resource_Location)
 	return 1;
 }
 
+// *************************************************************************
+// *				Game_Mode:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+bool SB_Scene::Game_Mode(void)
+{
+	App->Cl_Grid->Grid_SetVisible(0);
+	App->Cl_Grid->Hair_SetVisible(0);
+	App->Cl_Grid->Arrow_Node->setVisible(0);
+
+	////App->Cl19_Ogre->textArea->hide();
+
+	//if (S_Scene[0]->Sound[0].Play == 1)
+	//{
+	//	int result = 1;
+	//	result = strcmp(S_Scene[0]->Sound[0].SoundFile, "None");
+	//	if (result == 1) // Could be Unsafe 
+	//	{
+	//		S_Scene[0]->Sound[0].SndFile = App->Cl_SoundMgr->SoundEngine->play2D(S_Scene[0]->Sound[0].SoundFileAndPath,
+	//			S_Scene[0]->Sound[0].Loop, true, true);
+
+	//		S_Scene[0]->Sound[0].SndFile->setVolume(S_Scene[0]->Sound[0].Volume);
+	//		S_Scene[0]->Sound[0].SndFile->setIsPaused(false);
+	//	}
+	//}
+
+	//CurrentCamMode = App->Cl19_Ogre->OgreListener->GD_CameraMode;
+	//App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamFirst;
+
+
+	App->Cl_Visuals->BoxNode->setVisible(false);
+
+	//App->Cl19_Ogre->OgreListener->GD_Dubug_Physics = 0;
+
+	Show_Entities(false); // Hide All Visible Trigers
+
+	SetCursorPos(500, 500);
+	//S_Flags[0]->GameMode = 1;
+
+	int cx = GetSystemMetrics(SM_CXSCREEN);
+	int cy = GetSystemMetrics(SM_CYSCREEN);
+
+	SetWindowPos(App->ViewGLhWnd,HWND_TOP,0,0,0,0,SWP_NOSIZE|SWP_NOZORDER);
+	SetWindowPos(App->ViewGLhWnd, NULL, 0, 0, cx, cy, SWP_NOZORDER);
+	SetParent(App->ViewGLhWnd, NULL);
+
+	App->Cl19_Ogre->mWindow->resize(cx, cy);
+
+	App->Cl19_Ogre->mWindow->windowMovedOrResized();
+	App->Cl19_Ogre->mCamera->setAspectRatio((Ogre::Real)App->Cl19_Ogre->mWindow->getWidth() / (Ogre::Real)App->Cl19_Ogre->mWindow->getHeight());
+
+	Root::getSingletonPtr()->renderOneFrame();
+
+	SetCapture(App->ViewGLhWnd);// Bernie
+	//App->Cl19_Ogre->OgreListener->Pl_LeftMouseDown = 1;
+
+	//App->CUR = SetCursor(NULL);
+
+	//Reset_Triggers();
+
+	return 1;
+}
+// *************************************************************************
+// *				Editor_Mode:- Terry and Hazel Flanigan 2022	 	 	   *
+// *************************************************************************
+bool SB_Scene::Editor_Mode(void)
+{
+	App->Cl_Grid->Grid_SetVisible(1);
+	App->Cl_Grid->Hair_SetVisible(1);
+
+	// App->Cl19_Ogre->OgreListener->showDebugOverlay(1);
+
+	//if (S_Scene[0]->Sound[0].SndFile == NULL)
+	//{
+	//}
+	//else
+	//{
+	//	S_Scene[0]->Sound[0].SndFile->setIsPaused(true);
+	//	S_Scene[0]->Sound[0].SndFile->drop();
+	//	S_Scene[0]->Sound[0].SndFile = NULL;
+	//}
+
+	//S_Flags[0]->GameMode = 0;
+	//App->Cl19_Ogre->OgreListener->Pl_LeftMouseDown = 0;
+	//ReleaseCapture();
+	//SetCursor(App->CUR);
+
+	///*App->Select_C->BoxNode->setVisible(true);
+	//App->Select_C->Gizmo->setVisible(true);*/
+
+	//App->Cl19_Ogre->OgreListener->GD_Dubug_Physics = 1;
+	//Show_Entities(true); // Show All Visible Trigers
+
+	//App->Cl19_Ogre->OgreListener->GD_CameraMode = CurrentCamMode;
+
+	//App->Cl_Visuals->BoxNode->setVisible(true);
+	//App->Cl_Grid->Arrow_Node->setVisible(true);
+
+	////if (App->Cl19_Ogre->OgreListener->Show_Camara_Positions == 1)
+	//{
+	//	//App->Cl19_Ogre->textArea->show();
+	//}
+	////else
+	//{
+	//	//App->Cl19_Ogre->textArea->hide();
+	//}
+
+	//Reset_Triggers();
+	return 1;
+}
+
+// *************************************************************************
+// *			Show_Entities:- Terry and Hazel Flanigan 2022	 	 	   *
+// *************************************************************************
+bool SB_Scene::Show_Entities(bool YesNo)
+{
+	int Count = 0;
+	while (Count < Object_Count)
+	{
+		if (B_Object[Count]->Deleted == 0)
+		{
+			if (B_Object[Count]->Usage == Enums::Usage_Sound)
+			{
+				B_Object[Count]->Object_Node->setVisible(YesNo);
+			}
+			if (B_Object[Count]->Usage == Enums::Usage_Message)
+			{
+				B_Object[Count]->Object_Node->setVisible(YesNo);
+			}
+			if (B_Object[Count]->Usage == Enums::Usage_Move)
+			{
+				B_Object[Count]->Object_Node->setVisible(YesNo);
+			}
+			if (B_Object[Count]->Usage == Enums::Usage_Teleport)
+			{
+				B_Object[Count]->Object_Node->setVisible(YesNo);
+			}
+			if (B_Object[Count]->Usage == Enums::Usage_Environment)
+			{
+				B_Object[Count]->Object_Node->setVisible(YesNo);
+			}
+		}
+		Count++;
+	}
+	return 1;
+}
+
 
 

@@ -38,6 +38,9 @@ public:
 	bool Delete_Resources_Group();
 	bool Add_Resource_Location(char* Resource_Location);
 	
+	bool Game_Mode(void);
+	bool Editor_Mode(void);
+	bool Show_Entities(bool YesNo);
 
 	Base_Player*			SBC_Base_Player[100];
 	Base_Area*				SBC_Base_Area[100];
