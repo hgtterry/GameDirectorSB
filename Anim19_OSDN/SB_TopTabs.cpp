@@ -467,7 +467,7 @@ LRESULT CALLBACK SB_TopTabs::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 	case WM_CTLCOLORDLG:
 	{
-		return (LONG)App->Brush_Tabs;
+		return (LONG)App->AppBackground;
 	}
 
 	case WM_NOTIFY:
@@ -715,7 +715,7 @@ void SB_TopTabs::Start_Physics_TB(void)
 }
 
 // *************************************************************************
-// *								Shapes_TB_Proc					   *
+// *			Physics_TB_Proc:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 LRESULT CALLBACK SB_TopTabs::Physics_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -732,7 +732,7 @@ LRESULT CALLBACK SB_TopTabs::Physics_TB_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 	case WM_CTLCOLORDLG:
 	{
-		return (LONG)App->Brush_Tabs;
+		return (LONG)App->AppBackground;
 	}
 
 	case WM_NOTIFY:
@@ -827,7 +827,7 @@ LRESULT CALLBACK SB_TopTabs::Editors_TB_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 	case WM_CTLCOLORDLG:
 	{
-		return (LONG)App->Brush_Tabs;
+		return (LONG)App->AppBackground;
 	}
 
 	case WM_NOTIFY:
@@ -887,7 +887,7 @@ LRESULT CALLBACK SB_TopTabs::Files_TB_Proc(HWND hDlg, UINT message, WPARAM wPara
 
 	case WM_CTLCOLORDLG:
 	{
-		return (LONG)App->Brush_Tabs;
+		return (LONG)App->AppBackground;
 	}
 
 	case WM_NOTIFY:

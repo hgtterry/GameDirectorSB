@@ -602,7 +602,7 @@ bool GD19_App::Custom_Button_Toggle_Tabs(LPNMCUSTOMDRAW item, bool Toggle)
 
 			if (Toggle == 1)
 			{
-				hotbrush = CreateSolidBrush(RGB(240, 240, 240));
+				hotbrush = CreateSolidBrush(RGB(0, 255, 0));
 			}
 			else
 			{
@@ -610,12 +610,12 @@ bool GD19_App::Custom_Button_Toggle_Tabs(LPNMCUSTOMDRAW item, bool Toggle)
 				hotbrush = CreateSolidBrush(RGB(240, 240, 240));
 			}
 
-			HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(240, 240, 240));
+			HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0));
 
 			HGDIOBJ old_pen = SelectObject(item->hdc, pen);
 			HGDIOBJ old_brush = SelectObject(item->hdc, hotbrush);
 
-			RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 0, 0);
+			RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
 
 			SelectObject(item->hdc, old_pen);
 			SelectObject(item->hdc, old_brush);
@@ -628,19 +628,19 @@ bool GD19_App::Custom_Button_Toggle_Tabs(LPNMCUSTOMDRAW item, bool Toggle)
 
 		if (Toggle == 1)
 		{
-			defaultbrush = App->Brush_Tabs; // Selected
+			defaultbrush = defaultbrush = CreateSolidBrush(RGB(154, 255, 154));
 		}
 		else
 		{
-			defaultbrush = Brush_Tabs_UnSelected; // Unselected 
+			defaultbrush = CreateSolidBrush(RGB(255, 255, 255)); // Unselected 
 		}
 
-		HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(255, 255, 255));
+		HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0));
 
 		HGDIOBJ old_pen = SelectObject(item->hdc, pen);
 		HGDIOBJ old_brush = SelectObject(item->hdc, defaultbrush);
 
-		RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 0, 0);
+		RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
 
 		SelectObject(item->hdc, old_pen);
 		SelectObject(item->hdc, old_brush);
@@ -667,11 +667,11 @@ bool GD19_App::Custom_Button_Toggle(LPNMCUSTOMDRAW item, bool Toggle)
 
 			if (Toggle == 1)
 			{
-				hotbrush = CreateSolidBrush(RGB(154, 255, 154));
+				hotbrush = CreateSolidBrush(RGB(0, 255, 0));
 			}
 			else // Unselected
 			{
-				hotbrush = App->Brush_Button_Hover;
+				hotbrush = CreateSolidBrush(RGB(240, 240, 240));//App->Brush_Button_Hover;
 			}
 
 			HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0));
@@ -679,7 +679,7 @@ bool GD19_App::Custom_Button_Toggle(LPNMCUSTOMDRAW item, bool Toggle)
 			HGDIOBJ old_pen = SelectObject(item->hdc, pen);
 			HGDIOBJ old_brush = SelectObject(item->hdc, hotbrush);
 
-			RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 0, 0);
+			RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
 
 			SelectObject(item->hdc, old_pen);
 			SelectObject(item->hdc, old_brush);
@@ -696,7 +696,7 @@ bool GD19_App::Custom_Button_Toggle(LPNMCUSTOMDRAW item, bool Toggle)
 		}
 		else // Unselected
 		{
-			defaultbrush = CreateSolidBrush(RGB(220, 220, 220));
+			defaultbrush = CreateSolidBrush(RGB(255, 255, 255));
 		}
 
 		HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0));
@@ -704,7 +704,7 @@ bool GD19_App::Custom_Button_Toggle(LPNMCUSTOMDRAW item, bool Toggle)
 		HGDIOBJ old_pen = SelectObject(item->hdc, pen);
 		HGDIOBJ old_brush = SelectObject(item->hdc, defaultbrush);
 
-		RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 0, 0);
+		RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
 
 		SelectObject(item->hdc, old_pen);
 		SelectObject(item->hdc, old_brush);
