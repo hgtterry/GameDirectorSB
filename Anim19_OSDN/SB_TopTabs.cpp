@@ -37,6 +37,7 @@ SB_TopTabs::SB_TopTabs()
 	Physics_TB_hWnd = nullptr;
 	Editors_TB_hWnd = nullptr;
 	File_TB_hWnd = nullptr;
+	Game_TB_hWnd = nullptr;
 
 	MouseOption_DlgHwnd = nullptr;
 
@@ -49,6 +50,7 @@ SB_TopTabs::SB_TopTabs()
 	Toggle_Tabs_Shapes_Flag = 0;
 	Toggle_Tabs_Editors_Flag = 0;
 	Toggle_Tabs_File_Flag = 1;
+	Toggle_Tabs_Game_Flag = 0;
 
 	Toggle_GroupsOnly_Flag = 0;
 
@@ -137,6 +139,7 @@ LRESULT CALLBACK SB_TopTabs::TopBar_Globals_Proc(HWND hDlg, UINT message, WPARAM
 		App->SBC_TopTabs->Start_Physics_TB();
 		App->SBC_TopTabs->Start_Editors_TB();
 		App->SBC_TopTabs->Start_Files_TB();
+		App->SBC_TopTabs->Start_Game_TB();
 
 		return TRUE;
 	}
@@ -277,7 +280,8 @@ LRESULT CALLBACK SB_TopTabs::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM w
 		SendDlgItemMessage(hDlg, IDC_TBSHAPES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_TAB_EDITORS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_TBFILE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_BT_GAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		return TRUE;
 	}
 
@@ -325,6 +329,13 @@ LRESULT CALLBACK SB_TopTabs::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM w
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_GAME && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle_Tabs(item, App->SBC_TopTabs->Toggle_Tabs_Game_Flag);
+			return CDRF_DODEFAULT;
+		}
+		
 		return CDRF_DODEFAULT;
 	}
 
@@ -366,8 +377,6 @@ LRESULT CALLBACK SB_TopTabs::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM w
 
 			App->SBC_TopTabs->Toggle_Tabs_Shapes_Flag = 1;
 
-			App->Cl19_Ogre->OgreListener->ImGui_Render_Tab = Enums::ImGui_None;
-
 			RedrawWindow(App->SBC_TopTabs->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
 		}
@@ -380,12 +389,25 @@ LRESULT CALLBACK SB_TopTabs::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM w
 
 			App->SBC_TopTabs->Toggle_Tabs_Editors_Flag = 1;
 
-			App->Cl19_Ogre->OgreListener->ImGui_Render_Tab = Enums::ImGui_None;
-
 			RedrawWindow(App->SBC_TopTabs->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_BT_GAME)
+		{
+			
+			App->SBC_TopTabs->Hide_Tabs();
+
+			ShowWindow(App->SBC_TopTabs->Game_TB_hWnd, SW_SHOW);
+
+			App->SBC_TopTabs->Toggle_Tabs_Game_Flag = 1;
+
+			RedrawWindow(App->SBC_TopTabs->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			return TRUE;
+		}
+		
 	}
 	}
 	return FALSE;
@@ -400,6 +422,7 @@ void SB_TopTabs::Hide_Tabs(void)
 	ShowWindow(Physics_TB_hWnd, SW_HIDE);
 	ShowWindow(Editors_TB_hWnd, SW_HIDE);
 	ShowWindow(File_TB_hWnd, SW_HIDE);
+	ShowWindow(Game_TB_hWnd, SW_HIDE);
 
 	ShowWindow(App->SBC_Physics->PhysicsPannel_Hwnd, 0);
 
@@ -408,6 +431,7 @@ void SB_TopTabs::Hide_Tabs(void)
 	Toggle_Tabs_Shapes_Flag = 0;
 	Toggle_Tabs_Editors_Flag = 0;
 	Toggle_Tabs_File_Flag = 0;
+	Toggle_Tabs_Game_Flag = 0;
 }
 
 // *************************************************************************
@@ -802,7 +826,71 @@ LRESULT CALLBACK SB_TopTabs::Physics_TB_Proc(HWND hDlg, UINT message, WPARAM wPa
 }
 
 // *************************************************************************
-// *						Start_Editors_TB Terry Flanigan				   *
+// *			Start_Game_TB:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void SB_TopTabs::Start_Game_TB(void)
+{
+	Game_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_GAME, Tabs_TB_hWnd, (DLGPROC)Game_TB_Proc);
+	//Init_Bmps_Groups();
+}
+
+// *************************************************************************
+// *			Editors_TB_Proc:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+LRESULT CALLBACK SB_TopTabs::Game_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_BT_GAMEMODE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		return TRUE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_NOTIFY:
+	{
+
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_BT_GAMEMODE && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+		if (LOWORD(wParam) == IDC_BT_GAMEMODE)
+		{
+			App->Cl_Dialogs->GameMode_StartPosition_Dlg();
+			if (App->Cl_Dialogs->Canceled == 1)
+			{
+				return 1;
+			}
+
+			//App->Cl_Scene_Data->GameMode();
+			return TRUE;
+		}
+
+		return FALSE;
+	}
+	}
+	return FALSE;
+}
+
+// *************************************************************************
+// *			Start_Editors_TB:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
 void SB_TopTabs::Start_Editors_TB(void)
 {
@@ -811,7 +899,7 @@ void SB_TopTabs::Start_Editors_TB(void)
 }
 
 // *************************************************************************
-// *					Editors_TB_Proc Terry Flanigan					   *
+// *			Editors_TB_Proc:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 LRESULT CALLBACK SB_TopTabs::Editors_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -860,7 +948,7 @@ LRESULT CALLBACK SB_TopTabs::Editors_TB_Proc(HWND hDlg, UINT message, WPARAM wPa
 }
 
 // *************************************************************************
-// *						Start_Files_TB Terry Flanigan				   *
+// *			Start_Files_TB:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 void SB_TopTabs::Start_Files_TB(void)
 {
@@ -869,7 +957,7 @@ void SB_TopTabs::Start_Files_TB(void)
 }
 
 // *************************************************************************
-// *					Files_TB_Proc Terry Flanigan					   *
+// *			Files_TB_Proc:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 LRESULT CALLBACK SB_TopTabs::Files_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
