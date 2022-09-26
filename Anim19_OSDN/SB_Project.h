@@ -49,6 +49,8 @@ public:
 	char m_Level_Folder_Path[MAX_PATH];		// Level Just Path
 	char m_Players_Folder_Path[MAX_PATH];
 	char m_Objects_Folder_Path[MAX_PATH];
+	char m_Cameras_Folder_Path[MAX_PATH];
+
 	char m_Objects_Assets_Path[MAX_PATH];	// Assets Path and \\
 
 	char m_Project_Sub_Folder[MAX_PATH];	// Curent Default Project Location not including project folder
@@ -66,6 +68,9 @@ protected:
 	bool Save_Project();
 	bool Save_Project_Ini();
 	bool Save_Level_Folder();
+
+	bool Save_Cameras_Folder();
+	bool Save_Cameras_Data();
 
 	bool Save_Aera_Folder();
 	bool Save_Aeras_Data();

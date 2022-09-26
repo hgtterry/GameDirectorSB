@@ -45,6 +45,7 @@ SB_Project::SB_Project()
 	m_Level_Folder_Path[0] = 0;
 	m_Players_Folder_Path[0] = 0;
 	m_Objects_Folder_Path[0] = 0;
+	m_Cameras_Folder_Path[0] = 0;
 
 	m_Ini_Path_File_Name[0] = 0;
 	
@@ -339,6 +340,8 @@ bool SB_Project::Save_Project()
 
 	}
 
+	Save_Cameras_Folder();
+
 	Save_Objects_Folder();
 
 	App->SBC_FileView->Change_Level_Name();
@@ -416,6 +419,103 @@ bool SB_Project::Save_Level_Folder()
 	return 1;
 }
 
+// *************************************************************************
+// *	  	Save_Cameras_Folder:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+bool SB_Project::Save_Cameras_Folder()
+{
+	m_Cameras_Folder_Path[0] = 0;
+	
+	strcpy(m_Cameras_Folder_Path, m_Level_Folder_Path);
+	strcat(m_Cameras_Folder_Path, "\\");
+	strcat(m_Cameras_Folder_Path, "Cameras");
+
+	if (_mkdir(m_Cameras_Folder_Path) == 0)
+	{
+		_chdir(m_Cameras_Folder_Path);
+	}
+	else
+	{
+		_chdir(m_Cameras_Folder_Path);
+	}
+
+	Save_Cameras_Data();
+
+	_chdir(m_Level_Folder_Path); // Return to Level Folder
+
+	return 1;
+}
+
+// *************************************************************************
+// *	  		Save_Cameras_Data:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+bool SB_Project::Save_Cameras_Data()
+{
+	Ogre::Vector3 Pos;
+	char File[1024];
+
+	strcpy(File, m_Cameras_Folder_Path);
+	strcat(File, "\\");
+	strcat(File, "Cameras.epf");
+
+	WriteFile = nullptr;
+
+	WriteFile = fopen(File, "wt");
+
+	if (!WriteFile)
+	{
+		App->Say("Cant Create File");
+		App->Say_Win(File);
+		return 0;
+	}
+
+	fprintf(WriteFile, "%s\n", "[Version_Data]");
+	fprintf(WriteFile, "%s%s\n", "Version=", "V1.2");
+
+	fprintf(WriteFile, "%s\n", " ");
+
+	fprintf(WriteFile, "%s\n", "[Counters]");
+	fprintf(WriteFile, "%s%i\n", "Cameras_Count=", App->SBC_Scene->Camera_Count);
+
+	fprintf(WriteFile, "%s\n", " ");
+
+	char Cbuff[255];
+	char buff[255];
+
+	float x = 0;
+	float y = 0;
+	float z = 0;
+
+	//int Count = 0;
+	//while (Count < App->SBC_Scene->Area_Count)
+	//{
+	//	strcpy(buff, "[Aera_");
+	//	_itoa(Count, Cbuff, 10);
+	//	strcat(buff, Cbuff);
+	//	strcat(buff, "]");
+
+	//	fprintf(WriteFile, "%s\n", buff); // Header also Player name until changed by user
+
+	//	fprintf(WriteFile, "%s%s\n", "Aera_Name=", App->SBC_Scene->SBC_Base_Area[Count]->Area_Name); // Change
+
+	//	fprintf(WriteFile, "%s%s\n", "Aera_File=", App->SBC_Scene->SBC_Base_Area[Count]->Area_FileName);
+	//	fprintf(WriteFile, "%s%s\n", "Aera_Path_File=", App->SBC_Scene->SBC_Base_Area[Count]->Area_Path_And_FileName);
+	//	fprintf(WriteFile, "%s%s\n", "Aera_Resource_Path=", App->SBC_Scene->SBC_Base_Area[Count]->Area_Resource_Path);
+
+	//	fprintf(WriteFile, "%s\n", "[Position]");
+	//	x = App->SBC_Scene->SBC_Base_Area[Count]->Area_Node->getPosition().x;
+	//	y = App->SBC_Scene->SBC_Base_Area[Count]->Area_Node->getPosition().y;
+	//	z = App->SBC_Scene->SBC_Base_Area[Count]->Area_Node->getPosition().z;
+
+	//	fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Pos=", x, y, z);
+
+	//	Count++;
+	//}
+
+	fclose(WriteFile);
+
+	return 1;
+}
 
 // *************************************************************************
 // *	  				Save_Objects_Folder Terry Flanigan				   *
