@@ -41,6 +41,8 @@ SB_Scene::SB_Scene()
 	Camera_Count = 0;
 	Entity_Count = 0;
 
+	CurrentCamMode = 0;
+
 	SBC_Base_Player[100] = { nullptr };
 	SBC_Base_Area[100] = { nullptr };
 	SBC_Base_Area[0] = nullptr;
@@ -220,8 +222,8 @@ bool SB_Scene::Game_Mode(void)
 	//	}
 	//}
 
-	//CurrentCamMode = App->Cl19_Ogre->OgreListener->GD_CameraMode;
-	//App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamFirst;
+	CurrentCamMode = App->Cl19_Ogre->OgreListener->GD_CameraMode;
+	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamFirst;
 
 
 	App->Cl_Visuals->BoxNode->setVisible(false);

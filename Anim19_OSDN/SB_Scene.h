@@ -64,5 +64,7 @@ public:
 protected:
 
 	void Reset_Class();
+
+	int CurrentCamMode;
 };
 
