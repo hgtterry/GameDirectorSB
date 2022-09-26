@@ -1213,50 +1213,73 @@ bool SB_Project::Load_Project_Player()
 }
 
 // *************************************************************************
-// *	  			N_Load_Project_Camera Terry Flanigan				   *
+// *	  				Load_Project_Camera Terry Flanigan				   *
 // *************************************************************************
 bool SB_Project::Load_Project_Camera()
 {
-	char chr_Tag1[1024];
-	char chr_Tag2[1024];
+	char Cameras_Ini_Path[MAX_PATH];
+	char chr_Tag1[MAX_PATH];
+	char Camera_Name[MAX_PATH];
+	int Camera_Count = 0;
 
 	float x = 0;
 	float y = 0;
 	float z = 0;
 
-	chr_Tag1[0] = 0;
-	chr_Tag2[0] = 0;
+	strcpy(Cameras_Ini_Path, m_Project_Sub_Folder);
+	strcat(Cameras_Ini_Path, "\\");
 
-	// ------------------------------------------------------------------- 
-	char Path[1024];
-	strcpy(Path, m_Project_Sub_Folder);
-	strcat(Path, "Camera1.cam");
+	strcat(Cameras_Ini_Path, m_Level_Name);
+	strcat(Cameras_Ini_Path, "\\");
 
-	// ------------------------------------------------------------------- 
+	strcat(Cameras_Ini_Path, "Cameras");
+	strcat(Cameras_Ini_Path, "\\");
 
-	//App->Cl_Ini->SetPathName(Path);
+	strcat(Cameras_Ini_Path, "Cameras.epf");
 
-	//App->Cl_Ini->GetString("Version_Data", "Version", chr_Tag1, 1024);
+	App->Cl_Ini->SetPathName(Cameras_Ini_Path);
 
-	//App->Cl_Ini->GetString("Camera", "Camera_Name", chr_Tag1, 1024);
-	//strcpy(App->SBC_Camera->Camera_Name, chr_Tag1);
+	Camera_Count = App->Cl_Ini->GetInt("Counters", "Cameras_Count", 0);
 
-	//// Position
-	//App->Cl_Ini->GetString("Camera", "Start_Position", chr_Tag1, 1024);
-	//sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
-	//App->SBC_Camera->CamPos_X = x;
-	//App->SBC_Camera->CamPos_Y = y;
-	//App->SBC_Camera->CamPos_Z = z;
+	int Count = 0;
 
-	//// Position
-	//App->Cl_Ini->GetString("Camera", "Look_At", chr_Tag1, 1024);
-	//sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
-	//App->SBC_Camera->LookAt_X = x;
-	//App->SBC_Camera->LookAt_Y = y;
-	//App->SBC_Camera->LookAt_Z = z;
+	while (Count < Camera_Count)
+	{
+		char n_buff[255];
+		char buff[255];
+		strcpy(buff, "Camera_");
+		_itoa(Count, n_buff, 10);
+		strcat(buff, n_buff);
 
-	App->SBC_Camera->FileViewItem = App->SBC_FileView->Add_Camera(App->SBC_Camera->Camera_Name, 0);
-	App->SBC_FileView->Redraw_FileView();
+		App->SBC_Scene->B_Camera[Count] = new Base_Camera();
+
+		App->Cl_Ini->GetString(buff, "Camera_Name", Camera_Name, MAX_PATH);
+		strcpy(App->SBC_Scene->B_Camera[Count]->Camera_Name, Camera_Name);
+
+
+		App->Cl_Ini->GetString(buff, "Camera_Pos", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+
+		App->SBC_Scene->B_Camera[Count]->CamPos.x = x;
+		App->SBC_Scene->B_Camera[Count]->CamPos.y = y;
+		App->SBC_Scene->B_Camera[Count]->CamPos.z = z;
+
+		App->Cl_Ini->GetString(buff, "LookAt", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+
+		App->SBC_Scene->B_Camera[Count]->LookAt.x = x;
+		App->SBC_Scene->B_Camera[Count]->LookAt.y = y;
+		App->SBC_Scene->B_Camera[Count]->LookAt.z = z;
+
+		App->SBC_Scene->B_Camera[Count]->FileViewItem = App->SBC_FileView->Add_Camera(App->SBC_Scene->B_Camera[Count]->Camera_Name, Count);
+
+		App->SBC_Scene->Camera_Count++;
+
+		Count++;
+	}
+
+//	App->SBC_FileView->Redraw_FileView();
+
 	return 1;
 }
 
