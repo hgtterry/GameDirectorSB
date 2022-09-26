@@ -1239,8 +1239,8 @@ bool SB_Properties::Edit_Camera_Onclick(LPARAM lParam)
 	result = strcmp(App->SBC_Properties->btext, "Name");
 	if (result == 0)
 	{
-		strcpy(App->Cl_Dialogs->btext, "Change Object Name");
-		strcpy(App->Cl_Dialogs->Chr_Text, App->SBC_Camera->Camera_Name);
+		strcpy(App->Cl_Dialogs->btext, "Change Camera Name");
+		strcpy(App->Cl_Dialogs->Chr_Text, App->SBC_Scene->B_Camera[Index]->Camera_Name);
 
 		App->Cl_Dialogs->Dialog_Text(1);
 
@@ -1250,9 +1250,9 @@ bool SB_Properties::Edit_Camera_Onclick(LPARAM lParam)
 		}
 
 		// Needs Duplicate Name test 
-		strcpy(App->SBC_Camera->Camera_Name, App->Cl_Dialogs->Chr_Text);
+		strcpy(App->SBC_Scene->B_Camera[Index]->Camera_Name, App->Cl_Dialogs->Chr_Text);
 
-		App->SBC_FileView->Change_Item_Name(App->SBC_Camera->FileViewItem, App->Cl_Dialogs->Chr_Text);
+		App->SBC_FileView->Change_Item_Name(App->SBC_Scene->B_Camera[Index]->FileViewItem, App->Cl_Dialogs->Chr_Text);
 		Update_ListView_Camera();
 	}
 
@@ -1260,7 +1260,7 @@ bool SB_Properties::Edit_Camera_Onclick(LPARAM lParam)
 	if (result == 0)
 	{
 		char chr_Value[10];
-		sprintf(chr_Value, "%.3f ", App->SBC_Camera->CamPos_X);
+		sprintf(chr_Value, "%.3f ", App->SBC_Scene->B_Camera[Index]->CamPos.x);
 
 		strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
 		strcpy(App->Cl_Dialogs->btext, "Position X");
@@ -1268,7 +1268,7 @@ bool SB_Properties::Edit_Camera_Onclick(LPARAM lParam)
 		App->Cl_Dialogs->Dialog_Float();
 		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
 
-		App->SBC_Camera->CamPos_X = App->Cl_Dialogs->mFloat;
+		App->SBC_Scene->B_Camera[Index]->CamPos.x = App->Cl_Dialogs->mFloat;
 		Update_ListView_Camera();
 
 		return 1;
@@ -1278,7 +1278,7 @@ bool SB_Properties::Edit_Camera_Onclick(LPARAM lParam)
 	if (result == 0)
 	{
 		char chr_Value[10];
-		sprintf(chr_Value, "%.3f ", App->SBC_Camera->CamPos_Y);
+		sprintf(chr_Value, "%.3f ", App->SBC_Scene->B_Camera[Index]->CamPos.y);
 
 		strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
 		strcpy(App->Cl_Dialogs->btext, "Position Y");
@@ -1286,7 +1286,7 @@ bool SB_Properties::Edit_Camera_Onclick(LPARAM lParam)
 		App->Cl_Dialogs->Dialog_Float();
 		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
 
-		App->SBC_Camera->CamPos_Y = App->Cl_Dialogs->mFloat;
+		App->SBC_Scene->B_Camera[Index]->CamPos.y = App->Cl_Dialogs->mFloat;
 		Update_ListView_Camera();
 
 		return 1;
@@ -1296,7 +1296,7 @@ bool SB_Properties::Edit_Camera_Onclick(LPARAM lParam)
 	if (result == 0)
 	{
 		char chr_Value[10];
-		sprintf(chr_Value, "%.3f ", App->SBC_Camera->CamPos_Z);
+		sprintf(chr_Value, "%.3f ", App->SBC_Scene->B_Camera[Index]->CamPos.z);
 
 		strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
 		strcpy(App->Cl_Dialogs->btext, "Position Z");
@@ -1304,7 +1304,7 @@ bool SB_Properties::Edit_Camera_Onclick(LPARAM lParam)
 		App->Cl_Dialogs->Dialog_Float();
 		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
 
-		App->SBC_Camera->CamPos_Z = App->Cl_Dialogs->mFloat;
+		App->SBC_Scene->B_Camera[Index]->CamPos.z = App->Cl_Dialogs->mFloat;
 		Update_ListView_Camera();
 
 		return 1;

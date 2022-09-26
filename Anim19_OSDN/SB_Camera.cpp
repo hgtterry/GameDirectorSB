@@ -116,7 +116,7 @@ LRESULT CALLBACK SB_Camera::Camera_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == IDC_BTCAMGOTO)
 		{
-			App->SBC_Camera->Set_Camera();
+			App->SBC_Camera->Set_Camera(App->SBC_Properties->Current_Selected_Object);
 			return TRUE;
 		}
 		
@@ -158,12 +158,12 @@ void SB_Camera::Update_Camera_StartUp(void)
 }
 
 // *************************************************************************
-// *	  				Set_Camera Terry Bernie							   *
+// *	  		Set_Camera:- Terry and Hazel Flanigan 2022				   *
 // *************************************************************************
-void SB_Camera::Set_Camera(void)
+void SB_Camera::Set_Camera(int Index)
 {
-	App->Cl19_Ogre->mCamera->setPosition(Ogre::Vector3(CamPos_X, CamPos_Y, CamPos_Z));
-	App->Cl19_Ogre->mCamera->lookAt(Ogre::Vector3(LookAt_X, LookAt_Y, LookAt_Z));
+	App->Cl19_Ogre->mCamera->setPosition(App->SBC_Scene->B_Camera[Index]->CamPos);
+	App->Cl19_Ogre->mCamera->lookAt(App->SBC_Scene->B_Camera[Index]->LookAt);
 }
 
 // *************************************************************************

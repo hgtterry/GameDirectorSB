@@ -929,7 +929,9 @@ bool SB_Project::Load_Project()
 	// ------------------------------------- Camera
 	if (Options->Has_Camera > 0)
 	{
+		Load_Project_Camera();
 		App->SBC_Scene->Camera_Added = 1;
+		App->SBC_Camera->Set_Camera(0);
 	}
 
 	// ------------------------------------- Objects
@@ -937,6 +939,7 @@ bool SB_Project::Load_Project()
 	{
 		Load_Project_Objects();
 		App->SBC_Objects_Create->Add_Objects_From_File();
+
 	}
 
 	
@@ -952,7 +955,6 @@ bool SB_Project::Load_Project()
 	App->SBC_Scene->Scene_Loaded = 1;
 
 
-	Load_Project_Camera();
 	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->GD_CameraFolder);
 	
 	delete Options;

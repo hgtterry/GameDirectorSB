@@ -35,7 +35,7 @@ public:
 	void Reset_View(void);
 	void Zoom(void);
 
-	void Set_Camera(void);
+	void Set_Camera(int Index);
 
 	float CamPos_X;
 	float CamPos_Y;
