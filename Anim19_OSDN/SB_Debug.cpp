@@ -68,14 +68,17 @@ void SB_Debug::ImGui_Debug_Camera(void)
 	}
 	else
 	{
-
+		
 		ImGui::Text("%s %f", "Pos_X = ", App->Cl19_Ogre->mCamera->getPosition().x);
 		ImGui::Text("%s %f", "Pos_Y = ", App->Cl19_Ogre->mCamera->getPosition().y);
 		ImGui::Text("%s %f", "Pos_Z = ", App->Cl19_Ogre->mCamera->getPosition().z);
 
-		ImGui::Text("%s %f", "Rot_X = ", App->Cl19_Ogre->mCamera->getOrientation().x);
-		ImGui::Text("%s %f", "Rot_Y = ", App->Cl19_Ogre->mCamera->getOrientation().y);
-		ImGui::Text("%s %f", "Rot_Z = ", App->Cl19_Ogre->mCamera->getOrientation().z);
+		ImGui::Text("%s %.3f", "Rot_X = ", App->Cl19_Ogre->mCamera->getOrientation().getPitch().valueDegrees());
+		ImGui::Text("%s %.3f", "Rot_Y = ", App->Cl19_Ogre->mCamera->getOrientation().getYaw().valueDegrees());
+
+		App->Cl19_Ogre->mCamera->roll(Ogre::Degree(0));
+
+		ImGui::Text("%s %.3f", "Rot_Z = ", App->Cl19_Ogre->mCamera->getOrientation().getRoll().valueDegrees());
 
 		ImGui::Spacing();
 		ImGui::Spacing();
