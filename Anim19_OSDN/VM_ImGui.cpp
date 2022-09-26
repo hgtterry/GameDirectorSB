@@ -613,11 +613,14 @@ void VM_ImGui::ImGui_Model_Data(void)
 
 		if (ImGui::CollapsingHeader(Header))
 		{
+			ImGui::Text("%s %i", "Camera Count = ", App->SBC_Scene->Camera_Count);
 			ImGui::Text("%s %i", "Player Count = ", App->SBC_Scene->Player_Count);
 			ImGui::Text("%s %i", "Area Count = ", App->SBC_Scene->Area_Count);
 			ImGui::Text("%s %i", "Object Count = ", App->SBC_Scene->Object_Count);
+
 			ImGui::Text("%s %i", "Level Loaded = ",App->SBC_Scene->Scene_Loaded);
 			ImGui::Text("%s %i", "Player Added = ", App->SBC_Scene->Player_Added);
+
 			ImGui::Text("%s %i", "Physics Running = ", App->Cl19_Ogre->OgreListener->GD_Run_Physics);
 			ImGui::Text("%s %i", "Physics Debuging = ", App->Cl19_Ogre->OgreListener->Dubug_Physics_Draw);
 

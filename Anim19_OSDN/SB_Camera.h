@@ -53,5 +53,7 @@ public:
 protected:
 
 	static LRESULT CALLBACK Camera_PropsPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	void Update_Camera_StartUp(void);
 };
 

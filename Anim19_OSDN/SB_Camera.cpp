@@ -147,7 +147,14 @@ void SB_Camera::Reset_View(void)
 
 	App->Cl19_Ogre->mCamera->setPosition(Ogre::Vector3(0, 90, 100));
 	App->Cl19_Ogre->mCamera->lookAt(Ogre::Vector3(0, 30, 0));
+}
 
+// *************************************************************************
+// *	  	Update_Camera_StartUp:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+void SB_Camera::Update_Camera_StartUp(void)
+{
+	//App->SBC_Scene->SBC_Base_Area[0]->Area_Node->setPosition()
 }
 
 // *************************************************************************
