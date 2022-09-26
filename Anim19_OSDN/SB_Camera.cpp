@@ -192,5 +192,27 @@ void SB_Camera::Zoom(void)
 
 	//	App->Cl19_Ogre->mCamera->moveRelative(Move);
 	//}
+}
 
+// *************************************************************************
+// *	  		Add_New_Camera:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void SB_Camera::Add_New_Camera(void)
+{
+	char Camera_Name[MAX_PATH];
+	char Cbuff[MAX_PATH];
+
+	int Index = App->SBC_Scene->Camera_Count;
+
+	App->SBC_Scene->B_Camera[Index] = new Base_Camera();
+
+	strcpy(Camera_Name, "Camera_");
+	_itoa(Index, Cbuff, 10);
+	strcat(Camera_Name, Cbuff);
+
+	strcpy(App->SBC_Scene->B_Camera[Index]->Camera_Name, Camera_Name);
+
+	App->SBC_Scene->B_Camera[Index]->FileViewItem = App->SBC_FileView->Add_Camera(App->SBC_Scene->B_Camera[Index]->Camera_Name, Index);
+
+	App->SBC_Scene->Camera_Count++;
 }

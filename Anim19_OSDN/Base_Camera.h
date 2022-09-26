@@ -10,5 +10,8 @@ public:
 	Ogre::Vector3 CamPos;
 	Ogre::Vector3 LookAt;
 
+	char Camera_Name[MAX_PATH];
+
+	HTREEITEM FileViewItem;
 };
 

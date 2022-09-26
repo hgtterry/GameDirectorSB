@@ -3,12 +3,11 @@
 
 Base_Camera::Base_Camera()
 {
+	Init_Camera();
 }
 
 Base_Camera::~Base_Camera()
 {
-
-	Init_Camera();
 
 }
 
@@ -18,11 +17,15 @@ Base_Camera::~Base_Camera()
 void Base_Camera::Init_Camera(void)
 {
 	CamPos.x = 0;
-	CamPos.y = 0;
-	CamPos.z = 0;
+	CamPos.y = 90;
+	CamPos.z = 100;
 
 	LookAt.x = 0;
-	LookAt.y = 0;
+	LookAt.y = 30;
 	LookAt.z = 0;
+
+	Camera_Name[0] = 0;
+
+	FileViewItem = nullptr;
 
 }

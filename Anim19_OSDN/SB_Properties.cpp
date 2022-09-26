@@ -1161,10 +1161,10 @@ bool SB_Properties::Update_ListView_Camera()
 		//	return 1;
 	}
 
-	int index = App->SBC_Properties->Current_Selected_Object;
+	int Index = App->SBC_Properties->Current_Selected_Object;
 
 	char buff[255];
-	strcpy(buff, App->SBC_Camera->Camera_Name);
+	strcpy(buff, App->SBC_Scene->B_Camera[Index]->Camera_Name);
 	strcat(buff, "   (Camera)");
 	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
 
@@ -1176,13 +1176,13 @@ bool SB_Properties::Update_ListView_Camera()
 	char chr_LookAT_Y[100];
 	char chr_LookAT_Z[100];
 	
-	sprintf(chr_Pos_X, "%.3f ", App->SBC_Camera->CamPos_X);
-	sprintf(chr_Pos_Y, "%.3f ", App->SBC_Camera->CamPos_Y);
-	sprintf(chr_Pos_Z, "%.3f ", App->SBC_Camera->CamPos_Z);
+	sprintf(chr_Pos_X, "%.3f ", App->SBC_Scene->B_Camera[Index]->CamPos.x);
+	sprintf(chr_Pos_Y, "%.3f ", App->SBC_Scene->B_Camera[Index]->CamPos.y);
+	sprintf(chr_Pos_Z, "%.3f ", App->SBC_Scene->B_Camera[Index]->CamPos.z);
 
-	sprintf(chr_LookAT_X, "%.3f ", App->SBC_Camera->LookAt_X);
-	sprintf(chr_LookAT_Y, "%.3f ", App->SBC_Camera->LookAt_Y);
-	sprintf(chr_LookAT_Z, "%.3f ", App->SBC_Camera->LookAt_Z);
+	sprintf(chr_LookAT_X, "%.3f ", App->SBC_Scene->B_Camera[Index]->LookAt.x);
+	sprintf(chr_LookAT_Y, "%.3f ", App->SBC_Scene->B_Camera[Index]->LookAt.y);
+	sprintf(chr_LookAT_Z, "%.3f ", App->SBC_Scene->B_Camera[Index]->LookAt.z);
 
 
 	const int NUM_ITEMS = 9;
@@ -1192,7 +1192,7 @@ bool SB_Properties::Update_ListView_Camera()
 	memset(&pitem, 0, sizeof(LV_ITEM));
 	pitem.mask = LVIF_TEXT;
 
-	grid[0][0] = "Name",		grid[1][0] = App->SBC_Camera->Camera_Name;
+	grid[0][0] = "Name",		grid[1][0] = App->SBC_Scene->B_Camera[Index]->Camera_Name;
 	grid[0][1] = " ",			grid[1][1] = " ";
 	grid[0][2] = "Pos_X",		grid[1][2] = chr_Pos_X;
 	grid[0][3] = "Pos_Y",		grid[1][3] = chr_Pos_Y;

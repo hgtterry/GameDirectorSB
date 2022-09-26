@@ -28,6 +28,7 @@ public:
 	SB_Camera();
 	~SB_Camera();
 
+	void Add_New_Camera(void);
 	bool Start_Camera_PropsPanel();
 	void Hide_Cam_Dlg(bool Show);
 

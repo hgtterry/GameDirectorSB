@@ -607,8 +607,17 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		return;
 	}
 
+	if (!strcmp(FileView_Folder, "Camera"))
+	{
+		App->SBC_FileView->Context_Selection = Enums::FileView_Cameras_Folder;
+
+		return;
+	}
+
 	if (!strcmp(FileView_File, "Camera"))
 	{
+		App->SBC_FileView->Context_Selection = Enums::FileView_Cameras_File;
+
 		HideRightPanes();
 		ShowWindow(App->SBC_Properties->Properties_Dlg_hWnd, 1);
 		App->SBC_Camera->Hide_Cam_Dlg(1);
@@ -1418,7 +1427,7 @@ void SB_FileView::Select_Item(int Index)
 }
 
 // *************************************************************************
-// *				SelectItem	Terry Bernie							   *
+// *				SelectItem:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 bool SB_FileView::SelectItem(HTREEITEM TreeItem)
 {
@@ -1434,7 +1443,7 @@ bool SB_FileView::SelectItem(HTREEITEM TreeItem)
 }
 
 // *************************************************************************
-// *					Set_FolderActive Terry Bernie				 	   *
+// *			Set_FolderActive:- Terry and Hazel Flanigan 2022	 	   *
 // *************************************************************************
 void SB_FileView::Set_FolderActive(HTREEITEM Folder)
 {
@@ -1449,7 +1458,7 @@ void SB_FileView::Set_FolderActive(HTREEITEM Folder)
 }
 
 // *************************************************************************
-// *						Context_Menu Terry Flanigan				 	   *
+// *			Context_Menu:- Terry and Hazel Flanigan 2022		 	   *
 // *************************************************************************
 void SB_FileView::Context_Menu(HWND hDlg)
 {
@@ -1471,6 +1480,31 @@ void SB_FileView::Context_Menu(HWND hDlg)
 	if (htvItem = TreeView_HitTest(hwndTV, &htInfo)) {    // hit test
 		TreeView_SelectItem(hwndTV, htvItem);           // success; select the item
 
+		//------------------------------------- Camera
+		if (!strcmp(App->SBC_FileView->FileView_Folder, "Camera")) // Folder
+		{
+			App->SBC_FileView->hMenu = CreatePopupMenu();
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_NEW, L"&New");
+			TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+			DestroyMenu(App->SBC_FileView->hMenu);
+			Context_Selection = Enums::FileView_Cameras_Folder;
+		}
+
+		if (!strcmp(App->SBC_FileView->FileView_File, "Camera"))
+		{
+			App->SBC_FileView->hMenu = CreatePopupMenu();
+
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_COPY, L"&Copy");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
+			TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+			DestroyMenu(App->SBC_FileView->hMenu);
+			Context_Selection = Enums::FileView_Cameras_File;
+		}
+
+		//------------------------------------- Objects
 		if (!strcmp(App->SBC_FileView->FileView_Folder, "Objects")) // Folder
 		{
 			App->SBC_FileView->hMenu = CreatePopupMenu();
@@ -1494,6 +1528,7 @@ void SB_FileView::Context_Menu(HWND hDlg)
 			Context_Selection = Enums::FileView_Objects_File;
 		}
 
+		//------------------------------------- Messages
 		if (!strcmp(App->SBC_FileView->FileView_Folder, "Messages")) // Folder
 		{
 			App->SBC_FileView->hMenu = CreatePopupMenu();
@@ -1517,6 +1552,7 @@ void SB_FileView::Context_Menu(HWND hDlg)
 			Context_Selection = Enums::FileView_Messages_File;
 		}
 
+		//------------------------------------- Sounds
 		if (!strcmp(App->SBC_FileView->FileView_Folder, "Sounds")) // Folder
 		{
 			App->SBC_FileView->hMenu = CreatePopupMenu();
@@ -1543,7 +1579,7 @@ void SB_FileView::Context_Menu(HWND hDlg)
 }
 
 // *************************************************************************
-// *						Context_New Terry Flanigan				 	   *
+// *				Context_New:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 void SB_FileView::Context_New(HWND hDlg)
 {
@@ -1554,6 +1590,16 @@ void SB_FileView::Context_New(HWND hDlg)
 		return;
 	}
 
+	if (App->SBC_FileView->Context_Selection == Enums::FileView_Cameras_Folder)
+	{
+		App->Cl_Dialogs->YesNo("Add Object", "Do you want to add a new Camera");
+
+		bool Doit = App->Cl_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+			App->SBC_Camera->Add_New_Camera();
+		}
+	}
 
 	if (App->SBC_FileView->Context_Selection == Enums::FileView_Objects_Folder)
 	{

@@ -486,31 +486,32 @@ bool SB_Project::Save_Cameras_Data()
 	float y = 0;
 	float z = 0;
 
-	//int Count = 0;
-	//while (Count < App->SBC_Scene->Area_Count)
-	//{
-	//	strcpy(buff, "[Aera_");
-	//	_itoa(Count, Cbuff, 10);
-	//	strcat(buff, Cbuff);
-	//	strcat(buff, "]");
+	int Count = 0;
+	while (Count < App->SBC_Scene->Camera_Count)
+	{
+		strcpy(buff, "[Camera_");
+		_itoa(Count, Cbuff, 10);
+		strcat(buff, Cbuff);
+		strcat(buff, "]");
 
-	//	fprintf(WriteFile, "%s\n", buff); // Header also Player name until changed by user
+		fprintf(WriteFile, "%s\n", buff); // Header also Player name until changed by user
 
-	//	fprintf(WriteFile, "%s%s\n", "Aera_Name=", App->SBC_Scene->SBC_Base_Area[Count]->Area_Name); // Change
+		fprintf(WriteFile, "%s%s\n", "Camera_Name=", App->SBC_Scene->B_Camera[Count]->Camera_Name); // Change
 
-	//	fprintf(WriteFile, "%s%s\n", "Aera_File=", App->SBC_Scene->SBC_Base_Area[Count]->Area_FileName);
-	//	fprintf(WriteFile, "%s%s\n", "Aera_Path_File=", App->SBC_Scene->SBC_Base_Area[Count]->Area_Path_And_FileName);
-	//	fprintf(WriteFile, "%s%s\n", "Aera_Resource_Path=", App->SBC_Scene->SBC_Base_Area[Count]->Area_Resource_Path);
+		x = App->SBC_Scene->B_Camera[Count]->CamPos.x;
+		y = App->SBC_Scene->B_Camera[Count]->CamPos.y;
+		z = App->SBC_Scene->B_Camera[Count]->CamPos.z;
 
-	//	fprintf(WriteFile, "%s\n", "[Position]");
-	//	x = App->SBC_Scene->SBC_Base_Area[Count]->Area_Node->getPosition().x;
-	//	y = App->SBC_Scene->SBC_Base_Area[Count]->Area_Node->getPosition().y;
-	//	z = App->SBC_Scene->SBC_Base_Area[Count]->Area_Node->getPosition().z;
+		fprintf(WriteFile, "%s%f,%f,%f\n", "Camera_Pos=", x, y, z);
 
-	//	fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Pos=", x, y, z);
+		x = App->SBC_Scene->B_Camera[Count]->LookAt.x;
+		y = App->SBC_Scene->B_Camera[Count]->LookAt.y;
+		z = App->SBC_Scene->B_Camera[Count]->LookAt.z;
 
-	//	Count++;
-	//}
+		fprintf(WriteFile, "%s%f,%f,%f\n", "LookAt=", x, y, z);
+
+		Count++;
+	}
 
 	fclose(WriteFile);
 
