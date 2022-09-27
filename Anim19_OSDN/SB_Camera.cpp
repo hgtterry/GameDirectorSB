@@ -109,7 +109,10 @@ LRESULT CALLBACK SB_Camera::Camera_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == IDC_BTCAMSAVE)
 		{
-			//App->SBC_Project->Write_Camera();
+			int Index = App->SBC_Properties->Current_Selected_Object;
+
+			App->SBC_Camera->Update_Camera(Index);
+
 			App->Say("Camera Saved");
 			return TRUE;
 		}
@@ -177,7 +180,18 @@ void SB_Camera::Update_Camera_StartUp(void)
 void SB_Camera::Set_Camera(int Index)
 {
 	App->Cl19_Ogre->mCamera->setPosition(App->SBC_Scene->B_Camera[Index]->CamPos);
-	App->Cl19_Ogre->mCamera->lookAt(App->SBC_Scene->B_Camera[Index]->LookAt);
+	App->Cl19_Ogre->mCamera->setOrientation(App->SBC_Scene->B_Camera[Index]->Cam_Quat);
+}
+
+// *************************************************************************
+// *	  		Update_Camera:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void SB_Camera::Update_Camera(int Index)
+{
+	App->SBC_Scene->B_Camera[Index]->CamPos = App->Cl19_Ogre->mCamera->getPosition();
+	
+	App->SBC_Scene->B_Camera[Index]->Cam_Quat = App->Cl19_Ogre->mCamera->getOrientation();
+	
 }
 
 // *************************************************************************

@@ -482,6 +482,7 @@ bool SB_Project::Save_Cameras_Data()
 	char Cbuff[255];
 	char buff[255];
 
+	float w = 0;
 	float x = 0;
 	float y = 0;
 	float z = 0;
@@ -498,17 +499,27 @@ bool SB_Project::Save_Cameras_Data()
 
 		fprintf(WriteFile, "%s%s\n", "Camera_Name=", App->SBC_Scene->B_Camera[Count]->Camera_Name); // Change
 
+		//---------------------------------- Camera Pos
 		x = App->SBC_Scene->B_Camera[Count]->CamPos.x;
 		y = App->SBC_Scene->B_Camera[Count]->CamPos.y;
 		z = App->SBC_Scene->B_Camera[Count]->CamPos.z;
 
 		fprintf(WriteFile, "%s%f,%f,%f\n", "Camera_Pos=", x, y, z);
 
+		//---------------------------------- Camera Look At
 		x = App->SBC_Scene->B_Camera[Count]->LookAt.x;
 		y = App->SBC_Scene->B_Camera[Count]->LookAt.y;
 		z = App->SBC_Scene->B_Camera[Count]->LookAt.z;
 
 		fprintf(WriteFile, "%s%f,%f,%f\n", "LookAt=", x, y, z);
+
+		//---------------------------------- Camera Quaternion
+		w = App->SBC_Scene->B_Camera[Count]->Cam_Quat.w;
+		x = App->SBC_Scene->B_Camera[Count]->Cam_Quat.x;
+		y = App->SBC_Scene->B_Camera[Count]->Cam_Quat.y;
+		z = App->SBC_Scene->B_Camera[Count]->Cam_Quat.z;
+
+		fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Camera_Quat=", w, x, y, z);
 
 		Count++;
 	}
@@ -1224,6 +1235,7 @@ bool SB_Project::Load_Project_Camera()
 	char Camera_Name[MAX_PATH];
 	int Camera_Count = 0;
 
+	float w = 0;
 	float x = 0;
 	float y = 0;
 	float z = 0;
@@ -1258,7 +1270,7 @@ bool SB_Project::Load_Project_Camera()
 		App->Cl_Ini->GetString(buff, "Camera_Name", Camera_Name, MAX_PATH);
 		strcpy(App->SBC_Scene->B_Camera[Count]->Camera_Name, Camera_Name);
 
-
+		//---------------------------------- Camera Pos
 		App->Cl_Ini->GetString(buff, "Camera_Pos", chr_Tag1, MAX_PATH);
 		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
 
@@ -1266,12 +1278,23 @@ bool SB_Project::Load_Project_Camera()
 		App->SBC_Scene->B_Camera[Count]->CamPos.y = y;
 		App->SBC_Scene->B_Camera[Count]->CamPos.z = z;
 
+		//---------------------------------- Camera Look At
 		App->Cl_Ini->GetString(buff, "LookAt", chr_Tag1, MAX_PATH);
 		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
 
 		App->SBC_Scene->B_Camera[Count]->LookAt.x = x;
 		App->SBC_Scene->B_Camera[Count]->LookAt.y = y;
 		App->SBC_Scene->B_Camera[Count]->LookAt.z = z;
+
+		//---------------------------------- Camera Quaternion
+		App->Cl_Ini->GetString(buff, "Camera_Quat", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f,%f", &w, &x, &y, &z);
+
+		App->SBC_Scene->B_Camera[Count]->Cam_Quat.w = w;
+		App->SBC_Scene->B_Camera[Count]->Cam_Quat.x = x;
+		App->SBC_Scene->B_Camera[Count]->Cam_Quat.y = y;
+		App->SBC_Scene->B_Camera[Count]->Cam_Quat.z = z;
+
 
 		App->SBC_Scene->B_Camera[Count]->FileViewItem = App->SBC_FileView->Add_Camera(App->SBC_Scene->B_Camera[Count]->Camera_Name, Count);
 
