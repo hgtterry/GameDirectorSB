@@ -29,14 +29,15 @@ public:
 	~GD19_Grid(void);
 
 	void Reset_Class();
-	void Load_Arrow();
 	void Move_Arrow(Ogre::Vector3 pos);
 
 	void Load_Crosshair();
-	
+	void Load_Red_Axis();
+	void Load_Arrow();
+
 	void Grid_Update(bool Create);
 	void Hair_Update(bool Create);
-
+	
 	void Grid_SetVisible(bool Option);
 	void Hair_SetVisible(bool Option);
 	void Hair_DisplayGeneralCrossHair(float x,float y,float z,bool Option);
@@ -79,6 +80,9 @@ public:
 
 	Ogre::Entity*		Selection_Ent; 
 	Ogre::SceneNode*	Selection_Node;
+
+	Ogre::Entity*		RedAxis_Ent;
+	Ogre::SceneNode*	RedAxis_Node;
 
 	bool ShowGridFlag;
 	bool ShowDivisions;

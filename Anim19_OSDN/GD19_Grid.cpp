@@ -46,6 +46,9 @@ GD19_Grid::GD19_Grid(void)
 	Arrow_Ent = NULL;
 	Arrow_Node = NULL;
 
+	RedAxis_Ent = NULL;
+	RedAxis_Node = NULL;
+
 	Selection_Ent = NULL;
 	Selection_Node = NULL;
 
@@ -93,7 +96,24 @@ void GD19_Grid::Reset_Class()
 }
 
 // *************************************************************************
-// *	  					Grid_Update Terry Bernie					   *
+// *	  		Load_Arrow:- Terry and Hazel Flanigan 2022				   *
+// *************************************************************************
+void GD19_Grid::Load_Arrow()
+{
+	Arrow_Ent = App->Cl19_Ogre->mSceneMgr->createEntity("Arrow", "Gizmo.mesh", App->Cl19_Ogre->App_Resource_Group);
+	Arrow_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	Arrow_Node->attachObject(Arrow_Ent);
+
+	Arrow_Node->setVisible(false);
+	Arrow_Node->setPosition(0, 0, 0);
+	Arrow_Node->setScale(7, 7, 7);
+
+	Ogre::MaterialPtr materialPtr = Ogre::MaterialManager::getSingleton().getByName("BaseYellowLine");
+	Arrow_Ent->setMaterial(materialPtr);
+}
+
+// *************************************************************************
+// *	  		Load_Crosshair:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 void GD19_Grid::Load_Crosshair()
 {
@@ -105,6 +125,21 @@ void GD19_Grid::Load_Crosshair()
 	Crosshair_Node->setPosition(0, 0, 0);
 	Crosshair_Node->setScale(1, 1, 1);
 }
+
+// **************************************************************************
+// *	  			Load_Red_Axis:- Terry and Hazel Flanigan 2022			*
+// **************************************************************************
+void GD19_Grid::Load_Red_Axis()
+{
+	RedAxis_Ent = App->Cl19_Ogre->mSceneMgr->createEntity("Red_Axis", "RedAxes.mesh", App->Cl19_Ogre->App_Resource_Group);
+	RedAxis_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	RedAxis_Node->attachObject(RedAxis_Ent);
+
+	RedAxis_Node->setVisible(false);
+	RedAxis_Node->setPosition(0, 0, 0);
+	RedAxis_Node->setScale(1, 1, 1);
+}
+
 // *************************************************************************
 // *	  					Grid_Update Terry Bernie					   *
 // *************************************************************************
@@ -243,22 +278,6 @@ void GD19_Grid::Hair_DisplayGeneralCrossHair(float x, float y, float z, bool Opt
 	App->Cl_Ogre->RenderListener->Hair_1PosZ = z;*/
 }
 
-// *************************************************************************
-// *	  					Load_Arrow Terry Bernie						   *
-// *************************************************************************
-void GD19_Grid::Load_Arrow()
-{
-	Arrow_Ent = App->Cl19_Ogre->mSceneMgr->createEntity("Arrow", "Gizmo.mesh", App->Cl19_Ogre->App_Resource_Group);
-	Arrow_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	Arrow_Node->attachObject(Arrow_Ent);
-
-	Arrow_Node->setVisible(false);
-	Arrow_Node->setPosition(0, 0, 0);
-	Arrow_Node->setScale(7, 7, 7);
-
-	Ogre::MaterialPtr materialPtr = Ogre::MaterialManager::getSingleton().getByName("BaseYellowLine");
-	Arrow_Ent->setMaterial(materialPtr);
-}
 
 // *************************************************************************
 // *	  					Move_ArrowTerry Bernie						   *

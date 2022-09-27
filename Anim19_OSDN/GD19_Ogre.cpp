@@ -74,9 +74,11 @@ bool GD19_Ogre::InitOgre(void)
 	App->Cl_Grid->Hair_Update(1);
 
 	App->Cl_Grid->DummyNode = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+
 	App->Cl_Visuals->Load_PickSight();
 	App->Cl_Grid->Load_Arrow();
-	
+	App->Cl_Grid->Load_Red_Axis();
+
 	m_imgui.Init(mSceneMgr, RenderHwnd); 
 
 	App->Cl_Visuals->MarkerBB_Setup();
