@@ -1,5 +1,5 @@
 /*
-Copyright (c) Vima19 Inflanite Software W.T.Flanigan H.C.Flanigan
+Copyright (c) 2021 Scene Builder and Equity -- Inflanite Software W.T.Flanigan H.C.Flanigan
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -82,6 +82,8 @@ GD19_App::GD19_App(void)
 	SBC_Dimensions =	nullptr;
 	SBC_Collision =		nullptr;
 	SBC_SoundMgr =		nullptr;
+	SBC_Markers =		nullptr;
+
 	// ---------------------------------------------------- 29/12/21
 	Com_CDialogs =		nullptr;
 
@@ -240,6 +242,8 @@ bool GD19_App::InitApp(void)
 	SBC_Dimensions =	new SB_Dimensions();
 	SBC_Collision =		new SB_Collision();
 	SBC_SoundMgr =		new SB_SoundMgr();
+	SBC_Markers =		new SB_Markers();
+	
 
 	//-----------------------------------------------------
 	SetBrushes_Fonts();

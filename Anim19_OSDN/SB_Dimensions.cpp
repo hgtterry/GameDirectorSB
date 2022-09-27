@@ -298,8 +298,13 @@ void SB_Dimensions::ImGui_Position(void)
 	ImGui::Checkbox("Z", &PosZ_Selected);
 	if (PosZ_Selected)
 	{
+		App->Cl_Grid->RedAxis_Node->setPosition(App->SBC_Scene->B_Object[Index]->Object_Node->getPosition());
+		App->Cl_Grid->RedAxis_Node->setVisible(true);
+
 		PosX_Selected = 0;
 		PosY_Selected = 0;
+
+		
 	}
 	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
 
