@@ -857,9 +857,10 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
 
 		App->SBC_Scene->SBC_Base_Player[0]->StartPos.x = App->Cl_Dialogs->mFloat;
-		Update_ListView_Player();
-
+		
 		App->Cl_Bullet->Reset_Physics();
+
+		Update_ListView_Player();
 		return 1;
 	}
 
@@ -880,6 +881,8 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 		App->SBC_Scene->SBC_Base_Player[0]->StartPos.y = App->Cl_Dialogs->mFloat;
 	
 		App->Cl_Bullet->Reset_Physics();
+
+		Update_ListView_Player();
 		return 1;
 	}
 
@@ -898,9 +901,9 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 
 		App->SBC_Scene->SBC_Base_Player[0]->StartPos.z = App->Cl_Dialogs->mFloat;
 		
-		Update_ListView_Player();
-
 		App->Cl_Bullet->Reset_Physics();
+
+		Update_ListView_Player();
 
 		return 1;
 	}

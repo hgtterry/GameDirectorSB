@@ -80,7 +80,7 @@ LRESULT CALLBACK SB_Camera::Camera_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 
 	case WM_CTLCOLORDLG:
 	{
-		return (LONG)App->AppBackground;
+		return (LONG)App->DialogBackGround;
 	}
 
 	case WM_NOTIFY:

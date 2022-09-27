@@ -576,6 +576,18 @@ LRESULT CALLBACK SB_TopTabs::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 				App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamFirst;
 				App->SBC_TopTabs->Toggle_FirstCam_Flag = 1;
 				App->SBC_TopTabs->Toggle_FreeCam_Flag = 0;
+
+				App->SBC_Scene->SBC_Base_Player[0]->Player_Node->setVisible(false);
+
+				int f = App->SBC_Scene->SBC_Base_Player[0]->Phys_Body->getCollisionFlags();
+				App->SBC_Scene->SBC_Base_Player[0]->Phys_Body->setCollisionFlags(f | (1 << 5));
+				
+				App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 0;
+				App->Cl19_Ogre->RenderFrame();
+				App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 1;
+
+				App->Cl19_Ogre->OgreListener->GD_Run_Physics = 1;
+
 				RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			}
 			return TRUE;
@@ -586,6 +598,16 @@ LRESULT CALLBACK SB_TopTabs::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 			App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
 			App->SBC_TopTabs->Toggle_FirstCam_Flag = 0;
 			App->SBC_TopTabs->Toggle_FreeCam_Flag = 1;
+			
+			App->SBC_Scene->SBC_Base_Player[0]->Player_Node->setVisible(true);
+
+			int f = App->SBC_Scene->SBC_Base_Player[0]->Phys_Body->getCollisionFlags();
+			App->SBC_Scene->SBC_Base_Player[0]->Phys_Body->setCollisionFlags(f & (~(1 << 5)));
+
+			App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 0;
+			App->Cl19_Ogre->RenderFrame();
+			App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 1;
+
 			RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
 		}

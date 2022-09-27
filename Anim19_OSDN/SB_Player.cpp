@@ -347,7 +347,7 @@ LRESULT CALLBACK SB_Player::Player_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 			if (App->SBC_Player->Show_Physics_Debug == 1)
 			{
 				App->SBC_Player->Show_Physics_Debug = 0;
-				App->SBC_Scene->SBC_Base_Player[0]->Phys_Body->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+				App->SBC_Scene->SBC_Base_Player[0]->Phys_Body->setCollisionFlags(f | (1 << 5));
 
 				App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 0;
 				App->Cl19_Ogre->RenderFrame();
@@ -356,7 +356,7 @@ LRESULT CALLBACK SB_Player::Player_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 			else
 			{
 				App->SBC_Player->Show_Physics_Debug = 1;
-				App->SBC_Scene->SBC_Base_Player[0]->Phys_Body->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+				App->SBC_Scene->SBC_Base_Player[0]->Phys_Body->setCollisionFlags(f & (~(1 << 5)));
 			}
 			
 			return 1;
