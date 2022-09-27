@@ -25,7 +25,7 @@
 
 #define NOMINMAX
 #include <windows.h>
-#include <Genesis.h>
+#include "Genesis.h"
 //#include "btBulletDynamicsCommon.h"
 // C RunTime Header Files
 #include <stdint.h>
