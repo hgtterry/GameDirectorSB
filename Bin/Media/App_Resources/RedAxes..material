@@ -1,0 +1,34 @@
+
+material RedAxes._Material_0
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture PosRed.bmp
+			}
+		}
+
+	}
+
+}
+
+material RedAxes._Material_1
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture PosRed.bmp
+			}
+		}
+
+	}
+
+}
