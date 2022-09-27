@@ -28,8 +28,87 @@ distribution.
 
 SB_Markers::SB_Markers(void)
 {
+	RedAxis_Ent = nullptr;
+	RedAxis_Node = nullptr;
+
+	BlueAxis_Ent = nullptr;
+	BlueAxis_Node = nullptr;
 }
 
 SB_Markers::~SB_Markers(void)
 {
+}
+
+// **************************************************************************
+// *	  			Load_All_Axis:- Terry and Hazel Flanigan 2022			*
+// **************************************************************************
+void SB_Markers::Load_All_Axis()
+{
+	Load_Red_Axis();
+	Load_Blue_Axis();
+}
+
+// **************************************************************************
+// *	  			Load_Red_Axis:- Terry and Hazel Flanigan 2022			*
+// **************************************************************************
+void SB_Markers::Load_Red_Axis()
+{
+	RedAxis_Ent = App->Cl19_Ogre->mSceneMgr->createEntity("Red_Axis", "RedAxes.mesh", App->Cl19_Ogre->App_Resource_Group);
+	RedAxis_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	RedAxis_Node->attachObject(RedAxis_Ent);
+
+	RedAxis_Node->setVisible(false);
+	RedAxis_Node->setPosition(0, 0, 0);
+	RedAxis_Node->setScale(1, 1, 2);
+}
+
+// **************************************************************************
+// *	  			Load_Blue_Axis:- Terry and Hazel Flanigan 2022			*
+// **************************************************************************
+void SB_Markers::Load_Blue_Axis()
+{
+	BlueAxis_Ent = App->Cl19_Ogre->mSceneMgr->createEntity("Blue_Axis", "BlueAxes.mesh", App->Cl19_Ogre->App_Resource_Group);
+	BlueAxis_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	BlueAxis_Node->attachObject(BlueAxis_Ent);
+
+	BlueAxis_Node->setVisible(false);
+	BlueAxis_Node->setPosition(0, 0, 0);
+	BlueAxis_Node->setScale(2, 1, 1);
+}
+
+// **************************************************************************
+// *	  	Update_Red_Axis_Marker:- Terry and Hazel Flanigan 2022			*
+// **************************************************************************
+void SB_Markers::Update_Red_Axis_Marker(int Index)
+{
+
+	AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
+	worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
+	Ogre::Vector3 Centre = worldAAB.getCenter();
+
+	App->SBC_Markers->RedAxis_Node->setPosition(Centre);
+	App->SBC_Markers->RedAxis_Node->setVisible(true);
+}
+
+// **************************************************************************
+// *	  	Update_Blue_Axis_Marker:- Terry and Hazel Flanigan 2022			*
+// **************************************************************************
+void SB_Markers::Update_Blue_Axis_Marker(int Index)
+{
+
+	AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
+	worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
+	Ogre::Vector3 Centre = worldAAB.getCenter();
+
+	App->SBC_Markers->BlueAxis_Node->setPosition(Centre);
+	App->SBC_Markers->BlueAxis_Node->setVisible(true);
+}
+
+// **************************************************************************
+// *			Hide_Axis_Marker:- Terry and Hazel Flanigan 2022			*
+// **************************************************************************
+void SB_Markers::Hide_Axis_Marker()
+{
+	App->SBC_Markers->BlueAxis_Node->setVisible(false);
+	App->SBC_Markers->RedAxis_Node->setVisible(false);
 }

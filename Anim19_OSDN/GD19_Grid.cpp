@@ -46,9 +46,6 @@ GD19_Grid::GD19_Grid(void)
 	Arrow_Ent = NULL;
 	Arrow_Node = NULL;
 
-	RedAxis_Ent = NULL;
-	RedAxis_Node = NULL;
-
 	Selection_Ent = NULL;
 	Selection_Node = NULL;
 
@@ -124,20 +121,6 @@ void GD19_Grid::Load_Crosshair()
 	Crosshair_Node->setVisible(true);
 	Crosshair_Node->setPosition(0, 0, 0);
 	Crosshair_Node->setScale(1, 1, 1);
-}
-
-// **************************************************************************
-// *	  			Load_Red_Axis:- Terry and Hazel Flanigan 2022			*
-// **************************************************************************
-void GD19_Grid::Load_Red_Axis()
-{
-	RedAxis_Ent = App->Cl19_Ogre->mSceneMgr->createEntity("Red_Axis", "RedAxes.mesh", App->Cl19_Ogre->App_Resource_Group);
-	RedAxis_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	RedAxis_Node->attachObject(RedAxis_Ent);
-
-	RedAxis_Node->setVisible(false);
-	RedAxis_Node->setPosition(0, 0, 0);
-	RedAxis_Node->setScale(1, 1, 1);
 }
 
 // *************************************************************************

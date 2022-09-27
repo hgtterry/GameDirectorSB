@@ -276,6 +276,9 @@ void SB_Dimensions::ImGui_Position(void)
 	ImGui::Checkbox("X", &PosX_Selected);
 	if (PosX_Selected == 1)
 	{
+		App->SBC_Markers->Hide_Axis_Marker();
+		App->SBC_Markers->Update_Blue_Axis_Marker(Index);
+
 		PosY_Selected = 0;
 		PosZ_Selected = 0;
 	}
@@ -288,6 +291,8 @@ void SB_Dimensions::ImGui_Position(void)
 
 	if (PosY_Selected)
 	{
+		App->SBC_Markers->Hide_Axis_Marker();
+
 		PosX_Selected = 0;
 		PosZ_Selected = 0;
 	}
@@ -298,8 +303,8 @@ void SB_Dimensions::ImGui_Position(void)
 	ImGui::Checkbox("Z", &PosZ_Selected);
 	if (PosZ_Selected)
 	{
-		App->Cl_Grid->RedAxis_Node->setPosition(App->SBC_Scene->B_Object[Index]->Object_Node->getPosition());
-		App->Cl_Grid->RedAxis_Node->setVisible(true);
+		App->SBC_Markers->Hide_Axis_Marker();
+		App->SBC_Markers->Update_Red_Axis_Marker(Index);
 
 		PosX_Selected = 0;
 		PosY_Selected = 0;

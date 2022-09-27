@@ -32,7 +32,6 @@ public:
 	void Move_Arrow(Ogre::Vector3 pos);
 
 	void Load_Crosshair();
-	void Load_Red_Axis();
 	void Load_Arrow();
 
 	void Grid_Update(bool Create);
@@ -80,9 +79,6 @@ public:
 
 	Ogre::Entity*		Selection_Ent; 
 	Ogre::SceneNode*	Selection_Node;
-
-	Ogre::Entity*		RedAxis_Ent;
-	Ogre::SceneNode*	RedAxis_Node;
 
 	bool ShowGridFlag;
 	bool ShowDivisions;

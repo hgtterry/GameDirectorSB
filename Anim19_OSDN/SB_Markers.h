@@ -27,5 +27,21 @@ class SB_Markers
 public:
 	SB_Markers(void);
 	~SB_Markers(void);
+
+	void Load_All_Axis();
+
+	void Load_Red_Axis();
+	void Load_Blue_Axis();
+
+	void Update_Red_Axis_Marker(int Index);
+	void Update_Blue_Axis_Marker(int Index);
+
+	void Hide_Axis_Marker();
+
+	Ogre::Entity*		RedAxis_Ent;
+	Ogre::SceneNode*	RedAxis_Node;
+
+	Ogre::Entity*		BlueAxis_Ent;
+	Ogre::SceneNode*	BlueAxis_Node;
 };
 

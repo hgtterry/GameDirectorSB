@@ -77,7 +77,7 @@ bool GD19_Ogre::InitOgre(void)
 
 	App->Cl_Visuals->Load_PickSight();
 	App->Cl_Grid->Load_Arrow();
-	App->Cl_Grid->Load_Red_Axis();
+	App->SBC_Markers->Load_All_Axis();
 
 	m_imgui.Init(mSceneMgr, RenderHwnd); 
 
