@@ -571,13 +571,13 @@ bool SB_Properties::Update_ListView_Messages()
 	strcat(buff, "   (Message)");
 	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
 
-	char chr_ReTrigger[100];
+//	char chr_ReTrigger[100];
 
 	int StockIndex = 0;// App->SBC_Scene->B_Object[index]->Entity[0].Stock_mIndex;
 	//sprintf(chr_ReTrigger, "%i ", App->SBC_Scene->B_Object[index]->Re_Trigger);
 
-	char chr_FontSize[100];
-	char chr_TextColour[100];
+//	char chr_FontSize[100];
+//	char chr_TextColour[100];
 	char chr_PosVert[100];
 	char chr_PosHoz[100];
 

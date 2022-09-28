@@ -335,8 +335,8 @@ bool SB_Project::Save_Project()
 	{
 		Save_Players_Folder();
 
-		App->SBC_Player->FileViewItem = App->SBC_FileView->Add_PlayerFile("Player_1", 0);
-		App->SBC_FileView->Set_FolderActive(App->SBC_FileView->GD_Player);
+		App->SBC_Player->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Players_Folder,"Player_1", 0);
+		App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Players_Folder);
 
 	}
 
@@ -943,6 +943,7 @@ bool SB_Project::Load_Project()
 		Load_Project_Camera();
 		App->SBC_Scene->Camera_Added = 1;
 		App->SBC_Camera->Set_Camera(0);
+		App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Cameras_Folder);
 	}
 
 	// ------------------------------------- Objects
@@ -965,9 +966,6 @@ bool SB_Project::Load_Project()
 	App->SBC_Scene->Area_Added = 1;
 	App->SBC_Scene->Scene_Loaded = 1;
 
-
-	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->GD_CameraFolder);
-	
 	delete Options;
 
 	App->Set_Main_TitleBar(App->SBC_FileIO->Project_Path_File_Name);
@@ -1150,12 +1148,12 @@ bool SB_Project::Load_Project_Aera()
 		App->SBC_Scene->SBC_Base_Area[Count]->Physics_Pos = Ogre::Vector3(x, y, z);
 
 		strcpy(App->SBC_Scene->SBC_Base_Area[Count]->Area_Name, Area_Name);
-		App->SBC_Scene->SBC_Base_Area[Count]->FileViewItem = App->SBC_FileView->Add_Area(Area_Name, Count);
+		App->SBC_Scene->SBC_Base_Area[Count]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Areas_Folder, Area_Name, Count);
 
 		Count++;
 	}
 
-	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->GD_Rooms);
+	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Areas_Folder);
 
 	return 1;
 }
@@ -1210,9 +1208,7 @@ bool SB_Project::Load_Project_Player()
 		App->SBC_Scene->SBC_Base_Player[Count]->StartPos = Ogre::Vector3(x, y, z);
 
 
-
-
-		App->SBC_Player->FileViewItem = App->SBC_FileView->Add_PlayerFile(Player_Name, Count);
+		App->SBC_Player->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Players_Folder,Player_Name, Count);
 
 		Count++;
 
@@ -1221,7 +1217,7 @@ bool SB_Project::Load_Project_Player()
 	App->Cl_Bullet->Reset_Physics();
 	App->SBC_Physics->Enable_Physics(1);
 
-	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->GD_Player);
+	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Players_Folder);
 	return 1;
 }
 
@@ -1296,7 +1292,8 @@ bool SB_Project::Load_Project_Camera()
 		App->SBC_Scene->B_Camera[Count]->Cam_Quat.z = z;
 
 
-		App->SBC_Scene->B_Camera[Count]->FileViewItem = App->SBC_FileView->Add_Camera(App->SBC_Scene->B_Camera[Count]->Camera_Name, Count);
+		App->SBC_Scene->B_Camera[Count]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Cameras_Folder,
+			App->SBC_Scene->B_Camera[Count]->Camera_Name, Count);
 
 		App->SBC_Scene->Camera_Count++;
 

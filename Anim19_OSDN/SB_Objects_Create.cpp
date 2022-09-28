@@ -29,12 +29,12 @@ bool SB_Objects_Create::Add_Objects_From_File() // From File
 		if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Sound)
 		{
 			Add_Sound_Entity(Count);
-			App->SBC_FileView->Set_FolderActive(App->SBC_FileView->GD_Entities_Sound_Folder);
+			App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Sounds_Folder);
 		}
 		else if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Message)
 		{
 			Add_Message_Entity(Count);
-			App->SBC_FileView->Set_FolderActive(App->SBC_FileView->GD_Entities_Message_Folder);
+			App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Messages_Folder);
 		}
 		else if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Move)
 		{
@@ -58,7 +58,7 @@ bool SB_Objects_Create::Add_Objects_From_File() // From File
 
 	if (Object_Count > 0)
 	{
-		App->SBC_FileView->Set_FolderActive(App->SBC_FileView->GD_ObjectsFolder);
+		App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Objects_Folder);
 		ShowWindow(App->SBC_Properties->Properties_Dlg_hWnd, 1);
 		App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[0]->ListViewItem);
 	}
@@ -233,8 +233,7 @@ bool SB_Objects_Create::Add_New_Object(int Index)
 	else
 	{
 		Object->Folder = Enums::Folder_Objects;
-		HTREEITEM Temp = App->SBC_FileView->Add_ObjectFile(Object->Mesh_Name, Index);
-		Object->ListViewItem = Temp;
+		Object->ListViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Objects_Folder, Object->Mesh_Name, Index);
 	}
 
 
@@ -718,7 +717,7 @@ bool SB_Objects_Create::Add_New_Message()
 
 	App->SBC_Scene->Object_Count++;
 
-	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->GD_Entities_Message_Folder);
+	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Messages_Folder);
 	return 1;
 }
 
@@ -810,7 +809,7 @@ bool SB_Objects_Create::Add_Message_Entity(int Index)
 
 	Set_Physics(Index);
 
-	HTREEITEM Temp = App->SBC_FileView->Add_Message_Entity(Object->Mesh_Name, Index);
+	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Messages_Folder,Object->Mesh_Name, Index);
 	Object->ListViewItem = Temp;
 
 	return 1;
@@ -851,7 +850,7 @@ bool SB_Objects_Create::Add_New_Sound()
 
 	App->SBC_Scene->Object_Count++;
 
-	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->GD_Entities_Sound_Folder);
+	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Sounds_Folder);
 	return 1;
 }
 
@@ -943,7 +942,9 @@ bool SB_Objects_Create::Add_Sound_Entity(int Index)
 
 	Set_Physics(Index);
 
-	HTREEITEM Temp = App->SBC_FileView->Add_Sound_Entity(App->SBC_Scene->B_Object[Index]->Mesh_Name, Index);
+	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Sounds_Folder,
+		App->SBC_Scene->B_Object[Index]->Mesh_Name, Index);
+
 	App->SBC_Scene->B_Object[Index]->ListViewItem = Temp;
 
 	return 1;

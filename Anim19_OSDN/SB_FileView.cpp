@@ -36,13 +36,13 @@ SB_FileView::SB_FileView()
 {
 	Root = nullptr;
 	GD_ProjectFolder = nullptr;
-	GD_ObjectsFolder = nullptr;
+	FV_Objects_Folder = nullptr;
 	GD_LevelFolder = nullptr;
-	GD_CameraFolder = nullptr;
+	FV_Cameras_Folder = nullptr;
 	GD_TriggerFolder = nullptr;
 	GD_EntitiesFolder = nullptr;
-	GD_Entities_Sound_Folder = nullptr;
-	GD_Entities_Message_Folder = nullptr;
+	FV_Sounds_Folder = nullptr;
+	FV_Messages_Folder = nullptr;
 	GD_Entities_Move_Folder = nullptr;
 	GD_Collectables_Folder = nullptr;
 	GD_Teleporters_Folder = nullptr;
@@ -51,8 +51,8 @@ SB_FileView::SB_FileView()
 	GD_Level_Change_Folder = nullptr;
 	GD_Particles_Folder = nullptr;
 
-	GD_Player = nullptr;
-	GD_Rooms = nullptr;
+	FV_Players_Folder = nullptr;
+	FV_Areas_Folder = nullptr;
 
 	hImageList = nullptr;
 	hBitMap = nullptr;
@@ -79,13 +79,13 @@ void SB_FileView::Reset_Class()
 
 	Root = nullptr;
 	GD_ProjectFolder = nullptr;
-	GD_ObjectsFolder = nullptr;
+	FV_Objects_Folder = nullptr;
 	GD_LevelFolder = nullptr;
-	GD_CameraFolder = nullptr;
+	FV_Cameras_Folder = nullptr;
 	GD_TriggerFolder = nullptr;
 	GD_EntitiesFolder = nullptr;
-	GD_Entities_Sound_Folder = nullptr;
-	GD_Entities_Message_Folder = nullptr;
+	FV_Sounds_Folder = nullptr;
+	FV_Messages_Folder = nullptr;
 	GD_Entities_Move_Folder = nullptr;
 	GD_Collectables_Folder = nullptr;
 	GD_Teleporters_Folder = nullptr;
@@ -94,8 +94,8 @@ void SB_FileView::Reset_Class()
 	GD_Level_Change_Folder = nullptr;
 	GD_Particles_Folder = nullptr;
 
-	GD_Player = nullptr;
-	GD_Rooms = nullptr;
+	FV_Players_Folder = nullptr;
+	FV_Areas_Folder = nullptr;
 
 	strcpy(App->SBC_Project->m_Level_File_Name, "No Level");
 
@@ -366,7 +366,7 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	tvinsert.item.pszText = "Camera";
 	tvinsert.item.iImage = 0;
 	tvinsert.item.iSelectedImage = 1;
-	GD_CameraFolder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+	FV_Cameras_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
 
 	tvinsert.hParent = GD_LevelFolder;
 	tvinsert.hInsertAfter = TVI_LAST;
@@ -374,7 +374,7 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	tvinsert.item.pszText = "Player";
 	tvinsert.item.iImage = 0;
 	tvinsert.item.iSelectedImage = 1;
-	GD_Player = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+	FV_Players_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
 
 	tvinsert.hParent = GD_LevelFolder;
 	tvinsert.hInsertAfter = TVI_LAST;
@@ -382,7 +382,7 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	tvinsert.item.pszText = "Area";
 	tvinsert.item.iImage = 0;
 	tvinsert.item.iSelectedImage = 1;
-	GD_Rooms = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
+	FV_Areas_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
 
 	tvinsert.hParent = GD_LevelFolder;
 	tvinsert.hInsertAfter = TVI_LAST;
@@ -390,7 +390,7 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	tvinsert.item.pszText = "Objects";
 	tvinsert.item.iImage = 0;
 	tvinsert.item.iSelectedImage = 1;
-	GD_ObjectsFolder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+	FV_Objects_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
 
 	tvinsert.hParent = GD_LevelFolder;
 	tvinsert.hInsertAfter = TVI_LAST;
@@ -406,7 +406,7 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	tvinsert.item.pszText = "Sounds";
 	tvinsert.item.iImage = 0;
 	tvinsert.item.iSelectedImage = 1;
-	GD_Entities_Sound_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+	FV_Sounds_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
 
 	tvinsert.hParent = GD_EntitiesFolder;
 	tvinsert.hInsertAfter = TVI_LAST;
@@ -414,7 +414,7 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	tvinsert.item.pszText = "Messages";
 	tvinsert.item.iImage = 0;
 	tvinsert.item.iSelectedImage = 1;
-	GD_Entities_Message_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+	FV_Messages_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
 
 	tvinsert.hParent = GD_EntitiesFolder;
 	tvinsert.hInsertAfter = TVI_LAST;
@@ -1128,14 +1128,15 @@ void SB_FileView::HideRightPanes(void)
 	App->SBC_Object->Hide_Object_Dlg(0);
 }
 
+
 // *************************************************************************
-// *					Add_ObjectFile Terry Flanigan				 	   *
+// *				Add_Item:- Terry and Hazel Flanigan 2022		 	   *
 // *************************************************************************
-HTREEITEM SB_FileView::Add_ObjectFile(char *SFileName, int Index)
+HTREEITEM SB_FileView::Add_Item(HTREEITEM Folder,char *SFileName, int Index)
 {
 	HWND Temp2 = GetDlgItem(App->ListPanel, IDC_TREE1);
 
-	tvinsert.hParent = GD_ObjectsFolder;
+	tvinsert.hParent = Folder;
 	tvinsert.hInsertAfter = TVI_LAST;
 	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE | TVIF_PARAM;
 	tvinsert.item.pszText = SFileName;
@@ -1143,122 +1144,6 @@ HTREEITEM SB_FileView::Add_ObjectFile(char *SFileName, int Index)
 	tvinsert.item.iSelectedImage = 5;
 	tvinsert.item.lParam = Index;
 	HTREEITEM Temp = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
-
-	/*if (App->Cl_Load_Scene->File_Is_Loading == 0)
-	{
-		TreeView_Select(Temp2, Temp, TVGN_CARET);
-	}*/
-
-	return Temp;
-}
-
-// *************************************************************************
-// *					Add_PlayeFile Terry Bernie					 	   *
-// *************************************************************************
-HTREEITEM SB_FileView::Add_PlayerFile(char *SFileName, int Index)
-{
-	HWND Temp2 = GetDlgItem(App->ListPanel, IDC_TREE1);
-
-	tvinsert.hParent = GD_Player;
-	tvinsert.hInsertAfter = TVI_LAST;
-	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE | TVIF_PARAM;
-	tvinsert.item.pszText = SFileName;
-	tvinsert.item.iImage = 4;
-	tvinsert.item.iSelectedImage = 5;
-	tvinsert.item.lParam = Index;
-	HTREEITEM Temp = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
-
-	//TreeView_Select(Temp2,Temp,TVGN_CARET);
-
-	return Temp;
-}
-
-// *************************************************************************
-// *						Add_Area Terry Bernie					 	   *
-// *************************************************************************
-HTREEITEM SB_FileView::Add_Area(char *SFileName, int Index)
-{
-	HWND Temp2 = GetDlgItem(App->ListPanel, IDC_TREE1);
-
-	tvinsert.hParent = GD_Rooms;
-	tvinsert.hInsertAfter = TVI_LAST;
-	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE | TVIF_PARAM;
-	tvinsert.item.pszText = SFileName;
-	tvinsert.item.iImage = 4;
-	tvinsert.item.iSelectedImage = 5;
-	tvinsert.item.lParam = Index;
-	HTREEITEM Temp = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
-
-	//TreeView_Select(Temp2,Temp,TVGN_CARET);
-
-	return Temp;
-}
-
-// *************************************************************************
-// *						Add_Camera Terry Bernie					 	   *
-// *************************************************************************
-HTREEITEM SB_FileView::Add_Camera(char *SFileName, int Index)
-{
-	HWND Temp2 = GetDlgItem(App->ListPanel, IDC_TREE1);
-
-	tvinsert.hParent = GD_CameraFolder;
-	tvinsert.hInsertAfter = TVI_LAST;
-	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE | TVIF_PARAM;
-	tvinsert.item.pszText = SFileName;
-	tvinsert.item.iImage = 4;
-	tvinsert.item.iSelectedImage = 5;
-	tvinsert.item.lParam = Index;
-	HTREEITEM Temp = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
-
-	//TreeView_Select(Temp2,Temp,TVGN_CARET);
-
-	return Temp;
-}
-
-// *************************************************************************
-// *					Add_Message_Entity Terry Bernie				 	   *
-// *************************************************************************
-HTREEITEM SB_FileView::Add_Message_Entity(char *SFileName, int Index)
-{
-	HWND Temp2 = GetDlgItem(App->ListPanel, IDC_TREE1);
-
-	tvinsert.hParent = GD_Entities_Message_Folder;
-	tvinsert.hInsertAfter = TVI_LAST;
-	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE | TVIF_PARAM;
-	tvinsert.item.pszText = SFileName;
-	tvinsert.item.iImage = 4;
-	tvinsert.item.iSelectedImage = 5;
-	tvinsert.item.lParam = Index;
-	HTREEITEM Temp = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
-
-	//if (App->Cl_Load_Scene->File_Is_Loading == 0)
-	//{
-	//	TreeView_Select(Temp2, Temp, TVGN_CARET);
-	//}
-
-	return Temp;
-}
-
-// *************************************************************************
-// *		Add_Sound_Entity:- Terry and Hazel Flanigan 2022		 	   *
-// *************************************************************************
-HTREEITEM SB_FileView::Add_Sound_Entity(char *SFileName, int Index)
-{
-	HWND Temp2 = GetDlgItem(App->ListPanel, IDC_TREE1);
-
-	tvinsert.hParent = GD_Entities_Sound_Folder;
-	tvinsert.hInsertAfter = TVI_LAST;
-	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE | TVIF_PARAM;
-	tvinsert.item.pszText = SFileName;
-	tvinsert.item.iImage = 4;
-	tvinsert.item.iSelectedImage = 5;
-	tvinsert.item.lParam = Index;
-	HTREEITEM Temp = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
-
-	//if (App->Cl_Load_Scene->File_Is_Loading == 0)
-	//{
-	//	TreeView_Select(Temp2, Temp, TVGN_CARET);
-	//}
 
 	return Temp;
 }
@@ -1320,13 +1205,13 @@ void SB_FileView::Delete_AllItems()
 
 	Root = 0;
 	GD_ProjectFolder = NULL;
-	GD_ObjectsFolder = NULL;
+	FV_Objects_Folder = NULL;
 	GD_LevelFolder = NULL;
-	GD_CameraFolder = NULL;
+	FV_Cameras_Folder = NULL;
 	GD_TriggerFolder = NULL;
 	GD_EntitiesFolder = NULL;
-	GD_Entities_Sound_Folder = NULL;
-	GD_Entities_Message_Folder = NULL;
+	FV_Sounds_Folder = NULL;
+	FV_Messages_Folder = NULL;
 
 	strcpy(App->SBC_Project->m_Level_File_Name, "No Level");
 

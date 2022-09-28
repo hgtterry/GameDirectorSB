@@ -53,22 +53,18 @@ public:
 	bool Level_But_Active;
 	bool Stock_But_Active;
 
-	HTREEITEM Add_PlayerFile(char *SFileName, int Index);
-	HTREEITEM Add_Camera(char *SFileName, int Index);
-	HTREEITEM Add_Area(char *SFileName, int Index);
-	HTREEITEM Add_ObjectFile(char *SFileName, int Index);
-	HTREEITEM Add_Message_Entity(char *SFileName, int Index);
-	HTREEITEM Add_Sound_Entity(char *SFileName, int Index);
+	HTREEITEM Add_Item(HTREEITEM Folder,char *SFileName, int Index);
 
-	HTREEITEM GD_Player;
-	HTREEITEM GD_Rooms;
+	HTREEITEM FV_Players_Folder;	// Players Folder FileFView
+	HTREEITEM FV_Areas_Folder;		// Areas/Rooms Folder FileFView
 	HTREEITEM GD_LevelFolder;
-	HTREEITEM GD_CameraFolder;
-	HTREEITEM GD_ObjectsFolder;
-	HTREEITEM GD_Entities_Message_Folder;
-	HTREEITEM GD_Entities_Sound_Folder;
+	HTREEITEM FV_Cameras_Folder;
+	HTREEITEM FV_Objects_Folder;
+	HTREEITEM FV_Messages_Folder;
+	HTREEITEM FV_Sounds_Folder;
 
 	HMENU hMenu;
+
 protected:
 
 	static LRESULT CALLBACK ListPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
