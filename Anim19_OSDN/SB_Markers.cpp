@@ -100,9 +100,7 @@ void SB_Markers::Load_Blue_Axis()
 void SB_Markers::Update_Red_Axis_Marker(int Index)
 {
 
-	AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
-	worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
-	Ogre::Vector3 Centre = worldAAB.getCenter();
+	Ogre::Vector3 Centre = App->SBC_Object->Get_BoundingBox_World_Centre(Index);
 
 	App->SBC_Markers->RedAxis_Node->setPosition(Centre);
 	App->SBC_Markers->RedAxis_Node->setVisible(true);
@@ -114,9 +112,7 @@ void SB_Markers::Update_Red_Axis_Marker(int Index)
 void SB_Markers::Update_Green_Axis_Marker(int Index)
 {
 
-	AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
-	worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
-	Ogre::Vector3 Centre = worldAAB.getCenter();
+	Ogre::Vector3 Centre = App->SBC_Object->Get_BoundingBox_World_Centre(Index);
 
 	App->SBC_Markers->GreenAxis_Node->setPosition(Centre);
 	App->SBC_Markers->GreenAxis_Node->setVisible(true);
@@ -128,9 +124,7 @@ void SB_Markers::Update_Green_Axis_Marker(int Index)
 void SB_Markers::Update_Blue_Axis_Marker(int Index)
 {
 
-	AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
-	worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
-	Ogre::Vector3 Centre = worldAAB.getCenter();
+	Ogre::Vector3 Centre = App->SBC_Object->Get_BoundingBox_World_Centre(Index);
 
 	App->SBC_Markers->BlueAxis_Node->setPosition(Centre);
 	App->SBC_Markers->BlueAxis_Node->setVisible(true);

@@ -178,9 +178,8 @@ void SB_Dimensions::ImGui_Position(void)
 				App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
 				App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
 
-				AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
-				worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
-				Ogre::Vector3 Centre = worldAAB.getCenter();
+				Ogre::Vector3 Centre = App->SBC_Object->Get_BoundingBox_World_Centre(Index);
+
 				App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
 				UpDate_Physics_And_Visuals(Index);
 			}
@@ -191,9 +190,8 @@ void SB_Dimensions::ImGui_Position(void)
 				App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
 				App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
 
-				AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
-				worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
-				Ogre::Vector3 Centre = worldAAB.getCenter();
+				Ogre::Vector3 Centre = App->SBC_Object->Get_BoundingBox_World_Centre(Index);
+
 				App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
 				UpDate_Physics_And_Visuals(Index);
 			}
@@ -204,9 +202,8 @@ void SB_Dimensions::ImGui_Position(void)
 				App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
 				App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
 
-				AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
-				worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
-				Ogre::Vector3 Centre = worldAAB.getCenter();
+				Ogre::Vector3 Centre = App->SBC_Object->Get_BoundingBox_World_Centre(Index);
+
 				App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
 				UpDate_Physics_And_Visuals(Index);
 			}
@@ -224,9 +221,8 @@ void SB_Dimensions::ImGui_Position(void)
 				App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
 				App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
 
-				AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
-				worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
-				Ogre::Vector3 Centre = worldAAB.getCenter();
+				Ogre::Vector3 Centre = App->SBC_Object->Get_BoundingBox_World_Centre(Index);
+
 				App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
 				UpDate_Physics_And_Visuals(Index);
 			}
@@ -237,9 +233,8 @@ void SB_Dimensions::ImGui_Position(void)
 				App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
 				App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
 
-				AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
-				worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
-				Ogre::Vector3 Centre = worldAAB.getCenter();
+				Ogre::Vector3 Centre = App->SBC_Object->Get_BoundingBox_World_Centre(Index);
+
 				App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
 				UpDate_Physics_And_Visuals(Index);
 			}
@@ -250,9 +245,8 @@ void SB_Dimensions::ImGui_Position(void)
 				App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
 				App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
 
-				AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
-				worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
-				Ogre::Vector3 Centre = worldAAB.getCenter();
+				Ogre::Vector3 Centre = App->SBC_Object->Get_BoundingBox_World_Centre(Index);
+
 				App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
 				UpDate_Physics_And_Visuals(Index);
 			}
