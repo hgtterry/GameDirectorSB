@@ -115,7 +115,10 @@ LRESULT CALLBACK ME_Export::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wPar
 		SendDlgItemMessage(hDlg, IDC_BT_CHANGE_NAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CK_SUBFOLDER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_SUBFOLDER_NAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_FOLDER_NAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
+		SendDlgItemMessage(hDlg, IDC_ST_FLD, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_FN, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SetDlgItemText(hDlg, IDC_ST_FOLDER, App->CL_FileIO->szSelectedDir);
 		SetDlgItemText(hDlg, IDC_ST_NAME, App->CL_Model->JustName);
@@ -168,6 +171,22 @@ LRESULT CALLBACK ME_Export::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wPar
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
 		}
+
+		if (GetDlgItem(hDlg, IDC_ST_FLD) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_ST_FN) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
 		
 		return FALSE;
 	}
@@ -180,6 +199,14 @@ LRESULT CALLBACK ME_Export::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wPar
 	case WM_NOTIFY:
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
+		
+
+		if (some_item->idFrom == IDC_BT_FOLDER_NAME && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
 
 		if (some_item->idFrom == IDC_BT_CHANGE_NAME && some_item->code == NM_CUSTOMDRAW)
 		{
@@ -220,12 +247,16 @@ LRESULT CALLBACK ME_Export::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wPar
 			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
 			if (test == BST_CHECKED)
 			{
-				App->Say("Checked");
+				EnableWindow(GetDlgItem(hDlg, IDC_ST_SUBFOLDER_NAME), 1);
+				EnableWindow(GetDlgItem(hDlg, IDC_BT_FOLDER_NAME), 1);
+				App->CL_Export_Ogre3D->Add_Sub_Folder = 1;
 				return 1;
 			}
 			else
 			{
-				App->Say("Un Checked");
+				EnableWindow(GetDlgItem(hDlg, IDC_ST_SUBFOLDER_NAME),0);
+				EnableWindow(GetDlgItem(hDlg, IDC_BT_FOLDER_NAME), 0);
+				App->CL_Export_Ogre3D->Add_Sub_Folder = 0;
 				return 1;
 			}
 

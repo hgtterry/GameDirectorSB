@@ -1,0 +1,22 @@
+
+material GreenAxes_Material_0
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				depth_check off
+				depth_write off
+			
+				scene_blend one one_minus_src_alpha
+			
+				texture PosGreen.bmp
+			}
+		}
+
+	}
+
+}
