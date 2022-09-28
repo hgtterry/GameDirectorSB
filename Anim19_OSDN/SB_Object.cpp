@@ -209,9 +209,11 @@ LRESULT CALLBACK SB_Object::Object_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 			if (App->SBC_Dimensions->Show_Position == 1)
 			{
 				App->SBC_Dimensions->Show_Position = 0;
+				App->SBC_Markers->Hide_Axis_Marker();
 			}
 			else
 			{
+				App->SBC_Markers->Hide_Axis_Marker();
 				App->SBC_Dimensions->Show_Position = 1;
 				App->SBC_Dimensions->Show_Scale = 0;
 				App->SBC_Dimensions->Show_Rotation = 0;
@@ -228,9 +230,11 @@ LRESULT CALLBACK SB_Object::Object_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 			if (App->SBC_Dimensions->Show_Scale == 1)
 			{
 				App->SBC_Dimensions->Show_Scale = 0;
+				App->SBC_Markers->Hide_Axis_Marker();
 			}
 			else
 			{
+				App->SBC_Markers->Hide_Axis_Marker();
 				App->SBC_Dimensions->Show_Scale = 1;
 				App->SBC_Dimensions->Show_Position = 0;
 				App->SBC_Dimensions->Show_Rotation = 0;
@@ -247,9 +251,11 @@ LRESULT CALLBACK SB_Object::Object_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 			if (App->SBC_Dimensions->Show_Rotation == 1)
 			{
 				App->SBC_Dimensions->Show_Rotation = 0;
+				App->SBC_Markers->Hide_Axis_Marker();
 			}
 			else
 			{
+				App->SBC_Markers->Hide_Axis_Marker();
 				App->SBC_Dimensions->Show_Rotation = 1;
 				App->SBC_Dimensions->Show_Position = 0;
 				App->SBC_Dimensions->Show_Scale = 0;

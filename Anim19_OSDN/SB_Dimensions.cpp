@@ -116,6 +116,7 @@ void SB_Dimensions::ImGui_Dimensions(void)
 			Show_Scale = 0;
 			Show_Rotation = 0;
 
+			App->SBC_Markers->Hide_Axis_Marker();
 			RedrawWindow(App->SBC_Object->Object_PropDlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 			//App->CL_Ogre->RenderListener->Show_Crosshair = 0;

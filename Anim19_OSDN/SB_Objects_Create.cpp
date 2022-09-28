@@ -115,6 +115,8 @@ void SB_Objects_Create::Update_MV_Details()
 
 	App->SBC_Objects_Create->Dispatcher_New();
 	
+	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[Index]->ListViewItem);
+
 	App->Cl_Scene_Data->Object_ID_Counter++;
 	App->SBC_Scene->Object_Count++;  // Must be last line
 
