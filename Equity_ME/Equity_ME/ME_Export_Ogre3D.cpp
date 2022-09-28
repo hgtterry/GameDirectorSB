@@ -63,11 +63,13 @@ bool ME_Export_Ogre3D::Export_AssimpToOgre(void)
 
 	strcpy(App->CL_FileIO->BrowserMessage, "Select Folder To Place Ogre Files a sub folder will be created");
 	int Test = App->CL_FileIO->StartBrowser("");
-
 	if (Test == 0) { return 1; }
 
-	Test = CreateDirectoryMesh();
+	App->CL_Export->Start_Export_Dlg();
+	if (App->CL_Export->Is_Canceled = 1) { return 1; }
 
+
+	Test = CreateDirectoryMesh();
 	if (Test == 0) { return 1; }
 
 	strcpy(mOgreMeshFileName, App->CL_Model->JustName);

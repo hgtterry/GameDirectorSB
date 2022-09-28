@@ -28,11 +28,16 @@ public:
 	ME_Export();
 	~ME_Export();
 
+	void Start_Export_Dlg();
+
 	void Object_Model(void);
 	void Milkshape_Model(void);
 	void Ogre3D_Model(void);
 
+	bool Is_Canceled;
+
 protected:
 
+	static LRESULT CALLBACK Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 };
 

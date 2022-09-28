@@ -23,11 +23,13 @@ distribution.
 
 #include "stdafx.h"
 #include "ME_App.h"
+#include "resource.h"
 #include "ME_Export.h"
 
 
 ME_Export::ME_Export()
 {
+	Is_Canceled = 0;
 }
 
 
@@ -85,4 +87,70 @@ void ME_Export::Ogre3D_Model(void)
 	}
 
 	App->CL_Export_Ogre3D->Export_AssimpToOgre();
+}
+
+// *************************************************************************
+// *	  				Start_Export_Dlg Terry Flanigan					   *
+// *************************************************************************
+void ME_Export::Start_Export_Dlg()
+{
+	App->CL_Export->Is_Canceled = 0;
+	DialogBox(App->hInst, (LPCTSTR)IDD_EXPORT_OPTIONS_DLG, App->Fdlg, (DLGPROC)Export_Dlg_Proc);
+}
+// *************************************************************************
+// *        		Export_Dlg_Proc  Terry Flanigan						   *
+// *************************************************************************
+LRESULT CALLBACK ME_Export::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+
+		/*SendDlgItemMessage(hDlg, IDC_LISTGROUP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);*/
+
+		return TRUE;
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+		if (LOWORD(wParam) == IDOK)
+		{
+			App->CL_Export->Is_Canceled = 0;
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			App->CL_Export->Is_Canceled = 1;
+
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		break;
+	}
+
+	} // Switch End
+
+	return FALSE;
 }
