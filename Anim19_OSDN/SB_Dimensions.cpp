@@ -292,6 +292,7 @@ void SB_Dimensions::ImGui_Position(void)
 	if (PosY_Selected)
 	{
 		App->SBC_Markers->Hide_Axis_Marker();
+		App->SBC_Markers->Update_Green_Axis_Marker(Index);
 
 		PosX_Selected = 0;
 		PosZ_Selected = 0;

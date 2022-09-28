@@ -33,6 +33,9 @@ SB_Markers::SB_Markers(void)
 
 	BlueAxis_Ent = nullptr;
 	BlueAxis_Node = nullptr;
+
+	GreenAxis_Ent = nullptr;
+	GreenAxis_Node = nullptr;
 }
 
 SB_Markers::~SB_Markers(void)
@@ -45,6 +48,7 @@ SB_Markers::~SB_Markers(void)
 void SB_Markers::Load_All_Axis()
 {
 	Load_Red_Axis();
+	Load_Green_Axis();
 	Load_Blue_Axis();
 }
 
@@ -60,6 +64,20 @@ void SB_Markers::Load_Red_Axis()
 	RedAxis_Node->setVisible(false);
 	RedAxis_Node->setPosition(0, 0, 0);
 	RedAxis_Node->setScale(1, 1, 2);
+}
+
+// **************************************************************************
+// *	  			Load_Green_Axis:- Terry and Hazel Flanigan 2022			*
+// **************************************************************************
+void SB_Markers::Load_Green_Axis()
+{
+	GreenAxis_Ent = App->Cl19_Ogre->mSceneMgr->createEntity("Green_Axis", "GreenAxes.mesh", App->Cl19_Ogre->App_Resource_Group);
+	GreenAxis_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	GreenAxis_Node->attachObject(GreenAxis_Ent);
+
+	GreenAxis_Node->setVisible(false);
+	GreenAxis_Node->setPosition(0, 0, 0);
+	GreenAxis_Node->setScale(1, 2, 1);
 }
 
 // **************************************************************************
@@ -93,6 +111,20 @@ void SB_Markers::Update_Red_Axis_Marker(int Index)
 // **************************************************************************
 // *	  	Update_Blue_Axis_Marker:- Terry and Hazel Flanigan 2022			*
 // **************************************************************************
+void SB_Markers::Update_Green_Axis_Marker(int Index)
+{
+
+	AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
+	worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
+	Ogre::Vector3 Centre = worldAAB.getCenter();
+
+	App->SBC_Markers->GreenAxis_Node->setPosition(Centre);
+	App->SBC_Markers->GreenAxis_Node->setVisible(true);
+}
+
+// **************************************************************************
+// *	  	Update_Blue_Axis_Marker:- Terry and Hazel Flanigan 2022			*
+// **************************************************************************
 void SB_Markers::Update_Blue_Axis_Marker(int Index)
 {
 
@@ -111,4 +143,5 @@ void SB_Markers::Hide_Axis_Marker()
 {
 	App->SBC_Markers->BlueAxis_Node->setVisible(false);
 	App->SBC_Markers->RedAxis_Node->setVisible(false);
+	App->SBC_Markers->GreenAxis_Node->setVisible(false);
 }
