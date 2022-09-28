@@ -69,6 +69,10 @@ public:
 
 	bool Export_AssimpToOgre(void);
 
+	bool Add_Sub_Folder;
+	char NewDirectory[MAX_PATH];
+	char Directory_Name[MAX_PATH];
+
 protected:
 
 	bool CreateDirectoryMesh(void);

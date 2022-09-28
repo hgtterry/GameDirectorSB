@@ -34,6 +34,9 @@ ME_Export_Ogre3D::ME_Export_Ogre3D()
 	Dest_Path_FileName[0] = 0;
 
 	mCurrentFolder[0] = 0;
+	Directory_Name[0] = 0;
+	NewDirectory[0] = 0;
+	Add_Sub_Folder = 1;
 
 	nx = 0;
 	ny = 0;
@@ -61,13 +64,17 @@ bool ME_Export_Ogre3D::Export_AssimpToOgre(void)
 	mOgreSkellFileName[0] = 0;
 	mOgreSkellTagName[0] = 0;
 
+	strcpy(Directory_Name, App->CL_Model->JustName);
+	strcat(Directory_Name, "_Ogre");
+
 	strcpy(App->CL_FileIO->BrowserMessage, "Select Folder To Place Ogre Files a sub folder will be created");
 	int Test = App->CL_FileIO->StartBrowser("");
 	if (Test == 0) { return 1; }
 
 	App->CL_Export->Start_Export_Dlg();
-	if (App->CL_Export->Is_Canceled = 1) { return 1; }
+	if (App->CL_Export->Is_Canceled == 1) { return 1; }
 
+	
 
 	Test = CreateDirectoryMesh();
 	if (Test == 0) { return 1; }
@@ -76,6 +83,8 @@ bool ME_Export_Ogre3D::Export_AssimpToOgre(void)
 	strcpy(mOgreScriptFileName, App->CL_Model->JustName);
 	strcpy(mOgreSkellFileName, App->CL_Model->JustName);
 	strcpy(mOgreSkellTagName, App->CL_Model->JustName);
+
+	
 
 	strcat(mOgreMeshFileName, ".mesh");
 	strcat(mOgreScriptFileName, ".material");
@@ -566,24 +575,26 @@ XmlOptions ME_Export_Ogre3D::parseArgs()
 // *************************************************************************
 bool ME_Export_Ogre3D::CreateDirectoryMesh(void)
 {
-
-	char NewDirectory[200];
-	strcpy(NewDirectory, "\\");
-
-	strcat(NewDirectory, App->CL_Model->JustName);
-	strcat(NewDirectory, "_Ogre");
-
-	strcat(App->CL_FileIO->szSelectedDir, NewDirectory);
-
-	if (_mkdir(App->CL_FileIO->szSelectedDir) == 0)
+	
+	if (Add_Sub_Folder == 0)
 	{
-		strcpy(mDecompileFolder, App->CL_FileIO->szSelectedDir);
+		strcpy(NewDirectory, "");
 		_chdir(App->CL_FileIO->szSelectedDir);
 	}
 	else
 	{
-		_chdir(App->CL_FileIO->szSelectedDir);
+		strcpy(NewDirectory, "\\");
+		strcat(NewDirectory, Directory_Name);
+		
+		strcat(App->CL_FileIO->szSelectedDir, NewDirectory);
+
+		if (_mkdir(App->CL_FileIO->szSelectedDir) == 0)
+		{
+			strcpy(mDecompileFolder, App->CL_FileIO->szSelectedDir);
+			_chdir(App->CL_FileIO->szSelectedDir);
+		}
 	}
+	
 
 	_getcwd(mCurrentFolder, 1024);
 
@@ -705,11 +716,8 @@ bool ME_Export_Ogre3D::Write_XML_File()
 	char XmlFileName[256];
 	char XFIle[256];
 
+	strcpy(XmlFileName, App->CL_Model->JustName);
 
-	strcpy(XmlFileName, App->CL_Model->FileName);
-
-	int Len = strlen(XmlFileName);
-	XmlFileName[Len - 4] = 0;
 
 	strcpy(XmlMeshFileName, XmlFileName);
 	strcpy(XmlScriptFileName, XmlFileName);

@@ -90,7 +90,7 @@ void ME_Export::Ogre3D_Model(void)
 }
 
 // *************************************************************************
-// *	  				Start_Export_Dlg Terry Flanigan					   *
+// *	  		Start_Export_Dlg:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
 void ME_Export::Start_Export_Dlg()
 {
@@ -98,7 +98,7 @@ void ME_Export::Start_Export_Dlg()
 	DialogBox(App->hInst, (LPCTSTR)IDD_EXPORT_OPTIONS_DLG, App->Fdlg, (DLGPROC)Export_Dlg_Proc);
 }
 // *************************************************************************
-// *        		Export_Dlg_Proc  Terry Flanigan						   *
+// *        Export_Dlg_Proc:- Terry and Hazel Flanigan 2022				   *
 // *************************************************************************
 LRESULT CALLBACK ME_Export::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -108,11 +108,23 @@ LRESULT CALLBACK ME_Export::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wPar
 	case WM_INITDIALOG:
 	{
 
+		SendDlgItemMessage(hDlg, IDC_ST_BANNER, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_FOLDER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_BROWSE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
-		SetDlgItemText(hDlg, IDC_ST_FOLDER, App->CL_FileIO->szSelectedDir);
+		SendDlgItemMessage(hDlg, IDC_ST_NAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_CHANGE_NAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CK_SUBFOLDER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_SUBFOLDER_NAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
+		
+		SetDlgItemText(hDlg, IDC_ST_FOLDER, App->CL_FileIO->szSelectedDir);
+		SetDlgItemText(hDlg, IDC_ST_NAME, App->CL_Model->JustName);
+		SetDlgItemText(hDlg, IDC_ST_SUBFOLDER_NAME, App->CL_Export_Ogre3D->Directory_Name);
+		
+		HWND Temp = GetDlgItem(hDlg, IDC_CK_SUBFOLDER);
+		SendMessage(Temp, BM_SETCHECK, BST_CHECKED, 0);
+		App->CL_Export_Ogre3D->Add_Sub_Folder = 1;
+
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
@@ -125,6 +137,38 @@ LRESULT CALLBACK ME_Export::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wPar
 			return (UINT)App->Brush_White;
 		}
 
+		if (GetDlgItem(hDlg, IDC_ST_NAME) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->Brush_White;
+		}
+
+		if (GetDlgItem(hDlg, IDC_ST_SUBFOLDER_NAME) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->Brush_White;
+		}
+
+		if (GetDlgItem(hDlg, IDC_CK_SUBFOLDER) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_ST_BANNER) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+		
 		return FALSE;
 	}
 
@@ -137,7 +181,28 @@ LRESULT CALLBACK ME_Export::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wPar
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
+		if (some_item->idFrom == IDC_BT_CHANGE_NAME && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
 		if (some_item->idFrom == IDC_BT_BROWSE && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
@@ -149,6 +214,58 @@ LRESULT CALLBACK ME_Export::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 	case WM_COMMAND:
 	{
+		if (LOWORD(wParam) == IDC_CK_SUBFOLDER)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_SUBFOLDER);
+			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
+			if (test == BST_CHECKED)
+			{
+				App->Say("Checked");
+				return 1;
+			}
+			else
+			{
+				App->Say("Un Checked");
+				return 1;
+			}
+
+			return 1;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_CHANGE_NAME)
+		{
+			strcpy(App->CL_Dialogs->btext, "Change File Name");
+			strcpy(App->CL_Dialogs->Chr_Text, App->CL_Model->JustName);
+
+			App->CL_Dialogs->Dialog_Text();
+
+			if (App->CL_Dialogs->Is_Canceled == 0)
+			{
+				strcpy(App->CL_Model->JustName, App->CL_Dialogs->Chr_Text);
+			}
+
+			SetDlgItemText(hDlg, IDC_ST_NAME, App->CL_Model->JustName);
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_FOLDER_NAME)
+		{
+			strcpy(App->CL_Dialogs->btext, "Change Folder Name");
+			strcpy(App->CL_Dialogs->Chr_Text, App->CL_Export_Ogre3D->Directory_Name);
+
+			App->CL_Dialogs->Dialog_Text();
+
+			if (App->CL_Dialogs->Is_Canceled == 0)
+			{
+				strcpy(App->CL_Export_Ogre3D->Directory_Name, App->CL_Dialogs->Chr_Text);
+			}
+
+			SetDlgItemText(hDlg, IDC_ST_SUBFOLDER_NAME, App->CL_Export_Ogre3D->Directory_Name);
+
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDC_BT_BROWSE)
 		{
 			strcpy(App->CL_FileIO->BrowserMessage, "Select Folder To Place Ogre Files");

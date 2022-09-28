@@ -263,9 +263,19 @@ void ME_Model::Set_Paths(void)
 
 	strcpy(Texture_FolderPath, Model_FolderPath); // Back Slash remains
 	
-	strcpy(JustName, FileName);
-	int Len = strlen(JustName);
-	JustName[Len - 4] = 0;
+												 
+	if (stricmp(FileName + strlen(FileName) - 5, ".ms3d") == 0)
+	{
+		strcpy(JustName, FileName);
+		int Len = strlen(JustName);
+		JustName[Len - 5] = 0;
+	}
+	else
+	{
+		strcpy(JustName, FileName);
+		int Len = strlen(JustName);
+		JustName[Len - 4] = 0;
+	}
 
 	App->CL_FileIO->RecentFileHistory_Update();
 }

@@ -32,13 +32,18 @@ public:
 	void Start_Speed_Camera();
 	void Message(char *pString);
 	void YesNo(char *Text, char *Text2);
+	void Dialog_Text();
 
 	int What_List;
 
 	bool Canceled;
+	bool Is_Canceled;
 
 	char MessageString[100];
 	char MessageString2[100];
+
+	char btext[MAX_PATH];
+	char Chr_Text[MAX_PATH];
 
 protected:
 
@@ -46,6 +51,7 @@ protected:
 	static LRESULT CALLBACK Speed_Camera_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Message_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK YesNo_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Dialog_Text_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void List_GroupData(HWND hDlg);
 	void List_ModelData(HWND hDlg);

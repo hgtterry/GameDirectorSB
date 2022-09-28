@@ -39,9 +39,13 @@ ME_Dialogs::ME_Dialogs()
 	Message_Text[0] = 0;
 
 	Canceled = 0;
+	Is_Canceled = 0;
 
 	MessageString[0] = 0;
 	MessageString2[0] = 0;
+
+	btext[0] = 0;
+	Chr_Text[0] = 0;
 }
 
 
@@ -596,6 +600,101 @@ LRESULT CALLBACK ME_Dialogs::YesNo_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 		}
 
 		break;
+
+	}
+	return FALSE;
+}
+
+// *************************************************************************
+// *	  			Dialog_Text:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void ME_Dialogs::Dialog_Text()
+{
+	Is_Canceled = 0;
+
+	DialogBox(App->hInst, (LPCTSTR)IDD_PROP_TEXT, App->Fdlg, (DLGPROC)Dialog_Text_Proc);
+}
+// *************************************************************************
+// *			Dialog_Text_Proc:- Terry and Hazel Flanigan 2022 		   *
+// *************************************************************************
+LRESULT CALLBACK ME_Dialogs::Dialog_Text_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+
+		//App->SetTitleBar(hDlg);
+
+		SendDlgItemMessage(hDlg, IDC_TITLENAME, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_EDITTEXT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SetDlgItemText(hDlg, IDC_TITLENAME, (LPCTSTR)App->CL_Dialogs->btext);
+		SetDlgItemText(hDlg, IDC_EDITTEXT, (LPCTSTR)App->CL_Dialogs->Chr_Text);
+		
+		return TRUE;
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+		if (GetDlgItem(hDlg, IDC_TITLENAME) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+		if (LOWORD(wParam) == IDOK)
+		{
+			char buff[255];
+			GetDlgItemText(hDlg, IDC_EDITTEXT, (LPTSTR)buff, 255);
+
+			strcpy(App->CL_Dialogs->Chr_Text, buff);
+
+			App->CL_Dialogs->Is_Canceled = 0;
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			App->CL_Dialogs->Is_Canceled = 1;
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+	}
+
+	break;
 
 	}
 	return FALSE;
