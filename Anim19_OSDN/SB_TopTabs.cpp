@@ -703,7 +703,6 @@ void SB_TopTabs::Init_Bmps_Camera(void)
 }
 
 
-
 // *************************************************************************
 // *						Init_Bmps_Globals Terry Bernie				   *
 // *************************************************************************
@@ -749,7 +748,6 @@ void SB_TopTabs::Init_Bmps_Globals(void)
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti10);
 
 }
-
 
 // *************************************************************************
 // *						Start_Physics_TB Terry						   *
@@ -975,7 +973,7 @@ LRESULT CALLBACK SB_TopTabs::Editors_TB_Proc(HWND hDlg, UINT message, WPARAM wPa
 void SB_TopTabs::Start_Files_TB(void)
 {
 	File_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_FILE, Tabs_TB_hWnd, (DLGPROC)Files_TB_Proc);
-	//Init_Bmps_Groups();
+	Init_Bmps_Files();
 }
 
 // *************************************************************************
@@ -1026,11 +1024,25 @@ LRESULT CALLBACK SB_TopTabs::Files_TB_Proc(HWND hDlg, UINT message, WPARAM wPara
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_INFO_FILE && some_item->code == NM_CUSTOMDRAW) // Needs its owen Custum 
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+		
 		return CDRF_DODEFAULT;
 	}
 
 	case WM_COMMAND:
 	{
+
+		if (LOWORD(wParam) == IDC_BT_INFO_FILE)
+		{
+			App->Cl_Utilities->OpenHTML("Help\\FileTab.html");
+
+			return TRUE;
+		}
 
 		if (LOWORD(wParam) == IDC_TBBTRESOURCES)
 		{
@@ -1068,6 +1080,28 @@ LRESULT CALLBACK SB_TopTabs::Files_TB_Proc(HWND hDlg, UINT message, WPARAM wPara
 	}
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *			Init_Bmps_Files:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void SB_TopTabs::Init_Bmps_Files()
+{
+
+	HWND Temp = GetDlgItem(File_TB_hWnd, IDC_BT_INFO_FILE);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_InfoSmall_Bmp);
+
+	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
+
+	Temp = GetDlgItem(File_TB_hWnd, IDC_BT_INFO_FILE);
+	TOOLINFO ti1 = { 0 };
+	ti1.cbSize = sizeof(ti1);
+	ti1.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti1.uId = (UINT_PTR)Temp;
+	ti1.lpszText = "Show Help File";
+	ti1.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti1);
+
 }
 
 // *************************************************************************

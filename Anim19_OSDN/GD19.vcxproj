@@ -304,6 +304,8 @@
     <Image Include="Resource\FileView\SoundOn.bmp" />
     <Image Include="Resource\FileView\StartUpOff.bmp" />
     <Image Include="Resource\FileView\StartUpOn.bmp" />
+    <Image Include="Resource\Info.bmp" />
+    <Image Include="Resource\InfoSmall.bmp" />
     <Image Include="Resource\logo.bmp" />
     <Image Include="Resource\MenuBar\bitmap1.bmp" />
     <Image Include="Resource\MenuBar\bitmap2.bmp" />

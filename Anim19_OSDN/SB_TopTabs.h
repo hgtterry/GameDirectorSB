@@ -61,7 +61,8 @@ protected:
 
 	void Init_Bmps_Camera(void);
 	void Init_Bmps_Globals(void);
-	
+	void Init_Bmps_Files();
+
 	void Start_Physics_TB(void);
 	void Start_Editors_TB(void);
 	void Start_Files_TB(void);

@@ -104,12 +104,35 @@ void SB_FileView::Reset_Class()
 	ExpandRoot();
 }
 
+
+// *************************************************************************
+// *			Init_Bmps_FileView:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+void SB_FileView::Init_Bmps_FileView()
+{
+
+	HWND Temp = GetDlgItem(App->ListPanel, IDC_BT_INFO_FILEVIEW);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_InfoSmall_Bmp);
+
+	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
+
+	Temp = GetDlgItem(App->ListPanel, IDC_BT_INFO_FILEVIEW);
+	TOOLINFO ti1 = { 0 };
+	ti1.cbSize = sizeof(ti1);
+	ti1.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti1.uId = (UINT_PTR)Temp;
+	ti1.lpszText = "Show Help File";
+	ti1.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti1);
+}
+
 // *************************************************************************
 //							Start_FileView Terry Flanigan					*
 // *************************************************************************
 void SB_FileView::Start_FileView(void)
 {
 	App->ListPanel = CreateDialog(App->hInst, (LPCTSTR)IDD_LIST, App->MainHwnd, (DLGPROC)ListPanel_Proc);
+	Init_Bmps_FileView();
 }
 
 // *************************************************************************
@@ -126,7 +149,8 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 		ShowWindow(hDlg, 1);
 
 		SendDlgItemMessage(hDlg, IDC_TREE1, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_ENVIONMENT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		CheckMenuItem(App->mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND | MF_CHECKED);
 		return TRUE;
 	}
@@ -187,6 +211,13 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_INFO_FILEVIEW && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+		
 		return 1;
 	}
 	case WM_COMMAND:
@@ -242,11 +273,11 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 		
 		if (LOWORD(wParam) == IDC_LEVELS)
 		{
-			App->SBC_FileView->Level_But_Active = 1;
-			App->SBC_FileView->Stock_But_Active = 0;
-			App->RedrawWindow_Dlg(hDlg);
+			//App->SBC_FileView->Level_But_Active = 1;
+			//App->SBC_FileView->Stock_But_Active = 0;
+			//App->RedrawWindow_Dlg(hDlg);
 
-			ShowWindow(GetDlgItem(App->ListPanel, IDC_TREE1), 1);
+			//ShowWindow(GetDlgItem(App->ListPanel, IDC_TREE1), 1);
 
 			//App->GDCL_FileView->HideRightPanes();
 			//ShowWindow(App->GD_Properties_Hwnd, 1);*/
@@ -260,7 +291,7 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 			{
 				/*App->Cl_FileView->HideRightPanes();
 				ShowWindow(App->GD_Stock_Hwnd, 1);*/
-				App->Cl_Stock->Start_Stock_Dialog();
+				//App->Cl_Stock->Start_Stock_Dialog();
 			}
 			return TRUE;
 		}
@@ -268,6 +299,12 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 		if (LOWORD(wParam) == IDC_ENVIONMENT)
 		{
 			App->Cl_Environment->Start_Environment();
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_INFO_FILEVIEW)
+		{
+			App->Cl_Utilities->OpenHTML("Help\\Templete.html");
 			return TRUE;
 		}
 		break;

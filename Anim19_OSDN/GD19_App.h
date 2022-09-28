@@ -248,6 +248,8 @@ public:
 	HANDLE Hnd_StepBack;
 	HANDLE Hnd_StepForward;
 
+	HANDLE Hnd_InfoBig_Bmp;
+
 	HFONT Font_CB12;
 	HFONT Font_CB15;
 	HFONT Font_Arial20;

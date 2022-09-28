@@ -69,6 +69,7 @@ protected:
 
 	static LRESULT CALLBACK ListPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
+	void Init_Bmps_FileView();
 	void AddRootFolder(void);
 	void MoreFoldersD(void);
 	void ExpandRoot(void);

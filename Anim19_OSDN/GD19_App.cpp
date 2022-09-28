@@ -449,6 +449,9 @@ void GD19_App::LoadProgramResource(void)
 
 	Hnd_ModelInfo_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_MODELDATA);
 
+	Hnd_InfoBig_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_INFOBIG);
+	Hnd_InfoSmall_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_INFOSMALL);
+
 }
 
 // *************************************************************************
