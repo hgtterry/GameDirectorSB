@@ -36,11 +36,11 @@ SB_Project::SB_Project()
 	strcat(m_Project_Sub_Folder, "\\");
 	strcat(m_Project_Sub_Folder, "Projects");
 	strcat(m_Project_Sub_Folder, "\\");
-	strcat(m_Project_Sub_Folder, "No Project?");
+	strcat(m_Project_Sub_Folder, "First_Project");
 	strcat(m_Project_Sub_Folder, "_Prj");
 
-	strcpy(m_Project_Name, "No_Project");
-	strcpy(m_Level_Name, "No_Level");
+	strcpy(m_Project_Name, "First_Project");
+	strcpy(m_Level_Name, "First_Level");
 
 	m_Level_Folder_Path[0] = 0;
 	m_Players_Folder_Path[0] = 0;
@@ -103,6 +103,10 @@ LRESULT CALLBACK SB_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message, W
 		SendDlgItemMessage(hDlg, IDC_BTCHANGE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BTCHANGELEVEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		
 		SendDlgItemMessage(hDlg, IDC_BTPJBROWSE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BTDESKTOP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STBANNER, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
@@ -214,6 +218,20 @@ LRESULT CALLBACK SB_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message, W
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+		
+		if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
 		return CDRF_DODEFAULT;
 	}
 	case WM_COMMAND:
@@ -273,11 +291,8 @@ LRESULT CALLBACK SB_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message, W
 			App->SBC_Dialogs->Dialog_Text();
 
 			strcpy(App->SBC_Project->m_Level_Name, App->SBC_Dialogs->Chr_Text);
-
-
 			SetDlgItemText(hDlg, IDC_STLEVELNAME, (LPCTSTR)App->SBC_Project->m_Level_Name);
 			
-
 			return TRUE;
 		}
 
@@ -304,7 +319,8 @@ LRESULT CALLBACK SB_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message, W
 		if (LOWORD(wParam) == IDOK)
 		{
 			App->SBC_Project->Save_Project();
-			
+			App->SBC_Project->Project_Loaded = 1;
+
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -315,11 +331,10 @@ LRESULT CALLBACK SB_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message, W
 }
 
 // *************************************************************************
-// *	  				Save_Project Terry Flanigan						   *
+// *	  		Save_Project:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 bool SB_Project::Save_Project()
 {
-
 
 	if (_mkdir(m_Project_Sub_Folder) == 0)
 	{

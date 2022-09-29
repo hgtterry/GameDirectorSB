@@ -503,15 +503,13 @@ void SB_FileView::ExpandRoot(void)
 }
 
 // *************************************************************************
-// *					Get_Selection Terry Bernie					 	   *
+// *		Get_Selection Terry:- Terry and Hazel Flanigan 2022		 	   *
 // *************************************************************************
 void SB_FileView::Get_Selection(LPNMHDR lParam)
 {
 
 	strcpy(FileView_Folder, "");
 	strcpy(FileView_File, "");
-
-	
 
 	int Index = 0;
 	HWND Temp = GetDlgItem(App->ListPanel, IDC_TREE1);
@@ -552,25 +550,15 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 	if (!strcmp(FileView_Folder, "Area")) // Folder
 	{
-
-		//App->Cl_Dialogs->YesNo("Add Object", "Do you want to add a new Area/Building now");
-		//bool Doit = App->Cl_Dialogs->Canceled;
-		//if (Doit == 0)
-		//{
-		//	App->Cl_Mesh_Viewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Area; // 0; // Objects
-		//	App->Cl_Mesh_Viewer->StartMeshViewer();
-		//	App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
-		//}
-		//else
-		//{
-
-		//}
+		App->SBC_FileView->Context_Selection = Enums::FileView_Areas_Folder;
 
 		return;
 	}
 
 	if (!strcmp(FileView_File, "Area"))
 	{
+		App->SBC_FileView->Context_Selection = Enums::FileView_Areas_File;
+
 		HideRightPanes();
 		ShowWindow(App->GD_Properties_Hwnd, 1);
 		App->SBC_Aera->Hide_Area_Dlg(1);
@@ -1494,6 +1482,30 @@ void SB_FileView::Context_Menu(HWND hDlg)
 			DestroyMenu(App->SBC_FileView->hMenu);
 			Context_Selection = Enums::FileView_Sounds_File;
 		}
+
+		//------------------------------------- Areas
+		if (!strcmp(App->SBC_FileView->FileView_Folder, "Area")) // Folder
+		{
+			App->SBC_FileView->hMenu = CreatePopupMenu();
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_NEW, L"&New");
+			TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+			DestroyMenu(App->SBC_FileView->hMenu);
+			Context_Selection = Enums::FileView_Areas_Folder;
+		}
+
+		if (!strcmp(App->SBC_FileView->FileView_File, "Area"))
+		{
+			App->SBC_FileView->hMenu = CreatePopupMenu();
+
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_COPY, L"&Copy");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
+			TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+			DestroyMenu(App->SBC_FileView->hMenu);
+			Context_Selection = Enums::FileView_Areas_File;
+		}
 	}
 }
 
@@ -1502,6 +1514,27 @@ void SB_FileView::Context_Menu(HWND hDlg)
 // *************************************************************************
 void SB_FileView::Context_New(HWND hDlg)
 {
+	if (App->SBC_Project->Project_Loaded == 0)
+	{
+		App->Say("A Project must be created First");
+
+		return;
+	}
+
+	if (App->SBC_FileView->Context_Selection == Enums::FileView_Areas_Folder)
+	{
+		App->Cl_Dialogs->YesNo("Add Area", "Do you want to add a new Area");
+
+		bool Doit = App->Cl_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+			App->SBC_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Objects;
+			App->SBC_MeshViewer->StartMeshViewer();
+		}
+
+		return;
+	}
+
 	if (App->SBC_Scene->Area_Added == 0)
 	{
 		App->Say("An Area or Building must be Added Firest");
@@ -1518,6 +1551,8 @@ void SB_FileView::Context_New(HWND hDlg)
 		{
 			App->SBC_Camera->Add_New_Camera();
 		}
+
+		return;
 	}
 
 	if (App->SBC_FileView->Context_Selection == Enums::FileView_Objects_Folder)
@@ -1530,6 +1565,8 @@ void SB_FileView::Context_New(HWND hDlg)
 			App->SBC_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Objects; // 0; // Objects; // Objects
 			App->SBC_MeshViewer->StartMeshViewer();
 		}
+
+		return;
 	}
 
 	if (App->SBC_FileView->Context_Selection == Enums::FileView_Messages_Folder)
@@ -1541,6 +1578,8 @@ void SB_FileView::Context_New(HWND hDlg)
 		{
 			App->SBC_Objects_Create->Add_New_Message();
 		}
+
+		return;
 	}
 
 	if (App->SBC_FileView->Context_Selection == Enums::FileView_Sounds_Folder)
@@ -1552,8 +1591,11 @@ void SB_FileView::Context_New(HWND hDlg)
 		{
 			App->SBC_Objects_Create->Add_New_Sound();
 		}
+
+		return;
 	}
 
+	return;
 }
 
 
