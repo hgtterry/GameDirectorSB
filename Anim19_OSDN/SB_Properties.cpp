@@ -710,6 +710,58 @@ bool SB_Properties::Update_ListView_Sounds()
 	return 1;
 }
 
+// *************************************************************************
+// *			Update_ListView_Level:- Terry and Hazel Flanigan 2022     *
+// *************************************************************************
+bool SB_Properties::Update_ListView_Level()
+{
+	if (App->SBC_Scene->Scene_Loaded == 0)
+	{
+		return 1;
+	}
+
+	char buff[255];
+	strcpy(buff, App->SBC_Project->m_Level_Name);
+	strcat(buff, "   (Level)");
+	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
+
+	char strCamCount[20];
+	
+	const int NUM_ITEMS = 7;
+	const int NUM_COLS = 2;
+	std::string grid[NUM_COLS][NUM_ITEMS]; // string table
+	LV_ITEM pitem;
+	memset(&pitem, 0, sizeof(LV_ITEM));
+	pitem.mask = LVIF_TEXT;
+
+	grid[0][0] = "Name",			grid[1][0] = App->SBC_Project->m_Level_Name;
+	grid[0][1] = " ",				grid[1][1] = " ";
+	grid[0][2] = "Cameras",			grid[1][2] = _itoa(App->SBC_Scene->Camera_Count, strCamCount, 10);
+	grid[0][3] = "Players",			grid[1][3] = _itoa(App->SBC_Scene->Player_Count, strCamCount, 10);;
+	grid[0][4] = "Areas",			grid[1][4] = _itoa(App->SBC_Scene->Area_Count, strCamCount, 10);;
+	grid[0][5] = "Objects",			grid[1][5] = _itoa(App->SBC_Scene->Object_Count, strCamCount, 10);;
+	grid[0][6] = "Players",			grid[1][6] = _itoa(App->SBC_Scene->Player_Count, strCamCount, 10);;
+
+
+	ListView_DeleteAllItems(Properties_hLV);
+
+	for (DWORD row = 0; row < NUM_ITEMS; row++)
+	{
+		pitem.iItem = row;
+		pitem.pszText = const_cast<char*>(grid[0][row].c_str());
+		ListView_InsertItem(Properties_hLV, &pitem);
+
+		//ListView_SetItemText
+
+		for (DWORD col = 1; col < NUM_COLS; col++)
+		{
+			ListView_SetItemText(Properties_hLV, row, col,
+				const_cast<char*>(grid[col][row].c_str()));
+		}
+	}
+
+	return 1;
+}
 
 // *************************************************************************
 // *					Edit_Object_Onclick  Terry Flanigan				   *

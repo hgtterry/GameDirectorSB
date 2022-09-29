@@ -511,6 +511,8 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 	strcpy(FileView_Folder, "");
 	strcpy(FileView_File, "");
 
+	
+
 	int Index = 0;
 	HWND Temp = GetDlgItem(App->ListPanel, IDC_TREE1);
 	HTREEITEM i = TreeView_GetSelection(Temp);
@@ -532,10 +534,19 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 	item1.mask = TVIF_TEXT;
 	TreeView_GetItem(((LPNMHDR)lParam)->hwndFrom, &item1);
 
-	///App->SBC_Properties->Enable_Test_Button(0);
-	///App->SBC_Properties->Enable_Delete_Button(0);
+	
+
+	//App->SBC_Properties->Enable_Test_Button(0);
+	//App->SBC_Properties->Enable_Delete_Button(0);
 
 	//--------------------------------------------------------------------------
+
+	if (!strcmp(FileView_Folder, App->SBC_Project->m_Level_Name)) // Folder
+	{
+		HideRightPanes();
+		ShowWindow(App->GD_Properties_Hwnd, 1);
+		App->SBC_Properties->Update_ListView_Level();
+	}
 
 	if (!strcmp(FileView_Folder, "Area")) // Folder
 	{
