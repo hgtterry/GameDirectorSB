@@ -1528,7 +1528,7 @@ void SB_FileView::Context_New(HWND hDlg)
 		bool Doit = App->Cl_Dialogs->Canceled;
 		if (Doit == 0)
 		{
-			App->SBC_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Objects;
+			App->SBC_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Area;
 			App->SBC_MeshViewer->StartMeshViewer();
 		}
 
@@ -1562,7 +1562,7 @@ void SB_FileView::Context_New(HWND hDlg)
 		bool Doit = App->Cl_Dialogs->Canceled;
 		if (Doit == 0)
 		{
-			App->SBC_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Objects; // 0; // Objects; // Objects
+			App->SBC_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Objects;
 			App->SBC_MeshViewer->StartMeshViewer();
 		}
 

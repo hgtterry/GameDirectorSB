@@ -46,7 +46,7 @@ protected:
 
 	static LRESULT CALLBACK Area_PropsPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
-	btBvhTriangleMeshShape* create_Area_Trimesh(Base_Area* Object);
+	//btBvhTriangleMeshShape* create_Area_Trimesh(Base_Area* Object);
 	btBvhTriangleMeshShape* create_Area_Trimesh_New(int Index,Base_Area* Object);
 };
 

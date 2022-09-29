@@ -596,7 +596,14 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			App->SBC_MeshViewer->Close_OgreWindow();
 			App->SBC_MeshViewer->Delete_Resources_Group();
 
-			App->SBC_Objects_Create->Update_MV_Details();
+			if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area) // Area
+			{
+				App->SBC_Objects_Create->Add_New_Area();
+			}
+			else
+			{
+				App->SBC_Objects_Create->Update_MV_Details();
+			}
 
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;

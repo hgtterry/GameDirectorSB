@@ -12,6 +12,9 @@ public:
 	bool Add_New_Object(int Index);
 	bool Add_New_Message();
 	bool Add_New_Sound();
+	bool Add_New_Area();
+
+	btBvhTriangleMeshShape* create_Area_Trimesh_New(int Index, Base_Area* Object);
 
 	char DestinationFile[MAX_PATH];
 	char SourceFile[MAX_PATH];
@@ -28,6 +31,8 @@ protected:
 
 	bool Add_Message_Entity(int Index);
 	bool Add_Sound_Entity(int Index);
+
+	bool First_Area_Start_Project();
 
 	char m_ResourcePath[MAX_PATH];
 };
