@@ -57,7 +57,7 @@ public:
 
 	HTREEITEM FV_Players_Folder;	// Players Folder FileFView
 	HTREEITEM FV_Areas_Folder;		// Areas/Rooms Folder FileFView
-	HTREEITEM GD_LevelFolder;
+	HTREEITEM FV_LevelFolder;
 	HTREEITEM FV_Cameras_Folder;
 	HTREEITEM FV_Objects_Folder;
 	HTREEITEM FV_Messages_Folder;

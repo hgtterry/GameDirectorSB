@@ -39,8 +39,8 @@ SB_Project::SB_Project()
 	strcat(m_Project_Sub_Folder, "No Project?");
 	strcat(m_Project_Sub_Folder, "_Prj");
 
-	strcpy(m_Project_Name, "Project_X");
-	strcpy(m_Level_Name, "Level_X");
+	strcpy(m_Project_Name, "No_Project");
+	strcpy(m_Level_Name, "No_Level");
 
 	m_Level_Folder_Path[0] = 0;
 	m_Players_Folder_Path[0] = 0;
@@ -65,7 +65,17 @@ SB_Project::~SB_Project()
 }
 
 // *************************************************************************
-// *	  			Start_Save_Project_Dialog Terry Flanigan			   *
+// *	  			Reset_Class:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+bool SB_Project::Reset_Class()
+{
+	strcpy(m_Project_Name, "No_Project");
+	strcpy(m_Level_Name, "No_Level");
+	return 1;
+}
+
+// *************************************************************************
+// *	  Start_Save_Project_Dialog:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
 bool SB_Project::Start_Save_Project_Dialog()
 {
@@ -74,7 +84,7 @@ bool SB_Project::Start_Save_Project_Dialog()
 }
 
 // *************************************************************************
-// *				Save_Project_Dialog_Proc Terry Flanigan	  			   *
+// *		Save_Project_Dialog_Proc:- Terry and Hazel Flanigan 2022  	   *
 // *************************************************************************
 LRESULT CALLBACK SB_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -970,7 +980,7 @@ bool SB_Project::Load_Project()
 	App->Set_Main_TitleBar(App->SBC_FileIO->Project_Path_File_Name);
 	App->SBC_FileIO->RecentFileHistory_Update();
 
-	App->SBC_FileView->SelectItem(App->SBC_FileView->GD_LevelFolder);
+	App->SBC_FileView->SelectItem(App->SBC_FileView->FV_LevelFolder);
 
 	return 1;
 }

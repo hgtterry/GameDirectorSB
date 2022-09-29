@@ -39,6 +39,8 @@ public:
 	SB_Project();
 	~SB_Project();
 
+	bool Reset_Class();
+
 	bool Load_Project();
 	bool Start_Save_Project_Dialog();
 

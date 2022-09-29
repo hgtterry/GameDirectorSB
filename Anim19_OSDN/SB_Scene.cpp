@@ -115,6 +115,7 @@ void SB_Scene::Reset_Class()
 bool SB_Scene::Clear_Level()
 {
 
+	App->SBC_Project->Reset_Class();
 	App->SBC_FileView->Reset_Class();
 	App->SBC_TopTabs->Reset_Class();
 	App->SBC_Properties->Reset_Class();
@@ -151,7 +152,7 @@ bool SB_Scene::Clear_Level()
 
 	Delete_Resources_Group();
 
-	App->SBC_FileView->SelectItem(App->SBC_FileView->GD_LevelFolder);
+	App->SBC_FileView->SelectItem(App->SBC_FileView->FV_LevelFolder);
 
 	return 1;
 }

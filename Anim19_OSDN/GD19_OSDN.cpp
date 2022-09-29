@@ -129,7 +129,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	App->Cl_Vm_Preferences->Read_Preferences(); // Read Preferences
 
 	App->Set_Main_TitleBar(" ");
-	App->SBC_FileView->SelectItem(App->SBC_FileView->GD_LevelFolder);
+	App->SBC_FileView->SelectItem(App->SBC_FileView->FV_LevelFolder);
 
 	SetTimer(App->MainHwnd, 1, 1, NULL);
 

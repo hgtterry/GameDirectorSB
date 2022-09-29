@@ -37,7 +37,7 @@ SB_FileView::SB_FileView()
 	Root = nullptr;
 	GD_ProjectFolder = nullptr;
 	FV_Objects_Folder = nullptr;
-	GD_LevelFolder = nullptr;
+	FV_LevelFolder = nullptr;
 	FV_Cameras_Folder = nullptr;
 	GD_TriggerFolder = nullptr;
 	GD_EntitiesFolder = nullptr;
@@ -80,7 +80,7 @@ void SB_FileView::Reset_Class()
 	Root = nullptr;
 	GD_ProjectFolder = nullptr;
 	FV_Objects_Folder = nullptr;
-	GD_LevelFolder = nullptr;
+	FV_LevelFolder = nullptr;
 	FV_Cameras_Folder = nullptr;
 	GD_TriggerFolder = nullptr;
 	GD_EntitiesFolder = nullptr;
@@ -394,10 +394,10 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	tvinsert.item.pszText = App->SBC_Project->m_Level_Name;
 	tvinsert.item.iImage = 0;
 	tvinsert.item.iSelectedImage = 1;
-	GD_LevelFolder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+	FV_LevelFolder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
 
 	////------------------------------------------------------- Camera
-	tvinsert.hParent = GD_LevelFolder;
+	tvinsert.hParent = FV_LevelFolder;
 	tvinsert.hInsertAfter = TVI_LAST;
 	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
 	tvinsert.item.pszText = "Camera";
@@ -405,7 +405,7 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	tvinsert.item.iSelectedImage = 1;
 	FV_Cameras_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
 
-	tvinsert.hParent = GD_LevelFolder;
+	tvinsert.hParent = FV_LevelFolder;
 	tvinsert.hInsertAfter = TVI_LAST;
 	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
 	tvinsert.item.pszText = "Player";
@@ -413,7 +413,7 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	tvinsert.item.iSelectedImage = 1;
 	FV_Players_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
 
-	tvinsert.hParent = GD_LevelFolder;
+	tvinsert.hParent = FV_LevelFolder;
 	tvinsert.hInsertAfter = TVI_LAST;
 	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
 	tvinsert.item.pszText = "Area";
@@ -421,7 +421,7 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	tvinsert.item.iSelectedImage = 1;
 	FV_Areas_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
 
-	tvinsert.hParent = GD_LevelFolder;
+	tvinsert.hParent = FV_LevelFolder;
 	tvinsert.hInsertAfter = TVI_LAST;
 	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
 	tvinsert.item.pszText = "Objects";
@@ -429,7 +429,7 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	tvinsert.item.iSelectedImage = 1;
 	FV_Objects_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
 
-	tvinsert.hParent = GD_LevelFolder;
+	tvinsert.hParent = FV_LevelFolder;
 	tvinsert.hInsertAfter = TVI_LAST;
 	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
 	tvinsert.item.pszText = "Entities";
@@ -498,7 +498,7 @@ void SB_FileView::ExpandRoot(void)
 	HTREEITEM i = TreeView_GetSelection(Temp);
 
 	TreeView_Expand(Temp, GD_ProjectFolder, TVE_EXPAND);
-	TreeView_Expand(Temp, GD_LevelFolder, TVE_EXPAND);
+	TreeView_Expand(Temp, FV_LevelFolder, TVE_EXPAND);
 	TreeView_Expand(Temp, GD_EntitiesFolder, TVE_EXPAND);
 }
 
@@ -1197,7 +1197,7 @@ void SB_FileView::Change_Level_Name(void)
 {
 	TVITEM Sitem;
 	Sitem.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
-	Sitem.hItem = GD_LevelFolder;
+	Sitem.hItem = FV_LevelFolder;
 	Sitem.pszText = App->SBC_Project->m_Level_Name;
 	Sitem.iImage = 3;
 	Sitem.iSelectedImage = 3;
@@ -1240,7 +1240,7 @@ void SB_FileView::Delete_AllItems()
 	Root = 0;
 	GD_ProjectFolder = NULL;
 	FV_Objects_Folder = NULL;
-	GD_LevelFolder = NULL;
+	FV_LevelFolder = NULL;
 	FV_Cameras_Folder = NULL;
 	GD_TriggerFolder = NULL;
 	GD_EntitiesFolder = NULL;
