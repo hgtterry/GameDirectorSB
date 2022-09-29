@@ -37,7 +37,7 @@ SB_Properties::SB_Properties()
 
 	btext[0] = 0;
 
-	Edit_Category = Enums::Edit_Mesh_Object;
+	Edit_Category = Enums::FV_Edit_Object;
 	Edit_Physics = 0;
 
 	Is_Player = 0;
@@ -95,7 +95,7 @@ LRESULT CALLBACK SB_Properties::GD_Properties_Proc(HWND hDlg, UINT message, WPAR
 		SendDlgItemMessage(hDlg, IDC_BTPHYSICS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 
-		App->Cl_Object_Props->Edit_Type = Enums::Edit_Mesh_Object;
+		App->Cl_Object_Props->Edit_Type = Enums::FV_Edit_Object;
 
 		return 1;
 	}
@@ -310,7 +310,7 @@ void SB_Properties::ListView_OnClickOptions(LPARAM lParam)
 	}
 
 	// Objects
-	if (Edit_Category == Enums::Edit_Mesh_Object)
+	if (Edit_Category == Enums::FV_Edit_Object)
 	{
 		if (Edit_Physics == 0)
 		{
@@ -715,10 +715,10 @@ bool SB_Properties::Update_ListView_Sounds()
 // *************************************************************************
 bool SB_Properties::Update_ListView_Level()
 {
-	if (App->SBC_Scene->Scene_Loaded == 0)
+	/*if (App->SBC_Scene->Scene_Loaded == 0)
 	{
 		return 1;
-	}
+	}*/
 
 	char buff[255];
 	strcpy(buff, App->SBC_Project->m_Level_Name);

@@ -49,7 +49,7 @@ LRESULT CALLBACK GD19_Object_Properties::GD_Properties_Proc(HWND hDlg, UINT mess
 			SendDlgItemMessage(hDlg,IDC_STOBJECTNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 			///SendDlgItemMessage(hDlg,IDC_STTRANSFORM, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 			
-			App->Cl_Object_Props->Edit_Type = Enums::Edit_Mesh_Object;
+			App->Cl_Object_Props->Edit_Type = Enums::FV_Edit_Object;
 		}
 
 	case WM_CTLCOLORSTATIC:

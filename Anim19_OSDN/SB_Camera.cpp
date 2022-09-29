@@ -151,9 +151,9 @@ void SB_Camera::Reset_View(void)
 
 	App->Cl19_Ogre->mCamera->setPosition(Ogre::Vector3(0, 90, 100));
 	
-	//App->Cl19_Ogre->mCamera->lookAt(Ogre::Vector3(0, 90, 0));
+	App->Cl19_Ogre->mCamera->lookAt(Ogre::Vector3(0, 30, 0));
 
-	Ogre::Quaternion Test;
+	/*Ogre::Quaternion Test;
 	Test.IDENTITY;
 
 	App->Cl19_Ogre->mCamera->setOrientation(Test);
@@ -161,7 +161,7 @@ void SB_Camera::Reset_View(void)
 	App->Cl19_Ogre->mCamera->pitch(Radian(Ogre::Degree(-30)));
 
 	App->Cl19_Ogre->mCamera->yaw(Radian(Ogre::Degree(-101.260)));
-	App->Cl19_Ogre->mCamera->roll(Ogre::Degree(0));
+	App->Cl19_Ogre->mCamera->roll(Ogre::Degree(0));*/
 
 	//App->Cl19_Ogre->mCamera->lookAt(Ogre::Vector3(0, 30, 0));
 }

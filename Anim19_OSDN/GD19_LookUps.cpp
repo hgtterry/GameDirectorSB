@@ -248,7 +248,7 @@ char* GD19_LookUps::Get_Edit_Category_String(void)
 			strcpy(strcat2, "Edit_None");
 			return strcat2;
 		}
-		if (App->SBC_Properties->Edit_Category == Enums::Edit_Mesh_Object)
+		if (App->SBC_Properties->Edit_Category == Enums::FV_Edit_Object)
 		{
 			strcpy(strcat2, "Edit_Mesh_Object");
 			return strcat2;

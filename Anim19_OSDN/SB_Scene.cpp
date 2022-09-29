@@ -150,6 +150,9 @@ bool SB_Scene::Clear_Level()
 	App->SBC_Camera->Reset_View();
 
 	Delete_Resources_Group();
+
+	App->SBC_FileView->SelectItem(App->SBC_FileView->GD_LevelFolder);
+
 	return 1;
 }
 

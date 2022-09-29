@@ -955,7 +955,6 @@ bool SB_Project::Load_Project()
 	}
 
 	
-
 	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
 	
 	App->SBC_FileView->Change_Level_Name();
@@ -970,6 +969,9 @@ bool SB_Project::Load_Project()
 
 	App->Set_Main_TitleBar(App->SBC_FileIO->Project_Path_File_Name);
 	App->SBC_FileIO->RecentFileHistory_Update();
+
+	App->SBC_FileView->SelectItem(App->SBC_FileView->GD_LevelFolder);
+
 	return 1;
 }
 

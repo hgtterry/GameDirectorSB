@@ -87,8 +87,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 //	SetMenuItemBitmaps(App->mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND, 0, hBitMap);
 
 	App->SBC_FileView->Start_FileView();
-
 	App->Cl_Panels->Resize_FileView();
+
 
 	App->SetMainWinCentre();
 
@@ -129,6 +129,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	App->Cl_Vm_Preferences->Read_Preferences(); // Read Preferences
 
 	App->Set_Main_TitleBar(" ");
+	App->SBC_FileView->SelectItem(App->SBC_FileView->GD_LevelFolder);
 
 	SetTimer(App->MainHwnd, 1, 1, NULL);
 

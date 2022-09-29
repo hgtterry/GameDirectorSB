@@ -541,10 +541,12 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 	//--------------------------------------------------------------------------
 
-	if (!strcmp(FileView_Folder, App->SBC_Project->m_Level_Name)) // Folder
+	if (!strcmp(FileView_Folder, App->SBC_Project->m_Level_Name)) // Level Folder
 	{
 		HideRightPanes();
 		ShowWindow(App->GD_Properties_Hwnd, 1);
+
+		App->SBC_Properties->Edit_Category = Enums::FV_Edit_Level;
 		App->SBC_Properties->Update_ListView_Level();
 	}
 
@@ -611,9 +613,9 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 		App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
 
-		App->Cl_Object_Props->Edit_Type = Enums::Edit_Mesh_Object;
+		App->Cl_Object_Props->Edit_Type = Enums::FV_Edit_Object;
 
-		App->SBC_Properties->Edit_Category = Enums::Edit_Mesh_Object;
+		App->SBC_Properties->Edit_Category = Enums::FV_Edit_Object;
 		App->SBC_Properties->Current_Selected_Object = Index;
 //		App->SBC_Properties->Update_Transform_Dlg();
 		App->SBC_Object->Update_Types();
@@ -853,12 +855,12 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 		if (App->Cl_Object_Props->Edit_Type == Enums::Edit_Player)
 		{
-			App->Cl_Object_Props->Edit_Type = Enums::Edit_Mesh_Object;
+			App->Cl_Object_Props->Edit_Type = Enums::FV_Edit_Object;
 			App->Cl_Object_Props->Update_Properties_Mesh();
 			return;
 		}
 
-		if (App->Cl_Object_Props->Edit_Type == Enums::Edit_Mesh_Object)
+		if (App->Cl_Object_Props->Edit_Type == Enums::FV_Edit_Object)
 		{
 			App->Cl_Object_Props->Update_Properties_Mesh();
 			return;
@@ -922,12 +924,12 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 		if (App->Cl_Object_Props->Edit_Type == Enums::Edit_Player)
 		{
-			App->Cl_Object_Props->Edit_Type = Enums::Edit_Mesh_Object;
+			App->Cl_Object_Props->Edit_Type = Enums::FV_Edit_Object;
 			App->Cl_Object_Props->Update_Properties_Mesh();
 			return;
 		}
 
-		if (App->Cl_Object_Props->Edit_Type == Enums::Edit_Mesh_Object)
+		if (App->Cl_Object_Props->Edit_Type == Enums::FV_Edit_Object)
 		{
 			App->Cl_Object_Props->Update_Properties_Mesh();
 			return;

@@ -99,7 +99,7 @@ namespace Enums
 	enum Edit_Type
 	{
 		Edit_None = 0,
-		Edit_Mesh_Object = 1,
+		FV_Edit_Object = 1,
 		Edit_Physics_Object = 2,
 		Edit_Player = 3,
 		Edit_Message = 4,
@@ -112,7 +112,8 @@ namespace Enums
 		Edit_Change_Level = 11,
 		Edit_Particles = 12,
 		Edit_Camera = 13,
-		Edit_Area = 14
+		Edit_Area = 14,
+		FV_Edit_Level = 15
 	};
 
 	enum Usage
