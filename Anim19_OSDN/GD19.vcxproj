@@ -173,7 +173,6 @@
     <ClInclude Include="GD19_LookUps.h" />
     <ClInclude Include="GD19_Objects.h" />
     <ClInclude Include="GD19_Objects_Com.h" />
-    <ClInclude Include="GD19_Object_Properties.h" />
     <ClInclude Include="GD19_OSDN.h" />
     <ClInclude Include="GD19_App.h" />
     <ClInclude Include="GD19_Ogre.h" />
@@ -241,7 +240,6 @@
     <ClCompile Include="GD19_LookUps.cpp" />
     <ClCompile Include="GD19_Objects.cpp" />
     <ClCompile Include="GD19_Objects_Com.cpp" />
-    <ClCompile Include="GD19_Object_Properties.cpp" />
     <ClCompile Include="GD19_OSDN.cpp" />
     <ClCompile Include="GD19_App.cpp" />
     <ClCompile Include="GD19_Ogre.cpp" />

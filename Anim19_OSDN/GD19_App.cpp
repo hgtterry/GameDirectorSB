@@ -45,7 +45,6 @@ GD19_App::GD19_App(void)
 	Cl_Dialogs =		nullptr;
 	
 	Cl_Objects_Com =	nullptr;
-	Cl_Object_Props =	nullptr;
 	Cl_Stock =			nullptr;
 	Cl_LookUps =		nullptr;
 	Cl_spdlog =			nullptr;
@@ -203,7 +202,6 @@ bool GD19_App::InitApp(void)
 	Cl_Dialogs =		new GD19_Dialogs();
 
 	Cl_Objects_Com =	new GD19_Objects_Com();
-	Cl_Object_Props =	new GD19_Object_Properties();
 	Cl_Stock =			new GD19_Stock();
 	Cl_LookUps =		new GD19_LookUps();		
 	Cl_spdlog =			new	GD_spdlog();

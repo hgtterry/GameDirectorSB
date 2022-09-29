@@ -95,7 +95,7 @@ LRESULT CALLBACK SB_Properties::GD_Properties_Proc(HWND hDlg, UINT message, WPAR
 		SendDlgItemMessage(hDlg, IDC_BTPHYSICS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 
-		App->Cl_Object_Props->Edit_Type = Enums::FV_Edit_Object;
+		App->SBC_Properties->Edit_Category = Enums::FV_Edit_Object;
 
 		return 1;
 	}

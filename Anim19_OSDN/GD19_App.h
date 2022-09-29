@@ -36,7 +36,6 @@ distribution.
 #include "GD19_Environment.h"
 #include "GD19_DIALOGS.h"
 #include "GD19_Objects_Com.h"
-#include "GD19_Object_Properties.h"
 #include "GD19_Stock.h"
 #include "GD19_LookUps.h"
 #include "GD_spdlog.h"
@@ -98,7 +97,6 @@ public:
 	GD19_Environment*	Cl_Environment;
 	GD19_Dialogs*		Cl_Dialogs;
 	GD19_Objects_Com*	Cl_Objects_Com;
-	GD19_Object_Properties* Cl_Object_Props;
 	GD19_Stock*			Cl_Stock;
 	GD19_LookUps*		Cl_LookUps;
 	GD_spdlog*			Cl_spdlog;

@@ -611,10 +611,6 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 //		App->SBC_Properties->Enable_Delete_Button(1);
 
-		App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
-
-		App->Cl_Object_Props->Edit_Type = Enums::FV_Edit_Object;
-
 		App->SBC_Properties->Edit_Category = Enums::FV_Edit_Object;
 		App->SBC_Properties->Current_Selected_Object = Index;
 //		App->SBC_Properties->Update_Transform_Dlg();
@@ -640,8 +636,6 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		HideRightPanes();
 		ShowWindow(App->SBC_Properties->Properties_Dlg_hWnd, 1);
 		App->SBC_Player->Hide_Player_Dlg(1);
-
-		App->Cl_Object_Props->Is_Player = 1; // Mark as Player selected
 
 		App->SBC_Properties->Edit_Category = Enums::Edit_Player;
 		App->SBC_Properties->Current_Selected_Object = Index;
@@ -695,8 +689,6 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		ShowWindow(App->GD_Properties_Hwnd, 1);
 		App->SBC_Object->Hide_Object_Dlg(1);
 
-		App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
-
 		App->SBC_Properties->Is_Player = 0;
 		App->SBC_Properties->Edit_Category = Enums::Edit_Sounds;
 		App->SBC_Properties->Current_Selected_Object = Index;
@@ -729,8 +721,6 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		HideRightPanes();
 		ShowWindow(App->SBC_Properties->Properties_Dlg_hWnd, 1);
 		App->SBC_Object->Hide_Object_Dlg(1);
-
-		App->Cl_Object_Props->Edit_Type = Enums::Edit_Message;
 
 		App->SBC_Properties->Is_Player = 0; // Mark as Object selected
 		App->SBC_Properties->Edit_Category = Enums::Edit_Message;
@@ -777,9 +767,6 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 //		App->SBC_Properties->Enable_Delete_Button(1);
 
-		App->Cl_Object_Props->Edit_Type = Enums::Edit_Move_Entity;
-		App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
-
 //		App->SBC_Properties->Enable_Test_Button(1);
 		App->SBC_Properties->Is_Player = 0; // Mark as Object selected
 
@@ -820,8 +807,8 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		{
 			App->SBC_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Collectables;; // Collectables
 			App->SBC_MeshViewer->StartMeshViewer();
-			App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
-												 //App->Cl__Add_NewObject->Add_Collectable_Entity();
+			
+			//App->Cl__Add_NewObject->Add_Collectable_Entity();
 		}
 
 		return;
@@ -833,9 +820,6 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 //		App->SBC_Properties->Enable_Delete_Button(1);
 
-		App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
-
-		App->Cl_Object_Props->Selected_Object_Index = Index;
 		App->Cl_Visuals->MarkerBB_Addjust(Index);
 
 
@@ -853,7 +837,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 			//App->SBC_Properties->Update_ListView_Physics();
 		}
 
-		if (App->Cl_Object_Props->Edit_Type == Enums::Edit_Player)
+		/*if (App->Cl_Object_Props->Edit_Type == Enums::Edit_Player)
 		{
 			App->Cl_Object_Props->Edit_Type = Enums::FV_Edit_Object;
 			App->Cl_Object_Props->Update_Properties_Mesh();
@@ -870,7 +854,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		{
 			App->Cl_Object_Props->Update_Properties_Physics();
 			return;
-		}
+		}*/
 		return;
 	}
 
@@ -902,9 +886,9 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 //		App->SBC_Properties->Enable_Delete_Button(1);
 
-		App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
+		//App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
 
-		App->Cl_Object_Props->Selected_Object_Index = Index;
+		//App->Cl_Object_Props->Selected_Object_Index = Index;
 		App->Cl_Visuals->MarkerBB_Addjust(Index);
 
 
@@ -922,7 +906,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 			//App->SBC_Properties->Update_ListView_Physics();
 		}
 
-		if (App->Cl_Object_Props->Edit_Type == Enums::Edit_Player)
+		/*if (App->Cl_Object_Props->Edit_Type == Enums::Edit_Player)
 		{
 			App->Cl_Object_Props->Edit_Type = Enums::FV_Edit_Object;
 			App->Cl_Object_Props->Update_Properties_Mesh();
@@ -939,7 +923,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		{
 			App->Cl_Object_Props->Update_Properties_Physics();
 			return;
-		}
+		}*/
 		return;
 	}
 
@@ -973,9 +957,9 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 //		App->SBC_Properties->Enable_Delete_Button(1);
 
-		App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
+		//App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
 
-		App->Cl_Object_Props->Selected_Object_Index = Index;
+		//App->Cl_Object_Props->Selected_Object_Index = Index;
 		App->Cl_Visuals->MarkerBB_Addjust(Index);
 
 
@@ -1027,9 +1011,9 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 //		App->SBC_Properties->Enable_Delete_Button(1);
 
-		App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
+		//App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
 
-		App->Cl_Object_Props->Selected_Object_Index = Index;
+		//App->Cl_Object_Props->Selected_Object_Index = Index;
 		App->Cl_Visuals->MarkerBB_Addjust(Index);
 
 
@@ -1081,9 +1065,9 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 //		App->SBC_Properties->Enable_Delete_Button(1);
 
-		App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
+		//App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
 
-		App->Cl_Object_Props->Selected_Object_Index = Index;
+		//App->Cl_Object_Props->Selected_Object_Index = Index;
 		App->Cl_Visuals->MarkerBB_Addjust(Index);
 
 
@@ -1136,9 +1120,9 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 //		App->SBC_Properties->Enable_Delete_Button(1);
 
-		App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
+		//App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
 
-		App->Cl_Object_Props->Selected_Object_Index = Index;
+		//App->Cl_Object_Props->Selected_Object_Index = Index;
 		App->Cl_Visuals->MarkerBB_Addjust(Index);
 
 
@@ -1545,7 +1529,6 @@ void SB_FileView::Context_New(HWND hDlg)
 		{
 			App->SBC_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Objects; // 0; // Objects; // Objects
 			App->SBC_MeshViewer->StartMeshViewer();
-			App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
 		}
 	}
 
@@ -1557,7 +1540,6 @@ void SB_FileView::Context_New(HWND hDlg)
 		if (Doit == 0)
 		{
 			App->SBC_Objects_Create->Add_New_Message();
-			App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
 		}
 	}
 
@@ -1569,7 +1551,6 @@ void SB_FileView::Context_New(HWND hDlg)
 		if (Doit == 0)
 		{
 			App->SBC_Objects_Create->Add_New_Sound();
-			App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
 		}
 	}
 

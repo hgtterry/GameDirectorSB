@@ -575,7 +575,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			{
 				App->SBC_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Objects; // Objects
 				App->SBC_MeshViewer->StartMeshViewer();
-				App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
 			}
 
 			return 1;
