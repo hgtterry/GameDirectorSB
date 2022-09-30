@@ -1537,7 +1537,7 @@ void SB_FileView::Context_New(HWND hDlg)
 
 	if (App->SBC_Scene->Area_Added == 0)
 	{
-		App->Say("An Area or Building must be Added Firest");
+		App->Say("An Area must be Added Firest before adding items");
 
 		return;
 	}

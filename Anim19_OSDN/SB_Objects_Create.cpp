@@ -124,7 +124,7 @@ void SB_Objects_Create::Update_MV_Details()
 	strcpy(SourceFile, App->SBC_MeshViewer->mResource_Folder);
 	strcat(SourceFile, App->SBC_MeshViewer->Selected_MeshFile);
 
-	strcpy(DestinationFile, App->SBC_Project->m_Objects_Assets_Path);
+	strcpy(DestinationFile, App->SBC_Project->m_Main_Assets_Path);
 	strcat(DestinationFile, App->SBC_MeshViewer->Selected_MeshFile);
 
 	CopyFile(SourceFile, DestinationFile, false);

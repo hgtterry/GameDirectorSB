@@ -85,6 +85,7 @@ protected:
 	bool Save_Objects_Folder();
 	bool Save_Objects_Data();
 
+	bool Load_Get_Resource_Path();
 	bool Load_Project_Aera();
 	bool Load_Project_Player();
 	bool Load_Project_Camera();

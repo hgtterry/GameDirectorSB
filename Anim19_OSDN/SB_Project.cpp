@@ -980,6 +980,10 @@ bool SB_Project::Load_Project()
 	Options->Has_Camera = App->Cl_Ini->GetInt("Options", "Cameras_Count", 0, 10);
 	Options->Has_Objects = App->Cl_Ini->GetInt("Options", "Objects_Count", 0, 10);
 
+	//-------------------------------------- Set Resource Path
+
+		Load_Get_Resource_Path();
+
 	// ------------------------------------- Aera
 	if (Options->Has_Aera > 0)
 	{
@@ -1035,6 +1039,30 @@ bool SB_Project::Load_Project()
 // *************************************************************************
 // *	  				Load_Project_Objects Terry Flanigan				   *
 // *************************************************************************
+bool SB_Project::Load_Get_Resource_Path()
+{
+
+	m_Main_Assets_Path[0] = 0;
+
+	strcpy(m_Main_Assets_Path, m_Project_Sub_Folder);
+	strcat(m_Main_Assets_Path, "\\");
+
+	strcat(m_Main_Assets_Path, m_Level_Name);
+	strcat(m_Main_Assets_Path, "\\");
+
+	strcat(m_Main_Assets_Path, "Assets");
+	strcat(m_Main_Assets_Path, "\\");
+
+	App->SBC_Scene->Add_Resource_Location(m_Main_Assets_Path);
+
+	//App->Say_Win(m_Main_Assets_Path);
+
+	return 1;
+}
+
+// *************************************************************************
+// *	  				Load_Project_Objects Terry Flanigan				   *
+// *************************************************************************
 bool SB_Project::Load_Project_Objects()
 {
 	m_Objects_Assets_Path[0] = 0;
@@ -1058,11 +1086,11 @@ bool SB_Project::Load_Project_Objects()
 	strcat(Object_Ini_Path, "\\");
 
 	//Assets Path Relative
-	strcpy(m_Objects_Assets_Path, Object_Ini_Path);
+	/*strcpy(m_Objects_Assets_Path, Object_Ini_Path);
 	strcat(m_Objects_Assets_Path, "Assets");
 	strcat(m_Objects_Assets_Path, "\\");
 
-	App->SBC_Scene->Add_Resource_Location(m_Objects_Assets_Path);
+	App->SBC_Scene->Add_Resource_Location(m_Objects_Assets_Path);*/
 	//---------------------------------------------------
 
 	strcat(Object_Ini_Path, "Objects.efd");
