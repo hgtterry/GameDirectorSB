@@ -96,6 +96,9 @@ protected:
 
 	Ogre::String MV_Resource_Group;
 
+	int Texure_Count;
+	std::vector<std::string> v_Texture_Names;
+
 	HWND MeshView_Hwnd;
 	HWND ListHwnd;
 	

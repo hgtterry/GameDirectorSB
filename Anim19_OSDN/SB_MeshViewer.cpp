@@ -703,6 +703,19 @@ void SB_MeshViewer::Copy_Assets()
 	CopyFile(SourceFile, DestinationFile, false);
 
 	// ------------------ Copy Textures
+	int Count = 0;
+	while (Count < Texure_Count)
+	{
+		strcpy(SourceFile, App->SBC_MeshViewer->mResource_Folder);
+		strcat(SourceFile, v_Texture_Names[Count].c_str());
+
+		strcpy(DestinationFile, App->SBC_Project->m_Main_Assets_Path);
+		strcat(DestinationFile, v_Texture_Names[Count].c_str());
+
+		CopyFile(SourceFile, DestinationFile, false);
+
+		Count++;
+	}
 	
 }
 
@@ -712,14 +725,16 @@ void SB_MeshViewer::Copy_Assets()
 void SB_MeshViewer::Get_Mesh_Assets()
 {
 	App->SBC_MeshViewer->m_Material_File[0] = 0;
+	v_Texture_Names.resize(0);
+	Texure_Count = 0;
 
 	int SubMeshCount = App->SBC_MeshViewer->MvEnt->getNumSubEntities();
 	char pScriptName[255];
 	char pMaterialFile[255];
 	Ogre::String st;
-	Ogre::MaterialPtr pp;
+	Ogre::MaterialPtr MP;
 
-	pp.setNull();
+	MP.setNull();
 	bool loaded = 0;
 	
 	// ---------------------------------------------------------- Material File
@@ -731,8 +746,8 @@ void SB_MeshViewer::Get_Mesh_Assets()
 
 	if (loaded == 1)
 	{
-		pp = Ogre::MaterialManager::getSingleton().getByName(MatName, App->SBC_MeshViewer->MV_Resource_Group);
-		st = pp->getOrigin();
+		MP = Ogre::MaterialManager::getSingleton().getByName(MatName, App->SBC_MeshViewer->MV_Resource_Group);
+		st = MP->getOrigin();
 		strcpy(pMaterialFile, st.c_str());
 
 		strcpy(App->SBC_MeshViewer->m_Material_File, pMaterialFile);
@@ -743,7 +758,7 @@ void SB_MeshViewer::Get_Mesh_Assets()
 	}
 
 	// ---------------------------------------------------------- Textures
-	Ogre::ResourcePtr ppp;
+	Ogre::ResourcePtr TP;
 	Ogre::ResourceManager::ResourceMapIterator TextureIterator = Ogre::TextureManager::getSingleton().getResourceIterator();
 
 	while (TextureIterator.hasMoreElements())
@@ -754,12 +769,12 @@ void SB_MeshViewer::Get_Mesh_Assets()
 		{
 
 			strcpy(pScriptName, TextureIterator.peekNextValue()->getName().c_str());
-			ppp = Ogre::TextureManager::getSingleton().getByName(pScriptName);
+			TP = Ogre::TextureManager::getSingleton().getByName(pScriptName);
 
-			if (ppp->isLoaded() == 1)
+			if (TP->isLoaded() == 1)
 			{
-
-				//strcpy(test, "Loaded:- ");
+				v_Texture_Names.push_back(pScriptName);
+				Texure_Count = v_Texture_Names.size();
 			}
 			else
 			{
