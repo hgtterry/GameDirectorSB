@@ -53,7 +53,6 @@ public:
 	char m_Objects_Folder_Path[MAX_PATH];
 	char m_Cameras_Folder_Path[MAX_PATH];
 
-	char m_Objects_Assets_Path[MAX_PATH];	// Assets Path and
 	char m_Main_Assets_Path[MAX_PATH];
 	char m_Project_Sub_Folder[MAX_PATH];	// Curent Default Project Location not including project folder
 	

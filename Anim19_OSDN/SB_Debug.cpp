@@ -107,7 +107,7 @@ void SB_Debug::ImGui_Debug_Project(void)
 	{
 		
 		ImGui::Text("Sub_Folder: = %s", App->SBC_Project->m_Project_Sub_Folder);
-		ImGui::Text("Asset_Path: = %s", App->SBC_Project->m_Objects_Assets_Path);
+		ImGui::Text("Asset_Path: = %s", App->SBC_Project->m_Main_Assets_Path);
 
 		ImGui::Text("SourceFile: = %s", App->SBC_Objects_Create->SourceFile);
 		ImGui::Text("DestFile: = %s", App->SBC_Objects_Create->DestinationFile);

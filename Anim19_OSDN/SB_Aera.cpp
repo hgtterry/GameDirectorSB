@@ -341,8 +341,6 @@ void SB_Aera::Add_Aera_To_Project(int Index,char* FileName,char* Resource_Locati
 	strcpy(Area->Area_FileName, FileName);
 	strcpy(Area->Area_Resource_Path, Resource_Location); // with back slash
 
-	App->SBC_Scene->Add_Resource_Location(Resource_Location);
-	
 	Area->Area_Ent = App->Cl19_Ogre->mSceneMgr->createEntity("UserMesh", Area->Area_FileName, App->SBC_Scene->Project_Resource_Group);
 	Area->Area_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Area->Area_Node->attachObject(Area->Area_Ent);

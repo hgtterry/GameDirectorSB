@@ -587,7 +587,7 @@ void VM_ImGui::ImGui_Model_Data(void)
 		ImGui::Text("Level Name: = %s", App->SBC_Project->m_Level_File_Name);
 		ImGui::Text("Level File Name: = %s", App->SBC_Project->m_Level_File_Name);
 		ImGui::Text("Level Path: = %s", App->SBC_Project->m_Project_Sub_Folder);
-		ImGui::Text("Asset Path: = %s", App->SBC_Project->m_Objects_Assets_Path);
+		ImGui::Text("Asset Path: = %s", App->SBC_Project->m_Main_Assets_Path);
 
 		ImGui::Spacing();
 

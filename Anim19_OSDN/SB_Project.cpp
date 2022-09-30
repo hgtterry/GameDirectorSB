@@ -30,7 +30,7 @@ distribution.
 SB_Project::SB_Project()
 {
 	
-	strcpy(m_Objects_Assets_Path,"None");
+	strcpy(m_Main_Assets_Path,"None");
 
 	strcpy(m_Project_Sub_Folder, App->EquityDirecory_FullPath);
 	strcat(m_Project_Sub_Folder, "\\");
@@ -46,7 +46,6 @@ SB_Project::SB_Project()
 	m_Players_Folder_Path[0] = 0;
 	m_Objects_Folder_Path[0] = 0;
 	m_Cameras_Folder_Path[0] = 0;
-	m_Main_Assets_Path[0] = 0;
 
 	m_Ini_Path_File_Name[0] = 0;
 	
@@ -562,7 +561,7 @@ bool SB_Project::Save_Cameras_Data()
 bool SB_Project::Save_Objects_Folder()
 {
 	m_Objects_Folder_Path[0] = 0;
-	m_Objects_Assets_Path[0] = 0;
+	m_Main_Assets_Path[0] = 0;
 
 	strcpy(m_Objects_Folder_Path, m_Level_Folder_Path);
 	strcat(m_Objects_Folder_Path, "\\");
@@ -572,12 +571,12 @@ bool SB_Project::Save_Objects_Folder()
 	_mkdir(m_Objects_Folder_Path);
 	_chdir(m_Objects_Folder_Path);
 
-	strcpy(m_Objects_Assets_Path, m_Level_Folder_Path);
-	strcat(m_Objects_Assets_Path, "\\");
-	strcat(m_Objects_Assets_Path, "Objects\\Assets");
+	strcpy(m_Main_Assets_Path, m_Level_Folder_Path);
+	strcat(m_Main_Assets_Path, "\\");
+	strcat(m_Main_Assets_Path, "Objects\\Assets");
 
-	_mkdir(m_Objects_Assets_Path);
-	strcat(m_Objects_Assets_Path, "\\");
+	_mkdir(m_Main_Assets_Path);
+	strcat(m_Main_Assets_Path, "\\");
 
 	Save_Objects_Data();
 
@@ -718,8 +717,6 @@ bool SB_Project::Save_Main_Asset_Folder()
 	strcat(m_Main_Assets_Path, "\\");
 	strcat(m_Main_Assets_Path, "Assets");
 
-	App->Say_Win(m_Main_Assets_Path);
-
 	if (_mkdir(m_Main_Assets_Path) == 0)
 	{
 		_chdir(m_Main_Assets_Path);
@@ -728,9 +725,6 @@ bool SB_Project::Save_Main_Asset_Folder()
 	{
 		_chdir(m_Main_Assets_Path);
 	}
-
-
-	//Save_Aeras_Data();
 
 	_chdir(m_Level_Folder_Path); // Return to Level Folder
 	return 1;
@@ -1055,8 +1049,6 @@ bool SB_Project::Load_Get_Resource_Path()
 
 	App->SBC_Scene->Add_Resource_Location(m_Main_Assets_Path);
 
-	//App->Say_Win(m_Main_Assets_Path);
-
 	return 1;
 }
 
@@ -1065,8 +1057,6 @@ bool SB_Project::Load_Get_Resource_Path()
 // *************************************************************************
 bool SB_Project::Load_Project_Objects()
 {
-	m_Objects_Assets_Path[0] = 0;
-
 	char Object_Ini_Path[MAX_PATH];
 	char chr_Tag1[MAX_PATH];
 	int Object_Count = 0;
@@ -1147,8 +1137,6 @@ bool SB_Project::Load_Project_Objects()
 		App->SBC_Scene->B_Object[Count]->Physics_Quat.x = x;
 		App->SBC_Scene->B_Object[Count]->Physics_Quat.y = y;
 		App->SBC_Scene->B_Object[Count]->Physics_Quat.z = z;
-
-		App->SBC_Scene->Add_Resource_Location(Object->Mesh_Resource_Path);
 
 		//---------------------------------------------------------------------------------- Message Entity
 		if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Message)
