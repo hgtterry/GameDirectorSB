@@ -19,6 +19,9 @@ misrepresented as being the original software.
 
 3. This notice may not be removed or altered from any source
 distribution.
+
+// :- Terry and Hazel Flanigan 2022
+
 */
 
 #include "stdafx.h"
@@ -54,9 +57,6 @@ SB_Project::SB_Project()
 	WriteFile =			NULL;
 
 	Project_Loaded = 0;
-
-	test = "Char Test";
-
 }
 
 
@@ -69,8 +69,9 @@ SB_Project::~SB_Project()
 // *************************************************************************
 bool SB_Project::Reset_Class()
 {
-	strcpy(m_Project_Name, "No_Project");
-	strcpy(m_Level_Name, "No_Level");
+	strcpy(m_Project_Name, "First_Project");
+	strcpy(m_Level_Name, "First_Level");
+
 	return 1;
 }
 
@@ -380,7 +381,7 @@ bool SB_Project::Save_Project()
 }
 
 // *************************************************************************
-// *	  					Save_Project_Ini Terry Flanigan				   *
+// *	  		Save_Project_Ini:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
 bool SB_Project::Save_Project_Ini()
 {
@@ -424,7 +425,7 @@ bool SB_Project::Save_Project_Ini()
 }
 
 // *************************************************************************
-// *	  				Save_Level_Folder Terry Flanigan				   *
+// *	  	Save_Level_Folder:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 bool SB_Project::Save_Level_Folder()
 {
@@ -556,7 +557,7 @@ bool SB_Project::Save_Cameras_Data()
 }
 
 // *************************************************************************
-// *	  				Save_Objects_Folder Terry Flanigan				   *
+// *	  	Save_Objects_Folder:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 bool SB_Project::Save_Objects_Folder()
 {
@@ -585,7 +586,7 @@ bool SB_Project::Save_Objects_Folder()
 }
 
 // *************************************************************************
-// *	  				Save_Objects_Data Terry Flanigan				   *
+// *	  		Save_Objects_Data:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
 bool SB_Project::Save_Objects_Data()
 {
@@ -707,7 +708,7 @@ bool SB_Project::Save_Objects_Data()
 }
 
 // *************************************************************************
-// *	  				Save_Main_Asset_Folder Terry Flanigan			   *
+// *	  	Save_Main_Asset_Folder:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
 bool SB_Project::Save_Main_Asset_Folder()
 {
@@ -731,7 +732,7 @@ bool SB_Project::Save_Main_Asset_Folder()
 }
 
 // *************************************************************************
-// *	  				Save_Aera_Folder Terry Flanigan				   *
+// *	  	Save_Aera_Folder:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 bool SB_Project::Save_Aera_Folder()
 {
@@ -758,7 +759,7 @@ bool SB_Project::Save_Aera_Folder()
 }
 
 // *************************************************************************
-// *	  				Save_Aeras_Data Terry Flanigan					   *
+// *	  		Save_Aeras_Data:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 bool SB_Project::Save_Aeras_Data()
 {
@@ -829,7 +830,7 @@ bool SB_Project::Save_Aeras_Data()
 }
 
 // *************************************************************************
-// *	  				Save_Players_Folder Terry Flanigan				   *
+// *	  	Save_Players_Folder:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 bool SB_Project::Save_Players_Folder()
 {
@@ -851,7 +852,7 @@ bool SB_Project::Save_Players_Folder()
 }
 
 // *************************************************************************
-// *	  				Save_Player_Data Terry Flanigan					   *
+// *	  	Save_Player_Data:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 bool SB_Project::Save_Player_Data()
 {
@@ -919,7 +920,7 @@ bool SB_Project::Save_Player_Data()
 }
 
 // *************************************************************************
-// *	  					Set_Paths Terry Flanigan					   *
+// *	  		Set_Paths:- Terry and Hazel Flanigan 2022				   *
 // *************************************************************************
 void SB_Project::Set_Paths()
 {
@@ -937,7 +938,7 @@ void SB_Project::Set_Paths()
 
 }
 // *************************************************************************
-// *	  					Load_Project Terry Flanigan					   *
+// *	  		Load_Project:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 bool SB_Project::Load_Project()
 {
@@ -1031,7 +1032,7 @@ bool SB_Project::Load_Project()
 }
 
 // *************************************************************************
-// *	  				Load_Project_Objects Terry Flanigan				   *
+// *	  	Load_Get_Resource_Path:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
 bool SB_Project::Load_Get_Resource_Path()
 {
@@ -1053,7 +1054,7 @@ bool SB_Project::Load_Get_Resource_Path()
 }
 
 // *************************************************************************
-// *	  				Load_Project_Objects Terry Flanigan				   *
+// *	  	Load_Project_Objects:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
 bool SB_Project::Load_Project_Objects()
 {
@@ -1161,7 +1162,7 @@ bool SB_Project::Load_Project_Objects()
 }
 
 // *************************************************************************
-// *	  					Load_Project_Aera Terry Flanigan			   *
+// *	  		Load_Project_Aera:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
 bool SB_Project::Load_Project_Aera()
 {
@@ -1229,7 +1230,7 @@ bool SB_Project::Load_Project_Aera()
 }
 
 // *************************************************************************
-// *	  				Load_Project_Player Terry Flanigan				   *
+// *	  	Load_Project_Player:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 bool SB_Project::Load_Project_Player()
 {
@@ -1292,7 +1293,7 @@ bool SB_Project::Load_Project_Player()
 }
 
 // *************************************************************************
-// *	  				Load_Project_Camera Terry Flanigan				   *
+// *	  		Load_Project_Camera:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
 bool SB_Project::Load_Project_Camera()
 {

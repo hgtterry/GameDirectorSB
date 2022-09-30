@@ -19,6 +19,9 @@ misrepresented as being the original software.
 
 3. This notice may not be removed or altered from any source
 distribution.
+
+:- Terry and Hazel Flanigan 2022
+
 */
 
 #pragma once
@@ -53,12 +56,10 @@ public:
 	char m_Objects_Folder_Path[MAX_PATH];
 	char m_Cameras_Folder_Path[MAX_PATH];
 
-	char m_Main_Assets_Path[MAX_PATH];
+	char m_Main_Assets_Path[MAX_PATH];		// Asset Path where Object mesh are added too and used on Loading
 	char m_Project_Sub_Folder[MAX_PATH];	// Curent Default Project Location not including project folder
 	
 	char m_Ini_Path_File_Name[MAX_PATH];
-
-	string test;
 
 	bool Project_Loaded;
 

@@ -1,0 +1,17 @@
+
+material wood_logs_Material_0
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture wood_logs_texture.jpg
+			}
+		}
+
+	}
+
+}
