@@ -53,8 +53,8 @@ public:
 	char m_Objects_Folder_Path[MAX_PATH];
 	char m_Cameras_Folder_Path[MAX_PATH];
 
-	char m_Objects_Assets_Path[MAX_PATH];	// Assets Path and \\
-
+	char m_Objects_Assets_Path[MAX_PATH];	// Assets Path and
+	char m_Main_Assets_Path[MAX_PATH];
 	char m_Project_Sub_Folder[MAX_PATH];	// Curent Default Project Location not including project folder
 	
 	char m_Ini_Path_File_Name[MAX_PATH];
@@ -70,6 +70,8 @@ protected:
 	bool Save_Project();
 	bool Save_Project_Ini();
 	bool Save_Level_Folder();
+
+	bool Save_Main_Asset_Folder();
 
 	bool Save_Cameras_Folder();
 	bool Save_Cameras_Data();

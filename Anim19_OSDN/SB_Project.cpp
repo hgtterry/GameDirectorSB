@@ -46,6 +46,7 @@ SB_Project::SB_Project()
 	m_Players_Folder_Path[0] = 0;
 	m_Objects_Folder_Path[0] = 0;
 	m_Cameras_Folder_Path[0] = 0;
+	m_Main_Assets_Path[0] = 0;
 
 	m_Ini_Path_File_Name[0] = 0;
 	
@@ -348,6 +349,7 @@ bool SB_Project::Save_Project()
 	Save_Project_Ini();
 
 	Save_Level_Folder();
+	Save_Main_Asset_Folder();
 
 	_chdir(m_Level_Folder_Path);
 
@@ -706,6 +708,35 @@ bool SB_Project::Save_Objects_Data()
 }
 
 // *************************************************************************
+// *	  				Save_Main_Asset_Folder Terry Flanigan			   *
+// *************************************************************************
+bool SB_Project::Save_Main_Asset_Folder()
+{
+	m_Main_Assets_Path[0] = 0;
+
+	strcpy(m_Main_Assets_Path, m_Level_Folder_Path);
+	strcat(m_Main_Assets_Path, "\\");
+	strcat(m_Main_Assets_Path, "Assets");
+
+	App->Say_Win(m_Main_Assets_Path);
+
+	if (_mkdir(m_Main_Assets_Path) == 0)
+	{
+		_chdir(m_Main_Assets_Path);
+	}
+	else
+	{
+		_chdir(m_Main_Assets_Path);
+	}
+
+
+	//Save_Aeras_Data();
+
+	_chdir(m_Level_Folder_Path); // Return to Level Folder
+	return 1;
+}
+
+// *************************************************************************
 // *	  				Save_Aera_Folder Terry Flanigan				   *
 // *************************************************************************
 bool SB_Project::Save_Aera_Folder()
@@ -953,7 +984,7 @@ bool SB_Project::Load_Project()
 	if (Options->Has_Aera > 0)
 	{
 		bool test = Load_Project_Aera();
-		if (test == 0){return 0;}
+		App->SBC_Scene->Area_Added = 1;
 	}
 
 	// ------------------------------------- Player
@@ -987,8 +1018,9 @@ bool SB_Project::Load_Project()
 	App->SBC_FileView->Redraw_FileView();
 
 	
-	App->SBC_Scene->Area_Added = 1;
+	
 	App->SBC_Scene->Scene_Loaded = 1;
+	App->SBC_Project->Project_Loaded = 1;
 
 	delete Options;
 
@@ -1178,6 +1210,7 @@ bool SB_Project::Load_Project_Aera()
 		App->SBC_Scene->SBC_Base_Area[Count]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Areas_Folder, Area_Name, Count);
 
 		Count++;
+		App->SBC_Scene->Area_Count++;
 	}
 
 	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Areas_Folder);
