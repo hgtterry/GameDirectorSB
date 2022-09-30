@@ -55,6 +55,8 @@ protected:
 	static LRESULT CALLBACK MeshViewer_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Properties_ListBox_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
+	void SetUp_Area_Trimesh(HWND hDlg);
+
 	void Set_ResourceMesh_File(HWND hDlg);
 
 	bool Set_OgreWindow(void);

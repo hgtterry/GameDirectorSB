@@ -77,6 +77,49 @@ SB_MeshViewer::~SB_MeshViewer()
 }
 
 // *************************************************************************
+// *		SetUp_Area_Trimesh:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void SB_MeshViewer::SetUp_Area_Trimesh(HWND hDlg)
+{
+	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_MVSTATIC),false);
+	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_DYNAMIC), false);
+	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_TRIMESH), true);
+	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_JUSTOGRE), false);
+	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_TEST), false);
+
+	SelectTriMesh = 1;
+
+	Enable_ShapeButtons(0);
+
+	char ConNum[256];
+	char ATest[256];
+
+	strcpy_s(ATest, "Area_");
+	_itoa(App->SBC_Scene->Object_Count, ConNum, 10);
+	strcat(ATest, ConNum);
+
+	SetDlgItemText(hDlg, IDC_OBJECTNAME, ATest);
+	strcpy(App->SBC_MeshViewer->Object_Name, ATest);
+	strcpy(App->SBC_MeshViewer->m_Current_Folder, "Areas");
+	HWND temp = GetDlgItem(hDlg, IDC_CB_FOLDERS);
+	SendMessage(temp, CB_SELECTSTRING, -1, LPARAM(App->SBC_MeshViewer->m_Current_Folder));
+
+	SendMessage(App->SBC_MeshViewer->ListHwnd, LB_RESETCONTENT, 0, 0);
+
+	strcpy(App->SBC_MeshViewer->mResource_Folder, App->EquityDirecory_FullPath);
+	strcat(App->SBC_MeshViewer->mResource_Folder, "\\Media_New\\");
+	strcat(App->SBC_MeshViewer->mResource_Folder, App->SBC_MeshViewer->m_Current_Folder);
+	strcat(App->SBC_MeshViewer->mResource_Folder, "\\");
+
+	SetDlgItemText(hDlg, IDC_ST_CURRENTFOLDER, App->SBC_MeshViewer->mResource_Folder);
+	SetWindowText(hDlg, App->SBC_MeshViewer->mResource_Folder);
+
+	App->SBC_MeshViewer->Add_Resources();
+	App->SBC_MeshViewer->Get_Files();
+
+}
+
+// *************************************************************************
 // *					Enable_ShapeButtons Terry Bernie				   *
 // *************************************************************************
 void SB_MeshViewer::Enable_TypeButtons(bool state)
@@ -106,7 +149,7 @@ void SB_MeshViewer::Enable_ShapeButtons(bool state)
 }
 
 // *************************************************************************
-// *				StartMeshViewer  Terry	Bernie						   *
+// *			StartMeshViewer:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 bool SB_MeshViewer::StartMeshViewer()
 {
@@ -122,45 +165,14 @@ bool SB_MeshViewer::StartMeshViewer()
 	Create_Resources_Group();
 	Add_Resources();
 	
+	
 	DialogBox(App->hInst, (LPCTSTR)IDD_GD_MESHVIEWER, App->Fdlg, (DLGPROC)MeshViewer_Proc);
 
 	App->Cl19_Ogre->OgreListener->MeshViewer_Running = 0;
 
-	//Close_OgreWindow();
-
-	//App->Cl19_Ogre->OgreListener->showDebugOverlay(true);
-	//App->Cl19_Ogre->textArea->show();
 
 	App->RenderBackGround = 0;
 	return 1;
-}
-
-// *************************************************************************
-// *					Set_ResourceMesh_File  Terry Flanigan			   *
-// *************************************************************************
-void SB_MeshViewer::Set_ResourceMesh_File(HWND hDlg)
-{
-	char buff[MAX_PATH];
-
-	strcpy(App->SBC_MeshViewer->mResource_Folder, App->EquityDirecory_FullPath);
-	strcat(App->SBC_MeshViewer->mResource_Folder, "\\Media_New\\");
-	strcat(App->SBC_MeshViewer->mResource_Folder, App->SBC_MeshViewer->m_Current_Folder);
-	strcat(App->SBC_MeshViewer->mResource_Folder, "\\");
-
-	SetDlgItemText(hDlg, IDC_ST_CURRENTFOLDER, App->SBC_MeshViewer->mResource_Folder);
-	SetWindowText(hDlg, App->SBC_MeshViewer->mResource_Folder);
-
-	App->SBC_MeshViewer->Add_Resources();
-	App->SBC_MeshViewer->Get_Files();
-
-	HWND temp = GetDlgItem(hDlg, IDC_CB_FOLDERS);
-	SendMessage(temp, CB_SELECTSTRING, -1, LPARAM(App->SBC_MeshViewer->m_Current_Folder));
-	
-
-	SendDlgItemMessage(hDlg, IDC_LISTFILES, LB_GETTEXT, (WPARAM)0, (LPARAM)buff);
-	SetDlgItemText(hDlg, IDC_SELECTEDNAME, buff);
-
-	strcpy(App->SBC_MeshViewer->Selected_MeshFile, buff);
 }
 
 // *************************************************************************
@@ -175,11 +187,18 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 		App->SBC_MeshViewer->MainDlgHwnd = hDlg;
 
-		SendDlgItemMessage(hDlg, IDC_MVSTATIC, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_DYNAMIC, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		SendDlgItemMessage(hDlg, IDC_BT_FOLDERBROWSE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BOX, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_SELECTEDNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_MVSTATIC, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_DYNAMIC, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_TRIMESH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_SPHERE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CAPSULE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CYLINDER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CONE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SendDlgItemMessage(hDlg, IDC_LISTFILES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_OBJECTNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -187,16 +206,19 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		SendDlgItemMessage(hDlg, IDC_STSHAPE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STTYPE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STFOLDER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		
+		SendDlgItemMessage(hDlg, IDC_BT_PROPERTIES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CB_FOLDERS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_CURRENTFOLDER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		
 		SetDlgItemText(hDlg, IDC_ST_CURRENTFOLDER, App->SBC_MeshViewer->mResource_Folder);
 
 		SetWindowText(hDlg, App->SBC_MeshViewer->mResource_Folder);
 
 		App->SBC_MeshViewer->ListHwnd = GetDlgItem(hDlg, IDC_LISTFILES);
-		
+
 		App->SBC_MeshViewer->MeshView_Hwnd = GetDlgItem(hDlg, IDC_OGREWIN);
 		App->SBC_MeshViewer->Set_OgreWindow();
 
@@ -210,16 +232,22 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		App->SBC_MeshViewer->SelectDynamic = 0;
 		App->SBC_MeshViewer->SelectTriMesh = 0;
 
-		App->SBC_MeshViewer->Enable_ShapeButtons(1);
-		App->SBC_MeshViewer->Enable_TypeButtons(1);
 
-		char ConNum[256];
-		char ATest[256];
+		if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area)
+		{
+			App->SBC_MeshViewer->SetUp_Area_Trimesh(hDlg);
+		}
 
 		App->SBC_MeshViewer->Get_Files();
-	
+
 		if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Objects)
 		{
+			App->SBC_MeshViewer->Enable_ShapeButtons(1);
+			App->SBC_MeshViewer->Enable_TypeButtons(1);
+
+			char ATest[256];
+			char ConNum[256];
+
 			strcpy_s(ATest, "Object_");
 			_itoa(App->SBC_Scene->Object_Count, ConNum, 10);
 			strcat(ATest, ConNum);
@@ -284,7 +312,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->Brush_White;
 		}
-		
+
 		return FALSE;
 	}
 
@@ -292,7 +320,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 	{
 		return (LONG)App->AppBackground;
 	}
-	
+
 	case WM_NOTIFY:
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
@@ -310,7 +338,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			App->Custom_Button_Toggle(item, App->SBC_MeshViewer->SelectStatic);
 			return CDRF_DODEFAULT;
 		}
-		
+
 		if (some_item->idFrom == IDC_DYNAMIC && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
@@ -361,6 +389,13 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_PROPERTIES && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
 		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
@@ -396,7 +431,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 				break;
 			case CBN_CLOSEUP:
 			{
-		
+
 				HWND temp = GetDlgItem(hDlg, IDC_CB_FOLDERS);
 				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
 				SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)App->SBC_MeshViewer->m_Current_Folder);
@@ -457,7 +492,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			SetWindowText(hDlg, App->Com_CDialogs->szSelectedDir);
 
 			strcpy(App->SBC_MeshViewer->mResource_Folder, App->Com_CDialogs->szSelectedDir);
-			
+
 			App->SBC_MeshViewer->Add_Resources();
 			App->SBC_MeshViewer->Get_Files();
 			return TRUE;
@@ -587,8 +622,8 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 
 			char buff[255];
-			GetDlgItemText(hDlg,IDC_OBJECTNAME,(LPTSTR)buff,256);
-			strcpy(App->SBC_MeshViewer->Object_Name,buff);
+			GetDlgItemText(hDlg, IDC_OBJECTNAME, (LPTSTR)buff, 256);
+			strcpy(App->SBC_MeshViewer->Object_Name, buff);
 
 			App->Cl19_Ogre->OgreListener->MeshViewer_Running = 0;
 
@@ -612,9 +647,9 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
-			
+
 			App->Cl19_Ogre->OgreListener->MeshViewer_Running = 0;
-			
+
 			/*if (App->SBC_MeshViewer->MvEnt && App->SBC_MeshViewer->MvNode)
 			{
 				App->SBC_MeshViewer->MvNode->detachAllObjects();
@@ -626,9 +661,9 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 			//Debug
 			App->SBC_MeshViewer->Close_OgreWindow();
-			
+
 			App->SBC_MeshViewer->Delete_Resources_Group();
-			
+
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -636,6 +671,34 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		break;
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *					Set_ResourceMesh_File  Terry Flanigan			   *
+// *************************************************************************
+void SB_MeshViewer::Set_ResourceMesh_File(HWND hDlg)
+{
+	char buff[MAX_PATH];
+
+	strcpy(App->SBC_MeshViewer->mResource_Folder, App->EquityDirecory_FullPath);
+	strcat(App->SBC_MeshViewer->mResource_Folder, "\\Media_New\\");
+	strcat(App->SBC_MeshViewer->mResource_Folder, App->SBC_MeshViewer->m_Current_Folder);
+	strcat(App->SBC_MeshViewer->mResource_Folder, "\\");
+
+	SetDlgItemText(hDlg, IDC_ST_CURRENTFOLDER, App->SBC_MeshViewer->mResource_Folder);
+	SetWindowText(hDlg, App->SBC_MeshViewer->mResource_Folder);
+
+	App->SBC_MeshViewer->Add_Resources();
+	App->SBC_MeshViewer->Get_Files();
+
+	HWND temp = GetDlgItem(hDlg, IDC_CB_FOLDERS);
+	SendMessage(temp, CB_SELECTSTRING, -1, LPARAM(App->SBC_MeshViewer->m_Current_Folder));
+	
+
+	SendDlgItemMessage(hDlg, IDC_LISTFILES, LB_GETTEXT, (WPARAM)0, (LPARAM)buff);
+	SetDlgItemText(hDlg, IDC_SELECTEDNAME, buff);
+
+	strcpy(App->SBC_MeshViewer->Selected_MeshFile, buff);
 }
 
 // *************************************************************************
