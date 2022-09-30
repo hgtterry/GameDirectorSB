@@ -719,21 +719,30 @@ bool SB_Objects_Create::First_Area_Start_Project()
 	App->Cl_Grid->Grid_SetVisible(1);
 
 	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
+	// ------------------------ Add Default Camera
+	App->SBC_Camera->Add_New_Camera();
+	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Cameras_Folder);
 
+	// ------------------------ Add Default Player
 	App->SBC_Player->Create_Player_Object();
 	strcpy(App->SBC_Scene->SBC_Base_Player[0]->Player_Name, "Player_1");
+	App->SBC_Player->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Players_Folder, "Player_1", 0);
+	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Players_Folder);
+
+	// ------------------------ Add Area
+	App->SBC_Scene->SBC_Base_Area[0]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Areas_Folder, "Area_1", 0);
+	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Areas_Folder);
+
+	App->SBC_FileView->Redraw_FileView();
+
+	App->SBC_FileView->SelectItem(App->SBC_Scene->SBC_Base_Area[0]->FileViewItem);
 
 	App->Cl_Bullet->Reset_Physics();
 	App->SBC_Physics->Enable_Physics(1);
 
-	App->SBC_Player->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Players_Folder, "Player_1", 0);
-	App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Areas_Folder, "Area_1", 0);
-	App->SBC_FileView->Redraw_FileView();
-
 	App->SBC_Scene->Scene_Loaded = 1;
-
 	App->SBC_Scene->Area_Added = 1;
-
+	
 	return 1;
 }
 
