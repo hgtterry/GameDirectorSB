@@ -19,6 +19,9 @@ misrepresented as being the original software.
 
 3. This notice may not be removed or altered from any source
 distribution.
+
+:- Terry and Hazel Flanigan 2022
+
 */
 
 #include "stdafx.h"
@@ -627,6 +630,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 			App->Cl19_Ogre->OgreListener->MeshViewer_Running = 0;
 
+			App->SBC_MeshViewer->Copy_Assets();
 
 			App->SBC_MeshViewer->Close_OgreWindow();
 			App->SBC_MeshViewer->Delete_Resources_Group();
@@ -672,6 +676,103 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 	}
 	return FALSE;
 }
+
+// *************************************************************************
+// *	  			Copy_Assets:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void SB_MeshViewer::Copy_Assets()
+{
+	Get_Mesh_Assets();
+
+	// ------------------ Copy Mesh
+	strcpy(SourceFile, App->SBC_MeshViewer->mResource_Folder);
+	strcat(SourceFile, App->SBC_MeshViewer->Selected_MeshFile);
+
+	strcpy(DestinationFile, App->SBC_Project->m_Main_Assets_Path);
+	strcat(DestinationFile, App->SBC_MeshViewer->Selected_MeshFile);
+
+	CopyFile(SourceFile, DestinationFile, false);
+
+	// ------------------ Copy Material File
+	strcpy(SourceFile, App->SBC_MeshViewer->mResource_Folder);
+	strcat(SourceFile, App->SBC_MeshViewer->m_Material_File);
+
+	strcpy(DestinationFile, App->SBC_Project->m_Main_Assets_Path);
+	strcat(DestinationFile, App->SBC_MeshViewer->m_Material_File);
+
+	CopyFile(SourceFile, DestinationFile, false);
+
+	// ------------------ Copy Textures
+	
+}
+
+// *************************************************************************
+// *	  		Get_Mesh_Assets:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void SB_MeshViewer::Get_Mesh_Assets()
+{
+	App->SBC_MeshViewer->m_Material_File[0] = 0;
+
+	int SubMeshCount = App->SBC_MeshViewer->MvEnt->getNumSubEntities();
+	char pScriptName[255];
+	char pMaterialFile[255];
+	Ogre::String st;
+	Ogre::MaterialPtr pp;
+
+	pp.setNull();
+	bool loaded = 0;
+	
+	// ---------------------------------------------------------- Material File
+	Ogre::SubMesh const *subMesh = App->SBC_MeshViewer->MvEnt->getSubEntity(0)->getSubMesh();
+	Ogre::String MatName = subMesh->getMaterialName();
+	strcpy(pScriptName, MatName.c_str());
+
+	loaded = Ogre::MaterialManager::getSingleton().resourceExists(MatName);
+
+	if (loaded == 1)
+	{
+		pp = Ogre::MaterialManager::getSingleton().getByName(MatName, App->SBC_MeshViewer->MV_Resource_Group);
+		st = pp->getOrigin();
+		strcpy(pMaterialFile, st.c_str());
+
+		strcpy(App->SBC_MeshViewer->m_Material_File, pMaterialFile);
+	}
+	else
+	{
+		//strcpy(test, "Not Loaded:- ");
+	}
+
+	// ---------------------------------------------------------- Textures
+	Ogre::ResourcePtr ppp;
+	Ogre::ResourceManager::ResourceMapIterator TextureIterator = Ogre::TextureManager::getSingleton().getResourceIterator();
+
+	while (TextureIterator.hasMoreElements())
+	{
+		//strcpy(pScriptName,(static_cast<Ogre::MaterialPtr>(TextureIterator.peekNextValue()))->getName().c_str());
+
+		if (TextureIterator.peekNextValue()->getGroup() == App->SBC_MeshViewer->MV_Resource_Group)
+		{
+
+			strcpy(pScriptName, TextureIterator.peekNextValue()->getName().c_str());
+			ppp = Ogre::TextureManager::getSingleton().getByName(pScriptName);
+
+			if (ppp->isLoaded() == 1)
+			{
+
+				//strcpy(test, "Loaded:- ");
+			}
+			else
+			{
+				//strcpy(test, "Not Loaded:- ");	
+			}
+
+		}
+
+		TextureIterator.moveNext();
+	}
+	
+}
+
 
 // *************************************************************************
 // *					Set_ResourceMesh_File  Terry Flanigan			   *

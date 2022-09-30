@@ -1085,12 +1085,6 @@ bool SB_Project::Load_Project_Objects()
 	strcat(Object_Ini_Path, "Objects");
 	strcat(Object_Ini_Path, "\\");
 
-	//Assets Path Relative
-	/*strcpy(m_Objects_Assets_Path, Object_Ini_Path);
-	strcat(m_Objects_Assets_Path, "Assets");
-	strcat(m_Objects_Assets_Path, "\\");
-
-	App->SBC_Scene->Add_Resource_Location(m_Objects_Assets_Path);*/
 	//---------------------------------------------------
 
 	strcat(Object_Ini_Path, "Objects.efd");

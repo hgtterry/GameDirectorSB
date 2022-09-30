@@ -19,6 +19,9 @@ misrepresented as being the original software.
 
 3. This notice may not be removed or altered from any source
 distribution.
+
+// :- Terry and Hazel Flanigan 2022
+
 */
 
 #pragma once
@@ -30,6 +33,7 @@ public:
 	~SB_MeshViewer();
 
 	bool StartMeshViewer();
+	void Copy_Assets();
 
 	char mResource_Folder[MAX_PATH];
 	char Selected_MeshFile[MAX_PATH];
@@ -37,6 +41,9 @@ public:
 	char Last_MeshFile[MAX_PATH];
 	char m_Material_File[MAX_PATH];
 	char m_Current_Folder[MAX_PATH];
+
+	char DestinationFile[MAX_PATH];
+	char SourceFile[MAX_PATH];
 
 	Ogre::SceneNode*		MvNode;
 	HWND MainDlgHwnd;
@@ -63,7 +70,7 @@ protected:
 	void Close_OgreWindow(void);
 
 	void ShowMesh(char* MeshFile);
-
+	void Get_Mesh_Assets();
 	void Reset_Shape_Flags();
 
 	void Enable_ShapeButtons(bool state);
