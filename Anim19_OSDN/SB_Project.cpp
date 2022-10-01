@@ -1048,7 +1048,7 @@ bool SB_Project::Load_Get_Resource_Path()
 	strcat(m_Main_Assets_Path, "Assets");
 	strcat(m_Main_Assets_Path, "\\");
 
-	App->SBC_Scene->Add_Resource_Location(m_Main_Assets_Path);
+	App->SBC_Scene->Add_Resource_Location_Project(m_Main_Assets_Path);
 
 	return 1;
 }

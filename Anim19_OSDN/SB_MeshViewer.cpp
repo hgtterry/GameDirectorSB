@@ -682,6 +682,8 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 // *************************************************************************
 void SB_MeshViewer::Copy_Assets()
 {
+	App->SBC_Scene->Add_Resource_Location_Project(mResource_Folder);
+
 	Get_Mesh_Assets();
 
 	// ------------------ Copy Mesh

@@ -162,9 +162,14 @@ bool SB_Scene::Clear_Level()
 // *************************************************************************
 bool SB_Scene::Create_Resources_Group()
 {
+	bool Test = Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(Project_Resource_Group);
 
-	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(Project_Resource_Group);
-	//Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(App->SBC_Scene->Project_Resource_Group);
+	if (Test == 0)
+	{
+		Ogre::ResourceGroupManager::getSingleton().createResourceGroup(Project_Resource_Group);
+		App->Say("Resouce Group Created");
+	}
+
 	return 1;
 }
 
@@ -185,9 +190,9 @@ bool SB_Scene::Delete_Resources_Group()
 }
 
 // *************************************************************************
-// *					Add_Resource_Location	Terry Bernie 		 	   *
+// *	Add_Resource_Location_Project:- Terry and Hazel Flanigan 2022	   *
 // *************************************************************************
-bool SB_Scene::Add_Resource_Location(char* Resource_Location)
+bool SB_Scene::Add_Resource_Location_Project(char* Resource_Location)
 {
 	bool Test = Ogre::ResourceGroupManager::getSingleton().resourceLocationExists(Resource_Location, Project_Resource_Group);
 

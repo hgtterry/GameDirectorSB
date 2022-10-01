@@ -37,7 +37,7 @@ public:
 	bool Clear_Level();
 	bool Create_Resources_Group();
 	bool Delete_Resources_Group();
-	bool Add_Resource_Location(char* Resource_Location);
+	bool Add_Resource_Location_Project(char* Resource_Location);
 	
 	bool Game_Mode(void);
 	bool Editor_Mode(void);
