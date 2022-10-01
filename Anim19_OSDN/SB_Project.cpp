@@ -562,22 +562,13 @@ bool SB_Project::Save_Cameras_Data()
 bool SB_Project::Save_Objects_Folder()
 {
 	m_Objects_Folder_Path[0] = 0;
-	m_Main_Assets_Path[0] = 0;
 
 	strcpy(m_Objects_Folder_Path, m_Level_Folder_Path);
 	strcat(m_Objects_Folder_Path, "\\");
 	strcat(m_Objects_Folder_Path, "Objects");
 
-
 	_mkdir(m_Objects_Folder_Path);
 	_chdir(m_Objects_Folder_Path);
-
-	strcpy(m_Main_Assets_Path, m_Level_Folder_Path);
-	strcat(m_Main_Assets_Path, "\\");
-	strcat(m_Main_Assets_Path, "Objects\\Assets");
-
-	_mkdir(m_Main_Assets_Path);
-	strcat(m_Main_Assets_Path, "\\");
 
 	Save_Objects_Data();
 
@@ -717,6 +708,7 @@ bool SB_Project::Save_Main_Asset_Folder()
 	strcpy(m_Main_Assets_Path, m_Level_Folder_Path);
 	strcat(m_Main_Assets_Path, "\\");
 	strcat(m_Main_Assets_Path, "Assets");
+	strcat(m_Main_Assets_Path, "\\");
 
 	if (_mkdir(m_Main_Assets_Path) == 0)
 	{
@@ -740,7 +732,7 @@ bool SB_Project::Save_Aera_Folder()
 
 	strcpy(m_Aera_Folder_Path, m_Level_Folder_Path);
 	strcat(m_Aera_Folder_Path, "\\");
-	strcat(m_Aera_Folder_Path,"Aeras");
+	strcat(m_Aera_Folder_Path,"Areas");
 
 	
 	if (_mkdir(m_Aera_Folder_Path) == 0)
@@ -768,7 +760,7 @@ bool SB_Project::Save_Aeras_Data()
 
 	strcpy(File, m_Aera_Folder_Path);
 	strcat(File, "\\");
-	strcat(File, "Aeras.aer");
+	strcat(File, "Areas.aer");
 
 	WriteFile = nullptr;
 
@@ -787,7 +779,7 @@ bool SB_Project::Save_Aeras_Data()
 	fprintf(WriteFile, "%s\n", " ");
 
 	fprintf(WriteFile, "%s\n", "[Counters]");
-	fprintf(WriteFile, "%s%i\n", "Aeras_Count=", App->SBC_Scene->Area_Count);
+	fprintf(WriteFile, "%s%i\n", "Areas_Count=", App->SBC_Scene->Area_Count);
 
 	fprintf(WriteFile, "%s\n", " ");
 
@@ -801,18 +793,18 @@ bool SB_Project::Save_Aeras_Data()
 	int Count = 0;
 	while (Count < App->SBC_Scene->Area_Count)
 	{
-		strcpy(buff, "[Aera_");
+		strcpy(buff, "[Area_");
 		_itoa(Count, Cbuff, 10);
 		strcat(buff, Cbuff);
 		strcat(buff, "]");
 
 		fprintf(WriteFile, "%s\n", buff); // Header also Player name until changed by user
 
-		fprintf(WriteFile, "%s%s\n", "Aera_Name=", App->SBC_Scene->SBC_Base_Area[Count]->Area_Name); // Change
+		fprintf(WriteFile, "%s%s\n", "Area_Name=", App->SBC_Scene->SBC_Base_Area[Count]->Area_Name); // Change
 
-		fprintf(WriteFile, "%s%s\n", "Aera_File=", App->SBC_Scene->SBC_Base_Area[Count]->Area_FileName);
-		fprintf(WriteFile, "%s%s\n", "Aera_Path_File=", App->SBC_Scene->SBC_Base_Area[Count]->Area_Path_And_FileName);
-		fprintf(WriteFile, "%s%s\n", "Aera_Resource_Path=", App->SBC_Scene->SBC_Base_Area[Count]->Area_Resource_Path);
+		fprintf(WriteFile, "%s%s\n", "Area_File=", App->SBC_Scene->SBC_Base_Area[Count]->Area_FileName);
+		fprintf(WriteFile, "%s%s\n", "Area_Path_File=", App->SBC_Scene->SBC_Base_Area[Count]->Area_Path_And_FileName);
+		fprintf(WriteFile, "%s%s\n", "Area_Resource_Path=", App->SBC_Scene->SBC_Base_Area[Count]->Area_Resource_Path);
 
 		fprintf(WriteFile, "%s\n", "[Position]");
 		x = App->SBC_Scene->SBC_Base_Area[Count]->Area_Node->getPosition().x;
@@ -1182,35 +1174,27 @@ bool SB_Project::Load_Project_Aera()
 	strcat(Area_Ini_Path, m_Level_Name);
 	strcat(Area_Ini_Path, "\\");
 
-	strcat(Area_Ini_Path, "Aeras");
+	strcat(Area_Ini_Path, "Areas");
 	strcat(Area_Ini_Path, "\\");
 
-	strcat(Area_Ini_Path, "Aeras.aer");
+	strcat(Area_Ini_Path, "Areas.aer");
 
 	App->Cl_Ini->SetPathName(Area_Ini_Path);
 
-	Area_Count = App->Cl_Ini->GetInt("Counters","Aeras_Count", 0);
+	Area_Count = App->Cl_Ini->GetInt("Counters","Areas_Count", 0);
 	
 	int Count = 0;
 
 	while (Count < Area_Count)
 	{
 
-		App->Cl_Ini->GetString("Aera_0", "Aera_Name", Area_Name, MAX_PATH);
-		App->Cl_Ini->GetString("Aera_0", "Aera_File", Mesh_FileName, MAX_PATH);
-		App->Cl_Ini->GetString("Aera_0", "Aera_Resource_Path", Resource_Location, MAX_PATH);
+		App->Cl_Ini->GetString("Area_0", "Area_Name", Area_Name, MAX_PATH);
+		App->Cl_Ini->GetString("Area_0", "Area_File", Mesh_FileName, MAX_PATH);
+		App->Cl_Ini->GetString("Area_0", "Area_Resource_Path", Resource_Location, MAX_PATH);
 
-		bool test = App->SBC_FileIO->Directory_Vaild(Resource_Location);
-	
-		if (test == 0)
-		{
-			App->Say_Win("Cant find Area Folder/Location");
-			return 0;
-		}
+		App->SBC_Aera->Add_Aera_To_Project(Count, Mesh_FileName, m_Main_Assets_Path);
 
-		App->SBC_Aera->Add_Aera_To_Project(Count, Mesh_FileName, Resource_Location);
-
-		App->Cl_Ini->GetString("Position", "Mesh_Pos", chr_Tag1, 1024);
+		App->Cl_Ini->GetString("Position", "Mesh_Pos", chr_Tag1, MAX_PATH);
 		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
 
 		App->SBC_Scene->SBC_Base_Area[Count]->Area_Node->setPosition(x, y, z);

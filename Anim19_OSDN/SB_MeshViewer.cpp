@@ -697,38 +697,38 @@ void SB_MeshViewer::Copy_Assets()
 	
 	//Get_Mesh_Assets();
 
-	//// ------------------ Copy Mesh
-	//strcpy(SourceFile, App->SBC_MeshViewer->mResource_Folder);
-	//strcat(SourceFile, App->SBC_MeshViewer->Selected_MeshFile);
+	// ------------------ Copy Mesh
+	strcpy(SourceFile, App->SBC_MeshViewer->mResource_Folder);
+	strcat(SourceFile, App->SBC_MeshViewer->Selected_MeshFile);
 
-	//strcpy(DestinationFile, App->SBC_Project->m_Main_Assets_Path);
-	//strcat(DestinationFile, App->SBC_MeshViewer->Selected_MeshFile);
+	strcpy(DestinationFile, App->SBC_Project->m_Main_Assets_Path);
+	strcat(DestinationFile, App->SBC_MeshViewer->Selected_MeshFile);
 
-	//CopyFile(SourceFile, DestinationFile, false);
+	CopyFile(SourceFile, DestinationFile, false);
 
-	//// ------------------ Copy Material File
-	//strcpy(SourceFile, App->SBC_MeshViewer->mResource_Folder);
-	//strcat(SourceFile, App->SBC_MeshViewer->m_Material_File);
+	// ------------------ Copy Material File
+	strcpy(SourceFile, App->SBC_MeshViewer->mResource_Folder);
+	strcat(SourceFile, App->SBC_MeshViewer->m_Material_File);
 
-	//strcpy(DestinationFile, App->SBC_Project->m_Main_Assets_Path);
-	//strcat(DestinationFile, App->SBC_MeshViewer->m_Material_File);
+	strcpy(DestinationFile, App->SBC_Project->m_Main_Assets_Path);
+	strcat(DestinationFile, App->SBC_MeshViewer->m_Material_File);
 
-	//CopyFile(SourceFile, DestinationFile, false);
+	CopyFile(SourceFile, DestinationFile, false);
 
-	//// ------------------ Copy Textures
-	//int Count = 0;
-	//while (Count < Texure_Count)
-	//{
-	//	strcpy(SourceFile, App->SBC_MeshViewer->mResource_Folder);
-	//	strcat(SourceFile, v_Texture_Names[Count].c_str());
+	// ------------------ Copy Textures
+	int Count = 0;
+	while (Count < Texure_Count)
+	{
+		strcpy(SourceFile, App->SBC_MeshViewer->mResource_Folder);
+		strcat(SourceFile, v_Texture_Names[Count].c_str());
 
-	//	strcpy(DestinationFile, App->SBC_Project->m_Main_Assets_Path);
-	//	strcat(DestinationFile, v_Texture_Names[Count].c_str());
+		strcpy(DestinationFile, App->SBC_Project->m_Main_Assets_Path);
+		strcat(DestinationFile, v_Texture_Names[Count].c_str());
 
-	//	CopyFile(SourceFile, DestinationFile, false);
+		CopyFile(SourceFile, DestinationFile, false);
 
-	//	Count++;
-	//}
+		Count++;
+	}
 	
 }
 
@@ -856,6 +856,7 @@ void SB_MeshViewer::ShowMesh(char* MeshFile)
 	mCameraMeshView->setPosition(0, Centre.y, -Radius*2.5);
 	mCameraMeshView->lookAt(0, Centre.y, 0);
 
+	Get_Mesh_Assets();
 	//	Check_HasAnimations();
 }
 

@@ -62,7 +62,7 @@ bool GD19_Ogre::InitOgre(void)
 	chooseSceneManager();
 	createCamera();
 	createViewports();
-	loadResources();
+	Initialise_Resources();
 
 	manObj = mSceneMgr->createManualObject("sampleArea");
 	ModelNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
@@ -100,9 +100,9 @@ bool GD19_Ogre::OgreCreateRoot(void)
 	return 1;
 }
 
-// *************************************************************************
-// *				SetUpResources (Terry Bernie)						   *
-// *************************************************************************
+// **************************************************************************
+// *			SetUpResources:- Terry and Hazel Flanigan 2022				*
+// **************************************************************************
 bool GD19_Ogre::SetUpResources(void)
 {
 
@@ -116,32 +116,31 @@ bool GD19_Ogre::SetUpResources(void)
 	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App_Resource_Group);
 
 	//-------------------------------- Zip Files
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/OgreCore.zip", "Zip",
-		App_Resource_Group);
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/Equity.zip", "Zip",
-		App_Resource_Group);
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/GDCore.zip", "Zip",
-		App_Resource_Group);
-
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/Panels.zip", "Zip",
-		App_Resource_Group);
-
+	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/OgreCore.zip", "Zip",App_Resource_Group);
+	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/Equity.zip", "Zip",App_Resource_Group);
+	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/GDCore.zip", "Zip",App_Resource_Group);
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/App_Resources" ,"FileSystem", App_Resource_Group);
-	
-	//Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/Cube_Ogre", "FileSystem",
-	//	App_Resource_Group);
+	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/Zipper", "FileSystem",App_Resource_Group);
+	//Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/Particles", "FileSystem",App_Resource_Group);
 
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/Zipper", "FileSystem",
-		App_Resource_Group);
+	return 1;
+}
 
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/fonts", "FileSystem",
-		App_Resource_Group);
+// *************************************************************************
+// *		Initialise_Resources:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+bool GD19_Ogre::Initialise_Resources(void)
+{
+	// Initialize, parse scripts etc
+	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/Particles", "FileSystem",
-		App_Resource_Group);
-
-	/*Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media_New/Areas", "FileSystem",
-		App_Resource_Group);*/
+	/*Ogre::FontManager* fontMgr = Ogre::FontManager::getSingletonPtr();
+	Ogre::ResourcePtr font = fontMgr->create("MyFont", "General");
+	font->setParameter("type", "truetype");
+	font->setParameter("source", "cuckoo.ttf");
+	font->setParameter("size", "32");
+	font->setParameter("resolution", "96");
+	font->load();*/
 
 	return 1;
 }
@@ -238,32 +237,6 @@ bool GD19_Ogre::Get_Sub_Folders(char* Sub_folder)
 	}
 
 	return 0;
-}
-
-
-// *************************************************************************
-// *					loadResources (Terry Bernie)					   *
-// *************************************************************************
-bool GD19_Ogre::loadResources(void)
-{
-	// Initialize, parse scripts etc
-	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
-
-	Ogre::FontManager* fontMgr = Ogre::FontManager::getSingletonPtr();
-
-	Ogre::ResourcePtr font = fontMgr->create("MyFont", "General");
-
-	font->setParameter("type", "truetype");
-
-	font->setParameter("source", "cuckoo.ttf");
-
-	font->setParameter("size", "32");
-
-	font->setParameter("resolution", "96");
-
-	font->load();
-
-	return 1;
 }
 
 // *************************************************************************

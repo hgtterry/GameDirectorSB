@@ -42,7 +42,7 @@ public:
 	bool Configure(void);
 	bool chooseSceneManager(void);
 	bool createCamera(void);
-	bool loadResources(void);
+	bool Initialise_Resources(void);
 	bool createViewports(void);
 	bool createFrameListener(void);
 
