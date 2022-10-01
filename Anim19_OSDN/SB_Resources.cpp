@@ -32,6 +32,10 @@ SB_Resources::SB_Resources()
 	FX_General_hLV = nullptr;
 	Active_MeshMaterials = 0;
 	Active_Textures = 1;
+
+	Show_App_Res_Flag = 0;
+	Show_MV_Res_Flag = 0;
+	Show_Project_Res_Flag = 0;
 }
 
 
@@ -58,8 +62,7 @@ LRESULT CALLBACK SB_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM wP
 
 		App->SetTitleBar(hDlg);
 
-		SendDlgItemMessage(hDlg, IDC_BT_PRJRESOURCES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		
+		SendDlgItemMessage(hDlg, IDC_ST_BANNER, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 
 		////App->GDC_DlgResources->SelectedResource = 0;
 		App->SBC_Resources->CreateListGeneral_FX(hDlg);
@@ -68,6 +71,14 @@ LRESULT CALLBACK SB_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM wP
 	}
 	case WM_CTLCOLORSTATIC:
 	{
+		if (GetDlgItem(hDlg, IDC_ST_BANNER) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->DialogBackGround;
+		}
+
 		return FALSE;
 	}
 
@@ -80,10 +91,24 @@ LRESULT CALLBACK SB_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM wP
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
+		if (some_item->idFrom == IDC_BT_APPRESOURCES && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->SBC_Resources->Show_App_Res_Flag);
+			return CDRF_DODEFAULT;
+		}
+
 		if (some_item->idFrom == IDC_BT_PRJRESOURCES && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+			App->Custom_Button_Toggle(item, App->SBC_Resources->Show_Project_Res_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BTMVRESOURCES && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->SBC_Resources->Show_MV_Res_Flag);
 			return CDRF_DODEFAULT;
 		}
 
@@ -132,18 +157,24 @@ LRESULT CALLBACK SB_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM wP
 
 		if (LOWORD(wParam) == IDC_BT_PRJRESOURCES)
 		{
+			SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)"Project Resources");
+
 			App->SBC_Resources->Show_Project_Res();
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_BT_APPRESOURCES)
 		{
+			SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)"App Resources");
+
 			App->SBC_Resources->Show_App_Res();
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_BTMVRESOURCES)
 		{
+			SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)"Mesh Viewer Resources");
+
 			App->SBC_Resources->Show_MV_Res();
 			return TRUE;
 		}
@@ -174,7 +205,7 @@ bool SB_Resources::CreateListGeneral_FX(HWND hDlg)
 	int NUM_COLS = 4;
 	FX_General_hLV = CreateWindowEx(0, WC_LISTVIEW, "",
 		WS_CHILD | WS_VISIBLE | WS_BORDER | LVS_REPORT | LVS_SHOWSELALWAYS, 2, 2,
-		1280, 445, hDlg, 0, App->hInst, NULL);
+		1280, 405, hDlg, 0, App->hInst, NULL);
 
 	DWORD exStyles = LVS_EX_GRIDLINES;
 

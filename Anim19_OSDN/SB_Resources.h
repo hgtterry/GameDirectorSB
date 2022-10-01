@@ -64,6 +64,10 @@ protected:
 	bool Active_MeshMaterials;
 	bool Active_Textures;
 
+	bool Show_App_Res_Flag;
+	bool Show_MV_Res_Flag;
+	bool Show_Project_Res_Flag;
+
 	HWND FX_General_hLV;
 };
 
