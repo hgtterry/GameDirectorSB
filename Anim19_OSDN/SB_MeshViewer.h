@@ -45,9 +45,11 @@ public:
 	char DestinationFile[MAX_PATH];
 	char SourceFile[MAX_PATH];
 
-	Ogre::SceneNode*		MvNode;
 	HWND MainDlgHwnd;
 
+	Ogre::String MV_Resource_Group;
+	Ogre::SceneNode*		MvNode;
+	
 	int Physics_Type;
 	int Physics_Shape;
 
@@ -93,8 +95,6 @@ protected:
 
 	bool Get_Media_Folders_Actors(HWND DropHwnd);
 	bool GetMeshFiles(char* Location, bool ResetList);
-
-	Ogre::String MV_Resource_Group;
 
 	int Texure_Count;
 	std::vector<std::string> v_Texture_Names;

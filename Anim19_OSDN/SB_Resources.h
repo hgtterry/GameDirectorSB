@@ -19,6 +19,9 @@ misrepresented as being the original software.
 
 3. This notice may not be removed or altered from any source
 distribution.
+
+:- Terry and Hazel Flanigan 2022
+
 */
 
 #pragma once
@@ -37,9 +40,10 @@ public:
 
 	void Unload_Materials(void);
 	void Remove_OblectMesh(void);
-	void Unload_Game_Resources(void);
-
+	
 	bool Show_Project_Res();
+	bool Show_App_Res();
+	bool Show_MV_Res();
 
 protected:
 	static LRESULT CALLBACK Resources_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);

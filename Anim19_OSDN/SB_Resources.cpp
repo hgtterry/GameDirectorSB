@@ -135,6 +135,18 @@ LRESULT CALLBACK SB_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM wP
 			App->SBC_Resources->Show_Project_Res();
 			return TRUE;
 		}
+
+		if (LOWORD(wParam) == IDC_BT_APPRESOURCES)
+		{
+			App->SBC_Resources->Show_App_Res();
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BTMVRESOURCES)
+		{
+			App->SBC_Resources->Show_MV_Res();
+			return TRUE;
+		}
 		
 		////if (LOWORD(wParam) == IDC_NOTUSED)
 		////{
@@ -443,11 +455,84 @@ bool SB_Resources::ShowAllTextures()
 	return 1;
 }
 
+// **************************************************************************
+// *			Show_App_Res Terry:- Terry and Hazel Flanigan 2022			*
+// **************************************************************************
+bool SB_Resources::Show_App_Res()
+{
+	ListView_DeleteAllItems(FX_General_hLV);
+
+	bool Test = Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(App->Cl19_Ogre->App_Resource_Group);
+
+	if (Test == 1)
+	{
+
+		Ogre::String st;
+		int NUM_COLS = 4;
+
+		LV_ITEM pitem;
+		memset(&pitem, 0, sizeof(LV_ITEM));
+		pitem.mask = LVIF_TEXT;
+
+		LV_COLUMN lvC;
+		memset(&lvC, 0, sizeof(LV_COLUMN));
+		lvC.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
+		lvC.fmt = LVCFMT_LEFT;  // left-align the column
+		std::string headers[] =
+		{
+			"Resource Group", "Path","Type"," "
+		};
+		int headerSize[] =
+		{
+			165,280,170,250
+		};
+
+		for (int header = 0; header < NUM_COLS; header++)
+		{
+			lvC.iSubItem = header;
+			lvC.cx = headerSize[header]; // width of the column, in pixels
+			lvC.pszText = const_cast<char*>(headers[header].c_str());
+			ListView_SetColumn(FX_General_hLV, header, &lvC);
+		}
+
+		int	 pRow = 0;
+		char pPath[MAX_PATH];
+		char chr_Type[255];
+
+		Ogre::ResourceGroupManager::LocationList resLocationsList = Ogre::ResourceGroupManager::getSingleton().getResourceLocationList(App->Cl19_Ogre->App_Resource_Group);
+		Ogre::ResourceGroupManager::LocationList::iterator it = resLocationsList.begin();
+		Ogre::ResourceGroupManager::LocationList::iterator itEnd = resLocationsList.end();
+
+		for (; it != itEnd; ++it)
+		{
+			pitem.iItem = pRow;
+			pitem.pszText = "Project_Resource_Group";
+
+			strcpy(pPath, (*it)->archive->getName().c_str());
+			strcpy(chr_Type, (*it)->archive->getType().c_str());
+
+			ListView_InsertItem(FX_General_hLV, &pitem);
+			ListView_SetItemText(FX_General_hLV, pRow, 1, pPath);
+			ListView_SetItemText(FX_General_hLV, pRow, 2, chr_Type);
+			ListView_SetItemText(FX_General_hLV, pRow, 3, " ");
+		}
+	}
+	else
+	{
+		App->Say("No Project Loaded");
+
+		return 0;
+	}
+
+	return 1;
+}
+
 // *************************************************************************
-// *					Show_Project_Res Terry Flanigan	 			 	   *
+// *		Show_Project_Res:- Terry and Hazel Flanigan 2022 		 	   *
 // *************************************************************************
 bool SB_Resources::Show_Project_Res()
 {
+	ListView_DeleteAllItems(FX_General_hLV);
 
 	bool Test = Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(App->SBC_Scene->Project_Resource_Group);
 
@@ -460,8 +545,6 @@ bool SB_Resources::Show_Project_Res()
 		LV_ITEM pitem;
 		memset(&pitem, 0, sizeof(LV_ITEM));
 		pitem.mask = LVIF_TEXT;
-
-		ListView_DeleteAllItems(FX_General_hLV);
 
 		LV_COLUMN lvC;
 		memset(&lvC, 0, sizeof(LV_COLUMN));
@@ -489,6 +572,78 @@ bool SB_Resources::Show_Project_Res()
 		char chr_Type[255];
 
 		Ogre::ResourceGroupManager::LocationList resLocationsList = Ogre::ResourceGroupManager::getSingleton().getResourceLocationList(App->SBC_Scene->Project_Resource_Group);
+		Ogre::ResourceGroupManager::LocationList::iterator it = resLocationsList.begin();
+		Ogre::ResourceGroupManager::LocationList::iterator itEnd = resLocationsList.end();
+
+		for (; it != itEnd; ++it)
+		{
+			pitem.iItem = pRow;
+			pitem.pszText = "Project_Resource_Group";
+
+			strcpy(pPath, (*it)->archive->getName().c_str());
+			strcpy(chr_Type, (*it)->archive->getType().c_str());
+
+			ListView_InsertItem(FX_General_hLV, &pitem);
+			ListView_SetItemText(FX_General_hLV, pRow, 1, pPath);
+			ListView_SetItemText(FX_General_hLV, pRow, 2, chr_Type);
+			ListView_SetItemText(FX_General_hLV, pRow, 3, " ");
+		}
+	}
+	else
+	{
+		App->Say("No Project Loaded");
+
+		return 0;
+	}
+
+	return 1;
+}
+
+// **************************************************************************
+// *			Show_MV_Res Terry:- Terry and Hazel Flanigan 2022			*
+// **************************************************************************
+bool SB_Resources::Show_MV_Res()
+{
+	ListView_DeleteAllItems(FX_General_hLV);
+
+	bool Test = Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(App->SBC_MeshViewer->MV_Resource_Group);
+
+	if (Test == 1)
+	{
+
+		Ogre::String st;
+		int NUM_COLS = 4;
+
+		LV_ITEM pitem;
+		memset(&pitem, 0, sizeof(LV_ITEM));
+		pitem.mask = LVIF_TEXT;
+
+		LV_COLUMN lvC;
+		memset(&lvC, 0, sizeof(LV_COLUMN));
+		lvC.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
+		lvC.fmt = LVCFMT_LEFT;  // left-align the column
+		std::string headers[] =
+		{
+			"Resource Group", "Path","Type"," "
+		};
+		int headerSize[] =
+		{
+			165,280,170,250
+		};
+
+		for (int header = 0; header < NUM_COLS; header++)
+		{
+			lvC.iSubItem = header;
+			lvC.cx = headerSize[header]; // width of the column, in pixels
+			lvC.pszText = const_cast<char*>(headers[header].c_str());
+			ListView_SetColumn(FX_General_hLV, header, &lvC);
+		}
+
+		int	 pRow = 0;
+		char pPath[MAX_PATH];
+		char chr_Type[255];
+
+		Ogre::ResourceGroupManager::LocationList resLocationsList = Ogre::ResourceGroupManager::getSingleton().getResourceLocationList(App->SBC_MeshViewer->MV_Resource_Group);
 		Ogre::ResourceGroupManager::LocationList::iterator it = resLocationsList.begin();
 		Ogre::ResourceGroupManager::LocationList::iterator itEnd = resLocationsList.end();
 
@@ -898,13 +1053,3 @@ void SB_Resources::Remove_OblectMesh(void)
 	return;
 }
 
-// *************************************************************************
-// *					Unload_Game_Resources Terry Bernie		 	 	   *
-// *************************************************************************
-void SB_Resources::Unload_Game_Resources(void)
-{
-	
-	Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->Cl19_Ogre->Level_Resource_Group);
-	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App->Cl19_Ogre->Level_Resource_Group);
-	return;
-}

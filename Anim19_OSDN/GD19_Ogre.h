@@ -72,11 +72,8 @@ public:
 
 	Ogre::String mResourcePath;
 
-	Ogre::String Level_Resource_Group;		// Game/Level Reosource Group
 	Ogre::String App_Resource_Group;		// App Resource Group
-	Ogre::String Equity_Resource_Group;		// Equity Resource Group 
-
-
+	
 	Ogre::OverlaySystem *mOverlaySystem;
 
 	GD19_OgreListener*	OgreListener;

@@ -44,8 +44,7 @@ GD19_Ogre::GD19_Ogre(void)
 	OgreModel_Node = nullptr;
 
 	App_Resource_Group = "App_Resource_Group";
-	Level_Resource_Group = "Level_Resource_Group";
-	Equity_Resource_Group = "Equity_Resource_Group";
+
 }
 
 GD19_Ogre::~GD19_Ogre(void)
@@ -114,8 +113,6 @@ bool GD19_Ogre::SetUpResources(void)
 	App->Cl_Utilities->ReverseBackSlash(Copy);
 	File = App->Cl_Utilities->Return_Chr;
 
-	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(Equity_Resource_Group);
-	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(Level_Resource_Group);
 	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App_Resource_Group);
 
 	//-------------------------------- Zip Files

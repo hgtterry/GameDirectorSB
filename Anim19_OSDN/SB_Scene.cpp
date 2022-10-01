@@ -138,8 +138,6 @@ bool SB_Scene::Clear_Level()
 			App->Cl_Bullet->dynamicsWorld->removeCollisionObject(obj);
 			delete obj;
 		}
-
-		App->SBC_Resources->Unload_Game_Resources();
 	}
 
 	App->Cl_Scene_Data->ObjectCount = 0;
