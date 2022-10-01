@@ -162,8 +162,18 @@ bool SB_MeshViewer::StartMeshViewer()
 
 	App->RenderBackGround = 1;
 
-	strcpy(mResource_Folder, App->EquityDirecory_FullPath);
-	strcat(mResource_Folder, "\\Media_New\\Walls\\");
+	if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area)
+	{
+		strcpy(mResource_Folder, App->EquityDirecory_FullPath);
+		strcat(mResource_Folder, "\\Media_New\\Areas\\");
+		strcpy(Selected_MeshFile, "Test1.mesh");
+	}
+	else
+	{
+		strcpy(mResource_Folder, App->EquityDirecory_FullPath);
+		strcat(mResource_Folder, "\\Media_New\\Walls\\");
+	}
+
 
 	Create_Resources_Group();
 	Add_Resources();
@@ -229,8 +239,6 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 		App->SBC_MeshViewer->Get_Media_Folders_Actors(CB_hWnd); // Populate Combo
 
-		App->SBC_MeshViewer->Set_ResourceMesh_File(hDlg);
-
 		App->SBC_MeshViewer->SelectStatic = 0;
 		App->SBC_MeshViewer->SelectDynamic = 0;
 		App->SBC_MeshViewer->SelectTriMesh = 0;
@@ -241,10 +249,12 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			App->SBC_MeshViewer->SetUp_Area_Trimesh(hDlg);
 		}
 
-		App->SBC_MeshViewer->Get_Files();
 
 		if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Objects)
 		{
+			App->SBC_MeshViewer->Set_ResourceMesh_File(hDlg);
+			App->SBC_MeshViewer->Get_Files();
+
 			App->SBC_MeshViewer->Enable_ShapeButtons(1);
 			App->SBC_MeshViewer->Enable_TypeButtons(1);
 
@@ -629,14 +639,13 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			strcpy(App->SBC_MeshViewer->Object_Name, buff);
 
 			App->Cl19_Ogre->OgreListener->MeshViewer_Running = 0;
-
-			App->SBC_MeshViewer->Copy_Assets();
-
+			
 			App->SBC_MeshViewer->Close_OgreWindow();
 			App->SBC_MeshViewer->Delete_Resources_Group();
 
 			if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area) // Area
 			{
+				App->SBC_MeshViewer->Copy_Assets();
 				App->SBC_Objects_Create->Add_New_Area();
 			}
 			else
@@ -682,42 +691,44 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 // *************************************************************************
 void SB_MeshViewer::Copy_Assets()
 {
-	App->SBC_Scene->Add_Resource_Location_Project(App->SBC_Project->m_Main_Assets_Path);
+	
+	App->SBC_Scene->Add_Resource_Location_Project(App->SBC_MeshViewer->mResource_Folder);
 
-	Get_Mesh_Assets();
+	
+	//Get_Mesh_Assets();
 
-	// ------------------ Copy Mesh
-	strcpy(SourceFile, App->SBC_MeshViewer->mResource_Folder);
-	strcat(SourceFile, App->SBC_MeshViewer->Selected_MeshFile);
+	//// ------------------ Copy Mesh
+	//strcpy(SourceFile, App->SBC_MeshViewer->mResource_Folder);
+	//strcat(SourceFile, App->SBC_MeshViewer->Selected_MeshFile);
 
-	strcpy(DestinationFile, App->SBC_Project->m_Main_Assets_Path);
-	strcat(DestinationFile, App->SBC_MeshViewer->Selected_MeshFile);
+	//strcpy(DestinationFile, App->SBC_Project->m_Main_Assets_Path);
+	//strcat(DestinationFile, App->SBC_MeshViewer->Selected_MeshFile);
 
-	CopyFile(SourceFile, DestinationFile, false);
+	//CopyFile(SourceFile, DestinationFile, false);
 
-	// ------------------ Copy Material File
-	strcpy(SourceFile, App->SBC_MeshViewer->mResource_Folder);
-	strcat(SourceFile, App->SBC_MeshViewer->m_Material_File);
+	//// ------------------ Copy Material File
+	//strcpy(SourceFile, App->SBC_MeshViewer->mResource_Folder);
+	//strcat(SourceFile, App->SBC_MeshViewer->m_Material_File);
 
-	strcpy(DestinationFile, App->SBC_Project->m_Main_Assets_Path);
-	strcat(DestinationFile, App->SBC_MeshViewer->m_Material_File);
+	//strcpy(DestinationFile, App->SBC_Project->m_Main_Assets_Path);
+	//strcat(DestinationFile, App->SBC_MeshViewer->m_Material_File);
 
-	CopyFile(SourceFile, DestinationFile, false);
+	//CopyFile(SourceFile, DestinationFile, false);
 
-	// ------------------ Copy Textures
-	int Count = 0;
-	while (Count < Texure_Count)
-	{
-		strcpy(SourceFile, App->SBC_MeshViewer->mResource_Folder);
-		strcat(SourceFile, v_Texture_Names[Count].c_str());
+	//// ------------------ Copy Textures
+	//int Count = 0;
+	//while (Count < Texure_Count)
+	//{
+	//	strcpy(SourceFile, App->SBC_MeshViewer->mResource_Folder);
+	//	strcat(SourceFile, v_Texture_Names[Count].c_str());
 
-		strcpy(DestinationFile, App->SBC_Project->m_Main_Assets_Path);
-		strcat(DestinationFile, v_Texture_Names[Count].c_str());
+	//	strcpy(DestinationFile, App->SBC_Project->m_Main_Assets_Path);
+	//	strcat(DestinationFile, v_Texture_Names[Count].c_str());
 
-		CopyFile(SourceFile, DestinationFile, false);
+	//	CopyFile(SourceFile, DestinationFile, false);
 
-		Count++;
-	}
+	//	Count++;
+	//}
 	
 }
 

@@ -341,8 +341,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		// ------------------------------------------------------------
 		case ID_NEW_PROJECT:
 		{
-			//App->SBC_Scene->Clear_Level();
-			//App->SBC_Scene->Create_Resources_Group();
+			App->SBC_Scene->Clear_Level();
+			App->SBC_Scene->Create_Resources_Group();
 
 			App->SBC_Project->Start_Save_Project_Dialog();
 			return 1;

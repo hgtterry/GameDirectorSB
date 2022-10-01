@@ -197,7 +197,7 @@ bool SB_Scene::Add_Resource_Location_Project(char* Resource_Location)
 
 	if (Test == 0)
 	{
-		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(Resource_Location, "FileSystem", Project_Resource_Group);
+		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(Resource_Location, "FileSystem",Project_Resource_Group);
 		Ogre::ResourceGroupManager::getSingleton().clearResourceGroup(Project_Resource_Group);
 		Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(Project_Resource_Group);
 	}

@@ -112,7 +112,7 @@ bool GD19_Ogre::SetUpResources(void)
 	strcpy(Copy, App->EquityDirecory_FullPath);
 	App->Cl_Utilities->ReverseBackSlash(Copy);
 	File = App->Cl_Utilities->Return_Chr;
-
+	
 	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App_Resource_Group);
 
 	//-------------------------------- Zip Files
@@ -139,6 +139,9 @@ bool GD19_Ogre::SetUpResources(void)
 
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/Particles", "FileSystem",
 		App_Resource_Group);
+
+	/*Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media_New/Areas", "FileSystem",
+		App_Resource_Group);*/
 
 	return 1;
 }
