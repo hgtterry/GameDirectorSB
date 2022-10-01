@@ -162,11 +162,12 @@ bool SB_Scene::Clear_Level()
 // *************************************************************************
 bool SB_Scene::Create_Resources_Group()
 {
-	bool Test = Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(Project_Resource_Group);
+	//bool Test = Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(Project_Resource_Group);
 
-	if (Test == 0)
+	//if (Test == 0)
 	{
 		Ogre::ResourceGroupManager::getSingleton().createResourceGroup(Project_Resource_Group);
+		//Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(Project_Resource_Group);
 		App->Say("Resouce Group Created");
 	}
 

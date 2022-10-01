@@ -699,6 +699,7 @@ bool SB_Objects_Create::Add_New_Area()
 // *************************************************************************
 bool SB_Objects_Create::First_Area_Start_Project()
 {
+
 	App->SBC_Aera->Add_Aera_To_Project(0, App->SBC_MeshViewer->Selected_MeshFile, App->SBC_MeshViewer->mResource_Folder);
 	App->SBC_Scene->Area_Count++;
 
