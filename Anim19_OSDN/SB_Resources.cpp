@@ -224,7 +224,7 @@ bool SB_Resources::CreateListGeneral_FX(HWND hDlg)
 	};
 	int headerSize[] =
 	{
-		165,180,70,250
+		165,380,70,250
 	};
 
 	//Groups
@@ -515,7 +515,7 @@ bool SB_Resources::Show_App_Res()
 		};
 		int headerSize[] =
 		{
-			165,280,170,250
+			165,380,170,250
 		};
 
 		for (int header = 0; header < NUM_COLS; header++)
@@ -587,7 +587,7 @@ bool SB_Resources::Show_Project_Res()
 		};
 		int headerSize[] =
 		{
-			165,280,170,250
+			165,380,170,250
 		};
 
 		for (int header = 0; header < NUM_COLS; header++)
@@ -659,7 +659,7 @@ bool SB_Resources::Show_MV_Res()
 		};
 		int headerSize[] =
 		{
-			165,280,170,250
+			165,380,170,250
 		};
 
 		for (int header = 0; header < NUM_COLS; header++)
