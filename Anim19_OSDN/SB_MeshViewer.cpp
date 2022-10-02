@@ -792,6 +792,9 @@ void SB_MeshViewer::Get_Mesh_Assets()
 			}
 			else
 			{
+				v_Texture_Names.push_back(pScriptName);
+				Texure_Count = v_Texture_Names.size();
+				App->Say(pScriptName);
 				//strcpy(test, "Not Loaded:- ");	
 			}
 
@@ -845,7 +848,7 @@ void SB_MeshViewer::ShowMesh(char* MeshFile)
 		MvNode = NULL;
 	}
 
-	MvEnt = mSceneMgrMeshView->createEntity(MeshFile);
+	MvEnt = mSceneMgrMeshView->createEntity("MV",MeshFile, App->SBC_MeshViewer->MV_Resource_Group);
 	MvNode = mSceneMgrMeshView->getRootSceneNode()->createChildSceneNode();
 	MvNode->attachObject(MvEnt);
 	MvNode->setPosition(0, 0, 0);
@@ -1000,12 +1003,19 @@ bool SB_MeshViewer::Create_Resources_Group()
 // *************************************************************************
 bool SB_MeshViewer::Add_Resources()
 {
-	Ogre::ResourceGroupManager::getSingleton().clearResourceGroup(MV_Resource_Group);
-
+	
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mResource_Folder,"FileSystem", MV_Resource_Group);
-
+	Ogre::ResourceGroupManager::getSingleton().clearResourceGroup(MV_Resource_Group);
 	Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(MV_Resource_Group);
 	
+	/*bool Test = Ogre::ResourceGroupManager::getSingleton().resourceLocationExists(Resource_Location, Project_Resource_Group);
+
+	if (Test == 0)
+	{
+		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(Resource_Location, "FileSystem", Project_Resource_Group);
+		Ogre::ResourceGroupManager::getSingleton().clearResourceGroup(Project_Resource_Group);
+		Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(Project_Resource_Group);
+	}*/
 	return 1;
 }
 
