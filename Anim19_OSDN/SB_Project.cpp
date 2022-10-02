@@ -376,7 +376,9 @@ bool SB_Project::Save_Project()
 
 	App->Set_Main_TitleBar(App->SBC_FileIO->Project_Path_File_Name);
 
-	App->Say("Scene Created");
+	App->SBC_Object->Clear_Modified_Objects();
+
+	App->Say("Scene Saved");
 	return 1;
 }
 
@@ -1020,6 +1022,7 @@ bool SB_Project::Load_Project()
 
 	App->SBC_FileView->SelectItem(App->SBC_FileView->FV_LevelFolder);
 
+	App->SBC_Scene->Scene_Modified = 0;
 	return 1;
 }
 

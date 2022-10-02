@@ -785,6 +785,9 @@ void SB_Dimensions::UpDate_Physics_And_Visuals(int Index)
 {
 	Set_Physics_Position(Index);
 	App->Cl_Visuals->MarkerBB_Addjust(Index);
+
+	App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Object[Index]->ListViewItem);
+	App->SBC_Scene->Scene_Modified = 1;
 }
 
 // *************************************************************************

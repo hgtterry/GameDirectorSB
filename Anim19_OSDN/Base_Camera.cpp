@@ -24,6 +24,8 @@ void Base_Camera::Init_Camera(void)
 	LookAt.y = 30;
 	LookAt.z = 0;
 
+	Altered = 0;
+
 	Cam_Quat.IDENTITY;
 
 	Camera_Name[0] = 0;

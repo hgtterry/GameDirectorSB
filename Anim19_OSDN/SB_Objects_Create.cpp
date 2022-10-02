@@ -1,3 +1,29 @@
+/*
+Copyright (c) 2021 Scene Builder and Equity -- Inflanite Software W.T.Flanigan H.C.Flanigan
+
+This software is provided 'as-is', without any express or implied
+warranty. In no event will the authors be held liable for any damages
+arising from the use of this software.
+
+Permission is granted to anyone to use this software for any purpose,
+including commercial applications, and to alter it and redistribute it
+freely, subject to the following restrictions:
+
+1. The origin of this software must not be misrepresented; you must not
+claim that you wrote the original software. If you use this software
+in a product, an acknowledgment in the product documentation would be
+appreciated but is not required.
+
+2. Altered source versions must be plainly marked as such, and must not be
+misrepresented as being the original software.
+
+3. This notice may not be removed or altered from any source
+distribution.
+
+:- Terry and Hazel Flanigan 2022
+
+*/
+
 #include "stdafx.h"
 #include "GD19_App.h"
 #include "SB_Objects_Create.h"
@@ -12,7 +38,7 @@ SB_Objects_Create::~SB_Objects_Create(void)
 }
 
 // *************************************************************************
-//					Add_Objects_From_File Terry Bernie					   *
+//			Add_Objects_From_File:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
 bool SB_Objects_Create::Add_Objects_From_File() // From File
 {
@@ -71,9 +97,9 @@ bool SB_Objects_Create::Add_Objects_From_File() // From File
 	return 1;
 }
 // *************************************************************************
-//							Dispatcher_New Terry Flanigan				   *
+//			Dispatch_MeshViewer:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
-bool SB_Objects_Create::Dispatcher_New()
+bool SB_Objects_Create::Dispatch_MeshViewer()
 {
 	int Index = App->SBC_Scene->Object_Count;
 
@@ -96,7 +122,7 @@ bool SB_Objects_Create::Dispatcher_New()
 }
 
 // *************************************************************************
-//					Add_Objects_From_MeshViewer Terry Flanigan			   *
+//		Add_Objects_From_MeshViewer:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
 void SB_Objects_Create::Add_Objects_From_MeshViewer()
 {
@@ -115,7 +141,7 @@ void SB_Objects_Create::Add_Objects_From_MeshViewer()
 	Object->Type = App->SBC_MeshViewer->Physics_Type;
 	Object->Shape = App->SBC_MeshViewer->Physics_Shape;
 
-	App->SBC_Objects_Create->Dispatcher_New();
+	App->SBC_Objects_Create->Dispatch_MeshViewer();
 	
 	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[Index]->ListViewItem);
 

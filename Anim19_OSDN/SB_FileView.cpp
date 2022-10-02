@@ -1228,7 +1228,7 @@ void SB_FileView::Change_Project_Name(void)
 }
 
 // *************************************************************************
-// *						Change_Item_Name Terry Bernie			 	   *
+// *		Change_Item_Name:- Terry and Hazel Flanigan 2022		 	   *
 // *************************************************************************
 void SB_FileView::Change_Item_Name(HTREEITEM Folder, char *FolderName)
 {
@@ -1236,6 +1236,32 @@ void SB_FileView::Change_Item_Name(HTREEITEM Folder, char *FolderName)
 	Sitem.mask = TVIF_TEXT;
 	Sitem.hItem = Folder;
 	Sitem.pszText = FolderName;
+	SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_SETITEM, 0, (LPARAM)(const LPTVITEM)&Sitem);
+}
+
+// *************************************************************************
+// *			Mark_Altered:- Terry and Hazel Flanigan 2022		 	   *
+// *************************************************************************
+void SB_FileView::Mark_Altered(HTREEITEM Item)
+{
+	TVITEM Sitem;
+	Sitem.mask = TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	Sitem.hItem = Item;
+	Sitem.iImage = 6;
+	Sitem.iSelectedImage = 7;
+	SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_SETITEM, 0, (LPARAM)(const LPTVITEM)&Sitem);
+}
+
+// *************************************************************************
+// *				Mark_Clear:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void SB_FileView::Mark_Clear(HTREEITEM Item)
+{
+	TVITEM Sitem;
+	Sitem.mask = TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	Sitem.hItem = Item;
+	Sitem.iImage = 4;
+	Sitem.iSelectedImage = 5;
 	SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_SETITEM, 0, (LPARAM)(const LPTVITEM)&Sitem);
 }
 

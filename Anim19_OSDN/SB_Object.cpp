@@ -486,3 +486,22 @@ void SB_Object::Copy_Object(int Object_Index)
 
 	App->Say("Copied");
 }
+
+// *************************************************************************
+// *				Clear_Modified_Objects Terry Flanigan				   *
+// *************************************************************************
+void SB_Object::Clear_Modified_Objects()
+{
+	int Count = 0;
+
+	while (Count < App->SBC_Scene->Camera_Count)
+	{
+		if (App->SBC_Scene->B_Camera[Count]->Altered == 1)
+		{
+			App->SBC_Scene->B_Camera[Count]->Altered = 0;
+			App->SBC_FileView->Mark_Clear(App->SBC_Scene->B_Camera[Count]->FileViewItem);
+		}
+
+		Count++;
+	}
+}

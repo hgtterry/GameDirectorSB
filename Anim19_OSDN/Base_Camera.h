@@ -14,6 +14,7 @@ public:
 
 	char Camera_Name[MAX_PATH];
 
+	bool Altered;
 	HTREEITEM FileViewItem;
 };
 
