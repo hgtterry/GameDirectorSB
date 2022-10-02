@@ -53,7 +53,7 @@ public:
 	bool Level_But_Active;
 	bool Stock_But_Active;
 
-	HTREEITEM Add_Item(HTREEITEM Folder,char *SFileName, int Index);
+	HTREEITEM Add_Item(HTREEITEM Folder,char *SFileName, int Index, bool NewItem);
 
 	HTREEITEM FV_Players_Folder;	// Players Folder FileFView
 	HTREEITEM FV_Areas_Folder;		// Areas/Rooms Folder FileFView

@@ -48,8 +48,8 @@ bool SB_Import_Room::Room_Loader(char* Extension, char* Extension2)
 	App->Cl_Bullet->Reset_Physics();
 	App->SBC_Physics->Enable_Physics(1);
 
-	App->SBC_Player->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Players_Folder,"Player_1", 0);
-	App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Areas_Folder,"Area_1", 0);
+	App->SBC_Player->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Players_Folder,"Player_1", 0, true);
+	App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Areas_Folder,"Area_1", 0, true);
 	App->SBC_FileView->Redraw_FileView();
 
 	App->SBC_Scene->Scene_Loaded = 1;

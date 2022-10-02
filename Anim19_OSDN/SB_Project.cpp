@@ -362,7 +362,7 @@ bool SB_Project::Save_Project()
 	{
 		Save_Players_Folder();
 
-		App->SBC_Player->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Players_Folder,"Player_1", 0);
+		App->SBC_Player->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Players_Folder,"Player_1", 0, false);
 		App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Players_Folder);
 
 	}
@@ -1202,7 +1202,7 @@ bool SB_Project::Load_Project_Aera()
 		App->SBC_Scene->SBC_Base_Area[Count]->Physics_Pos = Ogre::Vector3(x, y, z);
 
 		strcpy(App->SBC_Scene->SBC_Base_Area[Count]->Area_Name, Area_Name);
-		App->SBC_Scene->SBC_Base_Area[Count]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Areas_Folder, Area_Name, Count);
+		App->SBC_Scene->SBC_Base_Area[Count]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Areas_Folder, Area_Name, Count, false);
 
 		Count++;
 		App->SBC_Scene->Area_Count++;
@@ -1263,7 +1263,7 @@ bool SB_Project::Load_Project_Player()
 		App->SBC_Scene->SBC_Base_Player[Count]->StartPos = Ogre::Vector3(x, y, z);
 
 
-		App->SBC_Player->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Players_Folder,Player_Name, Count);
+		App->SBC_Player->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Players_Folder,Player_Name, Count, false);
 
 		Count++;
 
@@ -1348,7 +1348,7 @@ bool SB_Project::Load_Project_Camera()
 
 
 		App->SBC_Scene->B_Camera[Count]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Cameras_Folder,
-			App->SBC_Scene->B_Camera[Count]->Camera_Name, Count);
+			App->SBC_Scene->B_Camera[Count]->Camera_Name, Count , false);
 
 		App->SBC_Scene->Camera_Count++;
 

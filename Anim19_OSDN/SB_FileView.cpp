@@ -355,6 +355,16 @@ void SB_FileView::Init_FileView(void)
 	ImageList_Add(hImageList, hBitMap, (HBITMAP)NULL);
 	DeleteObject(hBitMap);
 
+	//--------- File changed Open 6
+	hBitMap = LoadBitmap(App->hInst, MAKEINTRESOURCE(IDB_FILECHANGED));
+	ImageList_Add(hImageList, hBitMap, (HBITMAP)NULL);
+	DeleteObject(hBitMap);
+
+	//--------- File changed Selected Open 7
+	hBitMap = LoadBitmap(App->hInst, MAKEINTRESOURCE(IDB_FILECHANGEDSELECTED));
+	ImageList_Add(hImageList, hBitMap, (HBITMAP)NULL);
+	DeleteObject(hBitMap);
+
 	SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_SETIMAGELIST, 0, (LPARAM)hImageList);
 
 	HWND Temp = GetDlgItem(App->ListPanel, IDC_TREE1);
@@ -1154,7 +1164,7 @@ void SB_FileView::HideRightPanes(void)
 // *************************************************************************
 // *				Add_Item:- Terry and Hazel Flanigan 2022		 	   *
 // *************************************************************************
-HTREEITEM SB_FileView::Add_Item(HTREEITEM Folder,char *SFileName, int Index)
+HTREEITEM SB_FileView::Add_Item(HTREEITEM Folder,char *SFileName, int Index,bool NewItem)
 {
 	HWND Temp2 = GetDlgItem(App->ListPanel, IDC_TREE1);
 
@@ -1162,9 +1172,20 @@ HTREEITEM SB_FileView::Add_Item(HTREEITEM Folder,char *SFileName, int Index)
 	tvinsert.hInsertAfter = TVI_LAST;
 	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE | TVIF_PARAM;
 	tvinsert.item.pszText = SFileName;
-	tvinsert.item.iImage = 4;
-	tvinsert.item.iSelectedImage = 5;
-	tvinsert.item.lParam = Index;
+
+	if (NewItem == 1)
+	{
+		tvinsert.item.iImage = 6;
+		tvinsert.item.iSelectedImage = 7;
+		tvinsert.item.lParam = Index;
+	}
+	else
+	{
+		tvinsert.item.iImage = 4;
+		tvinsert.item.iSelectedImage = 5;
+		tvinsert.item.lParam = Index;
+	}
+
 	HTREEITEM Temp = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
 
 	return Temp;

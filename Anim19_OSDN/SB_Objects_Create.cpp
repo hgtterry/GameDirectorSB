@@ -221,7 +221,7 @@ bool SB_Objects_Create::Add_New_Object(int Index)
 	else
 	{
 		Object->Folder = Enums::Folder_Objects;
-		Object->ListViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Objects_Folder, Object->Mesh_Name, Index);
+		Object->ListViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Objects_Folder, Object->Mesh_Name, Index,true);
 	}
 
 
@@ -717,11 +717,11 @@ bool SB_Objects_Create::First_Area_Start_Project()
 	// ------------------------ Add Default Player
 	App->SBC_Player->Create_Player_Object();
 	strcpy(App->SBC_Scene->SBC_Base_Player[0]->Player_Name, "Player_1");
-	App->SBC_Player->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Players_Folder, "Player_1", 0);
+	App->SBC_Player->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Players_Folder, "Player_1", 0, true);
 	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Players_Folder);
 
 	// ------------------------ Add Area
-	App->SBC_Scene->SBC_Base_Area[0]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Areas_Folder, "Area_1", 0);
+	App->SBC_Scene->SBC_Base_Area[0]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Areas_Folder, "Area_1", 0, true);
 	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Areas_Folder);
 
 	App->SBC_FileView->Redraw_FileView();
@@ -858,7 +858,7 @@ bool SB_Objects_Create::Add_Message_Entity(int Index)
 
 	Set_Physics(Index);
 
-	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Messages_Folder,Object->Mesh_Name, Index);
+	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Messages_Folder,Object->Mesh_Name, Index, true);
 	Object->ListViewItem = Temp;
 
 	return 1;
@@ -992,7 +992,7 @@ bool SB_Objects_Create::Add_Sound_Entity(int Index)
 	Set_Physics(Index);
 
 	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Sounds_Folder,
-		App->SBC_Scene->B_Object[Index]->Mesh_Name, Index);
+		App->SBC_Scene->B_Object[Index]->Mesh_Name, Index, true);
 
 	App->SBC_Scene->B_Object[Index]->ListViewItem = Temp;
 
