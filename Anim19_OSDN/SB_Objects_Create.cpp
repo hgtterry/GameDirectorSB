@@ -12,7 +12,7 @@ SB_Objects_Create::~SB_Objects_Create(void)
 }
 
 // *************************************************************************
-//					Add_Objects_FromFile Terry Bernie					   *
+//					Add_Objects_From_File Terry Bernie					   *
 // *************************************************************************
 bool SB_Objects_Create::Add_Objects_From_File() // From File
 {
@@ -96,9 +96,9 @@ bool SB_Objects_Create::Dispatcher_New()
 }
 
 // *************************************************************************
-//							Update_MV_Details Terry Flanigan			   *
+//					Add_Objects_From_MeshViewer Terry Flanigan			   *
 // *************************************************************************
-void SB_Objects_Create::Update_MV_Details()
+void SB_Objects_Create::Add_Objects_From_MeshViewer()
 {
 	int Index = App->SBC_Scene->Object_Count;
 
@@ -121,6 +121,8 @@ void SB_Objects_Create::Update_MV_Details()
 
 	App->Cl_Scene_Data->Object_ID_Counter++;
 	App->SBC_Scene->Object_Count++;  // Must be last line
+
+	App->SBC_Scene->Scene_Modified = 1;
 }
 
 // *************************************************************************

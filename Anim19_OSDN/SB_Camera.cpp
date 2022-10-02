@@ -113,6 +113,8 @@ LRESULT CALLBACK SB_Camera::Camera_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 
 			App->SBC_Camera->Update_Camera(Index);
 
+			App->SBC_Scene->Scene_Modified = 1;
+
 			App->Say("Camera Saved");
 			return TRUE;
 		}

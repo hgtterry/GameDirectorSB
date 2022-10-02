@@ -928,8 +928,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			
 			if (test == IDYES)
 			{
-				App->Say("Save");
-
+				App->SBC_Project->Start_Save_Project_Dialog();
 			}
 		}
 		else

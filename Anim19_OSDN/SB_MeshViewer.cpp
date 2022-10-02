@@ -648,10 +648,10 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 				App->SBC_MeshViewer->Copy_Assets();
 				App->SBC_Objects_Create->Add_New_Area();
 			}
-			else
+			else // Normal Object
 			{
 				App->SBC_MeshViewer->Copy_Assets();
-				App->SBC_Objects_Create->Update_MV_Details();
+				App->SBC_Objects_Create->Add_Objects_From_MeshViewer();
 			}
 
 			EndDialog(hDlg, LOWORD(wParam));
@@ -794,7 +794,7 @@ void SB_MeshViewer::Get_Mesh_Assets()
 			{
 				v_Texture_Names.push_back(pScriptName);
 				Texure_Count = v_Texture_Names.size();
-				App->Say(pScriptName);
+				//App->Say(pScriptName);
 				//strcpy(test, "Not Loaded:- ");	
 			}
 
