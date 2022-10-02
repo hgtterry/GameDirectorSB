@@ -42,6 +42,7 @@ SB_Scene::SB_Scene()
 	Entity_Count = 0;
 
 	CurrentCamMode = 0;
+	Scene_Modified = 0;
 
 	SBC_Base_Player[100] = { nullptr };
 	SBC_Base_Area[100] = { nullptr };
@@ -139,6 +140,8 @@ bool SB_Scene::Clear_Level()
 			delete obj;
 		}
 	}
+
+	Scene_Modified = 0;
 
 	App->Cl_Scene_Data->ObjectCount = 0;
 

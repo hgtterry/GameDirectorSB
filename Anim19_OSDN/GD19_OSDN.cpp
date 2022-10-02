@@ -922,11 +922,23 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 	case WM_CLOSE:
 	{
-
-		App->Cl_Dialogs->YesNo("Close GameDirector", "Are you sure");
-		if (App->Cl_Dialogs->Canceled == 1)
+		if (App->SBC_Scene->Scene_Modified == 1)
 		{
-			break;
+			int test = MessageBox(App->Fdlg, "Scene has been Modified Do you wish to save changes", "Save Scene", MB_YESNO);
+			
+			if (test == IDYES)
+			{
+				App->Say("Save");
+
+			}
+		}
+		else
+		{
+			App->Cl_Dialogs->YesNo("Close GameDirector", "Are you sure");
+			if (App->Cl_Dialogs->Canceled == 1)
+			{
+				return 1;
+			}
 		}
 
 		if (App->Cl19_Ogre->OgreListener->StopOgre == 0)
