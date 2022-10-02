@@ -59,7 +59,7 @@ public:
 	float Capsule_Height;
 
 	float PlayerHeight;
-
+	bool Altered;
 	bool mOnGround;
 	bool IsMOving;
 	bool IsMOving_Back;

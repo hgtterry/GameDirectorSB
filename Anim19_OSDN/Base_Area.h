@@ -34,5 +34,6 @@ public:
 	HTREEITEM FileViewItem;			// Holder for Area File view item [211121]
 
 	bool Physics_Valid;
+	bool Altered;
 };
 
