@@ -430,7 +430,7 @@ bool SB_Properties::Update_ListView_Player()
 	int index = App->SBC_Properties->Current_Selected_Object;
 
 	char buff[255];
-	strcpy(buff, App->SBC_Scene->SBC_Base_Player[0]->Player_Name);
+	strcpy(buff, App->SBC_Scene->B_Player[0]->Player_Name);
 	strcat(buff, "   (Player)");
 	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
 
@@ -440,12 +440,12 @@ bool SB_Properties::Update_ListView_Player()
 	char chr_StartPosY[100];
 	char chr_StartPosZ[100];
 
-	sprintf(chr_Speed, "%.3f ", App->SBC_Scene->SBC_Base_Player[0]->Ground_speed);
-	sprintf(chr_Height, "%.3f ", App->SBC_Scene->SBC_Base_Player[0]->PlayerHeight);
+	sprintf(chr_Speed, "%.3f ", App->SBC_Scene->B_Player[0]->Ground_speed);
+	sprintf(chr_Height, "%.3f ", App->SBC_Scene->B_Player[0]->PlayerHeight);
 
-	sprintf(chr_StartPosX, "%.3f ", App->SBC_Scene->SBC_Base_Player[0]->StartPos.x);
-	sprintf(chr_StartPosY, "%.3f ", App->SBC_Scene->SBC_Base_Player[0]->StartPos.y);
-	sprintf(chr_StartPosZ, "%.3f ", App->SBC_Scene->SBC_Base_Player[0]->StartPos.z);
+	sprintf(chr_StartPosX, "%.3f ", App->SBC_Scene->B_Player[0]->StartPos.x);
+	sprintf(chr_StartPosY, "%.3f ", App->SBC_Scene->B_Player[0]->StartPos.y);
+	sprintf(chr_StartPosZ, "%.3f ", App->SBC_Scene->B_Player[0]->StartPos.z);
 
 	const int NUM_ITEMS = 9;
 	const int NUM_COLS = 2;
@@ -454,7 +454,7 @@ bool SB_Properties::Update_ListView_Player()
 	memset(&pitem, 0, sizeof(LV_ITEM));
 	pitem.mask = LVIF_TEXT;
 
-	grid[0][0] = "Name", grid[1][0] = App->SBC_Scene->SBC_Base_Player[0]->Player_Name;
+	grid[0][0] = "Name", grid[1][0] = App->SBC_Scene->B_Player[0]->Player_Name;
 	grid[0][1] = "Mode", grid[1][1] = "1st_Person";
 	grid[0][2] = " ", grid[1][2] = " ";
 	grid[0][3] = "Ground Speed", grid[1][3] = chr_Speed;
@@ -498,7 +498,7 @@ bool SB_Properties::Update_ListView_Player_Physics()
 	int index = App->SBC_Properties->Current_Selected_Object;
 
 	char buff[255];
-	strcpy(buff, App->SBC_Scene->SBC_Base_Player[0]->Player_Name);
+	strcpy(buff, App->SBC_Scene->B_Player[0]->Player_Name);
 	strcat(buff, "   (Physics)");
 	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
 
@@ -512,10 +512,10 @@ bool SB_Properties::Update_ListView_Player_Physics()
 	char chr_Radius[100];
 	char chr_Height[100];
 
-	sprintf(chr_Mass, "%.3f ", App->SBC_Scene->SBC_Base_Player[0]->Capsule_Mass);
+	sprintf(chr_Mass, "%.3f ", App->SBC_Scene->B_Player[0]->Capsule_Mass);
 	//sprintf(chr_Mass,"%.3f ",App->GDSBC_Player->mObject->getGravity().getY());
-	sprintf(chr_Radius, "%.3f ", App->SBC_Scene->SBC_Base_Player[0]->Capsule_Radius);
-	sprintf(chr_Height, "%.3f ", App->SBC_Scene->SBC_Base_Player[0]->Capsule_Height);
+	sprintf(chr_Radius, "%.3f ", App->SBC_Scene->B_Player[0]->Capsule_Radius);
+	sprintf(chr_Height, "%.3f ", App->SBC_Scene->B_Player[0]->Capsule_Height);
 
 
 	const int NUM_ITEMS = 7;
@@ -525,7 +525,7 @@ bool SB_Properties::Update_ListView_Player_Physics()
 	memset(&pitem, 0, sizeof(LV_ITEM));
 	pitem.mask = LVIF_TEXT;
 
-	grid[0][0] = "Name", grid[1][0] = App->SBC_Scene->SBC_Base_Player[0]->Player_Name;
+	grid[0][0] = "Name", grid[1][0] = App->SBC_Scene->B_Player[0]->Player_Name;
 	grid[0][1] = "Type", grid[1][1] = chr_PhysicsType;
 	grid[0][2] = "Shape ", grid[1][2] = chr_PhysicsShape;
 	grid[0][3] = " ", grid[1][3] = " ";
@@ -797,7 +797,7 @@ bool SB_Properties::Edit_Area_Onclick(LPARAM lParam)
 	int result = 1;
 	int List_Index;
 
-	Base_Area* Area = App->SBC_Scene->SBC_Base_Area[Index];
+	Base_Area* Area = App->SBC_Scene->B_Area[Index];
 
 	LPNMLISTVIEW List = (LPNMLISTVIEW)lParam;
 	List_Index = List->iItem;
@@ -843,7 +843,7 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 	if (result == 0)
 	{
 		strcpy(App->Cl_Dialogs->btext, "Change Player Name");
-		strcpy(App->Cl_Dialogs->Chr_Text, App->SBC_Scene->SBC_Base_Player[0]->Player_Name);
+		strcpy(App->Cl_Dialogs->Chr_Text, App->SBC_Scene->B_Player[0]->Player_Name);
 
 		App->Cl_Dialogs->Dialog_Text(1);
 
@@ -853,7 +853,7 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 		}
 
 		// Needs Duplicate Name test 
-		strcpy(App->SBC_Scene->SBC_Base_Player[0]->Player_Name, App->Cl_Dialogs->Chr_Text);
+		strcpy(App->SBC_Scene->B_Player[0]->Player_Name, App->Cl_Dialogs->Chr_Text);
 
 		App->SBC_FileView->Change_Item_Name(App->SBC_Player->FileViewItem, App->Cl_Dialogs->Chr_Text);
 		Update_ListView_Player();
@@ -863,7 +863,7 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 	if (result == 0)
 	{
 		char chr_Value[10];
-		sprintf(chr_Value, "%.3f ", App->SBC_Scene->SBC_Base_Player[0]->Ground_speed);
+		sprintf(chr_Value, "%.3f ", App->SBC_Scene->B_Player[0]->Ground_speed);
 
 		strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
 		strcpy(App->Cl_Dialogs->btext, "Ground Speed");
@@ -871,7 +871,7 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 		App->Cl_Dialogs->Dialog_Float();
 		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
 
-		App->SBC_Scene->SBC_Base_Player[0]->Ground_speed = App->Cl_Dialogs->mFloat;
+		App->SBC_Scene->B_Player[0]->Ground_speed = App->Cl_Dialogs->mFloat;
 		Update_ListView_Player();
 
 		return 1;
@@ -881,7 +881,7 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 	if (result == 0)
 	{
 		char chr_Value[10];
-		sprintf(chr_Value, "%.3f ", App->SBC_Scene->SBC_Base_Player[0]->PlayerHeight);
+		sprintf(chr_Value, "%.3f ", App->SBC_Scene->B_Player[0]->PlayerHeight);
 
 		strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
 
@@ -890,7 +890,7 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 		App->Cl_Dialogs->Dialog_Float();
 		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
 
-		App->SBC_Scene->SBC_Base_Player[0]->PlayerHeight = App->Cl_Dialogs->mFloat;
+		App->SBC_Scene->B_Player[0]->PlayerHeight = App->Cl_Dialogs->mFloat;
 		Update_ListView_Player();
 		return 1;
 	}
@@ -899,7 +899,7 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 	if (result == 0)
 	{
 		char chr_Value[10];
-		sprintf(chr_Value, "%.3f ", App->SBC_Scene->SBC_Base_Player[0]->StartPos.x);
+		sprintf(chr_Value, "%.3f ", App->SBC_Scene->B_Player[0]->StartPos.x);
 
 		strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
 
@@ -908,7 +908,7 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 		App->Cl_Dialogs->Dialog_Float();
 		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
 
-		App->SBC_Scene->SBC_Base_Player[0]->StartPos.x = App->Cl_Dialogs->mFloat;
+		App->SBC_Scene->B_Player[0]->StartPos.x = App->Cl_Dialogs->mFloat;
 		
 		App->Cl_Bullet->Reset_Physics();
 
@@ -921,7 +921,7 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 	{
 
 		char chr_Value[10];
-		sprintf(chr_Value, "%.3f ", App->SBC_Scene->SBC_Base_Player[0]->StartPos.y);
+		sprintf(chr_Value, "%.3f ", App->SBC_Scene->B_Player[0]->StartPos.y);
 
 		strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
 
@@ -930,7 +930,7 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 		App->Cl_Dialogs->Dialog_Float();
 		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
 
-		App->SBC_Scene->SBC_Base_Player[0]->StartPos.y = App->Cl_Dialogs->mFloat;
+		App->SBC_Scene->B_Player[0]->StartPos.y = App->Cl_Dialogs->mFloat;
 	
 		App->Cl_Bullet->Reset_Physics();
 
@@ -942,7 +942,7 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 	if (result == 0)
 	{
 		char chr_Value[10];
-		sprintf(chr_Value, "%.3f ", App->SBC_Scene->SBC_Base_Player[0]->StartPos.z);
+		sprintf(chr_Value, "%.3f ", App->SBC_Scene->B_Player[0]->StartPos.z);
 
 		strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
 
@@ -951,7 +951,7 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 		App->Cl_Dialogs->Dialog_Float();
 		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
 
-		App->SBC_Scene->SBC_Base_Player[0]->StartPos.z = App->Cl_Dialogs->mFloat;
+		App->SBC_Scene->B_Player[0]->StartPos.z = App->Cl_Dialogs->mFloat;
 		
 		App->Cl_Bullet->Reset_Physics();
 
@@ -1103,7 +1103,7 @@ bool SB_Properties::Edit_Player_Physics_Onclick(LPARAM lParam)
 	if (result == 0)
 	{
 		char chr_Radius[10];
-		sprintf(chr_Radius, "%.3f ", App->SBC_Scene->SBC_Base_Player[0]->Phys_Body->getInvMass());
+		sprintf(chr_Radius, "%.3f ", App->SBC_Scene->B_Player[0]->Phys_Body->getInvMass());
 
 		strcpy(App->Cl_Dialogs->Chr_Float, chr_Radius);
 		strcpy(App->Cl_Dialogs->btext, "Player Physics Mass");
@@ -1112,7 +1112,7 @@ bool SB_Properties::Edit_Player_Physics_Onclick(LPARAM lParam)
 		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
 
 
-		App->SBC_Scene->SBC_Base_Player[0]->Phys_Body->setMassProps(App->Cl_Dialogs->mFloat, btVector3(0, 0, 0));
+		App->SBC_Scene->B_Player[0]->Phys_Body->setMassProps(App->Cl_Dialogs->mFloat, btVector3(0, 0, 0));
 
 		App->SBC_Properties->Update_ListView_Player_Physics();
 
@@ -1123,7 +1123,7 @@ bool SB_Properties::Edit_Player_Physics_Onclick(LPARAM lParam)
 	if (result == 0)
 	{
 		char chr_Radius[10];
-		sprintf(chr_Radius, "%.3f ", App->SBC_Scene->SBC_Base_Player[0]->Capsule_Radius);
+		sprintf(chr_Radius, "%.3f ", App->SBC_Scene->B_Player[0]->Capsule_Radius);
 
 		strcpy(App->Cl_Dialogs->Chr_Float, chr_Radius);
 		strcpy(App->Cl_Dialogs->btext, "Player Physics Shape Radius");
@@ -1134,7 +1134,7 @@ bool SB_Properties::Edit_Player_Physics_Onclick(LPARAM lParam)
 			return TRUE;
 		}
 
-		App->SBC_Scene->SBC_Base_Player[0]->Capsule_Radius = App->Cl_Dialogs->mFloat;
+		App->SBC_Scene->B_Player[0]->Capsule_Radius = App->Cl_Dialogs->mFloat;
 
 		App->SBC_Properties->Update_ListView_Player_Physics();
 
@@ -1146,7 +1146,7 @@ bool SB_Properties::Edit_Player_Physics_Onclick(LPARAM lParam)
 	if (result == 0)
 	{
 		char chr_Height[10];
-		sprintf(chr_Height, "%.3f ", App->SBC_Scene->SBC_Base_Player[0]->Capsule_Height);
+		sprintf(chr_Height, "%.3f ", App->SBC_Scene->B_Player[0]->Capsule_Height);
 
 		strcpy(App->Cl_Dialogs->Chr_Float, chr_Height);
 		strcpy(App->Cl_Dialogs->btext, "Player Physics Shape Height");
@@ -1154,7 +1154,7 @@ bool SB_Properties::Edit_Player_Physics_Onclick(LPARAM lParam)
 		App->Cl_Dialogs->Dialog_Float();
 		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
 
-		App->SBC_Scene->SBC_Base_Player[0]->Capsule_Height = App->Cl_Dialogs->mFloat;
+		App->SBC_Scene->B_Player[0]->Capsule_Height = App->Cl_Dialogs->mFloat;
 
 		App->SBC_Properties->Update_ListView_Player_Physics();
 
@@ -1173,7 +1173,7 @@ bool SB_Properties::Update_ListView_Area()
 
 	char buff[255];
 	strcpy(buff,"Area ");
-	strcat(buff, App->SBC_Scene->SBC_Base_Area[Index]->Area_Name);
+	strcat(buff, App->SBC_Scene->B_Area[Index]->Area_Name);
 	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
 
 	const int NUM_ITEMS = 3;
@@ -1183,8 +1183,8 @@ bool SB_Properties::Update_ListView_Area()
 	memset(&pitem, 0, sizeof(LV_ITEM));
 	pitem.mask = LVIF_TEXT;
 
-	grid[0][0] = "Name", grid[1][0] = App->SBC_Scene->SBC_Base_Area[Index]->Area_Name;
-	grid[0][1] = "Mesh File", grid[1][1] = App->SBC_Scene->SBC_Base_Area[Index]->Area_FileName;
+	grid[0][0] = "Name", grid[1][0] = App->SBC_Scene->B_Area[Index]->Area_Name;
+	grid[0][1] = "Mesh File", grid[1][1] = App->SBC_Scene->B_Area[Index]->Area_FileName;
 
 	ListView_DeleteAllItems(Properties_hLV);
 

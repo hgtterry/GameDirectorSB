@@ -749,17 +749,17 @@ bool SB_Objects_Create::First_Area_Start_Project()
 
 	// ------------------------ Add Default Player
 	App->SBC_Player->Create_Player_Object();
-	strcpy(App->SBC_Scene->SBC_Base_Player[0]->Player_Name, "Player_1");
+	strcpy(App->SBC_Scene->B_Player[0]->Player_Name, "Player_1");
 	App->SBC_Player->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Players_Folder, "Player_1", 0, true);
 	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Players_Folder);
 
 	// ------------------------ Add Area
-	App->SBC_Scene->SBC_Base_Area[0]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Areas_Folder, "Area_1", 0, true);
+	App->SBC_Scene->B_Area[0]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Areas_Folder, "Area_1", 0, true);
 	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Areas_Folder);
 
 	App->SBC_FileView->Redraw_FileView();
 
-	App->SBC_FileView->SelectItem(App->SBC_Scene->SBC_Base_Area[0]->FileViewItem);
+	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Area[0]->FileViewItem);
 
 	App->Cl_Bullet->Reset_Physics();
 	App->SBC_Physics->Enable_Physics(1);

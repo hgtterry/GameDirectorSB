@@ -43,8 +43,8 @@ public:
 	bool Editor_Mode(void);
 	bool Show_Entities(bool YesNo);
 
-	Base_Player*			SBC_Base_Player[100];
-	Base_Area*				SBC_Base_Area[100];
+	Base_Player*			B_Player[100];
+	Base_Area*				B_Area[100];
 	Base_Object*			B_Object[100];
 	Base_Camera*			B_Camera[20];
 

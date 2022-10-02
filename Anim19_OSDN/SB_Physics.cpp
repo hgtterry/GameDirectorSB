@@ -131,7 +131,7 @@ LRESULT CALLBACK SB_Physics::Start_Physics_Proc(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDC_BTPHYTEST)
 		{
-			int f = App->SBC_Scene->SBC_Base_Player[0]->Phys_Body->getCollisionFlags();
+			int f = App->SBC_Scene->B_Player[0]->Phys_Body->getCollisionFlags();
 
 			if (App->Cl19_Ogre->OgreListener->Dubug_Physics_Draw == 0)
 			{
@@ -167,7 +167,7 @@ void SB_Physics::Update_Model(void)
 // *************************************************************************
 void SB_Physics::Enable_Physics(bool Enable)
 {
-	int f = App->SBC_Scene->SBC_Base_Player[0]->Phys_Body->getCollisionFlags();
+	int f = App->SBC_Scene->B_Player[0]->Phys_Body->getCollisionFlags();
 
 	App->Cl19_Ogre->OgreListener->Dubug_Physics_Draw = Enable;
 	//App->Cl19_Ogre->OgreListener->GD_Run_Physics = Enable;
@@ -175,7 +175,7 @@ void SB_Physics::Enable_Physics(bool Enable)
 
 	App->SBC_Player->ShowDebug = Enable;
 
-	App->SBC_Scene->SBC_Base_Player[0]->Phys_Body->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+	App->SBC_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
 	App->SBC_Physics->Toggle_Enable_Flag = Enable;
 

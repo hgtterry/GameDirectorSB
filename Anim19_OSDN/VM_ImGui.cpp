@@ -601,7 +601,7 @@ void VM_ImGui::ImGui_Model_Data(void)
 			int Count = 0;
 			while (Count < App->SBC_Scene->Player_Count)
 			{
-				ImGui::Text("%s", App->SBC_Scene->SBC_Base_Player[0]->Player_Name);
+				ImGui::Text("%s", App->SBC_Scene->B_Player[0]->Player_Name);
 				Count++;
 			}
 		}
@@ -727,7 +727,7 @@ void VM_ImGui::ImGui_App_Data(void)
 			int Count = 0;
 			while (Count < App->SBC_Scene->Player_Count)
 			{
-				ImGui::Text("%s", App->SBC_Scene->SBC_Base_Player[0]->Player_Name);
+				ImGui::Text("%s", App->SBC_Scene->B_Player[0]->Player_Name);
 				Count++;
 			}
 		}

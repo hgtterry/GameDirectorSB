@@ -210,11 +210,11 @@ bool GD19_OgreListener::frameStarted(const FrameEvent& evt)
 		if (GD_Run_Physics == 1 && App->SBC_Scene->Player_Added == 1)
 		{
 			btTransform trans;
-			App->SBC_Scene->SBC_Base_Player[0]->Phys_Body->getMotionState()->getWorldTransform(trans);
+			App->SBC_Scene->B_Player[0]->Phys_Body->getMotionState()->getWorldTransform(trans);
 			btQuaternion orientation = trans.getRotation();
-			App->SBC_Scene->SBC_Base_Player[0]->Player_Node->setPosition(Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ()));
-			App->SBC_Scene->SBC_Base_Player[0]->Player_Node->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
-			App->SBC_Scene->SBC_Base_Player[0]->Player_Node->pitch(Ogre::Degree(180));
+			App->SBC_Scene->B_Player[0]->Player_Node->setPosition(Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ()));
+			App->SBC_Scene->B_Player[0]->Player_Node->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
+			App->SBC_Scene->B_Player[0]->Player_Node->pitch(Ogre::Degree(180));
 		}
 
 	
@@ -254,11 +254,11 @@ bool GD19_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 		Ogre::Radian mmPitch;
 		Ogre::Radian mYaw;
 
-		Pos = App->SBC_Scene->SBC_Base_Player[0]->Player_Node->getPosition();
+		Pos = App->SBC_Scene->B_Player[0]->Player_Node->getPosition();
 		
-		mmPitch = App->SBC_Scene->SBC_Base_Player[0]->CameraPitch->getOrientation().getPitch();
-		mYaw = App->SBC_Scene->SBC_Base_Player[0]->Player_Node->getOrientation().getYaw();
-		Pos.y = Pos.y + App->SBC_Scene->SBC_Base_Player[0]->PlayerHeight;
+		mmPitch = App->SBC_Scene->B_Player[0]->CameraPitch->getOrientation().getPitch();
+		mYaw = App->SBC_Scene->B_Player[0]->Player_Node->getOrientation().getYaw();
+		Pos.y = Pos.y + App->SBC_Scene->B_Player[0]->PlayerHeight;
 
 		App->Cl19_Ogre->mCamera->setPosition(Pos);
 		App->Cl19_Ogre->mCamera->setOrientation(Ogre::Quaternion(1, 0, 0, 0));
@@ -837,7 +837,7 @@ bool GD19_OgreListener::Capture_Mouse_FirstPerson(void)
 
 			float mTurn = ((float)0.00040*Pl_DeltaMouse);//S_Player[0]->TurnRate);
 
-			App->SBC_Scene->SBC_Base_Player[0]->Rotate_FromCam(Rotate, mTurn, false);
+			App->SBC_Scene->B_Player[0]->Rotate_FromCam(Rotate, mTurn, false);
 
 		}
 	}
@@ -856,7 +856,7 @@ bool GD19_OgreListener::Capture_Mouse_FirstPerson(void)
 
 			float mTurn = ((float)0.00040*Pl_DeltaMouse);//S_Player[0]->TurnRate);
 
-			App->SBC_Scene->SBC_Base_Player[0]->Rotate_FromCam(Rotate, mTurn, false);
+			App->SBC_Scene->B_Player[0]->Rotate_FromCam(Rotate, mTurn, false);
 		}
 	}
 
@@ -869,7 +869,7 @@ bool GD19_OgreListener::Capture_Mouse_FirstPerson(void)
 		{
 			Pl_DeltaMouse = float(Pl_Cent500Y - Pl_MouseY);
 			Ogre::Radian pp = Degree(Pl_DeltaMouse * (float)0.03);
-			App->SBC_Scene->SBC_Base_Player[0]->CameraPitch->pitch(pp);
+			App->SBC_Scene->B_Player[0]->CameraPitch->pitch(pp);
 		}
 	}
 	else if (Pl_MouseY > Pl_Cent500Y)
@@ -880,7 +880,7 @@ bool GD19_OgreListener::Capture_Mouse_FirstPerson(void)
 		{
 			Pl_DeltaMouse = float(Pl_MouseY - Pl_Cent500Y);
 			Ogre::Radian pp = Degree(-Pl_DeltaMouse * (float)0.03);
-			App->SBC_Scene->SBC_Base_Player[0]->CameraPitch->pitch(pp);
+			App->SBC_Scene->B_Player[0]->CameraPitch->pitch(pp);
 		}
 	}
 

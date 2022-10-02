@@ -70,20 +70,20 @@ void SB_Player::Reset_Class(void)
 
 	while (Count < App->SBC_Scene->Player_Count) // Remove Ogre Objects
 	{
-		if (App->SBC_Scene->SBC_Base_Player[Count])
+		if (App->SBC_Scene->B_Player[Count])
 		{
-			if (App->SBC_Scene->SBC_Base_Player[Count]->Player_Ent && App->SBC_Scene->SBC_Base_Player[Count]->Player_Node)
+			if (App->SBC_Scene->B_Player[Count]->Player_Ent && App->SBC_Scene->B_Player[Count]->Player_Node)
 			{
-				App->Cl19_Ogre->mSceneMgr->destroySceneNode(App->SBC_Scene->SBC_Base_Player[Count]->Player_Node);
-				App->Cl19_Ogre->mSceneMgr->destroyEntity(App->SBC_Scene->SBC_Base_Player[Count]->Player_Ent);
-				App->Cl19_Ogre->mSceneMgr->destroyCamera(App->SBC_Scene->SBC_Base_Player[Count]->CameraPitch);
-				App->SBC_Scene->SBC_Base_Player[Count]->Player_Ent = nullptr;
-				App->SBC_Scene->SBC_Base_Player[Count]->Player_Node = nullptr;
-				App->SBC_Scene->SBC_Base_Player[Count]->CameraPitch = nullptr;
+				App->Cl19_Ogre->mSceneMgr->destroySceneNode(App->SBC_Scene->B_Player[Count]->Player_Node);
+				App->Cl19_Ogre->mSceneMgr->destroyEntity(App->SBC_Scene->B_Player[Count]->Player_Ent);
+				App->Cl19_Ogre->mSceneMgr->destroyCamera(App->SBC_Scene->B_Player[Count]->CameraPitch);
+				App->SBC_Scene->B_Player[Count]->Player_Ent = nullptr;
+				App->SBC_Scene->B_Player[Count]->Player_Node = nullptr;
+				App->SBC_Scene->B_Player[Count]->CameraPitch = nullptr;
 			}
 
-			delete App->SBC_Scene->SBC_Base_Player[Count];
-			App->SBC_Scene->SBC_Base_Player[Count] = nullptr;
+			delete App->SBC_Scene->B_Player[Count];
+			App->SBC_Scene->B_Player[Count] = nullptr;
 		}
 
 		Count++;
@@ -102,11 +102,11 @@ void SB_Player::Create_Player_Object(void)
 {
 	int Index = App->SBC_Scene->Player_Count;
 
-	App->SBC_Scene->SBC_Base_Player[Index] = new Base_Player();
+	App->SBC_Scene->B_Player[Index] = new Base_Player();
 
 	Initialize();
 
-	App->SBC_Scene->SBC_Base_Player[Index]->CameraPitch = App->Cl19_Ogre->mSceneMgr->createCamera("PlayerPitch");
+	App->SBC_Scene->B_Player[Index]->CameraPitch = App->Cl19_Ogre->mSceneMgr->createCamera("PlayerPitch");
 
 	App->SBC_Scene->Player_Count++;
 
@@ -121,7 +121,7 @@ void SB_Player::Initialize()
 
 	int Index = App->SBC_Scene->Player_Count;
 
-	Base_Player* pBase = App->SBC_Scene->SBC_Base_Player[Index];
+	Base_Player* pBase = App->SBC_Scene->B_Player[Index];
 
 	// ------------------- Ogre
 	if (pBase->Player_Ent && pBase->Player_Node)
@@ -342,12 +342,12 @@ LRESULT CALLBACK SB_Player::Player_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == IDC_PHYSICSDEBUG)
 		{
-			int f = App->SBC_Scene->SBC_Base_Player[0]->Phys_Body->getCollisionFlags();
+			int f = App->SBC_Scene->B_Player[0]->Phys_Body->getCollisionFlags();
 
 			if (App->SBC_Player->Show_Physics_Debug == 1)
 			{
 				App->SBC_Player->Show_Physics_Debug = 0;
-				App->SBC_Scene->SBC_Base_Player[0]->Phys_Body->setCollisionFlags(f | (1 << 5));
+				App->SBC_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f | (1 << 5));
 
 				App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 0;
 				App->Cl19_Ogre->RenderFrame();
@@ -356,7 +356,7 @@ LRESULT CALLBACK SB_Player::Player_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 			else
 			{
 				App->SBC_Player->Show_Physics_Debug = 1;
-				App->SBC_Scene->SBC_Base_Player[0]->Phys_Body->setCollisionFlags(f & (~(1 << 5)));
+				App->SBC_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f & (~(1 << 5)));
 			}
 			
 			return 1;
@@ -381,8 +381,8 @@ void SB_Player::Hide_Player_Dlg(bool Show)
 // *************************************************************************
 void SB_Player::Adjust_Capsule(void)
 {
-	App->SBC_Scene->SBC_Base_Player[0]->Phys_Shape = new btCapsuleShape(btScalar(App->SBC_Scene->SBC_Base_Player[0]->Capsule_Radius), btScalar(App->SBC_Scene->SBC_Base_Player[0]->Capsule_Height));
-	App->SBC_Scene->SBC_Base_Player[0]->Phys_Body->setCollisionShape(App->SBC_Scene->SBC_Base_Player[0]->Phys_Shape);
+	App->SBC_Scene->B_Player[0]->Phys_Shape = new btCapsuleShape(btScalar(App->SBC_Scene->B_Player[0]->Capsule_Radius), btScalar(App->SBC_Scene->B_Player[0]->Capsule_Height));
+	App->SBC_Scene->B_Player[0]->Phys_Body->setCollisionShape(App->SBC_Scene->B_Player[0]->Phys_Shape);
 
 }
 
@@ -391,7 +391,7 @@ void SB_Player::Adjust_Capsule(void)
 // *************************************************************************
 bool SB_Player::OnGround() const
 {
-	return App->SBC_Scene->SBC_Base_Player[0]->mOnGround;
+	return App->SBC_Scene->B_Player[0]->mOnGround;
 }
 
 // need to use ray cast for ground collision to handle stair case
@@ -739,9 +739,9 @@ void SB_Player::Save_Location(char* name)
 
 
 	strcpy(App->Cl_Scene_Data->S_Player_Locations[Count]->Name, name);
-	App->Cl_Scene_Data->S_Player_Locations[Count]->Current_Position = App->SBC_Scene->SBC_Base_Player[0]->Player_Node->getPosition();
-	App->Cl_Scene_Data->S_Player_Locations[Count]->Physics_Position = App->SBC_Scene->SBC_Base_Player[0]->Phys_Body->getWorldTransform().getOrigin();
-	App->Cl_Scene_Data->S_Player_Locations[Count]->Physics_Rotation = App->SBC_Scene->SBC_Base_Player[0]->Phys_Body->getWorldTransform().getRotation();
+	App->Cl_Scene_Data->S_Player_Locations[Count]->Current_Position = App->SBC_Scene->B_Player[0]->Player_Node->getPosition();
+	App->Cl_Scene_Data->S_Player_Locations[Count]->Physics_Position = App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().getOrigin();
+	App->Cl_Scene_Data->S_Player_Locations[Count]->Physics_Rotation = App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().getRotation();
 	App->Cl_Scene_Data->Player_Location_Count++;
 
 }
@@ -752,9 +752,9 @@ void SB_Player::Save_Location(char* name)
 void SB_Player::Goto_Location(int Index)
 {
 
-	App->SBC_Scene->SBC_Base_Player[0]->Player_Node->setPosition(App->Cl_Scene_Data->S_Player_Locations[Index]->Current_Position);
+	App->SBC_Scene->B_Player[0]->Player_Node->setPosition(App->Cl_Scene_Data->S_Player_Locations[Index]->Current_Position);
 
-	App->SBC_Scene->SBC_Base_Player[0]->Phys_Body->getWorldTransform().setOrigin(App->Cl_Scene_Data->S_Player_Locations[Index]->Physics_Position);
+	App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(App->Cl_Scene_Data->S_Player_Locations[Index]->Physics_Position);
 
-	App->SBC_Scene->SBC_Base_Player[0]->Phys_Body->getWorldTransform().setRotation(App->Cl_Scene_Data->S_Player_Locations[Index]->Physics_Rotation);
+	App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->Cl_Scene_Data->S_Player_Locations[Index]->Physics_Rotation);
 }

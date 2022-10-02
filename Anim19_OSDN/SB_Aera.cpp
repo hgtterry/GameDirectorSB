@@ -48,18 +48,18 @@ void SB_Aera::Reset_Class(void)
 
 	while (Count < App->SBC_Scene->Area_Count) // Remove Ogre Objects
 	{
-		if (App->SBC_Scene->SBC_Base_Area[Count])
+		if (App->SBC_Scene->B_Area[Count])
 		{
-			if (App->SBC_Scene->SBC_Base_Area[Count]->Area_Ent && App->SBC_Scene->SBC_Base_Area[Count]->Area_Node)
+			if (App->SBC_Scene->B_Area[Count]->Area_Ent && App->SBC_Scene->B_Area[Count]->Area_Node)
 			{
-				App->Cl19_Ogre->mSceneMgr->destroySceneNode(App->SBC_Scene->SBC_Base_Area[Count]->Area_Node);
-				App->Cl19_Ogre->mSceneMgr->destroyEntity(App->SBC_Scene->SBC_Base_Area[Count]->Area_Ent);
-				App->SBC_Scene->SBC_Base_Area[Count]->Area_Ent = nullptr;
-				App->SBC_Scene->SBC_Base_Area[Count]->Area_Node = nullptr;
+				App->Cl19_Ogre->mSceneMgr->destroySceneNode(App->SBC_Scene->B_Area[Count]->Area_Node);
+				App->Cl19_Ogre->mSceneMgr->destroyEntity(App->SBC_Scene->B_Area[Count]->Area_Ent);
+				App->SBC_Scene->B_Area[Count]->Area_Ent = nullptr;
+				App->SBC_Scene->B_Area[Count]->Area_Node = nullptr;
 			}
 
-			delete App->SBC_Scene->SBC_Base_Area[Count];
-			App->SBC_Scene->SBC_Base_Area[Count] = nullptr;
+			delete App->SBC_Scene->B_Area[Count];
+			App->SBC_Scene->B_Area[Count] = nullptr;
 		}
 
 		Count++;
@@ -123,12 +123,12 @@ LRESULT CALLBACK SB_Aera::Area_PropsPanel_Proc(HWND hDlg, UINT message, WPARAM w
 
 		if (LOWORD(wParam) == IDC_PHYSICSAREADEBUG)
 		{
-			int f = App->SBC_Scene->SBC_Base_Area[0]->Phys_Body->getCollisionFlags();
+			int f = App->SBC_Scene->B_Area[0]->Phys_Body->getCollisionFlags();
 
 			if (App->SBC_Aera->Show_Physics_Debug == 1)
 			{
 				App->SBC_Aera->Show_Physics_Debug = 0;
-				App->SBC_Scene->SBC_Base_Area[0]->Phys_Body->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+				App->SBC_Scene->B_Area[0]->Phys_Body->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
 				App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 0;
 				App->Cl19_Ogre->RenderFrame();
@@ -137,7 +137,7 @@ LRESULT CALLBACK SB_Aera::Area_PropsPanel_Proc(HWND hDlg, UINT message, WPARAM w
 			else
 			{
 				App->SBC_Aera->Show_Physics_Debug = 1;
-				App->SBC_Scene->SBC_Base_Area[0]->Phys_Body->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+				App->SBC_Scene->B_Area[0]->Phys_Body->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 			}
 
 			return 1;
@@ -319,23 +319,23 @@ void SB_Aera::Hide_Area_Dlg(bool Show)
 void SB_Aera::Add_Aera_To_Project(int Index,char* FileName,char* Resource_Location)
 {
 
-	if (App->SBC_Scene->SBC_Base_Area[Index])
+	if (App->SBC_Scene->B_Area[Index])
 	{
-		if (App->SBC_Scene->SBC_Base_Area[Index]->Area_Ent && App->SBC_Scene->SBC_Base_Area[Index]->Area_Node)
+		if (App->SBC_Scene->B_Area[Index]->Area_Ent && App->SBC_Scene->B_Area[Index]->Area_Node)
 		{
-			App->SBC_Scene->SBC_Base_Area[Index]->Area_Node->detachAllObjects();
-			App->Cl19_Ogre->mSceneMgr->destroySceneNode(App->SBC_Scene->SBC_Base_Area[Index]->Area_Node);
-			App->Cl19_Ogre->mSceneMgr->destroyEntity(App->SBC_Scene->SBC_Base_Area[Index]->Area_Ent);
-			App->SBC_Scene->SBC_Base_Area[Index]->Area_Ent = NULL;
-			App->SBC_Scene->SBC_Base_Area[Index]->Area_Node = NULL;
+			App->SBC_Scene->B_Area[Index]->Area_Node->detachAllObjects();
+			App->Cl19_Ogre->mSceneMgr->destroySceneNode(App->SBC_Scene->B_Area[Index]->Area_Node);
+			App->Cl19_Ogre->mSceneMgr->destroyEntity(App->SBC_Scene->B_Area[Index]->Area_Ent);
+			App->SBC_Scene->B_Area[Index]->Area_Ent = NULL;
+			App->SBC_Scene->B_Area[Index]->Area_Node = NULL;
 
-			delete App->SBC_Scene->SBC_Base_Area[Index];
-			App->SBC_Scene->SBC_Base_Area[Index] = nullptr;
+			delete App->SBC_Scene->B_Area[Index];
+			App->SBC_Scene->B_Area[Index] = nullptr;
 		}
 	}
 
-	App->SBC_Scene->SBC_Base_Area[Index] = new Base_Area();
-	Base_Area* Area = App->SBC_Scene->SBC_Base_Area[Index];
+	App->SBC_Scene->B_Area[Index] = new Base_Area();
+	Base_Area* Area = App->SBC_Scene->B_Area[Index];
 
 	Area->Object_ID = 0; //App->Cl_Scene_Data->Object_ID_Counter;
 	strcpy(Area->Area_FileName, FileName);

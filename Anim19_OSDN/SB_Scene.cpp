@@ -44,9 +44,9 @@ SB_Scene::SB_Scene()
 	CurrentCamMode = 0;
 	Scene_Modified = 0;
 
-	SBC_Base_Player[100] = { nullptr };
-	SBC_Base_Area[100] = { nullptr };
-	SBC_Base_Area[0] = nullptr;
+	B_Player[100] = { nullptr };
+	B_Area[100] = { nullptr };
+	B_Area[0] = nullptr;
 }
 
 

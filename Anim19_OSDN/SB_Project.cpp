@@ -802,16 +802,16 @@ bool SB_Project::Save_Aeras_Data()
 
 		fprintf(WriteFile, "%s\n", buff); // Header also Player name until changed by user
 
-		fprintf(WriteFile, "%s%s\n", "Area_Name=", App->SBC_Scene->SBC_Base_Area[Count]->Area_Name); // Change
+		fprintf(WriteFile, "%s%s\n", "Area_Name=", App->SBC_Scene->B_Area[Count]->Area_Name); // Change
 
-		fprintf(WriteFile, "%s%s\n", "Area_File=", App->SBC_Scene->SBC_Base_Area[Count]->Area_FileName);
-		fprintf(WriteFile, "%s%s\n", "Area_Path_File=", App->SBC_Scene->SBC_Base_Area[Count]->Area_Path_And_FileName);
-		fprintf(WriteFile, "%s%s\n", "Area_Resource_Path=", App->SBC_Scene->SBC_Base_Area[Count]->Area_Resource_Path);
+		fprintf(WriteFile, "%s%s\n", "Area_File=", App->SBC_Scene->B_Area[Count]->Area_FileName);
+		fprintf(WriteFile, "%s%s\n", "Area_Path_File=", App->SBC_Scene->B_Area[Count]->Area_Path_And_FileName);
+		fprintf(WriteFile, "%s%s\n", "Area_Resource_Path=", App->SBC_Scene->B_Area[Count]->Area_Resource_Path);
 
 		fprintf(WriteFile, "%s\n", "[Position]");
-		x = App->SBC_Scene->SBC_Base_Area[Count]->Area_Node->getPosition().x;
-		y = App->SBC_Scene->SBC_Base_Area[Count]->Area_Node->getPosition().y;
-		z = App->SBC_Scene->SBC_Base_Area[Count]->Area_Node->getPosition().z;
+		x = App->SBC_Scene->B_Area[Count]->Area_Node->getPosition().x;
+		y = App->SBC_Scene->B_Area[Count]->Area_Node->getPosition().y;
+		z = App->SBC_Scene->B_Area[Count]->Area_Node->getPosition().z;
 
 		fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Pos=", x, y, z);
 
@@ -890,19 +890,19 @@ bool SB_Project::Save_Player_Data()
 
 		fprintf(WriteFile, "%s\n", buff); // Header also Player name until changed by user
 
-		fprintf(WriteFile, "%s%s\n", "Player_Name=", App->SBC_Scene->SBC_Base_Player[Count]->Player_Name);
+		fprintf(WriteFile, "%s%s\n", "Player_Name=", App->SBC_Scene->B_Player[Count]->Player_Name);
 
-		Pos.x = App->SBC_Scene->SBC_Base_Player[Count]->StartPos.x;
-		Pos.y = App->SBC_Scene->SBC_Base_Player[Count]->StartPos.y;
-		Pos.z = App->SBC_Scene->SBC_Base_Player[Count]->StartPos.z;
+		Pos.x = App->SBC_Scene->B_Player[Count]->StartPos.x;
+		Pos.y = App->SBC_Scene->B_Player[Count]->StartPos.y;
+		Pos.z = App->SBC_Scene->B_Player[Count]->StartPos.z;
 		fprintf(WriteFile, "%s%f,%f,%f\n", "Start_Position=", Pos.x, Pos.y, Pos.z);
 
 		fprintf(WriteFile, "%s%s\n", "Shape=", "Capsule");
-		fprintf(WriteFile, "%s%f\n", "Mass=", App->SBC_Scene->SBC_Base_Player[Count]->Capsule_Mass);
-		fprintf(WriteFile, "%s%f\n", "Radius=", App->SBC_Scene->SBC_Base_Player[Count]->Capsule_Radius);
-		fprintf(WriteFile, "%s%f\n", "Height=", App->SBC_Scene->SBC_Base_Player[Count]->Capsule_Height);
-		fprintf(WriteFile, "%s%f\n", "Ground_Speed=", App->SBC_Scene->SBC_Base_Player[Count]->Ground_speed);
-		fprintf(WriteFile, "%s%f\n", "Cam_Height=", App->SBC_Scene->SBC_Base_Player[Count]->PlayerHeight);
+		fprintf(WriteFile, "%s%f\n", "Mass=", App->SBC_Scene->B_Player[Count]->Capsule_Mass);
+		fprintf(WriteFile, "%s%f\n", "Radius=", App->SBC_Scene->B_Player[Count]->Capsule_Radius);
+		fprintf(WriteFile, "%s%f\n", "Height=", App->SBC_Scene->B_Player[Count]->Capsule_Height);
+		fprintf(WriteFile, "%s%f\n", "Ground_Speed=", App->SBC_Scene->B_Player[Count]->Ground_speed);
+		fprintf(WriteFile, "%s%f\n", "Cam_Height=", App->SBC_Scene->B_Player[Count]->PlayerHeight);
 
 
 		Count++;
@@ -1200,12 +1200,12 @@ bool SB_Project::Load_Project_Aera()
 		App->Cl_Ini->GetString("Position", "Mesh_Pos", chr_Tag1, MAX_PATH);
 		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
 
-		App->SBC_Scene->SBC_Base_Area[Count]->Area_Node->setPosition(x, y, z);
-		App->SBC_Scene->SBC_Base_Area[Count]->Phys_Body->getWorldTransform().setOrigin(btVector3(x, y, z));
-		App->SBC_Scene->SBC_Base_Area[Count]->Physics_Pos = Ogre::Vector3(x, y, z);
+		App->SBC_Scene->B_Area[Count]->Area_Node->setPosition(x, y, z);
+		App->SBC_Scene->B_Area[Count]->Phys_Body->getWorldTransform().setOrigin(btVector3(x, y, z));
+		App->SBC_Scene->B_Area[Count]->Physics_Pos = Ogre::Vector3(x, y, z);
 
-		strcpy(App->SBC_Scene->SBC_Base_Area[Count]->Area_Name, Area_Name);
-		App->SBC_Scene->SBC_Base_Area[Count]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Areas_Folder, Area_Name, Count, false);
+		strcpy(App->SBC_Scene->B_Area[Count]->Area_Name, Area_Name);
+		App->SBC_Scene->B_Area[Count]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Areas_Folder, Area_Name, Count, false);
 
 		Count++;
 		App->SBC_Scene->Area_Count++;
@@ -1258,12 +1258,12 @@ bool SB_Project::Load_Project_Player()
 		App->SBC_Player->Create_Player_Object();
 
 		App->Cl_Ini->GetString(buff, "Player_Name", Player_Name, MAX_PATH);
-		strcpy(App->SBC_Scene->SBC_Base_Player[Count]->Player_Name, Player_Name);
+		strcpy(App->SBC_Scene->B_Player[Count]->Player_Name, Player_Name);
 
 
 		App->Cl_Ini->GetString(buff, "Start_Position", chr_Tag1, MAX_PATH);
 		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
-		App->SBC_Scene->SBC_Base_Player[Count]->StartPos = Ogre::Vector3(x, y, z);
+		App->SBC_Scene->B_Player[Count]->StartPos = Ogre::Vector3(x, y, z);
 
 
 		App->SBC_Player->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Players_Folder,Player_Name, Count, false);

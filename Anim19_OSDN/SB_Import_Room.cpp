@@ -43,7 +43,7 @@ bool SB_Import_Room::Room_Loader(char* Extension, char* Extension2)
 	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
 
 	App->SBC_Player->Create_Player_Object();
-	strcpy(App->SBC_Scene->SBC_Base_Player[0]->Player_Name, "Player_1");
+	strcpy(App->SBC_Scene->B_Player[0]->Player_Name, "Player_1");
 
 	App->Cl_Bullet->Reset_Physics();
 	App->SBC_Physics->Enable_Physics(1);
