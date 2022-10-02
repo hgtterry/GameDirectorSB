@@ -62,7 +62,7 @@ public:
 protected:
 
 	static LRESULT CALLBACK MeshViewer_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-	static LRESULT CALLBACK Properties_ListBox_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Mesh_Properties_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void SetUp_Area_Trimesh(HWND hDlg);
 
@@ -80,8 +80,8 @@ protected:
 
 	bool Get_Files();
 
-	void Start_Properties_ListBox();
-	//  Folders
+	void Show_Mesh_Properties();
+	
 	//----------------------------------
 	bool Selected_Shape_Box;
 	bool Selected_Shape_Sphere;

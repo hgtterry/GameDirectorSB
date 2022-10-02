@@ -431,7 +431,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		if (LOWORD(wParam) == IDC_BT_PROPERTIES)
 		{
 
-			App->SBC_MeshViewer->Start_Properties_ListBox();
+			App->SBC_MeshViewer->Show_Mesh_Properties();
 
 			return TRUE;
 		}
@@ -1106,17 +1106,17 @@ bool SB_MeshViewer::GetMeshFiles(char* Location, bool ResetList)
 }
 
 // *************************************************************************
-// *	  				Start_Gen_ListBox TerryFlanigan					   *
+// *	  	Show_Mesh_Properties:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
-void SB_MeshViewer::Start_Properties_ListBox()
+void SB_MeshViewer::Show_Mesh_Properties()
 {
-	DialogBox(App->hInst,(LPCTSTR)IDD_LISTDATA, MainDlgHwnd,(DLGPROC)Properties_ListBox_Proc);
+	DialogBox(App->hInst,(LPCTSTR)IDD_LISTDATA, MainDlgHwnd,(DLGPROC)Mesh_Properties_Proc);
 }
 
 // *************************************************************************
-// *				Properties_ListBox_Proc Terry Flanigan				   *
+// *		Properties_ListBox_Proc:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
-LRESULT CALLBACK SB_MeshViewer::Properties_ListBox_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK SB_MeshViewer::Mesh_Properties_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
@@ -1124,6 +1124,7 @@ LRESULT CALLBACK SB_MeshViewer::Properties_ListBox_Proc(HWND hDlg, UINT message,
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_LISTGROUP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		HWND List = GetDlgItem(hDlg, IDC_LISTGROUP);
 		ListView_DeleteAllItems(List);
@@ -1152,11 +1153,23 @@ LRESULT CALLBACK SB_MeshViewer::Properties_ListBox_Proc(HWND hDlg, UINT message,
 		return (LONG)App->AppBackground;
 	}
 
-	break;
 	case WM_CTLCOLORSTATIC:
 	{
-
 		return FALSE;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
 	}
 
 	case WM_COMMAND:
