@@ -650,6 +650,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			}
 			else
 			{
+				App->SBC_MeshViewer->Copy_Assets();
 				App->SBC_Objects_Create->Update_MV_Details();
 			}
 
@@ -1127,76 +1128,18 @@ LRESULT CALLBACK SB_MeshViewer::Properties_ListBox_Proc(HWND hDlg, UINT message,
 		HWND List = GetDlgItem(hDlg, IDC_LISTGROUP);
 		ListView_DeleteAllItems(List);
 
-		App->SBC_MeshViewer->m_Material_File[0] = 0;
+		SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->SBC_MeshViewer->mResource_Folder);
+		SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"");
+		SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->SBC_MeshViewer->Selected_MeshFile);
+		SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->SBC_MeshViewer->m_Material_File);
+		SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"");
 
-		int SubMeshCount = App->SBC_MeshViewer->MvEnt->getNumSubEntities();
-		char test[255];
-		char pScriptName[255];
-		char pMaterialFile[255];
-		Ogre::String st;
-		Ogre::MaterialPtr pp;
-
-		pp.setNull();
-		bool loaded = 0;
-		//SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->SBC_MeshViewer->MvEnt->getSubEntity(0)->getMaterialName().c_str());
-
-		Ogre::SubMesh const *subMesh = App->SBC_MeshViewer->MvEnt->getSubEntity(0)->getSubMesh();
-		Ogre::String MatName = subMesh->getMaterialName();
-		strcpy(pScriptName, MatName.c_str());
-
-		loaded = Ogre::MaterialManager::getSingleton().resourceExists(MatName);
-
-		if (loaded == 1)
+		int Count = 0;
+		while (Count < App->SBC_MeshViewer->Texure_Count)
 		{
-			pp = Ogre::MaterialManager::getSingleton().getByName(MatName, App->SBC_MeshViewer->MV_Resource_Group);
-			st = pp->getOrigin();
-			strcpy(pMaterialFile, st.c_str());
-
-			strcpy(test, "Loaded:- ");
-			strcat(test, pMaterialFile);
-			SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)test);
-
-			strcpy(App->SBC_MeshViewer->m_Material_File, pMaterialFile);
-
-		}
-		else
-		{
-			strcpy(test, "Not Loaded:- ");
-			strcat(test, pMaterialFile);
-			SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)test);
-		}
-
-		
-		Ogre::ResourcePtr ppp;
-		Ogre::ResourceManager::ResourceMapIterator TextureIterator = Ogre::TextureManager::getSingleton().getResourceIterator();
-
-		while (TextureIterator.hasMoreElements())
-		{
-			//strcpy(pScriptName,(static_cast<Ogre::MaterialPtr>(TextureIterator.peekNextValue()))->getName().c_str());
-
-			if (TextureIterator.peekNextValue()->getGroup() == App->SBC_MeshViewer->MV_Resource_Group)
-			{
-				
-				strcpy(pScriptName, TextureIterator.peekNextValue()->getName().c_str());
-				ppp = Ogre::TextureManager::getSingleton().getByName(pScriptName);
-
-				if (ppp->isLoaded() == 1)
-				{
-					
-					strcpy(test, "Loaded:- ");
-					strcat(test, pScriptName);
-					SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)test);
-				}
-				else
-				{
-					strcpy(test, "Not Loaded:- ");
-					strcat(test, pScriptName);
-					SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)test);
-				}
-
-			}
-
-			TextureIterator.moveNext();
+			SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->SBC_MeshViewer->v_Texture_Names[Count].c_str());
+			
+			Count++;
 		}
 
 		return TRUE;
