@@ -77,6 +77,7 @@ bool SB_Objects_Create::Add_Objects_From_File() // From File
 		else
 		{
 			App->SBC_Objects_Create->Add_New_Object(Count);
+			App->SBC_Scene->B_Object[Count]->Altered = 0;
 			App->SBC_Scene->B_Object[Count]->Folder = Enums::Folder_Objects;
 			App->SBC_Scene->B_Object[Count]->ListViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Objects_Folder, App->SBC_Scene->B_Object[Count]->Mesh_Name, Count, false);
 		}
@@ -114,6 +115,7 @@ bool SB_Objects_Create::Dispatch_MeshViewer()
 	else
 	{
 		Add_New_Object(Index);
+		App->SBC_Scene->B_Object[Index]->Altered = 1;
 		App->SBC_Scene->B_Object[Index]->Folder = Enums::Folder_Objects;
 		App->SBC_Scene->B_Object[Index]->ListViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Objects_Folder, App->SBC_Scene->B_Object[Index]->Mesh_Name, Index, true);
 		

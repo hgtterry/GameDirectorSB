@@ -73,8 +73,8 @@ public:
 	Ogre::Quaternion Mesh_BB_Quat;
 	Ogre::Vector3 Mesh_BB_Center;
 
-	bool  Deleted;
-
+	bool Deleted;
+	bool Altered;
 	//------------------------------ Entity
 	bool					Collision;
 	bool					Triggered;

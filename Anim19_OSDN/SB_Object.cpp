@@ -504,4 +504,18 @@ void SB_Object::Clear_Modified_Objects()
 
 		Count++;
 	}
+
+	Count = 0;
+	while (Count < App->SBC_Scene->Object_Count)
+	{
+		if (App->SBC_Scene->B_Object[Count]->Altered == 1)
+		{
+			App->SBC_Scene->B_Object[Count]->Altered = 0;
+			App->SBC_FileView->Mark_Clear(App->SBC_Scene->B_Object[Count]->ListViewItem);
+		}
+
+		Count++;
+	}
+
+	App->SBC_Scene->Scene_Modified = 0;
 }
