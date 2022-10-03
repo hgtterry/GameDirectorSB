@@ -862,9 +862,9 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 
 		App->SBC_Scene->B_Player[0]->Altered = 1;
 		App->SBC_Scene->Scene_Modified = 1;
-		//App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->);
+		App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);
 
-		App->SBC_FileView->Change_Item_Name(App->SBC_Player->FileViewItem, App->Cl_Dialogs->Chr_Text);
+		App->SBC_FileView->Change_Item_Name(App->SBC_Scene->B_Player[0]->FileViewItem, App->Cl_Dialogs->Chr_Text);
 		Update_ListView_Player();
 	}
 
@@ -1003,7 +1003,7 @@ bool SB_Properties::Edit_Messages_OnClick(LPARAM lParam)
 
 		App->SBC_Scene->B_Object[Index]->Altered = 1;
 		App->SBC_Scene->Scene_Modified = 1;
-		App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Object[Index]->ListViewItem);
+		App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Object[Index]->FileViewItem);
 
 		//App->Cl_FileView->ChangeItem_Name(NULL, App->Cl_Dialogs->Chr_Text);
 		Update_ListView_Messages();

@@ -828,7 +828,7 @@ void SB_Dimensions::UpDate_Physics_And_Visuals(int Index)
 
 	// Needs Looking at
 	App->SBC_Scene->B_Object[Index]->Altered = 1;
-	App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Object[Index]->ListViewItem);
+	App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Object[Index]->FileViewItem);
 	App->SBC_Scene->Scene_Modified = 1;
 }
 

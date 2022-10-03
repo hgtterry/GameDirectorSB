@@ -103,7 +103,7 @@ bool Base_Object::Init_Object(void)
 
 	Shape = -1;
 
-	ListViewItem = NULL;
+	FileViewItem = nullptr;
 
 	Object_ID = 0; // This Needs Checking
 	Deleted = 0;

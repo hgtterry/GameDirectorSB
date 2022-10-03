@@ -65,7 +65,7 @@ public:
 	bool					Physics_Valid;
 
 	//------------------------------ ListView
-	HTREEITEM ListViewItem;
+	HTREEITEM FileViewItem;
 	//------------------------------ Bounding Box
 	Ogre::Real Mesh_BB_Width;
 	Ogre::Real Mesh_BB_Height;

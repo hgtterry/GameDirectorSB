@@ -362,7 +362,7 @@ bool SB_Project::Save_Project()
 	{
 		Save_Players_Folder();
 
-		App->SBC_Player->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Players_Folder,"Player_1", 0, false);
+		App->SBC_Scene->B_Player[0]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Players_Folder,"Player_1", 0, false);
 		App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Players_Folder);
 
 	}
@@ -1265,9 +1265,8 @@ bool SB_Project::Load_Project_Player()
 		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
 		App->SBC_Scene->B_Player[Count]->StartPos = Ogre::Vector3(x, y, z);
 
-
-		App->SBC_Player->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Players_Folder,Player_Name, Count, false);
-
+		App->SBC_Scene->B_Player[Count]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Players_Folder, Player_Name, Count, false);
+	
 		Count++;
 
 	}

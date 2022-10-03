@@ -426,9 +426,9 @@ void SB_Object::Rename_Object(int Index)
 
 	Object->Altered = 1;
 	App->SBC_Scene->Scene_Modified = 1;
-	App->SBC_FileView->Mark_Altered(Object->ListViewItem);
+	App->SBC_FileView->Mark_Altered(Object->FileViewItem);
 
-	App->SBC_FileView->Change_Item_Name(Object->ListViewItem, Object->Mesh_Name);
+	App->SBC_FileView->Change_Item_Name(Object->FileViewItem, Object->Mesh_Name);
 }
 
 // *************************************************************************
@@ -515,7 +515,7 @@ void SB_Object::Clear_Modified_Objects()
 		if (App->SBC_Scene->B_Object[Count]->Altered == 1)
 		{
 			App->SBC_Scene->B_Object[Count]->Altered = 0;
-			App->SBC_FileView->Mark_Clear(App->SBC_Scene->B_Object[Count]->ListViewItem);
+			App->SBC_FileView->Mark_Clear(App->SBC_Scene->B_Object[Count]->FileViewItem);
 		}
 
 		Count++;

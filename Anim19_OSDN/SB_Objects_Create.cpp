@@ -79,7 +79,7 @@ bool SB_Objects_Create::Add_Objects_From_File() // From File
 			App->SBC_Objects_Create->Add_New_Object(Count);
 			App->SBC_Scene->B_Object[Count]->Altered = 0;
 			App->SBC_Scene->B_Object[Count]->Folder = Enums::Folder_Objects;
-			App->SBC_Scene->B_Object[Count]->ListViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Objects_Folder, App->SBC_Scene->B_Object[Count]->Mesh_Name, Count, false);
+			App->SBC_Scene->B_Object[Count]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Objects_Folder, App->SBC_Scene->B_Object[Count]->Mesh_Name, Count, false);
 		}
 
 		Count++;
@@ -89,7 +89,7 @@ bool SB_Objects_Create::Add_Objects_From_File() // From File
 	{
 		App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Objects_Folder);
 		ShowWindow(App->SBC_Properties->Properties_Dlg_hWnd, 1);
-		App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[0]->ListViewItem);
+		App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[0]->FileViewItem);
 	}
 
 	//App->Cl_FileView->Select_Item(NULL);
@@ -117,7 +117,7 @@ bool SB_Objects_Create::Dispatch_MeshViewer()
 		Add_New_Object(Index);
 		App->SBC_Scene->B_Object[Index]->Altered = 1;
 		App->SBC_Scene->B_Object[Index]->Folder = Enums::Folder_Objects;
-		App->SBC_Scene->B_Object[Index]->ListViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Objects_Folder, App->SBC_Scene->B_Object[Index]->Mesh_Name, Index, true);
+		App->SBC_Scene->B_Object[Index]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Objects_Folder, App->SBC_Scene->B_Object[Index]->Mesh_Name, Index, true);
 		
 	}
 	return 1;
@@ -145,7 +145,7 @@ void SB_Objects_Create::Add_Objects_From_MeshViewer()
 
 	App->SBC_Objects_Create->Dispatch_MeshViewer();
 	
-	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[Index]->ListViewItem);
+	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[Index]->FileViewItem);
 
 	App->Cl_Scene_Data->Object_ID_Counter++;
 	App->SBC_Scene->Object_Count++;  // Must be last line
@@ -752,7 +752,7 @@ bool SB_Objects_Create::First_Area_Start_Project()
 	// ------------------------ Add Default Player
 	App->SBC_Player->Create_Player_Object();
 	strcpy(App->SBC_Scene->B_Player[0]->Player_Name, "Player_1");
-	App->SBC_Player->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Players_Folder, "Player_1", 0, true);
+	App->SBC_Scene->B_Player[0]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Players_Folder, "Player_1", 0, true);
 	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Players_Folder);
 
 	// ------------------------ Add Area
@@ -797,7 +797,7 @@ bool SB_Objects_Create::Add_New_Message()
 
 	Add_Message_Entity(Index);
 
-	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[Index]->ListViewItem);
+	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[Index]->FileViewItem);
 
 	App->SBC_Scene->Object_Count++;
 
@@ -894,7 +894,7 @@ bool SB_Objects_Create::Add_Message_Entity(int Index)
 	Set_Physics(Index);
 
 	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Messages_Folder,Object->Mesh_Name, Index, true);
-	Object->ListViewItem = Temp;
+	Object->FileViewItem = Temp;
 
 	return 1;
 }
@@ -930,7 +930,7 @@ bool SB_Objects_Create::Add_New_Sound()
 
 	Add_Sound_Entity(Index);
 
-	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[Index]->ListViewItem);
+	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[Index]->FileViewItem);
 
 	App->SBC_Scene->Object_Count++;
 
@@ -1029,7 +1029,7 @@ bool SB_Objects_Create::Add_Sound_Entity(int Index)
 	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Sounds_Folder,
 		App->SBC_Scene->B_Object[Index]->Mesh_Name, Index, true);
 
-	App->SBC_Scene->B_Object[Index]->ListViewItem = Temp;
+	App->SBC_Scene->B_Object[Index]->FileViewItem = Temp;
 
 	return 1;
 }
