@@ -376,6 +376,7 @@ void SB_Dimensions::ImGui_Scale(void)
 				App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
 				App->SBC_Scene->B_Object[Index]->Mesh_Scale = Scale;
 
+				
 				App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
 				App->SBC_Scene->B_Object[Index]->Physics_Scale = Scale;
 
@@ -387,11 +388,11 @@ void SB_Dimensions::ImGui_Scale(void)
 				{
 					Scale.x = Scale.x - Model_Scale_Delta;
 					App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
+					App->SBC_Scene->B_Object[Index]->Mesh_Scale = Scale;
 
-					AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
-					worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
-					Ogre::Vector3 Centre = worldAAB.getCenter();
-					App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Scale.x/2, Scale.y/2, Scale.z/2));
+					App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+					App->SBC_Scene->B_Object[Index]->Physics_Scale = Scale;
+
 					UpDate_Physics_And_Visuals(Index);
 				}
 
@@ -399,24 +400,24 @@ void SB_Dimensions::ImGui_Scale(void)
 				{
 					Scale.y = Scale.y + Model_Scale_Delta;
 					App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
+					App->SBC_Scene->B_Object[Index]->Mesh_Scale = Scale;
 
-					AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
-					worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
-					Ogre::Vector3 Centre = worldAAB.getCenter();
-					App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
-				
+					App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+					App->SBC_Scene->B_Object[Index]->Physics_Scale = Scale;
+
+					UpDate_Physics_And_Visuals(Index);
 				}
 
 				if (ScaleZ_Selected == 1)
 				{
 					Scale.z = Scale.z - Model_Scale_Delta;
 					App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
+					App->SBC_Scene->B_Object[Index]->Mesh_Scale = Scale;
 
-					AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
-					worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
-					Ogre::Vector3 Centre = worldAAB.getCenter();
-					App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
-					
+					App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+					App->SBC_Scene->B_Object[Index]->Physics_Scale = Scale;
+
+					UpDate_Physics_And_Visuals(Index);
 				}
 			}
 		}
@@ -447,36 +448,36 @@ void SB_Dimensions::ImGui_Scale(void)
 				{
 					Scale.x = Scale.x + Model_Scale_Delta;
 					App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
+					App->SBC_Scene->B_Object[Index]->Mesh_Scale = Scale;
 
-					AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
-					worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
-					Ogre::Vector3 Centre = worldAAB.getCenter();
-					App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+					App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+					App->SBC_Scene->B_Object[Index]->Physics_Scale = Scale;
 					
+					UpDate_Physics_And_Visuals(Index);
 				}
 
 				if (ScaleY_Selected == 1)
 				{
 					Scale.y = Scale.y - Model_Scale_Delta;
 					App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
+					App->SBC_Scene->B_Object[Index]->Mesh_Scale = Scale;
 
-					AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
-					worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
-					Ogre::Vector3 Centre = worldAAB.getCenter();
-					App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+					App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+					App->SBC_Scene->B_Object[Index]->Physics_Scale = Scale;
 					
+					UpDate_Physics_And_Visuals(Index);
 				}
 
 				if (ScaleZ_Selected == 1)
 				{
 					Scale.z = Scale.z + Model_Scale_Delta;
 					App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
+					App->SBC_Scene->B_Object[Index]->Mesh_Scale = Scale;
 
-					AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
-					worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
-					Ogre::Vector3 Centre = worldAAB.getCenter();
-					App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+					App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+					App->SBC_Scene->B_Object[Index]->Physics_Scale = Scale;
 					
+					UpDate_Physics_And_Visuals(Index);
 				}
 			}
 		}

@@ -124,6 +124,8 @@ void SB_Markers::Update_Green_Axis_Marker(int Index)
 void SB_Markers::Update_Blue_Axis_Marker(int Index)
 {
 
+	//App->SBC_Markers->BlueAxis_Node->setOrientation = App->SBC_Scene->B_Object[Index]->Object_Node->getOrientation();
+
 	Ogre::Vector3 Centre = App->SBC_Object->Get_BoundingBox_World_Centre(Index);
 
 	App->SBC_Markers->BlueAxis_Node->setPosition(Centre);
