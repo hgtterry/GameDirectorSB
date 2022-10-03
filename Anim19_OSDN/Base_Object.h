@@ -39,6 +39,7 @@ public:
 	char Mesh_Name[MAX_PATH];				// Mesh Name Mesh.mesh
 	char Mesh_FileName[MAX_PATH];
 	char Mesh_Resource_Path[MAX_PATH];
+	char Material_File[MAX_PATH];
 
 	//------------------------------ Description
 	int Type;
@@ -65,7 +66,9 @@ public:
 	bool					Physics_Valid;
 
 	//------------------------------ ListView
+
 	HTREEITEM FileViewItem;
+
 	//------------------------------ Bounding Box
 	Ogre::Real Mesh_BB_Width;
 	Ogre::Real Mesh_BB_Height;

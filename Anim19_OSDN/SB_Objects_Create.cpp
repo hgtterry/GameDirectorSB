@@ -107,6 +107,7 @@ bool SB_Objects_Create::Dispatch_MeshViewer()
 	if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area) // Area
 	{
 		App->SBC_Aera->Add_Aera_To_Project(0, App->SBC_MeshViewer->Selected_MeshFile, m_ResourcePath);
+		
 	}
 	else if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables) // Collectables
 	{
@@ -139,6 +140,7 @@ void SB_Objects_Create::Add_Objects_From_MeshViewer()
 	strcpy(Object->Mesh_Name, App->SBC_MeshViewer->Object_Name);
 	strcpy(Object->Mesh_FileName, App->SBC_MeshViewer->Selected_MeshFile);
 	strcpy(Object->Mesh_Resource_Path, m_ResourcePath);
+	strcpy(Object->Material_File, App->SBC_MeshViewer->m_Material_File);
 
 	Object->Type = App->SBC_MeshViewer->Physics_Type;
 	Object->Shape = App->SBC_MeshViewer->Physics_Shape;
@@ -738,6 +740,8 @@ bool SB_Objects_Create::First_Area_Start_Project()
 	strcpy(poo, App->SBC_Scene->Project_Resource_Group.c_str());
 
 	App->SBC_Aera->Add_Aera_To_Project(0, App->SBC_MeshViewer->Selected_MeshFile, poo);
+	strcpy(App->SBC_Scene->B_Area[0]->Material_File,App->SBC_MeshViewer->m_Material_File);
+	
 	App->SBC_Scene->Area_Count++;
 
 	App->SBC_Scene->Area_Added = 1;

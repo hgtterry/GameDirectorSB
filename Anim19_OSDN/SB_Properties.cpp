@@ -383,7 +383,7 @@ bool SB_Properties::Update_ListView_Objects()
 	sprintf(chr_Total, "%i", "2");//TotalCollectableCount);
 
 
-	const int NUM_ITEMS = 4;
+	const int NUM_ITEMS = 5;
 	const int NUM_COLS = 2;
 	std::string grid[NUM_COLS][NUM_ITEMS]; // string table
 	LV_ITEM pitem;
@@ -392,8 +392,9 @@ bool SB_Properties::Update_ListView_Objects()
 
 	grid[0][0] = "Name",		grid[1][0] = App->SBC_Scene->B_Object[index]->Mesh_Name;
 	grid[0][1] = "Mesh File",	grid[1][1] = App->SBC_Scene->B_Object[index]->Mesh_FileName;
-	grid[0][2] = " ",			grid[1][2] = " ";
-	grid[0][3] = "Scale",		grid[1][3] = chr_Scale;
+	grid[0][2] = "Material",	grid[1][2] = App->SBC_Scene->B_Object[index]->Material_File;
+	grid[0][3] = " ",			grid[1][3] = " ";
+	grid[0][4] = "Scale",		grid[1][4] = chr_Scale;
 
 
 
@@ -1005,7 +1006,8 @@ bool SB_Properties::Edit_Messages_OnClick(LPARAM lParam)
 		App->SBC_Scene->Scene_Modified = 1;
 		App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Object[Index]->FileViewItem);
 
-		//App->Cl_FileView->ChangeItem_Name(NULL, App->Cl_Dialogs->Chr_Text);
+		App->SBC_FileView->Change_Item_Name(App->SBC_Scene->B_Object[Index]->FileViewItem, App->Cl_Dialogs->Chr_Text);
+
 		Update_ListView_Messages();
 	}
 
@@ -1196,8 +1198,9 @@ bool SB_Properties::Update_ListView_Area()
 	memset(&pitem, 0, sizeof(LV_ITEM));
 	pitem.mask = LVIF_TEXT;
 
-	grid[0][0] = "Name", grid[1][0] = App->SBC_Scene->B_Area[Index]->Area_Name;
-	grid[0][1] = "Mesh File", grid[1][1] = App->SBC_Scene->B_Area[Index]->Area_FileName;
+	grid[0][0] = "Name",		grid[1][0] = App->SBC_Scene->B_Area[Index]->Area_Name;
+	grid[0][1] = "Mesh File",	grid[1][1] = App->SBC_Scene->B_Area[Index]->Area_FileName;
+	grid[0][2] = "Material",	grid[1][2] = App->SBC_Scene->B_Area[Index]->Material_File;
 
 	ListView_DeleteAllItems(Properties_hLV);
 

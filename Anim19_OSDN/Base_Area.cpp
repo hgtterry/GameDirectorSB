@@ -47,7 +47,8 @@ Base_Area::Base_Area()
 	Object_ID = 0; // This Needs Checking
 
 	strcpy(Area_Name, "Room_1");
-
+	strcpy(Material_File,"Not_Loaded");
+	
 	Area_FileName[0] = 0;
 	Area_Path_And_FileName[0] = 0;
 	Area_Resource_Path[0] = 0;

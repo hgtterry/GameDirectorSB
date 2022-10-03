@@ -30,6 +30,7 @@ public:
 	char Area_FileName[MAX_PATH];
 	char Area_Path_And_FileName[MAX_PATH];
 	char Area_Resource_Path[MAX_PATH];
+	char Material_File[MAX_PATH];
 
 	HTREEITEM FileViewItem;			// Holder for Area File view item [211121]
 

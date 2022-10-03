@@ -634,7 +634,7 @@ bool SB_Project::Save_Objects_Data()
 
 			fprintf(WriteFile, "%s%s\n", "Mesh_File=", App->SBC_Scene->B_Object[Count]->Mesh_FileName);
 			fprintf(WriteFile, "%s%s\n", "Mesh_Resource_Path=", App->SBC_Scene->B_Object[Count]->Mesh_Resource_Path);
-
+			fprintf(WriteFile, "%s%s\n", "Material_File=", App->SBC_Scene->B_Object[Count]->Material_File);
 			fprintf(WriteFile, "%s%i\n", "Object_Type=", App->SBC_Scene->B_Object[Count]->Type);
 			fprintf(WriteFile, "%s%i\n", "Object_Shape=", App->SBC_Scene->B_Object[Count]->Shape);
 			fprintf(WriteFile, "%s%i\n", "Object_Usage=", App->SBC_Scene->B_Object[Count]->Usage);
@@ -807,6 +807,7 @@ bool SB_Project::Save_Aeras_Data()
 		fprintf(WriteFile, "%s%s\n", "Area_File=", App->SBC_Scene->B_Area[Count]->Area_FileName);
 		fprintf(WriteFile, "%s%s\n", "Area_Path_File=", App->SBC_Scene->B_Area[Count]->Area_Path_And_FileName);
 		fprintf(WriteFile, "%s%s\n", "Area_Resource_Path=", App->SBC_Scene->B_Area[Count]->Area_Resource_Path);
+		fprintf(WriteFile, "%s%s\n", "Material_File=", App->SBC_Scene->B_Area[Count]->Material_File);
 
 		fprintf(WriteFile, "%s\n", "[Position]");
 		x = App->SBC_Scene->B_Area[Count]->Area_Node->getPosition().x;
@@ -1095,7 +1096,8 @@ bool SB_Project::Load_Project_Objects()
 		App->Cl_Ini->GetString(buff, "Mesh_Name", Object->Mesh_Name, MAX_PATH);
 		App->Cl_Ini->GetString(buff, "Mesh_File", Object->Mesh_FileName, MAX_PATH);
 		App->Cl_Ini->GetString(buff, "Mesh_Resource_Path", Object->Mesh_Resource_Path, MAX_PATH);
-		
+		App->Cl_Ini->GetString(buff, "Material_File", Object->Material_File, MAX_PATH);
+
 		// Types
 		Object->Type = App->Cl_Ini->GetInt(buff, "Object_Type", 0);
 		Object->Shape = App->Cl_Ini->GetInt(buff, "Object_Shape", 0);
@@ -1196,6 +1198,8 @@ bool SB_Project::Load_Project_Aera()
 		App->Cl_Ini->GetString("Area_0", "Area_Resource_Path", Resource_Location, MAX_PATH);
 
 		App->SBC_Aera->Add_Aera_To_Project(Count, Mesh_FileName, m_Main_Assets_Path);
+
+		App->Cl_Ini->GetString("Area_0", "Material_File", App->SBC_Scene->B_Area[Count]->Material_File, MAX_PATH);
 
 		App->Cl_Ini->GetString("Position", "Mesh_Pos", chr_Tag1, MAX_PATH);
 		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
