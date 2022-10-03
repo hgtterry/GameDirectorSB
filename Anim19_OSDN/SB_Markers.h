@@ -34,6 +34,9 @@ public:
 	void Load_Green_Axis();
 	void Load_Blue_Axis();
 
+	void Load_Blue_Rot_Axis();
+
+
 	void Update_Red_Axis_Marker(int Index);
 	void Update_Green_Axis_Marker(int Index);
 	void Update_Blue_Axis_Marker(int Index);
@@ -48,5 +51,8 @@ public:
 
 	Ogre::Entity*		BlueAxis_Ent;
 	Ogre::SceneNode*	BlueAxis_Node;
+
+	Ogre::Entity*		BlueRotAxis_Ent;
+	Ogre::SceneNode*	BlueRotAxis_Node;
 };
 

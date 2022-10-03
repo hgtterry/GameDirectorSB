@@ -36,6 +36,9 @@ SB_Markers::SB_Markers(void)
 
 	GreenAxis_Ent = nullptr;
 	GreenAxis_Node = nullptr;
+
+	BlueRotAxis_Ent = nullptr;
+	BlueRotAxis_Node = nullptr;
 }
 
 SB_Markers::~SB_Markers(void)
@@ -47,9 +50,25 @@ SB_Markers::~SB_Markers(void)
 // **************************************************************************
 void SB_Markers::Load_All_Axis()
 {
+	Load_Blue_Rot_Axis();
+
 	Load_Red_Axis();
 	Load_Green_Axis();
 	Load_Blue_Axis();
+}
+
+// **************************************************************************
+// *	  		Load_Blue_Rot_Axis:- Terry and Hazel Flanigan 2022			*
+// **************************************************************************
+void SB_Markers::Load_Blue_Rot_Axis()
+{
+	BlueRotAxis_Ent = App->Cl19_Ogre->mSceneMgr->createEntity("Blue_Rot_Axis", "Ring.mesh", App->Cl19_Ogre->App_Resource_Group);
+	BlueRotAxis_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	BlueRotAxis_Node->attachObject(BlueRotAxis_Ent);
+
+	BlueRotAxis_Node->setVisible(true);
+	BlueRotAxis_Node->setPosition(0, 0, 0);
+	BlueRotAxis_Node->setScale(1, 1, 1);
 }
 
 // **************************************************************************

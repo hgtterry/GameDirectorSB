@@ -635,7 +635,7 @@ void SB_Dimensions::ImGui_Rotation(void)
 
 			if (RotationX_Selected == 1)
 			{
-				App->SBC_Scene->B_Object[Index]->Object_Node->pitch(Radian(Ogre::Degree(Model_Rotation_Delta)));
+				App->SBC_Scene->B_Object[Index]->Object_Node->pitch(Radian(Ogre::Degree(Model_Rotation_Delta)),Ogre::Node::TS_LOCAL);
 				App->SBC_Scene->B_Object[Index]->Mesh_Rot.x += Model_Rotation_Delta;
 				App->SBC_Scene->B_Object[Index]->Mesh_Quat = App->SBC_Scene->B_Object[Index]->Object_Node->getOrientation();
 
@@ -654,7 +654,7 @@ void SB_Dimensions::ImGui_Rotation(void)
 
 			if (RotationY_Selected == 1)
 			{
-				App->SBC_Scene->B_Object[Index]->Object_Node->yaw(Radian(Ogre::Degree(Model_Rotation_Delta)));
+				App->SBC_Scene->B_Object[Index]->Object_Node->yaw(Radian(Ogre::Degree(Model_Rotation_Delta)),Ogre::Node::TS_WORLD);
 				App->SBC_Scene->B_Object[Index]->Mesh_Rot.y += Model_Rotation_Delta;
 				App->SBC_Scene->B_Object[Index]->Mesh_Quat = App->SBC_Scene->B_Object[Index]->Object_Node->getOrientation();
 
@@ -674,7 +674,7 @@ void SB_Dimensions::ImGui_Rotation(void)
 
 			if (RotationZ_Selected == 1)
 			{
-				App->SBC_Scene->B_Object[Index]->Object_Node->roll(Radian(Ogre::Degree(Model_Rotation_Delta)));
+				App->SBC_Scene->B_Object[Index]->Object_Node->roll(Radian(Ogre::Degree(Model_Rotation_Delta)), Ogre::Node::TS_WORLD);
 				App->SBC_Scene->B_Object[Index]->Mesh_Rot.y += Model_Rotation_Delta;
 				App->SBC_Scene->B_Object[Index]->Mesh_Quat = App->SBC_Scene->B_Object[Index]->Object_Node->getOrientation();
 
