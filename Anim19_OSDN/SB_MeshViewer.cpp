@@ -803,6 +803,56 @@ void SB_MeshViewer::Get_Mesh_Assets()
 		TextureIterator.moveNext();
 	}
 	
+	//Ogre::Pass *myMatPass = Ogre::MaterialManager::getSingletonPtr()->getByName("material bkt_ball")->getTechnique(0)->getPass(0);
+	//Ogre::String test = myMatPass->getTextureUnitState(0)->getName();
+	//App->Say(test.c_str());
+
+	//or: myMatPass->getTextureUnitState(0)->setTextureName( "myTexture" );
+
+	/*Ogre::ResourcePtr kres_it = MaterialManager::getSingleton().getResourceByName(pMaterialFile);
+	
+	ResourceManager::ResourceMapIterator res_it = MaterialManager::getSingleton().getResourceIterator();*/
+
+	//while (res_it.hasMoreElements())
+	//{
+
+	//	ResourcePtr resource = res_it.getNext();
+	//	MaterialPtr material = resource.staticCast<Material>();
+	//	Material::TechniqueIterator tech_it = material->getTechniqueIterator();
+
+	//	Ogre::String test= material->getName();
+	//	//App->Say(test.c_str());
+
+	//	while (tech_it.hasMoreElements())
+	//	{
+	//		Technique* technique = tech_it.getNext();
+	//		Technique::PassIterator pass_it = technique->getPassIterator();
+	//		while (pass_it.hasMoreElements())
+	//		{
+	//			Pass* pass = pass_it.getNext();
+
+	//			int Passnum = technique->getNumPasses();
+
+	//			int poop = technique->getPass(0)->getNumTextureUnitStates();
+	//			//App->Say_Int(poop);
+
+	//			if (poop > 0)
+	//			{
+	//				Ogre::String test = technique->getPass(0)->getTextureUnitState(0)->getTextureName();
+	//				//App->Say(test.c_str()); Works
+	//			}
+
+	//			//Ogre::String test = pass->getTextureUnitState(1)->getTextureName();
+	//			//App->Say(test.c_str());
+
+	//			//TextureUnitState* tus = pass->getTextureUnitState(0);
+	//			//if (tus != 0)
+	//			//{
+	//				//tus->setTexture(m_cubemap_filter->getTexture());
+	//			//}
+	//		}
+	//	}
+	//}
 }
 
 
