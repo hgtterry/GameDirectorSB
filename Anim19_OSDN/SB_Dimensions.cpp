@@ -500,6 +500,19 @@ void SB_Dimensions::ImGui_Scale(void)
 	ImGui::Checkbox("SX", &ScaleX_Selected);
 	if (ScaleX_Selected == 1)
 	{
+		if (Scale_Lock == 1)
+		{
+			App->SBC_Markers->Hide_Axis_Marker();
+			App->SBC_Markers->Update_Red_Axis_Marker(Index);
+			App->SBC_Markers->Update_Green_Axis_Marker(Index);
+			App->SBC_Markers->Update_Blue_Axis_Marker(Index);
+		}
+		else
+		{
+			App->SBC_Markers->Hide_Axis_Marker();
+			App->SBC_Markers->Update_Blue_Axis_Marker(Index);
+		}
+
 		ScaleY_Selected = 0;
 		ScaleZ_Selected = 0;
 	}
@@ -512,6 +525,19 @@ void SB_Dimensions::ImGui_Scale(void)
 
 	if (ScaleY_Selected)
 	{
+		if (Scale_Lock == 1)
+		{
+			App->SBC_Markers->Hide_Axis_Marker();
+			App->SBC_Markers->Update_Red_Axis_Marker(Index);
+			App->SBC_Markers->Update_Green_Axis_Marker(Index);
+			App->SBC_Markers->Update_Blue_Axis_Marker(Index);
+		}
+		else
+		{
+			App->SBC_Markers->Hide_Axis_Marker();
+			App->SBC_Markers->Update_Green_Axis_Marker(Index);
+		}
+
 		ScaleX_Selected = 0;
 		ScaleZ_Selected = 0;
 	}
@@ -522,6 +548,19 @@ void SB_Dimensions::ImGui_Scale(void)
 	ImGui::Checkbox("SZ", &ScaleZ_Selected);
 	if (ScaleZ_Selected)
 	{
+		if (Scale_Lock == 1)
+		{
+			App->SBC_Markers->Hide_Axis_Marker();
+			App->SBC_Markers->Update_Red_Axis_Marker(Index);
+			App->SBC_Markers->Update_Green_Axis_Marker(Index);
+			App->SBC_Markers->Update_Blue_Axis_Marker(Index);
+		}
+		else
+		{
+			App->SBC_Markers->Hide_Axis_Marker();
+			App->SBC_Markers->Update_Red_Axis_Marker(Index);
+		}
+
 		ScaleX_Selected = 0;
 		ScaleY_Selected = 0;
 	}
@@ -529,7 +568,7 @@ void SB_Dimensions::ImGui_Scale(void)
 
 	ImGui::Checkbox("Lock Axis", &Scale_Lock);
 	{
-
+		
 	}
 
 	style->Colors[ImGuiCol_Text] = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);

@@ -846,6 +846,8 @@ LRESULT CALLBACK SB_TopTabs::Physics_TB_Proc(HWND hDlg, UINT message, WPARAM wPa
 			{
 				App->Cl_Bullet->Reset_Physics();
 
+				App->Cl_Visuals->MarkerBB_Addjust(App->SBC_Properties->Current_Selected_Object);
+
 				RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			}
 
