@@ -782,6 +782,7 @@ bool SB_Properties::Edit_Object_Onclick(LPARAM lParam)
 	if (result == 0)
 	{
 		App->SBC_Object->Rename_Object(Index);
+
 		Update_ListView_Objects();
 	}
 
@@ -819,6 +820,10 @@ bool SB_Properties::Edit_Area_Onclick(LPARAM lParam)
 		// Needs Duplicate Name test 
 		strcpy(Area->Area_Name, App->Cl_Dialogs->Chr_Text);
 
+		Area->Altered = 1;
+		App->SBC_Scene->Scene_Modified = 1;
+		App->SBC_FileView->Mark_Altered(Area->FileViewItem);
+
 		App->SBC_FileView->Change_Item_Name(Area->FileViewItem, Area->Area_Name);
 		Update_ListView_Area();
 	}
@@ -854,6 +859,10 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 
 		// Needs Duplicate Name test 
 		strcpy(App->SBC_Scene->B_Player[0]->Player_Name, App->Cl_Dialogs->Chr_Text);
+
+		App->SBC_Scene->B_Player[0]->Altered = 1;
+		App->SBC_Scene->Scene_Modified = 1;
+		//App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->);
 
 		App->SBC_FileView->Change_Item_Name(App->SBC_Player->FileViewItem, App->Cl_Dialogs->Chr_Text);
 		Update_ListView_Player();
@@ -991,6 +1000,10 @@ bool SB_Properties::Edit_Messages_OnClick(LPARAM lParam)
 		}
 
 		strcpy(App->SBC_Scene->B_Object[Index]->Mesh_Name, App->Cl_Dialogs->Chr_Text);
+
+		App->SBC_Scene->B_Object[Index]->Altered = 1;
+		App->SBC_Scene->Scene_Modified = 1;
+		App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Object[Index]->ListViewItem);
 
 		//App->Cl_FileView->ChangeItem_Name(NULL, App->Cl_Dialogs->Chr_Text);
 		Update_ListView_Messages();
@@ -1307,7 +1320,12 @@ bool SB_Properties::Edit_Camera_Onclick(LPARAM lParam)
 		// Needs Duplicate Name test 
 		strcpy(App->SBC_Scene->B_Camera[Index]->Camera_Name, App->Cl_Dialogs->Chr_Text);
 
+		App->SBC_Scene->B_Camera[Index]->Altered = 1;
+		App->SBC_Scene->Scene_Modified = 1;
+		App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Camera[Index]->FileViewItem);
+
 		App->SBC_FileView->Change_Item_Name(App->SBC_Scene->B_Camera[Index]->FileViewItem, App->Cl_Dialogs->Chr_Text);
+
 		Update_ListView_Camera();
 	}
 

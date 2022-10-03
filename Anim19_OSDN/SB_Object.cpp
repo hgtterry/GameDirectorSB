@@ -424,6 +424,10 @@ void SB_Object::Rename_Object(int Index)
 	// Needs Duplicate Name test 
 	strcpy(Object->Mesh_Name, App->Cl_Dialogs->Chr_Text);
 
+	Object->Altered = 1;
+	App->SBC_Scene->Scene_Modified = 1;
+	App->SBC_FileView->Mark_Altered(Object->ListViewItem);
+
 	App->SBC_FileView->Change_Item_Name(Object->ListViewItem, Object->Mesh_Name);
 }
 
