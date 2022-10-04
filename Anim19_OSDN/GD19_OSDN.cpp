@@ -254,6 +254,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return 1;
 		}
 	
+		case ID_DEBUG_COPYRESOURCES:
+		{
+			char Test[MAX_PATH];
+			strcpy(Test,"C:\\Users\\Gen2\\Desktop\\Test\\");
+
+			App->SBC_Project->Copy_Assets(App->SBC_Project->m_Main_Assets_Path, Test);
+			return 1;
+		}
+		
 		case ID_DEBUG_RESTOREAPP:
 		{
 			App->Cl_Dialogs->YesNo("Close GameDirector", "Are you sure");
