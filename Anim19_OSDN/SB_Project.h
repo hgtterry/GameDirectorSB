@@ -45,6 +45,8 @@ public:
 	bool Reset_Class();
 	bool Copy_Assets(char* Folder, char* DestinationFolder);
 
+	bool Save_All();
+
 	bool Load_Project();
 	bool Start_Save_Project_Dialog();
 

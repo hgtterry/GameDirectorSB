@@ -375,6 +375,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return 1;
 		}
 
+		case ID_FILE_SAVEPROJECTALL:
+		{
+			App->SBC_Project->Save_All();
+			return 1;
+		}
+		
 		case ID_FILE_SAVEPROJECT:
 		{
 			App->SBC_Project->Start_Save_Project_Dialog();

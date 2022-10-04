@@ -334,6 +334,15 @@ LRESULT CALLBACK SB_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message, W
 // *************************************************************************
 // *	  		Save_Project:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
+bool SB_Project::Save_All()
+{
+	App->Say("Scene Saved");
+	return 1;
+}
+
+// *************************************************************************
+// *	  		Save_Project:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
 bool SB_Project::Save_Project()
 {
 
