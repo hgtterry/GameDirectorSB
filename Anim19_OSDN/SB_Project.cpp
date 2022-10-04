@@ -57,6 +57,7 @@ SB_Project::SB_Project()
 	WriteFile =			NULL;
 
 	Project_Loaded = 0;
+	Directory_Changed_Flag = 0;
 }
 
 
@@ -248,8 +249,9 @@ LRESULT CALLBACK SB_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message, W
 			strcat(App->SBC_Project->m_Project_Sub_Folder, App->SBC_Project->m_Project_Name);
 			strcat(App->SBC_Project->m_Project_Sub_Folder, "_Prj");
 
-	
 			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Sub_Folder);
+			
+			App->SBC_Project->Directory_Changed_Flag = 1;
 
 			return TRUE;
 		}
@@ -281,6 +283,8 @@ LRESULT CALLBACK SB_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message, W
 			SetDlgItemText(hDlg, IDC_STPROJECTNAME, (LPCTSTR)App->SBC_Project->m_Project_Name);
 			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Sub_Folder);
 
+			App->SBC_Project->Directory_Changed_Flag = 1;
+
 			return TRUE;
 		}
 
@@ -290,10 +294,16 @@ LRESULT CALLBACK SB_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message, W
 			strcpy(App->SBC_Dialogs->Chr_Text, App->SBC_Project->m_Level_Name);
 
 			App->SBC_Dialogs->Dialog_Text();
+			if (App->SBC_Dialogs->Canceled == 1)
+			{
+				return TRUE;
+			}
 
 			strcpy(App->SBC_Project->m_Level_Name, App->SBC_Dialogs->Chr_Text);
 			SetDlgItemText(hDlg, IDC_STLEVELNAME, (LPCTSTR)App->SBC_Project->m_Level_Name);
 			
+			App->SBC_Project->Directory_Changed_Flag = 1;
+
 			return TRUE;
 		}
 
@@ -307,12 +317,16 @@ LRESULT CALLBACK SB_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message, W
 
 			SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Sub_Folder);
 
+			App->SBC_Project->Directory_Changed_Flag = 1;
+
 			return TRUE;
 		}
 		
 		
 		if (LOWORD(wParam) == IDCANCEL)
 		{
+			App->SBC_Project->Directory_Changed_Flag = 0;
+
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -385,9 +399,12 @@ bool SB_Project::Save_Project()
 
 	App->Set_Main_TitleBar(App->SBC_FileIO->Project_Path_File_Name);
 
-	App->SBC_Object->Clear_Modified_Objects();
+	App->SBC_Object->Clear_Modified_Objects(); // Clear Altered FileView Items
+
+	App->SBC_Project->Directory_Changed_Flag = 0;
 
 	App->Say("Scene Saved");
+
 	return 1;
 }
 
@@ -714,6 +731,14 @@ bool SB_Project::Save_Objects_Data()
 // *************************************************************************
 bool SB_Project::Save_Main_Asset_Folder()
 {
+	char LastFolder[MAX_PATH];
+
+	if (Directory_Changed_Flag == 1)
+	{
+		App->Say("Altered");
+		strcpy(LastFolder, m_Main_Assets_Path);
+	}
+
 	m_Main_Assets_Path[0] = 0;
 
 	strcpy(m_Main_Assets_Path, m_Level_Folder_Path);
@@ -728,6 +753,11 @@ bool SB_Project::Save_Main_Asset_Folder()
 	else
 	{
 		_chdir(m_Main_Assets_Path);
+	}
+
+	if (Directory_Changed_Flag == 1)
+	{
+		Copy_Assets(LastFolder, m_Main_Assets_Path);
 	}
 
 	_chdir(m_Level_Folder_Path); // Return to Level Folder

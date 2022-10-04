@@ -64,6 +64,7 @@ public:
 	
 	char m_Ini_Path_File_Name[MAX_PATH];
 
+	bool Directory_Changed_Flag;
 	bool Project_Loaded;
 
 protected:
