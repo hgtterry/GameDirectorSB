@@ -624,7 +624,7 @@ void GD19_Dialogs::Start_Gen_ListBox(int ListType)
 {
 	mListType = ListType;
 
-//	DialogBox(App->hInst,(LPCTSTR)IDD_GENLIST2,App->Fdlg,(DLGPROC)Gen_ListBox_Proc);
+	DialogBox(App->hInst,(LPCTSTR)IDD_LISTDATA,App->Fdlg,(DLGPROC)Gen_ListBox_Proc);
 }
 
 // *************************************************************************
@@ -639,9 +639,9 @@ LRESULT CALLBACK GD19_Dialogs::Gen_ListBox_Proc(HWND hDlg, UINT message, WPARAM 
 		{
 			HFONT Font;
 			Font = CreateFont( -15,0,0,0, 0,0,0,0,0,OUT_TT_ONLY_PRECIS ,0,0,0, "Aerial Black");
-			//SendDlgItemMessage(hDlg,IDC_LIST1, WM_SETFONT, (WPARAM)Font, MAKELPARAM(TRUE, 0));
+			SendDlgItemMessage(hDlg, IDC_LISTGROUP, WM_SETFONT, (WPARAM)Font, MAKELPARAM(TRUE, 0));
 
-		//	HWND List = GetDlgItem(hDlg,IDC_LIST1);
+			HWND List = GetDlgItem(hDlg, IDC_LISTGROUP);
 
 			if(App->Cl_Dialogs->mListType == Enums::ListBox_Stock_Messages)
 			{
@@ -662,6 +662,12 @@ LRESULT CALLBACK GD19_Dialogs::Gen_ListBox_Proc(HWND hDlg, UINT message, WPARAM 
 			{
 				//App->Cl_Resources->List_MeshMaterials(List);
 			}
+
+			if (App->Cl_Dialogs->mListType == Enums::ListBox_Resource_Folder)
+			{
+				App->Cl_Dialogs->Contents_Resource_Folder(List);
+			}
+
 			return TRUE;
 		}
 
@@ -695,6 +701,31 @@ LRESULT CALLBACK GD19_Dialogs::Gen_ListBox_Proc(HWND hDlg, UINT message, WPARAM 
 		}
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *	  				Contents_Resource_Folder Terry Bernie			   *
+// *************************************************************************
+void GD19_Dialogs::Contents_Resource_Folder(HWND List)
+{
+	SendMessage(List, LB_RESETCONTENT, 0, 0);
+	char Path[MAX_PATH];
+	strcpy(Path, App->SBC_Project->m_Main_Assets_Path);
+	strcat(Path, "*.*");
+
+	WIN32_FIND_DATA fd;
+	HANDLE hFind = ::FindFirstFile(Path, &fd);
+	if (hFind != INVALID_HANDLE_VALUE) {
+		do {
+
+			if (!(fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) 
+			{
+				SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)fd.cFileName);
+			}
+
+		} while (::FindNextFile(hFind, &fd));
+		::FindClose(hFind);
+	}
 }
 
 // *************************************************************************

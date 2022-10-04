@@ -24,7 +24,7 @@ distribution.
 #include "StdAfx.h"
 #include "resource.h"
 #include "GD19_App.h"
-#include "GD19_SoundMgr.h"
+#include "SB_SoundMgr.h"
 
 
 SB_SoundMgr::SB_SoundMgr(void)

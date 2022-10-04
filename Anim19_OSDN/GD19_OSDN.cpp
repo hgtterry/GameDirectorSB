@@ -248,6 +248,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return 1;
 		}
 
+		case ID_DEBUG_RESOURCEFOLDER:
+		{
+			App->Cl_Dialogs->Start_Gen_ListBox(Enums::ListBox_Resource_Folder);
+			return 1;
+		}
+	
 		case ID_DEBUG_RESTOREAPP:
 		{
 			App->Cl_Dialogs->YesNo("Close GameDirector", "Are you sure");

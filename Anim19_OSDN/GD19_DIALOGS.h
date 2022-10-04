@@ -61,6 +61,7 @@ protected:
 	static LRESULT CALLBACK Message_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Projection_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
+	void Contents_Resource_Folder(HWND List);
 	void List_Messages_Stock(HWND List);
 	void List_Sounds_Stock(HWND List);
 

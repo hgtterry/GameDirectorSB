@@ -222,7 +222,9 @@ namespace Enums
 		ListBox_Stock_Sounds = 1,
 		ListBox_Stock_Messages = 2,
 		ListBox_Resource_Paths = 3,
-		ListBox_Resource_MeshMaterials = 4
+		ListBox_Resource_MeshMaterials = 4,
+		ListBox_Resource_Folder = 5
+
 	};
 	enum OptionsProperties_Type
 	{

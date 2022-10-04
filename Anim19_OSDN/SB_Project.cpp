@@ -1366,3 +1366,39 @@ bool SB_Project::Load_Project_Camera()
 	return 1;
 }
 
+// *************************************************************************
+// *	  		Copy_Assets:- Terry and Hazel Flanigan 2022				   *
+// *************************************************************************
+bool SB_Project::Copy_Assets(char* SourceFolder, char* DestinationFolder)
+{
+	char SourceFile[MAX_PATH];
+	char DestinationFile[MAX_PATH];
+
+	char Path[MAX_PATH];
+	strcpy(Path, SourceFolder);
+	strcat(Path, "*.*");
+
+	WIN32_FIND_DATA fd;
+	HANDLE hFind = ::FindFirstFile(Path, &fd);
+	if (hFind != INVALID_HANDLE_VALUE) {
+		do {
+
+			if (!(fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
+			{
+				
+				strcpy(SourceFile, SourceFolder);
+				strcat(SourceFile, fd.cFileName);
+
+				strcpy(DestinationFile, DestinationFolder);
+				strcat(DestinationFile, fd.cFileName);
+
+				CopyFile(SourceFile, DestinationFile, false);
+			}
+
+		} while (::FindNextFile(hFind, &fd));
+		::FindClose(hFind);
+	}
+
+	return 1;
+}
+
