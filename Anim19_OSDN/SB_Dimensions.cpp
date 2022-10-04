@@ -635,7 +635,9 @@ void SB_Dimensions::ImGui_Rotation(void)
 
 			if (RotationX_Selected == 1)
 			{
-				App->SBC_Scene->B_Object[Index]->Object_Node->pitch(Radian(Ogre::Degree(Model_Rotation_Delta)),Ogre::Node::TS_LOCAL);
+				App->SBC_Scene->B_Object[Index]->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(45), Ogre::Vector3(1, 0, 0)), Ogre::Node::TransformSpace::TS_LOCAL);
+
+				//App->SBC_Scene->B_Object[Index]->Object_Node->pitch(Radian(Ogre::Degree(Model_Rotation_Delta)),Ogre::Node::TS_LOCAL);
 				App->SBC_Scene->B_Object[Index]->Mesh_Rot.x += Model_Rotation_Delta;
 				App->SBC_Scene->B_Object[Index]->Mesh_Quat = App->SBC_Scene->B_Object[Index]->Object_Node->getOrientation();
 
@@ -650,6 +652,13 @@ void SB_Dimensions::ImGui_Rotation(void)
 				App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
 
 				UpDate_Physics_And_Visuals(Index);
+
+				/*parent = sceneMgr->getRootSceneNode()->createChildSceneNode();
+				child = parent->createChildSceneNode();
+				child->attachObject(entity);
+				child->translate(10, 0, 0);*/
+		
+				//App->SBC_Scene->B_Object[Index]->Object_Node->pitch(Ogre::Quaternion(Ogre::Degree(10), Ogre::Vector3(1, 0, 0)), Ogre::Node::TransformSpace::TS_WORLD);
 			}
 
 			if (RotationY_Selected == 1)

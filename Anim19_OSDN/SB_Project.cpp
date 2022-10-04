@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2021 Stage Builder and Equity -- Inflanite Software W.T.Flanigan H.C.Flanigan
+Copyright (c) 2021 Equity Scene Builder and Equity Model Editor -- Inflanite Software W.T.Flanigan H.C.Flanigan
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -437,7 +437,7 @@ bool SB_Project::Save_Project_Ini()
 	fprintf(WriteFile, "%s\n", "[Files]");
 	fprintf(WriteFile, "%s%s\n", "Project_Name=", App->SBC_Project->m_Project_Name);
 	fprintf(WriteFile, "%s%s\n", "Level_Name=", App->SBC_Project->m_Level_Name);
-	fprintf(WriteFile, "%s%s\n", "Folder_Path=", App->SBC_Project->m_Project_Sub_Folder);
+	//fprintf(WriteFile, "%s%s\n", "Folder_Path=", App->SBC_Project->m_Project_Sub_Folder);
 
 	fprintf(WriteFile, "%s\n", " ");
 
@@ -735,7 +735,6 @@ bool SB_Project::Save_Main_Asset_Folder()
 
 	if (Directory_Changed_Flag == 1)
 	{
-		App->Say("Altered");
 		strcpy(LastFolder, m_Main_Assets_Path);
 	}
 
@@ -759,6 +758,8 @@ bool SB_Project::Save_Main_Asset_Folder()
 	{
 		Copy_Assets(LastFolder, m_Main_Assets_Path);
 	}
+
+	Directory_Changed_Flag = 0;
 
 	_chdir(m_Level_Folder_Path); // Return to Level Folder
 	return 1;
