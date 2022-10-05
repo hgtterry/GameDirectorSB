@@ -403,6 +403,10 @@ bool SB_Project::Save_Project()
 
 	App->SBC_Project->Directory_Changed_Flag = 0;
 
+	strcpy(App->SBC_FileIO->Project_Path_File_Name, m_Ini_Path_File_Name);
+	App->Set_Main_TitleBar(App->SBC_FileIO->Project_Path_File_Name);
+	App->SBC_FileIO->RecentFileHistory_Update();
+
 	App->Say("Scene Saved");
 
 	return 1;
