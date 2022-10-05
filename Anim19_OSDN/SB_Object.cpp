@@ -19,6 +19,9 @@ misrepresented as being the original software.
 
 3. This notice may not be removed or altered from any source
 distribution.
+
+:- Terry and Hazel Flanigan 2022
+
 */
 
 #include "stdafx.h"
@@ -444,7 +447,7 @@ Ogre::Vector3 SB_Object::Get_BoundingBox_World_Centre(int Object_Index)
 }
 
 // *************************************************************************
-//					Get_BoundingBox_World_Centre Terry Bernie			   *
+//							Copy_Object Terry Bernie					   *
 // *************************************************************************
 void SB_Object::Copy_Object(int Object_Index)
 {
@@ -484,7 +487,7 @@ void SB_Object::Copy_Object(int Object_Index)
 	New_Object->Mesh_Quat = Object->Mesh_Quat;
 	New_Object->Physics_Quat = Object->Physics_Quat;
 
-	App->SBC_Objects_Create->Add_New_Object(Object_Count);
+	App->SBC_Objects_Create->Add_New_Object(Object_Count,0);
 
 	App->SBC_Scene->Object_Count++;
 
@@ -492,7 +495,7 @@ void SB_Object::Copy_Object(int Object_Index)
 }
 
 // *************************************************************************
-// *				Clear_Modified_Objects Terry Flanigan				   *
+// *		Clear_Modified_Objects:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
 void SB_Object::Clear_Modified_Objects()
 {
@@ -522,4 +525,44 @@ void SB_Object::Clear_Modified_Objects()
 	}
 
 	App->SBC_Scene->Scene_Modified = 0;
+}
+
+// *************************************************************************
+// *	  		GetPlacement:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+Ogre::Vector3 SB_Object::GetPlacement(void)
+{
+
+	Ogre::Vector3 Placement;
+	Ogre::Vector3 CamPos;
+	Ogre::Quaternion CamRot;
+	Ogre::Radian mYaw;
+	Ogre::Vector3 mDirection;
+
+
+	CamPos = App->Cl19_Ogre->mCamera->getPosition();
+	mYaw = App->Cl19_Ogre->mCamera->getOrientation().getYaw();
+
+	App->Cl19_Ogre->PlacementCam->setPosition(CamPos);
+
+	CamRot = Ogre::Quaternion::IDENTITY;
+	App->Cl19_Ogre->PlacementCam->setOrientation(CamRot);
+	App->Cl19_Ogre->PlacementCam->yaw(mYaw);
+
+	Ogre::Vector3 TranslateVector = Ogre::Vector3::ZERO;
+
+	//float Radius = OgreNode->getAttachedObject(0)->getBoundingRadius();
+	//Radius = (Radius * 7) + 2;
+
+	
+	TranslateVector.z = -6;//Radius;
+
+	CamPos = App->Cl19_Ogre->mCamera->getPosition();
+
+	App->Cl19_Ogre->PlacementCam->moveRelative(TranslateVector);
+
+	Placement = App->Cl19_Ogre->PlacementCam->getPosition();
+	Placement.y = CamPos.y - 3; // = Placement.y - (float)13.5 / 2;
+
+	return Placement;
 }

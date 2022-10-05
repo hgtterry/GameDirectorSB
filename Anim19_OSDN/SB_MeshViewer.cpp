@@ -60,6 +60,8 @@ SB_MeshViewer::SB_MeshViewer()
 	Selected_Shape_Cylinder = 0;
 	Selected_Shape_Cone = 0;
 
+	Placement_Camera = 1;
+
 	// ------------------------------------------------ 
 
 	Last_MeshFile[0] = 0;
@@ -220,6 +222,9 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		SendDlgItemMessage(hDlg, IDC_STTYPE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STFOLDER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+		SendDlgItemMessage(hDlg, IDC_STPLACEMENT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CKPLACECAMERA, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CKPLACECENTER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SendDlgItemMessage(hDlg, IDC_BT_PROPERTIES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CB_FOLDERS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -303,6 +308,30 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		}
 
 		if (GetDlgItem(hDlg, IDC_STFOLDER) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STPLACEMENT) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_CKPLACECAMERA) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_CKPLACECENTER) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -427,6 +456,32 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 	}
 
 	case WM_COMMAND:
+
+
+		if (LOWORD(wParam) == IDC_CKPLACECAMERA)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CKPLACECAMERA);
+			SendMessage(temp, BM_SETCHECK, 1, 0);
+
+			temp = GetDlgItem(hDlg, IDC_CKPLACECENTER);
+			SendMessage(temp, BM_SETCHECK, 0, 0);
+
+			App->SBC_MeshViewer->Placement_Camera = 1;
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_CKPLACECENTER)
+		{
+
+			HWND temp = GetDlgItem(hDlg, IDC_CKPLACECENTER);
+			SendMessage(temp, BM_SETCHECK, 1, 0);
+
+			temp = GetDlgItem(hDlg, IDC_CKPLACECAMERA);
+			SendMessage(temp, BM_SETCHECK, 0, 0);
+
+			App->SBC_MeshViewer->Placement_Camera = 0;
+			return TRUE;
+		}
 
 		if (LOWORD(wParam) == IDC_BT_PROPERTIES)
 		{

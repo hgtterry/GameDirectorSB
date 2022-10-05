@@ -32,6 +32,7 @@ public:
 	void Hide_Object_Dlg(bool Show);
 	void Rename_Object(int Index);
 	void Clear_Modified_Objects();
+	Ogre::Vector3 GetPlacement(void);
 
 	Ogre::Vector3 Get_BoundingBox_World_Centre(int Object_Index);
 

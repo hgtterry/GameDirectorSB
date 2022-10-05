@@ -57,6 +57,8 @@ public:
 	bool SelectStatic;
 	bool SelectTriMesh;
 
+	bool Placement_Camera;
+
 	int Mesh_Viewer_Mode;
 	
 protected:

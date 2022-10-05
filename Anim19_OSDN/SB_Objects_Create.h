@@ -32,7 +32,7 @@ public:
 	bool Add_Objects_From_File(); // From File
 	bool Dispatch_MeshViewer();
 	void Add_Objects_From_MeshViewer();
-	bool Add_New_Object(int Index);
+	bool Add_New_Object(int Index, bool From_MeshViewer);
 	bool Add_New_Message();
 	bool Add_New_Sound();
 	bool Add_New_Area();

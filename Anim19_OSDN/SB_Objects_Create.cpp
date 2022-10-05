@@ -76,7 +76,7 @@ bool SB_Objects_Create::Add_Objects_From_File() // From File
 		}
 		else
 		{
-			App->SBC_Objects_Create->Add_New_Object(Count);
+			App->SBC_Objects_Create->Add_New_Object(Count,0);
 			App->SBC_Scene->B_Object[Count]->Altered = 0;
 			App->SBC_Scene->B_Object[Count]->Folder = Enums::Folder_Objects;
 			App->SBC_Scene->B_Object[Count]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Objects_Folder, App->SBC_Scene->B_Object[Count]->Mesh_Name, Count, false);
@@ -115,7 +115,7 @@ bool SB_Objects_Create::Dispatch_MeshViewer()
 	}
 	else
 	{
-		Add_New_Object(Index);
+		Add_New_Object(Index,1);
 		App->SBC_Scene->B_Object[Index]->Altered = 1;
 		App->SBC_Scene->B_Object[Index]->Folder = Enums::Folder_Objects;
 		App->SBC_Scene->B_Object[Index]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Objects_Folder, App->SBC_Scene->B_Object[Index]->Mesh_Name, Index, true);
@@ -158,7 +158,7 @@ void SB_Objects_Create::Add_Objects_From_MeshViewer()
 // *************************************************************************
 //								Add_New_Object Terry					   *
 // *************************************************************************
-bool SB_Objects_Create::Add_New_Object(int Index)
+bool SB_Objects_Create::Add_New_Object(int Index,bool From_MeshViewer)
 {
 	char Mesh_File[255];
 	char ConNum[256];
@@ -180,7 +180,18 @@ bool SB_Objects_Create::Add_New_Object(int Index)
 	Object->Object_Node->setVisible(true);
 
 	Object->Object_Node->setOrientation(Object->Mesh_Quat);
-	Object->Object_Node->setPosition(Object->Mesh_Pos);
+
+	if (From_MeshViewer == 1 && App->SBC_MeshViewer->Placement_Camera == 1)
+	{
+		Ogre::Vector3 Pos = App->SBC_Object->GetPlacement();// Object->GetPlacement();
+		Object->Mesh_Pos = Pos;
+		Object->Object_Node->setPosition(Pos);
+	}
+	else
+	{
+		Object->Object_Node->setPosition(Object->Mesh_Pos);
+	}
+
 
 	App->Cl_Scene_Data->SceneLoaded = 1;
 
