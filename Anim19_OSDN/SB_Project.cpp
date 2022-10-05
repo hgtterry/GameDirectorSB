@@ -58,6 +58,7 @@ SB_Project::SB_Project()
 
 	Project_Loaded = 0;
 	Directory_Changed_Flag = 0;
+	Set_QuickLoad_Flag = 1;
 }
 
 
@@ -113,12 +114,19 @@ LRESULT CALLBACK SB_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message, W
 		SendDlgItemMessage(hDlg, IDC_BTDESKTOP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STBANNER, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 
+		SendDlgItemMessage(hDlg, IDC_CKQUICKLOAD, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		SetDlgItemText(hDlg, IDC_STPROJECTNAME, (LPCTSTR)App->SBC_Project->m_Project_Name);
 		SetDlgItemText(hDlg, IDC_STLEVELNAME, (LPCTSTR)App->SBC_Project->m_Level_Name);
 		SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Sub_Folder);
 
+		SetDlgItemText(hDlg, IDC_STPJFOLDERPATH, (LPCTSTR)App->SBC_Project->m_Project_Sub_Folder);
+
 		SetDlgItemText(hDlg, IDC_STBANNER, (LPCTSTR)"Save Project As");
 		
+		HWND temp = GetDlgItem(hDlg, IDC_CKQUICKLOAD);
+		SendMessage(temp, BM_SETCHECK, 1, 0);
+
 		return TRUE;
 	}
 
@@ -180,6 +188,15 @@ LRESULT CALLBACK SB_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message, W
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
 		}
+
+		if (GetDlgItem(hDlg, IDC_CKQUICKLOAD) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
 		return FALSE;
 	}
 
@@ -322,7 +339,23 @@ LRESULT CALLBACK SB_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message, W
 			return TRUE;
 		}
 		
-		
+		if (LOWORD(wParam) == IDC_CKQUICKLOAD)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CKQUICKLOAD);
+
+			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
+			if (test == BST_CHECKED)
+			{
+				App->SBC_Project->Set_QuickLoad_Flag = 1;
+			}
+			else
+			{
+				App->SBC_Project->Set_QuickLoad_Flag = 0;
+			}
+
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDCANCEL)
 		{
 			App->SBC_Project->Directory_Changed_Flag = 0;
@@ -333,6 +366,7 @@ LRESULT CALLBACK SB_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message, W
 
 		if (LOWORD(wParam) == IDOK)
 		{
+
 			App->SBC_Project->Save_Project();
 			App->SBC_Project->Project_Loaded = 1;
 
@@ -406,6 +440,19 @@ bool SB_Project::Save_Project()
 	strcpy(App->SBC_FileIO->Project_Path_File_Name, m_Ini_Path_File_Name);
 	App->Set_Main_TitleBar(App->SBC_FileIO->Project_Path_File_Name);
 	App->SBC_FileIO->RecentFileHistory_Update();
+
+
+	if (Set_QuickLoad_Flag == 1)
+	{
+		char StartFile[1024];
+		strcpy(StartFile, App->EquityDirecory_FullPath);
+		strcat(StartFile, "\\");
+		strcat(StartFile, "Data\\StartUp.gcf");
+
+		App->Cl_Ini->SetPathName(StartFile);
+		App->Cl_Ini->WriteString("Startup", "Scene_Path_FileName", App->SBC_FileIO->Project_Path_File_Name);
+	}
+
 
 	App->Say("Scene Saved");
 

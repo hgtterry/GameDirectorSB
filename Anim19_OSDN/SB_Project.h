@@ -97,6 +97,8 @@ protected:
 
 	void Set_Paths();
 
+	bool Set_QuickLoad_Flag;
+
 	FILE *WriteFile;
 };
 
