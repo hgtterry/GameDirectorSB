@@ -723,14 +723,14 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 			App->Cl19_Ogre->OgreListener->MeshViewer_Running = 0;
 
-			/*if (App->SBC_MeshViewer->MvEnt && App->SBC_MeshViewer->MvNode)
+			if (App->SBC_MeshViewer->MvEnt && App->SBC_MeshViewer->MvNode)
 			{
 				App->SBC_MeshViewer->MvNode->detachAllObjects();
 				App->SBC_MeshViewer->mSceneMgrMeshView->destroySceneNode(App->SBC_MeshViewer->MvNode);
 				App->SBC_MeshViewer->mSceneMgrMeshView->destroyEntity(App->SBC_MeshViewer->MvEnt);
 				App->SBC_MeshViewer->MvEnt = NULL;
 				App->SBC_MeshViewer->MvNode = NULL;
-			}*/
+			}
 
 			//Debug
 			App->SBC_MeshViewer->Close_OgreWindow();
@@ -970,6 +970,7 @@ void SB_MeshViewer::ShowMesh(char* MeshFile)
 	mCameraMeshView->lookAt(0, Centre.y, 0);
 
 	Get_Mesh_Assets();
+
 	//	Check_HasAnimations();
 }
 
@@ -1112,19 +1113,16 @@ bool SB_MeshViewer::Create_Resources_Group()
 // *************************************************************************
 bool SB_MeshViewer::Add_Resources()
 {
-	
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mResource_Folder,"FileSystem", MV_Resource_Group);
-	Ogre::ResourceGroupManager::getSingleton().clearResourceGroup(MV_Resource_Group);
-	Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(MV_Resource_Group);
-	
-	/*bool Test = Ogre::ResourceGroupManager::getSingleton().resourceLocationExists(Resource_Location, Project_Resource_Group);
+	bool Test = Ogre::ResourceGroupManager::getSingleton().resourceLocationExists(mResource_Folder, MV_Resource_Group);
 
 	if (Test == 0)
 	{
-		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(Resource_Location, "FileSystem", Project_Resource_Group);
-		Ogre::ResourceGroupManager::getSingleton().clearResourceGroup(Project_Resource_Group);
-		Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(Project_Resource_Group);
-	}*/
+		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mResource_Folder, "FileSystem", MV_Resource_Group);
+		Ogre::ResourceGroupManager::getSingleton().clearResourceGroup(MV_Resource_Group);
+		Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(MV_Resource_Group);
+
+	}
+	
 	return 1;
 }
 

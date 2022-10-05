@@ -95,7 +95,7 @@ bool GD19_Ogre::OgreCreateRoot(void)
 	Ogre::String pluginsPath;
 	pluginsPath = mResourcePath + "plugins.cfg";
 
-	mRoot = OGRE_NEW Ogre::Root(pluginsPath, mResourcePath + "Equity_CFG.cfg", mResourcePath + "Equity_LOG.log");
+	mRoot = OGRE_NEW Ogre::Root(pluginsPath, mResourcePath + "Equity_CFG.cfg", mResourcePath + "EquitySB.log");
 	//Ogre::LogManager::getSingleton().setLogDetail(Ogre::LoggingLevel::LL_LOW);
 	return 1;
 }
@@ -118,13 +118,10 @@ bool GD19_Ogre::SetUpResources(void)
 	//-------------------------------- Zip Files
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/OgreCore.zip", "Zip",App_Resource_Group);
 
-	//Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/Equity.zip", "Zip",App_Resource_Group);
-	//Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/GDCore.zip", "Zip",App_Resource_Group);
-
+	//-------------------------------- File System
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/App_Resources" ,"FileSystem", App_Resource_Group);
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/Zipper", "FileSystem",App_Resource_Group);
-	//Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/Particles", "FileSystem",App_Resource_Group);
-
+	
 	return 1;
 }
 
