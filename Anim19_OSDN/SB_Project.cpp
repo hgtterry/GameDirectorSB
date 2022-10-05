@@ -350,7 +350,7 @@ LRESULT CALLBACK SB_Project::Save_Project_Dialog_Proc(HWND hDlg, UINT message, W
 // *************************************************************************
 bool SB_Project::Save_All()
 {
-	App->Say("Scene Saved");
+	Save_Project();
 	return 1;
 }
 
