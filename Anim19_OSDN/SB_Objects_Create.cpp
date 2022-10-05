@@ -181,6 +181,7 @@ bool SB_Objects_Create::Add_New_Object(int Index,bool From_MeshViewer)
 
 	Object->Object_Node->setOrientation(Object->Mesh_Quat);
 
+	// If from MeshViewer Get Placement Method
 	if (From_MeshViewer == 1 && App->SBC_MeshViewer->Placement_Camera == 1)
 	{
 		Ogre::Vector3 Pos = App->SBC_Object->GetPlacement();// Object->GetPlacement();

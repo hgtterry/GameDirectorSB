@@ -174,6 +174,7 @@ bool SB_MeshViewer::StartMeshViewer()
 	{
 		strcpy(mResource_Folder, App->EquityDirecory_FullPath);
 		strcat(mResource_Folder, "\\Media_New\\Walls\\");
+		strcpy(Selected_MeshFile, "Wall_1.mesh");
 	}
 
 
@@ -234,6 +235,9 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		SetDlgItemText(hDlg, IDC_ST_CURRENTFOLDER, App->SBC_MeshViewer->mResource_Folder);
 
 		SetWindowText(hDlg, App->SBC_MeshViewer->mResource_Folder);
+
+		HWND temp = GetDlgItem(hDlg, IDC_CKPLACECAMERA);
+		SendMessage(temp, BM_SETCHECK, 1, 0);
 
 		App->SBC_MeshViewer->ListHwnd = GetDlgItem(hDlg, IDC_LISTFILES);
 
