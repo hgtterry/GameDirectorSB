@@ -278,8 +278,15 @@ bool GD19_App::InitApp(void)
 	strcat(ETemp_Folder, "\\Data\\ETemp.bmp");
 
 	strcpy(Default_Project, EquityDirecory_FullPath);
-	strcat(Default_Project, "\\Projects\\Project_X_Prj\\Project.SBProj");
+	strcat(Default_Project, "\\Projects\\First_Project_Prj\\Project.SBProj");
 	
+	char StartFile[1024];
+	strcpy(StartFile, App->EquityDirecory_FullPath);
+	strcat(StartFile, "\\");
+	strcat(StartFile, "Data\\StartUp.gcf");
+
+	App->Cl_Ini->SetPathName(StartFile);
+	App->Cl_Ini->WriteString("Startup", "Scene_Path_FileName", Default_Project);
 	return 1;
 }
 

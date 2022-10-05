@@ -1,0 +1,15 @@
+[Version_Data]
+Version=V1.2
+ 
+[Counters]
+Player_Count=1
+ 
+[Player_0]
+Player_Name=Player_1
+Start_Position=0.000000,-50.000000,0.000000
+Shape=Capsule
+Mass=1.000000
+Radius=4.400000
+Height=17.000000
+Ground_Speed=4.200000
+Cam_Height=16.000000
