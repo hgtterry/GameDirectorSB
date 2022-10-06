@@ -677,17 +677,12 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		if (LOWORD(wParam) == IDOK)
 		{
 
-			if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area)
+			if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area || App->SBC_MeshViewer->Physics_Type == Enums::Bullet_Type_TriMesh)
 			{
 				
 			}
 			else if (App->SBC_MeshViewer->Physics_Type == Enums::Bullet_Type_None || App->SBC_MeshViewer->Physics_Shape == Enums::NoShape)
 			{
-				if (App->SBC_MeshViewer->Physics_Type == Enums::Bullet_Type_TriMesh)
-				{
-					break;
-				}
-
 				App->Say("No Type or Shape Selected");
 				return TRUE;
 			}

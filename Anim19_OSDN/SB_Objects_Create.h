@@ -52,6 +52,8 @@ protected:
 	void Add_Physics_Cylinder(bool Dynamic, int Index);
 	void Add_Physics_Cone(bool Dynamic, int Index);
 
+	btBvhTriangleMeshShape* create_New_Trimesh(int Index);
+
 	bool Add_Message_Entity(int Index);
 	bool Add_Sound_Entity(int Index);
 
