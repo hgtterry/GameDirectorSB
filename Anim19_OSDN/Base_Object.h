@@ -23,7 +23,6 @@ distribution.
 
 typedef struct Move_Type {
 	char Object_Name[255];	// Name of Object to Move
-	float Distance;			// Distance to Move negative or positive
 	float Newpos;
 	float Speed;			// 
 	int WhatDirection;		//
@@ -32,6 +31,7 @@ typedef struct Move_Type {
 	bool IsNegative;		// Positive or Negative distance to move
 	bool Triggered;			// Entity 
 	bool Re_Trigger;
+	float Move_Distance;			// Distance to Move negative or positive
 	Ogre::Vector3 MeshPos;
 	Ogre::Vector3 PhysicsPos;
 
@@ -109,6 +109,6 @@ public:
 	char Sound_Path[MAX_PATH];
 
 	//------------------------------ Move Entity
-	Move_Type* S_MoveType;
+	Move_Type* S_MoveType[1];
 };
 

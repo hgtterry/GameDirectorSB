@@ -57,14 +57,14 @@ Mesh_Scale=1.000000,1.000000,1.000000
 Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
-Move_Distance=-50.000000
+Move_Distance=222.000000
 Move_IsNegative=1
 Move_NewPos=0.000000
 Move_ObjectID=0
 Move_ObjectIndex=0
-Move_ObjectName=None
+Move_ObjectName=pppp
 Move_Re_Trigger=0
-Move_Speed=10.000000
+Move_Speed=121.000000
 Move_Triggered=0
 Move_WhatDirection=1
  

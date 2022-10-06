@@ -60,9 +60,6 @@ bool SB_Objects_Create::Add_Objects_From_File() // From File
 		}
 		else if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Move)
 		{
-			App->SBC_Scene->B_Object[Count]->S_MoveType = new Move_Type;
-			App->Cl_Scene_Data->Set_Move_Defaults(Count); // Check
-
 			Add_Move_Entity(Count);
 			App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Move_Folder);
 		}
@@ -1056,7 +1053,7 @@ bool SB_Objects_Create::Add_New_Move_Entity()
 
 	App->SBC_Scene->B_Object[Index] = new Base_Object();
 
-	App->SBC_Scene->B_Object[Index]->S_MoveType = new Move_Type;
+	App->SBC_Scene->B_Object[Index]->S_MoveType[0] = new Move_Type;
 	App->Cl_Scene_Data->Set_Move_Defaults(Index); // Check
 
 	App->SBC_Scene->B_Object[Index]->Type = Enums::Bullet_Type_Static;

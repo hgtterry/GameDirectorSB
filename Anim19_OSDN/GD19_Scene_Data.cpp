@@ -112,16 +112,16 @@ void GD19_Scene_Data::SetObjectDefaults(int Index)
 // *************************************************************************
 void GD19_Scene_Data::Set_Move_Defaults(int Index)
 {
-	App->SBC_Scene->B_Object[Index]->S_MoveType->IsNegative = 1;
-	App->SBC_Scene->B_Object[Index]->S_MoveType->Distance = -50;
-	App->SBC_Scene->B_Object[Index]->S_MoveType->Newpos = 0;
-	App->SBC_Scene->B_Object[Index]->S_MoveType->Speed = 10.0;
-	App->SBC_Scene->B_Object[Index]->S_MoveType->WhatDirection = Enums::Axis_x;
-	App->SBC_Scene->B_Object[Index]->S_MoveType->Object_Index = 0;
-	App->SBC_Scene->B_Object[Index]->S_MoveType->Object_ID = 0;
-	App->SBC_Scene->B_Object[Index]->S_MoveType->Triggered = 0;
-	App->SBC_Scene->B_Object[Index]->S_MoveType->Re_Trigger = 0;
-	strcpy(App->SBC_Scene->B_Object[Index]->S_MoveType->Object_Name,"None");
+	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->IsNegative = 1;
+	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Move_Distance = -50;
+	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Newpos = 0;
+	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Speed = 10.0;
+	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->WhatDirection = Enums::Axis_x;
+	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_Index = 0;
+	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_ID = 0;
+	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Triggered = 0;
+	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Re_Trigger = 0;
+	strcpy(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_Name,"None");
 	return;
 }
 // *************************************************************************

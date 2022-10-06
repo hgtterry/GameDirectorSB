@@ -729,21 +729,21 @@ bool SB_Properties::Update_ListView_Move_Entities()
 	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
 
 	char chr_Distance[100];
-	sprintf(chr_Distance, "%.3f ", App->SBC_Scene->B_Object[index]->S_MoveType->Distance);
+	sprintf(chr_Distance, "%.3f ", App->SBC_Scene->B_Object[index]->S_MoveType[0]->Move_Distance);
 
 	char chr_Speed[100];
-	sprintf(chr_Speed, "%.3f ", App->SBC_Scene->B_Object[index]->S_MoveType->Speed);
+	sprintf(chr_Speed, "%.3f ", App->SBC_Scene->B_Object[index]->S_MoveType[0]->Speed);
 
 	char chr_Axis[100];
-	if (App->SBC_Scene->B_Object[index]->S_MoveType->WhatDirection == Enums::Axis_x)
+	if (App->SBC_Scene->B_Object[index]->S_MoveType[0]->WhatDirection == Enums::Axis_x)
 	{
 		strcpy(chr_Axis, "X");
 	}
-	if (App->SBC_Scene->B_Object[index]->S_MoveType->WhatDirection == Enums::Axis_y)
+	if (App->SBC_Scene->B_Object[index]->S_MoveType[0]->WhatDirection == Enums::Axis_y)
 	{
 		strcpy(chr_Axis, "Y");
 	}
-	if (App->SBC_Scene->B_Object[index]->S_MoveType->WhatDirection == Enums::Axis_z)
+	if (App->SBC_Scene->B_Object[index]->S_MoveType[0]->WhatDirection == Enums::Axis_z)
 	{
 		strcpy(chr_Axis, "Z");
 	}
@@ -772,7 +772,7 @@ bool SB_Properties::Update_ListView_Move_Entities()
 
 	grid[0][0] = "Name", grid[1][0] = App->SBC_Scene->B_Object[index]->Mesh_Name;
 	grid[0][1] = " ", grid[1][1] = " ";
-	grid[0][2] = "Object", grid[1][2] = App->SBC_Scene->B_Object[index]->S_MoveType->Object_Name;
+	grid[0][2] = "Object", grid[1][2] = App->SBC_Scene->B_Object[index]->S_MoveType[0]->Object_Name;
 	grid[0][3] = "Axis", grid[1][3] = chr_Axis;
 	grid[0][4] = "Distance", grid[1][4] = chr_Distance;
 	grid[0][5] = "Speed", grid[1][5] = chr_Speed;
