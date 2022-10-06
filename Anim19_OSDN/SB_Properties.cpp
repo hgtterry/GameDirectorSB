@@ -1327,9 +1327,11 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 		{
 			strcpy(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_Name, App->Cl_Dialogs->Chr_DropText);
 
-			/*int MoveObjectIndex = App->Cl_Scene_Data->GetJustIndex_ByName(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_Name);
+			int MoveObjectIndex = 1;// App->Cl_Scene_Data->GetJustIndex_ByName(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_Name);
+
 			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_Index = MoveObjectIndex;
-			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_ID = App->SBC_Scene->B_Object[MoveObjectIndex]->Object_ID;
+
+			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_ID = 0;// App->SBC_Scene->B_Object[MoveObjectIndex]->Object_ID;
 
 			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->MeshPos.x = App->SBC_Scene->B_Object[MoveObjectIndex]->Mesh_Pos.x;
 			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->MeshPos.y = App->SBC_Scene->B_Object[MoveObjectIndex]->Mesh_Pos.y;
@@ -1337,11 +1339,11 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 
 			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->PhysicsPos.x = App->SBC_Scene->B_Object[MoveObjectIndex]->Physics_Pos.x;
 			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->PhysicsPos.y = App->SBC_Scene->B_Object[MoveObjectIndex]->Physics_Pos.y;
-			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->PhysicsPos.z = App->SBC_Scene->B_Object[MoveObjectIndex]->Physics_Pos.z;*/
+			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->PhysicsPos.z = App->SBC_Scene->B_Object[MoveObjectIndex]->Physics_Pos.z;
 
 			Update_ListView_Move_Entities();
 
-			//App->Cl_Scene_Data->Reset_Triggers();
+			App->Cl_Scene_Data->Reset_Triggers();
 
 		}
 		return 1;

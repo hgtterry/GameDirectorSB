@@ -482,15 +482,15 @@ bool GD19_Scene_Data::Is_Meshes_Used(char* Name)
 // *************************************************************************
 int GD19_Scene_Data::GetJustIndex_ByName(char* Name)
 {
-	/*int Count=0;
+	int Count=0;
 	int Total = ObjectCount;
 
 	while (Count < Total)
 	{
-		if(Cl_Object[Count]->Deleted==0)
+		if(App->SBC_Scene->B_Object[Count]->Deleted==0)
 		{
 			int Result=1;
-			Result=strcmp(Cl_Object[Count]->Name,Name);
+			Result=strcmp(App->SBC_Scene->B_Object[Count]->Mesh_Name,Name);
 			if (Result==0)
 			{
 				return Count;
@@ -498,7 +498,7 @@ int GD19_Scene_Data::GetJustIndex_ByName(char* Name)
 		}
 
 		Count++;
-	}*/
+	}
 
 	return -1;
 }
@@ -508,33 +508,33 @@ int GD19_Scene_Data::GetJustIndex_ByName(char* Name)
 // *************************************************************************
 void GD19_Scene_Data::Reset_Triggers(void)
 {
-	/*Ogre::Vector3 M_Pos;
+	Ogre::Vector3 M_Pos;
 	Ogre::Vector3 P_Pos;
 	
 	int Count=0;
-	int Total = ObjectCount;
+	int Total = App->SBC_Scene->Object_Count;
 
 	while (Count < Total)
 	{
-		if(Cl_Object[Count]->Deleted == 0)
+		if(App->SBC_Scene->B_Object[Count]->Deleted == 0)
 		{
-			if (Cl_Object[Count]->Usage == Enums::Usage_Move)
+			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Move)
 			{
-				int ObjectToMove = Cl_Object[Count]->S_MoveType->Object_Index;
+				int ObjectToMove = App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Object_Index;
 
-				M_Pos = Cl_Object[ObjectToMove]->Mesh_Pos;
-				P_Pos = Cl_Object[ObjectToMove]->Physics_Pos;
+				M_Pos = App->SBC_Scene->B_Object[ObjectToMove]->Mesh_Pos;
+				P_Pos = App->SBC_Scene->B_Object[ObjectToMove]->Physics_Pos;
 				
-				Cl_Object[Count]->S_MoveType->MeshPos  = Ogre::Vector3(M_Pos);
-				Cl_Object[Count]->S_MoveType->PhysicsPos = Ogre::Vector3(P_Pos);
+				App->SBC_Scene->B_Object[Count]->S_MoveType[0]->MeshPos  = Ogre::Vector3(M_Pos);
+				App->SBC_Scene->B_Object[Count]->S_MoveType[0]->PhysicsPos = Ogre::Vector3(P_Pos);
 
-				Cl_Object[ObjectToMove]->OgreNode->setPosition(M_Pos);
-				Cl_Object[ObjectToMove]->bt_body->getWorldTransform().setOrigin(btVector3(P_Pos.x,P_Pos.y,P_Pos.z));
+				App->SBC_Scene->B_Object[ObjectToMove]->Object_Node->setPosition(M_Pos);
+				App->SBC_Scene->B_Object[ObjectToMove]->Phys_Body->getWorldTransform().setOrigin(btVector3(P_Pos.x,P_Pos.y,P_Pos.z));
 
-				Cl_Object[Count]->Triggered = 0;
+				App->SBC_Scene->B_Object[Count]->Triggered = 0;
 			}
 
-			if (Cl_Object[Count]->Usage == Enums::Usage_Colectable)
+			/*if (Cl_Object[Count]->Usage == Enums::Usage_Colectable)
 			{
 				Cl_Object[Count]->OgreEntity->setVisible(TRUE);
 				
@@ -544,11 +544,11 @@ void GD19_Scene_Data::Reset_Triggers(void)
 				Cl_Object[Count]->bt_body->getWorldTransform().setOrigin(btVector3(P_Pos.x, P_Pos.y, P_Pos.z));
 
 				Cl_Object[Count]->Triggered = 0;
-			}
+			}*/
 		}
 
 		Count++;
-	}*/
+	}
 }
 
 // *************************************************************************

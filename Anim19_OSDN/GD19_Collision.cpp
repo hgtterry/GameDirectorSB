@@ -209,7 +209,7 @@ bool GD19_Collision::Move_Entity(int Index)
 
 	//	Play_Sound(Index);
 
-	//	DoMove = 1; // Trigger Ogre Listener to update
+		DoMove = 1; // Trigger Ogre Listener to update
 
 	}
 
