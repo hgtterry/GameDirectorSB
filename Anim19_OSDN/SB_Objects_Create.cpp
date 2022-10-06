@@ -257,7 +257,7 @@ bool SB_Objects_Create::Add_New_Object(int Index,bool From_MeshViewer)
 	}
 
 	//---------------------- Tri_Mesh
-	if (App->SBC_MeshViewer->Physics_Type == Enums::Bullet_Type_TriMesh)
+	if (Object->Type == Enums::Bullet_Type_TriMesh)
 	{
 		create_New_Trimesh(Index);
 	}
@@ -1190,7 +1190,7 @@ btBvhTriangleMeshShape* SB_Objects_Create::create_New_Trimesh(int Index)
 	int f = Object->Phys_Body->getCollisionFlags();
 	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
-	Object->Type = Enums::Bullet_Type_Static;
+	Object->Type = Enums::Bullet_Type_TriMesh;
 	Object->Shape = Enums::Shape_TriMesh;
 
 
