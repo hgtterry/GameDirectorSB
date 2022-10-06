@@ -762,6 +762,8 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 	{
 		HideRightPanes();
 		ShowWindow(App->GD_Properties_Hwnd, 1);
+		App->SBC_Object->Hide_Object_Dlg(1);
+
 
 		App->SBC_Properties->Is_Player = 0; // Mark as Object selected
 

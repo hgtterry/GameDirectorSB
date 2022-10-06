@@ -532,7 +532,8 @@ LRESULT CALLBACK GD19_Dialogs::Dialog_TrueFlase_Proc(HWND hDlg, UINT message, WP
 // *************************************************************************
 bool GD19_Dialogs::Dialog_DropGen()
 {
-	//DialogBox(App->hInst,(LPCTSTR)IDD_DROPGEN,App->Fdlg,(DLGPROC)Dialog_DropGen_Proc);
+	DialogBox(App->hInst,(LPCTSTR)IDD_DROPGEN,App->Fdlg,(DLGPROC)Dialog_DropGen_Proc);
+
 	return 1;
 }
 // *************************************************************************
@@ -548,16 +549,16 @@ LRESULT CALLBACK GD19_Dialogs::Dialog_DropGen_Proc(HWND hDlg, UINT message, WPAR
 		
 			App->SetTitleBar(hDlg);
 
-			/*SendDlgItemMessage(hDlg,IDC_TITLE, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+			SendDlgItemMessage(hDlg,IDC_TITLE, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 			SendDlgItemMessage(hDlg,IDC_CBGEN, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-			SetDlgItemText(hDlg,IDC_TITLE,(LPCTSTR)App->Cl_Dialogs->btext);*/
+			SetDlgItemText(hDlg,IDC_TITLE,(LPCTSTR)App->Cl_Dialogs->btext);
 			
-		//	HWND temp = GetDlgItem(hDlg,IDC_CBGEN);
+			HWND temp = GetDlgItem(hDlg,IDC_CBGEN);
 
 			if(App->Cl_Dialogs->DropList_Data == Enums::DropDialog_TrigMoveObject)
 			{
-				//App->Cl_Dialogs->ListObjects(temp);
+				App->Cl_Dialogs->ListObjects(temp);
 				return TRUE;
 			}
 
@@ -579,7 +580,7 @@ LRESULT CALLBACK GD19_Dialogs::Dialog_DropGen_Proc(HWND hDlg, UINT message, WPAR
 		case WM_CTLCOLORSTATIC:
 		{
 			
-			//if(GetDlgItem(hDlg,IDC_TITLE) == (HWND)lParam)
+			if(GetDlgItem(hDlg,IDC_TITLE) == (HWND)lParam)
 			{	
 				SetBkColor((HDC) wParam, RGB(0, 255, 0));	
 				SetTextColor((HDC) wParam, RGB(0,0,255));
@@ -597,7 +598,7 @@ LRESULT CALLBACK GD19_Dialogs::Dialog_DropGen_Proc(HWND hDlg, UINT message, WPAR
 			if (LOWORD(wParam) == IDOK) 
 			{
 				char buff[256];
-				//GetDlgItemText(hDlg,IDC_CBGEN,(LPTSTR)buff,256);
+				GetDlgItemText(hDlg,IDC_CBGEN,(LPTSTR)buff,256);
 				strcpy(App->Cl_Dialogs->Chr_DropText,buff);
 
 				App->Cl_Dialogs->Canceled = 0;
@@ -763,17 +764,17 @@ void GD19_Dialogs::List_Sounds_Stock(HWND List)
 // *************************************************************************
 void GD19_Dialogs::ListObjects(HWND DropHwnd)
 {
-	/*int Count = 0;
-	int Total = App->Cl_Scene_Data->ObjectCount;
+	int Count = 0;
+	int Total = App->SBC_Scene->Object_Count;
 
 	while (Count < Total)
 	{
 		{
-			if (App->Cl_Scene_Data->Cl_Object[Count]->Type == Enums::Bullet_Type_Static)
+			//if (App->SBC_Scene->B_Object[Count]->Type == Enums::Bullet_Type_Static)
 			{
-				if (App->Cl_Scene_Data->Cl_Object[Count]->Usage == Enums::Usage_Static)
+				//if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Static)
 				{
-					SendMessage(DropHwnd, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->Cl_Scene_Data->Cl_Object[Count]->Name);
+					SendMessage(DropHwnd, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->SBC_Scene->B_Object[Count]->Mesh_Name);
 				}
 			}
 		}
@@ -781,7 +782,7 @@ void GD19_Dialogs::ListObjects(HWND DropHwnd)
 		Count++;
 	}
 
-	SendMessage(DropHwnd, CB_SETCURSEL ,0,0);*/
+	SendMessage(DropHwnd, CB_SETCURSEL ,0,0);
 }
 
 // *************************************************************************

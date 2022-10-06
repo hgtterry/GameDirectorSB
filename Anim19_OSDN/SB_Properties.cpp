@@ -328,6 +328,17 @@ void SB_Properties::ListView_OnClickOptions(LPARAM lParam)
 		}
 		return;
 	}
+
+	// Messages
+	if (Edit_Category == Enums::Edit_Move_Entity)
+	{
+		if (Edit_Physics == 0)
+		{
+			Edit_Move_Entity_OnClick(lParam);
+		}
+		return;
+	}
+
 	return;
 }
 
@@ -1311,11 +1322,12 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 		App->Cl_Dialogs->DropList_Data = Enums::DropDialog_TrigMoveObject;
 		App->Cl_Dialogs->Dialog_DropGen();
 
+
 		if (App->Cl_Dialogs->Canceled == 0)
 		{
 			strcpy(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_Name, App->Cl_Dialogs->Chr_DropText);
 
-			int MoveObjectIndex = App->Cl_Scene_Data->GetJustIndex_ByName(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_Name);
+			/*int MoveObjectIndex = App->Cl_Scene_Data->GetJustIndex_ByName(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_Name);
 			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_Index = MoveObjectIndex;
 			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_ID = App->SBC_Scene->B_Object[MoveObjectIndex]->Object_ID;
 
@@ -1325,11 +1337,11 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 
 			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->PhysicsPos.x = App->SBC_Scene->B_Object[MoveObjectIndex]->Physics_Pos.x;
 			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->PhysicsPos.y = App->SBC_Scene->B_Object[MoveObjectIndex]->Physics_Pos.y;
-			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->PhysicsPos.z = App->SBC_Scene->B_Object[MoveObjectIndex]->Physics_Pos.z;
+			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->PhysicsPos.z = App->SBC_Scene->B_Object[MoveObjectIndex]->Physics_Pos.z;*/
 
 			Update_ListView_Move_Entities();
 
-			App->Cl_Scene_Data->Reset_Triggers();
+			//App->Cl_Scene_Data->Reset_Triggers();
 
 		}
 		return 1;
