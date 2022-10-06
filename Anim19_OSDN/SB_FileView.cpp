@@ -19,6 +19,9 @@ misrepresented as being the original software.
 
 3. This notice may not be removed or altered from any source
 distribution.
+
+:- Terry and Hazel Flanigan 2022
+
 */
 
 #include "stdafx.h"
@@ -71,7 +74,7 @@ SB_FileView::~SB_FileView()
 }
 
 // *************************************************************************
-// *						Reset_Class Terry Bernie				 	   *
+// *			Reset_Class:- Terry and Hazel Flanigan 2022			 	   *
 // *************************************************************************
 void SB_FileView::Reset_Class()
 {
@@ -126,9 +129,9 @@ void SB_FileView::Init_Bmps_FileView()
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti1);
 }
 
-// *************************************************************************
-//							Start_FileView Terry Flanigan					*
-// *************************************************************************
+// **************************************************************************
+// *			Start_FileView:- Terry and Hazel Flanigan 2022				*
+// **************************************************************************
 void SB_FileView::Start_FileView(void)
 {
 	App->ListPanel = CreateDialog(App->hInst, (LPCTSTR)IDD_LIST, App->MainHwnd, (DLGPROC)ListPanel_Proc);
@@ -136,7 +139,7 @@ void SB_FileView::Start_FileView(void)
 }
 
 // *************************************************************************
-// *					ListPanel_Proc_Proc Terry Flanigan				   *
+// *		ListPanel_Proc_Proc:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -326,7 +329,7 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 }
 
 // *************************************************************************
-// *						Init_FileView Terry Flanigan				   *
+// *			Init_FileView:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 void SB_FileView::Init_FileView(void)
 {
@@ -379,7 +382,7 @@ void SB_FileView::Init_FileView(void)
 }
 
 // *************************************************************************
-// *			AddRootFolder Terry Bernie			 				 	   *
+// *			AddRootFolder:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 void SB_FileView::AddRootFolder(void)
 {
@@ -393,7 +396,7 @@ void SB_FileView::AddRootFolder(void)
 }
 
 // *************************************************************************
-// *						MoreFoldersD Terry Bernie 				 	   *
+// *			MoreFoldersD:- Terry and Hazel Flanigan 2022 		 	   *
 // *************************************************************************
 void SB_FileView::MoreFoldersD(void) // last folder level
 {
@@ -471,36 +474,36 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	tvinsert.item.iSelectedImage = 1;
 	FV_Move_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
 
-	tvinsert.hParent = GD_EntitiesFolder;
-	tvinsert.hInsertAfter = TVI_LAST;
-	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
-	tvinsert.item.pszText = "Collectables";
-	tvinsert.item.iImage = 0;
-	tvinsert.item.iSelectedImage = 1;
-	GD_Collectables_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
+	//tvinsert.hParent = GD_EntitiesFolder;
+	//tvinsert.hInsertAfter = TVI_LAST;
+	//tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	//tvinsert.item.pszText = "Collectables";
+	//tvinsert.item.iImage = 0;
+	//tvinsert.item.iSelectedImage = 1;
+	//GD_Collectables_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
 
-	//----------------------------------------------------
-	tvinsert.hParent = GD_EntitiesFolder;
-	tvinsert.hInsertAfter = TVI_LAST;
-	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
-	tvinsert.item.pszText = "Teleporters";
-	tvinsert.item.iImage = 0;
-	tvinsert.item.iSelectedImage = 1;
-	GD_Teleporters_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
+	////----------------------------------------------------
+	//tvinsert.hParent = GD_EntitiesFolder;
+	//tvinsert.hInsertAfter = TVI_LAST;
+	//tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	//tvinsert.item.pszText = "Teleporters";
+	//tvinsert.item.iImage = 0;
+	//tvinsert.item.iSelectedImage = 1;
+	//GD_Teleporters_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
 
-	//----------------------------------------------------
-	tvinsert.hParent = GD_EntitiesFolder;
-	tvinsert.hInsertAfter = TVI_LAST;
-	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
-	tvinsert.item.pszText = "Particles";
-	tvinsert.item.iImage = 0;
-	tvinsert.item.iSelectedImage = 1;
-	GD_Particles_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
+	////----------------------------------------------------
+	//tvinsert.hParent = GD_EntitiesFolder;
+	//tvinsert.hInsertAfter = TVI_LAST;
+	//tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	//tvinsert.item.pszText = "Particles";
+	//tvinsert.item.iImage = 0;
+	//tvinsert.item.iSelectedImage = 1;
+	//GD_Particles_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
 
 }
 
 // *************************************************************************
-// *					ExpandRoot Terry Bernie							   *
+// *			ExpandRoot:- Terry and Hazel Flanigan 2022				   *
 // *************************************************************************
 void SB_FileView::ExpandRoot(void)
 {
@@ -742,24 +745,14 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 	// Move Entities
 	if (!strcmp(FileView_Folder, "Move_Entities")) // Folder
 	{
-		if (App->SBC_Scene->Scene_Loaded == 0)
-		{
-			App->Say("An Area or Building must be Added First");
-
-			return;
-		}
-
-		App->Cl_Dialogs->YesNo("Add Entity", "Do you want to add a new Move Entity now");
-		bool Doit = App->Cl_Dialogs->Canceled;
-		if (Doit == 0)
-		{
-			App->SBC_Objects_Create->Add_New_Move_Entity();
-		}
+		App->SBC_FileView->Context_Selection = Enums::FileView_Move_Folder;
 
 		return;
 	}
 	if (!strcmp(FileView_File, "Move_Entities"))
 	{
+		App->SBC_FileView->Context_Selection = Enums::FileView_Move_File;
+
 		HideRightPanes();
 		ShowWindow(App->GD_Properties_Hwnd, 1);
 		App->SBC_Object->Hide_Object_Dlg(1);
@@ -775,9 +768,8 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		return;
 	}
 
-	// *************************************************************************
-	// *				Collectables	Terry Bernie 					 	   *
-	// *************************************************************************
+	
+	// Collectables
 	if (!strcmp(FileView_Folder, "Collectables")) // Folder
 	{
 		if (App->Cl_Scene_Data->Scene_Has_Area == 0)
@@ -844,9 +836,8 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		return;
 	}
 
-	// *************************************************************************
-	// *				"Teleporters	Terry Bernie 					 	   *
-	// *************************************************************************
+	
+	// Teleporters
 	if (!strcmp(FileView_Folder, "Teleporters")) // Folder
 	{
 		if (App->Cl_Scene_Data->Scene_Has_Area == 0)
@@ -914,9 +905,8 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 	}
 
 
-	// *************************************************************************
-	// *					Particles	Terry Bernie 					 	   *
-	// *************************************************************************
+	
+	// Particles
 	if (!strcmp(FileView_Folder, "Particles")) // Folder
 	{
 		if (App->Cl_Scene_Data->Scene_Has_Area == 0)
@@ -1541,6 +1531,30 @@ void SB_FileView::Context_Menu(HWND hDlg)
 			DestroyMenu(App->SBC_FileView->hMenu);
 			Context_Selection = Enums::FileView_Areas_File;
 		}
+
+		//------------------------------------- Areas
+		if (!strcmp(App->SBC_FileView->FileView_Folder, "Move_Entities")) // Folder
+		{
+			App->SBC_FileView->hMenu = CreatePopupMenu();
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_NEW, L"&New");
+			TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+			DestroyMenu(App->SBC_FileView->hMenu);
+			Context_Selection = Enums::FileView_Move_Folder;
+		}
+
+		if (!strcmp(App->SBC_FileView->FileView_File, "Move_Entities"))
+		{
+			App->SBC_FileView->hMenu = CreatePopupMenu();
+
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_COPY, L"&Copy");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
+			TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+			DestroyMenu(App->SBC_FileView->hMenu);
+			Context_Selection = Enums::FileView_Move_File;
+		}
 	}
 }
 
@@ -1625,6 +1639,19 @@ void SB_FileView::Context_New(HWND hDlg)
 		if (Doit == 0)
 		{
 			App->SBC_Objects_Create->Add_New_Sound();
+		}
+
+		return;
+	}
+
+	if (App->SBC_FileView->Context_Selection == Enums::FileView_Move_Folder)
+	{
+		App->Cl_Dialogs->YesNo("Add Message", "Do you want to add a new Move Entity");
+
+		bool Doit = App->Cl_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+			App->SBC_Objects_Create->Add_New_Move_Entity();
 		}
 
 		return;

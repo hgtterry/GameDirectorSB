@@ -333,7 +333,9 @@ namespace Enums
 		FileView_Cameras_Folder = 7,
 		FileView_Cameras_File = 8,
 		FileView_Areas_Folder = 9,
-		FileView_Areas_File = 10
+		FileView_Areas_File = 10,
+		FileView_Move_Folder = 11,
+		FileView_Move_File = 12
 	};
 }
 
