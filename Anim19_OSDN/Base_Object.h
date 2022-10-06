@@ -21,6 +21,22 @@ misrepresented as being the original software.
 distribution.
 */
 
+typedef struct Move_Type {
+	char Object_Name[255];	// Name of Object to Move
+	float Distance;			// Distance to Move negative or positive
+	float Newpos;
+	float Speed;			// 
+	int WhatDirection;		//
+	int Object_Index;		// Can Change
+	int Object_ID;			// Wont Change
+	bool IsNegative;		// Positive or Negative distance to move
+	bool Triggered;			// Entity 
+	bool Re_Trigger;
+	Ogre::Vector3 MeshPos;
+	Ogre::Vector3 PhysicsPos;
+
+}Move_Type;
+
 #pragma once
 class Base_Object
 {
@@ -91,5 +107,8 @@ public:
 	bool HasSound;
 	char Sound_File[MAX_PATH];
 	char Sound_Path[MAX_PATH];
+
+	//------------------------------ Move Entity
+	Move_Type* S_MoveType;
 };
 

@@ -65,22 +65,6 @@ typedef struct Int_Type {int Array;}int_Type;
 
 
 //--------------------------------------------------------
-typedef struct Move_Type {
-	char Object_Name[255];	// Name of Object to Move
-	float Distance;			// Distance to Move negative or positive
-	float Newpos;
-	float Speed;			// 
-	int WhatDirection;		//
-	int Object_Index;		// Can Change
-	int Object_ID;			// Wont Change
-	bool IsNegative;		// Positive or Negative distance to move
-	bool Triggered;			// Entity 
-	bool Re_Trigger;	
-	Ogre::Vector3 MeshPos;
-	Ogre::Vector3 PhysicsPos;
-}Move_Type;
-
-//--------------------------------------------------------
 typedef struct Sound_Type {
 	irrklang::ISound*	SndFile;
 	char SoundFile[255];
@@ -167,7 +151,6 @@ typedef struct Object_Type {
 
 	//------------------------------
 	Entity_Type				Entity[1]; // stack
-	Move_Type*				S_MoveType; // Heap
 	Sound_Type*				S_Sounds[1]; // Heap
 	Teleport_type*			S_Teleport[1];
 	//------------------------------ Move Entity Data

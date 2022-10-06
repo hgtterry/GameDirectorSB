@@ -712,6 +712,96 @@ bool SB_Properties::Update_ListView_Sounds()
 }
 
 // *************************************************************************
+// *	Update_ListView_Move_Entities:- Terry and Hazel Flanigan 2022 	    *
+// *************************************************************************
+bool SB_Properties::Update_ListView_Move_Entities()
+{
+	if (App->SBC_Scene->Scene_Loaded == 0)
+	{
+		return 1;
+	}
+
+	int index = App->SBC_Properties->Current_Selected_Object;
+
+	char buff[255];
+	strcpy(buff, App->SBC_Scene->B_Object[index]->Mesh_Name);
+	strcat(buff, "   (Mover)");
+	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
+
+	char chr_Distance[100];
+	sprintf(chr_Distance, "%.3f ", App->SBC_Scene->B_Object[index]->S_MoveType->Distance);
+
+	char chr_Speed[100];
+	sprintf(chr_Speed, "%.3f ", App->SBC_Scene->B_Object[index]->S_MoveType->Speed);
+
+	char chr_Axis[100];
+	if (App->SBC_Scene->B_Object[index]->S_MoveType->WhatDirection == Enums::Axis_x)
+	{
+		strcpy(chr_Axis, "X");
+	}
+	if (App->SBC_Scene->B_Object[index]->S_MoveType->WhatDirection == Enums::Axis_y)
+	{
+		strcpy(chr_Axis, "Y");
+	}
+	if (App->SBC_Scene->B_Object[index]->S_MoveType->WhatDirection == Enums::Axis_z)
+	{
+		strcpy(chr_Axis, "Z");
+	}
+
+	// new sound
+	char chr_Play[100];
+	//if (App->SBC_Scene->B_Object[index]->Play_v2 == 1)
+	//{
+	//	strcpy(chr_Play, "True");
+	//}
+	//else
+	{
+		strcpy(chr_Play, "False");
+	}
+
+	char chr_Stock_Sound[100];
+	int sndIndex = 0;// App->SBC_Scene->B_Object[index]->Sound_ID_v2;
+	strcpy(chr_Stock_Sound, "poo");// App->Cl_Scene_Data->St_Sounds[sndIndex]->Name);
+
+	const int NUM_ITEMS = 9;
+	const int NUM_COLS = 2;
+	std::string grid[NUM_COLS][NUM_ITEMS]; // string table
+	LV_ITEM pitem;
+	memset(&pitem, 0, sizeof(LV_ITEM));
+	pitem.mask = LVIF_TEXT;
+
+	grid[0][0] = "Name", grid[1][0] = App->SBC_Scene->B_Object[index]->Mesh_Name;
+	grid[0][1] = " ", grid[1][1] = " ";
+	grid[0][2] = "Object", grid[1][2] = App->SBC_Scene->B_Object[index]->S_MoveType->Object_Name;
+	grid[0][3] = "Axis", grid[1][3] = chr_Axis;
+	grid[0][4] = "Distance", grid[1][4] = chr_Distance;
+	grid[0][5] = "Speed", grid[1][5] = chr_Speed;
+	grid[0][6] = " ", grid[1][6] = " ";
+	grid[0][7] = "Stock_Snd", grid[1][7] = chr_Stock_Sound;
+	grid[0][8] = "Play", grid[1][8] = chr_Play;
+
+
+	ListView_DeleteAllItems(Properties_hLV);
+
+	for (DWORD row = 0; row < NUM_ITEMS; row++)
+	{
+		pitem.iItem = row;
+		pitem.pszText = const_cast<char*>(grid[0][row].c_str());
+		ListView_InsertItem(Properties_hLV, &pitem);
+
+		//ListView_SetItemText
+
+		for (DWORD col = 1; col < NUM_COLS; col++)
+		{
+			ListView_SetItemText(Properties_hLV, row, col,
+				const_cast<char*>(grid[col][row].c_str()));
+		}
+	}
+
+	return 1;
+}
+
+// *************************************************************************
 // *			Update_ListView_Level:- Terry and Hazel Flanigan 2022     *
 // *************************************************************************
 bool SB_Properties::Update_ListView_Level()

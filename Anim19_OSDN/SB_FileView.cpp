@@ -43,7 +43,7 @@ SB_FileView::SB_FileView()
 	GD_EntitiesFolder = nullptr;
 	FV_Sounds_Folder = nullptr;
 	FV_Messages_Folder = nullptr;
-	GD_Entities_Move_Folder = nullptr;
+	FV_Move_Folder = nullptr;
 	GD_Collectables_Folder = nullptr;
 	GD_Teleporters_Folder = nullptr;
 	GD_Environment_Folder = nullptr;
@@ -86,7 +86,7 @@ void SB_FileView::Reset_Class()
 	GD_EntitiesFolder = nullptr;
 	FV_Sounds_Folder = nullptr;
 	FV_Messages_Folder = nullptr;
-	GD_Entities_Move_Folder = nullptr;
+	FV_Move_Folder = nullptr;
 	GD_Collectables_Folder = nullptr;
 	GD_Teleporters_Folder = nullptr;
 	GD_Environment_Folder = nullptr;
@@ -469,7 +469,7 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	tvinsert.item.pszText = "Move_Entities";
 	tvinsert.item.iImage = 0;
 	tvinsert.item.iSelectedImage = 1;
-	GD_Entities_Move_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+	FV_Move_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
 
 	tvinsert.hParent = GD_EntitiesFolder;
 	tvinsert.hInsertAfter = TVI_LAST;
@@ -742,7 +742,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 	// Move Entities
 	if (!strcmp(FileView_Folder, "Move_Entities")) // Folder
 	{
-		if (App->Cl_Scene_Data->Scene_Has_Area == 0)
+		if (App->SBC_Scene->Scene_Loaded == 0)
 		{
 			App->Say("An Area or Building must be Added First");
 
@@ -753,7 +753,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		bool Doit = App->Cl_Dialogs->Canceled;
 		if (Doit == 0)
 		{
-			//App->SBC_Objects_New->Add_New_MoveEntity();
+			App->SBC_Objects_Create->Add_New_Move_Entity();
 		}
 
 		return;
@@ -763,26 +763,12 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		HideRightPanes();
 		ShowWindow(App->GD_Properties_Hwnd, 1);
 
-//		App->SBC_Properties->Enable_Delete_Button(1);
-
-//		App->SBC_Properties->Enable_Test_Button(1);
 		App->SBC_Properties->Is_Player = 0; // Mark as Object selected
 
 		App->SBC_Properties->Edit_Category = Enums::Edit_Move_Entity;
 		App->SBC_Properties->Current_Selected_Object = Index;
-//		App->SBC_Properties->Update_Transform_Dlg();
 
-
-		if (App->SBC_Properties->Edit_Physics == 0)
-		{
-			//App->SBC_Properties->Update_ListView_Move_Entities();
-		}
-		else
-		{
-			//App->SBC_Properties->Update_ListView_Physics();
-		}
-
-		App->Cl_Visuals->MarkerBB_Addjust(Index);
+		App->SBC_Properties->Update_ListView_Move_Entities();
 
 		return;
 	}

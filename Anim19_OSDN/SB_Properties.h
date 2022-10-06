@@ -42,6 +42,7 @@ public:
 	bool Update_ListView_Messages();
 	bool Update_ListView_Sounds();
 	bool Update_ListView_Level();
+	bool Update_ListView_Move_Entities();
 
 	bool Properties_Dlg_Active;
 

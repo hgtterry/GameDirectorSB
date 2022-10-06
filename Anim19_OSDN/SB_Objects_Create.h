@@ -36,6 +36,7 @@ public:
 	bool Add_New_Message();
 	bool Add_New_Sound();
 	bool Add_New_Area();
+	bool Add_New_Move_Entity();
 
 	btBvhTriangleMeshShape* create_Area_Trimesh_New(int Index, Base_Area* Object);
 
@@ -56,6 +57,7 @@ protected:
 
 	bool Add_Message_Entity(int Index);
 	bool Add_Sound_Entity(int Index);
+	bool Add_Move_Entity(int Index);
 
 	bool First_Area_Start_Project();
 
