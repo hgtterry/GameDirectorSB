@@ -1270,6 +1270,208 @@ bool SB_Properties::Edit_Player_Physics_Onclick(LPARAM lParam)
 }
 
 // *************************************************************************
+// *				Edit_Move_Entity_OnClick  Terry Bernie					   *
+// *************************************************************************
+bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
+{
+	int Index = App->SBC_Properties->Current_Selected_Object; // Get Selected Object Index 
+	int result = 1;
+	int test;
+
+	LPNMLISTVIEW poo = (LPNMLISTVIEW)lParam;
+	test = poo->iItem;
+	ListView_GetItemText(Properties_hLV, test, 0, btext, 20);
+
+	result = strcmp(btext, "Name");
+	if (result == 0)
+	{
+		strcpy(App->Cl_Dialogs->btext, "Change Object Name");
+		strcpy(App->Cl_Dialogs->Chr_Text, App->SBC_Scene->B_Object[Index]->Mesh_Name);
+
+		App->Cl_Dialogs->Dialog_Text(Enums::Check_Names_Objects);
+
+		if (App->Cl_Dialogs->Canceled == 1)
+		{
+			return TRUE;
+		}
+
+		strcpy(App->SBC_Scene->B_Object[Index]->Mesh_Name, App->Cl_Dialogs->Chr_Text);
+
+		//App->Cl_FileView->ChangeItem_Name(NULL, App->Cl_Dialogs->Chr_Text);
+		Update_ListView_Move_Entities();
+	}
+
+
+
+	result = strcmp(btext, "Object");
+	if (result == 0)
+	{
+		strcpy(App->Cl_Dialogs->btext, "Select Object to Move");
+
+		App->Cl_Dialogs->DropList_Data = Enums::DropDialog_TrigMoveObject;
+		App->Cl_Dialogs->Dialog_DropGen();
+
+		if (App->Cl_Dialogs->Canceled == 0)
+		{
+			strcpy(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_Name, App->Cl_Dialogs->Chr_DropText);
+
+			int MoveObjectIndex = App->Cl_Scene_Data->GetJustIndex_ByName(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_Name);
+			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_Index = MoveObjectIndex;
+			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_ID = App->SBC_Scene->B_Object[MoveObjectIndex]->Object_ID;
+
+			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->MeshPos.x = App->SBC_Scene->B_Object[MoveObjectIndex]->Mesh_Pos.x;
+			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->MeshPos.y = App->SBC_Scene->B_Object[MoveObjectIndex]->Mesh_Pos.y;
+			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->MeshPos.z = App->SBC_Scene->B_Object[MoveObjectIndex]->Mesh_Pos.z;
+
+			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->PhysicsPos.x = App->SBC_Scene->B_Object[MoveObjectIndex]->Physics_Pos.x;
+			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->PhysicsPos.y = App->SBC_Scene->B_Object[MoveObjectIndex]->Physics_Pos.y;
+			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->PhysicsPos.z = App->SBC_Scene->B_Object[MoveObjectIndex]->Physics_Pos.z;
+
+			Update_ListView_Move_Entities();
+
+			App->Cl_Scene_Data->Reset_Triggers();
+
+		}
+		return 1;
+	}
+
+	result = strcmp(btext, "Axis");
+	if (result == 0)
+	{
+		int TestChr = 1;
+		strcpy(App->Cl_Dialogs->btext, "Select Axis ( World )");
+
+		App->Cl_Dialogs->DropList_Data = Enums::DropDialog_TrigMoveAxis;
+		App->Cl_Dialogs->Dialog_DropGen();
+
+		if (App->Cl_Dialogs->Canceled == 0)
+		{
+
+			// X Axis
+			TestChr = strcmp(App->Cl_Dialogs->Chr_DropText, "X");
+			if (TestChr == 0)
+			{
+				App->SBC_Scene->B_Object[Index]->S_MoveType[0]->WhatDirection = Enums::Axis_x;
+
+			}
+
+			// y Axis
+			TestChr = strcmp(App->Cl_Dialogs->Chr_DropText, "Y");
+			if (TestChr == 0)
+			{
+				App->SBC_Scene->B_Object[Index]->S_MoveType[0]->WhatDirection = Enums::Axis_y;
+
+			}
+
+			// Z Axis
+			TestChr = strcmp(App->Cl_Dialogs->Chr_DropText, "Z");
+			if (TestChr == 0)
+			{
+				App->SBC_Scene->B_Object[Index]->S_MoveType[0]->WhatDirection = Enums::Axis_z;
+			}
+
+			Update_ListView_Move_Entities();
+		}
+		return 1;
+	}
+
+
+	result = strcmp(btext, "Distance");
+	if (result == 0)
+	{
+		strcpy(App->Cl_Dialogs->btext, "Set Offset Distance");
+
+		char buff[256];
+
+		sprintf(buff, "%f", App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Move_Distance);
+		strcpy(App->Cl_Dialogs->Chr_Float, buff);
+
+		App->Cl_Dialogs->Dialog_Float();
+
+		if (App->Cl_Dialogs->Canceled == 0)
+		{
+
+			if (App->Cl_Dialogs->mFloat < 0)
+			{
+				App->SBC_Scene->B_Object[Index]->S_MoveType[0]->IsNegative = true;
+			}
+			else
+			{
+				App->SBC_Scene->B_Object[Index]->S_MoveType[0]->IsNegative = false;
+			}
+
+			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Move_Distance = App->Cl_Dialogs->mFloat;
+
+			Update_ListView_Move_Entities();
+		}
+		return 1;
+	}
+
+	result = strcmp(btext, "Speed");
+	if (result == 0)
+	{
+		strcpy(App->Cl_Dialogs->btext, "Set Movment Speed");
+
+		char buff[256];
+		sprintf(buff, "%f", App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Speed);
+		strcpy(App->Cl_Dialogs->Chr_Float, buff);
+
+		App->Cl_Dialogs->Dialog_Float();
+
+		if (App->Cl_Dialogs->Canceled == 0)
+		{
+
+			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Speed = App->Cl_Dialogs->mFloat;
+
+			Update_ListView_Move_Entities();
+		}
+		return 1;
+	}
+
+	// Stock Sound
+	result = strcmp(btext, "Stock_Snd");
+	if (result == 0)
+	{
+
+		App->Cl_Stock->List_Stock_Dialog(Enums::ListBox_Stock_Sounds);
+
+		//App->SBC_Scene->B_Object[Index]->Sound_ID_v2 = App->Cl_Stock->ListIndex;
+		Update_ListView_Move_Entities();
+		return 1;
+	}
+
+	// Sound
+	result = strcmp(btext, "Play");
+	if (result == 0)
+	{
+
+		/*strcpy(App->Cl_Dialogs->btext, "Play Sound In The Game");
+
+		App->Cl_Dialogs->TrueFlase = App->Cl_Scene_Data->Cl_Object[Index]->Play_v2;
+
+		App->Cl_Dialogs->Dialog_TrueFlase(App->MainHwnd);
+
+		if (App->Cl_Dialogs->Canceled == 0)
+		{
+			if (App->Cl_Dialogs->TrueFlase == 1)
+			{
+				App->Cl_Scene_Data->Cl_Object[Index]->Play_v2 = 1;
+			}
+			else
+			{
+				App->Cl_Scene_Data->Cl_Object[Index]->Play_v2 = 0;
+
+			}
+		}*/
+
+		Update_ListView_Move_Entities();
+		return 1;
+	}
+
+	return 1;
+}
+
+// *************************************************************************
 // *				Update_ListView_Area	Terry Bernie 			 	   *
 // *************************************************************************
 bool SB_Properties::Update_ListView_Area()

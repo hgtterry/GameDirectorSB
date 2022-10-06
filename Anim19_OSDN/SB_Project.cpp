@@ -1264,32 +1264,27 @@ bool SB_Project::Load_Project_Objects()
 		{
 
 			App->SBC_Scene->B_Object[Count]->S_MoveType[0] = new Move_Type;
-
 			App->Cl_Scene_Data->Set_Move_Defaults(Count); // Check
 
-			//App->Cl_Ini->GetString(buff, "Move_Distance", chr_Tag1, MAX_PATH);
-			//sscanf(chr_Tag1, "%f",&x);
+			App->Cl_Ini->GetString(buff, "Move_Distance", chr_Tag1, MAX_PATH);
+			sscanf(chr_Tag1, "%f",&x);
+			App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Move_Distance = x;
+
+			//App->SBC_Scene->B_Object[Count]->S_MoveType[0]->IsNegative = App->Cl_Ini->GetInt(buff, "Move_IsNegative", 0);
 			
-			App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Move_Distance = 222;
-			App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Speed = 121;
 
 			App->Cl_Ini->GetString(buff, "Move_ObjectName", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Object_Name, MAX_PATH);
 
-			strcpy(App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Object_Name, "pppp");
-			//strcpy(App->SBC_Scene->B_Object[Count]->S_MoveType->, "pppp");
-
-			//fprintf(WriteFile, "%s%f\n", "Move_Distance=", App->SBC_Scene->B_Object[Count]->S_MoveType->Distance);
-			//fprintf(WriteFile, "%s%i\n", "Move_IsNegative=", App->SBC_Scene->B_Object[Count]->S_MoveType->IsNegative);
-			////	fprintf(WriteFile, "%s%s\n", "Move_MeshPos=", App->SBC_Scene->B_Object[Count]->S_MoveType->MeshPos);
-			//fprintf(WriteFile, "%s%f\n", "Move_NewPos=", App->SBC_Scene->B_Object[Count]->S_MoveType->Newpos);
-			//fprintf(WriteFile, "%s%i\n", "Move_ObjectID=", App->SBC_Scene->B_Object[Count]->S_MoveType->Object_ID);
-			//fprintf(WriteFile, "%s%i\n", "Move_ObjectIndex=", App->SBC_Scene->B_Object[Count]->S_MoveType->Object_Index);
-			//fprintf(WriteFile, "%s%s\n", "Move_ObjectName=", App->SBC_Scene->B_Object[Count]->S_MoveType->Object_Name);
+		
+			//fprintf(WriteFile, "%s%f\n", "Move_NewPos=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Newpos);
+			//fprintf(WriteFile, "%s%i\n", "Move_ObjectID=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Object_ID);
+			//fprintf(WriteFile, "%s%i\n", "Move_ObjectIndex=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Object_Index);
+			//fprintf(WriteFile, "%s%s\n", "Move_ObjectName=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Object_Name);
 			////	fprintf(WriteFile, "%s%s\n", "Move_PhysicsPos=", App->SBC_Scene->B_Object[Count]->S_MoveType->PhysicsPos);
-			//fprintf(WriteFile, "%s%i\n", "Move_Re_Trigger=", App->SBC_Scene->B_Object[Count]->S_MoveType->Re_Trigger);
-			//fprintf(WriteFile, "%s%f\n", "Move_Speed=", App->SBC_Scene->B_Object[Count]->S_MoveType->Speed);
-			//fprintf(WriteFile, "%s%i\n", "Move_Triggered=", App->SBC_Scene->B_Object[Count]->S_MoveType->Triggered);
-			//fprintf(WriteFile, "%s%i\n", "Move_WhatDirection=", App->SBC_Scene->B_Object[Count]->S_MoveType->WhatDirection);
+			//fprintf(WriteFile, "%s%i\n", "Move_Re_Trigger=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Re_Trigger);
+			//fprintf(WriteFile, "%s%f\n", "Move_Speed=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Speed);
+			//fprintf(WriteFile, "%s%i\n", "Move_Triggered=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Triggered);
+			//fprintf(WriteFile, "%s%i\n", "Move_WhatDirection=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->WhatDirection);
 		}
 
 		Count++;
