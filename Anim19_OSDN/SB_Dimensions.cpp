@@ -48,7 +48,7 @@ SB_Dimensions::SB_Dimensions()
 
 		Model_Pos_Delta = 1;
 		Model_Scale_Delta = 0.01;
-		Model_Rotation_Delta = 0.5;
+		Model_Rotation_Delta = 1;
 
 		Scale_Lock = 1;
 }
@@ -636,7 +636,7 @@ void SB_Dimensions::ImGui_Rotation(void)
 
 			if (RotationX_Selected == 1)
 			{
-				App->SBC_Scene->B_Object[Index]->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(45), Ogre::Vector3(1, 0, 0)), Ogre::Node::TransformSpace::TS_LOCAL);
+				App->SBC_Scene->B_Object[Index]->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(Model_Rotation_Delta), Ogre::Vector3(1, 0, 0)), Ogre::Node::TransformSpace::TS_LOCAL);
 
 				//App->SBC_Scene->B_Object[Index]->Object_Node->pitch(Radian(Ogre::Degree(Model_Rotation_Delta)),Ogre::Node::TS_LOCAL);
 				App->SBC_Scene->B_Object[Index]->Mesh_Rot.x += Model_Rotation_Delta;
@@ -778,7 +778,7 @@ void SB_Dimensions::ImGui_Rotation(void)
 	ImGui::SameLine();
 	ImGui::SetNextItemWidth(100);
 	const char* XitemsRotXX[] = { "0.001","0.01","0.1","1", "2", "5", "10", "20" };
-	static int XitemRotXX = 1;
+	static int XitemRotXX = 3;
 	bool ChangedRotX = ImGui::Combo("Step Rot", &XitemRotXX, XitemsRotXX, IM_ARRAYSIZE(XitemsRotXX));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
 	if (ChangedRotX == 1)
 	{

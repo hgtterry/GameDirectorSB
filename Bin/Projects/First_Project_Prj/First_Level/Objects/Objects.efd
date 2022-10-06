@@ -52,7 +52,7 @@ Material_File=Not Found
 Object_Type=2
 Object_Shape=1
 Object_Usage=14
-Mesh_Pos=0.000000,0.000000,0.000000
+Mesh_Pos=-30.000000,-59.000000,0.000000
 Mesh_Scale=1.000000,1.000000,1.000000
 Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
@@ -62,11 +62,25 @@ Move_IsNegative=1
 Move_NewPos=0.000000
 Move_ObjectID=0
 Move_ObjectIndex=0
-Move_ObjectName=pppp
+Move_ObjectName=Gate
 Move_Re_Trigger=0
-Move_Speed=121.000000
+Move_Speed=10.000000
 Move_Triggered=0
 Move_WhatDirection=1
  
+[Object_4]
+Mesh_Name=Gate
+Mesh_File=Gate.mesh
+Mesh_Resource_Path=
+Material_File=Gate.material
+Object_Type=2
+Object_Shape=1
+Object_Usage=1
+Mesh_Pos=-28.802977,-57.660213,91.794159
+Mesh_Scale=1.819999,1.819999,1.819999
+Mesh_Rot=360.000000,90.000000,0.000000
+Mesh_Quat=-0.707103,-0.000000,-0.707103,0.000000
+Physics_Quat=-0.707103,-0.000000,-0.707103,0.000000
+ 
 [Counters]
-Objects_Count=4
+Objects_Count=5

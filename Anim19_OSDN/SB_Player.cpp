@@ -715,6 +715,35 @@ void SB_Player::Check_Collisions_New(void)
 					}
 				}
 
+				if (Col_Usage_Index == Enums::Usage_Move)
+				{
+					int numContacts = contactManifold->getNumContacts();
+					for (int j = 0; j < numContacts; j++)
+					{
+						btManifoldPoint& pt = contactManifold->getContactPoint(j);
+
+						Life_Time = pt.getLifeTime();
+						Distance = pt.getDistance();
+						Round = (int)Distance;
+
+						if (Round < 0)
+						{
+							if (App->SBC_Scene->B_Object[Col_Object_Index]->Triggered == 0)
+							{
+								App->Cl_Collision->Move_Entity(Col_Object_Index);
+							}
+						}
+						else if (Round == 0)
+						{
+							if (App->SBC_Scene->B_Object[Col_Object_Index]->Triggered == 1)
+							{
+								
+							}
+						}
+						
+					}
+				}
+
 				// -------------------- 
 			}
 		}

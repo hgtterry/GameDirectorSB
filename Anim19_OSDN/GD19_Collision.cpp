@@ -159,56 +159,59 @@ bool GD19_Collision::Do_Environment(int Index)
 // *************************************************************************
 bool GD19_Collision::Move_Entity(int Index)
 {
+	//FlashWindow(App->MainHwnd, true);
 
-	//if (App->Cl_Scene_Data->Cl_Object[Index]->Triggered == 1) // Retrigger Yes No
+	//if (App->SBC_Scene->B_Object[Index]->Triggered == 1) // Retrigger Yes No
 	//{
 	//	return 1;
 	//}
 
-	//App->Cl_Scene_Data->Cl_Object[Index]->Triggered = 1;
+	App->SBC_Scene->B_Object[Index]->Triggered = 1;
 
-	//Ogre::Vector3 M_Pos;
-	//Ogre::Vector3 P_Pos;
-	//ObjectIndex = Index;
+	Ogre::Vector3 M_Pos;
+	Ogre::Vector3 P_Pos;
+	ObjectIndex = Index;
 
-	//int ObjectToMove = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Object_Index;
+	int ObjectToMove = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Object_Index;
+	
+	if (App->SBC_Scene->B_Object[ObjectToMove]->Deleted == 0)
+	{
+		FlashWindow(App->MainHwnd, true);
 
-	//if (App->Cl_Scene_Data->Cl_Object[ObjectToMove]->Deleted == 0)
-	//{
+		M_Pos = App->SBC_Scene->B_Object[ObjectToMove]->Mesh_Pos;
+		P_Pos = App->SBC_Scene->B_Object[ObjectToMove]->Physics_Pos;
 
-	//	M_Pos = App->Cl_Scene_Data->Cl_Object[ObjectToMove]->Mesh_Pos;
-	//	P_Pos = App->Cl_Scene_Data->Cl_Object[ObjectToMove]->Physics_Pos;
+		App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos = Ogre::Vector3(M_Pos);
+		App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos = Ogre::Vector3(P_Pos);
 
-	//	App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos = Ogre::Vector3(M_Pos);
-	//	App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->PhysicsPos = Ogre::Vector3(P_Pos);
+		x = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.x;
+		y = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.y;
+		z = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.z;
 
-	//	x = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.x;
-	//	y = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.y;
-	//	z = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.z;
+		px = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.x;
+		py = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.y;
+		pz = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.z;
 
-	//	px = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->PhysicsPos.x;
-	//	py = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->PhysicsPos.y;
-	//	pz = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->PhysicsPos.z;
+		if (App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->WhatDirection == Enums::Axis_x)
+		{
+			FinalPosition = x + App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Move_Distance;
+		}
 
-	//	if (App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->WhatDirection == Enums::Axis_x)
-	//	{
-	//		FinalPosition = x + App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Distance;
-	//	}
+		if (App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->WhatDirection == Enums::Axis_y)
+		{
+			FinalPosition = y + App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Move_Distance;
+		}
 
-	//	if (App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->WhatDirection == Enums::Axis_y)
-	//	{
-	//		FinalPosition = y + App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Distance;
-	//	}
-
-	//	if (App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->WhatDirection == Enums::Axis_z)
-	//	{
-	//		FinalPosition = z + App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Distance;
-	//	}
+		if (App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->WhatDirection == Enums::Axis_z)
+		{
+			FinalPosition = z + App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Move_Distance;
+		}
 
 	//	Play_Sound(Index);
 
 	//	DoMove = 1; // Trigger Ogre Listener to update
-	//}
+
+	}
 
 	return 1;
 }
@@ -218,169 +221,169 @@ bool GD19_Collision::Move_Entity(int Index)
 // *************************************************************************
 void GD19_Collision::MoveObject(Ogre::Real Time)
 {
-	//if (App->Cl_Scene_Data->Cl_Object[ObjectIndex]->Deleted == 0)
-	//{
-	//	// X Axis
-	//	if (App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->WhatDirection == Enums::Axis_x)
-	//	{
+	if (App->SBC_Scene->B_Object[ObjectIndex]->Deleted == 0)
+	{
+		// X Axis
+		if (App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->WhatDirection == Enums::Axis_x)
+		{
 
-	//		if (App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->IsNegative == false)
-	//		{
-	//			int ObjectToMove = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Object_Index;
+			if (App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->IsNegative == false)
+			{
+				int ObjectToMove = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Object_Index;
 
-	//			App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.x += App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Speed * Time;
-	//			App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->PhysicsPos.x += App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Speed * Time;
+				App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.x += App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Speed * Time;
+				App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.x += App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Speed * Time;
 
-	//			x = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.x;
-	//			px = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->PhysicsPos.x;
+				x = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.x;
+				px = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.x;
 
-	//			App->Cl_Scene_Data->Cl_Object[ObjectToMove]->OgreNode->setPosition(x, y, z);
-	//			App->Cl_Scene_Data->Cl_Object[ObjectToMove]->bt_body->getWorldTransform().setOrigin(btVector3(px, py, pz));
+				App->SBC_Scene->B_Object[ObjectToMove]->Object_Node->setPosition(x, y, z);
+				App->SBC_Scene->B_Object[ObjectToMove]->Phys_Body->getWorldTransform().setOrigin(btVector3(px, py, pz));
 
-	//			if (App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.x > FinalPosition)
-	//			{
+				if (App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.x > FinalPosition)
+				{
 
-	//				/*App->GDCL_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile->stop();
-	//				App->GDCL_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile->drop();
-	//				App->GDCL_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile = NULL;*/
+					/*App->GDCL_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile->stop();
+					App->GDCL_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile->drop();
+					App->GDCL_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile = NULL;*/
 
-	//				DoMove = 0; // Stop Listener
-	//			}
+					DoMove = 0; // Stop Listener
+				}
 
-	//			return;
-	//		}
-	//		else
-	//		{
-	//			int ObjectToMove = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Object_Index;
+				return;
+			}
+			else
+			{
+				int ObjectToMove = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Object_Index;
 
-	//			App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.x -= App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Speed * Time;
-	//			App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->PhysicsPos.x -= App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Speed * Time;
+				App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.x -= App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Speed * Time;
+				App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.x -= App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Speed * Time;
 
-	//			x = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.x;
-	//			px = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->PhysicsPos.x;
+				x = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.x;
+				px = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.x;
 
-	//			App->Cl_Scene_Data->Cl_Object[ObjectToMove]->OgreNode->setPosition(x, y, z);
-	//			App->Cl_Scene_Data->Cl_Object[ObjectToMove]->bt_body->getWorldTransform().setOrigin(btVector3(px, py, pz));
+				App->SBC_Scene->B_Object[ObjectToMove]->Object_Node->setPosition(x, y, z);
+				App->SBC_Scene->B_Object[ObjectToMove]->Phys_Body->getWorldTransform().setOrigin(btVector3(px, py, pz));
 
-	//			if (App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.x < FinalPosition)
-	//			{
-	//				/*App->Cl_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile->stop();
-	//				App->Cl_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile->drop();
-	//				App->Cl_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile = NULL;*/
+				if (App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.x < FinalPosition)
+				{
+					/*App->Cl_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile->stop();
+					App->Cl_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile->drop();
+					App->Cl_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile = NULL;*/
 
-	//				DoMove = 0; // Stop Listener
-	//			}
+					DoMove = 0; // Stop Listener
+				}
 
-	//			return;
-	//		}
-	//	}
+				return;
+			}
+		}
 
-	//	// Y Axis
-	//	if (App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->WhatDirection == Enums::Axis_y)
-	//	{
-	//		if (App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->IsNegative == false)
-	//		{
-	//			int ObjectToMove = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Object_Index;
+		// Y Axis
+		if (App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->WhatDirection == Enums::Axis_y)
+		{
+			if (App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->IsNegative == false)
+			{
+				int ObjectToMove = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Object_Index;
 
-	//			App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.y += App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Speed * Time;
-	//			App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->PhysicsPos.y += App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Speed * Time;
+				App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.y += App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Speed * Time;
+				App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.y += App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Speed * Time;
 
-	//			y = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.y;
-	//			py = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->PhysicsPos.y;
+				y = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.y;
+				py = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.y;
 
-	//			App->Cl_Scene_Data->Cl_Object[ObjectToMove]->OgreNode->setPosition(x, y, z);
-	//			App->Cl_Scene_Data->Cl_Object[ObjectToMove]->bt_body->getWorldTransform().setOrigin(btVector3(px, py, pz));
+				App->SBC_Scene->B_Object[ObjectToMove]->Object_Node->setPosition(x, y, z);
+				App->SBC_Scene->B_Object[ObjectToMove]->Phys_Body->getWorldTransform().setOrigin(btVector3(px, py, pz));
 
-	//			if (App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.y > FinalPosition)
-	//			{
-	//				/*App->Cl_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile->stop();
-	//				App->Cl_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile->drop();
-	//				App->Cl_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile = NULL;*/
+				if (App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.y > FinalPosition)
+				{
+					/*App->Cl_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile->stop();
+					App->Cl_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile->drop();
+					App->Cl_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile = NULL;*/
 
-	//				DoMove = 0; // Stop Listener
-	//			}
+					DoMove = 0; // Stop Listener
+				}
 
-	//			return;
-	//		}
-	//		else
-	//		{
-	//			int ObjectToMove = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Object_Index;
+				return;
+			}
+			else
+			{
+				int ObjectToMove = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Object_Index;
 
-	//			App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.y -= App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Speed * Time;
-	//			App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->PhysicsPos.y -= App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Speed * Time;
+				App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.y -= App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Speed * Time;
+				App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.y -= App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Speed * Time;
 
-	//			y = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.y;
-	//			py = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->PhysicsPos.y;
+				y = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.y;
+				py = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.y;
 
-	//			App->Cl_Scene_Data->Cl_Object[ObjectToMove]->OgreNode->setPosition(x, y, z);
-	//			App->Cl_Scene_Data->Cl_Object[ObjectToMove]->bt_body->getWorldTransform().setOrigin(btVector3(px, py, pz));
+				App->SBC_Scene->B_Object[ObjectToMove]->Object_Node->setPosition(x, y, z);
+				App->SBC_Scene->B_Object[ObjectToMove]->Phys_Body->getWorldTransform().setOrigin(btVector3(px, py, pz));
 
-	//			if (App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.y < FinalPosition)
-	//			{
-	//				/*App->GDCL_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile->stop();
-	//				App->GDCL_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile->drop();
-	//				App->GDCL_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile = NULL;*/
+				if (App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.y < FinalPosition)
+				{
+					/*App->GDCL_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile->stop();
+					App->GDCL_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile->drop();
+					App->GDCL_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile = NULL;*/
 
-	//				DoMove = 0; // Stop Listener
-	//			}
+					DoMove = 0; // Stop Listener
+				}
 
-	//			return;
-	//		}
-	//	}
+				return;
+			}
+		}
 
-	//	// Z Axis
-	//	if (App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->WhatDirection == Enums::Axis_z)
-	//	{
-	//		if (App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->IsNegative == false)
-	//		{
-	//			int ObjectToMove = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Object_Index;
+		// Z Axis
+		if (App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->WhatDirection == Enums::Axis_z)
+		{
+			if (App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->IsNegative == false)
+			{
+				int ObjectToMove = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Object_Index;
 
-	//			App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.z += App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Speed * Time;
-	//			App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->PhysicsPos.z += App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Speed * Time;
+				App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.z += App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Speed * Time;
+				App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.z += App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Speed * Time;
 
-	//			z = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.z;
-	//			pz = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->PhysicsPos.z;
+				z = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.z;
+				pz = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.z;
 
-	//			App->Cl_Scene_Data->Cl_Object[ObjectToMove]->OgreNode->setPosition(x, y, z);
-	//			App->Cl_Scene_Data->Cl_Object[ObjectToMove]->bt_body->getWorldTransform().setOrigin(btVector3(px, py, pz));
+				App->SBC_Scene->B_Object[ObjectToMove]->Object_Node->setPosition(x, y, z);
+				App->SBC_Scene->B_Object[ObjectToMove]->Phys_Body->getWorldTransform().setOrigin(btVector3(px, py, pz));
 
-	//			if (App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.z > FinalPosition)
-	//			{
-	//				/*App->GDCL_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile->stop();
-	//				App->GDCL_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile->drop();
-	//				App->GDCL_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile = NULL;*/
+				if (App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.z > FinalPosition)
+				{
+					/*App->GDCL_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile->stop();
+					App->GDCL_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile->drop();
+					App->GDCL_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile = NULL;*/
 
-	//				DoMove = 0; // Stop Listener
-	//			}
+					DoMove = 0; // Stop Listener
+				}
 
-	//			return;
-	//		}
-	//		else
-	//		{
-	//			int ObjectToMove = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Object_Index;
+				return;
+			}
+			else
+			{
+				int ObjectToMove = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Object_Index;
 
-	//			App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.z -= App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Speed * Time;
-	//			App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->PhysicsPos.z -= App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->Speed * Time;
+				App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.z -= App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Speed * Time;
+				App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.z -= App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Speed * Time;
 
-	//			z = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.z;
-	//			pz = App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->PhysicsPos.z;
+				z = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.z;
+				pz = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.z;
 
-	//			App->Cl_Scene_Data->Cl_Object[ObjectToMove]->OgreNode->setPosition(x, y, z);
-	//			App->Cl_Scene_Data->Cl_Object[ObjectToMove]->bt_body->getWorldTransform().setOrigin(btVector3(px, py, pz));
+				App->SBC_Scene->B_Object[ObjectToMove]->Object_Node->setPosition(x, y, z);
+				App->SBC_Scene->B_Object[ObjectToMove]->Phys_Body->getWorldTransform().setOrigin(btVector3(px, py, pz));
 
-	//			if (App->Cl_Scene_Data->Cl_Object[ObjectIndex]->S_MoveType->MeshPos.z < FinalPosition)
-	//			{
-	//				/*App->GDCL_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile->stop();
-	//				App->GDCL_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile->drop();
-	//				App->GDCL_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile = NULL;*/
+				if (App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.z < FinalPosition)
+				{
+					/*App->GDCL_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile->stop();
+					App->GDCL_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile->drop();
+					App->GDCL_Scene_Data->CL_Object[ObjectIndex]->S_Sounds[0]->SndFile = NULL;*/
 
-	//				DoMove = 0; // Stop Listener
-	//			}
+					DoMove = 0; // Stop Listener
+				}
 
-	//			return;
-	//		}
-	//	}
-	//}
+				return;
+			}
+		}
+	}
 
 	return;
 }
