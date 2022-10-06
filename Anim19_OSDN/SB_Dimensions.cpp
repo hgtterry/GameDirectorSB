@@ -181,6 +181,7 @@ void SB_Dimensions::ImGui_Position(void)
 				Ogre::Vector3 Centre = App->SBC_Object->Get_BoundingBox_World_Centre(Index);
 
 				App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+
 				UpDate_Physics_And_Visuals(Index);
 			}
 
@@ -832,7 +833,16 @@ void SB_Dimensions::ImGui_Rotation(void)
 // *************************************************************************
 void SB_Dimensions::UpDate_Physics_And_Visuals(int Index)
 {
-	Set_Physics_Position(Index);
+	if (App->SBC_Scene->B_Object[Index]->Shape == Enums::Shape_TriMesh)
+	{
+
+	}
+	else
+	{
+		Set_Physics_Position(Index);
+	}
+	
+
 	App->Cl_Visuals->MarkerBB_Addjust(Index);
 
 	// Needs Looking at

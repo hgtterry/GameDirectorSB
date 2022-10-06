@@ -1171,7 +1171,6 @@ btBvhTriangleMeshShape* SB_Objects_Create::create_New_Trimesh(int Index)
 
 	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
 
-	//myMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 0, 0)));
 
 	btRigidBody::btRigidBodyConstructionInfo rigidBodyCI
 	(
@@ -1197,8 +1196,6 @@ btBvhTriangleMeshShape* SB_Objects_Create::create_New_Trimesh(int Index)
 
 	Object->Phys_Body->setUserIndex(123);
 	Object->Phys_Body->setUserIndex2(Index);
-
-	//Collect_Object_Data();
 
 	App->Cl_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 

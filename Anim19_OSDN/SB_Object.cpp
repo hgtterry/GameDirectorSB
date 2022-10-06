@@ -439,11 +439,19 @@ void SB_Object::Rename_Object(int Index)
 // *************************************************************************
 Ogre::Vector3 SB_Object::Get_BoundingBox_World_Centre(int Object_Index)
 {
-	AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Object_Index]->Object_Ent->getBoundingBox();
-	worldAAB.transformAffine(App->SBC_Scene->B_Object[Object_Index]->Object_Node->_getFullTransform());
-	Ogre::Vector3 Centre = worldAAB.getCenter();
+	if (App->SBC_Scene->B_Object[Object_Index]->Shape == Enums::Shape_TriMesh)
+	{
+		Ogre::Vector3 Pos = App->SBC_Scene->B_Object[Object_Index]->Object_Node->getPosition();
+		return Pos;
+	}
+	else
+	{
+		AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Object_Index]->Object_Ent->getBoundingBox();
+		worldAAB.transformAffine(App->SBC_Scene->B_Object[Object_Index]->Object_Node->_getFullTransform());
+		Ogre::Vector3 Centre = worldAAB.getCenter();
 
-	return Centre;
+		return Centre;
+	}
 }
 
 // *************************************************************************
