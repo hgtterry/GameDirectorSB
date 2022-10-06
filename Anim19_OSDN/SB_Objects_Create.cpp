@@ -60,7 +60,11 @@ bool SB_Objects_Create::Add_Objects_From_File() // From File
 		}
 		else if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Move)
 		{
-			//Add_MoveEntity_FFile(Count);
+			App->SBC_Scene->B_Object[Count]->S_MoveType = new Move_Type;
+			App->Cl_Scene_Data->Set_Move_Defaults(Count); // Check
+
+			Add_Move_Entity(Count);
+			App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Move_Folder);
 		}
 		else if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Colectable)
 		{
@@ -1146,8 +1150,8 @@ bool SB_Objects_Create::Add_Move_Entity(int Index)
 	Object->Phys_Body->setUserPointer(Object->Object_Node);
 	Object->Phys_Body->setWorldTransform(startTransform);
 
-	Object->Usage = Enums::Usage_Message;
-	Object->Phys_Body->setUserIndex(Enums::Usage_Message);
+	Object->Usage = Enums::Usage_Move;
+	Object->Phys_Body->setUserIndex(Enums::Usage_Move);
 	Object->Phys_Body->setUserIndex2(Index);
 
 	Object->Phys_Body->setCustomDebugColor(btVector3(0, 1, 1));

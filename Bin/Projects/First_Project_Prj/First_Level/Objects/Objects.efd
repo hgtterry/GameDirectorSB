@@ -44,5 +44,29 @@ Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
  
+[Object_3]
+Mesh_Name=MoveEnt_3
+Mesh_File=DoorEntity_GD.mesh
+Mesh_Resource_Path=
+Material_File=Not Found
+Object_Type=2
+Object_Shape=1
+Object_Usage=14
+Mesh_Pos=0.000000,0.000000,0.000000
+Mesh_Scale=1.000000,1.000000,1.000000
+Mesh_Rot=0.000000,0.000000,0.000000
+Mesh_Quat=1.000000,0.000000,0.000000,0.000000
+Physics_Quat=1.000000,0.000000,0.000000,0.000000
+Move_Distance=-50.000000
+Move_IsNegative=1
+Move_NewPos=0.000000
+Move_ObjectID=0
+Move_ObjectIndex=0
+Move_ObjectName=None
+Move_Re_Trigger=0
+Move_Speed=10.000000
+Move_Triggered=0
+Move_WhatDirection=1
+ 
 [Counters]
-Objects_Count=3
+Objects_Count=4
