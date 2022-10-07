@@ -992,7 +992,7 @@ void SB_Resources::List_MeshMaterials(HWND List)
 	SendMessage(List, LB_RESETCONTENT, 0, 0);
 
 	int Count = 0;
-	while (Count < App->Cl_Scene_Data->ObjectCount) // Remove Ogre Objects
+	while (Count < App->SBC_Scene->Object_Count) // Remove Ogre Objects
 	{
 		char MeshName[255];
 

@@ -78,15 +78,6 @@ typedef struct Sound_Type {
 	bool Play;
 }Sound_Type;
 
-//--------------------------------------------------------
-typedef struct Entity_Type 
-{
-	char mFileAndPath[1024];
-	char mTextItem[255];
-	char Stock_mName[255];
-	int Stock_mIndex;
-}Entity_Type;
-
 typedef struct Teleport_type
 {
 	char Name[255];
@@ -143,20 +134,10 @@ typedef struct Object_Type {
 	Ogre::Vector3 Mesh_BB_Center;
 
 	//------------------------------
-	bool					Show_Debug;
-	bool					Collision;
-	bool					UseTargetFlag;
-	bool					IsInCollision;
-	bool					HasSound;
-
-	//------------------------------
-	Entity_Type				Entity[1]; // stack
 	Sound_Type*				S_Sounds[1]; // Heap
 	Teleport_type*			S_Teleport[1];
 	//------------------------------ Move Entity Data
-	bool Triggered;								// Imternal
-	bool Re_Trigger;							
-
+							
 }Object_Type;
 
 typedef struct Scene_Type { 	
@@ -276,7 +257,6 @@ public:
 	Player_Location_type*	S_Player_Locations[20];
 
 	int Player_Location_Count;
-	int ObjectCount;
 	int Stock_Messgae_Count;
 	int Stock_Sound_Count;
 	int NewObjectID;

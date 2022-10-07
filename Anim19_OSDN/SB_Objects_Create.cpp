@@ -61,7 +61,12 @@ bool SB_Objects_Create::Add_Objects_From_File() // From File
 		else if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Move)
 		{
 			Add_Move_Entity(Count);
+
+			HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Move_Folder, App->SBC_Scene->B_Object[Count]->Mesh_Name, Count, false);
+			App->SBC_Scene->B_Object[Count]->FileViewItem = Temp;
+
 			App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Move_Folder);
+
 		}
 		else if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Colectable)
 		{
@@ -1073,10 +1078,14 @@ bool SB_Objects_Create::Add_New_Move_Entity()
 
 	Add_Move_Entity(Index);
 
+	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Move_Folder, App->SBC_Scene->B_Object[Index]->Mesh_Name, Index, true);
+	App->SBC_Scene->B_Object[Index]->FileViewItem = Temp;
+
 	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[Index]->FileViewItem);
 
 	App->SBC_Scene->Object_ID_Counter++;
 	App->SBC_Scene->Object_Count++;
+
 
 	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Move_Folder);
 	return 1;
@@ -1169,9 +1178,6 @@ bool SB_Objects_Create::Add_Move_Entity(int Index)
 	App->Cl_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
 	Set_Physics(Index);
-
-	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Move_Folder, Object->Mesh_Name, Index, true);
-	Object->FileViewItem = Temp;
 
 	return 1;
 }

@@ -56,7 +56,7 @@ public:
 	
 
 	btBvhTriangleMeshShape* createTrimesh(Ogre::Entity* ent, int Object_Index);
-	btBvhTriangleMeshShape* create_New_Trimesh(Ogre::Entity* ent);
+	
 
 	btTransform Set_Physics_PosRot(void);
 	void Set_Physics_Scale(void);
@@ -118,15 +118,13 @@ public:
 	bool					HasSound;
 
 	//------------------------------
-	Entity_Type2				Entity[1]; // stack
+	
 	Move_Type2* S_MoveType; // Heap
 
 	Teleport_type2* S_Teleport[1];
 	Environment2* S_Environment[1];
 	//------------------------------ Move Entity Data
-	bool Triggered;								// Imternal
-	bool Re_Trigger;
-
+	
 	// New Sound
 	int Sound_ID_v2;
 	bool Play_v2;

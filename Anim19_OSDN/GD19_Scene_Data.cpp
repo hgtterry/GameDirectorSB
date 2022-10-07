@@ -28,7 +28,6 @@ bool GD19_Scene_Data::Init_Class(void)
 	S_LoadOptions[0] = NULL;
 
 	Player_Location_Count = 0;
-	ObjectCount = 0;
 	Stock_Messgae_Count = 0;
 	Stock_Sound_Count = 0;
 
@@ -240,7 +239,7 @@ void GD19_Scene_Data::ClearScene(void)
 	ShowWindow(App->GD_Properties_Hwnd,0);
 
 	int Count = 0;
-	while (Count < ObjectCount) // Remove Ogre Objects
+	//while (Count < ObjectCount) // Remove Ogre Objects
 	{
 		/*if(Cl_Object[Count])
 		{
@@ -290,7 +289,6 @@ void GD19_Scene_Data::ClearScene(void)
 
 	Player_Location_Count = 0;
 	Stock_Sound_Count = 0;
-	ObjectCount = 0;
 
 	SceneLoaded = 0;
 
@@ -481,7 +479,7 @@ bool GD19_Scene_Data::Is_Meshes_Used(char* Name)
 int GD19_Scene_Data::GetJustIndex_ByName(char* Name)
 {
 	int Count=0;
-	int Total = ObjectCount;
+	int Total = App->SBC_Scene->Object_Count;
 
 	while (Count < Total)
 	{
