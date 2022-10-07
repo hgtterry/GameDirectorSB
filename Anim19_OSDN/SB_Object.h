@@ -36,6 +36,8 @@ public:
 
 	Ogre::Vector3 Get_BoundingBox_World_Centre(int Object_Index);
 
+	int GetIndex_By_Name(char* Name);
+
 	bool Update_Types();
 	void Copy_Object(int Object_Index);
 

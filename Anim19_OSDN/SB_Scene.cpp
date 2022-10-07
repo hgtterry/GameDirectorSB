@@ -41,6 +41,8 @@ SB_Scene::SB_Scene()
 	Camera_Count = 0;
 	Entity_Count = 0;
 
+	Project_Resources_Created = 0;
+
 	Object_ID_Counter = 0;
 
 	CurrentCamMode = 0;
@@ -157,6 +159,7 @@ bool SB_Scene::Clear_Level()
 	App->SBC_Camera->Reset_View();
 
 	Delete_Resources_Group();
+	Project_Resources_Created = 0;
 
 	App->SBC_FileView->SelectItem(App->SBC_FileView->FV_LevelFolder);
 
@@ -168,11 +171,10 @@ bool SB_Scene::Clear_Level()
 // *************************************************************************
 bool SB_Scene::Create_Resources_Group()
 {
-	//bool Test = Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(Project_Resource_Group);
-
-	//if (Test == 0)
+	if (Project_Resources_Created == 0)
 	{
 		Ogre::ResourceGroupManager::getSingleton().createResourceGroup(Project_Resource_Group);
+		Project_Resources_Created = 1;
 	}
 
 	return 1;
@@ -184,11 +186,10 @@ bool SB_Scene::Create_Resources_Group()
 bool SB_Scene::Delete_Resources_Group()
 {
 
-	bool Test = Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(Project_Resource_Group);
-
-	if (Test == 1)
+	if (Project_Resources_Created == 1)
 	{
 		Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(Project_Resource_Group);
+		Project_Resources_Created = 0;
 	}
 
 	return 1;

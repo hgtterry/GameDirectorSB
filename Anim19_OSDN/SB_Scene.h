@@ -61,7 +61,7 @@ public:
 	bool Area_Added;	// Is there a vaild Area or Room [131221]
 	bool Camera_Added;	// Is there a vaild Area or Room [131221]
 	bool Objects_Added;
-
+	bool Project_Resources_Created;
 	bool Scene_Modified;
 
 	Ogre::String Project_Resource_Group;

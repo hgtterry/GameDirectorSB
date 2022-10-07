@@ -244,8 +244,7 @@ public:
 	void Reset_Triggers(void);
 
 	bool Is_Meshes_Used(char* Name);
-	int GetJustIndex_ByName(char* Name);
-
+	
 	bool Delete_Object(int Index);
 
 	Flags_Type*				S_Flags[1];

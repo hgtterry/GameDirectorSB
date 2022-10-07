@@ -285,12 +285,29 @@ LRESULT CALLBACK SB_Player::Player_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 			return 1;
 		}
 
+		if (LOWORD(wParam) == IDC_BT_GOTO)
+		{
+
+			App->Cl19_Ogre->mCamera->setPosition(Ogre::Vector3(App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().getOrigin()));
+			
+			return 1;
+		}
+
 		if (LOWORD(wParam) == IDC_BTSAVE)
 		{
 			if (App->SBC_Scene->Scene_Loaded == 1)
 			{
-				//App->SBC_Project->Write_Player();
-				//App->Say("Player Saved");
+
+				App->SBC_Scene->B_Player[0]->StartPos = Ogre::Vector3(App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().getOrigin());
+				//App->SBC_Scene->B_Player[0]->
+				
+				App->SBC_Scene->B_Player[0]->Altered = 1;
+				App->SBC_Scene->Scene_Modified = 1;
+				App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);
+
+				App->SBC_Properties->Update_ListView_Player();
+
+				App->Say("Player Saved");
 			}
 			return 1;
 		}
@@ -320,21 +337,6 @@ LRESULT CALLBACK SB_Player::Player_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 				App->SBC_Player->Toggle_Physics_Flag = 1;
 				RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			}
-			return 1;
-		}
-
-		if (LOWORD(wParam) == IDC_BTLOOKAT)
-		{
-
-			//App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
-
-			//    //RedrawWindow(App->Cl_ToolBar->TB_1, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-
-			//int Index = App->SBC_Properties->Current_Selected_Object;
-			//Ogre::Vector3 Centre = App->Cl_Scene_Data->Cl_Object[Index]->OgreNode->getAttachedObject(0)->getBoundingBox().getCenter();
-			//Ogre::Vector3 WS = App->Cl_Scene_Data->Cl_Object[Index]->OgreNode->convertLocalToWorldPosition(Centre);
-			//App->Cl19_Ogre->mCamera->setPosition(WS);
-
 			return 1;
 		}
 

@@ -1327,7 +1327,7 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 		{
 			strcpy(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_Name, App->Cl_Dialogs->Chr_DropText);
 
-			int MoveObjectIndex = App->Cl_Scene_Data->GetJustIndex_ByName(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_Name);
+			int MoveObjectIndex = App->SBC_Object->GetIndex_By_Name(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_Name);
 
 			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_Index = MoveObjectIndex;
 
@@ -1340,6 +1340,10 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->PhysicsPos.x = App->SBC_Scene->B_Object[MoveObjectIndex]->Physics_Pos.x;
 			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->PhysicsPos.y = App->SBC_Scene->B_Object[MoveObjectIndex]->Physics_Pos.y;
 			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->PhysicsPos.z = App->SBC_Scene->B_Object[MoveObjectIndex]->Physics_Pos.z;
+
+			App->SBC_Scene->B_Object[Index]->Altered = 1;
+			App->SBC_Scene->Scene_Modified = 1;
+			App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Object[Index]->FileViewItem);
 
 			Update_ListView_Move_Entities();
 
@@ -1384,6 +1388,10 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 				App->SBC_Scene->B_Object[Index]->S_MoveType[0]->WhatDirection = Enums::Axis_z;
 			}
 
+			App->SBC_Scene->B_Object[Index]->Altered = 1;
+			App->SBC_Scene->Scene_Modified = 1;
+			App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Object[Index]->FileViewItem);
+
 			Update_ListView_Move_Entities();
 		}
 		return 1;
@@ -1416,6 +1424,10 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 
 			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Move_Distance = App->Cl_Dialogs->mFloat;
 
+			App->SBC_Scene->B_Object[Index]->Altered = 1;
+			App->SBC_Scene->Scene_Modified = 1;
+			App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Object[Index]->FileViewItem);
+
 			Update_ListView_Move_Entities();
 		}
 		return 1;
@@ -1436,6 +1448,10 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 		{
 
 			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Speed = App->Cl_Dialogs->mFloat;
+
+			App->SBC_Scene->B_Object[Index]->Altered = 1;
+			App->SBC_Scene->Scene_Modified = 1;
+			App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Object[Index]->FileViewItem);
 
 			Update_ListView_Move_Entities();
 		}

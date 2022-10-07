@@ -474,32 +474,6 @@ bool GD19_Scene_Data::Is_Meshes_Used(char* Name)
 }
 
 // *************************************************************************
-// *	  			GetJustIndex_ByName Terry Bernie					   *
-// *************************************************************************
-int GD19_Scene_Data::GetJustIndex_ByName(char* Name)
-{
-	int Count=0;
-	int Total = App->SBC_Scene->Object_Count;
-
-	while (Count < Total)
-	{
-		if(App->SBC_Scene->B_Object[Count]->Deleted==0)
-		{
-			int Result=1;
-			Result=strcmp(App->SBC_Scene->B_Object[Count]->Mesh_Name,Name);
-			if (Result==0)
-			{
-				return Count;
-			}
-		}
-
-		Count++;
-	}
-
-	return -1;
-}
-
-// *************************************************************************
 // *	  				Reset_Triggers Terry Bernie						   *
 // *************************************************************************
 void GD19_Scene_Data::Reset_Triggers(void)
