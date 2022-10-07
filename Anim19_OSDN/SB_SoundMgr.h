@@ -39,6 +39,8 @@ public:
 	char mSoundFile[255];
 	char Current_Object_Sound[255];
 
+	char m_Current_Sound_file[MAX_PATH];
+
 	char Default_Folder[1024];
 
 	bool IsObject;
@@ -53,6 +55,6 @@ public:
 
 protected:
 
-	char m_Current_Sound_file[MAX_PATH];
+	
 };
 
