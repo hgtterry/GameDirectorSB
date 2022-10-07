@@ -770,11 +770,18 @@ bool SB_Properties::Update_ListView_Move_Entities()
 		strcpy(chr_Play, "False");
 	}
 
+	
+	char chr_Volume[100];
+	float sum2 = App->SBC_Scene->B_Object[index]->SndVolume;
+	int Percent = int(sum2 * 100);
+	_itoa(Percent, chr_Volume, 10);
+
+
 	char chr_Stock_Sound[100];
 	int sndIndex = 0;// App->SBC_Scene->B_Object[index]->Sound_ID_v2;
 	strcpy(chr_Stock_Sound, "poo");// App->Cl_Scene_Data->St_Sounds[sndIndex]->Name);
 
-	const int NUM_ITEMS = 9;
+	const int NUM_ITEMS = 10;
 	const int NUM_COLS = 2;
 	std::string grid[NUM_COLS][NUM_ITEMS]; // string table
 	LV_ITEM pitem;
@@ -790,6 +797,7 @@ bool SB_Properties::Update_ListView_Move_Entities()
 	grid[0][6] = " ", grid[1][6] = " ";
 	grid[0][7] = "Sound", grid[1][7] = App->SBC_Scene->B_Object[index]->Sound_File;
 	grid[0][8] = "Play", grid[1][8] = chr_Play;
+	grid[0][9] = "Volume", grid[1][9] = chr_Volume;
 
 
 	ListView_DeleteAllItems(Properties_hLV);

@@ -123,5 +123,6 @@ bool Base_Object::Init_Object(void)
 	strcpy(Sound_File, "Door_Open.wav");
 	Sound_Path[0] = 0;
 	Play_Sound = 1;
+	SndVolume = 0.5; // Default Half Volume
 	return 1;
 }

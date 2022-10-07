@@ -109,7 +109,7 @@ public:
 	char Sound_File[MAX_PATH];
 	char Sound_Path[MAX_PATH];
 	irrklang::ISound* SndFile;
-
+	Ogre::Real SndVolume;
 	//------------------------------ Move Entity
 	Move_Type* S_MoveType[1];
 };
