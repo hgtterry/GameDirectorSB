@@ -761,11 +761,11 @@ bool SB_Properties::Update_ListView_Move_Entities()
 
 	// new sound
 	char chr_Play[100];
-	//if (App->SBC_Scene->B_Object[index]->Play_v2 == 1)
-	//{
-	//	strcpy(chr_Play, "True");
-	//}
-	//else
+	if (App->SBC_Scene->B_Object[index]->Play_Sound == 1)
+	{
+		strcpy(chr_Play, "True");
+	}
+	else
 	{
 		strcpy(chr_Play, "False");
 	}
@@ -788,7 +788,7 @@ bool SB_Properties::Update_ListView_Move_Entities()
 	grid[0][4] = "Distance", grid[1][4] = chr_Distance;
 	grid[0][5] = "Speed", grid[1][5] = chr_Speed;
 	grid[0][6] = " ", grid[1][6] = " ";
-	grid[0][7] = "Stock_Snd", grid[1][7] = chr_Stock_Sound;
+	grid[0][7] = "Sound", grid[1][7] = App->SBC_Scene->B_Object[index]->Sound_File;
 	grid[0][8] = "Play", grid[1][8] = chr_Play;
 
 
@@ -1459,13 +1459,10 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 	}
 
 	// Stock Sound
-	result = strcmp(btext, "Stock_Snd");
+	result = strcmp(btext, "Sound");
 	if (result == 0)
 	{
-
-		App->Cl_Stock->List_Stock_Dialog(Enums::ListBox_Stock_Sounds);
-
-		//App->SBC_Scene->B_Object[Index]->Sound_ID_v2 = App->Cl_Stock->ListIndex;
+		Debug
 		Update_ListView_Move_Entities();
 		return 1;
 	}
@@ -1475,9 +1472,9 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 	if (result == 0)
 	{
 
-		/*strcpy(App->Cl_Dialogs->btext, "Play Sound In The Game");
+		strcpy(App->Cl_Dialogs->btext, "Play Sound In The Game");
 
-		App->Cl_Dialogs->TrueFlase = App->Cl_Scene_Data->Cl_Object[Index]->Play_v2;
+		App->Cl_Dialogs->TrueFlase = App->SBC_Scene->B_Object[Index]->Play_Sound;
 
 		App->Cl_Dialogs->Dialog_TrueFlase(App->MainHwnd);
 
@@ -1485,14 +1482,14 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 		{
 			if (App->Cl_Dialogs->TrueFlase == 1)
 			{
-				App->Cl_Scene_Data->Cl_Object[Index]->Play_v2 = 1;
+				App->SBC_Scene->B_Object[Index]->Play_Sound = 1;
 			}
 			else
 			{
-				App->Cl_Scene_Data->Cl_Object[Index]->Play_v2 = 0;
+				App->SBC_Scene->B_Object[Index]->Play_Sound = 0;
 
 			}
-		}*/
+		}
 
 		Update_ListView_Move_Entities();
 		return 1;

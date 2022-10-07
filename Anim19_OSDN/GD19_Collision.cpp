@@ -209,6 +209,15 @@ bool GD19_Collision::Move_Entity(int Index)
 
 	//	Play_Sound(Index);
 
+		char Sound[1024];
+		strcpy(Sound, App->SBC_SoundMgr->Default_Folder);
+		strcat(Sound, "\\Media\\Sounds\\");
+		strcat(Sound, App->SBC_Scene->B_Object[ObjectIndex]->Sound_File);
+
+		App->SBC_Scene->B_Object[ObjectIndex]->SndFile = App->SBC_SoundMgr->SoundEngine->play2D(Sound, false, true, true);
+		App->SBC_Scene->B_Object[ObjectIndex]->SndFile->setVolume(App->SBC_SoundMgr->SndVolume);
+		App->SBC_Scene->B_Object[ObjectIndex]->SndFile->setIsPaused(false);
+
 		DoMove = 1; // Trigger Ogre Listener to update
 
 	}

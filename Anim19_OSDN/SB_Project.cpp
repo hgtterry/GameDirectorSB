@@ -779,6 +779,9 @@ bool SB_Project::Save_Objects_Data()
 				fprintf(WriteFile, "%s%f\n", "Move_Speed=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Speed);
 				fprintf(WriteFile, "%s%i\n", "Move_Triggered=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Triggered);
 				fprintf(WriteFile, "%s%i\n", "Move_WhatDirection=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->WhatDirection);
+
+				fprintf(WriteFile, "%s%s\n", "Move_Sound=", App->SBC_Scene->B_Object[Count]->Sound_File);
+				fprintf(WriteFile, "%s%i\n", "Move_Play_Sound=", App->SBC_Scene->B_Object[Count]->Play_Sound);
 			}
 
 			fprintf(WriteFile, "%s\n", " ");
@@ -1299,6 +1302,8 @@ bool SB_Project::Load_Project_Objects()
 			App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Object_Index = App->Cl_Ini->GetInt(buff, "Move_ObjectIndex", 0);
 			App->SBC_Scene->B_Object[Count]->S_MoveType[0]->WhatDirection = App->Cl_Ini->GetInt(buff, "Move_WhatDirection", 0);
 		
+			App->Cl_Ini->GetString(buff, "Move_Sound", App->SBC_Scene->B_Object[Count]->Sound_File, MAX_PATH);
+			App->SBC_Scene->B_Object[Count]->Play_Sound = App->Cl_Ini->GetInt(buff, "Move_Play_Sound", 0);
 
 			//fprintf(WriteFile, "%s%f\n", "Move_NewPos=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Newpos);
 			//fprintf(WriteFile, "%s%i\n", "Move_ObjectID=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Object_ID);

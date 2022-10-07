@@ -120,8 +120,8 @@ bool Base_Object::Init_Object(void)
 
 	//------------------------------ Sound Entity
 	HasSound = 0;
-	Sound_File[0] = 0;
+	strcpy(Sound_File, "Door_Open.wav");
 	Sound_Path[0] = 0;
-
+	Play_Sound = 1;
 	return 1;
 }

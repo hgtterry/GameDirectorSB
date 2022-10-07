@@ -105,8 +105,10 @@ public:
 
 	//------------------------------ Sound Entity
 	bool HasSound;
+	bool Play_Sound;
 	char Sound_File[MAX_PATH];
 	char Sound_Path[MAX_PATH];
+	irrklang::ISound* SndFile;
 
 	//------------------------------ Move Entity
 	Move_Type* S_MoveType[1];
