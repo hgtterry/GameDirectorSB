@@ -78,7 +78,7 @@ void SB_Debug::ImGui_Debug_Camera(void)
 
 		App->Cl19_Ogre->mCamera->roll(Ogre::Degree(0));
 
-		ImGui::Text("%s %.3f", "Rot_Z = ", App->Cl19_Ogre->mCamera->getOrientation().getRoll().valueDegrees());
+		//App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().getRotation()
 
 		ImGui::Spacing();
 		ImGui::Spacing();

@@ -419,8 +419,8 @@ bool SB_Project::Save_Project()
 	{
 		Save_Players_Folder();
 
-		App->SBC_Scene->B_Player[0]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Players_Folder,"Player_1", 0, false);
-		App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Players_Folder);
+		//App->SBC_Scene->B_Player[0]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Players_Folder,"Player_1", 0, false);
+		//App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Players_Folder);
 
 	}
 
@@ -964,6 +964,11 @@ bool SB_Project::Save_Player_Data()
 	Ogre::Vector3 Pos;
 	char File[1024];
 
+	float W = 0;
+	float X = 0;
+	float Y = 0;
+	float Z = 0;
+
 	strcpy(File, m_Players_Folder_Path);
 	strcat(File, "\\");
 	strcat(File, "Players.ply");
@@ -1007,6 +1012,13 @@ bool SB_Project::Save_Player_Data()
 		Pos.y = App->SBC_Scene->B_Player[Count]->StartPos.y;
 		Pos.z = App->SBC_Scene->B_Player[Count]->StartPos.z;
 		fprintf(WriteFile, "%s%f,%f,%f\n", "Start_Position=", Pos.x, Pos.y, Pos.z);
+
+		W = App->SBC_Scene->B_Player[Count]->Physics_Rotation.getW();
+		X = App->SBC_Scene->B_Player[Count]->Physics_Rotation.getX();
+		Y = App->SBC_Scene->B_Player[Count]->Physics_Rotation.getY();
+		Z = App->SBC_Scene->B_Player[Count]->Physics_Rotation.getZ();
+
+		fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Start_Rotation=", W, X, Y, Z);
 
 		fprintf(WriteFile, "%s%s\n", "Shape=", "Capsule");
 		fprintf(WriteFile, "%s%f\n", "Mass=", App->SBC_Scene->B_Player[Count]->Capsule_Mass);
@@ -1377,6 +1389,7 @@ bool SB_Project::Load_Project_Player()
 	char Player_Ini_Path[MAX_PATH];
 	char chr_Tag1[MAX_PATH];
 
+	float w = 0;
 	float x = 0;
 	float y = 0;
 	float z = 0;
@@ -1415,6 +1428,15 @@ bool SB_Project::Load_Project_Player()
 		App->Cl_Ini->GetString(buff, "Start_Position", chr_Tag1, MAX_PATH);
 		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
 		App->SBC_Scene->B_Player[Count]->StartPos = Ogre::Vector3(x, y, z);
+
+		App->Cl_Ini->GetString(buff, "Start_Rotation", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f,%f", &w, &x, &y, &z);
+
+		App->SBC_Scene->B_Player[Count]->Physics_Rotation.setW(w);
+		App->SBC_Scene->B_Player[Count]->Physics_Rotation.setX(x);
+		App->SBC_Scene->B_Player[Count]->Physics_Rotation.setY(y);
+		App->SBC_Scene->B_Player[Count]->Physics_Rotation.setZ(z);
+
 
 		App->SBC_Scene->B_Player[Count]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Players_Folder, Player_Name, Count, false);
 	

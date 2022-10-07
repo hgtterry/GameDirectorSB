@@ -49,6 +49,8 @@ public:
 
 	Ogre::Vector3 StartPos;
 
+	btQuaternion Physics_Rotation;
+	
 	float Forward_Timer;
 	float Ground_speed;
 

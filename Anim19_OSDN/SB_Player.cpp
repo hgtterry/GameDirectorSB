@@ -147,7 +147,7 @@ void SB_Player::Initialize()
 	// ------------------------ Bulet
 	btVector3 pos = btVector3(Pos.x, Pos.y, Pos.z);
 	btVector3 inertia = btVector3(0, 0, 0);
-	btQuaternion rot = btQuaternion(1, 0, 0, 0);
+	btQuaternion rot = btQuaternion(1,0,0,0);
 	btDefaultMotionState *state = new btDefaultMotionState(btTransform(rot, pos));
 
 	//mShape = new btSphereShape(btScalar(radius));
@@ -164,12 +164,16 @@ void SB_Player::Initialize()
 	int f = pBase->Phys_Body->getCollisionFlags();
 	pBase->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
+	//pBase->Phys_Body->getWorldTransform().setRotation(btQuaternion(1,0,1,1));
+	App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->SBC_Scene->B_Player[0]->Physics_Rotation);
 	App->Cl_Bullet->dynamicsWorld->addRigidBody(pBase->Phys_Body);
 
 	// Save for later
 	Current_Position = pBase->Player_Node->getPosition();
 	Physics_Position = pBase->Phys_Body->getWorldTransform().getOrigin();
 	Physics_Rotation = pBase->Phys_Body->getWorldTransform().getRotation();
+
+	//pBase->Physics_Rotation = pBase->Phys_Body->getWorldTransform().getRotation();
 
 	App->SBC_Scene->Player_Added = 1;
 
@@ -299,7 +303,10 @@ LRESULT CALLBACK SB_Player::Player_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 			{
 
 				App->SBC_Scene->B_Player[0]->StartPos = Ogre::Vector3(App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().getOrigin());
-				//App->SBC_Scene->B_Player[0]->
+			
+				App->SBC_Scene->B_Player[0]->Physics_Rotation = App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().getRotation();
+
+
 				
 				App->SBC_Scene->B_Player[0]->Altered = 1;
 				App->SBC_Scene->Scene_Modified = 1;

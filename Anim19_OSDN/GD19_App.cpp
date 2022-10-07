@@ -285,8 +285,8 @@ bool GD19_App::InitApp(void)
 	strcat(StartFile, "\\");
 	strcat(StartFile, "Data\\StartUp.gcf");
 
-	App->Cl_Ini->SetPathName(StartFile);
-	App->Cl_Ini->WriteString("Startup", "Scene_Path_FileName", Default_Project);
+	//App->Cl_Ini->SetPathName(StartFile);
+	//App->Cl_Ini->WriteString("Startup", "Scene_Path_FileName", Default_Project);
 	return 1;
 }
 
