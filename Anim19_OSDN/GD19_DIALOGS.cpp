@@ -564,7 +564,7 @@ LRESULT CALLBACK GD19_Dialogs::Dialog_DropGen_Proc(HWND hDlg, UINT message, WPAR
 
 			if(App->Cl_Dialogs->DropList_Data == Enums::DropDialog_TrigMoveAxis)
 			{
-				//App->Cl_Dialogs->ListAxis(temp);
+				App->Cl_Dialogs->ListAxis(temp);
 				return TRUE;
 			}
 
@@ -772,7 +772,7 @@ void GD19_Dialogs::ListObjects(HWND DropHwnd)
 		{
 			//if (App->SBC_Scene->B_Object[Count]->Type == Enums::Bullet_Type_Static)
 			{
-				//if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Static)
+				if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Static)
 				{
 					SendMessage(DropHwnd, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->SBC_Scene->B_Object[Count]->Mesh_Name);
 				}

@@ -1,49 +1,12 @@
 #pragma once
 
-
-
 typedef struct Int_Type2 { int Array; }int_Type2;
-
-
-//--------------------------------------------------------
-typedef struct Move_Type2 {
-	char Object_Name[255];	// Name of Object to Move
-	float Distance;			// Distance to Move negative or positive
-	float Newpos;
-	float Speed;			// 
-	int WhatDirection;		//
-	int Object_Index;		// Can Change
-	int Object_ID;			// Wont Change
-	bool IsNegative;		// Positive or Negative distance to move
-	bool Triggered;			// Entity 
-	bool Re_Trigger;
-	Ogre::Vector3 MeshPos;
-	Ogre::Vector3 PhysicsPos;
-}Move_Type2;
-
 
 //--------------------------------------------------------
 typedef struct Environment2 {
 	bool FogOn;
 }Environment2;
 
-//--------------------------------------------------------
-typedef struct Entity_Type2
-{
-	char mFileAndPath[1024];
-	char mTextItem[255];
-	char Stock_mName[255];
-	int Stock_mIndex;
-}Entity_Type2;
-
-typedef struct Teleport_type2
-{
-	char Name[255];
-	Ogre::Vector3 Player_Position;
-	btVector3 Physics_Position;
-	btQuaternion Physics_Rotation;
-
-}Teleport_type2;
 
 class GD19_Objects
 {
@@ -111,17 +74,14 @@ public:
 	Ogre::Vector3 Mesh_BB_Center;
 
 	//------------------------------
-	bool					Show_Debug;
+	/*bool					Show_Debug;
 	bool					Collision;
 	bool					UseTargetFlag;
 	bool					IsInCollision;
-	bool					HasSound;
+	bool					HasSound;*/
 
 	//------------------------------
 	
-	Move_Type2* S_MoveType; // Heap
-
-	Teleport_type2* S_Teleport[1];
 	Environment2* S_Environment[1];
 	//------------------------------ Move Entity Data
 	

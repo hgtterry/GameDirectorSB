@@ -82,11 +82,7 @@ bool GD19_Objects::Init_Object(void)
 	// Flag it is valid
 	Deleted = 0;
 
-	Show_Debug = 0;
 	bt_body = NULL;
-	IsInCollision = 0;
-
-	HasSound = 0;
 
 	ListViewItem = NULL;
 

@@ -360,8 +360,6 @@ void SB_Objects_Create::Add_Physics_Box(bool Dynamic,int Index)
 	int f = Object->Phys_Body->getCollisionFlags();
 	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
-	//Object->Collect_Object_Data();
-
 	App->Cl_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
 	Set_Physics(Index);
