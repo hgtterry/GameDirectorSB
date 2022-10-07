@@ -147,10 +147,10 @@ bool SB_Scene::Clear_Level()
 
 	Scene_Modified = 0;
 
+	Reset_Class(); // This One
+
 	Object_ID_Counter = 0;
 	Object_Count = 0;
-
-	Reset_Class(); // This One
 	
 	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamNone;
 
