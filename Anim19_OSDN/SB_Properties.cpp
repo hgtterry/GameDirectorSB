@@ -1327,7 +1327,7 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 		{
 			strcpy(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_Name, App->Cl_Dialogs->Chr_DropText);
 
-			int MoveObjectIndex = 1;// App->Cl_Scene_Data->GetJustIndex_ByName(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_Name);
+			int MoveObjectIndex = 0;// App->Cl_Scene_Data->GetJustIndex_ByName(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_Name);
 
 			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_Index = MoveObjectIndex;
 

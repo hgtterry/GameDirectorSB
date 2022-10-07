@@ -105,8 +105,8 @@ void SB_Objects_Create::Add_Objects_From_MeshViewer()
 	App->SBC_Scene->B_Object[Index] = new Base_Object();
 	
 	Base_Object* Object = App->SBC_Scene->B_Object[Index];
+	Object->Object_ID = App->SBC_Scene->Object_ID_Counter; // Unique ID
 
-	Object->Object_ID = App->Cl_Scene_Data->Object_ID_Counter;
 
 	strcpy(Object->Mesh_Name, App->SBC_MeshViewer->Object_Name);
 	strcpy(Object->Mesh_FileName, App->SBC_MeshViewer->Selected_MeshFile);
@@ -120,7 +120,7 @@ void SB_Objects_Create::Add_Objects_From_MeshViewer()
 	
 	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[Index]->FileViewItem);
 
-	App->Cl_Scene_Data->Object_ID_Counter++;
+	App->SBC_Scene->Object_ID_Counter++; // Unique ID
 	App->SBC_Scene->Object_Count++;  // Must be last line
 
 	App->SBC_Scene->Scene_Modified = 1;
@@ -794,6 +794,7 @@ bool SB_Objects_Create::Add_New_Message()
 
 	App->SBC_Scene->B_Object[Index]->Type = Enums::Bullet_Type_Static;
 	App->SBC_Scene->B_Object[Index]->Shape = Enums::Shape_Box;
+	App->SBC_Scene->B_Object[Index]->Object_ID = App->SBC_Scene->Object_ID_Counter; // Unique ID
 
 	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_FileName, "Test_cube.mesh");
 
@@ -806,6 +807,7 @@ bool SB_Objects_Create::Add_New_Message()
 
 	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[Index]->FileViewItem);
 
+	App->SBC_Scene->B_Object[Index]->Object_ID++;
 	App->SBC_Scene->Object_Count++;
 
 	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Messages_Folder);
@@ -927,6 +929,7 @@ bool SB_Objects_Create::Add_New_Sound()
 
 	App->SBC_Scene->B_Object[Index]->Type = Enums::Bullet_Type_Static;
 	App->SBC_Scene->B_Object[Index]->Shape = Enums::Shape_Box;
+	App->SBC_Scene->B_Object[Index]->Object_ID = App->SBC_Scene->Object_ID_Counter; // Unique ID
 
 	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_FileName, "SoundEntity_GD.mesh");
 
@@ -939,6 +942,7 @@ bool SB_Objects_Create::Add_New_Sound()
 
 	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[Index]->FileViewItem);
 
+	App->SBC_Scene->B_Object[Index]->Object_ID++;
 	App->SBC_Scene->Object_Count++;
 
 	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Sounds_Folder);
@@ -1058,6 +1062,7 @@ bool SB_Objects_Create::Add_New_Move_Entity()
 
 	App->SBC_Scene->B_Object[Index]->Type = Enums::Bullet_Type_Static;
 	App->SBC_Scene->B_Object[Index]->Shape = Enums::Shape_Box;
+	App->SBC_Scene->B_Object[Index]->Object_ID = App->SBC_Scene->Object_ID_Counter; // Unique ID
 
 	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_FileName, "DoorEntity_GD.mesh");
 
@@ -1070,6 +1075,7 @@ bool SB_Objects_Create::Add_New_Move_Entity()
 
 	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[Index]->FileViewItem);
 
+	App->SBC_Scene->Object_ID_Counter++;
 	App->SBC_Scene->Object_Count++;
 
 	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Move_Folder);

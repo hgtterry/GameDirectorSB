@@ -41,7 +41,6 @@ bool GD19_Scene_Data::Init_Class(void)
 	strcpy(Data_mFilename, "No Set");
 	strcpy(Data_Path_mFilename, "No Set");
 
-	Object_ID_Counter = 0;	//Objects 0 to 2000
 	Locations_ID_Counter = 2000; //Locations 2000 to 3000
 	StockSounds_ID_Counter = 3000; // Stock sounds 3000 to 4000
 
@@ -286,7 +285,6 @@ void GD19_Scene_Data::ClearScene(void)
 	
 	//App->GDCL_Scene_Data->Init_Class();
 	Scene_Has_Area = 0;
-	Object_ID_Counter = 0;
 	Locations_ID_Counter = 2000;
 	StockSounds_ID_Counter = 3000;
 

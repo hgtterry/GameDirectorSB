@@ -55,6 +55,7 @@ public:
 	int Object_Count;		// Actual Object Count Zero Based [171221]
 	int Camera_Count;		// Actual Object Count Zero Based [171221]
 	int Entity_Count;		// Actual Object Count Zero Based [171221]
+	int Object_ID_Counter;	
 
 	bool Player_Added;	// Is there a vaild player in the level [081221]
 	bool Area_Added;	// Is there a vaild Area or Room [131221]

@@ -41,6 +41,8 @@ SB_Scene::SB_Scene()
 	Camera_Count = 0;
 	Entity_Count = 0;
 
+	Object_ID_Counter = 0;
+
 	CurrentCamMode = 0;
 	Scene_Modified = 0;
 
@@ -104,6 +106,8 @@ void SB_Scene::Reset_Class()
 	Player_Added = 0;
 	Camera_Added = 0;
 
+	Object_ID_Counter = 0;
+
 	Player_Count = 0;
 	Area_Count = 0;
 	Camera_Count = 0;
@@ -143,7 +147,8 @@ bool SB_Scene::Clear_Level()
 
 	Scene_Modified = 0;
 
-	App->Cl_Scene_Data->ObjectCount = 0;
+	Object_ID_Counter = 0;
+	Object_Count = 0;
 
 	Reset_Class(); // This One
 	

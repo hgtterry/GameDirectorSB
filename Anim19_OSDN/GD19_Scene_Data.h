@@ -285,7 +285,6 @@ public:
 	bool Scene_Has_Area;
 
 	//---------------------Unique Counters
-	int Object_ID_Counter;	 //Unique Counter
 	int Locations_ID_Counter; //Unique Counter
 	int StockSounds_ID_Counter;
 
