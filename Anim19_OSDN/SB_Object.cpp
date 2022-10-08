@@ -508,7 +508,30 @@ void SB_Object::Copy_Object(int Object_Index)
 void SB_Object::Clear_Modified_Objects()
 {
 	int Count = 0;
+	while (Count < App->SBC_Scene->Area_Count)
+	{
+		if (App->SBC_Scene->B_Area[Count]->Altered == 1)
+		{
+			App->SBC_Scene->B_Area[Count]->Altered = 0;
+			App->SBC_FileView->Mark_Clear(App->SBC_Scene->B_Area[Count]->FileViewItem);
+		}
 
+		Count++;
+	}
+
+	Count = 0;
+	while (Count < App->SBC_Scene->Player_Count)
+	{
+		if (App->SBC_Scene->B_Player[Count]->Altered == 1)
+		{
+			App->SBC_Scene->B_Player[Count]->Altered = 0;
+			App->SBC_FileView->Mark_Clear(App->SBC_Scene->B_Player[Count]->FileViewItem);
+		}
+
+		Count++;
+	}
+
+	Count = 0;
 	while (Count < App->SBC_Scene->Camera_Count)
 	{
 		if (App->SBC_Scene->B_Camera[Count]->Altered == 1)

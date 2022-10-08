@@ -343,6 +343,16 @@ void SB_Properties::ListView_OnClickOptions(LPARAM lParam)
 }
 
 // *************************************************************************
+// *					Mark_As_Altered Terry Bernie				 	   *
+// *************************************************************************
+void SB_Properties::Mark_As_Altered(int Index)
+{
+	App->SBC_Scene->B_Object[Index]->Altered = 1;
+	App->SBC_Scene->Scene_Modified = 1;
+	App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Object[Index]->FileViewItem);
+}
+
+// *************************************************************************
 // *					Clear_Listview Terry Bernie					 	   *
 // *************************************************************************
 void SB_Properties::Clear_Listview()
@@ -991,6 +1001,11 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
 
 		App->SBC_Scene->B_Player[0]->Ground_speed = App->Cl_Dialogs->mFloat;
+
+		App->SBC_Scene->B_Player[0]->Altered = 1;
+		App->SBC_Scene->Scene_Modified = 1;
+		App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);
+
 		Update_ListView_Player();
 
 		return 1;
@@ -1010,6 +1025,11 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
 
 		App->SBC_Scene->B_Player[0]->PlayerHeight = App->Cl_Dialogs->mFloat;
+
+		App->SBC_Scene->B_Player[0]->Altered = 1;
+		App->SBC_Scene->Scene_Modified = 1;
+		App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);
+
 		Update_ListView_Player();
 		return 1;
 	}
@@ -1030,6 +1050,10 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 		App->SBC_Scene->B_Player[0]->StartPos.x = App->Cl_Dialogs->mFloat;
 		
 		App->Cl_Bullet->Reset_Physics();
+
+		App->SBC_Scene->B_Player[0]->Altered = 1;
+		App->SBC_Scene->Scene_Modified = 1;
+		App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);
 
 		Update_ListView_Player();
 		return 1;
@@ -1053,6 +1077,10 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 	
 		App->Cl_Bullet->Reset_Physics();
 
+		App->SBC_Scene->B_Player[0]->Altered = 1;
+		App->SBC_Scene->Scene_Modified = 1;
+		App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);
+
 		Update_ListView_Player();
 		return 1;
 	}
@@ -1073,6 +1101,10 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 		App->SBC_Scene->B_Player[0]->StartPos.z = App->Cl_Dialogs->mFloat;
 		
 		App->Cl_Bullet->Reset_Physics();
+
+		App->SBC_Scene->B_Player[0]->Altered = 1;
+		App->SBC_Scene->Scene_Modified = 1;
+		App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);
 
 		Update_ListView_Player();
 
@@ -1111,9 +1143,7 @@ bool SB_Properties::Edit_Messages_OnClick(LPARAM lParam)
 
 		strcpy(App->SBC_Scene->B_Object[Index]->Mesh_Name, App->Cl_Dialogs->Chr_Text);
 
-		App->SBC_Scene->B_Object[Index]->Altered = 1;
-		App->SBC_Scene->Scene_Modified = 1;
-		App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Object[Index]->FileViewItem);
+		App->SBC_Properties->Mark_As_Altered(Index);
 
 		App->SBC_FileView->Change_Item_Name(App->SBC_Scene->B_Object[Index]->FileViewItem, App->Cl_Dialogs->Chr_Text);
 
@@ -1137,6 +1167,8 @@ bool SB_Properties::Edit_Messages_OnClick(LPARAM lParam)
 		strcpy(App->SBC_Scene->B_Object[Index]->Message_Text, App->Cl_Dialogs->Chr_Text);
 		strcpy(App->Cl_Dialogs->Chr_Text, App->Cl_Dialogs->Chr_Text);
 
+		App->SBC_Properties->Mark_As_Altered(Index);
+
 		Update_ListView_Messages();
 		return 1;
 	}
@@ -1159,6 +1191,8 @@ bool SB_Properties::Edit_Messages_OnClick(LPARAM lParam)
 
 		App->SBC_Scene->B_Object[Index]->Message_Pos_y = App->Cl_Dialogs->mInt;
 		
+		App->SBC_Properties->Mark_As_Altered(Index);
+
 		Update_ListView_Messages();
 		return 1;
 	}
@@ -1180,6 +1214,8 @@ bool SB_Properties::Edit_Messages_OnClick(LPARAM lParam)
 		}
 
 		App->SBC_Scene->B_Object[Index]->Message_Pos_x = App->Cl_Dialogs->mInt;
+
+		App->SBC_Properties->Mark_As_Altered(Index);
 
 		Update_ListView_Messages();
 		return 1;
@@ -1316,6 +1352,7 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 
 		strcpy(App->SBC_Scene->B_Object[Index]->Mesh_Name, App->Cl_Dialogs->Chr_Text);
 
+		Mark_As_Altered(Index);
 		//App->Cl_FileView->ChangeItem_Name(NULL, App->Cl_Dialogs->Chr_Text);
 		Update_ListView_Move_Entities();
 	}
@@ -1349,9 +1386,7 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->PhysicsPos.y = App->SBC_Scene->B_Object[MoveObjectIndex]->Physics_Pos.y;
 			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->PhysicsPos.z = App->SBC_Scene->B_Object[MoveObjectIndex]->Physics_Pos.z;
 
-			App->SBC_Scene->B_Object[Index]->Altered = 1;
-			App->SBC_Scene->Scene_Modified = 1;
-			App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Object[Index]->FileViewItem);
+			Mark_As_Altered(Index);
 
 			Update_ListView_Move_Entities();
 
@@ -1396,9 +1431,7 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 				App->SBC_Scene->B_Object[Index]->S_MoveType[0]->WhatDirection = Enums::Axis_z;
 			}
 
-			App->SBC_Scene->B_Object[Index]->Altered = 1;
-			App->SBC_Scene->Scene_Modified = 1;
-			App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Object[Index]->FileViewItem);
+			Mark_As_Altered(Index);
 
 			Update_ListView_Move_Entities();
 		}
@@ -1432,9 +1465,7 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 
 			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Move_Distance = App->Cl_Dialogs->mFloat;
 
-			App->SBC_Scene->B_Object[Index]->Altered = 1;
-			App->SBC_Scene->Scene_Modified = 1;
-			App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Object[Index]->FileViewItem);
+			Mark_As_Altered(Index);
 
 			Update_ListView_Move_Entities();
 		}
@@ -1457,14 +1488,29 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 
 			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Speed = App->Cl_Dialogs->mFloat;
 
-			App->SBC_Scene->B_Object[Index]->Altered = 1;
-			App->SBC_Scene->Scene_Modified = 1;
-			App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Object[Index]->FileViewItem);
+			Mark_As_Altered(Index);
 
 			Update_ListView_Move_Entities();
 		}
 		return 1;
 	}
+
+	result = strcmp(btext, "Volume");
+	if (result == 0)
+	{
+
+		App->SBC_SoundMgr->Dialog_SoundFile();
+
+		strcpy(App->SBC_Scene->B_Object[Index]->Sound_File, App->SBC_SoundMgr->m_Current_Sound_file);
+
+		App->SBC_Scene->B_Object[Index]->SndVolume = App->SBC_SoundMgr->SndVolume;
+
+		Mark_As_Altered(Index);
+
+		Update_ListView_Move_Entities();
+		return 1;
+	}
+
 
 	// Stock Sound
 	result = strcmp(btext, "Sound");
@@ -1475,6 +1521,8 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 		strcpy(App->SBC_Scene->B_Object[Index]->Sound_File, App->SBC_SoundMgr->m_Current_Sound_file);
 
 		App->SBC_Scene->B_Object[Index]->SndVolume = App->SBC_SoundMgr->SndVolume;
+
+		Mark_As_Altered(Index);
 
 		Update_ListView_Move_Entities();
 
@@ -1504,6 +1552,8 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 
 			}
 		}
+
+		Mark_As_Altered(Index);
 
 		Update_ListView_Move_Entities();
 		return 1;

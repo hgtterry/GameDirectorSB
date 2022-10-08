@@ -33,7 +33,8 @@ public:
 	void Start_GD_Properties(void);
 
 	void Clear_Listview(); 
-	
+	void Mark_As_Altered(int Index);
+
 	bool Update_ListView_Player();
 	bool Update_ListView_Player_Physics();
 	bool Update_ListView_Camera();
