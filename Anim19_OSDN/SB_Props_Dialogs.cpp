@@ -32,6 +32,8 @@ distribution.
 SB_Props_Dialogs::SB_Props_Dialogs()
 {
 	Dimensions_Dlg_hWnd = nullptr;
+	PhysicsReset_Dlg_hWnd = nullptr;
+
 }
 
 SB_Props_Dialogs::~SB_Props_Dialogs()
@@ -45,6 +47,7 @@ bool SB_Props_Dialogs::Start_Props_Dialogs()
 {
 
 	Dialog_Dimensions();
+	Start_Dialog_PhysicsReset();
 
 	return 1;
 }
@@ -171,6 +174,111 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_Dimensions_Proc(HWND hDlg, UINT messag
 				App->SBC_Dimensions->Show_Rotation = 1;
 				App->SBC_Dimensions->Show_Position = 0;
 				App->SBC_Dimensions->Show_Scale = 0;
+			}
+
+			RedrawWindow(App->SBC_Props_Dialog->Dimensions_Dlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			return 1;
+		}
+
+		if (LOWORD(wParam) == IDOK)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+	}
+
+	}
+	return FALSE;
+}
+
+// *************************************************************************
+// *	  			 Start_Dialog_PhysicsReset	Terry Bernie			   *
+// *************************************************************************
+bool SB_Props_Dialogs::Start_Dialog_PhysicsReset()
+{
+
+	PhysicsReset_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_PHYSRESET, App->SBC_Properties->Properties_Dlg_hWnd, (DLGPROC)Dialog_PhysicsReset_Proc);
+	//Hide_Dimensions_Dlg(0);
+
+	return 1;
+}
+
+// *************************************************************************
+// *				Dialog_PhysicsReset_Proc	Terry Bernie  			   *
+// *************************************************************************
+LRESULT CALLBACK SB_Props_Dialogs::Dialog_PhysicsReset_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		/*SendDlgItemMessage(hDlg, IDC_BT_POSITION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_ROTATION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_SCALE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));*/
+
+		return TRUE;
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->DialogBackGround;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		/*if (some_item->idFrom == IDC_BT_POSITION && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->SBC_Dimensions->Show_Position);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_SCALE && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->SBC_Dimensions->Show_Scale);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_ROTATION && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->SBC_Dimensions->Show_Rotation);
+			return CDRF_DODEFAULT;
+		}*/
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+		if (LOWORD(wParam) == IDC_BT_POSITION)
+		{
+
+			if (App->SBC_Dimensions->Show_Position == 1)
+			{
+				App->SBC_Dimensions->Show_Position = 0;
+				App->SBC_Markers->Hide_Axis_Marker();
+			}
+			else
+			{
+				App->SBC_Markers->Hide_Axis_Marker();
+				App->SBC_Dimensions->Show_Position = 1;
+				App->SBC_Dimensions->Show_Scale = 0;
+				App->SBC_Dimensions->Show_Rotation = 0;
 			}
 
 			RedrawWindow(App->SBC_Props_Dialog->Dimensions_Dlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
