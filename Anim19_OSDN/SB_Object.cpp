@@ -64,8 +64,6 @@ LRESULT CALLBACK SB_Object::Object_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 	{
 	case WM_INITDIALOG:
 	{
-		SendDlgItemMessage(hDlg, IDC_BT_SHOWMESH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_PHYSICSOBJECTDEBUG, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_GOTO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_DETAIL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
@@ -92,17 +90,10 @@ LRESULT CALLBACK SB_Object::Object_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_PHYSICSOBJECTDEBUG && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BT_DETAIL && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->SBC_Object->Show_Physics_Debug);
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_BT_SHOWMESH && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->SBC_Object->Show_Mesh_Debug);
+			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
 		}
 
@@ -110,48 +101,6 @@ LRESULT CALLBACK SB_Object::Object_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 	}
 
 	case WM_COMMAND:
-
-		if (LOWORD(wParam) == IDC_BT_SHOWMESH)
-		{
-			int Index = App->SBC_Properties->Current_Selected_Object;
-
-			if (App->SBC_Object->Show_Mesh_Debug == 1)
-			{
-				App->SBC_Scene->B_Object[Index]->Object_Node->setVisible(false);
-				App->SBC_Object->Show_Mesh_Debug = 0;
-			}
-			else
-			{
-				App->SBC_Scene->B_Object[Index]->Object_Node->setVisible(true);
-				App->SBC_Object->Show_Mesh_Debug = 1;
-			}
-
-			return 1;
-		}
-
-		if (LOWORD(wParam) == IDC_PHYSICSOBJECTDEBUG)
-		{
-			int Index = App->SBC_Properties->Current_Selected_Object;
-
-			int f = App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionFlags();
-
-			if (App->SBC_Object->Show_Physics_Debug == 1)
-			{
-				App->SBC_Object->Show_Physics_Debug = 0;
-				App->SBC_Scene->B_Object[Index]->Phys_Body->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
-
-				App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 0;
-				App->Cl19_Ogre->RenderFrame();
-				App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 1;
-			}
-			else
-			{
-				App->SBC_Object->Show_Physics_Debug = 1;
-				App->SBC_Scene->B_Object[Index]->Phys_Body->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
-			}
-
-			return 1;
-		}
 
 		if (LOWORD(wParam) == IDC_BT_DETAIL)
 		{

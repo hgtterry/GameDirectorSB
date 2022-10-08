@@ -66,7 +66,7 @@ void SB_Markers::Load_Blue_Rot_Axis()
 	BlueRotAxis_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	BlueRotAxis_Node->attachObject(BlueRotAxis_Ent);
 
-	BlueRotAxis_Node->setVisible(true);
+	BlueRotAxis_Node->setVisible(false);
 	BlueRotAxis_Node->setPosition(0, 0, 0);
 	BlueRotAxis_Node->setScale(1, 1, 1);
 }

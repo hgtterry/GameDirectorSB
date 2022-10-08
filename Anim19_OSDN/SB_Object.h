@@ -45,14 +45,16 @@ public:
 	char Chr_Shape[32];
 	char Chr_Usage[32];
 
+	bool Show_Physics_Debug;
+	bool Show_Mesh_Debug;
+
 	HWND Object_PropDlg_Hwnd;
 
 protected:
 
 	static LRESULT CALLBACK Object_PropsPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
-	bool Show_Physics_Debug;
-	bool Show_Mesh_Debug;
+	
 
 	bool Get_Type(int Index);
 	bool Get_Shape(int Index);
