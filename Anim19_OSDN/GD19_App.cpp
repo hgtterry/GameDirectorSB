@@ -82,6 +82,7 @@ GD19_App::GD19_App(void)
 	SBC_Collision =		nullptr;
 	SBC_SoundMgr =		nullptr;
 	SBC_Markers =		nullptr;
+	SBC_Props_Dialog =	nullptr;
 
 	// ---------------------------------------------------- 29/12/21
 	Com_CDialogs =		nullptr;
@@ -241,8 +242,8 @@ bool GD19_App::InitApp(void)
 	SBC_Collision =		new SB_Collision();
 	SBC_SoundMgr =		new SB_SoundMgr();
 	SBC_Markers =		new SB_Markers();
+	SBC_Props_Dialog = new SB_Props_Dialogs();
 	
-
 	//-----------------------------------------------------
 	SetBrushes_Fonts();
 

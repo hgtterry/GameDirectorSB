@@ -22,49 +22,19 @@ distribution.
 */
 
 #pragma once
-class SB_Dimensions
+class SB_Props_Dialogs
 {
-
 public:
-	SB_Dimensions();
-	~SB_Dimensions();
+	SB_Props_Dialogs();
+	~SB_Props_Dialogs();
 
-	void ImGui_Dimensions(void);
-	void UpDate_Physics_And_Visuals(int Index);
-	void Dimesions_Select(void);
+	bool Start_Props_Dialogs();
 
-	bool Show_Dimensions;
+	bool Dialog_Dimensions();
 
-	bool Show_Position;
-	bool Show_Scale;
-	bool Show_Rotation;
+	HWND Dimensions_Dlg_hWnd;
 
 protected:
-
 	static LRESULT CALLBACK Dialog_Dimensions_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-
-	void ImGui_Position(void);
-	void ImGui_Scale(void);
-	void ImGui_Rotation(void);
-
-	void Set_Physics_Position(int Index);
-
-	bool PosX_Selected;
-	bool PosY_Selected;
-	bool PosZ_Selected;
-
-	bool ScaleX_Selected;
-	bool ScaleY_Selected;
-	bool ScaleZ_Selected;
-
-	bool RotationX_Selected;
-	bool RotationY_Selected;
-	bool RotationZ_Selected;
-
-	bool Scale_Lock;
-
-	float Model_Pos_Delta;
-	float Model_Scale_Delta;
-	float Model_Rotation_Delta;
 };
 

@@ -72,6 +72,7 @@ distribution.
 #include "SB_Collision.h"
 #include "SB_SoundMgr.h"
 #include "SB_Markers.h"
+#include "SB_Props_Dialogs.h"
 
 #include "Com_Diaolgs.h"
 #include "SB_Import_Room.h"
@@ -135,6 +136,7 @@ public:
 	SB_Collision*			SBC_Collision;
 	SB_SoundMgr*			SBC_SoundMgr;
 	SB_Markers*				SBC_Markers;
+	SB_Props_Dialogs*		SBC_Props_Dialog;
 
 	Com_Diaolgs*			Com_CDialogs;		// Common Dialogs for App [291221]
 	// ----------------------------------- 

@@ -23,6 +23,7 @@ distribution.
 
 #include "stdafx.h"
 #include "GD19_App.h"
+#include "resource.h"
 #include "SB_Dimensions.h"
 
 SB_Dimensions::SB_Dimensions()
@@ -117,7 +118,7 @@ void SB_Dimensions::ImGui_Dimensions(void)
 			Show_Rotation = 0;
 
 			App->SBC_Markers->Hide_Axis_Marker();
-			RedrawWindow(App->SBC_Object->Object_PropDlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			RedrawWindow(App->SBC_Props_Dialog->Dimensions_Dlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 			//App->CL_Ogre->RenderListener->Show_Crosshair = 0;
 		}

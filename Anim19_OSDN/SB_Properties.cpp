@@ -1274,6 +1274,10 @@ bool SB_Properties::Edit_Player_Physics_Onclick(LPARAM lParam)
 
 		App->SBC_Scene->B_Player[0]->Phys_Body->setMassProps(App->Cl_Dialogs->mFloat, btVector3(0, 0, 0));
 
+		App->SBC_Scene->B_Player[0]->Altered = 1;
+		App->SBC_Scene->Scene_Modified = 1;
+		App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);
+
 		App->SBC_Properties->Update_ListView_Player_Physics();
 
 		return 1;
@@ -1296,9 +1300,13 @@ bool SB_Properties::Edit_Player_Physics_Onclick(LPARAM lParam)
 
 		App->SBC_Scene->B_Player[0]->Capsule_Radius = App->Cl_Dialogs->mFloat;
 
-		App->SBC_Properties->Update_ListView_Player_Physics();
-
 		App->SBC_Player->Adjust_Capsule();
+
+		App->SBC_Scene->B_Player[0]->Altered = 1;
+		App->SBC_Scene->Scene_Modified = 1;
+		App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);
+
+		App->SBC_Properties->Update_ListView_Player_Physics();
 		return 1;
 	}
 
@@ -1316,9 +1324,14 @@ bool SB_Properties::Edit_Player_Physics_Onclick(LPARAM lParam)
 
 		App->SBC_Scene->B_Player[0]->Capsule_Height = App->Cl_Dialogs->mFloat;
 
+		App->SBC_Player->Adjust_Capsule();
+
+		App->SBC_Scene->B_Player[0]->Altered = 1;
+		App->SBC_Scene->Scene_Modified = 1;
+		App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);
+
 		App->SBC_Properties->Update_ListView_Player_Physics();
 
-		App->SBC_Player->Adjust_Capsule();
 		return 1;
 	}
 	return 1;
@@ -1728,6 +1741,11 @@ bool SB_Properties::Edit_Camera_Onclick(LPARAM lParam)
 		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
 
 		App->SBC_Scene->B_Camera[Index]->CamPos.x = App->Cl_Dialogs->mFloat;
+
+		App->SBC_Scene->B_Camera[Index]->Altered = 1;
+		App->SBC_Scene->Scene_Modified = 1;
+		App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Camera[Index]->FileViewItem);
+
 		Update_ListView_Camera();
 
 		return 1;
@@ -1746,6 +1764,11 @@ bool SB_Properties::Edit_Camera_Onclick(LPARAM lParam)
 		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
 
 		App->SBC_Scene->B_Camera[Index]->CamPos.y = App->Cl_Dialogs->mFloat;
+
+		App->SBC_Scene->B_Camera[Index]->Altered = 1;
+		App->SBC_Scene->Scene_Modified = 1;
+		App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Camera[Index]->FileViewItem);
+
 		Update_ListView_Camera();
 
 		return 1;
@@ -1764,6 +1787,11 @@ bool SB_Properties::Edit_Camera_Onclick(LPARAM lParam)
 		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
 
 		App->SBC_Scene->B_Camera[Index]->CamPos.z = App->Cl_Dialogs->mFloat;
+
+		App->SBC_Scene->B_Camera[Index]->Altered = 1;
+		App->SBC_Scene->Scene_Modified = 1;
+		App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Camera[Index]->FileViewItem);
+
 		Update_ListView_Camera();
 
 		return 1;
@@ -1782,6 +1810,11 @@ bool SB_Properties::Edit_Camera_Onclick(LPARAM lParam)
 		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
 
 		App->SBC_Camera->LookAt_X = App->Cl_Dialogs->mFloat;
+
+		App->SBC_Scene->B_Camera[Index]->Altered = 1;
+		App->SBC_Scene->Scene_Modified = 1;
+		App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Camera[Index]->FileViewItem);
+
 		Update_ListView_Camera();
 
 		return 1;
@@ -1800,6 +1833,11 @@ bool SB_Properties::Edit_Camera_Onclick(LPARAM lParam)
 		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
 
 		App->SBC_Camera->LookAt_Y = App->Cl_Dialogs->mFloat;
+
+		App->SBC_Scene->B_Camera[Index]->Altered = 1;
+		App->SBC_Scene->Scene_Modified = 1;
+		App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Camera[Index]->FileViewItem);
+
 		Update_ListView_Camera();
 
 		return 1;
@@ -1818,6 +1856,11 @@ bool SB_Properties::Edit_Camera_Onclick(LPARAM lParam)
 		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
 
 		App->SBC_Camera->LookAt_Z = App->Cl_Dialogs->mFloat;
+
+		App->SBC_Scene->B_Camera[Index]->Altered = 1;
+		App->SBC_Scene->Scene_Modified = 1;
+		App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Camera[Index]->FileViewItem);
+
 		Update_ListView_Camera();
 
 		return 1;

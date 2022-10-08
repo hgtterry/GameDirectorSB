@@ -118,6 +118,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	App->SBC_Aera->Start_Area_PropsPanel();
 	App->SBC_Object->Start_Object_PropsPanel();
 
+	App->SBC_Props_Dialog->Start_Props_Dialogs();
+
 	//CheckMenuItem(App->mMenu, ID_WINDOW_SHOWFPSSHORT, MF_BYCOMMAND | MF_CHECKED);
 	//CheckMenuItem(App->mMenu, ID_GRID_DIVISIONS, MF_BYCOMMAND | MF_CHECKED);
 

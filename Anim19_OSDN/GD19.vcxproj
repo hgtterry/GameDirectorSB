@@ -208,6 +208,7 @@
     <ClInclude Include="SB_Player.h" />
     <ClInclude Include="SB_Project.h" />
     <ClInclude Include="SB_Properties.h" />
+    <ClInclude Include="SB_Props_Dialogs.h" />
     <ClInclude Include="SB_Resources.h" />
     <ClInclude Include="SB_Scene.h" />
     <ClInclude Include="SB_SoundMgr.h" />
@@ -274,6 +275,7 @@
     <ClCompile Include="SB_Player.cpp" />
     <ClCompile Include="SB_Project.cpp" />
     <ClCompile Include="SB_Properties.cpp" />
+    <ClCompile Include="SB_Props_Dialogs.cpp" />
     <ClCompile Include="SB_Resources.cpp" />
     <ClCompile Include="SB_Scene.cpp" />
     <ClCompile Include="SB_SoundMgr.cpp" />

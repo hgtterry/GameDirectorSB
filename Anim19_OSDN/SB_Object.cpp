@@ -66,9 +66,6 @@ LRESULT CALLBACK SB_Object::Object_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 	{
 		SendDlgItemMessage(hDlg, IDC_BT_SHOWMESH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_PHYSICSOBJECTDEBUG, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BT_POSITION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BT_ROTATION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BT_SCALE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_GOTO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_DETAIL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
@@ -99,27 +96,6 @@ LRESULT CALLBACK SB_Object::Object_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle(item, App->SBC_Object->Show_Physics_Debug);
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_BT_POSITION && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->SBC_Dimensions->Show_Position);
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_BT_SCALE && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->SBC_Dimensions->Show_Scale);
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_BT_ROTATION && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->SBC_Dimensions->Show_Rotation);
 			return CDRF_DODEFAULT;
 		}
 
@@ -206,69 +182,6 @@ LRESULT CALLBACK SB_Object::Object_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 			return 1;
 		}
 
-		if (LOWORD(wParam) == IDC_BT_POSITION)
-		{
-			
-			if (App->SBC_Dimensions->Show_Position == 1)
-			{
-				App->SBC_Dimensions->Show_Position = 0;
-				App->SBC_Markers->Hide_Axis_Marker();
-			}
-			else
-			{
-				App->SBC_Markers->Hide_Axis_Marker();
-				App->SBC_Dimensions->Show_Position = 1;
-				App->SBC_Dimensions->Show_Scale = 0;
-				App->SBC_Dimensions->Show_Rotation = 0;
-			}
-
-			RedrawWindow(App->SBC_Object->Object_PropDlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-
-			return 1;
-		}
-
-		if (LOWORD(wParam) == IDC_BT_SCALE)
-		{
-
-			if (App->SBC_Dimensions->Show_Scale == 1)
-			{
-				App->SBC_Dimensions->Show_Scale = 0;
-				App->SBC_Markers->Hide_Axis_Marker();
-			}
-			else
-			{
-				App->SBC_Markers->Hide_Axis_Marker();
-				App->SBC_Dimensions->Show_Scale = 1;
-				App->SBC_Dimensions->Show_Position = 0;
-				App->SBC_Dimensions->Show_Rotation = 0;
-			}
-
-			RedrawWindow(App->SBC_Object->Object_PropDlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-
-			return 1;
-		}
-		
-		if (LOWORD(wParam) == IDC_BT_ROTATION)
-		{
-
-			if (App->SBC_Dimensions->Show_Rotation == 1)
-			{
-				App->SBC_Dimensions->Show_Rotation = 0;
-				App->SBC_Markers->Hide_Axis_Marker();
-			}
-			else
-			{
-				App->SBC_Markers->Hide_Axis_Marker();
-				App->SBC_Dimensions->Show_Rotation = 1;
-				App->SBC_Dimensions->Show_Position = 0;
-				App->SBC_Dimensions->Show_Scale = 0;
-			}
-
-			RedrawWindow(App->SBC_Object->Object_PropDlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-
-			return 1;
-		}
-		
 		break;
 	}
 	return FALSE;
