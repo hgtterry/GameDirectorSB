@@ -1473,6 +1473,9 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 		App->SBC_SoundMgr->Dialog_SoundFile();
 
 		strcpy(App->SBC_Scene->B_Object[Index]->Sound_File, App->SBC_SoundMgr->m_Current_Sound_file);
+
+		App->SBC_Scene->B_Object[Index]->SndVolume = App->SBC_SoundMgr->SndVolume;
+
 		Update_ListView_Move_Entities();
 
 		return 1;

@@ -782,6 +782,7 @@ bool SB_Project::Save_Objects_Data()
 
 				fprintf(WriteFile, "%s%s\n", "Move_Sound=", App->SBC_Scene->B_Object[Count]->Sound_File);
 				fprintf(WriteFile, "%s%i\n", "Move_Play_Sound=", App->SBC_Scene->B_Object[Count]->Play_Sound);
+				fprintf(WriteFile, "%s%f\n", "Move_Volume=", App->SBC_Scene->B_Object[Count]->SndVolume);
 			}
 
 			fprintf(WriteFile, "%s\n", " ");
@@ -1304,6 +1305,12 @@ bool SB_Project::Load_Project_Objects()
 		
 			App->Cl_Ini->GetString(buff, "Move_Sound", App->SBC_Scene->B_Object[Count]->Sound_File, MAX_PATH);
 			App->SBC_Scene->B_Object[Count]->Play_Sound = App->Cl_Ini->GetInt(buff, "Move_Play_Sound", 0);
+
+
+			// --------------------------- Speed
+			App->Cl_Ini->GetString(buff, "Move_Volume", chr_Tag1, MAX_PATH);
+			sscanf(chr_Tag1, "%f", &x);
+			App->SBC_Scene->B_Object[Count]->SndVolume = x;
 
 			//fprintf(WriteFile, "%s%f\n", "Move_NewPos=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Newpos);
 			//fprintf(WriteFile, "%s%i\n", "Move_ObjectID=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Object_ID);

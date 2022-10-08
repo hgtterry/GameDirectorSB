@@ -30,7 +30,7 @@ distribution.
 SB_SoundMgr::SB_SoundMgr(void)
 {
 	SoundEngine = irrklang::createIrrKlangDevice();
-	SndFile = NULL;
+	SndFile = nullptr;
 	SndVolume=0.5;
 	IsObject = 0;
 	strcpy(mSoundFile,"");
@@ -55,6 +55,7 @@ SB_SoundMgr::~SB_SoundMgr(void)
 bool SB_SoundMgr::Dialog_SoundFile()
 {
 	IsCancelled = 0;
+	SndFile = nullptr;
 
 	DialogBox(App->hInst,(LPCTSTR)IDD_GD_SOUNDPLAYER,App->Fdlg,(DLGPROC)Dialog_SoundFile_Proc);
 	return 1;
@@ -172,7 +173,11 @@ LRESULT CALLBACK SB_SoundMgr::Dialog_SoundFile_Proc(HWND hDlg, UINT message, WPA
 
 			float sum2 = float(Percent) / 100;
 			App->SBC_SoundMgr->SndVolume = sum2;
-			App->SBC_SoundMgr->SndFile->setVolume(sum2);
+
+			if (App->SBC_SoundMgr->SndFile)
+			{
+				App->SBC_SoundMgr->SndFile->setVolume(sum2);
+			}
 
 			return 1;
 		}
