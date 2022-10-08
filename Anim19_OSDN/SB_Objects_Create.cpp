@@ -51,11 +51,19 @@ bool SB_Objects_Create::Add_Objects_From_File() // From File
 		if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Sound)
 		{
 			Add_Sound_Entity(Count);
+
+			HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Sounds_Folder, App->SBC_Scene->B_Object[Count]->Mesh_Name, Count, false);
+			App->SBC_Scene->B_Object[Count]->FileViewItem = Temp;
+
 			App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Sounds_Folder);
 		}
 		else if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Message)
 		{
 			Add_Message_Entity(Count);
+
+			HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Messages_Folder, App->SBC_Scene->B_Object[Count]->Mesh_Name, Count, false);
+			App->SBC_Scene->B_Object[Count]->FileViewItem = Temp;
+
 			App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Messages_Folder);
 		}
 		else if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Move)
@@ -808,6 +816,9 @@ bool SB_Objects_Create::Add_New_Message()
 
 	Add_Message_Entity(Index);
 
+	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Messages_Folder, App->SBC_Scene->B_Object[Index]->Mesh_Name, Index, true);
+	App->SBC_Scene->B_Object[Index]->FileViewItem = Temp;
+
 	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[Index]->FileViewItem);
 
 	App->SBC_Scene->B_Object[Index]->Object_ID++;
@@ -905,9 +916,6 @@ bool SB_Objects_Create::Add_Message_Entity(int Index)
 
 	Set_Physics(Index);
 
-	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Messages_Folder,Object->Mesh_Name, Index, true);
-	Object->FileViewItem = Temp;
-
 	return 1;
 }
 
@@ -942,6 +950,9 @@ bool SB_Objects_Create::Add_New_Sound()
 	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_Name, B_Name);
 
 	Add_Sound_Entity(Index);
+
+	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Sounds_Folder, App->SBC_Scene->B_Object[Index]->Mesh_Name, Index, true);
+	App->SBC_Scene->B_Object[Index]->FileViewItem = Temp;
 
 	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[Index]->FileViewItem);
 
@@ -1039,11 +1050,6 @@ bool SB_Objects_Create::Add_Sound_Entity(int Index)
 	App->Cl_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
 	Set_Physics(Index);
-
-	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Sounds_Folder,
-		App->SBC_Scene->B_Object[Index]->Mesh_Name, Index, true);
-
-	App->SBC_Scene->B_Object[Index]->FileViewItem = Temp;
 
 	return 1;
 }
