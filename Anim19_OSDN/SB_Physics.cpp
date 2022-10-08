@@ -181,3 +181,51 @@ void SB_Physics::Enable_Physics(bool Enable)
 
 	RedrawWindow(App->SBC_Physics->PhysicsPannel_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
+
+// *************************************************************************
+// *	  				Reset_Triggers Terry Bernie						   *
+// *************************************************************************
+void SB_Physics::Reset_Triggers(void)
+{
+	Ogre::Vector3 M_Pos;
+	Ogre::Vector3 P_Pos;
+
+	int Count = 0;
+	int Total = App->SBC_Scene->Object_Count;
+
+	while (Count < Total)
+	{
+		if (App->SBC_Scene->B_Object[Count]->Deleted == 0)
+		{
+			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Move)
+			{
+				int ObjectToMove = App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Object_Index;
+
+				M_Pos = App->SBC_Scene->B_Object[ObjectToMove]->Mesh_Pos;
+				P_Pos = App->SBC_Scene->B_Object[ObjectToMove]->Physics_Pos;
+
+				App->SBC_Scene->B_Object[Count]->S_MoveType[0]->MeshPos = Ogre::Vector3(M_Pos);
+				App->SBC_Scene->B_Object[Count]->S_MoveType[0]->PhysicsPos = Ogre::Vector3(P_Pos);
+
+				App->SBC_Scene->B_Object[ObjectToMove]->Object_Node->setPosition(M_Pos);
+				App->SBC_Scene->B_Object[ObjectToMove]->Phys_Body->getWorldTransform().setOrigin(btVector3(P_Pos.x, P_Pos.y, P_Pos.z));
+
+				App->SBC_Scene->B_Object[Count]->Triggered = 0;
+			}
+
+			/*if (Cl_Object[Count]->Usage == Enums::Usage_Colectable)
+			{
+				Cl_Object[Count]->OgreEntity->setVisible(TRUE);
+
+				Cl_Object[Count]->OgreNode->setPosition(Cl_Object[Count]->Mesh_Pos);
+
+				P_Pos = Cl_Object[Count]->Physics_Pos;
+				Cl_Object[Count]->bt_body->getWorldTransform().setOrigin(btVector3(P_Pos.x, P_Pos.y, P_Pos.z));
+
+				Cl_Object[Count]->Triggered = 0;
+			}*/
+		}
+
+		Count++;
+	}
+}

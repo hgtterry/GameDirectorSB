@@ -253,7 +253,7 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_PhysicsReset_Proc(HWND hDlg, UINT mess
 		if (LOWORD(wParam) == IDC_BT_PHYSRESET)
 		{
 
-			Debug
+			App->SBC_Physics->Reset_Triggers();
 
 			return 1;
 		}
