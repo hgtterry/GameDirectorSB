@@ -586,22 +586,6 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 	if (!strcmp(FileView_Folder, "Objects")) // Folder
 	{
-		//if (App->SBC_Scene->Area_Added == 0)
-		//{
-		//	App->Say("An Area or Building must be Added Firest");
-
-		//	return;
-		//}
-
-		//App->Cl_Dialogs->YesNo("Add Object", "Do you want to add a new Object now");
-		//bool Doit = App->Cl_Dialogs->Canceled;
-		//if (Doit == 0)
-		//{
-		//	App->SBC_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Objects; // 0; // Objects; // Objects
-		//	App->SBC_MeshViewer->StartMeshViewer();
-		//	App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
-		//}
-
 		return;
 	}
 	if (!strcmp(FileView_File, "Objects"))
@@ -609,12 +593,11 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		HideRightPanes();
 		ShowWindow(App->SBC_Properties->Properties_Dlg_hWnd, 1);
 		App->SBC_Object->Hide_Object_Dlg(1);
-
-//		App->SBC_Properties->Enable_Delete_Button(1);
+		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1);
 
 		App->SBC_Properties->Edit_Category = Enums::FV_Edit_Object;
 		App->SBC_Properties->Current_Selected_Object = Index;
-//		App->SBC_Properties->Update_Transform_Dlg();
+
 		App->SBC_Object->Update_Types();
 
 		if (App->SBC_Properties->Edit_Physics == 0)
@@ -626,8 +609,6 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		{
 			//App->SBC_Properties->Update_ListView_Physics();
 		}
-
-		//App->Cl_Visuals->MarkerBB_Addjust(Index);
 
 		return;
 	}
@@ -689,6 +670,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		HideRightPanes();
 		ShowWindow(App->GD_Properties_Hwnd, 1);
 		App->SBC_Object->Hide_Object_Dlg(1);
+		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1);
 
 		App->SBC_Properties->Is_Player = 0;
 		App->SBC_Properties->Edit_Category = Enums::Edit_Sounds;
@@ -722,6 +704,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		HideRightPanes();
 		ShowWindow(App->SBC_Properties->Properties_Dlg_hWnd, 1);
 		App->SBC_Object->Hide_Object_Dlg(1);
+		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1);
 
 		App->SBC_Properties->Is_Player = 0; // Mark as Object selected
 		App->SBC_Properties->Edit_Category = Enums::Edit_Message;
@@ -756,6 +739,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		HideRightPanes();
 		ShowWindow(App->GD_Properties_Hwnd, 1);
 		App->SBC_Object->Hide_Object_Dlg(1);
+		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1);
 
 
 		App->SBC_Properties->Is_Player = 0; // Mark as Object selected
@@ -1136,6 +1120,8 @@ void SB_FileView::HideRightPanes(void)
 	App->SBC_Player->Hide_Player_Dlg(0);
 	App->SBC_Aera->Hide_Area_Dlg(0);
 	App->SBC_Object->Hide_Object_Dlg(0);
+
+	App->SBC_Props_Dialog->Hide_Dimensions_Dlg(0);
 }
 
 

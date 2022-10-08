@@ -56,6 +56,7 @@ bool SB_Props_Dialogs::Dialog_Dimensions()
 {
 
 	Dimensions_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_DIMENSIONS, App->SBC_Properties->Properties_Dlg_hWnd, (DLGPROC)Dialog_Dimensions_Proc);
+	Hide_Dimensions_Dlg(0);
 
 	return 1;
 }
@@ -192,4 +193,12 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_Dimensions_Proc(HWND hDlg, UINT messag
 
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *				Hide_Dimensions_Dlg Terry Flanigan					   *
+// *************************************************************************
+void SB_Props_Dialogs::Hide_Dimensions_Dlg(bool Show)
+{
+	ShowWindow(Dimensions_Dlg_hWnd, Show);
 }

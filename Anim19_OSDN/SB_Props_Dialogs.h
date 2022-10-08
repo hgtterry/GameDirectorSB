@@ -30,6 +30,8 @@ public:
 
 	bool Start_Props_Dialogs();
 
+	void Hide_Dimensions_Dlg(bool Show);
+
 	bool Dialog_Dimensions();
 
 	HWND Dimensions_Dlg_hWnd;
