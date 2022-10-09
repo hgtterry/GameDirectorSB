@@ -339,6 +339,15 @@ void SB_Properties::ListView_OnClickOptions(LPARAM lParam)
 		return;
 	}
 
+	if (Edit_Category == Enums::Edit_Sounds)
+	{
+		if (Edit_Physics == 0)
+		{
+			Edit_Sounds_OnClick(lParam);
+		}
+		return;
+	}
+	
 	return;
 }
 
@@ -699,7 +708,7 @@ bool SB_Properties::Update_ListView_Sounds()
 
 	int StockIndex = App->Cl_Scene_Data->Cl_Object[index]->Entity[0].Stock_mIndex;*/
 
-	const int NUM_ITEMS = 4;
+	const int NUM_ITEMS = 3;
 	const int NUM_COLS = 2;
 	std::string grid[NUM_COLS][NUM_ITEMS]; // string table
 	LV_ITEM pitem;
@@ -709,7 +718,7 @@ bool SB_Properties::Update_ListView_Sounds()
 	grid[0][0] = "Name",	grid[1][0] = App->SBC_Scene->B_Object[index]->Mesh_Name;
 	grid[0][1] = " ",		grid[1][1] = " ";
 	grid[0][2] = "Sound",	grid[1][2] = App->SBC_Scene->B_Object[index]->Sound_File;
-	grid[0][3] = "Play",	grid[1][3] = " ";// chr_Play;
+	//grid[0][3] = "Play",	grid[1][3] = " ";// chr_Play;
 
 
 	ListView_DeleteAllItems(Properties_hLV);
@@ -1865,6 +1874,90 @@ bool SB_Properties::Edit_Camera_Onclick(LPARAM lParam)
 
 		return 1;
 	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *				Edit_Sounds_OnClick  Terry Bernie					   *
+// *************************************************************************
+bool SB_Properties::Edit_Sounds_OnClick(LPARAM lParam)
+{
+	int Index = App->SBC_Properties->Current_Selected_Object; // Get Selected Object Index 
+	int result = 1;
+	int test;
+
+	LPNMLISTVIEW poo = (LPNMLISTVIEW)lParam;
+	test = poo->iItem;
+	ListView_GetItemText(Properties_hLV, test, 0, btext, 20);
+
+	// Name
+	result = strcmp(btext, "Name");
+	if (result == 0)
+	{
+		strcpy(App->Cl_Dialogs->btext, "Change Object Name");
+		strcpy(App->Cl_Dialogs->Chr_Text, App->SBC_Scene->B_Object[Index]->Mesh_Name);
+
+		App->Cl_Dialogs->Dialog_Text(Enums::Check_Names_Objects);
+
+		if (App->Cl_Dialogs->Canceled == 1)
+		{
+			return TRUE;
+		}
+
+		strcpy(App->SBC_Scene->B_Object[Index]->Mesh_Name, App->Cl_Dialogs->Chr_Text);
+
+		App->SBC_Properties->Mark_As_Altered(Index);
+
+		App->SBC_FileView->Change_Item_Name(App->SBC_Scene->B_Object[Index]->FileViewItem, App->Cl_Dialogs->Chr_Text);
+
+		Update_ListView_Sounds();
+	}
+
+
+	//// Stock Sound
+	//result = strcmp(btext, "Stock_Snd");
+	//if (result == 0)
+	//{
+
+	//	//App->Cl_Stock->List_Stock_Dialog(Enums::ListBox_Stock_Sounds); // Needs Deleteing or somthing
+
+	//	App->Cl_Stock->ItemToSelect = App->Cl_Scene_Data->Cl_Object[Index]->Sound_ID_v2;
+	//	App->Cl_Stock->Start_Stock_Dialog();
+	//	App->Cl_Scene_Data->Cl_Object[Index]->Sound_ID_v2 = App->Cl_Stock->ListIndex;
+
+	//	Update_ListView_Sounds();
+	//	return 1;
+	//}
+
+	// Sound
+	/*result = strcmp(btext, "Play");
+	if (result == 0)
+	{
+
+		strcpy(App->Cl_Dialogs->btext, "Play Sound In The Game");
+
+		App->Cl_Dialogs->TrueFlase = App->Cl_Scene_Data->Cl_Object[Index]->Play_v2;
+
+		App->Cl_Dialogs->Dialog_TrueFlase(App->MainHwnd);
+
+		if (App->Cl_Dialogs->Canceled == 0)
+		{
+			if (App->Cl_Dialogs->TrueFlase == 1)
+			{
+				App->Cl_Scene_Data->Cl_Object[Index]->Play_v2 = 1;
+			}
+			else
+			{
+				App->Cl_Scene_Data->Cl_Object[Index]->Play_v2 = 0;
+
+			}
+		}
+
+		Update_ListView_Sounds();
+		return 1;
+	}*/
+
 
 	return 1;
 }

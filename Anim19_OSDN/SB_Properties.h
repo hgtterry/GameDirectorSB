@@ -73,6 +73,7 @@ protected:
 	bool Edit_Messages_OnClick(LPARAM lParam);
 	bool Edit_Camera_Onclick(LPARAM lParam);
 	bool Edit_Move_Entity_OnClick(LPARAM lParam);
+	bool Edit_Sounds_OnClick(LPARAM lParam);
 
 	char btext[20]; // ListView_GetItemText Text Holder for Compare [041221]
 	
