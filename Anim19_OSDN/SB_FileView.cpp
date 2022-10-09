@@ -234,9 +234,7 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 		if (LOWORD(wParam) == IDM_FILE_DELETE)
 		{
-			/*int Num = App->Cl_Bullet->dynamicsWorld->getNumCollisionObjects();
-			App->Say_Int(Num);*/
-
+			
 			int MeshIndex = App->SBC_Properties->Current_Selected_Object;
 			btRigidBody* body = App->SBC_Scene->B_Object[MeshIndex]->Phys_Body;
 		
@@ -244,8 +242,6 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 			{
 				int UI = body->getUserIndex();
 				int Index = body->getUserIndex2();
-
-				//App->Say(App->SBC_Scene->B_Object[Index]->Mesh_Name);
 				App->Cl_Bullet->dynamicsWorld->removeCollisionObject(body);
 			}
 
@@ -253,9 +249,8 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 			App->SBC_Scene->B_Object[MeshIndex]->Object_Node->setVisible(false);
 
 			App->SBC_FileView->DeleteItem();
-
-			/*Num = App->Cl_Bullet->dynamicsWorld->getNumCollisionObjects();
-			App->Say_Int(Num);*/
+			App->SBC_Scene->Scene_Modified = 1;
+			
 			return TRUE;
 		}
 

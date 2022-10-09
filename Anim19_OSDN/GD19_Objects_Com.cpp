@@ -12,21 +12,6 @@ GD19_Objects_Com::~GD19_Objects_Com(void)
 }
 
 // *************************************************************************
-// *	  				GetMesh_Center Terry Bernie						   *
-// *************************************************************************
-Ogre::Vector3 GD19_Objects_Com::GetMesh_Center(int Index, SceneNode* mNode)
-{
-	AxisAlignedBox aab = mNode->getAttachedObject(0)->getBoundingBox();//getBoundingBox(); 
-	Ogre::Vector3 min = aab.getMinimum() * mNode->getScale();
-	Ogre::Vector3 max = aab.getMaximum() * mNode->getScale();
-	Ogre::Vector3 center = aab.getCenter() * mNode->getScale();
-	Ogre::Vector3 size(fabs(max.x - min.x), fabs(max.y - min.y), fabs(max.z - min.z));
-	float radius = (size.x > size.z) ? size.z / 2.0f : size.x / 2.0f;
-
-	return center;
-}
-
-// *************************************************************************
 // *	  				GetMesh_BB_Data Terry Bernie					   *
 // *************************************************************************
 bool GD19_Objects_Com::GetMesh_BB_Data(int SL, Ogre::SceneNode* Node)

@@ -6,7 +6,6 @@ public:
 	~GD19_Objects_Com(void);
 
 	Ogre::Vector3 Centre_of_Trimesh(int Object_Index);
-	Ogre::Vector3 GetMesh_Center(int Index, SceneNode* mNode);
 	bool GetMesh_BB_Data(int SL, Ogre::SceneNode* Node);
 	Ogre::Vector3 GetMesh_BB_Size(SceneNode* mNode);
 	float GetMesh_BB_Radius(SceneNode* mNode);

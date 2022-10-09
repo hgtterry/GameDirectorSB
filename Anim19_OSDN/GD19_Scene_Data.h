@@ -219,7 +219,6 @@ public:
 	bool Init_Scene(void);
 	bool Init_Class(void);
 
-	void SetObjectDefaults(int Index);
 	void SetScene_Defaults(void);
 	void SetOptions_Defaults(void);
 	void SetFlags_Defaults(void);

@@ -75,16 +75,6 @@ void GD19_Scene_Data::SetFlags_Defaults(void)
 {
 	S_Flags[0]->GameMode = 0;
 }
-// *************************************************************************
-//					SetObjectDefaults Terry Bernie				  		   *
-// *************************************************************************
-void GD19_Scene_Data::SetObjectDefaults(int Index)
-{
-
-	
-
-	return;
-}
 
 // *************************************************************************
 //						Set_Move_Defaults Terry Bernie				  	   *

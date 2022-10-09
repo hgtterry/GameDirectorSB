@@ -592,9 +592,6 @@ void SB_Dimensions::ImGui_Rotation(void)
 
 	Ogre::Vector3 RotD = App->SBC_Scene->B_Object[Index]->Mesh_Rot;
 
-	//Ogre::Real poo = (Ogre::Real(App->SBC_Scene->B_Object[Index]->Object_Node->getOrientation().getPitch()));
-	////RotD.x = poo;
-
 	ImGuiStyle* style = &ImGui::GetStyle();
 
 	ImGui::Text("Rotation");
@@ -639,7 +636,6 @@ void SB_Dimensions::ImGui_Rotation(void)
 			{
 				App->SBC_Scene->B_Object[Index]->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(Model_Rotation_Delta), Ogre::Vector3(1, 0, 0)), Ogre::Node::TransformSpace::TS_LOCAL);
 
-				//App->SBC_Scene->B_Object[Index]->Object_Node->pitch(Radian(Ogre::Degree(Model_Rotation_Delta)),Ogre::Node::TS_LOCAL);
 				App->SBC_Scene->B_Object[Index]->Mesh_Rot.x += Model_Rotation_Delta;
 				App->SBC_Scene->B_Object[Index]->Mesh_Quat = App->SBC_Scene->B_Object[Index]->Object_Node->getOrientation();
 
@@ -655,17 +651,11 @@ void SB_Dimensions::ImGui_Rotation(void)
 
 				UpDate_Physics_And_Visuals(Index);
 
-				/*parent = sceneMgr->getRootSceneNode()->createChildSceneNode();
-				child = parent->createChildSceneNode();
-				child->attachObject(entity);
-				child->translate(10, 0, 0);*/
-		
-				//App->SBC_Scene->B_Object[Index]->Object_Node->pitch(Ogre::Quaternion(Ogre::Degree(10), Ogre::Vector3(1, 0, 0)), Ogre::Node::TransformSpace::TS_WORLD);
 			}
 
 			if (RotationY_Selected == 1)
 			{
-				App->SBC_Scene->B_Object[Index]->Object_Node->yaw(Radian(Ogre::Degree(Model_Rotation_Delta)),Ogre::Node::TS_WORLD);
+				App->SBC_Scene->B_Object[Index]->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(Model_Rotation_Delta), Ogre::Vector3(0, 1, 0)), Ogre::Node::TransformSpace::TS_LOCAL);
 				App->SBC_Scene->B_Object[Index]->Mesh_Rot.y += Model_Rotation_Delta;
 				App->SBC_Scene->B_Object[Index]->Mesh_Quat = App->SBC_Scene->B_Object[Index]->Object_Node->getOrientation();
 
@@ -685,11 +675,11 @@ void SB_Dimensions::ImGui_Rotation(void)
 
 			if (RotationZ_Selected == 1)
 			{
-				App->SBC_Scene->B_Object[Index]->Object_Node->roll(Radian(Ogre::Degree(Model_Rotation_Delta)), Ogre::Node::TS_WORLD);
-				App->SBC_Scene->B_Object[Index]->Mesh_Rot.y += Model_Rotation_Delta;
+				App->SBC_Scene->B_Object[Index]->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(Model_Rotation_Delta), Ogre::Vector3(0, 0, 1)), Ogre::Node::TransformSpace::TS_LOCAL);
+				App->SBC_Scene->B_Object[Index]->Mesh_Rot.z += Model_Rotation_Delta;
 				App->SBC_Scene->B_Object[Index]->Mesh_Quat = App->SBC_Scene->B_Object[Index]->Object_Node->getOrientation();
 
-				App->SBC_Scene->B_Object[Index]->Physics_Rot.y += Model_Rotation_Delta;
+				App->SBC_Scene->B_Object[Index]->Physics_Rot.z += Model_Rotation_Delta;
 				App->SBC_Scene->B_Object[Index]->Physics_Quat = App->SBC_Scene->B_Object[Index]->Object_Node->getOrientation();
 
 				float w = App->SBC_Scene->B_Object[Index]->Physics_Quat.w;
@@ -714,7 +704,7 @@ void SB_Dimensions::ImGui_Rotation(void)
 			
 				if (RotationX_Selected == 1)
 				{
-					App->SBC_Scene->B_Object[Index]->Object_Node->pitch(Radian(Ogre::Degree(-Model_Rotation_Delta)));
+					App->SBC_Scene->B_Object[Index]->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(-Model_Rotation_Delta), Ogre::Vector3(1, 0, 0)), Ogre::Node::TransformSpace::TS_LOCAL);
 					App->SBC_Scene->B_Object[Index]->Mesh_Rot.x -= Model_Rotation_Delta;
 					App->SBC_Scene->B_Object[Index]->Mesh_Quat = App->SBC_Scene->B_Object[Index]->Object_Node->getOrientation();
 
@@ -734,7 +724,7 @@ void SB_Dimensions::ImGui_Rotation(void)
 
 				if (RotationY_Selected == 1)
 				{
-					App->SBC_Scene->B_Object[Index]->Object_Node->yaw(Radian(Ogre::Degree(-Model_Rotation_Delta)));
+					App->SBC_Scene->B_Object[Index]->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(-Model_Rotation_Delta), Ogre::Vector3(0, 1, 0)), Ogre::Node::TransformSpace::TS_LOCAL);
 					App->SBC_Scene->B_Object[Index]->Mesh_Rot.y -= Model_Rotation_Delta;
 					App->SBC_Scene->B_Object[Index]->Mesh_Quat = App->SBC_Scene->B_Object[Index]->Object_Node->getOrientation();
 
@@ -754,11 +744,11 @@ void SB_Dimensions::ImGui_Rotation(void)
 
 				if (RotationZ_Selected == 1)
 				{
-					App->SBC_Scene->B_Object[Index]->Object_Node->roll(Radian(Ogre::Degree(-Model_Rotation_Delta)));
-					App->SBC_Scene->B_Object[Index]->Mesh_Rot.y -= Model_Rotation_Delta;
+					App->SBC_Scene->B_Object[Index]->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(-Model_Rotation_Delta), Ogre::Vector3(0, 0, 1)), Ogre::Node::TransformSpace::TS_LOCAL);
+					App->SBC_Scene->B_Object[Index]->Mesh_Rot.z -= Model_Rotation_Delta;
 					App->SBC_Scene->B_Object[Index]->Mesh_Quat = App->SBC_Scene->B_Object[Index]->Object_Node->getOrientation();
 
-					App->SBC_Scene->B_Object[Index]->Physics_Rot.y -= Model_Rotation_Delta;
+					App->SBC_Scene->B_Object[Index]->Physics_Rot.z -= Model_Rotation_Delta;
 					App->SBC_Scene->B_Object[Index]->Physics_Quat = App->SBC_Scene->B_Object[Index]->Object_Node->getOrientation();
 
 					float w = App->SBC_Scene->B_Object[Index]->Physics_Quat.w;
@@ -778,7 +768,7 @@ void SB_Dimensions::ImGui_Rotation(void)
 	ImGui::PopButtonRepeat();
 	ImGui::SameLine();
 	ImGui::SetNextItemWidth(100);
-	const char* XitemsRotXX[] = { "0.001","0.01","0.1","1", "2", "5", "10", "20" };
+	const char* XitemsRotXX[] = { "0.001","0.01","0.1","1", "2", "5", "10", "45" };
 	static int XitemRotXX = 3;
 	bool ChangedRotX = ImGui::Combo("Step Rot", &XitemRotXX, XitemsRotXX, IM_ARRAYSIZE(XitemsRotXX));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
 	if (ChangedRotX == 1)
