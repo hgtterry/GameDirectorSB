@@ -761,7 +761,7 @@ bool SB_Project::Save_Objects_Data()
 			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Sound)
 			{
 				fprintf(WriteFile, "%s%s\n", "Sound_File=", App->SBC_Scene->B_Object[Count]->Sound_File);
-				//fprintf(WriteFile, "%s%s\n", "Sound_Path=", App->SBC_Scene->B_Object[Count]->Sound_Path);
+				fprintf(WriteFile, "%s%f\n", "Sound_Volume=", App->SBC_Scene->B_Object[Count]->SndVolume);
 			}
 
 			//---------------------------------------------------------------------------------- Move Entity
@@ -1277,7 +1277,10 @@ bool SB_Project::Load_Project_Objects()
 		if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Sound)
 		{
 			App->Cl_Ini->GetString(buff, "Sound_File", Object->Sound_File, MAX_PATH);
-			App->Cl_Ini->GetString(buff, "Sound_Path", Object->Sound_Path, MAX_PATH);
+			
+			App->Cl_Ini->GetString(buff, "Sound_Volume", chr_Tag1, MAX_PATH);
+			sscanf(chr_Tag1, "%f", &x);
+			App->SBC_Scene->B_Object[Count]->SndVolume = x;
 		}
 
 		//---------------------------------------------------------------------------------- Usage_Move

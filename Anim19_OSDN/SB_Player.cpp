@@ -654,11 +654,11 @@ void SB_Player::Check_Collisions_New(void)
 
 			if (Col_Usage_Index == 123)
 			{
-				App->CL_Vm_ImGui->Show_Collision_Debug = 0;
+				//App->CL_Vm_ImGui->Show_Collision_Debug = 0;
 			}
 			else
 			{
-				App->CL_Vm_ImGui->Show_Collision_Debug = 1;
+				//App->CL_Vm_ImGui->Show_Collision_Debug = 1;
 
 				Col_Usage_Index = obB->getUserIndex();
 

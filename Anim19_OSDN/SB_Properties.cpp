@@ -691,24 +691,12 @@ bool SB_Properties::Update_ListView_Sounds()
 	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
 
 
-	// new sound
-	/*char chr_Play[100];
-	if (App->Cl_Scene_Data->Cl_Object[index]->Play_v2 == 1)
-	{
-		strcpy(chr_Play, "True");
-	}
-	else
-	{
-		strcpy(chr_Play, "False");
-	}*/
+	char chr_Volume[100];
+	float sum2 = App->SBC_Scene->B_Object[index]->SndVolume;
+	int Percent = int(sum2 * 100);
+	_itoa(Percent, chr_Volume, 10);
 
-	/*char chr_Stock_Sound[100];
-	int sndIndex = App->Cl_Scene_Data->Cl_Object[index]->Sound_ID_v2;
-	strcpy(chr_Stock_Sound, App->Cl_Scene_Data->St_Sounds[sndIndex]->Name);
-
-	int StockIndex = App->Cl_Scene_Data->Cl_Object[index]->Entity[0].Stock_mIndex;*/
-
-	const int NUM_ITEMS = 3;
+	const int NUM_ITEMS = 4;
 	const int NUM_COLS = 2;
 	std::string grid[NUM_COLS][NUM_ITEMS]; // string table
 	LV_ITEM pitem;
@@ -718,7 +706,7 @@ bool SB_Properties::Update_ListView_Sounds()
 	grid[0][0] = "Name",	grid[1][0] = App->SBC_Scene->B_Object[index]->Mesh_Name;
 	grid[0][1] = " ",		grid[1][1] = " ";
 	grid[0][2] = "Sound",	grid[1][2] = App->SBC_Scene->B_Object[index]->Sound_File;
-	//grid[0][3] = "Play",	grid[1][3] = " ";// chr_Play;
+	grid[0][3] = "Volume",  grid[1][3] = chr_Volume;
 
 
 	ListView_DeleteAllItems(Properties_hLV);
@@ -807,16 +795,16 @@ bool SB_Properties::Update_ListView_Move_Entities()
 	memset(&pitem, 0, sizeof(LV_ITEM));
 	pitem.mask = LVIF_TEXT;
 
-	grid[0][0] = "Name", grid[1][0] = App->SBC_Scene->B_Object[index]->Mesh_Name;
-	grid[0][1] = " ", grid[1][1] = " ";
-	grid[0][2] = "Object", grid[1][2] = App->SBC_Scene->B_Object[index]->S_MoveType[0]->Object_Name;
-	grid[0][3] = "Axis", grid[1][3] = chr_Axis;
-	grid[0][4] = "Distance", grid[1][4] = chr_Distance;
-	grid[0][5] = "Speed", grid[1][5] = chr_Speed;
-	grid[0][6] = " ", grid[1][6] = " ";
-	grid[0][7] = "Sound", grid[1][7] = App->SBC_Scene->B_Object[index]->Sound_File;
-	grid[0][8] = "Play", grid[1][8] = chr_Play;
-	grid[0][9] = "Volume", grid[1][9] = chr_Volume;
+	grid[0][0] = "Name",		grid[1][0] = App->SBC_Scene->B_Object[index]->Mesh_Name;
+	grid[0][1] = " ",			grid[1][1] = " ";
+	grid[0][2] = "Object",		grid[1][2] = App->SBC_Scene->B_Object[index]->S_MoveType[0]->Object_Name;
+	grid[0][3] = "Axis",		grid[1][3] = chr_Axis;
+	grid[0][4] = "Distance",	grid[1][4] = chr_Distance;
+	grid[0][5] = "Speed",		grid[1][5] = chr_Speed;
+	grid[0][6] = " ",			grid[1][6] = " ";
+	grid[0][7] = "Sound",		grid[1][7] = App->SBC_Scene->B_Object[index]->Sound_File;
+	grid[0][8] = "Volume",		grid[1][8] = chr_Volume;
+	grid[0][9] = "Play",		grid[1][9] = chr_Play;
 
 
 	ListView_DeleteAllItems(Properties_hLV);
@@ -1920,6 +1908,25 @@ bool SB_Properties::Edit_Sounds_OnClick(LPARAM lParam)
 
 	// Sound
 	result = strcmp(btext, "Sound");
+	if (result == 0)
+	{
+		App->SBC_SoundMgr->Accessed = 1;
+		strcpy(App->SBC_SoundMgr->Access_File, App->SBC_Scene->B_Object[Index]->Sound_File);
+
+		App->SBC_SoundMgr->Dialog_SoundFile();
+
+		strcpy(App->SBC_Scene->B_Object[Index]->Sound_File, App->SBC_SoundMgr->Access_File);
+
+		App->SBC_Scene->B_Object[Index]->SndVolume = App->SBC_SoundMgr->SndVolume;
+
+		Mark_As_Altered(Index);
+
+		Update_ListView_Sounds();
+		return 1;
+	}
+
+	// Sound
+	result = strcmp(btext, "Volume");
 	if (result == 0)
 	{
 		App->SBC_SoundMgr->Accessed = 1;

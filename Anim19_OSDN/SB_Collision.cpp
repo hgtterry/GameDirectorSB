@@ -71,7 +71,7 @@ bool SB_Collision::Play_Sound(int Index)
 		strcat(buff, App->SBC_Scene->B_Object[Index]->Sound_File);
 
 		App->SBC_SoundMgr->SndFile = App->SBC_SoundMgr->SoundEngine->play2D(buff, false, true, true);
-		App->SBC_SoundMgr->SndFile->setVolume(0.5);
+		App->SBC_SoundMgr->SndFile->setVolume(App->SBC_Scene->B_Object[Index]->SndVolume);
 		App->SBC_SoundMgr->SndFile->setIsPaused(false);
 
 		App->SBC_Scene->B_Object[Index]->Triggered = 1;
