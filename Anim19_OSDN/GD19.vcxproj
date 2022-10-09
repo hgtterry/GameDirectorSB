@@ -171,7 +171,6 @@
     <ClInclude Include="GD19_Grid.h" />
     <ClInclude Include="GD19_Ini.h" />
     <ClInclude Include="GD19_LookUps.h" />
-    <ClInclude Include="GD19_Objects.h" />
     <ClInclude Include="GD19_Objects_Com.h" />
     <ClInclude Include="GD19_OSDN.h" />
     <ClInclude Include="GD19_App.h" />
@@ -239,7 +238,6 @@
     <ClCompile Include="GD19_Grid.cpp" />
     <ClCompile Include="GD19_Ini.cpp" />
     <ClCompile Include="GD19_LookUps.cpp" />
-    <ClCompile Include="GD19_Objects.cpp" />
     <ClCompile Include="GD19_Objects_Com.cpp" />
     <ClCompile Include="GD19_OSDN.cpp" />
     <ClCompile Include="GD19_App.cpp" />
