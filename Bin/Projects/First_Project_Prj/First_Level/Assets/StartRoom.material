@@ -1,0 +1,26 @@
+material Floor
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture SR_Floor.dds
+             }
+         }
+    }
+}
+material Wall
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture SR_Wall.dds
+             }
+         }
+    }
+}
