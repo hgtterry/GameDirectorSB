@@ -186,7 +186,6 @@
     <ClInclude Include="GD19_Visuals.h" />
     <ClInclude Include="GD_Bt_Render.h" />
     <ClInclude Include="GD_Keyboard.h" />
-    <ClInclude Include="GD_spdlog.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SB_3DT.h" />
     <ClInclude Include="SB_Aera.h" />
@@ -253,7 +252,6 @@
     <ClCompile Include="GD19_Visuals.cpp" />
     <ClCompile Include="GD_Bt_Render.cpp" />
     <ClCompile Include="GD_Keyboard.cpp" />
-    <ClCompile Include="GD_spdlog.cpp" />
     <ClCompile Include="SB_3DT.cpp" />
     <ClCompile Include="SB_Aera.cpp" />
     <ClCompile Include="SB_Camera.cpp" />

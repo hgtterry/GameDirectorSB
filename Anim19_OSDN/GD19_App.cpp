@@ -32,9 +32,7 @@ GD19_App::GD19_App(void)
 	Cl19_Ogre =			nullptr;
 	Cl_Utilities =		nullptr;
 	Cl_Grid =			nullptr;
-
 	Cl_Panels =			nullptr;
-	
 	Cl_Scene_Data =		nullptr;
 	Cl_Bullet =			nullptr;
 	Cl_Collision =		nullptr;
@@ -43,11 +41,9 @@ GD19_App::GD19_App(void)
 	Cl_Visuals =		nullptr;
 	Cl_Environment =	nullptr;
 	Cl_Dialogs =		nullptr;
-	
 	Cl_Objects_Com =	nullptr;
 	Cl_Stock =			nullptr;
 	Cl_LookUps =		nullptr;
-	Cl_spdlog =			nullptr;
 	Cl_Keyboard =		nullptr;
 
 	// Vima19 19/03/20
@@ -205,7 +201,6 @@ bool GD19_App::InitApp(void)
 	Cl_Objects_Com =	new GD19_Objects_Com();
 	Cl_Stock =			new GD19_Stock();
 	Cl_LookUps =		new GD19_LookUps();		
-	Cl_spdlog =			new	GD_spdlog();
 	Cl_Keyboard =		new GD_Keyboard();
 
 	// Vima19 19/03/20

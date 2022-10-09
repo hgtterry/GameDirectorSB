@@ -38,7 +38,6 @@ distribution.
 #include "GD19_Objects_Com.h"
 #include "GD19_Stock.h"
 #include "GD19_LookUps.h"
-#include "GD_spdlog.h"
 #include "GD19_PB.h"
 #include "GD_Keyboard.h"
 
@@ -100,7 +99,6 @@ public:
 	GD19_Objects_Com*	Cl_Objects_Com;
 	GD19_Stock*			Cl_Stock;
 	GD19_LookUps*		Cl_LookUps;
-	GD_spdlog*			Cl_spdlog;
 	GD19_PB*			Cl_PB;
 	GD_Keyboard*		Cl_Keyboard;
 
