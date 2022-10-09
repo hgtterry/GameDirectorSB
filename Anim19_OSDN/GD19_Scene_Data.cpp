@@ -69,26 +69,6 @@ bool GD19_Scene_Data::Init_Scene(void)
 }
 
 // *************************************************************************
-//					Set_Mesgaes_Defaults Terry Bernie			  		   *
-// *************************************************************************
-void GD19_Scene_Data::Set_Mesgaes_Defaults(int Index)
-{
-
-	strcpy(S_Messages[Index]->Name,"None");
-	strcpy(S_Messages[Index]->Default_Text,"Test Text");
-
-	S_Messages[Index]->Font_Size = 48;
-
-	S_Messages[Index]->Colour = Ogre::Vector3(1,1,1);
-	S_Messages[Index]->overlay = NULL;
-	S_Messages[Index]->panel = NULL;
-	S_Messages[Index]->textArea1 = NULL;
-	S_Messages[Index]->textArea2 = NULL;
-	S_Messages[Index]->Pos_Vert = -20;
-	S_Messages[Index]->Pos_Hoz =  -70;
-}
-
-// *************************************************************************
 //					SetFlags_Defaults Terry Bernie				  		   *
 // *************************************************************************
 void GD19_Scene_Data::SetFlags_Defaults(void)
@@ -105,6 +85,7 @@ void GD19_Scene_Data::SetObjectDefaults(int Index)
 
 	return;
 }
+
 // *************************************************************************
 //						Set_Move_Defaults Terry Bernie				  	   *
 // *************************************************************************
@@ -122,6 +103,7 @@ void GD19_Scene_Data::Set_Move_Defaults(int Index)
 	strcpy(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_Name,"None");
 	return;
 }
+
 // *************************************************************************
 // *						SetOptions_Defaults Terry Bernie			   *
 // *************************************************************************
@@ -186,113 +168,6 @@ void GD19_Scene_Data::SetScene_Defaults(void)
 	strcpy(S_Scene[0]->Sky[0].Material,"Examples/CloudySky");
 	S_Scene[0]->Sky[0].Tiling = 15;
 	S_Scene[0]->Sky[0].type = 1;
-}
-
-// *************************************************************************
-//						ClearScene Terry Bernie					  		   *
-// *************************************************************************
-void GD19_Scene_Data::ClearScene(void)
-{
-	
-	App->Cl_Bullet->GD_Physics_On = 0;
-	App->Cl19_Ogre->OgreListener->GD_Run_Physics = 0;
-	///App->RedrawWindow_Dlg(App->Physics_Console_Hwnd);
-
-	App->Cl19_Ogre->OgreListener->Dubug_Physics_Draw = 0;
-
-
-	if (App->Cl19_Ogre->mSceneMgr!=NULL)
-	{
-		App->Cl19_Ogre->OgreListener->Animate_Ogre = 0;
-
-		if(App->SBC_Scene->Player_Added == 1)
-		{
-			App->SBC_Scene->Player_Added = 0;
-			App->Cl19_Ogre->OgreListener->Animate_State->setEnabled(false);
-			App->Cl19_Ogre->OgreListener->Animate_State2->setEnabled(false);
-			App->Cl19_Ogre->OgreListener->Animate_State = NULL;
-			App->Cl19_Ogre->OgreListener->Animate_State2 = NULL;
-
-
-			App->SBC_Scene->B_Player[0]->Player_Node->detachAllObjects();  // Remove Player
-			App->Cl19_Ogre->mSceneMgr->destroySceneNode(App->SBC_Scene->B_Player[0]->Player_Node);
-			App->Cl19_Ogre->mSceneMgr->destroyEntity(App->SBC_Scene->B_Player[0]->Player_Ent);
-			App->SBC_Scene->B_Player[0]->Player_Node = NULL;
-			App->SBC_Scene->B_Player[0]->Player_Ent = NULL;
-		}
-
-		
-		App->SBC_Resources->Unload_Materials();
-		App->SBC_Resources->Remove_OblectMesh();
-
-	}
-	
-	 //remove the rigidbodies from the dynamics world and delete them
-    int i;
-    for (i = App->Cl_Bullet->dynamicsWorld->getNumCollisionObjects()-1; i>=0 ;i--)
-    {
-            btCollisionObject* obj = App->Cl_Bullet->dynamicsWorld->getCollisionObjectArray()[i];
-            App->Cl_Bullet->dynamicsWorld->removeCollisionObject( obj );
-            delete obj;
-    }
-
-	ShowWindow(App->GD_Properties_Hwnd,0);
-
-	int Count = 0;
-	//while (Count < ObjectCount) // Remove Ogre Objects
-	{
-		/*if(Cl_Object[Count])
-		{
-			delete Cl_Object[Count];
-			Cl_Object[Count] = NULL;
-		}*/
-
-		Count++;
-	}
-
-	// Remove Player Locations
-	Count = 0;
-	while (Count < Player_Location_Count) // Remove Player Locations
-	{
-		if (S_Player_Locations[Count])
-		{
-			delete S_Player_Locations[Count];
-			S_Player_Locations[Count] = NULL;
-		}
-
-		Count++;
-	}
-
-	// Remove Sound Stock
-	Count = 0;
-	while (Count < Stock_Sound_Count) // Remove Player Locations
-	{
-		if (St_Sounds[Count])
-		{
-			delete St_Sounds[Count];
-			St_Sounds[Count] = NULL;
-		}
-
-		Count++;
-	}
-
-
-	App->SBC_SoundMgr->Sound_File.resize(0);
-	App->SBC_SoundMgr->Sound_File.shrink_to_fit();
-	App->SBC_SoundMgr->SoundFile_Count = 0;
-
-	
-	//App->GDCL_Scene_Data->Init_Class();
-	Scene_Has_Area = 0;
-	Locations_ID_Counter = 2000;
-	StockSounds_ID_Counter = 3000;
-
-	Player_Location_Count = 0;
-	Stock_Sound_Count = 0;
-
-	SceneLoaded = 0;
-
-	App->SBC_FileView->Delete_AllItems();
 }
 
 // *************************************************************************
@@ -519,70 +394,6 @@ void GD19_Scene_Data::Reset_Triggers(void)
 
 		Count++;
 	}
-}
-
-// *************************************************************************
-//						Start_Scene Terry Bernie						   *
-// *************************************************************************
-bool GD19_Scene_Data::Start_Scene()
-{
-	// ------------------------------ Things needed
-//	App->Cl_Visuals->MarkerBB_Setup();
-//	// --------------------------------------------
-//
-//	int Index = ObjectCount;
-//
-//	Cl_Object[Index] = new GD19_Objects();
-//	
-//	strcpy(Cl_Object[Index]->MeshName,"RF_Level1.mesh");
-//
-//	Cl_Object[Index]->OgreEntity = App->Cl19_Ogre->mSceneMgr->createEntity("Start_Room","RF_Level1.mesh",App->Cl19_Ogre->App_Resource_Group);
-//	Cl_Object[Index]->OgreNode = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
-//	Cl_Object[Index]->OgreNode->attachObject(Cl_Object[Index]->OgreEntity);
-//	
-//	Cl_Object[Index]->OgreNode->setVisible(true);
-//	Cl_Object[Index]->OgreNode->setScale(Cl_Object[Index]->Mesh_Scale);
-//	Cl_Object[Index]->OgreNode->setPosition(57.000000, -47.000000, -107.000000);
-//
-//	Cl_Object[Index]->Mesh_Pos = Ogre::Vector3(57.000000, -47.000000, -107.000000);
-//
-//	strcpy(Cl_Object[Index]->Name,"Main_Room2");
-//
-//	//App->SBC_Player->SetUp();
-//	
-//	App->Cl19_Ogre->OgreListener->Dubug_Physics_Draw = 1;
-//
-//	App->Cl19_Ogre->OgreListener->GD_Run_Physics = 1;
-//
-//	
-//	App->Cl_SoundMgr->SndFile = App->Cl_SoundMgr->SoundEngine->play2D("Media\\Sounds\\Welcome.ogg",false,true,true);
-//	App->Cl_SoundMgr->SndFile->setVolume(App->Cl_SoundMgr->SndVolume);
-//	App->Cl_SoundMgr->SndFile->setIsPaused(false);
-//
-//	S_LoadOptions[0]->Has_Objects = 1;
-//	S_LoadOptions[0]->Has_Player = 1;
-//
-//	
-//
-//	SceneLoaded = 1;
-//
-//	ObjectCount++;  // Must be last line
-//	
-//	
-//	//App->Cl_Object_Props->Update_Properties_Mesh();
-//
-////	App->SBC_Objects_New->Add_Stock_Message();
-//	//App->CL10_Objects_New->Add_Stock_Sound();
-////	App->SBC_Objects_New->Add_Stock_Panel();
-//	
-//	Start_UpScene();
-//	
-//	//App->Cl_Load_Scene->OpenScene(0);
-//	
-//	//ShowWindow(App->GD_Properties_Hwnd,1);
-
-	return 1;
-
 }
 
 // *************************************************************************

@@ -1274,14 +1274,17 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 
 		SendDlgItemMessage(hDlg, IDC_LISTABOUT, LB_ADDSTRING, (WPARAM)0, (LPARAM)" ");
 		
-		sprintf(buff, "%s  %s", " Ogre Version ", "1.9");
+		sprintf(buff, "%s", " EquitySB Alpha Build 09/10/22");
+		SendDlgItemMessage(hDlg, IDC_LISTABOUT, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
+
+		/*sprintf(buff, "%s  %s", " Ogre Version ", "1.9");
 		SendDlgItemMessage(hDlg, IDC_LISTABOUT, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
 
 		sprintf(buff, "%s  %s", " Bullet Version ", "2.86");
 		SendDlgItemMessage(hDlg, IDC_LISTABOUT, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
 		
 		sprintf(buff, "%s  %s", " ImGui ", ImGui::GetVersion());
-		SendDlgItemMessage(hDlg, IDC_LISTABOUT, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
+		SendDlgItemMessage(hDlg, IDC_LISTABOUT, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);*/
 		
 		SendDlgItemMessage(hDlg, IDC_LISTABOUT, LB_ADDSTRING, (WPARAM)0, (LPARAM)" "); // Space
 		App->Cl19_Ogre->GetVersion_OpenGL(buff);

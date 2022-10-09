@@ -216,8 +216,6 @@ public:
 	GD19_Scene_Data(void);
 	~GD19_Scene_Data(void);
 
-	bool Start_Scene();
-
 	bool Init_Scene(void);
 	bool Init_Class(void);
 
@@ -226,11 +224,7 @@ public:
 	void SetOptions_Defaults(void);
 	void SetFlags_Defaults(void);
 
-	void Set_Mesgaes_Defaults(int Index);
-
 	void Set_Move_Defaults(int Index);
-
-	void ClearScene(void);
 
 	bool Start_UpScene();
 	bool Get_UserFile();
