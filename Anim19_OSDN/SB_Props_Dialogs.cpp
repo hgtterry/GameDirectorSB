@@ -282,7 +282,7 @@ bool SB_Props_Dialogs::Start_Dialog_Debug()
 {
 
 	Debug_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_DEBUG, App->SBC_Properties->Properties_Dlg_hWnd, (DLGPROC)Dialog_Debug_Proc);
-	//Hide_Physics_Reset_Dlg(0);
+	Hide_Debug_Dlg(0);
 
 	return 1;
 }
@@ -407,4 +407,12 @@ void SB_Props_Dialogs::Hide_Dimensions_Dlg(bool Show)
 void SB_Props_Dialogs::Hide_Physics_Reset_Dlg(bool Show)
 {
 	ShowWindow(PhysicsReset_Dlg_hWnd, Show);
+}
+
+// *************************************************************************
+// *				Hide_Physics_Reset_Dlg Terry Flanigan				   *
+// *************************************************************************
+void SB_Props_Dialogs::Hide_Debug_Dlg(bool Show)
+{
+	ShowWindow(Debug_Dlg_hWnd, Show);
 }

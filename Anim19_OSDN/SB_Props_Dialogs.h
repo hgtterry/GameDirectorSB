@@ -32,6 +32,7 @@ public:
 
 	void Hide_Dimensions_Dlg(bool Show);
 	void Hide_Physics_Reset_Dlg(bool Show);
+	void Hide_Debug_Dlg(bool Show);
 
 	bool Dialog_Dimensions();
 	bool Start_Dialog_PhysicsReset();

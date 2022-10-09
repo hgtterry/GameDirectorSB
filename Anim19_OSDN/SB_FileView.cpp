@@ -589,6 +589,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		ShowWindow(App->SBC_Properties->Properties_Dlg_hWnd, 1);
 		App->SBC_Object->Hide_Object_Dlg(1);
 		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1);
+		App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
 
 		App->SBC_Properties->Edit_Category = Enums::FV_Edit_Object;
 		App->SBC_Properties->Current_Selected_Object = Index;
@@ -666,6 +667,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		ShowWindow(App->GD_Properties_Hwnd, 1);
 		App->SBC_Object->Hide_Object_Dlg(1);
 		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1);
+		App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
 
 		App->SBC_Properties->Is_Player = 0;
 		App->SBC_Properties->Edit_Category = Enums::Edit_Sounds;
@@ -700,6 +702,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		ShowWindow(App->SBC_Properties->Properties_Dlg_hWnd, 1);
 		App->SBC_Object->Hide_Object_Dlg(1);
 		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1);
+		App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
 
 		App->SBC_Properties->Is_Player = 0; // Mark as Object selected
 		App->SBC_Properties->Edit_Category = Enums::Edit_Message;
@@ -736,7 +739,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		App->SBC_Object->Hide_Object_Dlg(1);
 		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1);
 		App->SBC_Props_Dialog->Hide_Physics_Reset_Dlg(1);
-
+		App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
 
 		App->SBC_Properties->Is_Player = 0; // Mark as Object selected
 
@@ -1119,6 +1122,7 @@ void SB_FileView::HideRightPanes(void)
 
 	App->SBC_Props_Dialog->Hide_Dimensions_Dlg(0);
 	App->SBC_Props_Dialog->Hide_Physics_Reset_Dlg(0);
+	App->SBC_Props_Dialog->Hide_Debug_Dlg(0);
 }
 
 
