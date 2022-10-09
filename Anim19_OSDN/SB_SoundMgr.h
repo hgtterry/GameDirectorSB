@@ -46,6 +46,9 @@ public:
 	bool IsObject;
 	bool IsCancelled;
 
+	bool Accessed;
+	char Access_File[MAX_PATH];
+
 	irrklang::ISoundEngine* SoundEngine; 
 	irrklang::ISound* SndFile;
 	Ogre::Real SndVolume;

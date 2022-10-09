@@ -1534,13 +1534,16 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 	}
 
 
-	// Stock Sound
+	//Sound
 	result = strcmp(btext, "Sound");
 	if (result == 0)
 	{
+		App->SBC_SoundMgr->Accessed = 1;
+		strcpy(App->SBC_SoundMgr->Access_File, App->SBC_Scene->B_Object[Index]->Sound_File);
+
 		App->SBC_SoundMgr->Dialog_SoundFile();
 
-		strcpy(App->SBC_Scene->B_Object[Index]->Sound_File, App->SBC_SoundMgr->m_Current_Sound_file);
+		strcpy(App->SBC_Scene->B_Object[Index]->Sound_File, App->SBC_SoundMgr->Access_File);
 
 		App->SBC_Scene->B_Object[Index]->SndVolume = App->SBC_SoundMgr->SndVolume;
 
@@ -1551,7 +1554,7 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 		return 1;
 	}
 
-	// Sound
+	// Play
 	result = strcmp(btext, "Play");
 	if (result == 0)
 	{
@@ -1915,49 +1918,24 @@ bool SB_Properties::Edit_Sounds_OnClick(LPARAM lParam)
 	}
 
 
-	//// Stock Sound
-	//result = strcmp(btext, "Stock_Snd");
-	//if (result == 0)
-	//{
-
-	//	//App->Cl_Stock->List_Stock_Dialog(Enums::ListBox_Stock_Sounds); // Needs Deleteing or somthing
-
-	//	App->Cl_Stock->ItemToSelect = App->Cl_Scene_Data->Cl_Object[Index]->Sound_ID_v2;
-	//	App->Cl_Stock->Start_Stock_Dialog();
-	//	App->Cl_Scene_Data->Cl_Object[Index]->Sound_ID_v2 = App->Cl_Stock->ListIndex;
-
-	//	Update_ListView_Sounds();
-	//	return 1;
-	//}
-
 	// Sound
-	/*result = strcmp(btext, "Play");
+	result = strcmp(btext, "Sound");
 	if (result == 0)
 	{
+		App->SBC_SoundMgr->Accessed = 1;
+		strcpy(App->SBC_SoundMgr->Access_File, App->SBC_Scene->B_Object[Index]->Sound_File);
 
-		strcpy(App->Cl_Dialogs->btext, "Play Sound In The Game");
+		App->SBC_SoundMgr->Dialog_SoundFile();
 
-		App->Cl_Dialogs->TrueFlase = App->Cl_Scene_Data->Cl_Object[Index]->Play_v2;
+		strcpy(App->SBC_Scene->B_Object[Index]->Sound_File, App->SBC_SoundMgr->Access_File);
 
-		App->Cl_Dialogs->Dialog_TrueFlase(App->MainHwnd);
+		App->SBC_Scene->B_Object[Index]->SndVolume = App->SBC_SoundMgr->SndVolume;
 
-		if (App->Cl_Dialogs->Canceled == 0)
-		{
-			if (App->Cl_Dialogs->TrueFlase == 1)
-			{
-				App->Cl_Scene_Data->Cl_Object[Index]->Play_v2 = 1;
-			}
-			else
-			{
-				App->Cl_Scene_Data->Cl_Object[Index]->Play_v2 = 0;
-
-			}
-		}
+		Mark_As_Altered(Index);
 
 		Update_ListView_Sounds();
 		return 1;
-	}*/
-
+	}
 
 	return 1;
 }

@@ -761,7 +761,7 @@ bool SB_Project::Save_Objects_Data()
 			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Sound)
 			{
 				fprintf(WriteFile, "%s%s\n", "Sound_File=", App->SBC_Scene->B_Object[Count]->Sound_File);
-				fprintf(WriteFile, "%s%s\n", "Sound_Path=", App->SBC_Scene->B_Object[Count]->Sound_Path);
+				//fprintf(WriteFile, "%s%s\n", "Sound_Path=", App->SBC_Scene->B_Object[Count]->Sound_Path);
 			}
 
 			//---------------------------------------------------------------------------------- Move Entity

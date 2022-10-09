@@ -42,6 +42,7 @@ SB_SoundMgr::SB_SoundMgr(void)
 	m_Current_Sound_file[0] = 0;
 
 	IsCancelled = 0;
+	Accessed = 0;
 }
 
 
@@ -86,6 +87,7 @@ LRESULT CALLBACK SB_SoundMgr::Dialog_SoundFile_Proc(HWND hDlg, UINT message, WPA
 
 			char Sound[MAX_PATH];
 			HWND ListHwnd = GetDlgItem(hDlg, IDC_SOUNDLIST);
+
 			SendMessage(ListHwnd, LB_SETCURSEL, 0, (LPARAM)(LPCTSTR)0);
 			SendDlgItemMessage(hDlg, IDC_SOUNDLIST, LB_GETTEXT, (WPARAM) 0, (LPARAM)Sound);
 			SetDlgItemText(hDlg, IDC_EDITINT, (LPTSTR)Sound);
@@ -107,6 +109,12 @@ LRESULT CALLBACK SB_SoundMgr::Dialog_SoundFile_Proc(HWND hDlg, UINT message, WPA
 			char buf[10];
 			sprintf(buf,"%i",VolPer);
 			SetDlgItemText(hDlg,IDC_VOLBOX,(LPCTSTR)buf);
+
+			if (App->SBC_SoundMgr->Accessed == 1)
+			{
+				SendMessage(GetDlgItem(hDlg, IDC_SOUNDLIST), LB_SELECTSTRING, -1, (LPARAM)App->SBC_SoundMgr->Access_File);
+			}
+
 			return TRUE;
 		}
 		case WM_CTLCOLORSTATIC:
@@ -249,6 +257,11 @@ LRESULT CALLBACK SB_SoundMgr::Dialog_SoundFile_Proc(HWND hDlg, UINT message, WPA
 
 				SetDlgItemText(hDlg,IDC_EDITINT,(LPTSTR)buff);
 
+				if (App->SBC_SoundMgr->Accessed == 1)
+				{
+					strcpy(App->SBC_SoundMgr->Access_File, buff);
+				}
+
 				return TRUE;
 			}
 			
@@ -269,6 +282,8 @@ LRESULT CALLBACK SB_SoundMgr::Dialog_SoundFile_Proc(HWND hDlg, UINT message, WPA
 				GetDlgItemText(hDlg,IDC_EDITINT,(LPTSTR)file,256);
 				strcpy(App->SBC_SoundMgr->mSoundFile,file);
 				App->SBC_SoundMgr->Remeber_SoundFile(file);
+
+				App->SBC_SoundMgr->Accessed = 0;
 				EndDialog(hDlg, LOWORD(wParam));
 				return TRUE;
 			}
@@ -286,6 +301,7 @@ LRESULT CALLBACK SB_SoundMgr::Dialog_SoundFile_Proc(HWND hDlg, UINT message, WPA
 
 				}
 
+				App->SBC_SoundMgr->Accessed = 0;
 				App->SBC_SoundMgr->IsCancelled = 1;
 				EndDialog(hDlg, LOWORD(wParam));
 				return TRUE;
