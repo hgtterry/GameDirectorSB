@@ -13,7 +13,6 @@ public:
 	void Start_Gen_ListBox(int ListType);
 	void Start_Projection();
 
-	void YesNo(char *Text, char *Text2);
 	void Message(char *pString);
 
 	bool GameMode_StartPosition_Dlg();
@@ -57,7 +56,6 @@ protected:
 
 	static LRESULT CALLBACK Start_DataView_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
-	static LRESULT CALLBACK YesNo_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Message_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Projection_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 

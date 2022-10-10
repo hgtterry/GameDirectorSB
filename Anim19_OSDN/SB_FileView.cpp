@@ -766,7 +766,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 			return;
 		}
 
-		App->Cl_Dialogs->YesNo("Add Entity", "Do you want to add a new Collectable Entity now");
+		App->SBC_Dialogs->YesNo("Add Entity", "Do you want to add a new Collectable Entity now");
 		bool Doit = App->Cl_Dialogs->Canceled;
 		if (Doit == 0)
 		{
@@ -834,7 +834,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 			return;
 		}
 
-		App->Cl_Dialogs->YesNo("Add Entity", "Do you want to add a new Telport Entity now");
+		App->SBC_Dialogs->YesNo("Add Entity", "Do you want to add a new Telport Entity now");
 		bool Doit = App->Cl_Dialogs->Canceled;
 		if (Doit == 0)
 		{
@@ -903,7 +903,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		}
 
 
-		App->Cl_Dialogs->YesNo("Add Entity", "Do you want to add a new Particle Entity now");
+		App->SBC_Dialogs->YesNo("Add Entity", "Do you want to add a new Particle Entity now");
 		bool Doit = App->Cl_Dialogs->Canceled;
 		if (Doit == 0)
 		{
@@ -957,7 +957,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 
 		//App->CL_Dialogs->YesNo("Add Entity", "Do you want to add a new Environment Entity now");
-		App->Cl_Dialogs->YesNo("Add Entity", "Not Available Yet Next Release");
+		App->SBC_Dialogs->YesNo("Add Entity", "Not Available Yet Next Release");
 		bool Doit = App->Cl_Dialogs->Canceled;
 		if (Doit == 0)
 		{
@@ -1010,7 +1010,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		}
 
 		//App->CL_Dialogs->YesNo("Add Entity", "Do you want to add a new Area Change Entity now");
-		App->Cl_Dialogs->YesNo("Add Entity", "Not Available Yet Next Release");
+		App->SBC_Dialogs->YesNo("Add Entity", "Not Available Yet Next Release");
 		bool Doit = App->Cl_Dialogs->Canceled;
 		if (Doit == 0)
 		{
@@ -1066,7 +1066,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 
 		//App->CL_Dialogs->YesNo("Add Entity", "Do you want to add a new Change Level Entity now");
-		App->Cl_Dialogs->YesNo("Add Entity", "Not Available Yet Next Release");
+		App->SBC_Dialogs->YesNo("Add Entity", "Not Available Yet Next Release");
 		bool Doit = App->Cl_Dialogs->Canceled;
 		if (Doit == 0)
 		{
@@ -1589,7 +1589,7 @@ void SB_FileView::Context_New(HWND hDlg)
 
 	if (App->SBC_FileView->Context_Selection == Enums::FileView_Areas_Folder)
 	{
-		App->Cl_Dialogs->YesNo("Add Area", "Do you want to add a new Area");
+		App->SBC_Dialogs->YesNo("Add Area", "Do you want to add a new Area");
 
 		bool Doit = App->Cl_Dialogs->Canceled;
 		if (Doit == 0)
@@ -1610,7 +1610,7 @@ void SB_FileView::Context_New(HWND hDlg)
 
 	if (App->SBC_FileView->Context_Selection == Enums::FileView_Cameras_Folder)
 	{
-		App->Cl_Dialogs->YesNo("Add Object", "Do you want to add a new Camera");
+		App->SBC_Dialogs->YesNo("Add Object", "Do you want to add a new Camera");
 
 		bool Doit = App->Cl_Dialogs->Canceled;
 		if (Doit == 0)
@@ -1623,7 +1623,7 @@ void SB_FileView::Context_New(HWND hDlg)
 
 	if (App->SBC_FileView->Context_Selection == Enums::FileView_Objects_Folder)
 	{
-		App->Cl_Dialogs->YesNo("Add Object", "Do you want to add a new Object Entity");
+		App->SBC_Dialogs->YesNo("Add Object", "Do you want to add a new Object Entity");
 
 		bool Doit = App->Cl_Dialogs->Canceled;
 		if (Doit == 0)
@@ -1637,7 +1637,7 @@ void SB_FileView::Context_New(HWND hDlg)
 
 	if (App->SBC_FileView->Context_Selection == Enums::FileView_Messages_Folder)
 	{
-		App->Cl_Dialogs->YesNo("Add Message", "Do you want to add a new Message Entity");
+		App->SBC_Dialogs->YesNo("Add Message", "Do you want to add a new Message Entity");
 
 		bool Doit = App->Cl_Dialogs->Canceled;
 		if (Doit == 0)
@@ -1650,7 +1650,7 @@ void SB_FileView::Context_New(HWND hDlg)
 
 	if (App->SBC_FileView->Context_Selection == Enums::FileView_Sounds_Folder)
 	{
-		App->Cl_Dialogs->YesNo("Add Message", "Do you want to add a new Sound Entity");
+		App->SBC_Dialogs->YesNo("Add Message", "Do you want to add a new Sound Entity");
 
 		bool Doit = App->Cl_Dialogs->Canceled;
 		if (Doit == 0)
@@ -1663,7 +1663,7 @@ void SB_FileView::Context_New(HWND hDlg)
 
 	if (App->SBC_FileView->Context_Selection == Enums::FileView_Move_Folder)
 	{
-		App->Cl_Dialogs->YesNo("Add Message", "Do you want to add a new Move Entity");
+		App->SBC_Dialogs->YesNo("Add Message", "Do you want to add a new Move Entity");
 
 		bool Doit = App->Cl_Dialogs->Canceled;
 		if (Doit == 0)
@@ -1715,7 +1715,7 @@ void SB_FileView::Context_Delete(HWND hDlg)
 
 	if (App->SBC_FileView->Context_Selection == Enums::FileView_Objects_File)
 	{
-		App->Cl_Dialogs->YesNo("Remove Object","Are you sure");
+		App->SBC_Dialogs->YesNo("Remove Object","Are you sure");
 
 		bool Doit = App->Cl_Dialogs->Canceled;
 		if (Doit == 0)
@@ -1729,7 +1729,7 @@ void SB_FileView::Context_Delete(HWND hDlg)
 
 	if (App->SBC_FileView->Context_Selection == Enums::FileView_Messages_File)
 	{
-		App->Cl_Dialogs->YesNo("Remove Message", "Are you sure");
+		App->SBC_Dialogs->YesNo("Remove Message", "Are you sure");
 
 		bool Doit = App->Cl_Dialogs->Canceled;
 		if (Doit == 0)
@@ -1743,7 +1743,7 @@ void SB_FileView::Context_Delete(HWND hDlg)
 
 	if (App->SBC_FileView->Context_Selection == Enums::FileView_Sounds_File)
 	{
-		App->Cl_Dialogs->YesNo("Remove Sound", "Are you sure");
+		App->SBC_Dialogs->YesNo("Remove Sound", "Are you sure");
 
 		bool Doit = App->Cl_Dialogs->Canceled;
 		if (Doit == 0)
@@ -1757,7 +1757,7 @@ void SB_FileView::Context_Delete(HWND hDlg)
 
 	if (App->SBC_FileView->Context_Selection == Enums::FileView_Move_File)
 	{
-		App->Cl_Dialogs->YesNo("Remove Move Entity", "Are you sure");
+		App->SBC_Dialogs->YesNo("Remove Move Entity", "Are you sure");
 
 		bool Doit = App->Cl_Dialogs->Canceled;
 		if (Doit == 0)

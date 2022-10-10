@@ -267,7 +267,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		
 		case ID_DEBUG_RESTOREAPP:
 		{
-			App->Cl_Dialogs->YesNo("Close GameDirector", "Are you sure");
+			App->SBC_Dialogs->YesNo("Close GameDirector", "Are you sure");
 			if (App->Cl_Dialogs->Canceled == 0)
 			{
 				char buf[1024];
@@ -583,7 +583,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		//------------------------- Add Item
 		case ID_ADDITEM_OBJECT:
 		{
-			App->Cl_Dialogs->YesNo("Add Object", "Do you want to add a new Object now");
+			App->SBC_Dialogs->YesNo("Add Object", "Do you want to add a new Object now");
 			bool Doit = App->Cl_Dialogs->Canceled;
 			if (Doit == 0)
 			{
@@ -941,16 +941,19 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	{
 		if (App->SBC_Scene->Scene_Modified == 1)
 		{
-			int test = MessageBox(App->Fdlg, "Scene has been Modified Do you wish to save changes", "Save Scene", MB_YESNO);
-			
-			if (test == IDYES)
+		
+			App->SBC_Dialogs->YesNo("Save Scene", "Scene has been Modified Do you wish to save changes");
+
+			bool Doit = App->Cl_Dialogs->Canceled;
+			if (Doit == 0)
 			{
 				App->SBC_Project->Start_Save_Project_Dialog();
 			}
+
 		}
 		else
 		{
-			App->Cl_Dialogs->YesNo("Close GameDirector", "Are you sure");
+			App->SBC_Dialogs->YesNo("Close GameDirector", "Are you sure");
 			if (App->Cl_Dialogs->Canceled == 1)
 			{
 				return 1;

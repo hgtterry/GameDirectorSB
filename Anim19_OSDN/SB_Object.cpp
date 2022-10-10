@@ -420,6 +420,9 @@ void SB_Object::Clear_Modified_Objects()
 	}
 
 	App->SBC_FileView->Mark_Clear_Folder(App->SBC_FileView->FV_Objects_Folder);
+	App->SBC_FileView->Mark_Clear_Folder(App->SBC_FileView->FV_Messages_Folder);
+	App->SBC_FileView->Mark_Clear_Folder(App->SBC_FileView->FV_Move_Folder);
+	App->SBC_FileView->Mark_Clear_Folder(App->SBC_FileView->FV_Sounds_Folder);
 
 	App->SBC_Scene->Scene_Modified = 0;
 }

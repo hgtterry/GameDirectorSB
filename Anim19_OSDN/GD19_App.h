@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2021 Scene Builder and Equity -- Inflanite Software W.T.Flanigan H.C.Flanigan
+Copyright (c) 2021 EquitySB and EquityME -- Inflanite Software W.T.Flanigan H.C.Flanigan
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages

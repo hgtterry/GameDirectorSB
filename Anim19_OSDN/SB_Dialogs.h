@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2021 Stage Builder and Equity -- Inflanite Software W.T.Flanigan H.C.Flanigan
+Copyright (c) 2021 EquitySB and EquityME -- Inflanite Software W.T.Flanigan H.C.Flanigan
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -29,14 +29,19 @@ public:
 	~SB_Dialogs();
 
 	bool Dialog_Text();
-	
+	void YesNo(char *Text, char *Text2);
+
 	bool Canceled;
 
-	char btext[255];
-	char Chr_Text[255];
+	char btext[MAX_PATH];
+	char Chr_Text[MAX_PATH];
+
+	char MessageString[MAX_PATH];
+	char MessageString2[MAX_PATH];
 
 protected:
 
 	static LRESULT CALLBACK Dialog_Text_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK YesNo_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 };
 
