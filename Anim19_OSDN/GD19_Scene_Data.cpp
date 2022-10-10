@@ -663,22 +663,3 @@ LRESULT CALLBACK GD19_Scene_Data::Dialog_GetUserFile_Proc(HWND hDlg, UINT messag
 	return FALSE;
 }
 
-// *************************************************************************
-// *					 Delete_Object(Terry Bernie)			 	 	   *
-// *************************************************************************
-bool GD19_Scene_Data::Delete_Object(int Index)
-{
-	//Cl_Object[Index]->OgreNode->setVisible(false);
-
-	///*App->GDCL_Scene_Data->CL_Object[Index]->OgreNode->detachAllObjects();
-	//App->Cl_Ogre->mSceneMgr->destroySceneNode(App->GDCL_Scene_Data->CL_Object[Index]->OgreNode);
-	//App->Cl_Ogre->mSceneMgr->destroyEntity(App->GDCL_Scene_Data->CL_Object[Index]->OgreEntity);
-
-	//App->GDCL_Scene_Data->CL_Object[Index]->OgreEntity = 0;
-	//App->GDCL_Scene_Data->CL_Object[Index]->OgreNode = 0;*/
-
-	//App->Cl_Bullet->dynamicsWorld->removeRigidBody(Cl_Object[Index]->bt_body);
-	//Cl_Object[Index]->bt_body = 0;
-	
-	return 1;
-}

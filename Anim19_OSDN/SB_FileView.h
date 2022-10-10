@@ -82,6 +82,7 @@ protected:
 
 	void Context_Menu(HWND hDlg);
 	void Context_New(HWND hDlg);
+	void Context_Delete(HWND hDlg);
 
 	TV_INSERTSTRUCT tvinsert;
 

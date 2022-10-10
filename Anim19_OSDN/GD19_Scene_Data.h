@@ -238,8 +238,6 @@ public:
 
 	bool Is_Meshes_Used(char* Name);
 	
-	bool Delete_Object(int Index);
-
 	Flags_Type*				S_Flags[1];
 	Scene_Type*				S_Scene[1];
 	Camera_Type*			S_Camera[5];

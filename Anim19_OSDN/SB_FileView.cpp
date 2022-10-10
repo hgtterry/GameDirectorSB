@@ -234,22 +234,7 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 		if (LOWORD(wParam) == IDM_FILE_DELETE)
 		{
-			
-			int MeshIndex = App->SBC_Properties->Current_Selected_Object;
-			btRigidBody* body = App->SBC_Scene->B_Object[MeshIndex]->Phys_Body;
-		
-			if (body)
-			{
-				int UI = body->getUserIndex();
-				int Index = body->getUserIndex2();
-				App->Cl_Bullet->dynamicsWorld->removeCollisionObject(body);
-			}
-
-			App->SBC_Scene->B_Object[MeshIndex]->Deleted = 1;
-			App->SBC_Scene->B_Object[MeshIndex]->Object_Node->setVisible(false);
-
-			App->SBC_FileView->DeleteItem();
-			App->SBC_Scene->Scene_Modified = 1;
+			App->SBC_FileView->Context_Delete(hDlg);
 			
 			return TRUE;
 		}
@@ -1640,6 +1625,87 @@ void SB_FileView::Context_New(HWND hDlg)
 		{
 			App->SBC_Objects_Create->Add_New_Move_Entity();
 		}
+
+		return;
+	}
+
+	return;
+}
+
+// *************************************************************************
+// *			Context_Delete:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void SB_FileView::Context_Delete(HWND hDlg)
+{
+	if (App->SBC_Project->Project_Loaded == 0)
+	{
+		App->Say("A Project must be created First");
+
+		return;
+	}
+
+	if (App->SBC_FileView->Context_Selection == Enums::FileView_Areas_Folder)
+	{
+		
+
+		return;
+	}
+
+	if (App->SBC_Scene->Area_Added == 0)
+	{
+		App->Say("An Area must be Added Firest before adding items");
+
+		return;
+	}
+
+	if (App->SBC_FileView->Context_Selection == Enums::FileView_Cameras_Folder)
+	{
+		
+
+		return;
+	}
+
+	if (App->SBC_FileView->Context_Selection == Enums::FileView_Objects_File)
+	{
+		Debug
+		int MeshIndex = App->SBC_Properties->Current_Selected_Object;
+		btRigidBody* body = App->SBC_Scene->B_Object[MeshIndex]->Phys_Body;
+
+		if (body)
+		{
+			int UI = body->getUserIndex();
+			int Index = body->getUserIndex2();
+			App->Cl_Bullet->dynamicsWorld->removeCollisionObject(body);
+		}
+
+		App->SBC_Scene->B_Object[MeshIndex]->Deleted = 1;
+		App->SBC_Scene->B_Object[MeshIndex]->Object_Node->setVisible(false);
+
+		App->SBC_FileView->DeleteItem();
+		App->SBC_Scene->Scene_Modified = 1;
+
+		App->SBC_FileView->Mark_Altered(FV_Objects_Folder);
+
+		return;
+	}
+
+	if (App->SBC_FileView->Context_Selection == Enums::FileView_Messages_Folder)
+	{
+		
+
+		return;
+	}
+
+	if (App->SBC_FileView->Context_Selection == Enums::FileView_Sounds_Folder)
+	{
+		
+
+		return;
+	}
+
+	if (App->SBC_FileView->Context_Selection == Enums::FileView_Move_Folder)
+	{
+		
 
 		return;
 	}
