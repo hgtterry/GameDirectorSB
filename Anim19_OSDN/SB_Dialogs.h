@@ -29,9 +29,10 @@ public:
 	~SB_Dialogs();
 
 	bool Dialog_Text();
-	void YesNo(char *Text, char *Text2);
+	void YesNo(char *Text, char *Text2,bool YesNo);
 
 	bool Canceled;
+	bool YesNo_Flag;
 
 	char btext[MAX_PATH];
 	char Chr_Text[MAX_PATH];

@@ -30,6 +30,7 @@ distribution.
 SB_Dialogs::SB_Dialogs()
 {
 	Canceled = 0;
+	YesNo_Flag = 0;
 
 	btext[0] = 0;
 	Chr_Text[0] = 0;
@@ -147,9 +148,12 @@ LRESULT CALLBACK SB_Dialogs::Dialog_Text_Proc(HWND hDlg, UINT message, WPARAM wP
 // **************************************************************************
 // *	  			 YesNo:- Terry and Hazel Flanigan 2022					*
 // **************************************************************************
-void SB_Dialogs::YesNo(char *Text, char *Text2)
+void SB_Dialogs::YesNo(char *Text, char *Text2,bool YesNo)
 {
 	Canceled = 0;
+
+	YesNo_Flag = YesNo;
+
 	strcpy(MessageString, Text);
 	strcpy(MessageString2, Text2);
 
@@ -170,8 +174,18 @@ LRESULT CALLBACK SB_Dialogs::YesNo_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 		SendDlgItemMessage(hDlg, IDC_BANNER, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STTEXT, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 
-		SetDlgItemText(hDlg, IDC_BANNER, App->Cl_Dialogs->MessageString);
-		SetDlgItemText(hDlg, IDC_STTEXT, App->Cl_Dialogs->MessageString2);
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SetDlgItemText(hDlg, IDC_BANNER, App->SBC_Dialogs->MessageString);
+		SetDlgItemText(hDlg, IDC_STTEXT, App->SBC_Dialogs->MessageString2);
+
+		if (App->SBC_Dialogs->YesNo_Flag == 1)
+		{
+			SetDlgItemText(hDlg, IDOK, "Yes");
+			SetDlgItemText(hDlg, IDCANCEL, "No");
+		}
+
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
@@ -221,14 +235,14 @@ LRESULT CALLBACK SB_Dialogs::YesNo_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 
 		if (LOWORD(wParam) == IDOK)
 		{
-			App->Cl_Dialogs->Canceled = 0;
+			App->SBC_Dialogs->Canceled = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
-			App->Cl_Dialogs->Canceled = 1;
+			App->SBC_Dialogs->Canceled = 1;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}

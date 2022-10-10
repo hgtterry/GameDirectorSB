@@ -221,7 +221,7 @@ void  SB_FileIO::ResentHistory_Clear(bool FirstTime)
 {
 	if (FirstTime == 0)
 	{
-		App->SBC_Dialogs->YesNo("Delete file history.", "Are you sure all File history will be Deleted Procede.");
+		App->SBC_Dialogs->YesNo("Delete file history.", "Are you sure all File history will be Deleted Procede.", 1);
 		if (App->Cl_Dialogs->Canceled == 1)
 		{
 			return;

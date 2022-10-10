@@ -1179,7 +1179,7 @@ LRESULT CALLBACK GD19_Dialogs::Projection_Proc(HWND hDlg, UINT message, WPARAM w
 			strcpy(tag, "Delete Location  ");
 			strcat(tag, App->Cl_Scene_Data->S_Player_Locations[Location_Index]->Name);
 
-			App->SBC_Dialogs->YesNo(tag, "Are you sure");
+			App->SBC_Dialogs->YesNo(tag, "Are you sure",1);
 			if (App->Cl_Dialogs->Canceled == 0)
 			{
 				App->Cl_Scene_Data->S_Player_Locations[Location_Index]->Deleted = 1;
