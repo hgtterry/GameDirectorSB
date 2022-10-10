@@ -112,6 +112,7 @@ bool Base_Object::Init_Object(void)
 
 	Collision = 0;
 	Triggered = 0;
+	Physics_Debug_On = 0;
 
 	//------------------------------ Message Entity
 	strcpy(Message_Text, "This is in the Object");

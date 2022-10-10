@@ -95,7 +95,7 @@ bool GD19_Ogre::OgreCreateRoot(void)
 	Ogre::String pluginsPath;
 	pluginsPath = mResourcePath + "plugins.cfg";
 
-	mRoot = OGRE_NEW Ogre::Root(pluginsPath, mResourcePath + "Equity_CFG.cfg", "");// mResourcePath + "EquitySB.log");
+	mRoot = OGRE_NEW Ogre::Root(pluginsPath, mResourcePath + mResourcePath + "EquitySB.log");
 	//Ogre::LogManager::getSingleton().setLogDetail(Ogre::LoggingLevel::LL_LOW);
 	return 1;
 }
@@ -282,6 +282,12 @@ bool GD19_Ogre::chooseSceneManager(void)
 
 	mSceneMgr->setAmbientLight(Ogre::ColourValue(1, 1, 1));
 	
+	// add a bright light above the scene
+	Light* light = mSceneMgr->createLight();
+	light->setType(Light::LT_SPOTLIGHT);
+	light->setPosition(0, 0, 0);
+	light->setSpecularColour(ColourValue::White);
+
 	return 1;
 }
 

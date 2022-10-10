@@ -175,19 +175,39 @@ bool GD_Bt_Render::Render_Debug(void)
 		
 		if (V_Count > 0)
 		{
-			btDebug_Manual->beginUpdate(0);
-
-			int Count = 0;
-			while (Count < V_Count)
+			if (App->Cl19_Ogre->OgreListener->MeshViewer_Running == 1)
 			{
-				btDebug_Manual->position(vertex_From[Count].x, vertex_From[Count].y, vertex_From[Count].z);
-				btDebug_Manual->colour(ColourMain);
-				btDebug_Manual->position(vertex_To[Count].x, vertex_To[Count].y, vertex_To[Count].z);
-				btDebug_Manual->colour(ColourMain);
-				Count++;
+				App->SBC_MeshViewer->btDebug_Manual->beginUpdate(0);
+
+				int Count = 0;
+				while (Count < V_Count)
+				{
+					App->SBC_MeshViewer->btDebug_Manual->position(vertex_From[Count].x, vertex_From[Count].y, vertex_From[Count].z);
+					App->SBC_MeshViewer->btDebug_Manual->colour(ColourMain);
+					App->SBC_MeshViewer->btDebug_Manual->position(vertex_To[Count].x, vertex_To[Count].y, vertex_To[Count].z);
+					App->SBC_MeshViewer->btDebug_Manual->colour(ColourMain);
+					Count++;
+				}
+
+				App->SBC_MeshViewer->btDebug_Manual->end();
+			}
+			else
+			{
+				btDebug_Manual->beginUpdate(0);
+
+				int Count = 0;
+				while (Count < V_Count)
+				{
+					btDebug_Manual->position(vertex_From[Count].x, vertex_From[Count].y, vertex_From[Count].z);
+					btDebug_Manual->colour(ColourMain);
+					btDebug_Manual->position(vertex_To[Count].x, vertex_To[Count].y, vertex_To[Count].z);
+					btDebug_Manual->colour(ColourMain);
+					Count++;
+				}
+
+				btDebug_Manual->end();
 			}
 
-			btDebug_Manual->end();
 			V_Count = 0;
 		}
 

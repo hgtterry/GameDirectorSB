@@ -36,5 +36,7 @@ public:
 
 	bool Physics_Valid;
 	bool Altered;
+
+	bool Physics_Debug_On;
 };
 

@@ -94,6 +94,7 @@ public:
 
 	bool Deleted;
 	bool Altered;
+	bool Physics_Debug_On;
 	//------------------------------ Entity
 	bool					Collision;
 	bool					Triggered;

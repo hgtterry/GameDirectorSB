@@ -63,6 +63,8 @@ Base_Player::Base_Player()
 	IsMOving_Right = 0;
 	IsMOving_Left = 0;
 
+	Physics_Debug_On = 1;
+
 	FileViewItem = nullptr;
 
 	strcpy(Player_Name, "Player_1");

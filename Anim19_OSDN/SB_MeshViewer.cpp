@@ -38,6 +38,7 @@ SB_MeshViewer::SB_MeshViewer()
 
 	MvEnt = NULL;
 	MvNode = NULL;
+	Phys_Body = nullptr;
 
 	MeshView_Window = NULL;
 	mSceneMgrMeshView = NULL;
@@ -74,6 +75,20 @@ SB_MeshViewer::SB_MeshViewer()
 	strcpy(m_Current_Folder, "Structure");
 
 	MV_Resource_Group = "MV_Resource_Group";
+
+	/*btDebug_Manual = mSceneMgrMeshView->createManualObject("MVManual");
+	btDebug_Manual->setRenderQueueGroup(RENDER_QUEUE_MAX);
+
+	btDebug_Manual->setDynamic(true);
+	btDebug_Manual->estimateVertexCount(2000);
+
+	btDebug_Manual->begin("BaseWhiteNoLighting", Ogre::RenderOperation::OT_LINE_LIST);
+	btDebug_Manual->position(0, 0, 0);
+	btDebug_Manual->colour(1,1,1,1);
+	btDebug_Manual->end();
+
+	btDebug_Node = mSceneMgrMeshView->getRootSceneNode()->createChildSceneNode();
+	btDebug_Node->attachObject(btDebug_Manual);*/
 }
 
 
@@ -694,6 +709,12 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 			App->Cl19_Ogre->OgreListener->MeshViewer_Running = 0;
 			
+			if (App->SBC_MeshViewer->Phys_Body)
+			{
+				App->Cl_Bullet->dynamicsWorld->removeCollisionObject(App->SBC_MeshViewer->Phys_Body);
+				App->SBC_MeshViewer->Phys_Body = nullptr;
+			}
+
 			App->SBC_MeshViewer->Close_OgreWindow();
 			App->SBC_MeshViewer->Delete_Resources_Group();
 
@@ -727,7 +748,12 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 				App->SBC_MeshViewer->MvNode = NULL;
 			}
 
-			//Debug
+			if (App->SBC_MeshViewer->Phys_Body)
+			{
+				App->Cl_Bullet->dynamicsWorld->removeCollisionObject(App->SBC_MeshViewer->Phys_Body);
+				App->SBC_MeshViewer->Phys_Body = nullptr;
+			}
+
 			App->SBC_MeshViewer->Close_OgreWindow();
 
 			App->SBC_MeshViewer->Delete_Resources_Group();
@@ -966,6 +992,8 @@ void SB_MeshViewer::ShowMesh(char* MeshFile)
 
 	Get_Mesh_Assets();
 
+	//Show_Physics_Box();
+	Show_Physics_Capsule();
 	//	Check_HasAnimations();
 }
 
@@ -987,7 +1015,7 @@ bool SB_MeshViewer::Set_OgreWindow(void)
 	mCameraMeshView = mSceneMgrMeshView->createCamera("CameraMV");
 	mCameraMeshView->setPosition(Ogre::Vector3(0, 0, 0));
 	mCameraMeshView->setNearClipDistance(0.1);
-	mCameraMeshView->setFarClipDistance(1000);
+	mCameraMeshView->setFarClipDistance(8000);
 
 	Ogre::Viewport* vp = MeshView_Window->addViewport(mCameraMeshView);
 	mCameraMeshView->setAspectRatio(Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));
@@ -1017,6 +1045,22 @@ bool SB_MeshViewer::Set_OgreWindow(void)
 
 	mCameraMeshView->setPosition(0, Centre.y, -Radius*(Real(2.5)));
 	mCameraMeshView->lookAt(0, Centre.y, 0);
+
+
+	// Debug Physics Shape
+	btDebug_Manual = mSceneMgrMeshView->createManualObject("MVManual");
+	btDebug_Manual->setRenderQueueGroup(RENDER_QUEUE_MAX);
+
+	btDebug_Manual->setDynamic(true);
+	btDebug_Manual->estimateVertexCount(2000);
+
+	btDebug_Manual->begin("BaseWhiteNoLighting", Ogre::RenderOperation::OT_LINE_LIST);
+	btDebug_Manual->position(0, 0, 0);
+	btDebug_Manual->colour(1,1,1,1);
+	btDebug_Manual->end();
+
+	btDebug_Node = mSceneMgrMeshView->getRootSceneNode()->createChildSceneNode();
+	btDebug_Node->attachObject(btDebug_Manual);
 
 	return 1;
 }
@@ -1302,5 +1346,138 @@ LRESULT CALLBACK SB_MeshViewer::Mesh_Properties_Proc(HWND hDlg, UINT message, WP
 	}
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *	  	Set_Debug_Shapes:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void SB_MeshViewer::Set_Debug_Shapes()
+{
+	
+}
+
+// *************************************************************************
+// *			Show_Physics_Box:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+void SB_MeshViewer::Show_Physics_Box()
+{
+	btDebug_Manual->beginUpdate(0);
+	btDebug_Manual->position(0, 0, 0);
+	btDebug_Manual->colour(1,1,1);
+	btDebug_Manual->position(0, 0, 0);
+	btDebug_Manual->colour(1,1,1);
+	btDebug_Manual->end();
+
+	if (Phys_Body)
+	{
+		App->Cl_Bullet->dynamicsWorld->removeCollisionObject(Phys_Body);
+		Phys_Body = nullptr;
+	}
+
+	AxisAlignedBox worldAAB = MvEnt->getBoundingBox();
+	worldAAB.transformAffine(MvNode->_getFullTransform());
+	Ogre::Vector3 Centre = worldAAB.getCenter();
+
+	btTransform startTransform;
+	startTransform.setIdentity();
+	startTransform.setRotation(btQuaternion(0, 0, 0, 1));
+
+	btScalar mass;
+	mass = 1.0f;
+	
+	btVector3 localInertia(0, 0, 0);
+	btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
+	startTransform.setOrigin(initialPosition);
+
+	Ogre::Vector3 Size = App->Cl_Objects_Com->GetMesh_BB_Size(MvNode);
+	float sx = Size.x / 2;
+	float sy = Size.y / 2;
+	float sz = Size.z / 2;
+
+	btCollisionShape* newRigidShape = new btBoxShape(btVector3(sx, sy, sz));
+	newRigidShape->calculateLocalInertia(mass, localInertia);
+
+	App->Cl_Bullet->collisionShapes.push_back(newRigidShape);
+
+	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
+
+	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, newRigidShape, localInertia);
+
+	Phys_Body = new btRigidBody(rbInfo);
+	Phys_Body->setRestitution(1.0);
+	Phys_Body->setFriction(1.5);
+	Phys_Body->setUserPointer(MvNode);
+	Phys_Body->setWorldTransform(startTransform);
+
+	Phys_Body->setCustomDebugColor(btVector3(0, 1, 1));
+
+	App->Cl_Bullet->dynamicsWorld->addRigidBody(Phys_Body);
+
+	//Set_Physics(Index);
+}
+
+// *************************************************************************
+// *		Show_Physics_Capsule:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+void SB_MeshViewer::Show_Physics_Capsule()
+{
+	btDebug_Manual->beginUpdate(0);
+	btDebug_Manual->position(0, 0, 0);
+	btDebug_Manual->colour(1, 1, 1);
+	btDebug_Manual->position(0, 0, 0);
+	btDebug_Manual->colour(1, 1, 1);
+	btDebug_Manual->end();
+
+	if (Phys_Body)
+	{
+		App->Cl_Bullet->dynamicsWorld->removeCollisionObject(Phys_Body);
+		Phys_Body = nullptr;
+	}
+
+	AxisAlignedBox worldAAB = MvEnt->getBoundingBox();
+	worldAAB.transformAffine(MvNode->_getFullTransform());
+	Ogre::Vector3 Centre = worldAAB.getCenter();
+
+	//Ogre::Vector3 Centre = Object->Get_BoundingBox_World_Centre();
+
+	btTransform startTransform;
+	startTransform.setIdentity();
+	startTransform.setRotation(btQuaternion(0.0f, 0.0f, 0.0f, 1));
+
+	btScalar mass;
+	mass = 0.0f;
+	
+	btVector3 localInertia(0, 0, 0);
+	btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
+
+	startTransform.setOrigin(initialPosition);
+
+	Ogre::Vector3 Size = App->Cl_Objects_Com->GetMesh_BB_Size(MvNode);
+	float sx = Size.x / 2;
+	float sy = Size.y / 2;
+	float sz = Size.z / 2;
+
+	float Radius = App->Cl_Objects_Com->GetMesh_BB_Radius(MvNode);
+	
+	btCollisionShape* newRigidShape = new btCapsuleShape(Radius, sy);
+	newRigidShape->calculateLocalInertia(mass, localInertia);
+
+	App->Cl_Bullet->collisionShapes.push_back(newRigidShape);
+
+	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
+
+	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, newRigidShape, localInertia);
+
+	Phys_Body = new btRigidBody(rbInfo);
+	Phys_Body->setRestitution(1.0);
+	Phys_Body->setFriction(1.5);
+	Phys_Body->setUserPointer(MvNode);
+	Phys_Body->setWorldTransform(startTransform);
+
+	Phys_Body->setCustomDebugColor(btVector3(0, 1, 1));
+
+	App->Cl_Bullet->dynamicsWorld->addRigidBody(Phys_Body);
+
+	//Set_Physics(Index);
 }
 

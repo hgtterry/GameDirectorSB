@@ -50,6 +50,9 @@ public:
 	Ogre::String MV_Resource_Group;
 	Ogre::SceneNode*		MvNode;
 	
+	Ogre::ManualObject*		btDebug_Manual;
+	Ogre::SceneNode*		btDebug_Node;
+
 	int Physics_Type;
 	int Physics_Shape;
 
@@ -66,6 +69,12 @@ protected:
 	static LRESULT CALLBACK MeshViewer_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Mesh_Properties_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
+	// -------------------------------- Physics Shapes
+	void Set_Debug_Shapes();
+	void Show_Physics_Box();
+	void Show_Physics_Capsule();
+
+	// -------------------------------- 
 	void SetUp_Area_Trimesh(HWND hDlg);
 
 	void Set_ResourceMesh_File(HWND hDlg);
@@ -107,6 +116,8 @@ protected:
 	HWND CB_hWnd;
 
 	Ogre::Entity*		MvEnt;
+	btRigidBody			*Phys_Body;
+	btCollisionShape	*Phys_Shape;
 
 	Ogre::RenderWindow* MeshView_Window;
 	Ogre::SceneManager* mSceneMgrMeshView;

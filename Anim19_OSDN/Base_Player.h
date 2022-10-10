@@ -68,6 +68,8 @@ public:
 	bool IsMOving_Right;
 	bool IsMOving_Left;
 
+	bool Physics_Debug_On;
+
 	HTREEITEM FileViewItem;
 
 	char Player_Name[255]; // Players Name must be unique [171221]
