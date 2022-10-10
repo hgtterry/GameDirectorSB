@@ -73,6 +73,7 @@ protected:
 	void Set_Debug_Shapes();
 	void Show_Physics_Box();
 	void Show_Physics_Capsule();
+	void Show_Physics_Cone();
 
 	// -------------------------------- 
 	void SetUp_Area_Trimesh(HWND hDlg);

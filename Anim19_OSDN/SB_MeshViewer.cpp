@@ -179,6 +179,8 @@ bool SB_MeshViewer::StartMeshViewer()
 
 	App->RenderBackGround = 1;
 
+	Set_Debug_Shapes();
+
 	if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area)
 	{
 		strcpy(mResource_Folder, App->EquityDirecory_FullPath);
@@ -729,6 +731,8 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 				App->SBC_Objects_Create->Add_Objects_From_MeshViewer();
 			}
 
+			App->SBC_MeshViewer->Set_Debug_Shapes();
+
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -758,6 +762,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 			App->SBC_MeshViewer->Delete_Resources_Group();
 
+			App->SBC_MeshViewer->Set_Debug_Shapes();
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -993,7 +998,8 @@ void SB_MeshViewer::ShowMesh(char* MeshFile)
 	Get_Mesh_Assets();
 
 	//Show_Physics_Box();
-	Show_Physics_Capsule();
+	//Show_Physics_Capsule();
+	Show_Physics_Cone();
 	//	Check_HasAnimations();
 }
 
@@ -1353,7 +1359,34 @@ LRESULT CALLBACK SB_MeshViewer::Mesh_Properties_Proc(HWND hDlg, UINT message, WP
 // *************************************************************************
 void SB_MeshViewer::Set_Debug_Shapes()
 {
-	
+	int Count = 0;
+
+	while (Count < App->SBC_Scene->Player_Count)
+	{
+		if (App->SBC_Scene->B_Player[Count]->Physics_Debug_On == 1)
+		{
+			int f = App->SBC_Scene->B_Player[Count]->Phys_Body->getCollisionFlags();
+			App->SBC_Scene->B_Player[Count]->Phys_Body->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+		}
+
+		Count++;
+	}
+
+	Count = 0;
+	while (Count < App->SBC_Scene->Object_Count)
+	{
+		if (App->SBC_Scene->B_Object[Count]->Physics_Debug_On == 1)
+		{
+			int f = App->SBC_Scene->B_Object[Count]->Phys_Body->getCollisionFlags();
+			App->SBC_Scene->B_Object[Count]->Phys_Body->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+		}
+
+		Count++;
+	}
+
+	App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 0;
+	App->Cl19_Ogre->RenderFrame();
+	App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 1;
 }
 
 // *************************************************************************
@@ -1460,6 +1493,69 @@ void SB_MeshViewer::Show_Physics_Capsule()
 	float Radius = App->Cl_Objects_Com->GetMesh_BB_Radius(MvNode);
 	
 	btCollisionShape* newRigidShape = new btCapsuleShape(Radius, sy);
+	newRigidShape->calculateLocalInertia(mass, localInertia);
+
+	App->Cl_Bullet->collisionShapes.push_back(newRigidShape);
+
+	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
+
+	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, newRigidShape, localInertia);
+
+	Phys_Body = new btRigidBody(rbInfo);
+	Phys_Body->setRestitution(1.0);
+	Phys_Body->setFriction(1.5);
+	Phys_Body->setUserPointer(MvNode);
+	Phys_Body->setWorldTransform(startTransform);
+
+	Phys_Body->setCustomDebugColor(btVector3(0, 1, 1));
+
+	App->Cl_Bullet->dynamicsWorld->addRigidBody(Phys_Body);
+
+	//Set_Physics(Index);
+}
+
+// *************************************************************************
+// *		Show_Physics_Cone:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void SB_MeshViewer::Show_Physics_Cone()
+{
+	btDebug_Manual->beginUpdate(0);
+	btDebug_Manual->position(0, 0, 0);
+	btDebug_Manual->colour(1, 1, 1);
+	btDebug_Manual->position(0, 0, 0);
+	btDebug_Manual->colour(1, 1, 1);
+	btDebug_Manual->end();
+
+	if (Phys_Body)
+	{
+		App->Cl_Bullet->dynamicsWorld->removeCollisionObject(Phys_Body);
+		Phys_Body = nullptr;
+	}
+
+	AxisAlignedBox worldAAB = MvEnt->getBoundingBox();
+	worldAAB.transformAffine(MvNode->_getFullTransform());
+	Ogre::Vector3 Centre = worldAAB.getCenter();
+
+	btTransform startTransform;
+	startTransform.setIdentity();
+	startTransform.setRotation(btQuaternion(0.0f, 0.0f, 0.0f, 1));
+
+	btScalar mass;
+	mass = 0.0f;
+	
+	btVector3 localInertia(0, 0, 0);
+	btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
+
+	startTransform.setOrigin(initialPosition);
+
+	Ogre::Vector3 Size = App->Cl_Objects_Com->GetMesh_BB_Size(MvNode);
+	float sx = Size.x / 2;
+	float sy = Size.y;// / 2;
+	float sz = Size.z / 2;
+
+	float Radius = App->Cl_Objects_Com->GetMesh_BB_Radius(MvNode);
+	
+	btCollisionShape* newRigidShape = new btConeShape(Radius, sy);
 	newRigidShape->calculateLocalInertia(mass, localInertia);
 
 	App->Cl_Bullet->collisionShapes.push_back(newRigidShape);

@@ -362,13 +362,14 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_Debug_Proc(HWND hDlg, UINT message, WP
 			{
 				App->SBC_Object->Show_Physics_Debug = 0;
 				App->SBC_Scene->B_Object[Index]->Phys_Body->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
-
+				App->SBC_Scene->B_Object[Index]->Physics_Debug_On = 0;
 				App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 0;
 				App->Cl19_Ogre->RenderFrame();
 				App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 1;
 			}
 			else
 			{
+				App->SBC_Scene->B_Object[Index]->Physics_Debug_On = 1;
 				App->SBC_Object->Show_Physics_Debug = 1;
 				App->SBC_Scene->B_Object[Index]->Phys_Body->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 			}
