@@ -28,6 +28,7 @@ public:
 	SB_Object(void);
 	~SB_Object(void);
 
+	void Delete_Object();
 	void Start_Object_PropsPanel(void);
 	void Hide_Object_Dlg(bool Show);
 	void Rename_Object(int Index);

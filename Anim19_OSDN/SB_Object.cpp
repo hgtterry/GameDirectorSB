@@ -489,3 +489,24 @@ int SB_Object::GetIndex_By_Name(char* Name)
 
 	return -1;
 }
+
+// **************************************************************************
+// *	  		Delete_Object:- Terry and Hazel Flanigan 2022				*
+// **************************************************************************
+void SB_Object::Delete_Object()
+{
+	int MeshIndex = App->SBC_Properties->Current_Selected_Object;
+	btRigidBody* body = App->SBC_Scene->B_Object[MeshIndex]->Phys_Body;
+
+	if (body)
+	{
+		App->Cl_Bullet->dynamicsWorld->removeCollisionObject(body);
+	}
+
+	App->SBC_Scene->B_Object[MeshIndex]->Deleted = 1;
+	App->SBC_Scene->B_Object[MeshIndex]->Object_Node->setVisible(false);
+
+	App->SBC_FileView->DeleteItem();
+	App->SBC_Scene->Scene_Modified = 1;
+
+}

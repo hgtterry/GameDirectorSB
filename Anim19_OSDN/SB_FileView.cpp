@@ -1687,7 +1687,7 @@ void SB_FileView::Context_Delete(HWND hDlg)
 	{
 		if (App->SBC_Scene->Area_Count == 1)
 		{
-			App->Say("Can not delete ther must be at least one Area");
+			App->Say("Can not delete there must be at least one Area");
 		}
 
 		return;
@@ -1697,7 +1697,7 @@ void SB_FileView::Context_Delete(HWND hDlg)
 	{
 		if (App->SBC_Scene->Camera_Count == 1)
 		{
-			App->Say("Can not delete ther must be at least one Camera");
+			App->Say("Can not delete there must be at least one Camera");
 		}
 
 		return;
@@ -1707,7 +1707,7 @@ void SB_FileView::Context_Delete(HWND hDlg)
 	{
 		if (App->SBC_Scene->Player_Count == 1)
 		{
-			App->Say("Can not delete ther must be at least one Player");
+			App->Say("Can not delete there must be at least one Player");
 		}
 
 		return;
@@ -1715,37 +1715,57 @@ void SB_FileView::Context_Delete(HWND hDlg)
 
 	if (App->SBC_FileView->Context_Selection == Enums::FileView_Objects_File)
 	{
-		int MeshIndex = App->SBC_Properties->Current_Selected_Object;
-		btRigidBody* body = App->SBC_Scene->B_Object[MeshIndex]->Phys_Body;
+		App->Cl_Dialogs->YesNo("Remove Object","Are you sure");
 
-		if (body)
+		bool Doit = App->Cl_Dialogs->Canceled;
+		if (Doit == 0)
 		{
-			App->Cl_Bullet->dynamicsWorld->removeCollisionObject(body);
+			App->SBC_Object->Delete_Object();
+			App->SBC_FileView->Mark_Altered_Folder(FV_Objects_Folder);
 		}
 
-		App->SBC_Scene->B_Object[MeshIndex]->Deleted = 1;
-		App->SBC_Scene->B_Object[MeshIndex]->Object_Node->setVisible(false);
+		return;
+	}
 
-		App->SBC_FileView->DeleteItem();
-		App->SBC_Scene->Scene_Modified = 1;
+	if (App->SBC_FileView->Context_Selection == Enums::FileView_Messages_File)
+	{
+		App->Cl_Dialogs->YesNo("Remove Message", "Are you sure");
 
-		App->SBC_FileView->Mark_Altered_Folder(FV_Objects_Folder);
+		bool Doit = App->Cl_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+			App->SBC_Object->Delete_Object();
+			App->SBC_FileView->Mark_Altered_Folder(FV_Messages_Folder);
+		}
 
 		return;
 	}
 
-	if (App->SBC_FileView->Context_Selection == Enums::FileView_Messages_Folder)
+	if (App->SBC_FileView->Context_Selection == Enums::FileView_Sounds_File)
 	{
+		App->Cl_Dialogs->YesNo("Remove Sound", "Are you sure");
+
+		bool Doit = App->Cl_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+			App->SBC_Object->Delete_Object();
+			App->SBC_FileView->Mark_Altered_Folder(FV_Sounds_Folder);
+		}
+
 		return;
 	}
 
-	if (App->SBC_FileView->Context_Selection == Enums::FileView_Sounds_Folder)
+	if (App->SBC_FileView->Context_Selection == Enums::FileView_Move_File)
 	{
-		return;
-	}
+		App->Cl_Dialogs->YesNo("Remove Move Entity", "Are you sure");
 
-	if (App->SBC_FileView->Context_Selection == Enums::FileView_Move_Folder)
-	{
+		bool Doit = App->Cl_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+			App->SBC_Object->Delete_Object();
+			App->SBC_FileView->Mark_Altered_Folder(FV_Move_Folder);
+		}
+
 		return;
 	}
 
