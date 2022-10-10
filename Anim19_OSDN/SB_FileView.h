@@ -38,8 +38,10 @@ public:
 	void Change_Level_Name(void);
 	void Change_Item_Name(HTREEITEM Folder, char *FolderName);
 
+	void Mark_Altered_Folder(HTREEITEM Item);
 	void Mark_Altered(HTREEITEM Item);
 	void Mark_Clear(HTREEITEM Item);
+	void Mark_Clear_Folder(HTREEITEM Item);
 
 	void Set_FolderActive(HTREEITEM Folder);
 

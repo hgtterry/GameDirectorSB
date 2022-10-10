@@ -359,6 +359,8 @@ void SB_Object::Copy_Object(int Object_Index)
 
 	App->SBC_Objects_Create->Add_New_Object(Object_Count,0);
 
+	App->SBC_Scene->B_Object[Object_Count]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Objects_Folder, App->SBC_Scene->B_Object[Object_Count]->Mesh_Name, Object_Count, false);
+	
 	App->SBC_Scene->Object_Count++;
 
 	App->Say("Copied");
@@ -416,6 +418,8 @@ void SB_Object::Clear_Modified_Objects()
 
 		Count++;
 	}
+
+	App->SBC_FileView->Mark_Clear_Folder(App->SBC_FileView->FV_Objects_Folder);
 
 	App->SBC_Scene->Scene_Modified = 0;
 }

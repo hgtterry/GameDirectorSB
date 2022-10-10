@@ -316,7 +316,7 @@ void SB_FileView::Init_FileView(void)
 	InitCommonControls();	    // make our tree control to work
 
 								////====================================================//
-	hImageList = ImageList_Create(16, 16, FALSE, 6, 0); // Zero Index
+	hImageList = ImageList_Create(16, 16, FALSE, 8, 0); // Zero Index
 
 														//--------- Grayed Folder Closed Open 0 1
 	hBitMap = LoadBitmap(App->hInst, MAKEINTRESOURCE(IDB_FILEINACTIVE));
@@ -345,6 +345,11 @@ void SB_FileView::Init_FileView(void)
 
 	//--------- File changed Selected Open 7
 	hBitMap = LoadBitmap(App->hInst, MAKEINTRESOURCE(IDB_FILECHANGEDSELECTED));
+	ImageList_Add(hImageList, hBitMap, (HBITMAP)NULL);
+	DeleteObject(hBitMap);
+
+	//--------- File changed Selected Open 8 and 9
+	hBitMap = LoadBitmap(App->hInst, MAKEINTRESOURCE(IDB_FVFOLDERRED));
 	ImageList_Add(hImageList, hBitMap, (HBITMAP)NULL);
 	DeleteObject(hBitMap);
 
@@ -541,6 +546,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		App->SBC_Properties->Update_ListView_Level();
 	}
 
+	// ------------------------------------------------------------ Areas
 	if (!strcmp(FileView_Folder, "Area")) // Folder
 	{
 		App->SBC_FileView->Context_Selection = Enums::FileView_Areas_Folder;
@@ -564,12 +570,16 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 	}
 
+	// ------------------------------------------------------------ Objects
 	if (!strcmp(FileView_Folder, "Objects")) // Folder
 	{
+		App->SBC_FileView->Context_Selection = Enums::FileView_Objects_Folder;
 		return;
 	}
 	if (!strcmp(FileView_File, "Objects"))
 	{
+		App->SBC_FileView->Context_Selection = Enums::FileView_Objects_File;
+
 		HideRightPanes();
 		ShowWindow(App->SBC_Properties->Properties_Dlg_hWnd, 1);
 		App->SBC_Object->Hide_Object_Dlg(1);
@@ -594,8 +604,16 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		return;
 	}
 
+	// ------------------------------------------------------------ Players
+	if (!strcmp(FileView_Folder, "Player")) // Folder
+	{
+		App->SBC_FileView->Context_Selection = Enums::FileView_Player_Folder;
+		return;
+	}
 	if (!strcmp(FileView_File, "Player"))
 	{
+		App->SBC_FileView->Context_Selection = Enums::FileView_Player_File;
+
 		HideRightPanes();
 		ShowWindow(App->SBC_Properties->Properties_Dlg_hWnd, 1);
 		App->SBC_Player->Hide_Player_Dlg(1);
@@ -614,6 +632,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		return;
 	}
 
+	// ------------------------------------------------------------ Cameras
 	if (!strcmp(FileView_Folder, "Camera"))
 	{
 		App->SBC_FileView->Context_Selection = Enums::FileView_Cameras_Folder;
@@ -638,7 +657,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		return;
 	}
 
-
+	// ------------------------------------------------------------ Sounds
 	if (!strcmp(FileView_Folder, "Sounds")) // Folder
 	{
 		App->SBC_FileView->Context_Selection = Enums::FileView_Sounds_Folder;
@@ -672,7 +691,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		return;
 	}
 
-	// Messages
+	// ------------------------------------------------------------ Messages
 	if (!strcmp(FileView_Folder, "Messages")) // Folder
 	{
 		App->SBC_FileView->Context_Selection = Enums::FileView_Messages_Folder;
@@ -708,7 +727,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		return;
 	}
 
-	// Move Entities
+	// ------------------------------------------------------------ Move Entity
 	if (!strcmp(FileView_Folder, "Move_Entities")) // Folder
 	{
 		App->SBC_FileView->Context_Selection = Enums::FileView_Move_Folder;
@@ -1203,6 +1222,19 @@ void SB_FileView::Mark_Altered(HTREEITEM Item)
 }
 
 // *************************************************************************
+// *		Mark_Altered_Folder:- Terry and Hazel Flanigan 2022		 	   *
+// *************************************************************************
+void SB_FileView::Mark_Altered_Folder(HTREEITEM Item)
+{
+	TVITEM Sitem;
+	Sitem.mask = TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	Sitem.hItem = Item;
+	Sitem.iImage = 8;
+	Sitem.iSelectedImage = 9;
+	SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_SETITEM, 0, (LPARAM)(const LPTVITEM)&Sitem);
+}
+
+// *************************************************************************
 // *				Mark_Clear:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 void SB_FileView::Mark_Clear(HTREEITEM Item)
@@ -1212,6 +1244,19 @@ void SB_FileView::Mark_Clear(HTREEITEM Item)
 	Sitem.hItem = Item;
 	Sitem.iImage = 4;
 	Sitem.iSelectedImage = 5;
+	SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_SETITEM, 0, (LPARAM)(const LPTVITEM)&Sitem);
+}
+
+// *************************************************************************
+// *				Mark_Folder:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void SB_FileView::Mark_Clear_Folder(HTREEITEM Item)
+{
+	TVITEM Sitem;
+	Sitem.mask = TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	Sitem.hItem = Item;
+	Sitem.iImage = 2;
+	Sitem.iSelectedImage = 3;
 	SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_SETITEM, 0, (LPARAM)(const LPTVITEM)&Sitem);
 }
 
@@ -1637,44 +1682,44 @@ void SB_FileView::Context_New(HWND hDlg)
 // *************************************************************************
 void SB_FileView::Context_Delete(HWND hDlg)
 {
-	if (App->SBC_Project->Project_Loaded == 0)
+
+	if (App->SBC_FileView->Context_Selection == Enums::FileView_Areas_File)
 	{
-		App->Say("A Project must be created First");
+		if (App->SBC_Scene->Area_Count == 1)
+		{
+			App->Say("Can not delete ther must be at least one Area");
+		}
 
 		return;
 	}
 
-	if (App->SBC_FileView->Context_Selection == Enums::FileView_Areas_Folder)
+	if (App->SBC_FileView->Context_Selection == Enums::FileView_Cameras_File)
 	{
-		
+		if (App->SBC_Scene->Camera_Count == 1)
+		{
+			App->Say("Can not delete ther must be at least one Camera");
+		}
 
 		return;
 	}
 
-	if (App->SBC_Scene->Area_Added == 0)
+	if (App->SBC_FileView->Context_Selection == Enums::FileView_Player_File)
 	{
-		App->Say("An Area must be Added Firest before adding items");
-
-		return;
-	}
-
-	if (App->SBC_FileView->Context_Selection == Enums::FileView_Cameras_Folder)
-	{
-		
+		if (App->SBC_Scene->Player_Count == 1)
+		{
+			App->Say("Can not delete ther must be at least one Player");
+		}
 
 		return;
 	}
 
 	if (App->SBC_FileView->Context_Selection == Enums::FileView_Objects_File)
 	{
-		Debug
 		int MeshIndex = App->SBC_Properties->Current_Selected_Object;
 		btRigidBody* body = App->SBC_Scene->B_Object[MeshIndex]->Phys_Body;
 
 		if (body)
 		{
-			int UI = body->getUserIndex();
-			int Index = body->getUserIndex2();
 			App->Cl_Bullet->dynamicsWorld->removeCollisionObject(body);
 		}
 
@@ -1684,29 +1729,23 @@ void SB_FileView::Context_Delete(HWND hDlg)
 		App->SBC_FileView->DeleteItem();
 		App->SBC_Scene->Scene_Modified = 1;
 
-		App->SBC_FileView->Mark_Altered(FV_Objects_Folder);
+		App->SBC_FileView->Mark_Altered_Folder(FV_Objects_Folder);
 
 		return;
 	}
 
 	if (App->SBC_FileView->Context_Selection == Enums::FileView_Messages_Folder)
 	{
-		
-
 		return;
 	}
 
 	if (App->SBC_FileView->Context_Selection == Enums::FileView_Sounds_Folder)
 	{
-		
-
 		return;
 	}
 
 	if (App->SBC_FileView->Context_Selection == Enums::FileView_Move_Folder)
 	{
-		
-
 		return;
 	}
 

@@ -298,6 +298,7 @@
     <Image Include="Resource\FileView\FileInactive.bmp" />
     <Image Include="Resource\FileView\FIleSelected.bmp" />
     <Image Include="Resource\FileView\Folder.bmp" />
+    <Image Include="Resource\FileView\Folder_Altered.bmp" />
     <Image Include="Resource\FileView\SoundOff.bmp" />
     <Image Include="Resource\FileView\SoundOn.bmp" />
     <Image Include="Resource\FileView\StartUpOff.bmp" />
