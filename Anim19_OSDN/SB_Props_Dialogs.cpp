@@ -317,9 +317,20 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_Debug_Proc(HWND hDlg, UINT message, WP
 
 		if (some_item->idFrom == IDC_BT_PHYSDEBUG && some_item->code == NM_CUSTOMDRAW)
 		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->SBC_Object->Show_Physics_Debug);
-			return CDRF_DODEFAULT;
+			if (App->SBC_Scene->Object_Count > 0)
+			{
+				int Index = App->SBC_Properties->Current_Selected_Object;
+
+				LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+				App->Custom_Button_Toggle(item, App->SBC_Scene->B_Object[Index]->Physics_Debug_On);
+				return CDRF_DODEFAULT;
+			}
+			else
+			{
+				LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+				App->Custom_Button_Toggle(item, 0);
+				return CDRF_DODEFAULT;
+			}
 		}
 
 		if (some_item->idFrom == IDC_BT_SHOWMESH && some_item->code == NM_CUSTOMDRAW)
@@ -358,20 +369,25 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_Debug_Proc(HWND hDlg, UINT message, WP
 
 			int f = App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionFlags();
 
-			if (App->SBC_Object->Show_Physics_Debug == 1)
+			if (App->SBC_Scene->Object_Count > 0)
 			{
-				App->SBC_Object->Show_Physics_Debug = 0;
-				App->SBC_Scene->B_Object[Index]->Phys_Body->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
-				App->SBC_Scene->B_Object[Index]->Physics_Debug_On = 0;
-				App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 0;
-				App->Cl19_Ogre->RenderFrame();
-				App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 1;
-			}
-			else
-			{
-				App->SBC_Scene->B_Object[Index]->Physics_Debug_On = 1;
-				App->SBC_Object->Show_Physics_Debug = 1;
-				App->SBC_Scene->B_Object[Index]->Phys_Body->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+				if (App->SBC_Scene->B_Object[Index]->Physics_Debug_On == 1)
+				{
+					App->SBC_Object->Show_Physics_Debug = 0;
+					App->SBC_Scene->B_Object[Index]->Phys_Body->setCollisionFlags(f | (1 << 5)); // Off
+
+					App->SBC_Scene->B_Object[Index]->Physics_Debug_On = 0;
+
+					App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 0;
+					App->Cl19_Ogre->RenderFrame();
+					App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 1;
+				}
+				else
+				{
+					App->SBC_Scene->B_Object[Index]->Physics_Debug_On = 1;
+					App->SBC_Object->Show_Physics_Debug = 1;
+					App->SBC_Scene->B_Object[Index]->Phys_Body->setCollisionFlags(f & (~(1 << 5))); // on
+				}
 			}
 
 			return 1;
