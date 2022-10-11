@@ -244,8 +244,9 @@ void SB_Camera::Add_New_Camera(void)
 
 	strcpy(App->SBC_Scene->B_Camera[Index]->Camera_Name, Camera_Name);
 
-	App->SBC_Scene->B_Camera[Index]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Cameras_Folder,
-		App->SBC_Scene->B_Camera[Index]->Camera_Name, Index,true);
+	App->SBC_Scene->Scene_Modified = 1;
+	App->SBC_Scene->B_Camera[Index]->Altered = 1;
+	App->SBC_Scene->B_Camera[Index]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Cameras_Folder,App->SBC_Scene->B_Camera[Index]->Camera_Name, Index,true);
 
 	App->SBC_Scene->Camera_Count++;
 }

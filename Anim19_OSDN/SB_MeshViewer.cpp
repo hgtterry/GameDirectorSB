@@ -179,7 +179,7 @@ bool SB_MeshViewer::StartMeshViewer()
 
 	App->RenderBackGround = 1;
 
-	Set_Debug_Shapes();
+	//Set_Debug_Shapes();
 
 	if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area)
 	{

@@ -784,6 +784,10 @@ bool SB_Objects_Create::First_Area_Start_Project()
 	App->Cl_Bullet->Reset_Physics();
 	App->SBC_Physics->Enable_Physics(1);
 
+	//------------------------------------------------------------------------------ WHY
+	int f = App->SBC_Scene->B_Player[0]->Phys_Body->getCollisionFlags();
+	App->SBC_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+
 	App->SBC_Scene->Scene_Loaded = 1;
 	App->SBC_Scene->Area_Added = 1;
 	
