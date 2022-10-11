@@ -479,7 +479,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 	case WM_COMMAND:
 
 
-		/*if (LOWORD(wParam) == IDC_CKPLACECAMERA)
+		if (LOWORD(wParam) == IDC_CKPLACECAMERA)
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_CKPLACECAMERA);
 			SendMessage(temp, BM_SETCHECK, 1, 0);
@@ -489,7 +489,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 			App->SBC_MeshViewer->Placement_Camera = 1;
 			return TRUE;
-		}*/
+		}
 
 		if (LOWORD(wParam) == IDC_CKPLACECENTER)
 		{
