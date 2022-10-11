@@ -1295,6 +1295,8 @@ bool SB_Project::Load_Project_Objects()
 			sscanf(chr_Tag1, "%f",&x);
 			App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Move_Distance = x;
 
+			App->SBC_Scene->B_Object[Count]->S_MoveType[0]->IsNegative = App->Cl_Ini->GetInt(buff, "Move_IsNegative", 0);
+
 			// --------------------------- Speed
 			App->Cl_Ini->GetString(buff, "Move_Speed", chr_Tag1, MAX_PATH);
 			sscanf(chr_Tag1, "%f", &x);

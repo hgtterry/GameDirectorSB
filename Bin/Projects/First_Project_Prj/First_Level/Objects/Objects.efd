@@ -38,10 +38,10 @@ Move_ObjectID=0
 Move_ObjectIndex=0
 Move_ObjectName=Gate
 Move_Re_Trigger=0
-Move_Speed=10.000000
+Move_Speed=20.000000
 Move_Triggered=0
 Move_WhatDirection=1
-Move_Sound=magicspell.ogg
+Move_Sound=Door_Open.wav
 Move_Play_Sound=1
 Move_Volume=0.500000
  
