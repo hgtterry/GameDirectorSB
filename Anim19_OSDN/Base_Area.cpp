@@ -53,7 +53,7 @@ Base_Area::Base_Area()
 	Area_Path_And_FileName[0] = 0;
 	Area_Resource_Path[0] = 0;
 
-	Altered = 0;
+	Altered = 1;
 	Physics_Debug_On = 0;
 }
 

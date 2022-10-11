@@ -47,7 +47,7 @@ Base_Player::Base_Player()
 	Forward_Timer = 0;
 	Ground_speed = 4.2;
 
-	Altered = 0;
+	Altered = 1;
 
 	Capsule_Mass = 1.0;
 	Capsule_Radius = 4.4;
