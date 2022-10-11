@@ -300,9 +300,9 @@ bool GD19_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 
 	MoveCamera();
 
-	if (App->Cl_Collision->DoMove == 1)
+	if (App->SBC_Collision->DoMove == 1)
 	{
-		App->Cl_Collision->MoveObject(evt.timeSinceLastFrame);
+		App->SBC_Collision->MoveObject_Listener(evt.timeSinceLastFrame);
 	}
 
 	return 1;

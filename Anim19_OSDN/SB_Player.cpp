@@ -532,7 +532,7 @@ void SB_Player::Check_Collisions(void)
 				int numContacts = contactManifold->getNumContacts();
 				for (int j = 0; j < numContacts; j++)
 				{
-					App->Cl_Collision->Do_Collectable(Col_Object_Index);
+					//App->Cl_Collision->Do_Collectable(Col_Object_Index);
 					btManifoldPoint& pt = contactManifold->getContactPoint(j);
 
 					Life_Time = pt.getLifeTime();
@@ -563,7 +563,7 @@ void SB_Player::Check_Collisions(void)
 				int numContacts = contactManifold->getNumContacts();
 				for (int j = 0; j < numContacts; j++)
 				{
-					App->Cl_Collision->Do_Teleport(Col_Object_Index);
+					//App->Cl_Collision->Do_Teleport(Col_Object_Index);
 					btManifoldPoint& pt = contactManifold->getContactPoint(j);
 
 					Life_Time = pt.getLifeTime();
@@ -741,7 +741,7 @@ void SB_Player::Check_Collisions_New(void)
 						{
 							if (App->SBC_Scene->B_Object[Col_Object_Index]->Triggered == 0)
 							{
-								App->Cl_Collision->Move_Entity(Col_Object_Index);
+								App->SBC_Collision->Move_Entity_Collision(Col_Object_Index);
 							}
 						}
 						else if (Round == 0)

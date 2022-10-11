@@ -32,5 +32,20 @@ public:
 	bool Message_Entity(int Index);
 	bool Play_Sound(int Index);
 
+	bool Move_Entity_Collision(int Index);
+	void MoveObject_Listener(Ogre::Real Time);
+
+	float FinalPosition;
+	int ObjectIndex;
+	bool DoMove;
+
+	float x;
+	float y;
+	float z;
+
+	float px;
+	float py;
+	float pz;
+
 };
 

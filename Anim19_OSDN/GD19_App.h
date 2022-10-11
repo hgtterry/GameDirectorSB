@@ -29,7 +29,6 @@ distribution.
 #include "GD19_Panels.h"
 #include "GD19_Scene_Data.h"
 #include "GD19_Bullet.h"
-#include "GD19_Collision.h"
 #include "GD19_Ini.h"
 #include "GD19_Panel_Com.h"
 #include "GD19_Visuals.h"
@@ -90,7 +89,6 @@ public:
 	
 	GD19_Scene_Data*	Cl_Scene_Data;
 	GD19_Bullet*		Cl_Bullet;
-	GD19_Collision*		Cl_Collision;
 	T_Ini*				Cl_Ini;
 	GD19_Panel_Com*		Cl_Panels_Com;
 	GD19_Visuals*		Cl_Visuals;

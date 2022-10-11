@@ -1363,8 +1363,12 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 		strcpy(App->SBC_Scene->B_Object[Index]->Mesh_Name, App->Cl_Dialogs->Chr_Text);
 
 		Mark_As_Altered(Index);
-		//App->Cl_FileView->ChangeItem_Name(NULL, App->Cl_Dialogs->Chr_Text);
+		
+		App->SBC_FileView->Change_Item_Name(App->SBC_Scene->B_Object[Index]->FileViewItem, App->Cl_Dialogs->Chr_Text);
+
 		Update_ListView_Move_Entities();
+
+		App->Cl_Scene_Data->Reset_Triggers();
 	}
 
 
@@ -1444,6 +1448,8 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 			Mark_As_Altered(Index);
 
 			Update_ListView_Move_Entities();
+
+			App->Cl_Scene_Data->Reset_Triggers();
 		}
 		return 1;
 	}
@@ -1478,7 +1484,10 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 			Mark_As_Altered(Index);
 
 			Update_ListView_Move_Entities();
+
+			App->Cl_Scene_Data->Reset_Triggers();
 		}
+
 		return 1;
 	}
 
@@ -1501,7 +1510,9 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 			Mark_As_Altered(Index);
 
 			Update_ListView_Move_Entities();
+			App->Cl_Scene_Data->Reset_Triggers();
 		}
+
 		return 1;
 	}
 
@@ -1518,6 +1529,9 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 		Mark_As_Altered(Index);
 
 		Update_ListView_Move_Entities();
+
+		App->Cl_Scene_Data->Reset_Triggers();
+
 		return 1;
 	}
 
@@ -1538,6 +1552,8 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 		Mark_As_Altered(Index);
 
 		Update_ListView_Move_Entities();
+
+		App->Cl_Scene_Data->Reset_Triggers();
 
 		return 1;
 	}
@@ -1569,6 +1585,8 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 		Mark_As_Altered(Index);
 
 		Update_ListView_Move_Entities();
+
+		App->Cl_Scene_Data->Reset_Triggers();
 		return 1;
 	}
 

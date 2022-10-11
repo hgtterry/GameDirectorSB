@@ -35,7 +35,6 @@ GD19_App::GD19_App(void)
 	Cl_Panels =			nullptr;
 	Cl_Scene_Data =		nullptr;
 	Cl_Bullet =			nullptr;
-	Cl_Collision =		nullptr;
 	Cl_Ini =			nullptr;
 	Cl_Panels_Com =		nullptr;
 	Cl_Visuals =		nullptr;
@@ -191,7 +190,6 @@ bool GD19_App::InitApp(void)
 
 	Cl_Scene_Data =		new GD19_Scene_Data();
 	Cl_Bullet =			new GD19_Bullet();		
-	Cl_Collision =		new GD19_Collision();
 	Cl_Ini =			new T_Ini();
 	Cl_Panels_Com =		new GD19_Panel_Com();
 	Cl_Visuals =		new GD19_Visuals();

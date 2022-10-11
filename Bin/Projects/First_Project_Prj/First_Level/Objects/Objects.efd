@@ -18,7 +18,7 @@ Mesh_Quat=0.707106,-0.000000,0.707105,0.000000
 Physics_Quat=0.707107,-0.000000,0.707106,0.000000
  
 [Object_1]
-Mesh_Name=Move_Door
+Mesh_Name=Move
 Mesh_File=DoorEntity_GD.mesh
 Mesh_Resource_Path=
 Material_File=Not Found
@@ -95,5 +95,48 @@ Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
  
+[Object_5]
+Mesh_Name=MoveEnt_5
+Mesh_File=DoorEntity_GD.mesh
+Mesh_Resource_Path=
+Material_File=Not Found
+Object_ID=5
+Object_Type=2
+Object_Shape=1
+Object_Usage=14
+Mesh_Pos=110.000000,-57.000000,0.000000
+Mesh_Scale=1.000000,1.000000,1.000000
+Mesh_Rot=0.000000,0.000000,0.000000
+Mesh_Quat=1.000000,0.000000,0.000000,0.000000
+Physics_Quat=1.000000,0.000000,0.000000,0.000000
+Move_Distance=-50.000000
+Move_IsNegative=1
+Move_NewPos=0.000000
+Move_ObjectID=6
+Move_ObjectIndex=6
+Move_ObjectName=Object_6
+Move_Re_Trigger=0
+Move_Speed=10.000000
+Move_Triggered=0
+Move_WhatDirection=1
+Move_Sound=Door_Open.wav
+Move_Play_Sound=1
+Move_Volume=0.500000
+ 
+[Object_6]
+Mesh_Name=Object_6
+Mesh_File=table-with-leaning-feet.mesh
+Mesh_Resource_Path=
+Material_File=table-with-leaning-feet.material
+Object_ID=6
+Object_Type=2
+Object_Shape=1
+Object_Usage=1
+Mesh_Pos=126.196213,-32.100010,129.438828
+Mesh_Scale=0.410001,0.410001,0.410001
+Mesh_Rot=0.000000,0.000000,0.000000
+Mesh_Quat=1.000000,0.000000,0.000000,0.000000
+Physics_Quat=1.000000,0.000000,0.000000,0.000000
+ 
 [Counters]
-Objects_Count=5
+Objects_Count=7
