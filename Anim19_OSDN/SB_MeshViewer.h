@@ -77,6 +77,7 @@ protected:
 	void Show_Physics_Sphere();
 	void Show_Physics_Cylinder();
 	void Show_Physics_Trimesh();
+	void Show_Physics_None();
 
 	// -------------------------------- 
 	void SetUp_Area_Trimesh(HWND hDlg);
@@ -86,7 +87,7 @@ protected:
 	bool Set_OgreWindow(void);
 	void Close_OgreWindow(void);
 
-	void ShowMesh(char* MeshFile);
+	void Update_Mesh(char* MeshFile);
 	void Get_Mesh_Assets();
 	void Reset_Shape_Flags();
 

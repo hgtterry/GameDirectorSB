@@ -48,7 +48,7 @@ SB_MeshViewer::SB_MeshViewer()
 	Mesh_Viewer_Mode = 0; // 0 = Defaulet Objects 1 = Collectables
 
 	// ------------------------------------------------ 
-	Physics_Type = Enums::Bullet_Type_Dynamic;
+	Physics_Type = Enums::Bullet_Type_None;
 	Physics_Shape = Enums::NoShape;
 
 	SelectDynamic = 0;
@@ -562,7 +562,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 			App->SBC_MeshViewer->Add_Resources();
 
-			App->SBC_MeshViewer->ShowMesh(App->SBC_MeshViewer->Selected_MeshFile);
+			App->SBC_MeshViewer->Update_Mesh(App->SBC_MeshViewer->Selected_MeshFile);
 
 			return TRUE;
 
@@ -620,12 +620,16 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		if (LOWORD(wParam) == IDC_MVSTATIC)
 		{
 			App->SBC_MeshViewer->Physics_Type = Enums::Bullet_Type_Static;
+			App->SBC_MeshViewer->Physics_Shape = Enums::NoShape;
 			App->SBC_MeshViewer->SelectStatic = 1;
 			App->SBC_MeshViewer->SelectDynamic = 0;
 			App->SBC_MeshViewer->SelectTriMesh = 0;
+			
+			App->SBC_MeshViewer->Enable_ShapeButtons(true);
+
 			App->RedrawWindow_Dlg(hDlg);
 
-			App->SBC_MeshViewer->Enable_ShapeButtons(true);
+			App->SBC_MeshViewer->Show_Physics_None();
 
 			return 1;
 		}
@@ -633,12 +637,17 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		if (LOWORD(wParam) == IDC_DYNAMIC)
 		{
 			App->SBC_MeshViewer->Physics_Type = Enums::Bullet_Type_Dynamic;
+			App->SBC_MeshViewer->Physics_Shape = Enums::NoShape;
 			App->SBC_MeshViewer->SelectDynamic = 1;
 			App->SBC_MeshViewer->SelectStatic = 0;
 			App->SBC_MeshViewer->SelectTriMesh = 0;
-			App->RedrawWindow_Dlg(hDlg);
 
 			App->SBC_MeshViewer->Enable_ShapeButtons(true);
+
+			App->RedrawWindow_Dlg(hDlg);
+
+			App->SBC_MeshViewer->Show_Physics_None();
+
 			return 1;
 		}
 
@@ -983,9 +992,9 @@ void SB_MeshViewer::Set_ResourceMesh_File(HWND hDlg)
 }
 
 // *************************************************************************
-// *					ShowMesh Terry Bernie							   *
+// *			Update_Mesh:- Terry and Hazel Flanigan 2022				   *
 // *************************************************************************
-void SB_MeshViewer::ShowMesh(char* MeshFile)
+void SB_MeshViewer::Update_Mesh(char* MeshFile)
 {
 	if (MvEnt && MvNode)
 	{
@@ -1010,7 +1019,36 @@ void SB_MeshViewer::ShowMesh(char* MeshFile)
 
 	Get_Mesh_Assets();
 
-	//	Check_HasAnimations();
+	if (Physics_Shape == Enums::Shape_Box)
+	{
+		Show_Physics_Box();
+	}
+
+	if (Physics_Shape == Enums::Sphere)
+	{
+		Show_Physics_Sphere();
+	}
+
+	if (Physics_Shape == Enums::Capsule)
+	{
+		Show_Physics_Capsule();
+	}
+
+	if (Physics_Shape == Enums::Cylinder)
+	{
+		Show_Physics_Cylinder();
+	}
+
+	if (App->SBC_MeshViewer->Physics_Shape == Enums::Cone)
+	{
+		Show_Physics_Cone();
+	}
+
+	if (App->SBC_MeshViewer->Physics_Type == Enums::Bullet_Type_TriMesh)
+	{
+		Show_Physics_Trimesh();
+	}
+
 }
 
 // *************************************************************************
@@ -1147,8 +1185,8 @@ bool SB_MeshViewer::Get_Files()
 	SetDlgItemText(MainDlgHwnd, IDC_SELECTEDNAME, buff);
 
 	strcpy(App->SBC_MeshViewer->Selected_MeshFile, buff);
-	App->SBC_MeshViewer->ShowMesh(App->SBC_MeshViewer->Selected_MeshFile);
-	//App->SBC_MeshViewer->Get_Details_hLV();
+	App->SBC_MeshViewer->Update_Mesh(App->SBC_MeshViewer->Selected_MeshFile);
+
 	return 0;
 }
 
@@ -1272,7 +1310,7 @@ bool SB_MeshViewer::GetMeshFiles(char* Location, bool ResetList)
 	SendMessage(ListHwnd, LB_GETTEXT, (WPARAM)0, (LPARAM)buff);
 
 	strcpy(Selected_MeshFile, buff);
-	ShowMesh(Selected_MeshFile);
+	Update_Mesh(Selected_MeshFile);
 
 	return 1;
 }
@@ -1399,6 +1437,24 @@ void SB_MeshViewer::Set_Debug_Shapes()
 	App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 1;
 }
 
+// *************************************************************************
+// *			Show_Physics_None:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+void SB_MeshViewer::Show_Physics_None()
+{
+	btDebug_Manual->beginUpdate(0);
+	btDebug_Manual->position(0, 0, 0);
+	btDebug_Manual->colour(1, 1, 1);
+	btDebug_Manual->position(0, 0, 0);
+	btDebug_Manual->colour(1, 1, 1);
+	btDebug_Manual->end();
+
+	if (Phys_Body)
+	{
+		App->Cl_Bullet->dynamicsWorld->removeCollisionObject(Phys_Body);
+		Phys_Body = nullptr;
+	}
+}
 // *************************************************************************
 // *			Show_Physics_Box:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
