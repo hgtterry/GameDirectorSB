@@ -479,7 +479,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 	case WM_COMMAND:
 
 
-		if (LOWORD(wParam) == IDC_CKPLACECAMERA)
+		/*if (LOWORD(wParam) == IDC_CKPLACECAMERA)
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_CKPLACECAMERA);
 			SendMessage(temp, BM_SETCHECK, 1, 0);
@@ -489,7 +489,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 			App->SBC_MeshViewer->Placement_Camera = 1;
 			return TRUE;
-		}
+		}*/
 
 		if (LOWORD(wParam) == IDC_CKPLACECENTER)
 		{
@@ -612,6 +612,8 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 			App->SBC_MeshViewer->Physics_Shape = Enums::NoShape;
 
+			App->SBC_MeshViewer->Show_Physics_Trimesh();
+
 			return 1;
 		}
 
@@ -640,7 +642,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			return 1;
 		}
 
-		// --------------------------------------------------------------------- Shape
+		// --------------------------------------------------------------------- Shapes
 		if (LOWORD(wParam) == IDC_BOX)
 		{
 			App->SBC_MeshViewer->Reset_Shape_Flags();
@@ -648,6 +650,8 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			App->RedrawWindow_Dlg(hDlg);
 
 			App->SBC_MeshViewer->Physics_Shape = Enums::Shape_Box;
+
+			App->SBC_MeshViewer->Show_Physics_Box();
 			return TRUE;
 		}
 
@@ -658,6 +662,8 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			App->RedrawWindow_Dlg(hDlg);
 
 			App->SBC_MeshViewer->Physics_Shape = Enums::Sphere;
+
+			App->SBC_MeshViewer->Show_Physics_Sphere();
 			return TRUE;
 		}
 
@@ -668,6 +674,8 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			App->RedrawWindow_Dlg(hDlg);
 
 			App->SBC_MeshViewer->Physics_Shape = Enums::Capsule;
+
+			App->SBC_MeshViewer->Show_Physics_Capsule();
 			return TRUE;
 		}
 
@@ -678,6 +686,9 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			App->RedrawWindow_Dlg(hDlg);
 
 			App->SBC_MeshViewer->Physics_Shape = Enums::Cylinder;
+
+			App->SBC_MeshViewer->Show_Physics_Cylinder();
+
 			return TRUE;
 		}
 
@@ -688,6 +699,8 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			App->RedrawWindow_Dlg(hDlg);
 
 			App->SBC_MeshViewer->Physics_Shape = Enums::Cone;
+
+			App->SBC_MeshViewer->Show_Physics_Cone();
 			return TRUE;
 		}
 
@@ -997,9 +1010,6 @@ void SB_MeshViewer::ShowMesh(char* MeshFile)
 
 	Get_Mesh_Assets();
 
-	//Show_Physics_Box();
-	//Show_Physics_Capsule();
-	Show_Physics_Cone();
 	//	Check_HasAnimations();
 }
 
@@ -1575,5 +1585,277 @@ void SB_MeshViewer::Show_Physics_Cone()
 	App->Cl_Bullet->dynamicsWorld->addRigidBody(Phys_Body);
 
 	//Set_Physics(Index);
+}
+
+// *************************************************************************
+// *		Show_Physics_Sphere:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void SB_MeshViewer::Show_Physics_Sphere()
+{
+	btDebug_Manual->beginUpdate(0);
+	btDebug_Manual->position(0, 0, 0);
+	btDebug_Manual->colour(1, 1, 1);
+	btDebug_Manual->position(0, 0, 0);
+	btDebug_Manual->colour(1, 1, 1);
+	btDebug_Manual->end();
+
+	if (Phys_Body)
+	{
+		App->Cl_Bullet->dynamicsWorld->removeCollisionObject(Phys_Body);
+		Phys_Body = nullptr;
+	}
+
+	AxisAlignedBox worldAAB = MvEnt->getBoundingBox();
+	worldAAB.transformAffine(MvNode->_getFullTransform());
+	Ogre::Vector3 Centre = worldAAB.getCenter();
+
+	btTransform startTransform;
+	startTransform.setIdentity();
+	startTransform.setRotation(btQuaternion(0.0f, 0.0f, 0.0f, 1));
+
+	btScalar mass;
+	mass = 0.0f;
+	
+
+	btVector3 localInertia(0, 0, 0);
+	btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
+
+	startTransform.setOrigin(initialPosition);
+
+	float Radius = App->Cl_Objects_Com->GetMesh_BB_Radius(MvNode);
+	
+	btCollisionShape* newRigidShape = new btSphereShape(Radius);
+	newRigidShape->calculateLocalInertia(mass, localInertia);
+
+	App->Cl_Bullet->collisionShapes.push_back(newRigidShape);
+
+	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
+
+	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, newRigidShape, localInertia);
+
+	Phys_Body = new btRigidBody(rbInfo);
+	Phys_Body->setRestitution(1.0);
+	Phys_Body->setFriction(1.5);
+	Phys_Body->setUserPointer(MvNode);
+	Phys_Body->setWorldTransform(startTransform);
+
+	Phys_Body->setCustomDebugColor(btVector3(0, 1, 1));
+
+	App->Cl_Bullet->dynamicsWorld->addRigidBody(Phys_Body);
+
+	//Set_Physics(Index);
+}
+
+// *************************************************************************
+// *		Show_Physics_Cylinder:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+void SB_MeshViewer::Show_Physics_Cylinder()
+{
+	btDebug_Manual->beginUpdate(0);
+	btDebug_Manual->position(0, 0, 0);
+	btDebug_Manual->colour(1, 1, 1);
+	btDebug_Manual->position(0, 0, 0);
+	btDebug_Manual->colour(1, 1, 1);
+	btDebug_Manual->end();
+
+	if (Phys_Body)
+	{
+		App->Cl_Bullet->dynamicsWorld->removeCollisionObject(Phys_Body);
+		Phys_Body = nullptr;
+	}
+
+	AxisAlignedBox worldAAB = MvEnt->getBoundingBox();
+	worldAAB.transformAffine(MvNode->_getFullTransform());
+	Ogre::Vector3 Centre = worldAAB.getCenter();
+	//Ogre::Vector3 Centre = Object->Get_BoundingBox_World_Centre();
+
+	btTransform startTransform;
+	startTransform.setIdentity();
+	startTransform.setRotation(btQuaternion(0.0f, 0.0f, 0.0f, 1));
+
+	btScalar mass;
+	mass = 0.0f;
+	
+
+	btVector3 localInertia(0, 0, 0);
+	btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
+
+	startTransform.setOrigin(initialPosition);
+
+	Ogre::Vector3 Size = App->Cl_Objects_Com->GetMesh_BB_Size(MvNode);
+	float sx = Size.x / 2;
+	float sy = Size.y / 2;
+	float sz = Size.z / 2;
+
+	float Radius = App->Cl_Objects_Com->GetMesh_BB_Radius(MvNode);
+	
+	btCollisionShape* newRigidShape = new btCylinderShape(btVector3(sx, sy, sz));
+	newRigidShape->calculateLocalInertia(mass, localInertia);
+
+	App->Cl_Bullet->collisionShapes.push_back(newRigidShape);
+
+	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
+
+	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, newRigidShape, localInertia);
+
+	Phys_Body = new btRigidBody(rbInfo);
+	Phys_Body->setRestitution(1.0);
+	Phys_Body->setFriction(1.5);
+	Phys_Body->setUserPointer(MvNode);
+	Phys_Body->setWorldTransform(startTransform);
+
+	Phys_Body->setCustomDebugColor(btVector3(0, 1, 1));
+
+	App->Cl_Bullet->dynamicsWorld->addRigidBody(Phys_Body);
+
+	//Set_Physics(Index);
+}
+
+// *************************************************************************
+// *		Show_Physics_Trimesh:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+void SB_MeshViewer::Show_Physics_Trimesh()
+{
+	btDebug_Manual->beginUpdate(0);
+	btDebug_Manual->position(0, 0, 0);
+	btDebug_Manual->colour(1, 1, 1);
+	btDebug_Manual->position(0, 0, 0);
+	btDebug_Manual->colour(1, 1, 1);
+	btDebug_Manual->end();
+
+	if (Phys_Body)
+	{
+		App->Cl_Bullet->dynamicsWorld->removeCollisionObject(Phys_Body);
+		Phys_Body = nullptr;
+	}
+
+	// Get the mesh from the entity
+	Ogre::MeshPtr myMesh = MvEnt->getMesh();
+	Ogre::Mesh::SubMeshIterator SubMeshIter = myMesh->getSubMeshIterator();
+
+	// Create the triangle mesh
+	btTriangleMesh* triMesh = NULL;
+	btVector3 vert0, vert1, vert2;
+	int i = 0;
+
+	while (SubMeshIter.hasMoreElements())
+	{
+		i = 0;
+		Ogre::SubMesh* subMesh = SubMeshIter.getNext();
+		Ogre::IndexData* indexData = subMesh->indexData;
+		Ogre::VertexData* vertexData = subMesh->vertexData;
+
+		// -------------------------------------------------------
+		// Get the position element
+		const Ogre::VertexElement* posElem = vertexData->vertexDeclaration->findElementBySemantic(Ogre::VES_POSITION);
+		// Get a pointer to the vertex buffer
+		Ogre::HardwareVertexBufferSharedPtr vBuffer = vertexData->vertexBufferBinding->getBuffer(posElem->getSource());
+		// Get a pointer to the index buffer
+		Ogre::HardwareIndexBufferSharedPtr iBuffer = indexData->indexBuffer;
+
+		// -------------------------------------------------------
+		// The vertices and indices used to create the triangle mesh
+		std::vector<Ogre::Vector3> vertices;
+		vertices.reserve(vertexData->vertexCount);
+		std::vector<unsigned long> indices;
+		indices.reserve(indexData->indexCount);
+
+		// -------------------------------------------------------
+		// Lock the Vertex Buffer (READ ONLY)
+		unsigned char* vertex = static_cast<unsigned char*> (vBuffer->lock(Ogre::HardwareBuffer::HBL_READ_ONLY));
+		float* pReal = NULL;
+
+		for (size_t j = 0; j < vertexData->vertexCount; ++j, vertex += vBuffer->getVertexSize()) {
+			posElem->baseVertexPointerToElement(vertex, &pReal);
+			Ogre::Vector3 pt(pReal[0], pReal[1], pReal[2]);
+
+			vertices.push_back(pt);
+		}
+		vBuffer->unlock();
+		// -------------------------------------------------------
+		bool use32bitindexes = (iBuffer->getType() == Ogre::HardwareIndexBuffer::IT_32BIT);
+
+		// -------------------------------------------------------
+		// Lock the Index Buffer (READ ONLY)
+		unsigned long* pLong = static_cast<unsigned long*> (iBuffer->lock(Ogre::HardwareBuffer::HBL_READ_ONLY));
+		unsigned short* pShort = reinterpret_cast<unsigned short*> (pLong);
+
+		if (use32bitindexes) {
+			for (size_t k = 0; k < indexData->indexCount; ++k) {
+				//
+				indices.push_back(pLong[k]);
+			}
+		}
+		else {
+			for (size_t k = 0; k < indexData->indexCount; ++k) {
+				//
+				indices.push_back(static_cast<unsigned long> (pShort[k]));
+			}
+		}
+		iBuffer->unlock();
+
+		// -------------------------------------------------------
+		// We now have vertices and indices ready to go
+		// ----
+
+		if (triMesh == nullptr)
+		{
+			triMesh = new btTriangleMesh(use32bitindexes);
+		}
+
+		for (size_t y = 0; y < indexData->indexCount / 3; y++) {
+			// Set each vertex
+			vert0.setValue(vertices[indices[i]].x, vertices[indices[i]].y, vertices[indices[i]].z);
+			vert1.setValue(vertices[indices[i + 1]].x, vertices[indices[i + 1]].y, vertices[indices[i + 1]].z);
+			vert2.setValue(vertices[indices[i + 2]].x, vertices[indices[i + 2]].y, vertices[indices[i + 2]].z);
+
+			// Add the triangle into the triangle mesh
+			triMesh->addTriangle(vert0, vert1, vert2);
+
+			// Increase index count
+			i += 3;
+		}
+
+		//App->Say("here");
+	}
+
+	const bool useQuantizedAABB = true;
+	btBvhTriangleMeshShape* mShape = new btBvhTriangleMeshShape(triMesh, false, true);
+	//mShape->buildOptimizedBvh();
+
+	float x = MvNode->getPosition().x;
+	float y = MvNode->getPosition().y;
+	float z = MvNode->getPosition().z;
+
+	btVector3 inertia(0, 0, 0);
+	mShape->calculateLocalInertia(0.0, inertia);
+
+	btTransform startTransform;
+	startTransform.setIdentity();
+	startTransform.setRotation(btQuaternion(0.0f, 0.0f, 0.0f, 1));
+	btVector3 initialPosition(x, y, z);
+	startTransform.setOrigin(initialPosition);
+
+	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
+
+
+	btRigidBody::btRigidBodyConstructionInfo rigidBodyCI
+	(
+		0,  // mass
+		myMotionState,// initial position
+		mShape,      // collision shape of body
+		inertia   // local inertia
+	);
+
+	Phys_Body = new btRigidBody(rigidBodyCI);
+	Phys_Body->clearForces();
+	Phys_Body->setLinearVelocity(btVector3(0, 0, 0));
+	Phys_Body->setAngularVelocity(btVector3(0, 0, 0));
+	Phys_Body->setWorldTransform(startTransform);
+
+	Phys_Body->setCustomDebugColor(btVector3(0, 1, 1));
+
+	App->Cl_Bullet->dynamicsWorld->addRigidBody(Phys_Body);
+
 }
 

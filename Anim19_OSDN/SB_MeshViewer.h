@@ -74,6 +74,9 @@ protected:
 	void Show_Physics_Box();
 	void Show_Physics_Capsule();
 	void Show_Physics_Cone();
+	void Show_Physics_Sphere();
+	void Show_Physics_Cylinder();
+	void Show_Physics_Trimesh();
 
 	// -------------------------------- 
 	void SetUp_Area_Trimesh(HWND hDlg);
