@@ -77,9 +77,6 @@ GD19_OgreListener::GD19_OgreListener(void)
 	Animate_Ogre = 0;
 	AnimationScale = 1;
 	
-	mNameOverlay = OverlayManager::getSingleton().getByName("Core/ObjectNameOverlay");
-	mNameOverlay->hide();
-
 	mCollisionTools = new MOC::CollisionTools(App->Cl19_Ogre->mSceneMgr);
 	mCollisionTools->setHeightAdjust(3.5f);
 
@@ -1088,6 +1085,8 @@ bool GD19_OgreListener::SelectEntity_World(void)
 
 
 		//mNameOverlay->show();
+		App->CL_Vm_ImGui->Show_Object_Selection = 1;
+
 		bool test = Ogre::StringUtil::match("Plane0", Pl_Entity_Name, true);
 		if (test == 1)
 		{

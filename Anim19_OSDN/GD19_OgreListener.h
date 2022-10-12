@@ -67,8 +67,6 @@ public:
 	Ogre::Camera* Pl_mDummyCamera;
 	Vector3		Pl_mDummyTranslateVector;
 
-	Ogre::Overlay*	mNameOverlay;
-
 	Radian		mRotX;
 	Radian		mRotY;
 	Vector3		mTranslateVector;

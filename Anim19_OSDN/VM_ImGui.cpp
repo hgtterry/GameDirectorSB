@@ -354,7 +354,7 @@ void VM_ImGui::Tabs_Render_Groups(void)
 // *************************************************************************
 void VM_ImGui::Object_Selection(void)
 {
-	ImGui::SetNextWindowPos(ImVec2(530, 50), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowPos(ImVec2(230, 10), ImGuiCond_FirstUseEver);
 
 	if (!ImGui::Begin("Selection_Data", &Show_Object_Selection, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_AlwaysAutoResize))
 	{
@@ -363,15 +363,21 @@ void VM_ImGui::Object_Selection(void)
 	else
 	{
 
-		ImGui::Spacing();
-		ImGui::Text(App->Cl19_Ogre->OgreListener->Pl_Entity_Name.c_str());
-		ImGui::Spacing();
-
 		ImGui::Text("Selected Object");
-		ImGui::Text(App->Cl19_Ogre->OgreListener->Selected_Object_Name);
-		//ImGui::PopFont();
+		ImGui::Separator();
+
+		ImGui::Text("Internal Name: = %s",App->Cl19_Ogre->OgreListener->Pl_Entity_Name.c_str());
+		ImGui::Text("Object Name: = %s",App->Cl19_Ogre->OgreListener->Selected_Object_Name);
+		
+		ImGui::Text("");
 
 		ImGui::Text("Edit Selected Object");
+		ImGui::Separator();
+
+		ImGui::Indent();
+		ImGui::Indent();
+		ImGui::Indent();
+
 		if (ImGui::Button("Yes"))
 		{
 			App->SBC_TopTabs->Toggle_Select_Flag = 0;

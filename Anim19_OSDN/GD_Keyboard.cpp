@@ -48,25 +48,15 @@ void GD_Keyboard::Keyboard_Monitor(float deltaTime)
 	}
 
 	//------------------------------------------------ Y Key
-	if (GetAsyncKeyState(89) < 0 && App->Cl19_Ogre->OgreListener->mNameOverlay->isVisible() == 1)
+	if (GetAsyncKeyState(89) < 0)
 	{
-		App->Cl19_Ogre->OgreListener->mNameOverlay->hide();
-
-		if (App->Cl19_Ogre->OgreListener->Pl_Entity_Name == "Player_1")
-		{
-			App->SBC_FileView->SelectItem(App->SBC_Scene->B_Player[0]->FileViewItem);
-		}
-		else
-		{
-			App->SBC_FileView->Select_Item(App->Cl19_Ogre->OgreListener->Selected_Entity_Index);
-		}
-
+		
 	}
 
 	//------------------------------------------------ N Key
-	if (GetAsyncKeyState(78) < 0 && App->Cl19_Ogre->OgreListener->mNameOverlay->isVisible() == 1)
+	if (GetAsyncKeyState(78) < 0 )
 	{
-		App->Cl19_Ogre->OgreListener->mNameOverlay->hide();
+		
 	}
 
 	//------------------------------------------------ Forward

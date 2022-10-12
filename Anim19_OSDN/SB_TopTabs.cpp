@@ -656,7 +656,7 @@ LRESULT CALLBACK SB_TopTabs::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 			}
 			else
 			{
-				App->CL_Vm_ImGui->Show_Object_Selection = 1;
+				//App->CL_Vm_ImGui->Show_Object_Selection = 1;
 
 				App->SBC_TopTabs->Toggle_Select_Flag = 1;
 				App->Cl_Visuals->mPickSight->show();

@@ -112,7 +112,7 @@ Physics_Quat=1.000000,0.000000,0.000000,0.000000
 Move_Distance=-50.000000
 Move_IsNegative=1
 Move_NewPos=0.000000
-Move_ObjectID=6
+Move_ObjectID=0
 Move_ObjectIndex=6
 Move_ObjectName=Object_6
 Move_Re_Trigger=0
@@ -124,7 +124,7 @@ Move_Play_Sound=1
 Move_Volume=0.500000
  
 [Object_6]
-Mesh_Name=Object_6
+Mesh_Name=Table
 Mesh_File=table-with-leaning-feet.mesh
 Mesh_Resource_Path=
 Material_File=table-with-leaning-feet.material
