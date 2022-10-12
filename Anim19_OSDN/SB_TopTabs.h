@@ -32,6 +32,8 @@ public:
 	void Reset_Class();
 	void Project_Loaded_Reset();
 
+	bool Toggle_Select_Flag;
+
 	void UnCheck_All_MouseOption(HWND hDlg);
 
 	HWND TabsHwnd;
@@ -92,7 +94,6 @@ protected:
 	bool Toggle_FirstCam_Flag;
 	bool Toggle_FreeCam_Flag;
 	bool Toggle_3rdCam_Flag;
-	bool Toggle_Select_Flag;
 
 	bool Toggle_GroupsOnly_Flag;
 };

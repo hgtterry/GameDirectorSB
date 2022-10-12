@@ -11,6 +11,7 @@ public:
 	void ImGui_Set_Colours(void);
 
 	void ImGui_FPS(void);
+	void Object_Selection(void);
 
 	void ImGui_Image(void);
 	void ImGui_GroupList(void);
@@ -56,6 +57,7 @@ public:
 	bool Show_Object_Data;
 	bool Show_Collision_Debug;
 	bool Show_Test_Text;
+	bool Show_Object_Selection;
 
 	ImFont* font0;
 	ImFont* font1;

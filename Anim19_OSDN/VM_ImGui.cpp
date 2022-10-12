@@ -30,6 +30,7 @@ VM_ImGui::VM_ImGui()
 	Show_Object_Data = 0;
 	Show_Collision_Debug = 0;
 	Show_Test_Text = 0;
+	Show_Object_Selection = 0;
 
 	Model_XTranslate = 2;
 	Model_YTranslate = 2;
@@ -187,6 +188,12 @@ void VM_ImGui::ImGui_Render_Loop(void)
 		ImGui_Text_Message();
 	}
 
+	if (Show_Object_Selection == 1)
+	{
+		Object_Selection();
+	}
+
+
 }
 
 // *************************************************************************
@@ -339,6 +346,59 @@ void VM_ImGui::Tabs_Render_Groups(void)
 		ImGui_Object_Data();
 	}
 
+}
+
+
+// *************************************************************************
+// *		Object_Selection:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void VM_ImGui::Object_Selection(void)
+{
+	ImGui::SetNextWindowPos(ImVec2(530, 50), ImGuiCond_FirstUseEver);
+
+	if (!ImGui::Begin("Selection_Data", &Show_Object_Selection, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_AlwaysAutoResize))
+	{
+		ImGui::End();
+	}
+	else
+	{
+
+		ImGui::Spacing();
+		ImGui::Text(App->Cl19_Ogre->OgreListener->Pl_Entity_Name.c_str());
+		ImGui::Spacing();
+
+		ImGui::Text("Selected Object");
+		ImGui::Text(App->Cl19_Ogre->OgreListener->Selected_Object_Name);
+		//ImGui::PopFont();
+
+		ImGui::Text("Edit Selected Object");
+		if (ImGui::Button("Yes"))
+		{
+			App->SBC_TopTabs->Toggle_Select_Flag = 0;
+			App->Cl_Visuals->mPickSight->hide();
+			App->Cl19_Ogre->OgreListener->GD_Selection_Mode = 0;
+
+			RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			App->SBC_FileView->Select_Item(App->Cl19_Ogre->OgreListener->Selected_Entity_Index);
+			Show_Object_Selection = 0;
+		}
+
+		ImGui::SameLine();
+
+		if (ImGui::Button("No"))
+		{
+			App->SBC_TopTabs->Toggle_Select_Flag = 0;
+			App->Cl_Visuals->mPickSight->hide();
+			App->Cl19_Ogre->OgreListener->GD_Selection_Mode = 0;
+
+			RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			Show_Object_Selection = 0;
+		}
+
+		ImGui::End();
+	}
 }
 
 // *************************************************************************

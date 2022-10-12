@@ -111,6 +111,7 @@ public:
 
 	int	Selected_Entity_Index;
 	Ogre::String Pl_Entity_Name;
+	char Selected_Object_Name[MAX_PATH];
 
 	Ogre::AnimationState*   Animate_State; // needs init
 	Ogre::AnimationState*   Animate_State2;

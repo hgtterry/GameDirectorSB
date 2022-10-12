@@ -1087,7 +1087,7 @@ bool GD19_OgreListener::SelectEntity_World(void)
 		//App->Say(buff);
 
 
-		mNameOverlay->show();
+		//mNameOverlay->show();
 		bool test = Ogre::StringUtil::match("Plane0", Pl_Entity_Name, true);
 		if (test == 1)
 		{
@@ -1099,9 +1099,9 @@ bool GD19_OgreListener::SelectEntity_World(void)
 			if (test == 1)
 			{
 				Pl_Entity_Name = "Player_1";
-				OverlayElement* guiName = OverlayManager::getSingleton().getOverlayElement("Core/ObjectName");
-				guiName->setCaption("Player_1");
-				mNameOverlay->show();
+				//OverlayElement* guiName = OverlayManager::getSingleton().getOverlayElement("Core/ObjectName");
+				//guiName->setCaption("Player_1");
+				//mNameOverlay->show();
 				return 1;
 				//mNameOverlay->show();
 			}
@@ -1117,13 +1117,14 @@ bool GD19_OgreListener::SelectEntity_World(void)
 				{
 					sscanf((buffer + 6), "%i", &IntNum);
 
-					if (IntNum > 0)
+					//if (IntNum > 0)
 					{
 						App->Cl_Visuals->MarkerBB_Addjust(IntNum);
 						Selected_Entity_Index = IntNum;
-						OverlayElement* guiName = OverlayManager::getSingleton().getOverlayElement("Core/ObjectName");
-						guiName->setCaption(App->SBC_Scene->B_Object[IntNum]->Mesh_Name);
-						mNameOverlay->show();
+						//OverlayElement* guiName = OverlayManager::getSingleton().getOverlayElement("Core/ObjectName");
+						//guiName->setCaption(App->SBC_Scene->B_Object[IntNum]->Mesh_Name);
+						strcpy(Selected_Object_Name, App->SBC_Scene->B_Object[IntNum]->Mesh_Name);
+						//mNameOverlay->show();
 						return 1;
 					}
 				}

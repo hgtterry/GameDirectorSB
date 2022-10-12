@@ -647,6 +647,8 @@ LRESULT CALLBACK SB_TopTabs::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 		{
 			if (App->SBC_TopTabs->Toggle_Select_Flag == 1)
 			{
+				App->CL_Vm_ImGui->Show_Object_Selection = 0;
+
 				App->SBC_TopTabs->Toggle_Select_Flag = 0;
 				App->Cl_Visuals->mPickSight->hide();
 				App->Cl19_Ogre->OgreListener->GD_Selection_Mode = 0;
@@ -654,12 +656,15 @@ LRESULT CALLBACK SB_TopTabs::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 			}
 			else
 			{
+				App->CL_Vm_ImGui->Show_Object_Selection = 1;
+
 				App->SBC_TopTabs->Toggle_Select_Flag = 1;
 				App->Cl_Visuals->mPickSight->show();
 				App->Cl19_Ogre->OgreListener->GD_Selection_Mode = 1;
 				//App->Cl19_Ogre->OgreListener->mNameOverlay->hide();
 			}
 
+			RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
 		}
 
