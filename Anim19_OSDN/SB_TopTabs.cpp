@@ -645,7 +645,21 @@ LRESULT CALLBACK SB_TopTabs::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 		if (LOWORD(wParam) == IDC_BT_SELECT)
 		{
-			Debug
+			if (App->SBC_TopTabs->Toggle_Select_Flag == 1)
+			{
+				App->SBC_TopTabs->Toggle_Select_Flag = 0;
+				App->Cl_Visuals->mPickSight->hide();
+				App->Cl19_Ogre->OgreListener->GD_Selection_Mode = 0;
+				//App->Cl19_Ogre->OgreListener->mNameOverlay->hide();
+			}
+			else
+			{
+				App->SBC_TopTabs->Toggle_Select_Flag = 1;
+				App->Cl_Visuals->mPickSight->show();
+				App->Cl19_Ogre->OgreListener->GD_Selection_Mode = 1;
+				//App->Cl19_Ogre->OgreListener->mNameOverlay->hide();
+			}
+
 			return TRUE;
 		}
 

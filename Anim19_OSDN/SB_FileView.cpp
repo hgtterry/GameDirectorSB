@@ -1353,26 +1353,25 @@ void SB_FileView::Select_Item(int Index)
 	//	return;
 	//}
 
-	//// Fall Through
-	////if (App->Cl_Scene_Data->CL_Object[Index]->Usage == Enums::Usage_Object)
-	//{
-	//	//App->Cl_FileView_V2->Select_ObjectFV(Index);
+	// Fall Through
+	//if (App->Cl_Scene_Data->CL_Object[Index]->Usage == Enums::Usage_Object)
+	{
+		//App->Cl_FileView_V2->Select_ObjectFV(Index);
 
-	//	App->SBC_FileView->SelectItem(App->Cl_Scene_Data->Cl_Object[Index]->ListViewItem);
-	//	App->SBC_Properties->Edit_Category = Enums::Edit_Mesh_Object;
-	//	//		App->Cl_Properties->Update_Transform_Dlg();
+		App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[Index]->FileViewItem);
+		App->SBC_Properties->Edit_Category = Enums::FV_Edit_Object;
+		
+		if (App->SBC_Properties->Edit_Physics == 0)
+		{
+			App->SBC_Properties->Update_ListView_Objects();
+		}
+		else
+		{
+			//App->Cl_Properties->Update_ListView_Physics();
+		}
 
-	//	if (App->SBC_Properties->Edit_Physics == 0)
-	//	{
-	//		//App->Cl_Properties->Update_ListView_Objects();
-	//	}
-	//	else
-	//	{
-	//		//App->Cl_Properties->Update_ListView_Physics();
-	//	}
-
-	//	return;
-	//}
+		return;
+	}
 }
 
 // *************************************************************************

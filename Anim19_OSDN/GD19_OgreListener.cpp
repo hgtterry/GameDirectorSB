@@ -1086,6 +1086,7 @@ bool GD19_OgreListener::SelectEntity_World(void)
 		strcpy(buff, Pl_Entity_Name.c_str());
 		//App->Say(buff);
 
+
 		mNameOverlay->show();
 		bool test = Ogre::StringUtil::match("Plane0", Pl_Entity_Name, true);
 		if (test == 1)
@@ -1112,7 +1113,6 @@ bool GD19_OgreListener::SelectEntity_World(void)
 
 				strcpy(buffer, Pl_Entity_Name.c_str());
 				pdest = strstr(buffer, "GDEnt_");
-
 				if (pdest != NULL)
 				{
 					sscanf((buffer + 6), "%i", &IntNum);
@@ -1122,7 +1122,7 @@ bool GD19_OgreListener::SelectEntity_World(void)
 						App->Cl_Visuals->MarkerBB_Addjust(IntNum);
 						Selected_Entity_Index = IntNum;
 						OverlayElement* guiName = OverlayManager::getSingleton().getOverlayElement("Core/ObjectName");
-						//guiName->setCaption(App->Cl_Scene_Data->Cl_Object[IntNum]->Name);
+						guiName->setCaption(App->SBC_Scene->B_Object[IntNum]->Mesh_Name);
 						mNameOverlay->show();
 						return 1;
 					}
