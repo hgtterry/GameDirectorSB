@@ -531,6 +531,18 @@ void GD19_App::Say_Int(int Value)
 }
 
 // *************************************************************************
+// *					Log_Messageg (Terry Bernie)						   *
+// *************************************************************************
+void GD19_App::Log_Messageg(char* Message)
+{
+	Ogre::LogManager::getSingleton().setDefaultLog(Ogre::LogManager::getSingleton().getLog("App.log"));
+
+	Ogre::LogManager::getSingleton().logMessage(Message);
+
+	Ogre::LogManager::getSingleton().setDefaultLog(Ogre::LogManager::getSingleton().getLog("EquitySB.log"));
+}
+
+// *************************************************************************
 // *					Custom_Button_Normal Terry Bernie   		  	   *
 // *************************************************************************
 bool GD19_App::Custom_Button_Normal(LPNMCUSTOMDRAW item)

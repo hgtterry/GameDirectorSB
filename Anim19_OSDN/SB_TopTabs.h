@@ -91,6 +91,8 @@ protected:
 	// Camera
 	bool Toggle_FirstCam_Flag;
 	bool Toggle_FreeCam_Flag;
+	bool Toggle_3rdCam_Flag;
+	bool Toggle_Select_Flag;
 
 	bool Toggle_GroupsOnly_Flag;
 };

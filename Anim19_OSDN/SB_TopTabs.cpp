@@ -57,6 +57,8 @@ SB_TopTabs::SB_TopTabs()
 	// Camera
 	Toggle_FreeCam_Flag = 1;
 	Toggle_FirstCam_Flag = 0;
+	Toggle_3rdCam_Flag = 0;
+	Toggle_Select_Flag = 0;
 
 }
 
@@ -461,7 +463,7 @@ void SB_TopTabs::Reset_Main_Controls(void)
 }
 
 // *************************************************************************
-// *						Start_Camera_TB Terry Berine				   *
+// *			Start_Camera_TB:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 void SB_TopTabs::Start_Camera_TB(void)
 {
@@ -470,7 +472,7 @@ void SB_TopTabs::Start_Camera_TB(void)
 }
 
 // *************************************************************************
-// *								Camera_TB_Proc						   *
+// *			Camera_TB_Proc:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 LRESULT CALLBACK SB_TopTabs::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -485,7 +487,9 @@ LRESULT CALLBACK SB_TopTabs::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 		SendDlgItemMessage(hDlg, IDC_FREECAM, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BTMOUSESPEED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_FULLSCREEN, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_BT_SELECT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_3RD, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		return TRUE;
 	}
 
@@ -509,6 +513,20 @@ LRESULT CALLBACK SB_TopTabs::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle(item, App->SBC_TopTabs->Toggle_FirstCam_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_3RD && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->SBC_TopTabs->Toggle_3rdCam_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_SELECT && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->SBC_TopTabs->Toggle_Select_Flag);
 			return CDRF_DODEFAULT;
 		}
 
@@ -602,20 +620,32 @@ LRESULT CALLBACK SB_TopTabs::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 		if (LOWORD(wParam) == IDC_FREECAM)
 		{
-			App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
-			App->SBC_TopTabs->Toggle_FirstCam_Flag = 0;
-			App->SBC_TopTabs->Toggle_FreeCam_Flag = 1;
-			
-			App->SBC_Scene->B_Player[0]->Player_Node->setVisible(true);
+			if (App->SBC_Scene->Scene_Loaded == 1)
+			{
+				App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
+				App->SBC_TopTabs->Toggle_FirstCam_Flag = 0;
+				App->SBC_TopTabs->Toggle_FreeCam_Flag = 1;
 
-			int f = App->SBC_Scene->B_Player[0]->Phys_Body->getCollisionFlags();
-			App->SBC_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f & (~(1 << 5)));
+				App->SBC_Scene->B_Player[0]->Player_Node->setVisible(true);
 
-			App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 0;
-			App->Cl19_Ogre->RenderFrame();
-			App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 1;
+				int f = App->SBC_Scene->B_Player[0]->Phys_Body->getCollisionFlags();
+				App->SBC_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f & (~(1 << 5)));
 
-			RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+				//body->setCollisionFlags(body->getCollisionFlags() | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+
+				App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 0;
+				App->Cl19_Ogre->RenderFrame();
+				App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 1;
+
+				RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			}
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_SELECT)
+		{
+			Debug
 			return TRUE;
 		}
 
@@ -634,7 +664,7 @@ LRESULT CALLBACK SB_TopTabs::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 }
 
 // *************************************************************************
-// *						Init_Bmps_Camera Terry Bernie				   *
+// *		Init_Bmps_Camera:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 void SB_TopTabs::Init_Bmps_Camera(void)
 {

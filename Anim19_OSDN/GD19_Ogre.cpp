@@ -95,8 +95,11 @@ bool GD19_Ogre::OgreCreateRoot(void)
 	Ogre::String pluginsPath;
 	pluginsPath = mResourcePath + "plugins.cfg";
 
-	mRoot = OGRE_NEW Ogre::Root(pluginsPath, mResourcePath + mResourcePath + "EquitySB.log");
+	mRoot = OGRE_NEW Ogre::Root(pluginsPath, mResourcePath + "Equity_CFG.cfg", mResourcePath + "EquitySB.log");
 	//Ogre::LogManager::getSingleton().setLogDetail(Ogre::LoggingLevel::LL_LOW);
+
+	Ogre::LogManager::getSingleton().createLog(mResourcePath + "App.log");
+	
 	return 1;
 }
 

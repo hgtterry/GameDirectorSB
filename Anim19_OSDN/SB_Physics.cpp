@@ -180,6 +180,8 @@ void SB_Physics::Enable_Physics(bool Enable)
 	App->SBC_Physics->Toggle_Enable_Flag = Enable;
 
 	RedrawWindow(App->SBC_Physics->PhysicsPannel_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+	App->Log_Messageg("EquitySB --------------------------------------------- Enable_Physics Call");
 }
 
 // *************************************************************************

@@ -164,6 +164,7 @@ public:
 	void Say(const char* Message);
 	void Say_Int(int Value);
 	void Say_Win(const char* Message);
+	void Log_Messageg(char* Message);
 
 	bool Start_Scene_Loaded;
 	bool FullScreen;

@@ -1140,7 +1140,6 @@ bool SB_Project::Load_Project()
 	App->SBC_FileView->Redraw_FileView();
 
 	
-	
 	App->SBC_Scene->Scene_Loaded = 1;
 	App->SBC_Project->Project_Loaded = 1;
 
