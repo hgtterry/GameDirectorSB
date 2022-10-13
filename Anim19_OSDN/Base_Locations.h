@@ -28,5 +28,11 @@ public:
 	Base_Locations();
 	~Base_Locations();
 
+	bool Deleted; // Internal
+	int Location_ID;  // Unique Number
+	char Name[255];
+	Ogre::Vector3 Current_Position;
+	btVector3 Physics_Position;
+	btQuaternion Physics_Rotation;
 };
 

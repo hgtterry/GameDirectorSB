@@ -438,9 +438,9 @@ LRESULT CALLBACK SB_Player::Locations_Proc(HWND hDlg, UINT message, WPARAM wPara
 		int Count = 0;
 		while (Count < App->Cl_Scene_Data->Player_Location_Count)
 		{
-			if (App->Cl_Scene_Data->S_Player_Locations[Count]->Deleted == 0)
+			if (App->SBC_Scene->B_Locations[Count]->Deleted == 0)
 			{
-				SendDlgItemMessage(hDlg, IDC_LSTLOCATIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)(LPCTSTR)App->Cl_Scene_Data->S_Player_Locations[Count]->Name);
+				SendDlgItemMessage(hDlg, IDC_LSTLOCATIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)(LPCTSTR)App->SBC_Scene->B_Locations[Count]->Name);
 			}
 			Count++;
 		}
@@ -539,7 +539,7 @@ LRESULT CALLBACK SB_Player::Locations_Proc(HWND hDlg, UINT message, WPARAM wPara
 			char numbuf[255];
 			_itoa(App->Cl_Scene_Data->Player_Location_Count, numbuf, 10);
 
-			strcpy(App->Cl_Dialogs->Chr_Text, App->Cl_Scene_Data->S_Player_Locations[Location_Index]->Name);
+			strcpy(App->Cl_Dialogs->Chr_Text, App->SBC_Scene->B_Locations[Location_Index]->Name);
 
 			App->Cl_Dialogs->Dialog_Text(Enums::Check_Names_Locatoins);
 
@@ -549,16 +549,16 @@ LRESULT CALLBACK SB_Player::Locations_Proc(HWND hDlg, UINT message, WPARAM wPara
 			}
 
 
-			strcpy(App->Cl_Scene_Data->S_Player_Locations[Location_Index]->Name, App->Cl_Dialogs->Chr_Text);
+			strcpy(App->SBC_Scene->B_Locations[Location_Index]->Name, App->Cl_Dialogs->Chr_Text);
 
 			SendDlgItemMessage(hDlg, IDC_LSTLOCATIONS, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 			int Count = 0;
 			while (Count < App->Cl_Scene_Data->Player_Location_Count)
 			{
 
-				if (App->Cl_Scene_Data->S_Player_Locations[Count]->Deleted == 0)
+				if (App->SBC_Scene->B_Locations[Count]->Deleted == 0)
 				{
-					SendDlgItemMessage(hDlg, IDC_LSTLOCATIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)(LPCTSTR)App->Cl_Scene_Data->S_Player_Locations[Count]->Name);
+					SendDlgItemMessage(hDlg, IDC_LSTLOCATIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)(LPCTSTR)App->SBC_Scene->B_Locations[Count]->Name);
 				}
 
 				Count++;
@@ -586,19 +586,19 @@ LRESULT CALLBACK SB_Player::Locations_Proc(HWND hDlg, UINT message, WPARAM wPara
 
 			char tag[255];
 			strcpy(tag, "Delete Location  ");
-			strcat(tag, App->Cl_Scene_Data->S_Player_Locations[Location_Index]->Name);
+			strcat(tag, App->SBC_Scene->B_Locations[Location_Index]->Name);
 
 			App->SBC_Dialogs->YesNo(tag, "Are you sure", 1);
 			if (App->Cl_Dialogs->Canceled == 0)
 			{
-				App->Cl_Scene_Data->S_Player_Locations[Location_Index]->Deleted = 1;
+				App->SBC_Scene->B_Locations[Location_Index]->Deleted = 1;
 				SendDlgItemMessage(hDlg, IDC_LSTLOCATIONS, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 				int Count = 0;
 				while (Count < App->Cl_Scene_Data->Player_Location_Count)
 				{
-					if (App->Cl_Scene_Data->S_Player_Locations[Count]->Deleted == 0)
+					if (App->SBC_Scene->B_Locations[Count]->Deleted == 0)
 					{
-						SendDlgItemMessage(hDlg, IDC_LSTLOCATIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)(LPCTSTR)App->Cl_Scene_Data->S_Player_Locations[Count]->Name);
+						SendDlgItemMessage(hDlg, IDC_LSTLOCATIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)(LPCTSTR)App->SBC_Scene->B_Locations[Count]->Name);
 					}
 
 					Count++;
@@ -1085,17 +1085,18 @@ void SB_Player::Save_Location(char* name)
 
 	int Count = App->Cl_Scene_Data->Player_Location_Count;
 
-	App->Cl_Scene_Data->S_Player_Locations[Count] = new Player_Location_type();
-	App->Cl_Scene_Data->S_Player_Locations[Count]->Deleted = 0;
+	App->SBC_Scene->B_Locations[Count] = new Base_Locations();
 
-	App->Cl_Scene_Data->S_Player_Locations[Count]->Location_ID = App->Cl_Scene_Data->Locations_ID_Counter;
+	App->SBC_Scene->B_Locations[Count]->Deleted = 0;
+
+	App->SBC_Scene->B_Locations[Count]->Location_ID = App->Cl_Scene_Data->Locations_ID_Counter;
 	App->Cl_Scene_Data->Locations_ID_Counter++;
 
+	strcpy(App->SBC_Scene->B_Locations[Count]->Name, name);
+	App->SBC_Scene->B_Locations[Count]->Current_Position = App->SBC_Scene->B_Player[0]->Player_Node->getPosition();
+	App->SBC_Scene->B_Locations[Count]->Physics_Position = App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().getOrigin();
+	App->SBC_Scene->B_Locations[Count]->Physics_Rotation = App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().getRotation();
 
-	strcpy(App->Cl_Scene_Data->S_Player_Locations[Count]->Name, name);
-	App->Cl_Scene_Data->S_Player_Locations[Count]->Current_Position = App->SBC_Scene->B_Player[0]->Player_Node->getPosition();
-	App->Cl_Scene_Data->S_Player_Locations[Count]->Physics_Position = App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().getOrigin();
-	App->Cl_Scene_Data->S_Player_Locations[Count]->Physics_Rotation = App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().getRotation();
 	App->Cl_Scene_Data->Player_Location_Count++;
 
 }
@@ -1106,9 +1107,9 @@ void SB_Player::Save_Location(char* name)
 void SB_Player::Goto_Location(int Index)
 {
 
-	App->SBC_Scene->B_Player[0]->Player_Node->setPosition(App->Cl_Scene_Data->S_Player_Locations[Index]->Current_Position);
+	App->SBC_Scene->B_Player[0]->Player_Node->setPosition(App->SBC_Scene->B_Locations[Index]->Current_Position);
 
-	App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(App->Cl_Scene_Data->S_Player_Locations[Index]->Physics_Position);
+	App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(App->SBC_Scene->B_Locations[Index]->Physics_Position);
 
-	App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->Cl_Scene_Data->S_Player_Locations[Index]->Physics_Rotation);
+	App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->SBC_Scene->B_Locations[Index]->Physics_Rotation);
 }

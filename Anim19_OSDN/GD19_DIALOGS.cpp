@@ -793,9 +793,9 @@ void GD19_Dialogs::List_Locations(HWND DropHwnd)
 	int Count = 0;
 	while (Count < App->Cl_Scene_Data->Player_Location_Count)
 	{
-		if (App->Cl_Scene_Data->S_Player_Locations[Count]->Deleted == 0)
+		if (App->SBC_Scene->B_Locations[Count]->Deleted == 0)
 		{
-			SendMessage(DropHwnd, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->Cl_Scene_Data->S_Player_Locations[Count]->Name);
+			SendMessage(DropHwnd, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->SBC_Scene->B_Locations[Count]->Name);
 		}
 		Count++;
 	}

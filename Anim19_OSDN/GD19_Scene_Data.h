@@ -196,19 +196,6 @@ typedef struct Stock_Sound_type
 
 }Stock_Sound_type;
 
-// ------------------------ Player_Location_type
-typedef struct Player_Location_type
-{
-	bool Deleted; // Internal
-	int Location_ID;  // Unique Number
-	char Name[255];
-	Ogre::Vector3 Current_Position;
-	btVector3 Physics_Position;
-	btQuaternion Physics_Rotation;
-
-}Player_Location_type;
-// --------------------------------------
-
 
 class GD19_Scene_Data
 {
@@ -244,7 +231,6 @@ public:
 	Load_Options_Type*		S_LoadOptions[1];
 	Stock_Messages_type*	S_Messages[20];
 	Stock_Sound_type*		St_Sounds[200];
-	Player_Location_type*	S_Player_Locations[20];
 
 	int Player_Location_Count;
 	int Stock_Messgae_Count;

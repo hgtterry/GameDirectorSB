@@ -26,6 +26,15 @@ distribution.
 
 Base_Locations::Base_Locations()
 {
+	Deleted = 0; // Internal
+	Location_ID = 0;  // Unique Number
+	Name[0] = 0;
+
+	Current_Position.ZERO;
+
+	Physics_Position.setZero();
+
+	Physics_Rotation = (btQuaternion(0,0,0,1));
 }
 
 Base_Locations::~Base_Locations()
