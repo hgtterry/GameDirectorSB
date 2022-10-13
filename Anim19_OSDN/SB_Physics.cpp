@@ -282,6 +282,8 @@ void SB_Physics::Reset_Physics(void)
 		App->SBC_Scene->B_Player[0]->Phys_Body->setWorldTransform(startTransform);
 		App->SBC_Scene->B_Player[0]->Phys_Body->getMotionState()->setWorldTransform(startTransform);
 		App->SBC_Scene->B_Player[0]->Phys_Body->activate(true);
+
+		App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->SBC_Scene->B_Player[0]->Physics_Rotation);
 	}
 
 	//App->Cl19_Ogre->OgreListener->GD_Run_Physics = 1;

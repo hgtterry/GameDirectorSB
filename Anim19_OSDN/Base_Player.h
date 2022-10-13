@@ -48,9 +48,7 @@ public:
 	btCollisionShape *Phys_Shape;
 
 	Ogre::Vector3 StartPos;
-
 	btQuaternion Physics_Rotation;
-	btTransform Player_Xform;
 
 	float Forward_Timer;
 	float Ground_speed;

@@ -309,9 +309,16 @@ LRESULT CALLBACK SB_Player::Player_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 		if (LOWORD(wParam) == IDC_BT_GOTO)
 		{
 
-			App->Cl19_Ogre->mCamera->setPosition(Ogre::Vector3(App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().getOrigin()));
+			//App->Cl19_Ogre->mCamera->setPosition(Ogre::Vector3(App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().getOrigin()));
 			
-			App->SBC_Scene->B_Player[0]->Phys_Body->setWorldTransform(App->SBC_Scene->B_Player[0]->Player_Xform);
+			float x = App->SBC_Scene->B_Player[0]->StartPos.x;
+			float y = App->SBC_Scene->B_Player[0]->StartPos.y;
+			float z = App->SBC_Scene->B_Player[0]->StartPos.z;
+
+			App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(btVector3(x,y,z));
+			App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->SBC_Scene->B_Player[0]->Physics_Rotation);
+			
+
 			return 1;
 		}
 
@@ -321,10 +328,7 @@ LRESULT CALLBACK SB_Player::Player_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 			{
 
 				App->SBC_Scene->B_Player[0]->StartPos = Ogre::Vector3(App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().getOrigin());
-			
 				App->SBC_Scene->B_Player[0]->Physics_Rotation = App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().getRotation();
-
-				App->SBC_Scene->B_Player[0]->Player_Xform = App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform();
 				
 				App->SBC_Scene->B_Player[0]->Altered = 1;
 				App->SBC_Scene->Scene_Modified = 1;
