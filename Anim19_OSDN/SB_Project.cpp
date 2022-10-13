@@ -1035,6 +1035,65 @@ bool SB_Project::Save_Player_Data()
 		Count++;
 	}
 
+	// ---------------------------------------- Player Locations
+
+	float w = 0;
+	float x = 0;
+	float y = 0;
+	float z = 0;
+
+	fprintf(WriteFile, "%s\n", " ");
+	fprintf(WriteFile, "%s\n", "[Locations]");
+
+	int RealCount = App->Cl_LookUps->Player_Location_GetCount(); // Get The real Count Minus Deleted Files
+
+	fprintf(WriteFile, "%s%i\n", "Locations_Count=", RealCount);
+
+	int Location = 0; // Correct for Deleted Files
+
+	Count = 0;
+	while (Count < App->Cl_Scene_Data->Player_Location_Count)
+	{
+		if (App->SBC_Scene->B_Locations[Count]->Deleted == 0)
+		{
+			fprintf(WriteFile, "%s\n", " ");
+
+			char Cbuff[255];
+			char buff[255];
+			strcpy(buff, "[Location_");
+			_itoa(Location, Cbuff, 10);
+			strcat(buff, Cbuff);
+			strcat(buff, "]");
+			fprintf(WriteFile, "%s\n", buff);
+
+			fprintf(WriteFile, "%s%i\n", "Locatoin_ID=", App->SBC_Scene->B_Locations[Count]->Location_ID);
+			fprintf(WriteFile, "%s%s\n", "Name=", App->SBC_Scene->B_Locations[Count]->Name);
+
+			x = App->SBC_Scene->B_Locations[Count]->Current_Position.x;
+			y = App->SBC_Scene->B_Locations[Count]->Current_Position.y;
+			z = App->SBC_Scene->B_Locations[Count]->Current_Position.z;
+			fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Position=", x, y, z);
+
+			x = App->SBC_Scene->B_Locations[Count]->Physics_Position.getX();
+			y = App->SBC_Scene->B_Locations[Count]->Physics_Position.getY();
+			z = App->SBC_Scene->B_Locations[Count]->Physics_Position.getZ();
+			fprintf(WriteFile, "%s%f,%f,%f\n", "Physics_Position=", x, y, z);
+
+			w = App->SBC_Scene->B_Locations[Count]->Physics_Rotation.getW();
+			x = App->SBC_Scene->B_Locations[Count]->Physics_Rotation.getX();
+			y = App->SBC_Scene->B_Locations[Count]->Physics_Rotation.getY();
+			z = App->SBC_Scene->B_Locations[Count]->Physics_Rotation.getZ();
+			fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Physics_Rotation=", w, x, y, z);
+			Location++;
+		}
+
+		Count++;
+	}
+
+
+
+
+
 	fclose(WriteFile);
 
 	return 1;
@@ -1408,6 +1467,7 @@ bool SB_Project::Load_Project_Aera()
 bool SB_Project::Load_Project_Player()
 {
 	int Players_Count = 0;
+	int Locations_Count = 0;
 	char Player_Name[MAX_PATH];
 	char Player_Ini_Path[MAX_PATH];
 	char chr_Tag1[MAX_PATH];
@@ -1466,6 +1526,63 @@ bool SB_Project::Load_Project_Player()
 		Count++;
 
 	}
+
+	// ------------------------------------------ Locations
+	int Int_Tag = 0;
+	Locations_Count = App->Cl_Ini->GetInt("Locations", "Locations_Count", 0);
+
+	Count = 0;
+	while (Count < Locations_Count)
+	{
+		if (App->SBC_Scene->B_Locations[Count])
+		{
+			delete App->SBC_Scene->B_Locations[Count];
+			App->SBC_Scene->B_Locations[Count] = NULL;
+		}
+
+		char n_buff[255];
+		char buff[255];
+		strcpy(buff, "Location_");
+		_itoa(Count, n_buff, 10);
+		strcat(buff, n_buff);
+
+		App->SBC_Scene->B_Locations[Count] = new Base_Locations();
+		App->SBC_Scene->B_Locations[Count]->Deleted = 0;
+
+
+		Int_Tag = App->Cl_Ini->GetInt(buff, "Locatoin_ID", 0, 10);
+		App->SBC_Scene->B_Locations[Count]->Location_ID = Int_Tag;
+
+		App->Cl_Ini->GetString(buff, "Name", chr_Tag1, MAX_PATH);
+
+
+		strcpy(App->SBC_Scene->B_Locations[Count]->Name, chr_Tag1);
+
+		// Mesh_Pos
+		App->Cl_Ini->GetString(buff, "Mesh_Position", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+		App->SBC_Scene->B_Locations[Count]->Current_Position.x = x;
+		App->SBC_Scene->B_Locations[Count]->Current_Position.y = y;
+		App->SBC_Scene->B_Locations[Count]->Current_Position.z = z;
+
+		App->Cl_Ini->GetString(buff, "Physics_Position", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+		App->SBC_Scene->B_Locations[Count]->Physics_Position.setX(x);
+		App->SBC_Scene->B_Locations[Count]->Physics_Position.setY(y);
+		App->SBC_Scene->B_Locations[Count]->Physics_Position.setZ(z);
+
+		App->Cl_Ini->GetString(buff, "Physics_Rotation", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f,%f", &w, &x, &y, &z);
+		App->SBC_Scene->B_Locations[Count]->Physics_Rotation.setW(w);
+		App->SBC_Scene->B_Locations[Count]->Physics_Rotation.setX(x);
+		App->SBC_Scene->B_Locations[Count]->Physics_Rotation.setY(y);
+		App->SBC_Scene->B_Locations[Count]->Physics_Rotation.setZ(z);
+
+		Count++;
+
+	}
+
+	App->Cl_Scene_Data->Player_Location_Count = Count;
 
 	App->SBC_Physics->Reset_Physics();
 	App->SBC_Physics->Enable_Physics(1);
