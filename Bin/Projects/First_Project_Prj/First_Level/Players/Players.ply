@@ -26,8 +26,8 @@ Physics_Position=72.376854,-47.100010,16.891436
 Physics_Rotation=0.000000,0.913089,0.000000,-0.407761
  
 [Location_1]
-Locatoin_ID=2001
-Name=New_Location_1
+Locatoin_ID=2000
+Name=New_Location_2
 Mesh_Position=-128.852783,-47.100010,47.780121
 Physics_Position=-128.852783,-47.100010,47.780121
 Physics_Rotation=0.000000,-0.647117,0.000000,0.762391
