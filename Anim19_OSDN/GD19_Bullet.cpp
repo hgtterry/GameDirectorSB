@@ -72,6 +72,8 @@ bool GD19_Bullet::Init_Bullet()
 // *************************************************************************
 void GD19_Bullet::Reset_Physics(void)
 {
+	App->Log_Messageg("void GD19_Bullet::Reset_Physics(void)");
+
 	App->Cl19_Ogre->OgreListener->GD_Run_Physics = 0;
 
 	float w = 1;

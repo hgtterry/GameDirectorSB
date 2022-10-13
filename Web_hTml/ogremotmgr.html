@@ -1,0 +1,240 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Inflanite Ogre3D Motions Manarger</title>
+
+<meta http-equiv="Window-target" content="_top">
+<meta name="description" content="Inflanite Equity_XL">
+<meta name="keywords" content="Inflanite Equity_XL">
+<meta name="Robots" content="noarchive">
+<link href="./images_equity10/style.css" type="text/css" rel="stylesheet">
+<link href="" type="" rel="" title="">
+<script type="text/javascript" language="JavaScript" src="./images_equity10/breakout.js"></script>
+</head>
+<body class="div4" style="background-image: url(images_equity10/ice-light.jpg);">
+<!-- body -->
+<table class="clear4" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td align="center"><!-- body header -->
+<table class="bodyheader4" border="0" cellpadding="2" cellspacing="0" width="980">
+<tbody>
+<tr>
+<td style="background-color: rgb(0, 21, 106);">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<!-- logo -->
+<table style="width: 980px;" class="logo4" border="0" cellpadding="0" cellspacing="0">
+<tbody>
+<tr align="center">
+<td style="background-color: rgb(0, 21, 106);"><img style="border: 0px solid ; width: 728px; height: 90px;" src="images_equity10/Title2.jpg" alt=""></td>
+</tr>
+</tbody>
+</table>
+<!-- link header -->
+<table style="background-color: rgb(0, 0, 153);" class="linkheader4" border="0" cellpadding="8" cellspacing="0" width="980">
+<tbody>
+<tr>
+<td style="color: black; background-color: rgb(0, 21, 106);" class="linkheader4" align="left" valign="bottom"><a style="color: white;" href="index.html">Home</a>
+&nbsp;&nbsp; <a style="color: white;" href="features.html">Features</a>
+&nbsp;&nbsp;<span style="color: white;"> </span><a style="color: white;" href="downloads.html">Downloads</a>
+&nbsp;&nbsp; <a style="color: white;" href="tutorials.html">Tutorials</a>
+&nbsp;&nbsp; <a style="color: white;" href="links.html">Links</a>
+&nbsp;&nbsp; <a style="color: white;" href="support.html">Support</a>
+</td>
+<td style="background-color: rgb(0, 21, 106);" class="date4" align="right">
+<script style="" type="text/javascript" language="JavaScript" src="./images_equity10/date.js"></script><span style="color: black;"></span>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<!-- content frame -->
+<table class="clear4" border="0" cellpadding="0" cellspacing="0" width="980">
+<tbody>
+<tr>
+<!-- start of center --> <td class="content4">
+<!-- start of content -->
+<table class="content4" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<!-- left padding --> <td width="65">&nbsp;</td>
+<!-- center content --> <td><!-- top padding -->
+<br>
+<span style="color: blue;" class="h4"><big><big><span class="h3" style="color: black;"></span></big></big></span><br>
+<hr><h2 style="text-align: center;"><span style="color: black; font-weight: bold; font-family: Arial;">Ogre3D</span></h2>
+<div style="text-align: center;"><h2><span style="color: black; font-weight: bold; font-family: Arial;">Motion Renaming Deleting Coping Saving and Reloading </span><span style="font-weight: bold; font-family: Arial;">.</span></h2></div><span style="font-weight: bold;">
+</span>
+<p class="western" style="margin-bottom: 0cm;">Some times when using a
+model in your game only a certain amount of animations are used this
+has the affect of bloating your resources with unnecessary data.</p>
+
+<p class="western" style="margin-bottom: 0cm;">As of version Equity10
+0.3.7.1  Can now delete unwanted motions then the model can be
+exported out with just the motions you want. 
+</p>
+
+<p class="western" style="margin-bottom: 0cm;">Also some motion don't
+have the required names required for your game Equity can help out
+and has the ability to rename motions it also can save motions that
+can be reloaded later and motions can be cloned/copied.</p><p class="western" style="margin-bottom: 0cm;">OK first off we will
+use the Sinbad.mesh model and its motions&nbsp;as every one has this
+model in the SDK. if for some reason you dont have the model just down load the model and models used to test Equity.</p><p class="western" style="margin-bottom: 0cm;"> <a href="https://sourceforge.net/projects/hgts123/files/Test_Models.zip/download">https://sourceforge.net/projects/hgts123/files/Test_Models.zip/download</a></p><span style="font-weight: bold;">
+</span>
+<p class="western" style="margin-bottom: 0cm;">Start Equity and
+navigate to File-&gt;Import-&gt;Ogre3D-&gt;Mesh</p><p class="western" style="margin-bottom: 0cm;"><img style="width: 400px; height: 160px;" alt="" src="images_equity10/LoadOgre.png"></p><br>
+<p class="western" style="margin-bottom: 0cm;">Now navigate with the
+Open dialog that appears to where your Model is. ( .mesh file )</p>
+<p class="western" style="margin-bottom: 0cm;">When the model loads
+you will be asked do you want to load a Resource File.</p><p class="western" style="margin-bottom: 0cm; text-align: center;"><img style="width: 400px; height: 134px;" alt="" src="images_equity10/ConfigDialog.png"></p>
+<p class="western" style="margin-bottom: 0cm;">You can click Yes and
+navigate to the resources.cfg you are using in your game but for the
+purposes of this tutorial it does not matter only the motions are
+affected and non of the internal material references in the mesh file
+are altered  so you can click No Delete motions and Export then place the model
+back into your game it will look exactly the same but with less or
+renamed motions.</p>
+<br><img src="images_equity10/FileView.png" alt="" style="width: 227px; height: 323px; float: left;" hspace="10"> 
+<p class="western" style="margin-bottom: 0cm;">Ok now Double click on
+the Motions Folder.</p><p class="western" style="margin-bottom: 0cm;">As you can see a list
+of motions appear in the case of Sinbad there are 13 Dance DrawSwords
+and so on  when you click on a Motion you will notice at the bottom
+the Motion Control Panel its a bit limited at the moment but will
+improve in future releases but there is a Play Stop and Pose Button.</p>
+
+<p class="western" style="margin-bottom: 0cm;">The Pose Button always
+returns the Model to the Default Pose this is the starting position
+of the model with or without  a motion you could say the default
+skeleton in the case of Sinbad. 
+</p><span style="font-weight: bold;">
+<br>
+<br><br><br><br><br></span>
+<p class="western" style="margin-bottom: 0cm;">Ok now to the right the
+motions manager is Active and with a set of Options.&nbsp;</p>
+
+<p class="western" style="margin-bottom: 0cm;"><img src="images_equity10/MotionManager.png" alt="" style="width: 200px; height: 411px; float: left;" hspace="10">
+</p><p class="western" style="margin-bottom: 0cm;">The first and obvious
+thing you will see is the name of the Motion</p><p class="western" style="margin-bottom: 0cm;">Then Next is the Time
+this is the total time of the Motion in seconds.</p><br><span style="font-weight: bold;">
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br><br><br>
+</span>
+<p class="western" style="margin-bottom: 0cm;">Ok the Buttons.</p><br><span style="font-weight: bold;">
+Motion Info<br></span>
+<p class="western" style="margin-bottom: 0cm;">I am not going to go
+into to much detail about this at the moment but click it and you
+will see it brings up the motion details including its Paths and
+Frames and the Times at which things happen in the Motion.</p><br><span style="font-weight: bold;">
+Rename Motion<br></span>
+<p class="western" style="margin-bottom: 0cm;">Clicking this button
+brings the Change Motion Name dialog. The name that appears in the
+dialog is the current selected Motion name now if you click Ok Equity
+will complain that a Motion by this name Exists so you will have to
+alter it so in this example stick a 2 after Dance so Dance2 now click
+Ok and the Motion name will change to Dance2. Also note that Motion
+names can be funny about space so if you type Dance 2 Equity will
+replace it with Dance_2. 
+</p><br><span style="font-weight: bold;">
+Copy Motion<br></span>
+<p class="western" style="margin-bottom: 0cm;">The Copy Motion Button
+provides the ability to clone a Motion so in this Example when
+clicked it will ask you again for a name if you type a 2 after Dance
+Dance2 and click ok a New motion will be created now Dance2 will be
+an Exact copy of Dance. This may seem an odd thing at the moment “why
+do it” later in future releases we will be adding Motion Edit so
+you can edit the motion and creating a copy then altering that seems
+a safe thing to do.</p><br>
+<span style="font-weight: bold;">Save Motion</span><br>
+<p class="western" style="margin-bottom: 0cm;">This button will bring
+up a Save dialog the save name is the model name plus the motion name
+and mot so it stands out in a file system so in this case the file
+will be sinbad_dance_mot.omf   the omf file extension stands for Ogre
+Motion File but of course you can name the file anything you want.</p><p class="western" style="margin-bottom: 0cm;"><span style="font-weight: bold;">Load Motion</span></p><p class="western" style="margin-bottom: 0cm;">Load motion is the
+counter part to Save motion when clicked it will bring up the load
+dialog navigate to where you saved the omf file and it will load it
+there are two things to note. 
+</p>
+
+<p class="western" style="margin-bottom: 0cm;">Note 1 If the file
+being loaded as a motion name that already exists in the model Equity
+will ask you to rename it on loading.</p>
+
+<p class="western" style="margin-bottom: 0cm;">Note 2  you can not
+just load any motion file say from ninja model to Sinbad model it
+gets a bit involved but in a nut shell the skeleton as different
+names for its joint/bones and a motion works on the motion by the
+names of the joints in the case of sinbad they are described like Jaw
+neck and so on but ninja is just joint1 joint2. If you try to load a
+Motion file that does not match the model skeleton Equity will tell you and abort the
+motion load.</p><br>
+<span style="font-weight: bold;">Delete Motion<br></span>
+<p class="western" style="margin-bottom: 0cm;">And Finally Delete
+Motion ok this will delete the selected motion it is advised to save
+the motion before deleting it just in case you want it back at a
+later date for a new game.</p>
+
+<p class="western" style="margin-bottom: 0cm;">You can keep deleting
+motions till there are none the motion folder will go grey to add a
+motion back just click the motion folder to bring back the Motion
+Manager.</p><br><div style="text-align: center;"><span style="font-weight: bold;">And Finaly</span><br></div>
+Ok now to save the changes to the model it will need to be Exported out so Navigate.<br>
+File-&gt;Export-&gt;Ogre3D-&gt;Mesh<br><br>The Export routine will
+create a folder for you it will place the mesh and skeleton files also
+a dummy material file and any textures used by the model .It should
+only be nessary to copy the skeleton file to you game data.<br>
+
+<p class="western" style="margin-bottom: 0cm;">We have many ideas in
+the pipeline including bulk delete motions which will save time
+deleting individual motion and a motion editor which will be able to
+create/edit motions.</p>
+
+<p class="western" style="margin-bottom: 0cm;">Thanks</p>
+
+<p class="western" style="margin-bottom: 0cm;">W.T.Flanigan -&nbsp;H.C.Flanigan</p>
+
+<hr> <br>
+</td>
+<!-- right padding --> <td width="65">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<!-- end of content --> </td>
+<!-- end of center --></tr>
+</tbody>
+</table>
+<!-- footer -->
+<table style="width: 980px;" class="copyright4" border="0" cellpadding="12" cellspacing="0">
+<tbody>
+<tr>
+<td style="background-color: rgb(213, 222, 242);" align="left" width="25%"><a href=""><br>
+</a></td>
+<td style="background-color: rgb(213, 222, 242);" align="center" width="50%"><span style="color: black;">Copyright
+© 2014.&nbsp;</span><span style="color: black;">Inflanite
+</span><span style="color: black;">Software.</span><br style="color: black;">
+<span style="color: black;">W.T.Flanigan
+B.Parkin H.C.Flanigan.</span><br>
+</td>
+<td style="width: 25%; text-align: right; background-color: rgb(213, 222, 242);"><br>
+</td>
+</tr>
+</tbody>
+</table>
+<br>
+</td>
+</tr>
+</tbody>
+</table>
+<!-- end of body -->
+</body></html>
