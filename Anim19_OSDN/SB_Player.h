@@ -73,6 +73,9 @@ public:
 protected:
 
 	static LRESULT CALLBACK Player_PropsPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Locations_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	void Start_Locations_Dlg();
 
 	void Initialize();
 	

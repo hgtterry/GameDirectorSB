@@ -11,7 +11,6 @@ public:
 	bool Dialog_Text(int Usage);
 	bool Dialog_DropGen();
 	void Start_Gen_ListBox(int ListType);
-	void Start_Projection();
 
 	void Message(char *pString);
 
@@ -53,8 +52,6 @@ protected:
 	static LRESULT CALLBACK Gen_ListBox_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Dialog_DropGen_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK GameMode_StartPosition_Dlg_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-
-	static LRESULT CALLBACK Start_DataView_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	static LRESULT CALLBACK Message_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Projection_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
