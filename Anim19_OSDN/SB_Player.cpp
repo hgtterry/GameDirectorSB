@@ -199,11 +199,13 @@ LRESULT CALLBACK SB_Player::Player_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_BTSAVE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
 		SendDlgItemMessage(hDlg, IDC_BTOBJECT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BTPHYSICS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
 		SendDlgItemMessage(hDlg, IDC_PHYSICSDEBUG, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_GOTO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
+		SendDlgItemMessage(hDlg, IDC_BTPL_LOCATIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_COLLISIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		return TRUE;
 	}
@@ -236,7 +238,14 @@ LRESULT CALLBACK SB_Player::Player_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_INFODETAILS && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BTPL_LOCATIONS && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_GOTO && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
@@ -264,16 +273,24 @@ LRESULT CALLBACK SB_Player::Player_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 			App->Custom_Button_Toggle(item, App->SBC_Player->Show_Physics_Debug);
 			return CDRF_DODEFAULT;
 		}
-		if (some_item->idFrom == IDC_BUTDIMENSIONS && some_item->code == NM_CUSTOMDRAW)
+
+		if (some_item->idFrom == IDC_BT_COLLISIONS && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			//			App->Custom_Button_Toggle(item, App->Cl_ImGui->Show_ImGui_Dimensions);
+			App->Custom_Button_Toggle(item, App->CL_Vm_ImGui->Show_Collision_Debug);
 			return CDRF_DODEFAULT;
 		}
+		
 		return CDRF_DODEFAULT;
 	}
 
 	case WM_COMMAND:
+
+		if (LOWORD(wParam) == IDC_BTPL_LOCATIONS)
+		{
+			Debug
+			return 1;
+		}
 
 		if (LOWORD(wParam) == IDC_BT_COLLISIONS)
 		{
@@ -288,7 +305,7 @@ LRESULT CALLBACK SB_Player::Player_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 
 			return 1;
 		}
-
+		
 		if (LOWORD(wParam) == IDC_BT_GOTO)
 		{
 

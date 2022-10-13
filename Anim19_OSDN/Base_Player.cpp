@@ -35,6 +35,8 @@ Base_Player::Base_Player()
 	Phys_Body =		nullptr;
 	Phys_Shape =	nullptr;
 
+	//Player_Xform.
+
 	StartPos.x = 0;
 	StartPos.y = 0;
 	StartPos.z = 0;
@@ -188,7 +190,7 @@ void Base_Player::Rotate(const Ogre::Vector3 axis, bool normalize)
 		R[2].normalize();
 		R[1] = R[0].cross(R[2]);
 	}
-
+	//R[0].
 	xform.setBasis(R);
 	Phys_Body->setWorldTransform(xform);
 	
