@@ -36,7 +36,7 @@ Base_Player::Base_Player()
 	Phys_Shape =	nullptr;
 
 	StartPos.x = 0;
-	StartPos.y = -50;
+	StartPos.y = 0;
 	StartPos.z = 0;
 
 	Physics_Rotation.setW(1);
