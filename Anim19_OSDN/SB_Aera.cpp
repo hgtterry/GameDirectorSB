@@ -318,6 +318,7 @@ void SB_Aera::Hide_Area_Dlg(bool Show)
 // *************************************************************************
 void SB_Aera::Add_Aera_To_Project(int Index,char* FileName,char* Resource_Location)
 {
+	App->Log_Messageg("void SB_Aera::Add_Aera_To_Project(int Index,char* FileName,char* Resource_Location)");
 
 	if (App->SBC_Scene->B_Area[Index])
 	{

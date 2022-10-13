@@ -365,9 +365,7 @@ void GD19_Ogre::Go_FullScreen_Mode(void)
 
 	SetWindowPos(App->ViewGLhWnd, HWND_TOP, 0, 0, cx, cy, NULL);
 
-
 	SetParent(App->ViewGLhWnd, NULL);
-
 
 	mWindow->resize(cx, cy);
 

@@ -1045,6 +1045,8 @@ bool SB_Project::Save_Player_Data()
 // *************************************************************************
 void SB_Project::Set_Paths()
 {
+	App->Log_Messageg("void SB_Project::Set_Paths()");
+
 	strcpy(m_Level_File_Name, App->SBC_FileIO->Project_File_Name);
 	strcpy(m_Project_Sub_Folder, App->SBC_FileIO->Project_Path_File_Name);
 	strcpy(m_Ini_Path_File_Name, App->SBC_FileIO->Project_Path_File_Name);
@@ -1161,6 +1163,7 @@ bool SB_Project::Load_Project()
 // *************************************************************************
 bool SB_Project::Load_Get_Resource_Path()
 {
+	App->Log_Messageg("bool SB_Project::Load_Get_Resource_Path()");
 
 	m_Main_Assets_Path[0] = 0;
 
@@ -1340,6 +1343,8 @@ bool SB_Project::Load_Project_Objects()
 // *************************************************************************
 bool SB_Project::Load_Project_Aera()
 {
+	App->Log_Messageg("bool SB_Project::Load_Project_Aera()");
+
 	char Area_Ini_Path[MAX_PATH];
 	char chr_Tag1[MAX_PATH];
 	char Area_Name[1024];

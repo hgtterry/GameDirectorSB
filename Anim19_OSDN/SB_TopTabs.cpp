@@ -228,6 +228,7 @@ LRESULT CALLBACK SB_TopTabs::TopBar_Globals_Proc(HWND hDlg, UINT message, WPARAM
 
 				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HairOn_Bmp);
 			}
+
 			return TRUE;
 		}
 
@@ -242,6 +243,14 @@ LRESULT CALLBACK SB_TopTabs::TopBar_Globals_Proc(HWND hDlg, UINT message, WPARAM
 			{
 				App->CL_Vm_ImGui->Show_Model_Data = 1;
 			}
+
+			return TRUE;
+		}
+
+		//-------------------------------------------------------- Show Full Screen
+		if (LOWORD(wParam) == IDC_BTTB_FULLSCREEN)
+		{
+			App->Cl19_Ogre->Go_FullScreen_Mode();
 			return TRUE;
 		}
 
@@ -481,12 +490,10 @@ LRESULT CALLBACK SB_TopTabs::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 	{
 	case WM_INITDIALOG:
 	{
-		SendDlgItemMessage(hDlg, IDC_TBRESETVIEW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_TBZOOM, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		SendDlgItemMessage(hDlg, IDC_FIRST_MODE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_FREECAM, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BTMOUSESPEED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_FULLSCREEN, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_SELECT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_3RD, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
@@ -530,28 +537,7 @@ LRESULT CALLBACK SB_TopTabs::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_TBZOOM && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_TBRESETVIEW && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
-			return CDRF_DODEFAULT;
-		}
-
 		if (some_item->idFrom == IDC_BTMOUSESPEED && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_FULLSCREEN && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
@@ -570,27 +556,10 @@ LRESULT CALLBACK SB_TopTabs::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 	case WM_COMMAND:
 	{
-		if (LOWORD(wParam) == IDC_TBRESETVIEW)
-		{
-			App->SBC_Camera->Reset_View();
-			return 1;
-		}
-
-		if (LOWORD(wParam) == IDC_TBZOOM)
-		{
-			App->SBC_Camera->Zoom();
-			return 1;
-		}
-
+		
 		if (LOWORD(wParam) == IDC_BTMOUSESPEED)
 		{
 			App->Com_CDialogs->Start_Mouse_Sensitivity(App->Fdlg);
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDC_FULLSCREEN)
-		{
-			App->Cl19_Ogre->Go_FullScreen_Mode();
 			return TRUE;
 		}
 
@@ -645,32 +614,34 @@ LRESULT CALLBACK SB_TopTabs::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 		if (LOWORD(wParam) == IDC_BT_SELECT)
 		{
-			if (App->SBC_TopTabs->Toggle_Select_Flag == 1)
+			if (App->SBC_Scene->Scene_Loaded == 1)
 			{
-				App->CL_Vm_ImGui->Show_Object_Selection = 0;
+				if (App->SBC_TopTabs->Toggle_Select_Flag == 1)
+				{
+					App->CL_Vm_ImGui->Show_Object_Selection = 0;
 
-				App->SBC_TopTabs->Toggle_Select_Flag = 0;
-				App->Cl_Visuals->mPickSight->hide();
-				App->Cl19_Ogre->OgreListener->GD_Selection_Mode = 0;
-				//App->Cl19_Ogre->OgreListener->mNameOverlay->hide();
+					App->SBC_TopTabs->Toggle_Select_Flag = 0;
+					App->Cl_Visuals->mPickSight->hide();
+					App->Cl19_Ogre->OgreListener->GD_Selection_Mode = 0;
+
+				}
+				else
+				{
+
+					App->SBC_TopTabs->Toggle_Select_Flag = 1;
+					App->Cl_Visuals->mPickSight->show();
+					App->Cl19_Ogre->OgreListener->GD_Selection_Mode = 1;
+
+				}
+
+				RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			}
-			else
-			{
-				//App->CL_Vm_ImGui->Show_Object_Selection = 1;
-
-				App->SBC_TopTabs->Toggle_Select_Flag = 1;
-				App->Cl_Visuals->mPickSight->show();
-				App->Cl19_Ogre->OgreListener->GD_Selection_Mode = 1;
-				//App->Cl19_Ogre->OgreListener->mNameOverlay->hide();
-			}
-
-			RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_BT_INFO_CAMERA)
 		{
-			App->Cl_Utilities->OpenHTML("Help\\Templete.html");
+			App->Cl_Utilities->OpenHTML("Help\\CameraTab.html");
 			return TRUE;
 		}
 
@@ -694,29 +665,6 @@ void SB_TopTabs::Init_Bmps_Camera(void)
 	HWND hTooltip_TB_1 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
 
 	// --------------------------------------------------- 
-	Temp = GetDlgItem(Camera_TB_hWnd, IDC_TBRESETVIEW);
-
-	TOOLINFO ti = { 0 };
-	ti.cbSize = sizeof(ti);
-	ti.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
-	ti.uId = (UINT_PTR)Temp;
-	ti.lpszText = "Reset to Default View";
-	ti.hwnd = App->MainHwnd;
-	SendMessage(hTooltip_TB_1, TTM_ADDTOOL, 0, (LPARAM)&ti);
-
-	// --------------------------------------------------- 
-
-	Temp = GetDlgItem(Camera_TB_hWnd, IDC_TBZOOM);
-
-	TOOLINFO ti2 = { 0 };
-	ti2.cbSize = sizeof(ti2);
-	ti2.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
-	ti2.uId = (UINT_PTR)Temp;
-	ti2.lpszText = "Reset and Zoom to fit Model In Window";
-	ti2.hwnd = App->MainHwnd;
-	SendMessage(hTooltip_TB_1, TTM_ADDTOOL, 0, (LPARAM)&ti2);
-
-	// --------------------------------------------------- 
 
 	Temp = GetDlgItem(Camera_TB_hWnd, IDC_BTMOUSESPEED);
 
@@ -727,18 +675,6 @@ void SB_TopTabs::Init_Bmps_Camera(void)
 	ti3.lpszText = "Adujust Mouse and Keys Speed";
 	ti3.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_1, TTM_ADDTOOL, 0, (LPARAM)&ti3);
-
-	// --------------------------------------------------- 
-
-	Temp = GetDlgItem(Camera_TB_hWnd, IDC_FULLSCREEN);
-
-	TOOLINFO ti4 = { 0 };
-	ti4.cbSize = sizeof(ti4);
-	ti4.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
-	ti4.uId = (UINT_PTR)Temp;
-	ti4.lpszText = "Go Fullscreen Press esc to return";
-	ti4.hwnd = App->MainHwnd;
-	SendMessage(hTooltip_TB_1, TTM_ADDTOOL, 0, (LPARAM)&ti4);
 
 	// --------------------------------------------------- 
 
@@ -796,6 +732,10 @@ void SB_TopTabs::Init_Bmps_Globals(void)
 	Temp = GetDlgItem(TabsHwnd, IDC_TBINFO);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfo_Bmp);
 
+	Temp = GetDlgItem(TabsHwnd, IDC_BTTB_FULLSCREEN);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_FullScreen_Bmp);
+
+
 	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
 
 	Temp = GetDlgItem(TabsHwnd, IDC_TBINFO);
@@ -824,6 +764,15 @@ void SB_TopTabs::Init_Bmps_Globals(void)
 	ti10.lpszText = "Toggle Main Grid";
 	ti10.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti10);
+
+	Temp = GetDlgItem(TabsHwnd, IDC_BTTB_FULLSCREEN);
+	TOOLINFO ti11 = { 0 };
+	ti11.cbSize = sizeof(ti11);
+	ti11.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti11.uId = (UINT_PTR)Temp;
+	ti11.lpszText = "Full Screen Press Esc to Exit";
+	ti11.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti11);
 
 }
 

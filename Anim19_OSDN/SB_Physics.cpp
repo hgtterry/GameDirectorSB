@@ -167,6 +167,8 @@ void SB_Physics::Update_Model(void)
 // *************************************************************************
 void SB_Physics::Enable_Physics(bool Enable)
 {
+	App->Log_Messageg("void SB_Physics::Enable_Physics(bool Enable)");
+
 	int f = App->SBC_Scene->B_Player[0]->Phys_Body->getCollisionFlags();
 
 	App->Cl19_Ogre->OgreListener->Dubug_Physics_Draw = Enable;
@@ -181,7 +183,6 @@ void SB_Physics::Enable_Physics(bool Enable)
 
 	RedrawWindow(App->SBC_Physics->PhysicsPannel_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-	App->Log_Messageg("EquitySB --------------------------------------------- Enable_Physics Call");
 }
 
 // *************************************************************************

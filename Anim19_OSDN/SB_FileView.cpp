@@ -63,6 +63,8 @@ SB_FileView::SB_FileView()
 	Level_But_Active = 1;
 	Stock_But_Active = 0;
 
+	FileView_Pined = 0;
+
 	Context_Selection = Enums::FileView_None;
 
 	FileView_Active = 0;
