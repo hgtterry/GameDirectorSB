@@ -11,7 +11,6 @@ public:
 
 	bool Init_Bullet();
 	void Start_Physics_Console(void);
-	void Reset_Physics(void);
 	
 	//GD_Debug M_Debug;
 

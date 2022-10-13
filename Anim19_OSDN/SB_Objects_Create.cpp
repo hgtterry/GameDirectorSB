@@ -781,7 +781,7 @@ bool SB_Objects_Create::First_Area_Start_Project()
 
 	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Area[0]->FileViewItem);
 
-	App->Cl_Bullet->Reset_Physics();
+	App->SBC_Physics->Reset_Physics();
 	App->SBC_Physics->Enable_Physics(1);
 
 	//------------------------------------------------------------------------------ WHY

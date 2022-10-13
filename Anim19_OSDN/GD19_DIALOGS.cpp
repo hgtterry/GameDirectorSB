@@ -882,7 +882,7 @@ LRESULT CALLBACK GD19_Dialogs::GameMode_StartPosition_Dlg_Proc(HWND hDlg, UINT m
 
 		if (LOWORD(wParam) == IDC_STARTLEVEL)
 		{
-			App->Cl_Bullet->Reset_Physics();
+			App->SBC_Physics->Reset_Physics();
 			App->Cl_Dialogs->Canceled = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 		}

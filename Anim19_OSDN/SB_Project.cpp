@@ -1467,7 +1467,7 @@ bool SB_Project::Load_Project_Player()
 
 	}
 
-	App->Cl_Bullet->Reset_Physics();
+	App->SBC_Physics->Reset_Physics();
 	App->SBC_Physics->Enable_Physics(1);
 
 	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Players_Folder);

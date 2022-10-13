@@ -29,6 +29,7 @@ public:
 	~SB_Physics();
 
 	bool Start_Physics_Pannel();
+	void Reset_Physics(void);
 	void Reset_Triggers(void);
 
 	// Enable Disable Physics [231121]

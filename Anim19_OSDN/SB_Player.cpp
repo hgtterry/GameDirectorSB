@@ -294,6 +294,7 @@ LRESULT CALLBACK SB_Player::Player_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 
 			App->Cl19_Ogre->mCamera->setPosition(Ogre::Vector3(App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().getOrigin()));
 			
+			App->SBC_Scene->B_Player[0]->Phys_Body->setWorldTransform(App->SBC_Scene->B_Player[0]->Player_Xform);
 			return 1;
 		}
 
@@ -306,7 +307,7 @@ LRESULT CALLBACK SB_Player::Player_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 			
 				App->SBC_Scene->B_Player[0]->Physics_Rotation = App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().getRotation();
 
-
+				App->SBC_Scene->B_Player[0]->Player_Xform = App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform();
 				
 				App->SBC_Scene->B_Player[0]->Altered = 1;
 				App->SBC_Scene->Scene_Modified = 1;

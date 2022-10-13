@@ -45,7 +45,7 @@ bool SB_Import_Room::Room_Loader(char* Extension, char* Extension2)
 	App->SBC_Player->Create_Player_Object();
 	strcpy(App->SBC_Scene->B_Player[0]->Player_Name, "Player_1");
 
-	App->Cl_Bullet->Reset_Physics();
+	App->SBC_Physics->Reset_Physics();
 	App->SBC_Physics->Enable_Physics(1);
 
 	App->SBC_Scene->B_Player[0]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Players_Folder,"Player_1", 0, true);

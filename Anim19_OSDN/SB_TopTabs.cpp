@@ -842,7 +842,7 @@ LRESULT CALLBACK SB_TopTabs::Physics_TB_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 			if (App->SBC_Scene->Scene_Loaded == 1)
 			{
-				App->Cl_Bullet->Reset_Physics();
+				App->SBC_Physics->Reset_Physics();
 
 				//App->Cl_Visuals->MarkerBB_Addjust(App->SBC_Properties->Current_Selected_Object);
 

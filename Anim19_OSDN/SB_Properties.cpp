@@ -1046,7 +1046,7 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 
 		App->SBC_Scene->B_Player[0]->StartPos.x = App->Cl_Dialogs->mFloat;
 		
-		App->Cl_Bullet->Reset_Physics();
+		App->SBC_Physics->Reset_Physics();
 
 		App->SBC_Scene->B_Player[0]->Altered = 1;
 		App->SBC_Scene->Scene_Modified = 1;
@@ -1072,7 +1072,7 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 
 		App->SBC_Scene->B_Player[0]->StartPos.y = App->Cl_Dialogs->mFloat;
 	
-		App->Cl_Bullet->Reset_Physics();
+		App->SBC_Physics->Reset_Physics();
 
 		App->SBC_Scene->B_Player[0]->Altered = 1;
 		App->SBC_Scene->Scene_Modified = 1;
@@ -1097,7 +1097,7 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 
 		App->SBC_Scene->B_Player[0]->StartPos.z = App->Cl_Dialogs->mFloat;
 		
-		App->Cl_Bullet->Reset_Physics();
+		App->SBC_Physics->Reset_Physics();
 
 		App->SBC_Scene->B_Player[0]->Altered = 1;
 		App->SBC_Scene->Scene_Modified = 1;
