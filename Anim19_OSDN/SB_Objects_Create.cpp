@@ -76,6 +76,16 @@ bool SB_Objects_Create::Add_Objects_From_File() // From File
 			App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Move_Folder);
 
 		}
+		else if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Teleport)
+		{
+			Create_TeleportEntity(Count);
+
+			HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Teleporters_Folder, App->SBC_Scene->B_Object[Count]->Mesh_Name, Count, false);
+			App->SBC_Scene->B_Object[Count]->FileViewItem = Temp;
+
+			App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Teleporters_Folder);
+
+		}
 		else if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Colectable)
 		{
 			//Add_CollectableEntity_FFile(Count);

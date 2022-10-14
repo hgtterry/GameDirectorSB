@@ -1405,13 +1405,40 @@ bool SB_Project::Load_Project_Objects()
 			sscanf(chr_Tag1, "%f", &x);
 			App->SBC_Scene->B_Object[Count]->SndVolume = x;
 
-			//fprintf(WriteFile, "%s%f\n", "Move_NewPos=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Newpos);
-			//fprintf(WriteFile, "%s%i\n", "Move_ObjectID=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Object_ID);
-			
-			//fprintf(WriteFile, "%s%s\n", "Move_PhysicsPos=", App->SBC_Scene->B_Object[Count]->S_MoveType->PhysicsPos);
-			//fprintf(WriteFile, "%s%i\n", "Move_Re_Trigger=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Re_Trigger);
-			//fprintf(WriteFile, "%s%i\n", "Move_Triggered=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Triggered);
+		}
 
+		if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Teleport)
+		{
+			// Create Teleport and use Player Start Position as Default
+
+			App->SBC_Scene->B_Object[Count]->S_Teleport[0] = new Teleport_type;
+			App->Cl_Ini->GetString(buff, "Tele_Goto", chr_Tag1, MAX_PATH);
+			strcpy(App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Name, chr_Tag1);
+
+			App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Location_ID = App->Cl_Ini->GetInt(buff, "Tele_ID", 0);
+
+			// Mesh_Pos
+			App->Cl_Ini->GetString(buff, "Tele_Mesh_Position", chr_Tag1, MAX_PATH);
+			sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+
+			App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Player_Position.x = x;
+			App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Player_Position.y = y;
+			App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Player_Position.z = z;
+
+			App->Cl_Ini->GetString(buff, "Tele_Physics_Position", chr_Tag1, MAX_PATH);
+			sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+
+			App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Position.setX(x);
+			App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Position.setY(y);
+			App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Position.setZ(z);
+
+			App->Cl_Ini->GetString(buff, "Tele_Physics_Rotation", chr_Tag1, MAX_PATH);
+			sscanf(chr_Tag1, "%f,%f,%f,%f", &w, &x, &y, &z);
+
+			App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Rotation.setW(w);
+			App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Rotation.setX(x);
+			App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Rotation.setY(y);
+			App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Rotation.setZ(z);
 		}
 
 		Count++;
