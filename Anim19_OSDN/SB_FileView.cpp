@@ -757,7 +757,72 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		return;
 	}
 
-	
+	// Teleporters
+	if (!strcmp(FileView_Folder, "Teleporters")) // Folder
+	{
+		if (App->SBC_Scene->Area_Added == 0)
+		{
+			App->Say("An Area or Building must be Added Firest");
+
+			return;
+		}
+
+		App->SBC_Dialogs->YesNo("Add Entity", "Do you want to add a new Telport Entity now", 1);
+		bool Doit = App->Cl_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+			App->SBC_Objects_Create->Add_New_Teleporter();
+		}
+
+		return;
+	}
+	if (!strcmp(FileView_File, "Teleporters"))
+	{
+		HideRightPanes();
+		ShowWindow(App->GD_Properties_Hwnd, 1);
+
+		//		App->SBC_Properties->Enable_Delete_Button(1);
+
+				//App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
+
+				//App->Cl_Object_Props->Selected_Object_Index = Index;
+		App->Cl_Visuals->MarkerBB_Addjust(Index);
+
+
+		App->SBC_Properties->Edit_Category = Enums::Edit_Teleport;
+		App->SBC_Properties->Current_Selected_Object = Index;
+		//		App->SBC_Properties->Update_Transform_Dlg();
+
+
+		if (App->SBC_Properties->Edit_Physics == 0)
+		{
+			//App->SBC_Properties->Update_ListView_Teleport();
+		}
+		else
+		{
+			//App->SBC_Properties->Update_ListView_Physics();
+		}
+
+		/*if (App->Cl_Object_Props->Edit_Type == Enums::Edit_Player)
+		{
+			App->Cl_Object_Props->Edit_Type = Enums::FV_Edit_Object;
+			App->Cl_Object_Props->Update_Properties_Mesh();
+			return;
+		}
+
+		if (App->Cl_Object_Props->Edit_Type == Enums::FV_Edit_Object)
+		{
+			App->Cl_Object_Props->Update_Properties_Mesh();
+			return;
+		}
+
+		if (App->Cl_Object_Props->Edit_Type == Enums::Edit_Physics_Object)
+		{
+			App->Cl_Object_Props->Update_Properties_Physics();
+			return;
+		}*/
+		return;
+	}
 	// Collectables
 	if (!strcmp(FileView_Folder, "Collectables")) // Folder
 	{
@@ -825,76 +890,6 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		return;
 	}
 
-	
-	// Teleporters
-	if (!strcmp(FileView_Folder, "Teleporters")) // Folder
-	{
-		if (App->Cl_Scene_Data->Scene_Has_Area == 0)
-		{
-			App->Say("An Area or Building must be Added Firest");
-
-			return;
-		}
-
-		App->SBC_Dialogs->YesNo("Add Entity", "Do you want to add a new Telport Entity now", 1);
-		bool Doit = App->Cl_Dialogs->Canceled;
-		if (Doit == 0)
-		{
-			//App->SBC_Objects_New->Add_New_TeleportEntity();
-		}
-
-		return;
-	}
-	if (!strcmp(FileView_File, "Teleporters"))
-	{
-		HideRightPanes();
-		ShowWindow(App->GD_Properties_Hwnd, 1);
-
-//		App->SBC_Properties->Enable_Delete_Button(1);
-
-		//App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
-
-		//App->Cl_Object_Props->Selected_Object_Index = Index;
-		App->Cl_Visuals->MarkerBB_Addjust(Index);
-
-
-		App->SBC_Properties->Edit_Category = Enums::Edit_Teleport;
-		App->SBC_Properties->Current_Selected_Object = Index;
-//		App->SBC_Properties->Update_Transform_Dlg();
-
-
-		if (App->SBC_Properties->Edit_Physics == 0)
-		{
-			//App->SBC_Properties->Update_ListView_Teleport();
-		}
-		else
-		{
-			//App->SBC_Properties->Update_ListView_Physics();
-		}
-
-		/*if (App->Cl_Object_Props->Edit_Type == Enums::Edit_Player)
-		{
-			App->Cl_Object_Props->Edit_Type = Enums::FV_Edit_Object;
-			App->Cl_Object_Props->Update_Properties_Mesh();
-			return;
-		}
-
-		if (App->Cl_Object_Props->Edit_Type == Enums::FV_Edit_Object)
-		{
-			App->Cl_Object_Props->Update_Properties_Mesh();
-			return;
-		}
-
-		if (App->Cl_Object_Props->Edit_Type == Enums::Edit_Physics_Object)
-		{
-			App->Cl_Object_Props->Update_Properties_Physics();
-			return;
-		}*/
-		return;
-	}
-
-
-	
 	// Particles
 	if (!strcmp(FileView_Folder, "Particles")) // Folder
 	{
