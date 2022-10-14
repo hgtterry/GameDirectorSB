@@ -70,6 +70,7 @@ public:
 	HTREEITEM FV_Messages_Folder;
 	HTREEITEM FV_Sounds_Folder;
 	HTREEITEM FV_Move_Folder;
+	HTREEITEM FV_Teleporters_Folder;
 
 	HMENU hMenu;
 
@@ -98,7 +99,6 @@ protected:
 	HTREEITEM GD_TriggerFolder;
 	HTREEITEM GD_EntitiesFolder;
 	HTREEITEM GD_Collectables_Folder;
-	HTREEITEM GD_Teleporters_Folder;
 	HTREEITEM GD_Environment_Folder;
 	HTREEITEM GD_Area_Change_Folder;
 	HTREEITEM GD_Level_Change_Folder;

@@ -48,7 +48,7 @@ SB_FileView::SB_FileView()
 	FV_Messages_Folder = nullptr;
 	FV_Move_Folder = nullptr;
 	GD_Collectables_Folder = nullptr;
-	GD_Teleporters_Folder = nullptr;
+	FV_Teleporters_Folder = nullptr;
 	GD_Environment_Folder = nullptr;
 	GD_Area_Change_Folder = nullptr;
 	GD_Level_Change_Folder = nullptr;
@@ -93,7 +93,7 @@ void SB_FileView::Reset_Class()
 	FV_Messages_Folder = nullptr;
 	FV_Move_Folder = nullptr;
 	GD_Collectables_Folder = nullptr;
-	GD_Teleporters_Folder = nullptr;
+	FV_Teleporters_Folder = nullptr;
 	GD_Environment_Folder = nullptr;
 	GD_Area_Change_Folder = nullptr;
 	GD_Level_Change_Folder = nullptr;
@@ -469,14 +469,14 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	//tvinsert.item.iSelectedImage = 1;
 	//GD_Collectables_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
 
-	////----------------------------------------------------
-	//tvinsert.hParent = GD_EntitiesFolder;
-	//tvinsert.hInsertAfter = TVI_LAST;
-	//tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
-	//tvinsert.item.pszText = "Teleporters";
-	//tvinsert.item.iImage = 0;
-	//tvinsert.item.iSelectedImage = 1;
-	//GD_Teleporters_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
+	//----------------------------------------------------
+	tvinsert.hParent = GD_EntitiesFolder;
+	tvinsert.hInsertAfter = TVI_LAST;
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	tvinsert.item.pszText = "Teleporters";
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
+	FV_Teleporters_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
 
 	////----------------------------------------------------
 	//tvinsert.hParent = GD_EntitiesFolder;
