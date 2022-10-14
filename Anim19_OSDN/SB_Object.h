@@ -37,6 +37,8 @@ public:
 
 	Ogre::Vector3 Get_BoundingBox_World_Centre(int Object_Index);
 
+	void Set_Teleports_Defaults(int Index);
+
 	int GetIndex_By_Name(char* Name);
 
 	bool Update_Types();

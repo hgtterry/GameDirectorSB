@@ -792,6 +792,10 @@ bool SB_Project::Save_Objects_Data()
 
 				fprintf(WriteFile, "%s%i\n", "Tele_ID=", App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Location_ID);
 
+				fprintf(WriteFile, "%s%s\n", "Tele_Sound=", App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Sound_File);
+				fprintf(WriteFile, "%s%f\n", "Tele_Volume=", App->SBC_Scene->B_Object[Count]->S_Teleport[0]->SndVolume);
+				fprintf(WriteFile, "%s%i\n", "Tele_Play=", App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Play);
+
 				x = App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Player_Position.x;
 				y = App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Player_Position.y;
 				z = App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Player_Position.z;
@@ -1409,13 +1413,21 @@ bool SB_Project::Load_Project_Objects()
 
 		if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Teleport)
 		{
-			// Create Teleport and use Player Start Position as Default
-
+			
 			App->SBC_Scene->B_Object[Count]->S_Teleport[0] = new Teleport_type;
 			App->Cl_Ini->GetString(buff, "Tele_Goto", chr_Tag1, MAX_PATH);
 			strcpy(App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Name, chr_Tag1);
 
 			App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Location_ID = App->Cl_Ini->GetInt(buff, "Tele_ID", 0);
+
+			// Sound
+			App->Cl_Ini->GetString(buff, "Tele_Sound", App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Sound_File, MAX_PATH);
+
+			App->Cl_Ini->GetString(buff, "Tele_Volume", chr_Tag1, MAX_PATH);
+			sscanf(chr_Tag1, "%f", &x);
+			App->SBC_Scene->B_Object[Count]->S_Teleport[0]->SndVolume = x;
+
+			App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Play = App->Cl_Ini->GetInt(buff, "Tele_Play", 0);
 
 			// Mesh_Pos
 			App->Cl_Ini->GetString(buff, "Tele_Mesh_Position", chr_Tag1, MAX_PATH);
@@ -1425,6 +1437,7 @@ bool SB_Project::Load_Project_Objects()
 			App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Player_Position.y = y;
 			App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Player_Position.z = z;
 
+			//Player_Pos
 			App->Cl_Ini->GetString(buff, "Tele_Physics_Position", chr_Tag1, MAX_PATH);
 			sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
 
@@ -1432,6 +1445,7 @@ bool SB_Project::Load_Project_Objects()
 			App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Position.setY(y);
 			App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Position.setZ(z);
 
+			//Player_Rotation
 			App->Cl_Ini->GetString(buff, "Tele_Physics_Rotation", chr_Tag1, MAX_PATH);
 			sscanf(chr_Tag1, "%f,%f,%f,%f", &w, &x, &y, &z);
 

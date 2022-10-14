@@ -22,7 +22,7 @@ distribution.
 */
 
 typedef struct Move_Type {
-	char Object_Name[255];	// Name of Object to Move
+	char Object_Name[MAX_PATH];	// Name of Object to Move
 	float Newpos;
 	float Speed;			// 
 	int WhatDirection;		//
@@ -39,12 +39,15 @@ typedef struct Move_Type {
 
 typedef struct Teleport_type
 {
-	char Name[255];
+	char Name[MAX_PATH];
 	Ogre::Vector3 Player_Position;
 	btVector3 Physics_Position;
 	btQuaternion Physics_Rotation;
 	int Location_ID;
-
+	irrklang::ISound* SndFile;
+	Ogre::Real SndVolume;
+	char Sound_File[MAX_PATH];
+	bool Play;
 }Teleport_type;
 
 #pragma once

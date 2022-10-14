@@ -740,9 +740,9 @@ bool SB_Properties::Update_ListView_Sounds()
 	return 1;
 }
 
-// *************************************************************************
-// *			Update_ListView_Teleport()	Terry Bernie 		 	   *
-// *************************************************************************
+// **************************************************************************
+// *		Update_ListView_Teleport():- Terry and Hazel Flanigan 2022		*
+// **************************************************************************
 bool SB_Properties::Update_ListView_Teleport()
 {
 	int index = App->SBC_Properties->Current_Selected_Object;
@@ -754,18 +754,19 @@ bool SB_Properties::Update_ListView_Teleport()
 
 	// new sound
 	char chr_Play[100];
-	/*if (App->GDCL_Scene_Data->CL_Object[index]->Play_v2 == 1)
+	if (App->SBC_Scene->B_Object[index]->S_Teleport[0]->Play == 1)
 	{
 		strcpy(chr_Play, "True");
 	}
 	else
 	{
 		strcpy(chr_Play, "False");
-	}*/
+	}
 
-	char chr_Stock_Sound[100];
-	/*int sndIndex = App->GDCL_Scene_Data->CL_Object[index]->Sound_ID_v2;
-	strcpy(chr_Stock_Sound, App->GDCL_Scene_Data->St_Sounds[sndIndex]->Name);*/
+	char chr_Volume[100];
+	float sum2 = App->SBC_Scene->B_Object[index]->S_Teleport[0]->SndVolume;
+	int Percent = int(sum2 * 100);
+	_itoa(Percent, chr_Volume, 10);
 
 	const int NUM_ITEMS = 7;
 	const int NUM_COLS = 2;
@@ -778,8 +779,9 @@ bool SB_Properties::Update_ListView_Teleport()
 	grid[0][1] = " ",			grid[1][1] = " ";
 	grid[0][2] = "Goto",		grid[1][2] = App->SBC_Scene->B_Object[index]->S_Teleport[0]->Name;
 	grid[0][3] = " ",			grid[1][3] = " ";
-	grid[0][4] = "Stock_Snd",	grid[1][4] = chr_Stock_Sound;
-	grid[0][5] = "Play",		grid[1][5] = chr_Play;
+	grid[0][4] = "Sound",		grid[1][4] = App->SBC_Scene->B_Object[index]->S_Teleport[0]->Sound_File;
+	grid[0][5] = "Volume",		grid[1][5] = chr_Volume;
+	grid[0][6] = "Play",		grid[1][6] = chr_Play;
 
 
 	ListView_DeleteAllItems(Properties_hLV);

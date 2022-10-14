@@ -373,8 +373,18 @@ bool SB_Collision::Do_Teleport(int Index)
 	App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Physics_Position);
 	App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Physics_Rotation);
 
+	if (App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Play == 1)
+	{
+		char Sound[1024];
+		strcpy(Sound, App->SBC_SoundMgr->Default_Folder);
+		strcat(Sound, "\\Media\\Sounds\\");
+		strcat(Sound, App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Sound_File);
 
-	//Play_Sound(Index);
+		App->SBC_Scene->B_Object[Index]->S_Teleport[0]->SndFile = App->SBC_SoundMgr->SoundEngine->play2D(Sound, false, true, true);
+		App->SBC_Scene->B_Object[Index]->S_Teleport[0]->SndFile->setVolume(App->SBC_Scene->B_Object[ObjectIndex]->SndVolume);
+		App->SBC_Scene->B_Object[Index]->S_Teleport[0]->SndFile->setIsPaused(false);
+	}
+	
 
 	return 1;
 }
