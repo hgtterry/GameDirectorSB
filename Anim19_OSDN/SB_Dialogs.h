@@ -32,6 +32,8 @@ public:
 	void YesNo(char *Text, char *Text2,bool YesNo);
 	bool Dialog_DropGen();
 
+	int DropList_Data;
+
 	bool Canceled;
 	bool YesNo_Flag;
 

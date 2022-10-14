@@ -29,6 +29,8 @@ distribution.
 
 SB_Dialogs::SB_Dialogs()
 {
+	DropList_Data = 0;
+
 	Canceled = 0;
 	YesNo_Flag = 0;
 
@@ -283,19 +285,19 @@ LRESULT CALLBACK SB_Dialogs::Dialog_DropGen_Proc(HWND hDlg, UINT message, WPARAM
 
 		HWND temp = GetDlgItem(hDlg, IDC_CBGEN);
 
-		if (App->Cl_Dialogs->DropList_Data == Enums::DropDialog_TrigMoveObject)
+		if (App->SBC_Dialogs->DropList_Data == Enums::DropDialog_TrigMoveObject)
 		{
 			App->SBC_Dialogs->ListObjects(temp);
 			return TRUE;
 		}
 
-		if (App->Cl_Dialogs->DropList_Data == Enums::DropDialog_TrigMoveAxis)
+		if (App->SBC_Dialogs->DropList_Data == Enums::DropDialog_TrigMoveAxis)
 		{
 			App->SBC_Dialogs->ListAxis(temp);
 			return TRUE;
 		}
 
-		if (App->Cl_Dialogs->DropList_Data == Enums::DropDialog_Locations)
+		if (App->SBC_Dialogs->DropList_Data == Enums::DropDialog_Locations)
 		{
 			App->SBC_Dialogs->List_Locations(temp);
 			return TRUE;

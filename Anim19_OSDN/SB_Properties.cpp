@@ -776,7 +776,7 @@ bool SB_Properties::Update_ListView_Teleport()
 
 	grid[0][0] = "Name",		grid[1][0] = App->SBC_Scene->B_Object[index]->Mesh_Name;
 	grid[0][1] = " ",			grid[1][1] = " ";
-	grid[0][2] = "Goto",		grid[1][2] = " ";// App->SBC_Scene->B_Object[index]->S_Teleport[0]->Name;
+	grid[0][2] = "Goto",		grid[1][2] = App->SBC_Scene->B_Object[index]->S_Teleport[0]->Name;
 	grid[0][3] = " ",			grid[1][3] = " ";
 	grid[0][4] = "Stock_Snd",	grid[1][4] = chr_Stock_Sound;
 	grid[0][5] = "Play",		grid[1][5] = chr_Play;
@@ -1451,7 +1451,7 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 	{
 		strcpy(App->Cl_Dialogs->btext, "Select Object to Move");
 
-		App->Cl_Dialogs->DropList_Data = Enums::DropDialog_TrigMoveObject;
+		App->SBC_Dialogs->DropList_Data = Enums::DropDialog_TrigMoveObject;
 		App->SBC_Dialogs->Dialog_DropGen();
 
 
@@ -1489,7 +1489,7 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 		int TestChr = 1;
 		strcpy(App->Cl_Dialogs->btext, "Select Axis ( World )");
 
-		App->Cl_Dialogs->DropList_Data = Enums::DropDialog_TrigMoveAxis;
+		App->SBC_Dialogs->DropList_Data = Enums::DropDialog_TrigMoveAxis;
 		App->SBC_Dialogs->Dialog_DropGen();
 
 		if (App->SBC_Dialogs->Canceled == 0)
@@ -2075,7 +2075,7 @@ bool SB_Properties::Edit_Teleport_OnClick(LPARAM lParam)
 	{
 		strcpy(App->Cl_Dialogs->btext, "Select Object to Move");
 
-		App->Cl_Dialogs->DropList_Data = Enums::DropDialog_Locations;
+		App->SBC_Dialogs->DropList_Data = Enums::DropDialog_Locations;
 		App->SBC_Dialogs->Dialog_DropGen();
 
 

@@ -32,7 +32,6 @@ public:
 	float mFloat;
 	int mInt;
 
-	int DropList_Data;
 	int Object_Index;
 
 	bool Mouse_Normal2;

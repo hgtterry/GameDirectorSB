@@ -35,6 +35,8 @@ public:
 	bool Move_Entity_Collision(int Index);
 	void MoveObject_Listener(Ogre::Real Time);
 
+	bool Do_Teleport(int Index);
+
 	float FinalPosition;
 	int ObjectIndex;
 	bool DoMove;

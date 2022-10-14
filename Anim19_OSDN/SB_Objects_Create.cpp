@@ -1202,6 +1202,9 @@ bool SB_Objects_Create::Add_New_Teleporter()
 
 	App->SBC_Scene->B_Object[Index] = new Base_Object();
 
+	App->SBC_Scene->B_Object[Index]->S_Teleport[0] = new Teleport_type;
+	//App->Cl_Scene_Data->Set_Move_Defaults(Index); // Check
+
 	App->SBC_Scene->B_Object[Index]->Type = Enums::Bullet_Type_Static;
 	App->SBC_Scene->B_Object[Index]->Shape = Enums::Shape_Box;
 	App->SBC_Scene->B_Object[Index]->Object_ID = App->SBC_Scene->Object_ID_Counter; // Unique ID

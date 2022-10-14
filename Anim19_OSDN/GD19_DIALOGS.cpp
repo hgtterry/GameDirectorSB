@@ -28,8 +28,6 @@ GD19_Dialogs::GD19_Dialogs(void)
 
 	CheckNames = 0;
 
-	DropList_Data = 0;
-
 	Mouse_Normal2 = 1;
 	Mouse_Slow2 = 0;
 	Mouse_VerySlow2 = 0;

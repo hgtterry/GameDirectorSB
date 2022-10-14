@@ -1010,6 +1010,7 @@ void SB_Player::Check_Collisions_New(void)
 					}
 				}
 
+				// -------------------- Sound Collision
 				if (Col_Usage_Index == Enums::Usage_Sound)
 				{
 					int numContacts = contactManifold->getNumContacts();
@@ -1040,6 +1041,7 @@ void SB_Player::Check_Collisions_New(void)
 					}
 				}
 
+				// -------------------- Move Collision
 				if (Col_Usage_Index == Enums::Usage_Move)
 				{
 					FlashWindow(App->MainHwnd, true);
@@ -1071,7 +1073,36 @@ void SB_Player::Check_Collisions_New(void)
 					}
 				}
 
-				// -------------------- 
+				// -------------------- Teleport Collision
+				if (UsageIndex == Enums::Usage_Teleport)
+				{
+					int numContacts = contactManifold->getNumContacts();
+					for (int j = 0; j < numContacts; j++)
+					{
+						App->SBC_Collision->Do_Teleport(Col_Object_Index);
+						btManifoldPoint& pt = contactManifold->getContactPoint(j);
+
+						Life_Time = pt.getLifeTime();
+						Distance = pt.getDistance();
+						Round = (int)Distance;
+
+						if (Round < 0)
+						{
+							if (App->SBC_Scene->B_Object[Col_Object_Index]->Triggered == 0)
+							{
+
+								App->SBC_Collision->Do_Teleport(Col_Object_Index);
+							}
+						}
+						else if (Round == 0)
+						{
+							if (App->SBC_Scene->B_Object[Col_Object_Index]->Triggered == 1)
+							{
+
+							}
+						}
+					}
+				}
 			}
 		}
 	}
