@@ -78,15 +78,6 @@ typedef struct Sound_Type {
 	bool Play;
 }Sound_Type;
 
-typedef struct Teleport_type
-{
-	char Name[255];
-	Ogre::Vector3 Player_Position;
-	btVector3 Physics_Position;
-	btQuaternion Physics_Rotation;
-
-}Teleport_type;
-
 //==================================== Object Structure
 typedef struct Object_Type { 
 	char Name[255];
@@ -135,7 +126,6 @@ typedef struct Object_Type {
 
 	//------------------------------
 	Sound_Type*				S_Sounds[1]; // Heap
-	Teleport_type*			S_Teleport[1];
 	//------------------------------ Move Entity Data
 							
 }Object_Type;

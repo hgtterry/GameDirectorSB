@@ -771,44 +771,16 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		HideRightPanes();
 		ShowWindow(App->GD_Properties_Hwnd, 1);
 
-		
+		App->SBC_Properties->Is_Player = 0; // Mark as Object selected
 
-		//App->Cl_Object_Props->Selected_Object_Index = Index;
 		App->Cl_Visuals->MarkerBB_Addjust(Index);
-
 
 		App->SBC_Properties->Edit_Category = Enums::Edit_Teleport;
 		App->SBC_Properties->Current_Selected_Object = Index;
-		//		App->SBC_Properties->Update_Transform_Dlg();
+		
 
-
-		if (App->SBC_Properties->Edit_Physics == 0)
-		{
-			//App->SBC_Properties->Update_ListView_Teleport();
-		}
-		else
-		{
-			//App->SBC_Properties->Update_ListView_Physics();
-		}
-
-		/*if (App->Cl_Object_Props->Edit_Type == Enums::Edit_Player)
-		{
-			App->Cl_Object_Props->Edit_Type = Enums::FV_Edit_Object;
-			App->Cl_Object_Props->Update_Properties_Mesh();
-			return;
-		}
-
-		if (App->Cl_Object_Props->Edit_Type == Enums::FV_Edit_Object)
-		{
-			App->Cl_Object_Props->Update_Properties_Mesh();
-			return;
-		}
-
-		if (App->Cl_Object_Props->Edit_Type == Enums::Edit_Physics_Object)
-		{
-			App->Cl_Object_Props->Update_Properties_Physics();
-			return;
-		}*/
+		App->SBC_Properties->Update_ListView_Teleport();
+		
 		return;
 	}
 

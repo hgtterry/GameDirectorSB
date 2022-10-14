@@ -339,11 +339,22 @@ void SB_Properties::ListView_OnClickOptions(LPARAM lParam)
 		return;
 	}
 
+	// Sounds
 	if (Edit_Category == Enums::Edit_Sounds)
 	{
 		if (Edit_Physics == 0)
 		{
 			Edit_Sounds_OnClick(lParam);
+		}
+		return;
+	}
+
+	// Teleports
+	if (Edit_Category == Enums::Edit_Teleport)
+	{
+		if (Edit_Physics == 0)
+		{
+			Edit_Teleport_OnClick(lParam);
 		}
 		return;
 	}
@@ -707,6 +718,68 @@ bool SB_Properties::Update_ListView_Sounds()
 	grid[0][1] = " ",		grid[1][1] = " ";
 	grid[0][2] = "Sound",	grid[1][2] = App->SBC_Scene->B_Object[index]->Sound_File;
 	grid[0][3] = "Volume",  grid[1][3] = chr_Volume;
+
+
+	ListView_DeleteAllItems(Properties_hLV);
+
+	for (DWORD row = 0; row < NUM_ITEMS; row++)
+	{
+		pitem.iItem = row;
+		pitem.pszText = const_cast<char*>(grid[0][row].c_str());
+		ListView_InsertItem(Properties_hLV, &pitem);
+
+		//ListView_SetItemText
+
+		for (DWORD col = 1; col < NUM_COLS; col++)
+		{
+			ListView_SetItemText(Properties_hLV, row, col,
+				const_cast<char*>(grid[col][row].c_str()));
+		}
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *			Update_ListView_Teleport()	Terry Bernie 		 	   *
+// *************************************************************************
+bool SB_Properties::Update_ListView_Teleport()
+{
+	int index = App->SBC_Properties->Current_Selected_Object;
+
+	char buff[255];
+	strcpy(buff, App->SBC_Scene->B_Object[index]->Mesh_Name);
+	strcat(buff, "   (Teleport)");
+	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
+
+	// new sound
+	char chr_Play[100];
+	/*if (App->GDCL_Scene_Data->CL_Object[index]->Play_v2 == 1)
+	{
+		strcpy(chr_Play, "True");
+	}
+	else
+	{
+		strcpy(chr_Play, "False");
+	}*/
+
+	char chr_Stock_Sound[100];
+	/*int sndIndex = App->GDCL_Scene_Data->CL_Object[index]->Sound_ID_v2;
+	strcpy(chr_Stock_Sound, App->GDCL_Scene_Data->St_Sounds[sndIndex]->Name);*/
+
+	const int NUM_ITEMS = 7;
+	const int NUM_COLS = 2;
+	string grid[NUM_COLS][NUM_ITEMS]; // string table
+	LV_ITEM pitem;
+	memset(&pitem, 0, sizeof(LV_ITEM));
+	pitem.mask = LVIF_TEXT;
+
+	grid[0][0] = "Name",		grid[1][0] = App->SBC_Scene->B_Object[index]->Mesh_Name;
+	grid[0][1] = " ",			grid[1][1] = " ";
+	grid[0][2] = "Goto",		grid[1][2] = " ";// App->SBC_Scene->B_Object[index]->S_Teleport[0]->Name;
+	grid[0][3] = " ",			grid[1][3] = " ";
+	grid[0][4] = "Stock_Snd",	grid[1][4] = chr_Stock_Sound;
+	grid[0][5] = "Play",		grid[1][5] = chr_Play;
 
 
 	ListView_DeleteAllItems(Properties_hLV);
@@ -1959,6 +2032,106 @@ bool SB_Properties::Edit_Sounds_OnClick(LPARAM lParam)
 		Mark_As_Altered(Index);
 
 		Update_ListView_Sounds();
+		return 1;
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *				Edit_Teleport_OnClick  Terry Bernie					   *
+// *************************************************************************
+bool SB_Properties::Edit_Teleport_OnClick(LPARAM lParam)
+{
+	int Index = App->SBC_Properties->Current_Selected_Object; // Get Selected Object Index 
+	int result = 1;
+	int test;
+
+	LPNMLISTVIEW poo = (LPNMLISTVIEW)lParam;
+	test = poo->iItem;
+	ListView_GetItemText(Properties_hLV, test, 0, btext, 20);
+
+	result = strcmp(btext, "Name");
+	if (result == 0)
+	{
+		strcpy(App->Cl_Dialogs->btext, "Change Object Name");
+		strcpy(App->Cl_Dialogs->Chr_Text, App->SBC_Scene->B_Object[Index]->Mesh_Name);
+
+		App->Cl_Dialogs->Dialog_Text(Enums::Check_Names_Objects);
+
+		if (App->Cl_Dialogs->Canceled == 1)
+		{
+			return TRUE;
+		}
+
+		strcpy(App->SBC_Scene->B_Object[Index]->Mesh_Name, App->Cl_Dialogs->Chr_Text);
+
+		App->SBC_FileView->Change_Item_Name(NULL, App->Cl_Dialogs->Chr_Text);
+		Update_ListView_Teleport();
+	}
+
+	result = strcmp(btext, "Goto");
+	if (result == 0)
+	{
+		strcpy(App->Cl_Dialogs->btext, "Select Object to Move");
+
+		App->Cl_Dialogs->DropList_Data = Enums::DropDialog_Locations;
+		App->Cl_Dialogs->Dialog_DropGen();
+
+
+		if (App->Cl_Dialogs->Canceled == 0)
+		{
+			int LocationIndex = App->Cl_LookUps->Player_Location_GetIndex_ByName(App->Cl_Dialogs->Chr_DropText);
+
+
+			strcpy(App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Name, App->SBC_Scene->B_Locations[LocationIndex]->Name);
+
+			App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Player_Position = App->SBC_Scene->B_Locations[LocationIndex]->Current_Position;
+			App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Physics_Position = App->SBC_Scene->B_Locations[LocationIndex]->Physics_Position;
+			App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Physics_Rotation = App->SBC_Scene->B_Locations[LocationIndex]->Physics_Rotation;
+
+			Update_ListView_Teleport();
+		}
+
+	}
+
+	// Stock Sound
+	result = strcmp(btext, "Stock_Snd");
+	if (result == 0)
+	{
+
+		/*App->GDCL_Stock->List_Stock_Dialog(Enums::ListBox_Stock_Sounds);
+
+		App->GDCL_Scene_Data->CL_Object[Index]->Sound_ID_v2 = App->GDCL_Stock->ListIndex;*/
+		Update_ListView_Teleport();
+		return 1;
+	}
+
+	// Sound
+	result = strcmp(btext, "Play");
+	if (result == 0)
+	{
+
+		/*strcpy(App->GDCL_Dialogs->btext, "Play Sound In The Game");
+
+		App->GDCL_Dialogs->TrueFlase = App->GDCL_Scene_Data->CL_Object[Index]->Play_v2;
+
+		App->GDCL_Dialogs->Dialog_TrueFlase(App->MainHwnd);
+
+		if (App->GDCL_Dialogs->Canceled == 0)
+		{
+			if (App->GDCL_Dialogs->TrueFlase == 1)
+			{
+				App->GDCL_Scene_Data->CL_Object[Index]->Play_v2 = 1;
+			}
+			else
+			{
+				App->GDCL_Scene_Data->CL_Object[Index]->Play_v2 = 0;
+
+			}
+		}*/
+
+		Update_ListView_Teleport();
 		return 1;
 	}
 

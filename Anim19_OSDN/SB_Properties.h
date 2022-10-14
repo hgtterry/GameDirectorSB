@@ -44,6 +44,7 @@ public:
 	bool Update_ListView_Sounds();
 	bool Update_ListView_Level();
 	bool Update_ListView_Move_Entities();
+	bool Update_ListView_Teleport();
 
 	bool Properties_Dlg_Active;
 
@@ -74,6 +75,7 @@ protected:
 	bool Edit_Camera_Onclick(LPARAM lParam);
 	bool Edit_Move_Entity_OnClick(LPARAM lParam);
 	bool Edit_Sounds_OnClick(LPARAM lParam);
+	bool Edit_Teleport_OnClick(LPARAM lParam);
 
 	char btext[20]; // ListView_GetItemText Text Holder for Compare [041221]
 	
