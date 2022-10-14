@@ -785,6 +785,31 @@ bool SB_Project::Save_Objects_Data()
 				fprintf(WriteFile, "%s%f\n", "Move_Volume=", App->SBC_Scene->B_Object[Count]->SndVolume);
 			}
 
+			//---------------------------------------------------------------------------------- Teleport Entity
+			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Teleport)
+			{
+				fprintf(WriteFile, "%s%s\n", "Tele_Goto=", App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Name);
+
+				fprintf(WriteFile, "%s%i\n", "Tele_ID=", App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Location_ID);
+
+				x = App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Player_Position.x;
+				y = App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Player_Position.y;
+				z = App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Player_Position.z;
+				fprintf(WriteFile, "%s%f,%f,%f\n", "Tele_Mesh_Position=", x, y, z);
+
+				x = App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Position.getX();
+				y = App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Position.getY();
+				z = App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Position.getZ();
+				fprintf(WriteFile, "%s%f,%f,%f\n", "Tele_Physics_Position=", x, y, z);
+
+				w = App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Rotation.getW();
+				x = App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Rotation.getX();
+				y = App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Rotation.getY();
+				z = App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Rotation.getZ();
+				fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Tele_Physics_Rotation=", w, x, y, z);
+			}
+
+
 			fprintf(WriteFile, "%s\n", " ");
 			new_Count++;
 		}
