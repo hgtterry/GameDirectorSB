@@ -28,10 +28,10 @@ typedef struct Move_Type {
 	int WhatDirection;		//
 	int Object_Index;		// Can Change
 	int Object_ID ;			// Wont Change
-	bool IsNegative = 0;		// Positive or Negative distance to move
+	bool IsNegative = 0;	// Positive or Negative distance to move
 	bool Triggered;			// Entity 
 	bool Re_Trigger;
-	float Move_Distance;			// Distance to Move negative or positive
+	float Move_Distance;	// Distance to Move negative or positive
 	Ogre::Vector3 MeshPos;
 	Ogre::Vector3 PhysicsPos;
 
@@ -43,6 +43,7 @@ typedef struct Teleport_type
 	Ogre::Vector3 Player_Position;
 	btVector3 Physics_Position;
 	btQuaternion Physics_Rotation;
+	int Location_ID;
 
 }Teleport_type;
 

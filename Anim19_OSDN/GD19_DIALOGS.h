@@ -9,7 +9,6 @@ public:
 	bool Dialog_Float();
 	bool Dialog_Int();
 	bool Dialog_Text(int Usage);
-	bool Dialog_DropGen();
 	void Start_Gen_ListBox(int ListType);
 
 	void Message(char *pString);
@@ -50,7 +49,6 @@ protected:
 	static LRESULT CALLBACK Dialog_Text_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Dialog_Int_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Gen_ListBox_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-	static LRESULT CALLBACK Dialog_DropGen_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK GameMode_StartPosition_Dlg_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	static LRESULT CALLBACK Message_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
@@ -59,11 +57,6 @@ protected:
 	void Contents_Resource_Folder(HWND List);
 	void List_Messages_Stock(HWND List);
 	void List_Sounds_Stock(HWND List);
-
-	void ListObjects(HWND DropHwnd);
-	void ListAxis(HWND DropHwnd);
-
-	void List_Locations(HWND DropHwnd);
 
 	bool Active_Dlg_Float;
 	bool Active_Dlg_Int;

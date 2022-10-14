@@ -1299,8 +1299,8 @@ bool SB_Objects_Create::Create_TeleportEntity(int Index)
 	Object->Phys_Body->setUserPointer(Object->Object_Node);
 	Object->Phys_Body->setWorldTransform(startTransform);
 
-	Object->Usage = Enums::Usage_Move;
-	Object->Phys_Body->setUserIndex(Enums::Usage_Move);
+	Object->Usage = Enums::Usage_Teleport;
+	Object->Phys_Body->setUserIndex(Enums::Usage_Teleport);
 	Object->Phys_Body->setUserIndex2(Index);
 
 	Object->Phys_Body->setCustomDebugColor(btVector3(0, 1, 1));

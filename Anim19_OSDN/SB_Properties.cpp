@@ -1452,10 +1452,10 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 		strcpy(App->Cl_Dialogs->btext, "Select Object to Move");
 
 		App->Cl_Dialogs->DropList_Data = Enums::DropDialog_TrigMoveObject;
-		App->Cl_Dialogs->Dialog_DropGen();
+		App->SBC_Dialogs->Dialog_DropGen();
 
 
-		if (App->Cl_Dialogs->Canceled == 0)
+		if (App->SBC_Dialogs->Canceled == 0)
 		{
 			strcpy(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_Name, App->Cl_Dialogs->Chr_DropText);
 
@@ -1490,9 +1490,9 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 		strcpy(App->Cl_Dialogs->btext, "Select Axis ( World )");
 
 		App->Cl_Dialogs->DropList_Data = Enums::DropDialog_TrigMoveAxis;
-		App->Cl_Dialogs->Dialog_DropGen();
+		App->SBC_Dialogs->Dialog_DropGen();
 
-		if (App->Cl_Dialogs->Canceled == 0)
+		if (App->SBC_Dialogs->Canceled == 0)
 		{
 
 			// X Axis
@@ -2076,10 +2076,10 @@ bool SB_Properties::Edit_Teleport_OnClick(LPARAM lParam)
 		strcpy(App->Cl_Dialogs->btext, "Select Object to Move");
 
 		App->Cl_Dialogs->DropList_Data = Enums::DropDialog_Locations;
-		App->Cl_Dialogs->Dialog_DropGen();
+		App->SBC_Dialogs->Dialog_DropGen();
 
 
-		if (App->Cl_Dialogs->Canceled == 0)
+		if (App->SBC_Dialogs->Canceled == 0)
 		{
 			int LocationIndex = App->Cl_LookUps->Player_Location_GetIndex_ByName(App->Cl_Dialogs->Chr_DropText);
 

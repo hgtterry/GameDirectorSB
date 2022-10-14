@@ -159,6 +159,7 @@ void SB_Dialogs::YesNo(char *Text, char *Text2,bool YesNo)
 
 	DialogBox(App->hInst, (LPCTSTR)IDD_YESNO, App->Fdlg, (DLGPROC)YesNo_Proc);
 }
+
 // *************************************************************************
 // *		YesNo_Proc_Proc:- Terry and Hazel Flanigan 2022	  			   *
 // *************************************************************************
@@ -251,4 +252,154 @@ LRESULT CALLBACK SB_Dialogs::YesNo_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *	  		Dialog_DropGen:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+bool SB_Dialogs::Dialog_DropGen()
+{
+	DialogBox(App->hInst, (LPCTSTR)IDD_DROPGEN, App->Fdlg, (DLGPROC)Dialog_DropGen_Proc);
+
+	return 1;
+}
+// *************************************************************************
+// *		Dialog_DropGen_Proc:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+LRESULT CALLBACK SB_Dialogs::Dialog_DropGen_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+
+		App->SetTitleBar(hDlg);
+
+		SendDlgItemMessage(hDlg, IDC_TITLE, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CBGEN, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SetDlgItemText(hDlg, IDC_TITLE, (LPCTSTR)App->Cl_Dialogs->btext);
+
+		HWND temp = GetDlgItem(hDlg, IDC_CBGEN);
+
+		if (App->Cl_Dialogs->DropList_Data == Enums::DropDialog_TrigMoveObject)
+		{
+			App->SBC_Dialogs->ListObjects(temp);
+			return TRUE;
+		}
+
+		if (App->Cl_Dialogs->DropList_Data == Enums::DropDialog_TrigMoveAxis)
+		{
+			App->SBC_Dialogs->ListAxis(temp);
+			return TRUE;
+		}
+
+		if (App->Cl_Dialogs->DropList_Data == Enums::DropDialog_Locations)
+		{
+			App->SBC_Dialogs->List_Locations(temp);
+			return TRUE;
+		}
+
+
+		return TRUE;
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+
+		if (GetDlgItem(hDlg, IDC_TITLE) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+	case WM_COMMAND:
+		if (LOWORD(wParam) == IDOK)
+		{
+			char buff[256];
+			GetDlgItemText(hDlg, IDC_CBGEN, (LPTSTR)buff, 256);
+			strcpy(App->Cl_Dialogs->Chr_DropText, buff);
+
+			App->SBC_Dialogs->Canceled = 0;
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			App->SBC_Dialogs->Canceled = 1;
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		break;
+	}
+	return FALSE;
+}
+
+// *************************************************************************
+// *					ListObjects Terry Bernie				 		   *
+// *************************************************************************
+void SB_Dialogs::ListObjects(HWND DropHwnd)
+{
+	int Count = 0;
+	int Total = App->SBC_Scene->Object_Count;
+
+	while (Count < Total)
+	{
+		{
+			//if (App->SBC_Scene->B_Object[Count]->Type == Enums::Bullet_Type_Static)
+			{
+				if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Static)
+				{
+					SendMessage(DropHwnd, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->SBC_Scene->B_Object[Count]->Mesh_Name);
+				}
+			}
+		}
+
+		Count++;
+	}
+
+	SendMessage(DropHwnd, CB_SETCURSEL, 0, 0);
+}
+
+// *************************************************************************
+// *					List_Locations Terry Bernie				 		   *
+// *************************************************************************
+void SB_Dialogs::List_Locations(HWND DropHwnd)
+{
+	int Count = 0;
+	while (Count < App->Cl_Scene_Data->Player_Location_Count)
+	{
+		if (App->SBC_Scene->B_Locations[Count]->Deleted == 0)
+		{
+			SendMessage(DropHwnd, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->SBC_Scene->B_Locations[Count]->Name);
+		}
+		Count++;
+	}
+
+	SendMessage(DropHwnd, CB_SETCURSEL, 0, 0);
+}
+
+// *************************************************************************
+// *					ListAxis Terry Bernie					 		   *
+// *************************************************************************
+void SB_Dialogs::ListAxis(HWND DropHwnd)
+{
+	int Count = 0;
+	bool Any = 0;
+
+	SendMessage(DropHwnd, CB_ADDSTRING, 0, (LPARAM)"X");
+	SendMessage(DropHwnd, CB_ADDSTRING, 0, (LPARAM)"Y");
+	SendMessage(DropHwnd, CB_ADDSTRING, 0, (LPARAM)"Z");
+
+	SendMessage(DropHwnd, CB_SETCURSEL, 0, 0);
 }

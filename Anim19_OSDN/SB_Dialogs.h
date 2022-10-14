@@ -30,6 +30,7 @@ public:
 
 	bool Dialog_Text();
 	void YesNo(char *Text, char *Text2,bool YesNo);
+	bool Dialog_DropGen();
 
 	bool Canceled;
 	bool YesNo_Flag;
@@ -44,5 +45,10 @@ protected:
 
 	static LRESULT CALLBACK Dialog_Text_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK YesNo_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Dialog_DropGen_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	void ListObjects(HWND DropHwnd);
+	void List_Locations(HWND DropHwnd);
+	void ListAxis(HWND DropHwnd);
 };
 
