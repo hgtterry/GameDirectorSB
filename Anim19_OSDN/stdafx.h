@@ -337,7 +337,9 @@ namespace Enums
 		FileView_Move_Folder = 11,
 		FileView_Move_File = 12,
 		FileView_Player_Folder = 13,
-		FileView_Player_File = 14
+		FileView_Player_File = 14,
+		FileView_Teleports_Folder = 15,
+		FileView_Teleports_File = 16
 	};
 }
 

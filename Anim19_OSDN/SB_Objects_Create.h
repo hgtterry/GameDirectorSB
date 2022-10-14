@@ -56,10 +56,10 @@ protected:
 
 	btBvhTriangleMeshShape* create_New_Trimesh(int Index);
 
-	bool Add_Message_Entity(int Index);
-	bool Add_Sound_Entity(int Index);
-	bool Add_Move_Entity(int Index);
-	bool Add_New_TeleportEntity(int Index);
+	bool Create_Message_Entity(int Index);
+	bool Create_Sound_Entity(int Index);
+	bool Create_Move_Entity(int Index);
+	bool Create_TeleportEntity(int Index);
 
 
 	bool First_Area_Start_Project();

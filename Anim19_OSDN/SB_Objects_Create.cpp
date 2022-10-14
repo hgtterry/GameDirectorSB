@@ -50,7 +50,7 @@ bool SB_Objects_Create::Add_Objects_From_File() // From File
 	{
 		if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Sound)
 		{
-			Add_Sound_Entity(Count);
+			Create_Sound_Entity(Count);
 
 			HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Sounds_Folder, App->SBC_Scene->B_Object[Count]->Mesh_Name, Count, false);
 			App->SBC_Scene->B_Object[Count]->FileViewItem = Temp;
@@ -59,7 +59,7 @@ bool SB_Objects_Create::Add_Objects_From_File() // From File
 		}
 		else if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Message)
 		{
-			Add_Message_Entity(Count);
+			Create_Message_Entity(Count);
 
 			HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Messages_Folder, App->SBC_Scene->B_Object[Count]->Mesh_Name, Count, false);
 			App->SBC_Scene->B_Object[Count]->FileViewItem = Temp;
@@ -68,7 +68,7 @@ bool SB_Objects_Create::Add_Objects_From_File() // From File
 		}
 		else if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Move)
 		{
-			Add_Move_Entity(Count);
+			Create_Move_Entity(Count);
 
 			HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Move_Folder, App->SBC_Scene->B_Object[Count]->Mesh_Name, Count, false);
 			App->SBC_Scene->B_Object[Count]->FileViewItem = Temp;
@@ -818,7 +818,7 @@ bool SB_Objects_Create::Add_New_Message()
 	strcat(B_Name, ConNum);
 	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_Name, B_Name);
 
-	Add_Message_Entity(Index);
+	Create_Message_Entity(Index);
 
 	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Messages_Folder, App->SBC_Scene->B_Object[Index]->Mesh_Name, Index, true);
 	App->SBC_Scene->B_Object[Index]->FileViewItem = Temp;
@@ -833,9 +833,9 @@ bool SB_Objects_Create::Add_New_Message()
 }
 
 // **************************************************************************
-// *		Add_Message_Entity:- Terry and Hazel Flanigan 2022				*
+// *		Create_Message_Entity:- Terry and Hazel Flanigan 2022			*
 // **************************************************************************
-bool SB_Objects_Create::Add_Message_Entity(int Index)
+bool SB_Objects_Create::Create_Message_Entity(int Index)
 {
 	char Mesh_File[255];
 	char ConNum[256];
@@ -953,7 +953,7 @@ bool SB_Objects_Create::Add_New_Sound()
 	strcat(B_Name, ConNum);
 	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_Name, B_Name);
 
-	Add_Sound_Entity(Index);
+	Create_Sound_Entity(Index);
 
 	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Sounds_Folder, App->SBC_Scene->B_Object[Index]->Mesh_Name, Index, true);
 	App->SBC_Scene->B_Object[Index]->FileViewItem = Temp;
@@ -968,9 +968,9 @@ bool SB_Objects_Create::Add_New_Sound()
 }
 
 // *************************************************************************
-// *				Add_Sound_Entity:- Terry and Hazel Flanigan	2022	   *
+// *		Create_Sound_Entity:- Terry and Hazel Flanigan	2022		   *
 // *************************************************************************
-bool SB_Objects_Create::Add_Sound_Entity(int Index)
+bool SB_Objects_Create::Create_Sound_Entity(int Index)
 {
 	char Mesh_File[255];
 	char ConNum[256];
@@ -1059,7 +1059,7 @@ bool SB_Objects_Create::Add_Sound_Entity(int Index)
 }
 
 // *************************************************************************
-//						Add_New_Move_Entity Terry Bernie				   *
+//			Add_New_Move_Entity:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 bool SB_Objects_Create::Add_New_Move_Entity()
 {
@@ -1084,7 +1084,7 @@ bool SB_Objects_Create::Add_New_Move_Entity()
 	strcat(B_Name, ConNum);
 	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_Name, B_Name);
 
-	Add_Move_Entity(Index);
+	Create_Move_Entity(Index);
 
 	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Move_Folder, App->SBC_Scene->B_Object[Index]->Mesh_Name, Index, true);
 	App->SBC_Scene->B_Object[Index]->FileViewItem = Temp;
@@ -1100,9 +1100,9 @@ bool SB_Objects_Create::Add_New_Move_Entity()
 }
 
 // **************************************************************************
-// *			Add_Move_Entity:- Terry and Hazel Flanigan 2022				*
+// *			Create_Move_Entity:- Terry and Hazel Flanigan 2022			*
 // **************************************************************************
-bool SB_Objects_Create::Add_Move_Entity(int Index)
+bool SB_Objects_Create::Create_Move_Entity(int Index)
 {
 	char Mesh_File[255];
 	char ConNum[256];
@@ -1191,7 +1191,7 @@ bool SB_Objects_Create::Add_Move_Entity(int Index)
 }
 
 // *************************************************************************
-//						Add_New_Teleporter Terry Bernie					   *
+//			Add_New_Teleporter:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 bool SB_Objects_Create::Add_New_Teleporter()
 {
@@ -1213,7 +1213,7 @@ bool SB_Objects_Create::Add_New_Teleporter()
 	strcat(B_Name, ConNum);
 	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_Name, B_Name);
 
-	Add_New_TeleportEntity(Index);
+	Create_TeleportEntity(Index);
 
 	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Teleporters_Folder, App->SBC_Scene->B_Object[Index]->Mesh_Name, Index, true);
 	App->SBC_Scene->B_Object[Index]->FileViewItem = Temp;
@@ -1229,9 +1229,9 @@ bool SB_Objects_Create::Add_New_Teleporter()
 }
 
 // *************************************************************************
-//						Add_New_TeleportEntity Terry Bernie			   *
+//			Create_TeleportEntity:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
-bool SB_Objects_Create::Add_New_TeleportEntity(int Index)
+bool SB_Objects_Create::Create_TeleportEntity(int Index)
 {
 	char Mesh_File[255];
 	char ConNum[256];

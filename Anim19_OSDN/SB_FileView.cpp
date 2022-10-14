@@ -757,35 +757,23 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		return;
 	}
 
-	// Teleporters
+	// ------------------------------------------------------------ Teleporter Entity
 	if (!strcmp(FileView_Folder, "Teleporters")) // Folder
 	{
-		if (App->SBC_Scene->Area_Added == 0)
-		{
-			App->Say("An Area or Building must be Added Firest");
-
-			return;
-		}
-
-		App->SBC_Dialogs->YesNo("Add Entity", "Do you want to add a new Telport Entity now", 1);
-		bool Doit = App->Cl_Dialogs->Canceled;
-		if (Doit == 0)
-		{
-			App->SBC_Objects_Create->Add_New_Teleporter();
-		}
+		App->SBC_FileView->Context_Selection = Enums::FileView_Teleports_Folder;
 
 		return;
 	}
 	if (!strcmp(FileView_File, "Teleporters"))
 	{
+		App->SBC_FileView->Context_Selection = Enums::FileView_Teleports_File;
+
 		HideRightPanes();
 		ShowWindow(App->GD_Properties_Hwnd, 1);
 
-		//		App->SBC_Properties->Enable_Delete_Button(1);
+		
 
-				//App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
-
-				//App->Cl_Object_Props->Selected_Object_Index = Index;
+		//App->Cl_Object_Props->Selected_Object_Index = Index;
 		App->Cl_Visuals->MarkerBB_Addjust(Index);
 
 
@@ -823,6 +811,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		}*/
 		return;
 	}
+
 	// Collectables
 	if (!strcmp(FileView_Folder, "Collectables")) // Folder
 	{
@@ -1545,7 +1534,7 @@ void SB_FileView::Context_Menu(HWND hDlg)
 			Context_Selection = Enums::FileView_Areas_File;
 		}
 
-		//------------------------------------- Areas
+		//------------------------------------- Move_Entities
 		if (!strcmp(App->SBC_FileView->FileView_Folder, "Move_Entities")) // Folder
 		{
 			App->SBC_FileView->hMenu = CreatePopupMenu();
@@ -1567,6 +1556,30 @@ void SB_FileView::Context_Menu(HWND hDlg)
 			TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
 			DestroyMenu(App->SBC_FileView->hMenu);
 			Context_Selection = Enums::FileView_Move_File;
+		}
+
+		//------------------------------------- Teleport_Entities
+		if (!strcmp(App->SBC_FileView->FileView_Folder, "Teleporters")) // Folder
+		{
+			App->SBC_FileView->hMenu = CreatePopupMenu();
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_NEW, L"&New");
+			TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+			DestroyMenu(App->SBC_FileView->hMenu);
+			Context_Selection = Enums::FileView_Teleports_Folder;
+		}
+
+		if (!strcmp(App->SBC_FileView->FileView_File, "Teleporters"))
+		{
+			App->SBC_FileView->hMenu = CreatePopupMenu();
+
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_COPY, L"&Copy");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
+			TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+			DestroyMenu(App->SBC_FileView->hMenu);
+			Context_Selection = Enums::FileView_Teleports_File;
 		}
 	}
 }
@@ -1665,6 +1678,19 @@ void SB_FileView::Context_New(HWND hDlg)
 		if (Doit == 0)
 		{
 			App->SBC_Objects_Create->Add_New_Move_Entity();
+		}
+
+		return;
+	}
+
+	if (App->SBC_FileView->Context_Selection == Enums::FileView_Teleports_Folder)
+	{
+		App->SBC_Dialogs->YesNo("Add Message", "Do you want to add a new Teleport Entity", 1);
+
+		bool Doit = App->SBC_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+			App->SBC_Objects_Create->Add_New_Teleporter();
 		}
 
 		return;
