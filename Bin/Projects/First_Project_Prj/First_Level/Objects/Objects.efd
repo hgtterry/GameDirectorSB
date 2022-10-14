@@ -139,7 +139,7 @@ Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
  
 [Object_7]
-Mesh_Name=Teleport_Ent_7
+Mesh_Name=Teleport_Test
 Mesh_File=TeleportSend.mesh
 Mesh_Resource_Path=
 Material_File=Not Found

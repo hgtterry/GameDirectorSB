@@ -2087,7 +2087,10 @@ bool SB_Properties::Edit_Teleport_OnClick(LPARAM lParam)
 
 		strcpy(App->SBC_Scene->B_Object[Index]->Mesh_Name, App->Cl_Dialogs->Chr_Text);
 
-		App->SBC_FileView->Change_Item_Name(NULL, App->Cl_Dialogs->Chr_Text);
+		App->SBC_Properties->Mark_As_Altered(Index);
+
+		App->SBC_FileView->Change_Item_Name(App->SBC_Scene->B_Object[Index]->FileViewItem, App->Cl_Dialogs->Chr_Text);
+
 		Update_ListView_Teleport();
 	}
 
