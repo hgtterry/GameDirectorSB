@@ -483,20 +483,18 @@ void VM_ImGui::ImGui_Text_Message(void)
 	else
 	{
 
-		ImGui::Spacing();
+		//ImFont* font = ImGui::GetFont();
 
-		ImFont* font = ImGui::GetFont();
-
-			ImGui::PushFont(font);
-			//ImVec2 sz = ImGui::CalcTextSize("poo");
-			ImGui::PopFont();
-			float canvasWidth = ImGui::GetWindowContentRegionWidth();
-			float origScale = font->Scale;
-			font->Scale = 1.5;
-			ImGui::PushFont(font);
-			//ImGui::Text("%s", "poo");
-			ImGui::PopFont();
-			font->Scale = origScale;
+		//	ImGui::PushFont(font);
+		//	//ImVec2 sz = ImGui::CalcTextSize("poo");
+		//	ImGui::PopFont();
+		//	float canvasWidth = ImGui::GetWindowContentRegionWidth();
+		//	float origScale = font->Scale;
+		//	font->Scale = 1.5;
+		//	ImGui::PushFont(font);
+		//	//ImGui::Text("%s", "poo");
+		//	ImGui::PopFont();
+		//	font->Scale = origScale;
 		
 		
 		ImGui::Text(App->SBC_Scene->B_Object[Object_Index]->Message_Text);

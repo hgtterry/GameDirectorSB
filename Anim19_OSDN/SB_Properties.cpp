@@ -2015,6 +2015,7 @@ bool SB_Properties::Edit_Sounds_OnClick(LPARAM lParam)
 		Mark_As_Altered(Index);
 
 		Update_ListView_Sounds();
+
 		return 1;
 	}
 
@@ -2034,8 +2035,26 @@ bool SB_Properties::Edit_Sounds_OnClick(LPARAM lParam)
 		Mark_As_Altered(Index);
 
 		Update_ListView_Sounds();
+
 		return 1;
 	}
+
+	// Sound
+	/*result = strcmp(btext, "Play");
+	if (result == 0)
+	{
+
+		App->SBC_Dialogs->YesNo("Play Sound",App->SBC_Scene->B_Object[Index]->Sound_File,true);
+
+		if (App->SBC_Dialogs->Canceled == 0)
+		{
+			App->SBC_Scene->B_Object[Index]->
+		}
+
+		Update_ListView_Teleport();
+
+		return 1;
+	}*/
 
 	return 1;
 }
@@ -2097,43 +2116,63 @@ bool SB_Properties::Edit_Teleport_OnClick(LPARAM lParam)
 
 	}
 
-	// Stock Sound
-	result = strcmp(btext, "Stock_Snd");
+	// Sound
+	result = strcmp(btext, "Sound");
 	if (result == 0)
 	{
 
-		/*App->GDCL_Stock->List_Stock_Dialog(Enums::ListBox_Stock_Sounds);
+		App->SBC_SoundMgr->Accessed = 1; // For Sound Manager Dlg
+		strcpy(App->SBC_SoundMgr->Access_File, App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Sound_File);
 
-		App->GDCL_Scene_Data->CL_Object[Index]->Sound_ID_v2 = App->GDCL_Stock->ListIndex;*/
+		App->SBC_SoundMgr->Dialog_SoundFile();
+
+		strcpy(App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Sound_File, App->SBC_SoundMgr->Access_File);
+
+		App->SBC_Scene->B_Object[Index]->S_Teleport[0]->SndVolume = App->SBC_SoundMgr->SndVolume;
+
+		Mark_As_Altered(Index);
+
 		Update_ListView_Teleport();
 		return 1;
 	}
 
-	// Sound
+	// Volume
+	result = strcmp(btext, "Volume");
+	if (result == 0)
+	{
+
+		App->SBC_SoundMgr->Accessed = 1; // For Sound Manager Dlg
+		strcpy(App->SBC_SoundMgr->Access_File, App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Sound_File);
+
+		App->SBC_SoundMgr->Dialog_SoundFile();
+
+		strcpy(App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Sound_File, App->SBC_SoundMgr->Access_File);
+
+		App->SBC_Scene->B_Object[Index]->S_Teleport[0]->SndVolume = App->SBC_SoundMgr->SndVolume;
+
+		Mark_As_Altered(Index);
+
+		Update_ListView_Teleport();
+		return 1;
+	}
+
 	result = strcmp(btext, "Play");
 	if (result == 0)
 	{
 
-		/*strcpy(App->GDCL_Dialogs->btext, "Play Sound In The Game");
+		App->SBC_Dialogs->YesNo("Play Sound", App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Sound_File, true);
 
-		App->GDCL_Dialogs->TrueFlase = App->GDCL_Scene_Data->CL_Object[Index]->Play_v2;
-
-		App->GDCL_Dialogs->Dialog_TrueFlase(App->MainHwnd);
-
-		if (App->GDCL_Dialogs->Canceled == 0)
+		if (App->SBC_Dialogs->Canceled == 0)
 		{
-			if (App->GDCL_Dialogs->TrueFlase == 1)
-			{
-				App->GDCL_Scene_Data->CL_Object[Index]->Play_v2 = 1;
-			}
-			else
-			{
-				App->GDCL_Scene_Data->CL_Object[Index]->Play_v2 = 0;
-
-			}
-		}*/
+			App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Play = 1;
+		}
+		else
+		{
+			App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Play = 0;
+		}
 
 		Update_ListView_Teleport();
+
 		return 1;
 	}
 

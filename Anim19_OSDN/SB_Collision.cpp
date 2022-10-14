@@ -381,7 +381,7 @@ bool SB_Collision::Do_Teleport(int Index)
 		strcat(Sound, App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Sound_File);
 
 		App->SBC_Scene->B_Object[Index]->S_Teleport[0]->SndFile = App->SBC_SoundMgr->SoundEngine->play2D(Sound, false, true, true);
-		App->SBC_Scene->B_Object[Index]->S_Teleport[0]->SndFile->setVolume(App->SBC_Scene->B_Object[ObjectIndex]->SndVolume);
+		App->SBC_Scene->B_Object[Index]->S_Teleport[0]->SndFile->setVolume(App->SBC_Scene->B_Object[Index]->S_Teleport[0]->SndVolume);
 		App->SBC_Scene->B_Object[Index]->S_Teleport[0]->SndFile->setIsPaused(false);
 	}
 	
