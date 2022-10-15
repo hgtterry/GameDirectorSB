@@ -6,8 +6,8 @@ Player_Count=1
  
 [Player_0]
 Player_Name=Player_1
-Start_Position=46.333244,-47.099998,-72.512581
-Start_Rotation=0.000000,0.836462,0.000000,-0.548024
+Start_Position=-3.842185,-47.100010,-112.147568
+Start_Rotation=0.000000,0.999985,0.000000,-0.005401
 Shape=Capsule
 Mass=1.000000
 Radius=4.400000
