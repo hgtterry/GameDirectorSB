@@ -600,10 +600,12 @@ bool GD19_OgreListener::frameEnded(const FrameEvent& evt)
 // *************************************************************************
 void GD19_OgreListener::MoveCamera(void)
 {
+
 	mCam->yaw(mRotX);
 	mCam->pitch(mRotY);
 	mCam->moveRelative(mTranslateVector); // Position Relative
 	Wheel = 0;
+
 }
 
 // *************************************************************************

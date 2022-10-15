@@ -53,6 +53,8 @@ public:
 	Ogre::ManualObject*		btDebug_Manual;
 	Ogre::SceneNode*		btDebug_Node;
 
+	Ogre::Camera*		mCameraMeshView;
+
 	int Physics_Type;
 	int Physics_Shape;
 
@@ -126,7 +128,6 @@ protected:
 
 	Ogre::RenderWindow* MeshView_Window;
 	Ogre::SceneManager* mSceneMgrMeshView;
-	Ogre::Camera*		mCameraMeshView;
 	Ogre::SceneNode*	CamNode;
 };
 
