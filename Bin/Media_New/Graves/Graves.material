@@ -1,0 +1,152 @@
+material CH_SOIL
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture CH_SOIL.dds
+             }
+         }
+    }
+}
+
+
+material CH_Marble
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture CH_Marble.dds
+			}
+		}
+
+	}
+
+}
+
+material CH_Gravel_1
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture CH_Gravel_1.dds
+			}
+		}
+
+	}
+
+}
+
+material CH_Sean
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture CH_Sean.dds
+			}
+		}
+
+	}
+
+}
+
+material CH_gravel
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture CH_gravel.dds
+             }
+         }
+    }
+}
+
+material CH_ILM
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture CH_ILM.dds
+             }
+         }
+    }
+}
+		
+
+
+material CH_Granite
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture CH_Granite.dds
+             }
+         }
+    }
+}
+		
+material CH_KSCL
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture CH_KSCL.dds
+             }
+         }
+    }
+}
+
+material CH_Mother
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture CH_Mother.dds
+             }
+         }
+    }
+}
+
+material CH_Grit
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture CH_Grit.dds
+             }
+         }
+    }
+}
+			
