@@ -433,7 +433,7 @@ void SB_Object::Clear_Modified_Objects()
 // *************************************************************************
 // *	  		GetPlacement:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
-Ogre::Vector3 SB_Object::GetPlacement(void)
+Ogre::Vector3 SB_Object::GetPlacement(int Distance)
 {
 
 	Ogre::Vector3 Placement;
@@ -458,7 +458,7 @@ Ogre::Vector3 SB_Object::GetPlacement(void)
 	//Radius = (Radius * 7) + 2;
 
 	
-	TranslateVector.z = -6;//Radius;
+	TranslateVector.z = Distance; // Distance from Camera/Player
 
 	CamPos = App->Cl19_Ogre->mCamera->getPosition();
 

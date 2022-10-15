@@ -828,6 +828,9 @@ bool SB_Objects_Create::Add_New_Message()
 	strcat(B_Name, ConNum);
 	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_Name, B_Name);
 
+	Ogre::Vector3 Pos = App->SBC_Object->GetPlacement(-50);
+	App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
+
 	Create_Message_Entity(Index);
 
 	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Messages_Folder, App->SBC_Scene->B_Object[Index]->Mesh_Name, Index, true);
@@ -963,6 +966,9 @@ bool SB_Objects_Create::Add_New_Sound()
 	strcat(B_Name, ConNum);
 	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_Name, B_Name);
 
+	Ogre::Vector3 Pos = App->SBC_Object->GetPlacement(-50);
+	App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
+
 	Create_Sound_Entity(Index);
 
 	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Sounds_Folder, App->SBC_Scene->B_Object[Index]->Mesh_Name, Index, true);
@@ -1093,6 +1099,9 @@ bool SB_Objects_Create::Add_New_Move_Entity()
 	_itoa(Index, ConNum, 10);
 	strcat(B_Name, ConNum);
 	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_Name, B_Name);
+
+	Ogre::Vector3 Pos = App->SBC_Object->GetPlacement(-50);
+	App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
 
 	Create_Move_Entity(Index);
 
@@ -1225,6 +1234,9 @@ bool SB_Objects_Create::Add_New_Teleporter()
 	_itoa(Index, ConNum, 10);
 	strcat(B_Name, ConNum);
 	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_Name, B_Name);
+
+	Ogre::Vector3 Pos = App->SBC_Object->GetPlacement(-50);
+	App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
 
 	Create_TeleportEntity(Index);
 
