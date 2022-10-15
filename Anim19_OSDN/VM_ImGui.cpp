@@ -85,6 +85,7 @@ void VM_ImGui::Load_Font(void)
 	font1 = io.Fonts->AddFontFromFileTTF("Roboto-Medium.ttf", 20);
 	font2 = io.Fonts->AddFontFromFileTTF("Roboto-Medium.ttf", 48);
 	font0 = io.Fonts->AddFontFromFileTTF("Roboto-Medium.ttf", 18);
+
 	fontDroid = io.Fonts->AddFontFromFileTTF("DroidSans.ttf", 12);
 
 	io.IniFilename = NULL;
@@ -483,21 +484,11 @@ void VM_ImGui::ImGui_Text_Message(void)
 	else
 	{
 
-		//ImFont* font = ImGui::GetFont();
+		ImGui::PushFont(font2);
 
-		//	ImGui::PushFont(font);
-		//	//ImVec2 sz = ImGui::CalcTextSize("poo");
-		//	ImGui::PopFont();
-		//	float canvasWidth = ImGui::GetWindowContentRegionWidth();
-		//	float origScale = font->Scale;
-		//	font->Scale = 1.5;
-		//	ImGui::PushFont(font);
-		//	//ImGui::Text("%s", "poo");
-		//	ImGui::PopFont();
-		//	font->Scale = origScale;
-		
-		
 		ImGui::Text(App->SBC_Scene->B_Object[Object_Index]->Message_Text);
+
+		ImGui::PopFont();
 
 		ImGui::End();
 	}

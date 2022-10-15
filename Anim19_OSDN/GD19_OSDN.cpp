@@ -349,6 +349,18 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return 1;
 		}
 
+		case ID_EXAMPLES_TESTPROJECT:
+		{
+			char Test_Project[MAX_PATH];
+
+			strcpy(Test_Project, App->EquityDirecory_FullPath);
+			strcat(Test_Project, "\\Projects\\First_Project_Prj\\Project.SBProj");
+
+			App->SBC_Import->Reload_FromResentFiles(Test_Project);
+
+			return 1;
+		}
+		
 		case ID_IMPORT_ROOM:
 		{
 			App->SBC_Import_Room->Room_Loader("Ogre3D   *.mesh\0*.mesh\0", "Ogre3D");
