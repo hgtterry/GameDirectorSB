@@ -289,7 +289,7 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 		if (LOWORD(wParam) == IDC_BT_INFO_FILEVIEW)
 		{
-			App->Cl_Utilities->OpenHTML("Help\\Templete.html");
+			App->Cl_Utilities->OpenHTML("Help\\FileView.html");
 			return TRUE;
 		}
 		break;
