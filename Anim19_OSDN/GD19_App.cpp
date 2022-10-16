@@ -168,6 +168,7 @@ GD19_App::GD19_App(void)
 
 	FollowFunctions = 0;
 
+	Debug_App = 0;
 
 	EquityDirecory_FullPath[0] = 0;
 	ETemp_Folder[0] = 0;
@@ -535,11 +536,12 @@ void GD19_App::Say_Int(int Value)
 // *************************************************************************
 void GD19_App::Log_Messageg(char* Message)
 {
-	Ogre::LogManager::getSingleton().setDefaultLog(Ogre::LogManager::getSingleton().getLog("App.log"));
-
-	Ogre::LogManager::getSingleton().logMessage(Message);
-
-	Ogre::LogManager::getSingleton().setDefaultLog(Ogre::LogManager::getSingleton().getLog("EquitySB.log"));
+	if (Debug_App == 1)
+	{
+		Ogre::LogManager::getSingleton().setDefaultLog(Ogre::LogManager::getSingleton().getLog("App.log"));
+		Ogre::LogManager::getSingleton().logMessage(Message);
+		Ogre::LogManager::getSingleton().setDefaultLog(Ogre::LogManager::getSingleton().getLog("EquitySB.log"));
+	}
 }
 
 // *************************************************************************

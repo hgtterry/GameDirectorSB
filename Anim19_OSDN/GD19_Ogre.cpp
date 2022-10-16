@@ -95,11 +95,19 @@ bool GD19_Ogre::OgreCreateRoot(void)
 	Ogre::String pluginsPath;
 	pluginsPath = mResourcePath + "plugins.cfg";
 
-	mRoot = OGRE_NEW Ogre::Root(pluginsPath, mResourcePath + "Equity_CFG.cfg", mResourcePath + "EquitySB.log");
-	//Ogre::LogManager::getSingleton().setLogDetail(Ogre::LoggingLevel::LL_LOW);
+	if (App->Debug_App == 1)
+	{
+		mRoot = OGRE_NEW Ogre::Root(pluginsPath, mResourcePath + "Equity_CFG.cfg", mResourcePath + "EquitySB.log");
+		//Ogre::LogManager::getSingleton().setLogDetail(Ogre::LoggingLevel::LL_LOW);
 
-	Ogre::LogManager::getSingleton().createLog(mResourcePath + "App.log");
+		Ogre::LogManager::getSingleton().createLog(mResourcePath + "App.log");
+	}
+	else
+	{
+		mRoot = OGRE_NEW Ogre::Root(pluginsPath, mResourcePath + "Equity_CFG.cfg", mResourcePath + "");
+	}
 	
+
 	return 1;
 }
 

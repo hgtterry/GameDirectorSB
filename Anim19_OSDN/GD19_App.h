@@ -256,7 +256,8 @@ public:
 	HCURSOR CUR;
 
 	bool OgreStarted;
-	
+	bool Debug_App;
+
 	char EquityDirecory_FullPath[MAX_PATH];
 	char Version[100];
 	char LevelDirectory[MAX_PATH];
