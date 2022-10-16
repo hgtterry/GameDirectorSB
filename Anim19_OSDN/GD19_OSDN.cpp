@@ -1290,7 +1290,7 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 
 		SendDlgItemMessage(hDlg, IDC_LISTABOUT, LB_ADDSTRING, (WPARAM)0, (LPARAM)" ");
 		
-		sprintf(buff, "%s", " EquitySB Alpha Build 09/10/22");
+		sprintf(buff, "%s", " EquitySB Alpha Build 16/10/22");
 		SendDlgItemMessage(hDlg, IDC_LISTABOUT, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
 
 		/*sprintf(buff, "%s  %s", " Ogre Version ", "1.9");

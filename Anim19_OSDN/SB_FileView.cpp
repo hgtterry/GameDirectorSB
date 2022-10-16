@@ -1404,7 +1404,7 @@ void SB_FileView::Context_Menu(HWND hDlg)
 			App->SBC_FileView->hMenu = CreatePopupMenu();
 
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
-			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_COPY, L"&Copy");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
 			AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
@@ -1428,7 +1428,7 @@ void SB_FileView::Context_Menu(HWND hDlg)
 			App->SBC_FileView->hMenu = CreatePopupMenu();
 
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
-			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_COPY, L"&Copy");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
 			AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
@@ -1452,7 +1452,7 @@ void SB_FileView::Context_Menu(HWND hDlg)
 			App->SBC_FileView->hMenu = CreatePopupMenu();
 
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
-			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_COPY, L"&Copy");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
 			AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
@@ -1476,7 +1476,7 @@ void SB_FileView::Context_Menu(HWND hDlg)
 			App->SBC_FileView->hMenu = CreatePopupMenu();
 
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
-			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_COPY, L"&Copy");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
 			AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
@@ -1500,7 +1500,7 @@ void SB_FileView::Context_Menu(HWND hDlg)
 			App->SBC_FileView->hMenu = CreatePopupMenu();
 
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
-			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_COPY, L"&Copy");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
 			AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
@@ -1524,7 +1524,7 @@ void SB_FileView::Context_Menu(HWND hDlg)
 			App->SBC_FileView->hMenu = CreatePopupMenu();
 
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
-			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_COPY, L"&Copy");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
 			AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
@@ -1548,7 +1548,7 @@ void SB_FileView::Context_Menu(HWND hDlg)
 			App->SBC_FileView->hMenu = CreatePopupMenu();
 
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
-			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_COPY, L"&Copy");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
 			AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
