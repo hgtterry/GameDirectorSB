@@ -47,7 +47,7 @@ SB_FileView::SB_FileView()
 	FV_Sounds_Folder = nullptr;
 	FV_Messages_Folder = nullptr;
 	FV_Move_Folder = nullptr;
-	GD_Collectables_Folder = nullptr;
+	FV_Collectables_Folder = nullptr;
 	FV_Teleporters_Folder = nullptr;
 	GD_Environment_Folder = nullptr;
 	GD_Area_Change_Folder = nullptr;
@@ -92,7 +92,7 @@ void SB_FileView::Reset_Class()
 	FV_Sounds_Folder = nullptr;
 	FV_Messages_Folder = nullptr;
 	FV_Move_Folder = nullptr;
-	GD_Collectables_Folder = nullptr;
+	FV_Collectables_Folder = nullptr;
 	FV_Teleporters_Folder = nullptr;
 	GD_Environment_Folder = nullptr;
 	GD_Area_Change_Folder = nullptr;
@@ -467,7 +467,7 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	tvinsert.item.pszText = "Collectables";
 	tvinsert.item.iImage = 0;
 	tvinsert.item.iSelectedImage = 1;
-	GD_Collectables_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
+	FV_Collectables_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
 
 	//----------------------------------------------------
 	tvinsert.hParent = GD_EntitiesFolder;
@@ -790,27 +790,31 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 	// Collectables
 	if (!strcmp(FileView_Folder, "Collectables")) // Folder
 	{
-		if (App->Cl_Scene_Data->Scene_Has_Area == 0)
-		{
-			App->Say("An Area or Building must be Added Firest");
+		App->SBC_FileView->Context_Selection = Enums::FileView_Collectables_Folder;
 
-			return;
-		}
+		//if (App->Cl_Scene_Data->Scene_Has_Area == 0)
+		//{
+		//	App->Say("An Area or Building must be Added Firest");
 
-		App->SBC_Dialogs->YesNo("Add Entity", "Do you want to add a new Collectable Entity now", 1);
-		bool Doit = App->Cl_Dialogs->Canceled;
-		if (Doit == 0)
-		{
-			App->SBC_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Collectables;; // Collectables
-			App->SBC_MeshViewer->StartMeshViewer();
-			
-			//App->Cl__Add_NewObject->Add_Collectable_Entity();
-		}
+		//	return;
+		//}
+
+		//App->SBC_Dialogs->YesNo("Add Entity", "Do you want to add a new Collectable Entity now", 1);
+		//bool Doit = App->Cl_Dialogs->Canceled;
+		//if (Doit == 0)
+		//{
+		//	App->SBC_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Collectables;; // Collectables
+		//	App->SBC_MeshViewer->StartMeshViewer();
+		//	
+		//	//App->Cl__Add_NewObject->Add_Collectable_Entity();
+		//}
 
 		return;
 	}
 	if (!strcmp(FileView_File, "Collectables"))
 	{
+		App->SBC_FileView->Context_Selection = Enums::FileView_Collectables_File;
+
 		HideRightPanes();
 		ShowWindow(App->GD_Properties_Hwnd, 1);
 
@@ -1666,6 +1670,21 @@ void SB_FileView::Context_New(HWND hDlg)
 		if (Doit == 0)
 		{
 			App->SBC_Objects_Create->Add_New_Teleporter();
+		}
+
+		return;
+	}
+
+	if (App->SBC_FileView->Context_Selection == Enums::FileView_Collectables_Folder)
+	{
+		
+		App->SBC_Dialogs->YesNo("Add Object", "Do you want to add a new Collectable", 1);
+
+		bool Doit = App->SBC_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+			App->SBC_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Collectables;
+			App->SBC_MeshViewer->StartMeshViewer();
 		}
 
 		return;
