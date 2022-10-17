@@ -36,6 +36,7 @@ public:
 	void MoveObject_Listener(Ogre::Real Time);
 
 	bool Do_Teleport(int Index);
+	bool Do_Collectable(int Index);
 
 	float FinalPosition;
 	int ObjectIndex;

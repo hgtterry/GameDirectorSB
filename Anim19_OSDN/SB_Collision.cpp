@@ -389,6 +389,33 @@ bool SB_Collision::Do_Teleport(int Index)
 	return 1;
 }
 
+// *************************************************************************
+// *						Do_Collectable Terry Bernie					   *
+// *************************************************************************
+bool SB_Collision::Do_Collectable(int Index)
+{
+
+	App->SBC_Scene->B_Object[Index]->Object_Ent->setVisible(0);
+	App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(100, 100, 100);
+	App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(100, 100, 100));
+
+	/*if (App->GDCL_Scene_Data->CL_Object[Index]->HasSound == 1)
+	{
+		char buff[1024];
+		strcpy(buff, App->GDCL_SoundMgr->Default_Folder);
+		strcat(buff, "\\Media\\Sounds\\");
+		strcat(buff, App->GDCL_Scene_Data->CL_Object[Index]->S_Sounds[0]->SoundFile);
+
+		App->GDCL_Scene_Data->CL_Object[Index]->S_Sounds[0]->SndFile = App->GDCL_SoundMgr->SoundEngine->play2D(buff, false, true, true);
+		App->GDCL_Scene_Data->CL_Object[Index]->S_Sounds[0]->SndFile->setVolume(App->GDCL_Scene_Data->CL_Object[Index]->S_Sounds[0]->Volume);
+		App->GDCL_Scene_Data->CL_Object[Index]->S_Sounds[0]->SndFile->setIsPaused(false);
+	}*/
+
+	//Play_Sound(Index);
+
+	return 1;
+}
+
 //
 //// *************************************************************************
 //// *						Do_Environment Terry Bernie					   *
