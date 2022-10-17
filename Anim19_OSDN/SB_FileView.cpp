@@ -461,13 +461,13 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	tvinsert.item.iSelectedImage = 1;
 	FV_Move_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
 
-	//tvinsert.hParent = GD_EntitiesFolder;
-	//tvinsert.hInsertAfter = TVI_LAST;
-	//tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
-	//tvinsert.item.pszText = "Collectables";
-	//tvinsert.item.iImage = 0;
-	//tvinsert.item.iSelectedImage = 1;
-	//GD_Collectables_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
+	tvinsert.hParent = GD_EntitiesFolder;
+	tvinsert.hInsertAfter = TVI_LAST;
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	tvinsert.item.pszText = "Collectables";
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
+	GD_Collectables_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
 
 	//----------------------------------------------------
 	tvinsert.hParent = GD_EntitiesFolder;
