@@ -276,7 +276,8 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		}
 
 
-		if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Objects)
+		if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Objects 
+			|| App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables)
 		{
 			App->SBC_MeshViewer->Set_ResourceMesh_File(hDlg);
 			App->SBC_MeshViewer->Get_Files();

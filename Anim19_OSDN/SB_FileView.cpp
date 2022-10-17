@@ -790,24 +790,8 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 	// Collectables
 	if (!strcmp(FileView_Folder, "Collectables")) // Folder
 	{
+
 		App->SBC_FileView->Context_Selection = Enums::FileView_Collectables_Folder;
-
-		//if (App->Cl_Scene_Data->Scene_Has_Area == 0)
-		//{
-		//	App->Say("An Area or Building must be Added Firest");
-
-		//	return;
-		//}
-
-		//App->SBC_Dialogs->YesNo("Add Entity", "Do you want to add a new Collectable Entity now", 1);
-		//bool Doit = App->Cl_Dialogs->Canceled;
-		//if (Doit == 0)
-		//{
-		//	App->SBC_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Collectables;; // Collectables
-		//	App->SBC_MeshViewer->StartMeshViewer();
-		//	
-		//	//App->Cl__Add_NewObject->Add_Collectable_Entity();
-		//}
 
 		return;
 	}
@@ -1559,6 +1543,30 @@ void SB_FileView::Context_Menu(HWND hDlg)
 			TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
 			DestroyMenu(App->SBC_FileView->hMenu);
 			Context_Selection = Enums::FileView_Teleports_File;
+		}
+
+		//------------------------------------- Collectables_Entities
+		if (!strcmp(App->SBC_FileView->FileView_Folder, "Collectables")) // Folder
+		{
+			App->SBC_FileView->hMenu = CreatePopupMenu();
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_NEW, L"&New");
+			TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+			DestroyMenu(App->SBC_FileView->hMenu);
+			Context_Selection = Enums::FileView_Collectables_Folder;
+		}
+
+		if (!strcmp(App->SBC_FileView->FileView_File, "Collectables"))
+		{
+			App->SBC_FileView->hMenu = CreatePopupMenu();
+
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
+			TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+			DestroyMenu(App->SBC_FileView->hMenu);
+			Context_Selection = Enums::FileView_Collectables_File;
 		}
 	}
 }

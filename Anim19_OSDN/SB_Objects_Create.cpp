@@ -163,14 +163,21 @@ bool SB_Objects_Create::Dispatch_MeshViewer()
 	}
 	else if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables) // Collectables
 	{
-		//Add_New_CollectableEntity();
+		Add_New_Object(Index, 1);
+		App->SBC_Scene->B_Object[Index]->Altered = 1;
+		App->SBC_Scene->B_Object[Index]->Folder = Enums::Folder_Objects;
+		App->SBC_Scene->B_Object[Index]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Collectables_Folder, 
+			App->SBC_Scene->B_Object[Index]->Mesh_Name, Index, true);
+
+		App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Collectables_Folder);
 	}
 	else
 	{
 		Add_New_Object(Index, 1);
 		App->SBC_Scene->B_Object[Index]->Altered = 1;
 		App->SBC_Scene->B_Object[Index]->Folder = Enums::Folder_Objects;
-		App->SBC_Scene->B_Object[Index]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Objects_Folder, App->SBC_Scene->B_Object[Index]->Mesh_Name, Index, true);
+		App->SBC_Scene->B_Object[Index]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Objects_Folder, 
+			App->SBC_Scene->B_Object[Index]->Mesh_Name, Index, true);
 
 	}
 	return 1;
