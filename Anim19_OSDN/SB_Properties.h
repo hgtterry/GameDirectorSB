@@ -45,6 +45,7 @@ public:
 	bool Update_ListView_Level();
 	bool Update_ListView_Move_Entities();
 	bool Update_ListView_Teleport();
+	bool Update_ListView_Collectables();
 
 	bool Properties_Dlg_Active;
 

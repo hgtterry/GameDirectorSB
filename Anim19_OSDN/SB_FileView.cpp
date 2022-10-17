@@ -781,7 +781,6 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		App->SBC_Properties->Edit_Category = Enums::Edit_Teleport;
 		App->SBC_Properties->Current_Selected_Object = Index;
 		
-
 		App->SBC_Properties->Update_ListView_Teleport();
 		
 		return;
@@ -801,44 +800,17 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 		HideRightPanes();
 		ShowWindow(App->GD_Properties_Hwnd, 1);
-
-//		App->SBC_Properties->Enable_Delete_Button(1);
+		App->SBC_Object->Hide_Object_Dlg(1);
+		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1);
+		App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
 
 		App->Cl_Visuals->MarkerBB_Addjust(Index);
 
-
 		App->SBC_Properties->Edit_Category = Enums::Edit_Collectable;
 		App->SBC_Properties->Current_Selected_Object = Index;
-//		App->SBC_Properties->Update_Transform_Dlg();
-
-
-		if (App->SBC_Properties->Edit_Physics == 0)
-		{
-			//App->SBC_Properties->Update_ListView_Collectables();
-		}
-		else
-		{
-			//App->SBC_Properties->Update_ListView_Physics();
-		}
-
-		/*if (App->Cl_Object_Props->Edit_Type == Enums::Edit_Player)
-		{
-			App->Cl_Object_Props->Edit_Type = Enums::FV_Edit_Object;
-			App->Cl_Object_Props->Update_Properties_Mesh();
-			return;
-		}
-
-		if (App->Cl_Object_Props->Edit_Type == Enums::FV_Edit_Object)
-		{
-			App->Cl_Object_Props->Update_Properties_Mesh();
-			return;
-		}
-
-		if (App->Cl_Object_Props->Edit_Type == Enums::Edit_Physics_Object)
-		{
-			App->Cl_Object_Props->Update_Properties_Physics();
-			return;
-		}*/
+		
+		App->SBC_Properties->Update_ListView_Collectables();
+		
 		return;
 	}
 

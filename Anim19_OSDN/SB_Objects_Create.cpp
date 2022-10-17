@@ -88,7 +88,16 @@ bool SB_Objects_Create::Add_Objects_From_File() // From File
 		}
 		else if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Colectable)
 		{
-			//Add_CollectableEntity_FFile(Count);
+			App->SBC_Objects_Create->Add_New_Object(Count, 0);
+			App->SBC_Scene->B_Object[Count]->Altered = 0;
+		
+			App->SBC_Scene->B_Object[Count]->Usage = Enums::Usage_Colectable;
+			App->SBC_Scene->B_Object[Count]->Phys_Body->setUserIndex(Enums::Usage_Colectable);
+			App->SBC_Scene->B_Object[Count]->Phys_Body->setUserIndex2(Count);
+			App->SBC_Scene->B_Object[Count]->Folder = Enums::Folder_Collectables;
+
+			App->SBC_Scene->B_Object[Count]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Collectables_Folder, 
+				App->SBC_Scene->B_Object[Count]->Mesh_Name, Count, false);
 		}
 		else if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Teleport)
 		{
@@ -169,6 +178,11 @@ bool SB_Objects_Create::Dispatch_MeshViewer()
 		App->SBC_Scene->B_Object[Index]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Collectables_Folder, 
 			App->SBC_Scene->B_Object[Index]->Mesh_Name, Index, true);
 
+		App->SBC_Scene->B_Object[Index]->Usage = Enums::Usage_Colectable;
+		App->SBC_Scene->B_Object[Index]->Phys_Body->setUserIndex(Enums::Usage_Colectable);
+		App->SBC_Scene->B_Object[Index]->Phys_Body->setUserIndex2(Index);
+		App->SBC_Scene->B_Object[Index]->Folder = Enums::Folder_Collectables;
+
 		App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Collectables_Folder);
 	}
 	else
@@ -212,7 +226,7 @@ bool SB_Objects_Create::Add_New_Object(int Index,bool From_MeshViewer)
 	// If from MeshViewer Get Placement Method
 	if (From_MeshViewer == 1 && App->SBC_MeshViewer->Placement_Camera == 1)
 	{
-		Ogre::Vector3 Pos = App->SBC_Object->GetPlacement();// Object->GetPlacement();
+		Ogre::Vector3 Pos = App->SBC_Object->GetPlacement();
 		Object->Mesh_Pos = Pos;
 		Object->Object_Node->setPosition(Pos);
 	}
