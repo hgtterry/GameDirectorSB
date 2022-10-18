@@ -764,6 +764,14 @@ bool SB_Project::Save_Objects_Data()
 				fprintf(WriteFile, "%s%f\n", "Sound_Volume=", App->SBC_Scene->B_Object[Count]->SndVolume);
 			}
 
+			//---------------------------------------------------------------------------------- Colectable Entity
+			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Colectable)
+			{
+				fprintf(WriteFile, "%s%s\n", "Col_Sound_File=", App->SBC_Scene->B_Object[Count]->S_Sound[0]->Sound_File);
+				fprintf(WriteFile, "%s%f\n", "Col_Sound_Volume=", App->SBC_Scene->B_Object[Count]->S_Sound[0]->SndVolume);
+				fprintf(WriteFile, "%s%i\n", "Col_Play=", App->SBC_Scene->B_Object[Count]->S_Sound[0]->Play);
+			}
+
 			//---------------------------------------------------------------------------------- Move Entity
 			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Move)
 			{
@@ -1380,6 +1388,15 @@ bool SB_Project::Load_Project_Objects()
 		{
 			App->SBC_Scene->B_Object[Count]->S_Sound[0] = new Sound_type;
 			App->SBC_Object->Set_Collectables_Sound_Defaults(Count);
+
+			App->Cl_Ini->GetString(buff, "Col_Sound_File", chr_Tag1, MAX_PATH);
+			strcpy(Object->S_Sound[0]->Sound_File, chr_Tag1);
+			
+			App->Cl_Ini->GetString(buff, "Col_Sound_Volume", chr_Tag1, MAX_PATH);
+			sscanf(chr_Tag1, "%f", &x);
+			App->SBC_Scene->B_Object[Count]->S_Sound[0]->SndVolume = x;
+
+			App->SBC_Scene->B_Object[Count]->S_Sound[0]->Play = App->Cl_Ini->GetInt(buff, "Col_Play", 0);
 		}
 
 		//---------------------------------------------------------------------------------- Usage_Move

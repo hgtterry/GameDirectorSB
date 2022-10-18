@@ -1778,7 +1778,84 @@ bool SB_Properties::Edit_Collectables_OnClick(LPARAM lParam)
 
 		Update_ListView_Collectables();
 
-		App->Cl_Scene_Data->Reset_Triggers();
+		App->SBC_Physics->Reset_Triggers();
+	}
+
+	result = strcmp(btext, "Volume");
+	if (result == 0)
+	{
+
+		App->SBC_SoundMgr->Accessed = 1;
+		strcpy(App->SBC_SoundMgr->Access_File, App->SBC_Scene->B_Object[Index]->S_Sound[0]->Sound_File);
+
+		App->SBC_SoundMgr->Dialog_SoundFile();
+
+		strcpy(App->SBC_Scene->B_Object[Index]->S_Sound[0]->Sound_File, App->SBC_SoundMgr->Access_File);
+
+		App->SBC_Scene->B_Object[Index]->S_Sound[0]->SndVolume = App->SBC_SoundMgr->SndVolume;
+
+		Mark_As_Altered(Index);
+
+		Update_ListView_Collectables();
+
+		App->SBC_Physics->Reset_Triggers();
+
+		return 1;
+	}
+
+
+	//Sound
+	result = strcmp(btext, "Sound");
+	if (result == 0)
+	{
+		App->SBC_SoundMgr->Accessed = 1;
+		strcpy(App->SBC_SoundMgr->Access_File, App->SBC_Scene->B_Object[Index]->S_Sound[0]->Sound_File);
+
+		App->SBC_SoundMgr->Dialog_SoundFile();
+
+		strcpy(App->SBC_Scene->B_Object[Index]->S_Sound[0]->Sound_File, App->SBC_SoundMgr->Access_File);
+
+		App->SBC_Scene->B_Object[Index]->S_Sound[0]->SndVolume = App->SBC_SoundMgr->SndVolume;
+
+		Mark_As_Altered(Index);
+
+		Update_ListView_Collectables();
+
+		App->SBC_Physics->Reset_Triggers();
+
+		return 1;
+	}
+
+	// Play
+	result = strcmp(btext, "Play");
+	if (result == 0)
+	{
+
+		strcpy(App->Cl_Dialogs->btext, "Play Sound In The Game");
+
+		App->Cl_Dialogs->TrueFlase = App->SBC_Scene->B_Object[Index]->S_Sound[0]->Play;
+
+		App->Cl_Dialogs->Dialog_TrueFlase(App->MainHwnd);
+
+		if (App->Cl_Dialogs->Canceled == 0)
+		{
+			if (App->Cl_Dialogs->TrueFlase == 1)
+			{
+				App->SBC_Scene->B_Object[Index]->S_Sound[0]->Play = 1;
+			}
+			else
+			{
+				App->SBC_Scene->B_Object[Index]->S_Sound[0]->Play = 0;
+
+			}
+		}
+
+		Mark_As_Altered(Index);
+
+		Update_ListView_Collectables();
+
+		App->SBC_Physics->Reset_Triggers();
+		return 1;
 	}
 
 	return 1;

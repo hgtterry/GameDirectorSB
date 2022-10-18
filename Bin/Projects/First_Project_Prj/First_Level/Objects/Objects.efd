@@ -162,7 +162,7 @@ Tele_Physics_Position=72.376854,-47.100010,16.891436
 Tele_Physics_Rotation=0.000000,0.913089,0.000000,-0.407761
  
 [Object_8]
-Mesh_Name=Object_8
+Mesh_Name=Tunnel
 Mesh_File=Tunnel.mesh
 Mesh_Resource_Path=
 Material_File=Tunnel.material

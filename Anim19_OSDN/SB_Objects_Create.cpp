@@ -98,6 +98,9 @@ bool SB_Objects_Create::Add_Objects_From_File() // From File
 
 			App->SBC_Scene->B_Object[Count]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Collectables_Folder, 
 				App->SBC_Scene->B_Object[Count]->Mesh_Name, Count, false);
+
+			App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Collectables_Folder);
+
 		}
 		else if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Teleport)
 		{
