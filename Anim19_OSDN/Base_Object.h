@@ -48,7 +48,17 @@ typedef struct Teleport_type
 	Ogre::Real SndVolume;
 	char Sound_File[MAX_PATH];
 	bool Play;
+
 }Teleport_type;
+
+typedef struct Sound_type
+{
+	irrklang::ISound* SndFile;
+	Ogre::Real SndVolume;
+	char Sound_File[MAX_PATH];
+	bool Play;
+
+}Sound_type;
 
 #pragma once
 class Base_Object
@@ -129,5 +139,8 @@ public:
 
 	//------------------------------ Teleport Entity
 	Teleport_type* S_Teleport[1];
+
+	//------------------------------ Sound
+	Sound_type* S_Sound[1];
 };
 

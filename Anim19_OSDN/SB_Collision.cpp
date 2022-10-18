@@ -336,34 +336,6 @@ void SB_Collision::MoveObject_Listener(Ogre::Real Time)
 	return;
 }
 
-//// *************************************************************************
-//// *						Do_Collectable Terry Bernie					   *
-//// *************************************************************************
-//bool GD19_Collision::Do_Collectable(int Index)
-//{
-//
-//	/*App->Cl_Scene_Data->Cl_Object[Index]->OgreEntity->setVisible(0);
-//	App->Cl_Scene_Data->Cl_Object[Index]->OgreNode->setPosition(100,100,100);
-//	App->Cl_Scene_Data->Cl_Object[Index]->bt_body->getWorldTransform().setOrigin(btVector3(100, 100, 100));*/
-//
-//	/*if (App->GDCL_Scene_Data->CL_Object[Index]->HasSound == 1)
-//	{
-//		char buff[1024];
-//		strcpy(buff, App->GDCL_SoundMgr->Default_Folder);
-//		strcat(buff, "\\Media\\Sounds\\");
-//		strcat(buff, App->GDCL_Scene_Data->CL_Object[Index]->S_Sounds[0]->SoundFile);
-//
-//		App->GDCL_Scene_Data->CL_Object[Index]->S_Sounds[0]->SndFile = App->GDCL_SoundMgr->SoundEngine->play2D(buff, false, true, true);
-//		App->GDCL_Scene_Data->CL_Object[Index]->S_Sounds[0]->SndFile->setVolume(App->GDCL_Scene_Data->CL_Object[Index]->S_Sounds[0]->Volume);
-//		App->GDCL_Scene_Data->CL_Object[Index]->S_Sounds[0]->SndFile->setIsPaused(false);
-//	}*/
-//
-//	Play_Sound(Index);
-//
-//	return 1;
-//}
-//
-
 // *************************************************************************
 // *						Do_Teleport Terry Bernie					   *
 // *************************************************************************
