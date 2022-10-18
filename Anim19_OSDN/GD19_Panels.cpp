@@ -104,7 +104,7 @@ bool GD19_Panels::MovePhysicsView(void)
 	int widthX = rect.right - rect.left;
 	int heightY = rect.bottom - rect.top;
 
-	SetWindowPos(App->Physics_Console_Hwnd, NULL, PosX + 14, PosY + heightY - 110,
+	SetWindowPos(App->Physics_Console_Hwnd, NULL, PosX + 10, PosY + heightY - 100,
 		0, 0, SWP_NOSIZE | SWP_NOZORDER);
 
 	return 1;

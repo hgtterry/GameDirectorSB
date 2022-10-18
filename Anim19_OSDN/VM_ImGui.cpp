@@ -413,7 +413,8 @@ void VM_ImGui::Object_Selection(void)
 // *************************************************************************
 void VM_ImGui::ImGui_FPS(void)
 {
-	if (!ImGui::Begin("Ogre Data", &Show_FPS, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_AlwaysAutoResize))
+	if (!ImGui::Begin("Ogre Data", &Show_FPS, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize 
+		| ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
 	{
 		ImGui::End();
 	}
@@ -421,12 +422,11 @@ void VM_ImGui::ImGui_FPS(void)
 	{
 		if (StartPos == 0)
 		{
-			ImGui::SetWindowPos("Ogre Data", ImVec2(10, 550));
+			ImGui::SetWindowPos("Ogre Data", ImVec2(500, 5));
 			ImGui::SetWindowSize(ImVec2(350, 90));
 			StartPos = 1;
 		}
 
-		ImGui::Spacing();
 		ImGui::Text("FPS average %.0f", ImGui::GetIO().Framerate);
 		//ImGui::PopFont();
 
