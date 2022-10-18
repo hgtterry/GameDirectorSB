@@ -176,5 +176,20 @@ Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
  
+[Object_9]
+Mesh_Name=Object_9
+Mesh_File=Barrel_1.mesh
+Mesh_Resource_Path=
+Material_File=Barrel_1.material
+Object_ID=9
+Object_Type=2
+Object_Shape=1
+Object_Usage=12
+Mesh_Pos=-53.559814,-60.473049,-110.838486
+Mesh_Scale=1.000000,1.000000,1.000000
+Mesh_Rot=0.000000,0.000000,0.000000
+Mesh_Quat=1.000000,0.000000,0.000000,0.000000
+Physics_Quat=1.000000,0.000000,0.000000,0.000000
+ 
 [Counters]
-Objects_Count=9
+Objects_Count=10

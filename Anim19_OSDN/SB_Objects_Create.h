@@ -60,7 +60,7 @@ protected:
 	bool Create_Sound_Entity(int Index);
 	bool Create_Move_Entity(int Index);
 	bool Create_TeleportEntity(int Index);
-
+	bool Create_Colectable_Entity(int Index);
 
 	bool First_Area_Start_Project();
 

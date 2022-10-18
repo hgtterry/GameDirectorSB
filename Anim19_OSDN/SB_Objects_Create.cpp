@@ -172,17 +172,8 @@ bool SB_Objects_Create::Dispatch_MeshViewer()
 	}
 	else if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables) // Collectables
 	{
-		Add_New_Object(Index, 1);
-		App->SBC_Scene->B_Object[Index]->Altered = 1;
-		App->SBC_Scene->B_Object[Index]->Folder = Enums::Folder_Objects;
-		App->SBC_Scene->B_Object[Index]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Collectables_Folder, 
-			App->SBC_Scene->B_Object[Index]->Mesh_Name, Index, true);
-
-		App->SBC_Scene->B_Object[Index]->Usage = Enums::Usage_Colectable;
-		App->SBC_Scene->B_Object[Index]->Phys_Body->setUserIndex(Enums::Usage_Colectable);
-		App->SBC_Scene->B_Object[Index]->Phys_Body->setUserIndex2(Index);
-		App->SBC_Scene->B_Object[Index]->Folder = Enums::Folder_Collectables;
-
+		Create_Colectable_Entity(Index);
+		
 		App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Collectables_Folder);
 	}
 	else
@@ -1091,6 +1082,26 @@ bool SB_Objects_Create::Create_Sound_Entity(int Index)
 	App->Cl_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
 	Set_Physics(Index);
+
+	return 1;
+}
+
+// *************************************************************************
+// *	Create_Colectable_Entity:- Terry and Hazel Flanigan	2022		   *
+// *************************************************************************
+bool SB_Objects_Create::Create_Colectable_Entity(int Index)
+{
+	Add_New_Object(Index, 1);
+
+	App->SBC_Scene->B_Object[Index]->Altered = 1;
+	App->SBC_Scene->B_Object[Index]->Folder = Enums::Folder_Objects;
+	App->SBC_Scene->B_Object[Index]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Collectables_Folder,
+		App->SBC_Scene->B_Object[Index]->Mesh_Name, Index, true);
+
+	App->SBC_Scene->B_Object[Index]->Usage = Enums::Usage_Colectable;
+	App->SBC_Scene->B_Object[Index]->Phys_Body->setUserIndex(Enums::Usage_Colectable);
+	App->SBC_Scene->B_Object[Index]->Phys_Body->setUserIndex2(Index);
+	App->SBC_Scene->B_Object[Index]->Folder = Enums::Folder_Collectables;
 
 	return 1;
 }

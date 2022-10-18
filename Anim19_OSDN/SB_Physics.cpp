@@ -304,6 +304,7 @@ void SB_Physics::Reset_Triggers(void)
 	{
 		if (App->SBC_Scene->B_Object[Count]->Deleted == 0)
 		{
+			// ------------------------------------- Move Entities
 			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Move)
 			{
 				int ObjectToMove = App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Object_Index;
@@ -320,17 +321,18 @@ void SB_Physics::Reset_Triggers(void)
 				App->SBC_Scene->B_Object[Count]->Triggered = 0;
 			}
 
-			/*if (Cl_Object[Count]->Usage == Enums::Usage_Colectable)
+			// ------------------------------------- Colectables
+			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Colectable)
 			{
-				Cl_Object[Count]->OgreEntity->setVisible(TRUE);
+				App->SBC_Scene->B_Object[Count]->Object_Ent->setVisible(TRUE);
 
-				Cl_Object[Count]->OgreNode->setPosition(Cl_Object[Count]->Mesh_Pos);
+				App->SBC_Scene->B_Object[Count]->Object_Node->setPosition(App->SBC_Scene->B_Object[Count]->Mesh_Pos);
 
-				P_Pos = Cl_Object[Count]->Physics_Pos;
-				Cl_Object[Count]->bt_body->getWorldTransform().setOrigin(btVector3(P_Pos.x, P_Pos.y, P_Pos.z));
+				P_Pos = App->SBC_Scene->B_Object[Count]->Physics_Pos;
+				App->SBC_Scene->B_Object[Count]->Phys_Body->getWorldTransform().setOrigin(btVector3(P_Pos.x, P_Pos.y, P_Pos.z));
 
-				Cl_Object[Count]->Triggered = 0;
-			}*/
+				App->SBC_Scene->B_Object[Count]->Triggered = 0;
+			}
 		}
 
 		Count++;
