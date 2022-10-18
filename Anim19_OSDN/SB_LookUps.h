@@ -29,5 +29,17 @@ public:
 	SB_LookUps(void);
 	~SB_LookUps(void);
 
+	bool Update_Types();
+	
+	char Chr_Type[32];
+	char Chr_Shape[32];
+	char Chr_Usage[32];
+
+protected:
+
+	bool Get_Type(int Index);
+	bool Get_Shape(int Index);
+	bool Get_Usage(int Index);
+
 };
 

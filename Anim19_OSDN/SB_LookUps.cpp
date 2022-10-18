@@ -30,8 +30,136 @@ distribution.
 
 SB_LookUps::SB_LookUps(void)
 {
+	Chr_Type[0] = 0;
+	Chr_Shape[0] = 0;
+	Chr_Usage[0] = 0;
 }
 
 SB_LookUps::~SB_LookUps(void)
 {
+}
+
+// *************************************************************************
+// *			Update_Types:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+bool SB_LookUps::Update_Types()
+{
+	int Index = App->SBC_Properties->Current_Selected_Object;
+
+	Get_Type(Index);
+	Get_Shape(Index);
+	Get_Usage(Index);
+
+	return 0;
+}
+
+// *************************************************************************
+// *			 Get_Type:- Terry and Hazel Flanigan 2022				   *
+// *************************************************************************
+bool SB_LookUps::Get_Type(int Index)
+{
+	int Type = App->SBC_Scene->B_Object[Index]->Type;
+
+	switch (Type)
+	{
+
+	case Enums::Bullet_Type_Dynamic:
+	{
+		strcpy(Chr_Type, "Dynamic");
+		return 1;
+	}
+	case Enums::Bullet_Type_Static:
+	{
+		strcpy(Chr_Type, "Static");
+		return 1;
+	}
+
+	break;
+
+	}
+
+	strcpy(Chr_Type, "None");
+	return 0;
+}
+
+// *************************************************************************
+// *				Get_Shape:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+bool SB_LookUps::Get_Shape(int Index)
+{
+	int Shape = App->SBC_Scene->B_Object[Index]->Shape;
+
+	switch (Shape)
+	{
+
+	case Enums::Shape_Box:
+	{
+		strcpy(Chr_Shape, "Box");
+		return 1;
+	}
+	case Enums::Sphere:
+	{
+		strcpy(Chr_Shape, "Sphere");
+		return 1;
+	}
+
+	case Enums::Capsule:
+	{
+		strcpy(Chr_Shape, "Capsule");
+		return 1;
+	}
+
+	break;
+
+	}
+
+	strcpy(Chr_Shape, "None");
+	return 0;
+}
+
+// *************************************************************************
+// *				Get_Usage:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+bool SB_LookUps::Get_Usage(int Index)
+{
+	int Usage = App->SBC_Scene->B_Object[Index]->Usage;
+
+	switch (Usage)
+	{
+
+	case Enums::Usage_Room:
+	{
+		strcpy(Chr_Usage, "Usage_Room");
+		return 1;
+	}
+	case Enums::Usage_Static:
+	{
+		strcpy(Chr_Usage, "Usage_Static");
+		return 1;
+	}
+
+	case Enums::Usage_Dynamic:
+	{
+		strcpy(Chr_Usage, "Usage_Dynamic");
+		return 1;
+	}
+
+	case Enums::Usage_Object:
+	{
+		strcpy(Chr_Usage, "Usage_Object");
+		return 1;
+	}
+
+	case Enums::Usage_Message:
+	{
+		strcpy(Chr_Usage, "Usage_Message");
+		return 1;
+	}
+
+	break;
+
+	}
+
+	strcpy(Chr_Usage, "None");
+	return 0;
 }

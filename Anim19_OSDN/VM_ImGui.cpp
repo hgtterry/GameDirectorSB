@@ -846,9 +846,9 @@ void VM_ImGui::ImGui_Object_Data(void)
 		ImGui::Text("Name: = %s", App->SBC_Scene->B_Object[Index]->Mesh_Name);
 		ImGui::Text("Mesh File Name: = %s", App->SBC_Scene->B_Object[Index]->Mesh_FileName);
 		ImGui::Text("Path: = %s", App->SBC_Scene->B_Object[Index]->Mesh_Resource_Path);
-		ImGui::Text("Type: = %s", App->SBC_Object->Chr_Type);
-		ImGui::Text("Shape: = %s", App->SBC_Object->Chr_Shape);
-		ImGui::Text("Usage: = %s", App->SBC_Object->Chr_Usage);
+		ImGui::Text("Type: = %s", App->SBC_LookUps->Chr_Type);
+		ImGui::Text("Shape: = %s", App->SBC_LookUps->Chr_Shape);
+		ImGui::Text("Usage: = %s", App->SBC_LookUps->Chr_Usage);
 		ImGui::Text("Object_ID: = %i", App->SBC_Scene->B_Object[Index]->Object_ID);
 
 		ImGui::Spacing();

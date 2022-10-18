@@ -41,12 +41,8 @@ public:
 
 	int GetIndex_By_Name(char* Name);
 
-	bool Update_Types();
 	void Copy_Object(int Object_Index);
 
-	char Chr_Type[32];
-	char Chr_Shape[32];
-	char Chr_Usage[32];
 
 	bool Show_Physics_Debug;
 	bool Show_Mesh_Debug;
@@ -57,10 +53,5 @@ protected:
 
 	static LRESULT CALLBACK Object_PropsPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
-	
-
-	bool Get_Type(int Index);
-	bool Get_Shape(int Index);
-	bool Get_Usage(int Index);
 };
 
