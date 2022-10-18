@@ -428,7 +428,7 @@ void SB_Object::Set_Teleports_Defaults(int Index)
 // *************************************************************************
 void SB_Object::Set_Collectables_Sound_Defaults(int Index)
 {
-	strcpy(App->SBC_Scene->B_Object[Index]->S_Sound[0]->Sound_File, "footsteps.ogg");
+	strcpy(App->SBC_Scene->B_Object[Index]->S_Sound[0]->Sound_File, "footstep.ogg");
 	App->SBC_Scene->B_Object[Index]->S_Sound[0]->Play = 1;
 	App->SBC_Scene->B_Object[Index]->S_Sound[0]->SndVolume = 0.5;
 }

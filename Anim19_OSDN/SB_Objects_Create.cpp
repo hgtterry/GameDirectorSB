@@ -89,8 +89,11 @@ bool SB_Objects_Create::Add_Objects_From_File() // From File
 		else if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Colectable)
 		{
 			App->SBC_Objects_Create->Add_New_Object(Count, 0);
+
+			App->SBC_Scene->B_Object[Count]->S_Sound[0] = new Sound_type;
+			App->SBC_Object->Set_Collectables_Sound_Defaults(Count);
+
 			App->SBC_Scene->B_Object[Count]->Altered = 0;
-		
 			App->SBC_Scene->B_Object[Count]->Usage = Enums::Usage_Colectable;
 			App->SBC_Scene->B_Object[Count]->Phys_Body->setUserIndex(Enums::Usage_Colectable);
 			App->SBC_Scene->B_Object[Count]->Phys_Body->setUserIndex2(Count);
