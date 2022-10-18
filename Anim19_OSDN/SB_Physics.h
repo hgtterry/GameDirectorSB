@@ -28,9 +28,12 @@ public:
 	SB_Physics();
 	~SB_Physics();
 
+	void Start_Physics_Console(void);
 	bool Start_Physics_Pannel();
 	void Reset_Physics(void);
 	void Reset_Triggers(void);
+
+	bool Physics_Console_Dlg_Active;
 
 	// Enable Disable Physics [231121]
 	void Enable_Physics(bool Enable);
@@ -40,6 +43,7 @@ public:
 protected:
 
 	static LRESULT CALLBACK Start_Physics_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Physics_Console_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Update_Model(void);
 

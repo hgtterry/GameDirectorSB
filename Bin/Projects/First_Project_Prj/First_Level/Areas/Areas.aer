@@ -8,7 +8,7 @@ Areas_Count=1
 Area_Name=Room_1
 Area_File=StartRoom.mesh
 Area_Path_File=
-Area_Resource_Path=C:\Users\Equity\Desktop\Equity_SB\Bin\Projects\First_Project_Prj\First_Level\Assets\
+Area_Resource_Path=C:\Users\Equity\Desktop\First_Project_Prj\First_Level\Assets\
 Material_File=StartRoom.material
 [Position]
 Mesh_Pos=0.000000,0.000000,0.000000

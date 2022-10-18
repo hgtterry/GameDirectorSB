@@ -107,8 +107,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	App->SBC_Properties->Start_GD_Properties();
 
 	App->SBC_Physics->Start_Physics_Pannel();
-
-	//App->Cl_Bullet->Start_Physics_Console(); // Atention
+	App->SBC_Physics->Start_Physics_Console();
+	
 	//App->Cl_Panels->MovePhysicsView();
 
 	App->SBC_TopTabs->Start_TopBar_Globals();

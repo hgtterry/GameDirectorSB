@@ -32,6 +32,8 @@ SB_Physics::SB_Physics()
 	PhysicsPannel_Hwnd = nullptr;
 
 	Toggle_Enable_Flag = 0;
+
+	Physics_Console_Dlg_Active = 0;
 }
 
 
@@ -39,6 +41,133 @@ SB_Physics::~SB_Physics()
 {
 }
 
+// *************************************************************************
+// *	  				Start_Physics_Consol Terry Bernie				   *
+// *************************************************************************
+void SB_Physics::Start_Physics_Console(void)
+{
+	if (Physics_Console_Dlg_Active == 1)
+	{
+		return;
+	}
+
+	Physics_Console_Dlg_Active = 1;
+
+	//CheckMenuItem(App->mMenu, ID_WINDOW_SHOWMOTIONSPANEL, MF_BYCOMMAND | MF_CHECKED);
+
+	App->Physics_Console_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PHYSICS_CONSOLE, App->Fdlg, (DLGPROC)Physics_Console_Proc);
+}
+// *************************************************************************
+// *        			Physics_Console_Proc  Terry	Bernie				   *
+// *************************************************************************
+LRESULT CALLBACK SB_Physics::Physics_Console_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_RESETTRIGGERS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_RESETPHYSICS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_PHYSICS_ON, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		return TRUE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->DialogBackGround;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_RESETPHYSICS && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_RESETTRIGGERS && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (App->SBC_Scene->Scene_Loaded == 1)
+		{
+			if (some_item->idFrom == IDC_PHYSICS_ON && some_item->code == NM_CUSTOMDRAW)
+			{
+				LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+				App->Custom_Button_Toggle(item, App->Cl19_Ogre->OgreListener->GD_Run_Physics);
+				return CDRF_DODEFAULT;
+			}
+		}
+		else
+		{
+			if (some_item->idFrom == IDC_PHYSICS_ON && some_item->code == NM_CUSTOMDRAW)
+			{
+				LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+				App->Custom_Button_Toggle(item, 0);
+				return CDRF_DODEFAULT;
+			}
+		}
+
+
+		return CDRF_DODEFAULT;
+	}
+	case WM_COMMAND:
+
+		if (LOWORD(wParam) == IDC_RESETTRIGGERS)
+		{
+			if (App->SBC_Scene->Scene_Loaded == 1)
+			{
+				App->SBC_Physics->Reset_Triggers();
+			}
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_RESETPHYSICS)
+		{
+			if (App->SBC_Scene->Scene_Loaded == 1)
+			{
+				App->SBC_Physics->Reset_Physics();
+			}
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_PHYSICS_ON)
+		{
+			if (App->SBC_Scene->Scene_Loaded == 1)
+			{
+				if (App->Cl19_Ogre->OgreListener->GD_Run_Physics == 1)
+				{
+					App->Cl19_Ogre->OgreListener->GD_Run_Physics = 0;
+				}
+				else
+				{
+					App->Cl19_Ogre->OgreListener->GD_Run_Physics = 1;
+				}
+			}
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			App->SBC_Physics->Physics_Console_Dlg_Active = 0;
+
+			//CheckMenuItem(App->mMenu, ID_WINDOW_SHOWMOTIONSPANEL, MF_BYCOMMAND | MF_UNCHECKED);
+			ShowWindow(App->Physics_Console_Hwnd, 0);
+			//EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		break;
+	}
+	return FALSE;
+}
 // *************************************************************************
 // *				Start_Physics_Pannel Terry Flanigan		  		 	   *
 // *************************************************************************
