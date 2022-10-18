@@ -400,7 +400,7 @@ void SB_Object::Delete_Object()
 }
 
 // *************************************************************************
-// *			Set_Teleports_Defaults	 Terry Flanigan			 	 	   *
+// *	  Set_Teleports_Defaults:- Terry and Hazel Flanigan 2022	 	   *
 // *************************************************************************
 void SB_Object::Set_Teleports_Defaults(int Index)
 {
@@ -422,3 +422,14 @@ void SB_Object::Set_Teleports_Defaults(int Index)
 	App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Physics_Position = btVector3(x,y,z);
 	App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Physics_Rotation = App->SBC_Scene->B_Player[0]->Physics_Rotation;
 }
+
+// *************************************************************************
+// *	Set_Collectables_Sound_Defaults:- Terry and Hazel Flanigan 2022	   *
+// *************************************************************************
+void SB_Object::Set_Collectables_Sound_Defaults(int Index)
+{
+	strcpy(App->SBC_Scene->B_Object[Index]->S_Sound[0]->Sound_File, "footsteps.ogg");
+	App->SBC_Scene->B_Object[Index]->S_Sound[0]->Play = 1;
+	App->SBC_Scene->B_Object[Index]->S_Sound[0]->SndVolume = 0.5;
+}
+	

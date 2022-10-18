@@ -150,9 +150,33 @@ bool SB_LookUps::Get_Usage(int Index)
 		return 1;
 	}
 
+	case Enums::Usage_Teleport:
+	{
+		strcpy(Chr_Usage, "Usage_Teleport");
+		return 1;
+	}
+
+	case Enums::Usage_Colectable:
+	{
+		strcpy(Chr_Usage, "Usage_Colectable");
+		return 1;
+	}
+
 	case Enums::Usage_Message:
 	{
 		strcpy(Chr_Usage, "Usage_Message");
+		return 1;
+	}
+
+	case Enums::Usage_Move:
+	{
+		strcpy(Chr_Usage, "Usage_Move");
+		return 1;
+	}
+
+	case Enums::Usage_Sound:
+	{
+		strcpy(Chr_Usage, "Usage_Sound");
 		return 1;
 	}
 
