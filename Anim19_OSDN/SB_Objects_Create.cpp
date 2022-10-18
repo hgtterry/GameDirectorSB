@@ -90,9 +90,6 @@ bool SB_Objects_Create::Add_Objects_From_File() // From File
 		{
 			App->SBC_Objects_Create->Add_New_Object(Count, 0);
 
-			App->SBC_Scene->B_Object[Count]->S_Sound[0] = new Sound_type;
-			App->SBC_Object->Set_Collectables_Sound_Defaults(Count);
-
 			App->SBC_Scene->B_Object[Count]->Altered = 0;
 			App->SBC_Scene->B_Object[Count]->Usage = Enums::Usage_Colectable;
 			App->SBC_Scene->B_Object[Count]->Phys_Body->setUserIndex(Enums::Usage_Colectable);
@@ -1095,9 +1092,6 @@ bool SB_Objects_Create::Create_Sound_Entity(int Index)
 bool SB_Objects_Create::Create_Colectable_Entity(int Index)
 {
 	Add_New_Object(Index, 1);
-
-	App->SBC_Scene->B_Object[Index]->S_Sound[0] = new Sound_type;
-	App->SBC_Object->Set_Collectables_Sound_Defaults(Index);
 
 	App->SBC_Scene->B_Object[Index]->Altered = 1;
 	App->SBC_Scene->B_Object[Index]->Folder = Enums::Folder_Objects;

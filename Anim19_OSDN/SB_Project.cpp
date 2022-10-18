@@ -1375,6 +1375,13 @@ bool SB_Project::Load_Project_Objects()
 			App->SBC_Scene->B_Object[Count]->SndVolume = x;
 		}
 
+		//---------------------------------------------------------------------------------- Colectable Entity
+		if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Colectable)
+		{
+			App->SBC_Scene->B_Object[Count]->S_Sound[0] = new Sound_type;
+			App->SBC_Object->Set_Collectables_Sound_Defaults(Count);
+		}
+
 		//---------------------------------------------------------------------------------- Usage_Move
 		if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Move)
 		{

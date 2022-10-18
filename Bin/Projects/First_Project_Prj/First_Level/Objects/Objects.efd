@@ -177,7 +177,7 @@ Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
  
 [Object_9]
-Mesh_Name=Object_9
+Mesh_Name=Collect_1
 Mesh_File=Barrel_1.mesh
 Mesh_Resource_Path=
 Material_File=Barrel_1.material

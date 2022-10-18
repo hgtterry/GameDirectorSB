@@ -358,6 +358,16 @@ void SB_Properties::ListView_OnClickOptions(LPARAM lParam)
 		}
 		return;
 	}
+
+	// Collectables
+	if (Edit_Category == Enums::Edit_Collectable)
+	{
+		if (Edit_Physics == 0)
+		{
+			Edit_Collectables_OnClick(lParam);
+		}
+		return;
+	}
 	
 	return;
 }
@@ -819,19 +829,22 @@ bool SB_Properties::Update_ListView_Collectables()
 
 	// new sound
 	char chr_Play[100];
-	/*if (App->SBC_Scene->B_Object[index]->Play_v2 == 1)
+	if (App->SBC_Scene->B_Object[index]->S_Sound[0]->Play == 1)
 	{
 		strcpy(chr_Play, "True");
 	}
 	else
 	{
 		strcpy(chr_Play, "False");
-	}*/
-	char chr_Stock_Sound[100];
-	/*int sndIndex = App->GDCL_Scene_Data->CL_Object[index]->Sound_ID_v2;
-	strcpy(chr_Stock_Sound, App->GDCL_Scene_Data->St_Sounds[sndIndex]->Name);*/
+	}
 
-	const int NUM_ITEMS = 5;
+	char chr_Volume[100];
+	float sum2 = App->SBC_Scene->B_Object[index]->S_Sound[0]->SndVolume;
+	int Percent = int(sum2 * 100);
+	_itoa(Percent, chr_Volume, 10);
+
+	
+	const int NUM_ITEMS = 6;
 	const int NUM_COLS = 2;
 	string grid[NUM_COLS][NUM_ITEMS]; // string table
 	LV_ITEM pitem;
@@ -841,8 +854,9 @@ bool SB_Properties::Update_ListView_Collectables()
 	grid[0][0] = "Name",			grid[1][0] = App->SBC_Scene->B_Object[index]->Mesh_Name;
 	grid[0][1] = "Mesh File",		grid[1][1] = App->SBC_Scene->B_Object[index]->Mesh_FileName;
 	grid[0][2] = " ",				grid[1][2] = " ";
-	grid[0][3] = "Sound",			grid[1][3] = chr_Stock_Sound;
-	grid[0][4] = "Play",			grid[1][4] = chr_Play;
+	grid[0][3] = "Sound",			grid[1][3] = App->SBC_Scene->B_Object[index]->S_Sound[0]->Sound_File;
+	grid[0][4] = "Volume",			grid[1][4] = chr_Volume;
+	grid[0][5] = "Play",			grid[1][5] = chr_Play;
 
 
 
@@ -1725,6 +1739,46 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 
 		App->Cl_Scene_Data->Reset_Triggers();
 		return 1;
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *				Edit_Collectables_OnClick  Terry Bernie				   *
+// *************************************************************************
+bool SB_Properties::Edit_Collectables_OnClick(LPARAM lParam)
+{
+	int Index = App->SBC_Properties->Current_Selected_Object; // Get Selected Object Index 
+	int result = 1;
+	int test;
+
+	LPNMLISTVIEW poo = (LPNMLISTVIEW)lParam;
+	test = poo->iItem;
+	ListView_GetItemText(Properties_hLV, test, 0, btext, 20);
+
+	result = strcmp(btext, "Name");
+	if (result == 0)
+	{
+		strcpy(App->SBC_Dialogs->btext, "Change Object Name");
+		strcpy(App->SBC_Dialogs->Chr_Text, App->SBC_Scene->B_Object[Index]->Mesh_Name);
+
+		App->SBC_Dialogs->Dialog_Text();
+
+		if (App->SBC_Dialogs->Canceled == 1)
+		{
+			return TRUE;
+		}
+
+		strcpy(App->SBC_Scene->B_Object[Index]->Mesh_Name, App->SBC_Dialogs->Chr_Text);
+
+
+		Mark_As_Altered(Index);
+		App->SBC_FileView->Change_Item_Name(App->SBC_Scene->B_Object[Index]->FileViewItem, App->SBC_Dialogs->Chr_Text);
+
+		Update_ListView_Collectables();
+
+		App->Cl_Scene_Data->Reset_Triggers();
 	}
 
 	return 1;
