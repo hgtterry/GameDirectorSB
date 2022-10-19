@@ -21,11 +21,52 @@ misrepresented as being the original software.
 distribution.
 */
 
+
 #pragma once
-class SB_MeshView_Listener
+class SB_MeshView_Listener : public FrameListener
 {
 public:
 	SB_MeshView_Listener();
 	~SB_MeshView_Listener();
+
+	bool RenderingQueued(const FrameEvent& evt); // Comes From Directly From Oger Render Listener [081221]
+	bool frameStarted(const FrameEvent& evt); // Comes From Directly From Oger Render Listener [081221]
+
+	int		Wheel;
+	bool	Pl_LeftMouseDown;	// Triger Left Mouse Presed [081221]
+	bool	Pl_RightMouseDown;	// Triger Right Mouse Presed [081221]
+
+	bool	Show_Model_Data; // Show Model Data ImGui [081221]
+
+	int		View_Height;	// Height of Render Window [081221]
+	int		View_Width;		// Width of Render Window [081221]
+
+	float		mMoveSensitivity;
+	float		mMoveSensitivityMouse;
+
+	Ogre::Camera* WE_Cam;
+
+protected:
+
+	void ModelMode(float DeltaTime);
+	void MoveCamera(void);
+
+	bool Capture_LeftMouse_Model(void);
+	bool Capture_RightMouse_Model(void);
+
+	Radian		mRotX;
+	Radian		mRotY;
+	Vector3		mTranslateVector;
+
+	float		mMoveScale;
+
+
+	float		Pl_DeltaMouse;
+	int			Pl_MouseX;
+	int			Pl_MouseY;
+
+	POINT		Pl_pt;
+	long		Pl_Cent500X;
+	long		Pl_Cent500Y;
 };
 
