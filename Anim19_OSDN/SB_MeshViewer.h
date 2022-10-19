@@ -70,6 +70,7 @@ protected:
 
 	static LRESULT CALLBACK MeshViewer_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Mesh_Properties_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK MeshView_3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	// -------------------------------- Physics Shapes
 	void Set_Debug_Shapes();
@@ -82,6 +83,11 @@ protected:
 	void Show_Physics_None();
 
 	// -------------------------------- 
+
+	void Grid_Update(bool Create);
+
+	// -------------------------------- 
+
 	void SetUp_Area_Trimesh(HWND hDlg);
 
 	void Set_ResourceMesh_File(HWND hDlg);
@@ -131,5 +137,32 @@ protected:
 	Ogre::RenderWindow* MeshView_Window;
 	Ogre::SceneManager* mSceneMgrMeshView;
 	Ogre::SceneNode*	CamNode;
+
+	ManualObject*		GridManual;
+	SceneNode*			GridNode;
+
+	int Scale_X;
+	int Scale_Y;
+	int Scale_Z;
+
+	int Division_X;
+	int Division_Y;
+	int Division_Z;
+
+	int XAxis_min;
+	int	XAxis_max;
+	int YAxis_min;
+	int	YAxis_max;
+	int ZAxis_min;
+	int	ZAxis_max;
+	int HairExtend;
+
+	Ogre::ColourValue ColourMain;
+	Ogre::ColourValue ColourHairZ;
+	Ogre::ColourValue ColourHairX;
+	Ogre::ColourValue ColourHairY;
+	Ogre::ColourValue ColourDivision;
+
+	bool ShowDivisions;
 };
 

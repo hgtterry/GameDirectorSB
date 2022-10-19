@@ -41,7 +41,38 @@ SB_MeshViewer::SB_MeshViewer()
 	MvEnt = NULL;
 	MvNode = NULL;
 	Phys_Body = nullptr;
+	// ------------------------------------------------ 
+	GridManual = nullptr;
+	GridNode = nullptr;
 
+	Scale_X = 4;
+	Scale_Y = 4;
+	Scale_Z = 4;
+
+	Division_X = 2;
+	Division_Y = 2;
+	Division_Z = 2;
+
+	YAxis_min = -8;
+	YAxis_max = 8;
+
+	ZAxis_min = -8;
+	ZAxis_max = 8;
+
+	XAxis_min = -8;
+	XAxis_max = 8;
+
+	HairExtend = 8;
+
+	ColourHairZ = ColourValue(1, 0, 0, 1);
+	ColourHairX = ColourValue(0, 0, 1, 1);
+	ColourHairY = ColourValue(0, 1, 0, 1);
+	ColourMain = ColourValue(0.7, 0.7, 0, 0.6);
+	ColourDivision = ColourValue(1, 1, 1, 0.4);
+
+	ShowDivisions = 1;
+
+	// ------------------------------------------------ 
 	MeshView_Window = NULL;
 	mSceneMgrMeshView = NULL;
 	mCameraMeshView = NULL;
@@ -265,7 +296,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		App->SBC_MeshViewer->ListHwnd = GetDlgItem(hDlg, IDC_LISTFILES);
 
 
-		App->SBC_MeshViewer->MeshView_3D_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_VIEWER3D_MV, hDlg, NULL);// (DLGPROC)Ogre3DEquity_Proc);
+		App->SBC_MeshViewer->MeshView_3D_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_VIEWER3D_MV, hDlg, (DLGPROC)MeshView_3D_Proc);
 		App->SBC_MeshViewer->Set_OgreWindow();
 
 
@@ -1102,7 +1133,7 @@ void SB_MeshViewer::Update_Mesh(char* MeshFile)
 }
 
 // *************************************************************************
-// *				Set_OgreWindow Terry Bernie						   *
+// *			OgreWindow:- Terry and Hazel Flanigan 2022				   *
 // *************************************************************************
 bool SB_MeshViewer::Set_OgreWindow(void)
 {
@@ -1147,9 +1178,13 @@ bool SB_MeshViewer::Set_OgreWindow(void)
 	Ogre::Vector3 Centre = MvEnt->getBoundingBox().getCenter();
 	Ogre::Real Radius = MvEnt->getBoundingRadius();
 
-	mCameraMeshView->setPosition(0, Centre.y, -Radius*(Real(2.5)));
-	mCameraMeshView->lookAt(0, Centre.y, 0);
+	//mCameraMeshView->setPosition(0, Centre.y, -Radius*(Real(2.5)));
+	//mCameraMeshView->lookAt(0, Centre.y, 0);
 
+	mCameraMeshView->setPosition(Ogre::Vector3(0, 90, 100));
+	mCameraMeshView->lookAt(Ogre::Vector3(0, 30, 0));
+
+	Grid_Update(1);
 
 	// Debug Physics Shape
 	btDebug_Manual = mSceneMgrMeshView->createManualObject("MVManual");
@@ -1170,7 +1205,7 @@ bool SB_MeshViewer::Set_OgreWindow(void)
 }
 
 // *************************************************************************
-// *				CloseMeshView (Terry Bernie)						   *
+// *		Close_MeshWindow:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 void SB_MeshViewer::Close_OgreWindow(void)
 {
@@ -1180,7 +1215,7 @@ void SB_MeshViewer::Close_OgreWindow(void)
 }
 
 // *************************************************************************
-// *	  					Reset_Shape_Flags Terry Bernie				   *
+// *	  	Reset_Shape_Flags:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 void SB_MeshViewer::Reset_Shape_Flags()
 {
@@ -1192,7 +1227,7 @@ void SB_MeshViewer::Reset_Shape_Flags()
 }
 
 // *************************************************************************
-// *							Get_Files( Terry Bernie				 	   *
+// *			Get_Files:- Terry and Hazel Flanigan 2022			 	   *
 // *************************************************************************
 bool SB_MeshViewer::Get_Files()
 {
@@ -1241,7 +1276,7 @@ bool SB_MeshViewer::Get_Files()
 }
 
 // *************************************************************************
-// *					Create_Resources_Group	Terry Bernie 		 	   *
+// *		Create_Resources_Group:- Terry and Hazel Flanigan 2022	  	   *
 // *************************************************************************
 bool SB_MeshViewer::Create_Resources_Group()
 {
@@ -1963,5 +1998,250 @@ void SB_MeshViewer::Show_Physics_Trimesh()
 
 	App->Cl_Bullet->dynamicsWorld->addRigidBody(Phys_Body);
 
+}
+
+// *************************************************************************
+// *	  		Grid_Update:- Terry and Hazel Flanigan 2022				   *
+// *************************************************************************
+void SB_MeshViewer::Grid_Update(bool Create)
+{
+	int i = 0;
+	Real r;
+
+	if (Create == 1)
+	{
+		GridManual = mSceneMgrMeshView->createManualObject("GridManual");
+		GridManual->setRenderQueueGroup(1);
+	}
+
+	GridManual->clear();
+	GridManual->begin("BaseWhiteAlphaBlended", RenderOperation::OT_LINE_LIST);
+
+	//if (ShowGridFlag == 1)
+	{
+		for (int x = XAxis_min; x <= XAxis_max; ++x)
+		{
+			GridManual->position(x, 0, ZAxis_min);
+			GridManual->colour(ColourMain);
+			GridManual->position(x, 0, ZAxis_max);
+			GridManual->colour(ColourMain);
+			if (x < XAxis_max && ShowDivisions == 1)
+			{
+				for (int d = 0; d < Division_X; ++d)
+				{
+					r = x + (1.0 / Real(Division_X))*Real(d);
+					GridManual->position(r, 0, ZAxis_min);
+					GridManual->colour(ColourDivision);
+					GridManual->position(r, 0, ZAxis_max);
+					GridManual->colour(ColourDivision);
+				}
+			}
+		}
+
+		for (int z = ZAxis_min; z <= ZAxis_max; ++z)
+		{
+			GridManual->position(Ogre::Vector3(XAxis_min, 0, z));
+			GridManual->colour(ColourMain);
+			GridManual->position(Ogre::Vector3(XAxis_max, 0, z));
+			GridManual->colour(ColourMain);
+			if (z < ZAxis_max && ShowDivisions == 1)
+			{
+				for (int d = 1; d < Division_Y; ++d)
+				{
+					r = z + (1.0 / Real(Division_Y))*Real(d);
+					GridManual->position(XAxis_min, 0, r);
+					GridManual->colour(ColourDivision);
+					GridManual->position(XAxis_max, 0, r);
+					GridManual->colour(ColourDivision);
+				}
+			}
+		}
+	}
+
+	GridManual->end();
+
+	if (Create == 1)
+	{
+		GridNode = mSceneMgrMeshView->getRootSceneNode()->createChildSceneNode();
+		GridNode->attachObject(GridManual);
+	}
+
+	GridNode->setPosition(0, 0, 0);
+	GridNode->setVisible(true);
+	GridNode->setScale(Scale_X, Scale_Y, Scale_Z);
+}
+
+// *************************************************************************
+// *		MeshView_3D_Proc:- Terry and Hazel Flanigan 2022 			   *
+// *************************************************************************
+LRESULT CALLBACK SB_MeshViewer::MeshView_3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+
+	case WM_INITDIALOG: // Bernie as the dialog is created
+	{
+		return TRUE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		if (App->OgreStarted == 0)
+		{
+			return (LONG)App->BlackBrush;
+		}
+	}
+	case WM_MOUSEWHEEL:
+	{
+		////if (App->FullScreen == 1)
+		//{
+		//	int zDelta = (short)HIWORD(wParam);    // wheel rotation
+
+		//	if (zDelta > 0)
+		//	{
+		//		App->EBC_Listener->Wheel = -1;
+		//	}
+		//	else if (zDelta < 0)
+		//	{
+		//		App->EBC_Listener->Wheel = 1;
+		//	}
+		//	return 1;
+		//}
+
+	}
+
+	case WM_MOUSEMOVE: // ok up and running and we have a loop for mouse
+	{
+
+		/*App->SBC_Equity->EB_imgui.mouseMoved();
+
+		SetFocus(App->ViewGLEquity_hWnd);*/
+
+		break;
+	}
+
+	// Right Mouse Button
+	case WM_RBUTTONDOWN: // BERNIE_HEAR_FIRE 
+	{
+		//App->Cl19_Ogre->m_imgui.mousePressed();
+
+		//if (ImGui::GetIO().WantCaptureMouse)
+		//{
+		//	//App->Cl_FileView_V2->RightMouseDown = 1;
+		//}
+
+		//if (!ImGui::GetIO().WantCaptureMouse)
+		//{
+		//	if (App->OgreStarted == 1)
+		//	{
+
+		//		SetCapture(App->ViewGLhWnd);// Bernie
+		//		SetCursorPos(500, 500);
+		//		App->Cl19_Ogre->OgreListener->Pl_RightMouseDown = 1;
+		//		App->CUR = SetCursor(NULL);
+		//		return 1;
+		//	}
+		//}
+		return 1;
+	}
+	case WM_RBUTTONUP:
+	{
+		/*App->Cl19_Ogre->m_imgui.mouseReleased();
+
+		if (App->OgreStarted == 1)
+		{
+			ReleaseCapture();
+			App->Cl19_Ogre->OgreListener->Pl_RightMouseDown = 0;
+			SetCursor(App->CUR);
+			return 1;
+		}*/
+
+		return 1;
+	}
+	// Left Mouse Button
+	case WM_LBUTTONDOWN: // BERNIE_HEAR_FIRE 
+	{
+		Debug
+		//App->Cl19_Ogre->m_imgui.mousePressed();
+
+		//if (!ImGui::GetIO().WantCaptureMouse)
+		//{
+
+		//	{
+
+		//		if (App->OgreStarted == 1)
+		//		{
+		//			if (!ImGui::GetIO().WantCaptureMouse)
+		//			{
+		//				SetCapture(App->ViewGLhWnd);// Bernie
+		//				SetCursorPos(500, 500);
+		//				App->Cl19_Ogre->OgreListener->Pl_LeftMouseDown = 1;
+		//				App->CUR = SetCursor(NULL);
+		//			}
+		//			else
+		//			{
+		//				App->Cl19_Ogre->OgreListener->Pl_LeftMouseDown = 1;
+		//			}
+
+		//			return 1;
+		//		}
+		//	}
+		//}
+
+		//App->SBC_Equity->EB_imgui.mousePressed();
+
+		//if (!ImGui::GetIO().WantCaptureMouse)
+		//{
+		//	if (App->OgreStarted == 1)
+		//	{
+
+		//		SetCapture(App->ViewGLEquity_hWnd);// Bernie
+		//		SetCursorPos(500, 500);
+		//		App->EBC_Listener->Pl_LeftMouseDown = 1;
+		//		App->CUR = SetCursor(NULL);
+
+		//		return 1;
+		//	}
+		//}
+
+		return 1;
+	}
+
+	case WM_LBUTTONUP:
+	{
+
+		/*App->SBC_Equity->EB_imgui.mouseReleased();
+
+		if (App->OgreStarted == 1)
+		{
+			ReleaseCapture();
+			App->EBC_Listener->Pl_LeftMouseDown = 0;
+			SetCursor(App->CUR);
+			return 1;
+		}*/
+
+		return 1;
+	}
+	case WM_KEYDOWN:
+		switch (wParam)
+		{
+		//case 'C':
+		//	if (GetAsyncKeyState(VK_CONTROL))
+		//	{
+		//		//		App->CL10_Objects_Com->Copy_Object();
+		//		//		return 1;
+		//	}
+		//case 'V':
+		//	if (GetAsyncKeyState(VK_CONTROL))
+		//	{
+		//		//		App->CL10_Objects_Com->Paste_Object();
+		//		//		return 1;
+		//	}
+		//	return 1;
+		//	//	// more keys here
+		}break;
+	}
+
+	return FALSE;
 }
 
