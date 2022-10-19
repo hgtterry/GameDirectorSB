@@ -33,7 +33,7 @@ public:
 	bool frameRenderingQueued(const FrameEvent& evt);
 	bool frameStarted(const FrameEvent& evt); // Comes From Directly From Oger Render Listener [081221]
 
-	int		Wheel;
+	int		Wheel_Move;
 	bool	Pl_LeftMouseDown;	// Triger Left Mouse Presed [081221]
 	bool	Pl_RightMouseDown;	// Triger Right Mouse Presed [081221]
 

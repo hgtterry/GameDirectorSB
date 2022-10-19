@@ -57,6 +57,9 @@ public:
 	Ogre::SceneManager* mSceneMgrMeshView;
 	Ogre::Camera*		mCameraMeshView;
 
+	ManualObject*		GridManual;
+	SceneNode*			GridNode;
+
 	SB_MeshView_Listener*	RenderListener;
 
 	int Physics_Type;
@@ -140,9 +143,6 @@ protected:
 
 	Ogre::RenderWindow* MeshView_Window;
 	Ogre::SceneNode*	CamNode;
-
-	ManualObject*		GridManual;
-	SceneNode*			GridNode;
 
 	int Scale_X;
 	int Scale_Y;

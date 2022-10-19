@@ -32,7 +32,7 @@ SB_MeshView_Listener::SB_MeshView_Listener()
 {
 	mMoveScale = 0;
 	mMoveSensitivity = 50;
-	Wheel = 0;
+	Wheel_Move = 0;
 
 	Show_Model_Data = 0;
 
@@ -107,79 +107,79 @@ void SB_MeshView_Listener::ModelMode(float DeltaTime)
 
 	mMoveScale = mMoveSensitivity * DeltaTime;
 
-	if (GetAsyncKeyState(69) < 0) // Q key Down in Fly Mode
-	{
-		Ogre::Real Rate;
-		Rate = (mMoveSensitivity / 1000) * 4;    //0.1;//FlyRate;
+	//if (GetAsyncKeyState(69) < 0) // Q key Down in Fly Mode
+	//{
+	//	Ogre::Real Rate;
+	//	Rate = (mMoveSensitivity / 1000) * 4;    //0.1;//FlyRate;
 
-		Ogre::Vector3 OldPos;
-		OldPos = WE_Cam->getPosition();
+	//	Ogre::Vector3 OldPos;
+	//	OldPos = WE_Cam->getPosition();
 
-		OldPos.y += Rate;
-		WE_Cam->setPosition(OldPos);
-	}
-	//------------------------------------------------
-	if (GetAsyncKeyState(81) < 0) // E key Up in Fly Mode
-	{
-		Ogre::Real Rate;
-		Rate = (mMoveSensitivity / 1000) * 4;// 0.1;//FlyRate;
+	//	OldPos.y += Rate;
+	//	WE_Cam->setPosition(OldPos);
+	//}
+	////------------------------------------------------
+	//if (GetAsyncKeyState(81) < 0) // E key Up in Fly Mode
+	//{
+	//	Ogre::Real Rate;
+	//	Rate = (mMoveSensitivity / 1000) * 4;// 0.1;//FlyRate;
 
-		Ogre::Vector3 OldPos;
-		OldPos = WE_Cam->getPosition();
+	//	Ogre::Vector3 OldPos;
+	//	OldPos = WE_Cam->getPosition();
 
-		OldPos.y -= Rate;
-		WE_Cam->setPosition(OldPos);
-	}
-	//------------------------------------------------
-	if (Wheel < 0) // Mouse Wheel Forward
+	//	OldPos.y -= Rate;
+	//	WE_Cam->setPosition(OldPos);
+	//}
+	////------------------------------------------------
+	if (Wheel_Move < 0) // Mouse Wheel Forward
 	{
 		mTranslateVector.z = -mMoveScale * 30;
 	}
-	if (GetAsyncKeyState(87) < 0) // W Key
-	{
-		mTranslateVector.z = -mMoveScale;
-	}
-	//------------------------------------------------
-	// back
-	if (Wheel > 0) // Mouse Wheel Back
+	//if (GetAsyncKeyState(87) < 0) // W Key
+	//{
+	//	mTranslateVector.z = -mMoveScale;
+	//}
+	////------------------------------------------------
+	//// back
+	if (Wheel_Move > 0) // Mouse Wheel Back
 	{
 		mTranslateVector.z = mMoveScale * 30;
 	}
-	if (GetAsyncKeyState(83) < 0) // S Key	
-	{
-		mTranslateVector.z = mMoveScale;
-	}
-	//------------------------------------------------
-	// Right
-	if (GetAsyncKeyState(65) < 0)
-	{
-		mTranslateVector.x = mMoveScale;
-	}
-	// Left
-	if (GetAsyncKeyState(68) < 0)
-	{
-		mTranslateVector.x = -mMoveScale;
-	}
+	//if (GetAsyncKeyState(83) < 0) // S Key	
+	//{
+	//	mTranslateVector.z = mMoveScale;
+	//}
+	////------------------------------------------------
+	//// Right
+	//if (GetAsyncKeyState(65) < 0)
+	//{
+	//	mTranslateVector.x = mMoveScale;
+	//}
+	//// Left
+	//if (GetAsyncKeyState(68) < 0)
+	//{
+	//	mTranslateVector.x = -mMoveScale;
+	//}
 
-	if (GetAsyncKeyState(VK_ESCAPE) < 0) // Back to full Screen;
-	{
-		if (App->FullScreen == 1)
-		{
-			App->FullScreen = 0;
-			App->Cl19_Ogre->ExitFullScreen();
-		}
-	}
+	//if (GetAsyncKeyState(VK_ESCAPE) < 0) // Back to full Screen;
+	//{
+	//	if (App->FullScreen == 1)
+	//	{
+	//		App->FullScreen = 0;
+	//		App->Cl19_Ogre->ExitFullScreen();
+	//	}
+	//}
 
 	// Left Mouse
 	if (Pl_LeftMouseDown == 1 && Pl_RightMouseDown == 0)
 	{
-		//Capture_LeftMouse_Model();
+		Capture_LeftMouse_Model();
 	}
 
 	// Right Mouse
 	if (Pl_LeftMouseDown == 0 && Pl_RightMouseDown == 1)
 	{
-		//Capture_RightMouse_Model();
+		Capture_RightMouse_Model();
 	}
 
 	MoveCamera();
@@ -193,7 +193,7 @@ void SB_MeshView_Listener::MoveCamera(void)
 	WE_Cam->yaw(mRotX);
 	WE_Cam->pitch(mRotY);
 	WE_Cam->moveRelative(mTranslateVector); // Position Relative
-	Wheel = 0;
+	Wheel_Move = 0;
 }
 
 // *************************************************************************
@@ -213,10 +213,9 @@ bool SB_MeshView_Listener::Capture_LeftMouse_Model(void)
 
 		if (test > 2)
 		{
-			/*Pl_DeltaMouse = float(Pl_Cent500X - Pl_MouseX);
-			App->SBC_Equity->GridNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
-			App->SBC_Equity->HairNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
-			App->SBC_Equity->RenderListener->RZ = App->SBC_Equity->RenderListener->RZ - (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);*/
+			Pl_DeltaMouse = float(Pl_Cent500X - Pl_MouseX);
+			App->SBC_MeshViewer->GridNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
+			App->SBC_MeshViewer->MvNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 			SetCursorPos(500, 500);
 		}
 	}
@@ -226,10 +225,10 @@ bool SB_MeshView_Listener::Capture_LeftMouse_Model(void)
 
 		if (test > 2)
 		{
-			/*Pl_DeltaMouse = float(Pl_MouseX - Pl_Cent500X);
-			App->SBC_Equity->GridNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
-			App->SBC_Equity->HairNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
-			App->SBC_Equity->RenderListener->RZ = App->SBC_Equity->RenderListener->RZ + (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);*/
+			Pl_DeltaMouse = float(Pl_MouseX - Pl_Cent500X);
+			App->SBC_MeshViewer->GridNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
+			App->SBC_MeshViewer->MvNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
+
 			SetCursorPos(500, 500);
 		}
 	}
@@ -241,10 +240,9 @@ bool SB_MeshView_Listener::Capture_LeftMouse_Model(void)
 
 		if (test > 2)
 		{
-			/*Pl_DeltaMouse = float(Pl_Cent500Y - Pl_MouseY);
-			App->SBC_Equity->GridNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
-			App->SBC_Equity->HairNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
-			App->SBC_Equity->RenderListener->RX = App->SBC_Equity->RenderListener->RX - (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);*/
+			Pl_DeltaMouse = float(Pl_Cent500Y - Pl_MouseY);
+			App->SBC_MeshViewer->GridNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+			App->SBC_MeshViewer->MvNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 			SetCursorPos(500, 500);
 		}
 	}
@@ -254,10 +252,9 @@ bool SB_MeshView_Listener::Capture_LeftMouse_Model(void)
 
 		if (test > 2)
 		{
-			/*Pl_DeltaMouse = float(Pl_MouseY - Pl_Cent500Y);
-			App->SBC_Equity->GridNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
-			App->SBC_Equity->HairNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
-			App->SBC_Equity->RenderListener->RX = App->SBC_Equity->RenderListener->RX + (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);*/
+			Pl_DeltaMouse = float(Pl_MouseY - Pl_Cent500Y);
+			App->SBC_MeshViewer->GridNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+			App->SBC_MeshViewer->MvNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 			SetCursorPos(500, 500);
 		}
 	}

@@ -418,6 +418,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		return FALSE;
 	}
 
+
 	case WM_CTLCOLORDLG:
 	{
 		return (LONG)App->AppBackground;
@@ -527,6 +528,22 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		}
 		
 		return CDRF_DODEFAULT;
+	}
+
+	case WM_MOUSEWHEEL:
+	{
+		int zDelta = (short)HIWORD(wParam);    // wheel rotation
+
+		if (zDelta > 0)
+		{
+			App->SBC_MeshViewer->RenderListener->Wheel_Move = -1;
+		}
+		else if (zDelta < 0)
+		{
+			App->SBC_MeshViewer->RenderListener->Wheel_Move = 1;
+		}
+
+		return 1;
 	}
 
 	case WM_COMMAND:
@@ -1180,14 +1197,15 @@ bool SB_MeshViewer::Set_OgreWindow(void)
 	//mCameraMeshView->setPosition(0, Centre.y, -Radius*(Real(2.5)));
 	//mCameraMeshView->lookAt(0, Centre.y, 0);
 
-	mCameraMeshView->setPosition(Ogre::Vector3(0, 90, 100));
-	mCameraMeshView->lookAt(Ogre::Vector3(0, 30, 0));
 
 	Grid_Update(1);
 
 	RenderListener = new SB_MeshView_Listener();
 	//mSceneMgrMeshView->addRenderQueueListener(RenderListener);
 	App->Cl19_Ogre->mRoot->addFrameListener(RenderListener);
+
+	mCameraMeshView->setPosition(Ogre::Vector3(0, 90, 100));
+	mCameraMeshView->lookAt(Ogre::Vector3(0, 30, 0));
 
 	// Debug Physics Shape
 	btDebug_Manual = mSceneMgrMeshView->createManualObject("MVManual");
@@ -2096,31 +2114,31 @@ LRESULT CALLBACK SB_MeshViewer::MeshView_3D_Proc(HWND hDlg, UINT message, WPARAM
 			return (LONG)App->BlackBrush;
 		}
 	}
-	case WM_MOUSEWHEEL:
-	{
-		////if (App->FullScreen == 1)
-		//{
-		//	int zDelta = (short)HIWORD(wParam);    // wheel rotation
+	//case WM_MOUSEWHEEL:
+	//{
+	//	if (App->SBC_MeshViewer->RenderListener->Pl_LeftMouseDown == 0)
+	//	{
+	//		{
+	//			int zDelta = (short)HIWORD(wParam);    // wheel rotation
 
-		//	if (zDelta > 0)
-		//	{
-		//		App->EBC_Listener->Wheel = -1;
-		//	}
-		//	else if (zDelta < 0)
-		//	{
-		//		App->EBC_Listener->Wheel = 1;
-		//	}
-		//	return 1;
-		//}
+	//			if (zDelta > 0)
+	//			{
+	//				App->SBC_MeshViewer->RenderListener->Wheel_Move = -1;
+	//			}
+	//			else if (zDelta < 0)
+	//			{
+	//				App->SBC_MeshViewer->RenderListener->Wheel_Move = 1;
+	//			}
+	//			return 1;
+	//		}
+	//	}
 
-	}
+	//}
 
 	case WM_MOUSEMOVE: // ok up and running and we have a loop for mouse
 	{
 
-		/*App->SBC_Equity->EB_imgui.mouseMoved();
-
-		SetFocus(App->ViewGLEquity_hWnd);*/
+		SetFocus(App->SBC_MeshViewer->MeshView_3D_hWnd);
 
 		break;
 	}
@@ -2128,86 +2146,47 @@ LRESULT CALLBACK SB_MeshViewer::MeshView_3D_Proc(HWND hDlg, UINT message, WPARAM
 	// Right Mouse Button
 	case WM_RBUTTONDOWN: // BERNIE_HEAR_FIRE 
 	{
-		//App->Cl19_Ogre->m_imgui.mousePressed();
+		
+			if (App->OgreStarted == 1)
+			{
+				SetCapture(App->SBC_MeshViewer->MeshView_3D_hWnd);// Bernie
+				SetCursorPos(500, 500);
+				App->SBC_MeshViewer->RenderListener->Pl_RightMouseDown = 1;
+				App->CUR = SetCursor(NULL);
+				return 1;
+			}
 
-		//if (ImGui::GetIO().WantCaptureMouse)
-		//{
-		//	//App->Cl_FileView_V2->RightMouseDown = 1;
-		//}
-
-		//if (!ImGui::GetIO().WantCaptureMouse)
-		//{
-		//	if (App->OgreStarted == 1)
-		//	{
-
-		//		SetCapture(App->ViewGLhWnd);// Bernie
-		//		SetCursorPos(500, 500);
-		//		App->Cl19_Ogre->OgreListener->Pl_RightMouseDown = 1;
-		//		App->CUR = SetCursor(NULL);
-		//		return 1;
-		//	}
-		//}
 		return 1;
 	}
 	case WM_RBUTTONUP:
 	{
-		/*App->Cl19_Ogre->m_imgui.mouseReleased();
+		
 
 		if (App->OgreStarted == 1)
 		{
 			ReleaseCapture();
-			App->Cl19_Ogre->OgreListener->Pl_RightMouseDown = 0;
+			App->SBC_MeshViewer->RenderListener->Pl_RightMouseDown = 0;
 			SetCursor(App->CUR);
 			return 1;
-		}*/
+		}
 
 		return 1;
 	}
 	// Left Mouse Button
 	case WM_LBUTTONDOWN: // BERNIE_HEAR_FIRE 
 	{
-	
-		//App->Cl19_Ogre->m_imgui.mousePressed();
+			if (App->OgreStarted == 1)
+			{
 
-		//if (!ImGui::GetIO().WantCaptureMouse)
-		//{
+				SetCapture(App->SBC_MeshViewer->MeshView_3D_hWnd);// Bernie
+				SetCursorPos(500, 500);
 
-		//	{
+				App->SBC_MeshViewer->RenderListener->Pl_LeftMouseDown = 1;
 
-		//		if (App->OgreStarted == 1)
-		//		{
-		//			if (!ImGui::GetIO().WantCaptureMouse)
-		//			{
-		//				SetCapture(App->ViewGLhWnd);// Bernie
-		//				SetCursorPos(500, 500);
-		//				App->Cl19_Ogre->OgreListener->Pl_LeftMouseDown = 1;
-		//				App->CUR = SetCursor(NULL);
-		//			}
-		//			else
-		//			{
-		//				App->Cl19_Ogre->OgreListener->Pl_LeftMouseDown = 1;
-		//			}
+				App->CUR = SetCursor(NULL);
 
-		//			return 1;
-		//		}
-		//	}
-		//}
-
-		//App->SBC_Equity->EB_imgui.mousePressed();
-
-		//if (!ImGui::GetIO().WantCaptureMouse)
-		//{
-		//	if (App->OgreStarted == 1)
-		//	{
-
-		//		SetCapture(App->ViewGLEquity_hWnd);// Bernie
-		//		SetCursorPos(500, 500);
-		//		App->EBC_Listener->Pl_LeftMouseDown = 1;
-		//		App->CUR = SetCursor(NULL);
-
-		//		return 1;
-		//	}
-		//}
+				return 1;
+			}
 
 		return 1;
 	}
@@ -2215,15 +2194,13 @@ LRESULT CALLBACK SB_MeshViewer::MeshView_3D_Proc(HWND hDlg, UINT message, WPARAM
 	case WM_LBUTTONUP:
 	{
 
-		/*App->SBC_Equity->EB_imgui.mouseReleased();
-
 		if (App->OgreStarted == 1)
 		{
 			ReleaseCapture();
-			App->EBC_Listener->Pl_LeftMouseDown = 0;
+			App->SBC_MeshViewer->RenderListener->Pl_LeftMouseDown = 0;
 			SetCursor(App->CUR);
 			return 1;
-		}*/
+		}
 
 		return 1;
 	}
