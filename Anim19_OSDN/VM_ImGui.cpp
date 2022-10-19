@@ -387,7 +387,8 @@ void VM_ImGui::Object_Selection(void)
 
 			RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-			App->SBC_FileView->Select_Item(App->Cl19_Ogre->OgreListener->Selected_Entity_Index);
+			//App->SBC_FileView->Select_Item(App->Cl19_Ogre->OgreListener->Selected_Entity_Index);
+			App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[App->Cl19_Ogre->OgreListener->Selected_Entity_Index]->FileViewItem);
 			Show_Object_Selection = 0;
 		}
 

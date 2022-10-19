@@ -46,7 +46,6 @@ public:
 	void Set_FolderActive(HTREEITEM Folder);
 
 	void DeleteItem();
-	void Select_Item(int Index);
 	bool SelectItem(HTREEITEM TreeItem);
 
 	char LevelName[255];
