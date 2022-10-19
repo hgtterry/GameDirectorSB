@@ -2161,7 +2161,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshView_3D_Proc(HWND hDlg, UINT message, WPARAM
 	// Left Mouse Button
 	case WM_LBUTTONDOWN: // BERNIE_HEAR_FIRE 
 	{
-		Debug
+	
 		//App->Cl19_Ogre->m_imgui.mousePressed();
 
 		//if (!ImGui::GetIO().WantCaptureMouse)
