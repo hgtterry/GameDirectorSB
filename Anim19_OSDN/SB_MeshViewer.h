@@ -114,6 +114,9 @@ protected:
 	bool Get_Media_Folders_Actors(HWND DropHwnd);
 	bool GetMeshFiles(char* Location, bool ResetList);
 
+	bool View_Centred_Flag;
+	bool View_Zoomed_Flag;
+
 	int Texure_Count;
 	std::vector<std::string> v_Texture_Names;
 

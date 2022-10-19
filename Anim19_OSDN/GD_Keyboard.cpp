@@ -39,7 +39,10 @@ void GD_Keyboard::Keyboard_Monitor(float deltaTime)
 	{
 		if (App->Cl19_Ogre->OgreListener->GD_Selection_Mode == 0)
 		{
-			App->SBC_Scene->B_Player[0]->Jump(Ogre::Vector3(1, 1, 0), 1.2);
+			if (App->Cl19_Ogre->OgreListener->GD_Run_Physics == 1)
+			{
+				App->SBC_Scene->B_Player[0]->Jump(Ogre::Vector3(1, 1, 0), 1.2);
+			}
 		}
 		else
 		{

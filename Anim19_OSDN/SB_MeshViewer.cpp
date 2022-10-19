@@ -63,6 +63,8 @@ SB_MeshViewer::SB_MeshViewer()
 
 	Placement_Camera = 1;
 
+	View_Centred_Flag = 0;
+	View_Zoomed_Flag = 1;
 	// ------------------------------------------------ 
 
 	Last_MeshFile[0] = 0;
@@ -248,6 +250,8 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		SendDlgItemMessage(hDlg, IDC_CB_FOLDERS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_CURRENTFOLDER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
+		SendDlgItemMessage(hDlg, IDC_BTMV_CENTRE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BTMV_ZOOMED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SetDlgItemText(hDlg, IDC_ST_CURRENTFOLDER, App->SBC_MeshViewer->mResource_Folder);
 
@@ -474,11 +478,51 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BTMV_CENTRE && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->SBC_MeshViewer->View_Centred_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BTMV_ZOOMED && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->SBC_MeshViewer->View_Zoomed_Flag);
+			return CDRF_DODEFAULT;
+		}
+		
 		return CDRF_DODEFAULT;
 	}
 
 	case WM_COMMAND:
 
+		
+		if (LOWORD(wParam) == IDC_BTMV_CENTRE)
+		{
+			App->SBC_MeshViewer->mCameraMeshView->setPosition(0, 0, 0);
+
+			App->SBC_MeshViewer->View_Zoomed_Flag = 0;
+			App->SBC_MeshViewer->View_Centred_Flag = 1;
+
+			App->RedrawWindow_Dlg(hDlg);
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BTMV_ZOOMED)
+		{
+			App->SBC_MeshViewer->View_Zoomed_Flag = 1;
+			App->SBC_MeshViewer->View_Centred_Flag = 0;
+			
+			Ogre::Vector3 Centre = App->SBC_MeshViewer->MvEnt->getBoundingBox().getCenter();
+			Ogre::Real Radius = App->SBC_MeshViewer->MvEnt->getBoundingRadius();
+
+			App->SBC_MeshViewer->mCameraMeshView->setPosition(0, Centre.y, -Radius * (Real(2.5)));
+			App->SBC_MeshViewer->mCameraMeshView->lookAt(0, Centre.y, 0);
+
+			App->RedrawWindow_Dlg(hDlg);
+			return TRUE;
+		}
 
 		if (LOWORD(wParam) == IDC_CKPLACECAMERA)
 		{
