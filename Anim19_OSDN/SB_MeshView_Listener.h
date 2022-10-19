@@ -21,6 +21,7 @@ misrepresented as being the original software.
 distribution.
 */
 
+#include "Ogre.h"
 
 #pragma once
 class SB_MeshView_Listener : public FrameListener
@@ -29,7 +30,7 @@ public:
 	SB_MeshView_Listener();
 	~SB_MeshView_Listener();
 
-	bool RenderingQueued(const FrameEvent& evt); // Comes From Directly From Oger Render Listener [081221]
+	bool frameRenderingQueued(const FrameEvent& evt);
 	bool frameStarted(const FrameEvent& evt); // Comes From Directly From Oger Render Listener [081221]
 
 	int		Wheel;

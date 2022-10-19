@@ -26,6 +26,8 @@ distribution.
 
 #pragma once
 
+#include "SB_MeshView_Listener.h"
+
 class SB_MeshViewer
 {
 public:
@@ -52,8 +54,10 @@ public:
 	
 	Ogre::ManualObject*		btDebug_Manual;
 	Ogre::SceneNode*		btDebug_Node;
-
+	Ogre::SceneManager* mSceneMgrMeshView;
 	Ogre::Camera*		mCameraMeshView;
+
+	SB_MeshView_Listener*	RenderListener;
 
 	int Physics_Type;
 	int Physics_Shape;
@@ -135,7 +139,6 @@ protected:
 	btCollisionShape	*Phys_Shape;
 
 	Ogre::RenderWindow* MeshView_Window;
-	Ogre::SceneManager* mSceneMgrMeshView;
 	Ogre::SceneNode*	CamNode;
 
 	ManualObject*		GridManual;

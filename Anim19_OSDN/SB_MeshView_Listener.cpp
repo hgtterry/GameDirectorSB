@@ -30,6 +30,29 @@ distribution.
 
 SB_MeshView_Listener::SB_MeshView_Listener()
 {
+	mMoveScale = 0;
+	mMoveSensitivity = 50;
+	Wheel = 0;
+
+	Show_Model_Data = 0;
+
+	Pl_DeltaMouse = 0;
+	Pl_MouseX = 0;
+	Pl_MouseY = 0;
+	Pl_Cent500X = 500;
+	Pl_Cent500Y = 500;
+
+	mMoveSensitivityMouse = 50;
+
+	Pl_LeftMouseDown = 0;
+	Pl_RightMouseDown = 0;
+
+	WE_Cam = nullptr;
+
+	View_Height = 0;
+	View_Width = 0;
+
+	WE_Cam = App->SBC_MeshViewer->mCameraMeshView;
 }
 
 SB_MeshView_Listener::~SB_MeshView_Listener()
@@ -41,7 +64,7 @@ SB_MeshView_Listener::~SB_MeshView_Listener()
 // *************************************************************************
 bool SB_MeshView_Listener::frameStarted(const FrameEvent& evt)
 {
-
+	//FlashWindow(App->SBC_MeshViewer->MainDlgHwnd, true);
 	/*if (App->Cl19_Ogre->OgreListener->Equity_Running == 1)
 	{
 		if (App->SBC_Equity->Use_Imgui == 1)
@@ -62,14 +85,16 @@ bool SB_MeshView_Listener::frameStarted(const FrameEvent& evt)
 	return true;
 }
 
+
 // *************************************************************************
-// *			WE_RenderingQueued   Terry Flanigan						   *
+// *			frameRenderingQueued   Terry Bernie						   *
 // *************************************************************************
-bool SB_MeshView_Listener::RenderingQueued(const FrameEvent& evt)
+bool SB_MeshView_Listener::frameRenderingQueued(const FrameEvent& evt)
 {
 	ModelMode(evt.timeSinceLastFrame);
 	return 1;
 }
+
 
 // *************************************************************************
 // *							ModelMode   							   *
@@ -148,13 +173,13 @@ void SB_MeshView_Listener::ModelMode(float DeltaTime)
 	// Left Mouse
 	if (Pl_LeftMouseDown == 1 && Pl_RightMouseDown == 0)
 	{
-		Capture_LeftMouse_Model();
+		//Capture_LeftMouse_Model();
 	}
 
 	// Right Mouse
 	if (Pl_LeftMouseDown == 0 && Pl_RightMouseDown == 1)
 	{
-		Capture_RightMouse_Model();
+		//Capture_RightMouse_Model();
 	}
 
 	MoveCamera();

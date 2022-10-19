@@ -29,7 +29,6 @@ distribution.
 #include "resource.h"
 #include "SB_MeshViewer.h"
 
-
 SB_MeshViewer::SB_MeshViewer()
 {
 	
@@ -1186,6 +1185,10 @@ bool SB_MeshViewer::Set_OgreWindow(void)
 
 	Grid_Update(1);
 
+	RenderListener = new SB_MeshView_Listener();
+	//mSceneMgrMeshView->addRenderQueueListener(RenderListener);
+	App->Cl19_Ogre->mRoot->addFrameListener(RenderListener);
+
 	// Debug Physics Shape
 	btDebug_Manual = mSceneMgrMeshView->createManualObject("MVManual");
 	btDebug_Manual->setRenderQueueGroup(RENDER_QUEUE_MAX);
@@ -1209,6 +1212,8 @@ bool SB_MeshViewer::Set_OgreWindow(void)
 // *************************************************************************
 void SB_MeshViewer::Close_OgreWindow(void)
 {
+	App->Cl19_Ogre->mRoot->removeFrameListener(RenderListener);
+
 	App->Cl19_Ogre->mRoot->detachRenderTarget("MeshViewWin");
 	MeshView_Window->destroy();
 	App->Cl19_Ogre->mRoot->destroySceneManager(mSceneMgrMeshView);
