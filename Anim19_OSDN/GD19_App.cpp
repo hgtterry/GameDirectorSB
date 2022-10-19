@@ -154,8 +154,6 @@ GD19_App::GD19_App(void)
 	Font_Arial20 = 0;
 
 	ViewGLhWnd =			nullptr;
-	ViewGLEquity_hWnd =		nullptr;
-
 
 	ViewPLeaseWait =		nullptr;
 	GD_Properties_Hwnd =	nullptr;

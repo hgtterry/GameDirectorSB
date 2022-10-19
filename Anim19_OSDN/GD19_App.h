@@ -181,8 +181,7 @@ public:
 	HWND ListPanel;
 
 	HWND ViewGLhWnd;
-	HWND ViewGLEquity_hWnd;
-
+	
 	HWND ViewPLeaseWait;
 	HWND Physics_Console_Hwnd;
 

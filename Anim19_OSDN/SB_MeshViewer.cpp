@@ -32,7 +32,9 @@ distribution.
 
 SB_MeshViewer::SB_MeshViewer()
 {
-	MeshView_Hwnd = nullptr;
+	
+	MeshView_3D_hWnd = nullptr;
+
 	ListHwnd = nullptr;
 	CB_hWnd = nullptr;
 
@@ -262,8 +264,10 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 		App->SBC_MeshViewer->ListHwnd = GetDlgItem(hDlg, IDC_LISTFILES);
 
-		App->SBC_MeshViewer->MeshView_Hwnd = GetDlgItem(hDlg, IDC_OGREWIN);
+
+		App->SBC_MeshViewer->MeshView_3D_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_VIEWER3D_MV, hDlg, NULL);// (DLGPROC)Ogre3DEquity_Proc);
 		App->SBC_MeshViewer->Set_OgreWindow();
+
 
 		HWND CB_hWnd = GetDlgItem(hDlg, IDC_CB_FOLDERS);
 
@@ -1055,12 +1059,13 @@ void SB_MeshViewer::Update_Mesh(char* MeshFile)
 	MvNode->attachObject(MvEnt);
 	MvNode->setPosition(0, 0, 0);
 
-	Ogre::Vector3 Centre = MvEnt->getBoundingBox().getCenter();
-
-	Ogre::Real Radius = MvEnt->getBoundingRadius();
-
-	mCameraMeshView->setPosition(0, Centre.y, -Radius*2.5);
-	mCameraMeshView->lookAt(0, Centre.y, 0);
+	if (App->SBC_MeshViewer->View_Zoomed_Flag == 1)
+	{
+		Ogre::Vector3 Centre = MvEnt->getBoundingBox().getCenter();
+		Ogre::Real Radius = MvEnt->getBoundingRadius();
+		mCameraMeshView->setPosition(0, Centre.y, -Radius * 2.5);
+		mCameraMeshView->lookAt(0, Centre.y, 0);
+	}
 
 	Get_Mesh_Assets();
 
@@ -1105,7 +1110,7 @@ bool SB_MeshViewer::Set_OgreWindow(void)
 	Ogre::NameValuePairList options;
 
 	options["externalWindowHandle"] =
-		Ogre::StringConverter::toString((size_t)MeshView_Hwnd);
+		Ogre::StringConverter::toString((size_t)MeshView_3D_hWnd);
 
 	MeshView_Window = App->Cl19_Ogre->mRoot->createRenderWindow("MeshViewWin", 1024, 768, false, &options);
 

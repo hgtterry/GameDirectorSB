@@ -120,9 +120,8 @@ protected:
 	int Texure_Count;
 	std::vector<std::string> v_Texture_Names;
 
-	HWND MeshView_Hwnd;
 	HWND ListHwnd;
-	
+	HWND MeshView_3D_hWnd;
 	HWND CB_hWnd;
 
 	Ogre::Entity*		MvEnt;
