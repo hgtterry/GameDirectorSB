@@ -154,6 +154,13 @@ LRESULT CALLBACK SB_Physics::Physics_Console_Proc(HWND hDlg, UINT message, WPARA
 			return TRUE;
 		}
 
+		/*if (LOWORD(wParam) == IDC_BT_INFO_PHYSICS)
+		{
+
+			App->Cl_Utilities->OpenHTML("Help\\Templete.html");
+			return TRUE;
+		}*/
+
 		if (LOWORD(wParam) == IDCANCEL)
 		{
 			App->SBC_Physics->Physics_Console_Dlg_Active = 0;
@@ -467,3 +474,27 @@ void SB_Physics::Reset_Triggers(void)
 		Count++;
 	}
 }
+
+//Init_Bmps_Physics();
+
+// *************************************************************************
+// *			Init_Bmps_Physics:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+//void SB_TopTabs::Init_Bmps_Physics()
+//{
+//
+//	HWND Temp = GetDlgItem(Physics_TB_hWnd, IDC_BT_INFO_PHYSICS);
+//	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_InfoSmall_Bmp);
+//
+//	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
+//
+//	Temp = GetDlgItem(File_TB_hWnd, IDC_BT_INFO_PHYSICS);
+//	TOOLINFO ti1 = { 0 };
+//	ti1.cbSize = sizeof(ti1);
+//	ti1.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+//	ti1.uId = (UINT_PTR)Temp;
+//	ti1.lpszText = "Show Help File";
+//	ti1.hwnd = App->MainHwnd;
+//	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti1);
+//
+//}

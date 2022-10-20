@@ -53,7 +53,6 @@ protected:
 
 	static LRESULT CALLBACK Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
-	static LRESULT CALLBACK Physics_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Editors_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Files_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Game_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
@@ -64,9 +63,7 @@ protected:
 	void Init_Bmps_Camera(void);
 	void Init_Bmps_Globals(void);
 	void Init_Bmps_Files();
-	void Init_Bmps_Physics();
 
-	void Start_Physics_TB(void);
 	void Start_Editors_TB(void);
 	void Start_Files_TB(void);
 	void Start_Game_TB(void);
