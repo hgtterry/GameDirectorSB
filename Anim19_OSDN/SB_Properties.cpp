@@ -71,13 +71,12 @@ void SB_Properties::Start_GD_Properties(void)
 
 	Properties_Dlg_Active = 1;
 	HMENU mMenu = GetMenu(App->MainHwnd);
-	///	CheckMenuItem(mMenu, ID_WINDOW_SHOWMODELGLBAL, MF_BYCOMMAND | MF_CHECKED);
+	CheckMenuItem(mMenu, ID_WINDOWS_PROPERTIES, MF_BYCOMMAND | MF_CHECKED);
 
 	Properties_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_GD_PROPERTIES, App->Fdlg, (DLGPROC)GD_Properties_Proc);
 	ShowWindow(Properties_Dlg_hWnd, 1);
 
 	Create_Properties_hLV();
-	//Set_DataView();
 
 }
 // *************************************************************************
@@ -194,11 +193,12 @@ LRESULT CALLBACK SB_Properties::GD_Properties_Proc(HWND hDlg, UINT message, WPAR
 	case WM_CLOSE:
 	{
 		App->SBC_Properties->Properties_Dlg_Active = 0;
-		ShowWindow(App->SBC_Properties->Properties_Dlg_hWnd, 0);
-
+		
 		HMENU mMenu = GetMenu(App->MainHwnd);
-		///CheckMenuItem(mMenu, ID_WINDOW_SHOWMODELGLBAL, MF_BYCOMMAND | MF_UNCHECKED);
+		CheckMenuItem(mMenu, ID_WINDOWS_PROPERTIES, MF_BYCOMMAND | MF_UNCHECKED);
 
+		ShowWindow(App->SBC_Properties->Properties_Dlg_hWnd, 0);
+		
 		break;
 	}
 	case WM_NOTIFY:

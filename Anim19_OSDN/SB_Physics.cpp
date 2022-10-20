@@ -117,6 +117,13 @@ LRESULT CALLBACK SB_Physics::Physics_Console_Proc(HWND hDlg, UINT message, WPARA
 			}
 		}
 
+		if (some_item->idFrom == IDC_BT_INFO_CONPHYSICS && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
 
 		return CDRF_DODEFAULT;
 	}
@@ -136,9 +143,9 @@ LRESULT CALLBACK SB_Physics::Physics_Console_Proc(HWND hDlg, UINT message, WPARA
 			if (App->SBC_Scene->Scene_Loaded == 1)
 			{
 				App->SBC_Physics->Reset_Physics();
-			}
 
-			App->RedrawWindow_Dlg(App->Physics_Console_Hwnd);
+				App->RedrawWindow_Dlg(App->Physics_Console_Hwnd);
+			}
 
 			return TRUE;
 		}
@@ -155,16 +162,18 @@ LRESULT CALLBACK SB_Physics::Physics_Console_Proc(HWND hDlg, UINT message, WPARA
 				{
 					App->Cl19_Ogre->OgreListener->GD_Run_Physics = 1;
 				}
+
+				App->RedrawWindow_Dlg(App->Physics_Console_Hwnd);
 			}
 			return TRUE;
 		}
 
-		/*if (LOWORD(wParam) == IDC_BT_INFO_PHYSICS)
+		if (LOWORD(wParam) == IDC_BT_INFO_CONPHYSICS)
 		{
-
 			App->Cl_Utilities->OpenHTML("Help\\Templete.html");
+
 			return TRUE;
-		}*/
+		}
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{

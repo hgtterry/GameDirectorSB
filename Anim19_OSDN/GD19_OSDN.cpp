@@ -133,6 +133,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	App->Set_Main_TitleBar(" ");
 	App->SBC_FileView->SelectItem(App->SBC_FileView->FV_LevelFolder);
 
+	CheckMenuItem(App->mMenu, ID_WINDOWS_FPS, MF_BYCOMMAND | MF_CHECKED);
+
 	SetTimer(App->MainHwnd, 1, 1, NULL);
 
 	HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_GD19_OSDN));
@@ -717,16 +719,20 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		case ID_WINDOWS_PROPERTIES:
 		{
 
-			/*if (App->Cl_ImGui->Show_Propertities == 1)
+			if (App->SBC_Properties->Properties_Dlg_Active == 1)
 			{
-				App->Cl_ImGui->Show_Propertities = 0;
+				App->SBC_Properties->Properties_Dlg_Active = 0;
 				CheckMenuItem(App->mMenu, ID_WINDOWS_PROPERTIES, MF_BYCOMMAND | MF_UNCHECKED);
+
+				ShowWindow(App->SBC_Properties->Properties_Dlg_hWnd, 0);
 			}
 			else
 			{
-				App->Cl_ImGui->Show_Propertities = 1;
+				App->SBC_Properties->Properties_Dlg_Active = 1;
 				CheckMenuItem(App->mMenu, ID_WINDOWS_PROPERTIES, MF_BYCOMMAND | MF_CHECKED);
-			}*/
+
+				ShowWindow(App->SBC_Properties->Properties_Dlg_hWnd, 1);
+			}
 
 			return 1;
 		}
@@ -753,16 +759,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		case ID_WINDOWS_FPS:
 		{
 
-			/*if (App->Cl_ImGui->Show_OgreData == 1)
+			if (App->CL_Vm_ImGui->Show_FPS == 1)
 			{
-				App->Cl_ImGui->Show_OgreData = 0;
+				App->CL_Vm_ImGui->Show_FPS = 0;
 				CheckMenuItem(App->mMenu, ID_WINDOWS_FPS, MF_BYCOMMAND | MF_UNCHECKED);
 			}
 			else
 			{
-				App->Cl_ImGui->Show_OgreData = 1;
+				App->CL_Vm_ImGui->Show_FPS = 1;
 				CheckMenuItem(App->mMenu, ID_WINDOWS_FPS, MF_BYCOMMAND | MF_CHECKED);
-			}*/
+			}
+
 			return 1;
 		}
 
