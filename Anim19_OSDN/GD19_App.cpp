@@ -79,6 +79,7 @@ GD19_App::GD19_App(void)
 	SBC_Markers =		nullptr;
 	SBC_Props_Dialog =	nullptr;
 	SBC_LookUps =		nullptr;
+	SBC_Prefs =			nullptr;
 
 	// ---------------------------------------------------- 29/12/21
 	Com_CDialogs =		nullptr;
@@ -237,7 +238,8 @@ bool GD19_App::InitApp(void)
 	SBC_Markers =		new SB_Markers();
 	SBC_Props_Dialog = new SB_Props_Dialogs();
 	SBC_LookUps =		new SB_LookUps();
-
+	SBC_Prefs =			new SB_Preferences();
+	
 	//--------------
 
 	SetBrushes_Fonts();

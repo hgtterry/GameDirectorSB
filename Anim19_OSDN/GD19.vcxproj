@@ -206,6 +206,7 @@
     <ClInclude Include="SB_Objects_Create.h" />
     <ClInclude Include="SB_Physics.h" />
     <ClInclude Include="SB_Player.h" />
+    <ClInclude Include="SB_Preferences.h" />
     <ClInclude Include="SB_Project.h" />
     <ClInclude Include="SB_Properties.h" />
     <ClInclude Include="SB_Props_Dialogs.h" />
@@ -273,6 +274,7 @@
     <ClCompile Include="SB_Objects_Create.cpp" />
     <ClCompile Include="SB_Physics.cpp" />
     <ClCompile Include="SB_Player.cpp" />
+    <ClCompile Include="SB_Preferences.cpp" />
     <ClCompile Include="SB_Project.cpp" />
     <ClCompile Include="SB_Properties.cpp" />
     <ClCompile Include="SB_Props_Dialogs.cpp" />

@@ -75,6 +75,7 @@ distribution.
 #include "Com_Diaolgs.h"
 #include "SB_Import_Room.h"
 #include "SB_LookUps.h"
+#include "SB_Preferences.h"
 
 // :- Terry and Hazel Flanigan 2022
 
@@ -135,6 +136,7 @@ public:
 	SB_Markers*				SBC_Markers;
 	SB_Props_Dialogs*		SBC_Props_Dialog;
 	SB_LookUps*				SBC_LookUps;
+	SB_Preferences*			SBC_Prefs;
 
 	Com_Diaolgs*			Com_CDialogs;		// Common Dialogs for App [291221]
 	// ----------------------------------- 
