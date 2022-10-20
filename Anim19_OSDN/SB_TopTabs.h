@@ -40,7 +40,6 @@ public:
 	HWND Camera_TB_hWnd;
 	HWND Tabs_TB_hWnd;
 
-	HWND Physics_TB_hWnd;
 	HWND Editors_TB_hWnd;
 	HWND File_TB_hWnd;
 	HWND Game_TB_hWnd;

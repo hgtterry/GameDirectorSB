@@ -34,7 +34,6 @@ SB_TopTabs::SB_TopTabs()
 	Tabs_TB_hWnd = nullptr;
 
 	Camera_TB_hWnd = nullptr;
-	Physics_TB_hWnd = nullptr;
 	Editors_TB_hWnd = nullptr;
 	File_TB_hWnd = nullptr;
 	Game_TB_hWnd = nullptr;
@@ -288,7 +287,6 @@ LRESULT CALLBACK SB_TopTabs::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM w
 
 		SendDlgItemMessage(hDlg, IDC_TBOLD, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_TBDIMENSIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_TBSHAPES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_TAB_EDITORS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_TBFILE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_GAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -316,13 +314,6 @@ LRESULT CALLBACK SB_TopTabs::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM w
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle_Tabs(item, App->SBC_TopTabs->Toggle_Tabs_Dimensions_Flag);
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_TBSHAPES && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle_Tabs(item, App->SBC_TopTabs->Toggle_Tabs_Shapes_Flag);
 			return CDRF_DODEFAULT;
 		}
 
@@ -379,19 +370,6 @@ LRESULT CALLBACK SB_TopTabs::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM w
 			return TRUE;
 		}
 
-		if (LOWORD(wParam) == IDC_TBSHAPES)
-		{
-			App->SBC_TopTabs->Hide_Tabs();
-
-			ShowWindow(App->SBC_TopTabs->Physics_TB_hWnd, SW_SHOW);
-			//ShowWindow(App->SBC_Physics->PhysicsPannel_Hwnd, SW_SHOW);
-
-			App->SBC_TopTabs->Toggle_Tabs_Shapes_Flag = 1;
-
-			RedrawWindow(App->SBC_TopTabs->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-			return TRUE;
-		}
-
 		if (LOWORD(wParam) == IDC_TAB_EDITORS)
 		{
 			App->SBC_TopTabs->Hide_Tabs();
@@ -430,7 +408,6 @@ LRESULT CALLBACK SB_TopTabs::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM w
 void SB_TopTabs::Hide_Tabs(void)
 {
 	ShowWindow(Camera_TB_hWnd, SW_HIDE);
-	ShowWindow(Physics_TB_hWnd, SW_HIDE);
 	ShowWindow(Editors_TB_hWnd, SW_HIDE);
 	ShowWindow(File_TB_hWnd, SW_HIDE);
 	ShowWindow(Game_TB_hWnd, SW_HIDE);
