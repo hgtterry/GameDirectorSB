@@ -498,3 +498,5 @@ void SB_Physics::Reset_Triggers(void)
 //	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti1);
 //
 //}
+
+// CheckMenuItem(App->mMenu, ID_WINDOWS_SHOWIMGUIPANELS, MF_BYCOMMAND | MF_UNCHECKED);

@@ -731,22 +731,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return 1;
 		}
 
-		case ID_WINDOWS_SHOWIMGUIPANELS:
-		{
 
-			if (App->Cl19_Ogre->OgreListener->Show_ImGui_Panels == 1)
-			{
-				App->Cl19_Ogre->OgreListener->Show_ImGui_Panels = 0;
-				CheckMenuItem(App->mMenu, ID_WINDOWS_SHOWIMGUIPANELS, MF_BYCOMMAND | MF_UNCHECKED);
-			}
-			else
-			{
-				App->Cl19_Ogre->OgreListener->Show_ImGui_Panels = 1;
-				CheckMenuItem(App->mMenu, ID_WINDOWS_SHOWIMGUIPANELS, MF_BYCOMMAND | MF_CHECKED);
-			}
-
-			return 1;
-		}
 		case ID_WINDOWS_SHOWPHYSICSPANEL:
 		{
 
@@ -773,58 +758,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				ShowWindow(App->Physics_Console_Hwnd, 1);
 				CheckMenuItem(App->mMenu, ID_WINDOWS_SHOWPHYSICSPANEL, MF_BYCOMMAND | MF_CHECKED);
 			}*/
-			return 1;
-		}
-
-		case ID_WINDOWS_LOG:
-		{
-			/*if (App->Cl_ImGui->Show_ImGui_Log == 1)
-			{
-				App->Cl_ImGui->Show_ImGui_Log = 0;
-			}
-			else
-			{
-				App->Cl_ImGui->Show_ImGui_Log = 1;
-			}*/
-			return 1;
-		}
-
-		case ID_WINDOWS_NEWFILEVIEW:
-		{
-			/*if (App->Cl_ImGui->Show_ImGui_FileView == 1)
-			{
-				App->Cl_ImGui->Show_ImGui_FileView = 0;
-			}
-			else
-			{
-				App->Cl_ImGui->Show_ImGui_FileView = 1;
-			}*/
-			return 1;
-		}
-
-		case ID_WINDOWS_DEBUGPROPERTIES:
-		{
-			/*if (App->Cl_ImGui->Show_Object_Data == 1)
-			{
-				App->Cl_ImGui->Show_Object_Data = 0;
-			}
-			else
-			{
-				App->Cl_ImGui->Show_Object_Data = 1;
-			}*/
-			return 1;
-		}
-
-		case ID_WINDOWS_TESTIMGUI:
-		{
-			if (App->CL_Vm_ImGui->Show_ImGui_Test == 1)
-			{
-				App->CL_Vm_ImGui->Show_ImGui_Test = 0;
-			}
-			else
-			{
-				App->CL_Vm_ImGui->Show_ImGui_Test = 1;
-			}
 			return 1;
 		}
 
