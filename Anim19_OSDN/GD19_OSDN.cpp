@@ -735,29 +735,18 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		case ID_WINDOWS_SHOWPHYSICSPANEL:
 		{
 
-			/*if (App->Cl_ImGui->Show_PhysicsConsole == 1)
+			if (App->SBC_Physics->Physics_Console_Dlg_Active == 1) // Atention
 			{
-				App->Cl_ImGui->Show_PhysicsConsole = 0;
-				CheckMenuItem(App->mMenu, ID_WINDOWS_SHOWPHYSICSPANEL, MF_BYCOMMAND | MF_UNCHECKED);
-			}
-			else
-			{
-				App->Cl_ImGui->Show_PhysicsConsole = 1;
-				CheckMenuItem(App->mMenu, ID_WINDOWS_SHOWPHYSICSPANEL, MF_BYCOMMAND | MF_CHECKED);
-			}*/
-
-		/*	if (App->Cl_Bullet->Physics_Dlg_Active == 1) // Atention
-			{
-				App->Cl_Bullet->Physics_Dlg_Active = 0;
+				App->SBC_Physics->Physics_Console_Dlg_Active = 0;
 				ShowWindow(App->Physics_Console_Hwnd, 0);
 				CheckMenuItem(App->mMenu, ID_WINDOWS_SHOWPHYSICSPANEL, MF_BYCOMMAND | MF_UNCHECKED);
 			}
 			else
 			{
-				App->Cl_Bullet->Physics_Dlg_Active = 1;
+				App->SBC_Physics->Physics_Console_Dlg_Active = 1;
 				ShowWindow(App->Physics_Console_Hwnd, 1);
 				CheckMenuItem(App->mMenu, ID_WINDOWS_SHOWPHYSICSPANEL, MF_BYCOMMAND | MF_CHECKED);
-			}*/
+			}
 			return 1;
 		}
 

@@ -45,6 +45,8 @@ protected:
 	static LRESULT CALLBACK Start_Physics_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Physics_Console_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
+	void Init_Bmps_Physics();
+
 	void Update_Model(void);
 
 	bool Toggle_Enable_Flag;

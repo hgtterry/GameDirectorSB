@@ -53,10 +53,12 @@ void SB_Physics::Start_Physics_Console(void)
 
 	Physics_Console_Dlg_Active = 1;
 
-	//CheckMenuItem(App->mMenu, ID_WINDOW_SHOWMOTIONSPANEL, MF_BYCOMMAND | MF_CHECKED);
+	CheckMenuItem(App->mMenu, ID_WINDOWS_SHOWPHYSICSPANEL, MF_BYCOMMAND | MF_CHECKED);
 
 	App->Physics_Console_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PHYSICS_CONSOLE, App->Fdlg, (DLGPROC)Physics_Console_Proc);
+	Init_Bmps_Physics();
 }
+
 // *************************************************************************
 // *        			Physics_Console_Proc  Terry	Bernie				   *
 // *************************************************************************
@@ -135,6 +137,9 @@ LRESULT CALLBACK SB_Physics::Physics_Console_Proc(HWND hDlg, UINT message, WPARA
 			{
 				App->SBC_Physics->Reset_Physics();
 			}
+
+			App->RedrawWindow_Dlg(App->Physics_Console_Hwnd);
+
 			return TRUE;
 		}
 
@@ -164,8 +169,7 @@ LRESULT CALLBACK SB_Physics::Physics_Console_Proc(HWND hDlg, UINT message, WPARA
 		if (LOWORD(wParam) == IDCANCEL)
 		{
 			App->SBC_Physics->Physics_Console_Dlg_Active = 0;
-
-			//CheckMenuItem(App->mMenu, ID_WINDOW_SHOWMOTIONSPANEL, MF_BYCOMMAND | MF_UNCHECKED);
+			CheckMenuItem(App->mMenu, ID_WINDOWS_SHOWPHYSICSPANEL, MF_BYCOMMAND | MF_UNCHECKED);
 			ShowWindow(App->Physics_Console_Hwnd, 0);
 			//EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
@@ -175,6 +179,56 @@ LRESULT CALLBACK SB_Physics::Physics_Console_Proc(HWND hDlg, UINT message, WPARA
 	}
 	return FALSE;
 }
+
+// *************************************************************************
+// *			Init_Bmps_Physics:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+void SB_Physics::Init_Bmps_Physics()
+{
+
+	HWND Temp = GetDlgItem(App->Physics_Console_Hwnd, IDC_BT_INFO_CONPHYSICS);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_InfoSmall_Bmp);
+
+	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
+
+	Temp = GetDlgItem(App->Physics_Console_Hwnd, IDC_BT_INFO_CONPHYSICS);
+	TOOLINFO ti1 = { 0 };
+	ti1.cbSize = sizeof(ti1);
+	ti1.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti1.uId = (UINT_PTR)Temp;
+	ti1.lpszText = "Show Help File";
+	ti1.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti1);
+
+	Temp = GetDlgItem(App->Physics_Console_Hwnd, IDC_RESETTRIGGERS);
+	TOOLINFO ti2 = { 0 };
+	ti2.cbSize = sizeof(ti2);
+	ti2.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti2.uId = (UINT_PTR)Temp;
+	ti2.lpszText = "Reset All Entites and Triggers";
+	ti2.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti2);
+
+	Temp = GetDlgItem(App->Physics_Console_Hwnd, IDC_RESETPHYSICS);
+	TOOLINFO ti3 = { 0 };
+	ti3.cbSize = sizeof(ti3);
+	ti3.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti3.uId = (UINT_PTR)Temp;
+	ti3.lpszText = "Stop and Reset Physics";
+	ti3.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti3);
+
+	Temp = GetDlgItem(App->Physics_Console_Hwnd, IDC_PHYSICS_ON);
+	TOOLINFO ti4 = { 0 };
+	ti4.cbSize = sizeof(ti4);
+	ti4.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti4.uId = (UINT_PTR)Temp;
+	ti4.lpszText = "Turn Physics On and Off";
+	ti4.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti4);
+	
+}
+
 // *************************************************************************
 // *				Start_Physics_Pannel Terry Flanigan		  		 	   *
 // *************************************************************************
@@ -475,28 +529,5 @@ void SB_Physics::Reset_Triggers(void)
 	}
 }
 
-//Init_Bmps_Physics();
 
-// *************************************************************************
-// *			Init_Bmps_Physics:- Terry and Hazel Flanigan 2022		   *
-// *************************************************************************
-//void SB_TopTabs::Init_Bmps_Physics()
-//{
-//
-//	HWND Temp = GetDlgItem(Physics_TB_hWnd, IDC_BT_INFO_PHYSICS);
-//	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_InfoSmall_Bmp);
-//
-//	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
-//
-//	Temp = GetDlgItem(File_TB_hWnd, IDC_BT_INFO_PHYSICS);
-//	TOOLINFO ti1 = { 0 };
-//	ti1.cbSize = sizeof(ti1);
-//	ti1.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
-//	ti1.uId = (UINT_PTR)Temp;
-//	ti1.lpszText = "Show Help File";
-//	ti1.hwnd = App->MainHwnd;
-//	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti1);
-//
-//}
 
-// CheckMenuItem(App->mMenu, ID_WINDOWS_SHOWIMGUIPANELS, MF_BYCOMMAND | MF_UNCHECKED);
