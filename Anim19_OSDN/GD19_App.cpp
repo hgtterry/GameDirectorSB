@@ -47,7 +47,6 @@ GD19_App::GD19_App(void)
 
 	// Vima19 19/03/20
 	CL_Vm_ImGui =		nullptr;
-	Cl_Vm_Preferences = nullptr;
 
 	// ---------------------------------------------------- 07/12/21
 	//EBC_Listener =		nullptr;
@@ -204,7 +203,6 @@ bool GD19_App::InitApp(void)
 
 	// Vima19 19/03/20
 	CL_Vm_ImGui =		new VM_ImGui();
-	Cl_Vm_Preferences = new VM_Preferences();
 
 	// ---------------------------------------------------- 07/12/21
 

@@ -128,7 +128,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	App->SBC_FileIO->Init_History();
 
-	App->Cl_Vm_Preferences->Read_Preferences(); // Read Preferences
+	App->SBC_Prefs->Read_Preferences(); // Read Preferences
 
 	App->Set_Main_TitleBar(" ");
 	App->SBC_FileView->SelectItem(App->SBC_FileView->FV_LevelFolder);
@@ -340,7 +340,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		case ID_TEST_WRITEPREFERENCES:
 		{
-			App->Cl_Vm_Preferences->Write_Preferences();
+			App->SBC_Prefs->Write_Preferences();
 			return 1;
 		}
 
@@ -590,7 +590,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		case ID_SETTINGS_PREFERENCES:
 		{
-			App->Cl_Vm_Preferences->Start_Preferences();
+			App->SBC_Prefs->Start_Preferences();
 			return 1;
 		}
 

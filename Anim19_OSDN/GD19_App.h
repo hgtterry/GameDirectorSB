@@ -42,7 +42,6 @@ distribution.
 
 // Vima19 19/03/20
 #include "VM_ImGui.h"
-#include "VM_Preferences.h"
 
 // ---------------------------------------------------- 07/12/21
 #include "EB_Options.h"
@@ -104,7 +103,6 @@ public:
 
 	// Vima19 19/03/20
 	VM_ImGui*			CL_Vm_ImGui;
-	VM_Preferences*		Cl_Vm_Preferences;
 
 	// ---------------------------------------------------- 07/12/21
 	EB_Options*				EBC_Options;		// Dialogs for Equity [151221]
