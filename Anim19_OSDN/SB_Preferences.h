@@ -46,6 +46,16 @@ protected:
 
 	static LRESULT CALLBACK Preferences_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
+	void AddRootFolder(void);
+
+	HWND Main_Window_Hwnd;
+	HWND FileView_Hwnd;
+
+	HTREEITEM Root;
+	HTREEITEM FV_File;
+
+	TV_INSERTSTRUCT tvinsert;
+
 	FILE *WriteScene;
 };
 

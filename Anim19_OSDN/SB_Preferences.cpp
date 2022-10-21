@@ -31,6 +31,10 @@ distribution.
 
 SB_Preferences::SB_Preferences()
 {
+	Main_Window_Hwnd = nullptr;
+	FileView_Hwnd = nullptr;
+
+
 	strcpy(Pref_Txl_Path_FileName, "Not_Set");
 
 	strcpy(Pref_WE_JustFileName, "Not_Set");
@@ -123,7 +127,7 @@ bool SB_Preferences::Read_Preferences()
 }
 
 // *************************************************************************
-// *	  				 Start_Preferences	Terry Flanigan				   *
+// *	  	 Start_Preferences:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 bool SB_Preferences::Start_Preferences()
 {
@@ -132,7 +136,7 @@ bool SB_Preferences::Start_Preferences()
 }
 
 // *************************************************************************
-// *				Preferences_Proc	Terry Flanigan 					   *
+// *		  Preferences_Proc:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 LRESULT CALLBACK SB_Preferences::Preferences_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -152,6 +156,12 @@ LRESULT CALLBACK SB_Preferences::Preferences_Proc(HWND hDlg, UINT message, WPARA
 		SetDlgItemText(hDlg, IDC_TITLENAME, (LPCTSTR)App->Cl_Dialogs->btext);
 
 		SetDlgItemText(hDlg, IDC_EDITTEXT, (LPCTSTR)App->Cl_Dialogs->Chr_Text);*/
+
+		App->SBC_Prefs->Main_Window_Hwnd = hDlg;
+
+		App->SBC_Prefs->FileView_Hwnd = GetDlgItem(hDlg, IDC_PREFTREE1);
+
+		App->SBC_Prefs->AddRootFolder();
 
 		return TRUE;
 	}
@@ -212,4 +222,26 @@ LRESULT CALLBACK SB_Preferences::Preferences_Proc(HWND hDlg, UINT message, WPARA
 
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *		  AddRootFolder:- Terry and Hazel Flanigan 2022		 	 	   *
+// *************************************************************************
+void SB_Preferences::AddRootFolder(void)
+{
+	tvinsert.hParent = Root;			// top most level no need handle
+	tvinsert.hInsertAfter = TVI_LAST; // work as root level
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	tvinsert.item.pszText = "File";
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
+	FV_File = (HTREEITEM)SendDlgItemMessage(Main_Window_Hwnd, IDC_PREFTREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+
+	tvinsert.hParent = FV_File;
+	tvinsert.hInsertAfter = TVI_LAST;
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	tvinsert.item.pszText = "Quick Load";
+	tvinsert.item.iImage = 2;
+	tvinsert.item.iSelectedImage = 3;
+	SendDlgItemMessage(Main_Window_Hwnd, IDC_PREFTREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
 }
