@@ -774,21 +774,45 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return 1;
 		}
 
+		case ID_MOUSEANDKEYS:
+		{
+			App->Cl_Utilities->OpenHTML("Help\\MouseAndKeys.html");
+			return 1;
+		}
+
 		//------------------------- Menu File
 		
 		case IDM_ABOUT:
 			DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
 			break;
 		case IDM_EXIT:
-			/*App->CL64_Dialogs->YesNo("Close GameDirector", "Are you sure");
-			if (App->GDCL_Dialogs->Canceled == 1)
+			if (App->SBC_Scene->Scene_Modified == 1)
 			{
-			break;
-			}*/
+
+				App->SBC_Dialogs->YesNo("Save Scene", "Scene has been Modified Do you wish to save changes", 1);
+
+				bool Doit = App->SBC_Dialogs->Canceled;
+				if (Doit == 0)
+				{
+					App->SBC_Project->Start_Save_Project_Dialog();
+				}
+
+			}
+			else
+			{
+				App->SBC_Dialogs->YesNo("Close GameDirector", "Are you sure", 1);
+
+				if (App->SBC_Dialogs->Canceled == 1)
+				{
+					return 1;
+				}
+			}
+
 			if (App->Cl19_Ogre->OgreListener->StopOgre == 0)
 			{
 				App->Cl19_Ogre->OgreListener->StopOgre = 1;
 			}
+
 			PostQuitMessage(0);
 			break;
 		default:
