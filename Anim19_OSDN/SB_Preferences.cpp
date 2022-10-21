@@ -71,15 +71,17 @@ bool SB_Preferences::Write_Preferences()
 		return 0;
 	}
 
-	fprintf(WriteScene, "%s\n", "[WE_Fast_Load]");
-	fprintf(WriteScene, "%s%s\n", "Pref_WE_JustFileName=", Pref_WE_JustFileName);
-	fprintf(WriteScene, "%s%s\n", "Pref_WE_Path_FileName=", Pref_WE_Path_FileName);
+	fprintf(WriteScene, "%s\n", "[Quick_Load]");
+	fprintf(WriteScene, "%s%i\n", "Use_TestFile=", QL_Use_TestFile_Flag);
+
+
+	/*fprintf(WriteScene, "%s%s\n", "Pref_WE_Path_FileName=", Pref_WE_Path_FileName);
 	fprintf(WriteScene, "%s%s\n", "Pref_Txl_Path_FileName=", Pref_Txl_Path_FileName);
 
 	fprintf(WriteScene, "%s%s\n", "Pref_Ogre_JustFileName=", Pref_Ogre_JustFileName);
 	fprintf(WriteScene, "%s%s\n", "Pref_Ogre_Path_FileName=", Pref_Ogre_Path);
 
-	fprintf(WriteScene, "%s\n", " ");
+	fprintf(WriteScene, "%s\n", " ");*/
 	fclose(WriteScene);
 
 	Read_Preferences();
@@ -107,7 +109,11 @@ bool SB_Preferences::Read_Preferences()
 
 	App->Cl_Ini->SetPathName(Preferences_Path);
 
-	App->Cl_Ini->GetString("WE_Fast_Load", "Pref_WE_JustFileName", chr_Tag1, 1024);
+	QL_Use_TestFile_Flag = App->Cl_Ini->GetInt("Quick_Load", "Use_TestFile", 10);
+
+	App->Say_Int(QL_Use_TestFile_Flag);
+
+	/*App->Cl_Ini->GetString("WE_Fast_Load", "Pref_WE_JustFileName", chr_Tag1, 1024);
 	strcpy(Pref_WE_JustFileName, chr_Tag1);
 
 	App->Cl_Ini->GetString("WE_Fast_Load", "Pref_WE_Path_FileName", chr_Tag1, 1024);
@@ -120,7 +126,7 @@ bool SB_Preferences::Read_Preferences()
 	strcpy(Pref_Ogre_JustFileName, chr_Tag2);
 
 	App->Cl_Ini->GetString("WE_Fast_Load", "Pref_Ogre_Path_FileName", chr_Tag2, 1024);
-	strcpy(Pref_Ogre_Path, chr_Tag2);
+	strcpy(Pref_Ogre_Path, chr_Tag2);*/
 
 	//App->Say(chr_Tag1);
 
@@ -210,6 +216,8 @@ LRESULT CALLBACK SB_Preferences::Preferences_Proc(HWND hDlg, UINT message, WPARA
 	{
 		if (LOWORD(wParam) == IDOK)
 		{
+			App->SBC_Prefs->Write_Preferences();
+
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -279,13 +287,14 @@ LRESULT CALLBACK SB_Preferences::QuickLoad_Proc(HWND hDlg, UINT message, WPARAM 
 		char StartFile[1024];
 		strcpy(StartFile, App->EquityDirecory_FullPath);
 		strcat(StartFile, "\\");
-		strcat(StartFile, "Data\\StartUp.gcf");
+		strcat(StartFile, "Data\\Preferences.ini");
 
 		App->Cl_Ini->SetPathName(StartFile);
 
-		bool Default = App->Cl_Ini->GetBool("Startup", "Default", 1);
+		bool Default = App->Cl_Ini->GetBool("Quick_Load", "Use_TestFile", 1);
 		if (Default == 1)
 		{
+			App->SBC_Prefs->QL_Use_TestFile_Flag = 1;
 			HWND temp = GetDlgItem(hDlg, IDC_CKDEFAULT);
 			SendMessage(temp, BM_SETCHECK, 1, 0);
 			EnableWindow(GetDlgItem(hDlg, IDC_STUSERFILE), 0);
@@ -293,6 +302,7 @@ LRESULT CALLBACK SB_Preferences::QuickLoad_Proc(HWND hDlg, UINT message, WPARAM 
 		}
 		else
 		{
+			App->SBC_Prefs->QL_Use_TestFile_Flag = 0;
 			HWND temp = GetDlgItem(hDlg, IDC_CKDEFAULT);
 			SendMessage(temp, BM_SETCHECK, 0, 0);
 			EnableWindow(GetDlgItem(hDlg, IDC_STUSERFILE), 1);
@@ -362,6 +372,7 @@ LRESULT CALLBACK SB_Preferences::QuickLoad_Proc(HWND hDlg, UINT message, WPARAM 
 			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
 			if (test == BST_CHECKED)
 			{
+				App->SBC_Prefs->QL_Use_TestFile_Flag = 1;
 				SetDlgItemText(hDlg, IDC_STUSERFILE, (LPTSTR)App->Default_Project);
 				EnableWindow(GetDlgItem(hDlg, IDC_STUSERFILE), 0);
 				EnableWindow(GetDlgItem(hDlg, IDC_BTBROWSE), 0);
@@ -369,6 +380,7 @@ LRESULT CALLBACK SB_Preferences::QuickLoad_Proc(HWND hDlg, UINT message, WPARAM 
 			}
 			else
 			{
+				App->SBC_Prefs->QL_Use_TestFile_Flag = 0;
 				EnableWindow(GetDlgItem(hDlg, IDC_STUSERFILE), 1);
 				EnableWindow(GetDlgItem(hDlg, IDC_BTBROWSE), 1);
 				return 1;
