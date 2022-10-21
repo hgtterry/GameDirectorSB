@@ -33,6 +33,8 @@ public:
 
 	bool Start_Preferences();
 
+	bool QL_Use_TestFile_Flag;
+
 	char Pref_Txl_FileName[255];
 	char Pref_Txl_Path_FileName[1024];
 
@@ -45,8 +47,11 @@ public:
 protected:
 
 	static LRESULT CALLBACK Preferences_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK QuickLoad_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void AddRootFolder(void);
+
+	bool Start_QuickLoad_Dlg();
 
 	HWND Main_Window_Hwnd;
 	HWND FileView_Hwnd;
