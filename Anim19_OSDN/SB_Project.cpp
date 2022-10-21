@@ -444,13 +444,11 @@ bool SB_Project::Save_Project()
 
 	if (Set_QuickLoad_Flag == 1)
 	{
-		char StartFile[1024];
-		strcpy(StartFile, App->EquityDirecory_FullPath);
-		strcat(StartFile, "\\");
-		strcat(StartFile, "Data\\StartUp.gcf");
 
-		App->Cl_Ini->SetPathName(StartFile);
-		App->Cl_Ini->WriteString("Startup", "Scene_Path_FileName", App->SBC_FileIO->Project_Path_File_Name);
+		strcpy(App->SBC_Prefs->QL_User_File, App->SBC_FileIO->Project_Path_File_Name);
+		App->SBC_Prefs->QL_Use_TestFile_Flag = 0;
+		App->SBC_Prefs->Write_Preferences();
+
 	}
 
 

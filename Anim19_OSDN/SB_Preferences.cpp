@@ -34,26 +34,35 @@ SB_Preferences::SB_Preferences()
 	Main_Window_Hwnd = nullptr;
 	FileView_Hwnd = nullptr;
 
+	// -------------------------- Quick Load
 	QL_Use_TestFile_Flag = 1;
+	strcpy(QL_User_File,"Not_Set");
 
-	strcpy(Pref_Txl_Path_FileName, "Not_Set");
-
-	strcpy(Pref_WE_JustFileName, "Not_Set");
-	strcpy(Pref_WE_Path_FileName, "Not_Set");
-
-	strcpy(Pref_Ogre_JustFileName, "Not_Set");
-	strcpy(Pref_Ogre_Path, "Not_Set");
 }
 
 SB_Preferences::~SB_Preferences()
 {
+	
 }
 
 // *************************************************************************
-// *						Write_Preferences Terry Flanigan 			   *
+// *			Set_Defaults:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void SB_Preferences::Set_Defaults()
+{
+	// -------------------------- Quick Load
+	QL_Use_TestFile_Flag = 1;
+	strcpy(QL_User_File, "Not_Set");
+
+	Write_Preferences();
+}
+
+// *************************************************************************
+// *			Write_Preferences:- Terry and Hazel Flanigan 2022 		   *
 // *************************************************************************
 bool SB_Preferences::Write_Preferences()
 {
+	
 	WriteScene = NULL;
 
 	char Preferences_Path[1024];
@@ -71,25 +80,20 @@ bool SB_Preferences::Write_Preferences()
 		return 0;
 	}
 
+	
+
 	fprintf(WriteScene, "%s\n", "[Quick_Load]");
-	fprintf(WriteScene, "%s%i\n", "Use_TestFile=", QL_Use_TestFile_Flag);
-
-
-	/*fprintf(WriteScene, "%s%s\n", "Pref_WE_Path_FileName=", Pref_WE_Path_FileName);
-	fprintf(WriteScene, "%s%s\n", "Pref_Txl_Path_FileName=", Pref_Txl_Path_FileName);
-
-	fprintf(WriteScene, "%s%s\n", "Pref_Ogre_JustFileName=", Pref_Ogre_JustFileName);
-	fprintf(WriteScene, "%s%s\n", "Pref_Ogre_Path_FileName=", Pref_Ogre_Path);
-
-	fprintf(WriteScene, "%s\n", " ");*/
+	fprintf(WriteScene, "%s%i\n", "QL_Use_TestFile=", QL_Use_TestFile_Flag);
+	fprintf(WriteScene, "%s%s\n", "QL_User_File=", QL_User_File);
+	
 	fclose(WriteScene);
 
-	Read_Preferences();
+	//Read_Preferences();
 	return 1;
 }
 
 // *************************************************************************
-// *						Read_Preferences Terry Flanigan 			   *
+// *			Read_Preferences:- Terry and Hazel Flanigan 2022 		   *
 // *************************************************************************
 bool SB_Preferences::Read_Preferences()
 {
@@ -109,26 +113,10 @@ bool SB_Preferences::Read_Preferences()
 
 	App->Cl_Ini->SetPathName(Preferences_Path);
 
-	QL_Use_TestFile_Flag = App->Cl_Ini->GetInt("Quick_Load", "Use_TestFile", 10);
+	QL_Use_TestFile_Flag = App->Cl_Ini->GetInt("Quick_Load", "QL_Use_TestFile", 10);
 
-	App->Say_Int(QL_Use_TestFile_Flag);
-
-	/*App->Cl_Ini->GetString("WE_Fast_Load", "Pref_WE_JustFileName", chr_Tag1, 1024);
-	strcpy(Pref_WE_JustFileName, chr_Tag1);
-
-	App->Cl_Ini->GetString("WE_Fast_Load", "Pref_WE_Path_FileName", chr_Tag1, 1024);
-	strcpy(Pref_WE_Path_FileName, chr_Tag1);
-
-	App->Cl_Ini->GetString("WE_Fast_Load", "Pref_Txl_Path_FileName", chr_Tag2, 1024);
-	strcpy(Pref_Txl_Path_FileName, chr_Tag2);
-
-	App->Cl_Ini->GetString("WE_Fast_Load", "Pref_Ogre_JustFileName", chr_Tag2, 1024);
-	strcpy(Pref_Ogre_JustFileName, chr_Tag2);
-
-	App->Cl_Ini->GetString("WE_Fast_Load", "Pref_Ogre_Path_FileName", chr_Tag2, 1024);
-	strcpy(Pref_Ogre_Path, chr_Tag2);*/
-
-	//App->Say(chr_Tag1);
+	App->Cl_Ini->GetString("Quick_Load", "QL_User_File", chr_Tag1, 1024);
+	strcpy(QL_User_File, chr_Tag1);
 
 	return 1;
 }
@@ -169,6 +157,8 @@ LRESULT CALLBACK SB_Preferences::Preferences_Proc(HWND hDlg, UINT message, WPARA
 		App->SBC_Prefs->FileView_Hwnd = GetDlgItem(hDlg, IDC_PREFTREE1);
 
 		App->SBC_Prefs->AddRootFolder();
+
+		//App->SBC_Prefs->Read_Preferences();
 
 		App->SBC_Prefs->Start_QuickLoad_Dlg();
 
@@ -291,7 +281,7 @@ LRESULT CALLBACK SB_Preferences::QuickLoad_Proc(HWND hDlg, UINT message, WPARAM 
 
 		App->Cl_Ini->SetPathName(StartFile);
 
-		bool Default = App->Cl_Ini->GetBool("Quick_Load", "Use_TestFile", 1);
+		bool Default = App->Cl_Ini->GetBool("Quick_Load", "QL_Use_TestFile", 1);
 		if (Default == 1)
 		{
 			App->SBC_Prefs->QL_Use_TestFile_Flag = 1;

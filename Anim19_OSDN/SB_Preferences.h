@@ -28,21 +28,14 @@ public:
 	SB_Preferences();
 	~SB_Preferences();
 
+	void Set_Defaults();
 	bool Write_Preferences();
 	bool Read_Preferences();
 
 	bool Start_Preferences();
 
 	bool QL_Use_TestFile_Flag;
-
-	char Pref_Txl_FileName[255];
-	char Pref_Txl_Path_FileName[1024];
-
-	char Pref_WE_JustFileName[255];			//World Editor/RFpro File 3ds
-	char Pref_WE_Path_FileName[1024];		//World Editor/RFpro File 3ds
-
-	char Pref_Ogre_JustFileName[255];		//Ogre File for Update
-	char Pref_Ogre_Path[1024];		//Ogre File for Update Location
+	char QL_User_File[MAX_PATH];
 
 protected:
 

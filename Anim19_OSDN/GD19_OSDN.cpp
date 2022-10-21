@@ -290,6 +290,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 			return 1;
 		}
+
+		case ID_DEBUG_SET:
+		{
+			App->SBC_Prefs->Set_Defaults();
+			App->Say("Done");
+
+			return 1;
+		}
 		
 		case ID_DEBUG_MESHVIEWER:
 		{

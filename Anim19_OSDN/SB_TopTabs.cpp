@@ -967,19 +967,30 @@ LRESULT CALLBACK SB_TopTabs::Files_TB_Proc(HWND hDlg, UINT message, WPARAM wPara
 
 		if (LOWORD(wParam) == IDC_TBBTQLOAD)
 		{
-			char StartFile[1024];
-			strcpy(StartFile, App->EquityDirecory_FullPath);
-			strcat(StartFile, "\\");
-			strcat(StartFile, "Data\\StartUp.gcf");
+			if (App->SBC_Prefs->QL_Use_TestFile_Flag == 1)
+			{
+				char Default_Project[MAX_PATH];
+				strcpy(Default_Project, App->EquityDirecory_FullPath);
+				strcat(Default_Project, "\\Projects\\First_Project_Prj\\Project.SBProj");
 
-			App->Cl_Ini->SetPathName(StartFile);
-
-			char buff[1024];
-			App->Cl_Ini->GetString("Startup", "Scene_Path_FileName", buff, 1024);
-
-			App->SBC_Import->Quick_Load_Flag = 1;
-			App->SBC_Import->Reload_FromResentFiles(buff);
-			App->SBC_Import->Quick_Load_Flag = 0;
+				App->SBC_Import->Quick_Load_Flag = 1;
+				App->SBC_Import->Reload_FromResentFiles(Default_Project);
+				App->SBC_Import->Quick_Load_Flag = 0;
+			}
+			else
+			{
+				int Result = strcmp(App->SBC_Prefs->QL_User_File, "Not_Set");
+				if (Result == 0)
+				{
+					App->Say("Quick Load Not Set");
+				}
+				else
+				{
+					App->SBC_Import->Quick_Load_Flag = 1;
+					App->SBC_Import->Reload_FromResentFiles(App->SBC_Prefs->QL_User_File);
+					App->SBC_Import->Quick_Load_Flag = 0; 
+				}
+			}
 
 			return TRUE;
 		}
