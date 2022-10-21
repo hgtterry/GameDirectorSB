@@ -387,12 +387,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return 1;
 		}
 
-		case ID_FILE_QUICKLOAD:
-		{
-//			App->SBC_Project->Load_Scene_Auto();
-			return 1;
-		}
-
 		case ID_FILE_CLEARLEVEL32869:
 		{
 			App->SBC_Scene->Clear_Level();
@@ -560,20 +554,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return 1;
 		}
 		
-		//------------------------- Menu Test
-		case ID_SETTINGS_TEST:
-		{
-			/*if (App->Cl_ImGui->Show_ImGui_Preferences == 1)
-			{
-				App->Cl_ImGui->Show_ImGui_Preferences = 0;
-			}
-			else
-			{
-				App->Cl_ImGui->Show_ImGui_Preferences = 1;
-			}*/
-			return 1;
-		}
-
 		case ID_TEST_VIEWLOG:
 		{
 			if (App->FollowFunctions == 1)
@@ -586,13 +566,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				App->FollowFunctions = 1;
 				CheckMenuItem(App->mMenu, ID_TEST_VIEWLOG, MF_BYCOMMAND | MF_CHECKED);
 			}
-			return 1;
-		}
-
-		//------------------------- Menu Settings
-		case ID_SETTINGS_STARTUP:
-		{
-			App->Cl_Scene_Data->Dialog_GetUserFile(App->MainHwnd);
 			return 1;
 		}
 
@@ -803,31 +776,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		//------------------------- Menu File
 		
-		case ID_FILE_SAVELEVELAS:
-		{
-			//App->Cl_Save_Scene->SaveGDScene_40(true);
-			return 1;
-		}
-
-		case ID_FILE_LOADLEVEL:
-		{
-			//App->Cl_Load_Scene->OpenScene(true);
-
-			//App->SBC_Import->Bullet_Load_Room("Ogre3D   *.mesh\0*.mesh\0", "Ogre3D");
-			App->SBC_Import->Load_Project("Level   *.SBLevel\0*.SBLevel\0", "Level");
-			//strcpy(App->Cl_Vm_Preferences->Pref_Ogre_JustFileName, App->CL_Vm_Model->FileName);
-			//strcpy(App->Cl_Vm_Preferences->Pref_Ogre_Path, App->CL_Vm_Model->Model_FolderPath);
-
-			//App->Cl_Vm_Preferences->Write_Preferences();
-			//// -----------------------------------------------------
-
-			//App->SBC_Physics->Enable_Physics(1);
-			//
-			//ShowWindow(App->SBC_Physics->PhysicsPannel_Hwnd, SW_SHOW);
-
-			return 1;
-		}
-
 		case IDM_ABOUT:
 			DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
 			break;

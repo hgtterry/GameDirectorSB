@@ -205,8 +205,7 @@ public:
 	bool Start_UpScene();
 	bool Get_UserFile();
 	bool Open_Project_Dlg(char* Extension, char* Title, char* StartDirectory);
-	bool Dialog_GetUserFile(HWND Parent);
-
+	
 	bool GameMode(void);
 	bool EditorMode(void);
 	bool Show_Entities(bool YesNo);
@@ -245,6 +244,6 @@ public:
 
 protected:
 
-	static LRESULT CALLBACK Dialog_GetUserFile_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
 };
 
