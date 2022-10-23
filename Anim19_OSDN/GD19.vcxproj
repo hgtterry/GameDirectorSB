@@ -194,6 +194,7 @@
     <ClInclude Include="SB_Debug.h" />
     <ClInclude Include="SB_Dialogs.h" />
     <ClInclude Include="SB_Dimensions.h" />
+    <ClInclude Include="SB_Display.h" />
     <ClInclude Include="SB_FileIO.h" />
     <ClInclude Include="SB_FileView.h" />
     <ClInclude Include="SB_Import.h" />
@@ -261,6 +262,7 @@
     <ClCompile Include="SB_Debug.cpp" />
     <ClCompile Include="SB_Dialogs.cpp" />
     <ClCompile Include="SB_Dimensions.cpp" />
+    <ClCompile Include="SB_Display.cpp" />
     <ClCompile Include="SB_FileIO.cpp" />
     <ClCompile Include="SB_FileView.cpp" />
     <ClCompile Include="SB_Import.cpp" />
