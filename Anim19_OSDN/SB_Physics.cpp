@@ -170,7 +170,7 @@ LRESULT CALLBACK SB_Physics::Physics_Console_Proc(HWND hDlg, UINT message, WPARA
 
 		if (LOWORD(wParam) == IDC_BT_INFO_CONPHYSICS)
 		{
-			App->Cl_Utilities->OpenHTML("Help\\Templete.html");
+			App->Cl_Utilities->OpenHTML("Help\\Physics_Console.html");
 
 			return TRUE;
 		}
