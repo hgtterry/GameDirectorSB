@@ -102,6 +102,8 @@ protected:
 	HTREEITEM GD_Area_Change_Folder;
 	HTREEITEM GD_Level_Change_Folder;
 	HTREEITEM GD_Particles_Folder;
+	HTREEITEM LV_Display_Folder;
+	HTREEITEM LV_Panels_Folder;
 
 	int Context_Selection;
 

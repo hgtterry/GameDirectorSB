@@ -487,6 +487,24 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	//tvinsert.item.iSelectedImage = 1;
 	//GD_Particles_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
 
+	//----------------------------------------------------
+	tvinsert.hParent = FV_LevelFolder;
+	tvinsert.hInsertAfter = TVI_LAST;
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	tvinsert.item.pszText = "Display";
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
+	LV_Display_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
+
+	//----------------------------------------------------
+	tvinsert.hParent = LV_Display_Folder;
+	tvinsert.hInsertAfter = TVI_LAST;
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	tvinsert.item.pszText = "Panels";
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
+	LV_Panels_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
+
 }
 
 // *************************************************************************
