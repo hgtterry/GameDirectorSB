@@ -851,6 +851,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 		return;
 	}
+
 	if (!strcmp(FileView_File, "Particles"))
 	{
 
@@ -883,6 +884,34 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 		return;
 	}
+
+	// ------------------------------------------------------------ Panels
+	if (!strcmp(FileView_Folder, "Panels")) // Folder
+	{
+		App->SBC_FileView->Context_Selection = Enums::FileView_Panels_Folder;
+		return;
+	}
+	if (!strcmp(FileView_File, "Panels"))
+	{
+		App->SBC_FileView->Context_Selection = Enums::FileView_Collectables_File;
+
+		HideRightPanes();
+		ShowWindow(App->GD_Properties_Hwnd, 1);
+
+		/*App->SBC_Object->Hide_Object_Dlg(1);
+		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1);
+		App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
+
+		App->Cl_Visuals->MarkerBB_Addjust(Index);
+
+		App->SBC_Properties->Edit_Category = Enums::Edit_Collectable;
+		App->SBC_Properties->Current_Selected_Object = Index;
+
+		App->SBC_Properties->Update_ListView_Collectables();*/
+
+		return;
+	}
+
 	// *************************************************************************
 	// *				"Environment	Terry Bernie 					 	   *
 	// *************************************************************************
@@ -1478,6 +1507,31 @@ void SB_FileView::Context_Menu(HWND hDlg)
 			DestroyMenu(App->SBC_FileView->hMenu);
 			Context_Selection = Enums::FileView_Collectables_File;
 		}
+
+		//------------------------------------- Panels
+		if (!strcmp(App->SBC_FileView->FileView_Folder, "Panels")) // Folder
+		{
+			App->SBC_FileView->hMenu = CreatePopupMenu();
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_NEW, L"&New");
+			TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+			DestroyMenu(App->SBC_FileView->hMenu);
+			Context_Selection = Enums::FileView_Panels_Folder;
+		}
+
+		if (!strcmp(App->SBC_FileView->FileView_File, "Panels"))
+		{
+			App->SBC_FileView->hMenu = CreatePopupMenu();
+
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
+			TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+			DestroyMenu(App->SBC_FileView->hMenu);
+			Context_Selection = Enums::FileView_Panels_File;
+		}
+
 	}
 }
 
@@ -1603,6 +1657,21 @@ void SB_FileView::Context_New(HWND hDlg)
 		{
 			App->SBC_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Collectables;
 			App->SBC_MeshViewer->StartMeshViewer();
+		}
+
+		return;
+	}
+
+	if (App->SBC_FileView->Context_Selection == Enums::FileView_Panels_Folder)
+	{
+
+		App->SBC_Dialogs->YesNo("Add Object", "Do you want to add a new Panel", 1);
+
+		bool Doit = App->SBC_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+			//App->SBC_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Collectables;
+			//App->SBC_MeshViewer->StartMeshViewer();
 		}
 
 		return;

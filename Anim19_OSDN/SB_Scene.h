@@ -28,6 +28,7 @@ distribution.
 #include "Base_Object.h"
 #include "Base_Camera.h"
 #include "Base_Locations.h"
+#include "Base_Panel.h"
 
 class SB_Scene
 {
@@ -49,6 +50,7 @@ public:
 	Base_Object*			B_Object[100];
 	Base_Camera*			B_Camera[20];
 	Base_Locations*			B_Locations[20];
+	Base_Panel*				B_Panel[20];
 
 	bool Scene_Loaded;	// Is the Scene Loaded [131221]
 
@@ -57,6 +59,8 @@ public:
 	int Object_Count;		// Actual Object Count Zero Based [171221]
 	int Camera_Count;		// Actual Object Count Zero Based [171221]
 	int Entity_Count;		// Actual Object Count Zero Based [171221]
+	int Panels_Count;
+
 	int Object_ID_Counter;	
 
 	bool Player_Added;	// Is there a vaild player in the level [081221]

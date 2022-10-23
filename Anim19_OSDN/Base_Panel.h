@@ -31,5 +31,10 @@ public:
 
 	Base_Panel();
 	~Base_Panel();
+
+	void Render_Panel();
+	void ImGui_Panel(void);
+
+	bool Show_Panel_Flag;
 };
 

@@ -30,8 +30,46 @@ distribution.
 
 Base_Panel::Base_Panel()
 {
+	Show_Panel_Flag = 0;
 }
 
 Base_Panel::~Base_Panel()
 {
+}
+
+// *************************************************************************
+// *			Render_Panel:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void Base_Panel::Render_Panel()
+{
+
+}
+
+// *************************************************************************
+// *			ImGui_Text_Message:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+void Base_Panel::ImGui_Panel(void)
+{
+	ImGui::SetNextWindowPos(ImVec2(300, 300));
+		
+
+	if (!ImGui::Begin("Text_Debug", &Show_Panel_Flag, ImGuiWindowFlags_NoSavedSettings
+		| ImGuiWindowFlags_AlwaysAutoResize
+		| ImGuiWindowFlags_NoMove
+		| ImGuiWindowFlags_NoResize
+		| ImGuiWindowFlags_NoTitleBar))
+	{
+		ImGui::End();
+	}
+	else
+	{
+
+		ImGui::PushFont(App->CL_Vm_ImGui->font2);
+
+		ImGui::Text("Test");
+
+		ImGui::PopFont();
+
+		ImGui::End();
+	}
 }

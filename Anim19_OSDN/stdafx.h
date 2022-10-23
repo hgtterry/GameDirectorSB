@@ -341,7 +341,9 @@ namespace Enums
 		FileView_Teleports_Folder = 15,
 		FileView_Teleports_File = 16,
 		FileView_Collectables_Folder = 17,
-		FileView_Collectables_File = 18
+		FileView_Collectables_File = 18,
+		FileView_Panels_Folder = 19,
+		FileView_Panels_File = 20
 	};
 }
 
