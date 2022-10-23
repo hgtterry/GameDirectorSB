@@ -26,12 +26,12 @@ distribution.
 
 #include "stdafx.h"
 #include "GD19_App.h"
-#include "SB_Display.h"
+#include "Base_Panel.h"
 
-SB_Display::SB_Display()
+Base_Panel::Base_Panel()
 {
 }
 
-SB_Display::~SB_Display()
+Base_Panel::~Base_Panel()
 {
 }

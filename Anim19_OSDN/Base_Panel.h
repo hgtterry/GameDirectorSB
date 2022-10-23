@@ -24,14 +24,12 @@ distribution.
 
 */
 
-#include "stdafx.h"
-#include "GD19_App.h"
-#include "SB_Display.h"
-
-SB_Display::SB_Display()
+#pragma once
+class Base_Panel
 {
-}
+public:
 
-SB_Display::~SB_Display()
-{
-}
+	Base_Panel();
+	~Base_Panel();
+};
+
