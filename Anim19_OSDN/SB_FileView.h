@@ -71,6 +71,8 @@ public:
 	HTREEITEM FV_Move_Folder;
 	HTREEITEM FV_Teleporters_Folder;
 	HTREEITEM FV_Collectables_Folder;
+	HTREEITEM FV_Display_Folder;
+	HTREEITEM FV_Panels_Folder;
 
 	HMENU hMenu;
 
@@ -102,9 +104,7 @@ protected:
 	HTREEITEM GD_Area_Change_Folder;
 	HTREEITEM GD_Level_Change_Folder;
 	HTREEITEM GD_Particles_Folder;
-	HTREEITEM LV_Display_Folder;
-	HTREEITEM LV_Panels_Folder;
-
+	
 	int Context_Selection;
 
 	char FileView_Folder[255];

@@ -36,5 +36,10 @@ public:
 	void ImGui_Panel(void);
 
 	bool Show_Panel_Flag;
+
+	char Panel_Name[MAX_PATH];
+	//------------------------------ ListView
+
+	HTREEITEM FileViewItem;
 };
 

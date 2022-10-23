@@ -494,16 +494,16 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	tvinsert.item.pszText = "Display";
 	tvinsert.item.iImage = 0;
 	tvinsert.item.iSelectedImage = 1;
-	LV_Display_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
+	FV_Display_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
 
 	//----------------------------------------------------
-	tvinsert.hParent = LV_Display_Folder;
+	tvinsert.hParent = FV_Display_Folder;
 	tvinsert.hInsertAfter = TVI_LAST;
 	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
 	tvinsert.item.pszText = "Panels";
 	tvinsert.item.iImage = 0;
 	tvinsert.item.iSelectedImage = 1;
-	LV_Panels_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
+	FV_Panels_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
 
 }
 
@@ -1540,12 +1540,12 @@ void SB_FileView::Context_Menu(HWND hDlg)
 // *************************************************************************
 void SB_FileView::Context_New(HWND hDlg)
 {
-	if (App->SBC_Project->Project_Loaded == 0)
+	/*if (App->SBC_Project->Project_Loaded == 0)
 	{
 		App->Say("A Project must be created First");
 
 		return;
-	}
+	}*/
 
 	if (App->SBC_FileView->Context_Selection == Enums::FileView_Areas_Folder)
 	{
@@ -1561,12 +1561,12 @@ void SB_FileView::Context_New(HWND hDlg)
 		return;
 	}
 
-	if (App->SBC_Scene->Area_Added == 0)
+	/*if (App->SBC_Scene->Area_Added == 0)
 	{
 		App->Say("An Area must be Added Firest before adding items");
 
 		return;
-	}
+	}*/
 
 	if (App->SBC_FileView->Context_Selection == Enums::FileView_Cameras_Folder)
 	{
@@ -1670,8 +1670,18 @@ void SB_FileView::Context_New(HWND hDlg)
 		bool Doit = App->SBC_Dialogs->Canceled;
 		if (Doit == 0)
 		{
-			//App->SBC_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Collectables;
-			//App->SBC_MeshViewer->StartMeshViewer();
+			int Index = App->SBC_Scene->Panels_Count;
+
+			App->SBC_Scene->B_Panel[Index] = new Base_Panel();
+
+			HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Panels_Folder, App->SBC_Scene->B_Panel[Index]->Panel_Name, Index, true);
+			App->SBC_Scene->B_Panel[Index]->FileViewItem = Temp;
+
+			App->SBC_FileView->SelectItem(App->SBC_Scene->B_Panel[Index]->FileViewItem);
+
+			App->SBC_Scene->Panels_Count++;
+
+
 		}
 
 		return;

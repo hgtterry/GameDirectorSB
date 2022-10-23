@@ -31,6 +31,11 @@ distribution.
 Base_Panel::Base_Panel()
 {
 	Show_Panel_Flag = 0;
+
+	FileViewItem = nullptr;
+
+	strcpy(Panel_Name, "Panel_1");
+
 }
 
 Base_Panel::~Base_Panel()
