@@ -34,6 +34,7 @@ SB_Props_Dialogs::SB_Props_Dialogs()
 	Dimensions_Dlg_hWnd = nullptr;
 	PhysicsReset_Dlg_hWnd = nullptr;
 	Debug_Dlg_hWnd = nullptr;
+	Panel_Test_Dlg_hWnd = nullptr;
 }
 
 SB_Props_Dialogs::~SB_Props_Dialogs()
@@ -49,6 +50,7 @@ bool SB_Props_Dialogs::Start_Props_Dialogs()
 	Dialog_Dimensions();
 	Start_Dialog_PhysicsReset();
 	Start_Dialog_Debug();
+	Start_Panels_Test_Dlg();
 
 	return 1;
 }
@@ -276,6 +278,82 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_PhysicsReset_Proc(HWND hDlg, UINT mess
 }
 
 // *************************************************************************
+// *	  	Start_Panels_Test_Dlg:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+bool SB_Props_Dialogs::Start_Panels_Test_Dlg()
+{
+
+	Panel_Test_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_PANELTEST, App->SBC_Properties->Properties_Dlg_hWnd, (DLGPROC)Panels_Test_Proc);
+	Hide_Panel_Test_Dlg(0);
+
+	return 1;
+}
+
+// *************************************************************************
+// *				Panels_Test_Proc:- Terry and Hazel Flanigan 2022	   *
+// *************************************************************************
+LRESULT CALLBACK SB_Props_Dialogs::Panels_Test_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_BT_PANELTEST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+
+		return TRUE;
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->DialogBackGround;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_BT_PANELTEST && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+		if (LOWORD(wParam) == IDC_BT_PANELTEST)
+		{
+			Debug
+			
+			return 1;
+		}
+
+		if (LOWORD(wParam) == IDOK)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+	}
+
+	}
+	return FALSE;
+}
+
+// *************************************************************************
 // *	  			 Start_Dialog_Debug	Terry Bernie			   *
 // *************************************************************************
 bool SB_Props_Dialogs::Start_Dialog_Debug()
@@ -432,4 +510,12 @@ void SB_Props_Dialogs::Hide_Physics_Reset_Dlg(bool Show)
 void SB_Props_Dialogs::Hide_Debug_Dlg(bool Show)
 {
 	ShowWindow(Debug_Dlg_hWnd, Show);
+}
+
+// *************************************************************************
+// *				Hide_Physics_Reset_Dlg Terry Flanigan				   *
+// *************************************************************************
+void SB_Props_Dialogs::Hide_Panel_Test_Dlg(bool Show)
+{
+	ShowWindow(Panel_Test_Dlg_hWnd, Show);
 }

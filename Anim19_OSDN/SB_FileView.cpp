@@ -897,6 +897,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 		HideRightPanes();
 		ShowWindow(App->GD_Properties_Hwnd, 1);
+		App->SBC_Props_Dialog->Hide_Panel_Test_Dlg(1);
 
 		App->SBC_Properties->Edit_Category = Enums::Edit_Panels;
 		App->SBC_Properties->Current_Selected_Object = Index;
@@ -1086,6 +1087,7 @@ void SB_FileView::HideRightPanes(void)
 	App->SBC_Aera->Hide_Area_Dlg(0);
 	App->SBC_Object->Hide_Object_Dlg(0);
 
+	App->SBC_Props_Dialog->Hide_Panel_Test_Dlg(0);
 	App->SBC_Props_Dialog->Hide_Dimensions_Dlg(0);
 	App->SBC_Props_Dialog->Hide_Physics_Reset_Dlg(0);
 	App->SBC_Props_Dialog->Hide_Debug_Dlg(0);

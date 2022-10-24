@@ -1,6 +1,5 @@
 #pragma once
 
-#include "GD19_Objects.h"
 
 //==================================== Application Flags Structure	
 typedef struct Flags_Type 
