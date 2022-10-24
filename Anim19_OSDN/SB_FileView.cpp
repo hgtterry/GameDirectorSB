@@ -893,21 +893,15 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 	}
 	if (!strcmp(FileView_File, "Panels"))
 	{
-		App->SBC_FileView->Context_Selection = Enums::FileView_Collectables_File;
+		App->SBC_FileView->Context_Selection = Enums::FileView_Panels_File;
 
 		HideRightPanes();
 		ShowWindow(App->GD_Properties_Hwnd, 1);
 
-		/*App->SBC_Object->Hide_Object_Dlg(1);
-		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1);
-		App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
-
-		App->Cl_Visuals->MarkerBB_Addjust(Index);
-
-		App->SBC_Properties->Edit_Category = Enums::Edit_Collectable;
+		App->SBC_Properties->Edit_Category = Enums::Edit_Panels;
 		App->SBC_Properties->Current_Selected_Object = Index;
 
-		App->SBC_Properties->Update_ListView_Collectables();*/
+		App->SBC_Properties->Update_ListView_Panels();
 
 		return;
 	}

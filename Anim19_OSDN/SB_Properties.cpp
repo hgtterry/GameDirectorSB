@@ -881,6 +881,72 @@ bool SB_Properties::Update_ListView_Collectables()
 }
 
 // *************************************************************************
+// *		Update_ListView_Panels():- Terry and Hazel Flanigan 2022	   *
+// *************************************************************************
+bool SB_Properties::Update_ListView_Panels()
+{
+	int index = App->SBC_Properties->Current_Selected_Object;
+
+
+	char buff[255];
+	strcpy(buff, App->SBC_Scene->B_Panel[index]->Panel_Name);
+	strcat(buff, "   (Panels)");
+	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
+
+	//// new sound
+	//char chr_Play[100];
+	//if (App->SBC_Scene->B_Object[index]->S_Sound[0]->Play == 1)
+	//{
+	//	strcpy(chr_Play, "True");
+	//}
+	//else
+	//{
+	//	strcpy(chr_Play, "False");
+	//}
+
+	//char chr_Volume[100];
+	//float sum2 = App->SBC_Scene->B_Object[index]->S_Sound[0]->SndVolume;
+	//int Percent = int(sum2 * 100);
+	//_itoa(Percent, chr_Volume, 10);
+
+
+	const int NUM_ITEMS = 4;
+	const int NUM_COLS = 2;
+	string grid[NUM_COLS][NUM_ITEMS]; // string table
+	LV_ITEM pitem;
+	memset(&pitem, 0, sizeof(LV_ITEM));
+	pitem.mask = LVIF_TEXT;
+
+	grid[0][0] = "Name",		grid[1][0] = App->SBC_Scene->B_Panel[index]->Panel_Name;
+	grid[0][1] = " ",			grid[1][1] = " ";// App->SBC_Scene->B_Object[index]->Mesh_FileName;
+	grid[0][2] = " ",			grid[1][2] = " ";
+	/*grid[0][3] = "Sound",		grid[1][3] = App->SBC_Scene->B_Object[index]->S_Sound[0]->Sound_File;
+	grid[0][4] = "Volume",		grid[1][4] = chr_Volume;
+	grid[0][5] = "Play",		grid[1][5] = chr_Play;*/
+
+
+
+	ListView_DeleteAllItems(Properties_hLV);
+
+	for (DWORD row = 0; row < NUM_ITEMS; row++)
+	{
+		pitem.iItem = row;
+		pitem.pszText = const_cast<char*>(grid[0][row].c_str());
+		ListView_InsertItem(Properties_hLV, &pitem);
+
+		//ListView_SetItemText
+
+		for (DWORD col = 1; col < NUM_COLS; col++)
+		{
+			ListView_SetItemText(Properties_hLV, row, col,
+				const_cast<char*>(grid[col][row].c_str()));
+		}
+	}
+
+	return 1;
+}
+
+// *************************************************************************
 // *	Update_ListView_Move_Entities:- Terry and Hazel Flanigan 2022 	    *
 // *************************************************************************
 bool SB_Properties::Update_ListView_Move_Entities()

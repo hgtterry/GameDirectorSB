@@ -113,7 +113,8 @@ namespace Enums
 		Edit_Particles = 12,
 		Edit_Camera = 13,
 		Edit_Area = 14,
-		FV_Edit_Level = 15
+		FV_Edit_Level = 15,
+		Edit_Panels = 16
 	};
 
 	enum Usage
