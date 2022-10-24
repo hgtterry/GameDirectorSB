@@ -120,32 +120,17 @@ bool GD19_OgreListener::frameStarted(const FrameEvent& evt)
 
 	App->Cl19_Ogre->m_imgui.NewFrame(evt.timeSinceLastFrame, (float)View_Width, (float)View_Height);
 
-	//if (Show_ImGui_Panels == 1)
-
-		/*if (ImGui_Render_Tab == Enums::ImGui_Camera)
+	int Count = 0;
+	while (Count < App->SBC_Scene->Panels_Count)
+	{
+		if (App->SBC_Scene->B_Panel[Count]->Show_Panel_Flag == 1)
 		{
-			App->CL_Vm_ImGui->Tabs_Render_Camera();
+			App->SBC_Scene->B_Panel[Count]->ImGui_Panel();
 		}
 
-		if (ImGui_Render_Tab == Enums::ImGui_Motions)
-		{
-			App->CL_Vm_ImGui->Tabs_Render_Motions();
-		}
+		Count++;
+	}
 
-		if (ImGui_Render_Tab == Enums::ImGui_Dimensions)
-		{
-			App->CL_Vm_ImGui->Tabs_Render_Dimensions();
-		}
-
-		if (ImGui_Render_Tab == Enums::ImGui_Groups)
-		{
-			App->CL_Vm_ImGui->Tabs_Render_Groups();
-		}
-
-		if (App->SBC_Debug->Allow_Debug == 1)
-		{
-			App->SBC_Debug->Debug_Render_Loop();
-		}*/
 	App->CL_Vm_ImGui->ImGui_Render_Loop();
 	App->SBC_Debug->Debug_Render_Loop();
 	App->SBC_Dimensions->Dimesions_Select();
