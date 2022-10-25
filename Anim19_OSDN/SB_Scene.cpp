@@ -238,7 +238,9 @@ bool SB_Scene::Game_Mode(void)
 	//	}
 	//}
 
-	CurrentCamMode = App->Cl19_Ogre->OgreListener->GD_CameraMode;
+	App->Cl19_Ogre->OgreListener->GD_Run_Physics = 1;
+
+	//CurrentCamMode = App->Cl19_Ogre->OgreListener->GD_CameraMode;
 	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamFirst;
 
 
@@ -266,9 +268,10 @@ bool SB_Scene::Game_Mode(void)
 	Root::getSingletonPtr()->renderOneFrame();
 
 	SetCapture(App->ViewGLhWnd);// Bernie
-	//App->Cl19_Ogre->OgreListener->Pl_LeftMouseDown = 1;
 
-	//App->CUR = SetCursor(NULL);
+	App->Cl19_Ogre->OgreListener->Pl_LeftMouseDown = 1;
+
+	App->CUR = SetCursor(NULL);
 
 	//Reset_Triggers();
 
