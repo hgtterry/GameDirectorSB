@@ -273,7 +273,7 @@ bool SB_Scene::Game_Mode(void)
 
 	App->CUR = SetCursor(NULL);
 
-	//Reset_Triggers();
+	App->SBC_Physics->Reset_Triggers();
 
 	return 1;
 }

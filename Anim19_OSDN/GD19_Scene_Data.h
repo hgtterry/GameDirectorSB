@@ -39,27 +39,6 @@ typedef struct Fog_Type {
 }Fog_Type;
 
 
-typedef struct Camera_Type { 
-	// == Pos
-	float PosX;
-	float PosY;
-	float PosZ;
-	// == Rotation
-	float RotW;
-	float RotX;
-	float RotY;
-	float RotZ;
-	// == Height
-	float CameraHeight;
-	// == Speeds
-	float WalkSpeed;
-	float RunSpeed;
-
-	int MakerCount;				// Maker Count Total;
-	int Adjusted_MakerCount;	// Maker Count Adjusted for saving Total;
-//	Marker_Type Marker[20];
-}Camera_Type;
-
 typedef struct Int_Type {int Array;}int_Type;
 
 
@@ -76,58 +55,6 @@ typedef struct Sound_Type {
 	bool Is3D;
 	bool Play;
 }Sound_Type;
-
-//==================================== Object Structure
-typedef struct Object_Type { 
-	char Name[255];
-	char MeshName[255];				// Mesh Name Mesh.mesh
-	char MeshName_FullPath[255];
-	
-	//------------------------------ Description
-	int Type;
-	int Shape;
-	int Usage;
-	int Folder;
-	int Object_ID;  // Unique Number
-
-	//------------------------------ Mesh
-	Ogre::Vector3			Mesh_Scale;
-	Ogre::Vector3			Mesh_Pos;
-	Ogre::Vector3			Mesh_Center;
-	Ogre::Vector3			Mesh_Rot;
-	Ogre::Quaternion		Mesh_Quat;
-
-	//------------------------------ Physics
-	Ogre::Vector3			Physics_Pos;
-	Ogre::Vector3			Physics_Rot;
-	Ogre::Vector3			Physics_Scale;
-	Ogre::Vector3			Physics_Size; // Box x y z ;- x = Radius y = Height
-	Ogre::Quaternion		Physics_Quat;
-	float					Physics_Mass;
-	float					Physics_Restitution;
-	bool					Physics_Valid;
-
-	//------------------------------ Ogre Scene Entity/Node
-	Ogre::SceneNode* OgreNode;
-	Ogre::Entity*	OgreEntity;
-	btRigidBody		*bt_body;
-
-	//------------------------------ ListView
-	HTREEITEM ListViewItem;
-	bool  Deleted;
-	
-	//------------------------------ Bounding Box
-	Ogre::Real Mesh_BB_Width;
-	Ogre::Real Mesh_BB_Height;
-	Ogre::Real Mesh_BB_Depth;
-	Ogre::Quaternion Mesh_BB_Quat;
-	Ogre::Vector3 Mesh_BB_Center;
-
-	//------------------------------
-	Sound_Type*				S_Sounds[1]; // Heap
-	//------------------------------ Move Entity Data
-							
-}Object_Type;
 
 typedef struct Scene_Type { 	
 	int PlaneCount;
@@ -201,7 +128,6 @@ public:
 
 	void Set_Move_Defaults(int Index);
 
-	bool Start_UpScene();
 	bool Get_UserFile();
 	bool Open_Project_Dlg(char* Extension, char* Title, char* StartDirectory);
 	
@@ -215,7 +141,6 @@ public:
 	
 	Flags_Type*				S_Flags[1];
 	Scene_Type*				S_Scene[1];
-	Camera_Type*			S_Camera[5];
 	Load_Options_Type*		S_LoadOptions[1];
 	Stock_Messages_type*	S_Messages[20];
 	Stock_Sound_type*		St_Sounds[200];

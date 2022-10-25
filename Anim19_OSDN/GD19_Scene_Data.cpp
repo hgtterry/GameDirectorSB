@@ -24,7 +24,7 @@ bool GD19_Scene_Data::Init_Class(void)
 
 	S_Flags[0] = NULL;
 	S_Scene[0] = NULL;
-	S_Camera[0] = NULL;
+
 	S_LoadOptions[0] = NULL;
 
 	Player_Location_Count = 0;
@@ -53,8 +53,6 @@ bool GD19_Scene_Data::Init_Scene(void)
 {
 	App->Cl_Scene_Data->S_Scene[0] = new Scene_Type();
 	App->Cl_Scene_Data->SetScene_Defaults();
-
-	App->Cl_Scene_Data->S_Camera[0] = new Camera_Type();
 
 	App->Cl_Scene_Data->S_LoadOptions[0] = new Load_Options_Type();
 	App->Cl_Scene_Data->SetOptions_Defaults();
@@ -384,48 +382,6 @@ void GD19_Scene_Data::Reset_Triggers(void)
 
 		Count++;
 	}
-}
-
-// *************************************************************************
-//							Start_UpScene Terry Bernie					   *
-// *************************************************************************
-bool GD19_Scene_Data::Start_UpScene()
-{
-	/*char StartFile[1024];
-	strcpy(StartFile, App->EquityDirecory_FullPath);
-	strcat(StartFile, "\\");
-	strcat(StartFile, "Data\\StartUp.gcf");
-
-	App->Cl_Ini->SetPathName(StartFile);
-
-	char Check[1024];
-	App->Cl_Ini->GetPathName(Check, 1024);
-
-
-	bool Default = App->Cl_Ini->GetBool("Startup", "Default", 1);
-	if (Default == 1)
-	{
-		char FileName[255];
-		char ParhFile[255];
-		strcpy(FileName, "StartLevel_40.GDScene");
-
-		strcpy(ParhFile, App->EquityDirecory_FullPath);
-		strcat(ParhFile, "\\");
-		strcat(ParhFile, "Media\\Levels\\StartLevel_40.GDScene");
-
-		strcpy(App->CL_Vm_FileIO->Scene_FileName, FileName);
-		strcpy(App->CL_Vm_FileIO->Scene_Path_FileName, ParhFile);
-		return 1;
-	}
-	else
-	{
-		App->Cl_Ini->GetString("Startup", "Scene_FileName", App->CL_Vm_FileIO->Scene_FileName,1024);
-		App->Cl_Ini->GetString("Startup", "Scene_Path_FileName", App->CL_Vm_FileIO->Scene_Path_FileName,1024);
-		return 1;
-	}*/
-
-
-	return 0;
 }
 
 // *************************************************************************
