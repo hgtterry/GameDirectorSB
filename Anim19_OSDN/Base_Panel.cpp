@@ -37,7 +37,10 @@ Base_Panel::Base_Panel()
 	PosX = 300;
 	PosY = 300;
 
+	Counter = 0;
+
 	strcpy(Panel_Name, "Panel_1");
+	strcpy(Text, "Test");
 
 }
 
@@ -74,7 +77,7 @@ void Base_Panel::ImGui_Panel(void)
 
 		ImGui::PushFont(App->CL_Vm_ImGui->font2);
 
-		ImGui::Text("Test");
+		ImGui::Text("%s %i",Text, Counter);
 
 		ImGui::PopFont();
 

@@ -38,6 +38,9 @@ public:
 	bool Show_Panel_Flag;
 
 	char Panel_Name[MAX_PATH];
+	char Text[MAX_PATH];
+
+	int Counter;
 
 	float PosX;
 	float PosY;

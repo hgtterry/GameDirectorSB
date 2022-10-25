@@ -909,8 +909,10 @@ bool SB_Properties::Update_ListView_Panels()
 	char chr_PosY[20];
 	sprintf(chr_PosY, "%.3f ", App->SBC_Scene->B_Panel[index]->PosY);
 
+	char chr_Counter[20];
+	_itoa(App->SBC_Scene->B_Panel[index]->Counter, chr_Counter, 10);
 
-	const int NUM_ITEMS = 4;
+	const int NUM_ITEMS = 6;
 	const int NUM_COLS = 2;
 	string grid[NUM_COLS][NUM_ITEMS]; // string table
 	LV_ITEM pitem;
@@ -921,8 +923,8 @@ bool SB_Properties::Update_ListView_Panels()
 	grid[0][1] = " ",			grid[1][1] = " ";// App->SBC_Scene->B_Object[index]->Mesh_FileName;
 	grid[0][2] = "Pos_X",		grid[1][2] = chr_PosX;
 	grid[0][3] = "Pos_Y",		grid[1][3] = chr_PosY;
-//	grid[0][4] = "Volume",		grid[1][4] = chr_Volume;
-//	grid[0][5] = "Play",		grid[1][5] = chr_Play;*/
+	grid[0][4] = "Text",		grid[1][4] = App->SBC_Scene->B_Panel[index]->Text;
+	grid[0][5] = "Counter",		grid[1][5] = chr_Counter;
 
 
 
@@ -2009,6 +2011,53 @@ bool SB_Properties::Edit_Panels_OnClick(LPARAM lParam)
 			Update_ListView_Panels();
 
 		}
+
+		return 1;
+	}
+
+	result = strcmp(btext, "Text");
+	if (result == 0)
+	{
+		strcpy(App->SBC_Dialogs->btext, "Change Text");
+		strcpy(App->SBC_Dialogs->Chr_Text, App->SBC_Scene->B_Panel[Index]->Text);
+
+		App->SBC_Dialogs->Dialog_Text();
+
+		if (App->SBC_Dialogs->Canceled == 1)
+		{
+			return TRUE;
+		}
+
+		strcpy(App->SBC_Scene->B_Panel[Index]->Text, App->SBC_Dialogs->Chr_Text);
+
+
+		//Mark_As_Altered(Index);
+		
+		Update_ListView_Panels();
+
+		return 1;
+	}
+
+	result = strcmp(btext, "Counter");
+	if (result == 0)
+	{
+		strcpy(App->Cl_Dialogs->btext, "Start Counter Value");
+		char buff[256];
+		sprintf(buff, "%i", App->SBC_Scene->B_Panel[Index]->Counter);
+		strcpy(App->Cl_Dialogs->Chr_Int, buff);
+
+		App->Cl_Dialogs->Dialog_Int();
+
+		if (App->Cl_Dialogs->Canceled == 1)
+		{
+			return TRUE;
+		}
+
+		App->SBC_Scene->B_Panel[Index]->Counter = App->Cl_Dialogs->mInt;
+
+		//App->SBC_Properties->Mark_As_Altered(Index);
+
+		Update_ListView_Panels();
 
 		return 1;
 	}
