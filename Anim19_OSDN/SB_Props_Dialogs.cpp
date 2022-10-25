@@ -299,7 +299,7 @@ LRESULT CALLBACK SB_Props_Dialogs::Panels_Test_Proc(HWND hDlg, UINT message, WPA
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_BT_PANELTEST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_BT_PANSETTINGS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		return TRUE;
 	}
@@ -324,9 +324,16 @@ LRESULT CALLBACK SB_Props_Dialogs::Panels_Test_Proc(HWND hDlg, UINT message, WPA
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_PANSETTINGS && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
 		return CDRF_DODEFAULT;
 	}
-
+	
 	case WM_COMMAND:
 	{
 		if (LOWORD(wParam) == IDC_BT_PANELTEST)
@@ -343,6 +350,14 @@ LRESULT CALLBACK SB_Props_Dialogs::Panels_Test_Proc(HWND hDlg, UINT message, WPA
 			return 1;
 		}
 
+		if (LOWORD(wParam) == IDC_BT_PANSETTINGS)
+		{
+			
+			Debug
+			return 1;
+		}
+
+		
 		if (LOWORD(wParam) == IDOK)
 		{
 			EndDialog(hDlg, LOWORD(wParam));
