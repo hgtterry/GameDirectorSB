@@ -959,6 +959,7 @@ bool GD19_OgreListener::Capture_RightMouse_Model(void)
 // *************************************************************************
 bool GD19_OgreListener::Capture_RightMouse_World(void)
 {
+
 	/*if (App->CL10_Dimensions->Mouse_Move_Mode == Enums::Edit_Mouse_Active)
 	{
 		return 1;
@@ -969,75 +970,79 @@ bool GD19_OgreListener::Capture_RightMouse_World(void)
 		return 1;
 	}*/
 
-	GetCursorPos(&Pl_pt);
-
-	Pl_MouseX = (int(Pl_pt.x));
-	Pl_MouseY = (int(Pl_pt.y));
-
-	//// Left Right
-	if (Pl_MouseX < Pl_Cent500X)
+	if (App->Cl19_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
 	{
-		long test = Pl_Cent500X - Pl_MouseX; // Positive
 
-		if (test > 2)
+		GetCursorPos(&Pl_pt);
+
+		Pl_MouseX = (int(Pl_pt.x));
+		Pl_MouseY = (int(Pl_pt.y));
+
+		//// Left Right
+		if (Pl_MouseX < Pl_Cent500X)
 		{
-			Pl_DeltaMouse = float(Pl_Cent500X - Pl_MouseX);
-			mTranslateVector.x = Pl_DeltaMouse * (mMoveSensitivityMouse / 1000);
-			SetCursorPos(500, 500);
+			long test = Pl_Cent500X - Pl_MouseX; // Positive
+
+			if (test > 2)
+			{
+				Pl_DeltaMouse = float(Pl_Cent500X - Pl_MouseX);
+				mTranslateVector.x = Pl_DeltaMouse * (mMoveSensitivityMouse / 1000);
+				SetCursorPos(500, 500);
+			}
 		}
-	}
-	else if (Pl_MouseX > Pl_Cent500X)
-	{
-		long test = Pl_MouseX - Pl_Cent500X; // Positive
-
-		if (test > 2)
+		else if (Pl_MouseX > Pl_Cent500X)
 		{
-			Pl_DeltaMouse = float(Pl_MouseX - Pl_Cent500X);
-			mTranslateVector.x = -Pl_DeltaMouse * (mMoveSensitivityMouse / 1000);
-			SetCursorPos(500, 500);
-		}
-	}
+			long test = Pl_MouseX - Pl_Cent500X; // Positive
 
-	//// Up Down
-	if (Pl_MouseY < Pl_Cent500Y)
-	{
-		long test = Pl_Cent500Y - Pl_MouseY; // Positive
-
-		if (test > 2)
-		{
-			Pl_DeltaMouse = float(Pl_Cent500Y - Pl_MouseY);
-
-			Ogre::Real Rate;
-			Rate = Pl_DeltaMouse * (mMoveSensitivityMouse / 1000);
-
-			Ogre::Vector3 OldPos;
-			OldPos = mCam->getPosition();
-
-			OldPos.y -= Rate;
-			mCam->setPosition(OldPos);
-			SetCursorPos(500, 500);
+			if (test > 2)
+			{
+				Pl_DeltaMouse = float(Pl_MouseX - Pl_Cent500X);
+				mTranslateVector.x = -Pl_DeltaMouse * (mMoveSensitivityMouse / 1000);
+				SetCursorPos(500, 500);
+			}
 		}
 
-	}
-	else if (Pl_MouseY > Pl_Cent500Y)
-	{
-		long test = Pl_MouseY - Pl_Cent500Y; // Positive
-
-		if (test > 2)
+		//// Up Down
+		if (Pl_MouseY < Pl_Cent500Y)
 		{
-			Pl_DeltaMouse = float(Pl_MouseY - Pl_Cent500Y);
+			long test = Pl_Cent500Y - Pl_MouseY; // Positive
 
-			Ogre::Real Rate;
-			Rate = Pl_DeltaMouse * (mMoveSensitivityMouse / 1000);
+			if (test > 2)
+			{
+				Pl_DeltaMouse = float(Pl_Cent500Y - Pl_MouseY);
 
-			Ogre::Vector3 OldPos;
-			OldPos = mCam->getPosition();
+				Ogre::Real Rate;
+				Rate = Pl_DeltaMouse * (mMoveSensitivityMouse / 1000);
 
-			OldPos.y += Rate;
-			mCam->setPosition(OldPos);
-			SetCursorPos(500, 500);
+				Ogre::Vector3 OldPos;
+				OldPos = mCam->getPosition();
+
+				OldPos.y -= Rate;
+				mCam->setPosition(OldPos);
+				SetCursorPos(500, 500);
+			}
+
 		}
+		else if (Pl_MouseY > Pl_Cent500Y)
+		{
+			long test = Pl_MouseY - Pl_Cent500Y; // Positive
 
+			if (test > 2)
+			{
+				Pl_DeltaMouse = float(Pl_MouseY - Pl_Cent500Y);
+
+				Ogre::Real Rate;
+				Rate = Pl_DeltaMouse * (mMoveSensitivityMouse / 1000);
+
+				Ogre::Vector3 OldPos;
+				OldPos = mCam->getPosition();
+
+				OldPos.y += Rate;
+				mCam->setPosition(OldPos);
+				SetCursorPos(500, 500);
+			}
+
+		}
 	}
 
 	return 1;

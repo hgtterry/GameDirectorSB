@@ -134,25 +134,31 @@ void GD_Keyboard::Keyboard_Monitor(float deltaTime)
 	//------------------------------------------------ Q key Down in Fly Mode
 	if (GetAsyncKeyState(69) < 0)
 	{
-		Rate = (App->Cl19_Ogre->OgreListener->mMoveSensitivity / 1000) * 2; //FlyRate;
+		if (App->Cl19_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
+		{
+			Rate = (App->Cl19_Ogre->OgreListener->mMoveSensitivity / 1000) * 2; //FlyRate;
 
-		OldPos = App->Cl19_Ogre->OgreListener->mCam->getPosition();
+			OldPos = App->Cl19_Ogre->OgreListener->mCam->getPosition();
 
-		OldPos.y += Rate;
+			OldPos.y += Rate;
 
-		App->Cl19_Ogre->OgreListener->mCam->setPosition(OldPos);
+			App->Cl19_Ogre->OgreListener->mCam->setPosition(OldPos);
+		}
 	}
 	
 	//------------------------------------------------ E key Up in Fly Mode
 	if (GetAsyncKeyState(81) < 0)
 	{
-		Rate = (App->Cl19_Ogre->OgreListener->mMoveSensitivity / 1000) * 2; //FlyRate;
+		if (App->Cl19_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
+		{
+			Rate = (App->Cl19_Ogre->OgreListener->mMoveSensitivity / 1000) * 2; //FlyRate;
 
-		OldPos = App->Cl19_Ogre->OgreListener->mCam->getPosition();
+			OldPos = App->Cl19_Ogre->OgreListener->mCam->getPosition();
 
-		OldPos.y -= Rate;
+			OldPos.y -= Rate;
 
-		App->Cl19_Ogre->OgreListener->mCam->setPosition(OldPos);
+			App->Cl19_Ogre->OgreListener->mCam->setPosition(OldPos);
+		}
 	}
 	//------------------------------------------------
 	if (App->Cl19_Ogre->OgreListener->Wheel < 0) // Mouse Wheel Forward
