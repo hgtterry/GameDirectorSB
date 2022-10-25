@@ -159,117 +159,6 @@ void GD19_Scene_Data::SetScene_Defaults(void)
 }
 
 // *************************************************************************
-// *					 	GameMode(Terry Bernie)			 		 	   *
-// *************************************************************************
-bool GD19_Scene_Data::GameMode(void)
-{
-	App->Cl_Grid->Grid_SetVisible(0);
-	App->Cl_Grid->Hair_SetVisible(0);
-
-	App->Cl_Grid->Arrow_Node->setVisible(0);
-
-	///App->Cl19_Ogre->textArea->hide();
-
-	if (S_Scene[0]->Sound[0].Play == 1)
-	{
-		int result = 1;
-		result = strcmp(S_Scene[0]->Sound[0].SoundFile, "None");
-		if (result == 1) // Could be Unsafe 
-		{
-			S_Scene[0]->Sound[0].SndFile = App->SBC_SoundMgr->SoundEngine->play2D(S_Scene[0]->Sound[0].SoundFileAndPath,
-				S_Scene[0]->Sound[0].Loop,true,true);
-
-			S_Scene[0]->Sound[0].SndFile->setVolume(S_Scene[0]->Sound[0].Volume);
-			S_Scene[0]->Sound[0].SndFile->setIsPaused(false);
-		}
-	}
-
-	CurrentCamMode = App->Cl19_Ogre->OgreListener->GD_CameraMode;
-	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamFirst;
-	
-
-	App->Cl_Visuals->BoxNode->setVisible(false);
-
-	App->Cl19_Ogre->OgreListener->Dubug_Physics_Draw = 0;
-
-	Show_Entities(false); // Hide All Visible Trigers
-
-	SetCursorPos(500,500);
-	S_Flags[0]->GameMode = 1;
-
-	int cx = GetSystemMetrics(SM_CXSCREEN);
-	int cy = GetSystemMetrics(SM_CYSCREEN);
-
-	//SetWindowPos(App->ViewGLhWnd,HWND_TOP,0,0,0,0,SWP_NOSIZE|SWP_NOZORDER);
-	SetWindowPos(App->ViewGLhWnd, NULL, 0, 0, cx,cy, SWP_NOZORDER);
-	SetParent(App->ViewGLhWnd,NULL);
-
-	App->Cl19_Ogre->mWindow->resize(cx,cy);
-
-	App->Cl19_Ogre->mWindow->windowMovedOrResized();
-	App->Cl19_Ogre->mCamera->setAspectRatio((Ogre::Real)App->Cl19_Ogre->mWindow->getWidth() / (Ogre::Real)App->Cl19_Ogre->mWindow->getHeight());
-
-	Root::getSingletonPtr()->renderOneFrame(); 
-
-	SetCapture(App->ViewGLhWnd);// Bernie
-	App->Cl19_Ogre->OgreListener->Pl_LeftMouseDown = 1;
-	
-	App->CUR = SetCursor(NULL);
-
-	Reset_Triggers();
-	
-	return 1;
-}
-// *************************************************************************
-// *					 	EditorMode(Terry Bernie)			 	 	   *
-// *************************************************************************
-bool GD19_Scene_Data::EditorMode(void)
-{
-	App->Cl_Grid->Grid_SetVisible(1);
-	App->Cl_Grid->Hair_SetVisible(1);
-
-	// App->Cl19_Ogre->OgreListener->showDebugOverlay(1);
-
-	if (S_Scene[0]->Sound[0].SndFile == NULL)
-	{
-	}
-	else
-	{
-		S_Scene[0]->Sound[0].SndFile->setIsPaused(true);
-		S_Scene[0]->Sound[0].SndFile->drop();
-		S_Scene[0]->Sound[0].SndFile = NULL;
-	}
-
-	S_Flags[0]->GameMode = 0;
-	App->Cl19_Ogre->OgreListener->Pl_LeftMouseDown = 0;
-	ReleaseCapture();
-	SetCursor(App->CUR);
-
-	/*App->Select_C->BoxNode->setVisible(true);
-	App->Select_C->Gizmo->setVisible(true);*/
-
-	App->Cl19_Ogre->OgreListener->Dubug_Physics_Draw = 1;
-	Show_Entities(true); // Show All Visible Trigers
-
-	App->Cl19_Ogre->OgreListener->GD_CameraMode = CurrentCamMode;
-	
-	App->Cl_Visuals->BoxNode->setVisible(true);
-	App->Cl_Grid->Arrow_Node->setVisible(true);
-
-	///if (App->Cl19_Ogre->OgreListener->Show_Camara_Positions == 1)
-	{
-		///App->Cl19_Ogre->textArea->show();
-	}
-	///else
-	{
-		///App->Cl19_Ogre->textArea->hide();
-	}
-
-	Reset_Triggers();
-	return 1;
-}
-
-// *************************************************************************
 // *					 Show_Entities(Terry Bernie)			 	 	   *
 // *************************************************************************
 bool GD19_Scene_Data::Show_Entities(bool YesNo)
@@ -337,54 +226,6 @@ bool GD19_Scene_Data::Is_Meshes_Used(char* Name)
 }
 
 // *************************************************************************
-// *	  				Reset_Triggers Terry Bernie						   *
-// *************************************************************************
-void GD19_Scene_Data::Reset_Triggers(void)
-{
-	Ogre::Vector3 M_Pos;
-	Ogre::Vector3 P_Pos;
-	
-	int Count=0;
-	int Total = App->SBC_Scene->Object_Count;
-
-	while (Count < Total)
-	{
-		if(App->SBC_Scene->B_Object[Count]->Deleted == 0)
-		{
-			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Move)
-			{
-				int ObjectToMove = App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Object_Index;
-
-				M_Pos = App->SBC_Scene->B_Object[ObjectToMove]->Mesh_Pos;
-				P_Pos = App->SBC_Scene->B_Object[ObjectToMove]->Physics_Pos;
-				
-				App->SBC_Scene->B_Object[Count]->S_MoveType[0]->MeshPos  = Ogre::Vector3(M_Pos);
-				App->SBC_Scene->B_Object[Count]->S_MoveType[0]->PhysicsPos = Ogre::Vector3(P_Pos);
-
-				App->SBC_Scene->B_Object[ObjectToMove]->Object_Node->setPosition(M_Pos);
-				App->SBC_Scene->B_Object[ObjectToMove]->Phys_Body->getWorldTransform().setOrigin(btVector3(P_Pos.x,P_Pos.y,P_Pos.z));
-
-				App->SBC_Scene->B_Object[Count]->Triggered = 0;
-			}
-
-			/*if (Cl_Object[Count]->Usage == Enums::Usage_Colectable)
-			{
-				Cl_Object[Count]->OgreEntity->setVisible(TRUE);
-				
-				Cl_Object[Count]->OgreNode->setPosition(Cl_Object[Count]->Mesh_Pos);
-
-				P_Pos = Cl_Object[Count]->Physics_Pos;
-				Cl_Object[Count]->bt_body->getWorldTransform().setOrigin(btVector3(P_Pos.x, P_Pos.y, P_Pos.z));
-
-				Cl_Object[Count]->Triggered = 0;
-			}*/
-		}
-
-		Count++;
-	}
-}
-
-// *************************************************************************
 // *					Open_Project_Dlg Terry Bernie					   *
 // *************************************************************************
 bool GD19_Scene_Data::Open_Project_Dlg(char* Extension, char* Title, char* StartDirectory)
@@ -420,17 +261,6 @@ bool GD19_Scene_Data::Open_Project_Dlg(char* Extension, char* Title, char* Start
 	return 0;
 }
 
-// *************************************************************************
-//							Start_UpScene Terry Bernie					   *
-// *************************************************************************
-bool GD19_Scene_Data::Get_UserFile()
-{
-	bool test = Open_Project_Dlg("Scene File   *.GDScene\0*.GDScene\0", "Scene File", NULL);
-	if (test == 0)
-	{
-		return 0;
-	}
-	return 1;
-}
+
 
 

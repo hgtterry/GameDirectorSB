@@ -136,7 +136,7 @@ LRESULT CALLBACK GD19_Bullet::Physics_Console_Proc(HWND hDlg, UINT message, WPAR
 			{
 				if(App->Cl_Scene_Data->SceneLoaded == 1)
 				{
-					App->Cl_Scene_Data->Reset_Triggers();
+					App->SBC_Physics->Reset_Triggers();
 				}
 				return TRUE;
 			}

@@ -179,7 +179,7 @@ int GD19_Stock::Edit_Message_Stock(LPARAM lParam)
 	result = strcmp(btext, "Default Text");
 	if (result == 0)
 	{
-		strcpy(App->Cl_Dialogs->btext,"Change Default Text");
+		/*strcpy(App->Cl_Dialogs->btext,"Change Default Text");
 		strcpy(App->Cl_Dialogs->Chr_Text,App->Cl_Scene_Data->S_Messages[Selected_Stock_Index]->Default_Text);
 
 		App->Cl_Dialogs->Dialog_Text(0);
@@ -194,14 +194,14 @@ int GD19_Stock::Edit_Message_Stock(LPARAM lParam)
 
 		App->Cl_Scene_Data->S_Messages[Selected_Stock_Index]->textArea1->setCaption(App->Cl_Dialogs->Chr_Text);
 
-		Update_Message_Properties();
+		Update_Message_Properties();*/
 		return 1;
 	}
 
 	result = strcmp(btext, "Font Size");
 	if (result == 0)
 	{
-		char IntBuff[30];
+		/*char IntBuff[30];
 		sprintf(IntBuff,"%i",App->Cl_Scene_Data->S_Messages[Selected_Stock_Index]->Font_Size);
 
 		strcpy(App->Cl_Dialogs->btext,"Change Font Size");
@@ -218,7 +218,7 @@ int GD19_Stock::Edit_Message_Stock(LPARAM lParam)
 	
 		App->Cl_Scene_Data->S_Messages[Selected_Stock_Index]->textArea1->setCharHeight(Ogre::Real(App->Cl_Dialogs->mInt));
 
-		Update_Message_Properties();
+		Update_Message_Properties();*/
 		return 1;
 	}
 
@@ -234,11 +234,11 @@ int GD19_Stock::Edit_Message_Stock(LPARAM lParam)
 			float Green = (float)GetGValue(App->SBC_FileIO->color.rgbResult)/ 256;
 			float Blue = (float)GetBValue(App->SBC_FileIO->color.rgbResult)/ 256;
 
-			App->Cl_Scene_Data->S_Messages[Selected_Stock_Index]->Colour.x = Red;
+			/*App->Cl_Scene_Data->S_Messages[Selected_Stock_Index]->Colour.x = Red;
 			App->Cl_Scene_Data->S_Messages[Selected_Stock_Index]->Colour.y = Green;
 			App->Cl_Scene_Data->S_Messages[Selected_Stock_Index]->Colour.z = Blue;
 
-			App->Cl_Scene_Data->S_Messages[Selected_Stock_Index]->textArea1->setColour(ColourValue(Red,Green,Blue));
+			App->Cl_Scene_Data->S_Messages[Selected_Stock_Index]->textArea1->setColour(ColourValue(Red,Green,Blue));*/
 			Update_Message_Properties();
 		}
 		return 1;
@@ -247,8 +247,8 @@ int GD19_Stock::Edit_Message_Stock(LPARAM lParam)
 	result = strcmp(btext, "Pos Horizontal");
 	if (result == 0)
 	{
-		char IntBuff[30];
-		sprintf(IntBuff,"%f",App->Cl_Scene_Data->S_Messages[Selected_Stock_Index]->Pos_Hoz);
+		//char IntBuff[30];
+		/*sprintf(IntBuff,"%f",App->Cl_Scene_Data->S_Messages[Selected_Stock_Index]->Pos_Hoz);
 
 		strcpy(App->Cl_Dialogs->btext,"Horizontal Position");
 		
@@ -266,7 +266,7 @@ int GD19_Stock::Edit_Message_Stock(LPARAM lParam)
 		float Vert = App->Cl_Scene_Data->S_Messages[Selected_Stock_Index]->Pos_Vert;
 		float Hoz = App->Cl_Scene_Data->S_Messages[Selected_Stock_Index]->Pos_Hoz;
 	
-		App->Cl_Scene_Data->S_Messages[Selected_Stock_Index]->textArea1->setPosition(Hoz,Vert);
+		App->Cl_Scene_Data->S_Messages[Selected_Stock_Index]->textArea1->setPosition(Hoz,Vert);*/
 		
 		Update_Message_Properties();
 		return 1;
@@ -275,7 +275,7 @@ int GD19_Stock::Edit_Message_Stock(LPARAM lParam)
 	result = strcmp(btext, "Pos Vertical");
 	if (result == 0)
 	{
-		char IntBuff[30];
+		/*char IntBuff[30];
 		sprintf(IntBuff,"%f",App->Cl_Scene_Data->S_Messages[Selected_Stock_Index]->Pos_Vert);
 
 		strcpy(App->Cl_Dialogs->btext,"Vertical Position");
@@ -294,7 +294,7 @@ int GD19_Stock::Edit_Message_Stock(LPARAM lParam)
 		float Vert = App->Cl_Scene_Data->S_Messages[Selected_Stock_Index]->Pos_Vert;
 		float Hoz = App->Cl_Scene_Data->S_Messages[Selected_Stock_Index]->Pos_Hoz;
 	
-		App->Cl_Scene_Data->S_Messages[Selected_Stock_Index]->textArea1->setPosition(Hoz,Vert);
+		App->Cl_Scene_Data->S_Messages[Selected_Stock_Index]->textArea1->setPosition(Hoz,Vert);*/
 		
 		Update_Message_Properties();
 		return 1;

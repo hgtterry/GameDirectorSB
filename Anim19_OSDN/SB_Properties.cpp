@@ -1585,7 +1585,7 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 
 		Update_ListView_Move_Entities();
 
-		App->Cl_Scene_Data->Reset_Triggers();
+		App->SBC_Physics->Reset_Triggers();
 	}
 
 
@@ -1621,7 +1621,7 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 
 			Update_ListView_Move_Entities();
 
-			App->Cl_Scene_Data->Reset_Triggers();
+			App->SBC_Physics->Reset_Triggers();
 
 		}
 		return 1;
@@ -1666,7 +1666,7 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 
 			Update_ListView_Move_Entities();
 
-			App->Cl_Scene_Data->Reset_Triggers();
+			App->SBC_Physics->Reset_Triggers();
 		}
 		return 1;
 	}
@@ -1702,7 +1702,7 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 
 			Update_ListView_Move_Entities();
 
-			App->Cl_Scene_Data->Reset_Triggers();
+			App->SBC_Physics->Reset_Triggers();
 		}
 
 		return 1;
@@ -1727,7 +1727,7 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 			Mark_As_Altered(Index);
 
 			Update_ListView_Move_Entities();
-			App->Cl_Scene_Data->Reset_Triggers();
+			App->SBC_Physics->Reset_Triggers();
 		}
 
 		return 1;
@@ -1747,7 +1747,7 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 
 		Update_ListView_Move_Entities();
 
-		App->Cl_Scene_Data->Reset_Triggers();
+		App->SBC_Physics->Reset_Triggers();
 
 		return 1;
 	}
@@ -1770,7 +1770,7 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 
 		Update_ListView_Move_Entities();
 
-		App->Cl_Scene_Data->Reset_Triggers();
+		App->SBC_Physics->Reset_Triggers();
 
 		return 1;
 	}
@@ -1803,7 +1803,7 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 
 		Update_ListView_Move_Entities();
 
-		App->Cl_Scene_Data->Reset_Triggers();
+		App->SBC_Physics->Reset_Triggers();
 		return 1;
 	}
 

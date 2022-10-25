@@ -78,23 +78,6 @@ typedef struct Scene_Type {
 
 }Scene_Type;
 
-// ------------------------ Stock Message
-typedef struct Stock_Messages_type 
-{
-	int Type;
-	char Name[255];
-	char Default_Text[255];
-	int Font_Size;
-	Ogre::Overlay* overlay;
-	Ogre::OverlayContainer* panel;
-	Ogre::TextAreaOverlayElement* textArea1;
-	Ogre::TextAreaOverlayElement* textArea2;
-	Ogre::Real Pos_Vert;
-	Ogre::Real Pos_Hoz;
-	Ogre::Vector3 Colour;
-
-}Stock_Messages_type;
-
 // ------------------------ Stock Sound
 typedef struct Stock_Sound_type 
 {
@@ -128,21 +111,15 @@ public:
 
 	void Set_Move_Defaults(int Index);
 
-	bool Get_UserFile();
 	bool Open_Project_Dlg(char* Extension, char* Title, char* StartDirectory);
 	
-	bool GameMode(void);
-	bool EditorMode(void);
 	bool Show_Entities(bool YesNo);
-
-	void Reset_Triggers(void);
 
 	bool Is_Meshes_Used(char* Name);
 	
 	Flags_Type*				S_Flags[1];
 	Scene_Type*				S_Scene[1];
 	Load_Options_Type*		S_LoadOptions[1];
-	Stock_Messages_type*	S_Messages[20];
 	Stock_Sound_type*		St_Sounds[200];
 
 	int Player_Location_Count;
