@@ -368,6 +368,16 @@ void SB_Properties::ListView_OnClickOptions(LPARAM lParam)
 		}
 		return;
 	}
+
+	// Panels
+	if (Edit_Category == Enums::Edit_Panels)
+	{
+		if (Edit_Physics == 0)
+		{
+			Edit_Panels_OnClick(lParam);
+		}
+		return;
+	}
 	
 	return;
 }
@@ -893,21 +903,11 @@ bool SB_Properties::Update_ListView_Panels()
 	strcat(buff, "   (Panels)");
 	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
 
-	//// new sound
-	//char chr_Play[100];
-	//if (App->SBC_Scene->B_Object[index]->S_Sound[0]->Play == 1)
-	//{
-	//	strcpy(chr_Play, "True");
-	//}
-	//else
-	//{
-	//	strcpy(chr_Play, "False");
-	//}
+	char chr_PosX[20];
+	sprintf(chr_PosX, "%.3f ", App->SBC_Scene->B_Panel[index]->PosX);
 
-	//char chr_Volume[100];
-	//float sum2 = App->SBC_Scene->B_Object[index]->S_Sound[0]->SndVolume;
-	//int Percent = int(sum2 * 100);
-	//_itoa(Percent, chr_Volume, 10);
+	char chr_PosY[20];
+	sprintf(chr_PosY, "%.3f ", App->SBC_Scene->B_Panel[index]->PosY);
 
 
 	const int NUM_ITEMS = 4;
@@ -919,10 +919,10 @@ bool SB_Properties::Update_ListView_Panels()
 
 	grid[0][0] = "Name",		grid[1][0] = App->SBC_Scene->B_Panel[index]->Panel_Name;
 	grid[0][1] = " ",			grid[1][1] = " ";// App->SBC_Scene->B_Object[index]->Mesh_FileName;
-	grid[0][2] = " ",			grid[1][2] = " ";
-	/*grid[0][3] = "Sound",		grid[1][3] = App->SBC_Scene->B_Object[index]->S_Sound[0]->Sound_File;
-	grid[0][4] = "Volume",		grid[1][4] = chr_Volume;
-	grid[0][5] = "Play",		grid[1][5] = chr_Play;*/
+	grid[0][2] = "Pos_X",		grid[1][2] = chr_PosX;
+	grid[0][3] = "Pos_Y",		grid[1][3] = chr_PosY;
+//	grid[0][4] = "Volume",		grid[1][4] = chr_Volume;
+//	grid[0][5] = "Play",		grid[1][5] = chr_Play;*/
 
 
 
@@ -1921,6 +1921,95 @@ bool SB_Properties::Edit_Collectables_OnClick(LPARAM lParam)
 		Update_ListView_Collectables();
 
 		App->SBC_Physics->Reset_Triggers();
+		return 1;
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *				Edit_Panels_OnClick  Terry Bernie				   *
+// *************************************************************************
+bool SB_Properties::Edit_Panels_OnClick(LPARAM lParam)
+{
+	int Index = App->SBC_Properties->Current_Selected_Object; // Get Selected Object Index 
+	int result = 1;
+	int test;
+
+	LPNMLISTVIEW poo = (LPNMLISTVIEW)lParam;
+	test = poo->iItem;
+	ListView_GetItemText(Properties_hLV, test, 0, btext, 20);
+
+	result = strcmp(btext, "Name");
+	if (result == 0)
+	{
+		strcpy(App->SBC_Dialogs->btext, "Change Panels Name");
+		strcpy(App->SBC_Dialogs->Chr_Text, App->SBC_Scene->B_Panel[Index]->Panel_Name);
+
+		App->SBC_Dialogs->Dialog_Text();
+
+		if (App->SBC_Dialogs->Canceled == 1)
+		{
+			return TRUE;
+		}
+
+		strcpy(App->SBC_Scene->B_Panel[Index]->Panel_Name, App->SBC_Dialogs->Chr_Text);
+
+
+		//Mark_As_Altered(Index);
+		App->SBC_FileView->Change_Item_Name(App->SBC_Scene->B_Panel[Index]->FileViewItem, App->SBC_Dialogs->Chr_Text);
+
+		Update_ListView_Panels();
+
+	}
+
+	result = strcmp(btext, "Pos_X");
+	if (result == 0)
+	{
+		strcpy(App->Cl_Dialogs->btext, "Set Position X");
+
+		char buff[256];
+		sprintf(buff, "%.3f", App->SBC_Scene->B_Panel[Index]->PosX);
+		strcpy(App->Cl_Dialogs->Chr_Float, buff);
+
+		App->Cl_Dialogs->Dialog_Float();
+
+		if (App->Cl_Dialogs->Canceled == 0)
+		{
+
+			App->SBC_Scene->B_Panel[Index]->PosX = App->Cl_Dialogs->mFloat;
+
+			//Mark_As_Altered(Index);
+
+			Update_ListView_Panels();
+	
+		}
+
+		return 1;
+	}
+
+	result = strcmp(btext, "Pos_Y");
+	if (result == 0)
+	{
+		strcpy(App->Cl_Dialogs->btext, "Set Position Y");
+
+		char buff[256];
+		sprintf(buff, "%.3f", App->SBC_Scene->B_Panel[Index]->PosY);
+		strcpy(App->Cl_Dialogs->Chr_Float, buff);
+
+		App->Cl_Dialogs->Dialog_Float();
+
+		if (App->Cl_Dialogs->Canceled == 0)
+		{
+
+			App->SBC_Scene->B_Panel[Index]->PosY = App->Cl_Dialogs->mFloat;
+
+			//Mark_As_Altered(Index);
+
+			Update_ListView_Panels();
+
+		}
+
 		return 1;
 	}
 

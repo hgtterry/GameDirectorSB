@@ -34,6 +34,9 @@ Base_Panel::Base_Panel()
 
 	FileViewItem = nullptr;
 
+	PosX = 300;
+	PosY = 300;
+
 	strcpy(Panel_Name, "Panel_1");
 
 }
@@ -55,7 +58,7 @@ void Base_Panel::Render_Panel()
 // *************************************************************************
 void Base_Panel::ImGui_Panel(void)
 {
-	ImGui::SetNextWindowPos(ImVec2(300, 300));
+	ImGui::SetNextWindowPos(ImVec2(PosX,PosY));
 		
 
 	if (!ImGui::Begin("Text_Debug", &Show_Panel_Flag, ImGuiWindowFlags_NoSavedSettings

@@ -38,6 +38,9 @@ public:
 	bool Show_Panel_Flag;
 
 	char Panel_Name[MAX_PATH];
+
+	float PosX;
+	float PosY;
 	//------------------------------ ListView
 
 	HTREEITEM FileViewItem;
