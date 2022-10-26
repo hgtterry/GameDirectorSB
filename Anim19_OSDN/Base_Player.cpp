@@ -41,10 +41,12 @@ Base_Player::Base_Player()
 	StartPos.y = 0;
 	StartPos.z = 0;
 
-	Physics_Rotation.setW(1);
+	/*Physics_Rotation.setW(0);
 	Physics_Rotation.setX(0);
 	Physics_Rotation.setY(0);
-	Physics_Rotation.setZ(0);
+	Physics_Rotation.setZ(1);*/
+
+	Physics_Rotation = btQuaternion(1, 0, 0, 0);
 
 	Forward_Timer = 0;
 	Ground_speed = 4.2;
