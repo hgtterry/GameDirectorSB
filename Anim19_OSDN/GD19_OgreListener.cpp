@@ -121,7 +121,7 @@ bool GD19_OgreListener::frameStarted(const FrameEvent& evt)
 	App->Cl19_Ogre->m_imgui.NewFrame(evt.timeSinceLastFrame, (float)View_Width, (float)View_Height);
 
 	int Count = 0;
-	while (Count < App->SBC_Scene->Panels_Count)
+	while (Count < App->SBC_Scene->Counters_Count)
 	{
 		if (App->SBC_Scene->B_Panel[Count]->Show_Panel_Flag == 1)
 		{

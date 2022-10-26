@@ -40,7 +40,7 @@ SB_Scene::SB_Scene()
 	Object_Count = 0;
 	Camera_Count = 0;
 	Entity_Count = 0;
-	Panels_Count = 0;
+	Counters_Count = 0;
 
 	Project_Resources_Created = 0;
 

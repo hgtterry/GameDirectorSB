@@ -370,11 +370,11 @@ void SB_Properties::ListView_OnClickOptions(LPARAM lParam)
 	}
 
 	// Panels
-	if (Edit_Category == Enums::Edit_Panels)
+	if (Edit_Category == Enums::Edit_Counters)
 	{
 		if (Edit_Physics == 0)
 		{
-			Edit_Panels_OnClick(lParam);
+			Edit_Counters_OnClick(lParam);
 		}
 		return;
 	}
@@ -893,14 +893,14 @@ bool SB_Properties::Update_ListView_Collectables()
 // *************************************************************************
 // *		Update_ListView_Panels():- Terry and Hazel Flanigan 2022	   *
 // *************************************************************************
-bool SB_Properties::Update_ListView_Panels()
+bool SB_Properties::Update_ListView_Counters()
 {
 	int index = App->SBC_Properties->Current_Selected_Object;
 
 
 	char buff[255];
 	strcpy(buff, App->SBC_Scene->B_Panel[index]->Panel_Name);
-	strcat(buff, "   (Panels)");
+	strcat(buff, "   (Counters)");
 	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
 
 	char chr_PosX[20];
@@ -1930,9 +1930,9 @@ bool SB_Properties::Edit_Collectables_OnClick(LPARAM lParam)
 }
 
 // *************************************************************************
-// *				Edit_Panels_OnClick  Terry Bernie				   *
+// *				Edit_Counters_OnClick  Terry Bernie					   *
 // *************************************************************************
-bool SB_Properties::Edit_Panels_OnClick(LPARAM lParam)
+bool SB_Properties::Edit_Counters_OnClick(LPARAM lParam)
 {
 	int Index = App->SBC_Properties->Current_Selected_Object; // Get Selected Object Index 
 	int result = 1;
@@ -1961,7 +1961,7 @@ bool SB_Properties::Edit_Panels_OnClick(LPARAM lParam)
 		//Mark_As_Altered(Index);
 		App->SBC_FileView->Change_Item_Name(App->SBC_Scene->B_Panel[Index]->FileViewItem, App->SBC_Dialogs->Chr_Text);
 
-		Update_ListView_Panels();
+		Update_ListView_Counters();
 
 	}
 
@@ -1983,7 +1983,7 @@ bool SB_Properties::Edit_Panels_OnClick(LPARAM lParam)
 
 			//Mark_As_Altered(Index);
 
-			Update_ListView_Panels();
+			Update_ListView_Counters();
 	
 		}
 
@@ -2008,7 +2008,7 @@ bool SB_Properties::Edit_Panels_OnClick(LPARAM lParam)
 
 			//Mark_As_Altered(Index);
 
-			Update_ListView_Panels();
+			Update_ListView_Counters();
 
 		}
 
@@ -2033,7 +2033,7 @@ bool SB_Properties::Edit_Panels_OnClick(LPARAM lParam)
 
 		//Mark_As_Altered(Index);
 		
-		Update_ListView_Panels();
+		Update_ListView_Counters();
 
 		return 1;
 	}
@@ -2057,7 +2057,7 @@ bool SB_Properties::Edit_Panels_OnClick(LPARAM lParam)
 
 		//App->SBC_Properties->Mark_As_Altered(Index);
 
-		Update_ListView_Panels();
+		Update_ListView_Counters();
 
 		return 1;
 	}

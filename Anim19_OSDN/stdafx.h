@@ -114,7 +114,7 @@ namespace Enums
 		Edit_Camera = 13,
 		Edit_Area = 14,
 		FV_Edit_Level = 15,
-		Edit_Panels = 16
+		Edit_Counters = 16
 	};
 
 	enum Usage
@@ -343,8 +343,8 @@ namespace Enums
 		FileView_Teleports_File = 16,
 		FileView_Collectables_Folder = 17,
 		FileView_Collectables_File = 18,
-		FileView_Panels_Folder = 19,
-		FileView_Panels_File = 20
+		FileView_Counters_Folder = 19,
+		FileView_Counters_File = 20
 	};
 }
 

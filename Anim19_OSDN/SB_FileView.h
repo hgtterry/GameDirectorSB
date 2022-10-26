@@ -72,7 +72,7 @@ public:
 	HTREEITEM FV_Teleporters_Folder;
 	HTREEITEM FV_Collectables_Folder;
 	HTREEITEM FV_Display_Folder;
-	HTREEITEM FV_Panels_Folder;
+	HTREEITEM FV_Counters_Folder;
 
 	HMENU hMenu;
 

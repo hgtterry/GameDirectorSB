@@ -59,7 +59,7 @@ public:
 	int Object_Count;		// Actual Object Count Zero Based [171221]
 	int Camera_Count;		// Actual Object Count Zero Based [171221]
 	int Entity_Count;		// Actual Object Count Zero Based [171221]
-	int Panels_Count;
+	int Counters_Count;
 
 	int Object_ID_Counter;	
 

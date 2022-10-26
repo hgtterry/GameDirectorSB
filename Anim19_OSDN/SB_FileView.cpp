@@ -500,10 +500,10 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	tvinsert.hParent = FV_Display_Folder;
 	tvinsert.hInsertAfter = TVI_LAST;
 	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
-	tvinsert.item.pszText = "Panels";
+	tvinsert.item.pszText = "Counters";
 	tvinsert.item.iImage = 0;
 	tvinsert.item.iSelectedImage = 1;
-	FV_Panels_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
+	FV_Counters_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
 
 }
 
@@ -885,24 +885,24 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		return;
 	}
 
-	// ------------------------------------------------------------ Panels
-	if (!strcmp(FileView_Folder, "Panels")) // Folder
+	// ------------------------------------------------------------ Counters
+	if (!strcmp(FileView_Folder, "Counters")) // Folder
 	{
-		App->SBC_FileView->Context_Selection = Enums::FileView_Panels_Folder;
+		App->SBC_FileView->Context_Selection = Enums::FileView_Counters_Folder;
 		return;
 	}
-	if (!strcmp(FileView_File, "Panels"))
+	if (!strcmp(FileView_File, "Counters"))
 	{
-		App->SBC_FileView->Context_Selection = Enums::FileView_Panels_File;
+		App->SBC_FileView->Context_Selection = Enums::FileView_Counters_File;
 
 		HideRightPanes();
 		ShowWindow(App->GD_Properties_Hwnd, 1);
 		App->SBC_Props_Dialog->Hide_Panel_Test_Dlg(1);
 
-		App->SBC_Properties->Edit_Category = Enums::Edit_Panels;
+		App->SBC_Properties->Edit_Category = Enums::Edit_Counters;
 		App->SBC_Properties->Current_Selected_Object = Index;
 
-		App->SBC_Properties->Update_ListView_Panels();
+		App->SBC_Properties->Update_ListView_Counters();
 
 		return;
 	}
@@ -1505,16 +1505,16 @@ void SB_FileView::Context_Menu(HWND hDlg)
 		}
 
 		//------------------------------------- Panels
-		if (!strcmp(App->SBC_FileView->FileView_Folder, "Panels")) // Folder
+		if (!strcmp(App->SBC_FileView->FileView_Folder, "Counters")) // Folder
 		{
 			App->SBC_FileView->hMenu = CreatePopupMenu();
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_NEW, L"&New");
 			TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
 			DestroyMenu(App->SBC_FileView->hMenu);
-			Context_Selection = Enums::FileView_Panels_Folder;
+			Context_Selection = Enums::FileView_Counters_Folder;
 		}
 
-		if (!strcmp(App->SBC_FileView->FileView_File, "Panels"))
+		if (!strcmp(App->SBC_FileView->FileView_File, "Counters"))
 		{
 			App->SBC_FileView->hMenu = CreatePopupMenu();
 
@@ -1525,7 +1525,7 @@ void SB_FileView::Context_Menu(HWND hDlg)
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
 			TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
 			DestroyMenu(App->SBC_FileView->hMenu);
-			Context_Selection = Enums::FileView_Panels_File;
+			Context_Selection = Enums::FileView_Counters_File;
 		}
 
 	}
@@ -1658,24 +1658,24 @@ void SB_FileView::Context_New(HWND hDlg)
 		return;
 	}
 
-	if (App->SBC_FileView->Context_Selection == Enums::FileView_Panels_Folder)
+	if (App->SBC_FileView->Context_Selection == Enums::FileView_Counters_Folder)
 	{
 
-		App->SBC_Dialogs->YesNo("Add Object", "Do you want to add a new Panel", 1);
+		App->SBC_Dialogs->YesNo("Add Object", "Do you want to add a new Counter", 1);
 
 		bool Doit = App->SBC_Dialogs->Canceled;
 		if (Doit == 0)
 		{
-			int Index = App->SBC_Scene->Panels_Count;
+			int Index = App->SBC_Scene->Counters_Count;
 
 			App->SBC_Scene->B_Panel[Index] = new Base_Panel();
 
-			HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Panels_Folder, App->SBC_Scene->B_Panel[Index]->Panel_Name, Index, true);
+			HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Counters_Folder, App->SBC_Scene->B_Panel[Index]->Panel_Name, Index, true);
 			App->SBC_Scene->B_Panel[Index]->FileViewItem = Temp;
 
 			App->SBC_FileView->SelectItem(App->SBC_Scene->B_Panel[Index]->FileViewItem);
 
-			App->SBC_Scene->Panels_Count++;
+			App->SBC_Scene->Counters_Count++;
 
 
 		}
