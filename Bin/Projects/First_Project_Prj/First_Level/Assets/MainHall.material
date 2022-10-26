@@ -1,0 +1,26 @@
+material MainHall/wall_concrete
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture wall_concrete.dds
+             }
+         }
+    }
+}
+material MainHall/ground_stone
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture ground_stone.dds
+             }
+         }
+    }
+}
