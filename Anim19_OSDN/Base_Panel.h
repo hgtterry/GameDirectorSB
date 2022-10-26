@@ -36,6 +36,8 @@ public:
 	void ImGui_Panel(void);
 
 	bool Show_Panel_Flag;
+	bool Deleted;
+	int Unique_ID;
 
 	char Panel_Name[MAX_PATH];
 	char Text[MAX_PATH];

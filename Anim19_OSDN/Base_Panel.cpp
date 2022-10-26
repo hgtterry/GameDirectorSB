@@ -34,12 +34,15 @@ Base_Panel::Base_Panel()
 
 	FileViewItem = nullptr;
 
+	Deleted = 0;
+	Unique_ID = 0;
+
 	PosX = 300;
 	PosY = 300;
 
 	Counter = 0;
 
-	strcpy(Panel_Name, "Panel_1");
+	strcpy(Panel_Name, "Counter_1");
 	strcpy(Text, "Test");
 
 }

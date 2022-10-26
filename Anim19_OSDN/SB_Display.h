@@ -27,5 +27,7 @@ class SB_Display
 public:
 	SB_Display();
 	~SB_Display();
+
+	void Add_New_Counter();
 };
 

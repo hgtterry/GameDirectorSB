@@ -1666,18 +1666,7 @@ void SB_FileView::Context_New(HWND hDlg)
 		bool Doit = App->SBC_Dialogs->Canceled;
 		if (Doit == 0)
 		{
-			int Index = App->SBC_Scene->Counters_Count;
-
-			App->SBC_Scene->B_Panel[Index] = new Base_Panel();
-
-			HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Counters_Folder, App->SBC_Scene->B_Panel[Index]->Panel_Name, Index, true);
-			App->SBC_Scene->B_Panel[Index]->FileViewItem = Temp;
-
-			App->SBC_FileView->SelectItem(App->SBC_Scene->B_Panel[Index]->FileViewItem);
-
-			App->SBC_Scene->Counters_Count++;
-
-
+			App->SBC_Display->Add_New_Counter();
 		}
 
 		return;
