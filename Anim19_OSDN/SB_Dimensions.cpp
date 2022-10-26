@@ -110,6 +110,77 @@ void SB_Dimensions::ImGui_Dimensions(void)
 			ImGui_Rotation();
 		}
 		
+		ImGui::Separator();
+		ImGui::Spacing();
+
+		//--------------------------------------- Position
+
+		style->Colors[ImGuiCol_Button] = ImVec4(0.8f, 0.8f, 0.8f, 1);
+
+		if (Show_Position == 1)
+		{
+			style->Colors[ImGuiCol_Button] = ImVec4(0.0f, 1.0f, 0.0f, 1.00f);
+		}
+
+		if (ImGui::Button("Position"))
+		{
+			Show_Dimensions = 0;
+			Show_Position = 1;
+			Show_Scale = 0;
+			Show_Rotation = 0;
+
+			App->SBC_Markers->Hide_Axis_Marker();
+			RedrawWindow(App->SBC_Props_Dialog->Dimensions_Dlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+		}
+
+		style->Colors[ImGuiCol_Button] = ImVec4(0.8f, 0.8f, 0.8f, 1);
+
+		//--------------------------------------- Rotation
+		ImGui::SameLine(0.0f);
+
+		if (Show_Rotation == 1)
+		{
+			style->Colors[ImGuiCol_Button] = ImVec4(0.0f, 1.0f, 0.0f, 1.00f);
+		}
+
+		if (ImGui::Button("Rotation"))
+		{
+			Show_Dimensions = 0;
+			Show_Position = 0;
+			Show_Scale = 0;
+			Show_Rotation = 1;
+
+			App->SBC_Markers->Hide_Axis_Marker();
+			RedrawWindow(App->SBC_Props_Dialog->Dimensions_Dlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+		}
+		style->Colors[ImGuiCol_Button] = ImVec4(0.8f, 0.8f, 0.8f, 1);
+
+		//--------------------------------------- Scale
+		ImGui::SameLine(0.0f);
+
+		if (Show_Scale == 1)
+		{
+			style->Colors[ImGuiCol_Button] = ImVec4(0.0f, 1.0f, 0.0f, 1.00f);
+		}
+
+		if (ImGui::Button("Scale"))
+		{
+			Show_Dimensions = 0;
+			Show_Position = 0;
+			Show_Scale = 1;
+			Show_Rotation = 0;
+
+			App->SBC_Markers->Hide_Axis_Marker();
+			RedrawWindow(App->SBC_Props_Dialog->Dimensions_Dlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+		}
+
+		style->Colors[ImGuiCol_Button] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
+
+		ImGui::SameLine(0.0f);
+
 		if (ImGui::Button("Close"))
 		{
 			Show_Dimensions = 0;
@@ -122,7 +193,6 @@ void SB_Dimensions::ImGui_Dimensions(void)
 
 			//App->CL_Ogre->RenderListener->Show_Crosshair = 0;
 		}
-
 		ImGui::End();
 	}
 }
