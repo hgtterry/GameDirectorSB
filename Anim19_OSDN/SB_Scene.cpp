@@ -229,19 +229,25 @@ bool SB_Scene::Game_Mode(void)
 
 	////App->Cl19_Ogre->textArea->hide();
 
-	//if (S_Scene[0]->Sound[0].Play == 1)
-	//{
-	//	int result = 1;
-	//	result = strcmp(S_Scene[0]->Sound[0].SoundFile, "None");
-	//	if (result == 1) // Could be Unsafe 
-	//	{
-	//		S_Scene[0]->Sound[0].SndFile = App->Cl_SoundMgr->SoundEngine->play2D(S_Scene[0]->Sound[0].SoundFileAndPath,
-	//			S_Scene[0]->Sound[0].Loop, true, true);
+	if (App->SBC_Scene->B_Area[0]->S_Environment[0]->Play == 1)
+	{
+		int result = 1;
+		result = strcmp(App->SBC_Scene->B_Area[0]->S_Environment[0]->Sound_File, "None");
+		if (result == 1) // Could be Unsafe 
+		{
+			char buff[1024];
+			strcpy(buff, App->SBC_SoundMgr->Default_Folder);
+			strcat(buff, "\\Media\\Sounds\\");
 
-	//		S_Scene[0]->Sound[0].SndFile->setVolume(S_Scene[0]->Sound[0].Volume);
-	//		S_Scene[0]->Sound[0].SndFile->setIsPaused(false);
-	//	}
-	//}
+			strcat(buff, App->SBC_Scene->B_Area[0]->S_Environment[0]->Sound_File);
+
+			App->SBC_Scene->B_Area[0]->S_Environment[0]->SndFile = App->SBC_SoundMgr->SoundEngine->play2D(buff, false, true, true);
+			//S_Scene[0]->Sound[0].Loop, true, true);
+
+			App->SBC_Scene->B_Area[0]->S_Environment[0]->SndFile->setVolume(App->SBC_Scene->B_Area[0]->S_Environment[0]->SndVolume);
+			App->SBC_Scene->B_Area[0]->S_Environment[0]->SndFile->setIsPaused(false);
+		}
+	}
 
 	App->Cl19_Ogre->OgreListener->GD_Run_Physics = 1;
 
