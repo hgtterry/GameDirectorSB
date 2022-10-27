@@ -115,18 +115,6 @@ void GD19_Scene_Data::SetScene_Defaults(void)
 	S_Scene[0]->LastSceneType = 0;
 	S_Scene[0]->PlaneCount=0;
 
-	S_Scene[0]->AmbientColour.x = 1;
-	S_Scene[0]->AmbientColour.y = 1;
-	S_Scene[0]->AmbientColour.z = 1;
-
-	S_Scene[0]->DiffuseColour.x = 0;
-	S_Scene[0]->DiffuseColour.y = 0;
-	S_Scene[0]->DiffuseColour.z = 0;
-
-	S_Scene[0]->SpecularColour.x = 0;
-	S_Scene[0]->SpecularColour.y = 0;
-	S_Scene[0]->SpecularColour.z = 0;
-
 	// Sound
 	strcpy(S_Scene[0]->Sound[0].SoundFileAndPath,App->SBC_SoundMgr->Default_Folder);
 	strcat(S_Scene[0]->Sound[0].SoundFileAndPath,"\\Media\\Sounds\\");
@@ -142,13 +130,6 @@ void GD19_Scene_Data::SetScene_Defaults(void)
 	S_Scene[0]->Sound[0].Data1 = 0;
 	S_Scene[0]->Sound[0].SndFile = NULL;
 
-	// Sky
-	S_Scene[0]->Sky[0].Curvature = 15;
-	S_Scene[0]->Sky[0].Distance = 4000;
-	S_Scene[0]->Sky[0].Enabled = 0;
-	strcpy(S_Scene[0]->Sky[0].Material,"Examples/CloudySky");
-	S_Scene[0]->Sky[0].Tiling = 15;
-	S_Scene[0]->Sky[0].type = 1;
 }
 
 // *************************************************************************

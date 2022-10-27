@@ -20,16 +20,6 @@ typedef struct Load_Options_Type {
 }Load_Options_Type;
 //==================================== Sound Structure
 
-typedef struct Sky_Type {
-	bool Enabled;
-	int type;
-	char Material[255];
-	float Curvature;
-	float Tiling;
-	float Distance;
-}Sky_Type;
-
-
 typedef struct Int_Type {int Array;}int_Type;
 
 
@@ -58,13 +48,8 @@ typedef struct Scene_Type {
 
 	int SceneType; //0 = Terrian 1 = Indoor
 	int LastSceneType;	
-	Ogre::Vector3 AmbientColour;
-	Ogre::Vector3 DiffuseColour;
-	Ogre::Vector3 SpecularColour;
-	Ogre::Vector3 Light_Position;
 	int MoveWhat;
 	Sound_Type				Sound[1];
-	Sky_Type				Sky[1];
 
 }Scene_Type;
 

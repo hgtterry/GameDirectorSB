@@ -39,9 +39,9 @@ GD19_Environment::~GD19_Environment(void)
 // *************************************************************************
 void GD19_Environment::Load_Environment(void)
 {
-	float x = App->Cl_Scene_Data->S_Scene[0]->AmbientColour.x;
-	float y = App->Cl_Scene_Data->S_Scene[0]->AmbientColour.y;
-	float z = App->Cl_Scene_Data->S_Scene[0]->AmbientColour.z;
+	float x = App->SBC_Scene->B_Area[0]->S_Environment[0]->AmbientColour.x;
+	float y = App->SBC_Scene->B_Area[0]->S_Environment[0]->AmbientColour.y;
+	float z = App->SBC_Scene->B_Area[0]->S_Environment[0]->AmbientColour.z;
 
 	App->Cl19_Ogre->mSceneMgr->setAmbientLight(ColourValue(x,y,z));
 
