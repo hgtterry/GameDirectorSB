@@ -300,7 +300,7 @@ void GD19_Environment::Update_CreateSkyListView(void)
 	char Chr_Tiling[10];
 	char Chr_Distance[10];
 
-	if (App->Cl_Scene_Data->S_Scene[0]->Sky[0].Enabled == 1)
+	if (App->SBC_Scene->B_Area[0]->S_Environment[0]->Enabled == 1)
 	{
 		strcpy(Chr_Enabled,"True");
 	}
@@ -309,11 +309,11 @@ void GD19_Environment::Update_CreateSkyListView(void)
 		strcpy(Chr_Enabled,"Flase");
 	}
 
-	sprintf(Chr_Curvature,"%.3f",App->Cl_Scene_Data->S_Scene[0]->Sky[0].Curvature);
-	sprintf(Chr_Tiling,"%.3f",App->Cl_Scene_Data->S_Scene[0]->Sky[0].Tiling);
-	sprintf(Chr_Distance,"%.3f",App->Cl_Scene_Data->S_Scene[0]->Sky[0].Distance);
+	sprintf(Chr_Curvature,"%.3f", App->SBC_Scene->B_Area[0]->S_Environment[0]->Curvature);
+	sprintf(Chr_Tiling,"%.3f", App->SBC_Scene->B_Area[0]->S_Environment[0]->Tiling);
+	sprintf(Chr_Distance,"%.3f", App->SBC_Scene->B_Area[0]->S_Environment[0]->Distance);
 
-	const int NUM_ITEMS = 5;
+	const int NUM_ITEMS = 1;
 	const int NUM_COLS = 2;
 	std::string grid[NUM_COLS][NUM_ITEMS]; // string table
 	LV_ITEM pitem;
@@ -321,10 +321,10 @@ void GD19_Environment::Update_CreateSkyListView(void)
 	pitem.mask = LVIF_TEXT;
 
 	grid[0][0] = "Enable",			grid[1][0] = Chr_Enabled;
-	grid[0][1] = "Type",			grid[1][1] = "SkyDome";
-	grid[0][2] = "Material",		grid[1][2] = "Examples/CloudySky";
-	grid[0][3] = "Curvature",		grid[1][3] = Chr_Curvature;
-	grid[0][4] = "Tiling",			grid[1][4] = Chr_Tiling;
+	//grid[0][1] = "Type",			grid[1][1] = "SkyDome";
+	//grid[0][2] = "Material",		grid[1][2] = "Examples/CloudySky";
+	//grid[0][3] = "Curvature",		grid[1][3] = Chr_Curvature;
+	//grid[0][4] = "Tiling",			grid[1][4] = Chr_Tiling;
 	
 	
 	
@@ -417,28 +417,28 @@ void GD19_Environment::Update_CreateMainLightListView(void)
 	Ogre::Real mGreen=0;
 	Ogre::Real mBlue=0;
 
-	mRed = App->Cl_Scene_Data->S_Scene[0]->AmbientColour.x;
-	mGreen = App->Cl_Scene_Data->S_Scene[0]->AmbientColour.y;
-	mBlue = App->Cl_Scene_Data->S_Scene[0]->AmbientColour.z;
+	mRed = App->SBC_Scene->B_Area[0]->S_Environment[0]->AmbientColour.x;
+	mGreen = App->SBC_Scene->B_Area[0]->S_Environment[0]->AmbientColour.y;
+	mBlue = App->SBC_Scene->B_Area[0]->S_Environment[0]->AmbientColour.z;
 	
 	char Chr_Ambient[100];
 	sprintf(Chr_Ambient,"%.2f %.2f %.2f",mRed,mGreen,mBlue);
 
-	mRed = App->Cl_Scene_Data->S_Scene[0]->DiffuseColour.x;
-	mGreen = App->Cl_Scene_Data->S_Scene[0]->DiffuseColour.y;
-	mBlue = App->Cl_Scene_Data->S_Scene[0]->DiffuseColour.z;
+	mRed = App->SBC_Scene->B_Area[0]->S_Environment[0]->DiffuseColour.x;
+	mGreen = App->SBC_Scene->B_Area[0]->S_Environment[0]->DiffuseColour.y;
+	mBlue = App->SBC_Scene->B_Area[0]->S_Environment[0]->DiffuseColour.z;
 	
 	char Chr_Diffuse[100];
 	sprintf(Chr_Diffuse,"%.2f %.2f %.2f",mRed,mGreen,mBlue);
 
-	mRed = App->Cl_Scene_Data->S_Scene[0]->SpecularColour.x;
-	mGreen = App->Cl_Scene_Data->S_Scene[0]->SpecularColour.y;
-	mBlue = App->Cl_Scene_Data->S_Scene[0]->SpecularColour.z;
+	mRed = App->SBC_Scene->B_Area[0]->S_Environment[0]->SpecularColour.x;
+	mGreen = App->SBC_Scene->B_Area[0]->S_Environment[0]->SpecularColour.y;
+	mBlue = App->SBC_Scene->B_Area[0]->S_Environment[0]->SpecularColour.z;
 	
 	char Chr_Specular[100];
 	sprintf(Chr_Specular,"%.2f %.2f %.2f",mRed,mGreen,mBlue);
 
-	const int NUM_ITEMS = 7;
+	const int NUM_ITEMS = 4;
 	const int NUM_COLS = 2;
 	std::string grid[NUM_COLS][NUM_ITEMS]; // string table
 	LV_ITEM pitem;
@@ -449,9 +449,9 @@ void GD19_Environment::Update_CreateMainLightListView(void)
 	grid[0][1] = "Diffuse",		grid[1][1] =Chr_Diffuse;
 	grid[0][2] = "Specular",	grid[1][2] =Chr_Specular;
 	grid[0][3] = " ",			grid[1][3] = " ";
-	grid[0][4] = "PosX",		grid[1][4] = " ";
-	grid[0][5] = "PosY",		grid[1][5] = " ";
-	grid[0][6] = "Posz",		grid[1][6] = " ";
+	//grid[0][4] = "PosX",		grid[1][4] = " ";
+	//grid[0][5] = "PosY",		grid[1][5] = " ";
+	//grid[0][6] = "Posz",		grid[1][6] = " ";
 	
 	ListView_DeleteAllItems(General_hLV);
 
@@ -897,7 +897,7 @@ bool GD19_Environment::Props_OnClick(LPARAM lParam)
 			int Green = GetGValue(App->SBC_FileIO->color.rgbResult);
 			int Blue = GetBValue(App->SBC_FileIO->color.rgbResult);
 
-			App->Cl_Scene_Data->S_Scene[0]->AmbientColour = Ogre::Vector3((float)Red/256,(float)Green/256,(float)Blue/256);
+			App->SBC_Scene->B_Area[0]->S_Environment[0]->AmbientColour = Ogre::Vector3((float)Red/256,(float)Green/256,(float)Blue/256);
 
 			Update_CreateMainLightListView();
 
@@ -920,7 +920,7 @@ bool GD19_Environment::Props_OnClick(LPARAM lParam)
 			int Green=GetGValue(App->SBC_FileIO->color.rgbResult);
 			int Blue=GetBValue(App->SBC_FileIO->color.rgbResult);
 
-			App->Cl_Scene_Data->S_Scene[0]->DiffuseColour = Ogre::Vector3((float)Red/256,(float)Green/256,(float)Blue/256);
+			App->SBC_Scene->B_Area[0]->S_Environment[0]->DiffuseColour = Ogre::Vector3((float)Red/256,(float)Green/256,(float)Blue/256);
 
 			Update_CreateMainLightListView();
 
@@ -943,7 +943,7 @@ bool GD19_Environment::Props_OnClick(LPARAM lParam)
 			int Green=GetGValue(App->SBC_FileIO->color.rgbResult);
 			int Blue=GetBValue(App->SBC_FileIO->color.rgbResult);
 
-			App->Cl_Scene_Data->S_Scene[0]->SpecularColour = Ogre::Vector3((float)Red/256,(float)Green/256,(float)Blue/256);
+			App->SBC_Scene->B_Area[0]->S_Environment[0]->SpecularColour = Ogre::Vector3((float)Red/256,(float)Green/256,(float)Blue/256);
 
 			Update_CreateMainLightListView();
 
@@ -957,21 +957,16 @@ bool GD19_Environment::Props_OnClick(LPARAM lParam)
 	result = strcmp(btext, "Track");
 	if (result == 0)
 	{
-		strcpy(App->SBC_SoundMgr->mSoundFile,App->Cl_Scene_Data->S_Scene[0]->Sound[0].SoundFile);
-		App->SBC_SoundMgr->SndVolume = App->Cl_Scene_Data->S_Scene[0]->Sound[0].Volume;
+		App->SBC_SoundMgr->Accessed = 1;
+		strcpy(App->SBC_SoundMgr->Access_File, App->SBC_Scene->B_Area[0]->S_Environment[0]->Sound_File);
+
 		App->SBC_SoundMgr->Dialog_SoundFile();
 
-		//if (App->Class_Dlg_Com->Canceled == 0)
+		if (App->SBC_SoundMgr->IsCancelled == 0)
 		{
 			
-			strcpy(App->Cl_Scene_Data->S_Scene[0]->Sound[0].SoundFile,App->SBC_SoundMgr->mSoundFile);
-
-			strcpy(App->Cl_Scene_Data->S_Scene[0]->Sound[0].SoundFileAndPath,App->SBC_SoundMgr->Default_Folder);
-			strcat(App->Cl_Scene_Data->S_Scene[0]->Sound[0].SoundFileAndPath,"\\Media\\Sounds\\");
-			strcat(App->Cl_Scene_Data->S_Scene[0]->Sound[0].SoundFileAndPath,App->SBC_SoundMgr->mSoundFile);
-			App->Cl_Scene_Data->S_Scene[0]->Sound[0].Volume = App->SBC_SoundMgr->SndVolume;
-
-			App->Cl_Scene_Data->S_Scene[0]->Sound[0].Play = 1;
+			strcpy(App->SBC_Scene->B_Area[0]->S_Environment[0]->Sound_File, App->SBC_SoundMgr->Access_File);
+			App->SBC_Scene->B_Area[0]->S_Environment[0]->SndVolume = App->SBC_SoundMgr->SndVolume;
 
 			Update_CreateSoundListView();
 			
@@ -992,11 +987,11 @@ bool GD19_Environment::Props_OnClick(LPARAM lParam)
 		{
 			if(App->Cl_Dialogs->TrueFlase == 1)
 			{
-				App->Cl_Scene_Data->S_Scene[0]->Sound[0].Play = 1;
+				App->SBC_Scene->B_Area[0]->S_Environment[0]->Play = 1;
 			}
 			else
 			{
-				App->Cl_Scene_Data->S_Scene[0]->Sound[0].Play = 0;
+				App->SBC_Scene->B_Area[0]->S_Environment[0]->Play = 0;
 			}
 
 			Update_CreateSoundListView();
@@ -1017,11 +1012,11 @@ bool GD19_Environment::Props_OnClick(LPARAM lParam)
 		{
 			if(App->Cl_Dialogs->TrueFlase == 1)
 			{
-				App->Cl_Scene_Data->S_Scene[0]->Sound[0].Loop = 1;
+				App->SBC_Scene->B_Area[0]->S_Environment[0]->Loop = 1;
 			}
 			else
 			{
-				App->Cl_Scene_Data->S_Scene[0]->Sound[0].Loop = 0;
+				App->SBC_Scene->B_Area[0]->S_Environment[0]->Loop = 0;
 			}
 
 			Update_CreateSoundListView();
@@ -1071,7 +1066,7 @@ bool GD19_Environment::Props_OnClick(LPARAM lParam)
 
 		strcpy(App->Cl_Dialogs->btext,"Set Sky Visiblity");
 
-		App->Cl_Dialogs->TrueFlase = App->Cl_Scene_Data->S_Scene[0]->Sky[0].Enabled;
+		App->Cl_Dialogs->TrueFlase = App->SBC_Scene->B_Area[0]->S_Environment[0]->Enabled;
 		
 		App->Cl_Dialogs->Dialog_TrueFlase(App->MainHwnd);
 
@@ -1079,12 +1074,12 @@ bool GD19_Environment::Props_OnClick(LPARAM lParam)
 		{
 			if(App->Cl_Dialogs->TrueFlase == 1)
 			{
-				App->Cl_Scene_Data->S_Scene[0]->Sky[0].Enabled = 1;
+				App->SBC_Scene->B_Area[0]->S_Environment[0]->Enabled = 1;
 				SetSky(1);
 			}
 			else
 			{
-				App->Cl_Scene_Data->S_Scene[0]->Sky[0].Enabled = 0;
+				App->SBC_Scene->B_Area[0]->S_Environment[0]->Enabled = 0;
 				SetSky(0);
 			}
 
@@ -1170,10 +1165,10 @@ bool GD19_Environment::Props_OnClick(LPARAM lParam)
 void GD19_Environment::SetSky(bool Enable)
 {
 	App->Cl19_Ogre->mSceneMgr->setSkyDome(Enable,
-	App->Cl_Scene_Data->S_Scene[0]->Sky[0].Material,
-	App->Cl_Scene_Data->S_Scene[0]->Sky[0].Curvature,
-	App->Cl_Scene_Data->S_Scene[0]->Sky[0].Tiling,
-	App->Cl_Scene_Data->S_Scene[0]->Sky[0].Distance);
+		App->SBC_Scene->B_Area[0]->S_Environment[0]->Material,
+		App->SBC_Scene->B_Area[0]->S_Environment[0]->Curvature,
+		App->SBC_Scene->B_Area[0]->S_Environment[0]->Tiling,
+		App->SBC_Scene->B_Area[0]->S_Environment[0]->Distance);
 }
 
 // *************************************************************************

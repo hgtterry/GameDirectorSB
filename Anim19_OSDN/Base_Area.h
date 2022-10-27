@@ -2,11 +2,26 @@
 
 typedef struct Environment_type
 {
+	//--------------- Sound
 	irrklang::ISound* SndFile;
 	Ogre::Real SndVolume;
 	char Sound_File[MAX_PATH];
 	bool Play;
 	bool Loop;
+
+	//--------------- Light
+	Ogre::Vector3 AmbientColour;
+	Ogre::Vector3 DiffuseColour;
+	Ogre::Vector3 SpecularColour;
+	Ogre::Vector3 Light_Position;
+
+	//--------------- Sky
+	bool Enabled;
+	int type;
+	char Material[255];
+	float Curvature;
+	float Tiling;
+	float Distance;
 
 }Environment_type;
 
