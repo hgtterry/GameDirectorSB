@@ -115,13 +115,6 @@ void GD19_Scene_Data::SetScene_Defaults(void)
 	S_Scene[0]->LastSceneType = 0;
 	S_Scene[0]->PlaneCount=0;
 
-	S_Scene[0]->Fog[0].FogOn = 0;
-	S_Scene[0]->Fog[0].Mode = FOG_LINEAR;
-	S_Scene[0]->Fog[0].Density = 0.001000;
-	S_Scene[0]->Fog[0].Start = 50;
-	S_Scene[0]->Fog[0].End = 300;
-	S_Scene[0]->Fog[0].Colour = Ogre::Vector3(1,1,1);
-
 	S_Scene[0]->AmbientColour.x = 1;
 	S_Scene[0]->AmbientColour.y = 1;
 	S_Scene[0]->AmbientColour.z = 1;

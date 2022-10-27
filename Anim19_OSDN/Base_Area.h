@@ -23,6 +23,14 @@ typedef struct Environment_type
 	float Tiling;
 	float Distance;
 
+	//--------------- Fog
+	int Fog_On;
+	int Fog_Mode;
+	Ogre::Vector3 Fog_Colour;
+	float Fog_Start;
+	float Fog_End;
+	float Fog_Density;
+
 }Environment_type;
 
 class Base_Area

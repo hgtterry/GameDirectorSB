@@ -29,15 +29,6 @@ typedef struct Sky_Type {
 	float Distance;
 }Sky_Type;
 
-typedef struct Fog_Type { 
-	int FogOn;
-	int Mode;
-	Ogre::Vector3 Colour;
-	float Start;
-	float End;
-	float Density;
-}Fog_Type;
-
 
 typedef struct Int_Type {int Array;}int_Type;
 
@@ -74,7 +65,6 @@ typedef struct Scene_Type {
 	int MoveWhat;
 	Sound_Type				Sound[1];
 	Sky_Type				Sky[1];
-	Fog_Type				Fog[1];
 
 }Scene_Type;
 

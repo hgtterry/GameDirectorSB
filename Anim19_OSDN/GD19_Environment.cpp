@@ -45,7 +45,7 @@ void GD19_Environment::Load_Environment(void)
 
 	App->Cl19_Ogre->mSceneMgr->setAmbientLight(ColourValue(x,y,z));
 
-	if (App->Cl_Scene_Data->S_Scene[0]->Fog[0].FogOn == 1)
+	if (App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_On == 1)
 	{
 		EnableFog(true);
 	}
@@ -364,7 +364,7 @@ void GD19_Environment::Update_CreateFogListView(void)
 	char chr_Mode[20];
 
 
-	if (App->Cl_Scene_Data->S_Scene[0]->Fog[0].FogOn == 1)
+	if (App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_On == 1)
 	{
 		strcpy(chr_FogOn,"True");
 	}
@@ -373,16 +373,18 @@ void GD19_Environment::Update_CreateFogListView(void)
 		strcpy(chr_FogOn,"Flase");
 	}
 
-	sprintf(chr_Density,"%f",App->Cl_Scene_Data->S_Scene[0]->Fog[0].Density);
-	sprintf(chr_Start,"%.2f",App->Cl_Scene_Data->S_Scene[0]->Fog[0].Start);
-	sprintf(chr_End,"%.2f",App->Cl_Scene_Data->S_Scene[0]->Fog[0].End);
+	sprintf(chr_Density,"%f", App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_Density);
+	sprintf(chr_Start,"%.2f", App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_Start);
+	sprintf(chr_End,"%.2f", App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_End);
 
-	sprintf(chr_Mode,"%i",App->Cl_Scene_Data->S_Scene[0]->Fog[0].Mode);
+	//sprintf(chr_End, "%.2f", App->Cl_Scene_Data->S_Scene[0]->Fog[0].End);
+
+	sprintf(chr_Mode,"%i", App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_Mode);
 
 
-	float mRed = App->Cl_Scene_Data->S_Scene[0]->Fog[0].Colour.x;
-	float mGreen = App->Cl_Scene_Data->S_Scene[0]->Fog[0].Colour.y;
-	float mBlue = App->Cl_Scene_Data->S_Scene[0]->Fog[0].Colour.z;
+	float mRed = App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_Colour.x;
+	float mGreen = App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_Colour.y;
+	float mBlue = App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_Colour.z;
 	
 	sprintf(chr_Colour,"%.2f %.2f %.2f",mRed,mGreen,mBlue);
 	
@@ -759,7 +761,7 @@ bool GD19_Environment::Props_OnClick(LPARAM lParam)
 	{
 		strcpy(App->Cl_Dialogs->btext,"Set Fog Visiblity");
 
-		App->Cl_Dialogs->TrueFlase = App->Cl_Scene_Data->S_Scene[0]->Fog[0].FogOn;
+		App->Cl_Dialogs->TrueFlase = App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_On;
 
 		App->Cl_Dialogs->Dialog_TrueFlase(App->MainHwnd);
 
@@ -767,12 +769,12 @@ bool GD19_Environment::Props_OnClick(LPARAM lParam)
 		{
 			if(App->Cl_Dialogs->TrueFlase == 1)
 			{
-				App->Cl_Scene_Data->S_Scene[0]->Fog[0].FogOn = 1;
+				App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_On = 1;
 				EnableFog(true);
 			}
 			else
 			{
-				App->Cl_Scene_Data->S_Scene[0]->Fog[0].FogOn = 0;
+				App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_On = 0;
 				EnableFog(false);
 			}
 
@@ -785,14 +787,14 @@ bool GD19_Environment::Props_OnClick(LPARAM lParam)
 	{
 		strcpy(App->Cl_Dialogs->btext,"Set Fog Start Distance");
 
-		sprintf(App->Cl_Dialogs->Chr_Float,"%f",App->Cl_Scene_Data->S_Scene[0]->Fog[0].Start);
+		sprintf(App->Cl_Dialogs->Chr_Float,"%f", App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_Start);
 		
 		App->Cl_Dialogs->Dialog_Float();
 
 		if (App->Cl_Dialogs->Canceled == 0)
 		{
-			App->Cl_Scene_Data->S_Scene[0]->Fog[0].Start = App->Cl_Dialogs->mFloat;
-			if (App->Cl_Scene_Data->S_Scene[0]->Fog[0].FogOn == 1)
+			App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_Start = App->Cl_Dialogs->mFloat;
+			if (App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_On == 1)
 			{
 				EnableFog(true);
 			}
@@ -807,14 +809,14 @@ bool GD19_Environment::Props_OnClick(LPARAM lParam)
 	{
 		strcpy(App->Cl_Dialogs->btext,"Set Fog End Distance");
 
-		sprintf(App->Cl_Dialogs->Chr_Float,"%f",App->Cl_Scene_Data->S_Scene[0]->Fog[0].End);
+		sprintf(App->Cl_Dialogs->Chr_Float,"%f", App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_End);
 		
 		App->Cl_Dialogs->Dialog_Float();
 
 		if (App->Cl_Dialogs->Canceled == 0)
 		{
-			App->Cl_Scene_Data->S_Scene[0]->Fog[0].End = App->Cl_Dialogs->mFloat;
-			if (App->Cl_Scene_Data->S_Scene[0]->Fog[0].FogOn==1)
+			App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_End = App->Cl_Dialogs->mFloat;
+			if (App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_On==1)
 			{
 				EnableFog(true);
 			}
@@ -829,14 +831,14 @@ bool GD19_Environment::Props_OnClick(LPARAM lParam)
 	{
 		strcpy(App->Cl_Dialogs->btext,"Set Density Of Fog");
 
-		sprintf(App->Cl_Dialogs->Chr_Float,"%f",App->Cl_Scene_Data->S_Scene[0]->Fog[0].Density);
+		sprintf(App->Cl_Dialogs->Chr_Float,"%f", App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_Density);
 		
 		App->Cl_Dialogs->Dialog_Float();
 
 		if (App->Cl_Dialogs->Canceled == 0)
 		{
-			App->Cl_Scene_Data->S_Scene[0]->Fog[0].Density = App->Cl_Dialogs->mFloat;
-			if (App->Cl_Scene_Data->S_Scene[0]->Fog[0].FogOn==1)
+			App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_Density = App->Cl_Dialogs->mFloat;
+			if (App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_On==1)
 			{
 				EnableFog(true);
 			}
@@ -857,13 +859,13 @@ bool GD19_Environment::Props_OnClick(LPARAM lParam)
 			int Green = GetGValue(App->SBC_FileIO->color.rgbResult);
 			int Blue = GetBValue(App->SBC_FileIO->color.rgbResult);
 
-			App->Cl_Scene_Data->S_Scene[0]->Fog[0].Colour.x = (float)Red / 256;
-			App->Cl_Scene_Data->S_Scene[0]->Fog[0].Colour.y = (float)Green / 256;;
-			App->Cl_Scene_Data->S_Scene[0]->Fog[0].Colour.z = (float)Blue / 256;;
+			App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_Colour.x = (float)Red / 256;
+			App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_Colour.y = (float)Green / 256;;
+			App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_Colour.z = (float)Blue / 256;;
 
 			Update_CreateFogListView();
 
-			if (App->Cl_Scene_Data->S_Scene[0]->Fog[0].FogOn == 1)
+			if (App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_On == 1)
 			{
 				EnableFog(true);
 			}
@@ -1178,13 +1180,13 @@ bool GD19_Environment::EnableFog(bool SetFog)
 {
 	if (SetFog == true)
 	{
-		float Start = App->Cl_Scene_Data->S_Scene[0]->Fog[0].Start;
-		float End = App->Cl_Scene_Data->S_Scene[0]->Fog[0].End;
-		float Density = App->Cl_Scene_Data->S_Scene[0]->Fog[0].Density;
+		float Start = App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_Start;
+		float End = App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_End;
+		float Density = App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_Density;
 
-		float x = App->Cl_Scene_Data->S_Scene[0]->Fog[0].Colour.x;
-		float y = App->Cl_Scene_Data->S_Scene[0]->Fog[0].Colour.y;
-		float z = App->Cl_Scene_Data->S_Scene[0]->Fog[0].Colour.z;
+		float x = App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_Colour.x;
+		float y = App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_Colour.y;
+		float z = App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_Colour.z;
 
 		App->Cl19_Ogre->mSceneMgr->setFog(FOG_LINEAR, ColourValue(x, y, z), Density, (Ogre::Real)Start, (Ogre::Real)End);
 	}

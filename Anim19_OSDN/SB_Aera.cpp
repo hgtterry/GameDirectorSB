@@ -563,4 +563,12 @@ void SB_Aera::Set_Environment_Defaults(int Index)
 	strcpy(App->SBC_Scene->B_Area[0]->S_Environment[0]->Material, "Examples/CloudySky");
 	App->SBC_Scene->B_Area[0]->S_Environment[0]->Tiling = 15;
 	App->SBC_Scene->B_Area[0]->S_Environment[0]->type = 1;
+
+	// Fog
+	App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_On = 0;
+	App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_Mode = FOG_LINEAR;
+	App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_Density = 0.001000;
+	App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_Start = 50;
+	App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_End = 300;
+	App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_Colour = Ogre::Vector3(1, 1, 1);
 }
