@@ -296,44 +296,44 @@ bool SB_Scene::Editor_Mode(void)
 	App->Cl_Grid->Grid_SetVisible(1);
 	App->Cl_Grid->Hair_SetVisible(1);
 
-	// App->Cl19_Ogre->OgreListener->showDebugOverlay(1);
+	//App->Cl_Ogre->OgreListener->showDebugOverlay(1);
 
-	//if (S_Scene[0]->Sound[0].SndFile == NULL)
-	//{
-	//}
-	//else
-	//{
-	//	S_Scene[0]->Sound[0].SndFile->setIsPaused(true);
-	//	S_Scene[0]->Sound[0].SndFile->drop();
-	//	S_Scene[0]->Sound[0].SndFile = NULL;
-	//}
+	if (App->SBC_Scene->B_Area[0]->S_Environment[0]->SndFile == NULL)
+	{
+	}
+	else
+	{
+		App->SBC_Scene->B_Area[0]->S_Environment[0]->SndFile->setIsPaused(true);
+		App->SBC_Scene->B_Area[0]->S_Environment[0]->SndFile->drop();
+		App->SBC_Scene->B_Area[0]->S_Environment[0]->SndFile = NULL;
+	}
 
 	//S_Flags[0]->GameMode = 0;
-	//App->Cl19_Ogre->OgreListener->Pl_LeftMouseDown = 0;
-	//ReleaseCapture();
-	//SetCursor(App->CUR);
+	App->Cl19_Ogre->OgreListener->Pl_LeftMouseDown = 0;
+	ReleaseCapture();
+	SetCursor(App->CUR);
 
-	///*App->Select_C->BoxNode->setVisible(true);
-	//App->Select_C->Gizmo->setVisible(true);*/
+	/*App->Select_C->BoxNode->setVisible(true);
+	App->Select_C->Gizmo->setVisible(true);*/
 
-	//App->Cl19_Ogre->OgreListener->GD_Dubug_Physics = 1;
-	//Show_Entities(true); // Show All Visible Trigers
+	//App->Cl19_Ogre->OgreListener-> = 1;
+	Show_Entities(true); // Show All Visible Trigers
 
-	//App->Cl19_Ogre->OgreListener->GD_CameraMode = CurrentCamMode;
+	App->Cl19_Ogre->OgreListener->GD_CameraMode = CurrentCamMode;
 
-	//App->Cl_Visuals->BoxNode->setVisible(true);
-	//App->Cl_Grid->Arrow_Node->setVisible(true);
+	/*App->GDCL_Visuals->BoxNode->setVisible(true);
+	App->Cl_Grid->Arrow_Node->setVisible(true);
 
-	////if (App->Cl19_Ogre->OgreListener->Show_Camara_Positions == 1)
-	//{
-	//	//App->Cl19_Ogre->textArea->show();
-	//}
-	////else
-	//{
-	//	//App->Cl19_Ogre->textArea->hide();
-	//}
+	if (App->Cl_Ogre->OgreListener->Show_Camara_Positions == 1)
+	{
+		App->Cl_Ogre->textArea->show();
+	}
+	else
+	{
+		App->Cl_Ogre->textArea->hide();
+	}*/
 
-	//Reset_Triggers();
+	App->SBC_Physics->Reset_Triggers();
 	return 1;
 }
 

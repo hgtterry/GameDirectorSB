@@ -517,7 +517,7 @@ void SB_Aera::Set_Environment_Defaults(int Index)
 {
 
 	strcpy(App->SBC_Scene->B_Area[0]->S_Environment[0]->Sound_File, "The_Sun.ogg");
-
+	App->SBC_Scene->B_Area[0]->S_Environment[0]->SndFile = NULL;
 	App->SBC_Scene->B_Area[0]->S_Environment[0]->Play = 1;
 	App->SBC_Scene->B_Area[0]->S_Environment[0]->SndVolume = 0.5;
 
