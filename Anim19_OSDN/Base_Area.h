@@ -6,6 +6,7 @@ typedef struct Environment_type
 	Ogre::Real SndVolume;
 	char Sound_File[MAX_PATH];
 	bool Play;
+	bool Loop;
 
 }Environment_type;
 

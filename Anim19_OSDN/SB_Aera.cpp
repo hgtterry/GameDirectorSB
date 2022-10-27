@@ -92,7 +92,8 @@ LRESULT CALLBACK SB_Aera::Area_PropsPanel_Proc(HWND hDlg, UINT message, WPARAM w
 	{
 		
 		SendDlgItemMessage(hDlg, IDC_PHYSICSAREADEBUG, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_BT_AREA_ENVIRONMENT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
@@ -113,6 +114,13 @@ LRESULT CALLBACK SB_Aera::Area_PropsPanel_Proc(HWND hDlg, UINT message, WPARAM w
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle(item, App->SBC_Aera->Show_Physics_Debug);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_AREA_ENVIRONMENT && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->Cl_Environment->Environment_Dlg_Active);
 			return CDRF_DODEFAULT;
 		}
 		
@@ -143,6 +151,19 @@ LRESULT CALLBACK SB_Aera::Area_PropsPanel_Proc(HWND hDlg, UINT message, WPARAM w
 			return 1;
 		}
 
+		if (LOWORD(wParam) == IDC_BT_AREA_ENVIRONMENT)
+		{
+			if (App->Cl_Environment->Environment_Dlg_Active == 1)
+			{
+				App->Cl_Environment->Environment_Dlg_Active = 0;
+				EndDialog(App->Cl_Environment->Environment_hWnd, LOWORD(wParam));
+			}
+			else
+			{
+				App->Cl_Environment->Start_Environment();
+			}
+			return 1;
+		}
 
 		break;
 	}
@@ -519,6 +540,7 @@ void SB_Aera::Set_Environment_Defaults(int Index)
 	strcpy(App->SBC_Scene->B_Area[0]->S_Environment[0]->Sound_File, "The_Sun.ogg");
 	App->SBC_Scene->B_Area[0]->S_Environment[0]->SndFile = NULL;
 	App->SBC_Scene->B_Area[0]->S_Environment[0]->Play = 1;
+	App->SBC_Scene->B_Area[0]->S_Environment[0]->Loop = 1;
 	App->SBC_Scene->B_Area[0]->S_Environment[0]->SndVolume = 0.5;
 
 }

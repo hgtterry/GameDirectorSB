@@ -9,6 +9,10 @@ public:
 	void Load_Environment(void);
 	bool EnableFog(bool SetFog);
 
+	bool Environment_Dlg_Active;
+
+	HWND Environment_hWnd;
+
 protected:
 
 	static LRESULT CALLBACK Environment_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
@@ -29,7 +33,6 @@ protected:
 	HWND General_hLV;
 	HWND mTreeCon;
 	HWND mPropsCon;
-	HWND Environment_hWnd;
 
 	int SelectedProperties;
 
@@ -37,8 +40,6 @@ protected:
 	char FileView_File[64];
 	char btext[255];
 	char TextInt[256];
-
-	bool Environment_Dlg_Active;
 
 	TV_INSERTSTRUCT tvinsert;
 

@@ -241,8 +241,7 @@ bool SB_Scene::Game_Mode(void)
 
 			strcat(buff, App->SBC_Scene->B_Area[0]->S_Environment[0]->Sound_File);
 
-			App->SBC_Scene->B_Area[0]->S_Environment[0]->SndFile = App->SBC_SoundMgr->SoundEngine->play2D(buff, false, true, true);
-			//S_Scene[0]->Sound[0].Loop, true, true);
+			App->SBC_Scene->B_Area[0]->S_Environment[0]->SndFile = App->SBC_SoundMgr->SoundEngine->play2D(buff, App->SBC_Scene->B_Area[0]->S_Environment[0]->Loop, true, true);
 
 			App->SBC_Scene->B_Area[0]->S_Environment[0]->SndFile->setVolume(App->SBC_Scene->B_Area[0]->S_Environment[0]->SndVolume);
 			App->SBC_Scene->B_Area[0]->S_Environment[0]->SndFile->setIsPaused(false);
@@ -251,7 +250,7 @@ bool SB_Scene::Game_Mode(void)
 
 	App->Cl19_Ogre->OgreListener->GD_Run_Physics = 1;
 
-	//CurrentCamMode = App->Cl19_Ogre->OgreListener->GD_CameraMode;
+	CurrentCamMode = App->Cl19_Ogre->OgreListener->GD_CameraMode;
 	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamFirst;
 
 

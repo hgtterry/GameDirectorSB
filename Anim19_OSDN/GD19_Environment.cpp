@@ -202,6 +202,7 @@ LRESULT CALLBACK GD19_Environment::Environment_Proc(HWND hDlg, UINT message, WPA
 			if (LOWORD(wParam) == IDOK) 
 			{
 				App->Cl_Environment->Environment_Dlg_Active = 0;
+				App->RedrawWindow_Dlg(App->SBC_Aera->Area_Props_HWND);
 				EndDialog(hDlg, LOWORD(wParam));
 				App->Cl_Environment->Environment_hWnd = NULL;
 				return TRUE;
@@ -210,6 +211,7 @@ LRESULT CALLBACK GD19_Environment::Environment_Proc(HWND hDlg, UINT message, WPA
 			if (LOWORD(wParam)== IDCANCEL) 
 			{
 				App->Cl_Environment->Environment_Dlg_Active = 0;
+				App->RedrawWindow_Dlg(App->SBC_Aera->Area_Props_HWND);
 				EndDialog(hDlg, LOWORD(wParam));
 				App->Cl_Environment->Environment_hWnd = NULL;
 				return TRUE;
