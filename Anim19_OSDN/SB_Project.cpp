@@ -1527,6 +1527,8 @@ bool SB_Project::Load_Project_Aera()
 		App->Cl_Ini->GetString("Area_0", "Area_Resource_Path", Resource_Location, MAX_PATH);
 
 		App->SBC_Aera->Add_Aera_To_Project(Count, Mesh_FileName, m_Main_Assets_Path);
+		App->SBC_Scene->B_Area[0]->S_Environment[0] = new Environment_type;
+		App->SBC_Aera->Set_Environment_Defaults(Count);
 
 		App->Cl_Ini->GetString("Area_0", "Material_File", App->SBC_Scene->B_Area[Count]->Material_File, MAX_PATH);
 

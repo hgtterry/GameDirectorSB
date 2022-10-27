@@ -516,5 +516,9 @@ btBvhTriangleMeshShape* SB_Aera::create_Area_Trimesh_New(int Index,Base_Area* Ob
 void SB_Aera::Set_Environment_Defaults(int Index)
 {
 
-	
+	strcpy(App->SBC_Scene->B_Area[0]->S_Environment[0]->Sound_File, "poop");
+
+	App->SBC_Scene->B_Area[0]->S_Environment[0]->Play = 1;
+	App->SBC_Scene->B_Area[0]->S_Environment[0]->SndVolume = 0.5;
+
 }

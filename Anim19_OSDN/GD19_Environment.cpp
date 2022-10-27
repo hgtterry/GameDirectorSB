@@ -475,10 +475,10 @@ void GD19_Environment::Update_CreateSoundListView(void)
 	char Chr_Volume[100];
 	char Chr_Play[100];
 	char Chr_Loop[100];
-	sprintf(Chr_Volume,"%.1f",App->Cl_Scene_Data->S_Scene[0]->Sound[0].Volume);
+	sprintf(Chr_Volume,"%.1f", App->SBC_Scene->B_Area[0]->S_Environment[0]->SndVolume);
 
 	// Play
-	if (App->Cl_Scene_Data->S_Scene[0]->Sound[0].Play == 1)
+	if (App->SBC_Scene->B_Area[0]->S_Environment[0]->Play == 1)
 	{
 		strcpy(Chr_Play,"True");
 	}
@@ -487,15 +487,15 @@ void GD19_Environment::Update_CreateSoundListView(void)
 		strcpy(Chr_Play,"False");
 	}
 
-	// Loop
-	if (App->Cl_Scene_Data->S_Scene[0]->Sound[0].Loop == 1)
-	{
-		strcpy(Chr_Loop,"True");
-	}
-	else
-	{
-		strcpy(Chr_Loop,"False");
-	}
+	//// Loop
+	//if (App->Cl_Scene_Data->S_Scene[0]->Sound[0].Loop == 1)
+	//{
+	//	strcpy(Chr_Loop,"True");
+	//}
+	//else
+	//{
+	//	strcpy(Chr_Loop,"False");
+	//}
 
 	const int NUM_ITEMS = 4;
 	const int NUM_COLS = 2;
@@ -504,7 +504,7 @@ void GD19_Environment::Update_CreateSoundListView(void)
 	memset(&pitem, 0, sizeof(LV_ITEM));
 	pitem.mask = LVIF_TEXT;
 
-	grid[0][0] = "Track",		grid[1][0] = App->Cl_Scene_Data->S_Scene[0]->Sound[0].SoundFile;
+	grid[0][0] = "Track",		grid[1][0] = App->SBC_Scene->B_Area[0]->S_Environment[0]->Sound_File;
 	grid[0][1] = "Volume",		grid[1][1] = Chr_Volume;
 	grid[0][2] = "Play",		grid[1][2] = Chr_Play;
 	grid[0][3] = "Loop",		grid[1][3] = Chr_Loop;
