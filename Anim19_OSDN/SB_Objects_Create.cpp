@@ -761,10 +761,14 @@ bool SB_Objects_Create::Add_New_Area()
 	if (App->SBC_Scene->Area_Count == 0)
 	{
 		First_Area_Start_Project();
+		App->SBC_Scene->B_Area[0]->S_Environment[0] = new Environment_type;
+
 	}
 	else
 	{
 		App->SBC_Aera->Add_Aera_To_Project(0, App->SBC_MeshViewer->Selected_MeshFile, App->SBC_MeshViewer->mResource_Folder);
+		App->SBC_Scene->B_Area[0]->S_Environment[0] = new Environment_type;
+
 		App->SBC_Scene->Area_Count++;
 	}
 	return 1;

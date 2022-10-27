@@ -40,6 +40,8 @@ public:
 
 	void Add_Aera_To_Project(int Index, char* FileName, char* Resource_Location);
 
+	void Set_Environment_Defaults(int Index);
+
 	HWND Area_Props_HWND;
 
 protected:

@@ -1,4 +1,14 @@
 #pragma once
+
+typedef struct Environment_type
+{
+	irrklang::ISound* SndFile;
+	Ogre::Real SndVolume;
+	char Sound_File[MAX_PATH];
+	bool Play;
+
+}Environment_type;
+
 class Base_Area
 {
 public:
@@ -38,5 +48,9 @@ public:
 	bool Altered;
 
 	bool Physics_Debug_On;
+
+	//------------------------------ Environment
+	
+	Environment_type* S_Environment[1];
 };
 

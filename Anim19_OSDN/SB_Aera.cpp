@@ -509,3 +509,12 @@ btBvhTriangleMeshShape* SB_Aera::create_Area_Trimesh_New(int Index,Base_Area* Ob
 	Object->Physics_Valid = 1;
 	return mShape;
 }
+
+// *************************************************************************
+// *	  				Set_Environment_Defaults Terry Bernie			   *
+// *************************************************************************
+void SB_Aera::Set_Environment_Defaults(int Index)
+{
+
+	
+}
