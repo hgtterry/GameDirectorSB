@@ -139,10 +139,10 @@ int GD19_LookUps::Stock_Sound_GetCount(void)
 
 	while (Count < Total)
 	{
-		if (App->Cl_Scene_Data->St_Sounds[Count]->Deleted == 0)
+		/*if (App->Cl_Scene_Data->St_Sounds[Count]->Deleted == 0)
 		{
 			RealCount++;
-		}
+		}*/
 		Count++;
 	}
 	return RealCount;

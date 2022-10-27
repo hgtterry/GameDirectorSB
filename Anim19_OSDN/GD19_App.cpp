@@ -41,7 +41,6 @@ GD19_App::GD19_App(void)
 	Cl_Environment =	nullptr;
 	Cl_Dialogs =		nullptr;
 	Cl_Objects_Com =	nullptr;
-	Cl_Stock =			nullptr;
 	Cl_LookUps =		nullptr;
 	Cl_Keyboard =		nullptr;
 
@@ -198,7 +197,6 @@ bool GD19_App::InitApp(void)
 	Cl_Dialogs =		new GD19_Dialogs();
 
 	Cl_Objects_Com =	new GD19_Objects_Com();
-	Cl_Stock =			new GD19_Stock();
 	Cl_LookUps =		new GD19_LookUps();		
 	Cl_Keyboard =		new GD_Keyboard();
 

@@ -981,7 +981,7 @@ bool GD19_Environment::Props_OnClick(LPARAM lParam)
 	{
 		strcpy(App->Cl_Dialogs->btext,"Play Main BackGround Track");
 
-		App->Cl_Dialogs->TrueFlase = App->Cl_Scene_Data->S_Scene[0]->Sound[0].Play;
+		App->Cl_Dialogs->TrueFlase = App->SBC_Scene->B_Area[0]->S_Environment[0]->Play;
 
 		App->Cl_Dialogs->Dialog_TrueFlase(App->MainHwnd);
 
@@ -1006,7 +1006,7 @@ bool GD19_Environment::Props_OnClick(LPARAM lParam)
 	{
 		strcpy(App->Cl_Dialogs->btext,"Loop BackGround Track");
 
-		App->Cl_Dialogs->TrueFlase = App->Cl_Scene_Data->S_Scene[0]->Sound[0].Loop;
+		App->Cl_Dialogs->TrueFlase = App->SBC_Scene->B_Area[0]->S_Environment[0]->Loop;
 
 		App->Cl_Dialogs->Dialog_TrueFlase(App->MainHwnd);
 

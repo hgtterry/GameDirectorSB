@@ -8,34 +8,12 @@ typedef struct Flags_Type
 
 }Flags_Type;
 
-//==================================== Load Options Structure
-typedef struct Load_Options_Type { 
-	bool Has_Planes;
-	bool Has_Objects;
-	bool Has_Particles;
-	bool Has_Weapons;
-	bool Has_Player;
-	bool Has_Debug;
-	bool Has_Messages;
-}Load_Options_Type;
 //==================================== Sound Structure
 
 typedef struct Int_Type {int Array;}int_Type;
 
 
 //--------------------------------------------------------
-typedef struct Sound_Type {
-	irrklang::ISound*	SndFile;
-	char SoundFile[255];
-	char SoundFileAndPath[255];
-	float Volume;
-	float Pan;
-	float Data0;
-	float Data1;
-	bool Loop;
-	bool Is3D;
-	bool Play;
-}Sound_Type;
 
 typedef struct Scene_Type { 	
 	int PlaneCount;
@@ -49,26 +27,8 @@ typedef struct Scene_Type {
 	int SceneType; //0 = Terrian 1 = Indoor
 	int LastSceneType;	
 	int MoveWhat;
-	Sound_Type				Sound[1];
 
 }Scene_Type;
-
-// ------------------------ Stock Sound
-typedef struct Stock_Sound_type 
-{
-	bool Deleted; // Internal
-	int Sound_ID;  // Unique Number
-	char Name[255];
-	char SoundFile[255];
-	char SoundFileAndPath[255];
-	float Volume;
-	float Pan;
-	bool Loop;
-	bool Is3D;
-	bool Play;
-	irrklang::ISound* SndFile;
-
-}Stock_Sound_type;
 
 
 class GD19_Scene_Data
@@ -81,7 +41,7 @@ public:
 	bool Init_Class(void);
 
 	void SetScene_Defaults(void);
-	void SetOptions_Defaults(void);
+
 	void SetFlags_Defaults(void);
 
 	void Set_Move_Defaults(int Index);
@@ -94,8 +54,6 @@ public:
 	
 	Flags_Type*				S_Flags[1];
 	Scene_Type*				S_Scene[1];
-	Load_Options_Type*		S_LoadOptions[1];
-	Stock_Sound_type*		St_Sounds[200];
 
 	int Player_Location_Count;
 	int Stock_Messgae_Count;

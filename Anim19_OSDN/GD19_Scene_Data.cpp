@@ -25,8 +25,6 @@ bool GD19_Scene_Data::Init_Class(void)
 	S_Flags[0] = NULL;
 	S_Scene[0] = NULL;
 
-	S_LoadOptions[0] = NULL;
-
 	Player_Location_Count = 0;
 	Stock_Messgae_Count = 0;
 	Stock_Sound_Count = 0;
@@ -54,15 +52,12 @@ bool GD19_Scene_Data::Init_Scene(void)
 	App->Cl_Scene_Data->S_Scene[0] = new Scene_Type();
 	App->Cl_Scene_Data->SetScene_Defaults();
 
-	App->Cl_Scene_Data->S_LoadOptions[0] = new Load_Options_Type();
-	App->Cl_Scene_Data->SetOptions_Defaults();
+	//App->Cl_Scene_Data->S_LoadOptions[0] = new Load_Options_Type();
+	//App->Cl_Scene_Data->SetOptions_Defaults();
 
 	App->Cl_Scene_Data->S_Flags[0]  = new Flags_Type();
 	SetFlags_Defaults();
 
-	//------------------------ Default Message
-	//App->GDCL_Add_NewObject->Add_Stock_Message();
-	
 	return 1;
 }
 
@@ -92,20 +87,7 @@ void GD19_Scene_Data::Set_Move_Defaults(int Index)
 	return;
 }
 
-// *************************************************************************
-// *						SetOptions_Defaults Terry Bernie			   *
-// *************************************************************************
-void GD19_Scene_Data::SetOptions_Defaults(void)
-{
-	S_LoadOptions[0]->Has_Player = 0;
-	S_LoadOptions[0]->Has_Debug = 0;
-	S_LoadOptions[0]->Has_Messages = 0;
-	S_LoadOptions[0]->Has_Objects = 0;
-	S_LoadOptions[0]->Has_Particles = 0;
-	S_LoadOptions[0]->Has_Planes = 0;
-	S_LoadOptions[0]->Has_Weapons = 0;
-	
-}
+
 // *************************************************************************
 // *						SetScene_Defaults Terry Bernie				   *
 // *************************************************************************
@@ -114,21 +96,6 @@ void GD19_Scene_Data::SetScene_Defaults(void)
 	S_Scene[0]->SceneType = 0;
 	S_Scene[0]->LastSceneType = 0;
 	S_Scene[0]->PlaneCount=0;
-
-	// Sound
-	strcpy(S_Scene[0]->Sound[0].SoundFileAndPath,App->SBC_SoundMgr->Default_Folder);
-	strcat(S_Scene[0]->Sound[0].SoundFileAndPath,"\\Media\\Sounds\\");
-	strcat(S_Scene[0]->Sound[0].SoundFileAndPath,"The_Sun.ogg");
-	strcpy(S_Scene[0]->Sound[0].SoundFile,"The_Sun.ogg");
-
-	S_Scene[0]->Sound[0].Volume = 1;
-	S_Scene[0]->Sound[0].Loop = 0;
-	S_Scene[0]->Sound[0].Is3D = 0;
-	S_Scene[0]->Sound[0].Play = 1;
-	S_Scene[0]->Sound[0].Pan = 0;
-	S_Scene[0]->Sound[0].Data0 = 0;
-	S_Scene[0]->Sound[0].Data1 = 0;
-	S_Scene[0]->Sound[0].SndFile = NULL;
 
 }
 
