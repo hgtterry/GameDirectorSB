@@ -824,7 +824,7 @@ bool GD19_OgreListener::Capture_Mouse_FirstPerson(void)
 			Rotate.y = -1;
 			Rotate.z = 0;
 
-			float mTurn = ((float)0.00040*Pl_DeltaMouse);//S_Player[0]->TurnRate);
+			float mTurn = ((float)App->SBC_Scene->B_Player[0]->TurnRate*Pl_DeltaMouse);
 
 			App->SBC_Scene->B_Player[0]->Rotate_FromCam(Rotate, mTurn, false);
 
@@ -843,7 +843,7 @@ bool GD19_OgreListener::Capture_Mouse_FirstPerson(void)
 			Rotate.y = 1;
 			Rotate.z = 0;
 
-			float mTurn = ((float)0.00040*Pl_DeltaMouse);//S_Player[0]->TurnRate);
+			float mTurn = ((float)App->SBC_Scene->B_Player[0]->TurnRate*Pl_DeltaMouse);
 
 			App->SBC_Scene->B_Player[0]->Rotate_FromCam(Rotate, mTurn, false);
 		}

@@ -1065,7 +1065,7 @@ bool SB_Project::Save_Player_Data()
 		fprintf(WriteFile, "%s%f\n", "Height=", App->SBC_Scene->B_Player[Count]->Capsule_Height);
 		fprintf(WriteFile, "%s%f\n", "Ground_Speed=", App->SBC_Scene->B_Player[Count]->Ground_speed);
 		fprintf(WriteFile, "%s%f\n", "Cam_Height=", App->SBC_Scene->B_Player[Count]->PlayerHeight);
-
+		fprintf(WriteFile, "%s%f\n", "Turn_Rate=", App->SBC_Scene->B_Player[Count]->TurnRate);
 
 		Count++;
 	}
@@ -1610,6 +1610,9 @@ bool SB_Project::Load_Project_Player()
 		App->SBC_Scene->B_Player[Count]->Physics_Rotation.setY(y);
 		App->SBC_Scene->B_Player[Count]->Physics_Rotation.setZ(z);
 
+		App->Cl_Ini->GetString(buff, "Turn_Rate", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f",&x);
+		App->SBC_Scene->B_Player[Count]->TurnRate = x;
 
 		App->SBC_Scene->B_Player[Count]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Players_Folder, Player_Name, Count, false);
 	

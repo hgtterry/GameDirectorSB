@@ -54,7 +54,7 @@ Base_Player::Base_Player()
 
 	PlayerHeight = 16.0;
 
-	TurnRate = 0.04;
+	TurnRate = 0.00040;
 
 	mOnGround = 1;
 	IsMOving = 0;
@@ -177,7 +177,7 @@ void Base_Player::Move_Right(void)
 // *************************************************************************
 void Base_Player::Rotate(const Ogre::Vector3 axis, bool normalize)
 {
-
+	
 	btTransform xform = Phys_Body->getWorldTransform();
 	btMatrix3x3 R = xform.getBasis();
 	R = R * btMatrix3x3(btQuaternion(btVector3(axis[0], axis[1], axis[2]), TurnRate));

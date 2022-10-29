@@ -497,34 +497,41 @@ bool SB_Properties::Update_ListView_Player()
 	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
 
 	char chr_Speed[100];
+	char chr_TurnRate[100];
 	char chr_Height[100];
 	char chr_StartPosX[100];
 	char chr_StartPosY[100];
 	char chr_StartPosZ[100];
 
 	sprintf(chr_Speed, "%.3f ", App->SBC_Scene->B_Player[0]->Ground_speed);
+
+	float sum2 = App->SBC_Scene->B_Player[0]->TurnRate;
+	int Percent = int(sum2 * 100000);
+	_itoa(Percent, chr_TurnRate, 10);
+
 	sprintf(chr_Height, "%.3f ", App->SBC_Scene->B_Player[0]->PlayerHeight);
 
 	sprintf(chr_StartPosX, "%.3f ", App->SBC_Scene->B_Player[0]->StartPos.x);
 	sprintf(chr_StartPosY, "%.3f ", App->SBC_Scene->B_Player[0]->StartPos.y);
 	sprintf(chr_StartPosZ, "%.3f ", App->SBC_Scene->B_Player[0]->StartPos.z);
 
-	const int NUM_ITEMS = 9;
+	const int NUM_ITEMS = 10;
 	const int NUM_COLS = 2;
 	std::string grid[NUM_COLS][NUM_ITEMS]; // string table
 	LV_ITEM pitem;
 	memset(&pitem, 0, sizeof(LV_ITEM));
 	pitem.mask = LVIF_TEXT;
 
-	grid[0][0] = "Name", grid[1][0] = App->SBC_Scene->B_Player[0]->Player_Name;
-	grid[0][1] = "Mode", grid[1][1] = "1st_Person";
-	grid[0][2] = " ", grid[1][2] = " ";
+	grid[0][0] = "Name",		grid[1][0] = App->SBC_Scene->B_Player[0]->Player_Name;
+	grid[0][1] = "Mode",		grid[1][1] = "1st_Person";
+	grid[0][2] = " ",			grid[1][2] = " ";
 	grid[0][3] = "Ground Speed", grid[1][3] = chr_Speed;
-	grid[0][4] = "Player Height", grid[1][4] = chr_Height;
-	grid[0][5] = " ", grid[1][5] = " ";
-	grid[0][6] = "Start Pos_X", grid[1][6] = chr_StartPosX;
-	grid[0][7] = "Start Pos_Y", grid[1][7] = chr_StartPosY;
-	grid[0][8] = "Start Pos_Z", grid[1][8] = chr_StartPosZ;
+	grid[0][4] = "Turn Rate",	grid[1][4] = chr_TurnRate;
+	grid[0][5] = "Player Height", grid[1][5] = chr_Height;
+	grid[0][6] = " ",			grid[1][6] = " ";
+	grid[0][7] = "Start Pos_X", grid[1][7] = chr_StartPosX;
+	grid[0][8] = "Start Pos_Y", grid[1][8] = chr_StartPosY;
+	grid[0][9] = "Start Pos_Z", grid[1][9] = chr_StartPosZ;
 
 
 	ListView_DeleteAllItems(App->SBC_Properties->Properties_hLV);
@@ -1227,6 +1234,36 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 		return 1;
 	}
 
+	result = strcmp(App->SBC_Properties->btext, "Turn Rate");
+	if (result == 0)
+	{
+		
+		float sum2 = App->SBC_Scene->B_Player[0]->TurnRate;
+		int Percent = int(sum2 * 100000);
+
+		strcpy(App->Cl_Dialogs->btext, "Turn Rate");
+		char buff[256];
+		sprintf(buff, "%i", Percent);
+		strcpy(App->Cl_Dialogs->Chr_Int, buff);
+
+		App->Cl_Dialogs->Dialog_Int();
+
+		if (App->Cl_Dialogs->Canceled == 1)
+		{
+			return TRUE;
+		}
+
+		App->SBC_Scene->B_Player[0]->TurnRate = float(App->Cl_Dialogs->mInt) / 100000;
+
+		App->SBC_Scene->B_Player[0]->Altered = 1;
+		App->SBC_Scene->Scene_Modified = 1;
+		App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);
+
+		Update_ListView_Player();
+
+		return 1;
+	}
+	
 	result = strcmp(App->SBC_Properties->btext, "Player Height");
 	if (result == 0)
 	{
