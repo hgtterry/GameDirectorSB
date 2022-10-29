@@ -763,6 +763,7 @@ bool SB_Objects_Create::Add_New_Area()
 		First_Area_Start_Project();
 		App->SBC_Scene->B_Area[0]->S_Environment[0] = new Environment_type;
 		App->SBC_Aera->Set_Environment_Defaults(0);
+
 	}
 	else
 	{

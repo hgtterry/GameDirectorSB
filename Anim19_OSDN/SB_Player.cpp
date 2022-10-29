@@ -1044,7 +1044,6 @@ void SB_Player::Check_Collisions_New(void)
 				// -------------------- Move Collision
 				if (Col_Usage_Index == Enums::Usage_Move)
 				{
-					FlashWindow(App->MainHwnd, true);
 
 					int numContacts = contactManifold->getNumContacts();
 					for (int j = 0; j < numContacts; j++)

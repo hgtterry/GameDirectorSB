@@ -384,6 +384,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			App->SBC_Scene->Create_Resources_Group();
 
 			App->SBC_Project->Start_Save_Project_Dialog();
+
+			App->SBC_Dialogs->YesNo("Add Area", "Do you want to add a new Area", 1);
+
+			bool Doit = App->SBC_Dialogs->Canceled;
+			if (Doit == 0)
+			{
+				App->SBC_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Area;
+				App->SBC_MeshViewer->StartMeshViewer();
+			}
+
 			return 1;
 		}
 

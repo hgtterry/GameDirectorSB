@@ -114,8 +114,7 @@ bool SB_Collision::Move_Entity_Collision(int Index)
 
 	if (App->SBC_Scene->B_Object[ObjectToMove]->Deleted == 0)
 	{
-		FlashWindow(App->MainHwnd, true);
-
+		
 		M_Pos = App->SBC_Scene->B_Object[ObjectToMove]->Mesh_Pos;
 		P_Pos = App->SBC_Scene->B_Object[ObjectToMove]->Physics_Pos;
 
