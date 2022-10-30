@@ -814,7 +814,12 @@ LRESULT CALLBACK SB_TopTabs::Game_TB_Proc(HWND hDlg, UINT message, WPARAM wParam
 
 	case WM_COMMAND:
 	{
-		
+		if (LOWORD(wParam) == IDC_BT_INFO_GAME)
+		{
+			//App->Cl_Utilities->OpenHTML("Help\\FileTab.html");
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDC_BT_GT_BUILDGAME)
 		{
 			if (App->SBC_Scene->Area_Added == 1)
