@@ -970,8 +970,44 @@ bool SB_Project::Save_Aeras_Data()
 
 		fprintf(WriteFile, "%s\n", "[Environment]");
 
-		// ----------- Fog
+		//--------------- Sound
+		fprintf(WriteFile, "%s%s\n", "Sound_File=", App->SBC_Scene->B_Area[0]->S_Environment[0]->Sound_File);
+		fprintf(WriteFile, "%s%f\n", "Snd_Volume=", App->SBC_Scene->B_Area[0]->S_Environment[0]->SndVolume);
 
+		fprintf(WriteFile, "%s%i\n", "Sound_Play=", App->SBC_Scene->B_Area[0]->S_Environment[0]->Play);
+		fprintf(WriteFile, "%s%i\n", "Sound_Loop=", App->SBC_Scene->B_Area[0]->S_Environment[0]->Loop);
+
+		//--------------- Light
+
+		x = App->SBC_Scene->B_Area[0]->S_Environment[0]->AmbientColour.x;
+		y = App->SBC_Scene->B_Area[0]->S_Environment[0]->AmbientColour.y;
+		z = App->SBC_Scene->B_Area[0]->S_Environment[0]->AmbientColour.z;
+		fprintf(WriteFile, "%s%f,%f,%f\n", "Ambient_Colour=", x, y, z);
+
+		x = App->SBC_Scene->B_Area[0]->S_Environment[0]->DiffuseColour.x;
+		y = App->SBC_Scene->B_Area[0]->S_Environment[0]->DiffuseColour.y;
+		z = App->SBC_Scene->B_Area[0]->S_Environment[0]->DiffuseColour.z;
+		fprintf(WriteFile, "%s%f,%f,%f\n", "Diffuse_Colour=", x, y, z);
+
+		x = App->SBC_Scene->B_Area[0]->S_Environment[0]->SpecularColour.x;
+		y = App->SBC_Scene->B_Area[0]->S_Environment[0]->SpecularColour.y;
+		z = App->SBC_Scene->B_Area[0]->S_Environment[0]->SpecularColour.z;
+		fprintf(WriteFile, "%s%f,%f,%f\n", "Specular_Colour=", x, y, z);
+		
+		x = App->SBC_Scene->B_Area[0]->S_Environment[0]->Light_Position.x;
+		y = App->SBC_Scene->B_Area[0]->S_Environment[0]->Light_Position.y;
+		z = App->SBC_Scene->B_Area[0]->S_Environment[0]->Light_Position.z;
+		fprintf(WriteFile, "%s%f,%f,%f\n", "Light_Position=", x, y, z);
+		
+		//--------------- Sky
+		fprintf(WriteFile, "%s%i\n", "Sky_Enable=", App->SBC_Scene->B_Area[0]->S_Environment[0]->Enabled);
+		fprintf(WriteFile, "%s%i\n", "Sky_Type=", App->SBC_Scene->B_Area[0]->S_Environment[0]->type);
+		fprintf(WriteFile, "%s%s\n", "Sky_Material=", App->SBC_Scene->B_Area[0]->S_Environment[0]->Material);
+		fprintf(WriteFile, "%s%f\n", "Sky_Curvature=", App->SBC_Scene->B_Area[0]->S_Environment[0]->Curvature);
+		fprintf(WriteFile, "%s%f\n", "Sky_Tiling=", App->SBC_Scene->B_Area[0]->S_Environment[0]->Tiling);
+		fprintf(WriteFile, "%s%f\n", "Sky_Distance=", App->SBC_Scene->B_Area[0]->S_Environment[0]->Distance);
+
+		//--------------- Fog
 		fprintf(WriteFile, "%s%i\n", "Fog_On=", App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_On);
 		fprintf(WriteFile, "%s%i\n", "Fog_Mode=", App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_Mode);
 		
@@ -1517,6 +1553,7 @@ bool SB_Project::Load_Project_Aera()
 	char Mesh_FileName[MAX_PATH];
 	char Resource_Location[MAX_PATH];
 	int Area_Count = 0;
+	int Int_Tag = 0;
 	float x = 0;
 	float y = 0;
 	float z = 0;
@@ -1560,6 +1597,40 @@ bool SB_Project::Load_Project_Aera()
 
 		strcpy(App->SBC_Scene->B_Area[Count]->Area_Name, Area_Name);
 		App->SBC_Scene->B_Area[Count]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Areas_Folder, Area_Name, Count, false);
+
+		// ------------------------------------ Environment
+
+		//--------------- Sound
+		App->Cl_Ini->GetString("Environment", "Sound_File", chr_Tag1, MAX_PATH);
+		strcpy(App->SBC_Scene->B_Area[0]->S_Environment[0]->Sound_File, chr_Tag1);
+
+		App->Cl_Ini->GetString("Environment", "Snd_Volume", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f", &x);
+		App->SBC_Scene->B_Area[0]->S_Environment[0]->SndVolume = x;
+
+		Int_Tag = App->Cl_Ini->GetInt("Environment", "Sound_Play", 0, 10);
+		App->SBC_Scene->B_Area[0]->S_Environment[0]->Play = Int_Tag;
+
+		Int_Tag = App->Cl_Ini->GetInt("Environment", "Sound_Loop", 0, 10);
+		App->SBC_Scene->B_Area[0]->S_Environment[0]->Loop = Int_Tag;
+
+		//--------------- Light
+
+		App->Cl_Ini->GetString("Environment", "Ambient_Colour", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+		App->SBC_Scene->B_Area[0]->S_Environment[0]->AmbientColour = Ogre::Vector3(x, y, z);
+
+		App->Cl_Ini->GetString("Environment", "Diffuse_Colour", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+		App->SBC_Scene->B_Area[0]->S_Environment[0]->DiffuseColour = Ogre::Vector3(x, y, z);
+
+		App->Cl_Ini->GetString("Environment", "Specular_Colour", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+		App->SBC_Scene->B_Area[0]->S_Environment[0]->SpecularColour = Ogre::Vector3(x, y, z);
+
+		App->Cl_Ini->GetString("Environment", "Light_Position", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+		App->SBC_Scene->B_Area[0]->S_Environment[0]->Light_Position = Ogre::Vector3(x, y, z);
 
 		Count++;
 		App->SBC_Scene->Area_Count++;

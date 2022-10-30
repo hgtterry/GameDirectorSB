@@ -283,7 +283,11 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 		if (LOWORD(wParam) == IDC_ENVIONMENT)
 		{
-			App->Cl_Environment->Start_Environment();
+			if (App->SBC_Scene->Area_Added == 1)
+			{
+				App->Cl_Environment->Start_Environment();
+			}
+
 			return TRUE;
 		}
 

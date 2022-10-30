@@ -801,13 +801,16 @@ LRESULT CALLBACK SB_TopTabs::Game_TB_Proc(HWND hDlg, UINT message, WPARAM wParam
 	{
 		if (LOWORD(wParam) == IDC_BT_GAMEMODE)
 		{
-			App->Cl_Dialogs->GameMode_StartPosition_Dlg();
-			if (App->Cl_Dialogs->Canceled == 1)
+			if (App->SBC_Scene->Area_Added == 1)
 			{
-				return 1;
-			}
+				App->Cl_Dialogs->GameMode_StartPosition_Dlg();
+				if (App->Cl_Dialogs->Canceled == 1)
+				{
+					return 1;
+				}
 
-			App->SBC_Scene->Game_Mode();
+				App->SBC_Scene->Game_Mode();
+			}
 			return TRUE;
 		}
 

@@ -556,6 +556,10 @@ void SB_Aera::Set_Environment_Defaults(int Index)
 	App->SBC_Scene->B_Area[0]->S_Environment[0]->SpecularColour.y = 0;
 	App->SBC_Scene->B_Area[0]->S_Environment[0]->SpecularColour.z = 0;
 
+	App->SBC_Scene->B_Area[0]->S_Environment[0]->Light_Position.x = 0;
+	App->SBC_Scene->B_Area[0]->S_Environment[0]->Light_Position.y = 0;
+	App->SBC_Scene->B_Area[0]->S_Environment[0]->Light_Position.z = 0;
+
 	// Sky
 	App->SBC_Scene->B_Area[0]->S_Environment[0]->Curvature = 15;
 	App->SBC_Scene->B_Area[0]->S_Environment[0]->Distance = 4000;
