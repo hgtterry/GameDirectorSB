@@ -1260,6 +1260,7 @@ bool SB_Project::Load_Project()
 	{
 		bool test = Load_Project_Aera();
 		App->SBC_Scene->Area_Added = 1;
+		App->Cl_Environment->Load_Environment();
 	}
 
 	// ------------------------------------- Player
