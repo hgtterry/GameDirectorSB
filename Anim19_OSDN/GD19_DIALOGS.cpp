@@ -682,6 +682,11 @@ LRESULT CALLBACK GD19_Dialogs::GameMode_StartPosition_Dlg_Proc(HWND hDlg, UINT m
 	case WM_INITDIALOG:
 	{
 		App->Cl_Dialogs->Canceled = 0;
+
+		SendDlgItemMessage(hDlg, IDC_STARTCUR, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STARTLEVEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_QUITGM, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		return TRUE;
 	}
 

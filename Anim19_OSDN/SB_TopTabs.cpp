@@ -816,7 +816,7 @@ LRESULT CALLBACK SB_TopTabs::Game_TB_Proc(HWND hDlg, UINT message, WPARAM wParam
 	{
 		if (LOWORD(wParam) == IDC_BT_INFO_GAME)
 		{
-			//App->Cl_Utilities->OpenHTML("Help\\FileTab.html");
+			App->Cl_Utilities->OpenHTML("Help\\GameTab.html");
 			return TRUE;
 		}
 
