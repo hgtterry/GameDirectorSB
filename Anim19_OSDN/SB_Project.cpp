@@ -965,6 +965,25 @@ bool SB_Project::Save_Aeras_Data()
 
 		fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Pos=", x, y, z);
 
+
+		// ------------------------------------ Environment
+
+		fprintf(WriteFile, "%s\n", "[Environment]");
+
+		// ----------- Fog
+
+		fprintf(WriteFile, "%s%i\n", "Fog_On=", App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_On);
+		fprintf(WriteFile, "%s%i\n", "Fog_Mode=", App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_Mode);
+		
+		x = App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_Colour.x;
+		y = App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_Colour.y;
+		z = App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_Colour.z;
+		fprintf(WriteFile, "%s%f,%f,%f\n", "Fog_Colour=", x, y, z);
+		
+		fprintf(WriteFile, "%s%f\n", "Fog_Start=", App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_Start);
+		fprintf(WriteFile, "%s%f\n", "Fog_End=", App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_End);
+		fprintf(WriteFile, "%s%f\n", "Fog_Density=", App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_Density);
+		
 		Count++;
 	}
 
