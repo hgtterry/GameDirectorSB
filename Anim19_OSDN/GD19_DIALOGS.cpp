@@ -72,9 +72,7 @@ LRESULT CALLBACK GD19_Dialogs::Dialog_Float_Proc(HWND hDlg, UINT message, WPARAM
 		{	
 			App->SetTitleBar(hDlg);
 
-			HFONT Font2;
-			Font2 = CreateFont( -20,0,0,0,FW_BOLD,0,0,0,0,OUT_TT_ONLY_PRECIS ,0,0,0, "Aerial Black");
-			SendDlgItemMessage(hDlg,IDC_BANNER, WM_SETFONT, (WPARAM)Font2,MAKELPARAM(TRUE, 0));
+			SendDlgItemMessage(hDlg,IDC_BANNER, WM_SETFONT, (WPARAM)App->Font_Arial20,MAKELPARAM(TRUE, 0));
 
 			SendDlgItemMessage(hDlg,IDC_EDIT1, WM_SETFONT, (WPARAM)App->Font_CB15,MAKELPARAM(TRUE, 0));
 			
@@ -179,11 +177,9 @@ LRESULT CALLBACK GD19_Dialogs::Dialog_Int_Proc(HWND hDlg, UINT message, WPARAM w
 		{	
 			App->SetTitleBar(hDlg);
 
-			HFONT Font2;
-			Font2 = CreateFont( -20,0,0,0,FW_BOLD,0,0,0,0,OUT_TT_ONLY_PRECIS ,0,0,0, "Aerial Black");
-		//	SendDlgItemMessage(hDlg,IDC_BANNER, WM_SETFONT, (WPARAM)Font2,MAKELPARAM(TRUE, 0));
+			SendDlgItemMessage(hDlg, IDC_BANNER, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 
-		//	SendDlgItemMessage(hDlg,IDC_EDIT1, WM_SETFONT, (WPARAM)App->Font_CB15,MAKELPARAM(TRUE, 0));
+			SendDlgItemMessage(hDlg, IDC_EDIT1, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 			
 
 			SetDlgItemText(hDlg,IDC_BANNER,(LPCTSTR)App->Cl_Dialogs->btext);
@@ -195,13 +191,14 @@ LRESULT CALLBACK GD19_Dialogs::Dialog_Int_Proc(HWND hDlg, UINT message, WPARAM w
 		case WM_CTLCOLORSTATIC:
 		{
 			
-			/*if(GetDlgItem(hDlg,IDC_BANNER) == (HWND)lParam)
+			if(GetDlgItem(hDlg,IDC_BANNER) == (HWND)lParam)
 			{	
 				SetBkColor((HDC) wParam, RGB(0, 255, 0));	
 				SetTextColor((HDC) wParam, RGB(0,0,255));
 				SetBkMode((HDC) wParam, TRANSPARENT);
 				return (UINT) App->AppBackground;
-			}*/
+			}
+
 			return FALSE;
 		}
 

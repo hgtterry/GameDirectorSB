@@ -65,6 +65,8 @@ public:
 
 	int Object_ID_Counter;	
 
+	int CurrentCamMode;
+
 	bool Player_Added;	// Is there a vaild player in the level [081221]
 	bool Area_Added;	// Is there a vaild Area or Room [131221]
 	bool Camera_Added;	// Is there a vaild Area or Room [131221]
@@ -78,6 +80,5 @@ protected:
 
 	void Reset_Class();
 
-	int CurrentCamMode;
 };
 

@@ -366,6 +366,7 @@ bool GD19_Ogre::createFrameListener(void)
 // *************************************************************************
 void GD19_Ogre::Go_FullScreen_Mode(void)
 {
+	App->SBC_Scene->CurrentCamMode = App->Cl19_Ogre->OgreListener->GD_CameraMode;
 
 	App->FullScreen = 1;
 	int cx = GetSystemMetrics(SM_CXSCREEN);
@@ -401,6 +402,7 @@ bool GD19_Ogre::ExitFullScreen()
 		mCamera->setAspectRatio((Ogre::Real)mWindow->getWidth() / (Ogre::Real)mWindow->getHeight());
 		mCamera->yaw(Radian(0));
 		Root::getSingletonPtr()->renderOneFrame();
+
 		App->SBC_Scene->Editor_Mode();
 
 	}
