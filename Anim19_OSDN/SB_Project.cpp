@@ -1615,7 +1615,6 @@ bool SB_Project::Load_Project_Aera()
 		App->SBC_Scene->B_Area[0]->S_Environment[0]->Loop = Int_Tag;
 
 		//--------------- Light
-
 		App->Cl_Ini->GetString("Environment", "Ambient_Colour", chr_Tag1, MAX_PATH);
 		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
 		App->SBC_Scene->B_Area[0]->S_Environment[0]->AmbientColour = Ogre::Vector3(x, y, z);
@@ -1632,6 +1631,28 @@ bool SB_Project::Load_Project_Aera()
 		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
 		App->SBC_Scene->B_Area[0]->S_Environment[0]->Light_Position = Ogre::Vector3(x, y, z);
 
+		//--------------- Sky
+		Int_Tag = App->Cl_Ini->GetInt("Environment", "Sky_Enable", 0, 10);
+		App->SBC_Scene->B_Area[0]->S_Environment[0]->Enabled = Int_Tag;
+
+		Int_Tag = App->Cl_Ini->GetInt("Environment", "Sky_Type", 0, 10);
+		App->SBC_Scene->B_Area[0]->S_Environment[0]->type = Int_Tag;
+
+		App->Cl_Ini->GetString("Environment", "Sky_Material", chr_Tag1, MAX_PATH);
+		strcpy(App->SBC_Scene->B_Area[0]->S_Environment[0]->Material, chr_Tag1);
+
+		App->Cl_Ini->GetString("Environment", "Sky_Curvature", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f", &x);
+		App->SBC_Scene->B_Area[0]->S_Environment[0]->Curvature = x;
+	
+		App->Cl_Ini->GetString("Environment", "Sky_Tiling", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f", &x);
+		App->SBC_Scene->B_Area[0]->S_Environment[0]->Tiling = x;
+		
+		App->Cl_Ini->GetString("Environment", "Sky_Distance", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f", &x);
+		App->SBC_Scene->B_Area[0]->S_Environment[0]->Distance = x;
+		
 		Count++;
 		App->SBC_Scene->Area_Count++;
 	}
