@@ -1653,6 +1653,30 @@ bool SB_Project::Load_Project_Aera()
 		sscanf(chr_Tag1, "%f", &x);
 		App->SBC_Scene->B_Area[0]->S_Environment[0]->Distance = x;
 		
+		//--------------- Fog
+		Int_Tag = App->Cl_Ini->GetInt("Environment", "Fog_On", 0, 10);
+		App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_On = Int_Tag;
+
+		Int_Tag = App->Cl_Ini->GetInt("Environment", "Fog_Mode", 0, 10);
+		App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_Mode = Int_Tag;
+		
+		App->Cl_Ini->GetString("Environment", "Fog_Colour", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+		App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_Colour = Ogre::Vector3(x, y, z);
+
+		App->Cl_Ini->GetString("Environment", "Fog_Start", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f", &x);
+		App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_Start = x;
+
+		App->Cl_Ini->GetString("Environment", "Fog_End", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f", &x);
+		App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_End = x;
+
+		App->Cl_Ini->GetString("Environment", "Fog_Density", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f", &x);
+		App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_Density = x;
+
+
 		Count++;
 		App->SBC_Scene->Area_Count++;
 	}
