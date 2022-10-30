@@ -759,7 +759,7 @@ void SB_TopTabs::Init_Bmps_Globals(void)
 void SB_TopTabs::Start_Game_TB(void)
 {
 	Game_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_GAME, Tabs_TB_hWnd, (DLGPROC)Game_TB_Proc);
-	//Init_Bmps_Groups();
+	Init_Bmps_Game();
 }
 
 // *************************************************************************
@@ -801,6 +801,13 @@ LRESULT CALLBACK SB_TopTabs::Game_TB_Proc(HWND hDlg, UINT message, WPARAM wParam
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
 		}
+
+		if (some_item->idFrom == IDC_BT_INFO_GAME && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
 		
 		return CDRF_DODEFAULT;
 	}
@@ -836,6 +843,28 @@ LRESULT CALLBACK SB_TopTabs::Game_TB_Proc(HWND hDlg, UINT message, WPARAM wParam
 	}
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *			Init_Bmps_Game:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void SB_TopTabs::Init_Bmps_Game()
+{
+
+	HWND Temp = GetDlgItem(Game_TB_hWnd, IDC_BT_INFO_GAME);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_InfoSmall_Bmp);
+
+	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
+
+	Temp = GetDlgItem(Game_TB_hWnd, IDC_BT_INFO_GAME);
+	TOOLINFO ti1 = { 0 };
+	ti1.cbSize = sizeof(ti1);
+	ti1.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti1.uId = (UINT_PTR)Temp;
+	ti1.lpszText = "Show Help File";
+	ti1.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti1);
+
 }
 
 // *************************************************************************
