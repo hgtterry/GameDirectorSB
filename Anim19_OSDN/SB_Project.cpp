@@ -403,7 +403,11 @@ bool SB_Project::Save_Project()
 		_chdir(m_Project_Sub_Folder);
 	}
 
-	Save_Project_Ini();
+	bool test = Save_Project_Ini();
+	if (test == 0)
+	{
+		return 0;
+	}
 
 	Save_Level_Folder();
 	Save_Main_Asset_Folder();
@@ -467,6 +471,18 @@ bool SB_Project::Save_Project_Ini()
 	strcpy(m_Ini_Path_File_Name, m_Project_Sub_Folder);
 	strcat(m_Ini_Path_File_Name, "\\");
 	strcat(m_Ini_Path_File_Name, "Project.SBProj");
+
+	int test = App->SBC_FileIO->SearchFolders(m_Project_Sub_Folder, "\\Project.SBProj");
+	if (test == 1)
+	{
+		App->SBC_Dialogs->YesNo("File Exsits", "Do you want to update File", 1);
+
+		bool Doit = App->SBC_Dialogs->Canceled;
+		if (Doit == 1)
+		{
+			return 0;
+		}
+	}
 
 	WriteFile = nullptr;
 
