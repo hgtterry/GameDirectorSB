@@ -124,7 +124,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	//CheckMenuItem(App->mMenu, ID_GRID_DIVISIONS, MF_BYCOMMAND | MF_CHECKED);
 
 	App->Cl_Bullet->Init_Bullet();
-	App->Cl_Scene_Data->Init_Scene();
 
 	App->SBC_FileIO->Init_History();
 

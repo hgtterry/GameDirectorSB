@@ -22,9 +22,6 @@ bool GD19_Scene_Data::Init_Class(void)
 	SceneLoaded = 0;
 	Scene_Has_Area = 0;
 
-	S_Flags[0] = NULL;
-	S_Scene[0] = NULL;
-
 	Player_Location_Count = 0;
 	Stock_Messgae_Count = 0;
 	Stock_Sound_Count = 0;
@@ -42,35 +39,6 @@ bool GD19_Scene_Data::Init_Class(void)
 	StockSounds_ID_Counter = 3000; // Stock sounds 3000 to 4000
 
 	return 1;
-}
-
-// *************************************************************************
-// *	  				Init_Scene Terry Bernie							   *
-// *************************************************************************
-bool GD19_Scene_Data::Init_Scene(void)
-{
-	App->Cl_Scene_Data->S_Scene[0] = new Scene_Type();
-	App->Cl_Scene_Data->SetScene_Defaults();
-
-	//App->Cl_Scene_Data->S_LoadOptions[0] = new Load_Options_Type();
-	//App->Cl_Scene_Data->SetOptions_Defaults();
-
-	App->Cl_Scene_Data->S_Flags[0]  = new Flags_Type();
-	//SetFlags_Defaults();
-
-	return 1;
-}
-
-
-// *************************************************************************
-// *						SetScene_Defaults Terry Bernie				   *
-// *************************************************************************
-void GD19_Scene_Data::SetScene_Defaults(void)
-{
-	S_Scene[0]->SceneType = 0;
-	S_Scene[0]->LastSceneType = 0;
-	S_Scene[0]->PlaneCount=0;
-
 }
 
 // *************************************************************************
