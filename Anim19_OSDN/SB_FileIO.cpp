@@ -32,6 +32,9 @@ SB_FileIO::SB_FileIO()
 	Project_File_Name[0] = 0;
 	Project_Path_File_Name[0] = 0;
 
+	strcpy(Data_mFilename, "No Set");
+	strcpy(Data_Path_mFilename, "No Set");
+
 	JustFileName[0] = 0;
 
 	Cannceled = 0;
@@ -71,6 +74,8 @@ bool SB_FileIO::Open_Project_File(char* Extension, char* Title, char* StartDirec
 
 	if (GetOpenFileName(&ofn) == TRUE)
 	{
+		strcpy(Data_mFilename, Project_File_Name);
+		strcpy(Data_Path_mFilename, Project_Path_File_Name);
 		return 1;
 	}
 

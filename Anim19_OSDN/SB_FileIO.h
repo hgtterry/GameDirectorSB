@@ -43,6 +43,9 @@ public:
 	char Project_Path_File_Name[MAX_PATH];
 	char JustFileName[MAX_PATH];
 
+	char Data_mFilename[MAX_PATH];
+	char Data_Path_mFilename[MAX_PATH];
+
 	char UserData_Folder[MAX_PATH];
 	char DeskTop_Folder[MAX_PATH];
 

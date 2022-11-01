@@ -135,7 +135,7 @@ int GD19_LookUps::Stock_Sound_GetCount(void)
 {
 	int RealCount = 0;
 	int Count = 0;
-	int Total = App->Cl_Scene_Data->Stock_Sound_Count;
+	int Total = 0;// App->Cl_Scene_Data->Stock_Sound_Count;
 
 	while (Count < Total)
 	{

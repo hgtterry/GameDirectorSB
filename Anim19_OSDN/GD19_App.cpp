@@ -33,7 +33,6 @@ GD19_App::GD19_App(void)
 	Cl_Utilities =		nullptr;
 	Cl_Grid =			nullptr;
 	Cl_Panels =			nullptr;
-	Cl_Scene_Data =		nullptr;
 	Cl_Bullet =			nullptr;
 	Cl_Ini =			nullptr;
 	Cl_Panels_Com =		nullptr;
@@ -185,17 +184,13 @@ bool GD19_App::InitApp(void)
 	Cl19_Ogre =			new GD19_Ogre();
 	Cl_Utilities =		new GD19_Utilities();
 	Cl_Grid =			new GD19_Grid();
-
 	Cl_Panels =			new GD19_Panels();
-
-	Cl_Scene_Data =		new GD19_Scene_Data();
 	Cl_Bullet =			new GD19_Bullet();		
 	Cl_Ini =			new T_Ini();
 	Cl_Panels_Com =		new GD19_Panel_Com();
 	Cl_Visuals =		new GD19_Visuals();
 	Cl_Environment =	new GD19_Environment();
 	Cl_Dialogs =		new GD19_Dialogs();
-
 	Cl_Objects_Com =	new GD19_Objects_Com();
 	Cl_LookUps =		new GD19_LookUps();		
 	Cl_Keyboard =		new GD_Keyboard();

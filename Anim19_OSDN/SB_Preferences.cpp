@@ -248,7 +248,7 @@ void SB_Preferences::AddRootFolder(void)
 }
 
 // *************************************************************************
-// *	  					 Start_QuickLoad_Dlg Terry Bernie			   *
+// *	  	Start_QuickLoad_Dlg:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 bool SB_Preferences::Start_QuickLoad_Dlg()
 {
@@ -256,7 +256,7 @@ bool SB_Preferences::Start_QuickLoad_Dlg()
 	return 1;
 }
 // *************************************************************************
-// *						Dialog_GetUserFile_Proc	  					   *
+// *		QuickLoad_Proc:- Terry and Hazel Flanigan 2022				   *
 // *************************************************************************
 LRESULT CALLBACK SB_Preferences::QuickLoad_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -302,10 +302,10 @@ LRESULT CALLBACK SB_Preferences::QuickLoad_Proc(HWND hDlg, UINT message, WPARAM 
 		char buff[1024];
 		App->Cl_Ini->GetString("Startup", "Scene_Path_FileName", buff, 1024);
 		SetDlgItemText(hDlg, IDC_STUSERFILE, (LPTSTR)buff);
-		strcpy(App->Cl_Scene_Data->Data_Path_mFilename, buff);
+		strcpy(App->SBC_FileIO->Data_Path_mFilename, buff);
 
 		App->Cl_Ini->GetString("Startup", "Scene_FileName", buff, 1024);
-		strcpy(App->Cl_Scene_Data->Data_mFilename, buff);
+		strcpy(App->SBC_FileIO->Data_mFilename, buff);
 
 
 		return TRUE;
@@ -346,13 +346,14 @@ LRESULT CALLBACK SB_Preferences::QuickLoad_Proc(HWND hDlg, UINT message, WPARAM 
 	case WM_COMMAND:
 		if (LOWORD(wParam) == IDC_BTBROWSE)
 		{
-			bool test = App->Cl_Scene_Data->Open_Project_Dlg("Project   *.SBProj\0*.SBProj\0", "Project File", NULL);
+
+			bool test = App->SBC_FileIO->Open_Project_File("Project   *.SBProj\0*.SBProj\0", "Project File", NULL);
 			if (test == 0)
 			{
 				return 0;
 			}
 
-			SetDlgItemText(hDlg, IDC_STUSERFILE, (LPTSTR)App->Cl_Scene_Data->Path_mFilename);
+			SetDlgItemText(hDlg, IDC_STUSERFILE, (LPTSTR)App->SBC_FileIO->Data_mFilename);
 			return 1;
 
 		}
@@ -408,13 +409,13 @@ LRESULT CALLBACK SB_Preferences::QuickLoad_Proc(HWND hDlg, UINT message, WPARAM 
 					App->Say("Error Writing 2");
 				}
 
-				test2 = App->Cl_Ini->WriteString("Startup", "Scene_FileName", App->Cl_Scene_Data->Data_mFilename);
+				test2 = App->Cl_Ini->WriteString("Startup", "Scene_FileName", App->SBC_FileIO->Data_mFilename);
 				if (test2 == 0)
 				{
 					App->Say("Error Writing 3");
 				}
 
-				test2 = App->Cl_Ini->WriteString("Startup", "Scene_Path_FileName", App->Cl_Scene_Data->Data_Path_mFilename);
+				test2 = App->Cl_Ini->WriteString("Startup", "Scene_Path_FileName", App->SBC_FileIO->Data_Path_mFilename);
 				if (test2 == 0)
 				{
 					App->Say("Error Writing 4");
