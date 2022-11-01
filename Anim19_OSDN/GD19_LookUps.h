@@ -51,9 +51,5 @@ public:
 	// Get Real Count - Deleted
 	int Get_AdjustedCount(void);
 
-	char* Get_Edit_Category_String(void);
-	char* Get_Type_Category_String(void);
-	char* Get_Usage_Category_String(void);
-	
 };
 
