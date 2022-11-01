@@ -230,7 +230,7 @@ bool SB_Objects_Create::Add_New_Object(int Index,bool From_MeshViewer)
 	}
 
 
-	App->Cl_Scene_Data->SceneLoaded = 1;
+	App->SBC_Scene->Scene_Loaded = 1;
 
 	
 	//---------------------- Static
@@ -300,7 +300,7 @@ bool SB_Objects_Create::Add_New_Object(int Index,bool From_MeshViewer)
 
 	if (Object->Usage == Enums::Usage_Room) // Rooms
 	{
-		App->Cl_Scene_Data->Scene_Has_Area = 1;
+		App->SBC_Scene->Area_Added = 1;
 	}
 	
 	ShowWindow(App->GD_Properties_Hwnd, 1);
@@ -894,7 +894,7 @@ bool SB_Objects_Create::Create_Message_Entity(int Index)
 	Object->Object_Node->setOrientation(Object->Mesh_Quat);
 	Object->Object_Node->setPosition(Object->Mesh_Pos);
 
-	App->Cl_Scene_Data->SceneLoaded = 1;
+	App->SBC_Scene->Scene_Loaded = 1;
 
 	// ----------------- Physics
 
@@ -1032,7 +1032,7 @@ bool SB_Objects_Create::Create_Sound_Entity(int Index)
 	Object->Object_Node->setOrientation(Object->Mesh_Quat);
 	Object->Object_Node->setPosition(Object->Mesh_Pos);
 
-	App->Cl_Scene_Data->SceneLoaded = 1;
+	App->SBC_Scene->Scene_Loaded = 1;
 
 	// ----------------- Physics
 
@@ -1187,7 +1187,7 @@ bool SB_Objects_Create::Create_Move_Entity(int Index)
 	Object->Object_Node->setOrientation(Object->Mesh_Quat);
 	Object->Object_Node->setPosition(Object->Mesh_Pos);
 
-	App->Cl_Scene_Data->SceneLoaded = 1;
+	App->SBC_Scene->Scene_Loaded = 1;
 
 	// ----------------- Physics
 
@@ -1322,7 +1322,7 @@ bool SB_Objects_Create::Create_TeleportEntity(int Index)
 	Object->Object_Node->setOrientation(Object->Mesh_Quat);
 	Object->Object_Node->setPosition(Object->Mesh_Pos);
 
-	App->Cl_Scene_Data->SceneLoaded = 1;
+	App->SBC_Scene->Scene_Loaded = 1;
 
 	// ----------------- Physics
 

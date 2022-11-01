@@ -22,10 +22,7 @@ public:
 	int Stock_Messgae_Count;
 	int Stock_Sound_Count;
 	int NewObjectID;
-	int CurrentCamMode;
-	bool SceneLoaded;
-	bool Scene_Has_Area;
-
+	
 	//---------------------Unique Counters
 	int Locations_ID_Counter; //Unique Counter
 	int StockSounds_ID_Counter;

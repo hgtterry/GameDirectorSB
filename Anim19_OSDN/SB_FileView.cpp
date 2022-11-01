@@ -839,7 +839,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 	// Particles
 	if (!strcmp(FileView_Folder, "Particles")) // Folder
 	{
-		if (App->Cl_Scene_Data->Scene_Has_Area == 0)
+		if (App->SBC_Scene->Area_Added == 0)
 		{
 			App->Say("An Area or Building must be Added Firest");
 			return;
@@ -916,7 +916,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 	// *************************************************************************
 	if (!strcmp(FileView_Folder, "Environment")) // Folder
 	{
-		if (App->Cl_Scene_Data->Scene_Has_Area == 0)
+		if (App->SBC_Scene->Area_Added == 0)
 		{
 			App->Say("An Area or Building must be Added Firest");
 			return;
@@ -970,7 +970,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 	// *************************************************************************
 	if (!strcmp(FileView_Folder, "Area_Change")) // Folder
 	{
-		if (App->Cl_Scene_Data->Scene_Has_Area == 0)
+		if (App->SBC_Scene->Area_Added == 0)
 		{
 			App->Say("An Area or Building must be Added Firest");
 			return;
@@ -1025,7 +1025,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 	// *************************************************************************
 	if (!strcmp(FileView_Folder, "Change_Level")) // Folder
 	{
-		if (App->Cl_Scene_Data->Scene_Has_Area == 0)
+		if (App->SBC_Scene->Area_Added == 0)
 		{
 			App->Say("An Area or Building must be Added Firest");
 			return;

@@ -134,7 +134,7 @@ LRESULT CALLBACK GD19_Bullet::Physics_Console_Proc(HWND hDlg, UINT message, WPAR
 			
 			if (LOWORD(wParam)== IDC_RESETTRIGGERS) 
 			{
-				if(App->Cl_Scene_Data->SceneLoaded == 1)
+				if(App->SBC_Scene->Scene_Loaded == 1)
 				{
 					App->SBC_Physics->Reset_Triggers();
 				}
@@ -143,7 +143,7 @@ LRESULT CALLBACK GD19_Bullet::Physics_Console_Proc(HWND hDlg, UINT message, WPAR
 
 			if (LOWORD(wParam)== IDC_RESETPHYSICS) 
 			{
-				if(App->Cl_Scene_Data->SceneLoaded == 1)
+				if(App->SBC_Scene->Scene_Loaded == 1)
 				{
 					//App->Cl_Bullet->Reset_Physics();
 				}
@@ -152,7 +152,7 @@ LRESULT CALLBACK GD19_Bullet::Physics_Console_Proc(HWND hDlg, UINT message, WPAR
 
 			if (LOWORD(wParam)== IDC_PHYSICS_ON) 
 			{
-				if(App->Cl_Scene_Data->SceneLoaded == 1)
+				if(App->SBC_Scene->Scene_Loaded == 1)
 				{
 					if(App->Cl_Bullet->GD_Physics_On == 1)
 					{

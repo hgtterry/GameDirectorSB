@@ -484,7 +484,7 @@ bool SB_Properties::Update_ListView_Objects()
 // *************************************************************************
 bool SB_Properties::Update_ListView_Player()
 {
-	if (App->Cl_Scene_Data->SceneLoaded == 0)
+	if (App->SBC_Scene->Scene_Loaded == 0)
 	{
 		//	return 1;
 	}
@@ -559,7 +559,7 @@ bool SB_Properties::Update_ListView_Player()
 // *************************************************************************
 bool SB_Properties::Update_ListView_Player_Physics()
 {
-	if (App->Cl_Scene_Data->SceneLoaded == 0)
+	if (App->SBC_Scene->Scene_Loaded == 0)
 	{
 		//return 1;
 	}
@@ -2150,7 +2150,7 @@ bool SB_Properties::Update_ListView_Area()
 // *************************************************************************
 bool SB_Properties::Update_ListView_Camera()
 {
-	if (App->Cl_Scene_Data->SceneLoaded == 0)
+	if (App->SBC_Scene->Scene_Loaded == 0)
 	{
 		//	return 1;
 	}

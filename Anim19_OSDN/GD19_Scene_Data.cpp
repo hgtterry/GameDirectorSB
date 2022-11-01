@@ -19,16 +19,12 @@ GD19_Scene_Data::~GD19_Scene_Data(void)
 // *************************************************************************
 bool GD19_Scene_Data::Init_Class(void)
 {
-	SceneLoaded = 0;
-	Scene_Has_Area = 0;
-
 	Player_Location_Count = 0;
 	Stock_Messgae_Count = 0;
 	Stock_Sound_Count = 0;
 
 	NewObjectID = 0;
-	CurrentCamMode = 0;
-
+	
 	strcpy(mFilename, "No Set");
 	strcpy(Path_mFilename, "No Set");
 
