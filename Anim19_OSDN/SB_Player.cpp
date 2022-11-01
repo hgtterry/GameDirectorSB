@@ -541,7 +541,7 @@ LRESULT CALLBACK SB_Player::Locations_Proc(HWND hDlg, UINT message, WPARAM wPara
 
 			strcpy(App->Cl_Dialogs->Chr_Text, App->SBC_Scene->B_Locations[Location_Index]->Name);
 
-			App->Cl_Dialogs->Dialog_Text(Enums::Check_Names_Locatoins);
+			App->Cl_Dialogs->Dialog_Text(Enums::Check_Names_Locatoins, 1);
 
 			if (App->Cl_Dialogs->Canceled == 1)
 			{
@@ -650,7 +650,7 @@ LRESULT CALLBACK SB_Player::Locations_Proc(HWND hDlg, UINT message, WPARAM wPara
 			strcat(buf, numbuf);
 			strcpy(App->Cl_Dialogs->Chr_Text, buf);
 
-			App->Cl_Dialogs->Dialog_Text(1);
+			App->Cl_Dialogs->Dialog_Text(1, 1);
 
 			if (App->Cl_Dialogs->Canceled == 1)
 			{

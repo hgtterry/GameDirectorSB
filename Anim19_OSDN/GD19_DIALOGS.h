@@ -8,7 +8,9 @@ public:
 	bool Dialog_TrueFlase(HWND Parent);
 	bool Dialog_Float();
 	bool Dialog_Int();
-	bool Dialog_Text(int Usage);
+
+	bool Dialog_Text(int Usage, bool CheckForSpaces);
+
 	void Start_Gen_ListBox(int ListType);
 
 	void Message(char *pString);
@@ -18,6 +20,7 @@ public:
 	bool Canceled;
 	bool TrueFlase;
 	int CheckNames;
+	bool CheckSpaces;
 
 	char btext[100];
 	char Chr_DropText[100];

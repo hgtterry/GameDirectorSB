@@ -155,7 +155,7 @@ void SB_Object::Rename_Object(int Index)
 	strcpy(App->Cl_Dialogs->btext, "Change Object Name");
 	strcpy(App->Cl_Dialogs->Chr_Text, Object->Mesh_Name);
 
-	App->Cl_Dialogs->Dialog_Text(Enums::Check_Names_Objects);
+	App->Cl_Dialogs->Dialog_Text(Enums::Check_Names_Objects, 1);
 
 	if (App->Cl_Dialogs->Canceled == 1)
 	{
@@ -209,7 +209,7 @@ void SB_Object::Copy_Object(int Object_Index)
 	strcpy(App->Cl_Dialogs->btext, "New Object Name");
 	strcpy(App->Cl_Dialogs->Chr_Text, NewName);
 
-	App->Cl_Dialogs->Dialog_Text(1);
+	App->Cl_Dialogs->Dialog_Text(2, 1);
 
 	if (App->Cl_Dialogs->Canceled == 1)
 	{

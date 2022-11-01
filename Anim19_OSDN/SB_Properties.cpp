@@ -1153,7 +1153,7 @@ bool SB_Properties::Edit_Area_Onclick(LPARAM lParam)
 		strcpy(App->Cl_Dialogs->btext, "Change Area Name");
 		strcpy(App->Cl_Dialogs->Chr_Text, Area->Area_Name);
 
-		App->Cl_Dialogs->Dialog_Text(1);
+		App->Cl_Dialogs->Dialog_Text(1, 1);
 
 		if (App->Cl_Dialogs->Canceled == 1)
 		{
@@ -1193,7 +1193,7 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 		strcpy(App->Cl_Dialogs->btext, "Change Player Name");
 		strcpy(App->Cl_Dialogs->Chr_Text, App->SBC_Scene->B_Player[0]->Player_Name);
 
-		App->Cl_Dialogs->Dialog_Text(1);
+		App->Cl_Dialogs->Dialog_Text(1, 1);
 
 		if (App->Cl_Dialogs->Canceled == 1)
 		{
@@ -1387,7 +1387,7 @@ bool SB_Properties::Edit_Messages_OnClick(LPARAM lParam)
 		strcpy(App->Cl_Dialogs->btext, "Change Object Name");
 		strcpy(App->Cl_Dialogs->Chr_Text, App->SBC_Scene->B_Object[Index]->Mesh_Name);
 
-		App->Cl_Dialogs->Dialog_Text(Enums::Check_Names_Objects);
+		App->Cl_Dialogs->Dialog_Text(Enums::Check_Names_Objects, 1);
 
 		if (App->Cl_Dialogs->Canceled == 1)
 		{
@@ -1410,7 +1410,7 @@ bool SB_Properties::Edit_Messages_OnClick(LPARAM lParam)
 		strcpy(App->Cl_Dialogs->btext, "Change Text");
 		strcpy(App->Cl_Dialogs->Chr_Text, App->SBC_Scene->B_Object[Index]->Message_Text);
 
-		App->Cl_Dialogs->Dialog_Text(0);
+		App->Cl_Dialogs->Dialog_Text(2, 1);
 
 		if (App->Cl_Dialogs->Canceled == 1)
 		{
@@ -1609,7 +1609,7 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 		strcpy(App->Cl_Dialogs->btext, "Change Object Name");
 		strcpy(App->Cl_Dialogs->Chr_Text, App->SBC_Scene->B_Object[Index]->Mesh_Name);
 
-		App->Cl_Dialogs->Dialog_Text(Enums::Check_Names_Objects);
+		App->Cl_Dialogs->Dialog_Text(Enums::Check_Names_Objects, 1);
 
 		if (App->Cl_Dialogs->Canceled == 1)
 		{
@@ -2236,7 +2236,7 @@ bool SB_Properties::Edit_Camera_Onclick(LPARAM lParam)
 		strcpy(App->Cl_Dialogs->btext, "Change Camera Name");
 		strcpy(App->Cl_Dialogs->Chr_Text, App->SBC_Scene->B_Camera[Index]->Camera_Name);
 
-		App->Cl_Dialogs->Dialog_Text(1);
+		App->Cl_Dialogs->Dialog_Text(1, 1);
 
 		if (App->Cl_Dialogs->Canceled == 1)
 		{
@@ -2416,7 +2416,7 @@ bool SB_Properties::Edit_Sounds_OnClick(LPARAM lParam)
 		strcpy(App->Cl_Dialogs->btext, "Change Object Name");
 		strcpy(App->Cl_Dialogs->Chr_Text, App->SBC_Scene->B_Object[Index]->Mesh_Name);
 
-		App->Cl_Dialogs->Dialog_Text(Enums::Check_Names_Objects);
+		App->Cl_Dialogs->Dialog_Text(Enums::Check_Names_Objects, 1);
 
 		if (App->Cl_Dialogs->Canceled == 1)
 		{
@@ -2512,7 +2512,7 @@ bool SB_Properties::Edit_Teleport_OnClick(LPARAM lParam)
 		strcpy(App->Cl_Dialogs->btext, "Change Object Name");
 		strcpy(App->Cl_Dialogs->Chr_Text, App->SBC_Scene->B_Object[Index]->Mesh_Name);
 
-		App->Cl_Dialogs->Dialog_Text(Enums::Check_Names_Objects);
+		App->Cl_Dialogs->Dialog_Text(Enums::Check_Names_Objects, 1);
 
 		if (App->Cl_Dialogs->Canceled == 1)
 		{

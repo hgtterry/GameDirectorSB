@@ -27,6 +27,7 @@ GD19_Dialogs::GD19_Dialogs(void)
 	mListType = Enums::ListBox_None;
 
 	CheckNames = 0;
+	CheckSpaces = 0;
 
 	Mouse_Normal2 = 1;
 	Mouse_Slow2 = 0;
@@ -259,9 +260,10 @@ LRESULT CALLBACK GD19_Dialogs::Dialog_Int_Proc(HWND hDlg, UINT message, WPARAM w
 // *************************************************************************
 // *	  				 Dialog_Text	Terry Bernie					   *
 // *************************************************************************
-bool GD19_Dialogs::Dialog_Text(int Usage)
+bool GD19_Dialogs::Dialog_Text(int Usage, bool CheckForSpaces)
 {
 	App->Cl_Dialogs->CheckNames = Usage;
+	App->Cl_Dialogs->CheckSpaces = CheckForSpaces;
 
 	DialogBox(App->hInst,(LPCTSTR)IDD_PROP_TEXT,App->Fdlg,(DLGPROC)Dialog_Text_Proc);
 	return 1;
@@ -335,11 +337,12 @@ LRESULT CALLBACK GD19_Dialogs::Dialog_Text_Proc(HWND hDlg, UINT message, WPARAM 
 					char buff[255]; 
 					GetDlgItemText(hDlg,IDC_EDITTEXT,(LPTSTR)buff,255);
 
-					/*if (App->Cl_Dialogs->CheckForSpaces == 1)
+					// Checks for Spaces
+					if (App->Cl_Dialogs->CheckSpaces == 1)
 					{
 						App->Cl_Utilities->TestForBadCharactors(buff);
 						strcpy(buff,App->Cl_Utilities->Return_Chr);
-					}*/
+					}
 
 					// Checks name duplication Locations
 					if (App->Cl_Dialogs->CheckNames == Enums::Check_Names_Locatoins)
