@@ -29,8 +29,6 @@ public:
 	GD19_LookUps(void);
 	~GD19_LookUps(void);
 
-	int Check_Objects_CheckNames(char* Name);
-
 	// Check for duplicate names 1=Name found  0=No Name Found
 	int Player_Location_CheckNames(char* Name);
 

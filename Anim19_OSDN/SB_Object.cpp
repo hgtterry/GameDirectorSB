@@ -145,12 +145,6 @@ void SB_Object::Hide_Object_Dlg(bool Show)
 }
 
 
-
-
-
-
-
-
 // *************************************************************************
 // *					Rename_Object Terry Flanigan					   *
 // *************************************************************************
@@ -161,14 +155,13 @@ void SB_Object::Rename_Object(int Index)
 	strcpy(App->Cl_Dialogs->btext, "Change Object Name");
 	strcpy(App->Cl_Dialogs->Chr_Text, Object->Mesh_Name);
 
-	App->Cl_Dialogs->Dialog_Text(1);
+	App->Cl_Dialogs->Dialog_Text(Enums::Check_Names_Objects);
 
 	if (App->Cl_Dialogs->Canceled == 1)
 	{
 		return;
 	}
 
-	// Needs Duplicate Name test 
 	strcpy(Object->Mesh_Name, App->Cl_Dialogs->Chr_Text);
 
 	Object->Altered = 1;

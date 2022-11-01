@@ -29,6 +29,8 @@ public:
 	SB_LookUps(void);
 	~SB_LookUps(void);
 
+	int CheckNames_Objects(char* Name);
+
 	bool Show_Entities(bool YesNo);
 	bool Is_Meshes_Used(char* Name);
 

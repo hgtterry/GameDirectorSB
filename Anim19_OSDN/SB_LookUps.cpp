@@ -254,3 +254,29 @@ bool SB_LookUps::Is_Meshes_Used(char* Name)
 
 	return 0;
 }
+
+// *************************************************************************
+// *		 CheckNames_Objects:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+int SB_LookUps::CheckNames_Objects(char* Name)
+{
+	int Count = 0;
+	int Total = App->SBC_Scene->Object_Count;
+
+	while (Count < Total)
+	{
+		if (App->SBC_Scene->B_Object[Count]->Deleted == 0)
+		{
+			int Result = 1;
+			Result = strcmp(App->SBC_Scene->B_Object[Count]->Mesh_Name, Name);
+
+			if (Result == 0)
+			{
+				return 1;
+			}
+		}
+
+		Count++;
+	}
+	return 0;
+}

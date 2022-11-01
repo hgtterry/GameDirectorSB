@@ -36,30 +36,6 @@ GD19_LookUps::~GD19_LookUps(void)
 }
 
 // *************************************************************************
-// *	  			Check_Objects_CheckNames Terry Bernie				   *
-// *************************************************************************
-int GD19_LookUps::Check_Objects_CheckNames(char* Name)
-{
-	/*int Count = 0;
-	int Total = App->Cl_Scene_Data->ObjectCount;
-	while (Count < Total)
-	{
-		if (App->Cl_Scene_Data->Cl_Object[Count]->Deleted == 0)
-		{
-			int Result = 1;
-			Result = strcmp(App->Cl_Scene_Data->Cl_Object[Count]->Name, Name);
-
-			if (Result == 0)
-			{
-				return 1;
-			}
-		}
-		Count++;
-	}*/
-	return 0;
-}
-
-// *************************************************************************
 // *	  			Player_Location_CheckNames Terry Bernie				   *
 // *************************************************************************
 int GD19_LookUps::Player_Location_CheckNames(char* Name)

@@ -261,7 +261,7 @@ LRESULT CALLBACK GD19_Dialogs::Dialog_Int_Proc(HWND hDlg, UINT message, WPARAM w
 // *************************************************************************
 bool GD19_Dialogs::Dialog_Text(int Usage)
 {
-	CheckNames = Usage;
+	App->Cl_Dialogs->CheckNames = Usage;
 
 	DialogBox(App->hInst,(LPCTSTR)IDD_PROP_TEXT,App->Fdlg,(DLGPROC)Dialog_Text_Proc);
 	return 1;
@@ -355,7 +355,7 @@ LRESULT CALLBACK GD19_Dialogs::Dialog_Text_Proc(HWND hDlg, UINT message, WPARAM 
 					// Checks name duplication Objects
 					if (App->Cl_Dialogs->CheckNames == Enums::Check_Names_Objects)
 					{
-						int test = App->Cl_LookUps->Check_Objects_CheckNames(buff);
+						int test = App->SBC_LookUps->CheckNames_Objects(buff);
 						if (test == 1)
 						{
 							App->Say("Name Already Exsits");
