@@ -19,10 +19,7 @@ GD19_Scene_Data::~GD19_Scene_Data(void)
 // *************************************************************************
 bool GD19_Scene_Data::Init_Class(void)
 {
-	Player_Location_Count = 0;
-	Stock_Messgae_Count = 0;
-	Stock_Sound_Count = 0;
-
+	
 	NewObjectID = 0;
 	
 	strcpy(mFilename, "No Set");

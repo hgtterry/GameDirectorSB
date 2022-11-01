@@ -656,11 +656,11 @@ void GD19_Dialogs::List_Sounds_Stock(HWND List)
 {
 	SendMessage(List,LB_RESETCONTENT, 0,0);
 
-	int Count = 0;
-	while (Count < App->Cl_Scene_Data->Stock_Sound_Count)
+	//int Count = 0;
+//	while (Count < App->Cl_Scene_Data->Stock_Sound_Count)
 	{
 //		SendMessage(List,LB_ADDSTRING, 0, (LPARAM) (LPCTSTR)App->Cl_Scene_Data->St_Sounds[Count]->Name);
-		Count++;
+		//Count++;
 	}
 }
 

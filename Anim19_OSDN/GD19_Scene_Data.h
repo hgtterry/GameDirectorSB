@@ -18,9 +18,6 @@ public:
 
 	bool Is_Meshes_Used(char* Name);
 	
-	int Player_Location_Count;
-	int Stock_Messgae_Count;
-	int Stock_Sound_Count;
 	int NewObjectID;
 	
 	//---------------------Unique Counters

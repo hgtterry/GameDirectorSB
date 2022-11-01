@@ -436,7 +436,7 @@ LRESULT CALLBACK SB_Player::Locations_Proc(HWND hDlg, UINT message, WPARAM wPara
 		SendDlgItemMessage(hDlg, IDC_CKMOVECAM, BM_SETCHECK, 1, 0);
 
 		int Count = 0;
-		while (Count < App->Cl_Scene_Data->Player_Location_Count)
+		while (Count < App->SBC_Scene->Player_Location_Count)
 		{
 			if (App->SBC_Scene->B_Locations[Count]->Deleted == 0)
 			{
@@ -537,7 +537,7 @@ LRESULT CALLBACK SB_Player::Locations_Proc(HWND hDlg, UINT message, WPARAM wPara
 			strcpy(App->Cl_Dialogs->btext, "Location Name");
 
 			char numbuf[255];
-			_itoa(App->Cl_Scene_Data->Player_Location_Count, numbuf, 10);
+			_itoa(App->SBC_Scene->Player_Location_Count, numbuf, 10);
 
 			strcpy(App->Cl_Dialogs->Chr_Text, App->SBC_Scene->B_Locations[Location_Index]->Name);
 
@@ -553,7 +553,7 @@ LRESULT CALLBACK SB_Player::Locations_Proc(HWND hDlg, UINT message, WPARAM wPara
 
 			SendDlgItemMessage(hDlg, IDC_LSTLOCATIONS, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 			int Count = 0;
-			while (Count < App->Cl_Scene_Data->Player_Location_Count)
+			while (Count < App->SBC_Scene->Player_Location_Count)
 			{
 
 				if (App->SBC_Scene->B_Locations[Count]->Deleted == 0)
@@ -594,7 +594,7 @@ LRESULT CALLBACK SB_Player::Locations_Proc(HWND hDlg, UINT message, WPARAM wPara
 				App->SBC_Scene->B_Locations[Location_Index]->Deleted = 1;
 				SendDlgItemMessage(hDlg, IDC_LSTLOCATIONS, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 				int Count = 0;
-				while (Count < App->Cl_Scene_Data->Player_Location_Count)
+				while (Count < App->SBC_Scene->Player_Location_Count)
 				{
 					if (App->SBC_Scene->B_Locations[Count]->Deleted == 0)
 					{
@@ -644,7 +644,7 @@ LRESULT CALLBACK SB_Player::Locations_Proc(HWND hDlg, UINT message, WPARAM wPara
 
 			char buf[255];
 			char numbuf[255];
-			_itoa(App->Cl_Scene_Data->Player_Location_Count, numbuf, 10);
+			_itoa(App->SBC_Scene->Player_Location_Count, numbuf, 10);
 
 			strcpy(buf, "New_Location_");
 			strcat(buf, numbuf);
@@ -1144,7 +1144,7 @@ void SB_Player::Check_Collisions_New(void)
 void SB_Player::Save_Location(char* name)
 {
 
-	int Count = App->Cl_Scene_Data->Player_Location_Count;
+	int Count = App->SBC_Scene->Player_Location_Count;
 
 	App->SBC_Scene->B_Locations[Count] = new Base_Locations();
 
@@ -1158,7 +1158,7 @@ void SB_Player::Save_Location(char* name)
 	App->SBC_Scene->B_Locations[Count]->Physics_Position = App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().getOrigin();
 	App->SBC_Scene->B_Locations[Count]->Physics_Rotation = App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().getRotation();
 
-	App->Cl_Scene_Data->Player_Location_Count++;
+	App->SBC_Scene->Player_Location_Count++;
 
 }
 

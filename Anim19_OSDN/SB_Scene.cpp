@@ -51,6 +51,8 @@ SB_Scene::SB_Scene()
 	CurrentCamMode = 0;
 	Scene_Modified = 0;
 
+	Player_Location_Count = 0;
+
 	GameMode_Flag = 0;
 
 	B_Player[100] = { nullptr };

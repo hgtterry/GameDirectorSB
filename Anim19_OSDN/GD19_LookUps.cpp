@@ -65,7 +65,7 @@ int GD19_LookUps::Check_Objects_CheckNames(char* Name)
 int GD19_LookUps::Player_Location_CheckNames(char* Name)
 {
 	int Count = 0;
-	int Total = App->Cl_Scene_Data->Player_Location_Count;
+	int Total = App->SBC_Scene->Player_Location_Count;
 	while (Count < Total)
 	{
 		if (App->SBC_Scene->B_Locations[Count]->Deleted == 0)
@@ -89,7 +89,7 @@ int GD19_LookUps::Player_Location_CheckNames(char* Name)
 int GD19_LookUps::Player_Location_GetIndex_ByName(char* Name)
 {
 	int Count = 0;
-	int Total = App->Cl_Scene_Data->Player_Location_Count;
+	int Total = App->SBC_Scene->Player_Location_Count;
 	while (Count < Total)
 	{
 		if (App->SBC_Scene->B_Locations[Count]->Deleted == 0)
@@ -115,7 +115,7 @@ int GD19_LookUps::Player_Location_GetCount(void)
 {
 	int RealCount = 0;
 	int Count = 0;
-	int Total = App->Cl_Scene_Data->Player_Location_Count;
+	int Total = App->SBC_Scene->Player_Location_Count;
 
 	while (Count < Total)
 	{

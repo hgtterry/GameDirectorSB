@@ -379,7 +379,7 @@ void SB_Dialogs::ListObjects(HWND DropHwnd)
 void SB_Dialogs::List_Locations(HWND DropHwnd)
 {
 	int Count = 0;
-	while (Count < App->Cl_Scene_Data->Player_Location_Count)
+	while (Count < App->SBC_Scene->Player_Location_Count)
 	{
 		if (App->SBC_Scene->B_Locations[Count]->Deleted == 0)
 		{
