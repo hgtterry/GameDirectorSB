@@ -42,10 +42,6 @@ public:
 
 	void SetScene_Defaults(void);
 
-	void SetFlags_Defaults(void);
-
-	void Set_Move_Defaults(int Index);
-
 	bool Open_Project_Dlg(char* Extension, char* Title, char* StartDirectory);
 	
 	bool Show_Entities(bool YesNo);

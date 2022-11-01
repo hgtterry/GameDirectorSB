@@ -56,35 +56,9 @@ bool GD19_Scene_Data::Init_Scene(void)
 	//App->Cl_Scene_Data->SetOptions_Defaults();
 
 	App->Cl_Scene_Data->S_Flags[0]  = new Flags_Type();
-	SetFlags_Defaults();
+	//SetFlags_Defaults();
 
 	return 1;
-}
-
-// *************************************************************************
-//					SetFlags_Defaults Terry Bernie				  		   *
-// *************************************************************************
-void GD19_Scene_Data::SetFlags_Defaults(void)
-{
-	S_Flags[0]->GameMode = 0;
-}
-
-// *************************************************************************
-//						Set_Move_Defaults Terry Bernie				  	   *
-// *************************************************************************
-void GD19_Scene_Data::Set_Move_Defaults(int Index)
-{
-	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->IsNegative = 1;
-	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Move_Distance = -50;
-	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Newpos = 0;
-	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Speed = 10.0;
-	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->WhatDirection = Enums::Axis_x;
-	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_Index = 0;
-	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_ID = 0;
-	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Triggered = 0;
-	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Re_Trigger = 0;
-	strcpy(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_Name,"None");
-	return;
 }
 
 

@@ -1075,7 +1075,7 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 	{
 		App->Cl19_Ogre->m_imgui.mouseReleased();
 
-		if (App->Cl_Scene_Data->S_Flags[0]->GameMode == 0)
+		if (App->SBC_Scene->GameMode_Flag == 0)
 		{
 			if (App->OgreStarted == 1)
 			{

@@ -39,6 +39,7 @@ public:
 
 	void Set_Teleports_Defaults(int Index);
 	void Set_Collectables_Sound_Defaults(int Index);
+	void Set_Move_Defaults(int Index);
 
 	int GetIndex_By_Name(char* Name);
 

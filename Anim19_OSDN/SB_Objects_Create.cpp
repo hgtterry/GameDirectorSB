@@ -1128,7 +1128,7 @@ bool SB_Objects_Create::Add_New_Move_Entity()
 	App->SBC_Scene->B_Object[Index] = new Base_Object();
 
 	App->SBC_Scene->B_Object[Index]->S_MoveType[0] = new Move_Type;
-	App->Cl_Scene_Data->Set_Move_Defaults(Index); // Check
+	App->SBC_Object->Set_Move_Defaults(Index); // Check
 
 	App->SBC_Scene->B_Object[Index]->Type = Enums::Bullet_Type_Static;
 	App->SBC_Scene->B_Object[Index]->Shape = Enums::Shape_Box;

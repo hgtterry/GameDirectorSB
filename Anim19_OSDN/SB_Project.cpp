@@ -1474,7 +1474,7 @@ bool SB_Project::Load_Project_Objects()
 		{
 
 			App->SBC_Scene->B_Object[Count]->S_MoveType[0] = new Move_Type;
-			App->Cl_Scene_Data->Set_Move_Defaults(Count); // Check
+			App->SBC_Object->Set_Move_Defaults(Count); // Check
 
 			// --------------------------- Distance
 			App->Cl_Ini->GetString(buff, "Move_Distance", chr_Tag1, MAX_PATH);

@@ -74,6 +74,8 @@ public:
 	bool Project_Resources_Created;
 	bool Scene_Modified;
 
+	bool GameMode_Flag;
+
 	Ogre::String Project_Resource_Group;
 	
 protected:
