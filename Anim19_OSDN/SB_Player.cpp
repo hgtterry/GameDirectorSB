@@ -1150,8 +1150,8 @@ void SB_Player::Save_Location(char* name)
 
 	App->SBC_Scene->B_Locations[Count]->Deleted = 0;
 
-	App->SBC_Scene->B_Locations[Count]->Location_ID = App->Cl_Scene_Data->Locations_ID_Counter;
-	App->Cl_Scene_Data->Locations_ID_Counter++;
+	App->SBC_Scene->B_Locations[Count]->Location_ID = App->SBC_Scene->Locations_ID_Counter;
+	App->SBC_Scene->Locations_ID_Counter++;
 
 	strcpy(App->SBC_Scene->B_Locations[Count]->Name, name);
 	App->SBC_Scene->B_Locations[Count]->Current_Position = App->SBC_Scene->B_Player[0]->Player_Node->getPosition();

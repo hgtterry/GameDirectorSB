@@ -6,99 +6,13 @@
 
 GD19_Scene_Data::GD19_Scene_Data(void)
 {
-	Init_Class();
+	strcpy(Data_mFilename, "No Set");
+	strcpy(Data_Path_mFilename, "No Set");
 } 
 
 
 GD19_Scene_Data::~GD19_Scene_Data(void)
 {
-}
-
-// *************************************************************************
-// *	  				Init_Class Terry Bernie							   *
-// *************************************************************************
-bool GD19_Scene_Data::Init_Class(void)
-{
-	
-	NewObjectID = 0;
-	
-	strcpy(mFilename, "No Set");
-	strcpy(Path_mFilename, "No Set");
-
-	strcpy(Data_mFilename, "No Set");
-	strcpy(Data_Path_mFilename, "No Set");
-
-	Locations_ID_Counter = 2000; //Locations 2000 to 3000
-	StockSounds_ID_Counter = 3000; // Stock sounds 3000 to 4000
-
-	return 1;
-}
-
-// *************************************************************************
-// *					 Show_Entities(Terry Bernie)			 	 	   *
-// *************************************************************************
-bool GD19_Scene_Data::Show_Entities(bool YesNo)
-{
-	/*int Count = 0;
-	while (Count < ObjectCount)
-	{
-		if (Cl_Object[Count]->Deleted == 0)
-		{
-			if (Cl_Object[Count]->Usage == Enums::Usage_Sound)
-			{
-				Cl_Object[Count]->OgreNode->setVisible(YesNo);
-			}
-			if (Cl_Object[Count]->Usage == Enums::Usage_Message)
-			{
-				Cl_Object[Count]->OgreNode->setVisible(YesNo);
-			}
-			if (Cl_Object[Count]->Usage == Enums::Usage_Move)
-			{
-				Cl_Object[Count]->OgreNode->setVisible(YesNo);
-			}
-			if (Cl_Object[Count]->Usage == Enums::Usage_Teleport)
-			{
-				Cl_Object[Count]->OgreNode->setVisible(YesNo);
-			}
-			if (Cl_Object[Count]->Usage == Enums::Usage_Environment)
-			{
-				Cl_Object[Count]->OgreNode->setVisible(YesNo);
-			}
-		}
-		Count++;
-	}*/
-	return 1;
-}
-
-// *************************************************************************
-// *	  			Is_Meshes_Used Terry Bernie							   *
-// *************************************************************************
-bool GD19_Scene_Data::Is_Meshes_Used(char* Name)
-{
-	//int Count = 0;
-	//int Total = ObjectCount;
-
-	//if (strcmp(Name, "Sinbad.mesh") == 0) // Needs to be Actual Player Mesh
-	//{
-	//	return 1;
-	//}
-
-	//while (Count < Total)
-	//{
-	//	if (Cl_Object[Count]->Deleted == 0)
-	//	{
-	//		int Result = 1;
-	//		Result = strcmp(Cl_Object[Count]->MeshName, Name);
-	//		if (Result == 0)
-	//		{
-	//			return 1;
-	//		}
-	//	}
-
-	//	Count++;
-	//}
-
-	return 0;
 }
 
 // *************************************************************************

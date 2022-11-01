@@ -9,21 +9,8 @@ public:
 	GD19_Scene_Data(void);
 	~GD19_Scene_Data(void);
 
-
-	bool Init_Class(void);
-
 	bool Open_Project_Dlg(char* Extension, char* Title, char* StartDirectory);
 	
-	bool Show_Entities(bool YesNo);
-
-	bool Is_Meshes_Used(char* Name);
-	
-	int NewObjectID;
-	
-	//---------------------Unique Counters
-	int Locations_ID_Counter; //Unique Counter
-	int StockSounds_ID_Counter;
-
 	char mFilename[1024];
 	char Path_mFilename[1024];
 

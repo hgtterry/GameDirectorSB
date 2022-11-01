@@ -64,7 +64,10 @@ public:
 	int Counters_ID_Count;
 
 	int Object_ID_Counter;	
+
 	int Player_Location_Count;
+	int Locations_ID_Counter;
+
 	int CurrentCamMode;
 
 	bool Player_Added;	// Is there a vaild player in the level [081221]

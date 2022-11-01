@@ -187,3 +187,70 @@ bool SB_LookUps::Get_Usage(int Index)
 	strcpy(Chr_Usage, "None");
 	return 0;
 }
+
+// *************************************************************************
+// *			Show_Entities:- Terry and Hazel Flanigan 2022	 	 	   *
+// *************************************************************************
+bool SB_LookUps::Show_Entities(bool YesNo)
+{
+	/*int Count = 0;
+	while (Count < ObjectCount)
+	{
+		if (Cl_Object[Count]->Deleted == 0)
+		{
+			if (Cl_Object[Count]->Usage == Enums::Usage_Sound)
+			{
+				Cl_Object[Count]->OgreNode->setVisible(YesNo);
+			}
+			if (Cl_Object[Count]->Usage == Enums::Usage_Message)
+			{
+				Cl_Object[Count]->OgreNode->setVisible(YesNo);
+			}
+			if (Cl_Object[Count]->Usage == Enums::Usage_Move)
+			{
+				Cl_Object[Count]->OgreNode->setVisible(YesNo);
+			}
+			if (Cl_Object[Count]->Usage == Enums::Usage_Teleport)
+			{
+				Cl_Object[Count]->OgreNode->setVisible(YesNo);
+			}
+			if (Cl_Object[Count]->Usage == Enums::Usage_Environment)
+			{
+				Cl_Object[Count]->OgreNode->setVisible(YesNo);
+			}
+		}
+		Count++;
+	}*/
+	return 1;
+}
+
+// *************************************************************************
+// *	  	Is_Meshes_Used:- Terry and Hazel Flanigan 2022				   *
+// *************************************************************************
+bool SB_LookUps::Is_Meshes_Used(char* Name)
+{
+	//int Count = 0;
+	//int Total = ObjectCount;
+
+	//if (strcmp(Name, "Sinbad.mesh") == 0) // Needs to be Actual Player Mesh
+	//{
+	//	return 1;
+	//}
+
+	//while (Count < Total)
+	//{
+	//	if (Cl_Object[Count]->Deleted == 0)
+	//	{
+	//		int Result = 1;
+	//		Result = strcmp(Cl_Object[Count]->MeshName, Name);
+	//		if (Result == 0)
+	//		{
+	//			return 1;
+	//		}
+	//	}
+
+	//	Count++;
+	//}
+
+	return 0;
+}

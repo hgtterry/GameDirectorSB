@@ -52,6 +52,7 @@ SB_Scene::SB_Scene()
 	Scene_Modified = 0;
 
 	Player_Location_Count = 0;
+	Locations_ID_Counter = 0;
 
 	GameMode_Flag = 0;
 
