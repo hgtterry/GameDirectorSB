@@ -52,9 +52,11 @@ typedef struct Teleport_type
 
 typedef struct Collectable_type
 {
+	int Counter_ID;
 	irrklang::ISound* SndFile;
 	Ogre::Real SndVolume;
 	char Sound_File[MAX_PATH];
+	char Counter_Name[MAX_PATH];
 	bool Play;
 
 }Collectable_type;
