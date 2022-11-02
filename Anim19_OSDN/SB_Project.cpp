@@ -1397,7 +1397,8 @@ bool SB_Project::Load_Project()
 
 	}
 
-	
+	Load_Project_Counters();
+
 	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
 	
 	App->SBC_FileView->Change_Level_Name();
@@ -1648,6 +1649,72 @@ bool SB_Project::Load_Project_Objects()
 	}
 
 	App->SBC_Scene->Object_Count = Count;
+
+	return 1;
+}
+
+// *************************************************************************
+// *	  	Load_Project_Counters:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+bool SB_Project::Load_Project_Counters()
+{
+	char Object_Ini_Path[MAX_PATH];
+	char chr_Tag1[MAX_PATH];
+	int Counters_Count = 0;
+
+	float w = 0;
+	float x = 0;
+	float y = 0;
+	float z = 0;
+
+	strcpy(Object_Ini_Path, m_Project_Sub_Folder);
+	strcat(Object_Ini_Path, "\\");
+
+	strcat(Object_Ini_Path, m_Level_Name);
+	strcat(Object_Ini_Path, "\\");
+
+	strcat(Object_Ini_Path, "Display");
+	strcat(Object_Ini_Path, "\\");
+
+	//---------------------------------------------------
+
+	strcat(Object_Ini_Path, "Counters.edf");
+
+	App->Cl_Ini->SetPathName(Object_Ini_Path);
+
+	Counters_Count = App->Cl_Ini->GetInt("Counters", "Counters_Count", 0);
+
+	int Count = 0;
+
+	while (Count < Counters_Count)
+	{
+		App->SBC_Scene->B_Panel[Count] = new Base_Panel();
+		App->SBC_Display->Set_Counter_Defaults(Count);
+
+
+		char n_buff[255];
+		char buff[255];
+		strcpy(buff, "Counter_");
+		_itoa(Count, n_buff, 10);
+		strcat(buff, n_buff);
+
+		App->Cl_Ini->GetString(buff, "Counter_Name", chr_Tag1, MAX_PATH);
+		strcpy(App->SBC_Scene->B_Panel[Count]->Panel_Name, chr_Tag1);
+
+		App->SBC_Scene->B_Panel[Count]->Unique_ID = App->Cl_Ini->GetInt(buff, "Counter_ID", 0);
+
+		App->Cl_Ini->GetString(buff, "Counter_Pos", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f", &x, &y);
+		App->SBC_Scene->B_Panel[Count]->PosX = x;
+		App->SBC_Scene->B_Panel[Count]->PosY = y;
+		
+		App->Cl_Ini->GetString(buff, "Counter_Text", chr_Tag1, MAX_PATH);
+		strcpy(App->SBC_Scene->B_Panel[Count]->Text, chr_Tag1);
+
+		Count++;
+	}
+
+	App->SBC_Scene->Counters_Count = Count;
 
 	return 1;
 }

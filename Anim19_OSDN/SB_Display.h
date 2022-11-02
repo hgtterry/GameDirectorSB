@@ -28,6 +28,7 @@ public:
 	SB_Display();
 	~SB_Display();
 
+	void Set_Counter_Defaults(int Index);
 	void Add_New_Counter();
 };
 

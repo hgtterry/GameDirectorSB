@@ -37,6 +37,24 @@ SB_Display::~SB_Display()
 }
 
 // *************************************************************************
+//			Set_Counter_Defaults:- Terry and Hazel Flanigan 2022	  	   *
+// *************************************************************************
+void SB_Display::Set_Counter_Defaults(int Index)
+{
+	strcpy(App->SBC_Scene->B_Panel[Index]->Panel_Name, "Not_Set");
+	App->SBC_Scene->B_Panel[Index]->PosX = 300;
+	App->SBC_Scene->B_Panel[Index]->PosY = 300;
+
+	App->SBC_Scene->B_Panel[Index]->Deleted = 0;
+	App->SBC_Scene->B_Panel[Index]->Show_Panel_Flag = 0;
+	App->SBC_Scene->B_Panel[Index]->Unique_ID = 0;
+
+	strcpy(App->SBC_Scene->B_Panel[Index]->Text, "Score:= ");
+
+	return;
+}
+
+// *************************************************************************
 // *			Add_New_Counter:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 void SB_Display::Add_New_Counter()
