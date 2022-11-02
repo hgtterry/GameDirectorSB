@@ -60,7 +60,7 @@ public:
 	int Entity_Count;		// Actual Object Count Zero Based [171221]
 
 	int Counters_Count;
-	int Counters_ID_Count;
+	int UniqueID_Counters_Count;
 
 	int Object_Count;		// Actual Object Count Zero Based [171221]
 	int UniqueID_Object_Counter;

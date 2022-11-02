@@ -33,6 +33,7 @@ typedef struct Load_Options
 	int Has_Player;
 	int Has_Camera;
 	int Has_Objects;
+	int Has_Counters;
 
 }Load_Options;
 

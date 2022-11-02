@@ -512,6 +512,8 @@ bool SB_Project::Save_Project_Ini()
 	fprintf(WriteFile, "%s%i\n", "Cameras_Count=", App->SBC_Scene->Camera_Count);
 	fprintf(WriteFile, "%s%i\n", "Objects_Count=", App->SBC_Scene->Object_Count);
 	fprintf(WriteFile, "%s%i\n", "Objects_ID_Count=", App->SBC_Scene->UniqueID_Object_Counter);
+	fprintf(WriteFile, "%s%i\n", "Counters_Count=", App->SBC_Scene->Counters_Count);
+	fprintf(WriteFile, "%s%i\n", "Counters_ID_Count=", App->SBC_Scene->UniqueID_Counters_Count);
 
 	fclose(WriteFile);
 
@@ -1340,6 +1342,8 @@ bool SB_Project::Load_Project()
 	Options->Has_Aera = 0;
 	Options->Has_Player = 0;
 	Options->Has_Camera = 0;
+	Options->Has_Objects = 0;
+	Options->Has_Counters = 0;
 
 	int Int1 = 0;
 	char chr_Tag1[1024];
@@ -1359,8 +1363,11 @@ bool SB_Project::Load_Project()
 	Options->Has_Player = App->Cl_Ini->GetInt("Options", "Players_Count", 0, 10);
 	Options->Has_Camera = App->Cl_Ini->GetInt("Options", "Cameras_Count", 0, 10);
 	Options->Has_Objects = App->Cl_Ini->GetInt("Options", "Objects_Count", 0, 10);
+	Options->Has_Counters = App->Cl_Ini->GetInt("Options", "Counters_Count", 0, 10);
+
 
 	App->SBC_Scene->UniqueID_Object_Counter = App->Cl_Ini->GetInt("Options", "Objects_ID_Count", 0, 10);
+	App->SBC_Scene->UniqueID_Counters_Count = App->Cl_Ini->GetInt("Options", "Counters_ID_Count", 0, 10);
 
 	//-------------------------------------- Set Resource Path
 
@@ -1397,7 +1404,12 @@ bool SB_Project::Load_Project()
 
 	}
 
-	Load_Project_Counters();
+	// ------------------------------------- Objects
+	if (Options->Has_Counters > 0)
+	{
+		Load_Project_Counters();
+	}
+	
 
 	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
 	

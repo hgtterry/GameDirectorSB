@@ -65,13 +65,14 @@ void SB_Display::Add_New_Counter()
 	int Index = App->SBC_Scene->Counters_Count;
 
 	App->SBC_Scene->B_Panel[Index] = new Base_Panel();
+	App->SBC_Display->Set_Counter_Defaults(Index);
 
 	strcpy_s(B_Name, "Counter_");
 	_itoa(Index, ConNum, 10);
 	strcat(B_Name, ConNum);
 	strcpy(App->SBC_Scene->B_Panel[Index]->Panel_Name, B_Name);
 
-	App->SBC_Scene->B_Panel[Index]->Unique_ID = App->SBC_Scene->Counters_ID_Count;
+	App->SBC_Scene->B_Panel[Index]->Unique_ID = App->SBC_Scene->UniqueID_Counters_Count;
 
 	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Counters_Folder, App->SBC_Scene->B_Panel[Index]->Panel_Name, Index, true);
 	App->SBC_Scene->B_Panel[Index]->FileViewItem = Temp;
@@ -81,6 +82,7 @@ void SB_Display::Add_New_Counter()
 
 	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Panel[Index]->FileViewItem);
 	
+	App->SBC_Scene->UniqueID_Counters_Count++;
 	App->SBC_Scene->Counters_Count++;
-	App->SBC_Scene->Counters_ID_Count++;
+	
 }

@@ -42,7 +42,7 @@ SB_Scene::SB_Scene()
 	Entity_Count = 0;
 
 	Counters_Count = 0;
-	Counters_ID_Count = 0;
+	UniqueID_Counters_Count = 0;
 
 	Project_Resources_Created = 0;
 
@@ -117,7 +117,7 @@ void SB_Scene::Reset_Class()
 	Camera_Added = 0;
 
 	Counters_Count = 0;
-	Counters_ID_Count = 0;
+	UniqueID_Counters_Count = 0;
 
 	Object_Count = 0;
 	UniqueID_Object_Counter = 0;
