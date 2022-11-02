@@ -29,7 +29,6 @@ distribution.
 #include "GD19_Panels.h"
 #include "GD19_Bullet.h"
 #include "GD19_Ini.h"
-#include "GD19_Panel_Com.h"
 #include "GD19_Visuals.h"
 #include "GD19_Environment.h"
 #include "GD19_DIALOGS.h"
@@ -88,7 +87,6 @@ public:
 	GD19_Panels*		Cl_Panels;
 	GD19_Bullet*		Cl_Bullet;
 	T_Ini*				Cl_Ini;
-	GD19_Panel_Com*		Cl_Panels_Com;
 	GD19_Visuals*		Cl_Visuals;
 	GD19_Environment*	Cl_Environment;
 	GD19_Dialogs*		Cl_Dialogs;

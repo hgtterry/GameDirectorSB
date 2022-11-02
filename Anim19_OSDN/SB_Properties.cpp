@@ -1090,8 +1090,8 @@ bool SB_Properties::Update_ListView_Level()
 	grid[0][2] = "Cameras",			grid[1][2] = _itoa(App->SBC_Scene->Camera_Count, strCamCount, 10);
 	grid[0][3] = "Players",			grid[1][3] = _itoa(App->SBC_Scene->Player_Count, strCamCount, 10);;
 	grid[0][4] = "Areas",			grid[1][4] = _itoa(App->SBC_Scene->Area_Count, strCamCount, 10);;
-	grid[0][5] = "Objects",			grid[1][5] = _itoa(App->SBC_Scene->Object_Count, strCamCount, 10);;
-	grid[0][6] = "Players",			grid[1][6] = _itoa(App->SBC_Scene->Player_Count, strCamCount, 10);;
+	grid[0][5] = "Objects",			grid[1][5] = _itoa(App->SBC_LookUps->Get_Adjusted_Object_Count(), strCamCount, 10);;
+	grid[0][6] = "Counters",		grid[1][6] = _itoa(App->SBC_LookUps->Get_Adjusted_Counters_Count(), strCamCount, 10);;
 
 
 	ListView_DeleteAllItems(Properties_hLV);
@@ -2000,8 +2000,8 @@ bool SB_Properties::Edit_Counters_OnClick(LPARAM lParam)
 
 		strcpy(App->SBC_Scene->B_Panel[Index]->Panel_Name, App->SBC_Dialogs->Chr_Text);
 
+		App->SBC_Display->Mark_As_Altered(Index);
 
-		//Mark_As_Altered(Index);
 		App->SBC_FileView->Change_Item_Name(App->SBC_Scene->B_Panel[Index]->FileViewItem, App->SBC_Dialogs->Chr_Text);
 
 		Update_ListView_Counters();
@@ -2024,7 +2024,7 @@ bool SB_Properties::Edit_Counters_OnClick(LPARAM lParam)
 
 			App->SBC_Scene->B_Panel[Index]->PosX = App->Cl_Dialogs->mFloat;
 
-			//Mark_As_Altered(Index);
+			App->SBC_Display->Mark_As_Altered(Index);
 
 			Update_ListView_Counters();
 	
@@ -2049,7 +2049,7 @@ bool SB_Properties::Edit_Counters_OnClick(LPARAM lParam)
 
 			App->SBC_Scene->B_Panel[Index]->PosY = App->Cl_Dialogs->mFloat;
 
-			//Mark_As_Altered(Index);
+			App->SBC_Display->Mark_As_Altered(Index);
 
 			Update_ListView_Counters();
 
@@ -2074,7 +2074,7 @@ bool SB_Properties::Edit_Counters_OnClick(LPARAM lParam)
 		strcpy(App->SBC_Scene->B_Panel[Index]->Text, App->SBC_Dialogs->Chr_Text);
 
 
-		//Mark_As_Altered(Index);
+		App->SBC_Display->Mark_As_Altered(Index);
 		
 		Update_ListView_Counters();
 
@@ -2098,7 +2098,7 @@ bool SB_Properties::Edit_Counters_OnClick(LPARAM lParam)
 
 		App->SBC_Scene->B_Panel[Index]->Counter = App->Cl_Dialogs->mInt;
 
-		//App->SBC_Properties->Mark_As_Altered(Index);
+		App->SBC_Display->Mark_As_Altered(Index);
 
 		Update_ListView_Counters();
 

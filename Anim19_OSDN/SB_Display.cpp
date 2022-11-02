@@ -125,5 +125,16 @@ void SB_Display::Delete_Counter()
 	App->SBC_FileView->DeleteItem();
 
 	App->SBC_Scene->Scene_Modified = 1;
+}
 
+// *************************************************************************
+// *					Mark_As_Altered Terry Bernie				 	   *
+// *************************************************************************
+void SB_Display::Mark_As_Altered(int Index)
+{
+	App->SBC_Scene->B_Panel[Index]->Altered = 1;
+
+	App->SBC_Scene->Scene_Modified = 1;
+
+	App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Panel[Index]->FileViewItem);
 }

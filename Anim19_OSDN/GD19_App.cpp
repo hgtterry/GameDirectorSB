@@ -35,7 +35,6 @@ GD19_App::GD19_App(void)
 	Cl_Panels =			nullptr;
 	Cl_Bullet =			nullptr;
 	Cl_Ini =			nullptr;
-	Cl_Panels_Com =		nullptr;
 	Cl_Visuals =		nullptr;
 	Cl_Environment =	nullptr;
 	Cl_Dialogs =		nullptr;
@@ -187,7 +186,6 @@ bool GD19_App::InitApp(void)
 	Cl_Panels =			new GD19_Panels();
 	Cl_Bullet =			new GD19_Bullet();		
 	Cl_Ini =			new T_Ini();
-	Cl_Panels_Com =		new GD19_Panel_Com();
 	Cl_Visuals =		new GD19_Visuals();
 	Cl_Environment =	new GD19_Environment();
 	Cl_Dialogs =		new GD19_Dialogs();

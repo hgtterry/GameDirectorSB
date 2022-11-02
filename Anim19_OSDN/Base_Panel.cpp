@@ -35,6 +35,8 @@ Base_Panel::Base_Panel()
 	FileViewItem = nullptr;
 
 	Deleted = 0;
+	Altered = 0;
+
 	Unique_ID = 0;
 
 	PosX = 300;

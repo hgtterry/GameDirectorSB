@@ -38,6 +38,8 @@ public:
 
 	bool Show_Panel_Flag;
 	bool Deleted;
+	bool Altered;
+
 	int Unique_ID;
 
 	char Panel_Name[MAX_PATH];

@@ -644,12 +644,12 @@ void GD19_Dialogs::List_Messages_Stock(HWND List)
 {
 	SendMessage(List,LB_RESETCONTENT, 0,0);
 
-	int Count = 0;
+	/*int Count = 0;
 	while (Count < App->Cl_Panels_Com->Panel_Count)
 	{
 		SendMessage(List,LB_ADDSTRING, 0, (LPARAM) (LPCTSTR)App->Cl_Panels_Com->Get_Panel_Name(Count));
 		Count++;
-	}
+	}*/
 }
 
 // *************************************************************************
