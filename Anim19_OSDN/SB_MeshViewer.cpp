@@ -850,7 +850,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			}
 
 			App->SBC_MeshViewer->Set_Debug_Shapes();
-
+			
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}

@@ -177,7 +177,6 @@ bool SB_Objects_Create::Dispatch_MeshViewer()
 	else if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables) // Collectables
 	{
 		Create_Colectable_Entity(Index);
-		
 		App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Collectables_Folder);
 	}
 	else
@@ -1102,6 +1101,9 @@ bool SB_Objects_Create::Create_Sound_Entity(int Index)
 bool SB_Objects_Create::Create_Colectable_Entity(int Index)
 {
 	Add_New_Object(Index, 1);
+	App->SBC_Scene->B_Object[Index]->S_Sound[0] = new Sound_type;
+	App->SBC_Object->Set_Collectables_Sound_Defaults(Index);
+
 
 	App->SBC_Scene->B_Object[Index]->Altered = 1;
 	App->SBC_Scene->B_Object[Index]->Folder = Enums::Folder_Objects;

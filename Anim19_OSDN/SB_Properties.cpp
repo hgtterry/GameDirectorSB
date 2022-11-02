@@ -843,7 +843,7 @@ bool SB_Properties::Update_ListView_Collectables()
 	strcpy(buff, App->SBC_Scene->B_Object[index]->Mesh_Name);
 	strcat(buff, "   (Collectable)");
 	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
-
+	
 	// new sound
 	char chr_Play[100];
 	if (App->SBC_Scene->B_Object[index]->S_Sound[0]->Play == 1)
@@ -860,7 +860,6 @@ bool SB_Properties::Update_ListView_Collectables()
 	int Percent = int(sum2 * 100);
 	_itoa(Percent, chr_Volume, 10);
 
-	
 	const int NUM_ITEMS = 6;
 	const int NUM_COLS = 2;
 	string grid[NUM_COLS][NUM_ITEMS]; // string table
