@@ -30,5 +30,7 @@ public:
 
 	void Set_Counter_Defaults(int Index);
 	void Add_New_Counter();
+	bool Add_Counters_From_File();
+
 };
 

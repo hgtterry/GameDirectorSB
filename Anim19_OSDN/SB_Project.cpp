@@ -1404,10 +1404,12 @@ bool SB_Project::Load_Project()
 
 	}
 
-	// ------------------------------------- Objects
+	// ------------------------------------- Counters
 	if (Options->Has_Counters > 0)
 	{
 		Load_Project_Counters();
+		App->SBC_Display->Add_Counters_From_File();
+
 	}
 	
 

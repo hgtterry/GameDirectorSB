@@ -86,3 +86,27 @@ void SB_Display::Add_New_Counter()
 	App->SBC_Scene->Counters_Count++;
 	
 }
+
+// *************************************************************************
+//			Add_Counters_From_File:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+bool SB_Display::Add_Counters_From_File() // From File
+{
+
+	int Counters_Count = App->SBC_Scene->Counters_Count;
+	int Count = 0;
+
+	while (Count < Counters_Count)
+	{
+		
+		HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Counters_Folder, App->SBC_Scene->B_Panel[Count]->Panel_Name, Count, false);
+		App->SBC_Scene->B_Panel[Count]->FileViewItem = Temp;
+
+		Count++;
+	}
+
+	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Display_Folder);
+	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Counters_Folder);
+
+	return 1;
+}
