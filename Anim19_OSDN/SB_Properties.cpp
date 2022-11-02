@@ -846,7 +846,7 @@ bool SB_Properties::Update_ListView_Collectables()
 	
 	// new sound
 	char chr_Play[100];
-	if (App->SBC_Scene->B_Object[index]->S_Sound[0]->Play == 1)
+	if (App->SBC_Scene->B_Object[index]->S_Collectable[0]->Play == 1)
 	{
 		strcpy(chr_Play, "True");
 	}
@@ -856,7 +856,7 @@ bool SB_Properties::Update_ListView_Collectables()
 	}
 
 	char chr_Volume[100];
-	float sum2 = App->SBC_Scene->B_Object[index]->S_Sound[0]->SndVolume;
+	float sum2 = App->SBC_Scene->B_Object[index]->S_Collectable[0]->SndVolume;
 	int Percent = int(sum2 * 100);
 	_itoa(Percent, chr_Volume, 10);
 
@@ -870,7 +870,7 @@ bool SB_Properties::Update_ListView_Collectables()
 	grid[0][0] = "Name",			grid[1][0] = App->SBC_Scene->B_Object[index]->Mesh_Name;
 	grid[0][1] = "Mesh File",		grid[1][1] = App->SBC_Scene->B_Object[index]->Mesh_FileName;
 	grid[0][2] = " ",				grid[1][2] = " ";
-	grid[0][3] = "Sound",			grid[1][3] = App->SBC_Scene->B_Object[index]->S_Sound[0]->Sound_File;
+	grid[0][3] = "Sound",			grid[1][3] = App->SBC_Scene->B_Object[index]->S_Collectable[0]->Sound_File;
 	grid[0][4] = "Volume",			grid[1][4] = chr_Volume;
 	grid[0][5] = "Play",			grid[1][5] = chr_Play;
 
@@ -1896,13 +1896,13 @@ bool SB_Properties::Edit_Collectables_OnClick(LPARAM lParam)
 	{
 
 		App->SBC_SoundMgr->Accessed = 1;
-		strcpy(App->SBC_SoundMgr->Access_File, App->SBC_Scene->B_Object[Index]->S_Sound[0]->Sound_File);
+		strcpy(App->SBC_SoundMgr->Access_File, App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Sound_File);
 
 		App->SBC_SoundMgr->Dialog_SoundFile();
 
-		strcpy(App->SBC_Scene->B_Object[Index]->S_Sound[0]->Sound_File, App->SBC_SoundMgr->Access_File);
+		strcpy(App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Sound_File, App->SBC_SoundMgr->Access_File);
 
-		App->SBC_Scene->B_Object[Index]->S_Sound[0]->SndVolume = App->SBC_SoundMgr->SndVolume;
+		App->SBC_Scene->B_Object[Index]->S_Collectable[0]->SndVolume = App->SBC_SoundMgr->SndVolume;
 
 		Mark_As_Altered(Index);
 
@@ -1919,13 +1919,13 @@ bool SB_Properties::Edit_Collectables_OnClick(LPARAM lParam)
 	if (result == 0)
 	{
 		App->SBC_SoundMgr->Accessed = 1;
-		strcpy(App->SBC_SoundMgr->Access_File, App->SBC_Scene->B_Object[Index]->S_Sound[0]->Sound_File);
+		strcpy(App->SBC_SoundMgr->Access_File, App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Sound_File);
 
 		App->SBC_SoundMgr->Dialog_SoundFile();
 
-		strcpy(App->SBC_Scene->B_Object[Index]->S_Sound[0]->Sound_File, App->SBC_SoundMgr->Access_File);
+		strcpy(App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Sound_File, App->SBC_SoundMgr->Access_File);
 
-		App->SBC_Scene->B_Object[Index]->S_Sound[0]->SndVolume = App->SBC_SoundMgr->SndVolume;
+		App->SBC_Scene->B_Object[Index]->S_Collectable[0]->SndVolume = App->SBC_SoundMgr->SndVolume;
 
 		Mark_As_Altered(Index);
 
@@ -1943,7 +1943,7 @@ bool SB_Properties::Edit_Collectables_OnClick(LPARAM lParam)
 
 		strcpy(App->Cl_Dialogs->btext, "Play Sound In The Game");
 
-		App->Cl_Dialogs->TrueFlase = App->SBC_Scene->B_Object[Index]->S_Sound[0]->Play;
+		App->Cl_Dialogs->TrueFlase = App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Play;
 
 		App->Cl_Dialogs->Dialog_TrueFlase(App->MainHwnd);
 
@@ -1951,11 +1951,11 @@ bool SB_Properties::Edit_Collectables_OnClick(LPARAM lParam)
 		{
 			if (App->Cl_Dialogs->TrueFlase == 1)
 			{
-				App->SBC_Scene->B_Object[Index]->S_Sound[0]->Play = 1;
+				App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Play = 1;
 			}
 			else
 			{
-				App->SBC_Scene->B_Object[Index]->S_Sound[0]->Play = 0;
+				App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Play = 0;
 
 			}
 		}

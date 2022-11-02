@@ -50,14 +50,14 @@ typedef struct Teleport_type
 
 }Teleport_type;
 
-typedef struct Sound_type
+typedef struct Collectable_type
 {
 	irrklang::ISound* SndFile;
 	Ogre::Real SndVolume;
 	char Sound_File[MAX_PATH];
 	bool Play;
 
-}Sound_type;
+}Collectable_type;
 
 #pragma once
 class Base_Object
@@ -121,25 +121,26 @@ public:
 	bool					Collision;
 	bool					Triggered;
 
-	//------------------------------ Message Entity
+	//-----Message Entity
 	char Message_Text[MAX_PATH];
 	int Message_Pos_x;
 	int Message_Pos_y;
 
-	//------------------------------ Sound Entity
+	//-----Sound Entity
 	bool HasSound;
 	bool Play_Sound;
 	char Sound_File[MAX_PATH];
 	char Sound_Path[MAX_PATH];
 	irrklang::ISound* SndFile;
 	Ogre::Real SndVolume;
-	//------------------------------ Move Entity
+
+	//-----Move Entity
 	Move_Type* S_MoveType[1];
 
-	//------------------------------ Teleport Entity
+	//-----Teleport Entity
 	Teleport_type* S_Teleport[1];
 
-	//------------------------------ Sound
-	Sound_type* S_Sound[1];
+	//-----Collectable
+	Collectable_type* S_Collectable[1];
 };
 

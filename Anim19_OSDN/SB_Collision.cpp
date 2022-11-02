@@ -370,16 +370,16 @@ bool SB_Collision::Do_Collectable(int Index)
 	App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(100, 100, 100);
 	App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(100, 100, 100));
 
-	if (App->SBC_Scene->B_Object[Index]->S_Sound[0]->Play == 1)
+	if (App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Play == 1)
 	{
 		char Sound[1024];
 		strcpy(Sound, App->SBC_SoundMgr->Default_Folder);
 		strcat(Sound, "\\Media\\Sounds\\");
-		strcat(Sound, App->SBC_Scene->B_Object[Index]->S_Sound[0]->Sound_File);
+		strcat(Sound, App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Sound_File);
 
-		App->SBC_Scene->B_Object[Index]->S_Sound[0]->SndFile = App->SBC_SoundMgr->SoundEngine->play2D(Sound, false, true, true);
-		App->SBC_Scene->B_Object[Index]->S_Sound[0]->SndFile->setVolume(App->SBC_Scene->B_Object[Index]->S_Sound[0]->SndVolume);
-		App->SBC_Scene->B_Object[Index]->S_Sound[0]->SndFile->setIsPaused(false);
+		App->SBC_Scene->B_Object[Index]->S_Collectable[0]->SndFile = App->SBC_SoundMgr->SoundEngine->play2D(Sound, false, true, true);
+		App->SBC_Scene->B_Object[Index]->S_Collectable[0]->SndFile->setVolume(App->SBC_Scene->B_Object[Index]->S_Collectable[0]->SndVolume);
+		App->SBC_Scene->B_Object[Index]->S_Collectable[0]->SndFile->setIsPaused(false);
 	}
 
 	//Play_Sound(Index);
