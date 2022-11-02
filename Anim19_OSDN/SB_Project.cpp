@@ -1672,6 +1672,7 @@ bool SB_Project::Load_Project_Objects()
 // *************************************************************************
 bool SB_Project::Load_Project_Counters()
 {
+
 	char Object_Ini_Path[MAX_PATH];
 	char chr_Tag1[MAX_PATH];
 	int Counters_Count = 0;
@@ -1714,6 +1715,7 @@ bool SB_Project::Load_Project_Counters()
 
 		App->Cl_Ini->GetString(buff, "Counter_Name", chr_Tag1, MAX_PATH);
 		strcpy(App->SBC_Scene->B_Panel[Count]->Panel_Name, chr_Tag1);
+
 
 		App->SBC_Scene->B_Panel[Count]->Unique_ID = App->Cl_Ini->GetInt(buff, "Counter_ID", 0);
 
