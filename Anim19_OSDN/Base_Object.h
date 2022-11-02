@@ -26,8 +26,7 @@ typedef struct Move_Type {
 	float Newpos;
 	float Speed;			// 
 	int WhatDirection;		//
-	int Object_Index;		// Can Change
-	int Object_ID ;			// Wont Change
+	int Object_To_Move_Index;		// Can Change
 	bool IsNegative = 0;	// Positive or Negative distance to move
 	bool Triggered;			// Entity 
 	bool Re_Trigger;

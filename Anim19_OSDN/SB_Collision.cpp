@@ -110,7 +110,7 @@ bool SB_Collision::Move_Entity_Collision(int Index)
 	Ogre::Vector3 P_Pos;
 	ObjectIndex = Index;
 
-	int ObjectToMove = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Object_Index;
+	int ObjectToMove = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Object_To_Move_Index;
 
 	if (App->SBC_Scene->B_Object[ObjectToMove]->Deleted == 0)
 	{
@@ -175,7 +175,7 @@ void SB_Collision::MoveObject_Listener(Ogre::Real Time)
 
 			if (App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->IsNegative == false)
 			{
-				int ObjectToMove = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Object_Index;
+				int ObjectToMove = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Object_To_Move_Index;
 
 				App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.x += App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Speed * Time;
 				App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.x += App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Speed * Time;
@@ -200,7 +200,7 @@ void SB_Collision::MoveObject_Listener(Ogre::Real Time)
 			}
 			else
 			{
-				int ObjectToMove = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Object_Index;
+				int ObjectToMove = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Object_To_Move_Index;
 
 				App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.x -= App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Speed * Time;
 				App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.x -= App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Speed * Time;
@@ -230,7 +230,7 @@ void SB_Collision::MoveObject_Listener(Ogre::Real Time)
 		{
 			if (App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->IsNegative == false)
 			{
-				int ObjectToMove = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Object_Index;
+				int ObjectToMove = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Object_To_Move_Index;
 
 				App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.y += App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Speed * Time;
 				App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.y += App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Speed * Time;
@@ -254,7 +254,7 @@ void SB_Collision::MoveObject_Listener(Ogre::Real Time)
 			}
 			else
 			{
-				int ObjectToMove = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Object_Index;
+				int ObjectToMove = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Object_To_Move_Index;
 
 				App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.y -= App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Speed * Time;
 				App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.y -= App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Speed * Time;
@@ -283,7 +283,7 @@ void SB_Collision::MoveObject_Listener(Ogre::Real Time)
 		{
 			if (App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->IsNegative == false)
 			{
-				int ObjectToMove = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Object_Index;
+				int ObjectToMove = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Object_To_Move_Index;
 
 				App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.z += App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Speed * Time;
 				App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.z += App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Speed * Time;
@@ -307,7 +307,7 @@ void SB_Collision::MoveObject_Listener(Ogre::Real Time)
 			}
 			else
 			{
-				int ObjectToMove = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Object_Index;
+				int ObjectToMove = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Object_To_Move_Index;
 
 				App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.z -= App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Speed * Time;
 				App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.z -= App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Speed * Time;

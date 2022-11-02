@@ -793,8 +793,7 @@ bool SB_Project::Save_Objects_Data()
 				fprintf(WriteFile, "%s%i\n", "Move_IsNegative=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->IsNegative);
 			//	fprintf(WriteFile, "%s%s\n", "Move_MeshPos=", App->SBC_Scene->B_Object[Count]->S_MoveType->MeshPos);
 				fprintf(WriteFile, "%s%f\n", "Move_NewPos=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Newpos);
-				fprintf(WriteFile, "%s%i\n", "Move_ObjectID=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Object_ID);
-				fprintf(WriteFile, "%s%i\n", "Move_ObjectIndex=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Object_Index);
+				fprintf(WriteFile, "%s%i\n", "Move_ObjectID=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Object_To_Move_Index);
 				fprintf(WriteFile, "%s%s\n", "Move_ObjectName=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Object_Name);
 			//	fprintf(WriteFile, "%s%s\n", "Move_PhysicsPos=", App->SBC_Scene->B_Object[Count]->S_MoveType->PhysicsPos);
 				fprintf(WriteFile, "%s%i\n", "Move_Re_Trigger=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Re_Trigger);
@@ -1491,14 +1490,14 @@ bool SB_Project::Load_Project_Objects()
 			// --------------------------- Name
 			App->Cl_Ini->GetString(buff, "Move_ObjectName", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Object_Name, MAX_PATH);
 
-			App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Object_Index = App->Cl_Ini->GetInt(buff, "Move_ObjectIndex", 0);
+			App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Object_To_Move_Index = App->Cl_Ini->GetInt(buff, "Move_ObjectID", 0);
 			App->SBC_Scene->B_Object[Count]->S_MoveType[0]->WhatDirection = App->Cl_Ini->GetInt(buff, "Move_WhatDirection", 0);
 		
 			App->Cl_Ini->GetString(buff, "Move_Sound", App->SBC_Scene->B_Object[Count]->Sound_File, MAX_PATH);
 			App->SBC_Scene->B_Object[Count]->Play_Sound = App->Cl_Ini->GetInt(buff, "Move_Play_Sound", 0);
 
 
-			// --------------------------- Speed
+			// --------------------------- Move_Volume
 			App->Cl_Ini->GetString(buff, "Move_Volume", chr_Tag1, MAX_PATH);
 			sscanf(chr_Tag1, "%f", &x);
 			App->SBC_Scene->B_Object[Count]->SndVolume = x;

@@ -436,8 +436,7 @@ void SB_Object::Set_Move_Defaults(int Index)
 	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Newpos = 0;
 	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Speed = 10.0;
 	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->WhatDirection = Enums::Axis_x;
-	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_Index = 0;
-	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_ID = 0;
+	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_To_Move_Index = 0;
 	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Triggered = 0;
 	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Re_Trigger = 0;
 	strcpy(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_Name, "None");

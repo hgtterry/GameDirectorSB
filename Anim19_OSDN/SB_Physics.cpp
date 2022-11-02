@@ -506,7 +506,7 @@ void SB_Physics::Reset_Triggers(void)
 			// ------------------------------------- Move Entities
 			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Move)
 			{
-				int ObjectToMove = App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Object_Index;
+				int ObjectToMove = App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Object_To_Move_Index;
 
 				M_Pos = App->SBC_Scene->B_Object[ObjectToMove]->Mesh_Pos;
 				P_Pos = App->SBC_Scene->B_Object[ObjectToMove]->Physics_Pos;

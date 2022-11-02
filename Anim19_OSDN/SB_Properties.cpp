@@ -1003,8 +1003,13 @@ bool SB_Properties::Update_ListView_Move_Entities()
 		strcpy(chr_Play, "False");
 	}
 
+	char chr_Object_Name[100];
+	strcpy(chr_Object_Name, App->SBC_Scene->B_Object[App->SBC_Scene->B_Object[index]->S_MoveType[0]->Object_To_Move_Index]->Mesh_Name);
+
+
 	char chr_Selected_Object_Id[100];
-	_itoa(App->SBC_Scene->B_Object[index]->S_MoveType[0]->Object_ID, chr_Selected_Object_Id, 10);
+	_itoa(App->SBC_Scene->B_Object[index]->S_MoveType[0]->Object_To_Move_Index, chr_Selected_Object_Id, 10);
+
 
 	char chr_Volume[100];
 	float sum2 = App->SBC_Scene->B_Object[index]->SndVolume;
@@ -1025,7 +1030,7 @@ bool SB_Properties::Update_ListView_Move_Entities()
 
 	grid[0][0] = "Name",		grid[1][0] = App->SBC_Scene->B_Object[index]->Mesh_Name;
 	grid[0][1] = " ",			grid[1][1] = " ";
-	grid[0][2] = "Object",		grid[1][2] = App->SBC_Scene->B_Object[index]->S_MoveType[0]->Object_Name;
+	grid[0][2] = "Object",		grid[1][2] = chr_Object_Name;
 	grid[0][3] = "ID_Num",		grid[1][3] = chr_Selected_Object_Id;
 	grid[0][4] = "Axis",		grid[1][4] = chr_Axis;
 	grid[0][5] = "Distance",	grid[1][5] = chr_Distance;
@@ -1647,9 +1652,7 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 
 			int MoveObjectIndex = App->SBC_Object->GetIndex_By_Name(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_Name);
 
-			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_Index = MoveObjectIndex;
-
-			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_ID = App->SBC_Scene->B_Object[MoveObjectIndex]->Object_ID;
+			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_To_Move_Index = MoveObjectIndex;
 
 			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->MeshPos.x = App->SBC_Scene->B_Object[MoveObjectIndex]->Mesh_Pos.x;
 			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->MeshPos.y = App->SBC_Scene->B_Object[MoveObjectIndex]->Mesh_Pos.y;
