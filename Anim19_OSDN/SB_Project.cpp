@@ -429,8 +429,8 @@ bool SB_Project::Save_Project()
 	}
 
 	Save_Cameras_Folder();
-
 	Save_Objects_Folder();
+	Save_Display_Folder();
 
 	App->SBC_FileView->Change_Level_Name();
 	App->SBC_FileView->Change_Project_Name();
@@ -847,6 +847,26 @@ bool SB_Project::Save_Objects_Data()
 
 	fclose(WriteFile);
 
+	return 1;
+}
+
+// *************************************************************************
+// *	  	Save_Display_Folder:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+bool SB_Project::Save_Display_Folder()
+{
+	m_Display_Folder_Path[0] = 0;
+
+	strcpy(m_Display_Folder_Path, m_Level_Folder_Path);
+	strcat(m_Display_Folder_Path, "\\");
+	strcat(m_Display_Folder_Path, "Display");
+
+	_mkdir(m_Display_Folder_Path);
+	_chdir(m_Display_Folder_Path);
+
+	//Save_Objects_Data();
+
+	_chdir(m_Level_Folder_Path); // Return to Level Folder
 	return 1;
 }
 
