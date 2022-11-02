@@ -29,6 +29,9 @@ public:
 	SB_LookUps(void);
 	~SB_LookUps(void);
 
+	int Get_Adjusted_Object_Count(void);
+	int Get_Adjusted_Counters_Count(void);
+
 	int CheckNames_Objects(char* Name);
 
 	bool Show_Entities(bool YesNo);

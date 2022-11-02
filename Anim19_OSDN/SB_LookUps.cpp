@@ -280,3 +280,47 @@ int SB_LookUps::CheckNames_Objects(char* Name)
 	}
 	return 0;
 }
+
+// *************************************************************************
+// *	  Get_Adjusted_Object_Count:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+int SB_LookUps::Get_Adjusted_Object_Count(void)
+{
+	int New_Count = 0;
+	int Count = 0;
+	int Total = App->SBC_Scene->Object_Count;
+
+	while (Count < Total)
+	{
+		if (App->SBC_Scene->B_Object[Count]->Deleted == 0)
+		{
+			New_Count++;
+		}
+
+		Count++;
+	}
+
+	return New_Count;
+}
+
+// *************************************************************************
+// *	  Get_Adjusted_Counters_Count:- Terry and Hazel Flanigan 2022	   *
+// *************************************************************************
+int SB_LookUps::Get_Adjusted_Counters_Count(void)
+{
+	int New_Count = 0;
+	int Count = 0;
+	int Total = App->SBC_Scene->Counters_Count;
+
+	while (Count < Total)
+	{
+		if (App->SBC_Scene->B_Panel[Count]->Deleted == 0)
+		{
+			New_Count++;
+		}
+
+		Count++;
+	}
+
+	return New_Count;
+}

@@ -191,23 +191,5 @@ int GD19_LookUps::GetIndex_From_ID(int Object_ID)
 	return -1;
 }
 
-// *************************************************************************
-// *	  			Get_AdjustedCoun Terry Bernie						   *
-// *************************************************************************
-int GD19_LookUps::Get_AdjustedCount(void)
-{
-	int New_Count = 0;
-	/*int Count = 0;
-	int Total = App->Cl_Scene_Data->ObjectCount;
-	while (Count < Total)
-	{
-		if (App->Cl_Scene_Data->Cl_Object[Count]->Deleted == 0)
-		{
-			New_Count++;
-		}
-		Count++;
-	}*/
-	return New_Count;
-}
 
 

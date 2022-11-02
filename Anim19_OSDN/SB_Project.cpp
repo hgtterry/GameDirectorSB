@@ -512,7 +512,10 @@ bool SB_Project::Save_Project_Ini()
 	fprintf(WriteFile, "%s%i\n", "Cameras_Count=", App->SBC_Scene->Camera_Count);
 	fprintf(WriteFile, "%s%i\n", "Objects_Count=", App->SBC_Scene->Object_Count);
 	fprintf(WriteFile, "%s%i\n", "Objects_ID_Count=", App->SBC_Scene->UniqueID_Object_Counter);
-	fprintf(WriteFile, "%s%i\n", "Counters_Count=", App->SBC_Scene->Counters_Count);
+
+	int Adjusted = App->SBC_LookUps->Get_Adjusted_Counters_Count();
+	fprintf(WriteFile, "%s%i\n", "Counters_Count=", Adjusted);
+
 	fprintf(WriteFile, "%s%i\n", "Counters_ID_Count=", App->SBC_Scene->UniqueID_Counters_Count);
 
 	fclose(WriteFile);

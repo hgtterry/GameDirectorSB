@@ -46,8 +46,5 @@ public:
 	// Get the Current Object Index from the Object ID
 	int GetIndex_From_ID(int Object_ID);
 
-	// Get Real Count - Deleted
-	int Get_AdjustedCount(void);
-
 };
 
