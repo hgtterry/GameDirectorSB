@@ -1973,6 +1973,41 @@ bool SB_Properties::Edit_Collectables_OnClick(LPARAM lParam)
 		return 1;
 	}
 
+	result = strcmp(btext, "Counter");
+	if (result == 0)
+	{
+		strcpy(App->Cl_Dialogs->btext, "Select Counter");
+
+		App->SBC_Dialogs->DropList_Data = Enums::DropDialog_Counters;
+		App->SBC_Dialogs->Dialog_DropGen();
+
+
+		if (App->SBC_Dialogs->Canceled == 0)
+		{
+			/*strcpy(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_Name, App->Cl_Dialogs->Chr_DropText);
+
+			int MoveObjectIndex = App->SBC_Object->GetIndex_By_Name(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_Name);
+
+			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_To_Move_Index = MoveObjectIndex;
+
+			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->MeshPos.x = App->SBC_Scene->B_Object[MoveObjectIndex]->Mesh_Pos.x;
+			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->MeshPos.y = App->SBC_Scene->B_Object[MoveObjectIndex]->Mesh_Pos.y;
+			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->MeshPos.z = App->SBC_Scene->B_Object[MoveObjectIndex]->Mesh_Pos.z;
+
+			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->PhysicsPos.x = App->SBC_Scene->B_Object[MoveObjectIndex]->Physics_Pos.x;
+			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->PhysicsPos.y = App->SBC_Scene->B_Object[MoveObjectIndex]->Physics_Pos.y;
+			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->PhysicsPos.z = App->SBC_Scene->B_Object[MoveObjectIndex]->Physics_Pos.z;
+
+			Mark_As_Altered(Index);
+
+			Update_ListView_Move_Entities();
+
+			App->SBC_Physics->Reset_Triggers();*/
+
+		}
+		return 1;
+	}
+
 	return 1;
 }
 

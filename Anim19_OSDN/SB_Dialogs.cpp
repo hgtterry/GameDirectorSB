@@ -281,6 +281,9 @@ LRESULT CALLBACK SB_Dialogs::Dialog_DropGen_Proc(HWND hDlg, UINT message, WPARAM
 		SendDlgItemMessage(hDlg, IDC_TITLE, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CBGEN, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		SetDlgItemText(hDlg, IDC_TITLE, (LPCTSTR)App->Cl_Dialogs->btext);
 
 		HWND temp = GetDlgItem(hDlg, IDC_CBGEN);
@@ -303,6 +306,12 @@ LRESULT CALLBACK SB_Dialogs::Dialog_DropGen_Proc(HWND hDlg, UINT message, WPARAM
 			return TRUE;
 		}
 
+		if (App->SBC_Dialogs->DropList_Data == Enums::DropDialog_Counters)
+		{
+			App->SBC_Dialogs->List_Counters(temp);
+			return TRUE;
+		}
+
 
 		return TRUE;
 	}
@@ -317,6 +326,27 @@ LRESULT CALLBACK SB_Dialogs::Dialog_DropGen_Proc(HWND hDlg, UINT message, WPARAM
 			return (UINT)App->AppBackground;
 		}
 		return FALSE;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
 	}
 
 	case WM_CTLCOLORDLG:
@@ -384,6 +414,24 @@ void SB_Dialogs::List_Locations(HWND DropHwnd)
 		if (App->SBC_Scene->B_Locations[Count]->Deleted == 0)
 		{
 			SendMessage(DropHwnd, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->SBC_Scene->B_Locations[Count]->Name);
+		}
+		Count++;
+	}
+
+	SendMessage(DropHwnd, CB_SETCURSEL, 0, 0);
+}
+
+// *************************************************************************
+// *					List_Locations Terry Bernie				 		   *
+// *************************************************************************
+void SB_Dialogs::List_Counters(HWND DropHwnd)
+{
+	int Count = 0;
+	while (Count < App->SBC_Scene->Counters_Count)
+	{
+		if (App->SBC_Scene->B_Panel[Count]->Deleted == 0)
+		{
+			SendMessage(DropHwnd, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->SBC_Scene->B_Panel[Count]->Panel_Name);
 		}
 		Count++;
 	}
