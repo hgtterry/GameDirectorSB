@@ -365,6 +365,7 @@ bool SB_Collision::Do_Teleport(int Index)
 // *************************************************************************
 bool SB_Collision::Do_Collectable(int Index)
 {
+	App->SBC_Scene->B_Object[Index]->Triggered = 1;
 
 	App->SBC_Scene->B_Object[Index]->Object_Ent->setVisible(0);
 	App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(100, 100, 100);
@@ -382,7 +383,12 @@ bool SB_Collision::Do_Collectable(int Index)
 		App->SBC_Scene->B_Object[Index]->S_Collectable[0]->SndFile->setIsPaused(false);
 	}
 
-	//Play_Sound(Index);
+	if (App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Counter_ID > -1)
+	{
+		int CouterID = App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Counter_ID;
+
+		App->SBC_Scene->B_Panel[CouterID]->Counter++;
+	}
 
 	return 1;
 }

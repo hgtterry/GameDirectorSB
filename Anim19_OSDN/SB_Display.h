@@ -33,5 +33,6 @@ public:
 	bool Add_Counters_From_File();
 	void Delete_Counter();
 	void Mark_As_Altered(int Index);
+	int GetIndex_By_Name(char* Name);
 };
 

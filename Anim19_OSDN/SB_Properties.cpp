@@ -1984,25 +1984,17 @@ bool SB_Properties::Edit_Collectables_OnClick(LPARAM lParam)
 
 		if (App->SBC_Dialogs->Canceled == 0)
 		{
-			/*strcpy(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_Name, App->Cl_Dialogs->Chr_DropText);
+			strcpy(App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Counter_Name, App->Cl_Dialogs->Chr_DropText);
 
-			int MoveObjectIndex = App->SBC_Object->GetIndex_By_Name(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_Name);
+			int CounterIndex = App->SBC_Display->GetIndex_By_Name(App->Cl_Dialogs->Chr_DropText);
 
-			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_To_Move_Index = MoveObjectIndex;
-
-			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->MeshPos.x = App->SBC_Scene->B_Object[MoveObjectIndex]->Mesh_Pos.x;
-			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->MeshPos.y = App->SBC_Scene->B_Object[MoveObjectIndex]->Mesh_Pos.y;
-			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->MeshPos.z = App->SBC_Scene->B_Object[MoveObjectIndex]->Mesh_Pos.z;
-
-			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->PhysicsPos.x = App->SBC_Scene->B_Object[MoveObjectIndex]->Physics_Pos.x;
-			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->PhysicsPos.y = App->SBC_Scene->B_Object[MoveObjectIndex]->Physics_Pos.y;
-			App->SBC_Scene->B_Object[Index]->S_MoveType[0]->PhysicsPos.z = App->SBC_Scene->B_Object[MoveObjectIndex]->Physics_Pos.z;
+			App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Counter_ID = CounterIndex;
 
 			Mark_As_Altered(Index);
 
-			Update_ListView_Move_Entities();
+			Update_ListView_Collectables();
 
-			App->SBC_Physics->Reset_Triggers();*/
+			App->SBC_Physics->Reset_Triggers();
 
 		}
 		return 1;

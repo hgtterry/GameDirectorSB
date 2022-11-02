@@ -138,3 +138,29 @@ void SB_Display::Mark_As_Altered(int Index)
 
 	App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Panel[Index]->FileViewItem);
 }
+
+// **************************************************************************
+// *	  			GetIndex_By_Name:- Terry and Hazel Flanigan 2022		*
+// **************************************************************************
+int SB_Display::GetIndex_By_Name(char* Name)
+{
+	int Count = 0;
+	int Total = App->SBC_Scene->Counters_Count;
+
+	while (Count < Total)
+	{
+		if (App->SBC_Scene->B_Panel[Count]->Deleted == 0)
+		{
+			int Result = 1;
+			Result = strcmp(App->SBC_Scene->B_Panel[Count]->Panel_Name, Name);
+			if (Result == 0)
+			{
+				return Count;
+			}
+		}
+
+		Count++;
+	}
+
+	return -1;
+}
