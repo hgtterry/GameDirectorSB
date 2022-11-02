@@ -91,6 +91,7 @@ protected:
 	bool Save_Objects_Data();
 
 	bool Save_Display_Folder();
+	bool Save_Display_Data();
 
 	bool Load_Get_Resource_Path();
 	bool Load_Project_Aera();
