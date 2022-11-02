@@ -511,7 +511,7 @@ bool SB_Project::Save_Project_Ini()
 	fprintf(WriteFile, "%s%i\n", "Players_Count=", App->SBC_Scene->Player_Count);
 	fprintf(WriteFile, "%s%i\n", "Cameras_Count=", App->SBC_Scene->Camera_Count);
 	fprintf(WriteFile, "%s%i\n", "Objects_Count=", App->SBC_Scene->Object_Count);
-	fprintf(WriteFile, "%s%i\n", "Objects_ID_Count=", App->SBC_Scene->Object_ID_Counter);
+	fprintf(WriteFile, "%s%i\n", "Objects_ID_Count=", App->SBC_Scene->UniqueID_Object_Counter);
 
 	fclose(WriteFile);
 
@@ -727,7 +727,7 @@ bool SB_Project::Save_Objects_Data()
 			fprintf(WriteFile, "%s%s\n", "Mesh_File=", App->SBC_Scene->B_Object[Count]->Mesh_FileName);
 			fprintf(WriteFile, "%s%s\n", "Mesh_Resource_Path=", App->SBC_Scene->B_Object[Count]->Mesh_Resource_Path);
 			fprintf(WriteFile, "%s%s\n", "Material_File=", App->SBC_Scene->B_Object[Count]->Material_File);
-			fprintf(WriteFile, "%s%i\n", "Object_ID=", App->SBC_Scene->B_Object[Count]->Object_ID);
+			fprintf(WriteFile, "%s%i\n", "Object_ID=", App->SBC_Scene->B_Object[Count]->This_Object_ID);
 			fprintf(WriteFile, "%s%i\n", "Object_Type=", App->SBC_Scene->B_Object[Count]->Type);
 			fprintf(WriteFile, "%s%i\n", "Object_Shape=", App->SBC_Scene->B_Object[Count]->Shape);
 			fprintf(WriteFile, "%s%i\n", "Object_Usage=", App->SBC_Scene->B_Object[Count]->Usage);
@@ -1264,7 +1264,7 @@ bool SB_Project::Load_Project()
 	Options->Has_Camera = App->Cl_Ini->GetInt("Options", "Cameras_Count", 0, 10);
 	Options->Has_Objects = App->Cl_Ini->GetInt("Options", "Objects_Count", 0, 10);
 
-	App->SBC_Scene->Object_ID_Counter = App->Cl_Ini->GetInt("Options", "Objects_ID_Count", 0, 10);
+	App->SBC_Scene->UniqueID_Object_Counter = App->Cl_Ini->GetInt("Options", "Objects_ID_Count", 0, 10);
 
 	//-------------------------------------- Set Resource Path
 
@@ -1396,7 +1396,7 @@ bool SB_Project::Load_Project_Objects()
 		App->Cl_Ini->GetString(buff, "Material_File", Object->Material_File, MAX_PATH);
 
 		// Types
-		Object->Object_ID = App->Cl_Ini->GetInt(buff, "Object_ID", 0);
+		Object->This_Object_ID = App->Cl_Ini->GetInt(buff, "Object_ID", 0);
 		Object->Type = App->Cl_Ini->GetInt(buff, "Object_Type", 0);
 		Object->Shape = App->Cl_Ini->GetInt(buff, "Object_Shape", 0);
 		Object->Usage = App->Cl_Ini->GetInt(buff, "Object_Usage", 0);

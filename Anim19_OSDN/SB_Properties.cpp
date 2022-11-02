@@ -1030,7 +1030,7 @@ bool SB_Properties::Update_ListView_Move_Entities()
 
 	grid[0][0] = "Name",		grid[1][0] = App->SBC_Scene->B_Object[index]->Mesh_Name;
 	grid[0][1] = " ",			grid[1][1] = " ";
-	grid[0][2] = "Object",		grid[1][2] = chr_Object_Name;
+	grid[0][2] = "Move_Object",		grid[1][2] = chr_Object_Name;
 	grid[0][3] = "ID_Num",		grid[1][3] = chr_Selected_Object_Id;
 	grid[0][4] = "Axis",		grid[1][4] = chr_Axis;
 	grid[0][5] = "Distance",	grid[1][5] = chr_Distance;
@@ -1633,11 +1633,11 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 		Update_ListView_Move_Entities();
 
 		App->SBC_Physics->Reset_Triggers();
-	}
+	} 
 
 
 
-	result = strcmp(btext, "Object");
+	result = strcmp(btext, "Move_Object");
 	if (result == 0)
 	{
 		strcpy(App->Cl_Dialogs->btext, "Select Object to Move");

@@ -106,7 +106,7 @@ bool Base_Object::Init_Object(void)
 
 	FileViewItem = nullptr;
 
-	Object_ID = 0; // This Needs Checking
+	This_Object_ID = 0; // This Needs Checking
 	Deleted = 0;
 	Altered = 0;
 

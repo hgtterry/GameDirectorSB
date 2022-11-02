@@ -56,14 +56,14 @@ public:
 
 	int Player_Count;		// Actual Player Count Zero Based
 	int Area_Count;			// Actual Area Count Zero Based [161221]
-	int Object_Count;		// Actual Object Count Zero Based [171221]
 	int Camera_Count;		// Actual Object Count Zero Based [171221]
 	int Entity_Count;		// Actual Object Count Zero Based [171221]
 
 	int Counters_Count;
 	int Counters_ID_Count;
 
-	int Object_ID_Counter;	
+	int Object_Count;		// Actual Object Count Zero Based [171221]
+	int UniqueID_Object_Counter;
 
 	int Player_Location_Count;
 	int Locations_ID_Counter;

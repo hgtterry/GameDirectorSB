@@ -46,7 +46,7 @@ SB_Scene::SB_Scene()
 
 	Project_Resources_Created = 0;
 
-	Object_ID_Counter = 0;
+	UniqueID_Object_Counter = 0;
 
 	CurrentCamMode = 0;
 	Scene_Modified = 0;
@@ -119,12 +119,12 @@ void SB_Scene::Reset_Class()
 	Counters_Count = 0;
 	Counters_ID_Count = 0;
 
-	Object_ID_Counter = 0;
+	Object_Count = 0;
+	UniqueID_Object_Counter = 0;
 
 	Player_Count = 0;
 	Area_Count = 0;
 	Camera_Count = 0;
-	Object_Count = 0;
 }
 
 // *************************************************************************
@@ -162,7 +162,7 @@ bool SB_Scene::Clear_Level()
 
 	Reset_Class(); // This One
 
-	Object_ID_Counter = 0;
+	UniqueID_Object_Counter = 0;
 	Object_Count = 0;
 	
 	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamNone;
