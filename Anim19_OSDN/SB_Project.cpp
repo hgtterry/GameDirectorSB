@@ -915,7 +915,7 @@ bool SB_Project::Save_Display_Data()
 	int Count = 0;
 	while (Count < App->SBC_Scene->Counters_Count)
 	{
-		if (App->SBC_Scene->B_Object[Count]->Deleted == 0)
+		if (App->SBC_Scene->B_Panel[Count]->Deleted == 0)
 		{
 			strcpy(buff, "[Counter_");
 			_itoa(new_Count, Cbuff, 10);

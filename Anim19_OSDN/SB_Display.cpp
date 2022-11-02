@@ -110,3 +110,18 @@ bool SB_Display::Add_Counters_From_File() // From File
 
 	return 1;
 }
+
+// **************************************************************************
+// *	  		Delete_Counter:- Terry and Hazel Flanigan 2022				*
+// **************************************************************************
+void SB_Display::Delete_Counter()
+{
+	int Index = App->SBC_Properties->Current_Selected_Object;
+
+	App->SBC_Scene->B_Panel[Index]->Deleted = 1;
+	
+	App->SBC_FileView->DeleteItem();
+
+	App->SBC_Scene->Scene_Modified = 1;
+
+}
