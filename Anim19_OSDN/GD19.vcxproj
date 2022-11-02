@@ -177,7 +177,6 @@
     <ClInclude Include="GD19_App.h" />
     <ClInclude Include="GD19_Ogre.h" />
     <ClInclude Include="GD19_OgreListener.h" />
-    <ClInclude Include="GD19_Panel.h" />
     <ClInclude Include="GD19_Panels.h" />
     <ClInclude Include="GD19_PB.h" />
     <ClInclude Include="GD19_Utilities.h" />
@@ -244,7 +243,6 @@
     <ClCompile Include="GD19_App.cpp" />
     <ClCompile Include="GD19_Ogre.cpp" />
     <ClCompile Include="GD19_OgreListener.cpp" />
-    <ClCompile Include="GD19_Panel.cpp" />
     <ClCompile Include="GD19_Panels.cpp" />
     <ClCompile Include="GD19_PB.cpp" />
     <ClCompile Include="GD19_Utilities.cpp" />
