@@ -155,6 +155,7 @@ void SB_Objects_Create::Add_Objects_From_MeshViewer()
 	
 	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[Index]->FileViewItem);
 
+
 	App->SBC_Scene->Object_ID_Counter++; // Unique ID
 	App->SBC_Scene->Object_Count++;  // Must be last line
 
