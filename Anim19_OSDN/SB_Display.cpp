@@ -42,8 +42,8 @@ SB_Display::~SB_Display()
 void SB_Display::Set_Counter_Defaults(int Index)
 {
 	strcpy(App->SBC_Scene->B_Panel[Index]->Panel_Name, "Not_Set");
-	App->SBC_Scene->B_Panel[Index]->PosX = 300;
-	App->SBC_Scene->B_Panel[Index]->PosY = 300;
+	App->SBC_Scene->B_Panel[Index]->PosX = 250;
+	App->SBC_Scene->B_Panel[Index]->PosY = 10;
 
 	App->SBC_Scene->B_Panel[Index]->Deleted = 0;
 	App->SBC_Scene->B_Panel[Index]->Show_Panel_Flag = 0;
@@ -82,6 +82,8 @@ void SB_Display::Add_New_Counter()
 
 	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Panel[Index]->FileViewItem);
 	
+	App->SBC_Scene->B_Panel[Index]->Set_ImGui_Panel_Name();
+
 	App->SBC_Scene->UniqueID_Counters_Count++;
 	App->SBC_Scene->Counters_Count++;
 	

@@ -32,8 +32,9 @@ public:
 	Base_Panel();
 	~Base_Panel();
 
-	void Render_Panel();
-	void ImGui_Panel(void);
+	void Set_ImGui_Panel_Name(void);
+
+	void Render_ImGui_Panel(void);
 
 	bool Show_Panel_Flag;
 	bool Deleted;
@@ -41,6 +42,8 @@ public:
 
 	char Panel_Name[MAX_PATH];
 	char Text[MAX_PATH];
+
+	char ImGui_Panel_Name[MAX_PATH];
 
 	int Counter;
 

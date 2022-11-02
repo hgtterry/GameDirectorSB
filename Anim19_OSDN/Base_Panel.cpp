@@ -45,29 +45,35 @@ Base_Panel::Base_Panel()
 	strcpy(Panel_Name, "Counter_1");
 	strcpy(Text, "Test");
 
+	strcpy(ImGui_Panel_Name, "Panel_");
 }
 
 Base_Panel::~Base_Panel()
 {
+
 }
 
 // *************************************************************************
-// *			Render_Panel:- Terry and Hazel Flanigan 2022			   *
+// *		Set_ImGui_Panel_Name:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
-void Base_Panel::Render_Panel()
+void Base_Panel::Set_ImGui_Panel_Name(void)
 {
+	char Num[10];
+	_itoa(Unique_ID, Num, 10);
+
+	strcat(ImGui_Panel_Name, Num);
 
 }
 
 // *************************************************************************
-// *			ImGui_Text_Message:- Terry and Hazel Flanigan 2022		   *
+// *			Render_ImGui_Panel:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
-void Base_Panel::ImGui_Panel(void)
+void Base_Panel::Render_ImGui_Panel(void)
 {
 	ImGui::SetNextWindowPos(ImVec2(PosX,PosY));
 		
 
-	if (!ImGui::Begin("Text_Debug", &Show_Panel_Flag, ImGuiWindowFlags_NoSavedSettings
+	if (!ImGui::Begin(ImGui_Panel_Name, &Show_Panel_Flag, ImGuiWindowFlags_NoSavedSettings
 		| ImGuiWindowFlags_AlwaysAutoResize
 		| ImGuiWindowFlags_NoMove
 		| ImGuiWindowFlags_NoResize

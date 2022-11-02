@@ -1730,6 +1730,9 @@ bool SB_Project::Load_Project_Counters()
 		App->Cl_Ini->GetString(buff, "Counter_Text", chr_Tag1, MAX_PATH);
 		strcpy(App->SBC_Scene->B_Panel[Count]->Text, chr_Tag1);
 
+
+		App->SBC_Scene->B_Panel[Count]->Set_ImGui_Panel_Name();
+
 		Count++;
 	}
 
