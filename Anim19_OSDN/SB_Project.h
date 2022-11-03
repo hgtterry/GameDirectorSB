@@ -60,6 +60,7 @@ public:
 	char m_Objects_Folder_Path[MAX_PATH];
 	char m_Cameras_Folder_Path[MAX_PATH];
 	char m_Display_Folder_Path[MAX_PATH];
+	
 
 	char m_Main_Assets_Path[MAX_PATH];		// Asset Path where Object mesh are added too and used on Loading
 	char m_Project_Sub_Folder[MAX_PATH];	// Curent Default Project Location not including project folder
@@ -93,6 +94,7 @@ protected:
 
 	bool Save_Display_Folder();
 	bool Save_Display_Data();
+	bool Save_TextMessage_Data();
 
 	bool Load_Get_Resource_Path();
 	bool Load_Project_Aera();

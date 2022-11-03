@@ -872,14 +872,15 @@ bool SB_Project::Save_Display_Folder()
 	_chdir(m_Display_Folder_Path);
 
 	Save_Display_Data();
+	Save_TextMessage_Data();
 
 	_chdir(m_Level_Folder_Path); // Return to Level Folder
 	return 1;
 }
 
-//// *************************************************************************
-//// *	  		Save_Display_Data:- Terry and Hazel Flanigan 2022		   *
-//// *************************************************************************
+// *************************************************************************
+// *	  		Save_Display_Data:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
 bool SB_Project::Save_Display_Data()
 {
 	Ogre::Vector3 Pos;
@@ -937,6 +938,82 @@ bool SB_Project::Save_Display_Data()
 			fprintf(WriteFile, "%s%f,%f\n", "Counter_Pos=", x, y);
 
 			fprintf(WriteFile, "%s%s\n", "Counter_Text=", App->SBC_Scene->B_Counter[Count]->Text);
+
+			fprintf(WriteFile, "%s\n", " ");
+			new_Count++;
+		}
+
+		Count++;
+	}
+
+	fprintf(WriteFile, "%s\n", "[Counters]");
+	fprintf(WriteFile, "%s%i\n", "Counters_Count=", new_Count);
+
+	fclose(WriteFile);
+
+	return 1;
+}
+
+// *************************************************************************
+// *	  	Save_TextMessage_Data:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+bool SB_Project::Save_TextMessage_Data()
+{
+	Ogre::Vector3 Pos;
+	char File[1024];
+
+	strcpy(File, m_Display_Folder_Path);
+	strcat(File, "\\");
+	strcat(File, "TextMessages.edf");
+
+	WriteFile = nullptr;
+
+	WriteFile = fopen(File, "wt");
+
+	if (!WriteFile)
+	{
+		App->Say("Cant Create File");
+		App->Say_Win(File);
+		return 0;
+	}
+
+	fprintf(WriteFile, "%s\n", "[Version_Data]");
+	fprintf(WriteFile, "%s%s\n", "Version=", "V1.2");
+
+	fprintf(WriteFile, "%s\n", " ");
+
+	fprintf(WriteFile, "%s\n", " ");
+
+	char Cbuff[255];
+	char buff[255];
+
+	float w = 0;
+	float x = 0;
+	float y = 0;
+	float z = 0;
+
+	int new_Count = 0;
+
+	int Count = 0;
+	while (Count < App->SBC_Scene->TextMessage_Count)
+	{
+		if (App->SBC_Scene->B_Counter[Count]->Deleted == 0)
+		{
+			strcpy(buff, "[TextMessage_");
+			_itoa(new_Count, Cbuff, 10);
+			strcat(buff, Cbuff);
+			strcat(buff, "]");
+
+			fprintf(WriteFile, "%s\n", buff); // Header also Player name until changed by user
+
+			fprintf(WriteFile, "%s%s\n", "TextMessage_Name=", App->SBC_Scene->B_Message[Count]->TextMessage_Name); // Change
+			fprintf(WriteFile, "%s%i\n", "TextMessage_ID=", App->SBC_Scene->B_Message[Count]->Unique_ID);
+
+			x = App->SBC_Scene->B_Message[Count]->PosX;
+			y = App->SBC_Scene->B_Message[Count]->PosY;
+			fprintf(WriteFile, "%s%f,%f\n", "TextMessage_Pos=", x, y);
+
+			fprintf(WriteFile, "%s%s\n", "TextMessage_Text=", App->SBC_Scene->B_Message[Count]->Text);
 
 			fprintf(WriteFile, "%s\n", " ");
 			new_Count++;
