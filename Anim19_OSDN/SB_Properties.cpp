@@ -902,7 +902,7 @@ bool SB_Properties::Update_ListView_Collectables()
 }
 
 // *************************************************************************
-// *		Update_ListView_Panels():- Terry and Hazel Flanigan 2022	   *
+// *		Update_ListView_Counters():- Terry and Hazel Flanigan 2022	   *
 // *************************************************************************
 bool SB_Properties::Update_ListView_Counters()
 {
@@ -936,6 +936,62 @@ bool SB_Properties::Update_ListView_Counters()
 	grid[0][3] = "Pos_Y",		grid[1][3] = chr_PosY;
 	grid[0][4] = "Text",		grid[1][4] = App->SBC_Scene->B_Counter[index]->Text;
 	grid[0][5] = "Counter",		grid[1][5] = chr_Counter;
+
+
+
+	ListView_DeleteAllItems(Properties_hLV);
+
+	for (DWORD row = 0; row < NUM_ITEMS; row++)
+	{
+		pitem.iItem = row;
+		pitem.pszText = const_cast<char*>(grid[0][row].c_str());
+		ListView_InsertItem(Properties_hLV, &pitem);
+
+		//ListView_SetItemText
+
+		for (DWORD col = 1; col < NUM_COLS; col++)
+		{
+			ListView_SetItemText(Properties_hLV, row, col,
+				const_cast<char*>(grid[col][row].c_str()));
+		}
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *	Update_ListView_TextMessages():- Terry and Hazel Flanigan 2022	   *
+// *************************************************************************
+bool SB_Properties::Update_ListView_TextMessages()
+{
+	int index = App->SBC_Properties->Current_Selected_Object;
+
+
+	char buff[255];
+	strcpy(buff, App->SBC_Scene->B_Message[index]->TextMessage_Name);
+	strcat(buff, "   (Messages)");
+	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
+
+	char chr_PosX[20];
+	sprintf(chr_PosX, "%.3f ", App->SBC_Scene->B_Message[index]->PosX);
+
+	char chr_PosY[20];
+	sprintf(chr_PosY, "%.3f ", App->SBC_Scene->B_Message[index]->PosY);
+
+
+	const int NUM_ITEMS = 6;
+	const int NUM_COLS = 2;
+	string grid[NUM_COLS][NUM_ITEMS]; // string table
+	LV_ITEM pitem;
+	memset(&pitem, 0, sizeof(LV_ITEM));
+	pitem.mask = LVIF_TEXT;
+
+	grid[0][0] = "Name",	grid[1][0] = App->SBC_Scene->B_Message[index]->TextMessage_Name;
+	grid[0][1] = " ",		grid[1][1] = " ";// App->SBC_Scene->B_Object[index]->Mesh_FileName;
+	grid[0][2] = "Pos_X",	grid[1][2] = chr_PosX;
+	grid[0][3] = "Pos_Y",	grid[1][3] = chr_PosY;
+	grid[0][4] = "Text",	grid[1][4] = App->SBC_Scene->B_Message[index]->Text;
+	grid[0][5] = " ",       grid[1][5] = " ";;
 
 
 

@@ -114,7 +114,8 @@ namespace Enums
 		Edit_Camera = 13,
 		Edit_Area = 14,
 		FV_Edit_Level = 15,
-		Edit_Counters = 16
+		Edit_Counters = 16,
+		Edit_TextMessages = 17
 	};
 
 	enum Usage

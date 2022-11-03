@@ -47,6 +47,7 @@ public:
 	bool Update_ListView_Teleport();
 	bool Update_ListView_Collectables();
 	bool Update_ListView_Counters();
+	bool Update_ListView_TextMessages();
 
 	bool Properties_Dlg_Active;
 

@@ -42,12 +42,10 @@ public:
 
 	int Unique_ID;
 
-	char Panel_Name[MAX_PATH];
+	char TextMessage_Name[MAX_PATH];
 	char Text[MAX_PATH];
 
 	char ImGui_Panel_Name[MAX_PATH];
-
-	int Counter;
 
 	float PosX;
 	float PosY;

@@ -39,12 +39,10 @@ Base_Message::Base_Message()
 
 	Unique_ID = 0;
 
-	PosX = 300;
-	PosY = 300;
+	PosX = 250;
+	PosY = 10;
 
-	Counter = 0;
-
-	strcpy(Panel_Name, "Counter_1");
+	strcpy(TextMessage_Name, "TextMessage_1");
 	strcpy(Text, "Test");
 
 	strcpy(ImGui_Panel_Name, "Panel_");
@@ -88,7 +86,7 @@ void Base_Message::Render_ImGui_Panel(void)
 
 		ImGui::PushFont(App->CL_Vm_ImGui->font2);
 
-		ImGui::Text("%s %i",Text, Counter);
+		ImGui::Text("%s",Text);
 
 		ImGui::PopFont();
 

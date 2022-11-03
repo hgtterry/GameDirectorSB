@@ -104,15 +104,15 @@ void SB_Display::Add_New_Message()
 	strcpy_s(B_Name, "Message_");
 	_itoa(Index, ConNum, 10);
 	strcat(B_Name, ConNum);
-	strcpy(App->SBC_Scene->B_Message[Index]->Panel_Name, B_Name);
+	strcpy(App->SBC_Scene->B_Message[Index]->TextMessage_Name, B_Name);
 
 	App->SBC_Scene->B_Message[Index]->Unique_ID = App->SBC_Scene->UniqueID_TextMessage_Count;
 
-	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_TextMessage_Folder, App->SBC_Scene->B_Message[Index]->Panel_Name, Index, true);
+	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_TextMessage_Folder, App->SBC_Scene->B_Message[Index]->TextMessage_Name, Index, true);
 	App->SBC_Scene->B_Message[Index]->FileViewItem = Temp;
 
 	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Display_Folder);
-	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Counters_Folder);
+	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_TextMessage_Folder);
 
 	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Message[Index]->FileViewItem);
 

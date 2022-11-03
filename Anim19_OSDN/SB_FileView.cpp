@@ -926,6 +926,28 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		return;
 	}
 
+	// ------------------------------------------------------------ Text_Message
+	if (!strcmp(FileView_Folder, "Text_Message")) // Folder
+	{
+		App->SBC_FileView->Context_Selection = Enums::FileView_TextMessage_Folder;
+		return;
+	}
+	if (!strcmp(FileView_File, "Text_Message"))
+	{
+		App->SBC_FileView->Context_Selection = Enums::FileView_TextMessage_File;
+
+		HideRightPanes();
+		ShowWindow(App->GD_Properties_Hwnd, 1);
+		App->SBC_Props_Dialog->Hide_Panel_Test_Dlg(1);
+
+		App->SBC_Properties->Edit_Category = Enums::Edit_TextMessages;
+		App->SBC_Properties->Current_Selected_Object = Index;
+
+		App->SBC_Properties->Update_ListView_TextMessages();
+
+		return;
+	}
+
 	// *************************************************************************
 	// *				"Environment	Terry Bernie 					 	   *
 	// *************************************************************************
