@@ -29,6 +29,7 @@ distribution.
 #include "Base_Camera.h"
 #include "Base_Locations.h"
 #include "Base_Counter.h"
+#include "Base_Message.h"
 
 class SB_Scene
 {
@@ -50,7 +51,8 @@ public:
 	Base_Object*			B_Object[100];
 	Base_Camera*			B_Camera[20];
 	Base_Locations*			B_Locations[20];
-	Base_Counter*				B_Counter[20];
+	Base_Counter*			B_Counter[20];
+	Base_Message*			B_Message[20];
 
 	bool Scene_Loaded;	// Is the Scene Loaded [131221]
 
