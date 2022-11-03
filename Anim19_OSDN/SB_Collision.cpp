@@ -387,7 +387,7 @@ bool SB_Collision::Do_Collectable(int Index)
 	{
 		int CouterID = App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Counter_ID;
 
-		App->SBC_Scene->B_Panel[CouterID]->Counter++;
+		App->SBC_Scene->B_Counter[CouterID]->Counter++;
 	}
 
 	return 1;

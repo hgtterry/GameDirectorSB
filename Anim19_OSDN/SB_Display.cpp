@@ -41,15 +41,15 @@ SB_Display::~SB_Display()
 // *************************************************************************
 void SB_Display::Set_Counter_Defaults(int Index)
 {
-	strcpy(App->SBC_Scene->B_Panel[Index]->Panel_Name, "Not_Set");
-	App->SBC_Scene->B_Panel[Index]->PosX = 250;
-	App->SBC_Scene->B_Panel[Index]->PosY = 10;
+	strcpy(App->SBC_Scene->B_Counter[Index]->Panel_Name, "Not_Set");
+	App->SBC_Scene->B_Counter[Index]->PosX = 250;
+	App->SBC_Scene->B_Counter[Index]->PosY = 10;
 
-	App->SBC_Scene->B_Panel[Index]->Deleted = 0;
-	App->SBC_Scene->B_Panel[Index]->Show_Panel_Flag = 0;
-	App->SBC_Scene->B_Panel[Index]->Unique_ID = 0;
+	App->SBC_Scene->B_Counter[Index]->Deleted = 0;
+	App->SBC_Scene->B_Counter[Index]->Show_Panel_Flag = 0;
+	App->SBC_Scene->B_Counter[Index]->Unique_ID = 0;
 
-	strcpy(App->SBC_Scene->B_Panel[Index]->Text, "Score:= ");
+	strcpy(App->SBC_Scene->B_Counter[Index]->Text, "Score:= ");
 
 	return;
 }
@@ -64,25 +64,25 @@ void SB_Display::Add_New_Counter()
 
 	int Index = App->SBC_Scene->Counters_Count;
 
-	App->SBC_Scene->B_Panel[Index] = new Base_Panel();
+	App->SBC_Scene->B_Counter[Index] = new Base_Counter();
 	App->SBC_Display->Set_Counter_Defaults(Index);
 
 	strcpy_s(B_Name, "Counter_");
 	_itoa(Index, ConNum, 10);
 	strcat(B_Name, ConNum);
-	strcpy(App->SBC_Scene->B_Panel[Index]->Panel_Name, B_Name);
+	strcpy(App->SBC_Scene->B_Counter[Index]->Panel_Name, B_Name);
 
-	App->SBC_Scene->B_Panel[Index]->Unique_ID = App->SBC_Scene->UniqueID_Counters_Count;
+	App->SBC_Scene->B_Counter[Index]->Unique_ID = App->SBC_Scene->UniqueID_Counters_Count;
 
-	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Counters_Folder, App->SBC_Scene->B_Panel[Index]->Panel_Name, Index, true);
-	App->SBC_Scene->B_Panel[Index]->FileViewItem = Temp;
+	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Counters_Folder, App->SBC_Scene->B_Counter[Index]->Panel_Name, Index, true);
+	App->SBC_Scene->B_Counter[Index]->FileViewItem = Temp;
 
 	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Display_Folder);
 	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Counters_Folder);
 
-	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Panel[Index]->FileViewItem);
+	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Counter[Index]->FileViewItem);
 	
-	App->SBC_Scene->B_Panel[Index]->Set_ImGui_Panel_Name();
+	App->SBC_Scene->B_Counter[Index]->Set_ImGui_Panel_Name();
 
 	App->SBC_Scene->UniqueID_Counters_Count++;
 	App->SBC_Scene->Counters_Count++;
@@ -101,8 +101,8 @@ bool SB_Display::Add_Counters_From_File() // From File
 	while (Count < Counters_Count)
 	{
 		
-		HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Counters_Folder, App->SBC_Scene->B_Panel[Count]->Panel_Name, Count, false);
-		App->SBC_Scene->B_Panel[Count]->FileViewItem = Temp;
+		HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Counters_Folder, App->SBC_Scene->B_Counter[Count]->Panel_Name, Count, false);
+		App->SBC_Scene->B_Counter[Count]->FileViewItem = Temp;
 
 		Count++;
 	}
@@ -120,7 +120,7 @@ void SB_Display::Delete_Counter()
 {
 	int Index = App->SBC_Properties->Current_Selected_Object;
 
-	App->SBC_Scene->B_Panel[Index]->Deleted = 1;
+	App->SBC_Scene->B_Counter[Index]->Deleted = 1;
 	
 	App->SBC_FileView->DeleteItem();
 
@@ -132,11 +132,11 @@ void SB_Display::Delete_Counter()
 // *************************************************************************
 void SB_Display::Mark_As_Altered(int Index)
 {
-	App->SBC_Scene->B_Panel[Index]->Altered = 1;
+	App->SBC_Scene->B_Counter[Index]->Altered = 1;
 
 	App->SBC_Scene->Scene_Modified = 1;
 
-	App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Panel[Index]->FileViewItem);
+	App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Counter[Index]->FileViewItem);
 }
 
 // **************************************************************************
@@ -149,10 +149,10 @@ int SB_Display::GetIndex_By_Name(char* Name)
 
 	while (Count < Total)
 	{
-		if (App->SBC_Scene->B_Panel[Count]->Deleted == 0)
+		if (App->SBC_Scene->B_Counter[Count]->Deleted == 0)
 		{
 			int Result = 1;
-			Result = strcmp(App->SBC_Scene->B_Panel[Count]->Panel_Name, Name);
+			Result = strcmp(App->SBC_Scene->B_Counter[Count]->Panel_Name, Name);
 			if (Result == 0)
 			{
 				return Count;

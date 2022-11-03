@@ -26,9 +26,9 @@ distribution.
 
 #include "stdafx.h"
 #include "GD19_App.h"
-#include "Base_Panel.h"
+#include "Base_Counter.h"
 
-Base_Panel::Base_Panel()
+Base_Counter::Base_Counter()
 {
 	Show_Panel_Flag = 0;
 
@@ -50,7 +50,7 @@ Base_Panel::Base_Panel()
 	strcpy(ImGui_Panel_Name, "Panel_");
 }
 
-Base_Panel::~Base_Panel()
+Base_Counter::~Base_Counter()
 {
 
 }
@@ -58,7 +58,7 @@ Base_Panel::~Base_Panel()
 // *************************************************************************
 // *		Set_ImGui_Panel_Name:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
-void Base_Panel::Set_ImGui_Panel_Name(void)
+void Base_Counter::Set_ImGui_Panel_Name(void)
 {
 	char Num[10];
 	_itoa(Unique_ID, Num, 10);
@@ -70,7 +70,7 @@ void Base_Panel::Set_ImGui_Panel_Name(void)
 // *************************************************************************
 // *			Render_ImGui_Panel:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
-void Base_Panel::Render_ImGui_Panel(void)
+void Base_Counter::Render_ImGui_Panel(void)
 {
 	ImGui::SetNextWindowPos(ImVec2(PosX,PosY));
 		

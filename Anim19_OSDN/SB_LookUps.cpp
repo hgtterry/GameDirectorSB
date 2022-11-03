@@ -314,7 +314,7 @@ int SB_LookUps::Get_Adjusted_Counters_Count(void)
 
 	while (Count < Total)
 	{
-		if (App->SBC_Scene->B_Panel[Count]->Deleted == 0)
+		if (App->SBC_Scene->B_Counter[Count]->Deleted == 0)
 		{
 			New_Count++;
 		}

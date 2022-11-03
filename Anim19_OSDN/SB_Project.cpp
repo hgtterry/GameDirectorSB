@@ -920,7 +920,7 @@ bool SB_Project::Save_Display_Data()
 	int Count = 0;
 	while (Count < App->SBC_Scene->Counters_Count)
 	{
-		if (App->SBC_Scene->B_Panel[Count]->Deleted == 0)
+		if (App->SBC_Scene->B_Counter[Count]->Deleted == 0)
 		{
 			strcpy(buff, "[Counter_");
 			_itoa(new_Count, Cbuff, 10);
@@ -929,14 +929,14 @@ bool SB_Project::Save_Display_Data()
 
 			fprintf(WriteFile, "%s\n", buff); // Header also Player name until changed by user
 
-			fprintf(WriteFile, "%s%s\n", "Counter_Name=", App->SBC_Scene->B_Panel[Count]->Panel_Name); // Change
-			fprintf(WriteFile, "%s%i\n", "Counter_ID=", App->SBC_Scene->B_Panel[Count]->Unique_ID);
+			fprintf(WriteFile, "%s%s\n", "Counter_Name=", App->SBC_Scene->B_Counter[Count]->Panel_Name); // Change
+			fprintf(WriteFile, "%s%i\n", "Counter_ID=", App->SBC_Scene->B_Counter[Count]->Unique_ID);
 
-			x = App->SBC_Scene->B_Panel[Count]->PosX;
-			y = App->SBC_Scene->B_Panel[Count]->PosY;
+			x = App->SBC_Scene->B_Counter[Count]->PosX;
+			y = App->SBC_Scene->B_Counter[Count]->PosY;
 			fprintf(WriteFile, "%s%f,%f\n", "Counter_Pos=", x, y);
 
-			fprintf(WriteFile, "%s%s\n", "Counter_Text=", App->SBC_Scene->B_Panel[Count]->Text);
+			fprintf(WriteFile, "%s%s\n", "Counter_Text=", App->SBC_Scene->B_Counter[Count]->Text);
 
 			fprintf(WriteFile, "%s\n", " ");
 			new_Count++;
@@ -1714,7 +1714,7 @@ bool SB_Project::Load_Project_Counters()
 
 	while (Count < Counters_Count)
 	{
-		App->SBC_Scene->B_Panel[Count] = new Base_Panel();
+		App->SBC_Scene->B_Counter[Count] = new Base_Counter();
 		App->SBC_Display->Set_Counter_Defaults(Count);
 
 
@@ -1725,21 +1725,21 @@ bool SB_Project::Load_Project_Counters()
 		strcat(buff, n_buff);
 
 		App->Cl_Ini->GetString(buff, "Counter_Name", chr_Tag1, MAX_PATH);
-		strcpy(App->SBC_Scene->B_Panel[Count]->Panel_Name, chr_Tag1);
+		strcpy(App->SBC_Scene->B_Counter[Count]->Panel_Name, chr_Tag1);
 
 
-		App->SBC_Scene->B_Panel[Count]->Unique_ID = App->Cl_Ini->GetInt(buff, "Counter_ID", 0);
+		App->SBC_Scene->B_Counter[Count]->Unique_ID = App->Cl_Ini->GetInt(buff, "Counter_ID", 0);
 
 		App->Cl_Ini->GetString(buff, "Counter_Pos", chr_Tag1, MAX_PATH);
 		sscanf(chr_Tag1, "%f,%f", &x, &y);
-		App->SBC_Scene->B_Panel[Count]->PosX = x;
-		App->SBC_Scene->B_Panel[Count]->PosY = y;
+		App->SBC_Scene->B_Counter[Count]->PosX = x;
+		App->SBC_Scene->B_Counter[Count]->PosY = y;
 		
 		App->Cl_Ini->GetString(buff, "Counter_Text", chr_Tag1, MAX_PATH);
-		strcpy(App->SBC_Scene->B_Panel[Count]->Text, chr_Tag1);
+		strcpy(App->SBC_Scene->B_Counter[Count]->Text, chr_Tag1);
 
 
-		App->SBC_Scene->B_Panel[Count]->Set_ImGui_Panel_Name();
+		App->SBC_Scene->B_Counter[Count]->Set_ImGui_Panel_Name();
 
 		Count++;
 	}

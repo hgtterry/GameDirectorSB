@@ -910,18 +910,18 @@ bool SB_Properties::Update_ListView_Counters()
 
 
 	char buff[255];
-	strcpy(buff, App->SBC_Scene->B_Panel[index]->Panel_Name);
+	strcpy(buff, App->SBC_Scene->B_Counter[index]->Panel_Name);
 	strcat(buff, "   (Counters)");
 	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
 
 	char chr_PosX[20];
-	sprintf(chr_PosX, "%.3f ", App->SBC_Scene->B_Panel[index]->PosX);
+	sprintf(chr_PosX, "%.3f ", App->SBC_Scene->B_Counter[index]->PosX);
 
 	char chr_PosY[20];
-	sprintf(chr_PosY, "%.3f ", App->SBC_Scene->B_Panel[index]->PosY);
+	sprintf(chr_PosY, "%.3f ", App->SBC_Scene->B_Counter[index]->PosY);
 
 	char chr_Counter[20];
-	_itoa(App->SBC_Scene->B_Panel[index]->Counter, chr_Counter, 10);
+	_itoa(App->SBC_Scene->B_Counter[index]->Counter, chr_Counter, 10);
 
 	const int NUM_ITEMS = 6;
 	const int NUM_COLS = 2;
@@ -930,11 +930,11 @@ bool SB_Properties::Update_ListView_Counters()
 	memset(&pitem, 0, sizeof(LV_ITEM));
 	pitem.mask = LVIF_TEXT;
 
-	grid[0][0] = "Name",		grid[1][0] = App->SBC_Scene->B_Panel[index]->Panel_Name;
+	grid[0][0] = "Name",		grid[1][0] = App->SBC_Scene->B_Counter[index]->Panel_Name;
 	grid[0][1] = " ",			grid[1][1] = " ";// App->SBC_Scene->B_Object[index]->Mesh_FileName;
 	grid[0][2] = "Pos_X",		grid[1][2] = chr_PosX;
 	grid[0][3] = "Pos_Y",		grid[1][3] = chr_PosY;
-	grid[0][4] = "Text",		grid[1][4] = App->SBC_Scene->B_Panel[index]->Text;
+	grid[0][4] = "Text",		grid[1][4] = App->SBC_Scene->B_Counter[index]->Text;
 	grid[0][5] = "Counter",		grid[1][5] = chr_Counter;
 
 
@@ -2020,7 +2020,7 @@ bool SB_Properties::Edit_Counters_OnClick(LPARAM lParam)
 	if (result == 0)
 	{
 		strcpy(App->SBC_Dialogs->btext, "Change Panels Name");
-		strcpy(App->SBC_Dialogs->Chr_Text, App->SBC_Scene->B_Panel[Index]->Panel_Name);
+		strcpy(App->SBC_Dialogs->Chr_Text, App->SBC_Scene->B_Counter[Index]->Panel_Name);
 
 		App->SBC_Dialogs->Dialog_Text();
 
@@ -2029,11 +2029,11 @@ bool SB_Properties::Edit_Counters_OnClick(LPARAM lParam)
 			return TRUE;
 		}
 
-		strcpy(App->SBC_Scene->B_Panel[Index]->Panel_Name, App->SBC_Dialogs->Chr_Text);
+		strcpy(App->SBC_Scene->B_Counter[Index]->Panel_Name, App->SBC_Dialogs->Chr_Text);
 
 		App->SBC_Display->Mark_As_Altered(Index);
 
-		App->SBC_FileView->Change_Item_Name(App->SBC_Scene->B_Panel[Index]->FileViewItem, App->SBC_Dialogs->Chr_Text);
+		App->SBC_FileView->Change_Item_Name(App->SBC_Scene->B_Counter[Index]->FileViewItem, App->SBC_Dialogs->Chr_Text);
 
 		Update_ListView_Counters();
 
@@ -2045,7 +2045,7 @@ bool SB_Properties::Edit_Counters_OnClick(LPARAM lParam)
 		strcpy(App->Cl_Dialogs->btext, "Set Position X");
 
 		char buff[256];
-		sprintf(buff, "%.3f", App->SBC_Scene->B_Panel[Index]->PosX);
+		sprintf(buff, "%.3f", App->SBC_Scene->B_Counter[Index]->PosX);
 		strcpy(App->Cl_Dialogs->Chr_Float, buff);
 
 		App->Cl_Dialogs->Dialog_Float();
@@ -2053,7 +2053,7 @@ bool SB_Properties::Edit_Counters_OnClick(LPARAM lParam)
 		if (App->Cl_Dialogs->Canceled == 0)
 		{
 
-			App->SBC_Scene->B_Panel[Index]->PosX = App->Cl_Dialogs->mFloat;
+			App->SBC_Scene->B_Counter[Index]->PosX = App->Cl_Dialogs->mFloat;
 
 			App->SBC_Display->Mark_As_Altered(Index);
 
@@ -2070,7 +2070,7 @@ bool SB_Properties::Edit_Counters_OnClick(LPARAM lParam)
 		strcpy(App->Cl_Dialogs->btext, "Set Position Y");
 
 		char buff[256];
-		sprintf(buff, "%.3f", App->SBC_Scene->B_Panel[Index]->PosY);
+		sprintf(buff, "%.3f", App->SBC_Scene->B_Counter[Index]->PosY);
 		strcpy(App->Cl_Dialogs->Chr_Float, buff);
 
 		App->Cl_Dialogs->Dialog_Float();
@@ -2078,7 +2078,7 @@ bool SB_Properties::Edit_Counters_OnClick(LPARAM lParam)
 		if (App->Cl_Dialogs->Canceled == 0)
 		{
 
-			App->SBC_Scene->B_Panel[Index]->PosY = App->Cl_Dialogs->mFloat;
+			App->SBC_Scene->B_Counter[Index]->PosY = App->Cl_Dialogs->mFloat;
 
 			App->SBC_Display->Mark_As_Altered(Index);
 
@@ -2093,7 +2093,7 @@ bool SB_Properties::Edit_Counters_OnClick(LPARAM lParam)
 	if (result == 0)
 	{
 		strcpy(App->SBC_Dialogs->btext, "Change Text");
-		strcpy(App->SBC_Dialogs->Chr_Text, App->SBC_Scene->B_Panel[Index]->Text);
+		strcpy(App->SBC_Dialogs->Chr_Text, App->SBC_Scene->B_Counter[Index]->Text);
 
 		App->SBC_Dialogs->Dialog_Text();
 
@@ -2102,7 +2102,7 @@ bool SB_Properties::Edit_Counters_OnClick(LPARAM lParam)
 			return TRUE;
 		}
 
-		strcpy(App->SBC_Scene->B_Panel[Index]->Text, App->SBC_Dialogs->Chr_Text);
+		strcpy(App->SBC_Scene->B_Counter[Index]->Text, App->SBC_Dialogs->Chr_Text);
 
 
 		App->SBC_Display->Mark_As_Altered(Index);
@@ -2117,7 +2117,7 @@ bool SB_Properties::Edit_Counters_OnClick(LPARAM lParam)
 	{
 		strcpy(App->Cl_Dialogs->btext, "Start Counter Value");
 		char buff[256];
-		sprintf(buff, "%i", App->SBC_Scene->B_Panel[Index]->Counter);
+		sprintf(buff, "%i", App->SBC_Scene->B_Counter[Index]->Counter);
 		strcpy(App->Cl_Dialogs->Chr_Int, buff);
 
 		App->Cl_Dialogs->Dialog_Int();
@@ -2127,7 +2127,7 @@ bool SB_Properties::Edit_Counters_OnClick(LPARAM lParam)
 			return TRUE;
 		}
 
-		App->SBC_Scene->B_Panel[Index]->Counter = App->Cl_Dialogs->mInt;
+		App->SBC_Scene->B_Counter[Index]->Counter = App->Cl_Dialogs->mInt;
 
 		App->SBC_Display->Mark_As_Altered(Index);
 

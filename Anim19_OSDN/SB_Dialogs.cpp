@@ -422,16 +422,16 @@ void SB_Dialogs::List_Locations(HWND DropHwnd)
 }
 
 // *************************************************************************
-// *					List_Locations Terry Bernie				 		   *
+// *					List_Counters Terry Bernie				 		   *
 // *************************************************************************
 void SB_Dialogs::List_Counters(HWND DropHwnd)
 {
 	int Count = 0;
 	while (Count < App->SBC_Scene->Counters_Count)
 	{
-		if (App->SBC_Scene->B_Panel[Count]->Deleted == 0)
+		if (App->SBC_Scene->B_Counter[Count]->Deleted == 0)
 		{
-			SendMessage(DropHwnd, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->SBC_Scene->B_Panel[Count]->Panel_Name);
+			SendMessage(DropHwnd, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->SBC_Scene->B_Counter[Count]->Panel_Name);
 		}
 		Count++;
 	}

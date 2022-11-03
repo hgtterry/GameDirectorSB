@@ -123,9 +123,9 @@ bool GD19_OgreListener::frameStarted(const FrameEvent& evt)
 	int Count = 0;
 	while (Count < App->SBC_Scene->Counters_Count)
 	{
-		if (App->SBC_Scene->B_Panel[Count]->Show_Panel_Flag == 1)
+		if (App->SBC_Scene->B_Counter[Count]->Show_Panel_Flag == 1)
 		{
-			App->SBC_Scene->B_Panel[Count]->Render_ImGui_Panel();
+			App->SBC_Scene->B_Counter[Count]->Render_ImGui_Panel();
 		}
 
 		Count++;

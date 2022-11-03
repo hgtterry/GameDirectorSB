@@ -25,12 +25,12 @@ distribution.
 */
 
 #pragma once
-class Base_Panel
+class Base_Counter
 {
 public:
 
-	Base_Panel();
-	~Base_Panel();
+	Base_Counter();
+	~Base_Counter();
 
 	void Set_ImGui_Panel_Name(void);
 
