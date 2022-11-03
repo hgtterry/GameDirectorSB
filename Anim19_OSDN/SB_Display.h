@@ -28,10 +28,11 @@ public:
 	SB_Display();
 	~SB_Display();
 
-	void Set_Counter_Defaults(int Index);
-
 	void Add_New_Counter();
 	void Add_New_Message();
+
+	void Set_Counter_Defaults(int Index);
+	void Set_TextMessage_Defaults(int Index);
 
 	bool Add_Counters_From_File();
 	void Delete_Counter();

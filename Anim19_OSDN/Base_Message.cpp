@@ -45,7 +45,7 @@ Base_Message::Base_Message()
 	strcpy(TextMessage_Name, "TextMessage_1");
 	strcpy(Text, "Test");
 
-	strcpy(ImGui_Panel_Name, "Panel_");
+	strcpy(ImGui_Panel_Name, "TextMessage_");
 }
 
 Base_Message::~Base_Message()

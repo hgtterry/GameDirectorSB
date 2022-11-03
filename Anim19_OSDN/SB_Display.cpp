@@ -46,10 +46,30 @@ void SB_Display::Set_Counter_Defaults(int Index)
 	App->SBC_Scene->B_Counter[Index]->PosY = 10;
 
 	App->SBC_Scene->B_Counter[Index]->Deleted = 0;
+	App->SBC_Scene->B_Counter[Index]->Altered = 0;
 	App->SBC_Scene->B_Counter[Index]->Show_Panel_Flag = 0;
 	App->SBC_Scene->B_Counter[Index]->Unique_ID = 0;
 
 	strcpy(App->SBC_Scene->B_Counter[Index]->Text, "Score:= ");
+
+	return;
+}
+
+// *************************************************************************
+//		Set_TextMessage_Defaults:- Terry and Hazel Flanigan 2022	  	   *
+// *************************************************************************
+void SB_Display::Set_TextMessage_Defaults(int Index)
+{
+	strcpy(App->SBC_Scene->B_Message[Index]->TextMessage_Name, "Not_Set");
+	App->SBC_Scene->B_Message[Index]->PosX = 250;
+	App->SBC_Scene->B_Message[Index]->PosY = 10;
+
+	App->SBC_Scene->B_Message[Index]->Deleted = 0;
+	App->SBC_Scene->B_Message[Index]->Altered = 0;
+	App->SBC_Scene->B_Message[Index]->Show_Panel_Flag = 0;
+	App->SBC_Scene->B_Message[Index]->Unique_ID = 0;
+
+	strcpy(App->SBC_Scene->B_Message[Index]->Text, "This is a Text Message Test");
 
 	return;
 }
@@ -99,7 +119,7 @@ void SB_Display::Add_New_Message()
 	int Index = App->SBC_Scene->TextMessage_Count;
 
 	App->SBC_Scene->B_Message[Index] = new Base_Message();
-	App->SBC_Display->Set_Counter_Defaults(Index);
+	App->SBC_Display->Set_TextMessage_Defaults(Index);
 
 	strcpy_s(B_Name, "Message_");
 	_itoa(Index, ConNum, 10);

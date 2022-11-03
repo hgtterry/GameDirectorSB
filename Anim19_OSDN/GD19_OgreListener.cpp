@@ -131,6 +131,18 @@ bool GD19_OgreListener::frameStarted(const FrameEvent& evt)
 		Count++;
 	}
 
+	Count = 0;
+	while (Count < App->SBC_Scene->TextMessage_Count)
+	{
+		if (App->SBC_Scene->B_Message[Count]->Show_Panel_Flag == 1)
+		{
+			App->SBC_Scene->B_Message[Count]->Render_ImGui_Panel();
+		}
+
+		Count++;
+	}
+
+
 	App->CL_Vm_ImGui->ImGui_Render_Loop();
 	App->SBC_Debug->Debug_Render_Loop();
 	App->SBC_Dimensions->Dimesions_Select();
