@@ -728,16 +728,16 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		return;
 	}
 
-	// ------------------------------------------------------------ Messages
-	if (!strcmp(FileView_Folder, "Messages")) // Folder
+	// ------------------------------------------------------------ Message_Triggers
+	if (!strcmp(FileView_Folder, "Message_Triggers")) // Folder
 	{
-		App->SBC_FileView->Context_Selection = Enums::FileView_Messages_Folder;
+		App->SBC_FileView->Context_Selection = Enums::FileView_Messages_Triggers_Folder;
 		return;
 	}
 
-	if (!strcmp(FileView_File, "Messages"))
+	if (!strcmp(FileView_File, "Message_Triggers"))
 	{
-		App->SBC_FileView->Context_Selection = Enums::FileView_Messages_File;
+		App->SBC_FileView->Context_Selection = Enums::FileView_Messages_Triggers_File;
 
 		HideRightPanes();
 		ShowWindow(App->SBC_Properties->Properties_Dlg_hWnd, 1);
@@ -1386,7 +1386,7 @@ void SB_FileView::Context_Menu(HWND hDlg)
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_NEW, L"&New");
 			TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
 			DestroyMenu(App->SBC_FileView->hMenu);
-			Context_Selection = Enums::FileView_Messages_Folder;
+			Context_Selection = Enums::FileView_Messages_Triggers_Folder;
 		}
 
 		if (!strcmp(App->SBC_FileView->FileView_File, "Message_Triggers"))
@@ -1400,7 +1400,7 @@ void SB_FileView::Context_Menu(HWND hDlg)
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
 			TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
 			DestroyMenu(App->SBC_FileView->hMenu);
-			Context_Selection = Enums::FileView_Messages_File;
+			Context_Selection = Enums::FileView_Messages_Triggers_File;
 		}
 
 		//------------------------------------- Sounds
@@ -1610,7 +1610,7 @@ void SB_FileView::Context_New(HWND hDlg)
 		return;
 	}
 
-	if (App->SBC_FileView->Context_Selection == Enums::FileView_Messages_Folder)
+	if (App->SBC_FileView->Context_Selection == Enums::FileView_Messages_Triggers_Folder)
 	{
 		App->SBC_Dialogs->YesNo("Add Message", "Do you want to add a new Message Entity", 1);
 
@@ -1744,7 +1744,7 @@ void SB_FileView::Context_Delete(HWND hDlg)
 		return;
 	}
 
-	if (App->SBC_FileView->Context_Selection == Enums::FileView_Messages_File)
+	if (App->SBC_FileView->Context_Selection == Enums::FileView_Messages_Triggers_File)
 	{
 		App->SBC_Dialogs->YesNo("Remove Message", "Are you sure", 1);
 
