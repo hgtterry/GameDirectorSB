@@ -66,13 +66,14 @@ public:
 	HTREEITEM FV_LevelFolder;
 	HTREEITEM FV_Cameras_Folder;
 	HTREEITEM FV_Objects_Folder;
-	HTREEITEM FV_Messages_Folder;
+	HTREEITEM FV_Message_Trigger_Folder;
 	HTREEITEM FV_Sounds_Folder;
 	HTREEITEM FV_Move_Folder;
 	HTREEITEM FV_Teleporters_Folder;
 	HTREEITEM FV_Collectables_Folder;
 	HTREEITEM FV_Display_Folder;
 	HTREEITEM FV_Counters_Folder;
+	HTREEITEM FV_TextMessage_Folder;
 
 	HMENU hMenu;
 

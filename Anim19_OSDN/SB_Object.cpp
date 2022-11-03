@@ -297,7 +297,7 @@ void SB_Object::Clear_Modified_Objects()
 	if (App->SBC_Scene->Object_Count > 0)
 	{
 		App->SBC_FileView->Mark_Clear_Folder(App->SBC_FileView->FV_Objects_Folder);
-		App->SBC_FileView->Mark_Clear_Folder(App->SBC_FileView->FV_Messages_Folder);
+		App->SBC_FileView->Mark_Clear_Folder(App->SBC_FileView->FV_Message_Trigger_Folder);
 		App->SBC_FileView->Mark_Clear_Folder(App->SBC_FileView->FV_Move_Folder);
 		App->SBC_FileView->Mark_Clear_Folder(App->SBC_FileView->FV_Sounds_Folder);
 	}

@@ -45,7 +45,7 @@ SB_FileView::SB_FileView()
 	GD_TriggerFolder = nullptr;
 	GD_EntitiesFolder = nullptr;
 	FV_Sounds_Folder = nullptr;
-	FV_Messages_Folder = nullptr;
+	FV_Message_Trigger_Folder = nullptr;
 	FV_Move_Folder = nullptr;
 	FV_Collectables_Folder = nullptr;
 	FV_Teleporters_Folder = nullptr;
@@ -53,6 +53,10 @@ SB_FileView::SB_FileView()
 	GD_Area_Change_Folder = nullptr;
 	GD_Level_Change_Folder = nullptr;
 	GD_Particles_Folder = nullptr;
+
+	FV_Display_Folder = nullptr;
+	FV_Counters_Folder = nullptr;
+	FV_TextMessage_Folder = nullptr;
 
 	FV_Players_Folder = nullptr;
 	FV_Areas_Folder = nullptr;
@@ -90,7 +94,7 @@ void SB_FileView::Reset_Class()
 	GD_TriggerFolder = nullptr;
 	GD_EntitiesFolder = nullptr;
 	FV_Sounds_Folder = nullptr;
-	FV_Messages_Folder = nullptr;
+	FV_Message_Trigger_Folder = nullptr;
 	FV_Move_Folder = nullptr;
 	FV_Collectables_Folder = nullptr;
 	FV_Teleporters_Folder = nullptr;
@@ -452,10 +456,10 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	tvinsert.hParent = GD_EntitiesFolder;
 	tvinsert.hInsertAfter = TVI_LAST;
 	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
-	tvinsert.item.pszText = "Messages";
+	tvinsert.item.pszText = "Message_Triggers";
 	tvinsert.item.iImage = 0;
 	tvinsert.item.iSelectedImage = 1;
-	FV_Messages_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+	FV_Message_Trigger_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
 
 	tvinsert.hParent = GD_EntitiesFolder;
 	tvinsert.hInsertAfter = TVI_LAST;
@@ -499,6 +503,15 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	tvinsert.item.iImage = 0;
 	tvinsert.item.iSelectedImage = 1;
 	FV_Display_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
+
+	//----------------------------------------------------
+	tvinsert.hParent = FV_Display_Folder;
+	tvinsert.hInsertAfter = TVI_LAST;
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	tvinsert.item.pszText = "Text_Message";
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
+	FV_TextMessage_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
 
 	//----------------------------------------------------
 	tvinsert.hParent = FV_Display_Folder;
@@ -1245,7 +1258,7 @@ void SB_FileView::Delete_AllItems()
 	GD_TriggerFolder = NULL;
 	GD_EntitiesFolder = NULL;
 	FV_Sounds_Folder = NULL;
-	FV_Messages_Folder = NULL;
+	FV_Message_Trigger_Folder = NULL;
 
 	strcpy(App->SBC_Project->m_Level_File_Name, "No Level");
 
@@ -1367,7 +1380,7 @@ void SB_FileView::Context_Menu(HWND hDlg)
 		}
 
 		//------------------------------------- Messages
-		if (!strcmp(App->SBC_FileView->FileView_Folder, "Messages")) // Folder
+		if (!strcmp(App->SBC_FileView->FileView_Folder, "Message_Triggers")) // Folder
 		{
 			App->SBC_FileView->hMenu = CreatePopupMenu();
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_NEW, L"&New");
@@ -1376,7 +1389,7 @@ void SB_FileView::Context_Menu(HWND hDlg)
 			Context_Selection = Enums::FileView_Messages_Folder;
 		}
 
-		if (!strcmp(App->SBC_FileView->FileView_File, "Messages"))
+		if (!strcmp(App->SBC_FileView->FileView_File, "Message_Triggers"))
 		{
 			App->SBC_FileView->hMenu = CreatePopupMenu();
 
@@ -1542,12 +1555,12 @@ void SB_FileView::Context_Menu(HWND hDlg)
 // *************************************************************************
 void SB_FileView::Context_New(HWND hDlg)
 {
-	/*if (App->SBC_Project->Project_Loaded == 0)
+	if (App->SBC_Project->Project_Loaded == 0)
 	{
 		App->Say("A Project must be created First");
 
 		return;
-	}*/
+	}
 
 	if (App->SBC_FileView->Context_Selection == Enums::FileView_Areas_Folder)
 	{
@@ -1563,12 +1576,12 @@ void SB_FileView::Context_New(HWND hDlg)
 		return;
 	}
 
-	/*if (App->SBC_Scene->Area_Added == 0)
+	if (App->SBC_Scene->Area_Added == 0)
 	{
 		App->Say("An Area must be Added Firest before adding items");
 
 		return;
-	}*/
+	}
 
 	if (App->SBC_FileView->Context_Selection == Enums::FileView_Cameras_Folder)
 	{
@@ -1739,7 +1752,7 @@ void SB_FileView::Context_Delete(HWND hDlg)
 		if (Doit == 0)
 		{
 			App->SBC_Object->Delete_Object();
-			App->SBC_FileView->Mark_Altered_Folder(FV_Messages_Folder);
+			App->SBC_FileView->Mark_Altered_Folder(FV_Message_Trigger_Folder);
 		}
 
 		return;

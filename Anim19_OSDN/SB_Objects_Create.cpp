@@ -61,10 +61,10 @@ bool SB_Objects_Create::Add_Objects_From_File() // From File
 		{
 			Create_Message_Entity(Count);
 
-			HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Messages_Folder, App->SBC_Scene->B_Object[Count]->Mesh_Name, Count, false);
+			HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Message_Trigger_Folder, App->SBC_Scene->B_Object[Count]->Mesh_Name, Count, false);
 			App->SBC_Scene->B_Object[Count]->FileViewItem = Temp;
 
-			App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Messages_Folder);
+			App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Message_Trigger_Folder);
 		}
 		else if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Move)
 		{
@@ -854,7 +854,7 @@ bool SB_Objects_Create::Add_New_Message()
 
 	Create_Message_Entity(Index);
 
-	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Messages_Folder, App->SBC_Scene->B_Object[Index]->Mesh_Name, Index, true);
+	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Message_Trigger_Folder, App->SBC_Scene->B_Object[Index]->Mesh_Name, Index, true);
 	App->SBC_Scene->B_Object[Index]->FileViewItem = Temp;
 
 	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[Index]->FileViewItem);
@@ -862,7 +862,7 @@ bool SB_Objects_Create::Add_New_Message()
 	App->SBC_Scene->UniqueID_Object_Counter++;
 	App->SBC_Scene->Object_Count++;
 
-	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Messages_Folder);
+	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Message_Trigger_Folder);
 	return 1;
 }
 
