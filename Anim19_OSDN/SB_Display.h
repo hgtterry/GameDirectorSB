@@ -35,6 +35,8 @@ public:
 	void Set_TextMessage_Defaults(int Index);
 
 	bool Add_Counters_From_File();
+	bool Add_TextMessages_From_File();
+
 	void Delete_Counter();
 
 	void Mark_As_Altered_Counter(int Index);
