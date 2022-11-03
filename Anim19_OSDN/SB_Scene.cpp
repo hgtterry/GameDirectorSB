@@ -44,6 +44,9 @@ SB_Scene::SB_Scene()
 	Counters_Count = 0;
 	UniqueID_Counters_Count = 0;
 
+	TextMessage_Count = 0;
+	UniqueID_TextMessage_Count = 0;
+
 	Project_Resources_Created = 0;
 
 	UniqueID_Object_Counter = 0;
@@ -118,6 +121,9 @@ void SB_Scene::Reset_Class()
 
 	Counters_Count = 0;
 	UniqueID_Counters_Count = 0;
+
+	TextMessage_Count = 0;
+	UniqueID_TextMessage_Count = 0;
 
 	Object_Count = 0;
 	UniqueID_Object_Counter = 0;

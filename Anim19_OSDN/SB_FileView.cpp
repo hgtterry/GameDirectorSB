@@ -1523,7 +1523,7 @@ void SB_FileView::Context_Menu(HWND hDlg)
 			Context_Selection = Enums::FileView_Collectables_File;
 		}
 
-		//------------------------------------- Panels
+		//------------------------------------- Counters
 		if (!strcmp(App->SBC_FileView->FileView_Folder, "Counters")) // Folder
 		{
 			App->SBC_FileView->hMenu = CreatePopupMenu();
@@ -1545,6 +1545,30 @@ void SB_FileView::Context_Menu(HWND hDlg)
 			TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
 			DestroyMenu(App->SBC_FileView->hMenu);
 			Context_Selection = Enums::FileView_Counters_File;
+		}
+
+		//------------------------------------- Text_Messages
+		if (!strcmp(App->SBC_FileView->FileView_Folder, "Text_Message")) // Folder
+		{
+			App->SBC_FileView->hMenu = CreatePopupMenu();
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_NEW, L"&New");
+			TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+			DestroyMenu(App->SBC_FileView->hMenu);
+			Context_Selection = Enums::FileView_TextMessage_Folder;
+		}
+
+		if (!strcmp(App->SBC_FileView->FileView_File, "Text_Message"))
+		{
+			App->SBC_FileView->hMenu = CreatePopupMenu();
+
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
+			TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+			DestroyMenu(App->SBC_FileView->hMenu);
+			Context_Selection = Enums::FileView_TextMessage_File;
 		}
 
 	}
@@ -1686,6 +1710,20 @@ void SB_FileView::Context_New(HWND hDlg)
 		if (Doit == 0)
 		{
 			App->SBC_Display->Add_New_Counter();
+		}
+
+		return;
+	}
+
+	if (App->SBC_FileView->Context_Selection == Enums::FileView_TextMessage_Folder)
+	{
+
+		App->SBC_Dialogs->YesNo("Add Object", "Do you want to add a new Text Message", 1);
+
+		bool Doit = App->SBC_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+			App->SBC_Display->Add_New_Message();
 		}
 
 		return;

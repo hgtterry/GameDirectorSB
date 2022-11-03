@@ -29,7 +29,10 @@ public:
 	~SB_Display();
 
 	void Set_Counter_Defaults(int Index);
+
 	void Add_New_Counter();
+	void Add_New_Message();
+
 	bool Add_Counters_From_File();
 	void Delete_Counter();
 	void Mark_As_Altered(int Index);

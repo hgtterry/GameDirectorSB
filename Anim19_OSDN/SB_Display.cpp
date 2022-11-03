@@ -65,7 +65,7 @@ void SB_Display::Add_New_Counter()
 	int Index = App->SBC_Scene->Counters_Count;
 
 	App->SBC_Scene->B_Counter[Index] = new Base_Counter();
-	App->SBC_Display->Set_Counter_Defaults(Index);
+	Set_Counter_Defaults(Index);
 
 	strcpy_s(B_Name, "Counter_");
 	_itoa(Index, ConNum, 10);
@@ -86,7 +86,41 @@ void SB_Display::Add_New_Counter()
 
 	App->SBC_Scene->UniqueID_Counters_Count++;
 	App->SBC_Scene->Counters_Count++;
-	
+}
+
+// *************************************************************************
+// *			Add_New_Message:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void SB_Display::Add_New_Message()
+{
+	char B_Name[MAX_PATH];
+	char ConNum[MAX_PATH];
+
+	int Index = App->SBC_Scene->TextMessage_Count;
+
+	App->SBC_Scene->B_Message[Index] = new Base_Message();
+	App->SBC_Display->Set_Counter_Defaults(Index);
+
+	strcpy_s(B_Name, "Message_");
+	_itoa(Index, ConNum, 10);
+	strcat(B_Name, ConNum);
+	strcpy(App->SBC_Scene->B_Message[Index]->Panel_Name, B_Name);
+
+	App->SBC_Scene->B_Message[Index]->Unique_ID = App->SBC_Scene->UniqueID_TextMessage_Count;
+
+	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_TextMessage_Folder, App->SBC_Scene->B_Message[Index]->Panel_Name, Index, true);
+	App->SBC_Scene->B_Message[Index]->FileViewItem = Temp;
+
+	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Display_Folder);
+	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Counters_Folder);
+
+	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Message[Index]->FileViewItem);
+
+	App->SBC_Scene->B_Message[Index]->Set_ImGui_Panel_Name();
+
+	App->SBC_Scene->UniqueID_TextMessage_Count++;
+	App->SBC_Scene->TextMessage_Count++;
+
 }
 
 // *************************************************************************

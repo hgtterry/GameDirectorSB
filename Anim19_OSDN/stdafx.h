@@ -344,7 +344,9 @@ namespace Enums
 		FileView_Collectables_Folder = 17,
 		FileView_Collectables_File = 18,
 		FileView_Counters_Folder = 19,
-		FileView_Counters_File = 20
+		FileView_Counters_File = 20,
+		FileView_TextMessage_Folder = 21,
+		FileView_TextMessage_File = 22
 	};
 }
 
