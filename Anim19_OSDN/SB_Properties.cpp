@@ -369,12 +369,22 @@ void SB_Properties::ListView_OnClickOptions(LPARAM lParam)
 		return;
 	}
 
-	// Panels
+	// Counters
 	if (Edit_Category == Enums::Edit_Counters)
 	{
 		if (Edit_Physics == 0)
 		{
 			Edit_Counters_OnClick(lParam);
+		}
+		return;
+	}
+
+	// Counters
+	if (Edit_Category == Enums::Edit_TextMessages)
+	{
+		if (Edit_Physics == 0)
+		{
+			Edit_TextMessage_OnClick(lParam);
 		}
 		return;
 	}
@@ -2060,7 +2070,7 @@ bool SB_Properties::Edit_Collectables_OnClick(LPARAM lParam)
 }
 
 // *************************************************************************
-// *				Edit_Counters_OnClick  Terry Bernie					   *
+// *		Edit_Counters_OnClick:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
 bool SB_Properties::Edit_Counters_OnClick(LPARAM lParam)
 {
@@ -2087,7 +2097,7 @@ bool SB_Properties::Edit_Counters_OnClick(LPARAM lParam)
 
 		strcpy(App->SBC_Scene->B_Counter[Index]->Panel_Name, App->SBC_Dialogs->Chr_Text);
 
-		App->SBC_Display->Mark_As_Altered(Index);
+		App->SBC_Display->Mark_As_Altered_Counter(Index);
 
 		App->SBC_FileView->Change_Item_Name(App->SBC_Scene->B_Counter[Index]->FileViewItem, App->SBC_Dialogs->Chr_Text);
 
@@ -2111,7 +2121,7 @@ bool SB_Properties::Edit_Counters_OnClick(LPARAM lParam)
 
 			App->SBC_Scene->B_Counter[Index]->PosX = App->Cl_Dialogs->mFloat;
 
-			App->SBC_Display->Mark_As_Altered(Index);
+			App->SBC_Display->Mark_As_Altered_Counter(Index);
 
 			Update_ListView_Counters();
 	
@@ -2136,7 +2146,7 @@ bool SB_Properties::Edit_Counters_OnClick(LPARAM lParam)
 
 			App->SBC_Scene->B_Counter[Index]->PosY = App->Cl_Dialogs->mFloat;
 
-			App->SBC_Display->Mark_As_Altered(Index);
+			App->SBC_Display->Mark_As_Altered_Counter(Index);
 
 			Update_ListView_Counters();
 
@@ -2161,7 +2171,7 @@ bool SB_Properties::Edit_Counters_OnClick(LPARAM lParam)
 		strcpy(App->SBC_Scene->B_Counter[Index]->Text, App->SBC_Dialogs->Chr_Text);
 
 
-		App->SBC_Display->Mark_As_Altered(Index);
+		App->SBC_Display->Mark_As_Altered_Counter(Index);
 		
 		Update_ListView_Counters();
 
@@ -2185,7 +2195,7 @@ bool SB_Properties::Edit_Counters_OnClick(LPARAM lParam)
 
 		App->SBC_Scene->B_Counter[Index]->Counter = App->Cl_Dialogs->mInt;
 
-		App->SBC_Display->Mark_As_Altered(Index);
+		App->SBC_Display->Mark_As_Altered_Counter(Index);
 
 		Update_ListView_Counters();
 
@@ -2196,7 +2206,118 @@ bool SB_Properties::Edit_Counters_OnClick(LPARAM lParam)
 }
 
 // *************************************************************************
-// *				Update_ListView_Area	Terry Bernie 			 	   *
+// *		Edit_TextMessage_OnClick:- Terry and Hazel Flanigan 2022	   *
+// *************************************************************************
+bool SB_Properties::Edit_TextMessage_OnClick(LPARAM lParam)
+{
+	int Index = App->SBC_Properties->Current_Selected_Object; // Get Selected Object Index 
+	int result = 1;
+	int test;
+
+	LPNMLISTVIEW poo = (LPNMLISTVIEW)lParam;
+	test = poo->iItem;
+	ListView_GetItemText(Properties_hLV, test, 0, btext, 20);
+
+	result = strcmp(btext, "Name");
+	if (result == 0)
+	{
+		strcpy(App->SBC_Dialogs->btext, "Change Panels Name");
+		strcpy(App->SBC_Dialogs->Chr_Text, App->SBC_Scene->B_Message[Index]->TextMessage_Name);
+
+		App->SBC_Dialogs->Dialog_Text();
+
+		if (App->SBC_Dialogs->Canceled == 1)
+		{
+			return TRUE;
+		}
+
+		strcpy(App->SBC_Scene->B_Message[Index]->TextMessage_Name, App->SBC_Dialogs->Chr_Text);
+
+		App->SBC_Display->Mark_As_Altered_TextMessage(Index);
+
+		App->SBC_FileView->Change_Item_Name(App->SBC_Scene->B_Message[Index]->FileViewItem, App->SBC_Dialogs->Chr_Text);
+
+		Update_ListView_TextMessages();
+
+	}
+
+	result = strcmp(btext, "Pos_X");
+	if (result == 0)
+	{
+		strcpy(App->Cl_Dialogs->btext, "Set Position X");
+
+		char buff[256];
+		sprintf(buff, "%.3f", App->SBC_Scene->B_Message[Index]->PosX);
+		strcpy(App->Cl_Dialogs->Chr_Float, buff);
+
+		App->Cl_Dialogs->Dialog_Float();
+
+		if (App->Cl_Dialogs->Canceled == 0)
+		{
+
+			App->SBC_Scene->B_Message[Index]->PosX = App->Cl_Dialogs->mFloat;
+
+			App->SBC_Display->Mark_As_Altered_TextMessage(Index);
+
+			Update_ListView_TextMessages();
+
+		}
+
+		return 1;
+	}
+
+	result = strcmp(btext, "Pos_Y");
+	if (result == 0)
+	{
+		strcpy(App->Cl_Dialogs->btext, "Set Position Y");
+
+		char buff[256];
+		sprintf(buff, "%.3f", App->SBC_Scene->B_Message[Index]->PosY);
+		strcpy(App->Cl_Dialogs->Chr_Float, buff);
+
+		App->Cl_Dialogs->Dialog_Float();
+
+		if (App->Cl_Dialogs->Canceled == 0)
+		{
+
+			App->SBC_Scene->B_Message[Index]->PosY = App->Cl_Dialogs->mFloat;
+
+			App->SBC_Display->Mark_As_Altered_TextMessage(Index);
+
+			Update_ListView_TextMessages();
+
+		}
+
+		return 1;
+	}
+
+	result = strcmp(btext, "Text");
+	if (result == 0)
+	{
+		strcpy(App->SBC_Dialogs->btext, "Change Text");
+		strcpy(App->SBC_Dialogs->Chr_Text, App->SBC_Scene->B_Message[Index]->Text);
+
+		App->SBC_Dialogs->Dialog_Text();
+
+		if (App->SBC_Dialogs->Canceled == 1)
+		{
+			return TRUE;
+		}
+
+		strcpy(App->SBC_Scene->B_Message[Index]->Text, App->SBC_Dialogs->Chr_Text);
+
+		App->SBC_Display->Mark_As_Altered_TextMessage(Index);
+
+		Update_ListView_TextMessages();
+
+		return 1;
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *		Update_ListView_Area:- Terry and Hazel Flanigan 2022	 	   *
 // *************************************************************************
 bool SB_Properties::Update_ListView_Area()
 {

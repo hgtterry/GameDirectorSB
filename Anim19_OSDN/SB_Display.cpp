@@ -69,7 +69,7 @@ void SB_Display::Set_TextMessage_Defaults(int Index)
 	App->SBC_Scene->B_Message[Index]->Show_Panel_Flag = 0;
 	App->SBC_Scene->B_Message[Index]->Unique_ID = 0;
 
-	strcpy(App->SBC_Scene->B_Message[Index]->Text, "This is a Text Message Test");
+	strcpy(App->SBC_Scene->B_Message[Index]->Text, "Wellcome To EquitySB");
 
 	return;
 }
@@ -138,6 +138,8 @@ void SB_Display::Add_New_Message()
 
 	App->SBC_Scene->B_Message[Index]->Set_ImGui_Panel_Name();
 
+	Mark_As_Altered_TextMessage(Index);
+
 	App->SBC_Scene->UniqueID_TextMessage_Count++;
 	App->SBC_Scene->TextMessage_Count++;
 
@@ -182,15 +184,27 @@ void SB_Display::Delete_Counter()
 }
 
 // *************************************************************************
-// *					Mark_As_Altered Terry Bernie				 	   *
+// *	Mark_As_Altered_Counter:- Terry and Hazel Flanigan 2022		 	   *
 // *************************************************************************
-void SB_Display::Mark_As_Altered(int Index)
+void SB_Display::Mark_As_Altered_Counter(int Index)
 {
 	App->SBC_Scene->B_Counter[Index]->Altered = 1;
 
 	App->SBC_Scene->Scene_Modified = 1;
 
 	App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Counter[Index]->FileViewItem);
+}
+
+// *************************************************************************
+// *	Mark_As_Altered_TextMessage:- Terry and Hazel Flanigan 2022	 	   *
+// *************************************************************************
+void SB_Display::Mark_As_Altered_TextMessage(int Index)
+{
+	App->SBC_Scene->B_Message[Index]->Altered = 1;
+
+	App->SBC_Scene->Scene_Modified = 1;
+
+	App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Message[Index]->FileViewItem);
 }
 
 // **************************************************************************
