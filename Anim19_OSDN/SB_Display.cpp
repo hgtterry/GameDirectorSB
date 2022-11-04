@@ -209,6 +209,20 @@ void SB_Display::Delete_Counter()
 	App->SBC_Scene->Scene_Modified = 1;
 }
 
+// **************************************************************************
+// *	  		Delete_TextMessage:- Terry and Hazel Flanigan 2022			*
+// **************************************************************************
+void SB_Display::Delete_TextMessage()
+{
+	int Index = App->SBC_Properties->Current_Selected_Object;
+
+	App->SBC_Scene->B_Message[Index]->Deleted = 1;
+
+	App->SBC_FileView->DeleteItem();
+
+	App->SBC_Scene->Scene_Modified = 1;
+}
+
 // *************************************************************************
 // *	Mark_As_Altered_Counter:- Terry and Hazel Flanigan 2022		 	   *
 // *************************************************************************

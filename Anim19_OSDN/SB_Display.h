@@ -38,6 +38,7 @@ public:
 	bool Add_TextMessages_From_File();
 
 	void Delete_Counter();
+	void Delete_TextMessage();
 
 	void Mark_As_Altered_Counter(int Index);
 	void Mark_As_Altered_TextMessage(int Index);

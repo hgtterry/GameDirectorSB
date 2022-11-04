@@ -42,7 +42,7 @@ SB_Object::~SB_Object(void)
 }
 
 // *************************************************************************
-// *					Start_Object_PropsPanel Terry Flanigan 	 	 	   *
+// *	Start_Object_PropsPanel:- Terry and Hazel Flanigan 2022 	 	   *
 // *************************************************************************
 void SB_Object::Start_Object_PropsPanel(void)
 {
@@ -55,7 +55,7 @@ void SB_Object::Start_Object_PropsPanel(void)
 }
 
 // *************************************************************************
-// *				Object_PropsPanel_Proc Terry Flanigan				   *
+// *		Object_PropsPanel_Proc:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
 LRESULT CALLBACK SB_Object::Object_PropsPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -137,7 +137,7 @@ LRESULT CALLBACK SB_Object::Object_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 }
 
 // *************************************************************************
-// *					Hide_Object_Dlg Terry Flanigan					   *
+// *			Hide_Object_Dlg:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 void SB_Object::Hide_Object_Dlg(bool Show)
 {
@@ -146,7 +146,7 @@ void SB_Object::Hide_Object_Dlg(bool Show)
 
 
 // *************************************************************************
-// *					Rename_Object Terry Flanigan					   *
+// *			Rename_Object:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 void SB_Object::Rename_Object(int Index)
 {
@@ -172,7 +172,7 @@ void SB_Object::Rename_Object(int Index)
 }
 
 // *************************************************************************
-//					Get_BoundingBox_World_Centre Terry Bernie			   *
+//		Get_BoundingBox_World_Centre:- Terry and Hazel Flanigan 2022	   *
 // *************************************************************************
 Ogre::Vector3 SB_Object::Get_BoundingBox_World_Centre(int Object_Index)
 {
@@ -192,7 +192,7 @@ Ogre::Vector3 SB_Object::Get_BoundingBox_World_Centre(int Object_Index)
 }
 
 // *************************************************************************
-//							Copy_Object Terry Bernie					   *
+//				Copy_Object:- Terry and Hazel Flanigan 2022				   *
 // *************************************************************************
 void SB_Object::Copy_Object(int Object_Index)
 {

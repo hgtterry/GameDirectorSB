@@ -1859,6 +1859,25 @@ void SB_FileView::Context_Delete(HWND hDlg)
 
 		return;
 	}
+
+	if (App->SBC_FileView->Context_Selection == Enums::FileView_TextMessage_File)
+	{
+		if (App->SBC_Scene->TextMessage_Count == 1)
+		{
+			App->Say("Can not delete there must be at least one Message");
+		}
+
+		App->SBC_Dialogs->YesNo("Remove Message", "Are you sure", 1);
+
+		bool Doit = App->SBC_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+			App->SBC_Display->Delete_TextMessage();
+			App->SBC_FileView->Mark_Altered_Folder(App->SBC_FileView->FV_TextMessage_Folder);
+		}
+
+		return;
+	}
 	return;
 }
 
