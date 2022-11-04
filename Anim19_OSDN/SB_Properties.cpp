@@ -604,11 +604,11 @@ bool SB_Properties::Update_ListView_Player_Physics()
 	memset(&pitem, 0, sizeof(LV_ITEM));
 	pitem.mask = LVIF_TEXT;
 
-	grid[0][0] = "Name", grid[1][0] = App->SBC_Scene->B_Player[0]->Player_Name;
-	grid[0][1] = "Type", grid[1][1] = chr_PhysicsType;
+	grid[0][0] = "Name",   grid[1][0] = App->SBC_Scene->B_Player[0]->Player_Name;
+	grid[0][1] = "Type",   grid[1][1] = chr_PhysicsType;
 	grid[0][2] = "Shape ", grid[1][2] = chr_PhysicsShape;
-	grid[0][3] = " ", grid[1][3] = " ";
-	grid[0][4] = "Mass", grid[1][4] = chr_Mass;
+	grid[0][3] = " ",      grid[1][3] = " ";
+	grid[0][4] = "Mass",   grid[1][4] = chr_Mass;
 	grid[0][5] = "Radius", grid[1][5] = chr_Radius;
 	grid[0][6] = "Height", grid[1][6] = chr_Height;
 
