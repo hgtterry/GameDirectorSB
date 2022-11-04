@@ -1759,7 +1759,7 @@ void SB_FileView::Context_New(HWND hDlg)
 // *************************************************************************
 void SB_FileView::Context_Delete(HWND hDlg)
 {
-
+	// ---------------- Areas
 	if (App->SBC_FileView->Context_Selection == Enums::FileView_Areas_File)
 	{
 		if (App->SBC_Scene->Area_Count == 1)
@@ -1770,6 +1770,7 @@ void SB_FileView::Context_Delete(HWND hDlg)
 		return;
 	}
 
+	// ---------------- Cameras
 	if (App->SBC_FileView->Context_Selection == Enums::FileView_Cameras_File)
 	{
 		if (App->SBC_Scene->Camera_Count == 1)
@@ -1780,6 +1781,7 @@ void SB_FileView::Context_Delete(HWND hDlg)
 		return;
 	}
 
+	// ---------------- Players
 	if (App->SBC_FileView->Context_Selection == Enums::FileView_Player_File)
 	{
 		if (App->SBC_Scene->Player_Count == 1)
@@ -1790,6 +1792,7 @@ void SB_FileView::Context_Delete(HWND hDlg)
 		return;
 	}
 
+	// ---------------- Objects
 	if (App->SBC_FileView->Context_Selection == Enums::FileView_Objects_File)
 	{
 		App->SBC_Dialogs->YesNo("Remove Object","Are you sure", 1);
@@ -1804,6 +1807,7 @@ void SB_FileView::Context_Delete(HWND hDlg)
 		return;
 	}
 
+	// ---------------- Message Triggers
 	if (App->SBC_FileView->Context_Selection == Enums::FileView_Messages_Triggers_File)
 	{
 		App->SBC_Dialogs->YesNo("Remove Message", "Are you sure", 1);
@@ -1818,6 +1822,7 @@ void SB_FileView::Context_Delete(HWND hDlg)
 		return;
 	}
 
+	// ---------------- Sound Entities
 	if (App->SBC_FileView->Context_Selection == Enums::FileView_Sounds_File)
 	{
 		App->SBC_Dialogs->YesNo("Remove Sound", "Are you sure", 1);
@@ -1832,6 +1837,7 @@ void SB_FileView::Context_Delete(HWND hDlg)
 		return;
 	}
 
+	// ---------------- Move Entities
 	if (App->SBC_FileView->Context_Selection == Enums::FileView_Move_File)
 	{
 		App->SBC_Dialogs->YesNo("Remove Move Entity", "Are you sure", 1);
@@ -1846,6 +1852,7 @@ void SB_FileView::Context_Delete(HWND hDlg)
 		return;
 	}
 
+	// ---------------- Counters
 	if (App->SBC_FileView->Context_Selection == Enums::FileView_Counters_File)
 	{
 		int Test = App->SBC_LookUps->Get_Adjusted_Counters_Count();
@@ -1867,6 +1874,7 @@ void SB_FileView::Context_Delete(HWND hDlg)
 		return;
 	}
 
+	// ---------------- TextMessages
 	if (App->SBC_FileView->Context_Selection == Enums::FileView_TextMessage_File)
 	{
 		int Test = App->SBC_LookUps->Get_Adjusted_TextMessage_Count();
