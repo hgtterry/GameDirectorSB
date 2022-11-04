@@ -47,5 +47,6 @@ public:
 	void Mark_As_Altered_TextMessage(int Index);
 
 	int GetIndex_By_Name(char* Name);
+	int GetIndex_By_MessageName(char* Name);
 };
 

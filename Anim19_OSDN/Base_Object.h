@@ -144,5 +144,8 @@ public:
 
 	//-----Collectable
 	Collectable_type* S_Collectable[1];
+
+	char TextMessage_Name[MAX_PATH];
+	int TextMessage_ID;
 };
 

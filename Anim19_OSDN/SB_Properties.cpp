@@ -665,19 +665,9 @@ bool SB_Properties::Update_ListView_Messages()
 	sprintf(chr_PosVert, "%i ", App->SBC_Scene->B_Object[index]->Message_Pos_y);
 	sprintf(chr_PosHoz, "%i ", App->SBC_Scene->B_Object[index]->Message_Pos_x);
 
-	//// new sound
-	//char chr_Play[100];
-	//if (App->Cl_Scene_Data->Cl_Object[index]->Play_v2 == 1)
-	//{
-	//	strcpy(chr_Play, "True");
-	//}
-	//else
-	//{
-	//	strcpy(chr_Play, "False");
-	//}
-	//char chr_Stock_Sound[100];
-	//int sndIndex = App->SBC_Scene->B_Object[index]->Sound_ID_v2;
-	//strcpy(chr_Stock_Sound, App->Cl_Scene_Data->St_Sounds[sndIndex]->Name);
+	char chr_Selected_Object_Id[100];
+	_itoa(App->SBC_Scene->B_Object[index]->TextMessage_ID, chr_Selected_Object_Id, 10);
+	
 
 	const int NUM_ITEMS = 14;
 	const int NUM_COLS = 2;
@@ -689,8 +679,8 @@ bool SB_Properties::Update_ListView_Messages()
 	grid[0][0] = "Name",			grid[1][0] = App->SBC_Scene->B_Object[index]->Mesh_Name;
 	grid[0][1] = " ",				grid[1][1] = " ";
 	grid[0][2] = "Message",			grid[1][2] = App->SBC_Scene->B_Object[index]->Message_Text;
-	grid[0][3] = " ",				grid[1][3] = " ";
-	grid[0][4] = "Font Size",		grid[1][4] = " "; //chr_FontSize;
+	grid[0][3] = "Test_Mesh",		grid[1][3] = App->SBC_Scene->B_Object[index]->TextMessage_Name;
+	grid[0][4] = "ID",              grid[1][4] = chr_Selected_Object_Id;
 	grid[0][5] = "Text Colour",		grid[1][5] = " "; //chr_TextColour;
 	grid[0][6] = "Pos Vertical",	grid[1][6] = chr_PosVert;
 	grid[0][7] = "Pos Horizontal",	grid[1][7] = chr_PosHoz;
@@ -1505,6 +1495,26 @@ bool SB_Properties::Edit_Messages_OnClick(LPARAM lParam)
 		return 1;
 	}
 
+	result = strcmp(btext, "Test_Mesh");
+	if (result == 0)
+	{
+		strcpy(App->Cl_Dialogs->btext, "Select Message To Display");
+
+		App->SBC_Dialogs->DropList_Data = Enums::DropDialog_Messages;
+		App->SBC_Dialogs->Dialog_DropGen();
+
+		if (App->SBC_Dialogs->Canceled == 0)
+		{
+			strcpy(App->SBC_Scene->B_Object[Index]->TextMessage_Name, App->Cl_Dialogs->Chr_DropText);
+
+			int MoveObjectIndex = App->SBC_Display->GetIndex_By_MessageName(App->SBC_Scene->B_Object[Index]->TextMessage_Name);
+			App->SBC_Scene->B_Object[Index]->TextMessage_ID = MoveObjectIndex;
+		}
+
+		Update_ListView_Messages();
+		return 1;
+	}
+	
 	// Pos Vertical
 	result = strcmp(btext, "Pos Vertical");
 	if (result == 0)

@@ -53,5 +53,6 @@ protected:
 	void List_Locations(HWND DropHwnd);
 	void ListAxis(HWND DropHwnd);
 	void List_Counters(HWND DropHwnd);
+	void List_Messages(HWND DropHwnd);
 };
 

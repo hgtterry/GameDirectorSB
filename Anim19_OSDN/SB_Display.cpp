@@ -273,6 +273,32 @@ int SB_Display::GetIndex_By_Name(char* Name)
 	return -1;
 }
 
+// **************************************************************************
+// *	  	GetIndex_By_MessageName:- Terry and Hazel Flanigan 2022			*
+// **************************************************************************
+int SB_Display::GetIndex_By_MessageName(char* Name)
+{
+	int Count = 0;
+	int Total = App->SBC_Scene->TextMessage_Count;
+
+	while (Count < Total)
+	{
+		if (App->SBC_Scene->B_Message[Count]->Deleted == 0)
+		{
+			int Result = 1;
+			Result = strcmp(App->SBC_Scene->B_Message[Count]->TextMessage_Name, Name);
+			if (Result == 0)
+			{
+				return Count;
+			}
+		}
+
+		Count++;
+	}
+
+	return -1;
+}
+
 // *************************************************************************
 // *			Rename_TextMessage:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************

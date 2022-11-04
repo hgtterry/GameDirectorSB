@@ -125,5 +125,8 @@ bool Base_Object::Init_Object(void)
 	Sound_Path[0] = 0;
 	Play_Sound = 1;
 	SndVolume = 0.5; // Default Half Volume
+
+	strcpy(TextMessage_Name, "Not_Set");
+	TextMessage_ID = 0;
 	return 1;
 }
