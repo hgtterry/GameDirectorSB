@@ -28,7 +28,6 @@ public:
 	void Tabs_Render_Groups(void);
 
 	void ImGui_Collision_Debug(void);
-	void ImGui_Text_Message(void);
 
 	void ImGui_ProgressBar(void);
 	void Start_ProgressBar(void);
@@ -56,7 +55,6 @@ public:
 	bool Show_App_Data;
 	bool Show_Object_Data;
 	bool Show_Collision_Debug;
-	bool Show_Test_Text;
 	bool Show_Object_Selection;
 
 	ImFont* font0;

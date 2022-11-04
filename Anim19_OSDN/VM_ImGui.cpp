@@ -29,7 +29,6 @@ VM_ImGui::VM_ImGui()
 	Show_Progress_Bar = 0;
 	Show_Object_Data = 0;
 	Show_Collision_Debug = 0;
-	Show_Test_Text = 0;
 	Show_Object_Selection = 0;
 
 	Model_XTranslate = 2;
@@ -182,11 +181,6 @@ void VM_ImGui::ImGui_Render_Loop(void)
 	if (Show_Collision_Debug == 1)
 	{
 		ImGui_Collision_Debug();
-	}
-
-	if (Show_Test_Text == 1)
-	{
-		ImGui_Text_Message();
 	}
 
 	if (Show_Object_Selection == 1)
@@ -460,36 +454,6 @@ void VM_ImGui::ImGui_Collision_Debug(void)
 		{
 			Show_Collision_Debug = 0;
 		}
-
-		ImGui::End();
-	}
-}
-
-// *************************************************************************
-// *					ImGui_Text_Message  Terry Flanigan				   *
-// *************************************************************************
-void VM_ImGui::ImGui_Text_Message(void)
-{
-	ImGui::SetNextWindowPos(ImVec2(App->SBC_Scene->B_Object[Object_Index]->Message_Pos_x, 
-		App->SBC_Scene->B_Object[Object_Index]->Message_Pos_y));
-
-
-	if (!ImGui::Begin("Text_Debug", &Show_Test_Text, ImGuiWindowFlags_NoSavedSettings 
-		| ImGuiWindowFlags_AlwaysAutoResize 
-		| ImGuiWindowFlags_NoMove 
-		| ImGuiWindowFlags_NoResize 
-		| ImGuiWindowFlags_NoTitleBar))
-	{
-		ImGui::End();
-	}
-	else
-	{
-
-		ImGui::PushFont(font2);
-
-		ImGui::Text(App->SBC_Scene->B_Object[Object_Index]->Message_Text);
-
-		ImGui::PopFont();
 
 		ImGui::End();
 	}
