@@ -1848,6 +1848,13 @@ void SB_FileView::Context_Delete(HWND hDlg)
 
 	if (App->SBC_FileView->Context_Selection == Enums::FileView_Counters_File)
 	{
+		int Test = App->SBC_LookUps->Get_Adjusted_Counters_Count();
+		if (Test == 1)
+		{
+			App->Say("Can not delete there must be at least one Counter");
+			return;
+		}
+
 		App->SBC_Dialogs->YesNo("Remove Counter", "Are you sure", 1);
 
 		bool Doit = App->SBC_Dialogs->Canceled;
@@ -1862,9 +1869,11 @@ void SB_FileView::Context_Delete(HWND hDlg)
 
 	if (App->SBC_FileView->Context_Selection == Enums::FileView_TextMessage_File)
 	{
-		if (App->SBC_Scene->TextMessage_Count == 1)
+		int Test = App->SBC_LookUps->Get_Adjusted_TextMessage_Count();
+		if (Test == 1)
 		{
 			App->Say("Can not delete there must be at least one Message");
+			return;
 		}
 
 		App->SBC_Dialogs->YesNo("Remove Message", "Are you sure", 1);

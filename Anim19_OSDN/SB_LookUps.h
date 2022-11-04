@@ -31,6 +31,7 @@ public:
 
 	int Get_Adjusted_Object_Count(void);
 	int Get_Adjusted_Counters_Count(void);
+	int Get_Adjusted_TextMessage_Count(void);
 
 	int CheckNames_Objects(char* Name);
 
