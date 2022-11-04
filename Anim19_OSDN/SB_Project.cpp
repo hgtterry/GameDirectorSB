@@ -998,7 +998,7 @@ bool SB_Project::Save_TextMessage_Data()
 	int Count = 0;
 	while (Count < App->SBC_Scene->TextMessage_Count)
 	{
-		if (App->SBC_Scene->B_Counter[Count]->Deleted == 0)
+		if (App->SBC_Scene->B_Message[Count]->Deleted == 0)
 		{
 			strcpy(buff, "[TextMessage_");
 			_itoa(new_Count, Cbuff, 10);
