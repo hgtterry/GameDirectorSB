@@ -642,7 +642,6 @@ bool SB_Properties::Update_ListView_Messages()
 		return 1;
 	}
 
-	
 	int index = App->SBC_Properties->Current_Selected_Object;
 
 	char buff[255];
@@ -650,18 +649,9 @@ bool SB_Properties::Update_ListView_Messages()
 	strcat(buff, "   (Message)");
 	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
 
-//	char chr_ReTrigger[100];
-
-	int StockIndex = 0;// App->SBC_Scene->B_Object[index]->Entity[0].Stock_mIndex;
-	//sprintf(chr_ReTrigger, "%i ", App->SBC_Scene->B_Object[index]->Re_Trigger);
-
-//	char chr_FontSize[100];
-//	char chr_TextColour[100];
 	char chr_PosVert[100];
 	char chr_PosHoz[100];
 
-	/*sprintf(chr_FontSize, "%i ", App->Cl_Scene_Data->S_Messages[StockIndex]->Font_Size);
-	sprintf(chr_TextColour, "%.2f %.2f %.2f", App->Cl_Scene_Data->S_Messages[StockIndex]->Colour.x, App->Cl_Scene_Data->S_Messages[StockIndex]->Colour.y, App->Cl_Scene_Data->S_Messages[StockIndex]->Colour.z);*/
 	sprintf(chr_PosVert, "%i ", App->SBC_Scene->B_Object[index]->Message_Pos_y);
 	sprintf(chr_PosHoz, "%i ", App->SBC_Scene->B_Object[index]->Message_Pos_x);
 
@@ -669,7 +659,7 @@ bool SB_Properties::Update_ListView_Messages()
 	_itoa(App->SBC_Scene->B_Object[index]->TextMessage_ID, chr_Selected_Object_Id, 10);
 	
 
-	const int NUM_ITEMS = 14;
+	const int NUM_ITEMS = 5;
 	const int NUM_COLS = 2;
 	std::string grid[NUM_COLS][NUM_ITEMS]; // string table
 	LV_ITEM pitem;
@@ -681,16 +671,7 @@ bool SB_Properties::Update_ListView_Messages()
 	grid[0][2] = "Message",			grid[1][2] = App->SBC_Scene->B_Object[index]->Message_Text;
 	grid[0][3] = "Test_Mesh",		grid[1][3] = App->SBC_Scene->B_Object[index]->TextMessage_Name;
 	grid[0][4] = "ID",              grid[1][4] = chr_Selected_Object_Id;
-	grid[0][5] = "Text Colour",		grid[1][5] = " "; //chr_TextColour;
-	grid[0][6] = "Pos Vertical",	grid[1][6] = chr_PosVert;
-	grid[0][7] = "Pos Horizontal",	grid[1][7] = chr_PosHoz;
-	grid[0][8] = " ",				grid[1][8] = " ";
-	grid[0][9] = "Re-Trigger",		grid[1][9] = " "; //chr_ReTrigger;
-	grid[0][10] = " ",				grid[1][10] = " ";
-	grid[0][11] = "Stock_Snd",		grid[1][11] = " "; //chr_Stock_Sound;
-	grid[0][12] = "Play",			grid[1][12] = " "; //chr_Play;
-
-
+	
 	ListView_DeleteAllItems(Properties_hLV);
 
 	for (DWORD row = 0; row < NUM_ITEMS; row++)
