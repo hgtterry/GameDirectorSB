@@ -448,11 +448,9 @@ bool SB_Project::Save_Project()
 
 	if (Set_QuickLoad_Flag == 1)
 	{
-
 		strcpy(App->SBC_Prefs->QL_User_File, App->SBC_FileIO->Project_Path_File_Name);
 		App->SBC_Prefs->QL_Use_TestFile_Flag = 0;
 		App->SBC_Prefs->Write_Preferences();
-
 	}
 
 

@@ -246,6 +246,7 @@ void SB_Object::Copy_Object(int Object_Index)
 // *************************************************************************
 void SB_Object::Clear_Modified_Objects()
 {
+	// ---------------- Areas
 	int Count = 0;
 	while (Count < App->SBC_Scene->Area_Count)
 	{
@@ -258,6 +259,7 @@ void SB_Object::Clear_Modified_Objects()
 		Count++;
 	}
 
+	// ---------------- Players
 	Count = 0;
 	while (Count < App->SBC_Scene->Player_Count)
 	{
@@ -270,6 +272,7 @@ void SB_Object::Clear_Modified_Objects()
 		Count++;
 	}
 
+	// ---------------- Cameras
 	Count = 0;
 	while (Count < App->SBC_Scene->Camera_Count)
 	{
@@ -282,6 +285,7 @@ void SB_Object::Clear_Modified_Objects()
 		Count++;
 	}
 
+	// ---------------- Objects
 	Count = 0;
 	while (Count < App->SBC_Scene->Object_Count)
 	{
@@ -294,6 +298,33 @@ void SB_Object::Clear_Modified_Objects()
 		Count++;
 	}
 
+	// ---------------- Display Counters
+	Count = 0;
+	while (Count < App->SBC_Scene->Counters_Count)
+	{
+		if (App->SBC_Scene->B_Counter[Count]->Altered == 1)
+		{
+			App->SBC_Scene->B_Counter[Count]->Altered = 0;
+			App->SBC_FileView->Mark_Clear(App->SBC_Scene->B_Counter[Count]->FileViewItem);
+		}
+
+		Count++;
+	}
+
+	// ---------------- TextMessages
+	Count = 0;
+	while (Count < App->SBC_Scene->TextMessage_Count)
+	{
+		if (App->SBC_Scene->B_Message[Count]->Altered == 1)
+		{
+			App->SBC_Scene->B_Message[Count]->Altered = 0;
+			App->SBC_FileView->Mark_Clear(App->SBC_Scene->B_Message[Count]->FileViewItem);
+		}
+
+		Count++;
+	}
+
+	// ---------------- Folders
 	if (App->SBC_Scene->Object_Count > 0)
 	{
 		App->SBC_FileView->Mark_Clear_Folder(App->SBC_FileView->FV_Objects_Folder);

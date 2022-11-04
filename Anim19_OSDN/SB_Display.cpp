@@ -104,6 +104,8 @@ void SB_Display::Add_New_Counter()
 	
 	App->SBC_Scene->B_Counter[Index]->Set_ImGui_Panel_Name();
 
+	Mark_As_Altered_Counter(Index);
+
 	App->SBC_Scene->UniqueID_Counters_Count++;
 	App->SBC_Scene->Counters_Count++;
 }
