@@ -125,9 +125,6 @@ public:
 
 	//-----Message Entity
 	char Message_Text[MAX_PATH];
-	int Message_Pos_x;
-	int Message_Pos_y;
-
 	//-----Sound Entity
 	bool HasSound;
 	bool Play_Sound;

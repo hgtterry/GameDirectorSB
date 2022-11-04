@@ -116,8 +116,6 @@ bool Base_Object::Init_Object(void)
 
 	//------------------------------ Message Entity
 	strcpy(Message_Text, "This is in the Object");
-	Message_Pos_x = 530;
-	Message_Pos_y = 5;
 
 	//------------------------------ Sound Entity
 	HasSound = 0;

@@ -772,9 +772,7 @@ bool SB_Project::Save_Objects_Data()
 			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Message)
 			{
 				fprintf(WriteFile, "%s%s\n", "Message_Text=", App->SBC_Scene->B_Object[Count]->Message_Text);
-				fprintf(WriteFile, "%s%i\n", "Message_Pos_X=", App->SBC_Scene->B_Object[Count]->Message_Pos_x);
-				fprintf(WriteFile, "%s%i\n", "Message_Pos_Y=", App->SBC_Scene->B_Object[Count]->Message_Pos_y);
-			
+				
 				fprintf(WriteFile, "%s%s\n", "TextMessage_Name=", App->SBC_Scene->B_Object[Count]->TextMessage_Name);
 				fprintf(WriteFile, "%s%i\n", "TextMessage_ID=", App->SBC_Scene->B_Object[Count]->TextMessage_ID);
 			}
@@ -1644,9 +1642,7 @@ bool SB_Project::Load_Project_Objects()
 		if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Message)
 		{
 			App->Cl_Ini->GetString(buff, "Message_Text", Object->Message_Text, MAX_PATH);
-			Object->Message_Pos_x = App->Cl_Ini->GetInt(buff, "Message_Pos_X", 0);
-			Object->Message_Pos_y = App->Cl_Ini->GetInt(buff, "Message_Pos_Y", 0);
-
+			
 			App->Cl_Ini->GetString(buff, "TextMessage_Name", chr_Tag1, MAX_PATH);
 			strcpy(App->SBC_Scene->B_Object[Count]->TextMessage_Name, chr_Tag1);
 

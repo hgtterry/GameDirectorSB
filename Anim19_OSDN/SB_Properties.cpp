@@ -649,12 +649,6 @@ bool SB_Properties::Update_ListView_Messages()
 	strcat(buff, "   (Message)");
 	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
 
-	char chr_PosVert[100];
-	char chr_PosHoz[100];
-
-	sprintf(chr_PosVert, "%i ", App->SBC_Scene->B_Object[index]->Message_Pos_y);
-	sprintf(chr_PosHoz, "%i ", App->SBC_Scene->B_Object[index]->Message_Pos_x);
-
 	char chr_Selected_Object_Id[100];
 	_itoa(App->SBC_Scene->B_Object[index]->TextMessage_ID, chr_Selected_Object_Id, 10);
 	
@@ -1496,76 +1490,6 @@ bool SB_Properties::Edit_Messages_OnClick(LPARAM lParam)
 		return 1;
 	}
 	
-	// Pos Vertical
-	result = strcmp(btext, "Pos Vertical");
-	if (result == 0)
-	{
-		strcpy(App->Cl_Dialogs->btext, "Pos Vertical");
-		char buff[256];
-		sprintf(buff, "%i", App->SBC_Scene->B_Object[Index]->Message_Pos_y);
-		strcpy(App->Cl_Dialogs->Chr_Int, buff);
-
-		App->Cl_Dialogs->Dialog_Int();
-
-		if (App->Cl_Dialogs->Canceled == 1)
-		{
-			return TRUE;
-		}
-
-		App->SBC_Scene->B_Object[Index]->Message_Pos_y = App->Cl_Dialogs->mInt;
-		
-		App->SBC_Properties->Mark_As_Altered(Index);
-
-		Update_ListView_Messages();
-		return 1;
-	}
-
-	// Pos Vertical
-	result = strcmp(btext, "Pos Horizontal");
-	if (result == 0)
-	{
-		strcpy(App->Cl_Dialogs->btext, "Pos Vertical");
-		char buff[256];
-		sprintf(buff, "%i", App->SBC_Scene->B_Object[Index]->Message_Pos_x);
-		strcpy(App->Cl_Dialogs->Chr_Int, buff);
-
-		App->Cl_Dialogs->Dialog_Int();
-
-		if (App->Cl_Dialogs->Canceled == 1)
-		{
-			return TRUE;
-		}
-
-		App->SBC_Scene->B_Object[Index]->Message_Pos_x = App->Cl_Dialogs->mInt;
-
-		App->SBC_Properties->Mark_As_Altered(Index);
-
-		Update_ListView_Messages();
-		return 1;
-	}
-
-
-
-	//// Message stock
-	//result = strcmp(btext, "Message_Stock");
-	//if (result == 0)
-	//{
-	//	App->Cl_Dialogs->Start_Gen_ListBox(Enums::ListBox_Stock_Messages);
-
-	//	Update_ListView_Messages();
-	//	return 1;
-	//}
-
-	//// Re Trigger
-	//result = strcmp(btext, "Re-Trigger");
-	//if (result == 0)
-	//{
-	//	App->Say("Re-Trigger");
-	//	//App->GDCL_Dialogs->Start_Postion();
-
-	//	return 1;
-	//}
-
 	return 1;
 }
 
