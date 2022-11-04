@@ -1,0 +1,17 @@
+[Version_Data]
+Version=V1.2
+ 
+[Files]
+Project_Name=First_Project
+Level_Name=First_Level
+ 
+[Options]
+Aeras_Count=1
+Players_Count=1
+Cameras_Count=1
+Objects_Count=4
+Objects_ID_Count=4
+Counters_Count=1
+Counters_ID_Count=2
+TextMessages_Count=1
+TextMessages_ID_Count=1
