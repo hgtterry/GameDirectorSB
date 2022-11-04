@@ -2086,24 +2086,8 @@ bool SB_Properties::Edit_Counters_OnClick(LPARAM lParam)
 	result = strcmp(btext, "Name");
 	if (result == 0)
 	{
-		strcpy(App->SBC_Dialogs->btext, "Change Panels Name");
-		strcpy(App->SBC_Dialogs->Chr_Text, App->SBC_Scene->B_Counter[Index]->Panel_Name);
-
-		App->SBC_Dialogs->Dialog_Text();
-
-		if (App->SBC_Dialogs->Canceled == 1)
-		{
-			return TRUE;
-		}
-
-		strcpy(App->SBC_Scene->B_Counter[Index]->Panel_Name, App->SBC_Dialogs->Chr_Text);
-
-		App->SBC_Display->Mark_As_Altered_Counter(Index);
-
-		App->SBC_FileView->Change_Item_Name(App->SBC_Scene->B_Counter[Index]->FileViewItem, App->SBC_Dialogs->Chr_Text);
-
+		App->SBC_Display->Rename_Counter(Index);
 		Update_ListView_Counters();
-
 	}
 
 	result = strcmp(btext, "Pos_X");
@@ -2222,24 +2206,8 @@ bool SB_Properties::Edit_TextMessage_OnClick(LPARAM lParam)
 	result = strcmp(btext, "Name");
 	if (result == 0)
 	{
-		strcpy(App->SBC_Dialogs->btext, "Change Panels Name");
-		strcpy(App->SBC_Dialogs->Chr_Text, App->SBC_Scene->B_Message[Index]->TextMessage_Name);
-
-		App->SBC_Dialogs->Dialog_Text();
-
-		if (App->SBC_Dialogs->Canceled == 1)
-		{
-			return TRUE;
-		}
-
-		strcpy(App->SBC_Scene->B_Message[Index]->TextMessage_Name, App->SBC_Dialogs->Chr_Text);
-
-		App->SBC_Display->Mark_As_Altered_TextMessage(Index);
-
-		App->SBC_FileView->Change_Item_Name(App->SBC_Scene->B_Message[Index]->FileViewItem, App->SBC_Dialogs->Chr_Text);
-
+		App->SBC_Display->Rename_TextMessage(Index);
 		Update_ListView_TextMessages();
-
 	}
 
 	result = strcmp(btext, "Pos_X");

@@ -272,3 +272,47 @@ int SB_Display::GetIndex_By_Name(char* Name)
 
 	return -1;
 }
+
+// *************************************************************************
+// *			Rename_TextMessage:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+void SB_Display::Rename_TextMessage(int Index)
+{
+	strcpy(App->SBC_Dialogs->btext, "Change Text Message Name");
+	strcpy(App->SBC_Dialogs->Chr_Text, App->SBC_Scene->B_Message[Index]->TextMessage_Name);
+
+	App->SBC_Dialogs->Dialog_Text();
+
+	if (App->SBC_Dialogs->Canceled == 1)
+	{
+		return;
+	}
+
+	strcpy(App->SBC_Scene->B_Message[Index]->TextMessage_Name, App->SBC_Dialogs->Chr_Text);
+
+	App->SBC_Display->Mark_As_Altered_TextMessage(Index);
+
+	App->SBC_FileView->Change_Item_Name(App->SBC_Scene->B_Message[Index]->FileViewItem, App->SBC_Dialogs->Chr_Text);
+}
+
+// *************************************************************************
+// *			Rename_Counter:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void SB_Display::Rename_Counter(int Index)
+{
+	strcpy(App->SBC_Dialogs->btext, "Change Counter Name");
+	strcpy(App->SBC_Dialogs->Chr_Text, App->SBC_Scene->B_Counter[Index]->Panel_Name);
+
+	App->SBC_Dialogs->Dialog_Text();
+
+	if (App->SBC_Dialogs->Canceled == 1)
+	{
+		return;
+	}
+
+	strcpy(App->SBC_Scene->B_Counter[Index]->Panel_Name, App->SBC_Dialogs->Chr_Text);
+
+	App->SBC_Display->Mark_As_Altered_Counter(Index);
+
+	App->SBC_FileView->Change_Item_Name(App->SBC_Scene->B_Counter[Index]->FileViewItem, App->SBC_Dialogs->Chr_Text);
+}

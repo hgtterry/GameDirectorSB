@@ -40,6 +40,9 @@ public:
 	void Delete_Counter();
 	void Delete_TextMessage();
 
+	void Rename_TextMessage(int Index);
+	void Rename_Counter(int Index);
+
 	void Mark_As_Altered_Counter(int Index);
 	void Mark_As_Altered_TextMessage(int Index);
 

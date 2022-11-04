@@ -253,8 +253,23 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 		if (LOWORD(wParam) == IDM_FILE_RENAME)
 		{
+			int Index = App->SBC_Properties->Current_Selected_Object;
 
-			App->SBC_Object->Rename_Object(App->SBC_Properties->Current_Selected_Object);
+			if (App->SBC_FileView->Context_Selection == Enums::FileView_TextMessage_File)
+			{
+				App->SBC_Display->Rename_TextMessage(Index);
+				App->SBC_Properties->Update_ListView_TextMessages();
+				return TRUE;
+			}
+
+			if (App->SBC_FileView->Context_Selection == Enums::FileView_Counters_File)
+			{
+				App->SBC_Display->Rename_Counter(Index);
+				App->SBC_Properties->Update_ListView_Counters();
+				return TRUE;
+			}
+
+			App->SBC_Object->Rename_Object(Index);
 			App->SBC_Properties->Update_ListView_Objects();
 
 			return TRUE;

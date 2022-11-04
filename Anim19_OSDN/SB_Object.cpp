@@ -144,7 +144,6 @@ void SB_Object::Hide_Object_Dlg(bool Show)
 	ShowWindow(Object_PropDlg_Hwnd, Show);
 }
 
-
 // *************************************************************************
 // *			Rename_Object:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
