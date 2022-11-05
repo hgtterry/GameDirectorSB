@@ -41,35 +41,35 @@ bool SB_Messages::Add_New_Message()
 	char B_Name[MAX_PATH];
 	char ConNum[MAX_PATH];
 
-	int Index = App->SBC_Scene->MessageNew_Count;
+	int Index = App->SBC_Scene->Object_Count;
 
-	App->SBC_Scene->B_Message[Index] = new Base_Message();
+	App->SBC_Scene->B_Object[Index] = new Base_Object();
 
-	App->SBC_Scene->B_Message[Index]->Type = Enums::Bullet_Type_Static;
-	App->SBC_Scene->B_Message[Index]->Shape = Enums::Shape_Box;
-	App->SBC_Scene->B_Message[Index]->This_Object_ID = App->SBC_Scene->UniqueID_MessageNew_Count; // Unique ID
+	App->SBC_Scene->B_Object[Index]->Type = Enums::Bullet_Type_Static;
+	App->SBC_Scene->B_Object[Index]->Shape = Enums::Shape_Box;
+	App->SBC_Scene->B_Object[Index]->This_Object_ID = App->SBC_Scene->UniqueID_Object_Counter; // Unique ID
 
-	strcpy(App->SBC_Scene->B_Message[Index]->Mesh_FileName, "Test_cube.mesh");
+	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_FileName, "Test_cube.mesh");
 
 	strcpy_s(B_Name, "Message_");
 	_itoa(Index, ConNum, 10);
 	strcat(B_Name, ConNum);
-	strcpy(App->SBC_Scene->B_Message[Index]->Mesh_Name, B_Name);
+	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_Name, B_Name);
 
-	Ogre::Vector3 Pos(0, 0, 0);// = App->SBC_Object->GetPlacement(-50);
-	App->SBC_Scene->B_Message[Index]->Mesh_Pos = Pos;
+	Ogre::Vector3 Pos = App->SBC_Object->GetPlacement(-50);
+	App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
 
 	Create_Message_Entity(Index);
 
-	//HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Message_Trigger_Folder, App->SBC_Scene->B_Message[Index]->Mesh_Name, Index, true);
-	//App->SBC_Scene->B_Message[Index]->FileViewItem = Temp;
+	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Message_Trigger_Folder, App->SBC_Scene->B_Object[Index]->Mesh_Name, Index, true);
+	App->SBC_Scene->B_Object[Index]->FileViewItem = Temp;
 
-	//App->SBC_FileView->SelectItem(App->SBC_Scene->B_Message[Index]->FileViewItem);
+	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[Index]->FileViewItem);
 
-	App->SBC_Scene->UniqueID_MessageNew_Count++;
-	App->SBC_Scene->MessageNew_Count++;
+	App->SBC_Scene->UniqueID_Object_Counter++;
+	App->SBC_Scene->Object_Count++;
 
-	//App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Message_Trigger_Folder);
+	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Message_Trigger_Folder);
 	return 1;
 }
 
@@ -82,11 +82,11 @@ bool SB_Messages::Create_Message_Entity(int Index)
 	char ConNum[256];
 	char Ogre_Name[256];
 
-	Base_Message* MObject = App->SBC_Scene->B_Message[Index];
+	Base_Object* MObject = App->SBC_Scene->B_Object[Index];
 
 	// ----------------- Mesh
 
-	strcpy_s(Ogre_Name, "Meesage_Ent_");
+	strcpy_s(Ogre_Name, "Message_Ent_");
 	_itoa(Index, ConNum, 10);
 	strcat(Ogre_Name, ConNum);
 
@@ -103,7 +103,6 @@ bool SB_Messages::Create_Message_Entity(int Index)
 
 	App->SBC_Scene->Scene_Loaded = 1;
 
-	return 1;
 	// ----------------- Physics
 
 	AxisAlignedBox worldAAB = MObject->Object_Ent->getBoundingBox();
@@ -160,7 +159,7 @@ bool SB_Messages::Create_Message_Entity(int Index)
 
 	App->Cl_Bullet->dynamicsWorld->addRigidBody(MObject->Phys_Body);
 
-	//App->SBC_Objects_Create->Set_Physics(Index);
+	App->SBC_Objects_Create->Set_Physics(Index);
 
 	return 1;
 }
