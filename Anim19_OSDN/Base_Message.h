@@ -32,6 +32,44 @@ public:
 	Base_Message();
 	~Base_Message();
 
+	bool Init_Object(void);
+
+	Ogre::SceneNode		*Object_Node;
+	Ogre::Entity		*Object_Ent;
+	btRigidBody			*Phys_Body;
+	btCollisionShape	*Phys_Shape;
+
+	char Mesh_Name[MAX_PATH];				// Mesh Name Mesh.mesh
+	char Mesh_FileName[MAX_PATH];
+	char Mesh_Resource_Path[MAX_PATH];
+	char Material_File[MAX_PATH];
+
+	//------------------------------ Description
+	int Type;
+	int Shape;
+	int Usage;
+	int Folder;
+	int This_Object_ID;  // Unique Number
+
+	//------------------------------ Mesh
+	Ogre::Vector3			Mesh_Scale;
+	Ogre::Vector3			Mesh_Pos;
+	Ogre::Vector3			Mesh_Center;
+	Ogre::Vector3			Mesh_Rot;
+	Ogre::Quaternion		Mesh_Quat;
+
+	//------------------------------ Physics
+	Ogre::Vector3			Physics_Pos;
+	Ogre::Vector3			Physics_Rot;
+	Ogre::Vector3			Physics_Scale;
+	Ogre::Vector3			Physics_Size; // Box x y z ;- x = Radius y = Height
+	Ogre::Quaternion		Physics_Quat;
+	float					Physics_Mass;
+	float					Physics_Restitution;
+	bool					Physics_Valid;
+
+	//------------------------------ ListView
+
 	void Set_ImGui_Panel_Name(void);
 
 	void Render_ImGui_Panel(void);

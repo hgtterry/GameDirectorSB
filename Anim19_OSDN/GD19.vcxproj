@@ -201,6 +201,7 @@
     <ClInclude Include="SB_Markers.h" />
     <ClInclude Include="SB_MeshViewer.h" />
     <ClInclude Include="SB_MeshView_Listener.h" />
+    <ClInclude Include="SB_Messages.h" />
     <ClInclude Include="SB_Object.h" />
     <ClInclude Include="SB_Objects_Create.h" />
     <ClInclude Include="SB_Physics.h" />
@@ -267,6 +268,7 @@
     <ClCompile Include="SB_Markers.cpp" />
     <ClCompile Include="SB_MeshViewer.cpp" />
     <ClCompile Include="SB_MeshView_Listener.cpp" />
+    <ClCompile Include="SB_Messages.cpp" />
     <ClCompile Include="SB_Object.cpp" />
     <ClCompile Include="SB_Objects_Create.cpp" />
     <ClCompile Include="SB_Physics.cpp" />
