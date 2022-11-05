@@ -34,7 +34,7 @@ SB_Messages::~SB_Messages()
 }
 
 // *************************************************************************
-//						Add_New_Message Terry Bernie					   *
+//				Add_New_Message:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 bool SB_Messages::Add_New_Message()
 {
