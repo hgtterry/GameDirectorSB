@@ -73,6 +73,7 @@ public:
 	HTREEITEM FV_Collectables_Folder;
 	HTREEITEM FV_Display_Folder;
 	HTREEITEM FV_Counters_Folder;
+	HTREEITEM FV_Counters2_Folder;
 	HTREEITEM FV_TextMessage_Folder;
 
 	HMENU hMenu;
