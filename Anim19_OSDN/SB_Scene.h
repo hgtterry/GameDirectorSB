@@ -64,6 +64,9 @@ public:
 	int Counters_Count;
 	int UniqueID_Counters_Count;
 
+	int MessageNew_Count;
+	int UniqueID_MessageNew_Count;
+
 	int TextMessage_Count;
 	int UniqueID_TextMessage_Count;
 

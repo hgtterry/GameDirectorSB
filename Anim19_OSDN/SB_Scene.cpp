@@ -51,6 +51,9 @@ SB_Scene::SB_Scene()
 
 	UniqueID_Object_Counter = 0;
 
+	MessageNew_Count = 0;
+	UniqueID_MessageNew_Count = 500;
+
 	CurrentCamMode = 0;
 	Scene_Modified = 0;
 
@@ -127,6 +130,9 @@ void SB_Scene::Reset_Class()
 
 	Object_Count = 0;
 	UniqueID_Object_Counter = 0;
+
+	MessageNew_Count = 0;
+	UniqueID_MessageNew_Count = 500;
 
 	Player_Count = 0;
 	Area_Count = 0;

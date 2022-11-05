@@ -41,35 +41,35 @@ bool SB_Messages::Add_New_Message()
 	char B_Name[MAX_PATH];
 	char ConNum[MAX_PATH];
 
-	int Index = App->SBC_Scene->Object_Count;
+	int Index = App->SBC_Scene->MessageNew_Count;
 
-	App->SBC_Scene->B_Object[Index] = new Base_Object();
+	App->SBC_Scene->B_Message[Index] = new Base_Message();
 
-	App->SBC_Scene->B_Object[Index]->Type = Enums::Bullet_Type_Static;
-	App->SBC_Scene->B_Object[Index]->Shape = Enums::Shape_Box;
-	App->SBC_Scene->B_Object[Index]->This_Object_ID = App->SBC_Scene->UniqueID_Object_Counter; // Unique ID
+	App->SBC_Scene->B_Message[Index]->Type = Enums::Bullet_Type_Static;
+	App->SBC_Scene->B_Message[Index]->Shape = Enums::Shape_Box;
+	App->SBC_Scene->B_Message[Index]->This_Object_ID = App->SBC_Scene->UniqueID_MessageNew_Count; // Unique ID
 
-	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_FileName, "Test_cube.mesh");
+	strcpy(App->SBC_Scene->B_Message[Index]->Mesh_FileName, "Test_cube.mesh");
 
 	strcpy_s(B_Name, "Message_");
 	_itoa(Index, ConNum, 10);
 	strcat(B_Name, ConNum);
-	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_Name, B_Name);
+	strcpy(App->SBC_Scene->B_Message[Index]->Mesh_Name, B_Name);
 
-	Ogre::Vector3 Pos = App->SBC_Object->GetPlacement(-50);
-	App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
+	Ogre::Vector3 Pos(0, 0, 0);// = App->SBC_Object->GetPlacement(-50);
+	App->SBC_Scene->B_Message[Index]->Mesh_Pos = Pos;
 
 	Create_Message_Entity(Index);
 
-	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Message_Trigger_Folder, App->SBC_Scene->B_Object[Index]->Mesh_Name, Index, true);
-	App->SBC_Scene->B_Object[Index]->FileViewItem = Temp;
+	//HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Message_Trigger_Folder, App->SBC_Scene->B_Message[Index]->Mesh_Name, Index, true);
+	//App->SBC_Scene->B_Message[Index]->FileViewItem = Temp;
 
-	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[Index]->FileViewItem);
+	//App->SBC_FileView->SelectItem(App->SBC_Scene->B_Message[Index]->FileViewItem);
 
-	App->SBC_Scene->UniqueID_Object_Counter++;
-	App->SBC_Scene->Object_Count++;
+	App->SBC_Scene->UniqueID_MessageNew_Count++;
+	App->SBC_Scene->MessageNew_Count++;
 
-	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Message_Trigger_Folder);
+	//App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Message_Trigger_Folder);
 	return 1;
 }
 
@@ -82,34 +82,35 @@ bool SB_Messages::Create_Message_Entity(int Index)
 	char ConNum[256];
 	char Ogre_Name[256];
 
-	Base_Object* Object = App->SBC_Scene->B_Object[Index];
+	Base_Message* MObject = App->SBC_Scene->B_Message[Index];
 
 	// ----------------- Mesh
 
-	strcpy_s(Ogre_Name, "GDEnt_");
+	strcpy_s(Ogre_Name, "Meesage_Ent_");
 	_itoa(Index, ConNum, 10);
 	strcat(Ogre_Name, ConNum);
 
-	strcpy(Mesh_File, Object->Mesh_FileName);
+	strcpy(Mesh_File, MObject->Mesh_FileName);
 
-	Object->Object_Ent = App->Cl19_Ogre->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->Cl19_Ogre->App_Resource_Group);
-	Object->Object_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	Object->Object_Node->attachObject(Object->Object_Ent);
+	MObject->Object_Ent = App->Cl19_Ogre->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->Cl19_Ogre->App_Resource_Group);
+	MObject->Object_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	MObject->Object_Node->attachObject(MObject->Object_Ent);
 
-	Object->Object_Node->setVisible(true);
+	MObject->Object_Node->setVisible(true);
 
-	Object->Object_Node->setOrientation(Object->Mesh_Quat);
-	Object->Object_Node->setPosition(Object->Mesh_Pos);
+	MObject->Object_Node->setOrientation(MObject->Mesh_Quat);
+	MObject->Object_Node->setPosition(MObject->Mesh_Pos);
 
 	App->SBC_Scene->Scene_Loaded = 1;
 
+	return 1;
 	// ----------------- Physics
 
-	AxisAlignedBox worldAAB = Object->Object_Ent->getBoundingBox();
-	worldAAB.transformAffine(Object->Object_Node->_getFullTransform());
+	AxisAlignedBox worldAAB = MObject->Object_Ent->getBoundingBox();
+	worldAAB.transformAffine(MObject->Object_Node->_getFullTransform());
 	Ogre::Vector3 Centre = worldAAB.getCenter();
 
-	Object->Physics_Pos = Ogre::Vector3(Centre.x, Centre.y, Centre.z);
+	MObject->Physics_Pos = Ogre::Vector3(Centre.x, Centre.y, Centre.z);
 
 	btTransform startTransform;
 	startTransform.setIdentity();
@@ -122,12 +123,12 @@ bool SB_Messages::Create_Message_Entity(int Index)
 	btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
 	startTransform.setOrigin(initialPosition);
 
-	Ogre::Vector3 Size = App->Cl_Objects_Com->GetMesh_BB_Size(Object->Object_Node);
+	Ogre::Vector3 Size = App->Cl_Objects_Com->GetMesh_BB_Size(MObject->Object_Node);
 	float sx = Size.x / 2;
 	float sy = Size.y / 2;
 	float sz = Size.z / 2;
 
-	Object->Physics_Size = Ogre::Vector3(sx, sy, sz);
+	MObject->Physics_Size = Ogre::Vector3(sx, sy, sz);
 
 	btCollisionShape* newRigidShape = new btBoxShape(btVector3(sx, sy, sz));
 	newRigidShape->calculateLocalInertia(mass, localInertia);
@@ -138,28 +139,28 @@ bool SB_Messages::Create_Message_Entity(int Index)
 
 	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, newRigidShape, localInertia);
 
-	Object->Phys_Body = new btRigidBody(rbInfo);
-	Object->Phys_Body->setRestitution(1.0);
-	Object->Phys_Body->setFriction(1.5);
-	Object->Phys_Body->setUserPointer(Object->Object_Node);
-	Object->Phys_Body->setWorldTransform(startTransform);
+	MObject->Phys_Body = new btRigidBody(rbInfo);
+	MObject->Phys_Body->setRestitution(1.0);
+	MObject->Phys_Body->setFriction(1.5);
+	MObject->Phys_Body->setUserPointer(MObject->Object_Node);
+	MObject->Phys_Body->setWorldTransform(startTransform);
 
-	Object->Usage = Enums::Usage_Message;
-	Object->Phys_Body->setUserIndex(Enums::Usage_Message);
-	Object->Phys_Body->setUserIndex2(Index);
+	MObject->Usage = Enums::Usage_Message;
+	MObject->Phys_Body->setUserIndex(Enums::Usage_Message);
+	MObject->Phys_Body->setUserIndex2(Index);
 
-	Object->Phys_Body->setCustomDebugColor(btVector3(0, 1, 1));
+	MObject->Phys_Body->setCustomDebugColor(btVector3(0, 1, 1));
 
-	int f = Object->Phys_Body->getCollisionFlags();
+	int f = MObject->Phys_Body->getCollisionFlags();
 
-	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT
+	MObject->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT
 		| btCollisionObject::CF_KINEMATIC_OBJECT
 		| btCollisionObject::CF_NO_CONTACT_RESPONSE);
 
 
-	App->Cl_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
+	App->Cl_Bullet->dynamicsWorld->addRigidBody(MObject->Phys_Body);
 
-	App->SBC_Objects_Create->Set_Physics(Index);
+	//App->SBC_Objects_Create->Set_Physics(Index);
 
 	return 1;
 }
