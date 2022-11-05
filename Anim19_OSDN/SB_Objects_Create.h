@@ -39,14 +39,14 @@ public:
 	bool Add_New_Move_Entity();
 	bool Add_New_Teleporter();
 
+	void Set_Physics(int Index);
+
 	btBvhTriangleMeshShape* create_Area_Trimesh_New(int Index, Base_Area* Object);
 
 	char DestinationFile[MAX_PATH];
 	char SourceFile[MAX_PATH];
 
 protected:
-
-	void Set_Physics(int Index);
 
 	void Add_Physics_Box(bool Dynamic,int Index);
 	void Add_Physics_Sphere(bool Dynamic, int Index);

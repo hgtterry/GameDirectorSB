@@ -28,5 +28,8 @@ public:
 
 	SB_Messages();
 	~SB_Messages();
+
+	bool Add_New_Message();
+	bool Create_Message_Entity(int Index);
 };
 
