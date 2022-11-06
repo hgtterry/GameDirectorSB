@@ -1761,20 +1761,6 @@ void SB_FileView::Context_New(HWND hDlg)
 		return;
 	}
 
-	if (App->SBC_FileView->Context_Selection == Enums::FileView_TextMessage_Folder)
-	{
-
-		App->SBC_Dialogs->YesNo("Add Object", "Do you want to add a new Text Message", 1);
-
-		bool Doit = App->SBC_Dialogs->Canceled;
-		if (Doit == 0)
-		{
-			App->SBC_Display->Add_New_Message();
-		}
-
-		return;
-	}
-
 	return;
 }
 

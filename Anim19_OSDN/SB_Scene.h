@@ -67,9 +67,6 @@ public:
 	int MessageNew_Count;
 	int UniqueID_MessageNew_Count;
 
-	int TextMessage_Count;
-	int UniqueID_TextMessage_Count;
-
 	int Object_Count;		// Actual Object Count Zero Based [171221]
 	int UniqueID_Object_Counter;
 

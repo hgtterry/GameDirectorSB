@@ -310,19 +310,6 @@ void SB_Object::Clear_Modified_Objects()
 		Count++;
 	}
 
-	// ---------------- TextMessages
-	Count = 0;
-	while (Count < App->SBC_Scene->TextMessage_Count)
-	{
-		if (App->SBC_Scene->B_Message[Count]->Altered == 1)
-		{
-			App->SBC_Scene->B_Message[Count]->Altered = 0;
-			App->SBC_FileView->Mark_Clear(App->SBC_Scene->B_Message[Count]->FileViewItem);
-		}
-
-		Count++;
-	}
-
 	// ---------------- Folders
 	if (App->SBC_Scene->Object_Count > 0)
 	{

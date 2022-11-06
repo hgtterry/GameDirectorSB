@@ -110,42 +110,6 @@ void SB_Display::Add_New_Counter()
 	App->SBC_Scene->Counters_Count++;
 }
 
-// *************************************************************************
-// *			Add_New_Message:- Terry and Hazel Flanigan 2022			   *
-// *************************************************************************
-void SB_Display::Add_New_Message()
-{
-	char B_Name[MAX_PATH];
-	char ConNum[MAX_PATH];
-
-	int Index = App->SBC_Scene->TextMessage_Count;
-
-	App->SBC_Scene->B_Message[Index] = new Base_Message();
-	App->SBC_Display->Set_TextMessage_Defaults(Index);
-
-	strcpy_s(B_Name, "Message_");
-	_itoa(Index, ConNum, 10);
-	strcat(B_Name, ConNum);
-	strcpy(App->SBC_Scene->B_Message[Index]->TextMessage_Name, B_Name);
-
-	App->SBC_Scene->B_Message[Index]->Unique_ID = App->SBC_Scene->UniqueID_TextMessage_Count;
-
-	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_TextMessage_Folder, App->SBC_Scene->B_Message[Index]->TextMessage_Name, Index, true);
-	App->SBC_Scene->B_Message[Index]->FileViewItem = Temp;
-
-	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Display_Folder);
-	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_TextMessage_Folder);
-
-	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Message[Index]->FileViewItem);
-
-	App->SBC_Scene->B_Message[Index]->Set_ImGui_Panel_Name();
-
-	Mark_As_Altered_TextMessage(Index);
-
-	App->SBC_Scene->UniqueID_TextMessage_Count++;
-	App->SBC_Scene->TextMessage_Count++;
-
-}
 
 // *************************************************************************
 //			Add_Counters_From_File:- Terry and Hazel Flanigan 2022		   *
@@ -171,29 +135,6 @@ bool SB_Display::Add_Counters_From_File() // From File
 	return 1;
 }
 
-// *************************************************************************
-//		Add_TextMessages_From_File:- Terry and Hazel Flanigan 2022		   *
-// *************************************************************************
-bool SB_Display::Add_TextMessages_From_File() // From File
-{
-
-	int Counters_Count = App->SBC_Scene->TextMessage_Count;
-	int Count = 0;
-
-	while (Count < Counters_Count)
-	{
-
-		HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_TextMessage_Folder, App->SBC_Scene->B_Message[Count]->TextMessage_Name, Count, false);
-		App->SBC_Scene->B_Message[Count]->FileViewItem = Temp;
-
-		Count++;
-	}
-
-	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Display_Folder);
-	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_TextMessage_Folder);
-
-	return 1;
-}
 
 // **************************************************************************
 // *	  		Delete_Counter:- Terry and Hazel Flanigan 2022				*
@@ -261,32 +202,6 @@ int SB_Display::GetIndex_By_Name(char* Name)
 		{
 			int Result = 1;
 			Result = strcmp(App->SBC_Scene->B_Counter[Count]->Panel_Name, Name);
-			if (Result == 0)
-			{
-				return Count;
-			}
-		}
-
-		Count++;
-	}
-
-	return -1;
-}
-
-// **************************************************************************
-// *	  	GetIndex_By_MessageName:- Terry and Hazel Flanigan 2022			*
-// **************************************************************************
-int SB_Display::GetIndex_By_MessageName(char* Name)
-{
-	int Count = 0;
-	int Total = App->SBC_Scene->TextMessage_Count;
-
-	while (Count < Total)
-	{
-		if (App->SBC_Scene->B_Message[Count]->Deleted == 0)
-		{
-			int Result = 1;
-			Result = strcmp(App->SBC_Scene->B_Message[Count]->TextMessage_Name, Name);
 			if (Result == 0)
 			{
 				return Count;

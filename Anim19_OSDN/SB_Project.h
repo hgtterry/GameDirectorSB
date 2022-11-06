@@ -34,7 +34,6 @@ typedef struct Load_Options
 	int Has_Camera;
 	int Has_Objects;
 	int Has_Counters;
-	int Has_TextMessages;
 
 }Load_Options;
 
@@ -95,7 +94,6 @@ protected:
 
 	bool Save_Display_Folder();
 	bool Save_Display_Data();
-	bool Save_TextMessage_Data();
 
 	bool Load_Get_Resource_Path();
 	bool Load_Project_Aera();
@@ -103,7 +101,6 @@ protected:
 	bool Load_Project_Camera();
 	bool Load_Project_Objects();
 	bool Load_Project_Counters();
-	bool Load_Project_TextMessages();
 
 	void Set_Paths();
 

@@ -29,13 +29,11 @@ public:
 	~SB_Display();
 
 	void Add_New_Counter();
-	void Add_New_Message();
-
+	
 	void Set_Counter_Defaults(int Index);
 	void Set_TextMessage_Defaults(int Index);
 
 	bool Add_Counters_From_File();
-	bool Add_TextMessages_From_File();
 
 	void Delete_Counter();
 	void Delete_TextMessage();
@@ -47,6 +45,6 @@ public:
 	void Mark_As_Altered_TextMessage(int Index);
 
 	int GetIndex_By_Name(char* Name);
-	int GetIndex_By_MessageName(char* Name);
+
 };
 

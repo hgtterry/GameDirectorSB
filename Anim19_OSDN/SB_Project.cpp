@@ -515,9 +515,6 @@ bool SB_Project::Save_Project_Ini()
 	fprintf(WriteFile, "%s%i\n", "Counters_Count=", Adjusted);
 	fprintf(WriteFile, "%s%i\n", "Counters_ID_Count=", App->SBC_Scene->UniqueID_Counters_Count);
 
-	fprintf(WriteFile, "%s%i\n", "TextMessages_Count=", App->SBC_Scene->TextMessage_Count);
-	fprintf(WriteFile, "%s%i\n", "TextMessages_ID_Count=", App->SBC_Scene->UniqueID_TextMessage_Count);
-
 	fclose(WriteFile);
 
 	return 1;
@@ -873,7 +870,6 @@ bool SB_Project::Save_Display_Folder()
 	_chdir(m_Display_Folder_Path);
 
 	Save_Display_Data();
-	Save_TextMessage_Data();
 
 	_chdir(m_Level_Folder_Path); // Return to Level Folder
 	return 1;
@@ -949,82 +945,6 @@ bool SB_Project::Save_Display_Data()
 
 	fprintf(WriteFile, "%s\n", "[Counters]");
 	fprintf(WriteFile, "%s%i\n", "Counters_Count=", new_Count);
-
-	fclose(WriteFile);
-
-	return 1;
-}
-
-// *************************************************************************
-// *	  	Save_TextMessage_Data:- Terry and Hazel Flanigan 2022		   *
-// *************************************************************************
-bool SB_Project::Save_TextMessage_Data()
-{
-	Ogre::Vector3 Pos;
-	char File[1024];
-
-	strcpy(File, m_Display_Folder_Path);
-	strcat(File, "\\");
-	strcat(File, "TextMessages.edf");
-
-	WriteFile = nullptr;
-
-	WriteFile = fopen(File, "wt");
-
-	if (!WriteFile)
-	{
-		App->Say("Cant Create File");
-		App->Say_Win(File);
-		return 0;
-	}
-
-	fprintf(WriteFile, "%s\n", "[Version_Data]");
-	fprintf(WriteFile, "%s%s\n", "Version=", "V1.2");
-
-	fprintf(WriteFile, "%s\n", " ");
-
-	fprintf(WriteFile, "%s\n", " ");
-
-	char Cbuff[255];
-	char buff[255];
-
-	float w = 0;
-	float x = 0;
-	float y = 0;
-	float z = 0;
-
-	int new_Count = 0;
-
-	int Count = 0;
-	while (Count < App->SBC_Scene->TextMessage_Count)
-	{
-		if (App->SBC_Scene->B_Message[Count]->Deleted == 0)
-		{
-			strcpy(buff, "[TextMessage_");
-			_itoa(new_Count, Cbuff, 10);
-			strcat(buff, Cbuff);
-			strcat(buff, "]");
-
-			fprintf(WriteFile, "%s\n", buff); // Header also Player name until changed by user
-
-			fprintf(WriteFile, "%s%s\n", "TextMessage_Name=", App->SBC_Scene->B_Message[Count]->TextMessage_Name); // Change
-			fprintf(WriteFile, "%s%i\n", "TextMessage_ID=", App->SBC_Scene->B_Message[Count]->Unique_ID);
-
-			x = App->SBC_Scene->B_Message[Count]->PosX;
-			y = App->SBC_Scene->B_Message[Count]->PosY;
-			fprintf(WriteFile, "%s%f,%f\n", "TextMessage_Pos=", x, y);
-
-			fprintf(WriteFile, "%s%s\n", "TextMessage_Text=", App->SBC_Scene->B_Message[Count]->Text);
-
-			fprintf(WriteFile, "%s\n", " ");
-			new_Count++;
-		}
-
-		Count++;
-	}
-
-	fprintf(WriteFile, "%s\n", "[Counters]");
-	fprintf(WriteFile, "%s%i\n", "TextMessage_Count=", new_Count);
 
 	fclose(WriteFile);
 
@@ -1427,7 +1347,6 @@ bool SB_Project::Load_Project()
 	Options->Has_Camera = 0;
 	Options->Has_Objects = 0;
 	Options->Has_Counters = 0;
-	Options->Has_TextMessages = 0;
 
 	int Int1 = 0;
 	char chr_Tag1[1024];
@@ -1448,12 +1367,10 @@ bool SB_Project::Load_Project()
 	Options->Has_Camera = App->Cl_Ini->GetInt("Options", "Cameras_Count", 0, 10);
 	Options->Has_Objects = App->Cl_Ini->GetInt("Options", "Objects_Count", 0, 10);
 	Options->Has_Counters = App->Cl_Ini->GetInt("Options", "Counters_Count", 0, 10);
-	Options->Has_TextMessages = App->Cl_Ini->GetInt("Options", "TextMessages_Count", 0, 10);
-
+	
 
 	App->SBC_Scene->UniqueID_Object_Counter = App->Cl_Ini->GetInt("Options", "Objects_ID_Count", 0, 10);
 	App->SBC_Scene->UniqueID_Counters_Count = App->Cl_Ini->GetInt("Options", "Counters_ID_Count", 0, 10);
-	App->SBC_Scene->UniqueID_TextMessage_Count = App->Cl_Ini->GetInt("Options", "TextMessages_ID_Count", 0, 10);
 
 	//-------------------------------------- Set Resource Path
 
@@ -1498,14 +1415,6 @@ bool SB_Project::Load_Project()
 
 	}
 
-	// ------------------------------------- Counters
-	if (Options->Has_TextMessages > 0)
-	{
-		Load_Project_TextMessages();
-		App->SBC_Display->Add_TextMessages_From_File();
-
-	}
-	
 	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
 	
 	App->SBC_FileView->Change_Level_Name();
@@ -1841,76 +1750,6 @@ bool SB_Project::Load_Project_Counters()
 	return 1;
 }
 
-// *************************************************************************
-// *	  Load_Project_TextMessages:- Terry and Hazel Flanigan 2022		   *
-// *************************************************************************
-bool SB_Project::Load_Project_TextMessages()
-{
-
-	char Object_Ini_Path[MAX_PATH];
-	char chr_Tag1[MAX_PATH];
-	int TextMessage_Count = 0;
-
-	float w = 0;
-	float x = 0;
-	float y = 0;
-	float z = 0;
-
-	strcpy(Object_Ini_Path, m_Project_Sub_Folder);
-	strcat(Object_Ini_Path, "\\");
-
-	strcat(Object_Ini_Path, m_Level_Name);
-	strcat(Object_Ini_Path, "\\");
-
-	strcat(Object_Ini_Path, "Display");
-	strcat(Object_Ini_Path, "\\");
-
-	//---------------------------------------------------
-
-	strcat(Object_Ini_Path, "TextMessages.edf");
-
-	App->Cl_Ini->SetPathName(Object_Ini_Path);
-
-	TextMessage_Count = App->Cl_Ini->GetInt("Counters", "TextMessage_Count", 0);
-
-	int Count = 0;
-	
-	while (Count < TextMessage_Count)
-	{
-		App->SBC_Scene->B_Message[Count] = new Base_Message();
-		App->SBC_Display->Set_TextMessage_Defaults(Count);
-
-
-		char n_buff[255];
-		char buff[255];
-		strcpy(buff, "TextMessage_");
-		_itoa(Count, n_buff, 10);
-		strcat(buff, n_buff);
-
-		App->Cl_Ini->GetString(buff, "TextMessage_Name", chr_Tag1, MAX_PATH);
-		strcpy(App->SBC_Scene->B_Message[Count]->TextMessage_Name, chr_Tag1);
-
-
-		App->SBC_Scene->B_Message[Count]->Unique_ID = App->Cl_Ini->GetInt(buff, "TextMessage_ID", 0);
-
-		App->Cl_Ini->GetString(buff, "TextMessage_Pos", chr_Tag1, MAX_PATH);
-		sscanf(chr_Tag1, "%f,%f", &x, &y);
-		App->SBC_Scene->B_Message[Count]->PosX = x;
-		App->SBC_Scene->B_Message[Count]->PosY = y;
-
-		App->Cl_Ini->GetString(buff, "TextMessage_Text", chr_Tag1, MAX_PATH);
-		strcpy(App->SBC_Scene->B_Message[Count]->Text, chr_Tag1);
-
-
-		App->SBC_Scene->B_Message[Count]->Set_ImGui_Panel_Name();
-
-		Count++;
-	}
-
-	App->SBC_Scene->TextMessage_Count = Count;
-
-	return 1;
-}
 
 // *************************************************************************
 // *	  		Load_Project_Aera:- Terry and Hazel Flanigan 2022		   *

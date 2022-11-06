@@ -325,24 +325,3 @@ int SB_LookUps::Get_Adjusted_Counters_Count(void)
 	return New_Count;
 }
 
-// *************************************************************************
-// *	 Get_Adjusted_TextMessage_Count:- Terry and Hazel Flanigan 2022	   *
-// *************************************************************************
-int SB_LookUps::Get_Adjusted_TextMessage_Count(void)
-{
-	int New_Count = 0;
-	int Count = 0;
-	int Total = App->SBC_Scene->TextMessage_Count;
-
-	while (Count < Total)
-	{
-		if (App->SBC_Scene->B_Message[Count]->Deleted == 0)
-		{
-			New_Count++;
-		}
-
-		Count++;
-	}
-
-	return New_Count;
-}

@@ -450,15 +450,15 @@ void SB_Dialogs::List_Counters(HWND DropHwnd)
 // *************************************************************************
 void SB_Dialogs::List_Messages(HWND DropHwnd)
 {
-	int Count = 0;
-	while (Count < App->SBC_Scene->TextMessage_Count)
+	/*int Count = 0;
+	while (Count < App->SBC_Scene->TextMessage_Count) // Needs_Removing
 	{
 		if (App->SBC_Scene->B_Message[Count]->Deleted == 0)
 		{
 			SendMessage(DropHwnd, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->SBC_Scene->B_Message[Count]->TextMessage_Name);
 		}
 		Count++;
-	}
+	}*/
 
 	SendMessage(DropHwnd, CB_SETCURSEL, 0, 0);
 }

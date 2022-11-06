@@ -1119,7 +1119,7 @@ bool SB_Properties::Update_ListView_Level()
 
 	char strCamCount[20];
 	
-	const int NUM_ITEMS = 8;
+	const int NUM_ITEMS = 7;
 	const int NUM_COLS = 2;
 	std::string grid[NUM_COLS][NUM_ITEMS]; // string table
 	LV_ITEM pitem;
@@ -1133,7 +1133,7 @@ bool SB_Properties::Update_ListView_Level()
 	grid[0][4] = "Areas",			grid[1][4] = _itoa(App->SBC_Scene->Area_Count, strCamCount, 10);
 	grid[0][5] = "Objects",			grid[1][5] = _itoa(App->SBC_LookUps->Get_Adjusted_Object_Count(), strCamCount, 10);
 	grid[0][6] = "Counters",		grid[1][6] = _itoa(App->SBC_LookUps->Get_Adjusted_Counters_Count(), strCamCount, 10);
-	grid[0][7] = "Text Messages",   grid[1][7] = _itoa(App->SBC_Scene->TextMessage_Count, strCamCount, 10);
+	//grid[0][7] = "Text Messages",   grid[1][7] = _itoa(App->SBC_Scene->TextMessage_Count, strCamCount, 10);
 
 
 	ListView_DeleteAllItems(Properties_hLV);
@@ -1488,8 +1488,8 @@ bool SB_Properties::Edit_Messages_OnClick(LPARAM lParam)
 		{
 			strcpy(App->SBC_Scene->B_Object[Index]->TextMessage_Name, App->Cl_Dialogs->Chr_DropText);
 
-			int MoveObjectIndex = App->SBC_Display->GetIndex_By_MessageName(App->SBC_Scene->B_Object[Index]->TextMessage_Name);
-			App->SBC_Scene->B_Object[Index]->TextMessage_ID = MoveObjectIndex;
+			//int MoveObjectIndex = App->SBC_Display->GetIndex_By_MessageName(App->SBC_Scene->B_Object[Index]->TextMessage_Name);
+			//App->SBC_Scene->B_Object[Index]->TextMessage_ID = MoveObjectIndex;
 		}
 
 		Update_ListView_Messages();
