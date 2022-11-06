@@ -645,9 +645,6 @@ bool SB_Properties::Update_ListView_Messages()
 	char chr_PosY[20];
 	sprintf(chr_PosY, "%.3f ", App->SBC_Scene->B_Object[index]->Message_PosY);
 
-	char chr_Selected_Object_Id[100];
-	_itoa(App->SBC_Scene->B_Object[index]->TextMessage_ID, chr_Selected_Object_Id, 10);
-	
 
 	const int NUM_ITEMS = 5;
 	const int NUM_COLS = 2;

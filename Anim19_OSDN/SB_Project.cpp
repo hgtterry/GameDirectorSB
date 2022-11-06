@@ -769,9 +769,11 @@ bool SB_Project::Save_Objects_Data()
 			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Message)
 			{
 				fprintf(WriteFile, "%s%s\n", "Message_Text=", App->SBC_Scene->B_Object[Count]->Message_Text);
+
+				x = App->SBC_Scene->B_Object[Count]->Message_PosX;
+				y = App->SBC_Scene->B_Object[Count]->Message_PosY;
+				fprintf(WriteFile, "%s%f,%f\n", "Message_Pos=",x,y);
 				
-				fprintf(WriteFile, "%s%s\n", "TextMessage_Name=", App->SBC_Scene->B_Object[Count]->TextMessage_Name);
-				fprintf(WriteFile, "%s%i\n", "TextMessage_ID=", App->SBC_Scene->B_Object[Count]->TextMessage_ID);
 			}
 
 			//---------------------------------------------------------------------------------- Sound Entity
@@ -1551,12 +1553,13 @@ bool SB_Project::Load_Project_Objects()
 		if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Message)
 		{
 			App->Cl_Ini->GetString(buff, "Message_Text", Object->Message_Text, MAX_PATH);
+
+			App->Cl_Ini->GetString(buff, "Message_Pos", chr_Tag1, MAX_PATH);
+			sscanf(chr_Tag1, "%f,%f", &x, &y);
+
+			App->SBC_Scene->B_Object[Count]->Message_PosX = x;
+			App->SBC_Scene->B_Object[Count]->Message_PosY = y;
 			
-			App->Cl_Ini->GetString(buff, "TextMessage_Name", chr_Tag1, MAX_PATH);
-			strcpy(App->SBC_Scene->B_Object[Count]->TextMessage_Name, chr_Tag1);
-
-			App->SBC_Scene->B_Object[Count]->TextMessage_ID = App->Cl_Ini->GetInt(buff, "TextMessage_ID", 0);
-
 		}
 
 		//---------------------------------------------------------------------------------- Sound Entity

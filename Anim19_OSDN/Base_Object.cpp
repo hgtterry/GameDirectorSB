@@ -130,9 +130,6 @@ bool Base_Object::Init_Object(void)
 	strcpy(Message_Text, "Welcome");
 	strcpy(ImGui_Panel_Name, "TextMessage_");
 
-
-	strcpy(TextMessage_Name, "Not_Set");
-	TextMessage_ID = 0;
 	return 1;
 }
 

@@ -149,8 +149,5 @@ public:
 	float Message_PosX;
 	float Message_PosY;
 
-
-	char TextMessage_Name[MAX_PATH];
-	int TextMessage_ID;
 };
 
