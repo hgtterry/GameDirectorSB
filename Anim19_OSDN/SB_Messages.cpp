@@ -60,6 +60,9 @@ bool SB_Messages::Add_New_Message()
 	App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
 
 	Create_Message_Entity(Index);
+	App->SBC_Scene->B_Object[Index]->Set_ImGui_Panel_Name();
+
+
 
 	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Message_Trigger_Folder, App->SBC_Scene->B_Object[Index]->Mesh_Name, Index, true);
 	App->SBC_Scene->B_Object[Index]->FileViewItem = Temp;

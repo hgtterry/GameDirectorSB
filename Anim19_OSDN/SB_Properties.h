@@ -80,8 +80,7 @@ protected:
 	bool Edit_Teleport_OnClick(LPARAM lParam);
 	bool Edit_Collectables_OnClick(LPARAM lParam);
 	bool Edit_Counters_OnClick(LPARAM lParam);
-	bool Edit_TextMessage_OnClick(LPARAM lParam);
-
+	
 	char btext[20]; // ListView_GetItemText Text Holder for Compare [041221]
 	
 };

@@ -379,16 +379,6 @@ void SB_Properties::ListView_OnClickOptions(LPARAM lParam)
 		return;
 	}
 
-	// Counters
-	if (Edit_Category == Enums::Edit_TextMessages)
-	{
-		if (Edit_Physics == 0)
-		{
-			Edit_TextMessage_OnClick(lParam);
-		}
-		return;
-	}
-	
 	return;
 }
 
@@ -1397,54 +1387,82 @@ bool SB_Properties::Edit_Messages_OnClick(LPARAM lParam)
 		Update_ListView_Messages();
 	}
 
-	// Message
-	result = strcmp(btext, "Message");
+	result = strcmp(btext, "Text");
 	if (result == 0)
 	{
-		strcpy(App->Cl_Dialogs->btext, "Change Text");
-		strcpy(App->Cl_Dialogs->Chr_Text, App->SBC_Scene->B_Object[Index]->Message_Text);
+		strcpy(App->SBC_Dialogs->btext, "Change Text");
+		strcpy(App->SBC_Dialogs->Chr_Text, App->SBC_Scene->B_Object[Index]->Message_Text);
 
-		App->Cl_Dialogs->Dialog_Text(2, 1);
+		App->SBC_Dialogs->Dialog_Text();
 
-		if (App->Cl_Dialogs->Canceled == 1)
+		if (App->SBC_Dialogs->Canceled == 1)
 		{
 			return TRUE;
 		}
 
-		strcpy(App->SBC_Scene->B_Object[Index]->Message_Text, App->Cl_Dialogs->Chr_Text);
-		strcpy(App->Cl_Dialogs->Chr_Text, App->Cl_Dialogs->Chr_Text);
+		strcpy(App->SBC_Scene->B_Object[Index]->Message_Text, App->SBC_Dialogs->Chr_Text);
 
 		App->SBC_Properties->Mark_As_Altered(Index);
 
 		Update_ListView_Messages();
+
 		return 1;
 	}
 
-	result = strcmp(btext, "Test_Mesh");
+	result = strcmp(btext, "Pos_X");
 	if (result == 0)
 	{
-		strcpy(App->Cl_Dialogs->btext, "Select Message To Display");
+		strcpy(App->Cl_Dialogs->btext, "Set Position X");
 
-		App->SBC_Dialogs->DropList_Data = Enums::DropDialog_Messages;
-		App->SBC_Dialogs->Dialog_DropGen();
+		char buff[256];
+		sprintf(buff, "%.3f", App->SBC_Scene->B_Object[Index]->Message_PosX);
+		strcpy(App->Cl_Dialogs->Chr_Float, buff);
 
-		if (App->SBC_Dialogs->Canceled == 0)
+		App->Cl_Dialogs->Dialog_Float();
+
+		if (App->Cl_Dialogs->Canceled == 0)
 		{
-			strcpy(App->SBC_Scene->B_Object[Index]->TextMessage_Name, App->Cl_Dialogs->Chr_DropText);
 
-			//int MoveObjectIndex = App->SBC_Display->GetIndex_By_MessageName(App->SBC_Scene->B_Object[Index]->TextMessage_Name);
-			//App->SBC_Scene->B_Object[Index]->TextMessage_ID = MoveObjectIndex;
+			App->SBC_Scene->B_Object[Index]->Message_PosX = App->Cl_Dialogs->mFloat;
+
+			App->SBC_Properties->Mark_As_Altered(Index);
+
+			Update_ListView_Messages();
+
 		}
 
-		Update_ListView_Messages();
 		return 1;
 	}
-	
+
+	result = strcmp(btext, "Pos_Y");
+	if (result == 0)
+	{
+		strcpy(App->Cl_Dialogs->btext, "Set Position Y");
+
+		char buff[256];
+		sprintf(buff, "%.3f", App->SBC_Scene->B_Object[Index]->Message_PosY);
+		strcpy(App->Cl_Dialogs->Chr_Float, buff);
+
+		App->Cl_Dialogs->Dialog_Float();
+
+		if (App->Cl_Dialogs->Canceled == 0)
+		{
+
+			App->SBC_Scene->B_Object[Index]->Message_PosY = App->Cl_Dialogs->mFloat;
+
+			App->SBC_Properties->Mark_As_Altered(Index);
+
+			Update_ListView_Messages();
+
+		}
+
+	}
+
 	return 1;
 }
 
 // *************************************************************************
-// *				Edit_Player_Physics_Onclick  Terry Bernie					   *
+// *				Edit_Player_Physics_Onclick  Terry Bernie			   *
 // *************************************************************************
 bool SB_Properties::Edit_Player_Physics_Onclick(LPARAM lParam)
 {
@@ -2055,100 +2073,6 @@ bool SB_Properties::Edit_Counters_OnClick(LPARAM lParam)
 	return 1;
 }
 
-// *************************************************************************
-// *		Edit_TextMessage_OnClick:- Terry and Hazel Flanigan 2022	   *
-// *************************************************************************
-bool SB_Properties::Edit_TextMessage_OnClick(LPARAM lParam) // Needs_Removing
-{
-	//int Index = App->SBC_Properties->Current_Selected_Object; // Get Selected Object Index 
-	//int result = 1;
-	//int test;
-
-	//LPNMLISTVIEW poo = (LPNMLISTVIEW)lParam;
-	//test = poo->iItem;
-	//ListView_GetItemText(Properties_hLV, test, 0, btext, 20);
-
-	//result = strcmp(btext, "Name");
-	//if (result == 0)
-	//{
-	//	App->SBC_Display->Rename_TextMessage(Index);
-	//	Update_ListView_TextMessages();
-	//}
-
-	//result = strcmp(btext, "Pos_X");
-	//if (result == 0)
-	//{
-	//	strcpy(App->Cl_Dialogs->btext, "Set Position X");
-
-	//	char buff[256];
-	//	sprintf(buff, "%.3f", App->SBC_Scene->B_Message[Index]->PosX);
-	//	strcpy(App->Cl_Dialogs->Chr_Float, buff);
-
-	//	App->Cl_Dialogs->Dialog_Float();
-
-	//	if (App->Cl_Dialogs->Canceled == 0)
-	//	{
-
-	//		App->SBC_Scene->B_Message[Index]->PosX = App->Cl_Dialogs->mFloat;
-
-	//		App->SBC_Display->Mark_As_Altered_TextMessage(Index);
-
-	//		Update_ListView_TextMessages();
-
-	//	}
-
-	//	return 1;
-	//}
-
-	//result = strcmp(btext, "Pos_Y");
-	//if (result == 0)
-	//{
-	//	strcpy(App->Cl_Dialogs->btext, "Set Position Y");
-
-	//	char buff[256];
-	//	sprintf(buff, "%.3f", App->SBC_Scene->B_Message[Index]->PosY);
-	//	strcpy(App->Cl_Dialogs->Chr_Float, buff);
-
-	//	App->Cl_Dialogs->Dialog_Float();
-
-	//	if (App->Cl_Dialogs->Canceled == 0)
-	//	{
-
-	//		App->SBC_Scene->B_Message[Index]->PosY = App->Cl_Dialogs->mFloat;
-
-	//		App->SBC_Display->Mark_As_Altered_TextMessage(Index);
-
-	//		Update_ListView_TextMessages();
-
-	//	}
-
-	//	return 1;
-	//}
-
-	//result = strcmp(btext, "Text");
-	//if (result == 0)
-	//{
-	//	strcpy(App->SBC_Dialogs->btext, "Change Text");
-	//	strcpy(App->SBC_Dialogs->Chr_Text, App->SBC_Scene->B_Message[Index]->Text);
-
-	//	App->SBC_Dialogs->Dialog_Text();
-
-	//	if (App->SBC_Dialogs->Canceled == 1)
-	//	{
-	//		return TRUE;
-	//	}
-
-	//	strcpy(App->SBC_Scene->B_Message[Index]->Text, App->SBC_Dialogs->Chr_Text);
-
-	//	App->SBC_Display->Mark_As_Altered_TextMessage(Index);
-
-	//	Update_ListView_TextMessages();
-
-	//	return 1;
-	//}
-
-	return 1;
-}
 
 // *************************************************************************
 // *		Update_ListView_Area:- Terry and Hazel Flanigan 2022	 	   *
