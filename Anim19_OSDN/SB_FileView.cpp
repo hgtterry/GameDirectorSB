@@ -54,9 +54,7 @@ SB_FileView::SB_FileView()
 	GD_Level_Change_Folder = nullptr;
 	GD_Particles_Folder = nullptr;
 
-	FV_Display_Folder = nullptr;
 	FV_Counters_Folder = nullptr;
-	FV_TextMessage_Folder = nullptr;
 
 	FV_Players_Folder = nullptr;
 	FV_Areas_Folder = nullptr;
@@ -464,7 +462,7 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	tvinsert.hParent = GD_EntitiesFolder;
 	tvinsert.hInsertAfter = TVI_LAST;
 	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
-	tvinsert.item.pszText = "Message_Triggers";
+	tvinsert.item.pszText = "Messages";
 	tvinsert.item.iImage = 0;
 	tvinsert.item.iSelectedImage = 1;
 	FV_Message_Trigger_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
@@ -511,33 +509,6 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	tvinsert.item.iImage = 0;
 	tvinsert.item.iSelectedImage = 1;
 	FV_Counters_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
-
-	//----------------------------------------------------
-	tvinsert.hParent = FV_LevelFolder;
-	tvinsert.hInsertAfter = TVI_LAST;
-	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
-	tvinsert.item.pszText = "Display";
-	tvinsert.item.iImage = 0;
-	tvinsert.item.iSelectedImage = 1;
-	FV_Display_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
-
-	//----------------------------------------------------
-	tvinsert.hParent = FV_Display_Folder;
-	tvinsert.hInsertAfter = TVI_LAST;
-	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
-	tvinsert.item.pszText = "Text_Message";
-	tvinsert.item.iImage = 0;
-	tvinsert.item.iSelectedImage = 1;
-	FV_TextMessage_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
-
-	//----------------------------------------------------
-	/*tvinsert.hParent = FV_Display_Folder;
-	tvinsert.hInsertAfter = TVI_LAST;
-	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
-	tvinsert.item.pszText = "Counters";
-	tvinsert.item.iImage = 0;
-	tvinsert.item.iSelectedImage = 1;
-	FV_Counters_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);*/
 
 }
 
@@ -746,13 +717,13 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 	}
 
 	// ------------------------------------------------------------ Message_Triggers
-	if (!strcmp(FileView_Folder, "Message_Triggers")) // Folder
+	if (!strcmp(FileView_Folder, "Messages")) // Folder
 	{
 		App->SBC_FileView->Context_Selection = Enums::FileView_Messages_Triggers_Folder;
 		return;
 	}
 
-	if (!strcmp(FileView_File, "Message_Triggers"))
+	if (!strcmp(FileView_File, "Messages"))
 	{
 		App->SBC_FileView->Context_Selection = Enums::FileView_Messages_Triggers_File;
 
@@ -1410,7 +1381,7 @@ void SB_FileView::Context_Menu(HWND hDlg)
 		}
 
 		//------------------------------------- Messages
-		if (!strcmp(App->SBC_FileView->FileView_Folder, "Message_Triggers")) // Folder
+		if (!strcmp(App->SBC_FileView->FileView_Folder, "Messages")) // Folder
 		{
 			App->SBC_FileView->hMenu = CreatePopupMenu();
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_NEW, L"&New");
@@ -1419,7 +1390,7 @@ void SB_FileView::Context_Menu(HWND hDlg)
 			Context_Selection = Enums::FileView_Messages_Triggers_Folder;
 		}
 
-		if (!strcmp(App->SBC_FileView->FileView_File, "Message_Triggers"))
+		if (!strcmp(App->SBC_FileView->FileView_File, "Messages"))
 		{
 			App->SBC_FileView->hMenu = CreatePopupMenu();
 

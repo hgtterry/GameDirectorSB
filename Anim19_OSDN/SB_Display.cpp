@@ -97,7 +97,6 @@ void SB_Display::Add_New_Counter()
 	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Counters_Folder, App->SBC_Scene->B_Counter[Index]->Panel_Name, Index, true);
 	App->SBC_Scene->B_Counter[Index]->FileViewItem = Temp;
 
-	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Display_Folder);
 	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Counters_Folder);
 
 	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Counter[Index]->FileViewItem);
@@ -129,7 +128,6 @@ bool SB_Display::Add_Counters_From_File() // From File
 		Count++;
 	}
 
-	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Display_Folder);
 	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Counters_Folder);
 
 	return 1;
