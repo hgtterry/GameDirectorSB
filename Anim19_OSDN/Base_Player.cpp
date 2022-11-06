@@ -198,10 +198,11 @@ void Base_Player::Rotate(const Ogre::Vector3 axis, bool normalize)
 // *************************************************************************
 void Base_Player::Rotate_FromCam(const Ogre::Vector3 axis, float delta, bool normalize)
 {
+	float test = (delta * 180) / 3.14159265359;
 
 	btTransform xform = Phys_Body->getWorldTransform();
 	btMatrix3x3 R = xform.getBasis();
-	R = R * btMatrix3x3(btQuaternion(btVector3(axis[0], axis[1], axis[2]), delta));
+	R = R * btMatrix3x3(btQuaternion(btVector3(axis[0], axis[1], axis[2]), test));
 
 	if (normalize) {
 		R[0].normalize();
