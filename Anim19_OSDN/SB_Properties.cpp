@@ -649,6 +649,12 @@ bool SB_Properties::Update_ListView_Messages()
 	strcat(buff, "   (Message)");
 	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
 
+	char chr_PosX[20];
+	sprintf(chr_PosX, "%.3f ", App->SBC_Scene->B_Object[index]->Message_PosX);
+
+	char chr_PosY[20];
+	sprintf(chr_PosY, "%.3f ", App->SBC_Scene->B_Object[index]->Message_PosY);
+
 	char chr_Selected_Object_Id[100];
 	_itoa(App->SBC_Scene->B_Object[index]->TextMessage_ID, chr_Selected_Object_Id, 10);
 	
@@ -660,11 +666,11 @@ bool SB_Properties::Update_ListView_Messages()
 	memset(&pitem, 0, sizeof(LV_ITEM));
 	pitem.mask = LVIF_TEXT;
 
-	grid[0][0] = "Name",			grid[1][0] = App->SBC_Scene->B_Object[index]->Mesh_Name;
-	grid[0][1] = " ",				grid[1][1] = " ";
-	grid[0][2] = "Message",			grid[1][2] = App->SBC_Scene->B_Object[index]->Message_Text;
-	grid[0][3] = "Test_Mesh",		grid[1][3] = App->SBC_Scene->B_Object[index]->TextMessage_Name;
-	grid[0][4] = "ID",              grid[1][4] = chr_Selected_Object_Id;
+	grid[0][0] = "Name",            grid[1][0] = App->SBC_Scene->B_Object[index]->Mesh_Name;
+	grid[0][1] = " ",               grid[1][1] = " ";
+	grid[0][2] = "Pos_X",           grid[1][2] = chr_PosX;
+	grid[0][3] = "Pos_Y",           grid[1][3] = chr_PosY;
+	grid[0][4] = "Text",            grid[1][4] = App->SBC_Scene->B_Object[index]->Message_Text;
 	
 	ListView_DeleteAllItems(Properties_hLV);
 

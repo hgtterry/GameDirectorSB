@@ -127,7 +127,7 @@ bool Base_Object::Init_Object(void)
 	Show_Message_Flag = 0;
 	Message_PosX = 250;
 	Message_PosY = 10;
-	strcpy(Message_Text, "Test");
+	strcpy(Message_Text, "Welcome");
 	strcpy(ImGui_Panel_Name, "TextMessage_");
 
 
