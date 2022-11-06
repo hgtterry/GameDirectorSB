@@ -36,13 +36,10 @@ public:
 	bool Add_Counters_From_File();
 
 	void Delete_Counter();
-	void Delete_TextMessage();
 
-	void Rename_TextMessage(int Index);
 	void Rename_Counter(int Index);
 
 	void Mark_As_Altered_Counter(int Index);
-	void Mark_As_Altered_TextMessage(int Index);
 
 	int GetIndex_By_Name(char* Name);
 

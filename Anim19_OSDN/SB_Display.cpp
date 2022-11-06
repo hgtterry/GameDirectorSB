@@ -60,7 +60,7 @@ void SB_Display::Set_Counter_Defaults(int Index)
 // *************************************************************************
 void SB_Display::Set_TextMessage_Defaults(int Index)
 {
-	strcpy(App->SBC_Scene->B_Message[Index]->TextMessage_Name, "Not_Set");
+	/*strcpy(App->SBC_Scene->B_Message[Index]->TextMessage_Name, "Not_Set"); // Needs_Removing
 	App->SBC_Scene->B_Message[Index]->PosX = 250;
 	App->SBC_Scene->B_Message[Index]->PosY = 10;
 
@@ -69,7 +69,7 @@ void SB_Display::Set_TextMessage_Defaults(int Index)
 	App->SBC_Scene->B_Message[Index]->Show_Panel_Flag = 0;
 	App->SBC_Scene->B_Message[Index]->Unique_ID = 0;
 
-	strcpy(App->SBC_Scene->B_Message[Index]->Text, "Wellcome To EquitySB");
+	strcpy(App->SBC_Scene->B_Message[Index]->Text, "Wellcome To EquitySB");*/
 
 	return;
 }
@@ -150,20 +150,6 @@ void SB_Display::Delete_Counter()
 	App->SBC_Scene->Scene_Modified = 1;
 }
 
-// **************************************************************************
-// *	  		Delete_TextMessage:- Terry and Hazel Flanigan 2022			*
-// **************************************************************************
-void SB_Display::Delete_TextMessage()
-{
-	int Index = App->SBC_Properties->Current_Selected_Object;
-
-	App->SBC_Scene->B_Message[Index]->Deleted = 1;
-
-	App->SBC_FileView->DeleteItem();
-
-	App->SBC_Scene->Scene_Modified = 1;
-}
-
 // *************************************************************************
 // *	Mark_As_Altered_Counter:- Terry and Hazel Flanigan 2022		 	   *
 // *************************************************************************
@@ -174,18 +160,6 @@ void SB_Display::Mark_As_Altered_Counter(int Index)
 	App->SBC_Scene->Scene_Modified = 1;
 
 	App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Counter[Index]->FileViewItem);
-}
-
-// *************************************************************************
-// *	Mark_As_Altered_TextMessage:- Terry and Hazel Flanigan 2022	 	   *
-// *************************************************************************
-void SB_Display::Mark_As_Altered_TextMessage(int Index)
-{
-	App->SBC_Scene->B_Message[Index]->Altered = 1;
-
-	App->SBC_Scene->Scene_Modified = 1;
-
-	App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Message[Index]->FileViewItem);
 }
 
 // **************************************************************************
@@ -212,28 +186,6 @@ int SB_Display::GetIndex_By_Name(char* Name)
 	}
 
 	return -1;
-}
-
-// *************************************************************************
-// *			Rename_TextMessage:- Terry and Hazel Flanigan 2022		   *
-// *************************************************************************
-void SB_Display::Rename_TextMessage(int Index)
-{
-	strcpy(App->SBC_Dialogs->btext, "Change Text Message Name");
-	strcpy(App->SBC_Dialogs->Chr_Text, App->SBC_Scene->B_Message[Index]->TextMessage_Name);
-
-	App->SBC_Dialogs->Dialog_Text();
-
-	if (App->SBC_Dialogs->Canceled == 1)
-	{
-		return;
-	}
-
-	strcpy(App->SBC_Scene->B_Message[Index]->TextMessage_Name, App->SBC_Dialogs->Chr_Text);
-
-	App->SBC_Display->Mark_As_Altered_TextMessage(Index);
-
-	App->SBC_FileView->Change_Item_Name(App->SBC_Scene->B_Message[Index]->FileViewItem, App->SBC_Dialogs->Chr_Text);
 }
 
 // *************************************************************************

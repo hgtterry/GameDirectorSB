@@ -162,7 +162,6 @@
     <ClInclude Include="Base_Camera.h" />
     <ClInclude Include="Base_Counter.h" />
     <ClInclude Include="Base_Locations.h" />
-    <ClInclude Include="Base_Message.h" />
     <ClInclude Include="Base_Object.h" />
     <ClInclude Include="Base_Player.h" />
     <ClInclude Include="Com_Diaolgs.h" />
@@ -223,7 +222,6 @@
     <ClCompile Include="Base_Camera.cpp" />
     <ClCompile Include="Base_Counter.cpp" />
     <ClCompile Include="Base_Locations.cpp" />
-    <ClCompile Include="Base_Message.cpp" />
     <ClCompile Include="Base_Object.cpp" />
     <ClCompile Include="Base_Player.cpp" />
     <ClCompile Include="CollisionTools.cpp" />

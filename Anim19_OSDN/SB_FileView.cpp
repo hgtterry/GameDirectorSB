@@ -255,13 +255,6 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 		{
 			int Index = App->SBC_Properties->Current_Selected_Object;
 
-			if (App->SBC_FileView->Context_Selection == Enums::FileView_TextMessage_File)
-			{
-				App->SBC_Display->Rename_TextMessage(Index);
-				App->SBC_Properties->Update_ListView_TextMessages();
-				return TRUE;
-			}
-
 			if (App->SBC_FileView->Context_Selection == Enums::FileView_Counters_File)
 			{
 				App->SBC_Display->Rename_Counter(Index);
@@ -956,18 +949,9 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		App->SBC_FileView->Context_Selection = Enums::FileView_TextMessage_Folder;
 		return;
 	}
-	if (!strcmp(FileView_File, "Text_Message"))
+	if (!strcmp(FileView_File, "Text_Message")) // Needs_Removing
 	{
-		App->SBC_FileView->Context_Selection = Enums::FileView_TextMessage_File;
-
-		HideRightPanes();
-		ShowWindow(App->GD_Properties_Hwnd, 1);
-		App->SBC_Props_Dialog->Hide_Panel_Test_Dlg(1);
-
-		App->SBC_Properties->Edit_Category = Enums::Edit_TextMessages;
-		App->SBC_Properties->Current_Selected_Object = Index;
-
-		App->SBC_Properties->Update_ListView_TextMessages();
+		
 
 		return;
 	}
@@ -1884,25 +1868,12 @@ void SB_FileView::Context_Delete(HWND hDlg)
 	}
 
 	// ---------------- TextMessages
-	if (App->SBC_FileView->Context_Selection == Enums::FileView_TextMessage_File)
+	if (App->SBC_FileView->Context_Selection == Enums::FileView_TextMessage_File) // Needs_Removing
 	{
-		if (App->SBC_Scene->B_Message[App->SBC_Properties->Current_Selected_Object]->Unique_ID == 0)
-		{
-			App->Say("This Message can not be Deleted");
-			return;
-		}
-
-		App->SBC_Dialogs->YesNo("Remove Message", "Are you sure", 1);
-
-		bool Doit = App->SBC_Dialogs->Canceled;
-		if (Doit == 0)
-		{
-			App->SBC_Display->Delete_TextMessage();
-			App->SBC_FileView->Mark_Altered_Folder(App->SBC_FileView->FV_TextMessage_Folder);
-		}
-
+		
 		return;
 	}
+
 	return;
 }
 

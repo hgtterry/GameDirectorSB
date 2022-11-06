@@ -350,16 +350,16 @@ LRESULT CALLBACK SB_Props_Dialogs::Panels_Test_Proc(HWND hDlg, UINT message, WPA
 				}
 			}
 
-			if (App->SBC_Properties->Edit_Category == Enums::Edit_TextMessages)
+			if (App->SBC_Properties->Edit_Category == Enums::Edit_TextMessages) // Needs_Removing
 			{
-				if (App->SBC_Scene->B_Message[App->SBC_Properties->Current_Selected_Object]->Show_Panel_Flag == 1)
+				/*if (App->SBC_Scene->B_Message[App->SBC_Properties->Current_Selected_Object]->Show_Panel_Flag == 1)
 				{
 					App->SBC_Scene->B_Message[App->SBC_Properties->Current_Selected_Object]->Show_Panel_Flag = 0;
 				}
 				else
 				{
 					App->SBC_Scene->B_Message[App->SBC_Properties->Current_Selected_Object]->Show_Panel_Flag = 1;
-				}
+				}*/
 			}
 			
 			return 1;

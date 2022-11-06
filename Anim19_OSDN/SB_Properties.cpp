@@ -941,62 +941,6 @@ bool SB_Properties::Update_ListView_Counters()
 }
 
 // *************************************************************************
-// *	Update_ListView_TextMessages():- Terry and Hazel Flanigan 2022	   *
-// *************************************************************************
-bool SB_Properties::Update_ListView_TextMessages()
-{
-	int index = App->SBC_Properties->Current_Selected_Object;
-
-
-	char buff[255];
-	strcpy(buff, App->SBC_Scene->B_Message[index]->TextMessage_Name);
-	strcat(buff, "   (Messages)");
-	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
-
-	char chr_PosX[20];
-	sprintf(chr_PosX, "%.3f ", App->SBC_Scene->B_Message[index]->PosX);
-
-	char chr_PosY[20];
-	sprintf(chr_PosY, "%.3f ", App->SBC_Scene->B_Message[index]->PosY);
-
-
-	const int NUM_ITEMS = 6;
-	const int NUM_COLS = 2;
-	string grid[NUM_COLS][NUM_ITEMS]; // string table
-	LV_ITEM pitem;
-	memset(&pitem, 0, sizeof(LV_ITEM));
-	pitem.mask = LVIF_TEXT;
-
-	grid[0][0] = "Name",	grid[1][0] = App->SBC_Scene->B_Message[index]->TextMessage_Name;
-	grid[0][1] = " ",		grid[1][1] = " ";// App->SBC_Scene->B_Object[index]->Mesh_FileName;
-	grid[0][2] = "Pos_X",	grid[1][2] = chr_PosX;
-	grid[0][3] = "Pos_Y",	grid[1][3] = chr_PosY;
-	grid[0][4] = "Text",	grid[1][4] = App->SBC_Scene->B_Message[index]->Text;
-	grid[0][5] = " ",       grid[1][5] = " ";;
-
-
-
-	ListView_DeleteAllItems(Properties_hLV);
-
-	for (DWORD row = 0; row < NUM_ITEMS; row++)
-	{
-		pitem.iItem = row;
-		pitem.pszText = const_cast<char*>(grid[0][row].c_str());
-		ListView_InsertItem(Properties_hLV, &pitem);
-
-		//ListView_SetItemText
-
-		for (DWORD col = 1; col < NUM_COLS; col++)
-		{
-			ListView_SetItemText(Properties_hLV, row, col,
-				const_cast<char*>(grid[col][row].c_str()));
-		}
-	}
-
-	return 1;
-}
-
-// *************************************************************************
 // *	Update_ListView_Move_Entities:- Terry and Hazel Flanigan 2022 	    *
 // *************************************************************************
 bool SB_Properties::Update_ListView_Move_Entities()
@@ -2114,94 +2058,94 @@ bool SB_Properties::Edit_Counters_OnClick(LPARAM lParam)
 // *************************************************************************
 // *		Edit_TextMessage_OnClick:- Terry and Hazel Flanigan 2022	   *
 // *************************************************************************
-bool SB_Properties::Edit_TextMessage_OnClick(LPARAM lParam)
+bool SB_Properties::Edit_TextMessage_OnClick(LPARAM lParam) // Needs_Removing
 {
-	int Index = App->SBC_Properties->Current_Selected_Object; // Get Selected Object Index 
-	int result = 1;
-	int test;
+	//int Index = App->SBC_Properties->Current_Selected_Object; // Get Selected Object Index 
+	//int result = 1;
+	//int test;
 
-	LPNMLISTVIEW poo = (LPNMLISTVIEW)lParam;
-	test = poo->iItem;
-	ListView_GetItemText(Properties_hLV, test, 0, btext, 20);
+	//LPNMLISTVIEW poo = (LPNMLISTVIEW)lParam;
+	//test = poo->iItem;
+	//ListView_GetItemText(Properties_hLV, test, 0, btext, 20);
 
-	result = strcmp(btext, "Name");
-	if (result == 0)
-	{
-		App->SBC_Display->Rename_TextMessage(Index);
-		Update_ListView_TextMessages();
-	}
+	//result = strcmp(btext, "Name");
+	//if (result == 0)
+	//{
+	//	App->SBC_Display->Rename_TextMessage(Index);
+	//	Update_ListView_TextMessages();
+	//}
 
-	result = strcmp(btext, "Pos_X");
-	if (result == 0)
-	{
-		strcpy(App->Cl_Dialogs->btext, "Set Position X");
+	//result = strcmp(btext, "Pos_X");
+	//if (result == 0)
+	//{
+	//	strcpy(App->Cl_Dialogs->btext, "Set Position X");
 
-		char buff[256];
-		sprintf(buff, "%.3f", App->SBC_Scene->B_Message[Index]->PosX);
-		strcpy(App->Cl_Dialogs->Chr_Float, buff);
+	//	char buff[256];
+	//	sprintf(buff, "%.3f", App->SBC_Scene->B_Message[Index]->PosX);
+	//	strcpy(App->Cl_Dialogs->Chr_Float, buff);
 
-		App->Cl_Dialogs->Dialog_Float();
+	//	App->Cl_Dialogs->Dialog_Float();
 
-		if (App->Cl_Dialogs->Canceled == 0)
-		{
+	//	if (App->Cl_Dialogs->Canceled == 0)
+	//	{
 
-			App->SBC_Scene->B_Message[Index]->PosX = App->Cl_Dialogs->mFloat;
+	//		App->SBC_Scene->B_Message[Index]->PosX = App->Cl_Dialogs->mFloat;
 
-			App->SBC_Display->Mark_As_Altered_TextMessage(Index);
+	//		App->SBC_Display->Mark_As_Altered_TextMessage(Index);
 
-			Update_ListView_TextMessages();
+	//		Update_ListView_TextMessages();
 
-		}
+	//	}
 
-		return 1;
-	}
+	//	return 1;
+	//}
 
-	result = strcmp(btext, "Pos_Y");
-	if (result == 0)
-	{
-		strcpy(App->Cl_Dialogs->btext, "Set Position Y");
+	//result = strcmp(btext, "Pos_Y");
+	//if (result == 0)
+	//{
+	//	strcpy(App->Cl_Dialogs->btext, "Set Position Y");
 
-		char buff[256];
-		sprintf(buff, "%.3f", App->SBC_Scene->B_Message[Index]->PosY);
-		strcpy(App->Cl_Dialogs->Chr_Float, buff);
+	//	char buff[256];
+	//	sprintf(buff, "%.3f", App->SBC_Scene->B_Message[Index]->PosY);
+	//	strcpy(App->Cl_Dialogs->Chr_Float, buff);
 
-		App->Cl_Dialogs->Dialog_Float();
+	//	App->Cl_Dialogs->Dialog_Float();
 
-		if (App->Cl_Dialogs->Canceled == 0)
-		{
+	//	if (App->Cl_Dialogs->Canceled == 0)
+	//	{
 
-			App->SBC_Scene->B_Message[Index]->PosY = App->Cl_Dialogs->mFloat;
+	//		App->SBC_Scene->B_Message[Index]->PosY = App->Cl_Dialogs->mFloat;
 
-			App->SBC_Display->Mark_As_Altered_TextMessage(Index);
+	//		App->SBC_Display->Mark_As_Altered_TextMessage(Index);
 
-			Update_ListView_TextMessages();
+	//		Update_ListView_TextMessages();
 
-		}
+	//	}
 
-		return 1;
-	}
+	//	return 1;
+	//}
 
-	result = strcmp(btext, "Text");
-	if (result == 0)
-	{
-		strcpy(App->SBC_Dialogs->btext, "Change Text");
-		strcpy(App->SBC_Dialogs->Chr_Text, App->SBC_Scene->B_Message[Index]->Text);
+	//result = strcmp(btext, "Text");
+	//if (result == 0)
+	//{
+	//	strcpy(App->SBC_Dialogs->btext, "Change Text");
+	//	strcpy(App->SBC_Dialogs->Chr_Text, App->SBC_Scene->B_Message[Index]->Text);
 
-		App->SBC_Dialogs->Dialog_Text();
+	//	App->SBC_Dialogs->Dialog_Text();
 
-		if (App->SBC_Dialogs->Canceled == 1)
-		{
-			return TRUE;
-		}
+	//	if (App->SBC_Dialogs->Canceled == 1)
+	//	{
+	//		return TRUE;
+	//	}
 
-		strcpy(App->SBC_Scene->B_Message[Index]->Text, App->SBC_Dialogs->Chr_Text);
+	//	strcpy(App->SBC_Scene->B_Message[Index]->Text, App->SBC_Dialogs->Chr_Text);
 
-		App->SBC_Display->Mark_As_Altered_TextMessage(Index);
+	//	App->SBC_Display->Mark_As_Altered_TextMessage(Index);
 
-		Update_ListView_TextMessages();
+	//	Update_ListView_TextMessages();
 
-		return 1;
-	}
+	//	return 1;
+	//}
 
 	return 1;
 }

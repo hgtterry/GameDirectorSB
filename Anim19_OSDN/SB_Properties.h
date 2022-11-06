@@ -47,8 +47,7 @@ public:
 	bool Update_ListView_Teleport();
 	bool Update_ListView_Collectables();
 	bool Update_ListView_Counters();
-	bool Update_ListView_TextMessages();
-
+	
 	bool Properties_Dlg_Active;
 
 	int Current_Selected_Object; // Object Index of Currently Selected Object [041221]
