@@ -45,7 +45,7 @@ Base_Message::Base_Message()
 	PosY = 10;
 
 	strcpy(TextMessage_Name, "TextMessage_1");
-	strcpy(Text, "Test");
+	strcpy(Text, "Welcome");
 
 	strcpy(ImGui_Panel_Name, "TextMessage_");
 }
@@ -140,9 +140,12 @@ bool Base_Message::Init_Object(void)
 // *************************************************************************
 void Base_Message::Set_ImGui_Panel_Name(void)
 {
+	ImGui_Panel_Name[0] = 0;
+
 	char Num[10];
 	_itoa(Unique_ID, Num, 10);
 
+	strcpy(ImGui_Panel_Name, "TextMessage_");
 	strcat(ImGui_Panel_Name, Num);
 
 }

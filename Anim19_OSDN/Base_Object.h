@@ -70,6 +70,8 @@ public:
 	~Base_Object();
 
 	bool Init_Object(void);
+	void Set_ImGui_Panel_Name(void);
+	void Render_ImGui_Panel(void);
 
 	Ogre::SceneNode		*Object_Node;
 	Ogre::Entity		*Object_Ent;
@@ -123,8 +125,6 @@ public:
 	bool					Collision;
 	bool					Triggered;
 
-	//-----Message Entity
-	char Message_Text[MAX_PATH];
 	//-----Sound Entity
 	bool HasSound;
 	bool Play_Sound;
@@ -141,6 +141,14 @@ public:
 
 	//-----Collectable
 	Collectable_type* S_Collectable[1];
+
+	//-----Message Entity
+	bool Show_Message_Flag;
+	char ImGui_Panel_Name[MAX_PATH];
+	char Message_Text[MAX_PATH];
+	float Message_PosX;
+	float Message_PosY;
+
 
 	char TextMessage_Name[MAX_PATH];
 	int TextMessage_ID;

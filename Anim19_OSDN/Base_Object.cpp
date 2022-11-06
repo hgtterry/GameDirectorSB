@@ -124,7 +124,58 @@ bool Base_Object::Init_Object(void)
 	Play_Sound = 1;
 	SndVolume = 0.5; // Default Half Volume
 
+	Show_Message_Flag = 0;
+	Message_PosX = 250;
+	Message_PosY = 10;
+	strcpy(Message_Text, "Test");
+	strcpy(ImGui_Panel_Name, "TextMessage_");
+
+
 	strcpy(TextMessage_Name, "Not_Set");
 	TextMessage_ID = 0;
 	return 1;
+}
+
+// *************************************************************************
+// *		Set_ImGui_Panel_Name:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+void Base_Object::Set_ImGui_Panel_Name(void)
+{
+	ImGui_Panel_Name[0] = 0;
+
+	char Num[10];
+	_itoa(This_Object_ID, Num, 10);
+
+	strcpy(ImGui_Panel_Name, "TextMessage_");
+	strcat(ImGui_Panel_Name, Num);
+
+}
+
+// *************************************************************************
+// *			Render_ImGui_Panel:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+void Base_Object::Render_ImGui_Panel(void)
+{
+	ImGui::SetNextWindowPos(ImVec2(Message_PosX, Message_PosY));
+
+
+	if (!ImGui::Begin(ImGui_Panel_Name, &Show_Message_Flag, ImGuiWindowFlags_NoSavedSettings
+		| ImGuiWindowFlags_AlwaysAutoResize
+		| ImGuiWindowFlags_NoMove
+		| ImGuiWindowFlags_NoResize
+		| ImGuiWindowFlags_NoTitleBar))
+	{
+		ImGui::End();
+	}
+	else
+	{
+
+		ImGui::PushFont(App->CL_Vm_ImGui->font2);
+
+		ImGui::Text("%s", Message_Text);
+
+		ImGui::PopFont();
+
+		ImGui::End();
+	}
 }
