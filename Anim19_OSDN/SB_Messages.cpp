@@ -89,7 +89,7 @@ bool SB_Messages::Create_Message_Entity(int Index)
 
 	// ----------------- Mesh
 
-	strcpy_s(Ogre_Name, "Message_Ent_");
+	strcpy_s(Ogre_Name, "GDEnt_");
 	_itoa(Index, ConNum, 10);
 	strcat(Ogre_Name, ConNum);
 

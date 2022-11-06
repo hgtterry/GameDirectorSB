@@ -365,10 +365,10 @@ LRESULT CALLBACK SB_Props_Dialogs::Panels_Test_Proc(HWND hDlg, UINT message, WPA
 			return 1;
 		}
 
-		if (LOWORD(wParam) == IDC_BT_PANSETTINGS)
+		/*if (LOWORD(wParam) == IDC_BT_PANSETTINGS)
 		{
 			return 1;
-		}
+		}*/
 
 		
 		if (LOWORD(wParam) == IDOK)
