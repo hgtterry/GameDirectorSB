@@ -62,8 +62,10 @@ bool SB_Collision::Message_Entity(int Index)
 
 	//-----------------  Do Action
 
-	int MessageIndex = App->SBC_Scene->B_Object[Index]->TextMessage_ID;
-	App->SBC_Scene->B_Message[MessageIndex]->Show_Panel_Flag = 1;
+	//int MessageIndex = App->SBC_Scene->B_Object[Index]->TextMessage_ID; // Needs_Removing
+	//App->SBC_Scene->B_Message[MessageIndex]->Show_Panel_Flag = 1;
+
+	App->SBC_Scene->B_Object[Index]->Show_Message_Flag = 1;
 	App->SBC_Scene->B_Object[Index]->Triggered = 1;
 	return 1;
 }

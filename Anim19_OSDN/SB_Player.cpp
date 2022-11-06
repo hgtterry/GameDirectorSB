@@ -1002,8 +1002,10 @@ void SB_Player::Check_Collisions_New(void)
 						{
 							if (App->SBC_Scene->B_Object[Col_Object_Index]->Triggered == 1)
 							{
-								int MessageIndex = App->SBC_Scene->B_Object[Col_Object_Index]->TextMessage_ID;
-								App->SBC_Scene->B_Message[MessageIndex]->Show_Panel_Flag = 0;
+								//int MessageIndex = App->SBC_Scene->B_Object[Col_Object_Index]->TextMessage_ID; // Needs_Removing
+								//App->SBC_Scene->B_Message[MessageIndex]->Show_Panel_Flag = 0;
+
+								App->SBC_Scene->B_Object[Col_Object_Index]->Show_Message_Flag = 0;
 								App->SBC_Scene->B_Object[Col_Object_Index]->Triggered = 0;
 
 							}

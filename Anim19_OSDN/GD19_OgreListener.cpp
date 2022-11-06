@@ -132,11 +132,14 @@ bool GD19_OgreListener::frameStarted(const FrameEvent& evt)
 	}
 
 	Count = 0;
-	while (Count < App->SBC_Scene->TextMessage_Count)
+	while (Count < App->SBC_Scene->Object_Count)
 	{
-		if (App->SBC_Scene->B_Message[Count]->Show_Panel_Flag == 1)
+		if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Message)
 		{
-			App->SBC_Scene->B_Message[Count]->Render_ImGui_Panel();
+			if (App->SBC_Scene->B_Object[Count]->Show_Message_Flag == 1)
+			{
+				App->SBC_Scene->B_Object[Count]->Render_ImGui_Panel();
+			}
 		}
 
 		Count++;
