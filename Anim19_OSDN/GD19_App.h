@@ -74,6 +74,7 @@ distribution.
 #include "SB_Preferences.h"
 #include "SB_Display.h"
 #include "SB_Messages.h"
+#include "SB_Build.h"
 
 // :- Terry and Hazel Flanigan 2022
 
@@ -132,6 +133,7 @@ public:
 	SB_Preferences*			SBC_Prefs;
 	SB_Display*				SBC_Display;
 	SB_Messages*			SBC_Messages;
+	SB_Build*				SBC_Build;
 
 	Com_Diaolgs*			Com_CDialogs;		// Common Dialogs for App [291221]
 	// ----------------------------------- 

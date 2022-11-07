@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2021 Scene Builder and Equity -- Inflanite Software W.T.Flanigan H.C.Flanigan
+Copyright (c) 2022 GameDirectorSB and EquityME -- Inflanite Software W.T.Flanigan H.C.Flanigan
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -78,6 +78,7 @@ GD19_App::GD19_App(void)
 	SBC_Prefs =			nullptr;
 	SBC_Display =		nullptr;
 	SBC_Messages =		nullptr;
+	SBC_Build =			nullptr;
 
 	// ---------------------------------------------------- 29/12/21
 	Com_CDialogs =		nullptr;
@@ -232,6 +233,7 @@ bool GD19_App::InitApp(void)
 	SBC_Prefs =			new SB_Preferences();
 	SBC_Display =		new SB_Display();
 	SBC_Messages =		new SB_Messages();
+	SBC_Build =			new SB_Build();
 
 	//--------------
 

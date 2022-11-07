@@ -186,6 +186,7 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SB_3DT.h" />
     <ClInclude Include="SB_Aera.h" />
+    <ClInclude Include="SB_Build.h" />
     <ClInclude Include="SB_Camera.h" />
     <ClInclude Include="SB_Collision.h" />
     <ClInclude Include="SB_Debug.h" />
@@ -252,6 +253,7 @@
     <ClCompile Include="GD_Keyboard.cpp" />
     <ClCompile Include="SB_3DT.cpp" />
     <ClCompile Include="SB_Aera.cpp" />
+    <ClCompile Include="SB_Build.cpp" />
     <ClCompile Include="SB_Camera.cpp" />
     <ClCompile Include="SB_Collision.cpp" />
     <ClCompile Include="SB_Debug.cpp" />
