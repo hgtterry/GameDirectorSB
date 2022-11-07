@@ -30,6 +30,18 @@ SB_Build::SB_Build()
 {
 	strcpy(GameName, "YourGameName");
 	StartFolder[0] = 0;
+
+	ProjectFolder[0] = 0;
+	Sub_ProjectFolder[0] = 0;
+
+	MediaFolder[0] = 0;
+
+	ActorsFolder[0] = 0;
+	MaterialsFolder[0] = 0;
+	TexturesFolder[0] = 0;
+	CoreDataFolder[0] = 0;
+	SoundFolder[0] = 0;
+
 }
 
 SB_Build::~SB_Build()
@@ -204,14 +216,14 @@ LRESULT CALLBACK SB_Build::Project_Build_Proc(HWND hDlg, UINT message, WPARAM wP
 				return 1;
 			}
 
-			//strcpy(App->CL_FileIO->szSelectedDir, PathName);
-			//strcpy(App->CL10_Project->StartFolder, PathName);
+			strcpy(App->Com_CDialogs->szSelectedDir, PathName);
+			strcpy(App->SBC_Build->StartFolder, PathName);
 
-			//strcpy(App->CL10_Project->GameName, GameName);
+			strcpy(App->SBC_Build->GameName, GameName);
 
 			//App->CL10_Project->Write_To_Config(); // Writre to Config File
 
-			//App->CL10_Project->Create_ProjectFolder();
+			App->SBC_Build->Create_ProjectFolder();
 
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
@@ -228,6 +240,242 @@ LRESULT CALLBACK SB_Build::Project_Build_Proc(HWND hDlg, UINT message, WPARAM wP
 
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *		Create_ProjectFolder:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+void SB_Build::Create_ProjectFolder(void)
+{
+
+	ProjectFolder[0] = 0;
+	Sub_ProjectFolder[0] = 0;
+
+	MediaFolder[0] = 0;
+
+	ActorsFolder[0] = 0;
+	MaterialsFolder[0] = 0;
+	TexturesFolder[0] = 0;
+	CoreDataFolder[0] = 0;
+	SoundFolder[0] = 0;
+
+
+//	App->CL10_PB = new GD10_PB();
+//	App->CL10_PB->StartNewProgressBar();
+
+	//App->CL_Dialogs->MessageLoad("Please Wait");
+
+	strcpy(ProjectFolder, App->Com_CDialogs->szSelectedDir);
+	strcat(ProjectFolder, "\\");
+	strcat(ProjectFolder, GameName);
+	strcat(ProjectFolder, "_Project");
+
+	int test = CreateDirectory(ProjectFolder, NULL);
+	/*if(test == 0)
+	{
+		App->Say("Failed");
+	}
+	else
+	{*/
+	strcpy(Sub_ProjectFolder, ProjectFolder);
+	strcat(Sub_ProjectFolder, "\\");
+	strcat(Sub_ProjectFolder, "GD_Project");
+	CreateDirectory(Sub_ProjectFolder, NULL);
+
+	strcpy(MediaFolder, ProjectFolder);
+	strcat(MediaFolder, "\\");
+	strcat(MediaFolder, "Media");
+	CreateDirectory(MediaFolder, NULL);
+
+	strcpy(LevelsFolder, MediaFolder);
+	strcat(LevelsFolder, "\\");
+	strcat(LevelsFolder, "Levels");
+	CreateDirectory(LevelsFolder, NULL);
+
+	strcpy(ActorsFolder, MediaFolder);
+	strcat(ActorsFolder, "\\");
+	strcat(ActorsFolder, "Actors");
+	CreateDirectory(ActorsFolder, NULL);
+
+	strcpy(MaterialsFolder, MediaFolder);
+	strcat(MaterialsFolder, "\\");
+	strcat(MaterialsFolder, "Materials");
+	CreateDirectory(MaterialsFolder, NULL);
+
+	strcpy(TexturesFolder, MediaFolder);
+	strcat(TexturesFolder, "\\");
+	strcat(TexturesFolder, "Textures");
+	CreateDirectory(TexturesFolder, NULL);
+
+	strcpy(CoreDataFolder, MediaFolder);
+	strcat(CoreDataFolder, "\\");
+	strcat(CoreDataFolder, "Core_Data");
+	CreateDirectory(CoreDataFolder, NULL);
+
+	strcpy(SoundFolder, MediaFolder);
+	strcat(SoundFolder, "\\");
+	strcat(SoundFolder, "Sounds");
+	CreateDirectory(SoundFolder, NULL);
+
+//	int TCount = Get_Transfer_Count();
+
+//	App->CL10_PB->Set_Progress("Copy_SystemFiles", TCount + 9);
+	Copy_SystemFiles();
+
+
+	/*App->CL10_PB->Set_Progress_Text("Copy_ZipFiles");
+	Copy_ZipFiles();
+
+
+	App->CL10_PB->Set_Progress_Text("Copy_Level_Files");
+	Copy_Level_Files();
+
+
+	App->CL10_PB->Set_Progress_Text("Transfer_UsedMaterials");
+	Transfer_UsedMaterials();
+
+
+	App->CL10_PB->Set_Progress_Text("Transfer_Meshes");
+	Transfer_Meshes();
+
+
+	App->CL10_PB->Set_Progress_Text("Transfer_Textures");
+	Transfer_Textures();
+
+
+	App->CL10_PB->Set_Progress_Text("Transfer_Environment_Sound");
+	Transfer_Environment_Sound();
+
+
+	App->CL10_PB->Set_Progress_Text("Transfer_Sounds");
+	Transfer_Sounds();
+
+
+	App->CL10_PB->Set_Progress_Text("Create_Game_IniFile");
+	Create_Game_IniFile();
+
+
+	App->CL10_PB->Set_Progress_Text("Create_Config_File");
+	Create_Config_File();*/
+
+
+	//App->CL_Dialogs->MessageLoad_Finish("Project Created");
+
+	//App->CL10_PB->Close();
+	//delete App->CL10_PB;
+	//App->CL10_PB = nullptr;
+
+	//}
+}
+
+// *************************************************************************
+// *		Copy_SystemFiles:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void SB_Build::Copy_SystemFiles(void)
+{
+
+	//----------------------------- OgreMain.dll
+	strcpy(SourceFile, App->EquityDirecory_FullPath);
+	strcat(SourceFile, "\\OgreMain.dll");
+
+	strcpy(DestinationFile, ProjectFolder);
+	strcat(DestinationFile, "\\OgreMain.dll");
+
+	CopyFile(SourceFile, DestinationFile, false);
+
+//	App->CL10_PB->Nudge();
+
+	//----------------------------- RenderSystem_GL.dll
+	strcpy(SourceFile, App->EquityDirecory_FullPath);
+	strcat(SourceFile, "\\RenderSystem_GL.dll");
+
+	strcpy(DestinationFile, ProjectFolder);
+	strcat(DestinationFile, "\\RenderSystem_GL.dll");
+
+	CopyFile(SourceFile, DestinationFile, false);
+
+//	App->CL10_PB->Nudge();
+	//----------------------------- cg.dll
+	strcpy(SourceFile, App->EquityDirecory_FullPath);
+	strcat(SourceFile, "\\cg.dll");
+
+	strcpy(DestinationFile, ProjectFolder);
+	strcat(DestinationFile, "\\cg.dll");
+
+	CopyFile(SourceFile, DestinationFile, false);
+
+	//----------------------------- OgreOverlay.dll
+	strcpy(SourceFile, App->EquityDirecory_FullPath);
+	strcat(SourceFile, "\\OgreOverlay.dll");
+
+	strcpy(DestinationFile, ProjectFolder);
+	strcat(DestinationFile, "\\OgreOverlay.dll");
+
+	CopyFile(SourceFile, DestinationFile, false);
+	
+//	App->CL10_PB->Nudge();
+	//----------------------------- msvcp140.dll
+	strcpy(SourceFile, App->EquityDirecory_FullPath);
+	strcat(SourceFile, "\\msvcp140.dll");
+
+	strcpy(DestinationFile, ProjectFolder);
+	strcat(DestinationFile, "\\msvcp140.dll");
+
+	CopyFile(SourceFile, DestinationFile, false);
+
+//	App->CL10_PB->Nudge();
+	//----------------------------- vcruntime140.dll
+	strcpy(SourceFile, App->EquityDirecory_FullPath);
+	strcat(SourceFile, "\\vcruntime140.dll");
+
+	strcpy(DestinationFile, ProjectFolder);
+	strcat(DestinationFile, "\\vcruntime140.dll");
+
+	CopyFile(SourceFile, DestinationFile, false);
+//	App->CL10_PB->Nudge();
+
+	//----------------------------- irrKlang.dll
+	strcpy(SourceFile, App->EquityDirecory_FullPath);
+	strcat(SourceFile, "\\irrKlang.dll");
+
+	strcpy(DestinationFile, ProjectFolder);
+	strcat(DestinationFile, "\\irrKlang.dll");
+
+	CopyFile(SourceFile, DestinationFile, false);
+//	App->CL10_PB->Nudge();
+
+	//----------------------------- Plugin_CgProgramManager.dll
+	strcpy(SourceFile, App->EquityDirecory_FullPath);
+	strcat(SourceFile, "\\Plugin_CgProgramManager.dll");
+
+	strcpy(DestinationFile, ProjectFolder);
+	strcat(DestinationFile, "\\Plugin_CgProgramManager.dll");
+
+	CopyFile(SourceFile, DestinationFile, false);
+//	App->CL10_PB->Nudge();
+
+	//----------------------------- Game FIle
+	strcpy(SourceFile, App->EquityDirecory_FullPath);
+	strcat(SourceFile, "\\GDShell.gex");
+
+	strcpy(DestinationFile, ProjectFolder);
+	strcat(DestinationFile, "\\");
+	strcat(DestinationFile, GameName);
+	strcat(DestinationFile, ".exe");
+
+	CopyFile(SourceFile, DestinationFile, false);
+//	App->CL10_PB->Nudge();
+
+	//----------------------------- Game FIle
+	strcpy(SourceFile, App->EquityDirecory_FullPath);
+	strcat(SourceFile, "\\plugins.cfg");
+
+	strcpy(DestinationFile, ProjectFolder);
+	strcat(DestinationFile, "\\plugins.cfg");
+
+	CopyFile(SourceFile, DestinationFile, false);
+//	App->CL10_PB->Nudge();
+
 }
 
 // *************************************************************************

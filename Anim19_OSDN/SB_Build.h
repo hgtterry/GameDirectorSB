@@ -39,5 +39,22 @@ protected:
 	static LRESULT CALLBACK Project_Build_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Read_From_Config(void);
+	void Create_ProjectFolder(void);
+	void Copy_SystemFiles(void);
+
+	char ProjectFolder[MAX_PATH];
+	char Sub_ProjectFolder[MAX_PATH];
+
+	char SourceFile[MAX_PATH];
+	char DestinationFile[MAX_PATH];
+	char MediaFolder[MAX_PATH];
+
+	char ActorsFolder[MAX_PATH];
+	char MaterialsFolder[MAX_PATH];
+	char TexturesFolder[MAX_PATH];
+	char CoreDataFolder[MAX_PATH];
+	char SoundFolder[MAX_PATH];
+
+	char LevelsFolder[MAX_PATH];
 };
 
