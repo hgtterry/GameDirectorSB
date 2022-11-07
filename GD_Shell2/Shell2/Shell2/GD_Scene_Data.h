@@ -257,6 +257,10 @@ public:
 
 
 	bool Project_Resources_Created;
+	bool Area_Added;
+
+	int Area_Count;
+
 	Ogre::String Project_Resource_Group;
 
 	Base_Area*				B_Area[100];

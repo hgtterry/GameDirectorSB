@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "GD19_App.h"
+#include "BT_App.h"
 #include "Base_Area.h"
 
 
@@ -68,7 +68,7 @@ Base_Area::~Base_Area()
 // *************************************************************************
 void Base_Area::Collect_Object_Data(void)
 {
-	int Index = App->SBC_Scene->Area_Count;
+	int Index = App->GDCL_Scene_Data->Area_Count;
 
 	float x = 0;
 	float y = 0;

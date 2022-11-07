@@ -108,6 +108,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Base_Area.cpp" />
     <ClCompile Include="BT_App.cpp" />
     <ClCompile Include="BT_Maths.cpp" />
     <ClCompile Include="BT_PhysicsListener.cpp" />
@@ -122,6 +123,7 @@
     <ClCompile Include="GD_Scene_Data.cpp" />
     <ClCompile Include="GD_SoundMgr.cpp" />
     <ClCompile Include="GD_Utilities.cpp" />
+    <ClCompile Include="SB_Aera.cpp" />
     <ClCompile Include="Shell2.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -129,6 +131,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Base_Area.h" />
     <ClInclude Include="BT_App.h" />
     <ClInclude Include="BT_Maths.h" />
     <ClInclude Include="BT_PhysicsListener.h" />
@@ -144,6 +147,7 @@
     <ClInclude Include="GD_SoundMgr.h" />
     <ClInclude Include="GD_Utilities.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="SB_Aera.h" />
     <ClInclude Include="Shell2.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />

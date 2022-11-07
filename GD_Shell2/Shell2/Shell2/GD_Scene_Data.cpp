@@ -7,6 +7,9 @@ GD_Scene_Data::GD_Scene_Data(void)
 {
 	Project_Resource_Group = "Project_Resource_Group";
 	Project_Resources_Created = 0;
+	Area_Added = 0;
+	Area_Count = 0;
+
 	//----------------------------------------------------------------------
 	SceneLoaded = 0;
 	S_Flags[0] = NULL;
@@ -559,7 +562,7 @@ bool GD_Scene_Data::Start_Scene()
 
 	App->GDCL_Player->SetUp();
 
-	App->Ogre17->PhysicsFrameListener->GD_Run_Physics = 1;
+	App->Ogre17->PhysicsFrameListener->GD_Run_Physics = 0; // ComeBack
 
 	App->GDCL_Scene_Data->S_LoadOptions[0]->Has_Objects = 1;
 	App->GDCL_Scene_Data->S_LoadOptions[0]->Has_Player = 1;

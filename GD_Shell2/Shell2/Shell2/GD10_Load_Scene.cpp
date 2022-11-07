@@ -103,8 +103,8 @@ bool GD10_Load_Scene::Load_Project()
 	if (Options->Has_Aera > 0)
 	{
 		bool test = Load_Project_Aera();
-		App->SBC_Scene->Area_Added = 1;
-		App->Cl_Environment->Load_Environment();
+		App->GDCL_Scene_Data->Area_Added = 1;
+		//App->Cl_Environment->Load_Environment();
 	}
 
 	//// ------------------------------------- Player
@@ -205,7 +205,7 @@ bool GD10_Load_Scene::Load_Project_Aera()
 		App->GDCL_Scene_Data->B_Area[0]->S_Environment[0] = new Environment_type;
 		App->SBC_Aera->Set_Environment_Defaults(Count);
 
-		App->CL10_Ini->GetString("Area_0", "Material_File", App->SBC_Scene->B_Area[Count]->Material_File, MAX_PATH);
+		App->CL10_Ini->GetString("Area_0", "Material_File", App->GDCL_Scene_Data->B_Area[Count]->Material_File, MAX_PATH);
 
 		App->CL10_Ini->GetString("Position", "Mesh_Pos", chr_Tag1, MAX_PATH);
 		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
@@ -215,8 +215,7 @@ bool GD10_Load_Scene::Load_Project_Aera()
 		App->GDCL_Scene_Data->B_Area[Count]->Physics_Pos = Ogre::Vector3(x, y, z);
 
 		strcpy(App->GDCL_Scene_Data->B_Area[Count]->Area_Name, Area_Name);
-		App->GDCL_Scene_Data->B_Area[Count]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Areas_Folder, Area_Name, Count, false);
-
+		
 		// ------------------------------------ Environment
 
 		//--------------- Sound
@@ -296,10 +295,8 @@ bool GD10_Load_Scene::Load_Project_Aera()
 		App->GDCL_Scene_Data->B_Area[0]->S_Environment[0]->Fog_Density = x;
 
 		Count++;
-		App->SBC_Scene->Area_Count++;
+		App->GDCL_Scene_Data->Area_Count++;
 	}
-
-	//App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Areas_Folder);
 
 	return 1;
 }
