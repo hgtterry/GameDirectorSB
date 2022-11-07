@@ -57,7 +57,7 @@ BT_PhysicsListener::BT_PhysicsListener(Camera* cam,Terrain * terrain)
 	mMoveSensitivityMouse = 50;
 	KeyFrame_Speed = 0.500;
 
-	Pl_LeftMouseDown = 0;
+	Pl_LeftMouseDown = 1;
 	Pl_RightMouseDown = 0;
 
 	Pl_Cent500X = 500;
@@ -98,11 +98,11 @@ BT_PhysicsListener::~BT_PhysicsListener(void)
 // *************************************************************************
 bool BT_PhysicsListener::frameStarted(const FrameEvent& evt)
 {
-	if (Animate_Ogre == 1)
+	/*if (Animate_Ogre == 1)
 	{
 		Animate_State->addTime(evt.timeSinceLastFrame * AnimationScale);
 		Animate_State2->addTime(evt.timeSinceLastFrame * AnimationScale);
-	}
+	}*/
 
 	if ( GD_Run_Physics == 1)
 	{
@@ -198,7 +198,6 @@ bool  BT_PhysicsListener::frameRenderingQueued(const FrameEvent& evt)
 		StopOgre = 1;
 	}
 
-	return 1;
 	mRotX = 0;
 	mRotY = 0;
 	mTranslateVector = Ogre::Vector3::ZERO;
@@ -304,17 +303,10 @@ bool  BT_PhysicsListener::frameRenderingQueued(const FrameEvent& evt)
 	}
 
 	
-	//if (GetAsyncKeyState(69) < 0) // Q key Down in Fly Mode
-	//{
-	//	Ogre::Real Rate;
-	//	Rate = (mMoveSensitivity/1000)*2;    //0.1;//FlyRate;
-
-	//	Ogre::Vector3 OldPos;
-	//	OldPos = mCam->getPosition();
-
-	//	OldPos.y += Rate;
-	//	mCam->setPosition(OldPos);
-	//}
+	if (GetAsyncKeyState(69) < 0) // Q key Down in Fly Mode
+	{
+		App->Ogre17->PhysicsFrameListener->GD_Run_Physics = 1;
+	}
 	////------------------------------------------------
 	//if (GetAsyncKeyState(81) < 0) // E key Up in Fly Mode
 	//{
