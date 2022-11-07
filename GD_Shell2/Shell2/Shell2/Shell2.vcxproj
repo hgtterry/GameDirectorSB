@@ -71,7 +71,7 @@
       <Optimization>Disabled</Optimization>
       <IntrinsicFunctions>false</IntrinsicFunctions>
       <WholeProgramOptimization>false</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>..\..\..\GD19_OSDN\Common\Bullet\Source;..\..\..\GD19_OSDN\Common\boost;..\..\..\GD19_OSDN\Common\include;..\..\..\GD19_OSDN\Common\include\OGRE;..\..\..\GD19_OSDN\Common\include\OGRE\Terrain;..\..\..\GD19_OSDN\Common\include\OGRE\Overlay;..\..\..\GD19_OSDN\Common\irrKlang\Headers</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\Anim19_OSDN\Common\Bullet\Source;..\..\..\Anim19_OSDN\Common\boost;..\..\..\Anim19_OSDN\Common\include;..\..\..\Anim19_OSDN\Common\include\OGRE;..\..\..\Anim19_OSDN\Common\include\OGRE\Terrain;..\..\..\Anim19_OSDN\Common\include\OGRE\Overlay;..\..\..\Anim19_OSDN\Common\irrKlang\Headers</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
@@ -90,7 +90,7 @@
     <Link>
       <AdditionalDependencies>comctl32.lib;OgreMain.lib;OgreOverlay.lib;OgreTerrain.lib;BulletDynamics.lib;BulletCollision.lib;LinearMath.lib;irrKlang.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)GDShell.gex</OutputFile>
-      <AdditionalLibraryDirectories>..\..\..\GD19_OSDN\Common\Bullet\lib;..\..\..\GD19_OSDN\Common\Soil\lib;..\..\..\GD19_OSDN\Common\lib\release;..\..\..\GD19_OSDN\Common\boost\lib;..\..\..\GD19_OSDN\Common\boost\libs49;..\..\..\GD19_OSDN\Common\Devil\lib;..\..\..\GD19_OSDN\Common\Assimp\Lib;..\..\..\GD19_OSDN\Common\irrKlang\Libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\..\Anim19_OSDN\Common\Bullet\lib;..\..\..\Anim19_OSDN\Common\Soil\lib;..\..\..\Anim19_OSDN\Common\lib\release;..\..\..\Anim19_OSDN\Common\boost\lib;..\..\..\Anim19_OSDN\Common\boost\libs49;..\..\..\Anim19_OSDN\Common\Devil\lib;..\..\..\Anim19_OSDN\Common\Assimp\Lib;..\..\..\Anim19_OSDN\Common\irrKlang\Libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
