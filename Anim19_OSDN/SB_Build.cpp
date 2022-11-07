@@ -28,6 +28,8 @@ distribution.
 
 SB_Build::SB_Build()
 {
+	strcpy(GameName, "YourGameName");
+	StartFolder[0] = 0;
 }
 
 SB_Build::~SB_Build()
@@ -58,8 +60,12 @@ LRESULT CALLBACK SB_Build::Project_Build_Proc(HWND hDlg, UINT message, WPARAM wP
 		SendDlgItemMessage(hDlg, IDC_STGAMENAME, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STPATH, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 
-		//SetDlgItemText(hDlg, IDC_EDGAMENAME, (LPCTSTR)App->CL10_Project->GameName);
-		//SetDlgItemText(hDlg, IDC_STLOCATION, (LPCTSTR)App->CL10_Project->StartFolder);
+		SendDlgItemMessage(hDlg, IDC_STLOCATION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BTBROWSE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
+		SetDlgItemText(hDlg, IDC_EDGAMENAME, (LPCTSTR)App->SBC_Build->GameName);
+		SetDlgItemText(hDlg, IDC_STLOCATION, (LPCTSTR)App->SBC_Build->StartFolder);
 
 
 
@@ -163,11 +169,13 @@ LRESULT CALLBACK SB_Build::Project_Build_Proc(HWND hDlg, UINT message, WPARAM wP
 
 		if (LOWORD(wParam) == IDC_BTBROWSE)
 		{
-			/*strcpy(App->SBC_FileIO->BrowserMessage, "Select a Folder for Game Files a Sub folder will be created");
-			int Test = App->CL_FileIO->StartBrowser(App->DeskTop_Folder);
-			if (Test == 0) { return 1; }
-			strcpy(App->CL10_Project->StartFolder, App->CL_FileIO->szSelectedDir);
-			SetDlgItemText(hDlg, IDC_STLOCATION, (LPCTSTR)App->CL10_Project->StartFolder);*/
+			strcpy(App->Com_CDialogs->BrowserMessage, "Select a Folder for Game Files a Sub folder will be created");
+			int Test = App->Com_CDialogs->StartBrowser(App->SBC_MeshViewer->mResource_Folder, App->Fdlg);
+			if (Test == 0) { return true; }
+
+			strcpy(App->SBC_Build->StartFolder, App->Com_CDialogs->szSelectedDir);
+
+			SetDlgItemText(hDlg, IDC_STLOCATION, (LPCTSTR)App->SBC_Build->StartFolder);
 
 			return TRUE;
 		}
@@ -220,4 +228,27 @@ LRESULT CALLBACK SB_Build::Project_Build_Proc(HWND hDlg, UINT message, WPARAM wP
 
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *					Read_From_Config Terry Berine					   *
+// *************************************************************************
+void SB_Build::Read_From_Config(void)
+{
+	char chr_Tag1[1024];
+	char StartFile[1024];
+	strcpy(StartFile, App->EquityDirecory_FullPath);
+	strcat(StartFile, "\\");
+	strcat(StartFile, "Data\\StartUp.gcf");
+
+	/*App->CL_Ini->SetPathName(StartFile);
+
+	CF_Full_Screen = App->CL_Ini->GetBool("Config", "Full_Screen", 1);
+
+	App->CL_Ini->GetString("Config", "Project_Path", chr_Tag1, 1024);
+	strcpy(App->CL10_Project->StartFolder, chr_Tag1);
+
+	App->CL_Ini->GetString("Config", "Game_Name", chr_Tag1, 1024);
+	strcpy(App->CL10_Project->GameName, chr_Tag1);*/
+
 }

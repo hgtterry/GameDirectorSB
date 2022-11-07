@@ -30,9 +30,14 @@ public:
 
 	void Start_Project_Build();
 
+	char StartFolder[MAX_PATH];
+	char GameName[MAX_PATH];
+
+
+
 protected:
 	static LRESULT CALLBACK Project_Build_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
-
+	void Read_From_Config(void);
 };
 
