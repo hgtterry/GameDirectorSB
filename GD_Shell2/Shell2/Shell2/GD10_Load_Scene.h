@@ -5,6 +5,10 @@ public:
 	GD10_Load_Scene();
 	~GD10_Load_Scene();
 
+	bool Load_Project();
+
+	char m_Ini_Path_File_Name[MAX_PATH];
+	// --------------------------------------------------------------
 	bool Load_Config_File();
 
 	bool OpenScene(bool AskForScene);

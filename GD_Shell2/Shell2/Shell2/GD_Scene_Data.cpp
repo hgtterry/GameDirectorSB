@@ -5,6 +5,9 @@
 
 GD_Scene_Data::GD_Scene_Data(void)
 {
+	Project_Resource_Group = "Project_Resource_Group";
+	Project_Resources_Created = 0;
+	//----------------------------------------------------------------------
 	SceneLoaded = 0;
 	S_Flags[0] = NULL;
 	S_Scene[0] = NULL;
@@ -30,6 +33,21 @@ GD_Scene_Data::~GD_Scene_Data(void)
 {
 }
 
+// *************************************************************************
+// *					Create_Resources_Group	Terry Bernie 		 	   *
+// *************************************************************************
+bool GD_Scene_Data::Create_Resources_Group()
+{
+	if (Project_Resources_Created == 0)
+	{
+		Ogre::ResourceGroupManager::getSingleton().createResourceGroup(Project_Resource_Group);
+		Project_Resources_Created = 1;
+	}
+
+	return 1;
+}
+
+//---------------------------------------------------------------------------------------------------
 // *************************************************************************
 // *	  				Init_Scene Terry Bernie							   *
 // *************************************************************************
@@ -520,7 +538,7 @@ bool GD_Scene_Data::Show_Entities(bool YesNo)
 // *************************************************************************
 bool GD_Scene_Data::Start_Scene()
 {
-	int Index = App->GDCL_Scene_Data->ObjectCount;
+	//int Index = App->GDCL_Scene_Data->ObjectCount;
 
 	App->GDCL_Player->SetUp();
 
@@ -531,23 +549,22 @@ bool GD_Scene_Data::Start_Scene()
 
 	App->GDCL_Scene_Data->SceneLoaded = 1;
 
-	return 1;
-
 	Read_LoadLevel(); // Get Scene File Name From External File
 	
-	char FileName[255];
-	char ParhFile[255];
-	strcpy(FileName,First_SceneFile);
-	
-	strcpy(ParhFile,App->GameDirecory_FullPath);
-	strcat(ParhFile,"\\");
-	strcat(ParhFile,"Media\\Levels\\");
-	strcat(ParhFile,First_SceneFile); // Create Relative File from EXE
+	//char FileName[255];
+	//char ParhFile[255];
+	//strcpy(FileName,First_SceneFile);
+	//
+	//strcpy(ParhFile,App->GameDirecory_FullPath);
+	//strcat(ParhFile,"\\");
+	//strcat(ParhFile,"Media\\Levels\\");
+	//strcat(ParhFile,First_SceneFile); // Create Relative File from EXE
 
-	strcpy(App->CL10_Load_Scene->Scene_FileName, FileName);
-	strcpy(App->CL10_Load_Scene->Scene_Path_FileName, ParhFile);
+	//strcpy(App->CL10_Load_Scene->Scene_FileName, FileName);
+	//strcpy(App->CL10_Load_Scene->Scene_Path_FileName, ParhFile);
 	
 	App->CL10_Load_Scene->OpenScene(0);
+
 	return 1;
 }
 
@@ -558,9 +575,9 @@ bool GD_Scene_Data::Read_LoadLevel(void)
 {
 	First_SceneFile[0] = 0;
 
-	char Tag1[1024];
+	char Tag1[MAX_PATH];
 	
-	char FileName[2048];
+	/*char FileName[2048];
 	strcpy(FileName,App->GameDirecory_FullPath);
 	strcat(FileName,"\\Load_Level.gds");
 
@@ -568,7 +585,12 @@ bool GD_Scene_Data::Read_LoadLevel(void)
 
 	App->CL10_Ini->GetString("Start_Level", "First_Level", Tag1, 1024);
 
-	strcpy(First_SceneFile,Tag1);
+	strcpy(First_SceneFile,Tag1);*/
+
+	// Temp 
+	strcpy(Tag1,App->GameDirecory_FullPath);
+	strcat(Tag1,"\\Game\\Project.SBProj");
+	strcpy(First_SceneFile, Tag1);
 
 	return 1;
 }

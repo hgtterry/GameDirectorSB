@@ -6,6 +6,8 @@
 
 GD10_Load_Scene::GD10_Load_Scene()
 {
+	m_Ini_Path_File_Name[0] = 0;
+
 	LoadScene = NULL;
 	LoadObjects = NULL;
 
@@ -24,7 +26,7 @@ GD10_Load_Scene::~GD10_Load_Scene()
 // *************************************************************************
 bool GD10_Load_Scene::OpenScene(bool AskForScene)
 {
-	strcpy(App->GDCL_Scene_Data->S_Scene[0]->TerrainFileName, Scene_FileName);
+	/*strcpy(App->GDCL_Scene_Data->S_Scene[0]->TerrainFileName, Scene_FileName);
 	strcpy(App->GDCL_Scene_Data->S_Scene[0]->GDSceneName, Scene_FileName);
 
 	
@@ -39,13 +41,124 @@ bool GD10_Load_Scene::OpenScene(bool AskForScene)
 	strcpy(Temp, Scene_FileName);
 	int Len = strlen(Temp);
 	Temp[Len - 8] = 0;
-	strcpy(App->GDCL_Scene_Data->S_Scene[0]->LevelName, Temp);
+	strcpy(App->GDCL_Scene_Data->S_Scene[0]->LevelName, Temp);*/
 
-	gdLoader_LoadGDScene_New();
+	//gdLoader_LoadGDScene_New();
 
+	Load_Project();
 	return 1;
 }
 
+// *************************************************************************
+// *	  		Load_Project:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+bool GD10_Load_Scene::Load_Project()
+{
+
+	m_Ini_Path_File_Name[0] = 0;
+
+	//App->SBC_Scene->Clear_Level();
+	App->GDCL_Scene_Data->Create_Resources_Group();
+
+	//Set_Paths();
+
+	//// ------------------------------------------------------------------- 
+	//Load_Options* Options = new Load_Options;
+
+	//Options->Has_Aera = 0;
+	//Options->Has_Player = 0;
+	//Options->Has_Camera = 0;
+	//Options->Has_Objects = 0;
+	//Options->Has_Counters = 0;
+
+	//int Int1 = 0;
+	//char chr_Tag1[1024];
+	//char chr_Tag2[1024];
+
+	//chr_Tag1[0] = 0;
+	//chr_Tag2[0] = 0;
+
+	//App->Cl_Ini->SetPathName(m_Ini_Path_File_Name);
+
+	//App->Cl_Ini->GetString("Version_Data", "Version", chr_Tag1, 1024);
+
+	//App->Cl_Ini->GetString("Files", "Level_Name", m_Level_Name, MAX_PATH);
+	//App->Cl_Ini->GetString("Files", "Project_Name", m_Project_Name, MAX_PATH);
+
+	//Options->Has_Aera = App->Cl_Ini->GetInt("Options", "Aeras_Count", 0, 10);
+	//Options->Has_Player = App->Cl_Ini->GetInt("Options", "Players_Count", 0, 10);
+	//Options->Has_Camera = App->Cl_Ini->GetInt("Options", "Cameras_Count", 0, 10);
+	//Options->Has_Objects = App->Cl_Ini->GetInt("Options", "Objects_Count", 0, 10);
+	//Options->Has_Counters = App->Cl_Ini->GetInt("Options", "Counters_Count", 0, 10);
+
+
+	//App->SBC_Scene->UniqueID_Object_Counter = App->Cl_Ini->GetInt("Options", "Objects_ID_Count", 0, 10);
+	//App->SBC_Scene->UniqueID_Counters_Count = App->Cl_Ini->GetInt("Options", "Counters_ID_Count", 0, 10);
+
+	////-------------------------------------- Set Resource Path
+
+	//Load_Get_Resource_Path();
+
+	//// ------------------------------------- Aera
+	//if (Options->Has_Aera > 0)
+	//{
+	//	bool test = Load_Project_Aera();
+	//	App->SBC_Scene->Area_Added = 1;
+	//	App->Cl_Environment->Load_Environment();
+	//}
+
+	//// ------------------------------------- Player
+	//if (Options->Has_Player > 0)
+	//{
+	//	bool test = Load_Project_Player();
+	//}
+
+	//// ------------------------------------- Camera
+	//if (Options->Has_Camera > 0)
+	//{
+	//	Load_Project_Camera();
+	//	App->SBC_Scene->Camera_Added = 1;
+	//	App->SBC_Camera->Set_Camera(0);
+	//	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Cameras_Folder);
+	//}
+
+	//// ------------------------------------- Objects
+	//if (Options->Has_Objects > 0)
+	//{
+	//	Load_Project_Objects();
+	//	App->SBC_Objects_Create->Add_Objects_From_File();
+
+	//}
+
+	//// ------------------------------------- Counters
+	//if (Options->Has_Counters > 0)
+	//{
+	//	Load_Project_Counters();
+	//	App->SBC_Display->Add_Counters_From_File();
+
+	//}
+
+	//App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
+
+	//App->SBC_FileView->Change_Level_Name();
+	//App->SBC_FileView->Change_Project_Name();
+	//App->SBC_FileView->Redraw_FileView();
+
+
+	//App->SBC_Scene->Scene_Loaded = 1;
+	//App->SBC_Project->Project_Loaded = 1;
+
+	//delete Options;
+
+	//App->Set_Main_TitleBar(App->SBC_FileIO->Project_Path_File_Name);
+	//App->SBC_FileIO->RecentFileHistory_Update();
+
+	//App->SBC_FileView->SelectItem(App->SBC_FileView->FV_LevelFolder);
+
+	//App->SBC_Scene->Scene_Modified = 0;
+	return 1;
+}
+//---------------------------------------------------------------------------------------------------------------------
 // *************************************************************************
 // *				gdLoader_LoadGDScene_New   Terry Bernie  			   *
 // *************************************************************************

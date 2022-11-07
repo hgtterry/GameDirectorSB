@@ -287,6 +287,13 @@ public:
 	GD_Scene_Data(void);
 	~GD_Scene_Data(void);
 
+	bool Create_Resources_Group();
+
+	bool Project_Resources_Created;
+	Ogre::String Project_Resource_Group;
+
+
+	//-----------------------------------------------------------------
 	bool Start_Scene();
 
 	bool Init_Scene(void);
