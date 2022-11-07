@@ -47,6 +47,23 @@ bool GD_Scene_Data::Create_Resources_Group()
 	return 1;
 }
 
+// *************************************************************************
+// *	Add_Resource_Location_Project:- Terry and Hazel Flanigan 2022	   *
+// *************************************************************************
+bool GD_Scene_Data::Add_Resource_Location_Project(char* Resource_Location)
+{
+	bool Test = Ogre::ResourceGroupManager::getSingleton().resourceLocationExists(Resource_Location, Project_Resource_Group);
+
+	if (Test == 0)
+	{
+		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(Resource_Location, "FileSystem", Project_Resource_Group);
+		Ogre::ResourceGroupManager::getSingleton().clearResourceGroup(Project_Resource_Group);
+		Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(Project_Resource_Group);
+	}
+
+	return 1;
+}
+
 //---------------------------------------------------------------------------------------------------
 // *************************************************************************
 // *	  				Init_Scene Terry Bernie							   *

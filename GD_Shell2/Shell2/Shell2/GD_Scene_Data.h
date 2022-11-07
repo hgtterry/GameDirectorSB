@@ -1,45 +1,10 @@
 #pragma once
 
+#include "Base_Area.h"
 //==================================== Application Flags Structure	
 typedef struct Flags_Type 
 { 
-	/*bool RenderBackGround;
-	bool SceneLoadedOnce;
-	bool OgreIsRunning;
-	bool FlyOn;
-	bool GameSpeedOn;
-	bool RenderNxOgre;
-	bool Save;
-	bool CamDetached;
-	bool CamFirst;
-	bool CamThird;
-	bool CamLookAt;
-	bool MovePalyer;
-	bool MoveCamera;
-	bool StartScreen;*/
 	bool GameMode;
-	/*bool PosEitorActive;
-	bool SaveScene;
-	bool ShowOgreDebug;
-	bool ShowContactReport;
-	bool PosEditorScale;
-	bool StopKeys;
-	bool StopCapture;
-	bool FileView_SceneLoaded;
-	bool VRD_Editor_Running;
-	bool Show_VRD_Shape;
-	bool MeshViewer_Running;
-	bool MeshViewer_SpinObject;
-	bool VRD_HideMesh;
-	bool SceneAltered;
-	bool ShowMarker;
-	bool SelectOn;
-	bool AutoScale;
-	bool SelectModeOn;
-	bool TestEntities;
-	bool TriggersOn;
-	int EditSpeed;*/
-
 }Flags_Type;
 
 //==================================== Load Options Structure
@@ -288,10 +253,13 @@ public:
 	~GD_Scene_Data(void);
 
 	bool Create_Resources_Group();
+	bool Add_Resource_Location_Project(char* Resource_Location);
+
 
 	bool Project_Resources_Created;
 	Ogre::String Project_Resource_Group;
 
+	Base_Area*				B_Area[100];
 
 	//-----------------------------------------------------------------
 	bool Start_Scene();

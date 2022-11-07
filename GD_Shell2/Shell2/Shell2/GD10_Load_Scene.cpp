@@ -60,36 +60,36 @@ bool GD10_Load_Scene::Load_Project()
 	//App->SBC_Scene->Clear_Level();
 	App->GDCL_Scene_Data->Create_Resources_Group();
 
-	//Set_Paths();
+	Set_Paths();
 
 	//// ------------------------------------------------------------------- 
-	//Load_Options* Options = new Load_Options;
+	Load_Options* Options = new Load_Options;
 
-	//Options->Has_Aera = 0;
-	//Options->Has_Player = 0;
-	//Options->Has_Camera = 0;
-	//Options->Has_Objects = 0;
-	//Options->Has_Counters = 0;
+	Options->Has_Aera = 0;
+	Options->Has_Player = 0;
+	Options->Has_Camera = 0;
+	Options->Has_Objects = 0;
+	Options->Has_Counters = 0;
 
-	//int Int1 = 0;
-	//char chr_Tag1[1024];
-	//char chr_Tag2[1024];
+	int Int1 = 0;
+	char chr_Tag1[1024];
+	char chr_Tag2[1024];
 
-	//chr_Tag1[0] = 0;
-	//chr_Tag2[0] = 0;
+	chr_Tag1[0] = 0;
+	chr_Tag2[0] = 0;
 
-	//App->Cl_Ini->SetPathName(m_Ini_Path_File_Name);
+	App->CL10_Ini->SetPathName(m_Ini_Path_File_Name);
 
-	//App->Cl_Ini->GetString("Version_Data", "Version", chr_Tag1, 1024);
+	App->CL10_Ini->GetString("Version_Data", "Version", chr_Tag1, 1024);
 
-	//App->Cl_Ini->GetString("Files", "Level_Name", m_Level_Name, MAX_PATH);
-	//App->Cl_Ini->GetString("Files", "Project_Name", m_Project_Name, MAX_PATH);
+	App->CL10_Ini->GetString("Files", "Level_Name", m_Level_Name, MAX_PATH);
+	App->CL10_Ini->GetString("Files", "Project_Name", m_Project_Name, MAX_PATH);
 
-	//Options->Has_Aera = App->Cl_Ini->GetInt("Options", "Aeras_Count", 0, 10);
-	//Options->Has_Player = App->Cl_Ini->GetInt("Options", "Players_Count", 0, 10);
-	//Options->Has_Camera = App->Cl_Ini->GetInt("Options", "Cameras_Count", 0, 10);
-	//Options->Has_Objects = App->Cl_Ini->GetInt("Options", "Objects_Count", 0, 10);
-	//Options->Has_Counters = App->Cl_Ini->GetInt("Options", "Counters_Count", 0, 10);
+	Options->Has_Aera = App->CL10_Ini->GetInt("Options", "Aeras_Count", 0, 10);
+	Options->Has_Player = App->CL10_Ini->GetInt("Options", "Players_Count", 0, 10);
+	Options->Has_Camera = App->CL10_Ini->GetInt("Options", "Cameras_Count", 0, 10);
+	Options->Has_Objects = App->CL10_Ini->GetInt("Options", "Objects_Count", 0, 10);
+	Options->Has_Counters = App->CL10_Ini->GetInt("Options", "Counters_Count", 0, 10);
 
 
 	//App->SBC_Scene->UniqueID_Object_Counter = App->Cl_Ini->GetInt("Options", "Objects_ID_Count", 0, 10);
@@ -97,15 +97,15 @@ bool GD10_Load_Scene::Load_Project()
 
 	////-------------------------------------- Set Resource Path
 
-	//Load_Get_Resource_Path();
+	Load_Get_Resource_Path();
 
 	//// ------------------------------------- Aera
-	//if (Options->Has_Aera > 0)
-	//{
-	//	bool test = Load_Project_Aera();
-	//	App->SBC_Scene->Area_Added = 1;
-	//	App->Cl_Environment->Load_Environment();
-	//}
+	if (Options->Has_Aera > 0)
+	{
+		bool test = Load_Project_Aera();
+		App->SBC_Scene->Area_Added = 1;
+		App->Cl_Environment->Load_Environment();
+	}
 
 	//// ------------------------------------- Player
 	//if (Options->Has_Player > 0)
@@ -158,6 +158,205 @@ bool GD10_Load_Scene::Load_Project()
 	//App->SBC_Scene->Scene_Modified = 0;
 	return 1;
 }
+
+// *************************************************************************
+// *	  		Load_Project_Aera:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+bool GD10_Load_Scene::Load_Project_Aera()
+{
+	//App->Log_Messageg("bool SB_Project::Load_Project_Aera()");
+
+	char Area_Ini_Path[MAX_PATH];
+	char chr_Tag1[MAX_PATH];
+	char Area_Name[1024];
+	char Mesh_FileName[MAX_PATH];
+	char Resource_Location[MAX_PATH];
+	int Area_Count = 0;
+	int Int_Tag = 0;
+	float x = 0;
+	float y = 0;
+	float z = 0;
+
+	strcpy(Area_Ini_Path, m_Project_Sub_Folder);
+	strcat(Area_Ini_Path, "\\");
+
+	strcat(Area_Ini_Path, m_Level_Name);
+	strcat(Area_Ini_Path, "\\");
+
+	strcat(Area_Ini_Path, "Areas");
+	strcat(Area_Ini_Path, "\\");
+
+	strcat(Area_Ini_Path, "Areas.aer");
+
+	App->CL10_Ini->SetPathName(Area_Ini_Path);
+
+	Area_Count = App->CL10_Ini->GetInt("Counters", "Areas_Count", 0);
+
+	int Count = 0;
+
+	while (Count < Area_Count)
+	{
+
+		App->CL10_Ini->GetString("Area_0", "Area_Name", Area_Name, MAX_PATH);
+		App->CL10_Ini->GetString("Area_0", "Area_File", Mesh_FileName, MAX_PATH);
+		App->CL10_Ini->GetString("Area_0", "Area_Resource_Path", Resource_Location, MAX_PATH);
+
+		App->SBC_Aera->Add_Aera_To_Project(Count, Mesh_FileName, m_Main_Assets_Path);
+		App->GDCL_Scene_Data->B_Area[0]->S_Environment[0] = new Environment_type;
+		App->SBC_Aera->Set_Environment_Defaults(Count);
+
+		App->CL10_Ini->GetString("Area_0", "Material_File", App->SBC_Scene->B_Area[Count]->Material_File, MAX_PATH);
+
+		App->CL10_Ini->GetString("Position", "Mesh_Pos", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+
+		App->GDCL_Scene_Data->B_Area[Count]->Area_Node->setPosition(x, y, z);
+		App->GDCL_Scene_Data->B_Area[Count]->Phys_Body->getWorldTransform().setOrigin(btVector3(x, y, z));
+		App->GDCL_Scene_Data->B_Area[Count]->Physics_Pos = Ogre::Vector3(x, y, z);
+
+		strcpy(App->GDCL_Scene_Data->B_Area[Count]->Area_Name, Area_Name);
+		App->GDCL_Scene_Data->B_Area[Count]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Areas_Folder, Area_Name, Count, false);
+
+		// ------------------------------------ Environment
+
+		//--------------- Sound
+		App->CL10_Ini->GetString("Environment", "Sound_File", chr_Tag1, MAX_PATH);
+		strcpy(App->GDCL_Scene_Data->B_Area[0]->S_Environment[0]->Sound_File, chr_Tag1);
+
+		App->CL10_Ini->GetString("Environment", "Snd_Volume", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f", &x);
+		App->GDCL_Scene_Data->B_Area[0]->S_Environment[0]->SndVolume = x;
+
+		Int_Tag = App->CL10_Ini->GetInt("Environment", "Sound_Play", 0, 10);
+		App->GDCL_Scene_Data->B_Area[0]->S_Environment[0]->Play = Int_Tag;
+
+		Int_Tag = App->CL10_Ini->GetInt("Environment", "Sound_Loop", 0, 10);
+		App->GDCL_Scene_Data->B_Area[0]->S_Environment[0]->Loop = Int_Tag;
+
+		//--------------- Light
+		App->CL10_Ini->GetString("Environment", "Ambient_Colour", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+		App->GDCL_Scene_Data->B_Area[0]->S_Environment[0]->AmbientColour = Ogre::Vector3(x, y, z);
+
+		App->CL10_Ini->GetString("Environment", "Diffuse_Colour", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+		App->GDCL_Scene_Data->B_Area[0]->S_Environment[0]->DiffuseColour = Ogre::Vector3(x, y, z);
+
+		App->CL10_Ini->GetString("Environment", "Specular_Colour", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+		App->GDCL_Scene_Data->B_Area[0]->S_Environment[0]->SpecularColour = Ogre::Vector3(x, y, z);
+
+		App->CL10_Ini->GetString("Environment", "Light_Position", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+		App->GDCL_Scene_Data->B_Area[0]->S_Environment[0]->Light_Position = Ogre::Vector3(x, y, z);
+
+		//--------------- Sky
+		Int_Tag = App->CL10_Ini->GetInt("Environment", "Sky_Enable", 0, 10);
+		App->GDCL_Scene_Data->B_Area[0]->S_Environment[0]->Enabled = Int_Tag;
+
+		Int_Tag = App->CL10_Ini->GetInt("Environment", "Sky_Type", 0, 10);
+		App->GDCL_Scene_Data->B_Area[0]->S_Environment[0]->type = Int_Tag;
+
+		App->CL10_Ini->GetString("Environment", "Sky_Material", chr_Tag1, MAX_PATH);
+		strcpy(App->GDCL_Scene_Data->B_Area[0]->S_Environment[0]->Material, chr_Tag1);
+
+		App->CL10_Ini->GetString("Environment", "Sky_Curvature", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f", &x);
+		App->GDCL_Scene_Data->B_Area[0]->S_Environment[0]->Curvature = x;
+
+		App->CL10_Ini->GetString("Environment", "Sky_Tiling", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f", &x);
+		App->GDCL_Scene_Data->B_Area[0]->S_Environment[0]->Tiling = x;
+
+		App->CL10_Ini->GetString("Environment", "Sky_Distance", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f", &x);
+		App->GDCL_Scene_Data->B_Area[0]->S_Environment[0]->Distance = x;
+
+		//--------------- Fog
+		Int_Tag = App->CL10_Ini->GetInt("Environment", "Fog_On", 0, 10);
+		App->GDCL_Scene_Data->B_Area[0]->S_Environment[0]->Fog_On = Int_Tag;
+
+		Int_Tag = App->CL10_Ini->GetInt("Environment", "Fog_Mode", 0, 10);
+		App->GDCL_Scene_Data->B_Area[0]->S_Environment[0]->Fog_Mode = Int_Tag;
+
+		App->CL10_Ini->GetString("Environment", "Fog_Colour", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+		App->GDCL_Scene_Data->B_Area[0]->S_Environment[0]->Fog_Colour = Ogre::Vector3(x, y, z);
+
+		App->CL10_Ini->GetString("Environment", "Fog_Start", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f", &x);
+		App->GDCL_Scene_Data->B_Area[0]->S_Environment[0]->Fog_Start = x;
+
+		App->CL10_Ini->GetString("Environment", "Fog_End", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f", &x);
+		App->GDCL_Scene_Data->B_Area[0]->S_Environment[0]->Fog_End = x;
+
+		App->CL10_Ini->GetString("Environment", "Fog_Density", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f", &x);
+		App->GDCL_Scene_Data->B_Area[0]->S_Environment[0]->Fog_Density = x;
+
+		Count++;
+		App->SBC_Scene->Area_Count++;
+	}
+
+	//App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Areas_Folder);
+
+	return 1;
+}
+
+// *************************************************************************
+// *	  	Load_Get_Resource_Path:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+bool GD10_Load_Scene::Load_Get_Resource_Path()
+{
+	//App->Log_Messageg("bool SB_Project::Load_Get_Resource_Path()");
+
+	m_Main_Assets_Path[0] = 0;
+
+	strcpy(m_Main_Assets_Path, m_Project_Sub_Folder);
+	strcat(m_Main_Assets_Path, "\\");
+
+	strcat(m_Main_Assets_Path, m_Level_Name);
+	strcat(m_Main_Assets_Path, "\\");
+
+	strcat(m_Main_Assets_Path, "Assets");
+	strcat(m_Main_Assets_Path, "\\");
+
+	App->GDCL_Scene_Data->Add_Resource_Location_Project(m_Main_Assets_Path);
+
+	return 1;
+}
+
+// *************************************************************************
+// *	  		Set_Paths:- Terry and Hazel Flanigan 2022				   *
+// *************************************************************************
+void GD10_Load_Scene::Set_Paths()
+{
+	//App->Log_Messageg("void SB_Project::Set_Paths()");
+
+	char Project_File_Name[MAX_PATH];
+	char Project_Path_File_Name[MAX_PATH];
+
+	strcpy(Project_Path_File_Name, App->GameDirecory_FullPath);
+	strcat(Project_Path_File_Name, "\\Game\\Project.SBProj");
+
+	strcpy(Project_File_Name, "Project.SBProj");
+
+
+	strcpy(m_Level_File_Name, Project_File_Name);
+	strcpy(m_Project_Sub_Folder, Project_Path_File_Name);
+	strcpy(m_Ini_Path_File_Name, Project_Path_File_Name);
+
+	strcpy(m_Level_Folder_Path, Project_Path_File_Name);
+
+	// Get path no file 
+	int len1 = strlen(m_Level_File_Name);
+	int len2 = strlen(m_Project_Sub_Folder);
+	strcpy(m_Project_Sub_Folder, m_Project_Sub_Folder);
+	m_Project_Sub_Folder[len2 - (len1 + 1)] = 0;
+
+}
+
 //---------------------------------------------------------------------------------------------------------------------
 // *************************************************************************
 // *				gdLoader_LoadGDScene_New   Terry Bernie  			   *
