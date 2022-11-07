@@ -27,5 +27,12 @@ class SB_Build
 public:
 	SB_Build();
 	~SB_Build();
+
+	void Start_Project_Build();
+
+protected:
+	static LRESULT CALLBACK Project_Build_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+
 };
 

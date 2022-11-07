@@ -822,9 +822,9 @@ LRESULT CALLBACK SB_TopTabs::Game_TB_Proc(HWND hDlg, UINT message, WPARAM wParam
 
 		if (LOWORD(wParam) == IDC_BT_GT_BUILDGAME)
 		{
-			if (App->SBC_Scene->Area_Added == 1)
+			//if (App->SBC_Scene->Area_Added == 1)
 			{
-				
+				App->SBC_Build->Start_Project_Build();
 			}
 			return TRUE;
 		}
