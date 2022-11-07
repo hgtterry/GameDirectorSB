@@ -47,7 +47,7 @@
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GDShell</TargetName>
-    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.gex</TargetExt>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.exe</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -90,7 +90,7 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>comctl32.lib;OgreMain.lib;OgreOverlay.lib;OgreTerrain.lib;BulletDynamics.lib;BulletCollision.lib;LinearMath.lib;irrKlang.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)GDShell.gex</OutputFile>
+      <OutputFile>$(OutDir)GDShell.exe</OutputFile>
       <AdditionalLibraryDirectories>..\..\..\Anim19_OSDN\Common\Bullet\lib;..\..\..\Anim19_OSDN\Common\Soil\lib;..\..\..\Anim19_OSDN\Common\lib\release;..\..\..\Anim19_OSDN\Common\boost\lib;..\..\..\Anim19_OSDN\Common\boost\libs49;..\..\..\Anim19_OSDN\Common\Devil\lib;..\..\..\Anim19_OSDN\Common\Assimp\Lib;..\..\..\Anim19_OSDN\Common\irrKlang\Libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateDebugInformation>false</GenerateDebugInformation>

@@ -11,7 +11,7 @@ GD_SoundMgr::GD_SoundMgr(void)
 	SndVolume=0.5;
 	IsObject = 0;
 	strcpy(mSoundFile,"");
-	strcpy(Default_Folder,App->EquityDirecory_FullPath);
+	strcpy(Default_Folder,App->GameDirecory_FullPath);
 	
 }
 

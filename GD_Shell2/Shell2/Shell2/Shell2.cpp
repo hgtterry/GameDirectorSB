@@ -43,7 +43,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 {
 
 	App = new BT_App();
-	_getcwd(App->EquityDirecory_FullPath,1024);
+	_getcwd(App->GameDirecory_FullPath,1024);
 
 	App->InitApp();
 
@@ -55,13 +55,13 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	App->ScreenHeight = GetSystemMetrics(SM_CYSCREEN);
 	App->ScreenWidth = GetSystemMetrics(SM_CXSCREEN);
 
-	App->CL10_Load_Scene->Load_Config_File();
+	//App->CL10_Load_Scene->Load_Config_File();
 
 	App->Ogre17->InitOgre();
 	
 
 	App->GDCL_Scene_Data->Start_Scene();
-	App->GDCL_Scene_Data->GameMode();
+	//App->GDCL_Scene_Data->GameMode();
 
 	App->Ogre17->mRoot->startRendering();
 

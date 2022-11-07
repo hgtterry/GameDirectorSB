@@ -54,20 +54,21 @@ void GD_Player::SetUp(void)
 
 	CameraPitch = App->Ogre17->mSceneMgr->createCamera("PlayerPitch");
 
-	Player_Ent->getSkeleton()->setBlendMode(ANIMBLEND_CUMULATIVE);
+	//Player_Ent->getSkeleton()->setBlendMode(ANIMBLEND_CUMULATIVE);
 
-	
-	// Get the two halves of the idle animation.
-	App->Ogre17->PhysicsFrameListener->Animate_State = Player_Ent->getAnimationState("IdleBase");
-	App->Ogre17->PhysicsFrameListener->Animate_State2 = Player_Ent->getAnimationState("IdleTop");
+	//
+	//// Get the two halves of the idle animation.
+	//App->Ogre17->PhysicsFrameListener->Animate_State = Player_Ent->getAnimationState("IdleBase");
+	//App->Ogre17->PhysicsFrameListener->Animate_State2 = Player_Ent->getAnimationState("IdleTop");
 
-	// Enable both of them and set them to loop.
-	App->Ogre17->PhysicsFrameListener->Animate_State->setLoop(true);
-	App->Ogre17->PhysicsFrameListener->Animate_State2->setLoop(true);
-	App->Ogre17->PhysicsFrameListener->Animate_State->setEnabled(true);
-	App->Ogre17->PhysicsFrameListener->Animate_State2->setEnabled(true);
+	//// Enable both of them and set them to loop.
+	//App->Ogre17->PhysicsFrameListener->Animate_State->setLoop(true);
+	//App->Ogre17->PhysicsFrameListener->Animate_State2->setLoop(true);
+	//App->Ogre17->PhysicsFrameListener->Animate_State->setEnabled(true);
+	//App->Ogre17->PhysicsFrameListener->Animate_State2->setEnabled(true);
 
-	App->Ogre17->PhysicsFrameListener->Animate_Ogre = 1;
+	//App->Ogre17->PhysicsFrameListener->Animate_Ogre = 1;
+
 }
 
 // *************************************************************************
@@ -77,19 +78,19 @@ void GD_Player::Load_Player(void)
 {
 	Initialize(StartPos,Capsule_Mass, Capsule_Radius,Capsule_Height);
 	
-	Player_Ent->getSkeleton()->setBlendMode(ANIMBLEND_CUMULATIVE);
+	//Player_Ent->getSkeleton()->setBlendMode(ANIMBLEND_CUMULATIVE);
 
-	// Get the two halves of the idle animation.
-	App->Ogre17->PhysicsFrameListener->Animate_State = Player_Ent->getAnimationState("IdleBase");
-	App->Ogre17->PhysicsFrameListener->Animate_State2 = Player_Ent->getAnimationState("IdleTop");
+	//// Get the two halves of the idle animation.
+	//App->Ogre17->PhysicsFrameListener->Animate_State = Player_Ent->getAnimationState("IdleBase");
+	//App->Ogre17->PhysicsFrameListener->Animate_State2 = Player_Ent->getAnimationState("IdleTop");
 
-	// Enable both of them and set them to loop.
-	App->Ogre17->PhysicsFrameListener->Animate_State->setLoop(true);
-	App->Ogre17->PhysicsFrameListener->Animate_State2->setLoop(true);
-	App->Ogre17->PhysicsFrameListener->Animate_State->setEnabled(true);
-	App->Ogre17->PhysicsFrameListener->Animate_State2->setEnabled(true);
+	//// Enable both of them and set them to loop.
+	//App->Ogre17->PhysicsFrameListener->Animate_State->setLoop(true);
+	//App->Ogre17->PhysicsFrameListener->Animate_State2->setLoop(true);
+	//App->Ogre17->PhysicsFrameListener->Animate_State->setEnabled(true);
+	//App->Ogre17->PhysicsFrameListener->Animate_State2->setEnabled(true);
 
-	App->Ogre17->PhysicsFrameListener->Animate_Ogre = 1;
+	//App->Ogre17->PhysicsFrameListener->Animate_Ogre = 1;
 }
 
 // *************************************************************************
@@ -97,8 +98,8 @@ void GD_Player::Load_Player(void)
 // *************************************************************************
 void GD_Player::Initialize(const Ogre::Vector3 p, float mass, float radius, float height)
 {
-	// ------------------- Ogre
-	Player_Ent = App->Ogre17->mSceneMgr->createEntity("Player_1","Sinbad.mesh",App->Ogre17->PermResourceGroup);
+	//// ------------------- Ogre
+	Player_Ent = App->Ogre17->mSceneMgr->createEntity("Player_1","Test_cube.mesh",App->Ogre17->PermResourceGroup);
 	Player_Node = App->Ogre17->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Player_Node->attachObject(Player_Ent); 
 	Player_Node->setPosition(p.x, p.y, p.z);

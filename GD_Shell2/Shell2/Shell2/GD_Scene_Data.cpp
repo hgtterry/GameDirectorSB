@@ -520,30 +520,8 @@ bool GD_Scene_Data::Show_Entities(bool YesNo)
 // *************************************************************************
 bool GD_Scene_Data::Start_Scene()
 {
-	// ------------------------------ Things needed
-	//App->GDCL_Visuals->MarkerBB_Setup();
-	// --------------------------------------------
-
 	int Index = App->GDCL_Scene_Data->ObjectCount;
 
-	/*App->GDCL_Scene_Data->S_Object[Index] = new Object_Type;
-	App->GDCL_Scene_Data->SetObjectDefaults(Index);
-
-	strcpy(App->GDCL_Scene_Data->S_Object[Index]->MeshName,"RF_Level1.mesh");
-
-	App->GDCL_Scene_Data->S_Object[Index]->OgreEntity = App->Ogre17->mSceneMgr->createEntity("Start_Room","RF_Level1.mesh",App->Ogre17->PermResourceGroup);
-	App->GDCL_Scene_Data->S_Object[Index]->OgreNode = App->Ogre17->mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	App->GDCL_Scene_Data->S_Object[Index]->OgreNode->attachObject(App->GDCL_Scene_Data->S_Object[Index]->OgreEntity); 
-	
-	App->GDCL_Scene_Data->S_Object[Index]->OgreNode->setVisible(true);
-	App->GDCL_Scene_Data->S_Object[Index]->OgreNode->setScale(App->GDCL_Scene_Data->S_Object[Index]->Mesh_Scale);
-	App->GDCL_Scene_Data->S_Object[Index]->OgreNode->setPosition(57.000000, -47.000000, -107.000000);
-
-	App->GDCL_Scene_Data->S_Object[Index]->Mesh_Pos = Ogre::Vector3(57.000000, -47.000000, -107.000000);
-
-	strcpy(App->GDCL_Scene_Data->S_Object[Index]->Name,"Main_Room");*/
-
-	
 	App->GDCL_Player->SetUp();
 
 	App->Ogre17->PhysicsFrameListener->GD_Run_Physics = 1;
@@ -553,18 +531,15 @@ bool GD_Scene_Data::Start_Scene()
 
 	App->GDCL_Scene_Data->SceneLoaded = 1;
 
-	//App->GDCL_Scene_Data->ObjectCount++;  // Must be last line
+	return 1;
 
-	
-	///App->GDCL_Add_Objects->Add_Stock_Message();
-	
 	Read_LoadLevel(); // Get Scene File Name From External File
 	
 	char FileName[255];
 	char ParhFile[255];
 	strcpy(FileName,First_SceneFile);
 	
-	strcpy(ParhFile,App->EquityDirecory_FullPath);
+	strcpy(ParhFile,App->GameDirecory_FullPath);
 	strcat(ParhFile,"\\");
 	strcat(ParhFile,"Media\\Levels\\");
 	strcat(ParhFile,First_SceneFile); // Create Relative File from EXE
@@ -586,7 +561,7 @@ bool GD_Scene_Data::Read_LoadLevel(void)
 	char Tag1[1024];
 	
 	char FileName[2048];
-	strcpy(FileName,App->EquityDirecory_FullPath);
+	strcpy(FileName,App->GameDirecory_FullPath);
 	strcat(FileName,"\\Load_Level.gds");
 
 	App->CL10_Ini->SetPathName(FileName);

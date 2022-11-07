@@ -749,7 +749,7 @@ bool GD10_Load_Scene::Load_Config_File()
 	char ReadBuf[256];
 	bool mBool = 0;
 	char FileName[2048];
-	strcpy(FileName, App->EquityDirecory_FullPath);
+	strcpy(FileName, App->GameDirecory_FullPath);
 	strcat(FileName, "\\Config.cfg");
 
 	App->CL10_Ini->SetPathName(FileName);

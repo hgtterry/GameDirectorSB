@@ -84,7 +84,7 @@ public:
 	char FileName[255];
 	char Path_FileName[255];
 	char LevelDirectory[1024];
-	char EquityDirecory_FullPath[1024];
+	char GameDirecory_FullPath[1024];
 
 	bool TestText;
 	bool FullScreen;

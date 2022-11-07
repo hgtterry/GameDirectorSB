@@ -82,84 +82,18 @@ bool GameDirectorOgre::SetUpResources(void)
 	Ogre::String File; 
 	char Copy[1024];
 
-	strcpy(Copy,App->EquityDirecory_FullPath);
+	strcpy(Copy,App->GameDirecory_FullPath);
 	App->GDCL_Utilities->ReverseBackSlash(Copy);
 	File = App->GDCL_Utilities->Return_Chr;
 	
 	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(PermResourceGroup);
 
 	//-------------------------------- Zip Files
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation( "Media/Core_Data/OgreCore.zip", "Zip",
-																	PermResourceGroup );
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation( "Media/Core_Data/Equity.zip", "Zip",
-																	PermResourceGroup );
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation( "Media/Core_Data/GDCore.zip", "Zip",
-																	PermResourceGroup );
+	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/OgreCore.zip", "Zip", PermResourceGroup);
 
-
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation( File+"/Media/Zipper", "FileSystem",
-																	PermResourceGroup );
-
-
-	//-------------------------------- Materials
-
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation( File+"/Media/Materials", "FileSystem",
-																	PermResourceGroup );
-
-	/*Ogre::ResourceGroupManager::getSingleton().addResourceLocation( File+"/Media/materials/Actor_scripts", "FileSystem",
-																	PermResourceGroup );
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation( File+"/Media/materials/Global_scripts", "FileSystem",
-																	PermResourceGroup );
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation( File+"/Media/materials/programs", "FileSystem",
-																	PermResourceGroup );*/
-
-
-	//-------------------------------- Textures
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation( File+"/Media/textures", "FileSystem",
-																	PermResourceGroup );
-	/*Ogre::ResourceGroupManager::getSingleton().addResourceLocation( File+"/Media/textures/Test", "FileSystem",
-																	PermResourceGroup );
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation( File+"/Media/textures/misc", "FileSystem",
-																	PermResourceGroup );
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation( File+"/Media/textures/Sinbad", "FileSystem",
-																	PermResourceGroup );
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation( File+"/Media/textures/Hall", "FileSystem",
-																	PermResourceGroup );*/
-
-
-	//-------------------------------- Actors/Mesh
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation( File+"/Media/Actors", "FileSystem",
-																	PermResourceGroup );
-	/*Ogre::ResourceGroupManager::getSingleton().addResourceLocation( File+"/Media/Actors/Test", "FileSystem",
-																	PermResourceGroup );
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation( File+"/Media/Actors/Weapons", "FileSystem",
-																	PermResourceGroup );
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation( File+"/Media/Actors/Ammo", "FileSystem",
-																	PermResourceGroup );
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation( File+"/Media/Actors/Medikits", "FileSystem",
-																	PermResourceGroup );
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation( File+"/Media/Actors/Collectables", "FileSystem",
-																	PermResourceGroup );
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation( File+"/Media/Actors/Kits_Fence", "FileSystem",
-																	PermResourceGroup );
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation( File+"/Media/Actors/Basic_Shapes", "FileSystem",
-																	PermResourceGroup );
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation( File+"/Media/Actors/Tools", "FileSystem",
-																	PermResourceGroup );
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation( File+"/Media/Actors/Buildings", "FileSystem",
-																	PermResourceGroup );
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation( File+"/Media/Actors/Rooms", "FileSystem",
-																	PermResourceGroup );
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation( File+"/Media/Actors/Prefabs", "FileSystem",
-																	PermResourceGroup );
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation( File+"/Media/Actors/Misc", "FileSystem",
-																	PermResourceGroup );
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation( File+"/Media/Actors/GDStock", "FileSystem",
-																	PermResourceGroup );
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation( File+"/Media/Actors/Characters", "FileSystem",
-																	PermResourceGroup );
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation( File+"/Media/Levels/RF_Level1_Ogre", "FileSystem",
-																	PermResourceGroup );*/
+	//-------------------------------- File System
+	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/App_Resources", "FileSystem", PermResourceGroup);
+	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/Zipper", "FileSystem", PermResourceGroup);
 
 	return 1;
 }
@@ -169,8 +103,8 @@ bool GameDirectorOgre::SetUpResources(void)
 // *************************************************************************
 bool GameDirectorOgre::Configure(void)
 {
-	Ogre::RenderSystem* rs = mRoot->getRenderSystemByName("Direct3D9 Rendering Subsystem");
-	if (!(rs->getName() == "Direct3D9 Rendering Subsystem"))
+	Ogre::RenderSystem* rs = mRoot->getRenderSystemByName("OpenGL Rendering Subsystem");
+	if (!(rs->getName() == "OpenGL Rendering Subsystem"))
 	{
 		return false; //No RenderSystem found
 	}
@@ -179,22 +113,22 @@ bool GameDirectorOgre::Configure(void)
 	char buff[1025];
 	//if (Full_Screen == 1)
 	//{
-		//sprintf(buff, "%i x %i @ 32-bit", App->ScreenWidth, App->ScreenHeight);
+		sprintf(buff, "%i x %i @ 32-bit", App->ScreenWidth, App->ScreenHeight);
 	//}
 	//else
 	//{
-		sprintf(buff, "%i x %i @ 32-bit colour", 1024, 768);
+		//sprintf(buff, "%i x %i @ 32-bit colour", 1024, 768);
 	//}
 	
 	rs->setConfigOption("Video Mode",buff);
 
 	//if (Full_Screen == 1)
 	{
-		//rs->setConfigOption("Full Screen", "Yes");
+		rs->setConfigOption("Full Screen", "Yes");
 	}
 	//else
 	{
-		rs->setConfigOption("Full Screen", "No");
+		//rs->setConfigOption("Full Screen", "No");
 	}
 
 	mRoot->setRenderSystem(rs);
