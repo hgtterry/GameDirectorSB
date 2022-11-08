@@ -54,6 +54,7 @@ BT_App::BT_App(void)
 	SBC_Aera = nullptr;
 	SBC_Physics = nullptr;
 	SBC_Object = nullptr;
+	SBC_Objects_Create = nullptr;
 
 }
 
@@ -109,6 +110,7 @@ bool BT_App::InitApp(void)
 	SBC_Aera =					new SB_Aera();
 	SBC_Physics =				new SB_Physics();
 	SBC_Object =				new SB_Object();
+	SBC_Objects_Create =		new SB_Objects_Create();
 
 	return 1;
 }

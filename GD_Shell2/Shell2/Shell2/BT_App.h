@@ -40,6 +40,7 @@
 #include "SB_Aera.h"
 #include "SB_Physics.h"
 #include "SB_Object.h"
+#include "SB_Objects_Create.h"
 
 class BT_App
 {
@@ -62,6 +63,7 @@ public:
 	SB_Aera*					SBC_Aera;
 	SB_Physics*					SBC_Physics;
 	SB_Object*					SBC_Object;
+	SB_Objects_Create*			SBC_Objects_Create;
 
 	BT_App(void);
 	~BT_App(void);

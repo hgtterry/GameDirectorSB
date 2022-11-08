@@ -25,7 +25,7 @@ distribution.
 */
 
 #include "stdafx.h"
-#include "GD19_App.h"
+#include "BT_App.h"
 #include "SB_Objects_Create.h"
 
 SB_Objects_Create::SB_Objects_Create(void)
@@ -43,154 +43,60 @@ SB_Objects_Create::~SB_Objects_Create(void)
 bool SB_Objects_Create::Add_Objects_From_File() // From File
 {
 	
-	int Object_Count = App->SBC_Scene->Object_Count;
+	int Object_Count = App->GDCL_Scene_Data->Object_Count;
 	int Count = 0;
 
 	while (Count < Object_Count)
 	{
-		if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Sound)
+		if (App->GDCL_Scene_Data->B_Object[Count]->Usage == Enums::Usage_Sound)
 		{
 			Create_Sound_Entity(Count);
-
-			HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Sounds_Folder, App->SBC_Scene->B_Object[Count]->Mesh_Name, Count, false);
-			App->SBC_Scene->B_Object[Count]->FileViewItem = Temp;
-
-			App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Sounds_Folder);
 		}
-		else if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Message)
+		else if (App->GDCL_Scene_Data->B_Object[Count]->Usage == Enums::Usage_Message)
 		{
 			App->SBC_Messages->Create_Message_Entity(Count);
-			App->SBC_Scene->B_Object[Count]->Set_ImGui_Panel_Name();
+			App->GDCL_Scene_Data->B_Object[Count]->Set_ImGui_Panel_Name();
 
-			HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Message_Trigger_Folder, App->SBC_Scene->B_Object[Count]->Mesh_Name, Count, false);
-			App->SBC_Scene->B_Object[Count]->FileViewItem = Temp;
-
-			App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Message_Trigger_Folder);
 		}
-		else if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Move)
+		else if (App->GDCL_Scene_Data->B_Object[Count]->Usage == Enums::Usage_Move)
 		{
 			Create_Move_Entity(Count);
 
-			HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Move_Folder, App->SBC_Scene->B_Object[Count]->Mesh_Name, Count, false);
-			App->SBC_Scene->B_Object[Count]->FileViewItem = Temp;
-
-			App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Move_Folder);
-
 		}
-		else if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Teleport)
+		else if (App->GDCL_Scene_Data->B_Object[Count]->Usage == Enums::Usage_Teleport)
 		{
 			Create_TeleportEntity(Count);
 
-			HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Teleporters_Folder, App->SBC_Scene->B_Object[Count]->Mesh_Name, Count, false);
-			App->SBC_Scene->B_Object[Count]->FileViewItem = Temp;
-
-			App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Teleporters_Folder);
-
 		}
-		else if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Colectable)
+		else if (App->GDCL_Scene_Data->B_Object[Count]->Usage == Enums::Usage_Colectable)
 		{
 			App->SBC_Objects_Create->Add_New_Object(Count, 0);
 
-			App->SBC_Scene->B_Object[Count]->Altered = 0;
-			App->SBC_Scene->B_Object[Count]->Usage = Enums::Usage_Colectable;
-			App->SBC_Scene->B_Object[Count]->Phys_Body->setUserIndex(Enums::Usage_Colectable);
-			App->SBC_Scene->B_Object[Count]->Phys_Body->setUserIndex2(Count);
-			App->SBC_Scene->B_Object[Count]->Folder = Enums::Folder_Collectables;
-
-			App->SBC_Scene->B_Object[Count]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Collectables_Folder, 
-				App->SBC_Scene->B_Object[Count]->Mesh_Name, Count, false);
-
-			App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Collectables_Folder);
+			App->GDCL_Scene_Data->B_Object[Count]->Altered = 0;
+			App->GDCL_Scene_Data->B_Object[Count]->Usage = Enums::Usage_Colectable;
+			App->GDCL_Scene_Data->B_Object[Count]->Phys_Body->setUserIndex(Enums::Usage_Colectable);
+			App->GDCL_Scene_Data->B_Object[Count]->Phys_Body->setUserIndex2(Count);
+			//App->GDCL_Scene_Data->B_Object[Count]->Folder = Enums::Folder_Collectables;
 
 		}
-		else if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Teleport)
+		else if (App->GDCL_Scene_Data->B_Object[Count]->Usage == Enums::Usage_Teleport)
 		{
 			//Add_TeleportEntity_FFile(Count);
 		}
 		else
 		{
-			App->SBC_Objects_Create->Add_New_Object(Count,0);
-			App->SBC_Scene->B_Object[Count]->Altered = 0;
-			App->SBC_Scene->B_Object[Count]->Folder = Enums::Folder_Objects;
-			App->SBC_Scene->B_Object[Count]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Objects_Folder, App->SBC_Scene->B_Object[Count]->Mesh_Name, Count, false);
+			Add_New_Object(Count,0);
+			App->GDCL_Scene_Data->B_Object[Count]->Altered = 0;
+			App->GDCL_Scene_Data->B_Object[Count]->Folder = Enums::Folder_Objects;
 		}
 
 		Count++;
 	}
 
-	if (Object_Count > 0)
-	{
-		App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Objects_Folder);
-		ShowWindow(App->SBC_Properties->Properties_Dlg_hWnd, 1);
-		App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[0]->FileViewItem);
-	}
-
-	//App->Cl_FileView->Select_Item(NULL);
 	
-
 	return 1;
 }
 
-// *************************************************************************
-//		Add_Objects_From_MeshViewer:- Terry and Hazel Flanigan 2022		   *
-// *************************************************************************
-void SB_Objects_Create::Add_Objects_From_MeshViewer()
-{
-	int Index = App->SBC_Scene->Object_Count;
-
-	App->SBC_Scene->B_Object[Index] = new Base_Object();
-	
-	Base_Object* Object = App->SBC_Scene->B_Object[Index];
-	Object->This_Object_ID = App->SBC_Scene->UniqueID_Object_Counter; // Unique ID
-
-
-	strcpy(Object->Mesh_Name, App->SBC_MeshViewer->Object_Name);
-	strcpy(Object->Mesh_FileName, App->SBC_MeshViewer->Selected_MeshFile);
-	strcpy(Object->Mesh_Resource_Path, m_ResourcePath);
-	strcpy(Object->Material_File, App->SBC_MeshViewer->m_Material_File);
-
-	Object->Type = App->SBC_MeshViewer->Physics_Type;
-	Object->Shape = App->SBC_MeshViewer->Physics_Shape;
-
-	App->SBC_Objects_Create->Dispatch_MeshViewer();
-	
-	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[Index]->FileViewItem);
-
-
-	App->SBC_Scene->UniqueID_Object_Counter++; // Unique ID
-	App->SBC_Scene->Object_Count++;  // Must be last line
-
-	App->SBC_Scene->Scene_Modified = 1;
-}
-
-// *************************************************************************
-//			Dispatch_MeshViewer:- Terry and Hazel Flanigan 2022			   *
-// *************************************************************************
-bool SB_Objects_Create::Dispatch_MeshViewer()
-{
-	int Index = App->SBC_Scene->Object_Count;
-
-	if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area) // Area
-	{
-		App->SBC_Aera->Add_Aera_To_Project(0, App->SBC_MeshViewer->Selected_MeshFile, m_ResourcePath);
-
-	}
-	else if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables) // Collectables
-	{
-		Create_Colectable_Entity(Index);
-		App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Collectables_Folder);
-	}
-	else
-	{
-		Add_New_Object(Index, 1);
-		App->SBC_Scene->B_Object[Index]->Altered = 1;
-		App->SBC_Scene->B_Object[Index]->Folder = Enums::Folder_Objects;
-		App->SBC_Scene->B_Object[Index]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Objects_Folder, 
-			App->SBC_Scene->B_Object[Index]->Mesh_Name, Index, true);
-
-	}
-	return 1;
-}
 
 // *************************************************************************
 //				Add_New_Object:- Terry and Hazel Flanigan 2022			   *
@@ -201,7 +107,7 @@ bool SB_Objects_Create::Add_New_Object(int Index,bool From_MeshViewer)
 	char ConNum[256];
 	char Ogre_Name[256];
 	
-	Base_Object* Object = App->SBC_Scene->B_Object[Index];
+	Base_Object* Object = App->GDCL_Scene_Data->B_Object[Index];
 
 
 	strcpy_s(Ogre_Name, "GDEnt_");
@@ -210,28 +116,18 @@ bool SB_Objects_Create::Add_New_Object(int Index,bool From_MeshViewer)
 
 	strcpy(Mesh_File ,Object->Mesh_FileName);
 
-	Object->Object_Ent = App->Cl19_Ogre->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->SBC_Scene->Project_Resource_Group);
-	Object->Object_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	Object->Object_Ent = App->Ogre17->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->GDCL_Scene_Data->Project_Resource_Group);
+	Object->Object_Node = App->Ogre17->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Object->Object_Node->attachObject(Object->Object_Ent);
 
 	Object->Object_Node->setVisible(true);
 
 	Object->Object_Node->setOrientation(Object->Mesh_Quat);
 
-	// If from MeshViewer Get Placement Method
-	if (From_MeshViewer == 1 && App->SBC_MeshViewer->Placement_Camera == 1)
-	{
-		Ogre::Vector3 Pos = App->SBC_Object->GetPlacement();
-		Object->Mesh_Pos = Pos;
-		Object->Object_Node->setPosition(Pos);
-	}
-	else
-	{
-		Object->Object_Node->setPosition(Object->Mesh_Pos);
-	}
-
-
-	App->SBC_Scene->Scene_Loaded = 1;
+	
+	Object->Object_Node->setPosition(Object->Mesh_Pos);
+	
+	//App->GDCL_Scene_Data->Scene_Loaded = 1;
 
 	
 	//---------------------- Static
@@ -299,13 +195,11 @@ bool SB_Objects_Create::Add_New_Object(int Index,bool From_MeshViewer)
 	}
 
 
-	if (Object->Usage == Enums::Usage_Room) // Rooms
-	{
-		App->SBC_Scene->Area_Added = 1;
-	}
+	//if (Object->Usage == Enums::Usage_Room) // Rooms
+	//{
+	//	App->SBC_Scene->Area_Added = 1;
+	//}
 	
-	ShowWindow(App->GD_Properties_Hwnd, 1);
-
 	return 1;
 }
 
@@ -315,7 +209,7 @@ bool SB_Objects_Create::Add_New_Object(int Index,bool From_MeshViewer)
 void SB_Objects_Create::Add_Physics_Box(bool Dynamic,int Index)
 {
 
-	Base_Object* Object = App->SBC_Scene->B_Object[Index];
+	Base_Object* Object = App->GDCL_Scene_Data->B_Object[Index];
 
 	if (Dynamic == 1)
 	{
@@ -364,7 +258,7 @@ void SB_Objects_Create::Add_Physics_Box(bool Dynamic,int Index)
 	btCollisionShape* newRigidShape = new btBoxShape(btVector3(sx, sy, sz));
 	newRigidShape->calculateLocalInertia(mass, localInertia);
 
-	App->Cl_Bullet->collisionShapes.push_back(newRigidShape);
+	App->GDCL_Bullet->collisionShapes.push_back(newRigidShape);
 
 	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
 
@@ -394,7 +288,7 @@ void SB_Objects_Create::Add_Physics_Box(bool Dynamic,int Index)
 	int f = Object->Phys_Body->getCollisionFlags();
 	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
-	App->Cl_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
+	App->GDCL_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
 	Set_Physics(Index);
 }
@@ -404,7 +298,7 @@ void SB_Objects_Create::Add_Physics_Box(bool Dynamic,int Index)
 // *************************************************************************
 void SB_Objects_Create::Add_Physics_Sphere(bool Dynamic, int Index)
 {
-	Base_Object* Object = App->SBC_Scene->B_Object[Index];
+	Base_Object* Object = App->GDCL_Scene_Data->B_Object[Index];
 	
 	if (Dynamic == 1)
 	{
@@ -451,7 +345,7 @@ void SB_Objects_Create::Add_Physics_Sphere(bool Dynamic, int Index)
 	btCollisionShape* newRigidShape = new btSphereShape(Radius);
 	newRigidShape->calculateLocalInertia(mass, localInertia);
 
-	App->Cl_Bullet->collisionShapes.push_back(newRigidShape);
+	App->GDCL_Bullet->collisionShapes.push_back(newRigidShape);
 
 	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
 
@@ -480,7 +374,7 @@ void SB_Objects_Create::Add_Physics_Sphere(bool Dynamic, int Index)
 	int f = Object->Phys_Body->getCollisionFlags();
 	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
-	App->Cl_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
+	App->GDCL_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
 	Set_Physics(Index);
 }
@@ -490,7 +384,7 @@ void SB_Objects_Create::Add_Physics_Sphere(bool Dynamic, int Index)
 // *************************************************************************
 void SB_Objects_Create::Add_Physics_Capsule(bool Dynamic, int Index)
 {
-	Base_Object* Object = App->SBC_Scene->B_Object[Index];
+	Base_Object* Object = App->GDCL_Scene_Data->B_Object[Index];
 
 	if (Dynamic == 1)
 	{
@@ -542,7 +436,7 @@ void SB_Objects_Create::Add_Physics_Capsule(bool Dynamic, int Index)
 	btCollisionShape* newRigidShape = new btCapsuleShape(Radius, sy);
 	newRigidShape->calculateLocalInertia(mass, localInertia);
 
-	App->Cl_Bullet->collisionShapes.push_back(newRigidShape);
+	App->GDCL_Bullet->collisionShapes.push_back(newRigidShape);
 
 	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
 
@@ -572,7 +466,7 @@ void SB_Objects_Create::Add_Physics_Capsule(bool Dynamic, int Index)
 	int f = Object->Phys_Body->getCollisionFlags();
 	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
-	App->Cl_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
+	App->GDCL_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
 	Set_Physics(Index);
 }
@@ -582,7 +476,7 @@ void SB_Objects_Create::Add_Physics_Capsule(bool Dynamic, int Index)
 // *************************************************************************
 void SB_Objects_Create::Add_Physics_Cylinder(bool Dynamic, int Index)
 {
-	Base_Object* Object = App->SBC_Scene->B_Object[Index];
+	Base_Object* Object = App->GDCL_Scene_Data->B_Object[Index];
 
 	if (Dynamic == 1)
 	{
@@ -632,7 +526,7 @@ void SB_Objects_Create::Add_Physics_Cylinder(bool Dynamic, int Index)
 	btCollisionShape* newRigidShape = new btCylinderShape(btVector3(sx, sy, sz));
 	newRigidShape->calculateLocalInertia(mass, localInertia);
 
-	App->Cl_Bullet->collisionShapes.push_back(newRigidShape);
+	App->GDCL_Bullet->collisionShapes.push_back(newRigidShape);
 
 	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
 
@@ -662,7 +556,7 @@ void SB_Objects_Create::Add_Physics_Cylinder(bool Dynamic, int Index)
 	int f = Object->Phys_Body->getCollisionFlags();
 	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
-	App->Cl_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
+	App->GDCL_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
 	Set_Physics(Index);
 }
@@ -672,7 +566,7 @@ void SB_Objects_Create::Add_Physics_Cylinder(bool Dynamic, int Index)
 // *************************************************************************
 void SB_Objects_Create::Add_Physics_Cone(bool Dynamic,int Index)
 {
-	Base_Object* Object = App->SBC_Scene->B_Object[Index];
+	Base_Object* Object = App->GDCL_Scene_Data->B_Object[Index];
 
 	if (Dynamic == 1)
 	{
@@ -719,7 +613,7 @@ void SB_Objects_Create::Add_Physics_Cone(bool Dynamic,int Index)
 	btCollisionShape* newRigidShape = new btConeShape(Radius, sy);
 	newRigidShape->calculateLocalInertia(mass, localInertia);
 
-	App->Cl_Bullet->collisionShapes.push_back(newRigidShape);
+	App->GDCL_Bullet->collisionShapes.push_back(newRigidShape);
 
 	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
 
@@ -749,128 +643,9 @@ void SB_Objects_Create::Add_Physics_Cone(bool Dynamic,int Index)
 	int f = Object->Phys_Body->getCollisionFlags();
 	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
-	App->Cl_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
+	App->GDCL_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
 	Set_Physics(Index);
-}
-
-// *************************************************************************
-//				Add_New_Area:- Terry and Hazel Flanigan 2022			   *
-// *************************************************************************
-bool SB_Objects_Create::Add_New_Area()
-{
-	if (App->SBC_Scene->Area_Count == 0)
-	{
-		First_Area_Start_Project();
-		App->SBC_Scene->B_Area[0]->S_Environment[0] = new Environment_type;
-		App->SBC_Aera->Set_Environment_Defaults(0);
-
-	}
-	else
-	{
-		App->SBC_Aera->Add_Aera_To_Project(0, App->SBC_MeshViewer->Selected_MeshFile, App->SBC_MeshViewer->mResource_Folder);
-		App->SBC_Scene->B_Area[0]->S_Environment[0] = new Environment_type;
-		App->SBC_Aera->Set_Environment_Defaults(App->SBC_Scene->Area_Count);
-
-		App->SBC_Scene->Area_Count++;
-	}
-	return 1;
-}
-
-// *************************************************************************
-//		First_Area_Start_Project:- Terry and Hazel Flanigan 2022		   *
-// *************************************************************************
-bool SB_Objects_Create::First_Area_Start_Project()
-{
-	char poo[MAX_PATH];
-	strcpy(poo, App->SBC_Scene->Project_Resource_Group.c_str());
-
-	App->SBC_Aera->Add_Aera_To_Project(0, App->SBC_MeshViewer->Selected_MeshFile, poo);
-	strcpy(App->SBC_Scene->B_Area[0]->Material_File,App->SBC_MeshViewer->m_Material_File);
-	
-	App->SBC_Scene->Area_Count++;
-
-	App->SBC_Scene->Area_Added = 1;
-
-	App->Cl_Grid->Grid_SetVisible(1);
-
-	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
-	// ------------------------ Add Default Camera
-	App->SBC_Camera->Add_New_Camera();
-	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Cameras_Folder);
-
-	// ------------------------ Add Default Player
-	App->SBC_Player->Create_Player_Object();
-	strcpy(App->SBC_Scene->B_Player[0]->Player_Name, "Player_1");
-	App->SBC_Scene->B_Player[0]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Players_Folder, "Player_1", 0, true);
-	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Players_Folder);
-
-	// ------------------------ Add Area
-	App->SBC_Scene->B_Area[0]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Areas_Folder, "Area_1", 0, true);
-	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Areas_Folder);
-
-	App->SBC_FileView->Redraw_FileView();
-
-	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Area[0]->FileViewItem);
-
-	App->SBC_Physics->Reset_Physics();
-	App->SBC_Physics->Enable_Physics(1);
-
-	//------------------------------------------------------------------------------ WHY
-	int f = App->SBC_Scene->B_Player[0]->Phys_Body->getCollisionFlags();
-	App->SBC_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
-
-	App->SBC_Scene->Scene_Loaded = 1;
-	App->SBC_Scene->Area_Added = 1;
-	
-	return 1;
-}
-
-// *************************************************************************
-// *				Add_New_Sound:- Terry and Hazel Flanigan 2022		   *
-// *************************************************************************
-bool SB_Objects_Create::Add_New_Sound()
-{
-	char B_Name[MAX_PATH];
-	char ConNum[MAX_PATH];
-
-	int Index = App->SBC_Scene->Object_Count;
-
-	App->SBC_Scene->B_Object[Index] = new Base_Object();
-
-	strcpy(App->SBC_Scene->B_Object[Index]->Sound_File, "Welcome.ogg");
-	strcpy(App->SBC_Scene->B_Object[Index]->Sound_Path, App->SBC_SoundMgr->Default_Folder);
-	strcat(App->SBC_Scene->B_Object[Index]->Sound_Path, "\\Media\\Sounds\\");
-	strcat(App->SBC_Scene->B_Object[Index]->Sound_Path, "Welcome.ogg");
-
-	App->SBC_Scene->B_Object[Index]->HasSound = 1;
-
-	App->SBC_Scene->B_Object[Index]->Type = Enums::Bullet_Type_Static;
-	App->SBC_Scene->B_Object[Index]->Shape = Enums::Shape_Box;
-	App->SBC_Scene->B_Object[Index]->This_Object_ID = App->SBC_Scene->UniqueID_Object_Counter; // Unique ID
-
-	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_FileName, "SoundEntity_GD.mesh");
-
-	strcpy_s(B_Name, "Sound_");
-	_itoa(Index, ConNum, 10);
-	strcat(B_Name, ConNum);
-	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_Name, B_Name);
-
-	Ogre::Vector3 Pos = App->SBC_Object->GetPlacement(-50);
-	App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
-
-	Create_Sound_Entity(Index);
-
-	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Sounds_Folder, App->SBC_Scene->B_Object[Index]->Mesh_Name, Index, true);
-	App->SBC_Scene->B_Object[Index]->FileViewItem = Temp;
-
-	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[Index]->FileViewItem);
-
-	App->SBC_Scene->UniqueID_Object_Counter++;
-	App->SBC_Scene->Object_Count++;
-
-	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Sounds_Folder);
-	return 1;
 }
 
 // *************************************************************************
@@ -882,7 +657,7 @@ bool SB_Objects_Create::Create_Sound_Entity(int Index)
 	char ConNum[256];
 	char Ogre_Name[256];
 
-	Base_Object* Object = App->SBC_Scene->B_Object[Index];
+	Base_Object* Object = App->GDCL_Scene_Data->B_Object[Index];
 
 	// ----------------- Mesh
 
@@ -892,8 +667,8 @@ bool SB_Objects_Create::Create_Sound_Entity(int Index)
 
 	strcpy(Mesh_File, Object->Mesh_FileName);
 
-	Object->Object_Ent = App->Cl19_Ogre->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->Cl19_Ogre->App_Resource_Group);
-	Object->Object_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	Object->Object_Ent = App->Ogre17->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->Ogre17->App_Resource_Group);
+	Object->Object_Node = App->Ogre17->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Object->Object_Node->attachObject(Object->Object_Ent);
 
 	Object->Object_Node->setVisible(true);
@@ -901,7 +676,7 @@ bool SB_Objects_Create::Create_Sound_Entity(int Index)
 	Object->Object_Node->setOrientation(Object->Mesh_Quat);
 	Object->Object_Node->setPosition(Object->Mesh_Pos);
 
-	App->SBC_Scene->Scene_Loaded = 1;
+	//App->GDCL_Scene_Data->Scene_Loaded = 1;
 
 	// ----------------- Physics
 
@@ -932,7 +707,7 @@ bool SB_Objects_Create::Create_Sound_Entity(int Index)
 	btCollisionShape* newRigidShape = new btBoxShape(btVector3(sx, sy, sz));
 	newRigidShape->calculateLocalInertia(mass, localInertia);
 
-	App->Cl_Bullet->collisionShapes.push_back(newRigidShape);
+	App->GDCL_Bullet->collisionShapes.push_back(newRigidShape);
 
 	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
 
@@ -957,7 +732,7 @@ bool SB_Objects_Create::Create_Sound_Entity(int Index)
 		| btCollisionObject::CF_NO_CONTACT_RESPONSE);
 
 
-	App->Cl_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
+	App->GDCL_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
 	Set_Physics(Index);
 
@@ -970,65 +745,19 @@ bool SB_Objects_Create::Create_Sound_Entity(int Index)
 bool SB_Objects_Create::Create_Colectable_Entity(int Index)
 {
 	Add_New_Object(Index, 1);
-	App->SBC_Scene->B_Object[Index]->S_Collectable[0] = new Collectable_type;
+	App->GDCL_Scene_Data->B_Object[Index]->S_Collectable[0] = new Collectable_type;
 
 	App->SBC_Object->Set_Collectables_Sound_Defaults(Index);
 
 
-	App->SBC_Scene->B_Object[Index]->Altered = 1;
-	App->SBC_Scene->B_Object[Index]->Folder = Enums::Folder_Objects;
-	App->SBC_Scene->B_Object[Index]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Collectables_Folder,
-		App->SBC_Scene->B_Object[Index]->Mesh_Name, Index, true);
+	App->GDCL_Scene_Data->B_Object[Index]->Altered = 1;
+	App->GDCL_Scene_Data->B_Object[Index]->Folder = Enums::Folder_Objects;
 
-	App->SBC_Scene->B_Object[Index]->Usage = Enums::Usage_Colectable;
-	App->SBC_Scene->B_Object[Index]->Phys_Body->setUserIndex(Enums::Usage_Colectable);
-	App->SBC_Scene->B_Object[Index]->Phys_Body->setUserIndex2(Index);
-	App->SBC_Scene->B_Object[Index]->Folder = Enums::Folder_Collectables;
+	App->GDCL_Scene_Data->B_Object[Index]->Usage = Enums::Usage_Colectable;
+	App->GDCL_Scene_Data->B_Object[Index]->Phys_Body->setUserIndex(Enums::Usage_Colectable);
+	App->GDCL_Scene_Data->B_Object[Index]->Phys_Body->setUserIndex2(Index);
+	App->GDCL_Scene_Data->B_Object[Index]->Folder = Enums::Folder_Collectables;
 
-	return 1;
-}
-
-// *************************************************************************
-//			Add_New_Move_Entity:- Terry and Hazel Flanigan 2022			   *
-// *************************************************************************
-bool SB_Objects_Create::Add_New_Move_Entity()
-{
-	char B_Name[MAX_PATH];
-	char ConNum[MAX_PATH];
-
-	int Index = App->SBC_Scene->Object_Count;
-
-	App->SBC_Scene->B_Object[Index] = new Base_Object();
-
-	App->SBC_Scene->B_Object[Index]->S_MoveType[0] = new Move_Type;
-	App->SBC_Object->Set_Move_Defaults(Index); // Check
-
-	App->SBC_Scene->B_Object[Index]->Type = Enums::Bullet_Type_Static;
-	App->SBC_Scene->B_Object[Index]->Shape = Enums::Shape_Box;
-	App->SBC_Scene->B_Object[Index]->This_Object_ID = App->SBC_Scene->UniqueID_Object_Counter; // Unique ID
-
-	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_FileName, "DoorEntity_GD.mesh");
-
-	strcpy_s(B_Name, "MoveEnt_");
-	_itoa(Index, ConNum, 10);
-	strcat(B_Name, ConNum);
-	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_Name, B_Name);
-
-	Ogre::Vector3 Pos = App->SBC_Object->GetPlacement(-50);
-	App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
-
-	Create_Move_Entity(Index);
-
-	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Move_Folder, App->SBC_Scene->B_Object[Index]->Mesh_Name, Index, true);
-	App->SBC_Scene->B_Object[Index]->FileViewItem = Temp;
-
-	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[Index]->FileViewItem);
-
-	App->SBC_Scene->UniqueID_Object_Counter++;
-	App->SBC_Scene->Object_Count++;
-
-
-	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Move_Folder);
 	return 1;
 }
 
@@ -1041,7 +770,7 @@ bool SB_Objects_Create::Create_Move_Entity(int Index)
 	char ConNum[256];
 	char Ogre_Name[256];
 
-	Base_Object* Object = App->SBC_Scene->B_Object[Index];
+	Base_Object* Object = App->GDCL_Scene_Data->B_Object[Index];
 
 	// ----------------- Mesh
 
@@ -1051,8 +780,8 @@ bool SB_Objects_Create::Create_Move_Entity(int Index)
 
 	strcpy(Mesh_File, Object->Mesh_FileName);
 
-	Object->Object_Ent = App->Cl19_Ogre->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->Cl19_Ogre->App_Resource_Group);
-	Object->Object_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	Object->Object_Ent = App->Ogre17->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->Ogre17->App_Resource_Group);
+	Object->Object_Node = App->Ogre17->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Object->Object_Node->attachObject(Object->Object_Ent);
 
 	Object->Object_Node->setVisible(true);
@@ -1060,7 +789,7 @@ bool SB_Objects_Create::Create_Move_Entity(int Index)
 	Object->Object_Node->setOrientation(Object->Mesh_Quat);
 	Object->Object_Node->setPosition(Object->Mesh_Pos);
 
-	App->SBC_Scene->Scene_Loaded = 1;
+	App->GDCL_Scene_Data->Scene_Loaded = 1;
 
 	// ----------------- Physics
 
@@ -1091,7 +820,7 @@ bool SB_Objects_Create::Create_Move_Entity(int Index)
 	btCollisionShape* newRigidShape = new btBoxShape(btVector3(sx, sy, sz));
 	newRigidShape->calculateLocalInertia(mass, localInertia);
 
-	App->Cl_Bullet->collisionShapes.push_back(newRigidShape);
+	App->GDCL_Bullet->collisionShapes.push_back(newRigidShape);
 
 	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
 
@@ -1116,54 +845,10 @@ bool SB_Objects_Create::Create_Move_Entity(int Index)
 		| btCollisionObject::CF_NO_CONTACT_RESPONSE);
 
 
-	App->Cl_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
+	App->GDCL_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
 	Set_Physics(Index);
 
-	return 1;
-}
-
-// *************************************************************************
-//			Add_New_Teleporter:- Terry and Hazel Flanigan 2022			   *
-// *************************************************************************
-bool SB_Objects_Create::Add_New_Teleporter()
-{
-	char B_Name[MAX_PATH];
-	char ConNum[MAX_PATH];
-
-	int Index = App->SBC_Scene->Object_Count;
-
-	App->SBC_Scene->B_Object[Index] = new Base_Object();
-
-	App->SBC_Scene->B_Object[Index]->S_Teleport[0] = new Teleport_type;
-	App->SBC_Object->Set_Teleports_Defaults(Index);
-
-	App->SBC_Scene->B_Object[Index]->Type = Enums::Bullet_Type_Static;
-	App->SBC_Scene->B_Object[Index]->Shape = Enums::Shape_Box;
-	App->SBC_Scene->B_Object[Index]->This_Object_ID = App->SBC_Scene->UniqueID_Object_Counter; // Unique ID
-
-	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_FileName, "TeleportSend.mesh");
-
-	strcpy_s(B_Name, "Teleport_Ent_");
-	_itoa(Index, ConNum, 10);
-	strcat(B_Name, ConNum);
-	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_Name, B_Name);
-
-	Ogre::Vector3 Pos = App->SBC_Object->GetPlacement(-50);
-	App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
-
-	Create_TeleportEntity(Index);
-
-	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Teleporters_Folder, App->SBC_Scene->B_Object[Index]->Mesh_Name, Index, true);
-	App->SBC_Scene->B_Object[Index]->FileViewItem = Temp;
-
-	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[Index]->FileViewItem);
-
-	App->SBC_Scene->UniqueID_Object_Counter++;
-	App->SBC_Scene->Object_Count++;
-
-
-	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Teleporters_Folder);
 	return 1;
 }
 
@@ -1176,7 +861,7 @@ bool SB_Objects_Create::Create_TeleportEntity(int Index)
 	char ConNum[256];
 	char Ogre_Name[256];
 
-	Base_Object* Object = App->SBC_Scene->B_Object[Index];
+	Base_Object* Object = App->GDCL_Scene_Data->B_Object[Index];
 
 	// ----------------- Mesh
 
@@ -1186,8 +871,8 @@ bool SB_Objects_Create::Create_TeleportEntity(int Index)
 
 	strcpy(Mesh_File, Object->Mesh_FileName);
 
-	Object->Object_Ent = App->Cl19_Ogre->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->Cl19_Ogre->App_Resource_Group);
-	Object->Object_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	Object->Object_Ent = App->Ogre17->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->Ogre17->App_Resource_Group);
+	Object->Object_Node = App->Ogre17->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Object->Object_Node->attachObject(Object->Object_Ent);
 
 	Object->Object_Node->setVisible(true);
@@ -1195,7 +880,7 @@ bool SB_Objects_Create::Create_TeleportEntity(int Index)
 	Object->Object_Node->setOrientation(Object->Mesh_Quat);
 	Object->Object_Node->setPosition(Object->Mesh_Pos);
 
-	App->SBC_Scene->Scene_Loaded = 1;
+	//App->GDCL_Scene_Data->Scene_Loaded = 1;
 
 	// ----------------- Physics
 
@@ -1226,7 +911,7 @@ bool SB_Objects_Create::Create_TeleportEntity(int Index)
 	btCollisionShape* newRigidShape = new btBoxShape(btVector3(sx, sy, sz));
 	newRigidShape->calculateLocalInertia(mass, localInertia);
 
-	App->Cl_Bullet->collisionShapes.push_back(newRigidShape);
+	App->GDCL_Bullet->collisionShapes.push_back(newRigidShape);
 
 	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
 
@@ -1251,7 +936,7 @@ bool SB_Objects_Create::Create_TeleportEntity(int Index)
 		| btCollisionObject::CF_NO_CONTACT_RESPONSE);
 
 
-	App->Cl_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
+	App->GDCL_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
 	Set_Physics(Index);
 	return 1;
@@ -1262,7 +947,7 @@ bool SB_Objects_Create::Create_TeleportEntity(int Index)
 // *************************************************************************
 btBvhTriangleMeshShape* SB_Objects_Create::create_New_Trimesh(int Index)
 {
-	Base_Object* Object = App->SBC_Scene->B_Object[Index];
+	Base_Object* Object = App->GDCL_Scene_Data->B_Object[Index];
 
 	// Get the mesh from the entity
 	Ogre::MeshPtr myMesh = Object->Object_Ent->getMesh();
@@ -1403,7 +1088,7 @@ btBvhTriangleMeshShape* SB_Objects_Create::create_New_Trimesh(int Index)
 	Object->Phys_Body->setUserIndex(123);
 	Object->Phys_Body->setUserIndex2(Index);
 
-	App->Cl_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
+	App->GDCL_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
 	Object->Physics_Valid = 1;
 	return mShape;
@@ -1556,7 +1241,7 @@ btBvhTriangleMeshShape* SB_Objects_Create::create_Area_Trimesh_New(int Index, Ba
 
 	Object->Collect_Object_Data();
 
-	App->Cl_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
+	App->GDCL_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
 	Object->Physics_Valid = 1;
 	return mShape;
@@ -1567,18 +1252,17 @@ btBvhTriangleMeshShape* SB_Objects_Create::create_Area_Trimesh_New(int Index, Ba
 // *************************************************************************
 void SB_Objects_Create::Set_Physics(int Index)
 {
-	App->SBC_Scene->B_Object[Index]->Physics_Quat = App->SBC_Scene->B_Object[Index]->Object_Node->getOrientation();
+	App->GDCL_Scene_Data->B_Object[Index]->Physics_Quat = App->GDCL_Scene_Data->B_Object[Index]->Object_Node->getOrientation();
 
-	float w = App->SBC_Scene->B_Object[Index]->Physics_Quat.w;
-	float x = App->SBC_Scene->B_Object[Index]->Physics_Quat.x;
-	float y = App->SBC_Scene->B_Object[Index]->Physics_Quat.y;
-	float z = App->SBC_Scene->B_Object[Index]->Physics_Quat.z;
-	App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
+	float w = App->GDCL_Scene_Data->B_Object[Index]->Physics_Quat.w;
+	float x = App->GDCL_Scene_Data->B_Object[Index]->Physics_Quat.x;
+	float y = App->GDCL_Scene_Data->B_Object[Index]->Physics_Quat.y;
+	float z = App->GDCL_Scene_Data->B_Object[Index]->Physics_Quat.z;
+	App->GDCL_Scene_Data->B_Object[Index]->Phys_Body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
 
-	App->SBC_Scene->B_Object[Index]->Object_Node->setScale(App->SBC_Scene->B_Object[Index]->Mesh_Scale);
-	Ogre::Vector3 Scale = App->SBC_Scene->B_Object[Index]->Object_Node->getScale();
-	App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
-	App->SBC_Dimensions->UpDate_Physics_And_Visuals(Index);
-
-	App->SBC_Scene->B_Object[Index]->Physics_Valid = 1;
+	App->GDCL_Scene_Data->B_Object[Index]->Object_Node->setScale(App->GDCL_Scene_Data->B_Object[Index]->Mesh_Scale);
+	Ogre::Vector3 Scale = App->GDCL_Scene_Data->B_Object[Index]->Object_Node->getScale();
+	App->GDCL_Scene_Data->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+	
+	App->GDCL_Scene_Data->B_Object[Index]->Physics_Valid = 1;
 }

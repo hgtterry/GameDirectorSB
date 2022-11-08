@@ -30,14 +30,8 @@ public:
 	~SB_Objects_Create(void);
 
 	bool Add_Objects_From_File(); // From File
-	bool Dispatch_MeshViewer();
-	void Add_Objects_From_MeshViewer();
 	bool Add_New_Object(int Index, bool From_MeshViewer);
-	bool Add_New_Sound();
-	bool Add_New_Area();
-	bool Add_New_Move_Entity();
-	bool Add_New_Teleporter();
-
+	
 	void Set_Physics(int Index);
 
 	btBvhTriangleMeshShape* create_Area_Trimesh_New(int Index, Base_Area* Object);
@@ -59,8 +53,6 @@ protected:
 	bool Create_Move_Entity(int Index);
 	bool Create_TeleportEntity(int Index);
 	bool Create_Colectable_Entity(int Index);
-
-	bool First_Area_Start_Project();
 
 	char m_ResourcePath[MAX_PATH];
 };
