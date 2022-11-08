@@ -345,30 +345,30 @@ bool  BT_PhysicsListener::frameRenderingQueued(const FrameEvent& evt)
 	//------------------------------------------------ Forward
 	if (GetAsyncKeyState(87) < 0) // W Key
 	{
-		if(GD_CameraMode == Enums::CamDetached)
+		if (GD_CameraMode == Enums::CamDetached)
 		{
 			mTranslateVector.z = -mMoveScale;
 		}
 		else
 		{
-			if (App->GDCL_Player->PlayerAdded == 1) 
+			if (App->GDCL_Scene_Data->Player_Added == 1)
 			{
-				
-				App->GDCL_Player->Forward();
-				App->GDCL_Player->IsMOving = 1;
+
+				App->GDCL_Scene_Data->B_Player[0]->Forward(evt.timeSinceLastFrame);
+				App->GDCL_Scene_Data->B_Player[0]->IsMOving = 1;
 			}
 		}
 	}
 	else
 	{
-		if(GD_CameraMode == Enums::CamDetached)
+		if (GD_CameraMode == Enums::CamDetached)
 		{
 
 		}
-		else if(App->GDCL_Player->PlayerAdded == 1 && App->GDCL_Player->IsMOving == 1 )
+		else if (App->GDCL_Scene_Data->Player_Added == 1 && App->GDCL_Scene_Data->B_Player[0]->IsMOving == 1)
 		{
-			App->GDCL_Player->Stop();
-			App->GDCL_Player->IsMOving = 0;
+			App->GDCL_Scene_Data->B_Player[0]->Stop();
+			App->GDCL_Scene_Data->B_Player[0]->IsMOving = 0;
 		}
 	}
 	
@@ -390,29 +390,30 @@ bool  BT_PhysicsListener::frameRenderingQueued(const FrameEvent& evt)
 	//------------------------------------------------ Back
 	if (GetAsyncKeyState(83) < 0) // S Key	
 	{
-		if(GD_CameraMode == Enums::CamDetached)
+
+		if (GD_CameraMode == Enums::CamDetached)
 		{
 			mTranslateVector.z = mMoveScale;
 		}
 		else
 		{
-			if (App->GDCL_Player->PlayerAdded == 1) 
+			if (App->GDCL_Scene_Data->Player_Added == 1)
 			{
-				App->GDCL_Player->Back();
-				App->GDCL_Player->IsMOving_Back = 1;
+				App->GDCL_Scene_Data->B_Player[0]->Back();
+				App->GDCL_Scene_Data->B_Player[0]->IsMOving_Back = 1;
 			}
 		}
 	}
 	else
 	{
-		if(GD_CameraMode == Enums::CamDetached)
+		if (GD_CameraMode == Enums::CamDetached)
 		{
 
 		}
-		else if(App->GDCL_Player->PlayerAdded == 1 && App->GDCL_Player->IsMOving_Back == 1 )
+		else if (App->GDCL_Scene_Data->Player_Added == 1 && App->GDCL_Scene_Data->B_Player[0]->IsMOving_Back == 1)
 		{
-			App->GDCL_Player->Stop();
-			App->GDCL_Player->IsMOving_Back = 0;
+			App->GDCL_Scene_Data->B_Player[0]->Stop();
+			App->GDCL_Scene_Data->B_Player[0]->IsMOving_Back = 0;
 		}
 	}
 
@@ -426,10 +427,10 @@ bool  BT_PhysicsListener::frameRenderingQueued(const FrameEvent& evt)
 		}
 		else
 		{
-			if (App->GDCL_Player->PlayerAdded == 1)
+			if (App->GDCL_Scene_Data->Player_Added == 1)
 			{
-				App->GDCL_Player->Move_Right();
-				App->GDCL_Player->IsMOving_Right = 1;
+				App->GDCL_Scene_Data->B_Player[0]->Move_Right();
+				App->GDCL_Scene_Data->B_Player[0]->IsMOving_Right = 1;
 			}
 		}
 	}
@@ -439,12 +440,13 @@ bool  BT_PhysicsListener::frameRenderingQueued(const FrameEvent& evt)
 		{
 
 		}
-		else if (App->GDCL_Player->PlayerAdded == 1 && App->GDCL_Player->IsMOving_Right == 1)
+		else if (App->GDCL_Scene_Data->Player_Added == 1 && App->GDCL_Scene_Data->B_Player[0]->IsMOving_Right == 1)
 		{
-			App->GDCL_Player->Stop();
-			App->GDCL_Player->IsMOving_Right = 0;
+			App->GDCL_Scene_Data->B_Player[0]->Stop();
+			App->GDCL_Scene_Data->B_Player[0]->IsMOving_Right = 0;
 		}
 	}
+
 	// Left
 	if (GetAsyncKeyState(68) < 0)
 	{
@@ -454,10 +456,10 @@ bool  BT_PhysicsListener::frameRenderingQueued(const FrameEvent& evt)
 		}
 		else
 		{
-			if (App->GDCL_Player->PlayerAdded == 1)
+			if (App->GDCL_Scene_Data->Player_Added == 1)
 			{
-				App->GDCL_Player->Move_Left();
-				App->GDCL_Player->IsMOving_Left = 1;
+				App->GDCL_Scene_Data->B_Player[0]->Move_Left();
+				App->GDCL_Scene_Data->B_Player[0]->IsMOving_Left = 1;
 			}
 		}
 	}
@@ -467,10 +469,10 @@ bool  BT_PhysicsListener::frameRenderingQueued(const FrameEvent& evt)
 		{
 
 		}
-		else if (App->GDCL_Player->PlayerAdded == 1 && App->GDCL_Player->IsMOving_Left == 1)
+		else if (App->GDCL_Scene_Data->Player_Added == 1 && App->GDCL_Scene_Data->B_Player[0]->IsMOving_Left == 1)
 		{
-			App->GDCL_Player->Stop();
-			App->GDCL_Player->IsMOving_Left = 0;
+			App->GDCL_Scene_Data->B_Player[0]->Stop();
+			App->GDCL_Scene_Data->B_Player[0]->IsMOving_Left = 0;
 		}
 	}
 
