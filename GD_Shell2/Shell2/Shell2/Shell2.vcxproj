@@ -109,6 +109,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Base_Area.cpp" />
+    <ClCompile Include="Base_Locations.cpp" />
     <ClCompile Include="Base_Player.cpp" />
     <ClCompile Include="BT_App.cpp" />
     <ClCompile Include="BT_Maths.cpp" />
@@ -134,6 +135,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base_Area.h" />
+    <ClInclude Include="Base_Locations.h" />
     <ClInclude Include="Base_Player.h" />
     <ClInclude Include="BT_App.h" />
     <ClInclude Include="BT_Maths.h" />

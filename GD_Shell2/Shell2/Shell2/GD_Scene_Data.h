@@ -2,6 +2,7 @@
 
 #include "Base_Area.h"
 #include "Base_Player.h"
+#include "Base_Locations.h"
 
 //==================================== Application Flags Structure	
 typedef struct Flags_Type 
@@ -270,7 +271,7 @@ public:
 
 	Base_Player*			B_Player[5];
 	Base_Area*				B_Area[100];
-
+	Base_Locations*			B_Locations[20];
 	//-----------------------------------------------------------------
 	bool Start_Scene();
 

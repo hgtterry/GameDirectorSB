@@ -103,7 +103,7 @@ void SB_Player::Create_Player_Object(void)
 
 	Initialize();
 
-	App->GDCL_Scene_Data->B_Player[Index]->CameraPitch = App->Ogre17->mSceneMgr->createCamera("PlayerPitch");
+	App->GDCL_Scene_Data->B_Player[Index]->CameraPitch = App->Ogre17->mSceneMgr->createCamera("PlayerPitch10");
 
 	App->GDCL_Scene_Data->Player_Count++;
 
@@ -121,7 +121,7 @@ void SB_Player::Initialize()
 	Base_Player* pBase = App->GDCL_Scene_Data->B_Player[Index];
 
 	// ------------------- Ogre
-	if (pBase->Player_Ent && pBase->Player_Node)
+	/*if (pBase->Player_Ent && pBase->Player_Node)
 	{
 		App->Ogre17->mSceneMgr->destroySceneNode(pBase->Player_Node);
 		App->Ogre17->mSceneMgr->destroyEntity(pBase->Player_Ent);
@@ -129,9 +129,9 @@ void SB_Player::Initialize()
 		pBase->Player_Ent = nullptr;
 		pBase->Player_Node = nullptr;
 		pBase->CameraPitch = nullptr;
-	}
+	}*/
 
-	pBase->Player_Ent = App->Ogre17->mSceneMgr->createEntity("Player_1", "axes.mesh", App->Ogre17->PermResourceGroup);
+	pBase->Player_Ent = App->Ogre17->mSceneMgr->createEntity("Player_10", "axes.mesh", App->Ogre17->PermResourceGroup);
 	pBase->Player_Node = App->Ogre17->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	pBase->Player_Node->attachObject(pBase->Player_Ent);
 
