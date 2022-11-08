@@ -104,7 +104,7 @@ bool GD10_Load_Scene::Load_Project()
 	{
 		bool test = Load_Project_Aera();
 		App->GDCL_Scene_Data->Area_Added = 1;
-		//App->Cl_Environment->Load_Environment();
+		App->GDCL_Environment->Load_Environment();
 	}
 
 	// ------------------------------------- Player
@@ -122,13 +122,12 @@ bool GD10_Load_Scene::Load_Project()
 	//	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Cameras_Folder);
 	//}
 
-	//// ------------------------------------- Objects
-	//if (Options->Has_Objects > 0)
-	//{
-	//	Load_Project_Objects();
-	//	App->SBC_Objects_Create->Add_Objects_From_File();
-
-	//}
+	// ------------------------------------- Objects
+	if (Options->Has_Objects > 0)
+	{
+		Load_Project_Objects();
+		App->SBC_Objects_Create->Add_Objects_From_File();
+	}
 
 	//// ------------------------------------- Counters
 	//if (Options->Has_Counters > 0)
@@ -156,6 +155,227 @@ bool GD10_Load_Scene::Load_Project()
 	//App->SBC_FileView->SelectItem(App->SBC_FileView->FV_LevelFolder);
 
 	//App->SBC_Scene->Scene_Modified = 0;
+	return 1;
+}
+
+// *************************************************************************
+// *	  	Load_Project_Objects:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+bool GD10_Load_Scene::Load_Project_Objects()
+{
+	char Object_Ini_Path[MAX_PATH];
+	char chr_Tag1[MAX_PATH];
+	int Object_Count = 0;
+
+	float w = 0;
+	float x = 0;
+	float y = 0;
+	float z = 0;
+
+	strcpy(Object_Ini_Path, m_Project_Sub_Folder);
+	strcat(Object_Ini_Path, "\\");
+
+	strcat(Object_Ini_Path, m_Level_Name);
+	strcat(Object_Ini_Path, "\\");
+
+	strcat(Object_Ini_Path, "Objects");
+	strcat(Object_Ini_Path, "\\");
+
+	//---------------------------------------------------
+
+	strcat(Object_Ini_Path, "Objects.efd");
+
+	App->CL10_Ini->SetPathName(Object_Ini_Path);
+
+	Object_Count = App->CL10_Ini->GetInt("Counters", "Objects_Count", 0);
+
+	int Count = 0;
+
+	while (Count < Object_Count)
+	{
+		char n_buff[255];
+		char buff[255];
+		strcpy(buff, "Object_");
+		_itoa(Count, n_buff, 10);
+		strcat(buff, n_buff);
+
+		App->GDCL_Scene_Data->B_Object[Count] = new Base_Object();
+		Base_Object* Object = App->GDCL_Scene_Data->B_Object[Count];
+
+		App->CL10_Ini->GetString(buff, "Mesh_Name", Object->Mesh_Name, MAX_PATH);
+		App->CL10_Ini->GetString(buff, "Mesh_File", Object->Mesh_FileName, MAX_PATH);
+		App->CL10_Ini->GetString(buff, "Mesh_Resource_Path", Object->Mesh_Resource_Path, MAX_PATH);
+		App->CL10_Ini->GetString(buff, "Material_File", Object->Material_File, MAX_PATH);
+
+		// Types
+		Object->This_Object_ID = App->CL10_Ini->GetInt(buff, "Object_ID", 0);
+		Object->Type = App->CL10_Ini->GetInt(buff, "Object_Type", 0);
+		Object->Shape = App->CL10_Ini->GetInt(buff, "Object_Shape", 0);
+		Object->Usage = App->CL10_Ini->GetInt(buff, "Object_Usage", 0);
+
+		// Pos
+		App->CL10_Ini->GetString(buff, "Mesh_Pos", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+		App->GDCL_Scene_Data->B_Object[Count]->Mesh_Pos = Ogre::Vector3(x, y, z);
+
+		// Scale
+		App->CL10_Ini->GetString(buff, "Mesh_Scale", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+		App->GDCL_Scene_Data->B_Object[Count]->Mesh_Scale = Ogre::Vector3(x, y, z);
+
+		// Rotation
+		App->CL10_Ini->GetString(buff, "Mesh_Rot", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+		App->GDCL_Scene_Data->B_Object[Count]->Mesh_Rot = Ogre::Vector3(x, y, z);
+
+		// Mesh_Quat
+		App->CL10_Ini->GetString(buff, "Mesh_Quat", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f,%f", &w, &x, &y, &z);
+
+		App->GDCL_Scene_Data->B_Object[Count]->Mesh_Quat.w = w;
+		App->GDCL_Scene_Data->B_Object[Count]->Mesh_Quat.x = x;
+		App->GDCL_Scene_Data->B_Object[Count]->Mesh_Quat.y = y;
+		App->GDCL_Scene_Data->B_Object[Count]->Mesh_Quat.z = z;
+
+		// Physics_Quat
+		App->CL10_Ini->GetString(buff, "Physics_Quat", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f,%f", &w, &x, &y, &z);
+
+		App->GDCL_Scene_Data->B_Object[Count]->Physics_Quat.w = w;
+		App->GDCL_Scene_Data->B_Object[Count]->Physics_Quat.x = x;
+		App->GDCL_Scene_Data->B_Object[Count]->Physics_Quat.y = y;
+		App->GDCL_Scene_Data->B_Object[Count]->Physics_Quat.z = z;
+
+		//---------------------------------------------------------------------------------- Message Entity
+		if (App->GDCL_Scene_Data->B_Object[Count]->Usage == Enums::Usage_Message)
+		{
+			App->CL10_Ini->GetString(buff, "Message_Text", Object->Message_Text, MAX_PATH);
+
+			App->CL10_Ini->GetString(buff, "Message_Pos", chr_Tag1, MAX_PATH);
+			sscanf(chr_Tag1, "%f,%f", &x, &y);
+
+			App->GDCL_Scene_Data->B_Object[Count]->Message_PosX = x;
+			App->GDCL_Scene_Data->B_Object[Count]->Message_PosY = y;
+
+		}
+
+		//---------------------------------------------------------------------------------- Sound Entity
+		if (App->GDCL_Scene_Data->B_Object[Count]->Usage == Enums::Usage_Sound)
+		{
+			App->CL10_Ini->GetString(buff, "Sound_File", Object->Sound_File, MAX_PATH);
+
+			App->CL10_Ini->GetString(buff, "Sound_Volume", chr_Tag1, MAX_PATH);
+			sscanf(chr_Tag1, "%f", &x);
+			App->GDCL_Scene_Data->B_Object[Count]->SndVolume = x;
+		}
+
+		//---------------------------------------------------------------------------------- Colectable Entity
+		if (App->GDCL_Scene_Data->B_Object[Count]->Usage == Enums::Usage_Colectable)
+		{
+			App->GDCL_Scene_Data->B_Object[Count]->S_Collectable[0] = new Collectable_type;
+			App->SBC_Object->Set_Collectables_Sound_Defaults(Count);
+
+			App->CL10_Ini->GetString(buff, "Col_Sound_File", chr_Tag1, MAX_PATH);
+			strcpy(Object->S_Collectable[0]->Sound_File, chr_Tag1);
+
+			App->CL10_Ini->GetString(buff, "Col_Sound_Volume", chr_Tag1, MAX_PATH);
+			sscanf(chr_Tag1, "%f", &x);
+			App->GDCL_Scene_Data->B_Object[Count]->S_Collectable[0]->SndVolume = x;
+
+			App->GDCL_Scene_Data->B_Object[Count]->S_Collectable[0]->Play = App->CL10_Ini->GetInt(buff, "Col_Play", 0);
+
+			App->CL10_Ini->GetString(buff, "Col_Counter_Name", chr_Tag1, MAX_PATH);
+			strcpy(Object->S_Collectable[0]->Counter_Name, chr_Tag1);
+
+			App->GDCL_Scene_Data->B_Object[Count]->S_Collectable[0]->Counter_ID = App->CL10_Ini->GetInt(buff, "Col_Counter_ID", 0);
+
+		}
+
+		//---------------------------------------------------------------------------------- Usage_Move
+		if (App->GDCL_Scene_Data->B_Object[Count]->Usage == Enums::Usage_Move)
+		{
+
+			App->GDCL_Scene_Data->B_Object[Count]->S_MoveType[0] = new Move_Type;
+			App->SBC_Object->Set_Move_Defaults(Count); // Check
+
+			// --------------------------- Distance
+			App->CL10_Ini->GetString(buff, "Move_Distance", chr_Tag1, MAX_PATH);
+			sscanf(chr_Tag1, "%f", &x);
+			App->GDCL_Scene_Data->B_Object[Count]->S_MoveType[0]->Move_Distance = x;
+
+			App->GDCL_Scene_Data->B_Object[Count]->S_MoveType[0]->IsNegative = App->CL10_Ini->GetInt(buff, "Move_IsNegative", 0);
+
+			// --------------------------- Speed
+			App->CL10_Ini->GetString(buff, "Move_Speed", chr_Tag1, MAX_PATH);
+			sscanf(chr_Tag1, "%f", &x);
+			App->GDCL_Scene_Data->B_Object[Count]->S_MoveType[0]->Speed = x;
+
+			// --------------------------- Name
+			App->CL10_Ini->GetString(buff, "Move_ObjectName", App->GDCL_Scene_Data->B_Object[Count]->S_MoveType[0]->Object_Name, MAX_PATH);
+
+			App->GDCL_Scene_Data->B_Object[Count]->S_MoveType[0]->Object_To_Move_Index = App->CL10_Ini->GetInt(buff, "Move_ObjectID", 0);
+			App->GDCL_Scene_Data->B_Object[Count]->S_MoveType[0]->WhatDirection = App->CL10_Ini->GetInt(buff, "Move_WhatDirection", 0);
+
+			App->CL10_Ini->GetString(buff, "Move_Sound", App->GDCL_Scene_Data->B_Object[Count]->Sound_File, MAX_PATH);
+			App->GDCL_Scene_Data->B_Object[Count]->Play_Sound = App->CL10_Ini->GetInt(buff, "Move_Play_Sound", 0);
+
+
+			// --------------------------- Move_Volume
+			App->CL10_Ini->GetString(buff, "Move_Volume", chr_Tag1, MAX_PATH);
+			sscanf(chr_Tag1, "%f", &x);
+			App->GDCL_Scene_Data->B_Object[Count]->SndVolume = x;
+
+		}
+
+		if (App->GDCL_Scene_Data->B_Object[Count]->Usage == Enums::Usage_Teleport)
+		{
+
+			App->GDCL_Scene_Data->B_Object[Count]->S_Teleport[0] = new Teleport_type;
+			App->CL10_Ini->GetString(buff, "Tele_Goto", chr_Tag1, MAX_PATH);
+			strcpy(App->GDCL_Scene_Data->B_Object[Count]->S_Teleport[0]->Name, chr_Tag1);
+
+			App->GDCL_Scene_Data->B_Object[Count]->S_Teleport[0]->Location_ID = App->CL10_Ini->GetInt(buff, "Tele_ID", 0);
+
+			// Sound
+			App->CL10_Ini->GetString(buff, "Tele_Sound", App->GDCL_Scene_Data->B_Object[Count]->S_Teleport[0]->Sound_File, MAX_PATH);
+
+			App->CL10_Ini->GetString(buff, "Tele_Volume", chr_Tag1, MAX_PATH);
+			sscanf(chr_Tag1, "%f", &x);
+			App->GDCL_Scene_Data->B_Object[Count]->S_Teleport[0]->SndVolume = x;
+
+			App->GDCL_Scene_Data->B_Object[Count]->S_Teleport[0]->Play = App->CL10_Ini->GetInt(buff, "Tele_Play", 0);
+
+			// Mesh_Pos
+			App->CL10_Ini->GetString(buff, "Tele_Mesh_Position", chr_Tag1, MAX_PATH);
+			sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+
+			App->GDCL_Scene_Data->B_Object[Count]->S_Teleport[0]->Player_Position.x = x;
+			App->GDCL_Scene_Data->B_Object[Count]->S_Teleport[0]->Player_Position.y = y;
+			App->GDCL_Scene_Data->B_Object[Count]->S_Teleport[0]->Player_Position.z = z;
+
+			//Player_Pos
+			App->CL10_Ini->GetString(buff, "Tele_Physics_Position", chr_Tag1, MAX_PATH);
+			sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+
+			App->GDCL_Scene_Data->B_Object[Count]->S_Teleport[0]->Physics_Position.setX(x);
+			App->GDCL_Scene_Data->B_Object[Count]->S_Teleport[0]->Physics_Position.setY(y);
+			App->GDCL_Scene_Data->B_Object[Count]->S_Teleport[0]->Physics_Position.setZ(z);
+
+			//Player_Rotation
+			App->CL10_Ini->GetString(buff, "Tele_Physics_Rotation", chr_Tag1, MAX_PATH);
+			sscanf(chr_Tag1, "%f,%f,%f,%f", &w, &x, &y, &z);
+
+			App->GDCL_Scene_Data->B_Object[Count]->S_Teleport[0]->Physics_Rotation.setW(w);
+			App->GDCL_Scene_Data->B_Object[Count]->S_Teleport[0]->Physics_Rotation.setX(x);
+			App->GDCL_Scene_Data->B_Object[Count]->S_Teleport[0]->Physics_Rotation.setY(y);
+			App->GDCL_Scene_Data->B_Object[Count]->S_Teleport[0]->Physics_Rotation.setZ(z);
+		}
+
+		Count++;
+	}
+
+	App->GDCL_Scene_Data->Object_Count = Count;
+
 	return 1;
 }
 
@@ -221,7 +441,7 @@ bool GD10_Load_Scene::Load_Project_Player()
 
 		App->CL10_Ini->GetString(buff, "Turn_Rate", chr_Tag1, MAX_PATH);
 		sscanf(chr_Tag1, "%f", &x);
-		App->GDCL_Scene_Data->B_Player[Count]->TurnRate = 0000030;
+		App->GDCL_Scene_Data->B_Player[Count]->TurnRate = 0.00030;
 
 		Count++;
 	}
@@ -525,8 +745,7 @@ void GD10_Load_Scene::Load_Scene40()
 	App->GDCL_Scene_Data->ClearScene();
 	Load_Player40();
 	Load_Environment40();
-	Load_Objects40();
-
+	
 	Populate_Level40();
 	
 	// New Folder for Data
@@ -676,212 +895,6 @@ bool GD10_Load_Scene::Load_Environment40()
 	App->GDCL_Scene_Data->S_Scene[0]->Sky[0].Distance = x;
 	App->GDCL_Scene_Data->S_Scene[0]->Sky[0].Tiling = y;
 	App->GDCL_Scene_Data->S_Scene[0]->Sky[0].Curvature = z;
-	return 1;
-}
-
-// *************************************************************************
-//						Load_Objects40 Terry Bernie						   *
-// *************************************************************************
-bool GD10_Load_Scene::Load_Objects40()
-{
-	char chr_Tag1[1024];
-	int Int_Tag = 0;
-	bool bool_Tag = 0;
-	float w = 0;
-	float x = 0;
-	float y = 0;
-	float z = 0;
-
-	Int_Tag = App->CL10_Ini->GetInt("Objects", "Objects_Count", 0, 10);
-
-	int Object_Count = Int_Tag;
-	int Count = 0;
-	while (Count < Object_Count)
-	{
-		App->GDCL_Scene_Data->S_Object[Count] = new Object_Type;
-		App->GDCL_Scene_Data->SetObjectDefaults(Count);
-
-		char n_buff[255];
-		char buff[255];
-		strcpy(buff, "Object_");
-		itoa(Count, n_buff, 10);
-		strcat(buff, n_buff);
-
-		Int_Tag = App->CL10_Ini->GetInt(buff, "Object_ID", 0, 10);
-		//App->GDCL_Scene_Data->S_Object[Count]->Object_ID = Int_Tag;
-
-		App->CL10_Ini->GetString(buff, "Object_Name", chr_Tag1, 1024);
-		strcpy(App->GDCL_Scene_Data->S_Object[Count]->Name, chr_Tag1);
-
-		App->CL10_Ini->GetString(buff, "Object_Mesh", chr_Tag1, 1024);
-		strcpy(App->GDCL_Scene_Data->S_Object[Count]->MeshName, chr_Tag1);
-
-		// Type
-		Int_Tag = App->CL10_Ini->GetInt(buff, "Object_Type", 0, 10);
-		App->GDCL_Scene_Data->S_Object[Count]->Type = Int_Tag;
-
-		// Shape
-		Int_Tag = App->CL10_Ini->GetInt(buff, "Object_Shape", 0, 10);
-		App->GDCL_Scene_Data->S_Object[Count]->Shape = Int_Tag;
-
-		// Usage
-		Int_Tag = App->CL10_Ini->GetInt(buff, "Object_Usage", 0, 10);
-		App->GDCL_Scene_Data->S_Object[Count]->Usage = Int_Tag;
-
-		// Folder
-		Int_Tag = App->CL10_Ini->GetInt(buff, "Object_Folder", 0, 10);
-		App->GDCL_Scene_Data->S_Object[Count]->Folder = Int_Tag;
-
-		// Mesh_Pos
-		App->CL10_Ini->GetString(buff, "Object_Mesh_Pos", chr_Tag1, 1024);
-		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
-		App->GDCL_Scene_Data->S_Object[Count]->Mesh_Pos.x = x;
-		App->GDCL_Scene_Data->S_Object[Count]->Mesh_Pos.y = y;
-		App->GDCL_Scene_Data->S_Object[Count]->Mesh_Pos.z = z;
-
-		// Mesh_Rot
-		App->CL10_Ini->GetString(buff, "Object_Mesh_Rot", chr_Tag1, 1024);
-		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
-		App->GDCL_Scene_Data->S_Object[Count]->Mesh_Rot.x = x;
-		App->GDCL_Scene_Data->S_Object[Count]->Mesh_Rot.y = y;
-		App->GDCL_Scene_Data->S_Object[Count]->Mesh_Rot.z = z;
-
-		// Mesh_Quat
-		App->CL10_Ini->GetString(buff, "Object_Mesh_Quat", chr_Tag1, 1024);
-		sscanf(chr_Tag1, "%f,%f,%f,%f", &w, &x, &y, &z);
-		App->GDCL_Scene_Data->S_Object[Count]->Mesh_Quat.w = w;
-		App->GDCL_Scene_Data->S_Object[Count]->Mesh_Quat.x = x;
-		App->GDCL_Scene_Data->S_Object[Count]->Mesh_Quat.y = y;
-		App->GDCL_Scene_Data->S_Object[Count]->Mesh_Quat.z = z;
-
-		// Mesh_Scale
-		App->CL10_Ini->GetString(buff, "Object_Mesh_Scale", chr_Tag1, 1024);
-		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
-		App->GDCL_Scene_Data->S_Object[Count]->Mesh_Scale.x = x;
-		App->GDCL_Scene_Data->S_Object[Count]->Mesh_Scale.y = y;
-		App->GDCL_Scene_Data->S_Object[Count]->Mesh_Scale.z = z;
-
-		////------------------------------------------------------------- Physics
-
-		x = App->CL10_Ini->Get_Float(buff, "Physics_Mass");
-		y = App->CL10_Ini->Get_Float(buff, "Physics_Restitution");
-		App->GDCL_Scene_Data->S_Object[Count]->Physics_Mass = x;
-		App->GDCL_Scene_Data->S_Object[Count]->Physics_Restitution = y;
-
-		// Physics_Pos
-		App->CL10_Ini->GetString(buff, "Physics_Pos", chr_Tag1, 1024);
-		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
-		App->GDCL_Scene_Data->S_Object[Count]->Physics_Pos.x = x;
-		App->GDCL_Scene_Data->S_Object[Count]->Physics_Pos.y = y;
-		App->GDCL_Scene_Data->S_Object[Count]->Physics_Pos.z = z;
-
-		// Physics_Rot
-		App->CL10_Ini->GetString(buff, "Physics_Rot", chr_Tag1, 1024);
-		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
-		App->GDCL_Scene_Data->S_Object[Count]->Physics_Rot.x = x;
-		App->GDCL_Scene_Data->S_Object[Count]->Physics_Rot.y = y;
-		App->GDCL_Scene_Data->S_Object[Count]->Physics_Rot.z = z;
-
-		// Physics_Quat
-		App->CL10_Ini->GetString(buff, "Physics_Quat", chr_Tag1, 1024);
-		sscanf(chr_Tag1, "%f,%f,%f,%f", &w, &x, &y, &z);
-		App->GDCL_Scene_Data->S_Object[Count]->Physics_Quat.w = w;
-		App->GDCL_Scene_Data->S_Object[Count]->Physics_Quat.x = x;
-		App->GDCL_Scene_Data->S_Object[Count]->Physics_Quat.y = y;
-		App->GDCL_Scene_Data->S_Object[Count]->Physics_Quat.z = z;
-
-		// Physics_Scale
-		App->CL10_Ini->GetString(buff, "Physics_Scale", chr_Tag1, 1024);
-		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
-		App->GDCL_Scene_Data->S_Object[Count]->Physics_Scale.x = x;
-		App->GDCL_Scene_Data->S_Object[Count]->Physics_Scale.y = y;
-		App->GDCL_Scene_Data->S_Object[Count]->Physics_Scale.z = z;
-
-		// Physics_Size
-		App->CL10_Ini->GetString(buff, "Physics_Size", chr_Tag1, 1024);
-		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
-		App->GDCL_Scene_Data->S_Object[Count]->Physics_Size.x = x;
-		App->GDCL_Scene_Data->S_Object[Count]->Physics_Size.y = y;
-		App->GDCL_Scene_Data->S_Object[Count]->Physics_Size.z = z;
-
-		// Stock
-		App->CL10_Ini->GetString(buff, "Stock_Text", chr_Tag1, 1024);
-		strcpy(App->GDCL_Scene_Data->S_Object[Count]->Entity[0].mTextItem, chr_Tag1);
-
-
-		//-------------------------- 
-		if (App->GDCL_Scene_Data->S_Object[Count]->Usage == Enums::Usage_Sound)
-		{
-			char buff[1024];
-			strcpy(buff, App->GDCL_SoundMgr->Default_Folder);
-			strcat(buff, "\\Media\\Sounds\\");
-			strcat(buff, chr_Tag1);
-
-			strcpy(App->GDCL_Scene_Data->S_Object[Count]->Entity[0].mFileAndPath, buff);
-		}
-		////-------------------------- 
-
-		// Stock Name
-		App->CL10_Ini->GetString(buff, "Stock_Name", chr_Tag1, 1024);
-		strcpy(App->GDCL_Scene_Data->S_Object[Count]->Entity[0].Stock_mName, chr_Tag1);
-
-		Int_Tag = App->CL10_Ini->GetInt(buff, "Stock_Index", 0, 10);
-		App->GDCL_Scene_Data->S_Object[Count]->Entity[0].Stock_mIndex = Int_Tag;
-
-		// Has Sound
-		bool_Tag = App->CL10_Ini->GetBool(buff, "Has_Sound", 0);
-		App->GDCL_Scene_Data->S_Object[Count]->HasSound = bool_Tag;
-
-		// new sound v2
-
-		Int_Tag = App->CL10_Ini->GetInt(buff, "Sound_ID", 0, 10);
-		App->GDCL_Scene_Data->S_Object[Count]->Sound_ID_v2 = Int_Tag;
-
-		Int_Tag = App->CL10_Ini->GetInt(buff, "Play", 0, 10);
-		App->GDCL_Scene_Data->S_Object[Count]->Play_v2 = Int_Tag;
-
-		if (App->GDCL_Scene_Data->S_Object[Count]->Usage == Enums::Usage_Move)
-		{
-			Load_MoveEntity40(Count);
-		}
-
-		if (App->GDCL_Scene_Data->S_Object[Count]->Usage == Enums::Usage_Teleport)
-		{
-			// Create Teleport and use Player Start Position as Default
-			App->GDCL_Scene_Data->S_Object[Count]->S_Teleport[0] = new Teleport_type;
-			App->CL10_Ini->GetString(buff, "Goto", chr_Tag1, 1024);
-
-			strcpy(App->GDCL_Scene_Data->S_Object[Count]->S_Teleport[0]->Name, chr_Tag1);
-
-			// Mesh_Pos
-			App->CL10_Ini->GetString(buff, "Mesh_Position", chr_Tag1, 1024);
-			sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
-			App->GDCL_Scene_Data->S_Object[Count]->S_Teleport[0]->Player_Position.x = x;
-			App->GDCL_Scene_Data->S_Object[Count]->S_Teleport[0]->Player_Position.y = y;
-			App->GDCL_Scene_Data->S_Object[Count]->S_Teleport[0]->Player_Position.z = z;
-
-			App->CL10_Ini->GetString(buff, "Physics_Position", chr_Tag1, 1024);
-			sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
-			App->GDCL_Scene_Data->S_Object[Count]->S_Teleport[0]->Physics_Position.setX(x);
-			App->GDCL_Scene_Data->S_Object[Count]->S_Teleport[0]->Physics_Position.setY(y);
-			App->GDCL_Scene_Data->S_Object[Count]->S_Teleport[0]->Physics_Position.setZ(z);
-
-			App->CL10_Ini->GetString(buff, "Physics_Rotation", chr_Tag1, 1024);
-			sscanf(chr_Tag1, "%f,%f,%f,%f", &w, &x, &y, &z);
-			App->GDCL_Scene_Data->S_Object[Count]->S_Teleport[0]->Physics_Rotation.setW(w);
-			App->GDCL_Scene_Data->S_Object[Count]->S_Teleport[0]->Physics_Rotation.setX(x);
-			App->GDCL_Scene_Data->S_Object[Count]->S_Teleport[0]->Physics_Rotation.setY(y);
-			App->GDCL_Scene_Data->S_Object[Count]->S_Teleport[0]->Physics_Rotation.setZ(z);
-		}
-
-		Count++;
-	}
-
-	// j
-	Int_Tag = App->CL10_Ini->GetInt("Counters", "Object_ID_Counter", 0, 10);
-	//App->GDCL_Scene_Data->Object_ID_Counter = Int_Tag;
-
-	App->GDCL_Scene_Data->ObjectCount = Count;
 	return 1;
 }
 

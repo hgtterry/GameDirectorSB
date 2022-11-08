@@ -1195,7 +1195,5 @@ bool GD19_Environment::EnableFog(bool SetFog)
 		App->Cl19_Ogre->mSceneMgr->setFog(FOG_NONE, ColourValue(0.7, 0.7, 0.8), 0, 100, 1000);
 	}
 	
-
-	
 	return 1;
 }

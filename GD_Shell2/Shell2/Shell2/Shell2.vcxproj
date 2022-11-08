@@ -20,7 +20,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
     <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -69,24 +69,26 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <AdditionalOptions>/Zm200 %(AdditionalOptions)</AdditionalOptions>
-      <Optimization>Disabled</Optimization>
-      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <AdditionalIncludeDirectories>..\..\..\Anim19_OSDN\Common\Bullet\Source;..\..\..\Anim19_OSDN\Common\boost;..\..\..\Anim19_OSDN\Common\include;..\..\..\Anim19_OSDN\Common\include\OGRE;..\..\..\Anim19_OSDN\Common\include\OGRE\Terrain;..\..\..\Anim19_OSDN\Common\include\OGRE\Overlay;..\..\..\Anim19_OSDN\Common\irrKlang\Headers</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <StringPooling>true</StringPooling>
-      <MinimalRebuild>true</MinimalRebuild>
+      <StringPooling>
+      </StringPooling>
+      <MinimalRebuild>false</MinimalRebuild>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <StructMemberAlignment>Default</StructMemberAlignment>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <FunctionLevelLinking>true</FunctionLevelLinking>
-      <FloatingPointModel>Fast</FloatingPointModel>
+      <FloatingPointModel>Precise</FloatingPointModel>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ShowIncludes>false</ShowIncludes>
       <UseFullPaths>false</UseFullPaths>
       <OmitDefaultLibName>false</OmitDefaultLibName>
+      <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
       <AdditionalDependencies>comctl32.lib;OgreMain.lib;OgreOverlay.lib;OgreTerrain.lib;BulletDynamics.lib;BulletCollision.lib;LinearMath.lib;irrKlang.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -126,6 +128,7 @@
     <ClCompile Include="GD_SoundMgr.cpp" />
     <ClCompile Include="GD_Utilities.cpp" />
     <ClCompile Include="SB_Aera.cpp" />
+    <ClCompile Include="SB_Object.cpp" />
     <ClCompile Include="SB_Physics.cpp" />
     <ClCompile Include="SB_Player.cpp" />
     <ClCompile Include="Shell2.cpp" />
@@ -154,6 +157,7 @@
     <ClInclude Include="GD_Utilities.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SB_Aera.h" />
+    <ClInclude Include="SB_Object.h" />
     <ClInclude Include="SB_Physics.h" />
     <ClInclude Include="SB_Player.h" />
     <ClInclude Include="Shell2.h" />

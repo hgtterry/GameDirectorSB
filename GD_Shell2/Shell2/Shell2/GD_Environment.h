@@ -9,7 +9,7 @@ public:
 
 protected:
 
-	bool EnableFog();
+	bool EnableFog(bool SetFog);
 	void SetSky(bool Enable);
 
 	int SelectedProperties;

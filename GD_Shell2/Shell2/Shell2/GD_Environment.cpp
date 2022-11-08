@@ -17,24 +17,19 @@ GD_Environment::~GD_Environment(void)
 // *************************************************************************
 void GD_Environment::Load_Environment(void)
 {
-	float x = App->GDCL_Scene_Data->S_Scene[0]->AmbientColour.x;
-	float y = App->GDCL_Scene_Data->S_Scene[0]->AmbientColour.y;
-	float z = App->GDCL_Scene_Data->S_Scene[0]->AmbientColour.z;
+	float x = App->GDCL_Scene_Data->B_Area[0]->S_Environment[0]->AmbientColour.x;
+	float y = App->GDCL_Scene_Data->B_Area[0]->S_Environment[0]->AmbientColour.y;
+	float z = App->GDCL_Scene_Data->B_Area[0]->S_Environment[0]->AmbientColour.z;
 
-	App->Ogre17->mSceneMgr->setAmbientLight(ColourValue(x,y,z));
+	App->Ogre17->mSceneMgr->setAmbientLight(ColourValue(x, y, z));
 
-	if (App->GDCL_Scene_Data->S_Scene[0]->Fog[0].FogOn == 1)
+	if (App->GDCL_Scene_Data->B_Area[0]->S_Environment[0]->Fog_On == 1)
 	{
-		EnableFog();
+		EnableFog(true);
 	}
 	else
 	{
 		App->Ogre17->mSceneMgr->setFog(FOG_NONE, ColourValue(0.7, 0.7, 0.8), 0, 100, 1000);
-	}
-
-	if (App->GDCL_Scene_Data->S_Scene[0]->Sky[0].Enabled == 1)
-	{
-		SetSky(1);
 	}
 }
 
@@ -53,20 +48,23 @@ void GD_Environment::SetSky(bool Enable)
 // *************************************************************************
 // *	  				  EnableFog	Terry Bernie						   *
 // *************************************************************************
-bool GD_Environment::EnableFog()
+bool GD_Environment::EnableFog(bool SetFog)
 {
-
-	float Start = App->GDCL_Scene_Data->S_Scene[0]->Fog[0].Start;
-	float End = App->GDCL_Scene_Data->S_Scene[0]->Fog[0].End;
-	float Density = App->GDCL_Scene_Data->S_Scene[0]->Fog[0].Density;
-
-	//if (strcmp(App->GDCL_Scene_Data->S_Scene[0]->Fog[0].Mode,"FOG_LINEAR")==0)
+	if (SetFog == true)
 	{
-		float x = App->GDCL_Scene_Data->S_Scene[0]->Fog[0].Colour.x;
-		float y = App->GDCL_Scene_Data->S_Scene[0]->Fog[0].Colour.y;
-		float z = App->GDCL_Scene_Data->S_Scene[0]->Fog[0].Colour.z;
+		float Start = App->GDCL_Scene_Data->B_Area[0]->S_Environment[0]->Fog_Start;
+		float End = App->GDCL_Scene_Data->B_Area[0]->S_Environment[0]->Fog_End;
+		float Density = App->GDCL_Scene_Data->B_Area[0]->S_Environment[0]->Fog_Density;
 
-		App->Ogre17->mSceneMgr->setFog(FOG_LINEAR, ColourValue(x,y,z),Density,(Ogre::Real)Start,(Ogre::Real)End);
+		float x = App->GDCL_Scene_Data->B_Area[0]->S_Environment[0]->Fog_Colour.x;
+		float y = App->GDCL_Scene_Data->B_Area[0]->S_Environment[0]->Fog_Colour.y;
+		float z = App->GDCL_Scene_Data->B_Area[0]->S_Environment[0]->Fog_Colour.z;
+
+		App->Ogre17->mSceneMgr->setFog(FOG_LINEAR, ColourValue(x, y, z), Density, (Ogre::Real)Start, (Ogre::Real)End);
+	}
+	else
+	{
+		App->Ogre17->mSceneMgr->setFog(FOG_NONE, ColourValue(0.7, 0.7, 0.8), 0, 100, 1000);
 	}
 
 	return 1;

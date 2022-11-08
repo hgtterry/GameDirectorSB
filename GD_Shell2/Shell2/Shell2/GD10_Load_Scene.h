@@ -21,6 +21,8 @@ public:
 	bool Load_Get_Resource_Path();
 	bool Load_Project_Player();
 	bool Load_Project_Aera();
+	bool Load_Project_Objects();
+
 	void Set_Paths();
 
 	char m_Ini_Path_File_Name[MAX_PATH];
@@ -61,7 +63,6 @@ protected:
 	void Load_Scene40();
 	bool Load_Player40();
 	bool Load_Environment40();
-	bool Load_Objects40();
 	void Load_MoveEntity40(int Count);
 	bool Populate_Level40();
 

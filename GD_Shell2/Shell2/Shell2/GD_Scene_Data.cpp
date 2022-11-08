@@ -216,8 +216,7 @@ void GD_Scene_Data::SetObjectDefaults(int Index)
 
 	App->GDCL_Scene_Data->S_Object[Index]->Sound_ID_v2 = 0;
 	App->GDCL_Scene_Data->S_Object[Index]->Play_v2 = 1;
-	SetDataBlocks(Index);
-
+	
 	return;
 }
 
@@ -237,121 +236,8 @@ void GD_Scene_Data::Set_Move_Defaults(int Index)
 	strcpy(S_Object[Index]->S_MoveType->Object_Name,"None");*/
 	return;
 }
-// *************************************************************************
-//						SetDataBlocks Terry Bernie				  		   *
-// *************************************************************************
-void GD_Scene_Data::SetDataBlocks(int Index)
-{
-	// Integer Data
-	//App->GDCL_Scene_Data->S_Object[Index]->IntsRow_1.intData_1 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->IntsRow_1.intData_2 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->IntsRow_1.intData_3 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->IntsRow_1.intData_4 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->IntsRow_1.intData_5 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->IntsRow_1.intData_6 = 0;
 
-	//App->GDCL_Scene_Data->S_Object[Index]->IntsRow_2.intData_1 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->IntsRow_2.intData_2 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->IntsRow_2.intData_3 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->IntsRow_2.intData_4 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->IntsRow_2.intData_5 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->IntsRow_2.intData_6 = 0;
 
-	//App->GDCL_Scene_Data->S_Object[Index]->IntsRow_3.intData_1 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->IntsRow_3.intData_2 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->IntsRow_3.intData_3 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->IntsRow_3.intData_4 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->IntsRow_3.intData_5 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->IntsRow_3.intData_6 = 0;
-
-	//App->GDCL_Scene_Data->S_Object[Index]->IntsRow_4.intData_1 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->IntsRow_4.intData_2 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->IntsRow_4.intData_3 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->IntsRow_4.intData_4 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->IntsRow_4.intData_5 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->IntsRow_4.intData_6 = 0;
-
-	//App->GDCL_Scene_Data->S_Object[Index]->IntsRow_5.intData_1 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->IntsRow_5.intData_2 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->IntsRow_5.intData_3 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->IntsRow_5.intData_4 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->IntsRow_5.intData_5 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->IntsRow_5.intData_6 = 0;
-
-	//// Float Data
-	//App->GDCL_Scene_Data->S_Object[Index]->Data_1.FloatData_1 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->Data_1.FloatData_2 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->Data_1.FloatData_3 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->Data_1.FloatData_4 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->Data_1.FloatData_5 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->Data_1.FloatData_6 = 0;
-
-	//App->GDCL_Scene_Data->S_Object[Index]->FloatsRow_1.FloatData_1 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->FloatsRow_1.FloatData_2 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->FloatsRow_1.FloatData_3 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->FloatsRow_1.FloatData_4 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->FloatsRow_1.FloatData_5 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->FloatsRow_1.FloatData_6 = 0;
-
-	//App->GDCL_Scene_Data->S_Object[Index]->FloatsRow_2.FloatData_1 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->FloatsRow_2.FloatData_2 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->FloatsRow_2.FloatData_3 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->FloatsRow_2.FloatData_4 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->FloatsRow_2.FloatData_5 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->FloatsRow_2.FloatData_6 = 0;
-
-	//App->GDCL_Scene_Data->S_Object[Index]->FloatsRow_3.FloatData_1 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->FloatsRow_3.FloatData_2 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->FloatsRow_3.FloatData_3 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->FloatsRow_3.FloatData_4 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->FloatsRow_3.FloatData_5 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->FloatsRow_3.FloatData_6 = 0;
-
-	//App->GDCL_Scene_Data->S_Object[Index]->FloatsRow_4.FloatData_1 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->FloatsRow_4.FloatData_2 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->FloatsRow_4.FloatData_3 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->FloatsRow_4.FloatData_4 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->FloatsRow_4.FloatData_5 = 0;
-	//App->GDCL_Scene_Data->S_Object[Index]->FloatsRow_4.FloatData_6 = 0;
-
-	//// Chr Data
-	//strcpy(App->GDCL_Scene_Data->S_Object[Index]->ChrsRow_1.charData_1,"None");
-	//strcpy(App->GDCL_Scene_Data->S_Object[Index]->ChrsRow_1.charData_2,"None");
-	//strcpy(App->GDCL_Scene_Data->S_Object[Index]->ChrsRow_1.charData_3,"None");
-	//strcpy(App->GDCL_Scene_Data->S_Object[Index]->ChrsRow_1.charData_4,"None");
-	//strcpy(App->GDCL_Scene_Data->S_Object[Index]->ChrsRow_1.charData_5,"None");
-	//strcpy(App->GDCL_Scene_Data->S_Object[Index]->ChrsRow_1.charData_6,"None");
-
-	//strcpy(App->GDCL_Scene_Data->S_Object[Index]->ChrsRow_2.charData_1,"None");
-	//strcpy(App->GDCL_Scene_Data->S_Object[Index]->ChrsRow_2.charData_2,"None");
-	//strcpy(App->GDCL_Scene_Data->S_Object[Index]->ChrsRow_2.charData_3,"None");
-	//strcpy(App->GDCL_Scene_Data->S_Object[Index]->ChrsRow_2.charData_4,"None");
-	//strcpy(App->GDCL_Scene_Data->S_Object[Index]->ChrsRow_2.charData_5,"None");
-	//strcpy(App->GDCL_Scene_Data->S_Object[Index]->ChrsRow_2.charData_6,"None");
-
-	//strcpy(App->GDCL_Scene_Data->S_Object[Index]->ChrsRow_3.charData_1,"None");
-	//strcpy(App->GDCL_Scene_Data->S_Object[Index]->ChrsRow_3.charData_2,"None");
-	//strcpy(App->GDCL_Scene_Data->S_Object[Index]->ChrsRow_3.charData_3,"None");
-	//strcpy(App->GDCL_Scene_Data->S_Object[Index]->ChrsRow_3.charData_4,"None");
-	//strcpy(App->GDCL_Scene_Data->S_Object[Index]->ChrsRow_3.charData_5,"None");
-	//strcpy(App->GDCL_Scene_Data->S_Object[Index]->ChrsRow_3.charData_6,"None");
-
-	//strcpy(App->GDCL_Scene_Data->S_Object[Index]->ChrsRow_4.charData_1,"None");
-	//strcpy(App->GDCL_Scene_Data->S_Object[Index]->ChrsRow_4.charData_2,"None");
-	//strcpy(App->GDCL_Scene_Data->S_Object[Index]->ChrsRow_4.charData_3,"None");
-	//strcpy(App->GDCL_Scene_Data->S_Object[Index]->ChrsRow_4.charData_4,"None");
-	//strcpy(App->GDCL_Scene_Data->S_Object[Index]->ChrsRow_4.charData_5,"None");
-	//strcpy(App->GDCL_Scene_Data->S_Object[Index]->ChrsRow_4.charData_6,"None");
-
-	//strcpy(App->GDCL_Scene_Data->S_Object[Index]->ChrsRow_5.charData_1,"None");
-	//strcpy(App->GDCL_Scene_Data->S_Object[Index]->ChrsRow_5.charData_2,"None");
-	//strcpy(App->GDCL_Scene_Data->S_Object[Index]->ChrsRow_5.charData_3,"None");
-	//strcpy(App->GDCL_Scene_Data->S_Object[Index]->ChrsRow_5.charData_4,"None");
-	//strcpy(App->GDCL_Scene_Data->S_Object[Index]->ChrsRow_5.charData_5,"None");
-	//strcpy(App->GDCL_Scene_Data->S_Object[Index]->ChrsRow_5.charData_6,"None");
-
-	return;
-}
 // *************************************************************************
 // *						SetOptions_Defaults Terry Bernie			   *
 // *************************************************************************
@@ -470,25 +356,27 @@ void GD_Scene_Data::ClearScene(void)
 }
 
 // *************************************************************************
-// *					 	GameMode(Terry Bernie)			 		 	   *
+// *		    	GameMode:- Terry and Hazel Flanigan 202	 		 	   *
 // *************************************************************************
 bool GD_Scene_Data::GameMode(void)
 {
 	
-	if (S_Scene[0]->Sound[0].Play == 1)
+	if (B_Area[0]->S_Environment[0]->Play == 1)
 	{
 		int result = 1;
-		result = strcmp(S_Scene[0]->Sound[0].SoundFile, "None");
-		if (result == 1)
+		result = strcmp(B_Area[0]->S_Environment[0]->Sound_File, "None");
+		if (result == 1) // Could be Unsafe 
 		{
-			bool Test = App->GDCL_Utilities->Search_Folder_ForFile("Media\\Sounds\\",S_Scene[0]->Sound[0].SoundFile);
-			if(Test == 1)
-			{
-				S_Scene[0]->Sound[0].SndFile = App->GDCL_SoundMgr->SoundEngine->play2D(S_Scene[0]->Sound[0].SoundFileAndPath,S_Scene[0]->Sound[0].Loop,false,true);
+			char buff[1024];
+			strcpy(buff, App->GDCL_SoundMgr->Default_Folder);
+			strcat(buff, "\\Media\\Sounds\\");
 
-				S_Scene[0]->Sound[0].SndFile->setVolume(S_Scene[0]->Sound[0].Volume);
-				S_Scene[0]->Sound[0].SndFile->setIsPaused(false);
-			}
+			strcat(buff, B_Area[0]->S_Environment[0]->Sound_File);
+
+			B_Area[0]->S_Environment[0]->SndFile = App->GDCL_SoundMgr->SoundEngine->play2D(buff, B_Area[0]->S_Environment[0]->Loop, true, true);
+
+			B_Area[0]->S_Environment[0]->SndFile->setVolume(B_Area[0]->S_Environment[0]->SndVolume);
+			B_Area[0]->S_Environment[0]->SndFile->setIsPaused(false);
 		}
 	}
 
@@ -496,9 +384,10 @@ bool GD_Scene_Data::GameMode(void)
 	CurrentCamMode = App->Ogre17->PhysicsFrameListener->GD_CameraMode;
 	App->Ogre17->PhysicsFrameListener->GD_CameraMode = Enums::CamFirst;
 	
-
+	App->SBC_Physics->Enable_Physics(1); 
 	App->Ogre17->PhysicsFrameListener->GD_Dubug_Physics = 0;
-	Show_Entities(false);
+
+	//Show_Entities(false);
 
 	SetCursorPos(500,500);
 	S_Flags[0]->GameMode = 1;
@@ -516,7 +405,7 @@ bool GD_Scene_Data::GameMode(void)
 }
 
 // *************************************************************************
-// *					 Show_Entities(Terry Bernie)			 	 	   *
+// *		Show_Entities:- Terry and Hazel Flanigan 2022			  	   *
 // *************************************************************************
 bool GD_Scene_Data::Show_Entities(bool YesNo)
 {

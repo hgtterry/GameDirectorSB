@@ -259,7 +259,7 @@ public:
 
 	bool Init_Scene(void);
 	void SetObjectDefaults(int Index);
-	void SetDataBlocks(int Index);
+
 	void SetScene_Defaults(void);
 	void SetOptions_Defaults(void);
 	void SetFlags_Defaults(void);

@@ -302,8 +302,7 @@ bool  BT_PhysicsListener::frameRenderingQueued(const FrameEvent& evt)
 	
 	if (GetAsyncKeyState(69) < 0) // Q key Down in Fly Mode
 	{
-		App->SBC_Physics->Enable_Physics(1); //App->Ogre17->PhysicsFrameListener->GD_Run_Physics = 1;
-		GD_CameraMode = Enums::CamFirst;
+		App->GDCL_Scene_Data->GameMode();
 	}
 	////------------------------------------------------
 	//if (GetAsyncKeyState(81) < 0) // E key Up in Fly Mode
