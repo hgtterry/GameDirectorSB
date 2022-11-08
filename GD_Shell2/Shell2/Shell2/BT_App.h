@@ -41,6 +41,7 @@
 #include "SB_Physics.h"
 #include "SB_Object.h"
 #include "SB_Objects_Create.h"
+#include "SB_Messages.h"
 
 class BT_App
 {
@@ -64,6 +65,7 @@ public:
 	SB_Physics*					SBC_Physics;
 	SB_Object*					SBC_Object;
 	SB_Objects_Create*			SBC_Objects_Create;
+	SB_Messages*				SBC_Messages;
 
 	BT_App(void);
 	~BT_App(void);
