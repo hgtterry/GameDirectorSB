@@ -104,7 +104,7 @@ bool BT_PhysicsListener::frameStarted(const FrameEvent& evt)
 		{
 			App->GDCL_Bullet->dynamicsWorld->stepSimulation(evt.timeSinceLastFrame*2); //suppose you have 60 frames per second
 
-			App->GDCL_Player->PostStep(NULL);
+			//App->GDCL_Player->PostStep(NULL);
 
 			for (int j =App->GDCL_Bullet->dynamicsWorld->getNumCollisionObjects()-1; j>=0 ;j--)
 			{
@@ -224,43 +224,43 @@ bool  BT_PhysicsListener::frameRenderingQueued(const FrameEvent& evt)
 	}
 
 	//------------------------------------------------ Jump and Selection
-	if (GetAsyncKeyState(VK_SPACE) < 0 && App->GDCL_Player->PlayerAdded == 1) 
+	//if (GetAsyncKeyState(VK_SPACE) < 0 && App->GDCL_Player->PlayerAdded == 1) 
 	{
-		App->GDCL_Player->Jump(Ogre::Vector3(1,1,0),1.2);
+		//App->GDCL_Player->Jump(Ogre::Vector3(1,1,0),1.2);
 	}
 
 	
 	//------------------------------------------------ Forward
-	if (GetAsyncKeyState(VK_UP) < 0 && App->GDCL_Player->PlayerAdded == 1 && GD_CameraMode == Enums::CamDetached) 
+	//if (GetAsyncKeyState(VK_UP) < 0 && App->GDCL_Player->PlayerAdded == 1 && GD_CameraMode == Enums::CamDetached) 
 	{
-		App->GDCL_Player->Forward();
-		App->GDCL_Player->IsMOving = 1;
+		//App->GDCL_Player->Forward();
+		//App->GDCL_Player->IsMOving = 1;
 	}
-	else 
+	//else 
 	{
-		if(App->GDCL_Player->PlayerAdded == 1 && App->GDCL_Player->IsMOving == 1 && GD_CameraMode == Enums::CamDetached)
+		//if(App->GDCL_Player->PlayerAdded == 1 && App->GDCL_Player->IsMOving == 1 && GD_CameraMode == Enums::CamDetached)
 		{
-			App->GDCL_Player->Stop();
-			App->GDCL_Player->IsMOving = 0;
+			//App->GDCL_Player->Stop();
+			//App->GDCL_Player->IsMOving = 0;
 		}
 	}
 	//------------------------------------------------ Back
-	if (GetAsyncKeyState(VK_DOWN) < 0 && App->GDCL_Player->PlayerAdded == 1 && GD_CameraMode == Enums::CamDetached) 
+	//if (GetAsyncKeyState(VK_DOWN) < 0 && App->GDCL_Player->PlayerAdded == 1 && GD_CameraMode == Enums::CamDetached) 
 	{
-		App->GDCL_Player->Back();
-		App->GDCL_Player->IsMOving_Back = 1;
+		//App->GDCL_Player->Back();
+		//App->GDCL_Player->IsMOving_Back = 1;
 	}
-	else 
+	//else 
 	{
-		if(App->GDCL_Player->PlayerAdded == 1 && App->GDCL_Player->IsMOving_Back == 1 && GD_CameraMode == Enums::CamDetached)
+		//if(App->GDCL_Player->PlayerAdded == 1 && App->GDCL_Player->IsMOving_Back == 1 && GD_CameraMode == Enums::CamDetached)
 		{
-			App->GDCL_Player->Stop();
-			App->GDCL_Player->IsMOving_Back = 0;
+			//App->GDCL_Player->Stop();
+			//App->GDCL_Player->IsMOving_Back = 0;
 		}
 	}
 	
 	//------------------------------------------------ Turn Right
-	if (GetAsyncKeyState(VK_RIGHT) < 0 && App->GDCL_Player->PlayerAdded == 1) 
+	/*if (GetAsyncKeyState(VK_RIGHT) < 0 && App->GDCL_Player->PlayerAdded == 1) 
 	{
 		toggleTimer -= evt.timeSinceLastFrame;
 
@@ -277,10 +277,10 @@ bool  BT_PhysicsListener::frameRenderingQueued(const FrameEvent& evt)
 
 			toggleTimer = 0.01;
 		}
-	}
+	}*/
 
 	//------------------------------------------------ Turn Left
-	if (GetAsyncKeyState(VK_LEFT) < 0 && App->GDCL_Player->PlayerAdded == 1) 
+	/*if (GetAsyncKeyState(VK_LEFT) < 0 && App->GDCL_Player->PlayerAdded == 1) 
 	{
 		toggleTimer -= evt.timeSinceLastFrame;
 
@@ -297,7 +297,7 @@ bool  BT_PhysicsListener::frameRenderingQueued(const FrameEvent& evt)
 
 			toggleTimer = 0.01;
 		}
-	}
+	}*/
 
 	
 	if (GetAsyncKeyState(69) < 0) // Q key Down in Fly Mode
@@ -712,9 +712,9 @@ bool BT_PhysicsListener::Capture_Mouse_FirstPerson(void)
 				Rotate.y = -1;
 				Rotate.z = 0;
 
-				float mTurn = ((float)0.00040*Pl_DeltaMouse );//S_Player[0]->TurnRate);
-
-				App->GDCL_Player->Rotate_FromCam(Rotate,mTurn,false);
+				//float mTurn = ((float)App->GDCL_Scene_Data->B_Player[0]->TurnRate*Pl_DeltaMouse);
+				float mTurn = (Pl_DeltaMouse * (float)0.00040);
+				App->GDCL_Scene_Data->B_Player[0]->Rotate_FromCam(Rotate, mTurn, false);
 
 			}
 		}
@@ -725,20 +725,19 @@ bool BT_PhysicsListener::Capture_Mouse_FirstPerson(void)
 			if (test > 1)
 			{
 				Pl_DeltaMouse = float(Pl_MouseX - Pl_Cent500X);
-				
+
 				Ogre::Vector3 Rotate;
 				Rotate.x = 0;
 				Rotate.y = 1;
 				Rotate.z = 0;
-
-				float mTurn = ((float)0.00040*Pl_DeltaMouse );//S_Player[0]->TurnRate);
-
-				App->GDCL_Player->Rotate_FromCam(Rotate,mTurn,false);
+				
+				float mTurn = (Pl_DeltaMouse * (float)0.00040 );
+				App->GDCL_Scene_Data->B_Player[0]->Rotate_FromCam(Rotate, mTurn, false);
 			}
 		}
 
 		//Up Down
-		if(Pl_MouseY < Pl_Cent500Y)
+		if (Pl_MouseY < Pl_Cent500Y)
 		{
 			long test = Pl_Cent500Y - Pl_MouseY; // Positive
 
@@ -746,10 +745,10 @@ bool BT_PhysicsListener::Capture_Mouse_FirstPerson(void)
 			{
 				Pl_DeltaMouse = float(Pl_Cent500Y - Pl_MouseY);
 				Ogre::Radian pp = Degree(Pl_DeltaMouse * (float)0.03);
-				App->GDCL_Player->CameraPitch->pitch(pp);//S_Player[0]->TurnRate);
+				App->GDCL_Scene_Data->B_Player[0]->CameraPitch->pitch(pp);
 			}
 		}
-		else if(Pl_MouseY > Pl_Cent500Y)
+		else if (Pl_MouseY > Pl_Cent500Y)
 		{
 			long test = Pl_MouseY - Pl_Cent500Y; // Positive
 
@@ -757,7 +756,7 @@ bool BT_PhysicsListener::Capture_Mouse_FirstPerson(void)
 			{
 				Pl_DeltaMouse = float(Pl_MouseY - Pl_Cent500Y);
 				Ogre::Radian pp = Degree(-Pl_DeltaMouse * (float)0.03);
-				App->GDCL_Player->CameraPitch->pitch(pp);//S_Player[0]->TurnRate);
+				App->GDCL_Scene_Data->B_Player[0]->CameraPitch->pitch(pp);
 			}
 		}
 

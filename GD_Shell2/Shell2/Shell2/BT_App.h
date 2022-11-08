@@ -25,7 +25,6 @@
 #include "GameDirectorOgre.h"
 
 #include "GD_Utilities.h"
-#include "GD_Player.h"
 #include "GD_BULLET.h"
 #include "GD_Scene_Data.h"
 #include "GD_SoundMgr.h"
@@ -48,7 +47,6 @@ public:
 	GameDirectorOgre *			Ogre17;
 
 	GD_Utilities*				GDCL_Utilities;
-	GD_Player*					GDCL_Player;
 	GD_BULLET*					GDCL_Bullet;
 	GD_Scene_Data*				GDCL_Scene_Data;
 	GD_SoundMgr*				GDCL_SoundMgr;

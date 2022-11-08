@@ -122,7 +122,6 @@
     <ClCompile Include="GD_BULLET.cpp" />
     <ClCompile Include="GD_Collision.cpp" />
     <ClCompile Include="GD_Environment.cpp" />
-    <ClCompile Include="GD_Player.cpp" />
     <ClCompile Include="GD_Scene_Data.cpp" />
     <ClCompile Include="GD_SoundMgr.cpp" />
     <ClCompile Include="GD_Utilities.cpp" />
@@ -150,7 +149,6 @@
     <ClInclude Include="GD_BULLET.h" />
     <ClInclude Include="GD_Collision.h" />
     <ClInclude Include="GD_Environment.h" />
-    <ClInclude Include="GD_Player.h" />
     <ClInclude Include="GD_Scene_Data.h" />
     <ClInclude Include="GD_SoundMgr.h" />
     <ClInclude Include="GD_Utilities.h" />

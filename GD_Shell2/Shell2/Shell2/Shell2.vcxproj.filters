@@ -36,9 +36,6 @@
     <ClCompile Include="GD_Utilities.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GD_Player.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GD_BULLET.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -111,9 +108,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GD_Utilities.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GD_Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GD_BULLET.h">

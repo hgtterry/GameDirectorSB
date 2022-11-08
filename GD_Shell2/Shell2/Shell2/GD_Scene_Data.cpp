@@ -435,21 +435,7 @@ void GD_Scene_Data::ClearScene(void)
 	{
 		App->Ogre17->PhysicsFrameListener->Animate_Ogre = 0;
 
-		if(App->GDCL_Player->PlayerAdded == 1)
-		{
-			/*App->GDCL_Player->PlayerAdded = 0;
-			App->Ogre17->PhysicsFrameListener->Animate_State->setEnabled(false);
-			App->Ogre17->PhysicsFrameListener->Animate_State2->setEnabled(false);
-			App->Ogre17->PhysicsFrameListener->Animate_State = NULL;
-			App->Ogre17->PhysicsFrameListener->Animate_State2 = NULL;*/
-
-
-			App->GDCL_Player->Player_Node->detachAllObjects();  // Remove Player
-			App->Ogre17->mSceneMgr->destroySceneNode(App->GDCL_Player->Player_Node);
-			App->Ogre17->mSceneMgr->destroyEntity(App->GDCL_Player->Player_Ent);
-			App->GDCL_Player->Player_Node = NULL;
-			App->GDCL_Player->Player_Ent = NULL;
-		}
+		
 
 		//App->GDCL_Resources->Unload_Materials();
 		//App->GDCL_Resources->Remove_OblectMesh();
@@ -565,7 +551,7 @@ bool GD_Scene_Data::Start_Scene()
 {
 	//int Index = App->GDCL_Scene_Data->ObjectCount;
 
-	App->GDCL_Player->SetUp();
+	//App->GDCL_Player->SetUp();
 
 	App->Ogre17->PhysicsFrameListener->GD_Run_Physics = 0; // ComeBack
 

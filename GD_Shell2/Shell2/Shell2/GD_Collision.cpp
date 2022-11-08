@@ -63,11 +63,11 @@ bool GD_Collision::Do_Collectable(int Index)
 // *************************************************************************
 bool GD_Collision::Do_Teleport(int Index)
 {
-	App->GDCL_Player->Player_Node->setPosition(App->GDCL_Scene_Data->S_Object[Index]->S_Teleport[0]->Player_Position);
+	/*App->GDCL_Player->Player_Node->setPosition(App->GDCL_Scene_Data->S_Object[Index]->S_Teleport[0]->Player_Position);
 	App->GDCL_Player->mObject->getWorldTransform().setOrigin(App->GDCL_Scene_Data->S_Object[Index]->S_Teleport[0]->Physics_Position);
 	App->GDCL_Player->mObject->getWorldTransform().setRotation(App->GDCL_Scene_Data->S_Object[Index]->S_Teleport[0]->Physics_Rotation);
 
-	Play_Sound(Index);
+	Play_Sound(Index);*/
 	
 
 	return 1;

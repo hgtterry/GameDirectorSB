@@ -126,7 +126,7 @@ void GD_BULLET::Reset_Physics(void)
 		Count++;
 	}
 	
-	if(App->GDCL_Player->PlayerAdded == 1 && GD_Reset_Player == 1)
+	/*if(App->GDCL_Player->PlayerAdded == 1 && GD_Reset_Player == 1)
 	{
 		btVector3 zeroVector(0,0,0);
 
@@ -147,7 +147,7 @@ void GD_BULLET::Reset_Physics(void)
 		App->GDCL_Player->mObject->setWorldTransform(startTransform);
 		App->GDCL_Player->mObject->getMotionState()->setWorldTransform(startTransform);
 		App->GDCL_Player->mObject->activate(true);
-	}
+	}*/
 
 	App->Ogre17->PhysicsFrameListener->GD_Run_Physics = 1;
 }

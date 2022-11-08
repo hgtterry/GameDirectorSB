@@ -54,7 +54,7 @@ Base_Player::Base_Player()
 
 	PlayerHeight = 16.0;
 
-	TurnRate = 0.00040;
+	TurnRate = 0.0000040;
 
 	mOnGround = 1;
 	IsMOving = 0;
@@ -92,7 +92,7 @@ void Base_Player::Jump(const Ogre::Vector3 axis, float force)
 
 	Phys_Body->getWorldTransform().setOrigin(btVector3(pos[0], pos[1], pos[2]));
 
-	App->GDCL_Player->Check_Collisions();
+	//App->GDCL_Player->Check_Collisions();
 }
 
 // *************************************************************************
@@ -116,7 +116,7 @@ void Base_Player::Forward(float delta)
 
 	}
 
-	App->GDCL_Player->Check_Collisions();
+	//App->GDCL_Player->Check_Collisions();
 }
 
 // *************************************************************************
@@ -132,7 +132,7 @@ void Base_Player::Back(void)
 	vel = Ground_speed * 10 * basis;			 //cur[1],
 	Phys_Body->setLinearVelocity(btVector3(vel[0], cur[1], vel[2]));
 
-	App->GDCL_Player->Check_Collisions();
+	//App->GDCL_Player->Check_Collisions();
 }
 
 // *************************************************************************
@@ -150,7 +150,7 @@ void Base_Player::Move_Left(void)
 
 	Phys_Body->setLinearVelocity(btVector3(-vel[2], cur[1], vel[0]));
 
-	App->GDCL_Player->Check_Collisions();
+	//App->GDCL_Player->Check_Collisions();
 }
 
 // *************************************************************************
@@ -168,7 +168,7 @@ void Base_Player::Move_Right(void)
 
 	Phys_Body->setLinearVelocity(btVector3(vel[2], cur[1], -vel[0]));
 
-	App->GDCL_Player->Check_Collisions();
+	//App->GDCL_Player->Check_Collisions();
 	
 }
 
@@ -202,7 +202,7 @@ void Base_Player::Rotate_FromCam(const Ogre::Vector3 axis, float delta, bool nor
 
 	btTransform xform = Phys_Body->getWorldTransform();
 	btMatrix3x3 R = xform.getBasis();
-	R = R * btMatrix3x3(btQuaternion(btVector3(axis[0], axis[1], axis[2]), test));
+	R = R * btMatrix3x3(btQuaternion(btVector3(axis[0], axis[1], axis[2]), delta));
 
 	if (normalize) {
 		R[0].normalize();

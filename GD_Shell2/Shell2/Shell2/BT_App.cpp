@@ -39,7 +39,6 @@ BT_App::BT_App(void)
 	ObjectCount = 0;
 	NewObjectID = NULL;
 
-	GDCL_Player = NULL;
 	GDCL_Utilities = NULL;
 	GDCL_Bullet = NULL;
 	GDCL_Scene_Data = NULL;
@@ -95,7 +94,6 @@ bool BT_App::InitApp(void)
 	Ogre17 =					new GameDirectorOgre();			
 					
 	GDCL_Utilities =			new GD_Utilities();
-	GDCL_Player =				new GD_Player();
 	GDCL_Bullet =				new GD_BULLET();
 	GDCL_Scene_Data =			new GD_Scene_Data();
 	GDCL_SoundMgr =				new GD_SoundMgr();

@@ -205,6 +205,7 @@ bool GD10_Load_Scene::Load_Project_Player()
 		App->CL10_Ini->GetString(buff, "Player_Name", Player_Name, MAX_PATH);
 		strcpy(App->GDCL_Scene_Data->B_Player[Count]->Player_Name, Player_Name);
 
+		//App->Say(App->GDCL_Scene_Data->B_Player[Count]->Player_Name);
 
 		App->CL10_Ini->GetString(buff, "Start_Position", chr_Tag1, MAX_PATH);
 		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
@@ -220,10 +221,9 @@ bool GD10_Load_Scene::Load_Project_Player()
 
 		App->CL10_Ini->GetString(buff, "Turn_Rate", chr_Tag1, MAX_PATH);
 		sscanf(chr_Tag1, "%f", &x);
-		App->GDCL_Scene_Data->B_Player[Count]->TurnRate = x;
+		App->GDCL_Scene_Data->B_Player[Count]->TurnRate = 0000030;
 
 		Count++;
-
 	}
 
 	// ------------------------------------------ Locations
@@ -552,33 +552,33 @@ bool GD10_Load_Scene::Load_Player40()
 	float z = 0;
 
 	// Name
-	App->CL10_Ini->GetString("Player", "Name", chr_Tag1, 1024);
-	strcpy(App->GDCL_Player->PlayerName, chr_Tag1);
+	//App->CL10_Ini->GetString("Player", "Name", chr_Tag1, 1024);
+	//strcpy(App->GDCL_Player->PlayerName, chr_Tag1);
 
-	// Position
-	App->CL10_Ini->GetString("Player", "Start_Position", chr_Tag1, 1024);
-	sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
-	App->GDCL_Player->StartPos.x = x;
-	App->GDCL_Player->StartPos.y = y;
-	App->GDCL_Player->StartPos.z = z;
+	//// Position
+	//App->CL10_Ini->GetString("Player", "Start_Position", chr_Tag1, 1024);
+	//sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+	//App->GDCL_Player->StartPos.x = x;
+	//App->GDCL_Player->StartPos.y = y;
+	//App->GDCL_Player->StartPos.z = z;
 
-	App->CL10_Ini->GetString("Player", "Shape", chr_Tag1, 1024); // Capsule
+	//App->CL10_Ini->GetString("Player", "Shape", chr_Tag1, 1024); // Capsule
 
-	x = App->CL10_Ini->Get_Float("Player", "Mass");
-	y = App->CL10_Ini->Get_Float("Player", "Radius");
-	z = App->CL10_Ini->Get_Float("Player", "Height");
+	//x = App->CL10_Ini->Get_Float("Player", "Mass");
+	//y = App->CL10_Ini->Get_Float("Player", "Radius");
+	//z = App->CL10_Ini->Get_Float("Player", "Height");
 
-	App->GDCL_Player->Capsule_Mass = x;
-	App->GDCL_Player->Capsule_Radius = y;
-	App->GDCL_Player->Capsule_Height = z;
+	//App->GDCL_Player->Capsule_Mass = x;
+	//App->GDCL_Player->Capsule_Radius = y;
+	//App->GDCL_Player->Capsule_Height = z;
 
-	x = App->CL10_Ini->Get_Float("Player", "Ground_Speed");
-	if (x == 0) { x = 2.220; }
-	App->GDCL_Player->Ground_speed = x;
+	//x = App->CL10_Ini->Get_Float("Player", "Ground_Speed");
+	//if (x == 0) { x = 2.220; }
+	//App->GDCL_Player->Ground_speed = x;
 
-	x = App->CL10_Ini->Get_Float("Player", "Cam_Height");
-	if (x == 0) { x = 6.00; }
-	App->GDCL_Player->PlayerHeight = x;
+	//x = App->CL10_Ini->Get_Float("Player", "Cam_Height");
+	//if (x == 0) { x = 6.00; }
+	//App->GDCL_Player->PlayerHeight = x;
 
 	return 1;
 }
@@ -978,7 +978,7 @@ bool GD10_Load_Scene::Populate_Level40()
 
 	if (App->GDCL_Scene_Data->S_LoadOptions[0]->Has_Player == 1)
 	{
-		App->GDCL_Player->Load_Player();
+		//App->GDCL_Player->Load_Player();
 	}
 
 	if (App->GDCL_Scene_Data->S_LoadOptions[0]->Has_Objects == 1)
@@ -988,7 +988,7 @@ bool GD10_Load_Scene::Populate_Level40()
 
 	if (App->GDCL_Scene_Data->S_LoadOptions[0]->Has_Player == 1)
 	{
-		App->GDCL_Player->PlayerAdded = 1;
+		//App->GDCL_Player->PlayerAdded = 1;
 	}
 
 	App->GDCL_Scene_Data->SceneLoaded = 1;
