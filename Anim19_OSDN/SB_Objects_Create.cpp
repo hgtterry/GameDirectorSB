@@ -354,7 +354,7 @@ void SB_Objects_Create::Add_Physics_Box(bool Dynamic,int Index)
 	btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
 	startTransform.setOrigin(initialPosition);
 
-	Ogre::Vector3 Size = App->Cl_Objects_Com->GetMesh_BB_Size(Object->Object_Node);
+	Ogre::Vector3 Size = App->SBC_Object->GetMesh_BB_Size(Object->Object_Node);
 	float sx = Size.x / 2;
 	float sy = Size.y / 2;
 	float sz = Size.z / 2;
@@ -445,7 +445,7 @@ void SB_Objects_Create::Add_Physics_Sphere(bool Dynamic, int Index)
 
 	startTransform.setOrigin(initialPosition);
 
-	float Radius = App->Cl_Objects_Com->GetMesh_BB_Radius(Object->Object_Node);
+	float Radius = App->SBC_Object->GetMesh_BB_Radius(Object->Object_Node);
 	Object->Physics_Size = Ogre::Vector3(Radius, 0, 0);
 
 	btCollisionShape* newRigidShape = new btSphereShape(Radius);
@@ -531,12 +531,12 @@ void SB_Objects_Create::Add_Physics_Capsule(bool Dynamic, int Index)
 
 	startTransform.setOrigin(initialPosition);
 
-	Ogre::Vector3 Size = App->Cl_Objects_Com->GetMesh_BB_Size(Object->Object_Node);
+	Ogre::Vector3 Size = App->SBC_Object->GetMesh_BB_Size(Object->Object_Node);
 	float sx = Size.x / 2;
 	float sy = Size.y / 2;
 	float sz = Size.z / 2;
 
-	float Radius = App->Cl_Objects_Com->GetMesh_BB_Radius(Object->Object_Node);
+	float Radius = App->SBC_Object->GetMesh_BB_Radius(Object->Object_Node);
 	Object->Physics_Size = Ogre::Vector3(Radius, sy, 0);
 
 	btCollisionShape* newRigidShape = new btCapsuleShape(Radius, sy);
@@ -621,12 +621,12 @@ void SB_Objects_Create::Add_Physics_Cylinder(bool Dynamic, int Index)
 
 	startTransform.setOrigin(initialPosition);
 
-	Ogre::Vector3 Size = App->Cl_Objects_Com->GetMesh_BB_Size(Object->Object_Node);
+	Ogre::Vector3 Size = App->SBC_Object->GetMesh_BB_Size(Object->Object_Node);
 	float sx = Size.x / 2;
 	float sy = Size.y / 2;
 	float sz = Size.z / 2;
 
-	float Radius = App->Cl_Objects_Com->GetMesh_BB_Radius(Object->Object_Node);
+	float Radius = App->SBC_Object->GetMesh_BB_Radius(Object->Object_Node);
 	Object->Physics_Size = Ogre::Vector3(sx, sy, sz);
 
 	btCollisionShape* newRigidShape = new btCylinderShape(btVector3(sx, sy, sz));
@@ -708,12 +708,12 @@ void SB_Objects_Create::Add_Physics_Cone(bool Dynamic,int Index)
 
 	startTransform.setOrigin(initialPosition);
 
-	Ogre::Vector3 Size = App->Cl_Objects_Com->GetMesh_BB_Size(Object->Object_Node);
+	Ogre::Vector3 Size = App->SBC_Object->GetMesh_BB_Size(Object->Object_Node);
 	float sx = Size.x / 2;
 	float sy = Size.y;// / 2;
 	float sz = Size.z / 2;
 
-	float Radius = App->Cl_Objects_Com->GetMesh_BB_Radius(Object->Object_Node);
+	float Radius = App->SBC_Object->GetMesh_BB_Radius(Object->Object_Node);
 	Object->Physics_Size = Ogre::Vector3(Radius, sy, 0);
 
 	btCollisionShape* newRigidShape = new btConeShape(Radius, sy);
@@ -922,7 +922,7 @@ bool SB_Objects_Create::Create_Sound_Entity(int Index)
 	btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
 	startTransform.setOrigin(initialPosition);
 
-	Ogre::Vector3 Size = App->Cl_Objects_Com->GetMesh_BB_Size(Object->Object_Node);
+	Ogre::Vector3 Size = App->SBC_Object->GetMesh_BB_Size(Object->Object_Node);
 	float sx = Size.x / 2;
 	float sy = Size.y / 2;
 	float sz = Size.z / 2;
@@ -1081,7 +1081,7 @@ bool SB_Objects_Create::Create_Move_Entity(int Index)
 	btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
 	startTransform.setOrigin(initialPosition);
 
-	Ogre::Vector3 Size = App->Cl_Objects_Com->GetMesh_BB_Size(Object->Object_Node);
+	Ogre::Vector3 Size = App->SBC_Object->GetMesh_BB_Size(Object->Object_Node);
 	float sx = Size.x / 2;
 	float sy = Size.y / 2;
 	float sz = Size.z / 2;
@@ -1216,7 +1216,7 @@ bool SB_Objects_Create::Create_TeleportEntity(int Index)
 	btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
 	startTransform.setOrigin(initialPosition);
 
-	Ogre::Vector3 Size = App->Cl_Objects_Com->GetMesh_BB_Size(Object->Object_Node);
+	Ogre::Vector3 Size = App->SBC_Object->GetMesh_BB_Size(Object->Object_Node);
 	float sx = Size.x / 2;
 	float sy = Size.y / 2;
 	float sz = Size.z / 2;

@@ -128,7 +128,7 @@ void GD19_Visuals::MarkerBB_Addjust(int Index)
 	Ogre::Vector3 Position = Object->Object_Node->getPosition();
 	Ogre::Quaternion Rot = Object->Object_Node->getOrientation();
 
-	Ogre::Vector3 Size = App->Cl_Objects_Com->GetMesh_BB_Size(Object->Object_Node);
+	Ogre::Vector3 Size = App->SBC_Object->GetMesh_BB_Size(Object->Object_Node);
 	MarkerBB_Update(Size.x/2,Size.y/2,Size.z/2);
 
 	Ogre::Vector3 Centre = Object->Object_Node->getAttachedObject(0)->getBoundingBox().getCenter();

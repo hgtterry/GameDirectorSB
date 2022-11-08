@@ -43,6 +43,9 @@ public:
 	bool Show_Physics_Debug;
 	bool Show_Mesh_Debug;
 
+	Ogre::Vector3 SB_Object::GetMesh_BB_Size(SceneNode* mNode);
+	float SB_Object::GetMesh_BB_Radius(SceneNode* mNode);
+
 	HWND Object_PropDlg_Hwnd;
 
 protected:

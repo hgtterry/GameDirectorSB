@@ -125,7 +125,7 @@ bool SB_Messages::Create_Message_Entity(int Index)
 	btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
 	startTransform.setOrigin(initialPosition);
 
-	Ogre::Vector3 Size = App->Cl_Objects_Com->GetMesh_BB_Size(MObject->Object_Node);
+	Ogre::Vector3 Size = App->SBC_Object->GetMesh_BB_Size(MObject->Object_Node);
 	float sx = Size.x / 2;
 	float sy = Size.y / 2;
 	float sz = Size.z / 2;

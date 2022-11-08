@@ -30,36 +30,6 @@ bool GD19_Objects_Com::GetMesh_BB_Data(int SL, Ogre::SceneNode* Node)
 }
 
 // *************************************************************************
-// *	  				GetMesh_BB_Size Terry Bernie					   *
-// *************************************************************************
-Ogre::Vector3 GD19_Objects_Com::GetMesh_BB_Size(SceneNode* mNode)
-{
-	AxisAlignedBox aab = mNode->getAttachedObject(0)->getBoundingBox();
-	Ogre::Vector3 min = aab.getMinimum() * mNode->getScale();
-	Ogre::Vector3 max = aab.getMaximum() * mNode->getScale();
-	Ogre::Vector3 center = aab.getCenter() * mNode->getScale();
-	Ogre::Vector3 size(fabs(max.x - min.x), fabs(max.y - min.y), fabs(max.z - min.z));
-	float radius = (size.x > size.z) ? size.z / 2.0f : size.x / 2.0f;
-
-	return size;
-}
-
-// *************************************************************************
-// *	  				GetMesh_BB_Radius Terry Bernie					   *
-// *************************************************************************
-float GD19_Objects_Com::GetMesh_BB_Radius(SceneNode* mNode)
-{
-	AxisAlignedBox aab = mNode->getAttachedObject(0)->getBoundingBox();
-	Ogre::Vector3 min = aab.getMinimum() * mNode->getScale();
-	Ogre::Vector3 max = aab.getMaximum() * mNode->getScale();
-	Ogre::Vector3 center = aab.getCenter() * mNode->getScale();
-	Ogre::Vector3 size(fabs(max.x - min.x), fabs(max.y - min.y), fabs(max.z - min.z));
-	float radius = (size.x > size.z) ? size.z / 2.0f : size.x / 2.0f;
-
-	return radius;
-}
-
-// *************************************************************************
 //						Set_Physics_PosRot Terry Bernie					   *
 // *************************************************************************
 btTransform GD19_Objects_Com::Set_Physics_PosRot(int Object_Index)

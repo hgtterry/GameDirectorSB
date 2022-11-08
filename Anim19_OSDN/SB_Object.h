@@ -36,6 +36,7 @@ public:
 	Ogre::Vector3 GetPlacement(int Distance = -6);
 
 	Ogre::Vector3 Get_BoundingBox_World_Centre(int Object_Index);
+	float GetMesh_BB_Radius(SceneNode* mNode);
 
 	void Set_Teleports_Defaults(int Index);
 	void Set_Collectables_Sound_Defaults(int Index);
@@ -45,6 +46,7 @@ public:
 
 	void Copy_Object(int Object_Index);
 
+	Ogre::Vector3 GetMesh_BB_Size(SceneNode* mNode);
 
 	bool Show_Physics_Debug;
 	bool Show_Mesh_Debug;
