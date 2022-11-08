@@ -283,8 +283,8 @@ bool GD10_Load_Scene::Load_Project_Player()
 
 	App->GDCL_Scene_Data->Player_Location_Count = Count;
 
-	//App->SBC_Physics->Reset_Physics();
-	//App->SBC_Physics->Enable_Physics(1);
+	App->SBC_Physics->Reset_Physics();
+	App->SBC_Physics->Enable_Physics(1);
 
 	return 1;
 }
