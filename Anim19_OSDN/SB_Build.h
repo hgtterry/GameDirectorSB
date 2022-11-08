@@ -41,6 +41,10 @@ protected:
 	void Read_From_Config(void);
 	void Create_ProjectFolder(void);
 	void Copy_SystemFiles(void);
+	void Copy_ZipFiles(void);
+	void Copy_Level_Files(void);
+	void Create_Game_IniFile(void);
+	void Create_Config_File(void);
 
 	char ProjectFolder[MAX_PATH];
 	char Sub_ProjectFolder[MAX_PATH];

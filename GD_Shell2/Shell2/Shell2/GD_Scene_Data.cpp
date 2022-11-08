@@ -7,6 +7,9 @@ GD_Scene_Data::GD_Scene_Data(void)
 {
 	Project_Resource_Group = "Project_Resource_Group";
 	Project_Resources_Created = 0;
+
+	Object_Count = 0;
+
 	Area_Added = 0;
 	Area_Count = 0;
 
@@ -223,7 +226,7 @@ void GD_Scene_Data::SetObjectDefaults(int Index)
 // *************************************************************************
 void GD_Scene_Data::Set_Move_Defaults(int Index)
 {
-	S_Object[Index]->S_MoveType->IsNegative = 1;
+	/*S_Object[Index]->S_MoveType->IsNegative = 1;
 	S_Object[Index]->S_MoveType->Distance = -50;
 	S_Object[Index]->S_MoveType->Newpos = 0;
 	S_Object[Index]->S_MoveType->Speed = 10.0;
@@ -231,7 +234,7 @@ void GD_Scene_Data::Set_Move_Defaults(int Index)
 	S_Object[Index]->S_MoveType->Object_Index = 0;
 	S_Object[Index]->S_MoveType->Triggered = 0;
 	S_Object[Index]->S_MoveType->Re_Trigger = 0;
-	strcpy(S_Object[Index]->S_MoveType->Object_Name,"None");
+	strcpy(S_Object[Index]->S_MoveType->Object_Name,"None");*/
 	return;
 }
 // *************************************************************************

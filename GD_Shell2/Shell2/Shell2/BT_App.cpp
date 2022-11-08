@@ -53,6 +53,8 @@ BT_App::BT_App(void)
 
 	SBC_Player = nullptr;
 	SBC_Aera = nullptr;
+	SBC_Physics = nullptr;
+
 }
 
 BT_App::~BT_App(void)
@@ -106,6 +108,8 @@ bool BT_App::InitApp(void)
 
 	SBC_Player =				new SB_Player();
 	SBC_Aera =					new SB_Aera();
+	SBC_Physics =				new SB_Physics();
+
 	return 1;
 }
 // *************************************************************************

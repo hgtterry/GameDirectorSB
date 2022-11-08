@@ -912,13 +912,13 @@ void GD10_Load_Scene::Load_MoveEntity40(int Count)
 	strcpy(App->GDCL_Scene_Data->S_Object[Count]->S_MoveType->Object_Name, chr_Tag1);
 
 	Int_Tag = App->CL10_Ini->GetInt(buff, "Object_Index", 0, 10);
-	App->GDCL_Scene_Data->S_Object[Count]->S_MoveType->Object_Index = Int_Tag;
+	//App->GDCL_Scene_Data->S_Object[Count]->S_MoveType->Object_Index = Int_Tag;
 
 
 
 	App->CL10_Ini->GetString(buff, "Data", chr_Tag1, 1024);
 	sscanf(chr_Tag1, "%f,%f,%i", &x, &y, &Int_Tag);
-	App->GDCL_Scene_Data->S_Object[Count]->S_MoveType->Distance = x;
+	//App->GDCL_Scene_Data->S_Object[Count]->S_MoveType->Distance = x;
 	App->GDCL_Scene_Data->S_Object[Count]->S_MoveType->Speed = y;
 	App->GDCL_Scene_Data->S_Object[Count]->S_MoveType->IsNegative = Int_Tag;
 

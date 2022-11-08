@@ -39,6 +39,7 @@
 
 #include "SB_Player.h"
 #include "SB_Aera.h"
+#include "SB_Physics.h"
 
 class BT_App
 {
@@ -60,6 +61,7 @@ public:
 	
 	SB_Player*					SBC_Player;
 	SB_Aera*					SBC_Aera;
+	SB_Physics*					SBC_Physics;
 
 	BT_App(void);
 	~BT_App(void);

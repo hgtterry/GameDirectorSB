@@ -479,6 +479,108 @@ void SB_Build::Copy_SystemFiles(void)
 }
 
 // *************************************************************************
+// *					Copy_ZipFiles Terry Berine					   *
+// *************************************************************************
+void SB_Build::Copy_ZipFiles(void)
+{
+	////----------------------------- GDCore.zip
+	//strcpy(SourceFile, App->EquityDirecory_FullPath);
+	//strcat(SourceFile, "\\Media\\Core_Data\\GDCore.zip");
+
+	//strcpy(DestinationFile, CoreDataFolder);
+	//strcat(DestinationFile, "\\GDCore.zip");
+
+	//CopyFile(SourceFile, DestinationFile, false);
+	//App->CL10_PB->Nudge();
+	////----------------------------- Equity.zip
+	//strcpy(SourceFile, App->EquityDirecory_FullPath);
+	//strcat(SourceFile, "\\Media\\Core_Data\\Equity.zip");
+
+	//strcpy(DestinationFile, CoreDataFolder);
+	//strcat(DestinationFile, "\\Equity.zip");
+
+	//CopyFile(SourceFile, DestinationFile, false);
+	//App->CL10_PB->Nudge();
+	////----------------------------- OgreCore.zip
+	//strcpy(SourceFile, App->EquityDirecory_FullPath);
+	//strcat(SourceFile, "\\Media\\Core_Data\\OgreCore.zip");
+
+	//strcpy(DestinationFile, CoreDataFolder);
+	//strcat(DestinationFile, "\\OgreCore.zip");
+
+	//CopyFile(SourceFile, DestinationFile, false);
+	//App->CL10_PB->Nudge();
+	////----------------------------- skybox.zip
+	//strcpy(SourceFile, App->EquityDirecory_FullPath);
+	//strcat(SourceFile, "\\Media\\Core_Data\\skybox.zip");
+
+	//strcpy(DestinationFile, CoreDataFolder);
+	//strcat(DestinationFile, "\\skybox.zip");
+
+	//CopyFile(SourceFile, DestinationFile, false);
+	//App->CL10_PB->Nudge();
+}
+
+// *************************************************************************
+// *					Copy_Level_Files Terry Berine					   *
+// *************************************************************************
+void SB_Build::Copy_Level_Files(void)
+{
+	/*----------------------------- GDCore.zip
+	strcpy(SourceFile, LevelsFolder);
+	strcat(SourceFile, "\\");
+	strcat(SourceFile, App->GDCL_Scene_Data->S_Scene[0]->GDSceneName);
+
+	strcpy(App->GDCL_Save_Scene->mLevel_Directory, LevelsFolder);
+	strcat(App->GDCL_Save_Scene->mLevel_Directory, "\\");
+
+	strcpy(App->CL10_File->Full_Path_And_File, SourceFile);
+	App->GDCL_Save_Scene->SaveGDScene_40(0);
+	App->CL10_PB->Nudge();*/
+}
+
+// *************************************************************************
+// *					Create_Game_IniFile Terry Berine				   *
+// *************************************************************************
+void SB_Build::Create_Game_IniFile(void)
+{
+	/*Write_IniFile = 0;
+
+	char buff[2048];
+	strcpy(buff, ProjectFolder);
+	strcat(buff, "\\Load_Level.gds");
+
+	Write_IniFile = fopen(buff, "wt");
+
+	fprintf(Write_IniFile, "%s\n", "[Start_Level]");
+	fprintf(Write_IniFile, "%s%s\n", "First_Level=", App->GDCL_Scene_Data->S_Scene[0]->GDSceneName);
+
+	fclose(Write_IniFile);
+	App->CL10_PB->Nudge();*/
+}
+
+// *************************************************************************
+// *					Create_Config_File Terry Berine					   *
+// *************************************************************************
+void SB_Build::Create_Config_File(void)
+{
+	/*Write_IniFile = 0;
+
+	char buff[2048];
+	strcpy(buff, ProjectFolder);
+	strcat(buff, "\\Config.cfg");
+
+	Write_IniFile = fopen(buff, "wt");
+
+	fprintf(Write_IniFile, "%s\n", "[Config]");
+	fprintf(Write_IniFile, "%s%s\n", "Version=", "1.0");
+	fprintf(Write_IniFile, "%s%i\n", "Full_Screen=", App->CL10_Project->CF_Full_Screen);
+
+	fclose(Write_IniFile);
+	App->CL10_PB->Nudge();*/
+}
+
+// *************************************************************************
 // *					Read_From_Config Terry Berine					   *
 // *************************************************************************
 void SB_Build::Read_From_Config(void)

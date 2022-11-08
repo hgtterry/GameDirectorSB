@@ -110,6 +110,7 @@
   <ItemGroup>
     <ClCompile Include="Base_Area.cpp" />
     <ClCompile Include="Base_Locations.cpp" />
+    <ClCompile Include="Base_Object.cpp" />
     <ClCompile Include="Base_Player.cpp" />
     <ClCompile Include="BT_App.cpp" />
     <ClCompile Include="BT_Maths.cpp" />
@@ -126,6 +127,7 @@
     <ClCompile Include="GD_SoundMgr.cpp" />
     <ClCompile Include="GD_Utilities.cpp" />
     <ClCompile Include="SB_Aera.cpp" />
+    <ClCompile Include="SB_Physics.cpp" />
     <ClCompile Include="SB_Player.cpp" />
     <ClCompile Include="Shell2.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -136,6 +138,7 @@
   <ItemGroup>
     <ClInclude Include="Base_Area.h" />
     <ClInclude Include="Base_Locations.h" />
+    <ClInclude Include="Base_Object.h" />
     <ClInclude Include="Base_Player.h" />
     <ClInclude Include="BT_App.h" />
     <ClInclude Include="BT_Maths.h" />
@@ -153,6 +156,7 @@
     <ClInclude Include="GD_Utilities.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SB_Aera.h" />
+    <ClInclude Include="SB_Physics.h" />
     <ClInclude Include="SB_Player.h" />
     <ClInclude Include="Shell2.h" />
     <ClInclude Include="stdafx.h" />

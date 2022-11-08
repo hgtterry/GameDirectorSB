@@ -3,6 +3,7 @@
 #include "Base_Area.h"
 #include "Base_Player.h"
 #include "Base_Locations.h"
+#include "Base_Object.h"
 
 //==================================== Application Flags Structure	
 typedef struct Flags_Type 
@@ -64,20 +65,7 @@ typedef struct Camera_Type {
 
 typedef struct Int_Type {int Array;}int_Type;
 
-//--------------------------------------------------------
-typedef struct Move_Type {
-	char Object_Name[255];	// Name of Object to Move
-	float Distance;			// Distance to Move negative or positive
-	float Newpos;
-	float Speed;			// 
-	int WhatDirection;		//
-	int Object_Index;
-	bool IsNegative;		//
-	bool Triggered;		
-	bool Re_Trigger;	
-	Ogre::Vector3 MeshPos;
-	Ogre::Vector3 PhysicsPos;
-}Move_Type;
+
 //--------------------------------------------------------
 typedef struct Sound_Type {
 
@@ -101,15 +89,6 @@ typedef struct Entity_Type
 	char Stock_mName[255];
 	int Stock_mIndex;
 }Entity_Type;
-
-typedef struct Teleport_type
-{
-	char Name[255];
-	Ogre::Vector3 Player_Position;
-	btVector3 Physics_Position;
-	btQuaternion Physics_Rotation;
-
-}Teleport_type;
 
 //==================================== Object Structure
 typedef struct Object_Type { 
@@ -261,6 +240,8 @@ public:
 
 	bool Project_Resources_Created;
 
+	int Object_Count;
+
 	bool Area_Added;
 	int Area_Count;
 
@@ -272,6 +253,7 @@ public:
 	Base_Player*			B_Player[5];
 	Base_Area*				B_Area[100];
 	Base_Locations*			B_Locations[20];
+	Base_Object*			B_Object[100];
 	//-----------------------------------------------------------------
 	bool Start_Scene();
 

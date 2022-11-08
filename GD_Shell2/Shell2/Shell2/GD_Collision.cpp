@@ -111,51 +111,51 @@ bool GD_Collision::Message_Entity(int Index)
 // *************************************************************************
 bool GD_Collision::Move_Entity(int Index)
 {
-	if (App->GDCL_Scene_Data->S_Object[Index]->Triggered == 1) // Retrigger Yes No
-	{
-		return 1;
-	}
+	//if (App->GDCL_Scene_Data->S_Object[Index]->Triggered == 1) // Retrigger Yes No
+	//{
+	//	return 1;
+	//}
 
-	App->GDCL_Scene_Data->S_Object[Index]->Triggered = 1;
+	//App->GDCL_Scene_Data->S_Object[Index]->Triggered = 1;
 
-	Ogre::Vector3 M_Pos;
-	Ogre::Vector3 P_Pos;
-	ObjectIndex = Index;
+	//Ogre::Vector3 M_Pos;
+	//Ogre::Vector3 P_Pos;
+	//ObjectIndex = Index;
 
-	int ObjectToMove = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->Object_Index;
+	//int ObjectToMove = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->Object_Index;
 
-	M_Pos = App->GDCL_Scene_Data->S_Object[ObjectToMove]->Mesh_Pos;
-	P_Pos = App->GDCL_Scene_Data->S_Object[ObjectToMove]->Physics_Pos;
+	//M_Pos = App->GDCL_Scene_Data->S_Object[ObjectToMove]->Mesh_Pos;
+	//P_Pos = App->GDCL_Scene_Data->S_Object[ObjectToMove]->Physics_Pos;
 
-	App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->MeshPos  = Ogre::Vector3(M_Pos);
-	App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->PhysicsPos = Ogre::Vector3(P_Pos);
+	//App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->MeshPos  = Ogre::Vector3(M_Pos);
+	//App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->PhysicsPos = Ogre::Vector3(P_Pos);
 
-	x = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->MeshPos.x;
-	y = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->MeshPos.y;
-	z = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->MeshPos.z;
+	//x = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->MeshPos.x;
+	//y = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->MeshPos.y;
+	//z = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->MeshPos.z;
 
-	px = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->PhysicsPos.x;
-	py = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->PhysicsPos.y;
-	pz = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->PhysicsPos.z;
+	//px = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->PhysicsPos.x;
+	//py = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->PhysicsPos.y;
+	//pz = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->PhysicsPos.z;
 
-	if (App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->WhatDirection == Enums::Axis_x)
-	{
-		FinalPosition = x + App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->Distance;
-	}
+	//if (App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->WhatDirection == Enums::Axis_x)
+	//{
+	//	FinalPosition = x + App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->Distance;
+	//}
 
-	if (App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->WhatDirection == Enums::Axis_y)
-	{
-		FinalPosition = y + App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->Distance;
-	}
+	//if (App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->WhatDirection == Enums::Axis_y)
+	//{
+	//	FinalPosition = y + App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->Distance;
+	//}
 
-	if (App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->WhatDirection == Enums::Axis_z)
-	{
-		FinalPosition = z + App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->Distance;
-	}
+	//if (App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->WhatDirection == Enums::Axis_z)
+	//{
+	//	FinalPosition = z + App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->Distance;
+	//}
 
-	Play_Sound(Index);
+	//Play_Sound(Index);
 
-	DoMove  = 1; // Trigger Ogre Listener to update
+	//DoMove  = 1; // Trigger Ogre Listener to update
 	
 	return 1;
 }
@@ -166,166 +166,166 @@ bool GD_Collision::Move_Entity(int Index)
 void GD_Collision::MoveObject(Ogre::Real Time)
 {
 
-	// X Axis
-	if (App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->WhatDirection == Enums::Axis_x)
-	{
+	//// X Axis
+	//if (App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->WhatDirection == Enums::Axis_x)
+	//{
 
-		if (App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->IsNegative == false)
-		{
-			int ObjectToMove = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->Object_Index;
+	//	if (App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->IsNegative == false)
+	//	{
+	//		int ObjectToMove = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->Object_Index;
 
-			App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->MeshPos.x += App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->Speed * Time;
-			App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->PhysicsPos.x += App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->Speed * Time;
+	//		App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->MeshPos.x += App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->Speed * Time;
+	//		App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->PhysicsPos.x += App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->Speed * Time;
 
-			x = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->MeshPos.x;
-			px = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->PhysicsPos.x;
+	//		x = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->MeshPos.x;
+	//		px = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->PhysicsPos.x;
 
-			App->GDCL_Scene_Data->S_Object[ObjectToMove]->OgreNode->setPosition(x,y,z);
-			App->GDCL_Scene_Data->S_Object[ObjectToMove]->bt_body->getWorldTransform().setOrigin(btVector3(px,py,pz));
+	//		App->GDCL_Scene_Data->S_Object[ObjectToMove]->OgreNode->setPosition(x,y,z);
+	//		App->GDCL_Scene_Data->S_Object[ObjectToMove]->bt_body->getWorldTransform().setOrigin(btVector3(px,py,pz));
 
-			if(App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->MeshPos.x > FinalPosition)
-			{
+	//		if(App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->MeshPos.x > FinalPosition)
+	//		{
 
-				/*App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_Sounds[0]->SndFile->stop();
-				App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_Sounds[0]->SndFile->drop();
-				App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_Sounds[0]->SndFile = NULL;*/
+	//			/*App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_Sounds[0]->SndFile->stop();
+	//			App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_Sounds[0]->SndFile->drop();
+	//			App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_Sounds[0]->SndFile = NULL;*/
 
-				DoMove = 0; // Stop Listener
-			}
+	//			DoMove = 0; // Stop Listener
+	//		}
 
-			return;
-		}	
-		else
-		{
-			int ObjectToMove = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->Object_Index;
+	//		return;
+	//	}	
+	//	else
+	//	{
+	//		int ObjectToMove = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->Object_Index;
 
-			App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->MeshPos.x -= App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->Speed * Time;
-			App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->PhysicsPos.x -= App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->Speed * Time;
+	//		App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->MeshPos.x -= App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->Speed * Time;
+	//		App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->PhysicsPos.x -= App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->Speed * Time;
 
-			x = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->MeshPos.x;
-			px = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->PhysicsPos.x;
+	//		x = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->MeshPos.x;
+	//		px = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->PhysicsPos.x;
 
-			App->GDCL_Scene_Data->S_Object[ObjectToMove]->OgreNode->setPosition(x,y,z);
-			App->GDCL_Scene_Data->S_Object[ObjectToMove]->bt_body->getWorldTransform().setOrigin(btVector3(px,py,pz));
+	//		App->GDCL_Scene_Data->S_Object[ObjectToMove]->OgreNode->setPosition(x,y,z);
+	//		App->GDCL_Scene_Data->S_Object[ObjectToMove]->bt_body->getWorldTransform().setOrigin(btVector3(px,py,pz));
 
-			if(App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->MeshPos.x < FinalPosition)
-			{
-				/*App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_Sounds[0]->SndFile->stop();
-				App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_Sounds[0]->SndFile->drop();
-				App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_Sounds[0]->SndFile = NULL;*/
+	//		if(App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->MeshPos.x < FinalPosition)
+	//		{
+	//			/*App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_Sounds[0]->SndFile->stop();
+	//			App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_Sounds[0]->SndFile->drop();
+	//			App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_Sounds[0]->SndFile = NULL;*/
 
-				DoMove = 0; // Stop Listener
-			}
+	//			DoMove = 0; // Stop Listener
+	//		}
 
-			return;
-		}
-	}
+	//		return;
+	//	}
+	//}
 
-	// Y Axis
-	if (App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->WhatDirection == Enums::Axis_y)
-	{
-		if (App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->IsNegative == false)
-		{
-			int ObjectToMove = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->Object_Index;
+	//// Y Axis
+	//if (App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->WhatDirection == Enums::Axis_y)
+	//{
+	//	if (App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->IsNegative == false)
+	//	{
+	//		int ObjectToMove = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->Object_Index;
 
-			App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->MeshPos.y += App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->Speed * Time;
-			App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->PhysicsPos.y += App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->Speed * Time;
+	//		App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->MeshPos.y += App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->Speed * Time;
+	//		App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->PhysicsPos.y += App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->Speed * Time;
 
-			y = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->MeshPos.y;
-			py = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->PhysicsPos.y;
+	//		y = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->MeshPos.y;
+	//		py = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->PhysicsPos.y;
 
-			App->GDCL_Scene_Data->S_Object[ObjectToMove]->OgreNode->setPosition(x,y,z);
-			App->GDCL_Scene_Data->S_Object[ObjectToMove]->bt_body->getWorldTransform().setOrigin(btVector3(px,py,pz));
+	//		App->GDCL_Scene_Data->S_Object[ObjectToMove]->OgreNode->setPosition(x,y,z);
+	//		App->GDCL_Scene_Data->S_Object[ObjectToMove]->bt_body->getWorldTransform().setOrigin(btVector3(px,py,pz));
 
-			if(App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->MeshPos.y > FinalPosition)
-			{
-				/*App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_Sounds[0]->SndFile->stop();
-				App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_Sounds[0]->SndFile->drop();
-				App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_Sounds[0]->SndFile = NULL;*/
+	//		if(App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->MeshPos.y > FinalPosition)
+	//		{
+	//			/*App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_Sounds[0]->SndFile->stop();
+	//			App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_Sounds[0]->SndFile->drop();
+	//			App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_Sounds[0]->SndFile = NULL;*/
 
-				DoMove = 0; // Stop Listener
-			}
+	//			DoMove = 0; // Stop Listener
+	//		}
 
-			return;
-		}	
-		else
-		{
-			int ObjectToMove = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->Object_Index;
+	//		return;
+	//	}	
+	//	else
+	//	{
+	//		int ObjectToMove = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->Object_Index;
 
-			App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->MeshPos.y -= App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->Speed * Time;
-			App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->PhysicsPos.y -= App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->Speed * Time;
+	//		App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->MeshPos.y -= App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->Speed * Time;
+	//		App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->PhysicsPos.y -= App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->Speed * Time;
 
-			y = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->MeshPos.y;
-			py = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->PhysicsPos.y;
+	//		y = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->MeshPos.y;
+	//		py = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->PhysicsPos.y;
 
-			App->GDCL_Scene_Data->S_Object[ObjectToMove]->OgreNode->setPosition(x,y,z);
-			App->GDCL_Scene_Data->S_Object[ObjectToMove]->bt_body->getWorldTransform().setOrigin(btVector3(px,py,pz));
+	//		App->GDCL_Scene_Data->S_Object[ObjectToMove]->OgreNode->setPosition(x,y,z);
+	//		App->GDCL_Scene_Data->S_Object[ObjectToMove]->bt_body->getWorldTransform().setOrigin(btVector3(px,py,pz));
 
-			if(App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->MeshPos.y < FinalPosition)
-			{
-				/*App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_Sounds[0]->SndFile->stop();
-				App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_Sounds[0]->SndFile->drop();
-				App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_Sounds[0]->SndFile = NULL;*/
+	//		if(App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->MeshPos.y < FinalPosition)
+	//		{
+	//			/*App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_Sounds[0]->SndFile->stop();
+	//			App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_Sounds[0]->SndFile->drop();
+	//			App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_Sounds[0]->SndFile = NULL;*/
 
-				DoMove = 0; // Stop Listener
-			}
+	//			DoMove = 0; // Stop Listener
+	//		}
 
-			return;
-		}
-	}
-	
-	// Z Axis
-	if (App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->WhatDirection == Enums::Axis_z)
-	{
-		if (App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->IsNegative == false)
-		{
-			int ObjectToMove = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->Object_Index;
+	//		return;
+	//	}
+	//}
+	//
+	//// Z Axis
+	//if (App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->WhatDirection == Enums::Axis_z)
+	//{
+	//	if (App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->IsNegative == false)
+	//	{
+	//		int ObjectToMove = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->Object_Index;
 
-			App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->MeshPos.z += App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->Speed * Time;
-			App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->PhysicsPos.z += App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->Speed * Time;
+	//		App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->MeshPos.z += App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->Speed * Time;
+	//		App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->PhysicsPos.z += App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->Speed * Time;
 
-			z = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->MeshPos.z;
-			pz = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->PhysicsPos.z;
+	//		z = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->MeshPos.z;
+	//		pz = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->PhysicsPos.z;
 
-			App->GDCL_Scene_Data->S_Object[ObjectToMove]->OgreNode->setPosition(x,y,z);
-			App->GDCL_Scene_Data->S_Object[ObjectToMove]->bt_body->getWorldTransform().setOrigin(btVector3(px,py,pz));
+	//		App->GDCL_Scene_Data->S_Object[ObjectToMove]->OgreNode->setPosition(x,y,z);
+	//		App->GDCL_Scene_Data->S_Object[ObjectToMove]->bt_body->getWorldTransform().setOrigin(btVector3(px,py,pz));
 
-			if(App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->MeshPos.z > FinalPosition)
-			{
-				/*App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_Sounds[0]->SndFile->stop();
-				App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_Sounds[0]->SndFile->drop();
-				App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_Sounds[0]->SndFile = NULL;*/
+	//		if(App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->MeshPos.z > FinalPosition)
+	//		{
+	//			/*App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_Sounds[0]->SndFile->stop();
+	//			App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_Sounds[0]->SndFile->drop();
+	//			App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_Sounds[0]->SndFile = NULL;*/
 
-				DoMove = 0; // Stop Listener
-			}
+	//			DoMove = 0; // Stop Listener
+	//		}
 
-			return;
-		}	
-		else
-		{
-			int ObjectToMove = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->Object_Index;
+	//		return;
+	//	}	
+	//	else
+	//	{
+	//		int ObjectToMove = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->Object_Index;
 
-			App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->MeshPos.z -= App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->Speed * Time;
-			App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->PhysicsPos.z -= App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->Speed * Time;
+	//		App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->MeshPos.z -= App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->Speed * Time;
+	//		App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->PhysicsPos.z -= App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->Speed * Time;
 
-			z = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->MeshPos.z;
-			pz = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->PhysicsPos.z;
+	//		z = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->MeshPos.z;
+	//		pz = App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->PhysicsPos.z;
 
-			App->GDCL_Scene_Data->S_Object[ObjectToMove]->OgreNode->setPosition(x,y,z);
-			App->GDCL_Scene_Data->S_Object[ObjectToMove]->bt_body->getWorldTransform().setOrigin(btVector3(px,py,pz));
+	//		App->GDCL_Scene_Data->S_Object[ObjectToMove]->OgreNode->setPosition(x,y,z);
+	//		App->GDCL_Scene_Data->S_Object[ObjectToMove]->bt_body->getWorldTransform().setOrigin(btVector3(px,py,pz));
 
-			if(App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->MeshPos.z < FinalPosition)
-			{
-				/*App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_Sounds[0]->SndFile->stop();
-				App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_Sounds[0]->SndFile->drop();
-				App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_Sounds[0]->SndFile = NULL;*/
+	//		if(App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_MoveType->MeshPos.z < FinalPosition)
+	//		{
+	//			/*App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_Sounds[0]->SndFile->stop();
+	//			App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_Sounds[0]->SndFile->drop();
+	//			App->GDCL_Scene_Data->S_Object[ObjectIndex]->S_Sounds[0]->SndFile = NULL;*/
 
-				DoMove = 0; // Stop Listener
-			}
+	//			DoMove = 0; // Stop Listener
+	//		}
 
-			return;
-		}
-	}
+	//		return;
+	//	}
+	//}
 
 	return;
 }

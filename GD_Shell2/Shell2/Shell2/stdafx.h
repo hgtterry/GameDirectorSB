@@ -26,6 +26,7 @@
 #pragma comment(linker,"/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='x86' publicKeyToken='6595b64144ccf1df' language='*'\"")
 
 #pragma warning( disable : 4251 4193 4275 4005)
+#pragma warning( disable : 4316) // Heap Alication
 #pragma warning( disable : 4996)
 #pragma warning( disable : 4305)
 
