@@ -98,12 +98,7 @@ BT_PhysicsListener::~BT_PhysicsListener(void)
 // *************************************************************************
 bool BT_PhysicsListener::frameStarted(const FrameEvent& evt)
 {
-	/*if (Animate_Ogre == 1)
-	{
-		Animate_State->addTime(evt.timeSinceLastFrame * AnimationScale);
-		Animate_State2->addTime(evt.timeSinceLastFrame * AnimationScale);
-	}*/
-
+	
 	if ( GD_Run_Physics == 1)
 	{
 		{
@@ -167,12 +162,15 @@ bool BT_PhysicsListener::frameStarted(const FrameEvent& evt)
 			}
 		}
 
-		btTransform trans;
-		App->GDCL_Player->mObject->getMotionState()->getWorldTransform(trans);
-		btQuaternion orientation = trans.getRotation();
-		App->GDCL_Player->Player_Node->setPosition(Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ()));
-		App->GDCL_Player->Player_Node->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
-		App->GDCL_Player->Player_Node->pitch(Ogre::Degree(180));
+		if (GD_Run_Physics == 1 && App->GDCL_Scene_Data->Player_Added == 1)
+		{
+			btTransform trans;
+			App->GDCL_Scene_Data->B_Player[0]->Phys_Body->getMotionState()->getWorldTransform(trans);
+			btQuaternion orientation = trans.getRotation();
+			App->GDCL_Scene_Data->B_Player[0]->Player_Node->setPosition(Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ()));
+			App->GDCL_Scene_Data->B_Player[0]->Player_Node->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
+			App->GDCL_Scene_Data->B_Player[0]->Player_Node->pitch(Ogre::Degree(180));
+		}
 	}
 	return true;
 }
@@ -208,21 +206,20 @@ bool  BT_PhysicsListener::frameRenderingQueued(const FrameEvent& evt)
 	if (GD_CameraMode == Enums::CamFirst)
 	{
 		
-		Ogre::Vector3 Pos2;
-		Ogre::Vector3 Pos = App->GDCL_Player->Player_Node->getPosition();
-		Ogre::Quaternion  CQ = App->GDCL_Player->Player_Node->getOrientation();
+		Ogre::Vector3 Pos;
+		Ogre::Radian mmPitch;
+		Ogre::Radian mYaw;
 
-		Ogre::Radian mmPitch = App->GDCL_Player->CameraPitch->getOrientation().getPitch();
-		Ogre::Radian mYaw = App->GDCL_Player->Player_Node->getOrientation().getYaw();
-		
-		Pos2 = Pos;
-		Pos.y = Pos.y + App->GDCL_Player->PlayerHeight;
+		Pos = App->GDCL_Scene_Data->B_Player[0]->Player_Node->getPosition();
+
+		mmPitch = App->GDCL_Scene_Data->B_Player[0]->CameraPitch->getOrientation().getPitch();
+		mYaw = App->GDCL_Scene_Data->B_Player[0]->Player_Node->getOrientation().getYaw();
+		Pos.y = Pos.y + App->GDCL_Scene_Data->B_Player[0]->PlayerHeight;
+
 		App->Ogre17->mCamera->setPosition(Pos);
-		App->Ogre17->mCamera->setOrientation(Ogre::Quaternion(1,0,0,0));
+		App->Ogre17->mCamera->setOrientation(Ogre::Quaternion(1, 0, 0, 0));
 		App->Ogre17->mCamera->yaw(mYaw);
 		App->Ogre17->mCamera->pitch(mmPitch);
-
-
 		App->Ogre17->mCamera->yaw(Ogre::Degree(180));
 	}
 
@@ -305,7 +302,8 @@ bool  BT_PhysicsListener::frameRenderingQueued(const FrameEvent& evt)
 	
 	if (GetAsyncKeyState(69) < 0) // Q key Down in Fly Mode
 	{
-		App->Ogre17->PhysicsFrameListener->GD_Run_Physics = 1;
+		App->SBC_Physics->Enable_Physics(1); //App->Ogre17->PhysicsFrameListener->GD_Run_Physics = 1;
+		GD_CameraMode = Enums::CamFirst;
 	}
 	////------------------------------------------------
 	//if (GetAsyncKeyState(81) < 0) // E key Up in Fly Mode

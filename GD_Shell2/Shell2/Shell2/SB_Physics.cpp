@@ -60,7 +60,9 @@ void SB_Physics::Enable_Physics(bool Enable)
 	int f = App->GDCL_Scene_Data->B_Player[0]->Phys_Body->getCollisionFlags();
 
 	//App->Ogre17->OgreListener->Dubug_Physics_Draw = Enable;
-	////App->Cl19_Ogre->OgreListener->GD_Run_Physics = Enable;
+
+	App->Ogre17->PhysicsFrameListener->GD_Run_Physics = Enable;
+
 	//App->Ogre17->BulletListener->Render_Debug_Flag = Enable;
 
 	App->SBC_Player->ShowDebug = Enable;
