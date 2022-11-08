@@ -37,6 +37,7 @@
 #include "GD10_Load_Scene.h"
 #include "GD10_Ini.h"
 
+#include "SB_Player.h"
 #include "SB_Aera.h"
 
 class BT_App
@@ -57,6 +58,7 @@ public:
 	GD10_Load_Scene*			CL10_Load_Scene;
 	GD10_Ini*					CL10_Ini;
 	
+	SB_Player*					SBC_Player;
 	SB_Aera*					SBC_Aera;
 
 	BT_App(void);

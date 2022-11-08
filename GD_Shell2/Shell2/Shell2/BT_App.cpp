@@ -51,6 +51,7 @@ BT_App::BT_App(void)
 	CL10_Load_Scene = NULL;
 	CL10_Ini = NULL;
 
+	SBC_Player = nullptr;
 	SBC_Aera = nullptr;
 }
 
@@ -103,6 +104,7 @@ bool BT_App::InitApp(void)
 	CL10_Load_Scene =			new GD10_Load_Scene();		
 	CL10_Ini =					new GD10_Ini();
 
+	SBC_Player =				new SB_Player();
 	SBC_Aera =					new SB_Aera();
 	return 1;
 }

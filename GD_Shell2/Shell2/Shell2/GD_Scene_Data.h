@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Base_Area.h"
+#include "Base_Player.h"
+
 //==================================== Application Flags Structure	
 typedef struct Flags_Type 
 { 
@@ -257,12 +259,16 @@ public:
 
 
 	bool Project_Resources_Created;
-	bool Area_Added;
 
+	bool Area_Added;
 	int Area_Count;
+
+	bool Player_Added;
+	int Player_Count;
 
 	Ogre::String Project_Resource_Group;
 
+	Base_Player*			B_Player[5];
 	Base_Area*				B_Area[100];
 
 	//-----------------------------------------------------------------

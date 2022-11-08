@@ -10,6 +10,8 @@ GD_Scene_Data::GD_Scene_Data(void)
 	Area_Added = 0;
 	Area_Count = 0;
 
+	Player_Added = 0;
+	Player_Count = 0;
 	//----------------------------------------------------------------------
 	SceneLoaded = 0;
 	S_Flags[0] = NULL;

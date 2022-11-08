@@ -18,13 +18,11 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// English (U.S.) resources
+// English (United States) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
-#ifdef _WIN32
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 #pragma code_page(1252)
-#endif //_WIN32
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -34,14 +32,16 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
 IDI_SHELL2              ICON                    "Shell2.ico"
+
 IDI_SMALL               ICON                    "small.ico"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // Menu
 //
 
-IDC_SHELL2 MENU 
+IDC_SHELL2 MENU
 BEGIN
     POPUP "&File"
     BEGIN
@@ -59,7 +59,7 @@ END
 // Accelerator
 //
 
-IDC_SHELL2 ACCELERATORS 
+IDC_SHELL2 ACCELERATORS
 BEGIN
     "?",            IDM_ABOUT,              ASCII,  ALT
     "/",            IDM_ABOUT,              ASCII,  ALT
@@ -102,13 +102,13 @@ END
 // String Table
 //
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
-    IDS_APP_TITLE           "Shell2"
-    IDC_SHELL2              "SHELL2"
+    IDS_APP_TITLE           "Shell2 8/11/22"
+    IDC_SHELL2              "SHELL2 8/11/22"
 END
 
-#endif    // English (U.S.) resources
+#endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
 
 

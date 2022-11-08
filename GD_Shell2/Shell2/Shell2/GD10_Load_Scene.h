@@ -19,6 +19,7 @@ public:
 
 	bool Load_Project();
 	bool Load_Get_Resource_Path();
+	bool Load_Project_Player();
 	bool Load_Project_Aera();
 	void Set_Paths();
 

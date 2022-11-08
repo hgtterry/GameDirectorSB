@@ -107,11 +107,11 @@ bool GD10_Load_Scene::Load_Project()
 		//App->Cl_Environment->Load_Environment();
 	}
 
-	//// ------------------------------------- Player
-	//if (Options->Has_Player > 0)
-	//{
-	//	bool test = Load_Project_Player();
-	//}
+	// ------------------------------------- Player
+	if (Options->Has_Player > 0)
+	{
+		bool test = Load_Project_Player();
+	}
 
 	//// ------------------------------------- Camera
 	//if (Options->Has_Camera > 0)
@@ -156,6 +156,136 @@ bool GD10_Load_Scene::Load_Project()
 	//App->SBC_FileView->SelectItem(App->SBC_FileView->FV_LevelFolder);
 
 	//App->SBC_Scene->Scene_Modified = 0;
+	return 1;
+}
+
+// *************************************************************************
+// *	  	Load_Project_Player:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+bool GD10_Load_Scene::Load_Project_Player()
+{
+	int Players_Count = 0;
+	int Locations_Count = 0;
+	char Player_Name[MAX_PATH];
+	char Player_Ini_Path[MAX_PATH];
+	char chr_Tag1[MAX_PATH];
+
+	float w = 0;
+	float x = 0;
+	float y = 0;
+	float z = 0;
+
+	strcpy(Player_Ini_Path, m_Project_Sub_Folder);
+	strcat(Player_Ini_Path, "\\");
+
+	strcat(Player_Ini_Path, m_Level_Name);
+	strcat(Player_Ini_Path, "\\");
+
+	strcat(Player_Ini_Path, "Players");
+	strcat(Player_Ini_Path, "\\");
+
+	strcat(Player_Ini_Path, "Players.ply");
+
+	App->CL10_Ini->SetPathName(Player_Ini_Path);
+
+	Players_Count = App->CL10_Ini->GetInt("Counters", "Player_Count", 0);
+
+	int Count = 0;
+	char Cbuff[255];
+	char buff[255];
+
+	while (Count < Players_Count)
+	{
+		strcpy(buff, "Player_");
+		_itoa(Count, Cbuff, 10);
+		strcat(buff, Cbuff);
+
+		App->SBC_Player->Create_Player_Object();
+
+		App->CL10_Ini->GetString(buff, "Player_Name", Player_Name, MAX_PATH);
+		strcpy(App->GDCL_Scene_Data->B_Player[Count]->Player_Name, Player_Name);
+
+
+		App->CL10_Ini->GetString(buff, "Start_Position", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+		App->GDCL_Scene_Data->B_Player[Count]->StartPos = Ogre::Vector3(x, y, z);
+
+		App->CL10_Ini->GetString(buff, "Start_Rotation", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f,%f", &w, &x, &y, &z);
+
+		App->GDCL_Scene_Data->B_Player[Count]->Physics_Rotation.setW(w);
+		App->GDCL_Scene_Data->B_Player[Count]->Physics_Rotation.setX(x);
+		App->GDCL_Scene_Data->B_Player[Count]->Physics_Rotation.setY(y);
+		App->GDCL_Scene_Data->B_Player[Count]->Physics_Rotation.setZ(z);
+
+		App->CL10_Ini->GetString(buff, "Turn_Rate", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f", &x);
+		App->GDCL_Scene_Data->B_Player[Count]->TurnRate = x;
+
+		Count++;
+
+	}
+
+	// ------------------------------------------ Locations
+	int Int_Tag = 0;
+	Locations_Count = App->CL10_Ini->GetInt("Locations", "Locations_Count", 0);
+
+	Count = 0;
+	while (Count < Locations_Count)
+	{
+		if (App->GDCL_Scene_Data->B_Locations[Count])
+		{
+			delete App->GDCL_Scene_Data->B_Locations[Count];
+			App->GDCL_Scene_Data->B_Locations[Count] = NULL;
+		}
+
+		char n_buff[255];
+		char buff[255];
+		strcpy(buff, "Location_");
+		_itoa(Count, n_buff, 10);
+		strcat(buff, n_buff);
+
+		App->GDCL_Scene_Data->B_Locations[Count] = new Base_Locations();
+		App->GDCL_Scene_Data->B_Locations[Count]->Deleted = 0;
+
+
+		Int_Tag = App->CL10_Ini->GetInt(buff, "Locatoin_ID", 0, 10);
+		App->GDCL_Scene_Data->B_Locations[Count]->Location_ID = Int_Tag;
+
+		App->CL10_Ini->GetString(buff, "Name", chr_Tag1, MAX_PATH);
+
+
+		strcpy(App->GDCL_Scene_Data->B_Locations[Count]->Name, chr_Tag1);
+
+		// Mesh_Pos
+		App->CL10_Ini->GetString(buff, "Mesh_Position", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+		App->GDCL_Scene_Data->B_Locations[Count]->Current_Position.x = x;
+		App->GDCL_Scene_Data->B_Locations[Count]->Current_Position.y = y;
+		App->GDCL_Scene_Data->B_Locations[Count]->Current_Position.z = z;
+
+		App->CL10_Ini->GetString(buff, "Physics_Position", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+		App->GDCL_Scene_Data->B_Locations[Count]->Physics_Position.setX(x);
+		App->GDCL_Scene_Data->B_Locations[Count]->Physics_Position.setY(y);
+		App->GDCL_Scene_Data->B_Locations[Count]->Physics_Position.setZ(z);
+
+		App->CL10_Ini->GetString(buff, "Physics_Rotation", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f,%f", &w, &x, &y, &z);
+		App->GDCL_Scene_Data->B_Locations[Count]->Physics_Rotation.setW(w);
+		App->GDCL_Scene_Data->B_Locations[Count]->Physics_Rotation.setX(x);
+		App->GDCL_Scene_Data->B_Locations[Count]->Physics_Rotation.setY(y);
+		App->GDCL_Scene_Data->B_Locations[Count]->Physics_Rotation.setZ(z);
+
+		Count++;
+
+	}
+
+	App->GDCL_Scene_Data->Player_Location_Count = Count;
+
+	App->SBC_Physics->Reset_Physics();
+	App->SBC_Physics->Enable_Physics(1);
+
 	return 1;
 }
 
