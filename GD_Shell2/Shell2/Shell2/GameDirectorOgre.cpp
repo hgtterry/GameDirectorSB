@@ -61,6 +61,8 @@ void GameDirectorOgre::InitOgre(void)
 	loadResources();
 	createFrameListener();
 
+	m_imgui.Init(mSceneMgr, NULL); //RenderHwnd);
+
 }
 // *************************************************************************
 // *				OgreCreateRoot (Terry Bernie)						   *
@@ -200,6 +202,19 @@ bool GameDirectorOgre::createFrameListener(void)
 	
 	PhysicsFrameListener = new BT_PhysicsListener(mCamera,mTerrain);
 	mRoot->addFrameListener(PhysicsFrameListener);
+
+	return 1;
+}
+
+// *************************************************************************
+// *				Get_View_Height_Width (Terry Bernie)				   *
+// *************************************************************************
+bool GameDirectorOgre::Get_View_Height_Width(void)
+{
+	Ogre::Viewport* vp = mWindow->getViewport(0);
+
+	PhysicsFrameListener->View_Width = vp->getActualWidth();
+	PhysicsFrameListener->View_Height = vp->getActualHeight();
 
 	return 1;
 }

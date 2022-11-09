@@ -117,8 +117,8 @@ bool GD19_OgreListener::frameStarted(const FrameEvent& evt)
 	}
 
 	App->Cl19_Ogre->Get_View_Height_Width();
-
 	App->Cl19_Ogre->m_imgui.NewFrame(evt.timeSinceLastFrame, (float)View_Width, (float)View_Height);
+
 
 	int Count = 0;
 	while (Count < App->SBC_Scene->Counters_Count)

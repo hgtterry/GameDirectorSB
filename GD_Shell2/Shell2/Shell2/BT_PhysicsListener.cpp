@@ -85,6 +85,8 @@ BT_PhysicsListener::BT_PhysicsListener(Camera* cam,Terrain * terrain)
 	Animate_State2 = NULL;
 	AnimationScale = 1;
 
+	View_Height = 0;
+	View_Width = 0;
 	//mCollisionTools = new MOC::CollisionTools(App->Cl_Ogre->mSceneMgr);
 	//mCollisionTools->setHeightAdjust(3.5f);
 	
@@ -98,7 +100,11 @@ BT_PhysicsListener::~BT_PhysicsListener(void)
 // *************************************************************************
 bool BT_PhysicsListener::frameStarted(const FrameEvent& evt)
 {
-	
+	App->Ogre17->Get_View_Height_Width();
+	App->Ogre17->m_imgui.NewFrame(evt.timeSinceLastFrame, (float)View_Width, (float)View_Height);
+
+	App->CL_Vm_ImGui->ImGui_Render_Loop();
+
 	if ( GD_Run_Physics == 1)
 	{
 		{
@@ -195,6 +201,8 @@ bool  BT_PhysicsListener::frameRenderingQueued(const FrameEvent& evt)
 	{
 		StopOgre = 1;
 	}
+
+	App->Ogre17->m_imgui.render();
 
 	mRotX = 0;
 	mRotY = 0;

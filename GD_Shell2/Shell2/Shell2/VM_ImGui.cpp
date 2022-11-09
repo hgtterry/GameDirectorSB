@@ -131,7 +131,7 @@ void VM_ImGui::ImGui_Set_Colours(void)
 // *************************************************************************
 void VM_ImGui::ImGui_Render_Loop(void)
 {
-	if (Show_FPS == 1)
+	//if (Show_FPS == 1)
 	{
 		ImGui_FPS();
 	}
@@ -341,8 +341,7 @@ void VM_ImGui::ImGui_FPS(void)
 		}
 
 		ImGui::Text("FPS average %.0f", ImGui::GetIO().Framerate);
-		//ImGui::PopFont();
-
+	
 		ImGui::End();
 	}
 }

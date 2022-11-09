@@ -78,7 +78,7 @@ bool GD19_Ogre::InitOgre(void)
 	App->Cl_Grid->Load_Arrow();
 	App->SBC_Markers->Load_All_Axis();
 
-	m_imgui.Init(mSceneMgr, RenderHwnd); 
+	m_imgui.Init(mSceneMgr,RenderHwnd);
 
 	App->Cl_Visuals->MarkerBB_Setup();
 	

@@ -42,6 +42,8 @@ public:
 	void InitOgre(void);
 	bool createFrameListener(void);
 	
+	bool Get_View_Height_Width(void);
+
 	Ogre::Root *mRoot;
 	Ogre::String mResourcePath;
 	Ogre::SceneManager* mSceneMgr;
@@ -59,6 +61,8 @@ public:
 
 	bool Full_Screen;
 	Ogre::String PermResourceGroup;   // permanent Resource Group
+
+	OgreImGui  m_imgui;
 
 	HWND WinHwnd;
 

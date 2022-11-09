@@ -115,6 +115,8 @@ public:
 	float AnimationScale;
 	float KeyFrame_Speed;
 
+	int		View_Height;
+	int		View_Width;
 	//MOC::CollisionTools* mCollisionTools;
 
 };
