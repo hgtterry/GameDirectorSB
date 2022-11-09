@@ -116,7 +116,7 @@ void Base_Player::Forward(float delta)
 
 	}
 
-	//App->GDCL_Player->Check_Collisions();
+	App->SBC_Player->Check_Collisions_New();
 }
 
 // *************************************************************************

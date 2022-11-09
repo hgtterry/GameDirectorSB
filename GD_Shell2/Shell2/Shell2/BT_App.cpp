@@ -56,6 +56,7 @@ BT_App::BT_App(void)
 	SBC_Object = nullptr;
 	SBC_Objects_Create = nullptr;
 	SBC_Messages = nullptr;
+	SBC_Collision = nullptr;
 
 }
 
@@ -113,6 +114,7 @@ bool BT_App::InitApp(void)
 	SBC_Object =				new SB_Object();
 	SBC_Objects_Create =		new SB_Objects_Create();
 	SBC_Messages =				new SB_Messages();
+	SBC_Collision =				new SB_Collision();
 
 	return 1;
 }

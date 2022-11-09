@@ -532,7 +532,7 @@ void SB_Player::Check_Collisions_New(void)
 				}*/
 
 				// -------------------- Move Collision
-				/*if (Col_Usage_Index == Enums::Usage_Move)
+				if (Col_Usage_Index == Enums::Usage_Move)
 				{
 
 					int numContacts = contactManifold->getNumContacts();
@@ -546,21 +546,21 @@ void SB_Player::Check_Collisions_New(void)
 
 						if (Round < 0)
 						{
-							if (App->SBC_Scene->B_Object[Col_Object_Index]->Triggered == 0)
+							if (App->GDCL_Scene_Data->B_Object[Col_Object_Index]->Triggered == 0)
 							{
 								App->SBC_Collision->Move_Entity_Collision(Col_Object_Index);
 							}
 						}
 						else if (Round == 0)
 						{
-							if (App->SBC_Scene->B_Object[Col_Object_Index]->Triggered == 1)
+							if (App->GDCL_Scene_Data->B_Object[Col_Object_Index]->Triggered == 1)
 							{
 								
 							}
 						}
 						
 					}
-				}*/
+				}
 
 				// -------------------- Collectable Collision
 				/*if (UsageIndex == Enums::Usage_Colectable)

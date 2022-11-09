@@ -128,6 +128,7 @@
     <ClCompile Include="GD_SoundMgr.cpp" />
     <ClCompile Include="GD_Utilities.cpp" />
     <ClCompile Include="SB_Aera.cpp" />
+    <ClCompile Include="SB_Collision.cpp" />
     <ClCompile Include="SB_Messages.cpp" />
     <ClCompile Include="SB_Object.cpp" />
     <ClCompile Include="SB_Objects_Create.cpp" />
@@ -159,6 +160,7 @@
     <ClInclude Include="GD_Utilities.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SB_Aera.h" />
+    <ClInclude Include="SB_Collision.h" />
     <ClInclude Include="SB_Messages.h" />
     <ClInclude Include="SB_Object.h" />
     <ClInclude Include="SB_Objects_Create.h" />
