@@ -43,7 +43,6 @@ BT_App::BT_App(void)
 	GDCL_Bullet = NULL;
 	GDCL_Scene_Data = NULL;
 	GDCL_SoundMgr = NULL;
-	GDCL_Collision = NULL;
 	GDCL_Add_Objects = NULL;
 	GDCL_Environment = NULL;
 
@@ -103,7 +102,6 @@ bool BT_App::InitApp(void)
 	GDCL_SoundMgr =				new GD_SoundMgr();
 	GDCL_Add_Objects =			new GD_Add_Objects();
 	GDCL_Environment =			new GD_Environment();	
-	GDCL_Collision =			new GD_Collision();		
 
 	CL10_Load_Scene =			new GD10_Load_Scene();		
 	CL10_Ini =					new GD10_Ini();

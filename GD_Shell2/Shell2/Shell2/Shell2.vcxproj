@@ -122,7 +122,6 @@
     <ClCompile Include="GD10_Load_Scene.cpp" />
     <ClCompile Include="GD_Add_Objects.cpp" />
     <ClCompile Include="GD_BULLET.cpp" />
-    <ClCompile Include="GD_Collision.cpp" />
     <ClCompile Include="GD_Environment.cpp" />
     <ClCompile Include="GD_Scene_Data.cpp" />
     <ClCompile Include="GD_SoundMgr.cpp" />
@@ -153,7 +152,6 @@
     <ClInclude Include="GD10_Load_Scene.h" />
     <ClInclude Include="GD_Add_Objects.h" />
     <ClInclude Include="GD_BULLET.h" />
-    <ClInclude Include="GD_Collision.h" />
     <ClInclude Include="GD_Environment.h" />
     <ClInclude Include="GD_Scene_Data.h" />
     <ClInclude Include="GD_SoundMgr.h" />

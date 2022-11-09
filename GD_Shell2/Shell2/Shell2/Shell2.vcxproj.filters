@@ -45,9 +45,6 @@
     <ClCompile Include="GD_SoundMgr.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GD_Collision.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GD_Add_Objects.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -129,9 +126,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GD_SoundMgr.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GD_Collision.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GD_Add_Objects.h">

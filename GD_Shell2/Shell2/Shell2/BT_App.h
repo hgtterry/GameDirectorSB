@@ -28,7 +28,6 @@
 #include "GD_BULLET.h"
 #include "GD_Scene_Data.h"
 #include "GD_SoundMgr.h"
-#include "GD_Collision.h"
 
 #include "GD_Add_Objects.h"
 #include "GD_Environment.h"
@@ -54,7 +53,6 @@ public:
 	GD_BULLET*					GDCL_Bullet;
 	GD_Scene_Data*				GDCL_Scene_Data;
 	GD_SoundMgr*				GDCL_SoundMgr;
-	GD_Collision*				GDCL_Collision;
 	GD_Add_Objects*				GDCL_Add_Objects;
 	GD_Environment*				GDCL_Environment;
 
