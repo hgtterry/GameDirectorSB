@@ -506,9 +506,9 @@ bool  BT_PhysicsListener::frameRenderingQueued(const FrameEvent& evt)
 
 	MoveCamera();
 
-	if (App->GDCL_Collision->DoMove == 1)
+	if (App->SBC_Collision->DoMove == 1)
 	{
-		App->GDCL_Collision->MoveObject(evt.timeSinceLastFrame);
+		App->SBC_Collision->MoveObject_Listener(evt.timeSinceLastFrame);
 	}
 	return 1;
 }

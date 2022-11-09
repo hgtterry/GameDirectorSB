@@ -114,7 +114,7 @@ bool SB_Collision::Move_Entity_Collision(int Index)
 
 	int ObjectToMove = App->GDCL_Scene_Data->B_Object[ObjectIndex]->S_MoveType[0]->Object_To_Move_Index;
 
-	if (App->GDCL_Scene_Data->B_Object[ObjectToMove]->Deleted == 0)
+	//if (App->GDCL_Scene_Data->B_Object[ObjectToMove]->Deleted == 0)
 	{
 		
 		M_Pos = App->GDCL_Scene_Data->B_Object[ObjectToMove]->Mesh_Pos;
