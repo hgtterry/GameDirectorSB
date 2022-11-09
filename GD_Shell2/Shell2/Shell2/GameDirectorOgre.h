@@ -28,8 +28,6 @@
 
 #include "ImguiManager.h"
 
-//using namespace Noesis;
-
 #define TERRAIN_FILE_PREFIX String("GDTest")
 #define TERRAIN_FILE_SUFFIX String(".dat")
 #define TERRAIN_SIZE 513

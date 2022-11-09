@@ -56,7 +56,7 @@ BT_App::BT_App(void)
 	SBC_Objects_Create = nullptr;
 	SBC_Messages = nullptr;
 	SBC_Collision = nullptr;
-
+	CL_Vm_ImGui = nullptr;
 }
 
 BT_App::~BT_App(void)
@@ -113,6 +113,8 @@ bool BT_App::InitApp(void)
 	SBC_Objects_Create =		new SB_Objects_Create();
 	SBC_Messages =				new SB_Messages();
 	SBC_Collision =				new SB_Collision();
+	CL_Vm_ImGui =				new VM_ImGui();
+
 
 	return 1;
 }

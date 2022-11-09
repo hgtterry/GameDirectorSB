@@ -90,6 +90,27 @@
     <ClCompile Include="SB_Collision.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\Anim19_OSDN\Common\imGui\ImGui_cpp\imgui.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Anim19_OSDN\Common\imGui\ImGui_cpp\imgui_demo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Anim19_OSDN\Common\imGui\ImGui_cpp\imgui_draw.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Anim19_OSDN\Common\imGui\ImGui_cpp\imgui_widgets.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Anim19_OSDN\Common\imGui\ImGui_cpp\ImguiManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Anim19_OSDN\Common\imGui\ImGui_cpp\ImguiRenderable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="VM_ImGui.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BT_App.h">
@@ -171,6 +192,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SB_Collision.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VM_ImGui.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

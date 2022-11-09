@@ -42,6 +42,7 @@
 #include "SB_Objects_Create.h"
 #include "SB_Messages.h"
 #include "SB_Collision.h"
+#include "VM_ImGui.h"
 
 class BT_App
 {
@@ -66,6 +67,7 @@ public:
 	SB_Objects_Create*			SBC_Objects_Create;
 	SB_Messages*				SBC_Messages;
 	SB_Collision*				SBC_Collision;
+	VM_ImGui*					CL_Vm_ImGui;
 
 	BT_App(void);
 	~BT_App(void);

@@ -110,6 +110,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\Anim19_OSDN\Common\imGui\ImGui_cpp\imgui.cpp" />
+    <ClCompile Include="..\..\..\Anim19_OSDN\Common\imGui\ImGui_cpp\ImguiManager.cpp" />
+    <ClCompile Include="..\..\..\Anim19_OSDN\Common\imGui\ImGui_cpp\ImguiRenderable.cpp" />
+    <ClCompile Include="..\..\..\Anim19_OSDN\Common\imGui\ImGui_cpp\imgui_demo.cpp" />
+    <ClCompile Include="..\..\..\Anim19_OSDN\Common\imGui\ImGui_cpp\imgui_draw.cpp" />
+    <ClCompile Include="..\..\..\Anim19_OSDN\Common\imGui\ImGui_cpp\imgui_widgets.cpp" />
     <ClCompile Include="Base_Area.cpp" />
     <ClCompile Include="Base_Locations.cpp" />
     <ClCompile Include="Base_Object.cpp" />
@@ -138,6 +144,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="VM_ImGui.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base_Area.h" />
@@ -167,6 +174,7 @@
     <ClInclude Include="Shell2.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="VM_ImGui.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shell2.ico" />
