@@ -13,6 +13,7 @@ VM_ImGui::VM_ImGui()
 	style.FrameBorderSize = 10.0;
 	Load_Font();
 
+	Show_Debug = 0;
 	StartPos = 0;
 	Show_FPS = 1;
 }
@@ -100,11 +101,15 @@ void VM_ImGui::ImGui_Set_Colours(void)
 // *************************************************************************
 void VM_ImGui::ImGui_Render_Loop(void)
 {
-	//if (Show_FPS == 1)
+	if (Show_FPS == 1)
 	{
 		ImGui_FPS();
 	}
 
+	if (Show_Debug == 1)
+	{
+		ImGui_Debug();
+	}
 }
 
 // *************************************************************************
@@ -128,6 +133,31 @@ void VM_ImGui::ImGui_FPS(void)
 
 		ImGui::Text("FPS average %.0f", ImGui::GetIO().Framerate);
 	
+		ImGui::End();
+	}
+}
+
+// *************************************************************************
+// *						ImGui_Debug  Terry Bernie					   *
+// *************************************************************************
+void VM_ImGui::ImGui_Debug(void)
+{
+	if (!ImGui::Begin("Debug", &Show_Debug, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize
+		| ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
+	{
+		ImGui::End();
+	}
+	else
+	{
+		if (StartPos == 0)
+		{
+			ImGui::SetWindowPos("Debug", ImVec2(500, 50));
+			ImGui::SetWindowSize(ImVec2(350, 90));
+			StartPos = 1;
+		}
+
+		ImGui::Text("FPS average %.0f", ImGui::GetIO().Framerate);
+
 		ImGui::End();
 	}
 }

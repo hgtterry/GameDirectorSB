@@ -111,31 +111,22 @@ bool GameDirectorOgre::Configure(void)
 		return false; //No RenderSystem found
 	}
 
+	Full_Screen = 1;
 
 	char buff[1025];
-	//if (Full_Screen == 1)
-	//{
+	if (Full_Screen == 1)
+	{
 		sprintf(buff, "%i x %i @ 32-bit", App->ScreenWidth, App->ScreenHeight);
-	//}
-	//else
-	//{
-		//sprintf(buff, "%i x %i @ 32-bit colour", 1024, 768);
-	//}
+		rs->setConfigOption("Video Mode", buff);
+	}
+	else
+	{
+		sprintf(buff, "%i x %i @ 32-bit colour", 1024, 768);
+		rs->setConfigOption("Full Screen", "No");
+	}
 	
-	rs->setConfigOption("Video Mode",buff);
-
-	//if (Full_Screen == 1)
-	{
-		rs->setConfigOption("Full Screen", "Yes");
-	}
-	//else
-	{
-		//rs->setConfigOption("Full Screen", "No");
-	}
-
 	mRoot->setRenderSystem(rs);
 
-	//mWindow = mRoot->createRenderWindow("Main RenderWindow", 1024, 768, false);
 	mWindow = mRoot->initialise(true, "poo");// App->GDCL_Scene_Data->S_Scene[0]->GDSceneName);
 	
 	//if (Full_Screen == 1)

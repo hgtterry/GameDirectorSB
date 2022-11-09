@@ -153,8 +153,7 @@ void Base_Object::Set_ImGui_Panel_Name(void)
 // *************************************************************************
 void Base_Object::Render_ImGui_Panel(void)
 {
-	/*ImGui::SetNextWindowPos(ImVec2(Message_PosX, Message_PosY));
-
+	ImGui::SetNextWindowPos(ImVec2(Message_PosX, Message_PosY));
 
 	if (!ImGui::Begin(ImGui_Panel_Name, &Show_Message_Flag, ImGuiWindowFlags_NoSavedSettings
 		| ImGuiWindowFlags_AlwaysAutoResize
@@ -174,5 +173,5 @@ void Base_Object::Render_ImGui_Panel(void)
 		ImGui::PopFont();
 
 		ImGui::End();
-	}*/
+	}
 }

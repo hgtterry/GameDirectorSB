@@ -92,7 +92,7 @@ void Base_Player::Jump(const Ogre::Vector3 axis, float force)
 
 	Phys_Body->getWorldTransform().setOrigin(btVector3(pos[0], pos[1], pos[2]));
 
-	//App->GDCL_Player->Check_Collisions();
+	App->SBC_Player->Check_Collisions_New();
 }
 
 // *************************************************************************
@@ -132,7 +132,7 @@ void Base_Player::Back(void)
 	vel = Ground_speed * 10 * basis;			 //cur[1],
 	Phys_Body->setLinearVelocity(btVector3(vel[0], cur[1], vel[2]));
 
-	//App->GDCL_Player->Check_Collisions();
+	App->SBC_Player->Check_Collisions_New();
 }
 
 // *************************************************************************
@@ -150,7 +150,7 @@ void Base_Player::Move_Left(void)
 
 	Phys_Body->setLinearVelocity(btVector3(-vel[2], cur[1], vel[0]));
 
-	//App->GDCL_Player->Check_Collisions();
+	App->SBC_Player->Check_Collisions_New();
 }
 
 // *************************************************************************
@@ -168,7 +168,7 @@ void Base_Player::Move_Right(void)
 
 	Phys_Body->setLinearVelocity(btVector3(vel[2], cur[1], -vel[0]));
 
-	//App->GDCL_Player->Check_Collisions();
+	App->SBC_Player->Check_Collisions_New();
 	
 }
 

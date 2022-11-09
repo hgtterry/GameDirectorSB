@@ -61,12 +61,9 @@ bool SB_Collision::Message_Entity(int Index)
 	}
 
 	//-----------------  Do Action
-
-	//int MessageIndex = App->GDCL_Scene_Data->B_Object[Index]->TextMessage_ID; // Needs_Removing
-	//App->GDCL_Scene_Data->B_Message[MessageIndex]->Show_Panel_Flag = 1;
-
 	App->GDCL_Scene_Data->B_Object[Index]->Show_Message_Flag = 1;
 	App->GDCL_Scene_Data->B_Object[Index]->Triggered = 1;
+
 	return 1;
 }
 

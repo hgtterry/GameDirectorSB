@@ -9,11 +9,13 @@ public:
 	void ImGui_Set_Colours(void);
 
 	void ImGui_FPS(void);
+	void ImGui_Debug(void);
 
 	void ImGui_Render_Loop(void);
 	
 	bool StartPos;
 	bool Show_FPS;
+	bool Show_Debug;
 
 	ImFont* font0;
 	ImFont* font1;

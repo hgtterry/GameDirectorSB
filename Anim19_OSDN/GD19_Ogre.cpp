@@ -269,9 +269,11 @@ bool GD19_Ogre::Configure(void)
 	mWindow = mRoot->initialise(false);
 	Ogre::NameValuePairList options;
 
+	options["vsync"] = true;
+
 	options["externalWindowHandle"] =
 		Ogre::StringConverter::toString((size_t)RenderHwnd);
-
+	
 	mWindow = mRoot->createRenderWindow("Main RenderWindow", 1024, 768, false, &options);
 
 	//App->Cl_Panels->Width = mWindow->getWidth();
