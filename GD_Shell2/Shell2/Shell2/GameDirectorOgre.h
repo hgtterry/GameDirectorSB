@@ -26,6 +26,8 @@
 #include "OgreOverlaySystem.h"
 #include "BT_PhysicsListener.h"
 
+#include "ImguiManager.h"
+
 //using namespace Noesis;
 
 #define TERRAIN_FILE_PREFIX String("GDTest")

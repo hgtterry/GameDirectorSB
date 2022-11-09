@@ -72,7 +72,7 @@
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <WholeProgramOptimization>false</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>..\..\..\Anim19_OSDN\Common\Bullet\Source;..\..\..\Anim19_OSDN\Common\boost;..\..\..\Anim19_OSDN\Common\include;..\..\..\Anim19_OSDN\Common\include\OGRE;..\..\..\Anim19_OSDN\Common\include\OGRE\Terrain;..\..\..\Anim19_OSDN\Common\include\OGRE\Overlay;..\..\..\Anim19_OSDN\Common\irrKlang\Headers</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\Anim19_OSDN\Common\Bullet\Source;..\..\..\Anim19_OSDN\Common\boost;..\..\..\Anim19_OSDN\Common\include;..\..\..\Anim19_OSDN\Common\include\OGRE;..\..\..\Anim19_OSDN\Common\include\OGRE\Terrain;..\..\..\Anim19_OSDN\Common\include\OGRE\Overlay;..\..\..\Anim19_OSDN\Common\irrKlang\Headers;..\..\..\Anim19_OSDN\Common\imGui\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>
       </StringPooling>
