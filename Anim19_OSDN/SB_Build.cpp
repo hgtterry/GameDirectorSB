@@ -44,7 +44,17 @@ SB_Build::SB_Build()
 
 	m_Build_Sub_Folder[0] = 0;
 
+	//---------------------------------
 	Sub_Build_Folder[0] = 0;
+	m_Ini_Path_File_Name[0] = 0;
+	m_Level_Folder_Path[0] = 0;
+	m_Main_Assets_Path[0] = 0;
+	m_Aera_Folder_Path[0] = 0;
+	m_Players_Folder_Path[0] = 0;
+	m_Cameras_Folder_Path[0] = 0;
+	m_Objects_Folder_Path[0] = 0;
+
+	WriteFile = nullptr;
 }
 
 SB_Build::~SB_Build()
@@ -630,33 +640,29 @@ bool SB_Build::Build_Project()
 		_chdir(m_Build_Sub_Folder);
 	}
 
-	//bool test = Save_Project_Ini();
-	//if (test == 0)
-	//{
-	//	return 0;
-	//}
+	bool test = Build_Project_Ini();
+	if (test == 0)
+	{
+		return 0;
+	}
 
-	//Save_Level_Folder();
-	//Save_Main_Asset_Folder();
+	Build_Level_Folder();
+	Build_Main_Asset_Folder();
 
-	//_chdir(m_Level_Folder_Path);
+	_chdir(m_Level_Folder_Path);
 
-	//if (App->SBC_Scene->Area_Added == 1)
-	//{
-	//	Save_Aera_Folder();
-	//}
+	if (App->SBC_Scene->Area_Added == 1)
+	{
+		Build_Area_Folder();
+	}
 
-	//if (App->SBC_Scene->Player_Added == 1)
-	//{
-	//	Save_Players_Folder();
+	if (App->SBC_Scene->Player_Added == 1)
+	{
+		Build_Players_Folder();
+	}
 
-	//	//App->SBC_Scene->B_Player[0]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Players_Folder,"Player_1", 0, false);
-	//	//App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Players_Folder);
-
-	//}
-
-	//Save_Cameras_Folder();
-	//Save_Objects_Folder();
+	Build_Cameras_Folder();
+	Build_Objects_Folder();
 	//Save_Display_Folder();
 
 	//App->SBC_FileView->Change_Level_Name();
@@ -682,6 +688,790 @@ bool SB_Build::Build_Project()
 
 
 	//App->Say("Scene Saved");
+
+	return 1;
+}
+
+// *************************************************************************
+// *	  		Build_Project_Ini:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+bool SB_Build::Build_Project_Ini()
+{
+	m_Ini_Path_File_Name[0] = 0;
+
+	strcpy(m_Ini_Path_File_Name, m_Build_Sub_Folder);
+	strcat(m_Ini_Path_File_Name, "\\");
+	strcat(m_Ini_Path_File_Name, "Game.gdat");
+
+	int test = App->SBC_FileIO->SearchFolders(m_Build_Sub_Folder, "\\Game.gdat");
+	if (test == 1)
+	{
+		App->SBC_Dialogs->YesNo("File Exsits", "Do you want to update File", 1);
+
+		bool Doit = App->SBC_Dialogs->Canceled;
+		if (Doit == 1)
+		{
+			return 0;
+		}
+	}
+
+	WriteFile = nullptr;
+
+	WriteFile = fopen(m_Ini_Path_File_Name, "wt");
+
+	if (!WriteFile)
+	{
+		App->Say("Cant Create File");
+		return 0;
+	}
+
+	fprintf(WriteFile, "%s\n", "[Version_Data]");
+	fprintf(WriteFile, "%s%s\n", "Version=", "V1.2");
+
+	fprintf(WriteFile, "%s\n", " ");
+
+	fprintf(WriteFile, "%s\n", "[Files]");
+	fprintf(WriteFile, "%s%s\n", "Project_Name=", App->SBC_Project->m_Project_Name);
+	fprintf(WriteFile, "%s%s\n", "Level_Name=", App->SBC_Project->m_Level_Name);
+
+
+	fprintf(WriteFile, "%s\n", " ");
+
+	fprintf(WriteFile, "%s\n", "[Options]");
+	fprintf(WriteFile, "%s%i\n", "Aeras_Count=", App->SBC_Scene->Area_Count);
+	fprintf(WriteFile, "%s%i\n", "Players_Count=", App->SBC_Scene->Player_Count);
+	fprintf(WriteFile, "%s%i\n", "Cameras_Count=", App->SBC_Scene->Camera_Count);
+	fprintf(WriteFile, "%s%i\n", "Objects_Count=", App->SBC_Scene->Object_Count);
+	fprintf(WriteFile, "%s%i\n", "Objects_ID_Count=", App->SBC_Scene->UniqueID_Object_Counter);
+
+	int Adjusted = App->SBC_LookUps->Get_Adjusted_Counters_Count();
+	fprintf(WriteFile, "%s%i\n", "Counters_Count=", Adjusted);
+	fprintf(WriteFile, "%s%i\n", "Counters_ID_Count=", App->SBC_Scene->UniqueID_Counters_Count);
+
+	fclose(WriteFile);
+
+	return 1;
+}
+
+// *************************************************************************
+// *	  	Build_Level_Folder:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+bool SB_Build::Build_Level_Folder()
+{
+	strcpy(m_Level_Folder_Path, m_Build_Sub_Folder);
+	strcat(m_Level_Folder_Path, "\\");
+	strcat(m_Level_Folder_Path, GameName);
+
+	// First Level Folder
+	if (_mkdir(m_Level_Folder_Path) == 0)
+	{
+		_chdir(m_Level_Folder_Path);
+	}
+	else
+	{
+		_chdir(m_Level_Folder_Path);
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *	  	Build_Main_Asset_Folder:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+bool SB_Build::Build_Main_Asset_Folder()
+{
+	char LastFolder[MAX_PATH];
+
+//	if (Directory_Changed_Flag == 1)
+	{
+		strcpy(LastFolder, App->SBC_Project->m_Main_Assets_Path);
+	}
+
+	m_Main_Assets_Path[0] = 0;
+
+	strcpy(m_Main_Assets_Path, m_Level_Folder_Path);
+	strcat(m_Main_Assets_Path, "\\");
+	strcat(m_Main_Assets_Path, "Assets");
+	strcat(m_Main_Assets_Path, "\\");
+
+	if (_mkdir(m_Main_Assets_Path) == 0)
+	{
+		_chdir(m_Main_Assets_Path);
+	}
+	else
+	{
+		_chdir(m_Main_Assets_Path);
+	}
+
+	//if (Directory_Changed_Flag == 1)
+	{
+		Copy_Assets(LastFolder, m_Main_Assets_Path);
+	}
+
+	//Directory_Changed_Flag = 0;
+
+	_chdir(m_Level_Folder_Path); // Return to Level Folder
+	return 1;
+}
+
+// *************************************************************************
+// *	  	Save_Area_Folder:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+bool SB_Build::Build_Area_Folder()
+{
+	m_Aera_Folder_Path[0] = 0;
+
+	strcpy(m_Aera_Folder_Path, m_Level_Folder_Path);
+	strcat(m_Aera_Folder_Path, "\\");
+	strcat(m_Aera_Folder_Path, "Areas");
+
+
+	if (_mkdir(m_Aera_Folder_Path) == 0)
+	{
+		_chdir(m_Aera_Folder_Path);
+	}
+	else
+	{
+		_chdir(m_Aera_Folder_Path);
+	}
+
+	Build_Areas_Data();
+
+	_chdir(m_Level_Folder_Path); // Return to Level Folder
+	return 1;
+}
+
+// *************************************************************************
+// *	  		Save_Areas_Data:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+bool SB_Build::Build_Areas_Data()
+{
+	Ogre::Vector3 Pos;
+	char File[1024];
+
+	strcpy(File, m_Aera_Folder_Path);
+	strcat(File, "\\");
+	strcat(File, "Areas.aer");
+
+	WriteFile = nullptr;
+
+	WriteFile = fopen(File, "wt");
+
+	if (!WriteFile)
+	{
+		App->Say("Cant Create File");
+		App->Say_Win(File);
+		return 0;
+	}
+
+	fprintf(WriteFile, "%s\n", "[Version_Data]");
+	fprintf(WriteFile, "%s%s\n", "Version=", "V1.2");
+
+	fprintf(WriteFile, "%s\n", " ");
+
+	fprintf(WriteFile, "%s\n", "[Counters]");
+	fprintf(WriteFile, "%s%i\n", "Areas_Count=", App->SBC_Scene->Area_Count);
+
+	fprintf(WriteFile, "%s\n", " ");
+
+	char Cbuff[255];
+	char buff[255];
+
+	float x = 0;
+	float y = 0;
+	float z = 0;
+
+	int Count = 0;
+	while (Count < App->SBC_Scene->Area_Count)
+	{
+		strcpy(buff, "[Area_");
+		_itoa(Count, Cbuff, 10);
+		strcat(buff, Cbuff);
+		strcat(buff, "]");
+
+		fprintf(WriteFile, "%s\n", buff); // Header also Player name until changed by user
+
+		fprintf(WriteFile, "%s%s\n", "Area_Name=", App->SBC_Scene->B_Area[Count]->Area_Name); // Change
+
+		fprintf(WriteFile, "%s%s\n", "Area_File=", App->SBC_Scene->B_Area[Count]->Area_FileName);
+		fprintf(WriteFile, "%s%s\n", "Area_Path_File=", App->SBC_Scene->B_Area[Count]->Area_Path_And_FileName);
+		fprintf(WriteFile, "%s%s\n", "Area_Resource_Path=", App->SBC_Scene->B_Area[Count]->Area_Resource_Path);
+		fprintf(WriteFile, "%s%s\n", "Material_File=", App->SBC_Scene->B_Area[Count]->Material_File);
+
+		fprintf(WriteFile, "%s\n", "[Position]");
+		x = App->SBC_Scene->B_Area[Count]->Area_Node->getPosition().x;
+		y = App->SBC_Scene->B_Area[Count]->Area_Node->getPosition().y;
+		z = App->SBC_Scene->B_Area[Count]->Area_Node->getPosition().z;
+
+		fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Pos=", x, y, z);
+
+
+		// ------------------------------------ Environment
+
+		fprintf(WriteFile, "%s\n", "[Environment]");
+
+		//--------------- Sound
+		fprintf(WriteFile, "%s%s\n", "Sound_File=", App->SBC_Scene->B_Area[0]->S_Environment[0]->Sound_File);
+		fprintf(WriteFile, "%s%f\n", "Snd_Volume=", App->SBC_Scene->B_Area[0]->S_Environment[0]->SndVolume);
+
+		fprintf(WriteFile, "%s%i\n", "Sound_Play=", App->SBC_Scene->B_Area[0]->S_Environment[0]->Play);
+		fprintf(WriteFile, "%s%i\n", "Sound_Loop=", App->SBC_Scene->B_Area[0]->S_Environment[0]->Loop);
+
+		//--------------- Light
+
+		x = App->SBC_Scene->B_Area[0]->S_Environment[0]->AmbientColour.x;
+		y = App->SBC_Scene->B_Area[0]->S_Environment[0]->AmbientColour.y;
+		z = App->SBC_Scene->B_Area[0]->S_Environment[0]->AmbientColour.z;
+		fprintf(WriteFile, "%s%f,%f,%f\n", "Ambient_Colour=", x, y, z);
+
+		x = App->SBC_Scene->B_Area[0]->S_Environment[0]->DiffuseColour.x;
+		y = App->SBC_Scene->B_Area[0]->S_Environment[0]->DiffuseColour.y;
+		z = App->SBC_Scene->B_Area[0]->S_Environment[0]->DiffuseColour.z;
+		fprintf(WriteFile, "%s%f,%f,%f\n", "Diffuse_Colour=", x, y, z);
+
+		x = App->SBC_Scene->B_Area[0]->S_Environment[0]->SpecularColour.x;
+		y = App->SBC_Scene->B_Area[0]->S_Environment[0]->SpecularColour.y;
+		z = App->SBC_Scene->B_Area[0]->S_Environment[0]->SpecularColour.z;
+		fprintf(WriteFile, "%s%f,%f,%f\n", "Specular_Colour=", x, y, z);
+
+		x = App->SBC_Scene->B_Area[0]->S_Environment[0]->Light_Position.x;
+		y = App->SBC_Scene->B_Area[0]->S_Environment[0]->Light_Position.y;
+		z = App->SBC_Scene->B_Area[0]->S_Environment[0]->Light_Position.z;
+		fprintf(WriteFile, "%s%f,%f,%f\n", "Light_Position=", x, y, z);
+
+		//--------------- Sky
+		fprintf(WriteFile, "%s%i\n", "Sky_Enable=", App->SBC_Scene->B_Area[0]->S_Environment[0]->Enabled);
+		fprintf(WriteFile, "%s%i\n", "Sky_Type=", App->SBC_Scene->B_Area[0]->S_Environment[0]->type);
+		fprintf(WriteFile, "%s%s\n", "Sky_Material=", App->SBC_Scene->B_Area[0]->S_Environment[0]->Material);
+		fprintf(WriteFile, "%s%f\n", "Sky_Curvature=", App->SBC_Scene->B_Area[0]->S_Environment[0]->Curvature);
+		fprintf(WriteFile, "%s%f\n", "Sky_Tiling=", App->SBC_Scene->B_Area[0]->S_Environment[0]->Tiling);
+		fprintf(WriteFile, "%s%f\n", "Sky_Distance=", App->SBC_Scene->B_Area[0]->S_Environment[0]->Distance);
+
+		//--------------- Fog
+		fprintf(WriteFile, "%s%i\n", "Fog_On=", App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_On);
+		fprintf(WriteFile, "%s%i\n", "Fog_Mode=", App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_Mode);
+
+		x = App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_Colour.x;
+		y = App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_Colour.y;
+		z = App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_Colour.z;
+		fprintf(WriteFile, "%s%f,%f,%f\n", "Fog_Colour=", x, y, z);
+
+		fprintf(WriteFile, "%s%f\n", "Fog_Start=", App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_Start);
+		fprintf(WriteFile, "%s%f\n", "Fog_End=", App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_End);
+		fprintf(WriteFile, "%s%f\n", "Fog_Density=", App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_Density);
+
+		Count++;
+	}
+
+	fclose(WriteFile);
+
+	return 1;
+}
+
+// *************************************************************************
+// *	  	Build_Players_Folder:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+bool SB_Build::Build_Players_Folder()
+{
+	m_Players_Folder_Path[0] = 0;
+
+	strcpy(m_Players_Folder_Path, m_Level_Folder_Path);
+	strcat(m_Players_Folder_Path, "\\");
+	strcat(m_Players_Folder_Path, "Players");
+
+
+	_mkdir(m_Players_Folder_Path);
+
+	_chdir(m_Players_Folder_Path);
+
+	Build_Player_Data();
+
+	_chdir(m_Level_Folder_Path); // Return to Level Folder
+	return 1;
+}
+
+// *************************************************************************
+// *	  	Build_Player_Data:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+bool SB_Build::Build_Player_Data()
+{
+	Ogre::Vector3 Pos;
+	char File[1024];
+
+	float W = 0;
+	float X = 0;
+	float Y = 0;
+	float Z = 0;
+
+	strcpy(File, m_Players_Folder_Path);
+	strcat(File, "\\");
+	strcat(File, "Players.ply");
+
+	WriteFile = nullptr;
+
+	WriteFile = fopen(File, "wt");
+
+	if (!WriteFile)
+	{
+		App->Say("Cant Create File");
+		App->Say_Win(File);
+		return 0;
+	}
+
+	fprintf(WriteFile, "%s\n", "[Version_Data]");
+	fprintf(WriteFile, "%s%s\n", "Version=", "V1.2");
+
+	fprintf(WriteFile, "%s\n", " ");
+
+	fprintf(WriteFile, "%s\n", "[Counters]");
+	fprintf(WriteFile, "%s%i\n", "Player_Count=", App->SBC_Scene->Player_Count);
+
+	fprintf(WriteFile, "%s\n", " ");
+
+	char Cbuff[255];
+	char buff[255];
+	int Count = 0;
+	while (Count < App->SBC_Scene->Player_Count)
+	{
+		strcpy(buff, "[Player_");
+		_itoa(Count, Cbuff, 10);
+		strcat(buff, Cbuff);
+		strcat(buff, "]");
+
+		fprintf(WriteFile, "%s\n", buff); // Header also Player name until changed by user
+
+		fprintf(WriteFile, "%s%s\n", "Player_Name=", App->SBC_Scene->B_Player[Count]->Player_Name);
+
+		Pos.x = App->SBC_Scene->B_Player[Count]->StartPos.x;
+		Pos.y = App->SBC_Scene->B_Player[Count]->StartPos.y;
+		Pos.z = App->SBC_Scene->B_Player[Count]->StartPos.z;
+		fprintf(WriteFile, "%s%f,%f,%f\n", "Start_Position=", Pos.x, Pos.y, Pos.z);
+
+		W = App->SBC_Scene->B_Player[Count]->Physics_Rotation.getW();
+		X = App->SBC_Scene->B_Player[Count]->Physics_Rotation.getX();
+		Y = App->SBC_Scene->B_Player[Count]->Physics_Rotation.getY();
+		Z = App->SBC_Scene->B_Player[Count]->Physics_Rotation.getZ();
+
+		fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Start_Rotation=", W, X, Y, Z);
+
+		fprintf(WriteFile, "%s%s\n", "Shape=", "Capsule");
+		fprintf(WriteFile, "%s%f\n", "Mass=", App->SBC_Scene->B_Player[Count]->Capsule_Mass);
+		fprintf(WriteFile, "%s%f\n", "Radius=", App->SBC_Scene->B_Player[Count]->Capsule_Radius);
+		fprintf(WriteFile, "%s%f\n", "Height=", App->SBC_Scene->B_Player[Count]->Capsule_Height);
+		fprintf(WriteFile, "%s%f\n", "Ground_Speed=", App->SBC_Scene->B_Player[Count]->Ground_speed);
+		fprintf(WriteFile, "%s%f\n", "Cam_Height=", App->SBC_Scene->B_Player[Count]->PlayerHeight);
+		fprintf(WriteFile, "%s%f\n", "Turn_Rate=", App->SBC_Scene->B_Player[Count]->TurnRate);
+
+		Count++;
+	}
+
+	// ---------------------------------------- Player Locations
+
+	float w = 0;
+	float x = 0;
+	float y = 0;
+	float z = 0;
+
+	fprintf(WriteFile, "%s\n", " ");
+	fprintf(WriteFile, "%s\n", "[Locations]");
+
+	int RealCount = App->Cl_LookUps->Player_Location_GetCount(); // Get The real Count Minus Deleted Files
+
+	fprintf(WriteFile, "%s%i\n", "Locations_Count=", RealCount);
+
+	int Location = 0; // Correct for Deleted Files
+
+	Count = 0;
+	while (Count < App->SBC_Scene->Player_Location_Count)
+	{
+		if (App->SBC_Scene->B_Locations[Count]->Deleted == 0)
+		{
+			fprintf(WriteFile, "%s\n", " ");
+
+			char Cbuff[255];
+			char buff[255];
+			strcpy(buff, "[Location_");
+			_itoa(Location, Cbuff, 10);
+			strcat(buff, Cbuff);
+			strcat(buff, "]");
+			fprintf(WriteFile, "%s\n", buff);
+
+			fprintf(WriteFile, "%s%i\n", "Locatoin_ID=", App->SBC_Scene->B_Locations[Count]->Location_ID);
+			fprintf(WriteFile, "%s%s\n", "Name=", App->SBC_Scene->B_Locations[Count]->Name);
+
+			x = App->SBC_Scene->B_Locations[Count]->Current_Position.x;
+			y = App->SBC_Scene->B_Locations[Count]->Current_Position.y;
+			z = App->SBC_Scene->B_Locations[Count]->Current_Position.z;
+			fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Position=", x, y, z);
+
+			x = App->SBC_Scene->B_Locations[Count]->Physics_Position.getX();
+			y = App->SBC_Scene->B_Locations[Count]->Physics_Position.getY();
+			z = App->SBC_Scene->B_Locations[Count]->Physics_Position.getZ();
+			fprintf(WriteFile, "%s%f,%f,%f\n", "Physics_Position=", x, y, z);
+
+			w = App->SBC_Scene->B_Locations[Count]->Physics_Rotation.getW();
+			x = App->SBC_Scene->B_Locations[Count]->Physics_Rotation.getX();
+			y = App->SBC_Scene->B_Locations[Count]->Physics_Rotation.getY();
+			z = App->SBC_Scene->B_Locations[Count]->Physics_Rotation.getZ();
+			fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Physics_Rotation=", w, x, y, z);
+			Location++;
+		}
+
+		Count++;
+	}
+
+	fclose(WriteFile);
+
+	return 1;
+}
+
+// *************************************************************************
+// *	  	Build_Cameras_Folder:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+bool SB_Build::Build_Cameras_Folder()
+{
+	m_Cameras_Folder_Path[0] = 0;
+
+	strcpy(m_Cameras_Folder_Path, m_Level_Folder_Path);
+	strcat(m_Cameras_Folder_Path, "\\");
+	strcat(m_Cameras_Folder_Path, "Cameras");
+
+	if (_mkdir(m_Cameras_Folder_Path) == 0)
+	{
+		_chdir(m_Cameras_Folder_Path);
+	}
+	else
+	{
+		_chdir(m_Cameras_Folder_Path);
+	}
+
+	Build_Cameras_Data();
+
+	_chdir(m_Level_Folder_Path); // Return to Level Folder
+
+	return 1;
+}
+
+// *************************************************************************
+// *	  		Build_Cameras_Data:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+bool SB_Build::Build_Cameras_Data()
+{
+	Ogre::Vector3 Pos;
+	char File[1024];
+
+	strcpy(File, m_Cameras_Folder_Path);
+	strcat(File, "\\");
+	strcat(File, "Cameras.epf");
+
+	WriteFile = nullptr;
+
+	WriteFile = fopen(File, "wt");
+
+	if (!WriteFile)
+	{
+		App->Say("Cant Create File");
+		App->Say_Win(File);
+		return 0;
+	}
+
+	fprintf(WriteFile, "%s\n", "[Version_Data]");
+	fprintf(WriteFile, "%s%s\n", "Version=", "V1.2");
+
+	fprintf(WriteFile, "%s\n", " ");
+
+	fprintf(WriteFile, "%s\n", "[Counters]");
+	fprintf(WriteFile, "%s%i\n", "Cameras_Count=", App->SBC_Scene->Camera_Count);
+
+	fprintf(WriteFile, "%s\n", " ");
+
+	char Cbuff[255];
+	char buff[255];
+
+	float w = 0;
+	float x = 0;
+	float y = 0;
+	float z = 0;
+
+	int Count = 0;
+	while (Count < App->SBC_Scene->Camera_Count)
+	{
+		strcpy(buff, "[Camera_");
+		_itoa(Count, Cbuff, 10);
+		strcat(buff, Cbuff);
+		strcat(buff, "]");
+
+		fprintf(WriteFile, "%s\n", buff); // Header also Player name until changed by user
+
+		fprintf(WriteFile, "%s%s\n", "Camera_Name=", App->SBC_Scene->B_Camera[Count]->Camera_Name); // Change
+
+		//---------------------------------- Camera Pos
+		x = App->SBC_Scene->B_Camera[Count]->CamPos.x;
+		y = App->SBC_Scene->B_Camera[Count]->CamPos.y;
+		z = App->SBC_Scene->B_Camera[Count]->CamPos.z;
+
+		fprintf(WriteFile, "%s%f,%f,%f\n", "Camera_Pos=", x, y, z);
+
+		//---------------------------------- Camera Look At
+		x = App->SBC_Scene->B_Camera[Count]->LookAt.x;
+		y = App->SBC_Scene->B_Camera[Count]->LookAt.y;
+		z = App->SBC_Scene->B_Camera[Count]->LookAt.z;
+
+		fprintf(WriteFile, "%s%f,%f,%f\n", "LookAt=", x, y, z);
+
+		//---------------------------------- Camera Quaternion
+		w = App->SBC_Scene->B_Camera[Count]->Cam_Quat.w;
+		x = App->SBC_Scene->B_Camera[Count]->Cam_Quat.x;
+		y = App->SBC_Scene->B_Camera[Count]->Cam_Quat.y;
+		z = App->SBC_Scene->B_Camera[Count]->Cam_Quat.z;
+
+		fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Camera_Quat=", w, x, y, z);
+
+		Count++;
+	}
+
+	fclose(WriteFile);
+
+	return 1;
+}
+
+// *************************************************************************
+// *	  	Build_Objects_Folder:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+bool SB_Build::Build_Objects_Folder()
+{
+	m_Objects_Folder_Path[0] = 0;
+
+	strcpy(m_Objects_Folder_Path, m_Level_Folder_Path);
+	strcat(m_Objects_Folder_Path, "\\");
+	strcat(m_Objects_Folder_Path, "Objects");
+
+	_mkdir(m_Objects_Folder_Path);
+	_chdir(m_Objects_Folder_Path);
+
+	Build_Objects_Data();
+
+	_chdir(m_Level_Folder_Path); // Return to Level Folder
+	return 1;
+}
+
+// *************************************************************************
+// *	  		Build_Objects_Data:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+bool SB_Build::Build_Objects_Data()
+{
+	Ogre::Vector3 Pos;
+	char File[1024];
+
+	strcpy(File, m_Objects_Folder_Path);
+	strcat(File, "\\");
+	strcat(File, "Objects.efd");
+
+	WriteFile = nullptr;
+
+	WriteFile = fopen(File, "wt");
+
+	if (!WriteFile)
+	{
+		App->Say("Cant Create File");
+		App->Say_Win(File);
+		return 0;
+	}
+
+	fprintf(WriteFile, "%s\n", "[Version_Data]");
+	fprintf(WriteFile, "%s%s\n", "Version=", "V1.2");
+
+	fprintf(WriteFile, "%s\n", " ");
+
+	fprintf(WriteFile, "%s\n", " ");
+
+	char Cbuff[255];
+	char buff[255];
+
+	float w = 0;
+	float x = 0;
+	float y = 0;
+	float z = 0;
+
+	int new_Count = 0;
+
+	int Count = 0;
+	while (Count < App->SBC_Scene->Object_Count)
+	{
+		if (App->SBC_Scene->B_Object[Count]->Deleted == 0)
+		{
+			strcpy(buff, "[Object_");
+			_itoa(new_Count, Cbuff, 10);
+			strcat(buff, Cbuff);
+			strcat(buff, "]");
+
+			fprintf(WriteFile, "%s\n", buff); // Header also Player name until changed by user
+
+			fprintf(WriteFile, "%s%s\n", "Mesh_Name=", App->SBC_Scene->B_Object[Count]->Mesh_Name); // Change
+
+			fprintf(WriteFile, "%s%s\n", "Mesh_File=", App->SBC_Scene->B_Object[Count]->Mesh_FileName);
+			fprintf(WriteFile, "%s%s\n", "Mesh_Resource_Path=", App->SBC_Scene->B_Object[Count]->Mesh_Resource_Path);
+			fprintf(WriteFile, "%s%s\n", "Material_File=", App->SBC_Scene->B_Object[Count]->Material_File);
+			fprintf(WriteFile, "%s%i\n", "Object_ID=", App->SBC_Scene->B_Object[Count]->This_Object_ID);
+			fprintf(WriteFile, "%s%i\n", "Object_Type=", App->SBC_Scene->B_Object[Count]->Type);
+			fprintf(WriteFile, "%s%i\n", "Object_Shape=", App->SBC_Scene->B_Object[Count]->Shape);
+			fprintf(WriteFile, "%s%i\n", "Object_Usage=", App->SBC_Scene->B_Object[Count]->Usage);
+
+			// Position
+			x = App->SBC_Scene->B_Object[Count]->Mesh_Pos.x;
+			y = App->SBC_Scene->B_Object[Count]->Mesh_Pos.y;
+			z = App->SBC_Scene->B_Object[Count]->Mesh_Pos.z;
+			fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Pos=", x, y, z);
+
+			// Mesh_Scale
+			x = App->SBC_Scene->B_Object[Count]->Mesh_Scale.x;
+			y = App->SBC_Scene->B_Object[Count]->Mesh_Scale.y;
+			z = App->SBC_Scene->B_Object[Count]->Mesh_Scale.z;
+			fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Scale=", x, y, z);
+
+			// Mesh_Rot
+			x = App->SBC_Scene->B_Object[Count]->Mesh_Rot.x;
+			y = App->SBC_Scene->B_Object[Count]->Mesh_Rot.y;
+			z = App->SBC_Scene->B_Object[Count]->Mesh_Rot.z;
+			fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Rot=", x, y, z);
+
+			// Mesh_Quat
+			w = App->SBC_Scene->B_Object[Count]->Mesh_Quat.w;
+			x = App->SBC_Scene->B_Object[Count]->Mesh_Quat.x;
+			y = App->SBC_Scene->B_Object[Count]->Mesh_Quat.y;
+			z = App->SBC_Scene->B_Object[Count]->Mesh_Quat.z;
+			fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Mesh_Quat=", w, x, y, z);
+
+			// Physics_Quat
+			w = App->SBC_Scene->B_Object[Count]->Physics_Quat.w;
+			x = App->SBC_Scene->B_Object[Count]->Physics_Quat.x;
+			y = App->SBC_Scene->B_Object[Count]->Physics_Quat.y;
+			z = App->SBC_Scene->B_Object[Count]->Physics_Quat.z;
+			fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Physics_Quat=", w, x, y, z);
+			//---------------------------------------------------------------------------------- Message Entity
+			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Message)
+			{
+				fprintf(WriteFile, "%s%s\n", "Message_Text=", App->SBC_Scene->B_Object[Count]->Message_Text);
+
+				x = App->SBC_Scene->B_Object[Count]->Message_PosX;
+				y = App->SBC_Scene->B_Object[Count]->Message_PosY;
+				fprintf(WriteFile, "%s%f,%f\n", "Message_Pos=", x, y);
+
+			}
+
+			//---------------------------------------------------------------------------------- Sound Entity
+			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Sound)
+			{
+				fprintf(WriteFile, "%s%s\n", "Sound_File=", App->SBC_Scene->B_Object[Count]->Sound_File);
+				fprintf(WriteFile, "%s%f\n", "Sound_Volume=", App->SBC_Scene->B_Object[Count]->SndVolume);
+			}
+
+			//---------------------------------------------------------------------------------- Colectable Entity
+			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Colectable)
+			{
+				fprintf(WriteFile, "%s%s\n", "Col_Sound_File=", App->SBC_Scene->B_Object[Count]->S_Collectable[0]->Sound_File);
+				fprintf(WriteFile, "%s%f\n", "Col_Sound_Volume=", App->SBC_Scene->B_Object[Count]->S_Collectable[0]->SndVolume);
+				fprintf(WriteFile, "%s%i\n", "Col_Play=", App->SBC_Scene->B_Object[Count]->S_Collectable[0]->Play);
+				fprintf(WriteFile, "%s%s\n", "Col_Counter_Name=", App->SBC_Scene->B_Object[Count]->S_Collectable[0]->Counter_Name);
+				fprintf(WriteFile, "%s%i\n", "Col_Counter_ID=", App->SBC_Scene->B_Object[Count]->S_Collectable[0]->Counter_ID);
+			}
+
+			//---------------------------------------------------------------------------------- Move Entity
+			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Move)
+			{
+				fprintf(WriteFile, "%s%f\n", "Move_Distance=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Move_Distance);
+				fprintf(WriteFile, "%s%i\n", "Move_IsNegative=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->IsNegative);
+				//	fprintf(WriteFile, "%s%s\n", "Move_MeshPos=", App->SBC_Scene->B_Object[Count]->S_MoveType->MeshPos);
+				fprintf(WriteFile, "%s%f\n", "Move_NewPos=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Newpos);
+				fprintf(WriteFile, "%s%i\n", "Move_ObjectID=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Object_To_Move_Index);
+				fprintf(WriteFile, "%s%s\n", "Move_ObjectName=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Object_Name);
+				//	fprintf(WriteFile, "%s%s\n", "Move_PhysicsPos=", App->SBC_Scene->B_Object[Count]->S_MoveType->PhysicsPos);
+				fprintf(WriteFile, "%s%i\n", "Move_Re_Trigger=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Re_Trigger);
+				fprintf(WriteFile, "%s%f\n", "Move_Speed=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Speed);
+				fprintf(WriteFile, "%s%i\n", "Move_Triggered=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Triggered);
+				fprintf(WriteFile, "%s%i\n", "Move_WhatDirection=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->WhatDirection);
+
+				fprintf(WriteFile, "%s%s\n", "Move_Sound=", App->SBC_Scene->B_Object[Count]->Sound_File);
+				fprintf(WriteFile, "%s%i\n", "Move_Play_Sound=", App->SBC_Scene->B_Object[Count]->Play_Sound);
+				fprintf(WriteFile, "%s%f\n", "Move_Volume=", App->SBC_Scene->B_Object[Count]->SndVolume);
+			}
+
+			//---------------------------------------------------------------------------------- Teleport Entity
+			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Teleport)
+			{
+				fprintf(WriteFile, "%s%s\n", "Tele_Goto=", App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Name);
+
+				fprintf(WriteFile, "%s%i\n", "Tele_ID=", App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Location_ID);
+
+				fprintf(WriteFile, "%s%s\n", "Tele_Sound=", App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Sound_File);
+				fprintf(WriteFile, "%s%f\n", "Tele_Volume=", App->SBC_Scene->B_Object[Count]->S_Teleport[0]->SndVolume);
+				fprintf(WriteFile, "%s%i\n", "Tele_Play=", App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Play);
+
+				x = App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Player_Position.x;
+				y = App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Player_Position.y;
+				z = App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Player_Position.z;
+				fprintf(WriteFile, "%s%f,%f,%f\n", "Tele_Mesh_Position=", x, y, z);
+
+				x = App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Position.getX();
+				y = App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Position.getY();
+				z = App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Position.getZ();
+				fprintf(WriteFile, "%s%f,%f,%f\n", "Tele_Physics_Position=", x, y, z);
+
+				w = App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Rotation.getW();
+				x = App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Rotation.getX();
+				y = App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Rotation.getY();
+				z = App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Rotation.getZ();
+				fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Tele_Physics_Rotation=", w, x, y, z);
+			}
+
+
+			fprintf(WriteFile, "%s\n", " ");
+			new_Count++;
+		}
+
+		Count++;
+	}
+
+	fprintf(WriteFile, "%s\n", "[Counters]");
+	fprintf(WriteFile, "%s%i\n", "Objects_Count=", new_Count);
+
+	fclose(WriteFile);
+
+	return 1;
+}
+
+// *************************************************************************
+// *	  		Copy_Assets:- Terry and Hazel Flanigan 2022				   *
+// *************************************************************************
+bool SB_Build::Copy_Assets(char* SourceFolder, char* DestinationFolder)
+{
+	char SourceFile[MAX_PATH];
+	char DestinationFile[MAX_PATH];
+
+	char Path[MAX_PATH];
+	strcpy(Path, SourceFolder);
+	strcat(Path, "*.*");
+
+	WIN32_FIND_DATA fd;
+	HANDLE hFind = ::FindFirstFile(Path, &fd);
+	if (hFind != INVALID_HANDLE_VALUE) {
+		do {
+
+			if (!(fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
+			{
+
+				strcpy(SourceFile, SourceFolder);
+				strcat(SourceFile, fd.cFileName);
+
+				strcpy(DestinationFile, DestinationFolder);
+				strcat(DestinationFile, fd.cFileName);
+
+				CopyFile(SourceFile, DestinationFile, false);
+			}
+
+		} while (::FindNextFile(hFind, &fd));
+		::FindClose(hFind);
+	}
 
 	return 1;
 }
