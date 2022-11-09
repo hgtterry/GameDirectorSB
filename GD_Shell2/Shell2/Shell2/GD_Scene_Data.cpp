@@ -489,7 +489,7 @@ bool GD_Scene_Data::Read_LoadLevel(void)
 
 	// Temp 
 	strcpy(Tag1,App->GameDirecory_FullPath);
-	strcat(Tag1,"\\Game\\Project.SBProj");
+	strcat(Tag1,"\\Game\\Game.gdat");
 	strcpy(First_SceneFile, Tag1);
 
 	return 1;

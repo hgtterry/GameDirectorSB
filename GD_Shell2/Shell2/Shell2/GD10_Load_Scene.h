@@ -32,6 +32,7 @@ public:
 	char m_Main_Assets_Path[MAX_PATH];
 	char m_Project_Name[MAX_PATH];
 	char m_Level_Name[MAX_PATH];
+	char m_Game_Name[MAX_PATH];
 
 	// --------------------------------------------------------------
 	bool Load_Config_File();

@@ -498,6 +498,16 @@ void SB_Build::Copy_SystemFiles(void)
 	strcat(DestinationFile, "\\plugins.cfg");
 
 	CopyFile(SourceFile, DestinationFile, false);
+	//	App->CL10_PB->Nudge();
+
+	//----------------------------- Plugin_ParticleFX.dll
+	strcpy(SourceFile, App->EquityDirecory_FullPath);
+	strcat(SourceFile, "\\Plugin_ParticleFX.dll");
+
+	strcpy(DestinationFile, ProjectFolder);
+	strcat(DestinationFile, "\\Plugin_ParticleFX.dll");
+
+	CopyFile(SourceFile, DestinationFile, false);
 //	App->CL10_PB->Nudge();
 
 }
@@ -710,10 +720,9 @@ bool SB_Build::Build_Project_Ini()
 	fprintf(WriteFile, "%s\n", " ");
 
 	fprintf(WriteFile, "%s\n", "[Files]");
-	fprintf(WriteFile, "%s%s\n", "Project_Name=", App->SBC_Project->m_Project_Name);
-	fprintf(WriteFile, "%s%s\n", "Level_Name=", App->SBC_Project->m_Level_Name);
-
-
+	fprintf(WriteFile, "%s%s\n", "Project_Name=", GameName);
+	fprintf(WriteFile, "%s%s\n", "Level_Name=", GameName);
+	
 	fprintf(WriteFile, "%s\n", " ");
 
 	fprintf(WriteFile, "%s\n", "[Options]");

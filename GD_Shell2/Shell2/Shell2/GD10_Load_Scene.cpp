@@ -10,6 +10,7 @@ GD10_Load_Scene::GD10_Load_Scene()
 
 	Scene_FileName[0] = 0;
 	Scene_Path_FileName[0] = 0;
+	m_Game_Name[0] = 0;
 }
 
 
@@ -61,7 +62,7 @@ bool GD10_Load_Scene::Load_Project()
 
 	App->CL10_Ini->GetString("Files", "Level_Name", m_Level_Name, MAX_PATH);
 	App->CL10_Ini->GetString("Files", "Project_Name", m_Project_Name, MAX_PATH);
-
+	
 	Options->Has_Aera = App->CL10_Ini->GetInt("Options", "Aeras_Count", 0, 10);
 	Options->Has_Player = App->CL10_Ini->GetInt("Options", "Players_Count", 0, 10);
 	Options->Has_Camera = App->CL10_Ini->GetInt("Options", "Cameras_Count", 0, 10);
@@ -393,6 +394,7 @@ bool GD10_Load_Scene::Load_Project_Player()
 
 	while (Count < Players_Count)
 	{
+		
 		strcpy(buff, "Player_");
 		_itoa(Count, Cbuff, 10);
 		strcat(buff, Cbuff);
@@ -662,9 +664,9 @@ void GD10_Load_Scene::Set_Paths()
 	char Project_Path_File_Name[MAX_PATH];
 
 	strcpy(Project_Path_File_Name, App->GameDirecory_FullPath);
-	strcat(Project_Path_File_Name, "\\Game\\Project.SBProj");
+	strcat(Project_Path_File_Name, "\\Game\\Game.gdat");
 
-	strcpy(Project_File_Name, "Project.SBProj");
+	strcpy(Project_File_Name, "Game.gdat");
 
 
 	strcpy(m_Level_File_Name, Project_File_Name);
@@ -686,8 +688,8 @@ void GD10_Load_Scene::Set_Paths()
 // *************************************************************************
 bool GD10_Load_Scene::Load_Config_File()
 {
-	char Tag1[256];
-	char ReadBuf[256];
+	//char Tag1[256];
+	//char ReadBuf[256];
 	bool mBool = 0;
 	char FileName[2048];
 	strcpy(FileName, App->GameDirecory_FullPath);
