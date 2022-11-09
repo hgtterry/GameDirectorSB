@@ -53,6 +53,7 @@ SB_Build::SB_Build()
 	m_Players_Folder_Path[0] = 0;
 	m_Cameras_Folder_Path[0] = 0;
 	m_Objects_Folder_Path[0] = 0;
+	m_Display_Folder_Path[0] = 0;
 
 	WriteFile = nullptr;
 }
@@ -663,31 +664,9 @@ bool SB_Build::Build_Project()
 
 	Build_Cameras_Folder();
 	Build_Objects_Folder();
-	//Save_Display_Folder();
+	Build_Display_Folder();
 
-	//App->SBC_FileView->Change_Level_Name();
-	//App->SBC_FileView->Change_Project_Name();
-
-	//App->Set_Main_TitleBar(App->SBC_FileIO->Project_Path_File_Name);
-
-	//App->SBC_Object->Clear_Modified_Objects(); // Clear Altered FileView Items
-
-	//App->SBC_Project->Directory_Changed_Flag = 0;
-
-	//strcpy(App->SBC_FileIO->Project_Path_File_Name, m_Ini_Path_File_Name);
-	//App->Set_Main_TitleBar(App->SBC_FileIO->Project_Path_File_Name);
-	//App->SBC_FileIO->RecentFileHistory_Update();
-
-
-	//if (Set_QuickLoad_Flag == 1)
-	//{
-	//	strcpy(App->SBC_Prefs->QL_User_File, App->SBC_FileIO->Project_Path_File_Name);
-	//	App->SBC_Prefs->QL_Use_TestFile_Flag = 0;
-	//	App->SBC_Prefs->Write_Preferences();
-	//}
-
-
-	//App->Say("Scene Saved");
+	App->Say("Game Built");
 
 	return 1;
 }
@@ -1434,6 +1413,102 @@ bool SB_Build::Build_Objects_Data()
 
 	fprintf(WriteFile, "%s\n", "[Counters]");
 	fprintf(WriteFile, "%s%i\n", "Objects_Count=", new_Count);
+
+	fclose(WriteFile);
+
+	return 1;
+}
+
+// *************************************************************************
+// *	  	Build_Display_Folder:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+bool SB_Build::Build_Display_Folder()
+{
+	m_Display_Folder_Path[0] = 0;
+
+	strcpy(m_Display_Folder_Path, m_Level_Folder_Path);
+	strcat(m_Display_Folder_Path, "\\");
+	strcat(m_Display_Folder_Path, "Display");
+
+	_mkdir(m_Display_Folder_Path);
+	_chdir(m_Display_Folder_Path);
+
+	Build_Display_Data();
+
+	_chdir(m_Level_Folder_Path); // Return to Level Folder
+	return 1;
+}
+
+// *************************************************************************
+// *	  		Build_Display_Data:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+bool SB_Build::Build_Display_Data()
+{
+	Ogre::Vector3 Pos;
+	char File[1024];
+
+	strcpy(File, m_Display_Folder_Path);
+	strcat(File, "\\");
+	strcat(File, "Counters.edf");
+
+	WriteFile = nullptr;
+
+	WriteFile = fopen(File, "wt");
+
+	if (!WriteFile)
+	{
+		App->Say("Cant Create File");
+		App->Say_Win(File);
+		return 0;
+	}
+
+	fprintf(WriteFile, "%s\n", "[Version_Data]");
+	fprintf(WriteFile, "%s%s\n", "Version=", "V1.2");
+
+	fprintf(WriteFile, "%s\n", " ");
+
+	fprintf(WriteFile, "%s\n", " ");
+
+	char Cbuff[255];
+	char buff[255];
+
+	float w = 0;
+	float x = 0;
+	float y = 0;
+	float z = 0;
+
+	int new_Count = 0;
+
+	int Count = 0;
+	while (Count < App->SBC_Scene->Counters_Count)
+	{
+		if (App->SBC_Scene->B_Counter[Count]->Deleted == 0)
+		{
+			strcpy(buff, "[Counter_");
+			_itoa(new_Count, Cbuff, 10);
+			strcat(buff, Cbuff);
+			strcat(buff, "]");
+
+			fprintf(WriteFile, "%s\n", buff); // Header also Player name until changed by user
+
+			fprintf(WriteFile, "%s%s\n", "Counter_Name=", App->SBC_Scene->B_Counter[Count]->Panel_Name); // Change
+			fprintf(WriteFile, "%s%i\n", "Counter_ID=", App->SBC_Scene->B_Counter[Count]->Unique_ID);
+
+			x = App->SBC_Scene->B_Counter[Count]->PosX;
+			y = App->SBC_Scene->B_Counter[Count]->PosY;
+			fprintf(WriteFile, "%s%f,%f\n", "Counter_Pos=", x, y);
+
+			fprintf(WriteFile, "%s%s\n", "Counter_Text=", App->SBC_Scene->B_Counter[Count]->Text);
+
+			fprintf(WriteFile, "%s\n", " ");
+			new_Count++;
+		}
+
+		Count++;
+	}
+
+	fprintf(WriteFile, "%s\n", "[Counters]");
+	fprintf(WriteFile, "%s%i\n", "Counters_Count=", new_Count);
 
 	fclose(WriteFile);
 

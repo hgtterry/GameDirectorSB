@@ -51,6 +51,8 @@ protected:
 	bool Build_Cameras_Data();
 	bool Build_Objects_Folder();
 	bool Build_Objects_Data();
+	bool Build_Display_Folder();
+	bool Build_Display_Data();
 
 	//------------------------------------------
 	void Read_From_Config(void);
@@ -88,6 +90,7 @@ protected:
 	char m_Players_Folder_Path[MAX_PATH];
 	char m_Cameras_Folder_Path[MAX_PATH];
 	char m_Objects_Folder_Path[MAX_PATH];
+	char m_Display_Folder_Path[MAX_PATH];
 
 	FILE *WriteFile;
 };
