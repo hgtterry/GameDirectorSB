@@ -38,6 +38,9 @@ public:
 protected:
 	static LRESULT CALLBACK Project_Build_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
+	bool Build_Project();
+
+	//------------------------------------------
 	void Read_From_Config(void);
 	void Create_ProjectFolder(void);
 	void Copy_SystemFiles(void);
@@ -48,6 +51,8 @@ protected:
 
 	char ProjectFolder[MAX_PATH];
 	char Sub_ProjectFolder[MAX_PATH];
+
+	char Sub_Build_Folder[MAX_PATH];
 
 	char SourceFile[MAX_PATH];
 	char DestinationFile[MAX_PATH];
@@ -60,5 +65,9 @@ protected:
 	char SoundFolder[MAX_PATH];
 
 	char LevelsFolder[MAX_PATH];
+
+	//------------------------------------------
+
+	char m_Build_Sub_Folder[MAX_PATH];
 };
 

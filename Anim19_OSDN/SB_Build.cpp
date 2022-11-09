@@ -42,6 +42,9 @@ SB_Build::SB_Build()
 	CoreDataFolder[0] = 0;
 	SoundFolder[0] = 0;
 
+	m_Build_Sub_Folder[0] = 0;
+
+	Sub_Build_Folder[0] = 0;
 }
 
 SB_Build::~SB_Build()
@@ -277,6 +280,12 @@ void SB_Build::Create_ProjectFolder(void)
 	}
 	else
 	{*/
+
+	/*strcpy(Sub_Build_Folder, ProjectFolder);
+	strcat(Sub_Build_Folder, "\\");
+	strcat(Sub_Build_Folder, "Game");
+	CreateDirectory(Sub_Build_Folder, NULL);*/
+
 	strcpy(Sub_ProjectFolder, ProjectFolder);
 	strcat(Sub_ProjectFolder, "\\");
 	strcat(Sub_ProjectFolder, "GD_Project");
@@ -322,6 +331,10 @@ void SB_Build::Create_ProjectFolder(void)
 //	App->CL10_PB->Set_Progress("Copy_SystemFiles", TCount + 9);
 	Copy_SystemFiles();
 
+	strcpy(m_Build_Sub_Folder, ProjectFolder);
+	strcat(m_Build_Sub_Folder, "\\");
+	strcat(m_Build_Sub_Folder, "Game");
+	Build_Project();
 
 	/*App->CL10_PB->Set_Progress_Text("Copy_ZipFiles");
 	Copy_ZipFiles();
@@ -600,5 +613,75 @@ void SB_Build::Read_From_Config(void)
 
 	App->CL_Ini->GetString("Config", "Game_Name", chr_Tag1, 1024);
 	strcpy(App->CL10_Project->GameName, chr_Tag1);*/
+}
 
+// *************************************************************************
+// *	  		Build_Project:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+bool SB_Build::Build_Project()
+{
+
+	if (_mkdir(m_Build_Sub_Folder) == 0)
+	{
+		_chdir(m_Build_Sub_Folder);
+	}
+	else
+	{
+		_chdir(m_Build_Sub_Folder);
+	}
+
+	//bool test = Save_Project_Ini();
+	//if (test == 0)
+	//{
+	//	return 0;
+	//}
+
+	//Save_Level_Folder();
+	//Save_Main_Asset_Folder();
+
+	//_chdir(m_Level_Folder_Path);
+
+	//if (App->SBC_Scene->Area_Added == 1)
+	//{
+	//	Save_Aera_Folder();
+	//}
+
+	//if (App->SBC_Scene->Player_Added == 1)
+	//{
+	//	Save_Players_Folder();
+
+	//	//App->SBC_Scene->B_Player[0]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Players_Folder,"Player_1", 0, false);
+	//	//App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Players_Folder);
+
+	//}
+
+	//Save_Cameras_Folder();
+	//Save_Objects_Folder();
+	//Save_Display_Folder();
+
+	//App->SBC_FileView->Change_Level_Name();
+	//App->SBC_FileView->Change_Project_Name();
+
+	//App->Set_Main_TitleBar(App->SBC_FileIO->Project_Path_File_Name);
+
+	//App->SBC_Object->Clear_Modified_Objects(); // Clear Altered FileView Items
+
+	//App->SBC_Project->Directory_Changed_Flag = 0;
+
+	//strcpy(App->SBC_FileIO->Project_Path_File_Name, m_Ini_Path_File_Name);
+	//App->Set_Main_TitleBar(App->SBC_FileIO->Project_Path_File_Name);
+	//App->SBC_FileIO->RecentFileHistory_Update();
+
+
+	//if (Set_QuickLoad_Flag == 1)
+	//{
+	//	strcpy(App->SBC_Prefs->QL_User_File, App->SBC_FileIO->Project_Path_File_Name);
+	//	App->SBC_Prefs->QL_Use_TestFile_Flag = 0;
+	//	App->SBC_Prefs->Write_Preferences();
+	//}
+
+
+	//App->Say("Scene Saved");
+
+	return 1;
 }
