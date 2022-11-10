@@ -36,9 +36,6 @@ SB_Build::SB_Build()
 
 	MediaFolder[0] = 0;
 
-	ActorsFolder[0] = 0;
-	MaterialsFolder[0] = 0;
-	TexturesFolder[0] = 0;
 	CoreDataFolder[0] = 0;
 	SoundFolder[0] = 0;
 
@@ -301,9 +298,6 @@ void SB_Build::Create_ProjectFolder(void)
 
 	MediaFolder[0] = 0;
 
-	ActorsFolder[0] = 0;
-	MaterialsFolder[0] = 0;
-	TexturesFolder[0] = 0;
 	CoreDataFolder[0] = 0;
 	SoundFolder[0] = 0;
 
@@ -325,40 +319,10 @@ void SB_Build::Create_ProjectFolder(void)
 	else
 	{*/
 
-	/*strcpy(Sub_Build_Folder, ProjectFolder);
-	strcat(Sub_Build_Folder, "\\");
-	strcat(Sub_Build_Folder, "Game");
-	CreateDirectory(Sub_Build_Folder, NULL);*/
-
-	/*strcpy(Sub_ProjectFolder, ProjectFolder);
-	strcat(Sub_ProjectFolder, "\\");
-	strcat(Sub_ProjectFolder, "GD_Project");
-	CreateDirectory(Sub_ProjectFolder, NULL);*/
-
 	strcpy(MediaFolder, ProjectFolder);
 	strcat(MediaFolder, "\\");
 	strcat(MediaFolder, "Media");
 	CreateDirectory(MediaFolder, NULL);
-
-	/*strcpy(LevelsFolder, MediaFolder);
-	strcat(LevelsFolder, "\\");
-	strcat(LevelsFolder, "Levels");
-	CreateDirectory(LevelsFolder, NULL);
-
-	strcpy(ActorsFolder, MediaFolder);
-	strcat(ActorsFolder, "\\");
-	strcat(ActorsFolder, "Actors");
-	CreateDirectory(ActorsFolder, NULL);
-
-	strcpy(MaterialsFolder, MediaFolder);
-	strcat(MaterialsFolder, "\\");
-	strcat(MaterialsFolder, "Materials");
-	CreateDirectory(MaterialsFolder, NULL);
-
-	strcpy(TexturesFolder, MediaFolder);
-	strcat(TexturesFolder, "\\");
-	strcat(TexturesFolder, "Textures");
-	CreateDirectory(TexturesFolder, NULL);*/
 
 	strcpy(CoreDataFolder, MediaFolder);
 	strcat(CoreDataFolder, "\\");
@@ -383,43 +347,11 @@ void SB_Build::Create_ProjectFolder(void)
 
 	//App->CL10_PB->Set_Progress_Text("Copy_ZipFiles");
 	Copy_ZipFiles();
-
 	Copy_Sound_Files();
 
-	/*App->CL10_PB->Set_Progress_Text("Copy_Level_Files");
-	Copy_Level_Files();
-
-
-	App->CL10_PB->Set_Progress_Text("Transfer_UsedMaterials");
-	Transfer_UsedMaterials();
-
-
-	App->CL10_PB->Set_Progress_Text("Transfer_Meshes");
-	Transfer_Meshes();
-
-
-	App->CL10_PB->Set_Progress_Text("Transfer_Textures");
-	Transfer_Textures();
-
-
-	App->CL10_PB->Set_Progress_Text("Transfer_Environment_Sound");
-	Transfer_Environment_Sound();
-
-
-	App->CL10_PB->Set_Progress_Text("Transfer_Sounds");
-	Transfer_Sounds();
-
-
-	App->CL10_PB->Set_Progress_Text("Create_Game_IniFile");
-	Create_Game_IniFile();
-
-
-	App->CL10_PB->Set_Progress_Text("Create_Config_File");
-	Create_Config_File();*/
-
+	App->Say("Game Created");
 
 	//App->CL_Dialogs->MessageLoad_Finish("Project Created");
-
 	//App->CL10_PB->Close();
 	//delete App->CL10_PB;
 	//App->CL10_PB = nullptr;
@@ -735,8 +667,6 @@ bool SB_Build::Build_Project()
 	Build_Cameras_Folder();
 	Build_Objects_Folder();
 	Build_Display_Folder();
-
-	App->Say("Game Built");
 
 	return 1;
 }

@@ -74,13 +74,8 @@ protected:
 	char DestinationFile[MAX_PATH];
 	char MediaFolder[MAX_PATH];
 
-	char ActorsFolder[MAX_PATH];
-	char MaterialsFolder[MAX_PATH];
-	char TexturesFolder[MAX_PATH];
 	char CoreDataFolder[MAX_PATH];
 	char SoundFolder[MAX_PATH];
-
-	char LevelsFolder[MAX_PATH];
 
 	//------------------------------------------
 
