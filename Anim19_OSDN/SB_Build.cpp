@@ -89,10 +89,10 @@ LRESULT CALLBACK SB_Build::Project_Build_Proc(HWND hDlg, UINT message, WPARAM wP
 		SendDlgItemMessage(hDlg, IDC_STLOCATION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BTBROWSE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		
+		SendDlgItemMessage(hDlg, IDC_CK_BL_DESKTOP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		SetDlgItemText(hDlg, IDC_EDGAMENAME, (LPCTSTR)App->SBC_Build->GameName);
 		SetDlgItemText(hDlg, IDC_STLOCATION, (LPCTSTR)App->SBC_Build->StartFolder);
-
 
 
 		/*if (App->CL10_Project->CF_Full_Screen == 1)
@@ -146,6 +146,14 @@ LRESULT CALLBACK SB_Build::Project_Build_Proc(HWND hDlg, UINT message, WPARAM wP
 			return (UINT)App->AppBackground;
 		}
 
+		if (GetDlgItem(hDlg, IDC_CK_BL_DESKTOP) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+	
 		return FALSE;
 	}
 
@@ -176,6 +184,32 @@ LRESULT CALLBACK SB_Build::Project_Build_Proc(HWND hDlg, UINT message, WPARAM wP
 	}
 
 	case WM_COMMAND:
+
+		
+		if (LOWORD(wParam) == IDC_CK_BL_DESKTOP)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_BL_DESKTOP);
+			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
+			if (test == BST_CHECKED)
+			{
+				char Desktop[MAX_PATH];
+				strcpy(Desktop, App->SBC_FileIO->DeskTop_Folder);
+				strcat(Desktop, "\\");
+
+				strcpy(App->Com_CDialogs->szSelectedDir, Desktop);
+				strcpy(App->SBC_Build->StartFolder, App->Com_CDialogs->szSelectedDir);
+				SetDlgItemText(hDlg, IDC_STLOCATION, (LPCTSTR)App->SBC_Build->StartFolder);
+
+				EnableWindow(GetDlgItem(hDlg, IDC_BTBROWSE), 0);
+				return 1;
+			}
+			else
+			{
+				EnableWindow(GetDlgItem(hDlg, IDC_BTBROWSE), 1);
+				return 1;
+			}
+			return TRUE;
+		}
 
 		if (LOWORD(wParam) == IDC_CKFULLSCREEN)
 		{
@@ -306,9 +340,7 @@ void SB_Build::Create_ProjectFolder(void)
 	strcat(MediaFolder, "Media");
 	CreateDirectory(MediaFolder, NULL);
 
-	App->Say_Win(MediaFolder);
-
-	strcpy(LevelsFolder, MediaFolder);
+	/*strcpy(LevelsFolder, MediaFolder);
 	strcat(LevelsFolder, "\\");
 	strcat(LevelsFolder, "Levels");
 	CreateDirectory(LevelsFolder, NULL);
@@ -326,7 +358,7 @@ void SB_Build::Create_ProjectFolder(void)
 	strcpy(TexturesFolder, MediaFolder);
 	strcat(TexturesFolder, "\\");
 	strcat(TexturesFolder, "Textures");
-	CreateDirectory(TexturesFolder, NULL);
+	CreateDirectory(TexturesFolder, NULL);*/
 
 	strcpy(CoreDataFolder, MediaFolder);
 	strcat(CoreDataFolder, "\\");
