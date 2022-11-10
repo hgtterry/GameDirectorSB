@@ -1186,13 +1186,11 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_INITDIALOG:
 	{
 		HFONT Font;
-		HFONT Font1;
 		HFONT Font2;
 		Font = CreateFont(-17, 0, 0, 0, FW_BOLD, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Aerial Black");
-		Font1 = CreateFont(-30, 0, 0, 0, FW_BOLD, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Aerial Black");
 		Font2 = CreateFont(-20, 0, 0, 0, FW_BOLD, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Aerial Black");
 
-		SendDlgItemMessage(hDlg, IDC_STNAME, WM_SETFONT, (WPARAM)Font1, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STNAME, WM_SETFONT, (WPARAM)App->Font_Banner, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STCOPYRIGHT, WM_SETFONT, (WPARAM)Font, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_LISTABOUT, WM_SETFONT, (WPARAM)Font, MAKELPARAM(TRUE, 0));
 

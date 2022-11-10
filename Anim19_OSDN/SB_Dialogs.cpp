@@ -498,9 +498,15 @@ LRESULT CALLBACK SB_Dialogs::Front_Screen_Proc(HWND hDlg, UINT message, WPARAM w
 	{
 		App->SetTitleBar(hDlg);
 
+
+		SendDlgItemMessage(hDlg, IDC_STBANNER, WM_SETFONT, (WPARAM)App->Font_Banner, MAKELPARAM(TRUE, 0));
+
 		SendDlgItemMessage(hDlg, IDC_CK_FR_DONTSHOW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_FR_CHANGELOG, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 	
+		SetDlgItemText(hDlg, IDC_STBANNER, App->Version);
+
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
@@ -509,6 +515,14 @@ LRESULT CALLBACK SB_Dialogs::Front_Screen_Proc(HWND hDlg, UINT message, WPARAM w
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STBANNER) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
 		}
@@ -526,6 +540,13 @@ LRESULT CALLBACK SB_Dialogs::Front_Screen_Proc(HWND hDlg, UINT message, WPARAM w
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_FR_CHANGELOG && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
 		return CDRF_DODEFAULT;
 	}
 
@@ -535,6 +556,14 @@ LRESULT CALLBACK SB_Dialogs::Front_Screen_Proc(HWND hDlg, UINT message, WPARAM w
 	}
 
 	case WM_COMMAND:
+
+		
+		if (LOWORD(wParam) == IDC_BT_FR_CHANGELOG)
+		{
+			
+			App->Cl_Utilities->OpenHTML("Help\\ChangeLog.html");
+			return TRUE;
+		}
 
 		if (LOWORD(wParam) == IDOK)
 		{

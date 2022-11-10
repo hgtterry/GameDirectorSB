@@ -152,6 +152,7 @@ GD19_App::GD19_App(void)
 	Font_CB15 = 0;
 	Font_CB15_Bold = 0;
 	Font_Arial20 = 0;
+	Font_Banner = 0;
 
 	ViewGLhWnd =			nullptr;
 
@@ -393,6 +394,8 @@ void GD19_App::SetBrushes_Fonts(void)
 	Font_CB15 = CreateFont(-15, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
 	Font_Arial20 = CreateFont(-20, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Arial");
 	Font_CB15_Bold = CreateFont(-15, 0, 0, 0, FW_BOLD, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
+
+	Font_Banner = CreateFont(-30, 0, 0, 0, FW_BOLD, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Aerial Black");
 }
 
 // *************************************************************************

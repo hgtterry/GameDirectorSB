@@ -251,6 +251,7 @@ public:
 	HFONT Font_CB15;
 	HFONT Font_Arial20;
 	HFONT Font_CB15_Bold;
+	HFONT Font_Banner;
 
 	HMENU mMenu;
 	HCURSOR CUR;
