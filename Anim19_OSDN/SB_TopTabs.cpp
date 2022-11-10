@@ -133,8 +133,10 @@ LRESULT CALLBACK SB_TopTabs::TopBar_Globals_Proc(HWND hDlg, UINT message, WPARAM
 	{
 	case WM_INITDIALOG:
 	{
-		App->SBC_TopTabs->TabsHwnd = hDlg;
 
+		SendDlgItemMessage(hDlg, IDC_BT_GAMEMODE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
+		App->SBC_TopTabs->TabsHwnd = hDlg;
 		App->SBC_TopTabs->Start_Tabs_Headers();
 		App->SBC_TopTabs->Start_Camera_TB();
 		//App->SBC_TopTabs->Start_Physics_TB();
@@ -172,10 +174,40 @@ LRESULT CALLBACK SB_TopTabs::TopBar_Globals_Proc(HWND hDlg, UINT message, WPARAM
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_GAMEMODE && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BTTB_FULLSCREEN && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
 		return CDRF_DODEFAULT;
 	}
 
 	case WM_COMMAND:
+
+		if (LOWORD(wParam) == IDC_BT_GAMEMODE)
+		{
+			if (App->SBC_Scene->Area_Added == 1)
+			{
+				App->Cl_Dialogs->GameMode_StartPosition_Dlg();
+				if (App->Cl_Dialogs->Canceled == 1)
+				{
+					return 1;
+				}
+
+				App->SBC_Scene->Game_Mode();
+			}
+
+			return TRUE;
+		}
 
 		//-------------------------------------------------------- Show Grid
 		if (LOWORD(wParam) == IDC_TBSHOWGRID)
@@ -750,6 +782,15 @@ void SB_TopTabs::Init_Bmps_Globals(void)
 	ti11.lpszText = "Full Screen Press Esc to Exit";
 	ti11.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti11);
+
+	Temp = GetDlgItem(TabsHwnd, IDC_BT_GAMEMODE);
+	TOOLINFO ti12 = { 0 };
+	ti12.cbSize = sizeof(ti12);
+	ti12.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti12.uId = (UINT_PTR)Temp;
+	ti12.lpszText = "Game Mode Press Esc to Exit";
+	ti12.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti12);
 
 }
 
