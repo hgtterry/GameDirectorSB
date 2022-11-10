@@ -37,6 +37,8 @@ public:
 	bool QL_Use_TestFile_Flag;
 	char QL_User_File[MAX_PATH];
 
+	bool Show_StartScreen;
+
 protected:
 
 	static LRESULT CALLBACK Preferences_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);

@@ -38,6 +38,7 @@ SB_Preferences::SB_Preferences()
 	QL_Use_TestFile_Flag = 1;
 	strcpy(QL_User_File,"Not_Set");
 
+	Show_StartScreen = 1;
 }
 
 SB_Preferences::~SB_Preferences()
@@ -53,6 +54,8 @@ void SB_Preferences::Set_Defaults()
 	// -------------------------- Quick Load
 	QL_Use_TestFile_Flag = 1;
 	strcpy(QL_User_File, "Not_Set");
+
+	Show_StartScreen = 1;
 
 	Write_Preferences();
 }
@@ -85,6 +88,11 @@ bool SB_Preferences::Write_Preferences()
 	fprintf(WriteScene, "%s\n", "[Quick_Load]");
 	fprintf(WriteScene, "%s%i\n", "QL_Use_TestFile=", QL_Use_TestFile_Flag);
 	fprintf(WriteScene, "%s%s\n", "QL_User_File=", QL_User_File);
+
+	fprintf(WriteScene, "%s\n", " ");
+
+	fprintf(WriteScene, "%s\n", "[Start_Up]");
+	fprintf(WriteScene, "%s%i\n", "Show_StartScreen=", Show_StartScreen);
 	
 	fclose(WriteScene);
 
@@ -117,6 +125,8 @@ bool SB_Preferences::Read_Preferences()
 
 	App->Cl_Ini->GetString("Quick_Load", "QL_User_File", chr_Tag1, 1024);
 	strcpy(QL_User_File, chr_Tag1);
+
+	Show_StartScreen = App->Cl_Ini->GetInt("Start_Up", "Show_StartScreen", 10);
 
 	return 1;
 }

@@ -483,7 +483,10 @@ void SB_Dialogs::ListAxis(HWND DropHwnd)
 // **************************************************************************
 void SB_Dialogs::Front_Screen()
 {
-	DialogBox(App->hInst, (LPCTSTR)IDD_FRONTDLG, App->Fdlg, (DLGPROC)Front_Screen_Proc);
+	if (App->SBC_Prefs->Show_StartScreen == 1)
+	{
+		DialogBox(App->hInst, (LPCTSTR)IDD_FRONTDLG, App->Fdlg, (DLGPROC)Front_Screen_Proc);
+	}
 }
 
 // *************************************************************************
@@ -557,10 +560,29 @@ LRESULT CALLBACK SB_Dialogs::Front_Screen_Proc(HWND hDlg, UINT message, WPARAM w
 
 	case WM_COMMAND:
 
-		
+		if (LOWORD(wParam) == IDC_CK_FR_DONTSHOW)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_BL_DESKTOP);
+			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
+			if (test == BST_CHECKED)
+			{
+				App->SBC_Prefs->Show_StartScreen = 0;
+				App->SBC_Prefs->Write_Preferences();
+
+				return 1;
+			}
+			else
+			{
+				App->SBC_Prefs->Show_StartScreen = 1;
+				App->SBC_Prefs->Write_Preferences();
+
+				return 1;
+			}
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDC_BT_FR_CHANGELOG)
 		{
-			
 			App->Cl_Utilities->OpenHTML("Help\\ChangeLog.html");
 			return TRUE;
 		}
