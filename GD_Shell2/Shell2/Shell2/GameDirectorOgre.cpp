@@ -92,10 +92,7 @@ bool GameDirectorOgre::SetUpResources(void)
 
 	//-------------------------------- Zip Files
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/OgreCore.zip", "Zip", PermResourceGroup);
-
-	//-------------------------------- File System
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/App_Resources", "FileSystem", PermResourceGroup);
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/Zipper", "FileSystem", PermResourceGroup);
+	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/App_Resources.zip", "Zip", PermResourceGroup);
 
 	return 1;
 }

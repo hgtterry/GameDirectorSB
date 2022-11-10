@@ -330,10 +330,10 @@ void SB_Build::Create_ProjectFolder(void)
 	strcat(Sub_Build_Folder, "Game");
 	CreateDirectory(Sub_Build_Folder, NULL);*/
 
-	strcpy(Sub_ProjectFolder, ProjectFolder);
+	/*strcpy(Sub_ProjectFolder, ProjectFolder);
 	strcat(Sub_ProjectFolder, "\\");
 	strcat(Sub_ProjectFolder, "GD_Project");
-	CreateDirectory(Sub_ProjectFolder, NULL);
+	CreateDirectory(Sub_ProjectFolder, NULL);*/
 
 	strcpy(MediaFolder, ProjectFolder);
 	strcat(MediaFolder, "\\");
@@ -521,29 +521,32 @@ void SB_Build::Copy_SystemFiles(void)
 	strcat(DestinationFile, "\\");
 	strcat(DestinationFile, GameName);
 	strcat(DestinationFile, ".exe");
-
 	CopyFile(SourceFile, DestinationFile, false);
 //	App->CL10_PB->Nudge();
 
 	//----------------------------- Game FIle
 	strcpy(SourceFile, App->EquityDirecory_FullPath);
 	strcat(SourceFile, "\\plugins.cfg");
-
 	strcpy(DestinationFile, ProjectFolder);
 	strcat(DestinationFile, "\\plugins.cfg");
-
 	CopyFile(SourceFile, DestinationFile, false);
 	//	App->CL10_PB->Nudge();
 
 	//----------------------------- Plugin_ParticleFX.dll
 	strcpy(SourceFile, App->EquityDirecory_FullPath);
 	strcat(SourceFile, "\\Plugin_ParticleFX.dll");
-
 	strcpy(DestinationFile, ProjectFolder);
 	strcat(DestinationFile, "\\Plugin_ParticleFX.dll");
-
 	CopyFile(SourceFile, DestinationFile, false);
 //	App->CL10_PB->Nudge();
+
+	//----------------------------- Plugin_ParticleFX.dll
+	strcpy(SourceFile, App->EquityDirecory_FullPath);
+	strcat(SourceFile, "\\Roboto-Medium.ttf");
+	strcpy(DestinationFile, ProjectFolder);
+	strcat(DestinationFile, "\\Roboto-Medium.ttf");
+	CopyFile(SourceFile, DestinationFile, false);
+	//	App->CL10_PB->Nudge();
 
 }
 
@@ -573,19 +576,24 @@ void SB_Build::Copy_ZipFiles(void)
 	//----------------------------- OgreCore.zip
 	strcpy(SourceFile, App->EquityDirecory_FullPath);
 	strcat(SourceFile, "\\Media\\Core_Data\\OgreCore.zip");
-
 	strcpy(DestinationFile, CoreDataFolder);
 	strcat(DestinationFile, "\\OgreCore.zip");
-
 	CopyFile(SourceFile, DestinationFile, false);
 	//App->CL10_PB->Nudge();
+
 	//----------------------------- skybox.zip
 	strcpy(SourceFile, App->EquityDirecory_FullPath);
 	strcat(SourceFile, "\\Media\\Core_Data\\skybox.zip");
-
 	strcpy(DestinationFile, CoreDataFolder);
 	strcat(DestinationFile, "\\skybox.zip");
+	CopyFile(SourceFile, DestinationFile, false);
+	//App->CL10_PB->Nudge();
 
+	//----------------------------- skybox.zip
+	strcpy(SourceFile, App->EquityDirecory_FullPath);
+	strcat(SourceFile, "\\Media\\App_Resources\\App_Resources.zip");
+	strcpy(DestinationFile, CoreDataFolder);
+	strcat(DestinationFile, "\\App_Resources.zip");
 	CopyFile(SourceFile, DestinationFile, false);
 	//App->CL10_PB->Nudge();
 }
