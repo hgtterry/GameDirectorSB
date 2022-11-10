@@ -54,6 +54,8 @@ protected:
 	bool Build_Display_Folder();
 	bool Build_Display_Data();
 
+	void Copy_Sound_Files(void);
+
 	//------------------------------------------
 	void Read_From_Config(void);
 	void Create_ProjectFolder(void);

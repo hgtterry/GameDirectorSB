@@ -280,7 +280,6 @@ void SB_Build::Create_ProjectFolder(void)
 	//App->CL_Dialogs->MessageLoad("Please Wait");
 
 	strcpy(ProjectFolder, App->Com_CDialogs->szSelectedDir);
-	strcat(ProjectFolder, "\\");
 	strcat(ProjectFolder, GameName);
 	strcat(ProjectFolder, "_Project");
 
@@ -306,6 +305,8 @@ void SB_Build::Create_ProjectFolder(void)
 	strcat(MediaFolder, "\\");
 	strcat(MediaFolder, "Media");
 	CreateDirectory(MediaFolder, NULL);
+
+	App->Say_Win(MediaFolder);
 
 	strcpy(LevelsFolder, MediaFolder);
 	strcat(LevelsFolder, "\\");
@@ -337,6 +338,7 @@ void SB_Build::Create_ProjectFolder(void)
 	strcat(SoundFolder, "Sounds");
 	CreateDirectory(SoundFolder, NULL);
 
+	
 //	int TCount = Get_Transfer_Count();
 
 //	App->CL10_PB->Set_Progress("Copy_SystemFiles", TCount + 9);
@@ -347,11 +349,12 @@ void SB_Build::Create_ProjectFolder(void)
 	strcat(m_Build_Sub_Folder, "Game");
 	Build_Project();
 
-	/*App->CL10_PB->Set_Progress_Text("Copy_ZipFiles");
+	//App->CL10_PB->Set_Progress_Text("Copy_ZipFiles");
 	Copy_ZipFiles();
 
+	Copy_Sound_Files();
 
-	App->CL10_PB->Set_Progress_Text("Copy_Level_Files");
+	/*App->CL10_PB->Set_Progress_Text("Copy_Level_Files");
 	Copy_Level_Files();
 
 
@@ -525,7 +528,7 @@ void SB_Build::Copy_ZipFiles(void)
 	//strcat(DestinationFile, "\\GDCore.zip");
 
 	//CopyFile(SourceFile, DestinationFile, false);
-	//App->CL10_PB->Nudge();
+	////App->CL10_PB->Nudge();
 	////----------------------------- Equity.zip
 	//strcpy(SourceFile, App->EquityDirecory_FullPath);
 	//strcat(SourceFile, "\\Media\\Core_Data\\Equity.zip");
@@ -534,24 +537,24 @@ void SB_Build::Copy_ZipFiles(void)
 	//strcat(DestinationFile, "\\Equity.zip");
 
 	//CopyFile(SourceFile, DestinationFile, false);
+	////App->CL10_PB->Nudge();
+	//----------------------------- OgreCore.zip
+	strcpy(SourceFile, App->EquityDirecory_FullPath);
+	strcat(SourceFile, "\\Media\\Core_Data\\OgreCore.zip");
+
+	strcpy(DestinationFile, CoreDataFolder);
+	strcat(DestinationFile, "\\OgreCore.zip");
+
+	CopyFile(SourceFile, DestinationFile, false);
 	//App->CL10_PB->Nudge();
-	////----------------------------- OgreCore.zip
-	//strcpy(SourceFile, App->EquityDirecory_FullPath);
-	//strcat(SourceFile, "\\Media\\Core_Data\\OgreCore.zip");
+	//----------------------------- skybox.zip
+	strcpy(SourceFile, App->EquityDirecory_FullPath);
+	strcat(SourceFile, "\\Media\\Core_Data\\skybox.zip");
 
-	//strcpy(DestinationFile, CoreDataFolder);
-	//strcat(DestinationFile, "\\OgreCore.zip");
+	strcpy(DestinationFile, CoreDataFolder);
+	strcat(DestinationFile, "\\skybox.zip");
 
-	//CopyFile(SourceFile, DestinationFile, false);
-	//App->CL10_PB->Nudge();
-	////----------------------------- skybox.zip
-	//strcpy(SourceFile, App->EquityDirecory_FullPath);
-	//strcat(SourceFile, "\\Media\\Core_Data\\skybox.zip");
-
-	//strcpy(DestinationFile, CoreDataFolder);
-	//strcat(DestinationFile, "\\skybox.zip");
-
-	//CopyFile(SourceFile, DestinationFile, false);
+	CopyFile(SourceFile, DestinationFile, false);
 	//App->CL10_PB->Nudge();
 }
 
@@ -571,6 +574,25 @@ void SB_Build::Copy_Level_Files(void)
 	strcpy(App->CL10_File->Full_Path_And_File, SourceFile);
 	App->GDCL_Save_Scene->SaveGDScene_40(0);
 	App->CL10_PB->Nudge();*/
+}
+
+// *************************************************************************
+// *					Copy_Sound_Files Terry Berine					   *
+// *************************************************************************
+void SB_Build::Copy_Sound_Files(void)
+{
+	char StartFolder[MAX_PATH];
+	strcpy(StartFolder, App->EquityDirecory_FullPath);
+	strcat(StartFolder, "\\");
+	strcat(StartFolder, "Media\\Sounds\\");
+
+	char Destination[MAX_PATH];
+	strcpy(Destination, SoundFolder);
+	strcat(Destination, "\\");
+
+	App->Say_Win(Destination);
+
+	Copy_Assets(StartFolder, Destination);
 }
 
 // *************************************************************************
