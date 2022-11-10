@@ -1321,6 +1321,8 @@ void StartOgre()
 
 	//App->Resize_OgreWin();
 
+	App->SBC_Dialogs->Front_Screen();
+
 	App->Cl19_Ogre->mRoot->startRendering();
 
 	Close_App();

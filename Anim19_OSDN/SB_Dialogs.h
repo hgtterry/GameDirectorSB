@@ -28,6 +28,8 @@ public:
 	SB_Dialogs();
 	~SB_Dialogs();
 
+	void Front_Screen();
+
 	bool Dialog_Text();
 	void YesNo(char *Text, char *Text2,bool YesNo);
 	bool Dialog_DropGen();
@@ -48,6 +50,7 @@ protected:
 	static LRESULT CALLBACK Dialog_Text_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK YesNo_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Dialog_DropGen_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Front_Screen_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void ListObjects(HWND DropHwnd);
 	void List_Locations(HWND DropHwnd);
