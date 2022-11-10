@@ -630,8 +630,6 @@ void SB_Build::Copy_Sound_Files(void)
 	strcpy(Destination, SoundFolder);
 	strcat(Destination, "\\");
 
-	App->Say_Win(Destination);
-
 	Copy_Assets(StartFolder, Destination);
 }
 

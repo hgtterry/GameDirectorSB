@@ -306,44 +306,30 @@ bool SB_Scene::Editor_Mode(void)
 	App->Cl_Grid->Grid_SetVisible(1);
 	App->Cl_Grid->Hair_SetVisible(1);
 
-	//App->Cl_Ogre->OgreListener->showDebugOverlay(1);
-
-	if (App->SBC_Scene->B_Area[0]->S_Environment[0]->SndFile == NULL)
-	{
-	}
-	else
-	{
-		App->SBC_Scene->B_Area[0]->S_Environment[0]->SndFile->setIsPaused(true);
-		App->SBC_Scene->B_Area[0]->S_Environment[0]->SndFile->drop();
-		App->SBC_Scene->B_Area[0]->S_Environment[0]->SndFile = NULL;
-	}
-
-	//S_Flags[0]->GameMode = 0;
 	App->Cl19_Ogre->OgreListener->Pl_LeftMouseDown = 0;
 	ReleaseCapture();
 	SetCursor(App->CUR);
 
-	/*App->Select_C->BoxNode->setVisible(true);
-	App->Select_C->Gizmo->setVisible(true);*/
+	if (App->SBC_Scene->Scene_Loaded == 1)
+	{
+		if (App->SBC_Scene->B_Area[0]->S_Environment[0]->SndFile == NULL)
+		{
+		}
+		else
+		{
+			App->SBC_Scene->B_Area[0]->S_Environment[0]->SndFile->setIsPaused(true);
+			App->SBC_Scene->B_Area[0]->S_Environment[0]->SndFile->drop();
+			App->SBC_Scene->B_Area[0]->S_Environment[0]->SndFile = NULL;
+		}
 
-	//App->Cl19_Ogre->OgreListener-> = 1;
-	Show_Entities(true); // Show All Visible Trigers
+		Show_Entities(true); // Show All Visible Trigers
+
+		App->SBC_Physics->Reset_Triggers();
+	}
+
 
 	App->Cl19_Ogre->OgreListener->GD_CameraMode = CurrentCamMode;
 
-	/*App->GDCL_Visuals->BoxNode->setVisible(true);
-	App->Cl_Grid->Arrow_Node->setVisible(true);
-
-	if (App->Cl_Ogre->OgreListener->Show_Camara_Positions == 1)
-	{
-		App->Cl_Ogre->textArea->show();
-	}
-	else
-	{
-		App->Cl_Ogre->textArea->hide();
-	}*/
-
-	App->SBC_Physics->Reset_Triggers();
 	return 1;
 }
 
