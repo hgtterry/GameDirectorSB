@@ -508,13 +508,24 @@ LRESULT CALLBACK SB_Dialogs::Front_Screen_Proc(HWND hDlg, UINT message, WPARAM w
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_FR_CHANGELOG, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 	
-		SetDlgItemText(hDlg, IDC_STBANNER, App->Version);
+		SendDlgItemMessage(hDlg, IDC_ST_WTHC, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+		SetDlgItemText(hDlg, IDC_STBANNER, App->Version);
+		SetDlgItemText(hDlg, IDC_ST_WTHC, "W.T.Flanigan and H.C.Flanigan");
+		
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
 	{
 		if (GetDlgItem(hDlg, IDC_CK_FR_DONTSHOW) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_ST_WTHC) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
