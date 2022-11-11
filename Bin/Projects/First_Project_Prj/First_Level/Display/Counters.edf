@@ -5,14 +5,16 @@ Version=V1.2
 [Counter_0]
 Counter_Name=Counter_0
 Counter_ID=0
-Counter_Pos=300.000000,300.000000
+Counter_Pos=300.000000,30.000000
 Counter_Text=Score:=
+Counter_Display=1
  
 [Counter_1]
 Counter_Name=Counter_1
 Counter_ID=2
 Counter_Pos=250.000000,10.000000
 Counter_Text=Score:=
+Counter_Display=0
  
 [Counters]
 Counters_Count=2
