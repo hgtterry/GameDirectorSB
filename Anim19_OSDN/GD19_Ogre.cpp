@@ -274,7 +274,7 @@ bool GD19_Ogre::Configure(void)
 	options["externalWindowHandle"] =
 		Ogre::StringConverter::toString((size_t)RenderHwnd);
 	
-	mWindow = mRoot->createRenderWindow("Main RenderWindow", 1024, 768, false, &options);
+	mWindow = mRoot->createRenderWindow("Main RenderWindow", 1024, 768, true, &options);
 
 	//App->Cl_Panels->Width = mWindow->getWidth();
 	//App->Cl_Panels->Height = mWindow->getHeight();

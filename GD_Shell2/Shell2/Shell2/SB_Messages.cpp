@@ -56,7 +56,7 @@ bool SB_Messages::Create_Message_Entity(int Index)
 	MObject->Object_Node = App->Ogre17->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	MObject->Object_Node->attachObject(MObject->Object_Ent);
 
-	MObject->Object_Node->setVisible(true);
+	MObject->Object_Node->setVisible(false);
 
 	MObject->Object_Node->setOrientation(MObject->Mesh_Quat);
 	MObject->Object_Node->setPosition(MObject->Mesh_Pos);

@@ -110,7 +110,7 @@ bool GameDirectorOgre::Configure(void)
 
 	Full_Screen = 1;
 
-	char buff[1025];
+	/*char buff[1025];
 	if (Full_Screen == 1)
 	{
 		sprintf(buff, "%i x %i @ 32-bit", App->ScreenWidth, App->ScreenHeight);
@@ -120,11 +120,18 @@ bool GameDirectorOgre::Configure(void)
 	{
 		sprintf(buff, "%i x %i @ 32-bit colour", 1024, 768);
 		rs->setConfigOption("Full Screen", "No");
-	}
+	}*/
 	
 	mRoot->setRenderSystem(rs);
 
-	mWindow = mRoot->initialise(true, "poo");// App->GDCL_Scene_Data->S_Scene[0]->GDSceneName);
+	mWindow = mRoot->initialise(false);
+	Ogre::NameValuePairList options;
+
+	options["vsync"] = true;
+
+	mWindow = mRoot->createRenderWindow("Main RenderWindow", App->ScreenWidth, App->ScreenHeight, true, &options);
+
+	//mWindow = mRoot->initialise(true, "Game");
 	
 	//if (Full_Screen == 1)
 	{
