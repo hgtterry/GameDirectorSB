@@ -115,9 +115,12 @@ bool ME_Ogre::SetUpResources(void)
 	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(Equity_Resource_Group);
 	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App_Resource_Group);
 
+	
 	//-------------------------------- Zip Files
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/OgreCore.zip", "Zip",
 		App_Resource_Group);
+
+	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/App_Resources", "FileSystem", App_Resource_Group);
 
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/Equity.zip", "Zip",
 		App_Resource_Group);
