@@ -390,7 +390,7 @@ LRESULT CALLBACK SB_Dialogs::Dialog_DropGen_Proc(HWND hDlg, UINT message, WPARAM
 			}
 
 			SendDlgItemMessage(hDlg, IDC_LISTSELECTION, LB_GETTEXT, (WPARAM)Index, (LPARAM)buff);
-			SetDlgItemText(hDlg, IDC_CBGEN, buff);
+		
 			SetDlgItemText(hDlg, IDC_STSELECTED, buff);
 
 			return TRUE;
@@ -399,7 +399,7 @@ LRESULT CALLBACK SB_Dialogs::Dialog_DropGen_Proc(HWND hDlg, UINT message, WPARAM
 		if (LOWORD(wParam) == IDOK)
 		{
 			char buff[256];
-			GetDlgItemText(hDlg, IDC_CBGEN, (LPTSTR)buff, 256);
+			GetDlgItemText(hDlg, IDC_STSELECTED, (LPTSTR)buff, 256);
 			strcpy(App->SBC_Dialogs->Chr_DropText, buff);
 
 			App->SBC_Dialogs->Canceled = 0;
@@ -430,19 +430,6 @@ void SB_Dialogs::ListObjects(HWND DropHwnd, HWND List)
 	while (Count < Total)
 	{
 		
-
-		if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Static)
-		{
-			SendMessage(DropHwnd, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->SBC_Scene->B_Object[Count]->Mesh_Name);
-		}
-			
-		Count++;
-	}
-
-	Count = 0;
-	while (Count < Total)
-	{
-		
 		if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Static)
 		{
 			SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->SBC_Scene->B_Object[Count]->Mesh_Name);
@@ -451,7 +438,7 @@ void SB_Dialogs::ListObjects(HWND DropHwnd, HWND List)
 		Count++;
 	}
 
-	SendMessage(DropHwnd, CB_SETCURSEL, 0, 0);
+	SendMessage(List, LB_SELECTSTRING, -1, (LPARAM)App->SBC_Dialogs->Chr_DropText);
 }
 
 // *************************************************************************
@@ -488,16 +475,7 @@ void SB_Dialogs::List_Locations(HWND DropHwnd, HWND List)
 void SB_Dialogs::List_Counters(HWND DropHwnd, HWND List)
 {
 	int Count = 0;
-	while (Count < App->SBC_Scene->Counters_Count)
-	{
-		if (App->SBC_Scene->B_Counter[Count]->Deleted == 0)
-		{
-			SendMessage(DropHwnd, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->SBC_Scene->B_Counter[Count]->Panel_Name);
-		}
-		Count++;
-	}
-
-	Count = 0;
+	
 	while (Count < App->SBC_Scene->Counters_Count)
 	{
 		if (App->SBC_Scene->B_Counter[Count]->Deleted == 0)
@@ -507,7 +485,7 @@ void SB_Dialogs::List_Counters(HWND DropHwnd, HWND List)
 		Count++;
 	}
 
-	SendMessage(DropHwnd, CB_SETCURSEL, 0, 0);
+	//SendMessage(List, LB_SELECTSTRING, -1, (LPARAM)App->SBC_Dialogs->Chr_DropText);
 }
 
 // *************************************************************************

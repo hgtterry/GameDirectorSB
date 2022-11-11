@@ -1934,6 +1934,8 @@ bool SB_Properties::Edit_Collectables_OnClick(LPARAM lParam)
 	{
 		strcpy(App->Cl_Dialogs->btext, "Select Counter");
 
+		strcpy(App->SBC_Dialogs->Chr_DropText, App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Counter_Name);
+
 		App->SBC_Dialogs->DropList_Data = Enums::DropDialog_Counters;
 		App->SBC_Dialogs->Dialog_DropGen();
 
