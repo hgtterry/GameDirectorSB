@@ -167,7 +167,7 @@ bool GameDirectorOgre::createViewports(void)
 	Ogre::Viewport* vp = mWindow->addViewport(mCamera);
 	mCamera->setAspectRatio(Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));
 	
-	Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(0);
+	Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(4);
 
 	vp->setBackgroundColour(Ogre::ColourValue(0.5, 0.5, 0.5));
 

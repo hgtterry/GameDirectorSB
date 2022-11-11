@@ -14,7 +14,7 @@ Radius=4.400000
 Height=17.000000
 Ground_Speed=4.200000
 Cam_Height=16.000000
-Turn_Rate=0.000010
+Turn_Rate=0.000004
  
 [Locations]
 Locations_Count=0

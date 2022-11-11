@@ -504,10 +504,7 @@ bool SB_Properties::Update_ListView_Player()
 	char chr_StartPosZ[100];
 
 	sprintf(chr_Speed, "%.3f ", App->SBC_Scene->B_Player[0]->Ground_speed);
-
-	float sum2 = App->SBC_Scene->B_Player[0]->TurnRate;
-	int Percent = int(sum2 * 100000);
-	_itoa(Percent, chr_TurnRate, 10);
+	sprintf(chr_TurnRate, "%.6f ", App->SBC_Scene->B_Player[0]->TurnRate);
 
 	sprintf(chr_Height, "%.3f ", App->SBC_Scene->B_Player[0]->PlayerHeight);
 
@@ -1202,7 +1199,10 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 		strcpy(App->Cl_Dialogs->btext, "Ground Speed");
 
 		App->Cl_Dialogs->Dialog_Float();
-		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
+		if (App->Cl_Dialogs->Canceled == 1) 
+		{ 
+			return TRUE; 
+		}
 
 		App->SBC_Scene->B_Player[0]->Ground_speed = App->Cl_Dialogs->mFloat;
 
@@ -1219,22 +1219,19 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 	if (result == 0)
 	{
 		
-		float sum2 = App->SBC_Scene->B_Player[0]->TurnRate;
-		int Percent = int(sum2 * 100000);
+		char chr_Value[10];
+		sprintf(chr_Value, "%.6f ", App->SBC_Scene->B_Player[0]->TurnRate);
 
-		strcpy(App->Cl_Dialogs->btext, "Turn Rate");
-		char buff[256];
-		sprintf(buff, "%i", Percent);
-		strcpy(App->Cl_Dialogs->Chr_Int, buff);
+		strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
+		strcpy(App->Cl_Dialogs->btext, "Ground Speed");
 
-		App->Cl_Dialogs->Dialog_Int();
-
+		App->Cl_Dialogs->Dialog_Float();
 		if (App->Cl_Dialogs->Canceled == 1)
 		{
 			return TRUE;
 		}
 
-		App->SBC_Scene->B_Player[0]->TurnRate = float(App->Cl_Dialogs->mInt) / 100000;
+		App->SBC_Scene->B_Player[0]->TurnRate = App->Cl_Dialogs->mFloat;
 
 		App->SBC_Scene->B_Player[0]->Altered = 1;
 		App->SBC_Scene->Scene_Modified = 1;

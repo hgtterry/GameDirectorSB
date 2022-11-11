@@ -733,8 +733,7 @@ bool BT_PhysicsListener::Capture_Mouse_FirstPerson(void)
 				Rotate.y = -1;
 				Rotate.z = 0;
 
-				//float mTurn = ((float)App->GDCL_Scene_Data->B_Player[0]->TurnRate*Pl_DeltaMouse);
-				float mTurn = (Pl_DeltaMouse * (float)0.00040);
+				float mTurn = ((float)App->GDCL_Scene_Data->B_Player[0]->TurnRate*Pl_DeltaMouse);
 				App->GDCL_Scene_Data->B_Player[0]->Rotate_FromCam(Rotate, mTurn, false);
 
 			}
@@ -752,7 +751,7 @@ bool BT_PhysicsListener::Capture_Mouse_FirstPerson(void)
 				Rotate.y = 1;
 				Rotate.z = 0;
 				
-				float mTurn = (Pl_DeltaMouse * (float)0.00040 );
+				float mTurn = ((float)App->GDCL_Scene_Data->B_Player[0]->TurnRate*Pl_DeltaMouse);
 				App->GDCL_Scene_Data->B_Player[0]->Rotate_FromCam(Rotate, mTurn, false);
 			}
 		}

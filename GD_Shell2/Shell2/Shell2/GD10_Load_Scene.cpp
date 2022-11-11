@@ -420,7 +420,7 @@ bool GD10_Load_Scene::Load_Project_Player()
 
 		App->CL10_Ini->GetString(buff, "Turn_Rate", chr_Tag1, MAX_PATH);
 		sscanf(chr_Tag1, "%f", &x);
-		App->GDCL_Scene_Data->B_Player[Count]->TurnRate = 0.00030;
+		App->GDCL_Scene_Data->B_Player[Count]->TurnRate = x;
 
 		Count++;
 	}
