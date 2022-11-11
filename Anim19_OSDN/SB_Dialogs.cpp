@@ -37,6 +37,8 @@ SB_Dialogs::SB_Dialogs()
 	btext[0] = 0;
 	Chr_Text[0] = 0;
 
+	Chr_DropText[0] = 0;
+
 	MessageString[0] = 0;;
 	MessageString2[0] = 0;
 }
@@ -78,6 +80,7 @@ LRESULT CALLBACK SB_Dialogs::Dialog_Text_Proc(HWND hDlg, UINT message, WPARAM wP
 		SetDlgItemText(hDlg, IDC_TITLENAME, (LPCTSTR)App->SBC_Dialogs->btext);
 
 		SetDlgItemText(hDlg, IDC_EDITTEXT, (LPCTSTR)App->SBC_Dialogs->Chr_Text);
+		
 
 		return TRUE;
 	}
@@ -284,37 +287,42 @@ LRESULT CALLBACK SB_Dialogs::Dialog_DropGen_Proc(HWND hDlg, UINT message, WPARAM
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+		SendDlgItemMessage(hDlg, IDC_LISTSELECTION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STSELECTION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		SetDlgItemText(hDlg, IDC_TITLE, (LPCTSTR)App->Cl_Dialogs->btext);
-
+		SetDlgItemText(hDlg, IDC_STSELECTED, (LPCTSTR)App->SBC_Dialogs->Chr_DropText);
+		
 		HWND temp = GetDlgItem(hDlg, IDC_CBGEN);
+		HWND tempList = GetDlgItem(hDlg, IDC_LISTSELECTION);
 
 		if (App->SBC_Dialogs->DropList_Data == Enums::DropDialog_TrigMoveObject)
 		{
-			App->SBC_Dialogs->ListObjects(temp);
+			App->SBC_Dialogs->ListObjects(temp, tempList);
 			return TRUE;
 		}
 
 		if (App->SBC_Dialogs->DropList_Data == Enums::DropDialog_TrigMoveAxis)
 		{
-			App->SBC_Dialogs->ListAxis(temp);
+			App->SBC_Dialogs->ListAxis(temp, tempList);
 			return TRUE;
 		}
 
 		if (App->SBC_Dialogs->DropList_Data == Enums::DropDialog_Locations)
 		{
-			App->SBC_Dialogs->List_Locations(temp);
+			App->SBC_Dialogs->List_Locations(temp, tempList);
 			return TRUE;
 		}
 
 		if (App->SBC_Dialogs->DropList_Data == Enums::DropDialog_Counters)
 		{
-			App->SBC_Dialogs->List_Counters(temp);
+			App->SBC_Dialogs->List_Counters(temp, tempList);
 			return TRUE;
 		}
 
 		if (App->SBC_Dialogs->DropList_Data == Enums::DropDialog_Messages)
 		{
-			App->SBC_Dialogs->List_Messages(temp);
+			App->SBC_Dialogs->List_Messages(temp, tempList);
 			return TRUE;
 		}
 
@@ -331,6 +339,15 @@ LRESULT CALLBACK SB_Dialogs::Dialog_DropGen_Proc(HWND hDlg, UINT message, WPARAM
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
 		}
+
+		if (GetDlgItem(hDlg, IDC_STSELECTION) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->Brush_White;
+		}
+		
 		return FALSE;
 	}
 
@@ -360,11 +377,30 @@ LRESULT CALLBACK SB_Dialogs::Dialog_DropGen_Proc(HWND hDlg, UINT message, WPARAM
 		return (LONG)App->AppBackground;
 	}
 	case WM_COMMAND:
+
+		if (LOWORD(wParam) == IDC_LISTSELECTION)
+		{
+			char buff[256];
+			int Index = 0;
+			Index = SendDlgItemMessage(hDlg, IDC_LISTSELECTION, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+
+			if (Index == -1)
+			{
+				return 1;
+			}
+
+			SendDlgItemMessage(hDlg, IDC_LISTSELECTION, LB_GETTEXT, (WPARAM)Index, (LPARAM)buff);
+			SetDlgItemText(hDlg, IDC_CBGEN, buff);
+			SetDlgItemText(hDlg, IDC_STSELECTED, buff);
+
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == IDOK)
 		{
 			char buff[256];
 			GetDlgItemText(hDlg, IDC_CBGEN, (LPTSTR)buff, 256);
-			strcpy(App->Cl_Dialogs->Chr_DropText, buff);
+			strcpy(App->SBC_Dialogs->Chr_DropText, buff);
 
 			App->SBC_Dialogs->Canceled = 0;
 			EndDialog(hDlg, LOWORD(wParam));
@@ -386,23 +422,32 @@ LRESULT CALLBACK SB_Dialogs::Dialog_DropGen_Proc(HWND hDlg, UINT message, WPARAM
 // *************************************************************************
 // *					ListObjects Terry Bernie				 		   *
 // *************************************************************************
-void SB_Dialogs::ListObjects(HWND DropHwnd)
+void SB_Dialogs::ListObjects(HWND DropHwnd, HWND List)
 {
 	int Count = 0;
 	int Total = App->SBC_Scene->Object_Count;
 
 	while (Count < Total)
 	{
-		{
-			//if (App->SBC_Scene->B_Object[Count]->Type == Enums::Bullet_Type_Static)
-			{
-				if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Static)
-				{
-					SendMessage(DropHwnd, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->SBC_Scene->B_Object[Count]->Mesh_Name);
-				}
-			}
-		}
+		
 
+		if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Static)
+		{
+			SendMessage(DropHwnd, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->SBC_Scene->B_Object[Count]->Mesh_Name);
+		}
+			
+		Count++;
+	}
+
+	Count = 0;
+	while (Count < Total)
+	{
+		
+		if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Static)
+		{
+			SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->SBC_Scene->B_Object[Count]->Mesh_Name);
+		}
+	
 		Count++;
 	}
 
@@ -412,7 +457,7 @@ void SB_Dialogs::ListObjects(HWND DropHwnd)
 // *************************************************************************
 // *					List_Locations Terry Bernie				 		   *
 // *************************************************************************
-void SB_Dialogs::List_Locations(HWND DropHwnd)
+void SB_Dialogs::List_Locations(HWND DropHwnd, HWND List)
 {
 	int Count = 0;
 	while (Count < App->SBC_Scene->Player_Location_Count)
@@ -424,13 +469,23 @@ void SB_Dialogs::List_Locations(HWND DropHwnd)
 		Count++;
 	}
 
+	Count = 0;
+	while (Count < App->SBC_Scene->Player_Location_Count)
+	{
+		if (App->SBC_Scene->B_Locations[Count]->Deleted == 0)
+		{
+			SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->SBC_Scene->B_Locations[Count]->Name);
+		}
+		Count++;
+	}
+
 	SendMessage(DropHwnd, CB_SETCURSEL, 0, 0);
 }
 
 // *************************************************************************
 // *					List_Counters Terry Bernie				 		   *
 // *************************************************************************
-void SB_Dialogs::List_Counters(HWND DropHwnd)
+void SB_Dialogs::List_Counters(HWND DropHwnd, HWND List)
 {
 	int Count = 0;
 	while (Count < App->SBC_Scene->Counters_Count)
@@ -442,13 +497,23 @@ void SB_Dialogs::List_Counters(HWND DropHwnd)
 		Count++;
 	}
 
+	Count = 0;
+	while (Count < App->SBC_Scene->Counters_Count)
+	{
+		if (App->SBC_Scene->B_Counter[Count]->Deleted == 0)
+		{
+			SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->SBC_Scene->B_Counter[Count]->Panel_Name);
+		}
+		Count++;
+	}
+
 	SendMessage(DropHwnd, CB_SETCURSEL, 0, 0);
 }
 
 // *************************************************************************
 // *					List_Messages Terry Bernie				 		   *
 // *************************************************************************
-void SB_Dialogs::List_Messages(HWND DropHwnd)
+void SB_Dialogs::List_Messages(HWND DropHwnd, HWND List)
 {
 	/*int Count = 0;
 	while (Count < App->SBC_Scene->TextMessage_Count) // Needs_Removing
@@ -466,7 +531,7 @@ void SB_Dialogs::List_Messages(HWND DropHwnd)
 // *************************************************************************
 // *					ListAxis Terry Bernie					 		   *
 // *************************************************************************
-void SB_Dialogs::ListAxis(HWND DropHwnd)
+void SB_Dialogs::ListAxis(HWND DropHwnd, HWND List)
 {
 	int Count = 0;
 	bool Any = 0;
@@ -474,6 +539,10 @@ void SB_Dialogs::ListAxis(HWND DropHwnd)
 	SendMessage(DropHwnd, CB_ADDSTRING, 0, (LPARAM)"X");
 	SendMessage(DropHwnd, CB_ADDSTRING, 0, (LPARAM)"Y");
 	SendMessage(DropHwnd, CB_ADDSTRING, 0, (LPARAM)"Z");
+
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"X");
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"Y");
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"Z");
 
 	SendMessage(DropHwnd, CB_SETCURSEL, 0, 0);
 }

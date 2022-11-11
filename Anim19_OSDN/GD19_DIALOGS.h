@@ -23,7 +23,6 @@ public:
 	bool CheckSpaces;
 
 	char btext[100];
-	char Chr_DropText[100];
 	char Chr_Text[255];
 	char Chr_Float[50];
 	char Chr_Int[50];

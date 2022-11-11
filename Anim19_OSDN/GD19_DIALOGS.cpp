@@ -19,7 +19,6 @@ GD19_Dialogs::GD19_Dialogs(void)
 
 	btext[0] = 0;
 	Chr_Float[0] = 0;
-	Chr_DropText[0] = 0;
 
 	mFloat = 0;
 	mInt = 0;

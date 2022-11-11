@@ -888,7 +888,18 @@ bool SB_Properties::Update_ListView_Counters()
 	char chr_Counter[20];
 	_itoa(App->SBC_Scene->B_Counter[index]->Counter, chr_Counter, 10);
 
-	const int NUM_ITEMS = 6;
+	char chr_Display[20];
+	if (App->SBC_Scene->B_Counter[index]->Show_Panel_Flag == 1)
+	{
+		strcpy(chr_Display, "Always");
+	}
+	else
+	{
+		strcpy(chr_Display, "Auto");
+	}
+
+	
+	const int NUM_ITEMS = 7;
 	const int NUM_COLS = 2;
 	string grid[NUM_COLS][NUM_ITEMS]; // string table
 	LV_ITEM pitem;
@@ -896,12 +907,12 @@ bool SB_Properties::Update_ListView_Counters()
 	pitem.mask = LVIF_TEXT;
 
 	grid[0][0] = "Name",		grid[1][0] = App->SBC_Scene->B_Counter[index]->Panel_Name;
-	grid[0][1] = " ",			grid[1][1] = " ";// App->SBC_Scene->B_Object[index]->Mesh_FileName;
+	grid[0][1] = " ",			grid[1][1] = " ";
 	grid[0][2] = "Pos_X",		grid[1][2] = chr_PosX;
 	grid[0][3] = "Pos_Y",		grid[1][3] = chr_PosY;
 	grid[0][4] = "Text",		grid[1][4] = App->SBC_Scene->B_Counter[index]->Text;
 	grid[0][5] = "Counter",		grid[1][5] = chr_Counter;
-
+	grid[0][6] = "Display",		grid[1][6] = chr_Display;
 
 
 	ListView_DeleteAllItems(Properties_hLV);
@@ -1589,6 +1600,7 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 	if (result == 0)
 	{
 		strcpy(App->Cl_Dialogs->btext, "Select Object to Move");
+		strcpy(App->SBC_Dialogs->Chr_DropText, App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_Name);
 
 		App->SBC_Dialogs->DropList_Data = Enums::DropDialog_TrigMoveObject;
 		App->SBC_Dialogs->Dialog_DropGen();
@@ -1596,7 +1608,7 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 
 		if (App->SBC_Dialogs->Canceled == 0)
 		{
-			strcpy(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_Name, App->Cl_Dialogs->Chr_DropText);
+			strcpy(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_Name, App->SBC_Dialogs->Chr_DropText);
 
 			int MoveObjectIndex = App->SBC_Object->GetIndex_By_Name(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_Name);
 
@@ -1633,7 +1645,7 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 		{
 
 			// X Axis
-			TestChr = strcmp(App->Cl_Dialogs->Chr_DropText, "X");
+			TestChr = strcmp(App->SBC_Dialogs->Chr_DropText, "X");
 			if (TestChr == 0)
 			{
 				App->SBC_Scene->B_Object[Index]->S_MoveType[0]->WhatDirection = Enums::Axis_x;
@@ -1641,7 +1653,7 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 			}
 
 			// y Axis
-			TestChr = strcmp(App->Cl_Dialogs->Chr_DropText, "Y");
+			TestChr = strcmp(App->SBC_Dialogs->Chr_DropText, "Y");
 			if (TestChr == 0)
 			{
 				App->SBC_Scene->B_Object[Index]->S_MoveType[0]->WhatDirection = Enums::Axis_y;
@@ -1649,7 +1661,7 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 			}
 
 			// Z Axis
-			TestChr = strcmp(App->Cl_Dialogs->Chr_DropText, "Z");
+			TestChr = strcmp(App->SBC_Dialogs->Chr_DropText, "Z");
 			if (TestChr == 0)
 			{
 				App->SBC_Scene->B_Object[Index]->S_MoveType[0]->WhatDirection = Enums::Axis_z;
@@ -1928,9 +1940,9 @@ bool SB_Properties::Edit_Collectables_OnClick(LPARAM lParam)
 
 		if (App->SBC_Dialogs->Canceled == 0)
 		{
-			strcpy(App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Counter_Name, App->Cl_Dialogs->Chr_DropText);
+			strcpy(App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Counter_Name, App->SBC_Dialogs->Chr_DropText);
 
-			int CounterIndex = App->SBC_Display->GetIndex_By_Name(App->Cl_Dialogs->Chr_DropText);
+			int CounterIndex = App->SBC_Display->GetIndex_By_Name(App->SBC_Dialogs->Chr_DropText);
 
 			App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Counter_ID = CounterIndex;
 
@@ -2060,6 +2072,30 @@ bool SB_Properties::Edit_Counters_OnClick(LPARAM lParam)
 		App->SBC_Display->Mark_As_Altered_Counter(Index);
 
 		Update_ListView_Counters();
+
+		return 1;
+	}
+
+	result = strcmp(btext, "Display");
+	if (result == 0)
+	{
+		/*strcpy(App->Cl_Dialogs->btext, "Start Counter Value");
+		char buff[256];
+		sprintf(buff, "%i", App->SBC_Scene->B_Counter[Index]->Counter);
+		strcpy(App->Cl_Dialogs->Chr_Int, buff);
+
+		App->Cl_Dialogs->Dialog_Int();
+
+		if (App->Cl_Dialogs->Canceled == 1)
+		{
+			return TRUE;
+		}
+
+		App->SBC_Scene->B_Counter[Index]->Counter = App->Cl_Dialogs->mInt;
+
+		App->SBC_Display->Mark_As_Altered_Counter(Index);
+
+		Update_ListView_Counters();*/
 
 		return 1;
 	}
@@ -2505,7 +2541,7 @@ bool SB_Properties::Edit_Teleport_OnClick(LPARAM lParam)
 
 		if (App->SBC_Dialogs->Canceled == 0)
 		{
-			int LocationIndex = App->Cl_LookUps->Player_Location_GetIndex_ByName(App->Cl_Dialogs->Chr_DropText);
+			int LocationIndex = App->Cl_LookUps->Player_Location_GetIndex_ByName(App->SBC_Dialogs->Chr_DropText);
 
 
 			strcpy(App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Name, App->SBC_Scene->B_Locations[LocationIndex]->Name);

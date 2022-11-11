@@ -34,6 +34,7 @@ public:
 	void YesNo(char *Text, char *Text2,bool YesNo);
 	bool Dialog_DropGen();
 
+	char Chr_DropText[MAX_PATH];
 	int DropList_Data;
 
 	bool Canceled;
@@ -52,10 +53,10 @@ protected:
 	static LRESULT CALLBACK Dialog_DropGen_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Front_Screen_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
-	void ListObjects(HWND DropHwnd);
-	void List_Locations(HWND DropHwnd);
-	void ListAxis(HWND DropHwnd);
-	void List_Counters(HWND DropHwnd);
-	void List_Messages(HWND DropHwnd);
+	void ListObjects(HWND DropHwnd, HWND List);
+	void List_Locations(HWND DropHwnd, HWND List);
+	void ListAxis(HWND DropHwnd, HWND List);
+	void List_Counters(HWND DropHwnd, HWND List);
+	void List_Messages(HWND DropHwnd, HWND List);
 };
 
