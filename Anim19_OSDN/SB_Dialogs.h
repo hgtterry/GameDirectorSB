@@ -58,5 +58,6 @@ protected:
 	void ListAxis(HWND DropHwnd, HWND List);
 	void List_Counters(HWND DropHwnd, HWND List);
 	void List_Messages(HWND DropHwnd, HWND List);
+	void List_Display(HWND List);
 };
 

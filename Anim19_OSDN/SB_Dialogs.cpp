@@ -326,6 +326,11 @@ LRESULT CALLBACK SB_Dialogs::Dialog_DropGen_Proc(HWND hDlg, UINT message, WPARAM
 			return TRUE;
 		}
 
+		if (App->SBC_Dialogs->DropList_Data == Enums::DropDialog_Display)
+		{
+			App->SBC_Dialogs->List_Display(tempList);
+			return TRUE;
+		}
 
 		return TRUE;
 	}
@@ -420,7 +425,7 @@ LRESULT CALLBACK SB_Dialogs::Dialog_DropGen_Proc(HWND hDlg, UINT message, WPARAM
 }
 
 // *************************************************************************
-// *					ListObjects Terry Bernie				 		   *
+// *			ListObjects:- Terry and Hazel Flanigan 2022		 		   *
 // *************************************************************************
 void SB_Dialogs::ListObjects(HWND DropHwnd, HWND List)
 {
@@ -442,21 +447,11 @@ void SB_Dialogs::ListObjects(HWND DropHwnd, HWND List)
 }
 
 // *************************************************************************
-// *					List_Locations Terry Bernie				 		   *
+// *		List_Locations:- Terry and Hazel Flanigan 2022		 		   *
 // *************************************************************************
 void SB_Dialogs::List_Locations(HWND DropHwnd, HWND List)
 {
 	int Count = 0;
-	while (Count < App->SBC_Scene->Player_Location_Count)
-	{
-		if (App->SBC_Scene->B_Locations[Count]->Deleted == 0)
-		{
-			SendMessage(DropHwnd, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->SBC_Scene->B_Locations[Count]->Name);
-		}
-		Count++;
-	}
-
-	Count = 0;
 	while (Count < App->SBC_Scene->Player_Location_Count)
 	{
 		if (App->SBC_Scene->B_Locations[Count]->Deleted == 0)
@@ -466,11 +461,11 @@ void SB_Dialogs::List_Locations(HWND DropHwnd, HWND List)
 		Count++;
 	}
 
-	SendMessage(DropHwnd, CB_SETCURSEL, 0, 0);
+	SendMessage(List, LB_SELECTSTRING, -1, (LPARAM)App->SBC_Dialogs->Chr_DropText);
 }
 
 // *************************************************************************
-// *					List_Counters Terry Bernie				 		   *
+// *			List_Counters:- Terry and Hazel Flanigan 2022		 	   *
 // *************************************************************************
 void SB_Dialogs::List_Counters(HWND DropHwnd, HWND List)
 {
@@ -489,7 +484,7 @@ void SB_Dialogs::List_Counters(HWND DropHwnd, HWND List)
 }
 
 // *************************************************************************
-// *					List_Messages Terry Bernie				 		   *
+// *			List_Messages:- Terry and Hazel Flanigan 2022		 	   *
 // *************************************************************************
 void SB_Dialogs::List_Messages(HWND DropHwnd, HWND List)
 {
@@ -507,14 +502,24 @@ void SB_Dialogs::List_Messages(HWND DropHwnd, HWND List)
 }
 
 // *************************************************************************
-// *					ListAxis Terry Bernie					 		   *
+// *			ListAxis:- Terry and Hazel Flanigan 2022			 	   *
 // *************************************************************************
 void SB_Dialogs::ListAxis(HWND DropHwnd, HWND List)
 {
-	
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"X");
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"Y");
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"Z");
+
+	SendMessage(List, LB_SELECTSTRING, -1, (LPARAM)App->SBC_Dialogs->Chr_DropText);
+}
+
+// *************************************************************************
+// *			List_Display:- Terry and Hazel Flanigan 2022		 		   *
+// *************************************************************************
+void SB_Dialogs::List_Display(HWND List)
+{
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"Auto");
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"Always");
 
 	SendMessage(List, LB_SELECTSTRING, -1, (LPARAM)App->SBC_Dialogs->Chr_DropText);
 }

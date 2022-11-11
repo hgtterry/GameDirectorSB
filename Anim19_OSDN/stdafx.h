@@ -302,7 +302,8 @@ namespace Enums
 		DropDialog_TrigMoveAxis = 2,
 		DropDialog_Counters = 3,
 		DropDialog_Locations = 4,
-		DropDialog_Messages = 5
+		DropDialog_Messages = 5,
+		DropDialog_Display = 6
 	};
 
 	enum ImGui_Groups

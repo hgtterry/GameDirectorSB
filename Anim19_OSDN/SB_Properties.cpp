@@ -2096,23 +2096,45 @@ bool SB_Properties::Edit_Counters_OnClick(LPARAM lParam)
 	result = strcmp(btext, "Display");
 	if (result == 0)
 	{
-		/*strcpy(App->Cl_Dialogs->btext, "Start Counter Value");
-		char buff[256];
-		sprintf(buff, "%i", App->SBC_Scene->B_Counter[Index]->Counter);
-		strcpy(App->Cl_Dialogs->Chr_Int, buff);
+		
+		strcpy(App->Cl_Dialogs->btext, "Select Display Option");
 
-		App->Cl_Dialogs->Dialog_Int();
-
-		if (App->Cl_Dialogs->Canceled == 1)
+		if (App->SBC_Scene->B_Counter[Index]->Show_Panel_Flag == 0)
 		{
-			return TRUE;
+			strcpy(App->SBC_Dialogs->Chr_DropText, "Auto");
 		}
 
-		App->SBC_Scene->B_Counter[Index]->Counter = App->Cl_Dialogs->mInt;
+		if (App->SBC_Scene->B_Counter[Index]->Show_Panel_Flag == 1)
+		{
+			strcpy(App->SBC_Dialogs->Chr_DropText, "Always");
+		}
 
-		App->SBC_Display->Mark_As_Altered_Counter(Index);
+		App->SBC_Dialogs->DropList_Data = Enums::DropDialog_Display;
+		App->SBC_Dialogs->Dialog_DropGen();
 
-		Update_ListView_Counters();*/
+
+		if (App->SBC_Dialogs->Canceled == 0)
+		{
+			int TestChr = 0;
+
+			// Auto
+			TestChr = strcmp(App->SBC_Dialogs->Chr_DropText, "Auto");
+			if (TestChr == 0)
+			{
+				App->SBC_Scene->B_Counter[Index]->Show_Panel_Flag = 0;
+			}
+
+			// Always
+			TestChr = strcmp(App->SBC_Dialogs->Chr_DropText, "Always");
+			if (TestChr == 0)
+			{
+				App->SBC_Scene->B_Counter[Index]->Show_Panel_Flag = 1;
+			}
+
+			App->SBC_Display->Mark_As_Altered_Counter(Index);
+			Update_ListView_Counters();
+
+		}
 
 		return 1;
 	}
