@@ -485,7 +485,7 @@ void SB_Dialogs::List_Counters(HWND DropHwnd, HWND List)
 		Count++;
 	}
 
-	//SendMessage(List, LB_SELECTSTRING, -1, (LPARAM)App->SBC_Dialogs->Chr_DropText);
+	SendMessage(List, LB_SELECTSTRING, -1, (LPARAM)App->SBC_Dialogs->Chr_DropText);
 }
 
 // *************************************************************************
@@ -511,18 +511,12 @@ void SB_Dialogs::List_Messages(HWND DropHwnd, HWND List)
 // *************************************************************************
 void SB_Dialogs::ListAxis(HWND DropHwnd, HWND List)
 {
-	int Count = 0;
-	bool Any = 0;
-
-	SendMessage(DropHwnd, CB_ADDSTRING, 0, (LPARAM)"X");
-	SendMessage(DropHwnd, CB_ADDSTRING, 0, (LPARAM)"Y");
-	SendMessage(DropHwnd, CB_ADDSTRING, 0, (LPARAM)"Z");
-
+	
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"X");
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"Y");
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"Z");
 
-	SendMessage(DropHwnd, CB_SETCURSEL, 0, 0);
+	SendMessage(List, LB_SELECTSTRING, -1, (LPARAM)App->SBC_Dialogs->Chr_DropText);
 }
 
 // **************************************************************************

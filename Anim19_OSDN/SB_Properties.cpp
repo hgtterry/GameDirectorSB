@@ -1638,6 +1638,21 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 		int TestChr = 1;
 		strcpy(App->Cl_Dialogs->btext, "Select Axis ( World )");
 
+		if (App->SBC_Scene->B_Object[Index]->S_MoveType[0]->WhatDirection == Enums::Axis_x)
+		{
+			strcpy(App->SBC_Dialogs->Chr_DropText,"X");
+		}
+
+		if (App->SBC_Scene->B_Object[Index]->S_MoveType[0]->WhatDirection == Enums::Axis_y)
+		{
+			strcpy(App->SBC_Dialogs->Chr_DropText, "Y");
+		}
+
+		if (App->SBC_Scene->B_Object[Index]->S_MoveType[0]->WhatDirection == Enums::Axis_z)
+		{
+			strcpy(App->SBC_Dialogs->Chr_DropText, "Z");
+		}
+
 		App->SBC_Dialogs->DropList_Data = Enums::DropDialog_TrigMoveAxis;
 		App->SBC_Dialogs->Dialog_DropGen();
 
