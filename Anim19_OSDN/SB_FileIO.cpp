@@ -109,8 +109,6 @@ void  SB_FileIO::Init_History()
 		ResentHistory_Clear(1); // Set all slots to Empty
 		Save_FileHistory();
 		LoadHistory();
-
-		App->Say("Recent File History Created");
 	}
 	else
 	{

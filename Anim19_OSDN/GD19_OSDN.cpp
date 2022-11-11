@@ -265,10 +265,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			App->SBC_Project->Copy_Assets(App->SBC_Project->m_Main_Assets_Path, Test);
 			return 1;
 		}
-		
-		case ID_DEBUG_RESTOREAPP:
+
+		case ID_DEBUG_APPRELEASE:
 		{
-			App->SBC_Dialogs->YesNo("Close GameDirector", "Are you sure",1);
+			App->SBC_Dialogs->YesNo("Release GameDirector", "Are you sure", 1);
 			if (App->Cl_Dialogs->Canceled == 0)
 			{
 				char buf[1024];
@@ -284,16 +284,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 				RemoveDirectory(DirCheck);
 
+				App->SBC_Prefs->Set_Defaults();
+
 				App->Say("Done");
 			}
-
-			return 1;
-		}
-
-		case ID_DEBUG_SET:
-		{
-			App->SBC_Prefs->Set_Defaults();
-			App->Say("Done");
 
 			return 1;
 		}
