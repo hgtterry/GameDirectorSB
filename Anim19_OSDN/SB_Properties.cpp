@@ -828,6 +828,9 @@ bool SB_Properties::Update_ListView_Collectables()
 	char chr_CounterID[100];
 	_itoa(App->SBC_Scene->B_Object[index]->S_Collectable[0]->Counter_ID, chr_CounterID, 10);
 
+	char chr_Value[100];
+	_itoa(App->SBC_Scene->B_Object[index]->S_Collectable[0]->Value, chr_Value, 10);
+
 	const int NUM_ITEMS = 11;
 	const int NUM_COLS = 2;
 	string grid[NUM_COLS][NUM_ITEMS]; // string table
@@ -844,8 +847,8 @@ bool SB_Properties::Update_ListView_Collectables()
 	grid[0][6] = " ",				grid[1][6] = " ";
 	grid[0][7] = "Counter",			grid[1][7] = App->SBC_Scene->B_Object[index]->S_Collectable[0]->Counter_Name;
 	grid[0][8] = "ID",				grid[1][8] = chr_CounterID;
-	grid[0][9] = "Sum",				grid[1][9] = chr_CounterID;
-	grid[0][10] = "Value",			grid[1][10] = chr_CounterID;
+	grid[0][9] = "Maths",			grid[1][9] = chr_CounterID;
+	grid[0][10] = "Value",			grid[1][10] = chr_Value;
 
 
 	ListView_DeleteAllItems(Properties_hLV);
@@ -1966,12 +1969,40 @@ bool SB_Properties::Edit_Collectables_OnClick(LPARAM lParam)
 			App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Counter_ID = CounterIndex;
 
 			Mark_As_Altered(Index);
-
 			Update_ListView_Collectables();
-
 			App->SBC_Physics->Reset_Triggers();
 
 		}
+		return 1;
+	}
+
+	result = strcmp(btext, "Maths");
+	if (result == 0)
+	{
+		return 1;
+	}
+
+	result = strcmp(btext, "Value");
+	if (result == 0)
+	{
+		strcpy(App->Cl_Dialogs->btext, "Collectable Value");
+		char buff[256];
+		sprintf(buff, "%i", App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Value);
+		strcpy(App->Cl_Dialogs->Chr_Int, buff);
+
+		App->Cl_Dialogs->Dialog_Int();
+
+		if (App->Cl_Dialogs->Canceled == 1)
+		{
+			return TRUE;
+		}
+
+		App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Value = App->Cl_Dialogs->mInt;
+
+		Mark_As_Altered(Index);
+		Update_ListView_Collectables();
+		App->SBC_Physics->Reset_Triggers();
+
 		return 1;
 	}
 

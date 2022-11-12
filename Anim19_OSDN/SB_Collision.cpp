@@ -389,7 +389,17 @@ bool SB_Collision::Do_Collectable(int Index)
 	{
 		int CouterID = App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Counter_ID;
 
-		App->SBC_Scene->B_Counter[CouterID]->Counter += -App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Value;
+		if (App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Maths == 1)
+		{
+			App->SBC_Scene->B_Counter[CouterID]->Counter += App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Value;
+			return 1;
+		}
+
+		if (App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Maths == 2)
+		{
+			App->SBC_Scene->B_Counter[CouterID]->Counter += -App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Value;
+			return 1;
+		}
 	}
 
 	return 1;

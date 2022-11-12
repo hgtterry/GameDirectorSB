@@ -445,7 +445,7 @@ void SB_Object::Set_Collectables_Sound_Defaults(int Index)
 	App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Play = 1;
 	App->SBC_Scene->B_Object[Index]->S_Collectable[0]->SndVolume = 0.5;
 
-	App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Sum = 1; // Add
+	App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Maths = 1; // Add
 	App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Value = 1;
 }
 
