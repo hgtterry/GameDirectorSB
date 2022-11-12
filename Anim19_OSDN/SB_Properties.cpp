@@ -831,6 +831,16 @@ bool SB_Properties::Update_ListView_Collectables()
 	char chr_Value[100];
 	_itoa(App->SBC_Scene->B_Object[index]->S_Collectable[0]->Value, chr_Value, 10);
 
+	char chr_Maths[20];
+	if (App->SBC_Scene->B_Object[index]->S_Collectable[0]->Maths == 1)
+	{
+		strcpy(chr_Maths, "Add");
+	}
+	else
+	{
+		strcpy(chr_Maths, "Subtract");
+	}
+
 	const int NUM_ITEMS = 11;
 	const int NUM_COLS = 2;
 	string grid[NUM_COLS][NUM_ITEMS]; // string table
@@ -847,7 +857,7 @@ bool SB_Properties::Update_ListView_Collectables()
 	grid[0][6] = " ",				grid[1][6] = " ";
 	grid[0][7] = "Counter",			grid[1][7] = App->SBC_Scene->B_Object[index]->S_Collectable[0]->Counter_Name;
 	grid[0][8] = "ID",				grid[1][8] = chr_CounterID;
-	grid[0][9] = "Maths",			grid[1][9] = chr_CounterID;
+	grid[0][9] = "Maths",			grid[1][9] = chr_Maths;
 	grid[0][10] = "Value",			grid[1][10] = chr_Value;
 
 
@@ -1979,6 +1989,47 @@ bool SB_Properties::Edit_Collectables_OnClick(LPARAM lParam)
 	result = strcmp(btext, "Maths");
 	if (result == 0)
 	{
+		char buff[20];
+		strcpy(App->Cl_Dialogs->btext, "Set Maths Option");
+
+		if (App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Maths == 1)
+		{
+			strcpy(App->SBC_Dialogs->Chr_DropText, "Add");
+		}
+
+		if (App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Maths == 2)
+		{
+			strcpy(App->SBC_Dialogs->Chr_DropText, "Subtract");
+		}
+
+		App->SBC_Dialogs->DropList_Data = Enums::DropDialog_Maths;
+		App->SBC_Dialogs->Dialog_DropGen();
+
+		if (App->SBC_Dialogs->Canceled == 0)
+		{
+			int TestChr;
+
+			// Add
+			TestChr = strcmp(App->SBC_Dialogs->Chr_DropText, "Add");
+			if (TestChr == 0)
+			{
+				App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Maths = 1;
+
+			}
+
+			// Subtract
+			TestChr = strcmp(App->SBC_Dialogs->Chr_DropText, "Subtract");
+			if (TestChr == 0)
+			{
+				App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Maths = 2;
+
+			}
+
+			Mark_As_Altered(Index);
+			Update_ListView_Collectables();
+			App->SBC_Physics->Reset_Triggers();
+		}
+
 		return 1;
 	}
 

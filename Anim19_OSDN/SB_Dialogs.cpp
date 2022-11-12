@@ -302,7 +302,7 @@ LRESULT CALLBACK SB_Dialogs::Dialog_DropGen_Proc(HWND hDlg, UINT message, WPARAM
 
 		if (App->SBC_Dialogs->DropList_Data == Enums::DropDialog_TrigMoveAxis)
 		{
-			App->SBC_Dialogs->ListAxis(tempList);
+			App->SBC_Dialogs->List_Axis(tempList);
 			return TRUE;
 		}
 
@@ -327,6 +327,12 @@ LRESULT CALLBACK SB_Dialogs::Dialog_DropGen_Proc(HWND hDlg, UINT message, WPARAM
 		if (App->SBC_Dialogs->DropList_Data == Enums::DropDialog_Display)
 		{
 			App->SBC_Dialogs->List_Display(tempList);
+			return TRUE;
+		}
+
+		if (App->SBC_Dialogs->DropList_Data == Enums::DropDialog_Maths)
+		{
+			App->SBC_Dialogs->List_Maths(tempList);
 			return TRUE;
 		}
 
@@ -500,13 +506,24 @@ void SB_Dialogs::List_Messages(HWND List)
 }
 
 // *************************************************************************
-// *			ListAxis:- Terry and Hazel Flanigan 2022			 	   *
+// *			List_Axis:- Terry and Hazel Flanigan 2022			 	   *
 // *************************************************************************
-void SB_Dialogs::ListAxis(HWND List)
+void SB_Dialogs::List_Axis(HWND List)
 {
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"X");
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"Y");
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"Z");
+
+	SendMessage(List, LB_SELECTSTRING, -1, (LPARAM)App->SBC_Dialogs->Chr_DropText);
+}
+
+// *************************************************************************
+// *			List_Maths:- Terry and Hazel Flanigan 2022			 	   *
+// *************************************************************************
+void SB_Dialogs::List_Maths(HWND List)
+{
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"Add");
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"Subtract");
 
 	SendMessage(List, LB_SELECTSTRING, -1, (LPARAM)App->SBC_Dialogs->Chr_DropText);
 }
