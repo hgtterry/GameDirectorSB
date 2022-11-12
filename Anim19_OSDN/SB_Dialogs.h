@@ -53,11 +53,11 @@ protected:
 	static LRESULT CALLBACK Dialog_DropGen_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Front_Screen_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
-	void ListObjects(HWND DropHwnd, HWND List);
-	void List_Locations(HWND DropHwnd, HWND List);
-	void ListAxis(HWND DropHwnd, HWND List);
-	void List_Counters(HWND DropHwnd, HWND List);
-	void List_Messages(HWND DropHwnd, HWND List);
+	void ListObjects(HWND List);
+	void List_Locations(HWND List);
+	void ListAxis(HWND List);
+	void List_Counters(HWND List);
+	void List_Messages(HWND List);
 	void List_Display(HWND List);
 };
 

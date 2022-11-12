@@ -282,8 +282,7 @@ LRESULT CALLBACK SB_Dialogs::Dialog_DropGen_Proc(HWND hDlg, UINT message, WPARAM
 		App->SetTitleBar(hDlg);
 
 		SendDlgItemMessage(hDlg, IDC_TITLE, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_CBGEN, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+	
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
@@ -293,36 +292,35 @@ LRESULT CALLBACK SB_Dialogs::Dialog_DropGen_Proc(HWND hDlg, UINT message, WPARAM
 		SetDlgItemText(hDlg, IDC_TITLE, (LPCTSTR)App->Cl_Dialogs->btext);
 		SetDlgItemText(hDlg, IDC_STSELECTED, (LPCTSTR)App->SBC_Dialogs->Chr_DropText);
 		
-		HWND temp = GetDlgItem(hDlg, IDC_CBGEN);
 		HWND tempList = GetDlgItem(hDlg, IDC_LISTSELECTION);
 
 		if (App->SBC_Dialogs->DropList_Data == Enums::DropDialog_TrigMoveObject)
 		{
-			App->SBC_Dialogs->ListObjects(temp, tempList);
+			App->SBC_Dialogs->ListObjects(tempList);
 			return TRUE;
 		}
 
 		if (App->SBC_Dialogs->DropList_Data == Enums::DropDialog_TrigMoveAxis)
 		{
-			App->SBC_Dialogs->ListAxis(temp, tempList);
+			App->SBC_Dialogs->ListAxis(tempList);
 			return TRUE;
 		}
 
 		if (App->SBC_Dialogs->DropList_Data == Enums::DropDialog_Locations)
 		{
-			App->SBC_Dialogs->List_Locations(temp, tempList);
+			App->SBC_Dialogs->List_Locations(tempList);
 			return TRUE;
 		}
 
 		if (App->SBC_Dialogs->DropList_Data == Enums::DropDialog_Counters)
 		{
-			App->SBC_Dialogs->List_Counters(temp, tempList);
+			App->SBC_Dialogs->List_Counters(tempList);
 			return TRUE;
 		}
 
 		if (App->SBC_Dialogs->DropList_Data == Enums::DropDialog_Messages)
 		{
-			App->SBC_Dialogs->List_Messages(temp, tempList);
+			App->SBC_Dialogs->List_Messages(tempList);
 			return TRUE;
 		}
 
@@ -427,7 +425,7 @@ LRESULT CALLBACK SB_Dialogs::Dialog_DropGen_Proc(HWND hDlg, UINT message, WPARAM
 // *************************************************************************
 // *			ListObjects:- Terry and Hazel Flanigan 2022		 		   *
 // *************************************************************************
-void SB_Dialogs::ListObjects(HWND DropHwnd, HWND List)
+void SB_Dialogs::ListObjects(HWND List)
 {
 	int Count = 0;
 	int Total = App->SBC_Scene->Object_Count;
@@ -449,7 +447,7 @@ void SB_Dialogs::ListObjects(HWND DropHwnd, HWND List)
 // *************************************************************************
 // *		List_Locations:- Terry and Hazel Flanigan 2022		 		   *
 // *************************************************************************
-void SB_Dialogs::List_Locations(HWND DropHwnd, HWND List)
+void SB_Dialogs::List_Locations(HWND List)
 {
 	int Count = 0;
 	while (Count < App->SBC_Scene->Player_Location_Count)
@@ -467,7 +465,7 @@ void SB_Dialogs::List_Locations(HWND DropHwnd, HWND List)
 // *************************************************************************
 // *			List_Counters:- Terry and Hazel Flanigan 2022		 	   *
 // *************************************************************************
-void SB_Dialogs::List_Counters(HWND DropHwnd, HWND List)
+void SB_Dialogs::List_Counters(HWND List)
 {
 	int Count = 0;
 	
@@ -486,7 +484,7 @@ void SB_Dialogs::List_Counters(HWND DropHwnd, HWND List)
 // *************************************************************************
 // *			List_Messages:- Terry and Hazel Flanigan 2022		 	   *
 // *************************************************************************
-void SB_Dialogs::List_Messages(HWND DropHwnd, HWND List)
+void SB_Dialogs::List_Messages(HWND List)
 {
 	/*int Count = 0;
 	while (Count < App->SBC_Scene->TextMessage_Count) // Needs_Removing
@@ -498,13 +496,13 @@ void SB_Dialogs::List_Messages(HWND DropHwnd, HWND List)
 		Count++;
 	}*/
 
-	SendMessage(DropHwnd, CB_SETCURSEL, 0, 0);
+	SendMessage(List, LB_SELECTSTRING, -1, (LPARAM)App->SBC_Dialogs->Chr_DropText);
 }
 
 // *************************************************************************
 // *			ListAxis:- Terry and Hazel Flanigan 2022			 	   *
 // *************************************************************************
-void SB_Dialogs::ListAxis(HWND DropHwnd, HWND List)
+void SB_Dialogs::ListAxis(HWND List)
 {
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"X");
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"Y");
