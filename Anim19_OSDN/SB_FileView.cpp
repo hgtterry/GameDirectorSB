@@ -260,6 +260,13 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 				return TRUE;
 			}
 
+			if (App->SBC_FileView->Context_Selection == Enums::FileView_Collectables_File)
+			{
+				App->SBC_Object->Rename_Object(Index);
+				App->SBC_Properties->Update_ListView_Collectables();
+				return TRUE;
+			}
+
 			App->SBC_Object->Rename_Object(Index);
 			App->SBC_Properties->Update_ListView_Objects();
 

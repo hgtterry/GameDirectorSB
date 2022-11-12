@@ -807,6 +807,8 @@ bool SB_Project::Save_Objects_Data()
 				fprintf(WriteFile, "%s%i\n", "Col_Play=", App->SBC_Scene->B_Object[Count]->S_Collectable[0]->Play);
 				fprintf(WriteFile, "%s%s\n", "Col_Counter_Name=", App->SBC_Scene->B_Object[Count]->S_Collectable[0]->Counter_Name);
 				fprintf(WriteFile, "%s%i\n", "Col_Counter_ID=", App->SBC_Scene->B_Object[Count]->S_Collectable[0]->Counter_ID);
+				fprintf(WriteFile, "%s%i\n", "Col_Maths=", App->SBC_Scene->B_Object[Count]->S_Collectable[0]->Maths);
+				fprintf(WriteFile, "%s%i\n", "Col_Value=", App->SBC_Scene->B_Object[Count]->S_Collectable[0]->Value);
 			}
 
 			//---------------------------------------------------------------------------------- Move Entity
@@ -1605,6 +1607,8 @@ bool SB_Project::Load_Project_Objects()
 			strcpy(Object->S_Collectable[0]->Counter_Name, chr_Tag1);
 
 			App->SBC_Scene->B_Object[Count]->S_Collectable[0]->Counter_ID = App->Cl_Ini->GetInt(buff, "Col_Counter_ID", 0);
+			App->SBC_Scene->B_Object[Count]->S_Collectable[0]->Maths = App->Cl_Ini->GetInt(buff, "Col_Maths", 0);
+			App->SBC_Scene->B_Object[Count]->S_Collectable[0]->Value = App->Cl_Ini->GetInt(buff, "Col_Value", 0);
 
 		}
 
