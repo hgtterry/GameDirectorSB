@@ -828,7 +828,7 @@ bool SB_Properties::Update_ListView_Collectables()
 	char chr_CounterID[100];
 	_itoa(App->SBC_Scene->B_Object[index]->S_Collectable[0]->Counter_ID, chr_CounterID, 10);
 
-	const int NUM_ITEMS = 9;
+	const int NUM_ITEMS = 11;
 	const int NUM_COLS = 2;
 	string grid[NUM_COLS][NUM_ITEMS]; // string table
 	LV_ITEM pitem;
@@ -844,6 +844,8 @@ bool SB_Properties::Update_ListView_Collectables()
 	grid[0][6] = " ",				grid[1][6] = " ";
 	grid[0][7] = "Counter",			grid[1][7] = App->SBC_Scene->B_Object[index]->S_Collectable[0]->Counter_Name;
 	grid[0][8] = "ID",				grid[1][8] = chr_CounterID;
+	grid[0][9] = "Sum",				grid[1][9] = chr_CounterID;
+	grid[0][10] = "Value",			grid[1][10] = chr_CounterID;
 
 
 	ListView_DeleteAllItems(Properties_hLV);

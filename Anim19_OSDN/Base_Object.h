@@ -58,6 +58,8 @@ typedef struct Collectable_type
 	char Sound_File[MAX_PATH];
 	char Counter_Name[MAX_PATH];
 	bool Play;
+	int Sum; // [ 0 = None ]  [ 1 = Add ]  [ 2 = Subtract ]
+	int Value; 
 
 }Collectable_type;
 
