@@ -120,9 +120,6 @@ bool SB_Objects_Create::Add_Objects_From_File() // From File
 		App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[0]->FileViewItem);
 	}
 
-	//App->Cl_FileView->Select_Item(NULL);
-	
-
 	return 1;
 }
 
@@ -131,6 +128,14 @@ bool SB_Objects_Create::Add_Objects_From_File() // From File
 // *************************************************************************
 void SB_Objects_Create::Add_Objects_From_MeshViewer()
 {
+
+	if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables) // Collectables
+	{
+		App->SBC_Com_Collectables->Add_New_Collectable();
+		return;
+	}
+
+
 	int Index = App->SBC_Scene->Object_Count;
 
 	App->SBC_Scene->B_Object[Index] = new Base_Object();
@@ -147,8 +152,9 @@ void SB_Objects_Create::Add_Objects_From_MeshViewer()
 	Object->Type = App->SBC_MeshViewer->Physics_Type;
 	Object->Shape = App->SBC_MeshViewer->Physics_Shape;
 
+
 	App->SBC_Objects_Create->Dispatch_MeshViewer();
-	
+
 	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[Index]->FileViewItem);
 
 
@@ -156,6 +162,7 @@ void SB_Objects_Create::Add_Objects_From_MeshViewer()
 	App->SBC_Scene->Object_Count++;  // Must be last line
 
 	App->SBC_Scene->Scene_Modified = 1;
+	
 }
 
 // *************************************************************************

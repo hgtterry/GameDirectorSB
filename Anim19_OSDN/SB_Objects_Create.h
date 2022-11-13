@@ -47,6 +47,8 @@ public:
 	char DestinationFile[MAX_PATH];
 	char SourceFile[MAX_PATH];
 
+	char m_ResourcePath[MAX_PATH];
+
 protected:
 
 	void Add_Physics_Sphere(bool Dynamic, int Index);
@@ -63,6 +65,5 @@ protected:
 
 	bool First_Area_Start_Project();
 
-	char m_ResourcePath[MAX_PATH];
 };
 
