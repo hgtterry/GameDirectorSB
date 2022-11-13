@@ -131,6 +131,12 @@ bool SB_Com_Collectables::Create_Collectable_Entity(int Index)
 
 	App->SBC_Objects_Create->Set_Physics(Index);
 
+	App->SBC_Scene->B_Object[Index]->Altered = 0;
+	App->SBC_Scene->B_Object[Index]->Usage = Enums::Usage_Colectable;
+	App->SBC_Scene->B_Object[Index]->Phys_Body->setUserIndex(Enums::Usage_Colectable);
+	App->SBC_Scene->B_Object[Index]->Phys_Body->setUserIndex2(Index);
+	App->SBC_Scene->B_Object[Index]->Folder = Enums::Folder_Collectables;
+
 	return 1;
 }
 
