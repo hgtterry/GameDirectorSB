@@ -73,8 +73,10 @@ distribution.
 #include "SB_LookUps.h"
 #include "SB_Preferences.h"
 #include "SB_Display.h"
-#include "SB_Messages.h"
 #include "SB_Build.h"
+
+#include "SB_Messages.h"
+#include "SB_Com_Collectables.h"
 
 // :- Terry and Hazel Flanigan 2022
 
@@ -132,8 +134,11 @@ public:
 	SB_LookUps*				SBC_LookUps;
 	SB_Preferences*			SBC_Prefs;
 	SB_Display*				SBC_Display;
-	SB_Messages*			SBC_Messages;
 	SB_Build*				SBC_Build;
+
+	SB_Messages*			SBC_Messages;
+	SB_Com_Collectables*	SBC_Com_Collectables;
+
 
 	Com_Diaolgs*			Com_CDialogs;		// Common Dialogs for App [291221]
 	// ----------------------------------- 

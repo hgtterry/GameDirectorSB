@@ -60,6 +60,7 @@ bool SB_Messages::Add_New_Message()
 	App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
 
 	Create_Message_Entity(Index);
+
 	App->SBC_Scene->B_Object[Index]->Set_ImGui_Panel_Name();
 
 
