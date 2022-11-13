@@ -926,7 +926,7 @@ bool SB_Properties::Update_ListView_Counters()
 	grid[0][2] = "Pos_X",		grid[1][2] = chr_PosX;
 	grid[0][3] = "Pos_Y",		grid[1][3] = chr_PosY;
 	grid[0][4] = "Text",		grid[1][4] = App->SBC_Scene->B_Counter[index]->Text;
-	grid[0][5] = "Counter",		grid[1][5] = chr_Counter;
+	grid[0][5] = "Start_Value",	grid[1][5] = chr_Counter;
 	grid[0][6] = "Display",		grid[1][6] = chr_Display;
 
 
@@ -2152,12 +2152,12 @@ bool SB_Properties::Edit_Counters_OnClick(LPARAM lParam)
 		return 1;
 	}
 
-	result = strcmp(btext, "Counter");
+	result = strcmp(btext, "Start_Value");
 	if (result == 0)
 	{
-		strcpy(App->Cl_Dialogs->btext, "Start Counter Value");
+		strcpy(App->Cl_Dialogs->btext, "Start Value");
 		char buff[256];
-		sprintf(buff, "%i", App->SBC_Scene->B_Counter[Index]->Counter);
+		sprintf(buff, "%i", App->SBC_Scene->B_Counter[Index]->Start_Value);
 		strcpy(App->Cl_Dialogs->Chr_Int, buff);
 
 		App->Cl_Dialogs->Dialog_Int();
@@ -2167,6 +2167,7 @@ bool SB_Properties::Edit_Counters_OnClick(LPARAM lParam)
 			return TRUE;
 		}
 
+		App->SBC_Scene->B_Counter[Index]->Start_Value = App->Cl_Dialogs->mInt;
 		App->SBC_Scene->B_Counter[Index]->Counter = App->Cl_Dialogs->mInt;
 
 		App->SBC_Display->Mark_As_Altered_Counter(Index);

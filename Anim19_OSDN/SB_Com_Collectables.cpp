@@ -76,6 +76,8 @@ bool SB_Com_Collectables::Add_New_Collectable()
 
 	App->SBC_Scene->UniqueID_Object_Counter++; // Unique ID
 	App->SBC_Scene->Object_Count++;  // Must be last line
+
+	App->SBC_Scene->B_Object[Index]->Altered = 1;
 	App->SBC_Scene->Scene_Modified = 1;
 
 	return 1;
@@ -165,7 +167,6 @@ bool SB_Com_Collectables::Create_Collectable_Entity(int Index)
 
 	App->SBC_Objects_Create->Set_Physics(Index);
 
-	App->SBC_Scene->B_Object[Index]->Altered = 0;
 	App->SBC_Scene->B_Object[Index]->Folder = Enums::Folder_Collectables;
 
 	return 1;
@@ -176,6 +177,8 @@ bool SB_Com_Collectables::Create_Collectable_Entity(int Index)
 // *************************************************************************
 void SB_Com_Collectables::Set_Collectables_Defaults(int Index)
 {
+	App->SBC_Scene->B_Object[Index]->Altered = 0;
+
 	App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Counter_ID = 0;
 	strcpy(App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Counter_Name, "Not_Set");
 

@@ -125,6 +125,8 @@ bool SB_Display::Add_Counters_From_File() // From File
 		HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Counters_Folder, App->SBC_Scene->B_Counter[Count]->Panel_Name, Count, false);
 		App->SBC_Scene->B_Counter[Count]->FileViewItem = Temp;
 
+		App->SBC_Scene->B_Counter[Count]->Counter = App->SBC_Scene->B_Counter[Count]->Start_Value;
+
 		Count++;
 	}
 

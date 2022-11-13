@@ -531,9 +531,18 @@ void SB_Physics::Reset_Triggers(void)
 				App->SBC_Scene->B_Object[Count]->Phys_Body->getWorldTransform().setOrigin(btVector3(P_Pos.x, P_Pos.y, P_Pos.z));
 
 				App->SBC_Scene->B_Object[Count]->Triggered = 0;
+
 			}
 		}
 
+		Count++;
+	}
+
+	Count = 0;
+	Total = App->SBC_Scene->Counters_Count;
+	while (Count < Total)
+	{
+		App->SBC_Scene->B_Counter[Count]->Counter = App->SBC_Scene->B_Counter[Count]->Start_Value;
 		Count++;
 	}
 }

@@ -47,6 +47,7 @@ public:
 
 	char ImGui_Panel_Name[MAX_PATH];
 
+	int Start_Value;
 	int Counter;
 
 	float PosX;

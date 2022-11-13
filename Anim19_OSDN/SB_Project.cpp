@@ -956,6 +956,7 @@ bool SB_Project::Save_Display_Data()
 
 			fprintf(WriteFile, "%s%s\n", "Counter_Text=", App->SBC_Scene->B_Counter[Count]->Text);
 			fprintf(WriteFile, "%s%i\n", "Counter_Display=", App->SBC_Scene->B_Counter[Count]->Show_Panel_Flag);
+			fprintf(WriteFile, "%s%i\n", "Counter_Start=", App->SBC_Scene->B_Counter[Count]->Start_Value);
 
 			fprintf(WriteFile, "%s\n", " ");
 			new_Count++;
@@ -1764,6 +1765,8 @@ bool SB_Project::Load_Project_Counters()
 
 
 		App->SBC_Scene->B_Counter[Count]->Show_Panel_Flag = App->Cl_Ini->GetInt(buff, "Counter_Display", 0);
+
+		App->SBC_Scene->B_Counter[Count]->Start_Value = App->Cl_Ini->GetInt(buff, "Counter_Start", 0);
 		
 		Count++;
 	}

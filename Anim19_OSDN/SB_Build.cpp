@@ -611,7 +611,7 @@ void SB_Build::Create_Config_File(void)
 // *************************************************************************
 void SB_Build::Read_From_Config(void)
 {
-	char chr_Tag1[1024];
+	//char chr_Tag1[1024];
 	char StartFile[1024];
 	strcpy(StartFile, App->EquityDirecory_FullPath);
 	strcat(StartFile, "\\");
@@ -1352,6 +1352,8 @@ bool SB_Build::Build_Objects_Data()
 				fprintf(WriteFile, "%s%i\n", "Col_Play=", App->SBC_Scene->B_Object[Count]->S_Collectable[0]->Play);
 				fprintf(WriteFile, "%s%s\n", "Col_Counter_Name=", App->SBC_Scene->B_Object[Count]->S_Collectable[0]->Counter_Name);
 				fprintf(WriteFile, "%s%i\n", "Col_Counter_ID=", App->SBC_Scene->B_Object[Count]->S_Collectable[0]->Counter_ID);
+				fprintf(WriteFile, "%s%i\n", "Col_Maths=", App->SBC_Scene->B_Object[Count]->S_Collectable[0]->Maths);
+				fprintf(WriteFile, "%s%i\n", "Col_Value=", App->SBC_Scene->B_Object[Count]->S_Collectable[0]->Value);
 			}
 
 			//---------------------------------------------------------------------------------- Move Entity

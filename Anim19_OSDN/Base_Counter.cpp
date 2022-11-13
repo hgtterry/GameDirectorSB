@@ -42,6 +42,7 @@ Base_Counter::Base_Counter()
 	PosX = 300;
 	PosY = 300;
 
+	Start_Value = 0;
 	Counter = 0;
 
 	strcpy(Panel_Name, "Counter_1");
