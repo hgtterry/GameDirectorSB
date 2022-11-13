@@ -190,6 +190,7 @@
     <ClInclude Include="SB_Camera.h" />
     <ClInclude Include="SB_Collision.h" />
     <ClInclude Include="SB_Com_Collectables.h" />
+    <ClInclude Include="SB_Com_Messages.h" />
     <ClInclude Include="SB_Debug.h" />
     <ClInclude Include="SB_Dialogs.h" />
     <ClInclude Include="SB_Dimensions.h" />
@@ -202,7 +203,6 @@
     <ClInclude Include="SB_Markers.h" />
     <ClInclude Include="SB_MeshViewer.h" />
     <ClInclude Include="SB_MeshView_Listener.h" />
-    <ClInclude Include="SB_Messages.h" />
     <ClInclude Include="SB_Object.h" />
     <ClInclude Include="SB_Objects_Create.h" />
     <ClInclude Include="SB_Physics.h" />
@@ -258,6 +258,7 @@
     <ClCompile Include="SB_Camera.cpp" />
     <ClCompile Include="SB_Collision.cpp" />
     <ClCompile Include="SB_Com_Collectables.cpp" />
+    <ClCompile Include="SB_Com_Messages.cpp" />
     <ClCompile Include="SB_Debug.cpp" />
     <ClCompile Include="SB_Dialogs.cpp" />
     <ClCompile Include="SB_Dimensions.cpp" />
@@ -270,7 +271,6 @@
     <ClCompile Include="SB_Markers.cpp" />
     <ClCompile Include="SB_MeshViewer.cpp" />
     <ClCompile Include="SB_MeshView_Listener.cpp" />
-    <ClCompile Include="SB_Messages.cpp" />
     <ClCompile Include="SB_Object.cpp" />
     <ClCompile Include="SB_Objects_Create.cpp" />
     <ClCompile Include="SB_Physics.cpp" />

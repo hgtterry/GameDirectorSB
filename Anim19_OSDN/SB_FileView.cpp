@@ -1650,7 +1650,7 @@ void SB_FileView::Context_New(HWND hDlg)
 		bool Doit = App->SBC_Dialogs->Canceled;
 		if (Doit == 0)
 		{
-			App->SBC_Messages->Add_New_Message();
+			App->SBC_Com_Messages->Add_New_Message();
 		}
 
 		return;

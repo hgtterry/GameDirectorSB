@@ -75,8 +75,8 @@ distribution.
 #include "SB_Display.h"
 #include "SB_Build.h"
 
-#include "SB_Messages.h"
 #include "SB_Com_Collectables.h"
+#include "SB_Com_Messages.h"
 
 // :- Terry and Hazel Flanigan 2022
 
@@ -136,9 +136,8 @@ public:
 	SB_Display*				SBC_Display;
 	SB_Build*				SBC_Build;
 
-	SB_Messages*			SBC_Messages;
 	SB_Com_Collectables*	SBC_Com_Collectables;
-
+	SB_Com_Messages*		SBC_Com_Messages;
 
 	Com_Diaolgs*			Com_CDialogs;		// Common Dialogs for App [291221]
 	// ----------------------------------- 

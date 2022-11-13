@@ -1500,6 +1500,8 @@ bool SB_Build::Build_Display_Data()
 			fprintf(WriteFile, "%s%f,%f\n", "Counter_Pos=", x, y);
 
 			fprintf(WriteFile, "%s%s\n", "Counter_Text=", App->SBC_Scene->B_Counter[Count]->Text);
+			fprintf(WriteFile, "%s%i\n", "Counter_Display=", App->SBC_Scene->B_Counter[Count]->Show_Panel_Flag);
+			fprintf(WriteFile, "%s%i\n", "Counter_Start=", App->SBC_Scene->B_Counter[Count]->Start_Value);
 
 			fprintf(WriteFile, "%s\n", " ");
 			new_Count++;

@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2021 EquitySB and EquityME -- Inflanite Software W.T.Flanigan H.C.Flanigan
+Copyright (c) 2021 GameDirectorSB and EquityME -- HGTInflanite Software W.T.Flanigan H.C.Flanigan
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -23,20 +23,20 @@ distribution.
 
 #include "stdafx.h"
 #include "GD19_App.h"
-#include "SB_Messages.h"
+#include "SB_Com_Messages.h"
 
-SB_Messages::SB_Messages()
+SB_Com_Messages::SB_Com_Messages()
 {
 }
 
-SB_Messages::~SB_Messages()
+SB_Com_Messages::~SB_Com_Messages()
 {
 }
 
 // *************************************************************************
 //				Add_New_Message:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
-bool SB_Messages::Add_New_Message()
+bool SB_Com_Messages::Add_New_Message()
 {
 	char B_Name[MAX_PATH];
 	char ConNum[MAX_PATH];
@@ -80,7 +80,7 @@ bool SB_Messages::Add_New_Message()
 // **************************************************************************
 // *		Create_Message_Entity:- Terry and Hazel Flanigan 2022			*
 // **************************************************************************
-bool SB_Messages::Create_Message_Entity(int Index)
+bool SB_Com_Messages::Create_Message_Entity(int Index)
 {
 	char Mesh_File[255];
 	char ConNum[256];
@@ -167,3 +167,4 @@ bool SB_Messages::Create_Message_Entity(int Index)
 
 	return 1;
 }
+

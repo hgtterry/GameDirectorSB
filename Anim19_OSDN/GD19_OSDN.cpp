@@ -618,7 +618,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			bool Doit = App->GDCL_Dialogs->Canceled;
 			if (Doit == 0)
 			{*/
-				App->SBC_Messages->Add_New_Message();
+				App->SBC_Com_Messages->Add_New_Message();
 			//}
 			
 			return 1;

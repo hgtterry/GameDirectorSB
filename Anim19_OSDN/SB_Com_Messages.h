@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2021 EquitySB and EquityME -- Inflanite Software W.T.Flanigan H.C.Flanigan
+Copyright (c) 2021 GameDirectorSB and EquityME -- HGTInflanite Software W.T.Flanigan H.C.Flanigan
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -22,12 +22,12 @@ distribution.
 */
 
 #pragma once
-class SB_Messages
+class SB_Com_Messages
 {
 public:
 
-	SB_Messages();
-	~SB_Messages();
+	SB_Com_Messages();
+	~SB_Com_Messages();
 
 	bool Add_New_Message();
 	bool Create_Message_Entity(int Index);
