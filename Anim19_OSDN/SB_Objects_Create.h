@@ -35,7 +35,6 @@ public:
 	bool Add_New_Object(int Index, bool From_MeshViewer);
 	bool Add_New_Sound();
 	bool Add_New_Area();
-	bool Add_New_Move_Entity();
 	bool Add_New_Teleporter();
 
 	void Set_Physics(int Index);
@@ -59,9 +58,7 @@ protected:
 	btBvhTriangleMeshShape* create_New_Trimesh(int Index);
 
 	bool Create_Sound_Entity(int Index);
-	bool Create_Move_Entity(int Index);
 	bool Create_TeleportEntity(int Index);
-	bool Create_Colectable_Entity(int Index);
 
 	bool First_Area_Start_Project();
 

@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022 GameDirectorSB and EquityME -- Inflanite Software W.T.Flanigan H.C.Flanigan
+Copyright (c) 2022 GameDirectorSB and EquityME -- HGTInflanite Software W.T.Flanigan H.C.Flanigan
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -81,6 +81,7 @@ GD19_App::GD19_App(void)
 
 	SBC_Com_Collectables =	nullptr;
 	SBC_Com_Messages =		nullptr;
+	SBC_Com_MoveEntity =	nullptr;
 
 	// ---------------------------------------------------- 29/12/21
 	Com_CDialogs =		nullptr;
@@ -239,7 +240,8 @@ bool GD19_App::InitApp(void)
 
 	SBC_Com_Collectables =	new SB_Com_Collectables();
 	SBC_Com_Messages =		new SB_Com_Messages();
-
+	SBC_Com_MoveEntity = new SB_Com_MoveEntity();
+	
 	//--------------
 
 	SetBrushes_Fonts();
