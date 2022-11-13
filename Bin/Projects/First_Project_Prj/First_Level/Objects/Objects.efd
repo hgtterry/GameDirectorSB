@@ -130,7 +130,7 @@ Object_Type=2
 Object_Shape=1
 Object_Usage=12
 Mesh_Pos=-28.111946,-51.600002,0.643725
-Mesh_Scale=0.360001,0.360001,0.360001
+Mesh_Scale=1.000000,1.000000,1.000000
 Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
@@ -139,9 +139,11 @@ Col_Sound_Volume=0.500000
 Col_Play=1
 Col_Counter_Name=Counter_0
 Col_Counter_ID=0
+Col_Maths=1
+Col_Value=100
  
 [Object_7]
-Mesh_Name=Object_7
+Mesh_Name=Coll_2
 Mesh_File=Blueball.mesh
 Mesh_Resource_Path=
 Material_File=Blueball.material
@@ -157,8 +159,32 @@ Physics_Quat=1.000000,0.000000,0.000000,0.000000
 Col_Sound_File=footstep.ogg
 Col_Sound_Volume=0.500000
 Col_Play=1
-Col_Counter_Name=Not_Set
-Col_Counter_ID=-1
+Col_Counter_Name=Counter_0
+Col_Counter_ID=0
+Col_Maths=2
+Col_Value=35
+ 
+[Object_8]
+Mesh_Name=Coll_3
+Mesh_File=Blueball.mesh
+Mesh_Resource_Path=
+Material_File=Blueball.material
+Object_ID=9
+Object_Type=2
+Object_Shape=1
+Object_Usage=12
+Mesh_Pos=1.105255,-51.600006,103.503891
+Mesh_Scale=1.000000,1.000000,1.000000
+Mesh_Rot=0.000000,0.000000,0.000000
+Mesh_Quat=1.000000,0.000000,0.000000,0.000000
+Physics_Quat=1.000000,0.000000,0.000000,0.000000
+Col_Sound_File=footstep.ogg
+Col_Sound_Volume=0.500000
+Col_Play=1
+Col_Counter_Name=Counter_0
+Col_Counter_ID=0
+Col_Maths=1
+Col_Value=200
  
 [Counters]
-Objects_Count=8
+Objects_Count=9
