@@ -27,5 +27,7 @@ class SB_Com_Collectables
 public:
 	SB_Com_Collectables();
 	~SB_Com_Collectables();
+
+	void Set_Collectables_Defaults(int Index);
 };
 

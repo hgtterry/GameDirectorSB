@@ -433,21 +433,6 @@ void SB_Object::Set_Teleports_Defaults(int Index)
 	App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Physics_Rotation = App->SBC_Scene->B_Player[0]->Physics_Rotation;
 }
 
-// *************************************************************************
-// *	Set_Collectables_Sound_Defaults:- Terry and Hazel Flanigan 2022	   *
-// *************************************************************************
-void SB_Object::Set_Collectables_Sound_Defaults(int Index)
-{
-	App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Counter_ID = -1;
-	strcpy(App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Counter_Name, "Not_Set");
-
-	strcpy(App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Sound_File, "footstep.ogg");
-	App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Play = 1;
-	App->SBC_Scene->B_Object[Index]->S_Collectable[0]->SndVolume = 0.5;
-
-	App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Maths = 1; // Add
-	App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Value = 1;
-}
 
 // *************************************************************************
 //			Set_Move_Defaults:- Terry and Hazel Flanigan 2022		  	   *

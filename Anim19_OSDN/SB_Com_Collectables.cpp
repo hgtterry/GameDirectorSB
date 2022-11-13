@@ -32,3 +32,19 @@ SB_Com_Collectables::SB_Com_Collectables()
 SB_Com_Collectables::~SB_Com_Collectables()
 {
 }
+
+// *************************************************************************
+// *		Set_Collectables_Defaults:- Terry and Hazel Flanigan 2022	   *
+// *************************************************************************
+void SB_Com_Collectables::Set_Collectables_Defaults(int Index)
+{
+	App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Counter_ID = 0;
+	strcpy(App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Counter_Name, "Not_Set");
+
+	strcpy(App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Sound_File, "footstep.ogg");
+	App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Play = 1;
+	App->SBC_Scene->B_Object[Index]->S_Collectable[0]->SndVolume = 0.5;
+
+	App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Maths = 1; // Add
+	App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Value = 1;
+}

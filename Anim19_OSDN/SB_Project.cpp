@@ -1592,7 +1592,7 @@ bool SB_Project::Load_Project_Objects()
 		if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Colectable)
 		{
 			App->SBC_Scene->B_Object[Count]->S_Collectable[0] = new Collectable_type;
-			App->SBC_Object->Set_Collectables_Sound_Defaults(Count);
+			App->SBC_Com_Collectables->Set_Collectables_Defaults(Count);
 
 			App->Cl_Ini->GetString(buff, "Col_Sound_File", chr_Tag1, MAX_PATH);
 			strcpy(Object->S_Collectable[0]->Sound_File, chr_Tag1);
