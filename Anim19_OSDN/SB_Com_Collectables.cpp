@@ -34,6 +34,62 @@ SB_Com_Collectables::~SB_Com_Collectables()
 }
 
 // *************************************************************************
+//				Add_New_Object:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+bool SB_Com_Collectables::Add_New_Object(int Index, bool From_MeshViewer)
+{
+	char Mesh_File[255];
+	char ConNum[256];
+	char Ogre_Name[256];
+
+	Base_Object* Object = App->SBC_Scene->B_Object[Index];
+
+
+	strcpy_s(Ogre_Name, "GDEnt_");
+	_itoa(Index, ConNum, 10);
+	strcat(Ogre_Name, ConNum);
+
+	strcpy(Mesh_File, Object->Mesh_FileName);
+
+	Object->Object_Ent = App->Cl19_Ogre->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->SBC_Scene->Project_Resource_Group);
+	Object->Object_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	Object->Object_Node->attachObject(Object->Object_Ent);
+
+	Object->Object_Node->setVisible(true);
+
+	Object->Object_Node->setOrientation(Object->Mesh_Quat);
+
+	// If from MeshViewer Get Placement Method
+	if (From_MeshViewer == 1 && App->SBC_MeshViewer->Placement_Camera == 1)
+	{
+		Ogre::Vector3 Pos = App->SBC_Object->GetPlacement();
+		Object->Mesh_Pos = Pos;
+		Object->Object_Node->setPosition(Pos);
+	}
+	else
+	{
+		Object->Object_Node->setPosition(Object->Mesh_Pos);
+	}
+
+
+	App->SBC_Scene->Scene_Loaded = 1;
+
+
+	//---------------------- Static
+	if (Object->Type == Enums::Bullet_Type_Static)
+	{
+		if (Object->Shape == Enums::Shape_Box)
+		{
+			App->SBC_Objects_Create->Add_Physics_Box(false, Index);
+		}
+	}
+
+	ShowWindow(App->GD_Properties_Hwnd, 1);
+
+	return 1;
+}
+
+// *************************************************************************
 // *		Set_Collectables_Defaults:- Terry and Hazel Flanigan 2022	   *
 // *************************************************************************
 void SB_Com_Collectables::Set_Collectables_Defaults(int Index)

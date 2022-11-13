@@ -40,6 +40,8 @@ public:
 
 	void Set_Physics(int Index);
 
+	void Add_Physics_Box(bool Dynamic, int Index);
+
 	btBvhTriangleMeshShape* create_Area_Trimesh_New(int Index, Base_Area* Object);
 
 	char DestinationFile[MAX_PATH];
@@ -47,7 +49,6 @@ public:
 
 protected:
 
-	void Add_Physics_Box(bool Dynamic,int Index);
 	void Add_Physics_Sphere(bool Dynamic, int Index);
 	void Add_Physics_Capsule(bool Dynamic, int Index);
 	void Add_Physics_Cylinder(bool Dynamic, int Index);

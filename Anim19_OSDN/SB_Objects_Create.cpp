@@ -89,7 +89,9 @@ bool SB_Objects_Create::Add_Objects_From_File() // From File
 		}
 		else if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Colectable)
 		{
-			App->SBC_Objects_Create->Add_New_Object(Count, 0);
+			//App->SBC_Objects_Create->Add_New_Object(Count, 0);
+
+			App->SBC_Com_Collectables->Add_New_Object(Count, 0);
 
 			App->SBC_Scene->B_Object[Count]->Altered = 0;
 			App->SBC_Scene->B_Object[Count]->Usage = Enums::Usage_Colectable;

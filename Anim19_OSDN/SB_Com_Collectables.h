@@ -28,6 +28,7 @@ public:
 	SB_Com_Collectables();
 	~SB_Com_Collectables();
 
+	bool Add_New_Object(int Index, bool From_MeshViewer);
 	void Set_Collectables_Defaults(int Index);
 };
 
