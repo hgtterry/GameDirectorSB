@@ -237,7 +237,7 @@ void SB_Properties::Create_Properties_hLV(void)
 	int NUM_COLS = 2;
 	Properties_hLV = CreateWindowEx(0, WC_LISTVIEW, "",
 		WS_CHILD | WS_VISIBLE | WS_BORDER | WS_VSCROLL | WS_VSCROLL | LVS_REPORT | LVS_NOCOLUMNHEADER | LVS_SHOWSELALWAYS, 7, 50,
-		230, 240, Properties_Dlg_hWnd, 0, App->hInst, NULL);
+		230, 280, Properties_Dlg_hWnd, 0, App->hInst, NULL);
 
 	DWORD exStyles = LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES;
 
@@ -1989,7 +1989,6 @@ bool SB_Properties::Edit_Collectables_OnClick(LPARAM lParam)
 	result = strcmp(btext, "Maths");
 	if (result == 0)
 	{
-		char buff[20];
 		strcpy(App->Cl_Dialogs->btext, "Set Maths Option");
 
 		if (App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Maths == 1)
