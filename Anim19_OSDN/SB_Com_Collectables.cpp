@@ -34,9 +34,9 @@ SB_Com_Collectables::~SB_Com_Collectables()
 }
 
 // *************************************************************************
-//				Add_New_Object:- Terry and Hazel Flanigan 2022			   *
+//		Create_Collectable_Entity:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
-bool SB_Com_Collectables::Add_New_Object(int Index, bool From_MeshViewer)
+bool SB_Com_Collectables::Create_Collectable_Entity(int Index)
 {
 	char Mesh_File[255];
 	char ConNum[256];
@@ -59,32 +59,77 @@ bool SB_Com_Collectables::Add_New_Object(int Index, bool From_MeshViewer)
 
 	Object->Object_Node->setOrientation(Object->Mesh_Quat);
 
-	// If from MeshViewer Get Placement Method
-	if (From_MeshViewer == 1 && App->SBC_MeshViewer->Placement_Camera == 1)
-	{
-		Ogre::Vector3 Pos = App->SBC_Object->GetPlacement();
-		Object->Mesh_Pos = Pos;
-		Object->Object_Node->setPosition(Pos);
-	}
-	else
-	{
-		Object->Object_Node->setPosition(Object->Mesh_Pos);
-	}
-
-
+	Object->Object_Node->setPosition(Object->Mesh_Pos);
+	
 	App->SBC_Scene->Scene_Loaded = 1;
 
 
-	//---------------------- Static
-	if (Object->Type == Enums::Bullet_Type_Static)
-	{
-		if (Object->Shape == Enums::Shape_Box)
-		{
-			App->SBC_Objects_Create->Add_Physics_Box(false, Index);
-		}
-	}
+	////---------------------- Static
+	//if (Object->Type == Enums::Bullet_Type_Static)
+	//{
+	//	if (Object->Shape == Enums::Shape_Box)
+	//	{
+	//		App->SBC_Objects_Create->Add_Physics_Box(false, Index);
+	//	}
+	//}
 
-	ShowWindow(App->GD_Properties_Hwnd, 1);
+	Object->Type = Enums::Bullet_Type_Static;
+	Object->Shape = Enums::Shape_Box;
+	
+	AxisAlignedBox worldAAB = Object->Object_Ent->getBoundingBox();
+	worldAAB.transformAffine(Object->Object_Node->_getFullTransform());
+	Ogre::Vector3 Centre = worldAAB.getCenter();
+
+	Object->Physics_Pos = Ogre::Vector3(Centre.x, Centre.y, Centre.z);
+
+	btTransform startTransform;
+	startTransform.setIdentity();
+	startTransform.setRotation(btQuaternion(0, 0, 0, 1));
+
+	btScalar mass;
+	
+	mass = 0.0f;
+
+	btVector3 localInertia(0, 0, 0);
+	btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
+	startTransform.setOrigin(initialPosition);
+
+	Ogre::Vector3 Size = App->SBC_Object->GetMesh_BB_Size(Object->Object_Node);
+	float sx = Size.x / 2;
+	float sy = Size.y / 2;
+	float sz = Size.z / 2;
+
+	Object->Physics_Size = Ogre::Vector3(sx, sy, sz);
+
+	btCollisionShape* newRigidShape = new btBoxShape(btVector3(sx, sy, sz));
+	newRigidShape->calculateLocalInertia(mass, localInertia);
+
+	App->Cl_Bullet->collisionShapes.push_back(newRigidShape);
+
+	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
+
+	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, newRigidShape, localInertia);
+
+	Object->Phys_Body = new btRigidBody(rbInfo);
+	Object->Phys_Body->setRestitution(1.0);
+	Object->Phys_Body->setFriction(1.5);
+	Object->Phys_Body->setUserPointer(Object->Object_Node);
+	Object->Phys_Body->setWorldTransform(startTransform);
+
+	
+	Object->Usage = Enums::Usage_Static;
+	Object->Phys_Body->setUserIndex(Enums::Usage_Static);
+	Object->Phys_Body->setUserIndex2(Index);
+	
+
+	Object->Phys_Body->setCustomDebugColor(btVector3(0, 1, 1));
+
+	int f = Object->Phys_Body->getCollisionFlags();
+	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+
+	App->Cl_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
+
+	App->SBC_Objects_Create->Set_Physics(Index);
 
 	return 1;
 }
