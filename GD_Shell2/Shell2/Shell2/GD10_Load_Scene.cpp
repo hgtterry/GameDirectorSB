@@ -338,6 +338,8 @@ bool GD10_Load_Scene::Load_Project_Objects()
 			strcpy(Object->S_Collectable[0]->Counter_Name, chr_Tag1);
 
 			App->GDCL_Scene_Data->B_Object[Count]->S_Collectable[0]->Counter_ID = App->CL10_Ini->GetInt(buff, "Col_Counter_ID", 0);
+			App->GDCL_Scene_Data->B_Object[Count]->S_Collectable[0]->Maths = App->CL10_Ini->GetInt(buff, "Col_Maths", 0);
+			App->GDCL_Scene_Data->B_Object[Count]->S_Collectable[0]->Value = App->CL10_Ini->GetInt(buff, "Col_Value", 0);
 
 		}
 

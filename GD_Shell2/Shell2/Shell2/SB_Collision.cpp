@@ -364,6 +364,7 @@ bool SB_Collision::Do_Teleport(int Index)
 // *************************************************************************
 bool SB_Collision::Do_Collectable(int Index)
 {
+	
 	App->GDCL_Scene_Data->B_Object[Index]->Triggered = 1;
 
 	App->GDCL_Scene_Data->B_Object[Index]->Object_Ent->setVisible(0);
@@ -380,13 +381,25 @@ bool SB_Collision::Do_Collectable(int Index)
 		App->GDCL_Scene_Data->B_Object[Index]->S_Collectable[0]->SndFile = App->GDCL_SoundMgr->SoundEngine->play2D(Sound, false, true, true);
 		App->GDCL_Scene_Data->B_Object[Index]->S_Collectable[0]->SndFile->setVolume(App->GDCL_Scene_Data->B_Object[Index]->S_Collectable[0]->SndVolume);
 		App->GDCL_Scene_Data->B_Object[Index]->S_Collectable[0]->SndFile->setIsPaused(false);
+
 	}
 
 	if (App->GDCL_Scene_Data->B_Object[Index]->S_Collectable[0]->Counter_ID > -1)
 	{
 		int CouterID = App->GDCL_Scene_Data->B_Object[Index]->S_Collectable[0]->Counter_ID;
 
-		//App->GDCL_Scene_Data->B_Counter[CouterID]->Counter++;
+		if (App->GDCL_Scene_Data->B_Object[Index]->S_Collectable[0]->Maths == 1)
+		{
+			App->GDCL_Scene_Data->B_Counter[CouterID]->Counter += App->GDCL_Scene_Data->B_Object[Index]->S_Collectable[0]->Value;
+			App->CL_Vm_ImGui->Show_Debug = 1;
+			return 1;
+		}
+
+		if (App->GDCL_Scene_Data->B_Object[Index]->S_Collectable[0]->Maths == 2)
+		{
+			App->GDCL_Scene_Data->B_Counter[CouterID]->Counter += -App->GDCL_Scene_Data->B_Object[Index]->S_Collectable[0]->Value;
+			return 1;
+		}
 	}
 
 	return 1;
