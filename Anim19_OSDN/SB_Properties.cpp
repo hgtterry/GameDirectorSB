@@ -1851,7 +1851,10 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 	result = strcmp(btext, "Trigger_Val");
 	if (result == 0)
 	{
-		strcpy(App->Cl_Dialogs->btext, "Trigger Value");
+		App->SBC_Dialogs->Dialog_Counter();
+
+
+		/*strcpy(App->Cl_Dialogs->btext, "Trigger Value");
 
 		char buff[256];
 		sprintf(buff, "%i", App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Trigger_Value);
@@ -1864,7 +1867,7 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 			return TRUE;
 		}
 
-		App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Trigger_Value = App->Cl_Dialogs->mInt;
+		App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Trigger_Value = App->Cl_Dialogs->mInt;*/
 
 		Mark_As_Altered(Index);
 

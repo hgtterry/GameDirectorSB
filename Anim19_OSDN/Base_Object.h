@@ -34,6 +34,8 @@ typedef struct Move_Type {
 	Ogre::Vector3 MeshPos;
 	Ogre::Vector3 PhysicsPos;
 	int Trigger_Value;
+	int Counter_ID;
+	char Counter_Name[MAX_PATH];
 
 }Move_Type;
 

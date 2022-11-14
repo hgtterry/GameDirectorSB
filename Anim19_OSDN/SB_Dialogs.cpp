@@ -287,7 +287,7 @@ LRESULT CALLBACK SB_Dialogs::Dialog_DropGen_Proc(HWND hDlg, UINT message, WPARAM
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDC_LISTSELECTION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_STSELECTION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STSELECTED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SetDlgItemText(hDlg, IDC_TITLE, (LPCTSTR)App->Cl_Dialogs->btext);
 		SetDlgItemText(hDlg, IDC_STSELECTED, (LPCTSTR)App->SBC_Dialogs->Chr_DropText);
@@ -349,7 +349,7 @@ LRESULT CALLBACK SB_Dialogs::Dialog_DropGen_Proc(HWND hDlg, UINT message, WPARAM
 			return (UINT)App->AppBackground;
 		}
 
-		if (GetDlgItem(hDlg, IDC_STSELECTION) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_STSELECTED) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -673,6 +673,170 @@ LRESULT CALLBACK SB_Dialogs::Front_Screen_Proc(HWND hDlg, UINT message, WPARAM w
 
 		break;
 
+	}
+	return FALSE;
+}
+
+// *************************************************************************
+// *	  		Dialog_Counter()  	Terry	Bernie							   *
+// *************************************************************************
+bool SB_Dialogs::Dialog_Counter()
+{
+	/*if (Active_Dlg_Int == 1)
+	{
+		return 1;
+	}
+
+	Active_Dlg_Int = 1;*/
+
+	DialogBox(App->hInst, (LPCTSTR)IDD_PROPS_COUNTER, App->Fdlg, (DLGPROC)Dialog_Counter_Proc);
+	return 1;
+}
+// *************************************************************************
+// *        		Dialog_Counter_Proc  Terry	Bernie					   *
+// *************************************************************************
+LRESULT CALLBACK SB_Dialogs::Dialog_Counter_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		App->SetTitleBar(hDlg);
+
+		SendDlgItemMessage(hDlg, IDC_EDTRIGGERVALUE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STCOUNTERNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_COUNTERID, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		if (App->SBC_Properties->Edit_Category == Enums::Edit_Move_Entity)
+		{
+			int Index = App->SBC_Properties->Current_Selected_Object;
+
+			char chr_TriggerVal[20];
+			_itoa(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Trigger_Value, chr_TriggerVal, 10);
+			SetDlgItemText(hDlg, IDC_EDTRIGGERVALUE, (LPCTSTR)chr_TriggerVal);
+
+			char chr_CounterName[20];
+			strcpy(chr_CounterName, App->SBC_Scene->B_Counter[App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Counter_ID]->Panel_Name);
+			SetDlgItemText(hDlg, IDC_STCOUNTERNAME, (LPCTSTR)chr_CounterName);
+			
+			char chr_CounterID[20];
+			_itoa(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Counter_ID, chr_CounterID, 10);
+			SetDlgItemText(hDlg, IDC_ST_COUNTERID, (LPCTSTR)chr_CounterID);
+		}
+
+		return TRUE;
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+
+		if (GetDlgItem(hDlg, IDC_STCOUNTERNAME) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->Brush_White;
+		}
+
+		if (GetDlgItem(hDlg, IDC_ST_COUNTERID) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->Brush_White;
+		}
+		
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		/*if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}*/
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+
+		if (LOWORD(wParam) == IDC_BT_COUNTER)
+		{
+			int Index = App->SBC_Properties->Current_Selected_Object;
+
+			strcpy(App->Cl_Dialogs->btext, "Select Counter");
+
+			if (App->SBC_Properties->Edit_Category == Enums::Edit_Move_Entity)
+			{
+				int Counter_Index = App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Counter_ID;
+
+				strcpy(App->SBC_Dialogs->Chr_DropText, App->SBC_Scene->B_Counter[Counter_Index]->Panel_Name);
+				App->SBC_Dialogs->DropList_Data = Enums::DropDialog_Counters;
+				App->SBC_Dialogs->Dialog_DropGen();
+
+				if (App->SBC_Dialogs->Canceled == 0)
+				{
+					strcpy(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Counter_Name, App->SBC_Dialogs->Chr_DropText);
+
+					int CounterIndex = App->SBC_Display->GetIndex_By_Name(App->SBC_Dialogs->Chr_DropText);
+
+					App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Counter_ID = CounterIndex;
+
+				}
+
+			}
+			return TRUE;
+		}
+
+		
+		if (LOWORD(wParam) == IDOK)
+		{
+			char buff[256];
+			int result = 0;
+			GetDlgItemText(hDlg, IDC_EDTRIGGERVALUE, (LPTSTR)buff, 256);
+			strcpy(App->Cl_Dialogs->Chr_Int, buff);
+			App->Cl_Dialogs->mInt = atoi(buff);
+
+			if (App->SBC_Properties->Edit_Category == Enums::Edit_Move_Entity)
+			{
+				int Index = App->SBC_Properties->Current_Selected_Object;
+				App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Trigger_Value = atoi(buff);
+			}
+
+
+
+			//App->Cl_Dialogs->Canceled = 0;
+			//App->Cl_Dialogs->Active_Dlg_Int = 0;
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			//App->Cl_Dialogs->Canceled = 1;
+			//App->Cl_Dialogs->Active_Dlg_Int = 0;
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		break;
 	}
 	return FALSE;
 }

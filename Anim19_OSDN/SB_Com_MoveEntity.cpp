@@ -184,6 +184,8 @@ void SB_Com_MoveEntity::Set_Move_Defaults(int Index)
 	strcpy(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_Name, "None");
 
 	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Trigger_Value = 0;
+	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Counter_ID = 0;
+	strcpy(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Counter_Name, "None");
 
 	return;
 }
