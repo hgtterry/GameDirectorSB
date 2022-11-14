@@ -4,6 +4,7 @@
 #include "Base_Player.h"
 #include "Base_Locations.h"
 #include "Base_Object.h"
+#include "Base_Counter.h"
 
 //==================================== Application Flags Structure	
 typedef struct Flags_Type 
@@ -254,6 +255,8 @@ public:
 	Base_Area*				B_Area[100];
 	Base_Locations*			B_Locations[20];
 	Base_Object*			B_Object[100];
+	Base_Counter*			B_Counter[20];
+
 	//-----------------------------------------------------------------
 	bool Start_Scene();
 
@@ -285,6 +288,7 @@ public:
 	Player_Location_type*	S_Player_Locations[20];
 
 	int ObjectCount;
+	int Counters_Count;
 	int Stock_Messgae_Count;
 	int Stock_Sound_Count;
 	int NewObjectID;

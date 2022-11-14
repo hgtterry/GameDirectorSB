@@ -108,12 +108,11 @@ bool GD10_Load_Scene::Load_Project()
 	}
 
 	//// ------------------------------------- Counters
-	//if (Options->Has_Counters > 0)
-	//{
-	//	Load_Project_Counters();
-	//	App->SBC_Display->Add_Counters_From_File();
-
-	//}
+	if (Options->Has_Counters > 0)
+	{
+		Load_Project_Counters();
+		App->SBC_Display->Add_Counters_From_File();
+	}
 
 	//App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
 
@@ -136,6 +135,79 @@ bool GD10_Load_Scene::Load_Project()
 	return 1;
 }
 
+// *************************************************************************
+// *	  	Load_Project_Counters:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+bool GD10_Load_Scene::Load_Project_Counters()
+{
+
+	char Object_Ini_Path[MAX_PATH];
+	char chr_Tag1[MAX_PATH];
+	int Counters_Count = 0;
+
+	float w = 0;
+	float x = 0;
+	float y = 0;
+	float z = 0;
+
+	strcpy(Object_Ini_Path, m_Project_Sub_Folder);
+	strcat(Object_Ini_Path, "\\");
+
+	strcat(Object_Ini_Path, m_Level_Name);
+	strcat(Object_Ini_Path, "\\");
+
+	strcat(Object_Ini_Path, "Display");
+	strcat(Object_Ini_Path, "\\");
+
+	//---------------------------------------------------
+
+	strcat(Object_Ini_Path, "Counters.edf");
+
+	App->CL10_Ini->SetPathName(Object_Ini_Path);
+
+	Counters_Count = App->CL10_Ini->GetInt("Counters", "Counters_Count", 0);
+
+	int Count = 0;
+
+	while (Count < Counters_Count)
+	{
+		App->GDCL_Scene_Data->B_Counter[Count] = new Base_Counter();
+		App->SBC_Display->Set_Counter_Defaults(Count);
+
+		char n_buff[255];
+		char buff[255];
+		strcpy(buff, "Counter_");
+		_itoa(Count, n_buff, 10);
+		strcat(buff, n_buff);
+
+		App->CL10_Ini->GetString(buff, "Counter_Name", chr_Tag1, MAX_PATH);
+		strcpy(App->GDCL_Scene_Data->B_Counter[Count]->Panel_Name, chr_Tag1);
+
+
+		App->GDCL_Scene_Data->B_Counter[Count]->Unique_ID = App->CL10_Ini->GetInt(buff, "Counter_ID", 0);
+
+		App->CL10_Ini->GetString(buff, "Counter_Pos", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f", &x, &y);
+		App->GDCL_Scene_Data->B_Counter[Count]->PosX = x;
+		App->GDCL_Scene_Data->B_Counter[Count]->PosY = y;
+
+		App->CL10_Ini->GetString(buff, "Counter_Text", chr_Tag1, MAX_PATH);
+		strcpy(App->GDCL_Scene_Data->B_Counter[Count]->Text, chr_Tag1);
+
+		App->GDCL_Scene_Data->B_Counter[Count]->Set_ImGui_Panel_Name();
+
+
+		App->GDCL_Scene_Data->B_Counter[Count]->Show_Panel_Flag = App->CL10_Ini->GetInt(buff, "Counter_Display", 0);
+
+		App->GDCL_Scene_Data->B_Counter[Count]->Start_Value = App->CL10_Ini->GetInt(buff, "Counter_Start", 0);
+
+		Count++;
+	}
+
+	App->GDCL_Scene_Data->Counters_Count = Count;
+
+	return 1;
+}
 // *************************************************************************
 // *	  	Load_Project_Objects:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************

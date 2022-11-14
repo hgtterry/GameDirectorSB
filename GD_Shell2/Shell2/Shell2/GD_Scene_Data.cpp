@@ -15,6 +15,8 @@ GD_Scene_Data::GD_Scene_Data(void)
 
 	Player_Added = 0;
 	Player_Count = 0;
+
+	Counters_Count = 0;
 	//----------------------------------------------------------------------
 	SceneLoaded = 0;
 	S_Flags[0] = NULL;

@@ -49,14 +49,15 @@ BT_App::BT_App(void)
 	CL10_Load_Scene = NULL;
 	CL10_Ini = NULL;
 
-	SBC_Player = nullptr;
-	SBC_Aera = nullptr;
-	SBC_Physics = nullptr;
-	SBC_Object = nullptr;
+	SBC_Player =		nullptr;
+	SBC_Aera =			nullptr;
+	SBC_Physics =		nullptr;
+	SBC_Object =		nullptr;
 	SBC_Objects_Create = nullptr;
-	SBC_Messages = nullptr;
-	SBC_Collision = nullptr;
-	CL_Vm_ImGui = nullptr;
+	SBC_Messages =		nullptr;
+	SBC_Collision =		nullptr;
+	SBC_Display =		nullptr;
+	CL_Vm_ImGui =		nullptr;
 }
 
 BT_App::~BT_App(void)
@@ -113,6 +114,8 @@ bool BT_App::InitApp(void)
 	SBC_Objects_Create =		new SB_Objects_Create();
 	SBC_Messages =				new SB_Messages();
 	SBC_Collision =				new SB_Collision();
+	SBC_Display =				new SB_Display();
+
 	CL_Vm_ImGui =				new VM_ImGui();
 
 

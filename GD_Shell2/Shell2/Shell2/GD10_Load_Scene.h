@@ -22,6 +22,7 @@ public:
 	bool Load_Project_Player();
 	bool Load_Project_Aera();
 	bool Load_Project_Objects();
+	bool Load_Project_Counters();
 
 	void Set_Paths();
 

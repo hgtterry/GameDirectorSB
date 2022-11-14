@@ -44,7 +44,7 @@ public:
 	bool frameEnded(const FrameEvent& evt);
 	bool frameRenderingQueued(const FrameEvent& evt);
 
-	bool Update_Game_Logic(const FrameEvent& evt);
+	bool Update_Game_Logic(float DeltaTime);
 
 	void WorldMode(float DeltaTime);
 	void ModelMode(float DeltaTime);
@@ -64,6 +64,8 @@ public:
 	bool Capture_LeftMouse(void);
 
 	bool SelectEntity_World(void);
+
+	bool Block_RenderingQueued;
 
 	Ogre::Camera* mCam;
 	Ogre::Camera* Pl_mDummyCamera;

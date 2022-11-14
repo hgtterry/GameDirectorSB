@@ -103,7 +103,19 @@ bool BT_PhysicsListener::frameStarted(const FrameEvent& evt)
 	App->Ogre17->Get_View_Height_Width();
 	App->Ogre17->m_imgui.NewFrame(evt.timeSinceLastFrame, (float)View_Width, (float)View_Height);
 
+
 	int Count = 0;
+	while (Count < App->GDCL_Scene_Data->Counters_Count)
+	{
+		if (App->GDCL_Scene_Data->B_Counter[Count]->Show_Panel_Flag == 1)
+		{
+			App->GDCL_Scene_Data->B_Counter[Count]->Render_ImGui_Panel();
+		}
+
+		Count++;
+	}
+
+	Count = 0;
 	while (Count < App->GDCL_Scene_Data->Object_Count)
 	{
 		if (App->GDCL_Scene_Data->B_Object[Count]->Usage == Enums::Usage_Message)

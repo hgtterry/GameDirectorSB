@@ -117,6 +117,7 @@
     <ClCompile Include="..\..\..\Anim19_OSDN\Common\imGui\ImGui_cpp\imgui_draw.cpp" />
     <ClCompile Include="..\..\..\Anim19_OSDN\Common\imGui\ImGui_cpp\imgui_widgets.cpp" />
     <ClCompile Include="Base_Area.cpp" />
+    <ClCompile Include="Base_Counter.cpp" />
     <ClCompile Include="Base_Locations.cpp" />
     <ClCompile Include="Base_Object.cpp" />
     <ClCompile Include="Base_Player.cpp" />
@@ -134,6 +135,7 @@
     <ClCompile Include="GD_Utilities.cpp" />
     <ClCompile Include="SB_Aera.cpp" />
     <ClCompile Include="SB_Collision.cpp" />
+    <ClCompile Include="SB_Display.cpp" />
     <ClCompile Include="SB_Messages.cpp" />
     <ClCompile Include="SB_Object.cpp" />
     <ClCompile Include="SB_Objects_Create.cpp" />
@@ -148,6 +150,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base_Area.h" />
+    <ClInclude Include="Base_Counter.h" />
     <ClInclude Include="Base_Locations.h" />
     <ClInclude Include="Base_Object.h" />
     <ClInclude Include="Base_Player.h" />
@@ -166,6 +169,7 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SB_Aera.h" />
     <ClInclude Include="SB_Collision.h" />
+    <ClInclude Include="SB_Display.h" />
     <ClInclude Include="SB_Messages.h" />
     <ClInclude Include="SB_Object.h" />
     <ClInclude Include="SB_Objects_Create.h" />
