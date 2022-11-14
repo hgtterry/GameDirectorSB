@@ -529,7 +529,7 @@ void SB_Dialogs::List_Maths(HWND List)
 }
 
 // *************************************************************************
-// *			List_Display:- Terry and Hazel Flanigan 2022		 		   *
+// *			List_Display:- Terry and Hazel Flanigan 2022		 	   *
 // *************************************************************************
 void SB_Dialogs::List_Display(HWND List)
 {
@@ -551,7 +551,7 @@ void SB_Dialogs::Front_Screen()
 }
 
 // *************************************************************************
-// *		Front_Screen_Proc:- Terry and Hazel Flanigan 2022	  			   *
+// *		Front_Screen_Proc:- Terry and Hazel Flanigan 2022	  		   *
 // *************************************************************************
 LRESULT CALLBACK SB_Dialogs::Front_Screen_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -678,7 +678,7 @@ LRESULT CALLBACK SB_Dialogs::Front_Screen_Proc(HWND hDlg, UINT message, WPARAM w
 }
 
 // *************************************************************************
-// *	  		Dialog_Counter()  	Terry	Bernie							   *
+// *	  	Dialog_Counter():- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 bool SB_Dialogs::Dialog_Counter()
 {
@@ -692,8 +692,9 @@ bool SB_Dialogs::Dialog_Counter()
 	DialogBox(App->hInst, (LPCTSTR)IDD_PROPS_COUNTER, App->Fdlg, (DLGPROC)Dialog_Counter_Proc);
 	return 1;
 }
+
 // *************************************************************************
-// *        		Dialog_Counter_Proc  Terry	Bernie					   *
+// *        Dialog_Counter_Proc:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 LRESULT CALLBACK SB_Dialogs::Dialog_Counter_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -707,23 +708,14 @@ LRESULT CALLBACK SB_Dialogs::Dialog_Counter_Proc(HWND hDlg, UINT message, WPARAM
 		SendDlgItemMessage(hDlg, IDC_EDTRIGGERVALUE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STCOUNTERNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_COUNTERID, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
-		if (App->SBC_Properties->Edit_Category == Enums::Edit_Move_Entity)
-		{
-			int Index = App->SBC_Properties->Current_Selected_Object;
-
-			char chr_TriggerVal[20];
-			_itoa(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Trigger_Value, chr_TriggerVal, 10);
-			SetDlgItemText(hDlg, IDC_EDTRIGGERVALUE, (LPCTSTR)chr_TriggerVal);
-
-			char chr_CounterName[20];
-			strcpy(chr_CounterName, App->SBC_Scene->B_Counter[App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Counter_ID]->Panel_Name);
-			SetDlgItemText(hDlg, IDC_STCOUNTERNAME, (LPCTSTR)chr_CounterName);
-			
-			char chr_CounterID[20];
-			_itoa(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Counter_ID, chr_CounterID, 10);
-			SetDlgItemText(hDlg, IDC_ST_COUNTERID, (LPCTSTR)chr_CounterID);
-		}
+		SendDlgItemMessage(hDlg, IDC_BT_COUNTER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STTRIGGERVALUE, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STMATHS, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		
+		SendDlgItemMessage(hDlg, IDC_STBANNER, WM_SETFONT, (WPARAM)App->Font_Banner, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_CT_MATHS, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		
+		App->SBC_Dialogs->UpDate_Counter_Dialog(hDlg);
 
 		return TRUE;
 	}
@@ -745,6 +737,38 @@ LRESULT CALLBACK SB_Dialogs::Dialog_Counter_Proc(HWND hDlg, UINT message, WPARAM
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->Brush_White;
 		}
+
+		if (GetDlgItem(hDlg, IDC_STMATHS) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->Brush_White;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STTRIGGERVALUE) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_ST_CT_MATHS) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STBANNER) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
 		
 		return FALSE;
 	}
@@ -758,7 +782,14 @@ LRESULT CALLBACK SB_Dialogs::Dialog_Counter_Proc(HWND hDlg, UINT message, WPARAM
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		/*if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BT_COUNTER && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
@@ -770,7 +801,7 @@ LRESULT CALLBACK SB_Dialogs::Dialog_Counter_Proc(HWND hDlg, UINT message, WPARAM
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
-		}*/
+		}
 
 		return CDRF_DODEFAULT;
 	}
@@ -801,7 +832,9 @@ LRESULT CALLBACK SB_Dialogs::Dialog_Counter_Proc(HWND hDlg, UINT message, WPARAM
 
 				}
 
+				App->SBC_Dialogs->UpDate_Counter_Dialog(hDlg);
 			}
+
 			return TRUE;
 		}
 
@@ -839,4 +872,29 @@ LRESULT CALLBACK SB_Dialogs::Dialog_Counter_Proc(HWND hDlg, UINT message, WPARAM
 		break;
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *	  	UpDate_Counter_Dialog:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+bool SB_Dialogs::UpDate_Counter_Dialog(HWND hDlg)
+{
+
+	if (App->SBC_Properties->Edit_Category == Enums::Edit_Move_Entity)
+	{
+		int Index = App->SBC_Properties->Current_Selected_Object;
+
+		char chr_TriggerVal[20];
+		_itoa(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Trigger_Value, chr_TriggerVal, 10);
+		SetDlgItemText(hDlg, IDC_EDTRIGGERVALUE, (LPCTSTR)chr_TriggerVal);
+
+		char chr_CounterName[20];
+		strcpy(chr_CounterName, App->SBC_Scene->B_Counter[App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Counter_ID]->Panel_Name);
+		SetDlgItemText(hDlg, IDC_STCOUNTERNAME, (LPCTSTR)chr_CounterName);
+
+		char chr_CounterID[20];
+		_itoa(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Counter_ID, chr_CounterID, 10);
+		SetDlgItemText(hDlg, IDC_ST_COUNTERID, (LPCTSTR)chr_CounterID);
+	}
+	return 1;
 }
