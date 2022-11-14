@@ -57,6 +57,7 @@ public:
 
 	void showDebugOverlay(bool show);
 	
+	bool Update_Game_Logic(float DeltaTime);
 
 	int	Selected_Entity_Index;
 
@@ -83,7 +84,7 @@ public:
 	float		Delta;
 	bool		DoProjectionMove;
 	bool		ProjectionDirection;
-
+	bool		Block_RenderingQueued;
 	float		Pl_DeltaMouse;
 	bool		Pl_LeftMouseDown;
 	bool		Pl_RightMouseDown;

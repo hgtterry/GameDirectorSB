@@ -391,7 +391,6 @@ bool SB_Collision::Do_Collectable(int Index)
 		if (App->GDCL_Scene_Data->B_Object[Index]->S_Collectable[0]->Maths == 1)
 		{
 			App->GDCL_Scene_Data->B_Counter[CouterID]->Counter += App->GDCL_Scene_Data->B_Object[Index]->S_Collectable[0]->Value;
-			App->CL_Vm_ImGui->Show_Debug = 1;
 			return 1;
 		}
 

@@ -70,6 +70,8 @@ BT_PhysicsListener::BT_PhysicsListener(Camera* cam,Terrain * terrain)
 
 	Debug_FPS = 1;
 
+	Block_RenderingQueued = 0;
+
 	Mouse_X = 0;
 
 	toggleTimer = 0.01;
@@ -100,110 +102,8 @@ BT_PhysicsListener::~BT_PhysicsListener(void)
 // *************************************************************************
 bool BT_PhysicsListener::frameStarted(const FrameEvent& evt)
 {
-	App->Ogre17->Get_View_Height_Width();
-	App->Ogre17->m_imgui.NewFrame(evt.timeSinceLastFrame, (float)View_Width, (float)View_Height);
+	Update_Game_Logic(evt.timeSinceLastFrame);
 
-
-	int Count = 0;
-	while (Count < App->GDCL_Scene_Data->Counters_Count)
-	{
-		if (App->GDCL_Scene_Data->B_Counter[Count]->Show_Panel_Flag == 1)
-		{
-			App->GDCL_Scene_Data->B_Counter[Count]->Render_ImGui_Panel();
-		}
-
-		Count++;
-	}
-
-	Count = 0;
-	while (Count < App->GDCL_Scene_Data->Object_Count)
-	{
-		if (App->GDCL_Scene_Data->B_Object[Count]->Usage == Enums::Usage_Message)
-		{
-			if (App->GDCL_Scene_Data->B_Object[Count]->Show_Message_Flag == 1)
-			{
-				App->GDCL_Scene_Data->B_Object[Count]->Render_ImGui_Panel();
-			}
-		}
-
-		Count++;
-	}
-
-	App->CL_Vm_ImGui->ImGui_Render_Loop();
-
-	if ( GD_Run_Physics == 1)
-	{
-		{
-			App->GDCL_Bullet->dynamicsWorld->stepSimulation(evt.timeSinceLastFrame*2); //suppose you have 60 frames per second
-
-			//App->GDCL_Player->PostStep(NULL);
-
-			for (int j =App->GDCL_Bullet->dynamicsWorld->getNumCollisionObjects()-1; j>=0 ;j--)
-			{
-				btCollisionObject* obj = App->GDCL_Bullet->dynamicsWorld->getCollisionObjectArray()[j];
-				btRigidBody* body = btRigidBody::upcast(obj);
-				btTransform trans;
-				if (body && body->getMotionState())
-				{
-					int UI = body->getUserIndex();
-					int Index = body->getUserIndex2();
-
-					/*if (UI == 20)
-					{
-						body->getMotionState()->getWorldTransform(trans);
-						void *userPointer = body->getUserPointer();
-						btQuaternion orientation = trans.getRotation();
-						App->Cl_Ogre->Test_Node->setPosition(Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ()));
-						App->Cl_Ogre->Test_Node->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
-					}*/
-
-					if (UI == Enums::Usage_Dynamic)
-					{
-						body->getMotionState()->getWorldTransform(trans);
-						btQuaternion orientation = trans.getRotation();
-
-						Ogre::Vector3 BB = App->GDCL_Add_Objects->GetMesh_Center(Index,App->GDCL_Scene_Data->S_Object[Index]->OgreNode);
-						Ogre::Vector3 WC = App->GDCL_Utilities->Get_BoundingBox_World_Centre(Index);
-
-						float x = trans.getOrigin().getX();
-						float y = trans.getOrigin().getY();
-						float z = trans.getOrigin().getZ();
-
-						App->GDCL_Scene_Data->S_Object[Index]->OgreNode->setPosition(Ogre::Vector3(x,y,z));
-						App->GDCL_Scene_Data->S_Object[Index]->OgreNode->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
-					
-						WC = App->GDCL_Utilities->Get_BoundingBox_World_Centre(Index);
-
-						Ogre::Vector3 NewPos = Ogre::Vector3(x,y,z)-WC;
-						App->GDCL_Scene_Data->S_Object[Index]->OgreNode->setPosition((Ogre::Vector3(x,y,z))+NewPos);
-					}
-
-					/*if (UI == Enums::Usage_Player && App->GDCL_Player->PlayerAdded == 1)
-					{
-						body->getMotionState()->getWorldTransform(trans);
-						void *userPointer = body->getUserPointer();
-						btQuaternion orientation = trans.getRotation();
-						App->GDCL_Player->Player_Node->setPosition(Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ()));
-						App->GDCL_Player->Player_Node->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
-						App->GDCL_Player->Player_Node->pitch(Ogre::Degree(180));
-					}*/
-				} else
-				{
-					trans = obj->getWorldTransform();
-				}
-			}
-		}
-
-		if (GD_Run_Physics == 1 && App->GDCL_Scene_Data->Player_Added == 1)
-		{
-			btTransform trans;
-			App->GDCL_Scene_Data->B_Player[0]->Phys_Body->getMotionState()->getWorldTransform(trans);
-			btQuaternion orientation = trans.getRotation();
-			App->GDCL_Scene_Data->B_Player[0]->Player_Node->setPosition(Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ()));
-			App->GDCL_Scene_Data->B_Player[0]->Player_Node->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
-			App->GDCL_Scene_Data->B_Player[0]->Player_Node->pitch(Ogre::Degree(180));
-		}
-	}
 	return true;
 }
 // *************************************************************************
@@ -227,6 +127,13 @@ bool  BT_PhysicsListener::frameRenderingQueued(const FrameEvent& evt)
 	{
 		StopOgre = 1;
 	}
+
+	if (Block_RenderingQueued == 1)
+	{
+		return 1;
+	}
+
+	Block_RenderingQueued = 1;
 
 	App->Ogre17->m_imgui.render();
 
@@ -264,117 +171,12 @@ bool  BT_PhysicsListener::frameRenderingQueued(const FrameEvent& evt)
 	}
 
 	
-	//------------------------------------------------ Forward
-	//if (GetAsyncKeyState(VK_UP) < 0 && App->GDCL_Player->PlayerAdded == 1 && GD_CameraMode == Enums::CamDetached) 
-	{
-		//App->GDCL_Player->Forward();
-		//App->GDCL_Player->IsMOving = 1;
-	}
-	//else 
-	{
-		//if(App->GDCL_Player->PlayerAdded == 1 && App->GDCL_Player->IsMOving == 1 && GD_CameraMode == Enums::CamDetached)
-		{
-			//App->GDCL_Player->Stop();
-			//App->GDCL_Player->IsMOving = 0;
-		}
-	}
-	//------------------------------------------------ Back
-	//if (GetAsyncKeyState(VK_DOWN) < 0 && App->GDCL_Player->PlayerAdded == 1 && GD_CameraMode == Enums::CamDetached) 
-	{
-		//App->GDCL_Player->Back();
-		//App->GDCL_Player->IsMOving_Back = 1;
-	}
-	//else 
-	{
-		//if(App->GDCL_Player->PlayerAdded == 1 && App->GDCL_Player->IsMOving_Back == 1 && GD_CameraMode == Enums::CamDetached)
-		{
-			//App->GDCL_Player->Stop();
-			//App->GDCL_Player->IsMOving_Back = 0;
-		}
-	}
-	
-	//------------------------------------------------ Turn Right
-	/*if (GetAsyncKeyState(VK_RIGHT) < 0 && App->GDCL_Player->PlayerAdded == 1) 
-	{
-		toggleTimer -= evt.timeSinceLastFrame;
-
-		if (toggleTimer < 0)
-		{
-			Ogre::Vector3 Rotate;
-			Rotate.x = 0;
-			Rotate.y = 1;
-			Rotate.z = 0;
-
-			float Delta = App->GDCL_Utilities->DegreesToRadians(1);
-
-			App->GDCL_Player->Rotate(Rotate,false);
-
-			toggleTimer = 0.01;
-		}
-	}*/
-
-	//------------------------------------------------ Turn Left
-	/*if (GetAsyncKeyState(VK_LEFT) < 0 && App->GDCL_Player->PlayerAdded == 1) 
-	{
-		toggleTimer -= evt.timeSinceLastFrame;
-
-		if (toggleTimer < 0)
-		{
-			Ogre::Vector3 Rotate;
-			Rotate.x = 0;
-			Rotate.y = -1;
-			Rotate.z = 0;
-
-			float Delta = App->GDCL_Utilities->DegreesToRadians(1);
-
-			App->GDCL_Player->Rotate(Rotate,false);
-
-			toggleTimer = 0.01;
-		}
-	}*/
-
 	
 	if (GetAsyncKeyState(69) < 0) // Q key Down in Fly Mode
 	{
 		App->GDCL_Scene_Data->GameMode();
 	}
-	////------------------------------------------------
-	//if (GetAsyncKeyState(81) < 0) // E key Up in Fly Mode
-	//{
-	//	Ogre::Real Rate;
-	//	Rate = (mMoveSensitivity/1000)*2;// 0.1;//FlyRate;
-
-	//	Ogre::Vector3 OldPos;
-	//	OldPos=mCam->getPosition();
-
-	//	OldPos.y -= Rate;
-	//	mCam->setPosition(OldPos);
-	//}
-	//------------------------------------------------
-	//if (Wheel < 0) // Mouse Wheel Forward
-	//{
-	//	if(GD_CameraMode == Enums::CamDetached)
-	//	{
-	//		mTranslateVector.z = -mMoveScale *30;
-	//	}
-	//	else
-	//	{
-	//		if (App->GDCL_Player->PlayerAdded == 1) 
-	//		{
-	//			App->GDCL_Player->IsMOving = 1;
-	//			App->GDCL_Player->Forward();
-	//		}
-	//		else 
-	//		{
-	//			if(App->GDCL_Player->IsMOving == 1)
-	//			{
-	//				App->GDCL_Player->Stop();
-	//				App->GDCL_Player->IsMOving = 0;
-	//			}
-	//		}
-	//	}
-	//}
-
+	
 	//------------------------------------------------ Forward
 	if (GetAsyncKeyState(87) < 0) // W Key
 	{
@@ -405,21 +207,6 @@ bool  BT_PhysicsListener::frameRenderingQueued(const FrameEvent& evt)
 		}
 	}
 	
-	//if (Wheel > 0) // Mouse Wheel Back
-	//{
-	//	if(GD_CameraMode == Enums::CamDetached)
-	//	{
-	//		mTranslateVector.z = mMoveScale *30;
-	//	}
-	//	else
-	//	{
-	//		if (App->GDCL_Player->PlayerAdded == 1) 
-	//		{
-	//			App->GDCL_Player->Back();
-	//		}
-	//	}
-	//}
-
 	//------------------------------------------------ Back
 	if (GetAsyncKeyState(83) < 0) // S Key	
 	{
@@ -544,6 +331,123 @@ bool  BT_PhysicsListener::frameRenderingQueued(const FrameEvent& evt)
 	{
 		App->SBC_Collision->MoveObject_Listener(evt.timeSinceLastFrame);
 	}
+
+	Block_RenderingQueued = 0;
+
+	return 1;
+}
+
+// *************************************************************************
+// *				Update_Game_Logic   Terry Bernie					   *
+// *************************************************************************
+bool BT_PhysicsListener::Update_Game_Logic(float DeltaTime)
+{
+	App->Ogre17->Get_View_Height_Width();
+	App->Ogre17->m_imgui.NewFrame(DeltaTime, (float)View_Width, (float)View_Height);
+
+
+	int Count = 0;
+	while (Count < App->GDCL_Scene_Data->Counters_Count)
+	{
+		if (App->GDCL_Scene_Data->B_Counter[Count]->Show_Panel_Flag == 1)
+		{
+			App->GDCL_Scene_Data->B_Counter[Count]->Render_ImGui_Panel();
+		}
+
+		Count++;
+	}
+
+	Count = 0;
+	while (Count < App->GDCL_Scene_Data->Object_Count)
+	{
+		if (App->GDCL_Scene_Data->B_Object[Count]->Usage == Enums::Usage_Message)
+		{
+			if (App->GDCL_Scene_Data->B_Object[Count]->Show_Message_Flag == 1)
+			{
+				App->GDCL_Scene_Data->B_Object[Count]->Render_ImGui_Panel();
+			}
+		}
+
+		Count++;
+	}
+
+	App->CL_Vm_ImGui->ImGui_Render_Loop();
+
+	if (GD_Run_Physics == 1)
+	{
+		{
+			App->GDCL_Bullet->dynamicsWorld->stepSimulation(DeltaTime * 2); //suppose you have 60 frames per second
+
+			//App->GDCL_Player->PostStep(NULL);
+
+			for (int j = App->GDCL_Bullet->dynamicsWorld->getNumCollisionObjects() - 1; j >= 0; j--)
+			{
+				btCollisionObject* obj = App->GDCL_Bullet->dynamicsWorld->getCollisionObjectArray()[j];
+				btRigidBody* body = btRigidBody::upcast(obj);
+				btTransform trans;
+				if (body && body->getMotionState())
+				{
+					int UI = body->getUserIndex();
+					int Index = body->getUserIndex2();
+
+					/*if (UI == 20)
+					{
+						body->getMotionState()->getWorldTransform(trans);
+						void *userPointer = body->getUserPointer();
+						btQuaternion orientation = trans.getRotation();
+						App->Cl_Ogre->Test_Node->setPosition(Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ()));
+						App->Cl_Ogre->Test_Node->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
+					}*/
+
+					if (UI == Enums::Usage_Dynamic)
+					{
+						body->getMotionState()->getWorldTransform(trans);
+						btQuaternion orientation = trans.getRotation();
+
+						Ogre::Vector3 BB = App->GDCL_Add_Objects->GetMesh_Center(Index, App->GDCL_Scene_Data->S_Object[Index]->OgreNode);
+						Ogre::Vector3 WC = App->GDCL_Utilities->Get_BoundingBox_World_Centre(Index);
+
+						float x = trans.getOrigin().getX();
+						float y = trans.getOrigin().getY();
+						float z = trans.getOrigin().getZ();
+
+						App->GDCL_Scene_Data->S_Object[Index]->OgreNode->setPosition(Ogre::Vector3(x, y, z));
+						App->GDCL_Scene_Data->S_Object[Index]->OgreNode->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
+
+						WC = App->GDCL_Utilities->Get_BoundingBox_World_Centre(Index);
+
+						Ogre::Vector3 NewPos = Ogre::Vector3(x, y, z) - WC;
+						App->GDCL_Scene_Data->S_Object[Index]->OgreNode->setPosition((Ogre::Vector3(x, y, z)) + NewPos);
+					}
+
+					/*if (UI == Enums::Usage_Player && App->GDCL_Player->PlayerAdded == 1)
+					{
+						body->getMotionState()->getWorldTransform(trans);
+						void *userPointer = body->getUserPointer();
+						btQuaternion orientation = trans.getRotation();
+						App->GDCL_Player->Player_Node->setPosition(Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ()));
+						App->GDCL_Player->Player_Node->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
+						App->GDCL_Player->Player_Node->pitch(Ogre::Degree(180));
+					}*/
+				}
+				else
+				{
+					trans = obj->getWorldTransform();
+				}
+			}
+		}
+
+		if (GD_Run_Physics == 1 && App->GDCL_Scene_Data->Player_Added == 1)
+		{
+			btTransform trans;
+			App->GDCL_Scene_Data->B_Player[0]->Phys_Body->getMotionState()->getWorldTransform(trans);
+			btQuaternion orientation = trans.getRotation();
+			App->GDCL_Scene_Data->B_Player[0]->Player_Node->setPosition(Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ()));
+			App->GDCL_Scene_Data->B_Player[0]->Player_Node->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
+			App->GDCL_Scene_Data->B_Player[0]->Player_Node->pitch(Ogre::Degree(180));
+		}
+	}
+
 	return 1;
 }
 
