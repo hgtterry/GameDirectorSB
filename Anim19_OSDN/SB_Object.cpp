@@ -435,23 +435,6 @@ void SB_Object::Set_Teleports_Defaults(int Index)
 
 
 // *************************************************************************
-//			Set_Move_Defaults:- Terry and Hazel Flanigan 2022		  	   *
-// *************************************************************************
-void SB_Object::Set_Move_Defaults(int Index)
-{
-	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->IsNegative = 1;
-	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Move_Distance = -50;
-	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Newpos = 0;
-	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Speed = 10.0;
-	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->WhatDirection = Enums::Axis_x;
-	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_To_Move_Index = 0;
-	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Triggered = 0;
-	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Re_Trigger = 0;
-	strcpy(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_Name, "None");
-	return;
-}
-
-// *************************************************************************
 // *	  		GetMesh_BB_Size:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 Ogre::Vector3 SB_Object::GetMesh_BB_Size(SceneNode* mNode)

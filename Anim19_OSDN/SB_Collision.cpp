@@ -62,9 +62,6 @@ bool SB_Collision::Message_Entity(int Index)
 
 	//-----------------  Do Action
 
-	//int MessageIndex = App->SBC_Scene->B_Object[Index]->TextMessage_ID; // Needs_Removing
-	//App->SBC_Scene->B_Message[MessageIndex]->Show_Panel_Flag = 1;
-
 	App->SBC_Scene->B_Object[Index]->Show_Message_Flag = 1;
 	App->SBC_Scene->B_Object[Index]->Triggered = 1;
 	return 1;
@@ -106,7 +103,6 @@ bool SB_Collision::Move_Entity_Collision(int Index)
 	//	return 1;
 	//}
 
-	App->SBC_Scene->B_Object[Index]->Triggered = 1;
 
 	Ogre::Vector3 M_Pos;
 	Ogre::Vector3 P_Pos;
@@ -116,49 +112,53 @@ bool SB_Collision::Move_Entity_Collision(int Index)
 
 	if (App->SBC_Scene->B_Object[ObjectToMove]->Deleted == 0)
 	{
-		
-		M_Pos = App->SBC_Scene->B_Object[ObjectToMove]->Mesh_Pos;
-		P_Pos = App->SBC_Scene->B_Object[ObjectToMove]->Physics_Pos;
+		int Trigger_Value = App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Trigger_Value;
 
-		App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos = Ogre::Vector3(M_Pos);
-		App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos = Ogre::Vector3(P_Pos);
-
-		x = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.x;
-		y = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.y;
-		z = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.z;
-
-		px = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.x;
-		py = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.y;
-		pz = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.z;
-
-		if (App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->WhatDirection == Enums::Axis_x)
+		if (App->SBC_Scene->B_Counter[0]->Counter >= Trigger_Value)
 		{
-			FinalPosition = x + App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Move_Distance;
+			App->SBC_Scene->B_Object[Index]->Triggered = 1;
+
+			M_Pos = App->SBC_Scene->B_Object[ObjectToMove]->Mesh_Pos;
+			P_Pos = App->SBC_Scene->B_Object[ObjectToMove]->Physics_Pos;
+
+			App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos = Ogre::Vector3(M_Pos);
+			App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos = Ogre::Vector3(P_Pos);
+
+			x = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.x;
+			y = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.y;
+			z = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.z;
+
+			px = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.x;
+			py = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.y;
+			pz = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.z;
+
+			if (App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->WhatDirection == Enums::Axis_x)
+			{
+				FinalPosition = x + App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Move_Distance;
+			}
+
+			if (App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->WhatDirection == Enums::Axis_y)
+			{
+				FinalPosition = y + App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Move_Distance;
+			}
+
+			if (App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->WhatDirection == Enums::Axis_z)
+			{
+				FinalPosition = z + App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Move_Distance;
+			}
+
+
+			char Sound[1024];
+			strcpy(Sound, App->SBC_SoundMgr->Default_Folder);
+			strcat(Sound, "\\Media\\Sounds\\");
+			strcat(Sound, App->SBC_Scene->B_Object[ObjectIndex]->Sound_File);
+
+			App->SBC_Scene->B_Object[ObjectIndex]->SndFile = App->SBC_SoundMgr->SoundEngine->play2D(Sound, false, true, true);
+			App->SBC_Scene->B_Object[ObjectIndex]->SndFile->setVolume(App->SBC_Scene->B_Object[ObjectIndex]->SndVolume);
+			App->SBC_Scene->B_Object[ObjectIndex]->SndFile->setIsPaused(false);
+
+			DoMove = 1; // Trigger Ogre Listener to update
 		}
-
-		if (App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->WhatDirection == Enums::Axis_y)
-		{
-			FinalPosition = y + App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Move_Distance;
-		}
-
-		if (App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->WhatDirection == Enums::Axis_z)
-		{
-			FinalPosition = z + App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Move_Distance;
-		}
-
-		//	Play_Sound(Index);
-
-		char Sound[1024];
-		strcpy(Sound, App->SBC_SoundMgr->Default_Folder);
-		strcat(Sound, "\\Media\\Sounds\\");
-		strcat(Sound, App->SBC_Scene->B_Object[ObjectIndex]->Sound_File);
-
-		App->SBC_Scene->B_Object[ObjectIndex]->SndFile = App->SBC_SoundMgr->SoundEngine->play2D(Sound, false, true, true);
-		App->SBC_Scene->B_Object[ObjectIndex]->SndFile->setVolume(App->SBC_Scene->B_Object[ObjectIndex]->SndVolume);
-		App->SBC_Scene->B_Object[ObjectIndex]->SndFile->setIsPaused(false);
-
-		DoMove = 1; // Trigger Ogre Listener to update
-
 	}
 
 	return 1;

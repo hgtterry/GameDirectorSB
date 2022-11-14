@@ -39,8 +39,7 @@ public:
 	float GetMesh_BB_Radius(SceneNode* mNode);
 
 	void Set_Teleports_Defaults(int Index);
-	void Set_Move_Defaults(int Index);
-
+	
 	int GetIndex_By_Name(char* Name);
 
 	void Copy_Object(int Object_Index);

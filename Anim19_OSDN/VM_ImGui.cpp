@@ -450,6 +450,12 @@ void VM_ImGui::ImGui_Collision_Debug(void)
 		ImGui::Text("Object_ID %i", App->SBC_Player->Col_Object_Index);
 		ImGui::Text("Usage %i", App->SBC_Player->Col_Usage_Index);
 
+		ImGui::Text(" ");
+
+		ImGui::Text("Round %i", App->SBC_Player->Round);
+		ImGui::Text("Distance %i", App->SBC_Player->Distance);
+		ImGui::Text("Life_Time %i", App->SBC_Player->Life_Time);
+
 		if (ImGui::Button("Close"))
 		{
 			Show_Collision_Debug = 0;

@@ -970,7 +970,7 @@ void SB_Player::Check_Collisions_New(void)
 
 			if (Col_Usage_Index == 123)
 			{
-				//App->CL_Vm_ImGui->Show_Collision_Debug = 0;
+				
 			}
 			else
 			{
@@ -1002,9 +1002,6 @@ void SB_Player::Check_Collisions_New(void)
 						{
 							if (App->SBC_Scene->B_Object[Col_Object_Index]->Triggered == 1)
 							{
-								//int MessageIndex = App->SBC_Scene->B_Object[Col_Object_Index]->TextMessage_ID; // Needs_Removing
-								//App->SBC_Scene->B_Message[MessageIndex]->Show_Panel_Flag = 0;
-
 								App->SBC_Scene->B_Object[Col_Object_Index]->Show_Message_Flag = 0;
 								App->SBC_Scene->B_Object[Col_Object_Index]->Triggered = 0;
 
@@ -1012,7 +1009,7 @@ void SB_Player::Check_Collisions_New(void)
 						}
 					}
 				}
-
+				
 				// -------------------- Sound Collision
 				if (Col_Usage_Index == Enums::Usage_Sound)
 				{
@@ -1121,6 +1118,7 @@ void SB_Player::Check_Collisions_New(void)
 				}
 			}
 		}
+		
 	}
 
 }

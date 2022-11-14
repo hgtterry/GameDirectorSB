@@ -33,6 +33,7 @@ typedef struct Move_Type {
 	float Move_Distance;	// Distance to Move negative or positive
 	Ogre::Vector3 MeshPos;
 	Ogre::Vector3 PhysicsPos;
+	int Trigger_Value;
 
 }Move_Type;
 

@@ -46,7 +46,7 @@ bool SB_Com_MoveEntity::Add_New_Move_Entity()
 	App->SBC_Scene->B_Object[Index] = new Base_Object();
 
 	App->SBC_Scene->B_Object[Index]->S_MoveType[0] = new Move_Type;
-	App->SBC_Object->Set_Move_Defaults(Index); // Check
+	Set_Move_Defaults(Index); // Check
 
 	App->SBC_Scene->B_Object[Index]->Type = Enums::Bullet_Type_Static;
 	App->SBC_Scene->B_Object[Index]->Shape = Enums::Shape_Box;
@@ -166,4 +166,24 @@ bool SB_Com_MoveEntity::Create_Move_Entity(int Index)
 	App->SBC_Objects_Create->Set_Physics(Index);
 
 	return 1;
+}
+
+// *************************************************************************
+// *		Set_Move_Defaults:- Terry and Hazel Flanigan 2022		  	   *
+// *************************************************************************
+void SB_Com_MoveEntity::Set_Move_Defaults(int Index)
+{
+	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->IsNegative = 1;
+	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Move_Distance = -50;
+	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Newpos = 0;
+	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Speed = 10.0;
+	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->WhatDirection = Enums::Axis_x;
+	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_To_Move_Index = 0;
+	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Triggered = 0;
+	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Re_Trigger = 0;
+	strcpy(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_Name, "None");
+
+	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Trigger_Value = 0;
+
+	return;
 }

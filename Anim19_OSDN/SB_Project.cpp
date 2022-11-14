@@ -829,6 +829,7 @@ bool SB_Project::Save_Objects_Data()
 				fprintf(WriteFile, "%s%s\n", "Move_Sound=", App->SBC_Scene->B_Object[Count]->Sound_File);
 				fprintf(WriteFile, "%s%i\n", "Move_Play_Sound=", App->SBC_Scene->B_Object[Count]->Play_Sound);
 				fprintf(WriteFile, "%s%f\n", "Move_Volume=", App->SBC_Scene->B_Object[Count]->SndVolume);
+				fprintf(WriteFile, "%s%i\n", "Move_Trigger_Value=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Trigger_Value);
 			}
 
 			//---------------------------------------------------------------------------------- Teleport Entity
@@ -1618,7 +1619,7 @@ bool SB_Project::Load_Project_Objects()
 		{
 
 			App->SBC_Scene->B_Object[Count]->S_MoveType[0] = new Move_Type;
-			App->SBC_Object->Set_Move_Defaults(Count); // Check
+			App->SBC_Com_MoveEntity->Set_Move_Defaults(Count); // Check
 
 			// --------------------------- Distance
 			App->Cl_Ini->GetString(buff, "Move_Distance", chr_Tag1, MAX_PATH);
@@ -1646,6 +1647,8 @@ bool SB_Project::Load_Project_Objects()
 			App->Cl_Ini->GetString(buff, "Move_Volume", chr_Tag1, MAX_PATH);
 			sscanf(chr_Tag1, "%f", &x);
 			App->SBC_Scene->B_Object[Count]->SndVolume = x;
+
+			App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Trigger_Value = App->Cl_Ini->GetInt(buff, "Move_Trigger_Value", 0);
 
 		}
 
