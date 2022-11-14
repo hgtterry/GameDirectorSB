@@ -44,6 +44,8 @@ public:
 	bool frameEnded(const FrameEvent& evt);
 	bool frameRenderingQueued(const FrameEvent& evt);
 
+	bool Update_Game_Logic(const FrameEvent& evt);
+
 	void WorldMode(float DeltaTime);
 	void ModelMode(float DeltaTime);
 
