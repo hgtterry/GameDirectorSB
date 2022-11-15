@@ -131,7 +131,6 @@ bool GD19_Ogre::SetUpResources(void)
 
 	//-------------------------------- File System
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/App_Resources" ,"FileSystem", App_Resource_Group);
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/Zipper", "FileSystem",App_Resource_Group);
 	
 	return 1;
 }
