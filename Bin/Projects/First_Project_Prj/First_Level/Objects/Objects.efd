@@ -31,18 +31,21 @@ Mesh_Scale=1.659999,0.130001,0.970000
 Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
-Move_Distance=-50.000000
+Move_Distance=-28.000000
 Move_IsNegative=1
 Move_NewPos=0.000000
 Move_ObjectID=0
 Move_ObjectName=Gate_1
 Move_Re_Trigger=0
-Move_Speed=10.000000
+Move_Speed=15.000000
 Move_Triggered=0
 Move_WhatDirection=1
 Move_Sound=Door_Open.wav
 Move_Play_Sound=1
 Move_Volume=0.500000
+Move_Counter_ID=0
+Move_Trigger_Value=1
+Move_Counter_Disabled=0
  
 [Object_2]
 Mesh_Name=Gate_2
@@ -73,21 +76,24 @@ Mesh_Scale=0.910000,0.130001,1.480000
 Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
-Move_Distance=-60.000000
-Move_IsNegative=1
+Move_Distance=60.000000
+Move_IsNegative=0
 Move_NewPos=0.000000
 Move_ObjectID=2
 Move_ObjectName=Gate_2
 Move_Re_Trigger=0
-Move_Speed=30.000000
+Move_Speed=40.000000
 Move_Triggered=0
 Move_WhatDirection=2
 Move_Sound=Door_Open.wav
 Move_Play_Sound=1
 Move_Volume=0.500000
+Move_Counter_ID=0
+Move_Trigger_Value=2
+Move_Counter_Disabled=0
  
 [Object_4]
-Mesh_Name=Message_4
+Mesh_Name=Mes_Gate2
 Mesh_File=Test_cube.mesh
 Mesh_Resource_Path=
 Material_File=Not Found
@@ -95,16 +101,16 @@ Object_ID=5
 Object_Type=2
 Object_Shape=1
 Object_Usage=13
-Mesh_Pos=24.389297,-43.600006,0.372846
-Mesh_Scale=0.140001,0.930000,0.930000
+Mesh_Pos=67.389297,-43.600006,0.372846
+Mesh_Scale=1.080000,1.250000,0.950000
 Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
-Message_Text=You need 2 Blue Balls to Open
-Message_Pos=450.000000,100.000000
+Message_Text=You Need 2 Ball to Open This Gate
+Message_Pos=230.000000,150.000000
  
 [Object_5]
-Mesh_Name=Message_5
+Mesh_Name=Mes_Gate1
 Mesh_File=Test_cube.mesh
 Mesh_Resource_Path=
 Material_File=Not Found
@@ -112,16 +118,16 @@ Object_ID=6
 Object_Type=2
 Object_Shape=1
 Object_Usage=13
-Mesh_Pos=36.127171,-53.904816,-27.547928
+Mesh_Pos=2.127171,-53.904816,-88.547928
 Mesh_Scale=1.000000,1.000000,1.000000
 Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
-Message_Text=Test
-Message_Pos=250.000000,10.000000
+Message_Text=You Need one Ball to Open This Gate
+Message_Pos=230.000000,150.000000
  
 [Object_6]
-Mesh_Name=Object_6
+Mesh_Name=Coll_1
 Mesh_File=Blueball.mesh
 Mesh_Resource_Path=
 Material_File=Blueball.material
@@ -140,7 +146,7 @@ Col_Play=1
 Col_Counter_Name=Counter_0
 Col_Counter_ID=0
 Col_Maths=1
-Col_Value=100
+Col_Value=1
  
 [Object_7]
 Mesh_Name=Coll_2
@@ -161,8 +167,8 @@ Col_Sound_Volume=0.500000
 Col_Play=1
 Col_Counter_Name=Counter_0
 Col_Counter_ID=0
-Col_Maths=2
-Col_Value=35
+Col_Maths=1
+Col_Value=1
  
 [Object_8]
 Mesh_Name=Coll_3
@@ -184,7 +190,7 @@ Col_Play=1
 Col_Counter_Name=Counter_0
 Col_Counter_ID=0
 Col_Maths=1
-Col_Value=200
+Col_Value=1
  
 [Counters]
 Objects_Count=9

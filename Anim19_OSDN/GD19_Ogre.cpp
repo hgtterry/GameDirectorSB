@@ -52,7 +52,7 @@ GD19_Ogre::~GD19_Ogre(void)
 }
 
 // *************************************************************************
-// *						InitOgre Terry Bernie						   *
+// *				InitOgre:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 bool GD19_Ogre::InitOgre(void)
 {
@@ -88,7 +88,7 @@ bool GD19_Ogre::InitOgre(void)
 }
 
 // *************************************************************************
-// *				OgreCreateRoot (Terry Bernie)						   *
+// *		OgreCreateRoot:- Terry and Hazel Flanigan 2022				   *
 // *************************************************************************
 bool GD19_Ogre::OgreCreateRoot(void)
 {
@@ -155,7 +155,7 @@ bool GD19_Ogre::Initialise_Resources(void)
 }
 
 // *************************************************************************
-// *						Get_Main_Folders Terry Berni			 	   *
+// *			Get_Main_Folders:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
 bool GD19_Ogre::Get_Main_Folders()
 {
@@ -200,7 +200,7 @@ bool GD19_Ogre::Get_Main_Folders()
 }
 
 // *************************************************************************
-// *						Get_Sub_Folders Terry Berni				 	   *
+// *			Get_Sub_Folders:- Terry and Hazel Flanigan 2022		 	   *
 // *************************************************************************
 bool GD19_Ogre::Get_Sub_Folders(char* Sub_folder)
 {
