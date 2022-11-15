@@ -1371,9 +1371,16 @@ bool SB_Build::Build_Objects_Data()
 				fprintf(WriteFile, "%s%i\n", "Move_Triggered=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Triggered);
 				fprintf(WriteFile, "%s%i\n", "Move_WhatDirection=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->WhatDirection);
 
+				// Move Sound
 				fprintf(WriteFile, "%s%s\n", "Move_Sound=", App->SBC_Scene->B_Object[Count]->Sound_File);
 				fprintf(WriteFile, "%s%i\n", "Move_Play_Sound=", App->SBC_Scene->B_Object[Count]->Play_Sound);
 				fprintf(WriteFile, "%s%f\n", "Move_Volume=", App->SBC_Scene->B_Object[Count]->SndVolume);
+
+				// Move Counter
+				fprintf(WriteFile, "%s%i\n", "Move_Counter_ID=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Counter_ID);
+				fprintf(WriteFile, "%s%i\n", "Move_Trigger_Value=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Trigger_Value);
+				fprintf(WriteFile, "%s%i\n", "Move_Counter_Disabled=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Counter_Disabled);
+	
 			}
 
 			//---------------------------------------------------------------------------------- Teleport Entity
