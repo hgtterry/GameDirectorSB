@@ -105,8 +105,8 @@ void GD19_Grid::Load_Arrow()
 	Arrow_Node->setPosition(0, 0, 0);
 	Arrow_Node->setScale(7, 7, 7);
 
-	Ogre::MaterialPtr materialPtr = Ogre::MaterialManager::getSingleton().getByName("BaseYellowLine");
-	Arrow_Ent->setMaterial(materialPtr);
+	/*Ogre::MaterialPtr materialPtr = Ogre::MaterialManager::getSingleton().getByName("BaseYellowLine");
+	Arrow_Ent->setMaterial(materialPtr);*/
 }
 
 // *************************************************************************

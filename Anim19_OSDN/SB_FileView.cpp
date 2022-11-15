@@ -785,6 +785,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 		App->SBC_Properties->Update_ListView_Move_Entities();
 
+		App->Cl_Visuals->MarkerBB_Addjust(Index);
 		return;
 	}
 
