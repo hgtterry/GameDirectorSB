@@ -33,6 +33,7 @@ public:
 	bool Play_Sound(int Index);
 
 	bool Move_Entity_Collision(int Index);
+	void Set_Move_Entity(int Index);
 	void MoveObject_Listener(Ogre::Real Time);
 
 	bool Do_Teleport(int Index);

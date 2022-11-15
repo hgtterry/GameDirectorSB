@@ -948,6 +948,8 @@ bool SB_Dialogs::UpDate_Counter_Dialog(HWND hDlg)
 		_itoa(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Trigger_Value, chr_TriggerVal, 10);
 		SetDlgItemText(hDlg, IDC_EDTRIGGERVALUE, (LPCTSTR)chr_TriggerVal);
 
+		App->Say_Int(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Trigger_Value);
+
 		char chr_CounterName[20];
 		strcpy(chr_CounterName, App->SBC_Scene->B_Counter[App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Counter_ID]->Panel_Name);
 		SetDlgItemText(hDlg, IDC_STCOUNTERNAME, (LPCTSTR)chr_CounterName);

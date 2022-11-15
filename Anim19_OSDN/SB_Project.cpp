@@ -831,6 +831,7 @@ bool SB_Project::Save_Objects_Data()
 				fprintf(WriteFile, "%s%f\n", "Move_Volume=", App->SBC_Scene->B_Object[Count]->SndVolume);
 
 				fprintf(WriteFile, "%s%i\n", "Move_Trigger_Value=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Trigger_Value);
+				fprintf(WriteFile, "%s%i\n", "Move_Counter_Disabled=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Counter_Disabled);
 			}
 
 			//---------------------------------------------------------------------------------- Teleport Entity
@@ -1615,7 +1616,7 @@ bool SB_Project::Load_Project_Objects()
 
 		}
 
-		//---------------------------------------------------------------------------------- Usage_Move
+		//---------------------------------------------------------------------------------- Move Enitity
 		if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Move)
 		{
 
@@ -1650,6 +1651,7 @@ bool SB_Project::Load_Project_Objects()
 			App->SBC_Scene->B_Object[Count]->SndVolume = x;
 
 			App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Trigger_Value = App->Cl_Ini->GetInt(buff, "Move_Trigger_Value", 0);
+			App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Counter_Disabled = App->Cl_Ini->GetInt(buff, "Move_Counter_Disabled", 1);
 
 		}
 
