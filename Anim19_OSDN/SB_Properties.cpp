@@ -1002,8 +1002,8 @@ bool SB_Properties::Update_ListView_Move_Entities()
 	strcpy(chr_Object_Name, App->SBC_Scene->B_Object[App->SBC_Scene->B_Object[index]->S_MoveType[0]->Object_To_Move_Index]->Mesh_Name);
 
 
-	char chr_Selected_Object_Id[100];
-	_itoa(App->SBC_Scene->B_Object[index]->S_MoveType[0]->Object_To_Move_Index, chr_Selected_Object_Id, 10);
+	/*char chr_Selected_Object_Id[100];
+	_itoa(App->SBC_Scene->B_Object[index]->S_MoveType[0]->Object_To_Move_Index, chr_Selected_Object_Id, 10);*/
 
 	char chr_Trigger_Value[100];
 	_itoa(App->SBC_Scene->B_Object[index]->S_MoveType[0]->Trigger_Value, chr_Trigger_Value, 10);
@@ -1014,11 +1014,7 @@ bool SB_Properties::Update_ListView_Move_Entities()
 	_itoa(Percent, chr_Volume, 10);
 
 
-	char chr_Stock_Sound[100];
-	int sndIndex = 0;// App->SBC_Scene->B_Object[index]->Sound_ID_v2;
-	strcpy(chr_Stock_Sound, "poo");// App->Cl_Scene_Data->St_Sounds[sndIndex]->Name);
-
-	const int NUM_ITEMS = 13;
+	const int NUM_ITEMS = 12;
 	const int NUM_COLS = 2;
 	std::string grid[NUM_COLS][NUM_ITEMS]; // string table
 	LV_ITEM pitem;
@@ -1027,17 +1023,16 @@ bool SB_Properties::Update_ListView_Move_Entities()
 
 	grid[0][0] = "Name",		grid[1][0] = App->SBC_Scene->B_Object[index]->Mesh_Name;
 	grid[0][1] = " ",			grid[1][1] = " ";
-	grid[0][2] = "Move_Object",		grid[1][2] = chr_Object_Name;
-	grid[0][3] = "ID_Num",		grid[1][3] = chr_Selected_Object_Id;
-	grid[0][4] = "Axis",		grid[1][4] = chr_Axis;
-	grid[0][5] = "Distance",	grid[1][5] = chr_Distance;
-	grid[0][6] = "Speed",		grid[1][6] = chr_Speed;
-	grid[0][7] = " ",			grid[1][7] = " ";
-	grid[0][8] = "Sound",		grid[1][8] = App->SBC_Scene->B_Object[index]->Sound_File;
-	grid[0][9] = "Volume",		grid[1][9] = chr_Volume;
-	grid[0][10] = "Play",		grid[1][10] = chr_Play;
-	grid[0][11] = " ",			grid[1][11] = " ";
-	grid[0][12] = "Trigger_Val", grid[1][12] = chr_Trigger_Value;
+	grid[0][2] = "Move_Object",	grid[1][2] = chr_Object_Name;
+	grid[0][3] = "Axis",		grid[1][3] = chr_Axis;
+	grid[0][4] = "Distance",	grid[1][4] = chr_Distance;
+	grid[0][5] = "Speed",		grid[1][5] = chr_Speed;
+	grid[0][6] = " ",			grid[1][6] = " ";
+	grid[0][7] = "Sound",		grid[1][7] = App->SBC_Scene->B_Object[index]->Sound_File;
+	grid[0][8] = "Volume",		grid[1][8] = chr_Volume;
+	grid[0][9] = "Play",		grid[1][9] = chr_Play;
+	grid[0][10] = " ",			grid[1][10] = " ";
+	grid[0][11] = "Counter",	grid[1][11] = "Enabled";
 
 
 
@@ -1848,7 +1843,7 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 	}
 
 	// Trigger_Val
-	result = strcmp(btext, "Trigger_Val");
+	result = strcmp(btext, "Counter");
 	if (result == 0)
 	{
 		App->SBC_Dialogs->Dialog_Counter();
