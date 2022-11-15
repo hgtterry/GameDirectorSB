@@ -111,8 +111,9 @@ bool SB_Collision::Move_Entity_Collision(int Index)
 		}
 
 		int Trigger_Value = App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Trigger_Value;
+		int CounterIndex = App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Counter_ID;
 
-		if (App->SBC_Scene->B_Counter[0]->Counter >= Trigger_Value)
+		if (App->SBC_Scene->B_Counter[CounterIndex]->Counter >= Trigger_Value)
 		{
 			Set_Move_Entity(Index);
 			return 1;

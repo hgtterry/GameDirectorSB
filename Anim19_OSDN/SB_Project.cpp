@@ -826,10 +826,13 @@ bool SB_Project::Save_Objects_Data()
 				fprintf(WriteFile, "%s%i\n", "Move_Triggered=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Triggered);
 				fprintf(WriteFile, "%s%i\n", "Move_WhatDirection=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->WhatDirection);
 
+				// Move Sound
 				fprintf(WriteFile, "%s%s\n", "Move_Sound=", App->SBC_Scene->B_Object[Count]->Sound_File);
 				fprintf(WriteFile, "%s%i\n", "Move_Play_Sound=", App->SBC_Scene->B_Object[Count]->Play_Sound);
 				fprintf(WriteFile, "%s%f\n", "Move_Volume=", App->SBC_Scene->B_Object[Count]->SndVolume);
 
+				// Move Counter
+				fprintf(WriteFile, "%s%i\n", "Move_Counter_ID=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Counter_ID);
 				fprintf(WriteFile, "%s%i\n", "Move_Trigger_Value=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Trigger_Value);
 				fprintf(WriteFile, "%s%i\n", "Move_Counter_Disabled=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Counter_Disabled);
 			}
@@ -1623,33 +1626,34 @@ bool SB_Project::Load_Project_Objects()
 			App->SBC_Scene->B_Object[Count]->S_MoveType[0] = new Move_Type;
 			App->SBC_Com_MoveEntity->Set_Move_Defaults(Count); // Check
 
-			// --------------------------- Distance
+			//  Distance
 			App->Cl_Ini->GetString(buff, "Move_Distance", chr_Tag1, MAX_PATH);
 			sscanf(chr_Tag1, "%f",&x);
 			App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Move_Distance = x;
 
 			App->SBC_Scene->B_Object[Count]->S_MoveType[0]->IsNegative = App->Cl_Ini->GetInt(buff, "Move_IsNegative", 0);
 
-			// --------------------------- Speed
+			//  Speed
 			App->Cl_Ini->GetString(buff, "Move_Speed", chr_Tag1, MAX_PATH);
 			sscanf(chr_Tag1, "%f", &x);
 			App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Speed = x;
 
-			// --------------------------- Name
+			//  Name
 			App->Cl_Ini->GetString(buff, "Move_ObjectName", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Object_Name, MAX_PATH);
 
 			App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Object_To_Move_Index = App->Cl_Ini->GetInt(buff, "Move_ObjectID", 0);
 			App->SBC_Scene->B_Object[Count]->S_MoveType[0]->WhatDirection = App->Cl_Ini->GetInt(buff, "Move_WhatDirection", 0);
 		
+			// Move Sound
 			App->Cl_Ini->GetString(buff, "Move_Sound", App->SBC_Scene->B_Object[Count]->Sound_File, MAX_PATH);
 			App->SBC_Scene->B_Object[Count]->Play_Sound = App->Cl_Ini->GetInt(buff, "Move_Play_Sound", 0);
 
-
-			// --------------------------- Move_Volume
 			App->Cl_Ini->GetString(buff, "Move_Volume", chr_Tag1, MAX_PATH);
 			sscanf(chr_Tag1, "%f", &x);
 			App->SBC_Scene->B_Object[Count]->SndVolume = x;
 
+			// Move Counter
+			App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Counter_ID = App->Cl_Ini->GetInt(buff, "Move_Counter_ID", 0);
 			App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Trigger_Value = App->Cl_Ini->GetInt(buff, "Move_Trigger_Value", 0);
 			App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Counter_Disabled = App->Cl_Ini->GetInt(buff, "Move_Counter_Disabled", 1);
 
