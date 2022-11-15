@@ -54,7 +54,7 @@ public:
 	float Distance;
 	int Life_Time;
 	int Last_ColisionIndex;
-
+	int Last_Message_Index;
 	bool is_Animated;
 
 	bool Toggle_Objects_Flag;

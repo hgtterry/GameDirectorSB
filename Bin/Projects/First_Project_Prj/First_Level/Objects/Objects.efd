@@ -106,7 +106,7 @@ Mesh_Scale=1.080000,1.250000,0.950000
 Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
-Message_Text=You Need 2 Ball to Open This Gate
+Message_Text=You Need 2 Orbs to Open This Gate
 Message_Pos=230.000000,150.000000
  
 [Object_5]
@@ -123,7 +123,7 @@ Mesh_Scale=1.000000,1.000000,1.000000
 Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
-Message_Text=You Need one Ball to Open This Gate
+Message_Text=You Need 1 Orb to Open This Gate
 Message_Pos=230.000000,150.000000
  
 [Object_6]

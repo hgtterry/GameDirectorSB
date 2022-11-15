@@ -6,7 +6,7 @@ Version=V1.2
 Counter_Name=Counter_0
 Counter_ID=0
 Counter_Pos=300.000000,30.000000
-Counter_Text=Score:=
+Counter_Text=Orbs:=
 Counter_Display=1
 Counter_Start=0
  

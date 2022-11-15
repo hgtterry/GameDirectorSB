@@ -49,6 +49,8 @@ SB_Player::SB_Player()
 
 	is_Animated = 0;
 
+	Last_Message_Index = 0;
+
 	Current_Position.ZERO;
 	Physics_Position.setZero();
 	Physics_Rotation = btQuaternion(1, 0, 0, 0);
@@ -968,9 +970,11 @@ void SB_Player::Check_Collisions_New(void)
 			Col_Object_Index = obB->getUserIndex2(); // Object Index
 			Col_Usage_Index = obB->getUserIndex();
 
-			if (Col_Usage_Index == 123)
+
+			if (Col_Usage_Index == 123 && App->SBC_Scene->B_Object[Last_Message_Index]->Triggered == 1)
 			{
-				
+				App->SBC_Scene->B_Object[Last_Message_Index]->Show_Message_Flag = 0;
+				App->SBC_Scene->B_Object[Last_Message_Index]->Triggered = 0;
 			}
 			else
 			{
@@ -995,6 +999,7 @@ void SB_Player::Check_Collisions_New(void)
 						{
 							if (App->SBC_Scene->B_Object[Col_Object_Index]->Triggered == 0)
 							{
+								Last_Message_Index = Col_Object_Index;
 								App->SBC_Collision->Message_Entity(Col_Object_Index);
 							}
 						}
