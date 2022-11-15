@@ -967,6 +967,8 @@ bool SB_Dialogs::Set_Counter_Dialog(HWND hDlg, bool Enable)
 	EnableWindow(GetDlgItem(hDlg, IDC_STMATHS), Enable);
 	EnableWindow(GetDlgItem(hDlg, IDC_BT_CT_MATHS), Enable);
 
+	EnableWindow(GetDlgItem(hDlg, IDC_EDTRIGGERVALUE), Enable);
+	
 	return 1;
 }
 
