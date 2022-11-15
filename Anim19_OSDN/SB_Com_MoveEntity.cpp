@@ -196,6 +196,9 @@ void SB_Com_MoveEntity::Set_Move_Defaults(int Index)
 // *************************************************************************
 void SB_Com_MoveEntity::Reset_Move_Entity(int Index)
 {
+	App->SBC_Collision->DoMove = 0;
+	App->SBC_SoundMgr->SoundEngine->stopAllSounds();
+
 	Ogre::Vector3 M_Pos;
 	Ogre::Vector3 P_Pos;
 
@@ -218,5 +221,6 @@ void SB_Com_MoveEntity::Reset_Move_Entity(int Index)
 // *************************************************************************
 void SB_Com_MoveEntity::Test_Move_Entity(int Index)
 {
+	App->SBC_Collision->Set_Move_Entity(Index);
 
 }

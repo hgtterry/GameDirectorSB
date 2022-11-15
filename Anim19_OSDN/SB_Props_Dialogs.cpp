@@ -262,7 +262,7 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_PhysicsReset_Proc(HWND hDlg, UINT mess
 
 		if (LOWORD(wParam) == IDC_BT_TEST_ENTITY)
 		{
-			Debug
+			App->SBC_Com_MoveEntity->Test_Move_Entity(App->SBC_Properties->Current_Selected_Object);
 			return 1;
 		}
 
