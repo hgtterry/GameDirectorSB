@@ -190,3 +190,33 @@ void SB_Com_MoveEntity::Set_Move_Defaults(int Index)
 	
 	return;
 }
+
+// *************************************************************************
+// *		Reset_Move_Entity:- Terry and Hazel Flanigan 2022		  	   *
+// *************************************************************************
+void SB_Com_MoveEntity::Reset_Move_Entity(int Index)
+{
+	Ogre::Vector3 M_Pos;
+	Ogre::Vector3 P_Pos;
+
+	int ObjectToMove = App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_To_Move_Index;
+
+	M_Pos = App->SBC_Scene->B_Object[ObjectToMove]->Mesh_Pos;
+	P_Pos = App->SBC_Scene->B_Object[ObjectToMove]->Physics_Pos;
+
+	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->MeshPos = Ogre::Vector3(M_Pos);
+	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->PhysicsPos = Ogre::Vector3(P_Pos);
+
+	App->SBC_Scene->B_Object[ObjectToMove]->Object_Node->setPosition(M_Pos);
+	App->SBC_Scene->B_Object[ObjectToMove]->Phys_Body->getWorldTransform().setOrigin(btVector3(P_Pos.x, P_Pos.y, P_Pos.z));
+
+	App->SBC_Scene->B_Object[Index]->Triggered = 0;
+}
+
+// *************************************************************************
+// *		Test_Move_Entity:- Terry and Hazel Flanigan 2022		  	   *
+// *************************************************************************
+void SB_Com_MoveEntity::Test_Move_Entity(int Index)
+{
+
+}

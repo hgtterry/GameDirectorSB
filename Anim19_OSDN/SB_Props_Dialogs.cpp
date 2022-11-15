@@ -222,8 +222,8 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_PhysicsReset_Proc(HWND hDlg, UINT mess
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_BT_PHYSRESET, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_TEST_ENTITY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
-
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
@@ -247,16 +247,29 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_PhysicsReset_Proc(HWND hDlg, UINT mess
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_TEST_ENTITY && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+		
 		return CDRF_DODEFAULT;
 	}
 
 	case WM_COMMAND:
 	{
+
+		if (LOWORD(wParam) == IDC_BT_TEST_ENTITY)
+		{
+			Debug
+			return 1;
+		}
+
 		if (LOWORD(wParam) == IDC_BT_PHYSRESET)
 		{
-
-			App->SBC_Physics->Reset_Triggers();
-
+			//App->SBC_Physics->Reset_Triggers();
+			App->SBC_Com_MoveEntity->Reset_Move_Entity(App->SBC_Properties->Current_Selected_Object);
 			return 1;
 		}
 
