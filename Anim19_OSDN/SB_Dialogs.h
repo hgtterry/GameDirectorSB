@@ -36,6 +36,7 @@ public:
 
 	bool Dialog_Counter();
 	bool UpDate_Counter_Dialog(HWND hDlg);
+	bool Set_Counter_Dialog(HWND hDlg, bool Disable);
 
 	char Chr_DropText[MAX_PATH];
 	int DropList_Data;

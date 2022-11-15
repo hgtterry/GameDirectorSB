@@ -855,7 +855,36 @@ LRESULT CALLBACK SB_Dialogs::Dialog_Counter_Proc(HWND hDlg, UINT message, WPARAM
 			return TRUE;
 		}
 
-		
+		if (LOWORD(wParam) == IDC_CK_ENABLE)
+		{
+			int Index = App->SBC_Properties->Current_Selected_Object;
+
+			HWND temp = GetDlgItem(hDlg, IDC_CK_ENABLE);
+			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
+			if (test == BST_CHECKED)
+			{
+				App->SBC_Dialogs->Set_Counter_Dialog(hDlg, false);
+
+				if (App->SBC_Properties->Edit_Category == Enums::Edit_Move_Entity)
+				{
+					App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Counter_Disabled = 1;
+				}
+				return 1;
+			}
+			else
+			{
+				App->SBC_Dialogs->Set_Counter_Dialog(hDlg, true);
+
+				if (App->SBC_Properties->Edit_Category == Enums::Edit_Move_Entity)
+				{
+					App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Counter_Disabled = 0;
+				}
+
+				return 1;
+			}
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDOK)
 		{
 			char buff[256];
@@ -896,11 +925,25 @@ LRESULT CALLBACK SB_Dialogs::Dialog_Counter_Proc(HWND hDlg, UINT message, WPARAM
 // *************************************************************************
 bool SB_Dialogs::UpDate_Counter_Dialog(HWND hDlg)
 {
+	int Index = App->SBC_Properties->Current_Selected_Object;
+
 
 	if (App->SBC_Properties->Edit_Category == Enums::Edit_Move_Entity)
 	{
-		int Index = App->SBC_Properties->Current_Selected_Object;
+		if (App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Counter_Disabled == 1)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_ENABLE);
+			SendMessage(temp, BM_SETCHECK, 1, 0);
+			Set_Counter_Dialog(hDlg, false);
+		}
+		else
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_ENABLE);
+			SendMessage(temp, BM_SETCHECK, 0, 0);
+			Set_Counter_Dialog(hDlg, true);
+		}
 
+	
 		char chr_TriggerVal[20];
 		_itoa(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Trigger_Value, chr_TriggerVal, 10);
 		SetDlgItemText(hDlg, IDC_EDTRIGGERVALUE, (LPCTSTR)chr_TriggerVal);
@@ -909,5 +952,21 @@ bool SB_Dialogs::UpDate_Counter_Dialog(HWND hDlg)
 		strcpy(chr_CounterName, App->SBC_Scene->B_Counter[App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Counter_ID]->Panel_Name);
 		SetDlgItemText(hDlg, IDC_STCOUNTERNAME, (LPCTSTR)chr_CounterName);
 	}
+
 	return 1;
 }
+
+// *************************************************************************
+// *	  	Set_Counter_Dialog:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+bool SB_Dialogs::Set_Counter_Dialog(HWND hDlg, bool Enable)
+{
+	EnableWindow(GetDlgItem(hDlg, IDC_BT_COUNTER), Enable);
+	EnableWindow(GetDlgItem(hDlg, IDC_STCOUNTERNAME), Enable);
+
+	EnableWindow(GetDlgItem(hDlg, IDC_STMATHS), Enable);
+	EnableWindow(GetDlgItem(hDlg, IDC_BT_CT_MATHS), Enable);
+
+	return 1;
+}
+

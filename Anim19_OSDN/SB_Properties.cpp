@@ -1013,6 +1013,15 @@ bool SB_Properties::Update_ListView_Move_Entities()
 	int Percent = int(sum2 * 100);
 	_itoa(Percent, chr_Volume, 10);
 
+	char chr_Counter_Disabled[20];
+	if (App->SBC_Scene->B_Object[index]->S_MoveType[0]->Counter_Disabled == 1)
+	{
+		strcpy(chr_Counter_Disabled, "Disabled");
+	}
+	else
+	{
+		strcpy(chr_Counter_Disabled, "Enabled");
+	}
 
 	const int NUM_ITEMS = 12;
 	const int NUM_COLS = 2;
@@ -1032,7 +1041,7 @@ bool SB_Properties::Update_ListView_Move_Entities()
 	grid[0][8] = "Volume",		grid[1][8] = chr_Volume;
 	grid[0][9] = "Play",		grid[1][9] = chr_Play;
 	grid[0][10] = " ",			grid[1][10] = " ";
-	grid[0][11] = "Counter",	grid[1][11] = "Enabled";
+	grid[0][11] = "Counter",	grid[1][11] = chr_Counter_Disabled;
 
 
 

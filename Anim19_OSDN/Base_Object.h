@@ -36,6 +36,7 @@ typedef struct Move_Type {
 	int Trigger_Value;
 	int Counter_ID;
 	char Counter_Name[MAX_PATH];
+	bool Counter_Disabled;
 
 }Move_Type;
 
