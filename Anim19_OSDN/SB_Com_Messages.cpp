@@ -44,6 +44,8 @@ bool SB_Com_Messages::Add_New_Message()
 	int Index = App->SBC_Scene->Object_Count;
 
 	App->SBC_Scene->B_Object[Index] = new Base_Object();
+	App->SBC_Scene->B_Object[Index]->S_Message[0] = new Message_type;
+	Set_Message_Defaults(Index);
 
 	App->SBC_Scene->B_Object[Index]->Type = Enums::Bullet_Type_Static;
 	App->SBC_Scene->B_Object[Index]->Shape = Enums::Shape_Box;
@@ -166,5 +168,18 @@ bool SB_Com_Messages::Create_Message_Entity(int Index)
 	App->SBC_Objects_Create->Set_Physics(Index);
 
 	return 1;
+}
+
+// *************************************************************************
+// *		Set_Message_Defaults:- Terry and Hazel Flanigan 2022	  	   *
+// *************************************************************************
+void SB_Com_Messages::Set_Message_Defaults(int Index)
+{
+	App->SBC_Scene->B_Object[Index]->S_Message[0]->Trigger_Value = 0;
+	App->SBC_Scene->B_Object[Index]->S_Message[0]->Counter_ID = 0;
+	strcpy(App->SBC_Scene->B_Object[Index]->S_Message[0]->Counter_Name, "None");
+	App->SBC_Scene->B_Object[Index]->S_Message[0]->Counter_Disabled = 1;
+
+	return;
 }
 

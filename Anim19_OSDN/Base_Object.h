@@ -54,6 +54,15 @@ typedef struct Teleport_type
 
 }Teleport_type;
 
+typedef struct Message_type
+{
+	int Trigger_Value;
+	int Counter_ID;
+	char Counter_Name[MAX_PATH];
+	bool Counter_Disabled;
+
+}Message_type;
+
 typedef struct Collectable_type
 {
 	int Counter_ID;
@@ -149,6 +158,9 @@ public:
 	Collectable_type* S_Collectable[1];
 
 	//-----Message Entity
+
+	Message_type*	S_Message[1];
+
 	bool Show_Message_Flag;
 	char ImGui_Panel_Name[MAX_PATH];
 	char Message_Text[MAX_PATH];

@@ -1575,6 +1575,9 @@ bool SB_Project::Load_Project_Objects()
 		//---------------------------------------------------------------------------------- Message Entity
 		if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Message)
 		{
+			App->SBC_Scene->B_Object[Count]->S_Message[0] = new Message_type;
+			App->SBC_Com_Messages->Set_Message_Defaults(Count);
+			
 			App->Cl_Ini->GetString(buff, "Message_Text", Object->Message_Text, MAX_PATH);
 
 			App->Cl_Ini->GetString(buff, "Message_Pos", chr_Tag1, MAX_PATH);

@@ -642,8 +642,17 @@ bool SB_Properties::Update_ListView_Messages()
 	char chr_PosY[20];
 	sprintf(chr_PosY, "%.3f ", App->SBC_Scene->B_Object[index]->Message_PosY);
 
+	char chr_Counter_Disabled[20];
+	if (App->SBC_Scene->B_Object[index]->S_Message[0]->Counter_Disabled == 1)
+	{
+		strcpy(chr_Counter_Disabled, "Disabled");
+	}
+	else
+	{
+		strcpy(chr_Counter_Disabled, "Enabled");
+	}
 
-	const int NUM_ITEMS = 5;
+	const int NUM_ITEMS = 7;
 	const int NUM_COLS = 2;
 	std::string grid[NUM_COLS][NUM_ITEMS]; // string table
 	LV_ITEM pitem;
@@ -655,7 +664,10 @@ bool SB_Properties::Update_ListView_Messages()
 	grid[0][2] = "Pos_X",           grid[1][2] = chr_PosX;
 	grid[0][3] = "Pos_Y",           grid[1][3] = chr_PosY;
 	grid[0][4] = "Text",            grid[1][4] = App->SBC_Scene->B_Object[index]->Message_Text;
-	
+	grid[0][5] = " ",				grid[1][5] = " ";
+	grid[0][6] = "Counter",			grid[1][6] = chr_Counter_Disabled;
+
+
 	ListView_DeleteAllItems(Properties_hLV);
 
 	for (DWORD row = 0; row < NUM_ITEMS; row++)
