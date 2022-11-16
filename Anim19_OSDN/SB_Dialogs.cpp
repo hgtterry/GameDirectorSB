@@ -567,17 +567,33 @@ LRESULT CALLBACK SB_Dialogs::Front_Screen_Proc(HWND hDlg, UINT message, WPARAM w
 
 		SendDlgItemMessage(hDlg, IDC_CK_FR_DONTSHOW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		SendDlgItemMessage(hDlg, IDC_BT_FR_CHANGELOG, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_QUICKSTART, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 	
 		SendDlgItemMessage(hDlg, IDC_ST_WTHC, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+		SendDlgItemMessage(hDlg, IDC_EDIT1, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		SetDlgItemText(hDlg, IDC_STBANNER, App->Version);
 		SetDlgItemText(hDlg, IDC_ST_WTHC, "W.T.Flanigan and H.C.Flanigan");
+		
+		
+
+		SetDlgItemText(hDlg, IDC_EDIT1, "\r\nClick Quick Start for a Quick Intro \r\n\r\nClick change log to see the latest developments");
 		
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
 	{
+		if (GetDlgItem(hDlg, IDC_EDIT1) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->Brush_White;
+		}
+
 		if (GetDlgItem(hDlg, IDC_CK_FR_DONTSHOW) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
@@ -622,6 +638,13 @@ LRESULT CALLBACK SB_Dialogs::Front_Screen_Proc(HWND hDlg, UINT message, WPARAM w
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_QUICKSTART && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
 		return CDRF_DODEFAULT;
 	}
 
@@ -653,6 +676,12 @@ LRESULT CALLBACK SB_Dialogs::Front_Screen_Proc(HWND hDlg, UINT message, WPARAM w
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_BT_QUICKSTART)
+		{
+			App->Cl_Utilities->OpenHTML("Help\\QuickStart.html");
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == IDC_BT_FR_CHANGELOG)
 		{
 			App->Cl_Utilities->OpenHTML("Help\\ChangeLog.html");
