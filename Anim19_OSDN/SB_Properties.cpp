@@ -1499,6 +1499,16 @@ bool SB_Properties::Edit_Messages_OnClick(LPARAM lParam)
 
 	}
 
+	// Counter
+	result = strcmp(btext, "Counter");
+	if (result == 0)
+	{
+		App->SBC_Dialogs->Dialog_Counter();
+		App->SBC_Properties->Mark_As_Altered(Index);
+		Update_ListView_Messages();
+
+		return 1;
+	}
 	return 1;
 }
 
@@ -1863,7 +1873,7 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 		return 1;
 	}
 
-	// Trigger_Val
+	// Counter
 	result = strcmp(btext, "Counter");
 	if (result == 0)
 	{
