@@ -31,7 +31,7 @@ Mesh_Scale=1.659999,0.130001,0.970000
 Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
-Move_Distance=-28.000000
+Move_Distance=-32.000000
 Move_IsNegative=1
 Move_NewPos=0.000000
 Move_ObjectID=0
@@ -106,8 +106,12 @@ Mesh_Scale=1.080000,1.250000,0.950000
 Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
+------------------- Message
 Message_Text=You Need 2 Orbs to Open This Gate
 Message_Pos=230.000000,150.000000
+Message_Counter_ID=0
+Message_Trigger_Value=2
+Message_Counter_Disabled=0
  
 [Object_5]
 Mesh_Name=Mes_Gate1
@@ -123,8 +127,12 @@ Mesh_Scale=1.000000,1.000000,1.000000
 Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
+------------------- Message
 Message_Text=You Need 1 Orb to Open This Gate
 Message_Pos=230.000000,150.000000
+Message_Counter_ID=0
+Message_Trigger_Value=1
+Message_Counter_Disabled=0
  
 [Object_6]
 Mesh_Name=Coll_1
@@ -136,7 +144,7 @@ Object_Type=2
 Object_Shape=1
 Object_Usage=12
 Mesh_Pos=-28.111946,-51.600002,0.643725
-Mesh_Scale=1.000000,1.000000,1.000000
+Mesh_Scale=1.999999,1.999999,1.999999
 Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
