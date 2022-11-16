@@ -45,28 +45,6 @@ SB_Collision::~SB_Collision()
 {
 }
 
-// *************************************************************************
-// *			Message_Entity:- Terry and Hazel Flanigan 2022			   *
-// *************************************************************************
-bool SB_Collision::Message_Entity(int Index)
-{
-	if (App->SBC_Scene->B_Object[Index]->Triggered == 1) // Retrigger Yes No
-	{
-		return 1;
-	}
-
-	if (App->SBC_Scene->B_Object[Index]->Triggered == 1) // Retrigger Yes No
-	{
-		return 1;
-	}
-
-	//-----------------  Do Action
-
-	App->SBC_Scene->B_Object[Index]->Show_Message_Flag = 1;
-	App->SBC_Scene->B_Object[Index]->Triggered = 1;
-	return 1;
-}
-
 // **************************************************************************
 // *				Play_Sound:- Terry and Hazel Flanigan 2022				*
 // **************************************************************************
@@ -86,6 +64,38 @@ bool SB_Collision::Play_Sound(int Index)
 		App->SBC_SoundMgr->SndFile->setIsPaused(false);
 
 		App->SBC_Scene->B_Object[Index]->Triggered = 1;
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *			Message_Entity:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+bool SB_Collision::Message_Entity(int Index)
+{
+	if (App->SBC_Scene->B_Object[Index]->Triggered == 1) // Retrigger Yes No
+	{
+		return 1;
+	}
+
+	//-----------------  Do Action
+
+	if (App->SBC_Scene->B_Object[Index]->S_Message[0]->Counter_Disabled == 1)
+	{
+		App->SBC_Scene->B_Object[Index]->Show_Message_Flag = 1;
+		App->SBC_Scene->B_Object[Index]->Triggered = 1;
+		return 1;
+	}
+
+	int Trigger_Value = App->SBC_Scene->B_Object[Index]->S_Message[0]->Trigger_Value;
+	int CounterIndex = App->SBC_Scene->B_Object[Index]->S_Message[0]->Counter_ID;
+
+	if (App->SBC_Scene->B_Counter[CounterIndex]->Counter < Trigger_Value)
+	{
+		App->SBC_Scene->B_Object[Index]->Show_Message_Flag = 1;
+		App->SBC_Scene->B_Object[Index]->Triggered = 1;
+		return 1;
 	}
 
 	return 1;
@@ -118,8 +128,6 @@ bool SB_Collision::Move_Entity_Collision(int Index)
 			Set_Move_Entity(Index);
 			return 1;
 		}
-
-		
 	}
 
 	return 1;

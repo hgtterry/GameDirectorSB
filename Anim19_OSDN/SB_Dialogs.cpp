@@ -845,6 +845,27 @@ LRESULT CALLBACK SB_Dialogs::Dialog_Counter_Proc(HWND hDlg, UINT message, WPARAM
 				App->SBC_Dialogs->UpDate_Counter_Dialog(hDlg);
 			}
 
+			if (App->SBC_Properties->Edit_Category == Enums::Edit_Message)
+			{
+				int Counter_Index = App->SBC_Scene->B_Object[Index]->S_Message[0]->Counter_ID;
+
+				strcpy(App->SBC_Dialogs->Chr_DropText, App->SBC_Scene->B_Counter[Counter_Index]->Panel_Name);
+				App->SBC_Dialogs->DropList_Data = Enums::DropDialog_Counters;
+				App->SBC_Dialogs->Dialog_DropGen();
+
+				if (App->SBC_Dialogs->Canceled == 0)
+				{
+					strcpy(App->SBC_Scene->B_Object[Index]->S_Message[0]->Counter_Name, App->SBC_Dialogs->Chr_DropText);
+
+					int CounterIndex = App->SBC_Display->GetIndex_By_Name(App->SBC_Dialogs->Chr_DropText);
+
+					App->SBC_Scene->B_Object[Index]->S_Message[0]->Counter_ID = CounterIndex;
+
+				}
+
+				App->SBC_Dialogs->UpDate_Counter_Dialog(hDlg);
+			}
+
 			return TRUE;
 		}
 
@@ -911,7 +932,11 @@ LRESULT CALLBACK SB_Dialogs::Dialog_Counter_Proc(HWND hDlg, UINT message, WPARAM
 				App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Trigger_Value = atoi(buff);
 			}
 
-
+			if (App->SBC_Properties->Edit_Category == Enums::Edit_Message)
+			{
+				int Index = App->SBC_Properties->Current_Selected_Object;
+				App->SBC_Scene->B_Object[Index]->S_Message[0]->Trigger_Value = atoi(buff);
+			}
 
 			//App->Cl_Dialogs->Canceled = 0;
 			//App->Cl_Dialogs->Active_Dlg_Int = 0;
