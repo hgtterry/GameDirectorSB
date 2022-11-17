@@ -850,6 +850,56 @@ LRESULT CALLBACK SB_Dialogs::Dialog_Counter_Proc(HWND hDlg, UINT message, WPARAM
 
 	case WM_COMMAND:
 
+		if (LOWORD(wParam) == IDC_BT_CT_MATHS)
+		{
+			int Index = App->SBC_Properties->Current_Selected_Object;
+
+			// Collectables
+			if (App->SBC_Properties->Edit_Category == Enums::Edit_Collectable)
+			{
+				int Counter_Index = App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Counter_ID;
+
+				strcpy(App->Cl_Dialogs->btext, "Set Maths Option");
+
+				if (App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Maths == 1)
+				{
+					strcpy(App->SBC_Dialogs->Chr_DropText, "Add");
+				}
+
+				if (App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Maths == 2)
+				{
+					strcpy(App->SBC_Dialogs->Chr_DropText, "Subtract");
+				}
+
+				App->SBC_Dialogs->DropList_Data = Enums::DropDialog_Maths;
+				App->SBC_Dialogs->Dialog_DropGen();
+
+				if (App->SBC_Dialogs->Canceled == 0)
+				{
+					int TestChr;
+
+					// Add
+					TestChr = strcmp(App->SBC_Dialogs->Chr_DropText, "Add");
+					if (TestChr == 0)
+					{
+						App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Maths = 1;
+					}
+
+					// Subtract
+					TestChr = strcmp(App->SBC_Dialogs->Chr_DropText, "Subtract");
+					if (TestChr == 0)
+					{
+						App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Maths = 2;
+					}
+
+					App->SBC_Dialogs->UpDate_Counter_Dialog(hDlg);
+				}
+
+			}
+
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == IDC_BT_COUNTER)
 		{
 			int Index = App->SBC_Properties->Current_Selected_Object;

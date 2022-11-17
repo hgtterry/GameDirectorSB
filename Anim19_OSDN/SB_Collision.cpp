@@ -409,7 +409,7 @@ bool SB_Collision::Do_Collectable(int Index)
 		App->SBC_Scene->B_Object[Index]->S_Collectable[0]->SndFile->setIsPaused(false);
 	}
 
-	if (App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Counter_ID > -1)
+	if (App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Counter_Disabled == 0)
 	{
 		int CouterID = App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Counter_ID;
 

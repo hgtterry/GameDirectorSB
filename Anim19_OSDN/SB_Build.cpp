@@ -1364,6 +1364,8 @@ bool SB_Build::Build_Objects_Data()
 				fprintf(WriteFile, "%s%i\n", "Col_Counter_ID=", App->SBC_Scene->B_Object[Count]->S_Collectable[0]->Counter_ID);
 				fprintf(WriteFile, "%s%i\n", "Col_Maths=", App->SBC_Scene->B_Object[Count]->S_Collectable[0]->Maths);
 				fprintf(WriteFile, "%s%i\n", "Col_Value=", App->SBC_Scene->B_Object[Count]->S_Collectable[0]->Value);
+				fprintf(WriteFile, "%s%i\n", "Col_Disabled=", App->SBC_Scene->B_Object[Count]->S_Collectable[0]->Counter_Disabled);
+
 			}
 
 			//---------------------------------------------------------------------------------- Move Entity
