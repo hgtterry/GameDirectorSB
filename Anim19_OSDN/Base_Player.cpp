@@ -54,7 +54,7 @@ Base_Player::Base_Player()
 
 	PlayerHeight = 16.0;
 
-	TurnRate = 0.000008;
+	TurnRate = 0.000005;
 
 	mOnGround = 1;
 	IsMOving = 0;
