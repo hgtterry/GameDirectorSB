@@ -106,7 +106,7 @@ LRESULT CALLBACK SB_Camera::Camera_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 	}
 
 	case WM_COMMAND:
-
+		
 		if (LOWORD(wParam) == IDC_BTCAMSAVE)
 		{
 			int Index = App->SBC_Properties->Current_Selected_Object;

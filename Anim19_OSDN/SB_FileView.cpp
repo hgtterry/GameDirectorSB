@@ -677,7 +677,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		App->SBC_FileView->Context_Selection = Enums::FileView_Cameras_File;
 
 		HideRightPanes();
-		ShowWindow(App->SBC_Properties->Properties_Dlg_hWnd, 1);
+		ShowWindow(App->GD_Properties_Hwnd, 0);
 		App->SBC_Camera->Hide_Cam_Dlg(1);
 		
 		App->SBC_Properties->Edit_Category = Enums::Edit_Camera;
