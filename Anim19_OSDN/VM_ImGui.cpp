@@ -823,9 +823,8 @@ void VM_ImGui::ImGui_Object_Data(void)
 		ImGui::Text("Object_ID: = %i", App->SBC_Scene->B_Object[Index]->This_Object_ID);
 
 		ImGui::Spacing();
-		ImGui::Spacing();
-
-		x = App->SBC_Scene->B_Object[Index]->Mesh_Pos.x;
+		
+		/*x = App->SBC_Scene->B_Object[Index]->Mesh_Pos.x;
 		y = App->SBC_Scene->B_Object[Index]->Mesh_Pos.y;
 		z = App->SBC_Scene->B_Object[Index]->Mesh_Pos.z;
 		ImGui::Text("Mesh_Pos: = %f,%f,%f", x, y, z);
@@ -839,12 +838,26 @@ void VM_ImGui::ImGui_Object_Data(void)
 		x = App->SBC_Scene->B_Object[Index]->Mesh_Quat.x;
 		y = App->SBC_Scene->B_Object[Index]->Mesh_Quat.y;
 		z = App->SBC_Scene->B_Object[Index]->Mesh_Quat.z;
-		ImGui::Text("Mesh_Quat: = %f,%f,%f,%f", w, x, y, z);
+		ImGui::Text("Mesh_Quat: = %f,%f,%f,%f", w, x, y, z);*/
 
-		ImGui::Spacing();
-		ImGui::Spacing();
+		// Collectables
+		if (App->SBC_Properties->Edit_Category == Enums::Edit_Collectable)
+		{
+			ImGui::Text("------------ Collectable");
+			ImGui::Text("Sound_File: = %s", App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Sound_File);
+			ImGui::Text("Sound_Volume: = %f", App->SBC_Scene->B_Object[Index]->S_Collectable[0]->SndVolume);
+			ImGui::Text("Sound_Play: = %i", App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Play);
 
-		ImGui::Text("Physics_Mass: = %f", App->SBC_Scene->B_Object[Index]->Physics_Mass);
+			ImGui::Text("Counter_Name: = %s", App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Counter_Name);
+			ImGui::Text("Counter_ID: = %i", App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Counter_ID);
+			ImGui::Text("Counter_Value: = %i", App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Value);
+			ImGui::Text("Counter_Maths: = %i", App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Maths);
+			ImGui::Text("Counter_Disabled: = %i", App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Counter_Disabled);
+
+			return;
+		}
+
+		/*ImGui::Text("Physics_Mass: = %f", App->SBC_Scene->B_Object[Index]->Physics_Mass);
 		ImGui::Text("Physics_Restitution: = %f", App->SBC_Scene->B_Object[Index]->Physics_Restitution);
 
 		x = App->SBC_Scene->B_Object[Index]->Physics_Pos.x;
@@ -861,7 +874,7 @@ void VM_ImGui::ImGui_Object_Data(void)
 		x = App->SBC_Scene->B_Object[Index]->Physics_Quat.x;
 		y = App->SBC_Scene->B_Object[Index]->Physics_Quat.y;
 		z = App->SBC_Scene->B_Object[Index]->Physics_Quat.z;
-		ImGui::Text("Physics_Quat: = %f,%f,%f,%f", w, x, y, z);
+		ImGui::Text("Physics_Quat: = %f,%f,%f,%f", w, x, y, z);*/
 
 		if (ImGui::Button("Close"))
 		{
