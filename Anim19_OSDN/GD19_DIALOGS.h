@@ -15,8 +15,6 @@ public:
 
 	void Message(char *pString);
 
-	bool GameMode_StartPosition_Dlg();
-
 	bool Canceled;
 	bool TrueFlase;
 	int CheckNames;
@@ -50,10 +48,9 @@ protected:
 	static LRESULT CALLBACK Dialog_Text_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Dialog_Int_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Gen_ListBox_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-	static LRESULT CALLBACK GameMode_StartPosition_Dlg_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-
+	
 	static LRESULT CALLBACK Message_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-	static LRESULT CALLBACK Projection_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	//static LRESULT CALLBACK Projection_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Contents_Resource_Folder(HWND List);
 	void List_Messages_Stock(HWND List);

@@ -37,6 +37,10 @@ public:
 	bool Dialog_Counter();
 	bool UpDate_Counter_Dialog(HWND hDlg);
 	bool Set_Counter_Dialog(HWND hDlg, bool Disable);
+	bool GameMode_StartPosition_Dlg();
+
+	bool DoFPS;
+	bool Saved_DoFPS;
 
 	char Chr_DropText[MAX_PATH];
 	int DropList_Data;
@@ -57,7 +61,7 @@ protected:
 	static LRESULT CALLBACK Dialog_DropGen_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Front_Screen_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Dialog_Counter_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-
+	static LRESULT CALLBACK GameMode_StartPosition_Dlg_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void ListObjects(HWND List);
 	void List_Locations(HWND List);

@@ -197,8 +197,8 @@ LRESULT CALLBACK SB_TopTabs::TopBar_Globals_Proc(HWND hDlg, UINT message, WPARAM
 		{
 			if (App->SBC_Scene->Area_Added == 1)
 			{
-				App->Cl_Dialogs->GameMode_StartPosition_Dlg();
-				if (App->Cl_Dialogs->Canceled == 1)
+				App->SBC_Dialogs->GameMode_StartPosition_Dlg();
+				if (App->SBC_Dialogs->Canceled == 1)
 				{
 					return 1;
 				}
@@ -874,8 +874,8 @@ LRESULT CALLBACK SB_TopTabs::Game_TB_Proc(HWND hDlg, UINT message, WPARAM wParam
 		{
 			if (App->SBC_Scene->Area_Added == 1)
 			{
-				App->Cl_Dialogs->GameMode_StartPosition_Dlg();
-				if (App->Cl_Dialogs->Canceled == 1)
+				App->SBC_Dialogs->GameMode_StartPosition_Dlg();
+				if (App->SBC_Dialogs->Canceled == 1)
 				{
 					return 1;
 				}

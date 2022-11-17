@@ -330,6 +330,8 @@ bool SB_Scene::Editor_Mode(void)
 
 	App->Cl19_Ogre->OgreListener->GD_CameraMode = CurrentCamMode;
 
+	App->CL_Vm_ImGui->Show_FPS = App->SBC_Dialogs->Saved_DoFPS;
+
 	return 1;
 }
 
