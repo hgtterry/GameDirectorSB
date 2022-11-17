@@ -241,8 +241,8 @@ bool SB_MeshView_Listener::Capture_LeftMouse_Model(void)
 		if (test > 2)
 		{
 			Pl_DeltaMouse = float(Pl_Cent500Y - Pl_MouseY);
-			App->SBC_MeshViewer->GridNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
-			App->SBC_MeshViewer->MvNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+			App->SBC_MeshViewer->GridNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+			App->SBC_MeshViewer->MvNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 			SetCursorPos(500, 500);
 		}
 	}
@@ -253,8 +253,8 @@ bool SB_MeshView_Listener::Capture_LeftMouse_Model(void)
 		if (test > 2)
 		{
 			Pl_DeltaMouse = float(Pl_MouseY - Pl_Cent500Y);
-			App->SBC_MeshViewer->GridNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
-			App->SBC_MeshViewer->MvNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+			App->SBC_MeshViewer->GridNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+			App->SBC_MeshViewer->MvNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 			SetCursorPos(500, 500);
 		}
 	}

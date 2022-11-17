@@ -297,9 +297,6 @@ bool GD19_OgreListener::Update_Game_Logic(float DeltaTime)
 					body->getMotionState()->getWorldTransform(trans);
 					btQuaternion orientation = trans.getRotation();
 
-					//Ogre::Vector3 BB = App->Cl_Objects_Com->GetMesh_Center(Index, App->SBC_Scene->B_Object[Index]->Object_Node);
-					//Ogre::Vector3 WC = App->SBC_Objects_New->Get_BoundingBox_World_Centre(Index);
-
 					float x = trans.getOrigin().getX();
 					float y = trans.getOrigin().getY();
 					float z = trans.getOrigin().getZ();

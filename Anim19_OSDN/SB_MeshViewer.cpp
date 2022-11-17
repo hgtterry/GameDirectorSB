@@ -338,6 +338,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 		App->Cl19_Ogre->OgreListener->MeshViewer_Running = 1;
 
+		App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 0;
 
 		return TRUE;
 	}
@@ -756,7 +757,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 			App->SBC_MeshViewer->Physics_Shape = Enums::Shape_Box;
 
-			App->SBC_MeshViewer->Show_Physics_Box();
+			//App->SBC_MeshViewer->Show_Physics_Box();
 			return TRUE;
 		}
 
@@ -768,7 +769,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 			App->SBC_MeshViewer->Physics_Shape = Enums::Sphere;
 
-			App->SBC_MeshViewer->Show_Physics_Sphere();
+			//App->SBC_MeshViewer->Show_Physics_Sphere();
 			return TRUE;
 		}
 
@@ -780,7 +781,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 			App->SBC_MeshViewer->Physics_Shape = Enums::Capsule;
 
-			App->SBC_MeshViewer->Show_Physics_Capsule();
+			//App->SBC_MeshViewer->Show_Physics_Capsule();
 			return TRUE;
 		}
 
@@ -792,7 +793,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 			App->SBC_MeshViewer->Physics_Shape = Enums::Cylinder;
 
-			App->SBC_MeshViewer->Show_Physics_Cylinder();
+			//App->SBC_MeshViewer->Show_Physics_Cylinder();
 
 			return TRUE;
 		}
@@ -805,7 +806,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 			App->SBC_MeshViewer->Physics_Shape = Enums::Cone;
 
-			App->SBC_MeshViewer->Show_Physics_Cone();
+			//App->SBC_MeshViewer->Show_Physics_Cone();
 			return TRUE;
 		}
 
