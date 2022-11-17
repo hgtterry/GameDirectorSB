@@ -33,7 +33,7 @@ public:
 	char StartFolder[MAX_PATH];
 	char GameName[MAX_PATH];
 
-
+	char Desktop[MAX_PATH];
 
 protected:
 	static LRESULT CALLBACK Project_Build_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
@@ -53,7 +53,6 @@ protected:
 	bool Build_Objects_Data();
 	bool Build_Display_Folder();
 	bool Build_Display_Data();
-
 	void Copy_Sound_Files(void);
 
 	//------------------------------------------
@@ -64,6 +63,8 @@ protected:
 	void Copy_Level_Files(void);
 	void Create_Game_IniFile(void);
 	void Create_Config_File(void);
+
+	bool Directory_Altered;
 
 	char ProjectFolder[MAX_PATH];
 	char Sub_ProjectFolder[MAX_PATH];

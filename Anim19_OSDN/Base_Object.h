@@ -70,6 +70,7 @@ typedef struct Collectable_type
 	Ogre::Real SndVolume;
 	char Sound_File[MAX_PATH];
 	char Counter_Name[MAX_PATH];
+	bool Counter_Disabled;
 	bool Play;
 	int Maths; // [ 0 = None ]  [ 1 = Add ]  [ 2 = Subtract ]
 	int Value; 

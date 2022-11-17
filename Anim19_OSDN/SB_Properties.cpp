@@ -2023,7 +2023,9 @@ bool SB_Properties::Edit_Collectables_OnClick(LPARAM lParam)
 	result = strcmp(btext, "Counter");
 	if (result == 0)
 	{
-		strcpy(App->Cl_Dialogs->btext, "Select Counter");
+		App->SBC_Dialogs->Dialog_Counter();
+		
+		/*strcpy(App->Cl_Dialogs->btext, "Select Counter");
 
 		strcpy(App->SBC_Dialogs->Chr_DropText, App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Counter_Name);
 
@@ -2037,13 +2039,13 @@ bool SB_Properties::Edit_Collectables_OnClick(LPARAM lParam)
 
 			int CounterIndex = App->SBC_Display->GetIndex_By_Name(App->SBC_Dialogs->Chr_DropText);
 
-			App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Counter_ID = CounterIndex;
+			App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Counter_ID = CounterIndex;*/
 
 			Mark_As_Altered(Index);
 			Update_ListView_Collectables();
 			App->SBC_Physics->Reset_Triggers();
 
-		}
+		//}
 		return 1;
 	}
 

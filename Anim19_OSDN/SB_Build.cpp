@@ -41,6 +41,7 @@ SB_Build::SB_Build()
 
 	m_Build_Sub_Folder[0] = 0;
 
+	Directory_Altered = 0;
 	//---------------------------------
 	Sub_Build_Folder[0] = 0;
 	m_Ini_Path_File_Name[0] = 0;
@@ -86,22 +87,21 @@ LRESULT CALLBACK SB_Build::Project_Build_Proc(HWND hDlg, UINT message, WPARAM wP
 		SendDlgItemMessage(hDlg, IDC_STLOCATION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BTBROWSE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CK_BL_DESKTOP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SetDlgItemText(hDlg, IDC_EDGAMENAME, (LPCTSTR)App->SBC_Build->GameName);
+		
+		if (App->SBC_Build->Directory_Altered == 0)
+		{
+			strcpy(App->SBC_Build->Desktop, App->SBC_FileIO->DeskTop_Folder);
+			strcat(App->SBC_Build->Desktop, "\\");
+			strcpy(App->SBC_Build->StartFolder, App->SBC_Build->Desktop);
+		}
+
 		SetDlgItemText(hDlg, IDC_STLOCATION, (LPCTSTR)App->SBC_Build->StartFolder);
 
-
-		/*if (App->CL10_Project->CF_Full_Screen == 1)
-		{
-			SendMessage(GetDlgItem(hDlg, IDC_CKFULLSCREEN), BM_SETCHECK, 1, 0);
-		}
-		else
-		{
-			SendMessage(GetDlgItem(hDlg, IDC_CKFULLSCREEN), BM_SETCHECK, 0, 0);
-		}*/
-
-
+	
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
@@ -170,6 +170,13 @@ LRESULT CALLBACK SB_Build::Project_Build_Proc(HWND hDlg, UINT message, WPARAM wP
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
 		if (some_item->idFrom == IDC_BTBROWSE && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
@@ -197,12 +204,19 @@ LRESULT CALLBACK SB_Build::Project_Build_Proc(HWND hDlg, UINT message, WPARAM wP
 				strcpy(App->SBC_Build->StartFolder, App->Com_CDialogs->szSelectedDir);
 				SetDlgItemText(hDlg, IDC_STLOCATION, (LPCTSTR)App->SBC_Build->StartFolder);
 
+				App->SBC_Build->Directory_Altered = 1;
+
 				EnableWindow(GetDlgItem(hDlg, IDC_BTBROWSE), 0);
+				EnableWindow(GetDlgItem(hDlg, IDC_STLOCATION), 0);
+			
 				return 1;
 			}
 			else
 			{
 				EnableWindow(GetDlgItem(hDlg, IDC_BTBROWSE), 1);
+				EnableWindow(GetDlgItem(hDlg, IDC_STLOCATION), 1);
+
+				App->SBC_Build->Directory_Altered = 1;
 				return 1;
 			}
 			return TRUE;
@@ -210,17 +224,6 @@ LRESULT CALLBACK SB_Build::Project_Build_Proc(HWND hDlg, UINT message, WPARAM wP
 
 		if (LOWORD(wParam) == IDC_CKFULLSCREEN)
 		{
-
-			/*if (App->CL10_Project->CF_Full_Screen == 1)
-			{
-				SendMessage(GetDlgItem(hDlg, IDC_CKFULLSCREEN), BM_SETCHECK, 0, 0);
-				App->CL10_Project->CF_Full_Screen = 0;
-			}
-			else
-			{
-				SendMessage(GetDlgItem(hDlg, IDC_CKFULLSCREEN), BM_SETCHECK, 1, 0);
-				App->CL10_Project->CF_Full_Screen = 1;
-			}*/
 			return TRUE;
 		}
 
@@ -233,6 +236,8 @@ LRESULT CALLBACK SB_Build::Project_Build_Proc(HWND hDlg, UINT message, WPARAM wP
 			strcpy(App->SBC_Build->StartFolder, App->Com_CDialogs->szSelectedDir);
 
 			SetDlgItemText(hDlg, IDC_STLOCATION, (LPCTSTR)App->SBC_Build->StartFolder);
+
+			App->SBC_Build->Directory_Altered = 1;
 
 			return TRUE;
 		}
