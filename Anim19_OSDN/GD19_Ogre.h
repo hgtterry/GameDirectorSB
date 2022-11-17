@@ -60,6 +60,8 @@ public:
 
 	void GetVersion_OpenGL(char* buff);
 
+	bool Block_RenderingQueued;
+
 	HWND RenderHwnd;
 	Ogre::Root* mRoot;
 	Ogre::RenderWindow* mWindow;

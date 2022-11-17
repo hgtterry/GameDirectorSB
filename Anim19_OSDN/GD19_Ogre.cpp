@@ -45,6 +45,7 @@ GD19_Ogre::GD19_Ogre(void)
 
 	App_Resource_Group = "App_Resource_Group";
 
+	Block_RenderingQueued = 0;
 }
 
 GD19_Ogre::~GD19_Ogre(void)
@@ -88,7 +89,7 @@ bool GD19_Ogre::InitOgre(void)
 }
 
 // *************************************************************************
-// *		OgreCreateRoot:- Terry and Hazel Flanigan 2022				   *
+// *		Ogre_Render_Loop:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 bool GD19_Ogre::Ogre_Render_Loop(void)
 {
@@ -98,9 +99,12 @@ bool GD19_Ogre::Ogre_Render_Loop(void)
 
 		if (mWindow->isClosed()) return false;
 
-		if (!mRoot->renderOneFrame()) return false;
+		if (Block_RenderingQueued == 0)
+		{
+			if (!mRoot->renderOneFrame()) return false;
+		}
 
-		Sleep(8);
+		//Sleep(8);
 	}
 
 	return 1;

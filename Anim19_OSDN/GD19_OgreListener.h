@@ -65,8 +65,6 @@ public:
 
 	bool SelectEntity_World(void);
 
-	bool Block_RenderingQueued;
-
 	Ogre::Camera* mCam;
 	Ogre::Camera* Pl_mDummyCamera;
 	Vector3		Pl_mDummyTranslateVector;

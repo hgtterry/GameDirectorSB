@@ -114,7 +114,7 @@ bool SB_Project_Create::First_Area_Start_Project()
 	App->SBC_Scene->Scene_Loaded = 1;
 	App->SBC_Scene->Area_Added = 1;
 
-	App->Cl19_Ogre->OgreListener->Block_RenderingQueued = 0;
+	App->Cl19_Ogre->Block_RenderingQueued = 0;
 
 	return 1;
 }

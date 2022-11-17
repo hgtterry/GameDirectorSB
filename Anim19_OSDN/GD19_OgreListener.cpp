@@ -62,8 +62,6 @@ GD19_OgreListener::GD19_OgreListener(void)
 	GD_SpinRate = 1;
 	GD_Selection_Mode = 0;
 
-	Block_RenderingQueued = 0;
-
 	FollowPlayer = 1;
 	Object_ToFollow = 1;
 
@@ -118,7 +116,7 @@ bool GD19_OgreListener::frameStarted(const FrameEvent& evt)
 // *************************************************************************
 bool GD19_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 {
-	if (Block_RenderingQueued == 1)
+	if (App->Cl19_Ogre->Block_RenderingQueued == 1)
 	{
 		return 1;
 	}
@@ -128,7 +126,7 @@ bool GD19_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 		return 1;
 	}
 
-	Block_RenderingQueued = 1;
+	App->Cl19_Ogre->Block_RenderingQueued = 1;
 
 	if (App->CL_Vm_ImGui->Show_Progress_Bar == 1)
 	{
@@ -201,7 +199,7 @@ bool GD19_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 		App->SBC_Collision->MoveObject_Listener(evt.timeSinceLastFrame);
 	}
 
-	Block_RenderingQueued = 0;
+	App->Cl19_Ogre->Block_RenderingQueued = 0;
 
 	return 1;
 }
