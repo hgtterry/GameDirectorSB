@@ -78,6 +78,7 @@ GD19_App::GD19_App(void)
 	SBC_Prefs =			nullptr;
 	SBC_Display =		nullptr;
 	SBC_Build =			nullptr;
+	SBC_Project_Create = nullptr;
 
 	SBC_Com_Collectables =	nullptr;
 	SBC_Com_Messages =		nullptr;
@@ -237,7 +238,8 @@ bool GD19_App::InitApp(void)
 	SBC_Prefs =			new SB_Preferences();
 	SBC_Display =		new SB_Display();
 	SBC_Build =			new SB_Build();
-
+	SBC_Project_Create = new SB_Project_Create;
+	
 	SBC_Com_Collectables =	new SB_Com_Collectables();
 	SBC_Com_Messages =		new SB_Com_Messages();
 	SBC_Com_MoveEntity = new SB_Com_MoveEntity();

@@ -971,10 +971,13 @@ void SB_Player::Check_Collisions_New(void)
 			Col_Usage_Index = obB->getUserIndex();
 
 
-			if (Col_Usage_Index == 123 && App->SBC_Scene->B_Object[Last_Message_Index]->Triggered == 1)
+			if (Col_Usage_Index == 123)// && App->SBC_Scene->B_Object[Last_Message_Index]->Triggered == 1)
 			{
-				App->SBC_Scene->B_Object[Last_Message_Index]->Show_Message_Flag = 0;
-				App->SBC_Scene->B_Object[Last_Message_Index]->Triggered = 0;
+				if (App->SBC_Scene->Object_Count > 0)
+				{
+					App->SBC_Scene->B_Object[Last_Message_Index]->Show_Message_Flag = 0;
+					App->SBC_Scene->B_Object[Last_Message_Index]->Triggered = 0;
+				}
 			}
 			else
 			{
