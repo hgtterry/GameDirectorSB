@@ -27,5 +27,12 @@ class SB_Project_Create
 public:
 	SB_Project_Create();
 	~SB_Project_Create();
+
+	void Start_New_Project();
+	void Add_Area();
+
+protected:
+
+	bool First_Area_Start_Project();
 };
 

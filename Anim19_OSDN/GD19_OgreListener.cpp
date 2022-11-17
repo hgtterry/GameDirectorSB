@@ -123,15 +123,12 @@ bool GD19_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 		return 1;
 	}
 
-	Block_RenderingQueued = 1;
-
 	if (MeshViewer_Running == 1)
 	{
-		/*Ogre::Radian Rotation_Speed;
-		Rotation_Speed = GD_SpinRate / (float)57.3;
-		App->SBC_MeshViewer->MvNode->yaw(Rotation_Speed);*/
 		return 1;
 	}
+
+	Block_RenderingQueued = 1;
 
 	if (App->CL_Vm_ImGui->Show_Progress_Bar == 1)
 	{
