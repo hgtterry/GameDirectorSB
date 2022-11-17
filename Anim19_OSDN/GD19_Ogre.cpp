@@ -90,6 +90,25 @@ bool GD19_Ogre::InitOgre(void)
 // *************************************************************************
 // *		OgreCreateRoot:- Terry and Hazel Flanigan 2022				   *
 // *************************************************************************
+bool GD19_Ogre::Ogre_Render_Loop(void)
+{
+	while (true)
+	{
+		Ogre::WindowEventUtilities::messagePump();
+
+		if (mWindow->isClosed()) return false;
+
+		if (!mRoot->renderOneFrame()) return false;
+
+		Sleep(8);
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *		OgreCreateRoot:- Terry and Hazel Flanigan 2022				   *
+// *************************************************************************
 bool GD19_Ogre::OgreCreateRoot(void)
 {
 	Ogre::String pluginsPath;

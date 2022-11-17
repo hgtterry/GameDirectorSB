@@ -36,6 +36,8 @@ public:
 	GD19_Ogre(void);
 	~GD19_Ogre(void);
 
+	bool Ogre_Render_Loop(void);
+
 	bool InitOgre(void);
 	bool OgreCreateRoot(void);
 	bool SetUpResources(void);

@@ -1311,7 +1311,9 @@ void StartOgre()
 
 	App->SBC_Dialogs->Front_Screen();
 
-	App->Cl19_Ogre->mRoot->startRendering();
+	//App->Cl19_Ogre->mRoot->startRendering();
+
+	App->Cl19_Ogre->Ogre_Render_Loop();
 
 	Close_App();
 
