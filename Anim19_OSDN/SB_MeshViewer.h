@@ -79,6 +79,9 @@ protected:
 	static LRESULT CALLBACK Mesh_Properties_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK MeshView_3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
+	void Set_For_Collectables();
+	void Set_Shape_Buttons();
+
 	// -------------------------------- Physics Shapes
 	void Set_Debug_Shapes();
 	void Show_Physics_Box();

@@ -307,6 +307,10 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		App->SBC_MeshViewer->SelectDynamic = 0;
 		App->SBC_MeshViewer->SelectTriMesh = 0;
 
+		if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables)
+		{
+			App->SBC_MeshViewer->Set_For_Collectables();
+		}
 
 		if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area)
 		{
@@ -314,27 +318,26 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		}
 
 
-		if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Objects 
-			|| App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables)
-		{
-			App->SBC_MeshViewer->Set_ResourceMesh_File(hDlg);
-			App->SBC_MeshViewer->Get_Files();
+		//if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Objects)// || App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables)
+		//{
+		//	App->SBC_MeshViewer->Set_ResourceMesh_File(hDlg);
+		//	App->SBC_MeshViewer->Get_Files();
 
-			App->SBC_MeshViewer->Enable_ShapeButtons(1);
-			App->SBC_MeshViewer->Enable_TypeButtons(1);
+		//	App->SBC_MeshViewer->Enable_ShapeButtons(1);
+		//	App->SBC_MeshViewer->Enable_TypeButtons(1);
 
-			char ATest[256];
-			char ConNum[256];
+		//	char ATest[256];
+		//	char ConNum[256];
 
-			strcpy_s(ATest, "Object_");
-			_itoa(App->SBC_Scene->Object_Count, ConNum, 10);
-			strcat(ATest, ConNum);
+		//	strcpy_s(ATest, "Object_");
+		//	_itoa(App->SBC_Scene->Object_Count, ConNum, 10);
+		//	strcat(ATest, ConNum);
 
-			SetDlgItemText(hDlg, IDC_OBJECTNAME, ATest);
-			strcpy(App->SBC_MeshViewer->Object_Name, ATest);
+		//	SetDlgItemText(hDlg, IDC_OBJECTNAME, ATest);
+		//	strcpy(App->SBC_MeshViewer->Object_Name, ATest);
 
-			App->SBC_MeshViewer->Enable_TypeButtons(1);
-		}
+		//	App->SBC_MeshViewer->Enable_TypeButtons(1);
+		//}
 
 		App->Cl19_Ogre->OgreListener->MeshViewer_Running = 1;
 
@@ -2226,5 +2229,52 @@ LRESULT CALLBACK SB_MeshViewer::MeshView_3D_Proc(HWND hDlg, UINT message, WPARAM
 	}
 
 	return FALSE;
+}
+
+// *************************************************************************
+// *	  	Set_For_Collectables:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+void SB_MeshViewer::Set_For_Collectables()
+{
+	Set_Shape_Buttons();
+
+	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_MVSTATIC), 1);
+	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_BOX), 1);
+
+	App->SBC_MeshViewer->Physics_Type = Enums::Bullet_Type_Static;
+	App->SBC_MeshViewer->Physics_Shape = Enums::Shape_Box;;
+	App->SBC_MeshViewer->SelectStatic = 1;
+	App->SBC_MeshViewer->SelectDynamic = 0;
+	App->SBC_MeshViewer->SelectTriMesh = 0;
+
+	App->RedrawWindow_Dlg(MainDlgHwnd);
+
+	Selected_Shape_Box = 1;
+	Debug
+}
+
+// *************************************************************************
+// *	  	Set_For_Collectables:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+void SB_MeshViewer::Set_Shape_Buttons()
+{
+
+	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_MVSTATIC), 0);
+	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_DYNAMIC), 0);
+	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_TRIMESH), 0);
+	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_JUSTOGRE), 0);
+	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_TEST), 0);
+
+	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_BOX), 0);
+	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_SPHERE), 0);
+	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_CAPSULE), 0);
+	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_CYLINDER), 0);
+	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_CONE), 0);
+
+	Selected_Shape_Box = 0;
+	Selected_Shape_Sphere = 0;
+	Selected_Shape_Capsule = 0;
+	Selected_Shape_Cylinder = 0;
+	Selected_Shape_Cone = 0;
 }
 
