@@ -246,6 +246,7 @@ bool SB_Scene::Game_Mode(void)
 		result = strcmp(App->SBC_Scene->B_Area[0]->S_Environment[0]->Sound_File, "None");
 		if (result == 1) // Could be Unsafe 
 		{
+			
 			char buff[1024];
 			strcpy(buff, App->SBC_SoundMgr->Default_Folder);
 			strcat(buff, "\\Media\\Sounds\\");

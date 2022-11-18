@@ -494,7 +494,7 @@ void SB_Physics::Reset_Physics(void)
 void SB_Physics::Reset_Triggers(void)
 {
 	App->SBC_Collision->DoMove = 0;
-	App->SBC_SoundMgr->SoundEngine->stopAllSounds();
+	//App->SBC_SoundMgr->SoundEngine->stopAllSounds();
 
 	Ogre::Vector3 M_Pos;
 	Ogre::Vector3 P_Pos;
