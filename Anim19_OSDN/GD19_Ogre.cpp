@@ -386,30 +386,6 @@ bool GD19_Ogre::createFrameListener(void)
 }
 
 // *************************************************************************
-// *					Go_FullScreen Terry Bernie					  	   *
-// *************************************************************************
-void GD19_Ogre::Go_FullScreen_Mode(void)
-{
-	App->SBC_Scene->CurrentCamMode = App->Cl19_Ogre->OgreListener->GD_CameraMode;
-
-	App->FullScreen = 1;
-	int cx = GetSystemMetrics(SM_CXSCREEN);
-	int cy = GetSystemMetrics(SM_CYSCREEN);
-
-	SetWindowPos(App->ViewGLhWnd, HWND_TOP, 0, 0, cx, cy, NULL);
-
-	SetParent(App->ViewGLhWnd, NULL);
-
-	mWindow->resize(cx, cy);
-
-	mWindow->windowMovedOrResized();
-	mCamera->setAspectRatio((Ogre::Real)mWindow->getWidth() / (Ogre::Real)mWindow->getHeight());
-
-	Root::getSingletonPtr()->renderOneFrame();
-
-}
-
-// *************************************************************************
 // *	  						ExitFullScreen							   *
 // *************************************************************************
 bool GD19_Ogre::ExitFullScreen()

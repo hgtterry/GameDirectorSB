@@ -137,14 +137,13 @@ void SB_Player::Initialize()
 	pBase->Player_Ent = App->Cl19_Ogre->mSceneMgr->createEntity("Player_1", "axes.mesh", App->Cl19_Ogre->App_Resource_Group);
 	pBase->Player_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	pBase->Player_Node->attachObject(pBase->Player_Ent);
+	pBase->Player_Node->setVisible(false);
 
 	Pos.x = pBase->StartPos.x;
 	Pos.y = pBase->StartPos.y;
 	Pos.z = pBase->StartPos.z;
 
 	pBase->Player_Node->setPosition(Pos.x, Pos.y, Pos.z);
-
-	pBase->Player_Node->setVisible(true);
 
 	// ------------------------ Bulet
 	btVector3 pos = btVector3(Pos.x, Pos.y, Pos.z);

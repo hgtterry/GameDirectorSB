@@ -59,6 +59,7 @@ SB_Scene::SB_Scene()
 
 	GameMode_Flag = 0;
 	GameMode_Running_Flag = 0;
+	FullScreenMode_Flag = 0;
 
 	B_Player[100] = { nullptr };
 	B_Area[100] = { nullptr };
@@ -310,6 +311,7 @@ bool SB_Scene::Game_Mode(void)
 bool SB_Scene::Editor_Mode(void)
 {
 	GameMode_Running_Flag = 0;
+	FullScreenMode_Flag = 0;
 
 	App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 1;
 
@@ -343,6 +345,31 @@ bool SB_Scene::Editor_Mode(void)
 	App->CL_Vm_ImGui->Show_FPS = App->SBC_Dialogs->Saved_DoFPS;
 
 	return 1;
+}
+
+// *************************************************************************
+// *		Go_FullScreen_Mode:- Terry and Hazel Flanigan 2022		  	   *
+// *************************************************************************
+void SB_Scene::Go_FullScreen_Mode(void)
+{
+	FullScreenMode_Flag = 1;
+
+	App->SBC_Scene->CurrentCamMode = App->Cl19_Ogre->OgreListener->GD_CameraMode;
+
+	App->FullScreen = 1;
+	int cx = GetSystemMetrics(SM_CXSCREEN);
+	int cy = GetSystemMetrics(SM_CYSCREEN);
+
+	SetWindowPos(App->ViewGLhWnd, HWND_TOP, 0, 0, cx, cy, NULL);
+
+	SetParent(App->ViewGLhWnd, NULL);
+
+	App->Cl19_Ogre->mWindow->resize(cx, cy);
+
+	App->Cl19_Ogre->mWindow->windowMovedOrResized();
+	App->Cl19_Ogre->mCamera->setAspectRatio((Ogre::Real)App->Cl19_Ogre->mWindow->getWidth() / (Ogre::Real)App->Cl19_Ogre->mWindow->getHeight());
+
+	Root::getSingletonPtr()->renderOneFrame();
 }
 
 // *************************************************************************

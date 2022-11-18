@@ -281,7 +281,7 @@ LRESULT CALLBACK SB_TopTabs::TopBar_Globals_Proc(HWND hDlg, UINT message, WPARAM
 		//-------------------------------------------------------- Show Full Screen
 		if (LOWORD(wParam) == IDC_BTTB_FULLSCREEN)
 		{
-			App->Cl19_Ogre->Go_FullScreen_Mode();
+			App->SBC_Scene->Go_FullScreen_Mode();
 			return TRUE;
 		}
 
@@ -604,7 +604,7 @@ LRESULT CALLBACK SB_TopTabs::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 				App->SBC_TopTabs->Toggle_FirstCam_Flag = 0;
 				App->SBC_TopTabs->Toggle_FreeCam_Flag = 1;
 
-				App->SBC_Scene->B_Player[0]->Player_Node->setVisible(true);
+				//App->SBC_Scene->B_Player[0]->Player_Node->setVisible(true);
 
 				int f = App->SBC_Scene->B_Player[0]->Phys_Body->getCollisionFlags();
 				App->SBC_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f & (~(1 << 5)));

@@ -43,6 +43,7 @@ public:
 	
 	bool Game_Mode(void);
 	bool Editor_Mode(void);
+	void Go_FullScreen_Mode(void);
 	bool Show_Entities(bool YesNo);
 
 	Base_Player*			B_Player[100];
@@ -83,6 +84,8 @@ public:
 	bool GameMode_Flag;
 
 	bool GameMode_Running_Flag;
+	bool FullScreenMode_Flag;
+
 
 	Ogre::String Project_Resource_Group;
 	

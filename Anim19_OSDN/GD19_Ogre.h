@@ -55,7 +55,6 @@ public:
 
 	bool RenderFrame(void);
 
-	void Go_FullScreen_Mode(void);
 	bool ExitFullScreen();
 
 	bool Get_View_Height_Width(void);

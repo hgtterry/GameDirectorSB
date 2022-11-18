@@ -319,9 +319,11 @@ void GD_Keyboard::Keyboard_Monitor(float deltaTime)
 	}
 
 	//------------------------------------------------ Escape 
-	if (GetAsyncKeyState(VK_ESCAPE) < 0) // Back to full Screen;
+	if (GetAsyncKeyState(VK_ESCAPE) < 0) // Back to Editor mode;
 	{
-		App->Cl19_Ogre->ExitFullScreen();
+		if (App->SBC_Scene->GameMode_Running_Flag == 1 || App->SBC_Scene->FullScreenMode_Flag == 1)
+		{
+			App->Cl19_Ogre->ExitFullScreen();
+		}
 	}
-
 }
