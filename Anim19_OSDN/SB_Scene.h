@@ -82,6 +82,8 @@ public:
 
 	bool GameMode_Flag;
 
+	bool GameMode_Running_Flag;
+
 	Ogre::String Project_Resource_Group;
 	
 protected:

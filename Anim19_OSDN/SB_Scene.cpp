@@ -58,6 +58,7 @@ SB_Scene::SB_Scene()
 	Locations_ID_Counter = 0;
 
 	GameMode_Flag = 0;
+	GameMode_Running_Flag = 0;
 
 	B_Player[100] = { nullptr };
 	B_Area[100] = { nullptr };
@@ -234,6 +235,8 @@ bool SB_Scene::Add_Resource_Location_Project(char* Resource_Location)
 // *************************************************************************
 bool SB_Scene::Game_Mode(void)
 {
+	GameMode_Running_Flag = 1;
+
 	App->Cl_Grid->Grid_SetVisible(0);
 	App->Cl_Grid->Hair_SetVisible(0);
 	App->Cl_Grid->Arrow_Node->setVisible(0);
@@ -304,6 +307,8 @@ bool SB_Scene::Game_Mode(void)
 // *************************************************************************
 bool SB_Scene::Editor_Mode(void)
 {
+	GameMode_Running_Flag = 0;
+
 	App->Cl_Grid->Grid_SetVisible(1);
 	App->Cl_Grid->Hair_SetVisible(1);
 
