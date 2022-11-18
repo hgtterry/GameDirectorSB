@@ -237,6 +237,8 @@ bool SB_Scene::Game_Mode(void)
 {
 	GameMode_Running_Flag = 1;
 
+	App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 0;
+	
 	App->Cl_Grid->Grid_SetVisible(0);
 	App->Cl_Grid->Hair_SetVisible(0);
 	App->Cl_Grid->Arrow_Node->setVisible(0);
@@ -309,6 +311,8 @@ bool SB_Scene::Editor_Mode(void)
 {
 	GameMode_Running_Flag = 0;
 
+	App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 1;
+
 	App->Cl_Grid->Grid_SetVisible(1);
 	App->Cl_Grid->Hair_SetVisible(1);
 
@@ -335,7 +339,7 @@ bool SB_Scene::Editor_Mode(void)
 
 
 	App->Cl19_Ogre->OgreListener->GD_CameraMode = CurrentCamMode;
-
+	
 	App->CL_Vm_ImGui->Show_FPS = App->SBC_Dialogs->Saved_DoFPS;
 
 	return 1;

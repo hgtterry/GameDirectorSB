@@ -285,7 +285,7 @@ Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
  
 [Object_13]
-Mesh_Name=Barrel2
+Mesh_Name=Barrel2_Dynamic
 Mesh_File=Barrel_B2.mesh
 Mesh_Resource_Path=
 Material_File=Barrel_B2.material
@@ -300,7 +300,7 @@ Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
  
 [Object_14]
-Mesh_Name=Object_14
+Mesh_Name=Barrel3_Dynamic
 Mesh_File=Barrel_B2.mesh
 Mesh_Resource_Path=
 Material_File=Barrel_B2.material
