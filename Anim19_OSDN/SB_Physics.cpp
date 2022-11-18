@@ -540,6 +540,12 @@ void SB_Physics::Reset_Triggers(void)
 				App->SBC_Scene->B_Object[Count]->Triggered = 0;
 
 			}
+
+			// ------------------------------------- Messages
+			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Message)
+			{
+				App->SBC_Scene->B_Object[Count]->Show_Message_Flag = 0;
+			}
 		}
 
 		Count++;
