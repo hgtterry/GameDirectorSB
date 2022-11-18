@@ -215,6 +215,7 @@ bool SB_MeshViewer::StartMeshViewer()
 
 	//Set_Debug_Shapes();
 
+	
 	if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area)
 	{
 		strcpy(mResource_Folder, App->EquityDirecory_FullPath);
@@ -228,6 +229,12 @@ bool SB_MeshViewer::StartMeshViewer()
 		strcpy(Selected_MeshFile, "Wall_1.mesh");
 	}
 
+	if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables)
+	{
+		strcpy(mResource_Folder, App->EquityDirecory_FullPath);
+		strcat(mResource_Folder, "\\Media_New\\Collectables\\");
+		strcpy(Selected_MeshFile, "Blueball.mesh");
+	}
 
 	Create_Resources_Group();
 	Add_Resources();
@@ -318,26 +325,26 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		}
 
 
-		//if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Objects)// || App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables)
-		//{
-		//	App->SBC_MeshViewer->Set_ResourceMesh_File(hDlg);
-		//	App->SBC_MeshViewer->Get_Files();
+		if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Objects)
+		{
+			App->SBC_MeshViewer->Set_ResourceMesh_File(hDlg);
+			App->SBC_MeshViewer->Get_Files();
 
-		//	App->SBC_MeshViewer->Enable_ShapeButtons(1);
-		//	App->SBC_MeshViewer->Enable_TypeButtons(1);
+			App->SBC_MeshViewer->Enable_ShapeButtons(1);
+			App->SBC_MeshViewer->Enable_TypeButtons(1);
 
-		//	char ATest[256];
-		//	char ConNum[256];
+			char ATest[256];
+			char ConNum[256];
 
-		//	strcpy_s(ATest, "Object_");
-		//	_itoa(App->SBC_Scene->Object_Count, ConNum, 10);
-		//	strcat(ATest, ConNum);
+			strcpy_s(ATest, "Object_");
+			_itoa(App->SBC_Scene->Object_Count, ConNum, 10);
+			strcat(ATest, ConNum);
 
-		//	SetDlgItemText(hDlg, IDC_OBJECTNAME, ATest);
-		//	strcpy(App->SBC_MeshViewer->Object_Name, ATest);
+			SetDlgItemText(hDlg, IDC_OBJECTNAME, ATest);
+			strcpy(App->SBC_MeshViewer->Object_Name, ATest);
 
-		//	App->SBC_MeshViewer->Enable_TypeButtons(1);
-		//}
+			App->SBC_MeshViewer->Enable_TypeButtons(1);
+		}
 
 		App->Cl19_Ogre->OgreListener->MeshViewer_Running = 1;
 
@@ -719,6 +726,11 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDC_MVSTATIC)
 		{
+			if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables)
+			{
+				return 1;
+			}
+
 			App->SBC_MeshViewer->Physics_Type = Enums::Bullet_Type_Static;
 			App->SBC_MeshViewer->Physics_Shape = Enums::NoShape;
 			App->SBC_MeshViewer->SelectStatic = 1;
@@ -754,6 +766,11 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		// --------------------------------------------------------------------- Shapes
 		if (LOWORD(wParam) == IDC_BOX)
 		{
+			if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables)
+			{
+				return 1;
+			}
+
 			App->SBC_MeshViewer->Reset_Shape_Flags();
 			App->SBC_MeshViewer->Selected_Shape_Box = 1;
 			App->RedrawWindow_Dlg(hDlg);
@@ -2250,11 +2267,37 @@ void SB_MeshViewer::Set_For_Collectables()
 	App->RedrawWindow_Dlg(MainDlgHwnd);
 
 	Selected_Shape_Box = 1;
-	Debug
+
+	char ConNum[256];
+	char ATest[256];
+
+	strcpy_s(ATest, "Collectable_");
+	_itoa(App->SBC_Scene->Object_Count, ConNum, 10);
+	strcat(ATest, ConNum);
+
+	SetDlgItemText(MainDlgHwnd, IDC_OBJECTNAME, ATest);
+	strcpy(App->SBC_MeshViewer->Object_Name, ATest);
+	strcpy(App->SBC_MeshViewer->m_Current_Folder, "Collectables");
+	HWND temp = GetDlgItem(MainDlgHwnd, IDC_CB_FOLDERS);
+	SendMessage(temp, CB_SELECTSTRING, -1, LPARAM(App->SBC_MeshViewer->m_Current_Folder));
+
+	SendMessage(App->SBC_MeshViewer->ListHwnd, LB_RESETCONTENT, 0, 0);
+
+	strcpy(App->SBC_MeshViewer->mResource_Folder, App->EquityDirecory_FullPath);
+	strcat(App->SBC_MeshViewer->mResource_Folder, "\\Media_New\\");
+	strcat(App->SBC_MeshViewer->mResource_Folder, App->SBC_MeshViewer->m_Current_Folder);
+	strcat(App->SBC_MeshViewer->mResource_Folder, "\\");
+
+	SetDlgItemText(MainDlgHwnd, IDC_ST_CURRENTFOLDER, App->SBC_MeshViewer->mResource_Folder);
+	SetWindowText(MainDlgHwnd, App->SBC_MeshViewer->mResource_Folder);
+
+	App->SBC_MeshViewer->Add_Resources();
+	App->SBC_MeshViewer->Get_Files();
+
 }
 
 // *************************************************************************
-// *	  	Set_For_Collectables:- Terry and Hazel Flanigan 2022		   *
+// *	  	Set_Shape_Buttons:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 void SB_MeshViewer::Set_Shape_Buttons()
 {
