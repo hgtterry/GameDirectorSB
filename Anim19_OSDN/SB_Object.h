@@ -44,6 +44,8 @@ public:
 
 	void Copy_Object(int Object_Index);
 
+	void Init_Bmps_Physics();
+
 	Ogre::Vector3 GetMesh_BB_Size(SceneNode* mNode);
 
 	bool Show_Physics_Debug;

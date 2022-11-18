@@ -50,8 +50,9 @@ void SB_Object::Start_Object_PropsPanel(void)
 	Object_PropDlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_OBJECT, App->SBC_Properties->Properties_Dlg_hWnd, (DLGPROC)Object_PropsPanel_Proc);
 	ShowWindow(App->GD_Properties_Hwnd,0);
 
-	//Set_DataView();
+	Init_Bmps_Physics();
 
+	//Set_DataView();
 }
 
 // *************************************************************************
@@ -97,6 +98,13 @@ LRESULT CALLBACK SB_Object::Object_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_OBJECTHELP && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+		
 		return CDRF_DODEFAULT;
 	}
 
@@ -131,9 +139,64 @@ LRESULT CALLBACK SB_Object::Object_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 			return 1;
 		}
 
+		if (LOWORD(wParam) == IDC_BT_OBJECTHELP)
+		{
+
+			return 1;
+		}
+
 		break;
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *			Init_Bmps_Physics:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+void SB_Object::Init_Bmps_Physics()
+{
+
+	HWND Temp = GetDlgItem(Object_PropDlg_Hwnd, IDC_BT_OBJECTHELP);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_InfoSmall_Bmp);
+
+	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
+
+	Temp = GetDlgItem(Object_PropDlg_Hwnd, IDC_BT_OBJECTHELP);
+	TOOLINFO ti1 = { 0 };
+	ti1.cbSize = sizeof(ti1);
+	ti1.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti1.uId = (UINT_PTR)Temp;
+	ti1.lpszText = "Show Help File";
+	ti1.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti1);
+
+	/*Temp = GetDlgItem(App->Physics_Console_Hwnd, IDC_RESETTRIGGERS);
+	TOOLINFO ti2 = { 0 };
+	ti2.cbSize = sizeof(ti2);
+	ti2.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti2.uId = (UINT_PTR)Temp;
+	ti2.lpszText = "Reset All Entites and Triggers";
+	ti2.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti2);
+
+	Temp = GetDlgItem(App->Physics_Console_Hwnd, IDC_RESETPHYSICS);
+	TOOLINFO ti3 = { 0 };
+	ti3.cbSize = sizeof(ti3);
+	ti3.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti3.uId = (UINT_PTR)Temp;
+	ti3.lpszText = "Stop and Reset Physics";
+	ti3.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti3);
+
+	Temp = GetDlgItem(App->Physics_Console_Hwnd, IDC_PHYSICS_ON);
+	TOOLINFO ti4 = { 0 };
+	ti4.cbSize = sizeof(ti4);
+	ti4.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti4.uId = (UINT_PTR)Temp;
+	ti4.lpszText = "Turn Physics On and Off";
+	ti4.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti4);*/
+
 }
 
 // *************************************************************************
