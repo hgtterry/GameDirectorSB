@@ -25,9 +25,6 @@ distribution.
 #include "GD19_App.h"
 #include "GD19_Ogre.h"
 
-
-
-
 GD19_Ogre::GD19_Ogre(void)
 {
 	RenderHwnd =	nullptr;
@@ -85,6 +82,9 @@ bool GD19_Ogre::InitOgre(void)
 	
 	createFrameListener();
 	
+	//mWindow->setVSyncEnabled(true);
+	//mWindow->setVSyncInterval(10);
+
 	return 1;
 }
 

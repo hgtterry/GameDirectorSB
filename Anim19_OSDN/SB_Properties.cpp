@@ -329,7 +329,7 @@ void SB_Properties::ListView_OnClickOptions(LPARAM lParam)
 		return;
 	}
 
-	// Messages
+	// Move Entity
 	if (Edit_Category == Enums::Edit_Move_Entity)
 	{
 		if (Edit_Physics == 0)

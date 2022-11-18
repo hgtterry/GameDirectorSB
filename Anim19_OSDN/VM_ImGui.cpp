@@ -857,6 +857,27 @@ void VM_ImGui::ImGui_Object_Data(void)
 			return;
 		}
 
+		// Move Entity
+		if (App->SBC_Properties->Edit_Category == Enums::Edit_Move_Entity)
+		{
+			ImGui::Text("------------ Move Entity");
+			//ImGui::Text("Sound_File: = %s", App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Sound_File);
+			//ImGui::Text("Sound_Volume: = %f", App->SBC_Scene->B_Object[Index]->S_Collectable[0]->SndVolume);
+			//ImGui::Text("Sound_Play: = %i", App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Play);
+
+			//ImGui::Text("Counter_Name: = %s", App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_To_Move_Index);
+		
+			//ImGui::Text("Counter_Name: = %s", App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Counter_Name);
+			//ImGui::Text("Counter_ID: = %i", App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Counter_ID);
+			//ImGui::Text("Counter_Value: = %i", App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Trigger_Value);
+			////ImGui::Text("Counter_Maths: = %i", App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Maths);
+			//ImGui::Text("Counter_Disabled: = %i", App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Counter_Disabled);
+
+			return;
+		}
+
+
+
 		/*ImGui::Text("Physics_Mass: = %f", App->SBC_Scene->B_Object[Index]->Physics_Mass);
 		ImGui::Text("Physics_Restitution: = %f", App->SBC_Scene->B_Object[Index]->Physics_Restitution);
 

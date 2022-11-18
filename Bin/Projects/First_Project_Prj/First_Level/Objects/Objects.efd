@@ -155,6 +155,7 @@ Col_Counter_Name=Counter_0
 Col_Counter_ID=0
 Col_Maths=1
 Col_Value=1
+Col_Disabled=0
  
 [Object_7]
 Mesh_Name=Coll_2
@@ -165,8 +166,8 @@ Object_ID=8
 Object_Type=2
 Object_Shape=1
 Object_Usage=12
-Mesh_Pos=-1.554194,-52.060463,41.506432
-Mesh_Scale=1.000000,1.000000,1.000000
+Mesh_Pos=-1.554194,-52.060463,-173.493561
+Mesh_Scale=1.999999,1.999999,1.999999
 Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
@@ -177,6 +178,7 @@ Col_Counter_Name=Counter_0
 Col_Counter_ID=0
 Col_Maths=1
 Col_Value=1
+Col_Disabled=0
  
 [Object_8]
 Mesh_Name=Coll_3
@@ -187,8 +189,8 @@ Object_ID=9
 Object_Type=2
 Object_Shape=1
 Object_Usage=12
-Mesh_Pos=1.105255,-51.600006,103.503891
-Mesh_Scale=1.000000,1.000000,1.000000
+Mesh_Pos=154.105255,-51.600006,-2.496109
+Mesh_Scale=1.999999,1.999999,1.999999
 Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
@@ -199,6 +201,7 @@ Col_Counter_Name=Counter_0
 Col_Counter_ID=0
 Col_Maths=1
 Col_Value=1
+Col_Disabled=0
  
 [Counters]
 Objects_Count=9
