@@ -6,7 +6,7 @@ material Wall_1/HL_Wall
          {
              texture_unit
              {
-                 texture wall.jpg
+                 texture Wall.bmp
              }
          }
     }
