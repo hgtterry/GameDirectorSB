@@ -159,7 +159,8 @@ LRESULT CALLBACK SB_Properties::GD_Properties_Proc(HWND hDlg, UINT message, WPAR
 		{
 			if (App->SBC_Properties->Edit_Category == Enums::FV_Edit_Level)
 			{
-				Debug
+				App->Cl_Utilities->OpenHTML("Help\\LevelFolder.html");
+				return 1;
 			}
 
 			return 1;
