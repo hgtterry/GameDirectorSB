@@ -76,6 +76,8 @@ void SB_Properties::Start_GD_Properties(void)
 	Properties_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_GD_PROPERTIES, App->Fdlg, (DLGPROC)GD_Properties_Proc);
 	ShowWindow(Properties_Dlg_hWnd, 1);
 
+	Init_Bmps_Properties();
+
 	Create_Properties_hLV();
 
 }
@@ -216,6 +218,13 @@ LRESULT CALLBACK SB_Properties::GD_Properties_Proc(HWND hDlg, UINT message, WPAR
 			}
 		}
 
+		if (some_item->idFrom == IDC_BT_OBJECTHELP2 && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
 		return CDRF_DODEFAULT;
 	}
 
@@ -228,6 +237,26 @@ LRESULT CALLBACK SB_Properties::GD_Properties_Proc(HWND hDlg, UINT message, WPAR
 	return FALSE;
 }
 
+// *************************************************************************
+// *		Init_Bmps_Properties:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+void SB_Properties::Init_Bmps_Properties()
+{
+
+	HWND Temp = GetDlgItem(Properties_Dlg_hWnd, IDC_BT_OBJECTHELP2);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_InfoSmall_Bmp);
+
+	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
+
+	Temp = GetDlgItem(Properties_Dlg_hWnd, IDC_BT_OBJECTHELP2);
+	TOOLINFO ti1 = { 0 };
+	ti1.cbSize = sizeof(ti1);
+	ti1.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti1.uId = (UINT_PTR)Temp;
+	ti1.lpszText = "Show Help File";
+	ti1.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti1);
+}
 
 // *************************************************************************
 // *					Create_Properties_hLV Terry Bernie				   *

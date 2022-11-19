@@ -69,6 +69,8 @@ protected:
 
 	void ListView_OnClickOptions(LPARAM lParam);
 
+	void Init_Bmps_Properties();
+
 	bool Edit_Area_Onclick(LPARAM lParam);
 	bool Edit_Player_Onclick(LPARAM lParam);
 	bool Edit_Player_Physics_Onclick(LPARAM lParam);
