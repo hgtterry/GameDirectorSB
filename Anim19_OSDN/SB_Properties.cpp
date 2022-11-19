@@ -1461,6 +1461,12 @@ bool SB_Properties::Edit_Messages_OnClick(LPARAM lParam)
 	if (result == 0)
 	{
 		App->SBC_Dialogs->Dialog_Counter();
+
+		if (App->SBC_Dialogs->Canceled == 1)
+		{
+			return 1;
+		}
+
 		App->SBC_Properties->Mark_As_Altered(Index);
 		Update_ListView_Messages();
 
@@ -1835,25 +1841,12 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 	if (result == 0)
 	{
 		App->SBC_Dialogs->Dialog_Counter();
-
-
-		/*strcpy(App->Cl_Dialogs->btext, "Trigger Value");
-
-		char buff[256];
-		sprintf(buff, "%i", App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Trigger_Value);
-		strcpy(App->Cl_Dialogs->Chr_Int, buff);
-
-		App->Cl_Dialogs->Dialog_Int();
-
-		if (App->Cl_Dialogs->Canceled == 1)
+		if (App->SBC_Dialogs->Canceled == 1)
 		{
-			return TRUE;
+			return 1;
 		}
 
-		App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Trigger_Value = App->Cl_Dialogs->mInt;*/
-
 		Mark_As_Altered(Index);
-
 		Update_ListView_Move_Entities();
 
 		App->SBC_Physics->Reset_Triggers();
@@ -1981,6 +1974,11 @@ bool SB_Properties::Edit_Collectables_OnClick(LPARAM lParam)
 	if (result == 0)
 	{
 		App->SBC_Dialogs->Dialog_Counter();
+
+		if (App->SBC_Dialogs->Canceled == 1)
+		{
+			return 1;
+		}
 
 		Mark_As_Altered(Index);
 		Update_ListView_Collectables();

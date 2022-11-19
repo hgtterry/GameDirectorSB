@@ -714,6 +714,8 @@ LRESULT CALLBACK SB_Dialogs::Front_Screen_Proc(HWND hDlg, UINT message, WPARAM w
 // *************************************************************************
 bool SB_Dialogs::Dialog_Counter()
 {
+	App->SBC_Dialogs->Canceled = 0;
+
 	DialogBox(App->hInst, (LPCTSTR)IDD_PROPS_COUNTER, App->Fdlg, (DLGPROC)Dialog_Counter_Proc);
 	return 1;
 }
@@ -1064,7 +1066,7 @@ LRESULT CALLBACK SB_Dialogs::Dialog_Counter_Proc(HWND hDlg, UINT message, WPARAM
 				App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Value = atoi(buff);
 			}
 
-			//App->Cl_Dialogs->Canceled = 0;
+			App->SBC_Dialogs->Canceled = 0;
 			//App->Cl_Dialogs->Active_Dlg_Int = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
@@ -1072,7 +1074,7 @@ LRESULT CALLBACK SB_Dialogs::Dialog_Counter_Proc(HWND hDlg, UINT message, WPARAM
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
-			//App->Cl_Dialogs->Canceled = 1;
+			App->SBC_Dialogs->Canceled = 1;
 			//App->Cl_Dialogs->Active_Dlg_Int = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
