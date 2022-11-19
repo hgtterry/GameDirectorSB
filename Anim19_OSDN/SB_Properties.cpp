@@ -90,7 +90,7 @@ LRESULT CALLBACK SB_Properties::GD_Properties_Proc(HWND hDlg, UINT message, WPAR
 	{
 	case WM_INITDIALOG:
 	{
-		SendDlgItemMessage(hDlg, IDC_STOBJECTNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STOBJECTNAME, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 
 		App->SBC_Properties->Edit_Category = Enums::FV_Edit_Object;
 
@@ -389,9 +389,9 @@ bool SB_Properties::Update_ListView_Objects()
 
 	char buff[255];
 	strcpy(buff, App->SBC_Scene->B_Object[index]->Mesh_Name);
-	strcat(buff, "   (Object-");
-	strcat(buff, Num);
-	strcat(buff, ")");
+	//strcat(buff, "   (Object-");
+	//strcat(buff, Num);
+	//strcat(buff, ")");
 
 
 	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
@@ -458,7 +458,7 @@ bool SB_Properties::Update_ListView_Player()
 
 	char buff[255];
 	strcpy(buff, App->SBC_Scene->B_Player[0]->Player_Name);
-	strcat(buff, "   (Player)");
+	//strcat(buff, "   (Player)");
 	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
 
 	char chr_Speed[100];
@@ -530,7 +530,7 @@ bool SB_Properties::Update_ListView_Player_Physics()
 
 	char buff[255];
 	strcpy(buff, App->SBC_Scene->B_Player[0]->Player_Name);
-	strcat(buff, "   (Physics)");
+	//strcat(buff, "   (Physics)");
 	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
 
 	char chr_PhysicsType[100];
@@ -598,7 +598,7 @@ bool SB_Properties::Update_ListView_Messages()
 
 	char buff[255];
 	strcpy(buff, App->SBC_Scene->B_Object[index]->Mesh_Name);
-	strcat(buff, "   (Message)");
+	//strcat(buff, "   (Message)");
 	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
 
 	char chr_PosX[20];
@@ -667,7 +667,7 @@ bool SB_Properties::Update_ListView_Sounds()
 
 	char buff[255];
 	strcpy(buff, App->SBC_Scene->B_Object[index]->Mesh_Name);
-	strcat(buff, "   (Sound)");
+	//strcat(buff, "   (Sound)");
 	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
 
 
@@ -718,7 +718,7 @@ bool SB_Properties::Update_ListView_Teleport()
 
 	char buff[255];
 	strcpy(buff, App->SBC_Scene->B_Object[index]->Mesh_Name);
-	strcat(buff, "   (Teleport)");
+	//strcat(buff, "   (Teleport)");
 	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
 
 	// new sound
@@ -783,7 +783,7 @@ bool SB_Properties::Update_ListView_Collectables()
 
 	char buff[255];
 	strcpy(buff, App->SBC_Scene->B_Object[index]->Mesh_Name);
-	strcat(buff, "   (Collectable)");
+	//strcat(buff, "   (Collectable)");
 	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
 	
 	// new sound
@@ -860,7 +860,7 @@ bool SB_Properties::Update_ListView_Counters()
 
 	char buff[255];
 	strcpy(buff, App->SBC_Scene->B_Counter[index]->Panel_Name);
-	strcat(buff, "   (Counters)");
+	//strcat(buff, "   (Counters)");
 	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
 
 	char chr_PosX[20];
@@ -933,7 +933,7 @@ bool SB_Properties::Update_ListView_Move_Entities()
 
 	char buff[255];
 	strcpy(buff, App->SBC_Scene->B_Object[index]->Mesh_Name);
-	strcat(buff, "   (Mover)");
+	//strcat(buff, "   (Mover)");
 	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
 
 	char chr_Distance[100];
@@ -1046,7 +1046,7 @@ bool SB_Properties::Update_ListView_Level()
 
 	char buff[255];
 	strcpy(buff, App->SBC_Project->m_Level_Name);
-	strcat(buff, "   (Level)");
+	//strcat(buff, "   (Level)");
 	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
 
 	char strCamCount[20];
@@ -2169,7 +2169,7 @@ bool SB_Properties::Update_ListView_Area()
 
 	char buff[255];
 	strcpy(buff,"Area ");
-	strcat(buff, App->SBC_Scene->B_Area[Index]->Area_Name);
+	//strcat(buff, App->SBC_Scene->B_Area[Index]->Area_Name);
 	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
 
 	const int NUM_ITEMS = 3;
@@ -2217,7 +2217,7 @@ bool SB_Properties::Update_ListView_Camera()
 
 	char buff[255];
 	strcpy(buff, App->SBC_Scene->B_Camera[Index]->Camera_Name);
-	strcat(buff, "   (Camera)");
+	//strcat(buff, "   (Camera)");
 	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
 
 	char chr_Pos_X[100];

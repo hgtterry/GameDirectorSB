@@ -319,6 +319,8 @@ void SB_Object::Clear_Modified_Objects()
 	}
 
 	App->SBC_Scene->Scene_Modified = 0;
+
+	EnableMenuItem(App->mMenu, ID_FILE_SAVEPROJECTALL, MF_GRAYED);
 }
 
 // *************************************************************************

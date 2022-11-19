@@ -133,6 +133,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	App->SBC_FileView->SelectItem(App->SBC_FileView->FV_LevelFolder);
 
 	CheckMenuItem(App->mMenu, ID_WINDOWS_FPS, MF_BYCOMMAND | MF_CHECKED);
+	EnableMenuItem(App->mMenu, ID_FILE_SAVEPROJECTALL, MF_GRAYED);
 
 	SetTimer(App->MainHwnd, 1, 1, NULL);
 

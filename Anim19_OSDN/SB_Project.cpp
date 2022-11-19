@@ -1464,6 +1464,8 @@ bool SB_Project::Load_Project()
 	App->SBC_FileView->SelectItem(App->SBC_FileView->FV_LevelFolder);
 
 	App->SBC_Scene->Scene_Modified = 0;
+	EnableMenuItem(App->mMenu, ID_FILE_SAVEPROJECTALL, MF_GRAYED);
+
 	return 1;
 }
 
