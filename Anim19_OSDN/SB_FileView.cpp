@@ -593,6 +593,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		HideRightPanes();
 		ShowWindow(App->GD_Properties_Hwnd, 1);
 		App->SBC_Aera->Hide_Area_Dlg(1);
+		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1);
 
 		App->SBC_Properties->Edit_Category = Enums::Edit_Area;
 

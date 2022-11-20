@@ -78,16 +78,28 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_Dimensions_Proc(HWND hDlg, UINT messag
 		SendDlgItemMessage(hDlg, IDC_BT_POSITION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_ROTATION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_SCALE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CK_LOCK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		return TRUE;
 	}
+
 	case WM_CTLCOLORSTATIC:
 	{
+
+		if (GetDlgItem(hDlg, IDC_CK_LOCK) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
 		return FALSE;
 	}
 
 	case WM_CTLCOLORDLG:
 	{
-		return (LONG)App->DialogBackGround;
+		return (LONG)App->AppBackground;
 	}
 
 	case WM_NOTIFY:
@@ -120,6 +132,27 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_Dimensions_Proc(HWND hDlg, UINT messag
 
 	case WM_COMMAND:
 	{
+		if (LOWORD(wParam) == IDC_CK_LOCK)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_LOCK);
+			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
+			if (test == BST_CHECKED)
+			{
+				EnableWindow(GetDlgItem(hDlg, IDC_BT_POSITION), 0);
+				EnableWindow(GetDlgItem(hDlg, IDC_BT_SCALE), 0);
+				EnableWindow(GetDlgItem(hDlg, IDC_BT_ROTATION), 0);
+				return 1;
+			}
+			else
+			{
+				EnableWindow(GetDlgItem(hDlg, IDC_BT_POSITION), 1);
+				EnableWindow(GetDlgItem(hDlg, IDC_BT_SCALE), 1);
+				EnableWindow(GetDlgItem(hDlg, IDC_BT_ROTATION), 1);
+				return 1;
+			}
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == IDC_BT_POSITION)
 		{
 
