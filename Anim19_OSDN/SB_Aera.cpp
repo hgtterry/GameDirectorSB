@@ -131,12 +131,14 @@ LRESULT CALLBACK SB_Area::Area_PropsPanel_Proc(HWND hDlg, UINT message, WPARAM w
 
 		if (LOWORD(wParam) == IDC_PHYSICSAREADEBUG)
 		{
-			int f = App->SBC_Scene->B_Area[0]->Phys_Body->getCollisionFlags();
+			int Index = App->SBC_Properties->Current_Selected_Object;
+
+			int f = App->SBC_Scene->B_Area[Index]->Phys_Body->getCollisionFlags();
 
 			if (App->SBC_Area->Show_Physics_Debug == 1)
 			{
 				App->SBC_Area->Show_Physics_Debug = 0;
-				App->SBC_Scene->B_Area[0]->Phys_Body->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+				App->SBC_Scene->B_Area[Index]->Phys_Body->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
 				App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 0;
 				App->Cl19_Ogre->RenderFrame();
@@ -145,7 +147,7 @@ LRESULT CALLBACK SB_Area::Area_PropsPanel_Proc(HWND hDlg, UINT message, WPARAM w
 			else
 			{
 				App->SBC_Area->Show_Physics_Debug = 1;
-				App->SBC_Scene->B_Area[0]->Phys_Body->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+				App->SBC_Scene->B_Area[Index]->Phys_Body->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 			}
 
 			return 1;
@@ -357,6 +359,9 @@ void SB_Area::Add_Aera_To_Project(int Index,char* FileName,char* Resource_Locati
 		}
 	}*/
 
+	char Mesh_File[MAX_PATH];
+	strcpy(Mesh_File, FileName);
+
 	App->SBC_Scene->B_Area[Index] = new Base_Area();
 	Base_Area* Area = App->SBC_Scene->B_Area[Index];
 
@@ -369,7 +374,7 @@ void SB_Area::Add_Aera_To_Project(int Index,char* FileName,char* Resource_Locati
 	strcpy(Area->Area_FileName, FileName);
 	strcpy(Area->Area_Resource_Path, Resource_Location); // with back slash
 
-	Area->Area_Ent = App->Cl19_Ogre->mSceneMgr->createEntity(App->SBC_Scene->B_Area[Index]->Area_Name, Area->Area_FileName, App->SBC_Scene->Project_Resource_Group);
+	Area->Area_Ent = App->Cl19_Ogre->mSceneMgr->createEntity(App->SBC_Scene->B_Area[Index]->Area_Name, Mesh_File, App->SBC_Scene->Project_Resource_Group);
 	Area->Area_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Area->Area_Node->attachObject(Area->Area_Ent);
 

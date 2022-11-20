@@ -1840,13 +1840,18 @@ bool SB_Project::Load_Project_Aera()
 
 	while (Count < Area_Count)
 	{
+		char n_buff[255];
+		char buff[255];
+		strcpy(buff, "Area_");
+		_itoa(Count, n_buff, 10);
+		strcat(buff, n_buff);
 
-		App->Cl_Ini->GetString("Area_0", "Area_Name", Area_Name, MAX_PATH);
-		App->Cl_Ini->GetString("Area_0", "Area_File", Mesh_FileName, MAX_PATH);
-		App->Cl_Ini->GetString("Area_0", "Area_Resource_Path", Resource_Location, MAX_PATH);
+		App->Cl_Ini->GetString(buff, "Area_Name", Area_Name, MAX_PATH);
+		App->Cl_Ini->GetString(buff, "Area_File", Mesh_FileName, MAX_PATH);
+		App->Cl_Ini->GetString(buff, "Area_Resource_Path", Resource_Location, MAX_PATH);
 
 		App->SBC_Area->Add_Aera_To_Project(Count, Mesh_FileName, m_Main_Assets_Path);
-		App->SBC_Scene->B_Area[0]->S_Environment[0] = new Environment_type;
+		App->SBC_Scene->B_Area[Count]->S_Environment[0] = new Environment_type;
 		App->SBC_Area->Set_Environment_Defaults(Count);
 
 		App->Cl_Ini->GetString("Area_0", "Material_File", App->SBC_Scene->B_Area[Count]->Material_File, MAX_PATH);
@@ -1865,82 +1870,83 @@ bool SB_Project::Load_Project_Aera()
 
 		//--------------- Sound
 		App->Cl_Ini->GetString("Environment", "Sound_File", chr_Tag1, MAX_PATH);
-		strcpy(App->SBC_Scene->B_Area[0]->S_Environment[0]->Sound_File, chr_Tag1);
+		strcpy(App->SBC_Scene->B_Area[Count]->S_Environment[0]->Sound_File, chr_Tag1);
 
 		App->Cl_Ini->GetString("Environment", "Snd_Volume", chr_Tag1, MAX_PATH);
 		sscanf(chr_Tag1, "%f", &x);
-		App->SBC_Scene->B_Area[0]->S_Environment[0]->SndVolume = x;
+		App->SBC_Scene->B_Area[Count]->S_Environment[0]->SndVolume = x;
 
 		Int_Tag = App->Cl_Ini->GetInt("Environment", "Sound_Play", 0, 10);
-		App->SBC_Scene->B_Area[0]->S_Environment[0]->Play = Int_Tag;
+		App->SBC_Scene->B_Area[Count]->S_Environment[0]->Play = Int_Tag;
 
 		Int_Tag = App->Cl_Ini->GetInt("Environment", "Sound_Loop", 0, 10);
-		App->SBC_Scene->B_Area[0]->S_Environment[0]->Loop = Int_Tag;
+		App->SBC_Scene->B_Area[Count]->S_Environment[0]->Loop = Int_Tag;
 
 		//--------------- Light
 		App->Cl_Ini->GetString("Environment", "Ambient_Colour", chr_Tag1, MAX_PATH);
 		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
-		App->SBC_Scene->B_Area[0]->S_Environment[0]->AmbientColour = Ogre::Vector3(x, y, z);
+		App->SBC_Scene->B_Area[Count]->S_Environment[0]->AmbientColour = Ogre::Vector3(x, y, z);
 
 		App->Cl_Ini->GetString("Environment", "Diffuse_Colour", chr_Tag1, MAX_PATH);
 		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
-		App->SBC_Scene->B_Area[0]->S_Environment[0]->DiffuseColour = Ogre::Vector3(x, y, z);
+		App->SBC_Scene->B_Area[Count]->S_Environment[0]->DiffuseColour = Ogre::Vector3(x, y, z);
 
 		App->Cl_Ini->GetString("Environment", "Specular_Colour", chr_Tag1, MAX_PATH);
 		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
-		App->SBC_Scene->B_Area[0]->S_Environment[0]->SpecularColour = Ogre::Vector3(x, y, z);
+		App->SBC_Scene->B_Area[Count]->S_Environment[0]->SpecularColour = Ogre::Vector3(x, y, z);
 
 		App->Cl_Ini->GetString("Environment", "Light_Position", chr_Tag1, MAX_PATH);
 		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
-		App->SBC_Scene->B_Area[0]->S_Environment[0]->Light_Position = Ogre::Vector3(x, y, z);
+		App->SBC_Scene->B_Area[Count]->S_Environment[0]->Light_Position = Ogre::Vector3(x, y, z);
 
 		//--------------- Sky
 		Int_Tag = App->Cl_Ini->GetInt("Environment", "Sky_Enable", 0, 10);
-		App->SBC_Scene->B_Area[0]->S_Environment[0]->Enabled = Int_Tag;
+		App->SBC_Scene->B_Area[Count]->S_Environment[0]->Enabled = Int_Tag;
 
 		Int_Tag = App->Cl_Ini->GetInt("Environment", "Sky_Type", 0, 10);
-		App->SBC_Scene->B_Area[0]->S_Environment[0]->type = Int_Tag;
+		App->SBC_Scene->B_Area[Count]->S_Environment[0]->type = Int_Tag;
 
 		App->Cl_Ini->GetString("Environment", "Sky_Material", chr_Tag1, MAX_PATH);
-		strcpy(App->SBC_Scene->B_Area[0]->S_Environment[0]->Material, chr_Tag1);
+		strcpy(App->SBC_Scene->B_Area[Count]->S_Environment[0]->Material, chr_Tag1);
 
 		App->Cl_Ini->GetString("Environment", "Sky_Curvature", chr_Tag1, MAX_PATH);
 		sscanf(chr_Tag1, "%f", &x);
-		App->SBC_Scene->B_Area[0]->S_Environment[0]->Curvature = x;
+		App->SBC_Scene->B_Area[Count]->S_Environment[0]->Curvature = x;
 	
 		App->Cl_Ini->GetString("Environment", "Sky_Tiling", chr_Tag1, MAX_PATH);
 		sscanf(chr_Tag1, "%f", &x);
-		App->SBC_Scene->B_Area[0]->S_Environment[0]->Tiling = x;
+		App->SBC_Scene->B_Area[Count]->S_Environment[0]->Tiling = x;
 		
 		App->Cl_Ini->GetString("Environment", "Sky_Distance", chr_Tag1, MAX_PATH);
 		sscanf(chr_Tag1, "%f", &x);
-		App->SBC_Scene->B_Area[0]->S_Environment[0]->Distance = x;
+		App->SBC_Scene->B_Area[Count]->S_Environment[0]->Distance = x;
 		
 		//--------------- Fog
 		Int_Tag = App->Cl_Ini->GetInt("Environment", "Fog_On", 0, 10);
-		App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_On = Int_Tag;
+		App->SBC_Scene->B_Area[Count]->S_Environment[0]->Fog_On = Int_Tag;
 
 		Int_Tag = App->Cl_Ini->GetInt("Environment", "Fog_Mode", 0, 10);
-		App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_Mode = Int_Tag;
+		App->SBC_Scene->B_Area[Count]->S_Environment[0]->Fog_Mode = Int_Tag;
 		
 		App->Cl_Ini->GetString("Environment", "Fog_Colour", chr_Tag1, MAX_PATH);
 		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
-		App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_Colour = Ogre::Vector3(x, y, z);
+		App->SBC_Scene->B_Area[Count]->S_Environment[0]->Fog_Colour = Ogre::Vector3(x, y, z);
 
 		App->Cl_Ini->GetString("Environment", "Fog_Start", chr_Tag1, MAX_PATH);
 		sscanf(chr_Tag1, "%f", &x);
-		App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_Start = x;
+		App->SBC_Scene->B_Area[Count]->S_Environment[0]->Fog_Start = x;
 
 		App->Cl_Ini->GetString("Environment", "Fog_End", chr_Tag1, MAX_PATH);
 		sscanf(chr_Tag1, "%f", &x);
-		App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_End = x;
+		App->SBC_Scene->B_Area[Count]->S_Environment[0]->Fog_End = x;
 
 		App->Cl_Ini->GetString("Environment", "Fog_Density", chr_Tag1, MAX_PATH);
 		sscanf(chr_Tag1, "%f", &x);
-		App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_Density = x;
+		App->SBC_Scene->B_Area[Count]->S_Environment[0]->Fog_Density = x;
 
 
 		Count++;
+
 		App->SBC_Scene->Area_Count++;
 	}
 
