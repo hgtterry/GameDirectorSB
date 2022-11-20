@@ -59,7 +59,7 @@ GD19_App::GD19_App(void)
 	SBC_Properties =	nullptr;
 	SBC_Camera =		nullptr;
 	SBC_3DT =			nullptr;
-	SBC_Aera =			nullptr;
+	SBC_Area =			nullptr;
 	SBC_Resources =		nullptr;
 	SBC_Scene =			nullptr;
 	SBC_TopTabs =		nullptr;
@@ -218,7 +218,7 @@ bool GD19_App::InitApp(void)
 	SBC_Properties =	new SB_Properties();
 	SBC_Camera =		new SB_Camera();
 	SBC_3DT =			new SB_3DT();
-	SBC_Aera =			new SB_Aera();
+	SBC_Area =			new SB_Area();
 	SBC_Resources =		new SB_Resources();
 	SBC_Scene =			new SB_Scene();
 	SBC_TopTabs =		new SB_TopTabs();

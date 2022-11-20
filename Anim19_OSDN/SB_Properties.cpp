@@ -55,7 +55,7 @@ void SB_Properties::Reset_Class()
 {
 	App->SBC_Camera->Hide_Cam_Dlg(0);
 	App->SBC_Player->Hide_Player_Dlg(0);
-	App->SBC_Aera->Hide_Area_Dlg(0);
+	App->SBC_Area->Hide_Area_Dlg(0);
 	Clear_Listview();
 }
 

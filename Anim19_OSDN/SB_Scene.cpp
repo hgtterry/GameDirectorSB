@@ -153,7 +153,7 @@ bool SB_Scene::Clear_Level()
 		App->SBC_Physics->Enable_Physics(0);
 
 		App->SBC_Player->Reset_Class();
-		App->SBC_Aera->Reset_Class();
+		App->SBC_Area->Reset_Class();
 
 
 		// Bullet Related

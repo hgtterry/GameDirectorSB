@@ -25,11 +25,11 @@ distribution.
 
 #include "Base_Area.h"
 
-class SB_Aera
+class SB_Area
 {
 public:
-	SB_Aera();
-	~SB_Aera();
+	SB_Area();
+	~SB_Area();
 
 	void Reset_Class(void);
 

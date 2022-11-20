@@ -592,7 +592,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 		HideRightPanes();
 		ShowWindow(App->GD_Properties_Hwnd, 1);
-		App->SBC_Aera->Hide_Area_Dlg(1);
+		App->SBC_Area->Hide_Area_Dlg(1);
 		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1);
 
 		App->SBC_Properties->Edit_Category = Enums::Edit_Area;
@@ -1017,7 +1017,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 		HideRightPanes();
 		ShowWindow(App->GD_Properties_Hwnd, 1);
-		App->SBC_Aera->Hide_Area_Dlg(1);
+		App->SBC_Area->Hide_Area_Dlg(1);
 
 //		App->SBC_Properties->Enable_Delete_Button(1);
 
@@ -1114,7 +1114,7 @@ void SB_FileView::HideRightPanes(void)
 
 	App->SBC_Camera->Hide_Cam_Dlg(0);
 	App->SBC_Player->Hide_Player_Dlg(0);
-	App->SBC_Aera->Hide_Area_Dlg(0);
+	App->SBC_Area->Hide_Area_Dlg(0);
 	App->SBC_Object->Hide_Object_Dlg(0);
 
 	App->SBC_Props_Dialog->Hide_Panel_Test_Dlg(0);

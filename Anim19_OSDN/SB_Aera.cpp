@@ -27,7 +27,7 @@ distribution.
 #include "SB_Aera.h"
 
 
-SB_Aera::SB_Aera()
+SB_Area::SB_Area()
 {
 	Area_Props_HWND = nullptr;
 
@@ -35,14 +35,14 @@ SB_Aera::SB_Aera()
 }
 
 
-SB_Aera::~SB_Aera()
+SB_Area::~SB_Area()
 {
 }
 
 // *************************************************************************
 // *	  					Reset_Class Bernie							   *
 // *************************************************************************
-void SB_Aera::Reset_Class(void)
+void SB_Area::Reset_Class(void)
 {
 	int Count = 0;
 
@@ -73,7 +73,7 @@ void SB_Aera::Reset_Class(void)
 // *************************************************************************
 // *	  				Start_Area_PropsPanel Terry Bernie				   *
 // *************************************************************************
-bool SB_Aera::Start_Area_PropsPanel()
+bool SB_Area::Start_Area_PropsPanel()
 {
 
 	Area_Props_HWND = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_AERA, App->SBC_Properties->Properties_Dlg_hWnd, (DLGPROC)Area_PropsPanel_Proc);
@@ -83,7 +83,7 @@ bool SB_Aera::Start_Area_PropsPanel()
 // *************************************************************************
 // *				Area_PropsPanel_Proc  Terry Bernie					   *
 // *************************************************************************
-LRESULT CALLBACK SB_Aera::Area_PropsPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK SB_Area::Area_PropsPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 
 	switch (message)
@@ -113,7 +113,7 @@ LRESULT CALLBACK SB_Aera::Area_PropsPanel_Proc(HWND hDlg, UINT message, WPARAM w
 		if (some_item->idFrom == IDC_PHYSICSAREADEBUG && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->SBC_Aera->Show_Physics_Debug);
+			App->Custom_Button_Toggle(item, App->SBC_Area->Show_Physics_Debug);
 			return CDRF_DODEFAULT;
 		}
 
@@ -133,9 +133,9 @@ LRESULT CALLBACK SB_Aera::Area_PropsPanel_Proc(HWND hDlg, UINT message, WPARAM w
 		{
 			int f = App->SBC_Scene->B_Area[0]->Phys_Body->getCollisionFlags();
 
-			if (App->SBC_Aera->Show_Physics_Debug == 1)
+			if (App->SBC_Area->Show_Physics_Debug == 1)
 			{
-				App->SBC_Aera->Show_Physics_Debug = 0;
+				App->SBC_Area->Show_Physics_Debug = 0;
 				App->SBC_Scene->B_Area[0]->Phys_Body->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
 				App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 0;
@@ -144,7 +144,7 @@ LRESULT CALLBACK SB_Aera::Area_PropsPanel_Proc(HWND hDlg, UINT message, WPARAM w
 			}
 			else
 			{
-				App->SBC_Aera->Show_Physics_Debug = 1;
+				App->SBC_Area->Show_Physics_Debug = 1;
 				App->SBC_Scene->B_Area[0]->Phys_Body->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 			}
 
@@ -173,7 +173,7 @@ LRESULT CALLBACK SB_Aera::Area_PropsPanel_Proc(HWND hDlg, UINT message, WPARAM w
 // *************************************************************************
 // *						Hide_Area_Dlg Terry Bernie 					   *
 // *************************************************************************
-void SB_Aera::Hide_Area_Dlg(bool Show)
+void SB_Area::Hide_Area_Dlg(bool Show)
 {
 	ShowWindow(Area_Props_HWND, Show);
 }
@@ -337,7 +337,7 @@ void SB_Aera::Hide_Area_Dlg(bool Show)
 // *************************************************************************
 // *					Add_Aera_To_Project Terry Bernie 				   *
 // *************************************************************************
-void SB_Aera::Add_Aera_To_Project(int Index,char* FileName,char* Resource_Location)
+void SB_Area::Add_Aera_To_Project(int Index,char* FileName,char* Resource_Location)
 {
 	App->Log_Messageg("void SB_Aera::Add_Aera_To_Project(int Index,char* FileName,char* Resource_Location)");
 
@@ -381,7 +381,7 @@ void SB_Aera::Add_Aera_To_Project(int Index,char* FileName,char* Resource_Locati
 // *************************************************************************
 //					create_Aera_Trimesh_New Terry Bernie				   *
 // *************************************************************************
-btBvhTriangleMeshShape* SB_Aera::create_Area_Trimesh_New(int Index,Base_Area* Object)
+btBvhTriangleMeshShape* SB_Area::create_Area_Trimesh_New(int Index,Base_Area* Object)
 {
 	
 	// Get the mesh from the entity
@@ -534,7 +534,7 @@ btBvhTriangleMeshShape* SB_Aera::create_Area_Trimesh_New(int Index,Base_Area* Ob
 // *************************************************************************
 // *	  				Set_Environment_Defaults Terry Bernie			   *
 // *************************************************************************
-void SB_Aera::Set_Environment_Defaults(int Index)
+void SB_Area::Set_Environment_Defaults(int Index)
 {
 	//----------------------- Sound
 	strcpy(App->SBC_Scene->B_Area[0]->S_Environment[0]->Sound_File, "The_Sun.ogg");
@@ -580,7 +580,7 @@ void SB_Aera::Set_Environment_Defaults(int Index)
 // *************************************************************************
 // *	Get_BoundingBox_World_Centre:- Terry and Hazel Flanigan 2022	   *
 // *************************************************************************
-Ogre::Vector3 SB_Aera::Get_BoundingBox_World_Centre(int Object_Index)
+Ogre::Vector3 SB_Area::Get_BoundingBox_World_Centre(int Object_Index)
 {
 	if (App->SBC_Scene->B_Area[Object_Index]->Shape == Enums::Shape_TriMesh)
 	{
@@ -600,7 +600,7 @@ Ogre::Vector3 SB_Aera::Get_BoundingBox_World_Centre(int Object_Index)
 // *************************************************************************
 // *				UpDate_Physics_And_Visuals Terry Flanigtan		 	   *
 // *************************************************************************
-void SB_Aera::UpDate_Physics_And_Visuals(int Index)
+void SB_Area::UpDate_Physics_And_Visuals(int Index)
 {
 	if (App->SBC_Scene->B_Area[Index]->Shape == Enums::Shape_TriMesh)
 	{

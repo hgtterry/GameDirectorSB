@@ -118,7 +118,7 @@ public:
 	SB_Properties*			SBC_Properties;
 	SB_Camera*				SBC_Camera;
 	SB_3DT*					SBC_3DT;
-	SB_Aera*				SBC_Aera;
+	SB_Area*				SBC_Area;
 	SB_Resources*			SBC_Resources;		// Resources Class Used by the Level [081221]
 	SB_Scene*				SBC_Scene;			// Collection Class For Level [081221]
 	SB_TopTabs*				SBC_TopTabs;		// Top Bar Tabs Class Level Editor [081221]
