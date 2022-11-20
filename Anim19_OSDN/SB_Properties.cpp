@@ -2163,10 +2163,10 @@ bool SB_Properties::Edit_Counters_OnClick(LPARAM lParam)
 // *************************************************************************
 bool SB_Properties::Update_ListView_Area()
 {
-	int Index = 0;// Current_Selected_Object; // Get Selected Object Index 
+	int Index = Current_Selected_Object;
 
 	char buff[255];
-	strcpy(buff,"Area ");
+	strcpy(buff, App->SBC_Scene->B_Area[Index]->Area_Name);
 	//strcat(buff, App->SBC_Scene->B_Area[Index]->Area_Name);
 	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
 

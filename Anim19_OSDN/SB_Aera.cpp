@@ -339,9 +339,10 @@ void SB_Area::Hide_Area_Dlg(bool Show)
 // *************************************************************************
 void SB_Area::Add_Aera_To_Project(int Index,char* FileName,char* Resource_Location)
 {
-	App->Log_Messageg("void SB_Aera::Add_Aera_To_Project(int Index,char* FileName,char* Resource_Location)");
+	char B_Name[MAX_PATH];
+	char ConNum[MAX_PATH];
 
-	if (App->SBC_Scene->B_Area[Index])
+	/*if (App->SBC_Scene->B_Area[Index])
 	{
 		if (App->SBC_Scene->B_Area[Index]->Area_Ent && App->SBC_Scene->B_Area[Index]->Area_Node)
 		{
@@ -354,16 +355,21 @@ void SB_Area::Add_Aera_To_Project(int Index,char* FileName,char* Resource_Locati
 			delete App->SBC_Scene->B_Area[Index];
 			App->SBC_Scene->B_Area[Index] = nullptr;
 		}
-	}
+	}*/
 
 	App->SBC_Scene->B_Area[Index] = new Base_Area();
 	Base_Area* Area = App->SBC_Scene->B_Area[Index];
+
+	strcpy_s(B_Name, "Area_");
+	_itoa(Index, ConNum, 10);
+	strcat(B_Name, ConNum);
+	strcpy(App->SBC_Scene->B_Area[Index]->Area_Name, B_Name);
 
 	Area->Object_ID = 0; //App->Cl_Scene_Data->Object_ID_Counter;
 	strcpy(Area->Area_FileName, FileName);
 	strcpy(Area->Area_Resource_Path, Resource_Location); // with back slash
 
-	Area->Area_Ent = App->Cl19_Ogre->mSceneMgr->createEntity("UserMesh", Area->Area_FileName, App->SBC_Scene->Project_Resource_Group);
+	Area->Area_Ent = App->Cl19_Ogre->mSceneMgr->createEntity(App->SBC_Scene->B_Area[Index]->Area_Name, Area->Area_FileName, App->SBC_Scene->Project_Resource_Group);
 	Area->Area_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Area->Area_Node->attachObject(Area->Area_Ent);
 

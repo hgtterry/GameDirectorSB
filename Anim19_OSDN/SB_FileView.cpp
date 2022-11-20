@@ -596,7 +596,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1);
 
 		App->SBC_Properties->Edit_Category = Enums::Edit_Area;
-
+		App->SBC_Properties->Current_Selected_Object = Index;
 		App->SBC_Properties->Update_ListView_Area();
 
 		return;

@@ -175,6 +175,7 @@ bool SB_Objects_Create::Dispatch_MeshViewer()
 	if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area) // Area
 	{
 		App->SBC_Area->Add_Aera_To_Project(0, App->SBC_MeshViewer->Selected_MeshFile, m_ResourcePath);
+		App->Say("Dispatch_MeshViewer");
 	}
 	else
 	{
@@ -761,9 +762,16 @@ bool SB_Objects_Create::Add_New_Area()
 	}
 	else
 	{
-		App->SBC_Area->Add_Aera_To_Project(0, App->SBC_MeshViewer->Selected_MeshFile, App->SBC_MeshViewer->mResource_Folder);
-		App->SBC_Scene->B_Area[0]->S_Environment[0] = new Environment_type;
-		App->SBC_Area->Set_Environment_Defaults(App->SBC_Scene->Area_Count);
+		int Index = App->SBC_Scene->Area_Count;
+
+		App->Say("Add_New_Area 2");
+		App->SBC_Area->Add_Aera_To_Project(Index, App->SBC_MeshViewer->Selected_MeshFile, App->SBC_MeshViewer->mResource_Folder);
+		App->SBC_Scene->B_Area[Index]->S_Environment[0] = new Environment_type;
+		App->SBC_Area->Set_Environment_Defaults(Index);
+
+		App->SBC_Scene->B_Area[Index]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Areas_Folder, "Area_1", Index, true);
+		
+		App->SBC_FileView->SelectItem(App->SBC_Scene->B_Area[Index]->FileViewItem);
 
 		App->SBC_Scene->Area_Count++;
 	}
