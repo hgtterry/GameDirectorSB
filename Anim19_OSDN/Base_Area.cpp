@@ -11,7 +11,26 @@ Base_Area::Base_Area()
 	Phys_Body =		nullptr;
 	Phys_Shape =	nullptr;
 
-	
+	// Actor Scale ------------------------------------------------------
+	Mesh_Scale.x = 1;
+	Mesh_Scale.y = 1;
+	Mesh_Scale.z = 1;
+
+	// Actor Pos
+	Mesh_Pos.x = 0;
+	Mesh_Pos.y = 0;
+	Mesh_Pos.z = 0;
+
+	// Mesh Rotation
+	Mesh_Rot.x = 0;
+	Mesh_Rot.y = 0;
+	Mesh_Rot.z = 0;
+
+	// Mesh Quat
+	Mesh_Quat.w = 1;
+	Mesh_Quat.x = 0;
+	Mesh_Quat.y = 0;
+	Mesh_Quat.z = 0;
 
 	// Physics Scale ------------------------------------------------------
 	Physics_Scale.x = 1;

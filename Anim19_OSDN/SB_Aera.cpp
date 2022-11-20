@@ -576,3 +576,46 @@ void SB_Aera::Set_Environment_Defaults(int Index)
 	App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_End = 300;
 	App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_Colour = Ogre::Vector3(1, 1, 1);
 }
+
+// *************************************************************************
+// *	Get_BoundingBox_World_Centre:- Terry and Hazel Flanigan 2022	   *
+// *************************************************************************
+Ogre::Vector3 SB_Aera::Get_BoundingBox_World_Centre(int Object_Index)
+{
+	if (App->SBC_Scene->B_Area[Object_Index]->Shape == Enums::Shape_TriMesh)
+	{
+		Ogre::Vector3 Pos = App->SBC_Scene->B_Area[Object_Index]->Area_Node->getPosition();
+		return Pos;
+	}
+	else
+	{
+		AxisAlignedBox worldAAB = App->SBC_Scene->B_Area[Object_Index]->Area_Ent->getBoundingBox();
+		worldAAB.transformAffine(App->SBC_Scene->B_Area[Object_Index]->Area_Node->_getFullTransform());
+		Ogre::Vector3 Centre = worldAAB.getCenter();
+
+		return Centre;
+	}
+}
+
+// *************************************************************************
+// *				UpDate_Physics_And_Visuals Terry Flanigtan		 	   *
+// *************************************************************************
+void SB_Aera::UpDate_Physics_And_Visuals(int Index)
+{
+	if (App->SBC_Scene->B_Area[Index]->Shape == Enums::Shape_TriMesh)
+	{
+
+	}
+	else
+	{
+		//Set_Physics_Position(Index);
+	}
+
+
+	App->Cl_Visuals->MarkerBB_Addjust(Index);
+
+	// Needs Looking at
+	App->SBC_Scene->B_Area[Index]->Altered = 1;
+	App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Area[Index]->FileViewItem);
+	App->SBC_Scene->Scene_Modified = 1;
+}

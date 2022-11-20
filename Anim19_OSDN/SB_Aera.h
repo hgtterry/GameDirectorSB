@@ -38,6 +38,8 @@ public:
 
 	bool Show_Physics_Debug; // Show Physics Debug For Area [021221]
 	
+	Ogre::Vector3 Get_BoundingBox_World_Centre(int Object_Index);
+	void UpDate_Physics_And_Visuals(int Index);
 
 	void Add_Aera_To_Project(int Index, char* FileName, char* Resource_Location);
 

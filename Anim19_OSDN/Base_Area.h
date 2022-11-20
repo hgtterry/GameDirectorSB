@@ -66,6 +66,13 @@ public:
 	char Area_Resource_Path[MAX_PATH];
 	char Material_File[MAX_PATH];
 
+	//------------------------------ Mesh
+	Ogre::Vector3			Mesh_Scale;
+	Ogre::Vector3			Mesh_Pos;
+	Ogre::Vector3			Mesh_Center;
+	Ogre::Vector3			Mesh_Rot;
+	Ogre::Quaternion		Mesh_Quat;
+
 	HTREEITEM FileViewItem;			// Holder for Area File view item [211121]
 
 	bool Physics_Valid;

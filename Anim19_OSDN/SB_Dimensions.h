@@ -39,6 +39,8 @@ public:
 	bool Show_Scale;
 	bool Show_Rotation;
 
+	void ImGui_Position_Area(void);
+
 protected:
 
 	static LRESULT CALLBACK Dialog_Dimensions_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
