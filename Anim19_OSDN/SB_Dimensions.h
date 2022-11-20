@@ -40,6 +40,7 @@ public:
 	bool Show_Rotation;
 
 	void ImGui_Position_Area(void);
+	void ImGui_Rotation_Area(void);
 
 protected:
 
