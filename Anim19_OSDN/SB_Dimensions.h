@@ -41,6 +41,7 @@ public:
 
 	void ImGui_Position_Area(void);
 	void ImGui_Rotation_Area(void);
+	void ImGui_Scale_Area(void);
 
 protected:
 
