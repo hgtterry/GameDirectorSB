@@ -1227,6 +1227,8 @@ void SB_FileView::Mark_Altered_Folder(HTREEITEM Item)
 	Sitem.iImage = 8;
 	Sitem.iSelectedImage = 9;
 	SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_SETITEM, 0, (LPARAM)(const LPTVITEM)&Sitem);
+
+	EnableMenuItem(App->mMenu, ID_FILE_SAVEPROJECTALL, MF_ENABLED);
 }
 
 // *************************************************************************
