@@ -80,6 +80,7 @@ protected:
 	static LRESULT CALLBACK MeshView_3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Set_For_Collectables();
+	void Set_For_Areas(HWND hDlg);
 	void Set_Shape_Buttons();
 
 	// -------------------------------- Physics Shapes
@@ -97,8 +98,6 @@ protected:
 	void Grid_Update(bool Create);
 
 	// -------------------------------- 
-
-	void SetUp_Area_Trimesh(HWND hDlg);
 
 	void Set_ResourceMesh_File(HWND hDlg);
 

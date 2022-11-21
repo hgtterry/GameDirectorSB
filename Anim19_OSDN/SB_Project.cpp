@@ -521,11 +521,14 @@ bool SB_Project::Save_Project_Ini()
 	fprintf(WriteFile, "%s\n", " ");
 
 	fprintf(WriteFile, "%s\n", "[Options]");
-	fprintf(WriteFile, "%s%i\n", "Aeras_Count=", App->SBC_Scene->Area_Count);
+	fprintf(WriteFile, "%s%i\n", "Areas_Count=", App->SBC_Scene->Area_Count);
+	fprintf(WriteFile, "%s%i\n", "Areas_ID_Count=", App->SBC_Scene->UniqueID_Area_Count);
+
 	fprintf(WriteFile, "%s%i\n", "Players_Count=", App->SBC_Scene->Player_Count);
 	fprintf(WriteFile, "%s%i\n", "Cameras_Count=", App->SBC_Scene->Camera_Count);
 	fprintf(WriteFile, "%s%i\n", "Objects_Count=", App->SBC_Scene->Object_Count);
 	fprintf(WriteFile, "%s%i\n", "Objects_ID_Count=", App->SBC_Scene->UniqueID_Object_Counter);
+
 
 	int Adjusted = App->SBC_LookUps->Get_Adjusted_Counters_Count();
 	fprintf(WriteFile, "%s%i\n", "Counters_Count=", Adjusted);
@@ -1107,6 +1110,7 @@ bool SB_Project::Save_Aeras_Data()
 		fprintf(WriteFile, "%s%s\n", "Area_Path_File=", App->SBC_Scene->B_Area[Count]->Area_Path_And_FileName);
 		fprintf(WriteFile, "%s%s\n", "Area_Resource_Path=", App->SBC_Scene->B_Area[Count]->Area_Resource_Path);
 		fprintf(WriteFile, "%s%s\n", "Material_File=", App->SBC_Scene->B_Area[Count]->Material_File);
+		fprintf(WriteFile, "%s%i\n", "Area_Object_ID=", App->SBC_Scene->B_Area[Count]->This_Object_ID);
 
 		fprintf(WriteFile, "%s\n", "[Position]");
 		x = App->SBC_Scene->B_Area[Count]->Area_Node->getPosition().x;
@@ -1393,7 +1397,10 @@ bool SB_Project::Load_Project()
 	App->Cl_Ini->GetString("Files", "Level_Name", m_Level_Name, MAX_PATH);
 	App->Cl_Ini->GetString("Files", "Project_Name", m_Project_Name, MAX_PATH);
 
-	Options->Has_Aera = App->Cl_Ini->GetInt("Options", "Aeras_Count", 0,10);
+	Options->Has_Aera = App->Cl_Ini->GetInt("Options", "Areas_Count", 0,10);
+
+	//App->Say_Int(Options->Has_Aera);
+
 	Options->Has_Player = App->Cl_Ini->GetInt("Options", "Players_Count", 0, 10);
 	Options->Has_Camera = App->Cl_Ini->GetInt("Options", "Cameras_Count", 0, 10);
 	Options->Has_Objects = App->Cl_Ini->GetInt("Options", "Objects_Count", 0, 10);
@@ -1402,7 +1409,8 @@ bool SB_Project::Load_Project()
 
 	App->SBC_Scene->UniqueID_Object_Counter = App->Cl_Ini->GetInt("Options", "Objects_ID_Count", 0, 10);
 	App->SBC_Scene->UniqueID_Counters_Count = App->Cl_Ini->GetInt("Options", "Counters_ID_Count", 0, 10);
-
+	App->SBC_Scene->UniqueID_Area_Count = App->Cl_Ini->GetInt("Options", "Areas_ID_Count", 0, 10);
+	
 	//-------------------------------------- Set Resource Path
 
 		Load_Get_Resource_Path();
@@ -1858,6 +1866,8 @@ bool SB_Project::Load_Project_Aera()
 		App->SBC_Com_Area->Set_Environment_Defaults(Count);
 
 		App->Cl_Ini->GetString("Area_0", "Material_File", App->SBC_Scene->B_Area[Count]->Material_File, MAX_PATH);
+
+		App->SBC_Scene->B_Area[Count]->This_Object_ID = App->Cl_Ini->GetInt(buff, "Area_Object_ID", 0);
 
 		App->Cl_Ini->GetString("Position", "Mesh_Pos", chr_Tag1, MAX_PATH);
 		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);

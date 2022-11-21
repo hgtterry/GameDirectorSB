@@ -131,49 +131,6 @@ SB_MeshViewer::~SB_MeshViewer()
 }
 
 // *************************************************************************
-// *		SetUp_Area_Trimesh:- Terry and Hazel Flanigan 2022			   *
-// *************************************************************************
-void SB_MeshViewer::SetUp_Area_Trimesh(HWND hDlg)
-{
-	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_MVSTATIC),false);
-	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_DYNAMIC), false);
-	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_TRIMESH), true);
-	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_JUSTOGRE), false);
-	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_TEST), false);
-
-	SelectTriMesh = 1;
-
-	Enable_ShapeButtons(0);
-
-	char ConNum[256];
-	char ATest[256];
-
-	strcpy_s(ATest, "Area_");
-	_itoa(App->SBC_Scene->Object_Count, ConNum, 10);
-	strcat(ATest, ConNum);
-
-	SetDlgItemText(hDlg, IDC_OBJECTNAME, ATest);
-	strcpy(App->SBC_MeshViewer->Object_Name, ATest);
-	strcpy(App->SBC_MeshViewer->m_Current_Folder, "Areas");
-	HWND temp = GetDlgItem(hDlg, IDC_CB_FOLDERS);
-	SendMessage(temp, CB_SELECTSTRING, -1, LPARAM(App->SBC_MeshViewer->m_Current_Folder));
-
-	SendMessage(App->SBC_MeshViewer->ListHwnd, LB_RESETCONTENT, 0, 0);
-
-	strcpy(App->SBC_MeshViewer->mResource_Folder, App->EquityDirecory_FullPath);
-	strcat(App->SBC_MeshViewer->mResource_Folder, "\\Media_New\\");
-	strcat(App->SBC_MeshViewer->mResource_Folder, App->SBC_MeshViewer->m_Current_Folder);
-	strcat(App->SBC_MeshViewer->mResource_Folder, "\\");
-
-	SetDlgItemText(hDlg, IDC_ST_CURRENTFOLDER, App->SBC_MeshViewer->mResource_Folder);
-	SetWindowText(hDlg, App->SBC_MeshViewer->mResource_Folder);
-
-	App->SBC_MeshViewer->Add_Resources();
-	App->SBC_MeshViewer->Get_Files();
-
-}
-
-// *************************************************************************
 // *					Enable_ShapeButtons Terry Bernie				   *
 // *************************************************************************
 void SB_MeshViewer::Enable_TypeButtons(bool state)
@@ -321,7 +278,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 		if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area)
 		{
-			App->SBC_MeshViewer->SetUp_Area_Trimesh(hDlg);
+			App->SBC_MeshViewer->Set_For_Areas(hDlg);
 		}
 
 
@@ -2319,5 +2276,47 @@ void SB_MeshViewer::Set_Shape_Buttons()
 	Selected_Shape_Capsule = 0;
 	Selected_Shape_Cylinder = 0;
 	Selected_Shape_Cone = 0;
+}
+
+// *************************************************************************
+// *			Set_For_Areas:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void SB_MeshViewer::Set_For_Areas(HWND hDlg)
+{
+	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_MVSTATIC), false);
+	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_DYNAMIC), false);
+	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_TRIMESH), true);
+	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_JUSTOGRE), false);
+	EnableWindow(GetDlgItem(MainDlgHwnd, IDC_TEST), false);
+
+	SelectTriMesh = 1;
+
+	Enable_ShapeButtons(0);
+
+	char ConNum[256];
+	char ATest[256];
+
+	strcpy_s(ATest, "Area_");
+	_itoa(App->SBC_Scene->Area_Count, ConNum, 10);
+	strcat(ATest, ConNum);
+
+	SetDlgItemText(hDlg, IDC_OBJECTNAME, ATest);
+	strcpy(App->SBC_MeshViewer->Object_Name, ATest);
+	strcpy(App->SBC_MeshViewer->m_Current_Folder, "Areas");
+	HWND temp = GetDlgItem(hDlg, IDC_CB_FOLDERS);
+	SendMessage(temp, CB_SELECTSTRING, -1, LPARAM(App->SBC_MeshViewer->m_Current_Folder));
+
+	SendMessage(App->SBC_MeshViewer->ListHwnd, LB_RESETCONTENT, 0, 0);
+
+	strcpy(App->SBC_MeshViewer->mResource_Folder, App->EquityDirecory_FullPath);
+	strcat(App->SBC_MeshViewer->mResource_Folder, "\\Media_New\\");
+	strcat(App->SBC_MeshViewer->mResource_Folder, App->SBC_MeshViewer->m_Current_Folder);
+	strcat(App->SBC_MeshViewer->mResource_Folder, "\\");
+
+	SetDlgItemText(hDlg, IDC_ST_CURRENTFOLDER, App->SBC_MeshViewer->mResource_Folder);
+	SetWindowText(hDlg, App->SBC_MeshViewer->mResource_Folder);
+
+	App->SBC_MeshViewer->Add_Resources();
+	App->SBC_MeshViewer->Get_Files();
 }
 
