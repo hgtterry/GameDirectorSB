@@ -28,5 +28,29 @@ public:
 
 	SB_Com_Area();
 	~SB_Com_Area();
+
+	void Reset_Class(void);
+
+	bool Start_Area_PropsPanel();
+	void Hide_Area_Dlg(bool Show);
+
+	bool Show_Physics_Debug; // Show Physics Debug For Area [021221]
+
+	Ogre::Vector3 Get_BoundingBox_World_Centre(int Object_Index);
+	void UpDate_Physics_And_Visuals(int Index);
+
+	bool Add_New_Area();
+	void Add_Aera_To_Project(int Index, char* FileName, char* Resource_Location);
+
+	void Set_Environment_Defaults(int Index);
+
+	HWND Area_Props_HWND;
+
+protected:
+
+	static LRESULT CALLBACK Area_PropsPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	//btBvhTriangleMeshShape* create_Area_Trimesh(Base_Area* Object);
+	btBvhTriangleMeshShape* create_Area_Trimesh_New(int Index, Base_Area* Object);
 };
 

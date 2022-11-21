@@ -174,7 +174,7 @@ bool SB_Objects_Create::Dispatch_MeshViewer()
 
 	if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area) // Area
 	{
-		App->SBC_Area->Add_Aera_To_Project(0, App->SBC_MeshViewer->Selected_MeshFile, m_ResourcePath);
+		App->SBC_Com_Area->Add_Aera_To_Project(0, App->SBC_MeshViewer->Selected_MeshFile, m_ResourcePath);
 		App->Say("Dispatch_MeshViewer");
 	}
 	else

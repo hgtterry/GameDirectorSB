@@ -53,7 +53,6 @@ distribution.
 #include "SB_Properties.h"
 #include "SB_Camera.h"
 #include "SB_3DT.h"
-#include "SB_Aera.h"
 #include "SB_Resources.h"
 #include "SB_Scene.h"
 #include "SB_TopTabs.h"
@@ -119,7 +118,6 @@ public:
 	SB_Properties*			SBC_Properties;
 	SB_Camera*				SBC_Camera;
 	SB_3DT*					SBC_3DT;
-	SB_Area*				SBC_Area;
 	SB_Resources*			SBC_Resources;		// Resources Class Used by the Level [081221]
 	SB_Scene*				SBC_Scene;			// Collection Class For Level [081221]
 	SB_TopTabs*				SBC_TopTabs;		// Top Bar Tabs Class Level Editor [081221]

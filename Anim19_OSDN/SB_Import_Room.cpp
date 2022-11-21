@@ -86,7 +86,7 @@ void SB_Import_Room::Set_Paths(void)
 // *************************************************************************
 void SB_Import_Room::AddToScene(void)
 {
-	App->SBC_Area->Add_Aera_To_Project(0, FileName, Texture_FolderPath);
+	App->SBC_Com_Area->Add_Aera_To_Project(0, FileName, Texture_FolderPath);
 	App->SBC_Scene->Area_Count++;
 }
 

@@ -60,7 +60,7 @@ void SB_Project_Create::Add_Area()
 {
 	First_Area_Start_Project();
 	App->SBC_Scene->B_Area[0]->S_Environment[0] = new Environment_type;
-	App->SBC_Area->Set_Environment_Defaults(0);
+	App->SBC_Com_Area->Set_Environment_Defaults(0);
 }
 
 // *************************************************************************
@@ -72,7 +72,7 @@ bool SB_Project_Create::First_Area_Start_Project()
 	char poo[MAX_PATH];
 	strcpy(poo, App->SBC_Scene->Project_Resource_Group.c_str());
 
-	App->SBC_Area->Add_Aera_To_Project(0, App->SBC_MeshViewer->Selected_MeshFile, poo);
+	App->SBC_Com_Area->Add_Aera_To_Project(0, App->SBC_MeshViewer->Selected_MeshFile, poo);
 	strcpy(App->SBC_Scene->B_Area[0]->Material_File, App->SBC_MeshViewer->m_Material_File);
 
 	App->SBC_Scene->Area_Count++;

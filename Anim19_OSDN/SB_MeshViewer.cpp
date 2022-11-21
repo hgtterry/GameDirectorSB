@@ -862,7 +862,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Area) // Area
 			{
 				App->SBC_MeshViewer->Copy_Assets();
-				App->SBC_Area->Add_New_Area();
+				App->SBC_Com_Area->Add_New_Area();
 			}
 			else // Normal Object
 			{
