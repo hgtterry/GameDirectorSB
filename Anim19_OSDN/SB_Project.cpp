@@ -1377,7 +1377,7 @@ bool SB_Project::Load_Project()
 	// ------------------------------------------------------------------- 
 	Load_Options* Options = new Load_Options;
 
-	Options->Has_Aera = 0;
+	Options->Has_Area = 0;
 	Options->Has_Player = 0;
 	Options->Has_Camera = 0;
 	Options->Has_Objects = 0;
@@ -1397,10 +1397,7 @@ bool SB_Project::Load_Project()
 	App->Cl_Ini->GetString("Files", "Level_Name", m_Level_Name, MAX_PATH);
 	App->Cl_Ini->GetString("Files", "Project_Name", m_Project_Name, MAX_PATH);
 
-	Options->Has_Aera = App->Cl_Ini->GetInt("Options", "Areas_Count", 0,10);
-
-	//App->Say_Int(Options->Has_Aera);
-
+	Options->Has_Area = App->Cl_Ini->GetInt("Options", "Areas_Count", 0,10);
 	Options->Has_Player = App->Cl_Ini->GetInt("Options", "Players_Count", 0, 10);
 	Options->Has_Camera = App->Cl_Ini->GetInt("Options", "Cameras_Count", 0, 10);
 	Options->Has_Objects = App->Cl_Ini->GetInt("Options", "Objects_Count", 0, 10);
@@ -1416,7 +1413,7 @@ bool SB_Project::Load_Project()
 		Load_Get_Resource_Path();
 
 	// ------------------------------------- Aera
-	if (Options->Has_Aera > 0)
+	if (Options->Has_Area > 0)
 	{
 		bool test = Load_Project_Aera();
 		App->SBC_Scene->Area_Added = 1;
@@ -1855,6 +1852,9 @@ bool SB_Project::Load_Project_Aera()
 		strcat(buff, n_buff);
 
 		App->SBC_Scene->B_Area[Count] = new Base_Area();
+		App->SBC_Scene->B_Area[Count]->S_Environment[0] = new Environment_type;
+		App->SBC_Com_Area->Set_Environment_Defaults(Count);
+
 		Base_Area* Area = App->SBC_Scene->B_Area[Count];
 
 		App->Cl_Ini->GetString(buff, "Area_Name", Area_Name, MAX_PATH);
@@ -1862,8 +1862,7 @@ bool SB_Project::Load_Project_Aera()
 		App->Cl_Ini->GetString(buff, "Area_Resource_Path", Resource_Location, MAX_PATH);
 
 		App->SBC_Com_Area->Add_Aera_To_Project(Count, Mesh_FileName, m_Main_Assets_Path);
-		App->SBC_Scene->B_Area[Count]->S_Environment[0] = new Environment_type;
-		App->SBC_Com_Area->Set_Environment_Defaults(Count);
+		
 
 		App->Cl_Ini->GetString("Area_0", "Material_File", App->SBC_Scene->B_Area[Count]->Material_File, MAX_PATH);
 

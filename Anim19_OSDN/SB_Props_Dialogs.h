@@ -31,13 +31,13 @@ public:
 	bool Start_Props_Dialogs();
 
 	void Start_Area_PropsPanel();
-	void Hide_Dimensions_Dlg(bool Show);
+	void Hide_Dimensions_Dlg(bool Show, bool Lock_Dimensions);
 	void Hide_Physics_Reset_Dlg(bool Show);
 	void Hide_Debug_Dlg(bool Show);
 	void Hide_Panel_Test_Dlg(bool Show);
 	void Hide_Area_Dlg(bool Show);
 
-	bool Dialog_Dimensions();
+	bool Start_Dialog_Dimensions();
 	bool Start_Dialog_PhysicsReset();
 	bool Start_Dialog_Debug();
 	bool Start_Panels_Test_Dlg();

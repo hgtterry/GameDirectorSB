@@ -36,7 +36,7 @@ SB_Com_Area::~SB_Com_Area()
 }
 
 // *************************************************************************
-// *	  					Reset_Class Bernie							   *
+// *	  		Reset_Class:- Terry and Hazel Flanigan 2022				   *
 // *************************************************************************
 void SB_Com_Area::Reset_Class(void)
 {
@@ -106,7 +106,7 @@ bool SB_Com_Area::Add_New_Area()
 }
 
 // *************************************************************************
-// *					Add_Aera_To_Project Terry Bernie 				   *
+// *		Add_Aera_To_Project:- Terry and Hazel Flanigan 2022 		   *
 // *************************************************************************
 void SB_Com_Area::Add_Aera_To_Project(int Index, char* FileName, char* Resource_Location)
 {
@@ -124,7 +124,6 @@ void SB_Com_Area::Add_Aera_To_Project(int Index, char* FileName, char* Resource_
 	strcat(B_Name, ConNum);
 	strcpy(App->SBC_Scene->B_Area[Index]->Area_Name, B_Name);
 
-	Area->This_Object_ID = 0; //App->Cl_Scene_Data->Object_ID_Counter;
 	strcpy(Area->Area_FileName, FileName);
 	strcpy(Area->Area_Resource_Path, Resource_Location); // with back slash
 
@@ -144,7 +143,7 @@ void SB_Com_Area::Add_Aera_To_Project(int Index, char* FileName, char* Resource_
 }
 
 // *************************************************************************
-//					create_Aera_Trimesh_New Terry Bernie				   *
+//			create_Aera_Trimesh_New:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
 btBvhTriangleMeshShape* SB_Com_Area::create_Area_Trimesh_New(int Index, Base_Area* Object)
 {
@@ -296,7 +295,7 @@ btBvhTriangleMeshShape* SB_Com_Area::create_Area_Trimesh_New(int Index, Base_Are
 }
 
 // *************************************************************************
-// *	  				Set_Environment_Defaults Terry Bernie			   *
+// *	  	Set_Environment_Defaults:- Terry and Hazel Flanigan 2022	   *
 // *************************************************************************
 void SB_Com_Area::Set_Environment_Defaults(int Index)
 {
@@ -362,7 +361,7 @@ Ogre::Vector3 SB_Com_Area::Get_BoundingBox_World_Centre(int Object_Index)
 }
 
 // *************************************************************************
-// *				UpDate_Physics_And_Visuals Terry Flanigtan		 	   *
+// *	  UpDate_Physics_And_Visuals:- Terry and Hazel Flanigan 2022 	   *
 // *************************************************************************
 void SB_Com_Area::UpDate_Physics_And_Visuals(int Index)
 {

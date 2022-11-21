@@ -50,7 +50,7 @@ SB_Props_Dialogs::~SB_Props_Dialogs()
 bool SB_Props_Dialogs::Start_Props_Dialogs()
 {
 
-	Dialog_Dimensions();
+	Start_Dialog_Dimensions();
 	Start_Dialog_PhysicsReset();
 	Start_Dialog_Debug();
 	Start_Panels_Test_Dlg();
@@ -59,18 +59,18 @@ bool SB_Props_Dialogs::Start_Props_Dialogs()
 }
 
 // *************************************************************************
-// *	  				 Dialog_Dimensions	Terry Bernie				   *
+// *	  Start_Dialog_Dimensions:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
-bool SB_Props_Dialogs::Dialog_Dimensions()
+bool SB_Props_Dialogs::Start_Dialog_Dimensions()
 {
 
 	Dimensions_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_DIMENSIONS, App->SBC_Properties->Properties_Dlg_hWnd, (DLGPROC)Dialog_Dimensions_Proc);
-	Hide_Dimensions_Dlg(0);
+	Hide_Dimensions_Dlg(0,0);
 
 	return 1;
 }
 // *************************************************************************
-// *				Dialog_Text_Proc	Terry Bernie  					   *
+// *		Dialog_Text_Proc:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 LRESULT CALLBACK SB_Props_Dialogs::Dialog_Dimensions_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -237,7 +237,7 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_Dimensions_Proc(HWND hDlg, UINT messag
 }
 
 // *************************************************************************
-// *	  			 Start_Dialog_PhysicsReset	Terry Bernie			   *
+// *	  	Start_Dialog_PhysicsReset:- Terry and Hazel Flanigan 2022	   *
 // *************************************************************************
 bool SB_Props_Dialogs::Start_Dialog_PhysicsReset()
 {
@@ -249,7 +249,7 @@ bool SB_Props_Dialogs::Start_Dialog_PhysicsReset()
 }
 
 // *************************************************************************
-// *				Dialog_PhysicsReset_Proc	Terry Bernie  			   *
+// *	  Dialog_PhysicsReset_Proc:- Terry and Hazel Flanigan 2022  	   *
 // *************************************************************************
 LRESULT CALLBACK SB_Props_Dialogs::Dialog_PhysicsReset_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -573,7 +573,7 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_Debug_Proc(HWND hDlg, UINT message, WP
 }
 
 // *************************************************************************
-// *	  				Start_Area_PropsPanel Terry Bernie				   *
+// *	  	Start_Area_PropsPanel:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
 void SB_Props_Dialogs::Start_Area_PropsPanel()
 {
@@ -581,7 +581,7 @@ void SB_Props_Dialogs::Start_Area_PropsPanel()
 }
 
 // *************************************************************************
-// *				Area_PropsPanel_Proc  Terry Bernie					   *
+// *		Area_PropsPanel_Proc:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
 LRESULT CALLBACK SB_Props_Dialogs::Area_PropsPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -603,7 +603,7 @@ LRESULT CALLBACK SB_Props_Dialogs::Area_PropsPanel_Proc(HWND hDlg, UINT message,
 
 	case WM_CTLCOLORDLG:
 	{
-		return (LONG)App->DialogBackGround;
+		return (LONG)App->AppBackground;
 	}
 
 	case WM_NOTIFY:
@@ -673,23 +673,44 @@ LRESULT CALLBACK SB_Props_Dialogs::Area_PropsPanel_Proc(HWND hDlg, UINT message,
 }
 
 // *************************************************************************
-// *				Hide_Dimensions_Dlg Terry Flanigan					   *
+// *		Hide_Dimensions_Dlg:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
-void SB_Props_Dialogs::Hide_Dimensions_Dlg(bool Show)
+void SB_Props_Dialogs::Hide_Dimensions_Dlg(bool Show, bool Lock_Dimensions)
 {
+	
+	if (Lock_Dimensions == 1)
+	{
+		HWND temp = GetDlgItem(Dimensions_Dlg_hWnd, IDC_CK_LOCK);
+		SendMessage(temp, BM_SETCHECK, 1, 0);
+
+		EnableWindow(GetDlgItem(Dimensions_Dlg_hWnd, IDC_BT_POSITION), 0);
+		EnableWindow(GetDlgItem(Dimensions_Dlg_hWnd, IDC_BT_SCALE), 0);
+		EnableWindow(GetDlgItem(Dimensions_Dlg_hWnd, IDC_BT_ROTATION), 0);
+	}
+	else
+	{
+		HWND temp = GetDlgItem(Dimensions_Dlg_hWnd, IDC_CK_LOCK);
+		SendMessage(temp, BM_SETCHECK, 0, 0);
+
+		EnableWindow(GetDlgItem(Dimensions_Dlg_hWnd, IDC_BT_POSITION), 1);
+		EnableWindow(GetDlgItem(Dimensions_Dlg_hWnd, IDC_BT_SCALE), 1);
+		EnableWindow(GetDlgItem(Dimensions_Dlg_hWnd, IDC_BT_ROTATION), 1);
+	}
+
 	ShowWindow(Dimensions_Dlg_hWnd, Show);
 }
 
 // *************************************************************************
-// *				Hide_Physics_Reset_Dlg Terry Flanigan				   *
+// *		Hide_Physics_Reset_Dlg:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
 void SB_Props_Dialogs::Hide_Physics_Reset_Dlg(bool Show)
 {
 	ShowWindow(PhysicsReset_Dlg_hWnd, Show);
+
 }
 
 // *************************************************************************
-// *				Hide_Physics_Reset_Dlg Terry Flanigan				   *
+// *			Hide_Debug_Dlg:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 void SB_Props_Dialogs::Hide_Debug_Dlg(bool Show)
 {
@@ -697,7 +718,7 @@ void SB_Props_Dialogs::Hide_Debug_Dlg(bool Show)
 }
 
 // *************************************************************************
-// *				Hide_Physics_Reset_Dlg Terry Flanigan				   *
+// *		Hide_Panel_Test_Dlg:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 void SB_Props_Dialogs::Hide_Panel_Test_Dlg(bool Show)
 {
@@ -705,7 +726,7 @@ void SB_Props_Dialogs::Hide_Panel_Test_Dlg(bool Show)
 }
 
 // *************************************************************************
-// *						Hide_Area_Dlg Terry Bernie 					   *
+// *		  Hide_Area_Dlg:- Terry and Hazel Flanigan 2022				   *
 // *************************************************************************
 void SB_Props_Dialogs::Hide_Area_Dlg(bool Show)
 {
