@@ -193,10 +193,17 @@ bool SB_Area::Add_New_Area()
 	{
 		int Index = App->SBC_Scene->Area_Count;
 
+		App->SBC_Scene->B_Area[Index] = new Base_Area();
+		//Base_Area* Area = App->SBC_Scene->B_Area[Count];
+
+		Ogre::Vector3 Pos = App->SBC_Object->GetPlacement(-50);
+		App->SBC_Scene->B_Area[Index]->Mesh_Pos = Pos;
+	
 		App->SBC_Area->Add_Aera_To_Project(Index, App->SBC_MeshViewer->Selected_MeshFile, App->SBC_MeshViewer->mResource_Folder);
 		App->SBC_Scene->B_Area[Index]->S_Environment[0] = new Environment_type;
 		App->SBC_Area->Set_Environment_Defaults(Index);
 
+		
 		App->SBC_Scene->B_Area[Index]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Areas_Folder, App->SBC_Scene->B_Area[Index]->Area_Name, Index, true);
 
 		App->SBC_FileView->SelectItem(App->SBC_Scene->B_Area[Index]->FileViewItem);
@@ -217,7 +224,7 @@ void SB_Area::Add_Aera_To_Project(int Index,char* FileName,char* Resource_Locati
 	char Mesh_File[MAX_PATH];
 	strcpy(Mesh_File, FileName);
 
-	App->SBC_Scene->B_Area[Index] = new Base_Area();
+	//App->SBC_Scene->B_Area[Index] = new Base_Area();
 	Base_Area* Area = App->SBC_Scene->B_Area[Index];
 
 	strcpy_s(B_Name, "Area_");
@@ -234,7 +241,7 @@ void SB_Area::Add_Aera_To_Project(int Index,char* FileName,char* Resource_Locati
 	Area->Area_Node->attachObject(Area->Area_Ent);
 
 	Area->Area_Node->setVisible(true);
-	Area->Area_Node->setPosition(0, 0, 0);
+	Area->Area_Node->setPosition(Area->Mesh_Pos);
 	Area->Area_Node->setScale(1, 1, 1);
 
 	create_Area_Trimesh_New(Index,Area);

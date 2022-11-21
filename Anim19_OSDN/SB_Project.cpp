@@ -1846,6 +1846,9 @@ bool SB_Project::Load_Project_Aera()
 		_itoa(Count, n_buff, 10);
 		strcat(buff, n_buff);
 
+		App->SBC_Scene->B_Area[Count] = new Base_Area();
+		Base_Area* Area = App->SBC_Scene->B_Area[Count];
+
 		App->Cl_Ini->GetString(buff, "Area_Name", Area_Name, MAX_PATH);
 		App->Cl_Ini->GetString(buff, "Area_File", Mesh_FileName, MAX_PATH);
 		App->Cl_Ini->GetString(buff, "Area_Resource_Path", Resource_Location, MAX_PATH);
