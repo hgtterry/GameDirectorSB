@@ -34,7 +34,7 @@ public:
 	void Add_Objects_From_MeshViewer();
 	bool Add_New_Object(int Index, bool From_MeshViewer);
 	bool Add_New_Sound();
-	bool Add_New_Area();
+
 	bool Add_New_Teleporter();
 
 	void Set_Physics(int Index);

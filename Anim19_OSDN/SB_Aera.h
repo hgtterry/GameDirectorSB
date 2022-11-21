@@ -41,6 +41,7 @@ public:
 	Ogre::Vector3 Get_BoundingBox_World_Centre(int Object_Index);
 	void UpDate_Physics_And_Visuals(int Index);
 
+	bool Add_New_Area();
 	void Add_Aera_To_Project(int Index, char* FileName, char* Resource_Location);
 
 	void Set_Environment_Defaults(int Index);

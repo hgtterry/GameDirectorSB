@@ -752,33 +752,6 @@ void SB_Objects_Create::Add_Physics_Cone(bool Dynamic,int Index)
 }
 
 // *************************************************************************
-//				Add_New_Area:- Terry and Hazel Flanigan 2022			   *
-// *************************************************************************
-bool SB_Objects_Create::Add_New_Area()
-{
-	if (App->SBC_Scene->Area_Count == 0)
-	{
-		App->SBC_Project_Create->Add_Area();
-	}
-	else
-	{
-		int Index = App->SBC_Scene->Area_Count;
-
-		App->Say("Add_New_Area 2");
-		App->SBC_Area->Add_Aera_To_Project(Index, App->SBC_MeshViewer->Selected_MeshFile, App->SBC_MeshViewer->mResource_Folder);
-		App->SBC_Scene->B_Area[Index]->S_Environment[0] = new Environment_type;
-		App->SBC_Area->Set_Environment_Defaults(Index);
-
-		App->SBC_Scene->B_Area[Index]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Areas_Folder, "Area_1", Index, true);
-		
-		App->SBC_FileView->SelectItem(App->SBC_Scene->B_Area[Index]->FileViewItem);
-
-		App->SBC_Scene->Area_Count++;
-	}
-	return 1;
-}
-
-// *************************************************************************
 // *				Add_New_Sound:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
 bool SB_Objects_Create::Add_New_Sound()
