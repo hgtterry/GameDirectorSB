@@ -78,6 +78,7 @@ distribution.
 #include "SB_Com_Collectables.h"
 #include "SB_Com_Messages.h"
 #include "SB_Com_MoveEntity.h"
+#include "SB_Com_Area.h"
 #include "SB_Project_Create.h"
 
 // :- Terry and Hazel Flanigan 2022
@@ -141,6 +142,8 @@ public:
 	SB_Com_Collectables*	SBC_Com_Collectables;
 	SB_Com_Messages*		SBC_Com_Messages;
 	SB_Com_MoveEntity*		SBC_Com_MoveEntity;
+	SB_Com_Area*			SBC_Com_Area;
+
 	SB_Project_Create*		SBC_Project_Create;
 
 	Com_Diaolgs*			Com_CDialogs;		// Common Dialogs for App [291221]

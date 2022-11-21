@@ -83,6 +83,7 @@ GD19_App::GD19_App(void)
 	SBC_Com_Collectables =	nullptr;
 	SBC_Com_Messages =		nullptr;
 	SBC_Com_MoveEntity =	nullptr;
+	SBC_Com_Area =			nullptr;
 
 	// ---------------------------------------------------- 29/12/21
 	Com_CDialogs =		nullptr;
@@ -238,6 +239,8 @@ bool GD19_App::InitApp(void)
 	SBC_Prefs =			new SB_Preferences();
 	SBC_Display =		new SB_Display();
 	SBC_Build =			new SB_Build();
+	SBC_Com_Area =		new SB_Com_Area();
+
 	SBC_Project_Create = new SB_Project_Create;
 	
 	SBC_Com_Collectables =	new SB_Com_Collectables();

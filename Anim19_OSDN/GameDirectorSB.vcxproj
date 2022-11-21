@@ -189,6 +189,7 @@
     <ClInclude Include="SB_Build.h" />
     <ClInclude Include="SB_Camera.h" />
     <ClInclude Include="SB_Collision.h" />
+    <ClInclude Include="SB_Com_Area.h" />
     <ClInclude Include="SB_Com_Collectables.h" />
     <ClInclude Include="SB_Com_Messages.h" />
     <ClInclude Include="SB_Com_MoveEntity.h" />
@@ -259,6 +260,7 @@
     <ClCompile Include="SB_Build.cpp" />
     <ClCompile Include="SB_Camera.cpp" />
     <ClCompile Include="SB_Collision.cpp" />
+    <ClCompile Include="SB_Com_Area.cpp" />
     <ClCompile Include="SB_Com_Collectables.cpp" />
     <ClCompile Include="SB_Com_Messages.cpp" />
     <ClCompile Include="SB_Com_MoveEntity.cpp" />
