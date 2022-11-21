@@ -30,26 +30,31 @@ public:
 
 	bool Start_Props_Dialogs();
 
+	void Start_Area_PropsPanel();
 	void Hide_Dimensions_Dlg(bool Show);
 	void Hide_Physics_Reset_Dlg(bool Show);
 	void Hide_Debug_Dlg(bool Show);
 	void Hide_Panel_Test_Dlg(bool Show);
+	void Hide_Area_Dlg(bool Show);
 
 	bool Dialog_Dimensions();
 	bool Start_Dialog_PhysicsReset();
 	bool Start_Dialog_Debug();
 	bool Start_Panels_Test_Dlg();
 
+	bool Show_Area_Physics_Debug;
+
 	HWND Dimensions_Dlg_hWnd;
 	HWND PhysicsReset_Dlg_hWnd;
 	HWND Panel_Test_Dlg_hWnd;
 	HWND Debug_Dlg_hWnd;
+	HWND Area_Props_HWND;
 
 protected:
 	static LRESULT CALLBACK Dialog_Dimensions_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Dialog_PhysicsReset_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Dialog_Debug_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Panels_Test_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-
+	static LRESULT CALLBACK Area_PropsPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 };
 

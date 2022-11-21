@@ -35,6 +35,9 @@ SB_Props_Dialogs::SB_Props_Dialogs()
 	PhysicsReset_Dlg_hWnd = nullptr;
 	Debug_Dlg_hWnd = nullptr;
 	Panel_Test_Dlg_hWnd = nullptr;
+	Area_Props_HWND = nullptr;
+
+	Show_Area_Physics_Debug = 0;
 }
 
 SB_Props_Dialogs::~SB_Props_Dialogs()
@@ -51,7 +54,7 @@ bool SB_Props_Dialogs::Start_Props_Dialogs()
 	Start_Dialog_PhysicsReset();
 	Start_Dialog_Debug();
 	Start_Panels_Test_Dlg();
-
+	Start_Area_PropsPanel();
 	return 1;
 }
 
@@ -570,6 +573,106 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_Debug_Proc(HWND hDlg, UINT message, WP
 }
 
 // *************************************************************************
+// *	  				Start_Area_PropsPanel Terry Bernie				   *
+// *************************************************************************
+void SB_Props_Dialogs::Start_Area_PropsPanel()
+{
+	Area_Props_HWND = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_AERA, App->SBC_Properties->Properties_Dlg_hWnd, (DLGPROC)Area_PropsPanel_Proc);
+}
+
+// *************************************************************************
+// *				Area_PropsPanel_Proc  Terry Bernie					   *
+// *************************************************************************
+LRESULT CALLBACK SB_Props_Dialogs::Area_PropsPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+
+		SendDlgItemMessage(hDlg, IDC_PHYSICSAREADEBUG, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_AREA_ENVIRONMENT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		return TRUE;
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->DialogBackGround;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_PHYSICSAREADEBUG && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->SBC_Props_Dialog->Show_Area_Physics_Debug);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_AREA_ENVIRONMENT && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->Cl_Environment->Environment_Dlg_Active);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+
+		if (LOWORD(wParam) == IDC_PHYSICSAREADEBUG)
+		{
+			int Index = App->SBC_Properties->Current_Selected_Object;
+
+			int f = App->SBC_Scene->B_Area[Index]->Phys_Body->getCollisionFlags();
+
+			if (App->SBC_Props_Dialog->Show_Area_Physics_Debug == 1)
+			{
+				App->SBC_Props_Dialog->Show_Area_Physics_Debug = 0;
+				App->SBC_Scene->B_Area[Index]->Phys_Body->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+
+				App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 0;
+				App->Cl19_Ogre->RenderFrame();
+				App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 1;
+			}
+			else
+			{
+				App->SBC_Props_Dialog->Show_Area_Physics_Debug = 1;
+				App->SBC_Scene->B_Area[Index]->Phys_Body->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+			}
+
+			return 1;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_AREA_ENVIRONMENT)
+		{
+			if (App->Cl_Environment->Environment_Dlg_Active == 1)
+			{
+				App->Cl_Environment->Environment_Dlg_Active = 0;
+				EndDialog(App->Cl_Environment->Environment_hWnd, LOWORD(wParam));
+			}
+			else
+			{
+				App->Cl_Environment->Start_Environment();
+			}
+			return 1;
+		}
+
+		break;
+	}
+	return FALSE;
+}
+
+// *************************************************************************
 // *				Hide_Dimensions_Dlg Terry Flanigan					   *
 // *************************************************************************
 void SB_Props_Dialogs::Hide_Dimensions_Dlg(bool Show)
@@ -599,4 +702,12 @@ void SB_Props_Dialogs::Hide_Debug_Dlg(bool Show)
 void SB_Props_Dialogs::Hide_Panel_Test_Dlg(bool Show)
 {
 	ShowWindow(Panel_Test_Dlg_hWnd, Show);
+}
+
+// *************************************************************************
+// *						Hide_Area_Dlg Terry Bernie 					   *
+// *************************************************************************
+void SB_Props_Dialogs::Hide_Area_Dlg(bool Show)
+{
+	ShowWindow(Area_Props_HWND, Show);
 }
