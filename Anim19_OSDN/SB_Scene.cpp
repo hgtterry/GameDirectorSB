@@ -36,7 +36,10 @@ SB_Scene::SB_Scene()
 	Camera_Added = 0;
 
 	Player_Count = 0;
+
 	Area_Count = 0;
+	UniqueID_Area_Count = 0;
+
 	Object_Count = 0;
 	Camera_Count = 0;
 	Entity_Count = 0;

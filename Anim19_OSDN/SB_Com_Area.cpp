@@ -80,21 +80,27 @@ bool SB_Com_Area::Add_New_Area()
 		int Index = App->SBC_Scene->Area_Count;
 
 		App->SBC_Scene->B_Area[Index] = new Base_Area();
-		//Base_Area* Area = App->SBC_Scene->B_Area[Count];
+		App->SBC_Scene->B_Area[Index]->S_Environment[0] = new Environment_type;
+		Set_Environment_Defaults(Index);
+
+		Base_Area* Area = App->SBC_Scene->B_Area[Index];
+		
+		Area->This_Object_ID = App->SBC_Scene->UniqueID_Area_Count;
 
 		Ogre::Vector3 Pos = App->SBC_Object->GetPlacement(-50);
-		App->SBC_Scene->B_Area[Index]->Mesh_Pos = Pos;
+		Area->Mesh_Pos = Pos;
 
-		App->SBC_Com_Area->Add_Aera_To_Project(Index, App->SBC_MeshViewer->Selected_MeshFile, App->SBC_MeshViewer->mResource_Folder);
-		App->SBC_Scene->B_Area[Index]->S_Environment[0] = new Environment_type;
-		App->SBC_Com_Area->Set_Environment_Defaults(Index);
+		Add_Aera_To_Project(Index, App->SBC_MeshViewer->Selected_MeshFile, App->SBC_MeshViewer->mResource_Folder);
+		
+		HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Areas_Folder, Area->Area_Name, Index, true);
+		Area->FileViewItem = Temp;
 
+		App->SBC_FileView->SelectItem(Area->FileViewItem);
 
-		App->SBC_Scene->B_Area[Index]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Areas_Folder, App->SBC_Scene->B_Area[Index]->Area_Name, Index, true);
-
-		App->SBC_FileView->SelectItem(App->SBC_Scene->B_Area[Index]->FileViewItem);
-
+		App->SBC_Scene->UniqueID_Area_Count++;
 		App->SBC_Scene->Area_Count++;
+
+		App->SBC_Scene->Scene_Modified = 1;
 	}
 	return 1;
 }
@@ -118,7 +124,7 @@ void SB_Com_Area::Add_Aera_To_Project(int Index, char* FileName, char* Resource_
 	strcat(B_Name, ConNum);
 	strcpy(App->SBC_Scene->B_Area[Index]->Area_Name, B_Name);
 
-	Area->Object_ID = 0; //App->Cl_Scene_Data->Object_ID_Counter;
+	Area->This_Object_ID = 0; //App->Cl_Scene_Data->Object_ID_Counter;
 	strcpy(Area->Area_FileName, FileName);
 	strcpy(Area->Area_Resource_Path, Resource_Location); // with back slash
 
@@ -142,7 +148,6 @@ void SB_Com_Area::Add_Aera_To_Project(int Index, char* FileName, char* Resource_
 // *************************************************************************
 btBvhTriangleMeshShape* SB_Com_Area::create_Area_Trimesh_New(int Index, Base_Area* Object)
 {
-
 	// Get the mesh from the entity
 	Ogre::MeshPtr myMesh = Object->Area_Ent->getMesh();
 	Ogre::Mesh::SubMeshIterator SubMeshIter = myMesh->getSubMeshIterator();

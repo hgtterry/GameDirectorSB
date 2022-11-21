@@ -57,7 +57,7 @@ public:
 	int Shape;
 	int Usage;
 	int Folder;
-	int Object_ID;  // Unique Number
+	int This_Object_ID;  // Unique Number
 
 	char Area_Name[100];
 
