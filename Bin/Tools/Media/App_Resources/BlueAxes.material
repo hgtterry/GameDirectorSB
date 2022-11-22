@@ -1,0 +1,42 @@
+
+material BlueAxes._Material_0
+{
+	technique
+	{
+		pass
+		{
+				depth_check off
+				depth_write off
+			
+				scene_blend one one_minus_src_alpha
+			
+			texture_unit
+			{
+				texture PosBlue.bmp
+			}
+		}
+
+	}
+
+}
+
+material BlueAxes._Material_1
+{
+	technique
+	{
+		pass
+		{
+				depth_check off
+				depth_write off
+			
+				scene_blend one one_minus_src_alpha
+				
+			texture_unit
+			{
+				texture PosBlue.bmp
+			}
+		}
+
+	}
+
+}

@@ -1,0 +1,90 @@
+material Mat1
+{
+    technique
+    {
+         pass
+         {
+			scene_blend colour_blend
+			depth_write off
+             texture_unit
+             {
+                 texture MessageEnt.dds
+             }
+         }
+    }
+}
+material Material02
+{
+    technique
+    {
+         pass
+         {
+			scene_blend colour_blend
+			depth_write off
+             texture_unit
+             {
+                 texture MessageEnt.dds
+             }
+         }
+    }
+}
+material Material03
+{
+    technique
+    {
+         pass
+         {
+			scene_blend colour_blend
+			depth_write off
+             texture_unit
+             {
+                 texture MessageEnt.dds
+             }
+         }
+    }
+}
+material Material04
+{
+    technique
+    {
+         pass
+         {
+			scene_blend colour_blend
+			depth_write off
+             texture_unit
+             {
+                 texture MessageEnt.dds
+             }
+         }
+    }
+}
+material Material05
+{
+    technique
+    {
+         pass
+         {
+			scene_blend colour_blend
+			depth_write off
+             texture_unit
+             {
+                 texture MessageEnt.dds
+             }
+         }
+    }
+}
+material Material06
+{
+    technique
+    {
+         pass
+         {
+			scene_blend colour_blend
+			depth_write off
+             texture_unit
+             {
+                 texture MessageEnt.dds
+             }
+         }
+    }
+}

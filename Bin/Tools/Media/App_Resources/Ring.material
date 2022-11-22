@@ -1,0 +1,17 @@
+
+material Ring_Material_0
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture PosBlue.jpg
+			}
+		}
+
+	}
+
+}

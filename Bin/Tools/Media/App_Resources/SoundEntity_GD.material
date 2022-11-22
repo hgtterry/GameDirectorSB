@@ -1,0 +1,90 @@
+material SoundEntityMat_GD1
+{
+    technique
+    {
+         pass
+         {
+			scene_blend colour_blend
+			depth_write off
+             texture_unit
+             {
+                 texture SoundEntityMat_GD1.dds
+             }
+         }
+    }
+}
+material SoundEntityMat_GD2
+{
+    technique
+    {
+         pass
+         {
+			scene_blend colour_blend
+			depth_write off
+             texture_unit
+             {
+                 texture SoundEntityMat_GD1.dds
+             }
+         }
+    }
+}
+material SoundEntityMat_GD3
+{
+    technique
+    {
+         pass
+         {
+			scene_blend colour_blend
+			depth_write off
+             texture_unit
+             {
+                 texture SoundEntityMat_GD1.dds
+             }
+         }
+    }
+}
+material SoundEntityMat_GD4
+{
+    technique
+    {
+         pass
+         {
+			scene_blend colour_blend
+			depth_write off
+             texture_unit
+             {
+                 texture SoundEntityMat_GD1.dds
+             }
+         }
+    }
+}
+material SoundEntityMat_GD5
+{
+    technique
+    {
+         pass
+         {
+			scene_blend colour_blend
+			depth_write off
+             texture_unit
+             {
+                 texture SoundEntityMat_GD1.dds
+             }
+         }
+    }
+}
+material SoundEntityMat_GD6
+{
+    technique
+    {
+         pass
+         {
+			scene_blend colour_blend
+			depth_write off
+             texture_unit
+             {
+                 texture SoundEntityMat_GD1.dds
+             }
+         }
+    }
+}

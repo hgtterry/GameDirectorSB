@@ -1,0 +1,80 @@
+
+material CL_Flag
+{
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{
+				texture flag.png -1
+			}
+		}
+
+	}
+
+}
+
+material CL_Black
+{
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{
+				texture black.png -1
+			}
+		}
+
+	}
+
+}
+
+material TR_Flag
+{
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{
+				texture TRflag.png -1
+			}
+		}
+
+	}
+
+}
+
+material TS_Flag
+{
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{
+				texture TSflag.png -1
+			}
+		}
+
+	}
+
+}
+
+material PS_Flag
+{
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{
+				texture PSflag.png -1
+			}
+		}
+
+	}
+
+}

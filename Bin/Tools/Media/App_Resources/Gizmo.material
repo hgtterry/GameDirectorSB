@@ -1,0 +1,62 @@
+
+material GizBLUE
+{
+	technique
+	{
+		pass
+		{
+			depth_check off
+			depth_write off
+			
+			scene_blend one one_minus_src_alpha
+		
+			texture_unit
+			{
+				texture GizmoBlue.bmp -1
+			}
+		}
+
+	}
+
+}
+
+material GizGREEN
+{
+	technique
+	{
+		pass
+		{
+
+			depth_check off
+			depth_write off
+			
+			scene_blend one one_minus_src_alpha
+			texture_unit
+			{
+				texture GizmoGreen.bmp -1
+			}
+		}
+
+	}
+
+}
+
+material GizRED
+{
+	technique
+	{
+		pass
+		{
+			depth_check off
+			depth_write off
+			
+			scene_blend one one_minus_src_alpha
+			texture_unit
+			{
+				texture GizmoRed.bmp -1
+			}
+		}
+
+	}
+
+}

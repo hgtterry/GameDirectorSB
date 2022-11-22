@@ -125,6 +125,7 @@
       <AdditionalDependencies>comctl32.lib;OgreMain.lib;OgreOverlay.lib;OgreTerrain.lib;genesis.lib;opengl32.lib;glu32.lib;assimp-vc140-mt.lib;DevIL.lib;ILU.lib;ILUT.lib;SOIL.lib;Tiny.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\..\Anim19_OSDN\Common\Tiny;..\..\Anim19_OSDN\Common\Genesis;..\..\Anim19_OSDN\Common\lib\Release;..\..\Anim19_OSDN\Common\Assimp\Lib;..\..\Anim19_OSDN\Common\Devil\lib;..\..\Anim19_OSDN\Common\Soil\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>LIBCMT.lib;libcpmt.lib</IgnoreSpecificDefaultLibraries>
+      <DelayLoadDLLs>%(DelayLoadDLLs)</DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
