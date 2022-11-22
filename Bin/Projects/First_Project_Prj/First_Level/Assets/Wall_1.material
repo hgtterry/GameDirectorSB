@@ -1,0 +1,13 @@
+material Wall_1/HL_Wall
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture Wall.bmp
+             }
+         }
+    }
+}

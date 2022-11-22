@@ -16,6 +16,7 @@ Mesh_Scale=2.699998,2.699998,2.699998
 Mesh_Rot=0.000000,90.000000,0.000000
 Mesh_Quat=0.707106,0.000000,0.707106,0.000000
 Physics_Quat=0.707107,0.000000,0.707107,0.000000
+Dimensions_Lock=1
  
 [Object_1]
 Mesh_Name=MoveGate_1
@@ -31,6 +32,7 @@ Mesh_Scale=1.659999,0.130001,0.970000
 Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
+Dimensions_Lock=0
 Move_Distance=60.000000
 Move_IsNegative=0
 Move_NewPos=0.000000
@@ -61,6 +63,7 @@ Mesh_Scale=2.699998,2.699998,2.699998
 Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,-0.000000,0.000000
 Physics_Quat=1.000000,0.000000,-0.000000,0.000000
+Dimensions_Lock=0
  
 [Object_3]
 Mesh_Name=MoveGate_2
@@ -76,6 +79,7 @@ Mesh_Scale=0.910000,0.130001,1.480000
 Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
+Dimensions_Lock=0
 Move_Distance=60.000000
 Move_IsNegative=0
 Move_NewPos=0.000000
@@ -106,6 +110,7 @@ Mesh_Scale=1.080000,1.250000,0.950000
 Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
+Dimensions_Lock=0
 ------------------- Message
 Message_Text=You Need 2 Orbs to Open This Gate
 Message_Pos=230.000000,150.000000
@@ -127,6 +132,7 @@ Mesh_Scale=1.000000,1.000000,1.000000
 Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
+Dimensions_Lock=0
 ------------------- Message
 Message_Text=You Need 1 Orb to Open This Gate
 Message_Pos=230.000000,150.000000
@@ -148,6 +154,7 @@ Mesh_Scale=1.999999,1.999999,1.999999
 Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
+Dimensions_Lock=0
 Col_Sound_File=footstep.ogg
 Col_Sound_Volume=0.500000
 Col_Play=1
@@ -171,6 +178,7 @@ Mesh_Scale=1.999999,1.999999,1.999999
 Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
+Dimensions_Lock=0
 Col_Sound_File=footstep.ogg
 Col_Sound_Volume=0.500000
 Col_Play=1
@@ -194,6 +202,7 @@ Mesh_Scale=1.999999,1.999999,1.999999
 Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
+Dimensions_Lock=0
 Col_Sound_File=footstep.ogg
 Col_Sound_Volume=0.500000
 Col_Play=1
@@ -217,6 +226,7 @@ Mesh_Scale=2.709998,2.709998,2.709998
 Mesh_Rot=0.000000,-90.000000,0.000000
 Mesh_Quat=0.707107,0.000000,-0.707107,0.000000
 Physics_Quat=0.707107,0.000000,-0.707107,0.000000
+Dimensions_Lock=0
  
 [Object_10]
 Mesh_Name=MoveGate_3
@@ -232,6 +242,7 @@ Mesh_Scale=1.430000,0.120001,1.000000
 Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
+Dimensions_Lock=0
 Move_Distance=60.000000
 Move_IsNegative=0
 Move_NewPos=0.000000
@@ -262,6 +273,7 @@ Mesh_Scale=1.000000,1.000000,1.000000
 Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
+Dimensions_Lock=0
 ------------------- Message
 Message_Text=You Need 3 Orbs to Open This Gate
 Message_Pos=230.000000,150.000000
@@ -283,6 +295,7 @@ Mesh_Scale=0.350001,0.350001,0.350001
 Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
+Dimensions_Lock=0
  
 [Object_13]
 Mesh_Name=Barrel2_Dynamic
@@ -298,6 +311,7 @@ Mesh_Scale=0.350000,0.350000,0.350000
 Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
+Dimensions_Lock=1
  
 [Object_14]
 Mesh_Name=Barrel3_Dynamic
@@ -313,6 +327,7 @@ Mesh_Scale=0.350001,0.350001,0.350001
 Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
+Dimensions_Lock=0
  
 [Object_15]
 Mesh_Name=Coll_4
@@ -328,6 +343,7 @@ Mesh_Scale=1.999999,1.999999,1.999999
 Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
+Dimensions_Lock=0
 Col_Sound_File=footstep.ogg
 Col_Sound_Volume=0.500000
 Col_Play=1
@@ -351,6 +367,7 @@ Mesh_Scale=1.999999,1.999999,1.999999
 Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
+Dimensions_Lock=0
 Col_Sound_File=footstep.ogg
 Col_Sound_Volume=0.500000
 Col_Play=1
@@ -374,6 +391,7 @@ Mesh_Scale=2.349999,0.050001,2.589998
 Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
+Dimensions_Lock=0
  
 [Object_18]
 Mesh_Name=MoveLift_1
@@ -389,6 +407,7 @@ Mesh_Scale=0.870000,0.120001,1.030000
 Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
+Dimensions_Lock=0
 Move_Distance=50.000000
 Move_IsNegative=0
 Move_NewPos=0.000000
@@ -419,6 +438,7 @@ Mesh_Scale=0.970000,0.970000,0.970000
 Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
+Dimensions_Lock=0
 ------------------- Message
 Message_Text=You Need 5 Orbs to use the Lift
 Message_Pos=230.000000,150.000000
@@ -440,6 +460,7 @@ Mesh_Scale=2.059999,-0.109999,5.350028
 Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
+Dimensions_Lock=0
  
 [Object_21]
 Mesh_Name=Collectable_21
@@ -455,6 +476,7 @@ Mesh_Scale=1.999999,1.999999,1.999999
 Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
+Dimensions_Lock=0
 Col_Sound_File=footstep.ogg
 Col_Sound_Volume=0.500000
 Col_Play=1
