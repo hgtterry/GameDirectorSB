@@ -34,7 +34,7 @@ ME_Ogre::ME_Ogre()
 	mRoot =				nullptr;
 	mWindow =			nullptr;
 	mSceneMgr =			nullptr;
-	mOverlaySystem =	nullptr;
+//	mOverlaySystem =	nullptr;
 	mCamera =			nullptr;
 	Ogre_Listener =		nullptr;
 	RenderListener =	nullptr;
@@ -158,9 +158,9 @@ bool ME_Ogre::chooseSceneManager(void)
 {
 	mSceneMgr = mRoot->createSceneManager("DefaultSceneManager"); 
 																  
-	mOverlaySystem = new Ogre::OverlaySystem();
+//	mOverlaySystem = new Ogre::OverlaySystem();
 
-	mSceneMgr->addRenderQueueListener(mOverlaySystem);
+//	mSceneMgr->addRenderQueueListener(mOverlaySystem);
 
 	mSceneMgr->setAmbientLight(Ogre::ColourValue(1, 1, 1));
 

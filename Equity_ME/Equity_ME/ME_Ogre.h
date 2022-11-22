@@ -56,7 +56,7 @@ public:
 	Ogre::Root* mRoot;
 	Ogre::RenderWindow* mWindow;
 	Ogre::SceneManager* mSceneMgr;
-	Ogre::OverlaySystem *mOverlaySystem;
+	//Ogre::OverlaySystem *mOverlaySystem;
 	Ogre::Camera* mCamera;
 
 	Ogre::ManualObject *manObj;
