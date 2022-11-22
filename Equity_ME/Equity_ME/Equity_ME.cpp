@@ -31,21 +31,6 @@ ME_App *App = NULL;  // Main Global App [090122]
 // *************************************************************************
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,_In_opt_ HINSTANCE hPrevInstance,_In_ LPWSTR    lpCmdLine,_In_ int nCmdShow)
 {
-	MessageBox(NULL,"poo","poo", MB_OK);
-	/*std::string path;
-
-	std::string wparentpath; 
-	wchar_t Temp[MAX_PATH];*/
-	char Temp[MAX_PATH];
-	_getcwd(Temp, 1024);
-
-	MessageBox(NULL, Temp, Temp,MB_OK);
-	/*std::string binDir = path;
-
-	SetDefaultDllDirectories(LOAD_LIBRARY_SEARCH_USER_DIRS);
-	AddDllDirectory(binDir.c_str);*/
-	
-
 	InitCommonControls();
 
 	App = new ME_App();
