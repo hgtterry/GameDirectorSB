@@ -120,24 +120,7 @@ bool ME_Ogre::SetUpResources(void)
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/OgreCore.zip", "Zip",
 		App_Resource_Group);
 
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/App_Resources", "FileSystem", App_Resource_Group);
-
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/Equity.zip", "Zip",
-		App_Resource_Group);
-
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/GDCore.zip", "Zip",
-		App_Resource_Group);
-
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/Panels.zip", "Zip",
-		App_Resource_Group);
-
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/Zipper", "FileSystem",
-		App_Resource_Group);
-
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/fonts", "FileSystem",
-		App_Resource_Group);
-
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/Particles", "FileSystem",
 		App_Resource_Group);
 
 	return 1;
@@ -223,7 +206,7 @@ bool ME_Ogre::loadResources(void)
 	// Initialize, parse scripts etc
 	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 
-	Ogre::FontManager* fontMgr = Ogre::FontManager::getSingletonPtr();
+	/*Ogre::FontManager* fontMgr = Ogre::FontManager::getSingletonPtr();
 
 	Ogre::ResourcePtr font = fontMgr->create("MyFont", "General");
 
@@ -235,7 +218,7 @@ bool ME_Ogre::loadResources(void)
 
 	font->setParameter("resolution", "96");
 
-	font->load();
+	font->load();*/
 
 	return 1;
 }
