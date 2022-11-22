@@ -576,20 +576,20 @@ LRESULT CALLBACK SB_Dialogs::Front_Screen_Proc(HWND hDlg, UINT message, WPARAM w
 	
 		SendDlgItemMessage(hDlg, IDC_ST_WTHC, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		SendDlgItemMessage(hDlg, IDC_EDIT1, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_STTEST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		SetDlgItemText(hDlg, IDC_STBANNER, App->Version);
 		SetDlgItemText(hDlg, IDC_ST_WTHC, "W.T.Flanigan and H.C.Flanigan");
 		
-		
-
-		SetDlgItemText(hDlg, IDC_EDIT1, "\r\nClick Quick Start for a Quick Intro \r\n\r\nClick change log to see the latest developments");
+		char Text[MAX_PATH];
+		LoadString(App->hInst, IDS_STRINGFRONT, Text, MAX_PATH);
+		SetDlgItemText(hDlg, IDC_STTEST, Text);
 		
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
 	{
-		if (GetDlgItem(hDlg, IDC_EDIT1) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_STTEST) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
