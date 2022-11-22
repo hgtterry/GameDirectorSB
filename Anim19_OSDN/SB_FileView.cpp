@@ -618,7 +618,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		ShowWindow(App->SBC_Properties->Properties_Dlg_hWnd, 1);
 		App->SBC_Object->Hide_Object_Dlg(1);
 
-		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1,0);
+		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->B_Object[Index]->Dimensions_Locked);
 
 		App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
 

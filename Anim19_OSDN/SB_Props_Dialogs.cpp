@@ -141,6 +141,16 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_Dimensions_Proc(HWND hDlg, UINT messag
 			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
 			if (test == BST_CHECKED)
 			{
+				if (App->SBC_Properties->Edit_Category == Enums::FV_Edit_Object)
+				{
+					int Index = App->SBC_Properties->Current_Selected_Object;
+					App->SBC_Scene->B_Object[Index]->Dimensions_Locked = 1;
+
+					App->SBC_Scene->B_Object[Index]->Altered = 1;
+					App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Object[Index]->FileViewItem);
+					App->SBC_Scene->Scene_Modified = 1;
+				}
+
 				EnableWindow(GetDlgItem(hDlg, IDC_BT_POSITION), 0);
 				EnableWindow(GetDlgItem(hDlg, IDC_BT_SCALE), 0);
 				EnableWindow(GetDlgItem(hDlg, IDC_BT_ROTATION), 0);
@@ -148,6 +158,30 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_Dimensions_Proc(HWND hDlg, UINT messag
 			}
 			else
 			{
+				if (App->SBC_Properties->Edit_Category == Enums::FV_Edit_Object)
+				{
+					int Index = App->SBC_Properties->Current_Selected_Object;
+					App->SBC_Scene->B_Object[Index]->Dimensions_Locked = 0;
+
+					App->SBC_Scene->B_Object[Index]->Altered = 1;
+					App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Object[Index]->FileViewItem);
+					App->SBC_Scene->Scene_Modified = 1;
+				}
+
+				if (App->SBC_Properties->Edit_Category == Enums::Edit_Area)
+				{
+					if (App->SBC_Properties->Edit_Category == Enums::Edit_Area)
+					{
+						App->SBC_Dialogs->YesNo("Edit Area", "Are You Sure", 1);
+						bool Doit = App->SBC_Dialogs->Canceled;
+						if (Doit == 1)
+						{
+							SendMessage(temp, BM_SETCHECK, 1, 0);
+							return TRUE;
+						}
+					}
+				}
+
 				EnableWindow(GetDlgItem(hDlg, IDC_BT_POSITION), 1);
 				EnableWindow(GetDlgItem(hDlg, IDC_BT_SCALE), 1);
 				EnableWindow(GetDlgItem(hDlg, IDC_BT_ROTATION), 1);

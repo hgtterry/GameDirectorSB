@@ -784,6 +784,9 @@ bool SB_Project::Save_Objects_Data()
 			y = App->SBC_Scene->B_Object[Count]->Physics_Quat.y;
 			z = App->SBC_Scene->B_Object[Count]->Physics_Quat.z;
 			fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Physics_Quat=", w, x, y, z);
+
+			fprintf(WriteFile, "%s%i\n", "Dimensions_Lock=", App->SBC_Scene->B_Object[Count]->Dimensions_Locked);
+
 			//---------------------------------------------------------------------------------- Message Entity
 			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Message)
 			{
@@ -1585,6 +1588,8 @@ bool SB_Project::Load_Project_Objects()
 		App->SBC_Scene->B_Object[Count]->Physics_Quat.y = y;
 		App->SBC_Scene->B_Object[Count]->Physics_Quat.z = z;
 
+		App->SBC_Scene->B_Object[Count]->Dimensions_Locked = App->Cl_Ini->GetInt(buff, "Dimensions_Lock", 0);
+		
 		//---------------------------------------------------------------------------------- Message Entity
 		if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Message)
 		{

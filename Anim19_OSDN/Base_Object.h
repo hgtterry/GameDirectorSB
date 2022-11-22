@@ -137,6 +137,8 @@ public:
 	bool Deleted;
 	bool Altered;
 	bool Physics_Debug_On;
+	bool Dimensions_Locked;
+
 	//------------------------------ Entity
 	bool					Collision;
 	bool					Triggered;
