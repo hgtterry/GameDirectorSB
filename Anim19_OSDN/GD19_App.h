@@ -79,6 +79,7 @@ distribution.
 #include "SB_Com_MoveEntity.h"
 #include "SB_Com_Area.h"
 #include "SB_Project_Create.h"
+#include "SB_Locations.h"
 
 // :- Terry and Hazel Flanigan 2022
 
@@ -143,6 +144,7 @@ public:
 	SB_Com_Area*			SBC_Com_Area;
 
 	SB_Project_Create*		SBC_Project_Create;
+	SB_Locations*			SBC_Locations;
 
 	Com_Diaolgs*			Com_CDialogs;		// Common Dialogs for App [291221]
 	// ----------------------------------- 

@@ -33,6 +33,8 @@ public:
 	void Project_Loaded_Reset();
 
 	bool Toggle_Select_Flag;
+	bool Toggle_FirstCam_Flag;
+	bool Toggle_FreeCam_Flag;
 
 	void UnCheck_All_MouseOption(HWND hDlg);
 
@@ -92,8 +94,7 @@ protected:
 	bool Toggle_Tabs_Locations_Flag;
 
 	// Camera
-	bool Toggle_FirstCam_Flag;
-	bool Toggle_FreeCam_Flag;
+
 	bool Toggle_3rdCam_Flag;
 
 	bool Toggle_GroupsOnly_Flag;

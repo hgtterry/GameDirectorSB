@@ -960,7 +960,7 @@ LRESULT CALLBACK SB_TopTabs::Locations_TB_Proc(HWND hDlg, UINT message, WPARAM w
 	{
 		if (LOWORD(wParam) == IDC_PLAYER_LOCATION)
 		{
-			Debug
+			App->SBC_Player->Start_Locations_Dlg();
 			return TRUE;
 		}
 

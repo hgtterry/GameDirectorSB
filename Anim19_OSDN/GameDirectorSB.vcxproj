@@ -200,6 +200,7 @@
     <ClInclude Include="SB_FileView.h" />
     <ClInclude Include="SB_Import.h" />
     <ClInclude Include="SB_Import_Room.h" />
+    <ClInclude Include="SB_Locations.h" />
     <ClInclude Include="SB_LookUps.h" />
     <ClInclude Include="SB_Markers.h" />
     <ClInclude Include="SB_MeshViewer.h" />
@@ -270,6 +271,7 @@
     <ClCompile Include="SB_FileView.cpp" />
     <ClCompile Include="SB_Import.cpp" />
     <ClCompile Include="SB_Import_Room.cpp" />
+    <ClCompile Include="SB_Locations.cpp" />
     <ClCompile Include="SB_LookUps.cpp" />
     <ClCompile Include="SB_Markers.cpp" />
     <ClCompile Include="SB_MeshViewer.cpp" />
