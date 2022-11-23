@@ -150,15 +150,13 @@ LRESULT CALLBACK SB_Preferences::Preferences_Proc(HWND hDlg, UINT message, WPARA
 	case WM_INITDIALOG:
 	{
 
-		/*App->SetTitleBar(hDlg);
+		App->SetTitleBar(hDlg);
 
-		HFONT Font;
-		Font = CreateFont(-20, 0, 0, 0, FW_BOLD, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
-		SendDlgItemMessage(hDlg, IDC_TITLENAME, WM_SETFONT, (WPARAM)Font, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_EDITTEXT, IDOK, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_EDITTEXT, IDCANCEL, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		SendDlgItemMessage(hDlg, IDC_EDITTEXT, WM_SETFONT, (WPARAM)App->Font_CB12, MAKELPARAM(TRUE, 0));
 
-		SetDlgItemText(hDlg, IDC_TITLENAME, (LPCTSTR)App->Cl_Dialogs->btext);
+		/*SetDlgItemText(hDlg, IDC_TITLENAME, (LPCTSTR)App->Cl_Dialogs->btext);
 
 		SetDlgItemText(hDlg, IDC_EDITTEXT, (LPCTSTR)App->Cl_Dialogs->Chr_Text);*/
 
@@ -195,7 +193,7 @@ LRESULT CALLBACK SB_Preferences::Preferences_Proc(HWND hDlg, UINT message, WPARA
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		/*if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
@@ -207,7 +205,7 @@ LRESULT CALLBACK SB_Preferences::Preferences_Proc(HWND hDlg, UINT message, WPARA
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
-		}*/
+		}
 
 		return CDRF_DODEFAULT;
 	}
