@@ -30,8 +30,6 @@ public:
 
 	void Reset_Class(void);
 
-	void Start_Locations_Dlg();
-
 	void Create_Player_Object(void);
 
 	bool Start_Player_PropsPanel();
@@ -75,8 +73,7 @@ public:
 protected:
 
 	static LRESULT CALLBACK Player_PropsPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-	static LRESULT CALLBACK Locations_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-
+	
 	void Initialize();
 	
 };

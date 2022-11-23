@@ -28,5 +28,16 @@ public:
 
 	SB_Locations(void);
 	~SB_Locations(void);
+
+	void Start_Locations_Dlg();
+
+protected:
+
+	static LRESULT CALLBACK Locations_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	HWND Locations_Dlg_hWnd;
+
+	bool Toggle_Player_Flag;
+	bool Toggle_FreeCam_Flag;
 };
 
