@@ -43,6 +43,7 @@ public:
 	HWND Editors_TB_hWnd;
 	HWND File_TB_hWnd;
 	HWND Game_TB_hWnd;
+	HWND Locations_TB_hWnd;
 
 	HWND MouseOption_DlgHwnd;
 
@@ -56,6 +57,7 @@ protected:
 	static LRESULT CALLBACK Files_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Game_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Locations_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Start_Camera_TB(void);
 
@@ -67,6 +69,7 @@ protected:
 	void Start_Editors_TB(void);
 	void Start_Files_TB(void);
 	void Start_Game_TB(void);
+	void Start_Locations_TB(void);
 
 	void Start_Tabs_Headers(void);
 
@@ -86,6 +89,7 @@ protected:
 	bool Toggle_Tabs_Editors_Flag;
 	bool Toggle_Tabs_File_Flag;
 	bool Toggle_Tabs_Game_Flag;
+	bool Toggle_Tabs_Locations_Flag;
 
 	// Camera
 	bool Toggle_FirstCam_Flag;

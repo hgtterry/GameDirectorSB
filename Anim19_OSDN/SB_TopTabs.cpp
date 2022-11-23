@@ -37,6 +37,7 @@ SB_TopTabs::SB_TopTabs()
 	Editors_TB_hWnd = nullptr;
 	File_TB_hWnd = nullptr;
 	Game_TB_hWnd = nullptr;
+	Locations_TB_hWnd = nullptr;
 
 	MouseOption_DlgHwnd = nullptr;
 
@@ -50,6 +51,7 @@ SB_TopTabs::SB_TopTabs()
 	Toggle_Tabs_Editors_Flag = 0;
 	Toggle_Tabs_File_Flag = 1;
 	Toggle_Tabs_Game_Flag = 0;
+	Toggle_Tabs_Locations_Flag = 0;
 
 	Toggle_GroupsOnly_Flag = 0;
 
@@ -143,6 +145,7 @@ LRESULT CALLBACK SB_TopTabs::TopBar_Globals_Proc(HWND hDlg, UINT message, WPARAM
 		App->SBC_TopTabs->Start_Editors_TB();
 		App->SBC_TopTabs->Start_Files_TB();
 		App->SBC_TopTabs->Start_Game_TB();
+		App->SBC_TopTabs->Start_Locations_TB();
 
 		return TRUE;
 	}
@@ -322,7 +325,7 @@ LRESULT CALLBACK SB_TopTabs::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM w
 		SendDlgItemMessage(hDlg, IDC_TAB_EDITORS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_TBFILE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_GAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		
+		SendDlgItemMessage(hDlg, IDC_BT_TB_LOCATIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		return TRUE;
 	}
 
@@ -369,20 +372,38 @@ LRESULT CALLBACK SB_TopTabs::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM w
 			App->Custom_Button_Toggle_Tabs(item, App->SBC_TopTabs->Toggle_Tabs_Game_Flag);
 			return CDRF_DODEFAULT;
 		}
+
+		if (some_item->idFrom == IDC_BT_TB_LOCATIONS && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle_Tabs(item, App->SBC_TopTabs->Toggle_Tabs_Locations_Flag);
+			return CDRF_DODEFAULT;
+		}
 		
 		return CDRF_DODEFAULT;
 	}
 
 	case WM_COMMAND:
 	{
+		if (LOWORD(wParam) == IDC_BT_TB_LOCATIONS)
+		{
+			App->SBC_TopTabs->Hide_Tabs();
+
+			ShowWindow(App->SBC_TopTabs->Locations_TB_hWnd, SW_SHOW);
+
+			App->SBC_TopTabs->Toggle_Tabs_Locations_Flag = 1;
+
+			RedrawWindow(App->SBC_TopTabs->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDC_TBFILE)
 		{
-
 			App->SBC_TopTabs->Hide_Tabs();
-			ShowWindow(App->SBC_TopTabs->File_TB_hWnd, SW_SHOW);
-			App->SBC_TopTabs->Toggle_Tabs_File_Flag = 1;
 
-			//App->Cl19_Ogre->OgreListener->ImGui_Render_Tab = Enums::ImGui_Camera;
+			ShowWindow(App->SBC_TopTabs->File_TB_hWnd, SW_SHOW);
+
+			App->SBC_TopTabs->Toggle_Tabs_File_Flag = 1;
 
 			RedrawWindow(App->SBC_TopTabs->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
@@ -391,12 +412,10 @@ LRESULT CALLBACK SB_TopTabs::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM w
 		if (LOWORD(wParam) == IDC_TBOLD)
 		{
 			App->SBC_TopTabs->Hide_Tabs();
+
 			ShowWindow(App->SBC_TopTabs->Camera_TB_hWnd, SW_SHOW);
+
 			App->SBC_TopTabs->Toggle_Tabs_Camera_Flag = 1;
-
-			App->Cl19_Ogre->OgreListener->ImGui_Render_Tab = Enums::ImGui_Camera;
-
-			//ShowWindow(App->SBC_Physics->PhysicsPannel_Hwnd, SW_SHOW);
 
 			RedrawWindow(App->SBC_TopTabs->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
@@ -417,7 +436,6 @@ LRESULT CALLBACK SB_TopTabs::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM w
 
 		if (LOWORD(wParam) == IDC_BT_GAME)
 		{
-			
 			App->SBC_TopTabs->Hide_Tabs();
 
 			ShowWindow(App->SBC_TopTabs->Game_TB_hWnd, SW_SHOW);
@@ -443,7 +461,8 @@ void SB_TopTabs::Hide_Tabs(void)
 	ShowWindow(Editors_TB_hWnd, SW_HIDE);
 	ShowWindow(File_TB_hWnd, SW_HIDE);
 	ShowWindow(Game_TB_hWnd, SW_HIDE);
-
+	ShowWindow(Locations_TB_hWnd, SW_HIDE);
+	
 	ShowWindow(App->SBC_Physics->PhysicsPannel_Hwnd, 0);
 
 	Toggle_Tabs_Camera_Flag = 0;
@@ -452,6 +471,8 @@ void SB_TopTabs::Hide_Tabs(void)
 	Toggle_Tabs_Editors_Flag = 0;
 	Toggle_Tabs_File_Flag = 0;
 	Toggle_Tabs_Game_Flag = 0;
+	Toggle_Tabs_Locations_Flag = 0;
+
 }
 
 // *************************************************************************
@@ -882,6 +903,64 @@ LRESULT CALLBACK SB_TopTabs::Game_TB_Proc(HWND hDlg, UINT message, WPARAM wParam
 
 				App->SBC_Scene->Game_Mode();
 			}
+			return TRUE;
+		}
+
+		return FALSE;
+	}
+	}
+	return FALSE;
+}
+
+// *************************************************************************
+// *			Start_Locations_TB:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+void SB_TopTabs::Start_Locations_TB(void)
+{
+	Locations_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_LOCATIONS, Tabs_TB_hWnd, (DLGPROC)Locations_TB_Proc);
+	//Init_Bmps_Groups();
+}
+
+// *************************************************************************
+// *			Locations_TB_Proc:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+LRESULT CALLBACK SB_TopTabs::Locations_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_PLAYER_LOCATION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		return TRUE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_NOTIFY:
+	{
+
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_PLAYER_LOCATION && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+		if (LOWORD(wParam) == IDC_PLAYER_LOCATION)
+		{
+			Debug
 			return TRUE;
 		}
 
