@@ -101,6 +101,7 @@ GD19_App::GD19_App(void)
 	CUR = 0;
 	AppBackground = 0;
 	BlackBrush = 0;
+	AppTest = 0;
 //	BannerBrush = 0;
 	Brush_Blue = 0;
 	Brush_White = 0;
@@ -111,7 +112,7 @@ GD19_App::GD19_App(void)
 	Brush_Red = 0;
 	Brush_Tabs = 0;
 	Brush_Tabs_UnSelected = 0;
-
+	Brush_Panel = 0;
 	Brush_Button = 0;
 	Brush_Button_Hover = 0;
 
@@ -378,7 +379,7 @@ void GD19_App::SetBrushes_Fonts(void)
 {
 	AppBackground = CreateSolidBrush(RGB(213, 222, 242));
 	DialogBackGround = CreateSolidBrush(RGB(208, 230, 252));
-
+	AppTest = CreateSolidBrush(RGB(218, 240, 255));
 
 	BlackBrush = CreateSolidBrush(RGB(0, 0, 0));
 
@@ -386,7 +387,7 @@ void GD19_App::SetBrushes_Fonts(void)
 
 	Brush_White = CreateSolidBrush(RGB(255, 255, 255));
 
-	///Brush_Grey = CreateSolidBrush(RGB(223, 223, 223));
+	Brush_Panel = CreateSolidBrush(RGB(218, 240, 255));
 
 	Brush_Red = CreateSolidBrush(RGB(252, 85, 63));
 	Brush_Green = CreateSolidBrush(RGB(0, 255, 0));

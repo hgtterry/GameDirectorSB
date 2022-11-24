@@ -79,13 +79,14 @@ bool SB_Project_Create::First_Area_Build_Project()
 	App->SBC_Scene->Area_Count++;
 	App->SBC_Scene->Area_Added = 1;
 
+	HTREEITEM Temp2 = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Areas_Folder, "Area_1", 0, true);
+	App->SBC_Scene->B_Area[0]->FileViewItem = Temp2;
+	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Areas_Folder);
 
-	App->Cl_Grid->Grid_SetVisible(1);
-
-	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
 	// ------------------------ Add Default Camera
 	App->SBC_Camera->Add_New_Camera();
 	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Cameras_Folder);
+	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
 
 	// ------------------------ Add Default Player
 	App->SBC_Player->Create_Player_Object();
@@ -95,33 +96,27 @@ bool SB_Project_Create::First_Area_Build_Project()
 	App->SBC_Scene->B_Player[0]->FileViewItem = Temp1;
 	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Players_Folder);
 
-
 	// ------------------------ Add Counter
 	App->SBC_Display->Add_New_Counter();
 
 	// ------------------------ Add Location
 	App->SBC_Locations->Save_Location("Start_Position");
 
-	// ------------------------ Add Area FileView
-
-	HTREEITEM Temp2 = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Areas_Folder, "Area_1", 0, true);
-	App->SBC_Scene->B_Area[0]->FileViewItem = Temp2;
-	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Areas_Folder);
-
-
+	// ------------------------ Set Scene
+	App->Cl_Grid->Grid_SetVisible(1);
 	App->SBC_FileView->Redraw_FileView();
 
 	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Area[0]->FileViewItem);
 
 	App->SBC_Physics->Reset_Physics();
 	App->SBC_Physics->Enable_Physics(1);
+	App->SBC_Scene->Scene_Loaded = 1;
+	App->SBC_Scene->Area_Added = 1;
+	App->Cl19_Ogre->Block_RenderingQueued = 0;
 
 	//------------------------------------------------------------------------------ WHY
 	int f = App->SBC_Scene->B_Player[0]->Phys_Body->getCollisionFlags();
 	App->SBC_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
-
-	App->SBC_Scene->Scene_Loaded = 1;
-	App->SBC_Scene->Area_Added = 1;
 
 	App->Cl19_Ogre->Block_RenderingQueued = 0;
 

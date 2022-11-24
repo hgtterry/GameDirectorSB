@@ -75,7 +75,7 @@ LRESULT CALLBACK SB_Object::Object_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 
 	case WM_CTLCOLORDLG:
 	{
-		return (LONG)App->DialogBackGround;
+		return (LONG)App->Brush_Panel;
 	}
 
 	case WM_NOTIFY:

@@ -199,6 +199,8 @@ public:
 
 	HBRUSH AppBackground;
 	HBRUSH DialogBackGround;
+	HBRUSH AppTest;
+	HBRUSH Brush_Panel;
 	HBRUSH BlackBrush;
 	HBRUSH Brush_White;
 	HBRUSH Brush_Red;

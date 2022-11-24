@@ -94,7 +94,7 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_Dimensions_Proc(HWND hDlg, UINT messag
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
+			return (UINT)App->Brush_Panel;
 		}
 
 		return FALSE;
@@ -102,7 +102,7 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_Dimensions_Proc(HWND hDlg, UINT messag
 
 	case WM_CTLCOLORDLG:
 	{
-		return (LONG)App->AppBackground;
+		return (LONG)App->Brush_Panel;
 	}
 
 	case WM_NOTIFY:
@@ -637,7 +637,7 @@ LRESULT CALLBACK SB_Props_Dialogs::Area_PropsPanel_Proc(HWND hDlg, UINT message,
 
 	case WM_CTLCOLORDLG:
 	{
-		return (LONG)App->AppBackground;
+		return (LONG)App->Brush_Panel;
 	}
 
 	case WM_NOTIFY:
