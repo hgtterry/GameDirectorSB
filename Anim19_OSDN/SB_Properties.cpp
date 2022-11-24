@@ -372,43 +372,19 @@ bool SB_Properties::Update_ListView_Objects()
 {
 	int index = App->SBC_Properties->Current_Selected_Object;
 
+	char Num[10];
+	char chr_ID[50];
+	_itoa(App->SBC_Scene->B_Object[index]->This_Object_ID, Num, 10);
+	strcpy(chr_ID, "Properties ID=");
+	strcat(chr_ID, Num);
+
+	SetWindowText(Properties_Dlg_hWnd, chr_ID);
+	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->B_Object[index]->Mesh_Name);
+
 	char chr_Scale[100];
-
-	char chr_PosX[100];
-	char chr_PosY[100];
-	char chr_PosZ[100];
-
-	char chr_RotX[100];
-	char chr_RotY[100];
-	char chr_RotZ[100];
-
-	char chr_Total[100];
-
-	char Num[255];
-	_itoa(index, Num, 10);
-
-	char buff[255];
-	strcpy(buff, App->SBC_Scene->B_Object[index]->Mesh_Name);
-	//strcat(buff, "   (Object-");
-	//strcat(buff, Num);
-	//strcat(buff, ")");
-
-
-	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
-
 	sprintf(chr_Scale, "%.3f", App->SBC_Scene->B_Object[index]->Mesh_Scale.x);
 
-	sprintf(chr_PosX, "%.3f", "2");//CL_Object[index]->MeshPos.x);
-	sprintf(chr_PosY, "%.3f", "2");//CL_Object[index]->MeshPos.y);
-	sprintf(chr_PosZ, "%.3f", "2");//CL_Object[index]->MeshPos.z);
-
-	sprintf(chr_RotX, "%.3f", "2");//CL_Object[index]->MeshRot.x);
-	sprintf(chr_RotY, "%.3f", "2");// CL_Object[index]->MeshRot.y);
-	sprintf(chr_RotZ, "%.3f", "2");//CL_Object[index]->MeshRot.z);
-
-	sprintf(chr_Total, "%i", "2");//TotalCollectableCount);
-
-
+	
 	const int NUM_ITEMS = 5;
 	const int NUM_COLS = 2;
 	std::string grid[NUM_COLS][NUM_ITEMS]; // string table
@@ -449,17 +425,16 @@ bool SB_Properties::Update_ListView_Objects()
 // *************************************************************************
 bool SB_Properties::Update_ListView_Player()
 {
-	if (App->SBC_Scene->Scene_Loaded == 0)
-	{
-		//	return 1;
-	}
-
 	int index = App->SBC_Properties->Current_Selected_Object;
 
-	char buff[255];
-	strcpy(buff, App->SBC_Scene->B_Player[0]->Player_Name);
-	//strcat(buff, "   (Player)");
-	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
+//	char Num[10];
+	char chr_ID[50];
+	//_itoa(App->SBC_Scene->B_Object[index]->This_Object_ID, Num, 10);
+	strcpy(chr_ID, "Properties ID=0");
+	//strcat(chr_ID, Num);
+
+	SetWindowText(Properties_Dlg_hWnd, chr_ID);
+	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->B_Player[0]->Player_Name);
 
 	char chr_Speed[100];
 	char chr_TurnRate[100];
@@ -589,17 +564,16 @@ bool SB_Properties::Update_ListView_Player_Physics()
 // *************************************************************************
 bool SB_Properties::Update_ListView_Messages()
 {
-	if (App->SBC_Scene->Scene_Loaded == 0)
-	{
-		return 1;
-	}
-
 	int index = App->SBC_Properties->Current_Selected_Object;
 
-	char buff[255];
-	strcpy(buff, App->SBC_Scene->B_Object[index]->Mesh_Name);
-	//strcat(buff, "   (Message)");
-	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
+	char Num[10];
+	char chr_ID[50];
+	_itoa(App->SBC_Scene->B_Object[index]->This_Object_ID, Num, 10);
+	strcpy(chr_ID, "Properties ID=");
+	strcat(chr_ID, Num);
+
+	SetWindowText(Properties_Dlg_hWnd, chr_ID);
+	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->B_Object[index]->Mesh_Name);
 
 	char chr_PosX[20];
 	sprintf(chr_PosX, "%.3f ", App->SBC_Scene->B_Object[index]->Message_PosX);
@@ -658,17 +632,16 @@ bool SB_Properties::Update_ListView_Messages()
 // *************************************************************************
 bool SB_Properties::Update_ListView_Sounds()
 {
-	if (App->SBC_Scene->Scene_Loaded == 0)
-	{
-		return 1;
-	}
-
 	int index = Current_Selected_Object;
 
-	char buff[255];
-	strcpy(buff, App->SBC_Scene->B_Object[index]->Mesh_Name);
-	//strcat(buff, "   (Sound)");
-	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
+	char Num[10];
+	char chr_ID[50];
+	_itoa(App->SBC_Scene->B_Object[index]->This_Object_ID, Num, 10);
+	strcpy(chr_ID, "Properties ID=");
+	strcat(chr_ID, Num);
+
+	SetWindowText(Properties_Dlg_hWnd, chr_ID);
+	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->B_Object[index]->Mesh_Name);
 
 
 	char chr_Volume[100];
@@ -716,10 +689,14 @@ bool SB_Properties::Update_ListView_Teleport()
 {
 	int index = App->SBC_Properties->Current_Selected_Object;
 
-	char buff[255];
-	strcpy(buff, App->SBC_Scene->B_Object[index]->Mesh_Name);
-	//strcat(buff, "   (Teleport)");
-	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
+	char Num[10];
+	char chr_ID[50];
+	_itoa(App->SBC_Scene->B_Object[index]->This_Object_ID, Num, 10);
+	strcpy(chr_ID, "Properties ID=");
+	strcat(chr_ID, Num);
+
+	SetWindowText(Properties_Dlg_hWnd, chr_ID);
+	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->B_Object[index]->Mesh_Name);
 
 	// new sound
 	char chr_Play[100];
@@ -780,11 +757,14 @@ bool SB_Properties::Update_ListView_Collectables()
 {
 	int index = App->SBC_Properties->Current_Selected_Object;
 
+	char Num[10];
+	char chr_ID[50];
+	_itoa(App->SBC_Scene->B_Object[index]->This_Object_ID, Num, 10);
+	strcpy(chr_ID, "Properties ID=");
+	strcat(chr_ID, Num);
 
-	char buff[255];
-	strcpy(buff, App->SBC_Scene->B_Object[index]->Mesh_Name);
-	//strcat(buff, "   (Collectable)");
-	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
+	SetWindowText(Properties_Dlg_hWnd, chr_ID);
+	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->B_Object[index]->Mesh_Name);
 	
 	// new sound
 	char chr_Play[100];
@@ -857,11 +837,14 @@ bool SB_Properties::Update_ListView_Counters()
 {
 	int index = App->SBC_Properties->Current_Selected_Object;
 
+	char Num[10];
+	char chr_ID[50];
+	_itoa(App->SBC_Scene->B_Counter[index]->Unique_ID, Num, 10);
+	strcpy(chr_ID, "Properties ID=");
+	strcat(chr_ID, Num);
 
-	char buff[255];
-	strcpy(buff, App->SBC_Scene->B_Counter[index]->Panel_Name);
-	//strcat(buff, "   (Counters)");
-	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
+	SetWindowText(Properties_Dlg_hWnd, chr_ID);
+	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->B_Counter[index]->Panel_Name);
 
 	char chr_PosX[20];
 	sprintf(chr_PosX, "%.3f ", App->SBC_Scene->B_Counter[index]->PosX);
@@ -924,17 +907,17 @@ bool SB_Properties::Update_ListView_Counters()
 // *************************************************************************
 bool SB_Properties::Update_ListView_Move_Entities()
 {
-	if (App->SBC_Scene->Scene_Loaded == 0)
-	{
-		return 1;
-	}
 
 	int index = App->SBC_Properties->Current_Selected_Object;
 
-	char buff[255];
-	strcpy(buff, App->SBC_Scene->B_Object[index]->Mesh_Name);
-	//strcat(buff, "   (Mover)");
-	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
+	char Num[10];
+	char chr_ID[50];
+	_itoa(App->SBC_Scene->B_Object[index]->This_Object_ID, Num, 10);
+	strcpy(chr_ID, "Properties ID=");
+	strcat(chr_ID, Num);
+
+	SetWindowText(Properties_Dlg_hWnd, chr_ID);
+	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->B_Object[index]->Mesh_Name);
 
 	char chr_Distance[100];
 	sprintf(chr_Distance, "%.3f ", App->SBC_Scene->B_Object[index]->S_MoveType[0]->Move_Distance);
@@ -969,10 +952,6 @@ bool SB_Properties::Update_ListView_Move_Entities()
 
 	char chr_Object_Name[100];
 	strcpy(chr_Object_Name, App->SBC_Scene->B_Object[App->SBC_Scene->B_Object[index]->S_MoveType[0]->Object_To_Move_Index]->Mesh_Name);
-
-
-	/*char chr_Selected_Object_Id[100];
-	_itoa(App->SBC_Scene->B_Object[index]->S_MoveType[0]->Object_To_Move_Index, chr_Selected_Object_Id, 10);*/
 
 	char chr_Trigger_Value[100];
 	_itoa(App->SBC_Scene->B_Object[index]->S_MoveType[0]->Trigger_Value, chr_Trigger_Value, 10);
@@ -1039,11 +1018,7 @@ bool SB_Properties::Update_ListView_Move_Entities()
 // *************************************************************************
 bool SB_Properties::Update_ListView_Level()
 {
-	/*if (App->SBC_Scene->Scene_Loaded == 0)
-	{
-		return 1;
-	}*/
-
+	
 	char buff[255];
 	strcpy(buff, App->SBC_Project->m_Level_Name);
 	//strcat(buff, "   (Level)");
@@ -2165,10 +2140,14 @@ bool SB_Properties::Update_ListView_Area()
 {
 	int Index = Current_Selected_Object;
 
-	char buff[255];
-	strcpy(buff, App->SBC_Scene->B_Area[Index]->Area_Name);
-	//strcat(buff, App->SBC_Scene->B_Area[Index]->Area_Name);
-	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
+	char Num[10];
+	char chr_ID[50];
+	_itoa(App->SBC_Scene->B_Area[Index]->This_Object_ID, Num, 10);
+	strcpy(chr_ID, "Properties ID=");
+	strcat(chr_ID, Num);
+
+	SetWindowText(Properties_Dlg_hWnd, chr_ID);
+	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->B_Area[Index]->Area_Name);
 
 	const int NUM_ITEMS = 3;
 	const int NUM_COLS = 2;
@@ -2206,17 +2185,16 @@ bool SB_Properties::Update_ListView_Area()
 // *************************************************************************
 bool SB_Properties::Update_ListView_Camera()
 {
-	if (App->SBC_Scene->Scene_Loaded == 0)
-	{
-		//	return 1;
-	}
-
 	int Index = App->SBC_Properties->Current_Selected_Object;
 
-	char buff[255];
-	strcpy(buff, App->SBC_Scene->B_Camera[Index]->Camera_Name);
-	//strcat(buff, "   (Camera)");
-	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)buff);
+//	char Num[10];
+	char chr_ID[50];
+	//_itoa(App->SBC_Scene->B_Camera[Index]->, Num, 10);
+	strcpy(chr_ID, "Properties ID=0");
+	//strcat(chr_ID, Num);
+	
+	SetWindowText(Properties_Dlg_hWnd, chr_ID);
+	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->B_Camera[Index]->Camera_Name);
 
 	char chr_Pos_X[100];
 	char chr_Pos_Y[100];
