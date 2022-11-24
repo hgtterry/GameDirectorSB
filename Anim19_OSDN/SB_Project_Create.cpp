@@ -54,19 +54,19 @@ void SB_Project_Create::Start_New_Project()
 }
 
 // *************************************************************************
-// *	  		Add_Area:- Terry and Hazel Flanigan 2022				   *
+// *	  	Add_First_New_Area:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
-void SB_Project_Create::Add_Area()
+void SB_Project_Create::Add_First_New_Area()
 {
-	First_Area_Start_Project();
+	First_Area_Build_Project();
 	App->SBC_Scene->B_Area[0]->S_Environment[0] = new Environment_type;
 	App->SBC_Com_Area->Set_Environment_Defaults(0);
 }
 
 // *************************************************************************
-//		First_Area_Start_Project:- Terry and Hazel Flanigan 2022		   *
+//		First_Area_Build_Project:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
-bool SB_Project_Create::First_Area_Start_Project()
+bool SB_Project_Create::First_Area_Build_Project()
 {
 
 	char poo[MAX_PATH];

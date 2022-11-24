@@ -29,10 +29,10 @@ public:
 	~SB_Project_Create();
 
 	void Start_New_Project();
-	void Add_Area();
+	void Add_First_New_Area();
 
 protected:
 
-	bool First_Area_Start_Project();
+	bool First_Area_Build_Project();
 };
 

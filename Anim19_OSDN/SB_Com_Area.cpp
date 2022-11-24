@@ -73,7 +73,7 @@ bool SB_Com_Area::Add_New_Area()
 {
 	if (App->SBC_Scene->Area_Count == 0)
 	{
-		App->SBC_Project_Create->Add_Area();
+		App->SBC_Project_Create->Add_First_New_Area();
 	}
 	else
 	{
