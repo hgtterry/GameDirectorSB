@@ -100,7 +100,7 @@ bool SB_Project_Create::First_Area_Build_Project()
 	App->SBC_Display->Add_New_Counter();
 
 	// ------------------------ Add Location
-	App->SBC_Player->Save_Location("Start_Position");
+	App->SBC_Locations->Save_Location("Start_Position");
 
 	// ------------------------ Add Area FileView
 

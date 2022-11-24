@@ -39,7 +39,7 @@ SB_Locations::~SB_Locations(void)
 }
 
 // *************************************************************************
-// *	  				Start_Projection Terry Bernie					   *
+// *	  		Start_Locations:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 void SB_Locations::Start_Locations_Dlg()
 {
@@ -49,7 +49,7 @@ void SB_Locations::Start_Locations_Dlg()
 	Locations_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROJECTION, App->Fdlg, (DLGPROC)Locations_Proc);
 }
 // *************************************************************************
-// *					Projection_Proc Terry Bernie		 			   *
+// *			Location_Proc:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 LRESULT CALLBACK SB_Locations::Locations_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -350,7 +350,7 @@ LRESULT CALLBACK SB_Locations::Locations_Proc(HWND hDlg, UINT message, WPARAM wP
 
 			if (Location_Index > -1)
 			{
-				App->SBC_Player->Goto_Location(Location_Index);
+				App->SBC_Locations->Goto_Location(Location_Index);
 
 				HWND temp = GetDlgItem(hDlg, IDC_CKMOVECAM);
 				int test = SendMessage(temp, BM_GETCHECK, 0, 0);
@@ -370,6 +370,7 @@ LRESULT CALLBACK SB_Locations::Locations_Proc(HWND hDlg, UINT message, WPARAM wP
 			return TRUE;
 		}
 
+		// --------------------- SAVE LOCATION
 		if (LOWORD(wParam) == IDC_BTSAVE_LOCATION_PLAYER)
 		{
 			strcpy(App->Cl_Dialogs->btext, "Location Name");
@@ -390,7 +391,7 @@ LRESULT CALLBACK SB_Locations::Locations_Proc(HWND hDlg, UINT message, WPARAM wP
 			}
 
 			strcpy(buf, App->Cl_Dialogs->Chr_Text);
-			App->SBC_Player->Save_Location(buf);
+			App->SBC_Locations->Save_Location(buf);
 
 			SendDlgItemMessage(hDlg, IDC_LSTLOCATIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)(LPCTSTR)buf);
 			return TRUE;
@@ -421,4 +422,38 @@ LRESULT CALLBACK SB_Locations::Locations_Proc(HWND hDlg, UINT message, WPARAM wP
 		break;
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *	  		Save_Location:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void SB_Locations::Save_Location(char* name)
+{
+	int Count = App->SBC_Scene->Player_Location_Count;
+
+	App->SBC_Scene->B_Locations[Count] = new Base_Locations();
+
+	App->SBC_Scene->B_Locations[Count]->Deleted = 0;
+
+	App->SBC_Scene->B_Locations[Count]->Location_ID = App->SBC_Scene->Locations_ID_Counter;
+
+	strcpy(App->SBC_Scene->B_Locations[Count]->Name, name);
+	App->SBC_Scene->B_Locations[Count]->Current_Position = App->SBC_Scene->B_Player[0]->Player_Node->getPosition();
+	App->SBC_Scene->B_Locations[Count]->Physics_Position = App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().getOrigin();
+	App->SBC_Scene->B_Locations[Count]->Physics_Rotation = App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().getRotation();
+
+	App->SBC_Scene->Locations_ID_Counter++;
+	App->SBC_Scene->Player_Location_Count++;
+}
+
+// *************************************************************************
+// *	  		Goto_Locatio:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void SB_Locations::Goto_Location(int Index)
+{
+	App->SBC_Scene->B_Player[0]->Player_Node->setPosition(App->SBC_Scene->B_Locations[Index]->Current_Position);
+
+	App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(App->SBC_Scene->B_Locations[Index]->Physics_Position);
+
+	App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->SBC_Scene->B_Locations[Index]->Physics_Rotation);
 }

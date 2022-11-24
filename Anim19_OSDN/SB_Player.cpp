@@ -835,39 +835,4 @@ void SB_Player::Check_Collisions_New(void)
 	}
 
 }
-// *************************************************************************
-// *	  					Save_Location Terry							   *
-// *************************************************************************
-void SB_Player::Save_Location(char* name)
-{
 
-	int Count = App->SBC_Scene->Player_Location_Count;
-
-	App->SBC_Scene->B_Locations[Count] = new Base_Locations();
-
-	App->SBC_Scene->B_Locations[Count]->Deleted = 0;
-
-	App->SBC_Scene->B_Locations[Count]->Location_ID = App->SBC_Scene->Locations_ID_Counter;
-	App->SBC_Scene->Locations_ID_Counter++;
-
-	strcpy(App->SBC_Scene->B_Locations[Count]->Name, name);
-	App->SBC_Scene->B_Locations[Count]->Current_Position = App->SBC_Scene->B_Player[0]->Player_Node->getPosition();
-	App->SBC_Scene->B_Locations[Count]->Physics_Position = App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().getOrigin();
-	App->SBC_Scene->B_Locations[Count]->Physics_Rotation = App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().getRotation();
-
-	App->SBC_Scene->Player_Location_Count++;
-
-}
-
-// *************************************************************************
-// *	  					Goto_Locatio Terry							   *
-// *************************************************************************
-void SB_Player::Goto_Location(int Index)
-{
-
-	App->SBC_Scene->B_Player[0]->Player_Node->setPosition(App->SBC_Scene->B_Locations[Index]->Current_Position);
-
-	App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(App->SBC_Scene->B_Locations[Index]->Physics_Position);
-
-	App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->SBC_Scene->B_Locations[Index]->Physics_Rotation);
-}

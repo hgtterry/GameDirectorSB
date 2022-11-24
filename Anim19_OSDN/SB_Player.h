@@ -42,9 +42,6 @@ public:
 	void Check_Collisions(void);
 	void Check_Collisions_New(void);
 
-	void Save_Location(char* name);
-	void Goto_Location(int Index);
-
 	int Col_numManifolds;
 	int Col_Player_Index;
 	int Col_Usage_Index;

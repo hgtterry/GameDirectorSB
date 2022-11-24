@@ -30,10 +30,13 @@ public:
 	~SB_Locations(void);
 
 	void Start_Locations_Dlg();
+	void Save_Location(char* name);
 
 protected:
 
 	static LRESULT CALLBACK Locations_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	void Goto_Location(int Index);
 
 	HWND Locations_Dlg_hWnd;
 
