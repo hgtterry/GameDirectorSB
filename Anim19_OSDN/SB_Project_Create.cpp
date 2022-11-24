@@ -95,9 +95,12 @@ bool SB_Project_Create::First_Area_Build_Project()
 	App->SBC_Scene->B_Player[0]->FileViewItem = Temp1;
 	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Players_Folder);
 
-	// ------------------------ Add Counter
 
+	// ------------------------ Add Counter
 	App->SBC_Display->Add_New_Counter();
+
+	// ------------------------ Add Location
+	App->SBC_Player->Save_Location("Start_Position");
 
 	// ------------------------ Add Area FileView
 
@@ -122,6 +125,5 @@ bool SB_Project_Create::First_Area_Build_Project()
 
 	App->Cl19_Ogre->Block_RenderingQueued = 0;
 
-	Debug
 	return 1;
 }
