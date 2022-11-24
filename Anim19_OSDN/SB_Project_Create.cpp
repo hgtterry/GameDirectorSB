@@ -68,16 +68,17 @@ void SB_Project_Create::Add_First_New_Area()
 // *************************************************************************
 bool SB_Project_Create::First_Area_Build_Project()
 {
+	
+	char Temp[MAX_PATH];
+	strcpy(Temp, App->SBC_Scene->Project_Resource_Group.c_str());
 
-	char poo[MAX_PATH];
-	strcpy(poo, App->SBC_Scene->Project_Resource_Group.c_str());
-
-	App->SBC_Com_Area->Add_Aera_To_Project(0, App->SBC_MeshViewer->Selected_MeshFile, poo);
+	// ------------------------ Add Area
+	App->SBC_Scene->B_Area[0] = new Base_Area();
+	App->SBC_Com_Area->Add_Aera_To_Project(0, App->SBC_MeshViewer->Selected_MeshFile, Temp);
 	strcpy(App->SBC_Scene->B_Area[0]->Material_File, App->SBC_MeshViewer->m_Material_File);
-
 	App->SBC_Scene->Area_Count++;
-
 	App->SBC_Scene->Area_Added = 1;
+
 
 	App->Cl_Grid->Grid_SetVisible(1);
 
@@ -89,16 +90,21 @@ bool SB_Project_Create::First_Area_Build_Project()
 	// ------------------------ Add Default Player
 	App->SBC_Player->Create_Player_Object();
 	strcpy(App->SBC_Scene->B_Player[0]->Player_Name, "Player_1");
-	App->SBC_Scene->B_Player[0]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Players_Folder, "Player_1", 0, true);
+
+	HTREEITEM Temp1 =App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Players_Folder, "Player_1", 0, true);
+	App->SBC_Scene->B_Player[0]->FileViewItem = Temp1;
 	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Players_Folder);
 
 	// ------------------------ Add Counter
 
 	App->SBC_Display->Add_New_Counter();
 
-	// ------------------------ Add Area
-	App->SBC_Scene->B_Area[0]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Areas_Folder, "Area_1", 0, true);
+	// ------------------------ Add Area FileView
+
+	HTREEITEM Temp2 = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Areas_Folder, "Area_1", 0, true);
+	App->SBC_Scene->B_Area[0]->FileViewItem = Temp2;
 	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Areas_Folder);
+
 
 	App->SBC_FileView->Redraw_FileView();
 
@@ -116,5 +122,6 @@ bool SB_Project_Create::First_Area_Build_Project()
 
 	App->Cl19_Ogre->Block_RenderingQueued = 0;
 
+	Debug
 	return 1;
 }
