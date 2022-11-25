@@ -65,6 +65,8 @@ bool SB_Props_Dialogs::Start_Dialog_Dimensions()
 {
 
 	Dimensions_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_DIMENSIONS, App->SBC_Properties->Properties_Dlg_hWnd, (DLGPROC)Dialog_Dimensions_Proc);
+	
+	Init_Bmps_Dimensions();
 	Hide_Dimensions_Dlg(0,0);
 
 	return 1;
@@ -268,6 +270,41 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_Dimensions_Proc(HWND hDlg, UINT messag
 
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *		Init_Bmps_Dimensions:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+void SB_Props_Dialogs::Init_Bmps_Dimensions()
+{
+	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
+
+	HWND Temp = GetDlgItem(Dimensions_Dlg_hWnd, IDC_BT_POSITION);
+	TOOLINFO ti1 = { 0 };
+	ti1.cbSize = sizeof(ti1);
+	ti1.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti1.uId = (UINT_PTR)Temp;
+	ti1.lpszText = "Start the Dimensions Dialog in Position Mode";
+	ti1.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti1);
+
+	Temp = GetDlgItem(Dimensions_Dlg_hWnd, IDC_BT_ROTATION);
+	TOOLINFO ti2 = { 0 };
+	ti2.cbSize = sizeof(ti2);
+	ti2.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti2.uId = (UINT_PTR)Temp;
+	ti2.lpszText = "Start the Dimensions Dialog in Rotation Mode";
+	ti2.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti2);
+
+	Temp = GetDlgItem(Dimensions_Dlg_hWnd, IDC_BT_SCALE);
+	TOOLINFO ti3 = { 0 };
+	ti3.cbSize = sizeof(ti3);
+	ti3.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti3.uId = (UINT_PTR)Temp;
+	ti3.lpszText = "Start the Dimensions Dialog in \n Scale Mode";
+	ti3.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti3);
 }
 
 // *************************************************************************
@@ -478,6 +515,8 @@ bool SB_Props_Dialogs::Start_Dialog_Debug()
 {
 
 	Debug_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_DEBUG, App->SBC_Properties->Properties_Dlg_hWnd, (DLGPROC)Dialog_Debug_Proc);
+	
+	Init_Bmps_Debug();
 	Hide_Debug_Dlg(0);
 
 	return 1;
@@ -504,7 +543,7 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_Debug_Proc(HWND hDlg, UINT message, WP
 
 	case WM_CTLCOLORDLG:
 	{
-		return (LONG)App->DialogBackGround;
+		return (LONG)App->Brush_Panel;
 	}
 
 	case WM_NOTIFY:
@@ -604,6 +643,32 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_Debug_Proc(HWND hDlg, UINT message, WP
 
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *			Init_Bmps_Debug:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void SB_Props_Dialogs::Init_Bmps_Debug()
+{
+	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
+
+	HWND Temp = GetDlgItem(Debug_Dlg_hWnd, IDC_BT_SHOWMESH);
+	TOOLINFO ti1 = { 0 };
+	ti1.cbSize = sizeof(ti1);
+	ti1.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti1.uId = (UINT_PTR)Temp;
+	ti1.lpszText = "Show or Hide the Mesh";
+	ti1.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti1);
+
+	Temp = GetDlgItem(Debug_Dlg_hWnd, IDC_BT_PHYSDEBUG);
+	TOOLINFO ti2 = { 0 };
+	ti2.cbSize = sizeof(ti2);
+	ti2.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti2.uId = (UINT_PTR)Temp;
+	ti2.lpszText = "Show or Hide the Physics Outline";
+	ti2.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti2);
 }
 
 // *************************************************************************

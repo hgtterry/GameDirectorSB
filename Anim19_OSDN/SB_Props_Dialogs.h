@@ -42,6 +42,9 @@ public:
 	bool Start_Dialog_Debug();
 	bool Start_Panels_Test_Dlg();
 
+	void Init_Bmps_Debug();
+	void Init_Bmps_Dimensions();
+
 	bool Show_Area_Physics_Debug;
 
 	HWND Dimensions_Dlg_hWnd;
