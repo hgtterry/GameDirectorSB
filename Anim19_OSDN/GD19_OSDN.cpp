@@ -115,8 +115,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	App->SBC_Camera->Start_Camera_PropsPanel();
 	App->SBC_Player->Start_Player_PropsPanel();
-	App->SBC_Object->Start_Object_PropsPanel();
-
+	
 	App->SBC_Props_Dialog->Start_Props_Dialogs();
 
 	//CheckMenuItem(App->mMenu, ID_WINDOW_SHOWFPSSHORT, MF_BYCOMMAND | MF_CHECKED);

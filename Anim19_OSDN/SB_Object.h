@@ -29,8 +29,6 @@ public:
 	~SB_Object(void);
 
 	void Delete_Object();
-	void Start_Object_PropsPanel(void);
-	void Hide_Object_Dlg(bool Show);
 	void Rename_Object(int Index);
 	void Clear_Modified_Objects();
 	Ogre::Vector3 GetPlacement(int Distance = -6);
@@ -49,11 +47,7 @@ public:
 	bool Show_Physics_Debug;
 	bool Show_Mesh_Debug;
 
-	HWND Object_PropDlg_Hwnd;
-
 protected:
-
-	static LRESULT CALLBACK Object_PropsPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 };
 

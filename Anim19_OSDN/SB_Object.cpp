@@ -31,116 +31,12 @@ distribution.
 
 SB_Object::SB_Object(void)
 {
-	Object_PropDlg_Hwnd = nullptr;
-
 	Show_Physics_Debug = 0;
 	Show_Mesh_Debug = 1;
 }
 
 SB_Object::~SB_Object(void)
 {
-}
-
-// *************************************************************************
-// *	Start_Object_PropsPanel:- Terry and Hazel Flanigan 2022 	 	   *
-// *************************************************************************
-void SB_Object::Start_Object_PropsPanel(void)
-{
-
-	Object_PropDlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_OBJECT, App->SBC_Properties->Properties_Dlg_hWnd, (DLGPROC)Object_PropsPanel_Proc);
-	ShowWindow(App->GD_Properties_Hwnd,0);
-
-	//Set_DataView();
-}
-
-// *************************************************************************
-// *		Object_PropsPanel_Proc:- Terry and Hazel Flanigan 2022		   *
-// *************************************************************************
-LRESULT CALLBACK SB_Object::Object_PropsPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
-{
-
-	switch (message)
-	{
-	case WM_INITDIALOG:
-	{
-		SendDlgItemMessage(hDlg, IDC_BT_GOTO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BT_DETAIL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		
-		return TRUE;
-	}
-	case WM_CTLCOLORSTATIC:
-	{
-		return FALSE;
-	}
-
-	case WM_CTLCOLORDLG:
-	{
-		return (LONG)App->Brush_Panel;
-	}
-
-	case WM_NOTIFY:
-	{
-		LPNMHDR some_item = (LPNMHDR)lParam;
-
-		if (some_item->idFrom == IDC_BT_GOTO && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_BT_DETAIL && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
-			return CDRF_DODEFAULT;
-		}
-
-		return CDRF_DODEFAULT;
-	}
-
-	case WM_COMMAND:
-
-		if (LOWORD(wParam) == IDC_BT_DETAIL)
-		{
-			if (App->CL_Vm_ImGui->Show_Object_Data == 1)
-			{
-				App->CL_Vm_ImGui->Show_Object_Data = 0;
-			}
-			else
-			{
-				App->SBC_LookUps->Update_Types();
-				App->CL_Vm_ImGui->Show_Object_Data = 1;
-			}
-			return 1;
-		}
-
-		if (LOWORD(wParam) == IDC_BT_GOTO)
-		{
-			//App->Cl_ToolBar->FreeCam_Active = 1;
-			//App->Cl_ToolBar->FirstPerson_Active = 0;
-			App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
-
-			//RedrawWindow(App->Cl_ToolBar->TB_1, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-
-			int Index = App->SBC_Properties->Current_Selected_Object;
-			Ogre::Vector3 Centre = App->SBC_Scene->B_Object[Index]->Object_Node->getAttachedObject(0)->getBoundingBox().getCenter();
-			Ogre::Vector3 WS = App->SBC_Scene->B_Object[Index]->Object_Node->convertLocalToWorldPosition(Centre);
-			App->Cl19_Ogre->mCamera->setPosition(WS);
-			return 1;
-		}
-
-		break;
-	}
-	return FALSE;
-}
-
-// *************************************************************************
-// *			Hide_Object_Dlg:- Terry and Hazel Flanigan 2022			   *
-// *************************************************************************
-void SB_Object::Hide_Object_Dlg(bool Show)
-{
-	ShowWindow(Object_PropDlg_Hwnd, Show);
 }
 
 // *************************************************************************

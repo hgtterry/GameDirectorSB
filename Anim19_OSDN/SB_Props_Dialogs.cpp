@@ -36,6 +36,7 @@ SB_Props_Dialogs::SB_Props_Dialogs()
 	Debug_Dlg_hWnd = nullptr;
 	Panel_Test_Dlg_hWnd = nullptr;
 	Area_Props_HWND = nullptr;
+	Details_Goto_Hwnd = nullptr;
 
 	Show_Area_Physics_Debug = 0;
 }
@@ -55,6 +56,8 @@ bool SB_Props_Dialogs::Start_Props_Dialogs()
 	Start_Dialog_Debug();
 	Start_Panels_Test_Dlg();
 	Start_Area_PropsPanel();
+	Start_Details_Goto_Dlg();
+
 	return 1;
 }
 
@@ -774,6 +777,122 @@ LRESULT CALLBACK SB_Props_Dialogs::Area_PropsPanel_Proc(HWND hDlg, UINT message,
 }
 
 // *************************************************************************
+// *	Start_Details_Goto_PropsPanel:- Terry and Hazel Flanigan 2022 	   *
+// *************************************************************************
+void SB_Props_Dialogs::Start_Details_Goto_Dlg(void)
+{
+	Details_Goto_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_OBJECT, App->SBC_Properties->Properties_Dlg_hWnd, (DLGPROC)Details_Goto_Proc);
+	
+	Init_Bmps_DetailsGo();
+	Hide_Details_Goto_Dlg(0);
+
+}
+
+// *************************************************************************
+// *			Details_Goto_Proc:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+LRESULT CALLBACK SB_Props_Dialogs::Details_Goto_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_BT_GOTO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_DETAIL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		return TRUE;
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->Brush_Panel;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_BT_GOTO && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_DETAIL && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+
+		if (LOWORD(wParam) == IDC_BT_DETAIL)
+		{
+			if (App->CL_Vm_ImGui->Show_Object_Data == 1)
+			{
+				App->CL_Vm_ImGui->Show_Object_Data = 0;
+			}
+			else
+			{
+				App->SBC_LookUps->Update_Types();
+				App->CL_Vm_ImGui->Show_Object_Data = 1;
+			}
+			return 1;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_GOTO)
+		{
+			App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
+
+			int Index = App->SBC_Properties->Current_Selected_Object;
+			Ogre::Vector3 Centre = App->SBC_Scene->B_Object[Index]->Object_Node->getAttachedObject(0)->getBoundingBox().getCenter();
+			Ogre::Vector3 WS = App->SBC_Scene->B_Object[Index]->Object_Node->convertLocalToWorldPosition(Centre);
+			App->Cl19_Ogre->mCamera->setPosition(WS);
+			return 1;
+		}
+
+		break;
+	}
+	return FALSE;
+}
+
+// *************************************************************************
+// *		Init_Bmps_DetailsGo:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void SB_Props_Dialogs::Init_Bmps_DetailsGo()
+{
+	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
+
+	HWND Temp = GetDlgItem(Details_Goto_Hwnd, IDC_BT_DETAIL);
+	TOOLINFO ti1 = { 0 };
+	ti1.cbSize = sizeof(ti1);
+	ti1.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti1.uId = (UINT_PTR)Temp;
+	ti1.lpszText = "Show Details of the Select Object/Entity";
+	ti1.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti1);
+
+	Temp = GetDlgItem(Details_Goto_Hwnd, IDC_BT_GOTO);
+	TOOLINFO ti2 = { 0 };
+	ti2.cbSize = sizeof(ti2);
+	ti2.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti2.uId = (UINT_PTR)Temp;
+	ti2.lpszText = "Move the Camera to the Centre of the Selected Object";
+	ti2.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti2);
+}
+
+// *************************************************************************
 // *		Hide_Dimensions_Dlg:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 void SB_Props_Dialogs::Hide_Dimensions_Dlg(bool Show, bool Lock_Dimensions)
@@ -832,4 +951,12 @@ void SB_Props_Dialogs::Hide_Panel_Test_Dlg(bool Show)
 void SB_Props_Dialogs::Hide_Area_Dlg(bool Show)
 {
 	ShowWindow(Area_Props_HWND, Show);
+}
+
+// *************************************************************************
+// *		Hide_Details_Goto_Dlg:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+void SB_Props_Dialogs::Hide_Details_Goto_Dlg(bool Show)
+{
+	ShowWindow(Details_Goto_Hwnd, Show);
 }
