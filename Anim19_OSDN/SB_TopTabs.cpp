@@ -913,12 +913,34 @@ LRESULT CALLBACK SB_TopTabs::Game_TB_Proc(HWND hDlg, UINT message, WPARAM wParam
 }
 
 // *************************************************************************
+// *			Init_Bmps_Game:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void SB_TopTabs::Init_Bmps_Game()
+{
+
+	HWND Temp = GetDlgItem(Game_TB_hWnd, IDC_BT_INFO_GAME);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_InfoSmall_Bmp);
+
+	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
+
+	Temp = GetDlgItem(Game_TB_hWnd, IDC_BT_INFO_GAME);
+	TOOLINFO ti1 = { 0 };
+	ti1.cbSize = sizeof(ti1);
+	ti1.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti1.uId = (UINT_PTR)Temp;
+	ti1.lpszText = "Show Help File";
+	ti1.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti1);
+
+}
+
+// *************************************************************************
 // *			Start_Locations_TB:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
 void SB_TopTabs::Start_Locations_TB(void)
 {
 	Locations_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_LOCATIONS, Tabs_TB_hWnd, (DLGPROC)Locations_TB_Proc);
-	//Init_Bmps_Groups();
+	Init_Bmps_Locations();
 }
 
 // *************************************************************************
@@ -932,7 +954,8 @@ LRESULT CALLBACK SB_TopTabs::Locations_TB_Proc(HWND hDlg, UINT message, WPARAM w
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_PLAYER_LOCATION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_CAMERA_LOCATIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		return TRUE;
 	}
 
@@ -953,6 +976,20 @@ LRESULT CALLBACK SB_TopTabs::Locations_TB_Proc(HWND hDlg, UINT message, WPARAM w
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_CAMERA_LOCATIONS && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_INFO_LOCATIONS && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+		
 		return CDRF_DODEFAULT;
 	}
 
@@ -964,6 +1001,12 @@ LRESULT CALLBACK SB_TopTabs::Locations_TB_Proc(HWND hDlg, UINT message, WPARAM w
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_CAMERA_LOCATIONS)
+		{
+			//App->SBC_Locations->Start_Locations_Dlg();
+			return TRUE;
+		}
+
 		return FALSE;
 	}
 	}
@@ -971,24 +1014,32 @@ LRESULT CALLBACK SB_TopTabs::Locations_TB_Proc(HWND hDlg, UINT message, WPARAM w
 }
 
 // *************************************************************************
-// *			Init_Bmps_Game:- Terry and Hazel Flanigan 2022			   *
+// *		Init_Bmps_Locations:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
-void SB_TopTabs::Init_Bmps_Game()
+void SB_TopTabs::Init_Bmps_Locations()
 {
-
-	HWND Temp = GetDlgItem(Game_TB_hWnd, IDC_BT_INFO_GAME);
+	HWND Temp = GetDlgItem(Locations_TB_hWnd, IDC_BT_INFO_LOCATIONS);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_InfoSmall_Bmp);
 
 	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
 
-	Temp = GetDlgItem(Game_TB_hWnd, IDC_BT_INFO_GAME);
+	Temp = GetDlgItem(Locations_TB_hWnd, IDC_PLAYER_LOCATION);
 	TOOLINFO ti1 = { 0 };
 	ti1.cbSize = sizeof(ti1);
 	ti1.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
 	ti1.uId = (UINT_PTR)Temp;
-	ti1.lpszText = "Show Help File";
+	ti1.lpszText = "Goto and Add Player Locations";
 	ti1.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti1);
+
+	Temp = GetDlgItem(Locations_TB_hWnd, IDC_BT_INFO_LOCATIONS);
+	TOOLINFO ti2 = { 0 };
+	ti2.cbSize = sizeof(ti2);
+	ti2.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti2.uId = (UINT_PTR)Temp;
+	ti2.lpszText = "Show Help File";
+	ti2.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti2);
 
 }
 
