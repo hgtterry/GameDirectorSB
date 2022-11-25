@@ -17,4 +17,18 @@ Cam_Height=16.000000
 Turn_Rate=0.000004
  
 [Locations]
-Locations_Count=0
+Locations_Count=2
+ 
+[Location_0]
+Locatoin_ID=0
+Name=Start_Location
+Mesh_Position=-104.661072,-39.600002,0.354004
+Physics_Position=-104.661072,-39.600002,0.354004
+Physics_Rotation=0.000000,0.710346,0.000000,-0.703853
+ 
+[Location_1]
+Locatoin_ID=0
+Name=By_The_Lift
+Mesh_Position=160.343475,-39.600010,91.441010
+Physics_Position=160.343475,-39.600010,91.441010
+Physics_Rotation=0.000000,-0.022112,0.000000,0.999756

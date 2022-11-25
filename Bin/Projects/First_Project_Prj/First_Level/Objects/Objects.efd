@@ -486,5 +486,29 @@ Col_Maths=1
 Col_Value=1
 Col_Disabled=0
  
+[Object_22]
+Mesh_Name=Teleport_Ent_22
+Mesh_File=TeleportSend.mesh
+Mesh_Resource_Path=
+Material_File=Not Found
+Object_ID=23
+Object_Type=2
+Object_Shape=1
+Object_Usage=6
+Mesh_Pos=24.389297,-50.600002,-30.627155
+Mesh_Scale=1.000000,1.000000,1.000000
+Mesh_Rot=0.000000,0.000000,0.000000
+Mesh_Quat=1.000000,0.000000,0.000000,0.000000
+Physics_Quat=1.000000,0.000000,0.000000,0.000000
+Dimensions_Lock=0
+Tele_Goto=Start_Location
+Tele_ID=0
+Tele_Sound=magicspell.ogg
+Tele_Volume=0.500000
+Tele_Play=1
+Tele_Mesh_Position=-104.661072,-39.600002,0.354004
+Tele_Physics_Position=-104.661072,-39.600002,0.354004
+Tele_Physics_Rotation=0.000000,0.710346,0.000000,-0.703853
+ 
 [Counters]
-Objects_Count=22
+Objects_Count=23
