@@ -62,8 +62,6 @@ LRESULT CALLBACK SB_Locations::Locations_Proc(HWND hDlg, UINT message, WPARAM wP
 		SendDlgItemMessage(hDlg, IDC_STBANNER, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 		//App->Cl_World->Store_Location();
 
-		SendDlgItemMessage(hDlg, IDC_CKMOVECAM, WM_SETFONT, (WPARAM)App->Font_CB12, MAKELPARAM(TRUE, 0));
-
 		SendDlgItemMessage(hDlg, IDC_LSTLOCATIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_LOC_PLAYER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_LOC_FREECAM, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -74,8 +72,6 @@ LRESULT CALLBACK SB_Locations::Locations_Proc(HWND hDlg, UINT message, WPARAM wP
 		SendDlgItemMessage(hDlg, IDC_BTDELETE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SendDlgItemMessage(hDlg, IDC_LSTLOCATIONS, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
-
-		SendDlgItemMessage(hDlg, IDC_CKMOVECAM, BM_SETCHECK, 1, 0);
 
 		int Count = 0;
 		while (Count < App->SBC_Scene->Player_Location_Count)
@@ -101,14 +97,7 @@ LRESULT CALLBACK SB_Locations::Locations_Proc(HWND hDlg, UINT message, WPARAM wP
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
 		}
-		if (GetDlgItem(hDlg, IDC_CKMOVECAM) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 255, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}
-
+		
 		return FALSE;
 	}
 
@@ -333,16 +322,6 @@ LRESULT CALLBACK SB_Locations::Locations_Proc(HWND hDlg, UINT message, WPARAM wP
 			if (Location_Index > -1)
 			{
 				App->SBC_Locations->Goto_Location(Location_Index);
-
-				/*HWND temp = GetDlgItem(hDlg, IDC_CKMOVECAM);
-				int test = SendMessage(temp, BM_GETCHECK, 0, 0);
-				if (test == BST_CHECKED)
-				{
-					App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamFirst;
-					Root::getSingletonPtr()->renderOneFrame();
-					Root::getSingletonPtr()->renderOneFrame();
-					App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
-				}*/
 			}
 			else
 			{
@@ -392,6 +371,12 @@ LRESULT CALLBACK SB_Locations::Locations_Proc(HWND hDlg, UINT message, WPARAM wP
 
 			App->Cl_Dialogs->ListBox_Index = Index;
 
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_PLAYERLOCATIONS_INFO)
+		{
+			Debug
 			return TRUE;
 		}
 

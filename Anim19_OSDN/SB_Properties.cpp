@@ -2565,7 +2565,7 @@ bool SB_Properties::Edit_Teleport_OnClick(LPARAM lParam)
 	result = strcmp(btext, "Goto");
 	if (result == 0)
 	{
-		strcpy(App->Cl_Dialogs->btext, "Select Object to Move");
+		strcpy(App->Cl_Dialogs->btext, "Select Location");
 
 		App->SBC_Dialogs->DropList_Data = Enums::DropDialog_Locations;
 		App->SBC_Dialogs->Dialog_DropGen();

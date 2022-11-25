@@ -997,7 +997,11 @@ LRESULT CALLBACK SB_TopTabs::Locations_TB_Proc(HWND hDlg, UINT message, WPARAM w
 	{
 		if (LOWORD(wParam) == IDC_PLAYER_LOCATION)
 		{
-			App->SBC_Locations->Start_Locations_Dlg();
+			if (App->SBC_Scene->Player_Added == 1)
+			{
+				App->SBC_Locations->Start_Locations_Dlg();
+			}
+
 			return TRUE;
 		}
 
