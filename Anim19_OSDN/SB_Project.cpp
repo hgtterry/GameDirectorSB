@@ -1313,7 +1313,7 @@ bool SB_Project::Save_Player_Data()
 			strcat(buff, "]");
 			fprintf(WriteFile, "%s\n", buff);
 
-			fprintf(WriteFile, "%s%i\n", "Locatoin_ID=", App->SBC_Scene->B_Locations[Count]->Location_ID);
+			fprintf(WriteFile, "%s%i\n", "Locatoin_ID=", App->SBC_Scene->B_Locations[Count]->This_Object_ID);
 			fprintf(WriteFile, "%s%s\n", "Name=", App->SBC_Scene->B_Locations[Count]->Name);
 
 			x = App->SBC_Scene->B_Locations[Count]->Current_Position.x;
@@ -2065,7 +2065,7 @@ bool SB_Project::Load_Project_Player()
 
 
 		Int_Tag = App->Cl_Ini->GetInt(buff, "Locatoin_ID", 0, 10);
-		App->SBC_Scene->B_Locations[Count]->Location_ID = Int_Tag;
+		App->SBC_Scene->B_Locations[Count]->This_Object_ID = Int_Tag;
 
 		App->Cl_Ini->GetString(buff, "Name", chr_Tag1, MAX_PATH);
 

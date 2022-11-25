@@ -26,8 +26,8 @@ distribution.
 
 Base_Locations::Base_Locations()
 {
+	This_Object_ID = 0;
 	Deleted = 0; // Internal
-	Location_ID = 0;  // Unique Number
 	Name[0] = 0;
 
 	Current_Position.ZERO;

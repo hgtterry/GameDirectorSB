@@ -47,7 +47,9 @@ void SB_Locations::Start_Locations_Dlg()
 	Toggle_FreeCam_Flag = App->SBC_TopTabs->Toggle_FreeCam_Flag;
 
 	Locations_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROJECTION, App->Fdlg, (DLGPROC)Locations_Proc);
+	Init_Bmps_PlayerLocations();
 }
+
 // *************************************************************************
 // *			Location_Proc:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
@@ -70,6 +72,7 @@ LRESULT CALLBACK SB_Locations::Locations_Proc(HWND hDlg, UINT message, WPARAM wP
 		SendDlgItemMessage(hDlg, IDC_BTSAVE_LOCATION_PLAYER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BTEDITT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BTDELETE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SendDlgItemMessage(hDlg, IDC_LSTLOCATIONS, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
@@ -160,6 +163,13 @@ LRESULT CALLBACK SB_Locations::Locations_Proc(HWND hDlg, UINT message, WPARAM wP
 		}
 		
 		if (some_item->idFrom == IDC_BT_LOC_PLAYERTOCAMERA && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_PLAYERLOCATIONS_INFO && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
@@ -382,13 +392,33 @@ LRESULT CALLBACK SB_Locations::Locations_Proc(HWND hDlg, UINT message, WPARAM wP
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
-			//App->Cl_Dialogs->Location_Dlg_Active = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
 		break;
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *  Init_Bmps_PlayerLocationsLocations:- Terry and Hazel Flanigan 2022   *
+// *************************************************************************
+void SB_Locations::Init_Bmps_PlayerLocations()
+{
+	HWND Temp = GetDlgItem(Locations_Dlg_hWnd, IDC_PLAYERLOCATIONS_INFO);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_InfoSmall_Bmp);
+
+	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
+
+	Temp = GetDlgItem(Locations_Dlg_hWnd, IDC_PLAYERLOCATIONS_INFO);
+	TOOLINFO ti2 = { 0 };
+	ti2.cbSize = sizeof(ti2);
+	ti2.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti2.uId = (UINT_PTR)Temp;
+	ti2.lpszText = "Show Help File";
+	ti2.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti2);
+
 }
 
 // *************************************************************************
@@ -402,7 +432,7 @@ void SB_Locations::Save_Location(char* name)
 
 	App->SBC_Scene->B_Locations[Count]->Deleted = 0;
 
-	App->SBC_Scene->B_Locations[Count]->Location_ID = App->SBC_Scene->Locations_ID_Counter;
+	App->SBC_Scene->B_Locations[Count]->This_Object_ID = App->SBC_Scene->Locations_ID_Counter;
 
 	strcpy(App->SBC_Scene->B_Locations[Count]->Name, name);
 	App->SBC_Scene->B_Locations[Count]->Current_Position = App->SBC_Scene->B_Player[0]->Player_Node->getPosition();

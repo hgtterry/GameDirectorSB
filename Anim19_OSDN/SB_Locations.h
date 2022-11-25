@@ -40,6 +40,8 @@ protected:
 
 	void Set_To_PlayerView();
 
+	void Init_Bmps_PlayerLocations();
+
 	HWND Locations_Dlg_hWnd;
 
 	bool Toggle_Player_Flag;

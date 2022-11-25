@@ -1079,7 +1079,7 @@ bool SB_Build::Build_Player_Data()
 			strcat(buff, "]");
 			fprintf(WriteFile, "%s\n", buff);
 
-			fprintf(WriteFile, "%s%i\n", "Locatoin_ID=", App->SBC_Scene->B_Locations[Count]->Location_ID);
+			fprintf(WriteFile, "%s%i\n", "Locatoin_ID=", App->SBC_Scene->B_Locations[Count]->This_Object_ID);
 			fprintf(WriteFile, "%s%s\n", "Name=", App->SBC_Scene->B_Locations[Count]->Name);
 
 			x = App->SBC_Scene->B_Locations[Count]->Current_Position.x;

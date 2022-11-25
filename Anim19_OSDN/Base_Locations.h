@@ -28,8 +28,9 @@ public:
 	Base_Locations();
 	~Base_Locations();
 
+	int This_Object_ID;  // Unique Number
+
 	bool Deleted; // Internal
-	int Location_ID;  // Unique Number
 	char Name[255];
 	Ogre::Vector3 Current_Position;
 	btVector3 Physics_Position;
