@@ -38,6 +38,8 @@ protected:
 
 	void Goto_Location(int Index);
 
+	void Set_To_PlayerView();
+
 	HWND Locations_Dlg_hWnd;
 
 	bool Toggle_Player_Flag;

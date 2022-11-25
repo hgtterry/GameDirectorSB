@@ -68,6 +68,10 @@ LRESULT CALLBACK SB_Locations::Locations_Proc(HWND hDlg, UINT message, WPARAM wP
 		SendDlgItemMessage(hDlg, IDC_BT_LOC_PLAYER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_LOC_FREECAM, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_LOC_PLAYERTOCAMERA, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BTMOVE_PLAYER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BTSAVE_LOCATION_PLAYER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BTEDITT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BTDELETE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SendDlgItemMessage(hDlg, IDC_LSTLOCATIONS, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
@@ -181,32 +185,7 @@ LRESULT CALLBACK SB_Locations::Locations_Proc(HWND hDlg, UINT message, WPARAM wP
 		// --------------------- 1st Player
 		if (LOWORD(wParam) == IDC_BT_LOC_PLAYER)
 		{
-			if (App->SBC_Scene->Player_Added == 1)
-			{
-				App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamFirst;
-				App->SBC_TopTabs->Toggle_FirstCam_Flag = 1;
-				App->SBC_TopTabs->Toggle_FreeCam_Flag = 0;
-
-				App->SBC_Locations->Toggle_Player_Flag = 1;
-				App->SBC_Locations->Toggle_FreeCam_Flag = 0;
-
-				App->SBC_Scene->B_Player[0]->Player_Node->setVisible(false);
-
-				int f = App->SBC_Scene->B_Player[0]->Phys_Body->getCollisionFlags();
-				App->SBC_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f | (1 << 5));
-
-				App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 0;
-				App->Cl19_Ogre->RenderFrame();
-				App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 1;
-
-				App->Cl19_Ogre->OgreListener->GD_Run_Physics = 1;
-
-				RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-				RedrawWindow(App->SBC_Locations->Locations_Dlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-
-				EnableWindow(GetDlgItem(hDlg, IDC_BT_LOC_PLAYERTOCAMERA), 0);
-			}
-
+			App->SBC_Locations->Set_To_PlayerView();
 			return TRUE;
 
 		}
@@ -300,7 +279,7 @@ LRESULT CALLBACK SB_Locations::Locations_Proc(HWND hDlg, UINT message, WPARAM wP
 			return TRUE;
 		}
 
-		// Delete Location
+		// --------------------------------------- Delete Location
 		if (LOWORD(wParam) == IDC_BTDELETE)
 		{
 
@@ -321,7 +300,7 @@ LRESULT CALLBACK SB_Locations::Locations_Proc(HWND hDlg, UINT message, WPARAM wP
 			strcat(tag, App->SBC_Scene->B_Locations[Location_Index]->Name);
 
 			App->SBC_Dialogs->YesNo(tag, "Are you sure", 1);
-			if (App->Cl_Dialogs->Canceled == 0)
+			if (App->SBC_Dialogs->Canceled == 0)
 			{
 				App->SBC_Scene->B_Locations[Location_Index]->Deleted = 1;
 				SendDlgItemMessage(hDlg, IDC_LSTLOCATIONS, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
@@ -335,11 +314,14 @@ LRESULT CALLBACK SB_Locations::Locations_Proc(HWND hDlg, UINT message, WPARAM wP
 
 					Count++;
 				}
+
+				App->SBC_Scene->Scene_Modified = 1;
 			}
 
 			//SendDlgItemMessage(hDlg, IDC_LSTLOCATIONS, LB_SETCURSEL, (WPARAM)0, (LPARAM)(LPCTSTR)0);
 			return TRUE;
 		}
+
 		if (LOWORD(wParam) == IDC_BTMOVE_PLAYER)
 		{
 			int Index = App->Cl_Dialogs->ListBox_Index;
@@ -352,7 +334,7 @@ LRESULT CALLBACK SB_Locations::Locations_Proc(HWND hDlg, UINT message, WPARAM wP
 			{
 				App->SBC_Locations->Goto_Location(Location_Index);
 
-				HWND temp = GetDlgItem(hDlg, IDC_CKMOVECAM);
+				/*HWND temp = GetDlgItem(hDlg, IDC_CKMOVECAM);
 				int test = SendMessage(temp, BM_GETCHECK, 0, 0);
 				if (test == BST_CHECKED)
 				{
@@ -360,7 +342,7 @@ LRESULT CALLBACK SB_Locations::Locations_Proc(HWND hDlg, UINT message, WPARAM wP
 					Root::getSingletonPtr()->renderOneFrame();
 					Root::getSingletonPtr()->renderOneFrame();
 					App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
-				}
+				}*/
 			}
 			else
 			{
@@ -452,8 +434,41 @@ void SB_Locations::Save_Location(char* name)
 void SB_Locations::Goto_Location(int Index)
 {
 	App->SBC_Scene->B_Player[0]->Player_Node->setPosition(App->SBC_Scene->B_Locations[Index]->Current_Position);
-
 	App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(App->SBC_Scene->B_Locations[Index]->Physics_Position);
-
 	App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->SBC_Scene->B_Locations[Index]->Physics_Rotation);
+
+	Set_To_PlayerView();
+
+}
+
+// *************************************************************************
+// *	  		Set_To_PlayerView:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+void SB_Locations::Set_To_PlayerView()
+{
+	if (App->SBC_Scene->Player_Added == 1)
+	{
+		App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamFirst;
+		App->SBC_TopTabs->Toggle_FirstCam_Flag = 1;
+		App->SBC_TopTabs->Toggle_FreeCam_Flag = 0;
+
+		App->SBC_Locations->Toggle_Player_Flag = 1;
+		App->SBC_Locations->Toggle_FreeCam_Flag = 0;
+
+		App->SBC_Scene->B_Player[0]->Player_Node->setVisible(false);
+
+		int f = App->SBC_Scene->B_Player[0]->Phys_Body->getCollisionFlags();
+		App->SBC_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f | (1 << 5));
+
+		App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 0;
+		App->Cl19_Ogre->RenderFrame();
+		App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 1;
+
+		App->Cl19_Ogre->OgreListener->GD_Run_Physics = 1;
+
+		RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+		RedrawWindow(App->SBC_Locations->Locations_Dlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+		EnableWindow(GetDlgItem(Locations_Dlg_hWnd, IDC_BT_LOC_PLAYERTOCAMERA), 0);
+	}
 }
