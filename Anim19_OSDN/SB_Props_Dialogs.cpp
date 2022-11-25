@@ -319,6 +319,8 @@ bool SB_Props_Dialogs::Start_Dialog_PhysicsReset()
 {
 
 	PhysicsReset_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_PHYSRESET, App->SBC_Properties->Properties_Dlg_hWnd, (DLGPROC)Dialog_PhysicsReset_Proc);
+	
+	Init_Bmps_PhysicsReset();
 	Hide_Physics_Reset_Dlg(0);
 
 	return 1;
@@ -400,6 +402,34 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_PhysicsReset_Proc(HWND hDlg, UINT mess
 
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *		Init_Bmps_PhysicsReset:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+void SB_Props_Dialogs::Init_Bmps_PhysicsReset()
+{
+	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
+
+	SendMessage(hTooltip_TB_2, TTM_SETMAXTIPWIDTH, 0, 150);
+
+	HWND Temp = GetDlgItem(PhysicsReset_Dlg_hWnd, IDC_BT_TEST_ENTITY);
+	TOOLINFO ti1 = { 0 };
+	ti1.cbSize = sizeof(ti1);
+	ti1.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti1.uId = (UINT_PTR)Temp;
+	ti1.lpszText = "Test this Entity";
+	ti1.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti1);
+
+	Temp = GetDlgItem(PhysicsReset_Dlg_hWnd, IDC_BT_PHYSRESET);
+	TOOLINFO ti2 = { 0 };
+	ti2.cbSize = sizeof(ti2);
+	ti2.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti2.uId = (UINT_PTR)Temp;
+	ti2.lpszText = "Reset just this Entity";
+	ti2.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti2);
 }
 
 // *************************************************************************
@@ -810,7 +840,7 @@ LRESULT CALLBACK SB_Props_Dialogs::Details_Goto_Proc(HWND hDlg, UINT message, WP
 
 	case WM_CTLCOLORDLG:
 	{
-		return (LONG)App->Brush_Panel;
+		return (LONG)App->DialogBackGround;
 	}
 
 	case WM_NOTIFY:

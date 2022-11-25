@@ -92,50 +92,8 @@ void SB_Dimensions::ImGui_Dimensions(void)
 	else
 	{
 		int Index = App->SBC_Properties->Current_Selected_Object;
-		//App->CL_Ogre->RenderListener->Show_Crosshair = 1;
-	
-
-		if (Show_Position == 1)
-		{
-			if (App->SBC_Properties->Edit_Category == Enums::Edit_Area)
-			{
-				ImGui_Position_Area();
-			}
-			else
-			{
-				ImGui_Position();
-			}
-		}
-
-		if (Show_Scale == 1)
-		{
-			if (App->SBC_Properties->Edit_Category == Enums::Edit_Area)
-			{
-				ImGui_Scale_Area();
-			}
-			else
-			{
-				ImGui_Scale();
-			}
-		}
-
-		if (Show_Rotation == 1)
-		{
-			if (App->SBC_Properties->Edit_Category == Enums::Edit_Area)
-			{
-				ImGui_Rotation_Area();
-			}
-			else
-			{
-				ImGui_Rotation();
-			}
-		}
 		
-		ImGui::Separator();
-		ImGui::Spacing();
-
 		//--------------------------------------- Position
-
 		style->Colors[ImGuiCol_Button] = ImVec4(0.8f, 0.8f, 0.8f, 1);
 
 		if (Show_Position == 1)
@@ -199,8 +157,46 @@ void SB_Dimensions::ImGui_Dimensions(void)
 		}
 
 		style->Colors[ImGuiCol_Button] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
+	
 
-		ImGui::SameLine(0.0f);
+		if (Show_Position == 1)
+		{
+			if (App->SBC_Properties->Edit_Category == Enums::Edit_Area)
+			{
+				ImGui_Position_Area();
+			}
+			else
+			{
+				ImGui_Position();
+			}
+		}
+
+		if (Show_Scale == 1)
+		{
+			if (App->SBC_Properties->Edit_Category == Enums::Edit_Area)
+			{
+				ImGui_Scale_Area();
+			}
+			else
+			{
+				ImGui_Scale();
+			}
+		}
+
+		if (Show_Rotation == 1)
+		{
+			if (App->SBC_Properties->Edit_Category == Enums::Edit_Area)
+			{
+				ImGui_Rotation_Area();
+			}
+			else
+			{
+				ImGui_Rotation();
+			}
+		}
+		
+		ImGui::Separator();
+		ImGui::Spacing();
 
 		if (ImGui::Button("Close"))
 		{

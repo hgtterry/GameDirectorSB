@@ -47,6 +47,7 @@ public:
 	void Init_Bmps_Debug();
 	void Init_Bmps_Dimensions();
 	void Init_Bmps_DetailsGo();
+	void Init_Bmps_PhysicsReset();
 
 	bool Show_Area_Physics_Debug;
 
