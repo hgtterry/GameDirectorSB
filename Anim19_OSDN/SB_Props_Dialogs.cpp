@@ -279,6 +279,8 @@ void SB_Props_Dialogs::Init_Bmps_Dimensions()
 {
 	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
 
+	SendMessage(hTooltip_TB_2, TTM_SETMAXTIPWIDTH, 0, 150);
+
 	HWND Temp = GetDlgItem(Dimensions_Dlg_hWnd, IDC_BT_POSITION);
 	TOOLINFO ti1 = { 0 };
 	ti1.cbSize = sizeof(ti1);
@@ -302,7 +304,7 @@ void SB_Props_Dialogs::Init_Bmps_Dimensions()
 	ti3.cbSize = sizeof(ti3);
 	ti3.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
 	ti3.uId = (UINT_PTR)Temp;
-	ti3.lpszText = "Start the Dimensions Dialog in \n Scale Mode";
+	ti3.lpszText = "Start the Dimensions Dialog in Scale Mode";
 	ti3.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti3);
 }
