@@ -185,6 +185,7 @@ LRESULT CALLBACK SB_Locations::Locations_Proc(HWND hDlg, UINT message, WPARAM wP
 		if (LOWORD(wParam) == IDC_BT_LOC_PLAYER)
 		{
 			App->SBC_Locations->Set_To_PlayerView();
+
 			return TRUE;
 
 		}
@@ -192,28 +193,7 @@ LRESULT CALLBACK SB_Locations::Locations_Proc(HWND hDlg, UINT message, WPARAM wP
 		// --------------------- FreeCam
 		if (LOWORD(wParam) == IDC_BT_LOC_FREECAM)
 		{
-			if (App->SBC_Scene->Scene_Loaded == 1)
-			{
-				App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
-				App->SBC_TopTabs->Toggle_FirstCam_Flag = 0;
-				App->SBC_TopTabs->Toggle_FreeCam_Flag = 1;
-
-				App->SBC_Locations->Toggle_FreeCam_Flag = 1;
-				App->SBC_Locations->Toggle_Player_Flag = 0;
-
-				int f = App->SBC_Scene->B_Player[0]->Phys_Body->getCollisionFlags();
-				App->SBC_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f & (~(1 << 5)));
-
-				App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 0;
-				App->Cl19_Ogre->RenderFrame();
-				App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 1;
-
-				RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-				RedrawWindow(App->SBC_Locations->Locations_Dlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-
-				EnableWindow(GetDlgItem(hDlg, IDC_BT_LOC_PLAYERTOCAMERA), 1);
-				
-			}
+			App->SBC_Locations->Set_To_FreeCam();
 
 			return TRUE;
 		}
@@ -223,6 +203,8 @@ LRESULT CALLBACK SB_Locations::Locations_Proc(HWND hDlg, UINT message, WPARAM wP
 		{
 			if (App->SBC_Scene->Scene_Loaded == 1)
 			{
+				App->SBC_Physics->Physics_On(false);
+
 				Ogre::Vector3 Pos = App->Cl19_Ogre->mCamera->getPosition();
 				Ogre::Quaternion Quat = App->Cl19_Ogre->mCamera->getOrientation();
 
@@ -498,11 +480,40 @@ void SB_Locations::Set_To_PlayerView()
 		App->Cl19_Ogre->RenderFrame();
 		App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 1;
 
-		App->Cl19_Ogre->OgreListener->GD_Run_Physics = 1;
-
+		App->SBC_Physics->Physics_On(true);
+		
 		RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 		RedrawWindow(App->SBC_Locations->Locations_Dlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 		EnableWindow(GetDlgItem(Locations_Dlg_hWnd, IDC_BT_LOC_PLAYERTOCAMERA), 0);
+	}
+}
+
+// *************************************************************************
+// *	  		Set_To_FreeCam:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void SB_Locations::Set_To_FreeCam()
+{
+	if (App->SBC_Scene->Scene_Loaded == 1)
+	{
+		App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
+		App->SBC_TopTabs->Toggle_FirstCam_Flag = 0;
+		App->SBC_TopTabs->Toggle_FreeCam_Flag = 1;
+
+		App->SBC_Locations->Toggle_FreeCam_Flag = 1;
+		App->SBC_Locations->Toggle_Player_Flag = 0;
+
+		int f = App->SBC_Scene->B_Player[0]->Phys_Body->getCollisionFlags();
+		App->SBC_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f & (~(1 << 5)));
+
+		App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 0;
+		App->Cl19_Ogre->RenderFrame();
+		App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 1;
+
+		RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+		RedrawWindow(App->SBC_Locations->Locations_Dlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+		EnableWindow(GetDlgItem(Locations_Dlg_hWnd, IDC_BT_LOC_PLAYERTOCAMERA), 1);
+
 	}
 }

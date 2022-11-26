@@ -385,6 +385,16 @@ void SB_Physics::Enable_Physics(bool Enable)
 }
 
 // *************************************************************************
+// *			 Physics_On:- Terry and Hazel Flanigan 2022				   *
+// *************************************************************************
+void SB_Physics::Physics_On(bool Enable)
+{
+	App->Cl19_Ogre->OgreListener->GD_Run_Physics = Enable;
+	RedrawWindow(App->Physics_Console_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+}
+
+
+// *************************************************************************
 // *	  		Reset_Physics:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 void SB_Physics::Reset_Physics(void)

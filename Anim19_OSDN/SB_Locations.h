@@ -39,6 +39,7 @@ protected:
 	void Goto_Location(int Index);
 
 	void Set_To_PlayerView();
+	void Set_To_FreeCam();
 
 	void Init_Bmps_PlayerLocations();
 
