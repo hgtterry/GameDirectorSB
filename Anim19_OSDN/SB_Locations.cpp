@@ -223,7 +223,21 @@ LRESULT CALLBACK SB_Locations::Locations_Proc(HWND hDlg, UINT message, WPARAM wP
 		{
 			if (App->SBC_Scene->Scene_Loaded == 1)
 			{
-				Debug
+				Ogre::Vector3 Pos = App->Cl19_Ogre->mCamera->getPosition();
+
+				App->SBC_Scene->B_Player[0]->Player_Node->pitch(Ogre::Degree(180));
+				Ogre::Quaternion Quat = App->SBC_Scene->B_Player[0]->Player_Node->getOrientation();
+
+				//App->SBC_Scene->B_Player[0]->Player_Node->getPosition()
+
+				float w = Quat.w;
+				float x = Quat.x;
+				float y = Quat.y;
+				float z = Quat.z;
+
+				//App->SBC_Scene->B_Player[0]->Player_Node->setPosition(Pos);
+				App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(btVector3(Pos.x, Pos.y, Pos.z));
+				App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
 			}
 
 			return TRUE;
