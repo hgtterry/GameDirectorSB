@@ -224,20 +224,25 @@ LRESULT CALLBACK SB_Locations::Locations_Proc(HWND hDlg, UINT message, WPARAM wP
 			if (App->SBC_Scene->Scene_Loaded == 1)
 			{
 				Ogre::Vector3 Pos = App->Cl19_Ogre->mCamera->getPosition();
+				Ogre::Quaternion Quat = App->Cl19_Ogre->mCamera->getOrientation();
 
+				App->SBC_Scene->B_Player[0]->Player_Node->setPosition(Pos);
+				App->SBC_Scene->B_Player[0]->Player_Node->setOrientation(Quat);
+
+				App->SBC_Scene->B_Player[0]->Player_Node->yaw(Ogre::Degree(180));
 				App->SBC_Scene->B_Player[0]->Player_Node->pitch(Ogre::Degree(180));
-				Ogre::Quaternion Quat = App->SBC_Scene->B_Player[0]->Player_Node->getOrientation();
 
-				//App->SBC_Scene->B_Player[0]->Player_Node->getPosition()
+				Ogre::Vector3 NewPos = App->SBC_Scene->B_Player[0]->Player_Node->getPosition();
+				Ogre::Quaternion NewQuat = App->SBC_Scene->B_Player[0]->Player_Node->getOrientation();
 
-				float w = Quat.w;
-				float x = Quat.x;
-				float y = Quat.y;
-				float z = Quat.z;
+				float w = NewQuat.w;
+				float x = NewQuat.x;
+				float y = NewQuat.y;
+				float z = NewQuat.z;
 
-				//App->SBC_Scene->B_Player[0]->Player_Node->setPosition(Pos);
-				App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(btVector3(Pos.x, Pos.y, Pos.z));
+				App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(btVector3(NewPos.x, NewPos.y, NewPos.z));
 				App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
+
 			}
 
 			return TRUE;
