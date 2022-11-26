@@ -510,5 +510,21 @@ Tele_Mesh_Position=-104.661072,-39.600002,0.354004
 Tele_Physics_Position=-104.661072,-39.600002,0.354004
 Tele_Physics_Rotation=0.000000,0.710346,0.000000,-0.703853
  
+[Object_23]
+Mesh_Name=Object_23
+Mesh_File=GDPortal.mesh
+Mesh_Resource_Path=
+Material_File=GDPortal.material
+Object_ID=24
+Object_Type=2
+Object_Shape=1
+Object_Usage=1
+Mesh_Pos=-190.608856,-43.600002,-0.031178
+Mesh_Scale=0.110001,0.110001,0.110001
+Mesh_Rot=0.000000,-90.000000,0.000000
+Mesh_Quat=0.707103,-0.000000,-0.707103,0.000000
+Physics_Quat=0.707103,-0.000000,-0.707103,0.000000
+Dimensions_Lock=0
+ 
 [Counters]
-Objects_Count=23
+Objects_Count=24
