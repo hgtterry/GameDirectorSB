@@ -1011,6 +1011,12 @@ LRESULT CALLBACK SB_TopTabs::Locations_TB_Proc(HWND hDlg, UINT message, WPARAM w
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_BT_INFO_LOCATIONS)
+		{
+			App->Cl_Utilities->OpenHTML("Help\\LocationsTab.html");
+			return TRUE;
+		}
+
 		return FALSE;
 	}
 	}

@@ -387,7 +387,7 @@ LRESULT CALLBACK SB_Locations::Locations_Proc(HWND hDlg, UINT message, WPARAM wP
 
 		if (LOWORD(wParam) == IDC_PLAYERLOCATIONS_INFO)
 		{
-			Debug
+			App->Cl_Utilities->OpenHTML("Help\\PlayerLocations.html");
 			return TRUE;
 		}
 
