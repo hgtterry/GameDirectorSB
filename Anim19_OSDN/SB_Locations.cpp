@@ -206,10 +206,13 @@ LRESULT CALLBACK SB_Locations::Locations_Proc(HWND hDlg, UINT message, WPARAM wP
 				App->SBC_Physics->Physics_On(false);
 
 				Ogre::Vector3 Pos = App->Cl19_Ogre->mCamera->getPosition();
-				Ogre::Quaternion Quat = App->Cl19_Ogre->mCamera->getOrientation();
+				Ogre::Radian Yaw = App->Cl19_Ogre->mCamera->getOrientation().getYaw();
+				Ogre::Radian Roll = App->Cl19_Ogre->mCamera->getOrientation().getRoll();
 
+				App->SBC_Scene->B_Player[0]->Player_Node->resetToInitialState();
 				App->SBC_Scene->B_Player[0]->Player_Node->setPosition(Pos);
-				App->SBC_Scene->B_Player[0]->Player_Node->setOrientation(Quat);
+				App->SBC_Scene->B_Player[0]->Player_Node->yaw(Yaw);
+				App->SBC_Scene->B_Player[0]->Player_Node->roll(Roll);
 
 				App->SBC_Scene->B_Player[0]->Player_Node->yaw(Ogre::Degree(180));
 				App->SBC_Scene->B_Player[0]->Player_Node->pitch(Ogre::Degree(180));

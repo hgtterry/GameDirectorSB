@@ -6,8 +6,8 @@ Player_Count=1
  
 [Player_0]
 Player_Name=Player_1
-Start_Position=-104.661072,-39.600002,0.354004
-Start_Rotation=0.000000,0.710346,0.000000,-0.703853
+Start_Position=24.408169,-47.100010,399.449432
+Start_Rotation=0.000000,0.999989,0.000000,0.004749
 Shape=Capsule
 Mass=1.000000
 Radius=4.400000
@@ -17,7 +17,7 @@ Cam_Height=16.000000
 Turn_Rate=0.000004
  
 [Locations]
-Locations_Count=2
+Locations_Count=3
  
 [Location_0]
 Locatoin_ID=0
@@ -32,3 +32,10 @@ Name=By_The_Lift
 Mesh_Position=160.343475,-39.600010,91.441010
 Physics_Position=160.343475,-39.600010,91.441010
 Physics_Rotation=0.000000,-0.022112,0.000000,0.999756
+ 
+[Location_2]
+Locatoin_ID=0
+Name=Area_2
+Mesh_Position=24.408169,-47.100010,399.449432
+Physics_Position=24.408169,-47.100010,399.449432
+Physics_Rotation=0.000000,0.999989,0.000000,0.004749

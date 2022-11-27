@@ -116,7 +116,6 @@ void SB_Com_Area::Add_Aera_To_Project(int Index, char* FileName, char* Resource_
 	char Mesh_File[MAX_PATH];
 	strcpy(Mesh_File, FileName);
 
-	//App->SBC_Scene->B_Area[Index] = new Base_Area();
 	Base_Area* Area = App->SBC_Scene->B_Area[Index];
 
 	strcpy_s(B_Name, "Area_");
@@ -125,7 +124,7 @@ void SB_Com_Area::Add_Aera_To_Project(int Index, char* FileName, char* Resource_
 	strcpy(App->SBC_Scene->B_Area[Index]->Area_Name, B_Name);
 
 	strcpy(Area->Area_FileName, FileName);
-	strcpy(Area->Area_Resource_Path, Resource_Location); // with back slash
+	strcpy(Area->Area_Resource_Path, Resource_Location); 
 
 	Area->Area_Ent = App->Cl19_Ogre->mSceneMgr->createEntity(App->SBC_Scene->B_Area[Index]->Area_Name, Mesh_File, App->SBC_Scene->Project_Resource_Group);
 	Area->Area_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();

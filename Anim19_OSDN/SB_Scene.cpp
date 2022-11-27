@@ -64,9 +64,12 @@ SB_Scene::SB_Scene()
 	GameMode_Running_Flag = 0;
 	FullScreenMode_Flag = 0;
 
-	B_Player[100] = { nullptr };
-	B_Area[100] = { nullptr };
-	B_Area[0] = nullptr;
+	B_Object[100] = { nullptr };
+	B_Player[20] = { nullptr };
+	B_Area[20] = { nullptr };
+	B_Camera[20] = { nullptr };
+	B_Locations[20] = { nullptr };
+	B_Counter[20] = { nullptr };
 }
 
 
@@ -76,7 +79,32 @@ SB_Scene::~SB_Scene()
 }
 
 // *************************************************************************
-// *						Reset_Class Terry Flanigan					   *
+// *			Zero_Pointers:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void SB_Scene::Zero_Pointers()
+{
+	int Count = 0;
+	while (Count < 100)
+	{
+		B_Object[Count] = NULL;
+		Count++;
+	}
+
+	Count = 0;
+	while (Count < 20)
+	{
+		B_Player[Count] = NULL;
+		B_Area[Count] = NULL;
+		B_Camera[Count] = NULL;
+		B_Locations[Count] = NULL;
+		B_Counter[Count] = NULL;
+
+		Count++;
+	}
+}
+
+// *************************************************************************
+// *			Reset_Class:- Terry and Hazel Flanigan 2022				   *
 // *************************************************************************
 void SB_Scene::Reset_Class()
 {
@@ -89,7 +117,7 @@ void SB_Scene::Reset_Class()
 	}
 
 	int Count = 0; // Remove Ogre Objects
-	while (Count < Object_Count) 
+	while (Count < Object_Count)
 	{
 		if (B_Object[Count]->Object_Node && B_Object[Count]->Object_Ent)
 		{
@@ -139,7 +167,7 @@ void SB_Scene::Reset_Class()
 }
 
 // *************************************************************************
-// *						Clear_Level Terry Flanigan					   *
+// *			Clear_Level:- Terry and Hazel Flanigan 2022				   *
 // *************************************************************************
 bool SB_Scene::Clear_Level()
 {
@@ -189,7 +217,7 @@ bool SB_Scene::Clear_Level()
 }
 
 // *************************************************************************
-// *					Create_Resources_Group	Terry Bernie 		 	   *
+// *		Create_Resources_Group:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
 bool SB_Scene::Create_Resources_Group()
 {
@@ -203,7 +231,7 @@ bool SB_Scene::Create_Resources_Group()
 }
 
 // *************************************************************************
-// *					Delete_Resources_Group	Terry Bernie 		 	   *
+// *		Delete_Resources_Group:- Terry and Hazel Flanigan 2022 		   *
 // *************************************************************************
 bool SB_Scene::Delete_Resources_Group()
 {

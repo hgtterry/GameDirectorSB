@@ -62,6 +62,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	_getcwd(App->EquityDirecory_FullPath, 1024);
 
 	App->InitApp();
+	App->SBC_Scene->Zero_Pointers();
 
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);

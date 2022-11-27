@@ -6,11 +6,11 @@ Project_Name=First_Project
 Level_Name=First_Level
  
 [Options]
-Areas_Count=1
-Areas_ID_Count=1
+Areas_Count=2
+Areas_ID_Count=2
 Players_Count=1
 Cameras_Count=1
-Objects_Count=24
-Objects_ID_Count=25
+Objects_Count=25
+Objects_ID_Count=26
 Counters_Count=2
 Counters_ID_Count=3

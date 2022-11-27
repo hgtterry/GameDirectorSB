@@ -880,8 +880,8 @@ bool SB_Build::Build_Areas_Data()
 		fprintf(WriteFile, "%s%s\n", "Area_Path_File=", App->SBC_Scene->B_Area[Count]->Area_Path_And_FileName);
 		fprintf(WriteFile, "%s%s\n", "Area_Resource_Path=", App->SBC_Scene->B_Area[Count]->Area_Resource_Path);
 		fprintf(WriteFile, "%s%s\n", "Material_File=", App->SBC_Scene->B_Area[Count]->Material_File);
+		fprintf(WriteFile, "%s%i\n", "Area_Object_ID=", App->SBC_Scene->B_Area[Count]->This_Object_ID);
 
-		fprintf(WriteFile, "%s\n", "[Position]");
 		x = App->SBC_Scene->B_Area[Count]->Area_Node->getPosition().x;
 		y = App->SBC_Scene->B_Area[Count]->Area_Node->getPosition().y;
 		z = App->SBC_Scene->B_Area[Count]->Area_Node->getPosition().z;
@@ -890,8 +890,6 @@ bool SB_Build::Build_Areas_Data()
 
 
 		// ------------------------------------ Environment
-
-		fprintf(WriteFile, "%s\n", "[Environment]");
 
 		//--------------- Sound
 		fprintf(WriteFile, "%s%s\n", "Sound_File=", App->SBC_Scene->B_Area[0]->S_Environment[0]->Sound_File);
@@ -943,6 +941,7 @@ bool SB_Build::Build_Areas_Data()
 		fprintf(WriteFile, "%s%f\n", "Fog_End=", App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_End);
 		fprintf(WriteFile, "%s%f\n", "Fog_Density=", App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_Density);
 
+		fprintf(WriteFile, "%s\n", " ");
 		Count++;
 	}
 
