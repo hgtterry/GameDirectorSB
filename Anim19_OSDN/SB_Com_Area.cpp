@@ -300,44 +300,44 @@ btBvhTriangleMeshShape* SB_Com_Area::create_Area_Trimesh_New(int Index, Base_Are
 void SB_Com_Area::Set_Environment_Defaults(int Index)
 {
 	//----------------------- Sound
-	strcpy(App->SBC_Scene->B_Area[0]->S_Environment[0]->Sound_File, "The_Sun.ogg");
-	App->SBC_Scene->B_Area[0]->S_Environment[0]->SndFile = NULL;
-	App->SBC_Scene->B_Area[0]->S_Environment[0]->Play = 1;
-	App->SBC_Scene->B_Area[0]->S_Environment[0]->Loop = 1;
-	App->SBC_Scene->B_Area[0]->S_Environment[0]->SndVolume = 0.5;
+	strcpy(App->SBC_Scene->B_Area[Index]->S_Environment[0]->Sound_File, "The_Sun.ogg");
+	App->SBC_Scene->B_Area[Index]->S_Environment[0]->SndFile = NULL;
+	App->SBC_Scene->B_Area[Index]->S_Environment[0]->Play = 1;
+	App->SBC_Scene->B_Area[Index]->S_Environment[0]->Loop = 1;
+	App->SBC_Scene->B_Area[Index]->S_Environment[0]->SndVolume = 0.5;
 
 	//----------------------- Light
-	App->SBC_Scene->B_Area[0]->S_Environment[0]->AmbientColour.x = 1;
-	App->SBC_Scene->B_Area[0]->S_Environment[0]->AmbientColour.y = 1;
-	App->SBC_Scene->B_Area[0]->S_Environment[0]->AmbientColour.z = 1;
+	App->SBC_Scene->B_Area[Index]->S_Environment[0]->AmbientColour.x = 1;
+	App->SBC_Scene->B_Area[Index]->S_Environment[0]->AmbientColour.y = 1;
+	App->SBC_Scene->B_Area[Index]->S_Environment[0]->AmbientColour.z = 1;
 
-	App->SBC_Scene->B_Area[0]->S_Environment[0]->DiffuseColour.x = 0;
-	App->SBC_Scene->B_Area[0]->S_Environment[0]->DiffuseColour.y = 0;
-	App->SBC_Scene->B_Area[0]->S_Environment[0]->DiffuseColour.z = 0;
+	App->SBC_Scene->B_Area[Index]->S_Environment[0]->DiffuseColour.x = 0;
+	App->SBC_Scene->B_Area[Index]->S_Environment[0]->DiffuseColour.y = 0;
+	App->SBC_Scene->B_Area[Index]->S_Environment[0]->DiffuseColour.z = 0;
 
-	App->SBC_Scene->B_Area[0]->S_Environment[0]->SpecularColour.x = 0;
-	App->SBC_Scene->B_Area[0]->S_Environment[0]->SpecularColour.y = 0;
-	App->SBC_Scene->B_Area[0]->S_Environment[0]->SpecularColour.z = 0;
+	App->SBC_Scene->B_Area[Index]->S_Environment[0]->SpecularColour.x = 0;
+	App->SBC_Scene->B_Area[Index]->S_Environment[0]->SpecularColour.y = 0;
+	App->SBC_Scene->B_Area[Index]->S_Environment[0]->SpecularColour.z = 0;
 
-	App->SBC_Scene->B_Area[0]->S_Environment[0]->Light_Position.x = 0;
-	App->SBC_Scene->B_Area[0]->S_Environment[0]->Light_Position.y = 0;
-	App->SBC_Scene->B_Area[0]->S_Environment[0]->Light_Position.z = 0;
+	App->SBC_Scene->B_Area[Index]->S_Environment[0]->Light_Position.x = 0;
+	App->SBC_Scene->B_Area[Index]->S_Environment[0]->Light_Position.y = 0;
+	App->SBC_Scene->B_Area[Index]->S_Environment[0]->Light_Position.z = 0;
 
 	// Sky
-	App->SBC_Scene->B_Area[0]->S_Environment[0]->Curvature = 15;
-	App->SBC_Scene->B_Area[0]->S_Environment[0]->Distance = 4000;
-	App->SBC_Scene->B_Area[0]->S_Environment[0]->Enabled = 0;
-	strcpy(App->SBC_Scene->B_Area[0]->S_Environment[0]->Material, "Examples/CloudySky");
-	App->SBC_Scene->B_Area[0]->S_Environment[0]->Tiling = 15;
-	App->SBC_Scene->B_Area[0]->S_Environment[0]->type = 1;
+	App->SBC_Scene->B_Area[Index]->S_Environment[0]->Curvature = 15;
+	App->SBC_Scene->B_Area[Index]->S_Environment[0]->Distance = 4000;
+	App->SBC_Scene->B_Area[Index]->S_Environment[0]->Enabled = 0;
+	strcpy(App->SBC_Scene->B_Area[Index]->S_Environment[0]->Material, "Examples/CloudySky");
+	App->SBC_Scene->B_Area[Index]->S_Environment[0]->Tiling = 15;
+	App->SBC_Scene->B_Area[Index]->S_Environment[0]->type = 1;
 
 	// Fog
-	App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_On = 0;
-	App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_Mode = FOG_LINEAR;
-	App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_Density = 0.001000;
-	App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_Start = 50;
-	App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_End = 300;
-	App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_Colour = Ogre::Vector3(1, 1, 1);
+	App->SBC_Scene->B_Area[Index]->S_Environment[0]->Fog_On = 0;
+	App->SBC_Scene->B_Area[Index]->S_Environment[0]->Fog_Mode = FOG_LINEAR;
+	App->SBC_Scene->B_Area[Index]->S_Environment[0]->Fog_Density = 0.001000;
+	App->SBC_Scene->B_Area[Index]->S_Environment[0]->Fog_Start = 50;
+	App->SBC_Scene->B_Area[Index]->S_Environment[0]->Fog_End = 300;
+	App->SBC_Scene->B_Area[Index]->S_Environment[0]->Fog_Colour = Ogre::Vector3(1, 1, 1);
 }
 
 // *************************************************************************

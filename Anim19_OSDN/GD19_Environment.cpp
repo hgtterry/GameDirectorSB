@@ -45,6 +45,7 @@ void GD19_Environment::Load_Environment(void)
 
 	App->Cl19_Ogre->mSceneMgr->setAmbientLight(ColourValue(x,y,z));
 
+	//App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_On = 1;
 	if (App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_On == 1)
 	{
 		EnableFog(true);
