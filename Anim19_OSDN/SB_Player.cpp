@@ -331,6 +331,9 @@ LRESULT CALLBACK SB_Player::Player_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 				App->SBC_Scene->B_Player[0]->StartPos = Ogre::Vector3(App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().getOrigin());
 				App->SBC_Scene->B_Player[0]->Physics_Rotation = App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().getRotation();
 				
+				App->SBC_Scene->B_Locations[0]->Physics_Position = App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().getOrigin();
+				App->SBC_Scene->B_Locations[0]->Physics_Rotation = App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().getRotation();
+
 				App->SBC_Scene->B_Player[0]->Altered = 1;
 				App->SBC_Scene->Scene_Modified = 1;
 				App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);

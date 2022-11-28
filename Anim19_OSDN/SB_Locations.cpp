@@ -61,9 +61,9 @@ LRESULT CALLBACK SB_Locations::Locations_Proc(HWND hDlg, UINT message, WPARAM wP
 	case WM_INITDIALOG:
 	{
 		App->Cl_Dialogs->ListBox_Index = 0;
-		SendDlgItemMessage(hDlg, IDC_STBANNER, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
-		//App->Cl_World->Store_Location();
 
+		SendDlgItemMessage(hDlg, IDC_STBANNER, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		
 		SendDlgItemMessage(hDlg, IDC_LSTLOCATIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_LOC_PLAYER, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_LOC_FREECAM, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -83,10 +83,16 @@ LRESULT CALLBACK SB_Locations::Locations_Proc(HWND hDlg, UINT message, WPARAM wP
 			{
 				SendDlgItemMessage(hDlg, IDC_LSTLOCATIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)(LPCTSTR)App->SBC_Scene->B_Locations[Count]->Name);
 			}
+
 			Count++;
 		}
 
 		SendDlgItemMessage(hDlg, IDC_LSTLOCATIONS, LB_SETCURSEL, (WPARAM)0, (LPARAM)(LPCTSTR)0);
+
+		if (App->SBC_TopTabs->Toggle_FirstCam_Flag == 1)
+		{
+			EnableWindow(GetDlgItem(hDlg, IDC_BT_LOC_PLAYERTOCAMERA), 0);
+		}
 
 		return TRUE;
 	}
@@ -185,51 +191,20 @@ LRESULT CALLBACK SB_Locations::Locations_Proc(HWND hDlg, UINT message, WPARAM wP
 		if (LOWORD(wParam) == IDC_BT_LOC_PLAYER)
 		{
 			App->SBC_Locations->Set_To_PlayerView();
-
 			return TRUE;
-
 		}
 
 		// --------------------- FreeCam
 		if (LOWORD(wParam) == IDC_BT_LOC_FREECAM)
 		{
 			App->SBC_Locations->Set_To_FreeCam();
-
 			return TRUE;
 		}
 
 		// --------------------- Player To Camera
 		if (LOWORD(wParam) == IDC_BT_LOC_PLAYERTOCAMERA)
 		{
-			if (App->SBC_Scene->Scene_Loaded == 1)
-			{
-				App->SBC_Physics->Physics_On(false);
-
-				Ogre::Vector3 Pos = App->Cl19_Ogre->mCamera->getPosition();
-				Ogre::Radian Yaw = App->Cl19_Ogre->mCamera->getOrientation().getYaw();
-				Ogre::Radian Roll = App->Cl19_Ogre->mCamera->getOrientation().getRoll();
-
-				App->SBC_Scene->B_Player[0]->Player_Node->resetToInitialState();
-				App->SBC_Scene->B_Player[0]->Player_Node->setPosition(Pos);
-				App->SBC_Scene->B_Player[0]->Player_Node->yaw(Yaw);
-				App->SBC_Scene->B_Player[0]->Player_Node->roll(Roll);
-
-				App->SBC_Scene->B_Player[0]->Player_Node->yaw(Ogre::Degree(180));
-				App->SBC_Scene->B_Player[0]->Player_Node->pitch(Ogre::Degree(180));
-
-				Ogre::Vector3 NewPos = App->SBC_Scene->B_Player[0]->Player_Node->getPosition();
-				Ogre::Quaternion NewQuat = App->SBC_Scene->B_Player[0]->Player_Node->getOrientation();
-
-				float w = NewQuat.w;
-				float x = NewQuat.x;
-				float y = NewQuat.y;
-				float z = NewQuat.z;
-
-				App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(btVector3(NewPos.x, NewPos.y, NewPos.z));
-				App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
-
-			}
-
+			App->SBC_Locations->Move_Player_To_Camera();
 			return TRUE;
 		}
 		
@@ -257,59 +232,15 @@ LRESULT CALLBACK SB_Locations::Locations_Proc(HWND hDlg, UINT message, WPARAM wP
 
 			App->Cl_Dialogs->Dialog_Text(Enums::Check_Names_Locatoins, 1);
 
-			if (App->Cl_Dialogs->Canceled == 1)
+			if (App->Cl_Dialogs->Canceled == 0)
 			{
-				return TRUE;
-			}
+				strcpy(App->SBC_Scene->B_Locations[Location_Index]->Name, App->Cl_Dialogs->Chr_Text);
 
-
-			strcpy(App->SBC_Scene->B_Locations[Location_Index]->Name, App->Cl_Dialogs->Chr_Text);
-
-			SendDlgItemMessage(hDlg, IDC_LSTLOCATIONS, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
-			int Count = 0;
-			while (Count < App->SBC_Scene->Player_Location_Count)
-			{
-
-				if (App->SBC_Scene->B_Locations[Count]->Deleted == 0)
-				{
-					SendDlgItemMessage(hDlg, IDC_LSTLOCATIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)(LPCTSTR)App->SBC_Scene->B_Locations[Count]->Name);
-				}
-
-				Count++;
-			}
-
-			SendDlgItemMessage(hDlg, IDC_LSTLOCATIONS, LB_SETCURSEL, (WPARAM)Index, (LPARAM)(LPCTSTR)0);
-			return TRUE;
-		}
-
-		// --------------------------------------- Delete Location
-		if (LOWORD(wParam) == IDC_BTDELETE)
-		{
-
-			int Index = App->Cl_Dialogs->ListBox_Index;
-			if (Index == 0)
-			{
-				App->Say("Start Location can not be deleted");
-				return 1;
-			}
-
-			char buff[255];
-			SendDlgItemMessage(hDlg, IDC_LSTLOCATIONS, LB_GETTEXT, (WPARAM)Index, (LPARAM)(LPCTSTR)buff);
-
-			int Location_Index = App->Cl_LookUps->Player_Location_GetIndex_ByName(buff); // Get by Referance (Name)
-
-			char tag[255];
-			strcpy(tag, "Delete Location  ");
-			strcat(tag, App->SBC_Scene->B_Locations[Location_Index]->Name);
-
-			App->SBC_Dialogs->YesNo(tag, "Are you sure", 1);
-			if (App->SBC_Dialogs->Canceled == 0)
-			{
-				App->SBC_Scene->B_Locations[Location_Index]->Deleted = 1;
 				SendDlgItemMessage(hDlg, IDC_LSTLOCATIONS, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 				int Count = 0;
 				while (Count < App->SBC_Scene->Player_Location_Count)
 				{
+
 					if (App->SBC_Scene->B_Locations[Count]->Deleted == 0)
 					{
 						SendDlgItemMessage(hDlg, IDC_LSTLOCATIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)(LPCTSTR)App->SBC_Scene->B_Locations[Count]->Name);
@@ -318,13 +249,22 @@ LRESULT CALLBACK SB_Locations::Locations_Proc(HWND hDlg, UINT message, WPARAM wP
 					Count++;
 				}
 
-				App->SBC_Scene->Scene_Modified = 1;
-			}
+				SendDlgItemMessage(hDlg, IDC_LSTLOCATIONS, LB_SETCURSEL, (WPARAM)Index, (LPARAM)(LPCTSTR)0);
 
-			//SendDlgItemMessage(hDlg, IDC_LSTLOCATIONS, LB_SETCURSEL, (WPARAM)0, (LPARAM)(LPCTSTR)0);
+				App->SBC_Scene->Scene_Modified = 1;
+				App->SBC_FileView->Mark_Altered_Folder(App->SBC_FileView->FV_LevelFolder);
+			}
 			return TRUE;
 		}
 
+		// --------------------------------------- Delete Location
+		if (LOWORD(wParam) == IDC_BTDELETE)
+		{
+			App->SBC_Locations->Delete_Location();
+			return TRUE;
+		}
+
+		// --------------------------------------- Move Player
 		if (LOWORD(wParam) == IDC_BTMOVE_PLAYER)
 		{
 			int Index = App->Cl_Dialogs->ListBox_Index;
@@ -348,29 +288,10 @@ LRESULT CALLBACK SB_Locations::Locations_Proc(HWND hDlg, UINT message, WPARAM wP
 		// --------------------- SAVE LOCATION
 		if (LOWORD(wParam) == IDC_BTSAVE_LOCATION_PLAYER)
 		{
-			strcpy(App->Cl_Dialogs->btext, "Location Name");
-
-			char buf[255];
-			char numbuf[255];
-			_itoa(App->SBC_Scene->Player_Location_Count, numbuf, 10);
-
-			strcpy(buf, "New_Location_");
-			strcat(buf, numbuf);
-			strcpy(App->Cl_Dialogs->Chr_Text, buf);
-
-			App->Cl_Dialogs->Dialog_Text(1, 1);
-
-			if (App->Cl_Dialogs->Canceled == 1)
-			{
-				return TRUE;
-			}
-
-			strcpy(buf, App->Cl_Dialogs->Chr_Text);
-			App->SBC_Locations->Save_Location(buf);
-
-			SendDlgItemMessage(hDlg, IDC_LSTLOCATIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)(LPCTSTR)buf);
+			App->SBC_Locations->Save_Location();
 			return TRUE;
 		}
+
 
 		if (LOWORD(wParam) == IDC_LSTLOCATIONS)
 		{
@@ -426,28 +347,6 @@ void SB_Locations::Init_Bmps_PlayerLocations()
 }
 
 // *************************************************************************
-// *	  		Save_Location:- Terry and Hazel Flanigan 2022			   *
-// *************************************************************************
-void SB_Locations::Save_Location(char* name)
-{
-	int Count = App->SBC_Scene->Player_Location_Count;
-
-	App->SBC_Scene->B_Locations[Count] = new Base_Locations();
-
-	App->SBC_Scene->B_Locations[Count]->Deleted = 0;
-
-	App->SBC_Scene->B_Locations[Count]->This_Object_ID = App->SBC_Scene->Locations_ID_Counter;
-
-	strcpy(App->SBC_Scene->B_Locations[Count]->Name, name);
-	App->SBC_Scene->B_Locations[Count]->Current_Position = App->SBC_Scene->B_Player[0]->Player_Node->getPosition();
-	App->SBC_Scene->B_Locations[Count]->Physics_Position = App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().getOrigin();
-	App->SBC_Scene->B_Locations[Count]->Physics_Rotation = App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().getRotation();
-
-	App->SBC_Scene->Locations_ID_Counter++;
-	App->SBC_Scene->Player_Location_Count++;
-}
-
-// *************************************************************************
 // *	  		Goto_Locatio:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 void SB_Locations::Goto_Location(int Index)
@@ -455,7 +354,6 @@ void SB_Locations::Goto_Location(int Index)
 	App->SBC_Scene->B_Player[0]->Player_Node->setPosition(App->SBC_Scene->B_Locations[Index]->Current_Position);
 	App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(App->SBC_Scene->B_Locations[Index]->Physics_Position);
 	App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->SBC_Scene->B_Locations[Index]->Physics_Rotation);
-
 	Set_To_PlayerView();
 
 }
@@ -517,6 +415,118 @@ void SB_Locations::Set_To_FreeCam()
 		RedrawWindow(App->SBC_Locations->Locations_Dlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 		EnableWindow(GetDlgItem(Locations_Dlg_hWnd, IDC_BT_LOC_PLAYERTOCAMERA), 1);
+	}
+}
 
+// *************************************************************************
+// *	  		Delete_Location:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+void SB_Locations::Delete_Location()
+{
+	int Index = App->Cl_Dialogs->ListBox_Index;
+	if (Index == 0)
+	{
+		App->Say("Start Location can not be deleted");
+		return;
+	}
+
+	char buff[255];
+	SendDlgItemMessage(Locations_Dlg_hWnd, IDC_LSTLOCATIONS, LB_GETTEXT, (WPARAM)Index, (LPARAM)(LPCTSTR)buff);
+
+	int Location_Index = App->Cl_LookUps->Player_Location_GetIndex_ByName(buff); // Get by Referance (Name)
+
+	char tag[255];
+	strcpy(tag, "Delete Location  ");
+	strcat(tag, App->SBC_Scene->B_Locations[Location_Index]->Name);
+
+	App->SBC_Dialogs->YesNo(tag, "Are you sure", 1);
+	if (App->SBC_Dialogs->Canceled == 0)
+	{
+		App->SBC_Scene->B_Locations[Location_Index]->Deleted = 1;
+
+		SendDlgItemMessage(Locations_Dlg_hWnd, IDC_LSTLOCATIONS, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+		int Count = 0;
+		while (Count < App->SBC_Scene->Player_Location_Count)
+		{
+			if (App->SBC_Scene->B_Locations[Count]->Deleted == 0)
+			{
+				SendDlgItemMessage(Locations_Dlg_hWnd, IDC_LSTLOCATIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)(LPCTSTR)App->SBC_Scene->B_Locations[Count]->Name);
+			}
+
+			Count++;
+		}
+
+		App->SBC_Scene->Scene_Modified = 1;
+		App->SBC_FileView->Mark_Altered_Folder(App->SBC_FileView->FV_LevelFolder);
+	}
+}
+
+// *************************************************************************
+// *	  		Save_Location:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void SB_Locations::Save_Location()
+{
+	strcpy(App->Cl_Dialogs->btext, "Location Name");
+
+	char buf[255];
+	char numbuf[255];
+	_itoa(App->SBC_Scene->Player_Location_Count, numbuf, 10);
+
+	strcpy(buf, "New_Location_");
+	strcat(buf, numbuf);
+	strcpy(App->Cl_Dialogs->Chr_Text, buf);
+
+	App->Cl_Dialogs->Dialog_Text(1, 1);
+
+	if (App->Cl_Dialogs->Canceled == 0)
+	{
+		strcpy(buf, App->Cl_Dialogs->Chr_Text);
+
+		App->SBC_Locations->Create_Location_Entity(buf);
+
+		SendDlgItemMessage(Locations_Dlg_hWnd, IDC_LSTLOCATIONS, LB_ADDSTRING, (WPARAM)0, (LPARAM)(LPCTSTR)buf);
+
+		App->SBC_Scene->Scene_Modified = 1;
+		App->SBC_FileView->Mark_Altered_Folder(App->SBC_FileView->FV_LevelFolder);
+	}
+}
+
+// *************************************************************************
+// *	  	Create_Location_Entity:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+void SB_Locations::Create_Location_Entity(char* name)
+{
+	int Count = App->SBC_Scene->Player_Location_Count;
+
+	App->SBC_Scene->B_Locations[Count] = new Base_Locations();
+
+	App->SBC_Scene->B_Locations[Count]->Deleted = 0;
+
+	App->SBC_Scene->B_Locations[Count]->This_Object_ID = App->SBC_Scene->Locations_ID_Counter;
+
+	strcpy(App->SBC_Scene->B_Locations[Count]->Name, name);
+	App->SBC_Scene->B_Locations[Count]->Current_Position = App->SBC_Scene->B_Player[0]->Player_Node->getPosition();
+	App->SBC_Scene->B_Locations[Count]->Physics_Position = App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().getOrigin();
+	App->SBC_Scene->B_Locations[Count]->Physics_Rotation = App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().getRotation();
+
+	App->SBC_Scene->Locations_ID_Counter++;
+	App->SBC_Scene->Player_Location_Count++;
+}
+
+// *************************************************************************
+// *	  	Move_Player_To_Camera:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+void SB_Locations::Move_Player_To_Camera()
+{
+	if (App->SBC_Scene->Scene_Loaded == 1)
+	{
+		App->SBC_Physics->Physics_On(false);
+
+		Ogre::Vector3 Pos = App->Cl19_Ogre->mCamera->getPosition();
+		App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(btVector3(Pos.x, Pos.y, Pos.z));
+
+		App->SBC_Scene->B_Player[0]->Player_Node->setPosition(Pos);
+
+		Set_To_PlayerView();
 	}
 }

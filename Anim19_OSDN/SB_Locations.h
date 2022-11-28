@@ -30,7 +30,7 @@ public:
 	~SB_Locations(void);
 
 	void Start_Locations_Dlg();
-	void Save_Location(char* name);
+	void Create_Location_Entity(char* name);
 
 protected:
 
@@ -40,6 +40,9 @@ protected:
 
 	void Set_To_PlayerView();
 	void Set_To_FreeCam();
+	void Delete_Location();
+	void Save_Location();
+	void Move_Player_To_Camera();
 
 	void Init_Bmps_PlayerLocations();
 

@@ -534,6 +534,11 @@ bool SB_Project::Save_Project_Ini()
 	fprintf(WriteFile, "%s%i\n", "Counters_Count=", Adjusted);
 	fprintf(WriteFile, "%s%i\n", "Counters_ID_Count=", App->SBC_Scene->UniqueID_Counters_Count);
 
+	fprintf(WriteFile, "%s\n", " ");
+
+	fprintf(WriteFile, "%s\n", "[Config]");
+	fprintf(WriteFile, "%s%i\n", "Show_FPS=", App->SBC_Build->GameOptions->Show_FPS);
+
 	fclose(WriteFile);
 
 	return 1;

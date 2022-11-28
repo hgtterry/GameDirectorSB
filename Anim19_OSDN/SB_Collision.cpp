@@ -366,7 +366,7 @@ void SB_Collision::MoveObject_Listener(Ogre::Real Time)
 // *************************************************************************
 bool SB_Collision::Do_Teleport(int Index)
 {
-	//App->SBC_Scene->SBC_Base_Player[0]->Player_Node->setPosition(App->Cl_Scene_Data->Cl_Object[Index]->S_Teleport[0]->Player_Position);
+
 	App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Physics_Position);
 	App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Physics_Rotation);
 

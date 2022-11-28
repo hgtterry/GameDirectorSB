@@ -21,6 +21,13 @@ misrepresented as being the original software.
 distribution.
 */
 
+// ------------------------ Game Options
+typedef struct Game_Options
+{
+	bool Show_FPS;
+
+}Game_Options;
+
 #pragma once
 class SB_Build
 {
@@ -35,8 +42,12 @@ public:
 
 	char Desktop[MAX_PATH];
 
+	Game_Options* GameOptions;
+
 protected:
 	static LRESULT CALLBACK Project_Build_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	void Init_Build_Game_Class();
 
 	bool Build_Project();
 	bool Build_Project_Ini();

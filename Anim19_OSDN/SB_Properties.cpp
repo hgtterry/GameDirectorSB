@@ -709,6 +709,10 @@ bool SB_Properties::Update_ListView_Teleport()
 		strcpy(chr_Play, "False");
 	}
 
+	char chr_Goto_Location[100];
+	int Goto_ID = App->SBC_Scene->B_Object[index]->S_Teleport[0]->Location_ID;
+	strcpy(chr_Goto_Location, App->SBC_Scene->B_Locations[Goto_ID]->Name);
+
 	char chr_Volume[100];
 	float sum2 = App->SBC_Scene->B_Object[index]->S_Teleport[0]->SndVolume;
 	int Percent = int(sum2 * 100);
@@ -723,7 +727,7 @@ bool SB_Properties::Update_ListView_Teleport()
 
 	grid[0][0] = "Name",		grid[1][0] = App->SBC_Scene->B_Object[index]->Mesh_Name;
 	grid[0][1] = " ",			grid[1][1] = " ";
-	grid[0][2] = "Goto",		grid[1][2] = App->SBC_Scene->B_Object[index]->S_Teleport[0]->Name;
+	grid[0][2] = "Goto",		grid[1][2] = chr_Goto_Location;
 	grid[0][3] = " ",			grid[1][3] = " ";
 	grid[0][4] = "Sound",		grid[1][4] = App->SBC_Scene->B_Object[index]->S_Teleport[0]->Sound_File;
 	grid[0][5] = "Volume",		grid[1][5] = chr_Volume;
@@ -2574,7 +2578,7 @@ bool SB_Properties::Edit_Teleport_OnClick(LPARAM lParam)
 		if (App->SBC_Dialogs->Canceled == 0)
 		{
 			int LocationIndex = App->Cl_LookUps->Player_Location_GetIndex_ByName(App->SBC_Dialogs->Chr_DropText);
-
+			App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Location_ID = LocationIndex;
 
 			strcpy(App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Name, App->SBC_Scene->B_Locations[LocationIndex]->Name);
 

@@ -100,7 +100,7 @@ bool SB_Project_Create::First_Area_Build_Project()
 	App->SBC_Display->Add_New_Counter();
 
 	// ------------------------ Add Location
-	App->SBC_Locations->Save_Location("Start_Position");
+	App->SBC_Locations->Create_Location_Entity("Start_Position");
 
 	// ------------------------ Set Scene
 	App->Cl_Grid->Grid_SetVisible(1);

@@ -54,10 +54,21 @@ SB_Build::SB_Build()
 	m_Display_Folder_Path[0] = 0;
 
 	WriteFile = nullptr;
+
+	Init_Build_Game_Class();
 }
 
 SB_Build::~SB_Build()
 {
+}
+
+// *************************************************************************
+// *	  	Init_Build_Game_Class:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+void SB_Build::Init_Build_Game_Class()
+{
+	GameOptions = new Game_Options;
+	GameOptions->Show_FPS = 1;
 }
 
 // *************************************************************************
@@ -731,6 +742,10 @@ bool SB_Build::Build_Project_Ini()
 	fprintf(WriteFile, "%s%i\n", "Counters_Count=", Adjusted);
 	fprintf(WriteFile, "%s%i\n", "Counters_ID_Count=", App->SBC_Scene->UniqueID_Counters_Count);
 
+	fprintf(WriteFile, "%s\n", " ");
+
+	fprintf(WriteFile, "%s\n", "[Config]");
+	fprintf(WriteFile, "%s%i\n", "Show_FPS=", GameOptions->Show_FPS);
 	fclose(WriteFile);
 
 	return 1;

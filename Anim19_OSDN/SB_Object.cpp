@@ -316,6 +316,7 @@ void SB_Object::Set_Teleports_Defaults(int Index)
 	float z = 0;
 
 	App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Location_ID = 0;
+
 	strcpy(App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Name, "Start_Location");
 
 	strcpy(App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Sound_File,"magicspell.ogg");
