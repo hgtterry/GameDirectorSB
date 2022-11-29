@@ -538,6 +538,7 @@ bool SB_Project::Save_Project_Ini()
 
 	fprintf(WriteFile, "%s\n", "[Config]");
 	fprintf(WriteFile, "%s%i\n", "Show_FPS=", App->SBC_Build->GameOptions->Show_FPS);
+	fprintf(WriteFile, "%s%i\n", "Game_FullScreen=", App->SBC_Build->GameOptions->FullScreen);
 
 	fclose(WriteFile);
 
@@ -1415,6 +1416,9 @@ bool SB_Project::Load_Project()
 	App->SBC_Scene->UniqueID_Counters_Count = App->Cl_Ini->GetInt("Options", "Counters_ID_Count", 0, 10);
 	App->SBC_Scene->UniqueID_Area_Count = App->Cl_Ini->GetInt("Options", "Areas_ID_Count", 0, 10);
 	
+	App->SBC_Build->GameOptions->Show_FPS = App->Cl_Ini->GetInt("Config", "Show_FPS", 0, 10);
+	App->SBC_Build->GameOptions->FullScreen = App->Cl_Ini->GetInt("Config", "Game_FullScreen", 1, 10);
+
 	//-------------------------------------- Set Resource Path
 
 		Load_Get_Resource_Path();

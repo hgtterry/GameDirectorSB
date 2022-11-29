@@ -53,6 +53,7 @@ SB_Build::SB_Build()
 	m_Objects_Folder_Path[0] = 0;
 	m_Display_Folder_Path[0] = 0;
 
+	DlgHwnd = nullptr;
 	WriteFile = nullptr;
 
 	Init_Build_Game_Class();
@@ -69,6 +70,7 @@ void SB_Build::Init_Build_Game_Class()
 {
 	GameOptions = new Game_Options;
 	GameOptions->Show_FPS = 1;
+	GameOptions->FullScreen = 1;
 }
 
 // *************************************************************************
@@ -76,7 +78,7 @@ void SB_Build::Init_Build_Game_Class()
 // *************************************************************************
 void SB_Build::Start_Project_Build()
 {
-	//App->CL10_Project->Read_From_Config();
+	DlgHwnd = nullptr;
 
 	DialogBox(App->hInst, (LPCTSTR)IDD_BUILD_DIALOG, App->Fdlg, (DLGPROC)Project_Build_Proc);
 }
@@ -91,6 +93,8 @@ LRESULT CALLBACK SB_Build::Project_Build_Proc(HWND hDlg, UINT message, WPARAM wP
 	{
 	case WM_INITDIALOG:
 	{
+		App->SBC_Build->DlgHwnd = hDlg;
+
 		SendDlgItemMessage(hDlg, IDC_EDGAMENAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STGAMENAME, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STPATH, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
@@ -100,6 +104,8 @@ LRESULT CALLBACK SB_Build::Project_Build_Proc(HWND hDlg, UINT message, WPARAM wP
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CK_BL_DESKTOP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_BT_BUILDOPTIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SetDlgItemText(hDlg, IDC_EDGAMENAME, (LPCTSTR)App->SBC_Build->GameName);
 		
@@ -195,12 +201,24 @@ LRESULT CALLBACK SB_Build::Project_Build_Proc(HWND hDlg, UINT message, WPARAM wP
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_BUILDOPTIONS && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
 		return CDRF_DODEFAULT;
 	}
 
 	case WM_COMMAND:
 
-		
+		if (LOWORD(wParam) == IDC_BT_BUILDOPTIONS)
+		{
+			App->SBC_Build->Start_Build_Options_Dialog();
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDC_CK_BL_DESKTOP)
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_CK_BL_DESKTOP);
@@ -297,6 +315,145 @@ LRESULT CALLBACK SB_Build::Project_Build_Proc(HWND hDlg, UINT message, WPARAM wP
 			return TRUE;
 		}
 
+		break;
+
+	}
+	return FALSE;
+}
+
+// *************************************************************************
+// *	  Start_Build_Options_Dialog:- Terry and Hazel Flanigan 2022	   *
+// *************************************************************************
+bool SB_Build::Start_Build_Options_Dialog()
+{
+	DialogBox(App->hInst, (LPCTSTR)IDD_BUILD_OPTIONS, App->SBC_Build->DlgHwnd, (DLGPROC)Build_Options_Dialog_Proc);
+	return 1;
+}
+
+// *************************************************************************
+// *		Build_Options_Dialog_Proc:- Terry and Hazel Flanigan 2022  	   *
+// *************************************************************************
+LRESULT CALLBACK SB_Build::Build_Options_Dialog_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_CK_SHOWFPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CK_FULLSCREEN, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
+		if (App->SBC_Build->GameOptions->Show_FPS == 1)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_SHOWFPS);
+			SendMessage(temp, BM_SETCHECK, 1, 0);
+		}
+
+		if (App->SBC_Build->GameOptions->FullScreen == 1)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_FULLSCREEN);
+			SendMessage(temp, BM_SETCHECK, 1, 0);
+		}
+
+		return TRUE;
+	}
+
+	case WM_CTLCOLORSTATIC:
+	{
+
+		if (GetDlgItem(hDlg, IDC_CK_SHOWFPS) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_CK_FULLSCREEN) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+	case WM_COMMAND:
+		
+		if (LOWORD(wParam) == IDC_CK_SHOWFPS)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_SHOWFPS);
+
+			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
+			if (test == BST_CHECKED)
+			{
+				App->SBC_Build->GameOptions->Show_FPS = 1;
+			}
+			else
+			{
+				App->SBC_Build->GameOptions->Show_FPS = 0;
+			}
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_CK_FULLSCREEN)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_FULLSCREEN);
+
+			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
+			if (test == BST_CHECKED)
+			{
+				App->SBC_Build->GameOptions->FullScreen = 1;
+			}
+			else
+			{
+				App->SBC_Build->GameOptions->FullScreen = 0;
+			}
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDOK)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
 		break;
 
 	}
@@ -746,6 +903,8 @@ bool SB_Build::Build_Project_Ini()
 
 	fprintf(WriteFile, "%s\n", "[Config]");
 	fprintf(WriteFile, "%s%i\n", "Show_FPS=", GameOptions->Show_FPS);
+	fprintf(WriteFile, "%s%i\n", "Game_FullScreen=", App->SBC_Build->GameOptions->FullScreen);
+
 	fclose(WriteFile);
 
 	return 1;

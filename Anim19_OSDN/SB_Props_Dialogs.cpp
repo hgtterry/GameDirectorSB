@@ -147,7 +147,7 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_Dimensions_Proc(HWND hDlg, UINT messag
 			if (test == BST_CHECKED)
 			{
 				int EditCat = App->SBC_Properties->Edit_Category;
-				if (EditCat == Enums::FV_Edit_Object || EditCat == Enums::Edit_Teleport)
+				//if (EditCat == Enums::FV_Edit_Object || EditCat == Enums::Edit_Teleport)
 				{
 					int Index = App->SBC_Properties->Current_Selected_Object;
 					App->SBC_Scene->B_Object[Index]->Dimensions_Locked = 1;
@@ -165,7 +165,7 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_Dimensions_Proc(HWND hDlg, UINT messag
 			else
 			{
 				int EditCat = App->SBC_Properties->Edit_Category;
-				if (EditCat == Enums::FV_Edit_Object || EditCat == Enums::Edit_Teleport)
+				//if (EditCat == Enums::FV_Edit_Object || EditCat == Enums::Edit_Teleport)
 				{
 					int Index = App->SBC_Properties->Current_Selected_Object;
 					App->SBC_Scene->B_Object[Index]->Dimensions_Locked = 0;

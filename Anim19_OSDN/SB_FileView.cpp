@@ -706,7 +706,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		HideRightPanes();
 		ShowWindow(App->GD_Properties_Hwnd, 1);
 		App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
-		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1,0);
+		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->B_Object[Index]->Dimensions_Locked);
 		App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
 
 		App->SBC_Properties->Is_Player = 0;
@@ -741,7 +741,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		HideRightPanes();
 		ShowWindow(App->SBC_Properties->Properties_Dlg_hWnd, 1);
 		App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
-		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, 0);
+		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->B_Object[Index]->Dimensions_Locked);
 		App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
 		App->SBC_Props_Dialog->Hide_Panel_Test_Dlg(1);
 
@@ -778,7 +778,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		HideRightPanes();
 		ShowWindow(App->GD_Properties_Hwnd, 1);
 		App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
-		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, 0);
+		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->B_Object[Index]->Dimensions_Locked);
 		App->SBC_Props_Dialog->Hide_Physics_Reset_Dlg(1);
 		App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
 
@@ -839,7 +839,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 		App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
 
-		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1,0);
+		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->B_Object[Index]->Dimensions_Locked);
 		App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
 
 		App->Cl_Visuals->MarkerBB_Addjust(Index);

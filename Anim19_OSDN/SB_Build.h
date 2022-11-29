@@ -25,6 +25,7 @@ distribution.
 typedef struct Game_Options
 {
 	bool Show_FPS;
+	bool FullScreen;
 
 }Game_Options;
 
@@ -46,8 +47,10 @@ public:
 
 protected:
 	static LRESULT CALLBACK Project_Build_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-
+	static LRESULT CALLBACK Build_Options_Dialog_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	void Init_Build_Game_Class();
+
+	bool Start_Build_Options_Dialog();
 
 	bool Build_Project();
 	bool Build_Project_Ini();
@@ -100,6 +103,8 @@ protected:
 	char m_Cameras_Folder_Path[MAX_PATH];
 	char m_Objects_Folder_Path[MAX_PATH];
 	char m_Display_Folder_Path[MAX_PATH];
+
+	HWND DlgHwnd;
 
 	FILE *WriteFile;
 };
