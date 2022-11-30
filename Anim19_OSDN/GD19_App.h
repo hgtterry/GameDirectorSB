@@ -252,6 +252,9 @@ public:
 	HANDLE Hnd_Info_Bmp;
 	HANDLE Hnd_InfoSmall_Bmp;
 
+	HANDLE Hnd_PhysicsOff_Bmp;
+	HANDLE Hnd_PhysicsOn_Bmp;
+
 	HANDLE Hnd_Playoff;
 	HANDLE Hnd_PlayOn;
 	HANDLE Hnd_PlayStop;

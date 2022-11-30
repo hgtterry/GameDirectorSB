@@ -28,6 +28,7 @@ public:
 	SB_Object(void);
 	~SB_Object(void);
 
+	void Hide_AllObjects_Except(int Index, bool Show);
 	void Delete_Object();
 	void Rename_Object(int Index);
 	void Clear_Modified_Objects();
@@ -46,6 +47,7 @@ public:
 
 	bool Show_Physics_Debug;
 	bool Show_Mesh_Debug;
+	bool Hide_All_Except_Flag;
 
 protected:
 

@@ -33,10 +33,33 @@ SB_Object::SB_Object(void)
 {
 	Show_Physics_Debug = 0;
 	Show_Mesh_Debug = 1;
+	Hide_All_Except_Flag = 0;
 }
 
 SB_Object::~SB_Object(void)
 {
+}
+
+// *************************************************************************
+// *		Hide_AllObjects_Except:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+void SB_Object::Hide_AllObjects_Except(int Index,bool Show)
+{
+	int Count = 0;
+	while (Count < App->SBC_Scene->Object_Count)
+	{
+		App->SBC_Scene->B_Object[Count]->Object_Node->setVisible(Show);
+		Count++;
+	}
+
+	Count = 0;
+	while (Count < App->SBC_Scene->Area_Count)
+	{
+		App->SBC_Scene->B_Area[Count]->Area_Node->setVisible(Show);
+		Count++;
+	}
+
+	App->SBC_Scene->B_Object[Index]->Object_Node->setVisible(true);
 }
 
 // *************************************************************************

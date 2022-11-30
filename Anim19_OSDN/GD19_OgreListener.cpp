@@ -1143,8 +1143,8 @@ bool GD19_OgreListener::SelectEntity_World(void)
 				}
 			}
 
-			OverlayElement* guiName = OverlayManager::getSingleton().getOverlayElement("Core/ObjectName");
-			guiName->setCaption("-------------");
+			//OverlayElement* guiName = OverlayManager::getSingleton().getOverlayElement("Core/ObjectName");
+			//guiName->setCaption("-------------");
 		}
 
 	}

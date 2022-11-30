@@ -142,6 +142,9 @@ GD19_App::GD19_App(void)
 	Hnd_Info_Bmp = NULL;
 	Hnd_InfoSmall_Bmp = NULL;
 
+	Hnd_PhysicsOff_Bmp = NULL;
+	Hnd_PhysicsOn_Bmp = NULL;
+
 	Hnd_Playoff = NULL;
 	Hnd_PlayOn = NULL;
 	Hnd_PlayStop = NULL;
@@ -464,6 +467,9 @@ void GD19_App::LoadProgramResource(void)
 
 	Hnd_InfoBig_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_INFOBIG);
 	Hnd_InfoSmall_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_INFOSMALL);
+
+	Hnd_PhysicsOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_PHYSICSOFF);
+	Hnd_PhysicsOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_PHYSICSON);
 
 }
 

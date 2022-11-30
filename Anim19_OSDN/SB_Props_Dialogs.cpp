@@ -570,7 +570,8 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_Debug_Proc(HWND hDlg, UINT message, WP
 	{
 		SendDlgItemMessage(hDlg, IDC_BT_PHYSDEBUG, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_SHOWMESH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_BT_ONLYMESH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
@@ -612,11 +613,37 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_Debug_Proc(HWND hDlg, UINT message, WP
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_ONLYMESH && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->SBC_Object->Hide_All_Except_Flag);
+			return CDRF_DODEFAULT;
+		}
+		
 		return CDRF_DODEFAULT;
 	}
 
 	case WM_COMMAND:
 	{
+		
+		if (LOWORD(wParam) == IDC_BT_ONLYMESH)
+		{
+			int Index = App->SBC_Properties->Current_Selected_Object;
+
+			if (App->SBC_Object->Hide_All_Except_Flag == 1)
+			{
+				App->SBC_Object->Hide_All_Except_Flag = 0;
+				App->SBC_Object->Hide_AllObjects_Except(Index, true);
+			}
+			else
+			{
+				App->SBC_Object->Hide_All_Except_Flag = 1;
+				App->SBC_Object->Hide_AllObjects_Except(Index, false);
+			}
+		
+			return 1;
+		}
+
 		if (LOWORD(wParam) == IDC_BT_SHOWMESH)
 		{
 			int Index = App->SBC_Properties->Current_Selected_Object;
@@ -637,6 +664,8 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_Debug_Proc(HWND hDlg, UINT message, WP
 
 		if (LOWORD(wParam) == IDC_BT_PHYSDEBUG)
 		{
+			HWND Temp = GetDlgItem(hDlg, IDC_BT_PHYSDEBUG);
+
 			int Index = App->SBC_Properties->Current_Selected_Object;
 
 			int f = App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionFlags();
@@ -653,12 +682,16 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_Debug_Proc(HWND hDlg, UINT message, WP
 					App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 0;
 					App->Cl19_Ogre->RenderFrame();
 					App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 1;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_PhysicsOff_Bmp);
 				}
 				else
 				{
 					App->SBC_Scene->B_Object[Index]->Physics_Debug_On = 1;
 					App->SBC_Object->Show_Physics_Debug = 1;
 					App->SBC_Scene->B_Object[Index]->Phys_Body->setCollisionFlags(f & (~(1 << 5))); // on
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_PhysicsOn_Bmp);
 				}
 			}
 
@@ -687,9 +720,12 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_Debug_Proc(HWND hDlg, UINT message, WP
 // *************************************************************************
 void SB_Props_Dialogs::Init_Bmps_Debug()
 {
+	HWND Temp = GetDlgItem(Debug_Dlg_hWnd, IDC_BT_PHYSDEBUG);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_PhysicsOff_Bmp);
+
 	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
 
-	HWND Temp = GetDlgItem(Debug_Dlg_hWnd, IDC_BT_SHOWMESH);
+	Temp = GetDlgItem(Debug_Dlg_hWnd, IDC_BT_SHOWMESH);
 	TOOLINFO ti1 = { 0 };
 	ti1.cbSize = sizeof(ti1);
 	ti1.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
@@ -706,6 +742,16 @@ void SB_Props_Dialogs::Init_Bmps_Debug()
 	ti2.lpszText = "Show or Hide the Physics Outline";
 	ti2.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti2);
+
+	Temp = GetDlgItem(Debug_Dlg_hWnd, IDC_BT_ONLYMESH);
+	TOOLINFO ti3 = { 0 };
+	ti3.cbSize = sizeof(ti3);
+	ti3.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti3.uId = (UINT_PTR)Temp;
+	ti3.lpszText = "Show Only This Mesh";
+	ti3.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti3);
+	
 }
 
 // *************************************************************************

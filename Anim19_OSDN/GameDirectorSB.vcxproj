@@ -346,6 +346,8 @@
     <Image Include="Resource\Motions\TplayON.bmp" />
     <Image Include="Resource\Motions\Treverse.bmp" />
     <Image Include="Resource\Motions\Tstop.bmp" />
+    <Image Include="Resource\Physics.bmp" />
+    <Image Include="Resource\PhysicsOn.bmp" />
     <Image Include="small.ico" />
   </ItemGroup>
   <ItemGroup>

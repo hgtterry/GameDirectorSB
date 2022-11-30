@@ -74,6 +74,7 @@ public:
 		return Ogre::Quaternion(Q.w(), Q.x(), Q.y(), Q.z());
 	};
 
+	void Clear_Debug_Render();
 	
 	Ogre::Vector3 mfrom;
 	Ogre::Vector3 mto;
@@ -111,7 +112,6 @@ protected:
 	bool Render_Debug(void);
 
 	// Clear Debug Render to Zero [021221]
-	void Clear_Debug_Render();
 
 };
 

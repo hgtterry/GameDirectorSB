@@ -49,6 +49,8 @@ public:
 	void Init_Bmps_DetailsGo();
 	void Init_Bmps_PhysicsReset();
 
+	void Set_Debug_Buttons();
+
 	bool Show_Area_Physics_Debug;
 
 	HWND Dimensions_Dlg_hWnd;

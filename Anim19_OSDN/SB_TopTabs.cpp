@@ -694,44 +694,64 @@ void SB_TopTabs::Init_Bmps_Camera(void)
 
 	HWND hTooltip_TB_1 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
 
-	// --------------------------------------------------- 
+	SendMessage(hTooltip_TB_1, TTM_SETMAXTIPWIDTH, 0, 150);
 
+	// --------------------------------------------------- 
 	Temp = GetDlgItem(Camera_TB_hWnd, IDC_BTMOUSESPEED);
+
+	TOOLINFO ti1 = { 0 };
+	ti1.cbSize = sizeof(ti1);
+	ti1.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti1.uId = (UINT_PTR)Temp;
+	ti1.lpszText = "Adujust Mouse and Keys Speed\r\nAffects only the Free Cam Speeds";
+	ti1.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_1, TTM_ADDTOOL, 0, (LPARAM)&ti1);
+
+	// --------------------------------------------------- 
+	Temp = GetDlgItem(Camera_TB_hWnd, IDC_FIRST_MODE);
+
+	TOOLINFO ti2 = { 0 };
+	ti2.cbSize = sizeof(ti2);
+	ti2.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti2.uId = (UINT_PTR)Temp;
+	ti2.lpszText = "Places you at the Player in First Prespective Mode.\r\nAnd turns Physics on You are the Player";
+	ti2.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_1, TTM_ADDTOOL, 0, (LPARAM)&ti2);
+
+	// --------------------------------------------------- 
+	Temp = GetDlgItem(Camera_TB_hWnd, IDC_BT_3RD);
 
 	TOOLINFO ti3 = { 0 };
 	ti3.cbSize = sizeof(ti3);
 	ti3.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
 	ti3.uId = (UINT_PTR)Temp;
-	ti3.lpszText = "Adujust Mouse and Keys Speed";
+	ti3.lpszText = "Not Available Yet";
 	ti3.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_1, TTM_ADDTOOL, 0, (LPARAM)&ti3);
 
 	// --------------------------------------------------- 
+	Temp = GetDlgItem(Camera_TB_hWnd, IDC_FREECAM);
 
-	Temp = GetDlgItem(Camera_TB_hWnd, IDC_TBMODEL);
+	TOOLINFO ti4 = { 0 };
+	ti4.cbSize = sizeof(ti4);
+	ti4.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti4.uId = (UINT_PTR)Temp;
+	ti4.lpszText = "Free Cam\r\nYou can move any where in the scene outside the scene and go through walls";
+	ti4.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_1, TTM_ADDTOOL, 0, (LPARAM)&ti4);
+
+	// --------------------------------------------------- 
+	Temp = GetDlgItem(Camera_TB_hWnd, IDC_BT_SELECT);
 
 	TOOLINFO ti5 = { 0 };
 	ti5.cbSize = sizeof(ti5);
 	ti5.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
 	ti5.uId = (UINT_PTR)Temp;
-	ti5.lpszText = "Camera Mode Rotate Model";
+	ti5.lpszText = "Select Object\r\nMove the sight onto an Object\r\nPress Space Bar to Select";
 	ti5.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_1, TTM_ADDTOOL, 0, (LPARAM)&ti5);
 
 	// --------------------------------------------------- 
-
-	Temp = GetDlgItem(Camera_TB_hWnd, IDC_TBWORLD);
-
-	TOOLINFO ti6 = { 0 };
-	ti6.cbSize = sizeof(ti6);
-	ti6.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
-	ti6.uId = (UINT_PTR)Temp;
-	ti6.lpszText = "Camera Mode You Move Around Model";
-	ti6.hwnd = App->MainHwnd;
-	SendMessage(hTooltip_TB_1, TTM_ADDTOOL, 0, (LPARAM)&ti6);
-
-	// --------------------------------------------------- 
-
 	Temp = GetDlgItem(Camera_TB_hWnd, IDC_BT_INFO_CAMERA);
 
 	TOOLINFO ti7 = { 0 };
@@ -768,6 +788,8 @@ void SB_TopTabs::Init_Bmps_Globals(void)
 
 	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
 
+	SendMessage(hTooltip_TB_2, TTM_SETMAXTIPWIDTH, 0, 150);
+
 	Temp = GetDlgItem(TabsHwnd, IDC_TBINFO);
 	TOOLINFO ti8 = { 0 };
 	ti8.cbSize = sizeof(ti8);
@@ -800,7 +822,7 @@ void SB_TopTabs::Init_Bmps_Globals(void)
 	ti11.cbSize = sizeof(ti11);
 	ti11.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
 	ti11.uId = (UINT_PTR)Temp;
-	ti11.lpszText = "Full Screen Press Esc to Exit";
+	ti11.lpszText = "Full Screen Mode\r\nPress Esc to Exit";
 	ti11.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti11);
 
@@ -809,7 +831,7 @@ void SB_TopTabs::Init_Bmps_Globals(void)
 	ti12.cbSize = sizeof(ti12);
 	ti12.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
 	ti12.uId = (UINT_PTR)Temp;
-	ti12.lpszText = "Game Mode Press Esc to Exit";
+	ti12.lpszText = "Game Mode\r\nPress Esc to Exit";
 	ti12.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti12);
 
@@ -923,6 +945,8 @@ void SB_TopTabs::Init_Bmps_Game()
 
 	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
 
+	SendMessage(hTooltip_TB_2, TTM_SETMAXTIPWIDTH, 0, 150);
+
 	Temp = GetDlgItem(Game_TB_hWnd, IDC_BT_INFO_GAME);
 	TOOLINFO ti1 = { 0 };
 	ti1.cbSize = sizeof(ti1);
@@ -931,6 +955,24 @@ void SB_TopTabs::Init_Bmps_Game()
 	ti1.lpszText = "Show Help File";
 	ti1.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti1);
+
+	Temp = GetDlgItem(Game_TB_hWnd, IDC_BT_GAMEMODE);
+	TOOLINFO ti2 = { 0 };
+	ti2.cbSize = sizeof(ti2);
+	ti2.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti2.uId = (UINT_PTR)Temp;
+	ti2.lpszText = "Game Mode\r\nPress Esc to Exit";
+	ti2.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti2);
+
+	Temp = GetDlgItem(Game_TB_hWnd, IDC_BT_GT_BUILDGAME);
+	TOOLINFO ti3 = { 0 };
+	ti3.cbSize = sizeof(ti3);
+	ti3.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti3.uId = (UINT_PTR)Temp;
+	ti3.lpszText = "Builds a stand Alone\r\nScene/Game";
+	ti3.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti3);
 
 }
 
@@ -1248,6 +1290,8 @@ void SB_TopTabs::Init_Bmps_Files()
 
 	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
 
+	SendMessage(hTooltip_TB_2, TTM_SETMAXTIPWIDTH, 0, 150);
+
 	Temp = GetDlgItem(File_TB_hWnd, IDC_BT_INFO_FILE);
 	TOOLINFO ti1 = { 0 };
 	ti1.cbSize = sizeof(ti1);
@@ -1257,6 +1301,24 @@ void SB_TopTabs::Init_Bmps_Files()
 	ti1.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti1);
 
+	Temp = GetDlgItem(File_TB_hWnd, IDC_TBBTQLOAD);
+	TOOLINFO ti2 = { 0 };
+	ti2.cbSize = sizeof(ti2);
+	ti2.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti2.uId = (UINT_PTR)Temp;
+	ti2.lpszText = "Quick Load\r\nQuickly loads the file you last saved";
+	ti2.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti2);
+
+	Temp = GetDlgItem(File_TB_hWnd, IDC_TBBTLOAD);
+	TOOLINFO ti3 = { 0 };
+	ti3.cbSize = sizeof(ti3);
+	ti3.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti3.uId = (UINT_PTR)Temp;
+	ti3.lpszText = "Load Project\r\nThe same as\r\nFile->Open->Project";
+	ti3.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti3);
+	
 }
 
 // *************************************************************************

@@ -2653,3 +2653,32 @@ bool SB_Properties::Edit_Teleport_OnClick(LPARAM lParam)
 
 	return 1;
 }
+
+// *************************************************************************
+// *				Reset_Last_Selected_Object Terry Bernie			 	   *
+// *************************************************************************
+void SB_Properties::Reset_Last_Selected_Object(int Index)
+{
+	App->SBC_Object->Show_Physics_Debug = 0;
+
+	int f = App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionFlags();
+	App->SBC_Scene->B_Object[Index]->Phys_Body->setCollisionFlags(f | (1 << 5)); // Off
+
+	App->SBC_Scene->B_Object[Index]->Physics_Debug_On = 0;
+
+	App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 0;
+	App->Cl19_Ogre->BulletListener->Clear_Debug_Render();
+	App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 1;
+
+	HWND Temp = GetDlgItem(App->SBC_Props_Dialog->Debug_Dlg_hWnd, IDC_BT_PHYSDEBUG);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_PhysicsOff_Bmp);
+
+	App->SBC_Scene->B_Object[Index]->Object_Node->setVisible(true);
+	App->SBC_Object->Show_Mesh_Debug = 1;
+
+	App->Cl_Visuals->BoxNode->setVisible(false);
+	App->Cl_Grid->Arrow_Node->setVisible(false);
+	App->SBC_Object->Hide_AllObjects_Except(Index, true);
+
+	App->SBC_Object->Hide_All_Except_Flag = 0;
+}

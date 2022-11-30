@@ -597,7 +597,13 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1,1);
 
 		App->SBC_Properties->Edit_Category = Enums::Edit_Area;
+
+		//----------------------------------------------------------------------------
 		App->SBC_Properties->Current_Selected_Object = Index;
+		App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
+		App->SBC_Properties->Last_Selected_Object = Index;
+		//----------------------------------------------------------------------------
+
 		App->SBC_Properties->Update_ListView_Area();
 
 		return;
@@ -623,20 +629,19 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
 
 		App->SBC_Properties->Edit_Category = Enums::FV_Edit_Object;
+
+		//----------------------------------------------------------------------------
 		App->SBC_Properties->Current_Selected_Object = Index;
+		App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
+		App->SBC_Properties->Last_Selected_Object = Index;
+		//----------------------------------------------------------------------------
 
 		App->SBC_LookUps->Update_Types();
 
-		if (App->SBC_Properties->Edit_Physics == 0)
-		{
-			App->Cl_Visuals->MarkerBB_Addjust(Index);
-			App->SBC_Properties->Update_ListView_Objects();
-		}
-		else
-		{
-			//App->SBC_Properties->Update_ListView_Physics();
-		}
+		App->Cl_Visuals->MarkerBB_Addjust(Index);
 
+		App->SBC_Properties->Update_ListView_Objects();
+		
 		return;
 	}
 
@@ -655,7 +660,12 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		App->SBC_Player->Hide_Player_Dlg(1);
 
 		App->SBC_Properties->Edit_Category = Enums::Edit_Player;
+		
+		//----------------------------------------------------------------------------
 		App->SBC_Properties->Current_Selected_Object = Index;
+		App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
+		App->SBC_Properties->Last_Selected_Object = Index;
+		//----------------------------------------------------------------------------
 		
 		if (App->SBC_Properties->Edit_Physics == 0)
 		{
@@ -711,19 +721,17 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 		App->SBC_Properties->Is_Player = 0;
 		App->SBC_Properties->Edit_Category = Enums::Edit_Sounds;
+		
+		//----------------------------------------------------------------------------
 		App->SBC_Properties->Current_Selected_Object = Index;
-
-		if (App->SBC_Properties->Edit_Physics == 0)
-		{
-			App->SBC_Properties->Update_ListView_Sounds();
-		}
-		else
-		{
-			//App->SBC_Properties->Update_ListView_Physics();
-		}
+		App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
+		App->SBC_Properties->Last_Selected_Object = Index;
+		//----------------------------------------------------------------------------
 
 		App->Cl_Visuals->MarkerBB_Addjust(Index);
-
+		
+		App->SBC_Properties->Update_ListView_Sounds();
+		
 		return;
 	}
 
@@ -747,20 +755,17 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 		App->SBC_Properties->Is_Player = 0; // Mark as Object selected
 		App->SBC_Properties->Edit_Category = Enums::Edit_Message;
+		
+		//----------------------------------------------------------------------------
 		App->SBC_Properties->Current_Selected_Object = Index;
-
-
-		if (App->SBC_Properties->Edit_Physics == 0)
-		{
-			App->SBC_Properties->Update_ListView_Messages();
-		}
-		else
-		{
-			//App->SBC_Properties->Update_ListView_Physics();
-		}
+		App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
+		App->SBC_Properties->Last_Selected_Object = Index;
+		//----------------------------------------------------------------------------
 
 		App->Cl_Visuals->MarkerBB_Addjust(Index);
 
+		App->SBC_Properties->Update_ListView_Messages();
+		
 		return;
 	}
 
@@ -785,11 +790,17 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		App->SBC_Properties->Is_Player = 0; // Mark as Object selected
 
 		App->SBC_Properties->Edit_Category = Enums::Edit_Move_Entity;
+		
+		//----------------------------------------------------------------------------
 		App->SBC_Properties->Current_Selected_Object = Index;
+		App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
+		App->SBC_Properties->Last_Selected_Object = Index;
+		//----------------------------------------------------------------------------
+
+		App->Cl_Visuals->MarkerBB_Addjust(Index);
 
 		App->SBC_Properties->Update_ListView_Move_Entities();
 
-		App->Cl_Visuals->MarkerBB_Addjust(Index);
 		return;
 	}
 
@@ -812,11 +823,16 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 		App->SBC_Properties->Is_Player = 0; // Mark as Object selected
 
+		App->SBC_Properties->Edit_Category = Enums::Edit_Teleport;
+
+		//----------------------------------------------------------------------------
+		App->SBC_Properties->Current_Selected_Object = Index;
+		App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
+		App->SBC_Properties->Last_Selected_Object = Index;
+		//----------------------------------------------------------------------------
+		
 		App->Cl_Visuals->MarkerBB_Addjust(Index);
 
-		App->SBC_Properties->Edit_Category = Enums::Edit_Teleport;
-		App->SBC_Properties->Current_Selected_Object = Index;
-		
 		App->SBC_Properties->Update_ListView_Teleport();
 		
 		return;
@@ -842,11 +858,16 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->B_Object[Index]->Dimensions_Locked);
 		App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
 
+		App->SBC_Properties->Edit_Category = Enums::Edit_Collectable;
+
+		//----------------------------------------------------------------------------
+		App->SBC_Properties->Current_Selected_Object = Index;
+		App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
+		App->SBC_Properties->Last_Selected_Object = Index;
+		//----------------------------------------------------------------------------
+
 		App->Cl_Visuals->MarkerBB_Addjust(Index);
 
-		App->SBC_Properties->Edit_Category = Enums::Edit_Collectable;
-		App->SBC_Properties->Current_Selected_Object = Index;
-		
 		App->SBC_Properties->Update_ListView_Collectables();
 		
 		return;
@@ -1305,7 +1326,7 @@ bool SB_FileView::SelectItem(HTREEITEM TreeItem)
 
 	//if (Flags[0]->FileView_SceneLoaded == 1)
 	{
-		TreeView_Select(Temp, NULL, TVGN_CARET);
+		//TreeView_Select(Temp, NULL, TVGN_CARET);
 		TreeView_Select(Temp, TreeItem, TVGN_CARET);
 	}
 	return 1;

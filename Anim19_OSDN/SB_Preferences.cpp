@@ -279,7 +279,7 @@ LRESULT CALLBACK SB_Preferences::QuickLoad_Proc(HWND hDlg, UINT message, WPARAM 
 
 		SendDlgItemMessage(hDlg, IDC_CKDEFAULT, WM_SETFONT, (WPARAM)Font2, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STTAGFILE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_CHECKYES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CK_SHOWSTARTUPSCREEN, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 
 		char StartFile[1024];
@@ -307,6 +307,12 @@ LRESULT CALLBACK SB_Preferences::QuickLoad_Proc(HWND hDlg, UINT message, WPARAM 
 			EnableWindow(GetDlgItem(hDlg, IDC_BTBROWSE), 1);
 		}
 
+		if (App->SBC_Prefs->Show_StartScreen == 1)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_SHOWSTARTUPSCREEN);
+			SendMessage(temp, BM_SETCHECK, 1, 0);
+		}
+
 		char buff[1024];
 		App->Cl_Ini->GetString("Startup", "Scene_Path_FileName", buff, 1024);
 		SetDlgItemText(hDlg, IDC_STUSERFILE, (LPTSTR)buff);
@@ -320,7 +326,6 @@ LRESULT CALLBACK SB_Preferences::QuickLoad_Proc(HWND hDlg, UINT message, WPARAM 
 	}
 	case WM_CTLCOLORSTATIC:
 	{
-
 		if (GetDlgItem(hDlg, IDC_STUSERFILE) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
@@ -328,6 +333,7 @@ LRESULT CALLBACK SB_Preferences::QuickLoad_Proc(HWND hDlg, UINT message, WPARAM 
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->Brush_White;
 		}
+
 		if (GetDlgItem(hDlg, IDC_CKDEFAULT) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
@@ -335,6 +341,7 @@ LRESULT CALLBACK SB_Preferences::QuickLoad_Proc(HWND hDlg, UINT message, WPARAM 
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
 		}
+
 		if (GetDlgItem(hDlg, IDC_STTAGFILE) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
@@ -342,6 +349,15 @@ LRESULT CALLBACK SB_Preferences::QuickLoad_Proc(HWND hDlg, UINT message, WPARAM 
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
 		}
+
+		if (GetDlgItem(hDlg, IDC_CK_SHOWSTARTUPSCREEN) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
 		return FALSE;
 	}
 
@@ -382,6 +398,24 @@ LRESULT CALLBACK SB_Preferences::QuickLoad_Proc(HWND hDlg, UINT message, WPARAM 
 				App->SBC_Prefs->QL_Use_TestFile_Flag = 0;
 				EnableWindow(GetDlgItem(hDlg, IDC_STUSERFILE), 1);
 				EnableWindow(GetDlgItem(hDlg, IDC_BTBROWSE), 1);
+				return 1;
+			}
+
+			return 1;
+		}
+
+		if (LOWORD(wParam) == IDC_CK_SHOWSTARTUPSCREEN)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_SHOWSTARTUPSCREEN);
+			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
+			if (test == BST_CHECKED)
+			{
+				App->SBC_Prefs->Show_StartScreen = 1;
+				return 1;
+			}
+			else
+			{
+				App->SBC_Prefs->Show_StartScreen = 0;
 				return 1;
 			}
 

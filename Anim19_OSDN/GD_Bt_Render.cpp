@@ -226,7 +226,6 @@ bool GD_Bt_Render::Render_Debug(void)
 // *************************************************************************
 void GD_Bt_Render::Clear_Debug_Render()
 {
-
 	btDebug_Manual->beginUpdate(0);
 	btDebug_Manual->position(0, 0, 0);
 	btDebug_Manual->colour(ColourMain);

@@ -48,15 +48,18 @@ public:
 	bool Update_ListView_Collectables();
 	bool Update_ListView_Counters();
 	
+	void Reset_Last_Selected_Object(int Index);
+
 	bool Properties_Dlg_Active;
 
-	int Current_Selected_Object; // Object Index of Currently Selected Object [041221]
+	int Current_Selected_Object;
+	int Last_Selected_Object;
 
-	int Edit_Category; // Category of Currently Selected Object [041221]
+	int Edit_Category;
 
 	bool Is_Player;
 
-	bool Edit_Physics; // Flag for Edit Physics or Object [041221]
+	bool Edit_Physics;
 
 	HWND Properties_Dlg_hWnd;
 	HWND Properties_hLV;
