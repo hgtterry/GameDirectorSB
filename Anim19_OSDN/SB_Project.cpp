@@ -447,6 +447,7 @@ bool SB_Project::Save_Project()
 	Save_Cameras_Folder();
 	Save_Objects_Folder();
 	Save_Display_Folder();
+	Save_Environment_Folder();
 
 	App->SBC_FileView->Change_Level_Name();
 	App->SBC_FileView->Change_Project_Name();
@@ -533,6 +534,9 @@ bool SB_Project::Save_Project_Ini()
 	int Adjusted = App->SBC_LookUps->Get_Adjusted_Counters_Count();
 	fprintf(WriteFile, "%s%i\n", "Counters_Count=", Adjusted);
 	fprintf(WriteFile, "%s%i\n", "Counters_ID_Count=", App->SBC_Scene->UniqueID_Counters_Count);
+
+	fprintf(WriteFile, "%s%i\n", "Environment_Count=", App->SBC_Scene->Environment_Count);
+	fprintf(WriteFile, "%s%i\n", "Environment_ID_Count=", App->SBC_Scene->UniqueID_Environment_Count);
 
 	fprintf(WriteFile, "%s\n", " ");
 
@@ -899,6 +903,145 @@ bool SB_Project::Save_Objects_Data()
 	return 1;
 }
 
+// *************************************************************************
+// *	  	Save_Environment_Folder:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+bool SB_Project::Save_Environment_Folder()
+{
+	m_Enviromnet_Folder_Path[0] = 0;
+
+	strcpy(m_Enviromnet_Folder_Path, m_Level_Folder_Path);
+	strcat(m_Enviromnet_Folder_Path, "\\");
+	strcat(m_Enviromnet_Folder_Path, "Environment");
+
+	_mkdir(m_Enviromnet_Folder_Path);
+	_chdir(m_Enviromnet_Folder_Path);
+
+	Save_Environment_Data();
+
+	_chdir(m_Level_Folder_Path); // Return to Level Folder
+	return 1;
+}
+
+// *************************************************************************
+// *	  	Save_Environment_Data:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+bool SB_Project::Save_Environment_Data()
+{
+	Ogre::Vector3 Pos;
+	char File[1024];
+
+	strcpy(File, m_Enviromnet_Folder_Path);
+	strcat(File, "\\");
+	strcat(File, "Environments.sdat");
+
+	WriteFile = nullptr;
+
+	WriteFile = fopen(File, "wt");
+
+	if (!WriteFile)
+	{
+		App->Say("Cant Create File");
+		App->Say_Win(File);
+		return 0;
+	}
+
+	fprintf(WriteFile, "%s\n", "[Version_Data]");
+	fprintf(WriteFile, "%s%s\n", "Version=", "V1.2");
+
+	fprintf(WriteFile, "%s\n", " ");
+
+	fprintf(WriteFile, "%s\n", " ");
+
+	char Cbuff[255];
+	char buff[255];
+
+	float w = 0;
+	float x = 0;
+	float y = 0;
+	float z = 0;
+
+	int new_Count = 0;
+
+	int Count = 0;
+	while (Count < App->SBC_Scene->Environment_Count)
+	{
+		if (App->SBC_Scene->B_Environment[Count]->Deleted == 0)
+		{
+			strcpy(buff, "[Environment_");
+			_itoa(new_Count, Cbuff, 10);
+			strcat(buff, Cbuff);
+			strcat(buff, "]");
+
+			fprintf(WriteFile, "%s\n", buff); // Header also Player name until changed by user
+
+			fprintf(WriteFile, "%s%s\n", "Environment_Name=", App->SBC_Scene->B_Environment[Count]->Name); // Change
+			fprintf(WriteFile, "%s%i\n", "Environment_ID=", App->SBC_Scene->B_Environment[Count]->This_Object_ID);
+
+			//--------------- Sound
+			fprintf(WriteFile, "%s%s\n", "Sound_File=", App->SBC_Scene->B_Environment[Count]->Sound_File);
+			fprintf(WriteFile, "%s%f\n", "Snd_Volume=", App->SBC_Scene->B_Environment[Count]->SndVolume);
+
+			fprintf(WriteFile, "%s%i\n", "Sound_Play=", App->SBC_Scene->B_Environment[Count]->Play);
+			fprintf(WriteFile, "%s%i\n", "Sound_Loop=", App->SBC_Scene->B_Environment[Count]->Loop);
+
+			//--------------- Light
+
+			x = App->SBC_Scene->B_Environment[Count]->AmbientColour.x;
+			y = App->SBC_Scene->B_Environment[Count]->AmbientColour.y;
+			z = App->SBC_Scene->B_Environment[Count]->AmbientColour.z;
+			fprintf(WriteFile, "%s%f,%f,%f\n", "Ambient_Colour=", x, y, z);
+
+			x = App->SBC_Scene->B_Environment[Count]->DiffuseColour.x;
+			y = App->SBC_Scene->B_Environment[Count]->DiffuseColour.y;
+			z = App->SBC_Scene->B_Environment[Count]->DiffuseColour.z;
+			fprintf(WriteFile, "%s%f,%f,%f\n", "Diffuse_Colour=", x, y, z);
+
+			x = App->SBC_Scene->B_Environment[Count]->SpecularColour.x;
+			y = App->SBC_Scene->B_Environment[Count]->SpecularColour.y;
+			z = App->SBC_Scene->B_Environment[Count]->SpecularColour.z;
+			fprintf(WriteFile, "%s%f,%f,%f\n", "Specular_Colour=", x, y, z);
+
+			x = App->SBC_Scene->B_Area[0]->S_Environment[0]->Light_Position.x;
+			y = App->SBC_Scene->B_Area[0]->S_Environment[0]->Light_Position.y;
+			z = App->SBC_Scene->B_Area[0]->S_Environment[0]->Light_Position.z;
+			fprintf(WriteFile, "%s%f,%f,%f\n", "Light_Position=", x, y, z);
+
+			//--------------- Sky
+			fprintf(WriteFile, "%s%i\n", "Sky_Enable=", App->SBC_Scene->B_Environment[Count]->Enabled);
+			fprintf(WriteFile, "%s%i\n", "Sky_Type=", App->SBC_Scene->B_Environment[Count]->type);
+			fprintf(WriteFile, "%s%s\n", "Sky_Material=", App->SBC_Scene->B_Environment[Count]->Material);
+			fprintf(WriteFile, "%s%f\n", "Sky_Curvature=", App->SBC_Scene->B_Environment[Count]->Curvature);
+			fprintf(WriteFile, "%s%f\n", "Sky_Tiling=", App->SBC_Scene->B_Environment[Count]->Tiling);
+			fprintf(WriteFile, "%s%f\n", "Sky_Distance=", App->SBC_Scene->B_Environment[Count]->Distance);
+
+			//--------------- Fog
+			fprintf(WriteFile, "%s%i\n", "Fog_On=", App->SBC_Scene->B_Environment[Count]->Fog_On);
+			fprintf(WriteFile, "%s%i\n", "Fog_Mode=", App->SBC_Scene->B_Environment[Count]->Fog_Mode);
+
+			x = App->SBC_Scene->B_Environment[Count]->Fog_Colour.x;
+			y = App->SBC_Scene->B_Environment[Count]->Fog_Colour.y;
+			z = App->SBC_Scene->B_Environment[Count]->Fog_Colour.z;
+			fprintf(WriteFile, "%s%f,%f,%f\n", "Fog_Colour=", x, y, z);
+
+			fprintf(WriteFile, "%s%f\n", "Fog_Start=", App->SBC_Scene->B_Environment[Count]->Fog_Start);
+			fprintf(WriteFile, "%s%f\n", "Fog_End=", App->SBC_Scene->B_Environment[Count]->Fog_End);
+			fprintf(WriteFile, "%s%f\n", "Fog_Density=", App->SBC_Scene->B_Environment[Count]->Fog_Density);
+
+			fprintf(WriteFile, "%s\n", " ");
+			new_Count++;
+		}
+
+		Count++;
+	}
+
+	fprintf(WriteFile, "%s\n", "[Counters]");
+	fprintf(WriteFile, "%s%i\n", "Environment_Count=", new_Count);
+
+	fclose(WriteFile);
+
+	return 1;
+}
 // *************************************************************************
 // *	  	Save_Display_Folder:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
@@ -1373,7 +1516,7 @@ void SB_Project::Set_Paths()
 // *************************************************************************
 bool SB_Project::Load_Project()
 {
-	App->Log_Messageg("bool SB_Project::Load_Project()");
+	//App->Log_Messageg("bool SB_Project::Load_Project()");
 
 	m_Ini_Path_File_Name[0] = 0;
 
@@ -1390,6 +1533,7 @@ bool SB_Project::Load_Project()
 	Options->Has_Camera = 0;
 	Options->Has_Objects = 0;
 	Options->Has_Counters = 0;
+	Options->Has_Environments = 0;
 
 	int Int1 = 0;
 	char chr_Tag1[1024];
@@ -1410,12 +1554,13 @@ bool SB_Project::Load_Project()
 	Options->Has_Camera = App->Cl_Ini->GetInt("Options", "Cameras_Count", 0, 10);
 	Options->Has_Objects = App->Cl_Ini->GetInt("Options", "Objects_Count", 0, 10);
 	Options->Has_Counters = App->Cl_Ini->GetInt("Options", "Counters_Count", 0, 10);
+	Options->Has_Environments = App->Cl_Ini->GetInt("Options", "Environment_Count", 0, 10);
 	
-
 	App->SBC_Scene->UniqueID_Object_Counter = App->Cl_Ini->GetInt("Options", "Objects_ID_Count", 0, 10);
 	App->SBC_Scene->UniqueID_Counters_Count = App->Cl_Ini->GetInt("Options", "Counters_ID_Count", 0, 10);
 	App->SBC_Scene->UniqueID_Area_Count = App->Cl_Ini->GetInt("Options", "Areas_ID_Count", 0, 10);
-	
+	App->SBC_Scene->UniqueID_Environment_Count = App->Cl_Ini->GetInt("Options", "Environment_ID_Count", 0, 10);
+
 	App->SBC_Build->GameOptions->Show_FPS = App->Cl_Ini->GetInt("Config", "Show_FPS", 0, 10);
 	App->SBC_Build->GameOptions->FullScreen = App->Cl_Ini->GetInt("Config", "Game_FullScreen", 1, 10);
 
@@ -1428,7 +1573,7 @@ bool SB_Project::Load_Project()
 	{
 		bool test = Load_Project_Aera();
 		App->SBC_Scene->Area_Added = 1;
-		App->Cl_Environment->Load_Environment();
+		//App->Cl_Environment->Load_Environment();
 	}
 
 	// ------------------------------------- Player
@@ -1451,7 +1596,6 @@ bool SB_Project::Load_Project()
 	{
 		Load_Project_Objects();
 		App->SBC_Objects_Create->Add_Objects_From_File();
-
 	}
 
 	// ------------------------------------- Counters
@@ -1459,9 +1603,23 @@ bool SB_Project::Load_Project()
 	{
 		Load_Project_Counters();
 		App->SBC_Display->Add_Counters_From_File();
-
 	}
 
+	// ------------------------------------- Environments
+	if (Options->Has_Environments > 0)
+	{
+		Load_Project_Environments();
+		App->SBC_Com_Environments->Add_Environments_From_File();
+		App->Cl_Environment->Load_Environment();
+	}
+	else
+	{
+		App->SBC_Com_Environments->Add_New_Environment();
+		App->Cl_Environment->Load_Environment();
+	}
+
+
+	
 	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
 	
 	App->SBC_FileView->Change_Level_Name();
@@ -1741,6 +1899,146 @@ bool SB_Project::Load_Project_Objects()
 	}
 
 	App->SBC_Scene->Object_Count = Count;
+
+	return 1;
+}
+
+// *************************************************************************
+// *	  	Load_Project_Environments:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+bool SB_Project::Load_Project_Environments()
+{
+
+	char Object_Ini_Path[MAX_PATH];
+	char chr_Tag1[MAX_PATH];
+	int Environments_Count = 0;
+
+	float w = 0;
+	float x = 0;
+	float y = 0;
+	float z = 0;
+
+	strcpy(Object_Ini_Path, m_Project_Sub_Folder);
+	strcat(Object_Ini_Path, "\\");
+
+	strcat(Object_Ini_Path, m_Level_Name);
+	strcat(Object_Ini_Path, "\\");
+
+	strcat(Object_Ini_Path, "Environment");
+	strcat(Object_Ini_Path, "\\");
+
+	//---------------------------------------------------
+
+	strcat(Object_Ini_Path, "Environments.sdat");
+
+	App->Cl_Ini->SetPathName(Object_Ini_Path);
+
+	Environments_Count = App->Cl_Ini->GetInt("Counters", "Environment_Count", 0);
+
+	int Count = 0;
+
+	while (Count < Environments_Count)
+	{
+		App->SBC_Scene->B_Environment[Count] = new Base_Environment();
+		App->SBC_Scene->B_Environment[Count]->Set_Environment_Defaults();
+
+		int Int_Tag = 0;
+		//float x = 0;
+		//float y = 0;
+		//float z = 0;
+
+		char n_buff[255];
+		char buff[255];
+		strcpy(buff, "Environment_");
+		_itoa(Count, n_buff, 10);
+		strcat(buff, n_buff);
+
+		App->Cl_Ini->GetString(buff, "Environment_Name", chr_Tag1, MAX_PATH);
+		strcpy(App->SBC_Scene->B_Environment[Count]->Name, chr_Tag1);
+
+
+		App->SBC_Scene->B_Environment[Count]->This_Object_ID = App->Cl_Ini->GetInt(buff, "Environment_ID", 0);
+
+		//--------------- Sound
+		App->Cl_Ini->GetString(buff, "Sound_File", chr_Tag1, MAX_PATH);
+		strcpy(App->SBC_Scene->B_Environment[Count]->Sound_File, chr_Tag1);
+
+		App->Cl_Ini->GetString(buff, "Snd_Volume", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f", &x);
+		App->SBC_Scene->B_Environment[Count]->SndVolume = x;
+
+		Int_Tag = App->Cl_Ini->GetInt(buff, "Sound_Play", 0, 10);
+		App->SBC_Scene->B_Environment[Count]->Play = Int_Tag;
+
+		Int_Tag = App->Cl_Ini->GetInt(buff, "Sound_Loop", 0, 10);
+		App->SBC_Scene->B_Environment[Count]->Loop = Int_Tag;
+
+		//--------------- Light
+		App->Cl_Ini->GetString(buff, "Ambient_Colour", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+		App->SBC_Scene->B_Environment[Count]->AmbientColour = Ogre::Vector3(x, y, z);
+
+		App->Cl_Ini->GetString(buff, "Diffuse_Colour", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+		App->SBC_Scene->B_Environment[Count]->DiffuseColour = Ogre::Vector3(x, y, z);
+
+		App->Cl_Ini->GetString(buff, "Specular_Colour", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+		App->SBC_Scene->B_Environment[Count]->SpecularColour = Ogre::Vector3(x, y, z);
+
+		App->Cl_Ini->GetString(buff, "Light_Position", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+		App->SBC_Scene->B_Environment[Count]->Light_Position = Ogre::Vector3(x, y, z);
+
+		//--------------- Sky
+		Int_Tag = App->Cl_Ini->GetInt(buff, "Sky_Enable", 0, 10);
+		App->SBC_Scene->B_Environment[Count]->Enabled = Int_Tag;
+
+		Int_Tag = App->Cl_Ini->GetInt(buff, "Sky_Type", 0, 10);
+		App->SBC_Scene->B_Environment[Count]->type = Int_Tag;
+
+		App->Cl_Ini->GetString(buff, "Sky_Material", chr_Tag1, MAX_PATH);
+		strcpy(App->SBC_Scene->B_Environment[Count]->Material, chr_Tag1);
+
+		App->Cl_Ini->GetString(buff, "Sky_Curvature", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f", &x);
+		App->SBC_Scene->B_Environment[Count]->Curvature = x;
+
+		App->Cl_Ini->GetString(buff, "Sky_Tiling", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f", &x);
+		App->SBC_Scene->B_Environment[Count]->Tiling = x;
+
+		App->Cl_Ini->GetString(buff, "Sky_Distance", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f", &x);
+		App->SBC_Scene->B_Environment[Count]->Distance = x;
+
+		//--------------- Fog
+		Int_Tag = App->Cl_Ini->GetInt(buff, "Fog_On", 0, 10);
+		App->SBC_Scene->B_Environment[Count]->Fog_On = Int_Tag;
+
+		Int_Tag = App->Cl_Ini->GetInt(buff, "Fog_Mode", 0, 10);
+		App->SBC_Scene->B_Environment[Count]->Fog_Mode = Int_Tag;
+
+		App->Cl_Ini->GetString(buff, "Fog_Colour", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+		App->SBC_Scene->B_Environment[Count]->Fog_Colour = Ogre::Vector3(x, y, z);
+
+		App->Cl_Ini->GetString(buff, "Fog_Start", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f", &x);
+		App->SBC_Scene->B_Environment[Count]->Fog_Start = x;
+
+		App->Cl_Ini->GetString(buff, "Fog_End", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f", &x);
+		App->SBC_Scene->B_Environment[Count]->Fog_End = x;
+
+		App->Cl_Ini->GetString(buff, "Fog_Density", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f", &x);
+		App->SBC_Scene->B_Environment[Count]->Fog_Density = x;
+		
+		Count++;
+	}
+
+	App->SBC_Scene->Environment_Count = Count;
 
 	return 1;
 }

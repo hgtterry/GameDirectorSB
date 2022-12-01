@@ -49,6 +49,9 @@ SB_FileView::SB_FileView()
 	FV_Move_Folder = nullptr;
 	FV_Collectables_Folder = nullptr;
 	FV_Teleporters_Folder = nullptr;
+	FV_Environments_Folder = nullptr;
+
+
 	GD_Environment_Folder = nullptr;
 	GD_Area_Change_Folder = nullptr;
 	GD_Level_Change_Folder = nullptr;
@@ -156,8 +159,7 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 		ShowWindow(hDlg, 1);
 
 		SendDlgItemMessage(hDlg, IDC_TREE1, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_ENVIONMENT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		
+	
 		CheckMenuItem(App->mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND | MF_CHECKED);
 		return TRUE;
 	}
@@ -196,13 +198,6 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 		}
 
 		LPNMHDR some_item = (LPNMHDR)lParam;
-
-		if (some_item->idFrom == IDC_ENVIONMENT && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
-			return CDRF_DODEFAULT;
-		}
 
 		if (some_item->idFrom == IDC_LEVELS && some_item->code == NM_CUSTOMDRAW)
 		{
@@ -267,6 +262,13 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 				return TRUE;
 			}
 
+			if (App->SBC_FileView->Context_Selection == Enums::FileView_Environments_File)
+			{
+				//App->SBC_Object->Rename_Object(Index);
+				//App->SBC_Properties->Update_ListView_Collectables();
+				return TRUE;
+			}
+
 			App->SBC_Object->Rename_Object(Index);
 			App->SBC_Properties->Update_ListView_Objects();
 
@@ -295,16 +297,6 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 				ShowWindow(App->GD_Stock_Hwnd, 1);*/
 				//App->Cl_Stock->Start_Stock_Dialog();
 			}
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDC_ENVIONMENT)
-		{
-			if (App->SBC_Scene->Area_Added == 1)
-			{
-				App->Cl_Environment->Start_Environment();
-			}
-
 			return TRUE;
 		}
 
@@ -458,6 +450,7 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	tvinsert.item.iSelectedImage = 1;
 	GD_EntitiesFolder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
 
+	//--------------------------------------- Sounds
 	tvinsert.hParent = GD_EntitiesFolder;
 	tvinsert.hInsertAfter = TVI_LAST;
 	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
@@ -466,6 +459,7 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	tvinsert.item.iSelectedImage = 1;
 	FV_Sounds_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
 
+	//--------------------------------------- Messages
 	tvinsert.hParent = GD_EntitiesFolder;
 	tvinsert.hInsertAfter = TVI_LAST;
 	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
@@ -474,6 +468,7 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	tvinsert.item.iSelectedImage = 1;
 	FV_Message_Trigger_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
 
+	//--------------------------------------- Move_Entities
 	tvinsert.hParent = GD_EntitiesFolder;
 	tvinsert.hInsertAfter = TVI_LAST;
 	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
@@ -482,6 +477,7 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	tvinsert.item.iSelectedImage = 1;
 	FV_Move_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
 
+	//--------------------------------------- Collectables
 	tvinsert.hParent = GD_EntitiesFolder;
 	tvinsert.hInsertAfter = TVI_LAST;
 	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
@@ -490,7 +486,7 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	tvinsert.item.iSelectedImage = 1;
 	FV_Collectables_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
 
-	//----------------------------------------------------
+	//--------------------------------------- Teleporters
 	tvinsert.hParent = GD_EntitiesFolder;
 	tvinsert.hInsertAfter = TVI_LAST;
 	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
@@ -508,7 +504,7 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	//tvinsert.item.iSelectedImage = 1;
 	//GD_Particles_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
 
-	//----------------------------------------------------
+	//--------------------------------------- Collectables
 	tvinsert.hParent = FV_LevelFolder;
 	tvinsert.hInsertAfter = TVI_LAST;
 	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
@@ -517,6 +513,14 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	tvinsert.item.iSelectedImage = 1;
 	FV_Counters_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
 
+	//--------------------------------------- Environments
+	tvinsert.hParent = FV_LevelFolder;
+	tvinsert.hInsertAfter = TVI_LAST;
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	tvinsert.item.pszText = "Environments";
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
+	FV_Environments_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
 }
 
 // *************************************************************************
@@ -838,7 +842,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		return;
 	}
 
-	// Collectables
+	// ------------------------------------------------------------ Collectables
 	if (!strcmp(FileView_Folder, "Collectables")) // Folder
 	{
 
@@ -948,6 +952,27 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		return;
 	}
 
+	// ------------------------------------------------------------ Enviroments
+	if (!strcmp(FileView_Folder, "Environments")) // Folder
+	{
+		App->SBC_FileView->Context_Selection = Enums::FileView_Environments_Folder;
+		return;
+	}
+	if (!strcmp(FileView_File, "Environments"))
+	{
+		App->SBC_FileView->Context_Selection = Enums::FileView_Environments_File;
+
+		HideRightPanes();
+		ShowWindow(App->GD_Properties_Hwnd, 1);
+		
+		App->SBC_Properties->Edit_Category = Enums::Edit_Environment;
+		App->SBC_Properties->Current_Selected_Object = Index;
+
+		App->SBC_Properties->Update_ListView_Environments();
+
+		return;
+	}
+
 	// ------------------------------------------------------------ Text_Message
 	if (!strcmp(FileView_Folder, "Text_Message")) // Folder
 	{
@@ -961,173 +986,10 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		return;
 	}
 
-	// *************************************************************************
-	// *				"Environment	Terry Bernie 					 	   *
-	// *************************************************************************
-	if (!strcmp(FileView_Folder, "Environment")) // Folder
-	{
-		if (App->SBC_Scene->Area_Added == 0)
-		{
-			App->Say("An Area or Building must be Added Firest");
-			return;
-		}
-
-
-		//App->CL_Dialogs->YesNo("Add Entity", "Do you want to add a new Environment Entity now");
-		App->SBC_Dialogs->YesNo("Add Entity", "Not Available Yet Next Release", 1);
-		bool Doit = App->Cl_Dialogs->Canceled;
-		if (Doit == 0)
-		{
-			//App->CL10_Objects_New->Add_New_EnvironmentEntity();
-		}
-
-		return;
-	}
-	if (!strcmp(FileView_File, "Environment"))
-	{
-
-		HideRightPanes();
-		ShowWindow(App->GD_Properties_Hwnd, 1);
-
-//		App->SBC_Properties->Enable_Delete_Button(1);
-
-		//App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
-
-		//App->Cl_Object_Props->Selected_Object_Index = Index;
-		App->Cl_Visuals->MarkerBB_Addjust(Index);
-
-
-		App->SBC_Properties->Edit_Category = Enums::Edit_Environment;
-		App->SBC_Properties->Current_Selected_Object = Index;
-
-//		App->SBC_Properties->Update_Transform_Dlg();
-
-
-		if (App->SBC_Properties->Edit_Physics == 0)
-		{
-			//App->SBC_Properties->Update_ListView_Environment();
-		}
-		else
-		{
-			//App->SBC_Properties->Update_ListView_Physics();
-		}
-
-		return;
-	}
-
-	// *************************************************************************
-	// *				Area_Change Terry Bernie 						 	   *
-	// *************************************************************************
-	if (!strcmp(FileView_Folder, "Area_Change")) // Folder
-	{
-		if (App->SBC_Scene->Area_Added == 0)
-		{
-			App->Say("An Area or Building must be Added Firest");
-			return;
-		}
-
-		//App->CL_Dialogs->YesNo("Add Entity", "Do you want to add a new Area Change Entity now");
-		App->SBC_Dialogs->YesNo("Add Entity", "Not Available Yet Next Release", 1);
-		bool Doit = App->Cl_Dialogs->Canceled;
-		if (Doit == 0)
-		{
-			//App->CL10_Objects_New->Add_New_Area_Change();
-		}
-
-		return;
-	}
-	if (!strcmp(FileView_File, "Area_Change"))
-	{
-
-		HideRightPanes();
-		ShowWindow(App->GD_Properties_Hwnd, 1);
-		App->SBC_Props_Dialog->Hide_Area_Dlg(1);
-
-//		App->SBC_Properties->Enable_Delete_Button(1);
-
-		//App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
-
-		//App->Cl_Object_Props->Selected_Object_Index = Index;
-		App->Cl_Visuals->MarkerBB_Addjust(Index);
-
-
-		App->SBC_Properties->Edit_Category = Enums::Edit_Area_Change;
-		App->SBC_Properties->Current_Selected_Object = Index;
-
-//		App->SBC_Properties->Update_Transform_Dlg();
-
-
-		if (App->SBC_Properties->Edit_Physics == 0)
-		{
-			//App->SBC_Properties->Update_ListView_Environment();
-		}
-		else
-		{
-			//App->SBC_Properties->Update_ListView_Physics();
-		}
-
-		return;
-	}
-
-
-	// *************************************************************************
-	// *				Change_Level Terry Bernie 						 	   *
-	// *************************************************************************
-	if (!strcmp(FileView_Folder, "Change_Level")) // Folder
-	{
-		if (App->SBC_Scene->Area_Added == 0)
-		{
-			App->Say("An Area or Building must be Added Firest");
-			return;
-		}
-
-
-		//App->CL_Dialogs->YesNo("Add Entity", "Do you want to add a new Change Level Entity now");
-		App->SBC_Dialogs->YesNo("Add Entity", "Not Available Yet Next Release", 1);
-		bool Doit = App->Cl_Dialogs->Canceled;
-		if (Doit == 0)
-		{
-			//App->CL10_Objects_New->Add_New_Change_Level();
-		}
-
-		return;
-	}
-	if (!strcmp(FileView_File, "Change_Level"))
-	{
-
-		HideRightPanes();
-		ShowWindow(App->GD_Properties_Hwnd, 1);
-
-//		App->SBC_Properties->Enable_Delete_Button(1);
-
-		//App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
-
-		//App->Cl_Object_Props->Selected_Object_Index = Index;
-		App->Cl_Visuals->MarkerBB_Addjust(Index);
-
-
-		App->SBC_Properties->Edit_Category = Enums::Edit_Change_Level;
-		App->SBC_Properties->Current_Selected_Object = Index;
-
-//		App->SBC_Properties->Update_Transform_Dlg();
-
-
-		if (App->SBC_Properties->Edit_Physics == 0)
-		{
-			//App->SBC_Properties->Update_ListView_Environment();
-		}
-		else
-		{
-			//App->SBC_Properties->Update_ListView_Physics();
-		}
-
-		return;
-	}
-
 }
 
 // *************************************************************************
-// *					HideRightPanes Terry Bernie 					   *
+// *			HideRightPanesTerry and Hazel Flanigan 2022				   *
 // *************************************************************************
 void SB_FileView::HideRightPanes(void)
 {
@@ -1179,7 +1041,7 @@ HTREEITEM SB_FileView::Add_Item(HTREEITEM Folder,char *SFileName, int Index,bool
 }
 
 // *************************************************************************
-// *						Redraw_FileView Terry Bernie			 	   *
+// *			Redraw_FileViewTerry and Hazel Flanigan 2022		 	   *
 // *************************************************************************
 void SB_FileView::Redraw_FileView()
 {
@@ -1187,7 +1049,7 @@ void SB_FileView::Redraw_FileView()
 }
 
 // *************************************************************************
-// *					Change_Level_Name Terry Flanigan 				   *
+// *			Change_Level_NameTerry and Hazel Flanigan 2022 			   *
 // *************************************************************************
 void SB_FileView::Change_Level_Name(void)
 {
@@ -1201,7 +1063,7 @@ void SB_FileView::Change_Level_Name(void)
 }
 
 // *************************************************************************
-// *					Change_Project_Name Terry Flanigan 				   *
+// *		Change_Project_NameTerry and Hazel Flanigan 2022 			   *
 // *************************************************************************
 void SB_FileView::Change_Project_Name(void)
 {
@@ -1283,7 +1145,7 @@ void SB_FileView::Mark_Clear_Folder(HTREEITEM Item)
 }
 
 // *************************************************************************
-// *						Delete_AllItems Terry Bernie			 	   *
+// *				Delete_AllItems:- Terry and Hazel Flanigan 2022	 	   *
 // *************************************************************************
 void SB_FileView::Delete_AllItems()
 {
@@ -1307,7 +1169,7 @@ void SB_FileView::Delete_AllItems()
 }
 
 // *************************************************************************
-// *						DeleteItem  Terry Bernie 					   *
+// *				DeleteItem:- Terry and Hazel Flanigan 2022 			   *
 // *************************************************************************
 void SB_FileView::DeleteItem()
 {
@@ -1586,6 +1448,30 @@ void SB_FileView::Context_Menu(HWND hDlg)
 			Context_Selection = Enums::FileView_Counters_File;
 		}
 
+		//------------------------------------- Environments
+		if (!strcmp(App->SBC_FileView->FileView_Folder, "Environments")) // Folder
+		{
+			App->SBC_FileView->hMenu = CreatePopupMenu();
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_NEW, L"&New");
+			TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+			DestroyMenu(App->SBC_FileView->hMenu);
+			Context_Selection = Enums::FileView_Environments_Folder;
+		}
+
+		if (!strcmp(App->SBC_FileView->FileView_File, "Environments"))
+		{
+			App->SBC_FileView->hMenu = CreatePopupMenu();
+
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
+			TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+			DestroyMenu(App->SBC_FileView->hMenu);
+			Context_Selection = Enums::FileView_Environments_File;
+		}
+
 		//------------------------------------- Text_Messages
 		if (!strcmp(App->SBC_FileView->FileView_Folder, "Text_Message")) // Folder
 		{
@@ -1743,12 +1629,26 @@ void SB_FileView::Context_New(HWND hDlg)
 	if (App->SBC_FileView->Context_Selection == Enums::FileView_Counters_Folder)
 	{
 
-		App->SBC_Dialogs->YesNo("Add Object", "Do you want to add a new Counter", 1);
+		App->SBC_Dialogs->YesNo("Add Counter", "Do you want to add a new Counter", 1);
 
 		bool Doit = App->SBC_Dialogs->Canceled;
 		if (Doit == 0)
 		{
 			App->SBC_Display->Add_New_Counter();
+		}
+
+		return;
+	}
+
+	if (App->SBC_FileView->Context_Selection == Enums::FileView_Environments_Folder)
+	{
+
+		App->SBC_Dialogs->YesNo("Add Environment", "Do you want to add a new Environment", 1);
+
+		bool Doit = App->SBC_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+			App->SBC_Com_Environments->Add_New_Environment();
 		}
 
 		return;
@@ -1872,6 +1772,28 @@ void SB_FileView::Context_Delete(HWND hDlg)
 			App->SBC_Display->Delete_Counter();
 			App->SBC_FileView->Mark_Altered_Folder(App->SBC_FileView->FV_Counters_Folder);
 		}
+
+		return;
+	}
+
+	// ---------------- Counters
+	if (App->SBC_FileView->Context_Selection == Enums::FileView_Environments_File)
+	{
+
+		/*if (App->SBC_Scene->B_Counter[App->SBC_Properties->Current_Selected_Object]->Unique_ID == 0)
+		{
+			App->Say("This Counter can not be Deleted");
+			return;
+		}
+
+		App->SBC_Dialogs->YesNo("Remove Counter", "Are you sure", 1);
+
+		bool Doit = App->SBC_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+			App->SBC_Display->Delete_Counter();
+			App->SBC_FileView->Mark_Altered_Folder(App->SBC_FileView->FV_Counters_Folder);
+		}*/
 
 		return;
 	}

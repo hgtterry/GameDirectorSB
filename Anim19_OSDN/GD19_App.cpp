@@ -83,6 +83,8 @@ GD19_App::GD19_App(void)
 	SBC_Com_Messages =		nullptr;
 	SBC_Com_MoveEntity =	nullptr;
 	SBC_Com_Area =			nullptr;
+	SBC_Com_Environments =	nullptr;
+
 	SBC_Locations =			nullptr;
 
 	// ---------------------------------------------------- 29/12/21
@@ -249,6 +251,8 @@ bool GD19_App::InitApp(void)
 	SBC_Com_Collectables =	new SB_Com_Collectables();
 	SBC_Com_Messages =		new SB_Com_Messages();
 	SBC_Com_MoveEntity =	new SB_Com_MoveEntity();
+	SBC_Com_Environments =	new SB_Com_Environments();
+	
 	SBC_Locations =			new SB_Locations();
 	
 	//--------------

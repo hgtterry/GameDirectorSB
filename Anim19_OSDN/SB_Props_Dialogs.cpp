@@ -774,7 +774,6 @@ LRESULT CALLBACK SB_Props_Dialogs::Area_PropsPanel_Proc(HWND hDlg, UINT message,
 	{
 
 		SendDlgItemMessage(hDlg, IDC_PHYSICSAREADEBUG, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BT_AREA_ENVIRONMENT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		return TRUE;
 	}
@@ -796,13 +795,6 @@ LRESULT CALLBACK SB_Props_Dialogs::Area_PropsPanel_Proc(HWND hDlg, UINT message,
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle(item, App->SBC_Props_Dialog->Show_Area_Physics_Debug);
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_BT_AREA_ENVIRONMENT && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->Cl_Environment->Environment_Dlg_Active);
 			return CDRF_DODEFAULT;
 		}
 
@@ -832,20 +824,6 @@ LRESULT CALLBACK SB_Props_Dialogs::Area_PropsPanel_Proc(HWND hDlg, UINT message,
 				App->SBC_Scene->B_Area[Index]->Phys_Body->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 			}
 
-			return 1;
-		}
-
-		if (LOWORD(wParam) == IDC_BT_AREA_ENVIRONMENT)
-		{
-			if (App->Cl_Environment->Environment_Dlg_Active == 1)
-			{
-				App->Cl_Environment->Environment_Dlg_Active = 0;
-				EndDialog(App->Cl_Environment->Environment_hWnd, LOWORD(wParam));
-			}
-			else
-			{
-				App->Cl_Environment->Start_Environment();
-			}
 			return 1;
 		}
 

@@ -34,6 +34,7 @@ typedef struct Load_Options
 	int Has_Camera;
 	int Has_Objects;
 	int Has_Counters;
+	int Has_Environments;
 
 }Load_Options;
 
@@ -60,6 +61,7 @@ public:
 	char m_Objects_Folder_Path[MAX_PATH];
 	char m_Cameras_Folder_Path[MAX_PATH];
 	char m_Display_Folder_Path[MAX_PATH];
+	char m_Enviromnet_Folder_Path[MAX_PATH];
 	
 
 	char m_Main_Assets_Path[MAX_PATH];		// Asset Path where Object mesh are added too and used on Loading
@@ -95,12 +97,16 @@ protected:
 	bool Save_Display_Folder();
 	bool Save_Display_Data();
 
+	bool Save_Environment_Folder();
+	bool Save_Environment_Data();
+
 	bool Load_Get_Resource_Path();
 	bool Load_Project_Aera();
 	bool Load_Project_Player();
 	bool Load_Project_Camera();
 	bool Load_Project_Objects();
 	bool Load_Project_Counters();
+	bool Load_Project_Environments();
 
 	void Set_Paths();
 

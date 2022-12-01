@@ -349,7 +349,9 @@ namespace Enums
 		FileView_Counters_Folder = 19,
 		FileView_Counters_File = 20,
 		FileView_TextMessage_Folder = 21,
-		FileView_TextMessage_File = 22
+		FileView_TextMessage_File = 22,
+		FileView_Environments_Folder = 22,
+		FileView_Environments_File = 23
 	};
 }
 

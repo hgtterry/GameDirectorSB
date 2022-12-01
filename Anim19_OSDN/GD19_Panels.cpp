@@ -60,28 +60,17 @@ bool GD19_Panels::Resize_FileView(void)
 	NewHeight = HeightClient - 150;
 
 	HWND Temp = GetDlgItem(App->ListPanel, IDC_TREE1);
-	//HWND Tree2 = GetDlgItem(App->ListPanel, IDC_TREE2);
-
-	HWND Temp2 = GetDlgItem(App->ListPanel, IDC_ENVIONMENT);
 	HWND Temp3 = GetDlgItem(App->ListPanel, IDC_BT_INFO_FILEVIEW);
-	//HWND Temp4 = GetDlgItem(App->ListPanel, IDC_STOCK);
-
+	
 	hdwp = BeginDeferWindowPos(4);
 
 	DeferWindowPos(hdwp, Temp, NULL, 10, 10,
 		NewWidth + 370, NewHeight + 71, SWP_NOZORDER);
 
-	//DeferWindowPos(hdwp, Tree2, NULL, 10, 10,
-		//NewWidth + 370, NewHeight + 71, SWP_NOZORDER);
-
-	DeferWindowPos(hdwp, Temp2, NULL, 10, NewHeight + 85,
-		0, 07, SWP_NOSIZE | SWP_NOZORDER);
-
 	DeferWindowPos(hdwp, Temp3, NULL, 10, NewHeight + 113,
 		0, 07, SWP_NOSIZE | SWP_NOZORDER);
 
-	/*DeferWindowPos(hdwp, Temp4, NULL, 113, NewHeight + 87,
-		0, 07, SWP_NOSIZE | SWP_NOZORDER);*/
+
 
 	return EndDeferWindowPos(hdwp);
 }

@@ -54,6 +54,9 @@ SB_Scene::SB_Scene()
 	MessageNew_Count = 0;
 	UniqueID_MessageNew_Count = 500;
 
+	Environment_Count = 0;;
+	UniqueID_Environment_Count = 0;;
+
 	CurrentCamMode = 0;
 	Scene_Modified = 0;
 
@@ -98,6 +101,7 @@ void SB_Scene::Zero_Pointers()
 		B_Camera[Count] = NULL;
 		B_Locations[Count] = NULL;
 		B_Counter[Count] = NULL;
+		B_Environment[Count] = NULL;
 
 		Count++;
 	}

@@ -1172,6 +1172,9 @@ btBvhTriangleMeshShape* SB_Objects_Create::create_New_Trimesh(int Index)
 	App->Cl_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
 	Object->Physics_Valid = 1;
+
+	Set_Physics(Index);
+
 	return mShape;
 }
 
@@ -1342,8 +1345,10 @@ void SB_Objects_Create::Set_Physics(int Index)
 	App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
 
 	App->SBC_Scene->B_Object[Index]->Object_Node->setScale(App->SBC_Scene->B_Object[Index]->Mesh_Scale);
+
 	Ogre::Vector3 Scale = App->SBC_Scene->B_Object[Index]->Object_Node->getScale();
 	App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+
 	App->SBC_Dimensions->UpDate_Physics_And_Visuals(Index);
 
 	App->SBC_Scene->B_Object[Index]->Physics_Valid = 1;

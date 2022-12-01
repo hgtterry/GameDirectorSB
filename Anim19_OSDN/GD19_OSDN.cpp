@@ -236,7 +236,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		}
 
 		// ----------------------------------- Debug
-
+		case ID_DEBUG_SHOWSTARTUP:
+		{
+			App->SBC_Dialogs->Front_Screen();
+			return 1;
+		}
+		
 		case ID_DEBUG_CAMERA:
 		{
 			if (App->SBC_Debug->Show_Debug_Camera == 1)

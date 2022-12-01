@@ -6,7 +6,7 @@ material ALCHEM3_Not_loaded
          {
              texture_unit
              {
-                 texture BasicWall.dds
+                 texture rok.bmp.2.dds
              }
          }
     }

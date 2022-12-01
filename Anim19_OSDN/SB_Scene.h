@@ -29,6 +29,7 @@ distribution.
 #include "Base_Camera.h"
 #include "Base_Locations.h"
 #include "Base_Counter.h"
+#include "Base_Environment.h"
 
 class SB_Scene
 {
@@ -53,16 +54,17 @@ public:
 	Base_Camera*			B_Camera[20];
 	Base_Locations*			B_Locations[20];
 	Base_Counter*			B_Counter[20];
-	
-	bool Scene_Loaded;	// Is the Scene Loaded [131221]
+	Base_Environment*		B_Environment[20];
 
-	int Player_Count;		// Actual Player Count Zero Based
+	bool Scene_Loaded;	// Is the Scene Loaded
+
+	int Player_Count;		
 
 	int Area_Count;			
 	int UniqueID_Area_Count;
 
-	int Camera_Count;		// Actual Object Count Zero Based [171221]
-	int Entity_Count;		// Actual Object Count Zero Based [171221]
+	int Camera_Count;		
+	int Entity_Count;		
 
 	int Counters_Count;
 	int UniqueID_Counters_Count;
@@ -70,11 +72,14 @@ public:
 	int MessageNew_Count;
 	int UniqueID_MessageNew_Count;
 
-	int Object_Count;		// Actual Object Count Zero Based [171221]
+	int Object_Count;		
 	int UniqueID_Object_Counter;
 
 	int Player_Location_Count;
 	int Locations_ID_Counter;
+
+	int Environment_Count;
+	int UniqueID_Environment_Count;
 
 	int CurrentCamMode;
 

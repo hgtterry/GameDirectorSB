@@ -161,6 +161,7 @@
     <ClInclude Include="Base_Area.h" />
     <ClInclude Include="Base_Camera.h" />
     <ClInclude Include="Base_Counter.h" />
+    <ClInclude Include="Base_Environment.h" />
     <ClInclude Include="Base_Locations.h" />
     <ClInclude Include="Base_Object.h" />
     <ClInclude Include="Base_Player.h" />
@@ -190,6 +191,7 @@
     <ClInclude Include="SB_Collision.h" />
     <ClInclude Include="SB_Com_Area.h" />
     <ClInclude Include="SB_Com_Collectables.h" />
+    <ClInclude Include="SB_Com_Environments.h" />
     <ClInclude Include="SB_Com_Messages.h" />
     <ClInclude Include="SB_Com_MoveEntity.h" />
     <ClInclude Include="SB_Debug.h" />
@@ -226,6 +228,7 @@
     <ClCompile Include="Base_Area.cpp" />
     <ClCompile Include="Base_Camera.cpp" />
     <ClCompile Include="Base_Counter.cpp" />
+    <ClCompile Include="Base_Environment.cpp" />
     <ClCompile Include="Base_Locations.cpp" />
     <ClCompile Include="Base_Object.cpp" />
     <ClCompile Include="Base_Player.cpp" />
@@ -261,6 +264,7 @@
     <ClCompile Include="SB_Collision.cpp" />
     <ClCompile Include="SB_Com_Area.cpp" />
     <ClCompile Include="SB_Com_Collectables.cpp" />
+    <ClCompile Include="SB_Com_Environments.cpp" />
     <ClCompile Include="SB_Com_Messages.cpp" />
     <ClCompile Include="SB_Com_MoveEntity.cpp" />
     <ClCompile Include="SB_Debug.cpp" />
