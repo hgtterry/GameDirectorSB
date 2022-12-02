@@ -86,7 +86,7 @@ void SB_Import::Reload_FromResentFiles(char* ResentPathAndFile)
 {
 
 	// Check Recent File Exsists
-	bool Result = App->SBC_FileIO->Search_For_Folder(ResentPathAndFile);
+	bool Result = App->SBC_FileIO->Check_File_Exist(ResentPathAndFile);
 	if (Result == 0)
 	{
 		App->Say(" Can Not Find File:- This may be due to it has been deleted or renamed");

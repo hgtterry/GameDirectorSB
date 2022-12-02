@@ -93,7 +93,7 @@ void  SB_FileIO::Init_History()
 	strcat(DirCheck, "Equity");
 
 	bool check = 0;
-	check = Search_For_Folder(DirCheck);
+	check = Check_File_Exist(DirCheck);
 	if (check == 0)
 	{
 		mPreviousFiles.resize(EQUITY_NUM_RECENT_FILES);
@@ -310,16 +310,16 @@ bool SB_FileIO::SearchFolders(char* Path, char* File)
 }
 
 // *************************************************************************
-// *					Search_For_Folder Terry Bernie				 	   *
+// *		Check_File_Exist:- Terry and Hazel Flanigan 2022		 	   *
 // *************************************************************************
-bool SB_FileIO::Search_For_Folder(char* FolderPath)
+bool SB_FileIO::Check_File_Exist(char* Full_Path)
 {
 	char pSearchPath[1024];
 
 	WIN32_FIND_DATA FindFileData;
 	HANDLE hFind;
 
-	strcpy(pSearchPath, FolderPath);
+	strcpy(pSearchPath, Full_Path);
 
 	hFind = FindFirstFile(pSearchPath, &FindFileData);
 	if (hFind == INVALID_HANDLE_VALUE)

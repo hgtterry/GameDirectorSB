@@ -135,6 +135,8 @@
       <OutputFile>$(OutDir)GameDirectorSB.exe</OutputFile>
       <IgnoreSpecificDefaultLibraries>LIBCMT.lib;libcpmt.lib</IgnoreSpecificDefaultLibraries>
       <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
+      <LinkStatus>
+      </LinkStatus>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

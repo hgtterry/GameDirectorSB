@@ -1608,9 +1608,12 @@ bool SB_Project::Load_Project()
 	// ------------------------------------- Environments
 	if (Options->Has_Environments > 0)
 	{
-		Load_Project_Environments();
-		App->SBC_Com_Environments->Add_Environments_From_File();
-		App->Cl_Environment->Load_Environment();
+		bool isok = Load_Project_Environments();
+		if (isok == 1)
+		{
+			App->SBC_Com_Environments->Add_Environments_From_File();
+			App->Cl_Environment->Load_Environment();
+		}
 	}
 	else
 	{
@@ -1904,7 +1907,7 @@ bool SB_Project::Load_Project_Objects()
 }
 
 // *************************************************************************
-// *	  	Load_Project_Environments:- Terry and Hazel Flanigan 2022		   *
+// *	  	Load_Project_Environments:- Terry and Hazel Flanigan 2022	   *
 // *************************************************************************
 bool SB_Project::Load_Project_Environments()
 {
@@ -1926,11 +1929,23 @@ bool SB_Project::Load_Project_Environments()
 
 	strcat(Object_Ini_Path, "Environment");
 	strcat(Object_Ini_Path, "\\");
-
-	//---------------------------------------------------
-
 	strcat(Object_Ini_Path, "Environments.sdat");
 
+	//---------------------------------------------------
+	
+	bool check = App->SBC_FileIO->Check_File_Exist(Object_Ini_Path);
+	if (check == 0)
+	{
+		App->Say("Cant Find Environments.sdat\r\nA Default Environment will be Created");
+
+		App->SBC_Scene->Environment_Count = 0;
+		App->SBC_Scene->UniqueID_Environment_Count = 0;
+		App->SBC_Com_Environments->Add_New_Environment();
+		App->Cl_Environment->Load_Environment();
+
+		return 0;
+	}
+	
 	App->Cl_Ini->SetPathName(Object_Ini_Path);
 
 	Environments_Count = App->Cl_Ini->GetInt("Counters", "Environment_Count", 0);

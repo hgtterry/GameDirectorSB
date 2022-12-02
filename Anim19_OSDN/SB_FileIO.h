@@ -30,7 +30,10 @@ public:
 
 	bool Open_Project_File(char* Extension, char* Title, char* StartDirectory);
 	bool SearchFolders(char* Path, char* File);
-	bool Search_For_Folder(char* FolderPath);
+
+	// Returns 1 if File Exits 0 if no file
+	bool Check_File_Exist(char* Full_Path); 
+
 	void CheckPath(char *pString, char *FileName);
 	bool GetColor();
 	bool Directory_Vaild(LPCTSTR szPath);

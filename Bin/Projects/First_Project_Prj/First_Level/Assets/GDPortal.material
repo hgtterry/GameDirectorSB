@@ -1,0 +1,39 @@
+material ship-blue.bmp.0
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture ship-blue.bmp.0.dds
+             }
+         }
+    }
+}
+material piping2.bmp.1
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture piping2.bmp.1.dds
+             }
+         }
+    }
+}
+material rok.bmp.2
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture rok.bmp.2.dds
+             }
+         }
+    }
+}
