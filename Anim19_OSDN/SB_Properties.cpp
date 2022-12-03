@@ -692,6 +692,59 @@ bool SB_Properties::Update_ListView_Sounds()
 	return 1;
 }
 
+// *************************************************************************
+// *		Update_ListView_Environs:- Terry and Hazel Flanigan 2022	   *
+// *************************************************************************
+bool SB_Properties::Update_ListView_Environs()
+{
+	int index = Current_Selected_Object;
+
+	char Num[10];
+	char chr_ID[50];
+	_itoa(App->SBC_Scene->B_Object[index]->This_Object_ID, Num, 10);
+	strcpy(chr_ID, "Properties ID=");
+	strcat(chr_ID, Num);
+
+	SetWindowText(Properties_Dlg_hWnd, chr_ID);
+	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->B_Object[index]->Mesh_Name);
+
+
+	char chr_Volume[100];
+	float sum2 = App->SBC_Scene->B_Object[index]->SndVolume;
+	int Percent = int(sum2 * 100);
+	_itoa(Percent, chr_Volume, 10);
+
+	const int NUM_ITEMS = 2;
+	const int NUM_COLS = 2;
+	std::string grid[NUM_COLS][NUM_ITEMS];
+	LV_ITEM pitem;
+	memset(&pitem, 0, sizeof(LV_ITEM));
+	pitem.mask = LVIF_TEXT;
+
+	grid[0][0] = "Name", grid[1][0] = App->SBC_Scene->B_Object[index]->Mesh_Name;
+	grid[0][1] = " ", grid[1][1] = " ";
+	//grid[0][2] = "Sound", grid[1][2] = App->SBC_Scene->B_Object[index]->Sound_File;
+	//grid[0][3] = "Volume", grid[1][3] = chr_Volume;
+
+
+	ListView_DeleteAllItems(Properties_hLV);
+
+	for (DWORD row = 0; row < NUM_ITEMS; row++)
+	{
+		pitem.iItem = row;
+		pitem.pszText = const_cast<char*>(grid[0][row].c_str());
+		ListView_InsertItem(Properties_hLV, &pitem);
+
+		for (DWORD col = 1; col < NUM_COLS; col++)
+		{
+			ListView_SetItemText(Properties_hLV, row, col,
+				const_cast<char*>(grid[col][row].c_str()));
+		}
+	}
+
+	return 1;
+}
+
 // **************************************************************************
 // *		Update_ListView_Teleport():- Terry and Hazel Flanigan 2022		*
 // **************************************************************************
@@ -2209,8 +2262,8 @@ bool SB_Properties::Edit_Environments_OnClick(LPARAM lParam)
 	result = strcmp(btext, "Name");
 	if (result == 0)
 	{
-		//App->SBC_Display->Rename_Counter(Index);
-		//Update_ListView_Counters();
+		App->SBC_Com_Environments->Rename_Environment(Index);
+		App->SBC_Properties->Update_ListView_Environments();
 	}
 
 	result = strcmp(btext, "Set");
@@ -2763,8 +2816,8 @@ void SB_Properties::Reset_Last_Selected_Object(int Index)
 	App->SBC_Scene->B_Object[Index]->Object_Node->setVisible(true);
 	App->SBC_Object->Show_Mesh_Debug = 1;
 
-	App->Cl_Visuals->BoxNode->setVisible(false);
-	App->Cl_Grid->Arrow_Node->setVisible(false);
+	App->SBC_Visuals->BoxNode->setVisible(false);
+	App->SBC_Grid->Arrow_Node->setVisible(false);
 	App->SBC_Object->Hide_AllObjects_Except(Index, true);
 
 	App->SBC_Object->Hide_All_Except_Flag = 0;

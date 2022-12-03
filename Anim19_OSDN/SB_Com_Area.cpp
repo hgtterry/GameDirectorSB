@@ -374,7 +374,7 @@ void SB_Com_Area::UpDate_Physics_And_Visuals(int Index)
 	}
 
 
-	App->Cl_Visuals->MarkerBB_Addjust(Index);
+	App->SBC_Visuals->MarkerBB_Addjust(Index);
 
 	// Needs Looking at
 	App->SBC_Scene->B_Area[Index]->Altered = 1;

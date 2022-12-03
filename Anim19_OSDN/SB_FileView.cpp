@@ -43,14 +43,14 @@ SB_FileView::SB_FileView()
 	FV_LevelFolder = nullptr;
 	FV_Cameras_Folder = nullptr;
 	GD_TriggerFolder = nullptr;
-	GD_EntitiesFolder = nullptr;
+	FV_EntitiesFolder = nullptr;
 	FV_Sounds_Folder = nullptr;
 	FV_Message_Trigger_Folder = nullptr;
 	FV_Move_Folder = nullptr;
 	FV_Collectables_Folder = nullptr;
 	FV_Teleporters_Folder = nullptr;
 	FV_Environments_Folder = nullptr;
-
+	FV_Evirons_Folder = nullptr;
 
 	GD_Environment_Folder = nullptr;
 	GD_Area_Change_Folder = nullptr;
@@ -93,7 +93,7 @@ void SB_FileView::Reset_Class()
 	FV_LevelFolder = nullptr;
 	FV_Cameras_Folder = nullptr;
 	GD_TriggerFolder = nullptr;
-	GD_EntitiesFolder = nullptr;
+	FV_EntitiesFolder = nullptr;
 	FV_Sounds_Folder = nullptr;
 	FV_Message_Trigger_Folder = nullptr;
 	FV_Move_Folder = nullptr;
@@ -246,32 +246,7 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 		if (LOWORD(wParam) == IDM_FILE_RENAME)
 		{
-			int Index = App->SBC_Properties->Current_Selected_Object;
-
-			if (App->SBC_FileView->Context_Selection == Enums::FileView_Counters_File)
-			{
-				App->SBC_Display->Rename_Counter(Index);
-				App->SBC_Properties->Update_ListView_Counters();
-				return TRUE;
-			}
-
-			if (App->SBC_FileView->Context_Selection == Enums::FileView_Collectables_File)
-			{
-				App->SBC_Object->Rename_Object(Index);
-				App->SBC_Properties->Update_ListView_Collectables();
-				return TRUE;
-			}
-
-			if (App->SBC_FileView->Context_Selection == Enums::FileView_Environments_File)
-			{
-				//App->SBC_Object->Rename_Object(Index);
-				//App->SBC_Properties->Update_ListView_Collectables();
-				return TRUE;
-			}
-
-			App->SBC_Object->Rename_Object(Index);
-			App->SBC_Properties->Update_ListView_Objects();
-
+			App->SBC_FileView->Context_Rename(hDlg);
 			return TRUE;
 		}
 		
@@ -448,10 +423,10 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	tvinsert.item.pszText = "Entities";
 	tvinsert.item.iImage = 0;
 	tvinsert.item.iSelectedImage = 1;
-	GD_EntitiesFolder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+	FV_EntitiesFolder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
 
 	//--------------------------------------- Sounds
-	tvinsert.hParent = GD_EntitiesFolder;
+	tvinsert.hParent = FV_EntitiesFolder;
 	tvinsert.hInsertAfter = TVI_LAST;
 	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
 	tvinsert.item.pszText = "Sounds";
@@ -460,7 +435,7 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	FV_Sounds_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
 
 	//--------------------------------------- Messages
-	tvinsert.hParent = GD_EntitiesFolder;
+	tvinsert.hParent = FV_EntitiesFolder;
 	tvinsert.hInsertAfter = TVI_LAST;
 	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
 	tvinsert.item.pszText = "Messages";
@@ -469,7 +444,7 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	FV_Message_Trigger_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
 
 	//--------------------------------------- Move_Entities
-	tvinsert.hParent = GD_EntitiesFolder;
+	tvinsert.hParent = FV_EntitiesFolder;
 	tvinsert.hInsertAfter = TVI_LAST;
 	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
 	tvinsert.item.pszText = "Move_Entities";
@@ -478,7 +453,7 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	FV_Move_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
 
 	//--------------------------------------- Collectables
-	tvinsert.hParent = GD_EntitiesFolder;
+	tvinsert.hParent = FV_EntitiesFolder;
 	tvinsert.hInsertAfter = TVI_LAST;
 	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
 	tvinsert.item.pszText = "Collectables";
@@ -487,13 +462,22 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	FV_Collectables_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
 
 	//--------------------------------------- Teleporters
-	tvinsert.hParent = GD_EntitiesFolder;
+	tvinsert.hParent = FV_EntitiesFolder;
 	tvinsert.hInsertAfter = TVI_LAST;
 	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
 	tvinsert.item.pszText = "Teleporters";
 	tvinsert.item.iImage = 0;
 	tvinsert.item.iSelectedImage = 1;
 	FV_Teleporters_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
+
+	//--------------------------------------- Eviron_Entity
+	tvinsert.hParent = FV_EntitiesFolder;
+	tvinsert.hInsertAfter = TVI_LAST;
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	tvinsert.item.pszText = "Eviron_Entities";
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
+	FV_Evirons_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
 
 	////----------------------------------------------------
 	//tvinsert.hParent = GD_EntitiesFolder;
@@ -533,7 +517,7 @@ void SB_FileView::ExpandRoot(void)
 
 	TreeView_Expand(Temp, GD_ProjectFolder, TVE_EXPAND);
 	TreeView_Expand(Temp, FV_LevelFolder, TVE_EXPAND);
-	TreeView_Expand(Temp, GD_EntitiesFolder, TVE_EXPAND);
+	TreeView_Expand(Temp, FV_EntitiesFolder, TVE_EXPAND);
 }
 
 // *************************************************************************
@@ -567,10 +551,6 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 	TreeView_GetItem(((LPNMHDR)lParam)->hwndFrom, &item1);
 
 	
-
-	//App->SBC_Properties->Enable_Test_Button(0);
-	//App->SBC_Properties->Enable_Delete_Button(0);
-
 	//--------------------------------------------------------------------------
 
 	if (!strcmp(FileView_Folder, App->SBC_Project->m_Level_Name)) // Level Folder
@@ -642,7 +622,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 		App->SBC_LookUps->Update_Types();
 
-		App->Cl_Visuals->MarkerBB_Addjust(Index);
+		App->SBC_Visuals->MarkerBB_Addjust(Index);
 
 		App->SBC_Properties->Update_ListView_Objects();
 		
@@ -732,10 +712,41 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		App->SBC_Properties->Last_Selected_Object = Index;
 		//----------------------------------------------------------------------------
 
-		App->Cl_Visuals->MarkerBB_Addjust(Index);
+		App->SBC_Visuals->MarkerBB_Addjust(Index);
 		
 		App->SBC_Properties->Update_ListView_Sounds();
 		
+		return;
+	}
+
+	// ------------------------------------------------------------ Eviron_Entities
+	if (!strcmp(FileView_Folder, "Eviron_Entities")) // Folder
+	{
+		App->SBC_FileView->Context_Selection = Enums::FileView_EnvironEntity_Folder;
+		return;
+	}
+	if (!strcmp(FileView_File, "Eviron_Entities"))
+	{
+		App->SBC_FileView->Context_Selection = Enums::FileView_EnvironEntity_File;
+
+		HideRightPanes();
+		ShowWindow(App->GD_Properties_Hwnd, 1);
+		App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
+		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->B_Object[Index]->Dimensions_Locked);
+		App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
+
+		App->SBC_Properties->Edit_Category = Enums::Edit_Environs;
+
+		//----------------------------------------------------------------------------
+		App->SBC_Properties->Current_Selected_Object = Index;
+		App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
+		App->SBC_Properties->Last_Selected_Object = Index;
+		//----------------------------------------------------------------------------
+
+		App->SBC_Visuals->MarkerBB_Addjust(Index);
+
+		App->SBC_Properties->Update_ListView_Environs();
+
 		return;
 	}
 
@@ -766,7 +777,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		App->SBC_Properties->Last_Selected_Object = Index;
 		//----------------------------------------------------------------------------
 
-		App->Cl_Visuals->MarkerBB_Addjust(Index);
+		App->SBC_Visuals->MarkerBB_Addjust(Index);
 
 		App->SBC_Properties->Update_ListView_Messages();
 		
@@ -801,7 +812,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		App->SBC_Properties->Last_Selected_Object = Index;
 		//----------------------------------------------------------------------------
 
-		App->Cl_Visuals->MarkerBB_Addjust(Index);
+		App->SBC_Visuals->MarkerBB_Addjust(Index);
 
 		App->SBC_Properties->Update_ListView_Move_Entities();
 
@@ -835,7 +846,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		App->SBC_Properties->Last_Selected_Object = Index;
 		//----------------------------------------------------------------------------
 		
-		App->Cl_Visuals->MarkerBB_Addjust(Index);
+		App->SBC_Visuals->MarkerBB_Addjust(Index);
 
 		App->SBC_Properties->Update_ListView_Teleport();
 		
@@ -870,7 +881,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		App->SBC_Properties->Last_Selected_Object = Index;
 		//----------------------------------------------------------------------------
 
-		App->Cl_Visuals->MarkerBB_Addjust(Index);
+		App->SBC_Visuals->MarkerBB_Addjust(Index);
 
 		App->SBC_Properties->Update_ListView_Collectables();
 		
@@ -908,7 +919,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		//App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
 
 		//App->Cl_Object_Props->Selected_Object_Index = Index;
-		App->Cl_Visuals->MarkerBB_Addjust(Index);
+		App->SBC_Visuals->MarkerBB_Addjust(Index);
 
 
 		App->SBC_Properties->Edit_Category = Enums::Edit_Particles;
@@ -1157,7 +1168,7 @@ void SB_FileView::Delete_AllItems()
 	FV_LevelFolder = NULL;
 	FV_Cameras_Folder = NULL;
 	GD_TriggerFolder = NULL;
-	GD_EntitiesFolder = NULL;
+	FV_EntitiesFolder = NULL;
 	FV_Sounds_Folder = NULL;
 	FV_Message_Trigger_Folder = NULL;
 
@@ -1326,6 +1337,30 @@ void SB_FileView::Context_Menu(HWND hDlg)
 			TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
 			DestroyMenu(App->SBC_FileView->hMenu);
 			Context_Selection = Enums::FileView_Sounds_File;
+		}
+
+		//------------------------------------- Eviron_Entities
+		if (!strcmp(App->SBC_FileView->FileView_Folder, "Eviron_Entities")) // Folder
+		{
+			App->SBC_FileView->hMenu = CreatePopupMenu();
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_NEW, L"&New");
+			TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+			DestroyMenu(App->SBC_FileView->hMenu);
+			Context_Selection = Enums::FileView_EnvironEntity_Folder;
+		}
+
+		if (!strcmp(App->SBC_FileView->FileView_File, "Eviron_Entities"))
+		{
+			App->SBC_FileView->hMenu = CreatePopupMenu();
+
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
+			TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+			DestroyMenu(App->SBC_FileView->hMenu);
+			Context_Selection = Enums::FileView_EnvironEntity_File;
 		}
 
 		//------------------------------------- Areas
@@ -1585,6 +1620,20 @@ void SB_FileView::Context_New(HWND hDlg)
 		return;
 	}
 
+	if (App->SBC_FileView->Context_Selection == Enums::FileView_EnvironEntity_Folder)
+	{
+		/*App->SBC_Dialogs->YesNo("Add Environ Entity", "Do you want to add a new Environ Entity", 1);
+
+		bool Doit = App->SBC_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+			App->SBC_Com_Environments->Add_New_Environ_Entity();
+		}*/
+
+		return;
+	}
+
+
 	if (App->SBC_FileView->Context_Selection == Enums::FileView_Move_Folder)
 	{
 		App->SBC_Dialogs->YesNo("Add Message", "Do you want to add a new Move Entity", 1);
@@ -1776,36 +1825,62 @@ void SB_FileView::Context_Delete(HWND hDlg)
 		return;
 	}
 
-	// ---------------- Counters
+	// ---------------- Environments
 	if (App->SBC_FileView->Context_Selection == Enums::FileView_Environments_File)
 	{
 
-		/*if (App->SBC_Scene->B_Counter[App->SBC_Properties->Current_Selected_Object]->Unique_ID == 0)
+		if (App->SBC_Scene->B_Environment[App->SBC_Properties->Current_Selected_Object]->This_Object_ID == 0)
 		{
-			App->Say("This Counter can not be Deleted");
+			App->Say("This Environment can not be Deleted");
 			return;
 		}
 
-		App->SBC_Dialogs->YesNo("Remove Counter", "Are you sure", 1);
+		App->SBC_Dialogs->YesNo("Remove Environment", "Are you sure", 1);
 
 		bool Doit = App->SBC_Dialogs->Canceled;
 		if (Doit == 0)
 		{
-			App->SBC_Display->Delete_Counter();
-			App->SBC_FileView->Mark_Altered_Folder(App->SBC_FileView->FV_Counters_Folder);
-		}*/
+			App->SBC_Com_Environments->Delete_Environment();
+			App->SBC_FileView->Mark_Altered_Folder(App->SBC_FileView->FV_Environments_Folder);
+		}
 
-		return;
-	}
-
-	// ---------------- TextMessages
-	if (App->SBC_FileView->Context_Selection == Enums::FileView_TextMessage_File) // Needs_Removing
-	{
-		
 		return;
 	}
 
 	return;
+}
+
+// *************************************************************************
+// *				Context_Rename:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+void SB_FileView::Context_Rename(HWND hDlg)
+{
+	int Index = App->SBC_Properties->Current_Selected_Object;
+
+	if (App->SBC_FileView->Context_Selection == Enums::FileView_Counters_File)
+	{
+		App->SBC_Display->Rename_Counter(Index);
+		App->SBC_Properties->Update_ListView_Counters();
+		return;
+	}
+
+	if (App->SBC_FileView->Context_Selection == Enums::FileView_Collectables_File)
+	{
+		App->SBC_Object->Rename_Object(Index);
+		App->SBC_Properties->Update_ListView_Collectables();
+		return;
+	}
+
+	if (App->SBC_FileView->Context_Selection == Enums::FileView_Environments_File)
+	{
+		App->SBC_Com_Environments->Rename_Environment(Index);
+		App->SBC_Properties->Update_ListView_Environments();
+		return;
+	}
+
+	App->SBC_Object->Rename_Object(Index);
+	App->SBC_Properties->Update_ListView_Objects();
+
 }
 
 

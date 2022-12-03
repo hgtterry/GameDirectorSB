@@ -103,7 +103,7 @@ bool SB_Project_Create::First_Area_Build_Project()
 	App->SBC_Locations->Create_Location_Entity("Start_Position");
 
 	// ------------------------ Set Scene
-	App->Cl_Grid->Grid_SetVisible(1);
+	App->SBC_Grid->Grid_SetVisible(1);
 	App->SBC_FileView->Redraw_FileView();
 
 	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Area[0]->FileViewItem);

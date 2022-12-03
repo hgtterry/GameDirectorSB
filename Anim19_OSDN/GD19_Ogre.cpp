@@ -67,18 +67,18 @@ bool GD19_Ogre::InitOgre(void)
 	ModelNode->attachObject(manObj);
 
 	// Set Up Grid Functions
-	App->Cl_Grid->Grid_Update(1);
-	App->Cl_Grid->Hair_Update(1);
+	App->SBC_Grid->Grid_Update(1);
+	App->SBC_Grid->Hair_Update(1);
 
-	App->Cl_Grid->DummyNode = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	App->SBC_Grid->DummyNode = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 
-	App->Cl_Visuals->Load_PickSight();
-	App->Cl_Grid->Load_Arrow();
+	App->SBC_Visuals->Load_PickSight();
+	App->SBC_Grid->Load_Arrow();
 	App->SBC_Markers->Load_All_Axis();
 
 	m_imgui.Init(mSceneMgr,RenderHwnd);
 
-	App->Cl_Visuals->MarkerBB_Setup();
+	App->SBC_Visuals->MarkerBB_Setup();
 	
 	createFrameListener();
 	

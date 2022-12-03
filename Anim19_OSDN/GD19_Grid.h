@@ -1,5 +1,5 @@
 /*
-Copyright (c) GameDirector 2019 Inflanite Software W.T.Flanigan H.C.Flanigan B.Parkin
+Copyright (c) 2022 GameDirectorSB and EquityME -- HGTInflanite Software W.T.Flanigan H.C.Flanigan
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -22,11 +22,11 @@ distribution.
 */
 
 #pragma once
-class GD19_Grid
+class SB_Grid
 {
 public:
-	GD19_Grid(void);
-	~GD19_Grid(void);
+	SB_Grid(void);
+	~SB_Grid(void);
 
 	void Reset_Class();
 	void Move_Arrow(Ogre::Vector3 pos);

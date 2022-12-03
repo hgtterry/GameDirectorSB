@@ -31,5 +31,12 @@ public:
 	void Add_New_Environment();
 	bool Add_Environments_From_File();
 	void Mark_As_Altered(int Index);
+	void Delete_Environment();
+	void Rename_Environment(int Index);
+
+	bool Add_New_Environ_Entity();
+	bool Create_Environ_Entity(int Index);
+	void Set_Environ_Defaults(int Index);
+
 };
 

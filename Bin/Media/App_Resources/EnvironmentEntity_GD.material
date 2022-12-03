@@ -1,0 +1,108 @@
+
+material EnvironmentEntity_GD_Material_0
+{
+	technique
+	{
+		pass
+		{
+			scene_blend colour_blend
+			depth_write off
+			texture_unit
+			{
+				texture Environment.jpg
+			}
+		}
+
+	}
+
+}
+
+material EnvironmentEntity_GD_Material_1
+{
+	technique
+	{
+		pass
+		{
+			scene_blend colour_blend
+			depth_write off
+			texture_unit
+			{
+				texture Environment.jpg
+			}
+		}
+
+	}
+
+}
+
+material EnvironmentEntity_GD_Material_2
+{
+	technique
+	{
+		pass
+		{
+			scene_blend colour_blend
+			depth_write off
+			texture_unit
+			{
+				texture Environment.jpg
+			}
+		}
+
+	}
+
+}
+
+material EnvironmentEntity_GD_Material_3
+{
+	technique
+	{
+		pass
+		{
+			scene_blend colour_blend
+			depth_write off
+			texture_unit
+			{
+				texture Environment.jpg
+			}
+		}
+
+	}
+
+}
+
+material EnvironmentEntity_GD_Material_4
+{
+	technique
+	{
+		pass
+		{
+			scene_blend colour_blend
+			depth_write off
+			texture_unit
+			{
+				texture Environment.jpg
+			}
+		}
+
+	}
+
+}
+
+material EnvironmentEntity_GD_Material_5
+{
+	technique
+	{
+		pass
+		{
+			scene_blend colour_blend
+			depth_write off
+			texture_unit
+			{
+				texture Environment.jpg
+			}
+		}
+
+	}
+
+}

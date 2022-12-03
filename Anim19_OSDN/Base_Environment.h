@@ -65,6 +65,5 @@ public:
 	float Fog_Start;
 	float Fog_End;
 	float Fog_Density;
-
 };
 

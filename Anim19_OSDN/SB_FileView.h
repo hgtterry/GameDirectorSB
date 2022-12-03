@@ -74,7 +74,9 @@ public:
 	HTREEITEM FV_Counters_Folder;
 	HTREEITEM FV_Environments_Folder;
 	HTREEITEM FV_Counters2_Folder;
-	
+	HTREEITEM FV_EntitiesFolder;
+	HTREEITEM FV_Evirons_Folder;
+
 	HMENU hMenu;
 
 protected:
@@ -91,6 +93,7 @@ protected:
 	void Context_Menu(HWND hDlg);
 	void Context_New(HWND hDlg);
 	void Context_Delete(HWND hDlg);
+	void Context_Rename(HWND hDlg);
 
 	TV_INSERTSTRUCT tvinsert;
 
@@ -100,7 +103,6 @@ protected:
 	HTREEITEM Root;
 	HTREEITEM GD_ProjectFolder;
 	HTREEITEM GD_TriggerFolder;
-	HTREEITEM GD_EntitiesFolder;
 	HTREEITEM GD_Environment_Folder;
 	HTREEITEM GD_Area_Change_Folder;
 	HTREEITEM GD_Level_Change_Folder;

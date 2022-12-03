@@ -217,10 +217,10 @@ LRESULT CALLBACK SB_TopTabs::TopBar_Globals_Proc(HWND hDlg, UINT message, WPARAM
 		{
 			HWND Temp = GetDlgItem(hDlg, IDC_TBSHOWGRID);
 
-			if (App->Cl_Grid->ShowGridFlag == 1)
+			if (App->SBC_Grid->ShowGridFlag == 1)
 			{
-				App->Cl_Grid->Grid_SetVisible(0);
-				App->Cl_Grid->ShowGridFlag = 0;
+				App->SBC_Grid->Grid_SetVisible(0);
+				App->SBC_Grid->ShowGridFlag = 0;
 
 				App->SBC_TopTabs->Toggle_Grid_Flag = 0;
 
@@ -228,8 +228,8 @@ LRESULT CALLBACK SB_TopTabs::TopBar_Globals_Proc(HWND hDlg, UINT message, WPARAM
 			}
 			else
 			{
-				App->Cl_Grid->Grid_SetVisible(1);
-				App->Cl_Grid->ShowGridFlag = 1;
+				App->SBC_Grid->Grid_SetVisible(1);
+				App->SBC_Grid->ShowGridFlag = 1;
 
 				App->SBC_TopTabs->Toggle_Grid_Flag = 1;
 
@@ -244,10 +244,10 @@ LRESULT CALLBACK SB_TopTabs::TopBar_Globals_Proc(HWND hDlg, UINT message, WPARAM
 		{
 			HWND Temp = GetDlgItem(hDlg, IDC_TBSHOWHAIR);
 
-			if (App->Cl_Grid->ShowHair == 1)
+			if (App->SBC_Grid->ShowHair == 1)
 			{
-				App->Cl_Grid->ShowHair = 0;
-				App->Cl_Grid->Hair_SetVisible(0);
+				App->SBC_Grid->ShowHair = 0;
+				App->SBC_Grid->Hair_SetVisible(0);
 
 				App->SBC_TopTabs->Toggle_Hair_Flag = 0;
 
@@ -255,8 +255,8 @@ LRESULT CALLBACK SB_TopTabs::TopBar_Globals_Proc(HWND hDlg, UINT message, WPARAM
 			}
 			else
 			{
-				App->Cl_Grid->ShowHair = 1;
-				App->Cl_Grid->Hair_SetVisible(1);
+				App->SBC_Grid->ShowHair = 1;
+				App->SBC_Grid->Hair_SetVisible(1);
 
 				App->SBC_TopTabs->Toggle_Hair_Flag = 1;
 
@@ -493,12 +493,12 @@ void SB_TopTabs::Reset_Main_Controls(void)
 	// Main Controls
 
 	Toggle_Hair_Flag = 1;
-	App->Cl_Grid->ShowHair = 1;
-	App->Cl_Grid->Hair_SetVisible(1);
+	App->SBC_Grid->ShowHair = 1;
+	App->SBC_Grid->Hair_SetVisible(1);
 
 	Toggle_Grid_Flag = 1;
-	App->Cl_Grid->Grid_SetVisible(1);
-	App->Cl_Grid->ShowGridFlag = 1;
+	App->SBC_Grid->Grid_SetVisible(1);
+	App->SBC_Grid->ShowGridFlag = 1;
 }
 
 // *************************************************************************
@@ -651,7 +651,7 @@ LRESULT CALLBACK SB_TopTabs::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 					App->CL_Vm_ImGui->Show_Object_Selection = 0;
 
 					App->SBC_TopTabs->Toggle_Select_Flag = 0;
-					App->Cl_Visuals->mPickSight->hide();
+					App->SBC_Visuals->mPickSight->hide();
 					App->Cl19_Ogre->OgreListener->GD_Selection_Mode = 0;
 
 				}
@@ -659,7 +659,7 @@ LRESULT CALLBACK SB_TopTabs::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 				{
 
 					App->SBC_TopTabs->Toggle_Select_Flag = 1;
-					App->Cl_Visuals->mPickSight->show();
+					App->SBC_Visuals->mPickSight->show();
 					App->Cl19_Ogre->OgreListener->GD_Selection_Mode = 1;
 
 				}

@@ -77,6 +77,40 @@ typedef struct Collectable_type
 
 }Collectable_type;
 
+typedef struct Environ_type
+{
+	//--------------- Sound
+	irrklang::ISound* SndFile;
+	Ogre::Real SndVolume;
+	char Sound_File[MAX_PATH];
+	bool Play;
+	bool Loop;
+
+	//--------------- Light
+	Ogre::Vector3 AmbientColour;
+	Ogre::Vector3 DiffuseColour;
+	Ogre::Vector3 SpecularColour;
+	Ogre::Vector3 Light_Position;
+
+	//--------------- Sky
+	bool Enabled;
+	int type;
+	char Material[MAX_PATH];
+	float Curvature;
+	float Tiling;
+	float Distance;
+
+	//--------------- Fog
+	int Fog_On;
+	int Fog_Mode;
+	Ogre::Vector3 Fog_Colour;
+	float Fog_Start;
+	float Fog_End;
+	float Fog_Density;
+
+}Environ_type;
+
+
 #pragma once
 class Base_Object
 {
@@ -151,18 +185,13 @@ public:
 	irrklang::ISound* SndFile;
 	Ogre::Real SndVolume;
 
-	//-----Move Entity
+	
 	Move_Type* S_MoveType[1];
-
-	//-----Teleport Entity
 	Teleport_type* S_Teleport[1];
-
-	//-----Collectable
 	Collectable_type* S_Collectable[1];
-
-	//-----Message Entity
-
 	Message_type*	S_Message[1];
+	Environ_type*	S_Environ[1];
+
 
 	bool Show_Message_Flag;
 	char ImGui_Panel_Name[MAX_PATH];

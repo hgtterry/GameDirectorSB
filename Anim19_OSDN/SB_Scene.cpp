@@ -42,7 +42,6 @@ SB_Scene::SB_Scene()
 
 	Object_Count = 0;
 	Camera_Count = 0;
-	Entity_Count = 0;
 
 	Counters_Count = 0;
 	UniqueID_Counters_Count = 0;
@@ -150,24 +149,7 @@ void SB_Scene::Reset_Class()
 		Count++;
 	}
 
-	// Zero Counters
-	Scene_Loaded = 0;
-	Area_Added = 0;
-	Player_Added = 0;
-	Camera_Added = 0;
-
-	Counters_Count = 0;
-	UniqueID_Counters_Count = 0;
-
-	Object_Count = 0;
-	UniqueID_Object_Counter = 0;
-
-	MessageNew_Count = 0;
-	UniqueID_MessageNew_Count = 500;
-
-	Player_Count = 0;
-	Area_Count = 0;
-	Camera_Count = 0;
+	
 }
 
 // *************************************************************************
@@ -175,21 +157,25 @@ void SB_Scene::Reset_Class()
 // *************************************************************************
 bool SB_Scene::Clear_Level()
 {
-
+	
 	App->SBC_Project->Reset_Class();
 	App->SBC_FileView->Reset_Class();
 	App->SBC_TopTabs->Reset_Class();
 	App->SBC_Properties->Reset_Class();
 
+	App->SBC_Visuals->BoxNode->setVisible(false);
+	App->SBC_Grid->Arrow_Node->setVisible(false);
+
 	App->Set_Main_TitleBar(" ");
 
+	
 	if (App->SBC_Scene->Scene_Loaded == 1)
 	{
 		App->SBC_Physics->Enable_Physics(0);
 
 		App->SBC_Player->Reset_Class();
-		App->SBC_Com_Area->Reset_Class();
 
+		App->SBC_Com_Area->Reset_Class();
 
 		// Bullet Related
 		int i;
@@ -201,13 +187,11 @@ bool SB_Scene::Clear_Level()
 		}
 	}
 
+
 	Scene_Modified = 0;
 
 	Reset_Class(); // This One
 
-	UniqueID_Object_Counter = 0;
-	Object_Count = 0;
-	
 	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamNone;
 
 	App->SBC_Camera->Reset_View();
@@ -215,9 +199,42 @@ bool SB_Scene::Clear_Level()
 	Delete_Resources_Group();
 	Project_Resources_Created = 0;
 
+	Reset_Counters();
+
 	App->SBC_FileView->SelectItem(App->SBC_FileView->FV_LevelFolder);
 
 	return 1;
+}
+
+// *************************************************************************
+// *			Reset_Counters:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void SB_Scene::Reset_Counters()
+{
+	Object_Count = 0;
+	UniqueID_Object_Counter = 0;
+
+
+	Camera_Count = 0;
+
+	Counters_Count = 0;
+	UniqueID_Counters_Count = 0;
+
+	Project_Resources_Created = 0;
+
+	MessageNew_Count = 0;
+	UniqueID_MessageNew_Count = 500;
+
+	Environment_Count = 0;;
+	UniqueID_Environment_Count = 0;;
+
+	CurrentCamMode = 0;
+	Scene_Modified = 0;
+
+	Scene_Loaded = 0;
+
+	Player_Location_Count = 0;
+	Locations_ID_Counter = 0;
 }
 
 // *************************************************************************
@@ -275,9 +292,9 @@ bool SB_Scene::Game_Mode(void)
 
 	App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 0;
 	
-	App->Cl_Grid->Grid_SetVisible(0);
-	App->Cl_Grid->Hair_SetVisible(0);
-	App->Cl_Grid->Arrow_Node->setVisible(0);
+	App->SBC_Grid->Grid_SetVisible(0);
+	App->SBC_Grid->Hair_SetVisible(0);
+	App->SBC_Grid->Arrow_Node->setVisible(0);
 
 	////App->Cl19_Ogre->textArea->hide();
 
@@ -307,7 +324,7 @@ bool SB_Scene::Game_Mode(void)
 	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamFirst;
 
 
-	App->Cl_Visuals->BoxNode->setVisible(false);
+	App->SBC_Visuals->BoxNode->setVisible(false);
 
 	//App->Cl19_Ogre->OgreListener->GD_Dubug_Physics = 0;
 
@@ -350,8 +367,8 @@ bool SB_Scene::Editor_Mode(void)
 
 	App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 1;
 
-	App->Cl_Grid->Grid_SetVisible(1);
-	App->Cl_Grid->Hair_SetVisible(1);
+	App->SBC_Grid->Grid_SetVisible(1);
+	App->SBC_Grid->Hair_SetVisible(1);
 
 	App->Cl19_Ogre->OgreListener->Pl_LeftMouseDown = 0;
 	ReleaseCapture();

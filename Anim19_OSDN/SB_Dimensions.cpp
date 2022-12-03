@@ -921,7 +921,7 @@ void SB_Dimensions::UpDate_Physics_And_Visuals(int Index)
 	}
 	
 
-	App->Cl_Visuals->MarkerBB_Addjust(Index);
+	App->SBC_Visuals->MarkerBB_Addjust(Index);
 
 	// Needs Looking at
 	App->SBC_Scene->B_Object[Index]->Altered = 1;

@@ -1,5 +1,5 @@
 /*
-Copyright (c) GameDirector 2019 Inflanite Software W.T.Flanigan H.C.Flanigan B.Parkin
+Copyright (c) 2022 GameDirectorSB and EquityME -- HGTInflanite Software W.T.Flanigan H.C.Flanigan
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -30,7 +30,7 @@ distribution.
 #pragma warning( disable : 4244 4305)
 
 
-GD19_Grid::GD19_Grid(void)
+SB_Grid::SB_Grid(void)
 {
 	GridManual = NULL;
 	GridNode = NULL;
@@ -80,14 +80,14 @@ GD19_Grid::GD19_Grid(void)
 }
 
 
-GD19_Grid::~GD19_Grid(void)
+SB_Grid::~SB_Grid(void)
 {
 }
 
 // *************************************************************************
-// *	  					Reset_Class Terry Bernie					   *
+// *	  		Reset_Class:- Terry and Hazel Flanigan 2022				   *
 // *************************************************************************
-void GD19_Grid::Reset_Class()
+void SB_Grid::Reset_Class()
 {
 	App->SBC_Camera->Reset_View();
 }
@@ -95,7 +95,7 @@ void GD19_Grid::Reset_Class()
 // *************************************************************************
 // *	  		Load_Arrow:- Terry and Hazel Flanigan 2022				   *
 // *************************************************************************
-void GD19_Grid::Load_Arrow()
+void SB_Grid::Load_Arrow()
 {
 	Arrow_Ent = App->Cl19_Ogre->mSceneMgr->createEntity("Arrow", "Gizmo.mesh", App->Cl19_Ogre->App_Resource_Group);
 	Arrow_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
@@ -109,7 +109,7 @@ void GD19_Grid::Load_Arrow()
 // *************************************************************************
 // *	  		Load_Crosshair:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
-void GD19_Grid::Load_Crosshair()
+void SB_Grid::Load_Crosshair()
 {
 	Crosshair_Ent = App->Cl19_Ogre->mSceneMgr->createEntity("Crosshair", "axes.mesh", App->Cl19_Ogre->App_Resource_Group);
 	Crosshair_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
@@ -121,9 +121,9 @@ void GD19_Grid::Load_Crosshair()
 }
 
 // *************************************************************************
-// *	  					Grid_Update Terry Bernie					   *
+// *	  		Grid_Update:- Terry and Hazel Flanigan 2022				   *
 // *************************************************************************
-void GD19_Grid::Grid_Update(bool Create)
+void SB_Grid::Grid_Update(bool Create)
 {
 	int i = 0;
 	Real r;
@@ -192,9 +192,9 @@ void GD19_Grid::Grid_Update(bool Create)
 	GridNode->setScale(Scale_X, Scale_Y, Scale_Z);
 }
 // *************************************************************************
-// *	  					Hair_Update Terry Bernie					   *
+// *	  		Hair_Update:- Terry and Hazel Flanigan 2022				   *
 // *************************************************************************
-void GD19_Grid::Hair_Update(bool Create)
+void SB_Grid::Hair_Update(bool Create)
 {
 	if (Create == 1)
 	{
@@ -234,24 +234,24 @@ void GD19_Grid::Hair_Update(bool Create)
 	HairNode->setScale(Scale_X, Scale_Y, Scale_Z);
 }
 // *************************************************************************
-// *	  				Grid_SetVisiable Terry Bernie					   *
+// *	  	Grid_SetVisiable:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
-void GD19_Grid::Grid_SetVisible(bool Option)
+void SB_Grid::Grid_SetVisible(bool Option)
 {
 	GridNode->setVisible(Option);
 }
 // *************************************************************************
-// *	  				Hair_SetVisiable Terry Bernie					   *
+// *	  	Hair_SetVisiable:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
-void GD19_Grid::Hair_SetVisible(bool Option)
+void SB_Grid::Hair_SetVisible(bool Option)
 {
 	HairNode->setVisible(Option);
 }
 
 // *************************************************************************
-// *	  			Hair_DisplayGeneralCrossHair Terry Bernie			   *
+// *	  Hair_DisplayGeneralCrossHair:- Terry and Hazel Flanigan 2022	   *
 // *************************************************************************
-void GD19_Grid::Hair_DisplayGeneralCrossHair(float x, float y, float z, bool Option)
+void SB_Grid::Hair_DisplayGeneralCrossHair(float x, float y, float z, bool Option)
 {
 	/*App->Cl_Ogre->RenderListener->Hair_1PosX = x;
 	App->Cl_Ogre->RenderListener->Hair_1PosY = y;
@@ -260,9 +260,9 @@ void GD19_Grid::Hair_DisplayGeneralCrossHair(float x, float y, float z, bool Opt
 
 
 // *************************************************************************
-// *	  					Move_ArrowTerry Bernie						   *
+// *	  	Move_ArrowTerry:- Terry and Hazel Flanigan 2022				   *
 // *************************************************************************
-void GD19_Grid::Move_Arrow(Ogre::Vector3 pos)
+void SB_Grid::Move_Arrow(Ogre::Vector3 pos)
 {
 	Arrow_Node->setVisible(true);
 	Arrow_Node->setPosition(pos);

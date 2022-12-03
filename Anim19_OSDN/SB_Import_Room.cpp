@@ -38,7 +38,7 @@ bool SB_Import_Room::Room_Loader(char* Extension, char* Extension2)
 
 	App->SBC_Scene->Area_Added = 1;
 
-	App->Cl_Grid->Grid_SetVisible(1);
+	App->SBC_Grid->Grid_SetVisible(1);
 
 	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
 

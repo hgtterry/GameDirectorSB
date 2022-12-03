@@ -42,7 +42,8 @@ public:
 	bool Create_Resources_Group();
 	bool Delete_Resources_Group();
 	bool Add_Resource_Location_Project(char* Resource_Location);
-	
+	void Reset_Counters();
+
 	bool Game_Mode(void);
 	bool Editor_Mode(void);
 	void Go_FullScreen_Mode(void);
@@ -64,8 +65,7 @@ public:
 	int UniqueID_Area_Count;
 
 	int Camera_Count;		
-	int Entity_Count;		
-
+		
 	int Counters_Count;
 	int UniqueID_Counters_Count;
 

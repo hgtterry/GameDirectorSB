@@ -438,10 +438,6 @@ bool SB_Project::Save_Project()
 	if (App->SBC_Scene->Player_Added == 1)
 	{
 		Save_Players_Folder();
-
-		//App->SBC_Scene->B_Player[0]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Players_Folder,"Player_1", 0, false);
-		//App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Players_Folder);
-
 	}
 
 	Save_Cameras_Folder();

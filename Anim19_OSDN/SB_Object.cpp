@@ -237,6 +237,8 @@ void SB_Object::Clear_Modified_Objects()
 		App->SBC_FileView->Mark_Clear_Folder(App->SBC_FileView->FV_Sounds_Folder);
 	}
 
+	App->SBC_FileView->Mark_Clear_Folder(App->SBC_FileView->FV_Environments_Folder);
+
 	App->SBC_Scene->Scene_Modified = 0;
 
 	EnableMenuItem(App->mMenu, ID_FILE_SAVEPROJECTALL, MF_GRAYED);

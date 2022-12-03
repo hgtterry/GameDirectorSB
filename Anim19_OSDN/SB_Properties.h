@@ -48,6 +48,7 @@ public:
 	bool Update_ListView_Collectables();
 	bool Update_ListView_Counters();
 	bool Update_ListView_Environments();
+	bool Update_ListView_Environs();
 
 	void Reset_Last_Selected_Object(int Index);
 

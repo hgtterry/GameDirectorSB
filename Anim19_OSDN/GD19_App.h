@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2021 EquitySB and EquityME -- Inflanite Software W.T.Flanigan H.C.Flanigan
+Copyright (c) 2022 GameDirectorSB and EquityME -- HGTInflanite Software W.T.Flanigan H.C.Flanigan
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -93,11 +93,11 @@ public:
 
 	GD19_Ogre*			Cl19_Ogre;
 	GD19_Utilities*		Cl_Utilities;
-	GD19_Grid*			Cl_Grid;
+	SB_Grid*			SBC_Grid;
 	GD19_Panels*		Cl_Panels;
 	GD19_Bullet*		Cl_Bullet;
 	T_Ini*				Cl_Ini;
-	GD19_Visuals*		Cl_Visuals;
+	SB_Visuals*			SBC_Visuals;
 	GD19_Environment*	Cl_Environment;
 	GD19_Dialogs*		Cl_Dialogs;
 	GD19_Objects_Com*	Cl_Objects_Com;

@@ -73,6 +73,7 @@ bool SB_Com_Collectables::Add_New_Collectable()
 	App->SBC_Scene->B_Object[Index]->FileViewItem = Temp;
 
 	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[Index]->FileViewItem);
+	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_EntitiesFolder);
 
 	App->SBC_Scene->UniqueID_Object_Counter++; // Unique ID
 	App->SBC_Scene->Object_Count++;  // Must be last line

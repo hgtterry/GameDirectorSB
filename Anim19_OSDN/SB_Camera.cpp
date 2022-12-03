@@ -147,11 +147,11 @@ void SB_Camera::Hide_Cam_Dlg(bool Show)
 void SB_Camera::Reset_View(void)
 {
 
-	App->Cl_Grid->GridNode->setPosition(0, 0, 0);
-	App->Cl_Grid->GridNode->resetOrientation();
+	App->SBC_Grid->GridNode->setPosition(0, 0, 0);
+	App->SBC_Grid->GridNode->resetOrientation();
 
-	App->Cl_Grid->HairNode->setPosition(0, 0, 0);
-	App->Cl_Grid->HairNode->resetOrientation();
+	App->SBC_Grid->HairNode->setPosition(0, 0, 0);
+	App->SBC_Grid->HairNode->resetOrientation();
 
 	App->Cl19_Ogre->mCamera->setPosition(Ogre::Vector3(0, 90, 100));
 	

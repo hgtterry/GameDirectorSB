@@ -376,7 +376,7 @@ void VM_ImGui::Object_Selection(void)
 		if (ImGui::Button("Yes"))
 		{
 			App->SBC_TopTabs->Toggle_Select_Flag = 0;
-			App->Cl_Visuals->mPickSight->hide();
+			App->SBC_Visuals->mPickSight->hide();
 			App->Cl19_Ogre->OgreListener->GD_Selection_Mode = 0;
 
 			RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
@@ -391,7 +391,7 @@ void VM_ImGui::Object_Selection(void)
 		if (ImGui::Button("No"))
 		{
 			App->SBC_TopTabs->Toggle_Select_Flag = 0;
-			App->Cl_Visuals->mPickSight->hide();
+			App->SBC_Visuals->mPickSight->hide();
 			App->Cl19_Ogre->OgreListener->GD_Selection_Mode = 0;
 
 			RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
