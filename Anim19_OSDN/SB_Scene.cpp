@@ -72,6 +72,8 @@ SB_Scene::SB_Scene()
 	B_Camera[20] = { nullptr };
 	B_Locations[20] = { nullptr };
 	B_Counter[20] = { nullptr };
+	B_Environment[20] = { nullptr };
+
 }
 
 
@@ -298,10 +300,10 @@ bool SB_Scene::Game_Mode(void)
 
 	////App->Cl19_Ogre->textArea->hide();
 
-	if (App->SBC_Scene->B_Area[0]->S_Environment[0]->Play == 1)
+	if (App->SBC_Scene->B_Environment[0]->Play == 1)
 	{
 		int result = 1;
-		result = strcmp(App->SBC_Scene->B_Area[0]->S_Environment[0]->Sound_File, "None");
+		result = strcmp(App->SBC_Scene->B_Environment[0]->Sound_File, "None");
 		if (result == 1) // Could be Unsafe 
 		{
 			
@@ -309,12 +311,12 @@ bool SB_Scene::Game_Mode(void)
 			strcpy(buff, App->SBC_SoundMgr->Default_Folder);
 			strcat(buff, "\\Media\\Sounds\\");
 
-			strcat(buff, App->SBC_Scene->B_Area[0]->S_Environment[0]->Sound_File);
+			strcat(buff, B_Environment[0]->Sound_File);
 
-			App->SBC_Scene->B_Area[0]->S_Environment[0]->SndFile = App->SBC_SoundMgr->SoundEngine->play2D(buff, App->SBC_Scene->B_Area[0]->S_Environment[0]->Loop, true, true);
+			App->SBC_Scene->B_Environment[0]->SndFile = App->SBC_SoundMgr->SoundEngine->play2D(buff, App->SBC_Scene->B_Environment[0]->Loop, true, true);
 
-			App->SBC_Scene->B_Area[0]->S_Environment[0]->SndFile->setVolume(App->SBC_Scene->B_Area[0]->S_Environment[0]->SndVolume);
-			App->SBC_Scene->B_Area[0]->S_Environment[0]->SndFile->setIsPaused(false);
+			App->SBC_Scene->B_Environment[0]->SndFile->setVolume(App->SBC_Scene->B_Environment[0]->SndVolume);
+			App->SBC_Scene->B_Environment[0]->SndFile->setIsPaused(false);
 		}
 	}
 
@@ -376,14 +378,14 @@ bool SB_Scene::Editor_Mode(void)
 
 	if (App->SBC_Scene->Scene_Loaded == 1)
 	{
-		if (App->SBC_Scene->B_Area[0]->S_Environment[0]->SndFile == NULL)
+		if (App->SBC_Scene->B_Environment[0]->SndFile == NULL)
 		{
 		}
 		else
 		{
-			App->SBC_Scene->B_Area[0]->S_Environment[0]->SndFile->setIsPaused(true);
-			App->SBC_Scene->B_Area[0]->S_Environment[0]->SndFile->drop();
-			App->SBC_Scene->B_Area[0]->S_Environment[0]->SndFile = NULL;
+			App->SBC_Scene->B_Environment[0]->SndFile->setIsPaused(true);
+			App->SBC_Scene->B_Environment[0]->SndFile->drop();
+			App->SBC_Scene->B_Environment[0]->SndFile = NULL;
 		}
 
 		Show_Entities(true); // Show All Visible Trigers

@@ -284,6 +284,9 @@ void SB_Com_Environments::Set_Environ_Defaults(int Index)
 {
 	App->SBC_Scene->B_Object[Index]->Altered = 0;
 
+	App->SBC_Scene->B_Object[Index]->S_Environ[0]->Environment_ID = 0;
+	strcpy(App->SBC_Scene->B_Object[Index]->S_Environ[0]->Environment_Name,"Not_Set");
+
 	//----------------------- Sound
 	strcpy(App->SBC_Scene->B_Object[Index]->S_Environ[0]->Sound_File, "The_Sun.ogg");
 	App->SBC_Scene->B_Object[Index]->S_Environ[0]->SndFile = NULL;
@@ -323,4 +326,52 @@ void SB_Com_Environments::Set_Environ_Defaults(int Index)
 	App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Start = 50;
 	App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_End = 300;
 	App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour = Ogre::Vector3(1, 1, 1);
+}
+
+// *************************************************************************
+// *				Load_Environment  Terry Bernie						   *
+// *************************************************************************
+void SB_Com_Environments::Load_Environment(void)
+{
+	float x = App->SBC_Scene->B_Environment[0]->AmbientColour.x;
+	float y = App->SBC_Scene->B_Environment[0]->AmbientColour.y;
+	float z = App->SBC_Scene->B_Environment[0]->AmbientColour.z;
+
+	App->Cl19_Ogre->mSceneMgr->setAmbientLight(ColourValue(x, y, z));
+
+	if (App->SBC_Scene->B_Environment[0]->Fog_On == 1)
+	{
+		EnableFog(true);
+	}
+	else
+	{
+		App->Cl19_Ogre->mSceneMgr->setFog(FOG_NONE, ColourValue(0.7, 0.7, 0.8), 0, 100, 1000);
+	}
+}
+
+// *************************************************************************
+// *	  				  EnableFog	Terry Bernie						   *
+// *************************************************************************
+bool SB_Com_Environments::EnableFog(bool SetFog)
+{
+	int Index = App->SBC_Properties->Current_Selected_Object;
+
+	if (SetFog == true)
+	{
+		float Start = App->SBC_Scene->B_Environment[Index]->Fog_Start;
+		float End = App->SBC_Scene->B_Environment[Index]->Fog_End;
+		float Density = App->SBC_Scene->B_Environment[Index]->Fog_Density;
+
+		float x = App->SBC_Scene->B_Environment[Index]->Fog_Colour.x;
+		float y = App->SBC_Scene->B_Environment[Index]->Fog_Colour.y;
+		float z = App->SBC_Scene->B_Environment[Index]->Fog_Colour.z;
+
+		App->Cl19_Ogre->mSceneMgr->setFog(FOG_LINEAR, ColourValue(x, y, z), Density, (Ogre::Real)Start, (Ogre::Real)End);
+	}
+	else
+	{
+		App->Cl19_Ogre->mSceneMgr->setFog(FOG_NONE, ColourValue(0.7, 0.7, 0.8), 0, 100, 1000);
+	}
+
+	return 1;
 }

@@ -59,8 +59,8 @@ void SB_Project_Create::Start_New_Project()
 void SB_Project_Create::Add_First_New_Area()
 {
 	First_Area_Build_Project();
-	App->SBC_Scene->B_Area[0]->S_Environment[0] = new Environment_type;
-	App->SBC_Com_Area->Set_Environment_Defaults(0);
+	//App->SBC_Scene->B_Area[0]->S_Environment[0] = new Environment_type;
+	//App->SBC_Com_Area->Set_Environment_Defaults(0);
 }
 
 // *************************************************************************

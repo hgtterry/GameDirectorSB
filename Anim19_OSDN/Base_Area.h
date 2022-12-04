@@ -1,38 +1,5 @@
 #pragma once
 
-typedef struct Environment_type
-{
-	//--------------- Sound
-	irrklang::ISound* SndFile;
-	Ogre::Real SndVolume;
-	char Sound_File[MAX_PATH];
-	bool Play;
-	bool Loop;
-
-	//--------------- Light
-	Ogre::Vector3 AmbientColour;
-	Ogre::Vector3 DiffuseColour;
-	Ogre::Vector3 SpecularColour;
-	Ogre::Vector3 Light_Position;
-
-	//--------------- Sky
-	bool Enabled;
-	int type;
-	char Material[255];
-	float Curvature;
-	float Tiling;
-	float Distance;
-
-	//--------------- Fog
-	int Fog_On;
-	int Fog_Mode;
-	Ogre::Vector3 Fog_Colour;
-	float Fog_Start;
-	float Fog_End;
-	float Fog_Density;
-
-}Environment_type;
-
 class Base_Area
 {
 public:
@@ -80,8 +47,5 @@ public:
 
 	bool Physics_Debug_On;
 
-	//------------------------------ Environment
-	
-	Environment_type* S_Environment[1];
 };
 

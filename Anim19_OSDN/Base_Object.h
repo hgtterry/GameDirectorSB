@@ -79,6 +79,9 @@ typedef struct Collectable_type
 
 typedef struct Environ_type
 {
+	int Environment_ID;
+	char Environment_Name[MAX_PATH];
+
 	//--------------- Sound
 	irrklang::ISound* SndFile;
 	Ogre::Real SndVolume;

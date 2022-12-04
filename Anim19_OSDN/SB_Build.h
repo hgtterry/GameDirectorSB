@@ -67,6 +67,9 @@ protected:
 	bool Build_Objects_Data();
 	bool Build_Display_Folder();
 	bool Build_Display_Data();
+	bool Build_Environment_Folder();
+	bool Build_Environment_Data();
+
 	void Copy_Sound_Files(void);
 
 	//------------------------------------------
@@ -103,6 +106,7 @@ protected:
 	char m_Cameras_Folder_Path[MAX_PATH];
 	char m_Objects_Folder_Path[MAX_PATH];
 	char m_Display_Folder_Path[MAX_PATH];
+	char m_Enviromnet_Folder_Path[MAX_PATH];
 
 	HWND DlgHwnd;
 

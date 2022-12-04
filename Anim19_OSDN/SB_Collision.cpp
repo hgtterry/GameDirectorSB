@@ -50,22 +50,18 @@ SB_Collision::~SB_Collision()
 // **************************************************************************
 bool SB_Collision::Play_Sound(int Index)
 {
+	char buff[1024];
+	strcpy(buff, App->SBC_SoundMgr->Default_Folder);
+	strcat(buff, "\\Media\\Sounds\\");
 
-	//if (App->Cl_Scene_Data->Cl_Object[Index]->HasSound == 1 && App->Cl_Scene_Data->Cl_Object[Index]->Play_v2 == 1)
-	{
-		char buff[1024];
-		strcpy(buff, App->SBC_SoundMgr->Default_Folder);
-		strcat(buff, "\\Media\\Sounds\\");
+	strcat(buff, App->SBC_Scene->B_Object[Index]->Sound_File);
 
-		strcat(buff, App->SBC_Scene->B_Object[Index]->Sound_File);
+	App->SBC_SoundMgr->SndFile = App->SBC_SoundMgr->SoundEngine->play2D(buff, false, true, true);
+	App->SBC_SoundMgr->SndFile->setVolume(App->SBC_Scene->B_Object[Index]->SndVolume);
+	App->SBC_SoundMgr->SndFile->setIsPaused(false);
 
-		App->SBC_SoundMgr->SndFile = App->SBC_SoundMgr->SoundEngine->play2D(buff, false, true, true);
-		App->SBC_SoundMgr->SndFile->setVolume(App->SBC_Scene->B_Object[Index]->SndVolume);
-		App->SBC_SoundMgr->SndFile->setIsPaused(false);
-
-		App->SBC_Scene->B_Object[Index]->Triggered = 1;
-	}
-
+	App->SBC_Scene->B_Object[Index]->Triggered = 1;
+	
 	return 1;
 }
 
@@ -429,37 +425,33 @@ bool SB_Collision::Do_Collectable(int Index)
 	return 1;
 }
 
-//
-//// *************************************************************************
-//// *						Do_Environment Terry Bernie					   *
-//// *************************************************************************
-//bool GD19_Collision::Do_Environment(int Index)
-//{
-//	//if (App->Cl_Scene_Data->Cl_Object[Index]->Re_Trigger == false && App->Cl_Scene_Data->Cl_Object[Index]->Triggered == 1) // Retrigger Yes No
-//	//{
-//	//	return 1;
-//	//}
-//
-//	//if (App->Cl_Scene_Data->Cl_Object[Index]->Triggered == 1) // Retrigger Yes No
-//	//{
-//	//	return 1;
-//	//}
-//
-//	//if (App->Cl_Scene_Data->Cl_Object[Index]->HasSound == 1)
-//	//{
-//	//	if (App->Cl_Scene_Data->Cl_Object[Index]->S_Environment[0]->FogOn == 0)
-//	//	{
-//	//		App->Cl_Scene_Data->Cl_Object[Index]->S_Environment[0]->FogOn = 1;
-//	//		App->Cl_Environment->EnableFog(true);
-//	//	}
-//	//	else
-//	//	{
-//	//		App->Cl_Scene_Data->Cl_Object[Index]->S_Environment[0]->FogOn = 0;
-//	//		App->Cl_Environment->EnableFog(false);
-//	//	}
-//
-//	//		Play_Sound(Index);
-//	//}
-//
-//	return 1;
-//}
+// *************************************************************************
+// *						Do_Environment Terry Bernie					   *
+// *************************************************************************
+bool SB_Collision::Do_Environment(int Index)
+{
+	if (App->SBC_Scene->B_Object[Index]->Triggered == 1) // Retrigger Yes No
+	{
+		return 1;
+	}
+
+
+
+	//if (App->Cl_Scene_Data->Cl_Object[Index]->HasSound == 1)
+	//{
+	//	if (App->Cl_Scene_Data->Cl_Object[Index]->S_Environment[0]->FogOn == 0)
+	//	{
+	//		App->Cl_Scene_Data->Cl_Object[Index]->S_Environment[0]->FogOn = 1;
+	//		App->Cl_Environment->EnableFog(true);
+	//	}
+	//	else
+	//	{
+	//		App->Cl_Scene_Data->Cl_Object[Index]->S_Environment[0]->FogOn = 0;
+			App->Cl_Environment->EnableFog(true);
+	//	}
+
+	//		Play_Sound(Index);
+	//}
+
+	return 1;
+}

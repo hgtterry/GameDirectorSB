@@ -37,8 +37,6 @@ public:
 	bool Add_New_Area();
 	void Add_Aera_To_Project(int Index, char* FileName, char* Resource_Location);
 
-	void Set_Environment_Defaults(int Index);
-
 protected:
 
 	//btBvhTriangleMeshShape* create_Area_Trimesh(Base_Area* Object);

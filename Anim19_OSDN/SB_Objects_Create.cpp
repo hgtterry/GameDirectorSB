@@ -99,9 +99,15 @@ bool SB_Objects_Create::Add_Objects_From_File() // From File
 			App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_EntitiesFolder);
 
 		}
-		else if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Teleport)
+		else if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_EnvironEntity)
 		{
-			//Add_TeleportEntity_FFile(Count);
+			App->SBC_Com_Environments->Create_Environ_Entity(Count);
+
+			HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Evirons_Folder, App->SBC_Scene->B_Object[Count]->Mesh_Name, Count, false);
+			App->SBC_Scene->B_Object[Count]->FileViewItem = Temp;
+
+			App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Evirons_Folder);
+
 		}
 		else
 		{

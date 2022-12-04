@@ -37,6 +37,7 @@ public:
 	bool Add_New_Environ_Entity();
 	bool Create_Environ_Entity(int Index);
 	void Set_Environ_Defaults(int Index);
-
+	void Load_Environment(void);
+	bool EnableFog(bool SetFog);
 };
 

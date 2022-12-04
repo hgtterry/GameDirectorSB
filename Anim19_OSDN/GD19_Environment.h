@@ -6,7 +6,6 @@ public:
 	~GD19_Environment(void);
 
 	void Start_Environment(void);
-	void Load_Environment(void);
 	bool EnableFog(bool SetFog);
 
 	bool Environment_Dlg_Active;

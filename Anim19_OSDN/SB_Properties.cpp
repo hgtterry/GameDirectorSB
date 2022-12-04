@@ -708,23 +708,24 @@ bool SB_Properties::Update_ListView_Environs()
 	SetWindowText(Properties_Dlg_hWnd, chr_ID);
 	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->B_Object[index]->Mesh_Name);
 
+	char chr_Environment_Name[100];
+	int Environment_ID = App->SBC_Scene->B_Object[index]->S_Environ[0]->Environment_ID;
+	strcpy(chr_Environment_Name, App->SBC_Scene->B_Environment[Environment_ID]->Name);
 
-	char chr_Volume[100];
-	float sum2 = App->SBC_Scene->B_Object[index]->SndVolume;
-	int Percent = int(sum2 * 100);
-	_itoa(Percent, chr_Volume, 10);
+	char chr_Environment_ID[100];
+	_itoa(Environment_ID, chr_Environment_ID, 10);
 
-	const int NUM_ITEMS = 2;
+	const int NUM_ITEMS = 4;
 	const int NUM_COLS = 2;
 	std::string grid[NUM_COLS][NUM_ITEMS];
 	LV_ITEM pitem;
 	memset(&pitem, 0, sizeof(LV_ITEM));
 	pitem.mask = LVIF_TEXT;
 
-	grid[0][0] = "Name", grid[1][0] = App->SBC_Scene->B_Object[index]->Mesh_Name;
-	grid[0][1] = " ", grid[1][1] = " ";
-	//grid[0][2] = "Sound", grid[1][2] = App->SBC_Scene->B_Object[index]->Sound_File;
-	//grid[0][3] = "Volume", grid[1][3] = chr_Volume;
+	grid[0][0] = "Name",		grid[1][0] = App->SBC_Scene->B_Object[index]->Mesh_Name;
+	grid[0][1] = " ",			grid[1][1] = " ";
+	grid[0][2] = "Environment", grid[1][2] = chr_Environment_Name;
+	grid[0][3] = "ID",			grid[1][3] = chr_Environment_ID;
 
 
 	ListView_DeleteAllItems(Properties_hLV);
@@ -994,7 +995,7 @@ bool SB_Properties::Update_ListView_Environments()
 
 	grid[0][0] = "Name",	grid[1][0] = App->SBC_Scene->B_Environment[index]->Name;
 	grid[0][1] = " ",		grid[1][1] = " ";
-	grid[0][2] = "Set",		grid[1][2] = "Set";
+	grid[0][2] = "Set",		grid[1][2] = "Options";
 	
 	ListView_DeleteAllItems(Properties_hLV);
 

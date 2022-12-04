@@ -35,28 +35,6 @@ GD19_Environment::~GD19_Environment(void)
 }
 
 // *************************************************************************
-// *				Load_Environment  Terry Bernie						   *
-// *************************************************************************
-void GD19_Environment::Load_Environment(void)
-{
-	float x = App->SBC_Scene->B_Environment[0]->AmbientColour.x;
-	float y = App->SBC_Scene->B_Environment[0]->AmbientColour.y;
-	float z = App->SBC_Scene->B_Environment[0]->AmbientColour.z;
-
-	App->Cl19_Ogre->mSceneMgr->setAmbientLight(ColourValue(x,y,z));
-
-	//App->SBC_Scene->B_Area[0]->S_Environment[0]->Fog_On = 1;
-	if (App->SBC_Scene->B_Environment[0]->Fog_On == 1)
-	{
-		EnableFog(true);
-	}
-	else
-	{
-		App->Cl19_Ogre->mSceneMgr->setFog(FOG_NONE, ColourValue(0.7, 0.7, 0.8), 0, 100, 1000);
-	}
-}
-
-// *************************************************************************
 // *				Start_Environment  Terry Bernie						   *
 // *************************************************************************
 void GD19_Environment::Start_Environment(void)

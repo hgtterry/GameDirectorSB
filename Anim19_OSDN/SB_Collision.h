@@ -38,6 +38,7 @@ public:
 
 	bool Do_Teleport(int Index);
 	bool Do_Collectable(int Index);
+	bool Do_Environment(int Index);
 
 	float FinalPosition;
 	int ObjectIndex;

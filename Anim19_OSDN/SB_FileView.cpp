@@ -1622,13 +1622,13 @@ void SB_FileView::Context_New(HWND hDlg)
 
 	if (App->SBC_FileView->Context_Selection == Enums::FileView_EnvironEntity_Folder)
 	{
-		/*App->SBC_Dialogs->YesNo("Add Environ Entity", "Do you want to add a new Environ Entity", 1);
+		App->SBC_Dialogs->YesNo("Add Environ Entity", "Do you want to add a new Environ Entity", 1);
 
 		bool Doit = App->SBC_Dialogs->Canceled;
 		if (Doit == 0)
 		{
 			App->SBC_Com_Environments->Add_New_Environ_Entity();
-		}*/
+		}
 
 		return;
 	}
