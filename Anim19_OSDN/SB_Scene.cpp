@@ -53,9 +53,6 @@ SB_Scene::SB_Scene()
 	MessageNew_Count = 0;
 	UniqueID_MessageNew_Count = 500;
 
-	Environment_Count = 0;;
-	UniqueID_Environment_Count = 0;;
-
 	CurrentCamMode = 0;
 	Scene_Modified = 0;
 
@@ -72,8 +69,6 @@ SB_Scene::SB_Scene()
 	B_Camera[20] = { nullptr };
 	B_Locations[20] = { nullptr };
 	B_Counter[20] = { nullptr };
-	B_Environment[20] = { nullptr };
-
 }
 
 
@@ -102,8 +97,7 @@ void SB_Scene::Zero_Pointers()
 		B_Camera[Count] = NULL;
 		B_Locations[Count] = NULL;
 		B_Counter[Count] = NULL;
-		B_Environment[Count] = NULL;
-
+	
 		Count++;
 	}
 }
@@ -114,10 +108,10 @@ void SB_Scene::Zero_Pointers()
 void SB_Scene::Reset_Class()
 {
 	int i; // Remove Physics Objects
-	for (i = App->Cl_Bullet->dynamicsWorld->getNumCollisionObjects() - 1; i >= 0; i--)
+	for (i = App->SBC_Bullet->dynamicsWorld->getNumCollisionObjects() - 1; i >= 0; i--)
 	{
-		btCollisionObject* obj = App->Cl_Bullet->dynamicsWorld->getCollisionObjectArray()[i];
-		App->Cl_Bullet->dynamicsWorld->removeCollisionObject(obj);
+		btCollisionObject* obj = App->SBC_Bullet->dynamicsWorld->getCollisionObjectArray()[i];
+		App->SBC_Bullet->dynamicsWorld->removeCollisionObject(obj);
 		delete obj;
 	}
 
@@ -181,10 +175,10 @@ bool SB_Scene::Clear_Level()
 
 		// Bullet Related
 		int i;
-		for (i = App->Cl_Bullet->dynamicsWorld->getNumCollisionObjects() - 1; i >= 0; i--)
+		for (i = App->SBC_Bullet->dynamicsWorld->getNumCollisionObjects() - 1; i >= 0; i--)
 		{
-			btCollisionObject* obj = App->Cl_Bullet->dynamicsWorld->getCollisionObjectArray()[i];
-			App->Cl_Bullet->dynamicsWorld->removeCollisionObject(obj);
+			btCollisionObject* obj = App->SBC_Bullet->dynamicsWorld->getCollisionObjectArray()[i];
+			App->SBC_Bullet->dynamicsWorld->removeCollisionObject(obj);
 			delete obj;
 		}
 	}
@@ -226,9 +220,6 @@ void SB_Scene::Reset_Counters()
 
 	MessageNew_Count = 0;
 	UniqueID_MessageNew_Count = 500;
-
-	Environment_Count = 0;;
-	UniqueID_Environment_Count = 0;;
 
 	CurrentCamMode = 0;
 	Scene_Modified = 0;
@@ -298,27 +289,9 @@ bool SB_Scene::Game_Mode(void)
 	App->SBC_Grid->Hair_SetVisible(0);
 	App->SBC_Grid->Arrow_Node->setVisible(0);
 
-	////App->Cl19_Ogre->textArea->hide();
-
-	if (App->SBC_Scene->B_Environment[0]->Play == 1)
-	{
-		int result = 1;
-		result = strcmp(App->SBC_Scene->B_Environment[0]->Sound_File, "None");
-		if (result == 1) // Could be Unsafe 
-		{
-			
-			char buff[1024];
-			strcpy(buff, App->SBC_SoundMgr->Default_Folder);
-			strcat(buff, "\\Media\\Sounds\\");
-
-			strcat(buff, B_Environment[0]->Sound_File);
-
-			App->SBC_Scene->B_Environment[0]->SndFile = App->SBC_SoundMgr->SoundEngine->play2D(buff, App->SBC_Scene->B_Environment[0]->Loop, true, true);
-
-			App->SBC_Scene->B_Environment[0]->SndFile->setVolume(App->SBC_Scene->B_Environment[0]->SndVolume);
-			App->SBC_Scene->B_Environment[0]->SndFile->setIsPaused(false);
-		}
-	}
+	
+	App->SBC_Com_Environments->GameMode(1);
+	
 
 	App->Cl19_Ogre->OgreListener->GD_Run_Physics = 1;
 
@@ -378,15 +351,7 @@ bool SB_Scene::Editor_Mode(void)
 
 	if (App->SBC_Scene->Scene_Loaded == 1)
 	{
-		if (App->SBC_Scene->B_Environment[0]->SndFile == NULL)
-		{
-		}
-		else
-		{
-			App->SBC_Scene->B_Environment[0]->SndFile->setIsPaused(true);
-			App->SBC_Scene->B_Environment[0]->SndFile->drop();
-			App->SBC_Scene->B_Environment[0]->SndFile = NULL;
-		}
+		App->SBC_Com_Environments->GameMode(0);
 
 		Show_Entities(true); // Show All Visible Trigers
 
@@ -440,19 +405,28 @@ bool SB_Scene::Show_Entities(bool YesNo)
 			{
 				B_Object[Count]->Object_Node->setVisible(YesNo);
 			}
+
 			if (B_Object[Count]->Usage == Enums::Usage_Message)
 			{
 				B_Object[Count]->Object_Node->setVisible(YesNo);
 			}
+
 			if (B_Object[Count]->Usage == Enums::Usage_Move)
 			{
 				B_Object[Count]->Object_Node->setVisible(YesNo);
 			}
+
 			if (B_Object[Count]->Usage == Enums::Usage_Teleport)
 			{
 				B_Object[Count]->Object_Node->setVisible(YesNo);
 			}
+
 			if (B_Object[Count]->Usage == Enums::Usage_Environment)
+			{
+				B_Object[Count]->Object_Node->setVisible(YesNo);
+			}
+
+			if (B_Object[Count]->Usage == Enums::Usage_EnvironEntity)
 			{
 				B_Object[Count]->Object_Node->setVisible(YesNo);
 			}

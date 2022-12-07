@@ -344,12 +344,12 @@ void SB_Properties::ListView_OnClickOptions(LPARAM lParam)
 		return;
 	}
 
-	// Counters
-	if (Edit_Category == Enums::Edit_Environment)
+	// Environs
+	if (Edit_Category == Enums::Edit_Environs)
 	{
 		if (Edit_Physics == 0)
 		{
-			Edit_Environments_OnClick(lParam);
+			Edit_Environs_OnClick(lParam);
 		}
 		return;
 	}
@@ -700,22 +700,19 @@ bool SB_Properties::Update_ListView_Environs()
 	int index = Current_Selected_Object;
 
 	char Num[10];
+	char IndexNum[10];
 	char chr_ID[50];
 	_itoa(App->SBC_Scene->B_Object[index]->This_Object_ID, Num, 10);
-	strcpy(chr_ID, "Properties ID=");
+	_itoa(index, IndexNum, 10);
+	strcpy(chr_ID, "Unique ID ");
 	strcat(chr_ID, Num);
+	strcat(chr_ID, "  Object Index ");
+	strcat(chr_ID, IndexNum);
 
 	SetWindowText(Properties_Dlg_hWnd, chr_ID);
 	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->B_Object[index]->Mesh_Name);
 
-	char chr_Environment_Name[100];
-	int Environment_ID = App->SBC_Scene->B_Object[index]->S_Environ[0]->Environment_ID;
-	strcpy(chr_Environment_Name, App->SBC_Scene->B_Environment[Environment_ID]->Name);
-
-	char chr_Environment_ID[100];
-	_itoa(Environment_ID, chr_Environment_ID, 10);
-
-	const int NUM_ITEMS = 4;
+	const int NUM_ITEMS = 3;
 	const int NUM_COLS = 2;
 	std::string grid[NUM_COLS][NUM_ITEMS];
 	LV_ITEM pitem;
@@ -724,9 +721,7 @@ bool SB_Properties::Update_ListView_Environs()
 
 	grid[0][0] = "Name",		grid[1][0] = App->SBC_Scene->B_Object[index]->Mesh_Name;
 	grid[0][1] = " ",			grid[1][1] = " ";
-	grid[0][2] = "Environment", grid[1][2] = chr_Environment_Name;
-	grid[0][3] = "ID",			grid[1][3] = chr_Environment_ID;
-
+	grid[0][2] = "Set",			grid[1][2] = "Options";
 
 	ListView_DeleteAllItems(Properties_hLV);
 
@@ -971,53 +966,6 @@ bool SB_Properties::Update_ListView_Counters()
 }
 
 // *************************************************************************
-// *	Update_ListView_Environments:- Terry and Hazel Flanigan 2022	   *
-// *************************************************************************
-bool SB_Properties::Update_ListView_Environments()
-{
-	int index = App->SBC_Properties->Current_Selected_Object;
-
-	char Num[10];
-	char chr_ID[50];
-	_itoa(App->SBC_Scene->B_Environment[index]->This_Object_ID, Num, 10);
-	strcpy(chr_ID, "Properties ID=");
-	strcat(chr_ID, Num);
-
-	SetWindowText(Properties_Dlg_hWnd, chr_ID);
-	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->B_Environment[index]->Name);
-
-	const int NUM_ITEMS = 3;
-	const int NUM_COLS = 2;
-	string grid[NUM_COLS][NUM_ITEMS]; // string table
-	LV_ITEM pitem;
-	memset(&pitem, 0, sizeof(LV_ITEM));
-	pitem.mask = LVIF_TEXT;
-
-	grid[0][0] = "Name",	grid[1][0] = App->SBC_Scene->B_Environment[index]->Name;
-	grid[0][1] = " ",		grid[1][1] = " ";
-	grid[0][2] = "Set",		grid[1][2] = "Options";
-	
-	ListView_DeleteAllItems(Properties_hLV);
-
-	for (DWORD row = 0; row < NUM_ITEMS; row++)
-	{
-		pitem.iItem = row;
-		pitem.pszText = const_cast<char*>(grid[0][row].c_str());
-		ListView_InsertItem(Properties_hLV, &pitem);
-
-		//ListView_SetItemText
-
-		for (DWORD col = 1; col < NUM_COLS; col++)
-		{
-			ListView_SetItemText(Properties_hLV, row, col,
-				const_cast<char*>(grid[col][row].c_str()));
-		}
-	}
-
-	return 1;
-}
-
-// *************************************************************************
 // *	Update_ListView_Move_Entities:- Terry and Hazel Flanigan 2022 	    *
 // *************************************************************************
 bool SB_Properties::Update_ListView_Move_Entities()
@@ -1155,8 +1103,7 @@ bool SB_Properties::Update_ListView_Level()
 	grid[0][4] = "Areas",			grid[1][4] = _itoa(App->SBC_Scene->Area_Count, strCamCount, 10);
 	grid[0][5] = "Objects",			grid[1][5] = _itoa(App->SBC_LookUps->Get_Adjusted_Object_Count(), strCamCount, 10);
 	grid[0][6] = "Counters",		grid[1][6] = _itoa(App->SBC_LookUps->Get_Adjusted_Counters_Count(), strCamCount, 10);
-	grid[0][7] = "Environments",	grid[1][7] = _itoa(App->SBC_Scene->Environment_Count, strCamCount, 10);
-	
+
 	ListView_DeleteAllItems(Properties_hLV);
 
 	for (DWORD row = 0; row < NUM_ITEMS; row++)
@@ -2246,10 +2193,11 @@ bool SB_Properties::Edit_Counters_OnClick(LPARAM lParam)
 	return 1;
 }
 
+
 // *************************************************************************
-// *	Edit_Environments_OnClick:- Terry and Hazel Flanigan 2022		   *
+// *		Edit_Environs_OnClick:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
-bool SB_Properties::Edit_Environments_OnClick(LPARAM lParam)
+bool SB_Properties::Edit_Environs_OnClick(LPARAM lParam)
 {
 	int Index = App->SBC_Properties->Current_Selected_Object;
 
@@ -2263,14 +2211,18 @@ bool SB_Properties::Edit_Environments_OnClick(LPARAM lParam)
 	result = strcmp(btext, "Name");
 	if (result == 0)
 	{
-		App->SBC_Com_Environments->Rename_Environment(Index);
-		App->SBC_Properties->Update_ListView_Environments();
+		App->SBC_Com_Environments->Rename_Environ(Index);
+		Update_ListView_Environs();
+		return 1;
 	}
 
+	
 	result = strcmp(btext, "Set");
 	if (result == 0)
 	{
 		App->Cl_Environment->Start_Environment();
+		Update_ListView_Environs();
+
 		return 1;
 	}
 
@@ -2819,7 +2771,11 @@ void SB_Properties::Reset_Last_Selected_Object(int Index)
 
 	App->SBC_Visuals->BoxNode->setVisible(false);
 	App->SBC_Grid->Arrow_Node->setVisible(false);
-	App->SBC_Object->Hide_AllObjects_Except(Index, true);
+
+	if (App->SBC_Scene->B_Object[Index]->Deleted == 0)
+	{
+		App->SBC_Object->Hide_AllObjects_Except(Index, true);
+	}
 
 	App->SBC_Object->Hide_All_Except_Flag = 0;
 }

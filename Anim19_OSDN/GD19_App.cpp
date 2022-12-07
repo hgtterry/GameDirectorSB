@@ -33,7 +33,7 @@ GD19_App::GD19_App(void)
 	Cl_Utilities =		nullptr;
 	SBC_Grid =			nullptr;
 	Cl_Panels =			nullptr;
-	Cl_Bullet =			nullptr;
+	SBC_Bullet =		nullptr;
 	Cl_Ini =			nullptr;
 	SBC_Visuals =		nullptr;
 	Cl_Environment =	nullptr;
@@ -179,7 +179,7 @@ GD19_App::GD19_App(void)
 
 	FollowFunctions = 0;
 
-	Debug_App = 1;
+	Debug_App = 0;
 
 	EquityDirecory_FullPath[0] = 0;
 	ETemp_Folder[0] = 0;
@@ -198,7 +198,7 @@ bool GD19_App::InitApp(void)
 	Cl_Utilities =		new GD19_Utilities();
 	SBC_Grid =			new SB_Grid();
 	Cl_Panels =			new GD19_Panels();
-	Cl_Bullet =			new GD19_Bullet();		
+	SBC_Bullet =		new SB_Bullet();		
 	Cl_Ini =			new T_Ini();
 	SBC_Visuals =		new SB_Visuals();
 	Cl_Environment =	new GD19_Environment();

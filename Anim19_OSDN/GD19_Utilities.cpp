@@ -121,6 +121,15 @@ bool GD19_Utilities::OpenHTML(char* HelpTitle)
 }
 
 // *************************************************************************
+// *					OpenHTML_WEB Terry	Bernie						   *
+// *************************************************************************
+bool GD19_Utilities::OpenHTML_WEB(char* HelpTitle)
+{
+	ShellExecute(0, "open", HelpTitle, 0, 0, SW_SHOW);
+	return 1;
+}
+
+// *************************************************************************
 // *					floatPercent Terry	Bernie						   *
 // *************************************************************************
 float GD19_Utilities::floatPercent(int Val)

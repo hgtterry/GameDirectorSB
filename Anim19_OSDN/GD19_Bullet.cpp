@@ -3,10 +3,8 @@
 #include "resource.h"
 #include "GD19_Bullet.h"
 
-//#include "GD_Debug.h"
 
-
-GD19_Bullet::GD19_Bullet(void)
+SB_Bullet::SB_Bullet(void)
 {
 	//M_Debug = NULL;
 	collisionConfiguration = NULL;
@@ -21,14 +19,14 @@ GD19_Bullet::GD19_Bullet(void)
 }
 
 
-GD19_Bullet::~GD19_Bullet(void)
+SB_Bullet::~SB_Bullet(void)
 {
 }
 
 // *************************************************************************
 // *						Init_Bullet Terry Bernie   			 	 	   *
 // *************************************************************************
-bool GD19_Bullet::Init_Bullet()
+bool SB_Bullet::Init_Bullet()
 {
 	collisionConfiguration = new btDefaultCollisionConfiguration();
 
@@ -72,7 +70,7 @@ bool GD19_Bullet::Init_Bullet()
 // *************************************************************************
 // *	  				Start_Physics_Consol Terry Bernie				   *
 // *************************************************************************
-void GD19_Bullet::Start_Physics_Console(void)
+void SB_Bullet::Start_Physics_Console(void)
 {
 	if(Physics_Dlg_Active == 1)
 	{
@@ -88,7 +86,7 @@ void GD19_Bullet::Start_Physics_Console(void)
 // *************************************************************************
 // *        			Physics_Console_Proc  Terry	Bernie				   *
 // *************************************************************************
-LRESULT CALLBACK GD19_Bullet::Physics_Console_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK SB_Bullet::Physics_Console_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 				
 	switch (message)
@@ -124,7 +122,7 @@ LRESULT CALLBACK GD19_Bullet::Physics_Console_Proc(HWND hDlg, UINT message, WPAR
 			if (some_item->idFrom == IDC_PHYSICS_ON && some_item->code == NM_CUSTOMDRAW)
             {
                 LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-				App->Custom_Button_Toggle(item,App->Cl_Bullet->GD_Physics_On);
+				App->Custom_Button_Toggle(item,App->SBC_Bullet->GD_Physics_On);
                 return CDRF_DODEFAULT;
             }
 
@@ -154,14 +152,14 @@ LRESULT CALLBACK GD19_Bullet::Physics_Console_Proc(HWND hDlg, UINT message, WPAR
 			{
 				if(App->SBC_Scene->Scene_Loaded == 1)
 				{
-					if(App->Cl_Bullet->GD_Physics_On == 1)
+					if(App->SBC_Bullet->GD_Physics_On == 1)
 					{
-						App->Cl_Bullet->GD_Physics_On = 0;
+						App->SBC_Bullet->GD_Physics_On = 0;
 						App->Cl19_Ogre->OgreListener->GD_Run_Physics = 0;
 					}
 					else
 					{
-						App->Cl_Bullet->GD_Physics_On = 1;
+						App->SBC_Bullet->GD_Physics_On = 1;
 						App->Cl19_Ogre->OgreListener->GD_Run_Physics = 1;
 					}
 				}
@@ -170,7 +168,7 @@ LRESULT CALLBACK GD19_Bullet::Physics_Console_Proc(HWND hDlg, UINT message, WPAR
 
 			if (LOWORD(wParam)== IDCANCEL) 
 			{
-				App->Cl_Bullet->Physics_Dlg_Active = 0;
+				App->SBC_Bullet->Physics_Dlg_Active = 0;
 				CheckMenuItem(App->mMenu, ID_WINDOWS_SHOWPHYSICSPANEL, MF_BYCOMMAND | MF_UNCHECKED);
 				ShowWindow(App->Physics_Console_Hwnd, 0);
 				//EndDialog(hDlg, LOWORD(wParam));

@@ -318,10 +318,10 @@ bool GD19_Ogre::chooseSceneManager(void)
 	mSceneMgr->setAmbientLight(Ogre::ColourValue(1, 1, 1));
 	
 	// add a bright light above the scene
-	Light* light = mSceneMgr->createLight();
+	/*Light* light = mSceneMgr->createLight();
 	light->setType(Light::LT_SPOTLIGHT);
 	light->setPosition(0, 0, 0);
-	light->setSpecularColour(ColourValue::White);
+	light->setSpecularColour(ColourValue::White);*/
 
 	return 1;
 }
@@ -378,7 +378,7 @@ bool GD19_Ogre::createFrameListener(void)
 
 		BulletListener->setDebugMode(BulletListener->getDebugMode()
 			| btIDebugDraw::DBG_MAX_DEBUG_DRAW_MODE);
-		App->Cl_Bullet->dynamicsWorld->setDebugDrawer(BulletListener);
+		App->SBC_Bullet->dynamicsWorld->setDebugDrawer(BulletListener);
 
 	}
 

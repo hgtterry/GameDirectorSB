@@ -51,6 +51,10 @@ void SB_Project_Create::Start_New_Project()
 		App->SBC_MeshViewer->Mesh_Viewer_Mode = Enums::Mesh_Viewer_Area;
 		App->SBC_MeshViewer->StartMeshViewer();
 	}
+	else
+	{
+		//First_Area_Build_Project(1);
+	}
 }
 
 // *************************************************************************
@@ -58,30 +62,31 @@ void SB_Project_Create::Start_New_Project()
 // *************************************************************************
 void SB_Project_Create::Add_First_New_Area()
 {
-	First_Area_Build_Project();
-	//App->SBC_Scene->B_Area[0]->S_Environment[0] = new Environment_type;
-	//App->SBC_Com_Area->Set_Environment_Defaults(0);
+	First_Area_Build_Project(0);
 }
 
 // *************************************************************************
 //		First_Area_Build_Project:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
-bool SB_Project_Create::First_Area_Build_Project()
+bool SB_Project_Create::First_Area_Build_Project(bool NoArea)
 {
 	
 	char Temp[MAX_PATH];
 	strcpy(Temp, App->SBC_Scene->Project_Resource_Group.c_str());
 
 	// ------------------------ Add Area
-	App->SBC_Scene->B_Area[0] = new Base_Area();
-	App->SBC_Com_Area->Add_Aera_To_Project(0, App->SBC_MeshViewer->Selected_MeshFile, Temp);
-	strcpy(App->SBC_Scene->B_Area[0]->Material_File, App->SBC_MeshViewer->m_Material_File);
-	App->SBC_Scene->Area_Count++;
-	App->SBC_Scene->Area_Added = 1;
+	if (NoArea == 0)
+	{
+		App->SBC_Scene->B_Area[0] = new Base_Area();
+		App->SBC_Com_Area->Add_Aera_To_Project(0, App->SBC_MeshViewer->Selected_MeshFile, Temp);
+		strcpy(App->SBC_Scene->B_Area[0]->Material_File, App->SBC_MeshViewer->m_Material_File);
+		App->SBC_Scene->Area_Count++;
+		App->SBC_Scene->Area_Added = 1;
 
-	HTREEITEM Temp2 = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Areas_Folder, "Area_1", 0, true);
-	App->SBC_Scene->B_Area[0]->FileViewItem = Temp2;
-	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Areas_Folder);
+		HTREEITEM Temp2 = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Areas_Folder, "Area_1", 0, true);
+		App->SBC_Scene->B_Area[0]->FileViewItem = Temp2;
+		App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Areas_Folder);
+	}
 
 	// ------------------------ Add Default Camera
 	App->SBC_Camera->Add_New_Camera();
@@ -102,6 +107,12 @@ bool SB_Project_Create::First_Area_Build_Project()
 	// ------------------------ Add Location
 	App->SBC_Locations->Create_Location_Entity("Start_Position");
 
+	// ------------------------ Add Environ
+
+	App->SBC_Com_Environments->Add_New_Environ_Entity(1);
+	int mIndex = App->SBC_Com_Environments->Get_First_Environ();
+	App->SBC_Com_Environments->Set_First_Environment(mIndex);
+
 	// ------------------------ Set Scene
 	App->SBC_Grid->Grid_SetVisible(1);
 	App->SBC_FileView->Redraw_FileView();
@@ -111,7 +122,7 @@ bool SB_Project_Create::First_Area_Build_Project()
 	App->SBC_Physics->Reset_Physics();
 	App->SBC_Physics->Enable_Physics(1);
 	App->SBC_Scene->Scene_Loaded = 1;
-	App->SBC_Scene->Area_Added = 1;
+	//App->SBC_Scene->Area_Added = 1;
 	App->Cl19_Ogre->Block_RenderingQueued = 0;
 
 	//------------------------------------------------------------------------------ WHY

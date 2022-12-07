@@ -95,7 +95,7 @@ public:
 	GD19_Utilities*		Cl_Utilities;
 	SB_Grid*			SBC_Grid;
 	GD19_Panels*		Cl_Panels;
-	GD19_Bullet*		Cl_Bullet;
+	SB_Bullet*			SBC_Bullet;
 	T_Ini*				Cl_Ini;
 	SB_Visuals*			SBC_Visuals;
 	GD19_Environment*	Cl_Environment;

@@ -28,16 +28,21 @@ public:
 	SB_Com_Environments();
 	~SB_Com_Environments();
 
-	void Add_New_Environment();
-	bool Add_Environments_From_File();
-	void Mark_As_Altered(int Index);
-	void Delete_Environment();
-	void Rename_Environment(int Index);
-
-	bool Add_New_Environ_Entity();
+	void Rename_Environ(int Index);
+	void GameMode(bool Is_On);
+	bool Add_New_Environ_Entity(bool FirstOne);
 	bool Create_Environ_Entity(int Index);
 	void Set_Environ_Defaults(int Index);
-	void Load_Environment(void);
+	void Set_First_Environment(int Index);
+	void Mark_As_Altered_Environ(int Index);
+
+	int Set_Environment_By_Index(bool PlayMusic, int Index);
+
+	int Get_First_Environ();
+
 	bool EnableFog(bool SetFog);
+	void EnableFog_Collision(bool SetFog, int Index);
+
+	void Set_Environment_From_Environ(int Index);
 };
 

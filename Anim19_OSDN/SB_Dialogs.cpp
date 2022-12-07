@@ -323,7 +323,7 @@ LRESULT CALLBACK SB_Dialogs::Dialog_DropGen_Proc(HWND hDlg, UINT message, WPARAM
 
 		if (App->SBC_Dialogs->DropList_Data == Enums::DropDialog_Messages)
 		{
-			App->SBC_Dialogs->List_Messages(tempList);
+			//App->SBC_Dialogs->List_Messages(tempList);
 			return TRUE;
 		}
 
@@ -491,24 +491,6 @@ void SB_Dialogs::List_Counters(HWND List)
 }
 
 // *************************************************************************
-// *			List_Messages:- Terry and Hazel Flanigan 2022		 	   *
-// *************************************************************************
-void SB_Dialogs::List_Messages(HWND List)
-{
-	/*int Count = 0;
-	while (Count < App->SBC_Scene->TextMessage_Count) // Needs_Removing
-	{
-		if (App->SBC_Scene->B_Message[Count]->Deleted == 0)
-		{
-			SendMessage(DropHwnd, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->SBC_Scene->B_Message[Count]->TextMessage_Name);
-		}
-		Count++;
-	}*/
-
-	SendMessage(List, LB_SELECTSTRING, -1, (LPARAM)App->SBC_Dialogs->Chr_DropText);
-}
-
-// *************************************************************************
 // *			List_Axis:- Terry and Hazel Flanigan 2022			 	   *
 // *************************************************************************
 void SB_Dialogs::List_Axis(HWND List)
@@ -572,7 +554,8 @@ LRESULT CALLBACK SB_Dialogs::Front_Screen_Proc(HWND hDlg, UINT message, WPARAM w
 
 		SendDlgItemMessage(hDlg, IDC_BT_FR_CHANGELOG, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_QUICKSTART, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
-	
+		SendDlgItemMessage(hDlg, IDC_BT_QSVIDEO, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		
 		SendDlgItemMessage(hDlg, IDC_ST_WTHC, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDC_STTEST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -647,6 +630,13 @@ LRESULT CALLBACK SB_Dialogs::Front_Screen_Proc(HWND hDlg, UINT message, WPARAM w
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_QSVIDEO && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+		
 		return CDRF_DODEFAULT;
 	}
 
@@ -690,6 +680,14 @@ LRESULT CALLBACK SB_Dialogs::Front_Screen_Proc(HWND hDlg, UINT message, WPARAM w
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_BT_QSVIDEO)
+		{
+			Debug
+			App->Cl_Utilities->OpenHTML_WEB("https://youtu.be/5aMsq8APyDw");
+			return TRUE;
+		}
+
+		
 		if (LOWORD(wParam) == IDOK)
 		{
 			EndDialog(hDlg, LOWORD(wParam));

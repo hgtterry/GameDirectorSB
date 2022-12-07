@@ -122,7 +122,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	//CheckMenuItem(App->mMenu, ID_WINDOW_SHOWFPSSHORT, MF_BYCOMMAND | MF_CHECKED);
 	//CheckMenuItem(App->mMenu, ID_GRID_DIVISIONS, MF_BYCOMMAND | MF_CHECKED);
 
-	App->Cl_Bullet->Init_Bullet();
+	App->SBC_Bullet->Init_Bullet();
 
 	App->SBC_FileIO->Init_History();
 
@@ -1200,7 +1200,7 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 
 		SendDlgItemMessage(hDlg, IDC_LISTABOUT, LB_ADDSTRING, (WPARAM)0, (LPARAM)" ");
 		
-		sprintf(buff, "%s", " EquitySB Alpha Build 06/11/22");
+		sprintf(buff, "%s", " EquitySB Alpha Build 07/12/22");
 		SendDlgItemMessage(hDlg, IDC_LISTABOUT, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
 
 		/*sprintf(buff, "%s  %s", " Ogre Version ", "1.9");

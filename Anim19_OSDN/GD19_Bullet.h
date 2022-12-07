@@ -3,11 +3,11 @@
 //#include "GD_Debug.h"
 
 
-class GD19_Bullet
+class SB_Bullet
 {
 public:
-	GD19_Bullet(void);
-	~GD19_Bullet(void);
+	SB_Bullet(void);
+	~SB_Bullet(void);
 
 	bool Init_Bullet();
 	void Start_Physics_Console(void);

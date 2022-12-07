@@ -58,15 +58,15 @@ LRESULT CALLBACK GD19_Environment::Environment_Proc(HWND hDlg, UINT message, WPA
 		{	
 			App->SetTitleBar(hDlg);
 
-			HFONT Font;
-			HFONT Font2;
-			Font = CreateFont( -13,0,0,0,FW_BOLD,0,0,0,0,OUT_TT_ONLY_PRECIS ,0,0,0, "Aerial Black");
-			Font2 = CreateFont( -20,0,0,0,FW_BOLD,0,0,0,0,OUT_TT_ONLY_PRECIS ,0,0,0, "Aerial Black");
+			SendDlgItemMessage(hDlg,IDC_STINFO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+			
+			SendDlgItemMessage(hDlg,IDC_USAGEBANNER, WM_SETFONT, (WPARAM)App->Font_Banner, MAKELPARAM(TRUE, 0));
+			
+			SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+			SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+			SendDlgItemMessage(hDlg, IDC_OPTIOINSTREE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-			SendDlgItemMessage(hDlg,IDC_STINFO, WM_SETFONT, (WPARAM)Font, MAKELPARAM(TRUE, 0));
-			
-			SendDlgItemMessage(hDlg,IDC_USAGEBANNER, WM_SETFONT, (WPARAM)Font2, MAKELPARAM(TRUE, 0));
-			
+
 			SetDlgItemText(hDlg,IDC_USAGEBANNER,(LPCTSTR)"Game Environment Options");
 
 			App->Cl_Environment->Init_FileView();
@@ -84,9 +84,8 @@ LRESULT CALLBACK GD19_Environment::Environment_Proc(HWND hDlg, UINT message, WPA
 			
 			App->Cl_Environment->AddOptions();
 
-			//Temp=GetDlgItem(hDlg,IDC_ENVHELP);
-			//SendMessage(Temp,BM_SETIMAGE, (WPARAM) IMAGE_BITMAP,(LPARAM) (HANDLE)App->SetUp_C->BmpHelp);
-
+			int Index = App->SBC_Properties->Current_Selected_Object;
+			App->SBC_Com_Environments->Set_Environment_By_Index(1,Index);
 			
 			return TRUE;
 		}
@@ -180,6 +179,12 @@ LRESULT CALLBACK GD19_Environment::Environment_Proc(HWND hDlg, UINT message, WPA
 		case WM_COMMAND:
 			if (LOWORD(wParam) == IDOK) 
 			{
+				int Index = App->SBC_Properties->Current_Selected_Object;
+				App->SBC_Com_Environments->Set_Environment_By_Index(0, Index);
+
+				Index = App->SBC_Com_Environments->Get_First_Environ();
+				App->SBC_Com_Environments->Set_Environment_By_Index(0,Index);
+
 				App->Cl_Environment->Environment_Dlg_Active = 0;
 				App->RedrawWindow_Dlg(App->SBC_Props_Dialog->Area_Props_HWND);
 				EndDialog(hDlg, LOWORD(wParam));
@@ -189,6 +194,12 @@ LRESULT CALLBACK GD19_Environment::Environment_Proc(HWND hDlg, UINT message, WPA
 
 			if (LOWORD(wParam)== IDCANCEL) 
 			{
+				int Index = App->SBC_Properties->Current_Selected_Object;
+				App->SBC_Com_Environments->Set_Environment_By_Index(0, Index);
+
+				Index = App->SBC_Com_Environments->Get_First_Environ();
+				App->SBC_Com_Environments->Set_Environment_By_Index(0, Index);
+
 				App->Cl_Environment->Environment_Dlg_Active = 0;
 				App->RedrawWindow_Dlg(App->SBC_Props_Dialog->Area_Props_HWND);
 				EndDialog(hDlg, LOWORD(wParam));
@@ -281,7 +292,7 @@ void GD19_Environment::Update_CreateSkyListView(void)
 
 	int Index = App->SBC_Properties->Current_Selected_Object;
 
-	if (App->SBC_Scene->B_Environment[Index]->Enabled == 1)
+	if (App->SBC_Scene->B_Object[Index]->S_Environ[0]->Enabled == 1)
 	{
 		strcpy(Chr_Enabled,"True");
 	}
@@ -290,9 +301,9 @@ void GD19_Environment::Update_CreateSkyListView(void)
 		strcpy(Chr_Enabled,"Flase");
 	}
 
-	sprintf(Chr_Curvature,"%.3f", App->SBC_Scene->B_Environment[Index]->Curvature);
-	sprintf(Chr_Tiling,"%.3f", App->SBC_Scene->B_Environment[Index]->Tiling);
-	sprintf(Chr_Distance,"%.3f", App->SBC_Scene->B_Environment[Index]->Distance);
+	sprintf(Chr_Curvature,"%.3f", App->SBC_Scene->B_Object[Index]->S_Environ[0]->Curvature);
+	sprintf(Chr_Tiling,"%.3f", App->SBC_Scene->B_Object[Index]->S_Environ[0]->Tiling);
+	sprintf(Chr_Distance,"%.3f", App->SBC_Scene->B_Object[Index]->S_Environ[0]->Distance);
 
 	const int NUM_ITEMS = 1;
 	const int NUM_COLS = 2;
@@ -346,7 +357,7 @@ void GD19_Environment::Update_CreateFogListView(void)
 
 	int Index = App->SBC_Properties->Current_Selected_Object;
 
-	if (App->SBC_Scene->B_Environment[Index]->Fog_On == 1)
+	if (App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_On == 1)
 	{
 		strcpy(chr_FogOn,"True");
 	}
@@ -355,18 +366,18 @@ void GD19_Environment::Update_CreateFogListView(void)
 		strcpy(chr_FogOn,"Flase");
 	}
 
-	sprintf(chr_Density,"%f", App->SBC_Scene->B_Environment[Index]->Fog_Density);
-	sprintf(chr_Start,"%.2f", App->SBC_Scene->B_Environment[Index]->Fog_Start);
-	sprintf(chr_End,"%.2f", App->SBC_Scene->B_Environment[Index]->Fog_End);
+	sprintf(chr_Density,"%f", App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Density);
+	sprintf(chr_Start,"%.2f", App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Start);
+	sprintf(chr_End,"%.2f", App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_End);
 
 	//sprintf(chr_End, "%.2f", App->Cl_Scene_Data->S_Scene[0]->Fog[0].End);
 
-	sprintf(chr_Mode,"%i", App->SBC_Scene->B_Environment[Index]->Fog_Mode);
+	sprintf(chr_Mode,"%i", App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Mode);
 
 
-	float mRed = App->SBC_Scene->B_Environment[Index]->Fog_Colour.x;
-	float mGreen = App->SBC_Scene->B_Environment[Index]->Fog_Colour.y;
-	float mBlue = App->SBC_Scene->B_Environment[Index]->Fog_Colour.z;
+	float mRed = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.x;
+	float mGreen = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.y;
+	float mBlue = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.z;
 	
 	sprintf(chr_Colour,"%.2f %.2f %.2f",mRed,mGreen,mBlue);
 	
@@ -403,23 +414,23 @@ void GD19_Environment::Update_CreateMainLightListView(void)
 
 	int Index = App->SBC_Properties->Current_Selected_Object;
 
-	mRed = App->SBC_Scene->B_Environment[Index]->AmbientColour.x;
-	mGreen = App->SBC_Scene->B_Environment[Index]->AmbientColour.y;
-	mBlue = App->SBC_Scene->B_Environment[Index]->AmbientColour.z;
+	mRed = App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour.x;
+	mGreen = App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour.y;
+	mBlue = App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour.z;
 	
 	char Chr_Ambient[100];
 	sprintf(Chr_Ambient,"%.2f %.2f %.2f",mRed,mGreen,mBlue);
 
-	mRed = App->SBC_Scene->B_Environment[Index]->DiffuseColour.x;
-	mGreen = App->SBC_Scene->B_Environment[Index]->DiffuseColour.y;
-	mBlue = App->SBC_Scene->B_Environment[Index]->DiffuseColour.z;
+	mRed = App->SBC_Scene->B_Object[Index]->S_Environ[0]->DiffuseColour.x;
+	mGreen = App->SBC_Scene->B_Object[Index]->S_Environ[0]->DiffuseColour.y;
+	mBlue = App->SBC_Scene->B_Object[Index]->S_Environ[0]->DiffuseColour.z;
 	
 	char Chr_Diffuse[100];
 	sprintf(Chr_Diffuse,"%.2f %.2f %.2f",mRed,mGreen,mBlue);
 
-	mRed = App->SBC_Scene->B_Environment[Index]->SpecularColour.x;
-	mGreen = App->SBC_Scene->B_Environment[Index]->SpecularColour.y;
-	mBlue = App->SBC_Scene->B_Environment[Index]->SpecularColour.z;
+	mRed = App->SBC_Scene->B_Object[Index]->S_Environ[0]->SpecularColour.x;
+	mGreen = App->SBC_Scene->B_Object[Index]->S_Environ[0]->SpecularColour.y;
+	mBlue = App->SBC_Scene->B_Object[Index]->S_Environ[0]->SpecularColour.z;
 	
 	char Chr_Specular[100];
 	sprintf(Chr_Specular,"%.2f %.2f %.2f",mRed,mGreen,mBlue);
@@ -466,10 +477,10 @@ void GD19_Environment::Update_CreateSoundListView(void)
 
 	int Index = App->SBC_Properties->Current_Selected_Object;
 
-	sprintf(Chr_Volume,"%.1f", App->SBC_Scene->B_Environment[Index]->SndVolume);
+	sprintf(Chr_Volume,"%.1f", App->SBC_Scene->B_Object[Index]->S_Environ[0]->SndVolume);
 
 	// Play
-	if (App->SBC_Scene->B_Environment[Index]->Play == 1)
+	if (App->SBC_Scene->B_Object[Index]->S_Environ[0]->Play == 1)
 	{
 		strcpy(Chr_Play,"True");
 	}
@@ -478,15 +489,15 @@ void GD19_Environment::Update_CreateSoundListView(void)
 		strcpy(Chr_Play,"False");
 	}
 
-	//// Loop
-	//if (App->Cl_Scene_Data->S_Scene[0]->Sound[0].Loop == 1)
-	//{
-	//	strcpy(Chr_Loop,"True");
-	//}
-	//else
-	//{
-	//	strcpy(Chr_Loop,"False");
-	//}
+	// Loop
+	if (App->SBC_Scene->B_Object[Index]->S_Environ[0]->Loop == 1)
+	{
+		strcpy(Chr_Loop,"True");
+	}
+	else
+	{
+		strcpy(Chr_Loop,"False");
+	}
 
 	const int NUM_ITEMS = 4;
 	const int NUM_COLS = 2;
@@ -495,7 +506,7 @@ void GD19_Environment::Update_CreateSoundListView(void)
 	memset(&pitem, 0, sizeof(LV_ITEM));
 	pitem.mask = LVIF_TEXT;
 
-	grid[0][0] = "Track",		grid[1][0] = App->SBC_Scene->B_Environment[Index]->Sound_File;
+	grid[0][0] = "Track",		grid[1][0] = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Sound_File;
 	grid[0][1] = "Volume",		grid[1][1] = Chr_Volume;
 	grid[0][2] = "Play",		grid[1][2] = Chr_Play;
 	grid[0][3] = "Loop",		grid[1][3] = Chr_Loop;
@@ -564,12 +575,12 @@ LRESULT CALLBACK GD19_Environment::BackDrop_Proc(HWND hDlg, UINT message, WPARAM
 					{
 					case NM_CLICK:
 						{
-							App->Cl_Environment->Props_OnClick(lParam);
+							App->Cl_Environment->On_Click_Props(lParam);
 							break;
 						}
 					case NM_DBLCLK:
 						{
-							//App->Class_Dlg_Options->PropsDBLCLK_OnClick(lParam);
+							
 							break;
 						}
 					}
@@ -618,9 +629,8 @@ void GD19_Environment::Create_GeneralList(HWND hDlg)
 		lvC.pszText = const_cast<char*>(headers[header].c_str());
 		ListView_InsertColumn(General_hLV, header, &lvC);
 	}
-	HFONT Font;
-	Font = CreateFont( -15,0,0,0,FW_NORMAL,0,0,0,0,OUT_TT_ONLY_PRECIS ,0,0,0, "Aerial Black");
-	SendMessage(General_hLV,WM_SETFONT, (WPARAM)Font, MAKELPARAM(TRUE, 0));
+	
+	SendMessage(General_hLV,WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 }
 
 // *************************************************************************
@@ -683,6 +693,7 @@ void GD19_Environment::Init_FileView(void)
 // *************************************************************************
 void GD19_Environment::AddOptions(void)
 {
+	
 	tvinsert.hParent = mRoot1;		// top most level no need handle
 	tvinsert.hInsertAfter=TVI_LAST; // work as root level
 	tvinsert.item.mask=TVIF_TEXT|TVIF_IMAGE|TVIF_SELECTEDIMAGE;
@@ -731,10 +742,11 @@ void GD19_Environment::AddOptions(void)
 }
 
 // *************************************************************************
-// *						Props_OnClick Terry Bernie			 		   *
+// *						On_Click_Props Terry Bernie			 		   *
 // *************************************************************************
-bool GD19_Environment::Props_OnClick(LPARAM lParam)
+bool GD19_Environment::On_Click_Props(LPARAM lParam)
 {
+
 	int result = 1;
 	int SelectionIndex = 0;
 
@@ -750,7 +762,7 @@ bool GD19_Environment::Props_OnClick(LPARAM lParam)
 	{
 		strcpy(App->Cl_Dialogs->btext,"Set Fog Visiblity");
 
-		App->Cl_Dialogs->TrueFlase = App->SBC_Scene->B_Environment[Index]->Fog_On;
+		App->Cl_Dialogs->TrueFlase = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_On;
 
 		App->Cl_Dialogs->Dialog_TrueFlase(App->MainHwnd);
 
@@ -758,12 +770,12 @@ bool GD19_Environment::Props_OnClick(LPARAM lParam)
 		{
 			if(App->Cl_Dialogs->TrueFlase == 1)
 			{
-				App->SBC_Scene->B_Environment[Index]->Fog_On = 1;
+				App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_On = 1;
 				EnableFog(true);
 			}
 			else
 			{
-				App->SBC_Scene->B_Environment[Index]->Fog_On = 0;
+				App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_On = 0;
 				EnableFog(false);
 			}
 
@@ -776,14 +788,14 @@ bool GD19_Environment::Props_OnClick(LPARAM lParam)
 	{
 		strcpy(App->Cl_Dialogs->btext,"Set Fog Start Distance");
 
-		sprintf(App->Cl_Dialogs->Chr_Float,"%f", App->SBC_Scene->B_Environment[Index]->Fog_Start);
+		sprintf(App->Cl_Dialogs->Chr_Float,"%f", App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Start);
 		
 		App->Cl_Dialogs->Dialog_Float();
 
 		if (App->Cl_Dialogs->Canceled == 0)
 		{
-			App->SBC_Scene->B_Environment[Index]->Fog_Start = App->Cl_Dialogs->mFloat;
-			if (App->SBC_Scene->B_Environment[Index]->Fog_On == 1)
+			App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Start = App->Cl_Dialogs->mFloat;
+			if (App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_On == 1)
 			{
 				EnableFog(true);
 			}
@@ -798,14 +810,14 @@ bool GD19_Environment::Props_OnClick(LPARAM lParam)
 	{
 		strcpy(App->Cl_Dialogs->btext,"Set Fog End Distance");
 
-		sprintf(App->Cl_Dialogs->Chr_Float,"%f", App->SBC_Scene->B_Environment[Index]->Fog_End);
+		sprintf(App->Cl_Dialogs->Chr_Float,"%f", App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_End);
 		
 		App->Cl_Dialogs->Dialog_Float();
 
 		if (App->Cl_Dialogs->Canceled == 0)
 		{
-			App->SBC_Scene->B_Environment[Index]->Fog_End = App->Cl_Dialogs->mFloat;
-			if (App->SBC_Scene->B_Environment[Index]->Fog_On == 1)
+			App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_End = App->Cl_Dialogs->mFloat;
+			if (App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_On == 1)
 			{
 				EnableFog(true);
 			}
@@ -820,15 +832,15 @@ bool GD19_Environment::Props_OnClick(LPARAM lParam)
 	{
 		strcpy(App->Cl_Dialogs->btext,"Set Density Of Fog");
 
-		sprintf(App->Cl_Dialogs->Chr_Float,"%f", App->SBC_Scene->B_Environment[Index]->Fog_Density);
+		sprintf(App->Cl_Dialogs->Chr_Float,"%f", App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Density);
 		
 		App->Cl_Dialogs->Dialog_Float();
 
 		if (App->Cl_Dialogs->Canceled == 0)
 		{
-			App->SBC_Scene->B_Environment[Index]->Fog_Density = App->Cl_Dialogs->mFloat;
+			App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Density = App->Cl_Dialogs->mFloat;
 
-			if (App->SBC_Scene->B_Environment[Index]->Fog_On == 1)
+			if (App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_On == 1)
 			{
 				EnableFog(true);
 			}
@@ -849,13 +861,13 @@ bool GD19_Environment::Props_OnClick(LPARAM lParam)
 			int Green = GetGValue(App->SBC_FileIO->color.rgbResult);
 			int Blue = GetBValue(App->SBC_FileIO->color.rgbResult);
 
-			App->SBC_Scene->B_Environment[Index]->Fog_Colour.x = (float)Red / 256;
-			App->SBC_Scene->B_Environment[Index]->Fog_Colour.y = (float)Green / 256;;
-			App->SBC_Scene->B_Environment[Index]->Fog_Colour.z = (float)Blue / 256;;
+			App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.x = (float)Red / 256;
+			App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.y = (float)Green / 256;;
+			App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.z = (float)Blue / 256;;
 
 			Update_CreateFogListView();
 
-			if (App->SBC_Scene->B_Environment[Index]->Fog_On == 1)
+			if (App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_On == 1)
 			{
 				EnableFog(true);
 			}
@@ -889,7 +901,7 @@ bool GD19_Environment::Props_OnClick(LPARAM lParam)
 			int Green = GetGValue(App->SBC_FileIO->color.rgbResult);
 			int Blue = GetBValue(App->SBC_FileIO->color.rgbResult);
 
-			App->SBC_Scene->B_Environment[Index]->AmbientColour = Ogre::Vector3((float)Red/256,(float)Green/256,(float)Blue/256);
+			App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour = Ogre::Vector3((float)Red/256,(float)Green/256,(float)Blue/256);
 
 			Update_CreateMainLightListView();
 
@@ -912,7 +924,7 @@ bool GD19_Environment::Props_OnClick(LPARAM lParam)
 			int Green=GetGValue(App->SBC_FileIO->color.rgbResult);
 			int Blue=GetBValue(App->SBC_FileIO->color.rgbResult);
 
-			App->SBC_Scene->B_Environment[Index]->DiffuseColour = Ogre::Vector3((float)Red/256,(float)Green/256,(float)Blue/256);
+			App->SBC_Scene->B_Object[Index]->S_Environ[0]->DiffuseColour = Ogre::Vector3((float)Red/256,(float)Green/256,(float)Blue/256);
 
 			Update_CreateMainLightListView();
 
@@ -935,7 +947,7 @@ bool GD19_Environment::Props_OnClick(LPARAM lParam)
 			int Green=GetGValue(App->SBC_FileIO->color.rgbResult);
 			int Blue=GetBValue(App->SBC_FileIO->color.rgbResult);
 
-			App->SBC_Scene->B_Environment[Index]->SpecularColour = Ogre::Vector3((float)Red/256,(float)Green/256,(float)Blue/256);
+			App->SBC_Scene->B_Object[Index]->S_Environ[0]->SpecularColour = Ogre::Vector3((float)Red/256,(float)Green/256,(float)Blue/256);
 
 			Update_CreateMainLightListView();
 
@@ -945,24 +957,33 @@ bool GD19_Environment::Props_OnClick(LPARAM lParam)
       return 1;
 	}
 
-	// Sound
+	// ----------------------------------------------------------- Sound
 	result = strcmp(btext, "Track");
 	if (result == 0)
 	{
 		App->SBC_SoundMgr->Accessed = 1;
-		strcpy(App->SBC_SoundMgr->Access_File, App->SBC_Scene->B_Environment[Index]->Sound_File);
+		strcpy(App->SBC_SoundMgr->Access_File, App->SBC_Scene->B_Object[Index]->S_Environ[0]->Sound_File);
 
+		App->SBC_Com_Environments->Set_Environment_By_Index(0, Index);
 		App->SBC_SoundMgr->Dialog_SoundFile();
 
 		if (App->SBC_SoundMgr->IsCancelled == 0)
 		{
 			
-			strcpy(App->SBC_Scene->B_Environment[Index]->Sound_File, App->SBC_SoundMgr->Access_File);
-			App->SBC_Scene->B_Environment[Index]->SndVolume = App->SBC_SoundMgr->SndVolume;
+			strcpy(App->SBC_Scene->B_Object[Index]->S_Environ[0]->Sound_File, App->SBC_SoundMgr->Access_File);
+			App->SBC_Scene->B_Object[Index]->S_Environ[0]->SndVolume = App->SBC_SoundMgr->SndVolume;
 
-			Update_CreateSoundListView();
-			
+			App->SBC_Com_Environments->Set_Environment_By_Index(1, Index);
+
+			App->SBC_Com_Environments->Mark_As_Altered_Environ(Index);
+
+			Update_CreateSoundListView();	
 		}
+		else
+		{
+			App->SBC_Com_Environments->Set_Environment_By_Index(1, Index);
+		}
+
 		return 1;
 	}
 
@@ -971,7 +992,7 @@ bool GD19_Environment::Props_OnClick(LPARAM lParam)
 	{
 		strcpy(App->Cl_Dialogs->btext,"Play Main BackGround Track");
 
-		App->Cl_Dialogs->TrueFlase = App->SBC_Scene->B_Environment[Index]->Play;
+		App->Cl_Dialogs->TrueFlase = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Play;
 
 		App->Cl_Dialogs->Dialog_TrueFlase(App->MainHwnd);
 
@@ -979,11 +1000,21 @@ bool GD19_Environment::Props_OnClick(LPARAM lParam)
 		{
 			if(App->Cl_Dialogs->TrueFlase == 1)
 			{
-				App->SBC_Scene->B_Environment[Index]->Play = 1;
+				App->SBC_Scene->B_Object[Index]->S_Environ[0]->Play = 1;
+
+				App->SBC_Com_Environments->Set_Environment_By_Index(0, Index);
+				App->SBC_Com_Environments->Set_Environment_By_Index(1, Index);
+
+				App->SBC_Com_Environments->Mark_As_Altered_Environ(Index);
 			}
 			else
 			{
-				App->SBC_Scene->B_Environment[Index]->Play = 0;
+				App->SBC_Scene->B_Object[Index]->S_Environ[0]->Play = 0;
+
+				App->SBC_Com_Environments->Set_Environment_By_Index(0, Index);
+				App->SBC_Com_Environments->Set_Environment_By_Index(0, Index);
+
+				App->SBC_Com_Environments->Mark_As_Altered_Environ(Index);
 			}
 
 			Update_CreateSoundListView();
@@ -996,7 +1027,7 @@ bool GD19_Environment::Props_OnClick(LPARAM lParam)
 	{
 		strcpy(App->Cl_Dialogs->btext,"Loop BackGround Track");
 
-		App->Cl_Dialogs->TrueFlase = App->SBC_Scene->B_Environment[Index]->Loop;
+		App->Cl_Dialogs->TrueFlase = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Loop;
 
 		App->Cl_Dialogs->Dialog_TrueFlase(App->MainHwnd);
 
@@ -1004,11 +1035,21 @@ bool GD19_Environment::Props_OnClick(LPARAM lParam)
 		{
 			if(App->Cl_Dialogs->TrueFlase == 1)
 			{
-				App->SBC_Scene->B_Environment[Index]->Loop = 1;
+				App->SBC_Scene->B_Object[Index]->S_Environ[0]->Loop = 1;
+
+				App->SBC_Com_Environments->Set_Environment_By_Index(0, Index);
+				App->SBC_Com_Environments->Set_Environment_By_Index(1, Index);
+
+				App->SBC_Com_Environments->Mark_As_Altered_Environ(Index);
 			}
 			else
 			{
-				App->SBC_Scene->B_Environment[Index]->Loop = 0;
+				App->SBC_Scene->B_Object[Index]->S_Environ[0]->Loop = 0;
+
+				App->SBC_Com_Environments->Set_Environment_By_Index(0, Index);
+				App->SBC_Com_Environments->Set_Environment_By_Index(1, Index);
+
+				App->SBC_Com_Environments->Mark_As_Altered_Environ(Index);
 			}
 
 			Update_CreateSoundListView();
@@ -1058,7 +1099,7 @@ bool GD19_Environment::Props_OnClick(LPARAM lParam)
 
 		strcpy(App->Cl_Dialogs->btext,"Set Sky Visiblity");
 
-		App->Cl_Dialogs->TrueFlase = App->SBC_Scene->B_Environment[Index]->Enabled;
+		App->Cl_Dialogs->TrueFlase = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Enabled;
 		
 		App->Cl_Dialogs->Dialog_TrueFlase(App->MainHwnd);
 
@@ -1066,12 +1107,12 @@ bool GD19_Environment::Props_OnClick(LPARAM lParam)
 		{
 			if(App->Cl_Dialogs->TrueFlase == 1)
 			{
-				App->SBC_Scene->B_Environment[Index]->Enabled = 1;
+				App->SBC_Scene->B_Object[Index]->S_Environ[0]->Enabled = 1;
 				SetSky(1);
 			}
 			else
 			{
-				App->SBC_Scene->B_Environment[Index]->Enabled = 0;
+				App->SBC_Scene->B_Object[Index]->S_Environ[0]->Enabled = 0;
 				SetSky(0);
 			}
 
@@ -1159,10 +1200,10 @@ void GD19_Environment::SetSky(bool Enable)
 	int Index = App->SBC_Properties->Current_Selected_Object;
 
 	App->Cl19_Ogre->mSceneMgr->setSkyDome(Enable,
-		App->SBC_Scene->B_Environment[Index]->Material,
-		App->SBC_Scene->B_Environment[Index]->Curvature,
-		App->SBC_Scene->B_Environment[Index]->Tiling,
-		App->SBC_Scene->B_Environment[Index]->Distance);
+		App->SBC_Scene->B_Object[Index]->S_Environ[0]->Material,
+		App->SBC_Scene->B_Object[Index]->S_Environ[0]->Curvature,
+		App->SBC_Scene->B_Object[Index]->S_Environ[0]->Tiling,
+		App->SBC_Scene->B_Object[Index]->S_Environ[0]->Distance);
 }
 
 // *************************************************************************
@@ -1174,13 +1215,13 @@ bool GD19_Environment::EnableFog(bool SetFog)
 
 	if (SetFog == true)
 	{
-		float Start = App->SBC_Scene->B_Environment[Index]->Fog_Start;
-		float End = App->SBC_Scene->B_Environment[Index]->Fog_End;
-		float Density = App->SBC_Scene->B_Environment[Index]->Fog_Density;
+		float Start = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Start;
+		float End = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_End;
+		float Density = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Density;
 
-		float x = App->SBC_Scene->B_Environment[Index]->Fog_Colour.x;
-		float y = App->SBC_Scene->B_Environment[Index]->Fog_Colour.y;
-		float z = App->SBC_Scene->B_Environment[Index]->Fog_Colour.z;
+		float x = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.x;
+		float y = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.y;
+		float z = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.z;
 
 		App->Cl19_Ogre->mSceneMgr->setFog(FOG_LINEAR, ColourValue(x, y, z), Density, (Ogre::Real)Start, (Ogre::Real)End);
 	}

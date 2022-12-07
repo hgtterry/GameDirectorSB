@@ -67,9 +67,7 @@ protected:
 	bool Build_Objects_Data();
 	bool Build_Display_Folder();
 	bool Build_Display_Data();
-	bool Build_Environment_Folder();
-	bool Build_Environment_Data();
-
+	
 	void Copy_Sound_Files(void);
 
 	//------------------------------------------

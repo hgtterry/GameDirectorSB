@@ -47,7 +47,6 @@ public:
 	bool Update_ListView_Teleport();
 	bool Update_ListView_Collectables();
 	bool Update_ListView_Counters();
-	bool Update_ListView_Environments();
 	bool Update_ListView_Environs();
 
 	void Reset_Last_Selected_Object(int Index);
@@ -87,7 +86,7 @@ protected:
 	bool Edit_Teleport_OnClick(LPARAM lParam);
 	bool Edit_Collectables_OnClick(LPARAM lParam);
 	bool Edit_Counters_OnClick(LPARAM lParam);
-	bool Edit_Environments_OnClick(LPARAM lParam);
+	bool Edit_Environs_OnClick(LPARAM lParam);
 
 	char btext[20]; // ListView_GetItemText Text Holder for Compare [041221]
 	

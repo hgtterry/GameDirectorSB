@@ -72,7 +72,6 @@ public:
 	HTREEITEM FV_Teleporters_Folder;
 	HTREEITEM FV_Collectables_Folder;
 	HTREEITEM FV_Counters_Folder;
-	HTREEITEM FV_Environments_Folder;
 	HTREEITEM FV_Counters2_Folder;
 	HTREEITEM FV_EntitiesFolder;
 	HTREEITEM FV_Evirons_Folder;

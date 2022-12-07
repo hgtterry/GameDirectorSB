@@ -368,7 +368,7 @@ void SB_Objects_Create::Add_Physics_Box(bool Dynamic,int Index)
 	btCollisionShape* newRigidShape = new btBoxShape(btVector3(sx, sy, sz));
 	newRigidShape->calculateLocalInertia(mass, localInertia);
 
-	App->Cl_Bullet->collisionShapes.push_back(newRigidShape);
+	App->SBC_Bullet->collisionShapes.push_back(newRigidShape);
 
 	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
 
@@ -398,7 +398,7 @@ void SB_Objects_Create::Add_Physics_Box(bool Dynamic,int Index)
 	int f = Object->Phys_Body->getCollisionFlags();
 	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
-	App->Cl_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
+	App->SBC_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
 	Set_Physics(Index);
 }
@@ -455,7 +455,7 @@ void SB_Objects_Create::Add_Physics_Sphere(bool Dynamic, int Index)
 	btCollisionShape* newRigidShape = new btSphereShape(Radius);
 	newRigidShape->calculateLocalInertia(mass, localInertia);
 
-	App->Cl_Bullet->collisionShapes.push_back(newRigidShape);
+	App->SBC_Bullet->collisionShapes.push_back(newRigidShape);
 
 	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
 
@@ -484,7 +484,7 @@ void SB_Objects_Create::Add_Physics_Sphere(bool Dynamic, int Index)
 	int f = Object->Phys_Body->getCollisionFlags();
 	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
-	App->Cl_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
+	App->SBC_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
 	Set_Physics(Index);
 }
@@ -546,7 +546,7 @@ void SB_Objects_Create::Add_Physics_Capsule(bool Dynamic, int Index)
 	btCollisionShape* newRigidShape = new btCapsuleShape(Radius, sy);
 	newRigidShape->calculateLocalInertia(mass, localInertia);
 
-	App->Cl_Bullet->collisionShapes.push_back(newRigidShape);
+	App->SBC_Bullet->collisionShapes.push_back(newRigidShape);
 
 	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
 
@@ -576,7 +576,7 @@ void SB_Objects_Create::Add_Physics_Capsule(bool Dynamic, int Index)
 	int f = Object->Phys_Body->getCollisionFlags();
 	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
-	App->Cl_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
+	App->SBC_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
 	Set_Physics(Index);
 }
@@ -636,7 +636,7 @@ void SB_Objects_Create::Add_Physics_Cylinder(bool Dynamic, int Index)
 	btCollisionShape* newRigidShape = new btCylinderShape(btVector3(sx, sy, sz));
 	newRigidShape->calculateLocalInertia(mass, localInertia);
 
-	App->Cl_Bullet->collisionShapes.push_back(newRigidShape);
+	App->SBC_Bullet->collisionShapes.push_back(newRigidShape);
 
 	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
 
@@ -666,7 +666,7 @@ void SB_Objects_Create::Add_Physics_Cylinder(bool Dynamic, int Index)
 	int f = Object->Phys_Body->getCollisionFlags();
 	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
-	App->Cl_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
+	App->SBC_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
 	Set_Physics(Index);
 }
@@ -723,7 +723,7 @@ void SB_Objects_Create::Add_Physics_Cone(bool Dynamic,int Index)
 	btCollisionShape* newRigidShape = new btConeShape(Radius, sy);
 	newRigidShape->calculateLocalInertia(mass, localInertia);
 
-	App->Cl_Bullet->collisionShapes.push_back(newRigidShape);
+	App->SBC_Bullet->collisionShapes.push_back(newRigidShape);
 
 	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
 
@@ -753,7 +753,7 @@ void SB_Objects_Create::Add_Physics_Cone(bool Dynamic,int Index)
 	int f = Object->Phys_Body->getCollisionFlags();
 	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
-	App->Cl_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
+	App->SBC_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
 	Set_Physics(Index);
 }
@@ -864,7 +864,7 @@ bool SB_Objects_Create::Create_Sound_Entity(int Index)
 	btCollisionShape* newRigidShape = new btBoxShape(btVector3(sx, sy, sz));
 	newRigidShape->calculateLocalInertia(mass, localInertia);
 
-	App->Cl_Bullet->collisionShapes.push_back(newRigidShape);
+	App->SBC_Bullet->collisionShapes.push_back(newRigidShape);
 
 	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
 
@@ -889,7 +889,7 @@ bool SB_Objects_Create::Create_Sound_Entity(int Index)
 		| btCollisionObject::CF_NO_CONTACT_RESPONSE);
 
 
-	App->Cl_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
+	App->SBC_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
 	Set_Physics(Index);
 
@@ -999,7 +999,7 @@ bool SB_Objects_Create::Create_TeleportEntity(int Index)
 	btCollisionShape* newRigidShape = new btBoxShape(btVector3(sx, sy, sz));
 	newRigidShape->calculateLocalInertia(mass, localInertia);
 
-	App->Cl_Bullet->collisionShapes.push_back(newRigidShape);
+	App->SBC_Bullet->collisionShapes.push_back(newRigidShape);
 
 	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
 
@@ -1024,7 +1024,7 @@ bool SB_Objects_Create::Create_TeleportEntity(int Index)
 		| btCollisionObject::CF_NO_CONTACT_RESPONSE);
 
 
-	App->Cl_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
+	App->SBC_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
 	Set_Physics(Index);
 	return 1;
@@ -1176,7 +1176,7 @@ btBvhTriangleMeshShape* SB_Objects_Create::create_New_Trimesh(int Index)
 	Object->Phys_Body->setUserIndex(123);
 	Object->Phys_Body->setUserIndex2(Index);
 
-	App->Cl_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
+	App->SBC_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
 	Object->Physics_Valid = 1;
 
@@ -1332,7 +1332,7 @@ btBvhTriangleMeshShape* SB_Objects_Create::create_Area_Trimesh_New(int Index, Ba
 
 	Object->Collect_Object_Data();
 
-	App->Cl_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
+	App->SBC_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
 	Object->Physics_Valid = 1;
 	return mShape;

@@ -33,6 +33,6 @@ public:
 
 protected:
 
-	bool First_Area_Build_Project();
+	bool First_Area_Build_Project(bool NoArea);
 };
 

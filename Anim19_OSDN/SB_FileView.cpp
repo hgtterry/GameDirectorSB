@@ -49,7 +49,6 @@ SB_FileView::SB_FileView()
 	FV_Move_Folder = nullptr;
 	FV_Collectables_Folder = nullptr;
 	FV_Teleporters_Folder = nullptr;
-	FV_Environments_Folder = nullptr;
 	FV_Evirons_Folder = nullptr;
 
 	GD_Environment_Folder = nullptr;
@@ -470,11 +469,11 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	tvinsert.item.iSelectedImage = 1;
 	FV_Teleporters_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
 
-	//--------------------------------------- Eviron_Entity
+	//--------------------------------------- Evironments Eviron_Entity
 	tvinsert.hParent = FV_EntitiesFolder;
 	tvinsert.hInsertAfter = TVI_LAST;
 	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
-	tvinsert.item.pszText = "Eviron_Entities";
+	tvinsert.item.pszText = "Evironments";
 	tvinsert.item.iImage = 0;
 	tvinsert.item.iSelectedImage = 1;
 	FV_Evirons_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
@@ -496,15 +495,6 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	tvinsert.item.iImage = 0;
 	tvinsert.item.iSelectedImage = 1;
 	FV_Counters_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
-
-	//--------------------------------------- Environments
-	tvinsert.hParent = FV_LevelFolder;
-	tvinsert.hInsertAfter = TVI_LAST;
-	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
-	tvinsert.item.pszText = "Environments";
-	tvinsert.item.iImage = 0;
-	tvinsert.item.iSelectedImage = 1;
-	FV_Environments_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
 }
 
 // *************************************************************************
@@ -720,12 +710,12 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 	}
 
 	// ------------------------------------------------------------ Eviron_Entities
-	if (!strcmp(FileView_Folder, "Eviron_Entities")) // Folder
+	if (!strcmp(FileView_Folder, "Evironments")) // Folder
 	{
 		App->SBC_FileView->Context_Selection = Enums::FileView_EnvironEntity_Folder;
 		return;
 	}
-	if (!strcmp(FileView_File, "Eviron_Entities"))
+	if (!strcmp(FileView_File, "Evironments"))
 	{
 		App->SBC_FileView->Context_Selection = Enums::FileView_EnvironEntity_File;
 
@@ -963,26 +953,6 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		return;
 	}
 
-	// ------------------------------------------------------------ Enviroments
-	if (!strcmp(FileView_Folder, "Environments")) // Folder
-	{
-		App->SBC_FileView->Context_Selection = Enums::FileView_Environments_Folder;
-		return;
-	}
-	if (!strcmp(FileView_File, "Environments"))
-	{
-		App->SBC_FileView->Context_Selection = Enums::FileView_Environments_File;
-
-		HideRightPanes();
-		ShowWindow(App->GD_Properties_Hwnd, 1);
-		
-		App->SBC_Properties->Edit_Category = Enums::Edit_Environment;
-		App->SBC_Properties->Current_Selected_Object = Index;
-
-		App->SBC_Properties->Update_ListView_Environments();
-
-		return;
-	}
 
 	// ------------------------------------------------------------ Text_Message
 	if (!strcmp(FileView_Folder, "Text_Message")) // Folder
@@ -1340,7 +1310,7 @@ void SB_FileView::Context_Menu(HWND hDlg)
 		}
 
 		//------------------------------------- Eviron_Entities
-		if (!strcmp(App->SBC_FileView->FileView_Folder, "Eviron_Entities")) // Folder
+		if (!strcmp(App->SBC_FileView->FileView_Folder, "Evironments")) // Folder
 		{
 			App->SBC_FileView->hMenu = CreatePopupMenu();
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_NEW, L"&New");
@@ -1349,7 +1319,7 @@ void SB_FileView::Context_Menu(HWND hDlg)
 			Context_Selection = Enums::FileView_EnvironEntity_Folder;
 		}
 
-		if (!strcmp(App->SBC_FileView->FileView_File, "Eviron_Entities"))
+		if (!strcmp(App->SBC_FileView->FileView_File, "Evironments"))
 		{
 			App->SBC_FileView->hMenu = CreatePopupMenu();
 
@@ -1483,29 +1453,29 @@ void SB_FileView::Context_Menu(HWND hDlg)
 			Context_Selection = Enums::FileView_Counters_File;
 		}
 
-		//------------------------------------- Environments
-		if (!strcmp(App->SBC_FileView->FileView_Folder, "Environments")) // Folder
-		{
-			App->SBC_FileView->hMenu = CreatePopupMenu();
-			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_NEW, L"&New");
-			TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
-			DestroyMenu(App->SBC_FileView->hMenu);
-			Context_Selection = Enums::FileView_Environments_Folder;
-		}
+		////------------------------------------- Environments
+		//if (!strcmp(App->SBC_FileView->FileView_Folder, "Environments")) // Folder
+		//{
+		//	App->SBC_FileView->hMenu = CreatePopupMenu();
+		//	AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_NEW, L"&New");
+		//	TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+		//	DestroyMenu(App->SBC_FileView->hMenu);
+		//	Context_Selection = Enums::FileView_Environments_Folder;
+		//}
 
-		if (!strcmp(App->SBC_FileView->FileView_File, "Environments"))
-		{
-			App->SBC_FileView->hMenu = CreatePopupMenu();
+		//if (!strcmp(App->SBC_FileView->FileView_File, "Environments"))
+		//{
+		//	App->SBC_FileView->hMenu = CreatePopupMenu();
 
-			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
-			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
-			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
-			AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
-			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
-			TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
-			DestroyMenu(App->SBC_FileView->hMenu);
-			Context_Selection = Enums::FileView_Environments_File;
-		}
+		//	AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
+		//	AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
+		//	AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
+		//	AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
+		//	AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
+		//	TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
+		//	DestroyMenu(App->SBC_FileView->hMenu);
+		//	Context_Selection = Enums::FileView_Environments_File;
+		//}
 
 		//------------------------------------- Text_Messages
 		if (!strcmp(App->SBC_FileView->FileView_Folder, "Text_Message")) // Folder
@@ -1627,7 +1597,7 @@ void SB_FileView::Context_New(HWND hDlg)
 		bool Doit = App->SBC_Dialogs->Canceled;
 		if (Doit == 0)
 		{
-			App->SBC_Com_Environments->Add_New_Environ_Entity();
+			App->SBC_Com_Environments->Add_New_Environ_Entity(0);
 		}
 
 		return;
@@ -1697,7 +1667,7 @@ void SB_FileView::Context_New(HWND hDlg)
 		bool Doit = App->SBC_Dialogs->Canceled;
 		if (Doit == 0)
 		{
-			App->SBC_Com_Environments->Add_New_Environment();
+			//App->SBC_Com_Environments->Add_New_Environment();
 		}
 
 		return;
@@ -1825,23 +1795,24 @@ void SB_FileView::Context_Delete(HWND hDlg)
 		return;
 	}
 
-	// ---------------- Environments
-	if (App->SBC_FileView->Context_Selection == Enums::FileView_Environments_File)
+	// ---------------- Environs
+	if (App->SBC_FileView->Context_Selection == Enums::FileView_EnvironEntity_File)
 	{
+		int Test = App->SBC_Com_Environments->Get_First_Environ();
 
-		if (App->SBC_Scene->B_Environment[App->SBC_Properties->Current_Selected_Object]->This_Object_ID == 0)
+		if (App->SBC_Properties->Current_Selected_Object == Test)
 		{
-			App->Say("This Environment can not be Deleted");
+			App->Say("This Environment Entity can not be Deleted");
 			return;
 		}
 
-		App->SBC_Dialogs->YesNo("Remove Environment", "Are you sure", 1);
+		App->SBC_Dialogs->YesNo("Remove Environment Entity", "Are you sure", 1);
 
 		bool Doit = App->SBC_Dialogs->Canceled;
 		if (Doit == 0)
 		{
-			App->SBC_Com_Environments->Delete_Environment();
-			App->SBC_FileView->Mark_Altered_Folder(App->SBC_FileView->FV_Environments_Folder);
+			App->SBC_Object->Delete_Object();
+			App->SBC_FileView->Mark_Altered_Folder(App->SBC_FileView->FV_Evirons_Folder);
 		}
 
 		return;
@@ -1871,10 +1842,10 @@ void SB_FileView::Context_Rename(HWND hDlg)
 		return;
 	}
 
-	if (App->SBC_FileView->Context_Selection == Enums::FileView_Environments_File)
+	if (App->SBC_FileView->Context_Selection == Enums::FileView_EnvironEntity_File)
 	{
-		App->SBC_Com_Environments->Rename_Environment(Index);
-		App->SBC_Properties->Update_ListView_Environments();
+		App->SBC_Com_Environments->Rename_Environ(Index);
+		App->SBC_Properties->Update_ListView_Environs();
 		return;
 	}
 

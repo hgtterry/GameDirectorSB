@@ -142,7 +142,7 @@ bool SB_Com_Collectables::Create_Collectable_Entity(int Index)
 	btCollisionShape* newRigidShape = new btBoxShape(btVector3(sx, sy, sz));
 	newRigidShape->calculateLocalInertia(mass, localInertia);
 
-	App->Cl_Bullet->collisionShapes.push_back(newRigidShape);
+	App->SBC_Bullet->collisionShapes.push_back(newRigidShape);
 
 	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
 
@@ -164,7 +164,7 @@ bool SB_Com_Collectables::Create_Collectable_Entity(int Index)
 	int f = Object->Phys_Body->getCollisionFlags();
 	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
-	App->Cl_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
+	App->SBC_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
 	App->SBC_Objects_Create->Set_Physics(Index);
 

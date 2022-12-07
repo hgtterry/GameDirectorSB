@@ -286,7 +286,7 @@ btBvhTriangleMeshShape* SB_Com_Area::create_Area_Trimesh_New(int Index, Base_Are
 
 	Object->Collect_Object_Data();
 
-	App->Cl_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
+	App->SBC_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
 	Object->Physics_Valid = 1;
 	return mShape;

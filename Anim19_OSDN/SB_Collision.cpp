@@ -31,6 +31,7 @@ SB_Collision::SB_Collision()
 	DoMove = 0;
 
 	FinalPosition = 0;
+	Old_Sound_Index = 0;
 
 	x = 0;
 	y = 0;
@@ -430,28 +431,33 @@ bool SB_Collision::Do_Collectable(int Index)
 // *************************************************************************
 bool SB_Collision::Do_Environment(int Index)
 {
-	if (App->SBC_Scene->B_Object[Index]->Triggered == 1) // Retrigger Yes No
+	if (App->SBC_Scene->B_Object[Index]->Triggered == 1) // return
 	{
 		return 1;
 	}
 
+	if (Old_Sound_Index == Index)
+	{
+		App->SBC_Scene->B_Object[Index]->Triggered = 1;
+		return 1;
+	}
 
+	if (App->SBC_Scene->GameMode_Running_Flag == 1)
+	{
+		App->SBC_Com_Environments->Set_Environment_By_Index(0, Old_Sound_Index);
+		App->SBC_Com_Environments->Set_Environment_By_Index(1, Index);
 
-	//if (App->Cl_Scene_Data->Cl_Object[Index]->HasSound == 1)
-	//{
-	//	if (App->Cl_Scene_Data->Cl_Object[Index]->S_Environment[0]->FogOn == 0)
-	//	{
-	//		App->Cl_Scene_Data->Cl_Object[Index]->S_Environment[0]->FogOn = 1;
-	//		App->Cl_Environment->EnableFog(true);
-	//	}
-	//	else
-	//	{
-	//		App->Cl_Scene_Data->Cl_Object[Index]->S_Environment[0]->FogOn = 0;
-			App->Cl_Environment->EnableFog(true);
-	//	}
+		Old_Sound_Index = Index;
+		App->SBC_Scene->B_Object[Index]->Triggered = 1;
+	}
+	else
+	{
+		App->SBC_Com_Environments->Set_Environment_By_Index(0, Index);
 
-	//		Play_Sound(Index);
-	//}
+		Old_Sound_Index = Index;
+
+		App->SBC_Scene->B_Object[Index]->Triggered = 1;
+	}
 
 	return 1;
 }

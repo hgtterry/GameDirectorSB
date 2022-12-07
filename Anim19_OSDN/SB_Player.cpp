@@ -167,7 +167,7 @@ void SB_Player::Initialize()
 
 	//pBase->Phys_Body->getWorldTransform().setRotation(btQuaternion(1,0,1,1));
 	App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->SBC_Scene->B_Player[0]->Physics_Rotation);
-	App->Cl_Bullet->dynamicsWorld->addRigidBody(pBase->Phys_Body);
+	App->SBC_Bullet->dynamicsWorld->addRigidBody(pBase->Phys_Body);
 
 	// Save for later
 	Current_Position = pBase->Player_Node->getPosition();
@@ -440,10 +440,10 @@ void SB_Player::Check_Collisions(void)
 	int UsageIndex = 0;
 
 	/* Browse all collision pairs */
-	int numManifolds = App->Cl_Bullet->dynamicsWorld->getDispatcher()->getNumManifolds();
+	int numManifolds = App->SBC_Bullet->dynamicsWorld->getDispatcher()->getNumManifolds();
 	for (int i = 0; i<numManifolds; i++)
 	{
-		btPersistentManifold* contactManifold = App->Cl_Bullet->dynamicsWorld->getDispatcher()->getManifoldByIndexInternal(i);
+		btPersistentManifold* contactManifold = App->SBC_Bullet->dynamicsWorld->getDispatcher()->getManifoldByIndexInternal(i);
 		btCollisionObject* obA = (btCollisionObject*)(contactManifold->getBody0());
 		btCollisionObject* obB = (btCollisionObject*)(contactManifold->getBody1());
 
@@ -661,11 +661,11 @@ void SB_Player::Check_Collisions_New(void)
 	Col_numManifolds = 0;
 
 	/* Browse all collision pairs */
-	Col_numManifolds = App->Cl_Bullet->dynamicsWorld->getDispatcher()->getNumManifolds();
+	Col_numManifolds = App->SBC_Bullet->dynamicsWorld->getDispatcher()->getNumManifolds();
 
 	for (int i = 0; i < Col_numManifolds; i++)
 	{
-		btPersistentManifold* contactManifold = App->Cl_Bullet->dynamicsWorld->getDispatcher()->getManifoldByIndexInternal(i);
+		btPersistentManifold* contactManifold = App->SBC_Bullet->dynamicsWorld->getDispatcher()->getManifoldByIndexInternal(i);
 		btCollisionObject* obA = (btCollisionObject*)(contactManifold->getBody0());
 		btCollisionObject* obB = (btCollisionObject*)(contactManifold->getBody1());
 
@@ -856,7 +856,7 @@ void SB_Player::Check_Collisions_New(void)
 						{
 							if (App->SBC_Scene->B_Object[Col_Object_Index]->Triggered == 1)
 							{
-
+								App->SBC_Scene->B_Object[Col_Object_Index]->Triggered = 0;
 							}
 						}
 					}

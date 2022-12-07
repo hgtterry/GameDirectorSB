@@ -30,7 +30,10 @@ public:
 
 	bool TestForBadCharactors(char* buf);
 	bool ReverseBackSlash(char* buf);
+
 	bool OpenHTML(char* HelpTitle);
+	bool OpenHTML_WEB(char* HelpTitle);
+
 	float floatPercent(int Val);
 
 	float DegreesToRadians(float Degrees);

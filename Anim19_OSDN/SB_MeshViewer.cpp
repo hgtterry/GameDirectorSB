@@ -809,7 +809,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			
 			if (App->SBC_MeshViewer->Phys_Body)
 			{
-				App->Cl_Bullet->dynamicsWorld->removeCollisionObject(App->SBC_MeshViewer->Phys_Body);
+				App->SBC_Bullet->dynamicsWorld->removeCollisionObject(App->SBC_MeshViewer->Phys_Body);
 				App->SBC_MeshViewer->Phys_Body = nullptr;
 			}
 
@@ -850,7 +850,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 			if (App->SBC_MeshViewer->Phys_Body)
 			{
-				App->Cl_Bullet->dynamicsWorld->removeCollisionObject(App->SBC_MeshViewer->Phys_Body);
+				App->SBC_Bullet->dynamicsWorld->removeCollisionObject(App->SBC_MeshViewer->Phys_Body);
 				App->SBC_MeshViewer->Phys_Body = nullptr;
 			}
 
@@ -1537,7 +1537,7 @@ void SB_MeshViewer::Show_Physics_None()
 
 	if (Phys_Body)
 	{
-		App->Cl_Bullet->dynamicsWorld->removeCollisionObject(Phys_Body);
+		App->SBC_Bullet->dynamicsWorld->removeCollisionObject(Phys_Body);
 		Phys_Body = nullptr;
 	}
 }
@@ -1555,7 +1555,7 @@ void SB_MeshViewer::Show_Physics_Box()
 
 	if (Phys_Body)
 	{
-		App->Cl_Bullet->dynamicsWorld->removeCollisionObject(Phys_Body);
+		App->SBC_Bullet->dynamicsWorld->removeCollisionObject(Phys_Body);
 		Phys_Body = nullptr;
 	}
 
@@ -1582,7 +1582,7 @@ void SB_MeshViewer::Show_Physics_Box()
 	btCollisionShape* newRigidShape = new btBoxShape(btVector3(sx, sy, sz));
 	newRigidShape->calculateLocalInertia(mass, localInertia);
 
-	App->Cl_Bullet->collisionShapes.push_back(newRigidShape);
+	App->SBC_Bullet->collisionShapes.push_back(newRigidShape);
 
 	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
 
@@ -1596,7 +1596,7 @@ void SB_MeshViewer::Show_Physics_Box()
 
 	Phys_Body->setCustomDebugColor(btVector3(0, 1, 1));
 
-	App->Cl_Bullet->dynamicsWorld->addRigidBody(Phys_Body);
+	App->SBC_Bullet->dynamicsWorld->addRigidBody(Phys_Body);
 
 	//Set_Physics(Index);
 }
@@ -1615,7 +1615,7 @@ void SB_MeshViewer::Show_Physics_Capsule()
 
 	if (Phys_Body)
 	{
-		App->Cl_Bullet->dynamicsWorld->removeCollisionObject(Phys_Body);
+		App->SBC_Bullet->dynamicsWorld->removeCollisionObject(Phys_Body);
 		Phys_Body = nullptr;
 	}
 
@@ -1647,7 +1647,7 @@ void SB_MeshViewer::Show_Physics_Capsule()
 	btCollisionShape* newRigidShape = new btCapsuleShape(Radius, sy);
 	newRigidShape->calculateLocalInertia(mass, localInertia);
 
-	App->Cl_Bullet->collisionShapes.push_back(newRigidShape);
+	App->SBC_Bullet->collisionShapes.push_back(newRigidShape);
 
 	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
 
@@ -1661,7 +1661,7 @@ void SB_MeshViewer::Show_Physics_Capsule()
 
 	Phys_Body->setCustomDebugColor(btVector3(0, 1, 1));
 
-	App->Cl_Bullet->dynamicsWorld->addRigidBody(Phys_Body);
+	App->SBC_Bullet->dynamicsWorld->addRigidBody(Phys_Body);
 
 	//Set_Physics(Index);
 }
@@ -1680,7 +1680,7 @@ void SB_MeshViewer::Show_Physics_Cone()
 
 	if (Phys_Body)
 	{
-		App->Cl_Bullet->dynamicsWorld->removeCollisionObject(Phys_Body);
+		App->SBC_Bullet->dynamicsWorld->removeCollisionObject(Phys_Body);
 		Phys_Body = nullptr;
 	}
 
@@ -1710,7 +1710,7 @@ void SB_MeshViewer::Show_Physics_Cone()
 	btCollisionShape* newRigidShape = new btConeShape(Radius, sy);
 	newRigidShape->calculateLocalInertia(mass, localInertia);
 
-	App->Cl_Bullet->collisionShapes.push_back(newRigidShape);
+	App->SBC_Bullet->collisionShapes.push_back(newRigidShape);
 
 	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
 
@@ -1724,7 +1724,7 @@ void SB_MeshViewer::Show_Physics_Cone()
 
 	Phys_Body->setCustomDebugColor(btVector3(0, 1, 1));
 
-	App->Cl_Bullet->dynamicsWorld->addRigidBody(Phys_Body);
+	App->SBC_Bullet->dynamicsWorld->addRigidBody(Phys_Body);
 
 	//Set_Physics(Index);
 }
@@ -1743,7 +1743,7 @@ void SB_MeshViewer::Show_Physics_Sphere()
 
 	if (Phys_Body)
 	{
-		App->Cl_Bullet->dynamicsWorld->removeCollisionObject(Phys_Body);
+		App->SBC_Bullet->dynamicsWorld->removeCollisionObject(Phys_Body);
 		Phys_Body = nullptr;
 	}
 
@@ -1769,7 +1769,7 @@ void SB_MeshViewer::Show_Physics_Sphere()
 	btCollisionShape* newRigidShape = new btSphereShape(Radius);
 	newRigidShape->calculateLocalInertia(mass, localInertia);
 
-	App->Cl_Bullet->collisionShapes.push_back(newRigidShape);
+	App->SBC_Bullet->collisionShapes.push_back(newRigidShape);
 
 	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
 
@@ -1783,7 +1783,7 @@ void SB_MeshViewer::Show_Physics_Sphere()
 
 	Phys_Body->setCustomDebugColor(btVector3(0, 1, 1));
 
-	App->Cl_Bullet->dynamicsWorld->addRigidBody(Phys_Body);
+	App->SBC_Bullet->dynamicsWorld->addRigidBody(Phys_Body);
 
 	//Set_Physics(Index);
 }
@@ -1802,7 +1802,7 @@ void SB_MeshViewer::Show_Physics_Cylinder()
 
 	if (Phys_Body)
 	{
-		App->Cl_Bullet->dynamicsWorld->removeCollisionObject(Phys_Body);
+		App->SBC_Bullet->dynamicsWorld->removeCollisionObject(Phys_Body);
 		Phys_Body = nullptr;
 	}
 
@@ -1834,7 +1834,7 @@ void SB_MeshViewer::Show_Physics_Cylinder()
 	btCollisionShape* newRigidShape = new btCylinderShape(btVector3(sx, sy, sz));
 	newRigidShape->calculateLocalInertia(mass, localInertia);
 
-	App->Cl_Bullet->collisionShapes.push_back(newRigidShape);
+	App->SBC_Bullet->collisionShapes.push_back(newRigidShape);
 
 	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
 
@@ -1848,7 +1848,7 @@ void SB_MeshViewer::Show_Physics_Cylinder()
 
 	Phys_Body->setCustomDebugColor(btVector3(0, 1, 1));
 
-	App->Cl_Bullet->dynamicsWorld->addRigidBody(Phys_Body);
+	App->SBC_Bullet->dynamicsWorld->addRigidBody(Phys_Body);
 
 	//Set_Physics(Index);
 }
@@ -1867,7 +1867,7 @@ void SB_MeshViewer::Show_Physics_Trimesh()
 
 	if (Phys_Body)
 	{
-		App->Cl_Bullet->dynamicsWorld->removeCollisionObject(Phys_Body);
+		App->SBC_Bullet->dynamicsWorld->removeCollisionObject(Phys_Body);
 		Phys_Body = nullptr;
 	}
 
@@ -1997,7 +1997,7 @@ void SB_MeshViewer::Show_Physics_Trimesh()
 
 	Phys_Body->setCustomDebugColor(btVector3(0, 1, 1));
 
-	App->Cl_Bullet->dynamicsWorld->addRigidBody(Phys_Body);
+	App->SBC_Bullet->dynamicsWorld->addRigidBody(Phys_Body);
 
 }
 

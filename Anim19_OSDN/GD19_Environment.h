@@ -25,7 +25,7 @@ protected:
 	void AddOptions(void);
 	void ListView_Selection(LPNMHDR lParam);
 
-	bool Props_OnClick(LPARAM lParam);
+	bool On_Click_Props(LPARAM lParam);
 
 	HWND OptionsDlgHwnd;
 	HWND BackDrop_hWnd;

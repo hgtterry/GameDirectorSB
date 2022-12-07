@@ -55,8 +55,7 @@ public:
 	Base_Camera*			B_Camera[20];
 	Base_Locations*			B_Locations[20];
 	Base_Counter*			B_Counter[20];
-	Base_Environment*		B_Environment[20];
-
+	
 	bool Scene_Loaded;	// Is the Scene Loaded
 
 	int Player_Count;		
@@ -77,9 +76,6 @@ public:
 
 	int Player_Location_Count;
 	int Locations_ID_Counter;
-
-	int Environment_Count;
-	int UniqueID_Environment_Count;
 
 	int CurrentCamMode;
 

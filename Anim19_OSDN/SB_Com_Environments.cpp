@@ -34,98 +34,12 @@ SB_Com_Environments::~SB_Com_Environments()
 }
 
 // *************************************************************************
-// *			Add_New_Environment:- Terry and Hazel Flanigan 2022		   *
+// *			Rename_Environ:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
-void SB_Com_Environments::Add_New_Environment()
+void SB_Com_Environments::Rename_Environ(int Index)
 {
-	char B_Name[MAX_PATH];
-	char ConNum[MAX_PATH];
-
-	int Index = App->SBC_Scene->Environment_Count;
-
-	App->SBC_Scene->B_Environment[Index] = new Base_Environment();
-	App->SBC_Scene->B_Environment[Index]->Set_Environment_Defaults();
-
-	strcpy_s(B_Name, "Environment_");
-	_itoa(Index, ConNum, 10);
-	strcat(B_Name, ConNum);
-	strcpy(App->SBC_Scene->B_Environment[Index]->Name, B_Name);
-
-	App->SBC_Scene->B_Environment[Index]->This_Object_ID = App->SBC_Scene->UniqueID_Environment_Count;
-
-	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Environments_Folder, App->SBC_Scene->B_Environment[Index]->Name, Index, true);
-	App->SBC_Scene->B_Environment[Index]->FileViewItem = Temp;
-
-	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Environments_Folder);
-
-	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Environment[Index]->FileViewItem);
-
-	Mark_As_Altered(Index);
-
-	App->SBC_Scene->UniqueID_Environment_Count++;
-	App->SBC_Scene->Environment_Count++;
-
-	App->Say("\r\nNew Environment Added");
-}
-
-// *************************************************************************
-// *			Mark_As_Altered:- Terry and Hazel Flanigan 2022		 	   *
-// *************************************************************************
-void SB_Com_Environments::Mark_As_Altered(int Index)
-{
-	App->SBC_Scene->B_Environment[Index]->Altered = 1;
-
-	App->SBC_Scene->Scene_Modified = 1;
-
-	App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Environment[Index]->FileViewItem);
-}
-
-// *************************************************************************
-// *	Add_Environments_From_File:- Terry and Hazel Flanigan 2022		   *
-// *************************************************************************
-bool SB_Com_Environments::Add_Environments_From_File() // From File
-{
-
-	int Environments_Count = App->SBC_Scene->Environment_Count;
-	int Count = 0;
-
-	while (Count < Environments_Count)
-	{
-
-		HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Environments_Folder, App->SBC_Scene->B_Environment[Count]->Name, Count, false);
-		App->SBC_Scene->B_Environment[Count]->FileViewItem = Temp;
-
-		Count++;
-	}
-
-	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Environments_Folder);
-
-	return 1;
-}
-
-// **************************************************************************
-// *	  		Delete_Environment:- Terry and Hazel Flanigan 2022			*
-// **************************************************************************
-void SB_Com_Environments::Delete_Environment()
-{
-	int Index = App->SBC_Properties->Current_Selected_Object;
-
-	App->SBC_Scene->B_Environment[Index]->Deleted = 1;
-
-	App->SBC_FileView->DeleteItem();
-
-	App->SBC_Scene->Scene_Modified = 1;
-}
-
-// *************************************************************************
-// *			Rename_Environment:- Terry and Hazel Flanigan 2022		   *
-// *************************************************************************
-void SB_Com_Environments::Rename_Environment(int Index)
-{
-	Base_Environment* Environment = App->SBC_Scene->B_Environment[Index];
-
-	strcpy(App->Cl_Dialogs->btext, "Change Object Name");
-	strcpy(App->Cl_Dialogs->Chr_Text, Environment->Name);
+	strcpy(App->Cl_Dialogs->btext, "Change Environ Name");
+	strcpy(App->Cl_Dialogs->Chr_Text, App->SBC_Scene->B_Object[Index]->Mesh_Name);
 
 	App->Cl_Dialogs->Dialog_Text(Enums::Check_Names_Objects, 1);
 
@@ -134,19 +48,16 @@ void SB_Com_Environments::Rename_Environment(int Index)
 		return;
 	}
 
-	strcpy(Environment->Name, App->Cl_Dialogs->Chr_Text);
+	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_Name, App->Cl_Dialogs->Chr_Text);
 
-	Environment->Altered = 1;
-	App->SBC_Scene->Scene_Modified = 1;
-	App->SBC_FileView->Mark_Altered(Environment->FileViewItem);
+	Mark_As_Altered_Environ(Index);
 
-	App->SBC_FileView->Change_Item_Name(Environment->FileViewItem, Environment->Name);
 }
 
 // *************************************************************************
 // *		Add_New_Environ_Entiry:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
-bool SB_Com_Environments::Add_New_Environ_Entity()
+bool SB_Com_Environments::Add_New_Environ_Entity(bool FirstOne)
 {
 	char B_Name[MAX_PATH];
 	char ConNum[MAX_PATH];
@@ -169,14 +80,22 @@ bool SB_Com_Environments::Add_New_Environ_Entity()
 	strcat(B_Name, ConNum);
 	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_Name, B_Name);
 
-	Ogre::Vector3 Pos = App->SBC_Object->GetPlacement(-50);
-	App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
+	if (FirstOne == 0)
+	{
+		Ogre::Vector3 Pos = App->SBC_Object->GetPlacement(-50);
+		App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
+	}
+	else
+	{
+		Ogre::Vector3 Pos = Ogre::Vector3(0, 0, 0);
+	}
 
 	Create_Environ_Entity(Index);
 
 	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Evirons_Folder, App->SBC_Scene->B_Object[Index]->Mesh_Name, Index, true);
 	App->SBC_Scene->B_Object[Index]->FileViewItem = Temp;
 
+	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Evirons_Folder);
 	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[Index]->FileViewItem);
 
 	App->SBC_Scene->UniqueID_Object_Counter++;
@@ -245,7 +164,7 @@ bool SB_Com_Environments::Create_Environ_Entity(int Index)
 	btCollisionShape* newRigidShape = new btBoxShape(btVector3(sx, sy, sz));
 	newRigidShape->calculateLocalInertia(mass, localInertia);
 
-	App->Cl_Bullet->collisionShapes.push_back(newRigidShape);
+	App->SBC_Bullet->collisionShapes.push_back(newRigidShape);
 
 	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
 
@@ -270,7 +189,7 @@ bool SB_Com_Environments::Create_Environ_Entity(int Index)
 		| btCollisionObject::CF_NO_CONTACT_RESPONSE);
 
 
-	App->Cl_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
+	App->SBC_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
 	//Set_Physics(Index);
 
@@ -278,7 +197,7 @@ bool SB_Com_Environments::Create_Environ_Entity(int Index)
 }
 
 // *************************************************************************
-// *		Set_Environ_Defaults:- Terry and Hazel Flanigan 2022	   *
+// *		Set_Environ_Defaults:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
 void SB_Com_Environments::Set_Environ_Defaults(int Index)
 {
@@ -329,17 +248,17 @@ void SB_Com_Environments::Set_Environ_Defaults(int Index)
 }
 
 // *************************************************************************
-// *				Load_Environment  Terry Bernie						   *
+// *		Load_Environment:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
-void SB_Com_Environments::Load_Environment(void)
+void SB_Com_Environments::Set_First_Environment(int Index)
 {
-	float x = App->SBC_Scene->B_Environment[0]->AmbientColour.x;
-	float y = App->SBC_Scene->B_Environment[0]->AmbientColour.y;
-	float z = App->SBC_Scene->B_Environment[0]->AmbientColour.z;
+	float x = App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour.x;
+	float y = App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour.y;
+	float z = App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour.z;
 
 	App->Cl19_Ogre->mSceneMgr->setAmbientLight(ColourValue(x, y, z));
 
-	if (App->SBC_Scene->B_Environment[0]->Fog_On == 1)
+	if (App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_On == 1)
 	{
 		EnableFog(true);
 	}
@@ -350,7 +269,7 @@ void SB_Com_Environments::Load_Environment(void)
 }
 
 // *************************************************************************
-// *	  				  EnableFog	Terry Bernie						   *
+// *	  			EnableFog:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 bool SB_Com_Environments::EnableFog(bool SetFog)
 {
@@ -358,13 +277,13 @@ bool SB_Com_Environments::EnableFog(bool SetFog)
 
 	if (SetFog == true)
 	{
-		float Start = App->SBC_Scene->B_Environment[Index]->Fog_Start;
-		float End = App->SBC_Scene->B_Environment[Index]->Fog_End;
-		float Density = App->SBC_Scene->B_Environment[Index]->Fog_Density;
+		float Start = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Start;
+		float End = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_End;
+		float Density = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Density;
 
-		float x = App->SBC_Scene->B_Environment[Index]->Fog_Colour.x;
-		float y = App->SBC_Scene->B_Environment[Index]->Fog_Colour.y;
-		float z = App->SBC_Scene->B_Environment[Index]->Fog_Colour.z;
+		float x = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.x;
+		float y = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.y;
+		float z = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.z;
 
 		App->Cl19_Ogre->mSceneMgr->setFog(FOG_LINEAR, ColourValue(x, y, z), Density, (Ogre::Real)Start, (Ogre::Real)End);
 	}
@@ -375,3 +294,196 @@ bool SB_Com_Environments::EnableFog(bool SetFog)
 
 	return 1;
 }
+
+// *************************************************************************
+// *	  			EnableFog:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void SB_Com_Environments::EnableFog_Collision(bool SetFog ,int Index)
+{
+	
+	if (SetFog == true)
+	{
+		float Start = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Start;
+		float End = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_End;
+		float Density = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Density;
+
+		float x = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.x;
+		float y = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.y;
+		float z = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.z;
+
+		App->Cl19_Ogre->mSceneMgr->setFog(FOG_LINEAR, ColourValue(x, y, z), Density, (Ogre::Real)Start, (Ogre::Real)End);
+	}
+	else
+	{
+		App->Cl19_Ogre->mSceneMgr->setFog(FOG_NONE, ColourValue(0.7, 0.7, 0.8), 0, 100, 1000);
+	}
+}
+
+// *************************************************************************
+// *	Set_Environment_From_Environ:- Terry and Hazel Flanigan 2022	   *
+// *************************************************************************
+void SB_Com_Environments::Set_Environment_From_Environ(int Index)
+{
+	
+	float x = App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour.x;
+	float y = App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour.y;
+	float z = App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour.z;
+	
+	App->Cl19_Ogre->mSceneMgr->setAmbientLight(ColourValue(x, y, z));
+
+	
+	if (App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_On == 1)
+	{
+		EnableFog_Collision(true, Index);
+	}
+	else
+	{
+		App->Cl19_Ogre->mSceneMgr->setFog(FOG_NONE, ColourValue(0.7, 0.7, 0.8), 0, 100, 1000);
+	}
+
+}
+
+// *************************************************************************
+// *	Mark_As_Altered_Environ:- Terry and Hazel Flanigan 2022		 	   *
+// *************************************************************************
+void SB_Com_Environments::Mark_As_Altered_Environ(int Index)
+{
+	App->SBC_Scene->B_Object[Index]->Altered = 1;
+
+	App->SBC_Scene->Scene_Modified = 1;
+
+	App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Object[Index]->FileViewItem);
+}
+
+// *************************************************************************
+// *		Get_First_Environ:- Terry and Hazel Flanigan 2022		 	   *
+// *************************************************************************
+int SB_Com_Environments::Get_First_Environ()
+{
+	int Count = 0;
+	while (Count < App->SBC_Scene->Object_Count)
+	{
+		if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_EnvironEntity)
+		{
+			return Count;
+		}
+
+		Count++;
+	}
+
+	return -1;
+}
+
+// *************************************************************************
+// *				GameMode:- Terry and Hazel Flanigan 2022		 	   *
+// *************************************************************************
+void SB_Com_Environments::GameMode(bool Is_On)
+{
+	int First_Environ = App->SBC_Com_Environments->Get_First_Environ();
+
+	if (Is_On == 1)
+	{
+		char buff[1024];
+		strcpy(buff, App->SBC_SoundMgr->Default_Folder);
+		strcat(buff, "\\Media\\Sounds\\");
+
+		strcat(buff, App->SBC_Scene->B_Object[First_Environ]->S_Environ[0]->Sound_File);
+
+		App->SBC_Scene->B_Object[First_Environ]->S_Environ[0]->SndFile = App->SBC_SoundMgr->SoundEngine->play2D(buff, App->SBC_Scene->B_Object[First_Environ]->S_Environ[0]->Loop, true, true);
+
+		App->SBC_Scene->B_Object[First_Environ]->S_Environ[0]->SndFile->setVolume(App->SBC_Scene->B_Object[First_Environ]->S_Environ[0]->SndVolume);
+		App->SBC_Scene->B_Object[First_Environ]->S_Environ[0]->SndFile->setIsPaused(false);
+
+		App->SBC_Collision->Old_Sound_Index = First_Environ;
+	}
+	else
+	{
+		if (App->SBC_Scene->B_Object[First_Environ]->S_Environ[0]->SndFile == NULL)
+		{
+		}
+		else
+		{
+			App->SBC_Scene->B_Object[First_Environ]->S_Environ[0]->SndFile->setIsPaused(true);
+			App->SBC_Scene->B_Object[First_Environ]->S_Environ[0]->SndFile->drop();
+			App->SBC_Scene->B_Object[First_Environ]->S_Environ[0]->SndFile = NULL;
+		}
+	}
+
+	float x = App->SBC_Scene->B_Object[First_Environ]->S_Environ[0]->AmbientColour.x;
+	float y = App->SBC_Scene->B_Object[First_Environ]->S_Environ[0]->AmbientColour.y;
+	float z = App->SBC_Scene->B_Object[First_Environ]->S_Environ[0]->AmbientColour.z;
+
+	App->Cl19_Ogre->mSceneMgr->setAmbientLight(ColourValue(x, y, z));
+
+	if (App->SBC_Scene->B_Object[First_Environ]->S_Environ[0]->Fog_On == 1)
+	{
+		EnableFog(true);
+	}
+	else
+	{
+		App->Cl19_Ogre->mSceneMgr->setFog(FOG_NONE, ColourValue(0.7, 0.7, 0.8), 0, 100, 1000);
+	}
+}
+
+// *************************************************************************
+// *		Set_Environment_By_Index:- Terry and Hazel Flanigan 2022 	   *
+// *************************************************************************
+int SB_Com_Environments::Set_Environment_By_Index(bool PlayMusic,int Index)
+{
+
+	float x = App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour.x;
+	float y = App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour.y;
+	float z = App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour.z;
+	App->Cl19_Ogre->mSceneMgr->setAmbientLight(ColourValue(x, y, z));
+
+
+	// Fog
+	if (App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_On == 1)
+	{
+		float Start = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Start;
+		float End = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_End;
+		float Density = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Density;
+
+		float x = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.x;
+		float y = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.y;
+		float z = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.z;
+
+		App->Cl19_Ogre->mSceneMgr->setFog(FOG_LINEAR, ColourValue(x, y, z), Density, (Ogre::Real)Start, (Ogre::Real)End);
+	}
+	else
+	{
+		App->Cl19_Ogre->mSceneMgr->setFog(FOG_NONE, ColourValue(0.7, 0.7, 0.8), 0, 100, 1000);
+	}
+
+	if (PlayMusic == 1)
+	{
+		char buff[1024];
+		strcpy(buff, App->SBC_SoundMgr->Default_Folder);
+		strcat(buff, "\\Media\\Sounds\\");
+
+		if (App->SBC_Scene->B_Object[Index]->S_Environ[0]->Play == 1)
+		{
+			strcat(buff, App->SBC_Scene->B_Object[Index]->S_Environ[0]->Sound_File);
+
+			App->SBC_Scene->B_Object[Index]->S_Environ[0]->SndFile = App->SBC_SoundMgr->SoundEngine->play2D(buff, App->SBC_Scene->B_Object[Index]->S_Environ[0]->Loop, true, true);
+
+			App->SBC_Scene->B_Object[Index]->S_Environ[0]->SndFile->setVolume(App->SBC_Scene->B_Object[Index]->S_Environ[0]->SndVolume);
+			App->SBC_Scene->B_Object[Index]->S_Environ[0]->SndFile->setIsPaused(false);
+		}
+	}
+	else
+	{
+		if (App->SBC_Scene->B_Object[Index]->S_Environ[0]->SndFile == NULL)
+		{
+		}
+		else
+		{
+			App->SBC_Scene->B_Object[Index]->S_Environ[0]->SndFile->setIsPaused(true);
+			App->SBC_Scene->B_Object[Index]->S_Environ[0]->SndFile->drop();
+			App->SBC_Scene->B_Object[Index]->S_Environ[0]->SndFile = NULL;
+		}
+	}
+
+	return 1;
+}
+

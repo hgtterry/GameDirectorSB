@@ -271,16 +271,16 @@ bool GD19_OgreListener::Update_Game_Logic(float DeltaTime)
 
 	if (Dubug_Physics_Draw == 1)
 	{
-		App->Cl_Bullet->dynamicsWorld->debugDrawWorld();
+		App->SBC_Bullet->dynamicsWorld->debugDrawWorld();
 	}
 
 	if (GD_Run_Physics == 1)
 	{
-		App->Cl_Bullet->dynamicsWorld->stepSimulation(DeltaTime * 2); //suppose you have 60 frames per second	
+		App->SBC_Bullet->dynamicsWorld->stepSimulation(DeltaTime * 2); //suppose you have 60 frames per second	
 
-		for (int j = App->Cl_Bullet->dynamicsWorld->getNumCollisionObjects() - 1; j >= 0; j--)
+		for (int j = App->SBC_Bullet->dynamicsWorld->getNumCollisionObjects() - 1; j >= 0; j--)
 		{
-			btCollisionObject* obj = App->Cl_Bullet->dynamicsWorld->getCollisionObjectArray()[j];
+			btCollisionObject* obj = App->SBC_Bullet->dynamicsWorld->getCollisionObjectArray()[j];
 			btRigidBody* body = btRigidBody::upcast(obj);
 			btTransform trans;
 

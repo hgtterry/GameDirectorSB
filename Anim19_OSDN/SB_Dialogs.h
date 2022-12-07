@@ -67,7 +67,6 @@ protected:
 	void List_Locations(HWND List);
 	void List_Axis(HWND List);
 	void List_Counters(HWND List);
-	void List_Messages(HWND List);
 	void List_Display(HWND List);
 	void List_Maths(HWND List);
 };

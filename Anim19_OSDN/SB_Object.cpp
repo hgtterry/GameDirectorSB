@@ -237,8 +237,6 @@ void SB_Object::Clear_Modified_Objects()
 		App->SBC_FileView->Mark_Clear_Folder(App->SBC_FileView->FV_Sounds_Folder);
 	}
 
-	App->SBC_FileView->Mark_Clear_Folder(App->SBC_FileView->FV_Environments_Folder);
-
 	App->SBC_Scene->Scene_Modified = 0;
 
 	EnableMenuItem(App->mMenu, ID_FILE_SAVEPROJECTALL, MF_GRAYED);
@@ -320,13 +318,15 @@ void SB_Object::Delete_Object()
 
 	if (body)
 	{
-		App->Cl_Bullet->dynamicsWorld->removeCollisionObject(body);
+		App->SBC_Bullet->dynamicsWorld->removeCollisionObject(body);
 	}
+
+	App->SBC_FileView->DeleteItem();
 
 	App->SBC_Scene->B_Object[MeshIndex]->Deleted = 1;
 	App->SBC_Scene->B_Object[MeshIndex]->Object_Node->setVisible(false);
 
-	App->SBC_FileView->DeleteItem();
+	
 	App->SBC_Scene->Scene_Modified = 1;
 
 }

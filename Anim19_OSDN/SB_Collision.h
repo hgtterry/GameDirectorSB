@@ -44,6 +44,8 @@ public:
 	int ObjectIndex;
 	bool DoMove;
 
+	int Old_Sound_Index;
+
 	float x;
 	float y;
 	float z;

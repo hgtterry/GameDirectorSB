@@ -71,7 +71,7 @@ void SB_Build::Init_Build_Game_Class()
 {
 	GameOptions = new Game_Options;
 	GameOptions->Show_FPS = 1;
-	GameOptions->FullScreen = 1;
+	GameOptions->FullScreen = 0;
 }
 
 // *************************************************************************
@@ -841,8 +841,7 @@ bool SB_Build::Build_Project()
 	Build_Cameras_Folder();
 	Build_Objects_Folder();
 	Build_Display_Folder();
-	Build_Environment_Folder();
-
+	
 	return 1;
 }
 
@@ -900,9 +899,6 @@ bool SB_Build::Build_Project_Ini()
 	int Adjusted = App->SBC_LookUps->Get_Adjusted_Counters_Count();
 	fprintf(WriteFile, "%s%i\n", "Counters_Count=", Adjusted);
 	fprintf(WriteFile, "%s%i\n", "Counters_ID_Count=", App->SBC_Scene->UniqueID_Counters_Count);
-
-	fprintf(WriteFile, "%s%i\n", "Environment_Count=", App->SBC_Scene->Environment_Count);
-	fprintf(WriteFile, "%s%i\n", "Environment_ID_Count=", App->SBC_Scene->UniqueID_Environment_Count);
 
 	fprintf(WriteFile, "%s\n", " ");
 
@@ -1617,146 +1613,6 @@ bool SB_Build::Build_Objects_Data()
 
 	fprintf(WriteFile, "%s\n", "[Counters]");
 	fprintf(WriteFile, "%s%i\n", "Objects_Count=", new_Count);
-
-	fclose(WriteFile);
-
-	return 1;
-}
-
-// *************************************************************************
-// *	  	Build_Environment_Folder:- Terry and Hazel Flanigan 2022	   *
-// *************************************************************************
-bool SB_Build::Build_Environment_Folder()
-{
-	m_Enviromnet_Folder_Path[0] = 0;
-
-	strcpy(m_Enviromnet_Folder_Path, m_Level_Folder_Path);
-	strcat(m_Enviromnet_Folder_Path, "\\");
-	strcat(m_Enviromnet_Folder_Path, "Environment");
-
-	_mkdir(m_Enviromnet_Folder_Path);
-	_chdir(m_Enviromnet_Folder_Path);
-
-	Build_Environment_Data();
-
-	_chdir(m_Level_Folder_Path); // Return to Level Folder
-	return 1;
-}
-
-// *************************************************************************
-// *	  	Build_Environment_Data:- Terry and Hazel Flanigan 2022		   *
-// *************************************************************************
-bool SB_Build::Build_Environment_Data()
-{
-	Ogre::Vector3 Pos;
-	char File[1024];
-
-	strcpy(File, m_Enviromnet_Folder_Path);
-	strcat(File, "\\");
-	strcat(File, "Environments.sdat");
-
-	WriteFile = nullptr;
-
-	WriteFile = fopen(File, "wt");
-
-	if (!WriteFile)
-	{
-		App->Say("Cant Create File");
-		App->Say_Win(File);
-		return 0;
-	}
-
-	fprintf(WriteFile, "%s\n", "[Version_Data]");
-	fprintf(WriteFile, "%s%s\n", "Version=", "V1.2");
-
-	fprintf(WriteFile, "%s\n", " ");
-
-	fprintf(WriteFile, "%s\n", " ");
-
-	char Cbuff[255];
-	char buff[255];
-
-	float w = 0;
-	float x = 0;
-	float y = 0;
-	float z = 0;
-
-	int new_Count = 0;
-
-	int Count = 0;
-	while (Count < App->SBC_Scene->Environment_Count)
-	{
-		if (App->SBC_Scene->B_Environment[Count]->Deleted == 0)
-		{
-			strcpy(buff, "[Environment_");
-			_itoa(new_Count, Cbuff, 10);
-			strcat(buff, Cbuff);
-			strcat(buff, "]");
-
-			fprintf(WriteFile, "%s\n", buff); // Header also Player name until changed by user
-
-			fprintf(WriteFile, "%s%s\n", "Environment_Name=", App->SBC_Scene->B_Environment[Count]->Name); // Change
-			fprintf(WriteFile, "%s%i\n", "Environment_ID=", App->SBC_Scene->B_Environment[Count]->This_Object_ID);
-
-			//--------------- Sound
-			fprintf(WriteFile, "%s%s\n", "Sound_File=", App->SBC_Scene->B_Environment[Count]->Sound_File);
-			fprintf(WriteFile, "%s%f\n", "Snd_Volume=", App->SBC_Scene->B_Environment[Count]->SndVolume);
-
-			fprintf(WriteFile, "%s%i\n", "Sound_Play=", App->SBC_Scene->B_Environment[Count]->Play);
-			fprintf(WriteFile, "%s%i\n", "Sound_Loop=", App->SBC_Scene->B_Environment[Count]->Loop);
-
-			//--------------- Light
-
-			x = App->SBC_Scene->B_Environment[Count]->AmbientColour.x;
-			y = App->SBC_Scene->B_Environment[Count]->AmbientColour.y;
-			z = App->SBC_Scene->B_Environment[Count]->AmbientColour.z;
-			fprintf(WriteFile, "%s%f,%f,%f\n", "Ambient_Colour=", x, y, z);
-
-			x = App->SBC_Scene->B_Environment[Count]->DiffuseColour.x;
-			y = App->SBC_Scene->B_Environment[Count]->DiffuseColour.y;
-			z = App->SBC_Scene->B_Environment[Count]->DiffuseColour.z;
-			fprintf(WriteFile, "%s%f,%f,%f\n", "Diffuse_Colour=", x, y, z);
-
-			x = App->SBC_Scene->B_Environment[Count]->SpecularColour.x;
-			y = App->SBC_Scene->B_Environment[Count]->SpecularColour.y;
-			z = App->SBC_Scene->B_Environment[Count]->SpecularColour.z;
-			fprintf(WriteFile, "%s%f,%f,%f\n", "Specular_Colour=", x, y, z);
-
-			x = App->SBC_Scene->B_Environment[0]->Light_Position.x;
-			y = App->SBC_Scene->B_Environment[0]->Light_Position.y;
-			z = App->SBC_Scene->B_Environment[0]->Light_Position.z;
-			fprintf(WriteFile, "%s%f,%f,%f\n", "Light_Position=", x, y, z);
-
-			//--------------- Sky
-			fprintf(WriteFile, "%s%i\n", "Sky_Enable=", App->SBC_Scene->B_Environment[Count]->Enabled);
-			fprintf(WriteFile, "%s%i\n", "Sky_Type=", App->SBC_Scene->B_Environment[Count]->type);
-			fprintf(WriteFile, "%s%s\n", "Sky_Material=", App->SBC_Scene->B_Environment[Count]->Material);
-			fprintf(WriteFile, "%s%f\n", "Sky_Curvature=", App->SBC_Scene->B_Environment[Count]->Curvature);
-			fprintf(WriteFile, "%s%f\n", "Sky_Tiling=", App->SBC_Scene->B_Environment[Count]->Tiling);
-			fprintf(WriteFile, "%s%f\n", "Sky_Distance=", App->SBC_Scene->B_Environment[Count]->Distance);
-
-			//--------------- Fog
-			fprintf(WriteFile, "%s%i\n", "Fog_On=", App->SBC_Scene->B_Environment[Count]->Fog_On);
-			fprintf(WriteFile, "%s%i\n", "Fog_Mode=", App->SBC_Scene->B_Environment[Count]->Fog_Mode);
-
-			x = App->SBC_Scene->B_Environment[Count]->Fog_Colour.x;
-			y = App->SBC_Scene->B_Environment[Count]->Fog_Colour.y;
-			z = App->SBC_Scene->B_Environment[Count]->Fog_Colour.z;
-			fprintf(WriteFile, "%s%f,%f,%f\n", "Fog_Colour=", x, y, z);
-
-			fprintf(WriteFile, "%s%f\n", "Fog_Start=", App->SBC_Scene->B_Environment[Count]->Fog_Start);
-			fprintf(WriteFile, "%s%f\n", "Fog_End=", App->SBC_Scene->B_Environment[Count]->Fog_End);
-			fprintf(WriteFile, "%s%f\n", "Fog_Density=", App->SBC_Scene->B_Environment[Count]->Fog_Density);
-
-			fprintf(WriteFile, "%s\n", " ");
-			new_Count++;
-		}
-
-		Count++;
-	}
-
-	fprintf(WriteFile, "%s\n", "[Counters]");
-	fprintf(WriteFile, "%s%i\n", "Environment_Count=", new_Count);
 
 	fclose(WriteFile);
 
