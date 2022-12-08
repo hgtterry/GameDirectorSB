@@ -56,7 +56,7 @@ bool SB_Visuals::MarkerBB_Setup(void)
 	float BoxHeight=2.5;
 	float BoxWidth=2.5;
 
-	BoxManual = App->Cl19_Ogre->mSceneMgr->createManualObject("BB_Box");
+	BoxManual = App->SBC_Ogre->mSceneMgr->createManualObject("BB_Box");
 	BoxManual->begin("BaseWhiteNoLighting", RenderOperation::OT_LINE_STRIP);
 	
 	BoxManual->colour(0,1,0);
@@ -93,7 +93,7 @@ bool SB_Visuals::MarkerBB_Setup(void)
     BoxManual->index(3);
 
     BoxManual->end();
-    BoxNode = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+    BoxNode = App->SBC_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	BoxNode->attachObject(BoxManual);
 
 	BoxNode->setPosition(0,0,0);

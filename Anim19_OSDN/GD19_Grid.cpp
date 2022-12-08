@@ -97,8 +97,8 @@ void SB_Grid::Reset_Class()
 // *************************************************************************
 void SB_Grid::Load_Arrow()
 {
-	Arrow_Ent = App->Cl19_Ogre->mSceneMgr->createEntity("Arrow", "Gizmo.mesh", App->Cl19_Ogre->App_Resource_Group);
-	Arrow_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	Arrow_Ent = App->SBC_Ogre->mSceneMgr->createEntity("Arrow", "Gizmo.mesh", App->SBC_Ogre->App_Resource_Group);
+	Arrow_Node = App->SBC_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Arrow_Node->attachObject(Arrow_Ent);
 
 	Arrow_Node->setVisible(false);
@@ -111,8 +111,8 @@ void SB_Grid::Load_Arrow()
 // *************************************************************************
 void SB_Grid::Load_Crosshair()
 {
-	Crosshair_Ent = App->Cl19_Ogre->mSceneMgr->createEntity("Crosshair", "axes.mesh", App->Cl19_Ogre->App_Resource_Group);
-	Crosshair_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	Crosshair_Ent = App->SBC_Ogre->mSceneMgr->createEntity("Crosshair", "axes.mesh", App->SBC_Ogre->App_Resource_Group);
+	Crosshair_Node = App->SBC_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Crosshair_Node->attachObject(Crosshair_Ent);
 
 	Crosshair_Node->setVisible(true);
@@ -130,7 +130,7 @@ void SB_Grid::Grid_Update(bool Create)
 
 	if (Create == 1)
 	{
-		GridManual = App->Cl19_Ogre->mSceneMgr->createManualObject("BoxManual");
+		GridManual = App->SBC_Ogre->mSceneMgr->createManualObject("BoxManual");
 		GridManual->setRenderQueueGroup(1);
 	}
 
@@ -183,7 +183,7 @@ void SB_Grid::Grid_Update(bool Create)
 
 	if (Create == 1)
 	{
-		GridNode = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+		GridNode = App->SBC_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 		GridNode->attachObject(GridManual);
 	}
 
@@ -198,7 +198,7 @@ void SB_Grid::Hair_Update(bool Create)
 {
 	if (Create == 1)
 	{
-		HairManual = App->Cl19_Ogre->mSceneMgr->createManualObject("HairManual");
+		HairManual = App->SBC_Ogre->mSceneMgr->createManualObject("HairManual");
 		HairManual->setRenderQueueGroup(5);
 	}
 
@@ -225,7 +225,7 @@ void SB_Grid::Hair_Update(bool Create)
 
 	if (Create == 1)
 	{
-		HairNode = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+		HairNode = App->SBC_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 		HairNode->attachObject(HairManual);
 	}
 

@@ -48,8 +48,8 @@ void SB_Com_Area::Reset_Class(void)
 		{
 			if (App->SBC_Scene->B_Area[Count]->Area_Ent && App->SBC_Scene->B_Area[Count]->Area_Node)
 			{
-				App->Cl19_Ogre->mSceneMgr->destroySceneNode(App->SBC_Scene->B_Area[Count]->Area_Node);
-				App->Cl19_Ogre->mSceneMgr->destroyEntity(App->SBC_Scene->B_Area[Count]->Area_Ent);
+				App->SBC_Ogre->mSceneMgr->destroySceneNode(App->SBC_Scene->B_Area[Count]->Area_Node);
+				App->SBC_Ogre->mSceneMgr->destroyEntity(App->SBC_Scene->B_Area[Count]->Area_Ent);
 				App->SBC_Scene->B_Area[Count]->Area_Ent = nullptr;
 				App->SBC_Scene->B_Area[Count]->Area_Node = nullptr;
 			}
@@ -125,8 +125,8 @@ void SB_Com_Area::Add_Aera_To_Project(int Index, char* FileName, char* Resource_
 	strcpy(Area->Area_FileName, FileName);
 	strcpy(Area->Area_Resource_Path, Resource_Location); 
 
-	Area->Area_Ent = App->Cl19_Ogre->mSceneMgr->createEntity(App->SBC_Scene->B_Area[Index]->Area_Name, Mesh_File, App->SBC_Scene->Project_Resource_Group);
-	Area->Area_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	Area->Area_Ent = App->SBC_Ogre->mSceneMgr->createEntity(App->SBC_Scene->B_Area[Index]->Area_Name, Mesh_File, App->SBC_Scene->Project_Resource_Group);
+	Area->Area_Node = App->SBC_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Area->Area_Node->attachObject(Area->Area_Ent);
 
 	Area->Area_Node->setVisible(true);

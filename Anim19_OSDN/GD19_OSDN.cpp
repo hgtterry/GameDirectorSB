@@ -195,7 +195,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
 	App->ViewGLhWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_VIEWER3D, App->Fdlg, (DLGPROC)Ogre3D_Proc);
 
-	App->Cl19_Ogre->RenderHwnd = App->ViewGLhWnd;
+	App->SBC_Ogre->RenderHwnd = App->ViewGLhWnd;
 
 	if (!App->MainHwnd)
 	{
@@ -417,13 +417,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		// ------------------------------------- Debug Physics Draw
 		case ID_PHYSICS_DRAWDEBUG:
 		{
-			if (App->Cl19_Ogre->OgreListener->Dubug_Physics_Draw == 1)
+			if (App->SBC_Ogre->OgreListener->Dubug_Physics_Draw == 1)
 			{
-				App->Cl19_Ogre->OgreListener->Dubug_Physics_Draw = 0;
+				App->SBC_Ogre->OgreListener->Dubug_Physics_Draw = 0;
 			}
 			else
 			{
-				App->Cl19_Ogre->OgreListener->Dubug_Physics_Draw = 1;
+				App->SBC_Ogre->OgreListener->Dubug_Physics_Draw = 1;
 			}
 
 			return 1;
@@ -432,13 +432,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		case ID_PHYSICS_RENDER:
 		{
 			
-				if (App->Cl19_Ogre->BulletListener->Render_Debug_Flag == 1)
+				if (App->SBC_Ogre->BulletListener->Render_Debug_Flag == 1)
 				{
-					App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 0;
+					App->SBC_Ogre->BulletListener->Render_Debug_Flag = 0;
 				}
 				else
 				{
-					App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 1;
+					App->SBC_Ogre->BulletListener->Render_Debug_Flag = 1;
 				}
 
 			return 1;
@@ -631,16 +631,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			if (App->SBC_Scene->Player_Added == 1)
 			{
-				App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
+				App->SBC_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
 				App->SBC_TopTabs->Toggle_FirstCam_Flag = 0;
 				App->SBC_TopTabs->Toggle_FreeCam_Flag = 1;
 
 				int f = App->SBC_Scene->B_Player[0]->Phys_Body->getCollisionFlags();
 				App->SBC_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f & (~(1 << 5)));
 
-				App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 0;
-				App->Cl19_Ogre->RenderFrame();
-				App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 1;
+				App->SBC_Ogre->BulletListener->Render_Debug_Flag = 0;
+				App->SBC_Ogre->RenderFrame();
+				App->SBC_Ogre->BulletListener->Render_Debug_Flag = 1;
 
 				RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			}
@@ -651,7 +651,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			if (App->SBC_Scene->Player_Added == 1)
 			{
-				App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamFirst;
+				App->SBC_Ogre->OgreListener->GD_CameraMode = Enums::CamFirst;
 				App->SBC_TopTabs->Toggle_FirstCam_Flag = 1;
 				App->SBC_TopTabs->Toggle_FreeCam_Flag = 0;
 
@@ -660,11 +660,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				int f = App->SBC_Scene->B_Player[0]->Phys_Body->getCollisionFlags();
 				App->SBC_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f | (1 << 5));
 
-				App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 0;
-				App->Cl19_Ogre->RenderFrame();
-				App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 1;
+				App->SBC_Ogre->BulletListener->Render_Debug_Flag = 0;
+				App->SBC_Ogre->RenderFrame();
+				App->SBC_Ogre->BulletListener->Render_Debug_Flag = 1;
 
-				App->Cl19_Ogre->OgreListener->GD_Run_Physics = 1;
+				App->SBC_Ogre->OgreListener->GD_Run_Physics = 1;
 
 				RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			}
@@ -681,13 +681,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 					App->SBC_TopTabs->Toggle_Select_Flag = 0;
 					App->SBC_Visuals->mPickSight->hide();
-					App->Cl19_Ogre->OgreListener->GD_Selection_Mode = 0;
+					App->SBC_Ogre->OgreListener->GD_Selection_Mode = 0;
 				}
 				else
 				{
 					App->SBC_TopTabs->Toggle_Select_Flag = 1;
 					App->SBC_Visuals->mPickSight->show();
-					App->Cl19_Ogre->OgreListener->GD_Selection_Mode = 1;
+					App->SBC_Ogre->OgreListener->GD_Selection_Mode = 1;
 				}
 
 				RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
@@ -810,9 +810,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				}
 			}
 
-			if (App->Cl19_Ogre->OgreListener->StopOgre == 0)
+			if (App->SBC_Ogre->OgreListener->StopOgre == 0)
 			{
-				App->Cl19_Ogre->OgreListener->StopOgre = 1;
+				App->SBC_Ogre->OgreListener->StopOgre = 1;
 			}
 
 			PostQuitMessage(0);
@@ -837,11 +837,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		if (zDelta > 0)
 		{
-			App->Cl19_Ogre->OgreListener->Wheel = -1;
+			App->SBC_Ogre->OgreListener->Wheel = -1;
 		}
 		else if (zDelta < 0)
 		{
-			App->Cl19_Ogre->OgreListener->Wheel = 1;
+			App->SBC_Ogre->OgreListener->Wheel = 1;
 		}
 
 		return 1;
@@ -884,9 +884,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			}
 		}
 
-		if (App->Cl19_Ogre->OgreListener->StopOgre == 0)
+		if (App->SBC_Ogre->OgreListener->StopOgre == 0)
 		{
-			App->Cl19_Ogre->OgreListener->StopOgre = 1;
+			App->SBC_Ogre->OgreListener->StopOgre = 1;
 		}
 
 		PostQuitMessage(0);
@@ -912,7 +912,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 				// Check
 				//App->Cl_Scene_Data->Cl_Object[1]->bt_body->setLinearVelocity(btVector3(35,0,35));
-				//App->Cl19_Ogre->OgreListener->_desiredVelocity = App->Cl_Scene_Data->Cl_Object[1]->bt_body->getLinearVelocity().length();
+				//App->SBC_Ogre->OgreListener->_desiredVelocity = App->Cl_Scene_Data->Cl_Object[1]->bt_body->getLinearVelocity().length();
 			}
 
 			//// Render behind windows
@@ -960,11 +960,11 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 
 			if (zDelta > 0)
 			{
-				App->Cl19_Ogre->OgreListener->Wheel = -1;
+				App->SBC_Ogre->OgreListener->Wheel = -1;
 			}
 			else if (zDelta < 0)
 			{
-				App->Cl19_Ogre->OgreListener->Wheel = 1;
+				App->SBC_Ogre->OgreListener->Wheel = 1;
 			}
 			return 1;
 		}
@@ -974,7 +974,7 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 	{
 		POINT p;
 
-		App->Cl19_Ogre->m_imgui.mouseMoved();
+		App->SBC_Ogre->m_imgui.mouseMoved();
 		
 		
 		if (GetCursorPos(&p) && App->OgreStarted == 1)// && App->CL10_Dimensions->Mouse_Move_Mode == Enums::Edit_Mouse_None)
@@ -996,7 +996,7 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 	// Right Mouse Button
 	case WM_RBUTTONDOWN: // BERNIE_HEAR_FIRE 
 	{
-		App->Cl19_Ogre->m_imgui.mousePressed();
+		App->SBC_Ogre->m_imgui.mousePressed();
 
 		if (ImGui::GetIO().WantCaptureMouse)
 		{
@@ -1010,7 +1010,7 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 				
 				SetCapture(App->ViewGLhWnd);// Bernie
 				SetCursorPos(500, 500);
-				App->Cl19_Ogre->OgreListener->Pl_RightMouseDown = 1;
+				App->SBC_Ogre->OgreListener->Pl_RightMouseDown = 1;
 				App->CUR = SetCursor(NULL);
 				return 1;
 			}
@@ -1019,12 +1019,12 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 	}
 	case WM_RBUTTONUP:
 	{
-		App->Cl19_Ogre->m_imgui.mouseReleased();
+		App->SBC_Ogre->m_imgui.mouseReleased();
 		
 		if (App->OgreStarted == 1)
 		{
 			ReleaseCapture();
-			App->Cl19_Ogre->OgreListener->Pl_RightMouseDown = 0;
+			App->SBC_Ogre->OgreListener->Pl_RightMouseDown = 0;
 			SetCursor(App->CUR);
 			return 1;
 		}
@@ -1034,7 +1034,7 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 	// Left Mouse Button
 	case WM_LBUTTONDOWN: // BERNIE_HEAR_FIRE 
 	{
-		App->Cl19_Ogre->m_imgui.mousePressed();
+		App->SBC_Ogre->m_imgui.mousePressed();
 
 		if (!ImGui::GetIO().WantCaptureMouse)
 		{
@@ -1047,12 +1047,12 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 					{
 						SetCapture(App->ViewGLhWnd);// Bernie
 						SetCursorPos(500, 500);
-						App->Cl19_Ogre->OgreListener->Pl_LeftMouseDown = 1;
+						App->SBC_Ogre->OgreListener->Pl_LeftMouseDown = 1;
 						App->CUR = SetCursor(NULL);
 					}
 					else
 					{
-						App->Cl19_Ogre->OgreListener->Pl_LeftMouseDown = 1;
+						App->SBC_Ogre->OgreListener->Pl_LeftMouseDown = 1;
 					}
 
 					return 1;
@@ -1065,14 +1065,14 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 
 	case WM_LBUTTONUP:
 	{
-		App->Cl19_Ogre->m_imgui.mouseReleased();
+		App->SBC_Ogre->m_imgui.mouseReleased();
 
 		if (App->SBC_Scene->GameMode_Flag == 0)
 		{
 			if (App->OgreStarted == 1)
 			{
 				ReleaseCapture();
-				App->Cl19_Ogre->OgreListener->Pl_LeftMouseDown = 0;
+				App->SBC_Ogre->OgreListener->Pl_LeftMouseDown = 0;
 				SetCursor(App->CUR);
 				return 1;
 			}
@@ -1212,7 +1212,7 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 		SendDlgItemMessage(hDlg, IDC_LISTABOUT, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);*/
 		
 		SendDlgItemMessage(hDlg, IDC_LISTABOUT, LB_ADDSTRING, (WPARAM)0, (LPARAM)" "); // Space
-		App->Cl19_Ogre->GetVersion_OpenGL(buff);
+		App->SBC_Ogre->GetVersion_OpenGL(buff);
 		SendDlgItemMessage(hDlg, IDC_LISTABOUT, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
 
 		return (INT_PTR)TRUE;
@@ -1303,7 +1303,7 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 // *************************************************************************
 void StartOgre()
 {
-	App->Cl19_Ogre->InitOgre();
+	App->SBC_Ogre->InitOgre();
 
 	Ogre::Root::getSingletonPtr()->renderOneFrame();
 	EndDialog(App->ViewPLeaseWait, LOWORD(0));
@@ -1314,9 +1314,9 @@ void StartOgre()
 
 	App->SBC_Dialogs->Front_Screen();
 
-	//App->Cl19_Ogre->mRoot->startRendering();
+	//App->SBC_Ogre->mRoot->startRendering();
 
-	App->Cl19_Ogre->Ogre_Render_Loop();
+	App->SBC_Ogre->Ogre_Render_Loop();
 
 	Close_App();
 
@@ -1332,10 +1332,10 @@ void Close_App()
 
 	//App->Say("Exit");
 
-	if (App->Cl19_Ogre->mRoot)
+	if (App->SBC_Ogre->mRoot)
 	{
-		delete App->Cl19_Ogre->mRoot;
-		App->Cl19_Ogre->mRoot = NULL;
+		delete App->SBC_Ogre->mRoot;
+		App->SBC_Ogre->mRoot = NULL;
 	}
 
 	ImGui::DestroyContext();

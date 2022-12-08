@@ -134,15 +134,15 @@ LRESULT CALLBACK Com_Diaolgs::Mouse_Sensitivity_Proc(HWND hDlg, UINT message, WP
 
 		if (LOWORD(wParam) == IDC_CKNORMAL)
 		{
-			if (App->Cl19_Ogre->OgreListener->Equity_Running == 1)
+			if (App->SBC_Ogre->OgreListener->Equity_Running == 1)
 			{
 				//App->EBC_Listener->mMoveSensitivity = 50;
 				//App->EBC_Listener->mMoveSensitivityMouse = 50;
 			}
 			else
 			{
-				App->Cl19_Ogre->OgreListener->mMoveSensitivity = 50;
-				App->Cl19_Ogre->OgreListener->mMoveSensitivityMouse = 50;
+				App->SBC_Ogre->OgreListener->mMoveSensitivity = 50;
+				App->SBC_Ogre->OgreListener->mMoveSensitivityMouse = 50;
 			}
 
 			App->SBC_TopTabs->UnCheck_All_MouseOption(hDlg);
@@ -155,15 +155,15 @@ LRESULT CALLBACK Com_Diaolgs::Mouse_Sensitivity_Proc(HWND hDlg, UINT message, WP
 
 		if (LOWORD(wParam) == IDC_CKSLOW)
 		{
-			if (App->Cl19_Ogre->OgreListener->Equity_Running == 1)
+			if (App->SBC_Ogre->OgreListener->Equity_Running == 1)
 			{
 				//App->EBC_Listener->mMoveSensitivity = 5;
 				//App->EBC_Listener->mMoveSensitivityMouse = 5;
 			}
 			else
 			{
-				App->Cl19_Ogre->OgreListener->mMoveSensitivity = 5;
-				App->Cl19_Ogre->OgreListener->mMoveSensitivityMouse = 5;
+				App->SBC_Ogre->OgreListener->mMoveSensitivity = 5;
+				App->SBC_Ogre->OgreListener->mMoveSensitivityMouse = 5;
 			}
 
 			App->SBC_TopTabs->UnCheck_All_MouseOption(hDlg);
@@ -176,15 +176,15 @@ LRESULT CALLBACK Com_Diaolgs::Mouse_Sensitivity_Proc(HWND hDlg, UINT message, WP
 
 		if (LOWORD(wParam) == IDC_CKVERYSLOW)
 		{
-			if (App->Cl19_Ogre->OgreListener->Equity_Running == 1)
+			if (App->SBC_Ogre->OgreListener->Equity_Running == 1)
 			{
 				//App->EBC_Listener->mMoveSensitivity = 1;
 				//App->EBC_Listener->mMoveSensitivityMouse = 1;
 			}
 			else
 			{
-				App->Cl19_Ogre->OgreListener->mMoveSensitivity = 1;
-				App->Cl19_Ogre->OgreListener->mMoveSensitivityMouse = 1;
+				App->SBC_Ogre->OgreListener->mMoveSensitivity = 1;
+				App->SBC_Ogre->OgreListener->mMoveSensitivityMouse = 1;
 			}
 
 			App->SBC_TopTabs->UnCheck_All_MouseOption(hDlg);
@@ -197,15 +197,15 @@ LRESULT CALLBACK Com_Diaolgs::Mouse_Sensitivity_Proc(HWND hDlg, UINT message, WP
 
 		if (LOWORD(wParam) == IDC_CKFAST)
 		{
-			if (App->Cl19_Ogre->OgreListener->Equity_Running == 1)
+			if (App->SBC_Ogre->OgreListener->Equity_Running == 1)
 			{
 				//App->EBC_Listener->mMoveSensitivity = 250;
 				//App->EBC_Listener->mMoveSensitivityMouse = 250;
 			}
 			else
 			{
-				App->Cl19_Ogre->OgreListener->mMoveSensitivity = 250;
-				App->Cl19_Ogre->OgreListener->mMoveSensitivityMouse = 250;
+				App->SBC_Ogre->OgreListener->mMoveSensitivity = 250;
+				App->SBC_Ogre->OgreListener->mMoveSensitivityMouse = 250;
 			}
 
 

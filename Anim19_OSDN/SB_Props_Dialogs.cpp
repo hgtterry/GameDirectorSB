@@ -679,9 +679,9 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_Debug_Proc(HWND hDlg, UINT message, WP
 
 					App->SBC_Scene->B_Object[Index]->Physics_Debug_On = 0;
 
-					App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 0;
-					App->Cl19_Ogre->RenderFrame();
-					App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 1;
+					App->SBC_Ogre->BulletListener->Render_Debug_Flag = 0;
+					App->SBC_Ogre->RenderFrame();
+					App->SBC_Ogre->BulletListener->Render_Debug_Flag = 1;
 
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_PhysicsOff_Bmp);
 				}
@@ -814,9 +814,9 @@ LRESULT CALLBACK SB_Props_Dialogs::Area_PropsPanel_Proc(HWND hDlg, UINT message,
 				App->SBC_Props_Dialog->Show_Area_Physics_Debug = 0;
 				App->SBC_Scene->B_Area[Index]->Phys_Body->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
-				App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 0;
-				App->Cl19_Ogre->RenderFrame();
-				App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 1;
+				App->SBC_Ogre->BulletListener->Render_Debug_Flag = 0;
+				App->SBC_Ogre->RenderFrame();
+				App->SBC_Ogre->BulletListener->Render_Debug_Flag = 1;
 			}
 			else
 			{
@@ -908,12 +908,12 @@ LRESULT CALLBACK SB_Props_Dialogs::Details_Goto_Proc(HWND hDlg, UINT message, WP
 
 		if (LOWORD(wParam) == IDC_BT_GOTO)
 		{
-			App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
+			App->SBC_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
 
 			int Index = App->SBC_Properties->Current_Selected_Object;
 			Ogre::Vector3 Centre = App->SBC_Scene->B_Object[Index]->Object_Node->getAttachedObject(0)->getBoundingBox().getCenter();
 			Ogre::Vector3 WS = App->SBC_Scene->B_Object[Index]->Object_Node->convertLocalToWorldPosition(Centre);
-			App->Cl19_Ogre->mCamera->setPosition(WS);
+			App->SBC_Ogre->mCamera->setPosition(WS);
 			return 1;
 		}
 

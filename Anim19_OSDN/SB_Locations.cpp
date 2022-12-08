@@ -365,7 +365,7 @@ void SB_Locations::Set_To_PlayerView()
 {
 	if (App->SBC_Scene->Player_Added == 1)
 	{
-		App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamFirst;
+		App->SBC_Ogre->OgreListener->GD_CameraMode = Enums::CamFirst;
 		App->SBC_TopTabs->Toggle_FirstCam_Flag = 1;
 		App->SBC_TopTabs->Toggle_FreeCam_Flag = 0;
 
@@ -377,9 +377,9 @@ void SB_Locations::Set_To_PlayerView()
 		int f = App->SBC_Scene->B_Player[0]->Phys_Body->getCollisionFlags();
 		App->SBC_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f | (1 << 5));
 
-		App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 0;
-		App->Cl19_Ogre->RenderFrame();
-		App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 1;
+		App->SBC_Ogre->BulletListener->Render_Debug_Flag = 0;
+		App->SBC_Ogre->RenderFrame();
+		App->SBC_Ogre->BulletListener->Render_Debug_Flag = 1;
 
 		App->SBC_Physics->Physics_On(true);
 		
@@ -397,7 +397,7 @@ void SB_Locations::Set_To_FreeCam()
 {
 	if (App->SBC_Scene->Scene_Loaded == 1)
 	{
-		App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
+		App->SBC_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
 		App->SBC_TopTabs->Toggle_FirstCam_Flag = 0;
 		App->SBC_TopTabs->Toggle_FreeCam_Flag = 1;
 
@@ -407,9 +407,9 @@ void SB_Locations::Set_To_FreeCam()
 		int f = App->SBC_Scene->B_Player[0]->Phys_Body->getCollisionFlags();
 		App->SBC_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f & (~(1 << 5)));
 
-		App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 0;
-		App->Cl19_Ogre->RenderFrame();
-		App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 1;
+		App->SBC_Ogre->BulletListener->Render_Debug_Flag = 0;
+		App->SBC_Ogre->RenderFrame();
+		App->SBC_Ogre->BulletListener->Render_Debug_Flag = 1;
 
 		RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 		RedrawWindow(App->SBC_Locations->Locations_Dlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
@@ -522,7 +522,7 @@ void SB_Locations::Move_Player_To_Camera()
 	{
 		App->SBC_Physics->Physics_On(false);
 
-		Ogre::Vector3 Pos = App->Cl19_Ogre->mCamera->getPosition();
+		Ogre::Vector3 Pos = App->SBC_Ogre->mCamera->getPosition();
 		App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(btVector3(Pos.x, Pos.y, Pos.z));
 
 		App->SBC_Scene->B_Player[0]->Player_Node->setPosition(Pos);

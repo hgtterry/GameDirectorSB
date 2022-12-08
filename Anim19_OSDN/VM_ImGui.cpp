@@ -361,8 +361,8 @@ void VM_ImGui::Object_Selection(void)
 		ImGui::Text("Selected Object");
 		ImGui::Separator();
 
-		ImGui::Text("Internal Name: = %s",App->Cl19_Ogre->OgreListener->Pl_Entity_Name.c_str());
-		ImGui::Text("Object Name: = %s",App->Cl19_Ogre->OgreListener->Selected_Object_Name);
+		ImGui::Text("Internal Name: = %s",App->SBC_Ogre->OgreListener->Pl_Entity_Name.c_str());
+		ImGui::Text("Object Name: = %s",App->SBC_Ogre->OgreListener->Selected_Object_Name);
 		
 		ImGui::Text("");
 
@@ -377,12 +377,12 @@ void VM_ImGui::Object_Selection(void)
 		{
 			App->SBC_TopTabs->Toggle_Select_Flag = 0;
 			App->SBC_Visuals->mPickSight->hide();
-			App->Cl19_Ogre->OgreListener->GD_Selection_Mode = 0;
+			App->SBC_Ogre->OgreListener->GD_Selection_Mode = 0;
 
 			RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-			//App->SBC_FileView->Select_Item(App->Cl19_Ogre->OgreListener->Selected_Entity_Index);
-			App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[App->Cl19_Ogre->OgreListener->Selected_Entity_Index]->FileViewItem);
+			//App->SBC_FileView->Select_Item(App->SBC_Ogre->OgreListener->Selected_Entity_Index);
+			App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[App->SBC_Ogre->OgreListener->Selected_Entity_Index]->FileViewItem);
 			Show_Object_Selection = 0;
 		}
 
@@ -392,7 +392,7 @@ void VM_ImGui::Object_Selection(void)
 		{
 			App->SBC_TopTabs->Toggle_Select_Flag = 0;
 			App->SBC_Visuals->mPickSight->hide();
-			App->Cl19_Ogre->OgreListener->GD_Selection_Mode = 0;
+			App->SBC_Ogre->OgreListener->GD_Selection_Mode = 0;
 
 			RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
@@ -649,8 +649,8 @@ void VM_ImGui::ImGui_Model_Data(void)
 			ImGui::Text("%s %i", "Level Loaded = ",App->SBC_Scene->Scene_Loaded);
 			ImGui::Text("%s %i", "Player Added = ", App->SBC_Scene->Player_Added);
 
-			ImGui::Text("%s %i", "Physics Running = ", App->Cl19_Ogre->OgreListener->GD_Run_Physics);
-			ImGui::Text("%s %i", "Physics Debuging = ", App->Cl19_Ogre->OgreListener->Dubug_Physics_Draw);
+			ImGui::Text("%s %i", "Physics Running = ", App->SBC_Ogre->OgreListener->GD_Run_Physics);
+			ImGui::Text("%s %i", "Physics Debuging = ", App->SBC_Ogre->OgreListener->Dubug_Physics_Draw);
 
 		}
 
@@ -738,8 +738,8 @@ void VM_ImGui::ImGui_App_Data(void)
 			ImGui::Text("%s %i", "Objects Added = ", App->SBC_Scene->Objects_Added);
 			ImGui::Text("%s %i", "Objects Count = ", App->SBC_Scene->Object_Count);
 
-			ImGui::Text("%s %i", "Physics Running = ", App->Cl19_Ogre->OgreListener->GD_Run_Physics);
-			ImGui::Text("%s %i", "Physics Debuging = ", App->Cl19_Ogre->OgreListener->Dubug_Physics_Draw);
+			ImGui::Text("%s %i", "Physics Running = ", App->SBC_Ogre->OgreListener->GD_Run_Physics);
+			ImGui::Text("%s %i", "Physics Debuging = ", App->SBC_Ogre->OgreListener->Dubug_Physics_Draw);
 
 		}
 
@@ -764,13 +764,13 @@ void VM_ImGui::ImGui_App_Data(void)
 		sprintf(Header, "%s", "Camera");
 		if (ImGui::CollapsingHeader(Header))
 		{
-			ImGui::Text("%s %f", "Pos_X = ", App->Cl19_Ogre->mCamera->getPosition().x);
-			ImGui::Text("%s %f", "Pos_Y = ", App->Cl19_Ogre->mCamera->getPosition().y);
-			ImGui::Text("%s %f", "Pos_Z = ", App->Cl19_Ogre->mCamera->getPosition().z);
+			ImGui::Text("%s %f", "Pos_X = ", App->SBC_Ogre->mCamera->getPosition().x);
+			ImGui::Text("%s %f", "Pos_Y = ", App->SBC_Ogre->mCamera->getPosition().y);
+			ImGui::Text("%s %f", "Pos_Z = ", App->SBC_Ogre->mCamera->getPosition().z);
 
-			ImGui::Text("%s %f", "Rot_X = ", App->Cl19_Ogre->mCamera->getOrientation().x);
-			ImGui::Text("%s %f", "Rot_Y = ", App->Cl19_Ogre->mCamera->getOrientation().y);
-			ImGui::Text("%s %f", "Rot_Z = ", App->Cl19_Ogre->mCamera->getOrientation().z);
+			ImGui::Text("%s %f", "Rot_X = ", App->SBC_Ogre->mCamera->getOrientation().x);
+			ImGui::Text("%s %f", "Rot_Y = ", App->SBC_Ogre->mCamera->getOrientation().y);
+			ImGui::Text("%s %f", "Rot_Z = ", App->SBC_Ogre->mCamera->getOrientation().z);
 		}
 
 		ImGui::Spacing();

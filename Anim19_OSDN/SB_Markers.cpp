@@ -62,8 +62,8 @@ void SB_Markers::Load_All_Axis()
 // **************************************************************************
 void SB_Markers::Load_Blue_Rot_Axis()
 {
-	BlueRotAxis_Ent = App->Cl19_Ogre->mSceneMgr->createEntity("Blue_Rot_Axis", "Ring.mesh", App->Cl19_Ogre->App_Resource_Group);
-	BlueRotAxis_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	BlueRotAxis_Ent = App->SBC_Ogre->mSceneMgr->createEntity("Blue_Rot_Axis", "Ring.mesh", App->SBC_Ogre->App_Resource_Group);
+	BlueRotAxis_Node = App->SBC_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	BlueRotAxis_Node->attachObject(BlueRotAxis_Ent);
 
 	BlueRotAxis_Node->setVisible(false);
@@ -76,8 +76,8 @@ void SB_Markers::Load_Blue_Rot_Axis()
 // **************************************************************************
 void SB_Markers::Load_Red_Axis()
 {
-	RedAxis_Ent = App->Cl19_Ogre->mSceneMgr->createEntity("Red_Axis", "RedAxes.mesh", App->Cl19_Ogre->App_Resource_Group);
-	RedAxis_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	RedAxis_Ent = App->SBC_Ogre->mSceneMgr->createEntity("Red_Axis", "RedAxes.mesh", App->SBC_Ogre->App_Resource_Group);
+	RedAxis_Node = App->SBC_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	RedAxis_Node->attachObject(RedAxis_Ent);
 
 	RedAxis_Node->setVisible(false);
@@ -90,8 +90,8 @@ void SB_Markers::Load_Red_Axis()
 // **************************************************************************
 void SB_Markers::Load_Green_Axis()
 {
-	GreenAxis_Ent = App->Cl19_Ogre->mSceneMgr->createEntity("Green_Axis", "GreenAxes.mesh", App->Cl19_Ogre->App_Resource_Group);
-	GreenAxis_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	GreenAxis_Ent = App->SBC_Ogre->mSceneMgr->createEntity("Green_Axis", "GreenAxes.mesh", App->SBC_Ogre->App_Resource_Group);
+	GreenAxis_Node = App->SBC_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	GreenAxis_Node->attachObject(GreenAxis_Ent);
 
 	GreenAxis_Node->setVisible(false);
@@ -104,8 +104,8 @@ void SB_Markers::Load_Green_Axis()
 // **************************************************************************
 void SB_Markers::Load_Blue_Axis()
 {
-	BlueAxis_Ent = App->Cl19_Ogre->mSceneMgr->createEntity("Blue_Axis", "BlueAxes.mesh", App->Cl19_Ogre->App_Resource_Group);
-	BlueAxis_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	BlueAxis_Ent = App->SBC_Ogre->mSceneMgr->createEntity("Blue_Axis", "BlueAxes.mesh", App->SBC_Ogre->App_Resource_Group);
+	BlueAxis_Node = App->SBC_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	BlueAxis_Node->attachObject(BlueAxis_Ent);
 
 	BlueAxis_Node->setVisible(false);

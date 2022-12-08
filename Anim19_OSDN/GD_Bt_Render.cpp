@@ -36,7 +36,7 @@ GD_Bt_Render::GD_Bt_Render(void)
 
 	ColourMain = ColourValue(1, 1, 1, 1);
 
-	btDebug_Manual = App->Cl19_Ogre->mSceneMgr->createManualObject("btManual");
+	btDebug_Manual = App->SBC_Ogre->mSceneMgr->createManualObject("btManual");
 	btDebug_Manual->setRenderQueueGroup(RENDER_QUEUE_MAX);
 
 	btDebug_Manual->setDynamic(true);
@@ -49,7 +49,7 @@ GD_Bt_Render::GD_Bt_Render(void)
 	btDebug_Manual->colour(ColourMain);
 	btDebug_Manual->end();
 
-	btDebug_Node = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	btDebug_Node = App->SBC_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	btDebug_Node->attachObject(btDebug_Manual);
 
 
@@ -175,7 +175,7 @@ bool GD_Bt_Render::Render_Debug(void)
 		
 		if (V_Count > 0)
 		{
-			if (App->Cl19_Ogre->OgreListener->MeshViewer_Running == 1)
+			if (App->SBC_Ogre->OgreListener->MeshViewer_Running == 1)
 			{
 				App->SBC_MeshViewer->btDebug_Manual->beginUpdate(0);
 

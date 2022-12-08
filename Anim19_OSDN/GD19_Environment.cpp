@@ -905,7 +905,7 @@ bool GD19_Environment::On_Click_Props(LPARAM lParam)
 
 			Update_CreateMainLightListView();
 
-			App->Cl19_Ogre->mSceneMgr->setAmbientLight(ColourValue((float)Red/256,(float)Green/256,(float)Blue/256));
+			App->SBC_Ogre->mSceneMgr->setAmbientLight(ColourValue((float)Red/256,(float)Green/256,(float)Blue/256));
 
 		}
 		return 1;
@@ -1199,7 +1199,7 @@ void GD19_Environment::SetSky(bool Enable)
 {
 	int Index = App->SBC_Properties->Current_Selected_Object;
 
-	App->Cl19_Ogre->mSceneMgr->setSkyDome(Enable,
+	App->SBC_Ogre->mSceneMgr->setSkyDome(Enable,
 		App->SBC_Scene->B_Object[Index]->S_Environ[0]->Material,
 		App->SBC_Scene->B_Object[Index]->S_Environ[0]->Curvature,
 		App->SBC_Scene->B_Object[Index]->S_Environ[0]->Tiling,
@@ -1223,11 +1223,11 @@ bool GD19_Environment::EnableFog(bool SetFog)
 		float y = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.y;
 		float z = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.z;
 
-		App->Cl19_Ogre->mSceneMgr->setFog(FOG_LINEAR, ColourValue(x, y, z), Density, (Ogre::Real)Start, (Ogre::Real)End);
+		App->SBC_Ogre->mSceneMgr->setFog(FOG_LINEAR, ColourValue(x, y, z), Density, (Ogre::Real)Start, (Ogre::Real)End);
 	}
 	else
 	{
-		App->Cl19_Ogre->mSceneMgr->setFog(FOG_NONE, ColourValue(0.7, 0.7, 0.8), 0, 100, 1000);
+		App->SBC_Ogre->mSceneMgr->setFog(FOG_NONE, ColourValue(0.7, 0.7, 0.8), 0, 100, 1000);
 	}
 	
 	return 1;

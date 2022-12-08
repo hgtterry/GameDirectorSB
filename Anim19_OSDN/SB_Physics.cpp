@@ -103,7 +103,7 @@ LRESULT CALLBACK SB_Physics::Physics_Console_Proc(HWND hDlg, UINT message, WPARA
 			if (some_item->idFrom == IDC_PHYSICS_ON && some_item->code == NM_CUSTOMDRAW)
 			{
 				LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-				App->Custom_Button_Toggle(item, App->Cl19_Ogre->OgreListener->GD_Run_Physics);
+				App->Custom_Button_Toggle(item, App->SBC_Ogre->OgreListener->GD_Run_Physics);
 				return CDRF_DODEFAULT;
 			}
 		}
@@ -154,13 +154,13 @@ LRESULT CALLBACK SB_Physics::Physics_Console_Proc(HWND hDlg, UINT message, WPARA
 		{
 			if (App->SBC_Scene->Scene_Loaded == 1)
 			{
-				if (App->Cl19_Ogre->OgreListener->GD_Run_Physics == 1)
+				if (App->SBC_Ogre->OgreListener->GD_Run_Physics == 1)
 				{
-					App->Cl19_Ogre->OgreListener->GD_Run_Physics = 0;
+					App->SBC_Ogre->OgreListener->GD_Run_Physics = 0;
 				}
 				else
 				{
-					App->Cl19_Ogre->OgreListener->GD_Run_Physics = 1;
+					App->SBC_Ogre->OgreListener->GD_Run_Physics = 1;
 				}
 
 				App->RedrawWindow_Dlg(App->Physics_Console_Hwnd);
@@ -332,7 +332,7 @@ LRESULT CALLBACK SB_Physics::Start_Physics_Proc(HWND hDlg, UINT message, WPARAM 
 		{
 			int f = App->SBC_Scene->B_Player[0]->Phys_Body->getCollisionFlags();
 
-			if (App->Cl19_Ogre->OgreListener->Dubug_Physics_Draw == 0)
+			if (App->SBC_Ogre->OgreListener->Dubug_Physics_Draw == 0)
 			{
 				App->SBC_Physics->Enable_Physics(1);
 			}
@@ -370,9 +370,9 @@ void SB_Physics::Enable_Physics(bool Enable)
 
 	int f = App->SBC_Scene->B_Player[0]->Phys_Body->getCollisionFlags();
 
-	App->Cl19_Ogre->OgreListener->Dubug_Physics_Draw = Enable;
-	//App->Cl19_Ogre->OgreListener->GD_Run_Physics = Enable;
-	App->Cl19_Ogre->BulletListener->Render_Debug_Flag = Enable;
+	App->SBC_Ogre->OgreListener->Dubug_Physics_Draw = Enable;
+	//App->SBC_Ogre->OgreListener->GD_Run_Physics = Enable;
+	App->SBC_Ogre->BulletListener->Render_Debug_Flag = Enable;
 
 	App->SBC_Player->ShowDebug = Enable;
 
@@ -389,7 +389,7 @@ void SB_Physics::Enable_Physics(bool Enable)
 // *************************************************************************
 void SB_Physics::Physics_On(bool Enable)
 {
-	App->Cl19_Ogre->OgreListener->GD_Run_Physics = Enable;
+	App->SBC_Ogre->OgreListener->GD_Run_Physics = Enable;
 	RedrawWindow(App->Physics_Console_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 
@@ -401,7 +401,7 @@ void SB_Physics::Reset_Physics(void)
 {
 	App->Log_Messageg("void GD19_Bullet::Reset_Physics(void)");
 
-	App->Cl19_Ogre->OgreListener->GD_Run_Physics = 0;
+	App->SBC_Ogre->OgreListener->GD_Run_Physics = 0;
 
 	float w = 1;
 	float x = 0;
@@ -495,7 +495,7 @@ void SB_Physics::Reset_Physics(void)
 		App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->SBC_Scene->B_Player[0]->Physics_Rotation);
 	}
 
-	//App->Cl19_Ogre->OgreListener->GD_Run_Physics = 1;
+	//App->SBC_Ogre->OgreListener->GD_Run_Physics = 1;
 }
 
 // *************************************************************************

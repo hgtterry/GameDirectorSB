@@ -29,7 +29,7 @@ distribution.
 
 GD19_App::GD19_App(void)
 {
-	Cl19_Ogre =			nullptr;
+	SBC_Ogre =			nullptr;
 	Cl_Utilities =		nullptr;
 	SBC_Grid =			nullptr;
 	Cl_Panels =			nullptr;
@@ -194,7 +194,7 @@ GD19_App::~GD19_App(void)
 // *************************************************************************
 bool GD19_App::InitApp(void)
 {
-	Cl19_Ogre =			new GD19_Ogre();
+	SBC_Ogre =			new SB_Ogre();
 	Cl_Utilities =		new GD19_Utilities();
 	SBC_Grid =			new SB_Grid();
 	Cl_Panels =			new GD19_Panels();
@@ -350,15 +350,15 @@ bool GD19_App::Resize_OgreWin(void)
 		RECT rect;
 		GetClientRect(App->ViewGLhWnd, &rect);
 
-		if ((rect.bottom - rect.top) != 0 && App->Cl19_Ogre->mCamera != 0)
+		if ((rect.bottom - rect.top) != 0 && App->SBC_Ogre->mCamera != 0)
 		{
-			App->Cl19_Ogre->mWindow->windowMovedOrResized();
-			App->Cl19_Ogre->mCamera->setAspectRatio((Ogre::Real)App->Cl19_Ogre->mWindow->getWidth() / (Ogre::Real)App->Cl19_Ogre->mWindow->getHeight());
-			App->Cl19_Ogre->mCamera->yaw(Radian(0));
+			App->SBC_Ogre->mWindow->windowMovedOrResized();
+			App->SBC_Ogre->mCamera->setAspectRatio((Ogre::Real)App->SBC_Ogre->mWindow->getWidth() / (Ogre::Real)App->SBC_Ogre->mWindow->getHeight());
+			App->SBC_Ogre->mCamera->yaw(Radian(0));
 			Root::getSingletonPtr()->renderOneFrame();
 		}
 
-		/*int Width = App->Cl19_Ogre->OgreListener->View_Width;
+		/*int Width = App->SBC_Ogre->OgreListener->View_Width;
 		int poo = (Width / 2) - 175;
 
 		ImGui::SetWindowPos("Ogre Data", ImVec2(poo, 20));*/

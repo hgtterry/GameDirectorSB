@@ -29,8 +29,8 @@ distribution.
 
 GD19_OgreListener::GD19_OgreListener(void)
 {
-	mCam = App->Cl19_Ogre->mCamera;
-	Pl_mDummyCamera = App->Cl19_Ogre->mSceneMgr->createCamera("PickCamera");
+	mCam = App->SBC_Ogre->mCamera;
+	Pl_mDummyCamera = App->SBC_Ogre->mSceneMgr->createCamera("PickCamera");
 
 	Wheel = 0;
 	StopOgre = 0;
@@ -76,7 +76,7 @@ GD19_OgreListener::GD19_OgreListener(void)
 	Animate_Ogre = 0;
 	AnimationScale = 1;
 	
-	mCollisionTools = new MOC::CollisionTools(App->Cl19_Ogre->mSceneMgr);
+	mCollisionTools = new MOC::CollisionTools(App->SBC_Ogre->mSceneMgr);
 	mCollisionTools->setHeightAdjust(3.5f);
 
 	CameraMode = 1;  // Model Mode
@@ -115,7 +115,7 @@ bool GD19_OgreListener::frameStarted(const FrameEvent& evt)
 // *************************************************************************
 bool GD19_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 {
-	if (App->Cl19_Ogre->Block_RenderingQueued == 1)
+	if (App->SBC_Ogre->Block_RenderingQueued == 1)
 	{
 		return 1;
 	}
@@ -125,15 +125,15 @@ bool GD19_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 		return 1;
 	}
 
-	App->Cl19_Ogre->Block_RenderingQueued = 1;
+	App->SBC_Ogre->Block_RenderingQueued = 1;
 
 	if (App->CL_Vm_ImGui->Show_Progress_Bar == 1)
 	{
-		App->Cl19_Ogre->m_imgui.render();
+		App->SBC_Ogre->m_imgui.render();
 		return 1;
 	}
 
-	App->Cl19_Ogre->m_imgui.render();
+	App->SBC_Ogre->m_imgui.render();
 
 	mRotX = 0;
 	mRotY = 0;
@@ -153,11 +153,11 @@ bool GD19_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 		mYaw = App->SBC_Scene->B_Player[0]->Player_Node->getOrientation().getYaw();
 		Pos.y = Pos.y + App->SBC_Scene->B_Player[0]->PlayerHeight;
 
-		App->Cl19_Ogre->mCamera->setPosition(Pos);
-		App->Cl19_Ogre->mCamera->setOrientation(Ogre::Quaternion(1, 0, 0, 0));
-		App->Cl19_Ogre->mCamera->yaw(mYaw);
-		App->Cl19_Ogre->mCamera->pitch(mmPitch);
-		App->Cl19_Ogre->mCamera->yaw(Ogre::Degree(180));
+		App->SBC_Ogre->mCamera->setPosition(Pos);
+		App->SBC_Ogre->mCamera->setOrientation(Ogre::Quaternion(1, 0, 0, 0));
+		App->SBC_Ogre->mCamera->yaw(mYaw);
+		App->SBC_Ogre->mCamera->pitch(mmPitch);
+		App->SBC_Ogre->mCamera->yaw(Ogre::Degree(180));
 	}
 
 	App->Cl_Keyboard->Keyboard_Monitor(evt.timeSinceLastFrame);
@@ -198,7 +198,7 @@ bool GD19_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 		App->SBC_Collision->MoveObject_Listener(evt.timeSinceLastFrame);
 	}
 
-	App->Cl19_Ogre->Block_RenderingQueued = 0;
+	App->SBC_Ogre->Block_RenderingQueued = 0;
 
 	return 1;
 }
@@ -225,15 +225,15 @@ bool GD19_OgreListener::Update_Game_Logic(float DeltaTime)
 
 	if (App->CL_Vm_ImGui->Show_Progress_Bar == 1)
 	{
-		App->Cl19_Ogre->Get_View_Height_Width();
+		App->SBC_Ogre->Get_View_Height_Width();
 
-		App->Cl19_Ogre->m_imgui.NewFrame(DeltaTime, (float)View_Width, (float)View_Height);
+		App->SBC_Ogre->m_imgui.NewFrame(DeltaTime, (float)View_Width, (float)View_Height);
 		App->CL_Vm_ImGui->ImGui_ProgressBar();
 		return true;
 	}
 
-	App->Cl19_Ogre->Get_View_Height_Width();
-	App->Cl19_Ogre->m_imgui.NewFrame(DeltaTime, (float)View_Width, (float)View_Height);
+	App->SBC_Ogre->Get_View_Height_Width();
+	App->SBC_Ogre->m_imgui.NewFrame(DeltaTime, (float)View_Width, (float)View_Height);
 
 
 	int Count = 0;
@@ -350,7 +350,7 @@ bool GD19_OgreListener::Capture_LeftMouse(void)
 				App->SBC_Grid->GridNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 				App->SBC_Grid->HairNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 				App->SBC_Grid->DummyNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
-				///App->Cl19_Ogre->RenderListener->RZ = App->Cl19_Ogre->RenderListener->RZ - (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
+				///App->SBC_Ogre->RenderListener->RZ = App->SBC_Ogre->RenderListener->RZ - (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
 				SetCursorPos(500, 500);
 			}
 		}
@@ -364,7 +364,7 @@ bool GD19_OgreListener::Capture_LeftMouse(void)
 				App->SBC_Grid->GridNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 				App->SBC_Grid->HairNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 				App->SBC_Grid->DummyNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
-				///App->Cl19_Ogre->RenderListener->RZ = App->Cl19_Ogre->RenderListener->RZ + (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
+				///App->SBC_Ogre->RenderListener->RZ = App->SBC_Ogre->RenderListener->RZ + (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
 				SetCursorPos(500, 500);
 			}
 		}
@@ -380,7 +380,7 @@ bool GD19_OgreListener::Capture_LeftMouse(void)
 				App->SBC_Grid->GridNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 				App->SBC_Grid->HairNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 				App->SBC_Grid->DummyNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
-				///App->Cl19_Ogre->RenderListener->RX = App->Cl19_Ogre->RenderListener->RX - (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
+				///App->SBC_Ogre->RenderListener->RX = App->SBC_Ogre->RenderListener->RX - (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
 				SetCursorPos(500, 500);
 			}
 		}
@@ -394,7 +394,7 @@ bool GD19_OgreListener::Capture_LeftMouse(void)
 				App->SBC_Grid->GridNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 				App->SBC_Grid->HairNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 				App->SBC_Grid->DummyNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
-				///App->Cl19_Ogre->RenderListener->RX = App->Cl19_Ogre->RenderListener->RX + (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
+				///App->SBC_Ogre->RenderListener->RX = App->SBC_Ogre->RenderListener->RX + (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
 				SetCursorPos(500, 500);
 			}
 		}
@@ -410,7 +410,7 @@ void GD19_OgreListener::WorldMode(float DeltaTime)
 {
 	//float start = DeltaTime;
 
-	//App->Cl19_Ogre->m_imgui.render();
+	//App->SBC_Ogre->m_imgui.render();
 
 	//mRotX = 0;
 	//mRotY = 0;
@@ -447,18 +447,18 @@ void GD19_OgreListener::WorldMode(float DeltaTime)
 	//		Pos.y = Pos.y + App->SBC_Scene->SBC_Base_Player[0]->PlayerHeight;
 	//	}
 
-	//	App->Cl19_Ogre->mCamera->setPosition(Pos);
-	//	App->Cl19_Ogre->mCamera->setOrientation(Ogre::Quaternion(1, 0, 0, 0));
-	//	App->Cl19_Ogre->mCamera->yaw(mYaw);
-	//	//App->Cl19_Ogre->mCamera->pitch(mmPitch);
-	//	App->Cl19_Ogre->mCamera->yaw(Ogre::Degree(180));
+	//	App->SBC_Ogre->mCamera->setPosition(Pos);
+	//	App->SBC_Ogre->mCamera->setOrientation(Ogre::Quaternion(1, 0, 0, 0));
+	//	App->SBC_Ogre->mCamera->yaw(mYaw);
+	//	//App->SBC_Ogre->mCamera->pitch(mmPitch);
+	//	App->SBC_Ogre->mCamera->yaw(Ogre::Degree(180));
 	//}
 
 	//App->Cl_Keyboard->Keyboard_Monitor(DeltaTime);
 
 	//if (GetAsyncKeyState(VK_ESCAPE) < 0) // Back to full Screen;
 	//{
-	//	App->Cl19_Ogre->ExitFullScreen();
+	//	App->SBC_Ogre->ExitFullScreen();
 	//}
 
 	//// Left Mouse
@@ -513,7 +513,7 @@ void GD19_OgreListener::ModelMode(float DeltaTime)
 
 	mMoveScale = mMoveSensitivity  * DeltaTime;
 
-	App->Cl19_Ogre->m_imgui.render();
+	App->SBC_Ogre->m_imgui.render();
 
 	if (GetAsyncKeyState(88) < 0)
 	{
@@ -579,7 +579,7 @@ void GD19_OgreListener::ModelMode(float DeltaTime)
 		if (App->FullScreen == 1)
 		{
 			App->FullScreen = 0;
-			App->Cl19_Ogre->ExitFullScreen();
+			App->SBC_Ogre->ExitFullScreen();
 		}
 	}
 
@@ -697,7 +697,7 @@ bool GD19_OgreListener::Capture_LeftMouse_World(void)
 				App->SBC_Grid->GridNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 				App->SBC_Grid->HairNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 				App->SBC_Grid->DummyNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
-				///App->Cl19_Ogre->RenderListener->RZ = App->Cl19_Ogre->RenderListener->RZ - (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
+				///App->SBC_Ogre->RenderListener->RZ = App->SBC_Ogre->RenderListener->RZ - (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
 				SetCursorPos(500, 500);
 			}
 		}
@@ -711,7 +711,7 @@ bool GD19_OgreListener::Capture_LeftMouse_World(void)
 				App->SBC_Grid->GridNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 				App->SBC_Grid->HairNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 				App->SBC_Grid->DummyNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
-				///App->Cl19_Ogre->RenderListener->RZ = App->Cl19_Ogre->RenderListener->RZ + (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
+				///App->SBC_Ogre->RenderListener->RZ = App->SBC_Ogre->RenderListener->RZ + (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
 				SetCursorPos(500, 500);
 			}
 		}
@@ -727,7 +727,7 @@ bool GD19_OgreListener::Capture_LeftMouse_World(void)
 				App->SBC_Grid->GridNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 				App->SBC_Grid->HairNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 				App->SBC_Grid->DummyNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
-				///App->Cl19_Ogre->RenderListener->RX = App->Cl19_Ogre->RenderListener->RX - (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
+				///App->SBC_Ogre->RenderListener->RX = App->SBC_Ogre->RenderListener->RX - (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
 				SetCursorPos(500, 500);
 			}
 		}
@@ -741,7 +741,7 @@ bool GD19_OgreListener::Capture_LeftMouse_World(void)
 				App->SBC_Grid->GridNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 				App->SBC_Grid->HairNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 				App->SBC_Grid->DummyNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
-				///App->Cl19_Ogre->RenderListener->RX = App->Cl19_Ogre->RenderListener->RX + (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
+				///App->SBC_Ogre->RenderListener->RX = App->SBC_Ogre->RenderListener->RX + (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
 				SetCursorPos(500, 500);
 			}
 		}
@@ -771,7 +771,7 @@ bool GD19_OgreListener::Capture_LeftMouse_Model(void)
 			App->SBC_Grid->GridNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 			App->SBC_Grid->HairNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 			App->SBC_Grid->DummyNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
-			//App->Cl19_Ogre->RenderListener->RZ = App->Cl19_Ogre->RenderListener->RZ - (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
+			//App->SBC_Ogre->RenderListener->RZ = App->SBC_Ogre->RenderListener->RZ - (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
 			SetCursorPos(500, 500);
 		}
 	}
@@ -785,7 +785,7 @@ bool GD19_OgreListener::Capture_LeftMouse_Model(void)
 			App->SBC_Grid->GridNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 			App->SBC_Grid->HairNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 			App->SBC_Grid->DummyNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
-			//App->Cl19_Ogre->RenderListener->RZ = App->Cl19_Ogre->RenderListener->RZ + (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
+			//App->SBC_Ogre->RenderListener->RZ = App->SBC_Ogre->RenderListener->RZ + (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
 			SetCursorPos(500, 500);
 		}
 	}
@@ -801,7 +801,7 @@ bool GD19_OgreListener::Capture_LeftMouse_Model(void)
 			App->SBC_Grid->GridNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 			App->SBC_Grid->HairNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 			App->SBC_Grid->DummyNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
-			//App->Cl19_Ogre->RenderListener->RX = App->Cl19_Ogre->RenderListener->RX - (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
+			//App->SBC_Ogre->RenderListener->RX = App->SBC_Ogre->RenderListener->RX - (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
 			SetCursorPos(500, 500);
 		}
 	}
@@ -815,7 +815,7 @@ bool GD19_OgreListener::Capture_LeftMouse_Model(void)
 			App->SBC_Grid->GridNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 			App->SBC_Grid->HairNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 			App->SBC_Grid->DummyNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
-			//App->Cl19_Ogre->RenderListener->RX = App->Cl19_Ogre->RenderListener->RX + (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
+			//App->SBC_Ogre->RenderListener->RX = App->SBC_Ogre->RenderListener->RX + (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
 			SetCursorPos(500, 500);
 		}
 	}
@@ -991,7 +991,7 @@ bool GD19_OgreListener::Capture_RightMouse_World(void)
 		return 1;
 	}*/
 
-	if (App->Cl19_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
+	if (App->SBC_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
 	{
 
 		GetCursorPos(&Pl_pt);
@@ -1075,11 +1075,11 @@ bool GD19_OgreListener::Capture_RightMouse_World(void)
 bool GD19_OgreListener::SelectEntity_World(void)
 {
 	Ogre::SceneNode *mNode;
-	Vector3 oldPos = App->Cl19_Ogre->mCamera->getPosition();
+	Vector3 oldPos = App->SBC_Ogre->mCamera->getPosition();
 	Pl_mDummyCamera->setPosition(oldPos);
 
 	Ogre::Quaternion Q;
-	Q = App->Cl19_Ogre->mCamera->getOrientation();
+	Q = App->SBC_Ogre->mCamera->getOrientation();
 
 	Pl_mDummyCamera->setOrientation(Q);
 	Pl_mDummyTranslateVector = Ogre::Vector3::ZERO;

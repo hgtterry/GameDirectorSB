@@ -63,6 +63,7 @@ public:
 	HWND Player_Props_HWND;
 
 	// Strucure to be
+
 	Ogre::Vector3 Current_Position;
 	btVector3 Physics_Position;
 	btQuaternion Physics_Rotation;

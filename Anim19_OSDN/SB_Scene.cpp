@@ -124,9 +124,9 @@ void SB_Scene::Reset_Class()
 		{
 			B_Object[Count]->Object_Node->detachAllObjects();
 
-			App->Cl19_Ogre->mSceneMgr->destroySceneNode(B_Object[Count]->Object_Node);
+			App->SBC_Ogre->mSceneMgr->destroySceneNode(B_Object[Count]->Object_Node);
 
-			App->Cl19_Ogre->mSceneMgr->destroyEntity(B_Object[Count]->Object_Ent);
+			App->SBC_Ogre->mSceneMgr->destroyEntity(B_Object[Count]->Object_Ent);
 
 			B_Object[Count]->Object_Node = NULL;
 			B_Object[Count]->Object_Ent = NULL;
@@ -190,7 +190,7 @@ bool SB_Scene::Clear_Level()
 
 	Reset_Class(); // This One
 
-	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamNone;
+	App->SBC_Ogre->OgreListener->GD_CameraMode = Enums::CamNone;
 
 	App->SBC_Com_Camera->Reset_View();
 
@@ -285,7 +285,7 @@ bool SB_Scene::Game_Mode(void)
 {
 	GameMode_Running_Flag = 1;
 
-	App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 0;
+	App->SBC_Ogre->BulletListener->Render_Debug_Flag = 0;
 	
 	App->SBC_Grid->Grid_SetVisible(0);
 	App->SBC_Grid->Hair_SetVisible(0);
@@ -295,15 +295,15 @@ bool SB_Scene::Game_Mode(void)
 	App->SBC_Com_Environments->GameMode(1);
 	
 
-	App->Cl19_Ogre->OgreListener->GD_Run_Physics = 1;
+	App->SBC_Ogre->OgreListener->GD_Run_Physics = 1;
 
-	CurrentCamMode = App->Cl19_Ogre->OgreListener->GD_CameraMode;
-	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamFirst;
+	CurrentCamMode = App->SBC_Ogre->OgreListener->GD_CameraMode;
+	App->SBC_Ogre->OgreListener->GD_CameraMode = Enums::CamFirst;
 
 
 	App->SBC_Visuals->BoxNode->setVisible(false);
 
-	//App->Cl19_Ogre->OgreListener->GD_Dubug_Physics = 0;
+	//App->SBC_Ogre->OgreListener->GD_Dubug_Physics = 0;
 
 	Show_Entities(false); // Hide All Visible Trigers
 
@@ -317,16 +317,16 @@ bool SB_Scene::Game_Mode(void)
 	SetWindowPos(App->ViewGLhWnd, NULL, 0, 0, cx, cy, SWP_NOZORDER);
 	SetParent(App->ViewGLhWnd, NULL);
 
-	App->Cl19_Ogre->mWindow->resize(cx, cy);
+	App->SBC_Ogre->mWindow->resize(cx, cy);
 
-	App->Cl19_Ogre->mWindow->windowMovedOrResized();
-	App->Cl19_Ogre->mCamera->setAspectRatio((Ogre::Real)App->Cl19_Ogre->mWindow->getWidth() / (Ogre::Real)App->Cl19_Ogre->mWindow->getHeight());
+	App->SBC_Ogre->mWindow->windowMovedOrResized();
+	App->SBC_Ogre->mCamera->setAspectRatio((Ogre::Real)App->SBC_Ogre->mWindow->getWidth() / (Ogre::Real)App->SBC_Ogre->mWindow->getHeight());
 
 	Root::getSingletonPtr()->renderOneFrame();
 
 	SetCapture(App->ViewGLhWnd);// Bernie
 
-	App->Cl19_Ogre->OgreListener->Pl_LeftMouseDown = 1;
+	App->SBC_Ogre->OgreListener->Pl_LeftMouseDown = 1;
 
 	App->CUR = SetCursor(NULL);
 
@@ -342,12 +342,12 @@ bool SB_Scene::Editor_Mode(void)
 	GameMode_Running_Flag = 0;
 	FullScreenMode_Flag = 0;
 
-	App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 1;
+	App->SBC_Ogre->BulletListener->Render_Debug_Flag = 1;
 
 	App->SBC_Grid->Grid_SetVisible(1);
 	App->SBC_Grid->Hair_SetVisible(1);
 
-	App->Cl19_Ogre->OgreListener->Pl_LeftMouseDown = 0;
+	App->SBC_Ogre->OgreListener->Pl_LeftMouseDown = 0;
 	ReleaseCapture();
 	SetCursor(App->CUR);
 
@@ -361,7 +361,7 @@ bool SB_Scene::Editor_Mode(void)
 	}
 
 
-	App->Cl19_Ogre->OgreListener->GD_CameraMode = CurrentCamMode;
+	App->SBC_Ogre->OgreListener->GD_CameraMode = CurrentCamMode;
 	
 	App->CL_Vm_ImGui->Show_FPS = App->SBC_Dialogs->Saved_DoFPS;
 
@@ -375,7 +375,7 @@ void SB_Scene::Go_FullScreen_Mode(void)
 {
 	FullScreenMode_Flag = 1;
 
-	App->SBC_Scene->CurrentCamMode = App->Cl19_Ogre->OgreListener->GD_CameraMode;
+	App->SBC_Scene->CurrentCamMode = App->SBC_Ogre->OgreListener->GD_CameraMode;
 
 	App->FullScreen = 1;
 	int cx = GetSystemMetrics(SM_CXSCREEN);
@@ -385,10 +385,10 @@ void SB_Scene::Go_FullScreen_Mode(void)
 
 	SetParent(App->ViewGLhWnd, NULL);
 
-	App->Cl19_Ogre->mWindow->resize(cx, cy);
+	App->SBC_Ogre->mWindow->resize(cx, cy);
 
-	App->Cl19_Ogre->mWindow->windowMovedOrResized();
-	App->Cl19_Ogre->mCamera->setAspectRatio((Ogre::Real)App->Cl19_Ogre->mWindow->getWidth() / (Ogre::Real)App->Cl19_Ogre->mWindow->getHeight());
+	App->SBC_Ogre->mWindow->windowMovedOrResized();
+	App->SBC_Ogre->mCamera->setAspectRatio((Ogre::Real)App->SBC_Ogre->mWindow->getWidth() / (Ogre::Real)App->SBC_Ogre->mWindow->getHeight());
 
 	Root::getSingletonPtr()->renderOneFrame();
 }

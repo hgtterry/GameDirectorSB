@@ -2741,9 +2741,9 @@ void SB_Properties::Reset_Last_Selected_Object(int Index)
 
 	App->SBC_Scene->B_Object[Index]->Physics_Debug_On = 0;
 
-	App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 0;
-	App->Cl19_Ogre->BulletListener->Clear_Debug_Render();
-	App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 1;
+	App->SBC_Ogre->BulletListener->Render_Debug_Flag = 0;
+	App->SBC_Ogre->BulletListener->Clear_Debug_Render();
+	App->SBC_Ogre->BulletListener->Render_Debug_Flag = 1;
 
 	HWND Temp = GetDlgItem(App->SBC_Props_Dialog->Debug_Dlg_hWnd, IDC_BT_PHYSDEBUG);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_PhysicsOff_Bmp);

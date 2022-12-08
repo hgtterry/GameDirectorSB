@@ -40,7 +40,7 @@ bool SB_Import_Room::Room_Loader(char* Extension, char* Extension2)
 
 	App->SBC_Grid->Grid_SetVisible(1);
 
-	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
+	App->SBC_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
 
 	App->SBC_Player->Create_Player_Object();
 	strcpy(App->SBC_Scene->B_Player[0]->Player_Name, "Player_1");

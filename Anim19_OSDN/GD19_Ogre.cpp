@@ -25,7 +25,7 @@ distribution.
 #include "GD19_App.h"
 #include "GD19_Ogre.h"
 
-GD19_Ogre::GD19_Ogre(void)
+SB_Ogre::SB_Ogre(void)
 {
 	RenderHwnd =	nullptr;
 	mRoot =			nullptr;
@@ -45,14 +45,14 @@ GD19_Ogre::GD19_Ogre(void)
 	Block_RenderingQueued = 0;
 }
 
-GD19_Ogre::~GD19_Ogre(void)
+SB_Ogre::~SB_Ogre(void)
 {
 }
 
 // *************************************************************************
 // *				InitOgre:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
-bool GD19_Ogre::InitOgre(void)
+bool SB_Ogre::InitOgre(void)
 {
 	OgreCreateRoot();
 	SetUpResources();
@@ -70,7 +70,7 @@ bool GD19_Ogre::InitOgre(void)
 	App->SBC_Grid->Grid_Update(1);
 	App->SBC_Grid->Hair_Update(1);
 
-	App->SBC_Grid->DummyNode = App->Cl19_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	App->SBC_Grid->DummyNode = App->SBC_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 
 	App->SBC_Visuals->Load_PickSight();
 	App->SBC_Grid->Load_Arrow();
@@ -91,7 +91,7 @@ bool GD19_Ogre::InitOgre(void)
 // *************************************************************************
 // *		Ogre_Render_Loop:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
-bool GD19_Ogre::Ogre_Render_Loop(void)
+bool SB_Ogre::Ogre_Render_Loop(void)
 {
 	while (true)
 	{
@@ -113,7 +113,7 @@ bool GD19_Ogre::Ogre_Render_Loop(void)
 // *************************************************************************
 // *		OgreCreateRoot:- Terry and Hazel Flanigan 2022				   *
 // *************************************************************************
-bool GD19_Ogre::OgreCreateRoot(void)
+bool SB_Ogre::OgreCreateRoot(void)
 {
 	Ogre::String pluginsPath;
 	pluginsPath = mResourcePath + "plugins.cfg";
@@ -137,7 +137,7 @@ bool GD19_Ogre::OgreCreateRoot(void)
 // **************************************************************************
 // *			SetUpResources:- Terry and Hazel Flanigan 2022				*
 // **************************************************************************
-bool GD19_Ogre::SetUpResources(void)
+bool SB_Ogre::SetUpResources(void)
 {
 
 	Ogre::String File;
@@ -161,18 +161,10 @@ bool GD19_Ogre::SetUpResources(void)
 // *************************************************************************
 // *		Initialise_Resources:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
-bool GD19_Ogre::Initialise_Resources(void)
+bool SB_Ogre::Initialise_Resources(void)
 {
 	// Initialize, parse scripts etc
 	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
-
-	/*Ogre::FontManager* fontMgr = Ogre::FontManager::getSingletonPtr();
-	Ogre::ResourcePtr font = fontMgr->create("MyFont", "General");
-	font->setParameter("type", "truetype");
-	font->setParameter("source", "cuckoo.ttf");
-	font->setParameter("size", "32");
-	font->setParameter("resolution", "96");
-	font->load();*/
 
 	return 1;
 }
@@ -180,7 +172,7 @@ bool GD19_Ogre::Initialise_Resources(void)
 // *************************************************************************
 // *			Get_Main_Folders:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
-bool GD19_Ogre::Get_Main_Folders()
+bool SB_Ogre::Get_Main_Folders()
 {
 	char Path[1024];
 
@@ -225,7 +217,7 @@ bool GD19_Ogre::Get_Main_Folders()
 // *************************************************************************
 // *			Get_Sub_Folders:- Terry and Hazel Flanigan 2022		 	   *
 // *************************************************************************
-bool GD19_Ogre::Get_Sub_Folders(char* Sub_folder)
+bool SB_Ogre::Get_Sub_Folders(char* Sub_folder)
 {
 	char Path[1024];
 
@@ -274,7 +266,7 @@ bool GD19_Ogre::Get_Sub_Folders(char* Sub_folder)
 // *************************************************************************
 // *				Configure (Terry Bernie)							   *
 // *************************************************************************
-bool GD19_Ogre::Configure(void)
+bool SB_Ogre::Configure(void)
 {
 
 	Ogre::RenderSystem* rs = mRoot->getRenderSystemByName("OpenGL Rendering Subsystem");
@@ -307,7 +299,7 @@ bool GD19_Ogre::Configure(void)
 // *************************************************************************
 // *				chooseSceneManager (Terry Bernie)					   *
 // *************************************************************************
-bool GD19_Ogre::chooseSceneManager(void)
+bool SB_Ogre::chooseSceneManager(void)
 {
 	mSceneMgr = mRoot->createSceneManager("DefaultSceneManager"); // Temp
 	//ImGui::ImguiManager::getSingleton().init(scnMgr);
@@ -329,7 +321,7 @@ bool GD19_Ogre::chooseSceneManager(void)
 // *************************************************************************
 // *					createCamera (Terry Bernie)						   *
 // *************************************************************************
-bool GD19_Ogre::createCamera(void)
+bool SB_Ogre::createCamera(void)
 {
 	mCamera = mSceneMgr->createCamera("MainCamera");
 	mCamera->setPosition(Ogre::Vector3(0, 90, 100));
@@ -344,7 +336,7 @@ bool GD19_Ogre::createCamera(void)
 // *************************************************************************
 // *					createViewports (Terry Bernie)					   *
 // *************************************************************************
-bool GD19_Ogre::createViewports(void)
+bool SB_Ogre::createViewports(void)
 {
 	mWindow->removeAllViewports();
 	Ogre::Viewport* vp = mWindow->addViewport(mCamera);
@@ -360,7 +352,7 @@ bool GD19_Ogre::createViewports(void)
 // *************************************************************************
 // *				createFrameListener (Terry Bernie)					   *
 // *************************************************************************
-bool GD19_Ogre::createFrameListener(void)
+bool SB_Ogre::createFrameListener(void)
 {
 	//// Physics Frame Listener
 	OgreListener = new GD19_OgreListener();
@@ -388,7 +380,7 @@ bool GD19_Ogre::createFrameListener(void)
 // *************************************************************************
 // *	  						ExitFullScreen							   *
 // *************************************************************************
-bool GD19_Ogre::ExitFullScreen()
+bool SB_Ogre::ExitFullScreen()
 {
 	//if(Flags[0]->OgreIsRunning==1)
 	{
@@ -412,7 +404,7 @@ bool GD19_Ogre::ExitFullScreen()
 // *************************************************************************
 // *					RenderFrame (Terry Bernie)						   *
 // *************************************************************************
-bool GD19_Ogre::RenderFrame(void)
+bool SB_Ogre::RenderFrame(void)
 {
 	Ogre::Root::getSingletonPtr()->renderOneFrame();
 	return 1;
@@ -421,7 +413,7 @@ bool GD19_Ogre::RenderFrame(void)
 // *************************************************************************
 // *				Get_View_Height_Width (Terry Bernie)				   *
 // *************************************************************************
-bool GD19_Ogre::Get_View_Height_Width(void)
+bool SB_Ogre::Get_View_Height_Width(void)
 {
 	Ogre::Viewport* vp = mWindow->getViewport(0);
 
@@ -434,7 +426,7 @@ bool GD19_Ogre::Get_View_Height_Width(void)
 // *************************************************************************
 // *					GetVersion (Terry Bernie)						   *
 // *************************************************************************
-void GD19_Ogre::GetVersion_OpenGL(char* buff)
+void SB_Ogre::GetVersion_OpenGL(char* buff)
 {
 	int  major = mRoot->getRenderSystem()->getDriverVersion().major;
 	int  minor = mRoot->getRenderSystem()->getDriverVersion().minor;

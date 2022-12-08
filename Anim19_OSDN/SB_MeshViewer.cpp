@@ -199,7 +199,7 @@ bool SB_MeshViewer::StartMeshViewer()
 	
 	DialogBox(App->hInst, (LPCTSTR)IDD_GD_MESHVIEWER, App->Fdlg, (DLGPROC)MeshViewer_Proc);
 
-	App->Cl19_Ogre->OgreListener->MeshViewer_Running = 0;
+	App->SBC_Ogre->OgreListener->MeshViewer_Running = 0;
 
 
 	App->RenderBackGround = 0;
@@ -303,9 +303,9 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			App->SBC_MeshViewer->Enable_TypeButtons(1);
 		}
 
-		App->Cl19_Ogre->OgreListener->MeshViewer_Running = 1;
+		App->SBC_Ogre->OgreListener->MeshViewer_Running = 1;
 
-		App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 0;
+		App->SBC_Ogre->BulletListener->Render_Debug_Flag = 0;
 
 		return TRUE;
 	}
@@ -805,7 +805,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 			GetDlgItemText(hDlg, IDC_OBJECTNAME, (LPTSTR)buff, 256);
 			strcpy(App->SBC_MeshViewer->Object_Name, buff);
 
-			App->Cl19_Ogre->OgreListener->MeshViewer_Running = 0;
+			App->SBC_Ogre->OgreListener->MeshViewer_Running = 0;
 			
 			if (App->SBC_MeshViewer->Phys_Body)
 			{
@@ -837,7 +837,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
 
-			App->Cl19_Ogre->OgreListener->MeshViewer_Running = 0;
+			App->SBC_Ogre->OgreListener->MeshViewer_Running = 0;
 
 			if (App->SBC_MeshViewer->MvEnt && App->SBC_MeshViewer->MvNode)
 			{
@@ -1137,9 +1137,9 @@ bool SB_MeshViewer::Set_OgreWindow(void)
 	options["externalWindowHandle"] =
 		Ogre::StringConverter::toString((size_t)MeshView_3D_hWnd);
 
-	MeshView_Window = App->Cl19_Ogre->mRoot->createRenderWindow("MeshViewWin", 1024, 768, false, &options);
+	MeshView_Window = App->SBC_Ogre->mRoot->createRenderWindow("MeshViewWin", 1024, 768, false, &options);
 
-	mSceneMgrMeshView = App->Cl19_Ogre->mRoot->createSceneManager("DefaultSceneManager", "MeshViewGD");
+	mSceneMgrMeshView = App->SBC_Ogre->mRoot->createSceneManager("DefaultSceneManager", "MeshViewGD");
 
 	mCameraMeshView = mSceneMgrMeshView->createCamera("CameraMV");
 	mCameraMeshView->setPosition(Ogre::Vector3(0, 0, 0));
@@ -1180,7 +1180,7 @@ bool SB_MeshViewer::Set_OgreWindow(void)
 
 	RenderListener = new SB_MeshView_Listener();
 	//mSceneMgrMeshView->addRenderQueueListener(RenderListener);
-	App->Cl19_Ogre->mRoot->addFrameListener(RenderListener);
+	App->SBC_Ogre->mRoot->addFrameListener(RenderListener);
 
 	mCameraMeshView->setPosition(Ogre::Vector3(0, 90, 100));
 	mCameraMeshView->lookAt(Ogre::Vector3(0, 30, 0));
@@ -1208,11 +1208,11 @@ bool SB_MeshViewer::Set_OgreWindow(void)
 // *************************************************************************
 void SB_MeshViewer::Close_OgreWindow(void)
 {
-	App->Cl19_Ogre->mRoot->removeFrameListener(RenderListener);
+	App->SBC_Ogre->mRoot->removeFrameListener(RenderListener);
 
-	App->Cl19_Ogre->mRoot->detachRenderTarget("MeshViewWin");
+	App->SBC_Ogre->mRoot->detachRenderTarget("MeshViewWin");
 	MeshView_Window->destroy();
-	App->Cl19_Ogre->mRoot->destroySceneManager(mSceneMgrMeshView);
+	App->SBC_Ogre->mRoot->destroySceneManager(mSceneMgrMeshView);
 }
 
 // *************************************************************************
@@ -1518,9 +1518,9 @@ void SB_MeshViewer::Set_Debug_Shapes()
 		Count++;
 	}
 
-	App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 0;
-	App->Cl19_Ogre->RenderFrame();
-	App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 1;
+	App->SBC_Ogre->BulletListener->Render_Debug_Flag = 0;
+	App->SBC_Ogre->RenderFrame();
+	App->SBC_Ogre->BulletListener->Render_Debug_Flag = 1;
 }
 
 // *************************************************************************

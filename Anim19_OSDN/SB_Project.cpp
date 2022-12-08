@@ -1461,7 +1461,7 @@ bool SB_Project::Load_Project()
 	}
 
 
-	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
+	App->SBC_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
 	
 	App->SBC_FileView->Change_Level_Name();
 	App->SBC_FileView->Change_Project_Name();

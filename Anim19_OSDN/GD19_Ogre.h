@@ -32,11 +32,11 @@ distribution.
 
 #include <chrono>
 
-class GD19_Ogre
+class SB_Ogre
 {
 public:
-	GD19_Ogre(void);
-	~GD19_Ogre(void);
+	SB_Ogre(void);
+	~SB_Ogre(void);
 
 	bool Ogre_Render_Loop(void);
 

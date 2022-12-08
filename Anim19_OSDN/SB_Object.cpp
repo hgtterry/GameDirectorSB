@@ -255,14 +255,14 @@ Ogre::Vector3 SB_Object::GetPlacement(int Distance)
 	Ogre::Vector3 mDirection;
 
 
-	CamPos = App->Cl19_Ogre->mCamera->getPosition();
-	mYaw = App->Cl19_Ogre->mCamera->getOrientation().getYaw();
+	CamPos = App->SBC_Ogre->mCamera->getPosition();
+	mYaw = App->SBC_Ogre->mCamera->getOrientation().getYaw();
 
-	App->Cl19_Ogre->PlacementCam->setPosition(CamPos);
+	App->SBC_Ogre->PlacementCam->setPosition(CamPos);
 
 	CamRot = Ogre::Quaternion::IDENTITY;
-	App->Cl19_Ogre->PlacementCam->setOrientation(CamRot);
-	App->Cl19_Ogre->PlacementCam->yaw(mYaw);
+	App->SBC_Ogre->PlacementCam->setOrientation(CamRot);
+	App->SBC_Ogre->PlacementCam->yaw(mYaw);
 
 	Ogre::Vector3 TranslateVector = Ogre::Vector3::ZERO;
 
@@ -272,11 +272,11 @@ Ogre::Vector3 SB_Object::GetPlacement(int Distance)
 	
 	TranslateVector.z = Distance; // Distance from Camera/Player
 
-	CamPos = App->Cl19_Ogre->mCamera->getPosition();
+	CamPos = App->SBC_Ogre->mCamera->getPosition();
 
-	App->Cl19_Ogre->PlacementCam->moveRelative(TranslateVector);
+	App->SBC_Ogre->PlacementCam->moveRelative(TranslateVector);
 
-	Placement = App->Cl19_Ogre->PlacementCam->getPosition();
+	Placement = App->SBC_Ogre->PlacementCam->getPosition();
 	Placement.y = CamPos.y - 3; // = Placement.y - (float)13.5 / 2;
 
 	return Placement;

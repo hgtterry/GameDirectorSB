@@ -91,7 +91,7 @@ class GD19_App
 
 public:
 
-	GD19_Ogre*			Cl19_Ogre;
+	SB_Ogre*			SBC_Ogre;
 	GD19_Utilities*		Cl_Utilities;
 	SB_Grid*			SBC_Grid;
 	GD19_Panels*		Cl_Panels;

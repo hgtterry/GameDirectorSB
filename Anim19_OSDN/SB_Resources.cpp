@@ -493,7 +493,7 @@ bool SB_Resources::Show_App_Res()
 {
 	ListView_DeleteAllItems(FX_General_hLV);
 
-	bool Test = Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(App->Cl19_Ogre->App_Resource_Group);
+	bool Test = Ogre::ResourceGroupManager::getSingleton().resourceGroupExists(App->SBC_Ogre->App_Resource_Group);
 
 	if (Test == 1)
 	{
@@ -530,7 +530,7 @@ bool SB_Resources::Show_App_Res()
 		char pPath[MAX_PATH];
 		char chr_Type[255];
 
-		Ogre::ResourceGroupManager::LocationList resLocationsList = Ogre::ResourceGroupManager::getSingleton().getResourceLocationList(App->Cl19_Ogre->App_Resource_Group);
+		Ogre::ResourceGroupManager::LocationList resLocationsList = Ogre::ResourceGroupManager::getSingleton().getResourceLocationList(App->SBC_Ogre->App_Resource_Group);
 		Ogre::ResourceGroupManager::LocationList::iterator it = resLocationsList.begin();
 		Ogre::ResourceGroupManager::LocationList::iterator itEnd = resLocationsList.end();
 
@@ -758,9 +758,9 @@ bool SB_Resources::ShowAllMeshes()
 		strcpy(Origin, st.c_str());
 		//App->Say(st.c_str());
 
-		Ogre::Entity *DummyEnt = App->Cl19_Ogre->mSceneMgr->createEntity("GDTemp1", pMeshName);
+		Ogre::Entity *DummyEnt = App->SBC_Ogre->mSceneMgr->createEntity("GDTemp1", pMeshName);
 		pHasSkel = DummyEnt->hasSkeleton();
-		App->Cl19_Ogre->mSceneMgr->destroyEntity(DummyEnt);
+		App->SBC_Ogre->mSceneMgr->destroyEntity(DummyEnt);
 
 		if (pHasSkel == 1)
 		{
@@ -1061,9 +1061,9 @@ void SB_Resources::Remove_OblectMesh(void)
 	//	{
 	//		App->Cl_Scene_Data->Cl_Object[Count]->OgreNode->detachAllObjects();
 
-	//		App->Cl19_Ogre->mSceneMgr->destroySceneNode(App->Cl_Scene_Data->Cl_Object[Count]->OgreNode);
+	//		App->SBC_Ogre->mSceneMgr->destroySceneNode(App->Cl_Scene_Data->Cl_Object[Count]->OgreNode);
 
-	//		App->Cl19_Ogre->mSceneMgr->destroyEntity(App->Cl_Scene_Data->Cl_Object[Count]->OgreEntity);
+	//		App->SBC_Ogre->mSceneMgr->destroyEntity(App->Cl_Scene_Data->Cl_Object[Count]->OgreEntity);
 
 	//		App->Cl_Scene_Data->Cl_Object[Count]->OgreNode = NULL;
 	//		App->Cl_Scene_Data->Cl_Object[Count]->OgreEntity = NULL;
