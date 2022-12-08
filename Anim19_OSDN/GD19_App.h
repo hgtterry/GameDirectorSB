@@ -120,7 +120,7 @@ public:
 	SB_Physics*				SBC_Physics;
 	SB_FileView*			SBC_FileView;
 	SB_Properties*			SBC_Properties;
-	SB_Camera*				SBC_Camera;
+	SB_Com_Camera*			SBC_Com_Camera;
 	SB_3DT*					SBC_3DT;
 	SB_Resources*			SBC_Resources;		// Resources Class Used by the Level [081221]
 	SB_Scene*				SBC_Scene;			// Collection Class For Level [081221]

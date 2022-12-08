@@ -48,7 +48,7 @@ bool SB_Com_Collectables::Add_New_Collectable()
 	App->SBC_Com_Collectables->Set_Collectables_Defaults(Index);
 
 	Base_Object* Object = App->SBC_Scene->B_Object[Index];
-	Object->This_Object_ID = App->SBC_Scene->UniqueID_Object_Counter; // Unique ID
+	Object->This_Object_UniqueID = App->SBC_Scene->UniqueID_Object_Counter; // Unique ID
 
 	strcpy(Object->Mesh_Name, App->SBC_MeshViewer->Object_Name);
 	strcpy(Object->Mesh_FileName, App->SBC_MeshViewer->Selected_MeshFile);

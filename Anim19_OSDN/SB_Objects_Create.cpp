@@ -148,7 +148,7 @@ void SB_Objects_Create::Add_Objects_From_MeshViewer()
 	App->SBC_Scene->B_Object[Index] = new Base_Object();
 	
 	Base_Object* Object = App->SBC_Scene->B_Object[Index];
-	Object->This_Object_ID = App->SBC_Scene->UniqueID_Object_Counter; // Unique ID
+	Object->This_Object_UniqueID = App->SBC_Scene->UniqueID_Object_Counter; // Unique ID
 
 
 	strcpy(Object->Mesh_Name, App->SBC_MeshViewer->Object_Name);
@@ -779,7 +779,7 @@ bool SB_Objects_Create::Add_New_Sound()
 
 	App->SBC_Scene->B_Object[Index]->Type = Enums::Bullet_Type_Static;
 	App->SBC_Scene->B_Object[Index]->Shape = Enums::Shape_Box;
-	App->SBC_Scene->B_Object[Index]->This_Object_ID = App->SBC_Scene->UniqueID_Object_Counter; // Unique ID
+	App->SBC_Scene->B_Object[Index]->This_Object_UniqueID = App->SBC_Scene->UniqueID_Object_Counter; // Unique ID
 
 	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_FileName, "SoundEntity_GD.mesh");
 
@@ -913,7 +913,7 @@ bool SB_Objects_Create::Add_New_Teleporter()
 
 	App->SBC_Scene->B_Object[Index]->Type = Enums::Bullet_Type_Static;
 	App->SBC_Scene->B_Object[Index]->Shape = Enums::Shape_Box;
-	App->SBC_Scene->B_Object[Index]->This_Object_ID = App->SBC_Scene->UniqueID_Object_Counter; // Unique ID
+	App->SBC_Scene->B_Object[Index]->This_Object_UniqueID = App->SBC_Scene->UniqueID_Object_Counter; // Unique ID
 
 	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_FileName, "TeleportSend.mesh");
 

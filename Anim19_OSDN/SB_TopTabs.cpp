@@ -625,12 +625,8 @@ LRESULT CALLBACK SB_TopTabs::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 				App->SBC_TopTabs->Toggle_FirstCam_Flag = 0;
 				App->SBC_TopTabs->Toggle_FreeCam_Flag = 1;
 
-				//App->SBC_Scene->B_Player[0]->Player_Node->setVisible(true);
-
 				int f = App->SBC_Scene->B_Player[0]->Phys_Body->getCollisionFlags();
 				App->SBC_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f & (~(1 << 5)));
-
-				//body->setCollisionFlags(body->getCollisionFlags() | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
 				App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 0;
 				App->Cl19_Ogre->RenderFrame();
@@ -653,15 +649,12 @@ LRESULT CALLBACK SB_TopTabs::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 					App->SBC_TopTabs->Toggle_Select_Flag = 0;
 					App->SBC_Visuals->mPickSight->hide();
 					App->Cl19_Ogre->OgreListener->GD_Selection_Mode = 0;
-
 				}
 				else
 				{
-
 					App->SBC_TopTabs->Toggle_Select_Flag = 1;
 					App->SBC_Visuals->mPickSight->show();
 					App->Cl19_Ogre->OgreListener->GD_Selection_Mode = 1;
-
 				}
 
 				RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);

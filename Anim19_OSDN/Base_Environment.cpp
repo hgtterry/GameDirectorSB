@@ -43,7 +43,7 @@ void Base_Environment::Set_Environment_Defaults()
 	Altered = 0;
 
 	FileViewItem = nullptr;
-	This_Object_ID = 0;
+	This_Object_UniqueID = 0;
 	strcpy(Name, "Not_Set");
 
 	//----------------------- Sound

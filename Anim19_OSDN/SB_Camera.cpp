@@ -27,7 +27,7 @@ distribution.
 #include "SB_Camera.h"
 
 
-SB_Camera::SB_Camera()
+SB_Com_Camera::SB_Com_Camera()
 {
 	Cam_Props_HWND = nullptr;
 
@@ -45,14 +45,14 @@ SB_Camera::SB_Camera()
 }
 
 
-SB_Camera::~SB_Camera()
+SB_Com_Camera::~SB_Com_Camera()
 {
 }
 
 // *************************************************************************
 // *	  			Start_Camera_PropsPanel Terry Bernie				   *
 // *************************************************************************
-bool SB_Camera::Start_Camera_PropsPanel()
+bool SB_Com_Camera::Start_Camera_PropsPanel()
 {
 	
 	Cam_Props_HWND = CreateDialog(App->hInst,(LPCTSTR)IDD_PROPS_CAMERA,App->SBC_Properties->Properties_Dlg_hWnd,(DLGPROC)Camera_PropsPanel_Proc);
@@ -61,7 +61,7 @@ bool SB_Camera::Start_Camera_PropsPanel()
 // *************************************************************************
 // *		  	Camera_PropsPanel_Proc  Terry Bernie					   *
 // *************************************************************************
-LRESULT CALLBACK SB_Camera::Camera_PropsPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK SB_Com_Camera::Camera_PropsPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 
 	switch (message)
@@ -111,7 +111,7 @@ LRESULT CALLBACK SB_Camera::Camera_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 		{
 			int Index = App->SBC_Properties->Current_Selected_Object;
 
-			App->SBC_Camera->Update_Camera(Index);
+			App->SBC_Com_Camera->Update_Camera(Index);
 
 			App->SBC_Scene->B_Camera[Index]->Altered = 1;
 			App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Camera[Index]->FileViewItem);
@@ -123,7 +123,7 @@ LRESULT CALLBACK SB_Camera::Camera_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == IDC_BTCAMGOTO)
 		{
-			App->SBC_Camera->Set_Camera(App->SBC_Properties->Current_Selected_Object);
+			App->SBC_Com_Camera->Set_Camera(App->SBC_Properties->Current_Selected_Object);
 			return TRUE;
 		}
 		
@@ -136,7 +136,7 @@ LRESULT CALLBACK SB_Camera::Camera_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 // *************************************************************************
 // *					Hide_Cam_Dlg Terry Bernie 						   *
 // *************************************************************************
-void SB_Camera::Hide_Cam_Dlg(bool Show)
+void SB_Com_Camera::Hide_Cam_Dlg(bool Show)
 {
 		ShowWindow(Cam_Props_HWND, Show);
 }
@@ -144,7 +144,7 @@ void SB_Camera::Hide_Cam_Dlg(bool Show)
 // *************************************************************************
 // *	  				Reset_View Terry Bernie							   *
 // *************************************************************************
-void SB_Camera::Reset_View(void)
+void SB_Com_Camera::Reset_View(void)
 {
 
 	App->SBC_Grid->GridNode->setPosition(0, 0, 0);
@@ -173,7 +173,7 @@ void SB_Camera::Reset_View(void)
 // *************************************************************************
 // *	  	Update_Camera_StartUp:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
-void SB_Camera::Update_Camera_StartUp(void)
+void SB_Com_Camera::Update_Camera_StartUp(void)
 {
 	//App->SBC_Scene->SBC_Base_Area[0]->Area_Node->setPosition()
 }
@@ -181,7 +181,7 @@ void SB_Camera::Update_Camera_StartUp(void)
 // *************************************************************************
 // *	  		Set_Camera:- Terry and Hazel Flanigan 2022				   *
 // *************************************************************************
-void SB_Camera::Set_Camera(int Index)
+void SB_Com_Camera::Set_Camera(int Index)
 {
 	App->Cl19_Ogre->mCamera->setPosition(App->SBC_Scene->B_Camera[Index]->CamPos);
 	App->Cl19_Ogre->mCamera->setOrientation(App->SBC_Scene->B_Camera[Index]->Cam_Quat);
@@ -190,7 +190,7 @@ void SB_Camera::Set_Camera(int Index)
 // *************************************************************************
 // *	  		Update_Camera:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
-void SB_Camera::Update_Camera(int Index)
+void SB_Com_Camera::Update_Camera(int Index)
 {
 	App->SBC_Scene->B_Camera[Index]->CamPos = App->Cl19_Ogre->mCamera->getPosition();
 	
@@ -201,7 +201,7 @@ void SB_Camera::Update_Camera(int Index)
 // *************************************************************************
 // *				Zoom   Terry Bernie								   *
 // *************************************************************************
-void SB_Camera::Zoom(void)
+void SB_Com_Camera::Zoom(void)
 {
 	//if (App->CL_Vm_Model->Model_Loaded == 1)
 	//{
@@ -229,7 +229,7 @@ void SB_Camera::Zoom(void)
 // *************************************************************************
 // *	  		Add_New_Camera:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
-void SB_Camera::Add_New_Camera(void)
+void SB_Com_Camera::Add_New_Camera(void)
 {
 	char Camera_Name[MAX_PATH];
 	char Cbuff[MAX_PATH];
@@ -249,4 +249,28 @@ void SB_Camera::Add_New_Camera(void)
 	App->SBC_Scene->B_Camera[Index]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Cameras_Folder,App->SBC_Scene->B_Camera[Index]->Camera_Name, Index,true);
 
 	App->SBC_Scene->Camera_Count++;
+}
+
+// *************************************************************************
+// *	  		Add_New_Camera:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void SB_Com_Camera::Rename_Camera(int Index)
+{
+	strcpy(App->Cl_Dialogs->btext, "Change Camera Name");
+	strcpy(App->Cl_Dialogs->Chr_Text, App->SBC_Scene->B_Camera[Index]->Camera_Name);
+
+	App->Cl_Dialogs->Dialog_Text(1, 1);
+
+	if (App->Cl_Dialogs->Canceled == 1)
+	{
+		return;
+	}
+
+	strcpy(App->SBC_Scene->B_Camera[Index]->Camera_Name, App->Cl_Dialogs->Chr_Text);
+
+	App->SBC_Scene->B_Camera[Index]->Altered = 1;
+	App->SBC_Scene->Scene_Modified = 1;
+	App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Camera[Index]->FileViewItem);
+
+	App->SBC_FileView->Change_Item_Name(App->SBC_Scene->B_Camera[Index]->FileViewItem, App->Cl_Dialogs->Chr_Text);
 }

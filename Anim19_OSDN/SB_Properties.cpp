@@ -53,7 +53,7 @@ SB_Properties::~SB_Properties()
 // *************************************************************************
 void SB_Properties::Reset_Class()
 {
-	App->SBC_Camera->Hide_Cam_Dlg(0);
+	App->SBC_Com_Camera->Hide_Cam_Dlg(0);
 	App->SBC_Player->Hide_Player_Dlg(0);
 	App->SBC_Props_Dialog->Hide_Area_Dlg(0);
 	Clear_Listview();
@@ -384,7 +384,7 @@ bool SB_Properties::Update_ListView_Objects()
 
 	char Num[10];
 	char chr_ID[50];
-	_itoa(App->SBC_Scene->B_Object[index]->This_Object_ID, Num, 10);
+	_itoa(App->SBC_Scene->B_Object[index]->This_Object_UniqueID, Num, 10);
 	strcpy(chr_ID, "Properties ID=");
 	strcat(chr_ID, Num);
 
@@ -578,7 +578,7 @@ bool SB_Properties::Update_ListView_Messages()
 
 	char Num[10];
 	char chr_ID[50];
-	_itoa(App->SBC_Scene->B_Object[index]->This_Object_ID, Num, 10);
+	_itoa(App->SBC_Scene->B_Object[index]->This_Object_UniqueID, Num, 10);
 	strcpy(chr_ID, "Properties ID=");
 	strcat(chr_ID, Num);
 
@@ -646,7 +646,7 @@ bool SB_Properties::Update_ListView_Sounds()
 
 	char Num[10];
 	char chr_ID[50];
-	_itoa(App->SBC_Scene->B_Object[index]->This_Object_ID, Num, 10);
+	_itoa(App->SBC_Scene->B_Object[index]->This_Object_UniqueID, Num, 10);
 	strcpy(chr_ID, "Properties ID=");
 	strcat(chr_ID, Num);
 
@@ -702,7 +702,7 @@ bool SB_Properties::Update_ListView_Environs()
 	char Num[10];
 	char IndexNum[10];
 	char chr_ID[50];
-	_itoa(App->SBC_Scene->B_Object[index]->This_Object_ID, Num, 10);
+	_itoa(App->SBC_Scene->B_Object[index]->This_Object_UniqueID, Num, 10);
 	_itoa(index, IndexNum, 10);
 	strcpy(chr_ID, "Unique ID ");
 	strcat(chr_ID, Num);
@@ -750,7 +750,7 @@ bool SB_Properties::Update_ListView_Teleport()
 
 	char Num[10];
 	char chr_ID[50];
-	_itoa(App->SBC_Scene->B_Object[index]->This_Object_ID, Num, 10);
+	_itoa(App->SBC_Scene->B_Object[index]->This_Object_UniqueID, Num, 10);
 	strcpy(chr_ID, "Properties ID=");
 	strcat(chr_ID, Num);
 
@@ -822,7 +822,7 @@ bool SB_Properties::Update_ListView_Collectables()
 
 	char Num[10];
 	char chr_ID[50];
-	_itoa(App->SBC_Scene->B_Object[index]->This_Object_ID, Num, 10);
+	_itoa(App->SBC_Scene->B_Object[index]->This_Object_UniqueID, Num, 10);
 	strcpy(chr_ID, "Properties ID=");
 	strcat(chr_ID, Num);
 
@@ -975,7 +975,7 @@ bool SB_Properties::Update_ListView_Move_Entities()
 
 	char Num[10];
 	char chr_ID[50];
-	_itoa(App->SBC_Scene->B_Object[index]->This_Object_ID, Num, 10);
+	_itoa(App->SBC_Scene->B_Object[index]->This_Object_UniqueID, Num, 10);
 	strcpy(chr_ID, "Properties ID=");
 	strcat(chr_ID, Num);
 
@@ -2239,7 +2239,7 @@ bool SB_Properties::Update_ListView_Area()
 
 	char Num[10];
 	char chr_ID[50];
-	_itoa(App->SBC_Scene->B_Area[Index]->This_Object_ID, Num, 10);
+	_itoa(App->SBC_Scene->B_Area[Index]->This_Object_UniqueID, Num, 10);
 	strcpy(chr_ID, "Properties ID=");
 	strcat(chr_ID, Num);
 
@@ -2364,25 +2364,7 @@ bool SB_Properties::Edit_Camera_Onclick(LPARAM lParam)
 	result = strcmp(App->SBC_Properties->btext, "Name");
 	if (result == 0)
 	{
-		strcpy(App->Cl_Dialogs->btext, "Change Camera Name");
-		strcpy(App->Cl_Dialogs->Chr_Text, App->SBC_Scene->B_Camera[Index]->Camera_Name);
-
-		App->Cl_Dialogs->Dialog_Text(1, 1);
-
-		if (App->Cl_Dialogs->Canceled == 1)
-		{
-			return TRUE;
-		}
-
-		// Needs Duplicate Name test 
-		strcpy(App->SBC_Scene->B_Camera[Index]->Camera_Name, App->Cl_Dialogs->Chr_Text);
-
-		App->SBC_Scene->B_Camera[Index]->Altered = 1;
-		App->SBC_Scene->Scene_Modified = 1;
-		App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Camera[Index]->FileViewItem);
-
-		App->SBC_FileView->Change_Item_Name(App->SBC_Scene->B_Camera[Index]->FileViewItem, App->Cl_Dialogs->Chr_Text);
-
+		App->SBC_Com_Camera->Rename_Camera(Index);
 		Update_ListView_Camera();
 	}
 
@@ -2459,7 +2441,7 @@ bool SB_Properties::Edit_Camera_Onclick(LPARAM lParam)
 	if (result == 0)
 	{
 		char chr_Value[10];
-		sprintf(chr_Value, "%.3f ", App->SBC_Camera->LookAt_X);
+		sprintf(chr_Value, "%.3f ", App->SBC_Com_Camera->LookAt_X);
 
 		strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
 		strcpy(App->Cl_Dialogs->btext, "Look At X");
@@ -2467,7 +2449,7 @@ bool SB_Properties::Edit_Camera_Onclick(LPARAM lParam)
 		App->Cl_Dialogs->Dialog_Float();
 		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
 
-		App->SBC_Camera->LookAt_X = App->Cl_Dialogs->mFloat;
+		App->SBC_Com_Camera->LookAt_X = App->Cl_Dialogs->mFloat;
 
 		App->SBC_Scene->B_Camera[Index]->Altered = 1;
 		App->SBC_Scene->Scene_Modified = 1;
@@ -2482,7 +2464,7 @@ bool SB_Properties::Edit_Camera_Onclick(LPARAM lParam)
 	if (result == 0)
 	{
 		char chr_Value[10];
-		sprintf(chr_Value, "%.3f ", App->SBC_Camera->LookAt_Y);
+		sprintf(chr_Value, "%.3f ", App->SBC_Com_Camera->LookAt_Y);
 
 		strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
 		strcpy(App->Cl_Dialogs->btext, "Look At Y");
@@ -2490,7 +2472,7 @@ bool SB_Properties::Edit_Camera_Onclick(LPARAM lParam)
 		App->Cl_Dialogs->Dialog_Float();
 		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
 
-		App->SBC_Camera->LookAt_Y = App->Cl_Dialogs->mFloat;
+		App->SBC_Com_Camera->LookAt_Y = App->Cl_Dialogs->mFloat;
 
 		App->SBC_Scene->B_Camera[Index]->Altered = 1;
 		App->SBC_Scene->Scene_Modified = 1;
@@ -2505,7 +2487,7 @@ bool SB_Properties::Edit_Camera_Onclick(LPARAM lParam)
 	if (result == 0)
 	{
 		char chr_Value[10];
-		sprintf(chr_Value, "%.3f ", App->SBC_Camera->LookAt_Z);
+		sprintf(chr_Value, "%.3f ", App->SBC_Com_Camera->LookAt_Z);
 
 		strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
 		strcpy(App->Cl_Dialogs->btext, "Look At Z");
@@ -2513,7 +2495,7 @@ bool SB_Properties::Edit_Camera_Onclick(LPARAM lParam)
 		App->Cl_Dialogs->Dialog_Float();
 		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
 
-		App->SBC_Camera->LookAt_Z = App->Cl_Dialogs->mFloat;
+		App->SBC_Com_Camera->LookAt_Z = App->Cl_Dialogs->mFloat;
 
 		App->SBC_Scene->B_Camera[Index]->Altered = 1;
 		App->SBC_Scene->Scene_Modified = 1;

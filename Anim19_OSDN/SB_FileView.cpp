@@ -666,7 +666,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 		HideRightPanes();
 		ShowWindow(App->GD_Properties_Hwnd, 0);
-		App->SBC_Camera->Hide_Cam_Dlg(1);
+		App->SBC_Com_Camera->Hide_Cam_Dlg(1);
 		
 		App->SBC_Properties->Edit_Category = Enums::Edit_Camera;
 
@@ -979,7 +979,7 @@ void SB_FileView::HideRightPanes(void)
 		//ShowWindow(App->SBC_Properties->Properties_Dlg_hWnd, 0);	
 	}
 
-	App->SBC_Camera->Hide_Cam_Dlg(0);
+	App->SBC_Com_Camera->Hide_Cam_Dlg(0);
 	App->SBC_Player->Hide_Player_Dlg(0);
 	App->SBC_Props_Dialog->Hide_Area_Dlg(0);
 	App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(0);
@@ -1217,7 +1217,7 @@ void SB_FileView::Context_Menu(HWND hDlg)
 		if (!strcmp(App->SBC_FileView->FileView_Folder, "Camera")) // Folder
 		{
 			App->SBC_FileView->hMenu = CreatePopupMenu();
-			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_NEW, L"&New");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_FILE_NEW, L"&New");
 			TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
 			DestroyMenu(App->SBC_FileView->hMenu);
 			Context_Selection = Enums::FileView_Cameras_Folder;
@@ -1227,7 +1227,7 @@ void SB_FileView::Context_Menu(HWND hDlg)
 		{
 			App->SBC_FileView->hMenu = CreatePopupMenu();
 
-			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING , IDM_FILE_RENAME, L"&Rename");
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
 			AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
@@ -1544,7 +1544,7 @@ void SB_FileView::Context_New(HWND hDlg)
 		bool Doit = App->SBC_Dialogs->Canceled;
 		if (Doit == 0)
 		{
-			App->SBC_Camera->Add_New_Camera();
+			App->SBC_Com_Camera->Add_New_Camera();
 		}
 
 		return;
@@ -1684,9 +1684,10 @@ void SB_FileView::Context_Delete(HWND hDlg)
 	// ---------------- Areas
 	if (App->SBC_FileView->Context_Selection == Enums::FileView_Areas_File)
 	{
-		if (App->SBC_Scene->Area_Count == 1)
+
+		if (App->SBC_Scene->B_Area[App->SBC_Properties->Current_Selected_Object]->This_Object_UniqueID == 0)
 		{
-			App->Say("Can not delete there must be at least one Area");
+			App->Say("This Area can not be Deleted");
 		}
 
 		return;
@@ -1697,7 +1698,7 @@ void SB_FileView::Context_Delete(HWND hDlg)
 	{
 		if (App->SBC_Scene->Camera_Count == 1)
 		{
-			App->Say("Can not delete there must be at least one Camera");
+			App->Say("This Camera can not be Deleted");
 		}
 
 		return;
@@ -1708,7 +1709,7 @@ void SB_FileView::Context_Delete(HWND hDlg)
 	{
 		if (App->SBC_Scene->Player_Count == 1)
 		{
-			App->Say("Can not delete there must be at least one Player");
+			App->Say("This Player can not be Deleted");
 		}
 
 		return;
@@ -1827,6 +1828,13 @@ void SB_FileView::Context_Delete(HWND hDlg)
 void SB_FileView::Context_Rename(HWND hDlg)
 {
 	int Index = App->SBC_Properties->Current_Selected_Object;
+
+	if (Context_Selection == Enums::FileView_Cameras_File)
+	{
+		App->SBC_Com_Camera->Rename_Camera(Index);
+		App->SBC_Properties->Update_ListView_Camera();
+		return;
+	}
 
 	if (App->SBC_FileView->Context_Selection == Enums::FileView_Counters_File)
 	{

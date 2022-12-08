@@ -1055,7 +1055,7 @@ bool SB_Build::Build_Areas_Data()
 		fprintf(WriteFile, "%s%s\n", "Area_Path_File=", App->SBC_Scene->B_Area[Count]->Area_Path_And_FileName);
 		fprintf(WriteFile, "%s%s\n", "Area_Resource_Path=", App->SBC_Scene->B_Area[Count]->Area_Resource_Path);
 		fprintf(WriteFile, "%s%s\n", "Material_File=", App->SBC_Scene->B_Area[Count]->Material_File);
-		fprintf(WriteFile, "%s%i\n", "Area_Object_ID=", App->SBC_Scene->B_Area[Count]->This_Object_ID);
+		fprintf(WriteFile, "%s%i\n", "Area_Object_ID=", App->SBC_Scene->B_Area[Count]->This_Object_UniqueID);
 
 		x = App->SBC_Scene->B_Area[Count]->Area_Node->getPosition().x;
 		y = App->SBC_Scene->B_Area[Count]->Area_Node->getPosition().y;
@@ -1200,7 +1200,7 @@ bool SB_Build::Build_Player_Data()
 			strcat(buff, "]");
 			fprintf(WriteFile, "%s\n", buff);
 
-			fprintf(WriteFile, "%s%i\n", "Locatoin_ID=", App->SBC_Scene->B_Locations[Count]->This_Object_ID);
+			fprintf(WriteFile, "%s%i\n", "Locatoin_ID=", App->SBC_Scene->B_Locations[Count]->This_Object_UniqueID);
 			fprintf(WriteFile, "%s%s\n", "Name=", App->SBC_Scene->B_Locations[Count]->Name);
 
 			x = App->SBC_Scene->B_Locations[Count]->Current_Position.x;
@@ -1416,7 +1416,7 @@ bool SB_Build::Build_Objects_Data()
 			fprintf(WriteFile, "%s%s\n", "Mesh_File=", App->SBC_Scene->B_Object[Count]->Mesh_FileName);
 			fprintf(WriteFile, "%s%s\n", "Mesh_Resource_Path=", App->SBC_Scene->B_Object[Count]->Mesh_Resource_Path);
 			fprintf(WriteFile, "%s%s\n", "Material_File=", App->SBC_Scene->B_Object[Count]->Material_File);
-			fprintf(WriteFile, "%s%i\n", "Object_ID=", App->SBC_Scene->B_Object[Count]->This_Object_ID);
+			fprintf(WriteFile, "%s%i\n", "Object_ID=", App->SBC_Scene->B_Object[Count]->This_Object_UniqueID);
 			fprintf(WriteFile, "%s%i\n", "Object_Type=", App->SBC_Scene->B_Object[Count]->Type);
 			fprintf(WriteFile, "%s%i\n", "Object_Shape=", App->SBC_Scene->B_Object[Count]->Shape);
 			fprintf(WriteFile, "%s%i\n", "Object_Usage=", App->SBC_Scene->B_Object[Count]->Usage);

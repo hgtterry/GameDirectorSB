@@ -820,7 +820,7 @@ void VM_ImGui::ImGui_Object_Data(void)
 		ImGui::Text("Type: = %s", App->SBC_LookUps->Chr_Type);
 		ImGui::Text("Shape: = %s", App->SBC_LookUps->Chr_Shape);
 		ImGui::Text("Usage: = %s", App->SBC_LookUps->Chr_Usage);
-		ImGui::Text("Object_ID: = %i", App->SBC_Scene->B_Object[Index]->This_Object_ID);
+		ImGui::Text("Object_ID: = %i", App->SBC_Scene->B_Object[Index]->This_Object_UniqueID);
 
 		ImGui::Spacing();
 		

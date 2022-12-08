@@ -41,7 +41,9 @@ SB_Scene::SB_Scene()
 	UniqueID_Area_Count = 0;
 
 	Object_Count = 0;
+
 	Camera_Count = 0;
+	UniqueID_Camera_Count = 0;
 
 	Counters_Count = 0;
 	UniqueID_Counters_Count = 0;
@@ -190,7 +192,7 @@ bool SB_Scene::Clear_Level()
 
 	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamNone;
 
-	App->SBC_Camera->Reset_View();
+	App->SBC_Com_Camera->Reset_View();
 
 	Delete_Resources_Group();
 	Project_Resources_Created = 0;
@@ -210,8 +212,8 @@ void SB_Scene::Reset_Counters()
 	Object_Count = 0;
 	UniqueID_Object_Counter = 0;
 
-
 	Camera_Count = 0;
+	UniqueID_Camera_Count = 0;
 
 	Counters_Count = 0;
 	UniqueID_Counters_Count = 0;

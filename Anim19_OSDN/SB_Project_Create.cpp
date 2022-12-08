@@ -89,7 +89,7 @@ bool SB_Project_Create::First_Area_Build_Project(bool NoArea)
 	}
 
 	// ------------------------ Add Default Camera
-	App->SBC_Camera->Add_New_Camera();
+	App->SBC_Com_Camera->Add_New_Camera();
 	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Cameras_Folder);
 	App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
 

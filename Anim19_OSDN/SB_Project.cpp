@@ -751,7 +751,7 @@ bool SB_Project::Save_Objects_Data()
 			fprintf(WriteFile, "%s%s\n", "Mesh_File=", App->SBC_Scene->B_Object[Count]->Mesh_FileName);
 			fprintf(WriteFile, "%s%s\n", "Mesh_Resource_Path=", App->SBC_Scene->B_Object[Count]->Mesh_Resource_Path);
 			fprintf(WriteFile, "%s%s\n", "Material_File=", App->SBC_Scene->B_Object[Count]->Material_File);
-			fprintf(WriteFile, "%s%i\n", "Object_ID=", App->SBC_Scene->B_Object[Count]->This_Object_ID);
+			fprintf(WriteFile, "%s%i\n", "Object_ID=", App->SBC_Scene->B_Object[Count]->This_Object_UniqueID);
 			fprintf(WriteFile, "%s%i\n", "Object_Type=", App->SBC_Scene->B_Object[Count]->Type);
 			fprintf(WriteFile, "%s%i\n", "Object_Shape=", App->SBC_Scene->B_Object[Count]->Shape);
 			fprintf(WriteFile, "%s%i\n", "Object_Usage=", App->SBC_Scene->B_Object[Count]->Usage);
@@ -1174,7 +1174,7 @@ bool SB_Project::Save_Aeras_Data()
 		fprintf(WriteFile, "%s%s\n", "Area_Path_File=", App->SBC_Scene->B_Area[Count]->Area_Path_And_FileName);
 		fprintf(WriteFile, "%s%s\n", "Area_Resource_Path=", App->SBC_Scene->B_Area[Count]->Area_Resource_Path);
 		fprintf(WriteFile, "%s%s\n", "Material_File=", App->SBC_Scene->B_Area[Count]->Material_File);
-		fprintf(WriteFile, "%s%i\n", "Area_Object_ID=", App->SBC_Scene->B_Area[Count]->This_Object_ID);
+		fprintf(WriteFile, "%s%i\n", "Area_Object_ID=", App->SBC_Scene->B_Area[Count]->This_Object_UniqueID);
 
 		x = App->SBC_Scene->B_Area[Count]->Area_Node->getPosition().x;
 		y = App->SBC_Scene->B_Area[Count]->Area_Node->getPosition().y;
@@ -1320,7 +1320,7 @@ bool SB_Project::Save_Player_Data()
 			strcat(buff, "]");
 			fprintf(WriteFile, "%s\n", buff);
 
-			fprintf(WriteFile, "%s%i\n", "Locatoin_ID=", App->SBC_Scene->B_Locations[Count]->This_Object_ID);
+			fprintf(WriteFile, "%s%i\n", "Locatoin_ID=", App->SBC_Scene->B_Locations[Count]->This_Object_UniqueID);
 			fprintf(WriteFile, "%s%s\n", "Name=", App->SBC_Scene->B_Locations[Count]->Name);
 
 			x = App->SBC_Scene->B_Locations[Count]->Current_Position.x;
@@ -1442,7 +1442,7 @@ bool SB_Project::Load_Project()
 	{
 		Load_Project_Camera();
 		App->SBC_Scene->Camera_Added = 1;
-		App->SBC_Camera->Set_Camera(0);
+		App->SBC_Com_Camera->Set_Camera(0);
 		App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Cameras_Folder);
 	}
 
@@ -1572,7 +1572,7 @@ bool SB_Project::Load_Project_Objects()
 		App->Cl_Ini->GetString(buff, "Material_File", Object->Material_File, MAX_PATH);
 
 		// Types
-		Object->This_Object_ID = App->Cl_Ini->GetInt(buff, "Object_ID", 0);
+		Object->This_Object_UniqueID = App->Cl_Ini->GetInt(buff, "Object_ID", 0);
 		Object->Type = App->Cl_Ini->GetInt(buff, "Object_Type", 0);
 		Object->Shape = App->Cl_Ini->GetInt(buff, "Object_Shape", 0);
 		Object->Usage = App->Cl_Ini->GetInt(buff, "Object_Usage", 0);
@@ -1989,7 +1989,7 @@ bool SB_Project::Load_Project_Aera()
 
 		App->Cl_Ini->GetString("Area_0", "Material_File", App->SBC_Scene->B_Area[Count]->Material_File, MAX_PATH);
 
-		App->SBC_Scene->B_Area[Count]->This_Object_ID = App->Cl_Ini->GetInt(buff, "Area_Object_ID", 0);
+		App->SBC_Scene->B_Area[Count]->This_Object_UniqueID = App->Cl_Ini->GetInt(buff, "Area_Object_ID", 0);
 
 		strcpy(App->SBC_Scene->B_Area[Count]->Area_Name, Area_Name);
 		App->SBC_Scene->B_Area[Count]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Areas_Folder, Area_Name, Count, false);
@@ -2097,7 +2097,7 @@ bool SB_Project::Load_Project_Player()
 
 
 		Int_Tag = App->Cl_Ini->GetInt(buff, "Locatoin_ID", 0, 10);
-		App->SBC_Scene->B_Locations[Count]->This_Object_ID = Int_Tag;
+		App->SBC_Scene->B_Locations[Count]->This_Object_UniqueID = Int_Tag;
 
 		App->Cl_Ini->GetString(buff, "Name", chr_Tag1, MAX_PATH);
 

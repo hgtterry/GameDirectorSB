@@ -84,7 +84,7 @@ bool SB_Com_Area::Add_New_Area()
 
 		Base_Area* Area = App->SBC_Scene->B_Area[Index];
 		
-		Area->This_Object_ID = App->SBC_Scene->UniqueID_Area_Count;
+		Area->This_Object_UniqueID = App->SBC_Scene->UniqueID_Area_Count;
 
 		Ogre::Vector3 Pos = App->SBC_Object->GetPlacement(-50);
 		Area->Mesh_Pos = Pos;

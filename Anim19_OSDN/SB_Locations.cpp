@@ -502,7 +502,7 @@ void SB_Locations::Create_Location_Entity(char* name)
 
 	App->SBC_Scene->B_Locations[Count]->Deleted = 0;
 
-	App->SBC_Scene->B_Locations[Count]->This_Object_ID = App->SBC_Scene->Locations_ID_Counter;
+	App->SBC_Scene->B_Locations[Count]->This_Object_UniqueID = App->SBC_Scene->Locations_ID_Counter;
 
 	strcpy(App->SBC_Scene->B_Locations[Count]->Name, name);
 	App->SBC_Scene->B_Locations[Count]->Current_Position = App->SBC_Scene->B_Player[0]->Player_Node->getPosition();

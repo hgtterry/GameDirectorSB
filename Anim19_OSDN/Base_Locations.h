@@ -28,7 +28,7 @@ public:
 	Base_Locations();
 	~Base_Locations();
 
-	int This_Object_ID;  // Unique Number
+	int This_Object_UniqueID;  // Unique Number
 
 	bool Deleted; // Internal
 	char Name[255];

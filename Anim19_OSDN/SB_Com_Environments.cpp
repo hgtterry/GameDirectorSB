@@ -50,6 +50,8 @@ void SB_Com_Environments::Rename_Environ(int Index)
 
 	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_Name, App->Cl_Dialogs->Chr_Text);
 
+	App->SBC_FileView->Change_Item_Name(App->SBC_Scene->B_Object[Index]->FileViewItem, App->Cl_Dialogs->Chr_Text);
+
 	Mark_As_Altered_Environ(Index);
 
 }
@@ -71,7 +73,7 @@ bool SB_Com_Environments::Add_New_Environ_Entity(bool FirstOne)
 
 	App->SBC_Scene->B_Object[Index]->Type = Enums::Bullet_Type_Static;
 	App->SBC_Scene->B_Object[Index]->Shape = Enums::Shape_Box;
-	App->SBC_Scene->B_Object[Index]->This_Object_ID = App->SBC_Scene->UniqueID_Object_Counter; // Unique ID
+	App->SBC_Scene->B_Object[Index]->This_Object_UniqueID = App->SBC_Scene->UniqueID_Object_Counter; // Unique ID
 
 	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_FileName, "EnvironmentEntity_GD.mesh");
 

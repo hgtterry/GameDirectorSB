@@ -63,7 +63,7 @@ Base_Area::Base_Area()
 	// Object Shape
 	Shape = -1;
 
-	This_Object_ID = 0; // This Needs Checking
+	This_Object_UniqueID = 0; // This Needs Checking
 
 	strcpy(Area_Name, "Room_1");
 	strcpy(Material_File,"Not_Loaded");

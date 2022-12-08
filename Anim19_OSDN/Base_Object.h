@@ -141,7 +141,7 @@ public:
 	int Shape;
 	int Usage;
 	int Folder;
-	int This_Object_ID;  // Unique Number
+	int This_Object_UniqueID;  // Unique Number
 
 	//------------------------------ Mesh
 	Ogre::Vector3			Mesh_Scale;

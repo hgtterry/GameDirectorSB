@@ -114,7 +114,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	App->SBC_TopTabs->Start_TopBar_Globals();
 
-	App->SBC_Camera->Start_Camera_PropsPanel();
+	App->SBC_Com_Camera->Start_Camera_PropsPanel();
 	App->SBC_Player->Start_Player_PropsPanel();
 	
 	App->SBC_Props_Dialog->Start_Props_Dialogs();
@@ -408,26 +408,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return 1;
 		}
 		
-		// Camera Mode
-		case ID_MODE_WORLD:
-		{
-			App->Cl19_Ogre->OgreListener->CameraMode = 0;
-			return 1;
-		}
-
-		case ID_MODE_MODEL:
-		{
-
-			App->Cl19_Ogre->OgreListener->CameraMode = 1;
-			return 1;
-		}
-
-		case ID_CAMERA_RESET:
-		{
-			App->SBC_Camera->Reset_View();
-			return 1;
-		}
-
 		case ID_TOOLS_TEXTURELIB:
 		{
 			//App->CL_Vm_TextLib->Start_TexturePack();
@@ -529,34 +509,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return 1;
 		}
 
-		// -----------------------------------------------------
-		//------------------------- Menu Camera
-		case ID_CAMERA_FOLLOWOBJECT:
-		{
-			if (App->Cl19_Ogre->OgreListener->FollowPlayer == 1)
-			{
-				App->Cl19_Ogre->OgreListener->FollowPlayer = 0;
-			}
-			else
-			{
-				App->Cl19_Ogre->OgreListener->FollowPlayer = 1;
-			}
-			return 1;
-		}
-
-		case ID_CAMERA_OBJECTPROPERTIES:
-		{
-			/*if (App->Cl_ImGui->Show_Camera_Object == 1)
-			{
-				App->Cl_ImGui->Show_Camera_Object = 0;
-			}
-			else
-			{
-				App->Cl_ImGui->Show_Camera_Object = 1;
-			}*/
-			return 1;
-		}
-		
 		case ID_TEST_VIEWLOG:
 		{
 			if (App->FollowFunctions == 1)
@@ -680,6 +632,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			if (App->SBC_Scene->Player_Added == 1)
 			{
 				App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
+				App->SBC_TopTabs->Toggle_FirstCam_Flag = 0;
+				App->SBC_TopTabs->Toggle_FreeCam_Flag = 1;
+
+				int f = App->SBC_Scene->B_Player[0]->Phys_Body->getCollisionFlags();
+				App->SBC_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f & (~(1 << 5)));
+
+				App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 0;
+				App->Cl19_Ogre->RenderFrame();
+				App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 1;
+
+				RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			}
 			return 1;
 		}
@@ -689,11 +652,47 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			if (App->SBC_Scene->Player_Added == 1)
 			{
 				App->Cl19_Ogre->OgreListener->GD_CameraMode = Enums::CamFirst;
+				App->SBC_TopTabs->Toggle_FirstCam_Flag = 1;
+				App->SBC_TopTabs->Toggle_FreeCam_Flag = 0;
+
+				App->SBC_Scene->B_Player[0]->Player_Node->setVisible(false);
+
+				int f = App->SBC_Scene->B_Player[0]->Phys_Body->getCollisionFlags();
+				App->SBC_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f | (1 << 5));
+
+				App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 0;
+				App->Cl19_Ogre->RenderFrame();
+				App->Cl19_Ogre->BulletListener->Render_Debug_Flag = 1;
+
+				App->Cl19_Ogre->OgreListener->GD_Run_Physics = 1;
+
+				RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			}
-			else
+			return 1;
+		}
+
+		case ID_MODE_SELECTION:
+		{
+			if (App->SBC_Scene->Scene_Loaded == 1)
 			{
-				App->Say("No Player in Scene");
+				if (App->SBC_TopTabs->Toggle_Select_Flag == 1)
+				{
+					App->CL_Vm_ImGui->Show_Object_Selection = 0;
+
+					App->SBC_TopTabs->Toggle_Select_Flag = 0;
+					App->SBC_Visuals->mPickSight->hide();
+					App->Cl19_Ogre->OgreListener->GD_Selection_Mode = 0;
+				}
+				else
+				{
+					App->SBC_TopTabs->Toggle_Select_Flag = 1;
+					App->SBC_Visuals->mPickSight->show();
+					App->Cl19_Ogre->OgreListener->GD_Selection_Mode = 1;
+				}
+
+				RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			}
+
 			return 1;
 		}
 

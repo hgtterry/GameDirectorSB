@@ -106,7 +106,8 @@ bool Base_Object::Init_Object(void)
 
 	FileViewItem = nullptr;
 
-	This_Object_ID = 0; // This Needs Checking
+	This_Object_UniqueID = 0; // This Needs Checking
+
 	Deleted = 0;
 	Altered = 0;
 
@@ -142,7 +143,7 @@ void Base_Object::Set_ImGui_Panel_Name(void)
 	ImGui_Panel_Name[0] = 0;
 
 	char Num[10];
-	_itoa(This_Object_ID, Num, 10);
+	_itoa(This_Object_UniqueID, Num, 10);
 
 	strcpy(ImGui_Panel_Name, "TextMessage_");
 	strcat(ImGui_Panel_Name, Num);

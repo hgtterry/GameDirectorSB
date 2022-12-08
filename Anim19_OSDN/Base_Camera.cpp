@@ -26,6 +26,8 @@ void Base_Camera::Init_Camera(void)
 
 	Altered = 1;
 
+	This_Object_UniqueID = 0;
+
 	Cam_Quat.IDENTITY;
 
 	Camera_Name[0] = 0;

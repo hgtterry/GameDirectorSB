@@ -33,7 +33,7 @@ public:
 	bool Deleted;
 	bool Altered;
 
-	int This_Object_ID;  // Unique Number
+	int This_Object_UniqueID;  // Unique Number
 	char Name[MAX_PATH];				
 	HTREEITEM FileViewItem;
 

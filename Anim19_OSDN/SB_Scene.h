@@ -64,7 +64,8 @@ public:
 	int UniqueID_Area_Count;
 
 	int Camera_Count;		
-		
+	int UniqueID_Camera_Count;
+
 	int Counters_Count;
 	int UniqueID_Counters_Count;
 

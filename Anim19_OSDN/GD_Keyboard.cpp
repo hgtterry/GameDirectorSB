@@ -21,19 +21,6 @@ GD_Keyboard::~GD_Keyboard()
 // *************************************************************************
 void GD_Keyboard::Keyboard_Monitor(float deltaTime)
 {
-	//------------------------------------------------ O Key - Change to Object
-	if (GetAsyncKeyState(79) < 0 && App->Cl19_Ogre->OgreListener->GD_CameraMode == Enums::CamFirst)
-	{
-		
-		App->Cl19_Ogre->OgreListener->FollowPlayer = 0;
-	}
-
-	if (GetAsyncKeyState(80) < 0 && App->Cl19_Ogre->OgreListener->GD_CameraMode == Enums::CamFirst)
-	{
-
-		App->Cl19_Ogre->OgreListener->FollowPlayer = 1; // P Key - Change to Player
-	}
-
 	//------------------------------------------------ Space Key - Jump and Selection
 	if (GetAsyncKeyState(VK_SPACE) < 0 && App->SBC_Scene->Player_Added == 1)
 	{

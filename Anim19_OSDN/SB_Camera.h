@@ -22,15 +22,16 @@ distribution.
 */
 
 #pragma once
-class SB_Camera
+class SB_Com_Camera
 {
 public:
-	SB_Camera();
-	~SB_Camera();
+	SB_Com_Camera();
+	~SB_Com_Camera();
 
 	void Add_New_Camera(void);
 	bool Start_Camera_PropsPanel();
 	void Hide_Cam_Dlg(bool Show);
+	void Rename_Camera(int Index);
 
 	void Reset_View(void);
 	void Zoom(void);

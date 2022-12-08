@@ -14,6 +14,8 @@ public:
 
 	char Camera_Name[MAX_PATH];
 
+	int This_Object_UniqueID;
+
 	bool Altered;
 	HTREEITEM FileViewItem;
 };

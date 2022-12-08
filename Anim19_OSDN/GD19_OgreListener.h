@@ -119,7 +119,6 @@ public:
 	bool Animate_Ogre;
 	bool ShowFPS;
 	bool StopOgre;
-	bool FollowPlayer;
 	int Object_ToFollow;
 
 	MOC::CollisionTools* mCollisionTools;

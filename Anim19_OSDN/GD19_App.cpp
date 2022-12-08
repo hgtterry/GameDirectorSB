@@ -57,7 +57,7 @@ GD19_App::GD19_App(void)
 	SBC_Physics =		nullptr;
 	SBC_FileView =		nullptr;
 	SBC_Properties =	nullptr;
-	SBC_Camera =		nullptr;
+	SBC_Com_Camera =	nullptr;
 	SBC_3DT =			nullptr;
 	SBC_Resources =		nullptr;
 	SBC_Scene =			nullptr;
@@ -223,7 +223,7 @@ bool GD19_App::InitApp(void)
 	SBC_Physics =		new SB_Physics();
 	SBC_FileView =		new SB_FileView();
 	SBC_Properties =	new SB_Properties();
-	SBC_Camera =		new SB_Camera();
+	SBC_Com_Camera =	new SB_Com_Camera();
 	SBC_3DT =			new SB_3DT();
 	SBC_Resources =		new SB_Resources();
 	SBC_Scene =			new SB_Scene();

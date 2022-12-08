@@ -62,7 +62,6 @@ GD19_OgreListener::GD19_OgreListener(void)
 	GD_SpinRate = 1;
 	GD_Selection_Mode = 0;
 
-	FollowPlayer = 1;
 	Object_ToFollow = 1;
 
 	Show_ImGui_Panels = 1;

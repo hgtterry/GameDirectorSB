@@ -10,10 +10,7 @@ public:
 	~SB_Bullet(void);
 
 	bool Init_Bullet();
-	void Start_Physics_Console(void);
 	
-	//GD_Debug M_Debug;
-
 	btDefaultCollisionConfiguration* collisionConfiguration;
 	btCollisionDispatcher* dispatcher;
 	btBroadphaseInterface* overlappingPairCache;
@@ -22,11 +19,9 @@ public:
 	std::vector<btCollisionShape *> collisionShapes;
 
 	bool GD_Physics_On;
-	bool GD_Reset_Player;
 	bool Physics_Dlg_Active;
 
 protected:
-	static LRESULT CALLBACK Physics_Console_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-
+	
 };
 
