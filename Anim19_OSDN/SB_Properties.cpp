@@ -2738,7 +2738,6 @@ void SB_Properties::Reset_Last_Selected_Object(int Index)
 
 	int f = App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionFlags();
 	App->SBC_Scene->B_Object[Index]->Phys_Body->setCollisionFlags(f | (1 << 5)); // Off
-
 	App->SBC_Scene->B_Object[Index]->Physics_Debug_On = 0;
 
 	App->SBC_Ogre->BulletListener->Render_Debug_Flag = 0;

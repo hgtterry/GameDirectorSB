@@ -59,7 +59,14 @@ void SB_Object::Hide_AllObjects_Except(int Index,bool Show)
 		Count++;
 	}
 
-	App->SBC_Scene->B_Object[Index]->Object_Node->setVisible(true);
+	if (App->SBC_Properties->Edit_Category == Enums::Edit_Area)
+	{
+		App->SBC_Scene->B_Area[Index]->Area_Node->setVisible(true);
+	}
+	else
+	{
+		App->SBC_Scene->B_Object[Index]->Object_Node->setVisible(true);
+	}
 }
 
 // *************************************************************************

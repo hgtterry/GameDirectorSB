@@ -33,13 +33,13 @@ public:
 
 	Ogre::Vector3 Get_BoundingBox_World_Centre(int Object_Index);
 	void UpDate_Physics_And_Visuals(int Index);
-
+	void Set_Physics(int Index);
+	void Set_Area_Defaults(int Index);
 	bool Add_New_Area();
 	void Add_Aera_To_Project(int Index, char* FileName, char* Resource_Location);
 
 protected:
 
-	//btBvhTriangleMeshShape* create_Area_Trimesh(Base_Area* Object);
-	btBvhTriangleMeshShape* create_Area_Trimesh_New(int Index, Base_Area* Object);
+	btBvhTriangleMeshShape* Create_Area_Trimesh(int Index, Base_Area* Object);
 };
 

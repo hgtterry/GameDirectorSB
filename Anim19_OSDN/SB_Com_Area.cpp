@@ -80,7 +80,7 @@ bool SB_Com_Area::Add_New_Area()
 		int Index = App->SBC_Scene->Area_Count;
 
 		App->SBC_Scene->B_Area[Index] = new Base_Area();
-		//Set_Environment_Defaults(Index);
+		Set_Area_Defaults(Index);
 
 		Base_Area* Area = App->SBC_Scene->B_Area[Index];
 		
@@ -131,9 +131,10 @@ void SB_Com_Area::Add_Aera_To_Project(int Index, char* FileName, char* Resource_
 
 	Area->Area_Node->setVisible(true);
 	Area->Area_Node->setPosition(Area->Mesh_Pos);
-	Area->Area_Node->setScale(1, 1, 1);
+	Area->Area_Node->setScale(Area->Mesh_Scale);
+	Area->Area_Node->setOrientation(Area->Mesh_Quat);
 
-	create_Area_Trimesh_New(Index, Area);
+	Create_Area_Trimesh(Index, Area);
 
 	Area->Usage = Enums::Usage_Room;
 
@@ -141,9 +142,9 @@ void SB_Com_Area::Add_Aera_To_Project(int Index, char* FileName, char* Resource_
 }
 
 // *************************************************************************
-//			create_Aera_Trimesh_New:- Terry and Hazel Flanigan 2022		   *
+// *		Create_Aera_Trimesh_New:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
-btBvhTriangleMeshShape* SB_Com_Area::create_Area_Trimesh_New(int Index, Base_Area* Object)
+btBvhTriangleMeshShape* SB_Com_Area::Create_Area_Trimesh(int Index, Base_Area* Object)
 {
 	// Get the mesh from the entity
 	Ogre::MeshPtr myMesh = Object->Area_Ent->getMesh();
@@ -288,6 +289,8 @@ btBvhTriangleMeshShape* SB_Com_Area::create_Area_Trimesh_New(int Index, Base_Are
 
 	App->SBC_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
+	Set_Physics(Index);
+
 	Object->Physics_Valid = 1;
 	return mShape;
 }
@@ -313,6 +316,41 @@ Ogre::Vector3 SB_Com_Area::Get_BoundingBox_World_Centre(int Object_Index)
 }
 
 // *************************************************************************
+//				Set_Physics:- Terry and Hazel Flanigan 2022				   *
+// *************************************************************************
+void SB_Com_Area::Set_Physics(int Index)
+{
+	float w = 0;
+	float x = 0;
+	float y = 0;
+	float z = 0;
+
+	// ----------- Position
+	x = App->SBC_Scene->B_Area[Index]->Mesh_Pos.x;
+	y = App->SBC_Scene->B_Area[Index]->Mesh_Pos.y;
+	z = App->SBC_Scene->B_Area[Index]->Mesh_Pos.z;
+
+	App->SBC_Scene->B_Area[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(x, y, z));
+	App->SBC_Scene->B_Area[Index]->Physics_Pos = Ogre::Vector3(x, y, z);
+
+	// ----------- Rotation
+	App->SBC_Scene->B_Area[Index]->Physics_Quat = App->SBC_Scene->B_Area[Index]->Area_Node->getOrientation();
+
+	w = App->SBC_Scene->B_Area[Index]->Physics_Quat.w;
+	x = App->SBC_Scene->B_Area[Index]->Physics_Quat.x;
+	y = App->SBC_Scene->B_Area[Index]->Physics_Quat.y;
+	z = App->SBC_Scene->B_Area[Index]->Physics_Quat.z;
+
+	App->SBC_Scene->B_Area[Index]->Phys_Body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
+
+	// ----------- Scale
+	Ogre::Vector3 Scale = App->SBC_Scene->B_Area[Index]->Area_Node->getScale();
+	App->SBC_Scene->B_Area[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+
+	App->SBC_Scene->B_Area[Index]->Physics_Valid = 1;
+}
+
+// *************************************************************************
 // *	  UpDate_Physics_And_Visuals:- Terry and Hazel Flanigan 2022 	   *
 // *************************************************************************
 void SB_Com_Area::UpDate_Physics_And_Visuals(int Index)
@@ -333,4 +371,55 @@ void SB_Com_Area::UpDate_Physics_And_Visuals(int Index)
 	App->SBC_Scene->B_Area[Index]->Altered = 1;
 	App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Area[Index]->FileViewItem);
 	App->SBC_Scene->Scene_Modified = 1;
+}
+
+
+// *************************************************************************
+// *		Set_Area_Defaults:- Terry and Hazel Flanigan 2022		  	   *
+// *************************************************************************
+void SB_Com_Area::Set_Area_Defaults(int Index)
+{
+	// Actor Scale ------------------------------------------------------
+	App->SBC_Scene->B_Area[Index]->Mesh_Scale.x = 1;
+	App->SBC_Scene->B_Area[Index]->Mesh_Scale.y = 1;
+	App->SBC_Scene->B_Area[Index]->Mesh_Scale.z = 1;
+
+	// Actor Pos
+	App->SBC_Scene->B_Area[Index]->Mesh_Pos.x = 0;
+	App->SBC_Scene->B_Area[Index]->Mesh_Pos.y = 0;
+	App->SBC_Scene->B_Area[Index]->Mesh_Pos.z = 0;
+
+	// Mesh Rotation
+	App->SBC_Scene->B_Area[Index]->Mesh_Rot.x = 0;
+	App->SBC_Scene->B_Area[Index]->Mesh_Rot.y = 0;
+	App->SBC_Scene->B_Area[Index]->Mesh_Rot.z = 0;
+
+	// Mesh Quat
+	App->SBC_Scene->B_Area[Index]->Mesh_Quat.w = 1;
+	App->SBC_Scene->B_Area[Index]->Mesh_Quat.x = 0;
+	App->SBC_Scene->B_Area[Index]->Mesh_Quat.y = 0;
+	App->SBC_Scene->B_Area[Index]->Mesh_Quat.z = 0;
+
+	// Physics Scale ------------------------------------------------------
+	App->SBC_Scene->B_Area[Index]->Physics_Scale.x = 1;
+	App->SBC_Scene->B_Area[Index]->Physics_Scale.y = 1;
+	App->SBC_Scene->B_Area[Index]->Physics_Scale.z = 1;
+
+	// Physics Pos
+	App->SBC_Scene->B_Area[Index]->Physics_Pos.x = 0;
+	App->SBC_Scene->B_Area[Index]->Physics_Pos.y = 0;
+	App->SBC_Scene->B_Area[Index]->Physics_Pos.z = 0;
+
+	// Physics Rotation
+	App->SBC_Scene->B_Area[Index]->Physics_Rot.x = 0;
+	App->SBC_Scene->B_Area[Index]->Physics_Rot.y = 0;
+	App->SBC_Scene->B_Area[Index]->Physics_Rot.z = 0;
+
+	// Physics Quat
+	App->SBC_Scene->B_Area[Index]->Physics_Quat.w = 1;
+	App->SBC_Scene->B_Area[Index]->Physics_Quat.x = 0;
+	App->SBC_Scene->B_Area[Index]->Physics_Quat.y = 0;
+	App->SBC_Scene->B_Area[Index]->Physics_Quat.z = 0;
+	App->SBC_Scene->B_Area[Index]->Physics_Valid = 0;
+	return;
 }

@@ -630,6 +630,22 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_Debug_Proc(HWND hDlg, UINT message, WP
 		{
 			int Index = App->SBC_Properties->Current_Selected_Object;
 
+			// -----------------------  Area
+			if (App->SBC_Properties->Edit_Category == Enums::Edit_Area)
+			{
+				if (App->SBC_Object->Hide_All_Except_Flag == 1)
+				{
+					App->SBC_Object->Hide_All_Except_Flag = 0;
+					App->SBC_Object->Hide_AllObjects_Except(Index, true);
+				}
+				else
+				{
+					App->SBC_Object->Hide_All_Except_Flag = 1;
+					App->SBC_Object->Hide_AllObjects_Except(Index, false);
+				}
+				return 1;
+			}
+
 			if (App->SBC_Object->Hide_All_Except_Flag == 1)
 			{
 				App->SBC_Object->Hide_All_Except_Flag = 0;
@@ -647,6 +663,22 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_Debug_Proc(HWND hDlg, UINT message, WP
 		if (LOWORD(wParam) == IDC_BT_SHOWMESH)
 		{
 			int Index = App->SBC_Properties->Current_Selected_Object;
+
+			// -----------------------  Area
+			if (App->SBC_Properties->Edit_Category == Enums::Edit_Area)
+			{
+				if (App->SBC_Object->Show_Mesh_Debug == 1)
+				{
+					App->SBC_Scene->B_Area[Index]->Area_Node->setVisible(false);
+					App->SBC_Object->Show_Mesh_Debug = 0;
+				}
+				else
+				{
+					App->SBC_Scene->B_Area[Index]->Area_Node->setVisible(true);
+					App->SBC_Object->Show_Mesh_Debug = 1;
+				}
+				return 1;
+			}
 
 			if (App->SBC_Object->Show_Mesh_Debug == 1)
 			{
@@ -668,10 +700,39 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_Debug_Proc(HWND hDlg, UINT message, WP
 
 			int Index = App->SBC_Properties->Current_Selected_Object;
 
-			int f = App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionFlags();
 
+			// -----------------------  Area
+			if (App->SBC_Properties->Edit_Category == Enums::Edit_Area)
+			{
+			
+				int f = App->SBC_Scene->B_Area[Index]->Phys_Body->getCollisionFlags();
+
+				if (App->SBC_Props_Dialog->Show_Area_Physics_Debug == 1)
+				{
+					App->SBC_Props_Dialog->Show_Area_Physics_Debug = 0;
+					App->SBC_Scene->B_Area[Index]->Phys_Body->setCollisionFlags(f | (1 << 5)); // Off
+
+					App->SBC_Ogre->BulletListener->Render_Debug_Flag = 0;
+					App->SBC_Ogre->RenderFrame();
+					App->SBC_Ogre->BulletListener->Render_Debug_Flag = 1;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_PhysicsOff_Bmp);
+				}
+				else
+				{
+					App->SBC_Props_Dialog->Show_Area_Physics_Debug = 1;
+					App->SBC_Scene->B_Area[Index]->Phys_Body->setCollisionFlags(f & (~(1 << 5))); // on
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_PhysicsOn_Bmp);
+				}
+				return 1;
+			}
+
+			// -----------------------  Objects
 			if (App->SBC_Scene->Object_Count > 0)
 			{
+				int f = App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionFlags();
+
 				if (App->SBC_Scene->B_Object[Index]->Physics_Debug_On == 1)
 				{
 					App->SBC_Object->Show_Physics_Debug = 0;
@@ -807,21 +868,34 @@ LRESULT CALLBACK SB_Props_Dialogs::Area_PropsPanel_Proc(HWND hDlg, UINT message,
 		{
 			int Index = App->SBC_Properties->Current_Selected_Object;
 
-			int f = App->SBC_Scene->B_Area[Index]->Phys_Body->getCollisionFlags();
-
 			if (App->SBC_Props_Dialog->Show_Area_Physics_Debug == 1)
 			{
 				App->SBC_Props_Dialog->Show_Area_Physics_Debug = 0;
-				App->SBC_Scene->B_Area[Index]->Phys_Body->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+				App->SBC_Object->Hide_AllObjects_Except(Index, true);
 
-				App->SBC_Ogre->BulletListener->Render_Debug_Flag = 0;
-				App->SBC_Ogre->RenderFrame();
-				App->SBC_Ogre->BulletListener->Render_Debug_Flag = 1;
+				int Count = 0;
+				while (Count < App->SBC_Scene->Area_Count)
+				{
+					int f = App->SBC_Scene->B_Area[Count]->Phys_Body->getCollisionFlags();
+					App->SBC_Scene->B_Area[Index]->Phys_Body->setCollisionFlags(f | (1 << 5)); // Off
+					
+					Count++;
+				}
+
 			}
 			else
 			{
 				App->SBC_Props_Dialog->Show_Area_Physics_Debug = 1;
-				App->SBC_Scene->B_Area[Index]->Phys_Body->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+				App->SBC_Object->Hide_AllObjects_Except(Index, false);
+
+				int Count = 0;
+				while (Count < App->SBC_Scene->Area_Count)
+				{
+					int f = App->SBC_Scene->B_Area[Count]->Phys_Body->getCollisionFlags();
+					App->SBC_Scene->B_Area[Count]->Phys_Body->setCollisionFlags(f & (~(1 << 5))); // on
+
+					Count++;
+				}
 			}
 
 			return 1;
@@ -910,9 +984,21 @@ LRESULT CALLBACK SB_Props_Dialogs::Details_Goto_Proc(HWND hDlg, UINT message, WP
 		{
 			App->SBC_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
 
+			Ogre::Vector3 WS;
+			Ogre::Vector3 Centre;
+
 			int Index = App->SBC_Properties->Current_Selected_Object;
-			Ogre::Vector3 Centre = App->SBC_Scene->B_Object[Index]->Object_Node->getAttachedObject(0)->getBoundingBox().getCenter();
-			Ogre::Vector3 WS = App->SBC_Scene->B_Object[Index]->Object_Node->convertLocalToWorldPosition(Centre);
+			if (App->SBC_Properties->Edit_Category == Enums::Edit_Area)
+			{
+				Centre = App->SBC_Scene->B_Area[Index]->Area_Node->getAttachedObject(0)->getBoundingBox().getCenter();
+				WS = App->SBC_Scene->B_Area[Index]->Area_Node->convertLocalToWorldPosition(Centre);
+			}
+			else
+			{
+				Centre = App->SBC_Scene->B_Object[Index]->Object_Node->getAttachedObject(0)->getBoundingBox().getCenter();
+				WS = App->SBC_Scene->B_Object[Index]->Object_Node->convertLocalToWorldPosition(Centre);
+			}
+
 			App->SBC_Ogre->mCamera->setPosition(WS);
 			return 1;
 		}

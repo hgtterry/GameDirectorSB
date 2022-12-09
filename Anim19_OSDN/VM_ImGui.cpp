@@ -814,32 +814,30 @@ void VM_ImGui::ImGui_Object_Data(void)
 		io.FontDefault = font;
 		ImGui::PopID();*/
 
-		ImGui::Text("Name: = %s", App->SBC_Scene->B_Object[Index]->Mesh_Name);
-		ImGui::Text("Mesh File Name: = %s", App->SBC_Scene->B_Object[Index]->Mesh_FileName);
-		ImGui::Text("Path: = %s", App->SBC_Scene->B_Object[Index]->Mesh_Resource_Path);
-		ImGui::Text("Type: = %s", App->SBC_LookUps->Chr_Type);
-		ImGui::Text("Shape: = %s", App->SBC_LookUps->Chr_Shape);
-		ImGui::Text("Usage: = %s", App->SBC_LookUps->Chr_Usage);
-		ImGui::Text("Object_ID: = %i", App->SBC_Scene->B_Object[Index]->This_Object_UniqueID);
+		if (App->SBC_Properties->Edit_Category == Enums::Edit_Area)
+		{
+			ImGui::Text("Name: = %s", App->SBC_Scene->B_Area[Index]->Area_Name);
+			ImGui::Text("Mesh File Name: = %s", App->SBC_Scene->B_Area[Index]->Area_FileName);
+			ImGui::Text("Path: = %s", App->SBC_Scene->B_Area[Index]->Area_Resource_Path);
+			ImGui::Text("Type: = %s", App->SBC_LookUps->Chr_Type);
+			ImGui::Text("Shape: = %s", App->SBC_LookUps->Chr_Shape);
+			ImGui::Text("Usage: = %s", App->SBC_LookUps->Chr_Usage);
+			ImGui::Text("Object_ID: = %i", App->SBC_Scene->B_Area[Index]->This_Object_UniqueID);
+		}
+		else
+		{
+			ImGui::Text("Name: = %s", App->SBC_Scene->B_Object[Index]->Mesh_Name);
+			ImGui::Text("Mesh File Name: = %s", App->SBC_Scene->B_Object[Index]->Mesh_FileName);
+			ImGui::Text("Path: = %s", App->SBC_Scene->B_Object[Index]->Mesh_Resource_Path);
+			ImGui::Text("Type: = %s", App->SBC_LookUps->Chr_Type);
+			ImGui::Text("Shape: = %s", App->SBC_LookUps->Chr_Shape);
+			ImGui::Text("Usage: = %s", App->SBC_LookUps->Chr_Usage);
+			ImGui::Text("Object_ID: = %i", App->SBC_Scene->B_Object[Index]->This_Object_UniqueID);
+		}
 
 		ImGui::Spacing();
 		
-		/*x = App->SBC_Scene->B_Object[Index]->Mesh_Pos.x;
-		y = App->SBC_Scene->B_Object[Index]->Mesh_Pos.y;
-		z = App->SBC_Scene->B_Object[Index]->Mesh_Pos.z;
-		ImGui::Text("Mesh_Pos: = %f,%f,%f", x, y, z);
 		
-		x = App->SBC_Scene->B_Object[Index]->Mesh_Scale.x;
-		y = App->SBC_Scene->B_Object[Index]->Mesh_Scale.y;
-		z = App->SBC_Scene->B_Object[Index]->Mesh_Scale.z;
-		ImGui::Text("Mesh_Scale: = %f,%f,%f", x, y, z);
-
-		w = App->SBC_Scene->B_Object[Index]->Mesh_Quat.w;
-		x = App->SBC_Scene->B_Object[Index]->Mesh_Quat.x;
-		y = App->SBC_Scene->B_Object[Index]->Mesh_Quat.y;
-		z = App->SBC_Scene->B_Object[Index]->Mesh_Quat.z;
-		ImGui::Text("Mesh_Quat: = %f,%f,%f,%f", w, x, y, z);*/
-
 		// Collectables
 		if (App->SBC_Properties->Edit_Category == Enums::Edit_Collectable)
 		{

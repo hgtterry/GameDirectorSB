@@ -1154,6 +1154,7 @@ bool SB_Project::Save_Aeras_Data()
 	char Cbuff[255];
 	char buff[255];
 
+	float w = 0;
 	float x = 0;
 	float y = 0;
 	float z = 0;
@@ -1176,11 +1177,31 @@ bool SB_Project::Save_Aeras_Data()
 		fprintf(WriteFile, "%s%s\n", "Material_File=", App->SBC_Scene->B_Area[Count]->Material_File);
 		fprintf(WriteFile, "%s%i\n", "Area_Object_ID=", App->SBC_Scene->B_Area[Count]->This_Object_UniqueID);
 
+		// ------------ Position
 		x = App->SBC_Scene->B_Area[Count]->Area_Node->getPosition().x;
 		y = App->SBC_Scene->B_Area[Count]->Area_Node->getPosition().y;
 		z = App->SBC_Scene->B_Area[Count]->Area_Node->getPosition().z;
-
 		fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Pos=", x, y, z);
+
+		// ------------ Scale
+		x = App->SBC_Scene->B_Area[Count]->Mesh_Scale.x;
+		y = App->SBC_Scene->B_Area[Count]->Mesh_Scale.y;
+		z = App->SBC_Scene->B_Area[Count]->Mesh_Scale.z;
+		fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Scale=", x, y, z);
+
+		// ------------ Mesh_Rot
+		x = App->SBC_Scene->B_Area[Count]->Mesh_Rot.x;
+		y = App->SBC_Scene->B_Area[Count]->Mesh_Rot.y;
+		z = App->SBC_Scene->B_Area[Count]->Mesh_Rot.z;
+		fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Rot=", x, y, z);
+
+		// ------------ Mesh_Quat
+		w = App->SBC_Scene->B_Area[Count]->Mesh_Quat.w;
+		x = App->SBC_Scene->B_Area[Count]->Mesh_Quat.x;
+		y = App->SBC_Scene->B_Area[Count]->Mesh_Quat.y;
+		z = App->SBC_Scene->B_Area[Count]->Mesh_Quat.z;
+		fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Mesh_Quat=", w, x, y, z);
+
 
 		fprintf(WriteFile, "%s\n", " ");
 
@@ -1940,6 +1961,8 @@ bool SB_Project::Load_Project_Aera()
 	char Resource_Location[MAX_PATH];
 	int Area_Count = 0;
 	int Int_Tag = 0;
+
+	float w = 0;
 	float x = 0;
 	float y = 0;
 	float z = 0;
@@ -1970,28 +1993,71 @@ bool SB_Project::Load_Project_Aera()
 		strcat(buff, n_buff);
 
 		App->SBC_Scene->B_Area[Count] = new Base_Area();
-	
+		App->SBC_Com_Area->Set_Area_Defaults(Count);
+
 		Base_Area* Area = App->SBC_Scene->B_Area[Count];
 
 		App->Cl_Ini->GetString(buff, "Area_Name", Area_Name, MAX_PATH);
 		App->Cl_Ini->GetString(buff, "Area_File", Mesh_FileName, MAX_PATH);
 		App->Cl_Ini->GetString(buff, "Area_Resource_Path", Resource_Location, MAX_PATH);
 
+		// ------------ Position
 		App->Cl_Ini->GetString(buff, "Mesh_Pos", chr_Tag1, MAX_PATH);
 		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
-	
 		App->SBC_Scene->B_Area[Count]->Mesh_Pos = Ogre::Vector3(x, y, z);
-		
+
+		// ------------ Scale
+		int Test = App->Cl_Ini->GetString(buff, "Mesh_Scale", chr_Tag1, MAX_PATH);
+		if (Test > 0)
+		{
+			sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+			App->SBC_Scene->B_Area[Count]->Mesh_Scale = Ogre::Vector3(x, y, z);
+		}
+		else
+		{
+			App->SBC_Scene->B_Area[Count]->Mesh_Scale = Ogre::Vector3(1, 1, 1);
+		}
+
+		// ------------ Rotation
+		Test = App->Cl_Ini->GetString(buff, "Mesh_Rot", chr_Tag1, MAX_PATH);
+		if (Test > 0)
+		{
+			sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+			App->SBC_Scene->B_Area[Count]->Mesh_Rot = Ogre::Vector3(x, y, z);
+		}
+		else
+		{
+			App->SBC_Scene->B_Area[Count]->Mesh_Rot = Ogre::Vector3(0, 0, 0);
+		}
+
+
+		// ------------ Mesh_Quat
+		Test = App->Cl_Ini->GetString(buff, "Mesh_Quat", chr_Tag1, MAX_PATH);
+		if (Test > 0)
+		{
+			sscanf(chr_Tag1, "%f,%f,%f,%f", &w, &x, &y, &z);
+
+			App->SBC_Scene->B_Area[Count]->Mesh_Quat.w = w;
+			App->SBC_Scene->B_Area[Count]->Mesh_Quat.x = x;
+			App->SBC_Scene->B_Area[Count]->Mesh_Quat.y = y;
+			App->SBC_Scene->B_Area[Count]->Mesh_Quat.z = z;
+		}
+		else
+		{
+			App->SBC_Scene->B_Area[Count]->Mesh_Quat.w = 1;
+			App->SBC_Scene->B_Area[Count]->Mesh_Quat.x = 0;
+			App->SBC_Scene->B_Area[Count]->Mesh_Quat.y = 0;
+			App->SBC_Scene->B_Area[Count]->Mesh_Quat.z = 0;
+		}
+
 		App->SBC_Com_Area->Add_Aera_To_Project(Count, Mesh_FileName, m_Main_Assets_Path);
 		
-		App->SBC_Scene->B_Area[Count]->Phys_Body->getWorldTransform().setOrigin(btVector3(x, y, z));
-		App->SBC_Scene->B_Area[Count]->Physics_Pos = Ogre::Vector3(x, y, z);
-
 		App->Cl_Ini->GetString("Area_0", "Material_File", App->SBC_Scene->B_Area[Count]->Material_File, MAX_PATH);
 
 		App->SBC_Scene->B_Area[Count]->This_Object_UniqueID = App->Cl_Ini->GetInt(buff, "Area_Object_ID", 0);
 
 		strcpy(App->SBC_Scene->B_Area[Count]->Area_Name, Area_Name);
+
 		App->SBC_Scene->B_Area[Count]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Areas_Folder, Area_Name, Count, false);
 
 		Count++;

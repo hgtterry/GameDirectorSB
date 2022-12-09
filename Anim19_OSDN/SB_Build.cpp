@@ -1035,6 +1035,7 @@ bool SB_Build::Build_Areas_Data()
 	char Cbuff[255];
 	char buff[255];
 
+	float w = 0;
 	float x = 0;
 	float y = 0;
 	float z = 0;
@@ -1057,11 +1058,31 @@ bool SB_Build::Build_Areas_Data()
 		fprintf(WriteFile, "%s%s\n", "Material_File=", App->SBC_Scene->B_Area[Count]->Material_File);
 		fprintf(WriteFile, "%s%i\n", "Area_Object_ID=", App->SBC_Scene->B_Area[Count]->This_Object_UniqueID);
 
+		// ------------ Position
 		x = App->SBC_Scene->B_Area[Count]->Area_Node->getPosition().x;
 		y = App->SBC_Scene->B_Area[Count]->Area_Node->getPosition().y;
 		z = App->SBC_Scene->B_Area[Count]->Area_Node->getPosition().z;
-
 		fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Pos=", x, y, z);
+
+		// ------------ Scale
+		x = App->SBC_Scene->B_Area[Count]->Mesh_Scale.x;
+		y = App->SBC_Scene->B_Area[Count]->Mesh_Scale.y;
+		z = App->SBC_Scene->B_Area[Count]->Mesh_Scale.z;
+		fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Scale=", x, y, z);
+
+		// ------------ Mesh_Rot
+		x = App->SBC_Scene->B_Area[Count]->Mesh_Rot.x;
+		y = App->SBC_Scene->B_Area[Count]->Mesh_Rot.y;
+		z = App->SBC_Scene->B_Area[Count]->Mesh_Rot.z;
+		fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Rot=", x, y, z);
+
+		// ------------ Mesh_Quat
+		w = App->SBC_Scene->B_Area[Count]->Mesh_Quat.w;
+		x = App->SBC_Scene->B_Area[Count]->Mesh_Quat.x;
+		y = App->SBC_Scene->B_Area[Count]->Mesh_Quat.y;
+		z = App->SBC_Scene->B_Area[Count]->Mesh_Quat.z;
+		fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Mesh_Quat=", w, x, y, z);
+
 
 		fprintf(WriteFile, "%s\n", " ");
 		Count++;

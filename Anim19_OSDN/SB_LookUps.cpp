@@ -58,7 +58,18 @@ bool SB_LookUps::Update_Types()
 // *************************************************************************
 bool SB_LookUps::Get_Type(int Index)
 {
-	int Type = App->SBC_Scene->B_Object[Index]->Type;
+	int Type = 0;
+
+	if (App->SBC_Properties->Edit_Category == Enums::Edit_Area)
+	{
+		Type = App->SBC_Scene->B_Area[Index]->Type;
+	}
+	else
+	{
+		Type = App->SBC_Scene->B_Object[Index]->Type;
+	}
+
+	
 
 	switch (Type)
 	{
@@ -87,7 +98,17 @@ bool SB_LookUps::Get_Type(int Index)
 // *************************************************************************
 bool SB_LookUps::Get_Shape(int Index)
 {
-	int Shape = App->SBC_Scene->B_Object[Index]->Shape;
+	int Shape = 0;
+
+	if (App->SBC_Properties->Edit_Category == Enums::Edit_Area)
+	{
+		Shape = App->SBC_Scene->B_Area[Index]->Shape;
+	}
+	else
+	{
+		Shape = App->SBC_Scene->B_Object[Index]->Shape;
+	}
+
 
 	switch (Shape)
 	{
@@ -109,6 +130,12 @@ bool SB_LookUps::Get_Shape(int Index)
 		return 1;
 	}
 
+	case Enums::Shape_TriMesh:
+	{
+		strcpy(Chr_Shape, "Triangle Mesh");
+		return 1;
+	}
+
 	break;
 
 	}
@@ -122,7 +149,16 @@ bool SB_LookUps::Get_Shape(int Index)
 // *************************************************************************
 bool SB_LookUps::Get_Usage(int Index)
 {
-	int Usage = App->SBC_Scene->B_Object[Index]->Usage;
+	int Usage = 0;
+
+	if (App->SBC_Properties->Edit_Category == Enums::Edit_Area)
+	{
+		Usage = App->SBC_Scene->B_Area[Index]->Usage;
+	}
+	else
+	{
+		Usage = App->SBC_Scene->B_Object[Index]->Usage;
+	}
 
 	switch (Usage)
 	{

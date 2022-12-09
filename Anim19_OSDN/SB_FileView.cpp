@@ -563,21 +563,23 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 	if (!strcmp(FileView_File, "Area"))
 	{
 		App->SBC_FileView->Context_Selection = Enums::FileView_Areas_File;
+		App->SBC_Properties->Edit_Category = Enums::Edit_Area;
+		App->SBC_Properties->Current_Selected_Object = Index;
 
 		HideRightPanes();
 		ShowWindow(App->GD_Properties_Hwnd, 1);
+
 		App->SBC_Props_Dialog->Hide_Area_Dlg(1);
-
+		App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
 		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1,1);
-
-		App->SBC_Properties->Edit_Category = Enums::Edit_Area;
+		App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
 
 		//----------------------------------------------------------------------------
-		App->SBC_Properties->Current_Selected_Object = Index;
-		App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
-		App->SBC_Properties->Last_Selected_Object = Index;
+		//App->SBC_Properties->Current_Selected_Object = Index;
+		//App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
+		//App->SBC_Properties->Last_Selected_Object = Index;
 		//----------------------------------------------------------------------------
-
+		
 		App->SBC_Properties->Update_ListView_Area();
 
 		return;
@@ -596,10 +598,9 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 		HideRightPanes();
 		ShowWindow(App->SBC_Properties->Properties_Dlg_hWnd, 1);
+
 		App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
-
 		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->B_Object[Index]->Dimensions_Locked);
-
 		App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
 
 		App->SBC_Properties->Edit_Category = Enums::FV_Edit_Object;
