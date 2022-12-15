@@ -86,5 +86,9 @@ public:
 
 	OgreImGui  m_imgui;
 
+	Ogre::Timer FPStimer;
+
+	double PCFreq;
+	_int64 CounterStart;
 };
 

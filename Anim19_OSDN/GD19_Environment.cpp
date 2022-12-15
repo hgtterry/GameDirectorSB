@@ -1,3 +1,26 @@
+/*
+Copyright (c) 2022 GameDirectorSB and EquityME -- HGTInflanite Software W.T.Flanigan H.C.Flanigan
+
+This software is provided 'as-is', without any express or implied
+warranty. In no event will the authors be held liable for any damages
+arising from the use of this software.
+
+Permission is granted to anyone to use this software for any purpose,
+including commercial applications, and to alter it and redistribute it
+freely, subject to the following restrictions:
+
+1. The origin of this software must not be misrepresented; you must not
+claim that you wrote the original software. If you use this software
+in a product, an acknowledgment in the product documentation would be
+appreciated but is not required.
+
+2. Altered source versions must be plainly marked as such, and must not be
+misrepresented as being the original software.
+
+3. This notice may not be removed or altered from any source
+distribution.
+*/
+
 #include "StdAfx.h"
 #include "GD19_App.h"
 #include "resource.h"
@@ -35,7 +58,7 @@ GD19_Environment::~GD19_Environment(void)
 }
 
 // *************************************************************************
-// *				Start_Environment  Terry Bernie						   *
+// *		Start_Environment:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 void GD19_Environment::Start_Environment(void)
 {
@@ -47,7 +70,7 @@ void GD19_Environment::Start_Environment(void)
 	Environment_hWnd = CreateDialog(App->hInst,(LPCTSTR)IDD_ENVIRONMENT,App->Fdlg,(DLGPROC)Environment_Proc);
 }
 // *************************************************************************
-// *        		Level_Front_Proc Terry Bernie						   *
+// *            Level_Front_Proc:- Terry and Hazel Flanigan 202			   *
 // *************************************************************************
 LRESULT CALLBACK GD19_Environment::Environment_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -105,35 +128,7 @@ LRESULT CALLBACK GD19_Environment::Environment_Proc(HWND hDlg, UINT message, WPA
 				SetBkMode((HDC) wParam, TRANSPARENT);
 				return (UINT) App->AppBackground;
 			}
-			/*if(GetDlgItem(hDlg,IDC_STSCENETYPE) == (HWND)lParam)
-			{	
-				SetBkColor((HDC) wParam, RGB(0, 255, 0));	
-				SetTextColor((HDC) wParam, RGB(0,0,255));
-				SetBkMode((HDC) wParam, TRANSPARENT);
-				return (UINT) App->AppBackground;
-			}
-			if(GetDlgItem(hDlg,IDC_STSCENENAME) == (HWND)lParam)
-			{	
-				SetBkColor((HDC) wParam, RGB(0, 255, 0));	
-				SetTextColor((HDC) wParam, RGB(0,0,255));
-				SetBkMode((HDC) wParam, TRANSPARENT);
-				return (UINT) App->AppBackground;
-			}
-			if(GetDlgItem(hDlg,IDC_SCENESELECTION) == (HWND)lParam)
-			{	
-				SetBkColor((HDC) wParam, RGB(0, 255, 0));	
-				SetTextColor((HDC) wParam, RGB(0,0,0));
-				SetBkMode((HDC) wParam, TRANSPARENT);
-				return (UINT) App->AppBackground;
-			}
-			if(GetDlgItem(hDlg,IDC_STTEST) == (HWND)lParam)
-			{	
-				SetBkColor((HDC) wParam, RGB(0, 255, 0));	
-				SetTextColor((HDC) wParam, RGB(0,0,0));
-				SetBkMode((HDC) wParam, TRANSPARENT);
-				return (UINT) App->AppBackground;
-			}*/
-
+			
 			return FALSE;
 		}
 
@@ -213,7 +208,7 @@ LRESULT CALLBACK GD19_Environment::Environment_Proc(HWND hDlg, UINT message, WPA
 }
 
 // *************************************************************************
-// *				  	ListView_Selection Terry Bernie				  	   *
+// *			ListView_Selection:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
 void GD19_Environment::ListView_Selection(LPNMHDR lParam)
 {
@@ -281,7 +276,7 @@ void GD19_Environment::ListView_Selection(LPNMHDR lParam)
 }
 
 // *************************************************************************
-// *				Update_CreateSkyListView Terry Bernie			 	   *
+// *    	Update_CreateSkyListView:- Terry and Hazel Flanigan 2022	   *
 // *************************************************************************
 void GD19_Environment::Update_CreateSkyListView(void)
 {
@@ -336,7 +331,7 @@ void GD19_Environment::Update_CreateSkyListView(void)
 	}
 }
 // *************************************************************************
-// *				Update_CreateFogListView Terry Bernie			 	   *
+// *	Update_CreateFogListView:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
 void GD19_Environment::Update_CreateFogListView(void)
 {
@@ -404,7 +399,7 @@ void GD19_Environment::Update_CreateFogListView(void)
 	}
 }
 // *************************************************************************
-// *			Update_CreateMainLightListView Terry Bernie 		 	   *
+// *	Update_CreateMainLightListView:- Terry and Hazel Flanigan 2022 	   *
 // *************************************************************************
 void GD19_Environment::Update_CreateMainLightListView(void)
 {
@@ -421,21 +416,7 @@ void GD19_Environment::Update_CreateMainLightListView(void)
 	char Chr_Ambient[100];
 	sprintf(Chr_Ambient,"%.2f %.2f %.2f",mRed,mGreen,mBlue);
 
-	mRed = App->SBC_Scene->B_Object[Index]->S_Environ[0]->DiffuseColour.x;
-	mGreen = App->SBC_Scene->B_Object[Index]->S_Environ[0]->DiffuseColour.y;
-	mBlue = App->SBC_Scene->B_Object[Index]->S_Environ[0]->DiffuseColour.z;
-	
-	char Chr_Diffuse[100];
-	sprintf(Chr_Diffuse,"%.2f %.2f %.2f",mRed,mGreen,mBlue);
-
-	mRed = App->SBC_Scene->B_Object[Index]->S_Environ[0]->SpecularColour.x;
-	mGreen = App->SBC_Scene->B_Object[Index]->S_Environ[0]->SpecularColour.y;
-	mBlue = App->SBC_Scene->B_Object[Index]->S_Environ[0]->SpecularColour.z;
-	
-	char Chr_Specular[100];
-	sprintf(Chr_Specular,"%.2f %.2f %.2f",mRed,mGreen,mBlue);
-
-	const int NUM_ITEMS = 4;
+	const int NUM_ITEMS = 1;
 	const int NUM_COLS = 2;
 	std::string grid[NUM_COLS][NUM_ITEMS]; // string table
 	LV_ITEM pitem;
@@ -443,12 +424,6 @@ void GD19_Environment::Update_CreateMainLightListView(void)
 	pitem.mask = LVIF_TEXT;
 
 	grid[0][0] = "Ambient",		grid[1][0] =Chr_Ambient;
-	grid[0][1] = "Diffuse",		grid[1][1] =Chr_Diffuse;
-	grid[0][2] = "Specular",	grid[1][2] =Chr_Specular;
-	grid[0][3] = " ",			grid[1][3] = " ";
-	//grid[0][4] = "PosX",		grid[1][4] = " ";
-	//grid[0][5] = "PosY",		grid[1][5] = " ";
-	//grid[0][6] = "Posz",		grid[1][6] = " ";
 	
 	ListView_DeleteAllItems(General_hLV);
 
@@ -467,7 +442,7 @@ void GD19_Environment::Update_CreateMainLightListView(void)
 }
 
 // *************************************************************************
-// *				Update_CreateSoundListView Terry Bernie			 	   *
+// *	Update_CreateSoundListView:- Terry and Hazel Flanigan 2022	 	   *
 // *************************************************************************
 void GD19_Environment::Update_CreateSoundListView(void)
 {
@@ -528,14 +503,15 @@ void GD19_Environment::Update_CreateSoundListView(void)
 }
 
 // *************************************************************************
-// *				Create_GeneralListBackDrop Terry Bernie				   *
+// *	Create_GeneralListBackDrop:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
 void GD19_Environment::Create_GeneralListBackDrop(HWND hDlg)
 {
 	 BackDrop_hWnd = CreateDialog(App->hInst,(LPCTSTR)IDD_ENVIRONMENTBACKDROP,hDlg,(DLGPROC)BackDrop_Proc);
 }
+
 // *************************************************************************
-// *						BackDrop_Proc  (Terry Bernie)				   *
+// *			BackDrop_Proc:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 LRESULT CALLBACK GD19_Environment::BackDrop_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -593,7 +569,7 @@ LRESULT CALLBACK GD19_Environment::BackDrop_Proc(HWND hDlg, UINT message, WPARAM
 }
 
 // *************************************************************************
-// *					Create_GeneralList Terry Bernie					   *
+// *		Create_GeneralList:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 void GD19_Environment::Create_GeneralList(HWND hDlg)
 {
@@ -634,49 +610,20 @@ void GD19_Environment::Create_GeneralList(HWND hDlg)
 }
 
 // *************************************************************************
-// *	  				GetListControls Terry Bernie					   *
+// *	  	GetListControls:- Terry and Hazel Flanigan 2022				   *
 // *************************************************************************
 void GD19_Environment::GetListControls(void)
 {
 	mTreeCon = GetDlgItem(OptionsDlgHwnd,IDC_OPTIOINSTREE);
 	mPropsCon = General_hLV;
 }
+
 // *************************************************************************
-// *					Init_FileView Terry Bernie	                   	   *
+// *			Init_FileView:- Terry and Hazel Flanigan 2022	       	   *
 // *************************************************************************
 void GD19_Environment::Init_FileView(void)
 {
 	mImageList=ImageList_Create(32,32, ILC_COLOR24,2,0);
-	//hBitMap=LoadBitmap(App->hInst,MAKEINTRESOURCE(IDB_SELECTON));
-	//ImageList_Add(mImageList,hBitMap,NULL);
-	//DeleteObject(hBitMap);
-	//
-	//// Speeds
-	//hBitMap=LoadBitmap(App->hInst,MAKEINTRESOURCE(IDB_SPEEDOFF));
-	//ImageList_Add(mImageList,hBitMap,NULL);
-	//DeleteObject(hBitMap);
-	//			 
-	//hBitMap=LoadBitmap(App->hInst,MAKEINTRESOURCE(IDB_SPEEDON));
-	//ImageList_Add(mImageList,hBitMap,NULL);
-	//DeleteObject(hBitMap);
-
-	//// Debug
-	//hBitMap=LoadBitmap(App->hInst,MAKEINTRESOURCE(IDB_DEBUGOFF));
-	//ImageList_Add(mImageList,hBitMap,NULL);
-	//DeleteObject(hBitMap);
-	//			 
-	//hBitMap=LoadBitmap(App->hInst,MAKEINTRESOURCE(IDB_DEBUGON));
-	//ImageList_Add(mImageList,hBitMap,NULL);
-	//DeleteObject(hBitMap);
-
-	//// Keys
-	//hBitMap=LoadBitmap(App->hInst,MAKEINTRESOURCE(IDB_KEYBOARDOFF));
-	//ImageList_Add(mImageList,hBitMap,NULL);
-	//DeleteObject(hBitMap);
-	//			 
-	//hBitMap=LoadBitmap(App->hInst,MAKEINTRESOURCE(IDB_KEYBOARDON));
-	//ImageList_Add(mImageList,hBitMap,NULL);
-	//DeleteObject(hBitMap);
 
 	// StartUp
 	hBitMap=LoadBitmap(App->hInst,MAKEINTRESOURCE(IDB_STARTUPOFF));
@@ -689,7 +636,7 @@ void GD19_Environment::Init_FileView(void)
 }
 
 // *************************************************************************
-// *						AddOptions Terry Bernie					 	   *
+// *			AddOptions:- Terry and Hazel Flanigan 2022			 	   *
 // *************************************************************************
 void GD19_Environment::AddOptions(void)
 {
@@ -742,7 +689,7 @@ void GD19_Environment::AddOptions(void)
 }
 
 // *************************************************************************
-// *						On_Click_Props Terry Bernie			 		   *
+// *			On_Click_Props:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 bool GD19_Environment::On_Click_Props(LPARAM lParam)
 {
@@ -756,7 +703,7 @@ bool GD19_Environment::On_Click_Props(LPARAM lParam)
 	SelectionIndex = Selection->iItem;
 	ListView_GetItemText(General_hLV,SelectionIndex, 0, btext, 255);
 
-	// Fog
+	// ----------------------------------------------------------- Fog
 	result = strcmp(btext, "Visible");
 	if (result == 0 && SelectedProperties == 1)
 	{
@@ -764,6 +711,7 @@ bool GD19_Environment::On_Click_Props(LPARAM lParam)
 
 		App->Cl_Dialogs->TrueFlase = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_On;
 
+		strcpy(App->Cl_Dialogs->btext, "Set Fog On/Off");
 		App->Cl_Dialogs->Dialog_TrueFlase(App->MainHwnd);
 
 		if (App->Cl_Dialogs->Canceled == 0)
@@ -780,6 +728,8 @@ bool GD19_Environment::On_Click_Props(LPARAM lParam)
 			}
 
 			Update_CreateFogListView();
+
+			App->SBC_Com_Environments->Mark_As_Altered_Environ(Index);
 		}
 		return 1;
 	}
@@ -800,7 +750,7 @@ bool GD19_Environment::On_Click_Props(LPARAM lParam)
 				EnableFog(true);
 			}
 			Update_CreateFogListView();
-		//	Flags[0]->RenderBackGround = 1;
+			App->SBC_Com_Environments->Mark_As_Altered_Environ(Index);
 		}
 		return 1;
 	}
@@ -822,7 +772,7 @@ bool GD19_Environment::On_Click_Props(LPARAM lParam)
 				EnableFog(true);
 			}
 			Update_CreateFogListView();
-		//	Flags[0]->RenderBackGround = 1;
+			App->SBC_Com_Environments->Mark_As_Altered_Environ(Index);
 		}
 		return 1;
 	}
@@ -845,7 +795,7 @@ bool GD19_Environment::On_Click_Props(LPARAM lParam)
 				EnableFog(true);
 			}
 			Update_CreateFogListView();
-		//	Flags[0]->RenderBackGround = 1;
+			App->SBC_Com_Environments->Mark_As_Altered_Environ(Index);
 		}
 		return 1;
 	}
@@ -873,7 +823,7 @@ bool GD19_Environment::On_Click_Props(LPARAM lParam)
 			}
 
 			Update_CreateFogListView();
-			//Flags[0]->RenderBackGround = 1;
+			App->SBC_Com_Environments->Mark_As_Altered_Environ(Index);
 		}
 		return 1;
 	}
@@ -887,7 +837,7 @@ bool GD19_Environment::On_Click_Props(LPARAM lParam)
 	//	return 1;
 	//}
 
-	// Main Light
+	// ----------------------------------------------------------- Main Light
 	result = strcmp(btext, "Ambient");
 	if (result == 0)
 	{
@@ -906,55 +856,9 @@ bool GD19_Environment::On_Click_Props(LPARAM lParam)
 			Update_CreateMainLightListView();
 
 			App->SBC_Ogre->mSceneMgr->setAmbientLight(ColourValue((float)Red/256,(float)Green/256,(float)Blue/256));
-
+			App->SBC_Com_Environments->Mark_As_Altered_Environ(Index);
 		}
 		return 1;
-	}
-
-	result = strcmp(btext, "Diffuse");
-	if (result == 0)
-	{
-
-	//	strcpy_s(TextInt,App->GDCL_Scene_Data->S_Scene[0]->Fog[0].Mode);
-		App->SBC_FileIO->GetColor();
-
-		if (App->SBC_FileIO->Cannceled==0)
-		{
-			int Red=GetRValue(App->SBC_FileIO->color.rgbResult);
-			int Green=GetGValue(App->SBC_FileIO->color.rgbResult);
-			int Blue=GetBValue(App->SBC_FileIO->color.rgbResult);
-
-			App->SBC_Scene->B_Object[Index]->S_Environ[0]->DiffuseColour = Ogre::Vector3((float)Red/256,(float)Green/256,(float)Blue/256);
-
-			Update_CreateMainLightListView();
-
-			//App->Cl_Ogre->mSceneMgr->setDiffuseColour(ColourValue(rRed,rGreen,rBlue));
-
-		}
-       return 1;
-	}
-
-	result = strcmp(btext, "Specular");
-	if (result == 0)
-	{
-
-	//	strcpy_s(TextInt,App->GDCL_Scene_Data->S_Scene[0]->Fog[0].Mode);
-		App->SBC_FileIO->GetColor();
-
-		if (App->SBC_FileIO->Cannceled==0)
-		{
-			int Red=GetRValue(App->SBC_FileIO->color.rgbResult);
-			int Green=GetGValue(App->SBC_FileIO->color.rgbResult);
-			int Blue=GetBValue(App->SBC_FileIO->color.rgbResult);
-
-			App->SBC_Scene->B_Object[Index]->S_Environ[0]->SpecularColour = Ogre::Vector3((float)Red/256,(float)Green/256,(float)Blue/256);
-
-			Update_CreateMainLightListView();
-
-			//App->Cl_Ogre->l->setSpecularColour(ColourValue(rRed,rGreen,rBlue));
-
-		}
-      return 1;
 	}
 
 	// ----------------------------------------------------------- Sound
@@ -994,6 +898,7 @@ bool GD19_Environment::On_Click_Props(LPARAM lParam)
 
 		App->Cl_Dialogs->TrueFlase = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Play;
 
+		strcpy(App->Cl_Dialogs->btext, "BackGround Music On/Off");
 		App->Cl_Dialogs->Dialog_TrueFlase(App->MainHwnd);
 
 		if (App->Cl_Dialogs->Canceled == 0)
@@ -1101,6 +1006,7 @@ bool GD19_Environment::On_Click_Props(LPARAM lParam)
 
 		App->Cl_Dialogs->TrueFlase = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Enabled;
 		
+		strcpy(App->Cl_Dialogs->btext, "Set Fog On/Off");
 		App->Cl_Dialogs->Dialog_TrueFlase(App->MainHwnd);
 
 		if (App->Cl_Dialogs->Canceled == 0)
@@ -1193,7 +1099,7 @@ bool GD19_Environment::On_Click_Props(LPARAM lParam)
 }
 
 // *************************************************************************
-// *	  					SetSky Terry Bernie							   *
+// *	  		SetSky:- Terry and Hazel Flanigan 2022					   *
 // *************************************************************************
 void GD19_Environment::SetSky(bool Enable)
 {
@@ -1207,7 +1113,7 @@ void GD19_Environment::SetSky(bool Enable)
 }
 
 // *************************************************************************
-// *	  				  EnableFog	Terry Bernie						   *
+// *	  		EnableFog:- Terry and Hazel Flanigan 2022				   *
 // *************************************************************************
 bool GD19_Environment::EnableFog(bool SetFog)
 {

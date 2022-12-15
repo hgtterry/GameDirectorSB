@@ -155,6 +155,7 @@ void SB_Player::Initialize()
 	pBase->Phys_Shape = new btCapsuleShape(btScalar(pBase->Capsule_Radius), btScalar(pBase->Capsule_Height));
 	pBase->Phys_Body = new btRigidBody(pBase->Capsule_Mass, state, pBase->Phys_Shape, inertia);
 	pBase->Phys_Body->setActivationState(DISABLE_DEACTIVATION);
+	pBase->Phys_Body->setSleepingThresholds(0.0, 0.0);
 	pBase->Phys_Body->setAngularFactor(0.0);
 
 	pBase->Phys_Body->setUserPointer(pBase->Player_Node);

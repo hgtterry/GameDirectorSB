@@ -39,6 +39,8 @@ public:
 	bool Set_Counter_Dialog(HWND hDlg, bool Disable);
 	bool GameMode_StartPosition_Dlg();
 
+	bool Start_Message_Settings_DLG();
+
 	bool DoFPS;
 	bool Saved_DoFPS;
 
@@ -62,6 +64,7 @@ protected:
 	static LRESULT CALLBACK Front_Screen_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Dialog_Counter_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK GameMode_StartPosition_Dlg_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Message_Settings_DLG_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void ListObjects(HWND List);
 	void List_Locations(HWND List);

@@ -177,9 +177,15 @@ GD19_App::GD19_App(void)
 	FullScreen_App = 0;
 	RenderBackGround = 0;
 
+	Panels_Disabled_Flag = 0;
+	Panels_Hidden_Flag = 0;
+
 	FollowFunctions = 0;
 
-	Debug_App = 0;
+	CursorPosX = 500;
+	CursorPosY = 500;
+
+	Debug_App = 1;
 
 	EquityDirecory_FullPath[0] = 0;
 	ETemp_Folder[0] = 0;
@@ -942,5 +948,61 @@ bool GD19_App::Custom_Button_Red(LPNMCUSTOMDRAW item)
 	}
 
 	return CDRF_DODEFAULT;
+}
+
+// *************************************************************************
+// *			Flash_Window:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void GD19_App::Flash_Window()
+{
+	FlashWindow(App->MainHwnd, true);
+}
+
+// *************************************************************************
+// *			Disable_Panels:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void GD19_App::Disable_Panels(bool Disable)
+{
+	if (Disable == 1)
+	{
+		Panels_Disabled_Flag = 1;
+		EnableWindow(App->MainHwnd, 0);
+		EnableWindow(App->SBC_Properties->Properties_Dlg_hWnd, 0);
+		EnableWindow(App->ListPanel, 0);
+		EnableWindow(App->Physics_Console_Hwnd, 0);
+		EnableWindow(App->SBC_TopTabs->TabsHwnd, 0);
+	}
+	else
+	{
+		Panels_Disabled_Flag = 0;
+		EnableWindow(App->MainHwnd, 1);
+		EnableWindow(App->SBC_Properties->Properties_Dlg_hWnd, 1);
+		EnableWindow(App->ListPanel, 1);
+		EnableWindow(App->Physics_Console_Hwnd, 1);
+		EnableWindow(App->SBC_TopTabs->TabsHwnd, 1);
+	}
+	
+}
+
+// *************************************************************************
+// *			Show_Panels:- Terry and Hazel Flanigan 2022			   	   *
+// *************************************************************************
+void GD19_App::Show_Panels(bool show)
+{
+	if (show == 1)
+	{
+		Panels_Hidden_Flag = 0;
+		ShowWindow(App->ListPanel, SW_SHOW);
+		ShowWindow(App->Physics_Console_Hwnd, SW_SHOW);
+		ShowWindow(App->SBC_Properties->Properties_Dlg_hWnd, SW_SHOW);
+	}
+	else
+	{
+		Panels_Hidden_Flag = 1;
+		ShowWindow(App->ListPanel, SW_HIDE);
+		ShowWindow(App->Physics_Console_Hwnd, SW_HIDE);
+		ShowWindow(App->SBC_Properties->Properties_Dlg_hWnd, SW_HIDE);
+	}
+	
 }
 

@@ -117,7 +117,7 @@ bool Base_Object::Init_Object(void)
 	Dimensions_Locked = 0;
 
 	//------------------------------ Message Entity
-	strcpy(Message_Text, "This is in the Object");
+	//strcpy(Message_Text, "This is in the Object");
 
 	//------------------------------ Sound Entity
 	HasSound = 0;
@@ -127,9 +127,7 @@ bool Base_Object::Init_Object(void)
 	SndVolume = 0.5; // Default Half Volume
 
 	Show_Message_Flag = 0;
-	Message_PosX = 250;
-	Message_PosY = 10;
-	strcpy(Message_Text, "Welcome");
+	//strcpy(Message_Text, "Welcome");
 	strcpy(ImGui_Panel_Name, "TextMessage_");
 
 	return 1;
@@ -155,7 +153,7 @@ void Base_Object::Set_ImGui_Panel_Name(void)
 // *************************************************************************
 void Base_Object::Render_ImGui_Panel(void)
 {
-	ImGui::SetNextWindowPos(ImVec2(Message_PosX, Message_PosY));
+	ImGui::SetNextWindowPos(ImVec2(S_Message[0]->Message_PosX, S_Message[0]->Message_PosY));
 
 
 	if (!ImGui::Begin(ImGui_Panel_Name, &Show_Message_Flag, ImGuiWindowFlags_NoSavedSettings
@@ -168,10 +166,21 @@ void Base_Object::Render_ImGui_Panel(void)
 	}
 	else
 	{
+		ImVec2 Size = ImGui::GetWindowSize();
 
 		ImGui::PushFont(App->CL_Vm_ImGui->font2);
 
-		ImGui::Text("%s", Message_Text);
+		ImGui::Text("%s", S_Message[0]->Message_Text);
+
+		if (S_Message[0]->PosXCentre_Flag == 1)
+		{
+			S_Message[0]->Message_PosX = ((float)App->SBC_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);
+		}
+
+		if (S_Message[0]->PosYCentre_Flag == 1)
+		{
+			S_Message[0]->Message_PosY = ((float)App->SBC_Ogre->OgreListener->View_Height / 2) - (Size.y / 2);
+		}
 
 		ImGui::PopFont();
 

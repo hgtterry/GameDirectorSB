@@ -182,10 +182,18 @@ public:
 	void Say_Win(const char* Message);
 	void Log_Messageg(char* Message);
 
+	void Flash_Window();
+
+	void Disable_Panels(bool Disable);
+	void Show_Panels(bool show);
+
 	bool Start_Scene_Loaded;
 	bool FullScreen;
 	bool FullScreen_App;
 	bool RenderBackGround;
+
+	bool Panels_Disabled_Flag;
+	bool Panels_Hidden_Flag;
 
 	bool FollowFunctions;
 
@@ -275,6 +283,9 @@ public:
 
 	HMENU mMenu;
 	HCURSOR CUR;
+
+	int CursorPosX;
+	int CursorPosY;
 
 	bool OgreStarted;
 	bool Debug_App;

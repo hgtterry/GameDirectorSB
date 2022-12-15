@@ -1328,3 +1328,232 @@ LRESULT CALLBACK SB_Dialogs::GameMode_StartPosition_Dlg_Proc(HWND hDlg, UINT mes
 	return FALSE;
 }
 
+// *************************************************************************
+// *	  		Dialog_Float()  	Terry	Bernie						   *
+// *************************************************************************
+bool SB_Dialogs::Start_Message_Settings_DLG()
+{
+	App->Show_Panels(false);
+	App->Disable_Panels(true);
+
+	CreateDialog(App->hInst, (LPCTSTR)IDD_MESSAGE_SETTINGS, App->Fdlg, (DLGPROC)Message_Settings_DLG_Proc);
+
+	return 1;
+}
+// *************************************************************************
+// *        	Dialog_Float_Proc  Terry	Bernie						   *
+// *************************************************************************
+LRESULT CALLBACK SB_Dialogs::Message_Settings_DLG_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		App->SetTitleBar(hDlg);
+
+		int Index = App->SBC_Properties->Current_Selected_Object;
+
+		//SendDlgItemMessage(hDlg, IDC_BANNER, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_EDMES_POSX, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_EDMES_POSY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CKMES_CENTREX, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CKMES_CENTREY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STMES_POSX, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STMES_POSY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+	
+		SendDlgItemMessage(hDlg, IDC_BTMES_APPLY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
+		if (App->SBC_Scene->B_Object[Index]->S_Message[0]->PosXCentre_Flag == 1)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CKMES_CENTREX);
+			SendMessage(temp, BM_SETCHECK, 1, 0);
+			EnableWindow(GetDlgItem(hDlg, IDC_EDMES_POSX), 0);
+		}
+
+		if (App->SBC_Scene->B_Object[Index]->S_Message[0]->PosYCentre_Flag == 1)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CKMES_CENTREY);
+			SendMessage(temp, BM_SETCHECK, 1, 0);
+			EnableWindow(GetDlgItem(hDlg, IDC_EDMES_POSY), 0);
+		}
+
+		char buff[256];
+		sprintf(buff, "%i", (int)App->SBC_Scene->B_Object[Index]->S_Message[0]->Message_PosX);
+		SetDlgItemText(hDlg, IDC_EDMES_POSX, (LPCTSTR)buff);
+
+		sprintf(buff, "%i", (int)App->SBC_Scene->B_Object[Index]->S_Message[0]->Message_PosY);
+		SetDlgItemText(hDlg, IDC_EDMES_POSY, (LPCTSTR)buff);
+		
+		App->SBC_Scene->B_Object[Index]->Show_Message_Flag = 1;
+
+		return TRUE;
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+
+		if (GetDlgItem(hDlg, IDC_CKMES_CENTREX) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_CKMES_CENTREY) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 00));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STMES_POSX) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STMES_POSY) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BTMES_APPLY && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+
+		if (LOWORD(wParam) == IDC_CKMES_CENTREX)
+		{
+			int Index = App->SBC_Properties->Current_Selected_Object;
+
+			HWND temp = GetDlgItem(hDlg, IDC_CKMES_CENTREX);
+			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
+			if (test == BST_CHECKED)
+			{
+				App->SBC_Scene->B_Object[Index]->S_Message[0]->PosXCentre_Flag = 1;
+				EnableWindow(GetDlgItem(hDlg, IDC_EDMES_POSX), 0);
+				return 1;
+			}
+			else
+			{
+				App->SBC_Scene->B_Object[Index]->S_Message[0]->PosXCentre_Flag = 0;
+				EnableWindow(GetDlgItem(hDlg, IDC_EDMES_POSX), 1);
+
+				char buff[MAX_PATH] = { 0 };
+				GetDlgItemText(hDlg, IDC_EDMES_POSX, (LPTSTR)buff, MAX_PATH);
+				App->SBC_Scene->B_Object[Index]->S_Message[0]->Message_PosX = (float)atof(buff);
+
+				return 1;
+			}
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_CKMES_CENTREY)
+		{
+			int Index = App->SBC_Properties->Current_Selected_Object;
+
+			HWND temp = GetDlgItem(hDlg, IDC_CKMES_CENTREY);
+			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
+			if (test == BST_CHECKED)
+			{
+				App->SBC_Scene->B_Object[Index]->S_Message[0]->PosYCentre_Flag = 1;
+				EnableWindow(GetDlgItem(hDlg, IDC_EDMES_POSY), 0);
+				return 1;
+			}
+			else
+			{
+				App->SBC_Scene->B_Object[Index]->S_Message[0]->PosYCentre_Flag = 0;
+				EnableWindow(GetDlgItem(hDlg, IDC_EDMES_POSY), 1);
+
+				char buff[MAX_PATH] = { 0 };
+				GetDlgItemText(hDlg, IDC_EDMES_POSY, (LPTSTR)buff, MAX_PATH);
+				App->SBC_Scene->B_Object[Index]->S_Message[0]->Message_PosY = (float)atof(buff);
+
+				return 1;
+			}
+
+			return TRUE;
+		}
+		
+		if (LOWORD(wParam) == IDC_BTMES_APPLY)
+		{
+			int Index = App->SBC_Properties->Current_Selected_Object;
+
+			char buff[MAX_PATH];
+			GetDlgItemText(hDlg, IDC_EDMES_POSX, (LPTSTR)buff, MAX_PATH);
+			App->SBC_Scene->B_Object[Index]->S_Message[0]->Message_PosX = (float)atof(buff);
+
+			GetDlgItemText(hDlg, IDC_EDMES_POSY, (LPTSTR)buff, MAX_PATH);
+			App->SBC_Scene->B_Object[Index]->S_Message[0]->Message_PosY = (float)atof(buff);
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDOK)
+		{
+			App->Disable_Panels(false);
+			App->Show_Panels(true);
+			App->SBC_Scene->B_Object[App->SBC_Properties->Current_Selected_Object]->Show_Message_Flag = 0;
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			App->Disable_Panels(false);
+			App->Show_Panels(true);
+			App->SBC_Scene->B_Object[App->SBC_Properties->Current_Selected_Object]->Show_Message_Flag = 0;
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		break;
+	}
+	return FALSE;
+}
+

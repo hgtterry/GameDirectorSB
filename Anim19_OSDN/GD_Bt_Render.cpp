@@ -99,7 +99,7 @@ void GD_Bt_Render::drawTriangle (const btVector3 &v0, const btVector3 &v1, const
 
 void GD_Bt_Render::drawContactPoint (const btVector3 &PointOnB, const btVector3 &normalOnB, btScalar distance, int lifeTime, const btVector3 &color)
 {
-	FlashWindow(App->MainHwnd,true);
+	//FlashWindow(App->MainHwnd,true);
 }
 
 void GD_Bt_Render::reportErrorWarning (const char *warningString)

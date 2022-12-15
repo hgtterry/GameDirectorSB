@@ -56,7 +56,7 @@ public:
 	bool Capture_RightMouse_Model(void);
 	bool Capture_RightMouse_World(void);
 
-	bool Capture_Mouse_FirstPerson(void);
+	bool Capture_Mouse_FirstPerson(float DeltaTime);
 
 	bool Capture_LeftMouse_World(void);
 	bool Capture_LeftMouse_Model(void);
@@ -80,6 +80,7 @@ public:
 	float		mMoveSensitivityMouse;
 
 	float		AnimationScale;
+	float		OgreFrameTime;
 
 	int Pl_MouseX;
 	int Pl_MouseY;

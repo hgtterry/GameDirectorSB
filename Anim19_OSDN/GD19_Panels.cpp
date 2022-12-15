@@ -1,5 +1,5 @@
 /*
-Copyright (c) GameDirector 2019 Inflanite Software W.T.Flanigan H.C.Flanigan B.Parkin
+Copyright (c) 2022 GameDirectorSB and EquityME -- HGTInflanite Software W.T.Flanigan H.C.Flanigan
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -38,7 +38,7 @@ GD19_Panels::~GD19_Panels()
 }
 
 // *************************************************************************
-// *						Resize_FileView Terry Bernie				   *
+// *			Resize_FileView:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 bool GD19_Panels::Resize_FileView(void)
 {
@@ -64,19 +64,17 @@ bool GD19_Panels::Resize_FileView(void)
 	
 	hdwp = BeginDeferWindowPos(4);
 
-	DeferWindowPos(hdwp, Temp, NULL, 10, 10,
-		NewWidth + 370, NewHeight + 71, SWP_NOZORDER);
+	DeferWindowPos(hdwp, Temp, NULL, 2, 2,
+		NewWidth + 388, NewHeight + 71, SWP_NOZORDER);
 
 	DeferWindowPos(hdwp, Temp3, NULL, 10, NewHeight + 113,
 		0, 07, SWP_NOSIZE | SWP_NOZORDER);
-
-
 
 	return EndDeferWindowPos(hdwp);
 }
 
 // *************************************************************************
-// *						MoveCentralView Terry Bernie				   *
+// *			MoveCentralView:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 bool GD19_Panels::MovePhysicsView(void)
 {
@@ -100,7 +98,7 @@ bool GD19_Panels::MovePhysicsView(void)
 }
 
 // *************************************************************************
-// *						Move_FileView_Window Terry Bernie			   *
+// *		Move_FileView_Window:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
 bool GD19_Panels::Move_FileView_Window(void)
 {
@@ -118,7 +116,7 @@ bool GD19_Panels::Move_FileView_Window(void)
 }
 
 // *************************************************************************
-// *						Place_GlobalGroups Terry Bernie				   *
+// *			Place_GlobalGroups:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
 bool GD19_Panels::Place_GlobalGroups(void)
 {

@@ -96,105 +96,39 @@ void Base_Player::Jump(const Ogre::Vector3 axis, float force)
 }
 
 // *************************************************************************
-// *	  					Forward Terry Bernie						   *
+// *	  		Move_Player:- Terry and Hazel Flanigan 2022				   *
 // *************************************************************************
-void Base_Player::Forward(float delta)
+void Base_Player::Move_Player(const btVector3 &walkDirection,float delta)
 {
-	Forward_Timer -= delta;
+	mMoveDirection = walkDirection;
 
-	if (Forward_Timer < 0)
+	btTransform transform;
+	Phys_Body->getMotionState()->getWorldTransform(transform);
+	btMatrix3x3& basis = transform.getBasis();
+	btMatrix3x3 inv = basis.transpose();
+
+	btVector3 linearVelocity = inv * Phys_Body->getLinearVelocity();
+
+	if (mMoveDirection.fuzzyZero() && mOnGround) 
 	{
-		Forward_Timer = 0.01; // 0.01
-
-		btVector3 vel;
-
-		btTransform xform = Phys_Body->getWorldTransform();
-		btVector3 cur = Phys_Body->getLinearVelocity();
-		btVector3 basis = xform.getBasis()[2];
-		vel = -Ground_speed * 10 * basis;
-		Phys_Body->setLinearVelocity(btVector3(vel[0], cur[1], vel[2]));
+		linearVelocity *= mSpeedDamping;
+	}
+	else if (mOnGround || linearVelocity[2] > 0) 
+	{
+		btVector3 dv = mMoveDirection * (App->SBC_Scene->B_Player[0]->Ground_speed * delta);
+		linearVelocity = dv;
+		linearVelocity[1] = 0;
 
 	}
 
-	App->SBC_Player->Check_Collisions_New();
-}
-
-// *************************************************************************
-// *	  					Back Terry Bernie							   *
-// *************************************************************************
-void Base_Player::Back(void)
-{
-		btVector3 vel;
-
-		btTransform xform = Phys_Body->getWorldTransform();
-		btVector3 cur = Phys_Body->getLinearVelocity();
-		btVector3 basis = xform.getBasis()[2];
-		vel = Ground_speed * 10 * basis;			 //cur[1],
-		Phys_Body->setLinearVelocity(btVector3(vel[0], cur[1], vel[2]));
-
-		App->SBC_Player->Check_Collisions_New();
-}
-
-// *************************************************************************
-// *	  					Move_Left Terry Bernie						   *
-// *************************************************************************
-void Base_Player::Move_Left(void)
-{
-
-	btVector3 vel;
-
-	btTransform xform = Phys_Body->getWorldTransform();
-	btVector3 cur = Phys_Body->getLinearVelocity();
-	btVector3 basis = xform.getBasis()[2];
-	vel = -Ground_speed * 10 * basis;
-
-	Phys_Body->setLinearVelocity(btVector3(-vel[2], cur[1], vel[0]));
+	Phys_Body->setLinearVelocity(basis * linearVelocity);
 
 	App->SBC_Player->Check_Collisions_New();
 }
 
-// *************************************************************************
-// *	  					Move_Right Terry Bernie						   *
-// *************************************************************************
-void Base_Player::Move_Right(void)
-{
-
-	btVector3 vel;
-
-	btTransform xform = Phys_Body->getWorldTransform();
-	btVector3 cur = Phys_Body->getLinearVelocity();
-	btVector3 basis = xform.getBasis()[2];
-	vel = -Ground_speed * 10 * basis;
-
-	Phys_Body->setLinearVelocity(btVector3(vel[2], cur[1], -vel[0]));
-
-	App->SBC_Player->Check_Collisions_New();
-	
-}
 
 // *************************************************************************
-// *	  					Rotate Terry Bernie							   *
-// *************************************************************************
-void Base_Player::Rotate(const Ogre::Vector3 axis, bool normalize)
-{
-	
-	btTransform xform = Phys_Body->getWorldTransform();
-	btMatrix3x3 R = xform.getBasis();
-	R = R * btMatrix3x3(btQuaternion(btVector3(axis[0], axis[1], axis[2]), TurnRate));
-
-	if (normalize) {
-		R[0].normalize();
-		R[2].normalize();
-		R[1] = R[0].cross(R[2]);
-	}
-	//R[0].
-	xform.setBasis(R);
-	Phys_Body->setWorldTransform(xform);
-	
-}
-
-// *************************************************************************
-// *	  					Rotate Terry Bernie							   *
+// *	  			Rotate:- Terry and Hazel Flanigan 2022				   *
 // *************************************************************************
 void Base_Player::Rotate_FromCam(const Ogre::Vector3 axis, float delta, bool normalize)
 {
@@ -204,14 +138,7 @@ void Base_Player::Rotate_FromCam(const Ogre::Vector3 axis, float delta, bool nor
 	btMatrix3x3 R = xform.getBasis();
 	R = R * btMatrix3x3(btQuaternion(btVector3(axis[0], axis[1], axis[2]), test));
 
-	if (normalize) {
-		R[0].normalize();
-		R[2].normalize();
-		R[1] = R[0].cross(R[2]);
-	}
-
 	xform.setBasis(R);
 	Phys_Body->setWorldTransform(xform);
-
 }
 

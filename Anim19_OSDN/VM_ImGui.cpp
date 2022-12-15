@@ -168,6 +168,7 @@ void VM_ImGui::ImGui_Render_Loop(void)
 		ImGui_App_Data();
 	}
 
+	//Show_ImGui_Test = 1;
 	if (Show_ImGui_Test == 1)
 	{
 		ImGui::ShowDemoWindow();
@@ -423,8 +424,13 @@ void VM_ImGui::ImGui_FPS(void)
 		}
 
 		ImGui::Text("FPS average %.0f", ImGui::GetIO().Framerate);
-		//ImGui::PopFont();
 
+		if (App->Debug_App == 1)
+		{
+			ImGui::Text("Delay Timer %i", App->SBC_Ogre->FPStimer.getMilliseconds());
+			ImGui::Text("Ogre Frame Time %f", App->SBC_Ogre->OgreListener->OgreFrameTime);
+		}
+		
 		ImGui::End();
 	}
 }
@@ -823,6 +829,7 @@ void VM_ImGui::ImGui_Object_Data(void)
 			ImGui::Text("Shape: = %s", App->SBC_LookUps->Chr_Shape);
 			ImGui::Text("Usage: = %s", App->SBC_LookUps->Chr_Usage);
 			ImGui::Text("Object_ID: = %i", App->SBC_Scene->B_Area[Index]->This_Object_UniqueID);
+			ImGui::Text("CollisionFlags: = %i", App->SBC_Scene->B_Area[Index]->Phys_Body->getCollisionFlags());
 		}
 		else
 		{
@@ -833,6 +840,7 @@ void VM_ImGui::ImGui_Object_Data(void)
 			ImGui::Text("Shape: = %s", App->SBC_LookUps->Chr_Shape);
 			ImGui::Text("Usage: = %s", App->SBC_LookUps->Chr_Usage);
 			ImGui::Text("Object_ID: = %i", App->SBC_Scene->B_Object[Index]->This_Object_UniqueID);
+			ImGui::Text("CollisionFlags: = %i", App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionFlags());
 		}
 
 		ImGui::Spacing();

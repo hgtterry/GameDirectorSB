@@ -110,8 +110,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	App->SBC_Physics->Start_Physics_Pannel();
 	App->SBC_Physics->Start_Physics_Console();
 	
-	//App->Cl_Panels->MovePhysicsView();
-
 	App->SBC_TopTabs->Start_TopBar_Globals();
 
 	App->SBC_Com_Camera->Start_Camera_PropsPanel();
@@ -193,6 +191,10 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 	int cy = GetSystemMetrics(SM_CYSCREEN);
 	MoveWindow(App->Fdlg, 0, 0, cx, cy, TRUE);
 
+	App->CursorPosX = cx/2;
+	App->CursorPosY = cy/2;
+
+
 	App->ViewGLhWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_VIEWER3D, App->Fdlg, (DLGPROC)Ogre3D_Proc);
 
 	App->SBC_Ogre->RenderHwnd = App->ViewGLhWnd;
@@ -236,6 +238,39 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		}
 
 		// ----------------------------------- Debug
+
+		case ID_TEST_DISABLEDIALOGS:
+		{
+			if (App->Panels_Disabled_Flag == 1)
+			{
+				App->Panels_Disabled_Flag = 0;
+				App->Disable_Panels(false);
+			}
+			else
+			{
+				App->Panels_Disabled_Flag = 1;
+				App->Disable_Panels(true);
+			}
+			
+			return 1;
+		}
+
+		case ID_TEST_HIDEPANELS:
+		{
+			if (App->Panels_Hidden_Flag == 1)
+			{
+				App->Panels_Hidden_Flag = 0;
+				App->Show_Panels(true);
+			}
+			else
+			{
+				App->Panels_Hidden_Flag = 1;
+				App->Show_Panels(false);
+			}
+
+			return 1;
+		}
+		
 		case ID_DEBUG_SHOWSTARTUP:
 		{
 			App->SBC_Dialogs->Front_Screen();
@@ -1009,7 +1044,7 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 			{
 				
 				SetCapture(App->ViewGLhWnd);// Bernie
-				SetCursorPos(500, 500);
+				SetCursorPos(App->CursorPosX, App->CursorPosY);
 				App->SBC_Ogre->OgreListener->Pl_RightMouseDown = 1;
 				App->CUR = SetCursor(NULL);
 				return 1;
@@ -1046,7 +1081,7 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 					if (!ImGui::GetIO().WantCaptureMouse)
 					{
 						SetCapture(App->ViewGLhWnd);// Bernie
-						SetCursorPos(500, 500);
+						SetCursorPos(App->CursorPosX, App->CursorPosY);
 						App->SBC_Ogre->OgreListener->Pl_LeftMouseDown = 1;
 						App->CUR = SetCursor(NULL);
 					}

@@ -51,8 +51,8 @@ GD19_OgreListener::GD19_OgreListener(void)
 	Pl_MouseX = 0;
 	Pl_MouseY = 0;
 
-	Pl_Cent500X = 500;
-	Pl_Cent500Y = 500;
+	Pl_Cent500X = App->CursorPosX;
+	Pl_Cent500Y = App->CursorPosY;
 
 	GD_Run_Physics = 0;
 	Dubug_Physics_Draw = 0;
@@ -63,6 +63,8 @@ GD19_OgreListener::GD19_OgreListener(void)
 	GD_Selection_Mode = 0;
 
 	Object_ToFollow = 1;
+
+	OgreFrameTime = 0;
 
 	Show_ImGui_Panels = 1;
 
@@ -115,6 +117,9 @@ bool GD19_OgreListener::frameStarted(const FrameEvent& evt)
 // *************************************************************************
 bool GD19_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 {
+
+	OgreFrameTime = evt.timeSinceLastFrame;
+
 	if (App->SBC_Ogre->Block_RenderingQueued == 1)
 	{
 		return 1;
@@ -167,8 +172,8 @@ bool GD19_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 	{
 		if (GD_CameraMode == Enums::CamFirst)
 		{
-			Capture_Mouse_FirstPerson();
-			SetCursorPos(500, 500);
+			Capture_Mouse_FirstPerson(evt.timeSinceLastFrame);
+			SetCursorPos(App->CursorPosX, App->CursorPosY);
 		}
 		else if (GD_CameraMode == Enums::CamNone)
 		{
@@ -182,7 +187,7 @@ bool GD19_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 
 	if (Pl_LeftMouseDown == 1 && GD_CameraMode == Enums::CamDetached)
 	{
-		SetCursorPos(500, 500);
+		SetCursorPos(App->CursorPosX, App->CursorPosY);
 	}
 
 	// Right Mouse
@@ -351,7 +356,7 @@ bool GD19_OgreListener::Capture_LeftMouse(void)
 				App->SBC_Grid->HairNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 				App->SBC_Grid->DummyNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 				///App->SBC_Ogre->RenderListener->RZ = App->SBC_Ogre->RenderListener->RZ - (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
-				SetCursorPos(500, 500);
+				SetCursorPos(App->CursorPosX, App->CursorPosY);
 			}
 		}
 		else if (Pl_MouseX > Pl_Cent500X)
@@ -365,7 +370,7 @@ bool GD19_OgreListener::Capture_LeftMouse(void)
 				App->SBC_Grid->HairNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 				App->SBC_Grid->DummyNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 				///App->SBC_Ogre->RenderListener->RZ = App->SBC_Ogre->RenderListener->RZ + (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
-				SetCursorPos(500, 500);
+				SetCursorPos(App->CursorPosX, App->CursorPosY);
 			}
 		}
 
@@ -381,7 +386,7 @@ bool GD19_OgreListener::Capture_LeftMouse(void)
 				App->SBC_Grid->HairNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 				App->SBC_Grid->DummyNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 				///App->SBC_Ogre->RenderListener->RX = App->SBC_Ogre->RenderListener->RX - (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
-				SetCursorPos(500, 500);
+				SetCursorPos(App->CursorPosX, App->CursorPosY);
 			}
 		}
 		else if (Pl_MouseY > Pl_Cent500Y)
@@ -395,7 +400,7 @@ bool GD19_OgreListener::Capture_LeftMouse(void)
 				App->SBC_Grid->HairNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 				App->SBC_Grid->DummyNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 				///App->SBC_Ogre->RenderListener->RX = App->SBC_Ogre->RenderListener->RX + (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
-				SetCursorPos(500, 500);
+				SetCursorPos(App->CursorPosX, App->CursorPosY);
 			}
 		}
 	}
@@ -698,7 +703,7 @@ bool GD19_OgreListener::Capture_LeftMouse_World(void)
 				App->SBC_Grid->HairNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 				App->SBC_Grid->DummyNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 				///App->SBC_Ogre->RenderListener->RZ = App->SBC_Ogre->RenderListener->RZ - (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
-				SetCursorPos(500, 500);
+				SetCursorPos(App->CursorPosX, App->CursorPosY);
 			}
 		}
 		else if (Pl_MouseX > Pl_Cent500X)
@@ -712,7 +717,7 @@ bool GD19_OgreListener::Capture_LeftMouse_World(void)
 				App->SBC_Grid->HairNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 				App->SBC_Grid->DummyNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 				///App->SBC_Ogre->RenderListener->RZ = App->SBC_Ogre->RenderListener->RZ + (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
-				SetCursorPos(500, 500);
+				SetCursorPos(App->CursorPosX, App->CursorPosY);
 			}
 		}
 
@@ -728,7 +733,7 @@ bool GD19_OgreListener::Capture_LeftMouse_World(void)
 				App->SBC_Grid->HairNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 				App->SBC_Grid->DummyNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 				///App->SBC_Ogre->RenderListener->RX = App->SBC_Ogre->RenderListener->RX - (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
-				SetCursorPos(500, 500);
+				SetCursorPos(App->CursorPosX, App->CursorPosY);
 			}
 		}
 		else if (Pl_MouseY > Pl_Cent500Y)
@@ -742,7 +747,7 @@ bool GD19_OgreListener::Capture_LeftMouse_World(void)
 				App->SBC_Grid->HairNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 				App->SBC_Grid->DummyNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 				///App->SBC_Ogre->RenderListener->RX = App->SBC_Ogre->RenderListener->RX + (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
-				SetCursorPos(500, 500);
+				SetCursorPos(App->CursorPosX, App->CursorPosY);
 			}
 		}
 	}
@@ -772,7 +777,7 @@ bool GD19_OgreListener::Capture_LeftMouse_Model(void)
 			App->SBC_Grid->HairNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 			App->SBC_Grid->DummyNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 			//App->SBC_Ogre->RenderListener->RZ = App->SBC_Ogre->RenderListener->RZ - (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
-			SetCursorPos(500, 500);
+			SetCursorPos(App->CursorPosX, App->CursorPosY);
 		}
 	}
 	else if (Pl_MouseX > Pl_Cent500X)
@@ -786,7 +791,7 @@ bool GD19_OgreListener::Capture_LeftMouse_Model(void)
 			App->SBC_Grid->HairNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 			App->SBC_Grid->DummyNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
 			//App->SBC_Ogre->RenderListener->RZ = App->SBC_Ogre->RenderListener->RZ + (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
-			SetCursorPos(500, 500);
+			SetCursorPos(App->CursorPosX, App->CursorPosY);
 		}
 	}
 
@@ -802,7 +807,7 @@ bool GD19_OgreListener::Capture_LeftMouse_Model(void)
 			App->SBC_Grid->HairNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 			App->SBC_Grid->DummyNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 			//App->SBC_Ogre->RenderListener->RX = App->SBC_Ogre->RenderListener->RX - (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
-			SetCursorPos(500, 500);
+			SetCursorPos(App->CursorPosX, App->CursorPosY);
 		}
 	}
 	else if (Pl_MouseY > Pl_Cent500Y)
@@ -816,7 +821,7 @@ bool GD19_OgreListener::Capture_LeftMouse_Model(void)
 			App->SBC_Grid->HairNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 			App->SBC_Grid->DummyNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
 			//App->SBC_Ogre->RenderListener->RX = App->SBC_Ogre->RenderListener->RX + (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
-			SetCursorPos(500, 500);
+			SetCursorPos(App->CursorPosX, App->CursorPosY);
 		}
 	}
 
@@ -826,7 +831,7 @@ bool GD19_OgreListener::Capture_LeftMouse_Model(void)
 // *************************************************************************
 // *				Capture_Mouse_FirstPerson_World   Terry Bernie		   *
 // *************************************************************************
-bool GD19_OgreListener::Capture_Mouse_FirstPerson(void)
+bool GD19_OgreListener::Capture_Mouse_FirstPerson(float DeltaTime)
 {
 
 	GetCursorPos(&Pl_pt);
@@ -837,59 +842,54 @@ bool GD19_OgreListener::Capture_Mouse_FirstPerson(void)
 	// Left Right
 	if (Pl_MouseX < Pl_Cent500X)
 	{
-		long test = Pl_Cent500X - Pl_MouseX; // Positive
-		if (test > 1)
+		long test = Pl_Cent500X - Pl_MouseX; // Rotate Left
+		if (test > 2)
 		{
 			Pl_DeltaMouse = float(Pl_Cent500X - Pl_MouseX);
 
-			Ogre::Vector3 Rotate;
-			Rotate.x = 0;
-			Rotate.y = -1;
-			Rotate.z = 0;
+			float Delta2 = DeltaTime * 150;
+			float mTurn = (App->SBC_Scene->B_Player[0]->TurnRate * Pl_DeltaMouse) * Delta2;
 
-			float mTurn = ((float)App->SBC_Scene->B_Player[0]->TurnRate*Pl_DeltaMouse);
-			App->SBC_Scene->B_Player[0]->Rotate_FromCam(Rotate, mTurn, false);
-
+			App->SBC_Scene->B_Player[0]->Rotate_FromCam(Ogre::Vector3(0,-1,0), mTurn, false);
+		
 		}
 	}
 	else if (Pl_MouseX > Pl_Cent500X)
 	{
-		long test = Pl_MouseX - Pl_Cent500X; // Positive
+		long test = Pl_MouseX - Pl_Cent500X; // Rotate Right
 
-		if (test > 1)
+		if (test > 2)
 		{
 			Pl_DeltaMouse = float(Pl_MouseX - Pl_Cent500X);
 
-			Ogre::Vector3 Rotate;
-			Rotate.x = 0;
-			Rotate.y = 1;
-			Rotate.z = 0;
+			float Delta2 = DeltaTime * 150;
+			float mTurn = (App->SBC_Scene->B_Player[0]->TurnRate * Pl_DeltaMouse) * Delta2;
 
-			float mTurn = ((float)App->SBC_Scene->B_Player[0]->TurnRate*Pl_DeltaMouse);
-			App->SBC_Scene->B_Player[0]->Rotate_FromCam(Rotate, mTurn, false);
+			App->SBC_Scene->B_Player[0]->Rotate_FromCam(Ogre::Vector3(0,1,0), mTurn, false);
 		}
 	}
 
 	//Up Down
 	if (Pl_MouseY < Pl_Cent500Y)
 	{
-		long test = Pl_Cent500Y - Pl_MouseY; // Positive
+		long test = Pl_Cent500Y - Pl_MouseY; // Look Up
 
-		if (test > 2)
+		if (test > 1)
 		{
 			Pl_DeltaMouse = float(Pl_Cent500Y - Pl_MouseY);
-			Ogre::Radian pp = Degree(Pl_DeltaMouse * (float)0.03);
+			Ogre::Radian pp = Degree(Pl_DeltaMouse * DeltaTime) * 2;
 			App->SBC_Scene->B_Player[0]->CameraPitch->pitch(pp);
 		}
+
 	}
 	else if (Pl_MouseY > Pl_Cent500Y)
 	{
-		long test = Pl_MouseY - Pl_Cent500Y; // Positive
+		long test = Pl_MouseY - Pl_Cent500Y; // Look Down
 
-		if (test > 2)
+		if (test > 1)
 		{
 			Pl_DeltaMouse = float(Pl_MouseY - Pl_Cent500Y);
-			Ogre::Radian pp = Degree(-Pl_DeltaMouse * (float)0.03);
+			Ogre::Radian pp = Degree(-Pl_DeltaMouse * DeltaTime) * 2;
 			App->SBC_Scene->B_Player[0]->CameraPitch->pitch(pp);
 		}
 	}
@@ -916,7 +916,7 @@ bool GD19_OgreListener::Capture_RightMouse_Model(void)
 		{
 			Pl_DeltaMouse = float(Pl_Cent500X - Pl_MouseX);
 			mTranslateVector.x = Pl_DeltaMouse * (mMoveSensitivityMouse / 1000);
-			SetCursorPos(500, 500);
+			SetCursorPos(App->CursorPosX, App->CursorPosY);
 		}
 	}
 	else if (Pl_MouseX > Pl_Cent500X)
@@ -927,7 +927,7 @@ bool GD19_OgreListener::Capture_RightMouse_Model(void)
 		{
 			Pl_DeltaMouse = float(Pl_MouseX - Pl_Cent500X);
 			mTranslateVector.x = -Pl_DeltaMouse * (mMoveSensitivityMouse / 1000);
-			SetCursorPos(500, 500);
+			SetCursorPos(App->CursorPosX, App->CursorPosY);
 		}
 	}
 
@@ -948,7 +948,7 @@ bool GD19_OgreListener::Capture_RightMouse_Model(void)
 
 			OldPos.y -= Rate;
 			mCam->setPosition(OldPos);
-			SetCursorPos(500, 500);
+			SetCursorPos(App->CursorPosX, App->CursorPosY);
 		}
 
 	}
@@ -968,7 +968,7 @@ bool GD19_OgreListener::Capture_RightMouse_Model(void)
 
 			OldPos.y += Rate;
 			mCam->setPosition(OldPos);
-			SetCursorPos(500, 500);
+			SetCursorPos(App->CursorPosX, App->CursorPosY);
 		}
 
 	}
@@ -1008,7 +1008,7 @@ bool GD19_OgreListener::Capture_RightMouse_World(void)
 			{
 				Pl_DeltaMouse = float(Pl_Cent500X - Pl_MouseX);
 				mTranslateVector.x = Pl_DeltaMouse * (mMoveSensitivityMouse / 1000);
-				SetCursorPos(500, 500);
+				SetCursorPos(App->CursorPosX, App->CursorPosY);
 			}
 		}
 		else if (Pl_MouseX > Pl_Cent500X)
@@ -1019,7 +1019,7 @@ bool GD19_OgreListener::Capture_RightMouse_World(void)
 			{
 				Pl_DeltaMouse = float(Pl_MouseX - Pl_Cent500X);
 				mTranslateVector.x = -Pl_DeltaMouse * (mMoveSensitivityMouse / 1000);
-				SetCursorPos(500, 500);
+				SetCursorPos(App->CursorPosX, App->CursorPosY);
 			}
 		}
 
@@ -1040,7 +1040,7 @@ bool GD19_OgreListener::Capture_RightMouse_World(void)
 
 				OldPos.y -= Rate;
 				mCam->setPosition(OldPos);
-				SetCursorPos(500, 500);
+				SetCursorPos(App->CursorPosX, App->CursorPosY);
 			}
 
 		}
@@ -1060,7 +1060,7 @@ bool GD19_OgreListener::Capture_RightMouse_World(void)
 
 				OldPos.y += Rate;
 				mCam->setPosition(OldPos);
-				SetCursorPos(500, 500);
+				SetCursorPos(App->CursorPosX, App->CursorPosY);
 			}
 
 		}

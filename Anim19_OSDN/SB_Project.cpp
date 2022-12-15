@@ -794,16 +794,21 @@ bool SB_Project::Save_Objects_Data()
 			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Message)
 			{
 				fprintf(WriteFile, "%s\n", "------------------- Message");
-				fprintf(WriteFile, "%s%s\n", "Message_Text=", App->SBC_Scene->B_Object[Count]->Message_Text);
+				fprintf(WriteFile, "%s%s\n", "Message_Text=", App->SBC_Scene->B_Object[Count]->S_Message[0]->Message_Text);
 
-				x = App->SBC_Scene->B_Object[Count]->Message_PosX;
-				y = App->SBC_Scene->B_Object[Count]->Message_PosY;
+				x = App->SBC_Scene->B_Object[Count]->S_Message[0]->Message_PosX;
+				y = App->SBC_Scene->B_Object[Count]->S_Message[0]->Message_PosY;
 				fprintf(WriteFile, "%s%f,%f\n", "Message_Pos=",x,y);
 				
 				// Message Counter
 				fprintf(WriteFile, "%s%i\n", "Message_Counter_ID=", App->SBC_Scene->B_Object[Count]->S_Message[0]->Counter_ID);
 				fprintf(WriteFile, "%s%i\n", "Message_Trigger_Value=", App->SBC_Scene->B_Object[Count]->S_Message[0]->Trigger_Value);
 				fprintf(WriteFile, "%s%i\n", "Message_Counter_Disabled=", App->SBC_Scene->B_Object[Count]->S_Message[0]->Counter_Disabled);
+
+				fprintf(WriteFile, "%s%i\n", "Message_CentreX=", App->SBC_Scene->B_Object[Count]->S_Message[0]->PosXCentre_Flag);
+				fprintf(WriteFile, "%s%i\n", "Message_CentreY=", App->SBC_Scene->B_Object[Count]->S_Message[0]->PosYCentre_Flag);
+
+
 			}
 
 			//---------------------------------------------------------------------------------- Sound Entity
@@ -1639,18 +1644,22 @@ bool SB_Project::Load_Project_Objects()
 			App->SBC_Scene->B_Object[Count]->S_Message[0] = new Message_type;
 			App->SBC_Com_Messages->Set_Message_Defaults(Count);
 			
-			App->Cl_Ini->GetString(buff, "Message_Text", Object->Message_Text, MAX_PATH);
+			App->Cl_Ini->GetString(buff, "Message_Text", Object->S_Message[0]->Message_Text, MAX_PATH);
 
 			App->Cl_Ini->GetString(buff, "Message_Pos", chr_Tag1, MAX_PATH);
 			sscanf(chr_Tag1, "%f,%f", &x, &y);
 
-			App->SBC_Scene->B_Object[Count]->Message_PosX = x;
-			App->SBC_Scene->B_Object[Count]->Message_PosY = y;
+			App->SBC_Scene->B_Object[Count]->S_Message[0]->Message_PosX = x;
+			App->SBC_Scene->B_Object[Count]->S_Message[0]->Message_PosY = y;
 			
 			// Message Counter
 			App->SBC_Scene->B_Object[Count]->S_Message[0]->Counter_ID = App->Cl_Ini->GetInt(buff, "Message_Counter_ID", 0);
 			App->SBC_Scene->B_Object[Count]->S_Message[0]->Trigger_Value = App->Cl_Ini->GetInt(buff, "Message_Trigger_Value", 0);
 			App->SBC_Scene->B_Object[Count]->S_Message[0]->Counter_Disabled = App->Cl_Ini->GetInt(buff, "Message_Counter_Disabled", 1);
+
+			App->SBC_Scene->B_Object[Count]->S_Message[0]->PosXCentre_Flag = App->Cl_Ini->GetInt(buff, "Message_CentreX", 0);
+			App->SBC_Scene->B_Object[Count]->S_Message[0]->PosYCentre_Flag = App->Cl_Ini->GetInt(buff, "Message_CentreY", 0);
+
 		}
 
 		//---------------------------------------------------------------------------------- Sound Entity
@@ -2132,6 +2141,10 @@ bool SB_Project::Load_Project_Player()
 		App->Cl_Ini->GetString(buff, "Turn_Rate", chr_Tag1, MAX_PATH);
 		sscanf(chr_Tag1, "%f",&x);
 		App->SBC_Scene->B_Player[Count]->TurnRate = x;
+
+		App->Cl_Ini->GetString(buff, "Ground_Speed", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f", &x);
+		App->SBC_Scene->B_Player[Count]->Ground_speed = x;
 
 		App->SBC_Scene->B_Player[Count]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Players_Folder, Player_Name, Count, false);
 	

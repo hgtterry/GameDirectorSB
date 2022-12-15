@@ -152,8 +152,6 @@ bool SB_Com_MoveEntity::Create_Move_Entity(int Index)
 	Object->Phys_Body->setUserIndex(Enums::Usage_Move);
 	Object->Phys_Body->setUserIndex2(Index);
 
-	Object->Phys_Body->setCustomDebugColor(btVector3(0, 1, 1));
-
 	int f = Object->Phys_Body->getCollisionFlags();
 
 	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT

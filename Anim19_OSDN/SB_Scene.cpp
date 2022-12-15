@@ -307,7 +307,7 @@ bool SB_Scene::Game_Mode(void)
 
 	Show_Entities(false); // Hide All Visible Trigers
 
-	SetCursorPos(500, 500);
+	SetCursorPos(App->CursorPosX, App->CursorPosY);
 	//S_Flags[0]->GameMode = 1;
 
 	int cx = GetSystemMetrics(SM_CXSCREEN);

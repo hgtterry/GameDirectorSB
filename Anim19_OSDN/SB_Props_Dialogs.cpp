@@ -876,9 +876,14 @@ LRESULT CALLBACK SB_Props_Dialogs::Area_PropsPanel_Proc(HWND hDlg, UINT message,
 				int Count = 0;
 				while (Count < App->SBC_Scene->Area_Count)
 				{
-					int f = App->SBC_Scene->B_Area[Count]->Phys_Body->getCollisionFlags();
-					App->SBC_Scene->B_Area[Index]->Phys_Body->setCollisionFlags(f | (1 << 5)); // Off
 					
+					int f = App->SBC_Scene->B_Area[Count]->Phys_Body->getCollisionFlags();
+					App->SBC_Scene->B_Area[Count]->Phys_Body->setCollisionFlags(f | (1 << 5)); // Off
+
+					App->SBC_Ogre->BulletListener->Render_Debug_Flag = 0;
+					App->SBC_Ogre->BulletListener->Clear_Debug_Render();
+					App->SBC_Ogre->BulletListener->Render_Debug_Flag = 1;
+
 					Count++;
 				}
 
@@ -893,6 +898,10 @@ LRESULT CALLBACK SB_Props_Dialogs::Area_PropsPanel_Proc(HWND hDlg, UINT message,
 				{
 					int f = App->SBC_Scene->B_Area[Count]->Phys_Body->getCollisionFlags();
 					App->SBC_Scene->B_Area[Count]->Phys_Body->setCollisionFlags(f & (~(1 << 5))); // on
+
+					App->SBC_Ogre->BulletListener->Render_Debug_Flag = 0;
+					App->SBC_Ogre->BulletListener->Clear_Debug_Render();
+					App->SBC_Ogre->BulletListener->Render_Debug_Flag = 1;
 
 					Count++;
 				}

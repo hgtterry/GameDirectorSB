@@ -6,9 +6,7 @@
 
 GD19_Dialogs::GD19_Dialogs(void)
 {
-
 	Object_Index = 0;
-
 	Canceled = 0;
 	TrueFlase = 0;
 
@@ -406,14 +404,14 @@ LRESULT CALLBACK GD19_Dialogs::Dialog_TrueFlase_Proc(HWND hDlg, UINT message, WP
 
 			App->SetTitleBar(hDlg);
 
-			HFONT Font2;
-			Font2 = CreateFont( -20,0,0,0,FW_BOLD,0,0,0,0,OUT_TT_ONLY_PRECIS ,0,0,0, "Aerial Black");
-
-			SendDlgItemMessage(hDlg,IDC_TITLENAME, WM_SETFONT, (WPARAM)Font2,MAKELPARAM(TRUE, 0));
+			SendDlgItemMessage(hDlg,IDC_TITLENAME, WM_SETFONT, (WPARAM)App->Font_Arial20,MAKELPARAM(TRUE, 0));
 			SendDlgItemMessage(hDlg,IDC_CHECKNO, WM_SETFONT, (WPARAM)App->Font_CB15,MAKELPARAM(TRUE, 0));
 			SendDlgItemMessage(hDlg,IDC_CHECKYES, WM_SETFONT, (WPARAM)App->Font_CB15,MAKELPARAM(TRUE, 0));
 
-		//	SetDlgItemText(hDlg,IDC_TITLENAME,(LPCTSTR)App->Cl_Dialogs->btext);
+			SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+			SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+			SetDlgItemText(hDlg,IDC_TITLENAME,(LPCTSTR)App->Cl_Dialogs->btext);
 			
 
 			if (App->Cl_Dialogs->TrueFlase == 1)
@@ -434,7 +432,6 @@ LRESULT CALLBACK GD19_Dialogs::Dialog_TrueFlase_Proc(HWND hDlg, UINT message, WP
 			}
 		case WM_CTLCOLORSTATIC:
 		{
-			
 			if(GetDlgItem(hDlg,IDC_TITLENAME) == (HWND)lParam)
 			{	
 				SetBkColor((HDC) wParam, RGB(0, 255, 0));	

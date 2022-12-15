@@ -154,8 +154,6 @@ bool SB_Com_Messages::Create_Message_Entity(int Index)
 	MObject->Phys_Body->setUserIndex(Enums::Usage_Message);
 	MObject->Phys_Body->setUserIndex2(Index);
 
-	MObject->Phys_Body->setCustomDebugColor(btVector3(0, 1, 1));
-
 	int f = MObject->Phys_Body->getCollisionFlags();
 
 	MObject->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT
@@ -179,6 +177,13 @@ void SB_Com_Messages::Set_Message_Defaults(int Index)
 	App->SBC_Scene->B_Object[Index]->S_Message[0]->Counter_ID = 0;
 	strcpy(App->SBC_Scene->B_Object[Index]->S_Message[0]->Counter_Name, "None");
 	App->SBC_Scene->B_Object[Index]->S_Message[0]->Counter_Disabled = 1;
+
+	strcpy(App->SBC_Scene->B_Object[Index]->S_Message[0]->Message_Text, "Welcome");
+	App->SBC_Scene->B_Object[Index]->S_Message[0]->Message_PosX = 250;
+	App->SBC_Scene->B_Object[Index]->S_Message[0]->Message_PosY = 10;
+
+	App->SBC_Scene->B_Object[Index]->S_Message[0]->PosXCentre_Flag = 0;
+	App->SBC_Scene->B_Object[Index]->S_Message[0]->PosYCentre_Flag = 0;
 
 	return;
 }

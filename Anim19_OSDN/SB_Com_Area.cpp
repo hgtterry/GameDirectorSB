@@ -274,7 +274,6 @@ btBvhTriangleMeshShape* SB_Com_Area::Create_Area_Trimesh(int Index, Base_Area* O
 	Object->Phys_Body->setAngularVelocity(btVector3(0, 0, 0));
 	Object->Phys_Body->setWorldTransform(startTransform);
 
-	Object->Phys_Body->setCustomDebugColor(btVector3(0, 1, 1));
 	int f = Object->Phys_Body->getCollisionFlags();
 	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 

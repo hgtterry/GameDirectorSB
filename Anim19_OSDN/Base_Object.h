@@ -60,6 +60,11 @@ typedef struct Message_type
 	int Counter_ID;
 	char Counter_Name[MAX_PATH];
 	bool Counter_Disabled;
+	float Message_PosX;
+	float Message_PosY;
+	char Message_Text[MAX_PATH];
+	bool PosXCentre_Flag;
+	bool PosYCentre_Flag;
 
 }Message_type;
 
@@ -198,9 +203,5 @@ public:
 
 	bool Show_Message_Flag;
 	char ImGui_Panel_Name[MAX_PATH];
-	char Message_Text[MAX_PATH];
-	float Message_PosX;
-	float Message_PosY;
-
 };
 

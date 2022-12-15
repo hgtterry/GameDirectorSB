@@ -86,10 +86,13 @@ void Base_Counter::Render_ImGui_Panel(void)
 	}
 	else
 	{
+		ImVec2 Size = ImGui::GetWindowSize();
 
 		ImGui::PushFont(App->CL_Vm_ImGui->font2);
 
 		ImGui::Text("%s %i",Text, Counter);
+		
+		//PosX = ((float)App->SBC_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);
 
 		ImGui::PopFont();
 

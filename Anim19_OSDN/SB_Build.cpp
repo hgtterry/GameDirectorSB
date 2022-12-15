@@ -1477,16 +1477,19 @@ bool SB_Build::Build_Objects_Data()
 			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Message)
 			{
 				fprintf(WriteFile, "%s\n", "------------------- Message");
-				fprintf(WriteFile, "%s%s\n", "Message_Text=", App->SBC_Scene->B_Object[Count]->Message_Text);
+				fprintf(WriteFile, "%s%s\n", "Message_Text=", App->SBC_Scene->B_Object[Count]->S_Message[0]->Message_Text);
 
-				x = App->SBC_Scene->B_Object[Count]->Message_PosX;
-				y = App->SBC_Scene->B_Object[Count]->Message_PosY;
+				x = App->SBC_Scene->B_Object[Count]->S_Message[0]->Message_PosX;
+				y = App->SBC_Scene->B_Object[Count]->S_Message[0]->Message_PosY;
 				fprintf(WriteFile, "%s%f,%f\n", "Message_Pos=", x, y);
 
 				// Message Counter
 				fprintf(WriteFile, "%s%i\n", "Message_Counter_ID=", App->SBC_Scene->B_Object[Count]->S_Message[0]->Counter_ID);
 				fprintf(WriteFile, "%s%i\n", "Message_Trigger_Value=", App->SBC_Scene->B_Object[Count]->S_Message[0]->Trigger_Value);
 				fprintf(WriteFile, "%s%i\n", "Message_Counter_Disabled=", App->SBC_Scene->B_Object[Count]->S_Message[0]->Counter_Disabled);
+
+				fprintf(WriteFile, "%s%i\n", "Message_CentreX=", App->SBC_Scene->B_Object[Count]->S_Message[0]->PosXCentre_Flag);
+				fprintf(WriteFile, "%s%i\n", "Message_CentreY=", App->SBC_Scene->B_Object[Count]->S_Message[0]->PosYCentre_Flag);
 			}
 
 			//---------------------------------------------------------------------------------- Sound Entity

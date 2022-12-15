@@ -1594,8 +1594,6 @@ void SB_MeshViewer::Show_Physics_Box()
 	Phys_Body->setUserPointer(MvNode);
 	Phys_Body->setWorldTransform(startTransform);
 
-	Phys_Body->setCustomDebugColor(btVector3(0, 1, 1));
-
 	App->SBC_Bullet->dynamicsWorld->addRigidBody(Phys_Body);
 
 	//Set_Physics(Index);
@@ -1659,7 +1657,6 @@ void SB_MeshViewer::Show_Physics_Capsule()
 	Phys_Body->setUserPointer(MvNode);
 	Phys_Body->setWorldTransform(startTransform);
 
-	Phys_Body->setCustomDebugColor(btVector3(0, 1, 1));
 
 	App->SBC_Bullet->dynamicsWorld->addRigidBody(Phys_Body);
 
@@ -1722,8 +1719,6 @@ void SB_MeshViewer::Show_Physics_Cone()
 	Phys_Body->setUserPointer(MvNode);
 	Phys_Body->setWorldTransform(startTransform);
 
-	Phys_Body->setCustomDebugColor(btVector3(0, 1, 1));
-
 	App->SBC_Bullet->dynamicsWorld->addRigidBody(Phys_Body);
 
 	//Set_Physics(Index);
@@ -1780,8 +1775,6 @@ void SB_MeshViewer::Show_Physics_Sphere()
 	Phys_Body->setFriction(1.5);
 	Phys_Body->setUserPointer(MvNode);
 	Phys_Body->setWorldTransform(startTransform);
-
-	Phys_Body->setCustomDebugColor(btVector3(0, 1, 1));
 
 	App->SBC_Bullet->dynamicsWorld->addRigidBody(Phys_Body);
 
@@ -1845,8 +1838,6 @@ void SB_MeshViewer::Show_Physics_Cylinder()
 	Phys_Body->setFriction(1.5);
 	Phys_Body->setUserPointer(MvNode);
 	Phys_Body->setWorldTransform(startTransform);
-
-	Phys_Body->setCustomDebugColor(btVector3(0, 1, 1));
 
 	App->SBC_Bullet->dynamicsWorld->addRigidBody(Phys_Body);
 
@@ -1995,8 +1986,6 @@ void SB_MeshViewer::Show_Physics_Trimesh()
 	Phys_Body->setAngularVelocity(btVector3(0, 0, 0));
 	Phys_Body->setWorldTransform(startTransform);
 
-	Phys_Body->setCustomDebugColor(btVector3(0, 1, 1));
-
 	App->SBC_Bullet->dynamicsWorld->addRigidBody(Phys_Body);
 
 }
@@ -2128,7 +2117,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshView_3D_Proc(HWND hDlg, UINT message, WPARAM
 			if (App->OgreStarted == 1)
 			{
 				SetCapture(App->SBC_MeshViewer->MeshView_3D_hWnd);// Bernie
-				SetCursorPos(500, 500);
+				SetCursorPos(App->CursorPosX, App->CursorPosY);
 				App->SBC_MeshViewer->RenderListener->Pl_RightMouseDown = 1;
 				App->CUR = SetCursor(NULL);
 				return 1;
@@ -2157,7 +2146,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshView_3D_Proc(HWND hDlg, UINT message, WPARAM
 			{
 
 				SetCapture(App->SBC_MeshViewer->MeshView_3D_hWnd);// Bernie
-				SetCursorPos(500, 500);
+				SetCursorPos(App->CursorPosX, App->CursorPosY);
 
 				App->SBC_MeshViewer->RenderListener->Pl_LeftMouseDown = 1;
 

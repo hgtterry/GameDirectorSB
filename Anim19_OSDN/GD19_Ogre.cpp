@@ -43,6 +43,11 @@ SB_Ogre::SB_Ogre(void)
 	App_Resource_Group = "App_Resource_Group";
 
 	Block_RenderingQueued = 0;
+
+	PCFreq = 0.0;
+	CounterStart = 0;
+
+	FPStimer.reset();
 }
 
 SB_Ogre::~SB_Ogre(void)
@@ -99,12 +104,31 @@ bool SB_Ogre::Ogre_Render_Loop(void)
 
 		if (mWindow->isClosed()) return false;
 
-		if (Block_RenderingQueued == 0)
+		if (FPStimer.getMilliseconds() > 3)
 		{
-			if (!mRoot->renderOneFrame()) return false;
-		}
+			if (Block_RenderingQueued == 0)
+			{
 
-		//Sleep(8);
+				// mRoot->renderOneFrame()
+				if (!mRoot->_fireFrameStarted())
+				{
+					return false;
+				}
+
+				if (!mRoot->_updateAllRenderTargets())
+				{
+					return false;
+				}
+
+				if (!mRoot->_fireFrameEnded())
+				{
+					return false;
+				}
+
+				FPStimer.reset();
+
+			}
+		}
 	}
 
 	return 1;
@@ -308,6 +332,7 @@ bool SB_Ogre::chooseSceneManager(void)
 	mSceneMgr->addRenderQueueListener(mOverlaySystem);
 
 	mSceneMgr->setAmbientLight(Ogre::ColourValue(1, 1, 1));
+	//mSceneMgr->setDisplaySceneNodes(true);
 	
 	// add a bright light above the scene
 	/*Light* light = mSceneMgr->createLight();

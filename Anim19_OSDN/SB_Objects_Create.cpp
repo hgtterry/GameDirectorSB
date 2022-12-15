@@ -393,8 +393,6 @@ void SB_Objects_Create::Add_Physics_Box(bool Dynamic,int Index)
 		Object->Phys_Body->setUserIndex2(Index);
 	}
 
-	Object->Phys_Body->setCustomDebugColor(btVector3(0, 1, 1));
-
 	int f = Object->Phys_Body->getCollisionFlags();
 	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
@@ -480,7 +478,6 @@ void SB_Objects_Create::Add_Physics_Sphere(bool Dynamic, int Index)
 		Object->Phys_Body->setUserIndex2(Index);
 	}
 
-	Object->Phys_Body->setCustomDebugColor(btVector3(0, 1, 1));
 	int f = Object->Phys_Body->getCollisionFlags();
 	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
@@ -557,8 +554,6 @@ void SB_Objects_Create::Add_Physics_Capsule(bool Dynamic, int Index)
 	Object->Phys_Body->setFriction(1.5);
 	Object->Phys_Body->setUserPointer(Object->Object_Node);
 	Object->Phys_Body->setWorldTransform(startTransform);
-
-	Object->Phys_Body->setCustomDebugColor(btVector3(0, 1, 1));
 
 	if (Dynamic == 1)
 	{
@@ -648,8 +643,6 @@ void SB_Objects_Create::Add_Physics_Cylinder(bool Dynamic, int Index)
 	Object->Phys_Body->setUserPointer(Object->Object_Node);
 	Object->Phys_Body->setWorldTransform(startTransform);
 
-	Object->Phys_Body->setCustomDebugColor(btVector3(0, 1, 1));
-
 	if (Dynamic == 1)
 	{
 		Object->Usage = Enums::Usage_Dynamic;
@@ -734,8 +727,6 @@ void SB_Objects_Create::Add_Physics_Cone(bool Dynamic,int Index)
 	Object->Phys_Body->setFriction(1.5);
 	Object->Phys_Body->setUserPointer(Object->Object_Node);
 	Object->Phys_Body->setWorldTransform(startTransform);
-
-	Object->Phys_Body->setCustomDebugColor(btVector3(0, 1, 1));
 
 	if (Dynamic == 1)
 	{
@@ -880,10 +871,8 @@ bool SB_Objects_Create::Create_Sound_Entity(int Index)
 	Object->Phys_Body->setUserIndex(Enums::Usage_Sound);
 	Object->Phys_Body->setUserIndex2(Index);
 
-	Object->Phys_Body->setCustomDebugColor(btVector3(0, 1, 1));
-
+	
 	int f = Object->Phys_Body->getCollisionFlags();
-
 	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT
 		| btCollisionObject::CF_KINEMATIC_OBJECT
 		| btCollisionObject::CF_NO_CONTACT_RESPONSE);
@@ -1014,8 +1003,6 @@ bool SB_Objects_Create::Create_TeleportEntity(int Index)
 	Object->Usage = Enums::Usage_Teleport;
 	Object->Phys_Body->setUserIndex(Enums::Usage_Teleport);
 	Object->Phys_Body->setUserIndex2(Index);
-
-	Object->Phys_Body->setCustomDebugColor(btVector3(0, 1, 1));
 
 	int f = Object->Phys_Body->getCollisionFlags();
 
@@ -1165,7 +1152,6 @@ btBvhTriangleMeshShape* SB_Objects_Create::create_New_Trimesh(int Index)
 	Object->Phys_Body->setAngularVelocity(btVector3(0, 0, 0));
 	Object->Phys_Body->setWorldTransform(startTransform);
 
-	Object->Phys_Body->setCustomDebugColor(btVector3(0, 1, 1));
 	int f = Object->Phys_Body->getCollisionFlags();
 	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
@@ -1319,7 +1305,6 @@ btBvhTriangleMeshShape* SB_Objects_Create::create_Area_Trimesh_New(int Index, Ba
 	Object->Phys_Body->setAngularVelocity(btVector3(0, 0, 0));
 	Object->Phys_Body->setWorldTransform(startTransform);
 
-	Object->Phys_Body->setCustomDebugColor(btVector3(0, 1, 1));
 	int f = Object->Phys_Body->getCollisionFlags();
 	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 

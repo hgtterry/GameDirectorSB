@@ -453,7 +453,8 @@ bool SB_Properties::Update_ListView_Player()
 	char chr_StartPosY[100];
 	char chr_StartPosZ[100];
 
-	sprintf(chr_Speed, "%.3f ", App->SBC_Scene->B_Player[0]->Ground_speed);
+	sprintf(chr_Speed, "%.0f ", App->SBC_Scene->B_Player[0]->Ground_speed/100);
+
 	sprintf(chr_TurnRate, "%.6f ", App->SBC_Scene->B_Player[0]->TurnRate);
 
 	sprintf(chr_Height, "%.3f ", App->SBC_Scene->B_Player[0]->PlayerHeight);
@@ -586,10 +587,10 @@ bool SB_Properties::Update_ListView_Messages()
 	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->B_Object[index]->Mesh_Name);
 
 	char chr_PosX[20];
-	sprintf(chr_PosX, "%.3f ", App->SBC_Scene->B_Object[index]->Message_PosX);
+	sprintf(chr_PosX, "%.3f ", App->SBC_Scene->B_Object[index]->S_Message[0]->Message_PosX);
 
 	char chr_PosY[20];
-	sprintf(chr_PosY, "%.3f ", App->SBC_Scene->B_Object[index]->Message_PosY);
+	sprintf(chr_PosY, "%.3f ", App->SBC_Scene->B_Object[index]->S_Message[0]->Message_PosY);
 
 	char chr_Counter_Disabled[20];
 	if (App->SBC_Scene->B_Object[index]->S_Message[0]->Counter_Disabled == 1)
@@ -612,7 +613,7 @@ bool SB_Properties::Update_ListView_Messages()
 	grid[0][1] = " ",               grid[1][1] = " ";
 	grid[0][2] = "Pos_X",           grid[1][2] = chr_PosX;
 	grid[0][3] = "Pos_Y",           grid[1][3] = chr_PosY;
-	grid[0][4] = "Text",            grid[1][4] = App->SBC_Scene->B_Object[index]->Message_Text;
+	grid[0][4] = "Text",            grid[1][4] = App->SBC_Scene->B_Object[index]->S_Message[0]->Message_Text;
 	grid[0][5] = " ",				grid[1][5] = " ";
 	grid[0][6] = "Counter",			grid[1][6] = chr_Counter_Disabled;
 
@@ -1233,7 +1234,7 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 	if (result == 0)
 	{
 		char chr_Value[10];
-		sprintf(chr_Value, "%.3f ", App->SBC_Scene->B_Player[0]->Ground_speed);
+		sprintf(chr_Value, "%.0f ", App->SBC_Scene->B_Player[0]->Ground_speed/100);
 
 		strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
 		strcpy(App->Cl_Dialogs->btext, "Ground Speed");
@@ -1244,7 +1245,7 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 			return TRUE; 
 		}
 
-		App->SBC_Scene->B_Player[0]->Ground_speed = App->Cl_Dialogs->mFloat;
+		App->SBC_Scene->B_Player[0]->Ground_speed = App->Cl_Dialogs->mFloat*100;
 
 		App->SBC_Scene->B_Player[0]->Altered = 1;
 		App->SBC_Scene->Scene_Modified = 1;
@@ -1425,7 +1426,7 @@ bool SB_Properties::Edit_Messages_OnClick(LPARAM lParam)
 	if (result == 0)
 	{
 		strcpy(App->SBC_Dialogs->btext, "Change Text");
-		strcpy(App->SBC_Dialogs->Chr_Text, App->SBC_Scene->B_Object[Index]->Message_Text);
+		strcpy(App->SBC_Dialogs->Chr_Text, App->SBC_Scene->B_Object[Index]->S_Message[0]->Message_Text);
 
 		App->SBC_Dialogs->Dialog_Text();
 
@@ -1434,7 +1435,7 @@ bool SB_Properties::Edit_Messages_OnClick(LPARAM lParam)
 			return TRUE;
 		}
 
-		strcpy(App->SBC_Scene->B_Object[Index]->Message_Text, App->SBC_Dialogs->Chr_Text);
+		strcpy(App->SBC_Scene->B_Object[Index]->S_Message[0]->Message_Text, App->SBC_Dialogs->Chr_Text);
 
 		App->SBC_Properties->Mark_As_Altered(Index);
 
@@ -1446,10 +1447,13 @@ bool SB_Properties::Edit_Messages_OnClick(LPARAM lParam)
 	result = strcmp(btext, "Pos_X");
 	if (result == 0)
 	{
+		App->SBC_Dialogs->Start_Message_Settings_DLG();
+		return 1;
+
 		strcpy(App->Cl_Dialogs->btext, "Set Position X");
 
 		char buff[256];
-		sprintf(buff, "%.3f", App->SBC_Scene->B_Object[Index]->Message_PosX);
+		sprintf(buff, "%.3f", App->SBC_Scene->B_Object[Index]->S_Message[0]->Message_PosX);
 		strcpy(App->Cl_Dialogs->Chr_Float, buff);
 
 		App->Cl_Dialogs->Dialog_Float();
@@ -1457,7 +1461,7 @@ bool SB_Properties::Edit_Messages_OnClick(LPARAM lParam)
 		if (App->Cl_Dialogs->Canceled == 0)
 		{
 
-			App->SBC_Scene->B_Object[Index]->Message_PosX = App->Cl_Dialogs->mFloat;
+			App->SBC_Scene->B_Object[Index]->S_Message[0]->Message_PosX = App->Cl_Dialogs->mFloat;
 
 			App->SBC_Properties->Mark_As_Altered(Index);
 
@@ -1471,10 +1475,13 @@ bool SB_Properties::Edit_Messages_OnClick(LPARAM lParam)
 	result = strcmp(btext, "Pos_Y");
 	if (result == 0)
 	{
+		App->SBC_Dialogs->Start_Message_Settings_DLG();
+		return 1;
+
 		strcpy(App->Cl_Dialogs->btext, "Set Position Y");
 
 		char buff[256];
-		sprintf(buff, "%.3f", App->SBC_Scene->B_Object[Index]->Message_PosY);
+		sprintf(buff, "%.3f", App->SBC_Scene->B_Object[Index]->S_Message[0]->Message_PosY);
 		strcpy(App->Cl_Dialogs->Chr_Float, buff);
 
 		App->Cl_Dialogs->Dialog_Float();
@@ -1482,7 +1489,7 @@ bool SB_Properties::Edit_Messages_OnClick(LPARAM lParam)
 		if (App->Cl_Dialogs->Canceled == 0)
 		{
 
-			App->SBC_Scene->B_Object[Index]->Message_PosY = App->Cl_Dialogs->mFloat;
+			App->SBC_Scene->B_Object[Index]->S_Message[0]->Message_PosY = App->Cl_Dialogs->mFloat;
 
 			App->SBC_Properties->Mark_As_Altered(Index);
 

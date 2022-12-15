@@ -30,14 +30,7 @@ public:
 
 	void Stop(void);
 	void Jump(const Ogre::Vector3 axis, float force);
-
-	void Forward(float delta);
-	void Back(void);
-
-	void Move_Left(void);
-	void Move_Right(void);
-
-	void Rotate(const Ogre::Vector3 axis, bool normalize);
+	void Move_Player(const btVector3 &walkDirection,float delta);
 	void Rotate_FromCam(const Ogre::Vector3 axis, float delta, bool normalize);
 
 	Ogre::Camera*		CameraPitch;
@@ -72,5 +65,12 @@ public:
 	HTREEITEM FileViewItem;
 
 	char Player_Name[255]; // Players Name must be unique [171221]
+
+
+	btVector3 mMoveDirection;
+
+	btScalar mSpeedDamping = 10.1;
+	btScalar mMaxLinearVelocity2 = pow(15 / 3.6, 2);
+	btScalar mWalkAccel = 25.0;
 };
 

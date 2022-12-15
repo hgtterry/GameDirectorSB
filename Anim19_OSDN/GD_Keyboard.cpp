@@ -52,7 +52,7 @@ void GD_Keyboard::Keyboard_Monitor(float deltaTime)
 	//------------------------------------------------ Forward
 	if (GetAsyncKeyState(VK_UP) < 0 && App->SBC_Scene->Player_Added == 1 && App->SBC_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
 	{
-		App->SBC_Scene->B_Player[0]->Forward(deltaTime);
+		App->SBC_Scene->B_Player[0]->Move_Player(btVector3(0, 0, -1), deltaTime);
 		App->SBC_Scene->B_Player[0]->IsMOving = 1;
 	}
 	else
@@ -66,7 +66,7 @@ void GD_Keyboard::Keyboard_Monitor(float deltaTime)
 	//------------------------------------------------ Back
 	if (GetAsyncKeyState(VK_DOWN) < 0 && App->SBC_Scene->Player_Added == 1 && App->SBC_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
 	{
-		App->SBC_Scene->B_Player[0]->Back();
+		App->SBC_Scene->B_Player[0]->Move_Player(btVector3(0,0,1),deltaTime);
 		App->SBC_Scene->B_Player[0]->IsMOving_Back = 1;
 	}
 	else
@@ -92,7 +92,7 @@ void GD_Keyboard::Keyboard_Monitor(float deltaTime)
 
 			float Delta = App->Cl_Utilities->DegreesToRadians(1);
 
-			App->SBC_Scene->B_Player[0]->Rotate(Rotate, false);
+			//App->SBC_Scene->B_Player[0]->Rotate(Rotate, false);
 
 			App->SBC_Ogre->OgreListener->toggleTimer = 0.01;
 		}
@@ -112,7 +112,7 @@ void GD_Keyboard::Keyboard_Monitor(float deltaTime)
 
 			float Delta = App->Cl_Utilities->DegreesToRadians(1);
 
-			App->SBC_Scene->B_Player[0]->Rotate(Rotate, false);
+			//App->SBC_Scene->B_Player[0]->Rotate(Rotate, false);
 
 			App->SBC_Ogre->OgreListener->toggleTimer = 0.01;
 		}
@@ -183,8 +183,7 @@ void GD_Keyboard::Keyboard_Monitor(float deltaTime)
 		{
 			if (App->SBC_Scene->Player_Added == 1)
 			{
-
-				App->SBC_Scene->B_Player[0]->Forward(deltaTime);
+				App->SBC_Scene->B_Player[0]->Move_Player(btVector3(0, 0, -1), deltaTime);
 				App->SBC_Scene->B_Player[0]->IsMOving = 1;
 			}
 		}
@@ -229,7 +228,7 @@ void GD_Keyboard::Keyboard_Monitor(float deltaTime)
 		{
 			if (App->SBC_Scene->Player_Added == 1)
 			{
-				App->SBC_Scene->B_Player[0]->Back();
+				App->SBC_Scene->B_Player[0]->Move_Player(btVector3(0, 0, 1),deltaTime);
 				App->SBC_Scene->B_Player[0]->IsMOving_Back = 1;
 			}
 		}
@@ -258,7 +257,7 @@ void GD_Keyboard::Keyboard_Monitor(float deltaTime)
 		{
 			if (App->SBC_Scene->Player_Added == 1)
 			{
-				App->SBC_Scene->B_Player[0]->Move_Right();
+				App->SBC_Scene->B_Player[0]->Move_Player(btVector3(1, 0, 0), deltaTime);
 				App->SBC_Scene->B_Player[0]->IsMOving_Right = 1;
 			}
 		}
@@ -287,7 +286,7 @@ void GD_Keyboard::Keyboard_Monitor(float deltaTime)
 		{
 			if (App->SBC_Scene->Player_Added == 1)
 			{
-				App->SBC_Scene->B_Player[0]->Move_Left();
+				App->SBC_Scene->B_Player[0]->Move_Player(btVector3(-1, 0, 0), deltaTime);
 				App->SBC_Scene->B_Player[0]->IsMOving_Left = 1;
 			}
 		}
