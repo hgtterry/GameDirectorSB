@@ -73,8 +73,14 @@ void SB_Debug::ImGui_Debug_Camera(void)
 		ImGui::Text("%s %f", "Pos_Y = ", App->SBC_Ogre->mCamera->getPosition().y);
 		ImGui::Text("%s %f", "Pos_Z = ", App->SBC_Ogre->mCamera->getPosition().z);
 
-		ImGui::Text("%s %.3f", "Rot_X = ", App->SBC_Ogre->mCamera->getOrientation().getPitch().valueDegrees());
-		ImGui::Text("%s %.3f", "Rot_Y = ", App->SBC_Ogre->mCamera->getOrientation().getYaw().valueDegrees());
+		ImGui::Text("--------------------------------------------");
+
+		ImGui::Text("%s %.3f", "Cam Pitch = ", App->SBC_Ogre->mCamera->getOrientation().getPitch().valueDegrees());
+		ImGui::Text("%s %.3f", "Cam Roll = ", App->SBC_Ogre->mCamera->getOrientation().getRoll().valueDegrees());
+		ImGui::Text("%s %.3f", "Cam Yaw = ", App->SBC_Ogre->mCamera->getOrientation().getYaw().valueDegrees());
+		
+		ImGui::Text("%s %.3f", "Player Pitch = ", App->SBC_Scene->B_Player[0]->CameraPitch->getOrientation().getPitch().valueDegrees());
+		
 
 		App->SBC_Ogre->mCamera->roll(Ogre::Degree(0));
 

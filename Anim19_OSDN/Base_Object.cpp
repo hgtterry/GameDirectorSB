@@ -158,7 +158,6 @@ void Base_Object::Render_ImGui_Panel(void)
 
 	if (!ImGui::Begin(ImGui_Panel_Name, &Show_Message_Flag, ImGuiWindowFlags_NoSavedSettings
 		| ImGuiWindowFlags_AlwaysAutoResize
-		| ImGuiWindowFlags_NoMove
 		| ImGuiWindowFlags_NoResize
 		| ImGuiWindowFlags_NoTitleBar))
 	{
@@ -166,9 +165,17 @@ void Base_Object::Render_ImGui_Panel(void)
 	}
 	else
 	{
+	
 		ImVec2 Size = ImGui::GetWindowSize();
 
 		ImGui::PushFont(App->CL_Vm_ImGui->font2);
+
+		ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(S_Message[0]->Text_Colour.x,
+			S_Message[0]->Text_Colour.y, 
+			S_Message[0]->Text_Colour.z,
+			S_Message[0]->Text_Colour.w));
+
+
 
 		ImGui::Text("%s", S_Message[0]->Message_Text);
 
@@ -182,7 +189,9 @@ void Base_Object::Render_ImGui_Panel(void)
 			S_Message[0]->Message_PosY = ((float)App->SBC_Ogre->OgreListener->View_Height / 2) - (Size.y / 2);
 		}
 
+
 		ImGui::PopFont();
+		ImGui::PopStyleColor();
 
 		ImGui::End();
 	}

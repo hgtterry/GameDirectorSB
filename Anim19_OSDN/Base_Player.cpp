@@ -46,6 +46,9 @@ Base_Player::Base_Player()
 	Forward_Timer = 0;
 	Ground_speed = 4.2;
 
+	Limit_Look_Up = 45;
+	Limit_Look_Down = -45;
+
 	Altered = 1;
 
 	Capsule_Mass = 1.0;

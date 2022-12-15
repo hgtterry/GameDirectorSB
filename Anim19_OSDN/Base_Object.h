@@ -65,6 +65,7 @@ typedef struct Message_type
 	char Message_Text[MAX_PATH];
 	bool PosXCentre_Flag;
 	bool PosYCentre_Flag;
+	Ogre::Vector4 Text_Colour;
 
 }Message_type;
 

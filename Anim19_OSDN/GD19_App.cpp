@@ -966,7 +966,7 @@ void GD19_App::Disable_Panels(bool Disable)
 	if (Disable == 1)
 	{
 		Panels_Disabled_Flag = 1;
-		EnableWindow(App->MainHwnd, 0);
+		//EnableWindow(App->MainHwnd, 0);
 		EnableWindow(App->SBC_Properties->Properties_Dlg_hWnd, 0);
 		EnableWindow(App->ListPanel, 0);
 		EnableWindow(App->Physics_Console_Hwnd, 0);
@@ -975,7 +975,7 @@ void GD19_App::Disable_Panels(bool Disable)
 	else
 	{
 		Panels_Disabled_Flag = 0;
-		EnableWindow(App->MainHwnd, 1);
+		//EnableWindow(App->MainHwnd, 1);
 		EnableWindow(App->SBC_Properties->Properties_Dlg_hWnd, 1);
 		EnableWindow(App->ListPanel, 1);
 		EnableWindow(App->Physics_Console_Hwnd, 1);

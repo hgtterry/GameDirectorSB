@@ -453,6 +453,9 @@ bool SB_Properties::Update_ListView_Player()
 	char chr_StartPosY[100];
 	char chr_StartPosZ[100];
 
+	char chr_LookUp_Limit[100];
+	char chr_LookDown_Limit[100];
+
 	sprintf(chr_Speed, "%.0f ", App->SBC_Scene->B_Player[0]->Ground_speed/100);
 
 	sprintf(chr_TurnRate, "%.6f ", App->SBC_Scene->B_Player[0]->TurnRate);
@@ -463,7 +466,11 @@ bool SB_Properties::Update_ListView_Player()
 	sprintf(chr_StartPosY, "%.3f ", App->SBC_Scene->B_Player[0]->StartPos.y);
 	sprintf(chr_StartPosZ, "%.3f ", App->SBC_Scene->B_Player[0]->StartPos.z);
 
-	const int NUM_ITEMS = 10;
+	sprintf(chr_LookUp_Limit, "%.3f ", App->SBC_Scene->B_Player[0]->Limit_Look_Up);
+	sprintf(chr_LookDown_Limit, "%.3f ", App->SBC_Scene->B_Player[0]->Limit_Look_Down);
+
+
+	const int NUM_ITEMS = 13;
 	const int NUM_COLS = 2;
 	std::string grid[NUM_COLS][NUM_ITEMS]; // string table
 	LV_ITEM pitem;
@@ -480,6 +487,9 @@ bool SB_Properties::Update_ListView_Player()
 	grid[0][7] = "Start Pos_X", grid[1][7] = chr_StartPosX;
 	grid[0][8] = "Start Pos_Y", grid[1][8] = chr_StartPosY;
 	grid[0][9] = "Start Pos_Z", grid[1][9] = chr_StartPosZ;
+	grid[0][10] = " ",			grid[1][10] = " ";
+	grid[0][11] = "Look Up",	grid[1][11] = chr_LookUp_Limit;
+	grid[0][12] = "Look Down",	grid[1][12] = chr_LookDown_Limit;
 
 
 	ListView_DeleteAllItems(App->SBC_Properties->Properties_hLV);
@@ -1383,6 +1393,55 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 		return 1;
 	}
 
+	result = strcmp(App->SBC_Properties->btext, "Look Up");
+	if (result == 0)
+	{
+		char chr_Value[10];
+		sprintf(chr_Value, "%.3f ", App->SBC_Scene->B_Player[0]->Limit_Look_Up);
+
+		strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
+
+		strcpy(App->Cl_Dialogs->btext, "Player Look Up Limit");
+
+		App->Cl_Dialogs->Dialog_Float();
+		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
+
+		App->SBC_Scene->B_Player[0]->Limit_Look_Up = App->Cl_Dialogs->mFloat;
+
+		App->SBC_Scene->B_Player[0]->Altered = 1;
+		App->SBC_Scene->Scene_Modified = 1;
+		App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);
+
+		Update_ListView_Player();
+
+		return 1;
+	}
+
+	result = strcmp(App->SBC_Properties->btext, "Look Down");
+	if (result == 0)
+	{
+		char chr_Value[10];
+		sprintf(chr_Value, "%.3f ", App->SBC_Scene->B_Player[0]->Limit_Look_Down);
+
+		strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
+
+		strcpy(App->Cl_Dialogs->btext, "Player Look Down Limit");
+
+		App->Cl_Dialogs->Dialog_Float();
+		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
+
+		App->SBC_Scene->B_Player[0]->Limit_Look_Down = App->Cl_Dialogs->mFloat;
+
+		App->SBC_Scene->B_Player[0]->Altered = 1;
+		App->SBC_Scene->Scene_Modified = 1;
+		App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);
+
+		Update_ListView_Player();
+
+		return 1;
+	}
+
+	
 	return 1;
 }
 

@@ -52,6 +52,9 @@ public:
 	float Capsule_Radius;
 	float Capsule_Height;
 
+	float Limit_Look_Up;
+	float Limit_Look_Down;
+
 	float PlayerHeight;
 	bool Altered;
 	bool mOnGround;

@@ -1362,7 +1362,7 @@ LRESULT CALLBACK SB_Dialogs::Message_Settings_DLG_Proc(HWND hDlg, UINT message, 
 		SendDlgItemMessage(hDlg, IDC_CKMES_CENTREY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STMES_POSX, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STMES_POSY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-	
+		SendDlgItemMessage(hDlg, IDC_BTMES_TEXTCOLOUR, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BTMES_APPLY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -1440,6 +1440,14 @@ LRESULT CALLBACK SB_Dialogs::Message_Settings_DLG_Proc(HWND hDlg, UINT message, 
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
+		
+		if (some_item->idFrom == IDC_BTMES_TEXTCOLOUR && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
 		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
@@ -1466,6 +1474,28 @@ LRESULT CALLBACK SB_Dialogs::Message_Settings_DLG_Proc(HWND hDlg, UINT message, 
 
 	case WM_COMMAND:
 
+		if (LOWORD(wParam) == IDC_BTMES_TEXTCOLOUR)
+		{
+			App->SBC_FileIO->GetColor();
+
+			if (App->SBC_FileIO->Cannceled == 0)
+			{
+				int Index = App->SBC_Properties->Current_Selected_Object;
+
+				int Red = GetRValue(App->SBC_FileIO->color.rgbResult);
+				int Green = GetGValue(App->SBC_FileIO->color.rgbResult);
+				int Blue = GetBValue(App->SBC_FileIO->color.rgbResult);
+
+				App->SBC_Scene->B_Object[Index]->S_Message[0]->Text_Colour.x = Red;
+				App->SBC_Scene->B_Object[Index]->S_Message[0]->Text_Colour.y = Green;
+				App->SBC_Scene->B_Object[Index]->S_Message[0]->Text_Colour.z = Blue;
+				//App->SBC_Scene->B_Object[Index]->S_Message[0]->Text_Colour.w = 250;
+				App->SBC_Properties->Mark_As_Altered(Index);
+			}
+
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == IDC_CKMES_CENTREX)
 		{
 			int Index = App->SBC_Properties->Current_Selected_Object;
@@ -1476,6 +1506,7 @@ LRESULT CALLBACK SB_Dialogs::Message_Settings_DLG_Proc(HWND hDlg, UINT message, 
 			{
 				App->SBC_Scene->B_Object[Index]->S_Message[0]->PosXCentre_Flag = 1;
 				EnableWindow(GetDlgItem(hDlg, IDC_EDMES_POSX), 0);
+				App->SBC_Properties->Mark_As_Altered(Index);
 				return 1;
 			}
 			else
@@ -1486,7 +1517,7 @@ LRESULT CALLBACK SB_Dialogs::Message_Settings_DLG_Proc(HWND hDlg, UINT message, 
 				char buff[MAX_PATH] = { 0 };
 				GetDlgItemText(hDlg, IDC_EDMES_POSX, (LPTSTR)buff, MAX_PATH);
 				App->SBC_Scene->B_Object[Index]->S_Message[0]->Message_PosX = (float)atof(buff);
-
+				App->SBC_Properties->Mark_As_Altered(Index);
 				return 1;
 			}
 
@@ -1503,6 +1534,7 @@ LRESULT CALLBACK SB_Dialogs::Message_Settings_DLG_Proc(HWND hDlg, UINT message, 
 			{
 				App->SBC_Scene->B_Object[Index]->S_Message[0]->PosYCentre_Flag = 1;
 				EnableWindow(GetDlgItem(hDlg, IDC_EDMES_POSY), 0);
+				App->SBC_Properties->Mark_As_Altered(Index);
 				return 1;
 			}
 			else
@@ -1513,7 +1545,7 @@ LRESULT CALLBACK SB_Dialogs::Message_Settings_DLG_Proc(HWND hDlg, UINT message, 
 				char buff[MAX_PATH] = { 0 };
 				GetDlgItemText(hDlg, IDC_EDMES_POSY, (LPTSTR)buff, MAX_PATH);
 				App->SBC_Scene->B_Object[Index]->S_Message[0]->Message_PosY = (float)atof(buff);
-
+				App->SBC_Properties->Mark_As_Altered(Index);
 				return 1;
 			}
 
@@ -1530,7 +1562,7 @@ LRESULT CALLBACK SB_Dialogs::Message_Settings_DLG_Proc(HWND hDlg, UINT message, 
 
 			GetDlgItemText(hDlg, IDC_EDMES_POSY, (LPTSTR)buff, MAX_PATH);
 			App->SBC_Scene->B_Object[Index]->S_Message[0]->Message_PosY = (float)atof(buff);
-
+			App->SBC_Properties->Mark_As_Altered(Index);
 			return TRUE;
 		}
 

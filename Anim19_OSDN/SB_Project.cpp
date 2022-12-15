@@ -808,6 +808,12 @@ bool SB_Project::Save_Objects_Data()
 				fprintf(WriteFile, "%s%i\n", "Message_CentreX=", App->SBC_Scene->B_Object[Count]->S_Message[0]->PosXCentre_Flag);
 				fprintf(WriteFile, "%s%i\n", "Message_CentreY=", App->SBC_Scene->B_Object[Count]->S_Message[0]->PosYCentre_Flag);
 
+				x = App->SBC_Scene->B_Object[Count]->S_Message[0]->Text_Colour.x;
+				y = App->SBC_Scene->B_Object[Count]->S_Message[0]->Text_Colour.y;
+				z = App->SBC_Scene->B_Object[Count]->S_Message[0]->Text_Colour.z;
+				w = App->SBC_Scene->B_Object[Count]->S_Message[0]->Text_Colour.w;
+
+				fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Message_Text_Colour=", x, y,z,w);
 
 			}
 
@@ -1311,6 +1317,8 @@ bool SB_Project::Save_Player_Data()
 		fprintf(WriteFile, "%s%f\n", "Ground_Speed=", App->SBC_Scene->B_Player[Count]->Ground_speed);
 		fprintf(WriteFile, "%s%f\n", "Cam_Height=", App->SBC_Scene->B_Player[Count]->PlayerHeight);
 		fprintf(WriteFile, "%s%f\n", "Turn_Rate=", App->SBC_Scene->B_Player[Count]->TurnRate);
+		fprintf(WriteFile, "%s%f\n", "Limit_Look_Up=", App->SBC_Scene->B_Player[Count]->Limit_Look_Up);
+		fprintf(WriteFile, "%s%f\n", "Limit_Look_Down=", App->SBC_Scene->B_Player[Count]->Limit_Look_Down);
 
 		Count++;
 	}
@@ -1659,6 +1667,20 @@ bool SB_Project::Load_Project_Objects()
 
 			App->SBC_Scene->B_Object[Count]->S_Message[0]->PosXCentre_Flag = App->Cl_Ini->GetInt(buff, "Message_CentreX", 0);
 			App->SBC_Scene->B_Object[Count]->S_Message[0]->PosYCentre_Flag = App->Cl_Ini->GetInt(buff, "Message_CentreY", 0);
+
+			int Test = App->Cl_Ini->GetString(buff, "Message_Text_Colour", chr_Tag1, MAX_PATH);
+			if (Test > 0)
+			{
+				sscanf(chr_Tag1, "%f,%f,%f,%f", &x, &y, &z, &w);
+				App->SBC_Scene->B_Object[Count]->S_Message[0]->Text_Colour.x = x;
+				App->SBC_Scene->B_Object[Count]->S_Message[0]->Text_Colour.y = y;
+				App->SBC_Scene->B_Object[Count]->S_Message[0]->Text_Colour.z = z;
+				App->SBC_Scene->B_Object[Count]->S_Message[0]->Text_Colour.w = w;
+			}
+			else
+			{
+				App->SBC_Scene->B_Object[Count]->S_Message[0]->Text_Colour = Ogre::Vector4(0, 1, 0 , 255);
+			}
 
 		}
 
@@ -2145,6 +2167,30 @@ bool SB_Project::Load_Project_Player()
 		App->Cl_Ini->GetString(buff, "Ground_Speed", chr_Tag1, MAX_PATH);
 		sscanf(chr_Tag1, "%f", &x);
 		App->SBC_Scene->B_Player[Count]->Ground_speed = x;
+
+		//------------------ Look Up Limit
+		int Test = App->Cl_Ini->GetString(buff, "Limit_Look_Up", chr_Tag1, MAX_PATH);
+		if (Test > 0)
+		{
+			sscanf(chr_Tag1, "%f", &x);
+			App->SBC_Scene->B_Player[Count]->Limit_Look_Up = x;
+		}
+		else
+		{
+			App->SBC_Scene->B_Player[Count]->Limit_Look_Up = 45;
+		}
+
+		//------------------ Look Down Limit
+		Test = App->Cl_Ini->GetString(buff, "Limit_Look_Down", chr_Tag1, MAX_PATH);
+		if (Test > 0)
+		{
+			sscanf(chr_Tag1, "%f", &x);
+			App->SBC_Scene->B_Player[Count]->Limit_Look_Down = x;
+		}
+		else
+		{
+			App->SBC_Scene->B_Player[Count]->Limit_Look_Down = -45;
+		}
 
 		App->SBC_Scene->B_Player[Count]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Players_Folder, Player_Name, Count, false);
 	

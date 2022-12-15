@@ -384,6 +384,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return 1;
 		}
 
+		case ID_DEBUG_SHOWIMGUIDEMO:
+		{
+			if (App->SBC_Ogre->OgreListener->Show_DemoWindow == 1)
+			{
+				App->SBC_Ogre->OgreListener->Show_DemoWindow = 0;
+			}
+			else
+			{
+				App->SBC_Ogre->OgreListener->Show_DemoWindow = 1;
+			}
+			return 1;
+		}
+
+		
+
 		// ------------------------------------------------------------
 		case ID_OPEN_PROJECT:
 		{
@@ -1021,7 +1036,7 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 				int width = rc.right - rc.left;
 				int height = rc.bottom - rc.top;
 
-				float tx = (width / 2) - (float)p.x;
+				float tx = ((float)width / 2) - (float)p.x;
 			}
 		}
 
@@ -1032,6 +1047,7 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 	case WM_RBUTTONDOWN: // BERNIE_HEAR_FIRE 
 	{
 		App->SBC_Ogre->m_imgui.mousePressed();
+		App->SBC_Ogre->m_imgui.keyPressed();
 
 		if (ImGui::GetIO().WantCaptureMouse)
 		{

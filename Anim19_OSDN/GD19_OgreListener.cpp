@@ -35,7 +35,8 @@ GD19_OgreListener::GD19_OgreListener(void)
 	Wheel = 0;
 	StopOgre = 0;
 	ShowFPS = 1;
-
+	Show_DemoWindow = 0;
+	
 	GD_CameraMode = Enums::CamNone;
 
 	Pl_mDummyTranslateVector = Ogre::Vector3::ZERO;
@@ -108,7 +109,6 @@ void GD19_OgreListener::Reset_Class(void)
 bool GD19_OgreListener::frameStarted(const FrameEvent& evt)
 {
 	Update_Game_Logic(evt.timeSinceLastFrame);
-
 	return true;
 }
 
@@ -270,9 +270,11 @@ bool GD19_OgreListener::Update_Game_Logic(float DeltaTime)
 	App->SBC_Debug->Debug_Render_Loop();
 	App->SBC_Dimensions->Dimesions_Select();
 
-	//ImGui::ShowDemoWindow();
-
-
+	if (Show_DemoWindow == 1)
+	{
+		ImGui::ShowDemoWindow();
+	}
+	
 	if (Dubug_Physics_Draw == 1)
 	{
 		App->SBC_Bullet->dynamicsWorld->debugDrawWorld();
@@ -876,9 +878,17 @@ bool GD19_OgreListener::Capture_Mouse_FirstPerson(float DeltaTime)
 
 		if (test > 1)
 		{
-			Pl_DeltaMouse = float(Pl_Cent500Y - Pl_MouseY);
-			Ogre::Radian pp = Degree(Pl_DeltaMouse * DeltaTime) * 2;
-			App->SBC_Scene->B_Player[0]->CameraPitch->pitch(pp);
+			if (App->SBC_Scene->B_Player[0]->CameraPitch->getOrientation().getPitch().valueDegrees() > App->SBC_Scene->B_Player[0]->Limit_Look_Up)
+			{
+
+			}
+			else
+			{
+				Pl_DeltaMouse = float(Pl_Cent500Y - Pl_MouseY);
+				Ogre::Radian pp = Degree(Pl_DeltaMouse * DeltaTime) * 2;
+				App->SBC_Scene->B_Player[0]->CameraPitch->pitch(pp);
+			}
+
 		}
 
 	}
@@ -888,9 +898,16 @@ bool GD19_OgreListener::Capture_Mouse_FirstPerson(float DeltaTime)
 
 		if (test > 1)
 		{
-			Pl_DeltaMouse = float(Pl_MouseY - Pl_Cent500Y);
-			Ogre::Radian pp = Degree(-Pl_DeltaMouse * DeltaTime) * 2;
-			App->SBC_Scene->B_Player[0]->CameraPitch->pitch(pp);
+			if (App->SBC_Scene->B_Player[0]->CameraPitch->getOrientation().getPitch().valueDegrees() < App->SBC_Scene->B_Player[0]->Limit_Look_Down)
+			{
+
+			}
+			else
+			{
+				Pl_DeltaMouse = float(Pl_MouseY - Pl_Cent500Y);
+				Ogre::Radian pp = Degree(-Pl_DeltaMouse * DeltaTime) * 2;
+				App->SBC_Scene->B_Player[0]->CameraPitch->pitch(pp);
+			}
 		}
 	}
 
