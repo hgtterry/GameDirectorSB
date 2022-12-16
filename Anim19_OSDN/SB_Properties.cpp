@@ -456,7 +456,7 @@ bool SB_Properties::Update_ListView_Player()
 	char chr_LookUp_Limit[100];
 	char chr_LookDown_Limit[100];
 
-	sprintf(chr_Speed, "%.0f ", App->SBC_Scene->B_Player[0]->Ground_speed/100);
+	sprintf(chr_Speed, "%.3f ", App->SBC_Scene->B_Player[0]->Ground_speed/100);
 
 	sprintf(chr_TurnRate, "%.6f ", App->SBC_Scene->B_Player[0]->TurnRate);
 
@@ -1243,24 +1243,30 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 	result = strcmp(App->SBC_Properties->btext, "Ground Speed");
 	if (result == 0)
 	{
-		char chr_Value[10];
-		sprintf(chr_Value, "%.0f ", App->SBC_Scene->B_Player[0]->Ground_speed/100);
 
-		strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
-		strcpy(App->Cl_Dialogs->btext, "Ground Speed");
+		App->SBC_Gui_Dialogs->Start_Dialog_Float(1.0, App->SBC_Scene->B_Player[0]->Ground_speed / 100, "Ground Speed");
 
-		App->Cl_Dialogs->Dialog_Float();
-		if (App->Cl_Dialogs->Canceled == 1) 
-		{ 
-			return TRUE; 
+		while (App->SBC_Gui_Dialogs->Show_Dialog_Float == 1)
+		{
+			App->SBC_Gui_Dialogs->Ogre_Render_Loop();
+			//App->SBC_Scene->B_Player[0]->Ground_speed = App->SBC_Gui_Dialogs->m_Dialog_Float * 100;
 		}
 
-		App->SBC_Scene->B_Player[0]->Ground_speed = App->Cl_Dialogs->mFloat*100;
+		if (App->SBC_Gui_Dialogs->Canceld == 0)
+		{
+			App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
+			App->SBC_Scene->B_Player[0]->Ground_speed = App->SBC_Gui_Dialogs->m_Dialog_Float * 100;
 
-		App->SBC_Scene->B_Player[0]->Altered = 1;
-		App->SBC_Scene->Scene_Modified = 1;
-		App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);
+			App->SBC_Scene->B_Player[0]->Altered = 1;
+			App->SBC_Scene->Scene_Modified = 1;
+			App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);
+		}
+		else
+		{
+			App->SBC_Gui_Dialogs->m_Dialog_Float = App->SBC_Gui_Dialogs->m_Dialog_Float_Copy;
+		}
 
+		App->Disable_Panels(false);
 		Update_ListView_Player();
 
 		return 1;
@@ -1396,22 +1402,26 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 	result = strcmp(App->SBC_Properties->btext, "Look Up");
 	if (result == 0)
 	{
-		char chr_Value[10];
-		sprintf(chr_Value, "%.3f ", App->SBC_Scene->B_Player[0]->Limit_Look_Up);
+		strcpy(App->SBC_Gui_Dialogs->Banner, "Player Look Up Limit");
+		App->SBC_Gui_Dialogs->Canceld = 0;
+		App->SBC_Gui_Dialogs->m_Dialog_Float = App->SBC_Scene->B_Player[0]->Limit_Look_Up;
+		App->SBC_Gui_Dialogs->Show_Dialog_Float = 1;
 
-		strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
+		while (App->SBC_Gui_Dialogs->Show_Dialog_Float == 1)
+		{
+			App->SBC_Gui_Dialogs->Ogre_Render_Loop();
+		}
 
-		strcpy(App->Cl_Dialogs->btext, "Player Look Up Limit");
+		if (App->SBC_Gui_Dialogs->Canceld == 0)
+		{
+			App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
+			App->SBC_Scene->B_Player[0]->Limit_Look_Up = App->SBC_Gui_Dialogs->m_Dialog_Float;
 
-		App->Cl_Dialogs->Dialog_Float();
-		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
-
-		App->SBC_Scene->B_Player[0]->Limit_Look_Up = App->Cl_Dialogs->mFloat;
-
-		App->SBC_Scene->B_Player[0]->Altered = 1;
-		App->SBC_Scene->Scene_Modified = 1;
-		App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);
-
+			App->SBC_Scene->B_Player[0]->Altered = 1;
+			App->SBC_Scene->Scene_Modified = 1;
+			App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);
+		}
+		
 		Update_ListView_Player();
 
 		return 1;
@@ -1420,21 +1430,25 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 	result = strcmp(App->SBC_Properties->btext, "Look Down");
 	if (result == 0)
 	{
-		char chr_Value[10];
-		sprintf(chr_Value, "%.3f ", App->SBC_Scene->B_Player[0]->Limit_Look_Down);
+		strcpy(App->SBC_Gui_Dialogs->Banner, "Player Look Down Limit");
+		App->SBC_Gui_Dialogs->Canceld = 0;
+		App->SBC_Gui_Dialogs->m_Dialog_Float = App->SBC_Scene->B_Player[0]->Limit_Look_Down;
+		App->SBC_Gui_Dialogs->Show_Dialog_Float = 1;
 
-		strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
+		while (App->SBC_Gui_Dialogs->Show_Dialog_Float == 1)
+		{
+			App->SBC_Gui_Dialogs->Ogre_Render_Loop();
+		}
 
-		strcpy(App->Cl_Dialogs->btext, "Player Look Down Limit");
+		if (App->SBC_Gui_Dialogs->Canceld == 0)
+		{
+			App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
+			App->SBC_Scene->B_Player[0]->Limit_Look_Down = App->SBC_Gui_Dialogs->m_Dialog_Float;
 
-		App->Cl_Dialogs->Dialog_Float();
-		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
-
-		App->SBC_Scene->B_Player[0]->Limit_Look_Down = App->Cl_Dialogs->mFloat;
-
-		App->SBC_Scene->B_Player[0]->Altered = 1;
-		App->SBC_Scene->Scene_Modified = 1;
-		App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);
+			App->SBC_Scene->B_Player[0]->Altered = 1;
+			App->SBC_Scene->Scene_Modified = 1;
+			App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);
+		}
 
 		Update_ListView_Player();
 

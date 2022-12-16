@@ -397,7 +397,18 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return 1;
 		}
 
-		
+		case ID_DEBUG_TESTIMGUIDIALOG:
+		{
+			if (App->SBC_Gui_Dialogs->Show_Dialog_Float == 1)
+			{
+				App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
+			}
+			else
+			{
+				App->SBC_Gui_Dialogs->Show_Dialog_Float = 1;
+			}
+			return 1;
+		}
 
 		// ------------------------------------------------------------
 		case ID_OPEN_PROJECT:
@@ -934,6 +945,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			}
 		}
 
+		App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
+
 		if (App->SBC_Ogre->OgreListener->StopOgre == 0)
 		{
 			App->SBC_Ogre->OgreListener->StopOgre = 1;
@@ -1047,7 +1060,7 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 	case WM_RBUTTONDOWN: // BERNIE_HEAR_FIRE 
 	{
 		App->SBC_Ogre->m_imgui.mousePressed();
-		App->SBC_Ogre->m_imgui.keyPressed();
+		
 
 		if (ImGui::GetIO().WantCaptureMouse)
 		{
@@ -1068,6 +1081,39 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 		}
 		return 1;
 	}
+
+	case WM_KEYUP:
+	{
+		ImGuiIO& io = ImGui::GetIO();
+
+		io.KeysDown[VK_BACK] = false;
+
+		return 1;
+	}
+
+	case WM_CHAR:
+	{
+		if (ImGui::GetIO().WantCaptureKeyboard)
+		{
+			ImGuiIO& io = ImGui::GetIO();
+			io.AddInputCharacter((unsigned short)wParam);
+		}
+		return 1;
+	}
+
+	case WM_KEYDOWN:
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		bool Done = 0;
+
+		if (wParam == VK_BACK)
+		{
+			io.KeysDown[VK_BACK] = true;
+		}
+		
+		return 1;
+	}
+
 	case WM_RBUTTONUP:
 	{
 		App->SBC_Ogre->m_imgui.mouseReleased();
@@ -1131,24 +1177,25 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 
 		return 1;
 	}
-	case WM_KEYDOWN:
-		switch (wParam)
-		{
-			case 'C':
-				if (GetAsyncKeyState(VK_CONTROL))
-				{
-			//		App->CL10_Objects_Com->Copy_Object();
-			//		return 1;
-				}
-			case 'V':
-				if (GetAsyncKeyState(VK_CONTROL))
-				{
-			//		App->CL10_Objects_Com->Paste_Object();
-			//		return 1;
-				}
-				return 1;
-			//	// more keys here
-		}break;
+	//case WM_KEYDOWN:
+	//	switch (wParam)
+	//	{
+	//		case 'C':
+	//			if (GetAsyncKeyState(VK_CONTROL))
+	//			{
+	//		//		App->CL10_Objects_Com->Copy_Object();
+	//		//		return 1;
+	//			}
+	//		case 'V':
+	//			if (GetAsyncKeyState(VK_CONTROL))
+	//			{
+	//		//		App->CL10_Objects_Com->Paste_Object();
+	//		//		return 1;
+	//			}
+	//			return 1;
+	//		//	// more keys here
+	//	}break;
+
 	}
 
 	return FALSE;
@@ -1380,9 +1427,6 @@ void StartOgre()
 // *************************************************************************
 void Close_App()
 {
-
-	//App->Say("Exit");
-
 	if (App->SBC_Ogre->mRoot)
 	{
 		delete App->SBC_Ogre->mRoot;
