@@ -186,6 +186,8 @@ void SB_Com_Messages::Set_Message_Defaults(int Index)
 	App->SBC_Scene->B_Object[Index]->S_Message[0]->PosYCentre_Flag = 0;
 
 	App->SBC_Scene->B_Object[Index]->S_Message[0]->Text_Colour = Ogre::Vector4(0, 0, 0, 255);
+
+	App->SBC_Scene->B_Object[Index]->S_Message[0]->Show_BackGround = 1;
 	return;
 }
 

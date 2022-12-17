@@ -28,15 +28,26 @@ distribution.
 SB_Gui_Dialogs::SB_Gui_Dialogs(void)
 {
 	Show_Dialog_Float = 0;
-	StartPos = 0;
-	Message_PosX = 0;
-	Message_PosY = 0;
+	Float_StartPos = 0;
+	Float_PosX = 0;
+	Float_PosY = 0;
 	Float_Step = 0.05f;
-	Canceld = 0;
+	Float_Canceld = 0;
 	Float_Exit = 0;
-	strcpy(Banner, "Banner");
+	strcpy(Float_Banner, "Banner");
 	m_Dialog_Float_Copy = 0;
 	m_Dialog_Float = 10.222;
+
+	// ---------------------- 
+
+	Centre_X_Selected = 0;
+	Centre_Y_Selected = 0;
+	MessageEditor_Canceld = 0;
+	Show_Dialog_MessageEditor = 0;
+	Message_Editor_StartPos = 0;
+	Message_Editor_PosX = 10;
+	Message_Editor_PosY = 10;
+	Message_Index = 0;
 }
 
 SB_Gui_Dialogs::~SB_Gui_Dialogs(void)
@@ -70,6 +81,11 @@ void SB_Gui_Dialogs::Gui_Render_Loop(void)
 	{
 		Dialog_Float();
 	}
+
+	if (Show_Dialog_MessageEditor == 1)
+	{
+		Dialog_MessageEditor();
+	}
 }
 
 // *************************************************************************
@@ -78,18 +94,18 @@ void SB_Gui_Dialogs::Gui_Render_Loop(void)
 void SB_Gui_Dialogs::Start_Dialog_Float(float Step, float StartValue,char* Banner)
 {
 	Float_Exit = 0;
-	App->SBC_Gui_Dialogs->Canceld = 0;
+	App->SBC_Gui_Dialogs->Float_Canceld = 0;
 	App->SBC_Gui_Dialogs->Float_Step = Step;
 	App->SBC_Gui_Dialogs->m_Dialog_Float = StartValue;
-	strcpy(App->SBC_Gui_Dialogs->Banner, Banner);
+	strcpy(App->SBC_Gui_Dialogs->Float_Banner, Banner);
 
 	m_Dialog_Float_Copy = StartValue;
 
 	App->Disable_Panels(true);
 
-	Message_PosX = ((float)App->SBC_Ogre->OgreListener->View_Width / 2) - (200 / 2);
-	Message_PosY = ((float)App->SBC_Ogre->OgreListener->View_Height / 2) - (130 / 2);
-	StartPos = 0;
+	Float_PosX = ((float)App->SBC_Ogre->OgreListener->View_Width / 2) - (200 / 2);
+	Float_PosY = ((float)App->SBC_Ogre->OgreListener->View_Height / 2) - (130 / 2);
+	Float_StartPos = 0;
 
 	App->SBC_Gui_Dialogs->Show_Dialog_Float = 1;
 }
@@ -100,22 +116,22 @@ void SB_Gui_Dialogs::Start_Dialog_Float(float Step, float StartValue,char* Banne
 void SB_Gui_Dialogs::Dialog_Float(void)
 {
 	
-	ImGui::SetNextWindowPos(ImVec2(Message_PosX, Message_PosY), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowPos(ImVec2(Float_PosX, Float_PosY), ImGuiCond_FirstUseEver);
 	ImGui::SetNextWindowSize(ImVec2(200, 130), ImGuiCond_FirstUseEver);
 
-	if (!ImGui::Begin(Banner, &Show_Dialog_Float, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize))
+	if (!ImGui::Begin(Float_Banner, &Show_Dialog_Float, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize))
 	{
 		ImGui::End();
 	}
 	else
 	{
-		if (StartPos == 0)
+		if (Float_StartPos == 0)
 		{
-			Message_PosX = ((float)App->SBC_Ogre->OgreListener->View_Width / 2) - (200 / 2);
-			Message_PosY = ((float)App->SBC_Ogre->OgreListener->View_Height / 2) - (130 / 2);
-			ImGui::SetWindowPos(Banner, ImVec2(Message_PosX, Message_PosY));
+			Float_PosX = ((float)App->SBC_Ogre->OgreListener->View_Width / 2) - (200 / 2);
+			Float_PosY = ((float)App->SBC_Ogre->OgreListener->View_Height / 2) - (130 / 2);
+			ImGui::SetWindowPos(Float_Banner, ImVec2(Float_PosX, Float_PosY));
 
-			StartPos = 1;
+			Float_StartPos = 1;
 		}
 
 		float spacingX = ImGui::GetStyle().ItemInnerSpacing.x;
@@ -137,7 +153,7 @@ void SB_Gui_Dialogs::Dialog_Float(void)
 		{
 			Float_Exit = 1;
 			Show_Dialog_Float = 0;
-			Canceld = 0;
+			Float_Canceld = 0;
 			ImGui::End();
 		}
 
@@ -147,13 +163,159 @@ void SB_Gui_Dialogs::Dialog_Float(void)
 		{
 			Float_Exit = 1;
 			Show_Dialog_Float = 0;
-			Canceld = 1;
+			Float_Canceld = 1;
 			ImGui::End();
 		}
 		
 		if (Float_Exit == 0)
 		{
-			Canceld = 1;
+			Float_Canceld = 1;
+			ImGui::End();
+		}
+	}
+}
+
+// *************************************************************************
+// *	 Start_Dialog_MessageEditor:- Terry and Hazel Flanigan 2022  	   *
+// *************************************************************************
+void SB_Gui_Dialogs::Start_Dialog_MessageEditor(int Index)
+{
+
+	Float_Exit = 0;
+	MessageEditor_Canceld = 0;
+	
+	App->SBC_Gui_Dialogs->Float_Step = 1;
+
+	App->Disable_Panels(true);
+	App->Show_Panels(false);
+
+	Message_Editor_PosX = 10;
+	Message_Editor_PosY = 10;
+	Message_Editor_StartPos = 0;
+	Message_Index = Index;
+
+	Centre_X_Selected = App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->PosXCentre_Flag;
+	Centre_Y_Selected = App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->PosYCentre_Flag;
+
+	color = ImVec4(App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->Text_Colour.x / 255.0f,
+		App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->Text_Colour.y / 255.0f,
+		App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->Text_Colour.z / 255.0f,
+		255);
+
+	App->SBC_Scene->B_Object[Index]->Show_Message_Flag = 1;
+
+	Show_Dialog_MessageEditor = 1;
+}
+
+// *************************************************************************
+// *		Dialog_MessageEditor:- Terry and Hazel Flanigan 2022  		   *
+// *************************************************************************
+void SB_Gui_Dialogs::Dialog_MessageEditor(void)
+{
+
+	ImGui::SetNextWindowPos(ImVec2(Message_Editor_PosX, Message_Editor_PosY), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowSize(ImVec2(200, 300), ImGuiCond_FirstUseEver);
+
+	if (!ImGui::Begin("Message Editor", &Show_Dialog_MessageEditor, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize))
+	{
+		ImGui::End();
+	}
+	else
+	{
+		if (Message_Editor_StartPos == 0)
+		{
+			Message_Editor_PosX = 10;
+			Message_Editor_PosY = 10;
+			ImGui::SetWindowPos("Message Editor", ImVec2(Message_Editor_PosX, Message_Editor_PosY));
+
+			Message_Editor_StartPos = 1;
+		}
+
+		float spacingX = ImGui::GetStyle().ItemInnerSpacing.x;
+
+		ImGui::Indent();
+		ImGui::Spacing();
+
+		// ------------------------------------------------------------- Pos X
+		ImGui::InputFloat("X", &App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->Message_PosX, Float_Step, 0, "%.3f");
+		
+		ImGui::Checkbox("Centre X", &Centre_X_Selected);
+
+		if (Centre_X_Selected)
+		{
+			App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->PosXCentre_Flag = 1;
+		}
+		else
+		{
+			App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->PosXCentre_Flag = 0;
+		}
+
+		ImGui::Separator();
+		// ------------------------------------------------------------ - Pos Y
+		ImGui::InputFloat("Y", &App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->Message_PosY, Float_Step, 0, "%.3f");
+
+		ImGui::Checkbox("Centre Y", &Centre_Y_Selected);
+
+		if (Centre_Y_Selected)
+		{
+			App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->PosYCentre_Flag = 1;
+		}
+		else
+		{
+			App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->PosYCentre_Flag = 0;
+		}
+
+		
+		
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Separator();
+		ImGui::Spacing();
+
+		ImGui::Unindent();
+
+		ImGuiColorEditFlags misc_flags = (ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_InputRGB | ImGuiColorEditFlags_Uint8);
+
+		ImGui::ColorEdit3("Text##1", (float*)&color, misc_flags);
+
+		App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->Text_Colour.x = color.x * 255.0f;
+		App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->Text_Colour.y = color.y * 255.0f;
+		App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->Text_Colour.z = color.z * 255.0f;
+
+		ImGui::Checkbox("Show Back Ground", &App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->Show_BackGround);
+
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Indent();
+		ImGui::Indent();
+		ImGui::Indent();
+
+		ImGui::Separator();
+
+		if (ImGui::Button("Close"))
+		{
+			Float_Exit = 1;
+			Show_Dialog_MessageEditor = 0;
+			MessageEditor_Canceld = 0;
+			ImGui::End();
+		}
+
+		//ImGui::SameLine(0.0f, spacingX);
+
+		/*if (ImGui::Button("Close"))
+		{
+			Float_Exit = 1;
+			Show_Dialog_MessageEditor = 0;
+			MessageEditor_Canceld = 1;
+			ImGui::End();
+		}*/
+
+		if (Float_Exit == 0)
+		{
+			MessageEditor_Canceld = 1;
 			ImGui::End();
 		}
 	}

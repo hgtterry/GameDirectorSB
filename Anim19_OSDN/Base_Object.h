@@ -66,6 +66,7 @@ typedef struct Message_type
 	bool PosXCentre_Flag;
 	bool PosYCentre_Flag;
 	Ogre::Vector4 Text_Colour;
+	bool Show_BackGround;
 
 }Message_type;
 

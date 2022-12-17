@@ -32,21 +32,35 @@ public:
 	void Gui_Render_Loop(void);
 
 	void Start_Dialog_Float(float Step, float StartValue, char* Banner);
+	void Start_Dialog_MessageEditor(int Index);
 
+
+	// -------------- Float Dialog
 	bool Show_Dialog_Float;
 	float Float_Step;
-	bool Canceld;
-	bool StartPos;
-	float Message_PosX;
-	float Message_PosY;
-
-	char Banner[MAX_PATH];
-	bool Float_Exit;
+	bool Float_Canceld;
+	bool Float_StartPos;
+	float Float_PosX;
+	float Float_PosY;
 	float m_Dialog_Float;
 	float m_Dialog_Float_Copy;
-	
+	char Float_Banner[MAX_PATH];
+	bool Float_Exit;
+
+	// -------------- Message Editor Dialog
+	bool Centre_X_Selected;
+	bool Centre_Y_Selected;
+	bool Show_Dialog_MessageEditor;
+	bool MessageEditor_Canceld;
+	float Message_Editor_PosX;
+	float Message_Editor_PosY;
+	bool Message_Editor_StartPos;
+	int Message_Index;
+	ImVec4 color;
+
 protected:
 
 	void Dialog_Float(void);
+	void Dialog_MessageEditor(void);
 };
 

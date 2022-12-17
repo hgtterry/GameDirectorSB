@@ -155,11 +155,25 @@ void Base_Object::Render_ImGui_Panel(void)
 {
 	ImGui::SetNextWindowPos(ImVec2(S_Message[0]->Message_PosX, S_Message[0]->Message_PosY));
 
+	ImGuiWindowFlags window_flags = 0;
 
-	if (!ImGui::Begin(ImGui_Panel_Name, &Show_Message_Flag, ImGuiWindowFlags_NoSavedSettings
-		| ImGuiWindowFlags_AlwaysAutoResize
-		| ImGuiWindowFlags_NoResize
-		| ImGuiWindowFlags_NoTitleBar))
+	if (S_Message[0]->Show_BackGround == 1)
+	{
+		window_flags |= ImGuiWindowFlags_NoSavedSettings;
+		window_flags |= ImGuiWindowFlags_NoResize;
+		window_flags |= ImGuiWindowFlags_NoTitleBar;
+		window_flags |= ImGuiWindowFlags_AlwaysAutoResize;
+	}
+	else
+	{
+		window_flags |= ImGuiWindowFlags_NoSavedSettings;
+		window_flags |= ImGuiWindowFlags_NoResize;
+		window_flags |= ImGuiWindowFlags_NoTitleBar;
+		window_flags |= ImGuiWindowFlags_AlwaysAutoResize;
+		window_flags |= ImGuiWindowFlags_NoBackground;
+	}
+	
+	if (!ImGui::Begin(ImGui_Panel_Name, &Show_Message_Flag, window_flags))
 	{
 		ImGui::End();
 	}
@@ -170,13 +184,8 @@ void Base_Object::Render_ImGui_Panel(void)
 
 		ImGui::PushFont(App->CL_Vm_ImGui->font2);
 
-		ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(S_Message[0]->Text_Colour.x,
-			S_Message[0]->Text_Colour.y, 
-			S_Message[0]->Text_Colour.z,
-			S_Message[0]->Text_Colour.w));
-
-
-
+		ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(S_Message[0]->Text_Colour.x,S_Message[0]->Text_Colour.y, S_Message[0]->Text_Colour.z,S_Message[0]->Text_Colour.w));
+		
 		ImGui::Text("%s", S_Message[0]->Message_Text);
 
 		if (S_Message[0]->PosXCentre_Flag == 1)
@@ -189,10 +198,9 @@ void Base_Object::Render_ImGui_Panel(void)
 			S_Message[0]->Message_PosY = ((float)App->SBC_Ogre->OgreListener->View_Height / 2) - (Size.y / 2);
 		}
 
-
 		ImGui::PopFont();
 		ImGui::PopStyleColor();
-
+		
 		ImGui::End();
 	}
 }

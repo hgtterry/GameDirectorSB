@@ -636,14 +636,13 @@ bool SB_Properties::Update_ListView_Messages()
 		pitem.pszText = const_cast<char*>(grid[0][row].c_str());
 		ListView_InsertItem(Properties_hLV, &pitem);
 
-		//ListView_SetItemText
-
 		for (DWORD col = 1; col < NUM_COLS; col++)
 		{
 			ListView_SetItemText(Properties_hLV, row, col,
 				const_cast<char*>(grid[col][row].c_str()));
 		}
 	}
+
 
 	return 1;
 }
@@ -1252,7 +1251,7 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 			//App->SBC_Scene->B_Player[0]->Ground_speed = App->SBC_Gui_Dialogs->m_Dialog_Float * 100;
 		}
 
-		if (App->SBC_Gui_Dialogs->Canceld == 0)
+		if (App->SBC_Gui_Dialogs->Float_Canceld == 0)
 		{
 			App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
 			App->SBC_Scene->B_Player[0]->Ground_speed = App->SBC_Gui_Dialogs->m_Dialog_Float * 100;
@@ -1402,8 +1401,8 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 	result = strcmp(App->SBC_Properties->btext, "Look Up");
 	if (result == 0)
 	{
-		strcpy(App->SBC_Gui_Dialogs->Banner, "Player Look Up Limit");
-		App->SBC_Gui_Dialogs->Canceld = 0;
+		strcpy(App->SBC_Gui_Dialogs->Float_Banner, "Player Look Up Limit");
+		App->SBC_Gui_Dialogs->Float_Canceld = 0;
 		App->SBC_Gui_Dialogs->m_Dialog_Float = App->SBC_Scene->B_Player[0]->Limit_Look_Up;
 		App->SBC_Gui_Dialogs->Show_Dialog_Float = 1;
 
@@ -1412,7 +1411,7 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 			App->SBC_Gui_Dialogs->Ogre_Render_Loop();
 		}
 
-		if (App->SBC_Gui_Dialogs->Canceld == 0)
+		if (App->SBC_Gui_Dialogs->Float_Canceld == 0)
 		{
 			App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
 			App->SBC_Scene->B_Player[0]->Limit_Look_Up = App->SBC_Gui_Dialogs->m_Dialog_Float;
@@ -1430,8 +1429,8 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 	result = strcmp(App->SBC_Properties->btext, "Look Down");
 	if (result == 0)
 	{
-		strcpy(App->SBC_Gui_Dialogs->Banner, "Player Look Down Limit");
-		App->SBC_Gui_Dialogs->Canceld = 0;
+		strcpy(App->SBC_Gui_Dialogs->Float_Banner, "Player Look Down Limit");
+		App->SBC_Gui_Dialogs->Float_Canceld = 0;
 		App->SBC_Gui_Dialogs->m_Dialog_Float = App->SBC_Scene->B_Player[0]->Limit_Look_Down;
 		App->SBC_Gui_Dialogs->Show_Dialog_Float = 1;
 
@@ -1440,7 +1439,7 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 			App->SBC_Gui_Dialogs->Ogre_Render_Loop();
 		}
 
-		if (App->SBC_Gui_Dialogs->Canceld == 0)
+		if (App->SBC_Gui_Dialogs->Float_Canceld == 0)
 		{
 			App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
 			App->SBC_Scene->B_Player[0]->Limit_Look_Down = App->SBC_Gui_Dialogs->m_Dialog_Float;
@@ -1520,9 +1519,26 @@ bool SB_Properties::Edit_Messages_OnClick(LPARAM lParam)
 	result = strcmp(btext, "Pos_X");
 	if (result == 0)
 	{
-		App->SBC_Dialogs->Start_Message_Settings_DLG();
+		App->SBC_Gui_Dialogs->Start_Dialog_MessageEditor(Index);
+
+		while (App->SBC_Gui_Dialogs->Show_Dialog_MessageEditor == 1)
+		{
+			App->SBC_Gui_Dialogs->Ogre_Render_Loop();
+		}
+
+		App->SBC_Scene->B_Object[Index]->Show_Message_Flag = 0;
+
+		App->SBC_Properties->Mark_As_Altered(Index);
+
+		App->Show_Panels(true);
+		App->Disable_Panels(false);
+
+		Update_ListView_Messages();
+		
 		return 1;
 
+		App->SBC_Dialogs->Start_Message_Settings_DLG();
+		
 		strcpy(App->Cl_Dialogs->btext, "Set Position X");
 
 		char buff[256];
@@ -1548,8 +1564,27 @@ bool SB_Properties::Edit_Messages_OnClick(LPARAM lParam)
 	result = strcmp(btext, "Pos_Y");
 	if (result == 0)
 	{
-		App->SBC_Dialogs->Start_Message_Settings_DLG();
+		App->SBC_Gui_Dialogs->Start_Dialog_MessageEditor(Index);
+
+		while (App->SBC_Gui_Dialogs->Show_Dialog_MessageEditor == 1)
+		{
+			App->SBC_Gui_Dialogs->Ogre_Render_Loop();
+		}
+
+		App->SBC_Scene->B_Object[Index]->Show_Message_Flag = 0;
+
+		App->SBC_Properties->Mark_As_Altered(Index);
+
+		App->Show_Panels(true);
+		App->Disable_Panels(false);
+
+		Update_ListView_Messages();
+
 		return 1;
+
+
+		App->SBC_Dialogs->Start_Message_Settings_DLG();
+		
 
 		strcpy(App->Cl_Dialogs->btext, "Set Position Y");
 

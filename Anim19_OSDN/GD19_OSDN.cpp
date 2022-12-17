@@ -399,14 +399,25 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		case ID_DEBUG_TESTIMGUIDIALOG:
 		{
-			if (App->SBC_Gui_Dialogs->Show_Dialog_Float == 1)
+
+			App->SBC_Gui_Dialogs->Start_Dialog_MessageEditor(5);
+
+			while (App->SBC_Gui_Dialogs->Show_Dialog_MessageEditor == 1)
 			{
-				App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
+				App->SBC_Gui_Dialogs->Ogre_Render_Loop();
+			}
+
+			App->Disable_Panels(false);
+			App->Show_Panels(true);
+
+			/*if (App->SBC_Gui_Dialogs->Show_Dialog_MessageEditor == 1)
+			{
+				App->SBC_Gui_Dialogs->Show_Dialog_MessageEditor = 0;
 			}
 			else
 			{
-				App->SBC_Gui_Dialogs->Show_Dialog_Float = 1;
-			}
+				App->SBC_Gui_Dialogs->Show_Dialog_MessageEditor = 1;
+			}*/
 			return 1;
 		}
 
@@ -946,6 +957,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		}
 
 		App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
+		App->SBC_Gui_Dialogs->Show_Dialog_MessageEditor = 0;
 
 		if (App->SBC_Ogre->OgreListener->StopOgre == 0)
 		{
