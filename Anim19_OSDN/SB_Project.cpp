@@ -814,6 +814,12 @@ bool SB_Project::Save_Objects_Data()
 				w = App->SBC_Scene->B_Object[Count]->S_Message[0]->Text_Colour.w;
 				fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Message_Text_Colour=", x, y,z,w);
 
+				x = App->SBC_Scene->B_Object[Count]->S_Message[0]->BackGround_Colour.x;
+				y = App->SBC_Scene->B_Object[Count]->S_Message[0]->BackGround_Colour.y;
+				z = App->SBC_Scene->B_Object[Count]->S_Message[0]->BackGround_Colour.z;
+				w = App->SBC_Scene->B_Object[Count]->S_Message[0]->BackGround_Colour.w;
+				fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Message_BackGround_Colour=", x, y, z, w);
+
 				fprintf(WriteFile, "%s%i\n", "Message_Show_BackGround=", App->SBC_Scene->B_Object[Count]->S_Message[0]->Show_BackGround);
 
 			}
@@ -1681,6 +1687,20 @@ bool SB_Project::Load_Project_Objects()
 			else
 			{
 				App->SBC_Scene->B_Object[Count]->S_Message[0]->Text_Colour = Ogre::Vector4(0, 1, 0 , 255);
+			}
+
+			Test = App->Cl_Ini->GetString(buff, "Message_BackGround_Colour", chr_Tag1, MAX_PATH);
+			if (Test > 0)
+			{
+				sscanf(chr_Tag1, "%f,%f,%f,%f", &x, &y, &z, &w);
+				App->SBC_Scene->B_Object[Count]->S_Message[0]->BackGround_Colour.x = x;
+				App->SBC_Scene->B_Object[Count]->S_Message[0]->BackGround_Colour.y = y;
+				App->SBC_Scene->B_Object[Count]->S_Message[0]->BackGround_Colour.z = z;
+				App->SBC_Scene->B_Object[Count]->S_Message[0]->BackGround_Colour.w = w;
+			}
+			else
+			{
+				App->SBC_Scene->B_Object[Count]->S_Message[0]->BackGround_Colour = Ogre::Vector4(239, 239, 239, 255);
 			}
 
 			App->SBC_Scene->B_Object[Count]->S_Message[0]->Show_BackGround = App->Cl_Ini->GetInt(buff, "Message_Show_BackGround", 1);

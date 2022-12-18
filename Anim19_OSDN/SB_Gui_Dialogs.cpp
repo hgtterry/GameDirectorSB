@@ -55,9 +55,9 @@ SB_Gui_Dialogs::~SB_Gui_Dialogs(void)
 }
 
 // *************************************************************************
-// *			Ogre_Render_Loop:- Terry and Hazel Flanigan 2022		   *
+// *		BackGround_Render_Loop:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
-void SB_Gui_Dialogs::Ogre_Render_Loop(void)
+void SB_Gui_Dialogs::BackGround_Render_Loop(void)
 {
 	Ogre::WindowEventUtilities::messagePump();
 
@@ -105,6 +105,7 @@ void SB_Gui_Dialogs::Start_Dialog_Float(float Step, float StartValue,char* Banne
 
 	Float_PosX = ((float)App->SBC_Ogre->OgreListener->View_Width / 2) - (200 / 2);
 	Float_PosY = ((float)App->SBC_Ogre->OgreListener->View_Height / 2) - (130 / 2);
+
 	Float_StartPos = 0;
 
 	App->SBC_Gui_Dialogs->Show_Dialog_Float = 1;
@@ -118,6 +119,8 @@ void SB_Gui_Dialogs::Dialog_Float(void)
 	
 	ImGui::SetNextWindowPos(ImVec2(Float_PosX, Float_PosY), ImGuiCond_FirstUseEver);
 	ImGui::SetNextWindowSize(ImVec2(200, 130), ImGuiCond_FirstUseEver);
+
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
 
 	if (!ImGui::Begin(Float_Banner, &Show_Dialog_Float, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize))
 	{
@@ -153,7 +156,9 @@ void SB_Gui_Dialogs::Dialog_Float(void)
 		{
 			Float_Exit = 1;
 			Show_Dialog_Float = 0;
+			Float_StartPos = 0;
 			Float_Canceld = 0;
+			ImGui::PopStyleColor();
 			ImGui::End();
 		}
 
@@ -161,15 +166,18 @@ void SB_Gui_Dialogs::Dialog_Float(void)
 
 		if (ImGui::Button("Close"))
 		{
+			Float_StartPos = 0;
 			Float_Exit = 1;
 			Show_Dialog_Float = 0;
 			Float_Canceld = 1;
+			ImGui::PopStyleColor();
 			ImGui::End();
 		}
 		
 		if (Float_Exit == 0)
 		{
 			Float_Canceld = 1;
+			ImGui::PopStyleColor();
 			ImGui::End();
 		}
 	}
@@ -197,9 +205,14 @@ void SB_Gui_Dialogs::Start_Dialog_MessageEditor(int Index)
 	Centre_X_Selected = App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->PosXCentre_Flag;
 	Centre_Y_Selected = App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->PosYCentre_Flag;
 
-	color = ImVec4(App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->Text_Colour.x / 255.0f,
+	Text_color = ImVec4(App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->Text_Colour.x / 255.0f,
 		App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->Text_Colour.y / 255.0f,
 		App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->Text_Colour.z / 255.0f,
+		255);
+
+	BackGround_color = ImVec4(App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->BackGround_Colour.x / 255.0f,
+		App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->BackGround_Colour.y / 255.0f,
+		App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->BackGround_Colour.z / 255.0f,
 		255);
 
 	App->SBC_Scene->B_Object[Index]->Show_Message_Flag = 1;
@@ -214,7 +227,9 @@ void SB_Gui_Dialogs::Dialog_MessageEditor(void)
 {
 
 	ImGui::SetNextWindowPos(ImVec2(Message_Editor_PosX, Message_Editor_PosY), ImGuiCond_FirstUseEver);
-	ImGui::SetNextWindowSize(ImVec2(200, 300), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowSize(ImVec2(200, 340), ImGuiCond_FirstUseEver);
+
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
 
 	if (!ImGui::Begin("Message Editor", &Show_Dialog_MessageEditor, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize))
 	{
@@ -277,11 +292,18 @@ void SB_Gui_Dialogs::Dialog_MessageEditor(void)
 
 		ImGuiColorEditFlags misc_flags = (ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_InputRGB | ImGuiColorEditFlags_Uint8);
 
-		ImGui::ColorEdit3("Text##1", (float*)&color, misc_flags);
 
-		App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->Text_Colour.x = color.x * 255.0f;
-		App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->Text_Colour.y = color.y * 255.0f;
-		App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->Text_Colour.z = color.z * 255.0f;
+		ImGui::ColorEdit3("Text##1", (float*)&Text_color, misc_flags);
+
+		App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->Text_Colour.x = Text_color.x * 255.0f;
+		App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->Text_Colour.y = Text_color.y * 255.0f;
+		App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->Text_Colour.z = Text_color.z * 255.0f;
+
+		ImGui::ColorEdit3("BG##1", (float*)&BackGround_color, misc_flags);
+
+		App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->BackGround_Colour.x = BackGround_color.x * 255.0f;
+		App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->BackGround_Colour.y = BackGround_color.y * 255.0f;
+		App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->BackGround_Colour.z = BackGround_color.z * 255.0f;
 
 		ImGui::Checkbox("Show Back Ground", &App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->Show_BackGround);
 
@@ -294,12 +316,15 @@ void SB_Gui_Dialogs::Dialog_MessageEditor(void)
 		ImGui::Indent();
 
 		ImGui::Separator();
+		ImGui::Spacing();
+		ImGui::Spacing();
 
 		if (ImGui::Button("Close"))
 		{
 			Float_Exit = 1;
 			Show_Dialog_MessageEditor = 0;
 			MessageEditor_Canceld = 0;
+			ImGui::PopStyleColor();
 			ImGui::End();
 		}
 
@@ -316,6 +341,7 @@ void SB_Gui_Dialogs::Dialog_MessageEditor(void)
 		if (Float_Exit == 0)
 		{
 			MessageEditor_Canceld = 1;
+			ImGui::PopStyleColor();
 			ImGui::End();
 		}
 	}

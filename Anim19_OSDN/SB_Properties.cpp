@@ -1247,8 +1247,7 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 
 		while (App->SBC_Gui_Dialogs->Show_Dialog_Float == 1)
 		{
-			App->SBC_Gui_Dialogs->Ogre_Render_Loop();
-			//App->SBC_Scene->B_Player[0]->Ground_speed = App->SBC_Gui_Dialogs->m_Dialog_Float * 100;
+			App->SBC_Gui_Dialogs->BackGround_Render_Loop();
 		}
 
 		if (App->SBC_Gui_Dialogs->Float_Canceld == 0)
@@ -1401,19 +1400,17 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 	result = strcmp(App->SBC_Properties->btext, "Look Up");
 	if (result == 0)
 	{
-		strcpy(App->SBC_Gui_Dialogs->Float_Banner, "Player Look Up Limit");
-		App->SBC_Gui_Dialogs->Float_Canceld = 0;
-		App->SBC_Gui_Dialogs->m_Dialog_Float = App->SBC_Scene->B_Player[0]->Limit_Look_Up;
-		App->SBC_Gui_Dialogs->Show_Dialog_Float = 1;
+		App->SBC_Gui_Dialogs->Start_Dialog_Float(0.5, App->SBC_Scene->B_Player[0]->Limit_Look_Up, "Player Look Up Limit");
 
 		while (App->SBC_Gui_Dialogs->Show_Dialog_Float == 1)
 		{
-			App->SBC_Gui_Dialogs->Ogre_Render_Loop();
+			App->SBC_Gui_Dialogs->BackGround_Render_Loop();
 		}
+
+		App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
 
 		if (App->SBC_Gui_Dialogs->Float_Canceld == 0)
 		{
-			App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
 			App->SBC_Scene->B_Player[0]->Limit_Look_Up = App->SBC_Gui_Dialogs->m_Dialog_Float;
 
 			App->SBC_Scene->B_Player[0]->Altered = 1;
@@ -1421,6 +1418,8 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 			App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);
 		}
 		
+		App->Disable_Panels(false);
+
 		Update_ListView_Player();
 
 		return 1;
@@ -1429,25 +1428,26 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 	result = strcmp(App->SBC_Properties->btext, "Look Down");
 	if (result == 0)
 	{
-		strcpy(App->SBC_Gui_Dialogs->Float_Banner, "Player Look Down Limit");
-		App->SBC_Gui_Dialogs->Float_Canceld = 0;
-		App->SBC_Gui_Dialogs->m_Dialog_Float = App->SBC_Scene->B_Player[0]->Limit_Look_Down;
-		App->SBC_Gui_Dialogs->Show_Dialog_Float = 1;
+		
+		App->SBC_Gui_Dialogs->Start_Dialog_Float(0.5, App->SBC_Scene->B_Player[0]->Limit_Look_Down, "Player Look Down Limit");
 
 		while (App->SBC_Gui_Dialogs->Show_Dialog_Float == 1)
 		{
-			App->SBC_Gui_Dialogs->Ogre_Render_Loop();
+			App->SBC_Gui_Dialogs->BackGround_Render_Loop();
 		}
+
+		App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
 
 		if (App->SBC_Gui_Dialogs->Float_Canceld == 0)
 		{
-			App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
 			App->SBC_Scene->B_Player[0]->Limit_Look_Down = App->SBC_Gui_Dialogs->m_Dialog_Float;
 
 			App->SBC_Scene->B_Player[0]->Altered = 1;
 			App->SBC_Scene->Scene_Modified = 1;
 			App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);
 		}
+
+		App->Disable_Panels(false);
 
 		Update_ListView_Player();
 
@@ -1523,8 +1523,10 @@ bool SB_Properties::Edit_Messages_OnClick(LPARAM lParam)
 
 		while (App->SBC_Gui_Dialogs->Show_Dialog_MessageEditor == 1)
 		{
-			App->SBC_Gui_Dialogs->Ogre_Render_Loop();
+			App->SBC_Gui_Dialogs->BackGround_Render_Loop();
 		}
+
+		App->SBC_Gui_Dialogs->Show_Dialog_MessageEditor = 0;
 
 		App->SBC_Scene->B_Object[Index]->Show_Message_Flag = 0;
 
@@ -1535,29 +1537,6 @@ bool SB_Properties::Edit_Messages_OnClick(LPARAM lParam)
 
 		Update_ListView_Messages();
 		
-		return 1;
-
-		App->SBC_Dialogs->Start_Message_Settings_DLG();
-		
-		strcpy(App->Cl_Dialogs->btext, "Set Position X");
-
-		char buff[256];
-		sprintf(buff, "%.3f", App->SBC_Scene->B_Object[Index]->S_Message[0]->Message_PosX);
-		strcpy(App->Cl_Dialogs->Chr_Float, buff);
-
-		App->Cl_Dialogs->Dialog_Float();
-
-		if (App->Cl_Dialogs->Canceled == 0)
-		{
-
-			App->SBC_Scene->B_Object[Index]->S_Message[0]->Message_PosX = App->Cl_Dialogs->mFloat;
-
-			App->SBC_Properties->Mark_As_Altered(Index);
-
-			Update_ListView_Messages();
-
-		}
-
 		return 1;
 	}
 
@@ -1568,8 +1547,10 @@ bool SB_Properties::Edit_Messages_OnClick(LPARAM lParam)
 
 		while (App->SBC_Gui_Dialogs->Show_Dialog_MessageEditor == 1)
 		{
-			App->SBC_Gui_Dialogs->Ogre_Render_Loop();
+			App->SBC_Gui_Dialogs->BackGround_Render_Loop();
 		}
+
+		App->SBC_Gui_Dialogs->Show_Dialog_MessageEditor = 0;
 
 		App->SBC_Scene->B_Object[Index]->Show_Message_Flag = 0;
 
@@ -1581,30 +1562,6 @@ bool SB_Properties::Edit_Messages_OnClick(LPARAM lParam)
 		Update_ListView_Messages();
 
 		return 1;
-
-
-		App->SBC_Dialogs->Start_Message_Settings_DLG();
-		
-
-		strcpy(App->Cl_Dialogs->btext, "Set Position Y");
-
-		char buff[256];
-		sprintf(buff, "%.3f", App->SBC_Scene->B_Object[Index]->S_Message[0]->Message_PosY);
-		strcpy(App->Cl_Dialogs->Chr_Float, buff);
-
-		App->Cl_Dialogs->Dialog_Float();
-
-		if (App->Cl_Dialogs->Canceled == 0)
-		{
-
-			App->SBC_Scene->B_Object[Index]->S_Message[0]->Message_PosY = App->Cl_Dialogs->mFloat;
-
-			App->SBC_Properties->Mark_As_Altered(Index);
-
-			Update_ListView_Messages();
-
-		}
-
 	}
 
 	// Counter

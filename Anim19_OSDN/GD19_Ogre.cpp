@@ -98,6 +98,8 @@ bool SB_Ogre::InitOgre(void)
 // *************************************************************************
 bool SB_Ogre::Ogre_Render_Loop(void)
 {
+	mRoot->clearEventTimes();
+
 	while (true)
 	{
 		Ogre::WindowEventUtilities::messagePump();

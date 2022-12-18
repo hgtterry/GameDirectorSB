@@ -1497,8 +1497,13 @@ bool SB_Build::Build_Objects_Data()
 				y = App->SBC_Scene->B_Object[Count]->S_Message[0]->Text_Colour.y;
 				z = App->SBC_Scene->B_Object[Count]->S_Message[0]->Text_Colour.z;
 				w = App->SBC_Scene->B_Object[Count]->S_Message[0]->Text_Colour.w;
-
 				fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Message_Text_Colour=", x, y, z, w);
+
+				x = App->SBC_Scene->B_Object[Count]->S_Message[0]->BackGround_Colour.x;
+				y = App->SBC_Scene->B_Object[Count]->S_Message[0]->BackGround_Colour.y;
+				z = App->SBC_Scene->B_Object[Count]->S_Message[0]->BackGround_Colour.z;
+				w = App->SBC_Scene->B_Object[Count]->S_Message[0]->BackGround_Colour.w;
+				fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Message_BackGround_Colour=", x, y, z, w);
 
 				fprintf(WriteFile, "%s%i\n", "Message_Show_BackGround=", App->SBC_Scene->B_Object[Count]->S_Message[0]->Show_BackGround);
 			}

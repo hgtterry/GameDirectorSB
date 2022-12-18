@@ -409,6 +409,8 @@ void VM_ImGui::Object_Selection(void)
 // *************************************************************************
 void VM_ImGui::ImGui_FPS(void)
 {
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239,239, 239, 255));
+
 	if (!ImGui::Begin("Ogre Data", &Show_FPS, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize 
 		| ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
 	{
@@ -431,6 +433,7 @@ void VM_ImGui::ImGui_FPS(void)
 			ImGui::Text("Ogre Frame Time %f", App->SBC_Ogre->OgreListener->OgreFrameTime);
 		}
 		
+		ImGui::PopStyleColor();
 		ImGui::End();
 	}
 }

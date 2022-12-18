@@ -173,6 +173,8 @@ void Base_Object::Render_ImGui_Panel(void)
 		window_flags |= ImGuiWindowFlags_NoBackground;
 	}
 	
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(S_Message[0]->BackGround_Colour.x, S_Message[0]->BackGround_Colour.y, S_Message[0]->BackGround_Colour.z,255));
+
 	if (!ImGui::Begin(ImGui_Panel_Name, &Show_Message_Flag, window_flags))
 	{
 		ImGui::End();
@@ -202,5 +204,7 @@ void Base_Object::Render_ImGui_Panel(void)
 		ImGui::PopStyleColor();
 		
 		ImGui::End();
+
+		
 	}
 }

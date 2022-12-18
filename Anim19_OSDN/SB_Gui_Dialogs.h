@@ -28,7 +28,7 @@ public:
 	SB_Gui_Dialogs(void);
 	~SB_Gui_Dialogs(void);
 
-	void Ogre_Render_Loop(void);
+	void BackGround_Render_Loop(void);
 	void Gui_Render_Loop(void);
 
 	void Start_Dialog_Float(float Step, float StartValue, char* Banner);
@@ -56,7 +56,8 @@ public:
 	float Message_Editor_PosY;
 	bool Message_Editor_StartPos;
 	int Message_Index;
-	ImVec4 color;
+	ImVec4 Text_color;
+	ImVec4 BackGround_color;
 
 protected:
 

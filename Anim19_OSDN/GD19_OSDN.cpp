@@ -404,7 +404,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 			while (App->SBC_Gui_Dialogs->Show_Dialog_MessageEditor == 1)
 			{
-				App->SBC_Gui_Dialogs->Ogre_Render_Loop();
+				App->SBC_Gui_Dialogs->BackGround_Render_Loop();
 			}
 
 			App->Disable_Panels(false);
@@ -1099,7 +1099,8 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 		ImGuiIO& io = ImGui::GetIO();
 
 		io.KeysDown[VK_BACK] = false;
-
+		io.KeysDown[VK_LEFT] = false;
+		io.KeysDown[VK_RIGHT] = false;
 		return 1;
 	}
 
@@ -1121,6 +1122,16 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 		if (wParam == VK_BACK)
 		{
 			io.KeysDown[VK_BACK] = true;
+		}
+
+		if (wParam == VK_RIGHT)
+		{
+			io.KeysDown[VK_RIGHT] = true;
+		}
+
+		if (wParam == VK_LEFT)
+		{
+			io.KeysDown[VK_LEFT] = true;
 		}
 		
 		return 1;

@@ -75,6 +75,7 @@ void Base_Counter::Render_ImGui_Panel(void)
 {
 	ImGui::SetNextWindowPos(ImVec2(PosX,PosY));
 		
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
 
 	if (!ImGui::Begin(ImGui_Panel_Name, &Show_Panel_Flag, ImGuiWindowFlags_NoSavedSettings
 		| ImGuiWindowFlags_AlwaysAutoResize
@@ -92,9 +93,8 @@ void Base_Counter::Render_ImGui_Panel(void)
 
 		ImGui::Text("%s %i",Text, Counter);
 		
-		//PosX = ((float)App->SBC_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);
-
 		ImGui::PopFont();
+		ImGui::PopStyleColor();
 
 		ImGui::End();
 	}
