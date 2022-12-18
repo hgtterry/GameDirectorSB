@@ -113,10 +113,15 @@ Physics_Quat=1.000000,0.000000,0.000000,0.000000
 Dimensions_Lock=0
 ------------------- Message
 Message_Text=You Need 2 Orbs to Open This Gate
-Message_Pos=230.000000,150.000000
+Message_Pos=255.000000,104.500000
 Message_Counter_ID=0
 Message_Trigger_Value=2
 Message_Counter_Disabled=0
+Message_CentreX=1
+Message_CentreY=0
+Message_Text_Colour=0.000000,78.000000,120.000000,255.000000
+Message_BackGround_Colour=201.000000,239.000000,239.000000,255.000000
+Message_Show_BackGround=1
  
 [Object_5]
 Mesh_Name=Mes_Gate1
@@ -135,10 +140,15 @@ Physics_Quat=1.000000,0.000000,0.000000,0.000000
 Dimensions_Lock=0
 ------------------- Message
 Message_Text=You Need 1 Orb to Open This Gate
-Message_Pos=230.000000,150.000000
+Message_Pos=265.500000,296.500000
 Message_Counter_ID=0
 Message_Trigger_Value=1
 Message_Counter_Disabled=0
+Message_CentreX=1
+Message_CentreY=1
+Message_Text_Colour=0.000000,0.000000,255.000000,255.000000
+Message_BackGround_Colour=239.000000,239.000000,239.000000,255.000000
+Message_Show_BackGround=1
  
 [Object_6]
 Mesh_Name=Coll_1
@@ -276,10 +286,15 @@ Physics_Quat=1.000000,0.000000,0.000000,0.000000
 Dimensions_Lock=0
 ------------------- Message
 Message_Text=You Need 3 Orbs to Open This Gate
-Message_Pos=230.000000,150.000000
+Message_Pos=255.000000,296.500000
 Message_Counter_ID=0
 Message_Trigger_Value=3
 Message_Counter_Disabled=0
+Message_CentreX=1
+Message_CentreY=1
+Message_Text_Colour=0.000000,0.000000,255.000000,255.000000
+Message_BackGround_Colour=239.000000,239.000000,239.000000,255.000000
+Message_Show_BackGround=1
  
 [Object_12]
 Mesh_Name=Barrel1_Dynamic
@@ -441,10 +456,15 @@ Physics_Quat=1.000000,0.000000,0.000000,0.000000
 Dimensions_Lock=0
 ------------------- Message
 Message_Text=You Need 5 Orbs to use the Lift
-Message_Pos=230.000000,150.000000
+Message_Pos=636.500000,491.000000
 Message_Counter_ID=0
 Message_Trigger_Value=5
 Message_Counter_Disabled=0
+Message_CentreX=1
+Message_CentreY=1
+Message_Text_Colour=0.000000,0.000000,255.000000,255.000000
+Message_BackGround_Colour=239.000000,239.000000,239.000000,255.000000
+Message_Show_BackGround=1
  
 [Object_20]
 Mesh_Name=Platform
@@ -575,7 +595,7 @@ Object_ID=27
 Object_Type=2
 Object_Shape=1
 Object_Usage=15
-Mesh_Pos=84.589081,-60.099998,574.414063
+Mesh_Pos=84.589081,-60.099998,574.414062
 Mesh_Scale=1.380000,1.000000,1.000000
 Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
