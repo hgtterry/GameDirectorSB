@@ -536,6 +536,7 @@ bool SB_Project::Save_Project_Ini()
 	fprintf(WriteFile, "%s\n", "[Config]");
 	fprintf(WriteFile, "%s%i\n", "Show_FPS=", App->SBC_Build->GameOptions->Show_FPS);
 	fprintf(WriteFile, "%s%i\n", "Game_FullScreen=", App->SBC_Build->GameOptions->FullScreen);
+	fprintf(WriteFile, "%s%i\n", "Zipped_Assets=", App->SBC_Build->GameOptions->Zipped_Assets_Flag);
 
 	fclose(WriteFile);
 
@@ -1460,6 +1461,7 @@ bool SB_Project::Load_Project()
 	
 	App->SBC_Build->GameOptions->Show_FPS = App->Cl_Ini->GetInt("Config", "Show_FPS", 0, 10);
 	App->SBC_Build->GameOptions->FullScreen = App->Cl_Ini->GetInt("Config", "Game_FullScreen", 1, 10);
+	App->SBC_Build->GameOptions->Zipped_Assets_Flag = App->Cl_Ini->GetInt("Config", "Zipped_Assets", 1, 10);
 
 	//-------------------------------------- Set Resource Path
 

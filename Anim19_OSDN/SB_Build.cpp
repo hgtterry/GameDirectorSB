@@ -25,6 +25,7 @@ distribution.
 #include "GD19_App.h"
 #include "resource.h"
 #include "SB_Build.h"
+#include "zip.h"
 
 SB_Build::SB_Build()
 {
@@ -69,9 +70,17 @@ SB_Build::~SB_Build()
 // *************************************************************************
 void SB_Build::Init_Build_Game_Class()
 {
+	HZIP hz;
+
+	hz = CreateZip(_T("Test.zip"), 0);
+	ZipAdd(hz, _T("Barrel_B2.dds"), _T("Barrel_B2.dds"));
+	//ZipAdd(hz, _T("znsimple.txt"), _T("simple.txt"));
+	CloseZip(hz);
+
 	GameOptions = new Game_Options;
 	GameOptions->Show_FPS = 1;
 	GameOptions->FullScreen = 0;
+	GameOptions->Zipped_Assets_Flag = 1;
 }
 
 // *************************************************************************
@@ -342,7 +351,8 @@ LRESULT CALLBACK SB_Build::Build_Options_Dialog_Proc(HWND hDlg, UINT message, WP
 	{
 		SendDlgItemMessage(hDlg, IDC_CK_SHOWFPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CK_FULLSCREEN, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_CK_BO_ZIPFILES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
@@ -355,6 +365,12 @@ LRESULT CALLBACK SB_Build::Build_Options_Dialog_Proc(HWND hDlg, UINT message, WP
 		if (App->SBC_Build->GameOptions->FullScreen == 1)
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_CK_FULLSCREEN);
+			SendMessage(temp, BM_SETCHECK, 1, 0);
+		}
+
+		if (App->SBC_Build->GameOptions->Zipped_Assets_Flag == 1)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_BO_ZIPFILES);
 			SendMessage(temp, BM_SETCHECK, 1, 0);
 		}
 
@@ -373,6 +389,14 @@ LRESULT CALLBACK SB_Build::Build_Options_Dialog_Proc(HWND hDlg, UINT message, WP
 		}
 
 		if (GetDlgItem(hDlg, IDC_CK_FULLSCREEN) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_CK_BO_ZIPFILES) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -439,6 +463,23 @@ LRESULT CALLBACK SB_Build::Build_Options_Dialog_Proc(HWND hDlg, UINT message, WP
 			else
 			{
 				App->SBC_Build->GameOptions->FullScreen = 0;
+			}
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_CK_BO_ZIPFILES)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_BO_ZIPFILES);
+
+			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
+			if (test == BST_CHECKED)
+			{
+				App->SBC_Build->GameOptions->Zipped_Assets_Flag = 1;
+			}
+			else
+			{
+				App->SBC_Build->GameOptions->Zipped_Assets_Flag = 0;
 			}
 
 			return TRUE;
@@ -704,23 +745,6 @@ void SB_Build::Copy_ZipFiles(void)
 	//App->CL10_PB->Nudge();
 }
 
-// *************************************************************************
-// *					Copy_Level_Files Terry Berine					   *
-// *************************************************************************
-void SB_Build::Copy_Level_Files(void)
-{
-	/*----------------------------- GDCore.zip
-	strcpy(SourceFile, LevelsFolder);
-	strcat(SourceFile, "\\");
-	strcat(SourceFile, App->GDCL_Scene_Data->S_Scene[0]->GDSceneName);
-
-	strcpy(App->GDCL_Save_Scene->mLevel_Directory, LevelsFolder);
-	strcat(App->GDCL_Save_Scene->mLevel_Directory, "\\");
-
-	strcpy(App->CL10_File->Full_Path_And_File, SourceFile);
-	App->GDCL_Save_Scene->SaveGDScene_40(0);
-	App->CL10_PB->Nudge();*/
-}
 
 // *************************************************************************
 // *					Copy_Sound_Files Terry Berine					   *
@@ -737,47 +761,6 @@ void SB_Build::Copy_Sound_Files(void)
 	strcat(Destination, "\\");
 
 	Copy_Assets(StartFolder, Destination);
-}
-
-// *************************************************************************
-// *					Create_Game_IniFile Terry Berine				   *
-// *************************************************************************
-void SB_Build::Create_Game_IniFile(void)
-{
-	/*Write_IniFile = 0;
-
-	char buff[2048];
-	strcpy(buff, ProjectFolder);
-	strcat(buff, "\\Load_Level.gds");
-
-	Write_IniFile = fopen(buff, "wt");
-
-	fprintf(Write_IniFile, "%s\n", "[Start_Level]");
-	fprintf(Write_IniFile, "%s%s\n", "First_Level=", App->GDCL_Scene_Data->S_Scene[0]->GDSceneName);
-
-	fclose(Write_IniFile);
-	App->CL10_PB->Nudge();*/
-}
-
-// *************************************************************************
-// *					Create_Config_File Terry Berine					   *
-// *************************************************************************
-void SB_Build::Create_Config_File(void)
-{
-	/*Write_IniFile = 0;
-
-	char buff[2048];
-	strcpy(buff, ProjectFolder);
-	strcat(buff, "\\Config.cfg");
-
-	Write_IniFile = fopen(buff, "wt");
-
-	fprintf(Write_IniFile, "%s\n", "[Config]");
-	fprintf(Write_IniFile, "%s%s\n", "Version=", "1.0");
-	fprintf(Write_IniFile, "%s%i\n", "Full_Screen=", App->CL10_Project->CF_Full_Screen);
-
-	fclose(Write_IniFile);
-	App->CL10_PB->Nudge();*/
 }
 
 // *************************************************************************
@@ -905,6 +888,7 @@ bool SB_Build::Build_Project_Ini()
 	fprintf(WriteFile, "%s\n", "[Config]");
 	fprintf(WriteFile, "%s%i\n", "Show_FPS=", GameOptions->Show_FPS);
 	fprintf(WriteFile, "%s%i\n", "Game_FullScreen=", App->SBC_Build->GameOptions->FullScreen);
+	fprintf(WriteFile, "%s%i\n", "Zipped_Assets=", App->SBC_Build->GameOptions->Zipped_Assets_Flag);
 
 	fclose(WriteFile);
 
@@ -961,7 +945,11 @@ bool SB_Build::Build_Main_Asset_Folder()
 		_chdir(m_Main_Assets_Path);
 	}
 
-	//if (Directory_Changed_Flag == 1)
+	if (GameOptions->Zipped_Assets_Flag == 1)
+	{
+		Zip_Assets(LastFolder, m_Main_Assets_Path);
+	}
+	else
 	{
 		Copy_Assets(LastFolder, m_Main_Assets_Path);
 	}
@@ -1776,7 +1764,6 @@ bool SB_Build::Copy_Assets(char* SourceFolder, char* DestinationFolder)
 
 			if (!(fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
 			{
-
 				strcpy(SourceFile, SourceFolder);
 				strcat(SourceFile, fd.cFileName);
 
@@ -1790,5 +1777,47 @@ bool SB_Build::Copy_Assets(char* SourceFolder, char* DestinationFolder)
 		::FindClose(hFind);
 	}
 
+	return 1;
+}
+
+// *************************************************************************
+// *	  		Zip_Assets:- Terry and Hazel Flanigan 2022				   *
+// *************************************************************************
+bool SB_Build::Zip_Assets(char* SourceFolder, char* DestinationFolder)
+{
+	HZIP hz;
+
+	hz = CreateZip(_T("Assets.zip"), 0);
+
+	char SourceFile[MAX_PATH];
+	char DestinationFile[MAX_PATH];
+
+	char Path[MAX_PATH];
+	strcpy(Path, SourceFolder);
+	strcat(Path, "*.*");
+
+	WIN32_FIND_DATA fd;
+	HANDLE hFind = ::FindFirstFile(Path, &fd);
+	if (hFind != INVALID_HANDLE_VALUE) {
+		do {
+
+			if (!(fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
+			{
+
+				strcpy(SourceFile, SourceFolder);
+				strcat(SourceFile, fd.cFileName);
+
+				strcpy(DestinationFile, DestinationFolder);
+				strcat(DestinationFile, fd.cFileName);
+
+				//CopyFile(SourceFile, DestinationFile, false);
+				ZipAdd(hz, _T(fd.cFileName), _T(SourceFile));
+			}
+
+		} while (::FindNextFile(hFind, &fd));
+		::FindClose(hFind);
+	}
+
+	CloseZip(hz);
 	return 1;
 }

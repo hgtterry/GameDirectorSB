@@ -83,7 +83,6 @@ distribution.
 #include "SB_Project_Create.h"
 #include "SB_Locations.h"
 #include "SB_Gui_Dialogs.h"
-
 // :- Terry and Hazel Flanigan 2022
 
 class GD19_App
@@ -150,7 +149,8 @@ public:
 	SB_Project_Create*		SBC_Project_Create;
 	SB_Locations*			SBC_Locations;
 	SB_Gui_Dialogs*			SBC_Gui_Dialogs;
-
+	//TZip* poop;
+	
 	Com_Diaolgs*			Com_CDialogs;		// Common Dialogs for App [291221]
 	// ----------------------------------- 
 	GD19_App(void);

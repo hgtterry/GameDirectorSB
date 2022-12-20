@@ -26,6 +26,7 @@ typedef struct Game_Options
 {
 	bool Show_FPS;
 	bool FullScreen;
+	bool Zipped_Assets_Flag;
 
 }Game_Options;
 
@@ -56,7 +57,10 @@ protected:
 	bool Build_Project_Ini();
 	bool Build_Level_Folder();
 	bool Build_Main_Asset_Folder();
+
 	bool Copy_Assets(char* SourceFolder, char* DestinationFolder);
+	bool Zip_Assets(char* SourceFolder, char* DestinationFolder);
+
 	bool Build_Area_Folder();
 	bool Build_Areas_Data();
 	bool Build_Players_Folder();
@@ -75,8 +79,6 @@ protected:
 	void Create_ProjectFolder(void);
 	void Copy_SystemFiles(void);
 	void Copy_ZipFiles(void);
-	void Copy_Level_Files(void);
-	void Create_Game_IniFile(void);
 	void Create_Config_File(void);
 
 	bool Directory_Altered;
