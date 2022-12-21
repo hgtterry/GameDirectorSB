@@ -196,6 +196,7 @@
     <ClInclude Include="SB_Com_Environments.h" />
     <ClInclude Include="SB_Com_Messages.h" />
     <ClInclude Include="SB_Com_MoveEntity.h" />
+    <ClInclude Include="SB_Com_Particles.h" />
     <ClInclude Include="SB_Debug.h" />
     <ClInclude Include="SB_Dialogs.h" />
     <ClInclude Include="SB_Dimensions.h" />
@@ -271,6 +272,7 @@
     <ClCompile Include="SB_Com_Environments.cpp" />
     <ClCompile Include="SB_Com_Messages.cpp" />
     <ClCompile Include="SB_Com_MoveEntity.cpp" />
+    <ClCompile Include="SB_Com_Particles.cpp" />
     <ClCompile Include="SB_Debug.cpp" />
     <ClCompile Include="SB_Dialogs.cpp" />
     <ClCompile Include="SB_Dimensions.cpp" />

@@ -356,7 +356,9 @@ namespace Enums
 		FileView_Environments_Folder = 23,
 		FileView_Environments_File = 24,
 		FileView_EnvironEntity_Folder = 25,
-		FileView_EnvironEntity_File = 26
+		FileView_EnvironEntity_File = 26,
+		FileView_Particle_Folder = 27,
+		FileView_Particle_File = 28
 	};
 }
 

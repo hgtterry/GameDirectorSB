@@ -354,6 +354,16 @@ void SB_Properties::ListView_OnClickOptions(LPARAM lParam)
 		return;
 	}
 
+	// Particles
+	if (Edit_Category == Enums::Edit_Particles)
+	{
+		if (Edit_Physics == 0)
+		{
+			Edit_Particle_Onclick(lParam);
+		}
+		return;
+	}
+
 	return;
 }
 
@@ -1135,7 +1145,52 @@ bool SB_Properties::Update_ListView_Level()
 }
 
 // *************************************************************************
-// *					Edit_Object_Onclick  Terry Flanigan				   *
+// *		Update_ListView_Particles:- Terry and Hazel Flanigan 2022 	   *
+// *************************************************************************
+void SB_Properties::Update_ListView_Particles()
+{
+	
+	int index = App->SBC_Properties->Current_Selected_Object;
+
+	char chr_Speed[100];
+
+	//SetDlgItemText(App->EditFX_hWnd,IDC_STNAME,(LPCTSTR)S_Object[index]->Name);
+
+	sprintf(chr_Speed, "%.3f", App->SBC_Scene->B_Object[index]->S_Particle[0]->Particle->getSpeedFactor());
+
+	const int NUM_ITEMS = 4;
+	const int NUM_COLS = 2;
+	string grid[NUM_COLS][NUM_ITEMS]; // string table
+	LV_ITEM pitem;
+	memset(&pitem, 0, sizeof(LV_ITEM));
+	pitem.mask = LVIF_TEXT;
+
+	grid[0][0] = "Name",		grid[1][0] = App->SBC_Scene->B_Object[index]->Mesh_Name;
+	grid[0][1] = "Particle",	grid[1][1] = App->SBC_Scene->B_Object[index]->Mesh_Name;
+	grid[0][2] = " ",			grid[1][2] = " ";
+	grid[0][3] = "Speed",		grid[1][3] = chr_Speed;
+	
+	ListView_DeleteAllItems(Properties_hLV);
+
+	for (DWORD row = 0; row < NUM_ITEMS; row++)
+	{
+		pitem.iItem = row;
+		pitem.pszText = const_cast<char*>(grid[0][row].c_str());
+		ListView_InsertItem(Properties_hLV, &pitem);
+
+		//ListView_SetItemText
+
+		for (DWORD col = 1; col < NUM_COLS; col++)
+		{
+			ListView_SetItemText(Properties_hLV, row, col,
+				const_cast<char*>(grid[col][row].c_str()));
+		}
+	}
+}
+
+
+// *************************************************************************
+// *		Edit_Object_Onclick:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 bool SB_Properties::Edit_Object_Onclick(LPARAM lParam)
 {
@@ -1160,6 +1215,209 @@ bool SB_Properties::Edit_Object_Onclick(LPARAM lParam)
 	return 1;
 }
 
+// *************************************************************************
+// *		Edit_Particle_Onclick:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+void SB_Properties::Edit_Particle_Onclick(LPARAM lParam)
+{
+	int Index = App->SBC_Properties->Current_Selected_Object;
+	int result = 1;
+	int test;
+
+	LPNMLISTVIEW poo = (LPNMLISTVIEW)lParam;
+	test = poo->iItem;
+	ListView_GetItemText(Properties_hLV, test, 0, btext, 20);
+
+	result = strcmp(btext, "Name");
+	if (result == 0)
+	{
+		//strcpy(App->Class_Dlg_Com->btext, "Set Object Name");
+		//strcpy(App->Class_Dlg_Com->Chr_Text, S_Object[Index]->Name);
+
+		//App->Class_Dlg_Com->CheckObjectNames = 1; // Check for duplicates
+
+		//App->Class_Dlg_Com->Dialog_Text(true);
+
+		//if (App->Class_Dlg_Com->Canceled == 0)
+		//{
+		//	strcpy(S_Object[Index]->Name, App->Class_Dlg_Com->Chr_Text);
+		//	App->FileView_Levels_C->ChangeItemName(S_Object[Index]->Name);
+		//	//		Update_ListViewTeleport();
+
+		//}
+	}
+
+	result = strcmp(btext, "Scale");
+	if (result == 0)
+	{
+		/*strcpy(App->Class_Dlg_Com->btext, "Set Particle Scale");
+
+		char buff[256];
+		sprintf(buff, "%f", S_Object[Index]->MeshScale.x);
+		strcpy(App->Class_Dlg_Com->Chr_Float, buff);
+
+		App->Class_Dlg_Com->Dialog_Float();
+
+		if (App->Class_Dlg_Com->Canceled == 0)
+		{
+			S_Object[Index]->MeshScale.x = App->Class_Dlg_Com->mFloat;
+			S_Object[Index]->MeshScale.y = App->Class_Dlg_Com->mFloat;
+			S_Object[Index]->MeshScale.z = App->Class_Dlg_Com->mFloat;
+
+			S_Object[Index]->OgreNode->setScale(S_Object[Index]->MeshScale);
+
+			Update_ListViewParticles();
+		}*/
+	}
+	result = strcmp(btext, "Speed");
+	if (result == 0)
+	{
+		strcpy(App->Cl_Dialogs->btext, "Set Particle Speed");
+
+		char buff[256];
+		sprintf(buff, "%f", App->SBC_Scene->B_Object[Index]->S_Particle[0]->Particle->getSpeedFactor());
+		strcpy(App->Cl_Dialogs->Chr_Float, buff);
+
+		App->Cl_Dialogs->Dialog_Float();
+
+		if (App->Cl_Dialogs->Canceled == 0)
+		{
+			App->SBC_Scene->B_Object[Index]->S_Particle[0]->Particle->setSpeedFactor(App->Cl_Dialogs->mFloat);
+			Update_ListView_Particles();
+		}
+	}
+
+	//	result = strcmp(btext, "Pos X");
+	//	if (result == 0)
+	//	{
+	//		bool TestExsists=0;
+	//		strcpy(App->Dialogs_C->btext,"Set Actor Pos X");
+	//		
+	//		char buff[256];
+	//		sprintf(buff,"%f",S_Object[Index]->MeshPos.x);
+	//		strcpy (App->Dialogs_C->Chr_Float,buff);
+	//
+	//		App->Dialogs_C->Dialog_Float();
+	//
+	//		if (App->Dialogs_C->Canceled==0)
+	//		{
+	//			S_Object[Index]->MeshPos.x = App->Dialogs_C->mFloat;
+	//			
+	//			S_Object[Index]->Nx_Kinetic->setGlobalPosition(S_Object[Index]->MeshPos);
+	//
+	////			Update_ListViewTeleport();
+	//		}
+	//	}
+	//	result = strcmp(btext, "Pos Y");
+	//	if (result == 0)
+	//	{
+	//		bool TestExsists=0;
+	//		strcpy(App->Dialogs_C->btext,"Set Actor Pos Y");
+	//		
+	//		char buff[256];
+	//		sprintf(buff,"%f",S_Object[Index]->MeshPos.y);
+	//		strcpy (App->Dialogs_C->Chr_Float,buff);
+	//
+	//		App->Dialogs_C->Dialog_Float();
+	//
+	//		if (App->Dialogs_C->Canceled==0)
+	//		{
+	//			S_Object[Index]->MeshPos.y = App->Dialogs_C->mFloat;
+	//			
+	//			S_Object[Index]->Nx_Kinetic->setGlobalPosition(S_Object[Index]->MeshPos);
+	//
+	////			Update_ListViewTeleport();
+	//		}
+	//	}
+	//	result = strcmp(btext, "Pos Z");
+	//	if (result == 0)
+	//	{
+	//		bool TestExsists=0;
+	//		strcpy(App->Dialogs_C->btext,"Set Actor Pos Z");
+	//		
+	//		char buff[256];
+	//		sprintf(buff,"%f",S_Object[Index]->MeshPos.z);
+	//		strcpy (App->Dialogs_C->Chr_Float,buff);
+	//
+	//		App->Dialogs_C->Dialog_Float();
+	//
+	//		if (App->Dialogs_C->Canceled==0)
+	//		{
+	//			S_Object[Index]->MeshPos.z = App->Dialogs_C->mFloat;
+	//			
+	//			S_Object[Index]->Nx_Kinetic->setGlobalPosition(S_Object[Index]->MeshPos);
+	//
+	////			Update_ListViewTeleport();
+	//		}
+	//	}
+
+	result = strcmp(btext, "Rot X");
+	if (result == 0)
+	{
+		//strcpy(App->Class_Dlg_Com->btext, "Rotation X");
+
+		//char buff[256];
+		//sprintf(buff, "%.3f", S_Object[Index]->MeshRot.x);
+		//strcpy(App->Class_Dlg_Com->Chr_Float, buff);
+
+		//App->GDC_EdPositionEditor->RotationVector = Enums::Vector_X;
+
+		//App->Class_Dlg_Com->Dialog_Rotation();
+
+		//if (App->Class_Dlg_Com->Canceled == 0)
+		//{
+		//	/*S_Object[Index]->MeshPos.z = App->Dialogs_C->mFloat;
+
+		//	S_Object[Index]->Nx_Kinetic->setGlobalPosition(S_Object[Index]->MeshPos);
+		//	Flags[0]->SceneAltered = 1;*/
+		//	Update_ListViewParticles();
+		//}
+	}
+	result = strcmp(btext, "Rot Y");
+	if (result == 0)
+	{
+		//strcpy(App->Class_Dlg_Com->btext, "Rotation Y");
+
+		//char buff[256];
+		//sprintf(buff, "%.3f", S_Object[Index]->MeshRot.y);
+		//strcpy(App->Class_Dlg_Com->Chr_Float, buff);
+
+		//App->GDC_EdPositionEditor->RotationVector = Enums::Vector_Y;
+
+		//App->Class_Dlg_Com->Dialog_Rotation();
+
+		//if (App->Class_Dlg_Com->Canceled == 0)
+		//{
+		//	/*S_Object[Index]->MeshPos.z = App->Dialogs_C->mFloat;
+
+		//	S_Object[Index]->Nx_Kinetic->setGlobalPosition(S_Object[Index]->MeshPos);
+		//	Flags[0]->SceneAltered = 1;*/
+		//	Update_ListViewParticles();
+		//}
+	}
+	result = strcmp(btext, "Rot Z");
+	if (result == 0)
+	{
+		//strcpy(App->Class_Dlg_Com->btext, "Rotation Z");
+
+		//char buff[256];
+		//sprintf(buff, "%.3f", S_Object[Index]->MeshRot.z);
+		//strcpy(App->Class_Dlg_Com->Chr_Float, buff);
+
+		//App->GDC_EdPositionEditor->RotationVector = Enums::Vector_Z;
+
+		//App->Class_Dlg_Com->Dialog_Rotation();
+
+		//if (App->Class_Dlg_Com->Canceled == 0)
+		//{
+		//	/*S_Object[Index]->MeshPos.z = App->Dialogs_C->mFloat;
+
+		//	S_Object[Index]->Nx_Kinetic->setGlobalPosition(S_Object[Index]->MeshPos);
+		//	Flags[0]->SceneAltered = 1;*/
+		//	Update_ListViewParticles();
+		//}
+	}
+}
 // *************************************************************************
 // *					Edit_Area_Onclick  Terry Flanigan				   *
 // *************************************************************************

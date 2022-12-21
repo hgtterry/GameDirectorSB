@@ -75,6 +75,7 @@ public:
 	HTREEITEM FV_Counters2_Folder;
 	HTREEITEM FV_EntitiesFolder;
 	HTREEITEM FV_Evirons_Folder;
+	HTREEITEM FV_Particles_Folder;
 
 	HMENU hMenu;
 
@@ -105,7 +106,7 @@ protected:
 	HTREEITEM GD_Environment_Folder;
 	HTREEITEM GD_Area_Change_Folder;
 	HTREEITEM GD_Level_Change_Folder;
-	HTREEITEM GD_Particles_Folder;
+	
 	
 	int Context_Selection;
 

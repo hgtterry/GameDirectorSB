@@ -84,6 +84,7 @@ GD19_App::GD19_App(void)
 	SBC_Com_MoveEntity =	nullptr;
 	SBC_Com_Area =			nullptr;
 	SBC_Com_Environments =	nullptr;
+	SBC_Com_Particles =		nullptr;
 
 	SBC_Locations =			nullptr;
 	SBC_Gui_Dialogs =		nullptr;
@@ -185,7 +186,7 @@ GD19_App::GD19_App(void)
 	CursorPosX = 500;
 	CursorPosY = 500;
 
-	Debug_App = 0;
+	Debug_App = 1;
 
 	EquityDirecory_FullPath[0] = 0;
 	ETemp_Folder[0] = 0;
@@ -258,7 +259,8 @@ bool GD19_App::InitApp(void)
 	SBC_Com_Messages =		new SB_Com_Messages();
 	SBC_Com_MoveEntity =	new SB_Com_MoveEntity();
 	SBC_Com_Environments =	new SB_Com_Environments();
-	SBC_Gui_Dialogs =	new SB_Gui_Dialogs();
+	SBC_Gui_Dialogs =		new SB_Gui_Dialogs();
+	SBC_Com_Particles =		new SB_Com_Particles();
 	
 	SBC_Locations =			new SB_Locations();
 	

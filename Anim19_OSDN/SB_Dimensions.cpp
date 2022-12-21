@@ -266,11 +266,14 @@ void SB_Dimensions::ImGui_Position(void)
 				App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
 				App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
 
-				Ogre::Vector3 Centre = App->SBC_Object->Get_BoundingBox_World_Centre(Index);
+				if (App->SBC_Scene->B_Object[Index]->Phys_Body)
+				{
+					Ogre::Vector3 Centre = App->SBC_Object->Get_BoundingBox_World_Centre(Index);
 
-				App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+					App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
 
-				UpDate_Physics_And_Visuals(Index);
+					UpDate_Physics_And_Visuals(Index);
+				}
 			}
 
 			if (PosY_Selected == 1)
@@ -279,10 +282,13 @@ void SB_Dimensions::ImGui_Position(void)
 				App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
 				App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
 
-				Ogre::Vector3 Centre = App->SBC_Object->Get_BoundingBox_World_Centre(Index);
+				if (App->SBC_Scene->B_Object[Index]->Phys_Body)
+				{
+					Ogre::Vector3 Centre = App->SBC_Object->Get_BoundingBox_World_Centre(Index);
 
-				App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
-				UpDate_Physics_And_Visuals(Index);
+					App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+					UpDate_Physics_And_Visuals(Index);
+				}
 			}
 
 			if (PosZ_Selected == 1)
@@ -291,10 +297,13 @@ void SB_Dimensions::ImGui_Position(void)
 				App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
 				App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
 
-				Ogre::Vector3 Centre = App->SBC_Object->Get_BoundingBox_World_Centre(Index);
+				if (App->SBC_Scene->B_Object[Index]->Phys_Body)
+				{
+					Ogre::Vector3 Centre = App->SBC_Object->Get_BoundingBox_World_Centre(Index);
 
-				App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
-				UpDate_Physics_And_Visuals(Index);
+					App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+					UpDate_Physics_And_Visuals(Index);
+				}
 			}
 		}
 	}
@@ -310,10 +319,13 @@ void SB_Dimensions::ImGui_Position(void)
 				App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
 				App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
 
-				Ogre::Vector3 Centre = App->SBC_Object->Get_BoundingBox_World_Centre(Index);
+				if (App->SBC_Scene->B_Object[Index]->Phys_Body)
+				{
+					Ogre::Vector3 Centre = App->SBC_Object->Get_BoundingBox_World_Centre(Index);
 
-				App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
-				UpDate_Physics_And_Visuals(Index);
+					App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+					UpDate_Physics_And_Visuals(Index);
+				}
 			}
 
 			if (PosY_Selected == 1)
@@ -322,10 +334,13 @@ void SB_Dimensions::ImGui_Position(void)
 				App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
 				App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
 
-				Ogre::Vector3 Centre = App->SBC_Object->Get_BoundingBox_World_Centre(Index);
+				if (App->SBC_Scene->B_Object[Index]->Phys_Body)
+				{
+					Ogre::Vector3 Centre = App->SBC_Object->Get_BoundingBox_World_Centre(Index);
 
-				App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
-				UpDate_Physics_And_Visuals(Index);
+					App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+					UpDate_Physics_And_Visuals(Index);
+				}
 			}
 
 			if (PosZ_Selected == 1)
@@ -334,10 +349,13 @@ void SB_Dimensions::ImGui_Position(void)
 				App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
 				App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
 
-				Ogre::Vector3 Centre = App->SBC_Object->Get_BoundingBox_World_Centre(Index);
+				if (App->SBC_Scene->B_Object[Index]->Phys_Body)
+				{
+					Ogre::Vector3 Centre = App->SBC_Object->Get_BoundingBox_World_Centre(Index);
 
-				App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
-				UpDate_Physics_And_Visuals(Index);
+					App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+					UpDate_Physics_And_Visuals(Index);
+				}
 			}
 		}
 	}
@@ -465,11 +483,13 @@ void SB_Dimensions::ImGui_Scale(void)
 				App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
 				App->SBC_Scene->B_Object[Index]->Mesh_Scale = Scale;
 
-				
-				App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
-				App->SBC_Scene->B_Object[Index]->Physics_Scale = Scale;
+				if (App->SBC_Scene->B_Object[Index]->Phys_Body)
+				{
+					App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+					App->SBC_Scene->B_Object[Index]->Physics_Scale = Scale;
 
-				UpDate_Physics_And_Visuals(Index);
+					UpDate_Physics_And_Visuals(Index);
+				}
 			}
 			else
 			{
@@ -479,10 +499,13 @@ void SB_Dimensions::ImGui_Scale(void)
 					App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
 					App->SBC_Scene->B_Object[Index]->Mesh_Scale = Scale;
 
-					App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
-					App->SBC_Scene->B_Object[Index]->Physics_Scale = Scale;
+					if (App->SBC_Scene->B_Object[Index]->Phys_Body)
+					{
+						App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+						App->SBC_Scene->B_Object[Index]->Physics_Scale = Scale;
 
-					UpDate_Physics_And_Visuals(Index);
+						UpDate_Physics_And_Visuals(Index);
+					}
 				}
 
 				if (ScaleY_Selected == 1)
@@ -491,10 +514,13 @@ void SB_Dimensions::ImGui_Scale(void)
 					App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
 					App->SBC_Scene->B_Object[Index]->Mesh_Scale = Scale;
 
-					App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
-					App->SBC_Scene->B_Object[Index]->Physics_Scale = Scale;
+					if (App->SBC_Scene->B_Object[Index]->Phys_Body)
+					{
+						App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+						App->SBC_Scene->B_Object[Index]->Physics_Scale = Scale;
 
-					UpDate_Physics_And_Visuals(Index);
+						UpDate_Physics_And_Visuals(Index);
+					}
 				}
 
 				if (ScaleZ_Selected == 1)
@@ -503,10 +529,13 @@ void SB_Dimensions::ImGui_Scale(void)
 					App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
 					App->SBC_Scene->B_Object[Index]->Mesh_Scale = Scale;
 
-					App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
-					App->SBC_Scene->B_Object[Index]->Physics_Scale = Scale;
+					if (App->SBC_Scene->B_Object[Index]->Phys_Body)
+					{
+						App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+						App->SBC_Scene->B_Object[Index]->Physics_Scale = Scale;
 
-					UpDate_Physics_And_Visuals(Index);
+						UpDate_Physics_And_Visuals(Index);
+					}
 				}
 			}
 		}
@@ -526,10 +555,13 @@ void SB_Dimensions::ImGui_Scale(void)
 				App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
 				App->SBC_Scene->B_Object[Index]->Mesh_Scale = Scale;
 
-				App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
-				App->SBC_Scene->B_Object[Index]->Physics_Scale = Scale;
+				if (App->SBC_Scene->B_Object[Index]->Phys_Body)
+				{
+					App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+					App->SBC_Scene->B_Object[Index]->Physics_Scale = Scale;
 
-				UpDate_Physics_And_Visuals(Index);
+					UpDate_Physics_And_Visuals(Index);
+				}
 			}
 			else
 			{
@@ -539,10 +571,13 @@ void SB_Dimensions::ImGui_Scale(void)
 					App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
 					App->SBC_Scene->B_Object[Index]->Mesh_Scale = Scale;
 
-					App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
-					App->SBC_Scene->B_Object[Index]->Physics_Scale = Scale;
-					
-					UpDate_Physics_And_Visuals(Index);
+					if (App->SBC_Scene->B_Object[Index]->Phys_Body)
+					{
+						App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+						App->SBC_Scene->B_Object[Index]->Physics_Scale = Scale;
+
+						UpDate_Physics_And_Visuals(Index);
+					}
 				}
 
 				if (ScaleY_Selected == 1)
@@ -551,10 +586,13 @@ void SB_Dimensions::ImGui_Scale(void)
 					App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
 					App->SBC_Scene->B_Object[Index]->Mesh_Scale = Scale;
 
-					App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
-					App->SBC_Scene->B_Object[Index]->Physics_Scale = Scale;
-					
-					UpDate_Physics_And_Visuals(Index);
+					if (App->SBC_Scene->B_Object[Index]->Phys_Body)
+					{
+						App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+						App->SBC_Scene->B_Object[Index]->Physics_Scale = Scale;
+
+						UpDate_Physics_And_Visuals(Index);
+					}
 				}
 
 				if (ScaleZ_Selected == 1)
@@ -563,10 +601,13 @@ void SB_Dimensions::ImGui_Scale(void)
 					App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
 					App->SBC_Scene->B_Object[Index]->Mesh_Scale = Scale;
 
-					App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
-					App->SBC_Scene->B_Object[Index]->Physics_Scale = Scale;
-					
-					UpDate_Physics_And_Visuals(Index);
+					if (App->SBC_Scene->B_Object[Index]->Phys_Body)
+					{
+						App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+						App->SBC_Scene->B_Object[Index]->Physics_Scale = Scale;
+
+						UpDate_Physics_And_Visuals(Index);
+					}
 				}
 			}
 		}

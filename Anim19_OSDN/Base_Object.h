@@ -85,6 +85,12 @@ typedef struct Collectable_type
 
 }Collectable_type;
 
+typedef struct Particle_type
+{
+	Ogre::ParticleSystem* Particle;
+
+}Particle_type;
+
 typedef struct Environ_type
 {
 	int Environment_ID;
@@ -196,12 +202,12 @@ public:
 	irrklang::ISound* SndFile;
 	Ogre::Real SndVolume;
 
-	
 	Move_Type* S_MoveType[1];
 	Teleport_type* S_Teleport[1];
 	Collectable_type* S_Collectable[1];
 	Message_type*	S_Message[1];
 	Environ_type*	S_Environ[1];
+	Particle_type*	S_Particle[1];
 
 
 	bool Show_Message_Flag;

@@ -54,7 +54,7 @@ SB_FileView::SB_FileView()
 	GD_Environment_Folder = nullptr;
 	GD_Area_Change_Folder = nullptr;
 	GD_Level_Change_Folder = nullptr;
-	GD_Particles_Folder = nullptr;
+	FV_Particles_Folder = nullptr;
 
 	FV_Counters_Folder = nullptr;
 
@@ -101,7 +101,7 @@ void SB_FileView::Reset_Class()
 	GD_Environment_Folder = nullptr;
 	GD_Area_Change_Folder = nullptr;
 	GD_Level_Change_Folder = nullptr;
-	GD_Particles_Folder = nullptr;
+	FV_Particles_Folder = nullptr;
 
 	FV_Players_Folder = nullptr;
 	FV_Areas_Folder = nullptr;
@@ -478,14 +478,14 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	tvinsert.item.iSelectedImage = 1;
 	FV_Evirons_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
 
-	////----------------------------------------------------
-	//tvinsert.hParent = GD_EntitiesFolder;
-	//tvinsert.hInsertAfter = TVI_LAST;
-	//tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
-	//tvinsert.item.pszText = "Particles";
-	//tvinsert.item.iImage = 0;
-	//tvinsert.item.iSelectedImage = 1;
-	//GD_Particles_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
+	//--------------------------------------- Particles
+	tvinsert.hParent = FV_EntitiesFolder;
+	tvinsert.hInsertAfter = TVI_LAST;
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	tvinsert.item.pszText = "Particles";
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
+	FV_Particles_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
 
 	//--------------------------------------- Collectables
 	tvinsert.hParent = FV_LevelFolder;
@@ -879,55 +879,36 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		return;
 	}
 
-	// Particles
+	// ------------------------------------------------------------ Particles
 	if (!strcmp(FileView_Folder, "Particles")) // Folder
 	{
-		if (App->SBC_Scene->Area_Added == 0)
-		{
-			App->Say("An Area or Building must be Added Firest");
-			return;
-		}
+		App->SBC_FileView->Context_Selection = Enums::FileView_Particle_Folder;
 
-
-		App->SBC_Dialogs->YesNo("Add Entity", "Do you want to add a new Particle Entity now", 1);
-		bool Doit = App->Cl_Dialogs->Canceled;
-		if (Doit == 0)
-		{
-			//App->SBC_Objects_New->Add_New_Particle();
-		}
-
+		App->SBC_Com_Particles->AddParticle();
 		return;
 	}
 
 	if (!strcmp(FileView_File, "Particles"))
 	{
+		App->SBC_FileView->Context_Selection = Enums::FileView_Particle_File;
 
 		HideRightPanes();
 		ShowWindow(App->GD_Properties_Hwnd, 1);
 
-//		App->SBC_Properties->Enable_Delete_Button(1);
-
-		//App->Cl_Object_Props->Is_Player = 0; // Mark as Object selected
-
-		//App->Cl_Object_Props->Selected_Object_Index = Index;
-		App->SBC_Visuals->MarkerBB_Addjust(Index);
-
+		App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
+		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->B_Object[Index]->Dimensions_Locked);
 
 		App->SBC_Properties->Edit_Category = Enums::Edit_Particles;
+
+		//----------------------------------------------------------------------------
 		App->SBC_Properties->Current_Selected_Object = Index;
+		App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
+		App->SBC_Properties->Last_Selected_Object = Index;
+		//----------------------------------------------------------------------------
 
-//		App->SBC_Properties->Update_Transform_Dlg();
+		App->SBC_Visuals->MarkerBB_Addjust(Index);
 
-
-
-		if (App->SBC_Properties->Edit_Physics == 0)
-		{
-			//App->SBC_Properties->Update_ListView_Particles();
-		}
-		else
-		{
-			//App->SBC_Properties->Update_ListView_Physics();
-		}
+		App->SBC_Properties->Update_ListView_Particles();
 
 		return;
 	}

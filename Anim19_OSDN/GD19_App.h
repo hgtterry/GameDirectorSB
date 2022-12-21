@@ -79,6 +79,7 @@ distribution.
 #include "SB_Com_MoveEntity.h"
 #include "SB_Com_Area.h"
 #include "SB_Com_Environments.h"
+#include "SB_Com_Particles.h"
 
 #include "SB_Project_Create.h"
 #include "SB_Locations.h"
@@ -145,6 +146,7 @@ public:
 	SB_Com_MoveEntity*		SBC_Com_MoveEntity;
 	SB_Com_Area*			SBC_Com_Area;
 	SB_Com_Environments*	SBC_Com_Environments;
+	SB_Com_Particles*		SBC_Com_Particles;
 
 	SB_Project_Create*		SBC_Project_Create;
 	SB_Locations*			SBC_Locations;

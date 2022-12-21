@@ -25,7 +25,7 @@ distribution.
 
 #include "GD19_OgreListener.h"
 #include "OgreOverlaySystem.h"
-
+#include <OgreParticleSystem.h>
 #include "ImguiManager.h"
 
 #include "GD_Bt_Render.h"
@@ -80,6 +80,8 @@ public:
 	Ogre::String App_Resource_Group;		// App Resource Group
 	
 	Ogre::OverlaySystem *mOverlaySystem;
+
+	//Ogre::Billboard* sunBillboard;
 
 	GD19_OgreListener*	OgreListener;
 	GD_Bt_Render*	BulletListener;

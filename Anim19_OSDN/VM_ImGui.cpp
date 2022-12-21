@@ -843,7 +843,11 @@ void VM_ImGui::ImGui_Object_Data(void)
 			ImGui::Text("Shape: = %s", App->SBC_LookUps->Chr_Shape);
 			ImGui::Text("Usage: = %s", App->SBC_LookUps->Chr_Usage);
 			ImGui::Text("Object_ID: = %i", App->SBC_Scene->B_Object[Index]->This_Object_UniqueID);
-			ImGui::Text("CollisionFlags: = %i", App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionFlags());
+
+			if (App->SBC_Scene->B_Object[Index]->Phys_Body)
+			{
+				ImGui::Text("CollisionFlags: = %i", App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionFlags());
+			}
 		}
 
 		ImGui::Spacing();
