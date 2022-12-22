@@ -794,7 +794,7 @@ bool SB_Project::Save_Objects_Data()
 			//---------------------------------------------------------------------------------- Message Entity
 			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Message)
 			{
-				fprintf(WriteFile, "%s\n", "------------------- Message");
+				fprintf(WriteFile, "%s\n", "-- Message");
 				fprintf(WriteFile, "%s%s\n", "Message_Text=", App->SBC_Scene->B_Object[Count]->S_Message[0]->Message_Text);
 
 				x = App->SBC_Scene->B_Object[Count]->S_Message[0]->Message_PosX;
@@ -835,6 +835,7 @@ bool SB_Project::Save_Objects_Data()
 			//---------------------------------------------------------------------------------- Colectable Entity
 			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Colectable)
 			{
+				fprintf(WriteFile, "%s\n", "-- Colectable");
 				fprintf(WriteFile, "%s%s\n", "Col_Sound_File=", App->SBC_Scene->B_Object[Count]->S_Collectable[0]->Sound_File);
 				fprintf(WriteFile, "%s%f\n", "Col_Sound_Volume=", App->SBC_Scene->B_Object[Count]->S_Collectable[0]->SndVolume);
 				fprintf(WriteFile, "%s%i\n", "Col_Play=", App->SBC_Scene->B_Object[Count]->S_Collectable[0]->Play);
@@ -848,6 +849,7 @@ bool SB_Project::Save_Objects_Data()
 			//---------------------------------------------------------------------------------- Move Entity
 			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Move)
 			{
+				fprintf(WriteFile, "%s\n", "-- Move Entity");
 				fprintf(WriteFile, "%s%f\n", "Move_Distance=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Move_Distance);
 				fprintf(WriteFile, "%s%i\n", "Move_IsNegative=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->IsNegative);
 			//	fprintf(WriteFile, "%s%s\n", "Move_MeshPos=", App->SBC_Scene->B_Object[Count]->S_MoveType->MeshPos);
@@ -874,6 +876,7 @@ bool SB_Project::Save_Objects_Data()
 			//---------------------------------------------------------------------------------- Teleport Entity
 			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Teleport)
 			{
+				fprintf(WriteFile, "%s\n", "-- Teleport");
 				fprintf(WriteFile, "%s%s\n", "Tele_Goto=", App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Name);
 
 				fprintf(WriteFile, "%s%i\n", "Tele_ID=", App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Location_ID);
@@ -902,6 +905,7 @@ bool SB_Project::Save_Objects_Data()
 			//---------------------------------------------------------------------------------- Environ Entity
 			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_EnvironEntity)
 			{
+				fprintf(WriteFile, "%s\n", "-- Environ");
 				fprintf(WriteFile, "%s\n", "------------------- EnvironEntity");
 				fprintf(WriteFile, "%s%s\n", "Environment_Name=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Environment_Name);
 				fprintf(WriteFile, "%s%i\n", "Environment_ID=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Environment_ID);
@@ -958,7 +962,18 @@ bool SB_Project::Save_Objects_Data()
 
 			}
 
+			//---------------------------------------------------------------------------------- Particle
+			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Particle)
+			{
+				fprintf(WriteFile, "%s\n", "-- Particle");
+				fprintf(WriteFile, "%s%s\n", "Particle_Script=", App->SBC_Scene->B_Object[Count]->S_Particle[0]->ParticleScript);
+				fprintf(WriteFile, "%s%f\n", "Particle_SpeedFactor=", App->SBC_Scene->B_Object[Count]->S_Particle[0]->SpeedFactor);
+
+			}
+
 			fprintf(WriteFile, "%s\n", " ");
+			fprintf(WriteFile, "%s\n", " --------------------------------------------------------------------------------- ");
+			
 			new_Count++;
 		}
 
@@ -1916,6 +1931,21 @@ bool SB_Project::Load_Project_Objects()
 			App->Cl_Ini->GetString(buff, "Fog_Density", chr_Tag1, MAX_PATH);
 			sscanf(chr_Tag1, "%f", &x);
 			App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_Density = x;
+
+		}
+
+		//---------------------------------------------------------------------------------- Particle Enitity
+		if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Particle)
+		{
+			App->SBC_Scene->B_Object[Count]->S_Particle[0] = new Particle_type;
+			App->SBC_Com_Particles->Set_Particle_Defaults(Count);
+
+			App->Cl_Ini->GetString(buff, "Particle_Script", chr_Tag1, MAX_PATH);
+			strcpy(App->SBC_Scene->B_Object[Count]->S_Particle[0]->ParticleScript, chr_Tag1);
+
+			App->Cl_Ini->GetString(buff, "Particle_SpeedFactor", chr_Tag1, MAX_PATH);
+			sscanf(chr_Tag1, "%f", &x);
+			App->SBC_Scene->B_Object[Count]->S_Particle[0]->SpeedFactor = x;
 
 		}
 

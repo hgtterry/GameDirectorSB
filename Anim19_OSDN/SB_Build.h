@@ -73,6 +73,7 @@ protected:
 	bool Build_Display_Data();
 	
 	void Copy_Sound_Files(void);
+	void Copy_Particle_Files(void);
 
 	//------------------------------------------
 	void Read_From_Config(void);
@@ -94,6 +95,7 @@ protected:
 
 	char CoreDataFolder[MAX_PATH];
 	char SoundFolder[MAX_PATH];
+	char ParticleFolder[MAX_PATH];
 
 	//------------------------------------------
 

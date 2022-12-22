@@ -39,6 +39,7 @@ SB_Build::SB_Build()
 
 	CoreDataFolder[0] = 0;
 	SoundFolder[0] = 0;
+	ParticleFolder[0] = 0;
 
 	m_Build_Sub_Folder[0] = 0;
 
@@ -549,6 +550,11 @@ void SB_Build::Create_ProjectFolder(void)
 	strcat(SoundFolder, "Sounds");
 	CreateDirectory(SoundFolder, NULL);
 
+	strcpy(ParticleFolder, MediaFolder);
+	strcat(ParticleFolder, "\\");
+	strcat(ParticleFolder, "New_Particles");
+	CreateDirectory(ParticleFolder, NULL);
+
 	
 //	int TCount = Get_Transfer_Count();
 
@@ -563,6 +569,7 @@ void SB_Build::Create_ProjectFolder(void)
 	//App->CL10_PB->Set_Progress_Text("Copy_ZipFiles");
 	Copy_ZipFiles();
 	Copy_Sound_Files();
+	Copy_Particle_Files();
 
 	App->Say("Game Created");
 
@@ -758,6 +765,23 @@ void SB_Build::Copy_Sound_Files(void)
 
 	char Destination[MAX_PATH];
 	strcpy(Destination, SoundFolder);
+	strcat(Destination, "\\");
+
+	Copy_Assets(StartFolder, Destination);
+}
+
+// *************************************************************************
+// *				Copy_Particle_Files Terry Berine					   *
+// *************************************************************************
+void SB_Build::Copy_Particle_Files(void)
+{
+	char StartFolder[MAX_PATH];
+	strcpy(StartFolder, App->EquityDirecory_FullPath);
+	strcat(StartFolder, "\\");
+	strcat(StartFolder, "Media\\New_Particles\\");
+
+	char Destination[MAX_PATH];
+	strcpy(Destination, ParticleFolder);
 	strcat(Destination, "\\");
 
 	Copy_Assets(StartFolder, Destination);
@@ -1631,8 +1655,18 @@ bool SB_Build::Build_Objects_Data()
 
 			}
 			
+			//---------------------------------------------------------------------------------- Particle
+			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Particle)
+			{
+				fprintf(WriteFile, "%s\n", "-- Particle");
+				fprintf(WriteFile, "%s%s\n", "Particle_Script=", App->SBC_Scene->B_Object[Count]->S_Particle[0]->ParticleScript);
+				fprintf(WriteFile, "%s%f\n", "Particle_SpeedFactor=", App->SBC_Scene->B_Object[Count]->S_Particle[0]->SpeedFactor);
+
+			}
 
 			fprintf(WriteFile, "%s\n", " ");
+			fprintf(WriteFile, "%s\n", " --------------------------------------------------------------------------------- ");
+
 			new_Count++;
 		}
 

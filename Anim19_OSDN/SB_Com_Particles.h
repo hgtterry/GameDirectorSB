@@ -29,11 +29,12 @@ public:
 	SB_Com_Particles();
 	~SB_Com_Particles();
 
-	void AddParticle(void);
+	void Add_New_Particle(void);
 	void CreateParticle(int Index);
+	void Set_Particle_Defaults(int Index);
 
 protected:
 
-	void Set_Particle_Defaults(int Index);
+	
 };
 

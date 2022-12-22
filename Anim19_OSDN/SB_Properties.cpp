@@ -1147,7 +1147,7 @@ bool SB_Properties::Update_ListView_Level()
 // *************************************************************************
 // *		Update_ListView_Particles:- Terry and Hazel Flanigan 2022 	   *
 // *************************************************************************
-void SB_Properties::Update_ListView_Particles()
+bool SB_Properties::Update_ListView_Particles()
 {
 	
 	int index = App->SBC_Properties->Current_Selected_Object;
@@ -1186,6 +1186,8 @@ void SB_Properties::Update_ListView_Particles()
 				const_cast<char*>(grid[col][row].c_str()));
 		}
 	}
+
+	return 1;
 }
 
 
@@ -1283,6 +1285,7 @@ void SB_Properties::Edit_Particle_Onclick(LPARAM lParam)
 		if (App->Cl_Dialogs->Canceled == 0)
 		{
 			App->SBC_Scene->B_Object[Index]->S_Particle[0]->Particle->setSpeedFactor(App->Cl_Dialogs->mFloat);
+			App->SBC_Scene->B_Object[Index]->S_Particle[0]->SpeedFactor = App->Cl_Dialogs->mFloat;
 			Update_ListView_Particles();
 		}
 	}

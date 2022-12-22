@@ -85,12 +85,6 @@ typedef struct Collectable_type
 
 }Collectable_type;
 
-typedef struct Particle_type
-{
-	Ogre::ParticleSystem* Particle;
-
-}Particle_type;
-
 typedef struct Environ_type
 {
 	int Environment_ID;
@@ -127,6 +121,13 @@ typedef struct Environ_type
 
 }Environ_type;
 
+typedef struct Particle_type
+{
+	Ogre::ParticleSystem* Particle;
+	float SpeedFactor;
+	char ParticleScript[MAX_PATH];
+
+}Particle_type;
 
 #pragma once
 class Base_Object

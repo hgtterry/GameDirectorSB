@@ -18,6 +18,7 @@ Mesh_Quat=0.707106,0.000000,0.707106,0.000000
 Physics_Quat=0.707107,0.000000,0.707107,0.000000
 Dimensions_Lock=1
  
+ --------------------------------------------------------------------------------- 
 [Object_1]
 Mesh_Name=MoveGate_1
 Mesh_File=DoorEntity_GD.mesh
@@ -33,6 +34,7 @@ Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
 Dimensions_Lock=0
+-- Move Entity
 Move_Distance=60.000000
 Move_IsNegative=0
 Move_NewPos=0.000000
@@ -49,6 +51,7 @@ Move_Counter_ID=0
 Move_Trigger_Value=1
 Move_Counter_Disabled=0
  
+ --------------------------------------------------------------------------------- 
 [Object_2]
 Mesh_Name=Gate_2
 Mesh_File=Gate.mesh
@@ -65,6 +68,7 @@ Mesh_Quat=1.000000,0.000000,-0.000000,0.000000
 Physics_Quat=1.000000,0.000000,-0.000000,0.000000
 Dimensions_Lock=0
  
+ --------------------------------------------------------------------------------- 
 [Object_3]
 Mesh_Name=MoveGate_2
 Mesh_File=DoorEntity_GD.mesh
@@ -80,6 +84,7 @@ Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
 Dimensions_Lock=0
+-- Move Entity
 Move_Distance=60.000000
 Move_IsNegative=0
 Move_NewPos=0.000000
@@ -96,6 +101,7 @@ Move_Counter_ID=0
 Move_Trigger_Value=2
 Move_Counter_Disabled=0
  
+ --------------------------------------------------------------------------------- 
 [Object_4]
 Mesh_Name=Mes_Gate2
 Mesh_File=Test_cube.mesh
@@ -111,7 +117,7 @@ Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
 Dimensions_Lock=0
-------------------- Message
+-- Message
 Message_Text=You Need 2 Orbs to Open This Gate
 Message_Pos=255.000000,104.500000
 Message_Counter_ID=0
@@ -123,6 +129,7 @@ Message_Text_Colour=0.000000,78.000000,120.000000,255.000000
 Message_BackGround_Colour=201.000000,239.000000,239.000000,255.000000
 Message_Show_BackGround=1
  
+ --------------------------------------------------------------------------------- 
 [Object_5]
 Mesh_Name=Mes_Gate1
 Mesh_File=Test_cube.mesh
@@ -138,7 +145,7 @@ Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
 Dimensions_Lock=0
-------------------- Message
+-- Message
 Message_Text=You Need 1 Orb to Open This Gate
 Message_Pos=265.500000,296.500000
 Message_Counter_ID=0
@@ -150,6 +157,7 @@ Message_Text_Colour=0.000000,0.000000,255.000000,255.000000
 Message_BackGround_Colour=239.000000,239.000000,239.000000,255.000000
 Message_Show_BackGround=1
  
+ --------------------------------------------------------------------------------- 
 [Object_6]
 Mesh_Name=Coll_1
 Mesh_File=Blueball.mesh
@@ -165,6 +173,7 @@ Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
 Dimensions_Lock=0
+-- Colectable
 Col_Sound_File=footstep.ogg
 Col_Sound_Volume=0.500000
 Col_Play=1
@@ -174,6 +183,7 @@ Col_Maths=1
 Col_Value=1
 Col_Disabled=0
  
+ --------------------------------------------------------------------------------- 
 [Object_7]
 Mesh_Name=Coll_2
 Mesh_File=Blueball.mesh
@@ -189,6 +199,7 @@ Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
 Dimensions_Lock=0
+-- Colectable
 Col_Sound_File=footstep.ogg
 Col_Sound_Volume=0.500000
 Col_Play=1
@@ -198,6 +209,7 @@ Col_Maths=1
 Col_Value=1
 Col_Disabled=0
  
+ --------------------------------------------------------------------------------- 
 [Object_8]
 Mesh_Name=Coll_3
 Mesh_File=Blueball.mesh
@@ -213,6 +225,7 @@ Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
 Dimensions_Lock=0
+-- Colectable
 Col_Sound_File=footstep.ogg
 Col_Sound_Volume=0.500000
 Col_Play=1
@@ -222,6 +235,7 @@ Col_Maths=1
 Col_Value=1
 Col_Disabled=0
  
+ --------------------------------------------------------------------------------- 
 [Object_9]
 Mesh_Name=Gate_3
 Mesh_File=Gate.mesh
@@ -238,6 +252,7 @@ Mesh_Quat=0.707107,0.000000,-0.707107,0.000000
 Physics_Quat=0.707107,0.000000,-0.707107,0.000000
 Dimensions_Lock=0
  
+ --------------------------------------------------------------------------------- 
 [Object_10]
 Mesh_Name=MoveGate_3
 Mesh_File=DoorEntity_GD.mesh
@@ -253,6 +268,7 @@ Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
 Dimensions_Lock=0
+-- Move Entity
 Move_Distance=60.000000
 Move_IsNegative=0
 Move_NewPos=0.000000
@@ -269,6 +285,7 @@ Move_Counter_ID=0
 Move_Trigger_Value=3
 Move_Counter_Disabled=0
  
+ --------------------------------------------------------------------------------- 
 [Object_11]
 Mesh_Name=Mess_Gate3
 Mesh_File=Test_cube.mesh
@@ -284,7 +301,7 @@ Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
 Dimensions_Lock=0
-------------------- Message
+-- Message
 Message_Text=You Need 3 Orbs to Open This Gate
 Message_Pos=255.000000,296.500000
 Message_Counter_ID=0
@@ -296,6 +313,7 @@ Message_Text_Colour=0.000000,0.000000,255.000000,255.000000
 Message_BackGround_Colour=239.000000,239.000000,239.000000,255.000000
 Message_Show_BackGround=1
  
+ --------------------------------------------------------------------------------- 
 [Object_12]
 Mesh_Name=Barrel1_Dynamic
 Mesh_File=Barrel_B2.mesh
@@ -312,6 +330,7 @@ Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
 Dimensions_Lock=0
  
+ --------------------------------------------------------------------------------- 
 [Object_13]
 Mesh_Name=Barrel2_Dynamic
 Mesh_File=Barrel_B2.mesh
@@ -328,6 +347,7 @@ Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
 Dimensions_Lock=1
  
+ --------------------------------------------------------------------------------- 
 [Object_14]
 Mesh_Name=Barrel3_Dynamic
 Mesh_File=Barrel_B2.mesh
@@ -344,6 +364,7 @@ Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
 Dimensions_Lock=0
  
+ --------------------------------------------------------------------------------- 
 [Object_15]
 Mesh_Name=Coll_4
 Mesh_File=Blueball.mesh
@@ -359,6 +380,7 @@ Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
 Dimensions_Lock=0
+-- Colectable
 Col_Sound_File=footstep.ogg
 Col_Sound_Volume=0.500000
 Col_Play=1
@@ -368,6 +390,7 @@ Col_Maths=1
 Col_Value=1
 Col_Disabled=0
  
+ --------------------------------------------------------------------------------- 
 [Object_16]
 Mesh_Name=Coll_5
 Mesh_File=Blueball.mesh
@@ -383,6 +406,7 @@ Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
 Dimensions_Lock=0
+-- Colectable
 Col_Sound_File=footstep.ogg
 Col_Sound_Volume=0.500000
 Col_Play=1
@@ -392,6 +416,7 @@ Col_Maths=1
 Col_Value=1
 Col_Disabled=0
  
+ --------------------------------------------------------------------------------- 
 [Object_17]
 Mesh_Name=Lift_1
 Mesh_File=cratea2.mesh
@@ -408,6 +433,7 @@ Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
 Dimensions_Lock=0
  
+ --------------------------------------------------------------------------------- 
 [Object_18]
 Mesh_Name=MoveLift_1
 Mesh_File=DoorEntity_GD.mesh
@@ -423,6 +449,7 @@ Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
 Dimensions_Lock=0
+-- Move Entity
 Move_Distance=50.000000
 Move_IsNegative=0
 Move_NewPos=0.000000
@@ -439,6 +466,7 @@ Move_Counter_ID=0
 Move_Trigger_Value=5
 Move_Counter_Disabled=0
  
+ --------------------------------------------------------------------------------- 
 [Object_19]
 Mesh_Name=MesLift_1
 Mesh_File=Test_cube.mesh
@@ -454,7 +482,7 @@ Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
 Dimensions_Lock=0
-------------------- Message
+-- Message
 Message_Text=You Need 5 Orbs to use the Lift
 Message_Pos=636.500000,491.000000
 Message_Counter_ID=0
@@ -466,6 +494,7 @@ Message_Text_Colour=0.000000,0.000000,255.000000,255.000000
 Message_BackGround_Colour=239.000000,239.000000,239.000000,255.000000
 Message_Show_BackGround=1
  
+ --------------------------------------------------------------------------------- 
 [Object_20]
 Mesh_Name=Platform
 Mesh_File=Wall_1.mesh
@@ -482,6 +511,7 @@ Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
 Dimensions_Lock=0
  
+ --------------------------------------------------------------------------------- 
 [Object_21]
 Mesh_Name=Coll_6
 Mesh_File=Blueball.mesh
@@ -497,6 +527,7 @@ Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
 Dimensions_Lock=0
+-- Colectable
 Col_Sound_File=footstep.ogg
 Col_Sound_Volume=0.500000
 Col_Play=1
@@ -506,6 +537,7 @@ Col_Maths=1
 Col_Value=1
 Col_Disabled=0
  
+ --------------------------------------------------------------------------------- 
 [Object_22]
 Mesh_Name=Teleport_Ent_22
 Mesh_File=TeleportSend.mesh
@@ -521,6 +553,7 @@ Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
 Dimensions_Lock=0
+-- Teleport
 Tele_Goto=Area_2
 Tele_ID=0
 Tele_Sound=magicspell.ogg
@@ -530,6 +563,7 @@ Tele_Mesh_Position=24.408169,-47.100010,399.449432
 Tele_Physics_Position=24.408169,-47.100010,399.449432
 Tele_Physics_Rotation=0.000000,0.999989,0.000000,0.004749
  
+ --------------------------------------------------------------------------------- 
 [Object_23]
 Mesh_Name=Area2_Portal
 Mesh_File=GDPortal.mesh
@@ -546,6 +580,7 @@ Mesh_Quat=0.999998,-0.000000,-0.000000,0.000000
 Physics_Quat=1.000000,-0.000000,-0.000000,0.000000
 Dimensions_Lock=0
  
+ --------------------------------------------------------------------------------- 
 [Object_24]
 Mesh_Name=Teleport_Ent_24
 Mesh_File=TeleportSend.mesh
@@ -561,6 +596,7 @@ Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
 Dimensions_Lock=0
+-- Teleport
 Tele_Goto=Start_Location
 Tele_ID=0
 Tele_Sound=magicspell.ogg
@@ -570,6 +606,7 @@ Tele_Mesh_Position=-104.661072,-39.600002,0.354004
 Tele_Physics_Position=-104.661072,-39.600002,0.354004
 Tele_Physics_Rotation=0.000000,0.710346,0.000000,-0.703853
  
+ --------------------------------------------------------------------------------- 
 [Object_25]
 Mesh_Name=Area1_Portal
 Mesh_File=GDPortal.mesh
@@ -586,6 +623,7 @@ Mesh_Quat=0.707106,0.000000,0.707106,0.000000
 Physics_Quat=0.707107,0.000000,0.707107,0.000000
 Dimensions_Lock=0
  
+ --------------------------------------------------------------------------------- 
 [Object_26]
 Mesh_Name=Tunnel_Snd
 Mesh_File=SoundEntity_GD.mesh
@@ -595,7 +633,7 @@ Object_ID=27
 Object_Type=2
 Object_Shape=1
 Object_Usage=15
-Mesh_Pos=84.589081,-60.099998,574.414062
+Mesh_Pos=120.589081,-60.099998,574.414062
 Mesh_Scale=1.380000,1.000000,1.000000
 Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
@@ -604,6 +642,7 @@ Dimensions_Lock=0
 Sound_File=metal_hit.ogg
 Sound_Volume=0.500000
  
+ --------------------------------------------------------------------------------- 
 [Object_27]
 Mesh_Name=Tunnel_Sound
 Mesh_File=Tunnel.mesh
@@ -613,13 +652,14 @@ Object_ID=28
 Object_Type=3
 Object_Shape=6
 Object_Usage=-1
-Mesh_Pos=84.963760,-59.099998,587.812744
+Mesh_Pos=120.963760,-59.099998,587.812744
 Mesh_Scale=0.990000,0.770000,0.990000
 Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=0.999997,0.000000,-0.000000,0.000000
 Physics_Quat=1.000000,0.000000,-0.000000,0.000000
 Dimensions_Lock=0
  
+ --------------------------------------------------------------------------------- 
 [Object_28]
 Mesh_Name=Collectable_28
 Mesh_File=Blueball.mesh
@@ -629,12 +669,13 @@ Object_ID=29
 Object_Type=2
 Object_Shape=1
 Object_Usage=12
-Mesh_Pos=84.832161,-59.580254,598.935242
+Mesh_Pos=123.832153,-59.580254,598.935242
 Mesh_Scale=1.999999,1.999999,1.999999
 Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
 Dimensions_Lock=0
+-- Colectable
 Col_Sound_File=footstep.ogg
 Col_Sound_Volume=0.500000
 Col_Play=1
@@ -644,6 +685,7 @@ Col_Maths=1
 Col_Value=1
 Col_Disabled=0
  
+ --------------------------------------------------------------------------------- 
 [Object_29]
 Mesh_Name=Main1
 Mesh_File=EnvironmentEntity_GD.mesh
@@ -659,6 +701,7 @@ Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
 Dimensions_Lock=0
+-- Environ
 ------------------- EnvironEntity
 Environment_Name=Not_Set
 Environment_ID=0
@@ -666,7 +709,7 @@ Sound_File=The_Sun.ogg
 Snd_Volume=0.500000
 Sound_Play=1
 Sound_Loop=1
-Ambient_Colour=1.000000,1.000000,1.000000
+Ambient_Colour=0.750000,0.750000,0.750000
 Diffuse_Colour=0.000000,0.000000,0.000000
 Specular_Colour=0.000000,0.000000,0.000000
 Light_Position=0.000000,0.000000,0.000000
@@ -683,6 +726,7 @@ Fog_Start=50.000000
 Fog_End=300.000000
 Fog_Density=0.001000
  
+ --------------------------------------------------------------------------------- 
 [Object_30]
 Mesh_Name=Environ_Test
 Mesh_File=EnvironmentEntity_GD.mesh
@@ -692,12 +736,13 @@ Object_ID=39
 Object_Type=2
 Object_Shape=1
 Object_Usage=21
-Mesh_Pos=-29.912102,-60.270267,579.641907
+Mesh_Pos=-103.912102,-60.270267,579.641907
 Mesh_Scale=1.000000,1.000000,1.000000
 Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
 Dimensions_Lock=0
+-- Environ
 ------------------- EnvironEntity
 Environment_Name=Not_Set
 Environment_ID=0
@@ -715,13 +760,14 @@ Sky_Material=Examples/CloudySky
 Sky_Curvature=15.000000
 Sky_Tiling=15.000000
 Sky_Distance=4000.000000
-Fog_On=1
+Fog_On=0
 Fog_Mode=3
 Fog_Colour=1.000000,1.000000,1.000000
 Fog_Start=50.000000
 Fog_End=300.000000
 Fog_Density=0.001000
  
+ --------------------------------------------------------------------------------- 
 [Object_31]
 Mesh_Name=Tunnel_Environ1
 Mesh_File=Tunnel.mesh
@@ -731,13 +777,14 @@ Object_ID=40
 Object_Type=3
 Object_Shape=6
 Object_Usage=-1
-Mesh_Pos=-31.188551,-71.605736,587.356445
+Mesh_Pos=-102.188553,-71.605736,587.356445
 Mesh_Scale=1.000000,1.000000,1.000000
 Mesh_Rot=0.000000,0.000000,0.000000
 Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
 Dimensions_Lock=0
  
+ --------------------------------------------------------------------------------- 
 [Object_32]
 Mesh_Name=Tunnel3
 Mesh_File=Tunnel.mesh
@@ -754,5 +801,80 @@ Mesh_Quat=1.000000,0.000000,0.000000,0.000000
 Physics_Quat=1.000000,0.000000,0.000000,0.000000
 Dimensions_Lock=0
  
+ --------------------------------------------------------------------------------- 
+[Object_33]
+Mesh_Name=Particle_33
+Mesh_File=DoorEntity_GD.mesh
+Mesh_Resource_Path=
+Material_File=Not Found
+Object_ID=43
+Object_Type=0
+Object_Shape=0
+Object_Usage=10
+Mesh_Pos=78.114449,-51.270267,604.754883
+Mesh_Scale=0.044001,0.024001,0.024001
+Mesh_Rot=0.000000,0.000000,0.000000
+Mesh_Quat=1.000000,0.000000,0.000000,0.000000
+Physics_Quat=1.000000,0.000000,0.000000,0.000000
+Dimensions_Lock=0
+-- Particle
+Particle_Script=MySmoke1
+Particle_SpeedFactor=0.300000
+ 
+ --------------------------------------------------------------------------------- 
+[Object_34]
+Mesh_Name=Barrel_1
+Mesh_File=Barrel_B2.mesh
+Mesh_Resource_Path=
+Material_File=Barrel_B2.material
+Object_ID=44
+Object_Type=2
+Object_Shape=1
+Object_Usage=1
+Mesh_Pos=78.122940,-59.635208,605.027466
+Mesh_Scale=0.200001,0.200001,0.200001
+Mesh_Rot=0.000000,0.000000,0.000000
+Mesh_Quat=1.000000,0.000000,0.000000,0.000000
+Physics_Quat=1.000000,0.000000,0.000000,0.000000
+Dimensions_Lock=0
+ 
+ --------------------------------------------------------------------------------- 
+[Object_35]
+Mesh_Name=Object_35
+Mesh_File=Barrel_B2.mesh
+Mesh_Resource_Path=
+Material_File=Barrel_B2.material
+Object_ID=45
+Object_Type=2
+Object_Shape=1
+Object_Usage=1
+Mesh_Pos=-23.346558,-59.313416,605.593018
+Mesh_Scale=0.200001,0.200001,0.200001
+Mesh_Rot=0.000000,0.000000,0.000000
+Mesh_Quat=1.000000,0.000000,0.000000,0.000000
+Physics_Quat=1.000000,0.000000,0.000000,0.000000
+Dimensions_Lock=0
+ 
+ --------------------------------------------------------------------------------- 
+[Object_36]
+Mesh_Name=Particle_36
+Mesh_File=DoorEntity_GD.mesh
+Mesh_Resource_Path=
+Material_File=Not Found
+Object_ID=46
+Object_Type=0
+Object_Shape=0
+Object_Usage=10
+Mesh_Pos=-22.796204,-51.118378,604.757996
+Mesh_Scale=0.044001,0.024001,0.024001
+Mesh_Rot=0.000000,0.000000,0.000000
+Mesh_Quat=1.000000,0.000000,0.000000,0.000000
+Physics_Quat=1.000000,0.000000,0.000000,0.000000
+Dimensions_Lock=0
+-- Particle
+Particle_Script=MySmoke1
+Particle_SpeedFactor=0.700000
+ 
+ --------------------------------------------------------------------------------- 
 [Counters]
-Objects_Count=33
+Objects_Count=37

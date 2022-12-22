@@ -34,9 +34,9 @@ SB_Com_Particles::~SB_Com_Particles()
 }
 
 // *************************************************************************
-// *						AddParticle (Terry Bernie)					   *
+// *			Add_New_Particle:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
-void SB_Com_Particles::AddParticle(void)
+void SB_Com_Particles::Add_New_Particle(void)
 {
 	char B_Name[MAX_PATH];
 	char ConNum[MAX_PATH];
@@ -60,6 +60,7 @@ void SB_Com_Particles::AddParticle(void)
 
 	Ogre::Vector3 Pos = App->SBC_Object->GetPlacement(-50);
 	App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
+	App->SBC_Scene->B_Object[Index]->Mesh_Scale = Ogre::Vector3(1, 1, 1);
 
 	CreateParticle(Index);
 
@@ -74,7 +75,7 @@ void SB_Com_Particles::AddParticle(void)
 }
 
 // *************************************************************************
-// *						CreateParticle (Terry Bernie)				   *
+// *			CreateParticle:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 void SB_Com_Particles::CreateParticle(int Index)
 {
@@ -94,69 +95,7 @@ void SB_Com_Particles::CreateParticle(int Index)
 	strcpy(Mesh_File, Object->Mesh_FileName);
 
 	Object->Object_Ent = App->SBC_Ogre->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->SBC_Ogre->App_Resource_Group);
-	Object->Object_Node = App->SBC_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	Object->Object_Node->attachObject(Object->Object_Ent);
-
-	Object->Object_Node->setVisible(true);
-
-	Object->Object_Node->setOrientation(Object->Mesh_Quat);
-	Object->Object_Node->setPosition(Object->Mesh_Pos);
-
-	// ----------------- Physics
-
-	/*AxisAlignedBox worldAAB = Object->Object_Ent->getBoundingBox();
-	worldAAB.transformAffine(Object->Object_Node->_getFullTransform());
-	Ogre::Vector3 Centre = worldAAB.getCenter();
-
-	Object->Physics_Pos = Ogre::Vector3(Centre.x, Centre.y, Centre.z);
-
-	btTransform startTransform;
-	startTransform.setIdentity();
-	startTransform.setRotation(btQuaternion(0, 0, 0, 1));
-
-	btScalar mass;
-	mass = 0.0f;
-
-	btVector3 localInertia(0, 0, 0);
-	btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
-	startTransform.setOrigin(initialPosition);
-
-	Ogre::Vector3 Size = App->SBC_Object->GetMesh_BB_Size(Object->Object_Node);
-	float sx = Size.x / 2;
-	float sy = Size.y / 2;
-	float sz = Size.z / 2;
-
-	Object->Physics_Size = Ogre::Vector3(sx, sy, sz);
-
-	btCollisionShape* newRigidShape = new btBoxShape(btVector3(sx, sy, sz));
-	newRigidShape->calculateLocalInertia(mass, localInertia);
-
-	App->SBC_Bullet->collisionShapes.push_back(newRigidShape);
-
-	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
-
-	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, newRigidShape, localInertia);
-
-	Object->Phys_Body = new btRigidBody(rbInfo);
-	Object->Phys_Body->setRestitution(1.0);
-	Object->Phys_Body->setFriction(1.5);
-	Object->Phys_Body->setUserPointer(Object->Object_Node);
-	Object->Phys_Body->setWorldTransform(startTransform);
-
-	Object->Usage = Enums::Usage_Move;
-	Object->Phys_Body->setUserIndex(Enums::Usage_Move);
-	Object->Phys_Body->setUserIndex2(Index);
-
-	int f = Object->Phys_Body->getCollisionFlags();
-
-	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT
-		| btCollisionObject::CF_KINEMATIC_OBJECT
-		| btCollisionObject::CF_NO_CONTACT_RESPONSE);
-
-
-	App->SBC_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
-
-	App->SBC_Objects_Create->Set_Physics(Index);*/
+	
 
 	// ----------------------------------------------------------------------
 	char buf[100];
@@ -165,9 +104,8 @@ void SB_Com_Particles::CreateParticle(int Index)
 	strcpy(Name, "TestPart_");
 	strcat(Name, buf);
 
-	Ogre::Vector3 Pos = App->SBC_Ogre->mCamera->getPosition();
 
-	Object->S_Particle[0]->Particle = App->SBC_Ogre->mSceneMgr->createParticleSystem(Name, "MySmoke1");
+	Object->S_Particle[0]->Particle = App->SBC_Ogre->mSceneMgr->createParticleSystem(Name, Object->S_Particle[0]->ParticleScript);
 	Object->S_Particle[0]->Particle->setKeepParticlesInLocalSpace(true);
 
 	Ogre::SceneNode* PartNode = App->SBC_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
@@ -176,22 +114,28 @@ void SB_Com_Particles::CreateParticle(int Index)
 
 	PartNode->setPosition(Object->Mesh_Pos);
 
-	PartNode->setScale(1, 1, 1);
+	PartNode->setScale(Object->Mesh_Scale);
 
 	Object->Object_Node = PartNode;
 
-	Object->Object_Node->setScale(0.2, 0.2, 0.2);
+	Object->Object_Node->setScale(Object->Mesh_Scale);
 
-	Object->S_Particle[0]->Particle->setSpeedFactor(0.5);
+	Object->S_Particle[0]->Particle->setSpeedFactor(Object->S_Particle[0]->SpeedFactor);
 }
+
 
 // *************************************************************************
 // *		Set_Particle_Defaults:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
 void SB_Com_Particles::Set_Particle_Defaults(int Index)
 {
-	App->SBC_Scene->B_Object[Index]->S_Particle[0]->Particle = NULL;
 	App->SBC_Scene->B_Object[Index]->Phys_Body = NULL;
+	App->SBC_Scene->B_Object[Index]->Physics_Valid = 0;
+	App->SBC_Scene->B_Object[Index]->Usage = Enums::Usage_Particle;
 
+
+	App->SBC_Scene->B_Object[Index]->S_Particle[0]->Particle = NULL;
+	App->SBC_Scene->B_Object[Index]->S_Particle[0]->SpeedFactor = 0.5;
+	strcpy(App->SBC_Scene->B_Object[Index]->S_Particle[0]->ParticleScript, "MySmoke1");
 
 }

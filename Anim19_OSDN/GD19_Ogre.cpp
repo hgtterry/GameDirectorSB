@@ -180,6 +180,7 @@ bool SB_Ogre::SetUpResources(void)
 
 	//-------------------------------- File System
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/App_Resources" ,"FileSystem", App_Resource_Group);
+	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/New_Particles", "FileSystem", App_Resource_Group);
 	
 	return 1;
 }
