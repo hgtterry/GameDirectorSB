@@ -1233,44 +1233,10 @@ void SB_Properties::Edit_Particle_Onclick(LPARAM lParam)
 	result = strcmp(btext, "Name");
 	if (result == 0)
 	{
-		//strcpy(App->Class_Dlg_Com->btext, "Set Object Name");
-		//strcpy(App->Class_Dlg_Com->Chr_Text, S_Object[Index]->Name);
-
-		//App->Class_Dlg_Com->CheckObjectNames = 1; // Check for duplicates
-
-		//App->Class_Dlg_Com->Dialog_Text(true);
-
-		//if (App->Class_Dlg_Com->Canceled == 0)
-		//{
-		//	strcpy(S_Object[Index]->Name, App->Class_Dlg_Com->Chr_Text);
-		//	App->FileView_Levels_C->ChangeItemName(S_Object[Index]->Name);
-		//	//		Update_ListViewTeleport();
-
-		//}
+		App->SBC_Object->Rename_Object(Index);
+		Update_ListView_Particles();
 	}
 
-	result = strcmp(btext, "Scale");
-	if (result == 0)
-	{
-		/*strcpy(App->Class_Dlg_Com->btext, "Set Particle Scale");
-
-		char buff[256];
-		sprintf(buff, "%f", S_Object[Index]->MeshScale.x);
-		strcpy(App->Class_Dlg_Com->Chr_Float, buff);
-
-		App->Class_Dlg_Com->Dialog_Float();
-
-		if (App->Class_Dlg_Com->Canceled == 0)
-		{
-			S_Object[Index]->MeshScale.x = App->Class_Dlg_Com->mFloat;
-			S_Object[Index]->MeshScale.y = App->Class_Dlg_Com->mFloat;
-			S_Object[Index]->MeshScale.z = App->Class_Dlg_Com->mFloat;
-
-			S_Object[Index]->OgreNode->setScale(S_Object[Index]->MeshScale);
-
-			Update_ListViewParticles();
-		}*/
-	}
 	result = strcmp(btext, "Speed");
 	if (result == 0)
 	{
@@ -1286,141 +1252,15 @@ void SB_Properties::Edit_Particle_Onclick(LPARAM lParam)
 		{
 			App->SBC_Scene->B_Object[Index]->S_Particle[0]->Particle->setSpeedFactor(App->Cl_Dialogs->mFloat);
 			App->SBC_Scene->B_Object[Index]->S_Particle[0]->SpeedFactor = App->Cl_Dialogs->mFloat;
+
+			App->SBC_Properties->Mark_As_Altered(Index);
+
 			Update_ListView_Particles();
 		}
 	}
 
-	//	result = strcmp(btext, "Pos X");
-	//	if (result == 0)
-	//	{
-	//		bool TestExsists=0;
-	//		strcpy(App->Dialogs_C->btext,"Set Actor Pos X");
-	//		
-	//		char buff[256];
-	//		sprintf(buff,"%f",S_Object[Index]->MeshPos.x);
-	//		strcpy (App->Dialogs_C->Chr_Float,buff);
-	//
-	//		App->Dialogs_C->Dialog_Float();
-	//
-	//		if (App->Dialogs_C->Canceled==0)
-	//		{
-	//			S_Object[Index]->MeshPos.x = App->Dialogs_C->mFloat;
-	//			
-	//			S_Object[Index]->Nx_Kinetic->setGlobalPosition(S_Object[Index]->MeshPos);
-	//
-	////			Update_ListViewTeleport();
-	//		}
-	//	}
-	//	result = strcmp(btext, "Pos Y");
-	//	if (result == 0)
-	//	{
-	//		bool TestExsists=0;
-	//		strcpy(App->Dialogs_C->btext,"Set Actor Pos Y");
-	//		
-	//		char buff[256];
-	//		sprintf(buff,"%f",S_Object[Index]->MeshPos.y);
-	//		strcpy (App->Dialogs_C->Chr_Float,buff);
-	//
-	//		App->Dialogs_C->Dialog_Float();
-	//
-	//		if (App->Dialogs_C->Canceled==0)
-	//		{
-	//			S_Object[Index]->MeshPos.y = App->Dialogs_C->mFloat;
-	//			
-	//			S_Object[Index]->Nx_Kinetic->setGlobalPosition(S_Object[Index]->MeshPos);
-	//
-	////			Update_ListViewTeleport();
-	//		}
-	//	}
-	//	result = strcmp(btext, "Pos Z");
-	//	if (result == 0)
-	//	{
-	//		bool TestExsists=0;
-	//		strcpy(App->Dialogs_C->btext,"Set Actor Pos Z");
-	//		
-	//		char buff[256];
-	//		sprintf(buff,"%f",S_Object[Index]->MeshPos.z);
-	//		strcpy (App->Dialogs_C->Chr_Float,buff);
-	//
-	//		App->Dialogs_C->Dialog_Float();
-	//
-	//		if (App->Dialogs_C->Canceled==0)
-	//		{
-	//			S_Object[Index]->MeshPos.z = App->Dialogs_C->mFloat;
-	//			
-	//			S_Object[Index]->Nx_Kinetic->setGlobalPosition(S_Object[Index]->MeshPos);
-	//
-	////			Update_ListViewTeleport();
-	//		}
-	//	}
-
-	result = strcmp(btext, "Rot X");
-	if (result == 0)
-	{
-		//strcpy(App->Class_Dlg_Com->btext, "Rotation X");
-
-		//char buff[256];
-		//sprintf(buff, "%.3f", S_Object[Index]->MeshRot.x);
-		//strcpy(App->Class_Dlg_Com->Chr_Float, buff);
-
-		//App->GDC_EdPositionEditor->RotationVector = Enums::Vector_X;
-
-		//App->Class_Dlg_Com->Dialog_Rotation();
-
-		//if (App->Class_Dlg_Com->Canceled == 0)
-		//{
-		//	/*S_Object[Index]->MeshPos.z = App->Dialogs_C->mFloat;
-
-		//	S_Object[Index]->Nx_Kinetic->setGlobalPosition(S_Object[Index]->MeshPos);
-		//	Flags[0]->SceneAltered = 1;*/
-		//	Update_ListViewParticles();
-		//}
-	}
-	result = strcmp(btext, "Rot Y");
-	if (result == 0)
-	{
-		//strcpy(App->Class_Dlg_Com->btext, "Rotation Y");
-
-		//char buff[256];
-		//sprintf(buff, "%.3f", S_Object[Index]->MeshRot.y);
-		//strcpy(App->Class_Dlg_Com->Chr_Float, buff);
-
-		//App->GDC_EdPositionEditor->RotationVector = Enums::Vector_Y;
-
-		//App->Class_Dlg_Com->Dialog_Rotation();
-
-		//if (App->Class_Dlg_Com->Canceled == 0)
-		//{
-		//	/*S_Object[Index]->MeshPos.z = App->Dialogs_C->mFloat;
-
-		//	S_Object[Index]->Nx_Kinetic->setGlobalPosition(S_Object[Index]->MeshPos);
-		//	Flags[0]->SceneAltered = 1;*/
-		//	Update_ListViewParticles();
-		//}
-	}
-	result = strcmp(btext, "Rot Z");
-	if (result == 0)
-	{
-		//strcpy(App->Class_Dlg_Com->btext, "Rotation Z");
-
-		//char buff[256];
-		//sprintf(buff, "%.3f", S_Object[Index]->MeshRot.z);
-		//strcpy(App->Class_Dlg_Com->Chr_Float, buff);
-
-		//App->GDC_EdPositionEditor->RotationVector = Enums::Vector_Z;
-
-		//App->Class_Dlg_Com->Dialog_Rotation();
-
-		//if (App->Class_Dlg_Com->Canceled == 0)
-		//{
-		//	/*S_Object[Index]->MeshPos.z = App->Dialogs_C->mFloat;
-
-		//	S_Object[Index]->Nx_Kinetic->setGlobalPosition(S_Object[Index]->MeshPos);
-		//	Flags[0]->SceneAltered = 1;*/
-		//	Update_ListViewParticles();
-		//}
-	}
 }
+
 // *************************************************************************
 // *					Edit_Area_Onclick  Terry Flanigan				   *
 // *************************************************************************

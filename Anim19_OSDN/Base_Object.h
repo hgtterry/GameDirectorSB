@@ -121,6 +121,7 @@ typedef struct Environ_type
 
 }Environ_type;
 
+// --------------------------------- Particle
 typedef struct Particle_type
 {
 	Ogre::ParticleSystem* Particle;
@@ -128,6 +129,13 @@ typedef struct Particle_type
 	char ParticleScript[MAX_PATH];
 
 }Particle_type;
+
+// --------------------------------- Particle
+typedef struct Light_type
+{
+	Light* light;
+
+}Light_type;
 
 #pragma once
 class Base_Object
@@ -209,7 +217,7 @@ public:
 	Message_type*	S_Message[1];
 	Environ_type*	S_Environ[1];
 	Particle_type*	S_Particle[1];
-
+	Light_type*		S_Light[1];
 
 	bool Show_Message_Flag;
 	char ImGui_Panel_Name[MAX_PATH];

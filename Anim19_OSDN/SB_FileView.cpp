@@ -50,6 +50,7 @@ SB_FileView::SB_FileView()
 	FV_Collectables_Folder = nullptr;
 	FV_Teleporters_Folder = nullptr;
 	FV_Evirons_Folder = nullptr;
+	FV_Lights_Folder = nullptr;
 
 	GD_Environment_Folder = nullptr;
 	GD_Area_Change_Folder = nullptr;
@@ -487,6 +488,15 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	tvinsert.item.iSelectedImage = 1;
 	FV_Particles_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
 
+	//--------------------------------------- Lights
+	tvinsert.hParent = FV_EntitiesFolder;
+	tvinsert.hInsertAfter = TVI_LAST;
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	tvinsert.item.pszText = "Lights";
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
+	FV_Lights_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+
 	//--------------------------------------- Collectables
 	tvinsert.hParent = FV_LevelFolder;
 	tvinsert.hInsertAfter = TVI_LAST;
@@ -908,6 +918,40 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		App->SBC_Visuals->MarkerBB_Addjust(Index);
 
 		App->SBC_Properties->Update_ListView_Particles();
+
+		return;
+	}
+
+	// ------------------------------------------------------------ Lights
+	if (!strcmp(FileView_Folder, "Lights")) // Folder
+	{
+		//App->SBC_FileView->Context_Selection = Enums::FileView_Particle_Folder;
+		App->SBC_Properties->Current_Selected_Object = Index;
+		//App->SBC_Com_Lights->Add_New_Light();
+		return;
+	}
+
+	if (!strcmp(FileView_File, "Lights"))
+	{
+		//App->SBC_FileView->Context_Selection = Enums::FileView_Particle_File;
+
+		//HideRightPanes();
+		//ShowWindow(App->GD_Properties_Hwnd, 1);
+
+		//App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
+		//App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->B_Object[Index]->Dimensions_Locked);
+
+		//App->SBC_Properties->Edit_Category = Enums::Edit_Particles;
+
+		////----------------------------------------------------------------------------
+		App->SBC_Properties->Current_Selected_Object = Index;
+		////App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
+		////App->SBC_Properties->Last_Selected_Object = Index;
+		////----------------------------------------------------------------------------
+
+		//App->SBC_Visuals->MarkerBB_Addjust(Index);
+
+		//App->SBC_Properties->Update_ListView_Particles();
 
 		return;
 	}

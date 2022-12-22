@@ -23,20 +23,20 @@ distribution.
 
 #include "stdafx.h"
 #include "GD19_App.h"
-#include "SB_Com_Particles.h"
+#include "SB_Com_Lights.h"
 
-SB_Com_Particles::SB_Com_Particles()
+SB_Com_Lights::SB_Com_Lights()
 {
 }
 
-SB_Com_Particles::~SB_Com_Particles()
+SB_Com_Lights::~SB_Com_Lights()
 {
 }
 
 // *************************************************************************
-// *			Add_New_Particle:- Terry and Hazel Flanigan 2022		   *
+// *			Add_New_Light:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
-void SB_Com_Particles::Add_New_Particle(void)
+void SB_Com_Lights::Add_New_Light(void)
 {
 	char B_Name[MAX_PATH];
 	char ConNum[MAX_PATH];
@@ -44,8 +44,9 @@ void SB_Com_Particles::Add_New_Particle(void)
 	int Index = App->SBC_Scene->Object_Count;
 
 	App->SBC_Scene->B_Object[Index] = new Base_Object();
-	App->SBC_Scene->B_Object[Index]->S_Particle[0] = new Particle_type;
-	Set_Particle_Defaults(Index);
+	App->SBC_Scene->B_Object[Index]->S_Light[0] = new Light_type;
+
+	Set_Light_Defaults(Index);
 
 	App->SBC_Scene->B_Object[Index]->Type = Enums::Bullet_Type_None;
 	App->SBC_Scene->B_Object[Index]->Shape = Enums::NoShape;
@@ -53,7 +54,7 @@ void SB_Com_Particles::Add_New_Particle(void)
 
 	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_FileName, "DoorEntity_GD.mesh");
 
-	strcpy_s(B_Name, "Particle_");
+	strcpy_s(B_Name, "Light_");
 	_itoa(Index, ConNum, 10);
 	strcat(B_Name, ConNum);
 	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_Name, B_Name);
@@ -62,9 +63,9 @@ void SB_Com_Particles::Add_New_Particle(void)
 	App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
 	App->SBC_Scene->B_Object[Index]->Mesh_Scale = Ogre::Vector3(1, 1, 1);
 
-	CreateParticle(Index);
+	Create_Light(Index);
 
-	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Particles_Folder, App->SBC_Scene->B_Object[Index]->Mesh_Name, Index, true);
+	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Lights_Folder, App->SBC_Scene->B_Object[Index]->Mesh_Name, Index, true);
 	App->SBC_Scene->B_Object[Index]->FileViewItem = Temp;
 
 	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[Index]->FileViewItem);
@@ -75,9 +76,9 @@ void SB_Com_Particles::Add_New_Particle(void)
 }
 
 // *************************************************************************
-// *			CreateParticle:- Terry and Hazel Flanigan 2022			   *
+// *			Create_Light:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
-void SB_Com_Particles::CreateParticle(int Index)
+void SB_Com_Lights::Create_Light(int Index)
 {
 	char Mesh_File[255];
 	char ConNum[256];
@@ -95,22 +96,25 @@ void SB_Com_Particles::CreateParticle(int Index)
 	strcpy(Mesh_File, Object->Mesh_FileName);
 
 	Object->Object_Ent = App->SBC_Ogre->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->SBC_Ogre->App_Resource_Group);
-	
+
 
 	// ----------------------------------------------------------------------
 	char buf[100];
 	char Name[100];
 	_itoa(Index, buf, 10);
-	strcpy(Name, "TestPart_");
+	strcpy(Name, "Light_");
 	strcat(Name, buf);
 
 
-	Object->S_Particle[0]->Particle = App->SBC_Ogre->mSceneMgr->createParticleSystem(Name, Object->S_Particle[0]->ParticleScript);
-	Object->S_Particle[0]->Particle->setKeepParticlesInLocalSpace(true);
+	Object->S_Light[0]->light = App->SBC_Ogre->mSceneMgr->createLight(buf);
+
+	Object->S_Light[0]->light->setType(Light::LT_SPOTLIGHT);
+	Object->S_Light[0]->light->setPosition(0, 0, 0);
+	Object->S_Light[0]->light->setSpecularColour(ColourValue::White);
 
 	Ogre::SceneNode* PartNode = App->SBC_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 
-	PartNode->attachObject(Object->S_Particle[0]->Particle);
+	PartNode->attachObject(Object->S_Light[0]->light);
 
 	PartNode->setPosition(Object->Mesh_Pos);
 
@@ -121,22 +125,19 @@ void SB_Com_Particles::CreateParticle(int Index)
 	Object->Object_Node->setScale(Object->Mesh_Scale);
 	Object->Object_Node->setOrientation(Object->Mesh_Quat);
 
-	Object->S_Particle[0]->Particle->setSpeedFactor(Object->S_Particle[0]->SpeedFactor);
 }
 
 
 // *************************************************************************
-// *		Set_Particle_Defaults:- Terry and Hazel Flanigan 2022		   *
+// *		Set_Light_Defaults:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
-void SB_Com_Particles::Set_Particle_Defaults(int Index)
+void SB_Com_Lights::Set_Light_Defaults(int Index)
 {
 	App->SBC_Scene->B_Object[Index]->Phys_Body = NULL;
 	App->SBC_Scene->B_Object[Index]->Physics_Valid = 0;
-	App->SBC_Scene->B_Object[Index]->Usage = Enums::Usage_Particle;
+	App->SBC_Scene->B_Object[Index]->Usage = Enums::Usage_Light;
 
 
-	App->SBC_Scene->B_Object[Index]->S_Particle[0]->Particle = NULL;
-	App->SBC_Scene->B_Object[Index]->S_Particle[0]->SpeedFactor = 0.5;
-	strcpy(App->SBC_Scene->B_Object[Index]->S_Particle[0]->ParticleScript, "MySmoke1");
-
+	App->SBC_Scene->B_Object[Index]->S_Light[0]->light = NULL;
+	
 }

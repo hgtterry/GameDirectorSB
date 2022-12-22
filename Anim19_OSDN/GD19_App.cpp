@@ -85,6 +85,7 @@ GD19_App::GD19_App(void)
 	SBC_Com_Area =			nullptr;
 	SBC_Com_Environments =	nullptr;
 	SBC_Com_Particles =		nullptr;
+	SBC_Com_Lights =		nullptr;
 
 	SBC_Locations =			nullptr;
 	SBC_Gui_Dialogs =		nullptr;
@@ -186,7 +187,7 @@ GD19_App::GD19_App(void)
 	CursorPosX = 500;
 	CursorPosY = 500;
 
-	Debug_App = 1;
+	Debug_App = 0;
 
 	EquityDirecory_FullPath[0] = 0;
 	ETemp_Folder[0] = 0;
@@ -252,7 +253,8 @@ bool GD19_App::InitApp(void)
 	SBC_Display =		new SB_Display();
 	SBC_Build =			new SB_Build();
 	SBC_Com_Area =		new SB_Com_Area();
-
+	SBC_Com_Lights =	new SB_Com_Lights();
+	
 	SBC_Project_Create = new SB_Project_Create;
 	
 	SBC_Com_Collectables =	new SB_Com_Collectables();

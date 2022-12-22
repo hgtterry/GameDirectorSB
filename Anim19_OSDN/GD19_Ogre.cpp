@@ -341,7 +341,10 @@ bool SB_Ogre::chooseSceneManager(void)
 	/*Light* light = mSceneMgr->createLight();
 	light->setType(Light::LT_SPOTLIGHT);
 	light->setPosition(0, 0, 0);
-	light->setSpecularColour(ColourValue::White);*/
+	light->setSpecularColour(ColourValue::White);
+
+	Ogre::SceneNode* PartNode = App->SBC_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	PartNode->attachObject(light);*/
 
 	return 1;
 }
