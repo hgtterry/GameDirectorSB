@@ -36,7 +36,7 @@ SB_Com_Particles::~SB_Com_Particles()
 // *************************************************************************
 // *			Add_New_Particle:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
-void SB_Com_Particles::Add_New_Particle(void)
+void SB_Com_Particles::Add_New_Particle(char* Script)
 {
 	char B_Name[MAX_PATH];
 	char ConNum[MAX_PATH];
@@ -46,6 +46,8 @@ void SB_Com_Particles::Add_New_Particle(void)
 	App->SBC_Scene->B_Object[Index] = new Base_Object();
 	App->SBC_Scene->B_Object[Index]->S_Particle[0] = new Particle_type;
 	Set_Particle_Defaults(Index);
+
+	strcpy(App->SBC_Scene->B_Object[Index]->S_Particle[0]->ParticleScript, Script);
 
 	App->SBC_Scene->B_Object[Index]->Type = Enums::Bullet_Type_None;
 	App->SBC_Scene->B_Object[Index]->Shape = Enums::NoShape;
@@ -106,6 +108,11 @@ void SB_Com_Particles::CreateParticle(int Index)
 
 
 	Object->S_Particle[0]->Particle = App->SBC_Ogre->mSceneMgr->createParticleSystem(Name, Object->S_Particle[0]->ParticleScript);
+	if (Object->S_Particle[0]->Particle == NULL)
+	{
+		App->Say("Poop");
+	}
+
 	Object->S_Particle[0]->Particle->setKeepParticlesInLocalSpace(true);
 
 	Ogre::SceneNode* PartNode = App->SBC_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
@@ -134,9 +141,8 @@ void SB_Com_Particles::Set_Particle_Defaults(int Index)
 	App->SBC_Scene->B_Object[Index]->Physics_Valid = 0;
 	App->SBC_Scene->B_Object[Index]->Usage = Enums::Usage_Particle;
 
-
 	App->SBC_Scene->B_Object[Index]->S_Particle[0]->Particle = NULL;
 	App->SBC_Scene->B_Object[Index]->S_Particle[0]->SpeedFactor = 0.5;
-	strcpy(App->SBC_Scene->B_Object[Index]->S_Particle[0]->ParticleScript, "MySmoke1");
+	strcpy(App->SBC_Scene->B_Object[Index]->S_Particle[0]->ParticleScript, "GD_Smoke1");// "GD_JetEngine1");// "GD_Smoke1");
 
 }

@@ -1,0 +1,17 @@
+material GD_JetEngine1_Mat
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			scene_blend add
+			depth_write off
+
+			texture_unit
+			{
+				texture GD_flare.png
+			}
+		}
+	}
+}

@@ -29,7 +29,7 @@ public:
 	SB_Com_Particles();
 	~SB_Com_Particles();
 
-	void Add_New_Particle(void);
+	void Add_New_Particle(char* Script);
 	void CreateParticle(int Index);
 	void Set_Particle_Defaults(int Index);
 

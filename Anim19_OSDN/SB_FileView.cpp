@@ -1706,7 +1706,12 @@ void SB_FileView::Context_New(HWND hDlg)
 		bool Doit = App->SBC_Dialogs->Canceled;
 		if (Doit == 0)
 		{
-			App->SBC_Com_Particles->Add_New_Particle();
+			strcpy(App->SBC_Dialogs->Chr_DropText, "GD_Smoke1");
+			App->SBC_Dialogs->DropList_Data = Enums::DropDialog_Particles;
+			App->SBC_Dialogs->Dialog_DropGen();
+
+			App->SBC_Com_Particles->Add_New_Particle(App->SBC_Dialogs->Chr_DropText);
+
 		}
 
 		return;

@@ -307,7 +307,8 @@ namespace Enums
 		DropDialog_Messages = 5,
 		DropDialog_Display = 6,
 		DropDialog_Maths = 7,
-		DropDialog_Environments = 8
+		DropDialog_Environments = 8,
+		DropDialog_Particles = 9
 	};
 
 	enum ImGui_Groups

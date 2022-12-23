@@ -1,5 +1,5 @@
 
-material Examples/Smoke22
+material GD_Smoke22
 {
     technique
     {
@@ -11,7 +11,7 @@ material Examples/Smoke22
 			diffuse vertexcolor
              texture_unit
              {
-                 texture smoke.png
+                 texture GD_smoke.png
 				 tex_address_mode clamp
              }
          }

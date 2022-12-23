@@ -4,9 +4,13 @@ material ship-blue.bmp.0
     {
          pass
          {
+		 
              texture_unit
              {
-                 texture ship-blue.bmp.0.dds
+                texture ship-blue.bmp.0.dds
+				colour_op_ex add src_texture src_current
+				alpha_op_ex source1 src_manual src_current 0.25			
+				scroll_anim 0.15 0.15
              }
          }
     }

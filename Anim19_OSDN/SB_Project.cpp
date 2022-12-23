@@ -1940,8 +1940,9 @@ bool SB_Project::Load_Project_Objects()
 			App->SBC_Scene->B_Object[Count]->S_Particle[0] = new Particle_type;
 			App->SBC_Com_Particles->Set_Particle_Defaults(Count);
 
-			App->Cl_Ini->GetString(buff, "Particle_Script", chr_Tag1, MAX_PATH);
+			int Test = App->Cl_Ini->GetString(buff, "Particle_Script", chr_Tag1, MAX_PATH);
 			strcpy(App->SBC_Scene->B_Object[Count]->S_Particle[0]->ParticleScript, chr_Tag1);
+
 
 			App->Cl_Ini->GetString(buff, "Particle_SpeedFactor", chr_Tag1, MAX_PATH);
 			sscanf(chr_Tag1, "%f", &x);

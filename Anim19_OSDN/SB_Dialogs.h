@@ -72,5 +72,6 @@ protected:
 	void List_Counters(HWND List);
 	void List_Display(HWND List);
 	void List_Maths(HWND List);
+	void List_Particles(HWND List);
 };
 

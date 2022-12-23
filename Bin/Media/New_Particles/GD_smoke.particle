@@ -1,9 +1,9 @@
 // Example particle systems
 
 
-particle_system MySmoke1
+particle_system GD_Smoke1
 {
-	material Examples/Smoke22
+	material GD_Smoke22
 	particle_width  	55
     	particle_height 	55
     	cull_each       	true
@@ -26,7 +26,7 @@ particle_system MySmoke1
 	
 	affector ColourImage
 	{
-		image		smokecolours.png
+		image		GD_smokecolours.png
 	}
 	
 		affector Rotator

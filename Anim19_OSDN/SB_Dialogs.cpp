@@ -339,6 +339,12 @@ LRESULT CALLBACK SB_Dialogs::Dialog_DropGen_Proc(HWND hDlg, UINT message, WPARAM
 			return TRUE;
 		}
 
+		if (App->SBC_Dialogs->DropList_Data == Enums::DropDialog_Particles)
+		{
+			App->SBC_Dialogs->List_Particles(tempList);
+			return TRUE;
+		}
+
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
@@ -520,6 +526,17 @@ void SB_Dialogs::List_Display(HWND List)
 {
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"Auto");
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"Always");
+
+	SendMessage(List, LB_SELECTSTRING, -1, (LPARAM)App->SBC_Dialogs->Chr_DropText);
+}
+
+// *************************************************************************
+// *			List_Particles:- Terry and Hazel Flanigan 2022		 	   *
+// *************************************************************************
+void SB_Dialogs::List_Particles(HWND List)
+{
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"GD_Smoke1");
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"GD_JetEngine1");
 
 	SendMessage(List, LB_SELECTSTRING, -1, (LPARAM)App->SBC_Dialogs->Chr_DropText);
 }
