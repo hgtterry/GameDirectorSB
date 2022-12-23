@@ -1,0 +1,34 @@
+
+material Test1_Material_0
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture concrete.bmp
+			}
+		}
+
+	}
+
+}
+
+material Test1_Material_1
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture aztec66.bmp
+			}
+		}
+
+	}
+
+}
