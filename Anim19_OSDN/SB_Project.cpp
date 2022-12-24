@@ -1342,6 +1342,7 @@ bool SB_Project::Save_Player_Data()
 		fprintf(WriteFile, "%s%f\n", "Turn_Rate=", App->SBC_Scene->B_Player[Count]->TurnRate);
 		fprintf(WriteFile, "%s%f\n", "Limit_Look_Up=", App->SBC_Scene->B_Player[Count]->Limit_Look_Up);
 		fprintf(WriteFile, "%s%f\n", "Limit_Look_Down=", App->SBC_Scene->B_Player[Count]->Limit_Look_Down);
+		fprintf(WriteFile, "%s%f\n", "Player_Height=", App->SBC_Scene->B_Player[Count]->PlayerHeight);
 
 		Count++;
 	}
@@ -2231,10 +2232,7 @@ bool SB_Project::Load_Project_Player()
 			sscanf(chr_Tag1, "%f", &x);
 			App->SBC_Scene->B_Player[Count]->Limit_Look_Up = x;
 		}
-		else
-		{
-			App->SBC_Scene->B_Player[Count]->Limit_Look_Up = 45;
-		}
+		else{ App->SBC_Scene->B_Player[Count]->Limit_Look_Up = 45; }
 
 		//------------------ Look Down Limit
 		Test = App->Cl_Ini->GetString(buff, "Limit_Look_Down", chr_Tag1, MAX_PATH);
@@ -2243,13 +2241,31 @@ bool SB_Project::Load_Project_Player()
 			sscanf(chr_Tag1, "%f", &x);
 			App->SBC_Scene->B_Player[Count]->Limit_Look_Down = x;
 		}
-		else
+		else{ App->SBC_Scene->B_Player[Count]->Limit_Look_Down = -45; }
+
+		//------------------ Capsule Height
+		Test = App->Cl_Ini->GetString(buff, "Height", chr_Tag1, MAX_PATH);
+		if (Test > 0)
 		{
-			App->SBC_Scene->B_Player[Count]->Limit_Look_Down = -45;
+			sscanf(chr_Tag1, "%f", &x);
+			App->SBC_Scene->B_Player[Count]->Capsule_Height = x;
 		}
+		else { App->SBC_Scene->B_Player[Count]->Capsule_Height = 17; }
+
+		//------------------ Player Height
+		Test = App->Cl_Ini->GetString(buff, "Player_Height", chr_Tag1, MAX_PATH);
+		if (Test > 0)
+		{
+			sscanf(chr_Tag1, "%f", &x);
+			App->SBC_Scene->B_Player[Count]->PlayerHeight = x;
+		}
+		else{ App->SBC_Scene->B_Player[Count]->PlayerHeight = 16; }
+
+
 
 		App->SBC_Scene->B_Player[Count]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Players_Folder, Player_Name, Count, false);
 	
+
 		Count++;
 
 	}

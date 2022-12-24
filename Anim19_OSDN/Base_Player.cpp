@@ -120,8 +120,7 @@ void Base_Player::Move_Player(const btVector3 &walkDirection,float delta)
 	{
 		btVector3 dv = mMoveDirection * (App->SBC_Scene->B_Player[0]->Ground_speed * delta);
 		linearVelocity = dv;
-		linearVelocity[1] = 0;
-
+		linearVelocity[1] = 20;
 	}
 
 	Phys_Body->setLinearVelocity(basis * linearVelocity);

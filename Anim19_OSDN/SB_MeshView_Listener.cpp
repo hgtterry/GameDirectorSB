@@ -39,8 +39,9 @@ SB_MeshView_Listener::SB_MeshView_Listener()
 	Pl_DeltaMouse = 0;
 	Pl_MouseX = 0;
 	Pl_MouseY = 0;
-	Pl_Cent500X = 500;
-	Pl_Cent500Y = 500;
+	
+	Pl_Cent500X = App->CursorPosX;
+	Pl_Cent500Y = App->CursorPosY;
 
 	mMoveSensitivityMouse = 50;
 
