@@ -81,6 +81,7 @@ GD19_OgreListener::GD19_OgreListener(void)
 	
 	mCollisionTools = new MOC::CollisionTools(App->SBC_Ogre->mSceneMgr);
 	mCollisionTools->setHeightAdjust(3.5f);
+	DistanceToCollision = 0;
 
 	CameraMode = 1;  // Model Mode
 
@@ -1092,6 +1093,8 @@ bool GD19_OgreListener::Capture_RightMouse_World(void)
 // *************************************************************************
 bool GD19_OgreListener::SelectEntity_World(void)
 {
+	DistanceToCollision = 0;
+
 	Ogre::SceneNode *mNode;
 	Vector3 oldPos = App->SBC_Ogre->mCamera->getPosition();
 	Pl_mDummyCamera->setPosition(oldPos);
@@ -1110,12 +1113,12 @@ bool GD19_OgreListener::SelectEntity_World(void)
 		mNode = mCollisionTools->pentity->getParentSceneNode();
 
 		Pl_Entity_Name = mCollisionTools->pentity->getName();
+
+		DistanceToCollision = mCollisionTools->distToColl;
+
 		char buff[255];
 		strcpy(buff, Pl_Entity_Name.c_str());
-		//App->Say(buff);
-
-
-		//mNameOverlay->show();
+		
 		App->CL_Vm_ImGui->Show_Object_Selection = 1;
 
 		bool test = Ogre::StringUtil::match("Plane0", Pl_Entity_Name, true);
@@ -1129,11 +1132,8 @@ bool GD19_OgreListener::SelectEntity_World(void)
 			if (test == 1)
 			{
 				Pl_Entity_Name = "Player_1";
-				//OverlayElement* guiName = OverlayManager::getSingleton().getOverlayElement("Core/ObjectName");
-				//guiName->setCaption("Player_1");
-				//mNameOverlay->show();
+				
 				return 1;
-				//mNameOverlay->show();
 			}
 			else
 			{
@@ -1147,21 +1147,14 @@ bool GD19_OgreListener::SelectEntity_World(void)
 				{
 					sscanf((buffer + 6), "%i", &IntNum);
 
-					//if (IntNum > 0)
-					{
-						App->SBC_Visuals->MarkerBB_Addjust(IntNum);
-						Selected_Entity_Index = IntNum;
-						//OverlayElement* guiName = OverlayManager::getSingleton().getOverlayElement("Core/ObjectName");
-						//guiName->setCaption(App->SBC_Scene->B_Object[IntNum]->Mesh_Name);
-						strcpy(Selected_Object_Name, App->SBC_Scene->B_Object[IntNum]->Mesh_Name);
-						//mNameOverlay->show();
-						return 1;
-					}
+					App->SBC_Visuals->MarkerBB_Addjust(IntNum);
+					Selected_Entity_Index = IntNum;
+					strcpy(Selected_Object_Name, App->SBC_Scene->B_Object[IntNum]->Mesh_Name);
+					return 1;
+					
 				}
 			}
 
-			//OverlayElement* guiName = OverlayManager::getSingleton().getOverlayElement("Core/ObjectName");
-			//guiName->setCaption("-------------");
 		}
 
 	}

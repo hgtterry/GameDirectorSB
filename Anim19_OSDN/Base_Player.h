@@ -32,10 +32,22 @@ public:
 	void Jump(const Ogre::Vector3 axis, float force);
 	void Move_Player(const btVector3 &walkDirection,float delta);
 	void Rotate_FromCam(const Ogre::Vector3 axis, float delta, bool normalize);
+	bool SelectEntity_World(void);
 
 	Ogre::Camera*		CameraPitch;
 	Ogre::Entity*		Player_Ent;
 	Ogre::SceneNode*	Player_Node;
+
+	Ogre::Camera* mDummyCamera;
+
+	Vector3		mDummyTranslateVector;
+
+	MOC::CollisionTools* mCollisionTools;
+	Ogre::String Pl_Entity_Name;
+	char Selected_Object_Name[MAX_PATH];
+	int	Selected_Entity_Index;
+	float Compenstate;
+
 
 	btRigidBody *Phys_Body;
 	btCollisionShape *Phys_Shape;

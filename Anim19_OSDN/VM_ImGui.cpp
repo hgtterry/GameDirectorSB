@@ -364,6 +364,7 @@ void VM_ImGui::Object_Selection(void)
 
 		ImGui::Text("Internal Name: = %s",App->SBC_Ogre->OgreListener->Pl_Entity_Name.c_str());
 		ImGui::Text("Object Name: = %s",App->SBC_Ogre->OgreListener->Selected_Object_Name);
+		ImGui::Text("Distance: = %f", App->SBC_Ogre->OgreListener->DistanceToCollision);
 		
 		ImGui::Text("");
 

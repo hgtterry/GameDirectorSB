@@ -28,6 +28,8 @@ distribution.
 
 Base_Player::Base_Player()
 {
+	mDummyCamera = App->SBC_Ogre->mSceneMgr->createCamera("PlayerRay");
+
 	CameraPitch =	nullptr;
 	Player_Ent =	nullptr;
 	Player_Node =	nullptr;
@@ -59,6 +61,8 @@ Base_Player::Base_Player()
 
 	TurnRate = 0.000005;
 
+	Compenstate = 100;
+
 	mOnGround = 1;
 	IsMOving = 0;
 	IsMOving_Back = 0;
@@ -82,6 +86,7 @@ Base_Player::~Base_Player()
 // *************************************************************************
 void Base_Player::Stop(void)
 {
+	SelectEntity_World();
 	Phys_Body->setLinearVelocity(btVector3(0, 0, 0));
 }
 
@@ -90,6 +95,8 @@ void Base_Player::Stop(void)
 // *************************************************************************
 void Base_Player::Jump(const Ogre::Vector3 axis, float force)
 {
+	SelectEntity_World();
+#
 	btVector3 pos = Phys_Body->getWorldTransform().getOrigin();
 	pos[1] = pos[1] + 0.2;
 
@@ -103,6 +110,8 @@ void Base_Player::Jump(const Ogre::Vector3 axis, float force)
 // *************************************************************************
 void Base_Player::Move_Player(const btVector3 &walkDirection,float delta)
 {
+	SelectEntity_World();
+
 	mMoveDirection = walkDirection;
 
 	btTransform transform;
@@ -120,7 +129,7 @@ void Base_Player::Move_Player(const btVector3 &walkDirection,float delta)
 	{
 		btVector3 dv = mMoveDirection * (App->SBC_Scene->B_Player[0]->Ground_speed * delta);
 		linearVelocity = dv;
-		linearVelocity[1] = 20;
+		linearVelocity[1] = Compenstate;
 	}
 
 	Phys_Body->setLinearVelocity(basis * linearVelocity);
@@ -142,5 +151,46 @@ void Base_Player::Rotate_FromCam(const Ogre::Vector3 axis, float delta, bool nor
 
 	xform.setBasis(R);
 	Phys_Body->setWorldTransform(xform);
+}
+
+// *************************************************************************
+// *					SelectEntity_World   Terry Bernie				   *
+// *************************************************************************
+bool Base_Player::SelectEntity_World(void)
+{
+	App->SBC_Ogre->OgreListener->DistanceToCollision = 0;
+
+	Ogre::SceneNode* mNode;
+	Vector3 oldPos = Player_Node->getPosition();
+	mDummyCamera->setPosition(oldPos);
+
+	mDummyTranslateVector = Ogre::Vector3::ZERO;
+
+	mDummyTranslateVector.y = -100.0;
+	mDummyCamera->moveRelative(mDummyTranslateVector);
+
+	if (App->SBC_Ogre->OgreListener->mCollisionTools->collidesWithEntity(oldPos, mDummyCamera->getPosition(), 1.0f, 0, -1))
+	{
+		mNode = App->SBC_Ogre->OgreListener->mCollisionTools->pentity->getParentSceneNode();
+		
+		App->SBC_Ogre->OgreListener->Pl_Entity_Name = App->SBC_Ogre->OgreListener->mCollisionTools->pentity->getName();
+		App->SBC_Ogre->OgreListener->DistanceToCollision = App->SBC_Ogre->OgreListener->mCollisionTools->distToColl;
+
+		if (App->SBC_Ogre->OgreListener->DistanceToCollision > 14)
+		{
+			Compenstate = 100;
+		}
+		else
+		{
+			Compenstate = 0;
+		}
+
+		char buff[255];
+		strcpy(buff, App->SBC_Ogre->OgreListener->Pl_Entity_Name.c_str());
+	
+		App->CL_Vm_ImGui->Show_Object_Selection = 1;
+	}
+
+	return 1;
 }
 

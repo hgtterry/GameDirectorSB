@@ -114,6 +114,7 @@ public:
 	int	Selected_Entity_Index;
 	Ogre::String Pl_Entity_Name;
 	char Selected_Object_Name[MAX_PATH];
+	float DistanceToCollision;
 
 	Ogre::AnimationState*   Animate_State; // needs init
 	Ogre::AnimationState*   Animate_State2;
