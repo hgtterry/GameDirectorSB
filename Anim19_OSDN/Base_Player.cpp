@@ -37,7 +37,7 @@ Base_Player::Base_Player()
 	Phys_Body =		nullptr;
 	Phys_Shape =	nullptr;
 
-	//Player_Xform.
+	mMoveDirection.setValue(0, 0, 0);
 
 	StartPos.x = 0;
 	StartPos.y = 0;
@@ -69,6 +69,8 @@ Base_Player::Base_Player()
 	IsMOving_Right = 0;
 	IsMOving_Left = 0;
 
+	mJump = 0;
+	mJumpSpeed = 4.5;
 	Physics_Debug_On = 1;
 
 	FileViewItem = nullptr;
@@ -95,14 +97,54 @@ void Base_Player::Stop(void)
 // *************************************************************************
 void Base_Player::Jump(const Ogre::Vector3 axis, float force)
 {
+	if (mJump == 0)
+	{
+		mJump = 1;
+	}
+	
 	SelectEntity_World();
-#
+
 	btVector3 pos = Phys_Body->getWorldTransform().getOrigin();
-	pos[1] = pos[1] + 0.2;
+	pos[1] = pos[1] + 0.5;
 
 	Phys_Body->getWorldTransform().setOrigin(btVector3(pos[0], pos[1], pos[2]));
 
 	App->SBC_Player->Check_Collisions_New();
+
+	if (App->SBC_Ogre->OgreListener->DistanceToCollision < 14)
+	{
+		mJump = 0;
+	}
+	//mJump = 0;
+}
+
+// *************************************************************************
+// *	  					Jump2 Terry Bernie							   *
+// *************************************************************************
+void Base_Player::jump2(const btVector3& dir)
+{
+	App->Flash_Window();
+	/*if (!canJump()) {
+		return;
+	}*/
+
+	mJump = true;
+
+	mJumpDir = dir;
+	//if (dir.fuzzyZero()) {
+		mJumpDir.setValue(0, 1, 0);
+	//}
+	//mJumpDir.normalize();
+		btTransform transform;
+		Phys_Body->getMotionState()->getWorldTransform(transform);
+		btMatrix3x3& basis = transform.getBasis();
+		btMatrix3x3 inv = basis.transpose();
+
+	btVector3 linearVelocity = inv * Phys_Body->getLinearVelocity();
+
+	linearVelocity += -2.5 * mJumpDir;
+
+	Phys_Body->setLinearVelocity(basis * linearVelocity);
 }
 
 // *************************************************************************
@@ -129,7 +171,22 @@ void Base_Player::Move_Player(const btVector3 &walkDirection,float delta)
 	{
 		btVector3 dv = mMoveDirection * (App->SBC_Scene->B_Player[0]->Ground_speed * delta);
 		linearVelocity = dv;
-		linearVelocity[1] = Compenstate;
+
+		if (mJump == 0)
+		{
+			linearVelocity[1] = Compenstate;
+		}
+		else
+		{
+			linearVelocity[1] = 10;
+		}
+	}
+
+	//if (mJump) 
+	{
+		//linearVelocity += 10 * mJumpDir;
+		//mJump = false;
+		//cancelStep();
 	}
 
 	Phys_Body->setLinearVelocity(basis * linearVelocity);
@@ -161,15 +218,15 @@ bool Base_Player::SelectEntity_World(void)
 	App->SBC_Ogre->OgreListener->DistanceToCollision = 0;
 
 	Ogre::SceneNode* mNode;
-	Vector3 oldPos = Player_Node->getPosition();
-	mDummyCamera->setPosition(oldPos);
+	Vector3 FirstPos = Player_Node->getPosition();
+	mDummyCamera->setPosition(FirstPos);
 
 	mDummyTranslateVector = Ogre::Vector3::ZERO;
 
 	mDummyTranslateVector.y = -100.0;
 	mDummyCamera->moveRelative(mDummyTranslateVector);
 
-	if (App->SBC_Ogre->OgreListener->mCollisionTools->collidesWithEntity(oldPos, mDummyCamera->getPosition(), 1.0f, 0, -1))
+	if (App->SBC_Ogre->OgreListener->mCollisionTools->collidesWithEntity(FirstPos, mDummyCamera->getPosition(), 1.0f, 0, -1))
 	{
 		mNode = App->SBC_Ogre->OgreListener->mCollisionTools->pentity->getParentSceneNode();
 		

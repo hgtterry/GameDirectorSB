@@ -33,7 +33,9 @@ public:
 
 	void Start_Dialog_Float(float Step, float StartValue, char* Banner);
 	void Start_Dialog_MessageEditor(int Index);
+	void Start_Colour_Picker(Ogre::Vector3 Colour);
 
+	void Dialog_Colour_Picker(void);
 
 	// -------------- Float Dialog
 	bool Show_Dialog_Float;
@@ -58,6 +60,12 @@ public:
 	int Message_Index;
 	ImVec4 Text_color;
 	ImVec4 BackGround_color;
+
+	// -------------- Dialog Colour Picker
+	bool Show_ColourPicker;
+	int Colour_Int_Red;
+	int Colour_Int_Green;
+	int Colour_Int_Blue;
 
 protected:
 

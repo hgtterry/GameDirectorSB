@@ -48,6 +48,12 @@ SB_Gui_Dialogs::SB_Gui_Dialogs(void)
 	Message_Editor_PosX = 10;
 	Message_Editor_PosY = 10;
 	Message_Index = 0;
+
+	// -------------- Dialog Colour Picker
+	Show_ColourPicker = 0;
+	Colour_Int_Red = 0;
+	Colour_Int_Green = 0;
+	Colour_Int_Blue = 0;
 }
 
 SB_Gui_Dialogs::~SB_Gui_Dialogs(void)
@@ -85,6 +91,11 @@ void SB_Gui_Dialogs::Gui_Render_Loop(void)
 	if (Show_Dialog_MessageEditor == 1)
 	{
 		Dialog_MessageEditor();
+	}
+
+	if (Show_ColourPicker == 1)
+	{
+		Dialog_Colour_Picker();
 	}
 }
 
@@ -347,7 +358,122 @@ void SB_Gui_Dialogs::Dialog_MessageEditor(void)
 	}
 }
 
+// *************************************************************************
+// *		 Start_Colour_Picker:- Terry and Hazel Flanigan 2022  		   *
+// *************************************************************************
+void SB_Gui_Dialogs::Start_Colour_Picker(Ogre::Vector3 Colour)
+{
+	Float_Exit = 0;
+	
+	Text_color.x = Colour.x;
+	Text_color.y = Colour.y;
+	Text_color.z = Colour.z;
 
+	Colour_Int_Red = Text_color.x * 255;
+	Colour_Int_Green = Text_color.y * 255;
+	Colour_Int_Blue = Text_color.z * 255;
+
+	App->Disable_Panels(true);
+
+	Show_ColourPicker = 1;
+}
+
+// *************************************************************************
+// *		Dialog_Colour_Picker:- Terry and Hazel Flanigan 2022  		   *
+// *************************************************************************
+void SB_Gui_Dialogs::Dialog_Colour_Picker(void)
+{
+
+	ImGui::SetNextWindowPos(ImVec2(100,10), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowSize(ImVec2(340, 550), ImGuiCond_FirstUseEver);
+
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
+
+	if (!ImGui::Begin("Colour Dialog", &Show_ColourPicker, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize))
+	{
+		ImGui::End();
+	}
+	else
+	{
+		if (Float_StartPos == 0)
+		{
+			Float_PosX = ((float)App->SBC_Ogre->OgreListener->View_Width / 2) - (340 / 2);
+			Float_PosY = ((float)App->SBC_Ogre->OgreListener->View_Height / 2) - (550 / 2);
+			ImGui::SetWindowPos("Colour Dialog", ImVec2(Float_PosX, Float_PosY));
+
+			Float_StartPos = 1;
+		}
+
+		ImGui::PushStyleColor(ImGuiCol_SliderGrab, IM_COL32(0, 0, 0, 255));
+		ImGui::PushStyleColor(ImGuiCol_FrameBg, IM_COL32(255, 0, 0, 255));
+		ImGui::PushStyleColor(ImGuiCol_FrameBgActive, IM_COL32(255, 0, 0, 255));
+		ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, IM_COL32(255, 0, 0, 255));
+		ImGui::VSliderInt("##r", ImVec2(100,400), &Colour_Int_Red, 0,255);
+		ImGui::PopStyleColor(4);
+
+		ImGui::SameLine();
+
+		ImGui::PushStyleColor(ImGuiCol_SliderGrab, IM_COL32(0, 0, 0, 255));
+		ImGui::PushStyleColor(ImGuiCol_FrameBg, IM_COL32(0, 255, 0, 255));
+		ImGui::PushStyleColor(ImGuiCol_FrameBgActive, IM_COL32(0, 255, 0, 255));
+		ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, IM_COL32(0, 255, 0, 255));
+		ImGui::VSliderInt("##g", ImVec2(100, 400), &Colour_Int_Green, 0, 255);
+		ImGui::PopStyleColor(4);
+
+		ImGui::SameLine();
+
+		ImGui::PushStyleColor(ImGuiCol_SliderGrab, IM_COL32(0, 0, 0, 255));
+		ImGui::PushStyleColor(ImGuiCol_FrameBg, IM_COL32(0, 0, 255, 255));
+		ImGui::PushStyleColor(ImGuiCol_FrameBgActive, IM_COL32(0, 0, 255, 255));
+		ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, IM_COL32(0, 0, 255, 255));
+		ImGui::VSliderInt("##b", ImVec2(100, 400), &Colour_Int_Blue, 0, 255);
+		ImGui::PopStyleColor(4);
+
+		ImGui::PushItemWidth(100);
+		ImGui::InputInt("##ir", &Colour_Int_Red, 1, 0);
+		ImGui::SameLine();
+		ImGui::InputInt("##ig", &Colour_Int_Green, 1, 0);
+		ImGui::SameLine();
+		ImGui::InputInt("##ib", &Colour_Int_Blue, 1, 0);
+		ImGui::PopItemWidth();
+
+		Text_color.x = float(Colour_Int_Red) / 255;
+		Text_color.y = float(Colour_Int_Green) / 255;
+		Text_color.z = float(Colour_Int_Blue) / 255;
+
+		//ImGui::Indent();
+		ImGui::Separator();
+		ImGui::Spacing();
+		ImGui::Text("Colour widget:");
+		ImGui::SameLine();
+		ImGuiColorEditFlags misc_flags2 = (ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_InputRGB | ImGuiColorEditFlags_Uint8);
+		ImGui::ColorEdit3("MyColor##1", (float*)&Text_color, ImGuiColorEditFlags_NoInputs | misc_flags2);
+		ImGui::Separator();
+		ImGui::Spacing();
+
+		Colour_Int_Red = Text_color.x * 255;
+		Colour_Int_Green = Text_color.y * 255;
+		Colour_Int_Blue = Text_color.z * 255;
+
+		if (ImGui::Button("Close"))
+		{
+			Float_StartPos = 0;
+			Float_Exit = 1;
+			Show_ColourPicker = 0;
+			Float_Canceld = 1;
+			ImGui::PopStyleColor();
+			ImGui::End();
+		}
+
+		if (Float_Exit == 0)
+		{
+			//Show_ColourPicker = 0;
+			Float_Canceld = 1;
+			ImGui::PopStyleColor();
+			ImGui::End();
+		}
+	}
+}
 // ----------------- Keep for later
 //static char buf2[64] = ""; ImGui::InputText("decimal", buf2, 64, ImGuiInputTextFlags_CharsDecimal);
 /*const float   f32_zero = 0.f, f32_one = 1.f, f32_lo_a = -10000000000.0f, f32_hi_a = +10000000000.0f;

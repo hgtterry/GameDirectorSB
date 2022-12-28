@@ -842,8 +842,20 @@ bool GD19_Environment::On_Click_Props(LPARAM lParam)
 	if (result == 0)
 	{
 
-		//strcpy_s(TextInt,App->GDCL_Scene_Data->S_Scene[0]->Fog[0].Mode);
-		App->SBC_FileIO->GetColor();
+		App->SBC_Gui_Dialogs->Start_Colour_Picker(App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour);
+
+		while (App->SBC_Gui_Dialogs->Show_ColourPicker == 1)
+		{
+			App->SBC_Gui_Dialogs->BackGround_Render_Loop();
+
+			App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour = Ogre::Vector3(App->SBC_Gui_Dialogs->Text_color.x, App->SBC_Gui_Dialogs->Text_color.y, App->SBC_Gui_Dialogs->Text_color.z);
+			App->SBC_Ogre->mSceneMgr->setAmbientLight(ColourValue(App->SBC_Gui_Dialogs->Text_color.x, App->SBC_Gui_Dialogs->Text_color.y, App->SBC_Gui_Dialogs->Text_color.z));
+		}
+
+		App->Disable_Panels(false);
+		Update_CreateMainLightListView();
+		App->SBC_Com_Environments->Mark_As_Altered_Environ(Index);
+		/*App->SBC_FileIO->GetColor();
 
 		if (App->SBC_FileIO->Cannceled == 0)
 		{
@@ -857,7 +869,7 @@ bool GD19_Environment::On_Click_Props(LPARAM lParam)
 
 			App->SBC_Ogre->mSceneMgr->setAmbientLight(ColourValue((float)Red/256,(float)Green/256,(float)Blue/256));
 			App->SBC_Com_Environments->Mark_As_Altered_Environ(Index);
-		}
+		}*/
 		return 1;
 	}
 

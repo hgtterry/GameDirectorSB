@@ -692,6 +692,20 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return 1;
 		}
 
+		case ID_TOOLS_COLOURVIEWER:
+		{
+			if (App->SBC_Gui_Dialogs->Show_ColourPicker == 1)
+			{
+				App->SBC_Gui_Dialogs->Show_ColourPicker = 0;
+			}
+			else
+			{
+				App->SBC_Gui_Dialogs->Show_ColourPicker = 1;
+			}
+
+			return 1;
+		}
+
 		/*case ID_TOOLS_MESHVIEWER:
 		{
 			App->Cl_Mesh_Viewer->StartMeshViewer();

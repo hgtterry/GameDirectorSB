@@ -30,6 +30,7 @@ public:
 
 	void Stop(void);
 	void Jump(const Ogre::Vector3 axis, float force);
+	void jump2(const btVector3& dir);
 	void Move_Player(const btVector3 &walkDirection,float delta);
 	void Rotate_FromCam(const Ogre::Vector3 axis, float delta, bool normalize);
 	bool SelectEntity_World(void);
@@ -39,10 +40,8 @@ public:
 	Ogre::SceneNode*	Player_Node;
 
 	Ogre::Camera* mDummyCamera;
-
 	Vector3		mDummyTranslateVector;
 
-	MOC::CollisionTools* mCollisionTools;
 	Ogre::String Pl_Entity_Name;
 	char Selected_Object_Name[MAX_PATH];
 	int	Selected_Entity_Index;
@@ -55,6 +54,8 @@ public:
 	Ogre::Vector3 StartPos;
 	btQuaternion Physics_Rotation;
 
+	btVector3 mJumpDir;;
+
 	float Forward_Timer;
 	float Ground_speed;
 
@@ -66,7 +67,7 @@ public:
 
 	float Limit_Look_Up;
 	float Limit_Look_Down;
-
+	float mJumpSpeed;
 	float PlayerHeight;
 	bool Altered;
 	bool mOnGround;
@@ -74,7 +75,7 @@ public:
 	bool IsMOving_Back;
 	bool IsMOving_Right;
 	bool IsMOving_Left;
-
+	bool mJump;
 	bool Physics_Debug_On;
 
 	HTREEITEM FileViewItem;
