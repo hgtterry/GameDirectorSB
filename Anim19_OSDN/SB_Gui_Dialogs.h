@@ -28,6 +28,7 @@ public:
 	SB_Gui_Dialogs(void);
 	~SB_Gui_Dialogs(void);
 
+	void Close_All_Dialogs(void);
 	void BackGround_Render_Loop(void);
 	void Gui_Render_Loop(void);
 
@@ -36,6 +37,9 @@ public:
 	void Start_Colour_Picker(Ogre::Vector3 Colour);
 
 	void Dialog_Colour_Picker(void);
+
+	// -------------- General
+	ImVec4 Float_Colour;
 
 	// -------------- Float Dialog
 	bool Show_Dialog_Float;
@@ -58,7 +62,6 @@ public:
 	float Message_Editor_PosY;
 	bool Message_Editor_StartPos;
 	int Message_Index;
-	ImVec4 Text_color;
 	ImVec4 BackGround_color;
 
 	// -------------- Dialog Colour Picker
@@ -66,6 +69,8 @@ public:
 	int Colour_Int_Red;
 	int Colour_Int_Green;
 	int Colour_Int_Blue;
+	ImVec4 Float_Colour_Copy;
+	bool ColourPicker_Canceled;
 
 protected:
 

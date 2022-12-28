@@ -896,6 +896,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				}
 			}
 
+			App->SBC_Gui_Dialogs->Close_All_Dialogs();
+
 			if (App->SBC_Ogre->OgreListener->StopOgre == 0)
 			{
 				App->SBC_Ogre->OgreListener->StopOgre = 1;
@@ -970,9 +972,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			}
 		}
 
-		App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
-		App->SBC_Gui_Dialogs->Show_Dialog_MessageEditor = 0;
-
+		App->SBC_Gui_Dialogs->Close_All_Dialogs();
+		
 		if (App->SBC_Ogre->OgreListener->StopOgre == 0)
 		{
 			App->SBC_Ogre->OgreListener->StopOgre = 1;

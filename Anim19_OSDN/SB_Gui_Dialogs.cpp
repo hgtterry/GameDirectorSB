@@ -51,6 +51,7 @@ SB_Gui_Dialogs::SB_Gui_Dialogs(void)
 
 	// -------------- Dialog Colour Picker
 	Show_ColourPicker = 0;
+	ColourPicker_Canceled = 0;
 	Colour_Int_Red = 0;
 	Colour_Int_Green = 0;
 	Colour_Int_Blue = 0;
@@ -58,6 +59,16 @@ SB_Gui_Dialogs::SB_Gui_Dialogs(void)
 
 SB_Gui_Dialogs::~SB_Gui_Dialogs(void)
 {
+}
+
+// *************************************************************************
+// *			Close_All_Dialogs:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+void SB_Gui_Dialogs::Close_All_Dialogs(void)
+{
+	Show_Dialog_Float = 0;
+	Show_Dialog_MessageEditor = 0;
+	Show_ColourPicker = 0;
 }
 
 // *************************************************************************
@@ -216,7 +227,7 @@ void SB_Gui_Dialogs::Start_Dialog_MessageEditor(int Index)
 	Centre_X_Selected = App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->PosXCentre_Flag;
 	Centre_Y_Selected = App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->PosYCentre_Flag;
 
-	Text_color = ImVec4(App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->Text_Colour.x / 255.0f,
+	Float_Colour = ImVec4(App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->Text_Colour.x / 255.0f,
 		App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->Text_Colour.y / 255.0f,
 		App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->Text_Colour.z / 255.0f,
 		255);
@@ -304,11 +315,11 @@ void SB_Gui_Dialogs::Dialog_MessageEditor(void)
 		ImGuiColorEditFlags misc_flags = (ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_InputRGB | ImGuiColorEditFlags_Uint8);
 
 
-		ImGui::ColorEdit3("Text##1", (float*)&Text_color, misc_flags);
+		ImGui::ColorEdit3("Text##1", (float*)&Float_Colour, misc_flags);
 
-		App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->Text_Colour.x = Text_color.x * 255.0f;
-		App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->Text_Colour.y = Text_color.y * 255.0f;
-		App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->Text_Colour.z = Text_color.z * 255.0f;
+		App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->Text_Colour.x = Float_Colour.x * 255.0f;
+		App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->Text_Colour.y = Float_Colour.y * 255.0f;
+		App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->Text_Colour.z = Float_Colour.z * 255.0f;
 
 		ImGui::ColorEdit3("BG##1", (float*)&BackGround_color, misc_flags);
 
@@ -364,16 +375,22 @@ void SB_Gui_Dialogs::Dialog_MessageEditor(void)
 void SB_Gui_Dialogs::Start_Colour_Picker(Ogre::Vector3 Colour)
 {
 	Float_Exit = 0;
-	
-	Text_color.x = Colour.x;
-	Text_color.y = Colour.y;
-	Text_color.z = Colour.z;
+	ColourPicker_Canceled = 0;
 
-	Colour_Int_Red = Text_color.x * 255;
-	Colour_Int_Green = Text_color.y * 255;
-	Colour_Int_Blue = Text_color.z * 255;
+	Float_Colour_Copy.x = Colour.x;
+	Float_Colour_Copy.y = Colour.y;
+	Float_Colour_Copy.z = Colour.z;
+	
+	Float_Colour.x = Colour.x;
+	Float_Colour.y = Colour.y;
+	Float_Colour.z = Colour.z;
+
+	Colour_Int_Red = Float_Colour.x * 255;
+	Colour_Int_Green = Float_Colour.y * 255;
+	Colour_Int_Blue = Float_Colour.z * 255;
 
 	App->Disable_Panels(true);
+	App->Show_Panels(false);
 
 	Show_ColourPicker = 1;
 }
@@ -384,7 +401,7 @@ void SB_Gui_Dialogs::Start_Colour_Picker(Ogre::Vector3 Colour)
 void SB_Gui_Dialogs::Dialog_Colour_Picker(void)
 {
 
-	ImGui::SetNextWindowPos(ImVec2(100,10), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowPos(ImVec2(10,10), ImGuiCond_FirstUseEver);
 	ImGui::SetNextWindowSize(ImVec2(340, 550), ImGuiCond_FirstUseEver);
 
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
@@ -399,7 +416,7 @@ void SB_Gui_Dialogs::Dialog_Colour_Picker(void)
 		{
 			Float_PosX = ((float)App->SBC_Ogre->OgreListener->View_Width / 2) - (340 / 2);
 			Float_PosY = ((float)App->SBC_Ogre->OgreListener->View_Height / 2) - (550 / 2);
-			ImGui::SetWindowPos("Colour Dialog", ImVec2(Float_PosX, Float_PosY));
+			ImGui::SetWindowPos("Colour Dialog", ImVec2(10,10));
 
 			Float_StartPos = 1;
 		}
@@ -437,9 +454,9 @@ void SB_Gui_Dialogs::Dialog_Colour_Picker(void)
 		ImGui::InputInt("##ib", &Colour_Int_Blue, 1, 0);
 		ImGui::PopItemWidth();
 
-		Text_color.x = float(Colour_Int_Red) / 255;
-		Text_color.y = float(Colour_Int_Green) / 255;
-		Text_color.z = float(Colour_Int_Blue) / 255;
+		Float_Colour.x = float(Colour_Int_Red) / 255;
+		Float_Colour.y = float(Colour_Int_Green) / 255;
+		Float_Colour.z = float(Colour_Int_Blue) / 255;
 
 		//ImGui::Indent();
 		ImGui::Separator();
@@ -447,29 +464,50 @@ void SB_Gui_Dialogs::Dialog_Colour_Picker(void)
 		ImGui::Text("Colour widget:");
 		ImGui::SameLine();
 		ImGuiColorEditFlags misc_flags2 = (ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_InputRGB | ImGuiColorEditFlags_Uint8);
-		ImGui::ColorEdit3("MyColor##1", (float*)&Text_color, ImGuiColorEditFlags_NoInputs | misc_flags2);
+		ImGui::ColorEdit3("MyColor##1", (float*)&Float_Colour, ImGuiColorEditFlags_NoInputs | misc_flags2);
 		ImGui::Separator();
 		ImGui::Spacing();
 
-		Colour_Int_Red = Text_color.x * 255;
-		Colour_Int_Green = Text_color.y * 255;
-		Colour_Int_Blue = Text_color.z * 255;
+		Colour_Int_Red = Float_Colour.x * 255;
+		Colour_Int_Green = Float_Colour.y * 255;
+		Colour_Int_Blue = Float_Colour.z * 255;
 
-		if (ImGui::Button("Close"))
+		ImGui::Indent();
+		ImGui::Indent();
+		ImGui::Indent();
+		ImGui::Indent();
+		ImGui::Indent();
+
+		if (ImGui::Button("Apply"))
 		{
-			Float_StartPos = 0;
 			Float_Exit = 1;
-			Show_ColourPicker = 0;
-			Float_Canceld = 1;
+			Show_Dialog_Float = 0;
+			Float_StartPos = 0;
+			ColourPicker_Canceled = 0;
+
 			ImGui::PopStyleColor();
+			Show_ColourPicker = 0;
+			ImGui::End();
+		}
+
+		ImGui::SameLine();
+
+		if (ImGui::Button("Cancel"))
+		{
+			Float_Exit = 1;
+			ColourPicker_Canceled = 1;
+
+			ImGui::PopStyleColor();
+			Show_ColourPicker = 0;
 			ImGui::End();
 		}
 
 		if (Float_Exit == 0)
 		{
-			//Show_ColourPicker = 0;
-			Float_Canceld = 1;
+			ColourPicker_Canceled = 1;
+
 			ImGui::PopStyleColor();
+			//Show_ColourPicker = 0;
 			ImGui::End();
 		}
 	}

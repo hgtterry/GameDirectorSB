@@ -732,7 +732,7 @@ bool SB_Properties::Update_ListView_Environs()
 	SetWindowText(Properties_Dlg_hWnd, chr_ID);
 	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->B_Object[index]->Mesh_Name);
 
-	const int NUM_ITEMS = 3;
+	const int NUM_ITEMS = 6;
 	const int NUM_COLS = 2;
 	std::string grid[NUM_COLS][NUM_ITEMS];
 	LV_ITEM pitem;
@@ -741,7 +741,10 @@ bool SB_Properties::Update_ListView_Environs()
 
 	grid[0][0] = "Name",		grid[1][0] = App->SBC_Scene->B_Object[index]->Mesh_Name;
 	grid[0][1] = " ",			grid[1][1] = " ";
-	grid[0][2] = "Set",			grid[1][2] = "Options";
+	grid[0][2] = "Main Light",	grid[1][2] = "Options";
+	grid[0][3] = "Sound",		grid[1][3] = "Options";
+	grid[0][4] = "Fog",			grid[1][4] = "Options";
+	grid[0][5] = "Sky",			grid[1][5] = "Options";
 
 	ListView_DeleteAllItems(Properties_hLV);
 
@@ -2389,16 +2392,38 @@ bool SB_Properties::Edit_Environs_OnClick(LPARAM lParam)
 		return 1;
 	}
 
-	
-	result = strcmp(btext, "Set");
+	result = strcmp(btext, "Main Light");
 	if (result == 0)
 	{
-		App->Cl_Environment->Start_Environment();
+		App->Cl_Environment->Start_Environment("Main Light");
 		Update_ListView_Environs();
 
 		return 1;
 	}
 
+	result = strcmp(btext, "Sound");
+	if (result == 0)
+	{
+		App->Cl_Environment->Start_Environment("Sound");
+		Update_ListView_Environs();
+		return 1;
+	}
+
+	result = strcmp(btext, "Fog");
+	if (result == 0)
+	{
+		App->Cl_Environment->Start_Environment("Fog");
+		Update_ListView_Environs();
+		return 1;
+	}
+
+	result = strcmp(btext, "Sky");
+	if (result == 0)
+	{
+		App->Cl_Environment->Start_Environment("Sky");
+		Update_ListView_Environs();
+		return 1;
+	}
 	return 1;
 }
 

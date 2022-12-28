@@ -30,10 +30,9 @@ distribution.
 
 GD19_Environment::GD19_Environment(void)
 {
-	OptionsDlgHwnd = NULL;
+
 	BackDrop_hWnd = NULL;
 	General_hLV = NULL;
-	mTreeCon = NULL;
 	mPropsCon = NULL;
 	Environment_hWnd = NULL;
 
@@ -41,15 +40,11 @@ GD19_Environment::GD19_Environment(void)
 	Environment_Dlg_Active = 0;
 
 	FileView_Folder[0] = 0;
-	FileView_File[0] = 0;
+	
 	btext[0] = 0;
-	TextInt[0] = 0;
-
+	
 	mParent = NULL;
 	mRoot1 = NULL;
-
-	mImageList = NULL;
-	hBitMap = NULL;
 }
 
 
@@ -60,17 +55,22 @@ GD19_Environment::~GD19_Environment(void)
 // *************************************************************************
 // *		Start_Environment:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
-void GD19_Environment::Start_Environment(void)
+void GD19_Environment::Start_Environment(char* Category)
 {
 
-	if(Environment_Dlg_Active == 1){return;}
+	if(Environment_Dlg_Active == 1)
+	{
+		Select_Category(Category);
+		return;
+	}
 
 	Environment_Dlg_Active = 1;
-
 	Environment_hWnd = CreateDialog(App->hInst,(LPCTSTR)IDD_ENVIRONMENT,App->Fdlg,(DLGPROC)Environment_Proc);
+	Select_Category(Category);
 }
+
 // *************************************************************************
-// *            Level_Front_Proc:- Terry and Hazel Flanigan 202			   *
+// *            Environment_Proc:- Terry and Hazel Flanigan 202			   *
 // *************************************************************************
 LRESULT CALLBACK GD19_Environment::Environment_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -81,54 +81,32 @@ LRESULT CALLBACK GD19_Environment::Environment_Proc(HWND hDlg, UINT message, WPA
 		{	
 			App->SetTitleBar(hDlg);
 
-			SendDlgItemMessage(hDlg,IDC_STINFO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-			
-			SendDlgItemMessage(hDlg,IDC_USAGEBANNER, WM_SETFONT, (WPARAM)App->Font_Banner, MAKELPARAM(TRUE, 0));
-			
 			SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 			SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-			SendDlgItemMessage(hDlg, IDC_OPTIOINSTREE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
-
-			SetDlgItemText(hDlg,IDC_USAGEBANNER,(LPCTSTR)"Game Environment Options");
-
-			App->Cl_Environment->Init_FileView();
-
-			App->Cl_Environment->OptionsDlgHwnd = hDlg;
-
+			SendDlgItemMessage(hDlg, IDC_STBANNER, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+			
 			App->Cl_Environment->Create_GeneralListBackDrop(hDlg);
 			App->Cl_Environment->Create_GeneralList(hDlg);
 
-			App->Cl_Environment->GetListControls();
-
-			SendDlgItemMessage(hDlg,IDC_OPTIOINSTREE,TVM_SETIMAGELIST,0,(LPARAM)App->Cl_Environment->mImageList); // put it onto the tree control
-			HWND Temp=GetDlgItem(hDlg,IDC_OPTIOINSTREE);
-			TreeView_DeleteAllItems(Temp);
-			
-			App->Cl_Environment->AddOptions();
+			App->Cl_Environment->mPropsCon = App->Cl_Environment->General_hLV;
 
 			int Index = App->SBC_Properties->Current_Selected_Object;
 			App->SBC_Com_Environments->Set_Environment_By_Index(1,Index);
+
+			SetDlgItemText(hDlg, IDC_STBANNER, App->SBC_Scene->B_Object[Index]->Mesh_Name);
 			
 			return TRUE;
 		}
 		case WM_CTLCOLORSTATIC:
 		{
-			if(GetDlgItem(hDlg,IDC_STINFO) == (HWND)lParam)
-			{	
-				SetBkColor((HDC) wParam, RGB(0, 255, 0));	
-				SetTextColor((HDC) wParam, RGB(0,0,0));
-				SetBkMode((HDC) wParam, TRANSPARENT);
-				return (UINT) App->Brush_White;
+			if (GetDlgItem(hDlg, IDC_STBANNER) == (HWND)lParam)
+			{
+				SetBkColor((HDC)wParam, RGB(0, 255, 0));
+				SetTextColor((HDC)wParam, RGB(0, 0,255));
+				SetBkMode((HDC)wParam, TRANSPARENT);
+				return (UINT)App->AppBackground;
 			}
-			if(GetDlgItem(hDlg,IDC_USAGEBANNER) == (HWND)lParam)
-			{	
-				SetBkColor((HDC) wParam, RGB(0, 255, 0));	
-				SetTextColor((HDC) wParam, RGB(0,0,255));
-				SetBkMode((HDC) wParam, TRANSPARENT);
-				return (UINT) App->AppBackground;
-			}
-			
+
 			return FALSE;
 		}
 
@@ -138,21 +116,6 @@ LRESULT CALLBACK GD19_Environment::Environment_Proc(HWND hDlg, UINT message, WPA
 			}
 		case WM_NOTIFY:
 			{
-				LPNMHDR nmhdr = (LPNMHDR) lParam;
-
-				// ListView
-				if (nmhdr->hwndFrom == App->Cl_Environment->mTreeCon)
-				{
-					switch (nmhdr->code) 
-					{
-
-					case TVN_SELCHANGED:
-						{
-							App->Cl_Environment->ListView_Selection((LPNMHDR) lParam); 
-						}	
-					}
-				}
-
 				LPNMHDR some_item = (LPNMHDR)lParam;
 
 				if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
@@ -208,69 +171,48 @@ LRESULT CALLBACK GD19_Environment::Environment_Proc(HWND hDlg, UINT message, WPA
 }
 
 // *************************************************************************
-// *			ListView_Selection:- Terry and Hazel Flanigan 2022		   *
+// *			Select_Category:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
-void GD19_Environment::ListView_Selection(LPNMHDR lParam)
+void GD19_Environment::Select_Category(char* FileView_Folder)
 {
 	
-	HWND Temp=GetDlgItem(OptionsDlgHwnd,IDC_OPTIOINSTREE);
-	
-	HTREEITEM i=TreeView_GetSelection(Temp);
-	
-	TVITEM item;
-	item.hItem = i;
-	item.pszText = FileView_Folder;
-	item.cchTextMax = sizeof(FileView_Folder);
-	item.mask = TVIF_TEXT;
-	TreeView_GetItem(((LPNMHDR) lParam)->hwndFrom, &item);
-	
-	HTREEITEM p=TreeView_GetParent(Temp,i);
-	
-	TVITEM item1;
-	item1.hItem = p;
-	item1.pszText = FileView_File;
-	item1.cchTextMax = sizeof(FileView_File);
-	item1.mask = TVIF_TEXT;
-	TreeView_GetItem(((LPNMHDR) lParam)->hwndFrom, &item1);
-
 	if (!strcmp(FileView_Folder, "Fog"))
 	{
 		SelectedProperties = 1; 
 		SetDlgItemText(BackDrop_hWnd,IDC_ITEMHEADER,(LPCTSTR)"Fog options");
 		Update_CreateFogListView();
-		SetDlgItemText(OptionsDlgHwnd,IDC_STINFO,(LPCSTR)" Settings for scene Fog");
 		return;
 	}
+
 	if (!strcmp(FileView_Folder, "Main Light"))
 	{
 		SelectedProperties = 2; 
 		SetDlgItemText(BackDrop_hWnd,IDC_ITEMHEADER,(LPCTSTR)"Main Light options");
 		Update_CreateMainLightListView();
-		SetDlgItemText(OptionsDlgHwnd,IDC_STINFO,(LPCSTR)" Option for the main light in the scene");
 		return;
 	}
+
 	if (!strcmp(FileView_Folder, "Composite Map"))
 	{
 		SelectedProperties = 3; 
 		SetDlgItemText(BackDrop_hWnd,IDC_ITEMHEADER,(LPCTSTR)"Composite Map options");
 		//Update_CreateCompositeListView();
-		SetDlgItemText(OptionsDlgHwnd,IDC_STINFO,(LPCSTR)" Options for Composite Map");
 		return;
 	}
+
 	if (!strcmp(FileView_Folder, "Sound"))
 	{
 		SelectedProperties = 4; 
 		SetDlgItemText(BackDrop_hWnd,IDC_ITEMHEADER,(LPCTSTR)"Sound options");
 		Update_CreateSoundListView();
-		SetDlgItemText(OptionsDlgHwnd,IDC_STINFO,(LPCSTR)" Main background Sound options");
 		return;
 	}
+
 	if (!strcmp(FileView_Folder, "Sky"))
 	{
 		SelectedProperties = 5; 
 		SetDlgItemText(BackDrop_hWnd,IDC_ITEMHEADER,(LPCTSTR)"Sky options");
 		Update_CreateSkyListView();
-		SetDlgItemText(OptionsDlgHwnd,IDC_STINFO,(LPCSTR)" Various options for the main Sky");
 		return;
 	}
 }
@@ -364,9 +306,6 @@ void GD19_Environment::Update_CreateFogListView(void)
 	sprintf(chr_Density,"%f", App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Density);
 	sprintf(chr_Start,"%.2f", App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Start);
 	sprintf(chr_End,"%.2f", App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_End);
-
-	//sprintf(chr_End, "%.2f", App->Cl_Scene_Data->S_Scene[0]->Fog[0].End);
-
 	sprintf(chr_Mode,"%i", App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Mode);
 
 
@@ -610,85 +549,6 @@ void GD19_Environment::Create_GeneralList(HWND hDlg)
 }
 
 // *************************************************************************
-// *	  	GetListControls:- Terry and Hazel Flanigan 2022				   *
-// *************************************************************************
-void GD19_Environment::GetListControls(void)
-{
-	mTreeCon = GetDlgItem(OptionsDlgHwnd,IDC_OPTIOINSTREE);
-	mPropsCon = General_hLV;
-}
-
-// *************************************************************************
-// *			Init_FileView:- Terry and Hazel Flanigan 2022	       	   *
-// *************************************************************************
-void GD19_Environment::Init_FileView(void)
-{
-	mImageList=ImageList_Create(32,32, ILC_COLOR24,2,0);
-
-	// StartUp
-	hBitMap=LoadBitmap(App->hInst,MAKEINTRESOURCE(IDB_STARTUPOFF));
-	ImageList_Add(mImageList,hBitMap,NULL);
-	DeleteObject(hBitMap);
-				 
-	hBitMap=LoadBitmap(App->hInst,MAKEINTRESOURCE(IDB_STARTUPON));
-	ImageList_Add(mImageList,hBitMap,NULL);
-	DeleteObject(hBitMap);
-}
-
-// *************************************************************************
-// *			AddOptions:- Terry and Hazel Flanigan 2022			 	   *
-// *************************************************************************
-void GD19_Environment::AddOptions(void)
-{
-	
-	tvinsert.hParent = mRoot1;		// top most level no need handle
-	tvinsert.hInsertAfter=TVI_LAST; // work as root level
-	tvinsert.item.mask=TVIF_TEXT|TVIF_IMAGE|TVIF_SELECTEDIMAGE;
-	tvinsert.item.pszText="Main Light";
-	tvinsert.item.iImage= 0 ;
-	tvinsert.item.iSelectedImage = 1;
-	mParent=(HTREEITEM)SendDlgItemMessage(OptionsDlgHwnd,IDC_OPTIOINSTREE,TVM_INSERTITEM,0,(LPARAM)&tvinsert);
-
-	tvinsert.hParent = mRoot1;		// top most level no need handle
-	tvinsert.hInsertAfter=TVI_LAST; // work as root level
-	tvinsert.item.mask=TVIF_TEXT|TVIF_IMAGE|TVIF_SELECTEDIMAGE;
-	tvinsert.item.pszText="Sound";
-	tvinsert.item.iImage= 0 ;
-	tvinsert.item.iSelectedImage = 1;
-	mParent=(HTREEITEM)SendDlgItemMessage(OptionsDlgHwnd,IDC_OPTIOINSTREE,TVM_INSERTITEM,0,(LPARAM)&tvinsert);
-
-	//tvinsert.hParent = mRoot1;		// top most level no need handle
-	//tvinsert.hInsertAfter=TVI_LAST; // work as root level
-	//tvinsert.item.mask=TVIF_TEXT|TVIF_IMAGE|TVIF_SELECTEDIMAGE;
-	//tvinsert.item.pszText="Composite Map";
-	//tvinsert.item.iImage= 0 ;
-	//tvinsert.item.iSelectedImage = 1;
-	//mParent=(HTREEITEM)SendDlgItemMessage(OptionsDlgHwnd,IDC_OPTIOINSTREE,TVM_INSERTITEM,0,(LPARAM)&tvinsert);
-
-	tvinsert.hParent = mRoot1;		// top most level no need handle
-	tvinsert.hInsertAfter=TVI_LAST; // work as root level
-	tvinsert.item.mask=TVIF_TEXT|TVIF_IMAGE|TVIF_SELECTEDIMAGE;
-	tvinsert.item.pszText="Fog";
-	tvinsert.item.iImage= 0 ;
-	tvinsert.item.iSelectedImage = 1;
-	mParent=(HTREEITEM)SendDlgItemMessage(OptionsDlgHwnd,IDC_OPTIOINSTREE,TVM_INSERTITEM,0,(LPARAM)&tvinsert);
-
-	tvinsert.hParent = mRoot1;		// top most level no need handle
-	tvinsert.hInsertAfter=TVI_LAST; // work as root level
-	tvinsert.item.mask=TVIF_TEXT|TVIF_IMAGE|TVIF_SELECTEDIMAGE;
-	tvinsert.item.pszText="Sky";
-	tvinsert.item.iImage= 0;
-	tvinsert.item.iSelectedImage = 1;
-	mParent=(HTREEITEM)SendDlgItemMessage(OptionsDlgHwnd,IDC_OPTIOINSTREE,TVM_INSERTITEM,0,(LPARAM)&tvinsert);
-
-	HWND TTemp=GetDlgItem(OptionsDlgHwnd,IDC_OPTIOINSTREE);
-
-	HTREEITEM root=TreeView_GetRoot(TTemp);		
-
-	TreeView_SelectItem(TTemp,root);
-}
-
-// *************************************************************************
 // *			On_Click_Props:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 bool GD19_Environment::On_Click_Props(LPARAM lParam)
@@ -794,6 +654,7 @@ bool GD19_Environment::On_Click_Props(LPARAM lParam)
 			{
 				EnableFog(true);
 			}
+
 			Update_CreateFogListView();
 			App->SBC_Com_Environments->Mark_As_Altered_Environ(Index);
 		}
@@ -841,6 +702,7 @@ bool GD19_Environment::On_Click_Props(LPARAM lParam)
 	result = strcmp(btext, "Ambient");
 	if (result == 0)
 	{
+		Show_Environment_Dialog(0);
 
 		App->SBC_Gui_Dialogs->Start_Colour_Picker(App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour);
 
@@ -848,28 +710,32 @@ bool GD19_Environment::On_Click_Props(LPARAM lParam)
 		{
 			App->SBC_Gui_Dialogs->BackGround_Render_Loop();
 
-			App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour = Ogre::Vector3(App->SBC_Gui_Dialogs->Text_color.x, App->SBC_Gui_Dialogs->Text_color.y, App->SBC_Gui_Dialogs->Text_color.z);
-			App->SBC_Ogre->mSceneMgr->setAmbientLight(ColourValue(App->SBC_Gui_Dialogs->Text_color.x, App->SBC_Gui_Dialogs->Text_color.y, App->SBC_Gui_Dialogs->Text_color.z));
+			App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour = Ogre::Vector3(App->SBC_Gui_Dialogs->Float_Colour.x, App->SBC_Gui_Dialogs->Float_Colour.y, App->SBC_Gui_Dialogs->Float_Colour.z);
+			App->SBC_Ogre->mSceneMgr->setAmbientLight(ColourValue(App->SBC_Gui_Dialogs->Float_Colour.x, App->SBC_Gui_Dialogs->Float_Colour.y, App->SBC_Gui_Dialogs->Float_Colour.z));
 		}
 
 		App->Disable_Panels(false);
+		App->Show_Panels(true);
+		Show_Environment_Dialog(1);
+
+		if (App->SBC_Gui_Dialogs->ColourPicker_Canceled == 0)
+		{
+			
+		}
+		else
+		{
+			float x = App->SBC_Gui_Dialogs->Float_Colour_Copy.x;
+			float y = App->SBC_Gui_Dialogs->Float_Colour_Copy.y;
+			float z = App->SBC_Gui_Dialogs->Float_Colour_Copy.z;
+
+			App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour = Ogre::Vector3(x, y, z);
+			App->SBC_Ogre->mSceneMgr->setAmbientLight(ColourValue(x, y, z));
+
+		}
+
 		Update_CreateMainLightListView();
 		App->SBC_Com_Environments->Mark_As_Altered_Environ(Index);
-		/*App->SBC_FileIO->GetColor();
-
-		if (App->SBC_FileIO->Cannceled == 0)
-		{
-			int Red = GetRValue(App->SBC_FileIO->color.rgbResult);
-			int Green = GetGValue(App->SBC_FileIO->color.rgbResult);
-			int Blue = GetBValue(App->SBC_FileIO->color.rgbResult);
-
-			App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour = Ogre::Vector3((float)Red/256,(float)Green/256,(float)Blue/256);
-
-			Update_CreateMainLightListView();
-
-			App->SBC_Ogre->mSceneMgr->setAmbientLight(ColourValue((float)Red/256,(float)Green/256,(float)Blue/256));
-			App->SBC_Com_Environments->Mark_As_Altered_Environ(Index);
-		}*/
+		
 		return 1;
 	}
 
@@ -1149,4 +1015,19 @@ bool GD19_Environment::EnableFog(bool SetFog)
 	}
 	
 	return 1;
+}
+
+// *************************************************************************
+// *		Show_Environment_Dialog:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+void GD19_Environment::Show_Environment_Dialog(bool show)
+{
+	if (show == 1)
+	{
+		ShowWindow(Environment_hWnd, SW_SHOW);	
+	}
+	else
+	{
+		ShowWindow(Environment_hWnd, SW_HIDE);
+	}
 }
