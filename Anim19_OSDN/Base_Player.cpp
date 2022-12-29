@@ -88,7 +88,7 @@ Base_Player::~Base_Player()
 // *************************************************************************
 void Base_Player::Stop(void)
 {
-	SelectEntity_World();
+	Get_Height();
 	Phys_Body->setLinearVelocity(btVector3(0, 0, 0));
 }
 
@@ -102,7 +102,7 @@ void Base_Player::Jump(const Ogre::Vector3 axis, float force)
 		mJump = 1;
 	}
 	
-	SelectEntity_World();
+	Get_Height();
 
 	btVector3 pos = Phys_Body->getWorldTransform().getOrigin();
 	pos[1] = pos[1] + 0.5;
@@ -123,7 +123,7 @@ void Base_Player::Jump(const Ogre::Vector3 axis, float force)
 // *************************************************************************
 void Base_Player::jump2(const btVector3& dir)
 {
-	App->Flash_Window();
+	//App->Flash_Window();
 	/*if (!canJump()) {
 		return;
 	}*/
@@ -152,7 +152,7 @@ void Base_Player::jump2(const btVector3& dir)
 // *************************************************************************
 void Base_Player::Move_Player(const btVector3 &walkDirection,float delta)
 {
-	SelectEntity_World();
+	Get_Height();
 
 	mMoveDirection = walkDirection;
 
@@ -211,9 +211,9 @@ void Base_Player::Rotate_FromCam(const Ogre::Vector3 axis, float delta, bool nor
 }
 
 // *************************************************************************
-// *					SelectEntity_World   Terry Bernie				   *
+// *					Get_Height   Terry Bernie						   *
 // *************************************************************************
-bool Base_Player::SelectEntity_World(void)
+bool Base_Player::Get_Height(void)
 {
 	App->SBC_Ogre->OgreListener->DistanceToCollision = 0;
 
@@ -245,7 +245,6 @@ bool Base_Player::SelectEntity_World(void)
 		char buff[255];
 		strcpy(buff, App->SBC_Ogre->OgreListener->Pl_Entity_Name.c_str());
 	
-		App->CL_Vm_ImGui->Show_Object_Selection = 1;
 	}
 
 	return 1;

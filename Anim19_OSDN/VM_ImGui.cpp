@@ -364,7 +364,6 @@ void VM_ImGui::Object_Selection(void)
 
 		ImGui::Text("Internal Name: = %s",App->SBC_Ogre->OgreListener->Pl_Entity_Name.c_str());
 		ImGui::Text("Object Name: = %s",App->SBC_Ogre->OgreListener->Selected_Object_Name);
-		ImGui::Text("Distance: = %f", App->SBC_Ogre->OgreListener->DistanceToCollision);
 		
 		ImGui::Text("");
 
@@ -432,6 +431,7 @@ void VM_ImGui::ImGui_FPS(void)
 		{
 			ImGui::Text("Delay Timer %i", App->SBC_Ogre->FPStimer.getMilliseconds());
 			ImGui::Text("Ogre Frame Time %f", App->SBC_Ogre->OgreListener->OgreFrameTime);
+			ImGui::Text("Distance To Floor: = %f", App->SBC_Ogre->OgreListener->DistanceToCollision);
 		}
 		
 		ImGui::PopStyleColor();

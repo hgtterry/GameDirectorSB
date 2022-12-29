@@ -33,7 +33,7 @@ public:
 	void jump2(const btVector3& dir);
 	void Move_Player(const btVector3 &walkDirection,float delta);
 	void Rotate_FromCam(const Ogre::Vector3 axis, float delta, bool normalize);
-	bool SelectEntity_World(void);
+	bool Get_Height(void);
 
 	Ogre::Camera*		CameraPitch;
 	Ogre::Entity*		Player_Ent;
