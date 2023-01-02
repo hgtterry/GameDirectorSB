@@ -133,10 +133,10 @@ bool GD19_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 
 	App->SBC_Ogre->Block_RenderingQueued = 1;
 
-	if (App->CL_Vm_ImGui->Show_Progress_Bar == 1)
+	//if (App->CL_Vm_ImGui->Show_Progress_Bar == 1)
 	{
-		App->SBC_Ogre->m_imgui.render();
-		return 1;
+		//App->SBC_Ogre->m_imgui.render();
+		//return 1;
 	}
 
 	App->SBC_Ogre->m_imgui.render();
@@ -229,14 +229,15 @@ bool GD19_OgreListener::frameEnded(const FrameEvent& evt)
 bool GD19_OgreListener::Update_Game_Logic(float DeltaTime)
 {
 
-	if (App->CL_Vm_ImGui->Show_Progress_Bar == 1)
-	{
-		App->SBC_Ogre->Get_View_Height_Width();
+	//if (App->CL_Vm_ImGui->Show_Progress_Bar == 1)
+	//{
+	//	App->SBC_Ogre->Get_View_Height_Width();
 
-		App->SBC_Ogre->m_imgui.NewFrame(DeltaTime, (float)View_Width, (float)View_Height);
-		App->CL_Vm_ImGui->ImGui_ProgressBar();
-		return true;
-	}
+	//	App->SBC_Ogre->m_imgui.NewFrame(DeltaTime, (float)View_Width, (float)View_Height);
+	//	/*App->CL_Vm_ImGui->Show_Progress_Bar = 1;
+	//	App->CL_Vm_ImGui->ImGui_ProgressBar();*/
+	//	return true;
+	//}
 
 	App->SBC_Ogre->Get_View_Height_Width();
 	App->SBC_Ogre->m_imgui.NewFrame(DeltaTime, (float)View_Width, (float)View_Height);
@@ -282,9 +283,21 @@ bool GD19_OgreListener::Update_Game_Logic(float DeltaTime)
 		App->SBC_Bullet->dynamicsWorld->debugDrawWorld();
 	}
 
+	float FPS = ImGui::GetIO().Framerate;
+	if (FPS < 200)
+	{
+		App->SBC_Ogre->FPSLock = App->SBC_Ogre->FPSLock - 2;
+	}
+
+	if (FPS > 200)
+	{
+		App->SBC_Ogre->FPSLock = App->SBC_Ogre->FPSLock + 1;
+	}
+
 	if (GD_Run_Physics == 1)
 	{
-		App->SBC_Bullet->dynamicsWorld->stepSimulation(DeltaTime * 2); //suppose you have 60 frames per second	
+		App->SBC_Bullet->dynamicsWorld->stepSimulation(btScalar(1.) / btScalar(200.)); //suppose you have 60 frames per second	
+		
 
 		for (int j = App->SBC_Bullet->dynamicsWorld->getNumCollisionObjects() - 1; j >= 0; j--)
 		{

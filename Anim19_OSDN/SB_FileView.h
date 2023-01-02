@@ -29,6 +29,7 @@ public:
 	~SB_FileView();
 
 	void Start_FileView(void);
+	void Show_FileView(bool show);
 	void Init_FileView(void);
 
 	void Redraw_FileView();

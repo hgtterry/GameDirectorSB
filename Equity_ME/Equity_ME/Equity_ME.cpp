@@ -254,6 +254,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				App->CL_Dimensions->Rotate_Z_Model(90);
 				return 1;
 			}
+
+			case ID_TOOLS_RFTEXTURELIBRARY:
+			{
+				App->CL_Texture_Lib->Start_Texl_Dialog();
+				return 1;
+			}
+			
 			
 			// ------------------------------------------------------- Import
 			case ID_IMPORT_EQ_WAVEFRONTOBJ:

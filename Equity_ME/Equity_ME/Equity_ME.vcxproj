@@ -22,7 +22,7 @@
     <ProjectGuid>{067988B6-40D5-402B-8844-885952F6CF5D}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Equity_ME</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -34,7 +34,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>false</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -47,7 +47,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -178,6 +178,7 @@
     <ClInclude Include="ME_Panels.h" />
     <ClInclude Include="ME_Preferences.h" />
     <ClInclude Include="ME_Render.h" />
+    <ClInclude Include="ME_TextureLib.h" />
     <ClInclude Include="ME_Textures.h" />
     <ClInclude Include="ME_TopBar.h" />
     <ClInclude Include="ME_Utilities.h" />
@@ -221,6 +222,7 @@
     <ClCompile Include="ME_Panels.cpp" />
     <ClCompile Include="ME_Preferences.cpp" />
     <ClCompile Include="ME_Render.cpp" />
+    <ClCompile Include="ME_TextureLib.cpp" />
     <ClCompile Include="ME_Textures.cpp" />
     <ClCompile Include="ME_TopBar.cpp" />
     <ClCompile Include="ME_Utilities.cpp" />

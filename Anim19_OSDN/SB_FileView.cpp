@@ -137,6 +137,21 @@ void SB_FileView::Init_Bmps_FileView()
 }
 
 // **************************************************************************
+// *			Hide_FileView:- Terry and Hazel Flanigan 2022				*
+// **************************************************************************
+void SB_FileView::Show_FileView(bool show)
+{
+	if (show == 1)
+	{
+		ShowWindow(App->ListPanel, SW_SHOW);
+	}
+	else
+	{
+		ShowWindow(App->ListPanel, SW_HIDE);
+	}
+}
+
+// **************************************************************************
 // *			Start_FileView:- Terry and Hazel Flanigan 2022				*
 // **************************************************************************
 void SB_FileView::Start_FileView(void)
@@ -1710,7 +1725,10 @@ void SB_FileView::Context_New(HWND hDlg)
 			App->SBC_Dialogs->DropList_Data = Enums::DropDialog_Particles;
 			App->SBC_Dialogs->Dialog_DropGen();
 
-			App->SBC_Com_Particles->Add_New_Particle(App->SBC_Dialogs->Chr_DropText);
+			if (App->SBC_Dialogs->Canceled == 0)
+			{
+				App->SBC_Com_Particles->Add_New_Particle(App->SBC_Dialogs->Chr_DropText);
+			}
 
 		}
 

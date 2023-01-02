@@ -27,6 +27,12 @@ distribution.
 
 SB_Gui_Dialogs::SB_Gui_Dialogs(void)
 {
+	Show_Progress_Bar2 = 0;
+	progress = 0;
+	Progress_Count = 0;
+	Progress_Delta = 0;
+	StartPos_PB = 0;
+
 	Show_Dialog_Float = 0;
 	Float_StartPos = 0;
 	Float_PosX = 0;
@@ -69,6 +75,7 @@ void SB_Gui_Dialogs::Close_All_Dialogs(void)
 	Show_Dialog_Float = 0;
 	Show_Dialog_MessageEditor = 0;
 	Show_ColourPicker = 0;
+	App->CL_Vm_ImGui->Show_Progress_Bar = 0;
 }
 
 // *************************************************************************
@@ -107,6 +114,11 @@ void SB_Gui_Dialogs::Gui_Render_Loop(void)
 	if (Show_ColourPicker == 1)
 	{
 		Dialog_Colour_Picker();
+	}
+
+	if (Show_Progress_Bar2 == 1)
+	{
+		ImGui_ProgressBar2();
 	}
 }
 
@@ -481,7 +493,7 @@ void SB_Gui_Dialogs::Dialog_Colour_Picker(void)
 		if (ImGui::Button("Apply"))
 		{
 			Float_Exit = 1;
-			Show_Dialog_Float = 0;
+		
 			Float_StartPos = 0;
 			ColourPicker_Canceled = 0;
 
@@ -510,8 +522,68 @@ void SB_Gui_Dialogs::Dialog_Colour_Picker(void)
 			//Show_ColourPicker = 0;
 			ImGui::End();
 		}
+
+		ImGui::End();
 	}
 }
+
+// *************************************************************************
+// *					ImGui_ProgressBar2  Terry Bernie				   *
+// *************************************************************************
+void SB_Gui_Dialogs::ImGui_ProgressBar2(void)
+{
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
+
+	ImGui::SetNextWindowPos(ImVec2(500, 500), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowSize(ImVec2(350, 90), ImGuiCond_FirstUseEver);
+
+	if (!ImGui::Begin("ProgressBar", &Show_Progress_Bar2, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize))
+	{
+		ImGui::End();
+	}
+	else
+	{
+		if (StartPos_PB == 0)
+		{
+			ImGui::SetWindowPos("ProgressBar", ImVec2(400, 250));
+			ImGui::SetWindowSize(ImVec2(350, 90));
+			StartPos_PB = 1;
+		}
+
+		progress = 0.0f,
+		progress += 0.0001;
+
+		float progress_saturated = (progress < 0.0f) ? 0.0f : (progress > 1.0f) ? 1.0f : progress;
+
+		char buf[32];
+		sprintf(buf, "%d/%d", (int)(progress_saturated * Progress_Count), (int)Progress_Count);
+		ImGui::ProgressBar(progress, ImVec2(0.f, 0.f), buf);
+
+		ImGui::PopStyleColor();
+		ImGui::End();
+	}
+}
+
+// *************************************************************************
+// *					Start_ProgressBar  Terry Bernie					   *
+// *************************************************************************
+void SB_Gui_Dialogs::Start_ProgressBar(void)
+{
+	StartPos_PB = 0;
+	Show_Progress_Bar2 = 1;
+}
+
+// *************************************************************************
+// *					Stop_ProgressBar  Terry Bernie					   *
+// *************************************************************************
+void SB_Gui_Dialogs::Stop_ProgressBar(void)
+{
+	StartPos_PB = 0;
+	progress = 0.0f,
+	Show_Progress_Bar2 = 0;
+}
+
+
 // ----------------- Keep for later
 //static char buf2[64] = ""; ImGui::InputText("decimal", buf2, 64, ImGuiInputTextFlags_CharsDecimal);
 /*const float   f32_zero = 0.f, f32_one = 1.f, f32_lo_a = -10000000000.0f, f32_hi_a = +10000000000.0f;

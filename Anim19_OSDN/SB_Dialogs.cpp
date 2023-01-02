@@ -538,6 +538,9 @@ void SB_Dialogs::List_Particles(HWND List)
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"GD_Smoke1");
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"GD_JetEngine1");
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"GD_Aureola");
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"GD_PurpleFountain");
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"GD_Swarm");
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"GD_GreenyNimbus");
 
 	SendMessage(List, LB_SELECTSTRING, -1, (LPARAM)App->SBC_Dialogs->Chr_DropText);
 }

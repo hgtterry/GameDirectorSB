@@ -814,6 +814,7 @@ void SB_Build::Read_From_Config(void)
 // *************************************************************************
 bool SB_Build::Build_Project()
 {
+	//App->CL_Vm_ImGui->Show_Progress_Bar = 1;
 
 	if (_mkdir(m_Build_Sub_Folder) == 0)
 	{
@@ -849,6 +850,7 @@ bool SB_Build::Build_Project()
 	Build_Objects_Folder();
 	Build_Display_Folder();
 	
+	//App->CL_Vm_ImGui->Show_Progress_Bar = 0;
 	return 1;
 }
 

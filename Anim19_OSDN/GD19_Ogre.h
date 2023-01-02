@@ -63,6 +63,7 @@ public:
 
 	bool Block_RenderingQueued;
 
+
 	HWND RenderHwnd;
 	Ogre::Root* mRoot;
 	Ogre::RenderWindow* mWindow;
@@ -89,6 +90,8 @@ public:
 	OgreImGui  m_imgui;
 
 	Ogre::Timer FPStimer;
+
+	int FPSLock;
 
 	double PCFreq;
 	_int64 CounterStart;

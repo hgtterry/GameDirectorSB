@@ -266,6 +266,20 @@ void SB_Com_Environments::Set_First_Environment(int Index)
 	{
 		App->SBC_Ogre->mSceneMgr->setFog(FOG_NONE, ColourValue(0.7, 0.7, 0.8), 0, 100, 1000);
 	}
+
+	if (App->SBC_Scene->B_Object[Index]->S_Environ[0]->Enabled == 1)
+	{
+		App->SBC_Ogre->mSceneMgr->setSkyDome(true,
+			App->SBC_Scene->B_Object[Index]->S_Environ[0]->Material,
+			App->SBC_Scene->B_Object[Index]->S_Environ[0]->Curvature,
+			App->SBC_Scene->B_Object[Index]->S_Environ[0]->Tiling,
+			App->SBC_Scene->B_Object[Index]->S_Environ[0]->Distance);
+	}
+	else
+	{
+
+	}
+
 }
 
 // *************************************************************************
@@ -417,7 +431,15 @@ void SB_Com_Environments::GameMode(bool Is_On)
 
 	if (App->SBC_Scene->B_Object[First_Environ]->S_Environ[0]->Fog_On == 1)
 	{
-		EnableFog(true);
+		float Start = App->SBC_Scene->B_Object[First_Environ]->S_Environ[0]->Fog_Start;
+		float End = App->SBC_Scene->B_Object[First_Environ]->S_Environ[0]->Fog_End;
+		float Density = App->SBC_Scene->B_Object[First_Environ]->S_Environ[0]->Fog_Density;
+
+		float x = App->SBC_Scene->B_Object[First_Environ]->S_Environ[0]->Fog_Colour.x;
+		float y = App->SBC_Scene->B_Object[First_Environ]->S_Environ[0]->Fog_Colour.y;
+		float z = App->SBC_Scene->B_Object[First_Environ]->S_Environ[0]->Fog_Colour.z;
+
+		App->SBC_Ogre->mSceneMgr->setFog(FOG_LINEAR, ColourValue(x, y, z), Density, (Ogre::Real)Start, (Ogre::Real)End);
 	}
 	else
 	{

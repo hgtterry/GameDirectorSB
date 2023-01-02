@@ -29,9 +29,6 @@ public:
 
 	void ImGui_Collision_Debug(void);
 
-	void ImGui_ProgressBar(void);
-	void Start_ProgressBar(void);
-	void Stop_ProgressBar(void);
 	void Set_ProgressCount(float Count);
 	bool Nudge();
 

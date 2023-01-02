@@ -71,6 +71,7 @@ Base_Player::Base_Player()
 
 	mJump = 0;
 	mJumpSpeed = 4.5;
+
 	Physics_Debug_On = 1;
 
 	FileViewItem = nullptr;
@@ -88,8 +89,20 @@ Base_Player::~Base_Player()
 // *************************************************************************
 void Base_Player::Stop(void)
 {
-	Get_Height();
-	Phys_Body->setLinearVelocity(btVector3(0, 0, 0));
+	//Get_Height();
+
+	btTransform transform;
+	Phys_Body->getMotionState()->getWorldTransform(transform);
+	btMatrix3x3& basis = transform.getBasis();
+	btMatrix3x3 inv = basis.transpose();
+
+	btVector3 dv = mMoveDirection * (1);
+
+	btVector3 linearVelocity = inv * Phys_Body->getLinearVelocity();
+	linearVelocity = dv;
+
+	Phys_Body->setLinearVelocity(basis * linearVelocity);
+
 }
 
 // *************************************************************************
@@ -123,12 +136,17 @@ void Base_Player::Jump(const Ogre::Vector3 axis, float force)
 // *************************************************************************
 void Base_Player::jump2(const btVector3& dir)
 {
-	//App->Flash_Window();
-	/*if (!canJump()) {
-		return;
-	}*/
+	return;
+	Get_Height();
 
-	mJump = true;
+	mJump = 1;
+
+	if (App->SBC_Ogre->OgreListener->DistanceToCollision > 14)
+	{
+		return;
+	}
+
+	
 
 	mJumpDir = dir;
 	//if (dir.fuzzyZero()) {
@@ -142,7 +160,14 @@ void Base_Player::jump2(const btVector3& dir)
 
 	btVector3 linearVelocity = inv * Phys_Body->getLinearVelocity();
 
-	linearVelocity += -2.5 * mJumpDir;
+	linearVelocity += -1.0 * mJumpDir;
+
+	Get_Height();
+
+	if (App->SBC_Ogre->OgreListener->DistanceToCollision < 14)
+	{
+		mJump = 0;
+	}
 
 	Phys_Body->setLinearVelocity(basis * linearVelocity);
 }
@@ -178,16 +203,16 @@ void Base_Player::Move_Player(const btVector3 &walkDirection,float delta)
 		}
 		else
 		{
-			linearVelocity[1] = 10;
+			linearVelocity[1] = linearVelocity[1] +1.50;
 		}
 	}
 
 	//if (mJump) 
-	{
-		//linearVelocity += 10 * mJumpDir;
-		//mJump = false;
-		//cancelStep();
-	}
+	//{
+	//	linearVelocity += 10 * mJumpDir;
+	//	mJump = false;
+	//	//cancelStep();
+	//}
 
 	Phys_Body->setLinearVelocity(basis * linearVelocity);
 
@@ -215,6 +240,7 @@ void Base_Player::Rotate_FromCam(const Ogre::Vector3 axis, float delta, bool nor
 // *************************************************************************
 bool Base_Player::Get_Height(void)
 {
+
 	App->SBC_Ogre->OgreListener->DistanceToCollision = 0;
 
 	Ogre::SceneNode* mNode;
@@ -235,11 +261,11 @@ bool Base_Player::Get_Height(void)
 
 		if (App->SBC_Ogre->OgreListener->DistanceToCollision > 14)
 		{
-			Compenstate = 100;
+			Compenstate = 80;
 		}
 		else
 		{
-			Compenstate = 0;
+			Compenstate = 5;
 		}
 
 		char buff[255];

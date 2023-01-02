@@ -64,6 +64,8 @@ void GD19_Environment::Start_Environment(char* Category)
 		return;
 	}
 
+	App->SBC_FileView->Show_FileView(false);
+
 	Environment_Dlg_Active = 1;
 	Environment_hWnd = CreateDialog(App->hInst,(LPCTSTR)IDD_ENVIRONMENT,App->Fdlg,(DLGPROC)Environment_Proc);
 	Select_Category(Category);
@@ -145,6 +147,8 @@ LRESULT CALLBACK GD19_Environment::Environment_Proc(HWND hDlg, UINT message, WPA
 
 				App->Cl_Environment->Environment_Dlg_Active = 0;
 				App->RedrawWindow_Dlg(App->SBC_Props_Dialog->Area_Props_HWND);
+
+				App->SBC_FileView->Show_FileView(true);
 				EndDialog(hDlg, LOWORD(wParam));
 				App->Cl_Environment->Environment_hWnd = NULL;
 				return TRUE;
@@ -160,6 +164,8 @@ LRESULT CALLBACK GD19_Environment::Environment_Proc(HWND hDlg, UINT message, WPA
 
 				App->Cl_Environment->Environment_Dlg_Active = 0;
 				App->RedrawWindow_Dlg(App->SBC_Props_Dialog->Area_Props_HWND);
+
+				App->SBC_FileView->Show_FileView(true);
 				EndDialog(hDlg, LOWORD(wParam));
 				App->Cl_Environment->Environment_hWnd = NULL;
 				return TRUE;
@@ -713,6 +719,8 @@ bool GD19_Environment::On_Click_Props(LPARAM lParam)
 			App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour = Ogre::Vector3(App->SBC_Gui_Dialogs->Float_Colour.x, App->SBC_Gui_Dialogs->Float_Colour.y, App->SBC_Gui_Dialogs->Float_Colour.z);
 			App->SBC_Ogre->mSceneMgr->setAmbientLight(ColourValue(App->SBC_Gui_Dialogs->Float_Colour.x, App->SBC_Gui_Dialogs->Float_Colour.y, App->SBC_Gui_Dialogs->Float_Colour.z));
 		}
+
+		App->SBC_Gui_Dialogs->Show_ColourPicker = 0;
 
 		App->Disable_Panels(false);
 		App->Show_Panels(true);

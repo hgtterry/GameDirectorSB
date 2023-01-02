@@ -426,10 +426,10 @@ void VM_ImGui::ImGui_FPS(void)
 		}
 
 		ImGui::Text("FPS average %.0f", ImGui::GetIO().Framerate);
-
+		
 		if (App->Debug_App == 1)
 		{
-			ImGui::Text("Delay Timer %i", App->SBC_Ogre->FPStimer.getMilliseconds());
+			ImGui::Text("Delay Timer %l", App->SBC_Ogre->FPStimer.getMicroseconds());
 			ImGui::Text("Ogre Frame Time %f", App->SBC_Ogre->OgreListener->OgreFrameTime);
 			ImGui::Text("Distance To Floor: = %f", App->SBC_Ogre->OgreListener->DistanceToCollision);
 		}
@@ -473,56 +473,6 @@ void VM_ImGui::ImGui_Collision_Debug(void)
 
 		ImGui::End();
 	}
-}
-
-// *************************************************************************
-// *					ImGui_ProgressBar  Terry Bernie					   *
-// *************************************************************************
-void VM_ImGui::ImGui_ProgressBar(void)
-{
-	if (!ImGui::Begin("ProgressBar1", &Show_Progress_Bar, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_AlwaysAutoResize))
-	{
-		ImGui::End();
-	}
-	else
-	{
-		if (StartPos_PB == 0)
-		{
-			ImGui::SetWindowPos("ProgressBar1", ImVec2(400, 250));
-			ImGui::SetWindowSize(ImVec2(350, 90));
-			StartPos_PB = 1;
-		}
-
-		//progress = 0.0f,
-		//progress += 0.0001;
-
-		float progress_saturated = (progress < 0.0f) ? 0.0f : (progress > 1.0f) ? 1.0f : progress;
-
-		char buf[32];
-		sprintf(buf, "%d/%d", (int)(progress_saturated * Progress_Count), (int)Progress_Count);
-		ImGui::ProgressBar(progress, ImVec2(0.f, 0.f), buf);
-
-		ImGui::End();
-	}
-}
-
-// *************************************************************************
-// *					Start_ProgressBar  Terry Bernie					   *
-// *************************************************************************
-void VM_ImGui::Start_ProgressBar(void)
-{
-	StartPos_PB = 0;
-	Show_Progress_Bar = 1;
-}
-
-// *************************************************************************
-// *					Stop_ProgressBar  Terry Bernie					   *
-// *************************************************************************
-void VM_ImGui::Stop_ProgressBar(void)
-{
-	StartPos_PB = 0;
-	progress = 0.0f,
-	Show_Progress_Bar = 0;
 }
 
 // *************************************************************************

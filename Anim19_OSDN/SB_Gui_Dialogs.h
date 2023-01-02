@@ -38,6 +38,16 @@ public:
 
 	void Dialog_Colour_Picker(void);
 
+	void ImGui_ProgressBar2(void);
+	void Start_ProgressBar(void);
+	void Stop_ProgressBar(void);
+
+	float progress;
+	float Progress_Count;
+	float Progress_Delta;
+	bool StartPos_PB;
+
+	bool Show_Progress_Bar2;
 	// -------------- General
 	ImVec4 Float_Colour;
 

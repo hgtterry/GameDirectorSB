@@ -50,6 +50,7 @@ distribution.
 #include "ME_Preferences.h"
 #include "ME_Ini.h"
 #include "ME_Export_Ogre3D.h"
+#include "ME_TextureLib.h"
 
 class ME_App
 {
@@ -84,6 +85,7 @@ public:
 	ME_Preferences*		CL_Prefs;
 	T_Ini*				CL_Ini;
 	ME_Export_Ogre3D*	CL_Export_Ogre3D;
+	ME_TextureLib*		CL_Texture_Lib;
 
 	bool InitApp(void);
 	bool SetMainWin_Centre(void);

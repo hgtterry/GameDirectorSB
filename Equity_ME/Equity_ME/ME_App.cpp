@@ -55,7 +55,7 @@ ME_App::ME_App()
 	CL_Prefs = nullptr;
 	CL_Ini = nullptr;
 	CL_Export_Ogre3D = nullptr;
-
+	CL_Texture_Lib = nullptr;
 	//----------------------------------------------
 	hInst =			nullptr;
 
@@ -146,6 +146,7 @@ bool ME_App::InitApp(void)
 	CL_Prefs = new ME_Preferences();
 	CL_Ini = new T_Ini();
 	CL_Export_Ogre3D = new ME_Export_Ogre3D();
+	CL_Texture_Lib = new ME_TextureLib();
 	
 	// ----------------------------------------------
 	SetBrushes_Fonts();

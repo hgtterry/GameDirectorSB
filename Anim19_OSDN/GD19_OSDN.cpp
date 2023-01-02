@@ -241,6 +241,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		case ID_TEST_DISABLEDIALOGS:
 		{
+			App->SBC_Gui_Dialogs->Close_All_Dialogs();
+
 			if (App->Panels_Disabled_Flag == 1)
 			{
 				App->Panels_Disabled_Flag = 0;
@@ -252,6 +254,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				App->Disable_Panels(true);
 			}
 			
+			Debug;
 			return 1;
 		}
 
@@ -369,11 +372,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			if (App->CL_Vm_ImGui->Show_Progress_Bar == 0)
 			{
 				App->CL_Vm_ImGui->Set_ProgressCount(10501);
-				App->CL_Vm_ImGui->Start_ProgressBar();
+				//App->CL_Vm_ImGui->Start_ProgressBar();
 			}
 			else
 			{
-				App->CL_Vm_ImGui->Stop_ProgressBar();
+				//App->CL_Vm_ImGui->Stop_ProgressBar();
 			}
 			return 1;
 		}
@@ -399,25 +402,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		case ID_DEBUG_TESTIMGUIDIALOG:
 		{
-
-			App->SBC_Gui_Dialogs->Start_Dialog_MessageEditor(5);
-
-			while (App->SBC_Gui_Dialogs->Show_Dialog_MessageEditor == 1)
+			if (App->SBC_Gui_Dialogs->Show_Progress_Bar2 == 0)
 			{
-				App->SBC_Gui_Dialogs->BackGround_Render_Loop();
-			}
-
-			App->Disable_Panels(false);
-			App->Show_Panels(true);
-
-			/*if (App->SBC_Gui_Dialogs->Show_Dialog_MessageEditor == 1)
-			{
-				App->SBC_Gui_Dialogs->Show_Dialog_MessageEditor = 0;
+				App->SBC_Gui_Dialogs->Start_ProgressBar();
 			}
 			else
 			{
-				App->SBC_Gui_Dialogs->Show_Dialog_MessageEditor = 1;
-			}*/
+				App->SBC_Gui_Dialogs->Stop_ProgressBar();
+			}
+			
 			return 1;
 		}
 
