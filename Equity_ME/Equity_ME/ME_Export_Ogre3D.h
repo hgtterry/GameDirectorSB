@@ -73,6 +73,8 @@ public:
 	char NewDirectory[MAX_PATH];
 	char Directory_Name[MAX_PATH];
 
+	bool Export_As_RF;
+
 protected:
 
 	bool CreateDirectoryMesh(void);

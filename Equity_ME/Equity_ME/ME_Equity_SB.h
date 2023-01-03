@@ -37,6 +37,9 @@ protected:
 		
 	static LRESULT CALLBACK WE_import_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
+	bool Write_Project_File(char* Path_And_File);
+	bool Load_Project_File(char* Path_And_File);
+
 	bool LoadTextures_TXL();
 	int Check_for_Textures(geVFile *BaseFile);
 	bool Check_in_Txl(char *FileName);
@@ -53,6 +56,17 @@ protected:
 
 	char Txt_FileName[255];
 	char Txt_Path_FileName[1024];
+
+	char Pref_Txl_FileName[MAX_PATH];
+	char Pref_Txl_Path_FileName[MAX_PATH];
+
+	char Pref_WE_JustFileName[MAX_PATH];			
+	char Pref_WE_Path_FileName[MAX_PATH];		
+
+	char Pref_Ogre_JustFileName[MAX_PATH];		
+	char Pref_Ogre_Path[MAX_PATH];
+
+	FILE* WriteScene;
 
 	OPENFILENAME ofn;
 };

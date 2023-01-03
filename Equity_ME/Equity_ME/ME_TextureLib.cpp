@@ -29,7 +29,8 @@ distribution.
 
 ME_TextureLib::ME_TextureLib()
 {
-
+	FileName[0] = 0;
+	Add_Texture_FileName[0] = 0;
 }
 
 ME_TextureLib::~ME_TextureLib()
@@ -48,6 +49,8 @@ void ME_TextureLib::Start_Texl_Dialog()
 		return;
 	}
 
+	strcpy(FileName, App->CL_FileIO->Model_FileName);
+
 	DialogBox(App->hInst, (LPCTSTR)IDD_TEXTUREPACKER, App->Fdlg, (DLGPROC)TextureLib_Proc);
 }
 
@@ -59,82 +62,103 @@ LRESULT CALLBACK ME_TextureLib::TextureLib_Proc(HWND hDlg, UINT message, WPARAM 
 	switch (message)
 	{
 	case WM_INITDIALOG:
+	{
 
 		App->CL_Texture_Lib->Entry = new BitmapEntry;
+		App->CL_Texture_Lib->Entry->Bitmap = NULL;
+		App->CL_Texture_Lib->Entry->WinABitmap = NULL;
+		App->CL_Texture_Lib->Entry->WinBitmap = NULL;
+		//App->CL_Texture_Lib->Entry->Flags
 
 		SetWindowLong(GetDlgItem(hDlg, IDC_PREVIEW), GWL_WNDPROC, (LONG)TextureLibPreviewWnd);
 		char buf1[200];
-		HFONT				Font;
-		HFONT				Font1;
-		HFONT				Font2;
-		HFONT				Font3;
+		
+		bool Test = App->CL_Texture_Lib->LoadFile(hDlg);
 
-		App->CL_Texture_Lib->LoadFile(hDlg);
+		if (Test == 0)
+		{
+			App->Say("Failed");
+			return 0;
+		}
 
-		strcpy(buf1, "poop");
-		strcat(buf1, "        ");
+		strcpy(buf1, "Texture library: - ");
 		strcat(buf1, App->CL_Texture_Lib->pData->TXLFileName);
 		SetWindowText(hDlg, buf1);
 
-		Font = CreateFont(-24, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Arial Black");
-		Font1 = CreateFont(-20, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Arial Black");
-		Font2 = CreateFont(-12, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
-		Font3 = CreateFont(-10, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier");
-		SendDlgItemMessage(hDlg, IDC_TEXTURE, WM_SETFONT, (WPARAM)Font, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_ALPHA, WM_SETFONT, (WPARAM)Font, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_GEINFO, WM_SETFONT, (WPARAM)Font1, MAKELPARAM(TRUE, 0));
-		//	SendDlgItemMessage(hDlg,IDC_CTRLKEY, WM_SETFONT, (WPARAM)Font2, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_TEXTURELIST, WM_SETFONT, (WPARAM)Font2, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_TEXTURE, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ALPHA, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_GEINFO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_TEXTURELIST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		/*	if (C_TetureLib->EditOrLoad==1)
-			{
-				C_TetureLib->LoadSetUpControls();
-			}
-			if (C_TetureLib->EditOrLoad==0)
-			{
-				C_TetureLib->EditSetUpControls();
-			}*/
+		SendDlgItemMessage(hDlg, IDC_EXPORTSELECTED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ADD, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
+		return 1;
+	}
 
 	case WM_CTLCOLORDLG:
 	{
 		return (LONG)App->AppBackground;
 	}
 
-	return TRUE;
+	case WM_CTLCOLORSTATIC:
+	{
+		if (GetDlgItem(hDlg, IDC_ALPHA) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->Brush_Green;
+		}
+		if (GetDlgItem(hDlg, IDC_TEXTURE) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->Brush_But_Normal;
+		}
+
+		break;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_EXPORTSELECTED && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_ADD && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
 
 	case WM_COMMAND:
 	{
-		if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
-		{
 
-			if (App->CL_Texture_Lib->pData->Dirty)
-			{
-				int	Result;
-
-				Result = MessageBox(NULL,
-					"Do you want to save changes before quitting?",
-					"Texture Packer",
-					MB_YESNOCANCEL);
-
-				if (Result == IDCANCEL)
-					return 0;
-
-				if (Result == IDYES)
-				{
-					if (App->CL_Texture_Lib->pData->FileNameIsValid)
-					{
-						App->CL_Texture_Lib->Save(App->CL_Texture_Lib->pData->TXLFileName);
-					}
-					else
-					{
-						App->CL_Texture_Lib->Save(NULL);
-					}
-				}
-			}
-			//	C_TetureLib->CleanUp();
-			EndDialog(hDlg, LOWORD(wParam));
-			return TRUE;
-		}
 		//-------------------Click in Texture List Box ----------------
 		if (LOWORD(wParam) == IDC_TEXTURELIST)
 		{
@@ -145,14 +169,16 @@ LRESULT CALLBACK ME_TextureLib::TextureLib_Proc(HWND hDlg, UINT message, WPARAM 
 		//--------------------------------- Add -----------------------
 		if (LOWORD(wParam) == IDC_ADD)
 		{
-			//int test = C_File->OpenFileCom("Texture Files ( *.bmp *.tga )\0*.bmp;*.tga\0*.tga\0*.tga\0*.bmp\0*.bmp\0", "Add Texture", "Bitmap Files");
-			//if (test == 0)
-			//{
-			//	return 1;
-			//}
+			int test = App->CL_FileIO->Open_File_Model("Texture Files ( *.bmp *.tga )\0*.bmp;*.tga\0*.tga\0*.tga\0*.bmp\0*.bmp\0", "Add Texture", "Bitmap Files");
+			if (test == 0)
+			{
+				return TRUE;
+			}
 
-			//C_TetureLib->AddTexture(NULL, FileName);
-			//C_TetureLib->pData->Dirty = 1; // it as changed reqest save
+			strcpy(App->CL_Texture_Lib->Add_Texture_FileName, App->CL_FileIO->Model_FileName);
+
+			App->CL_Texture_Lib->AddTexture(NULL, App->CL_Texture_Lib->Add_Texture_FileName);
+			App->CL_Texture_Lib->pData->Dirty = 1; // it as changed reqest save
 			return TRUE;
 		}
 		//--------------------------------- Save ----------------------
@@ -173,7 +199,6 @@ LRESULT CALLBACK ME_TextureLib::TextureLib_Proc(HWND hDlg, UINT message, WPARAM 
 		//--------------------------------- Save AS --------------------
 		if (LOWORD(wParam) == IDC_SAVEAS)
 		{
-
 			App->CL_Texture_Lib->Save(NULL);
 			return TRUE;
 		}
@@ -211,7 +236,7 @@ LRESULT CALLBACK ME_TextureLib::TextureLib_Proc(HWND hDlg, UINT message, WPARAM 
 		return TRUE;
 	}*/
 
-	//--------------------------------- Save AS --------------------
+		//--------------------------------- EXPORTSELECTED --------------------
 		if (LOWORD(wParam) == IDC_EXPORTSELECTED)
 		{
 
@@ -243,30 +268,39 @@ LRESULT CALLBACK ME_TextureLib::TextureLib_Proc(HWND hDlg, UINT message, WPARAM 
 			return TRUE;
 		}
 
-	}
-
-	case WM_CTLCOLORSTATIC:
-	{
-
-
-		/*if (GetDlgItem(hDlg, IDC_ALPHA) == (HWND)lParam)
+		if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
 		{
-			SetBkColor((HDC)wParam, RGB(0, 255, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			hBrushStatic = CreateSolidBrush(RGB(200, 200, 0));
-			return (UINT)hBrushStatic;
+
+			if (App->CL_Texture_Lib->pData->Dirty)
+			{
+				int	Result;
+
+				Result = MessageBox(NULL,
+					"Do you want to save changes before quitting?",
+					"Texture Packer",
+					MB_YESNOCANCEL);
+
+				if (Result == IDCANCEL)
+					return 0;
+
+				if (Result == IDYES)
+				{
+					if (App->CL_Texture_Lib->pData->FileNameIsValid)
+					{
+						App->CL_Texture_Lib->Save(App->CL_Texture_Lib->pData->TXLFileName);
+					}
+					else
+					{
+						App->CL_Texture_Lib->Save(NULL);
+					}
+				}
+			}
+
+			App->CL_Texture_Lib->CleanUp();
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
 		}
-		if (GetDlgItem(hDlg, IDC_TEXTURE) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 255, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			hBrushStatic = CreateSolidBrush(RGB(200, 200, 0));
-			return (UINT)hBrushStatic;
-		}*/
 
-		break;
 	}
 
 	break;
@@ -317,6 +351,7 @@ bool CALLBACK ME_TextureLib::TextureLibPreviewWnd(HWND hwnd, UINT msg, WPARAM wP
 
 			ReleaseDC(hwnd, hDC);
 		}
+
 		EndPaint(hwnd, &ps);
 		return 0;
 	}
@@ -775,7 +810,6 @@ ExitWriteBitmap:
 	return nErrorCode;
 }
 
-////   TXL LIBRARY STUFF
 // *************************************************************************
 // *						LoadFile  06/06/08 					  		   *
 // *************************************************************************
@@ -787,17 +821,14 @@ bool ME_TextureLib::LoadFile(HWND ChDlg)
 
 	pData= new TPack_WindowData;
 	pData->hwnd=ChDlg;
-	pData->BitmapCount=0;
+	pData->BitmapCount = 0;
 
-	int TextureCount=0;
+	int TextureCount  = 0;
 
-	//return 0;
-	//Say(FileName);
-	//Say(Path_FileName);
-	VFS = geVFile_OpenNewSystem(NULL, GE_VFILE_TYPE_VIRTUAL, App->CL_FileIO->Model_FileName, NULL, GE_VFILE_OPEN_READONLY | GE_VFILE_OPEN_DIRECTORY);
+	VFS = geVFile_OpenNewSystem(NULL, GE_VFILE_TYPE_VIRTUAL, FileName, NULL, GE_VFILE_OPEN_READONLY | GE_VFILE_OPEN_DIRECTORY);
 	if	(!VFS)
 	{
-		NonFatalError("Could not open file %s", App->CL_FileIO->Model_FileName);
+		App->Say("Could not open file %s");
 		return 0;
 	}
 
@@ -805,10 +836,11 @@ bool ME_TextureLib::LoadFile(HWND ChDlg)
 	Finder2 = geVFile_CreateFinder(VFS, "*.*");
 	if	(!Finder2)
 	{
-		NonFatalError("XX Could not load textures from %s", App->CL_FileIO->Model_FileName);
+		App->Say("XX Could not load textures from %s");
 		geVFile_Close(VFS);
 		return 0;
 	}
+
 
 	while	(geVFile_FinderGetNextFile(Finder2) != GE_FALSE)
 	{
@@ -817,17 +849,14 @@ bool ME_TextureLib::LoadFile(HWND ChDlg)
 		
 	}
 
-	
-
 	Finder = geVFile_CreateFinder(VFS, "*.*");
 	if	(!Finder)
 	{
-		NonFatalError("Could not load textures from %s", App->CL_FileIO->Model_FileName);
+		App->Say("Could not load textures from %s");
 		geVFile_Close(VFS);
 		return 0;
 	}
 
-	
 	while	(geVFile_FinderGetNextFile(Finder) != GE_FALSE)
 	{
 		geVFile_Properties	Properties;
@@ -840,13 +869,14 @@ bool ME_TextureLib::LoadFile(HWND ChDlg)
 		}
 
 	}
-	strcpy(pData->TXLFileName, App->CL_FileIO->Model_FileName);
+	strcpy(pData->TXLFileName, FileName);
 	pData->FileNameIsValid = TRUE;
 	pData->Dirty = FALSE;
 	geVFile_Close(VFS);
 
 	SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST,LB_SETCURSEL, (WPARAM)0, (LPARAM)0);
-	
+	SelectBitmap();
+
 	return 1;
 }
 
@@ -931,7 +961,7 @@ bool ME_TextureLib::AddTexture(geVFile *BaseFile, const char *Path)
 	pData->BitmapCount++;
 
 	SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)Name);
-	//SetProgText(Name);
+	
 	return TRUE;
 
 }
@@ -1219,11 +1249,14 @@ SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_GETTEXT, (WPARAM)nSel, (LPAR
 				strcpy(L_FileName,SaveFile);
 			}
 
-				if(geBitmap_HasAlpha(NewBitmapList[nSel]->Bitmap))
-					nErrorCode = WriteTGA(SaveFile,NewBitmapList[nSel]->Bitmap);
-				else
-					nErrorCode = WriteBMP8(SaveFile,NewBitmapList[nSel]->Bitmap);
-// end change
+			if (geBitmap_HasAlpha(NewBitmapList[nSel]->Bitmap))
+			{
+				nErrorCode = WriteTGA(SaveFile, NewBitmapList[nSel]->Bitmap);
+			}
+			else
+			{
+				nErrorCode = WriteBMP8(SaveFile, NewBitmapList[nSel]->Bitmap);
+			}
 
 			if (nErrorCode != TPACKERROR_OK)
 			{

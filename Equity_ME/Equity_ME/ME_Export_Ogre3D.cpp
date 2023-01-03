@@ -38,6 +38,8 @@ ME_Export_Ogre3D::ME_Export_Ogre3D()
 	NewDirectory[0] = 0;
 	Add_Sub_Folder = 1;
 
+	Export_As_RF = 0;
+
 	nx = 0;
 	ny = 0;
 	nz = 0;
@@ -621,10 +623,11 @@ bool ME_Export_Ogre3D::DecompileTextures(void)
 
 		if (_stricmp(FileName + strlen(FileName) - 4, ".tga") == 0)
 		{
+			App->Say(FileName);
 			int Len = strlen(FileName);
 			FileName[Len - 4] = 0;
 			strcat(FileName, ".jpg");
-
+			
 			App->CL_Textures->HBITMAP_TO_BmpFile(Data, FileName, "");
 			App->CL_Textures->Jpg_To_Tga24(FileName);
 		}

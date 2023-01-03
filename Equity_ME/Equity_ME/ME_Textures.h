@@ -6,6 +6,7 @@
 #define TPACKERROR_MEMORYALLOCATION  (TPACKERROR_OK - 3)
 #define TPACKERROR_CREATEFILE        (TPACKERROR_OK - 4)
 
+#pragma pack(1)
 typedef struct TGAHEADER
 {
 	char	IDLength;
@@ -21,6 +22,7 @@ typedef struct TGAHEADER
 	char	PixelDepth;
 	char	ImageDescriptor;
 } TGAHEADER;
+#pragma pack()
 
 class ME_Textures
 {

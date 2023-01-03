@@ -29,6 +29,15 @@ distribution.
 
 ME_Equity_SB::ME_Equity_SB()
 {
+	strcpy(Pref_Txl_Path_FileName, "Not_Set");
+
+	strcpy(Pref_WE_JustFileName, "Not_Set");
+	strcpy(Pref_WE_Path_FileName, "Not_Set");
+
+	strcpy(Pref_Ogre_JustFileName, "Not_Set");
+	strcpy(Pref_Ogre_Path, "Not_Set");
+
+	WriteScene = nullptr;
 
 	NameCount = 0;
 }
@@ -62,8 +71,8 @@ LRESULT CALLBACK ME_Equity_SB::WE_import_Proc(HWND hDlg, UINT message, WPARAM wP
 		/*SendDlgItemMessage(hDlg, IDC_STQLOGREFILE, WM_SETFONT, (WPARAM)App->Font_CB12, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STQLOGREPATH, WM_SETFONT, (WPARAM)App->Font_CB12, MAKELPARAM(TRUE, 0));*/
 
-		SetDlgItemText(hDlg, IDC_STWEPATHFILE, (LPCTSTR)App->CL_Prefs->Pref_WE_Path_FileName);
-		SetDlgItemText(hDlg, IDC_STTXLFILEPATH, (LPCTSTR)App->CL_Prefs->Pref_Txl_Path_FileName);
+		SetDlgItemText(hDlg, IDC_STWEPATHFILE, (LPCTSTR)App->CL_Equity_SB->Pref_WE_Path_FileName);
+		SetDlgItemText(hDlg, IDC_STTXLFILEPATH, (LPCTSTR)App->CL_Equity_SB->Pref_Txl_Path_FileName);
 
 		/*SetDlgItemText(hDlg, IDC_STQLOGREFILE, (LPCTSTR)App->Cl_Vm_Preferences->Pref_Ogre_JustFileName);
 		SetDlgItemText(hDlg, IDC_STQLOGREPATH, (LPCTSTR)App->Cl_Vm_Preferences->Pref_Ogre_Path);*/
@@ -167,6 +176,47 @@ LRESULT CALLBACK ME_Equity_SB::WE_import_Proc(HWND hDlg, UINT message, WPARAM wP
 
 	case WM_COMMAND:
 	{
+		
+		if (LOWORD(wParam) == IDC_BT_LOADPRJ)
+		{
+	
+			int Result = App->CL_FileIO->Open_File_Model("GDSB File   *.Prj\0*.Prj\0", "GDSB File", NULL);
+			if (Result == 0)
+			{
+				return 1;
+			}
+
+			App->CL_Equity_SB->Load_Project_File(App->CL_FileIO->Model_Path_FileName);
+
+			SetDlgItemText(hDlg, IDC_STWEPATHFILE, (LPCTSTR)App->CL_Equity_SB->Pref_WE_Path_FileName);
+			SetDlgItemText(hDlg, IDC_STTXLFILEPATH, (LPCTSTR)App->CL_Equity_SB->Pref_Txl_Path_FileName);
+
+			App->Say("Loaded");
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_SAVE_PRJ)
+		{
+			char mDirectory[MAX_PATH];
+			_getcwd(mDirectory, MAX_PATH);
+
+			strcpy(App->CL_FileIO->BrowserMessage, mDirectory);
+			int Test = App->CL_FileIO->StartBrowser(mDirectory);
+			if (Test == 0) { return 1; }
+
+			char Path_And_File[MAX_PATH];
+			strcpy(Path_And_File, App->CL_FileIO->szSelectedDir);
+			strcat(Path_And_File, "\\");
+			strcat(Path_And_File, "GDSB.Prj");
+
+			App->CL_Equity_SB->Write_Project_File(Path_And_File);
+
+			App->Say("Saved");
+
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDC_3DSBROWSE)
 		{
 			int Result = App->CL_FileIO->Open_File_Model("Equity Room   *.ebr\0*.ebr\0", "Equity Room ebr", NULL);
@@ -175,10 +225,10 @@ LRESULT CALLBACK ME_Equity_SB::WE_import_Proc(HWND hDlg, UINT message, WPARAM wP
 				return 1;
 			}
 
-			strcpy(App->CL_Prefs->Pref_WE_Path_FileName, App->CL_FileIO->Model_Path_FileName);
-			strcpy(App->CL_Prefs->Pref_WE_JustFileName, App->CL_FileIO->Model_FileName);
+			strcpy(App->CL_Equity_SB->Pref_WE_Path_FileName, App->CL_FileIO->Model_Path_FileName);
+			strcpy(App->CL_Equity_SB->Pref_WE_JustFileName, App->CL_FileIO->Model_FileName);
 
-			SetDlgItemText(hDlg, IDC_STWEPATHFILE, (LPCTSTR)App->CL_Prefs->Pref_WE_Path_FileName);
+			SetDlgItemText(hDlg, IDC_STWEPATHFILE, (LPCTSTR)App->CL_Equity_SB->Pref_WE_Path_FileName);
 
 			return TRUE;
 		}
@@ -192,35 +242,36 @@ LRESULT CALLBACK ME_Equity_SB::WE_import_Proc(HWND hDlg, UINT message, WPARAM wP
 				return 1;
 			}
 
-			strcpy(App->CL_Prefs->Pref_Txl_Path_FileName, App->CL_Equity_SB->Txt_Path_FileName);
+			strcpy(App->CL_Equity_SB->Pref_Txl_Path_FileName, App->CL_Equity_SB->Txt_Path_FileName);
 
-			SetDlgItemText(hDlg, IDC_STTXLFILEPATH, (LPCTSTR)App->CL_Prefs->Pref_Txl_Path_FileName);
+			SetDlgItemText(hDlg, IDC_STTXLFILEPATH, (LPCTSTR)App->CL_Equity_SB->Pref_Txl_Path_FileName);
 
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDOK)
 		{
-			App->CL_Prefs->Write_Preferences();
+			//App->CL_Prefs->Write_Preferences();
 
 			App->CL_Model->Clear_Model_And_Reset();
 
 
 			App->CL_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
 
-			bool Test = App->CL_Assimp->LoadFile(App->CL_Prefs->Pref_WE_Path_FileName);
+			bool Test = App->CL_Assimp->LoadFile(App->CL_Equity_SB->Pref_WE_Path_FileName);
 			if (Test == 0)
 			{
 				App->Say("Failed To Load");
 				return 0;
 			}
 
-			strcpy(App->CL_FileIO->Model_Path_FileName, App->CL_Prefs->Pref_WE_Path_FileName);
-			strcpy(App->CL_FileIO->Model_FileName, App->CL_Prefs->Pref_WE_JustFileName);
+			strcpy(App->CL_FileIO->Model_Path_FileName, App->CL_Equity_SB->Pref_WE_Path_FileName);
+			strcpy(App->CL_FileIO->Model_FileName, App->CL_Equity_SB->Pref_WE_JustFileName);
 
 			App->CL_Model->Set_Paths();
 
 			App->CL_Model->Model_Type = Enums::LoadedFile_Assimp;
+			App->CL_Export_Ogre3D->Export_As_RF = 1;
 
 			App->CL_Equity_SB->LoadTextures_TXL();
 
@@ -255,6 +306,9 @@ void ME_Equity_SB::Adjust()
 	App->CL_Dimensions->Rotate_Z_Model(90);
 	App->CL_Dimensions->Rotate_X_Model(-90);
 	App->CL_Dimensions->Centre_Model_Mid();
+
+	App->CL_Grid->Reset_View();
+
 }
 
 // *************************************************************************
@@ -268,7 +322,7 @@ bool ME_Equity_SB::LoadTextures_TXL()
 
 	NameCount = 0;
 
-	VFS = geVFile_OpenNewSystem(NULL, GE_VFILE_TYPE_VIRTUAL, App->CL_Prefs->Pref_Txl_Path_FileName, NULL, GE_VFILE_OPEN_READONLY | GE_VFILE_OPEN_DIRECTORY);
+	VFS = geVFile_OpenNewSystem(NULL, GE_VFILE_TYPE_VIRTUAL, App->CL_Equity_SB->Pref_Txl_Path_FileName, NULL, GE_VFILE_OPEN_READONLY | GE_VFILE_OPEN_DIRECTORY);
 	if (!VFS)
 	{
 		App->Say("Could not open file");
@@ -408,7 +462,7 @@ bool ME_Equity_SB::Check_in_Txl(char *FileName)
 // *************************************************************************
 bool ME_Equity_SB::AddTexture(geVFile *BaseFile, const char *Path, int GroupIndex)
 {
-
+	
 	geBitmap *		Bitmap;
 
 	geVFile *		File;
@@ -438,7 +492,19 @@ bool ME_Equity_SB::AddTexture(geVFile *BaseFile, const char *Path, int GroupInde
 		return TRUE;
 	}
 
+
 	Bitmap = geBitmap_CreateFromFile(File);
+
+	if (geBitmap_HasAlpha(Bitmap))
+	{
+		char mDirectory[MAX_PATH];
+
+		_getcwd(mDirectory, MAX_PATH);
+		strcat(mDirectory, "\\");
+		strcat(mDirectory, App->CL_Model->Group[GroupIndex]->Equity_Text_FileName);
+		App->CL_Texture_Lib->WriteTGA(mDirectory, Bitmap);
+
+	}
 
 	HWND	PreviewWnd;
 	HBITMAP	hbm;
@@ -592,4 +658,64 @@ bool ME_Equity_SB::Txt_OpenFile(char* Extension, char* Title, char* StartDirecto
 		return 1;
 	}
 	return 0;
+}
+
+// *************************************************************************
+// *						Write_Project_File Terry Flanigan 			   *
+// *************************************************************************
+bool ME_Equity_SB::Write_Project_File(char* Path_And_File)
+{
+	WriteScene = nullptr;
+
+	WriteScene = fopen(Path_And_File, "wt");
+	if (!WriteScene)
+	{
+		App->Say("Cant Create Save File");
+		return 0;
+	}
+
+	fprintf(WriteScene, "%s\n", "[WE_Fast_Load]");
+	fprintf(WriteScene, "%s%s\n", "Pref_WE_JustFileName=", Pref_WE_JustFileName);
+	fprintf(WriteScene, "%s%s\n", "Pref_WE_Path_FileName=", Pref_WE_Path_FileName);
+	fprintf(WriteScene, "%s%s\n", "Pref_Txl_Path_FileName=", Pref_Txl_Path_FileName);
+
+	fprintf(WriteScene, "%s%s\n", "Pref_Ogre_JustFileName=", Pref_Ogre_JustFileName);
+	fprintf(WriteScene, "%s%s\n", "Pref_Ogre_Path_FileName=", Pref_Ogre_Path);
+
+	fprintf(WriteScene, "%s\n", " ");
+	fclose(WriteScene);
+
+	//Read_Preferences();
+	return 1;
+}
+
+// *************************************************************************
+// *						Load_Project_File Terry Flanigan 			   *
+// *************************************************************************
+bool ME_Equity_SB::Load_Project_File(char* Path_And_File)
+{
+	char chr_Tag1[MAX_PATH];
+	char chr_Tag2[MAX_PATH];
+
+	chr_Tag1[0] = 0;
+	chr_Tag2[0] = 0;
+
+	App->CL_Ini->SetPathName(Path_And_File);
+
+	App->CL_Ini->GetString("WE_Fast_Load", "Pref_WE_JustFileName", chr_Tag1, MAX_PATH);
+	strcpy(Pref_WE_JustFileName, chr_Tag1);
+
+	App->CL_Ini->GetString("WE_Fast_Load", "Pref_WE_Path_FileName", chr_Tag1, MAX_PATH);
+	strcpy(Pref_WE_Path_FileName, chr_Tag1);
+
+	App->CL_Ini->GetString("WE_Fast_Load", "Pref_Txl_Path_FileName", chr_Tag2, MAX_PATH);
+	strcpy(Pref_Txl_Path_FileName, chr_Tag2);
+
+	App->CL_Ini->GetString("WE_Fast_Load", "Pref_Ogre_JustFileName", chr_Tag2, MAX_PATH);
+	strcpy(Pref_Ogre_JustFileName, chr_Tag2);
+
+	App->CL_Ini->GetString("WE_Fast_Load", "Pref_Ogre_Path_FileName", chr_Tag2, MAX_PATH);
+	strcpy(Pref_Ogre_Path, chr_Tag2);
+
+	return 1;
 }

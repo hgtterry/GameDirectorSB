@@ -67,8 +67,8 @@ typedef struct	TPack_WindowData
 	BOOL			Dirty;
 }	TPack_WindowData;
 
-#pragma pack(1)
-
+//#pragma pack(1)
+//
 //typedef struct TGAHEADER
 //{
 //	char	IDLength;
@@ -84,8 +84,8 @@ typedef struct	TPack_WindowData
 //	char	PixelDepth;
 //	char	ImageDescriptor;
 //} TGAHEADER;
-
-#pragma pack()
+//
+//#pragma pack()
 
 
 class ME_TextureLib
@@ -136,6 +136,9 @@ protected:
 
 	static LRESULT CALLBACK TextureLib_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static bool CALLBACK TextureLibPreviewWnd(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+
+	char FileName[MAX_PATH];
+	char Add_Texture_FileName[MAX_PATH];
 };
 
 #endif // !defined(AFX_TTEXTURELIB_H__DB5984F2_BA86_412D_A409_C0EC519FBDC5__INCLUDED_)
