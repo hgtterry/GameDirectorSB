@@ -1,0 +1,51 @@
+
+material ParticleBlock_Material_0
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture PB_trim01.bmp
+			}
+		}
+
+	}
+
+}
+
+material ParticleBlock_Material_1
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture PB_block02.bmp
+			}
+		}
+
+	}
+
+}
+
+material ParticleBlock_Material_2
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture PB_jp01.bmp
+			}
+		}
+
+	}
+
+}

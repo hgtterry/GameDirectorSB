@@ -1,0 +1,13 @@
+material cratea2
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture BumpyMetal.jpg
+             }
+         }
+    }
+}
