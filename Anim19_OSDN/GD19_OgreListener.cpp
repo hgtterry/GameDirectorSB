@@ -296,7 +296,7 @@ bool GD19_OgreListener::Update_Game_Logic(float DeltaTime)
 
 	if (GD_Run_Physics == 1)
 	{
-		App->SBC_Bullet->dynamicsWorld->stepSimulation(btScalar(1.) / btScalar(200.)); //suppose you have 60 frames per second	
+		App->SBC_Bullet->dynamicsWorld->stepSimulation(DeltaTime * 2); //suppose you have 60 frames per second	
 		
 
 		for (int j = App->SBC_Bullet->dynamicsWorld->getNumCollisionObjects() - 1; j >= 0; j--)

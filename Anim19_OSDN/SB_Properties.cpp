@@ -800,7 +800,17 @@ bool SB_Properties::Update_ListView_Teleport()
 	int Percent = int(sum2 * 100);
 	_itoa(Percent, chr_Volume, 10);
 
-	const int NUM_ITEMS = 7;
+	char chr_Counter_Disabled[20];
+	if (App->SBC_Scene->B_Object[index]->S_Teleport[0]->Counter_Disabled == 1)
+	{
+		strcpy(chr_Counter_Disabled, "Disabled");
+	}
+	else
+	{
+		strcpy(chr_Counter_Disabled, "Enabled");
+	}
+
+	const int NUM_ITEMS = 9;
 	const int NUM_COLS = 2;
 	string grid[NUM_COLS][NUM_ITEMS]; // string table
 	LV_ITEM pitem;
@@ -814,7 +824,8 @@ bool SB_Properties::Update_ListView_Teleport()
 	grid[0][4] = "Sound",		grid[1][4] = App->SBC_Scene->B_Object[index]->S_Teleport[0]->Sound_File;
 	grid[0][5] = "Volume",		grid[1][5] = chr_Volume;
 	grid[0][6] = "Play",		grid[1][6] = chr_Play;
-
+	grid[0][7] = " ",			grid[1][7] = " ";
+	grid[0][8] = "Counter",		grid[1][8] = chr_Counter_Disabled;
 
 	ListView_DeleteAllItems(Properties_hLV);
 
@@ -3000,6 +3011,23 @@ bool SB_Properties::Edit_Teleport_OnClick(LPARAM lParam)
 
 		Update_ListView_Teleport();
 
+		return 1;
+	}
+
+	// Counter
+	result = strcmp(btext, "Counter");
+	if (result == 0)
+	{
+		App->SBC_Dialogs->Dialog_Counter();
+		if (App->SBC_Dialogs->Canceled == 1)
+		{
+			return 1;
+		}
+
+		Mark_As_Altered(Index);
+		Update_ListView_Teleport();
+
+		//App->SBC_Physics->Reset_Triggers();
 		return 1;
 	}
 

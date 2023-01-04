@@ -1025,6 +1025,13 @@ LRESULT CALLBACK SB_Dialogs::Dialog_Counter_Proc(HWND hDlg, UINT message, WPARAM
 					return 1;
 				}
 
+				// Teleporters
+				if (App->SBC_Properties->Edit_Category == Enums::Edit_Teleport)
+				{
+					App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Counter_Disabled = 1;
+					return 1;
+				}
+
 				return 1;
 			}
 			else
@@ -1049,6 +1056,13 @@ LRESULT CALLBACK SB_Dialogs::Dialog_Counter_Proc(HWND hDlg, UINT message, WPARAM
 				if (App->SBC_Properties->Edit_Category == Enums::Edit_Collectable)
 				{
 					App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Counter_Disabled = 0;
+					return 1;
+				}
+
+				// Teleporters
+				if (App->SBC_Properties->Edit_Category == Enums::Edit_Teleport)
+				{
+					App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Counter_Disabled = 0;
 					return 1;
 				}
 
@@ -1082,6 +1096,13 @@ LRESULT CALLBACK SB_Dialogs::Dialog_Counter_Proc(HWND hDlg, UINT message, WPARAM
 			{
 				int Index = App->SBC_Properties->Current_Selected_Object;
 				App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Value = atoi(buff);
+			}
+
+			// Teleprters
+			if (App->SBC_Properties->Edit_Category == Enums::Edit_Teleport)
+			{
+				int Index = App->SBC_Properties->Current_Selected_Object;
+				App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Trigger_Value = atoi(buff);
 			}
 
 			App->SBC_Dialogs->Canceled = 0;
@@ -1198,6 +1219,33 @@ bool SB_Dialogs::UpDate_Counter_Dialog(HWND hDlg)
 		{
 			SetDlgItemText(hDlg, IDC_STMATHS, "Subtract");
 		}
+
+		return 1;
+	}
+
+	// Teleporters
+	if (App->SBC_Properties->Edit_Category == Enums::Edit_Teleport)
+	{
+		if (App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Counter_Disabled == 1)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_ENABLE);
+			SendMessage(temp, BM_SETCHECK, 1, 0);
+			Set_Counter_Dialog(hDlg, false);
+		}
+		else
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_ENABLE);
+			SendMessage(temp, BM_SETCHECK, 0, 0);
+			Set_Counter_Dialog(hDlg, true);
+		}
+
+		char chr_TriggerVal[20];
+		_itoa(App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Trigger_Value, chr_TriggerVal, 10);
+		SetDlgItemText(hDlg, IDC_EDTRIGGERVALUE, (LPCTSTR)chr_TriggerVal);
+
+		char chr_CounterName[20];
+		strcpy(chr_CounterName, App->SBC_Scene->B_Counter[App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Counter_ID]->Panel_Name);
+		SetDlgItemText(hDlg, IDC_STCOUNTERNAME, (LPCTSTR)chr_CounterName);
 
 		return 1;
 	}

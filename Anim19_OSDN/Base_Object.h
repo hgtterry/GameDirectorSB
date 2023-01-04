@@ -51,6 +51,10 @@ typedef struct Teleport_type
 	Ogre::Real SndVolume;
 	char Sound_File[MAX_PATH];
 	bool Play;
+	int Trigger_Value;
+	int Counter_ID;
+	char Counter_Name[MAX_PATH];
+	bool Counter_Disabled;
 
 }Teleport_type;
 

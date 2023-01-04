@@ -28,5 +28,7 @@ public:
 
 	SB_Com_Teleports();
 	~SB_Com_Teleports();
+
+	void Set_Teleports_Defaults(int Index);
 };
 

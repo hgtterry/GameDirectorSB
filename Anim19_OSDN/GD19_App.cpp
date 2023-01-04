@@ -86,6 +86,7 @@ GD19_App::GD19_App(void)
 	SBC_Com_Environments =	nullptr;
 	SBC_Com_Particles =		nullptr;
 	SBC_Com_Lights =		nullptr;
+	SBC_Com_Teleports =		nullptr;
 
 	SBC_Locations =			nullptr;
 	SBC_Gui_Dialogs =		nullptr;
@@ -263,6 +264,8 @@ bool GD19_App::InitApp(void)
 	SBC_Com_Environments =	new SB_Com_Environments();
 	SBC_Gui_Dialogs =		new SB_Gui_Dialogs();
 	SBC_Com_Particles =		new SB_Com_Particles();
+	SBC_Com_Teleports =		new SB_Com_Teleports();
+	
 	
 	SBC_Locations =			new SB_Locations();
 	

@@ -900,6 +900,13 @@ bool SB_Project::Save_Objects_Data()
 				y = App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Rotation.getY();
 				z = App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Rotation.getZ();
 				fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Tele_Physics_Rotation=", w, x, y, z);
+
+				// Teleport Counter
+				fprintf(WriteFile, "%s%i\n", "Tele_Counter_ID=", App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Counter_ID);
+				fprintf(WriteFile, "%s%i\n", "Tele_Trigger_Value=", App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Trigger_Value);
+				fprintf(WriteFile, "%s%i\n", "Tele_Counter_Disabled=", App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Counter_Disabled);
+		
+
 			}
 
 			//---------------------------------------------------------------------------------- Environ Entity
@@ -1805,6 +1812,8 @@ bool SB_Project::Load_Project_Objects()
 		{
 			
 			App->SBC_Scene->B_Object[Count]->S_Teleport[0] = new Teleport_type;
+			App->SBC_Com_Teleports->Set_Teleports_Defaults(Count);
+
 			App->Cl_Ini->GetString(buff, "Tele_Goto", chr_Tag1, MAX_PATH);
 			strcpy(App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Name, chr_Tag1);
 
@@ -1843,6 +1852,12 @@ bool SB_Project::Load_Project_Objects()
 			App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Rotation.setX(x);
 			App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Rotation.setY(y);
 			App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Rotation.setZ(z);
+
+			// Teleport Counter
+			App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Counter_ID = App->Cl_Ini->GetInt(buff, "Tele_Counter_ID", 0);
+			App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Trigger_Value = App->Cl_Ini->GetInt(buff, "Tele_Trigger_Value", 0);
+			App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Counter_Disabled = App->Cl_Ini->GetInt(buff, "Tele_Counter_Disabled", 1);
+			
 		}
 
 		//---------------------------------------------------------------------------------- Environ Enitity

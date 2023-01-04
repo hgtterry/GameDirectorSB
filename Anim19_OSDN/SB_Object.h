@@ -37,8 +37,6 @@ public:
 	Ogre::Vector3 Get_BoundingBox_World_Centre(int Object_Index);
 	float GetMesh_BB_Radius(SceneNode* mNode);
 
-	void Set_Teleports_Defaults(int Index);
-	
 	int GetIndex_By_Name(char* Name);
 
 	void Copy_Object(int Object_Index);

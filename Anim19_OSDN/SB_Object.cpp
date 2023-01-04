@@ -339,32 +339,6 @@ void SB_Object::Delete_Object()
 }
 
 // *************************************************************************
-// *	  Set_Teleports_Defaults:- Terry and Hazel Flanigan 2022	 	   *
-// *************************************************************************
-void SB_Object::Set_Teleports_Defaults(int Index)
-{
-	float x = 0;
-	float y = 0;
-	float z = 0;
-
-	App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Location_ID = 0;
-
-	strcpy(App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Name, "Start_Location");
-
-	strcpy(App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Sound_File,"magicspell.ogg");
-	App->SBC_Scene->B_Object[Index]->S_Teleport[0]->SndVolume = 0.5;
-	App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Play = 1;
-
-	x = App->SBC_Scene->B_Player[0]->StartPos.x;
-	y = App->SBC_Scene->B_Player[0]->StartPos.y;
-	z = App->SBC_Scene->B_Player[0]->StartPos.z;
-
-	App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Physics_Position = btVector3(x,y,z);
-	App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Physics_Rotation = App->SBC_Scene->B_Player[0]->Physics_Rotation;
-}
-
-
-// *************************************************************************
 // *	  		GetMesh_BB_Size:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 Ogre::Vector3 SB_Object::GetMesh_BB_Size(SceneNode* mNode)

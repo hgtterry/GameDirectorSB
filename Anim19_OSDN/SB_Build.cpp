@@ -1597,6 +1597,11 @@ bool SB_Build::Build_Objects_Data()
 				y = App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Rotation.getY();
 				z = App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Rotation.getZ();
 				fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Tele_Physics_Rotation=", w, x, y, z);
+
+				// Teleport Counter
+				fprintf(WriteFile, "%s%i\n", "Tele_Counter_ID=", App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Counter_ID);
+				fprintf(WriteFile, "%s%i\n", "Tele_Trigger_Value=", App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Trigger_Value);
+				fprintf(WriteFile, "%s%i\n", "Tele_Counter_Disabled=", App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Counter_Disabled);
 			}
 
 			//---------------------------------------------------------------------------------- Environ Entity
