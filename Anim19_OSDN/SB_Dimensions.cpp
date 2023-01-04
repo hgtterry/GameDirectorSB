@@ -990,7 +990,7 @@ void SB_Dimensions::UpDate_Physics_And_Visuals(int Index)
 	}
 	else
 	{
-		if (App->SBC_Scene->B_Object[Index]->Physics_Valid == 1)
+		//if (App->SBC_Scene->B_Object[Index]->Physics_Valid == 1)
 		{
 			Set_Physics_Position(Index);
 		}

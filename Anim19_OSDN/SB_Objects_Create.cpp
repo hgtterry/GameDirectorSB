@@ -408,6 +408,8 @@ void SB_Objects_Create::Add_Physics_Box(bool Dynamic,int Index)
 
 	App->SBC_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
+	App->SBC_Scene->B_Object[Index]->Physics_Valid = 1;
+
 	Set_Physics(Index);
 }
 
@@ -492,6 +494,8 @@ void SB_Objects_Create::Add_Physics_Sphere(bool Dynamic, int Index)
 	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
 	App->SBC_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
+
+	App->SBC_Scene->B_Object[Index]->Physics_Valid = 1;
 
 	Set_Physics(Index);
 }
@@ -583,6 +587,8 @@ void SB_Objects_Create::Add_Physics_Capsule(bool Dynamic, int Index)
 
 	App->SBC_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
+	App->SBC_Scene->B_Object[Index]->Physics_Valid = 1;
+
 	Set_Physics(Index);
 }
 
@@ -671,6 +677,8 @@ void SB_Objects_Create::Add_Physics_Cylinder(bool Dynamic, int Index)
 
 	App->SBC_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
+	App->SBC_Scene->B_Object[Index]->Physics_Valid = 1;
+
 	Set_Physics(Index);
 }
 
@@ -755,6 +763,8 @@ void SB_Objects_Create::Add_Physics_Cone(bool Dynamic,int Index)
 	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
 	App->SBC_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
+
+	App->SBC_Scene->B_Object[Index]->Physics_Valid = 1;
 
 	Set_Physics(Index);
 }
@@ -890,6 +900,8 @@ bool SB_Objects_Create::Create_Sound_Entity(int Index)
 
 	App->SBC_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
+	App->SBC_Scene->B_Object[Index]->Physics_Valid = 1;
+
 	Set_Physics(Index);
 
 	return 1;
@@ -1022,6 +1034,8 @@ bool SB_Objects_Create::Create_TeleportEntity(int Index)
 
 
 	App->SBC_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
+
+	App->SBC_Scene->B_Object[Index]->Physics_Valid = 1;
 
 	Set_Physics(Index);
 	return 1;

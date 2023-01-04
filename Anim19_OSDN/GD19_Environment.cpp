@@ -248,7 +248,7 @@ void GD19_Environment::Update_CreateSkyListView(void)
 	sprintf(Chr_Tiling,"%.3f", App->SBC_Scene->B_Object[Index]->S_Environ[0]->Tiling);
 	sprintf(Chr_Distance,"%.3f", App->SBC_Scene->B_Object[Index]->S_Environ[0]->Distance);
 
-	const int NUM_ITEMS = 1;
+	const int NUM_ITEMS = 3;
 	const int NUM_COLS = 2;
 	std::string grid[NUM_COLS][NUM_ITEMS]; // string table
 	LV_ITEM pitem;
@@ -256,6 +256,10 @@ void GD19_Environment::Update_CreateSkyListView(void)
 	pitem.mask = LVIF_TEXT;
 
 	grid[0][0] = "Enable",			grid[1][0] = Chr_Enabled;
+	grid[0][1] = "Tiling",			grid[1][1] = Chr_Tiling;
+	grid[0][2] = "Curvature",		grid[1][2] = Chr_Curvature;
+
+
 	//grid[0][1] = "Type",			grid[1][1] = "SkyDome";
 	//grid[0][2] = "Material",		grid[1][2] = "Examples/CloudySky";
 	//grid[0][3] = "Curvature",		grid[1][3] = Chr_Curvature;
@@ -284,7 +288,7 @@ void GD19_Environment::Update_CreateSkyListView(void)
 void GD19_Environment::Update_CreateFogListView(void)
 {
 	
-	const int NUM_ITEMS = 6;
+	const int NUM_ITEMS = 5;
 	const int NUM_COLS = 2;
 	std::string grid[NUM_COLS][NUM_ITEMS]; // string table
 	LV_ITEM pitem;
@@ -321,12 +325,18 @@ void GD19_Environment::Update_CreateFogListView(void)
 	
 	sprintf(chr_Colour,"%.2f %.2f %.2f",mRed,mGreen,mBlue);
 	
-	grid[0][0] = "Visible",		grid[1][0] = chr_FogOn;
+	/*grid[0][0] = "Visible",		grid[1][0] = chr_FogOn;
 	grid[0][1] = "Mode",		grid[1][1] = chr_Mode;
 	grid[0][2] = "Colour",		grid[1][2] = chr_Colour;
 	grid[0][3] = "Density",		grid[1][3] = chr_Density;
 	grid[0][4] = "Start",		grid[1][4] = chr_Start;
-	grid[0][5] = "End",			grid[1][5] = chr_End;
+	grid[0][5] = "End",			grid[1][5] = chr_End;*/
+
+	grid[0][0] = "Visible",		grid[1][0] = chr_FogOn;
+	grid[0][1] = "Mode",		grid[1][1] = chr_Mode;
+	grid[0][2] = "Colour",		grid[1][2] = chr_Colour;
+	grid[0][3] = "Start",		grid[1][3] = chr_Start;
+	grid[0][4] = "End",			grid[1][4] = chr_End;
 	
 	ListView_DeleteAllItems(General_hLV);
 
@@ -569,7 +579,7 @@ bool GD19_Environment::On_Click_Props(LPARAM lParam)
 	SelectionIndex = Selection->iItem;
 	ListView_GetItemText(General_hLV,SelectionIndex, 0, btext, 255);
 
-	// ----------------------------------------------------------- Fog
+	// ------------------------------------------------- Fog Visable
 	result = strcmp(btext, "Visible");
 	if (result == 0 && SelectedProperties == 1)
 	{
@@ -645,6 +655,7 @@ bool GD19_Environment::On_Click_Props(LPARAM lParam)
 
 		App->Disable_Panels(false);
 		Enable_Environment_Dialog(true);
+
 		Update_CreateFogListView();
 
 		return 1;
@@ -656,7 +667,7 @@ bool GD19_Environment::On_Click_Props(LPARAM lParam)
 	{
 		Enable_Environment_Dialog(false);
 
-		App->SBC_Gui_Dialogs->Start_Dialog_Float(1.0, App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_End, "Start");
+		App->SBC_Gui_Dialogs->Start_Dialog_Float(1.0, App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_End, "End");
 
 		while (App->SBC_Gui_Dialogs->Show_Dialog_Float == 1)
 		{
@@ -694,6 +705,7 @@ bool GD19_Environment::On_Click_Props(LPARAM lParam)
 
 		App->Disable_Panels(false);
 		Enable_Environment_Dialog(true);
+
 		Update_CreateFogListView();
 
 		return 1;
@@ -703,7 +715,25 @@ bool GD19_Environment::On_Click_Props(LPARAM lParam)
 	result = strcmp(btext, "Density");
 	if (result == 0)
 	{
-		strcpy(App->Cl_Dialogs->btext,"Set Density Of Fog");
+		Enable_Environment_Dialog(false);
+
+		App->SBC_Gui_Dialogs->Start_Dialog_Float(1.0, App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Density, "Density");
+
+		while (App->SBC_Gui_Dialogs->Show_Dialog_Float == 1)
+		{
+			App->SBC_Gui_Dialogs->BackGround_Render_Loop();
+
+			App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Density = App->SBC_Gui_Dialogs->m_Dialog_Float;
+
+			if (App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_On == 1)
+			{
+				EnableFog(true);
+			}
+		}
+
+		App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
+
+		/*strcpy(App->Cl_Dialogs->btext,"Set Density Of Fog");
 
 		sprintf(App->Cl_Dialogs->Chr_Float,"%f", App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Density);
 		
@@ -720,7 +750,9 @@ bool GD19_Environment::On_Click_Props(LPARAM lParam)
 
 			Update_CreateFogListView();
 			App->SBC_Com_Environments->Mark_As_Altered_Environ(Index);
-		}
+		}*/
+
+		Update_CreateFogListView();
 		return 1;
 	}
 
@@ -784,7 +816,7 @@ bool GD19_Environment::On_Click_Props(LPARAM lParam)
 	//	return 1;
 	//}
 
-	// ----------------------------------------------------------- Main Light
+	// ------------------------------------------------- Main Light Ambient
 	result = strcmp(btext, "Ambient");
 	if (result == 0)
 	{
@@ -826,7 +858,7 @@ bool GD19_Environment::On_Click_Props(LPARAM lParam)
 		return 1;
 	}
 
-	// ----------------------------------------------------------- Sound
+	// ------------------------------------------------- Background Music Track
 	result = strcmp(btext, "Track");
 	if (result == 0)
 	{
@@ -856,6 +888,7 @@ bool GD19_Environment::On_Click_Props(LPARAM lParam)
 		return 1;
 	}
 
+	// ------------------------------------------------- Background Music Play
 	result = strcmp(btext, "Play");
 	if (result == 0)
 	{
@@ -892,6 +925,8 @@ bool GD19_Environment::On_Click_Props(LPARAM lParam)
 		}
 		return 1;
 	}
+
+	// ------------------------------------------------- Background Music Loop
 	result = strcmp(btext, "Loop");
 	if (result == 0)
 	{
@@ -928,40 +963,40 @@ bool GD19_Environment::On_Click_Props(LPARAM lParam)
 		return 1;
 	}
 
-	//// Composite
-	//result = strcmp(btext, "Distance");
-	//if (result == 0)
-	//{
-	//	/*strcpy(App->Class_Dlg_Com->btext,"Set Composite Map Distance");
+	// ------------------------------------------------- Sky Distance
+	result = strcmp(btext, "Distance");
+	if (result == 0)
+	{
+		/*strcpy(App->Class_Dlg_Com->btext,"Set Composite Map Distance");
 
-	//	char Chr_MFScale[100];
-	//	sprintf(Chr_MFScale,"%.0f",S_Scene[0]->CompositeMapDistance);
+		char Chr_MFScale[100];
+		sprintf(Chr_MFScale,"%.0f",S_Scene[0]->CompositeMapDistance);
 
-	//	strcpy (App->Class_Dlg_Com->Chr_Float,Chr_MFScale);
-	//	
-	//	App->Class_Dlg_Com->Dialog_Float();
+		strcpy (App->Class_Dlg_Com->Chr_Float,Chr_MFScale);
+		
+		App->Class_Dlg_Com->Dialog_Float();
 
-	//	if (App->Class_Dlg_Com->Canceled == 0)
-	//	{
-	//		S_Scene[0]->CompositeMapDistance=App->Class_Dlg_Com->mFloat;	
-	//		Update_Composite();
+		if (App->Class_Dlg_Com->Canceled == 0)
+		{
+			S_Scene[0]->CompositeMapDistance=App->Class_Dlg_Com->mFloat;	
+			Update_Composite();
 
-	//		App->Ogre17->mTerrainGlobals->setCompositeMapDistance(App->Class_Dlg_Com->mFloat);
+			App->Ogre17->mTerrainGlobals->setCompositeMapDistance(App->Class_Dlg_Com->mFloat);
 
-	//		strcpy(App->FileName,S_Scene[0]->TerrainFileName);
+			strcpy(App->FileName,S_Scene[0]->TerrainFileName);
 
-	//		char Temp[256];
-	//		strcpy(Temp,App->FileName);
-	//		int Len=strlen(Temp);
-	//		Temp[Len-8]=0;
-	//		strcpy(S_Scene[0]->LevelName,Temp);
+			char Temp[256];
+			strcpy(Temp,App->FileName);
+			int Len=strlen(Temp);
+			Temp[Len-8]=0;
+			strcpy(S_Scene[0]->LevelName,Temp);
 
-	//		App->Terrain_C->ReloadTerrain(0);
-	//	}*/
-	//	//return 1;
-	//}
+			App->Terrain_C->ReloadTerrain(0);
+		}*/
+		//return 1;
+	}
 
-	//// Sky
+	// ------------------------------------------------- Sky Enable
 	result = strcmp(btext, "Enable");
 	if (result == 0 && SelectedProperties == 5)
 	{
@@ -988,78 +1023,109 @@ bool GD19_Environment::On_Click_Props(LPARAM lParam)
 			}
 
 			Update_CreateSkyListView();
-		//	Flags[0]->RenderBackGround = 1;
+
 		}
 		return 1;
 	}
-	//result = strcmp(btext, "Curvature");
-	//if (result == 0 && SelectedProperties == 5)
-	//{
-	//	strcpy(App->Class_Dlg_Com->btext,"Set Sky Cervature");
-
-	//	char buff[256];
-	//	sprintf(buff,"%f",S_Scene[0]->Sky[0].Curvature);
-	//	strcpy (App->Class_Dlg_Com->Chr_Float,buff);
-
-	//	App->Class_Dlg_Com->Dialog_Float();
-
-	//	if (App->Class_Dlg_Com->Canceled == 0)
-	//	{
-	//		S_Scene[0]->Sky[0].Curvature = App->Class_Dlg_Com->mFloat;
-	//		
-	//		SetSky(1);
-	//		
-	//		Update_CreateSkyListView();
-	//		Flags[0]->RenderBackGround = 1;
-	//	}
-	//	return 1;
-	//}
-	//result = strcmp(btext, "Tiling");
-	//if (result == 0 && SelectedProperties == 5)
-	//{
-	//	strcpy(App->Class_Dlg_Com->btext,"Set Texture Tiling");
-
-	//	char buff[256];
-	//	sprintf(buff,"%f",S_Scene[0]->Sky[0].Tiling);
-	//	strcpy (App->Class_Dlg_Com->Chr_Float,buff);
-
-	//	App->Class_Dlg_Com->Dialog_Float();
-
-	//	if (App->Class_Dlg_Com->Canceled == 0)
-	//	{
-	//		S_Scene[0]->Sky[0].Tiling = App->Class_Dlg_Com->mFloat;
-	//		
-	//		SetSky(1);
-	//		
-	//		Update_CreateSkyListView();
-	//		Flags[0]->RenderBackGround = 1;
-	//	}
-	//	return 1;
-	//}
-	/*result = strcmp(btext, "Distance");
+	
+	// ------------------------------------------------- Sky Curvature
+	result = strcmp(btext, "Curvature");
 	if (result == 0 && SelectedProperties == 5)
 	{
-		strcpy(App->Class_Dlg_Com->btext,"Set Sky Distance");
+		Enable_Environment_Dialog(false);
 
-		char buff[256];
-		sprintf(buff,"%f",S_Scene[0]->Sky[0].Distance);
-		strcpy (App->Class_Dlg_Com->Chr_Float,buff);
+		App->SBC_Gui_Dialogs->Start_Dialog_Float(0.5, App->SBC_Scene->B_Object[Index]->S_Environ[0]->Curvature, "Sky Curvature");
 
-		App->Class_Dlg_Com->Dialog_Float();
-
-		if (App->Class_Dlg_Com->Canceled == 0)
+		while (App->SBC_Gui_Dialogs->Show_Dialog_Float == 1)
 		{
-			S_Scene[0]->Sky[0].Distance = App->Class_Dlg_Com->mFloat;
-			
-			SetSky(1);
-			
-			Update_CreateSkyListView();
-			Flags[0]->RenderBackGround = 1;
-		}
-		return 1;
-	}*/
+			App->SBC_Gui_Dialogs->BackGround_Render_Loop();
 
-	App->Say("Not Available Yet");
+			App->SBC_Scene->B_Object[Index]->S_Environ[0]->Curvature = App->SBC_Gui_Dialogs->m_Dialog_Float;
+
+			if (App->SBC_Scene->B_Object[Index]->S_Environ[0]->Enabled == 1)
+			{
+				SetSky(true);
+			}
+		}
+
+		App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
+
+		if (App->SBC_Gui_Dialogs->Float_Canceld == 0)
+		{
+			App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
+			App->SBC_Scene->B_Object[Index]->S_Environ[0]->Curvature = App->SBC_Gui_Dialogs->m_Dialog_Float;
+
+
+			App->SBC_Scene->Scene_Modified = 1;
+			App->SBC_Com_Environments->Mark_As_Altered_Environ(Index);
+		}
+		else
+		{
+			App->SBC_Gui_Dialogs->m_Dialog_Float = App->SBC_Gui_Dialogs->m_Dialog_Float_Copy;
+			App->SBC_Scene->B_Object[Index]->S_Environ[0]->Curvature = App->SBC_Gui_Dialogs->m_Dialog_Float_Copy;
+
+			if (App->SBC_Scene->B_Object[Index]->S_Environ[0]->Enabled == 1)
+			{
+				SetSky(true);
+			}
+		}
+
+		App->Disable_Panels(false);
+		Enable_Environment_Dialog(true);
+
+		Update_CreateSkyListView();
+		return 1;
+	}
+
+	// ------------------------------------------------- Sky Tiling
+	result = strcmp(btext, "Tiling");
+	if (result == 0 && SelectedProperties == 5)
+	{
+		Enable_Environment_Dialog(false);
+
+		App->SBC_Gui_Dialogs->Start_Dialog_Float(0.5, App->SBC_Scene->B_Object[Index]->S_Environ[0]->Tiling, "Sky Tiling");
+
+		while (App->SBC_Gui_Dialogs->Show_Dialog_Float == 1)
+		{
+			App->SBC_Gui_Dialogs->BackGround_Render_Loop();
+
+			App->SBC_Scene->B_Object[Index]->S_Environ[0]->Tiling = App->SBC_Gui_Dialogs->m_Dialog_Float;
+
+			if (App->SBC_Scene->B_Object[Index]->S_Environ[0]->Enabled == 1)
+			{
+				SetSky(true);
+			}
+		}
+
+		App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
+
+		if (App->SBC_Gui_Dialogs->Float_Canceld == 0)
+		{
+			App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
+			App->SBC_Scene->B_Object[Index]->S_Environ[0]->Tiling = App->SBC_Gui_Dialogs->m_Dialog_Float;
+
+
+			App->SBC_Scene->Scene_Modified = 1;
+			App->SBC_Com_Environments->Mark_As_Altered_Environ(Index);
+		}
+		else
+		{
+			App->SBC_Gui_Dialogs->m_Dialog_Float = App->SBC_Gui_Dialogs->m_Dialog_Float_Copy;
+			App->SBC_Scene->B_Object[Index]->S_Environ[0]->Tiling = App->SBC_Gui_Dialogs->m_Dialog_Float_Copy;
+
+			if (App->SBC_Scene->B_Object[Index]->S_Environ[0]->Enabled == 1)
+			{
+				SetSky(true);
+			}
+		}
+
+		App->Disable_Panels(false);
+		Enable_Environment_Dialog(true);
+
+		Update_CreateSkyListView();
+		return 1;
+	}
+
 	return 1;
 }
 

@@ -1202,6 +1202,7 @@ bool SB_Build::Build_Player_Data()
 		fprintf(WriteFile, "%s%f\n", "Turn_Rate=", App->SBC_Scene->B_Player[Count]->TurnRate);
 		fprintf(WriteFile, "%s%f\n", "Limit_Look_Up=", App->SBC_Scene->B_Player[Count]->Limit_Look_Up);
 		fprintf(WriteFile, "%s%f\n", "Limit_Look_Down=", App->SBC_Scene->B_Player[Count]->Limit_Look_Down);
+		fprintf(WriteFile, "%s%f\n", "Player_Height=", App->SBC_Scene->B_Player[Count]->PlayerHeight);
 
 		Count++;
 	}

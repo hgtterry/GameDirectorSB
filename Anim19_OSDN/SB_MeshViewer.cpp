@@ -602,6 +602,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 				App->SBC_MeshViewer->Add_Resources();
 				App->SBC_MeshViewer->Get_Files();
 
+				App->SBC_MeshViewer->GridNode->resetOrientation();
 			}
 			}
 
@@ -628,6 +629,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshViewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 			App->SBC_MeshViewer->Update_Mesh(App->SBC_MeshViewer->Selected_MeshFile);
 
+			App->SBC_MeshViewer->GridNode->resetOrientation();
 			return TRUE;
 
 		}

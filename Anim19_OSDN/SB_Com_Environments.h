@@ -35,6 +35,7 @@ public:
 	void Set_Environ_Defaults(int Index);
 	void Set_First_Environment(int Index);
 	void Mark_As_Altered_Environ(int Index);
+	void Set_Physics(int Index);
 
 	int Set_Environment_By_Index(bool PlayMusic, int Index);
 

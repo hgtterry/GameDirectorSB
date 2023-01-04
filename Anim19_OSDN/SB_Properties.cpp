@@ -1243,23 +1243,42 @@ void SB_Properties::Edit_Particle_Onclick(LPARAM lParam)
 	result = strcmp(btext, "Speed");
 	if (result == 0)
 	{
-		strcpy(App->Cl_Dialogs->btext, "Set Particle Speed");
 
-		char buff[256];
-		sprintf(buff, "%f", App->SBC_Scene->B_Object[Index]->S_Particle[0]->Particle->getSpeedFactor());
-		strcpy(App->Cl_Dialogs->Chr_Float, buff);
+		App->SBC_Gui_Dialogs->Start_Dialog_Float(0.01, App->SBC_Scene->B_Object[Index]->S_Particle[0]->SpeedFactor, "Particle Speed");
 
-		App->Cl_Dialogs->Dialog_Float();
-
-		if (App->Cl_Dialogs->Canceled == 0)
+		while (App->SBC_Gui_Dialogs->Show_Dialog_Float == 1)
 		{
-			App->SBC_Scene->B_Object[Index]->S_Particle[0]->Particle->setSpeedFactor(App->Cl_Dialogs->mFloat);
-			App->SBC_Scene->B_Object[Index]->S_Particle[0]->SpeedFactor = App->Cl_Dialogs->mFloat;
+			App->SBC_Gui_Dialogs->BackGround_Render_Loop();
 
-			App->SBC_Properties->Mark_As_Altered(Index);
+			App->SBC_Scene->B_Object[Index]->S_Particle[0]->SpeedFactor = App->SBC_Gui_Dialogs->m_Dialog_Float;
+			App->SBC_Scene->B_Object[Index]->S_Particle[0]->Particle->setSpeedFactor(App->SBC_Gui_Dialogs->m_Dialog_Float);
 
-			Update_ListView_Particles();
 		}
+
+		App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
+
+		if (App->SBC_Gui_Dialogs->Float_Canceld == 0)
+		{
+			App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
+
+			App->SBC_Scene->B_Object[Index]->S_Particle[0]->SpeedFactor = App->SBC_Gui_Dialogs->m_Dialog_Float;
+
+			App->SBC_Scene->Scene_Modified = 1;
+			
+			App->SBC_Scene->B_Object[Index]->Altered = 1;
+			App->SBC_Scene->Scene_Modified = 1;
+			App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Object[Index]->FileViewItem);
+		}
+		else
+		{
+			App->SBC_Gui_Dialogs->m_Dialog_Float = App->SBC_Gui_Dialogs->m_Dialog_Float_Copy;
+			App->SBC_Scene->B_Object[Index]->S_Particle[0]->SpeedFactor = App->SBC_Gui_Dialogs->m_Dialog_Float_Copy;
+			App->SBC_Scene->B_Object[Index]->S_Particle[0]->Particle->setSpeedFactor(App->SBC_Gui_Dialogs->m_Dialog_Float);
+		}
+
+		App->Disable_Panels(false);
+
+		Update_ListView_Particles();
 	}
 
 }
@@ -1404,21 +1423,36 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 	result = strcmp(App->SBC_Properties->btext, "Player Height");
 	if (result == 0)
 	{
-		char chr_Value[10];
-		sprintf(chr_Value, "%.3f ", App->SBC_Scene->B_Player[0]->PlayerHeight);
+		App->SBC_Gui_Dialogs->Start_Dialog_Float(0.10, App->SBC_Scene->B_Player[0]->PlayerHeight, "Player Height");
 
-		strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
+		while (App->SBC_Gui_Dialogs->Show_Dialog_Float == 1)
+		{
+			App->SBC_Gui_Dialogs->BackGround_Render_Loop();
 
-		strcpy(App->Cl_Dialogs->btext, "Player Height");
+			App->SBC_Scene->B_Player[0]->PlayerHeight = App->SBC_Gui_Dialogs->m_Dialog_Float;
+		}
 
-		App->Cl_Dialogs->Dialog_Float();
-		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
+		App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
 
-		App->SBC_Scene->B_Player[0]->PlayerHeight = App->Cl_Dialogs->mFloat;
+		if (App->SBC_Gui_Dialogs->Float_Canceld == 0)
+		{
+			App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
 
-		App->SBC_Scene->B_Player[0]->Altered = 1;
-		App->SBC_Scene->Scene_Modified = 1;
-		App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);
+			App->SBC_Scene->B_Player[0]->PlayerHeight = App->SBC_Gui_Dialogs->m_Dialog_Float;
+
+			App->SBC_Scene->Scene_Modified = 1;
+
+			App->SBC_Scene->B_Player[0]->Altered = 1;
+			App->SBC_Scene->Scene_Modified = 1;
+			App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);
+		}
+		else
+		{
+			App->SBC_Gui_Dialogs->m_Dialog_Float = App->SBC_Gui_Dialogs->m_Dialog_Float_Copy;
+			App->SBC_Scene->B_Player[0]->PlayerHeight = App->SBC_Gui_Dialogs->m_Dialog_Float_Copy;
+		}
+
+		App->Disable_Panels(false);
 
 		Update_ListView_Player();
 		return 1;
@@ -1427,49 +1461,79 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 	result = strcmp(App->SBC_Properties->btext, "Start Pos_X");
 	if (result == 0)
 	{
-		char chr_Value[10];
-		sprintf(chr_Value, "%.3f ", App->SBC_Scene->B_Player[0]->StartPos.x);
+		App->SBC_Gui_Dialogs->Start_Dialog_Float(0.10, App->SBC_Scene->B_Player[0]->StartPos.x, "Start Pos_X");
 
-		strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
+		while (App->SBC_Gui_Dialogs->Show_Dialog_Float == 1)
+		{
+			App->SBC_Gui_Dialogs->BackGround_Render_Loop();
 
-		strcpy(App->Cl_Dialogs->btext, "Player Start Pos X");
+			App->SBC_Scene->B_Player[0]->StartPos.x = App->SBC_Gui_Dialogs->m_Dialog_Float;
+			App->SBC_Physics->Reset_Physics();
+		}
 
-		App->Cl_Dialogs->Dialog_Float();
-		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
+		App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
 
-		App->SBC_Scene->B_Player[0]->StartPos.x = App->Cl_Dialogs->mFloat;
-		
-		App->SBC_Physics->Reset_Physics();
+		if (App->SBC_Gui_Dialogs->Float_Canceld == 0)
+		{
+			App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
 
-		App->SBC_Scene->B_Player[0]->Altered = 1;
-		App->SBC_Scene->Scene_Modified = 1;
-		App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);
+			App->SBC_Scene->B_Player[0]->StartPos.x = App->SBC_Gui_Dialogs->m_Dialog_Float;
+
+			App->SBC_Scene->Scene_Modified = 1;
+
+			App->SBC_Scene->B_Player[0]->Altered = 1;
+			App->SBC_Scene->Scene_Modified = 1;
+			App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);
+		}
+		else
+		{
+			App->SBC_Gui_Dialogs->m_Dialog_Float = App->SBC_Gui_Dialogs->m_Dialog_Float_Copy;
+			App->SBC_Scene->B_Player[0]->StartPos.x = App->SBC_Gui_Dialogs->m_Dialog_Float_Copy;
+			App->SBC_Physics->Reset_Physics();
+		}
+
+		App->Disable_Panels(false);
 
 		Update_ListView_Player();
+
 		return 1;
 	}
 
 	result = strcmp(App->SBC_Properties->btext, "Start Pos_Y");
 	if (result == 0)
 	{
+		App->SBC_Gui_Dialogs->Start_Dialog_Float(0.10, App->SBC_Scene->B_Player[0]->StartPos.y, "Start Pos_Y");
 
-		char chr_Value[10];
-		sprintf(chr_Value, "%.3f ", App->SBC_Scene->B_Player[0]->StartPos.y);
+		while (App->SBC_Gui_Dialogs->Show_Dialog_Float == 1)
+		{
+			App->SBC_Gui_Dialogs->BackGround_Render_Loop();
 
-		strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
+			App->SBC_Scene->B_Player[0]->StartPos.y = App->SBC_Gui_Dialogs->m_Dialog_Float;
+			App->SBC_Physics->Reset_Physics();
+		}
 
-		strcpy(App->Cl_Dialogs->btext, "Player Start Pos Y");
+		App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
 
-		App->Cl_Dialogs->Dialog_Float();
-		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
+		if (App->SBC_Gui_Dialogs->Float_Canceld == 0)
+		{
+			App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
 
-		App->SBC_Scene->B_Player[0]->StartPos.y = App->Cl_Dialogs->mFloat;
-	
-		App->SBC_Physics->Reset_Physics();
+			App->SBC_Scene->B_Player[0]->StartPos.y = App->SBC_Gui_Dialogs->m_Dialog_Float;
 
-		App->SBC_Scene->B_Player[0]->Altered = 1;
-		App->SBC_Scene->Scene_Modified = 1;
-		App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);
+			App->SBC_Scene->Scene_Modified = 1;
+
+			App->SBC_Scene->B_Player[0]->Altered = 1;
+			App->SBC_Scene->Scene_Modified = 1;
+			App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);
+		}
+		else
+		{
+			App->SBC_Gui_Dialogs->m_Dialog_Float = App->SBC_Gui_Dialogs->m_Dialog_Float_Copy;
+			App->SBC_Scene->B_Player[0]->StartPos.y = App->SBC_Gui_Dialogs->m_Dialog_Float_Copy;
+			App->SBC_Physics->Reset_Physics();
+		}
+
+		App->Disable_Panels(false);
 
 		Update_ListView_Player();
 		return 1;
@@ -1478,23 +1542,38 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 	result = strcmp(App->SBC_Properties->btext, "Start Pos_Z");
 	if (result == 0)
 	{
-		char chr_Value[10];
-		sprintf(chr_Value, "%.3f ", App->SBC_Scene->B_Player[0]->StartPos.z);
+		App->SBC_Gui_Dialogs->Start_Dialog_Float(0.10, App->SBC_Scene->B_Player[0]->StartPos.z, "Start Pos_Z");
 
-		strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
+		while (App->SBC_Gui_Dialogs->Show_Dialog_Float == 1)
+		{
+			App->SBC_Gui_Dialogs->BackGround_Render_Loop();
 
-		strcpy(App->Cl_Dialogs->btext, "Player Start Pos Z");
+			App->SBC_Scene->B_Player[0]->StartPos.z = App->SBC_Gui_Dialogs->m_Dialog_Float;
+			App->SBC_Physics->Reset_Physics();
+		}
 
-		App->Cl_Dialogs->Dialog_Float();
-		if (App->Cl_Dialogs->Canceled == 1) { return TRUE; }
+		App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
 
-		App->SBC_Scene->B_Player[0]->StartPos.z = App->Cl_Dialogs->mFloat;
-		
-		App->SBC_Physics->Reset_Physics();
+		if (App->SBC_Gui_Dialogs->Float_Canceld == 0)
+		{
+			App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
 
-		App->SBC_Scene->B_Player[0]->Altered = 1;
-		App->SBC_Scene->Scene_Modified = 1;
-		App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);
+			App->SBC_Scene->B_Player[0]->StartPos.z = App->SBC_Gui_Dialogs->m_Dialog_Float;
+
+			App->SBC_Scene->Scene_Modified = 1;
+
+			App->SBC_Scene->B_Player[0]->Altered = 1;
+			App->SBC_Scene->Scene_Modified = 1;
+			App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);
+		}
+		else
+		{
+			App->SBC_Gui_Dialogs->m_Dialog_Float = App->SBC_Gui_Dialogs->m_Dialog_Float_Copy;
+			App->SBC_Scene->B_Player[0]->StartPos.z = App->SBC_Gui_Dialogs->m_Dialog_Float_Copy;
+			App->SBC_Physics->Reset_Physics();
+		}
+
+		App->Disable_Panels(false);
 
 		Update_ListView_Player();
 

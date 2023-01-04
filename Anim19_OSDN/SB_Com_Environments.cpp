@@ -191,9 +191,39 @@ bool SB_Com_Environments::Create_Environ_Entity(int Index)
 
 	App->SBC_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
-	//Set_Physics(Index);
+	Set_Physics(Index);
 
 	return 1;
+}
+
+// *************************************************************************
+//							Set_Physics Terry Bernie					   *
+// *************************************************************************
+void SB_Com_Environments::Set_Physics(int Index)
+{
+	App->SBC_Scene->B_Object[Index]->Physics_Quat = App->SBC_Scene->B_Object[Index]->Object_Node->getOrientation();
+
+	float w = App->SBC_Scene->B_Object[Index]->Physics_Quat.w;
+	float x = App->SBC_Scene->B_Object[Index]->Physics_Quat.x;
+	float y = App->SBC_Scene->B_Object[Index]->Physics_Quat.y;
+	float z = App->SBC_Scene->B_Object[Index]->Physics_Quat.z;
+	App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
+
+	App->SBC_Scene->B_Object[Index]->Object_Node->setScale(App->SBC_Scene->B_Object[Index]->Mesh_Scale);
+
+	Ogre::Vector3 Scale = App->SBC_Scene->B_Object[Index]->Object_Node->getScale();
+	App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+
+	AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
+	worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
+	Ogre::Vector3 Centre = worldAAB.getCenter();
+	App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+	App->SBC_Scene->B_Object[Index]->Physics_Pos = Centre;
+
+	//App->SBC_Dimensions->UpDate_Physics_And_Visuals(Index);
+
+	App->SBC_Scene->B_Object[Index]->Physics_Valid = 1;
+
 }
 
 // *************************************************************************
@@ -260,7 +290,15 @@ void SB_Com_Environments::Set_First_Environment(int Index)
 
 	if (App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_On == 1)
 	{
-		EnableFog(true);
+		float Start = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Start;
+		float End = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_End;
+		float Density = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Density;
+
+		float x = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.x;
+		float y = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.y;
+		float z = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.z;
+
+		App->SBC_Ogre->mSceneMgr->setFog(FOG_LINEAR, ColourValue(x, y, z), Density, (Ogre::Real)Start, (Ogre::Real)End);
 	}
 	else
 	{
