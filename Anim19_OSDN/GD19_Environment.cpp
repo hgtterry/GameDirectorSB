@@ -599,50 +599,107 @@ bool GD19_Environment::On_Click_Props(LPARAM lParam)
 		}
 		return 1;
 	}
+
+	// ------------------------------------------------- Fog Start
 	result = strcmp(btext, "Start");
 	if (result == 0)
 	{
-		strcpy(App->Cl_Dialogs->btext,"Set Fog Start Distance");
 
-		sprintf(App->Cl_Dialogs->Chr_Float,"%f", App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Start);
-		
-		App->Cl_Dialogs->Dialog_Float();
+		Enable_Environment_Dialog(false);
 
-		if (App->Cl_Dialogs->Canceled == 0)
+		App->SBC_Gui_Dialogs->Start_Dialog_Float(1.0, App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Start, "Start");
+
+		while (App->SBC_Gui_Dialogs->Show_Dialog_Float == 1)
 		{
-			App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Start = App->Cl_Dialogs->mFloat;
+			App->SBC_Gui_Dialogs->BackGround_Render_Loop();
+
+			App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Start = App->SBC_Gui_Dialogs->m_Dialog_Float;
+
 			if (App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_On == 1)
 			{
 				EnableFog(true);
 			}
-			Update_CreateFogListView();
+		}
+
+		App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
+
+		if (App->SBC_Gui_Dialogs->Float_Canceld == 0)
+		{
+			App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
+			App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Start = App->SBC_Gui_Dialogs->m_Dialog_Float;
+
+			
+			App->SBC_Scene->Scene_Modified = 1;
 			App->SBC_Com_Environments->Mark_As_Altered_Environ(Index);
 		}
+		else
+		{
+			App->SBC_Gui_Dialogs->m_Dialog_Float = App->SBC_Gui_Dialogs->m_Dialog_Float_Copy;
+			App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Start = App->SBC_Gui_Dialogs->m_Dialog_Float_Copy;
+
+			if (App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_On == 1)
+			{
+				EnableFog(true);
+			}
+		}
+
+		App->Disable_Panels(false);
+		Enable_Environment_Dialog(true);
+		Update_CreateFogListView();
+
 		return 1;
 	}
 
+	// ------------------------------------------------- Fog End
 	result = strcmp(btext, "End");
 	if (result == 0)
 	{
-		strcpy(App->Cl_Dialogs->btext,"Set Fog End Distance");
+		Enable_Environment_Dialog(false);
 
-		sprintf(App->Cl_Dialogs->Chr_Float,"%f", App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_End);
-		
-		App->Cl_Dialogs->Dialog_Float();
+		App->SBC_Gui_Dialogs->Start_Dialog_Float(1.0, App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_End, "Start");
 
-		if (App->Cl_Dialogs->Canceled == 0)
+		while (App->SBC_Gui_Dialogs->Show_Dialog_Float == 1)
 		{
-			App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_End = App->Cl_Dialogs->mFloat;
+			App->SBC_Gui_Dialogs->BackGround_Render_Loop();
+
+			App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_End = App->SBC_Gui_Dialogs->m_Dialog_Float;
+
 			if (App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_On == 1)
 			{
 				EnableFog(true);
 			}
-			Update_CreateFogListView();
+		}
+
+		App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
+
+		if (App->SBC_Gui_Dialogs->Float_Canceld == 0)
+		{
+			App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
+			App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_End = App->SBC_Gui_Dialogs->m_Dialog_Float;
+
+
+			App->SBC_Scene->Scene_Modified = 1;
 			App->SBC_Com_Environments->Mark_As_Altered_Environ(Index);
 		}
+		else
+		{
+			App->SBC_Gui_Dialogs->m_Dialog_Float = App->SBC_Gui_Dialogs->m_Dialog_Float_Copy;
+			App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_End = App->SBC_Gui_Dialogs->m_Dialog_Float_Copy;
+
+			if (App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_On == 1)
+			{
+				EnableFog(true);
+			}
+		}
+
+		App->Disable_Panels(false);
+		Enable_Environment_Dialog(true);
+		Update_CreateFogListView();
+
 		return 1;
 	}
 
+	// ------------------------------------------------- Fog Density
 	result = strcmp(btext, "Density");
 	if (result == 0)
 	{
@@ -667,31 +724,54 @@ bool GD19_Environment::On_Click_Props(LPARAM lParam)
 		return 1;
 	}
 
+	// ------------------------------------------------- Fog Colour
 	result = strcmp(btext, "Colour");
 	if (result == 0)
 	{
-		App->SBC_FileIO->GetColor();
-		
-		if (App->SBC_FileIO->Cannceled == 0)
+
+		Show_Environment_Dialog(0);
+
+		App->SBC_Gui_Dialogs->Start_Colour_Picker(App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour);
+
+		while (App->SBC_Gui_Dialogs->Show_ColourPicker == 1)
 		{
-			int Red = GetRValue(App->SBC_FileIO->color.rgbResult);
-			int Green = GetGValue(App->SBC_FileIO->color.rgbResult);
-			int Blue = GetBValue(App->SBC_FileIO->color.rgbResult);
+			App->SBC_Gui_Dialogs->BackGround_Render_Loop();
 
-			App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.x = (float)Red / 256;
-			App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.y = (float)Green / 256;;
-			App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.z = (float)Blue / 256;;
+			App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour = Ogre::Vector3(App->SBC_Gui_Dialogs->Float_Colour.x, App->SBC_Gui_Dialogs->Float_Colour.y, App->SBC_Gui_Dialogs->Float_Colour.z);
+			
+			if (App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_On == 1)
+			{
+				EnableFog(true);
+			}
+		}
 
-			Update_CreateFogListView();
+		App->SBC_Gui_Dialogs->Show_ColourPicker = 0;
+
+		if (App->SBC_Gui_Dialogs->ColourPicker_Canceled == 0)
+		{
+			App->SBC_Com_Environments->Mark_As_Altered_Environ(Index);
+		}
+		else
+		{
+			float x = App->SBC_Gui_Dialogs->Float_Colour_Copy.x;
+			float y = App->SBC_Gui_Dialogs->Float_Colour_Copy.y;
+			float z = App->SBC_Gui_Dialogs->Float_Colour_Copy.z;
+
+			App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour = Ogre::Vector3(x, y, z);
 
 			if (App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_On == 1)
 			{
 				EnableFog(true);
 			}
 
-			Update_CreateFogListView();
-			App->SBC_Com_Environments->Mark_As_Altered_Environ(Index);
 		}
+
+		App->Disable_Panels(false);
+		App->Show_Panels(true);
+		Show_Environment_Dialog(1);
+
+		Update_CreateFogListView();
+
 		return 1;
 	}
 
@@ -728,7 +808,7 @@ bool GD19_Environment::On_Click_Props(LPARAM lParam)
 
 		if (App->SBC_Gui_Dialogs->ColourPicker_Canceled == 0)
 		{
-			
+			App->SBC_Com_Environments->Mark_As_Altered_Environ(Index);
 		}
 		else
 		{
@@ -742,8 +822,7 @@ bool GD19_Environment::On_Click_Props(LPARAM lParam)
 		}
 
 		Update_CreateMainLightListView();
-		App->SBC_Com_Environments->Mark_As_Altered_Environ(Index);
-		
+	
 		return 1;
 	}
 
@@ -1037,5 +1116,20 @@ void GD19_Environment::Show_Environment_Dialog(bool show)
 	else
 	{
 		ShowWindow(Environment_hWnd, SW_HIDE);
+	}
+}
+
+// *************************************************************************
+// *	Enable_Environment_Dialog:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+void GD19_Environment::Enable_Environment_Dialog(bool show)
+{
+	if (show == 1)
+	{
+		EnableWindow(Environment_hWnd, true);
+	}
+	else
+	{
+		EnableWindow(Environment_hWnd, false);
 	}
 }

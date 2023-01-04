@@ -30,7 +30,9 @@ public:
 
 	void Start_Environment(char* Category);
 	bool EnableFog(bool SetFog);
+
 	void Show_Environment_Dialog(bool show);
+	void Enable_Environment_Dialog(bool show);
 
 	void Select_Category(char* FileView_Folder);
 

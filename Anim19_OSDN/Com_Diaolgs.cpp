@@ -306,7 +306,7 @@ int __stdcall Com_Diaolgs::BrowseCallbackProc(HWND  hwnd, UINT  uMsg, LPARAM  lP
 		// if invalid selection, disable the OK button
 		if (!bRet)
 		{
-			::EnableWindow(GetDlgItem(hwnd, IDOK), FALSE);
+			EnableWindow(GetDlgItem(hwnd, IDOK), FALSE);
 			strcpy(App->Com_CDialogs->szSelectedDir, "");
 		}
 		else
