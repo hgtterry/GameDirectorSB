@@ -804,7 +804,9 @@ void Start_Ogre()
 
 	App->CL_Panels->ResizeOgre_Window();
 
-	App->CL_Ogre->mRoot->startRendering();
+	//App->CL_Ogre->mRoot->startRendering();
+
+	App->CL_Ogre->Ogre_Render_Loop();
 
 	Close_App();
 

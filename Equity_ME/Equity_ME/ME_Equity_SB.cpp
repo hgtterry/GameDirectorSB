@@ -35,7 +35,7 @@ ME_Equity_SB::ME_Equity_SB()
 	strcpy(Pref_WE_Path_FileName, "Not_Set");
 
 	strcpy(Pref_Ogre_JustFileName, "Not_Set");
-	strcpy(Pref_Ogre_Path, "Not_Set");
+	strcpy(Pref_Ogre_Path, "");
 
 	WriteScene = nullptr;
 

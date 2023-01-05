@@ -38,6 +38,7 @@ public:
 	~ME_Ogre();
 
 	bool Init_Ogre(void);
+	bool Ogre_Render_Loop(void);
 
 	bool Ogre_CreateRoot(void);
 	bool SetUpResources(void);
@@ -52,6 +53,8 @@ public:
 	void GetVersion_OpenGL(char* buff);
 
 	HWND Render_Hwnd;
+
+	Ogre::Timer FPStimer;
 
 	Ogre::Root* mRoot;
 	Ogre::RenderWindow* mWindow;

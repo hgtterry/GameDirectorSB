@@ -577,6 +577,11 @@ XmlOptions ME_Export_Ogre3D::parseArgs()
 // *************************************************************************
 bool ME_Export_Ogre3D::CreateDirectoryMesh(void)
 {
+	/*if (App->CL_Export_Ogre3D->Export_As_RF)
+	{
+		strcpy(App->CL_Equity_SB->Pref_Ogre_Path, App->CL_FileIO->szSelectedDir);
+		App->CL_Equity_SB->Write_Project_File()
+	}*/
 	
 	if (Add_Sub_Folder == 0)
 	{
@@ -595,6 +600,23 @@ bool ME_Export_Ogre3D::CreateDirectoryMesh(void)
 			strcpy(mDecompileFolder, App->CL_FileIO->szSelectedDir);
 			_chdir(App->CL_FileIO->szSelectedDir);
 		}
+		else
+		{
+			App->CL_Dialogs->YesNo("File Exsits", "Do you want to update File");
+
+			bool Doit = App->CL_Dialogs->Canceled;
+			if (Doit == 0)
+			{
+				strcpy(mDecompileFolder, App->CL_FileIO->szSelectedDir);
+				_chdir(App->CL_FileIO->szSelectedDir);
+			}
+			else
+			{
+				return 0;
+			}
+		}
+
+
 	}
 	
 
@@ -623,7 +645,7 @@ bool ME_Export_Ogre3D::DecompileTextures(void)
 
 		if (_stricmp(FileName + strlen(FileName) - 4, ".tga") == 0)
 		{
-			App->Say(FileName);
+			//App->Say(FileName);
 			int Len = strlen(FileName);
 			FileName[Len - 4] = 0;
 			strcat(FileName, ".jpg");

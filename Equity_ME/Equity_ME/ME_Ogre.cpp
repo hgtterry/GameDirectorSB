@@ -46,6 +46,7 @@ ME_Ogre::ME_Ogre()
 	App_Resource_Group = "App_Resource_Group";
 	Equity_Resource_Group = "Equity_Resource_Group";
 
+	FPStimer.reset();
 }
 
 
@@ -82,6 +83,49 @@ bool ME_Ogre::Init_Ogre(void)
 
 
 	createFrameListener();
+
+	return 1;
+}
+
+// *************************************************************************
+// *		Ogre_Render_Loop:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+bool ME_Ogre::Ogre_Render_Loop(void)
+{
+	mRoot->clearEventTimes();
+
+	while (true)
+	{
+		Ogre::WindowEventUtilities::messagePump();
+
+		if (mWindow->isClosed()) return false;
+
+		if (FPStimer.getMilliseconds() > 3) // FPSLock)
+		{
+			//if (Block_RenderingQueued == 0)
+			{
+
+				// mRoot->renderOneFrame()
+				if (!mRoot->_fireFrameStarted())
+				{
+					return false;
+				}
+
+				if (!mRoot->_updateAllRenderTargets())
+				{
+					return false;
+				}
+
+				if (!mRoot->_fireFrameEnded())
+				{
+					return false;
+				}
+
+				FPStimer.reset();
+
+			}
+		}
+	}
 
 	return 1;
 }

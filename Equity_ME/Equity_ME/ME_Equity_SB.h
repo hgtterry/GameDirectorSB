@@ -32,12 +32,15 @@ public:
 	~ME_Equity_SB();
 
 	bool Start_WE_import();
+	bool Write_Project_File(char* Path_And_File);
+
+	char Pref_Ogre_Path[MAX_PATH];
 
 protected:
 		
 	static LRESULT CALLBACK WE_import_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
-	bool Write_Project_File(char* Path_And_File);
+	
 	bool Load_Project_File(char* Path_And_File);
 
 	bool LoadTextures_TXL();
@@ -64,7 +67,6 @@ protected:
 	char Pref_WE_Path_FileName[MAX_PATH];		
 
 	char Pref_Ogre_JustFileName[MAX_PATH];		
-	char Pref_Ogre_Path[MAX_PATH];
 
 	FILE* WriteScene;
 
