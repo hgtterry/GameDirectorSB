@@ -35,8 +35,6 @@ public:
 	bool Add_New_Object(int Index, bool From_MeshViewer);
 	bool Add_New_Sound();
 
-	bool Add_New_Teleporter();
-
 	void Set_Physics(int Index);
 
 	void Add_Physics_Box(bool Dynamic, int Index);
@@ -58,8 +56,6 @@ protected:
 	btBvhTriangleMeshShape* create_New_Trimesh(int Index);
 
 	bool Create_Sound_Entity(int Index);
-	bool Create_TeleportEntity(int Index);
-
-
+	
 };
 

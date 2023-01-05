@@ -151,6 +151,7 @@ public:
 	SB_Com_Particles*		SBC_Com_Particles;
 	SB_Com_Lights*			SBC_Com_Lights;
 	SB_Com_Teleports*		SBC_Com_Teleports;
+
 	SB_Project_Create*		SBC_Project_Create;
 	SB_Locations*			SBC_Locations;
 	SB_Gui_Dialogs*			SBC_Gui_Dialogs;

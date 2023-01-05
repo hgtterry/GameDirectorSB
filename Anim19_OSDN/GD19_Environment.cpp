@@ -800,6 +800,7 @@ bool GD19_Environment::On_Click_Props(LPARAM lParam)
 
 		App->Disable_Panels(false);
 		App->Show_Panels(true);
+		App->SBC_FileView->Show_FileView(false);
 		Show_Environment_Dialog(1);
 
 		Update_CreateFogListView();
@@ -834,10 +835,6 @@ bool GD19_Environment::On_Click_Props(LPARAM lParam)
 
 		App->SBC_Gui_Dialogs->Show_ColourPicker = 0;
 
-		App->Disable_Panels(false);
-		App->Show_Panels(true);
-		Show_Environment_Dialog(1);
-
 		if (App->SBC_Gui_Dialogs->ColourPicker_Canceled == 0)
 		{
 			App->SBC_Com_Environments->Mark_As_Altered_Environ(Index);
@@ -852,6 +849,11 @@ bool GD19_Environment::On_Click_Props(LPARAM lParam)
 			App->SBC_Ogre->mSceneMgr->setAmbientLight(ColourValue(x, y, z));
 
 		}
+
+		App->Disable_Panels(false);
+		App->Show_Panels(true);
+		App->SBC_FileView->Show_FileView(false);
+		Show_Environment_Dialog(1);
 
 		Update_CreateMainLightListView();
 	

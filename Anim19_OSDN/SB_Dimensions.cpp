@@ -93,6 +93,9 @@ void SB_Dimensions::ImGui_Dimensions(void)
 	{
 		int Index = App->SBC_Properties->Current_Selected_Object;
 		
+		ImGui::Indent();
+		ImGui::Indent();
+
 		//--------------------------------------- Position
 		style->Colors[ImGuiCol_Button] = ImVec4(0.8f, 0.8f, 0.8f, 1);
 
@@ -158,6 +161,8 @@ void SB_Dimensions::ImGui_Dimensions(void)
 
 		style->Colors[ImGuiCol_Button] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
 	
+		ImGui::Unindent();
+		ImGui::Unindent();
 
 		if (Show_Position == 1)
 		{
@@ -235,21 +240,64 @@ void SB_Dimensions::ImGui_Position(void)
 	ImGui::Separator();
 	ImGui::Spacing();
 
-	if (App->SBC_Scene->Scene_Loaded == 1)
+	float vec4a[4] = { App->SBC_Scene->B_Object[Index]->Mesh_Pos.x, App->SBC_Scene->B_Object[Index]->Mesh_Pos.y, App->SBC_Scene->B_Object[Index]->Mesh_Pos.z, 0.44f };
+	ImGui::InputFloat3("", vec4a, "%.3f", ImGuiInputTextFlags_ReadOnly);
+	
+	// ----------------------------------------------------------------------------- Pos X
+	ImGui::Indent();
+	ImGui::Indent();
+	
+	style->Colors[ImGuiCol_FrameBg] = ImVec4(0.0f, 0.0f, 1.0f, 1.00f);
+	ImGui::Checkbox("X", &PosX_Selected);
+	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
+	if (PosX_Selected == 1)
 	{
-		/*pos.x = App->CL_Model->S_BoundingBox[0]->Centre->x;
-		pos.y = App->CL_Model->S_BoundingBox[0]->Centre->y;
-		pos.z = App->CL_Model->S_BoundingBox[0]->Centre->z;
+		App->SBC_Markers->Hide_Axis_Marker();
+		App->SBC_Markers->Update_Blue_Axis_Marker(Index);
 
-		App->CL_Ogre->RenderListener->Hair_1PosX = pos.x;
-		App->CL_Ogre->RenderListener->Hair_1PosY = pos.y;
-		App->CL_Ogre->RenderListener->Hair_1PosZ = pos.z;*/
+		PosY_Selected = 0;
+		PosZ_Selected = 0;
 	}
 
-	ImGui::Indent();
-	ImGui::Indent();
-	ImGui::Text("X %.3f Y %.3f Z %.3f", Pos.x, Pos.y, Pos.z);
+	//------------------------------------------------------------------------------- Pos Y
 
+	ImGui::SameLine();
+	ImGui::Text("           ");
+	ImGui::SameLine();
+	style->Colors[ImGuiCol_FrameBg] = ImVec4(0.0f, 1.0f, 0.0f, 1.00f);
+	ImGui::Checkbox("Y", &PosY_Selected);
+	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
+
+	if (PosY_Selected)
+	{
+		App->SBC_Markers->Hide_Axis_Marker();
+		App->SBC_Markers->Update_Green_Axis_Marker(Index);
+
+		PosX_Selected = 0;
+		PosZ_Selected = 0;
+	}
+
+	//------------------------------------------------------------------------------- Pos Z
+	
+	ImGui::SameLine();
+	ImGui::Text("           ");
+	ImGui::SameLine();
+
+	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 0.0f, 0.0f, 1.00f);
+	ImGui::Checkbox("Z", &PosZ_Selected);
+	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
+	if (PosZ_Selected)
+	{
+		App->SBC_Markers->Hide_Axis_Marker();
+		App->SBC_Markers->Update_Red_Axis_Marker(Index);
+
+		PosX_Selected = 0;
+		PosY_Selected = 0;
+	}
+	
+	ImGui::Indent();
+
+	ImGui::Spacing();
 	ImGui::Spacing();
 
 	// ----------------------------------------------------------------------------- Position
@@ -369,6 +417,7 @@ void SB_Dimensions::ImGui_Position(void)
 	}
 	ImGui::PopButtonRepeat();
 
+
 	ImGui::SameLine();
 	ImGui::SetNextItemWidth(100);
 	const char* XitemsPosXX[] = { "0.001","0.01","0.1","1", "2", "5", "10", "20" };
@@ -379,57 +428,14 @@ void SB_Dimensions::ImGui_Position(void)
 		Model_Pos_Delta = (float)atof(XitemsPosXX[XitemPosXX]);
 	}
 
-	// ----------------------------------------------------------------------------- Pos X
-	ImGui::Indent();
-
-	style->Colors[ImGuiCol_FrameBg] = ImVec4(0.0f, 0.0f, 1.0f, 1.00f);
-	ImGui::Checkbox("X", &PosX_Selected);
-	if (PosX_Selected == 1)
-	{
-		App->SBC_Markers->Hide_Axis_Marker();
-		App->SBC_Markers->Update_Blue_Axis_Marker(Index);
-
-		PosY_Selected = 0;
-		PosZ_Selected = 0;
-	}
-	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
-	//------------------------------------------------------------------------------- Pos Y
-	ImGui::SameLine();
-	style->Colors[ImGuiCol_FrameBg] = ImVec4(0.0f, 1.0f, 0.0f, 1.00f);
-	ImGui::Checkbox("Y", &PosY_Selected);
-	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
-
-	if (PosY_Selected)
-	{
-		App->SBC_Markers->Hide_Axis_Marker();
-		App->SBC_Markers->Update_Green_Axis_Marker(Index);
-
-		PosX_Selected = 0;
-		PosZ_Selected = 0;
-	}
-
-	//------------------------------------------------------------------------------- Pos Z
-	ImGui::SameLine();
-	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 0.0f, 0.0f, 1.00f);
-	ImGui::Checkbox("Z", &PosZ_Selected);
-	if (PosZ_Selected)
-	{
-		App->SBC_Markers->Hide_Axis_Marker();
-		App->SBC_Markers->Update_Red_Axis_Marker(Index);
-
-		PosX_Selected = 0;
-		PosY_Selected = 0;
-
-		
-	}
-	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
+	
+	
 
 
 	style->Colors[ImGuiCol_Text] = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
 
 	ImGui::Spacing();
 	ImGui::Unindent();
-
 	ImGui::Unindent();
 	ImGui::Unindent();
 }
@@ -455,27 +461,97 @@ void SB_Dimensions::ImGui_Scale(void)
 	ImGui::Separator();
 	ImGui::Spacing();
 
-	float X = 0;
+	float vec4a[4] = { App->SBC_Scene->B_Object[Index]->Mesh_Scale.x, App->SBC_Scene->B_Object[Index]->Mesh_Scale.y, App->SBC_Scene->B_Object[Index]->Mesh_Scale.z, 0.44f };
+	ImGui::InputFloat3("", vec4a, "%.3f", ImGuiInputTextFlags_ReadOnly);
 
-	if (App->SBC_Scene->Scene_Loaded == 1)
+	// ----------------------------------------------------------------------------- Scale X
+	ImGui::Indent();
+	ImGui::Indent();
+	
+	style->Colors[ImGuiCol_FrameBg] = ImVec4(0.0f, 0.0f, 1.0f, 1.00f);
+	ImGui::Checkbox("SX", &ScaleX_Selected);
+	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
+	if (ScaleX_Selected == 1)
 	{
-		/*pos.x = App->CL_Model->S_BoundingBox[0]->Centre->x;
-		pos.y = App->CL_Model->S_BoundingBox[0]->Centre->y;
-		pos.z = App->CL_Model->S_BoundingBox[0]->Centre->z;
+		if (Scale_Lock == 1)
+		{
+			App->SBC_Markers->Hide_Axis_Marker();
+			App->SBC_Markers->Update_Red_Axis_Marker(Index);
+			App->SBC_Markers->Update_Green_Axis_Marker(Index);
+			App->SBC_Markers->Update_Blue_Axis_Marker(Index);
+		}
+		else
+		{
+			App->SBC_Markers->Hide_Axis_Marker();
+			App->SBC_Markers->Update_Blue_Axis_Marker(Index);
+		}
 
-		App->CL_Ogre->RenderListener->Hair_1PosX = pos.x;
-		App->CL_Ogre->RenderListener->Hair_1PosY = pos.y;
-		App->CL_Ogre->RenderListener->Hair_1PosZ = pos.z;*/
+		ScaleY_Selected = 0;
+		ScaleZ_Selected = 0;
+	}
+	
+	//------------------------------------------------------------------------------- Scale Y
+	ImGui::SameLine();
+	ImGui::Text("        ");
+	ImGui::SameLine();
+
+	style->Colors[ImGuiCol_FrameBg] = ImVec4(0.0f, 1.0f, 0.0f, 1.00f);
+	ImGui::Checkbox("SY", &ScaleY_Selected);
+	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
+
+	if (ScaleY_Selected)
+	{
+		if (Scale_Lock == 1)
+		{
+			App->SBC_Markers->Hide_Axis_Marker();
+			App->SBC_Markers->Update_Red_Axis_Marker(Index);
+			App->SBC_Markers->Update_Green_Axis_Marker(Index);
+			App->SBC_Markers->Update_Blue_Axis_Marker(Index);
+		}
+		else
+		{
+			App->SBC_Markers->Hide_Axis_Marker();
+			App->SBC_Markers->Update_Green_Axis_Marker(Index);
+		}
+
+		ScaleX_Selected = 0;
+		ScaleZ_Selected = 0;
 	}
 
-	ImGui::Indent();
-	ImGui::Indent();
-	ImGui::Text("X %.4f Y %.4f Z %.4f", Scale.x, Scale.y, Scale.z);
+	//------------------------------------------------------------------------------- Scale Z
+	ImGui::SameLine();
+	ImGui::Text("         ");
+	ImGui::SameLine();
 
+	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 0.0f, 0.0f, 1.00f);
+	ImGui::Checkbox("SZ", &ScaleZ_Selected);
+	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
+
+	if (ScaleZ_Selected)
+	{
+		if (Scale_Lock == 1)
+		{
+			App->SBC_Markers->Hide_Axis_Marker();
+			App->SBC_Markers->Update_Red_Axis_Marker(Index);
+			App->SBC_Markers->Update_Green_Axis_Marker(Index);
+			App->SBC_Markers->Update_Blue_Axis_Marker(Index);
+		}
+		else
+		{
+			App->SBC_Markers->Hide_Axis_Marker();
+			App->SBC_Markers->Update_Red_Axis_Marker(Index);
+		}
+
+		ScaleX_Selected = 0;
+		ScaleY_Selected = 0;
+	}
+	
+	ImGui::Indent();
+
+	ImGui::Spacing();
 	ImGui::Spacing();
 
 	// ----------------------------------------------------------------------------- Scale
-
 	float spacingX = ImGui::GetStyle().ItemInnerSpacing.x;
 	ImGui::PushButtonRepeat(true);
 	if (ImGui::ArrowButton("##leftSX", ImGuiDir_Left))
@@ -638,78 +714,7 @@ void SB_Dimensions::ImGui_Scale(void)
 		Model_Scale_Delta = (float)atof(XitemsScaleXX[XitemScaleXX]);
 	}
 
-	// ----------------------------------------------------------------------------- Scale X
-	ImGui::Indent();
-
-	style->Colors[ImGuiCol_FrameBg] = ImVec4(0.0f, 0.0f, 1.0f, 1.00f);
-	ImGui::Checkbox("SX", &ScaleX_Selected);
-	if (ScaleX_Selected == 1)
-	{
-		if (Scale_Lock == 1)
-		{
-			App->SBC_Markers->Hide_Axis_Marker();
-			App->SBC_Markers->Update_Red_Axis_Marker(Index);
-			App->SBC_Markers->Update_Green_Axis_Marker(Index);
-			App->SBC_Markers->Update_Blue_Axis_Marker(Index);
-		}
-		else
-		{
-			App->SBC_Markers->Hide_Axis_Marker();
-			App->SBC_Markers->Update_Blue_Axis_Marker(Index);
-		}
-
-		ScaleY_Selected = 0;
-		ScaleZ_Selected = 0;
-	}
-	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
-	//------------------------------------------------------------------------------- Scale Y
-	ImGui::SameLine();
-	style->Colors[ImGuiCol_FrameBg] = ImVec4(0.0f, 1.0f, 0.0f, 1.00f);
-	ImGui::Checkbox("SY", &ScaleY_Selected);
-	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
-
-	if (ScaleY_Selected)
-	{
-		if (Scale_Lock == 1)
-		{
-			App->SBC_Markers->Hide_Axis_Marker();
-			App->SBC_Markers->Update_Red_Axis_Marker(Index);
-			App->SBC_Markers->Update_Green_Axis_Marker(Index);
-			App->SBC_Markers->Update_Blue_Axis_Marker(Index);
-		}
-		else
-		{
-			App->SBC_Markers->Hide_Axis_Marker();
-			App->SBC_Markers->Update_Green_Axis_Marker(Index);
-		}
-
-		ScaleX_Selected = 0;
-		ScaleZ_Selected = 0;
-	}
-
-	//------------------------------------------------------------------------------- Scale Z
-	ImGui::SameLine();
-	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 0.0f, 0.0f, 1.00f);
-	ImGui::Checkbox("SZ", &ScaleZ_Selected);
-	if (ScaleZ_Selected)
-	{
-		if (Scale_Lock == 1)
-		{
-			App->SBC_Markers->Hide_Axis_Marker();
-			App->SBC_Markers->Update_Red_Axis_Marker(Index);
-			App->SBC_Markers->Update_Green_Axis_Marker(Index);
-			App->SBC_Markers->Update_Blue_Axis_Marker(Index);
-		}
-		else
-		{
-			App->SBC_Markers->Hide_Axis_Marker();
-			App->SBC_Markers->Update_Red_Axis_Marker(Index);
-		}
-
-		ScaleX_Selected = 0;
-		ScaleY_Selected = 0;
-	}
-	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
+	
 
 	ImGui::Checkbox("Lock Axis", &Scale_Lock);
 	{
@@ -720,7 +725,6 @@ void SB_Dimensions::ImGui_Scale(void)
 
 	ImGui::Spacing();
 	ImGui::Unindent();
-
 	ImGui::Unindent();
 	ImGui::Unindent();
 }
@@ -731,8 +735,6 @@ void SB_Dimensions::ImGui_Scale(void)
 void SB_Dimensions::ImGui_Rotation(void)
 {
 	int Index = App->SBC_Properties->Current_Selected_Object;
-
-	Ogre::Vector3 RotD = App->SBC_Scene->B_Object[Index]->Mesh_Rot;
 
 	ImGuiStyle* style = &ImGui::GetStyle();
 
@@ -746,26 +748,57 @@ void SB_Dimensions::ImGui_Rotation(void)
 	ImGui::Separator();
 	ImGui::Spacing();
 
-	float X = 0;
+	float vec4a[4] = { App->SBC_Scene->B_Object[Index]->Mesh_Rot.x, App->SBC_Scene->B_Object[Index]->Mesh_Rot.y, App->SBC_Scene->B_Object[Index]->Mesh_Rot.z, 0.44f };
+	ImGui::InputFloat3("", vec4a, "%.3f", ImGuiInputTextFlags_ReadOnly);
 
-	if (App->SBC_Scene->Scene_Loaded == 1)
+	// ----------------------------------------------------------------------------- Rotation X
+	ImGui::Indent();
+	ImGui::Indent();
+	
+	style->Colors[ImGuiCol_FrameBg] = ImVec4(0.0f, 0.0f, 1.0f, 1.00f);
+	ImGui::Checkbox("RX", &RotationX_Selected);
+	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
+
+	if (RotationX_Selected == 1)
 	{
-		/*pos.x = App->CL_Model->S_BoundingBox[0]->Centre->x;
-		pos.y = App->CL_Model->S_BoundingBox[0]->Centre->y;
-		pos.z = App->CL_Model->S_BoundingBox[0]->Centre->z;
-
-		App->CL_Ogre->RenderListener->Hair_1PosX = pos.x;
-		App->CL_Ogre->RenderListener->Hair_1PosY = pos.y;
-		App->CL_Ogre->RenderListener->Hair_1PosZ = pos.z;*/
+		RotationY_Selected = 0;
+		RotationZ_Selected = 0;
 	}
 
+	//------------------------------------------------------------------------------- Rotation Y
+	ImGui::SameLine();
+	ImGui::Text("        ");
+	ImGui::SameLine();
+
+	style->Colors[ImGuiCol_FrameBg] = ImVec4(0.0f, 1.0f, 0.0f, 1.00f);
+	ImGui::Checkbox("RY", &RotationY_Selected);
+	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
+
+	if (RotationY_Selected)
+	{
+		RotationX_Selected = 0;
+		RotationZ_Selected = 0;
+	}
+
+	//------------------------------------------------------------------------------- Rotation Z
+	ImGui::SameLine();
+	ImGui::Text("         ");
+	ImGui::SameLine();
+
+	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 0.0f, 0.0f, 1.00f);
+	ImGui::Checkbox("RZ", &RotationZ_Selected);
+	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
+	if (RotationZ_Selected)
+	{
+		RotationX_Selected = 0;
+		RotationY_Selected = 0;
+	}
+	// ----------------------------------------------------------------------------- Scale
+
 	ImGui::Indent();
-	ImGui::Indent();
-	ImGui::Text("X %.3f Y %.3f Z %.3f", RotD.x, RotD.y, RotD.z);
 
 	ImGui::Spacing();
-
-	// ----------------------------------------------------------------------------- Scale
+	ImGui::Spacing();
 
 	float spacingX = ImGui::GetStyle().ItemInnerSpacing.x;
 	ImGui::PushButtonRepeat(true);
@@ -936,45 +969,13 @@ void SB_Dimensions::ImGui_Rotation(void)
 		Model_Rotation_Delta = (float)atof(XitemsRotXX[XitemRotXX]);
 	}
 
-	// ----------------------------------------------------------------------------- Rotation X
-	ImGui::Indent();
-
-	style->Colors[ImGuiCol_FrameBg] = ImVec4(0.0f, 0.0f, 1.0f, 1.00f);
-	ImGui::Checkbox("RX", &RotationX_Selected);
-	if (RotationX_Selected == 1)
-	{
-		RotationY_Selected = 0;
-		RotationZ_Selected = 0;
-	}
-	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
-	//------------------------------------------------------------------------------- Rotation Y
-	ImGui::SameLine();
-	style->Colors[ImGuiCol_FrameBg] = ImVec4(0.0f, 1.0f, 0.0f, 1.00f);
-	ImGui::Checkbox("RY", &RotationY_Selected);
-	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
-
-	if (RotationY_Selected)
-	{
-		RotationX_Selected = 0;
-		RotationZ_Selected = 0;
-	}
-
-	//------------------------------------------------------------------------------- Rotation Z
-	ImGui::SameLine();
-	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 0.0f, 0.0f, 1.00f);
-	ImGui::Checkbox("RZ", &RotationZ_Selected);
-	if (RotationZ_Selected)
-	{
-		RotationX_Selected = 0;
-		RotationY_Selected = 0;
-	}
-	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
+	
+	
 
 	style->Colors[ImGuiCol_Text] = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
 
 	ImGui::Spacing();
 	ImGui::Unindent();
-
 	ImGui::Unindent();
 	ImGui::Unindent();
 }

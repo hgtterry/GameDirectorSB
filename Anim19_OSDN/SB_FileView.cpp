@@ -1664,7 +1664,7 @@ void SB_FileView::Context_New(HWND hDlg)
 		bool Doit = App->SBC_Dialogs->Canceled;
 		if (Doit == 0)
 		{
-			App->SBC_Objects_Create->Add_New_Teleporter();
+			App->SBC_Com_Teleports->Add_New_Teleporter();
 		}
 
 		return;
