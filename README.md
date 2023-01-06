@@ -1,9 +1,11 @@
 # **GameDirectorSB**
 GameDirectorSB ( Pre - Alpha )
 
-## Date 23-12-22
+## Updated:- 06-01-23
 
-#### GameDirectorSB
+Change Log:- https://equitysb.sourceforge.io/ChangeLog.html
+
+## **GameDirectorSB**
 
 Is a WYSIWYG 3D Game/Scene Editor that can build stand alone executables we are in the early stages of development at the moment and releasing regular builds.
 
@@ -11,7 +13,7 @@ GameDirectorSB is not trying to be an alternative to the Unreal Engine or Unity 
 
 GameDirectorSB uses physics and logic to control the scene we are in the stages of adding as much Help as we can to explain the features as we add them.
 
-#### Nightly Builds
+## **Nightly Builds**
 
 Nightly Builds are updated most nights and are used as we develop the software for testing. we then use the last nightly build as the release on a Sunday.
 
@@ -21,16 +23,6 @@ HGTInflanite Software:- Terry Flanigan and Hazel Flanigan.
 Any Problems or ideas you would like to see added please contact us.
 
 [terryinflanite@gmail.com](mailto:terryinflanite@gmail.com)
-
-Change Log
-
-https://equitysb.sourceforge.io/ChangeLog.html
-
-
-
-GameDirectorSB
-
-[Download](https://sourceforge.net/projects/realityeditor/files/GameDirectorSB.zip/download)
 
 ------
 
