@@ -1,0 +1,106 @@
+material GD_FlarePointSprite
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			scene_blend add
+			depth_write off
+
+			point_sprites on
+			point_size 2
+			point_size_attenuation on
+			fog_override true none
+
+			texture_unit
+			{
+				texture GD_flare.png
+			}
+		}
+	}
+}
+// ------------------------------------------ GD_Flare2
+material GD_Flare2
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			scene_blend add
+			depth_write off
+			fog_override true none
+			
+			texture_unit
+			{
+				texture GD_flaretrail.png
+			}
+		}
+	}
+}
+
+// ------------------------------------------ GD_Smoke22
+material GD_Smoke22
+{
+    technique
+    {
+         pass
+         {
+			lighting off
+			scene_blend colour_blend
+			depth_write off
+			diffuse vertexcolor
+			fog_override true none
+			
+             texture_unit
+             {
+                 texture GD_smoke.png
+				 tex_address_mode clamp
+             }
+         }
+    }
+}
+
+// ------------------------------------------ GD_JetEngine1_Mat
+material GD_JetEngine1_Mat
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			scene_blend add
+			depth_write off
+			fog_override true none
+			
+			texture_unit
+			{
+				texture GD_flare.png
+			}
+		}
+	}
+}
+
+// ------------------------------------------ GD_Aureola_Mat
+material GD_Aureola_Mat
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			scene_blend alpha_blend
+			depth_write off
+			cull_hardware none
+			fog_override true none
+			
+			texture_unit
+			{
+				texture GD_aureola.png PF_BYTE_LA
+				tex_address_mode clamp
+			}
+		}
+	}
+}
+
