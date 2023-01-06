@@ -45,10 +45,12 @@ public:
 
 protected:
 
-	static LRESULT CALLBACK Dialog_Dimensions_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-
 	void ImGui_Position(void);
+	void Set_Position(Ogre::Vector3 Pos);
+
 	void ImGui_Scale(void);
+	void Set_Scale(Ogre::Vector3 Scale);
+
 	void ImGui_Rotation(void);
 
 	void Set_Physics_Position(int Index);

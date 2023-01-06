@@ -243,13 +243,21 @@ void SB_Dimensions::ImGui_Position(void)
 	float vec4a[4] = { App->SBC_Scene->B_Object[Index]->Mesh_Pos.x, App->SBC_Scene->B_Object[Index]->Mesh_Pos.y, App->SBC_Scene->B_Object[Index]->Mesh_Pos.z, 0.44f };
 	ImGui::InputFloat3("", vec4a, "%.3f", ImGuiInputTextFlags_ReadOnly);
 	
-	// ----------------------------------------------------------------------------- Pos X
+	// ----------------------------------------------------------------------------- Pos CheckBox X 
 	ImGui::Indent();
 	ImGui::Indent();
 	
-	style->Colors[ImGuiCol_FrameBg] = ImVec4(0.0f, 0.0f, 1.0f, 1.00f);
-	ImGui::Checkbox("X", &PosX_Selected);
+	style->Colors[ImGuiCol_CheckMark] = ImVec4(0.0f, 0.0f, 0.0f, 1.0f);
+
+	style->Colors[ImGuiCol_FrameBg] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
+	style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.26f, 0.59f, 0.98f, 1.00f);
+
+	ImGui::Checkbox("PX", &PosX_Selected); 
+
+	style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
 	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
+	
+
 	if (PosX_Selected == 1)
 	{
 		App->SBC_Markers->Hide_Axis_Marker();
@@ -259,13 +267,15 @@ void SB_Dimensions::ImGui_Position(void)
 		PosZ_Selected = 0;
 	}
 
-	//------------------------------------------------------------------------------- Pos Y
+	//------------------------------------------------------------------------------- Pos CheckBox Y
+	ImGui::SameLine();
+	ImGui::Text("        ");
+	ImGui::SameLine();
 
-	ImGui::SameLine();
-	ImGui::Text("           ");
-	ImGui::SameLine();
-	style->Colors[ImGuiCol_FrameBg] = ImVec4(0.0f, 1.0f, 0.0f, 1.00f);
-	ImGui::Checkbox("Y", &PosY_Selected);
+	style->Colors[ImGuiCol_FrameBg] = ImVec4(0.0f, 0.9f, 0.0f, 1.00f);
+	style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.f, 1.f, 0.f, 1.00f);
+	ImGui::Checkbox("PY", &PosY_Selected);
+	style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
 	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
 
 	if (PosY_Selected)
@@ -277,14 +287,15 @@ void SB_Dimensions::ImGui_Position(void)
 		PosZ_Selected = 0;
 	}
 
-	//------------------------------------------------------------------------------- Pos Z
-	
+	//------------------------------------------------------------------------------- Pos CheckBox Z
 	ImGui::SameLine();
-	ImGui::Text("           ");
+	ImGui::Text("         ");
 	ImGui::SameLine();
 
-	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 0.0f, 0.0f, 1.00f);
-	ImGui::Checkbox("Z", &PosZ_Selected);
+	style->Colors[ImGuiCol_FrameBg] = ImVec4(0.9f, 0.0f, 0.0f, 1.00f);
+	style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(1.f, 0.f, 0.f, 1.00f);
+	ImGui::Checkbox("PZ", &PosZ_Selected);
+	style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
 	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
 	if (PosZ_Selected)
 	{
@@ -300,8 +311,7 @@ void SB_Dimensions::ImGui_Position(void)
 	ImGui::Spacing();
 	ImGui::Spacing();
 
-	// ----------------------------------------------------------------------------- Position
-
+	// ----------------------------------------------------------------------------- Position Do Move 
 	float spacingX = ImGui::GetStyle().ItemInnerSpacing.x;
 	ImGui::PushButtonRepeat(true);
 	if (ImGui::ArrowButton("##leftXX", ImGuiDir_Left))
@@ -310,51 +320,20 @@ void SB_Dimensions::ImGui_Position(void)
 		{
 			if (PosX_Selected == 1)
 			{
-				Pos.x = Pos.x - Model_Pos_Delta;
-				App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
-				App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
-
-				if (App->SBC_Scene->B_Object[Index]->Phys_Body)
-				{
-					Ogre::Vector3 Centre = App->SBC_Object->Get_BoundingBox_World_Centre(Index);
-
-					App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
-				}
-
-				UpDate_Physics_And_Visuals(Index);
+				Pos.x = Pos.x + Model_Pos_Delta;
+				Set_Position(Pos);
 			}
 
 			if (PosY_Selected == 1)
 			{
 				Pos.y = Pos.y + Model_Pos_Delta;
-				App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
-				App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
-
-				if (App->SBC_Scene->B_Object[Index]->Phys_Body)
-				{
-					Ogre::Vector3 Centre = App->SBC_Object->Get_BoundingBox_World_Centre(Index);
-
-					App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
-				}
-
-				UpDate_Physics_And_Visuals(Index);
+				Set_Position(Pos);
 			}
 
 			if (PosZ_Selected == 1)
 			{
-				Pos.z = Pos.z - Model_Pos_Delta;
-				App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
-				App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
-
-				if (App->SBC_Scene->B_Object[Index]->Phys_Body)
-				{
-					Ogre::Vector3 Centre = App->SBC_Object->Get_BoundingBox_World_Centre(Index);
-
-					App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
-					
-				}
-
-				UpDate_Physics_And_Visuals(Index);
+				Pos.z = Pos.z + Model_Pos_Delta;
+				Set_Position(Pos);
 			}
 		}
 	}
@@ -366,71 +345,35 @@ void SB_Dimensions::ImGui_Position(void)
 		{
 			if (PosX_Selected == 1)
 			{
-				Pos.x = Pos.x + Model_Pos_Delta;
-				App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
-				App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
-
-				if (App->SBC_Scene->B_Object[Index]->Phys_Body)
-				{
-					Ogre::Vector3 Centre = App->SBC_Object->Get_BoundingBox_World_Centre(Index);
-
-					App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
-					
-				}
-
-				UpDate_Physics_And_Visuals(Index);
+				Pos.x = Pos.x - Model_Pos_Delta;
+				Set_Position(Pos);
 			}
 
 			if (PosY_Selected == 1)
 			{
 				Pos.y = Pos.y - Model_Pos_Delta;
-				App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
-				App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
-
-				if (App->SBC_Scene->B_Object[Index]->Phys_Body)
-				{
-					Ogre::Vector3 Centre = App->SBC_Object->Get_BoundingBox_World_Centre(Index);
-
-					App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
-				
-				}
-
-				UpDate_Physics_And_Visuals(Index);
+				Set_Position(Pos);
 			}
 
 			if (PosZ_Selected == 1)
 			{
-				Pos.z = Pos.z + Model_Pos_Delta;
-				App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
-				App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
-
-				if (App->SBC_Scene->B_Object[Index]->Phys_Body)
-				{
-					Ogre::Vector3 Centre = App->SBC_Object->Get_BoundingBox_World_Centre(Index);
-
-					App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
-				}
-
-				UpDate_Physics_And_Visuals(Index);
+				Pos.z = Pos.z - Model_Pos_Delta;
+				Set_Position(Pos);
 			}
 		}
 	}
 	ImGui::PopButtonRepeat();
 
-
+	// ----------------------------------------------------------------------------- Position Combo Step
 	ImGui::SameLine();
 	ImGui::SetNextItemWidth(100);
 	const char* XitemsPosXX[] = { "0.001","0.01","0.1","1", "2", "5", "10", "20" };
 	static int XitemPosXX = 3;
-	bool ChangedPosX = ImGui::Combo("Step Pos", &XitemPosXX, XitemsPosXX, IM_ARRAYSIZE(XitemsPosXX));   // Combo using proper array. You can also pass a callback to retrieve array value, no need to create/copy an array just for that.
+	bool ChangedPosX = ImGui::Combo("Step Pos", &XitemPosXX, XitemsPosXX, IM_ARRAYSIZE(XitemsPosXX));
 	if (ChangedPosX == 1)
 	{
 		Model_Pos_Delta = (float)atof(XitemsPosXX[XitemPosXX]);
 	}
-
-	
-	
-
 
 	style->Colors[ImGuiCol_Text] = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
 
@@ -438,6 +381,26 @@ void SB_Dimensions::ImGui_Position(void)
 	ImGui::Unindent();
 	ImGui::Unindent();
 	ImGui::Unindent();
+}
+
+// *************************************************************************
+// *						Set_Position Terry Flanigan					   *
+// *************************************************************************
+void SB_Dimensions::Set_Position(Ogre::Vector3 Pos)
+{
+	int Index = App->SBC_Properties->Current_Selected_Object;
+
+	App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
+	App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
+
+	if (App->SBC_Scene->B_Object[Index]->Phys_Body)
+	{
+		Ogre::Vector3 Centre = App->SBC_Object->Get_BoundingBox_World_Centre(Index);
+
+		App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+	}
+
+	UpDate_Physics_And_Visuals(Index);
 }
 
 // *************************************************************************
@@ -464,13 +427,18 @@ void SB_Dimensions::ImGui_Scale(void)
 	float vec4a[4] = { App->SBC_Scene->B_Object[Index]->Mesh_Scale.x, App->SBC_Scene->B_Object[Index]->Mesh_Scale.y, App->SBC_Scene->B_Object[Index]->Mesh_Scale.z, 0.44f };
 	ImGui::InputFloat3("", vec4a, "%.3f", ImGuiInputTextFlags_ReadOnly);
 
-	// ----------------------------------------------------------------------------- Scale X
+	// ----------------------------------------------------------------------------- Scale Checkbox X
 	ImGui::Indent();
 	ImGui::Indent();
 	
-	style->Colors[ImGuiCol_FrameBg] = ImVec4(0.0f, 0.0f, 1.0f, 1.00f);
+	style->Colors[ImGuiCol_FrameBg] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
+	style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.26f, 0.59f, 0.98f, 1.00f);
+
 	ImGui::Checkbox("SX", &ScaleX_Selected);
+	
 	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
+	style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
+
 	if (ScaleX_Selected == 1)
 	{
 		if (Scale_Lock == 1)
@@ -490,13 +458,15 @@ void SB_Dimensions::ImGui_Scale(void)
 		ScaleZ_Selected = 0;
 	}
 	
-	//------------------------------------------------------------------------------- Scale Y
+	//------------------------------------------------------------------------------- Scale Checkbox Y
 	ImGui::SameLine();
 	ImGui::Text("        ");
 	ImGui::SameLine();
 
-	style->Colors[ImGuiCol_FrameBg] = ImVec4(0.0f, 1.0f, 0.0f, 1.00f);
+	style->Colors[ImGuiCol_FrameBg] = ImVec4(0.0f, 0.9f, 0.0f, 1.00f);
+	style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.f, 1.f, 0.f, 1.00f);
 	ImGui::Checkbox("SY", &ScaleY_Selected);
+	style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
 	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
 
 	if (ScaleY_Selected)
@@ -518,7 +488,7 @@ void SB_Dimensions::ImGui_Scale(void)
 		ScaleZ_Selected = 0;
 	}
 
-	//------------------------------------------------------------------------------- Scale Z
+	//------------------------------------------------------------------------------- Scale Checkbox Z
 	ImGui::SameLine();
 	ImGui::Text("         ");
 	ImGui::SameLine();
@@ -547,11 +517,10 @@ void SB_Dimensions::ImGui_Scale(void)
 	}
 	
 	ImGui::Indent();
-
 	ImGui::Spacing();
 	ImGui::Spacing();
 
-	// ----------------------------------------------------------------------------- Scale
+	// ----------------------------------------------------------------------------- Scale Do Scale
 	float spacingX = ImGui::GetStyle().ItemInnerSpacing.x;
 	ImGui::PushButtonRepeat(true);
 	if (ImGui::ArrowButton("##leftSX", ImGuiDir_Left))
@@ -564,65 +533,31 @@ void SB_Dimensions::ImGui_Scale(void)
 				Scale.y = Scale.y + Model_Scale_Delta;
 				Scale.z = Scale.z + Model_Scale_Delta;
 
-				App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
-				App->SBC_Scene->B_Object[Index]->Mesh_Scale = Scale;
-
-				if (App->SBC_Scene->B_Object[Index]->Phys_Body)
-				{
-					App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
-					App->SBC_Scene->B_Object[Index]->Physics_Scale = Scale;
-
-				}
-
-				UpDate_Physics_And_Visuals(Index);
+				Set_Scale(Scale);
 			}
 			else
 			{
 				if (ScaleX_Selected == 1)
 				{
-					Scale.x = Scale.x - Model_Scale_Delta;
-					App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
-					App->SBC_Scene->B_Object[Index]->Mesh_Scale = Scale;
+					Scale.x = Scale.x + Model_Scale_Delta;
 
-					if (App->SBC_Scene->B_Object[Index]->Phys_Body)
-					{
-						App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
-						App->SBC_Scene->B_Object[Index]->Physics_Scale = Scale;
+					Set_Scale(Scale);
 
-					}
-
-					UpDate_Physics_And_Visuals(Index);
 				}
 
 				if (ScaleY_Selected == 1)
 				{
 					Scale.y = Scale.y + Model_Scale_Delta;
-					App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
-					App->SBC_Scene->B_Object[Index]->Mesh_Scale = Scale;
 
-					if (App->SBC_Scene->B_Object[Index]->Phys_Body)
-					{
-						App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
-						App->SBC_Scene->B_Object[Index]->Physics_Scale = Scale;
-					}
+					Set_Scale(Scale);
 
-					UpDate_Physics_And_Visuals(Index);
 				}
 
 				if (ScaleZ_Selected == 1)
 				{
-					Scale.z = Scale.z - Model_Scale_Delta;
-					App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
-					App->SBC_Scene->B_Object[Index]->Mesh_Scale = Scale;
+					Scale.z = Scale.z + Model_Scale_Delta;
 
-					if (App->SBC_Scene->B_Object[Index]->Phys_Body)
-					{
-						App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
-						App->SBC_Scene->B_Object[Index]->Physics_Scale = Scale;
-
-					}
-
-					UpDate_Physics_And_Visuals(Index);
+					Set_Scale(Scale);
 				}
 			}
 		}
@@ -639,71 +574,39 @@ void SB_Dimensions::ImGui_Scale(void)
 				Scale.y = Scale.y - Model_Scale_Delta;
 				Scale.z = Scale.z - Model_Scale_Delta;
 
-				App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
-				App->SBC_Scene->B_Object[Index]->Mesh_Scale = Scale;
-
-				if (App->SBC_Scene->B_Object[Index]->Phys_Body)
-				{
-					App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
-					App->SBC_Scene->B_Object[Index]->Physics_Scale = Scale;
-				}
-
-				UpDate_Physics_And_Visuals(Index);
+				Set_Scale(Scale);
 			}
 			else
 			{
 				if (ScaleX_Selected == 1)
 				{
-					Scale.x = Scale.x + Model_Scale_Delta;
-					App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
-					App->SBC_Scene->B_Object[Index]->Mesh_Scale = Scale;
+					Scale.x = Scale.x - Model_Scale_Delta;
 
-					if (App->SBC_Scene->B_Object[Index]->Phys_Body)
-					{
-						App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
-						App->SBC_Scene->B_Object[Index]->Physics_Scale = Scale;
-
-					}
-
-					UpDate_Physics_And_Visuals(Index);
+					Set_Scale(Scale);
+					
 				}
 
 				if (ScaleY_Selected == 1)
 				{
 					Scale.y = Scale.y - Model_Scale_Delta;
-					App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
-					App->SBC_Scene->B_Object[Index]->Mesh_Scale = Scale;
 
-					if (App->SBC_Scene->B_Object[Index]->Phys_Body)
-					{
-						App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
-						App->SBC_Scene->B_Object[Index]->Physics_Scale = Scale;
-
-					}
-
-					UpDate_Physics_And_Visuals(Index);
+					Set_Scale(Scale);
+				
 				}
 
 				if (ScaleZ_Selected == 1)
 				{
-					Scale.z = Scale.z + Model_Scale_Delta;
-					App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
-					App->SBC_Scene->B_Object[Index]->Mesh_Scale = Scale;
+					Scale.z = Scale.z - Model_Scale_Delta;
 
-					if (App->SBC_Scene->B_Object[Index]->Phys_Body)
-					{
-						App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
-						App->SBC_Scene->B_Object[Index]->Physics_Scale = Scale;
-
-					}
-
-					UpDate_Physics_And_Visuals(Index);
+					Set_Scale(Scale);
+					
 				}
 			}
 		}
 	}
 	ImGui::PopButtonRepeat();
 
+	// ----------------------------------------------------------------------------- Scale Combo Step
 	ImGui::SameLine();
 	ImGui::SetNextItemWidth(100);
 	const char* XitemsScaleXX[] = { "0.001","0.01","0.1","1", "2", "5", "10", "20" };
@@ -727,6 +630,26 @@ void SB_Dimensions::ImGui_Scale(void)
 	ImGui::Unindent();
 	ImGui::Unindent();
 	ImGui::Unindent();
+}
+
+// *************************************************************************
+// *						Set_Scale Terry Flanigan					   *
+// *************************************************************************
+void SB_Dimensions::Set_Scale(Ogre::Vector3 Scale)
+{
+	int Index = App->SBC_Properties->Current_Selected_Object;
+
+	App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
+	App->SBC_Scene->B_Object[Index]->Mesh_Scale = Scale;
+
+	if (App->SBC_Scene->B_Object[Index]->Phys_Body)
+	{
+		App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+		App->SBC_Scene->B_Object[Index]->Physics_Scale = Scale;
+
+	}
+
+	UpDate_Physics_And_Visuals(Index);
 }
 
 // *************************************************************************
@@ -754,10 +677,11 @@ void SB_Dimensions::ImGui_Rotation(void)
 	// ----------------------------------------------------------------------------- Rotation X
 	ImGui::Indent();
 	ImGui::Indent();
-	
-	style->Colors[ImGuiCol_FrameBg] = ImVec4(0.0f, 0.0f, 1.0f, 1.00f);
+	style->Colors[ImGuiCol_FrameBg] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
+	style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.26f, 0.59f, 0.98f, 1.00f);
 	ImGui::Checkbox("RX", &RotationX_Selected);
 	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
+	style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
 
 	if (RotationX_Selected == 1)
 	{
@@ -770,8 +694,10 @@ void SB_Dimensions::ImGui_Rotation(void)
 	ImGui::Text("        ");
 	ImGui::SameLine();
 
-	style->Colors[ImGuiCol_FrameBg] = ImVec4(0.0f, 1.0f, 0.0f, 1.00f);
+	style->Colors[ImGuiCol_FrameBg] = ImVec4(0.0f, 0.9f, 0.0f, 1.00f);
+	style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.f, 1.f, 0.f, 1.00f);
 	ImGui::Checkbox("RY", &RotationY_Selected);
+	style->Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
 	style->Colors[ImGuiCol_FrameBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
 
 	if (RotationY_Selected)
@@ -957,8 +883,9 @@ void SB_Dimensions::ImGui_Rotation(void)
 			
 		}
 	}
-
 	ImGui::PopButtonRepeat();
+
+	// ----------------------------------------------------------------------------- Rotation Combo Step
 	ImGui::SameLine();
 	ImGui::SetNextItemWidth(100);
 	const char* XitemsRotXX[] = { "0.001","0.01","0.1","1", "2", "5", "10", "45" };
