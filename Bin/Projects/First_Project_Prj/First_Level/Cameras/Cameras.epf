@@ -1,0 +1,11 @@
+[Version_Data]
+Version=V1.2
+ 
+[Counters]
+Cameras_Count=1
+ 
+[Camera_0]
+Camera_Name=Camera_0
+Camera_Pos=34.278019,-83.431038,710.433105
+LookAt=0.000000,30.000000,0.000000
+Camera_Quat=0.009194,-0.000256,0.999569,0.027870
