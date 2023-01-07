@@ -61,6 +61,10 @@ SB_TopTabs::SB_TopTabs()
 	Toggle_3rdCam_Flag = 0;
 	Toggle_Select_Flag = 0;
 
+	Toggle_CamNormal_Flag = 1;
+	Toggle_CamFast_Flag = 0;
+	Toggle_CamSlow_Flag = 0;
+
 }
 
 
@@ -523,9 +527,14 @@ LRESULT CALLBACK SB_TopTabs::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 		SendDlgItemMessage(hDlg, IDC_FIRST_MODE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_FREECAM, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BTMOUSESPEED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_SELECT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_3RD, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		
+		SendDlgItemMessage(hDlg, IDC_ST_FCS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_CAMNORMAL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_CAMFAST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_CAMSLOW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		return TRUE;
 	}
@@ -533,6 +542,19 @@ LRESULT CALLBACK SB_TopTabs::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 	case WM_CTLCOLORDLG:
 	{
 		return (LONG)App->AppBackground;
+	}
+
+	case WM_CTLCOLORSTATIC:
+	{
+		if (GetDlgItem(hDlg, IDC_ST_FCS) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		return FALSE;
 	}
 
 	case WM_NOTIFY:
@@ -560,17 +582,31 @@ LRESULT CALLBACK SB_TopTabs::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_CAMNORMAL && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->SBC_TopTabs->Toggle_CamNormal_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_CAMFAST && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->SBC_TopTabs->Toggle_CamFast_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_CAMSLOW && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->SBC_TopTabs->Toggle_CamSlow_Flag);
+			return CDRF_DODEFAULT;
+		}
+
 		if (some_item->idFrom == IDC_BT_SELECT && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle(item, App->SBC_TopTabs->Toggle_Select_Flag);
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_BTMOUSESPEED && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
 		}
 
@@ -586,10 +622,42 @@ LRESULT CALLBACK SB_TopTabs::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 	case WM_COMMAND:
 	{
-		
-		if (LOWORD(wParam) == IDC_BTMOUSESPEED)
+		if (LOWORD(wParam) == IDC_BT_CAMNORMAL)
 		{
-			App->Com_CDialogs->Start_Mouse_Sensitivity(App->Fdlg);
+			App->SBC_Ogre->OgreListener->mMoveSensitivity = 100;
+			App->SBC_Ogre->OgreListener->mMoveSensitivityMouse = 100;
+
+			App->SBC_TopTabs->Toggle_CamNormal_Flag = 1;
+			App->SBC_TopTabs->Toggle_CamFast_Flag = 0;
+			App->SBC_TopTabs->Toggle_CamSlow_Flag = 0;
+			RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_CAMFAST)
+		{
+			App->SBC_Ogre->OgreListener->mMoveSensitivity = 250;
+			App->SBC_Ogre->OgreListener->mMoveSensitivityMouse = 250;
+
+			App->SBC_TopTabs->Toggle_CamFast_Flag = 1;
+			App->SBC_TopTabs->Toggle_CamNormal_Flag = 0;
+			App->SBC_TopTabs->Toggle_CamSlow_Flag = 0;
+			RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_CAMSLOW)
+		{
+			App->SBC_TopTabs->Toggle_CamSlow_Flag = 1;
+			App->SBC_Ogre->OgreListener->mMoveSensitivity = 5;
+			App->SBC_Ogre->OgreListener->mMoveSensitivityMouse = 5;
+
+			App->SBC_TopTabs->Toggle_CamFast_Flag = 0;
+			App->SBC_TopTabs->Toggle_CamNormal_Flag = 0;
+			RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
 			return TRUE;
 		}
 
@@ -688,17 +756,6 @@ void SB_TopTabs::Init_Bmps_Camera(void)
 	HWND hTooltip_TB_1 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
 
 	SendMessage(hTooltip_TB_1, TTM_SETMAXTIPWIDTH, 0, 150);
-
-	// --------------------------------------------------- 
-	Temp = GetDlgItem(Camera_TB_hWnd, IDC_BTMOUSESPEED);
-
-	TOOLINFO ti1 = { 0 };
-	ti1.cbSize = sizeof(ti1);
-	ti1.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
-	ti1.uId = (UINT_PTR)Temp;
-	ti1.lpszText = "Adujust Mouse and Keys Speed\r\nAffects only the Free Cam Speeds";
-	ti1.hwnd = App->MainHwnd;
-	SendMessage(hTooltip_TB_1, TTM_ADDTOOL, 0, (LPARAM)&ti1);
 
 	// --------------------------------------------------- 
 	Temp = GetDlgItem(Camera_TB_hWnd, IDC_FIRST_MODE);

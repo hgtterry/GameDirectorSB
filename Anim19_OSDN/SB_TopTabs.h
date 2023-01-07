@@ -36,6 +36,10 @@ public:
 	bool Toggle_FirstCam_Flag;
 	bool Toggle_FreeCam_Flag;
 
+	bool Toggle_CamNormal_Flag;
+	bool Toggle_CamFast_Flag;
+	bool Toggle_CamSlow_Flag;
+
 	void UnCheck_All_MouseOption(HWND hDlg);
 
 	HWND TabsHwnd;

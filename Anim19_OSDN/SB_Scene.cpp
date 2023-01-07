@@ -201,6 +201,9 @@ bool SB_Scene::Clear_Level()
 
 	App->SBC_FileView->SelectItem(App->SBC_FileView->FV_LevelFolder);
 
+	App->SBC_Ogre->mSceneMgr->destroyCamera("PlayerRay");
+	App->SBC_Ogre->mSceneMgr->destroyAllParticleSystems();
+
 	return 1;
 }
 

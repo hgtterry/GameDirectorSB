@@ -28,7 +28,6 @@ public:
 	Com_Diaolgs();
 	~Com_Diaolgs();
 
-	void Start_Mouse_Sensitivity(HWND hDlg);
 	bool StartBrowser(char* szInitDir, HWND hDlg);
 
 	char BrowserMessage[MAX_PATH];
@@ -36,7 +35,6 @@ public:
 
 protected:
 
-	static LRESULT CALLBACK Mouse_Sensitivity_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static int __stdcall BrowseCallbackProc(HWND  hwnd, UINT  uMsg, LPARAM  lParam, LPARAM  lpData);
 };
 
