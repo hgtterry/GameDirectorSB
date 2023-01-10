@@ -80,6 +80,7 @@ public:
 // Implementation
 
 	//{{AFX_MSG(CFusionApp)
+	afx_msg void OnTest();
 	afx_msg void OnAppAbout();
 	afx_msg void OnFileNew();
 	afx_msg void OnFileOpen();

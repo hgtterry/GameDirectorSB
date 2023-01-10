@@ -418,8 +418,17 @@ protected:
 	afx_msg void OnCameraUp();
 	afx_msg void OnCameraDown();
 	afx_msg void OnFileExport();
+
+	afx_msg void OnFileExportGDSB(); // hgtterry [100123]
+	afx_msg void OnUpdateFileExportGDSB(CCmdUI* pCmdUI); // hgtterry [100123]
+
 	afx_msg void OnUpdateFileExport(CCmdUI* pCmdUI);
 	afx_msg void OnViewTypeWireFrame();
+
+	// EquitySB
+	afx_msg void OnEquity_SetView(); // hgtterry [090123]
+	afx_msg void Zero_Camera(); // hgtterry [090123]
+
 	afx_msg void OnViewTypeTexture();
 	afx_msg void OnUpdateViewTypeWireFrame(CCmdUI* pCmdUI);
 	afx_msg void OnUpdateViewTypeTexture(CCmdUI* pCmdUI);

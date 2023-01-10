@@ -106,6 +106,7 @@
 #define IDD_SCALEDIALOG                 251
 #define IDB_GENESIS3D                   252
 #define IDD_EXPORT3DSDIALOG             254
+#define IDD_SCENEDATA                   255
 #define IDC_RESET_ALL                   1000
 #define IDC_EDIT1                       1001
 #define IDC_EDIT10                      1002
@@ -465,6 +466,7 @@
 #define IDC_EXPORTSELECTED              1340
 #define IDC_EXPORTLIGHTS                1341
 #define IDC_GROUPFILE                   1342
+#define IDC_LISTGROUP                   1343
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772
 #define ID_BRUSH_PRIMITIVES_SPHEROID    32773
@@ -628,6 +630,10 @@
 #define ID_VIEWPORT_LINKVIEWPORTS       33045
 #define ID_TEMPLATE_SUNLIGHT            33046
 #define ID_VIEW_SHOW_ACTORS             33047
+#define ID_DEBUG_TEST                   33048
+#define ID_DEBUG_SETVIEW                33049
+#define ID_EQUITYSB_ZEROCAMERA          33050
+#define ID_FILE_EXPORTGDSB              33051
 #define IDS_HELPINFORMATION             38000
 
 // Next default values for new objects
@@ -635,9 +641,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        255
-#define _APS_NEXT_COMMAND_VALUE         33048
-#define _APS_NEXT_CONTROL_VALUE         1343
+#define _APS_NEXT_RESOURCE_VALUE        256
+#define _APS_NEXT_COMMAND_VALUE         33052
+#define _APS_NEXT_CONTROL_VALUE         1344
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

@@ -55,6 +55,7 @@ BEGIN_MESSAGE_MAP(CFusionApp, CWinApp)
 	ON_COMMAND(IDM_PREFERENCES, OnPreferences)
 	ON_UPDATE_COMMAND_UI(IDM_PREFERENCES, OnUpdatePreferences)
 	ON_COMMAND(ID_HELP_HOWDOI, OnHelpHowdoi)
+	ON_COMMAND(ID_DEBUG_TEST, OnTest) // GD_Terry
 	//}}AFX_MSG_MAP
 	ON_COMMAND(ID_HELP_INDEX, OnHelpIndex)
 	ON_COMMAND(ID_HELP, OnHelp)
@@ -180,16 +181,16 @@ void CFusionApp::ResolvePreferencesPaths (void)
 }
 
 
-AB_App *App = NULL;
+A_App* App = NULL;
 
 // *************************************************************************
 // * Equity_InitInstance				InitInstance					   *
 // *************************************************************************
 BOOL CFusionApp::InitInstance()
 {
-	App = new AB_App();
+	App = new A_App();
 	App->InitApp();
-	
+
 	char AppPath[MAX_PATH];
 	
 	::GetModuleFileName (NULL, AppPath, MAX_PATH);
@@ -385,6 +386,15 @@ void CFusionApp::OnAppAbout()
 	aboutDlg.DoModal() ;
 }
 
+// GameDirector Test
+void CFusionApp::OnTest() // GD_Terry
+{
+	App->CL_Dialogs->Show_ListData();
+//	App->CL_FileIO->SaveSelectedFile("Equity   *.ebr\0**.ebr\0", NULL);
+//	App->Say(App->CL_FileIO->FileName);
+//	App->Say(App->CL_FileIO->PathFileName);
+}
+
 //	CHANGE!	03/29/97	John Moore
 void CFusionApp::InitUserPreferences(CMainFrame* pMainFrame)
 {
@@ -560,13 +570,14 @@ void CFusionApp::OnFileOpen()
 	{
 		this->pMainFrame->SendMessage( WM_COMMAND, ID_FILE_CLOSE, 0 ) ;
 	}
-//	CWinApp::OnFileOpen ();
+	CWinApp::OnFileOpen ();
 
-//	this->pMainFrame->UpdateActiveDoc ();
+	this->pMainFrame->UpdateActiveDoc ();
 }
 
 BOOL CFusionApp::OnOpenRecentFile (UINT nID)
 {
+	
 	BOOL rslt;
 
 	// If the current document is unmodified and has no brushes, wipe it
@@ -576,11 +587,21 @@ BOOL CFusionApp::OnOpenRecentFile (UINT nID)
 		this->pMainFrame->SendMessage( WM_COMMAND, ID_FILE_CLOSE, 0 ) ;
 	}
 
+	
+
 	rslt = CWinApp::OnOpenRecentFile (nID);
 	if (rslt != FALSE)
 	{
 		this->pMainFrame->UpdateActiveDoc ();
+
+		// hgtterry
+		CFusionDoc* pDoc2 = GetActiveFusionDoc() ;
+		strcpy(App->CL_Scene->Current_3DT_Path,pDoc2->GetPathName());
+		strcpy(App->CL_Scene->Current_3DT_File,pDoc2->GetTitle());
+
+		App->CL_Scene->Set_Paths();
 	}
+
 	return rslt;
 }
 

@@ -173,8 +173,17 @@ BEGIN_MESSAGE_MAP(CFusionDoc, CDocument)
 	ON_COMMAND(ID_CAMERA_DOWN, OnCameraDown)
 	ON_COMMAND(ID_FILE_EXPORT, OnFileExport)
 	ON_UPDATE_COMMAND_UI(ID_FILE_EXPORT, OnUpdateFileExport)
+
+	ON_COMMAND(ID_FILE_EXPORTGDSB, OnFileExportGDSB) //  hgtterry [100123]
+	ON_UPDATE_COMMAND_UI(ID_FILE_EXPORTGDSB, OnUpdateFileExportGDSB) //  hgtterry [100123]
+
 	ON_COMMAND( ID_VIEW_3DWIREFRAME, OnViewTypeWireFrame)
-	ON_COMMAND( ID_VIEW_TEXTUREVIEW, OnViewTypeTexture) // [281221]
+
+	// EquitySB
+	ON_COMMAND( ID_VIEW_TEXTUREVIEW, OnViewTypeTexture) // hgtterry [281221]
+	ON_COMMAND( ID_DEBUG_SETVIEW, OnEquity_SetView) // hgtterry [090123]
+	ON_COMMAND( ID_EQUITYSB_ZEROCAMERA, Zero_Camera) // hgtterry [090123]
+
 	ON_UPDATE_COMMAND_UI(ID_VIEW_3DWIREFRAME, OnUpdateViewTypeWireFrame)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_TEXTUREVIEW, OnUpdateViewTypeTexture)
 	ON_COMMAND(ID_CAMERA_CENTERONSELECTION, OnCameraCenteronselection)
@@ -322,6 +331,9 @@ CFusionDoc::CFusionDoc() : CDocument (),
 	}
 
 	mpMainFrame=(CMainFrame*)AfxGetMainWnd();
+
+	App->MainHwnd = AfxGetApp()->m_pMainWnd->m_hWnd; // hgtterry
+	App->hInst = AfxGetApp()->m_hInstance;
 
 	pSelBrushes = SelBrushList_Create ();
 	pTempSelBrushes = SelBrushList_Create ();
@@ -7035,6 +7047,10 @@ void CFusionDoc::OnFileOpen()
 	if(dlg.DoModal()==IDOK)
 	{
 			AfxGetApp()->OpenDocumentFile(dlg.GetPathName());
+			strcpy(App->CL_Scene->Current_3DT_Path,dlg.GetPathName()); // hgtterry
+			strcpy(App->CL_Scene->Current_3DT_File,dlg.GetFileName()); // hgtterry
+
+			App->CL_Scene->Set_Paths();
 	}
 }
 
@@ -8763,9 +8779,6 @@ void CFusionDoc::ExportTo_RFW(const char *FileName, int ExpSelected, geBoolean E
 	}
 }
 
-// *************************************************************************
-// * Equity_Export_3DS				OnFileExport						   *
-// *************************************************************************
 void CFusionDoc::OnFileExport() 
 {
 // changed QD 12/03
@@ -8823,6 +8836,46 @@ void CFusionDoc::OnUpdateFileExport(CCmdUI* pCmdUI)
 	
 	pCmdUI->Enable( bEnable ) ;	
 	
+}
+
+// *************************************************************************
+// * 						OnFileExportGDSB:- hgtterry					   *
+// *************************************************************************
+void CFusionDoc::OnUpdateFileExportGDSB(CCmdUI* pCmdUI) 
+{
+	BOOL		bEnable ;
+	
+	bEnable = ((GetSelState() & ANYBRUSH) ? TRUE : FALSE) || ((GetSelState() & ANYENTITY) ? TRUE : FALSE);
+	
+	pCmdUI->Enable( bEnable ) ;	
+	
+}
+
+// *************************************************************************
+// * 						OnFileExportGDSB:- hgtterry					   *
+// *************************************************************************
+void CFusionDoc::OnFileExportGDSB() 
+{
+	static const char FDTitle[] = "Export";
+	
+	bool Test = App->CL_FileIO->SaveSelectedFile("Equity   *.ebr\0**.ebr\0", App->CL_Scene->Current_3DT_Just_Path);
+
+	if (Test == 1)
+	{
+		
+		bool Check = App->CL_FileIO->CheckExtention(App->CL_FileIO->PathFileName);
+		if (Check==0)
+		{
+			strcat(App->CL_FileIO->PathFileName, ".ebr");
+			strcat(App->CL_FileIO->FileName, ".ebr");
+		}
+		
+		CExport3dsDialog ExpDlg;
+		if (ExpDlg.DoModal () == IDOK)
+		{
+			ExportTo_RFW(App->CL_FileIO->PathFileName, ExpDlg.m_ExportAll, ExpDlg.m_ExportLights, ExpDlg.m_GroupFile);
+		}
+	}			
 }
 
 const char* CFusionDoc::ReturnThingUnderPoint(CPoint point, ViewVars *v)
@@ -9037,6 +9090,26 @@ void CFusionDoc::OnViewTypeTexture()
 	pFusionView->OnViewType(ID_VIEW_TEXTUREVIEW);
 }
 
+void CFusionDoc::OnEquity_SetView() // GD_Terry [090123]
+{
+	SetModifiedFlag();
+
+	CFusionView* pFusionView = GetCameraView();
+	if (!pFusionView)
+		return;
+	
+	pFusionView->OnViewType(ID_VIEW_TEXTUREVIEW);
+
+	Level_SetBspRebuild (pLevel, !Level_RebuildBspAlways (pLevel));
+
+	if (Level_RebuildBspAlways (pLevel))
+	{
+		RebuildTrees();
+		UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+	}
+
+}
+
 void CFusionDoc::OnUpdateViewTypeWireFrame(CCmdUI* pCmdUI)
 {
 	OnUpdateViewType(pCmdUI);
@@ -9221,6 +9294,36 @@ void CFusionDoc::OnPlaceOmniLight()
 void CFusionDoc::OnPlaceSpotLight()
 {
 	mpMainFrame->m_wndTabControls->m_pBrushEntityDialog->PlaceSpotLight();
+}
+
+void CFusionDoc::Zero_Camera() 
+{
+	CEntity *pCameraEntity = FindCameraEntity ();
+
+	if (pCameraEntity)
+	{
+		SetModifiedFlag();
+		
+		pCameraEntity->mOrigin.X = 0;
+		pCameraEntity->mOrigin.Y = 0;
+		pCameraEntity->mOrigin.Z = 0;
+
+		geVec3d Angles;
+
+		Angles.X = 0;
+		Angles.Y = 0;
+		Angles.Z = 0;
+
+		pCameraEntity->SetAngles( &Angles, Level_GetEntityDefs (pLevel) );
+
+		Angles.X = 0;
+		Angles.Y = 0;
+		Angles.Z = 0;
+
+		SetRenderedViewCamera( &(pCameraEntity->mOrigin), &Angles) ;
+
+		UpdateAllViews( UAV_ALLVIEWS, NULL );
+	}
 }
 
 void CFusionDoc::OnCameraGoto() 

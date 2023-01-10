@@ -1104,11 +1104,14 @@ BEGIN
         MENUITEM "&Import...",                  ID_FILE_IMPORT
         MENUITEM "Export...",                   ID_FILE_EXPORT
         MENUITEM SEPARATOR
+        MENUITEM "Export GDSB",                 ID_FILE_EXPORTGDSB
+        MENUITEM SEPARATOR
         MENUITEM "&Properties...",              IDM_LEVELOPTIONS
         MENUITEM SEPARATOR
         MENUITEM "Recent File",                 ID_FILE_MRU_FILE1, GRAYED
         MENUITEM SEPARATOR
         MENUITEM "E&xit",                       ID_APP_EXIT
+        MENUITEM SEPARATOR
     END
     POPUP "&Edit"
     BEGIN
@@ -1298,6 +1301,12 @@ BEGIN
         MENUITEM "&Tile",                       ID_WINDOW_TILE_HORZ
         MENUITEM "&Arrange Icons",              ID_WINDOW_ARRANGE
     END
+    POPUP "EquitySB"
+    BEGIN
+        MENUITEM "Test",                        ID_DEBUG_TEST, INACTIVE
+        MENUITEM "Set_View",                    ID_DEBUG_SETVIEW
+        MENUITEM "Zero Camera",                 ID_EQUITYSB_ZEROCAMERA
+    END
     POPUP "&Help"
     BEGIN
         MENUITEM "&Help Topics\tF1",            ID_HELP
@@ -1417,7 +1426,7 @@ IDC_EYEDROPPER          CURSOR  DISCARDABLE     "res\\cursor1.cur"
 
 STRINGTABLE PRELOAD DISCARDABLE 
 BEGIN
-    IDR_MAINFRAME           "Genesis3D World Editor [ Equity 291221 ]"
+    IDR_MAINFRAME           "Genesis3D World Editor [Equity 10-01-23]"
     IDR_FUSIONTYPE          "Genesis3D World Editor\nWorld\nWorld\nWorld Files (*.3dt)\n.3dt\nWorldEditor.Document\nGenesis3D World Editor Document"
     IDS_LOAD_WARNING        "Some entities or brushes did not load properly, see console for details."
     IDS_NEWGROUP            "Group Name"
@@ -1783,6 +1792,54 @@ BEGIN
 END
 
 #endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.K.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENG)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_UK
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_SCENEDATA DIALOG DISCARDABLE  0, 0, 392, 197
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,139,176,50,14,BS_CENTER
+    PUSHBUTTON      "Cancel",IDCANCEL,198,176,50,14,BS_CENTER
+    LISTBOX         IDC_LISTGROUP,7,7,378,149,LBS_NOINTEGRALHEIGHT | 
+                    WS_VSCROLL | WS_TABSTOP
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_SCENEDATA, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 385
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 190
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+#endif    // English (U.K.) resources
 /////////////////////////////////////////////////////////////////////////////
 
 

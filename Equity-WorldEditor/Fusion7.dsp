@@ -155,6 +155,18 @@ SOURCE=.\TypeParser\type.h
 # End Group
 # Begin Source File
 
+SOURCE=.\A_Dialogs.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\A_FileIO.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\A_Scene.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\AB_App.cpp
 # End Source File
 # Begin Source File
@@ -425,6 +437,18 @@ SOURCE=.\WadFile.cpp
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h;hpp;hxx;hm;inl;fi;fd"
+# Begin Source File
+
+SOURCE=.\A_Dialogs.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\A_FileIO.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\A_Scene.h
+# End Source File
 # Begin Source File
 
 SOURCE=.\AB_App.h
