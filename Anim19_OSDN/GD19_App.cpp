@@ -377,13 +377,13 @@ bool GD19_App::Resize_OgreWin(void)
 			App->SBC_Ogre->mWindow->windowMovedOrResized();
 			App->SBC_Ogre->mCamera->setAspectRatio((Ogre::Real)App->SBC_Ogre->mWindow->getWidth() / (Ogre::Real)App->SBC_Ogre->mWindow->getHeight());
 			App->SBC_Ogre->mCamera->yaw(Radian(0));
-			Root::getSingletonPtr()->renderOneFrame();
+
+			if (App->SBC_Front_Dlg->Use_Front_Dlg_Flag == 0 || App->SBC_Front_Dlg->Show_Front_Dlg_Flag == 0) // LOOK AT
+			{
+				Root::getSingletonPtr()->renderOneFrame();
+			}
 		}
 
-		/*int Width = App->SBC_Ogre->OgreListener->View_Width;
-		int poo = (Width / 2) - 175;
-
-		ImGui::SetWindowPos("Ogre Data", ImVec2(poo, 20));*/
 	}
 
 	App->Cl_Panels->MovePhysicsView();

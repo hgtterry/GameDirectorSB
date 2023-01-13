@@ -10,5 +10,7 @@ public:
 	Ogre::Real Rate;
 	Ogre::Vector3 OldPos;
 	Ogre::Camera* mCamera;
+
+	bool Block_Keyboard;
 };
 

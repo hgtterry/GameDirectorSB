@@ -286,6 +286,12 @@ bool SB_Scene::Add_Resource_Location_Project(char* Resource_Location)
 // *************************************************************************
 bool SB_Scene::Game_Mode(void)
 {
+	if (App->SBC_Front_Dlg->Use_Front_Dlg_Flag == 1)
+	{
+		App->Cl_Keyboard->Block_Keyboard = 1;
+		App->SBC_Front_Dlg->Show_Front_Dlg_Flag = 1;
+	}
+
 	GameMode_Running_Flag = 1;
 
 	App->SBC_Ogre->BulletListener->Render_Debug_Flag = 0;
@@ -306,8 +312,6 @@ bool SB_Scene::Game_Mode(void)
 
 	App->SBC_Visuals->BoxNode->setVisible(false);
 
-	//App->SBC_Ogre->OgreListener->GD_Dubug_Physics = 0;
-
 	Show_Entities(false); // Hide All Visible Trigers
 
 	SetCursorPos(App->CursorPosX, App->CursorPosY);
@@ -327,11 +331,12 @@ bool SB_Scene::Game_Mode(void)
 
 	Root::getSingletonPtr()->renderOneFrame();
 
-	SetCapture(App->ViewGLhWnd);// Bernie
-
-	App->SBC_Ogre->OgreListener->Pl_LeftMouseDown = 1;
-
-	App->CUR = SetCursor(NULL);
+	if (App->SBC_Front_Dlg->Use_Front_Dlg_Flag == 0)
+	{
+		SetCapture(App->ViewGLhWnd);// Bernie
+		App->SBC_Ogre->OgreListener->Pl_LeftMouseDown = 1;
+		App->CUR = SetCursor(NULL);
+	}
 
 	App->SBC_Physics->Reset_Triggers();
 

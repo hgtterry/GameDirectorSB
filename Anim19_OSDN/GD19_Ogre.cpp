@@ -426,7 +426,7 @@ bool SB_Ogre::ExitFullScreen()
 		mWindow->windowMovedOrResized();
 		mCamera->setAspectRatio((Ogre::Real)mWindow->getWidth() / (Ogre::Real)mWindow->getHeight());
 		mCamera->yaw(Radian(0));
-		Root::getSingletonPtr()->renderOneFrame();
+		//Root::getSingletonPtr()->renderOneFrame();
 
 		App->SBC_Scene->Editor_Mode();
 

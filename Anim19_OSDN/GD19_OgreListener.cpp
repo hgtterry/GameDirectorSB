@@ -273,6 +273,11 @@ bool GD19_OgreListener::Update_Game_Logic(float DeltaTime)
 	App->SBC_Dimensions->Dimesions_Select();
 	App->SBC_Gui_Dialogs->Gui_Render_Loop();
 
+	if (App->SBC_Front_Dlg->Show_Front_Dlg_Flag == 1)
+	{
+		App->SBC_Front_Dlg->Render_ImGui_Panel();
+	}
+
 	if (Show_DemoWindow == 1)
 	{
 		ImGui::ShowDemoWindow();

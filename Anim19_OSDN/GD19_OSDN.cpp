@@ -402,14 +402,23 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		case ID_DEBUG_TESTIMGUIDIALOG:
 		{
-			if (App->SBC_Gui_Dialogs->Show_Progress_Bar2 == 0)
+			if (App->SBC_Front_Dlg->Show_Front_Dlg_Flag == 0)
+			{
+				App->SBC_Front_Dlg->Show_Front_Dlg_Flag = 1;
+			}
+			else
+			{
+				App->SBC_Front_Dlg->Show_Front_Dlg_Flag = 0;
+			}
+
+			/*if (App->SBC_Gui_Dialogs->Show_Progress_Bar2 == 0)
 			{
 				App->SBC_Gui_Dialogs->Start_ProgressBar();
 			}
 			else
 			{
 				App->SBC_Gui_Dialogs->Stop_ProgressBar();
-			}
+			}*/
 			
 			return 1;
 		}
