@@ -163,7 +163,7 @@ bool SB_Com_Collectables::Create_Collectable_Entity(int Index)
 
 	App->SBC_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
-	App->SBC_Objects_Create->Set_Physics(Index);
+	App->SBC_Physics->Set_Physics(Index);
 
 	App->SBC_Scene->B_Object[Index]->Folder = Enums::Folder_Collectables;
 

@@ -50,7 +50,7 @@ bool SB_Objects_Create::Add_Objects_From_File() // From File
 	{
 		if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Sound)
 		{
-			Create_Sound_Entity(Count);
+			App->SBC_Com_Sounds->Create_Sound_Entity(Count);
 
 			HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Sounds_Folder, App->SBC_Scene->B_Object[Count]->Mesh_Name, Count, false);
 			App->SBC_Scene->B_Object[Count]->FileViewItem = Temp;
@@ -410,7 +410,7 @@ void SB_Objects_Create::Add_Physics_Box(bool Dynamic,int Index)
 
 	App->SBC_Scene->B_Object[Index]->Physics_Valid = 1;
 
-	Set_Physics(Index);
+	App->SBC_Physics->Set_Physics(Index);
 }
 
 // *************************************************************************
@@ -497,7 +497,7 @@ void SB_Objects_Create::Add_Physics_Sphere(bool Dynamic, int Index)
 
 	App->SBC_Scene->B_Object[Index]->Physics_Valid = 1;
 
-	Set_Physics(Index);
+	App->SBC_Physics->Set_Physics(Index);
 }
 
 // *************************************************************************
@@ -589,7 +589,7 @@ void SB_Objects_Create::Add_Physics_Capsule(bool Dynamic, int Index)
 
 	App->SBC_Scene->B_Object[Index]->Physics_Valid = 1;
 
-	Set_Physics(Index);
+	App->SBC_Physics->Set_Physics(Index);
 }
 
 // *************************************************************************
@@ -679,7 +679,7 @@ void SB_Objects_Create::Add_Physics_Cylinder(bool Dynamic, int Index)
 
 	App->SBC_Scene->B_Object[Index]->Physics_Valid = 1;
 
-	Set_Physics(Index);
+	App->SBC_Physics->Set_Physics(Index);
 }
 
 // *************************************************************************
@@ -766,146 +766,9 @@ void SB_Objects_Create::Add_Physics_Cone(bool Dynamic,int Index)
 
 	App->SBC_Scene->B_Object[Index]->Physics_Valid = 1;
 
-	Set_Physics(Index);
+	App->SBC_Physics->Set_Physics(Index);
 }
 
-// *************************************************************************
-// *				Add_New_Sound:- Terry and Hazel Flanigan 2022		   *
-// *************************************************************************
-bool SB_Objects_Create::Add_New_Sound()
-{
-	char B_Name[MAX_PATH];
-	char ConNum[MAX_PATH];
-
-	int Index = App->SBC_Scene->Object_Count;
-
-	App->SBC_Scene->B_Object[Index] = new Base_Object();
-
-	strcpy(App->SBC_Scene->B_Object[Index]->Sound_File, "Welcome.ogg");
-	strcpy(App->SBC_Scene->B_Object[Index]->Sound_Path, App->SBC_SoundMgr->Default_Folder);
-	strcat(App->SBC_Scene->B_Object[Index]->Sound_Path, "\\Media\\Sounds\\");
-	strcat(App->SBC_Scene->B_Object[Index]->Sound_Path, "Welcome.ogg");
-
-	App->SBC_Scene->B_Object[Index]->HasSound = 1;
-
-	App->SBC_Scene->B_Object[Index]->Type = Enums::Bullet_Type_Static;
-	App->SBC_Scene->B_Object[Index]->Shape = Enums::Shape_Box;
-	App->SBC_Scene->B_Object[Index]->This_Object_UniqueID = App->SBC_Scene->UniqueID_Object_Counter; // Unique ID
-
-	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_FileName, "SoundEntity_GD.mesh");
-
-	strcpy_s(B_Name, "Sound_");
-	_itoa(Index, ConNum, 10);
-	strcat(B_Name, ConNum);
-	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_Name, B_Name);
-
-	Ogre::Vector3 Pos = App->SBC_Object->GetPlacement(-50);
-	App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
-
-	Create_Sound_Entity(Index);
-
-	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Sounds_Folder, App->SBC_Scene->B_Object[Index]->Mesh_Name, Index, true);
-	App->SBC_Scene->B_Object[Index]->FileViewItem = Temp;
-
-	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[Index]->FileViewItem);
-
-	App->SBC_Scene->UniqueID_Object_Counter++;
-	App->SBC_Scene->Object_Count++;
-
-	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Sounds_Folder);
-	return 1;
-}
-
-// *************************************************************************
-// *		Create_Sound_Entity:- Terry and Hazel Flanigan	2022		   *
-// *************************************************************************
-bool SB_Objects_Create::Create_Sound_Entity(int Index)
-{
-	char Mesh_File[255];
-	char ConNum[256];
-	char Ogre_Name[256];
-
-	Base_Object* Object = App->SBC_Scene->B_Object[Index];
-
-	// ----------------- Mesh
-
-	strcpy_s(Ogre_Name, "GDEnt_");
-	_itoa(Index, ConNum, 10);
-	strcat(Ogre_Name, ConNum);
-
-	strcpy(Mesh_File, Object->Mesh_FileName);
-
-	Object->Object_Ent = App->SBC_Ogre->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->SBC_Ogre->App_Resource_Group);
-	Object->Object_Node = App->SBC_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	Object->Object_Node->attachObject(Object->Object_Ent);
-
-	Object->Object_Node->setVisible(true);
-
-	Object->Object_Node->setOrientation(Object->Mesh_Quat);
-	Object->Object_Node->setPosition(Object->Mesh_Pos);
-
-	App->SBC_Scene->Scene_Loaded = 1;
-
-	// ----------------- Physics
-
-	AxisAlignedBox worldAAB = Object->Object_Ent->getBoundingBox();
-	worldAAB.transformAffine(Object->Object_Node->_getFullTransform());
-	Ogre::Vector3 Centre = worldAAB.getCenter();
-
-	Object->Physics_Pos = Ogre::Vector3(Centre.x, Centre.y, Centre.z);
-
-	btTransform startTransform;
-	startTransform.setIdentity();
-	startTransform.setRotation(btQuaternion(0, 0, 0, 1));
-
-	btScalar mass;
-	mass = 0.0f;
-
-	btVector3 localInertia(0, 0, 0);
-	btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
-	startTransform.setOrigin(initialPosition);
-
-	Ogre::Vector3 Size = App->SBC_Object->GetMesh_BB_Size(Object->Object_Node);
-	float sx = Size.x / 2;
-	float sy = Size.y / 2;
-	float sz = Size.z / 2;
-
-	Object->Physics_Size = Ogre::Vector3(sx, sy, sz);
-
-	btCollisionShape* newRigidShape = new btBoxShape(btVector3(sx, sy, sz));
-	newRigidShape->calculateLocalInertia(mass, localInertia);
-
-	App->SBC_Bullet->collisionShapes.push_back(newRigidShape);
-
-	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
-
-	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, newRigidShape, localInertia);
-
-	Object->Phys_Body = new btRigidBody(rbInfo);
-	Object->Phys_Body->setRestitution(1.0);
-	Object->Phys_Body->setFriction(1.5);
-	Object->Phys_Body->setUserPointer(Object->Object_Node);
-	Object->Phys_Body->setWorldTransform(startTransform);
-
-	Object->Usage = Enums::Usage_Sound;
-	Object->Phys_Body->setUserIndex(Enums::Usage_Sound);
-	Object->Phys_Body->setUserIndex2(Index);
-
-	
-	int f = Object->Phys_Body->getCollisionFlags();
-	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT
-		| btCollisionObject::CF_KINEMATIC_OBJECT
-		| btCollisionObject::CF_NO_CONTACT_RESPONSE);
-
-
-	App->SBC_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
-
-	App->SBC_Scene->B_Object[Index]->Physics_Valid = 1;
-
-	Set_Physics(Index);
-
-	return 1;
-}
 
 // *************************************************************************
 //			Create_New_Trimesh:- Terry and Hazel Flanigan 2022			   *
@@ -1056,7 +919,7 @@ btBvhTriangleMeshShape* SB_Objects_Create::create_New_Trimesh(int Index)
 
 	Object->Physics_Valid = 1;
 
-	Set_Physics(Index);
+	App->SBC_Physics->Set_Physics(Index);
 
 	return mShape;
 }
@@ -1213,25 +1076,3 @@ btBvhTriangleMeshShape* SB_Objects_Create::create_Area_Trimesh_New(int Index, Ba
 	return mShape;
 }
 
-// *************************************************************************
-//							Set_Physics Terry Bernie					   *
-// *************************************************************************
-void SB_Objects_Create::Set_Physics(int Index)
-{
-	App->SBC_Scene->B_Object[Index]->Physics_Quat = App->SBC_Scene->B_Object[Index]->Object_Node->getOrientation();
-
-	float w = App->SBC_Scene->B_Object[Index]->Physics_Quat.w;
-	float x = App->SBC_Scene->B_Object[Index]->Physics_Quat.x;
-	float y = App->SBC_Scene->B_Object[Index]->Physics_Quat.y;
-	float z = App->SBC_Scene->B_Object[Index]->Physics_Quat.z;
-	App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
-
-	App->SBC_Scene->B_Object[Index]->Object_Node->setScale(App->SBC_Scene->B_Object[Index]->Mesh_Scale);
-
-	Ogre::Vector3 Scale = App->SBC_Scene->B_Object[Index]->Object_Node->getScale();
-	App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
-
-	App->SBC_Dimensions->UpDate_Physics_And_Visuals(Index);
-
-	App->SBC_Scene->B_Object[Index]->Physics_Valid = 1;
-}

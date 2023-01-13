@@ -32,6 +32,7 @@ public:
 	bool Start_Physics_Pannel();
 	void Reset_Physics(void);
 	void Reset_Triggers(void);
+	void Set_Physics(int Index);
 
 	bool Physics_Console_Dlg_Active;
 

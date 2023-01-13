@@ -570,5 +570,28 @@ void SB_Physics::Reset_Triggers(void)
 	}
 }
 
+// *************************************************************************
+//							Set_Physics Terry Bernie					   *
+// *************************************************************************
+void SB_Physics::Set_Physics(int Index)
+{
+	App->SBC_Scene->B_Object[Index]->Physics_Quat = App->SBC_Scene->B_Object[Index]->Object_Node->getOrientation();
+
+	float w = App->SBC_Scene->B_Object[Index]->Physics_Quat.w;
+	float x = App->SBC_Scene->B_Object[Index]->Physics_Quat.x;
+	float y = App->SBC_Scene->B_Object[Index]->Physics_Quat.y;
+	float z = App->SBC_Scene->B_Object[Index]->Physics_Quat.z;
+	App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
+
+	App->SBC_Scene->B_Object[Index]->Object_Node->setScale(App->SBC_Scene->B_Object[Index]->Mesh_Scale);
+
+	Ogre::Vector3 Scale = App->SBC_Scene->B_Object[Index]->Object_Node->getScale();
+	App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+
+	App->SBC_Dimensions->UpDate_Physics_And_Visuals(Index);
+
+	App->SBC_Scene->B_Object[Index]->Physics_Valid = 1;
+}
+
 
 

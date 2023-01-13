@@ -163,7 +163,9 @@ bool SB_Com_Messages::Create_Message_Entity(int Index)
 
 	App->SBC_Bullet->dynamicsWorld->addRigidBody(MObject->Phys_Body);
 
-	App->SBC_Objects_Create->Set_Physics(Index);
+	App->SBC_Scene->B_Object[Index]->Physics_Valid = 1;
+
+	App->SBC_Physics->Set_Physics(Index);
 
 	return 1;
 }

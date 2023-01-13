@@ -163,7 +163,7 @@ bool SB_Com_Teleports::Create_Teleport_Entity(int Index)
 
 	App->SBC_Scene->B_Object[Index]->Physics_Valid = 1;
 
-	App->SBC_Objects_Create->Set_Physics(Index);
+	App->SBC_Physics->Set_Physics(Index);
 
 	return 1;
 }

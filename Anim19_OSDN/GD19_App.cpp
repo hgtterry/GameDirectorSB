@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022 GameDirectorSB and EquityME -- HGTInflanite Software W.T.Flanigan H.C.Flanigan
+Copyright (c) 2022 - 2023 GameDirectorSB and EquityME -- HGTInflanite Software W.T.Flanigan H.C.Flanigan
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -87,6 +87,7 @@ GD19_App::GD19_App(void)
 	SBC_Com_Particles =		nullptr;
 	SBC_Com_Lights =		nullptr;
 	SBC_Com_Teleports =		nullptr;
+	SBC_Com_Sounds =		nullptr;
 
 	SBC_Locations =			nullptr;
 	SBC_Gui_Dialogs =		nullptr;
@@ -270,6 +271,7 @@ bool GD19_App::InitApp(void)
 	SBC_Gui_Dialogs =		new SB_Gui_Dialogs();
 	SBC_Com_Particles =		new SB_Com_Particles();
 	SBC_Com_Teleports =		new SB_Com_Teleports();
+	SBC_Com_Sounds =		new SB_Com_Sounds();
 	
 	SBC_Front_Dlg =			new Bass_Front_Dialog();
 
