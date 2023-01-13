@@ -151,7 +151,6 @@ void SB_Player::Initialize()
 	btQuaternion rot = btQuaternion(0,0,0,1);
 	btDefaultMotionState *state = new btDefaultMotionState(btTransform(rot, pos));
 
-	//mShape = new btSphereShape(btScalar(radius));
 	pBase->Phys_Shape = new btCapsuleShape(btScalar(pBase->Capsule_Radius), btScalar(pBase->Capsule_Height));
 	pBase->Phys_Body = new btRigidBody(pBase->Capsule_Mass, state, pBase->Phys_Shape, inertia);
 	pBase->Phys_Body->setActivationState(DISABLE_DEACTIVATION);
@@ -166,7 +165,6 @@ void SB_Player::Initialize()
 	int f = pBase->Phys_Body->getCollisionFlags();
 	pBase->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
-	//pBase->Phys_Body->getWorldTransform().setRotation(btQuaternion(1,0,1,1));
 	App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->SBC_Scene->B_Player[0]->Physics_Rotation);
 	App->SBC_Bullet->dynamicsWorld->addRigidBody(pBase->Phys_Body);
 
@@ -175,7 +173,14 @@ void SB_Player::Initialize()
 	Physics_Position = pBase->Phys_Body->getWorldTransform().getOrigin();
 	Physics_Rotation = pBase->Phys_Body->getWorldTransform().getRotation();
 
-	//pBase->Physics_Rotation = pBase->Phys_Body->getWorldTransform().getRotation();
+
+
+	App->SBC_DCC = new DynamicCharacterController(pBase->Phys_Body, NULL);
+	App->SBC_DCC->mShapeRadius = pBase->Capsule_Radius;
+	App->SBC_DCC->mShapeHalfHeight = pBase->Capsule_Height/2;
+
+	App->SBC_DCC->setMovementDirection(btVector3(0, 0, 1));
+	App->SBC_DCC->updateAction(App->SBC_Bullet->dynamicsWorld,1);
 
 	App->SBC_Scene->Player_Added = 1;
 

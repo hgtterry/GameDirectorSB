@@ -86,6 +86,11 @@ distribution.
 #include "SB_Project_Create.h"
 #include "SB_Locations.h"
 #include "SB_Gui_Dialogs.h"
+
+#include "Bass_Front_Dialog.h"
+
+#include "DynamicCharacterController.h"
+
 // :- Terry and Hazel Flanigan 2022
 
 class GD19_App
@@ -106,7 +111,7 @@ public:
 	GD19_LookUps*		Cl_LookUps;
 	GD19_PB*			Cl_PB;
 	GD_Keyboard*		Cl_Keyboard;
-
+	
 	// Vima19 19/03/20
 	VM_ImGui*			CL_Vm_ImGui;
 
@@ -155,8 +160,13 @@ public:
 	SB_Project_Create*		SBC_Project_Create;
 	SB_Locations*			SBC_Locations;
 	SB_Gui_Dialogs*			SBC_Gui_Dialogs;
-	//TZip* poop;
-	
+
+	Bass_Front_Dialog*		SBC_Front_Dlg;
+
+
+	DynamicCharacterController*		SBC_DCC;
+
+
 	Com_Diaolgs*			Com_CDialogs;		// Common Dialogs for App [291221]
 	// ----------------------------------- 
 	GD19_App(void);

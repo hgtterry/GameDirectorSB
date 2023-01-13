@@ -432,6 +432,12 @@ void VM_ImGui::ImGui_FPS(void)
 			ImGui::Text("Delay Timer %l", App->SBC_Ogre->FPStimer.getMicroseconds());
 			ImGui::Text("Ogre Frame Time %f", App->SBC_Ogre->OgreListener->OgreFrameTime);
 			ImGui::Text("Distance To Floor: = %f", App->SBC_Ogre->OgreListener->DistanceToCollision);
+
+			if (App->SBC_Scene->Player_Added == 1)
+			{
+				ImGui::Text("DCC Distance %f %f %f", App->SBC_DCC->mGroundPoint.getX(), App->SBC_DCC->mGroundPoint.getY(), App->SBC_DCC->mGroundPoint.getZ());
+				ImGui::Text("DCC Ground %i", App->SBC_DCC->mOnGround);
+			}
 		}
 		
 		ImGui::PopStyleColor();

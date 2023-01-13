@@ -177,46 +177,54 @@ void Base_Player::jump2(const btVector3& dir)
 // *************************************************************************
 void Base_Player::Move_Player(const btVector3 &walkDirection,float delta)
 {
-	Get_Height();
+	App->SBC_DCC->mMoveDirection = walkDirection;
 
-	mMoveDirection = walkDirection;
-
-	btTransform transform;
-	Phys_Body->getMotionState()->getWorldTransform(transform);
-	btMatrix3x3& basis = transform.getBasis();
-	btMatrix3x3 inv = basis.transpose();
-
-	btVector3 linearVelocity = inv * Phys_Body->getLinearVelocity();
-
-	if (mMoveDirection.fuzzyZero() && mOnGround) 
-	{
-		linearVelocity *= mSpeedDamping;
-	}
-	else if (mOnGround || linearVelocity[2] > 0) 
-	{
-		btVector3 dv = mMoveDirection * (App->SBC_Scene->B_Player[0]->Ground_speed * delta);
-		linearVelocity = dv;
-
-		if (mJump == 0)
-		{
-			linearVelocity[1] = Compenstate;
-		}
-		else
-		{
-			linearVelocity[1] = linearVelocity[1] +1.50;
-		}
-	}
-
-	//if (mJump) 
-	//{
-	//	linearVelocity += 10 * mJumpDir;
-	//	mJump = false;
-	//	//cancelStep();
-	//}
-
-	Phys_Body->setLinearVelocity(basis * linearVelocity);
+	App->SBC_DCC->updateAction(App->SBC_Bullet->dynamicsWorld, delta);
 
 	App->SBC_Player->Check_Collisions_New();
+
+
+	//App->Flash_Window();
+	//Get_Height();
+
+	//mMoveDirection = walkDirection;
+
+	//btTransform transform;
+	//Phys_Body->getMotionState()->getWorldTransform(transform);
+	//btMatrix3x3& basis = transform.getBasis();
+	//btMatrix3x3 inv = basis.transpose();
+
+	//btVector3 linearVelocity = inv * Phys_Body->getLinearVelocity();
+
+	//if (mMoveDirection.fuzzyZero() && mOnGround) 
+	//{
+	//	linearVelocity *= mSpeedDamping;
+	//}
+	//else if (mOnGround || linearVelocity[2] > 0) 
+	//{
+	//	btVector3 dv = mMoveDirection * (App->SBC_Scene->B_Player[0]->Ground_speed * delta);
+	//	linearVelocity = dv;
+
+	//	if (mJump == 0)
+	//	{
+	//		linearVelocity[1] = Compenstate;
+	//	}
+	//	else
+	//	{
+	//		linearVelocity[1] = linearVelocity[1] +1.50;
+	//	}
+	//}
+
+	////if (mJump) 
+	////{
+	////	linearVelocity += 10 * mJumpDir;
+	////	mJump = false;
+	////	//cancelStep();
+	////}
+
+	//Phys_Body->setLinearVelocity(basis * linearVelocity);
+
+	//App->SBC_Player->Check_Collisions_New();
 }
 
 

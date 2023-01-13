@@ -90,6 +90,11 @@ GD19_App::GD19_App(void)
 
 	SBC_Locations =			nullptr;
 	SBC_Gui_Dialogs =		nullptr;
+
+	SBC_Front_Dlg =			nullptr;
+
+	SBC_DCC =				nullptr;
+
 	// ---------------------------------------------------- 29/12/21
 	Com_CDialogs =		nullptr;
 
@@ -188,7 +193,7 @@ GD19_App::GD19_App(void)
 	CursorPosX = 500;
 	CursorPosY = 500;
 
-	Debug_App = 0;
+	Debug_App = 1;
 
 	EquityDirecory_FullPath[0] = 0;
 	ETemp_Folder[0] = 0;
@@ -266,7 +271,8 @@ bool GD19_App::InitApp(void)
 	SBC_Com_Particles =		new SB_Com_Particles();
 	SBC_Com_Teleports =		new SB_Com_Teleports();
 	
-	
+	SBC_Front_Dlg =			new Bass_Front_Dialog();
+
 	SBC_Locations =			new SB_Locations();
 	
 	//--------------

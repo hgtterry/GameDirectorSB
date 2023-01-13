@@ -167,7 +167,9 @@
     <ClInclude Include="Base_Locations.h" />
     <ClInclude Include="Base_Object.h" />
     <ClInclude Include="Base_Player.h" />
+    <ClInclude Include="Bass_Front_Dialog.h" />
     <ClInclude Include="Com_Diaolgs.h" />
+    <ClInclude Include="DynamicCharacterController.h" />
     <ClInclude Include="EB_Options.h" />
     <ClInclude Include="GD19_Bullet.h" />
     <ClInclude Include="GD19_DIALOGS.h" />
@@ -239,6 +241,7 @@
     <ClCompile Include="Base_Locations.cpp" />
     <ClCompile Include="Base_Object.cpp" />
     <ClCompile Include="Base_Player.cpp" />
+    <ClCompile Include="Bass_Front_Dialog.cpp" />
     <ClCompile Include="CollisionTools.cpp" />
     <ClCompile Include="Common\imGui\ImGui_cpp\imgui.cpp" />
     <ClCompile Include="Common\imGui\ImGui_cpp\ImguiManager.cpp" />
@@ -247,6 +250,7 @@
     <ClCompile Include="Common\imGui\ImGui_cpp\imgui_draw.cpp" />
     <ClCompile Include="Common\imGui\ImGui_cpp\imgui_widgets.cpp" />
     <ClCompile Include="Com_Diaolgs.cpp" />
+    <ClCompile Include="DynamicCharacterController.cpp" />
     <ClCompile Include="EB_Options.cpp" />
     <ClCompile Include="GD19_Bullet.cpp" />
     <ClCompile Include="GD19_DIALOGS.cpp" />
