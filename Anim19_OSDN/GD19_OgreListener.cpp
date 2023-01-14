@@ -277,7 +277,7 @@ bool GD19_OgreListener::Update_Game_Logic(float DeltaTime)
 
 	if (App->SBC_Front_Dlg->Show_Front_Dlg_Flag == 1)
 	{
-		App->SBC_Front_Dlg->Render_ImGui_Panel();
+		App->SBC_Front_Dlg->Render_Front_Dlg();
 	}
 
 	if (Show_DemoWindow == 1)

@@ -219,7 +219,7 @@ LRESULT CALLBACK ME_Equity_SB::WE_import_Proc(HWND hDlg, UINT message, WPARAM wP
 
 		if (LOWORD(wParam) == IDC_3DSBROWSE)
 		{
-			int Result = App->CL_FileIO->Open_File_Model("Equity Room   *.ebr\0*.ebr\0", "Equity Room ebr", NULL);
+			int Result = App->CL_FileIO->Open_File_Model("Equity Room   *.G3ds\0*.G3ds\0", "Equity Room G3ds", NULL);
 			if (Result == 0)
 			{
 				return 1;

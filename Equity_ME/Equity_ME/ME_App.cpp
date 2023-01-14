@@ -56,6 +56,8 @@ ME_App::ME_App()
 	CL_Ini = nullptr;
 	CL_Export_Ogre3D = nullptr;
 	CL_Texture_Lib = nullptr;
+
+	SBC_Dimensions = nullptr;
 	//----------------------------------------------
 	hInst =			nullptr;
 
@@ -148,6 +150,8 @@ bool ME_App::InitApp(void)
 	CL_Export_Ogre3D = new ME_Export_Ogre3D();
 	CL_Texture_Lib = new ME_TextureLib();
 	
+	SBC_Dimensions = new SB_Dimensions();
+
 	// ----------------------------------------------
 	SetBrushes_Fonts();
 
@@ -240,6 +244,7 @@ void ME_App::LoadProgramResource(void)
 	Hnd_ModelInfo_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_TB_MODELDATA);
 	Hnd_ModelInfoOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_TB_MODELDATAON);
 }
+
 // *************************************************************************
 // *					SetBrushes_Fonts Inflanite						   *
 // *************************************************************************

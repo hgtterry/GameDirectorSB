@@ -44,6 +44,7 @@ public:
 	bool Add_Resource_Location_Project(char* Resource_Location);
 	void Reset_Counters();
 
+	bool Game_Restart(void);
 	bool Game_Mode(void);
 	bool Editor_Mode(void);
 	void Go_FullScreen_Mode(void);

@@ -86,7 +86,7 @@ bool ME_OgreListener::frameStarted(const Ogre::FrameEvent& evt)
 	}
 
 
-	
+	App->SBC_Dimensions->Dimesions_Select();
 
 
 	if (Animate_Ogre == 1 && App->CL_Model->ItsAnOgreModel == 1)

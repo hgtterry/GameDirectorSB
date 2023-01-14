@@ -29,6 +29,8 @@ Bass_Front_Dialog::Bass_Front_Dialog()
 {
 	Use_Front_Dlg_Flag = 0;
 	Show_Front_Dlg_Flag = 0;
+	Game_Running_Flag = 0;
+
 	PosX = 500;
 	PosY = 500;
 }
@@ -38,9 +40,9 @@ Bass_Front_Dialog::~Bass_Front_Dialog()
 }
 
 // *************************************************************************
-// *			Render_ImGui_Panel:- Terry and Hazel Flanigan 2022		   *
+// *			Render_Front_Dlg:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
-void Bass_Front_Dialog::Render_ImGui_Panel(void)
+void Bass_Front_Dialog::Render_Front_Dlg(void)
 {
 
 	ImGui::SetNextWindowPos(ImVec2(PosX, PosY));
@@ -79,36 +81,70 @@ void Bass_Front_Dialog::Render_ImGui_Panel(void)
 		ImGui::Spacing();
 		ImGui::Spacing();
 
-		if (ImGui::Button("Start Game"))
+		if (Game_Running_Flag == 0)
 		{
-			SetCapture(App->ViewGLhWnd);
-			App->SBC_Ogre->OgreListener->Pl_LeftMouseDown = 1;
-			App->CUR = SetCursor(NULL);
-			App->SBC_Ogre->OgreListener->Block_Mouse = 0;
-			App->SBC_Keyboard->Block_Keyboard = 0;
-			Show_Front_Dlg_Flag = 0;
+			if (ImGui::Button("Start Game",ImVec2(220, 0)))
+			{
+				SetCapture(App->ViewGLhWnd);
+				App->SBC_Ogre->OgreListener->Pl_LeftMouseDown = 1;
+				App->CUR = SetCursor(NULL);
+				App->SBC_Ogre->OgreListener->Block_Mouse = 0;
+				App->SBC_Keyboard->Block_Keyboard = 0;
+				Game_Running_Flag = 1;
+				Show_Front_Dlg_Flag = 0;
+			}
 		}
 
-		/*if (ImGui::Button("Resume Game"))
+		if (Game_Running_Flag == 1)
 		{
+			ImGui::Spacing();
+			ImGui::Spacing();
 
+			if (ImGui::Button("   Resume   ", ImVec2(220, 0)))
+			{
+				SetCapture(App->ViewGLhWnd);
+				App->SBC_Ogre->OgreListener->Pl_LeftMouseDown = 1;
+				App->CUR = SetCursor(NULL);
+				App->SBC_Ogre->OgreListener->Block_Mouse = 0;
+				App->SBC_Keyboard->Block_Keyboard = 0;
+				Show_Front_Dlg_Flag = 0;
+			}
 		}
 
-		if (ImGui::Button("Restart Game"))
+		if (Game_Running_Flag == 1)
 		{
+			ImGui::Spacing();
+			ImGui::Spacing();
 
-		}*/
+			if (ImGui::Button("    Restart    ",ImVec2(220, 0)))
+			{
+				SetCapture(App->ViewGLhWnd);
+				App->SBC_Ogre->OgreListener->Pl_LeftMouseDown = 1;
+				App->CUR = SetCursor(NULL);
+				App->SBC_Ogre->OgreListener->Block_Mouse = 0;
+				App->SBC_Keyboard->Block_Keyboard = 0;
+
+				App->SBC_Physics->Reset_Physics();
+				App->SBC_Scene->Game_Restart();
+
+				Show_Front_Dlg_Flag = 0;
+			}
+		}
 
 		ImGui::Spacing();
 		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
 
-		if (ImGui::Button("       Quit      "))
+		
+		if (ImGui::Button("      Quit      ",ImVec2(220,0)))
 		{
 			App->SBC_Ogre->OgreListener->Pl_LeftMouseDown = 0;
 			App->SBC_Ogre->OgreListener->Block_Mouse = 0;
 			App->SBC_Keyboard->Block_Keyboard = 0;
 			App->Block_Mouse_Buttons = 0;
 			App->SBC_Ogre->ExitFullScreen();
+			Game_Running_Flag = 0;
 			Use_Front_Dlg_Flag = 0; // Temp
 			Show_Front_Dlg_Flag = 0;
 

@@ -282,6 +282,48 @@ bool SB_Scene::Add_Resource_Location_Project(char* Resource_Location)
 }
 
 // *************************************************************************
+// *				Game_Restart:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+bool SB_Scene::Game_Restart(void)
+{
+
+	App->SBC_Com_Environments->GameMode(0);
+	App->SBC_SoundMgr->SoundEngine->stopAllSounds();
+
+	GameMode_Running_Flag = 1;
+
+	App->SBC_Ogre->BulletListener->Render_Debug_Flag = 0;
+
+	App->SBC_Grid->Grid_SetVisible(0);
+	App->SBC_Grid->Hair_SetVisible(0);
+	App->SBC_Grid->Arrow_Node->setVisible(0);
+
+	App->SBC_Ogre->OgreListener->GD_Run_Physics = 1;
+
+	CurrentCamMode = App->SBC_Ogre->OgreListener->GD_CameraMode;
+	App->SBC_Ogre->OgreListener->GD_CameraMode = Enums::CamFirst;
+
+	App->SBC_Visuals->BoxNode->setVisible(false);
+
+	Show_Entities(false); // Hide All Visible Trigers
+
+	SetCursorPos(App->CursorPosX, App->CursorPosY);
+	
+	if (App->SBC_Front_Dlg->Use_Front_Dlg_Flag == 0)
+	{
+		SetCapture(App->ViewGLhWnd);// Bernie
+		App->SBC_Ogre->OgreListener->Pl_LeftMouseDown = 1;
+		App->CUR = SetCursor(NULL);
+	}
+
+	App->SBC_Physics->Reset_Triggers();
+
+	App->SBC_Com_Environments->GameMode(1);
+
+	return 1;
+}
+
+// *************************************************************************
 // *				Game_Mode:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 bool SB_Scene::Game_Mode(void)
@@ -344,6 +386,7 @@ bool SB_Scene::Game_Mode(void)
 
 	return 1;
 }
+
 // *************************************************************************
 // *				Editor_Mode:- Terry and Hazel Flanigan 2022	 	 	   *
 // *************************************************************************

@@ -28,13 +28,15 @@ public:
 	Bass_Front_Dialog();
 	~Bass_Front_Dialog();
 
-	void Render_ImGui_Panel(void);
+	void Render_Front_Dlg(void);
 
 	bool Use_Front_Dlg_Flag;
 	bool Show_Front_Dlg_Flag;
 
 	float PosX; 
 	float PosY;
+
+	bool Game_Running_Flag;
 
 	Ogre::Vector4 Text_Colour;
 	Ogre::Vector4 BackGround_Colour;

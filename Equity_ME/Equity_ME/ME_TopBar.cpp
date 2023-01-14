@@ -882,7 +882,7 @@ LRESULT CALLBACK ME_TopBar::Model_TB_Proc(HWND hDlg, UINT message, WPARAM wParam
 
 	case WM_COMMAND:
 	{
-		if (LOWORD(wParam) == IDC_BTTBDIMENSIONS)
+		if (LOWORD(wParam) == IDC_BT_TEST)
 		{
 			//if (App->CL_Model->Model_Loaded == 1) // Check_Here
 			{
@@ -902,6 +902,22 @@ LRESULT CALLBACK ME_TopBar::Model_TB_Proc(HWND hDlg, UINT message, WPARAM wParam
 
 					App->CL_Ogre->Ogre_Listener->ImGui_Render_Tab = Enums::ImGui_Render_Model;
 				}
+			}
+
+			return 1;
+		}
+	
+		if (LOWORD(wParam) == IDC_BTTBDIMENSIONS)
+		{
+			if (App->SBC_Dimensions->Show_Position == 1)
+			{
+				App->SBC_Dimensions->Show_Position = 0;
+				App->CL_Panels->Show_Panels(1);
+			}
+			else
+			{
+				App->SBC_Dimensions->Show_Position = 1;
+				App->CL_Panels->Show_Panels(0);
 			}
 
 			return 1;

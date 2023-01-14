@@ -52,6 +52,8 @@ distribution.
 #include "ME_Export_Ogre3D.h"
 #include "ME_TextureLib.h"
 
+#include "SB_Dimensions.h"
+
 class ME_App
 {
 public:
@@ -86,6 +88,8 @@ public:
 	T_Ini*				CL_Ini;
 	ME_Export_Ogre3D*	CL_Export_Ogre3D;
 	ME_TextureLib*		CL_Texture_Lib;
+
+	SB_Dimensions* SBC_Dimensions;
 
 	bool InitApp(void);
 	bool SetMainWin_Centre(void);
