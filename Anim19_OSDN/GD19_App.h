@@ -35,7 +35,7 @@ distribution.
 #include "GD19_Objects_Com.h"
 #include "GD19_LookUps.h"
 #include "GD19_PB.h"
-#include "GD_Keyboard.h"
+
 
 // Vima19 19/03/20
 #include "VM_ImGui.h"
@@ -44,6 +44,7 @@ distribution.
 #include "EB_Options.h"
 
 // ---------------------------------------------------- 18/10/21
+#include "SB_Keyboard.h"
 #include "SB_Player.h"
 #include "SB_Import.h"
 #include "SB_Project.h"
@@ -111,7 +112,6 @@ public:
 	GD19_Objects_Com*	Cl_Objects_Com;
 	GD19_LookUps*		Cl_LookUps;
 	GD19_PB*			Cl_PB;
-	GD_Keyboard*		Cl_Keyboard;
 	
 	// Vima19 19/03/20
 	VM_ImGui*			CL_Vm_ImGui;
@@ -121,6 +121,7 @@ public:
 
 	// ---------------------------------------------------- 18/10/21
 
+	SB_Keyboard*			SBC_Keyboard;
 	SB_Player*				SBC_Player;
 	SB_Import*				SBC_Import;
 	SB_Project*				SBC_Project;
@@ -215,6 +216,8 @@ public:
 	bool Panels_Hidden_Flag;
 
 	bool FollowFunctions;
+
+	bool Block_Mouse_Buttons;
 
 	HWND Fdlg;
 	HINSTANCE hInst;

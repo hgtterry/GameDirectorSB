@@ -40,16 +40,14 @@ GD19_App::GD19_App(void)
 	Cl_Dialogs =		nullptr;
 	Cl_Objects_Com =	nullptr;
 	Cl_LookUps =		nullptr;
-	Cl_Keyboard =		nullptr;
-
-	// Vima19 19/03/20
+	
 	CL_Vm_ImGui =		nullptr;
 
-	// ---------------------------------------------------- 07/12/21
 	//EBC_Listener =		nullptr;
 	EBC_Options =		nullptr;
 
-	// ---------------------------------------------------- 18/10/21
+	
+	SBC_Keyboard =		nullptr;
 	SBC_Player =		nullptr;
 	SBC_Import =		nullptr;
 	SBC_Project =		nullptr;
@@ -186,6 +184,8 @@ GD19_App::GD19_App(void)
 	FullScreen_App = 0;
 	RenderBackGround = 0;
 
+	Block_Mouse_Buttons = 0;
+
 	Panels_Disabled_Flag = 0;
 	Panels_Hidden_Flag = 0;
 
@@ -220,17 +220,12 @@ bool GD19_App::InitApp(void)
 	Cl_Dialogs =		new GD19_Dialogs();
 	Cl_Objects_Com =	new GD19_Objects_Com();
 	Cl_LookUps =		new GD19_LookUps();		
-	Cl_Keyboard =		new GD_Keyboard();
 
-	// Vima19 19/03/20
 	CL_Vm_ImGui =		new VM_ImGui();
 
-	// ---------------------------------------------------- 07/12/21
+	EBC_Options =		new EB_Options();
 
-	EBC_Options =			new EB_Options();
-
-	// ---------------------------------------------------- 18/10/21
-		
+	SBC_Keyboard =		new SB_Keyboard();
 	SBC_Player =		new SB_Player();		
 	SBC_Import =		new SB_Import();
 	SBC_Project =		new SB_Project();

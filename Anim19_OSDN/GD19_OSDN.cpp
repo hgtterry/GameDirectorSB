@@ -1180,16 +1180,19 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 				
 				if (App->OgreStarted == 1)
 				{
-					if (!ImGui::GetIO().WantCaptureMouse)
+					if (App->Block_Mouse_Buttons == 0)
 					{
-						SetCapture(App->ViewGLhWnd);// Bernie
-						SetCursorPos(App->CursorPosX, App->CursorPosY);
-						App->SBC_Ogre->OgreListener->Pl_LeftMouseDown = 1;
-						App->CUR = SetCursor(NULL);
-					}
-					else
-					{
-						App->SBC_Ogre->OgreListener->Pl_LeftMouseDown = 1;
+						if (!ImGui::GetIO().WantCaptureMouse)
+						{
+							SetCapture(App->ViewGLhWnd);// Bernie
+							SetCursorPos(App->CursorPosX, App->CursorPosY);
+							App->SBC_Ogre->OgreListener->Pl_LeftMouseDown = 1;
+							App->CUR = SetCursor(NULL);
+						}
+						else
+						{
+							App->SBC_Ogre->OgreListener->Pl_LeftMouseDown = 1;
+						}
 					}
 
 					return 1;
@@ -1204,7 +1207,7 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 	{
 		App->SBC_Ogre->m_imgui.mouseReleased();
 
-		if (App->SBC_Scene->GameMode_Flag == 0)
+		if (App->SBC_Scene->GameMode_Running_Flag == 0)
 		{
 			if (App->OgreStarted == 1)
 			{

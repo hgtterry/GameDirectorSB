@@ -187,7 +187,6 @@
     <ClInclude Include="GD19_Utilities.h" />
     <ClInclude Include="GD19_Visuals.h" />
     <ClInclude Include="GD_Bt_Render.h" />
-    <ClInclude Include="GD_Keyboard.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SB_3DT.h" />
     <ClInclude Include="SB_Build.h" />
@@ -211,6 +210,7 @@
     <ClInclude Include="SB_Gui_Dialogs.h" />
     <ClInclude Include="SB_Import.h" />
     <ClInclude Include="SB_Import_Room.h" />
+    <ClInclude Include="SB_Keyboard.h" />
     <ClInclude Include="SB_Locations.h" />
     <ClInclude Include="SB_LookUps.h" />
     <ClInclude Include="SB_Markers.h" />
@@ -269,7 +269,6 @@
     <ClCompile Include="GD19_Utilities.cpp" />
     <ClCompile Include="GD19_Visuals.cpp" />
     <ClCompile Include="GD_Bt_Render.cpp" />
-    <ClCompile Include="GD_Keyboard.cpp" />
     <ClCompile Include="SB_3DT.cpp" />
     <ClCompile Include="SB_Build.cpp" />
     <ClCompile Include="SB_Camera.cpp" />
@@ -292,6 +291,7 @@
     <ClCompile Include="SB_Gui_Dialogs.cpp" />
     <ClCompile Include="SB_Import.cpp" />
     <ClCompile Include="SB_Import_Room.cpp" />
+    <ClCompile Include="SB_Keyboard.cpp" />
     <ClCompile Include="SB_Locations.cpp" />
     <ClCompile Include="SB_LookUps.cpp" />
     <ClCompile Include="SB_Markers.cpp" />

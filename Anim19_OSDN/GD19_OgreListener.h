@@ -85,6 +85,8 @@ public:
 	int Pl_MouseX;
 	int Pl_MouseY;
 
+	bool		Block_Mouse;
+
 	POINT		Pl_pt;
 	long		Pl_Cent500X;
 	long		Pl_Cent500Y;

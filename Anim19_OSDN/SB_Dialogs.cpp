@@ -1290,6 +1290,7 @@ LRESULT CALLBACK SB_Dialogs::GameMode_StartPosition_Dlg_Proc(HWND hDlg, UINT mes
 		SendDlgItemMessage(hDlg, IDC_STARTLEVEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_QUITGM, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CKFPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CK_FRONTDLG, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		App->Cl_Dialogs->Canceled = 0;
 		App->SBC_Dialogs->DoFPS = 0;
@@ -1313,6 +1314,14 @@ LRESULT CALLBACK SB_Dialogs::GameMode_StartPosition_Dlg_Proc(HWND hDlg, UINT mes
 			return (UINT)App->AppBackground;
 		}
 
+		if (GetDlgItem(hDlg, IDC_CK_FRONTDLG) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+		
 		return FALSE;
 	}
 
@@ -1358,6 +1367,25 @@ LRESULT CALLBACK SB_Dialogs::GameMode_StartPosition_Dlg_Proc(HWND hDlg, UINT mes
 			else
 			{
 				App->SBC_Dialogs->DoFPS = 0;
+
+				return 1;
+			}
+			return 1;
+		}
+
+		if (LOWORD(wParam) == IDC_CK_FRONTDLG)
+		{
+
+			HWND temp = GetDlgItem(hDlg, IDC_CK_FRONTDLG);
+			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
+			if (test == BST_CHECKED)
+			{
+				App->SBC_Front_Dlg->Use_Front_Dlg_Flag = 1;
+				return 1;
+			}
+			else
+			{
+				App->SBC_Front_Dlg->Use_Front_Dlg_Flag = 0;
 
 				return 1;
 			}

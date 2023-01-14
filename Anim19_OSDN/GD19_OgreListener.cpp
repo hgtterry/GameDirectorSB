@@ -45,6 +45,8 @@ GD19_OgreListener::GD19_OgreListener(void)
 	mMoveSensitivity = 50;
 	mMoveSensitivityMouse = 50;
 
+	Block_Mouse = 0;
+
 	Pl_LeftMouseDown = 0;
 	Pl_RightMouseDown = 0;
 
@@ -166,7 +168,7 @@ bool GD19_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 		App->SBC_Ogre->mCamera->yaw(Ogre::Degree(180));
 	}
 
-	App->Cl_Keyboard->Keyboard_Monitor(evt.timeSinceLastFrame);
+	App->SBC_Keyboard->Keyboard_Monitor(evt.timeSinceLastFrame);
 
 	// Left Mouse
 	if (Pl_LeftMouseDown == 1 && Pl_RightMouseDown == 0)
@@ -855,7 +857,11 @@ bool GD19_OgreListener::Capture_LeftMouse_Model(void)
 // *************************************************************************
 bool GD19_OgreListener::Capture_Mouse_FirstPerson(float DeltaTime)
 {
-
+	if (Block_Mouse == 1)
+	{
+		return 0;
+	}
+	
 	GetCursorPos(&Pl_pt);
 
 	Pl_MouseX = (int(Pl_pt.x));

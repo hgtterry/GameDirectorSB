@@ -288,7 +288,9 @@ bool SB_Scene::Game_Mode(void)
 {
 	if (App->SBC_Front_Dlg->Use_Front_Dlg_Flag == 1)
 	{
-		App->Cl_Keyboard->Block_Keyboard = 1;
+		App->SBC_Ogre->OgreListener->Block_Mouse = 1;
+		App->SBC_Keyboard->Block_Keyboard = 1;
+		App->Block_Mouse_Buttons = 1;
 		App->SBC_Front_Dlg->Show_Front_Dlg_Flag = 1;
 	}
 

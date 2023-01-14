@@ -27,7 +27,7 @@ distribution.
 
 Bass_Front_Dialog::Bass_Front_Dialog()
 {
-	Use_Front_Dlg_Flag = 1;
+	Use_Front_Dlg_Flag = 0;
 	Show_Front_Dlg_Flag = 0;
 	PosX = 500;
 	PosY = 500;
@@ -76,13 +76,16 @@ void Bass_Front_Dialog::Render_ImGui_Panel(void)
 
 		ImGui::PushFont(App->CL_Vm_ImGui->font2);
 
+		ImGui::Spacing();
+		ImGui::Spacing();
 
 		if (ImGui::Button("Start Game"))
 		{
 			SetCapture(App->ViewGLhWnd);
 			App->SBC_Ogre->OgreListener->Pl_LeftMouseDown = 1;
 			App->CUR = SetCursor(NULL);
-			App->Cl_Keyboard->Block_Keyboard = 0;
+			App->SBC_Ogre->OgreListener->Block_Mouse = 0;
+			App->SBC_Keyboard->Block_Keyboard = 0;
 			Show_Front_Dlg_Flag = 0;
 		}
 
@@ -96,14 +99,23 @@ void Bass_Front_Dialog::Render_ImGui_Panel(void)
 
 		}*/
 
+		ImGui::Spacing();
+		ImGui::Spacing();
+
 		if (ImGui::Button("       Quit      "))
 		{
 			App->SBC_Ogre->OgreListener->Pl_LeftMouseDown = 0;
-			App->Cl_Keyboard->Block_Keyboard = 0;
+			App->SBC_Ogre->OgreListener->Block_Mouse = 0;
+			App->SBC_Keyboard->Block_Keyboard = 0;
+			App->Block_Mouse_Buttons = 0;
 			App->SBC_Ogre->ExitFullScreen();
+			Use_Front_Dlg_Flag = 0; // Temp
 			Show_Front_Dlg_Flag = 0;
 
 		}
+
+		ImGui::Spacing();
+		ImGui::Spacing();
 
 		ImGui::PopFont();
 
