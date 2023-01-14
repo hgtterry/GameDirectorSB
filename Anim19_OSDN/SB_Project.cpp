@@ -1682,7 +1682,7 @@ bool SB_Project::Load_Project_Objects()
 		if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Message)
 		{
 			App->SBC_Scene->B_Object[Count]->S_Message[0] = new Message_type;
-			App->SBC_Com_Messages->Set_Message_Defaults(Count);
+			App->SBC_Com_Entity->Set_Message_Defaults(Count);
 			
 			App->Cl_Ini->GetString(buff, "Message_Text", Object->S_Message[0]->Message_Text, MAX_PATH);
 
@@ -1812,7 +1812,7 @@ bool SB_Project::Load_Project_Objects()
 		{
 			
 			App->SBC_Scene->B_Object[Count]->S_Teleport[0] = new Teleport_type;
-			App->SBC_Com_Teleports->Set_Teleports_Defaults(Count);
+			App->SBC_Com_Entity->Set_Teleports_Defaults(Count);
 
 			App->Cl_Ini->GetString(buff, "Tele_Goto", chr_Tag1, MAX_PATH);
 			strcpy(App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Name, chr_Tag1);
@@ -1954,7 +1954,7 @@ bool SB_Project::Load_Project_Objects()
 		if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Particle)
 		{
 			App->SBC_Scene->B_Object[Count]->S_Particle[0] = new Particle_type;
-			App->SBC_Com_Particles->Set_Particle_Defaults(Count);
+			App->SBC_Com_Entity->Set_Particle_Defaults(Count);
 
 			int Test = App->Cl_Ini->GetString(buff, "Particle_Script", chr_Tag1, MAX_PATH);
 			strcpy(App->SBC_Scene->B_Object[Count]->S_Particle[0]->ParticleScript, chr_Tag1);

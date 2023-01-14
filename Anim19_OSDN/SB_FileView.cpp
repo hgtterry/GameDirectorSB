@@ -1611,7 +1611,7 @@ void SB_FileView::Context_New(HWND hDlg)
 		bool Doit = App->SBC_Dialogs->Canceled;
 		if (Doit == 0)
 		{
-			App->SBC_Com_Messages->Add_New_Message();
+			App->SBC_Com_Entity->Add_New_Message();
 		}
 
 		return;
@@ -1624,7 +1624,7 @@ void SB_FileView::Context_New(HWND hDlg)
 		bool Doit = App->SBC_Dialogs->Canceled;
 		if (Doit == 0)
 		{
-			App->SBC_Com_Sounds->Add_New_Sound();
+			App->SBC_Com_Entity->Add_New_Sound();
 		}
 
 		return;
@@ -1664,7 +1664,7 @@ void SB_FileView::Context_New(HWND hDlg)
 		bool Doit = App->SBC_Dialogs->Canceled;
 		if (Doit == 0)
 		{
-			App->SBC_Com_Teleports->Add_New_Teleporter();
+			App->SBC_Com_Entity->Add_New_Teleporter();
 		}
 
 		return;
@@ -1727,7 +1727,7 @@ void SB_FileView::Context_New(HWND hDlg)
 
 			if (App->SBC_Dialogs->Canceled == 0)
 			{
-				App->SBC_Com_Particles->Add_New_Particle(App->SBC_Dialogs->Chr_DropText);
+				App->SBC_Com_Entity->Add_New_Particle(App->SBC_Dialogs->Chr_DropText);
 			}
 
 		}

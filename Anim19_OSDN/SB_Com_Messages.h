@@ -29,9 +29,5 @@ public:
 	SB_Com_Messages();
 	~SB_Com_Messages();
 
-	bool Add_New_Message();
-	bool Create_Message_Entity(int Index);
-	void Set_Message_Defaults(int Index);
-
 };
 

@@ -77,15 +77,12 @@ GD19_App::GD19_App(void)
 	SBC_Build =			nullptr;
 	SBC_Project_Create = nullptr;
 
+	SBC_Com_Entity =		nullptr;
 	SBC_Com_Collectables =	nullptr;
-	SBC_Com_Messages =		nullptr;
 	SBC_Com_MoveEntity =	nullptr;
 	SBC_Com_Area =			nullptr;
 	SBC_Com_Environments =	nullptr;
-	SBC_Com_Particles =		nullptr;
 	SBC_Com_Lights =		nullptr;
-	SBC_Com_Teleports =		nullptr;
-	SBC_Com_Sounds =		nullptr;
 
 	SBC_Locations =			nullptr;
 	SBC_Gui_Dialogs =		nullptr;
@@ -258,15 +255,12 @@ bool GD19_App::InitApp(void)
 	SBC_Com_Lights =	new SB_Com_Lights();
 	
 	SBC_Project_Create = new SB_Project_Create;
-	
+
+	SBC_Com_Entity =		new SB_Com_Entity();
 	SBC_Com_Collectables =	new SB_Com_Collectables();
-	SBC_Com_Messages =		new SB_Com_Messages();
 	SBC_Com_MoveEntity =	new SB_Com_MoveEntity();
 	SBC_Com_Environments =	new SB_Com_Environments();
 	SBC_Gui_Dialogs =		new SB_Gui_Dialogs();
-	SBC_Com_Particles =		new SB_Com_Particles();
-	SBC_Com_Teleports =		new SB_Com_Teleports();
-	SBC_Com_Sounds =		new SB_Com_Sounds();
 	
 	SBC_Front_Dlg =			new Bass_Front_Dialog();
 

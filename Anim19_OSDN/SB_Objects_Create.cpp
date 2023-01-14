@@ -50,7 +50,7 @@ bool SB_Objects_Create::Add_Objects_From_File() // From File
 	{
 		if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Sound)
 		{
-			App->SBC_Com_Sounds->Create_Sound_Entity(Count);
+			App->SBC_Com_Entity->Create_Sound_Entity(Count);
 
 			HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Sounds_Folder, App->SBC_Scene->B_Object[Count]->Mesh_Name, Count, false);
 			App->SBC_Scene->B_Object[Count]->FileViewItem = Temp;
@@ -59,7 +59,7 @@ bool SB_Objects_Create::Add_Objects_From_File() // From File
 		}
 		else if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Message)
 		{
-			App->SBC_Com_Messages->Create_Message_Entity(Count);
+			App->SBC_Com_Entity->Create_Message_Entity(Count);
 			App->SBC_Scene->B_Object[Count]->Set_ImGui_Panel_Name();
 
 			HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Message_Trigger_Folder, App->SBC_Scene->B_Object[Count]->Mesh_Name, Count, false);
@@ -79,7 +79,7 @@ bool SB_Objects_Create::Add_Objects_From_File() // From File
 		}
 		else if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Teleport)
 		{
-			App->SBC_Com_Teleports->Create_Teleport_Entity(Count);
+			App->SBC_Com_Entity->Create_Teleport_Entity(Count);
 
 			HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Teleporters_Folder, App->SBC_Scene->B_Object[Count]->Mesh_Name, Count, false);
 			App->SBC_Scene->B_Object[Count]->FileViewItem = Temp;
@@ -111,7 +111,7 @@ bool SB_Objects_Create::Add_Objects_From_File() // From File
 		} // -------------------------------------------------------------------------- Particles
 		else if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Particle)
 		{
-			App->SBC_Com_Particles->CreateParticle(Count);
+			App->SBC_Com_Entity->CreateParticle(Count);
 
 			HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Particles_Folder, App->SBC_Scene->B_Object[Count]->Mesh_Name, Count, false);
 			App->SBC_Scene->B_Object[Count]->FileViewItem = Temp;

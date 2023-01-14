@@ -29,8 +29,5 @@ public:
 	SB_Com_Teleports();
 	~SB_Com_Teleports();
 
-	bool Add_New_Teleporter();
-	bool Create_Teleport_Entity(int Index);
-	void Set_Teleports_Defaults(int Index);
 };
 

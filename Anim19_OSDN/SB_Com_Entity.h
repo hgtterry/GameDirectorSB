@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2021 GameDirectorSB and EquityME -- HGTInflanite Software W.T.Flanigan H.C.Flanigan
+Copyright (c) 2022 - 2023 GameDirectorSB and EquityME -- HGTInflanite Software W.T.Flanigan H.C.Flanigan
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -21,16 +21,30 @@ misrepresented as being the original software.
 distribution.
 */
 
-#include "stdafx.h"
-#include "GD19_App.h"
-#include "SB_Com_Messages.h"
-
-SB_Com_Messages::SB_Com_Messages()
+#pragma once
+class SB_Com_Entity
 {
-}
+public:
+	SB_Com_Entity();
+	~SB_Com_Entity();
 
-SB_Com_Messages::~SB_Com_Messages()
-{
-}
+	// ------------------------------------------ Teleporters
+	bool Add_New_Teleporter();
+	bool Create_Teleport_Entity(int Index);
+	void Set_Teleports_Defaults(int Index);
 
+	// ------------------------------------------ Sounds
+	bool Add_New_Sound();
+	bool Create_Sound_Entity(int Index);
+
+	// ------------------------------------------ Messages
+	bool Add_New_Message();
+	bool Create_Message_Entity(int Index);
+	void Set_Message_Defaults(int Index);
+
+	// ------------------------------------------ Particles
+	void Add_New_Particle(char* Script);
+	void CreateParticle(int Index);
+	void Set_Particle_Defaults(int Index);
+};
 

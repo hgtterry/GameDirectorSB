@@ -75,15 +75,12 @@ distribution.
 #include "SB_Display.h"
 #include "SB_Build.h"
 
+#include "SB_Com_Entity.h"
 #include "SB_Com_Collectables.h"
-#include "SB_Com_Messages.h"
 #include "SB_Com_MoveEntity.h"
 #include "SB_Com_Area.h"
 #include "SB_Com_Environments.h"
-#include "SB_Com_Particles.h"
 #include "SB_Com_Lights.h"
-#include "SB_Com_Teleports.h"
-#include "SB_Com_Sounds.h"
 
 #include "SB_Project_Create.h"
 #include "SB_Locations.h"
@@ -150,16 +147,13 @@ public:
 	SB_Display*				SBC_Display;
 	SB_Build*				SBC_Build;
 
+	SB_Com_Entity*			SBC_Com_Entity;
 	SB_Com_Collectables*	SBC_Com_Collectables;
-	SB_Com_Messages*		SBC_Com_Messages;
 	SB_Com_MoveEntity*		SBC_Com_MoveEntity;
 	SB_Com_Area*			SBC_Com_Area;
 	SB_Com_Environments*	SBC_Com_Environments;
-	SB_Com_Particles*		SBC_Com_Particles;
 	SB_Com_Lights*			SBC_Com_Lights;
-	SB_Com_Teleports*		SBC_Com_Teleports;
-	SB_Com_Sounds*			SBC_Com_Sounds;
-
+	
 	SB_Project_Create*		SBC_Project_Create;
 	SB_Locations*			SBC_Locations;
 	SB_Gui_Dialogs*			SBC_Gui_Dialogs;
