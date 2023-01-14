@@ -73,15 +73,16 @@ void SB_Build::Init_Build_Game_Class()
 {
 	HZIP hz;
 
-	hz = CreateZip(_T("Test.zip"), 0);
-	ZipAdd(hz, _T("Barrel_B2.dds"), _T("Barrel_B2.dds"));
+	//hz = CreateZip(_T("Test.zip"), 0);
+	//ZipAdd(hz, _T("Barrel_B2.dds"), _T("Barrel_B2.dds"));
 	//ZipAdd(hz, _T("znsimple.txt"), _T("simple.txt"));
-	CloseZip(hz);
+	//CloseZip(hz);
 
 	GameOptions = new Game_Options;
-	GameOptions->Show_FPS = 1;
+	GameOptions->Show_FPS = 0;
 	GameOptions->FullScreen = 0;
 	GameOptions->Zipped_Assets_Flag = 1;
+	GameOptions->Front_Dialog_Flag = 1;
 }
 
 // *************************************************************************
@@ -109,7 +110,8 @@ LRESULT CALLBACK SB_Build::Project_Build_Proc(HWND hDlg, UINT message, WPARAM wP
 		SendDlgItemMessage(hDlg, IDC_EDGAMENAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STGAMENAME, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STPATH, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_ST_BANNER, WM_SETFONT, (WPARAM)App->Font_Banner, MAKELPARAM(TRUE, 0));
+		
 		SendDlgItemMessage(hDlg, IDC_STLOCATION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BTBROWSE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -117,6 +119,12 @@ LRESULT CALLBACK SB_Build::Project_Build_Proc(HWND hDlg, UINT message, WPARAM wP
 		SendDlgItemMessage(hDlg, IDC_CK_BL_DESKTOP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDC_BT_BUILDOPTIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_CK_BO_SHOWFPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CK_FULLSCREEN, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CK_BO_ZIPFILES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CK_BO_FRONTDLG, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 
 		SetDlgItemText(hDlg, IDC_EDGAMENAME, (LPCTSTR)App->SBC_Build->GameName);
 		
@@ -126,6 +134,31 @@ LRESULT CALLBACK SB_Build::Project_Build_Proc(HWND hDlg, UINT message, WPARAM wP
 			strcat(App->SBC_Build->Desktop, "\\");
 			strcpy(App->SBC_Build->StartFolder, App->SBC_Build->Desktop);
 		}
+
+		if (App->SBC_Build->GameOptions->Show_FPS == 1)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_BO_SHOWFPS);
+			SendMessage(temp, BM_SETCHECK, 1, 0);
+		}
+
+		if (App->SBC_Build->GameOptions->FullScreen == 1)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_FULLSCREEN);
+			SendMessage(temp, BM_SETCHECK, 1, 0);
+		}
+
+		if (App->SBC_Build->GameOptions->Front_Dialog_Flag == 1)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_BO_FRONTDLG);
+			SendMessage(temp, BM_SETCHECK, 1, 0);
+		}
+
+		if (App->SBC_Build->GameOptions->Zipped_Assets_Flag == 1)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_BO_ZIPFILES);
+			SendMessage(temp, BM_SETCHECK, 1, 0);
+		}
+
 
 		SetDlgItemText(hDlg, IDC_STLOCATION, (LPCTSTR)App->SBC_Build->StartFolder);
 
@@ -178,6 +211,46 @@ LRESULT CALLBACK SB_Build::Project_Build_Proc(HWND hDlg, UINT message, WPARAM wP
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
 		}
+
+		if (GetDlgItem(hDlg, IDC_ST_BANNER) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_CK_BO_SHOWFPS) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_CK_FULLSCREEN) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_CK_BO_ZIPFILES) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_CK_BO_FRONTDLG) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
 	
 		return FALSE;
 	}
@@ -212,23 +285,10 @@ LRESULT CALLBACK SB_Build::Project_Build_Proc(HWND hDlg, UINT message, WPARAM wP
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_BT_BUILDOPTIONS && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
-			return CDRF_DODEFAULT;
-		}
-
 		return CDRF_DODEFAULT;
 	}
 
 	case WM_COMMAND:
-
-		if (LOWORD(wParam) == IDC_BT_BUILDOPTIONS)
-		{
-			App->SBC_Build->Start_Build_Options_Dialog();
-			return TRUE;
-		}
 
 		if (LOWORD(wParam) == IDC_CK_BL_DESKTOP)
 		{
@@ -262,11 +322,6 @@ LRESULT CALLBACK SB_Build::Project_Build_Proc(HWND hDlg, UINT message, WPARAM wP
 			return TRUE;
 		}
 
-		if (LOWORD(wParam) == IDC_CKFULLSCREEN)
-		{
-			return TRUE;
-		}
-
 		if (LOWORD(wParam) == IDC_BTBROWSE)
 		{
 			strcpy(App->Com_CDialogs->BrowserMessage, "Select a Folder for Game Files a Sub folder will be created");
@@ -278,6 +333,74 @@ LRESULT CALLBACK SB_Build::Project_Build_Proc(HWND hDlg, UINT message, WPARAM wP
 			SetDlgItemText(hDlg, IDC_STLOCATION, (LPCTSTR)App->SBC_Build->StartFolder);
 
 			App->SBC_Build->Directory_Altered = 1;
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_CK_BO_SHOWFPS)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_BO_SHOWFPS);
+
+			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
+			if (test == BST_CHECKED)
+			{
+				App->SBC_Build->GameOptions->Show_FPS = 1;
+			}
+			else
+			{
+				App->SBC_Build->GameOptions->Show_FPS = 0;
+			}
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_CK_FULLSCREEN)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_FULLSCREEN);
+
+			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
+			if (test == BST_CHECKED)
+			{
+				App->SBC_Build->GameOptions->FullScreen = 1;
+			}
+			else
+			{
+				App->SBC_Build->GameOptions->FullScreen = 0;
+			}
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_CK_BO_FRONTDLG)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_BO_FRONTDLG);
+
+			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
+			if (test == BST_CHECKED)
+			{
+				App->SBC_Build->GameOptions->Front_Dialog_Flag = 1;
+			}
+			else
+			{
+				App->SBC_Build->GameOptions->Front_Dialog_Flag = 0;
+			}
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_CK_BO_ZIPFILES)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_BO_ZIPFILES);
+
+			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
+			if (test == BST_CHECKED)
+			{
+				App->SBC_Build->GameOptions->Zipped_Assets_Flag = 1;
+			}
+			else
+			{
+				App->SBC_Build->GameOptions->Zipped_Assets_Flag = 0;
+			}
 
 			return TRUE;
 		}
@@ -326,177 +449,6 @@ LRESULT CALLBACK SB_Build::Project_Build_Proc(HWND hDlg, UINT message, WPARAM wP
 			return TRUE;
 		}
 
-		break;
-
-	}
-	return FALSE;
-}
-
-// *************************************************************************
-// *	  Start_Build_Options_Dialog:- Terry and Hazel Flanigan 2022	   *
-// *************************************************************************
-bool SB_Build::Start_Build_Options_Dialog()
-{
-	DialogBox(App->hInst, (LPCTSTR)IDD_BUILD_OPTIONS, App->SBC_Build->DlgHwnd, (DLGPROC)Build_Options_Dialog_Proc);
-	return 1;
-}
-
-// *************************************************************************
-// *		Build_Options_Dialog_Proc:- Terry and Hazel Flanigan 2022  	   *
-// *************************************************************************
-LRESULT CALLBACK SB_Build::Build_Options_Dialog_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
-{
-	switch (message)
-	{
-	case WM_INITDIALOG:
-	{
-		SendDlgItemMessage(hDlg, IDC_CK_SHOWFPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_CK_FULLSCREEN, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_CK_BO_ZIPFILES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		
-		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		
-		if (App->SBC_Build->GameOptions->Show_FPS == 1)
-		{
-			HWND temp = GetDlgItem(hDlg, IDC_CK_SHOWFPS);
-			SendMessage(temp, BM_SETCHECK, 1, 0);
-		}
-
-		if (App->SBC_Build->GameOptions->FullScreen == 1)
-		{
-			HWND temp = GetDlgItem(hDlg, IDC_CK_FULLSCREEN);
-			SendMessage(temp, BM_SETCHECK, 1, 0);
-		}
-
-		if (App->SBC_Build->GameOptions->Zipped_Assets_Flag == 1)
-		{
-			HWND temp = GetDlgItem(hDlg, IDC_CK_BO_ZIPFILES);
-			SendMessage(temp, BM_SETCHECK, 1, 0);
-		}
-
-		return TRUE;
-	}
-
-	case WM_CTLCOLORSTATIC:
-	{
-
-		if (GetDlgItem(hDlg, IDC_CK_SHOWFPS) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}
-
-		if (GetDlgItem(hDlg, IDC_CK_FULLSCREEN) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}
-
-		if (GetDlgItem(hDlg, IDC_CK_BO_ZIPFILES) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}
-
-		return FALSE;
-	}
-
-	case WM_CTLCOLORDLG:
-	{
-		return (LONG)App->AppBackground;
-	}
-
-	case WM_NOTIFY:
-	{
-		LPNMHDR some_item = (LPNMHDR)lParam;
-
-		if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
-			return CDRF_DODEFAULT;
-		}
-
-		return CDRF_DODEFAULT;
-	}
-	case WM_COMMAND:
-		
-		if (LOWORD(wParam) == IDC_CK_SHOWFPS)
-		{
-			HWND temp = GetDlgItem(hDlg, IDC_CK_SHOWFPS);
-
-			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
-			if (test == BST_CHECKED)
-			{
-				App->SBC_Build->GameOptions->Show_FPS = 1;
-			}
-			else
-			{
-				App->SBC_Build->GameOptions->Show_FPS = 0;
-			}
-
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDC_CK_FULLSCREEN)
-		{
-			HWND temp = GetDlgItem(hDlg, IDC_CK_FULLSCREEN);
-
-			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
-			if (test == BST_CHECKED)
-			{
-				App->SBC_Build->GameOptions->FullScreen = 1;
-			}
-			else
-			{
-				App->SBC_Build->GameOptions->FullScreen = 0;
-			}
-
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDC_CK_BO_ZIPFILES)
-		{
-			HWND temp = GetDlgItem(hDlg, IDC_CK_BO_ZIPFILES);
-
-			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
-			if (test == BST_CHECKED)
-			{
-				App->SBC_Build->GameOptions->Zipped_Assets_Flag = 1;
-			}
-			else
-			{
-				App->SBC_Build->GameOptions->Zipped_Assets_Flag = 0;
-			}
-
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDCANCEL)
-		{
-			EndDialog(hDlg, LOWORD(wParam));
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDOK)
-		{
-			EndDialog(hDlg, LOWORD(wParam));
-			return TRUE;
-		}
 		break;
 
 	}
@@ -915,6 +867,7 @@ bool SB_Build::Build_Project_Ini()
 	fprintf(WriteFile, "%s%i\n", "Show_FPS=", GameOptions->Show_FPS);
 	fprintf(WriteFile, "%s%i\n", "Game_FullScreen=", App->SBC_Build->GameOptions->FullScreen);
 	fprintf(WriteFile, "%s%i\n", "Zipped_Assets=", App->SBC_Build->GameOptions->Zipped_Assets_Flag);
+	fprintf(WriteFile, "%s%i\n", "Use_Front_Dlg=", App->SBC_Build->GameOptions->Front_Dialog_Flag);
 
 	fclose(WriteFile);
 

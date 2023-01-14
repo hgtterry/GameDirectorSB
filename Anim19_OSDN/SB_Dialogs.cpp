@@ -1296,6 +1296,12 @@ LRESULT CALLBACK SB_Dialogs::GameMode_StartPosition_Dlg_Proc(HWND hDlg, UINT mes
 		App->SBC_Dialogs->DoFPS = 0;
 		App->SBC_Dialogs->Saved_DoFPS = App->CL_Vm_ImGui->Show_FPS;
 
+		if (App->SBC_Front_Dlg->Use_Front_Dlg_Flag == 1)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_FRONTDLG);
+			SendMessage(temp, BM_SETCHECK, 1, 0);
+		}
+
 		return TRUE;
 	}
 

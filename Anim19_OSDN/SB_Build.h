@@ -27,6 +27,7 @@ typedef struct Game_Options
 	bool Show_FPS;
 	bool FullScreen;
 	bool Zipped_Assets_Flag;
+	bool Front_Dialog_Flag;
 
 }Game_Options;
 
@@ -48,10 +49,8 @@ public:
 
 protected:
 	static LRESULT CALLBACK Project_Build_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-	static LRESULT CALLBACK Build_Options_Dialog_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	
 	void Init_Build_Game_Class();
-
-	bool Start_Build_Options_Dialog();
 
 	bool Build_Project();
 	bool Build_Project_Ini();
@@ -80,7 +79,7 @@ protected:
 	void Create_ProjectFolder(void);
 	void Copy_SystemFiles(void);
 	void Copy_ZipFiles(void);
-	void Create_Config_File(void);
+	//void Create_Config_File(void);
 
 	bool Directory_Altered;
 

@@ -27,7 +27,7 @@ distribution.
 
 Bass_Front_Dialog::Bass_Front_Dialog()
 {
-	Use_Front_Dlg_Flag = 0;
+	Use_Front_Dlg_Flag = 1;
 	Show_Front_Dlg_Flag = 0;
 	Game_Running_Flag = 0;
 
@@ -145,7 +145,6 @@ void Bass_Front_Dialog::Render_Front_Dlg(void)
 			App->Block_Mouse_Buttons = 0;
 			App->SBC_Ogre->ExitFullScreen();
 			Game_Running_Flag = 0;
-			Use_Front_Dlg_Flag = 0; // Temp
 			Show_Front_Dlg_Flag = 0;
 
 		}
