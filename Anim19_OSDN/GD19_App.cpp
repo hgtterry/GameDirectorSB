@@ -78,7 +78,6 @@ GD19_App::GD19_App(void)
 	SBC_Project_Create = nullptr;
 
 	SBC_Com_Entity =		nullptr;
-	SBC_Com_Collectables =	nullptr;
 	SBC_Com_MoveEntity =	nullptr;
 	SBC_Com_Area =			nullptr;
 	SBC_Com_Environments =	nullptr;
@@ -191,7 +190,7 @@ GD19_App::GD19_App(void)
 	CursorPosX = 500;
 	CursorPosY = 500;
 
-	Debug_App = 1;
+	Debug_App = 0;
 
 	EquityDirecory_FullPath[0] = 0;
 	ETemp_Folder[0] = 0;
@@ -216,8 +215,10 @@ bool GD19_App::InitApp(void)
 	Cl_Environment =	new GD19_Environment();
 	Cl_Dialogs =		new GD19_Dialogs();
 	Cl_Objects_Com =	new GD19_Objects_Com();
-	Cl_LookUps =		new GD19_LookUps();		
+	Cl_LookUps =		new GD19_LookUps();	
 
+	Cl_PB =				new GD19_PB();
+	
 	CL_Vm_ImGui =		new VM_ImGui();
 
 	EBC_Options =		new EB_Options();
@@ -257,7 +258,6 @@ bool GD19_App::InitApp(void)
 	SBC_Project_Create = new SB_Project_Create;
 
 	SBC_Com_Entity =		new SB_Com_Entity();
-	SBC_Com_Collectables =	new SB_Com_Collectables();
 	SBC_Com_MoveEntity =	new SB_Com_MoveEntity();
 	SBC_Com_Environments =	new SB_Com_Environments();
 	SBC_Gui_Dialogs =		new SB_Gui_Dialogs();

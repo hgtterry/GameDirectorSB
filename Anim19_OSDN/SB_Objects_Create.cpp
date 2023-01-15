@@ -90,7 +90,7 @@ bool SB_Objects_Create::Add_Objects_From_File() // From File
 		else if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Colectable)
 		{
 			
-			App->SBC_Com_Collectables->Create_Collectable_Entity(Count);
+			App->SBC_Com_Entity->Create_Collectable_Entity(Count);
 
 			HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Collectables_Folder, App->SBC_Scene->B_Object[Count]->Mesh_Name, Count, false);
 			App->SBC_Scene->B_Object[Count]->FileViewItem = Temp;
@@ -148,7 +148,7 @@ void SB_Objects_Create::Add_Objects_From_MeshViewer()
 
 	if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables) // Collectables
 	{
-		App->SBC_Com_Collectables->Add_New_Collectable();
+		App->SBC_Com_Entity->Add_New_Collectable();
 		return;
 	}
 

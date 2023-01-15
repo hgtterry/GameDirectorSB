@@ -74,6 +74,7 @@ protected:
 	void Copy_Sound_Files(void);
 	void Copy_Particle_Files(void);
 
+	void Set_Banner(char* Message);
 	//------------------------------------------
 	void Read_From_Config(void);
 	void Create_ProjectFolder(void);
@@ -110,6 +111,7 @@ protected:
 	char m_Enviromnet_Folder_Path[MAX_PATH];
 
 	HWND DlgHwnd;
+	HWND Banner;
 
 	FILE *WriteFile;
 };

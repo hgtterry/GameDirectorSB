@@ -33,7 +33,9 @@ public:
 	void Gui_Render_Loop(void);
 
 	void Start_Dialog_Float(float Step, float StartValue, char* Banner);
+
 	void Start_Dialog_MessageEditor(int Index);
+
 	void Start_Colour_Picker(Ogre::Vector3 Colour);
 
 	void Dialog_Colour_Picker(void);
@@ -41,6 +43,8 @@ public:
 	void ImGui_ProgressBar2(void);
 	void Start_ProgressBar(void);
 	void Stop_ProgressBar(void);
+	void Set_ProgressCount(float Count);
+	bool SB_Gui_Dialogs::Nudge();
 
 	float progress;
 	float Progress_Count;
@@ -81,6 +85,8 @@ public:
 	int Colour_Int_Blue;
 	ImVec4 Float_Colour_Copy;
 	bool ColourPicker_Canceled;
+
+	MSG msg;
 
 protected:
 

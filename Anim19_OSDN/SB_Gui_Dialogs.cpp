@@ -550,7 +550,7 @@ void SB_Gui_Dialogs::ImGui_ProgressBar2(void)
 			StartPos_PB = 1;
 		}
 
-		progress = 0.0f,
+		//progress = 0.0f,
 		progress += 0.0001;
 
 		float progress_saturated = (progress < 0.0f) ? 0.0f : (progress > 1.0f) ? 1.0f : progress;
@@ -558,6 +558,13 @@ void SB_Gui_Dialogs::ImGui_ProgressBar2(void)
 		char buf[32];
 		sprintf(buf, "%d/%d", (int)(progress_saturated * Progress_Count), (int)Progress_Count);
 		ImGui::ProgressBar(progress, ImVec2(0.f, 0.f), buf);
+
+
+
+		float progress_saturated2 = (progress < 0.0f) ? 0.0f : (progress > 1.0f) ? 1.0f : progress;
+		char buf2[32];
+		sprintf(buf2, "%d/%d", (int)(progress_saturated2 * 100), 100);
+		ImGui::ProgressBar(progress, ImVec2(0.f, 0.f), buf2);
 
 		ImGui::PopStyleColor();
 		ImGui::End();
@@ -583,6 +590,32 @@ void SB_Gui_Dialogs::Stop_ProgressBar(void)
 	Show_Progress_Bar2 = 0;
 }
 
+// *************************************************************************
+// *					Set_ProgressCount  Terry Bernie					   *
+// *************************************************************************
+void SB_Gui_Dialogs::Set_ProgressCount(float Count)
+{
+	Progress_Count = Count;
+	Progress_Delta = 1 / Count;
+}
+
+// *************************************************************************
+// *								Nudge 								   *
+// *************************************************************************
+bool SB_Gui_Dialogs::Nudge()
+{
+	progress += 0.1;// Progress_Delta;
+
+	Ogre::Root::getSingletonPtr()->renderOneFrame();
+
+	if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+	{
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
+	}
+
+	return 1;
+}
 
 // ----------------- Keep for later
 //static char buf2[64] = ""; ImGui::InputText("decimal", buf2, 64, ImGuiInputTextFlags_CharsDecimal);

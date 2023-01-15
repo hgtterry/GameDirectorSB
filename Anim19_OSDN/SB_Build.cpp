@@ -56,6 +56,7 @@ SB_Build::SB_Build()
 	m_Display_Folder_Path[0] = 0;
 	m_Enviromnet_Folder_Path[0] = 0;
 
+	Banner = nullptr;
 	DlgHwnd = nullptr;
 	WriteFile = nullptr;
 
@@ -128,6 +129,8 @@ LRESULT CALLBACK SB_Build::Project_Build_Proc(HWND hDlg, UINT message, WPARAM wP
 
 		SetDlgItemText(hDlg, IDC_EDGAMENAME, (LPCTSTR)App->SBC_Build->GameName);
 		
+		App->SBC_Build->Banner = hDlg;
+
 		if (App->SBC_Build->Directory_Altered == 0)
 		{
 			strcpy(App->SBC_Build->Desktop, App->SBC_FileIO->DeskTop_Folder);
@@ -434,11 +437,13 @@ LRESULT CALLBACK SB_Build::Project_Build_Proc(HWND hDlg, UINT message, WPARAM wP
 
 			strcpy(App->SBC_Build->GameName, GameName);
 
-			//App->CL10_Project->Write_To_Config(); // Writre to Config File
-
 			App->SBC_Build->Create_ProjectFolder();
 
 			EndDialog(hDlg, LOWORD(wParam));
+
+			/*App->Cl_PB->StartNewProgressBar();
+			App->Cl_PB->Set_Progress("Building Scene/Game", 10);*/
+
 			return TRUE;
 		}
 
@@ -461,6 +466,7 @@ LRESULT CALLBACK SB_Build::Project_Build_Proc(HWND hDlg, UINT message, WPARAM wP
 void SB_Build::Create_ProjectFolder(void)
 {
 
+
 	ProjectFolder[0] = 0;
 	Sub_ProjectFolder[0] = 0;
 
@@ -469,24 +475,12 @@ void SB_Build::Create_ProjectFolder(void)
 	CoreDataFolder[0] = 0;
 	SoundFolder[0] = 0;
 
-
-//	App->CL10_PB = new GD10_PB();
-//	App->CL10_PB->StartNewProgressBar();
-
-	//App->CL_Dialogs->MessageLoad("Please Wait");
-
 	strcpy(ProjectFolder, App->Com_CDialogs->szSelectedDir);
 	strcat(ProjectFolder, GameName);
 	strcat(ProjectFolder, "_Project");
 
 	int test = CreateDirectory(ProjectFolder, NULL);
-	/*if(test == 0)
-	{
-		App->Say("Failed");
-	}
-	else
-	{*/
-
+	
 	strcpy(MediaFolder, ProjectFolder);
 	strcat(MediaFolder, "\\");
 	strcat(MediaFolder, "Media");
@@ -507,10 +501,6 @@ void SB_Build::Create_ProjectFolder(void)
 	strcat(ParticleFolder, "New_Particles");
 	CreateDirectory(ParticleFolder, NULL);
 
-	
-//	int TCount = Get_Transfer_Count();
-
-//	App->CL10_PB->Set_Progress("Copy_SystemFiles", TCount + 9);
 	Copy_SystemFiles();
 
 	strcpy(m_Build_Sub_Folder, ProjectFolder);
@@ -518,19 +508,12 @@ void SB_Build::Create_ProjectFolder(void)
 	strcat(m_Build_Sub_Folder, "Game");
 	Build_Project();
 
-	//App->CL10_PB->Set_Progress_Text("Copy_ZipFiles");
+	
 	Copy_ZipFiles();
 	Copy_Sound_Files();
 	Copy_Particle_Files();
 
-	App->Say("Game Created");
-
-	//App->CL_Dialogs->MessageLoad_Finish("Project Created");
-	//App->CL10_PB->Close();
-	//delete App->CL10_PB;
-	//App->CL10_PB = nullptr;
-
-	//}
+	App->Cl_PB->Stop_Progress_Bar("Build Completed");
 }
 
 // *************************************************************************
@@ -766,8 +749,12 @@ void SB_Build::Read_From_Config(void)
 // *************************************************************************
 bool SB_Build::Build_Project()
 {
-	//App->CL_Vm_ImGui->Show_Progress_Bar = 1;
+	ShowWindow(Banner, SW_HIDE);
 
+	App->Cl_PB->StartNewProgressBar();
+	App->Cl_PB->Set_Progress("Building Scene/Game", 10);
+
+	Set_Banner("Creating Sub Folder");
 	if (_mkdir(m_Build_Sub_Folder) == 0)
 	{
 		_chdir(m_Build_Sub_Folder);
@@ -777,34 +764,65 @@ bool SB_Build::Build_Project()
 		_chdir(m_Build_Sub_Folder);
 	}
 
+	Set_Banner("Creating Ini File");
 	bool test = Build_Project_Ini();
 	if (test == 0)
 	{
 		return 0;
 	}
-
+	
+	Set_Banner("Creating Level Folder");
 	Build_Level_Folder();
+
+	Set_Banner("Creating Assets Folder");
 	Build_Main_Asset_Folder();
 
 	_chdir(m_Level_Folder_Path);
 
+	Set_Banner("Creating Area Folder");
 	if (App->SBC_Scene->Area_Added == 1)
 	{
 		Build_Area_Folder();
 	}
 
+	Set_Banner("Creating Player Folder");
 	if (App->SBC_Scene->Player_Added == 1)
 	{
 		Build_Players_Folder();
 	}
 
+	Set_Banner("Creating Camera Folder");
 	Build_Cameras_Folder();
+
+	Set_Banner("Creating Objects Folder");
 	Build_Objects_Folder();
-	Build_Display_Folder();
 	
-	//App->CL_Vm_ImGui->Show_Progress_Bar = 0;
+	Set_Banner("Creating Display Folder");
+	Build_Display_Folder();
+
+	Set_Banner("Finished");
+	
 	return 1;
 }
+
+// *************************************************************************
+// *	  			Set_Banner:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void SB_Build::Set_Banner(char* Message)
+{
+	App->Cl_PB->Set_Progress_Text(Message);
+	App->Cl_PB->Nudge();
+
+	Sleep(100);
+
+	MSG msg;
+	if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+	{
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
+	}
+}
+
 
 // *************************************************************************
 // *	  		Build_Project_Ini:- Terry and Hazel Flanigan 2022		   *

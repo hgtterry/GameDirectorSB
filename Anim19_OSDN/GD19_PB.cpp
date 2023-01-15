@@ -61,9 +61,10 @@ LRESULT CALLBACK GD19_PB::ProgressNewBarProc(HWND hDlg, UINT message, WPARAM wPa
 		strcat(buf1, "    Progress");
 		SetWindowText(hDlg, buf1);*/
 
-		SendDlgItemMessage(hDlg, IDC_PBBANNER, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_PBBANNER, WM_SETFONT, (WPARAM)App->Font_Banner, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_PBACTION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_ST_PB_STATUS, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		
 		App->Cl_PB->g_pos = 0;
 		App->Cl_PB->Bar = GetDlgItem(hDlg, IDC_STBAR);
 		return TRUE;
@@ -81,7 +82,6 @@ LRESULT CALLBACK GD19_PB::ProgressNewBarProc(HWND hDlg, UINT message, WPARAM wPa
 
 		if (GetDlgItem(hDlg, IDC_PBACTION) == (HWND)lParam)
 		{
-
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
@@ -89,12 +89,17 @@ LRESULT CALLBACK GD19_PB::ProgressNewBarProc(HWND hDlg, UINT message, WPARAM wPa
 
 		if (GetDlgItem(hDlg, IDC_PBBANNER) == (HWND)lParam)
 		{
-
-			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
 		}
 
+		if (GetDlgItem(hDlg, IDC_ST_PB_STATUS) == (HWND)lParam)
+		{
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
 	}
 
 	case WM_CTLCOLORDLG:
@@ -139,18 +144,19 @@ LRESULT CALLBACK GD19_PB::ProgressNewBarProc(HWND hDlg, UINT message, WPARAM wPa
 
 		SelectObject(hdc, holdPen);
 
-		/*for ( i = 1; i < 10; i++) {
+		/*int i;
+		for ( i = 1; i < 10; i++) {
 
 			MoveToEx(hdc, i*step, 0, NULL);
 			LineTo(hdc, i*step, 7);
 
-			rect2.bottom = 28;
-			rect2.top = 8;
-			rect2.left = i*step-10;
-			rect2.right = i*step+10;
+			rect.bottom = 28;
+			rect.top = 8;
+			rect.left = i*step-10;
+			rect.right = i*step+10;
 
 			SetBkMode(hdc, TRANSPARENT) ;
-			DrawTextW(hdc, cap[i-1], wcslen(cap[i-1]), &rect2, DT_CENTER);
+			DrawTextW(hdc, cap[i-1], wcslen(cap[i-1]), &rect, DT_CENTER);
 		}*/
 
 		SelectObject(hdc, holdBrush);
@@ -188,6 +194,29 @@ LRESULT CALLBACK GD19_PB::ProgressNewBarProc(HWND hDlg, UINT message, WPARAM wPa
 		break;
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *							Stop_Progress_Bar 						   *
+// *************************************************************************
+bool GD19_PB::Stop_Progress_Bar(char* ProcessText)
+{
+	EnableWindow(GetDlgItem(ProgBarHwnd, IDOK), 1);
+
+	SetDlgItemText(ProgBarHwnd, IDC_ST_PB_STATUS, (LPCTSTR)ProcessText);
+
+	InvalidateRect(ProgBarHwnd, NULL, FALSE);
+
+	MSG msg;
+	if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+	{
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
+	}
+
+	InvalidateRect(ProgBarHwnd, NULL, FALSE);
+
+	return 1;
 }
 
 // *************************************************************************
@@ -230,12 +259,15 @@ bool GD19_PB::Set_Progress_Text(char* ProcessText)
 	strcat(buff, ProcessText);
 
 	SetDlgItemText(ProgBarHwnd, IDC_PBACTION, (LPCTSTR)buff);
+	SetDlgItemText(ProgBarHwnd, IDC_ST_PB_STATUS, (LPCTSTR)ProcessText);
+
 	InvalidateRect(ProgBarHwnd, NULL, FALSE);
 	if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 	{
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}
+
 	InvalidateRect(ProgBarHwnd, NULL, FALSE);
 	return 1;
 }

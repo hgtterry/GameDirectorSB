@@ -46,5 +46,10 @@ public:
 	void Add_New_Particle(char* Script);
 	void CreateParticle(int Index);
 	void Set_Particle_Defaults(int Index);
+
+	// ------------------------------------------ Collectables
+	bool Add_New_Collectable();
+	bool Create_Collectable_Entity(int Index);
+	void Set_Collectables_Defaults(int Index);
 };
 

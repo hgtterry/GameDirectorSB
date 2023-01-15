@@ -193,7 +193,6 @@
     <ClInclude Include="SB_Camera.h" />
     <ClInclude Include="SB_Collision.h" />
     <ClInclude Include="SB_Com_Area.h" />
-    <ClInclude Include="SB_Com_Collectables.h" />
     <ClInclude Include="SB_Com_Entity.h" />
     <ClInclude Include="SB_Com_Environments.h" />
     <ClInclude Include="SB_Com_Lights.h" />
@@ -271,7 +270,6 @@
     <ClCompile Include="SB_Camera.cpp" />
     <ClCompile Include="SB_Collision.cpp" />
     <ClCompile Include="SB_Com_Area.cpp" />
-    <ClCompile Include="SB_Com_Collectables.cpp" />
     <ClCompile Include="SB_Com_Entity.cpp" />
     <ClCompile Include="SB_Com_Environments.cpp" />
     <ClCompile Include="SB_Com_Lights.cpp" />

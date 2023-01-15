@@ -9,6 +9,7 @@ public:
 	bool StartNewProgressBar();
 	bool Set_Progress(char* ProcessText, float TotalSteps);
 	bool Set_Progress_Text(char* ProcessText);
+	bool Stop_Progress_Bar(char* ProcessText);
 	bool Nudge();
 	bool Close();
 
