@@ -1,0 +1,34 @@
+
+material Lift1_Material_0
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture block02.bmp
+			}
+		}
+
+	}
+
+}
+
+material Lift1_Material_1
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture jp01.bmp
+			}
+		}
+
+	}
+
+}

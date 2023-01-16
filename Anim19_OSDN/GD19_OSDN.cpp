@@ -132,6 +132,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	CheckMenuItem(App->mMenu, ID_WINDOWS_FPS, MF_BYCOMMAND | MF_CHECKED);
 	EnableMenuItem(App->mMenu, ID_FILE_SAVEPROJECTALL, MF_GRAYED);
 
+	//ShowWindow(App->MainHwnd, SW_MAXIMIZE);
+
 	SetTimer(App->MainHwnd, 1, 1, NULL);
 
 	HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_GD19_OSDN));
@@ -870,7 +872,19 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return 1;
 		}
 
-		//------------------------- Menu File
+		//------------------------- Menu Help
+		
+		case ID_HELP_CHANGELOG:
+		{
+			App->Cl_Utilities->OpenHTML("Help\\ChangeLog.html");
+			return 1;
+		}
+
+		case ID_HELP_TOADD:
+		{
+			App->Cl_Utilities->OpenHTML("Help\\todo.html");
+			return 1;
+		}
 		
 		case IDM_ABOUT:
 			DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);

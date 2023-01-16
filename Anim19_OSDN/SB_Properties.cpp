@@ -394,18 +394,20 @@ bool SB_Properties::Update_ListView_Objects()
 
 	char Num[10];
 	char chr_ID[50];
+	char IndexNum[10];
 	_itoa(App->SBC_Scene->B_Object[index]->This_Object_UniqueID, Num, 10);
-	strcpy(chr_ID, "Properties ID=");
+	_itoa(index, IndexNum, 10);
+	strcpy(chr_ID, "Unique ID ");
 	strcat(chr_ID, Num);
+	strcat(chr_ID, "  Object Index ");
+	strcat(chr_ID, IndexNum);
+
 
 	SetWindowText(Properties_Dlg_hWnd, chr_ID);
 	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->B_Object[index]->Mesh_Name);
 
-	char chr_Scale[100];
-	sprintf(chr_Scale, "%.3f", App->SBC_Scene->B_Object[index]->Mesh_Scale.x);
-
 	
-	const int NUM_ITEMS = 5;
+	const int NUM_ITEMS = 4;
 	const int NUM_COLS = 2;
 	std::string grid[NUM_COLS][NUM_ITEMS]; // string table
 	LV_ITEM pitem;
@@ -416,10 +418,7 @@ bool SB_Properties::Update_ListView_Objects()
 	grid[0][1] = "Mesh File",	grid[1][1] = App->SBC_Scene->B_Object[index]->Mesh_FileName;
 	grid[0][2] = "Material",	grid[1][2] = App->SBC_Scene->B_Object[index]->Material_File;
 	grid[0][3] = " ",			grid[1][3] = " ";
-	grid[0][4] = "Scale",		grid[1][4] = chr_Scale;
-
-
-
+	
 	ListView_DeleteAllItems(Properties_hLV);
 
 	for (DWORD row = 0; row < NUM_ITEMS; row++)
@@ -555,7 +554,7 @@ bool SB_Properties::Update_ListView_Player_Physics()
 	sprintf(chr_Height, "%.3f ", App->SBC_Scene->B_Player[0]->Capsule_Height);
 
 
-	const int NUM_ITEMS = 7;
+	const int NUM_ITEMS = 6;
 	const int NUM_COLS = 2;
 	std::string grid[NUM_COLS][NUM_ITEMS]; // string table
 	LV_ITEM pitem;
@@ -566,9 +565,8 @@ bool SB_Properties::Update_ListView_Player_Physics()
 	grid[0][1] = "Type",   grid[1][1] = chr_PhysicsType;
 	grid[0][2] = "Shape ", grid[1][2] = chr_PhysicsShape;
 	grid[0][3] = " ",      grid[1][3] = " ";
-	grid[0][4] = "Mass",   grid[1][4] = chr_Mass;
-	grid[0][5] = "Radius", grid[1][5] = chr_Radius;
-	grid[0][6] = "Height", grid[1][6] = chr_Height;
+	grid[0][4] = "Radius", grid[1][4] = chr_Radius;
+	grid[0][5] = "Height", grid[1][5] = chr_Height;
 
 	ListView_DeleteAllItems(App->SBC_Properties->Properties_hLV);
 
@@ -599,9 +597,13 @@ bool SB_Properties::Update_ListView_Messages()
 
 	char Num[10];
 	char chr_ID[50];
+	char IndexNum[10];
 	_itoa(App->SBC_Scene->B_Object[index]->This_Object_UniqueID, Num, 10);
-	strcpy(chr_ID, "Properties ID=");
+	_itoa(index, IndexNum, 10);
+	strcpy(chr_ID, "Unique ID ");
 	strcat(chr_ID, Num);
+	strcat(chr_ID, "  Object Index ");
+	strcat(chr_ID, IndexNum);
 
 	SetWindowText(Properties_Dlg_hWnd, chr_ID);
 	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->B_Object[index]->Mesh_Name);
@@ -666,9 +668,13 @@ bool SB_Properties::Update_ListView_Sounds()
 
 	char Num[10];
 	char chr_ID[50];
+	char IndexNum[10];
 	_itoa(App->SBC_Scene->B_Object[index]->This_Object_UniqueID, Num, 10);
-	strcpy(chr_ID, "Properties ID=");
+	_itoa(index, IndexNum, 10);
+	strcpy(chr_ID, "Unique ID ");
 	strcat(chr_ID, Num);
+	strcat(chr_ID, "  Object Index ");
+	strcat(chr_ID, IndexNum);
 
 	SetWindowText(Properties_Dlg_hWnd, chr_ID);
 	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->B_Object[index]->Mesh_Name);
@@ -856,9 +862,13 @@ bool SB_Properties::Update_ListView_Collectables()
 
 	char Num[10];
 	char chr_ID[50];
+	char IndexNum[10];
 	_itoa(App->SBC_Scene->B_Object[index]->This_Object_UniqueID, Num, 10);
-	strcpy(chr_ID, "Properties ID=");
+	_itoa(index, IndexNum, 10);
+	strcpy(chr_ID, "Unique ID ");
 	strcat(chr_ID, Num);
+	strcat(chr_ID, "  Object Index ");
+	strcat(chr_ID, IndexNum);
 
 	SetWindowText(Properties_Dlg_hWnd, chr_ID);
 	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->B_Object[index]->Mesh_Name);
@@ -1009,9 +1019,13 @@ bool SB_Properties::Update_ListView_Move_Entities()
 
 	char Num[10];
 	char chr_ID[50];
+	char IndexNum[10];
 	_itoa(App->SBC_Scene->B_Object[index]->This_Object_UniqueID, Num, 10);
-	strcpy(chr_ID, "Properties ID=");
+	_itoa(index, IndexNum, 10);
+	strcpy(chr_ID, "Unique ID ");
 	strcat(chr_ID, Num);
+	strcat(chr_ID, "  Object Index ");
+	strcat(chr_ID, IndexNum);
 
 	SetWindowText(Properties_Dlg_hWnd, chr_ID);
 	SetDlgItemText(App->SBC_Properties->Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->B_Object[index]->Mesh_Name);
@@ -1166,9 +1180,19 @@ bool SB_Properties::Update_ListView_Particles()
 	
 	int index = App->SBC_Properties->Current_Selected_Object;
 
-	char chr_Speed[100];
+	char Num[10];
+	char chr_ID[50];
+	char IndexNum[10];
+	_itoa(App->SBC_Scene->B_Object[index]->This_Object_UniqueID, Num, 10);
+	_itoa(index, IndexNum, 10);
+	strcpy(chr_ID, "Unique ID ");
+	strcat(chr_ID, Num);
+	strcat(chr_ID, "  Object Index ");
+	strcat(chr_ID, IndexNum);
+	SetWindowText(Properties_Dlg_hWnd, chr_ID);
+	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->B_Object[index]->Mesh_Name);
 
-	//SetDlgItemText(App->EditFX_hWnd,IDC_STNAME,(LPCTSTR)S_Object[index]->Name);
+	char chr_Speed[100];
 
 	sprintf(chr_Speed, "%.3f", App->SBC_Scene->B_Object[index]->S_Particle[0]->Particle->getSpeedFactor());
 
@@ -1412,7 +1436,7 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 		sprintf(chr_Value, "%.6f ", App->SBC_Scene->B_Player[0]->TurnRate);
 
 		strcpy(App->Cl_Dialogs->Chr_Float, chr_Value);
-		strcpy(App->Cl_Dialogs->btext, "Ground Speed");
+		strcpy(App->Cl_Dialogs->btext, "Turn Rate");
 
 		App->Cl_Dialogs->Dialog_Float();
 		if (App->Cl_Dialogs->Canceled == 1)
@@ -1790,7 +1814,7 @@ bool SB_Properties::Edit_Player_Physics_Onclick(LPARAM lParam)
 	test = poo->iItem;
 	ListView_GetItemText(Properties_hLV, test, 0, btext, 20);
 
-	result = strcmp(btext, "Mass");
+	/*result = strcmp(btext, "Mass");
 	if (result == 0)
 	{
 		char chr_Radius[10];
@@ -1812,12 +1836,12 @@ bool SB_Properties::Edit_Player_Physics_Onclick(LPARAM lParam)
 		App->SBC_Properties->Update_ListView_Player_Physics();
 
 		return 1;
-	}
+	}*/
 
 	result = strcmp(btext, "Radius");
 	if (result == 0)
 	{
-		char chr_Radius[10];
+		/*char chr_Radius[10];
 		sprintf(chr_Radius, "%.3f ", App->SBC_Scene->B_Player[0]->Capsule_Radius);
 
 		strcpy(App->Cl_Dialogs->Chr_Float, chr_Radius);
@@ -1837,14 +1861,14 @@ bool SB_Properties::Edit_Player_Physics_Onclick(LPARAM lParam)
 		App->SBC_Scene->Scene_Modified = 1;
 		App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);
 
-		App->SBC_Properties->Update_ListView_Player_Physics();
+		App->SBC_Properties->Update_ListView_Player_Physics();*/
 		return 1;
 	}
 
 	result = strcmp(btext, "Height");
 	if (result == 0)
 	{
-		char chr_Height[10];
+		/*char chr_Height[10];
 		sprintf(chr_Height, "%.3f ", App->SBC_Scene->B_Player[0]->Capsule_Height);
 
 		strcpy(App->Cl_Dialogs->Chr_Float, chr_Height);
@@ -1861,7 +1885,7 @@ bool SB_Properties::Edit_Player_Physics_Onclick(LPARAM lParam)
 		App->SBC_Scene->Scene_Modified = 1;
 		App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);
 
-		App->SBC_Properties->Update_ListView_Player_Physics();
+		App->SBC_Properties->Update_ListView_Player_Physics();*/
 
 		return 1;
 	}

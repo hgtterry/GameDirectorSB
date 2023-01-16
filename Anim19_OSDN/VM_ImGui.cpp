@@ -35,6 +35,9 @@ VM_ImGui::VM_ImGui()
 	Model_YTranslate = 2;
 	Model_ZTranslate = 2;
 
+	PosX = 500;
+	PosY = 500;
+
 	Test = 180;
 
 	Block = 0;
@@ -409,6 +412,8 @@ void VM_ImGui::Object_Selection(void)
 // *************************************************************************
 void VM_ImGui::ImGui_FPS(void)
 {
+	ImGui::SetNextWindowPos(ImVec2(PosX, PosY));
+
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239,239, 239, 255));
 
 	if (!ImGui::Begin("Ogre Data", &Show_FPS, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize 
@@ -440,6 +445,10 @@ void VM_ImGui::ImGui_FPS(void)
 			}
 		}
 		
+		ImVec2 Size = ImGui::GetWindowSize();
+		PosX = ((float)App->SBC_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);
+		PosY = 10;
+
 		ImGui::PopStyleColor();
 		ImGui::End();
 	}

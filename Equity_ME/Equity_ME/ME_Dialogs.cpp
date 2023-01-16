@@ -196,7 +196,11 @@ void ME_Dialogs::List_ModelData(HWND hDlg)
 	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
 	//----------------------- 
-	sprintf(buf, "%s%s", "Model Name = ", App->CL_Model->FileName);
+	sprintf(buf, "%s%s", "Model Name = ", App->CL_Model->JustName);
+	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+	//----------------------- 
+	sprintf(buf, "%s%s", "Model File Name = ", App->CL_Model->FileName);
 	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
 	//----------------------- 

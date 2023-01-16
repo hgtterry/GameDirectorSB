@@ -270,6 +270,13 @@ void ME_Model::Set_Paths(void)
 		int Len = strlen(JustName);
 		JustName[Len - 5] = 0;
 	}
+	else if (stricmp(FileName + strlen(FileName) - 5, ".G3ds") == 0)
+	{
+		strcpy(JustName, FileName);
+		int Len = strlen(JustName);
+		JustName[Len - 5] = 0;
+	}
+
 	else
 	{
 		strcpy(JustName, FileName);

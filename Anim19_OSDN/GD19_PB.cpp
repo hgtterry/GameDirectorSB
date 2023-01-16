@@ -37,30 +37,20 @@ bool GD19_PB::StartNewProgressBar()
 // *************************************************************************
 LRESULT CALLBACK GD19_PB::ProgressNewBarProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	HBRUSH hBrushYellow, hBrushRed, holdBrush;
+	HBRUSH holdBrush;
 	HPEN hPen, holdPen;
-	HFONT hFont, holdFont;
 	PAINTSTRUCT ps;
-	RECT rect;// rect2;
-
-	wchar_t* cap[] = { L"75", L"150", L"225", L"300", L"375", L"450",
-		L"525", L"600", L"675" };
+	RECT rect;
 
 	HDC hdc;
 	int till;
 	int step, full;
-//	int i;
-
 
 	switch (message)
 	{
 	case WM_INITDIALOG:
 	{
-		/*char buf1[200];
-		strcpy(buf1, szTitle);
-		strcat(buf1, "    Progress");
-		SetWindowText(hDlg, buf1);*/
-
+		
 		SendDlgItemMessage(hDlg, IDC_PBBANNER, WM_SETFONT, (WPARAM)App->Font_Banner, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_PBACTION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_PB_STATUS, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
@@ -118,55 +108,25 @@ LRESULT CALLBACK GD19_PB::ProgressNewBarProc(HWND hDlg, UINT message, WPARAM wPa
 		step = rect.right / 10.0;
 		full = (rect.right / App->Cl_PB->Steps);
 
-		hBrushYellow = CreateSolidBrush(RGB(0, 255, 0));
-		hBrushRed = CreateSolidBrush(RGB(255, 255, 255));
-
 		hPen = CreatePen(PS_NULL, 1, RGB(0, 0, 0));
 		holdPen = (HPEN)SelectObject(hdc, hPen);
 
-		hFont = CreateFontW(13, 0, 0, 0, FW_MEDIUM, 0, 0, 0, 0,
-			0, 0, 0, 0, L"Tahoma");
-
-		holdFont = (HFONT)SelectObject(hdc, hFont);
 
 		if (App->Cl_PB->ClearBarDlg == 1)
 		{
-			holdBrush = (HBRUSH)SelectObject(hdc, hBrushRed);
+			holdBrush = (HBRUSH)SelectObject(hdc, App->Brush_White);
 			::Rectangle(hdc, 0, 0, rect.right, 32);
 			App->Cl_PB->ClearBarDlg = 0;
 		}
 		else
 		{
-			holdBrush = (HBRUSH)SelectObject(hdc, hBrushYellow);
+			holdBrush = (HBRUSH)SelectObject(hdc, App->Brush_Green);
 			::Rectangle(hdc, 0, 0, till, 32);
 		}
 
-
-		SelectObject(hdc, holdPen);
-
-		/*int i;
-		for ( i = 1; i < 10; i++) {
-
-			MoveToEx(hdc, i*step, 0, NULL);
-			LineTo(hdc, i*step, 7);
-
-			rect.bottom = 28;
-			rect.top = 8;
-			rect.left = i*step-10;
-			rect.right = i*step+10;
-
-			SetBkMode(hdc, TRANSPARENT) ;
-			DrawTextW(hdc, cap[i-1], wcslen(cap[i-1]), &rect, DT_CENTER);
-		}*/
-
 		SelectObject(hdc, holdBrush);
-		DeleteObject(hBrushYellow);
-		DeleteObject(hBrushRed);
-
+		
 		DeleteObject(hPen);
-
-		SelectObject(hdc, holdFont);
-		DeleteObject(hFont);
 
 		EndPaint(hDlg, &ps);
 		break;

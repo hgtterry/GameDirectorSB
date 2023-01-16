@@ -70,6 +70,9 @@ public:
 
 	float Test;
 
+	float PosX;
+	float PosY;
+
 	bool Block;
 	bool Block_Motion;
 	bool Reset_Groups;
