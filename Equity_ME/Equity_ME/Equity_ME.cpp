@@ -304,6 +304,20 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				return 1;
 			}
 
+			case ID_EQUITY_WORLDEDITORPROJECT:
+			{
+				int Result = App->CL_FileIO->Open_File_Model("GDSB File   *.Wepf\0*.Wepf\0", "GDSB File", NULL);
+				if (Result == 0)
+				{
+					return 1;
+				}
+
+				App->CL_Equity_SB->Load_Project_File(App->CL_FileIO->Model_Path_FileName);
+				App->CL_Equity_SB->Load_File();
+
+				return 1;
+			}
+
 			case ID_OGRE3D_MESHMESH:
 			{
 				App->CL_Import->Ogre_Loader("Ogre3D   *.mesh\0*.mesh\0", "Ogre3D");

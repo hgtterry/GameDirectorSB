@@ -378,6 +378,21 @@ bool SB_Collision::Do_Teleport(int Index)
 			App->SBC_Scene->B_Object[Index]->S_Teleport[0]->SndFile = App->SBC_SoundMgr->SoundEngine->play2D(Sound, false, true, true);
 			App->SBC_Scene->B_Object[Index]->S_Teleport[0]->SndFile->setVolume(App->SBC_Scene->B_Object[Index]->S_Teleport[0]->SndVolume);
 			App->SBC_Scene->B_Object[Index]->S_Teleport[0]->SndFile->setIsPaused(false);
+
+			if (App->SBC_Scene->GameMode_Running_Flag == 1)
+			{
+				App->SBC_Com_Environments->Set_Environment_By_Index(0, Old_Sound_Index);
+				App->SBC_Com_Environments->Set_Environment_By_Index(1, Index);
+
+				Old_Sound_Index = Index;
+			}
+			else
+			{
+				App->SBC_Com_Environments->Set_Environment_By_Index(0, Index);
+
+				Old_Sound_Index = Index;
+
+			}
 		}
 
 		return 1;
@@ -401,6 +416,22 @@ bool SB_Collision::Do_Teleport(int Index)
 			App->SBC_Scene->B_Object[Index]->S_Teleport[0]->SndFile = App->SBC_SoundMgr->SoundEngine->play2D(Sound, false, true, true);
 			App->SBC_Scene->B_Object[Index]->S_Teleport[0]->SndFile->setVolume(App->SBC_Scene->B_Object[Index]->S_Teleport[0]->SndVolume);
 			App->SBC_Scene->B_Object[Index]->S_Teleport[0]->SndFile->setIsPaused(false);
+		}
+
+		if (App->SBC_Scene->GameMode_Running_Flag == 1)
+		{
+			App->SBC_Com_Environments->Set_Environment_By_Index(0, Old_Sound_Index);
+			App->SBC_Com_Environments->Set_Environment_By_Index(1, Index);
+
+			Old_Sound_Index = Index;
+	
+		}
+		else
+		{
+			App->SBC_Com_Environments->Set_Environment_By_Index(0, Index);
+
+			Old_Sound_Index = Index;
+
 		}
 
 		return 1;

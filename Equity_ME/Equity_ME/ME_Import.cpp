@@ -62,7 +62,7 @@ void ME_Import::Set_Equity(void)
 
 	App->CL_Grid->Zoom();
 
-	App->Say("Model Loaded");
+	//App->Say("Model Loaded");
 }
 
 // *************************************************************************

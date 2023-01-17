@@ -33,15 +33,13 @@ public:
 
 	bool Start_WE_import();
 	bool Write_Project_File(char* Path_And_File);
-
+	bool Load_Project_File(char* Path_And_File);
+	void Load_File();
 	char Pref_Ogre_Path[MAX_PATH];
 
 protected:
 		
 	static LRESULT CALLBACK WE_import_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-
-	
-	bool Load_Project_File(char* Path_And_File);
 
 	bool LoadTextures_TXL();
 	int Check_for_Textures(geVFile *BaseFile);

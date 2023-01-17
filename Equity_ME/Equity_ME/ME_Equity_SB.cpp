@@ -179,8 +179,7 @@ LRESULT CALLBACK ME_Equity_SB::WE_import_Proc(HWND hDlg, UINT message, WPARAM wP
 		
 		if (LOWORD(wParam) == IDC_BT_LOADPRJ)
 		{
-	
-			int Result = App->CL_FileIO->Open_File_Model("GDSB File   *.Prj\0*.Prj\0", "GDSB File", NULL);
+			int Result = App->CL_FileIO->Open_File_Model("GDSB File   *.Wepf\0*.Wepf\0", "GDSB File", NULL);
 			if (Result == 0)
 			{
 				return 1;
@@ -208,7 +207,7 @@ LRESULT CALLBACK ME_Equity_SB::WE_import_Proc(HWND hDlg, UINT message, WPARAM wP
 			char Path_And_File[MAX_PATH];
 			strcpy(Path_And_File, App->CL_FileIO->szSelectedDir);
 			strcat(Path_And_File, "\\");
-			strcat(Path_And_File, "GDSB.Prj");
+			strcat(Path_And_File, "GDSB.Wepf");
 
 			App->CL_Equity_SB->Write_Project_File(Path_And_File);
 
@@ -296,6 +295,43 @@ LRESULT CALLBACK ME_Equity_SB::WE_import_Proc(HWND hDlg, UINT message, WPARAM wP
 
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *						Load_File Terry Flanigan					   *
+// *************************************************************************
+void ME_Equity_SB::Load_File()
+{
+	App->CL_Model->Clear_Model_And_Reset();
+
+
+	App->CL_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
+
+	bool Test = App->CL_Assimp->LoadFile(App->CL_Equity_SB->Pref_WE_Path_FileName);
+	if (Test == 0)
+	{
+		App->Say("Failed To Load");
+		return;
+	}
+
+	strcpy(App->CL_FileIO->Model_Path_FileName, App->CL_Equity_SB->Pref_WE_Path_FileName);
+	strcpy(App->CL_FileIO->Model_FileName, App->CL_Equity_SB->Pref_WE_JustFileName);
+
+	App->CL_Model->Set_Paths();
+
+	App->CL_Model->Model_Type = Enums::LoadedFile_Assimp;
+	App->CL_Export_Ogre3D->Export_As_RF = 1;
+
+	App->CL_Equity_SB->LoadTextures_TXL();
+
+	App->CL_Import->Set_Equity();
+
+	App->CL_Equity_SB->Adjust();
+
+	Ogre::Root::getSingletonPtr()->renderOneFrame();
+	Ogre::Root::getSingletonPtr()->renderOneFrame();
+
+	App->Say("Model Loaded");
 }
 
 // *************************************************************************

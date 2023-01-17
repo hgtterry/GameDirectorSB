@@ -853,11 +853,10 @@ bool SB_Project::Save_Objects_Data()
 				fprintf(WriteFile, "%s\n", "-- Move Entity");
 				fprintf(WriteFile, "%s%f\n", "Move_Distance=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Move_Distance);
 				fprintf(WriteFile, "%s%i\n", "Move_IsNegative=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->IsNegative);
-			//	fprintf(WriteFile, "%s%s\n", "Move_MeshPos=", App->SBC_Scene->B_Object[Count]->S_MoveType->MeshPos);
+			
 				fprintf(WriteFile, "%s%f\n", "Move_NewPos=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Newpos);
 				fprintf(WriteFile, "%s%i\n", "Move_ObjectID=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Object_To_Move_Index);
 				fprintf(WriteFile, "%s%s\n", "Move_ObjectName=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Object_Name);
-			//	fprintf(WriteFile, "%s%s\n", "Move_PhysicsPos=", App->SBC_Scene->B_Object[Count]->S_MoveType->PhysicsPos);
 				fprintf(WriteFile, "%s%i\n", "Move_Re_Trigger=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Re_Trigger);
 				fprintf(WriteFile, "%s%f\n", "Move_Speed=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Speed);
 				fprintf(WriteFile, "%s%i\n", "Move_Triggered=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Triggered);
@@ -906,15 +905,10 @@ bool SB_Project::Save_Objects_Data()
 				fprintf(WriteFile, "%s%i\n", "Tele_Counter_ID=", App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Counter_ID);
 				fprintf(WriteFile, "%s%i\n", "Tele_Trigger_Value=", App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Trigger_Value);
 				fprintf(WriteFile, "%s%i\n", "Tele_Counter_Disabled=", App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Counter_Disabled);
-		
 
-			}
-
-			//---------------------------------------------------------------------------------- Environ Entity
-			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_EnvironEntity)
-			{
-				fprintf(WriteFile, "%s\n", "-- Environ");
-				fprintf(WriteFile, "%s\n", "------------------- EnvironEntity");
+				//--------------- Environment
+				fprintf(WriteFile, "%s\n", "------------------------------------------------------------------------------ Teleporter Environ");
+				fprintf(WriteFile, "%s%i\n", "Environ_Enabled=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Environ_Enabled);
 				fprintf(WriteFile, "%s%s\n", "Environment_Name=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Environment_Name);
 				fprintf(WriteFile, "%s%i\n", "Environment_ID=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Environment_ID);
 
@@ -932,15 +926,54 @@ bool SB_Project::Save_Objects_Data()
 				z = App->SBC_Scene->B_Object[Count]->S_Environ[0]->AmbientColour.z;
 				fprintf(WriteFile, "%s%f,%f,%f\n", "Ambient_Colour=", x, y, z);
 
-				x = App->SBC_Scene->B_Object[Count]->S_Environ[0]->DiffuseColour.x;
-				y = App->SBC_Scene->B_Object[Count]->S_Environ[0]->DiffuseColour.y;
-				z = App->SBC_Scene->B_Object[Count]->S_Environ[0]->DiffuseColour.z;
-				fprintf(WriteFile, "%s%f,%f,%f\n", "Diffuse_Colour=", x, y, z);
+				x = App->SBC_Scene->B_Object[Count]->S_Environ[0]->Light_Position.x;
+				y = App->SBC_Scene->B_Object[Count]->S_Environ[0]->Light_Position.y;
+				z = App->SBC_Scene->B_Object[Count]->S_Environ[0]->Light_Position.z;
+				fprintf(WriteFile, "%s%f,%f,%f\n", "Light_Position=", x, y, z);
 
-				x = App->SBC_Scene->B_Object[Count]->S_Environ[0]->SpecularColour.x;
-				y = App->SBC_Scene->B_Object[Count]->S_Environ[0]->SpecularColour.y;
-				z = App->SBC_Scene->B_Object[Count]->S_Environ[0]->SpecularColour.z;
-				fprintf(WriteFile, "%s%f,%f,%f\n", "Specular_Colour=", x, y, z);
+				//--------------- Sky
+				fprintf(WriteFile, "%s%i\n", "Sky_Enable=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Enabled);
+				fprintf(WriteFile, "%s%i\n", "Sky_Type=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->type);
+				fprintf(WriteFile, "%s%s\n", "Sky_Material=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Material);
+				fprintf(WriteFile, "%s%f\n", "Sky_Curvature=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Curvature);
+				fprintf(WriteFile, "%s%f\n", "Sky_Tiling=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Tiling);
+				fprintf(WriteFile, "%s%f\n", "Sky_Distance=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Distance);
+
+				//--------------- Fog
+				fprintf(WriteFile, "%s%i\n", "Fog_On=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_On);
+				fprintf(WriteFile, "%s%i\n", "Fog_Mode=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_Mode);
+
+				x = App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_Colour.x;
+				y = App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_Colour.y;
+				z = App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_Colour.z;
+				fprintf(WriteFile, "%s%f,%f,%f\n", "Fog_Colour=", x, y, z);
+
+				fprintf(WriteFile, "%s%f\n", "Fog_Start=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_Start);
+				fprintf(WriteFile, "%s%f\n", "Fog_End=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_End);
+				fprintf(WriteFile, "%s%f\n", "Fog_Density=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_Density);
+		
+			}
+
+			//---------------------------------------------------------------------------------- Environ Entity
+			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_EnvironEntity)
+			{
+				fprintf(WriteFile, "%s\n", "--------------------------------------------------------------------------------- EnvironEntity");
+				fprintf(WriteFile, "%s%s\n", "Environment_Name=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Environment_Name);
+				fprintf(WriteFile, "%s%i\n", "Environment_ID=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Environment_ID);
+
+				//--------------- Sound
+				fprintf(WriteFile, "%s%s\n", "Sound_File=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Sound_File);
+				fprintf(WriteFile, "%s%f\n", "Snd_Volume=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->SndVolume);
+
+				fprintf(WriteFile, "%s%i\n", "Sound_Play=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Play);
+				fprintf(WriteFile, "%s%i\n", "Sound_Loop=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Loop);
+
+				//--------------- Light
+
+				x = App->SBC_Scene->B_Object[Count]->S_Environ[0]->AmbientColour.x;
+				y = App->SBC_Scene->B_Object[Count]->S_Environ[0]->AmbientColour.y;
+				z = App->SBC_Scene->B_Object[Count]->S_Environ[0]->AmbientColour.z;
+				fprintf(WriteFile, "%s%f,%f,%f\n", "Ambient_Colour=", x, y, z);
 
 				x = App->SBC_Scene->B_Object[Count]->S_Environ[0]->Light_Position.x;
 				y = App->SBC_Scene->B_Object[Count]->S_Environ[0]->Light_Position.y;
@@ -980,7 +1013,7 @@ bool SB_Project::Save_Objects_Data()
 			}
 
 			fprintf(WriteFile, "%s\n", " ");
-			fprintf(WriteFile, "%s\n", " --------------------------------------------------------------------------------- ");
+			fprintf(WriteFile, "%s\n", "*************************************************************************************");
 			
 			new_Count++;
 		}
@@ -1816,6 +1849,9 @@ bool SB_Project::Load_Project_Objects()
 			App->SBC_Scene->B_Object[Count]->S_Teleport[0] = new Teleport_type;
 			App->SBC_Com_Entity->Set_Teleports_Defaults(Count);
 
+			App->SBC_Scene->B_Object[Count]->S_Environ[0] = new Environ_type;
+			App->SBC_Com_Environments->Set_Environ_Defaults(Count);
+
 			App->Cl_Ini->GetString(buff, "Tele_Goto", chr_Tag1, MAX_PATH);
 			strcpy(App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Name, chr_Tag1);
 
@@ -1859,6 +1895,85 @@ bool SB_Project::Load_Project_Objects()
 			App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Counter_ID = App->Cl_Ini->GetInt(buff, "Tele_Counter_ID", 0);
 			App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Trigger_Value = App->Cl_Ini->GetInt(buff, "Tele_Trigger_Value", 0);
 			App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Counter_Disabled = App->Cl_Ini->GetInt(buff, "Tele_Counter_Disabled", 1);
+
+
+			// Environment
+			Int_Tag = App->Cl_Ini->GetInt(buff, "Environ_Enabled", 0, 10);
+			App->SBC_Scene->B_Object[Count]->S_Environ[0]->Environ_Enabled = Int_Tag;
+
+			App->Cl_Ini->GetString(buff, "Environment_Name", chr_Tag1, MAX_PATH);
+			strcpy(App->SBC_Scene->B_Object[Count]->S_Environ[0]->Environment_Name, chr_Tag1);
+
+			Int_Tag = App->Cl_Ini->GetInt(buff, "Environment_ID", 0, 10);
+			App->SBC_Scene->B_Object[Count]->S_Environ[0]->Environment_ID = Int_Tag;
+
+			//--------------- Sound
+			App->Cl_Ini->GetString(buff, "Sound_File", chr_Tag1, MAX_PATH);
+			strcpy(App->SBC_Scene->B_Object[Count]->S_Environ[0]->Sound_File, chr_Tag1);
+
+			App->Cl_Ini->GetString(buff, "Snd_Volume", chr_Tag1, MAX_PATH);
+			sscanf(chr_Tag1, "%f", &x);
+			App->SBC_Scene->B_Object[Count]->S_Environ[0]->SndVolume = x;
+
+			Int_Tag = App->Cl_Ini->GetInt(buff, "Sound_Play", 0, 10);
+			App->SBC_Scene->B_Object[Count]->S_Environ[0]->Play = Int_Tag;
+
+			Int_Tag = App->Cl_Ini->GetInt(buff, "Sound_Loop", 0, 10);
+			App->SBC_Scene->B_Object[Count]->S_Environ[0]->Loop = Int_Tag;
+
+			//--------------- Light
+			App->Cl_Ini->GetString(buff, "Ambient_Colour", chr_Tag1, MAX_PATH);
+			sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+			App->SBC_Scene->B_Object[Count]->S_Environ[0]->AmbientColour = Ogre::Vector3(x, y, z);
+
+			App->Cl_Ini->GetString(buff, "Light_Position", chr_Tag1, MAX_PATH);
+			sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+			App->SBC_Scene->B_Object[Count]->S_Environ[0]->Light_Position = Ogre::Vector3(x, y, z);
+
+			//--------------- Sky
+			Int_Tag = App->Cl_Ini->GetInt(buff, "Sky_Enable", 0, 10);
+			App->SBC_Scene->B_Object[Count]->S_Environ[0]->Enabled = Int_Tag;
+
+			Int_Tag = App->Cl_Ini->GetInt(buff, "Sky_Type", 0, 10);
+			App->SBC_Scene->B_Object[Count]->S_Environ[0]->type = Int_Tag;
+
+			App->Cl_Ini->GetString(buff, "Sky_Material", chr_Tag1, MAX_PATH);
+			strcpy(App->SBC_Scene->B_Object[Count]->S_Environ[0]->Material, chr_Tag1);
+
+			App->Cl_Ini->GetString(buff, "Sky_Curvature", chr_Tag1, MAX_PATH);
+			sscanf(chr_Tag1, "%f", &x);
+			App->SBC_Scene->B_Object[Count]->S_Environ[0]->Curvature = x;
+
+			App->Cl_Ini->GetString(buff, "Sky_Tiling", chr_Tag1, MAX_PATH);
+			sscanf(chr_Tag1, "%f", &x);
+			App->SBC_Scene->B_Object[Count]->S_Environ[0]->Tiling = x;
+
+			App->Cl_Ini->GetString(buff, "Sky_Distance", chr_Tag1, MAX_PATH);
+			sscanf(chr_Tag1, "%f", &x);
+			App->SBC_Scene->B_Object[Count]->S_Environ[0]->Distance = x;
+
+			//--------------- Fog
+			Int_Tag = App->Cl_Ini->GetInt(buff, "Fog_On", 0, 10);
+			App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_On = Int_Tag;
+
+			Int_Tag = App->Cl_Ini->GetInt(buff, "Fog_Mode", 0, 10);
+			App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_Mode = Int_Tag;
+
+			App->Cl_Ini->GetString(buff, "Fog_Colour", chr_Tag1, MAX_PATH);
+			sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+			App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_Colour = Ogre::Vector3(x, y, z);
+
+			App->Cl_Ini->GetString(buff, "Fog_Start", chr_Tag1, MAX_PATH);
+			sscanf(chr_Tag1, "%f", &x);
+			App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_Start = x;
+
+			App->Cl_Ini->GetString(buff, "Fog_End", chr_Tag1, MAX_PATH);
+			sscanf(chr_Tag1, "%f", &x);
+			App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_End = x;
+
+			App->Cl_Ini->GetString(buff, "Fog_Density", chr_Tag1, MAX_PATH);
+			sscanf(chr_Tag1, "%f", &x);
+			App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_Density = x;
 			
 		}
 
@@ -1892,14 +2007,6 @@ bool SB_Project::Load_Project_Objects()
 			App->Cl_Ini->GetString(buff, "Ambient_Colour", chr_Tag1, MAX_PATH);
 			sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
 			App->SBC_Scene->B_Object[Count]->S_Environ[0]->AmbientColour = Ogre::Vector3(x, y, z);
-
-			App->Cl_Ini->GetString(buff, "Diffuse_Colour", chr_Tag1, MAX_PATH);
-			sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
-			App->SBC_Scene->B_Object[Count]->S_Environ[0]->DiffuseColour = Ogre::Vector3(x, y, z);
-
-			App->Cl_Ini->GetString(buff, "Specular_Colour", chr_Tag1, MAX_PATH);
-			sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
-			App->SBC_Scene->B_Object[Count]->S_Environ[0]->SpecularColour = Ogre::Vector3(x, y, z);
 
 			App->Cl_Ini->GetString(buff, "Light_Position", chr_Tag1, MAX_PATH);
 			sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);

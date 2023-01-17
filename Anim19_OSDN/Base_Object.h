@@ -94,6 +94,8 @@ typedef struct Environ_type
 	int Environment_ID;
 	char Environment_Name[MAX_PATH];
 
+	bool Environ_Enabled;
+
 	//--------------- Sound
 	irrklang::ISound* SndFile;
 	Ogre::Real SndVolume;
@@ -103,8 +105,6 @@ typedef struct Environ_type
 
 	//--------------- Light
 	Ogre::Vector3 AmbientColour;
-	Ogre::Vector3 DiffuseColour;
-	Ogre::Vector3 SpecularColour;
 	Ogre::Vector3 Light_Position;
 
 	//--------------- Sky
@@ -134,7 +134,7 @@ typedef struct Particle_type
 
 }Particle_type;
 
-// --------------------------------- Particle
+// --------------------------------- Light
 typedef struct Light_type
 {
 	Light* light;

@@ -236,6 +236,8 @@ void SB_Com_Environments::Set_Environ_Defaults(int Index)
 	App->SBC_Scene->B_Object[Index]->S_Environ[0]->Environment_ID = 0;
 	strcpy(App->SBC_Scene->B_Object[Index]->S_Environ[0]->Environment_Name,"Not_Set");
 
+	App->SBC_Scene->B_Object[Index]->S_Environ[0]->Environ_Enabled = 1;
+
 	//----------------------- Sound
 	strcpy(App->SBC_Scene->B_Object[Index]->S_Environ[0]->Sound_File, "The_Sun.ogg");
 	App->SBC_Scene->B_Object[Index]->S_Environ[0]->SndFile = NULL;
@@ -247,14 +249,6 @@ void SB_Com_Environments::Set_Environ_Defaults(int Index)
 	App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour.x = 1;
 	App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour.y = 1;
 	App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour.z = 1;
-
-	App->SBC_Scene->B_Object[Index]->S_Environ[0]->DiffuseColour.x = 0;
-	App->SBC_Scene->B_Object[Index]->S_Environ[0]->DiffuseColour.y = 0;
-	App->SBC_Scene->B_Object[Index]->S_Environ[0]->DiffuseColour.z = 0;
-
-	App->SBC_Scene->B_Object[Index]->S_Environ[0]->SpecularColour.x = 0;
-	App->SBC_Scene->B_Object[Index]->S_Environ[0]->SpecularColour.y = 0;
-	App->SBC_Scene->B_Object[Index]->S_Environ[0]->SpecularColour.z = 0;
 
 	App->SBC_Scene->B_Object[Index]->S_Environ[0]->Light_Position.x = 0;
 	App->SBC_Scene->B_Object[Index]->S_Environ[0]->Light_Position.y = 0;
