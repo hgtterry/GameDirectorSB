@@ -738,7 +738,7 @@ bool SB_Properties::Update_ListView_Environs()
 	SetWindowText(Properties_Dlg_hWnd, chr_ID);
 	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->B_Object[index]->Mesh_Name);
 
-	const int NUM_ITEMS = 6;
+	const int NUM_ITEMS = 8;
 	const int NUM_COLS = 2;
 	std::string grid[NUM_COLS][NUM_ITEMS];
 	LV_ITEM pitem;
@@ -751,6 +751,8 @@ bool SB_Properties::Update_ListView_Environs()
 	grid[0][3] = "Sound",		grid[1][3] = "Options";
 	grid[0][4] = "Fog",			grid[1][4] = "Options";
 	grid[0][5] = "Sky",			grid[1][5] = "Options";
+	grid[0][6] = " ",			grid[1][6] = " ";
+	grid[0][7] = "Test",		grid[1][7] = " ";
 
 	ListView_DeleteAllItems(Properties_hLV);
 
@@ -816,40 +818,98 @@ bool SB_Properties::Update_ListView_Teleport()
 		strcpy(chr_Counter_Disabled, "Enabled");
 	}
 
-	const int NUM_ITEMS = 10;
-	const int NUM_COLS = 2;
-	string grid[NUM_COLS][NUM_ITEMS]; // string table
-	LV_ITEM pitem;
-	memset(&pitem, 0, sizeof(LV_ITEM));
-	pitem.mask = LVIF_TEXT;
-
-	grid[0][0] = "Name",		grid[1][0] = App->SBC_Scene->B_Object[index]->Mesh_Name;
-	grid[0][1] = " ",			grid[1][1] = " ";
-	grid[0][2] = "Goto",		grid[1][2] = chr_Goto_Location;
-	grid[0][3] = " ",			grid[1][3] = " ";
-	grid[0][4] = "Sound",		grid[1][4] = App->SBC_Scene->B_Object[index]->S_Teleport[0]->Sound_File;
-	grid[0][5] = "Volume",		grid[1][5] = chr_Volume;
-	grid[0][6] = "Play",		grid[1][6] = chr_Play;
-	grid[0][7] = " ",			grid[1][7] = " ";
-	grid[0][8] = "Counter",		grid[1][8] = chr_Counter_Disabled;
-	grid[0][9] = "Environment",	grid[1][9] = App->SBC_Scene->B_Object[index]->S_Environ[0]->Sound_File;
-
-	ListView_DeleteAllItems(Properties_hLV);
-
-	for (DWORD row = 0; row < NUM_ITEMS; row++)
+	// Environ
+	char chr_Environ_Disabled[100];
+	if (App->SBC_Scene->B_Object[index]->S_Environ[0]->Enabled == 1)
 	{
-		pitem.iItem = row;
-		pitem.pszText = const_cast<char*>(grid[0][row].c_str());
-		ListView_InsertItem(Properties_hLV, &pitem);
+		strcpy(chr_Environ_Disabled, "Enabled");
+	}
+	else
+	{
+		strcpy(chr_Environ_Disabled, "Disabled");
+	}
 
-		//ListView_SetItemText
 
-		for (DWORD col = 1; col < NUM_COLS; col++)
+	if (App->SBC_Scene->B_Object[index]->S_Environ[0]->Enabled == 1)
+	{
+		const int NUM_ITEMS = 13;
+		const int NUM_COLS = 2;
+		string grid[NUM_COLS][NUM_ITEMS]; // string table
+
+		LV_ITEM pitem;
+		memset(&pitem, 0, sizeof(LV_ITEM));
+		pitem.mask = LVIF_TEXT;
+
+		grid[0][0] = "Name",	grid[1][0] = App->SBC_Scene->B_Object[index]->Mesh_Name;
+		grid[0][1] = " ",		grid[1][1] = " ";
+		grid[0][2] = "Goto",	grid[1][2] = chr_Goto_Location;
+		grid[0][3] = "Sound",	grid[1][3] = App->SBC_Scene->B_Object[index]->S_Teleport[0]->Sound_File;
+		grid[0][4] = "Volume",	grid[1][4] = chr_Volume;
+		grid[0][5] = "Play",	grid[1][5] = chr_Play;
+		grid[0][6] = " ",		grid[1][6] = " ";
+		grid[0][7] = "Counter", grid[1][7] = chr_Counter_Disabled;
+		grid[0][8] = "Environment", grid[1][8] = chr_Environ_Disabled;
+
+		grid[0][9] = "Main Light",		grid[1][9] = "Options";
+		grid[0][10] = "Sound_Env",		grid[1][10] = "Options";
+		grid[0][11] = "Fog",			grid[1][11] = "Options";
+		grid[0][12] = "Sky",			grid[1][12] = "Options";
+
+		ListView_DeleteAllItems(Properties_hLV);
+
+		for (DWORD row = 0; row < NUM_ITEMS; row++)
 		{
-			ListView_SetItemText(Properties_hLV, row, col,
-				const_cast<char*>(grid[col][row].c_str()));
+			pitem.iItem = row;
+			pitem.pszText = const_cast<char*>(grid[0][row].c_str());
+			ListView_InsertItem(Properties_hLV, &pitem);
+
+			//ListView_SetItemText
+
+			for (DWORD col = 1; col < NUM_COLS; col++)
+			{
+				ListView_SetItemText(Properties_hLV, row, col,
+					const_cast<char*>(grid[col][row].c_str()));
+			}
 		}
 	}
+	else
+	{
+		const int NUM_ITEMS = 9;
+		const int NUM_COLS = 2;
+		string grid[NUM_COLS][NUM_ITEMS]; // string table
+
+		LV_ITEM pitem;
+		memset(&pitem, 0, sizeof(LV_ITEM));
+		pitem.mask = LVIF_TEXT;
+
+		grid[0][0] = "Name",	grid[1][0] = App->SBC_Scene->B_Object[index]->Mesh_Name;
+		grid[0][1] = " ",		grid[1][1] = " ";
+		grid[0][2] = "Goto",	grid[1][2] = chr_Goto_Location;
+		grid[0][3] = "Sound",	grid[1][3] = App->SBC_Scene->B_Object[index]->S_Teleport[0]->Sound_File;
+		grid[0][4] = "Volume", grid[1][4] = chr_Volume;
+		grid[0][5] = "Play",	grid[1][5] = chr_Play;
+		grid[0][6] = " ",		grid[1][6] = " ";
+		grid[0][7] = "Counter", grid[1][7] = chr_Counter_Disabled;
+		grid[0][8] = "Environment", grid[1][8] = chr_Environ_Disabled;
+
+		ListView_DeleteAllItems(Properties_hLV);
+
+		for (DWORD row = 0; row < NUM_ITEMS; row++)
+		{
+			pitem.iItem = row;
+			pitem.pszText = const_cast<char*>(grid[0][row].c_str());
+			ListView_InsertItem(Properties_hLV, &pitem);
+
+			//ListView_SetItemText
+
+			for (DWORD col = 1; col < NUM_COLS; col++)
+			{
+				ListView_SetItemText(Properties_hLV, row, col,
+					const_cast<char*>(grid[col][row].c_str()));
+			}
+		}
+	}
+
 
 	return 1;
 }
@@ -2539,6 +2599,14 @@ bool SB_Properties::Edit_Environs_OnClick(LPARAM lParam)
 		Update_ListView_Environs();
 		return 1;
 	}
+
+	result = strcmp(btext, "Test");
+	if (result == 0)
+	{
+		App->SBC_Gui_Environ->Start_Colour_Picker(App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour);
+		return 1;
+	}
+
 	return 1;
 }
 
@@ -3056,6 +3124,58 @@ bool SB_Properties::Edit_Teleport_OnClick(LPARAM lParam)
 		return 1;
 	}
 
+	// Environment
+	result = strcmp(btext, "Environment");
+	if (result == 0)
+	{
+		App->SBC_Dialogs->YesNo("Enable Environment","Enable Teleport Environment", true);
+
+		if (App->SBC_Dialogs->Canceled == 0)
+		{
+			App->SBC_Scene->B_Object[Index]->S_Environ[0]->Enabled = 1;
+		}
+		else
+		{
+			App->SBC_Scene->B_Object[Index]->S_Environ[0]->Enabled = 0;
+		}
+
+		Update_ListView_Teleport();
+
+		return 1;
+	}
+	
+	result = strcmp(btext, "Main Light");
+	if (result == 0)
+	{
+		App->Cl_Environment->Start_Environment("Main Light");
+		Update_ListView_Teleport();
+
+		return 1;
+	}
+
+	result = strcmp(btext, "Sound_Env");
+	if (result == 0)
+	{
+		App->Cl_Environment->Start_Environment("Sound");
+		Update_ListView_Teleport();
+		return 1;
+	}
+
+	result = strcmp(btext, "Fog");
+	if (result == 0)
+	{
+		App->Cl_Environment->Start_Environment("Fog");
+		Update_ListView_Teleport();
+		return 1;
+	}
+
+	result = strcmp(btext, "Sky");
+	if (result == 0)
+	{
+		App->Cl_Environment->Start_Environment("Sky");
+		Update_ListView_Teleport();
+		return 1;
+	}
 	return 1;
 }
 

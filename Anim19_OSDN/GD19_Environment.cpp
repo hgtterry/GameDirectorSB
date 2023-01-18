@@ -821,6 +821,7 @@ bool GD19_Environment::On_Click_Props(LPARAM lParam)
 	result = strcmp(btext, "Ambient");
 	if (result == 0)
 	{
+
 		Show_Environment_Dialog(0);
 
 		App->SBC_Gui_Dialogs->Start_Colour_Picker(App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour);
@@ -1129,6 +1130,58 @@ bool GD19_Environment::On_Click_Props(LPARAM lParam)
 	}
 
 	return 1;
+}
+
+
+// *************************************************************************
+// *	  		Test_Ambient():- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void GD19_Environment::Test_Ambient()
+{
+	int Index = App->SBC_Properties->Current_Selected_Object;
+
+	//Show_Environment_Dialog(0);
+
+	App->SBC_Gui_Dialogs->Start_Colour_Picker(App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour);
+
+	//while (App->SBC_Gui_Dialogs->Show_ColourPicker == 1)
+	{
+		//Ogre::WindowEventUtilities::messagePump();
+		//App->SBC_Gui_Dialogs->BackGround_Render_Loop();
+
+		//App->SBC_Ogre->mRoot->_fireFrameStarted();
+		//App->SBC_Ogre->mRoot->_updateAllRenderTargets();
+		//App->SBC_Ogre->mRoot->_fireFrameEnded();
+
+		//App->SBC_Ogre->RenderFrame();
+
+		//App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour = Ogre::Vector3(App->SBC_Gui_Dialogs->Float_Colour.x, App->SBC_Gui_Dialogs->Float_Colour.y, App->SBC_Gui_Dialogs->Float_Colour.z);
+		//App->SBC_Ogre->mSceneMgr->setAmbientLight(ColourValue(App->SBC_Gui_Dialogs->Float_Colour.x, App->SBC_Gui_Dialogs->Float_Colour.y, App->SBC_Gui_Dialogs->Float_Colour.z));
+	}
+
+	//App->SBC_Gui_Dialogs->Show_ColourPicker = 0;
+
+	if (App->SBC_Gui_Dialogs->ColourPicker_Canceled == 0)
+	{
+		App->SBC_Com_Environments->Mark_As_Altered_Environ(Index);
+	}
+	else
+	{
+		float x = App->SBC_Gui_Dialogs->Float_Colour_Copy.x;
+		float y = App->SBC_Gui_Dialogs->Float_Colour_Copy.y;
+		float z = App->SBC_Gui_Dialogs->Float_Colour_Copy.z;
+
+		App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour = Ogre::Vector3(x, y, z);
+		App->SBC_Ogre->mSceneMgr->setAmbientLight(ColourValue(x, y, z));
+
+	}
+
+	App->Disable_Panels(false);
+	App->Show_Panels(true);
+	App->SBC_FileView->Show_FileView(false);
+	//Show_Environment_Dialog(1);
+
+	Update_CreateMainLightListView();
 }
 
 // *************************************************************************

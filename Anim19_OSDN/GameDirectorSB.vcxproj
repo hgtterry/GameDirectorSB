@@ -204,6 +204,7 @@
     <ClInclude Include="SB_FileIO.h" />
     <ClInclude Include="SB_FileView.h" />
     <ClInclude Include="SB_Gui_Dialogs.h" />
+    <ClInclude Include="SB_Gui_Environment.h" />
     <ClInclude Include="SB_Import.h" />
     <ClInclude Include="SB_Import_Room.h" />
     <ClInclude Include="SB_Keyboard.h" />
@@ -281,6 +282,7 @@
     <ClCompile Include="SB_FileIO.cpp" />
     <ClCompile Include="SB_FileView.cpp" />
     <ClCompile Include="SB_Gui_Dialogs.cpp" />
+    <ClCompile Include="SB_Gui_Environment.cpp" />
     <ClCompile Include="SB_Import.cpp" />
     <ClCompile Include="SB_Import_Room.cpp" />
     <ClCompile Include="SB_Keyboard.cpp" />

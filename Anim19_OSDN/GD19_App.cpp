@@ -85,6 +85,7 @@ GD19_App::GD19_App(void)
 
 	SBC_Locations =			nullptr;
 	SBC_Gui_Dialogs =		nullptr;
+	SBC_Gui_Environ =		nullptr;
 
 	SBC_Front_Dlg =			nullptr;
 
@@ -261,6 +262,7 @@ bool GD19_App::InitApp(void)
 	SBC_Com_MoveEntity =	new SB_Com_MoveEntity();
 	SBC_Com_Environments =	new SB_Com_Environments();
 	SBC_Gui_Dialogs =		new SB_Gui_Dialogs();
+	SBC_Gui_Environ =		new SB_Gui_Environment();
 	
 	SBC_Front_Dlg =			new Bass_Front_Dialog();
 

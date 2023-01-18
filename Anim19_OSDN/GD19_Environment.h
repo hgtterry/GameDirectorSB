@@ -34,6 +34,8 @@ public:
 	void Show_Environment_Dialog(bool show);
 	void Enable_Environment_Dialog(bool show);
 
+	void Test_Ambient();
+
 	void Select_Category(char* FileView_Folder);
 
 	bool Environment_Dlg_Active;

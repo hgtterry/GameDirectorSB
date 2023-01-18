@@ -84,6 +84,7 @@ distribution.
 #include "SB_Project_Create.h"
 #include "SB_Locations.h"
 #include "SB_Gui_Dialogs.h"
+#include "SB_Gui_Environment.h"
 
 #include "Bass_Front_Dialog.h"
 
@@ -155,6 +156,7 @@ public:
 	SB_Project_Create*		SBC_Project_Create;
 	SB_Locations*			SBC_Locations;
 	SB_Gui_Dialogs*			SBC_Gui_Dialogs;
+	SB_Gui_Environment*		SBC_Gui_Environ;
 
 	Bass_Front_Dialog*		SBC_Front_Dlg;
 

@@ -470,6 +470,10 @@ void SB_Gui_Dialogs::Dialog_Colour_Picker(void)
 		Float_Colour.y = float(Colour_Int_Green) / 255;
 		Float_Colour.z = float(Colour_Int_Blue) / 255;
 
+		/*int Index = App->SBC_Properties->Current_Selected_Object;
+		App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour = Ogre::Vector3(App->SBC_Gui_Dialogs->Float_Colour.x, App->SBC_Gui_Dialogs->Float_Colour.y, App->SBC_Gui_Dialogs->Float_Colour.z);
+		App->SBC_Ogre->mSceneMgr->setAmbientLight(ColourValue(App->SBC_Gui_Dialogs->Float_Colour.x, App->SBC_Gui_Dialogs->Float_Colour.y, App->SBC_Gui_Dialogs->Float_Colour.z));*/
+
 		//ImGui::Indent();
 		ImGui::Separator();
 		ImGui::Spacing();

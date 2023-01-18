@@ -192,6 +192,15 @@ void VM_ImGui::ImGui_Render_Loop(void)
 		Object_Selection();
 	}
 
+	if (App->SBC_Gui_Environ->Show_PropertyEditor == 1)
+	{
+		App->SBC_Gui_Environ->Environ_PropertyEditor();
+	}
+
+	if (App->SBC_Gui_Environ->Show_ColourPicker == 1)
+	{
+		App->SBC_Gui_Environ->Dialog_Colour_Picker();
+	}
 
 }
 
@@ -346,7 +355,6 @@ void VM_ImGui::Tabs_Render_Groups(void)
 	}
 
 }
-
 
 // *************************************************************************
 // *		Object_Selection:- Terry and Hazel Flanigan 2022			   *
