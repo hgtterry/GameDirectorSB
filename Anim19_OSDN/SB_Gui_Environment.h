@@ -29,20 +29,30 @@ public:
 	~SB_Gui_Environment(void);
 
 	void Environ_PropertyEditor();
-	void Dialog_Colour_Picker(void);
-	void Start_Colour_Picker(Ogre::Vector3 Colour);
-	void Do_Colour_Picker();
+	void Start_Environment_Editor(int Index);
+	void Close_Environment_Editor();
 
 	bool Show_PropertyEditor;
 	int PropertyEditor_Page;
 
-	bool Show_ColourPicker;
-	int Colour_Int_Red;
-	int Colour_Int_Green;
-	int Colour_Int_Blue;
-	ImVec4 Float_Colour_Copy;
-	bool ColourPicker_Canceled;
-	ImVec4 Float_Colour;
+protected:
+
+	// Ambient
+	int Ambient_Int_Red;
+	int Ambient_Int_Green;
+	int Ambient_Int_Blue;
+	ImVec4 Ambient_Colour_Copy;
+	ImVec4 Ambient_Colour;
+
+	// Fog Colour
+	int Fog_Colour_Int_Red;
+	int Fog_Colour_Int_Green;
+	int Fog_Colour_Int_Blue;
+	ImVec4 Fog_Colour_Copy;
+	ImVec4 Fog_Colour;
+
+	int Eviron_Index;
+
 	bool Float_Exit;
 
 	float Float_PosX;
@@ -59,5 +69,9 @@ public:
 	bool ClickOnFogColour;
 	bool ClickOnFogStart;
 	bool ClickOnFogEnd;
+
+	bool ClickOnSkyEnabled;
+	bool ClickOnSkyTiling;
+	bool ClickOnSkyCurve;
 };
 

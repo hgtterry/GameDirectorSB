@@ -197,11 +197,6 @@ void VM_ImGui::ImGui_Render_Loop(void)
 		App->SBC_Gui_Environ->Environ_PropertyEditor();
 	}
 
-	if (App->SBC_Gui_Environ->Show_ColourPicker == 1)
-	{
-		App->SBC_Gui_Environ->Dialog_Colour_Picker();
-	}
-
 }
 
 // *************************************************************************

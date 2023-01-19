@@ -2603,7 +2603,7 @@ bool SB_Properties::Edit_Environs_OnClick(LPARAM lParam)
 	result = strcmp(btext, "Test");
 	if (result == 0)
 	{
-		App->SBC_Gui_Environ->Start_Colour_Picker(App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour);
+		App->SBC_Gui_Environ->Start_Environment_Editor(Index);
 		return 1;
 	}
 

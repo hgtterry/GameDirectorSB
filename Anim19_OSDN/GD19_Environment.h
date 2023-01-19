@@ -30,6 +30,7 @@ public:
 
 	void Start_Environment(char* Category);
 	bool EnableFog(bool SetFog);
+	void SetSky(bool Enable);
 
 	void Show_Environment_Dialog(bool show);
 	void Enable_Environment_Dialog(bool show);
@@ -70,7 +71,6 @@ protected:
 	void Update_CreateSoundListView(void);
 	void Update_CreateSkyListView(void);
 
-	void SetSky(bool Enable);
 
 	TV_INSERTSTRUCT tvinsert;
 };

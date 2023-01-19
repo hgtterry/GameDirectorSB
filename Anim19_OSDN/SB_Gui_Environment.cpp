@@ -30,15 +30,19 @@ SB_Gui_Environment::SB_Gui_Environment(void)
 	Show_PropertyEditor = 0;
 	PropertyEditor_Page = 0;
 
-	Show_ColourPicker = 0;
-	ColourPicker_Canceled = 0;
-	Colour_Int_Red = 0;
-	Colour_Int_Green = 0;
-	Colour_Int_Blue = 0;
+	Ambient_Int_Red = 0;
+	Ambient_Int_Green = 0;
+	Ambient_Int_Blue = 0;
+
+	Fog_Colour_Int_Red = 0;
+	Fog_Colour_Int_Green = 0;
+	Fog_Colour_Int_Blue = 0;
 
 	Float_PosX = 0;
 	Float_PosY = 0;
 	Float_StartPos = 0;
+
+	Eviron_Index = 0;
 
 	ClickOnTrack = 0;
 	ClickOnVolume = 0;
@@ -51,6 +55,10 @@ SB_Gui_Environment::SB_Gui_Environment(void)
 	ClickOnFogStart = 0;
 	ClickOnFogEnd = 0;
 
+	ClickOnSkyEnabled = 0;
+	ClickOnSkyTiling = 0;
+	ClickOnSkyCurve = 0;
+
 }
 
 SB_Gui_Environment::~SB_Gui_Environment(void)
@@ -58,18 +66,64 @@ SB_Gui_Environment::~SB_Gui_Environment(void)
 }
 
 // *************************************************************************
+// *	 Start_Environment_Editor:- Terry and Hazel Flanigan 2023  		   *
+// *************************************************************************
+void SB_Gui_Environment::Start_Environment_Editor(int Index)
+{
+	Eviron_Index = Index;
+
+	Float_Exit = 0;
+
+	Ambient_Colour_Copy.x = App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->AmbientColour.x;
+	Ambient_Colour_Copy.y = App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->AmbientColour.y;
+	Ambient_Colour_Copy.z = App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->AmbientColour.z;
+
+	Ambient_Colour.x = App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->AmbientColour.x;
+	Ambient_Colour.y = App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->AmbientColour.y;
+	Ambient_Colour.z = App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->AmbientColour.z;
+
+	Ambient_Int_Red = Ambient_Colour.x * 255;
+	Ambient_Int_Green = Ambient_Colour.y * 255;
+	Ambient_Int_Blue = Ambient_Colour.z * 255;
+
+	Fog_Colour_Copy.x = App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->Fog_Colour.x;
+	Fog_Colour_Copy.y = App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->Fog_Colour.y;
+	Fog_Colour_Copy.z = App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->Fog_Colour.z;
+
+	Fog_Colour.x = App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->Fog_Colour.x;
+	Fog_Colour.y = App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->Fog_Colour.y;
+	Fog_Colour.z = App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->Fog_Colour.z;
+
+	Fog_Colour_Int_Red = Fog_Colour.x * 255;
+	Fog_Colour_Int_Green = Fog_Colour.y * 255;
+	Fog_Colour_Int_Blue = Fog_Colour.z * 255;
+
+
+	/*App->Disable_Panels(true);
+	App->Show_Panels(false);*/
+
+	App->SBC_FileView->Show_FileView(false);
+	App->SBC_Com_Environments->Set_Environment_By_Index(1, Eviron_Index);
+
+	Show_PropertyEditor = 1;
+}
+
+// *************************************************************************
 // *		Environ_PropertyEditor:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
 void SB_Gui_Environment::Environ_PropertyEditor()
 {
-	ImGui::SetNextWindowSize(ImVec2(350, 250), ImGuiCond_FirstUseEver);
-	if (!ImGui::Begin("Environment Editor", &Show_PropertyEditor, ImGuiWindowFlags_NoResize))
+
+	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowSize(ImVec2(350, 180), ImGuiCond_FirstUseEver);
+
+	if (!ImGui::Begin("Environment Editor", &Show_PropertyEditor, ImGuiWindowFlags_NoResize| ImGuiWindowFlags_NoTitleBar))
 	{
 		ImGui::End();
 		return;
 	}
 
-	int Index = App->SBC_Properties->Current_Selected_Object;
+	ImGuiColorEditFlags misc_flags2 = (ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_InputRGB | ImGuiColorEditFlags_Uint8);
 
 	ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(2, 2));
 	
@@ -101,11 +155,6 @@ void SB_Gui_Environment::Environ_PropertyEditor()
 	ImGui::Spacing();
 	ImGui::Spacing();
 
-	if (ImGui::Button("Close", ImVec2(100, 0)))
-	{
-		Show_PropertyEditor = 0;
-	}
-
 	// ---------------------------------------------------------------- Main Light
 	if (PropertyEditor_Page == 0)
 	{
@@ -114,17 +163,16 @@ void SB_Gui_Environment::Environ_PropertyEditor()
 
 		ImGui::Text("Ambient Colour:");
 		ImGui::SameLine();
-		ImGuiColorEditFlags misc_flags2 = (ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_InputRGB | ImGuiColorEditFlags_Uint8);
-		ImGui::ColorEdit3("", (float*)&Float_Colour, ImGuiColorEditFlags_NoInputs | misc_flags2);
+
+		ImGui::ColorEdit3("", (float*)&Ambient_Colour, ImGuiColorEditFlags_NoInputs | misc_flags2);
 		
-		Colour_Int_Red = Float_Colour.x * 255;
-		Colour_Int_Green = Float_Colour.y * 255;
-		Colour_Int_Blue = Float_Colour.z * 255;
+		Ambient_Int_Red = Ambient_Colour.x * 255;
+		Ambient_Int_Green = Ambient_Colour.y * 255;
+		Ambient_Int_Blue = Ambient_Colour.z * 255;
 
-		App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour = Ogre::Vector3(Float_Colour.x, Float_Colour.y, Float_Colour.z);
-		App->SBC_Ogre->mSceneMgr->setAmbientLight(ColourValue(Float_Colour.x, Float_Colour.y, Float_Colour.z));
+		App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->AmbientColour = Ogre::Vector3(Ambient_Colour.x, Ambient_Colour.y, Ambient_Colour.z);
+		App->SBC_Ogre->mSceneMgr->setAmbientLight(ColourValue(Ambient_Colour.x, Ambient_Colour.y, Ambient_Colour.z));
 
-		//Do_Colour_Picker();
 	}
 
 	// ---------------------------------------------------------------- Sound
@@ -135,31 +183,31 @@ void SB_Gui_Environment::Environ_PropertyEditor()
 		
 		ImGui::Selectable("Track:- ", &ClickOnTrack);
 		ImGui::SameLine();
-		ImGui::Text("%s", App->SBC_Scene->B_Object[Index]->S_Environ[0]->Sound_File);
+		ImGui::Text("%s", App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->Sound_File);
 
 		if (ClickOnTrack)
 		{
 			ImGui::TextColored(ImVec4(0.f, 1.f, 0.24f, 1.f), "ON");
 
 			App->SBC_SoundMgr->Accessed = 1;
-			strcpy(App->SBC_SoundMgr->Access_File, App->SBC_Scene->B_Object[Index]->S_Environ[0]->Sound_File);
+			strcpy(App->SBC_SoundMgr->Access_File, App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->Sound_File);
 
-			App->SBC_Com_Environments->Set_Environment_By_Index(0, Index);
+			App->SBC_Com_Environments->Set_Environment_By_Index(0, Eviron_Index);
 			App->SBC_SoundMgr->Dialog_SoundFile();
 
 			if (App->SBC_SoundMgr->IsCancelled == 0)
 			{
 
-				strcpy(App->SBC_Scene->B_Object[Index]->S_Environ[0]->Sound_File, App->SBC_SoundMgr->Access_File);
-				App->SBC_Scene->B_Object[Index]->S_Environ[0]->SndVolume = App->SBC_SoundMgr->SndVolume;
+				strcpy(App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->Sound_File, App->SBC_SoundMgr->Access_File);
+				App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->SndVolume = App->SBC_SoundMgr->SndVolume;
 
-				App->SBC_Com_Environments->Set_Environment_By_Index(1, Index);
+				App->SBC_Com_Environments->Set_Environment_By_Index(1, Eviron_Index);
 
-				App->SBC_Com_Environments->Mark_As_Altered_Environ(Index);
+				App->SBC_Com_Environments->Mark_As_Altered_Environ(Eviron_Index);
 			}
 			else
 			{
-				App->SBC_Com_Environments->Set_Environment_By_Index(1, Index);
+				App->SBC_Com_Environments->Set_Environment_By_Index(1, Eviron_Index);
 			}
 
 			ClickOnTrack = 0;
@@ -168,7 +216,7 @@ void SB_Gui_Environment::Environ_PropertyEditor()
 		// ----------------- Volume
 		ImGui::Selectable("Volume:- ", &ClickOnVolume);
 		ImGui::SameLine();
-		ImGui::Text("%f", App->SBC_Scene->B_Object[Index]->S_Environ[0]->SndVolume);
+		ImGui::Text("%f", App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->SndVolume);
 		if (ClickOnVolume)
 		{
 			ClickOnVolume = 0;
@@ -177,7 +225,7 @@ void SB_Gui_Environment::Environ_PropertyEditor()
 		// ----------------- Play
 		ImGui::Selectable("Play:- ", &ClickOnPlay);
 		ImGui::SameLine();
-		ImGui::Text("%i", App->SBC_Scene->B_Object[Index]->S_Environ[0]->Play);
+		ImGui::Text("%i", App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->Play);
 		if (ClickOnPlay)
 		{
 			ClickOnPlay = 0;
@@ -186,7 +234,7 @@ void SB_Gui_Environment::Environ_PropertyEditor()
 		// ----------------- Loop
 		ImGui::Selectable("Loop:- ", &ClickOnLoop);
 		ImGui::SameLine();
-		ImGui::Text("%i", App->SBC_Scene->B_Object[Index]->S_Environ[0]->Loop);
+		ImGui::Text("%i", App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->Loop);
 		if (ClickOnLoop)
 		{
 			ClickOnLoop = 0;
@@ -202,12 +250,12 @@ void SB_Gui_Environment::Environ_PropertyEditor()
 		// ----------------- Visible
 		ImGui::Selectable("Visible:- ", &ClickOnFogVisible);
 		ImGui::SameLine();
-		ImGui::Text("%i", App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_On);
+		ImGui::Text("%i", App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->Fog_On);
 		if (ClickOnFogVisible)
 		{
 			strcpy(App->Cl_Dialogs->btext, "Set Fog Visiblity");
 
-			App->Cl_Dialogs->TrueFlase = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_On;
+			App->Cl_Dialogs->TrueFlase = App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->Fog_On;
 
 			strcpy(App->Cl_Dialogs->btext, "Set Fog On/Off");
 			App->Cl_Dialogs->Dialog_TrueFlase(App->MainHwnd);
@@ -216,16 +264,16 @@ void SB_Gui_Environment::Environ_PropertyEditor()
 			{
 				if (App->Cl_Dialogs->TrueFlase == 1)
 				{
-					App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_On = 1;
+					App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->Fog_On = 1;
 					App->Cl_Environment->EnableFog(true);
 				}
 				else
 				{
-					App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_On = 0;
+					App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->Fog_On = 0;
 					App->Cl_Environment->EnableFog(false);
 				}
 
-				App->SBC_Com_Environments->Mark_As_Altered_Environ(Index);
+				App->SBC_Com_Environments->Mark_As_Altered_Environ(Eviron_Index);
 			}
 
 			ClickOnFogVisible = 0;
@@ -234,34 +282,114 @@ void SB_Gui_Environment::Environ_PropertyEditor()
 		// ----------------- Mode
 		ImGui::Selectable("Mode:- ", &ClickOnFogMode);
 		ImGui::SameLine();
-		ImGui::Text("%i", App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Mode);
+		ImGui::Text("%i", App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->Fog_Mode);
 		if (ClickOnFogMode)
 		{
 			ClickOnFogMode = 0;
 		}
 
+		// ----------------- Fog Colour
+		ImGui::Text("Fog Colour:");
+		ImGui::SameLine();
+
+		ImGui::ColorEdit3("", (float*)&Fog_Colour, ImGuiColorEditFlags_NoInputs | misc_flags2);
+
+		Ambient_Int_Red = Fog_Colour.x * 255;
+		Ambient_Int_Green = Fog_Colour.y * 255;
+		Ambient_Int_Blue = Fog_Colour.z * 255;
+
+		App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->Fog_Colour = Ogre::Vector3(Fog_Colour.x, Fog_Colour.y, Fog_Colour.z);
+
+		if (App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->Fog_On == 1)
+		{
+			App->Cl_Environment->EnableFog(true);
+		}
 
 		// ----------------- Start
-		ImGui::Text("Start:- ", App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Start);
+		ImGui::Text("Start:- ", App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->Fog_Start);
 		ImGui::SameLine();
 		
-		if (ImGui::InputFloat("##1", &App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Start, 0.5, 0, "%.3f"))
+		if (ImGui::InputFloat("##1", &App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->Fog_Start, 1, 0, "%.3f"))
 		{
-			if (App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_On == 1)
+			if (App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->Fog_On == 1)
 			{
 				App->Cl_Environment->EnableFog(true);
 			}
 		}
 
 		// ----------------- End
-		ImGui::Text("End:-   ", App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_End);
+		ImGui::Text("End:-   ", App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->Fog_End);
 		ImGui::SameLine();
 
-		if (ImGui::InputFloat("##2", &App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_End, 0.5, 0, "%.3f"))
+		if (ImGui::InputFloat("##2", &App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->Fog_End, 1, 0, "%.3f"))
 		{
-			if (App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_On == 1)
+			if (App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->Fog_On == 1)
 			{
 				App->Cl_Environment->EnableFog(true);
+			}
+		}
+
+	}
+
+	// ---------------------------------------------------------------- Sky
+	if (PropertyEditor_Page == 3)
+	{
+		ImGui::NextColumn();
+		ImGui::AlignTextToFramePadding();
+
+		// ----------------- Visible
+		ImGui::Selectable("Enabled:- ", &ClickOnSkyEnabled);
+		ImGui::SameLine();
+		ImGui::Text("%i", App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->Enabled);
+		if (ClickOnSkyEnabled)
+		{
+			strcpy(App->Cl_Dialogs->btext, "Set Sky Visiblity");
+
+			App->Cl_Dialogs->TrueFlase = App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->Enabled;
+
+			strcpy(App->Cl_Dialogs->btext, "Set Sky On/Off");
+			App->Cl_Dialogs->Dialog_TrueFlase(App->MainHwnd);
+
+			if (App->Cl_Dialogs->Canceled == 0)
+			{
+				if (App->Cl_Dialogs->TrueFlase == 1)
+				{
+					App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->Enabled = 1;
+					App->Cl_Environment->SetSky(1);
+				}
+				else
+				{
+					App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->Enabled = 0;
+					App->Cl_Environment->SetSky(0);
+				}
+
+				App->SBC_Com_Environments->Mark_As_Altered_Environ(Eviron_Index);
+			}
+
+			ClickOnSkyEnabled = 0;
+		}
+
+		// ----------------- Tiling
+		ImGui::Text("Tiling:- ", App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->Tiling);
+		ImGui::SameLine();
+
+		if (ImGui::InputFloat("##5", &App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->Tiling, 0.5, 0, "%.3f"))
+		{
+			if (App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->Enabled == 1)
+			{
+				App->Cl_Environment->SetSky(true);
+			}
+		}
+
+		// ----------------- Curvature
+		ImGui::Text("Curve:- ", App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->Curvature);
+		ImGui::SameLine();
+
+		if (ImGui::InputFloat("##6", &App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->Curvature, 0.5, 0, "%.3f"))
+		{
+			if (App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->Enabled == 1)
+			{
+				App->Cl_Environment->SetSky(true);
 			}
 		}
 
@@ -270,8 +398,9 @@ void SB_Gui_Environment::Environ_PropertyEditor()
 	ImGui::PopStyleVar();
 	ImGui::Columns(0);
 
-	if (ImGui::Button("Close2", ImVec2(100, 0)))
+	if (ImGui::Button("Close", ImVec2(100, 0)))
 	{
+		Close_Environment_Editor();
 		Show_PropertyEditor = 0;
 	}
 
@@ -279,219 +408,17 @@ void SB_Gui_Environment::Environ_PropertyEditor()
 }
 
 // *************************************************************************
-// *		 Start_Colour_Picker:- Terry and Hazel Flanigan 2022  		   *
+// *	 Close_Environment_Editor:- Terry and Hazel Flanigan 2022  		   *
 // *************************************************************************
-void SB_Gui_Environment::Start_Colour_Picker(Ogre::Vector3 Colour)
+void SB_Gui_Environment::Close_Environment_Editor()
 {
-	Float_Exit = 0;
-	ColourPicker_Canceled = 0;
+	/*App->Disable_Panels(false);
+	App->Show_Panels(true);*/
 
-	Float_Colour_Copy.x = Colour.x;
-	Float_Colour_Copy.y = Colour.y;
-	Float_Colour_Copy.z = Colour.z;
-
-	Float_Colour.x = Colour.x;
-	Float_Colour.y = Colour.y;
-	Float_Colour.z = Colour.z;
-
-	Colour_Int_Red = Float_Colour.x * 255;
-	Colour_Int_Green = Float_Colour.y * 255;
-	Colour_Int_Blue = Float_Colour.z * 255;
-
-	App->Disable_Panels(true);
-	App->Show_Panels(false);
-
-	Show_PropertyEditor = 1;
-
-}
-
-// *************************************************************************
-// *		 Do__Colour_Picker:- Terry and Hazel Flanigan 2022  		   *
-// *************************************************************************
-void SB_Gui_Environment::Do_Colour_Picker()
-{
+	App->SBC_FileView->Show_FileView(true);
 	int Index = App->SBC_Properties->Current_Selected_Object;
+	App->SBC_Com_Environments->Set_Environment_By_Index(0, Index);
 
-	Ogre::Real mRed = App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour.x;
-	Ogre::Real mGreen = App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour.y;
-	Ogre::Real mBlue = App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour.z;
-
-	ImGui::Text("Colour %.2f %.2f %.2f", mRed, mGreen, mBlue);
-
-
-	ImGui::PushStyleColor(ImGuiCol_SliderGrab, IM_COL32(0, 0, 0, 255));
-	ImGui::PushStyleColor(ImGuiCol_FrameBg, IM_COL32(255, 0, 0, 255));
-	ImGui::PushStyleColor(ImGuiCol_FrameBgActive, IM_COL32(255, 0, 0, 255));
-	ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, IM_COL32(255, 0, 0, 255));
-	ImGui::VSliderInt("##r", ImVec2(100, 300), &Colour_Int_Red, 0, 255);
-	ImGui::PopStyleColor(4);
-
-	ImGui::SameLine();
-
-	ImGui::PushStyleColor(ImGuiCol_SliderGrab, IM_COL32(0, 0, 0, 255));
-	ImGui::PushStyleColor(ImGuiCol_FrameBg, IM_COL32(0, 255, 0, 255));
-	ImGui::PushStyleColor(ImGuiCol_FrameBgActive, IM_COL32(0, 255, 0, 255));
-	ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, IM_COL32(0, 255, 0, 255));
-	ImGui::VSliderInt("##g", ImVec2(100, 300), &Colour_Int_Green, 0, 255);
-	ImGui::PopStyleColor(4);
-
-	ImGui::SameLine();
-
-	ImGui::PushStyleColor(ImGuiCol_SliderGrab, IM_COL32(0, 0, 0, 255));
-	ImGui::PushStyleColor(ImGuiCol_FrameBg, IM_COL32(0, 0, 255, 255));
-	ImGui::PushStyleColor(ImGuiCol_FrameBgActive, IM_COL32(0, 0, 255, 255));
-	ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, IM_COL32(0, 0, 255, 255));
-	ImGui::VSliderInt("##b", ImVec2(100, 300), &Colour_Int_Blue, 0, 255);
-	ImGui::PopStyleColor(4);
-
-	ImGui::PushItemWidth(100);
-	ImGui::InputInt("##ir", &Colour_Int_Red, 1, 0);
-	ImGui::SameLine();
-	ImGui::InputInt("##ig", &Colour_Int_Green, 1, 0);
-	ImGui::SameLine();
-	ImGui::InputInt("##ib", &Colour_Int_Blue, 1, 0);
-	ImGui::PopItemWidth();
-
-	Float_Colour.x = float(Colour_Int_Red) / 255;
-	Float_Colour.y = float(Colour_Int_Green) / 255;
-	Float_Colour.z = float(Colour_Int_Blue) / 255;
-
-
-	ImGui::Spacing();
-	ImGui::Text("Colour widget:");
-	ImGui::SameLine();
-	ImGuiColorEditFlags misc_flags2 = (ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_InputRGB | ImGuiColorEditFlags_Uint8);
-	ImGui::ColorEdit3("", (float*)&Float_Colour, ImGuiColorEditFlags_NoInputs | misc_flags2);
-	ImGui::Spacing();
-
-	Colour_Int_Red = Float_Colour.x * 255;
-	Colour_Int_Green = Float_Colour.y * 255;
-	Colour_Int_Blue = Float_Colour.z * 255;
-
-	App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour = Ogre::Vector3(Float_Colour.x, Float_Colour.y, Float_Colour.z);
-	App->SBC_Ogre->mSceneMgr->setAmbientLight(ColourValue(Float_Colour.x, Float_Colour.y, Float_Colour.z));
-}
-
-// *************************************************************************
-// *		Dialog_Colour_Picker:- Terry and Hazel Flanigan 2022  		   *
-// *************************************************************************
-void SB_Gui_Environment::Dialog_Colour_Picker(void)
-{
-
-	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
-	ImGui::SetNextWindowSize(ImVec2(340, 550), ImGuiCond_FirstUseEver);
-
-	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
-
-	if (!ImGui::Begin("Colour Dialog", &Show_ColourPicker, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize))
-	{
-		ImGui::End();
-	}
-	else
-	{
-		if (Float_StartPos == 0)
-		{
-			Float_PosX = ((float)App->SBC_Ogre->OgreListener->View_Width / 2) - (340 / 2);
-			Float_PosY = ((float)App->SBC_Ogre->OgreListener->View_Height / 2) - (550 / 2);
-			ImGui::SetWindowPos("Colour Dialog", ImVec2(10, 10));
-
-			Float_StartPos = 1;
-		}
-
-		ImGui::PushStyleColor(ImGuiCol_SliderGrab, IM_COL32(0, 0, 0, 255));
-		ImGui::PushStyleColor(ImGuiCol_FrameBg, IM_COL32(255, 0, 0, 255));
-		ImGui::PushStyleColor(ImGuiCol_FrameBgActive, IM_COL32(255, 0, 0, 255));
-		ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, IM_COL32(255, 0, 0, 255));
-		ImGui::VSliderInt("##r", ImVec2(100, 400), &Colour_Int_Red, 0, 255);
-		ImGui::PopStyleColor(4);
-
-		ImGui::SameLine();
-
-		ImGui::PushStyleColor(ImGuiCol_SliderGrab, IM_COL32(0, 0, 0, 255));
-		ImGui::PushStyleColor(ImGuiCol_FrameBg, IM_COL32(0, 255, 0, 255));
-		ImGui::PushStyleColor(ImGuiCol_FrameBgActive, IM_COL32(0, 255, 0, 255));
-		ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, IM_COL32(0, 255, 0, 255));
-		ImGui::VSliderInt("##g", ImVec2(100, 400), &Colour_Int_Green, 0, 255);
-		ImGui::PopStyleColor(4);
-
-		ImGui::SameLine();
-
-		ImGui::PushStyleColor(ImGuiCol_SliderGrab, IM_COL32(0, 0, 0, 255));
-		ImGui::PushStyleColor(ImGuiCol_FrameBg, IM_COL32(0, 0, 255, 255));
-		ImGui::PushStyleColor(ImGuiCol_FrameBgActive, IM_COL32(0, 0, 255, 255));
-		ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, IM_COL32(0, 0, 255, 255));
-		ImGui::VSliderInt("##b", ImVec2(100, 400), &Colour_Int_Blue, 0, 255);
-		ImGui::PopStyleColor(4);
-
-		ImGui::PushItemWidth(100);
-		ImGui::InputInt("##ir", &Colour_Int_Red, 1, 0);
-		ImGui::SameLine();
-		ImGui::InputInt("##ig", &Colour_Int_Green, 1, 0);
-		ImGui::SameLine();
-		ImGui::InputInt("##ib", &Colour_Int_Blue, 1, 0);
-		ImGui::PopItemWidth();
-
-		Float_Colour.x = float(Colour_Int_Red) / 255;
-		Float_Colour.y = float(Colour_Int_Green) / 255;
-		Float_Colour.z = float(Colour_Int_Blue) / 255;
-
-		//ImGui::Indent();
-		ImGui::Separator();
-		ImGui::Spacing();
-		ImGui::Text("Colour widget:");
-		ImGui::SameLine();
-		ImGuiColorEditFlags misc_flags2 = (ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_InputRGB | ImGuiColorEditFlags_Uint8);
-		ImGui::ColorEdit3("MyColor##1", (float*)&Float_Colour, ImGuiColorEditFlags_NoInputs | misc_flags2);
-		ImGui::Separator();
-		ImGui::Spacing();
-
-		Colour_Int_Red = Float_Colour.x * 255;
-		Colour_Int_Green = Float_Colour.y * 255;
-		Colour_Int_Blue = Float_Colour.z * 255;
-
-		ImGui::Indent();
-		ImGui::Indent();
-		ImGui::Indent();
-		ImGui::Indent();
-		ImGui::Indent();
-
-		int Index = App->SBC_Properties->Current_Selected_Object;
-		App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour = Ogre::Vector3(Float_Colour.x, Float_Colour.y, Float_Colour.z);
-		App->SBC_Ogre->mSceneMgr->setAmbientLight(ColourValue(Float_Colour.x, Float_Colour.y, Float_Colour.z));
-
-		if (ImGui::Button("Apply"))
-		{
-			Float_Exit = 1;
-
-			Float_StartPos = 0;
-			ColourPicker_Canceled = 0;
-
-			ImGui::PopStyleColor();
-			Show_ColourPicker = 0;
-			ImGui::End();
-		}
-
-		ImGui::SameLine();
-
-		if (ImGui::Button("Cancel"))
-		{
-			Float_Exit = 1;
-			ColourPicker_Canceled = 1;
-
-			ImGui::PopStyleColor();
-			Show_ColourPicker = 0;
-			ImGui::End();
-		}
-
-		if (Float_Exit == 0)
-		{
-			ColourPicker_Canceled = 1;
-
-			ImGui::PopStyleColor();
-			//Show_ColourPicker = 0;
-			ImGui::End();
-		}
-
-		ImGui::End();
-	}
+	Index = App->SBC_Com_Environments->Get_First_Environ();
+	App->SBC_Com_Environments->Set_Environment_By_Index(0, Index);
 }
