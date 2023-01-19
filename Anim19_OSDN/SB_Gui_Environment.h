@@ -48,5 +48,16 @@ public:
 	float Float_PosX;
 	float Float_PosY;
 	bool Float_StartPos;
+
+	bool ClickOnTrack;
+	bool ClickOnVolume;
+	bool ClickOnPlay;
+	bool ClickOnLoop;
+
+	bool ClickOnFogVisible;
+	bool ClickOnFogMode;
+	bool ClickOnFogColour;
+	bool ClickOnFogStart;
+	bool ClickOnFogEnd;
 };
 

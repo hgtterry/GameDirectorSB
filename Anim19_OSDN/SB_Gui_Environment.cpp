@@ -40,6 +40,17 @@ SB_Gui_Environment::SB_Gui_Environment(void)
 	Float_PosY = 0;
 	Float_StartPos = 0;
 
+	ClickOnTrack = 0;
+	ClickOnVolume = 0;
+	ClickOnPlay = 0;
+	ClickOnLoop = 0;
+
+	ClickOnFogVisible = 0;
+	ClickOnFogMode = 0;
+	ClickOnFogColour = 0;
+	ClickOnFogStart = 0;
+	ClickOnFogEnd = 0;
+
 }
 
 SB_Gui_Environment::~SB_Gui_Environment(void)
@@ -51,7 +62,7 @@ SB_Gui_Environment::~SB_Gui_Environment(void)
 // *************************************************************************
 void SB_Gui_Environment::Environ_PropertyEditor()
 {
-	ImGui::SetNextWindowSize(ImVec2(450, 480), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowSize(ImVec2(350, 250), ImGuiCond_FirstUseEver);
 	if (!ImGui::Begin("Environment Editor", &Show_PropertyEditor, ImGuiWindowFlags_NoResize))
 	{
 		ImGui::End();
@@ -101,12 +112,19 @@ void SB_Gui_Environment::Environ_PropertyEditor()
 		ImGui::NextColumn();
 		ImGui::AlignTextToFramePadding();
 
-		//if (ImGui::Button("Ambient   ", ImVec2(120, 0)))// && Block_Ambient == 0)
-		{
-			
-			Do_Colour_Picker();
-		}
+		ImGui::Text("Ambient Colour:");
+		ImGui::SameLine();
+		ImGuiColorEditFlags misc_flags2 = (ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_InputRGB | ImGuiColorEditFlags_Uint8);
+		ImGui::ColorEdit3("", (float*)&Float_Colour, ImGuiColorEditFlags_NoInputs | misc_flags2);
+		
+		Colour_Int_Red = Float_Colour.x * 255;
+		Colour_Int_Green = Float_Colour.y * 255;
+		Colour_Int_Blue = Float_Colour.z * 255;
 
+		App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour = Ogre::Vector3(Float_Colour.x, Float_Colour.y, Float_Colour.z);
+		App->SBC_Ogre->mSceneMgr->setAmbientLight(ColourValue(Float_Colour.x, Float_Colour.y, Float_Colour.z));
+
+		//Do_Colour_Picker();
 	}
 
 	// ---------------------------------------------------------------- Sound
@@ -114,7 +132,139 @@ void SB_Gui_Environment::Environ_PropertyEditor()
 	{
 		ImGui::NextColumn();
 		ImGui::AlignTextToFramePadding();
-		ImGui::Text("my sailor is poor");
+		
+		ImGui::Selectable("Track:- ", &ClickOnTrack);
+		ImGui::SameLine();
+		ImGui::Text("%s", App->SBC_Scene->B_Object[Index]->S_Environ[0]->Sound_File);
+
+		if (ClickOnTrack)
+		{
+			ImGui::TextColored(ImVec4(0.f, 1.f, 0.24f, 1.f), "ON");
+
+			App->SBC_SoundMgr->Accessed = 1;
+			strcpy(App->SBC_SoundMgr->Access_File, App->SBC_Scene->B_Object[Index]->S_Environ[0]->Sound_File);
+
+			App->SBC_Com_Environments->Set_Environment_By_Index(0, Index);
+			App->SBC_SoundMgr->Dialog_SoundFile();
+
+			if (App->SBC_SoundMgr->IsCancelled == 0)
+			{
+
+				strcpy(App->SBC_Scene->B_Object[Index]->S_Environ[0]->Sound_File, App->SBC_SoundMgr->Access_File);
+				App->SBC_Scene->B_Object[Index]->S_Environ[0]->SndVolume = App->SBC_SoundMgr->SndVolume;
+
+				App->SBC_Com_Environments->Set_Environment_By_Index(1, Index);
+
+				App->SBC_Com_Environments->Mark_As_Altered_Environ(Index);
+			}
+			else
+			{
+				App->SBC_Com_Environments->Set_Environment_By_Index(1, Index);
+			}
+
+			ClickOnTrack = 0;
+		}
+		
+		// ----------------- Volume
+		ImGui::Selectable("Volume:- ", &ClickOnVolume);
+		ImGui::SameLine();
+		ImGui::Text("%f", App->SBC_Scene->B_Object[Index]->S_Environ[0]->SndVolume);
+		if (ClickOnVolume)
+		{
+			ClickOnVolume = 0;
+		}
+
+		// ----------------- Play
+		ImGui::Selectable("Play:- ", &ClickOnPlay);
+		ImGui::SameLine();
+		ImGui::Text("%i", App->SBC_Scene->B_Object[Index]->S_Environ[0]->Play);
+		if (ClickOnPlay)
+		{
+			ClickOnPlay = 0;
+		}
+
+		// ----------------- Loop
+		ImGui::Selectable("Loop:- ", &ClickOnLoop);
+		ImGui::SameLine();
+		ImGui::Text("%i", App->SBC_Scene->B_Object[Index]->S_Environ[0]->Loop);
+		if (ClickOnLoop)
+		{
+			ClickOnLoop = 0;
+		}
+	}
+
+	// ---------------------------------------------------------------- Fog
+	if (PropertyEditor_Page == 2)
+	{
+		ImGui::NextColumn();
+		ImGui::AlignTextToFramePadding();
+
+		// ----------------- Visible
+		ImGui::Selectable("Visible:- ", &ClickOnFogVisible);
+		ImGui::SameLine();
+		ImGui::Text("%i", App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_On);
+		if (ClickOnFogVisible)
+		{
+			strcpy(App->Cl_Dialogs->btext, "Set Fog Visiblity");
+
+			App->Cl_Dialogs->TrueFlase = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_On;
+
+			strcpy(App->Cl_Dialogs->btext, "Set Fog On/Off");
+			App->Cl_Dialogs->Dialog_TrueFlase(App->MainHwnd);
+
+			if (App->Cl_Dialogs->Canceled == 0)
+			{
+				if (App->Cl_Dialogs->TrueFlase == 1)
+				{
+					App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_On = 1;
+					App->Cl_Environment->EnableFog(true);
+				}
+				else
+				{
+					App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_On = 0;
+					App->Cl_Environment->EnableFog(false);
+				}
+
+				App->SBC_Com_Environments->Mark_As_Altered_Environ(Index);
+			}
+
+			ClickOnFogVisible = 0;
+		}
+
+		// ----------------- Mode
+		ImGui::Selectable("Mode:- ", &ClickOnFogMode);
+		ImGui::SameLine();
+		ImGui::Text("%i", App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Mode);
+		if (ClickOnFogMode)
+		{
+			ClickOnFogMode = 0;
+		}
+
+
+		// ----------------- Start
+		ImGui::Text("Start:- ", App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Start);
+		ImGui::SameLine();
+		
+		if (ImGui::InputFloat("##1", &App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Start, 0.5, 0, "%.3f"))
+		{
+			if (App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_On == 1)
+			{
+				App->Cl_Environment->EnableFog(true);
+			}
+		}
+
+		// ----------------- End
+		ImGui::Text("End:-   ", App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_End);
+		ImGui::SameLine();
+
+		if (ImGui::InputFloat("##2", &App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_End, 0.5, 0, "%.3f"))
+		{
+			if (App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_On == 1)
+			{
+				App->Cl_Environment->EnableFog(true);
+			}
+		}
+
 	}
 
 	ImGui::PopStyleVar();
