@@ -379,6 +379,7 @@ bool SB_Collision::Do_Teleport(int Index)
 			App->SBC_Scene->B_Object[Index]->S_Teleport[0]->SndFile->setVolume(App->SBC_Scene->B_Object[Index]->S_Teleport[0]->SndVolume);
 			App->SBC_Scene->B_Object[Index]->S_Teleport[0]->SndFile->setIsPaused(false);
 
+			// Environment
 			if (App->SBC_Scene->GameMode_Running_Flag == 1)
 			{
 				App->SBC_Com_Environments->Set_Environment_By_Index(0, Old_Sound_Index);
@@ -418,6 +419,7 @@ bool SB_Collision::Do_Teleport(int Index)
 			App->SBC_Scene->B_Object[Index]->S_Teleport[0]->SndFile->setIsPaused(false);
 		}
 
+		// Environment
 		if (App->SBC_Scene->GameMode_Running_Flag == 1)
 		{
 			App->SBC_Com_Environments->Set_Environment_By_Index(0, Old_Sound_Index);

@@ -99,20 +99,20 @@ bool OgreImGui::mouseReleased()
 // Inherhited from OIS::KeyListener
 bool OgreImGui::keyPressed()
 {
-   // ImGuiIO& io = ImGui::GetIO();
-  //  io.KeysDown[arg.key] = true;
-
-   /* if(arg.text>0)
-    {
-        io.AddInputCharacter((unsigned short)arg.text);
-    }*/
+    ImGuiIO& io = ImGui::GetIO();
+ //   io.KeysDown[arg.key] = true;
+ 
+   // if(arg.text>0)
+    //{
+       // io.AddInputCharacter((unsigned short)arg.text);
+   // }*/
 
     return true;
 }
 
 bool OgreImGui::keyReleased()
 {
-   // ImGuiIO& io = ImGui::GetIO();
+    ImGuiIO& io = ImGui::GetIO();
   //  io.KeysDown[arg.key] = false;
     return true;
 }

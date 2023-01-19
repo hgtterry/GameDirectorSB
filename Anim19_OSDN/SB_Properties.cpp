@@ -738,7 +738,7 @@ bool SB_Properties::Update_ListView_Environs()
 	SetWindowText(Properties_Dlg_hWnd, chr_ID);
 	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->B_Object[index]->Mesh_Name);
 
-	const int NUM_ITEMS = 8;
+	const int NUM_ITEMS = 3;
 	const int NUM_COLS = 2;
 	std::string grid[NUM_COLS][NUM_ITEMS];
 	LV_ITEM pitem;
@@ -747,12 +747,7 @@ bool SB_Properties::Update_ListView_Environs()
 
 	grid[0][0] = "Name",		grid[1][0] = App->SBC_Scene->B_Object[index]->Mesh_Name;
 	grid[0][1] = " ",			grid[1][1] = " ";
-	grid[0][2] = "Main Light",	grid[1][2] = "Options";
-	grid[0][3] = "Sound",		grid[1][3] = "Options";
-	grid[0][4] = "Fog",			grid[1][4] = "Options";
-	grid[0][5] = "Sky",			grid[1][5] = "Options";
-	grid[0][6] = " ",			grid[1][6] = " ";
-	grid[0][7] = "Evironment",	grid[1][7] = "Settings";
+	grid[0][2] = "Evironment",	grid[1][2] = "Settings";
 
 	ListView_DeleteAllItems(Properties_hLV);
 
@@ -820,7 +815,7 @@ bool SB_Properties::Update_ListView_Teleport()
 
 	// Environ
 	char chr_Environ_Disabled[100];
-	if (App->SBC_Scene->B_Object[index]->S_Environ[0]->Enabled == 1)
+	if (App->SBC_Scene->B_Object[index]->S_Environ[0]->Environ_Enabled == 1)
 	{
 		strcpy(chr_Environ_Disabled, "Enabled");
 	}
@@ -830,9 +825,9 @@ bool SB_Properties::Update_ListView_Teleport()
 	}
 
 
-	if (App->SBC_Scene->B_Object[index]->S_Environ[0]->Enabled == 1)
+	if (App->SBC_Scene->B_Object[index]->S_Environ[0]->Environ_Enabled == 1)
 	{
-		const int NUM_ITEMS = 13;
+		const int NUM_ITEMS = 9;
 		const int NUM_COLS = 2;
 		string grid[NUM_COLS][NUM_ITEMS]; // string table
 
@@ -849,11 +844,6 @@ bool SB_Properties::Update_ListView_Teleport()
 		grid[0][6] = " ",		grid[1][6] = " ";
 		grid[0][7] = "Counter", grid[1][7] = chr_Counter_Disabled;
 		grid[0][8] = "Environment", grid[1][8] = chr_Environ_Disabled;
-
-		grid[0][9] = "Main Light",		grid[1][9] = "Options";
-		grid[0][10] = "Sound_Env",		grid[1][10] = "Options";
-		grid[0][11] = "Fog",			grid[1][11] = "Options";
-		grid[0][12] = "Sky",			grid[1][12] = "Options";
 
 		ListView_DeleteAllItems(Properties_hLV);
 
@@ -2559,51 +2549,10 @@ bool SB_Properties::Edit_Environs_OnClick(LPARAM lParam)
 	test = poo->iItem;
 	ListView_GetItemText(Properties_hLV, test, 0, btext, 20);
 
-	/*result = strcmp(btext, "Name");
-	if (result == 0)
-	{
-		App->SBC_Com_Environments->Rename_Environ(Index);
-		Update_ListView_Environs();
-		return 1;
-	}
-
-	result = strcmp(btext, "Main Light");
-	if (result == 0)
-	{
-		App->Cl_Environment->Start_Environment("Main Light");
-		Update_ListView_Environs();
-
-		return 1;
-	}
-
-	result = strcmp(btext, "Sound");
-	if (result == 0)
-	{
-		App->Cl_Environment->Start_Environment("Sound");
-		Update_ListView_Environs();
-		return 1;
-	}
-
-	result = strcmp(btext, "Fog");
-	if (result == 0)
-	{
-		App->Cl_Environment->Start_Environment("Fog");
-		Update_ListView_Environs();
-		return 1;
-	}
-
-	result = strcmp(btext, "Sky");
-	if (result == 0)
-	{
-		App->Cl_Environment->Start_Environment("Sky");
-		Update_ListView_Environs();
-		return 1;
-	}*/
-
 	result = strcmp(btext, "Evironment");
 	if (result == 0)
 	{
-		App->SBC_Gui_Environ->Start_Environment_Editor(Index);
+		App->SBC_Gui_Environ->Start_Environment_Editor(Index,0);
 		return 1;
 	}
 
@@ -3128,7 +3077,9 @@ bool SB_Properties::Edit_Teleport_OnClick(LPARAM lParam)
 	result = strcmp(btext, "Environment");
 	if (result == 0)
 	{
-		App->SBC_Dialogs->YesNo("Enable Environment","Enable Teleport Environment", true);
+		App->SBC_Gui_Environ->Start_Environment_Editor(Index,1);
+		
+		/*App->SBC_Dialogs->YesNo("Enable Environment","Enable Teleport Environment", true);
 
 		if (App->SBC_Dialogs->Canceled == 0)
 		{
@@ -3137,7 +3088,7 @@ bool SB_Properties::Edit_Teleport_OnClick(LPARAM lParam)
 		else
 		{
 			App->SBC_Scene->B_Object[Index]->S_Environ[0]->Enabled = 0;
-		}
+		}*/
 
 		Update_ListView_Teleport();
 

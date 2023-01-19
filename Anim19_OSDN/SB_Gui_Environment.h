@@ -29,7 +29,7 @@ public:
 	~SB_Gui_Environment(void);
 
 	void Environ_PropertyEditor();
-	void Start_Environment_Editor(int Index);
+	void Start_Environment_Editor(int Index,bool IsTeleport);
 	void Close_Environment_Editor();
 
 	void SetSky(bool Enable);
@@ -39,6 +39,8 @@ public:
 	int PropertyEditor_Page;
 
 protected:
+
+	void Set_To_PlayerView();
 
 	// Ambient
 	int Ambient_Int_Red;
@@ -57,6 +59,8 @@ protected:
 	int Eviron_Index;
 
 	bool Float_Exit;
+
+	bool Is_Teleport;
 
 	float Float_PosX;
 	float Float_PosY;

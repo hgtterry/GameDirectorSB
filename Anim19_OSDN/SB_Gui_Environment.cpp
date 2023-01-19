@@ -44,6 +44,8 @@ SB_Gui_Environment::SB_Gui_Environment(void)
 
 	Eviron_Index = 0;
 
+	Is_Teleport = 0;
+
 	ClickOnTrack = 0;
 	ClickOnVolume = 0;
 	ClickOnPlay = 0;
@@ -68,9 +70,10 @@ SB_Gui_Environment::~SB_Gui_Environment(void)
 // *************************************************************************
 // *	 Start_Environment_Editor:- Terry and Hazel Flanigan 2023  		   *
 // *************************************************************************
-void SB_Gui_Environment::Start_Environment_Editor(int Index)
+void SB_Gui_Environment::Start_Environment_Editor(int Index,bool IsTeleport)
 {
 	Eviron_Index = Index;
+	Is_Teleport = IsTeleport;
 
 	Float_Exit = 0;
 
@@ -404,6 +407,23 @@ void SB_Gui_Environment::Environ_PropertyEditor()
 		Show_PropertyEditor = 0;
 	}
 
+	if (Is_Teleport == 1)
+	{
+		ImGui::SameLine();
+		if (ImGui::Button("Goto Location", ImVec2(120, 0)))
+		{
+			App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(App->SBC_Scene->B_Object[Eviron_Index]->S_Teleport[0]->Physics_Position);
+			App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->SBC_Scene->B_Object[Eviron_Index]->S_Teleport[0]->Physics_Rotation);
+			Set_To_PlayerView();
+		}
+
+		ImGui::SameLine();
+		if (ImGui::Checkbox("Enabled", &App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->Environ_Enabled))
+		{
+			App->SBC_Properties->Update_ListView_Teleport();
+		}
+	}
+
 	ImGui::End();
 }
 
@@ -421,6 +441,28 @@ void SB_Gui_Environment::Close_Environment_Editor()
 
 	Index = App->SBC_Com_Environments->Get_First_Environ();
 	App->SBC_Com_Environments->Set_Environment_By_Index(0, Index);
+}
+
+// *************************************************************************
+// *		 Set_To_PlayerView:- Terry and Hazel Flanigan 2022  		   *
+// *************************************************************************
+void SB_Gui_Environment::Set_To_PlayerView()
+{
+	App->SBC_Ogre->OgreListener->GD_CameraMode = Enums::CamFirst;
+	App->SBC_TopTabs->Toggle_FirstCam_Flag = 1;
+	App->SBC_TopTabs->Toggle_FreeCam_Flag = 0;
+
+	App->SBC_Scene->B_Player[0]->Player_Node->setVisible(false);
+
+	int f = App->SBC_Scene->B_Player[0]->Phys_Body->getCollisionFlags();
+	App->SBC_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f | (1 << 5));
+
+	App->SBC_Ogre->BulletListener->Render_Debug_Flag = 0;
+	App->SBC_Ogre->BulletListener->Render_Debug_Flag = 1;
+
+	App->SBC_Ogre->OgreListener->GD_Run_Physics = 1;
+
+	RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 
 // *************************************************************************

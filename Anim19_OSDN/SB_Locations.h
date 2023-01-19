@@ -32,13 +32,14 @@ public:
 	void Start_Locations_Dlg();
 	void Create_Location_Entity(char* name);
 
+	void Set_To_PlayerView();
+
 protected:
 
 	static LRESULT CALLBACK Locations_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Goto_Location(int Index);
 
-	void Set_To_PlayerView();
 	void Set_To_FreeCam();
 	void Delete_Location();
 	void Save_Location();
