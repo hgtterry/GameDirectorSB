@@ -32,6 +32,9 @@ public:
 	void Start_Environment_Editor(int Index);
 	void Close_Environment_Editor();
 
+	void SetSky(bool Enable);
+	bool EnableFog(bool SetFog);
+
 	bool Show_PropertyEditor;
 	int PropertyEditor_Page;
 

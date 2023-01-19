@@ -752,7 +752,7 @@ bool SB_Properties::Update_ListView_Environs()
 	grid[0][4] = "Fog",			grid[1][4] = "Options";
 	grid[0][5] = "Sky",			grid[1][5] = "Options";
 	grid[0][6] = " ",			grid[1][6] = " ";
-	grid[0][7] = "Test",		grid[1][7] = " ";
+	grid[0][7] = "Evironment",	grid[1][7] = "Settings";
 
 	ListView_DeleteAllItems(Properties_hLV);
 
@@ -2559,7 +2559,7 @@ bool SB_Properties::Edit_Environs_OnClick(LPARAM lParam)
 	test = poo->iItem;
 	ListView_GetItemText(Properties_hLV, test, 0, btext, 20);
 
-	result = strcmp(btext, "Name");
+	/*result = strcmp(btext, "Name");
 	if (result == 0)
 	{
 		App->SBC_Com_Environments->Rename_Environ(Index);
@@ -2598,9 +2598,9 @@ bool SB_Properties::Edit_Environs_OnClick(LPARAM lParam)
 		App->Cl_Environment->Start_Environment("Sky");
 		Update_ListView_Environs();
 		return 1;
-	}
+	}*/
 
-	result = strcmp(btext, "Test");
+	result = strcmp(btext, "Evironment");
 	if (result == 0)
 	{
 		App->SBC_Gui_Environ->Start_Environment_Editor(Index);
@@ -3147,7 +3147,7 @@ bool SB_Properties::Edit_Teleport_OnClick(LPARAM lParam)
 	result = strcmp(btext, "Main Light");
 	if (result == 0)
 	{
-		App->Cl_Environment->Start_Environment("Main Light");
+		//App->Cl_Environment->Start_Environment("Main Light");
 		Update_ListView_Teleport();
 
 		return 1;
@@ -3156,7 +3156,7 @@ bool SB_Properties::Edit_Teleport_OnClick(LPARAM lParam)
 	result = strcmp(btext, "Sound_Env");
 	if (result == 0)
 	{
-		App->Cl_Environment->Start_Environment("Sound");
+		//App->Cl_Environment->Start_Environment("Sound");
 		Update_ListView_Teleport();
 		return 1;
 	}
@@ -3164,7 +3164,7 @@ bool SB_Properties::Edit_Teleport_OnClick(LPARAM lParam)
 	result = strcmp(btext, "Fog");
 	if (result == 0)
 	{
-		App->Cl_Environment->Start_Environment("Fog");
+		//App->Cl_Environment->Start_Environment("Fog");
 		Update_ListView_Teleport();
 		return 1;
 	}
@@ -3172,7 +3172,7 @@ bool SB_Properties::Edit_Teleport_OnClick(LPARAM lParam)
 	result = strcmp(btext, "Sky");
 	if (result == 0)
 	{
-		App->Cl_Environment->Start_Environment("Sky");
+		//App->Cl_Environment->Start_Environment("Sky");
 		Update_ListView_Teleport();
 		return 1;
 	}

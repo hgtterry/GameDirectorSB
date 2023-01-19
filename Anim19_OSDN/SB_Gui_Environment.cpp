@@ -265,12 +265,12 @@ void SB_Gui_Environment::Environ_PropertyEditor()
 				if (App->Cl_Dialogs->TrueFlase == 1)
 				{
 					App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->Fog_On = 1;
-					App->Cl_Environment->EnableFog(true);
+					EnableFog(true);
 				}
 				else
 				{
 					App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->Fog_On = 0;
-					App->Cl_Environment->EnableFog(false);
+					EnableFog(false);
 				}
 
 				App->SBC_Com_Environments->Mark_As_Altered_Environ(Eviron_Index);
@@ -302,7 +302,7 @@ void SB_Gui_Environment::Environ_PropertyEditor()
 
 		if (App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->Fog_On == 1)
 		{
-			App->Cl_Environment->EnableFog(true);
+			EnableFog(true);
 		}
 
 		// ----------------- Start
@@ -313,7 +313,7 @@ void SB_Gui_Environment::Environ_PropertyEditor()
 		{
 			if (App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->Fog_On == 1)
 			{
-				App->Cl_Environment->EnableFog(true);
+				EnableFog(true);
 			}
 		}
 
@@ -325,7 +325,7 @@ void SB_Gui_Environment::Environ_PropertyEditor()
 		{
 			if (App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->Fog_On == 1)
 			{
-				App->Cl_Environment->EnableFog(true);
+				EnableFog(true);
 			}
 		}
 
@@ -355,12 +355,12 @@ void SB_Gui_Environment::Environ_PropertyEditor()
 				if (App->Cl_Dialogs->TrueFlase == 1)
 				{
 					App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->Enabled = 1;
-					App->Cl_Environment->SetSky(1);
+					SetSky(1);
 				}
 				else
 				{
 					App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->Enabled = 0;
-					App->Cl_Environment->SetSky(0);
+					SetSky(0);
 				}
 
 				App->SBC_Com_Environments->Mark_As_Altered_Environ(Eviron_Index);
@@ -377,7 +377,7 @@ void SB_Gui_Environment::Environ_PropertyEditor()
 		{
 			if (App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->Enabled == 1)
 			{
-				App->Cl_Environment->SetSky(true);
+				SetSky(true);
 			}
 		}
 
@@ -389,7 +389,7 @@ void SB_Gui_Environment::Environ_PropertyEditor()
 		{
 			if (App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->Enabled == 1)
 			{
-				App->Cl_Environment->SetSky(true);
+				SetSky(true);
 			}
 		}
 
@@ -421,4 +421,45 @@ void SB_Gui_Environment::Close_Environment_Editor()
 
 	Index = App->SBC_Com_Environments->Get_First_Environ();
 	App->SBC_Com_Environments->Set_Environment_By_Index(0, Index);
+}
+
+// *************************************************************************
+// *	  		SetSky:- Terry and Hazel Flanigan 2023					   *
+// *************************************************************************
+void SB_Gui_Environment::SetSky(bool Enable)
+{
+	int Index = App->SBC_Properties->Current_Selected_Object;
+
+	App->SBC_Ogre->mSceneMgr->setSkyDome(Enable,
+		App->SBC_Scene->B_Object[Index]->S_Environ[0]->Material,
+		App->SBC_Scene->B_Object[Index]->S_Environ[0]->Curvature,
+		App->SBC_Scene->B_Object[Index]->S_Environ[0]->Tiling,
+		App->SBC_Scene->B_Object[Index]->S_Environ[0]->Distance);
+}
+
+// *************************************************************************
+// *	  		EnableFog:- Terry and Hazel Flanigan 2023				   *
+// *************************************************************************
+bool SB_Gui_Environment::EnableFog(bool SetFog)
+{
+	int Index = App->SBC_Properties->Current_Selected_Object;
+
+	if (SetFog == true)
+	{
+		float Start = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Start;
+		float End = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_End;
+		float Density = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Density;
+
+		float x = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.x;
+		float y = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.y;
+		float z = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.z;
+
+		App->SBC_Ogre->mSceneMgr->setFog(FOG_LINEAR, ColourValue(x, y, z), Density, (Ogre::Real)Start, (Ogre::Real)End);
+	}
+	else
+	{
+		App->SBC_Ogre->mSceneMgr->setFog(FOG_NONE, ColourValue(0.7, 0.7, 0.8), 0, 100, 1000);
+	}
+
+	return 1;
 }

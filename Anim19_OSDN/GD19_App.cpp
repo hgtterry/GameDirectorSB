@@ -36,7 +36,6 @@ GD19_App::GD19_App(void)
 	SBC_Bullet =		nullptr;
 	Cl_Ini =			nullptr;
 	SBC_Visuals =		nullptr;
-	Cl_Environment =	nullptr;
 	Cl_Dialogs =		nullptr;
 	Cl_Objects_Com =	nullptr;
 	Cl_LookUps =		nullptr;
@@ -213,7 +212,6 @@ bool GD19_App::InitApp(void)
 	SBC_Bullet =		new SB_Bullet();		
 	Cl_Ini =			new T_Ini();
 	SBC_Visuals =		new SB_Visuals();
-	Cl_Environment =	new GD19_Environment();
 	Cl_Dialogs =		new GD19_Dialogs();
 	Cl_Objects_Com =	new GD19_Objects_Com();
 	Cl_LookUps =		new GD19_LookUps();	
