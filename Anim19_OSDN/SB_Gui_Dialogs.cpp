@@ -97,32 +97,6 @@ void SB_Gui_Dialogs::BackGround_Render_Loop(void)
 }
 
 // *************************************************************************
-// *			Gui_Render_Loop:- Terry and Hazel Flanigan 2022			   *
-// *************************************************************************
-void SB_Gui_Dialogs::Gui_Render_Loop(void)
-{
-	if (Show_Dialog_Float == 1)
-	{
-		Dialog_Float();
-	}
-
-	if (Show_Dialog_MessageEditor == 1)
-	{
-		Dialog_MessageEditor();
-	}
-
-	if (Show_ColourPicker == 1)
-	{
-		Dialog_Colour_Picker();
-	}
-
-	if (Show_Progress_Bar2 == 1)
-	{
-		ImGui_ProgressBar2();
-	}
-}
-
-// *************************************************************************
 // *		Start_Dialog_Float:- Terry and Hazel Flanigan 2022  		   *
 // *************************************************************************
 void SB_Gui_Dialogs::Start_Dialog_Float(float Step, float StartValue,char* Banner)

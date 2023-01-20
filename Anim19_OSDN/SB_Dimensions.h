@@ -31,8 +31,7 @@ public:
 
 	void ImGui_Dimensions(void);
 	void UpDate_Physics_And_Visuals(int Index);
-	void Dimesions_Select(void);
-
+	
 	bool Show_Dimensions;
 
 	bool Show_Position;

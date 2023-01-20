@@ -60,21 +60,6 @@ SB_Dimensions::~SB_Dimensions()
 
 }
 
-// *************************************************************************
-// *					Dimesions_Select  Terry Flanigan				   *
-// *************************************************************************
-void SB_Dimensions::Dimesions_Select(void)
-{
-	if (Show_Position == 1 || Show_Scale == 1 || Show_Rotation == 1)
-	{
-		Show_Dimensions = 1;
-		App->SBC_Dimensions->ImGui_Dimensions();
-	}
-	else
-	{
-		Show_Dimensions = 0;
-	}
-}
 
 // *************************************************************************
 // *						ImGui_Dimensions  Terry Flanigan			   *
@@ -85,12 +70,16 @@ void SB_Dimensions::ImGui_Dimensions(void)
 
 	ImGuiStyle* style = &ImGui::GetStyle();
 
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
+
 	if (!ImGui::Begin("Rotation2", &Show_Dimensions, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
 	{
 		ImGui::End();
 	}
 	else
 	{
+		
+
 		int Index = App->SBC_Properties->Current_Selected_Object;
 		
 		ImGui::Indent();
@@ -215,6 +204,8 @@ void SB_Dimensions::ImGui_Dimensions(void)
 
 			//App->CL_Ogre->RenderListener->Show_Crosshair = 0;
 		}
+
+		ImGui::PopStyleColor();
 		ImGui::End();
 	}
 }

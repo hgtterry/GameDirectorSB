@@ -29,7 +29,8 @@ public:
 	SB_Debug();
 	~SB_Debug();
 
-	void Debug_Render_Loop(void);
+	void ImGui_Debug_Camera(void);
+	void ImGui_Debug_Project(void);
 
 	bool Allow_Debug;
 
@@ -38,7 +39,6 @@ public:
 
 protected:
 
-	void ImGui_Debug_Camera(void);
-	void ImGui_Debug_Project(void);
+	
 };
 

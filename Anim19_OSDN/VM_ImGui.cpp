@@ -17,9 +17,6 @@ VM_ImGui::VM_ImGui()
 	StartPos_PB = 0;
 	Show_FPS = 1;
 	Show_ImGui_Test = 0;
-	Show_Rotation = 0;
-	Show_Position = 0;
-	Show_Scale = 0;
 	Show_Image = 0;
 	Show_Group_List = 0;
 	Show_Motion_List = 0;
@@ -66,9 +63,6 @@ void VM_ImGui::Reset_Class(void)
 	StartPos = 0;
 	Show_FPS = 1;
 	Show_ImGui_Test = 0;
-	Show_Rotation = 0;
-	Show_Position = 0;
-	Show_Scale = 0;
 	Show_Object_Data = 0;
 
 	Model_XTranslate = 2;
@@ -152,10 +146,11 @@ void VM_ImGui::ImGui_Set_Colours(void)
 }
 
 // *************************************************************************
-// *					ImGui_Render_Loop  Terry Flanigan				   *
+// *					ImGui_Editor_Loop  Terry Flanigan				   *
 // *************************************************************************
-void VM_ImGui::ImGui_Render_Loop(void)
+void VM_ImGui::ImGui_Editor_Loop(void)
 {
+
 	if (Show_FPS == 1)
 	{
 		ImGui_FPS();
@@ -171,7 +166,6 @@ void VM_ImGui::ImGui_Render_Loop(void)
 		ImGui_App_Data();
 	}
 
-	//Show_ImGui_Test = 1;
 	if (Show_ImGui_Test == 1)
 	{
 		ImGui::ShowDemoWindow();
@@ -197,156 +191,47 @@ void VM_ImGui::ImGui_Render_Loop(void)
 		App->SBC_Gui_Environ->Environ_PropertyEditor();
 	}
 
-}
-
-// *************************************************************************
-// *					Tabs_Render_Camera  Terry Bernie				   *
-// *************************************************************************
-void VM_ImGui::Tabs_Render_Camera(void)
-{
-	if (Show_FPS == 1)
+	// SBC_Debug
+	if (App->SBC_Debug->Show_Debug_Camera == 1)
 	{
-		ImGui_FPS();
+		App->SBC_Debug->ImGui_Debug_Camera();
 	}
 
-	if (Show_Model_Data == 1)
+	if (App->SBC_Debug->Show_Debug_Project == 1)
 	{
-		ImGui_Model_Data();
+		App->SBC_Debug->ImGui_Debug_Project();
 	}
 
-	if (Show_App_Data == 1)
+	// SBC_Dimensions
+	if (App->SBC_Dimensions->Show_Position == 1 || App->SBC_Dimensions->Show_Scale == 1 || App->SBC_Dimensions->Show_Rotation == 1)
 	{
-		ImGui_App_Data();
+		App->SBC_Dimensions->Show_Dimensions = 1;
+		App->SBC_Dimensions->ImGui_Dimensions();
+	}
+	else
+	{
+		App->SBC_Dimensions->Show_Dimensions = 0;
 	}
 
-	if (Show_ImGui_Test == 1)
+	// SBC_Gui_Dialogs
+	if (App->SBC_Gui_Dialogs->Show_Dialog_Float == 1)
 	{
-		ImGui::ShowDemoWindow();
+		App->SBC_Gui_Dialogs->Dialog_Float();
 	}
 
-	if (Show_Position == 1)
+	if (App->SBC_Gui_Dialogs->Show_Dialog_MessageEditor == 1)
 	{
-		
+		App->SBC_Gui_Dialogs->Dialog_MessageEditor();
 	}
 
-	if (Show_Object_Data == 1)
+	if (App->SBC_Gui_Dialogs->Show_ColourPicker == 1)
 	{
-		ImGui_Object_Data();
-	}
-	
-}
-
-// *************************************************************************
-// *					Tabs_Render_Motions  Terry Bernie				   *
-// *************************************************************************
-void VM_ImGui::Tabs_Render_Motions(void)
-{
-	if (Show_FPS == 1)
-	{
-		ImGui_FPS();
+		App->SBC_Gui_Dialogs->Dialog_Colour_Picker();
 	}
 
-	if (Show_Model_Data == 1)
+	if (App->SBC_Gui_Dialogs->Show_Progress_Bar2 == 1)
 	{
-		ImGui_Model_Data();
-	}
-
-	if (Show_App_Data == 1)
-	{
-		ImGui_App_Data();
-	}
-
-	if (Show_Motion_List == 1)
-	{
-		ImGui_MotionList();
-	}
-
-	if (Show_Object_Data == 1)
-	{
-		ImGui_Object_Data();
-	}
-}
-
-// *************************************************************************
-// *					Tabs_Render_Dimensions  Terry Bernie			   *
-// *************************************************************************
-void VM_ImGui::Tabs_Render_Dimensions(void)
-{
-	if (Show_FPS == 1)
-	{
-		ImGui_FPS();
-	}
-
-	if (Show_Model_Data == 1)
-	{
-		ImGui_Model_Data();
-	}
-
-	if (Show_App_Data == 1)
-	{
-		ImGui_App_Data();
-	}
-
-	if (Show_Rotation == 1)
-	{
-		
-	}
-
-	if (Show_Position == 1)
-	{
-		
-	}
-
-	if (Show_Scale == 1)
-	{
-		
-	}
-
-	if (Show_Object_Data == 1)
-	{
-		ImGui_Object_Data();
-	}
-
-}
-
-// *************************************************************************
-// *					Tabs_Render_Groups  Terry Bernie				   *
-// *************************************************************************
-void VM_ImGui::Tabs_Render_Groups(void)
-{
-	if (Show_FPS == 1)
-	{
-		ImGui_FPS();
-	}
-
-	if (Show_Model_Data == 1)
-	{
-		ImGui_Model_Data();
-	}
-
-	if (Show_App_Data == 1)
-	{
-		ImGui_App_Data();
-	}
-
-	if (Show_ImGui_TextureData == 1)
-	{
-		ImGui_Texture_Data();
-	}
-
-	if (Show_Group_List == 1)
-	{
-		ImGui_GroupList();
-	}
-
-	if (Show_Position == 1)
-	{
-		
-	}
-
-	if (Show_Object_Data == 1)
-	{
-		ImGui_Object_Data();
+		App->SBC_Gui_Dialogs->ImGui_ProgressBar2();
 	}
 
 }

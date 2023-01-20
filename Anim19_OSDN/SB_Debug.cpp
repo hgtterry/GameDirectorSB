@@ -40,22 +40,6 @@ SB_Debug::~SB_Debug()
 }
 
 // *************************************************************************
-// *						Debug_Render_Loop  Terry Flanigan			   *
-// *************************************************************************
-void SB_Debug::Debug_Render_Loop(void)
-{
-	if (Show_Debug_Camera == 1)
-	{
-		ImGui_Debug_Camera();
-	}
-
-	if (Show_Debug_Project == 1)
-	{
-		ImGui_Debug_Project();
-	}
-}
-
-// *************************************************************************
 // *					ImGui_Debug_Camera  Terry Flanigan				   *
 // *************************************************************************
 void SB_Debug::ImGui_Debug_Camera(void)

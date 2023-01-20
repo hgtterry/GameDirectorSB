@@ -231,16 +231,6 @@ bool GD19_OgreListener::frameEnded(const FrameEvent& evt)
 bool GD19_OgreListener::Update_Game_Logic(float DeltaTime)
 {
 
-	//if (App->CL_Vm_ImGui->Show_Progress_Bar == 1)
-	//{
-	//	App->SBC_Ogre->Get_View_Height_Width();
-
-	//	App->SBC_Ogre->m_imgui.NewFrame(DeltaTime, (float)View_Width, (float)View_Height);
-	//	/*App->CL_Vm_ImGui->Show_Progress_Bar = 1;
-	//	App->CL_Vm_ImGui->ImGui_ProgressBar();*/
-	//	return true;
-	//}
-
 	App->SBC_Ogre->Get_View_Height_Width();
 	App->SBC_Ogre->m_imgui.NewFrame(DeltaTime, (float)View_Width, (float)View_Height);
 
@@ -270,10 +260,7 @@ bool GD19_OgreListener::Update_Game_Logic(float DeltaTime)
 		Count++;
 	}
 
-	App->CL_Vm_ImGui->ImGui_Render_Loop();
-	App->SBC_Debug->Debug_Render_Loop();
-	App->SBC_Dimensions->Dimesions_Select();
-	App->SBC_Gui_Dialogs->Gui_Render_Loop();
+	App->CL_Vm_ImGui->ImGui_Editor_Loop();
 
 	if (App->SBC_Front_Dlg->Show_Front_Dlg_Flag == 1)
 	{

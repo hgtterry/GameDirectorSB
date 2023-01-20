@@ -21,12 +21,8 @@ public:
 	void ImGui_Model_Data(void);
 	void ImGui_App_Data(void);
 
-	void ImGui_Render_Loop(void);
-	void Tabs_Render_Camera(void);
-	void Tabs_Render_Motions(void);
-	void Tabs_Render_Dimensions(void);
-	void Tabs_Render_Groups(void);
-
+	void ImGui_Editor_Loop(void);
+	
 	void ImGui_Collision_Debug(void);
 
 	void Set_ProgressCount(float Count);
@@ -41,9 +37,6 @@ public:
 
 	bool Show_Progress_Bar;
 
-	bool Show_Rotation;
-	bool Show_Position;
-	bool Show_Scale;
 	bool Show_Image;
 	bool Show_Group_List;
 	bool Show_Motion_List;

@@ -30,7 +30,6 @@ public:
 
 	void Close_All_Dialogs(void);
 	void BackGround_Render_Loop(void);
-	void Gui_Render_Loop(void);
 
 	void Start_Dialog_Float(float Step, float StartValue, char* Banner);
 
@@ -87,8 +86,6 @@ public:
 	bool ColourPicker_Canceled;
 
 	MSG msg;
-
-protected:
 
 	void Dialog_Float(void);
 	void Dialog_MessageEditor(void);
