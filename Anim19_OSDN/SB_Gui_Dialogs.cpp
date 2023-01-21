@@ -61,6 +61,8 @@ SB_Gui_Dialogs::SB_Gui_Dialogs(void)
 	Colour_Int_Red = 0;
 	Colour_Int_Green = 0;
 	Colour_Int_Blue = 0;
+
+	Show_Debug_Player = 0;
 }
 
 SB_Gui_Dialogs::~SB_Gui_Dialogs(void)
@@ -594,6 +596,49 @@ bool SB_Gui_Dialogs::Nudge()
 
 	return 1;
 }
+
+// *************************************************************************
+// *					Debug Player  Terry Bernie						   *
+// *************************************************************************
+void SB_Gui_Dialogs::Debug_Player(void)
+{
+	ImGui::SetNextWindowPos(ImVec2(500, 100), ImGuiCond_FirstUseEver);
+
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
+
+	if (!ImGui::Begin("Debug_Player", &Show_Debug_Player))
+	{
+		ImGui::End();
+	}
+	else
+	{
+		if (App->Debug_App == 1)
+		{
+			/*ImGui::Text("Delay Timer %l", App->SBC_Ogre->FPStimer.getMicroseconds());
+			ImGui::Text("Ogre Frame Time %f", App->SBC_Ogre->OgreListener->OgreFrameTime);
+			ImGui::Text("Distance To Floor: = %f", App->SBC_Ogre->OgreListener->DistanceToCollision);*/
+
+			if (App->SBC_Scene->Player_Added == 1)
+			{
+	
+				ImGui::Text("Distance To Floor: = %f", App->SBC_Ogre->OgreListener->DistanceToCollision);
+
+				ImGui::Text("AddGravity %i", App->SBC_DCC->AddGravity);
+				ImGui::Text("Is_On_Ground %i",App->SBC_DCC->Is_On_Ground);
+				ImGui::Text("mWorld_Height %f %f %f", App->SBC_DCC->mWorld_Height.getX(), App->SBC_DCC->mWorld_Height.getY(), App->SBC_DCC->mWorld_Height.getZ());
+				ImGui::Text("mGroundPoint %f %f %f", App->SBC_DCC->mGroundPoint.getX(), App->SBC_DCC->mGroundPoint.getY(), App->SBC_DCC->mGroundPoint.getZ());
+				
+			}
+		}
+
+		
+		ImGui::PopStyleColor();
+		ImGui::End();
+	}
+}
+
+
+
 
 // ----------------- Keep for later
 //static char buf2[64] = ""; ImGui::InputText("decimal", buf2, 64, ImGuiInputTextFlags_CharsDecimal);

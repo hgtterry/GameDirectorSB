@@ -239,7 +239,20 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return 1;
 		}
 
-		// ----------------------------------- Debug
+		// ---------------------------------------------------------------------- Debug
+
+		case ID_DEBUG_PLAYER:
+		{
+			if (App->SBC_Gui_Dialogs->Show_Debug_Player == 1)
+			{
+				App->SBC_Gui_Dialogs->Show_Debug_Player = 0;
+			}
+			else
+			{
+				App->SBC_Gui_Dialogs->Show_Debug_Player = 1;
+			}
+			return 1;
+		}
 
 		case ID_TEST_DISABLEDIALOGS:
 		{

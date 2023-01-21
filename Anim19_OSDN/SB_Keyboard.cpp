@@ -53,7 +53,7 @@ void SB_Keyboard::Keyboard_Monitor(float deltaTime)
 			{
 				if (App->SBC_Ogre->OgreListener->GD_Run_Physics == 1)
 				{
-					App->SBC_Scene->B_Player[0]->jump2(btVector3(0, 1, 0));// , 4.2);
+					App->SBC_DCC->jump();
 				}
 			}
 			else
@@ -77,28 +77,32 @@ void SB_Keyboard::Keyboard_Monitor(float deltaTime)
 		//------------------------------------------------ Forward
 		if (GetAsyncKeyState(VK_UP) < 0 && App->SBC_Scene->Player_Added == 1 && App->SBC_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
 		{
-			App->SBC_Scene->B_Player[0]->Move_Player(btVector3(0, 0, -1), deltaTime);
-			App->SBC_Scene->B_Player[0]->IsMOving = 1;
+			if (App->SBC_Scene->Player_Added == 1)
+			{
+				App->SBC_DCC->mMoveDirection = (btVector3(0, 0, -1));// walkDirection
+				App->SBC_Player->Check_Collisions_New();
+				App->SBC_Scene->B_Player[0]->IsMOving = 1;
+			}
 		}
 		else
 		{
 			if (App->SBC_Scene->Player_Added == 1 && App->SBC_Scene->B_Player[0]->IsMOving == 1 && App->SBC_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
 			{
-				App->SBC_Scene->B_Player[0]->Stop();
+				App->SBC_DCC->mMoveDirection = (btVector3(0, 0, 0));// walkDirection
 				App->SBC_Scene->B_Player[0]->IsMOving = 0;
 			}
 		}
 		//------------------------------------------------ Back
 		if (GetAsyncKeyState(VK_DOWN) < 0 && App->SBC_Scene->Player_Added == 1 && App->SBC_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
 		{
-			App->SBC_Scene->B_Player[0]->Move_Player(btVector3(0, 0, 1), deltaTime);
+			App->SBC_DCC->mMoveDirection = (btVector3(0, 0, 1));// walkDirection
 			App->SBC_Scene->B_Player[0]->IsMOving_Back = 1;
 		}
 		else
 		{
 			if (App->SBC_Scene->Player_Added == 1 && App->SBC_Scene->B_Player[0]->IsMOving_Back == 1 && App->SBC_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
 			{
-				App->SBC_Scene->B_Player[0]->Stop();
+				App->SBC_DCC->mMoveDirection = (btVector3(0, 0, 0));// walkDirection
 				App->SBC_Scene->B_Player[0]->IsMOving_Back = 0;
 			}
 		}
@@ -117,7 +121,7 @@ void SB_Keyboard::Keyboard_Monitor(float deltaTime)
 
 				float Delta = App->Cl_Utilities->DegreesToRadians(1);
 
-				//App->SBC_Scene->B_Player[0]->Rotate(Rotate, false);
+				App->SBC_Scene->B_Player[0]->Rotate_FromCam(Rotate, 0.001, false);
 
 				App->SBC_Ogre->OgreListener->toggleTimer = 0.01;
 			}
@@ -137,7 +141,7 @@ void SB_Keyboard::Keyboard_Monitor(float deltaTime)
 
 				float Delta = App->Cl_Utilities->DegreesToRadians(1);
 
-				//App->SBC_Scene->B_Player[0]->Rotate(Rotate, false);
+				App->SBC_Scene->B_Player[0]->Rotate_FromCam(Rotate, 0.001, false);
 
 				App->SBC_Ogre->OgreListener->toggleTimer = 0.01;
 			}
@@ -208,7 +212,8 @@ void SB_Keyboard::Keyboard_Monitor(float deltaTime)
 			{
 				if (App->SBC_Scene->Player_Added == 1)
 				{
-					App->SBC_Scene->B_Player[0]->Move_Player(btVector3(0, 0, -1), deltaTime);
+					App->SBC_DCC->mMoveDirection = (btVector3(0, 0, -1));
+					App->SBC_Player->Check_Collisions_New();
 					App->SBC_Scene->B_Player[0]->IsMOving = 1;
 				}
 			}
@@ -221,7 +226,7 @@ void SB_Keyboard::Keyboard_Monitor(float deltaTime)
 			}
 			else if (App->SBC_Scene->Player_Added == 1 && App->SBC_Scene->B_Player[0]->IsMOving == 1)
 			{
-				App->SBC_Scene->B_Player[0]->Stop();
+				App->SBC_DCC->mMoveDirection = (btVector3(0, 0, 0));
 				App->SBC_Scene->B_Player[0]->IsMOving = 0;
 			}
 		}
@@ -253,7 +258,8 @@ void SB_Keyboard::Keyboard_Monitor(float deltaTime)
 			{
 				if (App->SBC_Scene->Player_Added == 1)
 				{
-					App->SBC_Scene->B_Player[0]->Move_Player(btVector3(0, 0, 1), deltaTime);
+					App->SBC_DCC->mMoveDirection = (btVector3(0, 0, 1));
+					App->SBC_Player->Check_Collisions_New();
 					App->SBC_Scene->B_Player[0]->IsMOving_Back = 1;
 				}
 			}
@@ -266,7 +272,7 @@ void SB_Keyboard::Keyboard_Monitor(float deltaTime)
 			}
 			else if (App->SBC_Scene->Player_Added == 1 && App->SBC_Scene->B_Player[0]->IsMOving_Back == 1)
 			{
-				App->SBC_Scene->B_Player[0]->Stop();
+				App->SBC_DCC->mMoveDirection = (btVector3(0, 0, 0));
 				App->SBC_Scene->B_Player[0]->IsMOving_Back = 0;
 			}
 		}
@@ -282,7 +288,8 @@ void SB_Keyboard::Keyboard_Monitor(float deltaTime)
 			{
 				if (App->SBC_Scene->Player_Added == 1)
 				{
-					App->SBC_Scene->B_Player[0]->Move_Player(btVector3(1, 0, 0), deltaTime);
+					App->SBC_DCC->mMoveDirection = (btVector3(1, 0, 0));// walkDirection
+					App->SBC_Player->Check_Collisions_New();
 					App->SBC_Scene->B_Player[0]->IsMOving_Right = 1;
 				}
 			}
@@ -295,7 +302,7 @@ void SB_Keyboard::Keyboard_Monitor(float deltaTime)
 			}
 			else if (App->SBC_Scene->Player_Added == 1 && App->SBC_Scene->B_Player[0]->IsMOving_Right == 1)
 			{
-				App->SBC_Scene->B_Player[0]->Stop();
+				App->SBC_DCC->mMoveDirection = (btVector3(0, 0, 0));// walkDirection
 				App->SBC_Scene->B_Player[0]->IsMOving_Right = 0;
 			}
 		}
@@ -311,7 +318,8 @@ void SB_Keyboard::Keyboard_Monitor(float deltaTime)
 			{
 				if (App->SBC_Scene->Player_Added == 1)
 				{
-					App->SBC_Scene->B_Player[0]->Move_Player(btVector3(-1, 0, 0), deltaTime);
+					App->SBC_DCC->mMoveDirection = (btVector3(-1, 0, 0));// walkDirection
+					App->SBC_Player->Check_Collisions_New();
 					App->SBC_Scene->B_Player[0]->IsMOving_Left = 1;
 				}
 			}
@@ -324,7 +332,7 @@ void SB_Keyboard::Keyboard_Monitor(float deltaTime)
 			}
 			else if (App->SBC_Scene->Player_Added == 1 && App->SBC_Scene->B_Player[0]->IsMOving_Left == 1)
 			{
-				App->SBC_Scene->B_Player[0]->Stop();
+				App->SBC_DCC->mMoveDirection = (btVector3(0, 0, 0));// walkDirection
 				App->SBC_Scene->B_Player[0]->IsMOving_Left = 0;
 			}
 		}

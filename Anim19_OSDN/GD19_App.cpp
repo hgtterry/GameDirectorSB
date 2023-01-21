@@ -190,7 +190,7 @@ GD19_App::GD19_App(void)
 	CursorPosX = 500;
 	CursorPosY = 500;
 
-	Debug_App = 0;
+	Debug_App = 1;
 
 	EquityDirecory_FullPath[0] = 0;
 	ETemp_Folder[0] = 0;
@@ -265,7 +265,8 @@ bool GD19_App::InitApp(void)
 	SBC_Front_Dlg =			new Bass_Front_Dialog();
 
 	SBC_Locations =			new SB_Locations();
-	
+	//SBC_DCC =				new DynamicCharacterController();
+
 	//--------------
 
 	SetBrushes_Fonts();

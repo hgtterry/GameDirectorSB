@@ -168,6 +168,11 @@ bool GD19_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 		App->SBC_Ogre->mCamera->yaw(Ogre::Degree(180));
 	}
 
+	if (App->SBC_Scene->Player_Added == 1)
+	{
+		App->SBC_DCC->updateAction(App->SBC_Bullet->dynamicsWorld, evt.timeSinceLastFrame);
+	}
+
 	App->SBC_Keyboard->Keyboard_Monitor(evt.timeSinceLastFrame);
 
 	// Left Mouse

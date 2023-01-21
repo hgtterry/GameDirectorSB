@@ -162,3 +162,4 @@ void SB_Visuals::MarkerBB_Addjust(int Index)
 
 	App->SBC_Grid->Move_Arrow(WS);
 }
+

@@ -234,6 +234,12 @@ void VM_ImGui::ImGui_Editor_Loop(void)
 		App->SBC_Gui_Dialogs->ImGui_ProgressBar2();
 	}
 
+	// SBC_Gui_Dialogs - Debug Player
+	if (App->SBC_Gui_Dialogs->Show_Debug_Player == 1)
+	{
+		App->SBC_Gui_Dialogs->Debug_Player();
+	}
+
 }
 
 // *************************************************************************
@@ -319,19 +325,6 @@ void VM_ImGui::ImGui_FPS(void)
 		}
 
 		ImGui::Text("FPS average %.0f", ImGui::GetIO().Framerate);
-		
-		if (App->Debug_App == 1)
-		{
-			ImGui::Text("Delay Timer %l", App->SBC_Ogre->FPStimer.getMicroseconds());
-			ImGui::Text("Ogre Frame Time %f", App->SBC_Ogre->OgreListener->OgreFrameTime);
-			ImGui::Text("Distance To Floor: = %f", App->SBC_Ogre->OgreListener->DistanceToCollision);
-
-			if (App->SBC_Scene->Player_Added == 1)
-			{
-				ImGui::Text("DCC Distance %f %f %f", App->SBC_DCC->mGroundPoint.getX(), App->SBC_DCC->mGroundPoint.getY(), App->SBC_DCC->mGroundPoint.getZ());
-				ImGui::Text("DCC Ground %i", App->SBC_DCC->mOnGround);
-			}
-		}
 		
 		ImVec2 Size = ImGui::GetWindowSize();
 		PosX = ((float)App->SBC_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);

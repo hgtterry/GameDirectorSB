@@ -43,7 +43,10 @@ public:
 	void Start_ProgressBar(void);
 	void Stop_ProgressBar(void);
 	void Set_ProgressCount(float Count);
-	bool SB_Gui_Dialogs::Nudge();
+
+	bool Nudge();
+
+	void Debug_Player(void);
 
 	float progress;
 	float Progress_Count;
@@ -84,6 +87,8 @@ public:
 	int Colour_Int_Blue;
 	ImVec4 Float_Colour_Copy;
 	bool ColourPicker_Canceled;
+
+	bool Show_Debug_Player;
 
 	MSG msg;
 

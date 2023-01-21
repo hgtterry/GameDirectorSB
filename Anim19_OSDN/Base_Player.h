@@ -28,12 +28,7 @@ public:
 	Base_Player();
 	~Base_Player();
 
-	void Stop(void);
-	void Jump(const Ogre::Vector3 axis, float force);
-	void jump2(const btVector3& dir);
-	void Move_Player(const btVector3 &walkDirection,float delta);
 	void Rotate_FromCam(const Ogre::Vector3 axis, float delta, bool normalize);
-	bool Get_Height(void);
 
 	Ogre::Camera*		CameraPitch;
 	Ogre::Entity*		Player_Ent;
