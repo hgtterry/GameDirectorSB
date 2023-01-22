@@ -1,0 +1,34 @@
+
+material GDPanel1_Material_0
+{
+	technique
+	{
+		pass
+		{
+			alpha_rejection greater 128
+			texture_unit
+			{
+				texture GDP1_grid01.tga
+			}
+		}
+
+	}
+
+}
+
+material GDPanel1_Material_1
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture GDP1_wall04.bmp
+			}
+		}
+
+	}
+
+}
