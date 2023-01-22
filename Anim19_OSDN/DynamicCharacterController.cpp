@@ -130,6 +130,9 @@ bool DynamicCharacterController::Get_Height(void)
 	return 1;
 }
 
+// *************************************************************************
+// *							updateAction							   *
+// *************************************************************************
 void DynamicCharacterController::updateAction(btCollisionWorld *collisionWorld,btScalar deltaTimeStep)
 {
 	Get_Height();
@@ -158,6 +161,9 @@ void DynamicCharacterController::updateAction(btCollisionWorld *collisionWorld,b
 	}*/
 }
 
+// *************************************************************************
+// *							updateVelocity							   *
+// *************************************************************************
 void DynamicCharacterController::updateVelocity(float dt)
 {
 	btTransform transform;
@@ -213,6 +219,9 @@ void DynamicCharacterController::updateVelocity(float dt)
 	mRigidBody->setLinearVelocity(basis * linearVelocity);
 }
 
+// *************************************************************************
+// *								stepUp								   *
+// *************************************************************************
 void DynamicCharacterController::stepUp(float dt)
 {
 	//btTransform transform;
@@ -260,6 +269,9 @@ void DynamicCharacterController::stepUp(float dt)
 	//mRigidBody->setLinearVelocity(transform.getBasis() * linearVelocity);
 }
 
+// *************************************************************************
+// *								debugDraw							   *
+// *************************************************************************
 void DynamicCharacterController::debugDraw(btIDebugDraw *debugDrawer)
 {
 	if (mStepping) {
@@ -268,6 +280,9 @@ void DynamicCharacterController::debugDraw(btIDebugDraw *debugDrawer)
 	}
 }
 
+// *************************************************************************
+// *						setMovementDirection						   *
+// *************************************************************************
 void DynamicCharacterController::setMovementDirection(
 	const btVector3 &walkDirection)
 {
@@ -278,11 +293,17 @@ void DynamicCharacterController::setMovementDirection(
 	}
 }
 
+// *************************************************************************
+// *						getMovementDirection()						   *
+// *************************************************************************
 const btVector3 &DynamicCharacterController::getMovementDirection() const
 {
 	return mMoveDirection;
 }
 
+// *************************************************************************
+// *							resetStatus								   *
+// *************************************************************************
 void DynamicCharacterController::resetStatus()
 {
 	mMoveDirection.setValue(0, 0, 0);
@@ -291,11 +312,17 @@ void DynamicCharacterController::resetStatus()
 	cancelStep();
 }
 
+// *************************************************************************
+// *							canJump									   *
+// *************************************************************************
 bool DynamicCharacterController::canJump() const
 {
 	return Is_On_Ground;
 }
 
+// *************************************************************************
+// *							jump									   *
+// *************************************************************************
 void DynamicCharacterController::jump(const btVector3 &dir)
 {
 	if (!canJump()) {
@@ -311,11 +338,17 @@ void DynamicCharacterController::jump(const btVector3 &dir)
 	mJumpDir.normalize();
 }
 
+// *************************************************************************
+// *							getBody									   *
+// *************************************************************************
 const btRigidBody *DynamicCharacterController::getBody() const
 {
 	return mRigidBody;
 }
 
+// *************************************************************************
+// *							cancelStep								   *
+// *************************************************************************
 void DynamicCharacterController::cancelStep()
 {
 	if (mRigidBody) {
@@ -329,6 +362,9 @@ void DynamicCharacterController::cancelStep()
 }
 
 
+// *****************************************************************************************************************
+// *											FindGroundAndSteps Class			                           	   *
+// *****************************************************************************************************************
 namespace {
 FindGroundAndSteps::FindGroundAndSteps(
 	const DynamicCharacterController *controller, const btCollisionWorld *world)
@@ -337,6 +373,9 @@ FindGroundAndSteps::FindGroundAndSteps(
 	mWorld = world;
 }
 
+// *************************************************************************
+// *				FindGroundAndSteps - addSingleResult				   *
+// *************************************************************************
 btScalar FindGroundAndSteps::addSingleResult(btManifoldPoint &cp,
 	const btCollisionObjectWrapper *colObj0, int partId0, int index0,
 	const btCollisionObjectWrapper *colObj1, int partId1, int index1)
@@ -372,6 +411,9 @@ btScalar FindGroundAndSteps::addSingleResult(btManifoldPoint &cp,
 	return 0;
 }
 
+// *************************************************************************
+// *				FindGroundAndSteps - checkGround					   *
+// *************************************************************************
 void FindGroundAndSteps::checkGround(const btManifoldPoint &cp)
 {
 
@@ -397,6 +439,9 @@ void FindGroundAndSteps::checkGround(const btManifoldPoint &cp)
 	}*/
 }
 
+// *************************************************************************
+// *				FindGroundAndSteps - getInvNormal					   *
+// *************************************************************************
 btVector3 FindGroundAndSteps::getInvNormal()
 {
 	if (!mHaveStep) {
@@ -414,6 +459,9 @@ btVector3 FindGroundAndSteps::getInvNormal()
 	return frame[1];
 }
 
+// *************************************************************************
+// *				FindGroundAndSteps - ResolveStepUp					   *
+// *************************************************************************
 ResolveStepUp::ResolveStepUp(const DynamicCharacterController *controller,
 	const btCollisionWorld *world, const btManifoldPoint &cp) :
 	mStepPos(cp.m_positionWorldOnB), mStepNormal(cp.m_normalWorldOnB),
@@ -431,6 +479,9 @@ ResolveStepUp::ResolveStepUp(const DynamicCharacterController *controller,
 	}
 }
 
+// *************************************************************************
+// *				FindGroundAndSteps - checkPreconditions				   *
+// *************************************************************************
 bool ResolveStepUp::checkPreconditions()
 {
 	if (mController->getMovementDirection().fuzzyZero()) {
@@ -482,6 +533,9 @@ bool ResolveStepUp::checkPreconditions()
 	return true;
 }
 
+// *************************************************************************
+// *				FindGroundAndSteps - findRealPoint					   *
+// *************************************************************************
 bool ResolveStepUp::findRealPoint()
 {
 	/* Look for the real height of the step.
@@ -512,6 +566,9 @@ bool ResolveStepUp::findRealPoint()
 	return true;
 }
 
+// *************************************************************************
+// *					FindGroundAndSteps - canFit						   *
+// *************************************************************************
 bool ResolveStepUp::canFit() const
 {
 	// Not very robust test, but still better than nothing

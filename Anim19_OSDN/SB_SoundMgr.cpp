@@ -405,3 +405,20 @@ bool SB_SoundMgr::Remeber_SoundFile(char* File)
 	SoundFile_Count = Sound_File.size();
 	return 1;
 }
+
+// *************************************************************************
+// *					Play_StartUp_Sound Terry Bernie					   *
+// *************************************************************************
+bool SB_SoundMgr::Play_StartUp_Sound()
+{
+	char Sound[MAX_PATH];
+	strcpy(Sound, Default_Folder);
+	strcat(Sound, "\\Media\\Sounds\\");
+	strcat(Sound, "welcome.ogg");
+	
+	SndFile = App->SBC_SoundMgr->SoundEngine->play2D(Sound, false, true, true);
+	SndFile->setVolume(0.5);
+	SndFile->setIsPaused(false);
+
+	return 1;
+}

@@ -28,35 +28,31 @@ public:
 	SB_Preferences();
 	~SB_Preferences();
 
+	void Start_Preferences_GUI();
+	void Preferences_GUI();
+	void Close_Preferences_GUI();
+
+	bool Show_Preferences_GUI;
+	int Preferences_Page;
+
+
 	void Set_Defaults();
 	bool Write_Preferences();
 	bool Read_Preferences();
 
-	bool Start_Preferences();
-
-	bool QL_Use_TestFile_Flag;
 	char QL_User_File[MAX_PATH];
 
-	bool Show_StartScreen;
+	bool Prefs_TestFile_Flag;
+	bool Prefs_StartScreen_Flag;
+	bool Prefs_FullScreen_Flag;
+	bool Prefs_Load_LastScene_Flag;
 
 protected:
 
-	static LRESULT CALLBACK Preferences_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-	static LRESULT CALLBACK QuickLoad_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-
-	void AddRootFolder(void);
-
-	bool Start_QuickLoad_Dlg();
-
-	HWND Main_Window_Hwnd;
-	HWND FileView_Hwnd;
-
-	HTREEITEM Root;
-	HTREEITEM FV_File;
-
-	TV_INSERTSTRUCT tvinsert;
-
 	FILE *WriteScene;
+
+	float PosX;
+	float PosY;
 };
 
 

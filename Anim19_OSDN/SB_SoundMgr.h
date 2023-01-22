@@ -35,6 +35,7 @@ public:
 	bool InitSound_Defaults(int Index);
 	bool GetSoundFiles(HWND hDlg,char *Extention);
 	bool Remeber_SoundFile(char* File);
+	bool Play_StartUp_Sound();
 
 	char mSoundFile[255];
 	char Current_Object_Sound[255];

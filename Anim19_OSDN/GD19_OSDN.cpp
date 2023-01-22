@@ -84,9 +84,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	App->mMenu = GetMenu(App->MainHwnd);
 
-//	HBITMAP hBitMap = LoadBitmap(App->hInst, MAKEINTRESOURCE(IDB_FILEINACTIVE));
-//	SetMenuItemBitmaps(App->mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND, 0, hBitMap);
-
 	App->SBC_FileView->Start_FileView();
 	App->Cl_Panels->Resize_FileView();
 
@@ -96,10 +93,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	App->SBC_FileView->Init_FileView();
 
 	ShowWindow(App->ListPanel, 1);
-
-	ShowWindow(App->MainHwnd, nCmdShow);
-	//ShowWindow(App->MainHwnd, SW_MAXIMIZE);
-	UpdateWindow(App->MainHwnd);
 
 	App->Cl_Panels->Move_FileView_Window();
 	App->Cl_Panels->Place_GlobalGroups();
@@ -117,9 +110,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	
 	App->SBC_Props_Dialog->Start_Props_Dialogs();
 
-	//CheckMenuItem(App->mMenu, ID_WINDOW_SHOWFPSSHORT, MF_BYCOMMAND | MF_CHECKED);
-	//CheckMenuItem(App->mMenu, ID_GRID_DIVISIONS, MF_BYCOMMAND | MF_CHECKED);
-
 	App->SBC_Bullet->Init_Bullet();
 
 	App->SBC_FileIO->Init_History();
@@ -132,7 +122,17 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	CheckMenuItem(App->mMenu, ID_WINDOWS_FPS, MF_BYCOMMAND | MF_CHECKED);
 	EnableMenuItem(App->mMenu, ID_FILE_SAVEPROJECTALL, MF_GRAYED);
 
-	//ShowWindow(App->MainHwnd, SW_MAXIMIZE);
+
+	if (App->SBC_Prefs->Prefs_FullScreen_Flag == 1)
+	{
+		ShowWindow(App->MainHwnd, SW_MAXIMIZE);
+	}
+	else
+	{
+		ShowWindow(App->MainHwnd, SW_SHOWNORMAL);
+	}
+
+	UpdateWindow(App->MainHwnd);
 
 	SetTimer(App->MainHwnd, 1, 1, NULL);
 
@@ -417,13 +417,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		case ID_DEBUG_TESTIMGUIDIALOG:
 		{
-			if (App->SBC_Gui_Environ->Show_PropertyEditor == 0)
+			if (App->SBC_Prefs->Show_Preferences_GUI == 0)
 			{
-				App->SBC_Gui_Environ->Show_PropertyEditor = 1;
+				App->SBC_Prefs->Start_Preferences_GUI();
 			}
 			else
 			{
-				App->SBC_Gui_Environ->Show_PropertyEditor = 0;
+				App->SBC_Prefs->Close_Preferences_GUI();
 			}
 
 			/*if (App->SBC_Front_Dlg->Show_Front_Dlg_Flag == 0)
@@ -624,7 +624,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		case ID_SETTINGS_PREFERENCES:
 		{
-			App->SBC_Prefs->Start_Preferences();
+			if (App->SBC_Prefs->Show_Preferences_GUI == 0)
+			{
+				App->SBC_Prefs->Start_Preferences_GUI();
+			}
+
 			return 1;
 		}
 
@@ -1024,6 +1028,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_TIMER:
 		if (wParam == 1)
 		{
+
 			if (App->OgreStarted == 0)
 			{
 				if (Block_Call == 0)
@@ -1033,21 +1038,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				}
 			}
 
-			if (App->OgreStarted == 1 && App->Start_Scene_Loaded == 0)
-			{
-				App->Start_Scene_Loaded = 1;
-				//App->Cl_Scene_Data->Start_Scene();
-
-				// Check
-				//App->Cl_Scene_Data->Cl_Object[1]->bt_body->setLinearVelocity(btVector3(35,0,35));
-				//App->SBC_Ogre->OgreListener->_desiredVelocity = App->Cl_Scene_Data->Cl_Object[1]->bt_body->getLinearVelocity().length();
-			}
-
-			//// Render behind windows
-			if (App->RenderBackGround == 1 && App->OgreStarted == 1)
-			{
-				Ogre::Root::getSingletonPtr()->renderOneFrame();
-			}
 			break;
 		}
 	case WM_DESTROY:
@@ -1376,8 +1366,8 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 
 		SendDlgItemMessage(hDlg, IDC_LISTABOUT, LB_ADDSTRING, (WPARAM)0, (LPARAM)" ");
 		
-		sprintf(buff, "%s", " EquitySB Alpha Build 22/12/22");
-		SendDlgItemMessage(hDlg, IDC_LISTABOUT, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
+		/*sprintf(buff, "%s", " EquitySB Alpha Build 22/12/22");
+		SendDlgItemMessage(hDlg, IDC_LISTABOUT, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);*/
 
 		/*sprintf(buff, "%s  %s", " Ogre Version ", "1.9");
 		SendDlgItemMessage(hDlg, IDC_LISTABOUT, LB_ADDSTRING, (WPARAM)0, (LPARAM)buff);
@@ -1487,16 +1477,25 @@ void StartOgre()
 
 	App->OgreStarted = 1;
 
-	//App->Resize_OgreWin();
-
 	App->SBC_Dialogs->Front_Screen();
 
-	//App->SBC_Ogre->mRoot->startRendering();
+	KillTimer(App->MainHwnd, 1);
 
+	App->SBC_SoundMgr->Play_StartUp_Sound();
+
+	char Default_Project[MAX_PATH];
+	strcpy(Default_Project, App->EquityDirecory_FullPath);
+	strcat(Default_Project, "\\Projects\\First_Project_Prj\\Project.SBProj");
+
+	if (App->SBC_Prefs->Prefs_Load_LastScene_Flag == 1)
+	{
+		App->SBC_TopTabs->Do_Quick_Load();
+	}
+	
 	App->SBC_Ogre->Ogre_Render_Loop();
 
-	Close_App();
 
+	Close_App();
 	SystemParametersInfo(SPI_SETSCREENSAVEACTIVE, TRUE, NULL, TRUE);
 	PostQuitMessage(0);
 }
