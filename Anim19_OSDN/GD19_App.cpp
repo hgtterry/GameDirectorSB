@@ -312,6 +312,7 @@ bool GD19_App::InitApp(void)
 
 	App->Cl_Ini->SetPathName(StartFile);
 	App->Cl_Ini->WriteString("Startup", "Scene_Path_FileName", Default_Project);
+
 	return 1;
 }
 

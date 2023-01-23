@@ -91,6 +91,8 @@ public:
 
 	Ogre::Timer FPStimer;
 
+	int Fps_Tick;
+
 	int FPSLock;
 
 	double PCFreq;

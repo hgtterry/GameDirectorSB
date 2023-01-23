@@ -46,6 +46,8 @@ SB_Ogre::SB_Ogre(void)
 
 	FPSLock = 4200;
 
+	Fps_Tick = 4000;
+
 	PCFreq = 0.0;
 	CounterStart = 0;
 
@@ -108,7 +110,7 @@ bool SB_Ogre::Ogre_Render_Loop(void)
 
 		if (mWindow->isClosed()) return false;
 
-		if (FPStimer.getMilliseconds() > 3) // FPSLock)
+		if (FPStimer.getMicroseconds() > Fps_Tick) // FPSLock)
 		{
 			if (Block_RenderingQueued == 0)
 			{

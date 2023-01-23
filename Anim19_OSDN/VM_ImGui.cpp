@@ -96,6 +96,7 @@ void VM_ImGui::ImGui_Set_Colours(void)
 	ImVec4* colors = style->Colors;
 
 	style->WindowRounding = 6.0;
+	style->FrameRounding = 4.0;
 	style->WindowBorderSize = 0;
 
 	colors[ImGuiCol_Text] = ImVec4(0.00f, 0.00f, 0.00f, 1.00f);
@@ -232,11 +233,6 @@ void VM_ImGui::ImGui_Editor_Loop(void)
 		App->SBC_Gui_Dialogs->Dialog_Colour_Picker();
 	}
 
-	if (App->SBC_Gui_Dialogs->Show_Progress_Bar2 == 1)
-	{
-		App->SBC_Gui_Dialogs->ImGui_ProgressBar2();
-	}
-
 	// SBC_Gui_Dialogs - Debug Player
 	if (App->SBC_Gui_Dialogs->Show_Debug_Player == 1)
 	{
@@ -249,6 +245,12 @@ void VM_ImGui::ImGui_Editor_Loop(void)
 		App->SBC_Prefs->Preferences_GUI();
 	}
 
+	// SBC_Gui_Dialogs - Physics Console
+	if (App->SBC_Gui_Dialogs->Show_Physics_Console == 1)
+	{
+		App->SBC_Gui_Dialogs->Physics_Console_Gui();
+	}
+	
 }
 
 // *************************************************************************

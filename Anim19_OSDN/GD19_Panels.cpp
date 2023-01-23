@@ -78,22 +78,10 @@ bool GD19_Panels::Resize_FileView(void)
 // *************************************************************************
 bool GD19_Panels::MovePhysicsView(void)
 {
-	POINT p = { 0 };
-	RECT rect;
-
-	int Diff = MapWindowPoints(App->ViewGLhWnd, NULL, &p, 1);
-
-	int PosX = p.x;
-	int PosY = p.y;
-
-	GetWindowRect(App->ViewGLhWnd, &rect);
-
-	int widthX = rect.right - rect.left;
-	int heightY = rect.bottom - rect.top;
-
-	SetWindowPos(App->Physics_Console_Hwnd, NULL, PosX + 10, PosY + heightY - 100,
-		0, 0, SWP_NOSIZE | SWP_NOZORDER);
-
+	if (App->SBC_Gui_Dialogs->Show_Physics_Console == 1)
+	{
+		App->SBC_Gui_Dialogs->Physics_Console_StartPos = 0;
+	}
 	return 1;
 }
 

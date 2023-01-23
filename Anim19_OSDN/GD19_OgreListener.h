@@ -112,6 +112,7 @@ public:
 
 	int		ImGui_Render_Tab;
 
+	int Bullet_Step;
 
 	int	Selected_Entity_Index;
 	Ogre::String Pl_Entity_Name;

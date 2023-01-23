@@ -23,16 +23,11 @@ distribution.
 
 #include "stdafx.h"
 #include "GD19_App.h"
+#include "resource.h"
 #include "SB_Gui_Dialogs.h"
 
 SB_Gui_Dialogs::SB_Gui_Dialogs(void)
 {
-	Show_Progress_Bar2 = 0;
-	progress = 0;
-	Progress_Count = 0;
-	Progress_Delta = 0;
-	StartPos_PB = 0;
-
 	Show_Dialog_Float = 0;
 	Float_StartPos = 0;
 	Float_PosX = 0;
@@ -61,6 +56,12 @@ SB_Gui_Dialogs::SB_Gui_Dialogs(void)
 	Colour_Int_Red = 0;
 	Colour_Int_Green = 0;
 	Colour_Int_Blue = 0;
+
+	// -------------- Physics Console
+	Show_Physics_Console = 1;
+	Physics_PosX = 500;
+	Physics_PosY = 500;
+	Physics_Console_StartPos = 0;
 
 	Show_Debug_Player = 0;
 }
@@ -508,96 +509,6 @@ void SB_Gui_Dialogs::Dialog_Colour_Picker(void)
 }
 
 // *************************************************************************
-// *					ImGui_ProgressBar2  Terry Bernie				   *
-// *************************************************************************
-void SB_Gui_Dialogs::ImGui_ProgressBar2(void)
-{
-	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
-
-	ImGui::SetNextWindowPos(ImVec2(500, 500), ImGuiCond_FirstUseEver);
-	ImGui::SetNextWindowSize(ImVec2(350, 90), ImGuiCond_FirstUseEver);
-
-	if (!ImGui::Begin("ProgressBar", &Show_Progress_Bar2, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize))
-	{
-		ImGui::End();
-	}
-	else
-	{
-		if (StartPos_PB == 0)
-		{
-			ImGui::SetWindowPos("ProgressBar", ImVec2(400, 250));
-			ImGui::SetWindowSize(ImVec2(350, 90));
-			StartPos_PB = 1;
-		}
-
-		//progress = 0.0f,
-		progress += 0.0001;
-
-		float progress_saturated = (progress < 0.0f) ? 0.0f : (progress > 1.0f) ? 1.0f : progress;
-
-		char buf[32];
-		sprintf(buf, "%d/%d", (int)(progress_saturated * Progress_Count), (int)Progress_Count);
-		ImGui::ProgressBar(progress, ImVec2(0.f, 0.f), buf);
-
-
-
-		float progress_saturated2 = (progress < 0.0f) ? 0.0f : (progress > 1.0f) ? 1.0f : progress;
-		char buf2[32];
-		sprintf(buf2, "%d/%d", (int)(progress_saturated2 * 100), 100);
-		ImGui::ProgressBar(progress, ImVec2(0.f, 0.f), buf2);
-
-		ImGui::PopStyleColor();
-		ImGui::End();
-	}
-}
-
-// *************************************************************************
-// *					Start_ProgressBar  Terry Bernie					   *
-// *************************************************************************
-void SB_Gui_Dialogs::Start_ProgressBar(void)
-{
-	StartPos_PB = 0;
-	Show_Progress_Bar2 = 1;
-}
-
-// *************************************************************************
-// *					Stop_ProgressBar  Terry Bernie					   *
-// *************************************************************************
-void SB_Gui_Dialogs::Stop_ProgressBar(void)
-{
-	StartPos_PB = 0;
-	progress = 0.0f,
-	Show_Progress_Bar2 = 0;
-}
-
-// *************************************************************************
-// *					Set_ProgressCount  Terry Bernie					   *
-// *************************************************************************
-void SB_Gui_Dialogs::Set_ProgressCount(float Count)
-{
-	Progress_Count = Count;
-	Progress_Delta = 1 / Count;
-}
-
-// *************************************************************************
-// *								Nudge 								   *
-// *************************************************************************
-bool SB_Gui_Dialogs::Nudge()
-{
-	progress += 0.1;// Progress_Delta;
-
-	Ogre::Root::getSingletonPtr()->renderOneFrame();
-
-	if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
-	{
-		TranslateMessage(&msg);
-		DispatchMessage(&msg);
-	}
-
-	return 1;
-}
-
-// *************************************************************************
 // *					Debug Player  Terry Bernie						   *
 // *************************************************************************
 void SB_Gui_Dialogs::Debug_Player(void)
@@ -638,18 +549,106 @@ void SB_Gui_Dialogs::Debug_Player(void)
 }
 
 
+// *************************************************************************
+// *						Physics_Console  Terry Bernie				   *
+// *************************************************************************
+void SB_Gui_Dialogs::Physics_Console_Gui(void)
+{
+	ImGui::SetNextWindowPos(ImVec2(Physics_PosX, Physics_PosY), ImGuiCond_FirstUseEver);
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
+	ImGuiStyle* style = &ImGui::GetStyle();
 
-
-// ----------------- Keep for later
-//static char buf2[64] = ""; ImGui::InputText("decimal", buf2, 64, ImGuiInputTextFlags_CharsDecimal);
-/*const float   f32_zero = 0.f, f32_one = 1.f, f32_lo_a = -10000000000.0f, f32_hi_a = +10000000000.0f;
-		static bool inputs_step = true;
-		static float  f32_v = 0.123f;
-		ImGui::InputScalar("input float", ImGuiDataType_Float, &f32_v, inputs_step ? &f32_one : NULL);*/
-
-		/*if (StartPos == 0)
+	if (!ImGui::Begin("Physics_Console", &Show_Physics_Console, ImGuiWindowFlags_NoSavedSettings |ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar))
+	{
+		ImGui::End();
+	}
+	else
+	{
+		ImGui::Text("Physics Console");
+		
+		ImGui::SameLine(0,270);
+		if (ImGui::Button("H"))
 		{
-			ImGui::SetWindowPos("Ogre Data", ImVec2(500, 5));
-			ImGui::SetWindowSize(ImVec2(350, 90));
-			StartPos = 1;
-		}*/
+			App->Cl_Utilities->OpenHTML("Help\\Physics_Console.html");
+		}
+
+		ImGui::SameLine();
+		if (ImGui::Button("X"))
+		{
+			CheckMenuItem(App->mMenu, ID_WINDOWS_SHOWPHYSICSPANEL, MF_BYCOMMAND | MF_UNCHECKED);
+			Physics_Console_StartPos = 0;
+			Show_Physics_Console = 0;
+		}
+
+		ImGui::Separator();
+
+		if (App->SBC_Ogre->OgreListener->GD_Run_Physics == 1)
+		{
+			style->Colors[ImGuiCol_Button] = ImVec4(0.0f, 1.0f, 0.0f, 1.00f);
+		}
+		else
+		{
+			style->Colors[ImGuiCol_Button] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
+		}
+
+		if (ImGui::Button("Physics On"))
+		{
+			if (App->SBC_Scene->Scene_Loaded == 1)
+			{
+				if (App->SBC_Ogre->OgreListener->GD_Run_Physics == 1)
+				{
+					App->SBC_Ogre->OgreListener->GD_Run_Physics = 0;
+				}
+				else
+				{
+					App->SBC_Ogre->OgreListener->GD_Run_Physics = 1;
+				}
+
+				App->RedrawWindow_Dlg(App->Physics_Console_Hwnd);
+			}
+		}
+		
+		style->Colors[ImGuiCol_Button] = ImVec4(1, 1, 0.58,1); // Yellow
+		
+
+		ImGui::SameLine();
+		if (ImGui::Button("Reset Physics"))
+		{
+			if (App->SBC_Scene->Scene_Loaded == 1)
+			{
+				App->SBC_Physics->Reset_Physics();
+
+				App->RedrawWindow_Dlg(App->Physics_Console_Hwnd);
+			}
+		}
+
+		ImGui::SameLine();
+		if (ImGui::Button("Reset Entities"))
+		{
+			if (App->SBC_Scene->Scene_Loaded == 1)
+			{
+				App->SBC_Physics->Reset_Triggers();
+			}
+		}
+
+		ImGui::SameLine();
+		if (ImGui::Button("Reset Scene"))
+		{
+
+		}
+
+		if (Physics_Console_StartPos == 0)
+		{
+			ImVec2 Size = ImGui::GetWindowSize();
+			Physics_PosX = 10;
+			Physics_PosY = ((float)App->SBC_Ogre->OgreListener->View_Height) - (Size.y) - 10;
+			ImGui::SetWindowPos("Physics_Console", ImVec2(Physics_PosX, Physics_PosY));
+
+			Physics_Console_StartPos = 1;
+		}
+
+		style->Colors[ImGuiCol_Button] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
+		ImGui::PopStyleColor();
+		ImGui::End();
+	}
+}

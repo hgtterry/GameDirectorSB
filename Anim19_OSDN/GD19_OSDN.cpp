@@ -84,6 +84,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	App->mMenu = GetMenu(App->MainHwnd);
 
+	CheckMenuItem(App->mMenu, ID_WINDOWS_SHOWPHYSICSPANEL, MF_BYCOMMAND | MF_CHECKED);
+
 	App->SBC_FileView->Start_FileView();
 	App->Cl_Panels->Resize_FileView();
 
@@ -100,9 +102,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	App->SBC_Properties->Start_GD_Properties();
 
-	App->SBC_Physics->Start_Physics_Pannel();
-	App->SBC_Physics->Start_Physics_Console();
-	
 	App->SBC_TopTabs->Start_TopBar_Globals();
 
 	App->SBC_Com_Camera->Start_Camera_PropsPanel();
@@ -840,16 +839,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		case ID_WINDOWS_SHOWPHYSICSPANEL:
 		{
 
-			if (App->SBC_Physics->Physics_Console_Dlg_Active == 1) // Atention
+			if (App->SBC_Gui_Dialogs->Show_Physics_Console == 1) // Atention
 			{
-				App->SBC_Physics->Physics_Console_Dlg_Active = 0;
-				ShowWindow(App->Physics_Console_Hwnd, 0);
+				App->SBC_Gui_Dialogs->Physics_Console_StartPos = 0;
+				App->SBC_Gui_Dialogs->Show_Physics_Console = 0;
 				CheckMenuItem(App->mMenu, ID_WINDOWS_SHOWPHYSICSPANEL, MF_BYCOMMAND | MF_UNCHECKED);
 			}
 			else
 			{
-				App->SBC_Physics->Physics_Console_Dlg_Active = 1;
-				ShowWindow(App->Physics_Console_Hwnd, 1);
+				App->SBC_Gui_Dialogs->Physics_Console_StartPos = 0;
+				App->SBC_Gui_Dialogs->Show_Physics_Console = 1;
 				CheckMenuItem(App->mMenu, ID_WINDOWS_SHOWPHYSICSPANEL, MF_BYCOMMAND | MF_CHECKED);
 			}
 			return 1;
@@ -1492,6 +1491,10 @@ void StartOgre()
 		App->SBC_TopTabs->Do_Quick_Load();
 	}
 	
+	App->Cl_Panels->MovePhysicsView();
+	//App->SBC_Gui_Dialogs->Show_Physics_Console = 0;
+	//App->SBC_Gui_Dialogs->Show_Physics_Console = 1;
+
 	App->SBC_Ogre->Ogre_Render_Loop();
 
 

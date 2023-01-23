@@ -32,28 +32,15 @@ public:
 	void BackGround_Render_Loop(void);
 
 	void Start_Dialog_Float(float Step, float StartValue, char* Banner);
-
+	
 	void Start_Dialog_MessageEditor(int Index);
 
 	void Start_Colour_Picker(Ogre::Vector3 Colour);
 
 	void Dialog_Colour_Picker(void);
 
-	void ImGui_ProgressBar2(void);
-	void Start_ProgressBar(void);
-	void Stop_ProgressBar(void);
-	void Set_ProgressCount(float Count);
-
-	bool Nudge();
-
 	void Debug_Player(void);
 
-	float progress;
-	float Progress_Count;
-	float Progress_Delta;
-	bool StartPos_PB;
-
-	bool Show_Progress_Bar2;
 	// -------------- General
 	ImVec4 Float_Colour;
 
@@ -88,11 +75,18 @@ public:
 	ImVec4 Float_Colour_Copy;
 	bool ColourPicker_Canceled;
 
+	// -------------- Physics Console
+	bool Show_Physics_Console;
+	float Physics_PosX;
+	float Physics_PosY;
+	bool Physics_Console_StartPos;
+
 	bool Show_Debug_Player;
 
 	MSG msg;
 
 	void Dialog_Float(void);
 	void Dialog_MessageEditor(void);
+	void Physics_Console_Gui(void);
 };
 

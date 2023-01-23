@@ -144,6 +144,12 @@ void SB_Preferences::Preferences_GUI()
 			Write_Preferences();
 		}
 
+
+		if (ImGui::InputInt("##1", &App->SBC_Ogre->OgreListener->Bullet_Step, 1))
+		{
+			
+		}
+
 	}
 
 	ImGui::PopStyleVar();

@@ -57,6 +57,8 @@ GD19_OgreListener::GD19_OgreListener(void)
 	Pl_Cent500X = App->CursorPosX;
 	Pl_Cent500Y = App->CursorPosY;
 
+	Bullet_Step = 2;
+
 	GD_Run_Physics = 0;
 	Dubug_Physics_Draw = 0;
 	Equity_Running = 0;
@@ -295,7 +297,7 @@ bool GD19_OgreListener::Update_Game_Logic(float DeltaTime)
 
 	if (GD_Run_Physics == 1)
 	{
-		App->SBC_Bullet->dynamicsWorld->stepSimulation(DeltaTime * 2); //suppose you have 60 frames per second	
+		App->SBC_Bullet->dynamicsWorld->stepSimulation(DeltaTime * Bullet_Step); //suppose you have 60 frames per second	
 		
 
 		for (int j = App->SBC_Bullet->dynamicsWorld->getNumCollisionObjects() - 1; j >= 0; j--)

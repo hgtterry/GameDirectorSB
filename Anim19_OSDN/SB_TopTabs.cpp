@@ -467,8 +467,6 @@ void SB_TopTabs::Hide_Tabs(void)
 	ShowWindow(Game_TB_hWnd, SW_HIDE);
 	ShowWindow(Locations_TB_hWnd, SW_HIDE);
 	
-	ShowWindow(App->SBC_Physics->PhysicsPannel_Hwnd, 0);
-
 	Toggle_Tabs_Camera_Flag = 0;
 	Toggle_Tabs_Dimensions_Flag = 0;
 	Toggle_Tabs_Shapes_Flag = 0;
