@@ -364,6 +364,16 @@ void SB_Properties::ListView_OnClickOptions(LPARAM lParam)
 		return;
 	}
 
+	// Lights
+	if (Edit_Category == Enums::Edit_Lights)
+	{
+		if (Edit_Physics == 0)
+		{
+			Edit_Light_Onclick(lParam);
+		}
+		return;
+	}
+
 	return;
 }
 
@@ -1224,6 +1234,74 @@ bool SB_Properties::Update_ListView_Level()
 }
 
 // *************************************************************************
+// *		Update_ListView_Lights:- Terry and Hazel Flanigan 2023	 	   *
+// *************************************************************************
+bool SB_Properties::Update_ListView_Lights()
+{
+
+	int index = App->SBC_Properties->Current_Selected_Object;
+
+	char Num[10];
+	char chr_ID[50];
+	char IndexNum[10];
+	_itoa(App->SBC_Scene->B_Object[index]->This_Object_UniqueID, Num, 10);
+	_itoa(index, IndexNum, 10);
+	strcpy(chr_ID, "Unique ID ");
+	strcat(chr_ID, Num);
+	strcat(chr_ID, "  Object Index ");
+	strcat(chr_ID, IndexNum);
+	SetWindowText(Properties_Dlg_hWnd, chr_ID);
+	SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->B_Object[index]->Mesh_Name);
+
+	char chr_PosX[100];
+	sprintf(chr_PosX, "%.3f", App->SBC_Scene->B_Object[index]->Mesh_Pos.x);
+
+	char chr_PosY[100];
+	sprintf(chr_PosY, "%.3f", App->SBC_Scene->B_Object[index]->Mesh_Pos.y);
+
+	char chr_Outer[100];
+	sprintf(chr_Outer, "%.3f", App->SBC_Scene->B_Object[index]->S_Light[0]->light->getSpotlightOuterAngle().valueDegrees());
+
+	char chr_Inner[100];
+	sprintf(chr_Inner, "%.3f", App->SBC_Scene->B_Object[index]->S_Light[0]->light->getSpotlightInnerAngle().valueDegrees());
+	
+	const int NUM_ITEMS = 8;
+	const int NUM_COLS = 2;
+	string grid[NUM_COLS][NUM_ITEMS]; // string table
+	LV_ITEM pitem;
+	memset(&pitem, 0, sizeof(LV_ITEM));
+	pitem.mask = LVIF_TEXT;
+
+	grid[0][0] = "Name",		grid[1][0] = App->SBC_Scene->B_Object[index]->Mesh_Name;
+	grid[0][1] = "Particle",	grid[1][1] = App->SBC_Scene->B_Object[index]->Mesh_Name;
+	grid[0][2] = " ",			grid[1][2] = " ";
+	grid[0][3] = "PosX",		grid[1][3] = chr_PosX;
+	grid[0][4] = "PosY",		grid[1][4] = chr_PosY;
+	grid[0][5] = "Outer",		grid[1][5] = chr_Outer;
+	grid[0][6] = "Inner",		grid[1][6] = chr_Inner;
+	grid[0][7] = "Editor",		grid[1][7] = " ";
+
+	ListView_DeleteAllItems(Properties_hLV);
+
+	for (DWORD row = 0; row < NUM_ITEMS; row++)
+	{
+		pitem.iItem = row;
+		pitem.pszText = const_cast<char*>(grid[0][row].c_str());
+		ListView_InsertItem(Properties_hLV, &pitem);
+
+		//ListView_SetItemText
+
+		for (DWORD col = 1; col < NUM_COLS; col++)
+		{
+			ListView_SetItemText(Properties_hLV, row, col,
+				const_cast<char*>(grid[col][row].c_str()));
+		}
+	}
+
+	return 1;
+}
+
+// *************************************************************************
 // *		Update_ListView_Particles:- Terry and Hazel Flanigan 2022 	   *
 // *************************************************************************
 bool SB_Properties::Update_ListView_Particles()
@@ -1304,6 +1382,114 @@ bool SB_Properties::Edit_Object_Onclick(LPARAM lParam)
 	}
 
 	return 1;
+}
+
+// *************************************************************************
+// *		Edit_Light_Onclick:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void SB_Properties::Edit_Light_Onclick(LPARAM lParam)
+{
+	int Index = App->SBC_Properties->Current_Selected_Object;
+	int result = 1;
+	int test;
+
+	LPNMLISTVIEW poo = (LPNMLISTVIEW)lParam;
+	test = poo->iItem;
+	ListView_GetItemText(Properties_hLV, test, 0, btext, 20);
+
+	result = strcmp(btext, "Name");
+	if (result == 0)
+	{
+		App->SBC_Object->Rename_Object(Index);
+		Update_ListView_Particles();
+	}
+
+	result = strcmp(btext, "PosX");
+	if (result == 0)
+	{
+
+		App->SBC_Gui_Dialogs->Start_Dialog_Float(1, App->SBC_Scene->B_Object[Index]->Mesh_Pos.x, "Pos X");
+
+		while (App->SBC_Gui_Dialogs->Show_Dialog_Float == 1)
+		{
+			App->SBC_Gui_Dialogs->BackGround_Render_Loop();
+
+			App->SBC_Scene->B_Object[Index]->Mesh_Pos.x = App->SBC_Gui_Dialogs->m_Dialog_Float;
+			App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(App->SBC_Scene->B_Object[Index]->Mesh_Pos);
+
+		}
+
+		App->Disable_Panels(false);
+
+		Update_ListView_Lights();
+	}
+
+	result = strcmp(btext, "PosY");
+	if (result == 0)
+	{
+
+		App->SBC_Gui_Dialogs->Start_Dialog_Float(1, App->SBC_Scene->B_Object[Index]->Mesh_Pos.y, "Pos Y");
+
+		while (App->SBC_Gui_Dialogs->Show_Dialog_Float == 1)
+		{
+			App->SBC_Gui_Dialogs->BackGround_Render_Loop();
+
+			App->SBC_Scene->B_Object[Index]->Mesh_Pos.y = App->SBC_Gui_Dialogs->m_Dialog_Float;
+			App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(App->SBC_Scene->B_Object[Index]->Mesh_Pos);
+
+		}
+
+		App->Disable_Panels(false);
+
+		Update_ListView_Lights();
+	}
+
+	result = strcmp(btext, "Outer");
+	if (result == 0)
+	{
+		float Inner = App->SBC_Scene->B_Object[Index]->S_Light[0]->light->getSpotlightInnerAngle().valueDegrees();
+
+		App->SBC_Gui_Dialogs->Start_Dialog_Float(1, App->SBC_Scene->B_Object[Index]->S_Light[0]->light->getSpotlightOuterAngle().valueDegrees(), "Outer");
+
+		while (App->SBC_Gui_Dialogs->Show_Dialog_Float == 1)
+		{
+			App->SBC_Gui_Dialogs->BackGround_Render_Loop();
+
+			App->SBC_Scene->B_Object[Index]->S_Light[0]->light->setSpotlightRange(Degree(Inner), Degree(App->SBC_Gui_Dialogs->m_Dialog_Float));
+		}
+
+		App->Disable_Panels(false);
+
+		Update_ListView_Lights();
+	}
+
+	result = strcmp(btext, "Inner");
+	if (result == 0)
+	{
+		float Outer = App->SBC_Scene->B_Object[Index]->S_Light[0]->light->getSpotlightOuterAngle().valueDegrees();
+
+		App->SBC_Gui_Dialogs->Start_Dialog_Float(1, App->SBC_Scene->B_Object[Index]->S_Light[0]->light->getSpotlightInnerAngle().valueDegrees(), "Outer");
+
+		while (App->SBC_Gui_Dialogs->Show_Dialog_Float == 1)
+		{
+			App->SBC_Gui_Dialogs->BackGround_Render_Loop();
+
+			App->SBC_Scene->B_Object[Index]->S_Light[0]->light->setSpotlightRange(Degree(App->SBC_Gui_Dialogs->m_Dialog_Float), Degree(Outer));
+		}
+
+		App->Disable_Panels(false);
+
+		Update_ListView_Lights();
+	}
+
+	result = strcmp(btext, "Editor");
+	if (result == 0)
+	{
+		App->SBC_Gui_Dialogs->Start_Light_Editor();
+	}
+
+	
+
 }
 
 // *************************************************************************

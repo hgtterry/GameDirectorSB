@@ -50,6 +50,7 @@ public:
 	ImFont* font0;
 	ImFont* font1;
 	ImFont* font2;
+	ImFont* font3;
 	ImFont* fontDroid;
 	
 	float Model_XTranslate;

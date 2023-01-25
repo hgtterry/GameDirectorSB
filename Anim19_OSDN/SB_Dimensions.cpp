@@ -108,7 +108,7 @@ void SB_Dimensions::ImGui_Dimensions(void)
 		style->Colors[ImGuiCol_Button] = ImVec4(0.8f, 0.8f, 0.8f, 1);
 
 		//--------------------------------------- Rotation
-		ImGui::SameLine(0.0f);
+		ImGui::SameLine();
 
 		if (Show_Rotation == 1)
 		{
@@ -129,7 +129,7 @@ void SB_Dimensions::ImGui_Dimensions(void)
 		style->Colors[ImGuiCol_Button] = ImVec4(0.8f, 0.8f, 0.8f, 1);
 
 		//--------------------------------------- Scale
-		ImGui::SameLine(0.0f);
+		ImGui::SameLine();
 
 		if (Show_Scale == 1)
 		{
@@ -329,7 +329,7 @@ void SB_Dimensions::ImGui_Position(void)
 		}
 	}
 
-	ImGui::SameLine(0.0f, spacingX);
+	ImGui::SameLine();
 	if (ImGui::ArrowButton("##rightXX", ImGuiDir_Right))
 	{
 		if (App->SBC_Scene->Scene_Loaded == 1)
@@ -389,9 +389,14 @@ void SB_Dimensions::Set_Position(Ogre::Vector3 Pos)
 		Ogre::Vector3 Centre = App->SBC_Object->Get_BoundingBox_World_Centre(Index);
 
 		App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+		UpDate_Physics_And_Visuals(Index);
+	}
+	else
+	{
+		App->SBC_Visuals->MarkerBB_Addjust(Index);
 	}
 
-	UpDate_Physics_And_Visuals(Index);
+	
 }
 
 // *************************************************************************
@@ -554,7 +559,7 @@ void SB_Dimensions::ImGui_Scale(void)
 		}
 	}
 
-	ImGui::SameLine(0.0f, spacingX);
+	ImGui::SameLine();
 	if (ImGui::ArrowButton("##rightSX", ImGuiDir_Right))
 	{
 		if (App->SBC_Scene->Scene_Loaded == 1)
@@ -637,10 +642,10 @@ void SB_Dimensions::Set_Scale(Ogre::Vector3 Scale)
 	{
 		App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
 		App->SBC_Scene->B_Object[Index]->Physics_Scale = Scale;
-
+		UpDate_Physics_And_Visuals(Index);
 	}
 
-	UpDate_Physics_And_Visuals(Index);
+	App->SBC_Visuals->MarkerBB_Addjust(Index);	
 }
 
 // *************************************************************************
@@ -710,7 +715,7 @@ void SB_Dimensions::ImGui_Rotation(void)
 		RotationX_Selected = 0;
 		RotationY_Selected = 0;
 	}
-	// ----------------------------------------------------------------------------- Scale
+	// ----------------------------------------------------------------------------- Rotation
 
 	ImGui::Indent();
 
@@ -742,10 +747,12 @@ void SB_Dimensions::ImGui_Rotation(void)
 					float z = App->SBC_Scene->B_Object[Index]->Physics_Quat.z;
 
 					App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
+
+					UpDate_Physics_And_Visuals(Index);
 				}
-
-				UpDate_Physics_And_Visuals(Index);
-
+				
+				App->SBC_Visuals->MarkerBB_Addjust(Index);
+				
 			}
 
 			if (RotationY_Selected == 1)
@@ -765,10 +772,12 @@ void SB_Dimensions::ImGui_Rotation(void)
 					float z = App->SBC_Scene->B_Object[Index]->Physics_Quat.z;
 
 					App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
+
+					UpDate_Physics_And_Visuals(Index);
 				}
-
-				UpDate_Physics_And_Visuals(Index);
-
+				
+				App->SBC_Visuals->MarkerBB_Addjust(Index);
+			
 			}
 
 			if (RotationZ_Selected == 1)
@@ -788,16 +797,19 @@ void SB_Dimensions::ImGui_Rotation(void)
 					float z = App->SBC_Scene->B_Object[Index]->Physics_Quat.z;
 
 					App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
-				}
 
-				UpDate_Physics_And_Visuals(Index);
+					UpDate_Physics_And_Visuals(Index);
+				}
+				
+				App->SBC_Visuals->MarkerBB_Addjust(Index);
+				
 
 			}
 
 		}
 	}
 
-	ImGui::SameLine(0.0f, spacingX);
+	ImGui::SameLine();
 	if (ImGui::ArrowButton("##rightRX", ImGuiDir_Right))
 	{
 		if (App->SBC_Scene->Scene_Loaded == 1)
@@ -820,10 +832,12 @@ void SB_Dimensions::ImGui_Rotation(void)
 						float z = App->SBC_Scene->B_Object[Index]->Physics_Quat.z;
 
 						App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
+
+						UpDate_Physics_And_Visuals(Index);
 					}
-
-					UpDate_Physics_And_Visuals(Index);
-
+					
+					App->SBC_Visuals->MarkerBB_Addjust(Index);
+					
 				}
 
 				if (RotationY_Selected == 1)
@@ -843,9 +857,12 @@ void SB_Dimensions::ImGui_Rotation(void)
 						float z = App->SBC_Scene->B_Object[Index]->Physics_Quat.z;
 
 						App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
-					}
 
-					UpDate_Physics_And_Visuals(Index);
+						UpDate_Physics_And_Visuals(Index);
+					}
+					
+					App->SBC_Visuals->MarkerBB_Addjust(Index);
+					
 
 				}
 
@@ -866,10 +883,12 @@ void SB_Dimensions::ImGui_Rotation(void)
 						float z = App->SBC_Scene->B_Object[Index]->Physics_Quat.z;
 
 						App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
+
+						UpDate_Physics_And_Visuals(Index);
 					}
-
-					UpDate_Physics_And_Visuals(Index);
-
+					
+					App->SBC_Visuals->MarkerBB_Addjust(Index);
+				
 				}
 			
 		}
@@ -977,12 +996,17 @@ void SB_Dimensions::ImGui_Position_Area(void)
 				App->SBC_Scene->B_Area[Index]->Area_Node->setPosition(Pos);
 				App->SBC_Scene->B_Area[Index]->Mesh_Pos = Pos;
 
-				Ogre::Vector3 Centre = App->SBC_Com_Area->Get_BoundingBox_World_Centre(Index);
-
-				App->SBC_Scene->B_Area[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
-
-				App->SBC_Com_Area->UpDate_Physics_And_Visuals(Index);
+				if (App->SBC_Scene->B_Object[Index]->Phys_Body)
+				{
+					Ogre::Vector3 Centre = App->SBC_Com_Area->Get_BoundingBox_World_Centre(Index);
+					App->SBC_Scene->B_Area[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+					App->SBC_Com_Area->UpDate_Physics_And_Visuals(Index);
+				}
+				
+				App->SBC_Visuals->MarkerBB_Addjust(Index);
+				
 			}
+			
 
 			if (PosY_Selected == 1)
 			{
@@ -990,10 +1014,15 @@ void SB_Dimensions::ImGui_Position_Area(void)
 				App->SBC_Scene->B_Area[Index]->Area_Node->setPosition(Pos);
 				App->SBC_Scene->B_Area[Index]->Mesh_Pos = Pos;
 
-				Ogre::Vector3 Centre = App->SBC_Com_Area->Get_BoundingBox_World_Centre(Index);
-
-				App->SBC_Scene->B_Area[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
-				App->SBC_Com_Area->UpDate_Physics_And_Visuals(Index);
+				if (App->SBC_Scene->B_Object[Index]->Phys_Body)
+				{
+					Ogre::Vector3 Centre = App->SBC_Com_Area->Get_BoundingBox_World_Centre(Index);
+					App->SBC_Scene->B_Area[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+					App->SBC_Com_Area->UpDate_Physics_And_Visuals(Index);
+				}
+				
+				App->SBC_Visuals->MarkerBB_Addjust(Index);
+				
 			}
 
 			if (PosZ_Selected == 1)
@@ -1002,15 +1031,20 @@ void SB_Dimensions::ImGui_Position_Area(void)
 				App->SBC_Scene->B_Area[Index]->Area_Node->setPosition(Pos);
 				App->SBC_Scene->B_Area[Index]->Mesh_Pos = Pos;
 
-				Ogre::Vector3 Centre = App->SBC_Com_Area->Get_BoundingBox_World_Centre(Index);
-
-				App->SBC_Scene->B_Area[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
-				App->SBC_Com_Area->UpDate_Physics_And_Visuals(Index);
+				if (App->SBC_Scene->B_Object[Index]->Phys_Body)
+				{
+					Ogre::Vector3 Centre = App->SBC_Com_Area->Get_BoundingBox_World_Centre(Index);
+					App->SBC_Scene->B_Area[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+					App->SBC_Com_Area->UpDate_Physics_And_Visuals(Index);
+				}
+				
+				App->SBC_Visuals->MarkerBB_Addjust(Index);
+				
 			}
 		}
 	}
 
-	ImGui::SameLine(0.0f, spacingX);
+	ImGui::SameLine();
 	if (ImGui::ArrowButton("##rightXX", ImGuiDir_Right))
 	{
 		if (App->SBC_Scene->Scene_Loaded == 1)
@@ -1021,10 +1055,15 @@ void SB_Dimensions::ImGui_Position_Area(void)
 				App->SBC_Scene->B_Area[Index]->Area_Node->setPosition(Pos);
 				App->SBC_Scene->B_Area[Index]->Mesh_Pos = Pos;
 
-				Ogre::Vector3 Centre = App->SBC_Com_Area->Get_BoundingBox_World_Centre(Index);
-
-				App->SBC_Scene->B_Area[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
-				App->SBC_Com_Area->UpDate_Physics_And_Visuals(Index);
+				if (App->SBC_Scene->B_Object[Index]->Phys_Body)
+				{
+					Ogre::Vector3 Centre = App->SBC_Com_Area->Get_BoundingBox_World_Centre(Index);
+					App->SBC_Scene->B_Area[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+					App->SBC_Com_Area->UpDate_Physics_And_Visuals(Index);
+				}
+				
+				App->SBC_Visuals->MarkerBB_Addjust(Index);
+				
 			}
 
 			if (PosY_Selected == 1)
@@ -1033,10 +1072,15 @@ void SB_Dimensions::ImGui_Position_Area(void)
 				App->SBC_Scene->B_Area[Index]->Area_Node->setPosition(Pos);
 				App->SBC_Scene->B_Area[Index]->Mesh_Pos = Pos;
 
-				Ogre::Vector3 Centre = App->SBC_Com_Area->Get_BoundingBox_World_Centre(Index);
-
-				App->SBC_Scene->B_Area[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
-				App->SBC_Com_Area->UpDate_Physics_And_Visuals(Index);
+				if (App->SBC_Scene->B_Object[Index]->Phys_Body)
+				{
+					Ogre::Vector3 Centre = App->SBC_Com_Area->Get_BoundingBox_World_Centre(Index);
+					App->SBC_Scene->B_Area[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+					App->SBC_Com_Area->UpDate_Physics_And_Visuals(Index);
+				}
+				
+				App->SBC_Visuals->MarkerBB_Addjust(Index);
+				
 			}
 
 			if (PosZ_Selected == 1)
@@ -1045,10 +1089,16 @@ void SB_Dimensions::ImGui_Position_Area(void)
 				App->SBC_Scene->B_Area[Index]->Area_Node->setPosition(Pos);
 				App->SBC_Scene->B_Area[Index]->Mesh_Pos = Pos;
 
-				Ogre::Vector3 Centre = App->SBC_Com_Area->Get_BoundingBox_World_Centre(Index);
 
-				App->SBC_Scene->B_Area[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
-				App->SBC_Com_Area->UpDate_Physics_And_Visuals(Index);
+				if (App->SBC_Scene->B_Object[Index]->Phys_Body)
+				{
+					Ogre::Vector3 Centre = App->SBC_Com_Area->Get_BoundingBox_World_Centre(Index);
+					App->SBC_Scene->B_Area[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+					App->SBC_Com_Area->UpDate_Physics_And_Visuals(Index);
+				}
+				
+				App->SBC_Visuals->MarkerBB_Addjust(Index);
+				
 			}
 		}
 	}
@@ -1221,7 +1271,7 @@ void SB_Dimensions::ImGui_Rotation_Area(void)
 		}
 	}
 
-	ImGui::SameLine(0.0f, spacingX);
+	ImGui::SameLine();
 	if (ImGui::ArrowButton("##rightRX", ImGuiDir_Right))
 	{
 		if (App->SBC_Scene->Scene_Loaded == 1)
@@ -1448,7 +1498,7 @@ void SB_Dimensions::ImGui_Scale_Area(void)
 		}
 	}
 
-	ImGui::SameLine(0.0f, spacingX);
+	ImGui::SameLine();
 	if (ImGui::ArrowButton("##rightSX", ImGuiDir_Right))
 	{
 		if (App->SBC_Scene->Scene_Loaded == 1)

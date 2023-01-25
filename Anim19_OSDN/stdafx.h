@@ -115,7 +115,8 @@ namespace Enums
 		Edit_Area = 14,
 		FV_Edit_Level = 15,
 		Edit_Counters = 16,
-		Edit_Environs = 17
+		Edit_Environs = 17,
+		Edit_Lights = 18
 	};
 
 	enum Usage
@@ -359,7 +360,9 @@ namespace Enums
 		FileView_EnvironEntity_Folder = 25,
 		FileView_EnvironEntity_File = 26,
 		FileView_Particle_Folder = 27,
-		FileView_Particle_File = 28
+		FileView_Particle_File = 28,
+		FileView_Light_Folder = 29,
+		FileView_Light_File = 30
 	};
 }
 

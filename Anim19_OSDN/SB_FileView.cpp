@@ -940,23 +940,23 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 	// ------------------------------------------------------------ Lights
 	if (!strcmp(FileView_Folder, "Lights")) // Folder
 	{
-		//App->SBC_FileView->Context_Selection = Enums::FileView_Particle_Folder;
+		App->SBC_FileView->Context_Selection = Enums::FileView_Light_Folder;
 		App->SBC_Properties->Current_Selected_Object = Index;
-		//App->SBC_Com_Lights->Add_New_Light();
+		App->SBC_Com_Lights->Add_New_Light();
 		return;
 	}
 
 	if (!strcmp(FileView_File, "Lights"))
 	{
-		//App->SBC_FileView->Context_Selection = Enums::FileView_Particle_File;
+		App->SBC_FileView->Context_Selection = Enums::FileView_Light_File;
 
-		//HideRightPanes();
-		//ShowWindow(App->GD_Properties_Hwnd, 1);
+		HideRightPanes();
+		ShowWindow(App->GD_Properties_Hwnd, 1);
 
 		//App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
-		//App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->B_Object[Index]->Dimensions_Locked);
+		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->B_Object[Index]->Dimensions_Locked);
 
-		//App->SBC_Properties->Edit_Category = Enums::Edit_Particles;
+		App->SBC_Properties->Edit_Category = Enums::Edit_Lights;
 
 		////----------------------------------------------------------------------------
 		App->SBC_Properties->Current_Selected_Object = Index;
@@ -964,9 +964,9 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		////App->SBC_Properties->Last_Selected_Object = Index;
 		////----------------------------------------------------------------------------
 
-		//App->SBC_Visuals->MarkerBB_Addjust(Index);
+		App->SBC_Visuals->MarkerBB_Addjust(Index);
 
-		//App->SBC_Properties->Update_ListView_Particles();
+		App->SBC_Properties->Update_ListView_Lights();
 
 		return;
 	}

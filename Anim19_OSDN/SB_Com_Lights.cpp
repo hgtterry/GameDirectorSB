@@ -109,9 +109,10 @@ void SB_Com_Lights::Create_Light(int Index)
 	Object->S_Light[0]->light = App->SBC_Ogre->mSceneMgr->createLight(buf);
 
 	Object->S_Light[0]->light->setType(Light::LT_SPOTLIGHT);
-	Object->S_Light[0]->light->setPosition(0, 0, 0);
-	Object->S_Light[0]->light->setSpecularColour(ColourValue::White);
-
+	Object->S_Light[0]->light->setDiffuseColour(1, 1, 1.0);
+	Object->S_Light[0]->light->setSpecularColour(1, 1, 1.0);
+	Object->S_Light[0]->light->setSpotlightRange(Degree(5), Degree(10));
+	Object->S_Light[0]->light->setAttenuation(100, 1.0, 0.045, 0.0075);
 	Ogre::SceneNode* PartNode = App->SBC_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 
 	PartNode->attachObject(Object->S_Light[0]->light);
@@ -122,9 +123,12 @@ void SB_Com_Lights::Create_Light(int Index)
 
 	Object->Object_Node = PartNode;
 
+	//Object->Object_Node->setDirection(-1, 1, -1);
+	//spotLightNode->setPosition(Vector3(200, 200, 0));
+
 	Object->Object_Node->setScale(Object->Mesh_Scale);
 	Object->Object_Node->setOrientation(Object->Mesh_Quat);
-
+	Object->Object_Node->setScale(1, 1,1);
 }
 
 

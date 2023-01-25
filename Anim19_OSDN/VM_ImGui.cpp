@@ -82,9 +82,15 @@ void VM_ImGui::Load_Font(void)
 	font2 = io.Fonts->AddFontFromFileTTF("Roboto-Medium.ttf", 48);
 	font0 = io.Fonts->AddFontFromFileTTF("Roboto-Medium.ttf", 18);
 
-	fontDroid = io.Fonts->AddFontFromFileTTF("DroidSans.ttf", 12);
+	//float fontSize = 18.0f;// *2.0f;
+	//font3 = io.Fonts->AddFontFromFileTTF("fonts/opensans/OpenSans-Bold.ttf", fontSize);
+
+	//fontDroid = io.Fonts->AddFontFromFileTTF("DroidSans.ttf", 12);
 
 	io.IniFilename = NULL;
+
+	//io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
+	//io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
 }
 
 // *************************************************************************
@@ -249,6 +255,12 @@ void VM_ImGui::ImGui_Editor_Loop(void)
 	if (App->SBC_Gui_Dialogs->Show_Physics_Console == 1)
 	{
 		App->SBC_Gui_Dialogs->Physics_Console_Gui();
+	}
+
+	// SBC_Gui_Dialogs - Light Editor
+	if (App->SBC_Gui_Dialogs->Show_Light_Editor == 1)
+	{
+		App->SBC_Gui_Dialogs->Light_Property_Editor_Gui();
 	}
 	
 }

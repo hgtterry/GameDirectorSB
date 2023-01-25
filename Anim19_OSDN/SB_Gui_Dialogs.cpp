@@ -63,6 +63,11 @@ SB_Gui_Dialogs::SB_Gui_Dialogs(void)
 	Physics_PosY = 500;
 	Physics_Console_StartPos = 0;
 
+	// -------------- Light Editor
+	Show_Light_Editor = 0;
+
+
+
 	Show_Debug_Player = 0;
 }
 
@@ -634,7 +639,29 @@ void SB_Gui_Dialogs::Physics_Console_Gui(void)
 		ImGui::SameLine();
 		if (ImGui::Button("Reset Scene"))
 		{
+			if (App->SBC_Scene->Scene_Loaded == 1)
+			{
+				
+				int Saved = App->SBC_Ogre->OgreListener->GD_CameraMode;
+				App->SBC_Ogre->OgreListener->GD_CameraMode = Enums::CamFirst;
 
+				App->SBC_Physics->Reset_Physics();
+				App->SBC_Ogre->OgreListener->GD_Run_Physics = 1;
+				App->SBC_Physics->Reset_Triggers();
+				App->SBC_Ogre->OgreListener->GD_Run_Physics = 1;
+				
+				App->SBC_TopTabs->Toggle_FirstCam_Flag = 1;
+				App->SBC_TopTabs->Toggle_FreeCam_Flag = 0;
+				RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+				/*App->SBC_TopTabs->Toggle_FirstCam_Flag = 0;
+				App->SBC_TopTabs->Toggle_FreeCam_Flag = 1;
+				RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+				App->SBC_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;*/
+
+				App->SBC_Com_Environments->GameMode(0);
+
+			}
 		}
 
 		if (Physics_Console_StartPos == 0)
@@ -651,4 +678,77 @@ void SB_Gui_Dialogs::Physics_Console_Gui(void)
 		ImGui::PopStyleColor();
 		ImGui::End();
 	}
+}
+
+// *************************************************************************
+// *		 Start_Light_Editor:- Terry and Hazel Flanigan 2023  		   *
+// *************************************************************************
+void SB_Gui_Dialogs::Start_Light_Editor()
+{
+	
+	Show_Light_Editor = 1;
+}
+
+// *************************************************************************
+// *		Light_Property_Editor_Gui:- Terry and Hazel Flanigan 2022	   *
+// *************************************************************************
+void SB_Gui_Dialogs::Light_Property_Editor_Gui()
+{
+
+	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowSize(ImVec2(350, 190), ImGuiCond_FirstUseEver);
+
+	if (!ImGui::Begin("Environment Editor", &Show_Light_Editor, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar))
+	{
+		ImGui::End();
+		return;
+	}
+
+	ImGuiColorEditFlags misc_flags2 = (ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_InputRGB | ImGuiColorEditFlags_Uint8);
+
+	ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(2, 2));
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(213, 222, 242, 255));
+
+	ImGui::Spacing();
+	ImGui::Spacing();
+	ImGui::Spacing();
+	ImGui::Spacing();
+
+	// ---------------------------------------------------------------- Main Light
+
+	ImGui::NextColumn();
+	ImGui::AlignTextToFramePadding();
+
+	ImGui::Text("Ambient Colour:");
+	ImGui::SameLine();
+
+	/*if (ImGui::ColorEdit3("", (float*)&Ambient_Colour, ImGuiColorEditFlags_NoInputs | misc_flags2))
+	{
+		Ambient_Int_Red = Ambient_Colour.x * 255;
+		Ambient_Int_Green = Ambient_Colour.y * 255;
+		Ambient_Int_Blue = Ambient_Colour.z * 255;
+
+		App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->AmbientColour = Ogre::Vector3(Ambient_Colour.x, Ambient_Colour.y, Ambient_Colour.z);
+		App->SBC_Ogre->mSceneMgr->setAmbientLight(ColourValue(Ambient_Colour.x, Ambient_Colour.y, Ambient_Colour.z));
+
+		App->SBC_Com_Environments->Mark_As_Altered_Environ(Eviron_Index);
+	}*/
+
+	
+
+	ImGui::PopStyleVar();
+	ImGui::Columns(0);
+
+	ImGui::Spacing();
+	ImGui::Spacing();
+
+	if (ImGui::Button("Close", ImVec2(100, 0)))
+	{
+		//Close_Environment_Editor();
+
+		ImGui::PopStyleColor();
+		Show_Light_Editor = 0;
+	}
+
+	ImGui::End();
 }

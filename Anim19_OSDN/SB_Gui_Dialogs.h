@@ -37,6 +37,8 @@ public:
 
 	void Start_Colour_Picker(Ogre::Vector3 Colour);
 
+	void Start_Light_Editor();
+
 	void Dialog_Colour_Picker(void);
 
 	void Debug_Player(void);
@@ -81,6 +83,10 @@ public:
 	float Physics_PosY;
 	bool Physics_Console_StartPos;
 
+	// -------------- Physics Console
+	bool Show_Light_Editor;
+	
+
 	bool Show_Debug_Player;
 
 	MSG msg;
@@ -88,5 +94,9 @@ public:
 	void Dialog_Float(void);
 	void Dialog_MessageEditor(void);
 	void Physics_Console_Gui(void);
+	void Light_Property_Editor_Gui();
+protected:
+
+	
 };
 
