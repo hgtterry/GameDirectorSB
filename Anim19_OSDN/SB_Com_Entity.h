@@ -51,5 +51,10 @@ public:
 	bool Add_New_Collectable();
 	bool Create_Collectable_Entity(int Index);
 	void Set_Collectables_Defaults(int Index);
+
+	// ------------------------------------------ User_Objects
+	void Add_New_User_Object(void);
+	void Create_User_Object(int Index);
+	void Set_User_Objects_Defaults(int Index);
 };
 

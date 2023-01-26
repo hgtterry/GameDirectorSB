@@ -66,7 +66,8 @@ SB_Gui_Dialogs::SB_Gui_Dialogs(void)
 	// -------------- Light Editor
 	Show_Light_Editor = 0;
 
-
+	// -------------- Material Editor
+	Show_Material_Editor = 0;
 
 	Show_Debug_Player = 0;
 }
@@ -694,9 +695,9 @@ void SB_Gui_Dialogs::Start_Light_Editor()
 // *************************************************************************
 void SB_Gui_Dialogs::Light_Property_Editor_Gui()
 {
-
-	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
-	ImGui::SetNextWindowSize(ImVec2(350, 190), ImGuiCond_FirstUseEver);
+	int Index = App->SBC_Properties->Current_Selected_Object;
+	ImGui::SetNextWindowPos(ImVec2(200, 10), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowSize(ImVec2(350, 490), ImGuiCond_FirstUseEver);
 
 	if (!ImGui::Begin("Environment Editor", &Show_Light_Editor, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar))
 	{
@@ -706,38 +707,72 @@ void SB_Gui_Dialogs::Light_Property_Editor_Gui()
 
 	ImGuiColorEditFlags misc_flags2 = (ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_InputRGB | ImGuiColorEditFlags_Uint8);
 
-	ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(2, 2));
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(213, 222, 242, 255));
 
-	ImGui::Spacing();
-	ImGui::Spacing();
 	ImGui::Spacing();
 	ImGui::Spacing();
 
 	// ---------------------------------------------------------------- Main Light
 
-	ImGui::NextColumn();
-	ImGui::AlignTextToFramePadding();
+	ImGui::Text("Range");
+	ImGui::Separator();
 
-	ImGui::Text("Ambient Colour:");
+	float Inner = App->SBC_Scene->B_Object[Index]->S_Light[0]->light->getSpotlightInnerAngle().valueDegrees();
+	float Outer = App->SBC_Scene->B_Object[Index]->S_Light[0]->light->getSpotlightOuterAngle().valueDegrees();
+	float Limit = App->SBC_Scene->B_Object[Index]->S_Light[0]->light->getAttenuationRange();
+	float Const = App->SBC_Scene->B_Object[Index]->S_Light[0]->light->getAttenuationConstant();
+	float Linear = App->SBC_Scene->B_Object[Index]->S_Light[0]->light->getAttenuationLinear();
+	float Quadric = App->SBC_Scene->B_Object[Index]->S_Light[0]->light->getAttenuationQuadric();
+
+	// ----------------- Outer
+	ImGui::Text("Outer:- ");
 	ImGui::SameLine();
-
-	/*if (ImGui::ColorEdit3("", (float*)&Ambient_Colour, ImGuiColorEditFlags_NoInputs | misc_flags2))
+	if (ImGui::InputFloat("##1", &Outer, 1, 0, "%.3f"))
 	{
-		Ambient_Int_Red = Ambient_Colour.x * 255;
-		Ambient_Int_Green = Ambient_Colour.y * 255;
-		Ambient_Int_Blue = Ambient_Colour.z * 255;
+		App->SBC_Scene->B_Object[Index]->S_Light[0]->light->setSpotlightRange(Degree(Inner), Degree(Outer));
+	}
 
-		App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->AmbientColour = Ogre::Vector3(Ambient_Colour.x, Ambient_Colour.y, Ambient_Colour.z);
-		App->SBC_Ogre->mSceneMgr->setAmbientLight(ColourValue(Ambient_Colour.x, Ambient_Colour.y, Ambient_Colour.z));
+	// ----------------- Inner
+	ImGui::Text("Inner:-  ");
+	ImGui::SameLine();
+	if (ImGui::InputFloat("##2", &Inner, 1, 0, "%.3f"))
+	{
+		App->SBC_Scene->B_Object[Index]->S_Light[0]->light->setSpotlightRange(Degree(Inner), Degree(Outer));
+	}
 
-		App->SBC_Com_Environments->Mark_As_Altered_Environ(Eviron_Index);
-	}*/
+	ImGui::Text("Attenuation");
+	ImGui::Separator();
+	// ----------------- Range
+	ImGui::Text("Range:- ");
+	ImGui::SameLine();
+	if (ImGui::InputFloat("##3", &Limit, 1, 0, "%.3f"))
+	{
+		App->SBC_Scene->B_Object[Index]->S_Light[0]->light->setAttenuation(Limit, Const, Linear, Quadric);
+	}
 
-	
+	// ----------------- Const
+	ImGui::Text("Const:- ");
+	ImGui::SameLine();
+	if (ImGui::InputFloat("##4", &Const, 0.1, 0, "%f"))
+	{
+		App->SBC_Scene->B_Object[Index]->S_Light[0]->light->setAttenuation(Limit, Const, Linear, Quadric);
+	}
 
-	ImGui::PopStyleVar();
-	ImGui::Columns(0);
+	// ----------------- Linear
+	ImGui::Text("Linear:- ");
+	ImGui::SameLine();
+	if (ImGui::InputFloat("##5", &Linear, 0.1, 0, "%f"))
+	{
+		App->SBC_Scene->B_Object[Index]->S_Light[0]->light->setAttenuation(Limit, Const, Linear, Quadric);
+	}
+
+	// ----------------- Quadric
+	ImGui::Text("Quadric:- ");
+	ImGui::SameLine();
+	if (ImGui::InputFloat("##6", &Quadric, 0.1, 0, "%f"))
+	{
+		App->SBC_Scene->B_Object[Index]->S_Light[0]->light->setAttenuation(Limit, Const, Linear, Quadric);
+	}
 
 	ImGui::Spacing();
 	ImGui::Spacing();
@@ -746,6 +781,122 @@ void SB_Gui_Dialogs::Light_Property_Editor_Gui()
 	{
 		//Close_Environment_Editor();
 
+		ImGui::PopStyleColor();
+		Show_Light_Editor = 0;
+	}
+
+	ImGui::End();
+}
+
+// *************************************************************************
+// *		 Start_Material_Editor:- Terry and Hazel Flanigan 2023  	   *
+// *************************************************************************
+void SB_Gui_Dialogs::Start_Material_Editor()
+{
+	Show_Material_Editor = 1;
+}
+
+// *************************************************************************
+// *			Material_Editor_Gui:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_Gui_Dialogs::Material_Editor_Gui()
+{
+	int Index = App->SBC_Properties->Current_Selected_Object;
+
+	//App->SBC_Scene->B_Object[Index]->Object_Ent->getMesh()->getSubMesh(1)->getMaterialName();
+	
+
+	ImGui::SetNextWindowPos(ImVec2(250, 10), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowSize(ImVec2(350, 490), ImGuiCond_FirstUseEver);
+
+	if (!ImGui::Begin("Material Editor", &Show_Material_Editor, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar))
+	{
+		ImGui::End();
+		return;
+	}
+
+	ImGuiColorEditFlags misc_flags2 = (ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_InputRGB | ImGuiColorEditFlags_Uint8);
+
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(213, 222, 242, 255));
+
+	ImGui::Spacing();
+	ImGui::Spacing();
+
+	// ---------------------------------------------------------------- Main Light
+
+	ImGui::Text("Range");
+	ImGui::Separator();
+
+	if (App->SBC_Properties->Edit_Category == Enums::Edit_Area)
+	{
+		int NumSubMesh = App->SBC_Scene->B_Area[Index]->Area_Ent->getMesh()->getNumSubMeshes();
+		static int item_current_idx = 0;
+
+		ImGui::Text("SubMeshes %i", NumSubMesh);
+		if (ImGui::BeginCombo("Materials", App->SBC_Scene->B_Area[Index]->Area_Ent->getMesh()->getSubMesh(item_current_idx)->getMaterialName().c_str()))
+		{
+			for (int n = 0; n < NumSubMesh; n++)
+			{
+				Ogre::String text = App->SBC_Scene->B_Area[Index]->Area_Ent->getMesh()->getSubMesh(n)->getMaterialName().c_str();
+				const bool is_selected = (item_current_idx == n);
+				if (ImGui::Selectable(text.c_str(), is_selected))
+					item_current_idx = n;
+
+				if (is_selected)
+				{
+					ImGui::SetItemDefaultFocus();
+				}
+			}
+			ImGui::EndCombo();
+		}
+
+		ImGui::Text("Edge List:-  %i", App->SBC_Scene->B_Area[Index]->Area_Ent->getMesh()->isEdgeListBuilt());
+
+		Ogre::String text = App->SBC_Scene->B_Area[Index]->Area_Ent->getMesh()->getSubMesh(item_current_idx)->getMaterialName().c_str();
+		Ogre::MaterialPtr  Mat = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(text));
+		ImGui::Text("Texture:-  %s", Mat->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureName().c_str());
+	}
+	else
+	{
+		int NumSubMesh = App->SBC_Scene->B_Object[Index]->Object_Ent->getMesh()->getNumSubMeshes();
+		static int item_current_idx = 0; 
+
+		ImGui::Text("SubMeshes %i", NumSubMesh);
+		if (ImGui::BeginCombo("Materials", App->SBC_Scene->B_Object[Index]->Object_Ent->getMesh()->getSubMesh(item_current_idx)->getMaterialName().c_str()))
+		{
+			for (int n = 0; n < NumSubMesh; n++)
+			{
+				Ogre::String text = App->SBC_Scene->B_Object[Index]->Object_Ent->getMesh()->getSubMesh(n)->getMaterialName().c_str();
+				const bool is_selected = (item_current_idx == n);
+				if (ImGui::Selectable(text.c_str(), is_selected))
+					item_current_idx = n;
+
+				if (is_selected)
+				{
+					ImGui::SetItemDefaultFocus();
+				}
+			}
+
+
+			ImGui::EndCombo();
+		}
+
+		ImGui::Text("Edge List:-  %i", App->SBC_Scene->B_Object[Index]->Object_Ent->getMesh()->isEdgeListBuilt());
+
+		Ogre::String text = App->SBC_Scene->B_Object[Index]->Object_Ent->getMesh()->getSubMesh(item_current_idx)->getMaterialName().c_str();
+		Ogre::MaterialPtr  Mat = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(text));
+		ImGui::Text("Texture:-  %s", Mat->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureName().c_str());
+		
+
+		//Ogre::String text = App->SBC_Scene->B_Object[Index]->Object_Ent->getMesh()->getSubMesh(0)->getMaterialName().c_str();
+		//Ogre::MaterialPtr  Mat = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(text));
+		Mat->getTechnique(0)->getPass(0)->setAmbient(0.5, 0.5, 1);
+	}
+	
+	if (ImGui::Button("Close", ImVec2(100, 0)))
+	{
+		//Close_Environment_Editor();
+		Show_Material_Editor = 0;
 		ImGui::PopStyleColor();
 		Show_Light_Editor = 0;
 	}

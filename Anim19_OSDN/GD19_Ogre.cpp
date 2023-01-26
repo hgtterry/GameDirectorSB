@@ -91,9 +91,6 @@ bool SB_Ogre::InitOgre(void)
 	
 	createFrameListener();
 	
-	//mWindow->setVSyncEnabled(true);
-	//mWindow->setVSyncInterval(10);
-
 	return 1;
 }
 

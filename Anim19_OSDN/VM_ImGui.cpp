@@ -262,7 +262,12 @@ void VM_ImGui::ImGui_Editor_Loop(void)
 	{
 		App->SBC_Gui_Dialogs->Light_Property_Editor_Gui();
 	}
-	
+
+	// SBC_Gui_Dialogs - Light Editor
+	if (App->SBC_Gui_Dialogs->Show_Material_Editor == 1)
+	{
+		App->SBC_Gui_Dialogs->Material_Editor_Gui();
+	}
 }
 
 // *************************************************************************

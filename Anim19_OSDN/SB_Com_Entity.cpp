@@ -769,5 +769,91 @@ void SB_Com_Entity::Set_Collectables_Defaults(int Index)
 	strcpy(App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Counter_Name, "Not_Set");
 
 	App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Counter_Disabled = 0;
+}
+
+// *************************************************************************
+// *		Add_New_User_Object:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void SB_Com_Entity::Add_New_User_Object(void)
+{
+	char B_Name[MAX_PATH];
+	char ConNum[MAX_PATH];
+
+	int Index = App->SBC_Scene->Object_Count;
+
+	App->SBC_Scene->B_Object[Index] = new Base_Object();
+	//App->SBC_Scene->B_Object[Index]->S_Light[0] = new Light_type;
+
+	Set_User_Objects_Defaults(Index);
+
+	App->SBC_Scene->B_Object[Index]->Type = Enums::Bullet_Type_None;
+	App->SBC_Scene->B_Object[Index]->Shape = Enums::NoShape;
+	App->SBC_Scene->B_Object[Index]->This_Object_UniqueID = App->SBC_Scene->UniqueID_Object_Counter; // Unique ID
+
+	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_FileName, "Cube.mesh");
+
+	strcpy_s(B_Name, "User_");
+	_itoa(Index, ConNum, 10);
+	strcat(B_Name, ConNum);
+	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_Name, B_Name);
+
+	Ogre::Vector3 Pos = App->SBC_Object->GetPlacement(-50);
+	App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
+	App->SBC_Scene->B_Object[Index]->Mesh_Scale = Ogre::Vector3(1, 1, 1);
+
+	Create_User_Object(Index);
+
+	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_UserObjects_Folder, App->SBC_Scene->B_Object[Index]->Mesh_Name, Index, true);
+	App->SBC_Scene->B_Object[Index]->FileViewItem = Temp;
+
+	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[Index]->FileViewItem);
+
+	App->SBC_Scene->UniqueID_Object_Counter++;
+	App->SBC_Scene->Object_Count++;
+
+}
+
+// *************************************************************************
+// *			Create_User_Object:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_Com_Entity::Create_User_Object(int Index)
+{
+	char Mesh_File[255];
+	char ConNum[256];
+	char Ogre_Name[256];
+
+	Base_Object* Object = App->SBC_Scene->B_Object[Index];
+
+
+	// ----------------- Mesh
+
+	strcpy_s(Ogre_Name, "GDEnt_");
+	_itoa(Index, ConNum, 10);
+	strcat(Ogre_Name, ConNum);
+
+	strcpy(Mesh_File, Object->Mesh_FileName);
+
+	Object->Object_Ent = App->SBC_Ogre->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->SBC_Ogre->App_Resource_Group);
+
+	Object->Object_Node = App->SBC_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	Object->Object_Node->attachObject(Object->Object_Ent);
+
+	Object->Object_Node->setVisible(true);
+	Object->Object_Node->setPosition(Object->Mesh_Pos);
+
+	//Object->Object_Ent->setMaterialName("Wall_1/HL_Wall");
+
+	//Object->Object_Ent->getMesh()->getNumSubMeshes();
+}
+
+
+// *************************************************************************
+// *	Set_User_Objects_Defaults:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_Com_Entity::Set_User_Objects_Defaults(int Index)
+{
+	App->SBC_Scene->B_Object[Index]->Phys_Body = NULL;
+	App->SBC_Scene->B_Object[Index]->Physics_Valid = 0;
+	App->SBC_Scene->B_Object[Index]->Usage = Enums::Usage_UserObject;
 
 }

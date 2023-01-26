@@ -78,6 +78,7 @@ public:
 	HTREEITEM FV_Evirons_Folder;
 	HTREEITEM FV_Particles_Folder;
 	HTREEITEM FV_Lights_Folder;
+	HTREEITEM FV_UserObjects_Folder;
 
 	HMENU hMenu;
 

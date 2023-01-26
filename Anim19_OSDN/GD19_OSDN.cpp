@@ -416,14 +416,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		case ID_DEBUG_TESTIMGUIDIALOG:
 		{
-			if (App->SBC_Prefs->Show_Preferences_GUI == 0)
+			Ogre::Entity* GroundEnt = App->SBC_Ogre->mSceneMgr->createEntity("Ground12", "DoorEntity_GD.mesh", App->SBC_Scene->Project_Resource_Group);
+			Ogre::SceneNode* groundNode = App->SBC_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+			groundNode->attachObject(GroundEnt);
+
+			groundNode->setVisible(true);
+			groundNode->setPosition(0,0,0);
+	
+
+			/*if (App->SBC_Prefs->Show_Preferences_GUI == 0)
 			{
 				App->SBC_Prefs->Start_Preferences_GUI();
 			}
 			else
 			{
 				App->SBC_Prefs->Close_Preferences_GUI();
-			}
+			}*/
 
 			/*if (App->SBC_Front_Dlg->Show_Front_Dlg_Flag == 0)
 			{

@@ -116,7 +116,8 @@ namespace Enums
 		FV_Edit_Level = 15,
 		Edit_Counters = 16,
 		Edit_Environs = 17,
-		Edit_Lights = 18
+		Edit_Lights = 18,
+		Edit_UserObjects = 19
 	};
 
 	enum Usage
@@ -143,7 +144,8 @@ namespace Enums
 		Usage_Player = 18,
 		Usage_Environment = 19,
 		Usage_RoomChange = 20,
-		Usage_EnvironEntity = 21
+		Usage_EnvironEntity = 21,
+		Usage_UserObject = 22
 	};
 	enum Camera
 	{
@@ -362,7 +364,9 @@ namespace Enums
 		FileView_Particle_Folder = 27,
 		FileView_Particle_File = 28,
 		FileView_Light_Folder = 29,
-		FileView_Light_File = 30
+		FileView_Light_File = 30,
+		FileView_UserObjects_Folder = 31,
+		FileView_UserObjects_File = 32
 	};
 }
 

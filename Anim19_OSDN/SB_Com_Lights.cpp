@@ -52,7 +52,7 @@ void SB_Com_Lights::Add_New_Light(void)
 	App->SBC_Scene->B_Object[Index]->Shape = Enums::NoShape;
 	App->SBC_Scene->B_Object[Index]->This_Object_UniqueID = App->SBC_Scene->UniqueID_Object_Counter; // Unique ID
 
-	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_FileName, "DoorEntity_GD.mesh");
+	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_FileName, "Cube.mesh");
 
 	strcpy_s(B_Name, "Light_");
 	_itoa(Index, ConNum, 10);
@@ -97,38 +97,13 @@ void SB_Com_Lights::Create_Light(int Index)
 
 	Object->Object_Ent = App->SBC_Ogre->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->SBC_Ogre->App_Resource_Group);
 
+	Object->Object_Node = App->SBC_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	Object->Object_Node->attachObject(Object->Object_Ent);
 
-	// ----------------------------------------------------------------------
-	char buf[100];
-	char Name[100];
-	_itoa(Index, buf, 10);
-	strcpy(Name, "Light_");
-	strcat(Name, buf);
+	Object->Object_Node->setVisible(true);
+	Object->Object_Node->setPosition(Object->Mesh_Pos);
 
-
-	Object->S_Light[0]->light = App->SBC_Ogre->mSceneMgr->createLight(buf);
-
-	Object->S_Light[0]->light->setType(Light::LT_SPOTLIGHT);
-	Object->S_Light[0]->light->setDiffuseColour(1, 1, 1.0);
-	Object->S_Light[0]->light->setSpecularColour(1, 1, 1.0);
-	Object->S_Light[0]->light->setSpotlightRange(Degree(5), Degree(10));
-	Object->S_Light[0]->light->setAttenuation(100, 1.0, 0.045, 0.0075);
-	Ogre::SceneNode* PartNode = App->SBC_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
-
-	PartNode->attachObject(Object->S_Light[0]->light);
-
-	PartNode->setPosition(Object->Mesh_Pos);
-
-	PartNode->setScale(Object->Mesh_Scale);
-
-	Object->Object_Node = PartNode;
-
-	//Object->Object_Node->setDirection(-1, 1, -1);
-	//spotLightNode->setPosition(Vector3(200, 200, 0));
-
-	Object->Object_Node->setScale(Object->Mesh_Scale);
-	Object->Object_Node->setOrientation(Object->Mesh_Quat);
-	Object->Object_Node->setScale(1, 1,1);
+	Object->Object_Ent->setMaterialName("Wall_1/HL_Wall");
 }
 
 

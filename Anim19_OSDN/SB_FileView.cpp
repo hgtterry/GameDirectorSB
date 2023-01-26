@@ -103,6 +103,8 @@ void SB_FileView::Reset_Class()
 	GD_Area_Change_Folder = nullptr;
 	GD_Level_Change_Folder = nullptr;
 	FV_Particles_Folder = nullptr;
+	FV_UserObjects_Folder = nullptr;
+
 
 	FV_Players_Folder = nullptr;
 	FV_Areas_Folder = nullptr;
@@ -502,6 +504,15 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	tvinsert.item.iImage = 0;
 	tvinsert.item.iSelectedImage = 1;
 	FV_Particles_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)& tvinsert);
+
+	//--------------------------------------- User_Objects
+	tvinsert.hParent = FV_EntitiesFolder;
+	tvinsert.hInsertAfter = TVI_LAST;
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	tvinsert.item.pszText = "User_Objects";
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
+	FV_UserObjects_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
 
 	//--------------------------------------- Lights
 	tvinsert.hParent = FV_EntitiesFolder;
@@ -937,26 +948,26 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		return;
 	}
 
-	// ------------------------------------------------------------ Lights
-	if (!strcmp(FileView_Folder, "Lights")) // Folder
+	// ------------------------------------------------------------ User_Objects
+	if (!strcmp(FileView_Folder, "User_Objects")) // Folder
 	{
-		App->SBC_FileView->Context_Selection = Enums::FileView_Light_Folder;
+		App->SBC_FileView->Context_Selection = Enums::FileView_UserObjects_Folder;
 		App->SBC_Properties->Current_Selected_Object = Index;
-		App->SBC_Com_Lights->Add_New_Light();
+		App->SBC_Com_Entity->Add_New_User_Object();
 		return;
 	}
 
-	if (!strcmp(FileView_File, "Lights"))
+	if (!strcmp(FileView_File, "User_Objects"))
 	{
-		App->SBC_FileView->Context_Selection = Enums::FileView_Light_File;
+		App->SBC_FileView->Context_Selection = Enums::FileView_UserObjects_File;
 
 		HideRightPanes();
 		ShowWindow(App->GD_Properties_Hwnd, 1);
 
-		//App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
+		App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
 		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->B_Object[Index]->Dimensions_Locked);
 
-		App->SBC_Properties->Edit_Category = Enums::Edit_Lights;
+		App->SBC_Properties->Edit_Category = Enums::Edit_UserObjects;
 
 		////----------------------------------------------------------------------------
 		App->SBC_Properties->Current_Selected_Object = Index;
@@ -966,10 +977,44 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 		App->SBC_Visuals->MarkerBB_Addjust(Index);
 
-		App->SBC_Properties->Update_ListView_Lights();
+		App->SBC_Properties->Update_ListView_UserObjects();
 
 		return;
 	}
+
+	//// ------------------------------------------------------------ Lights
+	//if (!strcmp(FileView_Folder, "Lights")) // Folder
+	//{
+	//	App->SBC_FileView->Context_Selection = Enums::FileView_Light_Folder;
+	//	App->SBC_Properties->Current_Selected_Object = Index;
+	//	App->SBC_Com_Lights->Add_New_Light();
+	//	return;
+	//}
+
+	//if (!strcmp(FileView_File, "Lights"))
+	//{
+	//	App->SBC_FileView->Context_Selection = Enums::FileView_Light_File;
+
+	//	HideRightPanes();
+	//	ShowWindow(App->GD_Properties_Hwnd, 1);
+
+	//	//App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
+	//	App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->B_Object[Index]->Dimensions_Locked);
+
+	//	App->SBC_Properties->Edit_Category = Enums::Edit_Lights;
+
+	//	////----------------------------------------------------------------------------
+	//	App->SBC_Properties->Current_Selected_Object = Index;
+	//	////App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
+	//	////App->SBC_Properties->Last_Selected_Object = Index;
+	//	////----------------------------------------------------------------------------
+
+	//	App->SBC_Visuals->MarkerBB_Addjust(Index);
+
+	//	App->SBC_Properties->Update_ListView_Lights();
+
+	//	return;
+	//}
 
 	// ------------------------------------------------------------ Counters
 	if (!strcmp(FileView_Folder, "Counters")) // Folder
