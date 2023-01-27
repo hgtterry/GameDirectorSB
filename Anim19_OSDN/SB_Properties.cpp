@@ -970,7 +970,7 @@ bool SB_Properties::Update_ListView_Collectables()
 		strcpy(chr_Counter_Disabled, "Enabled");
 	}
 
-	const int NUM_ITEMS = 8;
+	const int NUM_ITEMS = 9;
 	const int NUM_COLS = 2;
 	string grid[NUM_COLS][NUM_ITEMS]; // string table
 	LV_ITEM pitem;
@@ -979,12 +979,13 @@ bool SB_Properties::Update_ListView_Collectables()
 
 	grid[0][0] = "Name",			grid[1][0] = App->SBC_Scene->B_Object[index]->Mesh_Name;
 	grid[0][1] = "Mesh File",		grid[1][1] = App->SBC_Scene->B_Object[index]->Mesh_FileName;
-	grid[0][2] = " ",				grid[1][2] = " ";
-	grid[0][3] = "Sound",			grid[1][3] = App->SBC_Scene->B_Object[index]->S_Collectable[0]->Sound_File;
-	grid[0][4] = "Volume",			grid[1][4] = chr_Volume;
-	grid[0][5] = "Play",			grid[1][5] = chr_Play;
-	grid[0][6] = " ",				grid[1][6] = " ";
-	grid[0][7] = "Counter",			grid[1][7] = chr_Counter_Disabled;
+	grid[0][2] = "Materials",		grid[1][2] = App->SBC_Scene->B_Object[index]->Material_File;
+	grid[0][3] = " ",				grid[1][3] = " ";
+	grid[0][4] = "Sound",			grid[1][4] = App->SBC_Scene->B_Object[index]->S_Collectable[0]->Sound_File;
+	grid[0][5] = "Volume",			grid[1][5] = chr_Volume;
+	grid[0][6] = "Play",			grid[1][6] = chr_Play;
+	grid[0][7] = " ",				grid[1][7] = " ";
+	grid[0][8] = "Counter",			grid[1][8] = chr_Counter_Disabled;
 	
 
 
@@ -2513,6 +2514,12 @@ bool SB_Properties::Edit_Collectables_OnClick(LPARAM lParam)
 		Update_ListView_Collectables();
 
 		App->SBC_Physics->Reset_Triggers();
+	}
+
+	result = strcmp(btext, "Materials");
+	if (result == 0)
+	{
+		App->SBC_Materials->Start_Material_Editor();
 	}
 
 	result = strcmp(btext, "Volume");
