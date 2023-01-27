@@ -1446,7 +1446,7 @@ bool SB_Properties::Edit_Object_Onclick(LPARAM lParam)
 	result = strcmp(btext, "Materials");
 	if (result == 0)
 	{
-		App->SBC_Gui_Dialogs->Start_Material_Editor();
+		App->SBC_Materials->Start_Material_Editor();
 	}
 	return 1;
 }
@@ -1541,7 +1541,7 @@ void SB_Properties::Edit_UserObjects_Onclick(LPARAM lParam)
 	result = strcmp(btext, "Materials");
 	if (result == 0)
 	{
-		App->SBC_Gui_Dialogs->Start_Material_Editor();
+		App->SBC_Materials->Start_Material_Editor();
 	}
 }
 
@@ -1650,7 +1650,7 @@ bool SB_Properties::Edit_Area_Onclick(LPARAM lParam)
 	result = strcmp(btext, "Materials");
 	if (result == 0)
 	{
-		App->SBC_Gui_Dialogs->Start_Material_Editor();
+		App->SBC_Materials->Start_Material_Editor();
 	}
 
 	return 1;

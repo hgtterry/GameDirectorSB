@@ -38,8 +38,7 @@ public:
 	void Start_Colour_Picker(Ogre::Vector3 Colour);
 
 	void Start_Light_Editor();
-	void Start_Material_Editor();
-
+	
 	void Dialog_Colour_Picker(void);
 
 	void Debug_Player(void);
@@ -88,7 +87,7 @@ public:
 	bool Show_Light_Editor;
 	
 	// -------------- Material Editor
-	bool Show_Material_Editor;
+
 
 	bool Show_Debug_Player;
 
@@ -98,7 +97,7 @@ public:
 	void Dialog_MessageEditor(void);
 	void Physics_Console_Gui(void);
 	void Light_Property_Editor_Gui();
-	void Material_Editor_Gui();
+
 protected:
 
 	

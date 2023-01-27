@@ -84,7 +84,7 @@ distribution.
 #include "SB_Locations.h"
 #include "SB_Gui_Dialogs.h"
 #include "SB_Gui_Environment.h"
-
+#include "SB_Materials.h"
 #include "Bass_Front_Dialog.h"
 
 #include "DynamicCharacterController.h"
@@ -155,6 +155,7 @@ public:
 	SB_Locations*			SBC_Locations;
 	SB_Gui_Dialogs*			SBC_Gui_Dialogs;
 	SB_Gui_Environment*		SBC_Gui_Environ;
+	SB_Materials*			SBC_Materials;
 
 	Bass_Front_Dialog*		SBC_Front_Dlg;
 

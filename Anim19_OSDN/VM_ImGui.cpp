@@ -264,9 +264,9 @@ void VM_ImGui::ImGui_Editor_Loop(void)
 	}
 
 	// SBC_Gui_Dialogs - Light Editor
-	if (App->SBC_Gui_Dialogs->Show_Material_Editor == 1)
+	if (App->SBC_Materials->Show_Material_Editor == 1)
 	{
-		App->SBC_Gui_Dialogs->Material_Editor_Gui();
+		App->SBC_Materials->Material_Editor_Gui();
 	}
 }
 

@@ -29,6 +29,8 @@ public:
 	~SB_FileIO();
 
 	bool Open_Project_File(char* Extension, char* Title, char* StartDirectory);
+	bool OpenTextureFile(char* Title, char* StartDirectory, bool SaveLocation);
+
 	bool SearchFolders(char* Path, char* File);
 
 	// Returns 1 if File Exits 0 if no file
@@ -41,6 +43,9 @@ public:
 	void  Init_History();
 	void  RecentFileHistory_Update();
 	void  ResentHistory_Clear(bool FirstTime);
+
+	char Texture_FileName[MAX_PATH];
+	char Texture_Path_FileName[MAX_PATH];
 
 	char Project_File_Name[MAX_PATH];
 	char Project_Path_File_Name[MAX_PATH];

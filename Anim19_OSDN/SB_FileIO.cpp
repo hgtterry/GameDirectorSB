@@ -29,6 +29,9 @@ distribution.
 
 SB_FileIO::SB_FileIO()
 {
+	Texture_FileName[0] = 0;
+	Texture_Path_FileName[0] = 0;
+
 	Project_File_Name[0] = 0;
 	Project_Path_File_Name[0] = 0;
 
@@ -76,6 +79,40 @@ bool SB_FileIO::Open_Project_File(char* Extension, char* Title, char* StartDirec
 	{
 		strcpy(Data_mFilename, Project_File_Name);
 		strcpy(Data_Path_mFilename, Project_Path_File_Name);
+		return 1;
+	}
+
+	return 0;
+}
+
+// *************************************************************************
+// *					OpenTextureFile Terry Bernie			  	 	   *
+// *************************************************************************
+bool SB_FileIO::OpenTextureFile(char* Title, char* StartDirectory, bool SaveLocation)
+{
+	Texture_FileName[0] = 0;
+	Texture_Path_FileName[0] = 0;
+
+	ZeroMemory(&ofn, sizeof(ofn));
+	ofn.lStructSize = sizeof(ofn);
+	ofn.hwndOwner = App->Fdlg;
+	ofn.hInstance = App->hInst;
+	ofn.lpstrFile = Texture_Path_FileName;						// full path and file name
+	ofn.nMaxFile = sizeof(Texture_Path_FileName);
+	ofn.lpstrFilter = "Available Formats\0*.bmp;*.tga;*.jpg;*.png;*.dds;*.pcx;*.tif;*.tiff;\0Windows Bitmap  (*.bmp)\0*.bmp\0Truevision Targa  (*.tga) \0*.tga\0JPEG  (*.jpg) \0*.jpg\0Portable Network Graphics (*.png) \0*.png\0Direct Draw  (*.dds) \0*.dds\0ZSoft PCX  (*.pcx) \0*.pcx\0Tagged Image File Format  (*.tif) \0*.tif\0Tagged Image File Format  (*.tiff) \0*.tiff\0";
+
+	ofn.nFilterIndex = 1;
+	ofn.lpstrFileTitle = Texture_FileName;				// Just File Name
+	ofn.nMaxFileTitle = sizeof(Texture_FileName);
+	ofn.lpstrInitialDir = StartDirectory;
+	ofn.lpstrTitle = Title;
+	ofn.Flags = OFN_PATHMUSTEXIST |
+		OFN_FILEMUSTEXIST |
+		OFN_EXPLORER |
+		OFN_HIDEREADONLY |
+		OFN_FILEMUSTEXIST;
+	if (GetOpenFileName(&ofn) == TRUE)
+	{
 		return 1;
 	}
 
