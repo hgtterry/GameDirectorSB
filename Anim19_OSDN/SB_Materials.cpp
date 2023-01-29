@@ -109,9 +109,9 @@ void SB_Materials::Material_Editor_Gui()
 
 		if (ImGui::Button("Close", ImVec2(100, 0)))
 		{
-			ImGui::PopStyleColor();
+			Show_Material_Editor = 0;
 			Close_Material_Editor();
-			//Show_Material_Editor = 0;
+			Show_Material_Editor = 0;
 		}
 
 		ImGui::PopStyleColor();
@@ -127,7 +127,6 @@ void SB_Materials::Close_Material_Editor()
 	Show_Material_Editor = 0;
 	BaseEntity = nullptr;
 	item_current_idx = 0;
-
 	App->SBC_FileView->Show_FileView(true);
 }
 

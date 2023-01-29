@@ -37,19 +37,21 @@ public:
 	void Hide_Panel_Test_Dlg(bool Show);
 	void Hide_Area_Dlg(bool Show);
 	void Hide_Details_Goto_Dlg(bool Show);
+	void Hide_Material_Dlg(bool Show);
 
 	bool Start_Dialog_Dimensions();
 	bool Start_Dialog_PhysicsReset();
 	bool Start_Dialog_Debug();
 	bool Start_Panels_Test_Dlg();
 	void Start_Details_Goto_Dlg(void);
+	void Start_Materials_PropsPanel();
 
 	void Init_Bmps_Debug();
 	void Init_Bmps_Dimensions();
 	void Init_Bmps_DetailsGo();
 	void Init_Bmps_PhysicsReset();
 
-	void Set_Debug_Buttons();
+	//void Set_Debug_Buttons();
 
 	bool Show_Area_Physics_Debug;
 
@@ -59,6 +61,7 @@ public:
 	HWND Debug_Dlg_hWnd;
 	HWND Area_Props_HWND;
 	HWND Details_Goto_Hwnd;
+	HWND Material_Props_Hwnd;
 
 protected:
 	static LRESULT CALLBACK Dialog_Dimensions_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
@@ -67,5 +70,6 @@ protected:
 	static LRESULT CALLBACK Panels_Test_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Area_PropsPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Details_Goto_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Materials_PropsPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 };
 

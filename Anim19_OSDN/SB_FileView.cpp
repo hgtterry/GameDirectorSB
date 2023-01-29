@@ -173,8 +173,6 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 	case WM_INITDIALOG:
 	{
 		App->SBC_FileView->FileView_Active = 1;
-		ShowWindow(hDlg, 1);
-
 		SendDlgItemMessage(hDlg, IDC_TREE1, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 	
 		CheckMenuItem(App->mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND | MF_CHECKED);
@@ -609,6 +607,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
 		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1,1);
 		App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
+		App->SBC_Props_Dialog->Hide_Material_Dlg(1);
 
 		//----------------------------------------------------------------------------
 		//App->SBC_Properties->Current_Selected_Object = Index;
@@ -638,6 +637,8 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
 		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->B_Object[Index]->Dimensions_Locked);
 		App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
+		App->SBC_Props_Dialog->Hide_Material_Dlg(1);
+
 
 		App->SBC_Properties->Edit_Category = Enums::FV_Edit_Object;
 
@@ -899,6 +900,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->B_Object[Index]->Dimensions_Locked);
 		App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
+		App->SBC_Props_Dialog->Hide_Material_Dlg(1);
 
 		App->SBC_Properties->Edit_Category = Enums::Edit_Collectable;
 
@@ -1073,6 +1075,7 @@ void SB_FileView::HideRightPanes(void)
 	App->SBC_Props_Dialog->Hide_Dimensions_Dlg(0,0);
 	App->SBC_Props_Dialog->Hide_Physics_Reset_Dlg(0);
 	App->SBC_Props_Dialog->Hide_Debug_Dlg(0);
+	App->SBC_Props_Dialog->Hide_Material_Dlg(0);
 }
 
 

@@ -86,17 +86,16 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	CheckMenuItem(App->mMenu, ID_WINDOWS_SHOWPHYSICSPANEL, MF_BYCOMMAND | MF_CHECKED);
 
+
 	App->SBC_FileView->Start_FileView();
+	ShowWindow(App->ListPanel, 0);
+	App->SBC_FileView->Init_FileView();
+	App->Cl_Panels->Move_FileView_Window();
 	App->Cl_Panels->Resize_FileView();
 
 
 	App->SetMainWinCentre();
 
-	App->SBC_FileView->Init_FileView();
-
-	ShowWindow(App->ListPanel, 1);
-
-	App->Cl_Panels->Move_FileView_Window();
 	App->Cl_Panels->Place_GlobalGroups();
 	
 
@@ -130,6 +129,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	{
 		ShowWindow(App->MainHwnd, SW_SHOWNORMAL);
 	}
+
+	ShowWindow(App->ListPanel, 1);
+	ShowWindow(App->SBC_Properties->Properties_Dlg_hWnd, 1);
 
 	UpdateWindow(App->MainHwnd);
 
@@ -1045,6 +1047,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				}
 			}
 
+			if (App->RenderBackGround == 1 && App->OgreStarted == 1)
+			{
+				Ogre::Root::getSingletonPtr()->renderOneFrame();
+			}
+
 			break;
 		}
 	case WM_DESTROY:
@@ -1503,9 +1510,10 @@ void StartOgre()
 	//App->SBC_Gui_Dialogs->Show_Physics_Console = 0;
 	//App->SBC_Gui_Dialogs->Show_Physics_Console = 1;
 
+	//App->SBC_Ogre->mRoot->startRendering();
 	App->SBC_Ogre->Ogre_Render_Loop();
 
-
+	
 	Close_App();
 	SystemParametersInfo(SPI_SETSCREENSAVEACTIVE, TRUE, NULL, TRUE);
 	PostQuitMessage(0);

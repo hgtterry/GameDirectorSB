@@ -237,7 +237,7 @@ bool GD19_OgreListener::frameEnded(const FrameEvent& evt)
 // *************************************************************************
 bool GD19_OgreListener::Update_Game_Logic(float DeltaTime)
 {
-
+	
 	App->SBC_Ogre->Get_View_Height_Width();
 	App->SBC_Ogre->m_imgui.NewFrame(DeltaTime, (float)View_Width, (float)View_Height);
 

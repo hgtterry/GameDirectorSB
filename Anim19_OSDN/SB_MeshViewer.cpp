@@ -195,14 +195,16 @@ bool SB_MeshViewer::StartMeshViewer()
 
 	Create_Resources_Group();
 	Add_Resources();
-	
+
+	SetTimer(App->MainHwnd, 1, 1, NULL);
 	
 	DialogBox(App->hInst, (LPCTSTR)IDD_GD_MESHVIEWER, App->Fdlg, (DLGPROC)MeshViewer_Proc);
 
 	App->SBC_Ogre->OgreListener->MeshViewer_Running = 0;
 
-
 	App->RenderBackGround = 0;
+	KillTimer(App->MainHwnd, 1);
+
 	return 1;
 }
 
@@ -1174,15 +1176,12 @@ bool SB_MeshViewer::Set_OgreWindow(void)
 	Ogre::Vector3 Centre = MvEnt->getBoundingBox().getCenter();
 	Ogre::Real Radius = MvEnt->getBoundingRadius();
 
-	//mCameraMeshView->setPosition(0, Centre.y, -Radius*(Real(2.5)));
-	//mCameraMeshView->lookAt(0, Centre.y, 0);
-
-
 	Grid_Update(1);
-
+	
 	RenderListener = new SB_MeshView_Listener();
-	//mSceneMgrMeshView->addRenderQueueListener(RenderListener);
+	
 	App->SBC_Ogre->mRoot->addFrameListener(RenderListener);
+
 
 	mCameraMeshView->setPosition(Ogre::Vector3(0, 90, 100));
 	mCameraMeshView->lookAt(Ogre::Vector3(0, 30, 0));
@@ -2073,6 +2072,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshView_3D_Proc(HWND hDlg, UINT message, WPARAM
 
 	case WM_INITDIALOG: // Bernie as the dialog is created
 	{
+		
 		return TRUE;
 	}
 
@@ -2083,6 +2083,7 @@ LRESULT CALLBACK SB_MeshViewer::MeshView_3D_Proc(HWND hDlg, UINT message, WPARAM
 			return (LONG)App->BlackBrush;
 		}
 	}
+
 	//case WM_MOUSEWHEEL:
 	//{
 	//	if (App->SBC_MeshViewer->RenderListener->Pl_LeftMouseDown == 0)

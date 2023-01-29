@@ -37,6 +37,7 @@ SB_Props_Dialogs::SB_Props_Dialogs()
 	Panel_Test_Dlg_hWnd = nullptr;
 	Area_Props_HWND = nullptr;
 	Details_Goto_Hwnd = nullptr;
+	Material_Props_Hwnd = nullptr;
 
 	Show_Area_Physics_Debug = 0;
 }
@@ -57,6 +58,7 @@ bool SB_Props_Dialogs::Start_Props_Dialogs()
 	Start_Panels_Test_Dlg();
 	Start_Area_PropsPanel();
 	Start_Details_Goto_Dlg();
+	Start_Materials_PropsPanel();
 
 	return 1;
 }
@@ -845,7 +847,7 @@ LRESULT CALLBACK SB_Props_Dialogs::Area_PropsPanel_Proc(HWND hDlg, UINT message,
 
 	case WM_CTLCOLORDLG:
 	{
-		return (LONG)App->Brush_Panel;
+		return (LONG)App->DialogBackGround;
 	}
 
 	case WM_NOTIFY:
@@ -906,6 +908,67 @@ LRESULT CALLBACK SB_Props_Dialogs::Area_PropsPanel_Proc(HWND hDlg, UINT message,
 					Count++;
 				}
 			}
+
+			return 1;
+		}
+
+		break;
+	}
+	return FALSE;
+}
+
+// *************************************************************************
+// *	  Start_Materials_PropsPanel:- Terry and Hazel Flanigan 2022	   *
+// *************************************************************************
+void SB_Props_Dialogs::Start_Materials_PropsPanel()
+{
+	Material_Props_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_PROPS_MATERIALS, App->SBC_Properties->Properties_Dlg_hWnd, (DLGPROC)Materials_PropsPanel_Proc);
+}
+
+// *************************************************************************
+// *	Materials_PropsPanel_Proc:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+LRESULT CALLBACK SB_Props_Dialogs::Materials_PropsPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+
+		SendDlgItemMessage(hDlg, IDC_PROPMATERIALS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		return TRUE;
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->DialogBackGround;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_PROPMATERIALS && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+
+		if (LOWORD(wParam) == IDC_PROPMATERIALS)
+		{
+			App->SBC_Materials->Start_Material_Editor();
 
 			return 1;
 		}
@@ -1041,6 +1104,15 @@ void SB_Props_Dialogs::Init_Bmps_DetailsGo()
 	ti2.lpszText = "Move the Camera to the Centre of the Selected Object";
 	ti2.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti2);
+}
+
+// *************************************************************************
+// *		Hide_Material_Dlg:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void SB_Props_Dialogs::Hide_Material_Dlg(bool Show)
+{
+	ShowWindow(Material_Props_Hwnd, Show);
+
 }
 
 // *************************************************************************

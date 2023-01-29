@@ -65,13 +65,32 @@ void SB_Keyboard::Keyboard_Monitor(float deltaTime)
 		//------------------------------------------------ Y Key
 		if (GetAsyncKeyState(89) < 0)
 		{
+			if (App->CL_Vm_ImGui->Show_Object_Selection == 1)
+			{
+				App->SBC_TopTabs->Toggle_Select_Flag = 0;
+				App->SBC_Visuals->mPickSight->hide();
+				App->SBC_Ogre->OgreListener->GD_Selection_Mode = 0;
 
+				RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+				App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[App->SBC_Ogre->OgreListener->Selected_Entity_Index]->FileViewItem);
+				App->CL_Vm_ImGui->Show_Object_Selection = 0;
+			}
 		}
 
 		//------------------------------------------------ N Key
 		if (GetAsyncKeyState(78) < 0)
 		{
+			if (App->CL_Vm_ImGui->Show_Object_Selection == 1)
+			{
+				App->SBC_TopTabs->Toggle_Select_Flag = 0;
+				App->SBC_Visuals->mPickSight->hide();
+				App->SBC_Ogre->OgreListener->GD_Selection_Mode = 0;
 
+				RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+				App->CL_Vm_ImGui->Show_Object_Selection = 0;
+			}
 		}
 
 		//------------------------------------------------ Forward

@@ -74,7 +74,7 @@ void SB_Properties::Start_GD_Properties(void)
 	CheckMenuItem(mMenu, ID_WINDOWS_PROPERTIES, MF_BYCOMMAND | MF_CHECKED);
 
 	Properties_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_GD_PROPERTIES, App->Fdlg, (DLGPROC)GD_Properties_Proc);
-	ShowWindow(Properties_Dlg_hWnd, 1);
+	//ShowWindow(Properties_Dlg_hWnd, 1);
 
 	Init_Bmps_Properties();
 
