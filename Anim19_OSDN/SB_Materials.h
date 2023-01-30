@@ -15,10 +15,13 @@ public:
 protected:
 
 	void Update_MaterialFile();
+	void Copy_Texture();
 
 	int item_current_idx;
 
 	char Material_FileName[MAX_PATH];
 	Ogre::Entity* BaseEntity;
+
+	Ogre::MaterialPtr  MatClone[10];
 };
 
