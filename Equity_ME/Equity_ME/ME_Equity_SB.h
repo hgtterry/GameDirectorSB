@@ -34,7 +34,7 @@ public:
 	bool Start_WE_import();
 	bool Write_Project_File(char* Path_And_File);
 	bool Load_Project_File(char* Path_And_File);
-	void Load_File();
+	void Load_File_Wepf();
 	char Pref_Ogre_Path[MAX_PATH];
 
 protected:

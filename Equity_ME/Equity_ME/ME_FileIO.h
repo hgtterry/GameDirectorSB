@@ -28,6 +28,7 @@ public:
 	ME_FileIO();
 	~ME_FileIO();
 
+	bool Folder_Browser();
 	bool Open_File_Model(char* Extension, char* Title, char* StartDirectory);
 	bool OpenTextureFile(char* Title, char* StartDirectory, bool SaveLocation);
 	bool StartBrowser(char* szInitDir);

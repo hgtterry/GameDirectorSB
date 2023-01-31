@@ -70,8 +70,10 @@ bool ME_Export_Ogre3D::Export_AssimpToOgre(void)
 	strcat(Directory_Name, "_Ogre");
 
 	strcpy(App->CL_FileIO->BrowserMessage, "Select Folder To Place Ogre Files a sub folder will be created");
-	int Test = App->CL_FileIO->StartBrowser("");
+	int Test = App->CL_FileIO->StartBrowser(App->CL_Model->Model_FolderPath);
 	if (Test == 0) { return 1; }
+
+	//App->CL_FileIO->Folder_Browser();
 
 	App->CL_Export->Start_Export_Dlg();
 	if (App->CL_Export->Is_Canceled == 1) { return 1; }
@@ -645,13 +647,23 @@ bool ME_Export_Ogre3D::DecompileTextures(void)
 
 		if (_stricmp(FileName + strlen(FileName) - 4, ".tga") == 0)
 		{
-			//App->Say(FileName);
-			int Len = strlen(FileName);
-			FileName[Len - 4] = 0;
-			strcat(FileName, ".jpg");
 			
-			App->CL_Textures->HBITMAP_TO_BmpFile(Data, FileName, "");
-			App->CL_Textures->Jpg_To_Tga24(FileName);
+			char mDirectory[MAX_PATH];
+			_getcwd(mDirectory, MAX_PATH);
+			strcat(mDirectory, "\\");
+			strcat(mDirectory, FileName);
+			
+			App->CL_Texture_Lib->WriteTGA(mDirectory, App->CL_Model->Group[Loop]->RF_Bitmap);
+
+			//int Len = strlen(FileName);
+			//FileName[Len - 4] = 0;
+			//strcat(FileName, ".jpg");
+			//
+			//App->CL_Textures->HBITMAP_TO_BmpFile(Data, FileName, "");
+			//geBitmap* Bitmap = geBitmap_CreateFromFile(FileName);
+			
+			//App->CL_Textures->Jpg_To_Tga24(FileName);
+
 		}
 		else if (_stricmp(FileName + strlen(FileName) - 4, ".png") == 0)
 		{
@@ -720,7 +732,17 @@ void ME_Export_Ogre3D::CreateMaterialFile(char* MatFileName)
 
 		if (0 < strlen(File))
 		{
+			/*if (_stricmp(File + strlen(File) - 4, ".TGA") == 0)
+			{
+				App->Say(File);
+			}*/
+
 			ogremat->getTechnique(0)->getPass(0)->createTextureUnitState(File);
+
+			if (_stricmp(File + strlen(File) - 4, ".TGA") == 0)
+			{
+				ogremat->getTechnique(0)->getPass(0)->setAlphaRejectSettings(Ogre::CMPF_GREATER, 128);
+			}
 		}
 
 		matSer.queueForExport(ogremat);

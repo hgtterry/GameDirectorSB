@@ -192,7 +192,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 			case ID_DEBUG_GENERAL:
 			{
-				
+				App->CL_FileIO->Folder_Browser();
+	
 				return 1;
 			}
 
@@ -313,7 +314,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				}
 
 				App->CL_Equity_SB->Load_Project_File(App->CL_FileIO->Model_Path_FileName);
-				App->CL_Equity_SB->Load_File();
+				App->CL_Equity_SB->Load_File_Wepf();
 
 				return 1;
 			}

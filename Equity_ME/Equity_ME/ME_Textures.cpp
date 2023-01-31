@@ -401,7 +401,7 @@ bool ME_Textures::TexureToWinPreviewFullPath(int Index, char* FullPath)
 	{
 		App->CL_Model->Group[Index]->Base_Bitmap = ilutWinLoadImage(mFileName, hDC);
 		ReleaseDC(PreviewWnd, hDC);
-
+		
 		if (App->CL_Model->Group[Index]->Base_Bitmap == NULL)
 		{
 

@@ -45,7 +45,7 @@ Base_Group::Base_Group()
 	Soil_TextureIndex = 0;
 
 	Base_Bitmap = NULL;
-
+	RF_Bitmap = NULL;
 	ListView_Item = NULL;
 }
 

@@ -263,7 +263,7 @@ void ME_Model::Set_Paths(void)
 
 	strcpy(Texture_FolderPath, Model_FolderPath); // Back Slash remains
 	
-												 
+								 
 	if (stricmp(FileName + strlen(FileName) - 5, ".ms3d") == 0)
 	{
 		strcpy(JustName, FileName);

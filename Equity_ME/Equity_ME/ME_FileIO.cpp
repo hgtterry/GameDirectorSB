@@ -29,7 +29,7 @@ distribution.
 #include "Shlobj.h"
 #include "io.h"
 #include <string>
-
+#include "shobjidl_core.h"
 
 ME_FileIO::ME_FileIO()
 {
@@ -49,6 +49,38 @@ ME_FileIO::ME_FileIO()
 
 ME_FileIO::~ME_FileIO()
 {
+}
+
+// *************************************************************************
+// *						Folder_Browser Terry Bernie					   *
+// *************************************************************************
+bool ME_FileIO::Folder_Browser()
+{
+	IFileDialog* pfd;
+	if (SUCCEEDED(CoCreateInstance(CLSID_FileOpenDialog, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pfd))))
+	{
+		DWORD dwOptions;
+		if (SUCCEEDED(pfd->GetOptions(&dwOptions)))
+		{
+			pfd->SetOptions(dwOptions | FOS_PICKFOLDERS);
+		}
+		if (SUCCEEDED(pfd->Show(App->MainHwnd)))
+		{
+			IShellItem* psi;
+			if (SUCCEEDED(pfd->GetResult(&psi)))
+			{
+				if (!SUCCEEDED(psi->GetDisplayName(SIGDN_DESKTOPABSOLUTEPARSING, (LPWSTR*)"poo")))
+				{
+					//MessageBox(NULL, "GetIDListName() failed", NULL, NULL);
+					App->Say("Failed");
+				}
+				psi->Release();
+			}
+		}
+		pfd->Release();
+	}
+
+	return 1;
 }
 
 // *************************************************************************
@@ -175,7 +207,10 @@ int __stdcall ME_FileIO::BrowseCallbackProc(HWND  hwnd, UINT  uMsg, LPARAM  lPar
 	if (uMsg == BFFM_INITIALIZED)
 	{
 		//SendMessage(hWnd, BFFM_SETSELECTION, 1, (LPARAM) szInitialPathName); 
-		SendMessage(hwnd, BFFM_SETSELECTION, TRUE, lpData);
+
+		LPCTSTR path = reinterpret_cast<LPCTSTR>(lpData);
+
+		SendMessage(hwnd, BFFM_SETSELECTION, TRUE, (LPARAM)path);
 
 	}
 

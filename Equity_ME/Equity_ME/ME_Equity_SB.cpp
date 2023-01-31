@@ -52,6 +52,8 @@ ME_Equity_SB::~ME_Equity_SB()
 // *************************************************************************
 bool ME_Equity_SB::Start_WE_import()
 {
+	char* g_path;
+
 	DialogBox(App->hInst, (LPCTSTR)IDD_WEQUICKLOAD, App->MainHwnd, (DLGPROC)WE_import_Proc);
 	return 1;
 }
@@ -298,9 +300,9 @@ LRESULT CALLBACK ME_Equity_SB::WE_import_Proc(HWND hDlg, UINT message, WPARAM wP
 }
 
 // *************************************************************************
-// *						Load_File Terry Flanigan					   *
+// *					Load_File_Wepf Terry Flanigan					   *
 // *************************************************************************
-void ME_Equity_SB::Load_File()
+void ME_Equity_SB::Load_File_Wepf()
 {
 	App->CL_Model->Clear_Model_And_Reset();
 
@@ -314,8 +316,8 @@ void ME_Equity_SB::Load_File()
 		return;
 	}
 
-	strcpy(App->CL_FileIO->Model_Path_FileName, App->CL_Equity_SB->Pref_WE_Path_FileName);
-	strcpy(App->CL_FileIO->Model_FileName, App->CL_Equity_SB->Pref_WE_JustFileName);
+	//strcpy(App->CL_FileIO->Model_Path_FileName, App->CL_Equity_SB->Pref_WE_Path_FileName);
+	//strcpy(App->CL_FileIO->Model_FileName, App->CL_Equity_SB->Pref_WE_JustFileName);
 
 	App->CL_Model->Set_Paths();
 
@@ -398,13 +400,6 @@ bool ME_Equity_SB::LoadTextures_TXL()
 		strcpy(BitMap_Names[NameCount].Name, Properties.Name);
 
 		NameCount++;
-
-		
-		/*if (!AddTexture(VFS, Properties.Name))
-		{
-		geVFile_Close(VFS);
-		return 0;
-		}*/
 	}
 
 	Copy_Texture_Names();
@@ -533,14 +528,9 @@ bool ME_Equity_SB::AddTexture(geVFile *BaseFile, const char *Path, int GroupInde
 
 	if (geBitmap_HasAlpha(Bitmap))
 	{
-		char mDirectory[MAX_PATH];
-
-		_getcwd(mDirectory, MAX_PATH);
-		strcat(mDirectory, "\\");
-		strcat(mDirectory, App->CL_Model->Group[GroupIndex]->Equity_Text_FileName);
-		App->CL_Texture_Lib->WriteTGA(mDirectory, Bitmap);
-
+		App->CL_Model->Group[GroupIndex]->RF_Bitmap = Bitmap;
 	}
+
 
 	HWND	PreviewWnd;
 	HBITMAP	hbm;
@@ -551,13 +541,6 @@ bool ME_Equity_SB::AddTexture(geVFile *BaseFile, const char *Path, int GroupInde
 	hbm = CreateHBitmapFromgeBitmap(Bitmap, hDC);
 
 	App->CL_Model->Group[GroupIndex]->Base_Bitmap = hbm;
-
-
-	/*if (!Bitmap)
-	{
-	NonFatalError("%s is not a valid bitmap", Path);
-	return TRUE;
-	}*/
 
 	char TempTextureFile_BMP[1024];
 	strcpy(TempTextureFile_BMP, App->EquityDirecory_FullPath);
