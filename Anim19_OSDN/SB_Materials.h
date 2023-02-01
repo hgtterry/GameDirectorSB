@@ -10,6 +10,8 @@ public:
 
 	void Material_Editor_Gui();
 
+	void Get_Material_Name(Ogre::Entity* mEntity);
+
 	bool Show_Material_Editor;
 
 protected:

@@ -34,6 +34,8 @@ public:
 
 	int CheckNames_Objects(char* Name);
 
+	bool Get_Usage(int Index);
+
 	bool Show_Entities(bool YesNo);
 	bool Is_Meshes_Used(char* Name);
 
@@ -47,7 +49,7 @@ protected:
 
 	bool Get_Type(int Index);
 	bool Get_Shape(int Index);
-	bool Get_Usage(int Index);
+	
 
 };
 

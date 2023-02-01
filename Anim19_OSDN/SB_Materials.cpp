@@ -31,10 +31,7 @@ void SB_Materials::Start_Material_Editor()
 	}
 
 	// ---------------- Get Material Name
-	Ogre::String text = BaseEntity->getMesh()->getSubMesh(0)->getMaterialName().c_str();
-	Ogre::MaterialPtr  Mat = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(text));
-	strcpy(Material_FileName, Mat->getOrigin().c_str());
-
+	Get_Material_Name(BaseEntity);
 
 	// ---------------- Copy Scripts
 	int NumSubMesh = BaseEntity->getMesh()->getNumSubMeshes();
@@ -86,7 +83,7 @@ void SB_Materials::Material_Editor_Gui()
 		ImGui::Spacing();
 		ImGui::Spacing();
 
-		// ---------------------------------------------------------------- Main Light
+		// ---------------------------------------------------------------- Material Editor
 
 		ImGui::Text("Material Editor");
 		ImGui::Separator();
@@ -125,6 +122,7 @@ void SB_Materials::Material_Editor_Gui()
 				Copy_Texture();
 				Mat->getTechnique(0)->getPass(0)->getTextureUnitState(0)->setTextureName(App->SBC_FileIO->Texture_FileName);
 				Mat->getTechnique(0)->getPass(0)->setAmbient(1, 1, 1);
+				//Mat->getTechnique(0)->getPass(0)->setPolygonMode(Ogre::PolygonMode::PM_POINTS);
 				Update_MaterialFile();
 			}
 
@@ -229,7 +227,16 @@ void SB_Materials::Update_MaterialFile()
 	}
 
 	matSer.exportQueued(Material_FileName);
+}
 
+// *************************************************************************
+// *			Update_MaterialFile:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_Materials::Get_Material_Name(Ogre::Entity* mEntity)
+{
+	Ogre::String text = mEntity->getMesh()->getSubMesh(0)->getMaterialName().c_str();
+	Ogre::MaterialPtr  Mat = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(text));
+	strcpy(Material_FileName, Mat->getOrigin().c_str());
 }
 
 

@@ -129,6 +129,11 @@ void SB_Com_Area::Add_Aera_To_Project(int Index, char* FileName, char* Resource_
 	Area->Area_Node = App->SBC_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Area->Area_Node->attachObject(Area->Area_Ent);
 
+	// Get Material Name
+	Ogre::String text = Area->Area_Ent->getMesh()->getSubMesh(0)->getMaterialName().c_str();
+	Ogre::MaterialPtr  Mat = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(text));
+	strcpy(Area->Material_File, Mat->getOrigin().c_str());
+
 	Area->Area_Node->setVisible(true);
 	Area->Area_Node->setPosition(Area->Mesh_Pos);
 	Area->Area_Node->setScale(Area->Mesh_Scale);

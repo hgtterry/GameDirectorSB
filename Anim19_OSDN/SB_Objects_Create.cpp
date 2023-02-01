@@ -232,6 +232,12 @@ bool SB_Objects_Create::Add_New_Object(int Index,bool From_MeshViewer)
 
 	Object->Object_Node->setOrientation(Object->Mesh_Quat);
 
+
+	// Get Material Name
+	Ogre::String text = Object->Object_Ent->getMesh()->getSubMesh(0)->getMaterialName().c_str();
+	Ogre::MaterialPtr  Mat = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(text));
+	strcpy(Object->Material_File, Mat->getOrigin().c_str());
+	Object->UsageEX = 777;
 	// If from MeshViewer Get Placement Method
 	if (From_MeshViewer == 1 && App->SBC_MeshViewer->Placement_Camera == 1)
 	{

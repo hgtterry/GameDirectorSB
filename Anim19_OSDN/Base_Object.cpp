@@ -100,6 +100,8 @@ bool Base_Object::Init_Object(void)
 
 	Usage = Enums::Usage_None;
 
+	UsageEX = 0;
+
 	Folder = Enums::Folder_None;
 
 	Shape = -1;

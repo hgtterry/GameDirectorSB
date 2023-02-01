@@ -457,6 +457,7 @@ bool SB_Com_Entity::Create_Message_Entity(int Index)
 	MObject->Phys_Body->setWorldTransform(startTransform);
 
 	MObject->Usage = Enums::Usage_Message;
+	
 	MObject->Phys_Body->setUserIndex(Enums::Usage_Message);
 	MObject->Phys_Body->setUserIndex2(Index);
 
@@ -481,6 +482,7 @@ bool SB_Com_Entity::Create_Message_Entity(int Index)
 // *************************************************************************
 void SB_Com_Entity::Set_Message_Defaults(int Index)
 {
+	
 	App->SBC_Scene->B_Object[Index]->S_Message[0]->Trigger_Value = 0;
 	App->SBC_Scene->B_Object[Index]->S_Message[0]->Counter_ID = 0;
 	strcpy(App->SBC_Scene->B_Object[Index]->S_Message[0]->Counter_Name, "None");
@@ -686,6 +688,13 @@ bool SB_Com_Entity::Create_Collectable_Entity(int Index)
 	Object->Object_Ent = App->SBC_Ogre->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->SBC_Scene->Project_Resource_Group);
 	Object->Object_Node = App->SBC_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Object->Object_Node->attachObject(Object->Object_Ent);
+
+	// Get Material Name
+	Ogre::String text = Object->Object_Ent->getMesh()->getSubMesh(0)->getMaterialName().c_str();
+	Ogre::MaterialPtr  Mat = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(text));
+	strcpy(Object->Material_File, Mat->getOrigin().c_str());
+
+	Object->UsageEX = 777;
 
 	Object->Object_Node->setVisible(true);
 

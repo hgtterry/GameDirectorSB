@@ -149,6 +149,8 @@ bool SB_LookUps::Get_Shape(int Index)
 // *************************************************************************
 bool SB_LookUps::Get_Usage(int Index)
 {
+	strcpy(Chr_Usage, "None");
+
 	int Usage = 0;
 
 	if (App->SBC_Properties->Edit_Category == Enums::Edit_Area)

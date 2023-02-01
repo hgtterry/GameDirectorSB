@@ -50,7 +50,7 @@ protected:
 
 	bool CreateListGeneral_FX(HWND hDlg);
 	bool ShowAllMaterials();
-	bool SearchFolders(char* File, char* StartFolder);
+	bool SearchFolders();
 	bool FindPath(char* SubFolder, char* File, char* StartFolder);
 	bool FindPath_New(char* File, char* Folder);
 
@@ -58,6 +58,8 @@ protected:
 
 	bool ShowAllTextures();
 	bool ShowAllMeshes();
+
+	bool Show_Scene_Meshes(HWND hDlg);
 
 	char ResourcePath[2048];
 

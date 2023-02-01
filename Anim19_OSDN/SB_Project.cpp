@@ -2262,10 +2262,10 @@ bool SB_Project::Load_Project_Aera()
 			App->SBC_Scene->B_Area[Count]->Mesh_Quat.z = 0;
 		}
 
+		//App->Cl_Ini->GetString("Area_0", "Material_File", App->SBC_Scene->B_Area[Count]->Material_File, MAX_PATH);
+
 		App->SBC_Com_Area->Add_Aera_To_Project(Count, Mesh_FileName, m_Main_Assets_Path);
 		
-		App->Cl_Ini->GetString("Area_0", "Material_File", App->SBC_Scene->B_Area[Count]->Material_File, MAX_PATH);
-
 		App->SBC_Scene->B_Area[Count]->This_Object_UniqueID = App->Cl_Ini->GetInt(buff, "Area_Object_ID", 0);
 
 		strcpy(App->SBC_Scene->B_Area[Count]->Area_Name, Area_Name);

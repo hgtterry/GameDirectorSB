@@ -274,10 +274,9 @@ void DynamicCharacterController::stepUp(float dt)
 // *************************************************************************
 void DynamicCharacterController::debugDraw(btIDebugDraw *debugDrawer)
 {
-	if (mStepping) {
-		debugDrawer->drawContactPoint(mSteppingTo, { 0, 0, 1 }, 0, 1000,
-			{ 0, 0.3, 1 });
-	}
+	/*if (mStepping) {
+		debugDrawer->drawContactPoint(mSteppingTo, { 0, 0, 1 }, 0, 1000,{ 0, 0.3, 1 });
+	}*/
 }
 
 // *************************************************************************

@@ -64,7 +64,9 @@ LRESULT CALLBACK SB_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM wP
 
 		SendDlgItemMessage(hDlg, IDC_ST_BANNER, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 
-		////App->GDC_DlgResources->SelectedResource = 0;
+		SendDlgItemMessage(hDlg, IDC_BT_SCENEMESH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STCOUNT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		App->SBC_Resources->CreateListGeneral_FX(hDlg);
 
 		return TRUE;
@@ -79,6 +81,15 @@ LRESULT CALLBACK SB_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM wP
 			return (UINT)App->DialogBackGround;
 		}
 
+		if (GetDlgItem(hDlg, IDC_STCOUNT) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->Brush_White;
+		}
+
+		
 		return FALSE;
 	}
 
@@ -109,6 +120,13 @@ LRESULT CALLBACK SB_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM wP
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle(item, App->SBC_Resources->Show_MV_Res_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_SCENEMESH && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
 		}
 
@@ -178,6 +196,14 @@ LRESULT CALLBACK SB_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM wP
 			App->SBC_Resources->Show_MV_Res();
 			return TRUE;
 		}
+
+		if (LOWORD(wParam) == IDC_BT_SCENEMESH)
+		{
+			SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)"Scene Meshes");
+			App->SBC_Resources->SearchFolders();
+			//App->SBC_Resources->Show_Scene_Meshes(hDlg);
+			return TRUE;
+		}
 		
 		////if (LOWORD(wParam) == IDC_NOTUSED)
 		////{
@@ -204,7 +230,7 @@ bool SB_Resources::CreateListGeneral_FX(HWND hDlg)
 {
 	int NUM_COLS = 4;
 	FX_General_hLV = CreateWindowEx(0, WC_LISTVIEW, "",
-		WS_CHILD | WS_VISIBLE | WS_BORDER | LVS_REPORT | LVS_SHOWSELALWAYS, 2, 2,
+		WS_CHILD | WS_VISIBLE | WS_BORDER | LVS_REPORT |  LVS_SHOWSELALWAYS, 2, 2,
 		1280, 405, hDlg, 0, App->hInst, NULL);
 
 	DWORD exStyles = LVS_EX_GRIDLINES;
@@ -242,6 +268,81 @@ bool SB_Resources::CreateListGeneral_FX(HWND hDlg)
 
 	//ShowAllMaterials();
 	ShowAllTextures();
+	return 1;
+}
+
+// *************************************************************************
+// *					Show_Scene_Meshes Terry Bernie	 			 	   *
+// *************************************************************************
+bool SB_Resources::Show_Scene_Meshes(HWND hDlg)
+{
+	Ogre::String st;
+	int NUM_COLS = 4;
+
+	LV_ITEM pitem;
+	memset(&pitem, 0, sizeof(LV_ITEM));
+	pitem.mask = LVIF_TEXT;
+
+	ListView_DeleteAllItems(FX_General_hLV);
+
+	LV_COLUMN lvC;
+	memset(&lvC, 0, sizeof(LV_COLUMN));
+	lvC.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
+	lvC.fmt = LVCFMT_LEFT;  // left-align the column
+	std::string headers[] =
+	{
+		"Mesh", "Material File","Usage","Path"
+	};
+	int headerSize[] =
+	{
+		165,180,170,250
+	};
+
+	for (int header = 0; header < NUM_COLS; header++)
+	{
+		lvC.iSubItem = header;
+		lvC.cx = headerSize[header]; // width of the column, in pixels
+		lvC.pszText = const_cast<char*>(headers[header].c_str());
+		ListView_SetColumn(FX_General_hLV, header, &lvC);
+	}
+
+	int	 pRow = 0;
+	char pMeshName[MAX_PATH];
+	char pMaterialName[MAX_PATH];
+	char pUsage[MAX_PATH];
+	
+	int Count = 0;
+	while (Count < App->SBC_Scene->Object_Count)
+	{
+		strcpy(pMeshName, App->SBC_Scene->B_Object[Count]->Mesh_FileName);
+		strcpy(pMaterialName, App->SBC_Scene->B_Object[Count]->Material_File);
+
+		if (App->SBC_Scene->B_Object[Count]->UsageEX == 777)
+		{
+			strcpy(pUsage, "In Scene");
+		}
+		else
+		{
+			strcpy(pUsage, "Editor");
+		}
+		
+		pitem.iItem = pRow;
+		pitem.pszText = pMeshName;
+
+		ListView_InsertItem(FX_General_hLV, &pitem);
+		ListView_SetItemText(FX_General_hLV, pRow, 1, pMaterialName);
+		ListView_SetItemText(FX_General_hLV, pRow, 2, pUsage);
+		ListView_SetItemText(FX_General_hLV, pRow, 3, " ");
+
+		pRow++;
+
+		Count++;
+	}
+
+	char num[256];
+	_itoa(Count, num, 10);
+	SetDlgItemText(hDlg, IDC_STCOUNT, (LPCTSTR)num);
+	
 	return 1;
 }
 
@@ -800,55 +901,68 @@ bool SB_Resources::ShowAllMeshes()
 // *************************************************************************
 // *					SearchFolders Terry Bernie			 		 	   *
 // *************************************************************************
-bool SB_Resources::SearchFolders(char* File, char* StartFolder)
+bool SB_Resources::SearchFolders()
 {
-	strcpy(ResourcePath, StartFolder);
 
-	//	char Folder[255];
+	int NUM_COLS = 4;
+
+	LV_ITEM pitem;
+	memset(&pitem, 0, sizeof(LV_ITEM));
+	pitem.mask = LVIF_TEXT;
+
+	ListView_DeleteAllItems(FX_General_hLV);
+
+	LV_COLUMN lvC;
+	memset(&lvC, 0, sizeof(LV_COLUMN));
+	lvC.mask = LVCF_FMT | LVCF_WIDTH | LVCF_TEXT | LVCF_SUBITEM;
+	lvC.fmt = LVCFMT_LEFT;  // left-align the column
+	std::string headers[] =
+	{
+		"Mesh", "Has Skeleton","Material File","Path"
+	};
+	int headerSize[] =
+	{
+		165,180,170,250
+	};
+
+	for (int header = 0; header < NUM_COLS; header++)
+	{
+		lvC.iSubItem = header;
+		lvC.cx = headerSize[header]; // width of the column, in pixels
+		lvC.pszText = const_cast<char*>(headers[header].c_str());
+		ListView_SetColumn(FX_General_hLV, header, &lvC);
+	}
+
+	int	 pRow = 0;
+
 	char pSearchPath[1024];
-	//	char pReturnPath[1024];
-	//	char *pPartPath;
-
+	strcpy(pSearchPath, App->SBC_Project->m_Main_Assets_Path);
+	strcat(pSearchPath, "*.material");
+	
 	WIN32_FIND_DATA FindFileData;
-	HANDLE hFind;
+	HANDLE hFind = ::FindFirstFile(pSearchPath, &FindFileData);
 
-	strcpy(pSearchPath, App->EquityDirecory_FullPath);
-	strcat(pSearchPath, "\\");
-	strcat(pSearchPath, StartFolder);
-	strcat(pSearchPath, "*.*");
+//	return 1;
 
-	hFind = FindFirstFile(pSearchPath, &FindFileData);
-	if (hFind == INVALID_HANDLE_VALUE)
+	if (hFind != INVALID_HANDLE_VALUE) 
 	{
-		//App->Say("Cant Find File");
-		return FALSE;
-	}
+		do {
+			
+			if (!(FindFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) {
+				
+				pitem.iItem = pRow;
+				pitem.pszText = FindFileData.cFileName;
 
-	do
-	{
-		if (FindFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
-		{
+				ListView_InsertItem(FX_General_hLV, &pitem);
+				ListView_SetItemText(FX_General_hLV, pRow, 1, "");
+				ListView_SetItemText(FX_General_hLV, pRow, 2, "");
+				ListView_SetItemText(FX_General_hLV, pRow, 3, "");
 
-			if (strcmp(FindFileData.cFileName, "."))
-			{
-				if (strcmp(FindFileData.cFileName, ".."))
-				{
-					//App->Say(FindFileData.cFileName);
-					int Result = FindPath(FindFileData.cFileName, File, StartFolder);
-					if (Result == 1)
-					{
-						strcat(ResourcePath, FindFileData.cFileName);
-						//App->Say(ResourcePath);
-						SearchFolders(File, ResourcePath); // Needs Checking
-						return 1;
-					}
-				}
+				pRow++;
 			}
-		}
+		} while (::FindNextFile(hFind, &FindFileData));
+		::FindClose(hFind);
 	}
-
-	while (FindNextFile(hFind, &FindFileData));
-	FindClose(hFind);
 
 	return 1;
 }

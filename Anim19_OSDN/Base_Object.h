@@ -167,6 +167,7 @@ public:
 	int Type;
 	int Shape;
 	int Usage;
+	int UsageEX;
 	int Folder;
 	int This_Object_UniqueID;  // Unique Number
 
