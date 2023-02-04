@@ -19,11 +19,16 @@ protected:
 	void Update_MaterialFile();
 	void Copy_Texture();
 
+	void Scroll_Gui();
+
+	bool Show_Scroll_Editor;
 	int item_current_idx;
 
 	char Material_FileName[MAX_PATH];
 	Ogre::Entity* BaseEntity;
 
-	Ogre::MaterialPtr  MatClone[10];
+	Ogre::MaterialPtr MatCurent;
+	
+	std::vector<MaterialPtr> MatClone;
 };
 

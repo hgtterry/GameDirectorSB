@@ -513,6 +513,7 @@ bool SB_Project::Save_Project_Ini()
 	fprintf(WriteFile, "%s\n", "[Files]");
 	fprintf(WriteFile, "%s%s\n", "Project_Name=", App->SBC_Project->m_Project_Name);
 	fprintf(WriteFile, "%s%s\n", "Level_Name=", App->SBC_Project->m_Level_Name);
+	fprintf(WriteFile, "%s%s\n", "Game_Name=", App->SBC_Build->GameName);
 	
 
 	fprintf(WriteFile, "%s\n", " ");
@@ -1505,6 +1506,8 @@ bool SB_Project::Load_Project()
 
 	App->Cl_Ini->GetString("Files", "Level_Name", m_Level_Name, MAX_PATH);
 	App->Cl_Ini->GetString("Files", "Project_Name", m_Project_Name, MAX_PATH);
+	App->Cl_Ini->GetString("Files", "Game_Name", App->SBC_Build->GameName, MAX_PATH,"YourGameName");
+
 
 	Options->Has_Area = App->Cl_Ini->GetInt("Options", "Areas_Count", 0,10);
 	Options->Has_Player = App->Cl_Ini->GetInt("Options", "Players_Count", 0, 10);
@@ -1536,6 +1539,7 @@ bool SB_Project::Load_Project()
 	if (Options->Has_Player > 0)
 	{
 		bool test = Load_Project_Player();
+		App->SBC_DCC->Player_CanJump = App->SBC_Prefs->Prefs_PlayerCanJump_Flag;
 	}
 
 	// ------------------------------------- Camera

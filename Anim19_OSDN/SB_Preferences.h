@@ -40,12 +40,16 @@ public:
 	bool Write_Preferences();
 	bool Read_Preferences();
 
+	// Start Up
 	char QL_User_File[MAX_PATH];
 
 	bool Prefs_TestFile_Flag;
 	bool Prefs_StartScreen_Flag;
 	bool Prefs_FullScreen_Flag;
 	bool Prefs_Load_LastScene_Flag;
+
+	// Game Options
+	bool Prefs_PlayerCanJump_Flag;
 
 protected:
 

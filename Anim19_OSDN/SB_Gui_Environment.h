@@ -28,6 +28,8 @@ public:
 	SB_Gui_Environment(void);
 	~SB_Gui_Environment(void);
 
+	void Reset_Class();
+
 	void Environ_PropertyEditor();
 	void Start_Environment_Editor(int Index,bool IsTeleport);
 	void Close_Environment_Editor();

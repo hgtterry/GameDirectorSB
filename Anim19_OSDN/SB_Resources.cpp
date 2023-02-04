@@ -66,7 +66,10 @@ LRESULT CALLBACK SB_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM wP
 
 		SendDlgItemMessage(hDlg, IDC_BT_SCENEMESH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STCOUNT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		
+		SendDlgItemMessage(hDlg, IDC_BTMATSF, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BTMESHSF, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BTTEXTSF, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		App->SBC_Resources->CreateListGeneral_FX(hDlg);
 
 		return TRUE;
@@ -124,6 +127,27 @@ LRESULT CALLBACK SB_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM wP
 		}
 
 		if (some_item->idFrom == IDC_BT_SCENEMESH && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BTMATSF && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BTMESHSF && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BTTEXTSF && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
@@ -200,17 +224,55 @@ LRESULT CALLBACK SB_Resources::Resources_Proc(HWND hDlg, UINT message, WPARAM wP
 		if (LOWORD(wParam) == IDC_BT_SCENEMESH)
 		{
 			SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)"Scene Meshes");
-			App->SBC_Resources->SearchFolders();
-			//App->SBC_Resources->Show_Scene_Meshes(hDlg);
+			App->SBC_Resources->Show_Scene_Meshes(hDlg);
+
 			return TRUE;
 		}
-		
-		////if (LOWORD(wParam) == IDC_NOTUSED)
-		////{
-		////	App->GDC_DlgResources->ShowNotUsedMaterials();
-		////	return TRUE;
-		////}
 
+		if (LOWORD(wParam) == IDC_BTMATSF)
+		{
+			char Message[MAX_PATH];
+			strcpy(Message, "Scene Folder Materials - ");
+			strcat(Message, App->SBC_Project->m_Main_Assets_Path);
+
+			SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)Message);
+
+			ListView_DeleteAllItems(App->SBC_Resources->FX_General_hLV);
+			App->SBC_Resources->SearchFolders("*.material");
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BTMESHSF)
+		{
+			char Message[MAX_PATH];
+			strcpy(Message, "Scene Folder Mesh - ");
+			strcat(Message, App->SBC_Project->m_Main_Assets_Path);
+
+			SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)Message);
+
+			ListView_DeleteAllItems(App->SBC_Resources->FX_General_hLV);
+			App->SBC_Resources->SearchFolders("*.mesh");
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BTTEXTSF)
+		{
+			char Message[MAX_PATH];
+			strcpy(Message, "Scene Folder Textures - ");
+			strcat(Message, App->SBC_Project->m_Main_Assets_Path);
+
+			SetDlgItemText(hDlg, IDC_ST_BANNER, (LPCTSTR)Message);
+
+			ListView_DeleteAllItems(App->SBC_Resources->FX_General_hLV);
+			App->SBC_Resources->SearchFolders("*.bmp");
+			App->SBC_Resources->SearchFolders("*.tga");
+			App->SBC_Resources->SearchFolders("*.jpg");
+			App->SBC_Resources->SearchFolders("*.png");
+			App->SBC_Resources->SearchFolders("*.dds");
+
+			return TRUE;
+		}
+	
 		if (LOWORD(wParam) == IDCANCEL)
 		{
 			EndDialog(hDlg, LOWORD(wParam));
@@ -901,7 +963,7 @@ bool SB_Resources::ShowAllMeshes()
 // *************************************************************************
 // *					SearchFolders Terry Bernie			 		 	   *
 // *************************************************************************
-bool SB_Resources::SearchFolders()
+bool SB_Resources::SearchFolders(char* Extension)
 {
 
 	int NUM_COLS = 4;
@@ -910,7 +972,7 @@ bool SB_Resources::SearchFolders()
 	memset(&pitem, 0, sizeof(LV_ITEM));
 	pitem.mask = LVIF_TEXT;
 
-	ListView_DeleteAllItems(FX_General_hLV);
+	//ListView_DeleteAllItems(FX_General_hLV);
 
 	LV_COLUMN lvC;
 	memset(&lvC, 0, sizeof(LV_COLUMN));
@@ -937,7 +999,7 @@ bool SB_Resources::SearchFolders()
 
 	char pSearchPath[1024];
 	strcpy(pSearchPath, App->SBC_Project->m_Main_Assets_Path);
-	strcat(pSearchPath, "*.material");
+	strcat(pSearchPath, Extension); // "*.material");
 	
 	WIN32_FIND_DATA FindFileData;
 	HANDLE hFind = ::FindFirstFile(pSearchPath, &FindFileData);

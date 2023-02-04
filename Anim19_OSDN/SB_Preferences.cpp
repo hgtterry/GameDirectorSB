@@ -37,7 +37,7 @@ SB_Preferences::SB_Preferences()
 	PosX = 500;
 	PosY = 500;
 
-	// -------------------------- Quick Load
+	// Start Up
 
 	strcpy(QL_User_File,"Not_Set");
 
@@ -45,6 +45,9 @@ SB_Preferences::SB_Preferences()
 	Prefs_StartScreen_Flag = 1;
 	Prefs_FullScreen_Flag = 1;
 	Prefs_Load_LastScene_Flag = 1;
+
+	// Game Options
+	Prefs_PlayerCanJump_Flag = 0;
 }
 
 SB_Preferences::~SB_Preferences()
@@ -71,7 +74,7 @@ void SB_Preferences::Preferences_GUI()
 {
 
 	ImGui::SetNextWindowPos(ImVec2(PosX, PosY));
-	ImGui::SetNextWindowSize(ImVec2(350, 210), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowSize(ImVec2(350, 240), ImGuiCond_FirstUseEver);
 
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
 
@@ -93,12 +96,12 @@ void SB_Preferences::Preferences_GUI()
 		Preferences_Page = 0;
 	}
 
-	/*if (ImGui::Button("Sound   ", ImVec2(100, 0)))
+	if (ImGui::Button("Game   ", ImVec2(100, 0)))
 	{
 		Preferences_Page = 1;
 	}
 
-	if (ImGui::Button("Fog   ", ImVec2(100, 0)))
+	/*if (ImGui::Button("Fog   ", ImVec2(100, 0)))
 	{
 		Preferences_Page = 2;
 	}
@@ -144,11 +147,48 @@ void SB_Preferences::Preferences_GUI()
 			Write_Preferences();
 		}
 
-
-		if (ImGui::InputInt("##1", &App->SBC_Ogre->OgreListener->Bullet_Step, 1))
+		/*if (ImGui::InputInt("##1", &App->SBC_Ogre->OgreListener->Bullet_Step, 1))
 		{
 			
+		}*/
+	}
+
+	// ---------------------------------------------------------------- Game
+	if (Preferences_Page == 1)
+	{
+		ImGui::NextColumn();
+		ImGui::AlignTextToFramePadding();
+
+		ImGui::Text("Game Options:");
+
+		ImGui::Spacing();
+		ImGui::Spacing();
+
+		if (ImGui::Checkbox("Player Can Jump", &Prefs_PlayerCanJump_Flag))
+		{
+			App->SBC_DCC->Player_CanJump = Prefs_PlayerCanJump_Flag;
+			Write_Preferences();
 		}
+
+		/*if (ImGui::Checkbox("Default Quick File", &Prefs_TestFile_Flag))
+		{
+			Write_Preferences();
+		}
+
+		if (ImGui::Checkbox("Full Screen", &Prefs_FullScreen_Flag))
+		{
+			Write_Preferences();
+		}
+
+		if (ImGui::Checkbox("Load Last Scene", &Prefs_Load_LastScene_Flag))
+		{
+			Write_Preferences();
+		}*/
+
+		/*if (ImGui::InputInt("##1", &App->SBC_Ogre->OgreListener->Bullet_Step, 1))
+		{
+
+		}*/
 
 	}
 
@@ -240,7 +280,10 @@ bool SB_Preferences::Write_Preferences()
 	fprintf(WriteScene, "%s%i\n", "Show_StartScreen=", Prefs_StartScreen_Flag);
 	fprintf(WriteScene, "%s%i\n", "Start_FullScreen=", Prefs_FullScreen_Flag);
 	fprintf(WriteScene, "%s%i\n", "Load_LastScene=", Prefs_Load_LastScene_Flag);
-	
+
+	fprintf(WriteScene, "%s\n", "[Game]");
+	fprintf(WriteScene, "%s%i\n", "Player_CanJump=", Prefs_PlayerCanJump_Flag);
+
 	fclose(WriteScene);
 
 	//Read_Preferences();
@@ -276,5 +319,8 @@ bool SB_Preferences::Read_Preferences()
 	Prefs_FullScreen_Flag = App->Cl_Ini->GetInt("Start_Up", "Start_FullScreen", 1, 10);
 	Prefs_Load_LastScene_Flag = App->Cl_Ini->GetInt("Start_Up", "Load_LastScene", 1, 10);
 
+	// Game
+	Prefs_PlayerCanJump_Flag = App->Cl_Ini->GetInt("Game", "Player_CanJump", 0, 10);
+	
 	return 1;
 }

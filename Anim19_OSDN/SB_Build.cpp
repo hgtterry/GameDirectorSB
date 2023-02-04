@@ -432,17 +432,22 @@ LRESULT CALLBACK SB_Build::Project_Build_Proc(HWND hDlg, UINT message, WPARAM wP
 				return 1;
 			}
 
+			result = strcmp(GameName, App->SBC_Build->GameName);
+			if (result < 0 || result > 0)
+			{
+				App->SBC_Scene->Scene_Modified = 1;
+			}
+			
+
+
+
 			strcpy(App->Com_CDialogs->szSelectedDir, PathName);
 			strcpy(App->SBC_Build->StartFolder, PathName);
 
 			strcpy(App->SBC_Build->GameName, GameName);
-
-			App->SBC_Build->Create_ProjectFolder();
+			//App->SBC_Build->Create_ProjectFolder();
 
 			EndDialog(hDlg, LOWORD(wParam));
-
-			/*App->Cl_PB->StartNewProgressBar();
-			App->Cl_PB->Set_Progress("Building Scene/Game", 10);*/
 
 			return TRUE;
 		}
@@ -886,6 +891,7 @@ bool SB_Build::Build_Project_Ini()
 	fprintf(WriteFile, "%s%i\n", "Game_FullScreen=", App->SBC_Build->GameOptions->FullScreen);
 	fprintf(WriteFile, "%s%i\n", "Zipped_Assets=", App->SBC_Build->GameOptions->Zipped_Assets_Flag);
 	fprintf(WriteFile, "%s%i\n", "Use_Front_Dlg=", App->SBC_Build->GameOptions->Front_Dialog_Flag);
+	fprintf(WriteFile, "%s%i\n", "Player_CanJump=", App->SBC_Prefs->Prefs_PlayerCanJump_Flag);
 
 	fclose(WriteFile);
 

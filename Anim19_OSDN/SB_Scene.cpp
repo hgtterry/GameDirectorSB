@@ -155,7 +155,7 @@ void SB_Scene::Reset_Class()
 // *************************************************************************
 bool SB_Scene::Clear_Level()
 {
-	
+	App->SBC_Gui_Environ->Reset_Class();
 	App->SBC_Project->Reset_Class();
 	App->SBC_FileView->Reset_Class();
 	App->SBC_TopTabs->Reset_Class();
@@ -384,6 +384,8 @@ bool SB_Scene::Game_Mode(void)
 
 	App->SBC_Physics->Reset_Triggers();
 
+	App->SBC_Gui_Dialogs->Show_Physics_Console = 0;
+
 	return 1;
 }
 
@@ -418,6 +420,7 @@ bool SB_Scene::Editor_Mode(void)
 	
 	App->CL_Vm_ImGui->Show_FPS = App->SBC_Dialogs->Saved_DoFPS;
 
+	App->SBC_Gui_Dialogs->Show_Physics_Console = 1;
 	return 1;
 }
 

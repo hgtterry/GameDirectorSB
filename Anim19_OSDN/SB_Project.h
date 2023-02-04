@@ -50,6 +50,7 @@ public:
 
 	bool Load_Project();
 	bool Start_Save_Project_Dialog();
+	bool Save_Project_Ini();
 
 	char m_Project_Name[MAX_PATH];
 	char m_Level_Name[MAX_PATH];
@@ -76,7 +77,7 @@ protected:
 	static LRESULT CALLBACK Save_Project_Dialog_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	
 	bool Save_Project();
-	bool Save_Project_Ini();
+	
 	bool Save_Level_Folder();
 
 	bool Save_Main_Asset_Folder();

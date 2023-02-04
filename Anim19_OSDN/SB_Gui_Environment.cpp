@@ -68,6 +68,52 @@ SB_Gui_Environment::~SB_Gui_Environment(void)
 }
 
 // *************************************************************************
+// *		 Reset_Evironment:- Terry and Hazel Flanigan 2023  			   *
+// *************************************************************************
+void SB_Gui_Environment::Reset_Class()
+{
+	if (App->SBC_Scene->Scene_Loaded == 1)
+	{
+		App->SBC_Ogre->mSceneMgr->setSkyDome(false, "Examples/CloudySky");
+
+		Show_PropertyEditor = 0;
+		PropertyEditor_Page = 0;
+
+		Ambient_Int_Red = 0;
+		Ambient_Int_Green = 0;
+		Ambient_Int_Blue = 0;
+
+		Fog_Colour_Int_Red = 0;
+		Fog_Colour_Int_Green = 0;
+		Fog_Colour_Int_Blue = 0;
+
+		Float_PosX = 0;
+		Float_PosY = 0;
+		Float_StartPos = 0;
+
+		Eviron_Index = 0;
+
+		Is_Teleport = 0;
+
+		ClickOnTrack = 0;
+		ClickOnVolume = 0;
+		ClickOnPlay = 0;
+		ClickOnLoop = 0;
+
+		ClickOnFogVisible = 0;
+		ClickOnFogMode = 0;
+		ClickOnFogColour = 0;
+		ClickOnFogStart = 0;
+		ClickOnFogEnd = 0;
+
+		ClickOnSkyEnabled = 0;
+		ClickOnSkyTiling = 0;
+		ClickOnSkyCurve = 0;
+	}
+}
+
+
+// *************************************************************************
 // *	 Start_Environment_Editor:- Terry and Hazel Flanigan 2023  		   *
 // *************************************************************************
 void SB_Gui_Environment::Start_Environment_Editor(int Index,bool IsTeleport)

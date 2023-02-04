@@ -190,7 +190,7 @@ GD19_App::GD19_App(void)
 	CursorPosX = 500;
 	CursorPosY = 500;
 
-	Debug_App = 1;
+	Debug_App = 0;
 
 	EquityDirecory_FullPath[0] = 0;
 	ETemp_Folder[0] = 0;
@@ -304,7 +304,7 @@ bool GD19_App::InitApp(void)
 	strcat(ETemp_Folder, "\\Data\\ETemp.bmp");
 
 	strcpy(Default_Project, EquityDirecory_FullPath);
-	strcat(Default_Project, "\\Projects\\First_Project_Prj\\Project.SBProj");
+	strcat(Default_Project, "\\Projects\\RF_Project_Prj\\Project.SBProj");
 	
 	char StartFile[1024];
 	strcpy(StartFile, App->EquityDirecory_FullPath);

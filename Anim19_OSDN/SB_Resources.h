@@ -50,7 +50,7 @@ protected:
 
 	bool CreateListGeneral_FX(HWND hDlg);
 	bool ShowAllMaterials();
-	bool SearchFolders();
+	bool SearchFolders(char* Extension);
 	bool FindPath(char* SubFolder, char* File, char* StartFolder);
 	bool FindPath_New(char* File, char* Folder);
 

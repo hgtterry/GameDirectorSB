@@ -73,6 +73,7 @@ DynamicCharacterController::DynamicCharacterController(btRigidBody *body,
 	//mShapeRadius = shape->getRadius();
 	//mShapeHalfHeight = shape->getHalfHeight();
 
+	Player_CanJump = 0;
 	setupBody();
 	resetStatus();
 }
@@ -80,6 +81,7 @@ DynamicCharacterController::DynamicCharacterController(btRigidBody *body,
 DynamicCharacterController::DynamicCharacterController()
 {
 	mRigidBody = nullptr;
+	Player_CanJump = 0;
 	resetStatus();
 }
 
@@ -324,7 +326,14 @@ bool DynamicCharacterController::canJump() const
 // *************************************************************************
 void DynamicCharacterController::jump(const btVector3 &dir)
 {
-	if (!canJump()) {
+
+	if (Player_CanJump == 0)
+	{
+		return;
+	}
+
+	if (!canJump())
+	{
 		return;
 	}
 

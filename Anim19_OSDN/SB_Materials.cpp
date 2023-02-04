@@ -5,8 +5,10 @@
 SB_Materials::SB_Materials(void)
 {
 	Show_Material_Editor = 0;
+	Show_Scroll_Editor = 0;
 	item_current_idx = 0;
 	BaseEntity = nullptr;
+	MatClone.resize(20);
 }
 
 SB_Materials::~SB_Materials(void)
@@ -48,7 +50,7 @@ void SB_Materials::Start_Material_Editor()
 		strcpy(Name, "Clone_");
 		strcat(Name, Num);
 
-		MatClone[Count] = Mat->clone(Name);
+		MatClone.push_back(Mat->clone(Name));
 
 		Count++;
 	}
@@ -67,7 +69,7 @@ void SB_Materials::Material_Editor_Gui()
 	int Index = App->SBC_Properties->Current_Selected_Object;
 
 	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
-	ImGui::SetNextWindowSize(ImVec2(350, 250), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowSize(ImVec2(320, 350), ImGuiCond_FirstUseEver);
 
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
 
@@ -77,8 +79,6 @@ void SB_Materials::Material_Editor_Gui()
 	}
 	else
 	{
-
-		ImGuiColorEditFlags misc_flags2 = (ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_InputRGB | ImGuiColorEditFlags_Uint8);
 
 		ImGui::Spacing();
 		ImGui::Spacing();
@@ -90,8 +90,10 @@ void SB_Materials::Material_Editor_Gui()
 
 		int NumSubMesh = BaseEntity->getMesh()->getNumSubMeshes();
 
-		ImGui::Text("SubMeshes %i %s", NumSubMesh, Material_FileName);
-		if (ImGui::BeginCombo("Materials", BaseEntity->getMesh()->getSubMesh(item_current_idx)->getMaterialName().c_str()))
+		ImGui::Text(Material_FileName);
+		ImGui::Text("Sub Materials %i", NumSubMesh);
+
+		if (ImGui::BeginCombo("###MATS", BaseEntity->getMesh()->getSubMesh(item_current_idx)->getMaterialName().c_str()))
 		{
 			for (int n = 0; n < NumSubMesh; n++)
 			{
@@ -110,23 +112,47 @@ void SB_Materials::Material_Editor_Gui()
 		}
 
 		Ogre::String text = BaseEntity->getMesh()->getSubMesh(item_current_idx)->getMaterialName().c_str();
-		Ogre::MaterialPtr  Mat = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(text));
+		MatCurent = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(text));
 
-		ImGui::Text("Texture:-  %s", Mat->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureName().c_str());
+		//ImGui::Text("Texture:-  %s", Mat->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureName().c_str());
 
-		if (ImGui::Button("Change", ImVec2(100, 0)))
+		char Texture[256];
+
+		strcpy(Texture, MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureName().c_str());
+
+		const char* listbox_items[] = { Texture,"Scroll"};
+		static int listbox_item_current = -1;
+		
+		if (ImGui::ListBox("##L1", &listbox_item_current, listbox_items, IM_ARRAYSIZE(listbox_items), 4))
 		{
-			bool test = App->SBC_FileIO->OpenTextureFile("Texture",NULL, NULL);
-			if (test == 1)
+			if (listbox_item_current == 0) // Change Texture
 			{
-				Copy_Texture();
-				Mat->getTechnique(0)->getPass(0)->getTextureUnitState(0)->setTextureName(App->SBC_FileIO->Texture_FileName);
-				Mat->getTechnique(0)->getPass(0)->setAmbient(1, 1, 1);
-				//Mat->getTechnique(0)->getPass(0)->setPolygonMode(Ogre::PolygonMode::PM_POINTS);
-				Update_MaterialFile();
+				bool test = App->SBC_FileIO->OpenTextureFile("Texture", NULL, NULL);
+				if (test == 1)
+				{
+					Copy_Texture();
+					MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->setTextureName(App->SBC_FileIO->Texture_FileName);
+					MatCurent->getTechnique(0)->getPass(0)->setAmbient(1, 1, 1);
+					//MatCurent->getTechnique(0)->getPass(0)->setPolygonMode(Ogre::PolygonMode::PM_POINTS);
+					Update_MaterialFile();
+				}
 			}
 
+			
+			if (listbox_item_current == 1) // Scroll
+			{
+				MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->setScrollAnimation(0.01, 0.71);
+				//Mat->getTechnique(0)->getPass(0)->getTextureUnitState(0)->setTextureRotate(Ogre::Radian(90));
+				//Update_MaterialFile();
+			}
 		}
+
+		if (listbox_item_current == 1)
+		{
+			Show_Scroll_Editor = 1;
+			Scroll_Gui();
+		}
+
 
 		ImGui::Spacing();
 		ImGui::Spacing();
@@ -160,13 +186,45 @@ void SB_Materials::Material_Editor_Gui()
 			{
 				Ogre::String text = BaseEntity->getMesh()->getSubMesh(Count)->getMaterialName().c_str();
 				Ogre::MaterialPtr  Mat = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(text));
+				
 				MatClone[Count]->copyDetailsTo(Mat);
+
 				Count++;
 			}
 
 			Update_MaterialFile();
 		}
 
+		ImGui::PopStyleColor();
+		ImGui::End();
+	}
+}
+
+// *************************************************************************
+// *				Scroll_Gui:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void SB_Materials::Scroll_Gui()
+{
+	int Index = App->SBC_Properties->Current_Selected_Object;
+
+	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowSize(ImVec2(320, 350), ImGuiCond_FirstUseEver);
+
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
+
+	if (!ImGui::Begin("Scroll_Editor", &Show_Scroll_Editor, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar))
+	{
+		ImGui::End();
+	}
+	else
+	{
+
+		ImGui::Text("Scroll Editor");
+		ImGui::Separator();
+
+		ImGui::Text("Poop %f", MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureUScroll());
+		
+	
 		ImGui::PopStyleColor();
 		ImGui::End();
 	}
@@ -236,6 +294,7 @@ void SB_Materials::Get_Material_Name(Ogre::Entity* mEntity)
 {
 	Ogre::String text = mEntity->getMesh()->getSubMesh(0)->getMaterialName().c_str();
 	Ogre::MaterialPtr  Mat = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(text));
+
 	strcpy(Material_FileName, Mat->getOrigin().c_str());
 }
 

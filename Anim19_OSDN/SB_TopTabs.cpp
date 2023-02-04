@@ -1312,7 +1312,7 @@ void SB_TopTabs::Do_Quick_Load()
 	{
 		char Default_Project[MAX_PATH];
 		strcpy(Default_Project, App->EquityDirecory_FullPath);
-		strcat(Default_Project, "\\Projects\\First_Project_Prj\\Project.SBProj");
+		strcat(Default_Project, "\\Projects\\RF_Project_Prj\\Project.SBProj");
 
 		App->SBC_Import->Quick_Load_Flag = 1;
 		App->SBC_Import->Reload_FromResentFiles(Default_Project);

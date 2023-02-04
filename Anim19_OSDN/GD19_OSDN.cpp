@@ -463,10 +463,20 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			return 1;
 		}
 
+		case ID_EXAMPLES_RF:
+		{
+			char Test_Project[MAX_PATH];
+			strcpy(Test_Project, App->EquityDirecory_FullPath);
+			strcat(Test_Project, "\\Projects\\RF_Project_Prj\\Project.SBProj");
+
+			App->SBC_Import->Reload_FromResentFiles(Test_Project);
+
+			return 1;
+		}
+
 		case ID_EXAMPLES_TESTPROJECT:
 		{
 			char Test_Project[MAX_PATH];
-
 			strcpy(Test_Project, App->EquityDirecory_FullPath);
 			strcat(Test_Project, "\\Projects\\First_Project_Prj\\Project.SBProj");
 
@@ -1138,14 +1148,18 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 
 		if (!ImGui::GetIO().WantCaptureMouse)
 		{
-			if (App->OgreStarted == 1)
+
+			if (App->SBC_Scene->GameMode_Running_Flag == 0)
 			{
-				
-				SetCapture(App->ViewGLhWnd);// Bernie
-				SetCursorPos(App->CursorPosX, App->CursorPosY);
-				App->SBC_Ogre->OgreListener->Pl_RightMouseDown = 1;
-				App->CUR = SetCursor(NULL);
-				return 1;
+				if (App->OgreStarted == 1)
+				{
+
+					SetCapture(App->ViewGLhWnd);// Bernie
+					SetCursorPos(App->CursorPosX, App->CursorPosY);
+					App->SBC_Ogre->OgreListener->Pl_RightMouseDown = 1;
+					App->CUR = SetCursor(NULL);
+					return 1;
+				}
 			}
 		}
 		return 1;
@@ -1197,13 +1211,16 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 	case WM_RBUTTONUP:
 	{
 		App->SBC_Ogre->m_imgui.mouseReleased();
-		
-		if (App->OgreStarted == 1)
+
+		if (App->SBC_Scene->GameMode_Running_Flag == 0)
 		{
-			ReleaseCapture();
-			App->SBC_Ogre->OgreListener->Pl_RightMouseDown = 0;
-			SetCursor(App->CUR);
-			return 1;
+			if (App->OgreStarted == 1)
+			{
+				ReleaseCapture();
+				App->SBC_Ogre->OgreListener->Pl_RightMouseDown = 0;
+				SetCursor(App->CUR);
+				return 1;
+			}
 		}
 
 		return 1;
@@ -1499,7 +1516,7 @@ void StartOgre()
 
 	char Default_Project[MAX_PATH];
 	strcpy(Default_Project, App->EquityDirecory_FullPath);
-	strcat(Default_Project, "\\Projects\\First_Project_Prj\\Project.SBProj");
+	strcat(Default_Project, "\\Projects\\RF_Project_Prj\\Project.SBProj");
 
 	if (App->SBC_Prefs->Prefs_Load_LastScene_Flag == 1)
 	{
