@@ -141,5 +141,6 @@ void SB_Panels::Enable_All_Panels(bool Enable)
 {
 	EnableWindow(App->ListPanel, Enable);
 	EnableWindow(App->SBC_Properties->Properties_Dlg_hWnd, Enable);
+	EnableWindow(App->SBC_TopTabs->TabsHwnd, Enable);
 
 }

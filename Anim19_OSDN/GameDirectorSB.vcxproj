@@ -243,6 +243,7 @@
     <ClCompile Include="Common\imGui\ImGui_cpp\ImguiRenderable.cpp" />
     <ClCompile Include="Common\imGui\ImGui_cpp\imgui_demo.cpp" />
     <ClCompile Include="Common\imGui\ImGui_cpp\imgui_draw.cpp" />
+    <ClCompile Include="Common\imGui\ImGui_cpp\imgui_tables.cpp" />
     <ClCompile Include="Common\imGui\ImGui_cpp\imgui_widgets.cpp" />
     <ClCompile Include="Com_Diaolgs.cpp" />
     <ClCompile Include="DynamicCharacterController.cpp" />

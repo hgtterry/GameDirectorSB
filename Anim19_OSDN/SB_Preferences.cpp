@@ -86,6 +86,8 @@ void SB_Preferences::Preferences_GUI()
 		return;
 	}
 
+	//ImGui::BeginDisabled(true);
+
 	ImGuiColorEditFlags misc_flags2 = (ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_InputRGB | ImGuiColorEditFlags_Uint8);
 
 	ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(2, 2));
@@ -225,6 +227,7 @@ void SB_Preferences::Preferences_GUI()
 	PosX = ((float)App->SBC_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);
 	PosY = ((float)App->SBC_Ogre->OgreListener->View_Height / 2) - (Size.y / 2);;
 
+	//ImGui::BeginDisabled(false);
 	ImGui::End();
 }
 
