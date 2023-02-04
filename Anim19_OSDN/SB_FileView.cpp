@@ -186,7 +186,7 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 	case WM_SIZE:
 	{
-		App->Cl_Panels->Resize_FileView();
+		App->SBC_Panels->Resize_FileView();
 	}break;
 
 	case WM_CONTEXTMENU:

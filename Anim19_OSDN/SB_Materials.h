@@ -23,6 +23,7 @@ protected:
 
 	bool Show_Scroll_Editor;
 	int item_current_idx;
+	int NumSubMesh;
 
 	char Material_FileName[MAX_PATH];
 	Ogre::Entity* BaseEntity;

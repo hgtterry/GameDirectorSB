@@ -64,6 +64,8 @@ void SB_Preferences::Start_Preferences_GUI()
 
 	Read_Preferences();
 
+	App->SBC_Panels->Enable_All_Panels(false);
+
 	Show_Preferences_GUI = 1;
 }
 
@@ -74,7 +76,7 @@ void SB_Preferences::Preferences_GUI()
 {
 
 	ImGui::SetNextWindowPos(ImVec2(PosX, PosY));
-	ImGui::SetNextWindowSize(ImVec2(350, 240), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowSize(ImVec2(350, 200), ImGuiCond_FirstUseEver);
 
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
 
@@ -91,26 +93,17 @@ void SB_Preferences::Preferences_GUI()
 	ImGui::Columns(2);
 	ImGui::SetColumnWidth(-1, 120);
 
-	if (ImGui::Button(" Start Up ", ImVec2(100, 0)))
+	if (ImGui::Selectable("   Start Up ", Preferences_Page == 0, 0, ImVec2(100, 0)))
 	{
 		Preferences_Page = 0;
 	}
 
-	if (ImGui::Button("Game   ", ImVec2(100, 0)))
+	if (ImGui::Selectable("     Game ", Preferences_Page == 1, 0, ImVec2(100, 0)))
 	{
 		Preferences_Page = 1;
 	}
 
-	/*if (ImGui::Button("Fog   ", ImVec2(100, 0)))
-	{
-		Preferences_Page = 2;
-	}
-
-	if (ImGui::Button("Sky   ", ImVec2(100, 0)))
-	{
-		Preferences_Page = 3;
-	}*/
-
+	
 	ImGui::Spacing();
 	ImGui::Spacing();
 	ImGui::Spacing();
@@ -170,6 +163,28 @@ void SB_Preferences::Preferences_GUI()
 			Write_Preferences();
 		}
 
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		
 		/*if (ImGui::Checkbox("Default Quick File", &Prefs_TestFile_Flag))
 		{
 			Write_Preferences();
@@ -218,15 +233,8 @@ void SB_Preferences::Preferences_GUI()
 // *************************************************************************
 void SB_Preferences::Close_Preferences_GUI()
 {
-	///*App->Disable_Panels(false);
-	//App->Show_Panels(true);*/
-
-	//App->SBC_FileView->Show_FileView(true);
-	//int Index = App->SBC_Properties->Current_Selected_Object;
-	//App->SBC_Com_Environments->Set_Environment_By_Index(0, Index);
-
-	//Index = App->SBC_Com_Environments->Get_First_Environ();
-	//App->SBC_Com_Environments->Set_Environment_By_Index(0, Index);
+	
+	App->SBC_Panels->Enable_All_Panels(true);
 
 	Show_Preferences_GUI = 0;
 }

@@ -90,13 +90,13 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	App->SBC_FileView->Start_FileView();
 	ShowWindow(App->ListPanel, 0);
 	App->SBC_FileView->Init_FileView();
-	App->Cl_Panels->Move_FileView_Window();
-	App->Cl_Panels->Resize_FileView();
+	App->SBC_Panels->Move_FileView_Window();
+	App->SBC_Panels->Resize_FileView();
 
 
 	App->SetMainWinCentre();
 
-	App->Cl_Panels->Place_GlobalGroups();
+	App->SBC_Panels->Place_GlobalGroups();
 	
 
 	App->SBC_Properties->Start_GD_Properties();
@@ -1523,7 +1523,7 @@ void StartOgre()
 		App->SBC_TopTabs->Do_Quick_Load();
 	}
 	
-	App->Cl_Panels->MovePhysicsView();
+	App->SBC_Panels->MovePhysicsView();
 	//App->SBC_Gui_Dialogs->Show_Physics_Console = 0;
 	//App->SBC_Gui_Dialogs->Show_Physics_Console = 1;
 

@@ -22,15 +22,16 @@ distribution.
 */
 
 #pragma once
-class GD19_Panels
+class SB_Panels
 {
 public:
-	GD19_Panels();
-	~GD19_Panels();
+	SB_Panels();
+	~SB_Panels();
 
 	bool Resize_FileView(void);
 	bool Move_FileView_Window(void);
 	bool Place_GlobalGroups(void);
 	bool MovePhysicsView(void);
+	void Enable_All_Panels(bool Enable);
 };
 

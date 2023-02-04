@@ -28,19 +28,19 @@ distribution.
 
 #pragma warning( disable : 4800)
 
-GD19_Panels::GD19_Panels()
+SB_Panels::SB_Panels()
 {
 }
 
 
-GD19_Panels::~GD19_Panels()
+SB_Panels::~SB_Panels()
 {
 }
 
 // *************************************************************************
 // *			Resize_FileView:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
-bool GD19_Panels::Resize_FileView(void)
+bool SB_Panels::Resize_FileView(void)
 {
 	RECT rcl;
 
@@ -76,7 +76,7 @@ bool GD19_Panels::Resize_FileView(void)
 // *************************************************************************
 // *			MoveCentralView:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
-bool GD19_Panels::MovePhysicsView(void)
+bool SB_Panels::MovePhysicsView(void)
 {
 	if (App->SBC_Gui_Dialogs->Show_Physics_Console == 1)
 	{
@@ -88,7 +88,7 @@ bool GD19_Panels::MovePhysicsView(void)
 // *************************************************************************
 // *		Move_FileView_Window:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
-bool GD19_Panels::Move_FileView_Window(void)
+bool SB_Panels::Move_FileView_Window(void)
 {
 	POINT p = { 0 };
 
@@ -106,7 +106,7 @@ bool GD19_Panels::Move_FileView_Window(void)
 // *************************************************************************
 // *			Place_GlobalGroups:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
-bool GD19_Panels::Place_GlobalGroups(void)
+bool SB_Panels::Place_GlobalGroups(void)
 {
 	POINT p = { 0 };
 
@@ -131,6 +131,15 @@ bool GD19_Panels::Place_GlobalGroups(void)
 	///DeferWindowPos(hdwp, App->GD_Stock_Hwnd, NULL, p.x + widthX - 250, PosY + 10,
 		///0, 0, SWP_NOSIZE | SWP_NOZORDER);
 
-
 	return EndDeferWindowPos(hdwp);
+}
+
+// *************************************************************************
+// *				Disable_Panels:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+void SB_Panels::Enable_All_Panels(bool Enable)
+{
+	EnableWindow(App->ListPanel, Enable);
+	EnableWindow(App->SBC_Properties->Properties_Dlg_hWnd, Enable);
+
 }

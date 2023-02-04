@@ -99,7 +99,6 @@ public:
 	SB_Ogre*			SBC_Ogre;
 	GD19_Utilities*		Cl_Utilities;
 	SB_Grid*			SBC_Grid;
-	GD19_Panels*		Cl_Panels;
 	SB_Bullet*			SBC_Bullet;
 	T_Ini*				Cl_Ini;
 	SB_Visuals*			SBC_Visuals;
@@ -144,6 +143,8 @@ public:
 	SB_Preferences*			SBC_Prefs;
 	SB_Display*				SBC_Display;
 	SB_Build*				SBC_Build;
+	SB_Panels*				SBC_Panels;
+
 
 	SB_Com_Entity*			SBC_Com_Entity;
 	SB_Com_MoveEntity*		SBC_Com_MoveEntity;

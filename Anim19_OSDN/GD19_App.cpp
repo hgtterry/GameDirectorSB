@@ -29,12 +29,8 @@ distribution.
 
 GD19_App::GD19_App(void)
 {
-	SBC_Ogre =			nullptr;
+
 	Cl_Utilities =		nullptr;
-	SBC_Grid =			nullptr;
-	Cl_Panels =			nullptr;
-	SBC_Bullet =		nullptr;
-	Cl_Ini =			nullptr;
 	SBC_Visuals =		nullptr;
 	Cl_Dialogs =		nullptr;
 	Cl_Objects_Com =	nullptr;
@@ -45,7 +41,11 @@ GD19_App::GD19_App(void)
 	//EBC_Listener =		nullptr;
 	EBC_Options =		nullptr;
 
-	
+	SBC_Ogre =			nullptr;
+	SBC_Grid =			nullptr;
+	SBC_Panels =		nullptr;
+	SBC_Bullet =		nullptr;
+
 	SBC_Keyboard =		nullptr;
 	SBC_Player =		nullptr;
 	SBC_Import =		nullptr;
@@ -208,7 +208,7 @@ bool GD19_App::InitApp(void)
 	SBC_Ogre =			new SB_Ogre();
 	Cl_Utilities =		new GD19_Utilities();
 	SBC_Grid =			new SB_Grid();
-	Cl_Panels =			new GD19_Panels();
+	SBC_Panels =		new SB_Panels();
 	SBC_Bullet =		new SB_Bullet();		
 	Cl_Ini =			new T_Ini();
 	SBC_Visuals =		new SB_Visuals();
@@ -378,9 +378,9 @@ bool GD19_App::Resize_OgreWin(void)
 
 	}
 
-	App->Cl_Panels->MovePhysicsView();
-	App->Cl_Panels->Move_FileView_Window();
-	App->Cl_Panels->Place_GlobalGroups();
+	App->SBC_Panels->MovePhysicsView();
+	App->SBC_Panels->Move_FileView_Window();
+	App->SBC_Panels->Place_GlobalGroups();
 
 	return 1;
 }

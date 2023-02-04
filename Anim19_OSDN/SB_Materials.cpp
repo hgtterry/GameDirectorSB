@@ -8,7 +8,8 @@ SB_Materials::SB_Materials(void)
 	Show_Scroll_Editor = 0;
 	item_current_idx = 0;
 	BaseEntity = nullptr;
-	MatClone.resize(20);
+	NumSubMesh = 0;
+	MatClone.resize(0);
 }
 
 SB_Materials::~SB_Materials(void)
@@ -20,6 +21,9 @@ SB_Materials::~SB_Materials(void)
 // *************************************************************************
 void SB_Materials::Start_Material_Editor()
 {
+	NumSubMesh = 0;
+	MatClone.resize(0);
+
 	int Index = App->SBC_Properties->Current_Selected_Object;
 	item_current_idx = 0;
 
@@ -36,7 +40,8 @@ void SB_Materials::Start_Material_Editor()
 	Get_Material_Name(BaseEntity);
 
 	// ---------------- Copy Scripts
-	int NumSubMesh = BaseEntity->getMesh()->getNumSubMeshes();
+	NumSubMesh = BaseEntity->getMesh()->getNumSubMeshes();
+
 	int Count = 0;
 	while (Count < NumSubMesh)
 	{
@@ -87,8 +92,6 @@ void SB_Materials::Material_Editor_Gui()
 
 		ImGui::Text("Material Editor");
 		ImGui::Separator();
-
-		int NumSubMesh = BaseEntity->getMesh()->getNumSubMeshes();
 
 		ImGui::Text(Material_FileName);
 		ImGui::Text("Sub Materials %i", NumSubMesh);
@@ -179,8 +182,6 @@ void SB_Materials::Material_Editor_Gui()
 
 		if (ImGui::Button("Undo All", ImVec2(100, 0)))
 		{
-
-			int NumSubMesh = BaseEntity->getMesh()->getNumSubMeshes();
 			int Count = 0;
 			while (Count < NumSubMesh)
 			{
@@ -288,7 +289,7 @@ void SB_Materials::Update_MaterialFile()
 }
 
 // *************************************************************************
-// *			Update_MaterialFile:- Terry and Hazel Flanigan 2023		   *
+// *			Get_Material_Name:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
 void SB_Materials::Get_Material_Name(Ogre::Entity* mEntity)
 {
