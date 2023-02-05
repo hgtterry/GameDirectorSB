@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022 GameDirectorSB and EquityME -- HGTInflanite Software W.T.Flanigan H.C.Flanigan
+Copyright (c) 2022 - 2023 GameDirectorSB and EquityME -- HGTInflanite Software W.T.Flanigan H.C.Flanigan
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -22,19 +22,27 @@ distribution.
 */
 
 #pragma once
-class SB_Panels
+class SB_Gui_Properties
 {
 public:
-	SB_Panels();
-	~SB_Panels();
+	SB_Gui_Properties();
+	~SB_Gui_Properties();
 
-	bool Resize_FileView(void);
-	bool Move_FileView_Window(void);
-	bool Place_GlobalGroups(void);
-	bool MovePhysicsView(void);
-	void Enable_All_Panels(bool Enable);
-	void Close_Gui_Panels();
-	bool MovePropertiesPanel_Gui(void);
+	void Start_Properties_Panel(void);
+	void Properties_Panel_Gui(void);
+	void Close_Properties_Panel(void);
+	bool LoadTextureFromFile(const char* filename, GLuint* out_texture, int* out_width, int* out_height);
 
+	bool Show_Properties_Panel_Flag;
+	bool Properties_Panel_StartPos;
+
+	int Current_Object;
+
+	float Props_Panel_PosX;
+	float Props_Panel_PosY;
+
+	int my_image_width = 0;
+	int my_image_height = 0;
+	GLuint my_image_texture = 0;
 };
 

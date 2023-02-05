@@ -74,13 +74,25 @@ bool SB_Panels::Resize_FileView(void)
 }
 
 // *************************************************************************
-// *			MoveCentralView:- Terry and Hazel Flanigan 2022			   *
+// *			MoveCentralView:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 bool SB_Panels::MovePhysicsView(void)
 {
 	if (App->SBC_Gui_Dialogs->Show_Physics_Console == 1)
 	{
 		App->SBC_Gui_Dialogs->Physics_Console_StartPos = 0;
+	}
+	return 1;
+}
+
+// *************************************************************************
+// *		MovePropertiesPanel_Gui:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+bool SB_Panels::MovePropertiesPanel_Gui(void)
+{
+	if (App->SBC_Gui_Propreties->Show_Properties_Panel_Flag == 1)
+	{
+		App->SBC_Gui_Propreties->Properties_Panel_StartPos = 0;
 	}
 	return 1;
 }
@@ -135,7 +147,7 @@ bool SB_Panels::Place_GlobalGroups(void)
 }
 
 // *************************************************************************
-// *				Disable_Panels:- Terry and Hazel Flanigan 2022		   *
+// *				Disable_Panels:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
 void SB_Panels::Enable_All_Panels(bool Enable)
 {
@@ -143,4 +155,20 @@ void SB_Panels::Enable_All_Panels(bool Enable)
 	EnableWindow(App->SBC_Properties->Properties_Dlg_hWnd, Enable);
 	EnableWindow(App->SBC_TopTabs->TabsHwnd, Enable);
 
+	if (Enable == 1)
+	{
+		App->SBC_Gui_Dialogs->Disable_Physics_Console = 0;
+	}
+	else
+	{
+		App->SBC_Gui_Dialogs->Disable_Physics_Console = 1;
+	}
+}
+
+// *************************************************************************
+// *			Close_Gui_Panels:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_Panels::Close_Gui_Panels()
+{
+	App->CL_Vm_ImGui->Show_Object_Data = 0;
 }

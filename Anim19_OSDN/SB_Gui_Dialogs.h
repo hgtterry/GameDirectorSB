@@ -78,6 +78,7 @@ public:
 	bool ColourPicker_Canceled;
 
 	// -------------- Physics Console
+	bool Disable_Physics_Console;
 	bool Show_Physics_Console;
 	float Physics_PosX;
 	float Physics_PosY;

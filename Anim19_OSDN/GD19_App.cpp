@@ -87,7 +87,7 @@ GD19_App::GD19_App(void)
 	SBC_Gui_Environ =		nullptr;
 
 	SBC_Front_Dlg =			nullptr;
-
+	SBC_Gui_Propreties =	nullptr;
 	SBC_DCC =				nullptr;
 
 	// ---------------------------------------------------- 29/12/21
@@ -266,6 +266,8 @@ bool GD19_App::InitApp(void)
 	SBC_Front_Dlg =			new Bass_Front_Dialog();
 
 	SBC_Locations =			new SB_Locations();
+	SBC_Gui_Propreties =	new SB_Gui_Properties();
+	
 	//SBC_DCC =				new DynamicCharacterController();
 
 	//--------------
@@ -379,6 +381,7 @@ bool GD19_App::Resize_OgreWin(void)
 	}
 
 	App->SBC_Panels->MovePhysicsView();
+	App->SBC_Panels->MovePropertiesPanel_Gui();
 	App->SBC_Panels->Move_FileView_Window();
 	App->SBC_Panels->Place_GlobalGroups();
 

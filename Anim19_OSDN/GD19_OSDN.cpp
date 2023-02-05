@@ -1524,6 +1524,7 @@ void StartOgre()
 	}
 	
 	App->SBC_Panels->MovePhysicsView();
+	App->SBC_Panels->MovePropertiesPanel_Gui();
 	//App->SBC_Gui_Dialogs->Show_Physics_Console = 0;
 	//App->SBC_Gui_Dialogs->Show_Physics_Console = 1;
 

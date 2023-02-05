@@ -64,6 +64,7 @@ void SB_Preferences::Start_Preferences_GUI()
 
 	Read_Preferences();
 
+	App->SBC_Panels->Close_Gui_Panels();
 	App->SBC_Panels->Enable_All_Panels(false);
 
 	Show_Preferences_GUI = 1;
@@ -103,6 +104,11 @@ void SB_Preferences::Preferences_GUI()
 	if (ImGui::Selectable("     Game ", Preferences_Page == 1, 0, ImVec2(100, 0)))
 	{
 		Preferences_Page = 1;
+	}
+
+	if (ImGui::Selectable("     Test ", Preferences_Page == 2, 0, ImVec2(100, 0)))
+	{
+		Preferences_Page = 2;
 	}
 
 	
@@ -209,6 +215,45 @@ void SB_Preferences::Preferences_GUI()
 
 	}
 
+	// ---------------------------------------------------------------- Test App
+	if (Preferences_Page == 2)
+	{
+		ImGui::NextColumn();
+		ImGui::AlignTextToFramePadding();
+
+		ImGui::Text("Development:");
+
+		ImGui::Spacing();
+		ImGui::Spacing();
+
+		if (ImGui::Checkbox("New Properties", &App->SBC_Gui_Propreties->Show_Properties_Panel_Flag))
+		{
+			Write_Preferences();
+		}
+
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
+	}
+
 	ImGui::PopStyleVar();
 	ImGui::Columns(0);
 
@@ -295,6 +340,9 @@ bool SB_Preferences::Write_Preferences()
 	fprintf(WriteScene, "%s\n", "[Game]");
 	fprintf(WriteScene, "%s%i\n", "Player_CanJump=", Prefs_PlayerCanJump_Flag);
 
+	fprintf(WriteScene, "%s\n", "[Development]");
+	fprintf(WriteScene, "%s%i\n", "New_Properties=", App->SBC_Gui_Propreties->Show_Properties_Panel_Flag);
+
 	fclose(WriteScene);
 
 	//Read_Preferences();
@@ -332,6 +380,10 @@ bool SB_Preferences::Read_Preferences()
 
 	// Game
 	Prefs_PlayerCanJump_Flag = App->Cl_Ini->GetInt("Game", "Player_CanJump", 0, 10);
-	
+
+	// Development
+
+	App->SBC_Gui_Propreties->Show_Properties_Panel_Flag = App->Cl_Ini->GetInt("Development", "New_Properties", 0, 10);
+
 	return 1;
 }

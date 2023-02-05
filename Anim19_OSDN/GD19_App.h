@@ -86,6 +86,7 @@ distribution.
 #include "SB_Gui_Environment.h"
 #include "SB_Materials.h"
 #include "Bass_Front_Dialog.h"
+#include "SB_Gui_Properties.h"
 
 #include "DynamicCharacterController.h"
 
@@ -159,7 +160,7 @@ public:
 	SB_Materials*			SBC_Materials;
 
 	Bass_Front_Dialog*		SBC_Front_Dlg;
-
+	SB_Gui_Properties*		SBC_Gui_Propreties;
 
 	DynamicCharacterController*		SBC_DCC;
 

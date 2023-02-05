@@ -409,8 +409,29 @@ void OgreImGui::createMaterial()
     mPass->setSeparateSceneBlending(Ogre::SBF_SOURCE_ALPHA,Ogre::SBF_ONE_MINUS_SOURCE_ALPHA,Ogre::SBF_ONE_MINUS_SOURCE_ALPHA,Ogre::SBF_ZERO);
 
     Ogre::TextureUnitState* texUnit =  mPass->createTextureUnitState();
+    
     texUnit->setTexture(mFontTex);
-    texUnit->setTextureFiltering(Ogre::TFO_NONE);
+   // texUnit->setTextureName("concrete.bmp");
+   texUnit->setTextureFiltering(Ogre::TFO_NONE);
+
+
+  // // Ogre::Pass* mPass = mRenderable.mMaterial->getBestTechnique()->getPass(0);
+  //  Ogre::TextureUnitState* st = mPass->getTextureUnitState(0);
+  // // if (drawCmd->TextureId != 0)
+  //  {
+  //      Ogre::ResourceHandle handle = (Ogre::ResourceHandle)drawCmd->TextureId;
+  //      Ogre::TexturePtr tex = Ogre::TextureManager::getSingleton().getByHandle(handle);
+  //      //if (tex)
+  //      {
+  //          st->setTexture(tex);
+  //          st->setTextureFiltering(Ogre::TFO_TRILINEAR);
+  //      }
+  //  }
+  // // else
+  // // {
+  //  //    st->setTexture(mFontTex);
+  //  //    st->setTextureFiltering(Ogre::TFO_NONE);
+  ////  }
 }
 
 void OgreImGui::createFontTexture()
@@ -519,7 +540,7 @@ void OgreImGui::ImGUIRenderable::setMaterial( const Ogre::String& matName )
     }
     
     // Won't load twice anyway
-    mMaterial->load();
+   mMaterial->load();
 }
 
 void OgreImGui::ImGUIRenderable::setMaterial(const Ogre::MaterialPtr & material)

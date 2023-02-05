@@ -268,6 +268,12 @@ void VM_ImGui::ImGui_Editor_Loop(void)
 	{
 		App->SBC_Materials->Material_Editor_Gui();
 	}
+
+	// SBC_Gui_Dialogs - Properties Panel
+	if (App->SBC_Gui_Propreties->Show_Properties_Panel_Flag == 1)
+	{
+		App->SBC_Gui_Propreties->Properties_Panel_Gui();
+	}
 }
 
 // *************************************************************************

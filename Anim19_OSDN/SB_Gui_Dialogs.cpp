@@ -58,6 +58,7 @@ SB_Gui_Dialogs::SB_Gui_Dialogs(void)
 	Colour_Int_Blue = 0;
 
 	// -------------- Physics Console
+	Disable_Physics_Console = 0;
 	Show_Physics_Console = 1;
 	Physics_PosX = 500;
 	Physics_PosY = 500;
@@ -567,6 +568,11 @@ void SB_Gui_Dialogs::Physics_Console_Gui(void)
 	}
 	else
 	{
+		if (Disable_Physics_Console == 1)
+		{
+			ImGui::BeginDisabled(true);
+		}
+
 		ImGui::Text("Physics Console");
 		
 		ImGui::SameLine(0,270);
@@ -674,6 +680,13 @@ void SB_Gui_Dialogs::Physics_Console_Gui(void)
 
 		style->Colors[ImGuiCol_Button] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
 		ImGui::PopStyleColor();
+
+		
+		if (Disable_Physics_Console == 1)
+		{
+			ImGui::EndDisabled();
+		}
+
 		ImGui::End();
 	}
 }

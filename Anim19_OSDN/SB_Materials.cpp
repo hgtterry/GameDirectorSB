@@ -63,6 +63,9 @@ void SB_Materials::Start_Material_Editor()
 
 	App->SBC_FileView->Show_FileView(false);
 
+	App->SBC_Panels->Close_Gui_Panels();
+	App->SBC_Panels->Enable_All_Panels(false);
+
 	Show_Material_Editor = 1;
 }
 
@@ -219,13 +222,11 @@ void SB_Materials::Scroll_Gui()
 	}
 	else
 	{
-
 		ImGui::Text("Scroll Editor");
 		ImGui::Separator();
 
 		ImGui::Text("Poop %f", MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureUScroll());
 		
-	
 		ImGui::PopStyleColor();
 		ImGui::End();
 	}
@@ -239,6 +240,8 @@ void SB_Materials::Close_Material_Editor()
 	Show_Material_Editor = 0;
 	BaseEntity = nullptr;
 	item_current_idx = 0;
+
+	App->SBC_Panels->Enable_All_Panels(true);
 	App->SBC_FileView->Show_FileView(true);
 }
 
