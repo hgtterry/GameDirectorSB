@@ -187,7 +187,7 @@ LRESULT CALLBACK ME_Equity_SB::WE_import_Proc(HWND hDlg, UINT message, WPARAM wP
 				return 1;
 			}
 
-			App->CL_Equity_SB->Load_Project_File(App->CL_FileIO->Model_Path_FileName);
+			App->CL_Equity_SB->Read_Project_File(App->CL_FileIO->Model_Path_FileName);
 
 			SetDlgItemText(hDlg, IDC_STWEPATHFILE, (LPCTSTR)App->CL_Equity_SB->Pref_WE_Path_FileName);
 			SetDlgItemText(hDlg, IDC_STTXLFILEPATH, (LPCTSTR)App->CL_Equity_SB->Pref_Txl_Path_FileName);
@@ -711,7 +711,7 @@ bool ME_Equity_SB::Write_Project_File(char* Path_And_File)
 // *************************************************************************
 // *						Load_Project_File Terry Flanigan 			   *
 // *************************************************************************
-bool ME_Equity_SB::Load_Project_File(char* Path_And_File)
+bool ME_Equity_SB::Read_Project_File(char* Path_And_File)
 {
 	char chr_Tag1[MAX_PATH];
 	char chr_Tag2[MAX_PATH];

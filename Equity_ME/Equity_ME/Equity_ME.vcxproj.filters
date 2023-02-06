@@ -129,6 +129,12 @@
     <ClInclude Include="SB_Dimensions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ME_WE_3DT.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ME_PB.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -249,6 +255,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SB_Dimensions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Anim19_OSDN\Common\imGui\ImGui_cpp\imgui_tables.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ME_WE_3DT.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ME_PB.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

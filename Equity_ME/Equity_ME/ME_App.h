@@ -51,6 +51,8 @@ distribution.
 #include "ME_Ini.h"
 #include "ME_Export_Ogre3D.h"
 #include "ME_TextureLib.h"
+#include "ME_WE_3DT.h"
+#include "ME_PB.h"
 
 #include "SB_Dimensions.h"
 
@@ -88,6 +90,9 @@ public:
 	T_Ini*				CL_Ini;
 	ME_Export_Ogre3D*	CL_Export_Ogre3D;
 	ME_TextureLib*		CL_Texture_Lib;
+	ME_WE_3DT*			CL_WE_3DT;
+
+	ME_PB*				CL_PB;
 
 	SB_Dimensions* SBC_Dimensions;
 

@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022 Equity_ME Model Editor -- Inflanite Software W.T.Flanigan H.C.Flanigan
+Copyright (c) 2022- 2023 Equity_ME Model Editor -- Inflanite Software W.T.Flanigan H.C.Flanigan
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -56,8 +56,12 @@ ME_App::ME_App()
 	CL_Ini = nullptr;
 	CL_Export_Ogre3D = nullptr;
 	CL_Texture_Lib = nullptr;
+	CL_WE_3DT = nullptr;
+	CL_PB = nullptr;
 
 	SBC_Dimensions = nullptr;
+
+	
 	//----------------------------------------------
 	hInst =			nullptr;
 
@@ -137,20 +141,23 @@ bool ME_App::InitApp(void)
 	CL_Dialogs =	new ME_Dialogs();
 	CL_Dimensions = new ME_Dimensions();
 
-	CL_Export = new ME_Export();
+	CL_Export =		new ME_Export();
 	CL_Export_Object = new ME_Export_Object();
 	CL_Export_Milk = new ME_Export_Milkshape();
-	CL_Motions = new ME_Motions();
+	CL_Motions =	new ME_Motions();
 	
-	CL_Genesis3D = new ME_Genesis3D();
-	CL_Ogre3D = new ME_Ogre3D();
-	CL_Equity_SB = new ME_Equity_SB();
-	CL_Prefs = new ME_Preferences();
-	CL_Ini = new T_Ini();
+	CL_Genesis3D =	new ME_Genesis3D();
+	CL_Ogre3D =		new ME_Ogre3D();
+	CL_Equity_SB =	new ME_Equity_SB();
+	CL_Prefs =		new ME_Preferences();
+	CL_Ini =		new T_Ini();
 	CL_Export_Ogre3D = new ME_Export_Ogre3D();
 	CL_Texture_Lib = new ME_TextureLib();
+	CL_WE_3DT =		new ME_WE_3DT();
+
 	
-	SBC_Dimensions = new SB_Dimensions();
+	SBC_Dimensions =	new SB_Dimensions();
+	CL_PB =				new ME_PB();
 
 	// ----------------------------------------------
 	SetBrushes_Fonts();

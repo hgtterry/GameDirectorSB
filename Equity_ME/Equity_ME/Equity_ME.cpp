@@ -313,7 +313,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 					return 1;
 				}
 
-				App->CL_Equity_SB->Load_Project_File(App->CL_FileIO->Model_Path_FileName);
+				App->CL_Equity_SB->Read_Project_File(App->CL_FileIO->Model_Path_FileName);
 				App->CL_Equity_SB->Load_File_Wepf();
 
 				return 1;
@@ -325,11 +325,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				return 1;
 			}
 
-			case ID_EQUITY_ROOM:
+			/*case ID_EQUITY_ROOM:
 			{
 				App->CL_Import->WorldEditor_Loader();
 				return 1;
-			}
+			}*/
 
 			// ------------------------------------------------------- Export
 			case ID_EXPORT_WAVEFRONTOBJ:
@@ -458,6 +458,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
                 break;
             case IDM_EXIT:
+
+				App->CL_Dialogs->YesNo("Close EquityME", "Are you sure");
+
+				if (App->CL_Dialogs->Canceled == 1)
+				{
+					return 1;
+				}
+
 				if (App->CL_Ogre->Ogre_Listener->Stop_Ogre == 0)
 				{
 					App->CL_Ogre->Ogre_Listener->Stop_Ogre = 1;
@@ -471,6 +479,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	
         }
         break;
+
     case WM_PAINT:
         {
             PAINTSTRUCT ps;
@@ -511,11 +520,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_CLOSE:
 	{
 
-		//App->Cl_Dialogs->YesNo("Close GameDirector", "Are you sure");
-		/*if (App->Cl_Dialogs->Canceled == 1)
+		App->CL_Dialogs->YesNo("Close EquityME", "Are you sure");
+		if (App->CL_Dialogs->Canceled == 1)
 		{
 			break;
-		}*/
+		}
 
 		if (App->CL_Ogre->Ogre_Listener->Stop_Ogre == 0)
 		{

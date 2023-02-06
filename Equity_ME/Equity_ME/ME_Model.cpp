@@ -276,6 +276,15 @@ void ME_Model::Set_Paths(void)
 		int Len = strlen(JustName);
 		JustName[Len - 5] = 0;
 	}
+	else if (stricmp(FileName + strlen(FileName) - 5, ".Wepf") == 0)
+	{
+		char JustFileName[MAX_PATH];
+		GetFileTitleA(App->CL_Equity_SB->Pref_WE_Path_FileName, JustFileName, MAX_PATH);
+			
+		strcpy(JustName, JustFileName);
+		int Len = strlen(JustFileName);
+		JustName[Len - 5] = 0;
+	}
 
 	else
 	{

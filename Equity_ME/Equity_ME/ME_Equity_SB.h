@@ -33,9 +33,10 @@ public:
 
 	bool Start_WE_import();
 	bool Write_Project_File(char* Path_And_File);
-	bool Load_Project_File(char* Path_And_File);
+	bool Read_Project_File(char* Path_And_File);
 	void Load_File_Wepf();
 	char Pref_Ogre_Path[MAX_PATH];
+	char Pref_WE_Path_FileName[MAX_PATH];
 
 protected:
 		
@@ -62,8 +63,7 @@ protected:
 	char Pref_Txl_Path_FileName[MAX_PATH];
 
 	char Pref_WE_JustFileName[MAX_PATH];			
-	char Pref_WE_Path_FileName[MAX_PATH];		
-
+	
 	char Pref_Ogre_JustFileName[MAX_PATH];		
 
 	FILE* WriteScene;

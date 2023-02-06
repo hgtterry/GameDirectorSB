@@ -59,15 +59,11 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
@@ -176,12 +172,14 @@
     <ClInclude Include="ME_Ogre3D.h" />
     <ClInclude Include="ME_OgreListener.h" />
     <ClInclude Include="ME_Panels.h" />
+    <ClInclude Include="ME_PB.h" />
     <ClInclude Include="ME_Preferences.h" />
     <ClInclude Include="ME_Render.h" />
     <ClInclude Include="ME_TextureLib.h" />
     <ClInclude Include="ME_Textures.h" />
     <ClInclude Include="ME_TopBar.h" />
     <ClInclude Include="ME_Utilities.h" />
+    <ClInclude Include="ME_WE_3DT.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SB_Dimensions.h" />
     <ClInclude Include="stdafx.h" />
@@ -195,6 +193,7 @@
     <ClCompile Include="..\..\Anim19_OSDN\Common\imGui\ImGui_cpp\ImguiRenderable.cpp" />
     <ClCompile Include="..\..\Anim19_OSDN\Common\imGui\ImGui_cpp\imgui_demo.cpp" />
     <ClCompile Include="..\..\Anim19_OSDN\Common\imGui\ImGui_cpp\imgui_draw.cpp" />
+    <ClCompile Include="..\..\Anim19_OSDN\Common\imGui\ImGui_cpp\imgui_tables.cpp" />
     <ClCompile Include="..\..\Anim19_OSDN\Common\imGui\ImGui_cpp\imgui_widgets.cpp" />
     <ClCompile Include="Base_Group.cpp" />
     <ClCompile Include="Equity_ME.cpp" />
@@ -221,12 +220,14 @@
     <ClCompile Include="ME_Ogre3D.cpp" />
     <ClCompile Include="ME_OgreListener.cpp" />
     <ClCompile Include="ME_Panels.cpp" />
+    <ClCompile Include="ME_PB.cpp" />
     <ClCompile Include="ME_Preferences.cpp" />
     <ClCompile Include="ME_Render.cpp" />
     <ClCompile Include="ME_TextureLib.cpp" />
     <ClCompile Include="ME_Textures.cpp" />
     <ClCompile Include="ME_TopBar.cpp" />
     <ClCompile Include="ME_Utilities.cpp" />
+    <ClCompile Include="ME_WE_3DT.cpp" />
     <ClCompile Include="OgreXMLMeshSerializer.cpp" />
     <ClCompile Include="SB_Dimensions.cpp" />
     <ClCompile Include="stdafx.cpp">
