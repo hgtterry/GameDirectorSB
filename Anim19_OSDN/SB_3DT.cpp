@@ -28,9 +28,100 @@ distribution.
 
 SB_3DT::SB_3DT()
 {
+	Pl_mDummyCamera = NULL;// App->SBC_Ogre->mSceneMgr->createCamera("ShootCamera");
+	Pl_mDummyTranslateVector = Ogre::Vector3::ZERO;
+	Selected_Entity_Index = 0;
+	Selected_Object_Name[0] = 0;
+
+	SndFile = NULL;
+	timeUntilNextToggle = 1;
+	DistanceToCollision = 0;
 }
 
 
 SB_3DT::~SB_3DT()
 {
+}
+
+// *************************************************************************
+// *				Fire:- Terry and Hazel Flanigan 2023			   	   *
+// *************************************************************************
+void SB_3DT::Fire(float deltaTime)
+{
+	
+		char buff[1024];
+		strcpy(buff, App->SBC_SoundMgr->Default_Folder);
+		strcat(buff, "\\Media\\Sounds\\");
+
+		strcat(buff, "richochet.ogg");
+
+		SndFile = App->SBC_SoundMgr->SoundEngine->play2D(buff, false, true, true);
+		SndFile->setVolume(1.0);
+		SndFile->setIsPaused(false);
+
+		DistanceToCollision = 0;
+
+		Ogre::SceneNode* mNode;
+		Vector3 oldPos = App->SBC_Ogre->mCamera->getPosition();
+		Pl_mDummyCamera->setPosition(oldPos);
+
+		Ogre::Quaternion Q;
+		Q = App->SBC_Ogre->mCamera->getOrientation();
+
+		Pl_mDummyCamera->setOrientation(Q);
+		Pl_mDummyTranslateVector = Ogre::Vector3::ZERO;
+
+		Pl_mDummyTranslateVector.z = -10000.0;
+		Pl_mDummyCamera->moveRelative(Pl_mDummyTranslateVector);
+
+		if (App->SBC_Ogre->OgreListener->mCollisionTools->collidesWithEntity(oldPos, Pl_mDummyCamera->getPosition(), 1.0f, 0, -1))
+		{
+			mNode = App->SBC_Ogre->OgreListener->mCollisionTools->pentity->getParentSceneNode();
+
+			Pl_Entity_Name = App->SBC_Ogre->OgreListener->mCollisionTools->pentity->getName();
+
+			DistanceToCollision = App->SBC_Ogre->OgreListener->mCollisionTools->distToColl;
+
+			char buff[255];
+			strcpy(buff, Pl_Entity_Name.c_str());
+
+			App->CL_Vm_ImGui->Show_Object_Selection = 1;
+
+			bool test = Ogre::StringUtil::match("Plane0", Pl_Entity_Name, true);
+			if (test == 1)
+			{
+				Pl_Entity_Name = "---------";
+			}
+			else
+			{
+				bool test = Ogre::StringUtil::match("Player_1", Pl_Entity_Name, true);
+				if (test == 1)
+				{
+					Pl_Entity_Name = "Player_1";
+
+					return;
+				}
+				else
+				{
+					char* pdest;
+					int IntNum = 0;
+					char buffer[255];
+
+					strcpy(buffer, Pl_Entity_Name.c_str());
+					pdest = strstr(buffer, "GDEnt_");
+					if (pdest != NULL)
+					{
+						sscanf((buffer + 6), "%i", &IntNum);
+
+						App->SBC_Visuals->MarkerBB_Addjust(IntNum);
+						Selected_Entity_Index = IntNum;
+						strcpy(Selected_Object_Name, App->SBC_Scene->B_Object[IntNum]->Mesh_Name);
+						return;
+
+					}
+				}
+
+			}
+
+		}
 }

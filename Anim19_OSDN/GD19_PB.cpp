@@ -163,6 +163,7 @@ bool GD19_PB::Stop_Progress_Bar(char* ProcessText)
 {
 	EnableWindow(GetDlgItem(ProgBarHwnd, IDOK), 1);
 
+	SetDlgItemText(ProgBarHwnd, IDC_PBBANNER, (LPCTSTR)"Finished");
 	SetDlgItemText(ProgBarHwnd, IDC_ST_PB_STATUS, (LPCTSTR)ProcessText);
 
 	InvalidateRect(ProgBarHwnd, NULL, FALSE);
@@ -235,11 +236,12 @@ bool GD19_PB::Set_Progress_Text(char* ProcessText)
 // *************************************************************************
 // *								Nudge 								   *
 // *************************************************************************
-bool GD19_PB::Nudge()
+bool GD19_PB::Nudge(char* Message)
 {
-	MSG msg;
+	Set_Progress_Text(Message);
 
-	App->Cl_PB->g_pos++;
+	MSG msg;
+	g_pos++;
 	InvalidateRect(ProgBarHwnd, NULL, FALSE);
 
 	if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
@@ -248,8 +250,11 @@ bool GD19_PB::Nudge()
 		DispatchMessage(&msg);
 	}
 
+	Sleep(100);
+
 	return 1;
 }
+
 // *************************************************************************
 // *							Close									   *
 // *************************************************************************

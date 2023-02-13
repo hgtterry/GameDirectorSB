@@ -27,5 +27,19 @@ class SB_3DT
 public:
 	SB_3DT();
 	~SB_3DT();
+
+	void Fire(float deltaTime);
+
+	float timeUntilNextToggle;
+
+	float DistanceToCollision;
+
+	Ogre::Camera* Pl_mDummyCamera;
+	Vector3		Pl_mDummyTranslateVector;
+	Ogre::String Pl_Entity_Name;
+	int	Selected_Entity_Index;
+	char Selected_Object_Name[MAX_PATH];
+
+	irrklang::ISound* SndFile;
 };
 

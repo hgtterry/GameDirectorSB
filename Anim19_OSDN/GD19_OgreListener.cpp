@@ -31,6 +31,8 @@ GD19_OgreListener::GD19_OgreListener(void)
 {
 	mCam = App->SBC_Ogre->mCamera;
 	Pl_mDummyCamera = App->SBC_Ogre->mSceneMgr->createCamera("PickCamera");
+	App->SBC_3DT->Pl_mDummyCamera = App->SBC_Ogre->mSceneMgr->createCamera("ShootCamera");
+
 
 	Wheel = 0;
 	StopOgre = 0;

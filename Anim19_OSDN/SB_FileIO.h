@@ -40,9 +40,15 @@ public:
 	bool GetColor();
 	bool Directory_Vaild(LPCTSTR szPath);
 
+	void Start_RecentProjects_Dlg(int Selected_Recent);
+	void List_Recent_Files(HWND hDlg);
+	void List_Recent_Projects(HWND hDlg);
+
 	void  Init_History();
 	void  RecentFileHistory_Update();
 	void  ResentHistory_Clear(bool FirstTime);
+
+	int mSelected_Recent;
 
 	char Texture_FileName[MAX_PATH];
 	char Texture_Path_FileName[MAX_PATH];
@@ -56,6 +62,7 @@ public:
 
 	char UserData_Folder[MAX_PATH];
 	char DeskTop_Folder[MAX_PATH];
+	char RecentFile[MAX_PATH];
 
 	bool Cannceled;
 
@@ -64,6 +71,8 @@ public:
 	CHOOSECOLOR color;
 
 protected:
+
+	static LRESULT CALLBACK RecentProjects_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void  LoadHistory();
 	void  Save_FileHistory();

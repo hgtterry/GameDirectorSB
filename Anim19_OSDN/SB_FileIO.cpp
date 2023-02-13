@@ -35,8 +35,11 @@ SB_FileIO::SB_FileIO()
 	Project_File_Name[0] = 0;
 	Project_Path_File_Name[0] = 0;
 
+	mSelected_Recent = 0;
+
 	strcpy(Data_mFilename, "No Set");
 	strcpy(Data_Path_mFilename, "No Set");
+	RecentFile[0] = 0;
 
 	JustFileName[0] = 0;
 
@@ -449,4 +452,252 @@ bool SB_FileIO::GetColor()
 
 	Cannceled = 1;
 	return 1;
+}
+
+// *************************************************************************
+// *	  Start_RecentProjects_Dlg:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_FileIO::Start_RecentProjects_Dlg(int Selected_Recent)
+{
+	mSelected_Recent = Selected_Recent;
+
+	DialogBox(App->hInst, (LPCTSTR)IDD_RECENTPRJ, App->Fdlg, (DLGPROC)RecentProjects_Proc);
+}
+
+// *************************************************************************
+// *			RecentProjects_Proc:- Terry and Hazel Flanigan 2022 	   *
+// *************************************************************************
+LRESULT CALLBACK SB_FileIO::RecentProjects_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+
+		SendDlgItemMessage(hDlg, IDC_RECENTPRJLIST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BTCLEARFILES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+
+		SendDlgItemMessage(hDlg, IDC_RECENTPRJLIST, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+
+		if (App->SBC_FileIO->mSelected_Recent == 0)
+		{
+			App->SBC_FileIO->List_Recent_Files(hDlg);
+
+			return TRUE;
+		}
+
+		return TRUE;
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+		/*if (GetDlgItem(hDlg, IDC_TITLENAME) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}*/
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BTCLEARFILES && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+		if (LOWORD(wParam) == IDC_RECENTPRJLIST)
+		{
+			App->SBC_FileIO->RecentFile[0] = 0;
+			int Index = 0;
+
+			Index = SendDlgItemMessage(hDlg, IDC_RECENTPRJLIST, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+			if (Index == -1)
+			{
+				return 1;
+			}
+			else
+			{
+				SendDlgItemMessage(hDlg, IDC_RECENTPRJLIST, LB_GETTEXT, (WPARAM)Index, (LPARAM)App->SBC_FileIO->RecentFile);
+
+			}
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BTCLEARFILES)
+		{
+			App->SBC_FileIO->ResentHistory_Clear(0);
+
+			SendDlgItemMessage(hDlg, IDC_RECENTPRJLIST, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDOK)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			App->SBC_Import->Reload_FromResentFiles(App->SBC_FileIO->RecentFile);
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+	}
+
+	break;
+
+	}
+	return FALSE;
+}
+
+// *************************************************************************
+// *	  				List_Recent_Files Terry Flanigan				   *
+// *************************************************************************
+void SB_FileIO::List_Recent_Files(HWND hDlg)
+{
+	char buf[MAX_PATH];
+	char buffer[MAX_PATH];
+
+	mPreviousFiles.resize(EQUITY_NUM_RECENT_FILES);
+
+	strcpy(buf, UserData_Folder);
+	strcat(buf, "\\Vima19\\Vima19.ini");
+
+	ReadRecentFiles = fopen(buf, "rt");
+
+	if (!ReadRecentFiles)
+	{
+		App->Say("Cant Find Recent Files");
+		return;
+	}
+
+	// Read in File Names from RecentFiles.ini
+	for (unsigned int i = 0; i < EQUITY_NUM_RECENT_FILES; ++i)
+	{
+		memset(buffer, 0, MAX_PATH);
+		fgets(buffer, MAX_PATH, ReadRecentFiles);
+
+		char Path[MAX_PATH];
+		strcpy(Path, buffer);
+		int Len = strlen(Path);
+		Path[Len - 1] = 0;
+
+		mPreviousFiles[i] = std::string(Path);
+	}
+
+	fclose(ReadRecentFiles);
+
+	// Check for empty slots and gray out
+	for (int i = EQUITY_NUM_RECENT_FILES - 1; i >= 0; --i)
+	{
+		char szText[MAX_PATH];
+		strcpy(szText, mPreviousFiles[i].c_str());
+
+		int Result = 0;
+		Result = strcmp("<empty>", szText);
+		if (Result == 0)
+		{
+
+		}
+		else
+		{
+			sprintf(buf, "%s", szText);
+			SendDlgItemMessage(hDlg, IDC_RECENTPRJLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+		}
+	}
+}
+
+// *************************************************************************
+// *	  				List_Recent_Projects Terry Flanigan				   *
+// *************************************************************************
+void SB_FileIO::List_Recent_Projects(HWND hDlg)
+{
+	char buf[MAX_PATH];
+	char buffer[MAX_PATH];
+
+	sprintf(buf, "%s", "Model Info");
+	SendDlgItemMessage(hDlg, IDC_RECENTPRJLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+	mPreviousFiles.resize(EQUITY_NUM_RECENT_FILES);
+
+	strcpy(buf, UserData_Folder);
+	strcat(buf, "\\Vima19\\Vima19.ini");
+
+	ReadRecentFiles = fopen(buf, "rt");
+
+	if (!ReadRecentFiles)
+	{
+		App->Say("Cant Find Recent Files");
+		return;
+	}
+
+	// Read in File Names from RecentFiles.ini
+	for (unsigned int i = 0; i < EQUITY_NUM_RECENT_FILES; ++i)
+	{
+		memset(buffer, 0, MAX_PATH);
+		fgets(buffer, MAX_PATH, ReadRecentFiles);
+
+		char Path[MAX_PATH];
+		strcpy(Path, buffer);
+		int Len = strlen(Path);
+		Path[Len - 1] = 0;
+
+		mPreviousFiles[i] = std::string(Path);
+	}
+
+	fclose(ReadRecentFiles);
+
+	// Check for empty slots and gray out
+	for (int i = EQUITY_NUM_RECENT_FILES - 1; i >= 0; --i)
+	{
+		char szText[MAX_PATH];
+		strcpy(szText, mPreviousFiles[i].c_str());
+
+		int Result = 0;
+		Result = strcmp("<empty>", szText);
+		if (Result == 0)
+		{
+
+		}
+		else
+		{
+			sprintf(buf, "%s", szText);
+			SendDlgItemMessage(hDlg, IDC_RECENTPRJLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+		}
+	}
 }

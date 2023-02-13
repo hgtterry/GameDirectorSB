@@ -46,6 +46,12 @@ void SB_Keyboard::Keyboard_Monitor(float deltaTime)
 {
 	if (Block_Keyboard == 0)
 	{
+		if (App->SBC_3DT->timeUntilNextToggle >= 0)
+		{
+			App->SBC_3DT->timeUntilNextToggle -= deltaTime;
+		}
+		
+
 		//------------------------------------------------ Space Key - Jump and Selection
 		if (GetAsyncKeyState(VK_SPACE) < 0 && App->SBC_Scene->Player_Added == 1)
 		{
@@ -166,7 +172,7 @@ void SB_Keyboard::Keyboard_Monitor(float deltaTime)
 			}
 		}
 
-		//------------------------------------------------ Q key Down in Fly Mode
+		//------------------------------------------------ E key Up in Fly Mode
 		if (GetAsyncKeyState(69) < 0)
 		{
 			if (App->SBC_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
@@ -179,9 +185,17 @@ void SB_Keyboard::Keyboard_Monitor(float deltaTime)
 
 				App->SBC_Ogre->OgreListener->mCam->setPosition(OldPos);
 			}
+			else
+			{
+				if (App->SBC_3DT->timeUntilNextToggle <= 0)
+				{
+					App->SBC_3DT->Fire(deltaTime);
+					App->SBC_3DT->timeUntilNextToggle = 0.5;
+				}
+			}
 		}
 
-		//------------------------------------------------ E key Up in Fly Mode
+		//------------------------------------------------ Q key Down in Fly Mode
 		if (GetAsyncKeyState(81) < 0)
 		{
 			if (App->SBC_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)

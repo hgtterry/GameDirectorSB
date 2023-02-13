@@ -1468,6 +1468,7 @@ void SB_Project::Set_Paths()
 	strcpy(m_Project_Sub_Folder, m_Project_Sub_Folder);
 	m_Project_Sub_Folder[len2 - (len1+1)] = 0;
 
+	//GetFileTitleA(App->CL_Equity_SB->Pref_WE_Path_FileName, JustFileName, MAX_PATH);
 }
 
 // *************************************************************************

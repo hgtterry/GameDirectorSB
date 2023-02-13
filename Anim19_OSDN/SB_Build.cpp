@@ -445,7 +445,7 @@ LRESULT CALLBACK SB_Build::Project_Build_Proc(HWND hDlg, UINT message, WPARAM wP
 			strcpy(App->SBC_Build->StartFolder, PathName);
 
 			strcpy(App->SBC_Build->GameName, GameName);
-			//App->SBC_Build->Create_ProjectFolder();
+			App->SBC_Build->Create_ProjectFolder();
 
 			EndDialog(hDlg, LOWORD(wParam));
 
@@ -759,7 +759,8 @@ bool SB_Build::Build_Project()
 	App->Cl_PB->StartNewProgressBar();
 	App->Cl_PB->Set_Progress("Building Scene/Game", 10);
 
-	Set_Banner("Creating Sub Folder");
+	App->Cl_PB->Nudge("Creating Sub Folder");
+
 	if (_mkdir(m_Build_Sub_Folder) == 0)
 	{
 		_chdir(m_Build_Sub_Folder);
@@ -769,63 +770,45 @@ bool SB_Build::Build_Project()
 		_chdir(m_Build_Sub_Folder);
 	}
 
-	Set_Banner("Creating Ini File");
+	App->Cl_PB->Nudge("Creating Ini File");
 	bool test = Build_Project_Ini();
 	if (test == 0)
 	{
 		return 0;
 	}
 	
-	Set_Banner("Creating Level Folder");
+	App->Cl_PB->Nudge("Creating Level Folder");
 	Build_Level_Folder();
 
-	Set_Banner("Creating Assets Folder");
+	App->Cl_PB->Nudge("Creating Assets Folder");
 	Build_Main_Asset_Folder();
 
 	_chdir(m_Level_Folder_Path);
 
-	Set_Banner("Creating Area Folder");
+	App->Cl_PB->Nudge("Creating Area Folder");
 	if (App->SBC_Scene->Area_Added == 1)
 	{
 		Build_Area_Folder();
 	}
 
-	Set_Banner("Creating Player Folder");
+	App->Cl_PB->Nudge("Creating Player Folder");
 	if (App->SBC_Scene->Player_Added == 1)
 	{
 		Build_Players_Folder();
 	}
 
-	Set_Banner("Creating Camera Folder");
+	App->Cl_PB->Nudge("Creating Camera Folder");
 	Build_Cameras_Folder();
 
-	Set_Banner("Creating Objects Folder");
+	App->Cl_PB->Nudge("Creating Objects Folder");
 	Build_Objects_Folder();
 	
-	Set_Banner("Creating Display Folder");
+	App->Cl_PB->Nudge("Creating Display Folder");
 	Build_Display_Folder();
 
-	Set_Banner("Finished");
+	App->Cl_PB->Nudge("Finished");
 	
 	return 1;
-}
-
-// *************************************************************************
-// *	  			Set_Banner:- Terry and Hazel Flanigan 2022			   *
-// *************************************************************************
-void SB_Build::Set_Banner(char* Message)
-{
-	App->Cl_PB->Set_Progress_Text(Message);
-	App->Cl_PB->Nudge();
-
-	Sleep(100);
-
-	MSG msg;
-	if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
-	{
-		TranslateMessage(&msg);
-		DispatchMessage(&msg);
-	}
 }
 
 
