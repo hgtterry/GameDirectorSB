@@ -28,6 +28,17 @@ distribution.
 
 SB_Markers::SB_Markers(void)
 {
+	BoxManual = NULL;
+	BoxNode = NULL;
+
+	Arrow_Ent = NULL;
+	Arrow_Node = NULL;
+
+	mPickSight = NULL;
+
+	Target_Hit_Ent = NULL;
+	Target_Hit_Node = NULL;
+
 	RedAxis_Ent = nullptr;
 	RedAxis_Node = nullptr;
 
@@ -45,13 +56,177 @@ SB_Markers::~SB_Markers(void)
 {
 }
 
+// *************************************************************************
+// *	  		MarkerBB_Setup:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+bool SB_Markers::MarkerBB_Setup(void)
+{
+	float BoxDepth = 2.5;
+	float BoxHeight = 2.5;
+	float BoxWidth = 2.5;
+
+	BoxManual = App->SBC_Ogre->mSceneMgr->createManualObject("BB_Box");
+	BoxManual->begin("BaseWhiteNoLighting", RenderOperation::OT_LINE_STRIP);
+
+	BoxManual->colour(0, 1, 0);
+
+	BoxManual->position(-BoxWidth, -BoxHeight, BoxDepth);
+	BoxManual->position(BoxWidth, -BoxHeight, BoxDepth);
+	BoxManual->position(BoxWidth, BoxHeight, BoxDepth);
+	BoxManual->position(-BoxWidth, BoxHeight, BoxDepth);
+
+	BoxManual->position(-BoxWidth, -BoxHeight, -BoxDepth);
+	BoxManual->position(BoxWidth, -BoxHeight, -BoxDepth);
+	BoxManual->position(BoxWidth, BoxHeight, -BoxDepth);
+	BoxManual->position(-BoxWidth, BoxHeight, -BoxDepth);
+
+	BoxManual->index(0);
+	BoxManual->index(1);
+	BoxManual->index(2);
+	BoxManual->index(3);
+	BoxManual->index(0);
+
+	BoxManual->index(4);
+	BoxManual->index(5);
+	BoxManual->index(6);
+	BoxManual->index(7);
+	BoxManual->index(4);
+
+	BoxManual->index(5);
+	BoxManual->index(1);
+
+	BoxManual->index(2);
+	BoxManual->index(6);
+
+	BoxManual->index(7);
+	BoxManual->index(3);
+
+	BoxManual->end();
+	BoxNode = App->SBC_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	BoxNode->attachObject(BoxManual);
+
+	BoxNode->setPosition(0, 0, 0);
+	BoxNode->setVisible(false);
+	return 1;
+}
+// *************************************************************************
+// *	  	MarkerBB_Update:- Terry and Hazel Flanigan 2022				   *
+// *************************************************************************
+bool SB_Markers::MarkerBB_Update(float Depth, float Height, float Width)
+{
+	BoxManual->beginUpdate(0);
+	BoxManual->colour(0, 1, 0, 0.5);
+
+	BoxManual->position(-Depth, -Height, Width);
+	BoxManual->position(Depth, -Height, Width);
+	BoxManual->position(Depth, Height, Width);
+	BoxManual->position(-Depth, Height, Width);
+	BoxManual->position(-Depth, -Height, -Width);
+	BoxManual->position(Depth, -Height, -Width);
+	BoxManual->position(Depth, Height, -Width);
+	BoxManual->position(-Depth, Height, -Width);
+
+	BoxManual->index(0);
+	BoxManual->index(1);
+	BoxManual->index(2);
+	BoxManual->index(3);
+	BoxManual->index(0);
+	BoxManual->index(4);
+	BoxManual->index(5);
+	BoxManual->index(6);
+	BoxManual->index(7);
+	BoxManual->index(4);
+	BoxManual->index(5);
+	BoxManual->index(1);
+	BoxManual->index(2);
+	BoxManual->index(6);
+	BoxManual->index(7);
+	BoxManual->index(3);
+
+	BoxManual->end();
+
+	return 1;
+}
+
+// *************************************************************************
+// *	  		MarkerBB_Addjust:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+void SB_Markers::MarkerBB_Addjust(int Index)
+{
+
+	Base_Object* Object = App->SBC_Scene->B_Object[Index];
+
+	Ogre::Vector3 Position = Object->Object_Node->getPosition();
+	Ogre::Quaternion Rot = Object->Object_Node->getOrientation();
+
+	Ogre::Vector3 Size = App->SBC_Object->GetMesh_BB_Size(Object->Object_Node);
+	MarkerBB_Update(Size.x / 2, Size.y / 2, Size.z / 2);
+
+	Ogre::Vector3 Centre = Object->Object_Node->getAttachedObject(0)->getBoundingBox().getCenter();
+	Ogre::Vector3 WS = Object->Object_Node->convertLocalToWorldPosition(Centre);
+
+	BoxNode->setPosition(WS);
+	BoxNode->setOrientation(Rot);
+	BoxNode->setVisible(true);
+
+	App->SBC_Markers->Move_Arrow(WS);
+}
+
+// **************************************************************************
+// *	  			Set_Markers:- Terry and Hazel Flanigan 2022				*
+// **************************************************************************
+void SB_Markers::Set_Markers()
+{
+	Load_PickSight();
+	Load_Arrow();
+	Load_Target_Hit();
+	Load_All_Axis();
+	MarkerBB_Setup();
+}
+
+// *************************************************************************
+// *	  		Target_Hit:- Terry and Hazel Flanigan 2023				   *
+// *************************************************************************
+void SB_Markers::Load_Target_Hit()
+{
+	Target_Hit_Ent = App->SBC_Ogre->mSceneMgr->createEntity("Target_Hit", "Gizmo.mesh", App->SBC_Ogre->App_Resource_Group);
+	Target_Hit_Node = App->SBC_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	Target_Hit_Node->attachObject(Target_Hit_Ent);
+
+	Target_Hit_Node->setVisible(false);
+	Target_Hit_Node->setPosition(0, 0, 0);
+	Target_Hit_Node->setScale(10, 10, 10);
+}
+
+// *************************************************************************
+// *	  		Load_Arrow:- Terry and Hazel Flanigan 2022				   *
+// *************************************************************************
+void SB_Markers::Load_Arrow()
+{
+	Arrow_Ent = App->SBC_Ogre->mSceneMgr->createEntity("Arrow", "Gizmo.mesh", App->SBC_Ogre->App_Resource_Group);
+	Arrow_Node = App->SBC_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	Arrow_Node->attachObject(Arrow_Ent);
+
+	Arrow_Node->setVisible(false);
+	Arrow_Node->setPosition(0, 0, 0);
+	Arrow_Node->setScale(7, 7, 7);
+}
+
+// *************************************************************************
+// *			Load_PickSight:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void SB_Markers::Load_PickSight(void)
+{
+	mPickSight = OverlayManager::getSingleton().getByName("MyOverlays/PicksightOverlay");
+	mPickSight->hide();
+}
+
 // **************************************************************************
 // *	  			Load_All_Axis:- Terry and Hazel Flanigan 2022			*
 // **************************************************************************
 void SB_Markers::Load_All_Axis()
 {
 	Load_Blue_Rot_Axis();
-
 	Load_Red_Axis();
 	Load_Green_Axis();
 	Load_Blue_Axis();
@@ -159,4 +334,22 @@ void SB_Markers::Hide_Axis_Marker()
 	App->SBC_Markers->BlueAxis_Node->setVisible(false);
 	App->SBC_Markers->RedAxis_Node->setVisible(false);
 	App->SBC_Markers->GreenAxis_Node->setVisible(false);
+}
+
+// *************************************************************************
+// *			Move_Arrow:- Terry and Hazel Flanigan 2022				   *
+// *************************************************************************
+void SB_Markers::Move_Arrow(Ogre::Vector3 pos)
+{
+	Arrow_Node->setVisible(true);
+	Arrow_Node->setPosition(pos);
+}
+
+// *************************************************************************
+// *	  	Move_Target_Hit:- Terry and Hazel Flanigan 2022				   *
+// *************************************************************************
+void SB_Markers::Move_Target_Hit(Ogre::Vector3 pos)
+{
+	Target_Hit_Node->setVisible(true);
+	Target_Hit_Node->setPosition(pos);
 }

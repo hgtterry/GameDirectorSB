@@ -29,10 +29,12 @@ public:
 	~SB_3DT();
 
 	void Fire(float deltaTime);
+	void Remove_Oblect(int Index);
 
 	float timeUntilNextToggle;
 
 	float DistanceToCollision;
+	Vector3 Point;
 
 	Ogre::Camera* Pl_mDummyCamera;
 	Vector3		Pl_mDummyTranslateVector;

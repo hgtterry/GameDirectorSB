@@ -74,7 +74,7 @@ void SB_Keyboard::Keyboard_Monitor(float deltaTime)
 			if (App->CL_Vm_ImGui->Show_Object_Selection == 1)
 			{
 				App->SBC_TopTabs->Toggle_Select_Flag = 0;
-				App->SBC_Visuals->mPickSight->hide();
+				App->SBC_Markers->mPickSight->hide();
 				App->SBC_Ogre->OgreListener->GD_Selection_Mode = 0;
 
 				RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
@@ -90,7 +90,7 @@ void SB_Keyboard::Keyboard_Monitor(float deltaTime)
 			if (App->CL_Vm_ImGui->Show_Object_Selection == 1)
 			{
 				App->SBC_TopTabs->Toggle_Select_Flag = 0;
-				App->SBC_Visuals->mPickSight->hide();
+				App->SBC_Markers->mPickSight->hide();
 				App->SBC_Ogre->OgreListener->GD_Selection_Mode = 0;
 
 				RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);

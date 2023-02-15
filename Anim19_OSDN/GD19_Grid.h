@@ -29,10 +29,8 @@ public:
 	~SB_Grid(void);
 
 	void Reset_Class();
-	void Move_Arrow(Ogre::Vector3 pos);
 
 	void Load_Crosshair();
-	void Load_Arrow();
 
 	void Grid_Update(bool Create);
 	void Hair_Update(bool Create);
@@ -73,9 +71,6 @@ public:
 
 	Ogre::Entity*		Crosshair_Ent; 
 	Ogre::SceneNode*	Crosshair_Node;
-
-	Ogre::Entity*		Arrow_Ent; 
-	Ogre::SceneNode*	Arrow_Node;
 
 	Ogre::Entity*		Selection_Ent; 
 	Ogre::SceneNode*	Selection_Node;

@@ -1167,7 +1167,7 @@ bool GD19_OgreListener::SelectEntity_World(void)
 				{
 					sscanf((buffer + 6), "%i", &IntNum);
 
-					App->SBC_Visuals->MarkerBB_Addjust(IntNum);
+					App->SBC_Markers->MarkerBB_Addjust(IntNum);
 					Selected_Entity_Index = IntNum;
 					strcpy(Selected_Object_Name, App->SBC_Scene->B_Object[IntNum]->Mesh_Name);
 					return 1;

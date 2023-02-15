@@ -43,9 +43,6 @@ SB_Grid::SB_Grid(void)
 	Crosshair_Ent = NULL;
 	Crosshair_Node = NULL;
 
-	Arrow_Ent = NULL;
-	Arrow_Node = NULL;
-
 	Selection_Ent = NULL;
 	Selection_Node = NULL;
 
@@ -92,19 +89,6 @@ void SB_Grid::Reset_Class()
 	App->SBC_Com_Camera->Reset_View();
 }
 
-// *************************************************************************
-// *	  		Load_Arrow:- Terry and Hazel Flanigan 2022				   *
-// *************************************************************************
-void SB_Grid::Load_Arrow()
-{
-	Arrow_Ent = App->SBC_Ogre->mSceneMgr->createEntity("Arrow", "Gizmo.mesh", App->SBC_Ogre->App_Resource_Group);
-	Arrow_Node = App->SBC_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	Arrow_Node->attachObject(Arrow_Ent);
-
-	Arrow_Node->setVisible(false);
-	Arrow_Node->setPosition(0, 0, 0);
-	Arrow_Node->setScale(7, 7, 7);
-}
 
 // *************************************************************************
 // *	  		Load_Crosshair:- Terry and Hazel Flanigan 2022			   *
@@ -258,14 +242,5 @@ void SB_Grid::Hair_DisplayGeneralCrossHair(float x, float y, float z, bool Optio
 	App->Cl_Ogre->RenderListener->Hair_1PosZ = z;*/
 }
 
-
-// *************************************************************************
-// *	  	Move_ArrowTerry:- Terry and Hazel Flanigan 2022				   *
-// *************************************************************************
-void SB_Grid::Move_Arrow(Ogre::Vector3 pos)
-{
-	Arrow_Node->setVisible(true);
-	Arrow_Node->setPosition(pos);
-}
 
 

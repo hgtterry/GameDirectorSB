@@ -27,6 +27,7 @@ VM_ImGui::VM_ImGui()
 	Show_Object_Data = 0;
 	Show_Collision_Debug = 0;
 	Show_Object_Selection = 0;
+	Show_Fire_Target = 0;
 
 	Model_XTranslate = 2;
 	Model_YTranslate = 2;
@@ -196,6 +197,11 @@ void VM_ImGui::ImGui_Editor_Loop(void)
 		Object_Selection();
 	}
 
+	if (Show_Fire_Target == 1)
+	{
+		Fire_Target();
+	}
+
 	if (App->SBC_Gui_Environ->Show_PropertyEditor == 1)
 	{
 		App->SBC_Gui_Environ->Environ_PropertyEditor();
@@ -308,7 +314,7 @@ void VM_ImGui::Object_Selection(void)
 		if (ImGui::Button("Yes"))
 		{
 			App->SBC_TopTabs->Toggle_Select_Flag = 0;
-			App->SBC_Visuals->mPickSight->hide();
+			App->SBC_Markers->mPickSight->hide();
 			App->SBC_Ogre->OgreListener->GD_Selection_Mode = 0;
 
 			RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
@@ -323,12 +329,57 @@ void VM_ImGui::Object_Selection(void)
 		if (ImGui::Button("No"))
 		{
 			App->SBC_TopTabs->Toggle_Select_Flag = 0;
-			App->SBC_Visuals->mPickSight->hide();
+			App->SBC_Markers->mPickSight->hide();
 			App->SBC_Ogre->OgreListener->GD_Selection_Mode = 0;
 
 			RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 			Show_Object_Selection = 0;
+		}
+
+		ImGui::End();
+	}
+}
+
+// *************************************************************************
+// *			Fire_Target:- Terry and Hazel Flanigan 2023				   *
+// *************************************************************************
+void VM_ImGui::Fire_Target(void)
+{
+	ImGui::SetNextWindowPos(ImVec2(230, 10), ImGuiCond_FirstUseEver);
+
+	if (!ImGui::Begin("Target_Data", &Show_Fire_Target, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_AlwaysAutoResize))
+	{
+		ImGui::End();
+	}
+	else
+	{
+
+		ImGui::Text("Target Data");
+		ImGui::Separator();
+
+		ImGui::Text("Internal Name: = %s", App->SBC_3DT->Pl_Entity_Name.c_str());
+		ImGui::Text("Object Name: = %s", App->SBC_3DT->Selected_Object_Name);
+		ImGui::Text("");
+		ImGui::Text("Distance: = %f", App->SBC_3DT->DistanceToCollision);
+		ImGui::Text("");
+		ImGui::Text("Point_X: = %f", App->SBC_3DT->Point.x);
+		ImGui::Text("Point_Y: = %f", App->SBC_3DT->Point.y);
+		ImGui::Text("Point_Z: = %f", App->SBC_3DT->Point.z);
+		
+		ImGui::Separator();
+
+		ImGui::Indent();
+		ImGui::Indent();
+		ImGui::Indent();
+
+	
+		if (ImGui::Button("Close"))
+		{
+			
+			App->SBC_Markers->mPickSight->hide();
+			Show_Fire_Target = 0;
+
 		}
 
 		ImGui::End();

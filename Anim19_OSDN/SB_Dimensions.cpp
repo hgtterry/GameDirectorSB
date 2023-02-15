@@ -393,7 +393,7 @@ void SB_Dimensions::Set_Position(Ogre::Vector3 Pos)
 	}
 	else
 	{
-		App->SBC_Visuals->MarkerBB_Addjust(Index);
+		App->SBC_Markers->MarkerBB_Addjust(Index);
 	}
 
 	
@@ -645,7 +645,7 @@ void SB_Dimensions::Set_Scale(Ogre::Vector3 Scale)
 		UpDate_Physics_And_Visuals(Index);
 	}
 
-	App->SBC_Visuals->MarkerBB_Addjust(Index);	
+	App->SBC_Markers->MarkerBB_Addjust(Index);
 }
 
 // *************************************************************************
@@ -751,7 +751,7 @@ void SB_Dimensions::ImGui_Rotation(void)
 					UpDate_Physics_And_Visuals(Index);
 				}
 				
-				App->SBC_Visuals->MarkerBB_Addjust(Index);
+				App->SBC_Markers->MarkerBB_Addjust(Index);
 				
 			}
 
@@ -776,7 +776,7 @@ void SB_Dimensions::ImGui_Rotation(void)
 					UpDate_Physics_And_Visuals(Index);
 				}
 				
-				App->SBC_Visuals->MarkerBB_Addjust(Index);
+				App->SBC_Markers->MarkerBB_Addjust(Index);
 			
 			}
 
@@ -801,7 +801,7 @@ void SB_Dimensions::ImGui_Rotation(void)
 					UpDate_Physics_And_Visuals(Index);
 				}
 				
-				App->SBC_Visuals->MarkerBB_Addjust(Index);
+				App->SBC_Markers->MarkerBB_Addjust(Index);
 				
 
 			}
@@ -836,7 +836,7 @@ void SB_Dimensions::ImGui_Rotation(void)
 						UpDate_Physics_And_Visuals(Index);
 					}
 					
-					App->SBC_Visuals->MarkerBB_Addjust(Index);
+					App->SBC_Markers->MarkerBB_Addjust(Index);
 					
 				}
 
@@ -861,7 +861,7 @@ void SB_Dimensions::ImGui_Rotation(void)
 						UpDate_Physics_And_Visuals(Index);
 					}
 					
-					App->SBC_Visuals->MarkerBB_Addjust(Index);
+					App->SBC_Markers->MarkerBB_Addjust(Index);
 					
 
 				}
@@ -887,7 +887,7 @@ void SB_Dimensions::ImGui_Rotation(void)
 						UpDate_Physics_And_Visuals(Index);
 					}
 					
-					App->SBC_Visuals->MarkerBB_Addjust(Index);
+					App->SBC_Markers->MarkerBB_Addjust(Index);
 				
 				}
 			
@@ -935,7 +935,7 @@ void SB_Dimensions::UpDate_Physics_And_Visuals(int Index)
 	}
 	
 
-	App->SBC_Visuals->MarkerBB_Addjust(Index);
+	App->SBC_Markers->MarkerBB_Addjust(Index);
 
 	// Needs Looking at
 	App->SBC_Scene->B_Object[Index]->Altered = 1;
@@ -1003,7 +1003,7 @@ void SB_Dimensions::ImGui_Position_Area(void)
 					App->SBC_Com_Area->UpDate_Physics_And_Visuals(Index);
 				}
 				
-				App->SBC_Visuals->MarkerBB_Addjust(Index);
+				App->SBC_Markers->MarkerBB_Addjust(Index);
 				
 			}
 			
@@ -1021,7 +1021,7 @@ void SB_Dimensions::ImGui_Position_Area(void)
 					App->SBC_Com_Area->UpDate_Physics_And_Visuals(Index);
 				}
 				
-				App->SBC_Visuals->MarkerBB_Addjust(Index);
+				App->SBC_Markers->MarkerBB_Addjust(Index);
 				
 			}
 
@@ -1038,7 +1038,7 @@ void SB_Dimensions::ImGui_Position_Area(void)
 					App->SBC_Com_Area->UpDate_Physics_And_Visuals(Index);
 				}
 				
-				App->SBC_Visuals->MarkerBB_Addjust(Index);
+				App->SBC_Markers->MarkerBB_Addjust(Index);
 				
 			}
 		}
@@ -1062,7 +1062,7 @@ void SB_Dimensions::ImGui_Position_Area(void)
 					App->SBC_Com_Area->UpDate_Physics_And_Visuals(Index);
 				}
 				
-				App->SBC_Visuals->MarkerBB_Addjust(Index);
+				App->SBC_Markers->MarkerBB_Addjust(Index);
 				
 			}
 
@@ -1079,7 +1079,7 @@ void SB_Dimensions::ImGui_Position_Area(void)
 					App->SBC_Com_Area->UpDate_Physics_And_Visuals(Index);
 				}
 				
-				App->SBC_Visuals->MarkerBB_Addjust(Index);
+				App->SBC_Markers->MarkerBB_Addjust(Index);
 				
 			}
 
@@ -1097,7 +1097,7 @@ void SB_Dimensions::ImGui_Position_Area(void)
 					App->SBC_Com_Area->UpDate_Physics_And_Visuals(Index);
 				}
 				
-				App->SBC_Visuals->MarkerBB_Addjust(Index);
+				App->SBC_Markers->MarkerBB_Addjust(Index);
 				
 			}
 		}

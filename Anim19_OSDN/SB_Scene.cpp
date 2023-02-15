@@ -161,8 +161,8 @@ bool SB_Scene::Clear_Level()
 	App->SBC_TopTabs->Reset_Class();
 	App->SBC_Properties->Reset_Class();
 
-	App->SBC_Visuals->BoxNode->setVisible(false);
-	App->SBC_Grid->Arrow_Node->setVisible(false);
+	App->SBC_Markers->BoxNode->setVisible(false);
+	App->SBC_Markers->Arrow_Node->setVisible(false);
 
 	App->Set_Main_TitleBar(" ");
 
@@ -296,14 +296,14 @@ bool SB_Scene::Game_Restart(void)
 
 	App->SBC_Grid->Grid_SetVisible(0);
 	App->SBC_Grid->Hair_SetVisible(0);
-	App->SBC_Grid->Arrow_Node->setVisible(0);
+	App->SBC_Markers->Arrow_Node->setVisible(0);
 
 	App->SBC_Ogre->OgreListener->GD_Run_Physics = 1;
 
 	CurrentCamMode = App->SBC_Ogre->OgreListener->GD_CameraMode;
 	App->SBC_Ogre->OgreListener->GD_CameraMode = Enums::CamFirst;
 
-	App->SBC_Visuals->BoxNode->setVisible(false);
+	App->SBC_Markers->BoxNode->setVisible(false);
 
 	Show_Entities(false); // Hide All Visible Trigers
 
@@ -342,7 +342,7 @@ bool SB_Scene::Game_Mode(void)
 	
 	App->SBC_Grid->Grid_SetVisible(0);
 	App->SBC_Grid->Hair_SetVisible(0);
-	App->SBC_Grid->Arrow_Node->setVisible(0);
+	App->SBC_Markers->Arrow_Node->setVisible(0);
 
 	
 	App->SBC_Com_Environments->GameMode(1);
@@ -354,7 +354,7 @@ bool SB_Scene::Game_Mode(void)
 	App->SBC_Ogre->OgreListener->GD_CameraMode = Enums::CamFirst;
 
 
-	App->SBC_Visuals->BoxNode->setVisible(false);
+	App->SBC_Markers->BoxNode->setVisible(false);
 
 	Show_Entities(false); // Hide All Visible Trigers
 

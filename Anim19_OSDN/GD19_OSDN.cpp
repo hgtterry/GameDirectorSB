@@ -815,13 +815,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 					App->CL_Vm_ImGui->Show_Object_Selection = 0;
 
 					App->SBC_TopTabs->Toggle_Select_Flag = 0;
-					App->SBC_Visuals->mPickSight->hide();
+					App->SBC_Markers->mPickSight->hide();
 					App->SBC_Ogre->OgreListener->GD_Selection_Mode = 0;
 				}
 				else
 				{
 					App->SBC_TopTabs->Toggle_Select_Flag = 1;
-					App->SBC_Visuals->mPickSight->show();
+					App->SBC_Markers->mPickSight->show();
 					App->SBC_Ogre->OgreListener->GD_Selection_Mode = 1;
 				}
 

@@ -3403,8 +3403,8 @@ void SB_Properties::Reset_Last_Selected_Object(int Index)
 	App->SBC_Scene->B_Object[Index]->Object_Node->setVisible(true);
 	App->SBC_Object->Show_Mesh_Debug = 1;
 
-	App->SBC_Visuals->BoxNode->setVisible(false);
-	App->SBC_Grid->Arrow_Node->setVisible(false);
+	App->SBC_Markers->BoxNode->setVisible(false);
+	App->SBC_Markers->Arrow_Node->setVisible(false);
 
 	if (App->SBC_Scene->B_Object[Index]->Deleted == 0)
 	{

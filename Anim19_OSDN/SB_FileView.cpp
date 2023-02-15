@@ -650,7 +650,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 		App->SBC_LookUps->Update_Types();
 
-		App->SBC_Visuals->MarkerBB_Addjust(Index);
+		App->SBC_Markers->MarkerBB_Addjust(Index);
 
 		App->SBC_Properties->Update_ListView_Objects();
 		
@@ -740,7 +740,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		App->SBC_Properties->Last_Selected_Object = Index;
 		//----------------------------------------------------------------------------
 
-		App->SBC_Visuals->MarkerBB_Addjust(Index);
+		App->SBC_Markers->MarkerBB_Addjust(Index);
 		
 		App->SBC_Properties->Update_ListView_Sounds();
 		
@@ -771,7 +771,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		App->SBC_Properties->Last_Selected_Object = Index;
 		//----------------------------------------------------------------------------
 
-		App->SBC_Visuals->MarkerBB_Addjust(Index);
+		App->SBC_Markers->MarkerBB_Addjust(Index);
 
 		App->SBC_Properties->Update_ListView_Environs();
 
@@ -805,7 +805,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		App->SBC_Properties->Last_Selected_Object = Index;
 		//----------------------------------------------------------------------------
 
-		App->SBC_Visuals->MarkerBB_Addjust(Index);
+		App->SBC_Markers->MarkerBB_Addjust(Index);
 
 		App->SBC_Properties->Update_ListView_Messages();
 		
@@ -840,7 +840,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		App->SBC_Properties->Last_Selected_Object = Index;
 		//----------------------------------------------------------------------------
 
-		App->SBC_Visuals->MarkerBB_Addjust(Index);
+		App->SBC_Markers->MarkerBB_Addjust(Index);
 
 		App->SBC_Properties->Update_ListView_Move_Entities();
 
@@ -874,7 +874,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		App->SBC_Properties->Last_Selected_Object = Index;
 		//----------------------------------------------------------------------------
 		
-		App->SBC_Visuals->MarkerBB_Addjust(Index);
+		App->SBC_Markers->MarkerBB_Addjust(Index);
 
 		App->SBC_Properties->Update_ListView_Teleport();
 		
@@ -910,7 +910,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		App->SBC_Properties->Last_Selected_Object = Index;
 		//----------------------------------------------------------------------------
 
-		App->SBC_Visuals->MarkerBB_Addjust(Index);
+		App->SBC_Markers->MarkerBB_Addjust(Index);
 
 		App->SBC_Properties->Update_ListView_Collectables();
 		
@@ -943,7 +943,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		//App->SBC_Properties->Last_Selected_Object = Index;
 		//----------------------------------------------------------------------------
 
-		App->SBC_Visuals->MarkerBB_Addjust(Index);
+		App->SBC_Markers->MarkerBB_Addjust(Index);
 
 		App->SBC_Properties->Update_ListView_Particles();
 
@@ -977,7 +977,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		////App->SBC_Properties->Last_Selected_Object = Index;
 		////----------------------------------------------------------------------------
 
-		App->SBC_Visuals->MarkerBB_Addjust(Index);
+		App->SBC_Markers->MarkerBB_Addjust(Index);
 
 		App->SBC_Properties->Update_ListView_UserObjects();
 

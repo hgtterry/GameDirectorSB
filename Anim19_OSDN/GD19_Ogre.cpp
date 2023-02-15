@@ -81,14 +81,10 @@ bool SB_Ogre::InitOgre(void)
 
 	App->SBC_Grid->DummyNode = App->SBC_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 
-	App->SBC_Visuals->Load_PickSight();
-	App->SBC_Grid->Load_Arrow();
-	App->SBC_Markers->Load_All_Axis();
+	App->SBC_Markers->Set_Markers();
 
 	m_imgui.Init(mSceneMgr,RenderHwnd);
 
-	App->SBC_Visuals->MarkerBB_Setup();
-	
 	createFrameListener();
 	
 	return 1;

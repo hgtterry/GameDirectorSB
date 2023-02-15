@@ -28,6 +28,15 @@ public:
 	SB_Markers(void);
 	~SB_Markers(void);
 
+	void Set_Markers();
+
+	bool MarkerBB_Setup(void);
+	bool MarkerBB_Update(float Depth, float Height, float Width);
+	void MarkerBB_Addjust(int Index);
+
+	void Load_PickSight(void);
+	void Load_Arrow();
+	void Load_Target_Hit();
 	void Load_All_Axis();
 
 	void Load_Red_Axis();
@@ -42,6 +51,20 @@ public:
 	void Update_Blue_Axis_Marker(int Index);
 
 	void Hide_Axis_Marker();
+
+	void Move_Arrow(Ogre::Vector3 pos);
+	void Move_Target_Hit(Ogre::Vector3 pos);
+
+	ManualObject*		BoxManual;
+	SceneNode*			BoxNode;
+
+	Ogre::Entity*		Target_Hit_Ent;
+	Ogre::SceneNode*	Target_Hit_Node;
+
+	Ogre::Entity*		Arrow_Ent;
+	Ogre::SceneNode*	Arrow_Node;
+
+	Ogre::Overlay*		mPickSight;
 
 	Ogre::Entity*		RedAxis_Ent;
 	Ogre::SceneNode*	RedAxis_Node;

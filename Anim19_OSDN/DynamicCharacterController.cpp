@@ -145,7 +145,7 @@ void DynamicCharacterController::updateAction(btCollisionWorld *collisionWorld,b
 	mGroundPoint = groundSteps.mGroundPoint;
 	mWorld_Height = mRigidBody->getWorldTransform().getOrigin();
 
-	App->SBC_Grid->Move_Arrow(Ogre::Vector3(mWorld_Height));
+	App->SBC_Markers->Move_Arrow(Ogre::Vector3(mWorld_Height));
 
 	updateVelocity(deltaTimeStep);
 	//if (mStepping || groundSteps.mHaveStep) {

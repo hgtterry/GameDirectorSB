@@ -30,6 +30,8 @@ SB_3DT::SB_3DT()
 {
 	Pl_mDummyCamera = NULL;// App->SBC_Ogre->mSceneMgr->createCamera("ShootCamera");
 	Pl_mDummyTranslateVector = Ogre::Vector3::ZERO;
+	Point = Ogre::Vector3::ZERO;
+
 	Selected_Entity_Index = 0;
 	Selected_Object_Name[0] = 0;
 
@@ -48,80 +50,100 @@ SB_3DT::~SB_3DT()
 // *************************************************************************
 void SB_3DT::Fire(float deltaTime)
 {
-	
-		char buff[1024];
-		strcpy(buff, App->SBC_SoundMgr->Default_Folder);
-		strcat(buff, "\\Media\\Sounds\\");
 
-		strcat(buff, "richochet.ogg");
+	char buff[1024];
+	strcpy(buff, App->SBC_SoundMgr->Default_Folder);
+	strcat(buff, "\\Media\\Sounds\\");
 
-		SndFile = App->SBC_SoundMgr->SoundEngine->play2D(buff, false, true, true);
-		SndFile->setVolume(1.0);
-		SndFile->setIsPaused(false);
+	strcat(buff, "richochet.ogg");
 
-		DistanceToCollision = 0;
+	SndFile = App->SBC_SoundMgr->SoundEngine->play2D(buff, false, true, true);
+	SndFile->setVolume(1.0);
+	SndFile->setIsPaused(false);
 
-		Ogre::SceneNode* mNode;
-		Vector3 oldPos = App->SBC_Ogre->mCamera->getPosition();
-		Pl_mDummyCamera->setPosition(oldPos);
+	//-----------------------------------------------------------------------
+	DistanceToCollision = 0;
 
-		Ogre::Quaternion Q;
-		Q = App->SBC_Ogre->mCamera->getOrientation();
+	Ogre::SceneNode* mNode;
+	Vector3 oldPos = App->SBC_Ogre->mCamera->getPosition();
+	Pl_mDummyCamera->setPosition(oldPos);
 
-		Pl_mDummyCamera->setOrientation(Q);
-		Pl_mDummyTranslateVector = Ogre::Vector3::ZERO;
+	Ogre::Quaternion Q;
+	Q = App->SBC_Ogre->mCamera->getOrientation();
 
-		Pl_mDummyTranslateVector.z = -10000.0;
-		Pl_mDummyCamera->moveRelative(Pl_mDummyTranslateVector);
+	Pl_mDummyCamera->setOrientation(Q);
+	Pl_mDummyTranslateVector = Ogre::Vector3::ZERO;
 
-		if (App->SBC_Ogre->OgreListener->mCollisionTools->collidesWithEntity(oldPos, Pl_mDummyCamera->getPosition(), 1.0f, 0, -1))
+	Pl_mDummyTranslateVector.z = -10000.0;
+	Pl_mDummyCamera->moveRelative(Pl_mDummyTranslateVector);
+
+	if (App->SBC_Ogre->OgreListener->mCollisionTools->collidesWithEntity(oldPos, Pl_mDummyCamera->getPosition(), 1.0f, 0, -1))
+	{
+		mNode = App->SBC_Ogre->OgreListener->mCollisionTools->pentity->getParentSceneNode();
+
+		Pl_Entity_Name = App->SBC_Ogre->OgreListener->mCollisionTools->pentity->getName();
+
+		DistanceToCollision = App->SBC_Ogre->OgreListener->mCollisionTools->distToColl;
+		Point = App->SBC_Ogre->OgreListener->mCollisionTools->Point;
+
+		char buff[255];
+		strcpy(buff, Pl_Entity_Name.c_str());
+
+		App->CL_Vm_ImGui->Show_Fire_Target = 1;
+
+		bool test = Ogre::StringUtil::match("Plane0", Pl_Entity_Name, true);
+		if (test == 1)
 		{
-			mNode = App->SBC_Ogre->OgreListener->mCollisionTools->pentity->getParentSceneNode();
-
-			Pl_Entity_Name = App->SBC_Ogre->OgreListener->mCollisionTools->pentity->getName();
-
-			DistanceToCollision = App->SBC_Ogre->OgreListener->mCollisionTools->distToColl;
-
-			char buff[255];
-			strcpy(buff, Pl_Entity_Name.c_str());
-
-			App->CL_Vm_ImGui->Show_Object_Selection = 1;
-
-			bool test = Ogre::StringUtil::match("Plane0", Pl_Entity_Name, true);
+			Pl_Entity_Name = "---------";
+		}
+		else
+		{
+			bool test = Ogre::StringUtil::match("Player_1", Pl_Entity_Name, true);
 			if (test == 1)
 			{
-				Pl_Entity_Name = "---------";
+				Pl_Entity_Name = "Player_1";
+
+				return;
 			}
 			else
 			{
-				bool test = Ogre::StringUtil::match("Player_1", Pl_Entity_Name, true);
-				if (test == 1)
+				char* pdest;
+				int IntNum = 0;
+				char buffer[255];
+
+				strcpy(buffer, Pl_Entity_Name.c_str());
+				pdest = strstr(buffer, "GDEnt_");
+				if (pdest != NULL)
 				{
-					Pl_Entity_Name = "Player_1";
+					sscanf((buffer + 6), "%i", &IntNum);
+					App->SBC_Markers->BoxNode->setVisible(true);
+					App->SBC_Markers->MarkerBB_Addjust(IntNum);
+					Selected_Entity_Index = IntNum;
+					strcpy(Selected_Object_Name, App->SBC_Scene->B_Object[IntNum]->Mesh_Name);
+
+					App->SBC_Markers->Move_Target_Hit(Point);
+					//Remove_Oblect(Selected_Entity_Index);
 
 					return;
 				}
 				else
 				{
-					char* pdest;
-					int IntNum = 0;
-					char buffer[255];
-
-					strcpy(buffer, Pl_Entity_Name.c_str());
-					pdest = strstr(buffer, "GDEnt_");
-					if (pdest != NULL)
-					{
-						sscanf((buffer + 6), "%i", &IntNum);
-
-						App->SBC_Visuals->MarkerBB_Addjust(IntNum);
-						Selected_Entity_Index = IntNum;
-						strcpy(Selected_Object_Name, App->SBC_Scene->B_Object[IntNum]->Mesh_Name);
-						return;
-
-					}
+					strcpy(Selected_Object_Name, "Area");
+					App->SBC_Markers->BoxNode->setVisible(false);
 				}
-
 			}
 
 		}
+
+	}
+
+}
+
+// *************************************************************************
+// *				Remove_Oblect:- Terry and Hazel Flanigan 2023	   	   *
+// *************************************************************************
+void SB_3DT::Remove_Oblect(int Index)
+{
+	App->SBC_Scene->B_Object[Index]->Object_Node->setVisible(false);
+
 }

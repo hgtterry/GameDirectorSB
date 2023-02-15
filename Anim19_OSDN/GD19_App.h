@@ -29,7 +29,6 @@ distribution.
 #include "GD19_Panels.h"
 #include "GD19_Bullet.h"
 #include "GD19_Ini.h"
-#include "GD19_Visuals.h"
 #include "GD19_DIALOGS.h"
 #include "GD19_Objects_Com.h"
 #include "GD19_LookUps.h"
@@ -102,7 +101,6 @@ public:
 	SB_Grid*			SBC_Grid;
 	SB_Bullet*			SBC_Bullet;
 	T_Ini*				Cl_Ini;
-	SB_Visuals*			SBC_Visuals;
 	GD19_Dialogs*		Cl_Dialogs;
 	GD19_Objects_Com*	Cl_Objects_Com;
 	GD19_LookUps*		Cl_LookUps;
