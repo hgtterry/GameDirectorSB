@@ -37,7 +37,6 @@ public:
 	
 	void Grid_SetVisible(bool Option);
 	void Hair_SetVisible(bool Option);
-	void Hair_DisplayGeneralCrossHair(float x,float y,float z,bool Option);
 
 	Ogre::ColourValue ColourMain; 
 	Ogre::ColourValue ColourHairZ;

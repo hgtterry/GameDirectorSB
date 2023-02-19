@@ -230,17 +230,9 @@ void SB_Grid::Grid_SetVisible(bool Option)
 void SB_Grid::Hair_SetVisible(bool Option)
 {
 	HairNode->setVisible(Option);
+
 }
 
-// *************************************************************************
-// *	  Hair_DisplayGeneralCrossHair:- Terry and Hazel Flanigan 2022	   *
-// *************************************************************************
-void SB_Grid::Hair_DisplayGeneralCrossHair(float x, float y, float z, bool Option)
-{
-	/*App->Cl_Ogre->RenderListener->Hair_1PosX = x;
-	App->Cl_Ogre->RenderListener->Hair_1PosY = y;
-	App->Cl_Ogre->RenderListener->Hair_1PosZ = z;*/
-}
 
 
 
