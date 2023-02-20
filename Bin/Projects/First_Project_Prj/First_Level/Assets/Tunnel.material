@@ -1,0 +1,13 @@
+material ALCHEM3_Not_loaded
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture rok.bmp.2.dds
+             }
+         }
+    }
+}

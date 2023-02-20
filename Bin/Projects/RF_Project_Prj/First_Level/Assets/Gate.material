@@ -1,0 +1,13 @@
+material Gate/pole
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture pole.dds
+             }
+         }
+    }
+}

@@ -1,0 +1,68 @@
+
+material StartRoom_Material_0
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture Well_stone.dds
+			}
+		}
+
+	}
+
+}
+
+material StartRoom_Material_1
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture concrete.bmp
+			}
+		}
+
+	}
+
+}
+
+material StartRoom_Material_2
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture BumpyMetal.jpg
+			}
+		}
+
+	}
+
+}
+
+material StartRoom_Material_3
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture ground_stone.dds
+			}
+		}
+
+	}
+
+}

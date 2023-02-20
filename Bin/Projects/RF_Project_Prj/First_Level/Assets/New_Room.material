@@ -1,0 +1,274 @@
+
+material New_Room_Material_0
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture trim02.bmp
+			}
+		}
+
+	}
+
+}
+
+material New_Room_Material_1
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture light02.bmp
+			}
+		}
+
+	}
+
+}
+
+material New_Room_Material_2
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture wall06.bmp
+			}
+		}
+
+	}
+
+}
+
+material New_Room_Material_3
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture wall04.bmp
+			}
+		}
+
+	}
+
+}
+
+material New_Room_Material_4
+{
+	technique
+	{
+		pass
+		{
+			alpha_rejection greater 128
+
+			texture_unit
+			{
+				texture grid01.tga
+			}
+		}
+
+	}
+
+}
+
+material New_Room_Material_5
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture jp01.bmp
+			}
+		}
+
+	}
+
+}
+
+material New_Room_Material_6
+{
+	technique
+	{
+		pass
+		{
+			alpha_rejection greater 128
+
+			texture_unit
+			{
+				texture grid02.tga
+			}
+		}
+
+	}
+
+}
+
+material New_Room_Material_7
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture block04.bmp
+			}
+		}
+
+	}
+
+}
+
+material New_Room_Material_8
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture ground_stone.dds
+			}
+		}
+
+	}
+
+}
+
+material New_Room_Material_9
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture wall03.bmp
+			}
+		}
+
+	}
+
+}
+
+material New_Room_Material_10
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture block03.bmp
+			}
+		}
+
+	}
+
+}
+
+material New_Room_Material_11
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture block02.bmp
+			}
+		}
+
+	}
+
+}
+
+material New_Room_Material_12
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture block02a.bmp
+			}
+		}
+
+	}
+
+}
+
+material New_Room_Material_13
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture wall05.bmp
+			}
+		}
+
+	}
+
+}
+
+material New_Room_Material_14
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture trim01.bmp
+			}
+		}
+
+	}
+
+}
+
+material New_Room_Material_15
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture jp02.bmp
+			}
+		}
+
+	}
+
+}

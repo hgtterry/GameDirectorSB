@@ -1,0 +1,34 @@
+
+material GD_BigPlatForm1_Material_0
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture trim01.bmp
+			}
+		}
+
+	}
+
+}
+
+material GD_BigPlatForm1_Material_1
+{
+	technique
+	{
+		pass
+		{
+			alpha_rejection greater 128
+			texture_unit
+			{
+				texture grid02.tga
+			}
+		}
+
+	}
+
+}

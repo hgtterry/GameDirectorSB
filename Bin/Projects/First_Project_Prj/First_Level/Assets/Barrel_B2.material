@@ -1,0 +1,17 @@
+
+material B2_wood
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture Barrel_B2.dds
+			}
+		}
+
+	}
+
+}

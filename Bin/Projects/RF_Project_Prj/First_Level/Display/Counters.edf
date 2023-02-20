@@ -1,0 +1,14 @@
+[Version_Data]
+Version=V1.2
+ 
+ 
+[Counter_0]
+Counter_Name=Counter_0
+Counter_ID=0
+Counter_Pos=250.000000,10.000000
+Counter_Text=Orbs:=
+Counter_Display=1
+Counter_Start=0
+ 
+[Counters]
+Counters_Count=1
