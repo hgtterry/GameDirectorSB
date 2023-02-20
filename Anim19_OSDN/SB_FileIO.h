@@ -82,10 +82,10 @@ protected:
 	FILE *WriteRecentFiles;
 	FILE *ReadRecentFiles;
 
-	HMENU mHistoryMenu;
+	//HMENU mHistoryMenu;
 
 #define EQUITY_NUM_RECENT_FILES 0x8
-#define EQUITY_RECENT_FILE_ID(_n_) (5000 + _n_)
+//#define EQUITY_RECENT_FILE_ID(_n_) (5000 + _n_)
 
 };
 

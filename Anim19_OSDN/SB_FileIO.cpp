@@ -192,8 +192,6 @@ void  SB_FileIO::LoadHistory()
 
 	fclose(ReadRecentFiles);
 
-	mHistoryMenu = CreateMenu();
-
 	// Check for empty slots and gray out
 	for (int i = EQUITY_NUM_RECENT_FILES - 1; i >= 0; --i)
 	{
@@ -203,16 +201,9 @@ void  SB_FileIO::LoadHistory()
 		UINT iFlags = 0;
 		int Result = 0;
 		Result = strcmp("<empty>", szText);
-		if (Result == 0)
-		{
-			iFlags = MF_GRAYED | MF_DISABLED;
-		}
 
-		AppendMenu(mHistoryMenu, MF_STRING | iFlags, EQUITY_RECENT_FILE_ID(i), szText);
 	}
 
-	ModifyMenu(GetMenu(App->MainHwnd), ID_FILE_RECENTFILES, MF_BYCOMMAND | MF_POPUP,
-		(UINT_PTR)mHistoryMenu, "Recent files");
 	return;
 }
 
@@ -221,8 +212,7 @@ void  SB_FileIO::LoadHistory()
 // *************************************************************************
 void  SB_FileIO::RecentFileHistory_Update()
 {
-	if (!mHistoryMenu)return;
-
+	
 	std::string sz = std::string(App->SBC_FileIO->Project_Path_File_Name);
 	if (mPreviousFiles[EQUITY_NUM_RECENT_FILES - 1] == sz)return;
 
@@ -248,8 +238,6 @@ void  SB_FileIO::RecentFileHistory_Update()
 			iFlags = MF_GRAYED | MF_DISABLED;
 		}
 
-		ModifyMenu(mHistoryMenu, EQUITY_RECENT_FILE_ID(i),
-			MF_STRING | MF_BYCOMMAND | iFlags, EQUITY_RECENT_FILE_ID(i), szText);
 	}
 
 	// Save Changes
@@ -275,13 +263,6 @@ void  SB_FileIO::ResentHistory_Clear(bool FirstTime)
 	for (unsigned int i = 0; i < EQUITY_NUM_RECENT_FILES; ++i)
 	{
 		mPreviousFiles[i] = std::string("<empty>");
-	}
-
-	// Repopulate Menu system
-	for (int i = EQUITY_NUM_RECENT_FILES - 1; i >= 0; --i)
-	{
-		ModifyMenu(mHistoryMenu, EQUITY_RECENT_FILE_ID(i),
-			MF_STRING | MF_BYCOMMAND | MF_GRAYED | MF_DISABLED, EQUITY_RECENT_FILE_ID(i), "<empty>");
 	}
 
 	// Save Changes
@@ -596,7 +577,7 @@ void SB_FileIO::List_Recent_Files(HWND hDlg)
 	mPreviousFiles.resize(EQUITY_NUM_RECENT_FILES);
 
 	strcpy(buf, UserData_Folder);
-	strcat(buf, "\\Vima19\\Vima19.ini");
+	strcat(buf, "\\Equity\\Equity_SB.ini");
 
 	ReadRecentFiles = fopen(buf, "rt");
 
