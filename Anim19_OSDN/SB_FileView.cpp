@@ -617,6 +617,12 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		
 		App->SBC_Properties->Update_ListView_Area();
 
+
+		if (App->SBC_Dimensions->Show_Dimensions == 1)
+		{
+			App->SBC_Dimensions->Prepare_Dimensions();
+		}
+
 		return;
 
 	}
@@ -654,6 +660,12 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 		App->SBC_Properties->Update_ListView_Objects();
 		
+
+		if (App->SBC_Dimensions->Show_Dimensions == 1)
+		{
+			App->SBC_Dimensions->Prepare_Dimensions();
+		}
+
 		return;
 	}
 

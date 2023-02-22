@@ -52,6 +52,23 @@ SB_Dimensions::SB_Dimensions()
 		Model_Rotation_Delta = 1;
 
 		Scale_Lock = 1;
+
+
+		// -------------------------- Pointers
+		pBase_Mesh_Name = NULL;
+
+		pBase_Shape = NULL;
+
+		pBase_Object_Ent = NULL;
+		pBase_Object_Node = NULL;
+		pBase_Mesh_Pos = NULL;
+		pBase_Mesh_Rot = NULL;
+		pBase_Mesh_Quat = NULL;
+
+		pBase_Phys_Body = NULL;
+		pBase_Physics_Scale = NULL;
+		pBase_Physics_Rot = NULL;
+		pBase_Physics_Quat = NULL;
 }
 
 SB_Dimensions::~SB_Dimensions()
@@ -60,6 +77,55 @@ SB_Dimensions::~SB_Dimensions()
 
 }
 
+
+// *************************************************************************
+// *						ImGui_Dimensions  Terry Flanigan			   *
+// *************************************************************************
+void SB_Dimensions::Prepare_Dimensions(void)
+{
+	int Index = App->SBC_Properties->Current_Selected_Object;
+
+	if (App->SBC_Properties->Edit_Category == Enums::Edit_Area)
+	{
+		pBase_Mesh_Name = App->SBC_Scene->B_Area[Index]->Area_Name;
+
+		pBase_Shape = &App->SBC_Scene->B_Area[Index]->Shape;
+
+		pBase_Object_Ent = App->SBC_Scene->B_Area[Index]->Area_Ent;
+		pBase_Object_Node = App->SBC_Scene->B_Area[Index]->Area_Node;
+		pBase_Mesh_Pos = &App->SBC_Scene->B_Area[Index]->Mesh_Pos;
+		pBase_Mesh_Scale = &App->SBC_Scene->B_Area[Index]->Mesh_Scale;
+		pBase_Mesh_Rot = &App->SBC_Scene->B_Area[Index]->Mesh_Rot;
+		pBase_Mesh_Quat = &App->SBC_Scene->B_Area[Index]->Mesh_Quat;
+
+		pBase_Phys_Body = App->SBC_Scene->B_Area[Index]->Phys_Body;
+		pBase_Physics_Scale = &App->SBC_Scene->B_Area[Index]->Physics_Scale;
+		pBase_Physics_Rot = &App->SBC_Scene->B_Area[Index]->Physics_Rot;
+		pBase_Physics_Quat = &App->SBC_Scene->B_Area[Index]->Physics_Quat;
+
+		App->Say("Area");
+	}
+	else
+	{
+		pBase_Mesh_Name = App->SBC_Scene->B_Object[Index]->Mesh_Name;
+
+		pBase_Shape = &App->SBC_Scene->B_Object[Index]->Shape;
+
+		pBase_Object_Ent = App->SBC_Scene->B_Object[Index]->Object_Ent;
+		pBase_Object_Node = App->SBC_Scene->B_Object[Index]->Object_Node;
+		pBase_Mesh_Pos  = &App->SBC_Scene->B_Object[Index]->Mesh_Pos;
+		pBase_Mesh_Scale = &App->SBC_Scene->B_Object[Index]->Mesh_Scale;
+		pBase_Mesh_Rot = &App->SBC_Scene->B_Object[Index]->Mesh_Rot;
+		pBase_Mesh_Quat = &App->SBC_Scene->B_Object[Index]->Mesh_Quat;
+
+		pBase_Phys_Body = App->SBC_Scene->B_Object[Index]->Phys_Body;
+		pBase_Physics_Scale = &App->SBC_Scene->B_Object[Index]->Physics_Scale;
+		pBase_Physics_Rot = &App->SBC_Scene->B_Object[Index]->Physics_Rot;
+		pBase_Physics_Quat = &App->SBC_Scene->B_Object[Index]->Physics_Quat;
+
+		//App->Say("Object");
+	}
+}
 
 // *************************************************************************
 // *						ImGui_Dimensions  Terry Flanigan			   *
@@ -158,6 +224,7 @@ void SB_Dimensions::ImGui_Dimensions(void)
 			if (App->SBC_Properties->Edit_Category == Enums::Edit_Area)
 			{
 				ImGui_Position_Area();
+				//ImGui_Position();
 			}
 			else
 			{
@@ -217,7 +284,7 @@ void SB_Dimensions::ImGui_Position(void)
 {
 	int Index = App->SBC_Properties->Current_Selected_Object;
 
-	Ogre::Vector3 Pos = App->SBC_Scene->B_Object[Index]->Mesh_Pos;
+	Ogre::Vector3 Pos = *pBase_Mesh_Pos;// App->SBC_Scene->B_Object[Index]->Mesh_Pos;
 
 	ImGuiStyle* style = &ImGui::GetStyle();
 
@@ -226,12 +293,12 @@ void SB_Dimensions::ImGui_Position(void)
 	ImGui::Spacing();
 
 	ImGui::Text("Current Selected Object = %i", App->SBC_Properties->Current_Selected_Object);
-	ImGui::Text("Object Name: = %s", App->SBC_Scene->B_Object[Index]->Mesh_Name);
+	ImGui::Text("Object Name: = %s", pBase_Mesh_Name);
 	ImGui::Spacing();
 	ImGui::Separator();
 	ImGui::Spacing();
 
-	float vec4a[4] = { App->SBC_Scene->B_Object[Index]->Mesh_Pos.x, App->SBC_Scene->B_Object[Index]->Mesh_Pos.y, App->SBC_Scene->B_Object[Index]->Mesh_Pos.z, 0.44f };
+	float vec4a[4] = { Pos.x, Pos.y, Pos.z, 0.44f };
 	ImGui::InputFloat3("", vec4a, "%.3f", ImGuiInputTextFlags_ReadOnly);
 	
 	// ----------------------------------------------------------------------------- Pos CheckBox X 
@@ -381,14 +448,21 @@ void SB_Dimensions::Set_Position(Ogre::Vector3 Pos)
 {
 	int Index = App->SBC_Properties->Current_Selected_Object;
 
-	App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Pos);
-	App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
+	pBase_Object_Node->setPosition(Pos);
 
-	if (App->SBC_Scene->B_Object[Index]->Phys_Body)
+	pBase_Mesh_Pos->x = Pos.x;
+	pBase_Mesh_Pos->y = Pos.y;
+	pBase_Mesh_Pos->z = Pos.z;
+
+
+
+	if (pBase_Phys_Body)
 	{
-		Ogre::Vector3 Centre = App->SBC_Object->Get_BoundingBox_World_Centre(Index);
+		
+		Ogre::Vector3 Centre = Get_BoundingBox_World_Centre_New();
 
-		App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+		pBase_Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+
 		UpDate_Physics_And_Visuals(Index);
 	}
 	else
@@ -406,7 +480,7 @@ void SB_Dimensions::ImGui_Scale(void)
 {
 	int Index = App->SBC_Properties->Current_Selected_Object;
 
-	Ogre::Vector3 Scale = App->SBC_Scene->B_Object[Index]->Mesh_Scale;
+	Ogre::Vector3 Scale = *pBase_Mesh_Scale;
 
 	ImGuiStyle* style = &ImGui::GetStyle();
 
@@ -415,12 +489,12 @@ void SB_Dimensions::ImGui_Scale(void)
 	ImGui::Spacing();
 
 	ImGui::Text("Current Selected Object = %i", App->SBC_Properties->Current_Selected_Object);
-	ImGui::Text("Object Name: = %s", App->SBC_Scene->B_Object[Index]->Mesh_Name);
+	ImGui::Text("Object Name: = %s", pBase_Mesh_Name);
 	ImGui::Spacing();
 	ImGui::Separator();
 	ImGui::Spacing();
 
-	float vec4a[4] = { App->SBC_Scene->B_Object[Index]->Mesh_Scale.x, App->SBC_Scene->B_Object[Index]->Mesh_Scale.y, App->SBC_Scene->B_Object[Index]->Mesh_Scale.z, 0.44f };
+	float vec4a[4] = { Scale.x, Scale.y, Scale.z, 0.44f };
 	ImGui::InputFloat3("", vec4a, "%.3f", ImGuiInputTextFlags_ReadOnly);
 
 	// ----------------------------------------------------------------------------- Scale Checkbox X
@@ -635,13 +709,19 @@ void SB_Dimensions::Set_Scale(Ogre::Vector3 Scale)
 {
 	int Index = App->SBC_Properties->Current_Selected_Object;
 
-	App->SBC_Scene->B_Object[Index]->Object_Node->setScale(Scale);
-	App->SBC_Scene->B_Object[Index]->Mesh_Scale = Scale;
+	pBase_Object_Node->setScale(Scale);
 
-	if (App->SBC_Scene->B_Object[Index]->Phys_Body)
+	pBase_Mesh_Scale->x = Scale.x;
+	pBase_Mesh_Scale->y = Scale.y;
+	pBase_Mesh_Scale->z = Scale.z;
+
+	if (pBase_Phys_Body)
 	{
-		App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
-		App->SBC_Scene->B_Object[Index]->Physics_Scale = Scale;
+		pBase_Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+		pBase_Physics_Scale->x = Scale.x;
+		pBase_Physics_Scale->y = Scale.y;
+		pBase_Physics_Scale->z = Scale.z;
+
 		UpDate_Physics_And_Visuals(Index);
 	}
 
@@ -655,6 +735,8 @@ void SB_Dimensions::ImGui_Rotation(void)
 {
 	int Index = App->SBC_Properties->Current_Selected_Object;
 
+	Ogre::Vector3 mRotation = *pBase_Mesh_Rot;
+
 	ImGuiStyle* style = &ImGui::GetStyle();
 
 	ImGui::Text("Rotation");
@@ -662,12 +744,12 @@ void SB_Dimensions::ImGui_Rotation(void)
 	ImGui::Spacing();
 
 	ImGui::Text("Current Selected Object = %i", App->SBC_Properties->Current_Selected_Object);
-	ImGui::Text("Object Name: = %s", App->SBC_Scene->B_Object[Index]->Mesh_Name);
+	ImGui::Text("Object Name: = %s", pBase_Mesh_Name);
 	ImGui::Spacing();
 	ImGui::Separator();
 	ImGui::Spacing();
 
-	float vec4a[4] = { App->SBC_Scene->B_Object[Index]->Mesh_Rot.x, App->SBC_Scene->B_Object[Index]->Mesh_Rot.y, App->SBC_Scene->B_Object[Index]->Mesh_Rot.z, 0.44f };
+	float vec4a[4] = { mRotation.x, mRotation.y, mRotation.z, 0.44f };
 	ImGui::InputFloat3("", vec4a, "%.3f", ImGuiInputTextFlags_ReadOnly);
 
 	// ----------------------------------------------------------------------------- Rotation X
@@ -728,84 +810,25 @@ void SB_Dimensions::ImGui_Rotation(void)
 	{
 		if (App->SBC_Scene->Scene_Loaded == 1)
 		{
-
 			if (RotationX_Selected == 1)
 			{
-				App->SBC_Scene->B_Object[Index]->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(Model_Rotation_Delta), Ogre::Vector3(1, 0, 0)), Ogre::Node::TransformSpace::TS_LOCAL);
+				pBase_Mesh_Rot->x += Model_Rotation_Delta;
+				Set_Rotation(Ogre::Vector3(1,0,0), Model_Rotation_Delta);
 
-				App->SBC_Scene->B_Object[Index]->Mesh_Rot.x += Model_Rotation_Delta;
-				App->SBC_Scene->B_Object[Index]->Mesh_Quat = App->SBC_Scene->B_Object[Index]->Object_Node->getOrientation();
-
-				if (App->SBC_Scene->B_Object[Index]->Phys_Body)
-				{
-					App->SBC_Scene->B_Object[Index]->Physics_Rot.x += Model_Rotation_Delta;
-					App->SBC_Scene->B_Object[Index]->Physics_Quat = App->SBC_Scene->B_Object[Index]->Object_Node->getOrientation();
-
-					float w = App->SBC_Scene->B_Object[Index]->Physics_Quat.w;
-					float x = App->SBC_Scene->B_Object[Index]->Physics_Quat.x;
-					float y = App->SBC_Scene->B_Object[Index]->Physics_Quat.y;
-					float z = App->SBC_Scene->B_Object[Index]->Physics_Quat.z;
-
-					App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
-
-					UpDate_Physics_And_Visuals(Index);
-				}
-				
-				App->SBC_Markers->MarkerBB_Addjust(Index);
-				
 			}
 
 			if (RotationY_Selected == 1)
 			{
-				App->SBC_Scene->B_Object[Index]->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(Model_Rotation_Delta), Ogre::Vector3(0, 1, 0)), Ogre::Node::TransformSpace::TS_LOCAL);
-				App->SBC_Scene->B_Object[Index]->Mesh_Rot.y += Model_Rotation_Delta;
-				App->SBC_Scene->B_Object[Index]->Mesh_Quat = App->SBC_Scene->B_Object[Index]->Object_Node->getOrientation();
-
-				if (App->SBC_Scene->B_Object[Index]->Phys_Body)
-				{
-					App->SBC_Scene->B_Object[Index]->Physics_Rot.y += Model_Rotation_Delta;
-					App->SBC_Scene->B_Object[Index]->Physics_Quat = App->SBC_Scene->B_Object[Index]->Object_Node->getOrientation();
-
-					float w = App->SBC_Scene->B_Object[Index]->Physics_Quat.w;
-					float x = App->SBC_Scene->B_Object[Index]->Physics_Quat.x;
-					float y = App->SBC_Scene->B_Object[Index]->Physics_Quat.y;
-					float z = App->SBC_Scene->B_Object[Index]->Physics_Quat.z;
-
-					App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
-
-					UpDate_Physics_And_Visuals(Index);
-				}
-				
-				App->SBC_Markers->MarkerBB_Addjust(Index);
-			
+				pBase_Mesh_Rot->y += Model_Rotation_Delta;
+				Set_Rotation(Ogre::Vector3(0, 1, 0), Model_Rotation_Delta);
 			}
 
 			if (RotationZ_Selected == 1)
 			{
-				App->SBC_Scene->B_Object[Index]->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(Model_Rotation_Delta), Ogre::Vector3(0, 0, 1)), Ogre::Node::TransformSpace::TS_LOCAL);
-				App->SBC_Scene->B_Object[Index]->Mesh_Rot.z += Model_Rotation_Delta;
-				App->SBC_Scene->B_Object[Index]->Mesh_Quat = App->SBC_Scene->B_Object[Index]->Object_Node->getOrientation();
-
-				if (App->SBC_Scene->B_Object[Index]->Phys_Body)
-				{
-					App->SBC_Scene->B_Object[Index]->Physics_Rot.z += Model_Rotation_Delta;
-					App->SBC_Scene->B_Object[Index]->Physics_Quat = App->SBC_Scene->B_Object[Index]->Object_Node->getOrientation();
-
-					float w = App->SBC_Scene->B_Object[Index]->Physics_Quat.w;
-					float x = App->SBC_Scene->B_Object[Index]->Physics_Quat.x;
-					float y = App->SBC_Scene->B_Object[Index]->Physics_Quat.y;
-					float z = App->SBC_Scene->B_Object[Index]->Physics_Quat.z;
-
-					App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
-
-					UpDate_Physics_And_Visuals(Index);
-				}
-				
-				App->SBC_Markers->MarkerBB_Addjust(Index);
-				
+				pBase_Mesh_Rot->z += Model_Rotation_Delta;
+				Set_Rotation(Ogre::Vector3(0, 0, 1), Model_Rotation_Delta);
 
 			}
-
 		}
 	}
 
@@ -817,82 +840,28 @@ void SB_Dimensions::ImGui_Rotation(void)
 			
 				if (RotationX_Selected == 1)
 				{
-					App->SBC_Scene->B_Object[Index]->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(-Model_Rotation_Delta), Ogre::Vector3(1, 0, 0)), Ogre::Node::TransformSpace::TS_LOCAL);
-					App->SBC_Scene->B_Object[Index]->Mesh_Rot.x -= Model_Rotation_Delta;
-					App->SBC_Scene->B_Object[Index]->Mesh_Quat = App->SBC_Scene->B_Object[Index]->Object_Node->getOrientation();
+					pBase_Mesh_Rot->x -= Model_Rotation_Delta;
+					Set_Rotation(Ogre::Vector3(1, 0, 0), -Model_Rotation_Delta);
 
-					if (App->SBC_Scene->B_Object[Index]->Phys_Body)
-					{
-						App->SBC_Scene->B_Object[Index]->Physics_Rot.x -= Model_Rotation_Delta;
-						App->SBC_Scene->B_Object[Index]->Physics_Quat = App->SBC_Scene->B_Object[Index]->Object_Node->getOrientation();
-
-						float w = App->SBC_Scene->B_Object[Index]->Physics_Quat.w;
-						float x = App->SBC_Scene->B_Object[Index]->Physics_Quat.x;
-						float y = App->SBC_Scene->B_Object[Index]->Physics_Quat.y;
-						float z = App->SBC_Scene->B_Object[Index]->Physics_Quat.z;
-
-						App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
-
-						UpDate_Physics_And_Visuals(Index);
-					}
-					
-					App->SBC_Markers->MarkerBB_Addjust(Index);
-					
 				}
 
 				if (RotationY_Selected == 1)
 				{
-					App->SBC_Scene->B_Object[Index]->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(-Model_Rotation_Delta), Ogre::Vector3(0, 1, 0)), Ogre::Node::TransformSpace::TS_LOCAL);
-					App->SBC_Scene->B_Object[Index]->Mesh_Rot.y -= Model_Rotation_Delta;
-					App->SBC_Scene->B_Object[Index]->Mesh_Quat = App->SBC_Scene->B_Object[Index]->Object_Node->getOrientation();
-
-					if (App->SBC_Scene->B_Object[Index]->Phys_Body)
-					{
-						App->SBC_Scene->B_Object[Index]->Physics_Rot.y -= Model_Rotation_Delta;
-						App->SBC_Scene->B_Object[Index]->Physics_Quat = App->SBC_Scene->B_Object[Index]->Object_Node->getOrientation();
-
-						float w = App->SBC_Scene->B_Object[Index]->Physics_Quat.w;
-						float x = App->SBC_Scene->B_Object[Index]->Physics_Quat.x;
-						float y = App->SBC_Scene->B_Object[Index]->Physics_Quat.y;
-						float z = App->SBC_Scene->B_Object[Index]->Physics_Quat.z;
-
-						App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
-
-						UpDate_Physics_And_Visuals(Index);
-					}
-					
-					App->SBC_Markers->MarkerBB_Addjust(Index);
-					
+					pBase_Mesh_Rot->y -= Model_Rotation_Delta;
+					Set_Rotation(Ogre::Vector3(0, 1, 0), -Model_Rotation_Delta);
 
 				}
 
 				if (RotationZ_Selected == 1)
 				{
-					App->SBC_Scene->B_Object[Index]->Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(-Model_Rotation_Delta), Ogre::Vector3(0, 0, 1)), Ogre::Node::TransformSpace::TS_LOCAL);
-					App->SBC_Scene->B_Object[Index]->Mesh_Rot.z -= Model_Rotation_Delta;
-					App->SBC_Scene->B_Object[Index]->Mesh_Quat = App->SBC_Scene->B_Object[Index]->Object_Node->getOrientation();
+					pBase_Mesh_Rot->z -= Model_Rotation_Delta;
+					Set_Rotation(Ogre::Vector3(0, 0, 1), -Model_Rotation_Delta);
 
-					if (App->SBC_Scene->B_Object[Index]->Phys_Body)
-					{
-						App->SBC_Scene->B_Object[Index]->Physics_Rot.z -= Model_Rotation_Delta;
-						App->SBC_Scene->B_Object[Index]->Physics_Quat = App->SBC_Scene->B_Object[Index]->Object_Node->getOrientation();
-
-						float w = App->SBC_Scene->B_Object[Index]->Physics_Quat.w;
-						float x = App->SBC_Scene->B_Object[Index]->Physics_Quat.x;
-						float y = App->SBC_Scene->B_Object[Index]->Physics_Quat.y;
-						float z = App->SBC_Scene->B_Object[Index]->Physics_Quat.z;
-
-						App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
-
-						UpDate_Physics_And_Visuals(Index);
-					}
-					
-					App->SBC_Markers->MarkerBB_Addjust(Index);
-				
 				}
 			
 		}
 	}
+
 	ImGui::PopButtonRepeat();
 
 	// ----------------------------------------------------------------------------- Rotation Combo Step
@@ -906,15 +875,91 @@ void SB_Dimensions::ImGui_Rotation(void)
 		Model_Rotation_Delta = (float)atof(XitemsRotXX[XitemRotXX]);
 	}
 
-	
-	
-
 	style->Colors[ImGuiCol_Text] = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
 
 	ImGui::Spacing();
 	ImGui::Unindent();
 	ImGui::Unindent();
 	ImGui::Unindent();
+}
+
+// *************************************************************************
+// *						Set_Rotation Terry Flanigan					   *
+// *************************************************************************
+void SB_Dimensions::Set_Rotation(Ogre::Vector3 Rotation,float Delta)
+{
+	int Index = App->SBC_Properties->Current_Selected_Object;
+
+	pBase_Object_Node->rotate(Ogre::Quaternion(Ogre::Degree(Delta), Rotation), Ogre::Node::TransformSpace::TS_LOCAL);
+
+	pBase_Mesh_Quat->w = pBase_Object_Node->getOrientation().w;
+	pBase_Mesh_Quat->x = pBase_Object_Node->getOrientation().x;
+	pBase_Mesh_Quat->y = pBase_Object_Node->getOrientation().y;
+	pBase_Mesh_Quat->z = pBase_Object_Node->getOrientation().z;
+
+	if (pBase_Phys_Body)
+	{
+		pBase_Physics_Rot->x += Model_Rotation_Delta;
+
+		pBase_Physics_Quat->w = pBase_Object_Node->getOrientation().w;
+		pBase_Physics_Quat->x = pBase_Object_Node->getOrientation().x;
+		pBase_Physics_Quat->y = pBase_Object_Node->getOrientation().y;
+		pBase_Physics_Quat->z = pBase_Object_Node->getOrientation().z;
+
+		pBase_Phys_Body->getWorldTransform().setRotation(btQuaternion(pBase_Physics_Quat->x,
+			pBase_Physics_Quat->y, pBase_Physics_Quat->z, pBase_Physics_Quat->w));
+
+		UpDate_Physics_And_Visuals(Index);
+	}
+
+	App->SBC_Markers->MarkerBB_Addjust(Index);
+}
+
+// *************************************************************************
+// *Get_BoundingBox_World_Centre_New:- Terry and Hazel Flanigan 2023	   *
+// *************************************************************************
+Ogre::Vector3 SB_Dimensions::Get_BoundingBox_World_Centre_New()
+{
+	
+	if (*pBase_Shape == Enums::Shape_TriMesh)
+	{
+		Ogre::Vector3 Pos = pBase_Object_Node->getPosition();
+		return Pos;
+	}
+	else
+	{
+		AxisAlignedBox worldAAB = pBase_Object_Ent->getBoundingBox();
+		worldAAB.transformAffine(pBase_Object_Node->_getFullTransform());
+		Ogre::Vector3 Centre = worldAAB.getCenter();
+
+		return Centre;
+	}
+}
+
+// *************************************************************************
+// *				UpDate_Physics_And_Visuals Terry Flanigan		 	   *
+// *************************************************************************
+void SB_Dimensions::UpDate_Physics_And_Visuals_New(int Index)
+{
+	if (App->SBC_Scene->B_Object[Index]->Shape == Enums::Shape_TriMesh)
+	{
+
+	}
+	else
+	{
+		//if (App->SBC_Scene->B_Object[Index]->Physics_Valid == 1)
+		{
+			Set_Physics_Position(Index);
+		}
+	}
+
+
+	App->SBC_Markers->MarkerBB_Addjust(Index);
+
+	// Needs Looking at
+	App->SBC_Scene->B_Object[Index]->Altered = 1;
+	App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Object[Index]->FileViewItem);
+	App->SBC_Scene->Scene_Modified = 1;
 }
 
 // *************************************************************************

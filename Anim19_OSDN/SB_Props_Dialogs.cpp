@@ -210,6 +210,8 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_Dimensions_Proc(HWND hDlg, UINT messag
 			else
 			{
 				App->SBC_Markers->Hide_Axis_Marker();
+
+				App->SBC_Dimensions->Prepare_Dimensions();
 				App->SBC_Dimensions->Show_Position = 1;
 				App->SBC_Dimensions->Show_Scale = 0;
 				App->SBC_Dimensions->Show_Rotation = 0;
@@ -231,6 +233,8 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_Dimensions_Proc(HWND hDlg, UINT messag
 			else
 			{
 				App->SBC_Markers->Hide_Axis_Marker();
+
+				App->SBC_Dimensions->Prepare_Dimensions();
 				App->SBC_Dimensions->Show_Scale = 1;
 				App->SBC_Dimensions->Show_Position = 0;
 				App->SBC_Dimensions->Show_Rotation = 0;
@@ -252,6 +256,8 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_Dimensions_Proc(HWND hDlg, UINT messag
 			else
 			{
 				App->SBC_Markers->Hide_Axis_Marker();
+
+				App->SBC_Dimensions->Prepare_Dimensions();
 				App->SBC_Dimensions->Show_Rotation = 1;
 				App->SBC_Dimensions->Show_Position = 0;
 				App->SBC_Dimensions->Show_Scale = 0;
