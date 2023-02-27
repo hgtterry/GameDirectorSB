@@ -40,5 +40,7 @@ protected:
 
 	void Update_Model(void);
 
+	void UpDate_Physics_And_Visuals(int Index);
+	void Set_Physics_Position(int Index);
 };
 

@@ -30,13 +30,8 @@ public:
 	~SB_Dimensions();
 
 	void Prepare_Dimensions(void);
-
 	void ImGui_Dimensions(void);
-	void UpDate_Physics_And_Visuals(int Index);
-	
-	Ogre::Vector3 Get_BoundingBox_World_Centre_New();
 
-	void UpDate_Physics_And_Visuals_New(int Index);
 
 	bool Show_Dimensions;
 
@@ -44,11 +39,8 @@ public:
 	bool Show_Scale;
 	bool Show_Rotation;
 
-	void ImGui_Position_Area(void);
-	void ImGui_Rotation_Area(void);
-	void ImGui_Scale_Area(void);
-
 protected:
+	
 
 	void ImGui_Position(void);
 	void Set_Position(Ogre::Vector3 Pos);
@@ -59,7 +51,9 @@ protected:
 	void ImGui_Rotation(void);
 	void Set_Rotation(Ogre::Vector3 Rotation, float Delta);
 
-	void Set_Physics_Position(int Index);
+	Ogre::Vector3 Get_BoundingBox_World_Centre();
+	void UpDate_Physics_And_Visuals(int Index);
+	void Set_Physics_Position();
 
 	bool PosX_Selected;
 	bool PosY_Selected;
@@ -92,6 +86,7 @@ protected:
 	Ogre::Quaternion*	pBase_Mesh_Quat;
 
 	btRigidBody*		pBase_Phys_Body;
+	Ogre::Vector3*		pBase_Physics_Pos;
 	Ogre::Vector3*		pBase_Physics_Scale;
 	Ogre::Vector3*		pBase_Physics_Rot;
 	Ogre::Quaternion*	pBase_Physics_Quat;

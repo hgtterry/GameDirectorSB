@@ -277,10 +277,46 @@ void SB_Physics::Set_Physics(int Index)
 	Ogre::Vector3 Scale = App->SBC_Scene->B_Object[Index]->Object_Node->getScale();
 	App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
 
-	App->SBC_Dimensions->UpDate_Physics_And_Visuals(Index);
+	UpDate_Physics_And_Visuals(Index);
 
 	App->SBC_Scene->B_Object[Index]->Physics_Valid = 1;
 }
 
+// *************************************************************************
+// *				UpDate_Physics_And_Visuals Terry Flanigtan		 	   *
+// *************************************************************************
+void SB_Physics::UpDate_Physics_And_Visuals(int Index)
+{
+	if (App->SBC_Scene->B_Object[Index]->Shape == Enums::Shape_TriMesh)
+	{
 
+	}
+	else
+	{
+		//if (App->SBC_Scene->B_Object[Index]->Physics_Valid == 1)
+		{
+			Set_Physics_Position(Index);
+		}
+	}
+
+
+	App->SBC_Markers->MarkerBB_Addjust(Index);
+
+	// Needs Looking at
+	App->SBC_Scene->B_Object[Index]->Altered = 1;
+	App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Object[Index]->FileViewItem);
+	App->SBC_Scene->Scene_Modified = 1;
+}
+
+// *************************************************************************
+// *	  				Set_Physics_Position Terry Flanigan				   *
+// *************************************************************************
+void SB_Physics::Set_Physics_Position(int Index)
+{
+	AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
+	worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
+	Ogre::Vector3 Centre = worldAAB.getCenter();
+	App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+	App->SBC_Scene->B_Object[Index]->Physics_Pos = Centre;
+}
 
