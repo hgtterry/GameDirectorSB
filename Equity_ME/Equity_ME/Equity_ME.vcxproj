@@ -34,7 +34,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>false</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -112,6 +112,8 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\Equity15\Equity_ME\Equity_ME;..\..\Anim19_OSDN\Common\Genesis\include2;..\..\Anim19_OSDN\Common\Genesis\Gen2;..\..\Anim19_OSDN\Common\Genesis\Gen;..\..\Anim19_OSDN\Common\include\OGRE;..\..\Anim19_OSDN\Common\include\OGRE\Terrain;..\..\Anim19_OSDN\Common\include\OGRE\Overlay;..\..\Anim19_OSDN\Common\imGui\include;..\..\Anim19_OSDN\Common\Assimp\Include;..\..\Anim19_OSDN\Common\Devil\include\IL;..\..\Anim19_OSDN\Common\Soil\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>C:\Users\Equity\Desktop\Equity_SB\Anim19_OSDN\Common\Genesis\Include2;%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
+      <LanguageStandard>stdcpp14</LanguageStandard>
+      <LanguageStandard_C>stdc11</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -166,6 +168,7 @@
     <ClInclude Include="ME_ImGui.h" />
     <ClInclude Include="ME_Import.h" />
     <ClInclude Include="ME_Ini.h" />
+    <ClInclude Include="ME_Load_Textures.h" />
     <ClInclude Include="ME_Model.h" />
     <ClInclude Include="ME_Motions.h" />
     <ClInclude Include="ME_Ogre.h" />
@@ -214,6 +217,7 @@
     <ClCompile Include="ME_ImGui.cpp" />
     <ClCompile Include="ME_Import.cpp" />
     <ClCompile Include="ME_Ini.cpp" />
+    <ClCompile Include="ME_Load_Textures.cpp" />
     <ClCompile Include="ME_Model.cpp" />
     <ClCompile Include="ME_Motions.cpp" />
     <ClCompile Include="ME_Ogre.cpp" />

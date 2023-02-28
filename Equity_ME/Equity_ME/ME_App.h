@@ -54,6 +54,8 @@ distribution.
 #include "ME_WE_3DT.h"
 #include "ME_PB.h"
 
+#include "ME_Load_Textures.h"
+
 #include "SB_Dimensions.h"
 
 class ME_App
@@ -93,6 +95,8 @@ public:
 	ME_WE_3DT*			CL_WE_3DT;
 
 	ME_PB*				CL_PB;
+
+	ME_Load_Textures*	CL_Load_Textures;
 
 	SB_Dimensions* SBC_Dimensions;
 
@@ -135,6 +139,7 @@ public:
 	HFONT Font_CB15;
 	HFONT Font_CB18;
 	HFONT Font_Arial20;
+	HFONT Font_Banner;
 
 	HANDLE Hnd_GridOn_Bmp;
 	HANDLE Hnd_GridOff_Bmp;
@@ -160,6 +165,7 @@ public:
 	HANDLE Hnd_PlayOn_Bmp;
 	HANDLE Hnd_PlayStop_Bmp;
 
+	bool Debug_App;
 
 	HMENU mMenu;
 	HCURSOR CUR;

@@ -119,10 +119,10 @@ void ME_Ogre3D::Create_MeshGroups()
 	int SubMeshCount = OgreModel_Ent->getNumSubEntities();
 
 	int Count = 0;
-	while (Count<SubMeshCount)
+	while (Count < SubMeshCount)
 	{
 		App->CL_Model->Create_Mesh_Group(Count);
-	
+
 		App->CL_Model->Group[Count]->GroupVertCount = 0;
 		App->CL_Model->Group[Count]->MaterialIndex = -1;
 
@@ -135,14 +135,23 @@ void ME_Ogre3D::Create_MeshGroups()
 		strcpy(App->CL_Model->Group[Count]->GroupName, GroupName);
 
 		//---------------
-		Ogre::SubMesh const *subMesh = OgreModel_Ent->getSubEntity(Count)->getSubMesh();
-		strcpy(App->CL_Model->Group[Count]->MaterialName, subMesh->getMaterialName().c_str());
+		Ogre::SubMesh const* subMesh = OgreModel_Ent->getSubEntity(Count)->getSubMesh();
 
 
+		//---------------
+		char JustName[MAX_PATH];
+		strcpy(JustName, subMesh->getMaterialName().c_str());
+
+		char TestName;
+		App->CL_FileIO->CheckPath(JustName, JustName, &TestName);
+		strcpy(App->CL_Model->Group[Count]->MaterialName, &TestName);
+		//---------------
+		
 		App->CL_Model->Group[Count]->GroupVertCount = subMesh->vertexData->vertexCount;
 		App->CL_Model->Group[Count]->IndicesCount = subMesh->vertexData->vertexCount;
+
 		//---------------
-		App->CL_FileView->Add_Group(GroupName, Count); //Check++
+		App->CL_Model->Group[Count]->ListView_Item = App->CL_FileView->Add_Group(GroupName, Count);
 
 		Count++;
 	}
@@ -832,112 +841,6 @@ bool ME_Ogre3D::UpdateBones_Orge(bool Reset)
 // *************************************************************************
 void ME_Ogre3D::Get_Textures(void)
 {
-	int SubMeshCount = OgreModel_Ent->getNumSubEntities();
+	App->CL_Load_Textures->Load_Textures_Ogre3D();
 
-	int mMaterialindex = 0;
-	int Count = 0;
-	char MatName[255];
-	char TextureName[255];
-	char SubMeshName[255];
-	char buf[255];
-
-	strcpy(SubMeshName, "SubMesh_");
-
-	while (Count<SubMeshCount)
-	{
-		Ogre::SubMesh const *subMesh = OgreModel_Ent->getSubEntity(Count)->getSubMesh();
-		strcpy(MatName, subMesh->getMaterialName().c_str());
-
-		itoa(Count, buf, 10);
-		strcpy(SubMeshName, "SubMesh_");
-		strcat(SubMeshName, buf);
-
-		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(MatName);
-
-		if (material.isNull())
-		{
-			NoMaterialFileFound = 1; // Flag we dont have a texture yet
-									 //App->Say_Int(NoMaterialFileFound);
-		}
-		else
-		{
-			Ogre::Technique *technique = material->getTechnique(0);
-			if (technique == NULL)
-			{
-
-			}
-			else
-			{
-				Ogre::Pass *pass;
-				pass = technique->getPass(0);
-				if (pass == NULL)
-				{
-				}
-				else
-				{
-					int TextureUnitCount = pass->getNumTextureUnitStates();
-					if (TextureUnitCount == 0)
-					{
-						strcpy(App->CL_Model->Group[Count]->Text_FileName, "No_Texture");
-						//App->S_MeshGroup[Count]->IsValid = 0;
-						NoTexture = 1;
-					}
-					else
-					{
-						Ogre::TextureUnitState *textureUnit = pass->getTextureUnitState(0);
-
-						Ogre::String TxtName = textureUnit->getTextureName();
-
-						strcpy(TextureName, TxtName.c_str());
-
-						strcpy(App->CL_Model->Group[Count]->Text_FileName, TextureName);
-
-						// New 25 august 2013 
-
-						NoTexture = 0;
-
-						bool result = 0;
-						result = App->CL_FileIO->SearchFolders(App->CL_Model->Texture_FolderPath, TextureName);
-
-						if (result == 1) // Texture Found in Mesh Folder
-						{
-							char ImageFullPath[1024];
-							strcpy(ImageFullPath, App->CL_Model->Texture_FolderPath);
-							strcat(ImageFullPath, TextureName);
-
-							strcpy(App->CL_Textures->TextureFileName, ImageFullPath);
-
-							strcpy(App->CL_Model->Group[Count]->Texture_FolderPath, ImageFullPath);
-							strcpy(App->CL_Model->Group[Count]->Text_FileName, TextureName);
-
-							App->CL_Textures->TexureToWinPreviewFullPath(Count, TextureName);
-							App->CL_Model->Group[Count]->MaterialIndex = mMaterialindex;
-
-							App->CL_Textures->Soil_DecodeTextures(mMaterialindex);
-							mMaterialindex++;
-						}
-						else
-						{
-							//if (ExternalResourceLoaded == 1) // Search for texture via resource file
-							//{
-							//	Scan_ResourcesNew(ResourcePathAndFile, Count);
-
-							//	strcpy(App->CL_Textures->TextureFileName, App->CL_Model->Group[Count]->Texture_FolderPath);
-
-							//	App->CL_Model->Group[Count]->MaterialIndex = mMaterialindex;
-
-							//	App->CL_Textures->Soil_DecodeTextures(mMaterialindex);
-							//	mMaterialindex++;
-							//}
-						}
-					}
-				}
-			}
-		}
-
-		Count++;
-	}
-
-	//App->CL_FileView->Set_FolderActive(App->CL_FileView->HT_TexturesFolder);
-	//App->CL_FileView->Set_FolderActive(App->CL_FileView->HT_Textures_Mapped_Folder);
 }

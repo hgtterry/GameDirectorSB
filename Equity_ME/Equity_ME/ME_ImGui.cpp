@@ -36,6 +36,9 @@ ME_ImGui::ME_ImGui()
 	style.FrameBorderSize = 1.0;
 	Load_Font();
 
+	PosX = 500;
+	PosY = 500;
+
 	Show_FPS = 1;
 	StartPos = 0;
 	Show_Dimensions = 0;
@@ -153,11 +156,25 @@ void ME_ImGui::ImGui_Set_Colours(void)
 
 
 // *************************************************************************
+// *					ImGui_Editor_Loop  Terry Flanigan				   *
+// *************************************************************************
+void ME_ImGui::ImGui_Editor_Loop(void)
+{
+	if (App->CL_Prefs->Show_Preferences_GUI == 1)
+	{
+		App->CL_Prefs->Preferences_GUI();
+	}
+}
+
+// *************************************************************************
 // *						ImGui_FPS  Terry Bernie						   *
 // *************************************************************************
 void ME_ImGui::ImGui_FPS(void)
 {
-	if (!ImGui::Begin("Ogre Data", &Show_FPS, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_AlwaysAutoResize))
+	ImGui::SetNextWindowPos(ImVec2(PosX, PosY));
+
+	if (!ImGui::Begin("Ogre Data", &Show_FPS, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize
+		| ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
 	{
 		ImGui::End();
 	}
@@ -165,7 +182,7 @@ void ME_ImGui::ImGui_FPS(void)
 	{
 		if (StartPos == 0)
 		{
-			ImGui::SetWindowPos("Ogre Data", ImVec2(10, 580));
+			ImGui::SetWindowPos("Ogre Data", ImVec2(500, 5));
 			ImGui::SetWindowSize(ImVec2(350, 90));
 			StartPos = 1;
 		}
@@ -173,12 +190,10 @@ void ME_ImGui::ImGui_FPS(void)
 		ImGui::Spacing();
 		ImGui::Text("FPS average %.0f", ImGui::GetIO().Framerate);
 		
-		/*ImGuiIO& io = ImGui::GetIO();
-		ImTextureID my_tex_id = &App->CL_Textures->g_Texture[2];
-		float my_tex_w = (float)io.Fonts->TexWidth;
-		float my_tex_h = (float)io.Fonts->TexHeight;
-		ImGui::ImageButton(my_tex_id, ImVec2(64, 64) , ImVec2(0, 0), ImVec2(1,1), 1, ImVec4(0.0f, 0.0f, 0.0f, 1.0f));*/
-		
+		ImVec2 Size = ImGui::GetWindowSize();
+		PosX = ((float)App->CL_Ogre->Ogre_Listener->View_Width / 2) - (Size.x / 2);
+		PosY = 10;
+
 		ImGui::End();
 	}
 }

@@ -61,6 +61,8 @@ public:
 
 	void TestLight(void);
 
+	UINT  g_Texture[400];
+
 protected:
 
 	virtual void renderQueueStarted(Ogre::uint8 queueGroupId, const String& invocation,

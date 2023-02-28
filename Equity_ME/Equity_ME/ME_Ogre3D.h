@@ -15,6 +15,9 @@ public:
 
 	bool UpdateBones_Orge(bool Reset);
 
+	bool NoTexture;
+	bool NoMaterialFileFound; // Returns 1 No Material File Found;
+
 	Ogre::Entity*		OgreModel_Ent;
 
 protected:
@@ -36,9 +39,6 @@ protected:
 	void Get_BoneNames(void);
 	void Get_Motions(void);
 	void Get_Textures(void);
-
-	bool NoTexture;
-	bool NoMaterialFileFound; // Returns 1 No Material File Found;
 
 	std::vector<Vector2> MeshTextureCoords;
 

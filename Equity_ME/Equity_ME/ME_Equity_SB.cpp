@@ -52,8 +52,6 @@ ME_Equity_SB::~ME_Equity_SB()
 // *************************************************************************
 bool ME_Equity_SB::Start_WE_import()
 {
-	char* g_path;
-
 	DialogBox(App->hInst, (LPCTSTR)IDD_WEQUICKLOAD, App->MainHwnd, (DLGPROC)WE_import_Proc);
 	return 1;
 }
@@ -549,7 +547,7 @@ bool ME_Equity_SB::AddTexture(geVFile *BaseFile, const char *Path, int GroupInde
 
 	App->CL_Textures->Genesis_WriteToBmp(Bitmap, TempTextureFile_BMP);
 
-	App->CL_Textures->Soil_Load_Texture(App->CL_Textures->g_Texture, TempTextureFile_BMP, GroupIndex);
+	App->CL_Textures->Soil_Load_Texture(App->CL_Ogre->RenderListener->g_Texture, TempTextureFile_BMP, GroupIndex);
 
 	geVFile_Close(File);
 

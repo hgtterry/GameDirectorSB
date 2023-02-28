@@ -68,7 +68,8 @@ LRESULT CALLBACK ME_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 	case WM_SIZE:
 	{
-		//App->Cl_Panels->Resize_FileView();
+		App->CL_Panels->Resize_FileView();
+
 	}break;
 
 	case WM_NOTIFY:
@@ -321,7 +322,7 @@ void ME_FileView::SelectItem(HTREEITEM TreeItem)
 	HWND Temp = GetDlgItem(App->ListPanel, IDC_TREE1);
 
 	{
-		TreeView_Select(Temp, NULL, TVGN_CARET);
+		//TreeView_Select(Temp, NULL, TVGN_CARET);
 		TreeView_Select(Temp, TreeItem, TVGN_CARET);
 	}
 }

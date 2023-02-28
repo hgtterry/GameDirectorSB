@@ -15,6 +15,7 @@
 
 #include "ME_Export_Ogre3D.h"
 
+#pragma warning( disable : 4101)
 
 ME_Export_Ogre3D::ME_Export_Ogre3D()
 {
@@ -78,8 +79,10 @@ bool ME_Export_Ogre3D::Export_AssimpToOgre(void)
 	App->CL_Export->Start_Export_Dlg();
 	if (App->CL_Export->Is_Canceled == 1) { return 1; }
 
-	
+	App->CL_PB->StartNewProgressBar();
+	App->CL_PB->Set_Progress("Building Scene/Game", 15);
 
+	App->CL_PB->Nudge("CreateDirectoryMesh");
 	Test = CreateDirectoryMesh();
 	if (Test == 0) { return 1; }
 
@@ -94,16 +97,20 @@ bool ME_Export_Ogre3D::Export_AssimpToOgre(void)
 	strcat(mOgreScriptFileName, ".material");
 	strcat(mOgreSkellFileName, ".skeleton");
 
+	App->CL_PB->Nudge("DecompileTextures");
 	DecompileTextures();
 
+	App->CL_PB->Nudge("CreateMaterialFile");
 	CreateMaterialFile(mOgreScriptFileName);
 
+	App->CL_PB->Nudge("Write_XML_File");
 	Write_XML_File();
 
 	// ---------------------------------------------------- 
 	char SourceFile[1024];
 	char OldFile[1024];
 
+	App->CL_PB->Nudge("Transfer");
 	strcpy(OldFile, XmlMeshFileName);
 
 	strcpy(SourceFile, mCurrentFolder);
@@ -122,12 +129,18 @@ bool ME_Export_Ogre3D::Export_AssimpToOgre(void)
 
 	strcpy(Dest_Path_FileName, DestFile);
 
+	App->CL_PB->Nudge("Convert_To_Mesh");
 	Convert_To_Mesh();
 
-	App->Say("Converted");
-
+	App->CL_PB->Nudge("Remove Temp Files");
 	remove(OldFile);
 
+	App->CL_PB->Nudge("Convert_To_Mesh");
+	App->CL_PB->Nudge("Convert_To_Mesh");
+	App->CL_PB->Nudge("Convert_To_Mesh");
+	App->CL_PB->Nudge("Convert_To_Mesh");
+	
+	App->CL_PB->Stop_Progress_Bar("Export to Ogre Format Completed");
 	return 1;
 }
 
@@ -147,6 +160,7 @@ bool ME_Export_Ogre3D::Convert_To_Mesh()
 		meshSerializer = new MeshSerializer();
 		xmlMeshSerializer = new XMLMeshSerializer();
 
+		App->CL_PB->Nudge("XMLToBinary");
 		XMLToBinary(opts);
 
 	}
@@ -440,6 +454,7 @@ void ME_Export_Ogre3D::XMLToBinary(XmlOptions opts)
 			}
 		}
 
+		App->CL_PB->Nudge("Generate Edge Lists");
 		if (opts.generateEdgeLists)
 		{
 			if (!opts.quietMode)
@@ -449,6 +464,7 @@ void ME_Export_Ogre3D::XMLToBinary(XmlOptions opts)
 			newMesh->buildEdgeList();
 		}
 
+		
 		if (opts.generateTangents)
 		{
 			unsigned short srcTex, destTex;
@@ -515,9 +531,11 @@ void ME_Export_Ogre3D::XMLToBinary(XmlOptions opts)
 			}
 		}
 
+		App->CL_PB->Nudge("Export Mesh");
 		meshSerializer->exportMesh(newMesh.getPointer(), opts.dest, opts.endian);
 
 		// Clean up the conversion mesh
+		App->CL_PB->Nudge("Cleaning Up");
 		MeshManager::getSingleton().remove("conversion");
 	}
 	else if (!_stricmp(root->Value(), "skeleton"))

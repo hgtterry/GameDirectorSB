@@ -51,7 +51,7 @@ LRESULT CALLBACK ME_PB::ProgressNewBarProc(HWND hDlg, UINT message, WPARAM wPara
 	case WM_INITDIALOG:
 	{
 		
-		SendDlgItemMessage(hDlg, IDC_PBBANNER, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_PBBANNER, WM_SETFONT, (WPARAM)App->Font_Banner, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_PBACTION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_PB_STATUS, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
 		
@@ -163,6 +163,8 @@ bool ME_PB::Stop_Progress_Bar(char* ProcessText)
 {
 	EnableWindow(GetDlgItem(ProgBarHwnd, IDOK), 1);
 
+
+	SetDlgItemText(ProgBarHwnd, IDC_PBBANNER, (LPCTSTR)"Finished");
 	SetDlgItemText(ProgBarHwnd, IDC_ST_PB_STATUS, (LPCTSTR)ProcessText);
 
 	InvalidateRect(ProgBarHwnd, NULL, FALSE);
@@ -232,13 +234,15 @@ bool ME_PB::Set_Progress_Text(char* ProcessText)
 	return 1;
 }
 
+
 // *************************************************************************
 // *								Nudge 								   *
 // *************************************************************************
-bool ME_PB::Nudge()
+bool ME_PB::Nudge(char* Message)
 {
+	App->CL_PB->Set_Progress_Text(Message);
+	
 	MSG msg;
-
 	App->CL_PB->g_pos++;
 	InvalidateRect(ProgBarHwnd, NULL, FALSE);
 
@@ -248,8 +252,11 @@ bool ME_PB::Nudge()
 		DispatchMessage(&msg);
 	}
 
+	Sleep(100);
+
 	return 1;
 }
+
 // *************************************************************************
 // *							Close									   *
 // *************************************************************************

@@ -74,7 +74,17 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,_In_opt_ HINSTANCE hPrevInstance,
 	App->CL_Panels->Place_GlobalGroups();
 
 	App->CL_FileIO->Init_History();
+
 	App->CL_Prefs->Read_Preferences(); // Read Preferences
+
+	if (App->CL_Prefs->Prefs_FullScreen_Flag == 1)
+	{
+		ShowWindow(App->MainHwnd, SW_MAXIMIZE);
+	}
+	else
+	{
+		ShowWindow(App->MainHwnd, SW_SHOWNORMAL);
+	}
 
 	SetTimer(App->MainHwnd, 1, 1, NULL);
 
@@ -390,66 +400,28 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			}
 
 			// ------------------------------------- Recent Files
-			case 5000 + 7: // Top Recent Files 1
+
+
+			case ID_RECENTFILES2_IMPORTS: // Top Recent Files 1
 			{
-				char mFileName[1024];
-				strcpy(mFileName, App->CL_FileIO->mPreviousFiles[7].c_str());
-				App->CL_Import->Reload_FromResentFiles(mFileName);
-				return 1;
-			}
-			case 5000 + 6: // 2
-			{
-				char mFileName[1024];
-				strcpy(mFileName, App->CL_FileIO->mPreviousFiles[6].c_str());
-				App->CL_Import->Reload_FromResentFiles(mFileName);
-				return 1;
-			}
-			case 5000 + 5: // 3
-			{
-				char mFileName[1024];
-				strcpy(mFileName, App->CL_FileIO->mPreviousFiles[5].c_str());
-				App->CL_Import->Reload_FromResentFiles(mFileName);
-				return 1;
-			}
-			case 5000 + 4: // 4
-			{
-				char mFileName[1024];
-				strcpy(mFileName, App->CL_FileIO->mPreviousFiles[4].c_str());
-				App->CL_Import->Reload_FromResentFiles(mFileName);
-				return 1;
-			}
-			case 5000 + 3: // 5
-			{
-				char mFileName[1024];
-				strcpy(mFileName, App->CL_FileIO->mPreviousFiles[3].c_str());
-				App->CL_Import->Reload_FromResentFiles(mFileName);
-				return 1;
-			}
-			case 5000 + 2: // 6
-			{
-				char mFileName[1024];
-				strcpy(mFileName, App->CL_FileIO->mPreviousFiles[2].c_str());
-				App->CL_Import->Reload_FromResentFiles(mFileName);
-				return 1;
-			}
-			case 5000 + 1: // 7
-			{
-				char mFileName[1024];
-				strcpy(mFileName, App->CL_FileIO->mPreviousFiles[1].c_str());
-				App->CL_Import->Reload_FromResentFiles(mFileName);
-				return 1;
-			}
-			case 5000 + 0: // 8
-			{
-				char mFileName[1024];
-				strcpy(mFileName, App->CL_FileIO->mPreviousFiles[0].c_str());
-				App->CL_Import->Reload_FromResentFiles(mFileName);
+				App->CL_FileIO->Start_RecentProjects_Dlg(1);
 				return 1;
 			}
 
-			case ID_FILE_CLEARRESENTFILES:
+			case ID_RECENTFILES2_PROJECTFILES: // Top Recent Files 1
 			{
-				App->CL_FileIO->ResentHistory_Clear();
+				App->CL_FileIO->Start_RecentProjects_Dlg(0);
+				return 1;
+			}
+
+			case ID_SETTINGS_PREFERENCES:
+			{
+				
+				if (App->CL_Prefs->Show_Preferences_GUI == 0)
+				{
+					App->CL_Prefs->Start_Preferences_GUI();
+				}
+
 				return 1;
 			}
 			

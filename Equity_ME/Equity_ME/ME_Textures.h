@@ -51,7 +51,6 @@ public:
 
 	char JustFileName[MAX_PATH];
 	char TextureFileName[MAX_PATH];
-	UINT  g_Texture[300];
 
 private:
 

@@ -194,19 +194,19 @@ bool ME_Textures::Soil_DecodeTextures(int TextureID)
 	// ----------------------------------- Bitmap
 	if (_stricmp(TextureFileName + strlen(TextureFileName) - 4, ".BMP") == 0)
 	{
-		Soil_Load_Texture(g_Texture, TextureFileName, TextureID);
+		Soil_Load_Texture(App->CL_Ogre->RenderListener->g_Texture, TextureFileName, TextureID);
 		return 1;
 	}
 	// ------------------------------------ JPEG
 	if (_stricmp(TextureFileName + strlen(TextureFileName) - 4, ".JPG") == 0)
 	{
-		Soil_Load_Texture(g_Texture, TextureFileName, TextureID);
+		Soil_Load_Texture(App->CL_Ogre->RenderListener->g_Texture, TextureFileName, TextureID);
 		return 1;
 	}
 	// ------------------------------------ TGA
 	if (_stricmp(TextureFileName + strlen(TextureFileName) - 4, ".TGA") == 0)
 	{
-		Soil_Load_Texture(g_Texture, TextureFileName, TextureID);
+		Soil_Load_Texture(App->CL_Ogre->RenderListener->g_Texture, TextureFileName, TextureID);
 		return 1;
 	}
 	//// ------------------------------------ DDS
@@ -472,7 +472,7 @@ void ME_Textures::Strip_JustFileName(char *pString, char *FileName)
 }
 
 // *************************************************************************
-// *					CreateDummyTexture Terry Bernie   		 	 	   *
+// *					LoadDummyTexture Terry Bernie   		 	 	   *
 // *************************************************************************
 bool ME_Textures::LoadDummyTexture(int Index)
 {
@@ -509,7 +509,7 @@ bool ME_Textures::ChangeTexture_Model(void)
 		int Index = App->CL_Groups->Selected_Group;
 
 		TexureToWinPreviewFullPath(Index, App->CL_FileIO->Texture_Path_FileName);
-		Soil_Load_Texture(g_Texture, App->CL_FileIO->Texture_Path_FileName, Index);
+		Soil_Load_Texture(App->CL_Ogre->RenderListener->g_Texture, App->CL_FileIO->Texture_Path_FileName, Index);
 																																		
 		strcpy(App->CL_Model->Group[Index]->Text_FileName, App->CL_FileIO->Texture_FileName);
 		strcpy(App->CL_Model->Group[Index]->Texture_PathFileName, App->CL_FileIO->Texture_Path_FileName);

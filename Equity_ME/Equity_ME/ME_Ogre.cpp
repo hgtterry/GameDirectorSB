@@ -135,11 +135,19 @@ bool ME_Ogre::Ogre_Render_Loop(void)
 // *************************************************************************
 bool ME_Ogre::Ogre_CreateRoot(void)
 {
+
 	Ogre::String pluginsPath;
 	pluginsPath = mResourcePath + "plugins.cfg";
 
-	mRoot = OGRE_NEW Ogre::Root(pluginsPath, mResourcePath + "Equity_CFG.cfg", mResourcePath + "Equity_ME_LOG.log");
-
+	if (App->Debug_App == 1)
+	{
+		mRoot = OGRE_NEW Ogre::Root(pluginsPath, mResourcePath + "Equity_CFG.cfg", mResourcePath + "EquityME.log");
+		//Ogre::LogManager::getSingleton().createLog(mResourcePath + "App.log");
+	}
+	else
+	{
+		mRoot = OGRE_NEW Ogre::Root(pluginsPath, mResourcePath + "Equity_CFG.cfg", mResourcePath + "");
+	}
 	return 1;
 }
 

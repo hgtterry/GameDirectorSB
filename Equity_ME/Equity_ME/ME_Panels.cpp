@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "ME_App.h"
+#include "resource.h"
 #include "ME_Panels.h"
 
 #pragma warning( disable : 4800)
@@ -135,6 +136,42 @@ bool ME_Panels::Resize(void)
 	SetWindowPos(App->ViewGLhWnd, NULL, 0, 41, NewWidth + 384, NewHeight + 100, SWP_NOZORDER);
 	
 	return 1;
+}
+
+// *************************************************************************
+// *			Resize_FileView:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+bool ME_Panels::Resize_FileView(void)
+{
+	RECT rcl;
+
+	HDWP hdwp;
+
+	int WidthClient = 0;
+	int HeightClient;
+	int NewWidth = 0;
+	int NewHeight = 0;
+
+	GetClientRect(App->ListPanel, &rcl);
+
+	WidthClient = rcl.right - rcl.left - 1010;
+	NewWidth = 417 + WidthClient + 200;
+
+	HeightClient = rcl.bottom - rcl.top;
+	NewHeight = HeightClient - 150;
+
+	HWND Temp = GetDlgItem(App->ListPanel, IDC_TREE1);
+	//HWND Temp3 = GetDlgItem(App->ListPanel, IDC_BT_INFO_FILEVIEW);
+
+	hdwp = BeginDeferWindowPos(4);
+
+	DeferWindowPos(hdwp, Temp, NULL, 2, 2,
+		NewWidth + 388, NewHeight + 71, SWP_NOZORDER);
+
+	/*DeferWindowPos(hdwp, Temp3, NULL, 10, NewHeight + 113,
+		0, 07, SWP_NOSIZE | SWP_NOZORDER);*/
+
+	return EndDeferWindowPos(hdwp);
 }
 
 // *************************************************************************

@@ -58,6 +58,7 @@ void ME_Import::Set_Equity(void)
 	App->CL_TopBar->Set_Loaded();
 
 	App->CL_FileView->ExpandRoot();
+
 	App->CL_FileView->SelectItem(App->CL_Model->Group[0]->ListView_Item);  // Select First Group
 
 	App->CL_Grid->Zoom();
@@ -212,14 +213,23 @@ void ME_Import::Reload_FromResentFiles(char* ResentPathAndFile)
 
 	strcpy(mPathAndFile, ResentPathAndFile); // Full Path and File
 
-	App->CL_FileIO->CheckPath(mPathAndFile, mPathAndFile);
+	char TestName;
+	App->CL_FileIO->CheckPath(mPathAndFile, mPathAndFile, &TestName);
 
-	strcpy(mJustFileName, App->CL_FileIO->JustFileName); // Just File Name
+	strcpy(mJustFileName, &TestName); // Just File Name
 
 	strcpy(App->CL_FileIO->Model_FileName, mJustFileName);
 
 	App->CL_Model->Set_Paths();
 
+	//--------------------------------------------------------------- Genesis Actor
+	if (_stricmp(mJustFileName + strlen(mJustFileName) - 5, ".Wepf") == 0)
+	{
+
+		App->CL_Equity_SB->Read_Project_File(App->CL_FileIO->Model_Path_FileName);
+		App->CL_Equity_SB->Load_File_Wepf();
+		return;
+	}
 	
 	//--------------------------------------------------------------- Genesis Actor
 	if (_stricmp(mJustFileName + strlen(mJustFileName) - 4, ".act") == 0)
@@ -290,6 +300,7 @@ void ME_Import::Reload_FromResentFiles(char* ResentPathAndFile)
 	App->CL_Model->Model_Type = Enums::LoadedFile_Assimp;
 
 	Set_Equity();
+
 }
 
 // *************************************************************************

@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022 Equity_ME Model Editor -- Inflanite Software W.T.Flanigan H.C.Flanigan
+Copyright (c) 2022- 2023 Equity_ME Model Editor -- Inflanite Software W.T.Flanigan H.C.Flanigan
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -22,45 +22,25 @@ distribution.
 */
 
 #pragma once
-class ME_ImGui
+class ME_Load_Textures
 {
 public:
-	ME_ImGui();
-	~ME_ImGui();
+	ME_Load_Textures();
+	~ME_Load_Textures();
 
-	void ImGui_Editor_Loop(void);
+	void Load_Textures_Assimp();
+	void Load_Textures_Ogre3D(void);
 
-	void Render_FPS(void);
-	void ImGui_Render_Model(void);
-
-	void ImGui_FPS(void);
-
-	bool Show_FPS;  // Show Frames Per Second [150122]
-	bool StartPos;  // Position FPS Frame Flag [150122]
-
-	void ImGui_Dimensions(void);
-
-	bool Show_Dimensions;
-	bool Show_ImGui_Test;
-
-	float PosX;
-	float PosY;
+	bool Windows_Preview_FullPath(int Index, char* FullPath);
+	bool Load_OpenGL_Textures(int TextureID);
+	char TextureFileName[MAX_PATH];
 
 protected:
 
-	void Load_Font(void);
-	void ImGui_Set_Colours(void);
+	bool Soil_Load_Texture(UINT textureArray[], LPSTR strFileName, int textureID);
 
-	void ImGui_Rotation(void);
-	void ImGui_Position(void);
+	bool Texture_To_Bmp(char* File);
+	bool LoadDummyTexture(int Index);
 
-	ImFont* font0;
-	ImFont* font1;
-	ImFont* font2;
-	ImFont* fontDroid;
-
-	bool PosX_Selected;
-	bool PosY_Selected;
-	bool PosZ_Selected;
 };
 

@@ -35,7 +35,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>false</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -121,6 +121,7 @@
       <AdditionalIncludeDirectories>C:\Users\Equity\Desktop\Equity15\Anim19_OSDN;Common\Devil\include\IL;Common\Bullet\Source;Common\include\OGRE;Common\include\OGRE\Terrain;Common\include\OIS;Common\include\OGRE\Overlay;Common\spdlog;Common\irrKlang\Headers;Common\imGui\include;Common\Soil\include;Common\Assimp\Include;Common\XMLConverter\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <EnablePREfast>false</EnablePREfast>
       <LanguageStandard_C>stdc11</LanguageStandard_C>
+      <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

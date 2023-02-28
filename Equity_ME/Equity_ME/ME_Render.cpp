@@ -97,13 +97,13 @@ void ME_Render::Reset_Class(void)
 void ME_Render::TestLight(void)
 {
 	//glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
+	//glEnable(GL_LIGHT0);
 	float ld[4] = { (float) 0.4,(float) 0.4, (float)0.4,(float)0 };
 	glLightfv(GL_LIGHT0, GL_AMBIENT, ld);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, ld);
 	glLightfv(GL_LIGHT0, GL_SPECULAR, ld);
 
-
+	Debug
 	/*GLfloat a[4] = { 1, 1, 1, 1 };
 	glMaterialfv(GL_FRONT, GL_AMBIENT, a);
 	GLfloat d[4] = { 0, 0, 0, 1 };
@@ -217,6 +217,12 @@ void ME_Render::Render_Loop()
 	else
 	{
 		glEnable(GL_LIGHTING);
+
+		GLfloat ambientLightFull[] = { 0.2f, 0.2f, 0.2f, 1.0f };
+
+		glLightModelfv(GL_LIGHT_MODEL_AMBIENT,
+			ambientLightFull);
+		glEnable(GL_LIGHT0);
 	}
 
 	glColor3f(0.8f, 0.8f, 0.8f);
@@ -505,7 +511,7 @@ bool ME_Render::Assimp_Textured_Parts(int Count)
 		glEnable(GL_TEXTURE_2D);
 		glColor3f(1, 1, 1);
 
-		glBindTexture(GL_TEXTURE_2D, App->CL_Textures->g_Texture[App->CL_Model->Group[Count]->MaterialIndex]);
+		glBindTexture(GL_TEXTURE_2D, g_Texture[App->CL_Model->Group[Count]->MaterialIndex]);
 	}
 	else
 	{
@@ -1045,7 +1051,7 @@ bool ME_Render::RenderByTexture()
 		//MatIndex = App->CL_Genesis_Import->ActorDef_Memory->Body->SkinFaces[GE_BODY_HIGHEST_LOD].FaceArray[Count].MaterialIndex;
 		MatIndex = App->CL_Model->MatIndex_Data[Count];
 
-		glBindTexture(GL_TEXTURE_2D, App->CL_Textures->g_Texture[MatIndex]);
+		glBindTexture(GL_TEXTURE_2D,g_Texture[MatIndex]);
 
 		glBegin(GL_POLYGON);
 

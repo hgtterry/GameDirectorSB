@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022 Equity_ME Model Editor -- Inflanite Software W.T.Flanigan H.C.Flanigan
+Copyright (c) 2022- 2023 Equity_ME Model Editor -- Inflanite Software W.T.Flanigan H.C.Flanigan
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -22,45 +22,12 @@ distribution.
 */
 
 #pragma once
-class ME_ImGui
+class ME_WE_3DT
 {
 public:
-	ME_ImGui();
-	~ME_ImGui();
+	ME_WE_3DT();
+	~ME_WE_3DT();
 
-	void ImGui_Editor_Loop(void);
-
-	void Render_FPS(void);
-	void ImGui_Render_Model(void);
-
-	void ImGui_FPS(void);
-
-	bool Show_FPS;  // Show Frames Per Second [150122]
-	bool StartPos;  // Position FPS Frame Flag [150122]
-
-	void ImGui_Dimensions(void);
-
-	bool Show_Dimensions;
-	bool Show_ImGui_Test;
-
-	float PosX;
-	float PosY;
-
-protected:
-
-	void Load_Font(void);
-	void ImGui_Set_Colours(void);
-
-	void ImGui_Rotation(void);
-	void ImGui_Position(void);
-
-	ImFont* font0;
-	ImFont* font1;
-	ImFont* font2;
-	ImFont* fontDroid;
-
-	bool PosX_Selected;
-	bool PosY_Selected;
-	bool PosZ_Selected;
+	bool ImportFile(const char* PathName, const geVec3d* location);
 };
 

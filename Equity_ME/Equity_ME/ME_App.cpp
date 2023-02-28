@@ -59,6 +59,8 @@ ME_App::ME_App()
 	CL_WE_3DT = nullptr;
 	CL_PB = nullptr;
 
+	CL_Load_Textures = nullptr;
+
 	SBC_Dimensions = nullptr;
 
 	
@@ -86,6 +88,7 @@ ME_App::ME_App()
 	Font_CB15 = 0;
 	Font_CB18 = 0;
 	Font_Arial20 = 0;
+	Font_Banner = 0;
 
 	Hnd_ModelInfo_Bmp = NULL;
 	Hnd_ModelInfoOn_Bmp = NULL;
@@ -110,6 +113,8 @@ ME_App::ME_App()
 	Hnd_PlayOff_Bmp = NULL;
 	Hnd_PlayOn_Bmp = NULL;
 	Hnd_PlayStop_Bmp = NULL;
+
+	Debug_App = 1;
 
 	EquityDirecory_FullPath[0] = 0;
 	Version[0] = 0;
@@ -155,6 +160,7 @@ bool ME_App::InitApp(void)
 	CL_Texture_Lib = new ME_TextureLib();
 	CL_WE_3DT =		new ME_WE_3DT();
 
+	CL_Load_Textures = new ME_Load_Textures();
 	
 	SBC_Dimensions =	new SB_Dimensions();
 	CL_PB =				new ME_PB();
@@ -273,7 +279,7 @@ void ME_App::SetBrushes_Fonts(void)
 	Font_CB15 = CreateFont(-15, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
 	Font_CB18 = CreateFont(-18, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
 	Font_Arial20 = CreateFont(-20, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Arial");
-
+	Font_Banner = CreateFont(-30, 0, 0, 0, FW_BOLD, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Aerial Black");
 }
 
 // *************************************************************************

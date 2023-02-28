@@ -333,6 +333,8 @@ void ME_Assimp::Create_MeshGroups(const aiScene* pScene)
 	}
 
 	App->CL_FileView->Set_FolderActive(App->CL_FileView->GD_GroupsFolder);
+
+
 }
 
 // *************************************************************************
@@ -340,69 +342,5 @@ void ME_Assimp::Create_MeshGroups(const aiScene* pScene)
 // *************************************************************************
 void ME_Assimp::LoadTextures()
 {
-	
-	int v = 0;
-	int Count = 0;
-
-	int mGroupCount = App->CL_Model->Get_Groupt_Count();
-
-	while (Count < mGroupCount)
-	{
-		char FullName[1024];
-		strcpy(FullName, App->CL_Model->Group[Count]->Text_FileName);
-
-		App->CL_Textures->Strip_JustFileName(FullName, FullName);
-
-		strcpy(App->CL_Model->Group[Count]->Text_FileName, App->CL_Textures->JustFileName);
-
-		//	strcat(App->CL_Vm_Model->Texture_FullPath, App->CL_Vm_Textures->JustFileName);
-
-		int Test = strcmp(App->CL_Textures->JustFileName, "No_Texture");
-		if (Test != 0) // Dose not equal 
-		{
-			int MatIndex = App->CL_Model->Group[Count]->MaterialIndex;
-
-			char ImageFullPath[1024];
-			strcpy(ImageFullPath, App->CL_Model->Texture_FolderPath);
-			strcat(ImageFullPath, App->CL_Model->Group[Count]->Text_FileName);
-
-			strcpy(App->CL_Model->Group[v]->Texture_PathFileName, ImageFullPath);
-			strcpy(App->CL_Textures->TextureFileName, ImageFullPath);
-
-			App->CL_Textures->TexureToWinPreviewFullPath(v, ImageFullPath);
-			App->CL_Textures->Soil_DecodeTextures(MatIndex); // ??
-
-			v++;
-		}
-		else
-		{
-
-	//		App->CL_Vm_Textures->CreateDummyTexture();
-
-	//		int MatIndex = App->CL_Vm_Model->S_MeshGroup[Count]->MaterialIndex;
-	//		App->CL_Vm_Model->S_TextureInfo[Count]->ActorMaterialIndex = MatIndex;
-
-	//		//App->CL_Vm_Model->S_MeshGroup[v]->Soil_TextureIndex = MatIndex;
-
-	//		strcpy(App->CL_Vm_Model->S_MeshGroup[v]->Text_FileName, "Etemp.bmp");
-	//		strcpy(App->CL_Vm_Model->S_TextureInfo[Count]->MaterialName, "Etemp.bmp");
-
-	//		char ImageFullPath[1024];
-	//		strcpy(ImageFullPath, App->CL_Vm_Model->Texture_FolderPath);
-	//		strcat(ImageFullPath, "Etemp.bmp");
-
-	//		strcpy(App->CL_Vm_Model->S_MeshGroup[v]->Text_PathFileName, ImageFullPath);
-	//		strcpy(App->CL_Vm_Textures->TextureFileName, ImageFullPath);
-
-	//		App->CL_Vm_Textures->TexureToWinPreviewFullPath(v, ImageFullPath);
-	//		App->CL_Vm_Textures->Soil_DecodeTextures(MatIndex); // ??
-
-
-	//		remove(ImageFullPath);
-
-			v++;
-		}
-		Count++;
-	}
-
+	App->CL_Load_Textures->Load_Textures_Assimp();
 }

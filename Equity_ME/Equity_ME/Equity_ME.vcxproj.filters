@@ -135,6 +135,9 @@
     <ClInclude Include="ME_PB.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ME_Load_Textures.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -264,6 +267,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ME_PB.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ME_Load_Textures.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

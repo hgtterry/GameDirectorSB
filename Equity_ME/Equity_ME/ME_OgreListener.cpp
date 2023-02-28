@@ -23,7 +23,7 @@ distribution.
 
 #include "stdafx.h"
 #include "ME_App.h"
-#include "ME_OgreListener.h"
+//#include "ME_OgreListener.h"
 
 
 ME_OgreListener::ME_OgreListener()
@@ -83,6 +83,8 @@ bool ME_OgreListener::frameStarted(const Ogre::FrameEvent& evt)
 		{
 			App->CL_ImGui->ImGui_Render_Model();
 		}
+
+		App->CL_ImGui->ImGui_Editor_Loop();
 	}
 
 

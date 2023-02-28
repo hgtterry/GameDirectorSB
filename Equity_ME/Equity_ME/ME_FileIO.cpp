@@ -35,11 +35,11 @@ ME_FileIO::ME_FileIO()
 {
 	Model_FileName[0] = 0;
 	Model_Path_FileName[0] = 0;
-
+	RecentFile[0] = 0;
 	Texture_FileName[0] = 0;
 	Texture_Path_FileName[0] = 0;
 	JustFileName[0] = 0;
-
+	mSelected_Recent = 0;
 	BrowserMessage[0] = 0;
 	szSelectedDir[0] = 0;
 
@@ -115,6 +115,7 @@ bool ME_FileIO::Open_File_Model(char* Extension, char* Title, char* StartDirecto
 	{
 		return 1;
 	}
+
 	return 0;
 }
 
@@ -198,6 +199,7 @@ bool ME_FileIO::StartBrowser(char* szInitDir)
 
 	return 0;
 }
+
 // *************************************************************************
 // *						BrowseCallbackProc   						   *
 // *************************************************************************
@@ -309,7 +311,7 @@ bool ME_FileIO::Search_For_Folder(char* FolderPath)
 // *************************************************************************
 // *						CheckPath Terry Bernie	   					   *
 // *************************************************************************
-void ME_FileIO::CheckPath(char *pString, char *FileName)
+void ME_FileIO::CheckPath(char *pString, char *FileName,char* mJustFileName)
 {
 	JustFileName[0] = 0;
 
@@ -331,20 +333,21 @@ void ME_FileIO::CheckPath(char *pString, char *FileName)
 
 	if (Mark == 0 && Test == 0)
 	{
-		strcpy(JustFileName, FileName);
+		strcpy(mJustFileName, FileName);
 	}
 	else
 	{
 		if (Mark == 0 && Test == 1)
 		{
 			Mark = 1;
-			strcpy(JustFileName, (FileName + Mark));
+			strcpy(mJustFileName, (FileName + Mark));
 		}
 		else
 		{
-			strcpy(JustFileName, (FileName + Mark) + 1);
+			strcpy(mJustFileName, (FileName + Mark) + 1);
 		}
 	}
+
 }
 
 // *************************************************************************
@@ -414,8 +417,6 @@ void ME_FileIO::LoadHistory()
 
 	fclose(ReadRecentFiles);
 
-	mHistoryMenu = CreateMenu();
-
 	// Check for empty slots and gray out
 	for (int i = EQUITY_NUM_RECENT_FILES - 1; i >= 0; --i)
 	{
@@ -425,16 +426,9 @@ void ME_FileIO::LoadHistory()
 		UINT iFlags = 0;
 		int Result = 0;
 		Result = strcmp("<empty>", szText);
-		if (Result == 0)
-		{
-			iFlags = MF_GRAYED | MF_DISABLED;
-		}
 
-		AppendMenu(mHistoryMenu, MF_STRING | iFlags, EQUITY_RECENT_FILE_ID(i), szText);
 	}
 
-	ModifyMenu(GetMenu(App->MainHwnd), ID_FILE_RECENTFILES, MF_BYCOMMAND | MF_POPUP,
-		(UINT_PTR)mHistoryMenu, "Recent files");
 	return;
 }
 
@@ -446,10 +440,9 @@ void ME_FileIO::Save_FileHistory()
 
 	WriteRecentFiles = nullptr;
 
-	char buf[1024];
+	char buf[MAX_PATH];
 	strcpy(buf, UserData_Folder);
 	strcat(buf, "\\Vima19\\Vima19.ini");
-
 
 	WriteRecentFiles = fopen(buf, "wt");
 
@@ -462,22 +455,36 @@ void ME_FileIO::Save_FileHistory()
 	// Save out to RecentFile.ini
 	for (unsigned int i = 0; i < EQUITY_NUM_RECENT_FILES; ++i)
 	{
-		char szName[1024];
+		char szName[MAX_PATH];
 		strcpy(szName, mPreviousFiles[i].c_str());
 
 		fprintf(WriteRecentFiles, "%s\n", szName);
+	}
+	fclose(WriteRecentFiles);
+
+	WriteRecentFiles = nullptr;
+
+	strcpy(buf, UserData_Folder);
+	strcat(buf, "\\Vima19\\Recent_Projects.ini");
+
+	WriteRecentFiles = fopen(buf, "wt");
+
+	if (!WriteRecentFiles)
+	{
+		App->Say("Why Cant Find Recent Files");
+		return;
 	}
 
 	fclose(WriteRecentFiles);
 	return;
 }
+
 // *************************************************************************
 // *					RecentFileHistory_Update Terry Bernie			   *
 // *************************************************************************
 void ME_FileIO::RecentFileHistory_Update()
 {
-	if (!mHistoryMenu)return;
-
+	
 	std::string sz = std::string(App->CL_Model->Path_FileName);
 	if (mPreviousFiles[EQUITY_NUM_RECENT_FILES - 1] == sz)return;
 
@@ -498,13 +505,10 @@ void ME_FileIO::RecentFileHistory_Update()
 		UINT iFlags = 0;
 		int Result = 0;
 		Result = strcmp("<empty>", szText);
-		if (Result == 0)
+		/*if (Result == 0)
 		{
 			iFlags = MF_GRAYED | MF_DISABLED;
-		}
-
-		ModifyMenu(mHistoryMenu, EQUITY_RECENT_FILE_ID(i),
-			MF_STRING | MF_BYCOMMAND | iFlags, EQUITY_RECENT_FILE_ID(i), szText);
+		}*/
 	}
 
 	// Save Changes
@@ -512,6 +516,7 @@ void ME_FileIO::RecentFileHistory_Update()
 
 	return;
 }
+
 // *************************************************************************
 // *			ResentHistory_Clear Terry Bernie Hazel Nathan			   *
 // *************************************************************************
@@ -527,13 +532,6 @@ void ME_FileIO::ResentHistory_Clear()
 	for (unsigned int i = 0; i < EQUITY_NUM_RECENT_FILES; ++i)
 	{
 		mPreviousFiles[i] = std::string("<empty>");
-	}
-
-	// Repopulate Menu system
-	for (int i = EQUITY_NUM_RECENT_FILES - 1; i >= 0; --i)
-	{
-		ModifyMenu(mHistoryMenu, EQUITY_RECENT_FILE_ID(i),
-			MF_STRING | MF_BYCOMMAND | MF_GRAYED | MF_DISABLED, EQUITY_RECENT_FILE_ID(i), "<empty>");
 	}
 
 	// Save Changes
@@ -577,8 +575,7 @@ void ME_FileIO::LoadHistory_Equity()
 
 	fclose(ReadRecentFiles);
 
-	mHistoryMenu = CreateMenu();
-
+	
 	// Check for empty slots and gray out
 	for (int i = EQUITY_NUM_RECENT_FILES - 1; i >= 0; --i)
 	{
@@ -593,10 +590,263 @@ void ME_FileIO::LoadHistory_Equity()
 			iFlags = MF_GRAYED | MF_DISABLED;
 		}
 
-		AppendMenu(mHistoryMenu, MF_STRING | iFlags, EQUITY_RECENT_FILE_ID(i), szText);
+		
 	}
 
-	ModifyMenu(GetMenu(App->MainHwnd), ID_FILE_RECENTFILES, MF_BYCOMMAND | MF_POPUP,
-		(UINT_PTR)mHistoryMenu, "Recent files");
 	return;
 }
+
+// *************************************************************************
+// *	  Start_RecentProjects_Dlg:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void ME_FileIO::Start_RecentProjects_Dlg(int Selected_Recent)
+{
+	mSelected_Recent = Selected_Recent;
+
+	DialogBox(App->hInst, (LPCTSTR)IDD_RECENTPRJ, App->Fdlg, (DLGPROC)RecentProjects_Proc);
+}
+
+// *************************************************************************
+// *			RecentProjects_Proc:- Terry and Hazel Flanigan 2022 	   *
+// *************************************************************************
+LRESULT CALLBACK ME_FileIO::RecentProjects_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+
+		SendDlgItemMessage(hDlg, IDC_RECENTPRJLIST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BTCLEARFILES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
+
+		SendDlgItemMessage(hDlg, IDC_RECENTPRJLIST, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+
+		if (App->CL_FileIO->mSelected_Recent == 0)
+		{
+			App->CL_FileIO->List_Recent_Files(hDlg);
+
+			return TRUE;
+		}
+
+		if (App->CL_FileIO->mSelected_Recent == 1)
+		{
+			App->CL_FileIO->List_Recent_Files(hDlg);
+
+			return TRUE;
+		}
+
+		return TRUE;
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+		/*if (GetDlgItem(hDlg, IDC_TITLENAME) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}*/
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BTCLEARFILES && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+		if (LOWORD(wParam) == IDC_RECENTPRJLIST)
+		{
+			App->CL_FileIO->RecentFile[0] = 0;
+			int Index = 0;
+
+			Index = SendDlgItemMessage(hDlg, IDC_RECENTPRJLIST, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+			if (Index == -1)
+			{
+				return 1;
+			}
+			else
+			{
+				SendDlgItemMessage(hDlg, IDC_RECENTPRJLIST, LB_GETTEXT, (WPARAM)Index, (LPARAM)App->CL_FileIO->RecentFile);
+
+			}
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BTCLEARFILES)
+		{
+			App->CL_FileIO->ResentHistory_Clear();
+			SendDlgItemMessage(hDlg, IDC_RECENTPRJLIST, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDOK)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			App->CL_Import->Reload_FromResentFiles(App->CL_FileIO->RecentFile);
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+	}
+
+	break;
+
+	}
+	return FALSE;
+}
+
+// *************************************************************************
+// *	  				List_Recent_Files Terry Flanigan				   *
+// *************************************************************************
+void ME_FileIO::List_Recent_Files(HWND hDlg)
+{
+	char buf[MAX_PATH];
+	char buffer[MAX_PATH];
+
+	mPreviousFiles.resize(EQUITY_NUM_RECENT_FILES);
+
+	strcpy(buf, UserData_Folder);
+	strcat(buf, "\\Vima19\\Vima19.ini");
+
+	ReadRecentFiles = fopen(buf, "rt");
+
+	if (!ReadRecentFiles)
+	{
+		App->Say("Cant Find Recent Files");
+		return;
+	}
+
+	// Read in File Names from RecentFiles.ini
+	for (unsigned int i = 0; i < EQUITY_NUM_RECENT_FILES; ++i)
+	{
+		memset(buffer, 0, MAX_PATH);
+		fgets(buffer, MAX_PATH, ReadRecentFiles);
+
+		char Path[MAX_PATH];
+		strcpy(Path, buffer);
+		int Len = strlen(Path);
+		Path[Len - 1] = 0;
+
+		mPreviousFiles[i] = std::string(Path);
+	}
+
+	fclose(ReadRecentFiles);
+
+	// Check for empty slots and gray out
+	for (int i = EQUITY_NUM_RECENT_FILES - 1; i >= 0; --i)
+	{
+		char szText[MAX_PATH];
+		strcpy(szText, mPreviousFiles[i].c_str());
+
+		int Result = 0;
+		Result = strcmp("<empty>", szText);
+		if (Result == 0)
+		{
+
+		}
+		else
+		{
+			sprintf(buf, "%s", szText);
+			SendDlgItemMessage(hDlg, IDC_RECENTPRJLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+		}
+	}
+}
+
+// *************************************************************************
+// *	  				List_Recent_Projects Terry Flanigan				   *
+// *************************************************************************
+void ME_FileIO::List_Recent_Projects(HWND hDlg)
+{
+	char buf[MAX_PATH];
+	char buffer[MAX_PATH];
+
+	sprintf(buf, "%s", "Model Info");
+	SendDlgItemMessage(hDlg, IDC_RECENTPRJLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+	mPreviousFiles.resize(EQUITY_NUM_RECENT_FILES);
+
+	strcpy(buf, UserData_Folder);
+	strcat(buf, "\\Vima19\\Vima19.ini");
+
+	ReadRecentFiles = fopen(buf, "rt");
+
+	if (!ReadRecentFiles)
+	{
+		App->Say("Cant Find Recent Files");
+		return;
+	}
+
+	// Read in File Names from RecentFiles.ini
+	for (unsigned int i = 0; i < EQUITY_NUM_RECENT_FILES; ++i)
+	{
+		memset(buffer, 0, MAX_PATH);
+		fgets(buffer, MAX_PATH, ReadRecentFiles);
+
+		char Path[MAX_PATH];
+		strcpy(Path, buffer);
+		int Len = strlen(Path);
+		Path[Len - 1] = 0;
+
+		mPreviousFiles[i] = std::string(Path);
+	}
+
+	fclose(ReadRecentFiles);
+
+	// Check for empty slots and gray out
+	for (int i = EQUITY_NUM_RECENT_FILES - 1; i >= 0; --i)
+	{
+		char szText[MAX_PATH];
+		strcpy(szText, mPreviousFiles[i].c_str());
+
+		int Result = 0;
+		Result = strcmp("<empty>", szText);
+		if (Result == 0)
+		{
+
+		}
+		else
+		{
+			sprintf(buf, "%s", szText);
+			SendDlgItemMessage(hDlg, IDC_RECENTPRJLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+		}
+	}
+}
+

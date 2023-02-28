@@ -9,7 +9,7 @@ public:
 	bool Place_GlobalGroups(void);
 
 	bool Resize(void);
-
+	bool Resize_FileView(void);
 	bool ResizeOgre_Window(void);
 
 	void Enable_Panels(int show);
