@@ -43,6 +43,7 @@ public:
 	
 protected:
 
+	static LRESULT CALLBACK Files_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Group_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
@@ -50,6 +51,8 @@ protected:
 	static LRESULT CALLBACK Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Amimation_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	void Init_Bmps_Globals(void);
+
+	void Start_Files_TB(void);
 
 	void Start_Tabs_Headers(void);
 	void Start_Group_TB(void);
@@ -72,6 +75,7 @@ protected:
 	bool Toggle_Tabs_Model_Flag;
 	bool Toggle_Tabs_Camera_Flag;
 	bool Toggle_Tabs_Animation_Flag;
+	bool Toggle_Tabs_File_Flag;
 
 	bool Toggle_GroupInfo_Flag;
 
@@ -79,6 +83,7 @@ protected:
 	bool Toggle_Group_HIDE_Flag;
 	bool Toggle_Group_ALL_Flag;
 
+	HWND Files_TB_hWnd;
 	HWND Group_TB_hWnd;
 	HWND Camera_TB_hWnd;
 	HWND Animation_TB_hWnd;

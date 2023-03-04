@@ -36,6 +36,7 @@ ME_TopBar::ME_TopBar()
 	Model_TB_hWnd = nullptr;
 	Camera_TB_hWnd = nullptr;
 	Animation_TB_hWnd = nullptr;
+	Files_TB_hWnd = nullptr;
 
 	Show_Model_Data = 0;
 	Toggle_Grid_Flag = 1;
@@ -46,6 +47,7 @@ ME_TopBar::ME_TopBar()
 	Toggle_Tabs_Model_Flag = 1;
 	Toggle_Tabs_Camera_Flag = 0;
 	Toggle_Tabs_Animation_Flag = 0;
+	Toggle_Tabs_File_Flag = 0;
 
 	Toggle_Dimensions_Flag = 0;
 
@@ -119,6 +121,7 @@ LRESULT CALLBACK ME_TopBar::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 
 		App->CL_TopBar->Start_Tabs_Headers();
 
+		App->CL_TopBar->Start_Files_TB();
 		App->CL_TopBar->Start_Group_TB();
 		App->CL_TopBar->Start_Model_TB();
 		App->CL_TopBar->Start_Camera_TB();
@@ -190,18 +193,16 @@ LRESULT CALLBACK ME_TopBar::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 		//-------------------------------------------------------- Show Info
 		if (LOWORD(wParam) == IDC_TBINFO)
 		{
-			HWND Temp = GetDlgItem(hDlg, IDC_TBINFO);
+			if (App->CL_ImGui->Show_Model_Data_Flag == 1)
+			{
+				App->CL_ImGui->Close_Model_Data();
+			}
+			else
+			{
+				App->CL_ImGui->Start_Model_Data();
+			}
 
-			SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfoOn_Bmp);
-
-			App->CL_Panels->Enable_Panels(0);
-
-			App->CL_Dialogs->What_List = Enums::Show_List_Model;
-			App->CL_Dialogs->Show_ListData();
-
-			App->CL_Panels->Enable_Panels(1);
-
-			SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfo_Bmp);
+			
 			return TRUE;
 		}
 
@@ -529,6 +530,7 @@ LRESULT CALLBACK ME_TopBar::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM wP
 		SendDlgItemMessage(hDlg, IDC_TBMODEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_TBCAMERA, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_TBANIMATION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_TBFILE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		return TRUE;
 	}
@@ -569,12 +571,34 @@ LRESULT CALLBACK ME_TopBar::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM wP
 			App->Custom_Button_Toggle_Tabs(item, App->CL_TopBar->Toggle_Tabs_Animation_Flag);
 			return CDRF_DODEFAULT;
 		}
+
+		if (some_item->idFrom == IDC_TBFILE && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle_Tabs(item, App->CL_TopBar->Toggle_Tabs_File_Flag);
+			return CDRF_DODEFAULT;
+		}
 		
 		return CDRF_DODEFAULT;
 	}
 
 	case WM_COMMAND:
 	{
+		if (LOWORD(wParam) == IDC_TBFILE)
+		{
+			App->CL_TopBar->Hide_Tabs();
+			ShowWindow(App->CL_TopBar->Files_TB_hWnd, SW_SHOW);
+			App->CL_TopBar->Toggle_Tabs_File_Flag = 1;
+
+			RedrawWindow(App->CL_TopBar->Tabs_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			App->CL_Ogre->Ogre_Listener->ImGui_Render_Tab = Enums::ImGui_Render_Group;
+
+			App->CL_Panels->Show_Panels(1);
+
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDC_TBGROUP)
 		{
 			App->CL_TopBar->Hide_Tabs();
@@ -656,11 +680,13 @@ void ME_TopBar::Hide_Tabs(void)
 	ShowWindow(Model_TB_hWnd, SW_HIDE);
 	ShowWindow(Camera_TB_hWnd, SW_HIDE);
 	ShowWindow(Animation_TB_hWnd, SW_HIDE);
+	ShowWindow(Files_TB_hWnd, SW_HIDE);
 	
 	Toggle_Tabs_Group_Flag = 0;
 	Toggle_Tabs_Model_Flag = 0;
 	Toggle_Tabs_Camera_Flag = 0;
 	Toggle_Tabs_Animation_Flag = 0;
+	Toggle_Tabs_File_Flag = 0;
 }
 
 // *************************************************************************
@@ -804,6 +830,71 @@ LRESULT CALLBACK ME_TopBar::Group_TB_Proc(HWND hDlg, UINT message, WPARAM wParam
 				App->CL_Ogre->RenderListener->Show_HideGroup = 0;
 
 				RedrawWindow(App->CL_TopBar->Group_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			}
+
+			return 1;
+		}
+
+		return FALSE;
+	}
+
+	}
+	return FALSE;
+}
+
+// *************************************************************************
+// *						Start_Files_TB Terry Flanigan				   *
+// *************************************************************************
+void ME_TopBar::Start_Files_TB(void)
+{
+	Files_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_FILE, Tabs_TB_hWnd, (DLGPROC)Files_TB_Proc);
+}
+
+// *************************************************************************
+// *								Files_TB_Proc						   *
+// *************************************************************************
+LRESULT CALLBACK ME_TopBar::Files_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_BTTBQUICKLOAD, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		return TRUE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->Brush_Tabs;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_BTTBQUICKLOAD && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+
+		if (LOWORD(wParam) == IDC_BTTBQUICKLOAD)
+		{
+			Debug
+
+			if (App->CL_Model->Model_Loaded == 1)
+			{
+				Debug
+				//RedrawWindow(App->CL_TopBar->Group_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			}
 
 			return 1;

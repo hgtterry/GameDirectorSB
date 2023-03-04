@@ -250,6 +250,9 @@ void ME_Preferences::Preferences_GUI()
 	PosY = ((float)App->CL_Ogre->Ogre_Listener->View_Height / 2) - (Size.y / 2);;
 
 	//ImGui::BeginDisabled(false);
+
+	//ImGui::Image(&App->CL_Ogre->RenderListener->g_Texture[0], ImVec2(256, 256));
+
 	ImGui::End();
 }
 
@@ -316,7 +319,7 @@ bool ME_Preferences::Write_Preferences()
 
 	char Preferences_Path[MAX_PATH];
 
-	strcpy(Preferences_Path, App->EquityDirecory_FullPath);;
+	strcpy(Preferences_Path, App->EquityDirecory_FullPath);
 	strcat(Preferences_Path, "\\");
 	strcat(Preferences_Path, "Data");
 	strcat(Preferences_Path, "\\");

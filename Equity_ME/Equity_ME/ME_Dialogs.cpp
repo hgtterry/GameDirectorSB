@@ -82,12 +82,6 @@ LRESULT CALLBACK ME_Dialogs::GroupData_Proc(HWND hDlg, UINT message, WPARAM wPar
 			return TRUE;
 		}
 
-		if (App->CL_Dialogs->What_List == Enums::Show_List_Model)
-		{
-			App->CL_Dialogs->List_ModelData(hDlg);
-			return TRUE;
-		}
-
 		if (App->CL_Dialogs->What_List == Enums::Show_List_App)
 		{
 			App->CL_Dialogs->List_App_Data(hDlg);
@@ -178,51 +172,6 @@ void ME_Dialogs::List_GroupData(HWND hDlg)
 	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
 	sprintf(buf, "%s", "    ");
-	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-}
-
-// *************************************************************************
-// *	  				List_ModelData Terry Flanigan					   *
-// *************************************************************************
-void ME_Dialogs::List_ModelData(HWND hDlg)
-{
-
-	char buf[255];
-	
-	sprintf(buf, "%s", "Model Info");
-	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
-	sprintf(buf, "%s", "    ");
-	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
-	//----------------------- 
-	sprintf(buf, "%s%s", "Model Name = ", App->CL_Model->JustName);
-	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
-	//----------------------- 
-	sprintf(buf, "%s%s", "Model File Name = ", App->CL_Model->FileName);
-	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
-	//----------------------- 
-	sprintf(buf, "%s%s", "Model Path = ", App->CL_Model->Path_FileName);
-	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
-	sprintf(buf, "%s", "    ");
-	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
-	sprintf(buf, "%s%i", "Vertices = ", App->CL_Model->VerticeCount);
-	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
-	sprintf(buf, "%s%i", "Faces = ", App->CL_Model->FaceCount);
-	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
-	sprintf(buf, "%s", "    ");
-	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
-	sprintf(buf, "%s%i", "Groups = ", App->CL_Model->Get_Groupt_Count());
-	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
-	sprintf(buf, "%s%i", "Motions = ", App->CL_Model->MotionCount);
 	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 }
 

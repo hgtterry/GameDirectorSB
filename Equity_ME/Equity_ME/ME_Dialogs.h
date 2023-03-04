@@ -54,7 +54,6 @@ protected:
 	static LRESULT CALLBACK Dialog_Text_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void List_GroupData(HWND hDlg);
-	void List_ModelData(HWND hDlg);
 	void List_App_Data(HWND hDlg);
 
 	void UnCheck_All_SpeedMouseOption();

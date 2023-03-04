@@ -209,8 +209,18 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 			case ID_DEBUG_APPDATA:
 			{
+				if (App->CL_ImGui->Show_App_Data_Flag == 1)
+				{
+					App->CL_ImGui->Close_App_Data();
+				}
+				else
+				{
+					App->CL_ImGui->Start_App_Data();
+				}
+
+				/*App->CL_ImGui->Start_App_Data();
 				App->CL_Dialogs->What_List = Enums::Show_List_App;
-				App->CL_Dialogs->Show_ListData();
+				App->CL_Dialogs->Show_ListData();*/
 				return 1;
 			}
 
@@ -597,6 +607,7 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 		}
 		return FALSE;
 	}
+
 	case WM_CTLCOLORDLG:
 	{
 		return (LONG)App->AppBackground;
@@ -610,6 +621,7 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
         }
         break;
     }
+
     return (INT_PTR)FALSE;
 }
 
@@ -637,6 +649,7 @@ LRESULT CALLBACK ViewerMain_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM 
 	}
 	break;
 	}
+
 	return FALSE;
 }
 

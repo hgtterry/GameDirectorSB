@@ -21,6 +21,8 @@ misrepresented as being the original software.
 distribution.
 */
 
+//:- Terry and Hazel Flanigan 2023
+
 #pragma once
 
 #include "ME_Ogre.h"

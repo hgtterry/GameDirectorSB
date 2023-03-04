@@ -28,6 +28,15 @@ public:
 	ME_ImGui();
 	~ME_ImGui();
 
+	void Start_Model_Data(void);
+	void Close_Model_Data(void);
+
+	void Start_Group_Data(void);
+	void Close_Group_Data(void);
+
+	void Start_App_Data(void);
+	void Close_App_Data(void);
+
 	void ImGui_Editor_Loop(void);
 
 	void Render_FPS(void);
@@ -43,10 +52,27 @@ public:
 	bool Show_Dimensions;
 	bool Show_ImGui_Test;
 
+	bool Show_Model_Data_Flag;
+	bool Show_Group_Data_Flag;
+	bool Show_App_Data_Flag;
+
+	float App_Data_PosX;
+	float App_Data_PosY;
+
+	float Model_Data_PosX;
+	float Model_Data_PosY;
+
+	float Group_Data_PosX;
+	float Group_Data_PosY;
+
 	float PosX;
 	float PosY;
 
 protected:
+
+	void Model_Data_GUI(void);
+	void Group_Data_GUI(void);
+	void App_Data_GUI(void);
 
 	void Load_Font(void);
 	void ImGui_Set_Colours(void);
