@@ -178,7 +178,7 @@ bool ME_App::InitApp(void)
 	{
 		wsprintf(Udir, "%ls", path);
 		CoTaskMemFree(path);
-		strcpy(App->CL_FileIO->UserData_Folder, Udir);
+		strcpy(App->CL_Recent_Files->UserData_Folder, Udir);
 	}
 	else
 	{

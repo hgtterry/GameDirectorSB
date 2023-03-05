@@ -331,6 +331,8 @@ void ME_Equity_SB::Load_File_Wepf()
 	Ogre::Root::getSingletonPtr()->renderOneFrame();
 	Ogre::Root::getSingletonPtr()->renderOneFrame();
 
+	App->CL_Recent_Files->RecentFile_Projects_History_Update();
+
 	App->Say("Model Loaded");
 }
 

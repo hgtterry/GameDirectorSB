@@ -293,7 +293,7 @@ void ME_Model::Set_Paths(void)
 		JustName[Len - 4] = 0;
 	}
 
-	App->CL_FileIO->RecentFileHistory_Update();
+	//App->CL_Recent_Files->RecentFileHistory_Update();
 }
 
 // *************************************************************************

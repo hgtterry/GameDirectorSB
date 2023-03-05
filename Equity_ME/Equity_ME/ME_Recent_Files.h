@@ -29,6 +29,36 @@ public:
 	ME_Recent_Files();
 	~ME_Recent_Files();
 
+	void Init_History();
 
+	void ResentHistory_Models_Clear();
+	void ResentHistory_Projects_Clear();
+
+	void Save_FileHistory_Models();
+	void Save_FileHistory_Projects();
+
+	void LoadHistory_Models();
+	void LoadHistory_Projects();
+
+	void RecentFile_Models_History_Update();
+	void RecentFile_Projects_History_Update();
+
+	void LoadHistory_Equity();
+
+	void List_Recent_Files(HWND hDlg);
+	void List_Recent_Projects(HWND hDlg);
+
+
+	char UserData_Folder[MAX_PATH];
+
+	bool Search_For_Folder(char* FolderPath);
+
+	std::vector<std::string> mPreviousFiles_Models;
+	std::vector<std::string> mPreviousFiles_Projects;
+
+	FILE* WriteRecentFiles;
+	FILE* ReadRecentFiles;
+
+#define RECENT_FILES 0x8
 };
 

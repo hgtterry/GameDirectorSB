@@ -95,6 +95,7 @@ bool ME_Import::Assimp_Loader(char* Extension, char* Extension2)
 
 	Set_Equity();
 	
+	App->CL_Recent_Files->RecentFile_Models_History_Update();
 	return 1;
 }
 
@@ -123,6 +124,7 @@ bool ME_Import::RFActor_Loader(void)
 
 	Set_Equity();
 
+	App->CL_Recent_Files->RecentFile_Models_History_Update();
 	return 1;
 }
 
@@ -165,6 +167,7 @@ bool ME_Import::Ogre_Loader(char* Extension, char* Extension2)
 	Ogre::Root::getSingletonPtr()->renderOneFrame();
 	Ogre::Root::getSingletonPtr()->renderOneFrame();
 
+	App->CL_Recent_Files->RecentFile_Models_History_Update();
 	//-------------------------------
 	//if (App->CL_Import_Ogre->NoMaterialFileFound == 1)
 	//{
@@ -228,6 +231,8 @@ void ME_Import::Reload_FromResentFiles(char* ResentPathAndFile)
 
 		App->CL_Equity_SB->Read_Project_File(App->CL_FileIO->Model_Path_FileName);
 		App->CL_Equity_SB->Load_File_Wepf();
+
+		
 		return;
 	}
 	
@@ -241,6 +246,7 @@ void ME_Import::Reload_FromResentFiles(char* ResentPathAndFile)
 
 		Set_Equity();
 
+		App->CL_Recent_Files->RecentFile_Models_History_Update();
 		return;
 	}
 
@@ -260,6 +266,8 @@ void ME_Import::Reload_FromResentFiles(char* ResentPathAndFile)
 		App->CL_Model->ItsAnOgreModel = 1;
 		
 		Set_Equity();
+
+		App->CL_Recent_Files->RecentFile_Models_History_Update();
 
 		Ogre::Root::getSingletonPtr()->renderOneFrame();
 		Ogre::Root::getSingletonPtr()->renderOneFrame();
@@ -289,7 +297,7 @@ void ME_Import::Reload_FromResentFiles(char* ResentPathAndFile)
 		return;
 	}
 
-	// Fall through fo assimp
+	// Fall through for assimp
 	bool Test = App->CL_Assimp->LoadFile(ResentPathAndFile);
 	if (Test == 0)
 	{
@@ -301,6 +309,7 @@ void ME_Import::Reload_FromResentFiles(char* ResentPathAndFile)
 
 	Set_Equity();
 
+	App->CL_Recent_Files->RecentFile_Models_History_Update();
 }
 
 // *************************************************************************

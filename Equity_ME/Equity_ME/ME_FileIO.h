@@ -36,13 +36,6 @@ public:
 	bool Search_For_Folder(char* FolderPath);
 	void CheckPath(char *pString, char *FileName, char* mJustFileName);
 
-	void Init_History();
-	void LoadHistory();
-	void Save_FileHistory();
-	void RecentFileHistory_Update();
-	void ResentHistory_Clear();
-	void LoadHistory_Equity();
-
 	void Start_RecentProjects_Dlg(int Selected_Recent);
 
 	char Model_FileName[MAX_PATH];
@@ -50,7 +43,6 @@ public:
 
 	char Texture_FileName[MAX_PATH];
 	char Texture_Path_FileName[MAX_PATH];
-	char UserData_Folder[MAX_PATH];
 	char JustFileName[MAX_PATH];
 
 	char RecentFile[MAX_PATH];
@@ -69,13 +61,10 @@ protected:
 	static int __stdcall BrowseCallbackProc(HWND  hwnd, UINT  uMsg, LPARAM  lParam, LPARAM  lpData);
 	static LRESULT CALLBACK RecentProjects_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	
-	void List_Recent_Files(HWND hDlg);
-	void List_Recent_Projects(HWND hDlg);
-
 	FILE *WriteRecentFiles;
 	FILE *ReadRecentFiles;
 
-#define RECENT_FILES 0x8
+//#define RECENT_FILES 0x8
 
 
 	OPENFILENAME ofn;

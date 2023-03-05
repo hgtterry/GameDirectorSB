@@ -350,273 +350,9 @@ void ME_FileIO::CheckPath(char *pString, char *FileName,char* mJustFileName)
 
 }
 
-// *************************************************************************
-// *						Init_History() Terry Bernie					   *
-// *************************************************************************
-void ME_FileIO::Init_History()
-{
-
-	char DirCheck[MAX_PATH];
-	strcpy(DirCheck, UserData_Folder);
-	strcat(DirCheck, "\\");
-	strcat(DirCheck, "Vima19");
-
-
-	bool check = 0;
-	check = Search_For_Folder(DirCheck);
-	if (check == 0)
-	{
-		mPreviousFiles_Models.resize(RECENT_FILES);
-
-		CreateDirectory(DirCheck, NULL);
-		ResentHistory_Clear(); // Set all slots to Empty
-		Save_FileHistory();
-		LoadHistory();
-	}
-	else
-	{
-		char mCheckFile[MAX_PATH];
-
-		strcpy(mCheckFile, DirCheck);
-		strcat(mCheckFile, "\\Projects.ini");
-
-		bool checkfile = App->CL_Utilities->Check_File_Exist(mCheckFile);
-
-		if (checkfile == 1)
-		{
-
-		}
-		else
-		{
-			ReadRecentFiles = nullptr;
-			ReadRecentFiles = fopen(mCheckFile, "wt");
-			fclose(ReadRecentFiles);
-		}
-
-		LoadHistory();
-	}
-}
-
-// *************************************************************************
-// *						LoadHistory() Terry Bernie					   *
-// *************************************************************************
-void ME_FileIO::LoadHistory()
-{
-	mPreviousFiles_Models.resize(RECENT_FILES);
-
-	char buffer[1024];
-	char buf[1024];
-
-	strcpy(buf, UserData_Folder);
-	strcat(buf, "\\Vima19\\Vima19.ini");
-
-	
-	ReadRecentFiles = nullptr;
-
-	ReadRecentFiles = fopen(buf, "rt");
-
-	if (!ReadRecentFiles)
-	{
-		App->Say("Cant Find Recent Files");
-		return;
-	}
-
-	// Read in File Names from RecentFiles.ini
-	for (unsigned int i = 0; i < RECENT_FILES; ++i)
-	{
-		memset(buffer, 0, 1024);
-		fgets(buffer, 1024, ReadRecentFiles);
-
-		char Path[1024];
-		strcpy(Path, buffer);
-		int Len = strlen(Path);
-		Path[Len - 1] = 0;
-
-		mPreviousFiles_Models[i] = std::string(Path);
-	}
-
-	fclose(ReadRecentFiles);
-
-	// Check for empty slots and gray out
-	for (int i = RECENT_FILES - 1; i >= 0; --i)
-	{
-		char szText[1024];
-		strcpy(szText, mPreviousFiles_Models[i].c_str());
-
-		UINT iFlags = 0;
-		int Result = 0;
-		Result = strcmp("<empty>", szText);
-
-	}
-
-	return;
-}
-
-// *************************************************************************
-// *					Save_FileHistory Terry Bernie					   *
-// *************************************************************************
-void ME_FileIO::Save_FileHistory()
-{
-
-	WriteRecentFiles = nullptr;
-
-	char buf[MAX_PATH];
-	strcpy(buf, UserData_Folder);
-	strcat(buf, "\\Vima19\\Vima19.ini");
-
-	WriteRecentFiles = fopen(buf, "wt");
-
-	if (!WriteRecentFiles)
-	{
-		App->Say("Why Cant Find Recent Files");
-		return;
-	}
-
-	// Save out to RecentFile.ini
-	for (unsigned int i = 0; i < RECENT_FILES; ++i)
-	{
-		char szName[MAX_PATH];
-		strcpy(szName, mPreviousFiles_Models[i].c_str());
-
-		fprintf(WriteRecentFiles, "%s\n", szName);
-	}
-	fclose(WriteRecentFiles);
 
 
 
-	WriteRecentFiles = nullptr;
-
-	strcpy(buf, UserData_Folder);
-	strcat(buf, "\\Vima19\\Projects.ini");
-
-	WriteRecentFiles = fopen(buf, "wt");
-
-	if (!WriteRecentFiles)
-	{
-		App->Say("Why Cant Find Recent Files");
-		return;
-	}
-
-	fclose(WriteRecentFiles);
-	return;
-}
-
-// *************************************************************************
-// *					RecentFileHistory_Update Terry Bernie			   *
-// *************************************************************************
-void ME_FileIO::RecentFileHistory_Update()
-{
-	
-	std::string sz = std::string(App->CL_Model->Path_FileName);
-	if (mPreviousFiles_Models[RECENT_FILES - 1] == sz)return;
-
-	// add the new file to the list of recent files
-	for (unsigned int i = 0; i < RECENT_FILES - 1; ++i)
-	{
-		mPreviousFiles_Models[i] = mPreviousFiles_Models[i + 1];
-	}
-
-	mPreviousFiles_Models[RECENT_FILES - 1] = sz;
-
-	// Check for empty slots and gray out
-	for (int i = RECENT_FILES - 1; i >= 0; --i)
-	{
-		char szText[1024];
-		strcpy(szText, mPreviousFiles_Models[i].c_str());
-
-		UINT iFlags = 0;
-		int Result = 0;
-		Result = strcmp("<empty>", szText);
-		/*if (Result == 0)
-		{
-			iFlags = MF_GRAYED | MF_DISABLED;
-		}*/
-	}
-
-	// Save Changes
-	Save_FileHistory();
-
-	return;
-}
-
-// *************************************************************************
-// *			ResentHistory_Clear Terry Bernie Hazel Nathan			   *
-// *************************************************************************
-void ME_FileIO::ResentHistory_Clear()
-{
-	App->CL_Dialogs->YesNo("Delete file history.", "Are you sure all File history will be Deleted Procede.");
-	if (App->CL_Dialogs->Canceled == 1)
-	{
-		return;
-	}
-
-	// Set all slots to <empty>
-	for (unsigned int i = 0; i < RECENT_FILES; ++i)
-	{
-		mPreviousFiles_Models[i] = std::string("<empty>");
-	}
-
-	// Save Changes
-	Save_FileHistory();
-}
-
-// *************************************************************************
-// *					LoadHistory_Equity Terry Bernie					   *
-// *************************************************************************
-void ME_FileIO::LoadHistory_Equity()
-{
-	mPreviousFiles_Models.resize(RECENT_FILES);
-
-	char buffer[1024];
-	char buf[1024];
-
-	strcpy(buf, UserData_Folder);
-	strcat(buf, "\\Vima19\\Vima19.ini");
-
-	ReadRecentFiles = fopen(buf, "rt");
-
-	if (!ReadRecentFiles)
-	{
-		App->Say("Cant Find Recent Files");
-		return;
-	}
-
-	// Read in File Names from RecentFiles.ini
-	for (unsigned int i = 0; i < RECENT_FILES; ++i)
-	{
-		memset(buffer, 0, 1024);
-		fgets(buffer, 1024, ReadRecentFiles);
-
-		char Path[1024];
-		strcpy(Path, buffer);
-		int Len = strlen(Path);
-		Path[Len - 1] = 0;
-
-		mPreviousFiles_Models[i] = std::string(Path);
-	}
-
-	fclose(ReadRecentFiles);
-
-	
-	// Check for empty slots and gray out
-	for (int i = RECENT_FILES - 1; i >= 0; --i)
-	{
-		char szText[1024];
-		strcpy(szText, mPreviousFiles_Models[i].c_str());
-
-		UINT iFlags = 0;
-		int Result = 0;
-		Result = strcmp("<empty>", szText);
-		if (Result == 0)
-		{
-			iFlags = MF_GRAYED | MF_DISABLED;
-		}
-
-		
-	}
-
-	return;
-}
 
 // *************************************************************************
 // *	  Start_RecentProjects_Dlg:- Terry and Hazel Flanigan 2023		   *
@@ -648,14 +384,14 @@ LRESULT CALLBACK ME_FileIO::RecentProjects_Proc(HWND hDlg, UINT message, WPARAM 
 
 		if (App->CL_FileIO->mSelected_Recent == 0)
 		{
-			App->CL_FileIO->List_Recent_Files(hDlg);
+			App->CL_Recent_Files->List_Recent_Files(hDlg);
 
 			return TRUE;
 		}
 
 		if (App->CL_FileIO->mSelected_Recent == 1)
 		{
-			App->CL_FileIO->List_Recent_Files(hDlg);
+			App->CL_Recent_Files->List_Recent_Projects(hDlg);
 
 			return TRUE;
 		}
@@ -730,8 +466,29 @@ LRESULT CALLBACK ME_FileIO::RecentProjects_Proc(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDC_BTCLEARFILES)
 		{
-			App->CL_FileIO->ResentHistory_Clear();
+			if (App->CL_FileIO->mSelected_Recent == 0)
+			{
+				App->CL_Dialogs->YesNo("Delete file history.", "Are you sure all Models history will be Deleted Procede.");
+				if (App->CL_Dialogs->Canceled == 1)
+				{
+					return 1;
+				}
+				App->CL_Recent_Files->ResentHistory_Models_Clear();
+			}
+
+			if (App->CL_FileIO->mSelected_Recent == 1)
+			{
+				App->CL_Dialogs->YesNo("Delete file history.", "Are you sure all Projects history will be Deleted Procede.");
+				if (App->CL_Dialogs->Canceled == 1)
+				{
+					return 1;
+				}
+				App->CL_Recent_Files->ResentHistory_Projects_Clear();
+			}
+
+
 			SendDlgItemMessage(hDlg, IDC_RECENTPRJLIST, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+
 			return TRUE;
 		}
 
@@ -755,120 +512,5 @@ LRESULT CALLBACK ME_FileIO::RecentProjects_Proc(HWND hDlg, UINT message, WPARAM 
 	return FALSE;
 }
 
-// *************************************************************************
-// *	  				List_Recent_Files Terry Flanigan				   *
-// *************************************************************************
-void ME_FileIO::List_Recent_Files(HWND hDlg)
-{
-	char buf[MAX_PATH];
-	char buffer[MAX_PATH];
 
-	mPreviousFiles_Models.resize(RECENT_FILES);
-
-	strcpy(buf, UserData_Folder);
-	strcat(buf, "\\Vima19\\Vima19.ini");
-
-	ReadRecentFiles = fopen(buf, "rt");
-
-	if (!ReadRecentFiles)
-	{
-		App->Say("Cant Find Recent Files");
-		return;
-	}
-
-	// Read in File Names from RecentFiles.ini
-	for (unsigned int i = 0; i < RECENT_FILES; ++i)
-	{
-		memset(buffer, 0, MAX_PATH);
-		fgets(buffer, MAX_PATH, ReadRecentFiles);
-
-		char Path[MAX_PATH];
-		strcpy(Path, buffer);
-		int Len = strlen(Path);
-		Path[Len - 1] = 0;
-
-		mPreviousFiles_Models[i] = std::string(Path);
-	}
-
-	fclose(ReadRecentFiles);
-
-	// Check for empty slots and gray out
-	for (int i = RECENT_FILES - 1; i >= 0; --i)
-	{
-		char szText[MAX_PATH];
-		strcpy(szText, mPreviousFiles_Models[i].c_str());
-
-		int Result = 0;
-		Result = strcmp("<empty>", szText);
-		if (Result == 0)
-		{
-
-		}
-		else
-		{
-			sprintf(buf, "%s", szText);
-			SendDlgItemMessage(hDlg, IDC_RECENTPRJLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-		}
-	}
-}
-
-// *************************************************************************
-// *	  				List_Recent_Projects Terry Flanigan				   *
-// *************************************************************************
-void ME_FileIO::List_Recent_Projects(HWND hDlg)
-{
-	char buf[MAX_PATH];
-	char buffer[MAX_PATH];
-
-	sprintf(buf, "%s", "Model Info");
-	SendDlgItemMessage(hDlg, IDC_RECENTPRJLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
-	mPreviousFiles_Models.resize(RECENT_FILES);
-
-	strcpy(buf, UserData_Folder);
-	strcat(buf, "\\Vima19\\Vima19.ini");
-
-	ReadRecentFiles = fopen(buf, "rt");
-
-	if (!ReadRecentFiles)
-	{
-		App->Say("Cant Find Recent Files");
-		return;
-	}
-
-	// Read in File Names from RecentFiles.ini
-	for (unsigned int i = 0; i < RECENT_FILES; ++i)
-	{
-		memset(buffer, 0, MAX_PATH);
-		fgets(buffer, MAX_PATH, ReadRecentFiles);
-
-		char Path[MAX_PATH];
-		strcpy(Path, buffer);
-		int Len = strlen(Path);
-		Path[Len - 1] = 0;
-
-		mPreviousFiles_Models[i] = std::string(Path);
-	}
-
-	fclose(ReadRecentFiles);
-
-	// Check for empty slots and gray out
-	for (int i = RECENT_FILES - 1; i >= 0; --i)
-	{
-		char szText[MAX_PATH];
-		strcpy(szText, mPreviousFiles_Models[i].c_str());
-
-		int Result = 0;
-		Result = strcmp("<empty>", szText);
-		if (Result == 0)
-		{
-
-		}
-		else
-		{
-			sprintf(buf, "%s", szText);
-			SendDlgItemMessage(hDlg, IDC_RECENTPRJLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-		}
-	}
-}
 

@@ -73,7 +73,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,_In_opt_ HINSTANCE hPrevInstance,
 	App->CL_Panels->Move_FileView_Window();
 	App->CL_Panels->Place_GlobalGroups();
 
-	App->CL_FileIO->Init_History();
+	App->CL_Recent_Files->Init_History();
 
 	App->CL_Prefs->Read_Preferences(); // Read Preferences
 
@@ -414,13 +414,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 			case ID_RECENTFILES2_IMPORTS: // Top Recent Files 1
 			{
-				App->CL_FileIO->Start_RecentProjects_Dlg(1);
+				App->CL_FileIO->Start_RecentProjects_Dlg(0);
 				return 1;
 			}
 
 			case ID_RECENTFILES2_PROJECTFILES: // Top Recent Files 1
 			{
-				App->CL_FileIO->Start_RecentProjects_Dlg(0);
+				App->CL_FileIO->Start_RecentProjects_Dlg(1);
 				return 1;
 			}
 
