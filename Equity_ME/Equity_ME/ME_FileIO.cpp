@@ -355,16 +355,18 @@ void ME_FileIO::CheckPath(char *pString, char *FileName,char* mJustFileName)
 // *************************************************************************
 void ME_FileIO::Init_History()
 {
-	char DirCheck[1024];
+
+	char DirCheck[MAX_PATH];
 	strcpy(DirCheck, UserData_Folder);
 	strcat(DirCheck, "\\");
 	strcat(DirCheck, "Vima19");
+
 
 	bool check = 0;
 	check = Search_For_Folder(DirCheck);
 	if (check == 0)
 	{
-		mPreviousFiles.resize(EQUITY_NUM_RECENT_FILES);
+		mPreviousFiles_Models.resize(RECENT_FILES);
 
 		CreateDirectory(DirCheck, NULL);
 		ResentHistory_Clear(); // Set all slots to Empty
@@ -373,6 +375,24 @@ void ME_FileIO::Init_History()
 	}
 	else
 	{
+		char mCheckFile[MAX_PATH];
+
+		strcpy(mCheckFile, DirCheck);
+		strcat(mCheckFile, "\\Projects.ini");
+
+		bool checkfile = App->CL_Utilities->Check_File_Exist(mCheckFile);
+
+		if (checkfile == 1)
+		{
+
+		}
+		else
+		{
+			ReadRecentFiles = nullptr;
+			ReadRecentFiles = fopen(mCheckFile, "wt");
+			fclose(ReadRecentFiles);
+		}
+
 		LoadHistory();
 	}
 }
@@ -382,7 +402,7 @@ void ME_FileIO::Init_History()
 // *************************************************************************
 void ME_FileIO::LoadHistory()
 {
-	mPreviousFiles.resize(EQUITY_NUM_RECENT_FILES);
+	mPreviousFiles_Models.resize(RECENT_FILES);
 
 	char buffer[1024];
 	char buf[1024];
@@ -402,7 +422,7 @@ void ME_FileIO::LoadHistory()
 	}
 
 	// Read in File Names from RecentFiles.ini
-	for (unsigned int i = 0; i < EQUITY_NUM_RECENT_FILES; ++i)
+	for (unsigned int i = 0; i < RECENT_FILES; ++i)
 	{
 		memset(buffer, 0, 1024);
 		fgets(buffer, 1024, ReadRecentFiles);
@@ -412,16 +432,16 @@ void ME_FileIO::LoadHistory()
 		int Len = strlen(Path);
 		Path[Len - 1] = 0;
 
-		mPreviousFiles[i] = std::string(Path);
+		mPreviousFiles_Models[i] = std::string(Path);
 	}
 
 	fclose(ReadRecentFiles);
 
 	// Check for empty slots and gray out
-	for (int i = EQUITY_NUM_RECENT_FILES - 1; i >= 0; --i)
+	for (int i = RECENT_FILES - 1; i >= 0; --i)
 	{
 		char szText[1024];
-		strcpy(szText, mPreviousFiles[i].c_str());
+		strcpy(szText, mPreviousFiles_Models[i].c_str());
 
 		UINT iFlags = 0;
 		int Result = 0;
@@ -453,19 +473,21 @@ void ME_FileIO::Save_FileHistory()
 	}
 
 	// Save out to RecentFile.ini
-	for (unsigned int i = 0; i < EQUITY_NUM_RECENT_FILES; ++i)
+	for (unsigned int i = 0; i < RECENT_FILES; ++i)
 	{
 		char szName[MAX_PATH];
-		strcpy(szName, mPreviousFiles[i].c_str());
+		strcpy(szName, mPreviousFiles_Models[i].c_str());
 
 		fprintf(WriteRecentFiles, "%s\n", szName);
 	}
 	fclose(WriteRecentFiles);
 
+
+
 	WriteRecentFiles = nullptr;
 
 	strcpy(buf, UserData_Folder);
-	strcat(buf, "\\Vima19\\Recent_Projects.ini");
+	strcat(buf, "\\Vima19\\Projects.ini");
 
 	WriteRecentFiles = fopen(buf, "wt");
 
@@ -486,21 +508,21 @@ void ME_FileIO::RecentFileHistory_Update()
 {
 	
 	std::string sz = std::string(App->CL_Model->Path_FileName);
-	if (mPreviousFiles[EQUITY_NUM_RECENT_FILES - 1] == sz)return;
+	if (mPreviousFiles_Models[RECENT_FILES - 1] == sz)return;
 
 	// add the new file to the list of recent files
-	for (unsigned int i = 0; i < EQUITY_NUM_RECENT_FILES - 1; ++i)
+	for (unsigned int i = 0; i < RECENT_FILES - 1; ++i)
 	{
-		mPreviousFiles[i] = mPreviousFiles[i + 1];
+		mPreviousFiles_Models[i] = mPreviousFiles_Models[i + 1];
 	}
 
-	mPreviousFiles[EQUITY_NUM_RECENT_FILES - 1] = sz;
+	mPreviousFiles_Models[RECENT_FILES - 1] = sz;
 
 	// Check for empty slots and gray out
-	for (int i = EQUITY_NUM_RECENT_FILES - 1; i >= 0; --i)
+	for (int i = RECENT_FILES - 1; i >= 0; --i)
 	{
 		char szText[1024];
-		strcpy(szText, mPreviousFiles[i].c_str());
+		strcpy(szText, mPreviousFiles_Models[i].c_str());
 
 		UINT iFlags = 0;
 		int Result = 0;
@@ -529,9 +551,9 @@ void ME_FileIO::ResentHistory_Clear()
 	}
 
 	// Set all slots to <empty>
-	for (unsigned int i = 0; i < EQUITY_NUM_RECENT_FILES; ++i)
+	for (unsigned int i = 0; i < RECENT_FILES; ++i)
 	{
-		mPreviousFiles[i] = std::string("<empty>");
+		mPreviousFiles_Models[i] = std::string("<empty>");
 	}
 
 	// Save Changes
@@ -543,7 +565,7 @@ void ME_FileIO::ResentHistory_Clear()
 // *************************************************************************
 void ME_FileIO::LoadHistory_Equity()
 {
-	mPreviousFiles.resize(EQUITY_NUM_RECENT_FILES);
+	mPreviousFiles_Models.resize(RECENT_FILES);
 
 	char buffer[1024];
 	char buf[1024];
@@ -560,7 +582,7 @@ void ME_FileIO::LoadHistory_Equity()
 	}
 
 	// Read in File Names from RecentFiles.ini
-	for (unsigned int i = 0; i < EQUITY_NUM_RECENT_FILES; ++i)
+	for (unsigned int i = 0; i < RECENT_FILES; ++i)
 	{
 		memset(buffer, 0, 1024);
 		fgets(buffer, 1024, ReadRecentFiles);
@@ -570,17 +592,17 @@ void ME_FileIO::LoadHistory_Equity()
 		int Len = strlen(Path);
 		Path[Len - 1] = 0;
 
-		mPreviousFiles[i] = std::string(Path);
+		mPreviousFiles_Models[i] = std::string(Path);
 	}
 
 	fclose(ReadRecentFiles);
 
 	
 	// Check for empty slots and gray out
-	for (int i = EQUITY_NUM_RECENT_FILES - 1; i >= 0; --i)
+	for (int i = RECENT_FILES - 1; i >= 0; --i)
 	{
 		char szText[1024];
-		strcpy(szText, mPreviousFiles[i].c_str());
+		strcpy(szText, mPreviousFiles_Models[i].c_str());
 
 		UINT iFlags = 0;
 		int Result = 0;
@@ -741,7 +763,7 @@ void ME_FileIO::List_Recent_Files(HWND hDlg)
 	char buf[MAX_PATH];
 	char buffer[MAX_PATH];
 
-	mPreviousFiles.resize(EQUITY_NUM_RECENT_FILES);
+	mPreviousFiles_Models.resize(RECENT_FILES);
 
 	strcpy(buf, UserData_Folder);
 	strcat(buf, "\\Vima19\\Vima19.ini");
@@ -755,7 +777,7 @@ void ME_FileIO::List_Recent_Files(HWND hDlg)
 	}
 
 	// Read in File Names from RecentFiles.ini
-	for (unsigned int i = 0; i < EQUITY_NUM_RECENT_FILES; ++i)
+	for (unsigned int i = 0; i < RECENT_FILES; ++i)
 	{
 		memset(buffer, 0, MAX_PATH);
 		fgets(buffer, MAX_PATH, ReadRecentFiles);
@@ -765,16 +787,16 @@ void ME_FileIO::List_Recent_Files(HWND hDlg)
 		int Len = strlen(Path);
 		Path[Len - 1] = 0;
 
-		mPreviousFiles[i] = std::string(Path);
+		mPreviousFiles_Models[i] = std::string(Path);
 	}
 
 	fclose(ReadRecentFiles);
 
 	// Check for empty slots and gray out
-	for (int i = EQUITY_NUM_RECENT_FILES - 1; i >= 0; --i)
+	for (int i = RECENT_FILES - 1; i >= 0; --i)
 	{
 		char szText[MAX_PATH];
-		strcpy(szText, mPreviousFiles[i].c_str());
+		strcpy(szText, mPreviousFiles_Models[i].c_str());
 
 		int Result = 0;
 		Result = strcmp("<empty>", szText);
@@ -801,7 +823,7 @@ void ME_FileIO::List_Recent_Projects(HWND hDlg)
 	sprintf(buf, "%s", "Model Info");
 	SendDlgItemMessage(hDlg, IDC_RECENTPRJLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
-	mPreviousFiles.resize(EQUITY_NUM_RECENT_FILES);
+	mPreviousFiles_Models.resize(RECENT_FILES);
 
 	strcpy(buf, UserData_Folder);
 	strcat(buf, "\\Vima19\\Vima19.ini");
@@ -815,7 +837,7 @@ void ME_FileIO::List_Recent_Projects(HWND hDlg)
 	}
 
 	// Read in File Names from RecentFiles.ini
-	for (unsigned int i = 0; i < EQUITY_NUM_RECENT_FILES; ++i)
+	for (unsigned int i = 0; i < RECENT_FILES; ++i)
 	{
 		memset(buffer, 0, MAX_PATH);
 		fgets(buffer, MAX_PATH, ReadRecentFiles);
@@ -825,16 +847,16 @@ void ME_FileIO::List_Recent_Projects(HWND hDlg)
 		int Len = strlen(Path);
 		Path[Len - 1] = 0;
 
-		mPreviousFiles[i] = std::string(Path);
+		mPreviousFiles_Models[i] = std::string(Path);
 	}
 
 	fclose(ReadRecentFiles);
 
 	// Check for empty slots and gray out
-	for (int i = EQUITY_NUM_RECENT_FILES - 1; i >= 0; --i)
+	for (int i = RECENT_FILES - 1; i >= 0; --i)
 	{
 		char szText[MAX_PATH];
-		strcpy(szText, mPreviousFiles[i].c_str());
+		strcpy(szText, mPreviousFiles_Models[i].c_str());
 
 		int Result = 0;
 		Result = strcmp("<empty>", szText);

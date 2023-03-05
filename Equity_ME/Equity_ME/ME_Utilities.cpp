@@ -147,3 +147,29 @@ float ME_Utilities::RadiansToDegrees(float Radians)
 	float Degrees = 0;//(Radians * 180)/GE_PI;
 	return Degrees;
 }
+
+// *************************************************************************
+// *		Check_File_Exist:- Terry and Hazel Flanigan 2022		 	   *
+// *************************************************************************
+bool ME_Utilities::Check_File_Exist(char* Full_Path)
+{
+	char pSearchPath[1024];
+
+	WIN32_FIND_DATA FindFileData;
+	HANDLE hFind;
+
+	strcpy(pSearchPath, Full_Path);
+
+	hFind = FindFirstFile(pSearchPath, &FindFileData);
+	if (hFind == INVALID_HANDLE_VALUE)
+	{
+		return 0;
+	}
+	else
+	{
+		FindClose(hFind);
+		return 1;
+	}
+
+	return 0;
+}

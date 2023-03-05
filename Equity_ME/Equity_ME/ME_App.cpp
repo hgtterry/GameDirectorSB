@@ -60,6 +60,7 @@ ME_App::ME_App()
 	CL_PB = nullptr;
 
 	CL_Load_Textures = nullptr;
+	CL_Recent_Files = nullptr;
 
 	SBC_Dimensions = nullptr;
 
@@ -161,7 +162,8 @@ bool ME_App::InitApp(void)
 	CL_WE_3DT =		new ME_WE_3DT();
 
 	CL_Load_Textures = new ME_Load_Textures();
-	
+	CL_Recent_Files = new ME_Recent_Files();
+
 	SBC_Dimensions =	new SB_Dimensions();
 	CL_PB =				new ME_PB();
 

@@ -62,7 +62,8 @@ public:
 	char BrowserMessage[MAX_PATH];
 	TCHAR szSelectedDir[MAX_PATH];
 
-	std::vector<std::string> mPreviousFiles;
+	std::vector<std::string> mPreviousFiles_Models;
+	std::vector<std::string> mPreviousFiles_Projects;
 
 protected:
 	static int __stdcall BrowseCallbackProc(HWND  hwnd, UINT  uMsg, LPARAM  lParam, LPARAM  lpData);
@@ -74,8 +75,8 @@ protected:
 	FILE *WriteRecentFiles;
 	FILE *ReadRecentFiles;
 
-#define EQUITY_NUM_RECENT_FILES 0x8
-#define EQUITY_RECENT_FILE_ID(_n_) (5000 + _n_)
+#define RECENT_FILES 0x8
+
 
 	OPENFILENAME ofn;
 };

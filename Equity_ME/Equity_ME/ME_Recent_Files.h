@@ -1,5 +1,7 @@
+#pragma once
+
 /*
-Copyright (c) 2022 Equity_ME Model Editor -- Inflanite Software W.T.Flanigan H.C.Flanigan
+Copyright (c) 2022- 2023 Equity_ME Model Editor -- Inflanite Software W.T.Flanigan H.C.Flanigan
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -21,23 +23,12 @@ misrepresented as being the original software.
 distribution.
 */
 
-#pragma once
-class ME_Utilities
+class ME_Recent_Files
 {
 public:
-	ME_Utilities();
-	~ME_Utilities();
+	ME_Recent_Files();
+	~ME_Recent_Files();
 
-	bool TestForBadCharactors(char* buf);
-	bool ReverseBackSlash(char* buf);
-	bool OpenHTML(char* HelpTitle);
-	float floatPercent(int Val);
 
-	bool Check_File_Exist(char* Full_Path);
-
-	float DegreesToRadians(float Degrees);
-	float RadiansToDegrees(float Radians);
-
-	char Return_Chr[255];
 };
 

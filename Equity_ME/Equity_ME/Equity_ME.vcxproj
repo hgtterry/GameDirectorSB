@@ -177,6 +177,7 @@
     <ClInclude Include="ME_Panels.h" />
     <ClInclude Include="ME_PB.h" />
     <ClInclude Include="ME_Preferences.h" />
+    <ClInclude Include="ME_Recent_Files.h" />
     <ClInclude Include="ME_Render.h" />
     <ClInclude Include="ME_TextureLib.h" />
     <ClInclude Include="ME_Textures.h" />
@@ -226,6 +227,7 @@
     <ClCompile Include="ME_Panels.cpp" />
     <ClCompile Include="ME_PB.cpp" />
     <ClCompile Include="ME_Preferences.cpp" />
+    <ClCompile Include="ME_Recent_Files.cpp" />
     <ClCompile Include="ME_Render.cpp" />
     <ClCompile Include="ME_TextureLib.cpp" />
     <ClCompile Include="ME_Textures.cpp" />
