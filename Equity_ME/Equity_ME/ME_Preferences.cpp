@@ -9,7 +9,15 @@ ME_Preferences::ME_Preferences()
 	Show_Preferences_GUI = 0;
 	Preferences_Page = 0;
 
-	Prefs_TestFile_Flag = 0;
+
+	char Default_Project[MAX_PATH];
+	strcpy(Default_Project, App->EquityDirecory_FullPath);
+	strcat(Default_Project, "\\Models\\Cube.obj");
+	strcpy(QL_User_File, Default_Project);
+
+
+
+	Prefs_QuickLoad_Default_f = 0;
 	Prefs_StartScreen_Flag = 0;
 	Prefs_FullScreen_Flag = 0;
 	Prefs_Load_LastScene_Flag = 0;
@@ -108,12 +116,12 @@ void ME_Preferences::Preferences_GUI()
 		/*if (ImGui::Checkbox("Show Start Up Screen", &Prefs_StartScreen_Flag))
 		{
 			Write_Preferences();
-		}
+		}*/
 
-		if (ImGui::Checkbox("Default Quick File", &Prefs_TestFile_Flag))
+		if (ImGui::Checkbox("Default Quick Load", &Prefs_QuickLoad_Default_f))
 		{
 			Write_Preferences();
-		}*/
+		}
 
 		if (ImGui::Checkbox("Full Screen", &Prefs_FullScreen_Flag))
 		{
@@ -272,11 +280,11 @@ void ME_Preferences::Close_Preferences_GUI()
 // *************************************************************************
 bool ME_Preferences::Read_Preferences()
 {
-	/*char chr_Tag1[MAX_Path];
-	char chr_Tag2[1024];
+	char chr_Tag1[MAX_PATH];
+	//char chr_Tag2[1024];
 
 	chr_Tag1[0] = 0;
-	chr_Tag2[0] = 0;*/
+	//chr_Tag2[0] = 0;
 
 	char Preferences_Path[MAX_PATH];
 
@@ -288,24 +296,23 @@ bool ME_Preferences::Read_Preferences()
 
 	App->CL_Ini->SetPathName(Preferences_Path);
 
+	Prefs_QuickLoad_Default_f = App->CL_Ini->GetInt("Quick_Load", "QL_Use_TestFile", 1, 10);
+
+	
+	int Test = App->CL_Ini->GetString("Quick_Load", "QL_User_File", chr_Tag1, MAX_PATH);
+	if (Test > 0)
+	{
+		strcpy(QL_User_File, chr_Tag1);
+	}
+	else
+	{
+		char Default_Project[MAX_PATH];
+		strcpy(Default_Project, App->EquityDirecory_FullPath);
+		strcat(Default_Project, "\\Models\\Cube.obj");
+	}
+
+
 	Prefs_FullScreen_Flag = App->CL_Ini->GetInt("Start_Up", "Start_FullScreen", 1, 10);
-
-
-
-	/*App->CL_Ini->GetString("WE_Fast_Load", "Pref_WE_JustFileName", chr_Tag1, 1024);
-	strcpy(Pref_WE_JustFileName, chr_Tag1);
-
-	App->CL_Ini->GetString("WE_Fast_Load", "Pref_WE_Path_FileName", chr_Tag1, 1024);
-	strcpy(Pref_WE_Path_FileName, chr_Tag1);
-
-	App->CL_Ini->GetString("WE_Fast_Load", "Pref_Txl_Path_FileName", chr_Tag2, 1024);
-	strcpy(Pref_Txl_Path_FileName, chr_Tag2);
-
-	App->CL_Ini->GetString("WE_Fast_Load", "Pref_Ogre_JustFileName", chr_Tag2, 1024);
-	strcpy(Pref_Ogre_JustFileName, chr_Tag2);
-
-	App->CL_Ini->GetString("WE_Fast_Load", "Pref_Ogre_Path_FileName", chr_Tag2, 1024);
-	strcpy(Pref_Ogre_Path, chr_Tag2);*/
 
 	return 1;
 }
@@ -332,6 +339,12 @@ bool ME_Preferences::Write_Preferences()
 		return 0;
 	}
 
+	fprintf(WriteScene, "%s\n", "[Quick_Load]");
+	fprintf(WriteScene, "%s%i\n", "QL_Use_TestFile=", Prefs_QuickLoad_Default_f);
+	fprintf(WriteScene, "%s%s\n", "QL_User_File=", QL_User_File);
+
+	fprintf(WriteScene, "%s\n", " ");
+
 	fprintf(WriteScene, "%s\n", "[Start_Up]");
 	fprintf(WriteScene, "%s%i\n", "Start_FullScreen=", Prefs_FullScreen_Flag);
 
@@ -349,4 +362,47 @@ bool ME_Preferences::Write_Preferences()
 
 	//Read_Preferences();
 	return 1;
+}
+
+// *************************************************************************
+// *			Do_Quick_Load:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void ME_Preferences::Do_Quick_Load()
+{
+
+	if (App->CL_Prefs->Prefs_QuickLoad_Default_f == 1)
+	{
+
+		char Default_Project[MAX_PATH];
+		strcpy(Default_Project, App->EquityDirecory_FullPath);
+		strcat(Default_Project, "\\Models\\Cube.obj");
+
+		App->CL_Import->Reload_FromResentFiles(Default_Project);
+
+		//App->SBC_Import->Quick_Load_Flag = 1;
+		//App->SBC_Import->Quick_Load_Flag = 0;
+	}
+	else
+	{
+		int Result = strcmp(App->CL_Prefs->QL_User_File, "Not_Set");
+		if (Result == 0)
+		{
+			App->Say("Quick Load Not Set");
+		}
+		else
+		{
+			//App->SBC_Import->Quick_Load_Flag = 1;
+			App->CL_Import->Reload_FromResentFiles(App->CL_Prefs->QL_User_File);
+			//App->SBC_Import->Quick_Load_Flag = 0;
+		}
+	}
+}
+
+// *************************************************************************
+// *			Update_User_File:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void ME_Preferences::Update_User_File(char * PathAndFile)
+{
+	strcpy(App->CL_Prefs->QL_User_File, PathAndFile);
+	App->CL_Prefs->Write_Preferences();
 }

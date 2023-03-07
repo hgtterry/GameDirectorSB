@@ -12,10 +12,15 @@ public:
 	bool Read_Preferences();
 	bool Write_Preferences();
 
+	void Do_Quick_Load();
+	void Update_User_File(char* PathAndFile);
+
 	bool Show_Preferences_GUI;
 	int Preferences_Page;
 
-	bool Prefs_TestFile_Flag;
+	char QL_User_File[MAX_PATH];
+
+	bool Prefs_QuickLoad_Default_f;
 	bool Prefs_StartScreen_Flag;
 	bool Prefs_FullScreen_Flag;
 	bool Prefs_Load_LastScene_Flag;

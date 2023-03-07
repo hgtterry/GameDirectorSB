@@ -889,13 +889,7 @@ LRESULT CALLBACK ME_TopBar::Files_TB_Proc(HWND hDlg, UINT message, WPARAM wParam
 
 		if (LOWORD(wParam) == IDC_BTTBQUICKLOAD)
 		{
-			Debug
-
-			if (App->CL_Model->Model_Loaded == 1)
-			{
-				Debug
-				//RedrawWindow(App->CL_TopBar->Group_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-			}
+			App->CL_Prefs->Do_Quick_Load();
 
 			return 1;
 		}
@@ -906,6 +900,7 @@ LRESULT CALLBACK ME_TopBar::Files_TB_Proc(HWND hDlg, UINT message, WPARAM wParam
 	}
 	return FALSE;
 }
+
 
 // *************************************************************************
 // *						Init_Bmps_Group Terry Bernie				   *

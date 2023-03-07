@@ -58,6 +58,7 @@ distribution.
 
 #include "ME_Load_Textures.h"
 #include "ME_Recent_Files.h"
+#include "ME_Editor_Gui.h"
 
 #include "SB_Dimensions.h"
 
@@ -100,7 +101,8 @@ public:
 	ME_PB*				CL_PB;
 
 	ME_Load_Textures*	CL_Load_Textures;
-	ME_Recent_Files* CL_Recent_Files;
+	ME_Recent_Files*	CL_Recent_Files;
+	ME_Editor_Gui*		CL_Editor_Gui;
 
 	SB_Dimensions* SBC_Dimensions;
 

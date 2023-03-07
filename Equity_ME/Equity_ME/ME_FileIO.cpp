@@ -28,7 +28,7 @@ distribution.
 #include <shellapi.h>
 #include "Shlobj.h"
 #include "io.h"
-#include <string>
+//#include <string>
 #include "shobjidl_core.h"
 
 ME_FileIO::ME_FileIO()
@@ -56,6 +56,7 @@ ME_FileIO::~ME_FileIO()
 // *************************************************************************
 bool ME_FileIO::Folder_Browser()
 {
+	
 	IFileDialog* pfd;
 	if (SUCCEEDED(CoCreateInstance(CLSID_FileOpenDialog, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pfd))))
 	{

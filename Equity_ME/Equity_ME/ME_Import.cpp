@@ -96,6 +96,9 @@ bool ME_Import::Assimp_Loader(char* Extension, char* Extension2)
 	Set_Equity();
 	
 	App->CL_Recent_Files->RecentFile_Models_History_Update();
+
+	App->CL_Prefs->Update_User_File(Model_Path_And_File);
+
 	return 1;
 }
 
@@ -125,6 +128,7 @@ bool ME_Import::RFActor_Loader(void)
 	Set_Equity();
 
 	App->CL_Recent_Files->RecentFile_Models_History_Update();
+	App->CL_Prefs->Update_User_File(Model_Path_And_File);
 	return 1;
 }
 
@@ -168,6 +172,7 @@ bool ME_Import::Ogre_Loader(char* Extension, char* Extension2)
 	Ogre::Root::getSingletonPtr()->renderOneFrame();
 
 	App->CL_Recent_Files->RecentFile_Models_History_Update();
+	App->CL_Prefs->Update_User_File(Model_Path_And_File);
 	//-------------------------------
 	//if (App->CL_Import_Ogre->NoMaterialFileFound == 1)
 	//{
@@ -232,7 +237,7 @@ void ME_Import::Reload_FromResentFiles(char* ResentPathAndFile)
 		App->CL_Equity_SB->Read_Project_File(App->CL_FileIO->Model_Path_FileName);
 		App->CL_Equity_SB->Load_File_Wepf();
 
-		
+		App->CL_Prefs->Update_User_File(App->CL_FileIO->Model_Path_FileName);
 		return;
 	}
 	
@@ -247,6 +252,7 @@ void ME_Import::Reload_FromResentFiles(char* ResentPathAndFile)
 		Set_Equity();
 
 		App->CL_Recent_Files->RecentFile_Models_History_Update();
+		App->CL_Prefs->Update_User_File(App->CL_FileIO->Model_Path_FileName);
 		return;
 	}
 
@@ -268,6 +274,7 @@ void ME_Import::Reload_FromResentFiles(char* ResentPathAndFile)
 		Set_Equity();
 
 		App->CL_Recent_Files->RecentFile_Models_History_Update();
+		App->CL_Prefs->Update_User_File(App->CL_FileIO->Model_Path_FileName);
 
 		Ogre::Root::getSingletonPtr()->renderOneFrame();
 		Ogre::Root::getSingletonPtr()->renderOneFrame();
@@ -310,6 +317,7 @@ void ME_Import::Reload_FromResentFiles(char* ResentPathAndFile)
 	Set_Equity();
 
 	App->CL_Recent_Files->RecentFile_Models_History_Update();
+	App->CL_Prefs->Update_User_File(App->CL_FileIO->Model_Path_FileName);
 }
 
 // *************************************************************************

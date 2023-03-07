@@ -35,6 +35,7 @@
 #include <tchar.h>
 #include <direct.h>
 #include <Commctrl.h>   // includes the Common control header
+#include <string>
 
 #include "Ogre.h"
 #include "OgreConfigFile.h"

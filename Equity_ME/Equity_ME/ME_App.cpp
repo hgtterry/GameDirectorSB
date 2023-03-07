@@ -61,6 +61,7 @@ ME_App::ME_App()
 
 	CL_Load_Textures = nullptr;
 	CL_Recent_Files = nullptr;
+	CL_Editor_Gui = nullptr;
 
 	SBC_Dimensions = nullptr;
 
@@ -163,6 +164,7 @@ bool ME_App::InitApp(void)
 
 	CL_Load_Textures = new ME_Load_Textures();
 	CL_Recent_Files = new ME_Recent_Files();
+	CL_Editor_Gui = new ME_Editor_Gui();
 
 	SBC_Dimensions =	new SB_Dimensions();
 	CL_PB =				new ME_PB();
