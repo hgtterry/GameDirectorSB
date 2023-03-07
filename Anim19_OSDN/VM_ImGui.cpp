@@ -252,9 +252,9 @@ void VM_ImGui::ImGui_Editor_Loop(void)
 	}
 
 	// SBC_Gui_Dialogs - Preferences
-	if (App->SBC_Prefs->Show_Preferences_GUI == 1)
+	if (App->CL_Prefs->Show_Preferences_GUI == 1)
 	{
-		App->SBC_Prefs->Preferences_GUI();
+		App->CL_Prefs->Preferences_GUI();
 	}
 
 	// SBC_Gui_Dialogs - Physics Console

@@ -461,9 +461,9 @@ bool SB_Project::Save_Project()
 
 	if (Set_QuickLoad_Flag == 1)
 	{
-		strcpy(App->SBC_Prefs->QL_User_File, App->SBC_FileIO->Project_Path_File_Name);
-		App->SBC_Prefs->Prefs_TestFile_Flag = 0;
-		App->SBC_Prefs->Write_Preferences();
+		strcpy(App->CL_Prefs->QL_User_File, App->SBC_FileIO->Project_Path_File_Name);
+		App->CL_Prefs->Prefs_QuickLoad_Default_f = 0;
+		App->CL_Prefs->Write_Preferences();
 	}
 
 
@@ -1540,7 +1540,7 @@ bool SB_Project::Load_Project()
 	if (Options->Has_Player > 0)
 	{
 		bool test = Load_Project_Player();
-		App->SBC_DCC->Player_CanJump = App->SBC_Prefs->Prefs_PlayerCanJump_Flag;
+		App->SBC_DCC->Player_CanJump = App->CL_Prefs->Prefs_PlayerCanJump_Flag;
 	}
 
 	// ------------------------------------- Camera
@@ -1596,6 +1596,7 @@ bool SB_Project::Load_Project()
 
 	App->Set_Main_TitleBar(App->SBC_FileIO->Project_Path_File_Name);
 	App->SBC_FileIO->RecentFileHistory_Update();
+	App->CL_Prefs->Update_User_File(App->SBC_FileIO->Project_Path_File_Name);
 
 	App->SBC_FileView->SelectItem(App->SBC_FileView->FV_LevelFolder);
 

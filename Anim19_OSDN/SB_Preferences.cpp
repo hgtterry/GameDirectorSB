@@ -41,7 +41,7 @@ SB_Preferences::SB_Preferences()
 
 	strcpy(QL_User_File,"Not_Set");
 
-	Prefs_TestFile_Flag = 1;
+	Prefs_QuickLoad_Default_f = 1;
 	Prefs_StartScreen_Flag = 1;
 	Prefs_FullScreen_Flag = 1;
 	Prefs_Load_LastScene_Flag = 1;
@@ -133,7 +133,7 @@ void SB_Preferences::Preferences_GUI()
 			Write_Preferences();
 		}
 
-		if (ImGui::Checkbox("Default Quick File", &Prefs_TestFile_Flag))
+		if (ImGui::Checkbox("Default Quick File", &Prefs_QuickLoad_Default_f))
 		{
 			Write_Preferences();
 		}
@@ -293,7 +293,7 @@ void SB_Preferences::Close_Preferences_GUI()
 void SB_Preferences::Set_Defaults()
 {
 	// -------------------------- Quick Load
-	Prefs_TestFile_Flag = 1;
+	Prefs_QuickLoad_Default_f = 1;
 	strcpy(QL_User_File, "Not_Set");
 
 	Prefs_StartScreen_Flag = 1;
@@ -327,7 +327,7 @@ bool SB_Preferences::Write_Preferences()
 	
 
 	fprintf(WriteScene, "%s\n", "[Quick_Load]");
-	fprintf(WriteScene, "%s%i\n", "QL_Use_TestFile=", Prefs_TestFile_Flag);
+	fprintf(WriteScene, "%s%i\n", "QL_Use_TestFile=", Prefs_QuickLoad_Default_f);
 	fprintf(WriteScene, "%s%s\n", "QL_User_File=", QL_User_File);
 
 	fprintf(WriteScene, "%s\n", " ");
@@ -368,7 +368,7 @@ bool SB_Preferences::Read_Preferences()
 
 	App->Cl_Ini->SetPathName(Preferences_Path);
 
-	Prefs_TestFile_Flag = App->Cl_Ini->GetInt("Quick_Load", "QL_Use_TestFile",1, 10);
+	Prefs_QuickLoad_Default_f = App->Cl_Ini->GetInt("Quick_Load", "QL_Use_TestFile",1, 10);
 
 	App->Cl_Ini->GetString("Quick_Load", "QL_User_File", chr_Tag1, MAX_PATH);
 	strcpy(QL_User_File, chr_Tag1);
@@ -386,4 +386,44 @@ bool SB_Preferences::Read_Preferences()
 	App->SBC_Gui_Propreties->Show_Properties_Panel_Flag = App->Cl_Ini->GetInt("Development", "New_Properties", 0, 10);
 
 	return 1;
+}
+
+// *************************************************************************
+// *			Do_Quick_Load:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void SB_Preferences::Do_Quick_Load()
+{
+	if (Prefs_QuickLoad_Default_f == 1)
+	{
+		char Default_Project[MAX_PATH];
+		strcpy(Default_Project, App->EquityDirecory_FullPath);
+		strcat(Default_Project, "\\Projects\\RF_Project_Prj\\Project.SBProj");
+
+		App->SBC_Import->Quick_Load_Flag = 1;
+		App->SBC_Import->Reload_FromResentFiles(Default_Project);
+		App->SBC_Import->Quick_Load_Flag = 0;
+	}
+	else
+	{
+		int Result = strcmp(QL_User_File, "Not_Set");
+		if (Result == 0)
+		{
+			App->Say("Quick Load Not Set");
+		}
+		else
+		{
+			App->SBC_Import->Quick_Load_Flag = 1;
+			App->SBC_Import->Reload_FromResentFiles(QL_User_File);
+			App->SBC_Import->Quick_Load_Flag = 0;
+		}
+	}
+}
+
+// *************************************************************************
+// *			Update_User_File:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_Preferences::Update_User_File(char* PathAndFile)
+{
+	strcpy(App->CL_Prefs->QL_User_File, PathAndFile);
+	App->CL_Prefs->Write_Preferences();
 }

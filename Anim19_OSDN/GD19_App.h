@@ -86,6 +86,7 @@ distribution.
 #include "SB_Materials.h"
 #include "Bass_Front_Dialog.h"
 #include "SB_Gui_Properties.h"
+#include "SB_Editor_Gui.h"
 
 #include "DynamicCharacterController.h"
 
@@ -139,7 +140,7 @@ public:
 	SB_Markers*				SBC_Markers;
 	SB_Props_Dialogs*		SBC_Props_Dialog;
 	SB_LookUps*				SBC_LookUps;
-	SB_Preferences*			SBC_Prefs;
+	SB_Preferences*			CL_Prefs;
 	SB_Display*				SBC_Display;
 	SB_Build*				SBC_Build;
 	SB_Panels*				SBC_Panels;
@@ -159,6 +160,7 @@ public:
 
 	Bass_Front_Dialog*		SBC_Front_Dlg;
 	SB_Gui_Properties*		SBC_Gui_Propreties;
+	SB_Editor_Gui*			CL_Editor_Gui;
 
 	DynamicCharacterController*		SBC_DCC;
 

@@ -108,6 +108,8 @@ void SB_Import::Reload_FromResentFiles(char* ResentPathAndFile)
 
 	bool test = App->SBC_Project->Load_Project();
 
+	App->CL_Prefs->Update_User_File(ResentPathAndFile);
+
 	App->SBC_TopTabs->Project_Loaded_Reset();
 	App->SBC_Ogre->RenderFrame();
 	

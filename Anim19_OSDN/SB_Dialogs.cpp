@@ -550,7 +550,7 @@ void SB_Dialogs::List_Particles(HWND List)
 // **************************************************************************
 void SB_Dialogs::Front_Screen()
 {
-	if (App->SBC_Prefs->Prefs_StartScreen_Flag == 1)
+	if (App->CL_Prefs->Prefs_StartScreen_Flag == 1)
 	{
 		DialogBox(App->hInst, (LPCTSTR)IDD_FRONTDLG, App->Fdlg, (DLGPROC)Front_Screen_Proc);
 	}
@@ -674,15 +674,15 @@ LRESULT CALLBACK SB_Dialogs::Front_Screen_Proc(HWND hDlg, UINT message, WPARAM w
 			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
 			if (test == BST_CHECKED)
 			{
-				App->SBC_Prefs->Prefs_StartScreen_Flag = 0;
-				App->SBC_Prefs->Write_Preferences();
+				App->CL_Prefs->Prefs_StartScreen_Flag = 0;
+				App->CL_Prefs->Write_Preferences();
 
 				return 1;
 			}
 			else
 			{
-				App->SBC_Prefs->Prefs_StartScreen_Flag = 1;
-				App->SBC_Prefs->Write_Preferences();
+				App->CL_Prefs->Prefs_StartScreen_Flag = 1;
+				App->CL_Prefs->Write_Preferences();
 
 				return 1;
 			}

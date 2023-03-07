@@ -22,7 +22,7 @@
     <ProjectGuid>{FE2B8ABE-DBBE-466A-86BB-0B2344866A98}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>GD19_OSDN</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.22000.0</WindowsTargetPlatformVersion>
     <ProjectName>GameDirectorSB</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -197,6 +197,7 @@
     <ClInclude Include="SB_Dialogs.h" />
     <ClInclude Include="SB_Dimensions.h" />
     <ClInclude Include="SB_Display.h" />
+    <ClInclude Include="SB_Editor_Gui.h" />
     <ClInclude Include="SB_FileIO.h" />
     <ClInclude Include="SB_FileView.h" />
     <ClInclude Include="SB_Gui_Dialogs.h" />
@@ -276,6 +277,7 @@
     <ClCompile Include="SB_Dialogs.cpp" />
     <ClCompile Include="SB_Dimensions.cpp" />
     <ClCompile Include="SB_Display.cpp" />
+    <ClCompile Include="SB_Editor_Gui.cpp" />
     <ClCompile Include="SB_FileIO.cpp" />
     <ClCompile Include="SB_FileView.cpp" />
     <ClCompile Include="SB_Gui_Dialogs.cpp" />

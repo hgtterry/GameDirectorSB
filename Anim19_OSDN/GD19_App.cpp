@@ -70,7 +70,7 @@ GD19_App::GD19_App(void)
 	SBC_Markers =		nullptr;
 	SBC_Props_Dialog =	nullptr;
 	SBC_LookUps =		nullptr;
-	SBC_Prefs =			nullptr;
+	CL_Prefs =			nullptr;
 	SBC_Display =		nullptr;
 	SBC_Build =			nullptr;
 	SBC_Project_Create = nullptr;
@@ -87,6 +87,8 @@ GD19_App::GD19_App(void)
 
 	SBC_Front_Dlg =			nullptr;
 	SBC_Gui_Propreties =	nullptr;
+	CL_Editor_Gui =			nullptr;
+
 	SBC_DCC =				nullptr;
 
 	// ---------------------------------------------------- 29/12/21
@@ -246,7 +248,7 @@ bool GD19_App::InitApp(void)
 	SBC_Markers =		new SB_Markers();
 	SBC_Props_Dialog = new SB_Props_Dialogs();
 	SBC_LookUps =		new SB_LookUps();
-	SBC_Prefs =			new SB_Preferences();
+	CL_Prefs =			new SB_Preferences();
 	SBC_Display =		new SB_Display();
 	SBC_Build =			new SB_Build();
 	SBC_Com_Area =		new SB_Com_Area();
@@ -265,7 +267,8 @@ bool GD19_App::InitApp(void)
 
 	SBC_Locations =			new SB_Locations();
 	SBC_Gui_Propreties =	new SB_Gui_Properties();
-	
+	CL_Editor_Gui =			new SB_Editor_Gui();
+
 	//SBC_DCC =				new DynamicCharacterController();
 
 	//--------------

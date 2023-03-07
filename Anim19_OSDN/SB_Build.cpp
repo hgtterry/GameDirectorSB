@@ -874,7 +874,7 @@ bool SB_Build::Build_Project_Ini()
 	fprintf(WriteFile, "%s%i\n", "Game_FullScreen=", App->SBC_Build->GameOptions->FullScreen);
 	fprintf(WriteFile, "%s%i\n", "Zipped_Assets=", App->SBC_Build->GameOptions->Zipped_Assets_Flag);
 	fprintf(WriteFile, "%s%i\n", "Use_Front_Dlg=", App->SBC_Build->GameOptions->Front_Dialog_Flag);
-	fprintf(WriteFile, "%s%i\n", "Player_CanJump=", App->SBC_Prefs->Prefs_PlayerCanJump_Flag);
+	fprintf(WriteFile, "%s%i\n", "Player_CanJump=", App->CL_Prefs->Prefs_PlayerCanJump_Flag);
 
 	fclose(WriteFile);
 

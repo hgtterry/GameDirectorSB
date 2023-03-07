@@ -144,8 +144,6 @@ bool SB_Ogre::OgreCreateRoot(void)
 	if (App->Debug_App == 1)
 	{
 		mRoot = OGRE_NEW Ogre::Root(pluginsPath, mResourcePath + "Equity_CFG.cfg", mResourcePath + "EquitySB.log");
-		//Ogre::LogManager::getSingleton().setLogDetail(Ogre::LoggingLevel::LL_LOW);
-
 		Ogre::LogManager::getSingleton().createLog(mResourcePath + "App.log");
 	}
 	else
@@ -153,7 +151,6 @@ bool SB_Ogre::OgreCreateRoot(void)
 		mRoot = OGRE_NEW Ogre::Root(pluginsPath, mResourcePath + "Equity_CFG.cfg", mResourcePath + "");
 	}
 	
-
 	return 1;
 }
 

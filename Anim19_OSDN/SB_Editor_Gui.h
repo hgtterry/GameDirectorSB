@@ -1,5 +1,7 @@
+#pragma once
+
 /*
-Copyright (c) 2021 EquitySB and EquityME -- Inflanite Software W.T.Flanigan H.C.Flanigan
+Copyright (c) 2022 - 2023 GameDirectorSB and EquityME -- HGTInflanite Software W.T.Flanigan H.C.Flanigan
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -21,45 +23,10 @@ misrepresented as being the original software.
 distribution.
 */
 
-#pragma once
-class SB_Preferences
+class SB_Editor_Gui
 {
 public:
-	SB_Preferences();
-	~SB_Preferences();
-
-	void Start_Preferences_GUI();
-	void Preferences_GUI();
-	void Close_Preferences_GUI();
-
-	bool Show_Preferences_GUI;
-	int Preferences_Page;
-
-
-	void Set_Defaults();
-	bool Write_Preferences();
-	bool Read_Preferences();
-
-	void Do_Quick_Load();
-	void Update_User_File(char* PathAndFile);
-
-	// Start Up
-	char QL_User_File[MAX_PATH];
-
-	bool Prefs_QuickLoad_Default_f;
-	bool Prefs_StartScreen_Flag;
-	bool Prefs_FullScreen_Flag;
-	bool Prefs_Load_LastScene_Flag;
-
-	// Game Options
-	bool Prefs_PlayerCanJump_Flag;
-
-protected:
-
-	FILE *WriteScene;
-
-	float PosX;
-	float PosY;
+	SB_Editor_Gui();
+	~SB_Editor_Gui();
 };
-
 

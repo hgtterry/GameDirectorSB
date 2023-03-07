@@ -31,7 +31,6 @@ public:
 	bool Start_TopBar_Globals();
 	void Reset_Class();
 	void Project_Loaded_Reset();
-	void Do_Quick_Load();
 
 	bool Toggle_Select_Flag;
 	bool Toggle_FirstCam_Flag;

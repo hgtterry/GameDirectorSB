@@ -112,7 +112,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	App->SBC_FileIO->Init_History();
 
-	App->SBC_Prefs->Read_Preferences(); // Read Preferences
+	App->CL_Prefs->Read_Preferences(); // Read Preferences
 
 	App->Set_Main_TitleBar(" ");
 	App->SBC_FileView->SelectItem(App->SBC_FileView->FV_LevelFolder);
@@ -121,7 +121,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	EnableMenuItem(App->mMenu, ID_FILE_SAVEPROJECTALL, MF_GRAYED);
 
 
-	if (App->SBC_Prefs->Prefs_FullScreen_Flag == 1)
+	if (App->CL_Prefs->Prefs_FullScreen_Flag == 1)
 	{
 		ShowWindow(App->MainHwnd, SW_MAXIMIZE);
 	}
@@ -342,7 +342,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 				RemoveDirectory(DirCheck);
 
-				App->SBC_Prefs->Set_Defaults();
+				App->CL_Prefs->Set_Defaults();
 
 				App->Say("Done");
 			}
@@ -399,7 +399,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		case ID_TEST_WRITEPREFERENCES:
 		{
-			App->SBC_Prefs->Write_Preferences();
+			App->CL_Prefs->Write_Preferences();
 			return 1;
 		}
 
@@ -592,9 +592,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		case ID_SETTINGS_PREFERENCES:
 		{
-			if (App->SBC_Prefs->Show_Preferences_GUI == 0)
+			if (App->CL_Prefs->Show_Preferences_GUI == 0)
 			{
-				App->SBC_Prefs->Start_Preferences_GUI();
+				App->CL_Prefs->Start_Preferences_GUI();
 			}
 
 			return 1;
@@ -1467,9 +1467,9 @@ void StartOgre()
 	strcpy(Default_Project, App->EquityDirecory_FullPath);
 	strcat(Default_Project, "\\Projects\\RF_Project_Prj\\Project.SBProj");
 
-	if (App->SBC_Prefs->Prefs_Load_LastScene_Flag == 1)
+	if (App->CL_Prefs->Prefs_Load_LastScene_Flag == 1)
 	{
-		App->SBC_TopTabs->Do_Quick_Load();
+		App->CL_Prefs->Do_Quick_Load();
 	}
 	
 	App->SBC_Panels->MovePhysicsView();
