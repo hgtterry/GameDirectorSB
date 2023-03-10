@@ -55,16 +55,16 @@ void SB_Keyboard::Keyboard_Monitor(float deltaTime)
 		//------------------------------------------------ Space Key - Jump and Selection
 		if (GetAsyncKeyState(VK_SPACE) < 0 && App->SBC_Scene->Player_Added == 1)
 		{
-			if (App->SBC_Ogre->OgreListener->GD_Selection_Mode == 0)
+			if (App->CL_Ogre->OgreListener->GD_Selection_Mode == 0)
 			{
-				if (App->SBC_Ogre->OgreListener->GD_Run_Physics == 1)
+				if (App->CL_Ogre->OgreListener->GD_Run_Physics == 1)
 				{
 					App->SBC_DCC->jump();
 				}
 			}
 			else
 			{
-				App->SBC_Ogre->OgreListener->SelectEntity_World();
+				App->CL_Ogre->OgreListener->SelectEntity_World();
 			}
 		}
 
@@ -75,11 +75,11 @@ void SB_Keyboard::Keyboard_Monitor(float deltaTime)
 			{
 				App->SBC_TopTabs->Toggle_Select_Flag = 0;
 				App->SBC_Markers->mPickSight->hide();
-				App->SBC_Ogre->OgreListener->GD_Selection_Mode = 0;
+				App->CL_Ogre->OgreListener->GD_Selection_Mode = 0;
 
 				RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-				App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[App->SBC_Ogre->OgreListener->Selected_Entity_Index]->FileViewItem);
+				App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[App->CL_Ogre->OgreListener->Selected_Entity_Index]->FileViewItem);
 				App->CL_Vm_ImGui->Show_Object_Selection = 0;
 			}
 		}
@@ -91,7 +91,7 @@ void SB_Keyboard::Keyboard_Monitor(float deltaTime)
 			{
 				App->SBC_TopTabs->Toggle_Select_Flag = 0;
 				App->SBC_Markers->mPickSight->hide();
-				App->SBC_Ogre->OgreListener->GD_Selection_Mode = 0;
+				App->CL_Ogre->OgreListener->GD_Selection_Mode = 0;
 
 				RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
@@ -100,7 +100,7 @@ void SB_Keyboard::Keyboard_Monitor(float deltaTime)
 		}
 
 		//------------------------------------------------ Forward
-		if (GetAsyncKeyState(VK_UP) < 0 && App->SBC_Scene->Player_Added == 1 && App->SBC_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
+		if (GetAsyncKeyState(VK_UP) < 0 && App->SBC_Scene->Player_Added == 1 && App->CL_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
 		{
 			if (App->SBC_Scene->Player_Added == 1)
 			{
@@ -111,21 +111,21 @@ void SB_Keyboard::Keyboard_Monitor(float deltaTime)
 		}
 		else
 		{
-			if (App->SBC_Scene->Player_Added == 1 && App->SBC_Scene->B_Player[0]->IsMOving == 1 && App->SBC_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
+			if (App->SBC_Scene->Player_Added == 1 && App->SBC_Scene->B_Player[0]->IsMOving == 1 && App->CL_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
 			{
 				App->SBC_DCC->mMoveDirection = (btVector3(0, 0, 0));// walkDirection
 				App->SBC_Scene->B_Player[0]->IsMOving = 0;
 			}
 		}
 		//------------------------------------------------ Back
-		if (GetAsyncKeyState(VK_DOWN) < 0 && App->SBC_Scene->Player_Added == 1 && App->SBC_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
+		if (GetAsyncKeyState(VK_DOWN) < 0 && App->SBC_Scene->Player_Added == 1 && App->CL_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
 		{
 			App->SBC_DCC->mMoveDirection = (btVector3(0, 0, 1));// walkDirection
 			App->SBC_Scene->B_Player[0]->IsMOving_Back = 1;
 		}
 		else
 		{
-			if (App->SBC_Scene->Player_Added == 1 && App->SBC_Scene->B_Player[0]->IsMOving_Back == 1 && App->SBC_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
+			if (App->SBC_Scene->Player_Added == 1 && App->SBC_Scene->B_Player[0]->IsMOving_Back == 1 && App->CL_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
 			{
 				App->SBC_DCC->mMoveDirection = (btVector3(0, 0, 0));// walkDirection
 				App->SBC_Scene->B_Player[0]->IsMOving_Back = 0;
@@ -135,9 +135,9 @@ void SB_Keyboard::Keyboard_Monitor(float deltaTime)
 		//------------------------------------------------ Turn Right
 		if (GetAsyncKeyState(VK_RIGHT) < 0 && App->SBC_Scene->Player_Added == 1)
 		{
-			App->SBC_Ogre->OgreListener->toggleTimer -= deltaTime;
+			App->CL_Ogre->OgreListener->toggleTimer -= deltaTime;
 
-			if (App->SBC_Ogre->OgreListener->toggleTimer < 0)
+			if (App->CL_Ogre->OgreListener->toggleTimer < 0)
 			{
 				Ogre::Vector3 Rotate;
 				Rotate.x = 0;
@@ -148,16 +148,16 @@ void SB_Keyboard::Keyboard_Monitor(float deltaTime)
 
 				App->SBC_Scene->B_Player[0]->Rotate_FromCam(Rotate, 0.001, false);
 
-				App->SBC_Ogre->OgreListener->toggleTimer = 0.01;
+				App->CL_Ogre->OgreListener->toggleTimer = 0.01;
 			}
 		}
 
 		//------------------------------------------------ Turn Left
 		if (GetAsyncKeyState(VK_LEFT) < 0 && App->SBC_Scene->Player_Added == 1)
 		{
-			App->SBC_Ogre->OgreListener->toggleTimer -= deltaTime;
+			App->CL_Ogre->OgreListener->toggleTimer -= deltaTime;
 
-			if (App->SBC_Ogre->OgreListener->toggleTimer < 0)
+			if (App->CL_Ogre->OgreListener->toggleTimer < 0)
 			{
 				Ogre::Vector3 Rotate;
 				Rotate.x = 0;
@@ -168,22 +168,22 @@ void SB_Keyboard::Keyboard_Monitor(float deltaTime)
 
 				App->SBC_Scene->B_Player[0]->Rotate_FromCam(Rotate, 0.001, false);
 
-				App->SBC_Ogre->OgreListener->toggleTimer = 0.01;
+				App->CL_Ogre->OgreListener->toggleTimer = 0.01;
 			}
 		}
 
 		//------------------------------------------------ E key Up in Fly Mode
 		if (GetAsyncKeyState(69) < 0)
 		{
-			if (App->SBC_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
+			if (App->CL_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
 			{
-				Rate = (App->SBC_Ogre->OgreListener->mMoveSensitivity / 1000) * 2; //FlyRate;
+				Rate = (App->CL_Ogre->OgreListener->mMoveSensitivity / 1000) * 2; //FlyRate;
 
-				OldPos = App->SBC_Ogre->OgreListener->mCam->getPosition();
+				OldPos = App->CL_Ogre->OgreListener->mCam->getPosition();
 
 				OldPos.y += Rate;
 
-				App->SBC_Ogre->OgreListener->mCam->setPosition(OldPos);
+				App->CL_Ogre->OgreListener->mCam->setPosition(OldPos);
 			}
 			else
 			{
@@ -198,23 +198,23 @@ void SB_Keyboard::Keyboard_Monitor(float deltaTime)
 		//------------------------------------------------ Q key Down in Fly Mode
 		if (GetAsyncKeyState(81) < 0)
 		{
-			if (App->SBC_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
+			if (App->CL_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
 			{
-				Rate = (App->SBC_Ogre->OgreListener->mMoveSensitivity / 1000) * 2; //FlyRate;
+				Rate = (App->CL_Ogre->OgreListener->mMoveSensitivity / 1000) * 2; //FlyRate;
 
-				OldPos = App->SBC_Ogre->OgreListener->mCam->getPosition();
+				OldPos = App->CL_Ogre->OgreListener->mCam->getPosition();
 
 				OldPos.y -= Rate;
 
-				App->SBC_Ogre->OgreListener->mCam->setPosition(OldPos);
+				App->CL_Ogre->OgreListener->mCam->setPosition(OldPos);
 			}
 		}
 		//------------------------------------------------
-		if (App->SBC_Ogre->OgreListener->Wheel < 0) // Mouse Wheel Forward
+		if (App->CL_Ogre->OgreListener->Wheel < 0) // Mouse Wheel Forward
 		{
-			if (App->SBC_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
+			if (App->CL_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
 			{
-				App->SBC_Ogre->OgreListener->mTranslateVector.z = -App->SBC_Ogre->OgreListener->mMoveScale * 30;
+				App->CL_Ogre->OgreListener->mTranslateVector.z = -App->CL_Ogre->OgreListener->mMoveScale * 30;
 			}
 			/*else
 			{
@@ -237,9 +237,9 @@ void SB_Keyboard::Keyboard_Monitor(float deltaTime)
 		//------------------------------------------------ Move Forward
 		if (GetAsyncKeyState(87) < 0) // W Key
 		{
-			if (App->SBC_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
+			if (App->CL_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
 			{
-				App->SBC_Ogre->OgreListener->mTranslateVector.z = -App->SBC_Ogre->OgreListener->mMoveScale;
+				App->CL_Ogre->OgreListener->mTranslateVector.z = -App->CL_Ogre->OgreListener->mMoveScale;
 			}
 			else
 			{
@@ -253,7 +253,7 @@ void SB_Keyboard::Keyboard_Monitor(float deltaTime)
 		}
 		else
 		{
-			if (App->SBC_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
+			if (App->CL_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
 			{
 
 			}
@@ -264,11 +264,11 @@ void SB_Keyboard::Keyboard_Monitor(float deltaTime)
 			}
 		}
 
-		if (App->SBC_Ogre->OgreListener->Wheel > 0) // Mouse Wheel Back
+		if (App->CL_Ogre->OgreListener->Wheel > 0) // Mouse Wheel Back
 		{
-			if (App->SBC_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
+			if (App->CL_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
 			{
-				App->SBC_Ogre->OgreListener->mTranslateVector.z = App->SBC_Ogre->OgreListener->mMoveScale * 30;
+				App->CL_Ogre->OgreListener->mTranslateVector.z = App->CL_Ogre->OgreListener->mMoveScale * 30;
 			}
 			/*else
 			{
@@ -283,9 +283,9 @@ void SB_Keyboard::Keyboard_Monitor(float deltaTime)
 		if (GetAsyncKeyState(83) < 0) // S Key	
 		{
 
-			if (App->SBC_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
+			if (App->CL_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
 			{
-				App->SBC_Ogre->OgreListener->mTranslateVector.z = App->SBC_Ogre->OgreListener->mMoveScale;
+				App->CL_Ogre->OgreListener->mTranslateVector.z = App->CL_Ogre->OgreListener->mMoveScale;
 			}
 			else
 			{
@@ -299,7 +299,7 @@ void SB_Keyboard::Keyboard_Monitor(float deltaTime)
 		}
 		else
 		{
-			if (App->SBC_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
+			if (App->CL_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
 			{
 
 			}
@@ -313,9 +313,9 @@ void SB_Keyboard::Keyboard_Monitor(float deltaTime)
 		//------------------------------------------------ Move Right
 		if (GetAsyncKeyState(65) < 0)
 		{
-			if (App->SBC_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
+			if (App->CL_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
 			{
-				App->SBC_Ogre->OgreListener->mTranslateVector.x = -App->SBC_Ogre->OgreListener->mMoveScale;
+				App->CL_Ogre->OgreListener->mTranslateVector.x = -App->CL_Ogre->OgreListener->mMoveScale;
 			}
 			else
 			{
@@ -329,7 +329,7 @@ void SB_Keyboard::Keyboard_Monitor(float deltaTime)
 		}
 		else
 		{
-			if (App->SBC_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
+			if (App->CL_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
 			{
 
 			}
@@ -343,9 +343,9 @@ void SB_Keyboard::Keyboard_Monitor(float deltaTime)
 		//------------------------------------------------ Move Left
 		if (GetAsyncKeyState(68) < 0)
 		{
-			if (App->SBC_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
+			if (App->CL_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
 			{
-				App->SBC_Ogre->OgreListener->mTranslateVector.x = App->SBC_Ogre->OgreListener->mMoveScale;
+				App->CL_Ogre->OgreListener->mTranslateVector.x = App->CL_Ogre->OgreListener->mMoveScale;
 			}
 			else
 			{
@@ -359,7 +359,7 @@ void SB_Keyboard::Keyboard_Monitor(float deltaTime)
 		}
 		else
 		{
-			if (App->SBC_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
+			if (App->CL_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
 			{
 
 			}
@@ -377,20 +377,20 @@ void SB_Keyboard::Keyboard_Monitor(float deltaTime)
 			{
 				if (App->SBC_Front_Dlg->Use_Front_Dlg_Flag == 1)
 				{
-					App->SBC_Ogre->OgreListener->Pl_LeftMouseDown = 0;
-					App->SBC_Ogre->OgreListener->Block_Mouse = 1;
+					App->CL_Ogre->OgreListener->Pl_LeftMouseDown = 0;
+					App->CL_Ogre->OgreListener->Block_Mouse = 1;
 					App->SBC_Keyboard->Block_Keyboard = 1;
 					App->Block_Mouse_Buttons = 1;
 
 					ReleaseCapture();
-					App->SBC_Ogre->OgreListener->Pl_LeftMouseDown = 0;
+					App->CL_Ogre->OgreListener->Pl_LeftMouseDown = 0;
 					SetCursor(App->CUR);
 
 					App->SBC_Front_Dlg->Show_Front_Dlg_Flag = 1;
 				}
 				else
 				{
-					App->SBC_Ogre->ExitFullScreen();
+					App->CL_Ogre->ExitFullScreen();
 				}
 			}
 		}

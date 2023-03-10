@@ -97,8 +97,8 @@ bool SB_Com_Entity::Create_Teleport_Entity(int Index)
 
 	strcpy(Mesh_File, Object->Mesh_FileName);
 
-	Object->Object_Ent = App->SBC_Ogre->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->SBC_Ogre->App_Resource_Group);
-	Object->Object_Node = App->SBC_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	Object->Object_Ent = App->CL_Ogre->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->CL_Ogre->App_Resource_Group);
+	Object->Object_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Object->Object_Node->attachObject(Object->Object_Ent);
 
 	Object->Object_Node->setVisible(true);
@@ -199,6 +199,38 @@ void SB_Com_Entity::Set_Teleports_Defaults(int Index)
 	App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Counter_Disabled = 1;
 }
 
+// *************************************************************************
+// *	  V_Set_Teleports_Defaults:- Terry and Hazel Flanigan 2023	 	   *
+// *************************************************************************
+void SB_Com_Entity::V_Set_Teleports_Defaults(int Index)
+{
+
+	Ogre::Vector4 V4 = Ogre::Vector4::ZERO;
+
+	Base_Object* V_Object = App->SBC_Scene->V_Object[Index];
+
+	V_Object->S_Teleport[0]->Location_ID = 0;
+
+	strcpy(V_Object->S_Teleport[0]->Name, "Start_Location");
+
+	strcpy(V_Object->S_Teleport[0]->Sound_File, "magicspell.ogg");
+	V_Object->S_Teleport[0]->SndVolume = 0.5;
+	V_Object->S_Teleport[0]->Play = 1;
+
+	V4.x = App->SBC_Scene->B_Player[0]->StartPos.x;
+	V4.y = App->SBC_Scene->B_Player[0]->StartPos.y;
+	V4.z = App->SBC_Scene->B_Player[0]->StartPos.z;
+
+	V_Object->S_Teleport[0]->Physics_Position = btVector3(V4.x, V4.y, V4.z);
+	V_Object->S_Teleport[0]->Physics_Rotation = App->SBC_Scene->B_Player[0]->Physics_Rotation;
+
+	V_Object->S_Teleport[0]->Trigger_Value = 0;
+	V_Object->S_Teleport[0]->Counter_ID = 0;
+	strcpy(V_Object->S_Teleport[0]->Counter_Name, "None");
+	V_Object->S_Teleport[0]->Counter_Disabled = 1;
+
+}
+
 // ------------------------------------------------------------------------------------------ Sounds
 // *************************************************************************
 // *				Add_New_Sound:- Terry and Hazel Flanigan 2022		   *
@@ -266,8 +298,8 @@ bool SB_Com_Entity::Create_Sound_Entity(int Index)
 
 	strcpy(Mesh_File, Object->Mesh_FileName);
 
-	Object->Object_Ent = App->SBC_Ogre->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->SBC_Ogre->App_Resource_Group);
-	Object->Object_Node = App->SBC_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	Object->Object_Ent = App->CL_Ogre->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->CL_Ogre->App_Resource_Group);
+	Object->Object_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Object->Object_Node->attachObject(Object->Object_Ent);
 
 	Object->Object_Node->setVisible(true);
@@ -404,8 +436,8 @@ bool SB_Com_Entity::Create_Message_Entity(int Index)
 
 	strcpy(Mesh_File, MObject->Mesh_FileName);
 
-	MObject->Object_Ent = App->SBC_Ogre->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->SBC_Ogre->App_Resource_Group);
-	MObject->Object_Node = App->SBC_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	MObject->Object_Ent = App->CL_Ogre->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->CL_Ogre->App_Resource_Group);
+	MObject->Object_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	MObject->Object_Node->attachObject(MObject->Object_Ent);
 
 	MObject->Object_Node->setVisible(true);
@@ -502,6 +534,33 @@ void SB_Com_Entity::Set_Message_Defaults(int Index)
 	return;
 }
 
+// *************************************************************************
+// *		V_Set_Message_Defaults:- Terry and Hazel Flanigan 2022	  	   *
+// *************************************************************************
+void SB_Com_Entity::V_Set_Message_Defaults(int Index)
+{
+
+	Base_Object* V_Object = App->SBC_Scene->V_Object[Index];
+
+	V_Object->S_Message[0]->Trigger_Value = 0;
+	V_Object->S_Message[0]->Counter_ID = 0;
+	strcpy(V_Object->S_Message[0]->Counter_Name, "None");
+	V_Object->S_Message[0]->Counter_Disabled = 1;
+
+	strcpy(V_Object->S_Message[0]->Message_Text, "Welcome");
+	V_Object->S_Message[0]->Message_PosX = 250;
+	V_Object->S_Message[0]->Message_PosY = 10;
+
+	V_Object->S_Message[0]->PosXCentre_Flag = 0;
+	V_Object->S_Message[0]->PosYCentre_Flag = 0;
+
+	V_Object->S_Message[0]->Text_Colour = Ogre::Vector4(0, 0, 0, 255);
+	V_Object->S_Message[0]->BackGround_Colour = Ogre::Vector4(239, 239, 239, 255);
+
+	V_Object->S_Message[0]->Show_BackGround = 1;
+	return;
+}
+
 // ------------------------------------------------------------------------------------------ Particles
 // *************************************************************************
 // *			Add_New_Particle:- Terry and Hazel Flanigan 2022		   *
@@ -566,7 +625,7 @@ void SB_Com_Entity::CreateParticle(int Index)
 
 	strcpy(Mesh_File, Object->Mesh_FileName);
 
-	Object->Object_Ent = App->SBC_Ogre->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->SBC_Ogre->App_Resource_Group);
+	Object->Object_Ent = App->CL_Ogre->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->CL_Ogre->App_Resource_Group);
 
 
 	// ----------------------------------------------------------------------
@@ -577,7 +636,7 @@ void SB_Com_Entity::CreateParticle(int Index)
 	strcat(Name, buf);
 
 
-	Object->S_Particle[0]->Particle = App->SBC_Ogre->mSceneMgr->createParticleSystem(Name, Object->S_Particle[0]->ParticleScript);
+	Object->S_Particle[0]->Particle = App->CL_Ogre->mSceneMgr->createParticleSystem(Name, Object->S_Particle[0]->ParticleScript);
 	if (Object->S_Particle[0]->Particle == NULL)
 	{
 		App->Say("Poop");
@@ -585,7 +644,7 @@ void SB_Com_Entity::CreateParticle(int Index)
 
 	Object->S_Particle[0]->Particle->setKeepParticlesInLocalSpace(true);
 
-	Ogre::SceneNode* PartNode = App->SBC_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	Ogre::SceneNode* PartNode = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 
 	PartNode->attachObject(Object->S_Particle[0]->Particle);
 
@@ -613,6 +672,22 @@ void SB_Com_Entity::Set_Particle_Defaults(int Index)
 	App->SBC_Scene->B_Object[Index]->S_Particle[0]->Particle = NULL;
 	App->SBC_Scene->B_Object[Index]->S_Particle[0]->SpeedFactor = 0.5;
 	strcpy(App->SBC_Scene->B_Object[Index]->S_Particle[0]->ParticleScript, "GD_Smoke1");
+}
+
+// *************************************************************************
+// *		V_Set_Particle_Defaults:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+void SB_Com_Entity::V_Set_Particle_Defaults(int Index)
+{
+	Base_Object* V_Object = App->SBC_Scene->V_Object[Index];
+
+	V_Object->Phys_Body = NULL;
+	V_Object->Physics_Valid = 0;
+	V_Object->Usage = Enums::Usage_Particle;
+
+	V_Object->S_Particle[0]->Particle = NULL;
+	V_Object->S_Particle[0]->SpeedFactor = 0.5;
+	strcpy(V_Object->S_Particle[0]->ParticleScript, "GD_Smoke1");
 }
 
 // ------------------------------------------------------------------------------------------ Collectables
@@ -685,8 +760,8 @@ bool SB_Com_Entity::Create_Collectable_Entity(int Index)
 
 	strcpy(Mesh_File, Object->Mesh_FileName);
 
-	Object->Object_Ent = App->SBC_Ogre->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->SBC_Scene->Project_Resource_Group);
-	Object->Object_Node = App->SBC_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	Object->Object_Ent = App->CL_Ogre->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->SBC_Scene->Project_Resource_Group);
+	Object->Object_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Object->Object_Node->attachObject(Object->Object_Ent);
 
 	// Get Material Name
@@ -781,6 +856,28 @@ void SB_Com_Entity::Set_Collectables_Defaults(int Index)
 }
 
 // *************************************************************************
+// *		V_Set_Collectables_Defaults:- Terry and Hazel Flanigan 2022	   *
+// *************************************************************************
+void SB_Com_Entity::V_Set_Collectables_Defaults(int Index)
+{
+	Base_Object* V_Object = App->SBC_Scene->V_Object[Index];
+
+	V_Object->Altered = 0;
+
+	strcpy(V_Object->S_Collectable[0]->Sound_File, "footstep.ogg");
+	V_Object->S_Collectable[0]->Play = 1;
+	V_Object->S_Collectable[0]->SndVolume = 0.5;
+
+	V_Object->S_Collectable[0]->Maths = 1; // Add
+	V_Object->S_Collectable[0]->Value = 1;
+
+	V_Object->S_Collectable[0]->Counter_ID = 0;
+	strcpy(V_Object->S_Collectable[0]->Counter_Name, "Not_Set");
+
+	V_Object->S_Collectable[0]->Counter_Disabled = 0;
+}
+
+// *************************************************************************
 // *		Add_New_User_Object:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 void SB_Com_Entity::Add_New_User_Object(void)
@@ -842,9 +939,9 @@ void SB_Com_Entity::Create_User_Object(int Index)
 
 	strcpy(Mesh_File, Object->Mesh_FileName);
 
-	Object->Object_Ent = App->SBC_Ogre->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->SBC_Ogre->App_Resource_Group);
+	Object->Object_Ent = App->CL_Ogre->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->CL_Ogre->App_Resource_Group);
 
-	Object->Object_Node = App->SBC_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	Object->Object_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Object->Object_Node->attachObject(Object->Object_Ent);
 
 	Object->Object_Node->setVisible(true);

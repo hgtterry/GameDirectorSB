@@ -720,9 +720,9 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_Debug_Proc(HWND hDlg, UINT message, WP
 					App->SBC_Props_Dialog->Show_Area_Physics_Debug = 0;
 					App->SBC_Scene->B_Area[Index]->Phys_Body->setCollisionFlags(f | (1 << 5)); // Off
 
-					App->SBC_Ogre->BulletListener->Render_Debug_Flag = 0;
-					App->SBC_Ogre->RenderFrame();
-					App->SBC_Ogre->BulletListener->Render_Debug_Flag = 1;
+					App->CL_Ogre->BulletListener->Render_Debug_Flag = 0;
+					App->CL_Ogre->RenderFrame();
+					App->CL_Ogre->BulletListener->Render_Debug_Flag = 1;
 
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_PhysicsOff_Bmp);
 				}
@@ -748,9 +748,9 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_Debug_Proc(HWND hDlg, UINT message, WP
 
 					App->SBC_Scene->B_Object[Index]->Physics_Debug_On = 0;
 
-					App->SBC_Ogre->BulletListener->Render_Debug_Flag = 0;
-					App->SBC_Ogre->RenderFrame();
-					App->SBC_Ogre->BulletListener->Render_Debug_Flag = 1;
+					App->CL_Ogre->BulletListener->Render_Debug_Flag = 0;
+					App->CL_Ogre->RenderFrame();
+					App->CL_Ogre->BulletListener->Render_Debug_Flag = 1;
 
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_PhysicsOff_Bmp);
 				}
@@ -888,9 +888,9 @@ LRESULT CALLBACK SB_Props_Dialogs::Area_PropsPanel_Proc(HWND hDlg, UINT message,
 					int f = App->SBC_Scene->B_Area[Count]->Phys_Body->getCollisionFlags();
 					App->SBC_Scene->B_Area[Count]->Phys_Body->setCollisionFlags(f | (1 << 5)); // Off
 
-					App->SBC_Ogre->BulletListener->Render_Debug_Flag = 0;
-					App->SBC_Ogre->BulletListener->Clear_Debug_Render();
-					App->SBC_Ogre->BulletListener->Render_Debug_Flag = 1;
+					App->CL_Ogre->BulletListener->Render_Debug_Flag = 0;
+					App->CL_Ogre->BulletListener->Clear_Debug_Render();
+					App->CL_Ogre->BulletListener->Render_Debug_Flag = 1;
 
 					Count++;
 				}
@@ -907,9 +907,9 @@ LRESULT CALLBACK SB_Props_Dialogs::Area_PropsPanel_Proc(HWND hDlg, UINT message,
 					int f = App->SBC_Scene->B_Area[Count]->Phys_Body->getCollisionFlags();
 					App->SBC_Scene->B_Area[Count]->Phys_Body->setCollisionFlags(f & (~(1 << 5))); // on
 
-					App->SBC_Ogre->BulletListener->Render_Debug_Flag = 0;
-					App->SBC_Ogre->BulletListener->Clear_Debug_Render();
-					App->SBC_Ogre->BulletListener->Render_Debug_Flag = 1;
+					App->CL_Ogre->BulletListener->Render_Debug_Flag = 0;
+					App->CL_Ogre->BulletListener->Clear_Debug_Render();
+					App->CL_Ogre->BulletListener->Render_Debug_Flag = 1;
 
 					Count++;
 				}
@@ -1060,7 +1060,7 @@ LRESULT CALLBACK SB_Props_Dialogs::Details_Goto_Proc(HWND hDlg, UINT message, WP
 
 		if (LOWORD(wParam) == IDC_BT_GOTO)
 		{
-			App->SBC_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
+			App->CL_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
 
 			Ogre::Vector3 WS;
 			Ogre::Vector3 Centre;
@@ -1077,7 +1077,7 @@ LRESULT CALLBACK SB_Props_Dialogs::Details_Goto_Proc(HWND hDlg, UINT message, WP
 				WS = App->SBC_Scene->B_Object[Index]->Object_Node->convertLocalToWorldPosition(Centre);
 			}
 
-			App->SBC_Ogre->mCamera->setPosition(WS);
+			App->CL_Ogre->mCamera->setPosition(WS);
 			return 1;
 		}
 

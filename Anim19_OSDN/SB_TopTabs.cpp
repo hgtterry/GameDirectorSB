@@ -622,8 +622,8 @@ LRESULT CALLBACK SB_TopTabs::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 	{
 		if (LOWORD(wParam) == IDC_BT_CAMNORMAL)
 		{
-			App->SBC_Ogre->OgreListener->mMoveSensitivity = 100;
-			App->SBC_Ogre->OgreListener->mMoveSensitivityMouse = 100;
+			App->CL_Ogre->OgreListener->mMoveSensitivity = 100;
+			App->CL_Ogre->OgreListener->mMoveSensitivityMouse = 100;
 
 			App->SBC_TopTabs->Toggle_CamNormal_Flag = 1;
 			App->SBC_TopTabs->Toggle_CamFast_Flag = 0;
@@ -635,8 +635,8 @@ LRESULT CALLBACK SB_TopTabs::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 		if (LOWORD(wParam) == IDC_BT_CAMFAST)
 		{
-			App->SBC_Ogre->OgreListener->mMoveSensitivity = 250;
-			App->SBC_Ogre->OgreListener->mMoveSensitivityMouse = 250;
+			App->CL_Ogre->OgreListener->mMoveSensitivity = 250;
+			App->CL_Ogre->OgreListener->mMoveSensitivityMouse = 250;
 
 			App->SBC_TopTabs->Toggle_CamFast_Flag = 1;
 			App->SBC_TopTabs->Toggle_CamNormal_Flag = 0;
@@ -649,8 +649,8 @@ LRESULT CALLBACK SB_TopTabs::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 		if (LOWORD(wParam) == IDC_BT_CAMSLOW)
 		{
 			App->SBC_TopTabs->Toggle_CamSlow_Flag = 1;
-			App->SBC_Ogre->OgreListener->mMoveSensitivity = 5;
-			App->SBC_Ogre->OgreListener->mMoveSensitivityMouse = 5;
+			App->CL_Ogre->OgreListener->mMoveSensitivity = 5;
+			App->CL_Ogre->OgreListener->mMoveSensitivityMouse = 5;
 
 			App->SBC_TopTabs->Toggle_CamFast_Flag = 0;
 			App->SBC_TopTabs->Toggle_CamNormal_Flag = 0;
@@ -663,7 +663,7 @@ LRESULT CALLBACK SB_TopTabs::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 		{
 			if (App->SBC_Scene->Player_Added == 1)
 			{
-				App->SBC_Ogre->OgreListener->GD_CameraMode = Enums::CamFirst;
+				App->CL_Ogre->OgreListener->GD_CameraMode = Enums::CamFirst;
 				App->SBC_TopTabs->Toggle_FirstCam_Flag = 1;
 				App->SBC_TopTabs->Toggle_FreeCam_Flag = 0;
 
@@ -672,11 +672,11 @@ LRESULT CALLBACK SB_TopTabs::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 				int f = App->SBC_Scene->B_Player[0]->Phys_Body->getCollisionFlags();
 				App->SBC_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f | (1 << 5));
 				
-				App->SBC_Ogre->BulletListener->Render_Debug_Flag = 0;
-				App->SBC_Ogre->RenderFrame();
-				App->SBC_Ogre->BulletListener->Render_Debug_Flag = 1;
+				App->CL_Ogre->BulletListener->Render_Debug_Flag = 0;
+				App->CL_Ogre->RenderFrame();
+				App->CL_Ogre->BulletListener->Render_Debug_Flag = 1;
 
-				App->SBC_Ogre->OgreListener->GD_Run_Physics = 1;
+				App->CL_Ogre->OgreListener->GD_Run_Physics = 1;
 
 				RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			}
@@ -687,16 +687,16 @@ LRESULT CALLBACK SB_TopTabs::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 		{
 			if (App->SBC_Scene->Scene_Loaded == 1)
 			{
-				App->SBC_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
+				App->CL_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
 				App->SBC_TopTabs->Toggle_FirstCam_Flag = 0;
 				App->SBC_TopTabs->Toggle_FreeCam_Flag = 1;
 
 				int f = App->SBC_Scene->B_Player[0]->Phys_Body->getCollisionFlags();
 				App->SBC_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f & (~(1 << 5)));
 
-				App->SBC_Ogre->BulletListener->Render_Debug_Flag = 0;
-				App->SBC_Ogre->RenderFrame();
-				App->SBC_Ogre->BulletListener->Render_Debug_Flag = 1;
+				App->CL_Ogre->BulletListener->Render_Debug_Flag = 0;
+				App->CL_Ogre->RenderFrame();
+				App->CL_Ogre->BulletListener->Render_Debug_Flag = 1;
 
 				RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			}
@@ -714,13 +714,13 @@ LRESULT CALLBACK SB_TopTabs::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 					App->SBC_TopTabs->Toggle_Select_Flag = 0;
 					App->SBC_Markers->mPickSight->hide();
-					App->SBC_Ogre->OgreListener->GD_Selection_Mode = 0;
+					App->CL_Ogre->OgreListener->GD_Selection_Mode = 0;
 				}
 				else
 				{
 					App->SBC_TopTabs->Toggle_Select_Flag = 1;
 					App->SBC_Markers->mPickSight->show();
-					App->SBC_Ogre->OgreListener->GD_Selection_Mode = 1;
+					App->CL_Ogre->OgreListener->GD_Selection_Mode = 1;
 				}
 
 				RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);

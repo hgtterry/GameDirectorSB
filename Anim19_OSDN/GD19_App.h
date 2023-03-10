@@ -87,17 +87,20 @@ distribution.
 #include "Bass_Front_Dialog.h"
 #include "SB_Gui_Properties.h"
 #include "SB_Editor_Gui.h"
+#include "SB_Logger.h"
 
 #include "DynamicCharacterController.h"
 
-// :- Terry and Hazel Flanigan 2022
+// :- Terry and Hazel Flanigan 2023
 
 class GD19_App
 {
 
 public:
 
-	SB_Ogre*			SBC_Ogre;
+	SB_Ogre*			CL_Ogre;
+
+	//--------------------------------------------------------
 	GD19_Utilities*		Cl_Utilities;
 	SB_Grid*			SBC_Grid;
 	SB_Bullet*			SBC_Bullet;
@@ -161,6 +164,7 @@ public:
 	Bass_Front_Dialog*		SBC_Front_Dlg;
 	SB_Gui_Properties*		SBC_Gui_Propreties;
 	SB_Editor_Gui*			CL_Editor_Gui;
+	SB_Logger*				CL_Logger;
 
 	DynamicCharacterController*		SBC_DCC;
 
@@ -195,8 +199,7 @@ public:
 	void Say(const char* Message);
 	void Say_Int(int Value);
 	void Say_Win(const char* Message);
-	void Log_Messageg(char* Message);
-
+	
 	void Flash_Window();
 
 	void Disable_Panels(bool Disable);
@@ -306,6 +309,7 @@ public:
 
 	bool OgreStarted;
 	bool Debug_App;
+	bool V_New_Objects;
 
 	char EquityDirecory_FullPath[MAX_PATH];
 	char Version[100];

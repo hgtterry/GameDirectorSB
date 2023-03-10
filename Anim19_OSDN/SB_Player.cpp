@@ -74,9 +74,9 @@ void SB_Player::Reset_Class(void)
 		{
 			if (App->SBC_Scene->B_Player[Count]->Player_Ent && App->SBC_Scene->B_Player[Count]->Player_Node)
 			{
-				App->SBC_Ogre->mSceneMgr->destroySceneNode(App->SBC_Scene->B_Player[Count]->Player_Node);
-				App->SBC_Ogre->mSceneMgr->destroyEntity(App->SBC_Scene->B_Player[Count]->Player_Ent);
-				App->SBC_Ogre->mSceneMgr->destroyCamera(App->SBC_Scene->B_Player[Count]->CameraPitch);
+				App->CL_Ogre->mSceneMgr->destroySceneNode(App->SBC_Scene->B_Player[Count]->Player_Node);
+				App->CL_Ogre->mSceneMgr->destroyEntity(App->SBC_Scene->B_Player[Count]->Player_Ent);
+				App->CL_Ogre->mSceneMgr->destroyCamera(App->SBC_Scene->B_Player[Count]->CameraPitch);
 				App->SBC_Scene->B_Player[Count]->Player_Ent = nullptr;
 				App->SBC_Scene->B_Player[Count]->Player_Node = nullptr;
 				App->SBC_Scene->B_Player[Count]->CameraPitch = nullptr;
@@ -106,7 +106,7 @@ void SB_Player::Create_Player_Object(void)
 
 	Initialize();
 
-	App->SBC_Scene->B_Player[Index]->CameraPitch = App->SBC_Ogre->mSceneMgr->createCamera("PlayerPitch");
+	App->SBC_Scene->B_Player[Index]->CameraPitch = App->CL_Ogre->mSceneMgr->createCamera("PlayerPitch");
 
 	App->SBC_Scene->Player_Count++;
 
@@ -126,16 +126,16 @@ void SB_Player::Initialize()
 	// ------------------- Ogre
 	if (pBase->Player_Ent && pBase->Player_Node)
 	{
-		App->SBC_Ogre->mSceneMgr->destroySceneNode(pBase->Player_Node);
-		App->SBC_Ogre->mSceneMgr->destroyEntity(pBase->Player_Ent);
-		App->SBC_Ogre->mSceneMgr->destroyCamera(pBase->CameraPitch);
+		App->CL_Ogre->mSceneMgr->destroySceneNode(pBase->Player_Node);
+		App->CL_Ogre->mSceneMgr->destroyEntity(pBase->Player_Ent);
+		App->CL_Ogre->mSceneMgr->destroyCamera(pBase->CameraPitch);
 		pBase->Player_Ent = nullptr;
 		pBase->Player_Node = nullptr;
 		pBase->CameraPitch = nullptr;
 	}
 
-	pBase->Player_Ent = App->SBC_Ogre->mSceneMgr->createEntity("Player_1", "axes.mesh", App->SBC_Ogre->App_Resource_Group);
-	pBase->Player_Node = App->SBC_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	pBase->Player_Ent = App->CL_Ogre->mSceneMgr->createEntity("Player_1", "axes.mesh", App->CL_Ogre->App_Resource_Group);
+	pBase->Player_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	pBase->Player_Node->attachObject(pBase->Player_Ent);
 	pBase->Player_Node->setVisible(false);
 
@@ -316,7 +316,7 @@ LRESULT CALLBACK SB_Player::Player_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 		if (LOWORD(wParam) == IDC_BT_GOTO)
 		{
 
-			//App->SBC_Ogre->mCamera->setPosition(Ogre::Vector3(App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().getOrigin()));
+			//App->CL_Ogre->mCamera->setPosition(Ogre::Vector3(App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().getOrigin()));
 			
 			float x = App->SBC_Scene->B_Player[0]->StartPos.x;
 			float y = App->SBC_Scene->B_Player[0]->StartPos.y;
@@ -388,9 +388,9 @@ LRESULT CALLBACK SB_Player::Player_PropsPanel_Proc(HWND hDlg, UINT message, WPAR
 				App->SBC_Player->Show_Physics_Debug = 0;
 				App->SBC_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f | (1 << 5));
 
-				App->SBC_Ogre->BulletListener->Render_Debug_Flag = 0;
-				App->SBC_Ogre->RenderFrame();
-				App->SBC_Ogre->BulletListener->Render_Debug_Flag = 1;
+				App->CL_Ogre->BulletListener->Render_Debug_Flag = 0;
+				App->CL_Ogre->RenderFrame();
+				App->CL_Ogre->BulletListener->Render_Debug_Flag = 1;
 			}
 			else
 			{

@@ -207,6 +207,7 @@
     <ClInclude Include="SB_Import_Room.h" />
     <ClInclude Include="SB_Keyboard.h" />
     <ClInclude Include="SB_Locations.h" />
+    <ClInclude Include="SB_Logger.h" />
     <ClInclude Include="SB_LookUps.h" />
     <ClInclude Include="SB_Markers.h" />
     <ClInclude Include="SB_Materials.h" />
@@ -287,6 +288,7 @@
     <ClCompile Include="SB_Import_Room.cpp" />
     <ClCompile Include="SB_Keyboard.cpp" />
     <ClCompile Include="SB_Locations.cpp" />
+    <ClCompile Include="SB_Logger.cpp" />
     <ClCompile Include="SB_LookUps.cpp" />
     <ClCompile Include="SB_Markers.cpp" />
     <ClCompile Include="SB_Materials.cpp" />

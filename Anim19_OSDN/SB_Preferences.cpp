@@ -148,7 +148,7 @@ void SB_Preferences::Preferences_GUI()
 			Write_Preferences();
 		}
 
-		/*if (ImGui::InputInt("##1", &App->SBC_Ogre->OgreListener->Bullet_Step, 1))
+		/*if (ImGui::InputInt("##1", &App->CL_Ogre->OgreListener->Bullet_Step, 1))
 		{
 			
 		}*/
@@ -208,7 +208,7 @@ void SB_Preferences::Preferences_GUI()
 			Write_Preferences();
 		}*/
 
-		/*if (ImGui::InputInt("##1", &App->SBC_Ogre->OgreListener->Bullet_Step, 1))
+		/*if (ImGui::InputInt("##1", &App->CL_Ogre->OgreListener->Bullet_Step, 1))
 		{
 
 		}*/
@@ -269,8 +269,8 @@ void SB_Preferences::Preferences_GUI()
 	}
 
 	ImVec2 Size = ImGui::GetWindowSize();
-	PosX = ((float)App->SBC_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);
-	PosY = ((float)App->SBC_Ogre->OgreListener->View_Height / 2) - (Size.y / 2);;
+	PosX = ((float)App->CL_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);
+	PosY = ((float)App->CL_Ogre->OgreListener->View_Height / 2) - (Size.y / 2);;
 
 	//ImGui::BeginDisabled(false);
 	ImGui::End();

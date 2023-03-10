@@ -96,8 +96,8 @@ bool SB_Com_MoveEntity::Create_Move_Entity(int Index)
 
 	strcpy(Mesh_File, Object->Mesh_FileName);
 
-	Object->Object_Ent = App->SBC_Ogre->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->SBC_Ogre->App_Resource_Group);
-	Object->Object_Node = App->SBC_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	Object->Object_Ent = App->CL_Ogre->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->CL_Ogre->App_Resource_Group);
+	Object->Object_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Object->Object_Node->attachObject(Object->Object_Ent);
 
 	Object->Object_Node->setVisible(true);
@@ -188,6 +188,31 @@ void SB_Com_MoveEntity::Set_Move_Defaults(int Index)
 	strcpy(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Counter_Name, "None");
 	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Counter_Disabled = 1;
 	
+	return;
+}
+
+// *************************************************************************
+// *		V_Set_Move_Defaults:- Terry and Hazel Flanigan 2023		  	   *
+// *************************************************************************
+void SB_Com_MoveEntity::V_Set_Move_Defaults(int Index)
+{
+	Base_Object* V_Object = App->SBC_Scene->V_Object[Index];
+
+	V_Object->S_MoveType[0]->IsNegative = 1;
+	V_Object->S_MoveType[0]->Move_Distance = -50;
+	V_Object->S_MoveType[0]->Newpos = 0;
+	V_Object->S_MoveType[0]->Speed = 10.0;
+	V_Object->S_MoveType[0]->WhatDirection = Enums::Axis_x;
+	V_Object->S_MoveType[0]->Object_To_Move_Index = 0;
+	V_Object->S_MoveType[0]->Triggered = 0;
+	V_Object->S_MoveType[0]->Re_Trigger = 0;
+	strcpy(V_Object->S_MoveType[0]->Object_Name, "None");
+
+	V_Object->S_MoveType[0]->Trigger_Value = 0;
+	V_Object->S_MoveType[0]->Counter_ID = 0;
+	strcpy(V_Object->S_MoveType[0]->Counter_Name, "None");
+	V_Object->S_MoveType[0]->Counter_Disabled = 1;
+
 	return;
 }
 

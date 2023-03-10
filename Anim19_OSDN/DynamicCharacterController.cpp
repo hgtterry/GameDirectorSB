@@ -99,21 +99,21 @@ void DynamicCharacterController::setupBody()
 bool DynamicCharacterController::Get_Height(void)
 {
 
-	App->SBC_Ogre->OgreListener->DistanceToCollision = 0;
+	App->CL_Ogre->OgreListener->DistanceToCollision = 0;
 
 	Ogre::SceneNode* mNode;
 	
 	Vector3 FirstPos1 = Ogre::Vector3(mWorld_Height);
 	Vector3 SecondPos1 = Ogre::Vector3(mWorld_Height.getX(), mWorld_Height.getY() -100, mWorld_Height.getZ());
 
-	if (App->SBC_Ogre->OgreListener->mCollisionTools->collidesWithEntity(FirstPos1, SecondPos1, 2.5f, 0, -1))
+	if (App->CL_Ogre->OgreListener->mCollisionTools->collidesWithEntity(FirstPos1, SecondPos1, 2.5f, 0, -1))
 	{
-		mNode = App->SBC_Ogre->OgreListener->mCollisionTools->pentity->getParentSceneNode();
+		mNode = App->CL_Ogre->OgreListener->mCollisionTools->pentity->getParentSceneNode();
 
-		App->SBC_Ogre->OgreListener->Pl_Entity_Name = App->SBC_Ogre->OgreListener->mCollisionTools->pentity->getName();
-		App->SBC_Ogre->OgreListener->DistanceToCollision = App->SBC_Ogre->OgreListener->mCollisionTools->distToColl;
+		App->CL_Ogre->OgreListener->Pl_Entity_Name = App->CL_Ogre->OgreListener->mCollisionTools->pentity->getName();
+		App->CL_Ogre->OgreListener->DistanceToCollision = App->CL_Ogre->OgreListener->mCollisionTools->distToColl;
 
-		if (App->SBC_Ogre->OgreListener->DistanceToCollision > 12 && mJump == 0)
+		if (App->CL_Ogre->OgreListener->DistanceToCollision > 12 && mJump == 0)
 		{
 			AddGravity = 1;
 		}
@@ -125,7 +125,7 @@ bool DynamicCharacterController::Get_Height(void)
 		
 
 		char buff[255];
-		strcpy(buff, App->SBC_Ogre->OgreListener->Pl_Entity_Name.c_str());
+		strcpy(buff, App->CL_Ogre->OgreListener->Pl_Entity_Name.c_str());
 
 	}
 
@@ -211,7 +211,7 @@ void DynamicCharacterController::updateVelocity(float dt)
 		Get_Height();
 		linearVelocity += mJumpSpeed * mJumpDir;
 
-		if (App->SBC_Ogre->OgreListener->DistanceToCollision > 30)
+		if (App->CL_Ogre->OgreListener->DistanceToCollision > 30)
 		{
 			mJump = false;
 		}

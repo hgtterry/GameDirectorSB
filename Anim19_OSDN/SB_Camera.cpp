@@ -153,21 +153,21 @@ void SB_Com_Camera::Reset_View(void)
 	App->SBC_Grid->HairNode->setPosition(0, 0, 0);
 	App->SBC_Grid->HairNode->resetOrientation();
 
-	App->SBC_Ogre->mCamera->setPosition(Ogre::Vector3(0, 90, 100));
+	App->CL_Ogre->mCamera->setPosition(Ogre::Vector3(0, 90, 100));
 	
-	App->SBC_Ogre->mCamera->lookAt(Ogre::Vector3(0, 30, 0));
+	App->CL_Ogre->mCamera->lookAt(Ogre::Vector3(0, 30, 0));
 
 	/*Ogre::Quaternion Test;
 	Test.IDENTITY;
 
-	App->SBC_Ogre->mCamera->setOrientation(Test);
+	App->CL_Ogre->mCamera->setOrientation(Test);
 
-	App->SBC_Ogre->mCamera->pitch(Radian(Ogre::Degree(-30)));
+	App->CL_Ogre->mCamera->pitch(Radian(Ogre::Degree(-30)));
 
-	App->SBC_Ogre->mCamera->yaw(Radian(Ogre::Degree(-101.260)));
-	App->SBC_Ogre->mCamera->roll(Ogre::Degree(0));*/
+	App->CL_Ogre->mCamera->yaw(Radian(Ogre::Degree(-101.260)));
+	App->CL_Ogre->mCamera->roll(Ogre::Degree(0));*/
 
-	//App->SBC_Ogre->mCamera->lookAt(Ogre::Vector3(0, 30, 0));
+	//App->CL_Ogre->mCamera->lookAt(Ogre::Vector3(0, 30, 0));
 }
 
 // *************************************************************************
@@ -183,8 +183,8 @@ void SB_Com_Camera::Update_Camera_StartUp(void)
 // *************************************************************************
 void SB_Com_Camera::Set_Camera(int Index)
 {
-	App->SBC_Ogre->mCamera->setPosition(App->SBC_Scene->B_Camera[Index]->CamPos);
-	App->SBC_Ogre->mCamera->setOrientation(App->SBC_Scene->B_Camera[Index]->Cam_Quat);
+	App->CL_Ogre->mCamera->setPosition(App->SBC_Scene->B_Camera[Index]->CamPos);
+	App->CL_Ogre->mCamera->setOrientation(App->SBC_Scene->B_Camera[Index]->Cam_Quat);
 }
 
 // *************************************************************************
@@ -192,9 +192,9 @@ void SB_Com_Camera::Set_Camera(int Index)
 // *************************************************************************
 void SB_Com_Camera::Update_Camera(int Index)
 {
-	App->SBC_Scene->B_Camera[Index]->CamPos = App->SBC_Ogre->mCamera->getPosition();
+	App->SBC_Scene->B_Camera[Index]->CamPos = App->CL_Ogre->mCamera->getPosition();
 	
-	App->SBC_Scene->B_Camera[Index]->Cam_Quat = App->SBC_Ogre->mCamera->getOrientation();
+	App->SBC_Scene->B_Camera[Index]->Cam_Quat = App->CL_Ogre->mCamera->getOrientation();
 	
 }
 
@@ -206,7 +206,7 @@ void SB_Com_Camera::Zoom(void)
 	//if (App->CL_Vm_Model->Model_Loaded == 1)
 	//{
 	//	Reset_View();
-	//	App->SBC_Ogre->mCamera->setPosition(App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].x, App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].y, App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].z);
+	//	App->CL_Ogre->mCamera->setPosition(App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].x, App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].y, App->CL_Vm_Model->S_BoundingBox[0]->Centre[0].z);
 
 	//	Ogre::Vector3 Move;
 	//	Move.x = 0;
@@ -222,7 +222,7 @@ void SB_Com_Camera::Zoom(void)
 	//		Move.z = App->CL_Vm_Model->S_BoundingBox[0]->Size[0].y * 2;
 	//	}
 
-	//	App->SBC_Ogre->mCamera->moveRelative(Move);
+	//	App->CL_Ogre->mCamera->moveRelative(Move);
 	//}
 }
 

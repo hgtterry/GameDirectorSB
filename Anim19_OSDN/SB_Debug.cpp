@@ -53,20 +53,20 @@ void SB_Debug::ImGui_Debug_Camera(void)
 	else
 	{
 		
-		ImGui::Text("%s %f", "Pos_X = ", App->SBC_Ogre->mCamera->getPosition().x);
-		ImGui::Text("%s %f", "Pos_Y = ", App->SBC_Ogre->mCamera->getPosition().y);
-		ImGui::Text("%s %f", "Pos_Z = ", App->SBC_Ogre->mCamera->getPosition().z);
+		ImGui::Text("%s %f", "Pos_X = ", App->CL_Ogre->mCamera->getPosition().x);
+		ImGui::Text("%s %f", "Pos_Y = ", App->CL_Ogre->mCamera->getPosition().y);
+		ImGui::Text("%s %f", "Pos_Z = ", App->CL_Ogre->mCamera->getPosition().z);
 
 		ImGui::Text("--------------------------------------------");
 
-		ImGui::Text("%s %.3f", "Cam Pitch = ", App->SBC_Ogre->mCamera->getOrientation().getPitch().valueDegrees());
-		ImGui::Text("%s %.3f", "Cam Roll = ", App->SBC_Ogre->mCamera->getOrientation().getRoll().valueDegrees());
-		ImGui::Text("%s %.3f", "Cam Yaw = ", App->SBC_Ogre->mCamera->getOrientation().getYaw().valueDegrees());
+		ImGui::Text("%s %.3f", "Cam Pitch = ", App->CL_Ogre->mCamera->getOrientation().getPitch().valueDegrees());
+		ImGui::Text("%s %.3f", "Cam Roll = ", App->CL_Ogre->mCamera->getOrientation().getRoll().valueDegrees());
+		ImGui::Text("%s %.3f", "Cam Yaw = ", App->CL_Ogre->mCamera->getOrientation().getYaw().valueDegrees());
 		
 		ImGui::Text("%s %.3f", "Player Pitch = ", App->SBC_Scene->B_Player[0]->CameraPitch->getOrientation().getPitch().valueDegrees());
 		
 
-		App->SBC_Ogre->mCamera->roll(Ogre::Degree(0));
+		App->CL_Ogre->mCamera->roll(Ogre::Degree(0));
 
 		//App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().getRotation()
 

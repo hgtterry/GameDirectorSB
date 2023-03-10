@@ -41,6 +41,7 @@ SB_Scene::SB_Scene()
 	UniqueID_Area_Count = 0;
 
 	Object_Count = 0;
+	V_Object_Count = 0;
 
 	Camera_Count = 0;
 	UniqueID_Camera_Count = 0;
@@ -71,6 +72,8 @@ SB_Scene::SB_Scene()
 	B_Camera[20] = { nullptr };
 	B_Locations[20] = { nullptr };
 	B_Counter[20] = { nullptr };
+
+	V_Object.reserve(200);
 }
 
 
@@ -124,9 +127,9 @@ void SB_Scene::Reset_Class()
 		{
 			B_Object[Count]->Object_Node->detachAllObjects();
 
-			App->SBC_Ogre->mSceneMgr->destroySceneNode(B_Object[Count]->Object_Node);
+			App->CL_Ogre->mSceneMgr->destroySceneNode(B_Object[Count]->Object_Node);
 
-			App->SBC_Ogre->mSceneMgr->destroyEntity(B_Object[Count]->Object_Ent);
+			App->CL_Ogre->mSceneMgr->destroyEntity(B_Object[Count]->Object_Ent);
 
 			B_Object[Count]->Object_Node = NULL;
 			B_Object[Count]->Object_Ent = NULL;
@@ -147,7 +150,18 @@ void SB_Scene::Reset_Class()
 		Count++;
 	}
 
-	
+
+	// Remove V_Objects
+	Count = 0;
+	int NumObjects = V_Object.size();
+
+	while (Count < NumObjects)
+	{
+		delete V_Object[Count];
+		Count++;
+	}
+
+	V_Object.resize(0);
 }
 
 // *************************************************************************
@@ -190,7 +204,7 @@ bool SB_Scene::Clear_Level()
 
 	Reset_Class(); // This One
 
-	App->SBC_Ogre->OgreListener->GD_CameraMode = Enums::CamNone;
+	App->CL_Ogre->OgreListener->GD_CameraMode = Enums::CamNone;
 
 	App->SBC_Com_Camera->Reset_View();
 
@@ -201,8 +215,8 @@ bool SB_Scene::Clear_Level()
 
 	App->SBC_FileView->SelectItem(App->SBC_FileView->FV_LevelFolder);
 
-	App->SBC_Ogre->mSceneMgr->destroyCamera("PlayerRay");
-	App->SBC_Ogre->mSceneMgr->destroyAllParticleSystems();
+	App->CL_Ogre->mSceneMgr->destroyCamera("PlayerRay");
+	App->CL_Ogre->mSceneMgr->destroyAllParticleSystems();
 
 	return 1;
 }
@@ -292,16 +306,16 @@ bool SB_Scene::Game_Restart(void)
 
 	GameMode_Running_Flag = 1;
 
-	App->SBC_Ogre->BulletListener->Render_Debug_Flag = 0;
+	App->CL_Ogre->BulletListener->Render_Debug_Flag = 0;
 
 	App->SBC_Grid->Grid_SetVisible(0);
 	App->SBC_Grid->Hair_SetVisible(0);
 	App->SBC_Markers->Arrow_Node->setVisible(0);
 
-	App->SBC_Ogre->OgreListener->GD_Run_Physics = 1;
+	App->CL_Ogre->OgreListener->GD_Run_Physics = 1;
 
-	CurrentCamMode = App->SBC_Ogre->OgreListener->GD_CameraMode;
-	App->SBC_Ogre->OgreListener->GD_CameraMode = Enums::CamFirst;
+	CurrentCamMode = App->CL_Ogre->OgreListener->GD_CameraMode;
+	App->CL_Ogre->OgreListener->GD_CameraMode = Enums::CamFirst;
 
 	App->SBC_Markers->BoxNode->setVisible(false);
 
@@ -312,7 +326,7 @@ bool SB_Scene::Game_Restart(void)
 	if (App->SBC_Front_Dlg->Use_Front_Dlg_Flag == 0)
 	{
 		SetCapture(App->ViewGLhWnd);// Bernie
-		App->SBC_Ogre->OgreListener->Pl_LeftMouseDown = 1;
+		App->CL_Ogre->OgreListener->Pl_LeftMouseDown = 1;
 		App->CUR = SetCursor(NULL);
 	}
 
@@ -330,7 +344,7 @@ bool SB_Scene::Game_Mode(void)
 {
 	if (App->SBC_Front_Dlg->Use_Front_Dlg_Flag == 1)
 	{
-		App->SBC_Ogre->OgreListener->Block_Mouse = 1;
+		App->CL_Ogre->OgreListener->Block_Mouse = 1;
 		App->SBC_Keyboard->Block_Keyboard = 1;
 		App->Block_Mouse_Buttons = 1;
 		App->SBC_Front_Dlg->Show_Front_Dlg_Flag = 1;
@@ -338,7 +352,7 @@ bool SB_Scene::Game_Mode(void)
 
 	GameMode_Running_Flag = 1;
 
-	App->SBC_Ogre->BulletListener->Render_Debug_Flag = 0;
+	App->CL_Ogre->BulletListener->Render_Debug_Flag = 0;
 	
 	App->SBC_Grid->Grid_SetVisible(0);
 	App->SBC_Grid->Hair_SetVisible(0);
@@ -348,10 +362,10 @@ bool SB_Scene::Game_Mode(void)
 	App->SBC_Com_Environments->GameMode(1);
 	
 
-	App->SBC_Ogre->OgreListener->GD_Run_Physics = 1;
+	App->CL_Ogre->OgreListener->GD_Run_Physics = 1;
 
-	CurrentCamMode = App->SBC_Ogre->OgreListener->GD_CameraMode;
-	App->SBC_Ogre->OgreListener->GD_CameraMode = Enums::CamFirst;
+	CurrentCamMode = App->CL_Ogre->OgreListener->GD_CameraMode;
+	App->CL_Ogre->OgreListener->GD_CameraMode = Enums::CamFirst;
 
 
 	App->SBC_Markers->BoxNode->setVisible(false);
@@ -368,17 +382,17 @@ bool SB_Scene::Game_Mode(void)
 	SetWindowPos(App->ViewGLhWnd, NULL, 0, 0, cx, cy, SWP_NOZORDER);
 	SetParent(App->ViewGLhWnd, NULL);
 
-	App->SBC_Ogre->mWindow->resize(cx, cy);
+	App->CL_Ogre->mWindow->resize(cx, cy);
 
-	App->SBC_Ogre->mWindow->windowMovedOrResized();
-	App->SBC_Ogre->mCamera->setAspectRatio((Ogre::Real)App->SBC_Ogre->mWindow->getWidth() / (Ogre::Real)App->SBC_Ogre->mWindow->getHeight());
+	App->CL_Ogre->mWindow->windowMovedOrResized();
+	App->CL_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CL_Ogre->mWindow->getWidth() / (Ogre::Real)App->CL_Ogre->mWindow->getHeight());
 
 	Root::getSingletonPtr()->renderOneFrame();
 
 	if (App->SBC_Front_Dlg->Use_Front_Dlg_Flag == 0)
 	{
 		SetCapture(App->ViewGLhWnd);// Bernie
-		App->SBC_Ogre->OgreListener->Pl_LeftMouseDown = 1;
+		App->CL_Ogre->OgreListener->Pl_LeftMouseDown = 1;
 		App->CUR = SetCursor(NULL);
 	}
 
@@ -397,12 +411,12 @@ bool SB_Scene::Editor_Mode(void)
 	GameMode_Running_Flag = 0;
 	FullScreenMode_Flag = 0;
 
-	App->SBC_Ogre->BulletListener->Render_Debug_Flag = 1;
+	App->CL_Ogre->BulletListener->Render_Debug_Flag = 1;
 
 	App->SBC_Grid->Grid_SetVisible(1);
 	App->SBC_Grid->Hair_SetVisible(1);
 
-	App->SBC_Ogre->OgreListener->Pl_LeftMouseDown = 0;
+	App->CL_Ogre->OgreListener->Pl_LeftMouseDown = 0;
 	ReleaseCapture();
 	SetCursor(App->CUR);
 
@@ -416,7 +430,7 @@ bool SB_Scene::Editor_Mode(void)
 	}
 
 
-	App->SBC_Ogre->OgreListener->GD_CameraMode = CurrentCamMode;
+	App->CL_Ogre->OgreListener->GD_CameraMode = CurrentCamMode;
 	
 	App->CL_Vm_ImGui->Show_FPS = App->SBC_Dialogs->Saved_DoFPS;
 
@@ -431,7 +445,7 @@ void SB_Scene::Go_FullScreen_Mode(void)
 {
 	FullScreenMode_Flag = 1;
 
-	App->SBC_Scene->CurrentCamMode = App->SBC_Ogre->OgreListener->GD_CameraMode;
+	App->SBC_Scene->CurrentCamMode = App->CL_Ogre->OgreListener->GD_CameraMode;
 
 	App->FullScreen = 1;
 	int cx = GetSystemMetrics(SM_CXSCREEN);
@@ -441,10 +455,10 @@ void SB_Scene::Go_FullScreen_Mode(void)
 
 	SetParent(App->ViewGLhWnd, NULL);
 
-	App->SBC_Ogre->mWindow->resize(cx, cy);
+	App->CL_Ogre->mWindow->resize(cx, cy);
 
-	App->SBC_Ogre->mWindow->windowMovedOrResized();
-	App->SBC_Ogre->mCamera->setAspectRatio((Ogre::Real)App->SBC_Ogre->mWindow->getWidth() / (Ogre::Real)App->SBC_Ogre->mWindow->getHeight());
+	App->CL_Ogre->mWindow->windowMovedOrResized();
+	App->CL_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CL_Ogre->mWindow->getWidth() / (Ogre::Real)App->CL_Ogre->mWindow->getHeight());
 
 	Root::getSingletonPtr()->renderOneFrame();
 }
@@ -492,6 +506,24 @@ bool SB_Scene::Show_Entities(bool YesNo)
 		Count++;
 	}
 	return 1;
+}
+
+// *************************************************************************
+// *		Set_Object_SizeCounter:- Terry and Hazel Flanigan 2022	  	   *
+// *************************************************************************
+int SB_Scene::Set_Object_SizeCounter()
+{
+	V_Object_Count = V_Object.size();
+	return V_Object_Count;
+}
+
+// *************************************************************************
+// *		Get_Object_SizeCounter:- Terry and Hazel Flanigan 2022	  	   *
+// *************************************************************************
+int SB_Scene::Get_Object_SizeCounter()
+{
+	V_Object_Count = V_Object.size();
+	return V_Object_Count;
 }
 
 

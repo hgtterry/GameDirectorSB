@@ -141,7 +141,7 @@ void SB_Gui_Properties::Properties_Panel_Gui(void)
 		if (Properties_Panel_StartPos == 0)
 		{
 			ImVec2 Size = ImGui::GetWindowSize();
-			Props_Panel_PosX = ((float)App->SBC_Ogre->OgreListener->View_Width) - (Size.x) - 250;
+			Props_Panel_PosX = ((float)App->CL_Ogre->OgreListener->View_Width) - (Size.x) - 250;
 			Props_Panel_PosY = 10;// ((float)App->SBC_Ogre->OgreListener->View_Height) - (Size.y) - 590;
 			ImGui::SetWindowPos("Properties_Panel", ImVec2(Props_Panel_PosX, Props_Panel_PosY));
 

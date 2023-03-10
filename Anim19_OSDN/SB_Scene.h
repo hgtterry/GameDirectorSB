@@ -50,6 +50,9 @@ public:
 	void Go_FullScreen_Mode(void);
 	bool Show_Entities(bool YesNo);
 
+	int Set_Object_SizeCounter();
+	int Get_Object_SizeCounter();
+
 	Base_Object*			B_Object[100];
 	Base_Player*			B_Player[20];
 	Base_Area*				B_Area[20];
@@ -57,6 +60,8 @@ public:
 	Base_Locations*			B_Locations[20];
 	Base_Counter*			B_Counter[20];
 	
+	std::vector<Base_Object*> V_Object;
+
 	bool Scene_Loaded;	// Is the Scene Loaded
 
 	int Player_Count;		
@@ -73,7 +78,8 @@ public:
 	int MessageNew_Count;
 	int UniqueID_MessageNew_Count;
 
-	int Object_Count;		
+	int Object_Count;
+	int V_Object_Count;
 	int UniqueID_Object_Counter;
 
 	int Player_Location_Count;

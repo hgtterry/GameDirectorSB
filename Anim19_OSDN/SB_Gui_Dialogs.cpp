@@ -92,14 +92,14 @@ void SB_Gui_Dialogs::BackGround_Render_Loop(void)
 {
 	Ogre::WindowEventUtilities::messagePump();
 
-	if (App->SBC_Ogre->mWindow->isClosed()) return;
+	if (App->CL_Ogre->mWindow->isClosed()) return;
 
-	if (App->SBC_Ogre->FPStimer.getMilliseconds() > 3)
+	if (App->CL_Ogre->FPStimer.getMilliseconds() > 3)
 	{
-		App->SBC_Ogre->mRoot->_fireFrameStarted();
-		App->SBC_Ogre->mRoot->_updateAllRenderTargets();
-		App->SBC_Ogre->mRoot->_fireFrameEnded();
-		App->SBC_Ogre->FPStimer.reset();	
+		App->CL_Ogre->mRoot->_fireFrameStarted();
+		App->CL_Ogre->mRoot->_updateAllRenderTargets();
+		App->CL_Ogre->mRoot->_fireFrameEnded();
+		App->CL_Ogre->FPStimer.reset();	
 	}
 }
 
@@ -118,8 +118,8 @@ void SB_Gui_Dialogs::Start_Dialog_Float(float Step, float StartValue,char* Banne
 
 	App->Disable_Panels(true);
 
-	Float_PosX = ((float)App->SBC_Ogre->OgreListener->View_Width / 2) - (200 / 2);
-	Float_PosY = ((float)App->SBC_Ogre->OgreListener->View_Height / 2) - (130 / 2);
+	Float_PosX = ((float)App->CL_Ogre->OgreListener->View_Width / 2) - (200 / 2);
+	Float_PosY = ((float)App->CL_Ogre->OgreListener->View_Height / 2) - (130 / 2);
 
 	Float_StartPos = 0;
 
@@ -145,8 +145,8 @@ void SB_Gui_Dialogs::Dialog_Float(void)
 	{
 		if (Float_StartPos == 0)
 		{
-			Float_PosX = ((float)App->SBC_Ogre->OgreListener->View_Width / 2) - (200 / 2);
-			Float_PosY = ((float)App->SBC_Ogre->OgreListener->View_Height / 2) - (130 / 2);
+			Float_PosX = ((float)App->CL_Ogre->OgreListener->View_Width / 2) - (200 / 2);
+			Float_PosY = ((float)App->CL_Ogre->OgreListener->View_Height / 2) - (130 / 2);
 			ImGui::SetWindowPos(Float_Banner, ImVec2(Float_PosX, Float_PosY));
 
 			Float_StartPos = 1;
@@ -407,8 +407,8 @@ void SB_Gui_Dialogs::Dialog_Colour_Picker(void)
 	{
 		if (Float_StartPos == 0)
 		{
-			Float_PosX = ((float)App->SBC_Ogre->OgreListener->View_Width / 2) - (340 / 2);
-			Float_PosY = ((float)App->SBC_Ogre->OgreListener->View_Height / 2) - (550 / 2);
+			Float_PosX = ((float)App->CL_Ogre->OgreListener->View_Width / 2) - (340 / 2);
+			Float_PosY = ((float)App->CL_Ogre->OgreListener->View_Height / 2) - (550 / 2);
 			ImGui::SetWindowPos("Colour Dialog", ImVec2(10,10));
 
 			Float_StartPos = 1;
@@ -453,7 +453,7 @@ void SB_Gui_Dialogs::Dialog_Colour_Picker(void)
 
 		/*int Index = App->SBC_Properties->Current_Selected_Object;
 		App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour = Ogre::Vector3(App->SBC_Gui_Dialogs->Float_Colour.x, App->SBC_Gui_Dialogs->Float_Colour.y, App->SBC_Gui_Dialogs->Float_Colour.z);
-		App->SBC_Ogre->mSceneMgr->setAmbientLight(ColourValue(App->SBC_Gui_Dialogs->Float_Colour.x, App->SBC_Gui_Dialogs->Float_Colour.y, App->SBC_Gui_Dialogs->Float_Colour.z));*/
+		App->CL_Ogre->mSceneMgr->setAmbientLight(ColourValue(App->SBC_Gui_Dialogs->Float_Colour.x, App->SBC_Gui_Dialogs->Float_Colour.y, App->SBC_Gui_Dialogs->Float_Colour.z));*/
 
 		//ImGui::Indent();
 		ImGui::Separator();
@@ -529,14 +529,14 @@ void SB_Gui_Dialogs::Debug_Player(void)
 	{
 		if (App->Debug_App == 1)
 		{
-			/*ImGui::Text("Delay Timer %l", App->SBC_Ogre->FPStimer.getMicroseconds());
-			ImGui::Text("Ogre Frame Time %f", App->SBC_Ogre->OgreListener->OgreFrameTime);
-			ImGui::Text("Distance To Floor: = %f", App->SBC_Ogre->OgreListener->DistanceToCollision);*/
+			/*ImGui::Text("Delay Timer %l", App->CL_Ogre->FPStimer.getMicroseconds());
+			ImGui::Text("Ogre Frame Time %f", App->CL_Ogre->OgreListener->OgreFrameTime);
+			ImGui::Text("Distance To Floor: = %f", App->CL_Ogre->OgreListener->DistanceToCollision);*/
 
 			if (App->SBC_Scene->Player_Added == 1)
 			{
 	
-				ImGui::Text("Distance To Floor: = %f", App->SBC_Ogre->OgreListener->DistanceToCollision);
+				ImGui::Text("Distance To Floor: = %f", App->CL_Ogre->OgreListener->DistanceToCollision);
 
 				ImGui::Text("AddGravity %i", App->SBC_DCC->AddGravity);
 				ImGui::Text("Is_On_Ground %i",App->SBC_DCC->Is_On_Ground);
@@ -591,7 +591,7 @@ void SB_Gui_Dialogs::Physics_Console_Gui(void)
 
 		ImGui::Separator();
 
-		if (App->SBC_Ogre->OgreListener->GD_Run_Physics == 1)
+		if (App->CL_Ogre->OgreListener->GD_Run_Physics == 1)
 		{
 			style->Colors[ImGuiCol_Button] = ImVec4(0.0f, 1.0f, 0.0f, 1.00f);
 		}
@@ -604,13 +604,13 @@ void SB_Gui_Dialogs::Physics_Console_Gui(void)
 		{
 			if (App->SBC_Scene->Scene_Loaded == 1)
 			{
-				if (App->SBC_Ogre->OgreListener->GD_Run_Physics == 1)
+				if (App->CL_Ogre->OgreListener->GD_Run_Physics == 1)
 				{
-					App->SBC_Ogre->OgreListener->GD_Run_Physics = 0;
+					App->CL_Ogre->OgreListener->GD_Run_Physics = 0;
 				}
 				else
 				{
-					App->SBC_Ogre->OgreListener->GD_Run_Physics = 1;
+					App->CL_Ogre->OgreListener->GD_Run_Physics = 1;
 				}
 
 				App->RedrawWindow_Dlg(App->Physics_Console_Hwnd);
@@ -646,13 +646,13 @@ void SB_Gui_Dialogs::Physics_Console_Gui(void)
 			if (App->SBC_Scene->Scene_Loaded == 1)
 			{
 				
-				int Saved = App->SBC_Ogre->OgreListener->GD_CameraMode;
-				App->SBC_Ogre->OgreListener->GD_CameraMode = Enums::CamFirst;
+				int Saved = App->CL_Ogre->OgreListener->GD_CameraMode;
+				App->CL_Ogre->OgreListener->GD_CameraMode = Enums::CamFirst;
 
 				App->SBC_Physics->Reset_Physics();
-				App->SBC_Ogre->OgreListener->GD_Run_Physics = 1;
+				App->CL_Ogre->OgreListener->GD_Run_Physics = 1;
 				App->SBC_Physics->Reset_Triggers();
-				App->SBC_Ogre->OgreListener->GD_Run_Physics = 1;
+				App->CL_Ogre->OgreListener->GD_Run_Physics = 1;
 				
 				App->SBC_TopTabs->Toggle_FirstCam_Flag = 1;
 				App->SBC_TopTabs->Toggle_FreeCam_Flag = 0;
@@ -661,7 +661,7 @@ void SB_Gui_Dialogs::Physics_Console_Gui(void)
 				/*App->SBC_TopTabs->Toggle_FirstCam_Flag = 0;
 				App->SBC_TopTabs->Toggle_FreeCam_Flag = 1;
 				RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-				App->SBC_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;*/
+				App->CL_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;*/
 
 				App->SBC_Com_Environments->GameMode(0);
 
@@ -672,7 +672,7 @@ void SB_Gui_Dialogs::Physics_Console_Gui(void)
 		{
 			ImVec2 Size = ImGui::GetWindowSize();
 			Physics_PosX = 10;
-			Physics_PosY = ((float)App->SBC_Ogre->OgreListener->View_Height) - (Size.y) - 10;
+			Physics_PosY = ((float)App->CL_Ogre->OgreListener->View_Height) - (Size.y) - 10;
 			ImGui::SetWindowPos("Physics_Console", ImVec2(Physics_PosX, Physics_PosY));
 
 			Physics_Console_StartPos = 1;

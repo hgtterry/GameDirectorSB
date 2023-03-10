@@ -91,7 +91,7 @@ bool SB_Project_Create::First_Area_Build_Project(bool NoArea)
 	// ------------------------ Add Default Camera
 	App->SBC_Com_Camera->Add_New_Camera();
 	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Cameras_Folder);
-	App->SBC_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
+	App->CL_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
 
 	// ------------------------ Add Default Player
 	App->SBC_Player->Create_Player_Object();
@@ -123,13 +123,13 @@ bool SB_Project_Create::First_Area_Build_Project(bool NoArea)
 	App->SBC_Physics->Enable_Physics(1);
 	App->SBC_Scene->Scene_Loaded = 1;
 	//App->SBC_Scene->Area_Added = 1;
-	App->SBC_Ogre->Block_RenderingQueued = 0;
+	App->CL_Ogre->Block_RenderingQueued = 0;
 
 	//------------------------------------------------------------------------------ WHY
 	int f = App->SBC_Scene->B_Player[0]->Phys_Body->getCollisionFlags();
 	App->SBC_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
-	App->SBC_Ogre->Block_RenderingQueued = 0;
+	App->CL_Ogre->Block_RenderingQueued = 0;
 
 	return 1;
 }

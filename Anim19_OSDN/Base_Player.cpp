@@ -28,7 +28,7 @@ distribution.
 
 Base_Player::Base_Player()
 {
-	mDummyCamera = App->SBC_Ogre->mSceneMgr->createCamera("PlayerRay");
+	mDummyCamera = App->CL_Ogre->mSceneMgr->createCamera("PlayerRay");
 
 	CameraPitch =	nullptr;
 	Player_Ent =	nullptr;

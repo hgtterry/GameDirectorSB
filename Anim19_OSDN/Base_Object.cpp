@@ -194,12 +194,12 @@ void Base_Object::Render_ImGui_Panel(void)
 
 		if (S_Message[0]->PosXCentre_Flag == 1)
 		{
-			S_Message[0]->Message_PosX = ((float)App->SBC_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);
+			S_Message[0]->Message_PosX = ((float)App->CL_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);
 		}
 
 		if (S_Message[0]->PosYCentre_Flag == 1)
 		{
-			S_Message[0]->Message_PosY = ((float)App->SBC_Ogre->OgreListener->View_Height / 2) - (Size.y / 2);
+			S_Message[0]->Message_PosY = ((float)App->CL_Ogre->OgreListener->View_Height / 2) - (Size.y / 2);
 		}
 
 		ImGui::PopFont();

@@ -28,7 +28,7 @@ distribution.
 
 SB_3DT::SB_3DT()
 {
-	Pl_mDummyCamera = NULL;// App->SBC_Ogre->mSceneMgr->createCamera("ShootCamera");
+	Pl_mDummyCamera = NULL;// App->CL_Ogre->mSceneMgr->createCamera("ShootCamera");
 	Pl_mDummyTranslateVector = Ogre::Vector3::ZERO;
 	Point = Ogre::Vector3::ZERO;
 
@@ -65,11 +65,11 @@ void SB_3DT::Fire(float deltaTime)
 	DistanceToCollision = 0;
 
 	Ogre::SceneNode* mNode;
-	Vector3 oldPos = App->SBC_Ogre->mCamera->getPosition();
+	Vector3 oldPos = App->CL_Ogre->mCamera->getPosition();
 	Pl_mDummyCamera->setPosition(oldPos);
 
 	Ogre::Quaternion Q;
-	Q = App->SBC_Ogre->mCamera->getOrientation();
+	Q = App->CL_Ogre->mCamera->getOrientation();
 
 	Pl_mDummyCamera->setOrientation(Q);
 	Pl_mDummyTranslateVector = Ogre::Vector3::ZERO;
@@ -77,14 +77,14 @@ void SB_3DT::Fire(float deltaTime)
 	Pl_mDummyTranslateVector.z = -10000.0;
 	Pl_mDummyCamera->moveRelative(Pl_mDummyTranslateVector);
 
-	if (App->SBC_Ogre->OgreListener->mCollisionTools->collidesWithEntity(oldPos, Pl_mDummyCamera->getPosition(), 1.0f, 0, -1))
+	if (App->CL_Ogre->OgreListener->mCollisionTools->collidesWithEntity(oldPos, Pl_mDummyCamera->getPosition(), 1.0f, 0, -1))
 	{
-		mNode = App->SBC_Ogre->OgreListener->mCollisionTools->pentity->getParentSceneNode();
+		mNode = App->CL_Ogre->OgreListener->mCollisionTools->pentity->getParentSceneNode();
 
-		Pl_Entity_Name = App->SBC_Ogre->OgreListener->mCollisionTools->pentity->getName();
+		Pl_Entity_Name = App->CL_Ogre->OgreListener->mCollisionTools->pentity->getName();
 
-		DistanceToCollision = App->SBC_Ogre->OgreListener->mCollisionTools->distToColl;
-		Point = App->SBC_Ogre->OgreListener->mCollisionTools->Point;
+		DistanceToCollision = App->CL_Ogre->OgreListener->mCollisionTools->distToColl;
+		Point = App->CL_Ogre->OgreListener->mCollisionTools->Point;
 
 		char buff[255];
 		strcpy(buff, Pl_Entity_Name.c_str());

@@ -126,8 +126,8 @@ bool SB_Com_Environments::Create_Environ_Entity(int Index)
 
 	strcpy(Mesh_File, Object->Mesh_FileName);
 
-	Object->Object_Ent = App->SBC_Ogre->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->SBC_Ogre->App_Resource_Group);
-	Object->Object_Node = App->SBC_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	Object->Object_Ent = App->CL_Ogre->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->CL_Ogre->App_Resource_Group);
+	Object->Object_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Object->Object_Node->attachObject(Object->Object_Ent);
 
 	Object->Object_Node->setVisible(true);
@@ -272,7 +272,54 @@ void SB_Com_Environments::Set_Environ_Defaults(int Index)
 }
 
 // *************************************************************************
-// *		Load_Environment:- Terry and Hazel Flanigan 2022			   *
+// *		V_Set_Environ_Defaults:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_Com_Environments::V_Set_Environ_Defaults(int Index)
+{
+	Base_Object* V_Object = App->SBC_Scene->V_Object[Index];
+
+	V_Object->Altered = 0;
+
+	V_Object->S_Environ[0]->Environment_ID = 0;
+	strcpy(V_Object->S_Environ[0]->Environment_Name, "Not_Set");
+
+	V_Object->S_Environ[0]->Environ_Enabled = 1;
+
+	//----------------------- Sound
+	strcpy(V_Object->S_Environ[0]->Sound_File, "The_Sun.ogg");
+	V_Object->S_Environ[0]->SndFile = NULL;
+	V_Object->S_Environ[0]->Play = 0;
+	V_Object->S_Environ[0]->Loop = 1;
+	V_Object->S_Environ[0]->SndVolume = 0.5;
+
+	//----------------------- Light
+	V_Object->S_Environ[0]->AmbientColour.x = 1;
+	V_Object->S_Environ[0]->AmbientColour.y = 1;
+	V_Object->S_Environ[0]->AmbientColour.z = 1;
+
+	V_Object->S_Environ[0]->Light_Position.x = 0;
+	V_Object->S_Environ[0]->Light_Position.y = 0;
+	V_Object->S_Environ[0]->Light_Position.z = 0;
+
+	// Sky
+	V_Object->S_Environ[0]->Curvature = 15;
+	V_Object->S_Environ[0]->Distance = 4000;
+	V_Object->S_Environ[0]->Enabled = 0;
+	strcpy(V_Object->S_Environ[0]->Material, "Examples/CloudySky");
+	V_Object->S_Environ[0]->Tiling = 15;
+	V_Object->S_Environ[0]->type = 1;
+
+	// Fog
+	V_Object->S_Environ[0]->Fog_On = 0;
+	V_Object->S_Environ[0]->Fog_Mode = FOG_LINEAR;
+	V_Object->S_Environ[0]->Fog_Density = 0.001000;
+	V_Object->S_Environ[0]->Fog_Start = 50;
+	V_Object->S_Environ[0]->Fog_End = 300;
+	V_Object->S_Environ[0]->Fog_Colour = Ogre::Vector3(1, 1, 1);
+}
+
+// *************************************************************************
+// *		Set_First_Environment:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
 void SB_Com_Environments::Set_First_Environment(int Index)
 {
@@ -280,7 +327,7 @@ void SB_Com_Environments::Set_First_Environment(int Index)
 	float y = App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour.y;
 	float z = App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour.z;
 
-	App->SBC_Ogre->mSceneMgr->setAmbientLight(ColourValue(x, y, z));
+	App->CL_Ogre->mSceneMgr->setAmbientLight(ColourValue(x, y, z));
 
 	if (App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_On == 1)
 	{
@@ -292,16 +339,16 @@ void SB_Com_Environments::Set_First_Environment(int Index)
 		float y = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.y;
 		float z = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.z;
 
-		App->SBC_Ogre->mSceneMgr->setFog(FOG_LINEAR, ColourValue(x, y, z), Density, (Ogre::Real)Start, (Ogre::Real)End);
+		App->CL_Ogre->mSceneMgr->setFog(FOG_LINEAR, ColourValue(x, y, z), Density, (Ogre::Real)Start, (Ogre::Real)End);
 	}
 	else
 	{
-		App->SBC_Ogre->mSceneMgr->setFog(FOG_NONE, ColourValue(0.7, 0.7, 0.8), 0, 100, 1000);
+		App->CL_Ogre->mSceneMgr->setFog(FOG_NONE, ColourValue(0.7, 0.7, 0.8), 0, 100, 1000);
 	}
 
 	if (App->SBC_Scene->B_Object[Index]->S_Environ[0]->Enabled == 1)
 	{
-		App->SBC_Ogre->mSceneMgr->setSkyDome(true,
+		App->CL_Ogre->mSceneMgr->setSkyDome(true,
 			App->SBC_Scene->B_Object[Index]->S_Environ[0]->Material,
 			App->SBC_Scene->B_Object[Index]->S_Environ[0]->Curvature,
 			App->SBC_Scene->B_Object[Index]->S_Environ[0]->Tiling,
@@ -331,11 +378,11 @@ bool SB_Com_Environments::EnableFog(bool SetFog)
 		float y = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.y;
 		float z = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.z;
 
-		App->SBC_Ogre->mSceneMgr->setFog(FOG_LINEAR, ColourValue(x, y, z), Density, (Ogre::Real)Start, (Ogre::Real)End);
+		App->CL_Ogre->mSceneMgr->setFog(FOG_LINEAR, ColourValue(x, y, z), Density, (Ogre::Real)Start, (Ogre::Real)End);
 	}
 	else
 	{
-		App->SBC_Ogre->mSceneMgr->setFog(FOG_NONE, ColourValue(0.7, 0.7, 0.8), 0, 100, 1000);
+		App->CL_Ogre->mSceneMgr->setFog(FOG_NONE, ColourValue(0.7, 0.7, 0.8), 0, 100, 1000);
 	}
 
 	return 1;
@@ -357,11 +404,11 @@ void SB_Com_Environments::EnableFog_Collision(bool SetFog ,int Index)
 		float y = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.y;
 		float z = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.z;
 
-		App->SBC_Ogre->mSceneMgr->setFog(FOG_LINEAR, ColourValue(x, y, z), Density, (Ogre::Real)Start, (Ogre::Real)End);
+		App->CL_Ogre->mSceneMgr->setFog(FOG_LINEAR, ColourValue(x, y, z), Density, (Ogre::Real)Start, (Ogre::Real)End);
 	}
 	else
 	{
-		App->SBC_Ogre->mSceneMgr->setFog(FOG_NONE, ColourValue(0.7, 0.7, 0.8), 0, 100, 1000);
+		App->CL_Ogre->mSceneMgr->setFog(FOG_NONE, ColourValue(0.7, 0.7, 0.8), 0, 100, 1000);
 	}
 }
 
@@ -375,7 +422,7 @@ void SB_Com_Environments::Set_Environment_From_Environ(int Index)
 	float y = App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour.y;
 	float z = App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour.z;
 	
-	App->SBC_Ogre->mSceneMgr->setAmbientLight(ColourValue(x, y, z));
+	App->CL_Ogre->mSceneMgr->setAmbientLight(ColourValue(x, y, z));
 
 	
 	if (App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_On == 1)
@@ -384,7 +431,7 @@ void SB_Com_Environments::Set_Environment_From_Environ(int Index)
 	}
 	else
 	{
-		App->SBC_Ogre->mSceneMgr->setFog(FOG_NONE, ColourValue(0.7, 0.7, 0.8), 0, 100, 1000);
+		App->CL_Ogre->mSceneMgr->setFog(FOG_NONE, ColourValue(0.7, 0.7, 0.8), 0, 100, 1000);
 	}
 
 }
@@ -459,7 +506,7 @@ void SB_Com_Environments::GameMode(bool Is_On)
 	float y = App->SBC_Scene->B_Object[First_Environ]->S_Environ[0]->AmbientColour.y;
 	float z = App->SBC_Scene->B_Object[First_Environ]->S_Environ[0]->AmbientColour.z;
 
-	App->SBC_Ogre->mSceneMgr->setAmbientLight(ColourValue(x, y, z));
+	App->CL_Ogre->mSceneMgr->setAmbientLight(ColourValue(x, y, z));
 
 	if (App->SBC_Scene->B_Object[First_Environ]->S_Environ[0]->Fog_On == 1)
 	{
@@ -471,11 +518,11 @@ void SB_Com_Environments::GameMode(bool Is_On)
 		float y = App->SBC_Scene->B_Object[First_Environ]->S_Environ[0]->Fog_Colour.y;
 		float z = App->SBC_Scene->B_Object[First_Environ]->S_Environ[0]->Fog_Colour.z;
 
-		App->SBC_Ogre->mSceneMgr->setFog(FOG_LINEAR, ColourValue(x, y, z), Density, (Ogre::Real)Start, (Ogre::Real)End);
+		App->CL_Ogre->mSceneMgr->setFog(FOG_LINEAR, ColourValue(x, y, z), Density, (Ogre::Real)Start, (Ogre::Real)End);
 	}
 	else
 	{
-		App->SBC_Ogre->mSceneMgr->setFog(FOG_NONE, ColourValue(0.7, 0.7, 0.8), 0, 100, 1000);
+		App->CL_Ogre->mSceneMgr->setFog(FOG_NONE, ColourValue(0.7, 0.7, 0.8), 0, 100, 1000);
 	}
 }
 
@@ -488,7 +535,7 @@ int SB_Com_Environments::Set_Environment_By_Index(bool PlayMusic,int Index)
 	float x = App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour.x;
 	float y = App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour.y;
 	float z = App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour.z;
-	App->SBC_Ogre->mSceneMgr->setAmbientLight(ColourValue(x, y, z));
+	App->CL_Ogre->mSceneMgr->setAmbientLight(ColourValue(x, y, z));
 
 
 	// Fog
@@ -502,11 +549,11 @@ int SB_Com_Environments::Set_Environment_By_Index(bool PlayMusic,int Index)
 		float y = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.y;
 		float z = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.z;
 
-		App->SBC_Ogre->mSceneMgr->setFog(FOG_LINEAR, ColourValue(x, y, z), Density, (Ogre::Real)Start, (Ogre::Real)End);
+		App->CL_Ogre->mSceneMgr->setFog(FOG_LINEAR, ColourValue(x, y, z), Density, (Ogre::Real)Start, (Ogre::Real)End);
 	}
 	else
 	{
-		App->SBC_Ogre->mSceneMgr->setFog(FOG_NONE, ColourValue(0.7, 0.7, 0.8), 0, 100, 1000);
+		App->CL_Ogre->mSceneMgr->setFog(FOG_NONE, ColourValue(0.7, 0.7, 0.8), 0, 100, 1000);
 	}
 
 	if (PlayMusic == 1)

@@ -28,5 +28,19 @@ class SB_Editor_Gui
 public:
 	SB_Editor_Gui();
 	~SB_Editor_Gui();
+
+	void ImGui_Editor_Loop(void);
+
+	void Start_App_Data(void);
+	void App_Data_GUI(void);
+	void Close_App_Data(void);
+
+	bool Show_App_Data_F;
+
+	bool AppData_DoOnce;
+
+	float App_Data_PosX;
+	float App_Data_PosY;
+
 };
 

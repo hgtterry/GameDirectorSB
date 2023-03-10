@@ -79,7 +79,7 @@ bool SB_Ogre::InitOgre(void)
 	App->SBC_Grid->Grid_Update(1);
 	App->SBC_Grid->Hair_Update(1);
 
-	App->SBC_Grid->DummyNode = App->SBC_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	App->SBC_Grid->DummyNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 
 	App->SBC_Markers->Set_Markers();
 

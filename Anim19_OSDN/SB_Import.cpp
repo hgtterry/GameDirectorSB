@@ -51,7 +51,7 @@ bool SB_Import::Load_Project(char* Extension, char* Extension2)
 	bool test = App->SBC_Project->Load_Project();
 
 	App->SBC_TopTabs->Project_Loaded_Reset();
-	App->SBC_Ogre->RenderFrame();
+	App->CL_Ogre->RenderFrame();
 	
 	if (test == 1)
 	{
@@ -111,7 +111,7 @@ void SB_Import::Reload_FromResentFiles(char* ResentPathAndFile)
 	App->CL_Prefs->Update_User_File(ResentPathAndFile);
 
 	App->SBC_TopTabs->Project_Loaded_Reset();
-	App->SBC_Ogre->RenderFrame();
+	App->CL_Ogre->RenderFrame();
 	
 	if (Quick_Load_Flag == 0)
 	{

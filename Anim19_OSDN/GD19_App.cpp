@@ -40,7 +40,7 @@ GD19_App::GD19_App(void)
 	//EBC_Listener =		nullptr;
 	EBC_Options =		nullptr;
 
-	SBC_Ogre =			nullptr;
+	CL_Ogre =			nullptr;
 	SBC_Grid =			nullptr;
 	SBC_Panels =		nullptr;
 	SBC_Bullet =		nullptr;
@@ -88,6 +88,7 @@ GD19_App::GD19_App(void)
 	SBC_Front_Dlg =			nullptr;
 	SBC_Gui_Propreties =	nullptr;
 	CL_Editor_Gui =			nullptr;
+	CL_Logger =				nullptr;
 
 	SBC_DCC =				nullptr;
 
@@ -192,6 +193,7 @@ GD19_App::GD19_App(void)
 	CursorPosY = 500;
 
 	Debug_App = 1;
+	V_New_Objects = 1;
 
 	EquityDirecory_FullPath[0] = 0;
 	ETemp_Folder[0] = 0;
@@ -206,7 +208,7 @@ GD19_App::~GD19_App(void)
 // *************************************************************************
 bool GD19_App::InitApp(void)
 {
-	SBC_Ogre =			new SB_Ogre();
+	CL_Ogre =			new SB_Ogre();
 	Cl_Utilities =		new GD19_Utilities();
 	SBC_Grid =			new SB_Grid();
 	SBC_Panels =		new SB_Panels();
@@ -268,7 +270,8 @@ bool GD19_App::InitApp(void)
 	SBC_Locations =			new SB_Locations();
 	SBC_Gui_Propreties =	new SB_Gui_Properties();
 	CL_Editor_Gui =			new SB_Editor_Gui();
-
+	CL_Logger =				new SB_Logger();
+	
 	//SBC_DCC =				new DynamicCharacterController();
 
 	//--------------
@@ -367,11 +370,11 @@ bool GD19_App::Resize_OgreWin(void)
 		RECT rect;
 		GetClientRect(App->ViewGLhWnd, &rect);
 
-		if ((rect.bottom - rect.top) != 0 && App->SBC_Ogre->mCamera != 0)
+		if ((rect.bottom - rect.top) != 0 && App->CL_Ogre->mCamera != 0)
 		{
-			App->SBC_Ogre->mWindow->windowMovedOrResized();
-			App->SBC_Ogre->mCamera->setAspectRatio((Ogre::Real)App->SBC_Ogre->mWindow->getWidth() / (Ogre::Real)App->SBC_Ogre->mWindow->getHeight());
-			App->SBC_Ogre->mCamera->yaw(Radian(0));
+			App->CL_Ogre->mWindow->windowMovedOrResized();
+			App->CL_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CL_Ogre->mWindow->getWidth() / (Ogre::Real)App->CL_Ogre->mWindow->getHeight());
+			App->CL_Ogre->mCamera->yaw(Radian(0));
 
 			if (App->SBC_Front_Dlg->Use_Front_Dlg_Flag == 0 || App->SBC_Front_Dlg->Show_Front_Dlg_Flag == 0) // LOOK AT
 			{
@@ -570,19 +573,6 @@ void GD19_App::Say_Int(int Value)
 	char buf[255];
 	_itoa(Value, buf, 10);
 	MessageBox(MainHwnd, buf, "Equity Notice", MB_OK);
-}
-
-// *************************************************************************
-// *					Log_Messageg (Terry Bernie)						   *
-// *************************************************************************
-void GD19_App::Log_Messageg(char* Message)
-{
-	if (Debug_App == 1)
-	{
-		Ogre::LogManager::getSingleton().setDefaultLog(Ogre::LogManager::getSingleton().getLog("App.log"));
-		Ogre::LogManager::getSingleton().logMessage(Message);
-		Ogre::LogManager::getSingleton().setDefaultLog(Ogre::LogManager::getSingleton().getLog("EquitySB.log"));
-	}
 }
 
 // *************************************************************************

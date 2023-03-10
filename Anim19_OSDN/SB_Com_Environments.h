@@ -32,7 +32,10 @@ public:
 	void GameMode(bool Is_On);
 	bool Add_New_Environ_Entity(bool FirstOne);
 	bool Create_Environ_Entity(int Index);
+
 	void Set_Environ_Defaults(int Index);
+	void V_Set_Environ_Defaults(int Index);
+
 	void Set_First_Environment(int Index);
 	void Mark_As_Altered_Environ(int Index);
 	void Set_Physics(int Index);

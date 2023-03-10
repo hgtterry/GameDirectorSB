@@ -76,6 +76,13 @@ protected:
 
 	static LRESULT CALLBACK Save_Project_Dialog_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	
+	bool Read_Message(int Index, char* Section);
+	bool Read_Collectable(int Index, char* Section);
+	bool Read_Particle(int Index, char* Section);
+	bool Read_EnvironEntity(int Index, char* Section);
+	bool Read_Teleport(int Index, char* Section);
+	bool Read_MoveEntity(int Index, char* Section);
+
 	bool Save_Project();
 	
 	bool Save_Level_Folder();
@@ -104,6 +111,8 @@ protected:
 	bool Load_Project_Objects();
 	bool Load_Project_Counters();
 	
+	bool SB_Project::V_Load_Project_Objects();
+
 	void Set_Paths();
 
 	bool Set_QuickLoad_Flag;

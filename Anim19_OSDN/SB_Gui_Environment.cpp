@@ -74,7 +74,7 @@ void SB_Gui_Environment::Reset_Class()
 {
 	if (App->SBC_Scene->Scene_Loaded == 1)
 	{
-		App->SBC_Ogre->mSceneMgr->setSkyDome(false, "Examples/CloudySky");
+		App->CL_Ogre->mSceneMgr->setSkyDome(false, "Examples/CloudySky");
 
 		Show_PropertyEditor = 0;
 		PropertyEditor_Page = 0;
@@ -221,7 +221,7 @@ void SB_Gui_Environment::Environ_PropertyEditor()
 			Ambient_Int_Blue = Ambient_Colour.z * 255;
 
 			App->SBC_Scene->B_Object[Eviron_Index]->S_Environ[0]->AmbientColour = Ogre::Vector3(Ambient_Colour.x, Ambient_Colour.y, Ambient_Colour.z);
-			App->SBC_Ogre->mSceneMgr->setAmbientLight(ColourValue(Ambient_Colour.x, Ambient_Colour.y, Ambient_Colour.z));
+			App->CL_Ogre->mSceneMgr->setAmbientLight(ColourValue(Ambient_Colour.x, Ambient_Colour.y, Ambient_Colour.z));
 
 			App->SBC_Com_Environments->Mark_As_Altered_Environ(Eviron_Index);
 		}
@@ -567,7 +567,7 @@ void SB_Gui_Environment::Close_Environment_Editor()
 // *************************************************************************
 void SB_Gui_Environment::Set_To_PlayerView()
 {
-	App->SBC_Ogre->OgreListener->GD_CameraMode = Enums::CamFirst;
+	App->CL_Ogre->OgreListener->GD_CameraMode = Enums::CamFirst;
 	App->SBC_TopTabs->Toggle_FirstCam_Flag = 1;
 	App->SBC_TopTabs->Toggle_FreeCam_Flag = 0;
 
@@ -576,10 +576,10 @@ void SB_Gui_Environment::Set_To_PlayerView()
 	int f = App->SBC_Scene->B_Player[0]->Phys_Body->getCollisionFlags();
 	App->SBC_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f | (1 << 5));
 
-	App->SBC_Ogre->BulletListener->Render_Debug_Flag = 0;
-	App->SBC_Ogre->BulletListener->Render_Debug_Flag = 1;
+	App->CL_Ogre->BulletListener->Render_Debug_Flag = 0;
+	App->CL_Ogre->BulletListener->Render_Debug_Flag = 1;
 
-	App->SBC_Ogre->OgreListener->GD_Run_Physics = 1;
+	App->CL_Ogre->OgreListener->GD_Run_Physics = 1;
 
 	RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
@@ -591,7 +591,7 @@ void SB_Gui_Environment::SetSky(bool Enable)
 {
 	int Index = App->SBC_Properties->Current_Selected_Object;
 
-	App->SBC_Ogre->mSceneMgr->setSkyDome(Enable,
+	App->CL_Ogre->mSceneMgr->setSkyDome(Enable,
 		App->SBC_Scene->B_Object[Index]->S_Environ[0]->Material,
 		App->SBC_Scene->B_Object[Index]->S_Environ[0]->Curvature,
 		App->SBC_Scene->B_Object[Index]->S_Environ[0]->Tiling,
@@ -615,11 +615,11 @@ bool SB_Gui_Environment::EnableFog(bool SetFog)
 		float y = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.y;
 		float z = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.z;
 
-		App->SBC_Ogre->mSceneMgr->setFog(FOG_LINEAR, ColourValue(x, y, z), Density, (Ogre::Real)Start, (Ogre::Real)End);
+		App->CL_Ogre->mSceneMgr->setFog(FOG_LINEAR, ColourValue(x, y, z), Density, (Ogre::Real)Start, (Ogre::Real)End);
 	}
 	else
 	{
-		App->SBC_Ogre->mSceneMgr->setFog(FOG_NONE, ColourValue(0.7, 0.7, 0.8), 0, 100, 1000);
+		App->CL_Ogre->mSceneMgr->setFog(FOG_NONE, ColourValue(0.7, 0.7, 0.8), 0, 100, 1000);
 	}
 
 	return 1;

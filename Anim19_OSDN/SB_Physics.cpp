@@ -59,13 +59,13 @@ void SB_Physics::Update_Model(void)
 // *************************************************************************
 void SB_Physics::Enable_Physics(bool Enable)
 {
-	App->Log_Messageg("void SB_Physics::Enable_Physics(bool Enable)");
+	App->CL_Logger->Log_Message_To_File("void SB_Physics::Enable_Physics(bool Enable)");
 
 	int f = App->SBC_Scene->B_Player[0]->Phys_Body->getCollisionFlags();
 
-	App->SBC_Ogre->OgreListener->Dubug_Physics_Draw = Enable;
-	//App->SBC_Ogre->OgreListener->GD_Run_Physics = Enable;
-	App->SBC_Ogre->BulletListener->Render_Debug_Flag = Enable;
+	App->CL_Ogre->OgreListener->Dubug_Physics_Draw = Enable;
+	//App->CL_Ogre->OgreListener->GD_Run_Physics = Enable;
+	App->CL_Ogre->BulletListener->Render_Debug_Flag = Enable;
 
 	App->SBC_Player->ShowDebug = Enable;
 
@@ -78,7 +78,7 @@ void SB_Physics::Enable_Physics(bool Enable)
 // *************************************************************************
 void SB_Physics::Physics_On(bool Enable)
 {
-	App->SBC_Ogre->OgreListener->GD_Run_Physics = Enable;
+	App->CL_Ogre->OgreListener->GD_Run_Physics = Enable;
 	RedrawWindow(App->Physics_Console_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 
@@ -88,9 +88,9 @@ void SB_Physics::Physics_On(bool Enable)
 // *************************************************************************
 void SB_Physics::Reset_Physics(void)
 {
-	App->Log_Messageg("void GD19_Bullet::Reset_Physics(void)");
+	App->CL_Logger->Log_Message_To_File("void GD19_Bullet::Reset_Physics(void)");
 
-	App->SBC_Ogre->OgreListener->GD_Run_Physics = 0;
+	App->CL_Ogre->OgreListener->GD_Run_Physics = 0;
 
 	float w = 1;
 	float x = 0;
@@ -184,7 +184,7 @@ void SB_Physics::Reset_Physics(void)
 		App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->SBC_Scene->B_Player[0]->Physics_Rotation);
 	}
 
-	//App->SBC_Ogre->OgreListener->GD_Run_Physics = 1;
+	//App->CL_Ogre->OgreListener->GD_Run_Physics = 1;
 }
 
 // *************************************************************************

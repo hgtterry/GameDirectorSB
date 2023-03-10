@@ -28,7 +28,7 @@ distribution.
 #include "GD19_App.h"
 #include "resource.h"
 #include "SB_Project.h"
-
+//#include "OgreVector3.h"
 
 SB_Project::SB_Project()
 {
@@ -1454,7 +1454,7 @@ bool SB_Project::Save_Player_Data()
 // *************************************************************************
 void SB_Project::Set_Paths()
 {
-	App->Log_Messageg("void SB_Project::Set_Paths()");
+	App->CL_Logger->Log_Message_To_File("void SB_Project::Set_Paths()");
 
 	strcpy(m_Level_File_Name, App->SBC_FileIO->Project_File_Name);
 	strcpy(m_Project_Sub_Folder, App->SBC_FileIO->Project_Path_File_Name);
@@ -1476,7 +1476,8 @@ void SB_Project::Set_Paths()
 // *************************************************************************
 bool SB_Project::Load_Project()
 {
-	//App->Log_Messageg("bool SB_Project::Load_Project()");
+
+	App->CL_Logger->Log_Message_To_File("bool SB_Project::Load_Project()");
 
 	m_Ini_Path_File_Name[0] = 0;
 
@@ -1502,7 +1503,7 @@ bool SB_Project::Load_Project()
 	chr_Tag2[0] = 0;
 
 	App->Cl_Ini->SetPathName(m_Ini_Path_File_Name);
-	
+
 	App->Cl_Ini->GetString("Version_Data", "Version", chr_Tag1, 1024);
 
 	App->Cl_Ini->GetString("Files", "Level_Name", m_Level_Name, MAX_PATH);
@@ -1567,7 +1568,7 @@ bool SB_Project::Load_Project()
 	}
 
 
-	App->SBC_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
+	App->CL_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
 	
 	App->SBC_FileView->Change_Level_Name();
 	App->SBC_FileView->Change_Project_Name();
@@ -1610,7 +1611,7 @@ bool SB_Project::Load_Project()
 // *************************************************************************
 bool SB_Project::Load_Get_Resource_Path()
 {
-	App->Log_Messageg("bool SB_Project::Load_Get_Resource_Path()");
+	App->CL_Logger->Log_Message_To_File("bool SB_Project::Load_Get_Resource_Path()");
 
 	m_Main_Assets_Path[0] = 0;
 
@@ -1633,6 +1634,7 @@ bool SB_Project::Load_Get_Resource_Path()
 // *************************************************************************
 bool SB_Project::Load_Project_Objects()
 {
+	
 	int Int_Tag = 0;
 	char Object_Ini_Path[MAX_PATH];
 	char chr_Tag1[MAX_PATH];
@@ -1671,12 +1673,15 @@ bool SB_Project::Load_Project_Objects()
 		strcat(buff, n_buff);
 
 		App->SBC_Scene->B_Object[Count] = new Base_Object();
+		
 		Base_Object* Object = App->SBC_Scene->B_Object[Count];
-
+		
 		App->Cl_Ini->GetString(buff, "Mesh_Name", Object->Mesh_Name, MAX_PATH);
 		App->Cl_Ini->GetString(buff, "Mesh_File", Object->Mesh_FileName, MAX_PATH);
 		App->Cl_Ini->GetString(buff, "Mesh_Resource_Path", Object->Mesh_Resource_Path, MAX_PATH);
 		App->Cl_Ini->GetString(buff, "Material_File", Object->Material_File, MAX_PATH);
+
+		
 
 		// Types
 		Object->This_Object_UniqueID = App->Cl_Ini->GetInt(buff, "Object_ID", 0);
@@ -1689,15 +1694,23 @@ bool SB_Project::Load_Project_Objects()
 		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
 		App->SBC_Scene->B_Object[Count]->Mesh_Pos = Ogre::Vector3(x, y, z);
 
+		
+
+		//App->CL_Logger->Show(0, 0, V_Object->Mesh_Name, V_Object->Mesh_Pos);
+
 		// Scale
 		App->Cl_Ini->GetString(buff, "Mesh_Scale", chr_Tag1, MAX_PATH);
 		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
 		App->SBC_Scene->B_Object[Count]->Mesh_Scale = Ogre::Vector3(x, y, z);
 
+		
+
 		// Rotation
 		App->Cl_Ini->GetString(buff, "Mesh_Rot", chr_Tag1, MAX_PATH);
 		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
 		App->SBC_Scene->B_Object[Count]->Mesh_Rot = Ogre::Vector3(x, y, z);
+
+		
 
 		// Mesh_Quat
 		App->Cl_Ini->GetString(buff, "Mesh_Quat", chr_Tag1, MAX_PATH);
@@ -1707,6 +1720,8 @@ bool SB_Project::Load_Project_Objects()
 		App->SBC_Scene->B_Object[Count]->Mesh_Quat.x = x;
 		App->SBC_Scene->B_Object[Count]->Mesh_Quat.y = y;
 		App->SBC_Scene->B_Object[Count]->Mesh_Quat.z = z;
+
+		
 
 		// Physics_Quat
 		App->Cl_Ini->GetString(buff, "Physics_Quat", chr_Tag1, MAX_PATH);
@@ -1719,6 +1734,8 @@ bool SB_Project::Load_Project_Objects()
 
 		App->SBC_Scene->B_Object[Count]->Dimensions_Locked = App->Cl_Ini->GetInt(buff, "Dimensions_Lock", 0);
 		
+		
+
 		//---------------------------------------------------------------------------------- Message Entity
 		if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Message)
 		{
@@ -2086,6 +2103,159 @@ bool SB_Project::Load_Project_Objects()
 
 	App->SBC_Scene->Object_Count = Count;
 
+	if (App->V_New_Objects == 1)
+	{
+		V_Load_Project_Objects();
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *	  	V_Load_Project_Objects:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+bool SB_Project::V_Load_Project_Objects()
+{
+	Debug
+	int Int_Tag = 0;
+	char Object_Ini_Path[MAX_PATH];
+	char chr_Tag1[MAX_PATH];
+	int Object_Count = 0;
+
+	float w = 0;
+	float x = 0;
+	float y = 0;
+	float z = 0;
+
+	strcpy(Object_Ini_Path, m_Project_Sub_Folder);
+	strcat(Object_Ini_Path, "\\");
+
+	strcat(Object_Ini_Path, m_Level_Name);
+	strcat(Object_Ini_Path, "\\");
+
+	strcat(Object_Ini_Path, "Objects");
+	strcat(Object_Ini_Path, "\\");
+
+	//---------------------------------------------------
+
+	strcat(Object_Ini_Path, "Objects.efd");
+
+	App->Cl_Ini->SetPathName(Object_Ini_Path);
+
+	Object_Count = App->Cl_Ini->GetInt("Counters", "Objects_Count", 0);
+
+	int Count = 0;
+	while (Count < Object_Count)
+	{
+		char n_buff[255];
+		char buff[255];
+		strcpy(buff, "Object_");
+		_itoa(Count, n_buff, 10);
+		strcat(buff, n_buff);
+
+		App->SBC_Scene->V_Object.push_back(new Base_Object());
+
+		Base_Object* V_Object = App->SBC_Scene->V_Object[Count];
+
+		App->Cl_Ini->GetString(buff, "Mesh_Name", V_Object->Mesh_Name, MAX_PATH);
+		App->Cl_Ini->GetString(buff, "Mesh_File", V_Object->Mesh_FileName, MAX_PATH);
+		App->Cl_Ini->GetString(buff, "Mesh_Resource_Path", V_Object->Mesh_Resource_Path, MAX_PATH);
+		App->Cl_Ini->GetString(buff, "Material_File", V_Object->Material_File, MAX_PATH);
+
+		// ------------- Types
+		V_Object->This_Object_UniqueID = App->Cl_Ini->GetInt(buff, "Object_ID", 0);
+		V_Object->Type = App->Cl_Ini->GetInt(buff, "Object_Type", 0);
+		V_Object->Shape = App->Cl_Ini->GetInt(buff, "Object_Shape", 0);
+		V_Object->Usage = App->Cl_Ini->GetInt(buff, "Object_Usage", 0);
+
+		// ------------- Pos
+		App->Cl_Ini->GetString(buff, "Mesh_Pos", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+		V_Object->Mesh_Pos = Ogre::Vector3(x, y, z);
+
+		// ------------- Scale
+		App->Cl_Ini->GetString(buff, "Mesh_Scale", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+		V_Object->Mesh_Scale = Ogre::Vector3(x, y, z);
+	
+		// ------------- Rotation
+		App->Cl_Ini->GetString(buff, "Mesh_Rot", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+		V_Object->Mesh_Rot = Ogre::Vector3(x, y, z);
+
+		// ------------- Mesh_Quat
+		App->Cl_Ini->GetString(buff, "Mesh_Quat", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f,%f", &w, &x, &y, &z);
+
+		V_Object->Mesh_Quat.w = w;
+		V_Object->Mesh_Quat.x = x;
+		V_Object->Mesh_Quat.y = y;
+		V_Object->Mesh_Quat.z = z;
+
+		// ------------- Physics_Quat
+		App->Cl_Ini->GetString(buff, "Physics_Quat", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f,%f", &w, &x, &y, &z);
+
+		V_Object->Physics_Quat.w = w;
+		V_Object->Physics_Quat.x = x;
+		V_Object->Physics_Quat.y = y;
+		V_Object->Physics_Quat.z = z;
+
+		V_Object->Dimensions_Locked = App->Cl_Ini->GetInt(buff, "Dimensions_Lock", 0);
+
+
+		//---------------------------------------------------------------------------------- Message Entity
+		if (V_Object->Usage == Enums::Usage_Message)
+		{
+			Read_Message(Count, buff);
+		}
+
+		//---------------------------------------------------------------------------------- Sound Entity
+		if (V_Object->Usage == Enums::Usage_Sound)
+		{
+			App->Cl_Ini->GetString(buff, "Sound_File", V_Object->Sound_File, MAX_PATH);
+
+			App->Cl_Ini->GetString(buff, "Sound_Volume", chr_Tag1, MAX_PATH);
+			sscanf(chr_Tag1, "%f", &x);
+			V_Object->SndVolume = x;
+		}
+
+		//---------------------------------------------------------------------------------- Colectable Entity
+		if (V_Object->Usage == Enums::Usage_Colectable)
+		{
+			Read_Collectable(Count, buff);
+		}
+
+		//---------------------------------------------------------------------------------- Move Enitity
+		if (V_Object->Usage == Enums::Usage_Move)
+		{
+			Read_MoveEntity(Count, buff);
+		}
+
+		//---------------------------------------------------------------------------------- Teleport Enitity
+		if (V_Object->Usage == Enums::Usage_Teleport)
+		{
+			Read_Teleport(Count,buff);
+		}
+
+		//---------------------------------------------------------------------------------- Environ Enitity
+		if (V_Object->Usage == Enums::Usage_EnvironEntity)
+		{
+			Read_EnvironEntity(Count,buff);
+		}
+
+		//---------------------------------------------------------------------------------- Particle Enitity
+		if (V_Object->Usage == Enums::Usage_Particle)
+		{
+			Read_Particle(Count,buff);
+		}
+
+		Count++;
+
+	}
+
+	App->SBC_Scene->Object_Count = Count;
+
 	return 1;
 }
 
@@ -2170,7 +2340,7 @@ bool SB_Project::Load_Project_Counters()
 // *************************************************************************
 bool SB_Project::Load_Project_Aera()
 {
-	App->Log_Messageg("bool SB_Project::Load_Project_Aera()");
+	App->CL_Logger->Log_Message_To_File("bool SB_Project::Load_Project_Aera()");
 
 	char Area_Ini_Path[MAX_PATH];
 	char chr_Tag1[MAX_PATH];
@@ -2583,4 +2753,406 @@ bool SB_Project::Copy_Assets(char* SourceFolder, char* DestinationFolder)
 
 	return 1;
 }
+
+// *************************************************************************
+// *	  		Read_Message:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+bool SB_Project::Read_Message(int Index, char* Section)
+{
+	char chr_Tag1[MAX_PATH] = { 0 };
+	Ogre::Vector4 V4 = Ogre::Vector4::ZERO;
+
+	Base_Object* V_Object = App->SBC_Scene->V_Object[Index];
+
+
+	V_Object->S_Message[0] = new Message_type;
+	App->SBC_Com_Entity->V_Set_Message_Defaults(Index);
+
+	App->Cl_Ini->GetString(Section, "Message_Text", V_Object->S_Message[0]->Message_Text, MAX_PATH);
+
+	App->Cl_Ini->GetString(Section, "Message_Pos", chr_Tag1, MAX_PATH);
+	sscanf(chr_Tag1, "%f,%f", &V4.x, &V4.y);
+
+	V_Object->S_Message[0]->Message_PosX = V4.x;
+	V_Object->S_Message[0]->Message_PosY = V4.y;
+
+	// Message Counter
+	V_Object->S_Message[0]->Counter_ID = App->Cl_Ini->GetInt(Section, "Message_Counter_ID", 0);
+	V_Object->S_Message[0]->Trigger_Value = App->Cl_Ini->GetInt(Section, "Message_Trigger_Value", 0);
+	V_Object->S_Message[0]->Counter_Disabled = App->Cl_Ini->GetInt(Section, "Message_Counter_Disabled", 1);
+
+	V_Object->S_Message[0]->PosXCentre_Flag = App->Cl_Ini->GetInt(Section, "Message_CentreX", 0);
+	V_Object->S_Message[0]->PosYCentre_Flag = App->Cl_Ini->GetInt(Section, "Message_CentreY", 0);
+
+	int Test = App->Cl_Ini->GetString(Section, "Message_Text_Colour", chr_Tag1, MAX_PATH);
+	if (Test > 0)
+	{
+		sscanf(chr_Tag1, "%f,%f,%f,%f", &V4.x, &V4.y, &V4.z, &V4.w);
+		V_Object->S_Message[0]->Text_Colour.x = V4.x;
+		V_Object->S_Message[0]->Text_Colour.y = V4.y;
+		V_Object->S_Message[0]->Text_Colour.z = V4.z;
+		V_Object->S_Message[0]->Text_Colour.w = V4.w;
+	}
+	else
+	{
+		V_Object->S_Message[0]->Text_Colour = Ogre::Vector4(0, 1, 0, 255);
+	}
+
+	Test = App->Cl_Ini->GetString(Section, "Message_BackGround_Colour", chr_Tag1, MAX_PATH);
+	if (Test > 0)
+	{
+		sscanf(chr_Tag1, "%f,%f,%f,%f", &V4.x, &V4.y, &V4.z, &V4.w);
+		V_Object->S_Message[0]->BackGround_Colour.x = V4.x;
+		V_Object->S_Message[0]->BackGround_Colour.y = V4.y;
+		V_Object->S_Message[0]->BackGround_Colour.z = V4.z;
+		V_Object->S_Message[0]->BackGround_Colour.w = V4.w;
+	}
+	else
+	{
+		V_Object->S_Message[0]->BackGround_Colour = Ogre::Vector4(239, 239, 239, 255);
+	}
+
+	V_Object->S_Message[0]->Show_BackGround = App->Cl_Ini->GetInt(Section, "Message_Show_BackGround", 1);
+
+	return 1;
+}
+
+// *************************************************************************
+// *	  		Read_Collectable:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+bool SB_Project::Read_Collectable(int Index, char* Section)
+{
+	char chr_Tag1[MAX_PATH] = { 0 };
+	Ogre::Vector4 V4 = Ogre::Vector4::ZERO;
+
+	Base_Object* V_Object = App->SBC_Scene->V_Object[Index];
+
+	V_Object->S_Collectable[0] = new Collectable_type;
+	App->SBC_Com_Entity->V_Set_Collectables_Defaults(Index);
+
+	App->Cl_Ini->GetString(Section, "Col_Sound_File", chr_Tag1, MAX_PATH);
+	strcpy(V_Object->S_Collectable[0]->Sound_File, chr_Tag1);
+
+	App->Cl_Ini->GetString(Section, "Col_Sound_Volume", chr_Tag1, MAX_PATH);
+	sscanf(chr_Tag1, "%f", &V4.x);
+	V_Object->S_Collectable[0]->SndVolume = V4.x;
+
+	V_Object->S_Collectable[0]->Play = App->Cl_Ini->GetInt(Section, "Col_Play", 0);
+
+	App->Cl_Ini->GetString(Section, "Col_Counter_Name", chr_Tag1, MAX_PATH);
+	strcpy(V_Object->S_Collectable[0]->Counter_Name, chr_Tag1);
+
+	V_Object->S_Collectable[0]->Counter_ID = App->Cl_Ini->GetInt(Section, "Col_Counter_ID", 0);
+	V_Object->S_Collectable[0]->Maths = App->Cl_Ini->GetInt(Section, "Col_Maths", 0);
+	V_Object->S_Collectable[0]->Value = App->Cl_Ini->GetInt(Section, "Col_Value", 0);
+	V_Object->S_Collectable[0]->Counter_Disabled = App->Cl_Ini->GetInt(Section, "Col_Disabled", 0);
+
+	return 1;
+}
+
+// *************************************************************************
+// *	  		Read_Particle:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+bool SB_Project::Read_Particle(int Index, char* Section)
+{
+	char chr_Tag1[MAX_PATH] = { 0 };
+	Ogre::Vector4 V4 = Ogre::Vector4::ZERO;
+
+	Base_Object* V_Object = App->SBC_Scene->V_Object[Index];
+
+	V_Object->S_Particle[0] = new Particle_type;
+	App->SBC_Com_Entity->V_Set_Particle_Defaults(Index);
+
+	int Test = App->Cl_Ini->GetString(Section, "Particle_Script", chr_Tag1, MAX_PATH);
+	strcpy(V_Object->S_Particle[0]->ParticleScript, chr_Tag1);
+
+	App->Cl_Ini->GetString(Section, "Particle_SpeedFactor", chr_Tag1, MAX_PATH);
+	sscanf(chr_Tag1, "%f", &V4.x);
+	V_Object->S_Particle[0]->SpeedFactor = V4.x;
+
+	return 1;
+}
+
+// *************************************************************************
+// *	  	Read_EnvironEntity:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+bool SB_Project::Read_EnvironEntity(int Index, char* Section)
+{
+	int Int_Tag = 0;
+	char chr_Tag1[MAX_PATH] = { 0 };
+	Ogre::Vector4 V4 = Ogre::Vector4::ZERO;
+
+	Base_Object* V_Object = App->SBC_Scene->V_Object[Index];
+
+	V_Object->S_Environ[0] = new Environ_type;
+	App->SBC_Com_Environments->V_Set_Environ_Defaults(Index);
+
+	App->Cl_Ini->GetString(Section, "Environment_Name", chr_Tag1, MAX_PATH);
+	strcpy(V_Object->S_Environ[0]->Environment_Name, chr_Tag1);
+
+	Int_Tag = App->Cl_Ini->GetInt(Section, "Environment_ID", 0, 10);
+	V_Object->S_Environ[0]->Environment_ID = Int_Tag;
+
+	//--------------- Sound
+	App->Cl_Ini->GetString(Section, "Sound_File", chr_Tag1, MAX_PATH);
+	strcpy(V_Object->S_Environ[0]->Sound_File, chr_Tag1);
+
+	App->Cl_Ini->GetString(Section, "Snd_Volume", chr_Tag1, MAX_PATH);
+	sscanf(chr_Tag1, "%f", &V4.x);
+	V_Object->S_Environ[0]->SndVolume = V4.x;
+
+	Int_Tag = App->Cl_Ini->GetInt(Section, "Sound_Play", 0, 10);
+	V_Object->S_Environ[0]->Play = Int_Tag;
+
+	Int_Tag = App->Cl_Ini->GetInt(Section, "Sound_Loop", 0, 10);
+	V_Object->S_Environ[0]->Loop = Int_Tag;
+
+	//--------------- Light
+	App->Cl_Ini->GetString(Section, "Ambient_Colour", chr_Tag1, MAX_PATH);
+	sscanf(chr_Tag1, "%f,%f,%f", &V4.x, &V4.y, &V4.z);
+	V_Object->S_Environ[0]->AmbientColour = Ogre::Vector3(V4.x, V4.y, V4.z);
+
+	App->Cl_Ini->GetString(Section, "Light_Position", chr_Tag1, MAX_PATH);
+	sscanf(chr_Tag1, "%f,%f,%f", &V4.x, &V4.y, &V4.z);
+	V_Object->S_Environ[0]->Light_Position = Ogre::Vector3(V4.x, V4.y, V4.z);
+
+	//--------------- Sky
+	Int_Tag = App->Cl_Ini->GetInt(Section, "Sky_Enable", 0, 10);
+	V_Object->S_Environ[0]->Enabled = Int_Tag;
+
+	Int_Tag = App->Cl_Ini->GetInt(Section, "Sky_Type", 0, 10);
+	V_Object->S_Environ[0]->type = Int_Tag;
+
+	App->Cl_Ini->GetString(Section, "Sky_Material", chr_Tag1, MAX_PATH);
+	strcpy(V_Object->S_Environ[0]->Material, chr_Tag1);
+
+	App->Cl_Ini->GetString(Section, "Sky_Curvature", chr_Tag1, MAX_PATH);
+	sscanf(chr_Tag1, "%f", &V4.x);
+	V_Object->S_Environ[0]->Curvature = V4.x;
+
+	App->Cl_Ini->GetString(Section, "Sky_Tiling", chr_Tag1, MAX_PATH);
+	sscanf(chr_Tag1, "%f", &V4.x);
+	V_Object->S_Environ[0]->Tiling = V4.x;
+
+	App->Cl_Ini->GetString(Section, "Sky_Distance", chr_Tag1, MAX_PATH);
+	sscanf(chr_Tag1, "%f", &V4.x);
+	V_Object->S_Environ[0]->Distance = V4.x;
+
+	//--------------- Fog
+	Int_Tag = App->Cl_Ini->GetInt(Section, "Fog_On", 0, 10);
+	V_Object->S_Environ[0]->Fog_On = Int_Tag;
+
+	Int_Tag = App->Cl_Ini->GetInt(Section, "Fog_Mode", 0, 10);
+	V_Object->S_Environ[0]->Fog_Mode = Int_Tag;
+
+	App->Cl_Ini->GetString(Section, "Fog_Colour", chr_Tag1, MAX_PATH);
+	sscanf(chr_Tag1, "%f,%f,%f", &V4.x, &V4.y, &V4.z);
+	V_Object->S_Environ[0]->Fog_Colour = Ogre::Vector3(V4.x, V4.y, V4.z);
+
+	App->Cl_Ini->GetString(Section, "Fog_Start", chr_Tag1, MAX_PATH);
+	sscanf(chr_Tag1, "%f", &V4.x);
+	V_Object->S_Environ[0]->Fog_Start = V4.x;
+
+	App->Cl_Ini->GetString(Section, "Fog_End", chr_Tag1, MAX_PATH);
+	sscanf(chr_Tag1, "%f", &V4.x);
+	V_Object->S_Environ[0]->Fog_End = V4.x;
+
+	App->Cl_Ini->GetString(Section, "Fog_Density", chr_Tag1, MAX_PATH);
+	sscanf(chr_Tag1, "%f", &V4.x);
+	V_Object->S_Environ[0]->Fog_Density = V4.x;
+	
+	return 1;
+}
+
+// *************************************************************************
+// *	  		Read_Teleport:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+bool SB_Project::Read_Teleport(int Index, char* Section)
+{
+	int Int_Tag = 0;
+	char chr_Tag1[MAX_PATH] = { 0 };
+	Ogre::Vector4 V4 = Ogre::Vector4::ZERO;
+
+	Base_Object* V_Object = App->SBC_Scene->V_Object[Index];
+
+	V_Object->S_Teleport[0] = new Teleport_type;
+	App->SBC_Com_Entity->V_Set_Teleports_Defaults(Index);
+
+	V_Object->S_Environ[0] = new Environ_type;
+	App->SBC_Com_Environments->Set_Environ_Defaults(Index);
+
+	
+	App->Cl_Ini->GetString(Section, "Tele_Goto", chr_Tag1, MAX_PATH);
+	strcpy(V_Object->S_Teleport[0]->Name, chr_Tag1);
+
+	V_Object->S_Teleport[0]->Location_ID = App->Cl_Ini->GetInt(Section, "Tele_ID", 0);
+
+	// Sound
+	App->Cl_Ini->GetString(Section, "Tele_Sound", V_Object->S_Teleport[0]->Sound_File, MAX_PATH);
+
+	App->Cl_Ini->GetString(Section, "Tele_Volume", chr_Tag1, MAX_PATH);
+	sscanf(chr_Tag1, "%f", &V4.x);
+	V_Object->S_Teleport[0]->SndVolume = V4.x;
+
+	V_Object->S_Teleport[0]->Play = App->Cl_Ini->GetInt(Section, "Tele_Play", 0);
+
+	// Mesh_Pos
+	App->Cl_Ini->GetString(Section, "Tele_Mesh_Position", chr_Tag1, MAX_PATH);
+	sscanf(chr_Tag1, "%f,%f,%f", &V4.x, &V4.y, &V4.z);
+
+	V_Object->S_Teleport[0]->Player_Position.x = V4.x;
+	V_Object->S_Teleport[0]->Player_Position.y = V4.y;
+	V_Object->S_Teleport[0]->Player_Position.z = V4.z;
+
+	//Player_Pos
+	App->Cl_Ini->GetString(Section, "Tele_Physics_Position", chr_Tag1, MAX_PATH);
+	sscanf(chr_Tag1, "%f,%f,%f", &V4.x, &V4.y, &V4.z);
+
+	V_Object->S_Teleport[0]->Physics_Position.setX(V4.x);
+	V_Object->S_Teleport[0]->Physics_Position.setY(V4.y);
+	V_Object->S_Teleport[0]->Physics_Position.setZ(V4.z);
+
+	//Player_Rotation
+	App->Cl_Ini->GetString(Section, "Tele_Physics_Rotation", chr_Tag1, MAX_PATH);
+	sscanf(chr_Tag1, "%f,%f,%f,%f", &V4.w, &V4.x, &V4.y, &V4.z);
+
+	V_Object->S_Teleport[0]->Physics_Rotation.setW(V4.w);
+	V_Object->S_Teleport[0]->Physics_Rotation.setX(V4.x);
+	V_Object->S_Teleport[0]->Physics_Rotation.setY(V4.y);
+	V_Object->S_Teleport[0]->Physics_Rotation.setZ(V4.z);
+
+	// Teleport Counter
+	V_Object->S_Teleport[0]->Counter_ID = App->Cl_Ini->GetInt(Section, "Tele_Counter_ID", 0);
+	V_Object->S_Teleport[0]->Trigger_Value = App->Cl_Ini->GetInt(Section, "Tele_Trigger_Value", 0);
+	V_Object->S_Teleport[0]->Counter_Disabled = App->Cl_Ini->GetInt(Section, "Tele_Counter_Disabled", 1);
+
+	// Environment
+	Int_Tag = App->Cl_Ini->GetInt(Section, "Environ_Enabled", 0, 10);
+	V_Object->S_Environ[0]->Environ_Enabled = Int_Tag;
+
+	App->Cl_Ini->GetString(Section, "Environment_Name", chr_Tag1, MAX_PATH);
+	strcpy(V_Object->S_Environ[0]->Environment_Name, chr_Tag1);
+
+	Int_Tag = App->Cl_Ini->GetInt(Section, "Environment_ID", 0, 10);
+	V_Object->S_Environ[0]->Environment_ID = Int_Tag;
+
+	//--------------- Sound
+	App->Cl_Ini->GetString(Section, "Sound_File", chr_Tag1, MAX_PATH);
+	strcpy(V_Object->S_Environ[0]->Sound_File, chr_Tag1);
+
+	App->Cl_Ini->GetString(Section, "Snd_Volume", chr_Tag1, MAX_PATH);
+	sscanf(chr_Tag1, "%f", &V4.x);
+	V_Object->S_Environ[0]->SndVolume = V4.x;
+
+	Int_Tag = App->Cl_Ini->GetInt(Section, "Sound_Play", 0, 10);
+	V_Object->S_Environ[0]->Play = Int_Tag;
+
+	Int_Tag = App->Cl_Ini->GetInt(Section, "Sound_Loop", 0, 10);
+	V_Object->S_Environ[0]->Loop = Int_Tag;
+
+	//--------------- Light
+	App->Cl_Ini->GetString(Section, "Ambient_Colour", chr_Tag1, MAX_PATH);
+	sscanf(chr_Tag1, "%f,%f,%f", &V4.x, &V4.y, &V4.z);
+	V_Object->S_Environ[0]->AmbientColour = Ogre::Vector3(V4.x, V4.y, V4.z);
+
+	App->Cl_Ini->GetString(Section, "Light_Position", chr_Tag1, MAX_PATH);
+	sscanf(chr_Tag1, "%f,%f,%f", &V4.x, &V4.y, &V4.z);
+	V_Object->S_Environ[0]->Light_Position = Ogre::Vector3(V4.x, V4.y, V4.z);
+
+	//--------------- Sky
+	Int_Tag = App->Cl_Ini->GetInt(Section, "Sky_Enable", 0, 10);
+	V_Object->S_Environ[0]->Enabled = Int_Tag;
+
+	Int_Tag = App->Cl_Ini->GetInt(Section, "Sky_Type", 0, 10);
+	V_Object->S_Environ[0]->type = Int_Tag;
+
+	App->Cl_Ini->GetString(Section, "Sky_Material", chr_Tag1, MAX_PATH);
+	strcpy(V_Object->S_Environ[0]->Material, chr_Tag1);
+
+	App->Cl_Ini->GetString(Section, "Sky_Curvature", chr_Tag1, MAX_PATH);
+	sscanf(chr_Tag1, "%f", &V4.x);
+	V_Object->S_Environ[0]->Curvature = V4.x;
+
+	App->Cl_Ini->GetString(Section, "Sky_Tiling", chr_Tag1, MAX_PATH);
+	sscanf(chr_Tag1, "%f", &V4.x);
+	V_Object->S_Environ[0]->Tiling = V4.x;
+
+	App->Cl_Ini->GetString(Section, "Sky_Distance", chr_Tag1, MAX_PATH);
+	sscanf(chr_Tag1, "%f", &V4.x);
+	V_Object->S_Environ[0]->Distance = V4.x;
+
+	//--------------- Fog
+	Int_Tag = App->Cl_Ini->GetInt(Section, "Fog_On", 0, 10);
+	V_Object->S_Environ[0]->Fog_On = Int_Tag;
+
+	Int_Tag = App->Cl_Ini->GetInt(Section, "Fog_Mode", 0, 10);
+	V_Object->S_Environ[0]->Fog_Mode = Int_Tag;
+
+	App->Cl_Ini->GetString(Section, "Fog_Colour", chr_Tag1, MAX_PATH);
+	sscanf(chr_Tag1, "%f,%f,%f", &V4.x, &V4.y, &V4.z);
+	V_Object->S_Environ[0]->Fog_Colour = Ogre::Vector3(V4.x, V4.y, V4.z);
+
+	App->Cl_Ini->GetString(Section, "Fog_Start", chr_Tag1, MAX_PATH);
+	sscanf(chr_Tag1, "%f", &V4.x);
+	V_Object->S_Environ[0]->Fog_Start = V4.x;
+
+	App->Cl_Ini->GetString(Section, "Fog_End", chr_Tag1, MAX_PATH);
+	sscanf(chr_Tag1, "%f", &V4.x);
+	V_Object->S_Environ[0]->Fog_End = V4.x;
+
+	App->Cl_Ini->GetString(Section, "Fog_Density", chr_Tag1, MAX_PATH);
+	sscanf(chr_Tag1, "%f", &V4.x);
+	V_Object->S_Environ[0]->Fog_Density = V4.x;
+
+	App->CL_Logger->Show_Data(0, V_Object->S_Environ[0]->Fog_Density, V_Object->S_Teleport[0]->Name);
+	return 1;
+}
+
+// *************************************************************************
+// *	  		Read_MoveEntity:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+bool SB_Project::Read_MoveEntity(int Index, char* Section)
+{
+	char chr_Tag1[MAX_PATH] = { 0 };
+	Ogre::Vector4 V4 = Ogre::Vector4::ZERO;
+
+	Base_Object* V_Object = App->SBC_Scene->V_Object[Index];
+
+	V_Object->S_MoveType[0] = new Move_Type;
+	App->SBC_Com_MoveEntity->V_Set_Move_Defaults(Index); // Check
+
+	//  Distance
+	App->Cl_Ini->GetString(Section, "Move_Distance", chr_Tag1, MAX_PATH);
+	sscanf(chr_Tag1, "%f", &V4.x);
+	V_Object->S_MoveType[0]->Move_Distance = V4.x;
+
+	V_Object->S_MoveType[0]->IsNegative = App->Cl_Ini->GetInt(Section, "Move_IsNegative", 0);
+
+	//  Speed
+	App->Cl_Ini->GetString(Section, "Move_Speed", chr_Tag1, MAX_PATH);
+	sscanf(chr_Tag1, "%f", &V4.x);
+	V_Object->S_MoveType[0]->Speed = V4.x;
+
+	//  Name
+	App->Cl_Ini->GetString(Section, "Move_ObjectName", V_Object->S_MoveType[0]->Object_Name, MAX_PATH);
+
+	V_Object->S_MoveType[0]->Object_To_Move_Index = App->Cl_Ini->GetInt(Section, "Move_ObjectID", 0);
+	V_Object->S_MoveType[0]->WhatDirection = App->Cl_Ini->GetInt(Section, "Move_WhatDirection", 0);
+
+	// Move Sound
+	App->Cl_Ini->GetString(Section, "Move_Sound", V_Object->Sound_File, MAX_PATH);
+	V_Object->Play_Sound = App->Cl_Ini->GetInt(Section, "Move_Play_Sound", 0);
+
+	App->Cl_Ini->GetString(Section, "Move_Volume", chr_Tag1, MAX_PATH);
+	sscanf(chr_Tag1, "%f", &V4.x);
+	V_Object->SndVolume = V4.x;
+
+	// Move Counter
+	V_Object->S_MoveType[0]->Counter_ID = App->Cl_Ini->GetInt(Section, "Move_Counter_ID", 0);
+	V_Object->S_MoveType[0]->Trigger_Value = App->Cl_Ini->GetInt(Section, "Move_Trigger_Value", 0);
+	V_Object->S_MoveType[0]->Counter_Disabled = App->Cl_Ini->GetInt(Section, "Move_Counter_Disabled", 1);
+
+	return 1;
+}
+
 

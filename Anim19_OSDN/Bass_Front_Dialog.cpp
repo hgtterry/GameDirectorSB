@@ -86,9 +86,9 @@ void Bass_Front_Dialog::Render_Front_Dlg(void)
 			if (ImGui::Button("Start Game",ImVec2(220, 0)))
 			{
 				SetCapture(App->ViewGLhWnd);
-				App->SBC_Ogre->OgreListener->Pl_LeftMouseDown = 1;
+				App->CL_Ogre->OgreListener->Pl_LeftMouseDown = 1;
 				App->CUR = SetCursor(NULL);
-				App->SBC_Ogre->OgreListener->Block_Mouse = 0;
+				App->CL_Ogre->OgreListener->Block_Mouse = 0;
 				App->SBC_Keyboard->Block_Keyboard = 0;
 				Game_Running_Flag = 1;
 				Show_Front_Dlg_Flag = 0;
@@ -103,9 +103,9 @@ void Bass_Front_Dialog::Render_Front_Dlg(void)
 			if (ImGui::Button("   Resume   ", ImVec2(220, 0)))
 			{
 				SetCapture(App->ViewGLhWnd);
-				App->SBC_Ogre->OgreListener->Pl_LeftMouseDown = 1;
+				App->CL_Ogre->OgreListener->Pl_LeftMouseDown = 1;
 				App->CUR = SetCursor(NULL);
-				App->SBC_Ogre->OgreListener->Block_Mouse = 0;
+				App->CL_Ogre->OgreListener->Block_Mouse = 0;
 				App->SBC_Keyboard->Block_Keyboard = 0;
 				Show_Front_Dlg_Flag = 0;
 			}
@@ -119,9 +119,9 @@ void Bass_Front_Dialog::Render_Front_Dlg(void)
 			if (ImGui::Button("    Restart    ",ImVec2(220, 0)))
 			{
 				SetCapture(App->ViewGLhWnd);
-				App->SBC_Ogre->OgreListener->Pl_LeftMouseDown = 1;
+				App->CL_Ogre->OgreListener->Pl_LeftMouseDown = 1;
 				App->CUR = SetCursor(NULL);
-				App->SBC_Ogre->OgreListener->Block_Mouse = 0;
+				App->CL_Ogre->OgreListener->Block_Mouse = 0;
 				App->SBC_Keyboard->Block_Keyboard = 0;
 
 				App->SBC_Physics->Reset_Physics();
@@ -139,11 +139,11 @@ void Bass_Front_Dialog::Render_Front_Dlg(void)
 		
 		if (ImGui::Button("      Quit      ",ImVec2(220,0)))
 		{
-			App->SBC_Ogre->OgreListener->Pl_LeftMouseDown = 0;
-			App->SBC_Ogre->OgreListener->Block_Mouse = 0;
+			App->CL_Ogre->OgreListener->Pl_LeftMouseDown = 0;
+			App->CL_Ogre->OgreListener->Block_Mouse = 0;
 			App->SBC_Keyboard->Block_Keyboard = 0;
 			App->Block_Mouse_Buttons = 0;
-			App->SBC_Ogre->ExitFullScreen();
+			App->CL_Ogre->ExitFullScreen();
 			Game_Running_Flag = 0;
 			Show_Front_Dlg_Flag = 0;
 
@@ -155,8 +155,8 @@ void Bass_Front_Dialog::Render_Front_Dlg(void)
 		ImGui::PopFont();
 
 		ImVec2 Size = ImGui::GetWindowSize();
-		PosX = ((float)App->SBC_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);
-		PosY = ((float)App->SBC_Ogre->OgreListener->View_Height / 2) - (Size.y / 2);
+		PosX = ((float)App->CL_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);
+		PosY = ((float)App->CL_Ogre->OgreListener->View_Height / 2) - (Size.y / 2);
 
 		ImGui::PopStyleColor();
 		ImGui::End();
