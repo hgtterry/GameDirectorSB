@@ -668,7 +668,7 @@ static void Level_BrushListToTexels(Level *pLevel)
 	}
 }
 
-#pragma warning (disable:4100)
+#pragma warning (disable:4100 4505)
 static geBoolean Level_LoadSky 
 	(
 	  Level *pLevel,

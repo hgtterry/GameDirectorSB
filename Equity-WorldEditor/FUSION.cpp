@@ -55,7 +55,10 @@ BEGIN_MESSAGE_MAP(CFusionApp, CWinApp)
 	ON_COMMAND(IDM_PREFERENCES, OnPreferences)
 	ON_UPDATE_COMMAND_UI(IDM_PREFERENCES, OnUpdatePreferences)
 	ON_COMMAND(ID_HELP_HOWDOI, OnHelpHowdoi)
-	ON_COMMAND(ID_DEBUG_TEST, OnTest) // GD_Terry
+
+	ON_COMMAND(ID_DEBUG_TEST, OnTest) // hgtterry ON_COMMAND(ID_DEBUG_TEST, OnTest)
+	ON_COMMAND(ID_EQUITYSB_TXLEDITOR, Open_TxlEditor)
+
 	//}}AFX_MSG_MAP
 	ON_COMMAND(ID_HELP_INDEX, OnHelpIndex)
 	ON_COMMAND(ID_HELP, OnHelp)
@@ -184,9 +187,9 @@ void CFusionApp::ResolvePreferencesPaths (void)
 A_App* App = NULL;
 
 // *************************************************************************
-// * Equity_InitInstance				InitInstance					   *
+// *							InitInstance							   *
 // *************************************************************************
-BOOL CFusionApp::InitInstance()
+BOOL CFusionApp::InitInstance() // hgtterry InitInstance
 {
 	App = new A_App();
 	App->InitApp();
@@ -350,7 +353,10 @@ BOOL CFusionApp::InitInstance()
 
 	//	CHANGE!	04/01/97	John Moore
 	//	We don't care about the app right now...
-	OnAppAbout();
+
+	App->CL_Dialogs->Start_FrontPanel(); // hgtterry
+
+	//OnAppAbout();
 	//	End of CHANGE
 
 
@@ -367,6 +373,8 @@ BOOL CFusionApp::InitInstance()
 
 	pMainFrame->IsStartingApp = 0;
 
+	App->InitMFC(); // hgtterry
+	App->CL_Scene->Set_Paths();
 	return TRUE;
 }
 
@@ -387,12 +395,14 @@ void CFusionApp::OnAppAbout()
 }
 
 // GameDirector Test
-void CFusionApp::OnTest() // GD_Terry
+void CFusionApp::OnTest() // hgtterry void CFusionApp::OnTest()
 {
 	App->CL_Dialogs->Show_ListData();
-//	App->CL_FileIO->SaveSelectedFile("Equity   *.ebr\0**.ebr\0", NULL);
-//	App->Say(App->CL_FileIO->FileName);
-//	App->Say(App->CL_FileIO->PathFileName);
+}
+
+void CFusionApp::Open_TxlEditor() // hgtterry void CFusionApp::OnTest()
+{
+	App->CL_TxlEditor->Start_Texl_Dialog();
 }
 
 //	CHANGE!	03/29/97	John Moore
@@ -598,6 +608,7 @@ BOOL CFusionApp::OnOpenRecentFile (UINT nID)
 		CFusionDoc* pDoc2 = GetActiveFusionDoc() ;
 		strcpy(App->CL_Scene->Current_3DT_Path,pDoc2->GetPathName());
 		strcpy(App->CL_Scene->Current_3DT_File,pDoc2->GetTitle());
+		strcpy(App->CL_Scene->Current_TXL_FilePath,Level_GetWadPath (pDoc2->pLevel)); // hgtterry
 
 		App->CL_Scene->Set_Paths();
 	}

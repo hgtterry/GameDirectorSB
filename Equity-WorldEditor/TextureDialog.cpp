@@ -233,13 +233,7 @@ static void TextureFace
 // changed QD 12/03
 static void TextureBrushList(BrushList *pList, int SelId, char const *Name, WadFileEntry* pbmp);
 
-static void TextureBrush
-	(
-	  Brush *pBrush,
-	  int SelId,
-	  char const *Name,
-	  WadFileEntry* pbmp // changed QD 12/03
-	)
+static void TextureBrush(Brush *pBrush,int SelId,char const *Name,WadFileEntry* pbmp) // changed QD 12/03)
 {
 	int j;
 
@@ -507,7 +501,6 @@ void CTextureDialog::UpdateSize()
 
 	size.Format( "%d X %d", width, height );
 	m_SizeText.SetWindowText (size);
-
 }
 /*
 void CTextureDialog::ClearSizeImage( CDC* pDC )
@@ -574,6 +567,9 @@ void CTextureDialog::Update( CFusionDoc* pDoc )
 	CString Name;
 	CString FirstName;
 
+	// hgtterry -> set Texture Dialog TXL Name
+	SetDlgItemText(IDC_STTXTFILE,App->CL_Scene->Current_TXL_FileName);
+	
 	if ((m_pDoc == pDoc) && (m_TxlibChanged == false))
 	{
 		//	Document is the same, so just redraw stuff...

@@ -28,8 +28,15 @@ public:
 	AB_Export_RFW();
 	virtual ~AB_Export_RFW();
 
+	void OnFileExportGDSB();
+	void ExportTo_RFW(const char *FileName, int ExpSelected, geBoolean ExpLights, geBoolean ExpFiles);
 	bool Level_ExportTo_RFW(Level2 *pLevel, const char *Filename, BrushList *BList,int ExpSelected, geBoolean ExpLights, int GroupID);
 
+	bool Write_Project_File(char* Path_And_File,const char* Filename);
+
+protected:
+
+	FILE* WriteScene;
 };
 
 #endif // !defined(AFX_AB_EXPORT_RFW_H__A1009AFC_78B0_43E7_BCA5_5366946ED7A5__INCLUDED_)

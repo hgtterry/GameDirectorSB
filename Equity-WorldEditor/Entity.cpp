@@ -40,6 +40,7 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
+#pragma warning (disable:4101)
 
 #define CLASSNAME "classname"
 

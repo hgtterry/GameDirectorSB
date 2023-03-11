@@ -16,11 +16,21 @@ public:
 	virtual ~A_Scene();
 
 	void Set_Paths(void);
+	
+	void Get_FileName_FromPath(char *pString, char *FileName);
 
 	char Last_Saved_EBR_Path[MAX_PATH];
 	char Current_3DT_Path[MAX_PATH];
 	char Current_3DT_File[MAX_PATH];
 	char Current_3DT_Just_Path[MAX_PATH];
+	char Current_TXL_FilePath[MAX_PATH];
+	char Current_TXL_FileName[MAX_PATH];
+
+	char JustFileName[MAX_PATH];
+
+protected:
+
+	void Get_Current_TxlPath(void);
 
 };
 

@@ -1,5 +1,5 @@
 //{{NO_DEPENDENCIES}}
-// Microsoft Developer Studio generated include file.
+// Microsoft Visual C++ generated include file.
 // Used by FUSION.rc
 //
 #define ID_DEFAULTS                     3
@@ -107,6 +107,8 @@
 #define IDB_GENESIS3D                   252
 #define IDD_EXPORT3DSDIALOG             254
 #define IDD_SCENEDATA                   255
+#define IDD_EQ_FRONTPANEL               256
+#define IDD_TEXTUREPACKER               257
 #define IDC_RESET_ALL                   1000
 #define IDC_EDIT1                       1001
 #define IDC_EDIT10                      1002
@@ -467,6 +469,21 @@
 #define IDC_EXPORTLIGHTS                1341
 #define IDC_GROUPFILE                   1342
 #define IDC_LISTGROUP                   1343
+#define IDC_BTSETVIEW                   1344
+#define IDC_BTWIRE                      1345
+#define IDC_BTSELECTALL                 1346
+#define IDC_BTDESELECTALL               1347
+#define IDC_STTXTFILE                   1348
+#define IDC_LIST2                       1349
+#define IDC_GEINFO                      1349
+#define IDC_BUTTON1                     1350
+#define IDC_BUTTON2                     1351
+#define IDC_BUTTON3                     1352
+#define IDC_BUTTON4                     1353
+#define IDC_BUTTON5                     1354
+#define IDC_PREVIEW                     1355
+#define IDC_BUTTON6                     1356
+#define IDC_TEXTURELIST2                1357
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772
 #define ID_BRUSH_PRIMITIVES_SPHEROID    32773
@@ -633,7 +650,9 @@
 #define ID_DEBUG_TEST                   33048
 #define ID_DEBUG_SETVIEW                33049
 #define ID_EQUITYSB_ZEROCAMERA          33050
-#define ID_FILE_EXPORTGDSB              33051
+#define ID_FILE_EXPORTGDSB_GAMEDIRECTORG3DS 33052
+#define ID_FILE_EXPORT_OLDEXPORT        33053
+#define ID_EQUITYSB_TXLEDITOR           33054
 #define IDS_HELPINFORMATION             38000
 
 // Next default values for new objects
@@ -641,9 +660,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        256
-#define _APS_NEXT_COMMAND_VALUE         33052
-#define _APS_NEXT_CONTROL_VALUE         1344
+#define _APS_NEXT_RESOURCE_VALUE        258
+#define _APS_NEXT_COMMAND_VALUE         33055
+#define _APS_NEXT_CONTROL_VALUE         1358
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

@@ -18,10 +18,12 @@ public:
 	bool Show_ListData();
 	void List_SceneData(HWND hDlg);
 
+	void Start_FrontPanel();
+
 protected:
 
-	static LRESULT CALLBACK GroupData_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-
+	static LRESULT CALLBACK ListData_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK FrontPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 };
 
 #endif // !defined(AFX_A_DIALOGS_H__373548E3_01B1_47FB_8C16_BF24D6C48B3A__INCLUDED_)

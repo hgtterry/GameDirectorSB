@@ -171,11 +171,12 @@ BEGIN_MESSAGE_MAP(CFusionDoc, CDocument)
 	ON_COMMAND(ID_CAMERA_LOOK_DOWN, OnCameraLookDown)
 	ON_COMMAND(ID_CAMERA_UP, OnCameraUp)
 	ON_COMMAND(ID_CAMERA_DOWN, OnCameraDown)
-	ON_COMMAND(ID_FILE_EXPORT, OnFileExport)
-	ON_UPDATE_COMMAND_UI(ID_FILE_EXPORT, OnUpdateFileExport)
 
-	ON_COMMAND(ID_FILE_EXPORTGDSB, OnFileExportGDSB) //  hgtterry [100123]
-	ON_UPDATE_COMMAND_UI(ID_FILE_EXPORTGDSB, OnUpdateFileExportGDSB) //  hgtterry [100123]
+	ON_COMMAND(ID_FILE_EXPORT_OLDEXPORT, OnFileExport) // Old Exporter
+	ON_UPDATE_COMMAND_UI(ID_FILE_EXPORT_OLDEXPORT, OnUpdateFileExport) // Old Exporter
+
+	ON_COMMAND(ID_FILE_EXPORTGDSB_GAMEDIRECTORG3DS, OnFileExportGDSB) //  hgtterry [100123]
+	ON_UPDATE_COMMAND_UI(ID_FILE_EXPORTGDSB_GAMEDIRECTORG3DS, OnUpdateFileExportGDSB) //  hgtterry [100123]
 
 	ON_COMMAND( ID_VIEW_3DWIREFRAME, OnViewTypeWireFrame)
 
@@ -7049,6 +7050,7 @@ void CFusionDoc::OnFileOpen()
 			AfxGetApp()->OpenDocumentFile(dlg.GetPathName());
 			strcpy(App->CL_Scene->Current_3DT_Path,dlg.GetPathName()); // hgtterry
 			strcpy(App->CL_Scene->Current_3DT_File,dlg.GetFileName()); // hgtterry
+			strcpy(App->CL_Scene->Current_TXL_FilePath,Level_GetWadPath (pLevel)); // hgtterry
 
 			App->CL_Scene->Set_Paths();
 	}
@@ -8622,7 +8624,7 @@ void CFusionDoc::ExportTo3ds(const char *FileName, int ExpSelected, geBoolean Ex
 }
 
 // *************************************************************************
-// * Equity_Export_RFW				ExportTo_RFW						   *
+// * Equity_Export_RFW		ExportTo_RFW	// Old Exporter				   *
 // *************************************************************************
 void CFusionDoc::ExportTo_RFW(const char *FileName, int ExpSelected, geBoolean ExpLights, geBoolean ExpFiles)
 {
@@ -8779,7 +8781,7 @@ void CFusionDoc::ExportTo_RFW(const char *FileName, int ExpSelected, geBoolean E
 	}
 }
 
-void CFusionDoc::OnFileExport() 
+void CFusionDoc::OnFileExport() // Old Exporter
 {
 // changed QD 12/03
 	static const char FDTitle[] = "Export";
@@ -8787,7 +8789,7 @@ void CFusionDoc::OnFileExport()
 								//	"World Files (*.3dt)|*.3dt|Map Files (*.map)|*.map|World Files v1.32 (*.3dt)|*.3dt|Autodesk (*.3ds)|*.3ds|Equity Room (*.ebr)|*.ebr|All Files (*.*)|*.*||");
 
 	CFileDialog dlg(FALSE, "3dt", NULL, (OFN_OVERWRITEPROMPT | OFN_HIDEREADONLY | OFN_NOREADONLYRETURN | OFN_PATHMUSTEXIST | OFN_NOREADONLYRETURN),
-									"Equity Room (*.ebr)|*.ebr|Map Files (*.map)|*.map|World Files v1.32 (*.3dt)|*.3dt|Autodesk (*.3ds)|*.3ds|World Files (*.3dt)|*.3dt|All Files (*.*)|*.*||");
+									"Equity Room (*.G3ds)|*.G3ds|Map Files (*.map)|*.map|World Files v1.32 (*.3dt)|*.3dt|Autodesk (*.3ds)|*.3ds|World Files (*.3dt)|*.3dt|All Files (*.*)|*.*||");
 
 	dlg.m_ofn.lpstrTitle = FDTitle;	
 	if (dlg.DoModal () == IDOK)
@@ -8799,7 +8801,7 @@ void CFusionDoc::OnFileExport()
 				CExport3dsDialog ExpDlg;
 				if (ExpDlg.DoModal () == IDOK)
 				{
-					ExportTo_RFW(dlg.GetPathName(), ExpDlg.m_ExportAll, ExpDlg.m_ExportLights, ExpDlg.m_GroupFile);
+					ExportTo_RFW(dlg.GetPathName(), 1, 0, 0);
 				}
 			}
 			break;
@@ -8856,27 +8858,9 @@ void CFusionDoc::OnUpdateFileExportGDSB(CCmdUI* pCmdUI)
 // *************************************************************************
 void CFusionDoc::OnFileExportGDSB() 
 {
-	static const char FDTitle[] = "Export";
-	
-	bool Test = App->CL_FileIO->SaveSelectedFile("Equity   *.ebr\0**.ebr\0", App->CL_Scene->Current_3DT_Just_Path);
-
-	if (Test == 1)
-	{
-		
-		bool Check = App->CL_FileIO->CheckExtention(App->CL_FileIO->PathFileName);
-		if (Check==0)
-		{
-			strcat(App->CL_FileIO->PathFileName, ".ebr");
-			strcat(App->CL_FileIO->FileName, ".ebr");
-		}
-		
-		CExport3dsDialog ExpDlg;
-		if (ExpDlg.DoModal () == IDOK)
-		{
-			ExportTo_RFW(App->CL_FileIO->PathFileName, ExpDlg.m_ExportAll, ExpDlg.m_ExportLights, ExpDlg.m_GroupFile);
-		}
-	}			
+	App->ABC_Export_RFW->OnFileExportGDSB();
 }
+
 
 const char* CFusionDoc::ReturnThingUnderPoint(CPoint point, ViewVars *v)
 {

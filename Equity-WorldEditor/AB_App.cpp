@@ -9,6 +9,8 @@ A_App::A_App()
 	CL_FileIO = NULL;
 	CL_Dialogs = NULL;
 	CL_Scene = NULL;
+	CL_Render_App = NULL;
+	CL_TxlEditor = NULL;
 
 	AppBackground = NULL;
 	BlackBrush =	NULL;
@@ -19,11 +21,22 @@ A_App::A_App()
 	Font_CB18 = 0;
 	Font_Arial20 = 0;
 
+	// MFC
+	m_pMainFrame = NULL;//(CMainFrame *)AfxGetMainWnd();
+	pCFusionDoc = NULL;
 }
 
 A_App::~A_App()
 {
 
+}
+
+// *************************************************************************
+// *								InitMFC								   *
+// *************************************************************************
+void A_App::InitMFC(void)
+{	
+	m_pMainFrame = (CMainFrame *)AfxGetMainWnd();
 }
 
 // *************************************************************************
@@ -35,7 +48,9 @@ bool A_App::InitApp(void)
 	CL_FileIO =					new	A_FileIO();
 	CL_Dialogs =				new	A_Dialogs();
 	CL_Scene =					new	A_Scene();
-	
+	CL_Render_App =				new	A_Render_App();
+	CL_TxlEditor =				new	A_TxlEditor();
+
 	hInst =NULL;
 	MainHwnd = NULL;
 	
@@ -60,7 +75,11 @@ void A_App::SetBrushes_Fonts(void)
 	Brush_Tabs = CreateSolidBrush(RGB(255, 255, 255));
 	Brush_Tabs_UnSelected = CreateSolidBrush(RGB(190, 190, 190));*/
 
-	Font_CB15 = CreateFont(-15, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
+	//Font_CB15 = CreateFont(-10, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Arial");
+
+	Font_CB15 = CreateFont(36,10,250,0,FW_DONTCARE,FALSE,TRUE,FALSE,DEFAULT_CHARSET,OUT_OUTLINE_PRECIS,
+                CLIP_DEFAULT_PRECIS,ANTIALIASED_QUALITY, VARIABLE_PITCH,TEXT("Arial"));
+
 	Font_CB18 = CreateFont(-18, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
 	Font_Arial20 = CreateFont(-20, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Arial");
 
@@ -74,8 +93,26 @@ void A_App::Say(const char* Message)
 	char text[1024];
 	strcpy(text, Message);
 	MessageBox(NULL,Message,"Message",MB_OK);
+}
 
-//	App->Cl_Dialogs->Message(text);
+// *************************************************************************
+// *								Say_Int								   *
+// *************************************************************************
+void A_App::Say_Int(int Value)
+{
+	char buf[255];
+	itoa(Value, buf, 10);
+	MessageBox(MainHwnd, buf, "Equity Notice", MB_OK);
+}
+
+// *************************************************************************
+// *							Say_Float								   *
+// *************************************************************************
+void A_App::Say_Float(float Value)
+{
+	char buf[255];
+	sprintf(buf, "%f", Value);
+	MessageBox(MainHwnd, buf, "Equity Notice", MB_OK);
 }
 
 

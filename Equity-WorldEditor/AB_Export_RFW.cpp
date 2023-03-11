@@ -2,7 +2,7 @@
 #include "stdafx.h"
 #include "AB_App.h"
 #include "AB_Export_RFW.h"
-
+#include "FUSIONDoc.h"
 #include "level.h"
 #include "Parse3dt.h"
 #include "EntTypeName.h"
@@ -17,6 +17,8 @@
 
 
 #define NUM_VIEWS (4)
+
+#pragma warning (disable:4100)
 
 struct tag_Level2
 {
@@ -66,7 +68,7 @@ struct tag_Level2
 
 AB_Export_RFW::AB_Export_RFW()
 {
-
+	WriteScene = NULL;
 }
 
 AB_Export_RFW::~AB_Export_RFW()
@@ -116,6 +118,188 @@ AB_Export_RFW::~AB_Export_RFW()
 #define CHUNK_KF_CURTIME	0xB009
 
 #define MASTER_SCALE		0x0100
+
+
+// *************************************************************************
+// * 						OnFileExportGDSB:- hgtterry					   *
+// *************************************************************************
+void AB_Export_RFW::OnFileExportGDSB() 
+{
+	bool Test = App->CL_FileIO->SaveSelectedFile("Equity   *.G3ds\0**.G3ds\0", App->CL_Scene->Current_3DT_Just_Path);
+
+	if (Test == 1)
+	{
+		bool Check = App->CL_FileIO->CheckExtention(App->CL_FileIO->PathFileName);
+		if (Check==0)
+		{
+			strcat(App->CL_FileIO->PathFileName, ".G3ds");
+			strcat(App->CL_FileIO->FileName, ".G3ds");
+		}
+
+		App->pCFusionDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+		App->pCFusionDoc->ExportTo_RFW(App->CL_FileIO->PathFileName, 1, 0, 0);
+	}	
+}
+
+// *************************************************************************
+// * Equity_Export_RFW		ExportTo_RFW	// Old Exporter				   *
+// *************************************************************************
+void AB_Export_RFW::ExportTo_RFW(const char *FileName, int ExpSelected, geBoolean ExpLights, geBoolean ExpFiles)
+{
+/*	App->pCFusionDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+
+	{
+		// update view information in level
+		ViewStateInfo *pViewStateInfo;
+		POSITION		pos;
+		CFusionView	*	pView;
+		int iView;
+
+		pos = 	App->pCFusionDoc->GetFirstViewPosition();
+		while( pos != NULL )
+		{
+			pView = (CFusionView*)	App->pCFusionDoc->GetNextView(pos) ;
+			switch (Render_GetViewType (pView->VCam))
+			{
+				case VIEWSOLID :
+				case VIEWTEXTURE :
+				case VIEWWIRE :
+					iView = 0;
+					break;
+				case VIEWTOP :
+					iView = 1;
+					break;
+				case VIEWFRONT :
+					iView = 2;
+					break;
+				case VIEWSIDE :
+					iView = 3;
+					break;
+				default :
+					iView = -1;
+			}
+			if (iView != -1)
+			{
+				pViewStateInfo = Level_GetViewStateInfo (pLevel, iView);
+				pViewStateInfo->IsValid = GE_TRUE;
+				pViewStateInfo->ZoomFactor = Render_GetZoom (pView->VCam);
+				Render_GetPitchRollYaw (pView->VCam, &pViewStateInfo->PitchRollYaw);
+				Render_GetCameraPos (pView->VCam, &pViewStateInfo->CameraPos);
+			}
+		}
+	}
+
+// changed QD 12/03
+	BrushList *BList;
+	geBoolean fResult;
+
+	BList = Level_GetBrushes (pLevel);
+	if(!ExpSelected&&!ExpFiles)
+		fResult = App->ABC_Export_RFW->Level_ExportTo_RFW(reinterpret_cast<tag_Level2 *> (pLevel), FileName, BList, ExpSelected, ExpLights, -1);
+
+	else
+	{
+		int i, GroupID, GroupCount;
+		char NewFileName[MAX_PATH];
+		strcpy(NewFileName, FileName);
+		GroupID=-1;
+		GroupCount=1;
+
+		if(ExpFiles)
+		{
+			GroupListType *GroupList;
+
+			GroupList=Level_GetGroups(pLevel);
+			GroupCount=Group_GetCount(GroupList);
+		}
+
+		for(i=0;i<GroupCount;i++)
+		{
+			BrushList *SBList;
+			Brush *pBrush;
+			BrushIterator bi;
+
+			SBList=BrushList_Create();
+
+			pBrush = BrushList_GetFirst (BList, &bi);
+			while (pBrush != NULL)
+			{
+				if(!strstr(Brush_GetName(pBrush),".act"))
+				{
+					if(!ExpSelected || SelBrushList_Find(pSelBrushes, pBrush))
+					{
+						if(!ExpFiles || Brush_GetGroupId(pBrush)==i)
+						{
+							Brush *pClone =	Brush_Clone(pBrush);
+							BrushList_Append(SBList, pClone);
+						}
+					}
+				}
+
+				pBrush = BrushList_GetNext(&bi);
+			}
+			// do CSG
+			{
+				ModelIterator	mi;
+				int				i, CurId = 0;
+				ModelInfo_Type	*ModelInfo;
+				Model			*pMod;
+
+				BrushList_ClearAllCSG (SBList);
+
+				BrushList_DoCSG(SBList, CurId, ::fdocBrushCSGCallback, this);
+
+				//build individual model mini trees
+				ModelInfo = Level_GetModelInfo (pLevel);
+				pMod = ModelList_GetFirst (ModelInfo->Models, &mi);
+
+				for(i=0;i < ModelList_GetCount(ModelInfo->Models);i++)
+				{
+					CurId = Model_GetId (pMod);
+
+					BrushList_DoCSG(SBList, CurId, ::fdocBrushCSGCallback, this);
+				}
+			}
+
+			if(ExpFiles)
+			{
+				GroupID=i;
+
+				//build individual filenames
+				char Name[MAX_PATH];
+				char c[2];
+				c[1]='\0';
+				::FilePath_GetName (FileName, Name);
+				c[0] = (char)(48+(i-i%100)/100);
+				strcat(Name, c);
+				c[0] = (char)(48+((i-i%10)/10)%10);
+				strcat(Name, c);
+				c[0] = (char)(48+i%10);
+				strcat(Name, c);
+
+				::FilePath_ChangeName(FileName, Name, NewFileName);
+			}
+
+			fResult =App->ABC_Export_RFW->Level_ExportTo_RFW(reinterpret_cast<tag_Level2 *> (pLevel), NewFileName, SBList, ExpSelected, ExpLights, GroupID);
+			if(!fResult)
+				ConPrintf("Error exporting group %i\n", i);
+			BrushList_Destroy(&SBList);
+		}
+
+	}
+// end change 12/03
+
+	if(fResult == GE_FALSE)
+	{
+		// Ok, the save was successful.  Gun any ".old" files we
+		// ..have laying around for this file.
+		ConPrintf("Error exporting file\n");
+	}
+	else
+	{
+			App->Say("Exported");
+	}*/
+}
 
 // *************************************************************************
 // *							Level_ExportTo_RFW						   *
@@ -322,5 +506,47 @@ WriteDone:
 		_unlink(Filename);
 // end change
 
+
+	Write_Project_File("GDSB.Wepf",Filename);
+
 	return WriteRslt;
+}
+
+// *************************************************************************
+// *						Write_Project_File Terry Flanigan 			   *
+// *************************************************************************
+bool AB_Export_RFW::Write_Project_File(char* Path_And_File,const char* Filename)
+{
+	char NewFile[MAX_PATH];
+
+	if (stricmp(Filename + strlen(Filename) - 5, ".G3ds") == 0)
+	{
+		strcpy(NewFile, Filename);
+		int Len = strlen(NewFile);
+		NewFile[Len - 5] = 0;
+
+		strcat(NewFile,".Wepf");
+	}
+
+	WriteScene = NULL;
+
+	WriteScene = fopen(NewFile, "wt");
+	if (!WriteScene)
+	{
+		App->Say("Cant Create Save File");
+		return 0;
+	}
+
+	fprintf(WriteScene, "%s\n", "[WE_Fast_Load]");
+	fprintf(WriteScene, "%s%s\n", "Pref_WE_JustFileName=",App->CL_Scene->Current_3DT_File);
+	fprintf(WriteScene, "%s%s\n", "Pref_WE_Path_FileName=",Filename);
+	fprintf(WriteScene, "%s%s\n", "Pref_Txl_Path_FileName=", App->CL_Scene->Current_TXL_FilePath);
+
+	fprintf(WriteScene, "%s%s\n", "Pref_Ogre_JustFileName=", "Test");
+	fprintf(WriteScene, "%s%s\n", "Pref_Ogre_Path_FileName=", "Test");
+
+	fprintf(WriteScene, "%s\n", " ");
+	fclose(WriteScene);
+
+	return 1;
 }

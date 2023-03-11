@@ -7,6 +7,7 @@
 #include "resource.h"
 #include "A_Dialogs.h"
 
+#include "FUSIONView.h"
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
@@ -26,14 +27,14 @@ A_Dialogs::~A_Dialogs()
 // *************************************************************************
 bool A_Dialogs::Show_ListData()
 {
-	DialogBox(App->hInst, (LPCTSTR)IDD_SCENEDATA, App->MainHwnd, (DLGPROC)GroupData_Proc);
+	DialogBox(App->hInst, (LPCTSTR)IDD_SCENEDATA, App->MainHwnd, (DLGPROC)ListData_Proc);
 
 	return 1;
 }
 // *************************************************************************
-// *        		GroupData_Proc  Terry Flanigan						   *
+// *        		ListData_Proc  Terry Flanigan						   *
 // *************************************************************************
-LRESULT CALLBACK A_Dialogs::GroupData_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK A_Dialogs::ListData_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 
 	switch (message)
@@ -88,7 +89,7 @@ LRESULT CALLBACK A_Dialogs::GroupData_Proc(HWND hDlg, UINT message, WPARAM wPara
 // *************************************************************************
 void A_Dialogs::List_SceneData(HWND hDlg)
 {
-	
+
 	char buf[255];
 
 	sprintf(buf, "%s", "Scene Info");
@@ -117,30 +118,111 @@ void A_Dialogs::List_SceneData(HWND hDlg)
 	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
 
-//	sprintf(buf, "%s%i", "Faces = ", App->CL_Model->Group[Index]->GroupFaceCount);
-//	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	// ----------------------------------------- TXL_FilePath
+	sprintf(buf, "%s", "    ");
+	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
-//	sprintf(buf, "%s", "    ");
-//	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	sprintf(buf, "%s", "TXL File --------------------------------");
+	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
-//	sprintf(buf, "%s%s", "Material Name = ", App->CL_Model->Group[Index]->MaterialName);
-//	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	sprintf(buf, "File Name And Path:- %s",App->CL_Scene->Current_TXL_FilePath);
+	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
-//	sprintf(buf, "%s%s", "Texture Name = ", App->CL_Model->Group[Index]->Text_FileName);
-//	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	sprintf(buf, "Just File Name:- %s",App->CL_Scene->Current_TXL_FileName);
+	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
-//	sprintf(buf, "%s%s", "Texture Name = ", App->CL_Model->Group[Index]->Equity_Text_FileName);
-//	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+}
 
-//	sprintf(buf, "%s%s", "Texture Path = ", App->CL_Model->Group[Index]->Texture_PathFileName);
-//	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+// *************************************************************************
+// *	  				Start_FrontPanel Terry Flanigan					   *
+// *************************************************************************
+void A_Dialogs::Start_FrontPanel()
+{
+	CreateDialog(App->hInst, (LPCTSTR)IDD_EQ_FRONTPANEL, App->MainHwnd, (DLGPROC)FrontPanel_Proc);
+}
 
-//	sprintf(buf, "%s%i", "Bit Depth = ", App->CL_Model->Group[Index]->Depth);
-//	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+// *************************************************************************
+// *        		FrontPanel_Proc  Terry Flanigan						   *
+// *************************************************************************
+LRESULT CALLBACK A_Dialogs::FrontPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
 
-//	sprintf(buf, "%s%i x %i", "Dimensions = ", App->CL_Model->Group[Index]->Width, App->CL_Model->Group[Index]->Height);
-//	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		//SendDlgItemMessage(hDlg, IDC_BTSETVIEW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		return TRUE;
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+		return FALSE;
+	}
 
-//	sprintf(buf, "%s", "    ");
-//	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+		{
+			// Textured
+			if (LOWORD(wParam) == IDC_BTSETVIEW)
+			{
+				App->CL_Render_App->Render3D_Mode(ID_VIEW_TEXTUREVIEW);
+				return TRUE;
+			}
+
+			// Wired Framed
+			if (LOWORD(wParam) == IDC_BTSELECTALL)
+			{
+				CFusionDoc* pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+
+				pDoc->SelectAll() ;
+				pDoc->UpdateAllViews( UAV_ALL3DVIEWS, NULL ) ;
+
+				return TRUE;
+			}
+
+			if (LOWORD(wParam) == IDC_BTDESELECTALL)
+			{
+				CFusionDoc* pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+
+				pDoc->ResetAllSelections() ;
+				pDoc->UpdateSelected();
+				pDoc->UpdateAllViews( UAV_ALL3DVIEWS, NULL ) ;
+
+				return TRUE;
+			}
+
+			if (LOWORD(wParam) == IDC_BTWIRE)
+			{
+				App->CL_Render_App->Render3D_Mode(ID_VIEW_3DWIREFRAME);
+				return TRUE;
+			}
+
+			// -----------------------------------------------------------------
+			if (LOWORD(wParam) == IDOK)
+			{
+				EndDialog(hDlg, LOWORD(wParam));
+				return TRUE;
+			}
+
+			if (LOWORD(wParam) == IDCANCEL)
+			{
+				EndDialog(hDlg, LOWORD(wParam));
+				return TRUE;
+			}
+
+			break;
+		}
+	}
+	return FALSE;
 }

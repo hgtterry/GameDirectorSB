@@ -168,8 +168,8 @@ BOOL CChildFrame::OnCreateClient(LPCREATESTRUCT, CCreateContext* pContext)
 	GetClientRect(&r);
 	x=(r.right>>2);
 	y=(r.bottom>>2);
-	x2=x*3;
-	y2=y*3;
+	x2=x*2;
+	y2=y*2;
 
 	if (!m_wndSplitter.CreateView(0, 0,
 		RUNTIME_CLASS(CFusionView), CSize(x2, y2), pContext))
@@ -186,14 +186,14 @@ BOOL CChildFrame::OnCreateClient(LPCREATESTRUCT, CCreateContext* pContext)
 	}
 
 	if (!m_wndSplitter.CreateView(1, 0,
-		RUNTIME_CLASS(CFusionView), CSize(x2, y), pContext))
+		RUNTIME_CLASS(CFusionView), CSize(x, y), pContext))
 	{
 		TRACE0("Failed to create first pane\n");
 		return FALSE;
 	}
 
 	if (!m_wndSplitter.CreateView(1, 1,
-		RUNTIME_CLASS(CFusionView), CSize(x, y), pContext))
+		RUNTIME_CLASS(CFusionView), CSize(x2, y), pContext))
 	{
 		TRACE0("Failed to create first pane\n");
 		return FALSE;
@@ -227,14 +227,15 @@ LRESULT CChildFrame::OnSetText(WPARAM wParam, LPARAM lParam)
 }
 #pragma warning (default: 4100)
 
-void CChildFrame::OnSize(UINT nType, int cx, int cy) 
+
+void CChildFrame::OnSize(UINT nType, int cx, int cy) // hgtterry
 {
 	//center the panes on a size
 	if(InitDone &&(m_wndSplitter.GetRowCount()==2 && m_wndSplitter.GetColumnCount()==2))
 	{
-		m_wndSplitter.SetColumnInfo(0, (cx>>2)*3, 0);
+		m_wndSplitter.SetColumnInfo(0, (cx>>2)*2, 0);
 		m_wndSplitter.SetColumnInfo(1, cx>>2, 0);
-		m_wndSplitter.SetRowInfo(0, (cy>>2)*3, 0);
+		m_wndSplitter.SetRowInfo(0, (cy>>2)*2, 0);
 		m_wndSplitter.SetRowInfo(1, cy>>2, 0);
 	}
 
