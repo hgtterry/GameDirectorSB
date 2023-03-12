@@ -84,7 +84,7 @@ bool ME_OgreListener::frameStarted(const Ogre::FrameEvent& evt)
 			App->CL_ImGui->ImGui_Render_Model();
 		}
 
-		App->CL_ImGui->ImGui_Editor_Loop();
+		App->CL_Editor_Gui->ImGui_Editor_Loop();
 	}
 
 

@@ -1247,7 +1247,7 @@ IDC_EYEDROPPER          CURSOR                  "res\\cursor1.cur"
 
 STRINGTABLE 
 BEGIN
-    IDR_MAINFRAME           "Genesis3D World Editor [Equity 11-03-23  [ v 1.23 ]"
+    IDR_MAINFRAME           "Genesis3D World Editor [Equity 12-03-23  [ v 1.23 ]"
     IDR_FUSIONTYPE          "Genesis3D World Editor\nWorld\nWorld\nWorld Files (*.3dt)\n.3dt\nWorldEditor.Document\nGenesis3D World Editor Document"
     IDS_LOAD_WARNING        "Some entities or brushes did not load properly, see console for details."
     IDS_NEWGROUP            "Group Name"
@@ -1664,14 +1664,15 @@ BEGIN
     CONTROL         "",IDC_PREVIEW,"Static",SS_BLACKFRAME,4,30,365,170
     CTEXT           "Texture",IDC_STATIC,4,4,169,22,SS_CENTERIMAGE
     CTEXT           "Alpha",IDC_STATIC,193,4,169,22,SS_CENTERIMAGE
-    LISTBOX         IDC_TEXTURELIST2,373,7,140,334,LBS_SORT | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    LISTBOX         IDC_TEXTURELIST2,373,7,140,334,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
     LISTBOX         IDC_GEINFO,4,207,364,79,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
-    PUSHBUTTON      "Button1",IDC_BUTTON1,4,295,50,14
-    PUSHBUTTON      "Button1",IDC_BUTTON2,114,295,50,14
-    PUSHBUTTON      "Button1",IDC_BUTTON3,59,295,50,14
-    PUSHBUTTON      "Button1",IDC_BUTTON4,169,295,50,14
-    PUSHBUTTON      "Button1",IDC_BUTTON5,224,295,50,14
-    PUSHBUTTON      "Button1",IDC_BUTTON6,279,295,50,14
+    PUSHBUTTON      "Export Selected",IDC_EXPORTSELECTED,55,296,94,14
+    PUSHBUTTON      "Add",IDC_ADD,150,296,39,14
+    PUSHBUTTON      "Button1",IDC_BUTTON3,132,319,50,14,NOT WS_VISIBLE
+    PUSHBUTTON      "Button1",IDC_BUTTON4,209,293,50,14,NOT WS_VISIBLE
+    PUSHBUTTON      "Button1",IDC_BUTTON5,264,294,50,14,NOT WS_VISIBLE
+    PUSHBUTTON      "Button1",IDC_BUTTON6,317,295,50,14,NOT WS_VISIBLE
+    PUSHBUTTON      "Open",IDC_BTTXLOPEN,4,296,50,14
 END
 
 

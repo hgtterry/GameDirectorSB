@@ -170,6 +170,7 @@
     <ClInclude Include="ME_Import.h" />
     <ClInclude Include="ME_Ini.h" />
     <ClInclude Include="ME_Load_Textures.h" />
+    <ClInclude Include="ME_Logger.h" />
     <ClInclude Include="ME_Model.h" />
     <ClInclude Include="ME_Motions.h" />
     <ClInclude Include="ME_Ogre.h" />
@@ -221,6 +222,7 @@
     <ClCompile Include="ME_Import.cpp" />
     <ClCompile Include="ME_Ini.cpp" />
     <ClCompile Include="ME_Load_Textures.cpp" />
+    <ClCompile Include="ME_Logger.cpp" />
     <ClCompile Include="ME_Model.cpp" />
     <ClCompile Include="ME_Motions.cpp" />
     <ClCompile Include="ME_Ogre.cpp" />

@@ -209,13 +209,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 			case ID_DEBUG_APPDATA:
 			{
-				if (App->CL_ImGui->Show_App_Data_Flag == 1)
+				if (App->CL_Editor_Gui->Show_App_Data_F == 1)
 				{
-					App->CL_ImGui->Close_App_Data();
+					App->CL_Editor_Gui->Close_App_Data();
 				}
 				else
 				{
-					App->CL_ImGui->Start_App_Data();
+					App->CL_Editor_Gui->Start_App_Data();
 				}
 
 				/*App->CL_ImGui->Start_App_Data();

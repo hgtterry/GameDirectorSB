@@ -474,16 +474,16 @@
 #define IDC_BTSELECTALL                 1346
 #define IDC_BTDESELECTALL               1347
 #define IDC_STTXTFILE                   1348
-#define IDC_LIST2                       1349
 #define IDC_GEINFO                      1349
-#define IDC_BUTTON1                     1350
 #define IDC_BUTTON2                     1351
+#define IDC_ADD                         1351
 #define IDC_BUTTON3                     1352
 #define IDC_BUTTON4                     1353
 #define IDC_BUTTON5                     1354
 #define IDC_PREVIEW                     1355
 #define IDC_BUTTON6                     1356
 #define IDC_TEXTURELIST2                1357
+#define IDC_BTTXLOPEN                   1358
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772
 #define ID_BRUSH_PRIMITIVES_SPHEROID    32773
@@ -662,7 +662,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        258
 #define _APS_NEXT_COMMAND_VALUE         33055
-#define _APS_NEXT_CONTROL_VALUE         1358
+#define _APS_NEXT_CONTROL_VALUE         1359
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

@@ -63,7 +63,7 @@ typedef struct	TPack_WindowData
 	BitmapEntry	*	Bitmaps;
 	BitmapEntry *	SelectedEntry;
 	BOOL			FileNameIsValid;
-	char			TXLFileName[256];
+	char			TXLFileName[MAX_PATH];
 	BOOL			Dirty;
 }	TPack_WindowData;
 

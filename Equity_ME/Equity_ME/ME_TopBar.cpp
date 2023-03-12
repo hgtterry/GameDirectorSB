@@ -193,13 +193,13 @@ LRESULT CALLBACK ME_TopBar::TopBar_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 		//-------------------------------------------------------- Show Info
 		if (LOWORD(wParam) == IDC_TBINFO)
 		{
-			if (App->CL_ImGui->Show_Model_Data_Flag == 1)
+			if (App->CL_Editor_Gui->Show_Model_Data_F == 1)
 			{
-				App->CL_ImGui->Close_Model_Data();
+				App->CL_Editor_Gui->Close_Model_Data();
 			}
 			else
 			{
-				App->CL_ImGui->Start_Model_Data();
+				App->CL_Editor_Gui->Start_Model_Data();
 			}
 
 			

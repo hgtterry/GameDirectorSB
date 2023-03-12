@@ -144,6 +144,9 @@
     <ClInclude Include="ME_Editor_Gui.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ME_Logger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -282,6 +285,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ME_Editor_Gui.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ME_Logger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

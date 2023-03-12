@@ -62,6 +62,7 @@ ME_App::ME_App()
 	CL_Load_Textures = nullptr;
 	CL_Recent_Files = nullptr;
 	CL_Editor_Gui = nullptr;
+	CL_Logger = nullptr;
 
 	SBC_Dimensions = nullptr;
 
@@ -158,14 +159,15 @@ bool ME_App::InitApp(void)
 	CL_Equity_SB =	new ME_Equity_SB();
 	CL_Prefs =		new ME_Preferences();
 	CL_Ini =		new T_Ini();
-	CL_Export_Ogre3D = new ME_Export_Ogre3D();
-	CL_Texture_Lib = new ME_TextureLib();
-	CL_WE_3DT =		new ME_WE_3DT();
+	CL_Export_Ogre3D =	new ME_Export_Ogre3D();
+	CL_Texture_Lib =	new ME_TextureLib();
+	CL_WE_3DT =			new ME_WE_3DT();
 
-	CL_Load_Textures = new ME_Load_Textures();
-	CL_Recent_Files = new ME_Recent_Files();
-	CL_Editor_Gui = new ME_Editor_Gui();
-
+	CL_Load_Textures =	new ME_Load_Textures();
+	CL_Recent_Files =	new ME_Recent_Files();
+	CL_Editor_Gui =		new ME_Editor_Gui();
+	CL_Logger =			new ME_Logger();
+	
 	SBC_Dimensions =	new SB_Dimensions();
 	CL_PB =				new ME_PB();
 
@@ -342,7 +344,7 @@ bool ME_App::Custom_Button_Normal(LPNMCUSTOMDRAW item)
 			HGDIOBJ old_pen = SelectObject(item->hdc, pen);
 			HGDIOBJ old_brush = SelectObject(item->hdc, App->Brush_But_Pressed);
 
-			RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
+			RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 1, 1);
 
 			//Clean up
 			SelectObject(item->hdc, old_pen);
@@ -361,7 +363,7 @@ bool ME_App::Custom_Button_Normal(LPNMCUSTOMDRAW item)
 				HGDIOBJ old_pen = SelectObject(item->hdc, pen);
 				HGDIOBJ old_brush = SelectObject(item->hdc, App->Brush_But_Hover);
 
-				RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
+				RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 1, 1);
 
 				SelectObject(item->hdc, old_pen);
 				SelectObject(item->hdc, old_brush);
@@ -375,7 +377,7 @@ bool ME_App::Custom_Button_Normal(LPNMCUSTOMDRAW item)
 			HGDIOBJ old_pen = SelectObject(item->hdc, pen);
 			HGDIOBJ old_brush = SelectObject(item->hdc, App->Brush_But_Normal);
 
-			RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 7, 7);
+			RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 1, 1);
 
 			SelectObject(item->hdc, old_pen);
 			SelectObject(item->hdc, old_brush);

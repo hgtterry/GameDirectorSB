@@ -15,8 +15,11 @@ public:
 	A_FileIO();
 	virtual ~A_FileIO();
 
+	bool Open_File_Model(char* Extension, char* Title, char* StartDirectory);
+
 	bool SaveSelectedFile(char* Extension,char* TszFile);
 	bool CheckExtention(char *FileName);
+
 
 	char FileName[MAX_PATH];
 	char PathFileName[MAX_PATH];

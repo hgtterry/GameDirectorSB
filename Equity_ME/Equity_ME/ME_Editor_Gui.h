@@ -28,5 +28,32 @@ class ME_Editor_Gui
 public:
 	ME_Editor_Gui();
 	~ME_Editor_Gui();
+
+	void ImGui_Editor_Loop(void);
+
+	void Start_Model_Data(void);
+	void Model_Data_GUI(void);
+	void Close_Model_Data(void);
+
+	void Start_Group_Data(void);
+	void Group_Data_GUI(void);
+	void Close_Group_Data(void);
+
+	void Start_App_Data(void);
+	void App_Data_GUI(void);
+	void Close_App_Data(void);
+
+	bool Show_Model_Data_F;
+	bool Show_Group_Data_F;
+	bool Show_App_Data_F;
+
+	float Model_Data_PosX;
+	float Model_Data_PosY;
+
+	float Group_Data_PosX;
+	float Group_Data_PosY;
+
+	float App_Data_PosX;
+	float App_Data_PosY;
 };
 

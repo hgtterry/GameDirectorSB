@@ -67,26 +67,25 @@ typedef struct	TPack_WindowData
 	BOOL			Dirty;
 }	TPack_WindowData;
 
-//#pragma pack(1)
-//
-//typedef struct TGAHEADER
-//{
-//	char	IDLength;
-//	char	ColorMapType;
-//	char	ImageType;
-//	uint16	CMFirstEntry;
-//	uint16	CMLength;
-//	char	CMEntrySize;
-//	uint16	Xorigin;
-//	uint16	Yorigin;
-//	uint16	Width;
-//	uint16	Height;
-//	char	PixelDepth;
-//	char	ImageDescriptor;
-//} TGAHEADER;
-//
-//#pragma pack()
+#pragma pack(1)
 
+typedef struct TGAHEADER
+{
+	char	IDLength;
+	char	ColorMapType;
+	char	ImageType;
+	uint16	CMFirstEntry;
+	uint16	CMLength;
+	char	CMEntrySize;
+	uint16	Xorigin;
+	uint16	Yorigin;
+	uint16	Width;
+	uint16	Height;
+	char	PixelDepth;
+	char	ImageDescriptor;
+} TGAHEADER;
+
+#pragma pack()
 
 class A_TxlEditor
 {

@@ -29,6 +29,7 @@ distribution.
 
 ME_TextureLib::ME_TextureLib()
 {
+	pData = NULL;
 	FileName[0] = 0;
 	Add_Texture_FileName[0] = 0;
 }
@@ -92,6 +93,7 @@ LRESULT CALLBACK ME_TextureLib::TextureLib_Proc(HWND hDlg, UINT message, WPARAM 
 
 		SendDlgItemMessage(hDlg, IDC_EXPORTSELECTED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ADD, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BTTXLOPEN, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		return 1;
 	}
@@ -138,6 +140,14 @@ LRESULT CALLBACK ME_TextureLib::TextureLib_Proc(HWND hDlg, UINT message, WPARAM 
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
 		}
+
+		if (some_item->idFrom == IDC_BTTXLOPEN && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
 
 		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
 		{
@@ -204,37 +214,31 @@ LRESULT CALLBACK ME_TextureLib::TextureLib_Proc(HWND hDlg, UINT message, WPARAM 
 		}
 
 		//--------------------------------- IDC_LOAD --------------------
-/*	if (LOWORD(wParam) == IDC_LOAD)
-	{
-
-		C_TetureLib->TPack_ExtractSelected();
-
-			strcpy(FileName,C_TetureLib->L_FileName);
-
-			if (stricmp(C_TetureLib->L_FileName+strlen(C_TetureLib->L_FileName)-4,".bmp") == 0)
+		if (LOWORD(wParam) == IDC_BTTXLOPEN)
+		{
+			int test = App->CL_FileIO->Open_File_Model("Texture Libary   *.txl\0*.txl\0", "Texure Editor", NULL);
+			if (test == 0)
 			{
-
-				int textureID=S_TextureInfo[PictureIndex]->ActorMaterialIndex;
-				S_TextureInfo[PictureIndex]->Tga=0;
-				NEWLoadTexture(g_Texture,C_TetureLib->L_FileName,textureID,PictureIndex);
-				Test();
-				At->SingleTextureInfo(PictureIndex);
-				C_Display->TextureNames();
-			}
-			if (stricmp(C_TetureLib->L_FileName+strlen(C_TetureLib->L_FileName)-4,".tga") == 0)
-			{
-
-
-				C_File->LoadTGA(C_TetureLib->L_FileName);
-				C_Textures->ReloadTextures(g_Texture);
-				At->SingleTextureInfo(PictureIndex);
-				C_Display->TextureNames();
+				return 1;
 			}
 
-			DeleteFile(C_TetureLib->L_FileName);
+			strcpy(App->CL_Texture_Lib->FileName, App->CL_FileIO->Model_FileName);
+			SendDlgItemMessage(App->CL_Texture_Lib->pData->hwnd, IDC_TEXTURELIST, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
-		return TRUE;
-	}*/
+			App->CL_Texture_Lib->CleanUp();
+
+			
+
+			bool Test = App->CL_Texture_Lib->LoadFile(hDlg);
+
+			if (Test == 0)
+			{
+				App->Say("Failed");
+				return 0;
+			}
+
+			return TRUE;
+		}
 
 		//--------------------------------- EXPORTSELECTED --------------------
 		if (LOWORD(wParam) == IDC_EXPORTSELECTED)
@@ -817,8 +821,7 @@ bool ME_TextureLib::LoadFile(HWND ChDlg)
 {
 	geVFile *			VFS;
 	geVFile_Finder *	Finder=NULL;
-	//geVFile_Finder *	FinderCount;
-
+	
 	pData= new TPack_WindowData;
 	pData->hwnd=ChDlg;
 	pData->BitmapCount = 0;
@@ -1284,7 +1287,7 @@ SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_GETTEXT, (WPARAM)nSel, (LPAR
 
 
 // *************************************************************************
-// *				SaveSelectedFile  09/04/04   						   *
+// *		SaveSelectedFile:- Terry and Hazel Flanigan 2023  			   *
 // *************************************************************************
 bool ME_TextureLib::SaveSelectedFile(char* Extension,char* TszFile)
 {
@@ -1326,7 +1329,7 @@ return 0;
 
 
 // *************************************************************************
-// *					CheckExtention  09/04/04   					 	   *
+// *			CheckExtention:- Terry and Hazel Flanigan 2023   		   *
 // *************************************************************************
 bool ME_TextureLib::CheckExtention(char *FileName)
 {
@@ -1342,7 +1345,7 @@ bool ME_TextureLib::CheckExtention(char *FileName)
 
 
 // *************************************************************************
-// *						TPack_ExtractAll  06/06/08 			  		   *
+// *			TPack_ExtractAll:- Terry and Hazel Flanigan 2023	  	   *
 // *************************************************************************
 bool ME_TextureLib::TPack_ExtractAll()
 {
@@ -1418,7 +1421,7 @@ return 1;
 }
 
 // *************************************************************************
-// *						Save/SaveAs  13/06/08 				  		   *
+// *			Save/SaveAs:- Terry and Hazel Flanigan 2023		  		   *
 // *************************************************************************
 bool ME_TextureLib::Save(const char *Path)
 {
@@ -1516,31 +1519,33 @@ bool ME_TextureLib::Save(const char *Path)
 
 
 // *************************************************************************
-// *						CleanUp  06/06/08 					  		   *
+// *			CleanUp:- Terry and Hazel Flanigan 2023			  		   *
 // *************************************************************************
 
 bool ME_TextureLib::CleanUp()
 {
+	if (pData)
+	{
+		delete (pData);
+		pData = NULL;
+	}
 
-	if(Entry){ delete Entry;Entry=NULL;}
 	return 1;
 }
 
 
 // *************************************************************************
-// *						GetName  06/06/08 					  		   *
+// *			GetName:- Terry and Hazel Flanigan 2023 		  		   *
 // *************************************************************************
-
 bool ME_TextureLib::GetName()
 {
-
-int Index = SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
-SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_GETTEXT, (WPARAM)Index, (LPARAM)&TextureName[0]);
+	int Index = SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+	SendDlgItemMessage(pData->hwnd, IDC_TEXTURELIST, LB_GETTEXT, (WPARAM)Index, (LPARAM)&TextureName[0]);
 	return 1;
 }
 
 // *************************************************************************
-// *						ReName  06/06/08 					  		   *
+// *			ReName:- Terry and Hazel Flanigan 2023			  		   *
 // *************************************************************************
 
 bool ME_TextureLib::ReName(const char *NewName)
@@ -1555,7 +1560,7 @@ strcpy(NewBitmapList[location]->Name,NewName);
 }
 
 // *************************************************************************
-// *						UpDateList  13/06/08 					  	   *
+// *			UpDateList:- Terry and Hazel Flanigan 2023			  	   *
 // *************************************************************************
 
 bool ME_TextureLib::UpDateList(const char *NewName)

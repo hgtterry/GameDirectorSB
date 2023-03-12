@@ -146,7 +146,7 @@ LRESULT CALLBACK ME_Groups::Groups_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 		if (some_item->idFrom == IDC_BTGROUPINFO && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CL_ImGui->Show_Group_Data_Flag);
+			App->Custom_Button_Toggle(item, App->CL_Editor_Gui->Show_Group_Data_F);
 			return CDRF_DODEFAULT;
 		}
 
@@ -170,13 +170,13 @@ LRESULT CALLBACK ME_Groups::Groups_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 		{
 			if (App->CL_Model->Model_Loaded == 1)
 			{
-				if (App->CL_ImGui->Show_Group_Data_Flag == 1)
+				if (App->CL_Editor_Gui->Show_Group_Data_F == 1)
 				{
-					App->CL_ImGui->Close_Group_Data();
+					App->CL_Editor_Gui->Close_Group_Data();
 				}
 				else
 				{
-					App->CL_ImGui->Start_Group_Data();
+					App->CL_Editor_Gui->Start_Group_Data();
 				}
 				
 

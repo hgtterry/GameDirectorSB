@@ -58,6 +58,43 @@ bool A_FileIO::SaveSelectedFile(char* Extension,char* File)
 }
 
 // *************************************************************************
+// *						OpenFile Terry Bernie						   *
+// *************************************************************************
+bool A_FileIO::Open_File_Model(char* Extension, char* Title, char* StartDirectory)
+{
+	FileName[0] = 0;
+	PathFileName[0] = 0;
+
+	OPENFILENAME ofn;
+
+	ZeroMemory(&ofn, sizeof(ofn));
+	ofn.lStructSize = sizeof(ofn);
+	ofn.hwndOwner = App->MainHwnd;
+	ofn.hInstance = App->hInst;
+	ofn.lpstrFile = PathFileName;						// full path and file name
+	ofn.nMaxFile = sizeof(PathFileName);
+	ofn.lpstrFilter = Extension;
+
+	ofn.nFilterIndex = 1;
+	ofn.lpstrFileTitle = FileName;						// Just File Name
+	ofn.nMaxFileTitle = sizeof(FileName);;
+	ofn.lpstrInitialDir = StartDirectory;
+	ofn.lpstrTitle = Title;
+	ofn.Flags = OFN_PATHMUSTEXIST |
+		OFN_FILEMUSTEXIST |
+		OFN_EXPLORER |
+		OFN_HIDEREADONLY |
+		OFN_FILEMUSTEXIST;
+
+	if (GetOpenFileName(&ofn) == TRUE)
+	{
+		return 1;
+	}
+
+	return 0;
+}
+
+// *************************************************************************
 // *					CheckExtention  09/04/04   					 	   *
 // *************************************************************************
 bool A_FileIO::CheckExtention(char *FileName)
