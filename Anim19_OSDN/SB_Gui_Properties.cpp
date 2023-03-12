@@ -103,9 +103,9 @@ void SB_Gui_Properties::Properties_Panel_Gui(void)
 		
 		if (App->SBC_Scene->Scene_Loaded == 1)
 		{
-			ImGui::Text("Name           %s", App->SBC_Scene->B_Object[Current_Object]->Mesh_Name);
-			ImGui::Text("Mesh File     %s", App->SBC_Scene->B_Object[Current_Object]->Mesh_FileName);
-			ImGui::Text("Material       %s", App->SBC_Scene->B_Object[Current_Object]->Material_File);
+			ImGui::Text("Name           %s", App->SBC_Scene->V_Object[Current_Object]->Mesh_Name);
+			ImGui::Text("Mesh File     %s", App->SBC_Scene->V_Object[Current_Object]->Mesh_FileName);
+			ImGui::Text("Material       %s", App->SBC_Scene->V_Object[Current_Object]->Material_File);
 
 			//if (ImGui::Button("Test"))
 			//{

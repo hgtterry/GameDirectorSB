@@ -258,11 +258,11 @@ bool GD19_OgreListener::Update_Game_Logic(float DeltaTime)
 	Count = 0;
 	while (Count < App->SBC_Scene->Object_Count)
 	{
-		if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Message)
+		if (App->SBC_Scene->V_Object[Count]->Usage == Enums::Usage_Message)
 		{
-			if (App->SBC_Scene->B_Object[Count]->Show_Message_Flag == 1)
+			if (App->SBC_Scene->V_Object[Count]->Show_Message_Flag == 1)
 			{
-				App->SBC_Scene->B_Object[Count]->Render_ImGui_Panel();
+				App->SBC_Scene->V_Object[Count]->Render_ImGui_Panel();
 			}
 		}
 
@@ -315,7 +315,7 @@ bool GD19_OgreListener::Update_Game_Logic(float DeltaTime)
 				int Index = body->getUserIndex2();
 
 
-				if (UI == Enums::Usage_Dynamic && App->SBC_Scene->B_Object[Index]->Deleted == 0)
+				if (UI == Enums::Usage_Dynamic && App->SBC_Scene->V_Object[Index]->Deleted == 0)
 				{
 					body->getMotionState()->getWorldTransform(trans);
 					btQuaternion orientation = trans.getRotation();
@@ -324,13 +324,13 @@ bool GD19_OgreListener::Update_Game_Logic(float DeltaTime)
 					float y = trans.getOrigin().getY();
 					float z = trans.getOrigin().getZ();
 
-					App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(Ogre::Vector3(x, y, z));
-					App->SBC_Scene->B_Object[Index]->Object_Node->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
+					App->SBC_Scene->V_Object[Index]->Object_Node->setPosition(Ogre::Vector3(x, y, z));
+					App->SBC_Scene->V_Object[Index]->Object_Node->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
 
 					Ogre::Vector3 WC = App->SBC_Object->Get_BoundingBox_World_Centre(Index);
 
 					Ogre::Vector3 NewPos = Ogre::Vector3(x, y, z) - WC;
-					App->SBC_Scene->B_Object[Index]->Object_Node->setPosition((Ogre::Vector3(x, y, z)) + NewPos);
+					App->SBC_Scene->V_Object[Index]->Object_Node->setPosition((Ogre::Vector3(x, y, z)) + NewPos);
 				}
 
 			}
@@ -1170,7 +1170,7 @@ bool GD19_OgreListener::SelectEntity_World(void)
 
 					App->SBC_Markers->MarkerBB_Addjust(IntNum);
 					Selected_Entity_Index = IntNum;
-					strcpy(Selected_Object_Name, App->SBC_Scene->B_Object[IntNum]->Mesh_Name);
+					strcpy(Selected_Object_Name, App->SBC_Scene->V_Object[IntNum]->Mesh_Name);
 					return 1;
 					
 				}

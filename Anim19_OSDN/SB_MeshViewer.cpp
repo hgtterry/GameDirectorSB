@@ -1510,10 +1510,10 @@ void SB_MeshViewer::Set_Debug_Shapes()
 	Count = 0;
 	while (Count < App->SBC_Scene->Object_Count)
 	{
-		if (App->SBC_Scene->B_Object[Count]->Physics_Debug_On == 1)
+		if (App->SBC_Scene->V_Object[Count]->Physics_Debug_On == 1)
 		{
-			int f = App->SBC_Scene->B_Object[Count]->Phys_Body->getCollisionFlags();
-			App->SBC_Scene->B_Object[Count]->Phys_Body->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+			int f = App->SBC_Scene->V_Object[Count]->Phys_Body->getCollisionFlags();
+			App->SBC_Scene->V_Object[Count]->Phys_Body->setCollisionFlags(f ^ btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 		}
 
 		Count++;

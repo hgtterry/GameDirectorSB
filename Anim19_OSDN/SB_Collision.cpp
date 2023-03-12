@@ -55,13 +55,13 @@ bool SB_Collision::Play_Sound(int Index)
 	strcpy(buff, App->SBC_SoundMgr->Default_Folder);
 	strcat(buff, "\\Media\\Sounds\\");
 
-	strcat(buff, App->SBC_Scene->B_Object[Index]->Sound_File);
+	strcat(buff, App->SBC_Scene->V_Object[Index]->Sound_File);
 
 	App->SBC_SoundMgr->SndFile = App->SBC_SoundMgr->SoundEngine->play2D(buff, false, true, true);
-	App->SBC_SoundMgr->SndFile->setVolume(App->SBC_Scene->B_Object[Index]->SndVolume);
+	App->SBC_SoundMgr->SndFile->setVolume(App->SBC_Scene->V_Object[Index]->SndVolume);
 	App->SBC_SoundMgr->SndFile->setIsPaused(false);
 
-	App->SBC_Scene->B_Object[Index]->Triggered = 1;
+	App->SBC_Scene->V_Object[Index]->Triggered = 1;
 	
 	return 1;
 }
@@ -71,27 +71,27 @@ bool SB_Collision::Play_Sound(int Index)
 // *************************************************************************
 bool SB_Collision::Message_Entity(int Index)
 {
-	if (App->SBC_Scene->B_Object[Index]->Triggered == 1) // Retrigger Yes No
+	if (App->SBC_Scene->V_Object[Index]->Triggered == 1) // Retrigger Yes No
 	{
 		return 1;
 	}
 
 	//-----------------  Do Action
 
-	if (App->SBC_Scene->B_Object[Index]->S_Message[0]->Counter_Disabled == 1)
+	if (App->SBC_Scene->V_Object[Index]->S_Message[0]->Counter_Disabled == 1)
 	{
-		App->SBC_Scene->B_Object[Index]->Show_Message_Flag = 1;
-		App->SBC_Scene->B_Object[Index]->Triggered = 1;
+		App->SBC_Scene->V_Object[Index]->Show_Message_Flag = 1;
+		App->SBC_Scene->V_Object[Index]->Triggered = 1;
 		return 1;
 	}
 
-	int Trigger_Value = App->SBC_Scene->B_Object[Index]->S_Message[0]->Trigger_Value;
-	int CounterIndex = App->SBC_Scene->B_Object[Index]->S_Message[0]->Counter_ID;
+	int Trigger_Value = App->SBC_Scene->V_Object[Index]->S_Message[0]->Trigger_Value;
+	int CounterIndex = App->SBC_Scene->V_Object[Index]->S_Message[0]->Counter_ID;
 
 	if (App->SBC_Scene->B_Counter[CounterIndex]->Counter < Trigger_Value)
 	{
-		App->SBC_Scene->B_Object[Index]->Show_Message_Flag = 1;
-		App->SBC_Scene->B_Object[Index]->Triggered = 1;
+		App->SBC_Scene->V_Object[Index]->Show_Message_Flag = 1;
+		App->SBC_Scene->V_Object[Index]->Triggered = 1;
 		return 1;
 	}
 
@@ -107,18 +107,18 @@ bool SB_Collision::Move_Entity_Collision(int Index)
 	Ogre::Vector3 P_Pos;
 	ObjectIndex = Index;
 
-	int ObjectToMove = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Object_To_Move_Index;
+	int ObjectToMove = App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->Object_To_Move_Index;
 
-	if (App->SBC_Scene->B_Object[ObjectToMove]->Deleted == 0)
+	if (App->SBC_Scene->V_Object[ObjectToMove]->Deleted == 0)
 	{
-		if (App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Counter_Disabled == 1)
+		if (App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->Counter_Disabled == 1)
 		{
 			Set_Move_Entity(Index);
 			return 1;
 		}
 
-		int Trigger_Value = App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Trigger_Value;
-		int CounterIndex = App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Counter_ID;
+		int Trigger_Value = App->SBC_Scene->V_Object[Index]->S_MoveType[0]->Trigger_Value;
+		int CounterIndex = App->SBC_Scene->V_Object[Index]->S_MoveType[0]->Counter_ID;
 
 		if (App->SBC_Scene->B_Counter[CounterIndex]->Counter >= Trigger_Value)
 		{
@@ -139,48 +139,48 @@ void SB_Collision::Set_Move_Entity(int Index)
 	Ogre::Vector3 P_Pos;
 	ObjectIndex = Index;
 
-	int ObjectToMove = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Object_To_Move_Index;
+	int ObjectToMove = App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->Object_To_Move_Index;
 
-	App->SBC_Scene->B_Object[Index]->Triggered = 1;
+	App->SBC_Scene->V_Object[Index]->Triggered = 1;
 
-	M_Pos = App->SBC_Scene->B_Object[ObjectToMove]->Mesh_Pos;
-	P_Pos = App->SBC_Scene->B_Object[ObjectToMove]->Physics_Pos;
+	M_Pos = App->SBC_Scene->V_Object[ObjectToMove]->Mesh_Pos;
+	P_Pos = App->SBC_Scene->V_Object[ObjectToMove]->Physics_Pos;
 
-	App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos = Ogre::Vector3(M_Pos);
-	App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos = Ogre::Vector3(P_Pos);
+	App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->MeshPos = Ogre::Vector3(M_Pos);
+	App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos = Ogre::Vector3(P_Pos);
 
-	x = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.x;
-	y = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.y;
-	z = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.z;
+	x = App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->MeshPos.x;
+	y = App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->MeshPos.y;
+	z = App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->MeshPos.z;
 
-	px = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.x;
-	py = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.y;
-	pz = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.z;
+	px = App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.x;
+	py = App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.y;
+	pz = App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.z;
 
-	if (App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->WhatDirection == Enums::Axis_x)
+	if (App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->WhatDirection == Enums::Axis_x)
 	{
-		FinalPosition = x + App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Move_Distance;
+		FinalPosition = x + App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->Move_Distance;
 	}
 
-	if (App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->WhatDirection == Enums::Axis_y)
+	if (App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->WhatDirection == Enums::Axis_y)
 	{
-		FinalPosition = y + App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Move_Distance;
+		FinalPosition = y + App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->Move_Distance;
 	}
 
-	if (App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->WhatDirection == Enums::Axis_z)
+	if (App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->WhatDirection == Enums::Axis_z)
 	{
-		FinalPosition = z + App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Move_Distance;
+		FinalPosition = z + App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->Move_Distance;
 	}
 
 
 	char Sound[1024];
 	strcpy(Sound, App->SBC_SoundMgr->Default_Folder);
 	strcat(Sound, "\\Media\\Sounds\\");
-	strcat(Sound, App->SBC_Scene->B_Object[ObjectIndex]->Sound_File);
+	strcat(Sound, App->SBC_Scene->V_Object[ObjectIndex]->Sound_File);
 
-	App->SBC_Scene->B_Object[ObjectIndex]->SndFile = App->SBC_SoundMgr->SoundEngine->play2D(Sound, false, true, true);
-	App->SBC_Scene->B_Object[ObjectIndex]->SndFile->setVolume(App->SBC_Scene->B_Object[ObjectIndex]->SndVolume);
-	App->SBC_Scene->B_Object[ObjectIndex]->SndFile->setIsPaused(false);
+	App->SBC_Scene->V_Object[ObjectIndex]->SndFile = App->SBC_SoundMgr->SoundEngine->play2D(Sound, false, true, true);
+	App->SBC_Scene->V_Object[ObjectIndex]->SndFile->setVolume(App->SBC_Scene->V_Object[ObjectIndex]->SndVolume);
+	App->SBC_Scene->V_Object[ObjectIndex]->SndFile->setIsPaused(false);
 
 	DoMove = 1; // Trigger Ogre Listener to update
 }
@@ -190,31 +190,31 @@ void SB_Collision::Set_Move_Entity(int Index)
 // *************************************************************************
 void SB_Collision::MoveObject_Listener(Ogre::Real Time)
 {
-	if (App->SBC_Scene->B_Object[ObjectIndex]->Deleted == 0)
+	if (App->SBC_Scene->V_Object[ObjectIndex]->Deleted == 0)
 	{
 		// X Axis
-		if (App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->WhatDirection == Enums::Axis_x)
+		if (App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->WhatDirection == Enums::Axis_x)
 		{
 
-			if (App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->IsNegative == false)
+			if (App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->IsNegative == false)
 			{
-				int ObjectToMove = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Object_To_Move_Index;
+				int ObjectToMove = App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->Object_To_Move_Index;
 
-				App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.x += App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Speed * Time;
-				App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.x += App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Speed * Time;
+				App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->MeshPos.x += App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->Speed * Time;
+				App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.x += App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->Speed * Time;
 
-				x = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.x;
-				px = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.x;
+				x = App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->MeshPos.x;
+				px = App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.x;
 
-				App->SBC_Scene->B_Object[ObjectToMove]->Object_Node->setPosition(x, y, z);
-				App->SBC_Scene->B_Object[ObjectToMove]->Phys_Body->getWorldTransform().setOrigin(btVector3(px, py, pz));
+				App->SBC_Scene->V_Object[ObjectToMove]->Object_Node->setPosition(x, y, z);
+				App->SBC_Scene->V_Object[ObjectToMove]->Phys_Body->getWorldTransform().setOrigin(btVector3(px, py, pz));
 
-				if (App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.x > FinalPosition)
+				if (App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->MeshPos.x > FinalPosition)
 				{
 
-					App->SBC_Scene->B_Object[ObjectIndex]->SndFile->stop();
-					App->SBC_Scene->B_Object[ObjectIndex]->SndFile->drop();
-					App->SBC_Scene->B_Object[ObjectIndex]->SndFile = NULL;
+					App->SBC_Scene->V_Object[ObjectIndex]->SndFile->stop();
+					App->SBC_Scene->V_Object[ObjectIndex]->SndFile->drop();
+					App->SBC_Scene->V_Object[ObjectIndex]->SndFile = NULL;
 
 					DoMove = 0; // Stop Listener
 				}
@@ -223,23 +223,23 @@ void SB_Collision::MoveObject_Listener(Ogre::Real Time)
 			}
 			else
 			{
-				int ObjectToMove = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Object_To_Move_Index;
+				int ObjectToMove = App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->Object_To_Move_Index;
 
-				App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.x -= App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Speed * Time;
-				App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.x -= App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Speed * Time;
+				App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->MeshPos.x -= App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->Speed * Time;
+				App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.x -= App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->Speed * Time;
 
-				x = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.x;
-				px = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.x;
+				x = App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->MeshPos.x;
+				px = App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.x;
 
-				App->SBC_Scene->B_Object[ObjectToMove]->Object_Node->setPosition(x, y, z);
-				App->SBC_Scene->B_Object[ObjectToMove]->Phys_Body->getWorldTransform().setOrigin(btVector3(px, py, pz));
+				App->SBC_Scene->V_Object[ObjectToMove]->Object_Node->setPosition(x, y, z);
+				App->SBC_Scene->V_Object[ObjectToMove]->Phys_Body->getWorldTransform().setOrigin(btVector3(px, py, pz));
 
-				if (App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.x < FinalPosition)
+				if (App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->MeshPos.x < FinalPosition)
 				{
 
-					App->SBC_Scene->B_Object[ObjectIndex]->SndFile->stop();
-					App->SBC_Scene->B_Object[ObjectIndex]->SndFile->drop();
-					App->SBC_Scene->B_Object[ObjectIndex]->SndFile = NULL;
+					App->SBC_Scene->V_Object[ObjectIndex]->SndFile->stop();
+					App->SBC_Scene->V_Object[ObjectIndex]->SndFile->drop();
+					App->SBC_Scene->V_Object[ObjectIndex]->SndFile = NULL;
 
 					DoMove = 0; // Stop Listener
 				}
@@ -249,26 +249,26 @@ void SB_Collision::MoveObject_Listener(Ogre::Real Time)
 		}
 
 		// Y Axis
-		if (App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->WhatDirection == Enums::Axis_y)
+		if (App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->WhatDirection == Enums::Axis_y)
 		{
-			if (App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->IsNegative == false)
+			if (App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->IsNegative == false)
 			{
-				int ObjectToMove = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Object_To_Move_Index;
+				int ObjectToMove = App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->Object_To_Move_Index;
 
-				App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.y += App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Speed * Time;
-				App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.y += App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Speed * Time;
+				App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->MeshPos.y += App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->Speed * Time;
+				App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.y += App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->Speed * Time;
 
-				y = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.y;
-				py = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.y;
+				y = App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->MeshPos.y;
+				py = App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.y;
 
-				App->SBC_Scene->B_Object[ObjectToMove]->Object_Node->setPosition(x, y, z);
-				App->SBC_Scene->B_Object[ObjectToMove]->Phys_Body->getWorldTransform().setOrigin(btVector3(px, py, pz));
+				App->SBC_Scene->V_Object[ObjectToMove]->Object_Node->setPosition(x, y, z);
+				App->SBC_Scene->V_Object[ObjectToMove]->Phys_Body->getWorldTransform().setOrigin(btVector3(px, py, pz));
 
-				if (App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.y > FinalPosition)
+				if (App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->MeshPos.y > FinalPosition)
 				{
-					App->SBC_Scene->B_Object[ObjectIndex]->SndFile->stop();
-					App->SBC_Scene->B_Object[ObjectIndex]->SndFile->drop();
-					App->SBC_Scene->B_Object[ObjectIndex]->SndFile = NULL;
+					App->SBC_Scene->V_Object[ObjectIndex]->SndFile->stop();
+					App->SBC_Scene->V_Object[ObjectIndex]->SndFile->drop();
+					App->SBC_Scene->V_Object[ObjectIndex]->SndFile = NULL;
 
 					DoMove = 0; // Stop Listener
 				}
@@ -277,22 +277,22 @@ void SB_Collision::MoveObject_Listener(Ogre::Real Time)
 			}
 			else
 			{
-				int ObjectToMove = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Object_To_Move_Index;
+				int ObjectToMove = App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->Object_To_Move_Index;
 
-				App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.y -= App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Speed * Time;
-				App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.y -= App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Speed * Time;
+				App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->MeshPos.y -= App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->Speed * Time;
+				App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.y -= App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->Speed * Time;
 
-				y = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.y;
-				py = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.y;
+				y = App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->MeshPos.y;
+				py = App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.y;
 
-				App->SBC_Scene->B_Object[ObjectToMove]->Object_Node->setPosition(x, y, z);
-				App->SBC_Scene->B_Object[ObjectToMove]->Phys_Body->getWorldTransform().setOrigin(btVector3(px, py, pz));
+				App->SBC_Scene->V_Object[ObjectToMove]->Object_Node->setPosition(x, y, z);
+				App->SBC_Scene->V_Object[ObjectToMove]->Phys_Body->getWorldTransform().setOrigin(btVector3(px, py, pz));
 
-				if (App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.y < FinalPosition)
+				if (App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->MeshPos.y < FinalPosition)
 				{
-					App->SBC_Scene->B_Object[ObjectIndex]->SndFile->stop();
-					App->SBC_Scene->B_Object[ObjectIndex]->SndFile->drop();
-					App->SBC_Scene->B_Object[ObjectIndex]->SndFile = NULL;
+					App->SBC_Scene->V_Object[ObjectIndex]->SndFile->stop();
+					App->SBC_Scene->V_Object[ObjectIndex]->SndFile->drop();
+					App->SBC_Scene->V_Object[ObjectIndex]->SndFile = NULL;
 
 					DoMove = 0; // Stop Listener
 				}
@@ -302,26 +302,26 @@ void SB_Collision::MoveObject_Listener(Ogre::Real Time)
 		}
 
 		// Z Axis
-		if (App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->WhatDirection == Enums::Axis_z)
+		if (App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->WhatDirection == Enums::Axis_z)
 		{
-			if (App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->IsNegative == false)
+			if (App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->IsNegative == false)
 			{
-				int ObjectToMove = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Object_To_Move_Index;
+				int ObjectToMove = App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->Object_To_Move_Index;
 
-				App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.z += App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Speed * Time;
-				App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.z += App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Speed * Time;
+				App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->MeshPos.z += App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->Speed * Time;
+				App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.z += App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->Speed * Time;
 
-				z = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.z;
-				pz = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.z;
+				z = App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->MeshPos.z;
+				pz = App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.z;
 
-				App->SBC_Scene->B_Object[ObjectToMove]->Object_Node->setPosition(x, y, z);
-				App->SBC_Scene->B_Object[ObjectToMove]->Phys_Body->getWorldTransform().setOrigin(btVector3(px, py, pz));
+				App->SBC_Scene->V_Object[ObjectToMove]->Object_Node->setPosition(x, y, z);
+				App->SBC_Scene->V_Object[ObjectToMove]->Phys_Body->getWorldTransform().setOrigin(btVector3(px, py, pz));
 
-				if (App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.z > FinalPosition)
+				if (App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->MeshPos.z > FinalPosition)
 				{
-					App->SBC_Scene->B_Object[ObjectIndex]->SndFile->stop();
-					App->SBC_Scene->B_Object[ObjectIndex]->SndFile->drop();
-					App->SBC_Scene->B_Object[ObjectIndex]->SndFile = NULL;
+					App->SBC_Scene->V_Object[ObjectIndex]->SndFile->stop();
+					App->SBC_Scene->V_Object[ObjectIndex]->SndFile->drop();
+					App->SBC_Scene->V_Object[ObjectIndex]->SndFile = NULL;
 
 					DoMove = 0; // Stop Listener
 				}
@@ -330,22 +330,22 @@ void SB_Collision::MoveObject_Listener(Ogre::Real Time)
 			}
 			else
 			{
-				int ObjectToMove = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Object_To_Move_Index;
+				int ObjectToMove = App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->Object_To_Move_Index;
 
-				App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.z -= App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Speed * Time;
-				App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.z -= App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->Speed * Time;
+				App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->MeshPos.z -= App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->Speed * Time;
+				App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.z -= App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->Speed * Time;
 
-				z = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.z;
-				pz = App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.z;
+				z = App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->MeshPos.z;
+				pz = App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->PhysicsPos.z;
 
-				App->SBC_Scene->B_Object[ObjectToMove]->Object_Node->setPosition(x, y, z);
-				App->SBC_Scene->B_Object[ObjectToMove]->Phys_Body->getWorldTransform().setOrigin(btVector3(px, py, pz));
+				App->SBC_Scene->V_Object[ObjectToMove]->Object_Node->setPosition(x, y, z);
+				App->SBC_Scene->V_Object[ObjectToMove]->Phys_Body->getWorldTransform().setOrigin(btVector3(px, py, pz));
 
-				if (App->SBC_Scene->B_Object[ObjectIndex]->S_MoveType[0]->MeshPos.z < FinalPosition)
+				if (App->SBC_Scene->V_Object[ObjectIndex]->S_MoveType[0]->MeshPos.z < FinalPosition)
 				{
-					App->SBC_Scene->B_Object[ObjectIndex]->SndFile->stop();
-					App->SBC_Scene->B_Object[ObjectIndex]->SndFile->drop();
-					App->SBC_Scene->B_Object[ObjectIndex]->SndFile = NULL;
+					App->SBC_Scene->V_Object[ObjectIndex]->SndFile->stop();
+					App->SBC_Scene->V_Object[ObjectIndex]->SndFile->drop();
+					App->SBC_Scene->V_Object[ObjectIndex]->SndFile = NULL;
 
 					DoMove = 0; // Stop Listener
 				}
@@ -363,21 +363,21 @@ void SB_Collision::MoveObject_Listener(Ogre::Real Time)
 // *************************************************************************
 bool SB_Collision::Do_Teleport(int Index)
 {
-	if (App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Counter_Disabled == 1)
+	if (App->SBC_Scene->V_Object[Index]->S_Teleport[0]->Counter_Disabled == 1)
 	{
-		App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Physics_Position);
-		App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Physics_Rotation);
+		App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(App->SBC_Scene->V_Object[Index]->S_Teleport[0]->Physics_Position);
+		App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->SBC_Scene->V_Object[Index]->S_Teleport[0]->Physics_Rotation);
 
-		if (App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Play == 1)
+		if (App->SBC_Scene->V_Object[Index]->S_Teleport[0]->Play == 1)
 		{
 			char Sound[1024];
 			strcpy(Sound, App->SBC_SoundMgr->Default_Folder);
 			strcat(Sound, "\\Media\\Sounds\\");
-			strcat(Sound, App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Sound_File);
+			strcat(Sound, App->SBC_Scene->V_Object[Index]->S_Teleport[0]->Sound_File);
 
-			App->SBC_Scene->B_Object[Index]->S_Teleport[0]->SndFile = App->SBC_SoundMgr->SoundEngine->play2D(Sound, false, true, true);
-			App->SBC_Scene->B_Object[Index]->S_Teleport[0]->SndFile->setVolume(App->SBC_Scene->B_Object[Index]->S_Teleport[0]->SndVolume);
-			App->SBC_Scene->B_Object[Index]->S_Teleport[0]->SndFile->setIsPaused(false);
+			App->SBC_Scene->V_Object[Index]->S_Teleport[0]->SndFile = App->SBC_SoundMgr->SoundEngine->play2D(Sound, false, true, true);
+			App->SBC_Scene->V_Object[Index]->S_Teleport[0]->SndFile->setVolume(App->SBC_Scene->V_Object[Index]->S_Teleport[0]->SndVolume);
+			App->SBC_Scene->V_Object[Index]->S_Teleport[0]->SndFile->setIsPaused(false);
 
 			// Environment
 			if (App->SBC_Scene->GameMode_Running_Flag == 1)
@@ -399,24 +399,24 @@ bool SB_Collision::Do_Teleport(int Index)
 		return 1;
 	}
 
-	int Trigger_Value = App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Trigger_Value;
-	int CounterIndex = App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Counter_ID;
+	int Trigger_Value = App->SBC_Scene->V_Object[Index]->S_Teleport[0]->Trigger_Value;
+	int CounterIndex = App->SBC_Scene->V_Object[Index]->S_Teleport[0]->Counter_ID;
 
 	if (App->SBC_Scene->B_Counter[CounterIndex]->Counter >= Trigger_Value)
 	{
-		App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Physics_Position);
-		App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Physics_Rotation);
+		App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().setOrigin(App->SBC_Scene->V_Object[Index]->S_Teleport[0]->Physics_Position);
+		App->SBC_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->SBC_Scene->V_Object[Index]->S_Teleport[0]->Physics_Rotation);
 
-		if (App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Play == 1)
+		if (App->SBC_Scene->V_Object[Index]->S_Teleport[0]->Play == 1)
 		{
 			char Sound[1024];
 			strcpy(Sound, App->SBC_SoundMgr->Default_Folder);
 			strcat(Sound, "\\Media\\Sounds\\");
-			strcat(Sound, App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Sound_File);
+			strcat(Sound, App->SBC_Scene->V_Object[Index]->S_Teleport[0]->Sound_File);
 
-			App->SBC_Scene->B_Object[Index]->S_Teleport[0]->SndFile = App->SBC_SoundMgr->SoundEngine->play2D(Sound, false, true, true);
-			App->SBC_Scene->B_Object[Index]->S_Teleport[0]->SndFile->setVolume(App->SBC_Scene->B_Object[Index]->S_Teleport[0]->SndVolume);
-			App->SBC_Scene->B_Object[Index]->S_Teleport[0]->SndFile->setIsPaused(false);
+			App->SBC_Scene->V_Object[Index]->S_Teleport[0]->SndFile = App->SBC_SoundMgr->SoundEngine->play2D(Sound, false, true, true);
+			App->SBC_Scene->V_Object[Index]->S_Teleport[0]->SndFile->setVolume(App->SBC_Scene->V_Object[Index]->S_Teleport[0]->SndVolume);
+			App->SBC_Scene->V_Object[Index]->S_Teleport[0]->SndFile->setIsPaused(false);
 		}
 
 		// Environment
@@ -447,37 +447,37 @@ bool SB_Collision::Do_Teleport(int Index)
 // *************************************************************************
 bool SB_Collision::Do_Collectable(int Index)
 {
-	App->SBC_Scene->B_Object[Index]->Triggered = 1;
+	App->SBC_Scene->V_Object[Index]->Triggered = 1;
 
-	App->SBC_Scene->B_Object[Index]->Object_Ent->setVisible(0);
-	App->SBC_Scene->B_Object[Index]->Object_Node->setPosition(100, 100, 100);
-	App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(100, 100, 100));
+	App->SBC_Scene->V_Object[Index]->Object_Ent->setVisible(0);
+	App->SBC_Scene->V_Object[Index]->Object_Node->setPosition(100, 100, 100);
+	App->SBC_Scene->V_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(100, 100, 100));
 
-	if (App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Play == 1)
+	if (App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Play == 1)
 	{
 		char Sound[1024];
 		strcpy(Sound, App->SBC_SoundMgr->Default_Folder);
 		strcat(Sound, "\\Media\\Sounds\\");
-		strcat(Sound, App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Sound_File);
+		strcat(Sound, App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Sound_File);
 
-		App->SBC_Scene->B_Object[Index]->S_Collectable[0]->SndFile = App->SBC_SoundMgr->SoundEngine->play2D(Sound, false, true, true);
-		App->SBC_Scene->B_Object[Index]->S_Collectable[0]->SndFile->setVolume(App->SBC_Scene->B_Object[Index]->S_Collectable[0]->SndVolume);
-		App->SBC_Scene->B_Object[Index]->S_Collectable[0]->SndFile->setIsPaused(false);
+		App->SBC_Scene->V_Object[Index]->S_Collectable[0]->SndFile = App->SBC_SoundMgr->SoundEngine->play2D(Sound, false, true, true);
+		App->SBC_Scene->V_Object[Index]->S_Collectable[0]->SndFile->setVolume(App->SBC_Scene->V_Object[Index]->S_Collectable[0]->SndVolume);
+		App->SBC_Scene->V_Object[Index]->S_Collectable[0]->SndFile->setIsPaused(false);
 	}
 
-	if (App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Counter_Disabled == 0)
+	if (App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Counter_Disabled == 0)
 	{
-		int CouterID = App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Counter_ID;
+		int CouterID = App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Counter_ID;
 
-		if (App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Maths == 1)
+		if (App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Maths == 1)
 		{
-			App->SBC_Scene->B_Counter[CouterID]->Counter += App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Value;
+			App->SBC_Scene->B_Counter[CouterID]->Counter += App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Value;
 			return 1;
 		}
 
-		if (App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Maths == 2)
+		if (App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Maths == 2)
 		{
-			App->SBC_Scene->B_Counter[CouterID]->Counter += -App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Value;
+			App->SBC_Scene->B_Counter[CouterID]->Counter += -App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Value;
 			return 1;
 		}
 	}
@@ -490,14 +490,14 @@ bool SB_Collision::Do_Collectable(int Index)
 // *************************************************************************
 bool SB_Collision::Do_Environment(int Index)
 {
-	if (App->SBC_Scene->B_Object[Index]->Triggered == 1) // return
+	if (App->SBC_Scene->V_Object[Index]->Triggered == 1) // return
 	{
 		return 1;
 	}
 
 	if (Old_Sound_Index == Index)
 	{
-		App->SBC_Scene->B_Object[Index]->Triggered = 1;
+		App->SBC_Scene->V_Object[Index]->Triggered = 1;
 		return 1;
 	}
 
@@ -507,7 +507,7 @@ bool SB_Collision::Do_Environment(int Index)
 		App->SBC_Com_Environments->Set_Environment_By_Index(1, Index);
 
 		Old_Sound_Index = Index;
-		App->SBC_Scene->B_Object[Index]->Triggered = 1;
+		App->SBC_Scene->V_Object[Index]->Triggered = 1;
 	}
 	else
 	{
@@ -515,7 +515,7 @@ bool SB_Collision::Do_Environment(int Index)
 
 		Old_Sound_Index = Index;
 
-		App->SBC_Scene->B_Object[Index]->Triggered = 1;
+		App->SBC_Scene->V_Object[Index]->Triggered = 1;
 	}
 
 	return 1;

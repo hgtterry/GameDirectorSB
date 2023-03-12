@@ -154,7 +154,7 @@ bool SB_Markers::MarkerBB_Update(float Depth, float Height, float Width)
 void SB_Markers::MarkerBB_Addjust(int Index)
 {
 
-	Base_Object* Object = App->SBC_Scene->B_Object[Index];
+	Base_Object* Object = App->SBC_Scene->V_Object[Index];
 
 	Ogre::Vector3 Position = Object->Object_Node->getPosition();
 	Ogre::Quaternion Rot = Object->Object_Node->getOrientation();

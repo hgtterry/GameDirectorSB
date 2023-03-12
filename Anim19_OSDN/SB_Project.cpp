@@ -740,7 +740,7 @@ bool SB_Project::Save_Objects_Data()
 	int Count = 0;
 	while (Count < App->SBC_Scene->Object_Count)
 	{
-		if (App->SBC_Scene->B_Object[Count]->Deleted == 0)
+		if (App->SBC_Scene->V_Object[Count]->Deleted == 0)
 		{
 			strcpy(buff, "[Object_");
 			_itoa(new_Count, Cbuff, 10);
@@ -749,267 +749,267 @@ bool SB_Project::Save_Objects_Data()
 
 			fprintf(WriteFile, "%s\n", buff); // Header also Player name until changed by user
 
-			fprintf(WriteFile, "%s%s\n", "Mesh_Name=", App->SBC_Scene->B_Object[Count]->Mesh_Name); // Change
+			fprintf(WriteFile, "%s%s\n", "Mesh_Name=", App->SBC_Scene->V_Object[Count]->Mesh_Name); // Change
 
-			fprintf(WriteFile, "%s%s\n", "Mesh_File=", App->SBC_Scene->B_Object[Count]->Mesh_FileName);
-			fprintf(WriteFile, "%s%s\n", "Mesh_Resource_Path=", App->SBC_Scene->B_Object[Count]->Mesh_Resource_Path);
-			fprintf(WriteFile, "%s%s\n", "Material_File=", App->SBC_Scene->B_Object[Count]->Material_File);
-			fprintf(WriteFile, "%s%i\n", "Object_ID=", App->SBC_Scene->B_Object[Count]->This_Object_UniqueID);
-			fprintf(WriteFile, "%s%i\n", "Object_Type=", App->SBC_Scene->B_Object[Count]->Type);
-			fprintf(WriteFile, "%s%i\n", "Object_Shape=", App->SBC_Scene->B_Object[Count]->Shape);
-			fprintf(WriteFile, "%s%i\n", "Object_Usage=", App->SBC_Scene->B_Object[Count]->Usage);
+			fprintf(WriteFile, "%s%s\n", "Mesh_File=", App->SBC_Scene->V_Object[Count]->Mesh_FileName);
+			fprintf(WriteFile, "%s%s\n", "Mesh_Resource_Path=", App->SBC_Scene->V_Object[Count]->Mesh_Resource_Path);
+			fprintf(WriteFile, "%s%s\n", "Material_File=", App->SBC_Scene->V_Object[Count]->Material_File);
+			fprintf(WriteFile, "%s%i\n", "Object_ID=", App->SBC_Scene->V_Object[Count]->This_Object_UniqueID);
+			fprintf(WriteFile, "%s%i\n", "Object_Type=", App->SBC_Scene->V_Object[Count]->Type);
+			fprintf(WriteFile, "%s%i\n", "Object_Shape=", App->SBC_Scene->V_Object[Count]->Shape);
+			fprintf(WriteFile, "%s%i\n", "Object_Usage=", App->SBC_Scene->V_Object[Count]->Usage);
 
 			// Position
-			x = App->SBC_Scene->B_Object[Count]->Mesh_Pos.x;
-			y = App->SBC_Scene->B_Object[Count]->Mesh_Pos.y;
-			z = App->SBC_Scene->B_Object[Count]->Mesh_Pos.z;
+			x = App->SBC_Scene->V_Object[Count]->Mesh_Pos.x;
+			y = App->SBC_Scene->V_Object[Count]->Mesh_Pos.y;
+			z = App->SBC_Scene->V_Object[Count]->Mesh_Pos.z;
 			fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Pos=", x, y, z);
 
 			// Mesh_Scale
-			x = App->SBC_Scene->B_Object[Count]->Mesh_Scale.x;
-			y = App->SBC_Scene->B_Object[Count]->Mesh_Scale.y;
-			z = App->SBC_Scene->B_Object[Count]->Mesh_Scale.z;
+			x = App->SBC_Scene->V_Object[Count]->Mesh_Scale.x;
+			y = App->SBC_Scene->V_Object[Count]->Mesh_Scale.y;
+			z = App->SBC_Scene->V_Object[Count]->Mesh_Scale.z;
 			fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Scale=", x, y, z);
 
 			// Mesh_Rot
-			x = App->SBC_Scene->B_Object[Count]->Mesh_Rot.x;
-			y = App->SBC_Scene->B_Object[Count]->Mesh_Rot.y;
-			z = App->SBC_Scene->B_Object[Count]->Mesh_Rot.z;
+			x = App->SBC_Scene->V_Object[Count]->Mesh_Rot.x;
+			y = App->SBC_Scene->V_Object[Count]->Mesh_Rot.y;
+			z = App->SBC_Scene->V_Object[Count]->Mesh_Rot.z;
 			fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Rot=", x, y, z);
 
 			// Mesh_Quat
-			w = App->SBC_Scene->B_Object[Count]->Mesh_Quat.w;
-			x = App->SBC_Scene->B_Object[Count]->Mesh_Quat.x;
-			y = App->SBC_Scene->B_Object[Count]->Mesh_Quat.y;
-			z = App->SBC_Scene->B_Object[Count]->Mesh_Quat.z;
+			w = App->SBC_Scene->V_Object[Count]->Mesh_Quat.w;
+			x = App->SBC_Scene->V_Object[Count]->Mesh_Quat.x;
+			y = App->SBC_Scene->V_Object[Count]->Mesh_Quat.y;
+			z = App->SBC_Scene->V_Object[Count]->Mesh_Quat.z;
 			fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Mesh_Quat=", w, x, y, z);
 
 			// Physics_Quat
-			w = App->SBC_Scene->B_Object[Count]->Physics_Quat.w;
-			x = App->SBC_Scene->B_Object[Count]->Physics_Quat.x;
-			y = App->SBC_Scene->B_Object[Count]->Physics_Quat.y;
-			z = App->SBC_Scene->B_Object[Count]->Physics_Quat.z;
+			w = App->SBC_Scene->V_Object[Count]->Physics_Quat.w;
+			x = App->SBC_Scene->V_Object[Count]->Physics_Quat.x;
+			y = App->SBC_Scene->V_Object[Count]->Physics_Quat.y;
+			z = App->SBC_Scene->V_Object[Count]->Physics_Quat.z;
 			fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Physics_Quat=", w, x, y, z);
 
-			fprintf(WriteFile, "%s%i\n", "Dimensions_Lock=", App->SBC_Scene->B_Object[Count]->Dimensions_Locked);
+			fprintf(WriteFile, "%s%i\n", "Dimensions_Lock=", App->SBC_Scene->V_Object[Count]->Dimensions_Locked);
 
 			//---------------------------------------------------------------------------------- Message Entity
-			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Message)
+			if (App->SBC_Scene->V_Object[Count]->Usage == Enums::Usage_Message)
 			{
 				fprintf(WriteFile, "%s\n", "-- Message");
-				fprintf(WriteFile, "%s%s\n", "Message_Text=", App->SBC_Scene->B_Object[Count]->S_Message[0]->Message_Text);
+				fprintf(WriteFile, "%s%s\n", "Message_Text=", App->SBC_Scene->V_Object[Count]->S_Message[0]->Message_Text);
 
-				x = App->SBC_Scene->B_Object[Count]->S_Message[0]->Message_PosX;
-				y = App->SBC_Scene->B_Object[Count]->S_Message[0]->Message_PosY;
+				x = App->SBC_Scene->V_Object[Count]->S_Message[0]->Message_PosX;
+				y = App->SBC_Scene->V_Object[Count]->S_Message[0]->Message_PosY;
 				fprintf(WriteFile, "%s%f,%f\n", "Message_Pos=",x,y);
 				
 				// Message Counter
-				fprintf(WriteFile, "%s%i\n", "Message_Counter_ID=", App->SBC_Scene->B_Object[Count]->S_Message[0]->Counter_ID);
-				fprintf(WriteFile, "%s%i\n", "Message_Trigger_Value=", App->SBC_Scene->B_Object[Count]->S_Message[0]->Trigger_Value);
-				fprintf(WriteFile, "%s%i\n", "Message_Counter_Disabled=", App->SBC_Scene->B_Object[Count]->S_Message[0]->Counter_Disabled);
+				fprintf(WriteFile, "%s%i\n", "Message_Counter_ID=", App->SBC_Scene->V_Object[Count]->S_Message[0]->Counter_ID);
+				fprintf(WriteFile, "%s%i\n", "Message_Trigger_Value=", App->SBC_Scene->V_Object[Count]->S_Message[0]->Trigger_Value);
+				fprintf(WriteFile, "%s%i\n", "Message_Counter_Disabled=", App->SBC_Scene->V_Object[Count]->S_Message[0]->Counter_Disabled);
 
-				fprintf(WriteFile, "%s%i\n", "Message_CentreX=", App->SBC_Scene->B_Object[Count]->S_Message[0]->PosXCentre_Flag);
-				fprintf(WriteFile, "%s%i\n", "Message_CentreY=", App->SBC_Scene->B_Object[Count]->S_Message[0]->PosYCentre_Flag);
+				fprintf(WriteFile, "%s%i\n", "Message_CentreX=", App->SBC_Scene->V_Object[Count]->S_Message[0]->PosXCentre_Flag);
+				fprintf(WriteFile, "%s%i\n", "Message_CentreY=", App->SBC_Scene->V_Object[Count]->S_Message[0]->PosYCentre_Flag);
 
-				x = App->SBC_Scene->B_Object[Count]->S_Message[0]->Text_Colour.x;
-				y = App->SBC_Scene->B_Object[Count]->S_Message[0]->Text_Colour.y;
-				z = App->SBC_Scene->B_Object[Count]->S_Message[0]->Text_Colour.z;
-				w = App->SBC_Scene->B_Object[Count]->S_Message[0]->Text_Colour.w;
+				x = App->SBC_Scene->V_Object[Count]->S_Message[0]->Text_Colour.x;
+				y = App->SBC_Scene->V_Object[Count]->S_Message[0]->Text_Colour.y;
+				z = App->SBC_Scene->V_Object[Count]->S_Message[0]->Text_Colour.z;
+				w = App->SBC_Scene->V_Object[Count]->S_Message[0]->Text_Colour.w;
 				fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Message_Text_Colour=", x, y,z,w);
 
-				x = App->SBC_Scene->B_Object[Count]->S_Message[0]->BackGround_Colour.x;
-				y = App->SBC_Scene->B_Object[Count]->S_Message[0]->BackGround_Colour.y;
-				z = App->SBC_Scene->B_Object[Count]->S_Message[0]->BackGround_Colour.z;
-				w = App->SBC_Scene->B_Object[Count]->S_Message[0]->BackGround_Colour.w;
+				x = App->SBC_Scene->V_Object[Count]->S_Message[0]->BackGround_Colour.x;
+				y = App->SBC_Scene->V_Object[Count]->S_Message[0]->BackGround_Colour.y;
+				z = App->SBC_Scene->V_Object[Count]->S_Message[0]->BackGround_Colour.z;
+				w = App->SBC_Scene->V_Object[Count]->S_Message[0]->BackGround_Colour.w;
 				fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Message_BackGround_Colour=", x, y, z, w);
 
-				fprintf(WriteFile, "%s%i\n", "Message_Show_BackGround=", App->SBC_Scene->B_Object[Count]->S_Message[0]->Show_BackGround);
+				fprintf(WriteFile, "%s%i\n", "Message_Show_BackGround=", App->SBC_Scene->V_Object[Count]->S_Message[0]->Show_BackGround);
 
 			}
 
 			//---------------------------------------------------------------------------------- Sound Entity
-			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Sound)
+			if (App->SBC_Scene->V_Object[Count]->Usage == Enums::Usage_Sound)
 			{
-				fprintf(WriteFile, "%s%s\n", "Sound_File=", App->SBC_Scene->B_Object[Count]->Sound_File);
-				fprintf(WriteFile, "%s%f\n", "Sound_Volume=", App->SBC_Scene->B_Object[Count]->SndVolume);
+				fprintf(WriteFile, "%s%s\n", "Sound_File=", App->SBC_Scene->V_Object[Count]->Sound_File);
+				fprintf(WriteFile, "%s%f\n", "Sound_Volume=", App->SBC_Scene->V_Object[Count]->SndVolume);
 			}
 
 			//---------------------------------------------------------------------------------- Colectable Entity
-			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Colectable)
+			if (App->SBC_Scene->V_Object[Count]->Usage == Enums::Usage_Colectable)
 			{
 				fprintf(WriteFile, "%s\n", "-- Colectable");
-				fprintf(WriteFile, "%s%s\n", "Col_Sound_File=", App->SBC_Scene->B_Object[Count]->S_Collectable[0]->Sound_File);
-				fprintf(WriteFile, "%s%f\n", "Col_Sound_Volume=", App->SBC_Scene->B_Object[Count]->S_Collectable[0]->SndVolume);
-				fprintf(WriteFile, "%s%i\n", "Col_Play=", App->SBC_Scene->B_Object[Count]->S_Collectable[0]->Play);
-				fprintf(WriteFile, "%s%s\n", "Col_Counter_Name=", App->SBC_Scene->B_Object[Count]->S_Collectable[0]->Counter_Name);
-				fprintf(WriteFile, "%s%i\n", "Col_Counter_ID=", App->SBC_Scene->B_Object[Count]->S_Collectable[0]->Counter_ID);
-				fprintf(WriteFile, "%s%i\n", "Col_Maths=", App->SBC_Scene->B_Object[Count]->S_Collectable[0]->Maths);
-				fprintf(WriteFile, "%s%i\n", "Col_Value=", App->SBC_Scene->B_Object[Count]->S_Collectable[0]->Value);
-				fprintf(WriteFile, "%s%i\n", "Col_Disabled=", App->SBC_Scene->B_Object[Count]->S_Collectable[0]->Counter_Disabled);
+				fprintf(WriteFile, "%s%s\n", "Col_Sound_File=", App->SBC_Scene->V_Object[Count]->S_Collectable[0]->Sound_File);
+				fprintf(WriteFile, "%s%f\n", "Col_Sound_Volume=", App->SBC_Scene->V_Object[Count]->S_Collectable[0]->SndVolume);
+				fprintf(WriteFile, "%s%i\n", "Col_Play=", App->SBC_Scene->V_Object[Count]->S_Collectable[0]->Play);
+				fprintf(WriteFile, "%s%s\n", "Col_Counter_Name=", App->SBC_Scene->V_Object[Count]->S_Collectable[0]->Counter_Name);
+				fprintf(WriteFile, "%s%i\n", "Col_Counter_ID=", App->SBC_Scene->V_Object[Count]->S_Collectable[0]->Counter_ID);
+				fprintf(WriteFile, "%s%i\n", "Col_Maths=", App->SBC_Scene->V_Object[Count]->S_Collectable[0]->Maths);
+				fprintf(WriteFile, "%s%i\n", "Col_Value=", App->SBC_Scene->V_Object[Count]->S_Collectable[0]->Value);
+				fprintf(WriteFile, "%s%i\n", "Col_Disabled=", App->SBC_Scene->V_Object[Count]->S_Collectable[0]->Counter_Disabled);
 			}
 
 			//---------------------------------------------------------------------------------- Move Entity
-			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Move)
+			if (App->SBC_Scene->V_Object[Count]->Usage == Enums::Usage_Move)
 			{
 				fprintf(WriteFile, "%s\n", "-- Move Entity");
-				fprintf(WriteFile, "%s%f\n", "Move_Distance=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Move_Distance);
-				fprintf(WriteFile, "%s%i\n", "Move_IsNegative=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->IsNegative);
+				fprintf(WriteFile, "%s%f\n", "Move_Distance=", App->SBC_Scene->V_Object[Count]->S_MoveType[0]->Move_Distance);
+				fprintf(WriteFile, "%s%i\n", "Move_IsNegative=", App->SBC_Scene->V_Object[Count]->S_MoveType[0]->IsNegative);
 			
-				fprintf(WriteFile, "%s%f\n", "Move_NewPos=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Newpos);
-				fprintf(WriteFile, "%s%i\n", "Move_ObjectID=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Object_To_Move_Index);
-				fprintf(WriteFile, "%s%s\n", "Move_ObjectName=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Object_Name);
-				fprintf(WriteFile, "%s%i\n", "Move_Re_Trigger=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Re_Trigger);
-				fprintf(WriteFile, "%s%f\n", "Move_Speed=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Speed);
-				fprintf(WriteFile, "%s%i\n", "Move_Triggered=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Triggered);
-				fprintf(WriteFile, "%s%i\n", "Move_WhatDirection=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->WhatDirection);
+				fprintf(WriteFile, "%s%f\n", "Move_NewPos=", App->SBC_Scene->V_Object[Count]->S_MoveType[0]->Newpos);
+				fprintf(WriteFile, "%s%i\n", "Move_ObjectID=", App->SBC_Scene->V_Object[Count]->S_MoveType[0]->Object_To_Move_Index);
+				fprintf(WriteFile, "%s%s\n", "Move_ObjectName=", App->SBC_Scene->V_Object[Count]->S_MoveType[0]->Object_Name);
+				fprintf(WriteFile, "%s%i\n", "Move_Re_Trigger=", App->SBC_Scene->V_Object[Count]->S_MoveType[0]->Re_Trigger);
+				fprintf(WriteFile, "%s%f\n", "Move_Speed=", App->SBC_Scene->V_Object[Count]->S_MoveType[0]->Speed);
+				fprintf(WriteFile, "%s%i\n", "Move_Triggered=", App->SBC_Scene->V_Object[Count]->S_MoveType[0]->Triggered);
+				fprintf(WriteFile, "%s%i\n", "Move_WhatDirection=", App->SBC_Scene->V_Object[Count]->S_MoveType[0]->WhatDirection);
 
 				// Move Sound
-				fprintf(WriteFile, "%s%s\n", "Move_Sound=", App->SBC_Scene->B_Object[Count]->Sound_File);
-				fprintf(WriteFile, "%s%i\n", "Move_Play_Sound=", App->SBC_Scene->B_Object[Count]->Play_Sound);
-				fprintf(WriteFile, "%s%f\n", "Move_Volume=", App->SBC_Scene->B_Object[Count]->SndVolume);
+				fprintf(WriteFile, "%s%s\n", "Move_Sound=", App->SBC_Scene->V_Object[Count]->Sound_File);
+				fprintf(WriteFile, "%s%i\n", "Move_Play_Sound=", App->SBC_Scene->V_Object[Count]->Play_Sound);
+				fprintf(WriteFile, "%s%f\n", "Move_Volume=", App->SBC_Scene->V_Object[Count]->SndVolume);
 
 				// Move Counter
-				fprintf(WriteFile, "%s%i\n", "Move_Counter_ID=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Counter_ID);
-				fprintf(WriteFile, "%s%i\n", "Move_Trigger_Value=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Trigger_Value);
-				fprintf(WriteFile, "%s%i\n", "Move_Counter_Disabled=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Counter_Disabled);
+				fprintf(WriteFile, "%s%i\n", "Move_Counter_ID=", App->SBC_Scene->V_Object[Count]->S_MoveType[0]->Counter_ID);
+				fprintf(WriteFile, "%s%i\n", "Move_Trigger_Value=", App->SBC_Scene->V_Object[Count]->S_MoveType[0]->Trigger_Value);
+				fprintf(WriteFile, "%s%i\n", "Move_Counter_Disabled=", App->SBC_Scene->V_Object[Count]->S_MoveType[0]->Counter_Disabled);
 			}
 
 			//---------------------------------------------------------------------------------- Teleport Entity
-			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Teleport)
+			if (App->SBC_Scene->V_Object[Count]->Usage == Enums::Usage_Teleport)
 			{
 				fprintf(WriteFile, "%s\n", "-- Teleport");
-				fprintf(WriteFile, "%s%s\n", "Tele_Goto=", App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Name);
+				fprintf(WriteFile, "%s%s\n", "Tele_Goto=", App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Name);
 
-				fprintf(WriteFile, "%s%i\n", "Tele_ID=", App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Location_ID);
+				fprintf(WriteFile, "%s%i\n", "Tele_ID=", App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Location_ID);
 
-				fprintf(WriteFile, "%s%s\n", "Tele_Sound=", App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Sound_File);
-				fprintf(WriteFile, "%s%f\n", "Tele_Volume=", App->SBC_Scene->B_Object[Count]->S_Teleport[0]->SndVolume);
-				fprintf(WriteFile, "%s%i\n", "Tele_Play=", App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Play);
+				fprintf(WriteFile, "%s%s\n", "Tele_Sound=", App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Sound_File);
+				fprintf(WriteFile, "%s%f\n", "Tele_Volume=", App->SBC_Scene->V_Object[Count]->S_Teleport[0]->SndVolume);
+				fprintf(WriteFile, "%s%i\n", "Tele_Play=", App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Play);
 
-				x = App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Player_Position.x;
-				y = App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Player_Position.y;
-				z = App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Player_Position.z;
+				x = App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Player_Position.x;
+				y = App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Player_Position.y;
+				z = App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Player_Position.z;
 				fprintf(WriteFile, "%s%f,%f,%f\n", "Tele_Mesh_Position=", x, y, z);
 
-				x = App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Position.getX();
-				y = App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Position.getY();
-				z = App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Position.getZ();
+				x = App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Physics_Position.getX();
+				y = App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Physics_Position.getY();
+				z = App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Physics_Position.getZ();
 				fprintf(WriteFile, "%s%f,%f,%f\n", "Tele_Physics_Position=", x, y, z);
 
-				w = App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Rotation.getW();
-				x = App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Rotation.getX();
-				y = App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Rotation.getY();
-				z = App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Rotation.getZ();
+				w = App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Physics_Rotation.getW();
+				x = App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Physics_Rotation.getX();
+				y = App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Physics_Rotation.getY();
+				z = App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Physics_Rotation.getZ();
 				fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Tele_Physics_Rotation=", w, x, y, z);
 
 				// Teleport Counter
-				fprintf(WriteFile, "%s%i\n", "Tele_Counter_ID=", App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Counter_ID);
-				fprintf(WriteFile, "%s%i\n", "Tele_Trigger_Value=", App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Trigger_Value);
-				fprintf(WriteFile, "%s%i\n", "Tele_Counter_Disabled=", App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Counter_Disabled);
+				fprintf(WriteFile, "%s%i\n", "Tele_Counter_ID=", App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Counter_ID);
+				fprintf(WriteFile, "%s%i\n", "Tele_Trigger_Value=", App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Trigger_Value);
+				fprintf(WriteFile, "%s%i\n", "Tele_Counter_Disabled=", App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Counter_Disabled);
 
 				//--------------- Environment
 				fprintf(WriteFile, "%s\n", "------------------------------------------------------------------------------ Teleporter Environ");
-				fprintf(WriteFile, "%s%i\n", "Environ_Enabled=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Environ_Enabled);
-				fprintf(WriteFile, "%s%s\n", "Environment_Name=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Environment_Name);
-				fprintf(WriteFile, "%s%i\n", "Environment_ID=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Environment_ID);
+				fprintf(WriteFile, "%s%i\n", "Environ_Enabled=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Environ_Enabled);
+				fprintf(WriteFile, "%s%s\n", "Environment_Name=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Environment_Name);
+				fprintf(WriteFile, "%s%i\n", "Environment_ID=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Environment_ID);
 
 				//--------------- Sound
-				fprintf(WriteFile, "%s%s\n", "Sound_File=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Sound_File);
-				fprintf(WriteFile, "%s%f\n", "Snd_Volume=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->SndVolume);
+				fprintf(WriteFile, "%s%s\n", "Sound_File=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Sound_File);
+				fprintf(WriteFile, "%s%f\n", "Snd_Volume=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->SndVolume);
 
-				fprintf(WriteFile, "%s%i\n", "Sound_Play=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Play);
-				fprintf(WriteFile, "%s%i\n", "Sound_Loop=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Loop);
+				fprintf(WriteFile, "%s%i\n", "Sound_Play=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Play);
+				fprintf(WriteFile, "%s%i\n", "Sound_Loop=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Loop);
 
 				//--------------- Light
 
-				x = App->SBC_Scene->B_Object[Count]->S_Environ[0]->AmbientColour.x;
-				y = App->SBC_Scene->B_Object[Count]->S_Environ[0]->AmbientColour.y;
-				z = App->SBC_Scene->B_Object[Count]->S_Environ[0]->AmbientColour.z;
+				x = App->SBC_Scene->V_Object[Count]->S_Environ[0]->AmbientColour.x;
+				y = App->SBC_Scene->V_Object[Count]->S_Environ[0]->AmbientColour.y;
+				z = App->SBC_Scene->V_Object[Count]->S_Environ[0]->AmbientColour.z;
 				fprintf(WriteFile, "%s%f,%f,%f\n", "Ambient_Colour=", x, y, z);
 
-				x = App->SBC_Scene->B_Object[Count]->S_Environ[0]->Light_Position.x;
-				y = App->SBC_Scene->B_Object[Count]->S_Environ[0]->Light_Position.y;
-				z = App->SBC_Scene->B_Object[Count]->S_Environ[0]->Light_Position.z;
+				x = App->SBC_Scene->V_Object[Count]->S_Environ[0]->Light_Position.x;
+				y = App->SBC_Scene->V_Object[Count]->S_Environ[0]->Light_Position.y;
+				z = App->SBC_Scene->V_Object[Count]->S_Environ[0]->Light_Position.z;
 				fprintf(WriteFile, "%s%f,%f,%f\n", "Light_Position=", x, y, z);
 
 				//--------------- Sky
-				fprintf(WriteFile, "%s%i\n", "Sky_Enable=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Enabled);
-				fprintf(WriteFile, "%s%i\n", "Sky_Type=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->type);
-				fprintf(WriteFile, "%s%s\n", "Sky_Material=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Material);
-				fprintf(WriteFile, "%s%f\n", "Sky_Curvature=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Curvature);
-				fprintf(WriteFile, "%s%f\n", "Sky_Tiling=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Tiling);
-				fprintf(WriteFile, "%s%f\n", "Sky_Distance=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Distance);
+				fprintf(WriteFile, "%s%i\n", "Sky_Enable=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Enabled);
+				fprintf(WriteFile, "%s%i\n", "Sky_Type=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->type);
+				fprintf(WriteFile, "%s%s\n", "Sky_Material=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Material);
+				fprintf(WriteFile, "%s%f\n", "Sky_Curvature=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Curvature);
+				fprintf(WriteFile, "%s%f\n", "Sky_Tiling=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Tiling);
+				fprintf(WriteFile, "%s%f\n", "Sky_Distance=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Distance);
 
 				//--------------- Fog
-				fprintf(WriteFile, "%s%i\n", "Fog_On=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_On);
-				fprintf(WriteFile, "%s%i\n", "Fog_Mode=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_Mode);
+				fprintf(WriteFile, "%s%i\n", "Fog_On=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_On);
+				fprintf(WriteFile, "%s%i\n", "Fog_Mode=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_Mode);
 
-				x = App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_Colour.x;
-				y = App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_Colour.y;
-				z = App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_Colour.z;
+				x = App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_Colour.x;
+				y = App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_Colour.y;
+				z = App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_Colour.z;
 				fprintf(WriteFile, "%s%f,%f,%f\n", "Fog_Colour=", x, y, z);
 
-				fprintf(WriteFile, "%s%f\n", "Fog_Start=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_Start);
-				fprintf(WriteFile, "%s%f\n", "Fog_End=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_End);
-				fprintf(WriteFile, "%s%f\n", "Fog_Density=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_Density);
+				fprintf(WriteFile, "%s%f\n", "Fog_Start=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_Start);
+				fprintf(WriteFile, "%s%f\n", "Fog_End=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_End);
+				fprintf(WriteFile, "%s%f\n", "Fog_Density=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_Density);
 		
 			}
 
 			//---------------------------------------------------------------------------------- Environ Entity
-			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_EnvironEntity)
+			if (App->SBC_Scene->V_Object[Count]->Usage == Enums::Usage_EnvironEntity)
 			{
 				fprintf(WriteFile, "%s\n", "--------------------------------------------------------------------------------- EnvironEntity");
-				fprintf(WriteFile, "%s%s\n", "Environment_Name=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Environment_Name);
-				fprintf(WriteFile, "%s%i\n", "Environment_ID=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Environment_ID);
+				fprintf(WriteFile, "%s%s\n", "Environment_Name=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Environment_Name);
+				fprintf(WriteFile, "%s%i\n", "Environment_ID=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Environment_ID);
 
 				//--------------- Sound
-				fprintf(WriteFile, "%s%s\n", "Sound_File=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Sound_File);
-				fprintf(WriteFile, "%s%f\n", "Snd_Volume=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->SndVolume);
+				fprintf(WriteFile, "%s%s\n", "Sound_File=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Sound_File);
+				fprintf(WriteFile, "%s%f\n", "Snd_Volume=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->SndVolume);
 
-				fprintf(WriteFile, "%s%i\n", "Sound_Play=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Play);
-				fprintf(WriteFile, "%s%i\n", "Sound_Loop=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Loop);
+				fprintf(WriteFile, "%s%i\n", "Sound_Play=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Play);
+				fprintf(WriteFile, "%s%i\n", "Sound_Loop=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Loop);
 
 				//--------------- Light
 
-				x = App->SBC_Scene->B_Object[Count]->S_Environ[0]->AmbientColour.x;
-				y = App->SBC_Scene->B_Object[Count]->S_Environ[0]->AmbientColour.y;
-				z = App->SBC_Scene->B_Object[Count]->S_Environ[0]->AmbientColour.z;
+				x = App->SBC_Scene->V_Object[Count]->S_Environ[0]->AmbientColour.x;
+				y = App->SBC_Scene->V_Object[Count]->S_Environ[0]->AmbientColour.y;
+				z = App->SBC_Scene->V_Object[Count]->S_Environ[0]->AmbientColour.z;
 				fprintf(WriteFile, "%s%f,%f,%f\n", "Ambient_Colour=", x, y, z);
 
-				x = App->SBC_Scene->B_Object[Count]->S_Environ[0]->Light_Position.x;
-				y = App->SBC_Scene->B_Object[Count]->S_Environ[0]->Light_Position.y;
-				z = App->SBC_Scene->B_Object[Count]->S_Environ[0]->Light_Position.z;
+				x = App->SBC_Scene->V_Object[Count]->S_Environ[0]->Light_Position.x;
+				y = App->SBC_Scene->V_Object[Count]->S_Environ[0]->Light_Position.y;
+				z = App->SBC_Scene->V_Object[Count]->S_Environ[0]->Light_Position.z;
 				fprintf(WriteFile, "%s%f,%f,%f\n", "Light_Position=", x, y, z);
 
 				//--------------- Sky
-				fprintf(WriteFile, "%s%i\n", "Sky_Enable=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Enabled);
-				fprintf(WriteFile, "%s%i\n", "Sky_Type=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->type);
-				fprintf(WriteFile, "%s%s\n", "Sky_Material=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Material);
-				fprintf(WriteFile, "%s%f\n", "Sky_Curvature=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Curvature);
-				fprintf(WriteFile, "%s%f\n", "Sky_Tiling=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Tiling);
-				fprintf(WriteFile, "%s%f\n", "Sky_Distance=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Distance);
+				fprintf(WriteFile, "%s%i\n", "Sky_Enable=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Enabled);
+				fprintf(WriteFile, "%s%i\n", "Sky_Type=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->type);
+				fprintf(WriteFile, "%s%s\n", "Sky_Material=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Material);
+				fprintf(WriteFile, "%s%f\n", "Sky_Curvature=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Curvature);
+				fprintf(WriteFile, "%s%f\n", "Sky_Tiling=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Tiling);
+				fprintf(WriteFile, "%s%f\n", "Sky_Distance=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Distance);
 
 				//--------------- Fog
-				fprintf(WriteFile, "%s%i\n", "Fog_On=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_On);
-				fprintf(WriteFile, "%s%i\n", "Fog_Mode=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_Mode);
+				fprintf(WriteFile, "%s%i\n", "Fog_On=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_On);
+				fprintf(WriteFile, "%s%i\n", "Fog_Mode=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_Mode);
 
-				x = App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_Colour.x;
-				y = App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_Colour.y;
-				z = App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_Colour.z;
+				x = App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_Colour.x;
+				y = App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_Colour.y;
+				z = App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_Colour.z;
 				fprintf(WriteFile, "%s%f,%f,%f\n", "Fog_Colour=", x, y, z);
 
-				fprintf(WriteFile, "%s%f\n", "Fog_Start=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_Start);
-				fprintf(WriteFile, "%s%f\n", "Fog_End=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_End);
-				fprintf(WriteFile, "%s%f\n", "Fog_Density=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_Density);
+				fprintf(WriteFile, "%s%f\n", "Fog_Start=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_Start);
+				fprintf(WriteFile, "%s%f\n", "Fog_End=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_End);
+				fprintf(WriteFile, "%s%f\n", "Fog_Density=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_Density);
 
 			}
 
 			//---------------------------------------------------------------------------------- Particle
-			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Particle)
+			if (App->SBC_Scene->V_Object[Count]->Usage == Enums::Usage_Particle)
 			{
 				fprintf(WriteFile, "%s\n", "-- Particle");
-				fprintf(WriteFile, "%s%s\n", "Particle_Script=", App->SBC_Scene->B_Object[Count]->S_Particle[0]->ParticleScript);
-				fprintf(WriteFile, "%s%f\n", "Particle_SpeedFactor=", App->SBC_Scene->B_Object[Count]->S_Particle[0]->SpeedFactor);
+				fprintf(WriteFile, "%s%s\n", "Particle_Script=", App->SBC_Scene->V_Object[Count]->S_Particle[0]->ParticleScript);
+				fprintf(WriteFile, "%s%f\n", "Particle_SpeedFactor=", App->SBC_Scene->V_Object[Count]->S_Particle[0]->SpeedFactor);
 
 			}
 
@@ -1556,7 +1556,7 @@ bool SB_Project::Load_Project()
 	// ------------------------------------- Objects
 	if (Options->Has_Objects > 0)
 	{
-		Load_Project_Objects();
+		V_Load_Project_Objects();
 		App->SBC_Objects_Create->Add_Objects_From_File();
 	}
 
@@ -1630,493 +1630,10 @@ bool SB_Project::Load_Get_Resource_Path()
 }
 
 // *************************************************************************
-// *	  	Load_Project_Objects:- Terry and Hazel Flanigan 2022		   *
-// *************************************************************************
-bool SB_Project::Load_Project_Objects()
-{
-	
-	int Int_Tag = 0;
-	char Object_Ini_Path[MAX_PATH];
-	char chr_Tag1[MAX_PATH];
-	int Object_Count = 0;
-
-	float w = 0;
-	float x = 0;
-	float y = 0;
-	float z = 0;
-
-	strcpy(Object_Ini_Path, m_Project_Sub_Folder);
-	strcat(Object_Ini_Path, "\\");
-
-	strcat(Object_Ini_Path, m_Level_Name);
-	strcat(Object_Ini_Path, "\\");
-
-	strcat(Object_Ini_Path, "Objects");
-	strcat(Object_Ini_Path, "\\");
-
-	//---------------------------------------------------
-
-	strcat(Object_Ini_Path, "Objects.efd");
-
-	App->Cl_Ini->SetPathName(Object_Ini_Path);
-
-	Object_Count = App->Cl_Ini->GetInt("Counters", "Objects_Count", 0);
-
-	int Count = 0;
-
-	while (Count < Object_Count)
-	{
-		char n_buff[255];
-		char buff[255];
-		strcpy(buff, "Object_");
-		_itoa(Count, n_buff, 10);
-		strcat(buff, n_buff);
-
-		App->SBC_Scene->B_Object[Count] = new Base_Object();
-		
-		Base_Object* Object = App->SBC_Scene->B_Object[Count];
-		
-		App->Cl_Ini->GetString(buff, "Mesh_Name", Object->Mesh_Name, MAX_PATH);
-		App->Cl_Ini->GetString(buff, "Mesh_File", Object->Mesh_FileName, MAX_PATH);
-		App->Cl_Ini->GetString(buff, "Mesh_Resource_Path", Object->Mesh_Resource_Path, MAX_PATH);
-		App->Cl_Ini->GetString(buff, "Material_File", Object->Material_File, MAX_PATH);
-
-		
-
-		// Types
-		Object->This_Object_UniqueID = App->Cl_Ini->GetInt(buff, "Object_ID", 0);
-		Object->Type = App->Cl_Ini->GetInt(buff, "Object_Type", 0);
-		Object->Shape = App->Cl_Ini->GetInt(buff, "Object_Shape", 0);
-		Object->Usage = App->Cl_Ini->GetInt(buff, "Object_Usage", 0);
-
-		// Pos
-		App->Cl_Ini->GetString(buff, "Mesh_Pos", chr_Tag1, MAX_PATH);
-		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
-		App->SBC_Scene->B_Object[Count]->Mesh_Pos = Ogre::Vector3(x, y, z);
-
-		
-
-		//App->CL_Logger->Show(0, 0, V_Object->Mesh_Name, V_Object->Mesh_Pos);
-
-		// Scale
-		App->Cl_Ini->GetString(buff, "Mesh_Scale", chr_Tag1, MAX_PATH);
-		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
-		App->SBC_Scene->B_Object[Count]->Mesh_Scale = Ogre::Vector3(x, y, z);
-
-		
-
-		// Rotation
-		App->Cl_Ini->GetString(buff, "Mesh_Rot", chr_Tag1, MAX_PATH);
-		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
-		App->SBC_Scene->B_Object[Count]->Mesh_Rot = Ogre::Vector3(x, y, z);
-
-		
-
-		// Mesh_Quat
-		App->Cl_Ini->GetString(buff, "Mesh_Quat", chr_Tag1, MAX_PATH);
-		sscanf(chr_Tag1, "%f,%f,%f,%f", &w, &x, &y, &z);
-
-		App->SBC_Scene->B_Object[Count]->Mesh_Quat.w = w;
-		App->SBC_Scene->B_Object[Count]->Mesh_Quat.x = x;
-		App->SBC_Scene->B_Object[Count]->Mesh_Quat.y = y;
-		App->SBC_Scene->B_Object[Count]->Mesh_Quat.z = z;
-
-		
-
-		// Physics_Quat
-		App->Cl_Ini->GetString(buff, "Physics_Quat", chr_Tag1, MAX_PATH);
-		sscanf(chr_Tag1, "%f,%f,%f,%f", &w, &x, &y, &z);
-
-		App->SBC_Scene->B_Object[Count]->Physics_Quat.w = w;
-		App->SBC_Scene->B_Object[Count]->Physics_Quat.x = x;
-		App->SBC_Scene->B_Object[Count]->Physics_Quat.y = y;
-		App->SBC_Scene->B_Object[Count]->Physics_Quat.z = z;
-
-		App->SBC_Scene->B_Object[Count]->Dimensions_Locked = App->Cl_Ini->GetInt(buff, "Dimensions_Lock", 0);
-		
-		
-
-		//---------------------------------------------------------------------------------- Message Entity
-		if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Message)
-		{
-			App->SBC_Scene->B_Object[Count]->S_Message[0] = new Message_type;
-			App->SBC_Com_Entity->Set_Message_Defaults(Count);
-			
-			App->Cl_Ini->GetString(buff, "Message_Text", Object->S_Message[0]->Message_Text, MAX_PATH);
-
-			App->Cl_Ini->GetString(buff, "Message_Pos", chr_Tag1, MAX_PATH);
-			sscanf(chr_Tag1, "%f,%f", &x, &y);
-
-			App->SBC_Scene->B_Object[Count]->S_Message[0]->Message_PosX = x;
-			App->SBC_Scene->B_Object[Count]->S_Message[0]->Message_PosY = y;
-			
-			// Message Counter
-			App->SBC_Scene->B_Object[Count]->S_Message[0]->Counter_ID = App->Cl_Ini->GetInt(buff, "Message_Counter_ID", 0);
-			App->SBC_Scene->B_Object[Count]->S_Message[0]->Trigger_Value = App->Cl_Ini->GetInt(buff, "Message_Trigger_Value", 0);
-			App->SBC_Scene->B_Object[Count]->S_Message[0]->Counter_Disabled = App->Cl_Ini->GetInt(buff, "Message_Counter_Disabled", 1);
-
-			App->SBC_Scene->B_Object[Count]->S_Message[0]->PosXCentre_Flag = App->Cl_Ini->GetInt(buff, "Message_CentreX", 0);
-			App->SBC_Scene->B_Object[Count]->S_Message[0]->PosYCentre_Flag = App->Cl_Ini->GetInt(buff, "Message_CentreY", 0);
-
-			int Test = App->Cl_Ini->GetString(buff, "Message_Text_Colour", chr_Tag1, MAX_PATH);
-			if (Test > 0)
-			{
-				sscanf(chr_Tag1, "%f,%f,%f,%f", &x, &y, &z, &w);
-				App->SBC_Scene->B_Object[Count]->S_Message[0]->Text_Colour.x = x;
-				App->SBC_Scene->B_Object[Count]->S_Message[0]->Text_Colour.y = y;
-				App->SBC_Scene->B_Object[Count]->S_Message[0]->Text_Colour.z = z;
-				App->SBC_Scene->B_Object[Count]->S_Message[0]->Text_Colour.w = w;
-			}
-			else
-			{
-				App->SBC_Scene->B_Object[Count]->S_Message[0]->Text_Colour = Ogre::Vector4(0, 1, 0 , 255);
-			}
-
-			Test = App->Cl_Ini->GetString(buff, "Message_BackGround_Colour", chr_Tag1, MAX_PATH);
-			if (Test > 0)
-			{
-				sscanf(chr_Tag1, "%f,%f,%f,%f", &x, &y, &z, &w);
-				App->SBC_Scene->B_Object[Count]->S_Message[0]->BackGround_Colour.x = x;
-				App->SBC_Scene->B_Object[Count]->S_Message[0]->BackGround_Colour.y = y;
-				App->SBC_Scene->B_Object[Count]->S_Message[0]->BackGround_Colour.z = z;
-				App->SBC_Scene->B_Object[Count]->S_Message[0]->BackGround_Colour.w = w;
-			}
-			else
-			{
-				App->SBC_Scene->B_Object[Count]->S_Message[0]->BackGround_Colour = Ogre::Vector4(239, 239, 239, 255);
-			}
-
-			App->SBC_Scene->B_Object[Count]->S_Message[0]->Show_BackGround = App->Cl_Ini->GetInt(buff, "Message_Show_BackGround", 1);
-
-		}
-
-		//---------------------------------------------------------------------------------- Sound Entity
-		if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Sound)
-		{
-			App->Cl_Ini->GetString(buff, "Sound_File", Object->Sound_File, MAX_PATH);
-			
-			App->Cl_Ini->GetString(buff, "Sound_Volume", chr_Tag1, MAX_PATH);
-			sscanf(chr_Tag1, "%f", &x);
-			App->SBC_Scene->B_Object[Count]->SndVolume = x;
-		}
-
-		//---------------------------------------------------------------------------------- Colectable Entity
-		if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Colectable)
-		{
-			App->SBC_Scene->B_Object[Count]->S_Collectable[0] = new Collectable_type;
-			App->SBC_Com_Entity->Set_Collectables_Defaults(Count);
-
-			App->Cl_Ini->GetString(buff, "Col_Sound_File", chr_Tag1, MAX_PATH);
-			strcpy(Object->S_Collectable[0]->Sound_File, chr_Tag1);
-			
-			App->Cl_Ini->GetString(buff, "Col_Sound_Volume", chr_Tag1, MAX_PATH);
-			sscanf(chr_Tag1, "%f", &x);
-			App->SBC_Scene->B_Object[Count]->S_Collectable[0]->SndVolume = x;
-
-			App->SBC_Scene->B_Object[Count]->S_Collectable[0]->Play = App->Cl_Ini->GetInt(buff, "Col_Play", 0);
-
-			App->Cl_Ini->GetString(buff, "Col_Counter_Name", chr_Tag1, MAX_PATH);
-			strcpy(Object->S_Collectable[0]->Counter_Name, chr_Tag1);
-
-			App->SBC_Scene->B_Object[Count]->S_Collectable[0]->Counter_ID = App->Cl_Ini->GetInt(buff, "Col_Counter_ID", 0);
-			App->SBC_Scene->B_Object[Count]->S_Collectable[0]->Maths = App->Cl_Ini->GetInt(buff, "Col_Maths", 0);
-			App->SBC_Scene->B_Object[Count]->S_Collectable[0]->Value = App->Cl_Ini->GetInt(buff, "Col_Value", 0);
-			App->SBC_Scene->B_Object[Count]->S_Collectable[0]->Counter_Disabled = App->Cl_Ini->GetInt(buff, "Col_Disabled", 0);
-
-		}
-
-		//---------------------------------------------------------------------------------- Move Enitity
-		if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Move)
-		{
-
-			App->SBC_Scene->B_Object[Count]->S_MoveType[0] = new Move_Type;
-			App->SBC_Com_MoveEntity->Set_Move_Defaults(Count); // Check
-
-			//  Distance
-			App->Cl_Ini->GetString(buff, "Move_Distance", chr_Tag1, MAX_PATH);
-			sscanf(chr_Tag1, "%f",&x);
-			App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Move_Distance = x;
-
-			App->SBC_Scene->B_Object[Count]->S_MoveType[0]->IsNegative = App->Cl_Ini->GetInt(buff, "Move_IsNegative", 0);
-
-			//  Speed
-			App->Cl_Ini->GetString(buff, "Move_Speed", chr_Tag1, MAX_PATH);
-			sscanf(chr_Tag1, "%f", &x);
-			App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Speed = x;
-
-			//  Name
-			App->Cl_Ini->GetString(buff, "Move_ObjectName", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Object_Name, MAX_PATH);
-
-			App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Object_To_Move_Index = App->Cl_Ini->GetInt(buff, "Move_ObjectID", 0);
-			App->SBC_Scene->B_Object[Count]->S_MoveType[0]->WhatDirection = App->Cl_Ini->GetInt(buff, "Move_WhatDirection", 0);
-		
-			// Move Sound
-			App->Cl_Ini->GetString(buff, "Move_Sound", App->SBC_Scene->B_Object[Count]->Sound_File, MAX_PATH);
-			App->SBC_Scene->B_Object[Count]->Play_Sound = App->Cl_Ini->GetInt(buff, "Move_Play_Sound", 0);
-
-			App->Cl_Ini->GetString(buff, "Move_Volume", chr_Tag1, MAX_PATH);
-			sscanf(chr_Tag1, "%f", &x);
-			App->SBC_Scene->B_Object[Count]->SndVolume = x;
-
-			// Move Counter
-			App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Counter_ID = App->Cl_Ini->GetInt(buff, "Move_Counter_ID", 0);
-			App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Trigger_Value = App->Cl_Ini->GetInt(buff, "Move_Trigger_Value", 0);
-			App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Counter_Disabled = App->Cl_Ini->GetInt(buff, "Move_Counter_Disabled", 1);
-
-		}
-
-		//---------------------------------------------------------------------------------- Teleport Enitity
-		if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Teleport)
-		{
-			
-			App->SBC_Scene->B_Object[Count]->S_Teleport[0] = new Teleport_type;
-			App->SBC_Com_Entity->Set_Teleports_Defaults(Count);
-
-			App->SBC_Scene->B_Object[Count]->S_Environ[0] = new Environ_type;
-			App->SBC_Com_Environments->Set_Environ_Defaults(Count);
-
-			App->Cl_Ini->GetString(buff, "Tele_Goto", chr_Tag1, MAX_PATH);
-			strcpy(App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Name, chr_Tag1);
-
-			App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Location_ID = App->Cl_Ini->GetInt(buff, "Tele_ID", 0);
-
-			// Sound
-			App->Cl_Ini->GetString(buff, "Tele_Sound", App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Sound_File, MAX_PATH);
-
-			App->Cl_Ini->GetString(buff, "Tele_Volume", chr_Tag1, MAX_PATH);
-			sscanf(chr_Tag1, "%f", &x);
-			App->SBC_Scene->B_Object[Count]->S_Teleport[0]->SndVolume = x;
-
-			App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Play = App->Cl_Ini->GetInt(buff, "Tele_Play", 0);
-
-			// Mesh_Pos
-			App->Cl_Ini->GetString(buff, "Tele_Mesh_Position", chr_Tag1, MAX_PATH);
-			sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
-
-			App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Player_Position.x = x;
-			App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Player_Position.y = y;
-			App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Player_Position.z = z;
-
-			//Player_Pos
-			App->Cl_Ini->GetString(buff, "Tele_Physics_Position", chr_Tag1, MAX_PATH);
-			sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
-
-			App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Position.setX(x);
-			App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Position.setY(y);
-			App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Position.setZ(z);
-
-			//Player_Rotation
-			App->Cl_Ini->GetString(buff, "Tele_Physics_Rotation", chr_Tag1, MAX_PATH);
-			sscanf(chr_Tag1, "%f,%f,%f,%f", &w, &x, &y, &z);
-
-			App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Rotation.setW(w);
-			App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Rotation.setX(x);
-			App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Rotation.setY(y);
-			App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Rotation.setZ(z);
-
-			// Teleport Counter
-			App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Counter_ID = App->Cl_Ini->GetInt(buff, "Tele_Counter_ID", 0);
-			App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Trigger_Value = App->Cl_Ini->GetInt(buff, "Tele_Trigger_Value", 0);
-			App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Counter_Disabled = App->Cl_Ini->GetInt(buff, "Tele_Counter_Disabled", 1);
-
-
-			// Environment
-			Int_Tag = App->Cl_Ini->GetInt(buff, "Environ_Enabled", 0, 10);
-			App->SBC_Scene->B_Object[Count]->S_Environ[0]->Environ_Enabled = Int_Tag;
-
-			App->Cl_Ini->GetString(buff, "Environment_Name", chr_Tag1, MAX_PATH);
-			strcpy(App->SBC_Scene->B_Object[Count]->S_Environ[0]->Environment_Name, chr_Tag1);
-
-			Int_Tag = App->Cl_Ini->GetInt(buff, "Environment_ID", 0, 10);
-			App->SBC_Scene->B_Object[Count]->S_Environ[0]->Environment_ID = Int_Tag;
-
-			//--------------- Sound
-			App->Cl_Ini->GetString(buff, "Sound_File", chr_Tag1, MAX_PATH);
-			strcpy(App->SBC_Scene->B_Object[Count]->S_Environ[0]->Sound_File, chr_Tag1);
-
-			App->Cl_Ini->GetString(buff, "Snd_Volume", chr_Tag1, MAX_PATH);
-			sscanf(chr_Tag1, "%f", &x);
-			App->SBC_Scene->B_Object[Count]->S_Environ[0]->SndVolume = x;
-
-			Int_Tag = App->Cl_Ini->GetInt(buff, "Sound_Play", 0, 10);
-			App->SBC_Scene->B_Object[Count]->S_Environ[0]->Play = Int_Tag;
-
-			Int_Tag = App->Cl_Ini->GetInt(buff, "Sound_Loop", 0, 10);
-			App->SBC_Scene->B_Object[Count]->S_Environ[0]->Loop = Int_Tag;
-
-			//--------------- Light
-			App->Cl_Ini->GetString(buff, "Ambient_Colour", chr_Tag1, MAX_PATH);
-			sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
-			App->SBC_Scene->B_Object[Count]->S_Environ[0]->AmbientColour = Ogre::Vector3(x, y, z);
-
-			App->Cl_Ini->GetString(buff, "Light_Position", chr_Tag1, MAX_PATH);
-			sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
-			App->SBC_Scene->B_Object[Count]->S_Environ[0]->Light_Position = Ogre::Vector3(x, y, z);
-
-			//--------------- Sky
-			Int_Tag = App->Cl_Ini->GetInt(buff, "Sky_Enable", 0, 10);
-			App->SBC_Scene->B_Object[Count]->S_Environ[0]->Enabled = Int_Tag;
-
-			Int_Tag = App->Cl_Ini->GetInt(buff, "Sky_Type", 0, 10);
-			App->SBC_Scene->B_Object[Count]->S_Environ[0]->type = Int_Tag;
-
-			App->Cl_Ini->GetString(buff, "Sky_Material", chr_Tag1, MAX_PATH);
-			strcpy(App->SBC_Scene->B_Object[Count]->S_Environ[0]->Material, chr_Tag1);
-
-			App->Cl_Ini->GetString(buff, "Sky_Curvature", chr_Tag1, MAX_PATH);
-			sscanf(chr_Tag1, "%f", &x);
-			App->SBC_Scene->B_Object[Count]->S_Environ[0]->Curvature = x;
-
-			App->Cl_Ini->GetString(buff, "Sky_Tiling", chr_Tag1, MAX_PATH);
-			sscanf(chr_Tag1, "%f", &x);
-			App->SBC_Scene->B_Object[Count]->S_Environ[0]->Tiling = x;
-
-			App->Cl_Ini->GetString(buff, "Sky_Distance", chr_Tag1, MAX_PATH);
-			sscanf(chr_Tag1, "%f", &x);
-			App->SBC_Scene->B_Object[Count]->S_Environ[0]->Distance = x;
-
-			//--------------- Fog
-			Int_Tag = App->Cl_Ini->GetInt(buff, "Fog_On", 0, 10);
-			App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_On = Int_Tag;
-
-			Int_Tag = App->Cl_Ini->GetInt(buff, "Fog_Mode", 0, 10);
-			App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_Mode = Int_Tag;
-
-			App->Cl_Ini->GetString(buff, "Fog_Colour", chr_Tag1, MAX_PATH);
-			sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
-			App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_Colour = Ogre::Vector3(x, y, z);
-
-			App->Cl_Ini->GetString(buff, "Fog_Start", chr_Tag1, MAX_PATH);
-			sscanf(chr_Tag1, "%f", &x);
-			App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_Start = x;
-
-			App->Cl_Ini->GetString(buff, "Fog_End", chr_Tag1, MAX_PATH);
-			sscanf(chr_Tag1, "%f", &x);
-			App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_End = x;
-
-			App->Cl_Ini->GetString(buff, "Fog_Density", chr_Tag1, MAX_PATH);
-			sscanf(chr_Tag1, "%f", &x);
-			App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_Density = x;
-			
-		}
-
-		//---------------------------------------------------------------------------------- Environ Enitity
-		if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_EnvironEntity)
-		{
-			App->SBC_Scene->B_Object[Count]->S_Environ[0] = new Environ_type;
-			App->SBC_Com_Environments->Set_Environ_Defaults(Count);
-
-			App->Cl_Ini->GetString(buff, "Environment_Name", chr_Tag1, MAX_PATH);
-			strcpy(App->SBC_Scene->B_Object[Count]->S_Environ[0]->Environment_Name, chr_Tag1);
-
-			Int_Tag = App->Cl_Ini->GetInt(buff, "Environment_ID", 0, 10);
-			App->SBC_Scene->B_Object[Count]->S_Environ[0]->Environment_ID = Int_Tag;
-
-		//--------------- Sound
-			App->Cl_Ini->GetString(buff, "Sound_File", chr_Tag1, MAX_PATH);
-			strcpy(App->SBC_Scene->B_Object[Count]->S_Environ[0]->Sound_File, chr_Tag1);
-
-			App->Cl_Ini->GetString(buff, "Snd_Volume", chr_Tag1, MAX_PATH);
-			sscanf(chr_Tag1, "%f", &x);
-			App->SBC_Scene->B_Object[Count]->S_Environ[0]->SndVolume = x;
-
-			Int_Tag = App->Cl_Ini->GetInt(buff, "Sound_Play", 0, 10);
-			App->SBC_Scene->B_Object[Count]->S_Environ[0]->Play = Int_Tag;
-
-			Int_Tag = App->Cl_Ini->GetInt(buff, "Sound_Loop", 0, 10);
-			App->SBC_Scene->B_Object[Count]->S_Environ[0]->Loop = Int_Tag;
-
-			//--------------- Light
-			App->Cl_Ini->GetString(buff, "Ambient_Colour", chr_Tag1, MAX_PATH);
-			sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
-			App->SBC_Scene->B_Object[Count]->S_Environ[0]->AmbientColour = Ogre::Vector3(x, y, z);
-
-			App->Cl_Ini->GetString(buff, "Light_Position", chr_Tag1, MAX_PATH);
-			sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
-			App->SBC_Scene->B_Object[Count]->S_Environ[0]->Light_Position = Ogre::Vector3(x, y, z);
-
-			//--------------- Sky
-			Int_Tag = App->Cl_Ini->GetInt(buff, "Sky_Enable", 0, 10);
-			App->SBC_Scene->B_Object[Count]->S_Environ[0]->Enabled = Int_Tag;
-
-			Int_Tag = App->Cl_Ini->GetInt(buff, "Sky_Type", 0, 10);
-			App->SBC_Scene->B_Object[Count]->S_Environ[0]->type = Int_Tag;
-
-			App->Cl_Ini->GetString(buff, "Sky_Material", chr_Tag1, MAX_PATH);
-			strcpy(App->SBC_Scene->B_Object[Count]->S_Environ[0]->Material, chr_Tag1);
-
-			App->Cl_Ini->GetString(buff, "Sky_Curvature", chr_Tag1, MAX_PATH);
-			sscanf(chr_Tag1, "%f", &x);
-			App->SBC_Scene->B_Object[Count]->S_Environ[0]->Curvature = x;
-
-			App->Cl_Ini->GetString(buff, "Sky_Tiling", chr_Tag1, MAX_PATH);
-			sscanf(chr_Tag1, "%f", &x);
-			App->SBC_Scene->B_Object[Count]->S_Environ[0]->Tiling = x;
-
-			App->Cl_Ini->GetString(buff, "Sky_Distance", chr_Tag1, MAX_PATH);
-			sscanf(chr_Tag1, "%f", &x);
-			App->SBC_Scene->B_Object[Count]->S_Environ[0]->Distance = x;
-
-			//--------------- Fog
-			Int_Tag = App->Cl_Ini->GetInt(buff, "Fog_On", 0, 10);
-			App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_On = Int_Tag;
-
-			Int_Tag = App->Cl_Ini->GetInt(buff, "Fog_Mode", 0, 10);
-			App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_Mode = Int_Tag;
-
-			App->Cl_Ini->GetString(buff, "Fog_Colour", chr_Tag1, MAX_PATH);
-			sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
-			App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_Colour = Ogre::Vector3(x, y, z);
-
-			App->Cl_Ini->GetString(buff, "Fog_Start", chr_Tag1, MAX_PATH);
-			sscanf(chr_Tag1, "%f", &x);
-			App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_Start = x;
-
-			App->Cl_Ini->GetString(buff, "Fog_End", chr_Tag1, MAX_PATH);
-			sscanf(chr_Tag1, "%f", &x);
-			App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_End = x;
-
-			App->Cl_Ini->GetString(buff, "Fog_Density", chr_Tag1, MAX_PATH);
-			sscanf(chr_Tag1, "%f", &x);
-			App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_Density = x;
-
-		}
-
-		//---------------------------------------------------------------------------------- Particle Enitity
-		if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Particle)
-		{
-			App->SBC_Scene->B_Object[Count]->S_Particle[0] = new Particle_type;
-			App->SBC_Com_Entity->Set_Particle_Defaults(Count);
-
-			int Test = App->Cl_Ini->GetString(buff, "Particle_Script", chr_Tag1, MAX_PATH);
-			strcpy(App->SBC_Scene->B_Object[Count]->S_Particle[0]->ParticleScript, chr_Tag1);
-
-
-			App->Cl_Ini->GetString(buff, "Particle_SpeedFactor", chr_Tag1, MAX_PATH);
-			sscanf(chr_Tag1, "%f", &x);
-			App->SBC_Scene->B_Object[Count]->S_Particle[0]->SpeedFactor = x;
-
-		}
-
-		Count++;
-	}
-
-	App->SBC_Scene->Object_Count = Count;
-
-	if (App->V_New_Objects == 1)
-	{
-		V_Load_Project_Objects();
-	}
-
-	return 1;
-}
-
-// *************************************************************************
 // *	  	V_Load_Project_Objects:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
 bool SB_Project::V_Load_Project_Objects()
 {
-	Debug
 	int Int_Tag = 0;
 	char Object_Ini_Path[MAX_PATH];
 	char chr_Tag1[MAX_PATH];
@@ -2147,44 +1664,45 @@ bool SB_Project::V_Load_Project_Objects()
 	int Count = 0;
 	while (Count < Object_Count)
 	{
-		char n_buff[255];
-		char buff[255];
-		strcpy(buff, "Object_");
-		_itoa(Count, n_buff, 10);
-		strcat(buff, n_buff);
+		char mNumChr[MAX_PATH] = { 0 };
+		char mSection[MAX_PATH] = { 0 };
+
+		strcpy(mSection, "Object_");
+		_itoa(Count, mNumChr, 10);
+		strcat(mSection, mNumChr);
 
 		App->SBC_Scene->V_Object.push_back(new Base_Object());
 
 		Base_Object* V_Object = App->SBC_Scene->V_Object[Count];
 
-		App->Cl_Ini->GetString(buff, "Mesh_Name", V_Object->Mesh_Name, MAX_PATH);
-		App->Cl_Ini->GetString(buff, "Mesh_File", V_Object->Mesh_FileName, MAX_PATH);
-		App->Cl_Ini->GetString(buff, "Mesh_Resource_Path", V_Object->Mesh_Resource_Path, MAX_PATH);
-		App->Cl_Ini->GetString(buff, "Material_File", V_Object->Material_File, MAX_PATH);
+		App->Cl_Ini->GetString(mSection, "Mesh_Name", V_Object->Mesh_Name, MAX_PATH);
+		App->Cl_Ini->GetString(mSection, "Mesh_File", V_Object->Mesh_FileName, MAX_PATH);
+		App->Cl_Ini->GetString(mSection, "Mesh_Resource_Path", V_Object->Mesh_Resource_Path, MAX_PATH);
+		App->Cl_Ini->GetString(mSection, "Material_File", V_Object->Material_File, MAX_PATH);
 
 		// ------------- Types
-		V_Object->This_Object_UniqueID = App->Cl_Ini->GetInt(buff, "Object_ID", 0);
-		V_Object->Type = App->Cl_Ini->GetInt(buff, "Object_Type", 0);
-		V_Object->Shape = App->Cl_Ini->GetInt(buff, "Object_Shape", 0);
-		V_Object->Usage = App->Cl_Ini->GetInt(buff, "Object_Usage", 0);
+		V_Object->This_Object_UniqueID = App->Cl_Ini->GetInt(mSection, "Object_ID", 0);
+		V_Object->Type = App->Cl_Ini->GetInt(mSection, "Object_Type", 0);
+		V_Object->Shape = App->Cl_Ini->GetInt(mSection, "Object_Shape", 0);
+		V_Object->Usage = App->Cl_Ini->GetInt(mSection, "Object_Usage", 0);
 
 		// ------------- Pos
-		App->Cl_Ini->GetString(buff, "Mesh_Pos", chr_Tag1, MAX_PATH);
+		App->Cl_Ini->GetString(mSection, "Mesh_Pos", chr_Tag1, MAX_PATH);
 		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
 		V_Object->Mesh_Pos = Ogre::Vector3(x, y, z);
 
 		// ------------- Scale
-		App->Cl_Ini->GetString(buff, "Mesh_Scale", chr_Tag1, MAX_PATH);
+		App->Cl_Ini->GetString(mSection, "Mesh_Scale", chr_Tag1, MAX_PATH);
 		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
 		V_Object->Mesh_Scale = Ogre::Vector3(x, y, z);
 	
 		// ------------- Rotation
-		App->Cl_Ini->GetString(buff, "Mesh_Rot", chr_Tag1, MAX_PATH);
+		App->Cl_Ini->GetString(mSection, "Mesh_Rot", chr_Tag1, MAX_PATH);
 		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
 		V_Object->Mesh_Rot = Ogre::Vector3(x, y, z);
 
 		// ------------- Mesh_Quat
-		App->Cl_Ini->GetString(buff, "Mesh_Quat", chr_Tag1, MAX_PATH);
+		App->Cl_Ini->GetString(mSection, "Mesh_Quat", chr_Tag1, MAX_PATH);
 		sscanf(chr_Tag1, "%f,%f,%f,%f", &w, &x, &y, &z);
 
 		V_Object->Mesh_Quat.w = w;
@@ -2193,7 +1711,7 @@ bool SB_Project::V_Load_Project_Objects()
 		V_Object->Mesh_Quat.z = z;
 
 		// ------------- Physics_Quat
-		App->Cl_Ini->GetString(buff, "Physics_Quat", chr_Tag1, MAX_PATH);
+		App->Cl_Ini->GetString(mSection, "Physics_Quat", chr_Tag1, MAX_PATH);
 		sscanf(chr_Tag1, "%f,%f,%f,%f", &w, &x, &y, &z);
 
 		V_Object->Physics_Quat.w = w;
@@ -2201,53 +1719,53 @@ bool SB_Project::V_Load_Project_Objects()
 		V_Object->Physics_Quat.y = y;
 		V_Object->Physics_Quat.z = z;
 
-		V_Object->Dimensions_Locked = App->Cl_Ini->GetInt(buff, "Dimensions_Lock", 0);
+		V_Object->Dimensions_Locked = App->Cl_Ini->GetInt(mSection, "Dimensions_Lock", 0);
 
 
-		//---------------------------------------------------------------------------------- Message Entity
+		// Message Entity
 		if (V_Object->Usage == Enums::Usage_Message)
 		{
-			Read_Message(Count, buff);
+			Read_Message(Count, mSection);
 		}
 
-		//---------------------------------------------------------------------------------- Sound Entity
+		// Sound Entity
 		if (V_Object->Usage == Enums::Usage_Sound)
 		{
-			App->Cl_Ini->GetString(buff, "Sound_File", V_Object->Sound_File, MAX_PATH);
+			App->Cl_Ini->GetString(mSection, "Sound_File", V_Object->Sound_File, MAX_PATH);
 
-			App->Cl_Ini->GetString(buff, "Sound_Volume", chr_Tag1, MAX_PATH);
+			App->Cl_Ini->GetString(mSection, "Sound_Volume", chr_Tag1, MAX_PATH);
 			sscanf(chr_Tag1, "%f", &x);
 			V_Object->SndVolume = x;
 		}
 
-		//---------------------------------------------------------------------------------- Colectable Entity
+		// Colectable Entity
 		if (V_Object->Usage == Enums::Usage_Colectable)
 		{
-			Read_Collectable(Count, buff);
+			Read_Collectable(Count, mSection);
 		}
 
-		//---------------------------------------------------------------------------------- Move Enitity
+		// Move Enitity
 		if (V_Object->Usage == Enums::Usage_Move)
 		{
-			Read_MoveEntity(Count, buff);
+			Read_MoveEntity(Count, mSection);
 		}
 
-		//---------------------------------------------------------------------------------- Teleport Enitity
+		// Teleport Enitity
 		if (V_Object->Usage == Enums::Usage_Teleport)
 		{
-			Read_Teleport(Count,buff);
+			Read_Teleport(Count, mSection);
 		}
 
-		//---------------------------------------------------------------------------------- Environ Enitity
+		// Environ Enitity
 		if (V_Object->Usage == Enums::Usage_EnvironEntity)
 		{
-			Read_EnvironEntity(Count,buff);
+			Read_EnvironEntity(Count, mSection);
 		}
 
-		//---------------------------------------------------------------------------------- Particle Enitity
+		// Particle Enitity
 		if (V_Object->Usage == Enums::Usage_Particle)
 		{
-			Read_Particle(Count,buff);
+			Read_Particle(Count, mSection);
 		}
 
 		Count++;
@@ -2768,6 +2286,8 @@ bool SB_Project::Read_Message(int Index, char* Section)
 	V_Object->S_Message[0] = new Message_type;
 	App->SBC_Com_Entity->V_Set_Message_Defaults(Index);
 
+	// --------------------------------
+
 	App->Cl_Ini->GetString(Section, "Message_Text", V_Object->S_Message[0]->Message_Text, MAX_PATH);
 
 	App->Cl_Ini->GetString(Section, "Message_Pos", chr_Tag1, MAX_PATH);
@@ -2788,10 +2308,8 @@ bool SB_Project::Read_Message(int Index, char* Section)
 	if (Test > 0)
 	{
 		sscanf(chr_Tag1, "%f,%f,%f,%f", &V4.x, &V4.y, &V4.z, &V4.w);
-		V_Object->S_Message[0]->Text_Colour.x = V4.x;
-		V_Object->S_Message[0]->Text_Colour.y = V4.y;
-		V_Object->S_Message[0]->Text_Colour.z = V4.z;
-		V_Object->S_Message[0]->Text_Colour.w = V4.w;
+
+		V_Object->S_Message[0]->Text_Colour = Ogre::Vector4( V4.x ,V4.y ,V4.z ,V4.w );
 	}
 	else
 	{
@@ -2802,10 +2320,9 @@ bool SB_Project::Read_Message(int Index, char* Section)
 	if (Test > 0)
 	{
 		sscanf(chr_Tag1, "%f,%f,%f,%f", &V4.x, &V4.y, &V4.z, &V4.w);
-		V_Object->S_Message[0]->BackGround_Colour.x = V4.x;
-		V_Object->S_Message[0]->BackGround_Colour.y = V4.y;
-		V_Object->S_Message[0]->BackGround_Colour.z = V4.z;
-		V_Object->S_Message[0]->BackGround_Colour.w = V4.w;
+
+		V_Object->S_Message[0]->BackGround_Colour = Ogre::Vector4(V4.x, V4.y, V4.z, V4.w);
+
 	}
 	else
 	{
@@ -2979,7 +2496,7 @@ bool SB_Project::Read_Teleport(int Index, char* Section)
 	App->SBC_Com_Entity->V_Set_Teleports_Defaults(Index);
 
 	V_Object->S_Environ[0] = new Environ_type;
-	App->SBC_Com_Environments->Set_Environ_Defaults(Index);
+	App->SBC_Com_Environments->V_Set_Environ_Defaults(Index);
 
 	
 	App->Cl_Ini->GetString(Section, "Tele_Goto", chr_Tag1, MAX_PATH);
@@ -2999,10 +2516,7 @@ bool SB_Project::Read_Teleport(int Index, char* Section)
 	// Mesh_Pos
 	App->Cl_Ini->GetString(Section, "Tele_Mesh_Position", chr_Tag1, MAX_PATH);
 	sscanf(chr_Tag1, "%f,%f,%f", &V4.x, &V4.y, &V4.z);
-
-	V_Object->S_Teleport[0]->Player_Position.x = V4.x;
-	V_Object->S_Teleport[0]->Player_Position.y = V4.y;
-	V_Object->S_Teleport[0]->Player_Position.z = V4.z;
+	V_Object->S_Teleport[0]->Player_Position = Ogre::Vector3(V4.x, V4.y, V4.z);
 
 	//Player_Pos
 	App->Cl_Ini->GetString(Section, "Tele_Physics_Position", chr_Tag1, MAX_PATH);
@@ -3104,7 +2618,6 @@ bool SB_Project::Read_Teleport(int Index, char* Section)
 	sscanf(chr_Tag1, "%f", &V4.x);
 	V_Object->S_Environ[0]->Fog_Density = V4.x;
 
-	App->CL_Logger->Show_Data(0, V_Object->S_Environ[0]->Fog_Density, V_Object->S_Teleport[0]->Name);
 	return 1;
 }
 

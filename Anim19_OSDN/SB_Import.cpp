@@ -101,7 +101,7 @@ void SB_Import::Reload_FromResentFiles(char* ResentPathAndFile)
 
 	strcpy(mPathAndFile, ResentPathAndFile); // Full Path and File
 
-	App->SBC_FileIO->CheckPath(mPathAndFile, mPathAndFile);
+	App->SBC_FileIO->Get_FileName_FromPath(mPathAndFile, mPathAndFile);
 	strcpy(mJustFileName, App->SBC_FileIO->JustFileName); // Just File Name
 
 	strcpy(App->SBC_FileIO->Project_File_Name, mJustFileName);

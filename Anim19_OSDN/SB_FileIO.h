@@ -36,7 +36,7 @@ public:
 	// Returns 1 if File Exits 0 if no file
 	bool Check_File_Exist(char* Full_Path); 
 
-	void CheckPath(char *pString, char *FileName);
+	void Get_FileName_FromPath(char* pString, char* FileName);
 	bool GetColor();
 	bool Directory_Vaild(LPCTSTR szPath);
 

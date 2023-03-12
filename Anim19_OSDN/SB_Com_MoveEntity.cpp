@@ -43,31 +43,31 @@ bool SB_Com_MoveEntity::Add_New_Move_Entity()
 
 	int Index = App->SBC_Scene->Object_Count;
 
-	App->SBC_Scene->B_Object[Index] = new Base_Object();
+	App->SBC_Scene->V_Object[Index] = new Base_Object();
 
-	App->SBC_Scene->B_Object[Index]->S_MoveType[0] = new Move_Type;
-	Set_Move_Defaults(Index); // Check
+	App->SBC_Scene->V_Object[Index]->S_MoveType[0] = new Move_Type;
+	V_Set_Move_Defaults(Index); // Check
 
-	App->SBC_Scene->B_Object[Index]->Type = Enums::Bullet_Type_Static;
-	App->SBC_Scene->B_Object[Index]->Shape = Enums::Shape_Box;
-	App->SBC_Scene->B_Object[Index]->This_Object_UniqueID = App->SBC_Scene->UniqueID_Object_Counter; // Unique ID
+	App->SBC_Scene->V_Object[Index]->Type = Enums::Bullet_Type_Static;
+	App->SBC_Scene->V_Object[Index]->Shape = Enums::Shape_Box;
+	App->SBC_Scene->V_Object[Index]->This_Object_UniqueID = App->SBC_Scene->UniqueID_Object_Counter; // Unique ID
 
-	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_FileName, "DoorEntity_GD.mesh");
+	strcpy(App->SBC_Scene->V_Object[Index]->Mesh_FileName, "DoorEntity_GD.mesh");
 
 	strcpy_s(B_Name, "MoveEnt_");
 	_itoa(Index, ConNum, 10);
 	strcat(B_Name, ConNum);
-	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_Name, B_Name);
+	strcpy(App->SBC_Scene->V_Object[Index]->Mesh_Name, B_Name);
 
 	Ogre::Vector3 Pos = App->SBC_Object->GetPlacement(-50);
-	App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
+	App->SBC_Scene->V_Object[Index]->Mesh_Pos = Pos;
 
 	Create_Move_Entity(Index);
 
-	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Move_Folder, App->SBC_Scene->B_Object[Index]->Mesh_Name, Index, true);
-	App->SBC_Scene->B_Object[Index]->FileViewItem = Temp;
+	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Move_Folder, App->SBC_Scene->V_Object[Index]->Mesh_Name, Index, true);
+	App->SBC_Scene->V_Object[Index]->FileViewItem = Temp;
 
-	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[Index]->FileViewItem);
+	App->SBC_FileView->SelectItem(App->SBC_Scene->V_Object[Index]->FileViewItem);
 
 	App->SBC_Scene->UniqueID_Object_Counter++;
 	App->SBC_Scene->Object_Count++;
@@ -86,7 +86,7 @@ bool SB_Com_MoveEntity::Create_Move_Entity(int Index)
 	char ConNum[256];
 	char Ogre_Name[256];
 
-	Base_Object* Object = App->SBC_Scene->B_Object[Index];
+	Base_Object* Object = App->SBC_Scene->V_Object[Index];
 
 	// ----------------- Mesh
 
@@ -161,34 +161,11 @@ bool SB_Com_MoveEntity::Create_Move_Entity(int Index)
 
 	App->SBC_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
-	App->SBC_Scene->B_Object[Index]->Physics_Valid = 1;
+	App->SBC_Scene->V_Object[Index]->Physics_Valid = 1;
 
 	App->SBC_Physics->Set_Physics(Index);
 
 	return 1;
-}
-
-// *************************************************************************
-// *		Set_Move_Defaults:- Terry and Hazel Flanigan 2022		  	   *
-// *************************************************************************
-void SB_Com_MoveEntity::Set_Move_Defaults(int Index)
-{
-	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->IsNegative = 1;
-	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Move_Distance = -50;
-	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Newpos = 0;
-	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Speed = 10.0;
-	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->WhatDirection = Enums::Axis_x;
-	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_To_Move_Index = 0;
-	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Triggered = 0;
-	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Re_Trigger = 0;
-	strcpy(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_Name, "None");
-
-	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Trigger_Value = 0;
-	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Counter_ID = 0;
-	strcpy(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Counter_Name, "None");
-	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Counter_Disabled = 1;
-	
-	return;
 }
 
 // *************************************************************************
@@ -227,18 +204,18 @@ void SB_Com_MoveEntity::Reset_Move_Entity(int Index)
 	Ogre::Vector3 M_Pos;
 	Ogre::Vector3 P_Pos;
 
-	int ObjectToMove = App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_To_Move_Index;
+	int ObjectToMove = App->SBC_Scene->V_Object[Index]->S_MoveType[0]->Object_To_Move_Index;
 
-	M_Pos = App->SBC_Scene->B_Object[ObjectToMove]->Mesh_Pos;
-	P_Pos = App->SBC_Scene->B_Object[ObjectToMove]->Physics_Pos;
+	M_Pos = App->SBC_Scene->V_Object[ObjectToMove]->Mesh_Pos;
+	P_Pos = App->SBC_Scene->V_Object[ObjectToMove]->Physics_Pos;
 
-	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->MeshPos = Ogre::Vector3(M_Pos);
-	App->SBC_Scene->B_Object[Index]->S_MoveType[0]->PhysicsPos = Ogre::Vector3(P_Pos);
+	App->SBC_Scene->V_Object[Index]->S_MoveType[0]->MeshPos = Ogre::Vector3(M_Pos);
+	App->SBC_Scene->V_Object[Index]->S_MoveType[0]->PhysicsPos = Ogre::Vector3(P_Pos);
 
-	App->SBC_Scene->B_Object[ObjectToMove]->Object_Node->setPosition(M_Pos);
-	App->SBC_Scene->B_Object[ObjectToMove]->Phys_Body->getWorldTransform().setOrigin(btVector3(P_Pos.x, P_Pos.y, P_Pos.z));
+	App->SBC_Scene->V_Object[ObjectToMove]->Object_Node->setPosition(M_Pos);
+	App->SBC_Scene->V_Object[ObjectToMove]->Phys_Body->getWorldTransform().setOrigin(btVector3(P_Pos.x, P_Pos.y, P_Pos.z));
 
-	App->SBC_Scene->B_Object[Index]->Triggered = 0;
+	App->SBC_Scene->V_Object[Index]->Triggered = 0;
 }
 
 // *************************************************************************

@@ -108,10 +108,9 @@ protected:
 	bool Load_Project_Aera();
 	bool Load_Project_Player();
 	bool Load_Project_Camera();
-	bool Load_Project_Objects();
 	bool Load_Project_Counters();
 	
-	bool SB_Project::V_Load_Project_Objects();
+	bool V_Load_Project_Objects();
 
 	void Set_Paths();
 

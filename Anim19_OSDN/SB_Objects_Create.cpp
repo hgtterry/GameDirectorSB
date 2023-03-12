@@ -48,73 +48,73 @@ bool SB_Objects_Create::Add_Objects_From_File() // From File
 
 	while (Count < Object_Count)
 	{
-		if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Sound)
+		if (App->SBC_Scene->V_Object[Count]->Usage == Enums::Usage_Sound)
 		{
 			App->SBC_Com_Entity->Create_Sound_Entity(Count);
 
-			HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Sounds_Folder, App->SBC_Scene->B_Object[Count]->Mesh_Name, Count, false);
-			App->SBC_Scene->B_Object[Count]->FileViewItem = Temp;
+			HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Sounds_Folder, App->SBC_Scene->V_Object[Count]->Mesh_Name, Count, false);
+			App->SBC_Scene->V_Object[Count]->FileViewItem = Temp;
 
 			App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Sounds_Folder);
 		}
-		else if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Message)
+		else if (App->SBC_Scene->V_Object[Count]->Usage == Enums::Usage_Message)
 		{
 			App->SBC_Com_Entity->Create_Message_Entity(Count);
-			App->SBC_Scene->B_Object[Count]->Set_ImGui_Panel_Name();
+			App->SBC_Scene->V_Object[Count]->Set_ImGui_Panel_Name();
 
-			HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Message_Trigger_Folder, App->SBC_Scene->B_Object[Count]->Mesh_Name, Count, false);
-			App->SBC_Scene->B_Object[Count]->FileViewItem = Temp;
+			HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Message_Trigger_Folder, App->SBC_Scene->V_Object[Count]->Mesh_Name, Count, false);
+			App->SBC_Scene->V_Object[Count]->FileViewItem = Temp;
 
 			App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Message_Trigger_Folder);
 		}
-		else if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Move)
+		else if (App->SBC_Scene->V_Object[Count]->Usage == Enums::Usage_Move)
 		{
 			App->SBC_Com_MoveEntity->Create_Move_Entity(Count);
 
-			HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Move_Folder, App->SBC_Scene->B_Object[Count]->Mesh_Name, Count, false);
-			App->SBC_Scene->B_Object[Count]->FileViewItem = Temp;
+			HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Move_Folder, App->SBC_Scene->V_Object[Count]->Mesh_Name, Count, false);
+			App->SBC_Scene->V_Object[Count]->FileViewItem = Temp;
 
 			App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Move_Folder);
 
 		}
-		else if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Teleport)
+		else if (App->SBC_Scene->V_Object[Count]->Usage == Enums::Usage_Teleport)
 		{
 			App->SBC_Com_Entity->Create_Teleport_Entity(Count);
 
-			HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Teleporters_Folder, App->SBC_Scene->B_Object[Count]->Mesh_Name, Count, false);
-			App->SBC_Scene->B_Object[Count]->FileViewItem = Temp;
+			HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Teleporters_Folder, App->SBC_Scene->V_Object[Count]->Mesh_Name, Count, false);
+			App->SBC_Scene->V_Object[Count]->FileViewItem = Temp;
 
 			App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Teleporters_Folder);
 
 		}
-		else if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Colectable)
+		else if (App->SBC_Scene->V_Object[Count]->Usage == Enums::Usage_Colectable)
 		{
 			
 			App->SBC_Com_Entity->Create_Collectable_Entity(Count);
 
-			HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Collectables_Folder, App->SBC_Scene->B_Object[Count]->Mesh_Name, Count, false);
-			App->SBC_Scene->B_Object[Count]->FileViewItem = Temp;
+			HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Collectables_Folder, App->SBC_Scene->V_Object[Count]->Mesh_Name, Count, false);
+			App->SBC_Scene->V_Object[Count]->FileViewItem = Temp;
 
 			App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Collectables_Folder);
 			App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_EntitiesFolder);
 
 		}
-		else if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_EnvironEntity)
+		else if (App->SBC_Scene->V_Object[Count]->Usage == Enums::Usage_EnvironEntity)
 		{
 			App->SBC_Com_Environments->Create_Environ_Entity(Count);
 
-			HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Evirons_Folder, App->SBC_Scene->B_Object[Count]->Mesh_Name, Count, false);
-			App->SBC_Scene->B_Object[Count]->FileViewItem = Temp;
+			HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Evirons_Folder, App->SBC_Scene->V_Object[Count]->Mesh_Name, Count, false);
+			App->SBC_Scene->V_Object[Count]->FileViewItem = Temp;
 
 			App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Evirons_Folder);
 
 		} // -------------------------------------------------------------------------- Particles
-		else if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Particle)
+		else if (App->SBC_Scene->V_Object[Count]->Usage == Enums::Usage_Particle)
 		{
 			App->SBC_Com_Entity->CreateParticle(Count);
 
-			HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Particles_Folder, App->SBC_Scene->B_Object[Count]->Mesh_Name, Count, false);
-			App->SBC_Scene->B_Object[Count]->FileViewItem = Temp;
+			HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Particles_Folder, App->SBC_Scene->V_Object[Count]->Mesh_Name, Count, false);
+			App->SBC_Scene->V_Object[Count]->FileViewItem = Temp;
 
 			App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Particles_Folder);
 		
@@ -122,9 +122,9 @@ bool SB_Objects_Create::Add_Objects_From_File() // From File
 		else
 		{
 			App->SBC_Objects_Create->Add_New_Object(Count,0);
-			App->SBC_Scene->B_Object[Count]->Altered = 0;
-			App->SBC_Scene->B_Object[Count]->Folder = Enums::Folder_Objects;
-			App->SBC_Scene->B_Object[Count]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Objects_Folder, App->SBC_Scene->B_Object[Count]->Mesh_Name, Count, false);
+			App->SBC_Scene->V_Object[Count]->Altered = 0;
+			App->SBC_Scene->V_Object[Count]->Folder = Enums::Folder_Objects;
+			App->SBC_Scene->V_Object[Count]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Objects_Folder, App->SBC_Scene->V_Object[Count]->Mesh_Name, Count, false);
 		}
 
 		Count++;
@@ -134,7 +134,7 @@ bool SB_Objects_Create::Add_Objects_From_File() // From File
 	{
 		App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Objects_Folder);
 		ShowWindow(App->SBC_Properties->Properties_Dlg_hWnd, 1);
-		App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[0]->FileViewItem);
+		App->SBC_FileView->SelectItem(App->SBC_Scene->V_Object[0]->FileViewItem);
 	}
 
 	return 1;
@@ -155,9 +155,9 @@ void SB_Objects_Create::Add_Objects_From_MeshViewer()
 
 	int Index = App->SBC_Scene->Object_Count;
 
-	App->SBC_Scene->B_Object[Index] = new Base_Object();
+	App->SBC_Scene->V_Object[Index] = new Base_Object();
 	
-	Base_Object* Object = App->SBC_Scene->B_Object[Index];
+	Base_Object* Object = App->SBC_Scene->V_Object[Index];
 	Object->This_Object_UniqueID = App->SBC_Scene->UniqueID_Object_Counter; // Unique ID
 
 
@@ -172,7 +172,7 @@ void SB_Objects_Create::Add_Objects_From_MeshViewer()
 
 	App->SBC_Objects_Create->Dispatch_MeshViewer();
 
-	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[Index]->FileViewItem);
+	App->SBC_FileView->SelectItem(App->SBC_Scene->V_Object[Index]->FileViewItem);
 
 
 	App->SBC_Scene->UniqueID_Object_Counter++; // Unique ID
@@ -197,10 +197,10 @@ bool SB_Objects_Create::Dispatch_MeshViewer()
 	else
 	{
 		Add_New_Object(Index, 1);
-		App->SBC_Scene->B_Object[Index]->Altered = 1;
-		App->SBC_Scene->B_Object[Index]->Folder = Enums::Folder_Objects;
-		App->SBC_Scene->B_Object[Index]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Objects_Folder, 
-			App->SBC_Scene->B_Object[Index]->Mesh_Name, Index, true);
+		App->SBC_Scene->V_Object[Index]->Altered = 1;
+		App->SBC_Scene->V_Object[Index]->Folder = Enums::Folder_Objects;
+		App->SBC_Scene->V_Object[Index]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Objects_Folder, 
+			App->SBC_Scene->V_Object[Index]->Mesh_Name, Index, true);
 
 	}
 	return 1;
@@ -215,7 +215,7 @@ bool SB_Objects_Create::Add_New_Object(int Index,bool From_MeshViewer)
 	char ConNum[256];
 	char Ogre_Name[256];
 	
-	Base_Object* Object = App->SBC_Scene->B_Object[Index];
+	Base_Object* Object = App->SBC_Scene->V_Object[Index];
 
 
 	strcpy_s(Ogre_Name, "GDEnt_");
@@ -335,7 +335,7 @@ bool SB_Objects_Create::Add_New_Object(int Index,bool From_MeshViewer)
 void SB_Objects_Create::Add_Physics_Box(bool Dynamic,int Index)
 {
 
-	Base_Object* Object = App->SBC_Scene->B_Object[Index];
+	Base_Object* Object = App->SBC_Scene->V_Object[Index];
 
 	if (Dynamic == 1)
 	{
@@ -414,7 +414,7 @@ void SB_Objects_Create::Add_Physics_Box(bool Dynamic,int Index)
 
 	App->SBC_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
-	App->SBC_Scene->B_Object[Index]->Physics_Valid = 1;
+	App->SBC_Scene->V_Object[Index]->Physics_Valid = 1;
 
 	App->SBC_Physics->Set_Physics(Index);
 }
@@ -424,7 +424,7 @@ void SB_Objects_Create::Add_Physics_Box(bool Dynamic,int Index)
 // *************************************************************************
 void SB_Objects_Create::Add_Physics_Sphere(bool Dynamic, int Index)
 {
-	Base_Object* Object = App->SBC_Scene->B_Object[Index];
+	Base_Object* Object = App->SBC_Scene->V_Object[Index];
 	
 	if (Dynamic == 1)
 	{
@@ -501,7 +501,7 @@ void SB_Objects_Create::Add_Physics_Sphere(bool Dynamic, int Index)
 
 	App->SBC_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
-	App->SBC_Scene->B_Object[Index]->Physics_Valid = 1;
+	App->SBC_Scene->V_Object[Index]->Physics_Valid = 1;
 
 	App->SBC_Physics->Set_Physics(Index);
 }
@@ -511,7 +511,7 @@ void SB_Objects_Create::Add_Physics_Sphere(bool Dynamic, int Index)
 // *************************************************************************
 void SB_Objects_Create::Add_Physics_Capsule(bool Dynamic, int Index)
 {
-	Base_Object* Object = App->SBC_Scene->B_Object[Index];
+	Base_Object* Object = App->SBC_Scene->V_Object[Index];
 
 	if (Dynamic == 1)
 	{
@@ -593,7 +593,7 @@ void SB_Objects_Create::Add_Physics_Capsule(bool Dynamic, int Index)
 
 	App->SBC_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
-	App->SBC_Scene->B_Object[Index]->Physics_Valid = 1;
+	App->SBC_Scene->V_Object[Index]->Physics_Valid = 1;
 
 	App->SBC_Physics->Set_Physics(Index);
 }
@@ -603,7 +603,7 @@ void SB_Objects_Create::Add_Physics_Capsule(bool Dynamic, int Index)
 // *************************************************************************
 void SB_Objects_Create::Add_Physics_Cylinder(bool Dynamic, int Index)
 {
-	Base_Object* Object = App->SBC_Scene->B_Object[Index];
+	Base_Object* Object = App->SBC_Scene->V_Object[Index];
 
 	if (Dynamic == 1)
 	{
@@ -683,7 +683,7 @@ void SB_Objects_Create::Add_Physics_Cylinder(bool Dynamic, int Index)
 
 	App->SBC_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
-	App->SBC_Scene->B_Object[Index]->Physics_Valid = 1;
+	App->SBC_Scene->V_Object[Index]->Physics_Valid = 1;
 
 	App->SBC_Physics->Set_Physics(Index);
 }
@@ -693,7 +693,7 @@ void SB_Objects_Create::Add_Physics_Cylinder(bool Dynamic, int Index)
 // *************************************************************************
 void SB_Objects_Create::Add_Physics_Cone(bool Dynamic,int Index)
 {
-	Base_Object* Object = App->SBC_Scene->B_Object[Index];
+	Base_Object* Object = App->SBC_Scene->V_Object[Index];
 
 	if (Dynamic == 1)
 	{
@@ -770,7 +770,7 @@ void SB_Objects_Create::Add_Physics_Cone(bool Dynamic,int Index)
 
 	App->SBC_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
-	App->SBC_Scene->B_Object[Index]->Physics_Valid = 1;
+	App->SBC_Scene->V_Object[Index]->Physics_Valid = 1;
 
 	App->SBC_Physics->Set_Physics(Index);
 }
@@ -781,7 +781,7 @@ void SB_Objects_Create::Add_Physics_Cone(bool Dynamic,int Index)
 // *************************************************************************
 btBvhTriangleMeshShape* SB_Objects_Create::create_New_Trimesh(int Index)
 {
-	Base_Object* Object = App->SBC_Scene->B_Object[Index];
+	Base_Object* Object = App->SBC_Scene->V_Object[Index];
 
 	// Get the mesh from the entity
 	Ogre::MeshPtr myMesh = Object->Object_Ent->getMesh();

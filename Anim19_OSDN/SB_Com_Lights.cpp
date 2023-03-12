@@ -43,32 +43,32 @@ void SB_Com_Lights::Add_New_Light(void)
 
 	int Index = App->SBC_Scene->Object_Count;
 
-	App->SBC_Scene->B_Object[Index] = new Base_Object();
-	App->SBC_Scene->B_Object[Index]->S_Light[0] = new Light_type;
+	App->SBC_Scene->V_Object[Index] = new Base_Object();
+	App->SBC_Scene->V_Object[Index]->S_Light[0] = new Light_type;
 
 	Set_Light_Defaults(Index);
 
-	App->SBC_Scene->B_Object[Index]->Type = Enums::Bullet_Type_None;
-	App->SBC_Scene->B_Object[Index]->Shape = Enums::NoShape;
-	App->SBC_Scene->B_Object[Index]->This_Object_UniqueID = App->SBC_Scene->UniqueID_Object_Counter; // Unique ID
+	App->SBC_Scene->V_Object[Index]->Type = Enums::Bullet_Type_None;
+	App->SBC_Scene->V_Object[Index]->Shape = Enums::NoShape;
+	App->SBC_Scene->V_Object[Index]->This_Object_UniqueID = App->SBC_Scene->UniqueID_Object_Counter; // Unique ID
 
-	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_FileName, "Cube.mesh");
+	strcpy(App->SBC_Scene->V_Object[Index]->Mesh_FileName, "Cube.mesh");
 
 	strcpy_s(B_Name, "Light_");
 	_itoa(Index, ConNum, 10);
 	strcat(B_Name, ConNum);
-	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_Name, B_Name);
+	strcpy(App->SBC_Scene->V_Object[Index]->Mesh_Name, B_Name);
 
 	Ogre::Vector3 Pos = App->SBC_Object->GetPlacement(-50);
-	App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
-	App->SBC_Scene->B_Object[Index]->Mesh_Scale = Ogre::Vector3(1, 1, 1);
+	App->SBC_Scene->V_Object[Index]->Mesh_Pos = Pos;
+	App->SBC_Scene->V_Object[Index]->Mesh_Scale = Ogre::Vector3(1, 1, 1);
 
 	Create_Light(Index);
 
-	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Lights_Folder, App->SBC_Scene->B_Object[Index]->Mesh_Name, Index, true);
-	App->SBC_Scene->B_Object[Index]->FileViewItem = Temp;
+	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Lights_Folder, App->SBC_Scene->V_Object[Index]->Mesh_Name, Index, true);
+	App->SBC_Scene->V_Object[Index]->FileViewItem = Temp;
 
-	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[Index]->FileViewItem);
+	App->SBC_FileView->SelectItem(App->SBC_Scene->V_Object[Index]->FileViewItem);
 
 	App->SBC_Scene->UniqueID_Object_Counter++;
 	App->SBC_Scene->Object_Count++;
@@ -84,7 +84,7 @@ void SB_Com_Lights::Create_Light(int Index)
 	char ConNum[256];
 	char Ogre_Name[256];
 
-	Base_Object* Object = App->SBC_Scene->B_Object[Index];
+	Base_Object* Object = App->SBC_Scene->V_Object[Index];
 
 
 	// ----------------- Mesh
@@ -112,11 +112,11 @@ void SB_Com_Lights::Create_Light(int Index)
 // *************************************************************************
 void SB_Com_Lights::Set_Light_Defaults(int Index)
 {
-	App->SBC_Scene->B_Object[Index]->Phys_Body = NULL;
-	App->SBC_Scene->B_Object[Index]->Physics_Valid = 0;
-	App->SBC_Scene->B_Object[Index]->Usage = Enums::Usage_Light;
+	App->SBC_Scene->V_Object[Index]->Phys_Body = NULL;
+	App->SBC_Scene->V_Object[Index]->Physics_Valid = 0;
+	App->SBC_Scene->V_Object[Index]->Usage = Enums::Usage_Light;
 
 
-	App->SBC_Scene->B_Object[Index]->S_Light[0]->light = NULL;
+	App->SBC_Scene->V_Object[Index]->S_Light[0]->light = NULL;
 	
 }

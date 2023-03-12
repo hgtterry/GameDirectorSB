@@ -217,20 +217,20 @@ void SB_Gui_Dialogs::Start_Dialog_MessageEditor(int Index)
 	Message_Editor_StartPos = 0;
 	Message_Index = Index;
 
-	Centre_X_Selected = App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->PosXCentre_Flag;
-	Centre_Y_Selected = App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->PosYCentre_Flag;
+	Centre_X_Selected = App->SBC_Scene->V_Object[Message_Index]->S_Message[0]->PosXCentre_Flag;
+	Centre_Y_Selected = App->SBC_Scene->V_Object[Message_Index]->S_Message[0]->PosYCentre_Flag;
 
-	Float_Colour = ImVec4(App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->Text_Colour.x / 255.0f,
-		App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->Text_Colour.y / 255.0f,
-		App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->Text_Colour.z / 255.0f,
+	Float_Colour = ImVec4(App->SBC_Scene->V_Object[Message_Index]->S_Message[0]->Text_Colour.x / 255.0f,
+		App->SBC_Scene->V_Object[Message_Index]->S_Message[0]->Text_Colour.y / 255.0f,
+		App->SBC_Scene->V_Object[Message_Index]->S_Message[0]->Text_Colour.z / 255.0f,
 		255);
 
-	BackGround_color = ImVec4(App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->BackGround_Colour.x / 255.0f,
-		App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->BackGround_Colour.y / 255.0f,
-		App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->BackGround_Colour.z / 255.0f,
+	BackGround_color = ImVec4(App->SBC_Scene->V_Object[Message_Index]->S_Message[0]->BackGround_Colour.x / 255.0f,
+		App->SBC_Scene->V_Object[Message_Index]->S_Message[0]->BackGround_Colour.y / 255.0f,
+		App->SBC_Scene->V_Object[Message_Index]->S_Message[0]->BackGround_Colour.z / 255.0f,
 		255);
 
-	App->SBC_Scene->B_Object[Index]->Show_Message_Flag = 1;
+	App->SBC_Scene->V_Object[Index]->Show_Message_Flag = 1;
 
 	Show_Dialog_MessageEditor = 1;
 }
@@ -267,32 +267,32 @@ void SB_Gui_Dialogs::Dialog_MessageEditor(void)
 		ImGui::Spacing();
 
 		// ------------------------------------------------------------- Pos X
-		ImGui::InputFloat("X", &App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->Message_PosX, Float_Step, 0, "%.3f");
+		ImGui::InputFloat("X", &App->SBC_Scene->V_Object[Message_Index]->S_Message[0]->Message_PosX, Float_Step, 0, "%.3f");
 		
 		ImGui::Checkbox("Centre X", &Centre_X_Selected);
 
 		if (Centre_X_Selected)
 		{
-			App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->PosXCentre_Flag = 1;
+			App->SBC_Scene->V_Object[Message_Index]->S_Message[0]->PosXCentre_Flag = 1;
 		}
 		else
 		{
-			App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->PosXCentre_Flag = 0;
+			App->SBC_Scene->V_Object[Message_Index]->S_Message[0]->PosXCentre_Flag = 0;
 		}
 
 		ImGui::Separator();
 		// ------------------------------------------------------------ - Pos Y
-		ImGui::InputFloat("Y", &App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->Message_PosY, Float_Step, 0, "%.3f");
+		ImGui::InputFloat("Y", &App->SBC_Scene->V_Object[Message_Index]->S_Message[0]->Message_PosY, Float_Step, 0, "%.3f");
 
 		ImGui::Checkbox("Centre Y", &Centre_Y_Selected);
 
 		if (Centre_Y_Selected)
 		{
-			App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->PosYCentre_Flag = 1;
+			App->SBC_Scene->V_Object[Message_Index]->S_Message[0]->PosYCentre_Flag = 1;
 		}
 		else
 		{
-			App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->PosYCentre_Flag = 0;
+			App->SBC_Scene->V_Object[Message_Index]->S_Message[0]->PosYCentre_Flag = 0;
 		}
 
 		
@@ -310,17 +310,17 @@ void SB_Gui_Dialogs::Dialog_MessageEditor(void)
 
 		ImGui::ColorEdit3("Text##1", (float*)&Float_Colour, misc_flags);
 
-		App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->Text_Colour.x = Float_Colour.x * 255.0f;
-		App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->Text_Colour.y = Float_Colour.y * 255.0f;
-		App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->Text_Colour.z = Float_Colour.z * 255.0f;
+		App->SBC_Scene->V_Object[Message_Index]->S_Message[0]->Text_Colour.x = Float_Colour.x * 255.0f;
+		App->SBC_Scene->V_Object[Message_Index]->S_Message[0]->Text_Colour.y = Float_Colour.y * 255.0f;
+		App->SBC_Scene->V_Object[Message_Index]->S_Message[0]->Text_Colour.z = Float_Colour.z * 255.0f;
 
 		ImGui::ColorEdit3("BG##1", (float*)&BackGround_color, misc_flags);
 
-		App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->BackGround_Colour.x = BackGround_color.x * 255.0f;
-		App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->BackGround_Colour.y = BackGround_color.y * 255.0f;
-		App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->BackGround_Colour.z = BackGround_color.z * 255.0f;
+		App->SBC_Scene->V_Object[Message_Index]->S_Message[0]->BackGround_Colour.x = BackGround_color.x * 255.0f;
+		App->SBC_Scene->V_Object[Message_Index]->S_Message[0]->BackGround_Colour.y = BackGround_color.y * 255.0f;
+		App->SBC_Scene->V_Object[Message_Index]->S_Message[0]->BackGround_Colour.z = BackGround_color.z * 255.0f;
 
-		ImGui::Checkbox("Show Back Ground", &App->SBC_Scene->B_Object[Message_Index]->S_Message[0]->Show_BackGround);
+		ImGui::Checkbox("Show Back Ground", &App->SBC_Scene->V_Object[Message_Index]->S_Message[0]->Show_BackGround);
 
 		ImGui::Spacing();
 		ImGui::Spacing();
@@ -452,7 +452,7 @@ void SB_Gui_Dialogs::Dialog_Colour_Picker(void)
 		Float_Colour.z = float(Colour_Int_Blue) / 255;
 
 		/*int Index = App->SBC_Properties->Current_Selected_Object;
-		App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour = Ogre::Vector3(App->SBC_Gui_Dialogs->Float_Colour.x, App->SBC_Gui_Dialogs->Float_Colour.y, App->SBC_Gui_Dialogs->Float_Colour.z);
+		App->SBC_Scene->V_Object[Index]->S_Environ[0]->AmbientColour = Ogre::Vector3(App->SBC_Gui_Dialogs->Float_Colour.x, App->SBC_Gui_Dialogs->Float_Colour.y, App->SBC_Gui_Dialogs->Float_Colour.z);
 		App->CL_Ogre->mSceneMgr->setAmbientLight(ColourValue(App->SBC_Gui_Dialogs->Float_Colour.x, App->SBC_Gui_Dialogs->Float_Colour.y, App->SBC_Gui_Dialogs->Float_Colour.z));*/
 
 		//ImGui::Indent();
@@ -727,19 +727,19 @@ void SB_Gui_Dialogs::Light_Property_Editor_Gui()
 	ImGui::Text("Range");
 	ImGui::Separator();
 
-	float Inner = App->SBC_Scene->B_Object[Index]->S_Light[0]->light->getSpotlightInnerAngle().valueDegrees();
-	float Outer = App->SBC_Scene->B_Object[Index]->S_Light[0]->light->getSpotlightOuterAngle().valueDegrees();
-	float Limit = App->SBC_Scene->B_Object[Index]->S_Light[0]->light->getAttenuationRange();
-	float Const = App->SBC_Scene->B_Object[Index]->S_Light[0]->light->getAttenuationConstant();
-	float Linear = App->SBC_Scene->B_Object[Index]->S_Light[0]->light->getAttenuationLinear();
-	float Quadric = App->SBC_Scene->B_Object[Index]->S_Light[0]->light->getAttenuationQuadric();
+	float Inner = App->SBC_Scene->V_Object[Index]->S_Light[0]->light->getSpotlightInnerAngle().valueDegrees();
+	float Outer = App->SBC_Scene->V_Object[Index]->S_Light[0]->light->getSpotlightOuterAngle().valueDegrees();
+	float Limit = App->SBC_Scene->V_Object[Index]->S_Light[0]->light->getAttenuationRange();
+	float Const = App->SBC_Scene->V_Object[Index]->S_Light[0]->light->getAttenuationConstant();
+	float Linear = App->SBC_Scene->V_Object[Index]->S_Light[0]->light->getAttenuationLinear();
+	float Quadric = App->SBC_Scene->V_Object[Index]->S_Light[0]->light->getAttenuationQuadric();
 
 	// ----------------- Outer
 	ImGui::Text("Outer:- ");
 	ImGui::SameLine();
 	if (ImGui::InputFloat("##1", &Outer, 1, 0, "%.3f"))
 	{
-		App->SBC_Scene->B_Object[Index]->S_Light[0]->light->setSpotlightRange(Degree(Inner), Degree(Outer));
+		App->SBC_Scene->V_Object[Index]->S_Light[0]->light->setSpotlightRange(Degree(Inner), Degree(Outer));
 	}
 
 	// ----------------- Inner
@@ -747,7 +747,7 @@ void SB_Gui_Dialogs::Light_Property_Editor_Gui()
 	ImGui::SameLine();
 	if (ImGui::InputFloat("##2", &Inner, 1, 0, "%.3f"))
 	{
-		App->SBC_Scene->B_Object[Index]->S_Light[0]->light->setSpotlightRange(Degree(Inner), Degree(Outer));
+		App->SBC_Scene->V_Object[Index]->S_Light[0]->light->setSpotlightRange(Degree(Inner), Degree(Outer));
 	}
 
 	ImGui::Text("Attenuation");
@@ -757,7 +757,7 @@ void SB_Gui_Dialogs::Light_Property_Editor_Gui()
 	ImGui::SameLine();
 	if (ImGui::InputFloat("##3", &Limit, 1, 0, "%.3f"))
 	{
-		App->SBC_Scene->B_Object[Index]->S_Light[0]->light->setAttenuation(Limit, Const, Linear, Quadric);
+		App->SBC_Scene->V_Object[Index]->S_Light[0]->light->setAttenuation(Limit, Const, Linear, Quadric);
 	}
 
 	// ----------------- Const
@@ -765,7 +765,7 @@ void SB_Gui_Dialogs::Light_Property_Editor_Gui()
 	ImGui::SameLine();
 	if (ImGui::InputFloat("##4", &Const, 0.1, 0, "%f"))
 	{
-		App->SBC_Scene->B_Object[Index]->S_Light[0]->light->setAttenuation(Limit, Const, Linear, Quadric);
+		App->SBC_Scene->V_Object[Index]->S_Light[0]->light->setAttenuation(Limit, Const, Linear, Quadric);
 	}
 
 	// ----------------- Linear
@@ -773,7 +773,7 @@ void SB_Gui_Dialogs::Light_Property_Editor_Gui()
 	ImGui::SameLine();
 	if (ImGui::InputFloat("##5", &Linear, 0.1, 0, "%f"))
 	{
-		App->SBC_Scene->B_Object[Index]->S_Light[0]->light->setAttenuation(Limit, Const, Linear, Quadric);
+		App->SBC_Scene->V_Object[Index]->S_Light[0]->light->setAttenuation(Limit, Const, Linear, Quadric);
 	}
 
 	// ----------------- Quadric
@@ -781,7 +781,7 @@ void SB_Gui_Dialogs::Light_Property_Editor_Gui()
 	ImGui::SameLine();
 	if (ImGui::InputFloat("##6", &Quadric, 0.1, 0, "%f"))
 	{
-		App->SBC_Scene->B_Object[Index]->S_Light[0]->light->setAttenuation(Limit, Const, Linear, Quadric);
+		App->SBC_Scene->V_Object[Index]->S_Light[0]->light->setAttenuation(Limit, Const, Linear, Quadric);
 	}
 
 	ImGui::Spacing();

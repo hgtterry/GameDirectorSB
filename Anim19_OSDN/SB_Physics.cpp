@@ -100,35 +100,35 @@ void SB_Physics::Reset_Physics(void)
 	int Count = 0;
 	while (Count < App->SBC_Scene->Object_Count)
 	{
-		if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Dynamic)
+		if (App->SBC_Scene->V_Object[Count]->Usage == Enums::Usage_Dynamic)
 		{
 			btVector3 zeroVector(0, 0, 0);
 
-			x = App->SBC_Scene->B_Object[Count]->Physics_Pos.x;
-			y = App->SBC_Scene->B_Object[Count]->Physics_Pos.y;
-			z = App->SBC_Scene->B_Object[Count]->Physics_Pos.z;
+			x = App->SBC_Scene->V_Object[Count]->Physics_Pos.x;
+			y = App->SBC_Scene->V_Object[Count]->Physics_Pos.y;
+			z = App->SBC_Scene->V_Object[Count]->Physics_Pos.z;
 			btVector3 initialPosition(x, y, z);
 
 			btTransform startTransform;
 			startTransform.setIdentity();
 
-			startTransform.setRotation(btQuaternion(App->SBC_Scene->B_Object[Count]->Physics_Quat.x,
-				App->SBC_Scene->B_Object[Count]->Physics_Quat.y,
-				App->SBC_Scene->B_Object[Count]->Physics_Quat.z,
-				App->SBC_Scene->B_Object[Count]->Physics_Quat.w));
+			startTransform.setRotation(btQuaternion(App->SBC_Scene->V_Object[Count]->Physics_Quat.x,
+				App->SBC_Scene->V_Object[Count]->Physics_Quat.y,
+				App->SBC_Scene->V_Object[Count]->Physics_Quat.z,
+				App->SBC_Scene->V_Object[Count]->Physics_Quat.w));
 
 			startTransform.setOrigin(initialPosition);
 
-			App->SBC_Scene->B_Object[Count]->Phys_Body->clearForces();
-			App->SBC_Scene->B_Object[Count]->Phys_Body->setLinearVelocity(zeroVector);
-			App->SBC_Scene->B_Object[Count]->Phys_Body->setAngularVelocity(zeroVector);
+			App->SBC_Scene->V_Object[Count]->Phys_Body->clearForces();
+			App->SBC_Scene->V_Object[Count]->Phys_Body->setLinearVelocity(zeroVector);
+			App->SBC_Scene->V_Object[Count]->Phys_Body->setAngularVelocity(zeroVector);
 
-			App->SBC_Scene->B_Object[Count]->Phys_Body->setWorldTransform(startTransform);
-			App->SBC_Scene->B_Object[Count]->Phys_Body->getMotionState()->setWorldTransform(startTransform);
-			App->SBC_Scene->B_Object[Count]->Phys_Body->activate(true);
+			App->SBC_Scene->V_Object[Count]->Phys_Body->setWorldTransform(startTransform);
+			App->SBC_Scene->V_Object[Count]->Phys_Body->getMotionState()->setWorldTransform(startTransform);
+			App->SBC_Scene->V_Object[Count]->Phys_Body->activate(true);
 
-			App->SBC_Scene->B_Object[Count]->Object_Node->setPosition(App->SBC_Scene->B_Object[Count]->Mesh_Pos);
-			App->SBC_Scene->B_Object[Count]->Object_Node->setOrientation(App->SBC_Scene->B_Object[Count]->Mesh_Quat);
+			App->SBC_Scene->V_Object[Count]->Object_Node->setPosition(App->SBC_Scene->V_Object[Count]->Mesh_Pos);
+			App->SBC_Scene->V_Object[Count]->Object_Node->setOrientation(App->SBC_Scene->V_Object[Count]->Mesh_Quat);
 
 		}
 
@@ -207,43 +207,43 @@ void SB_Physics::Reset_Triggers(void)
 
 	while (Count < Total)
 	{
-		if (App->SBC_Scene->B_Object[Count]->Deleted == 0)
+		if (App->SBC_Scene->V_Object[Count]->Deleted == 0)
 		{
 			// ------------------------------------- Move Entities
-			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Move)
+			if (App->SBC_Scene->V_Object[Count]->Usage == Enums::Usage_Move)
 			{
-				int ObjectToMove = App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Object_To_Move_Index;
+				int ObjectToMove = App->SBC_Scene->V_Object[Count]->S_MoveType[0]->Object_To_Move_Index;
 
-				M_Pos = App->SBC_Scene->B_Object[ObjectToMove]->Mesh_Pos;
-				P_Pos = App->SBC_Scene->B_Object[ObjectToMove]->Physics_Pos;
+				M_Pos = App->SBC_Scene->V_Object[ObjectToMove]->Mesh_Pos;
+				P_Pos = App->SBC_Scene->V_Object[ObjectToMove]->Physics_Pos;
 
-				App->SBC_Scene->B_Object[Count]->S_MoveType[0]->MeshPos = Ogre::Vector3(M_Pos);
-				App->SBC_Scene->B_Object[Count]->S_MoveType[0]->PhysicsPos = Ogre::Vector3(P_Pos);
+				App->SBC_Scene->V_Object[Count]->S_MoveType[0]->MeshPos = Ogre::Vector3(M_Pos);
+				App->SBC_Scene->V_Object[Count]->S_MoveType[0]->PhysicsPos = Ogre::Vector3(P_Pos);
 
-				App->SBC_Scene->B_Object[ObjectToMove]->Object_Node->setPosition(M_Pos);
-				App->SBC_Scene->B_Object[ObjectToMove]->Phys_Body->getWorldTransform().setOrigin(btVector3(P_Pos.x, P_Pos.y, P_Pos.z));
+				App->SBC_Scene->V_Object[ObjectToMove]->Object_Node->setPosition(M_Pos);
+				App->SBC_Scene->V_Object[ObjectToMove]->Phys_Body->getWorldTransform().setOrigin(btVector3(P_Pos.x, P_Pos.y, P_Pos.z));
 
-				App->SBC_Scene->B_Object[Count]->Triggered = 0;
+				App->SBC_Scene->V_Object[Count]->Triggered = 0;
 			}
 
 			// ------------------------------------- Colectables
-			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Colectable)
+			if (App->SBC_Scene->V_Object[Count]->Usage == Enums::Usage_Colectable)
 			{
-				App->SBC_Scene->B_Object[Count]->Object_Ent->setVisible(TRUE);
+				App->SBC_Scene->V_Object[Count]->Object_Ent->setVisible(TRUE);
 
-				App->SBC_Scene->B_Object[Count]->Object_Node->setPosition(App->SBC_Scene->B_Object[Count]->Mesh_Pos);
+				App->SBC_Scene->V_Object[Count]->Object_Node->setPosition(App->SBC_Scene->V_Object[Count]->Mesh_Pos);
 
-				P_Pos = App->SBC_Scene->B_Object[Count]->Physics_Pos;
-				App->SBC_Scene->B_Object[Count]->Phys_Body->getWorldTransform().setOrigin(btVector3(P_Pos.x, P_Pos.y, P_Pos.z));
+				P_Pos = App->SBC_Scene->V_Object[Count]->Physics_Pos;
+				App->SBC_Scene->V_Object[Count]->Phys_Body->getWorldTransform().setOrigin(btVector3(P_Pos.x, P_Pos.y, P_Pos.z));
 
-				App->SBC_Scene->B_Object[Count]->Triggered = 0;
+				App->SBC_Scene->V_Object[Count]->Triggered = 0;
 
 			}
 
 			// ------------------------------------- Messages
-			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Message)
+			if (App->SBC_Scene->V_Object[Count]->Usage == Enums::Usage_Message)
 			{
-				App->SBC_Scene->B_Object[Count]->Show_Message_Flag = 0;
+				App->SBC_Scene->V_Object[Count]->Show_Message_Flag = 0;
 			}
 		}
 
@@ -264,22 +264,22 @@ void SB_Physics::Reset_Triggers(void)
 // *************************************************************************
 void SB_Physics::Set_Physics(int Index)
 {
-	App->SBC_Scene->B_Object[Index]->Physics_Quat = App->SBC_Scene->B_Object[Index]->Object_Node->getOrientation();
+	App->SBC_Scene->V_Object[Index]->Physics_Quat = App->SBC_Scene->V_Object[Index]->Object_Node->getOrientation();
 
-	float w = App->SBC_Scene->B_Object[Index]->Physics_Quat.w;
-	float x = App->SBC_Scene->B_Object[Index]->Physics_Quat.x;
-	float y = App->SBC_Scene->B_Object[Index]->Physics_Quat.y;
-	float z = App->SBC_Scene->B_Object[Index]->Physics_Quat.z;
-	App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
+	float w = App->SBC_Scene->V_Object[Index]->Physics_Quat.w;
+	float x = App->SBC_Scene->V_Object[Index]->Physics_Quat.x;
+	float y = App->SBC_Scene->V_Object[Index]->Physics_Quat.y;
+	float z = App->SBC_Scene->V_Object[Index]->Physics_Quat.z;
+	App->SBC_Scene->V_Object[Index]->Phys_Body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
 
-	App->SBC_Scene->B_Object[Index]->Object_Node->setScale(App->SBC_Scene->B_Object[Index]->Mesh_Scale);
+	App->SBC_Scene->V_Object[Index]->Object_Node->setScale(App->SBC_Scene->V_Object[Index]->Mesh_Scale);
 
-	Ogre::Vector3 Scale = App->SBC_Scene->B_Object[Index]->Object_Node->getScale();
-	App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+	Ogre::Vector3 Scale = App->SBC_Scene->V_Object[Index]->Object_Node->getScale();
+	App->SBC_Scene->V_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
 
 	UpDate_Physics_And_Visuals(Index);
 
-	App->SBC_Scene->B_Object[Index]->Physics_Valid = 1;
+	App->SBC_Scene->V_Object[Index]->Physics_Valid = 1;
 }
 
 // *************************************************************************
@@ -287,13 +287,13 @@ void SB_Physics::Set_Physics(int Index)
 // *************************************************************************
 void SB_Physics::UpDate_Physics_And_Visuals(int Index)
 {
-	if (App->SBC_Scene->B_Object[Index]->Shape == Enums::Shape_TriMesh)
+	if (App->SBC_Scene->V_Object[Index]->Shape == Enums::Shape_TriMesh)
 	{
 
 	}
 	else
 	{
-		//if (App->SBC_Scene->B_Object[Index]->Physics_Valid == 1)
+		//if (App->SBC_Scene->V_Object[Index]->Physics_Valid == 1)
 		{
 			Set_Physics_Position(Index);
 		}
@@ -303,8 +303,8 @@ void SB_Physics::UpDate_Physics_And_Visuals(int Index)
 	App->SBC_Markers->MarkerBB_Addjust(Index);
 
 	// Needs Looking at
-	App->SBC_Scene->B_Object[Index]->Altered = 1;
-	App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Object[Index]->FileViewItem);
+	App->SBC_Scene->V_Object[Index]->Altered = 1;
+	App->SBC_FileView->Mark_Altered(App->SBC_Scene->V_Object[Index]->FileViewItem);
 	App->SBC_Scene->Scene_Modified = 1;
 }
 
@@ -313,10 +313,10 @@ void SB_Physics::UpDate_Physics_And_Visuals(int Index)
 // *************************************************************************
 void SB_Physics::Set_Physics_Position(int Index)
 {
-	AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
-	worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
+	AxisAlignedBox worldAAB = App->SBC_Scene->V_Object[Index]->Object_Ent->getBoundingBox();
+	worldAAB.transformAffine(App->SBC_Scene->V_Object[Index]->Object_Node->_getFullTransform());
 	Ogre::Vector3 Centre = worldAAB.getCenter();
-	App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
-	App->SBC_Scene->B_Object[Index]->Physics_Pos = Centre;
+	App->SBC_Scene->V_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+	App->SBC_Scene->V_Object[Index]->Physics_Pos = Centre;
 }
 

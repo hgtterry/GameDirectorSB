@@ -48,7 +48,7 @@ void SB_Object::Hide_AllObjects_Except(int Index,bool Show)
 	int Count = 0;
 	while (Count < App->SBC_Scene->Object_Count)
 	{
-		App->SBC_Scene->B_Object[Count]->Object_Node->setVisible(Show);
+		App->SBC_Scene->V_Object[Count]->Object_Node->setVisible(Show);
 		Count++;
 	}
 
@@ -65,7 +65,7 @@ void SB_Object::Hide_AllObjects_Except(int Index,bool Show)
 	}
 	else
 	{
-		App->SBC_Scene->B_Object[Index]->Object_Node->setVisible(true);
+		App->SBC_Scene->V_Object[Index]->Object_Node->setVisible(true);
 	}
 }
 
@@ -74,7 +74,7 @@ void SB_Object::Hide_AllObjects_Except(int Index,bool Show)
 // *************************************************************************
 void SB_Object::Rename_Object(int Index)
 {
-	Base_Object* Object = App->SBC_Scene->B_Object[Index];
+	Base_Object* Object = App->SBC_Scene->V_Object[Index];
 
 	strcpy(App->Cl_Dialogs->btext, "Change Object Name");
 	strcpy(App->Cl_Dialogs->Chr_Text, Object->Mesh_Name);
@@ -100,15 +100,15 @@ void SB_Object::Rename_Object(int Index)
 // *************************************************************************
 Ogre::Vector3 SB_Object::Get_BoundingBox_World_Centre(int Object_Index)
 {
-	if (App->SBC_Scene->B_Object[Object_Index]->Shape == Enums::Shape_TriMesh)
+	if (App->SBC_Scene->V_Object[Object_Index]->Shape == Enums::Shape_TriMesh)
 	{
-		Ogre::Vector3 Pos = App->SBC_Scene->B_Object[Object_Index]->Object_Node->getPosition();
+		Ogre::Vector3 Pos = App->SBC_Scene->V_Object[Object_Index]->Object_Node->getPosition();
 		return Pos;
 	}
 	else
 	{
-		AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Object_Index]->Object_Ent->getBoundingBox();
-		worldAAB.transformAffine(App->SBC_Scene->B_Object[Object_Index]->Object_Node->_getFullTransform());
+		AxisAlignedBox worldAAB = App->SBC_Scene->V_Object[Object_Index]->Object_Ent->getBoundingBox();
+		worldAAB.transformAffine(App->SBC_Scene->V_Object[Object_Index]->Object_Node->_getFullTransform());
 		Ogre::Vector3 Centre = worldAAB.getCenter();
 
 		return Centre;
@@ -120,7 +120,7 @@ Ogre::Vector3 SB_Object::Get_BoundingBox_World_Centre(int Object_Index)
 // *************************************************************************
 void SB_Object::Copy_Object(int Object_Index)
 {
-	Base_Object* Object = App->SBC_Scene->B_Object[Object_Index];
+	Base_Object* Object = App->SBC_Scene->V_Object[Object_Index];
 
 	char ConNum[256];
 	char NewName[MAX_PATH];
@@ -140,8 +140,8 @@ void SB_Object::Copy_Object(int Object_Index)
 		return ;
 	}
 
-	App->SBC_Scene->B_Object[Object_Count] = new Base_Object();
-	Base_Object* New_Object = App->SBC_Scene->B_Object[Object_Count];
+	App->SBC_Scene->V_Object[Object_Count] = new Base_Object();
+	Base_Object* New_Object = App->SBC_Scene->V_Object[Object_Count];
 
 	strcpy(New_Object->Mesh_Name, App->Cl_Dialogs->Chr_Text);
 	strcpy(New_Object->Mesh_FileName, Object->Mesh_FileName);
@@ -158,7 +158,7 @@ void SB_Object::Copy_Object(int Object_Index)
 
 	App->SBC_Objects_Create->Add_New_Object(Object_Count,0);
 
-	App->SBC_Scene->B_Object[Object_Count]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Objects_Folder, App->SBC_Scene->B_Object[Object_Count]->Mesh_Name, Object_Count, false);
+	App->SBC_Scene->V_Object[Object_Count]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Objects_Folder, App->SBC_Scene->V_Object[Object_Count]->Mesh_Name, Object_Count, false);
 	
 	App->SBC_Scene->Object_Count++;
 
@@ -213,10 +213,10 @@ void SB_Object::Clear_Modified_Objects()
 	Count = 0;
 	while (Count < App->SBC_Scene->Object_Count)
 	{
-		if (App->SBC_Scene->B_Object[Count]->Altered == 1)
+		if (App->SBC_Scene->V_Object[Count]->Altered == 1)
 		{
-			App->SBC_Scene->B_Object[Count]->Altered = 0;
-			App->SBC_FileView->Mark_Clear(App->SBC_Scene->B_Object[Count]->FileViewItem);
+			App->SBC_Scene->V_Object[Count]->Altered = 0;
+			App->SBC_FileView->Mark_Clear(App->SBC_Scene->V_Object[Count]->FileViewItem);
 		}
 
 		Count++;
@@ -299,10 +299,10 @@ int SB_Object::GetIndex_By_Name(char* Name)
 
 	while (Count < Total)
 	{
-		if (App->SBC_Scene->B_Object[Count]->Deleted == 0)
+		if (App->SBC_Scene->V_Object[Count]->Deleted == 0)
 		{
 			int Result = 1;
-			Result = strcmp(App->SBC_Scene->B_Object[Count]->Mesh_Name, Name);
+			Result = strcmp(App->SBC_Scene->V_Object[Count]->Mesh_Name, Name);
 			if (Result == 0)
 			{
 				return Count;
@@ -321,7 +321,7 @@ int SB_Object::GetIndex_By_Name(char* Name)
 void SB_Object::Delete_Object()
 {
 	int MeshIndex = App->SBC_Properties->Current_Selected_Object;
-	btRigidBody* body = App->SBC_Scene->B_Object[MeshIndex]->Phys_Body;
+	btRigidBody* body = App->SBC_Scene->V_Object[MeshIndex]->Phys_Body;
 
 	if (body)
 	{
@@ -330,8 +330,8 @@ void SB_Object::Delete_Object()
 
 	App->SBC_FileView->DeleteItem();
 
-	App->SBC_Scene->B_Object[MeshIndex]->Deleted = 1;
-	App->SBC_Scene->B_Object[MeshIndex]->Object_Node->setVisible(false);
+	App->SBC_Scene->V_Object[MeshIndex]->Deleted = 1;
+	App->SBC_Scene->V_Object[MeshIndex]->Object_Node->setVisible(false);
 
 	
 	App->SBC_Scene->Scene_Modified = 1;

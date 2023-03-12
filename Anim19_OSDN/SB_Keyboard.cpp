@@ -79,7 +79,7 @@ void SB_Keyboard::Keyboard_Monitor(float deltaTime)
 
 				RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-				App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[App->CL_Ogre->OgreListener->Selected_Entity_Index]->FileViewItem);
+				App->SBC_FileView->SelectItem(App->SBC_Scene->V_Object[App->CL_Ogre->OgreListener->Selected_Entity_Index]->FileViewItem);
 				App->CL_Vm_ImGui->Show_Object_Selection = 0;
 			}
 		}

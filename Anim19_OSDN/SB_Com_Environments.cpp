@@ -39,7 +39,7 @@ SB_Com_Environments::~SB_Com_Environments()
 void SB_Com_Environments::Rename_Environ(int Index)
 {
 	strcpy(App->Cl_Dialogs->btext, "Change Environ Name");
-	strcpy(App->Cl_Dialogs->Chr_Text, App->SBC_Scene->B_Object[Index]->Mesh_Name);
+	strcpy(App->Cl_Dialogs->Chr_Text, App->SBC_Scene->V_Object[Index]->Mesh_Name);
 
 	App->Cl_Dialogs->Dialog_Text(Enums::Check_Names_Objects, 1);
 
@@ -48,9 +48,9 @@ void SB_Com_Environments::Rename_Environ(int Index)
 		return;
 	}
 
-	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_Name, App->Cl_Dialogs->Chr_Text);
+	strcpy(App->SBC_Scene->V_Object[Index]->Mesh_Name, App->Cl_Dialogs->Chr_Text);
 
-	App->SBC_FileView->Change_Item_Name(App->SBC_Scene->B_Object[Index]->FileViewItem, App->Cl_Dialogs->Chr_Text);
+	App->SBC_FileView->Change_Item_Name(App->SBC_Scene->V_Object[Index]->FileViewItem, App->Cl_Dialogs->Chr_Text);
 
 	Mark_As_Altered_Environ(Index);
 
@@ -66,26 +66,26 @@ bool SB_Com_Environments::Add_New_Environ_Entity(bool FirstOne)
 
 	int Index = App->SBC_Scene->Object_Count;
 
-	App->SBC_Scene->B_Object[Index] = new Base_Object();
-	App->SBC_Scene->B_Object[Index]->S_Environ[0] = new Environ_type;
-	Set_Environ_Defaults(Index);
+	App->SBC_Scene->V_Object[Index] = new Base_Object();
+	App->SBC_Scene->V_Object[Index]->S_Environ[0] = new Environ_type;
+	V_Set_Environ_Defaults(Index);
 	
 
-	App->SBC_Scene->B_Object[Index]->Type = Enums::Bullet_Type_Static;
-	App->SBC_Scene->B_Object[Index]->Shape = Enums::Shape_Box;
-	App->SBC_Scene->B_Object[Index]->This_Object_UniqueID = App->SBC_Scene->UniqueID_Object_Counter; // Unique ID
+	App->SBC_Scene->V_Object[Index]->Type = Enums::Bullet_Type_Static;
+	App->SBC_Scene->V_Object[Index]->Shape = Enums::Shape_Box;
+	App->SBC_Scene->V_Object[Index]->This_Object_UniqueID = App->SBC_Scene->UniqueID_Object_Counter; // Unique ID
 
-	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_FileName, "EnvironmentEntity_GD.mesh");
+	strcpy(App->SBC_Scene->V_Object[Index]->Mesh_FileName, "EnvironmentEntity_GD.mesh");
 
 	strcpy_s(B_Name, "Environ_");
 	_itoa(Index, ConNum, 10);
 	strcat(B_Name, ConNum);
-	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_Name, B_Name);
+	strcpy(App->SBC_Scene->V_Object[Index]->Mesh_Name, B_Name);
 
 	if (FirstOne == 0)
 	{
 		Ogre::Vector3 Pos = App->SBC_Object->GetPlacement(-50);
-		App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
+		App->SBC_Scene->V_Object[Index]->Mesh_Pos = Pos;
 	}
 	else
 	{
@@ -94,11 +94,11 @@ bool SB_Com_Environments::Add_New_Environ_Entity(bool FirstOne)
 
 	Create_Environ_Entity(Index);
 
-	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Evirons_Folder, App->SBC_Scene->B_Object[Index]->Mesh_Name, Index, true);
-	App->SBC_Scene->B_Object[Index]->FileViewItem = Temp;
+	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Evirons_Folder, App->SBC_Scene->V_Object[Index]->Mesh_Name, Index, true);
+	App->SBC_Scene->V_Object[Index]->FileViewItem = Temp;
 
 	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Evirons_Folder);
-	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[Index]->FileViewItem);
+	App->SBC_FileView->SelectItem(App->SBC_Scene->V_Object[Index]->FileViewItem);
 
 	App->SBC_Scene->UniqueID_Object_Counter++;
 	App->SBC_Scene->Object_Count++;
@@ -116,7 +116,7 @@ bool SB_Com_Environments::Create_Environ_Entity(int Index)
 	char ConNum[256];
 	char Ogre_Name[256];
 
-	Base_Object* Object = App->SBC_Scene->B_Object[Index];
+	Base_Object* Object = App->SBC_Scene->V_Object[Index];
 
 	// ----------------- Mesh
 
@@ -201,74 +201,29 @@ bool SB_Com_Environments::Create_Environ_Entity(int Index)
 // *************************************************************************
 void SB_Com_Environments::Set_Physics(int Index)
 {
-	App->SBC_Scene->B_Object[Index]->Physics_Quat = App->SBC_Scene->B_Object[Index]->Object_Node->getOrientation();
+	App->SBC_Scene->V_Object[Index]->Physics_Quat = App->SBC_Scene->V_Object[Index]->Object_Node->getOrientation();
 
-	float w = App->SBC_Scene->B_Object[Index]->Physics_Quat.w;
-	float x = App->SBC_Scene->B_Object[Index]->Physics_Quat.x;
-	float y = App->SBC_Scene->B_Object[Index]->Physics_Quat.y;
-	float z = App->SBC_Scene->B_Object[Index]->Physics_Quat.z;
-	App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
+	float w = App->SBC_Scene->V_Object[Index]->Physics_Quat.w;
+	float x = App->SBC_Scene->V_Object[Index]->Physics_Quat.x;
+	float y = App->SBC_Scene->V_Object[Index]->Physics_Quat.y;
+	float z = App->SBC_Scene->V_Object[Index]->Physics_Quat.z;
+	App->SBC_Scene->V_Object[Index]->Phys_Body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
 
-	App->SBC_Scene->B_Object[Index]->Object_Node->setScale(App->SBC_Scene->B_Object[Index]->Mesh_Scale);
+	App->SBC_Scene->V_Object[Index]->Object_Node->setScale(App->SBC_Scene->V_Object[Index]->Mesh_Scale);
 
-	Ogre::Vector3 Scale = App->SBC_Scene->B_Object[Index]->Object_Node->getScale();
-	App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+	Ogre::Vector3 Scale = App->SBC_Scene->V_Object[Index]->Object_Node->getScale();
+	App->SBC_Scene->V_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
 
-	AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
-	worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
+	AxisAlignedBox worldAAB = App->SBC_Scene->V_Object[Index]->Object_Ent->getBoundingBox();
+	worldAAB.transformAffine(App->SBC_Scene->V_Object[Index]->Object_Node->_getFullTransform());
 	Ogre::Vector3 Centre = worldAAB.getCenter();
-	App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
-	App->SBC_Scene->B_Object[Index]->Physics_Pos = Centre;
+	App->SBC_Scene->V_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+	App->SBC_Scene->V_Object[Index]->Physics_Pos = Centre;
 
 	//App->SBC_Dimensions->UpDate_Physics_And_Visuals(Index);
 
-	App->SBC_Scene->B_Object[Index]->Physics_Valid = 1;
+	App->SBC_Scene->V_Object[Index]->Physics_Valid = 1;
 
-}
-
-// *************************************************************************
-// *		Set_Environ_Defaults:- Terry and Hazel Flanigan 2022		   *
-// *************************************************************************
-void SB_Com_Environments::Set_Environ_Defaults(int Index)
-{
-	App->SBC_Scene->B_Object[Index]->Altered = 0;
-
-	App->SBC_Scene->B_Object[Index]->S_Environ[0]->Environment_ID = 0;
-	strcpy(App->SBC_Scene->B_Object[Index]->S_Environ[0]->Environment_Name,"Not_Set");
-
-	App->SBC_Scene->B_Object[Index]->S_Environ[0]->Environ_Enabled = 1;
-
-	//----------------------- Sound
-	strcpy(App->SBC_Scene->B_Object[Index]->S_Environ[0]->Sound_File, "The_Sun.ogg");
-	App->SBC_Scene->B_Object[Index]->S_Environ[0]->SndFile = NULL;
-	App->SBC_Scene->B_Object[Index]->S_Environ[0]->Play = 0;
-	App->SBC_Scene->B_Object[Index]->S_Environ[0]->Loop = 1;
-	App->SBC_Scene->B_Object[Index]->S_Environ[0]->SndVolume = 0.5;
-
-	//----------------------- Light
-	App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour.x = 1;
-	App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour.y = 1;
-	App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour.z = 1;
-
-	App->SBC_Scene->B_Object[Index]->S_Environ[0]->Light_Position.x = 0;
-	App->SBC_Scene->B_Object[Index]->S_Environ[0]->Light_Position.y = 0;
-	App->SBC_Scene->B_Object[Index]->S_Environ[0]->Light_Position.z = 0;
-
-	// Sky
-	App->SBC_Scene->B_Object[Index]->S_Environ[0]->Curvature = 15;
-	App->SBC_Scene->B_Object[Index]->S_Environ[0]->Distance = 4000;
-	App->SBC_Scene->B_Object[Index]->S_Environ[0]->Enabled = 0;
-	strcpy(App->SBC_Scene->B_Object[Index]->S_Environ[0]->Material, "Examples/CloudySky");
-	App->SBC_Scene->B_Object[Index]->S_Environ[0]->Tiling = 15;
-	App->SBC_Scene->B_Object[Index]->S_Environ[0]->type = 1;
-
-	// Fog
-	App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_On = 0;
-	App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Mode = FOG_LINEAR;
-	App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Density = 0.001000;
-	App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Start = 50;
-	App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_End = 300;
-	App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour = Ogre::Vector3(1, 1, 1);
 }
 
 // *************************************************************************
@@ -323,21 +278,21 @@ void SB_Com_Environments::V_Set_Environ_Defaults(int Index)
 // *************************************************************************
 void SB_Com_Environments::Set_First_Environment(int Index)
 {
-	float x = App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour.x;
-	float y = App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour.y;
-	float z = App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour.z;
+	float x = App->SBC_Scene->V_Object[Index]->S_Environ[0]->AmbientColour.x;
+	float y = App->SBC_Scene->V_Object[Index]->S_Environ[0]->AmbientColour.y;
+	float z = App->SBC_Scene->V_Object[Index]->S_Environ[0]->AmbientColour.z;
 
 	App->CL_Ogre->mSceneMgr->setAmbientLight(ColourValue(x, y, z));
 
-	if (App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_On == 1)
+	if (App->SBC_Scene->V_Object[Index]->S_Environ[0]->Fog_On == 1)
 	{
-		float Start = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Start;
-		float End = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_End;
-		float Density = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Density;
+		float Start = App->SBC_Scene->V_Object[Index]->S_Environ[0]->Fog_Start;
+		float End = App->SBC_Scene->V_Object[Index]->S_Environ[0]->Fog_End;
+		float Density = App->SBC_Scene->V_Object[Index]->S_Environ[0]->Fog_Density;
 
-		float x = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.x;
-		float y = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.y;
-		float z = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.z;
+		float x = App->SBC_Scene->V_Object[Index]->S_Environ[0]->Fog_Colour.x;
+		float y = App->SBC_Scene->V_Object[Index]->S_Environ[0]->Fog_Colour.y;
+		float z = App->SBC_Scene->V_Object[Index]->S_Environ[0]->Fog_Colour.z;
 
 		App->CL_Ogre->mSceneMgr->setFog(FOG_LINEAR, ColourValue(x, y, z), Density, (Ogre::Real)Start, (Ogre::Real)End);
 	}
@@ -346,13 +301,13 @@ void SB_Com_Environments::Set_First_Environment(int Index)
 		App->CL_Ogre->mSceneMgr->setFog(FOG_NONE, ColourValue(0.7, 0.7, 0.8), 0, 100, 1000);
 	}
 
-	if (App->SBC_Scene->B_Object[Index]->S_Environ[0]->Enabled == 1)
+	if (App->SBC_Scene->V_Object[Index]->S_Environ[0]->Enabled == 1)
 	{
 		App->CL_Ogre->mSceneMgr->setSkyDome(true,
-			App->SBC_Scene->B_Object[Index]->S_Environ[0]->Material,
-			App->SBC_Scene->B_Object[Index]->S_Environ[0]->Curvature,
-			App->SBC_Scene->B_Object[Index]->S_Environ[0]->Tiling,
-			App->SBC_Scene->B_Object[Index]->S_Environ[0]->Distance);
+			App->SBC_Scene->V_Object[Index]->S_Environ[0]->Material,
+			App->SBC_Scene->V_Object[Index]->S_Environ[0]->Curvature,
+			App->SBC_Scene->V_Object[Index]->S_Environ[0]->Tiling,
+			App->SBC_Scene->V_Object[Index]->S_Environ[0]->Distance);
 	}
 	else
 	{
@@ -370,13 +325,13 @@ bool SB_Com_Environments::EnableFog(bool SetFog)
 
 	if (SetFog == true)
 	{
-		float Start = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Start;
-		float End = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_End;
-		float Density = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Density;
+		float Start = App->SBC_Scene->V_Object[Index]->S_Environ[0]->Fog_Start;
+		float End = App->SBC_Scene->V_Object[Index]->S_Environ[0]->Fog_End;
+		float Density = App->SBC_Scene->V_Object[Index]->S_Environ[0]->Fog_Density;
 
-		float x = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.x;
-		float y = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.y;
-		float z = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.z;
+		float x = App->SBC_Scene->V_Object[Index]->S_Environ[0]->Fog_Colour.x;
+		float y = App->SBC_Scene->V_Object[Index]->S_Environ[0]->Fog_Colour.y;
+		float z = App->SBC_Scene->V_Object[Index]->S_Environ[0]->Fog_Colour.z;
 
 		App->CL_Ogre->mSceneMgr->setFog(FOG_LINEAR, ColourValue(x, y, z), Density, (Ogre::Real)Start, (Ogre::Real)End);
 	}
@@ -396,13 +351,13 @@ void SB_Com_Environments::EnableFog_Collision(bool SetFog ,int Index)
 	
 	if (SetFog == true)
 	{
-		float Start = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Start;
-		float End = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_End;
-		float Density = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Density;
+		float Start = App->SBC_Scene->V_Object[Index]->S_Environ[0]->Fog_Start;
+		float End = App->SBC_Scene->V_Object[Index]->S_Environ[0]->Fog_End;
+		float Density = App->SBC_Scene->V_Object[Index]->S_Environ[0]->Fog_Density;
 
-		float x = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.x;
-		float y = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.y;
-		float z = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.z;
+		float x = App->SBC_Scene->V_Object[Index]->S_Environ[0]->Fog_Colour.x;
+		float y = App->SBC_Scene->V_Object[Index]->S_Environ[0]->Fog_Colour.y;
+		float z = App->SBC_Scene->V_Object[Index]->S_Environ[0]->Fog_Colour.z;
 
 		App->CL_Ogre->mSceneMgr->setFog(FOG_LINEAR, ColourValue(x, y, z), Density, (Ogre::Real)Start, (Ogre::Real)End);
 	}
@@ -418,14 +373,14 @@ void SB_Com_Environments::EnableFog_Collision(bool SetFog ,int Index)
 void SB_Com_Environments::Set_Environment_From_Environ(int Index)
 {
 	
-	float x = App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour.x;
-	float y = App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour.y;
-	float z = App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour.z;
+	float x = App->SBC_Scene->V_Object[Index]->S_Environ[0]->AmbientColour.x;
+	float y = App->SBC_Scene->V_Object[Index]->S_Environ[0]->AmbientColour.y;
+	float z = App->SBC_Scene->V_Object[Index]->S_Environ[0]->AmbientColour.z;
 	
 	App->CL_Ogre->mSceneMgr->setAmbientLight(ColourValue(x, y, z));
 
 	
-	if (App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_On == 1)
+	if (App->SBC_Scene->V_Object[Index]->S_Environ[0]->Fog_On == 1)
 	{
 		EnableFog_Collision(true, Index);
 	}
@@ -441,11 +396,11 @@ void SB_Com_Environments::Set_Environment_From_Environ(int Index)
 // *************************************************************************
 void SB_Com_Environments::Mark_As_Altered_Environ(int Index)
 {
-	App->SBC_Scene->B_Object[Index]->Altered = 1;
+	App->SBC_Scene->V_Object[Index]->Altered = 1;
 
 	App->SBC_Scene->Scene_Modified = 1;
 
-	App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Object[Index]->FileViewItem);
+	App->SBC_FileView->Mark_Altered(App->SBC_Scene->V_Object[Index]->FileViewItem);
 }
 
 // *************************************************************************
@@ -456,7 +411,7 @@ int SB_Com_Environments::Get_First_Environ()
 	int Count = 0;
 	while (Count < App->SBC_Scene->Object_Count)
 	{
-		if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_EnvironEntity)
+		if (App->SBC_Scene->V_Object[Count]->Usage == Enums::Usage_EnvironEntity)
 		{
 			return Count;
 		}
@@ -480,43 +435,43 @@ void SB_Com_Environments::GameMode(bool Is_On)
 		strcpy(buff, App->SBC_SoundMgr->Default_Folder);
 		strcat(buff, "\\Media\\Sounds\\");
 
-		strcat(buff, App->SBC_Scene->B_Object[First_Environ]->S_Environ[0]->Sound_File);
+		strcat(buff, App->SBC_Scene->V_Object[First_Environ]->S_Environ[0]->Sound_File);
 
-		App->SBC_Scene->B_Object[First_Environ]->S_Environ[0]->SndFile = App->SBC_SoundMgr->SoundEngine->play2D(buff, App->SBC_Scene->B_Object[First_Environ]->S_Environ[0]->Loop, true, true);
+		App->SBC_Scene->V_Object[First_Environ]->S_Environ[0]->SndFile = App->SBC_SoundMgr->SoundEngine->play2D(buff, App->SBC_Scene->V_Object[First_Environ]->S_Environ[0]->Loop, true, true);
 
-		App->SBC_Scene->B_Object[First_Environ]->S_Environ[0]->SndFile->setVolume(App->SBC_Scene->B_Object[First_Environ]->S_Environ[0]->SndVolume);
-		App->SBC_Scene->B_Object[First_Environ]->S_Environ[0]->SndFile->setIsPaused(false);
+		App->SBC_Scene->V_Object[First_Environ]->S_Environ[0]->SndFile->setVolume(App->SBC_Scene->V_Object[First_Environ]->S_Environ[0]->SndVolume);
+		App->SBC_Scene->V_Object[First_Environ]->S_Environ[0]->SndFile->setIsPaused(false);
 
 		App->SBC_Collision->Old_Sound_Index = First_Environ;
 	}
 	else
 	{
-		if (App->SBC_Scene->B_Object[First_Environ]->S_Environ[0]->SndFile == NULL)
+		if (App->SBC_Scene->V_Object[First_Environ]->S_Environ[0]->SndFile == NULL)
 		{
 		}
 		else
 		{
-			App->SBC_Scene->B_Object[First_Environ]->S_Environ[0]->SndFile->setIsPaused(true);
-			App->SBC_Scene->B_Object[First_Environ]->S_Environ[0]->SndFile->drop();
-			App->SBC_Scene->B_Object[First_Environ]->S_Environ[0]->SndFile = NULL;
+			App->SBC_Scene->V_Object[First_Environ]->S_Environ[0]->SndFile->setIsPaused(true);
+			App->SBC_Scene->V_Object[First_Environ]->S_Environ[0]->SndFile->drop();
+			App->SBC_Scene->V_Object[First_Environ]->S_Environ[0]->SndFile = NULL;
 		}
 	}
 
-	float x = App->SBC_Scene->B_Object[First_Environ]->S_Environ[0]->AmbientColour.x;
-	float y = App->SBC_Scene->B_Object[First_Environ]->S_Environ[0]->AmbientColour.y;
-	float z = App->SBC_Scene->B_Object[First_Environ]->S_Environ[0]->AmbientColour.z;
+	float x = App->SBC_Scene->V_Object[First_Environ]->S_Environ[0]->AmbientColour.x;
+	float y = App->SBC_Scene->V_Object[First_Environ]->S_Environ[0]->AmbientColour.y;
+	float z = App->SBC_Scene->V_Object[First_Environ]->S_Environ[0]->AmbientColour.z;
 
 	App->CL_Ogre->mSceneMgr->setAmbientLight(ColourValue(x, y, z));
 
-	if (App->SBC_Scene->B_Object[First_Environ]->S_Environ[0]->Fog_On == 1)
+	if (App->SBC_Scene->V_Object[First_Environ]->S_Environ[0]->Fog_On == 1)
 	{
-		float Start = App->SBC_Scene->B_Object[First_Environ]->S_Environ[0]->Fog_Start;
-		float End = App->SBC_Scene->B_Object[First_Environ]->S_Environ[0]->Fog_End;
-		float Density = App->SBC_Scene->B_Object[First_Environ]->S_Environ[0]->Fog_Density;
+		float Start = App->SBC_Scene->V_Object[First_Environ]->S_Environ[0]->Fog_Start;
+		float End = App->SBC_Scene->V_Object[First_Environ]->S_Environ[0]->Fog_End;
+		float Density = App->SBC_Scene->V_Object[First_Environ]->S_Environ[0]->Fog_Density;
 
-		float x = App->SBC_Scene->B_Object[First_Environ]->S_Environ[0]->Fog_Colour.x;
-		float y = App->SBC_Scene->B_Object[First_Environ]->S_Environ[0]->Fog_Colour.y;
-		float z = App->SBC_Scene->B_Object[First_Environ]->S_Environ[0]->Fog_Colour.z;
+		float x = App->SBC_Scene->V_Object[First_Environ]->S_Environ[0]->Fog_Colour.x;
+		float y = App->SBC_Scene->V_Object[First_Environ]->S_Environ[0]->Fog_Colour.y;
+		float z = App->SBC_Scene->V_Object[First_Environ]->S_Environ[0]->Fog_Colour.z;
 
 		App->CL_Ogre->mSceneMgr->setFog(FOG_LINEAR, ColourValue(x, y, z), Density, (Ogre::Real)Start, (Ogre::Real)End);
 	}
@@ -532,22 +487,22 @@ void SB_Com_Environments::GameMode(bool Is_On)
 int SB_Com_Environments::Set_Environment_By_Index(bool PlayMusic,int Index)
 {
 
-	float x = App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour.x;
-	float y = App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour.y;
-	float z = App->SBC_Scene->B_Object[Index]->S_Environ[0]->AmbientColour.z;
+	float x = App->SBC_Scene->V_Object[Index]->S_Environ[0]->AmbientColour.x;
+	float y = App->SBC_Scene->V_Object[Index]->S_Environ[0]->AmbientColour.y;
+	float z = App->SBC_Scene->V_Object[Index]->S_Environ[0]->AmbientColour.z;
 	App->CL_Ogre->mSceneMgr->setAmbientLight(ColourValue(x, y, z));
 
 
 	// Fog
-	if (App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_On == 1)
+	if (App->SBC_Scene->V_Object[Index]->S_Environ[0]->Fog_On == 1)
 	{
-		float Start = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Start;
-		float End = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_End;
-		float Density = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Density;
+		float Start = App->SBC_Scene->V_Object[Index]->S_Environ[0]->Fog_Start;
+		float End = App->SBC_Scene->V_Object[Index]->S_Environ[0]->Fog_End;
+		float Density = App->SBC_Scene->V_Object[Index]->S_Environ[0]->Fog_Density;
 
-		float x = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.x;
-		float y = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.y;
-		float z = App->SBC_Scene->B_Object[Index]->S_Environ[0]->Fog_Colour.z;
+		float x = App->SBC_Scene->V_Object[Index]->S_Environ[0]->Fog_Colour.x;
+		float y = App->SBC_Scene->V_Object[Index]->S_Environ[0]->Fog_Colour.y;
+		float z = App->SBC_Scene->V_Object[Index]->S_Environ[0]->Fog_Colour.z;
 
 		App->CL_Ogre->mSceneMgr->setFog(FOG_LINEAR, ColourValue(x, y, z), Density, (Ogre::Real)Start, (Ogre::Real)End);
 	}
@@ -562,26 +517,26 @@ int SB_Com_Environments::Set_Environment_By_Index(bool PlayMusic,int Index)
 		strcpy(buff, App->SBC_SoundMgr->Default_Folder);
 		strcat(buff, "\\Media\\Sounds\\");
 
-		if (App->SBC_Scene->B_Object[Index]->S_Environ[0]->Play == 1)
+		if (App->SBC_Scene->V_Object[Index]->S_Environ[0]->Play == 1)
 		{
-			strcat(buff, App->SBC_Scene->B_Object[Index]->S_Environ[0]->Sound_File);
+			strcat(buff, App->SBC_Scene->V_Object[Index]->S_Environ[0]->Sound_File);
 
-			App->SBC_Scene->B_Object[Index]->S_Environ[0]->SndFile = App->SBC_SoundMgr->SoundEngine->play2D(buff, App->SBC_Scene->B_Object[Index]->S_Environ[0]->Loop, true, true);
+			App->SBC_Scene->V_Object[Index]->S_Environ[0]->SndFile = App->SBC_SoundMgr->SoundEngine->play2D(buff, App->SBC_Scene->V_Object[Index]->S_Environ[0]->Loop, true, true);
 
-			App->SBC_Scene->B_Object[Index]->S_Environ[0]->SndFile->setVolume(App->SBC_Scene->B_Object[Index]->S_Environ[0]->SndVolume);
-			App->SBC_Scene->B_Object[Index]->S_Environ[0]->SndFile->setIsPaused(false);
+			App->SBC_Scene->V_Object[Index]->S_Environ[0]->SndFile->setVolume(App->SBC_Scene->V_Object[Index]->S_Environ[0]->SndVolume);
+			App->SBC_Scene->V_Object[Index]->S_Environ[0]->SndFile->setIsPaused(false);
 		}
 	}
 	else
 	{
-		if (App->SBC_Scene->B_Object[Index]->S_Environ[0]->SndFile == NULL)
+		if (App->SBC_Scene->V_Object[Index]->S_Environ[0]->SndFile == NULL)
 		{
 		}
 		else
 		{
-			App->SBC_Scene->B_Object[Index]->S_Environ[0]->SndFile->setIsPaused(true);
-			App->SBC_Scene->B_Object[Index]->S_Environ[0]->SndFile->drop();
-			App->SBC_Scene->B_Object[Index]->S_Environ[0]->SndFile = NULL;
+			App->SBC_Scene->V_Object[Index]->S_Environ[0]->SndFile->setIsPaused(true);
+			App->SBC_Scene->V_Object[Index]->S_Environ[0]->SndFile->drop();
+			App->SBC_Scene->V_Object[Index]->S_Environ[0]->SndFile = NULL;
 		}
 	}
 

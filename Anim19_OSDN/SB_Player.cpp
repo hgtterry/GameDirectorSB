@@ -685,12 +685,12 @@ void SB_Player::Check_Collisions_New(void)
 			Col_Usage_Index = obB->getUserIndex();
 
 
-			if (Col_Usage_Index == 123)// && App->SBC_Scene->B_Object[Last_Message_Index]->Triggered == 1)
+			if (Col_Usage_Index == 123)// && App->SBC_Scene->V_Object[Last_Message_Index]->Triggered == 1)
 			{
 				if (App->SBC_Scene->Object_Count > 0)
 				{
-					App->SBC_Scene->B_Object[Last_Message_Index]->Show_Message_Flag = 0;
-					App->SBC_Scene->B_Object[Last_Message_Index]->Triggered = 0;
+					App->SBC_Scene->V_Object[Last_Message_Index]->Show_Message_Flag = 0;
+					App->SBC_Scene->V_Object[Last_Message_Index]->Triggered = 0;
 				}
 			}
 			else
@@ -714,7 +714,7 @@ void SB_Player::Check_Collisions_New(void)
 
 						if (Round < 0)
 						{
-							if (App->SBC_Scene->B_Object[Col_Object_Index]->Triggered == 0)
+							if (App->SBC_Scene->V_Object[Col_Object_Index]->Triggered == 0)
 							{
 								Last_Message_Index = Col_Object_Index;
 								App->SBC_Collision->Message_Entity(Col_Object_Index);
@@ -722,10 +722,10 @@ void SB_Player::Check_Collisions_New(void)
 						}
 						else if (Round == 0)
 						{
-							if (App->SBC_Scene->B_Object[Col_Object_Index]->Triggered == 1)
+							if (App->SBC_Scene->V_Object[Col_Object_Index]->Triggered == 1)
 							{
-								App->SBC_Scene->B_Object[Col_Object_Index]->Show_Message_Flag = 0;
-								App->SBC_Scene->B_Object[Col_Object_Index]->Triggered = 0;
+								App->SBC_Scene->V_Object[Col_Object_Index]->Show_Message_Flag = 0;
+								App->SBC_Scene->V_Object[Col_Object_Index]->Triggered = 0;
 
 							}
 						}
@@ -747,7 +747,7 @@ void SB_Player::Check_Collisions_New(void)
 
 						if (Round < 0)
 						{
-							if (App->SBC_Scene->B_Object[Col_Object_Index]->Triggered == 0)
+							if (App->SBC_Scene->V_Object[Col_Object_Index]->Triggered == 0)
 							{
 								App->SBC_Collision->Play_Sound(Col_Object_Index);
 								Last_ColisionIndex = Col_Object_Index;
@@ -755,9 +755,9 @@ void SB_Player::Check_Collisions_New(void)
 						}
 						else if (Life_Time < 10)
 						{
-							if (App->SBC_Scene->B_Object[Col_Object_Index]->Triggered == 1)
+							if (App->SBC_Scene->V_Object[Col_Object_Index]->Triggered == 1)
 							{
-								App->SBC_Scene->B_Object[Col_Object_Index]->Triggered = 0;
+								App->SBC_Scene->V_Object[Col_Object_Index]->Triggered = 0;
 							}
 						}
 					}
@@ -778,14 +778,14 @@ void SB_Player::Check_Collisions_New(void)
 
 						if (Round < 0)
 						{
-							if (App->SBC_Scene->B_Object[Col_Object_Index]->Triggered == 0)
+							if (App->SBC_Scene->V_Object[Col_Object_Index]->Triggered == 0)
 							{
 								App->SBC_Collision->Move_Entity_Collision(Col_Object_Index);
 							}
 						}
 						else if (Round == 0)
 						{
-							if (App->SBC_Scene->B_Object[Col_Object_Index]->Triggered == 1)
+							if (App->SBC_Scene->V_Object[Col_Object_Index]->Triggered == 1)
 							{
 								
 							}
@@ -800,7 +800,7 @@ void SB_Player::Check_Collisions_New(void)
 					int numContacts = contactManifold->getNumContacts();
 					for (int j = 0; j < numContacts; j++)
 					{
-						if (App->SBC_Scene->B_Object[Col_Object_Index]->Triggered == 0)
+						if (App->SBC_Scene->V_Object[Col_Object_Index]->Triggered == 0)
 						{
 							App->SBC_Collision->Do_Collectable(Col_Object_Index);
 						}
@@ -823,7 +823,7 @@ void SB_Player::Check_Collisions_New(void)
 
 						if (Round < 0)
 						{
-							if (App->SBC_Scene->B_Object[Col_Object_Index]->Triggered == 0)
+							if (App->SBC_Scene->V_Object[Col_Object_Index]->Triggered == 0)
 							{
 
 								App->SBC_Collision->Do_Teleport(Col_Object_Index);
@@ -831,7 +831,7 @@ void SB_Player::Check_Collisions_New(void)
 						}
 						else if (Round == 0)
 						{
-							if (App->SBC_Scene->B_Object[Col_Object_Index]->Triggered == 1)
+							if (App->SBC_Scene->V_Object[Col_Object_Index]->Triggered == 1)
 							{
 
 							}
@@ -853,16 +853,16 @@ void SB_Player::Check_Collisions_New(void)
 
 						if (Round < 0)
 						{
-							if (App->SBC_Scene->B_Object[Col_Object_Index]->Triggered == 0)
+							if (App->SBC_Scene->V_Object[Col_Object_Index]->Triggered == 0)
 							{
 								App->SBC_Collision->Do_Environment(Col_Object_Index);
 							}
 						}
 						else if (Round == 0)
 						{
-							if (App->SBC_Scene->B_Object[Col_Object_Index]->Triggered == 1)
+							if (App->SBC_Scene->V_Object[Col_Object_Index]->Triggered == 1)
 							{
-								App->SBC_Scene->B_Object[Col_Object_Index]->Triggered = 0;
+								App->SBC_Scene->V_Object[Col_Object_Index]->Triggered = 0;
 							}
 						}
 					}

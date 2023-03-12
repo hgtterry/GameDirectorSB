@@ -368,9 +368,9 @@ bool SB_FileIO::Directory_Vaild(LPCTSTR szPath)
 }
 
 // *************************************************************************
-// *						CheckPath Terry Bernie	   					   *
+// *		Get_FileName_FromPath:- Terry and Hazel Flanigan 2023	 	   *
 // *************************************************************************
-void SB_FileIO::CheckPath(char *pString, char *FileName)
+void SB_FileIO::Get_FileName_FromPath(char *pString, char *FileName)
 {
 	JustFileName[0] = 0;
 

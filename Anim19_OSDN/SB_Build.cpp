@@ -1400,7 +1400,7 @@ bool SB_Build::Build_Objects_Data()
 	int Count = 0;
 	while (Count < App->SBC_Scene->Object_Count)
 	{
-		if (App->SBC_Scene->B_Object[Count]->Deleted == 0)
+		if (App->SBC_Scene->V_Object[Count]->Deleted == 0)
 		{
 			strcpy(buff, "[Object_");
 			_itoa(new_Count, Cbuff, 10);
@@ -1409,264 +1409,264 @@ bool SB_Build::Build_Objects_Data()
 
 			fprintf(WriteFile, "%s\n", buff); // Header also Player name until changed by user
 
-			fprintf(WriteFile, "%s%s\n", "Mesh_Name=", App->SBC_Scene->B_Object[Count]->Mesh_Name); // Change
+			fprintf(WriteFile, "%s%s\n", "Mesh_Name=", App->SBC_Scene->V_Object[Count]->Mesh_Name); // Change
 
-			fprintf(WriteFile, "%s%s\n", "Mesh_File=", App->SBC_Scene->B_Object[Count]->Mesh_FileName);
-			fprintf(WriteFile, "%s%s\n", "Mesh_Resource_Path=", App->SBC_Scene->B_Object[Count]->Mesh_Resource_Path);
-			fprintf(WriteFile, "%s%s\n", "Material_File=", App->SBC_Scene->B_Object[Count]->Material_File);
-			fprintf(WriteFile, "%s%i\n", "Object_ID=", App->SBC_Scene->B_Object[Count]->This_Object_UniqueID);
-			fprintf(WriteFile, "%s%i\n", "Object_Type=", App->SBC_Scene->B_Object[Count]->Type);
-			fprintf(WriteFile, "%s%i\n", "Object_Shape=", App->SBC_Scene->B_Object[Count]->Shape);
-			fprintf(WriteFile, "%s%i\n", "Object_Usage=", App->SBC_Scene->B_Object[Count]->Usage);
+			fprintf(WriteFile, "%s%s\n", "Mesh_File=", App->SBC_Scene->V_Object[Count]->Mesh_FileName);
+			fprintf(WriteFile, "%s%s\n", "Mesh_Resource_Path=", App->SBC_Scene->V_Object[Count]->Mesh_Resource_Path);
+			fprintf(WriteFile, "%s%s\n", "Material_File=", App->SBC_Scene->V_Object[Count]->Material_File);
+			fprintf(WriteFile, "%s%i\n", "Object_ID=", App->SBC_Scene->V_Object[Count]->This_Object_UniqueID);
+			fprintf(WriteFile, "%s%i\n", "Object_Type=", App->SBC_Scene->V_Object[Count]->Type);
+			fprintf(WriteFile, "%s%i\n", "Object_Shape=", App->SBC_Scene->V_Object[Count]->Shape);
+			fprintf(WriteFile, "%s%i\n", "Object_Usage=", App->SBC_Scene->V_Object[Count]->Usage);
 
 			// Position
-			x = App->SBC_Scene->B_Object[Count]->Mesh_Pos.x;
-			y = App->SBC_Scene->B_Object[Count]->Mesh_Pos.y;
-			z = App->SBC_Scene->B_Object[Count]->Mesh_Pos.z;
+			x = App->SBC_Scene->V_Object[Count]->Mesh_Pos.x;
+			y = App->SBC_Scene->V_Object[Count]->Mesh_Pos.y;
+			z = App->SBC_Scene->V_Object[Count]->Mesh_Pos.z;
 			fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Pos=", x, y, z);
 
 			// Mesh_Scale
-			x = App->SBC_Scene->B_Object[Count]->Mesh_Scale.x;
-			y = App->SBC_Scene->B_Object[Count]->Mesh_Scale.y;
-			z = App->SBC_Scene->B_Object[Count]->Mesh_Scale.z;
+			x = App->SBC_Scene->V_Object[Count]->Mesh_Scale.x;
+			y = App->SBC_Scene->V_Object[Count]->Mesh_Scale.y;
+			z = App->SBC_Scene->V_Object[Count]->Mesh_Scale.z;
 			fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Scale=", x, y, z);
 
 			// Mesh_Rot
-			x = App->SBC_Scene->B_Object[Count]->Mesh_Rot.x;
-			y = App->SBC_Scene->B_Object[Count]->Mesh_Rot.y;
-			z = App->SBC_Scene->B_Object[Count]->Mesh_Rot.z;
+			x = App->SBC_Scene->V_Object[Count]->Mesh_Rot.x;
+			y = App->SBC_Scene->V_Object[Count]->Mesh_Rot.y;
+			z = App->SBC_Scene->V_Object[Count]->Mesh_Rot.z;
 			fprintf(WriteFile, "%s%f,%f,%f\n", "Mesh_Rot=", x, y, z);
 
 			// Mesh_Quat
-			w = App->SBC_Scene->B_Object[Count]->Mesh_Quat.w;
-			x = App->SBC_Scene->B_Object[Count]->Mesh_Quat.x;
-			y = App->SBC_Scene->B_Object[Count]->Mesh_Quat.y;
-			z = App->SBC_Scene->B_Object[Count]->Mesh_Quat.z;
+			w = App->SBC_Scene->V_Object[Count]->Mesh_Quat.w;
+			x = App->SBC_Scene->V_Object[Count]->Mesh_Quat.x;
+			y = App->SBC_Scene->V_Object[Count]->Mesh_Quat.y;
+			z = App->SBC_Scene->V_Object[Count]->Mesh_Quat.z;
 			fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Mesh_Quat=", w, x, y, z);
 
 			// Physics_Quat
-			w = App->SBC_Scene->B_Object[Count]->Physics_Quat.w;
-			x = App->SBC_Scene->B_Object[Count]->Physics_Quat.x;
-			y = App->SBC_Scene->B_Object[Count]->Physics_Quat.y;
-			z = App->SBC_Scene->B_Object[Count]->Physics_Quat.z;
+			w = App->SBC_Scene->V_Object[Count]->Physics_Quat.w;
+			x = App->SBC_Scene->V_Object[Count]->Physics_Quat.x;
+			y = App->SBC_Scene->V_Object[Count]->Physics_Quat.y;
+			z = App->SBC_Scene->V_Object[Count]->Physics_Quat.z;
 			fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Physics_Quat=", w, x, y, z);
 			//---------------------------------------------------------------------------------- Message Entity
-			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Message)
+			if (App->SBC_Scene->V_Object[Count]->Usage == Enums::Usage_Message)
 			{
 				fprintf(WriteFile, "%s\n", "------------------- Message");
-				fprintf(WriteFile, "%s%s\n", "Message_Text=", App->SBC_Scene->B_Object[Count]->S_Message[0]->Message_Text);
+				fprintf(WriteFile, "%s%s\n", "Message_Text=", App->SBC_Scene->V_Object[Count]->S_Message[0]->Message_Text);
 
-				x = App->SBC_Scene->B_Object[Count]->S_Message[0]->Message_PosX;
-				y = App->SBC_Scene->B_Object[Count]->S_Message[0]->Message_PosY;
+				x = App->SBC_Scene->V_Object[Count]->S_Message[0]->Message_PosX;
+				y = App->SBC_Scene->V_Object[Count]->S_Message[0]->Message_PosY;
 				fprintf(WriteFile, "%s%f,%f\n", "Message_Pos=", x, y);
 
 				// Message Counter
-				fprintf(WriteFile, "%s%i\n", "Message_Counter_ID=", App->SBC_Scene->B_Object[Count]->S_Message[0]->Counter_ID);
-				fprintf(WriteFile, "%s%i\n", "Message_Trigger_Value=", App->SBC_Scene->B_Object[Count]->S_Message[0]->Trigger_Value);
-				fprintf(WriteFile, "%s%i\n", "Message_Counter_Disabled=", App->SBC_Scene->B_Object[Count]->S_Message[0]->Counter_Disabled);
+				fprintf(WriteFile, "%s%i\n", "Message_Counter_ID=", App->SBC_Scene->V_Object[Count]->S_Message[0]->Counter_ID);
+				fprintf(WriteFile, "%s%i\n", "Message_Trigger_Value=", App->SBC_Scene->V_Object[Count]->S_Message[0]->Trigger_Value);
+				fprintf(WriteFile, "%s%i\n", "Message_Counter_Disabled=", App->SBC_Scene->V_Object[Count]->S_Message[0]->Counter_Disabled);
 
-				fprintf(WriteFile, "%s%i\n", "Message_CentreX=", App->SBC_Scene->B_Object[Count]->S_Message[0]->PosXCentre_Flag);
-				fprintf(WriteFile, "%s%i\n", "Message_CentreY=", App->SBC_Scene->B_Object[Count]->S_Message[0]->PosYCentre_Flag);
+				fprintf(WriteFile, "%s%i\n", "Message_CentreX=", App->SBC_Scene->V_Object[Count]->S_Message[0]->PosXCentre_Flag);
+				fprintf(WriteFile, "%s%i\n", "Message_CentreY=", App->SBC_Scene->V_Object[Count]->S_Message[0]->PosYCentre_Flag);
 
-				x = App->SBC_Scene->B_Object[Count]->S_Message[0]->Text_Colour.x;
-				y = App->SBC_Scene->B_Object[Count]->S_Message[0]->Text_Colour.y;
-				z = App->SBC_Scene->B_Object[Count]->S_Message[0]->Text_Colour.z;
-				w = App->SBC_Scene->B_Object[Count]->S_Message[0]->Text_Colour.w;
+				x = App->SBC_Scene->V_Object[Count]->S_Message[0]->Text_Colour.x;
+				y = App->SBC_Scene->V_Object[Count]->S_Message[0]->Text_Colour.y;
+				z = App->SBC_Scene->V_Object[Count]->S_Message[0]->Text_Colour.z;
+				w = App->SBC_Scene->V_Object[Count]->S_Message[0]->Text_Colour.w;
 				fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Message_Text_Colour=", x, y, z, w);
 
-				x = App->SBC_Scene->B_Object[Count]->S_Message[0]->BackGround_Colour.x;
-				y = App->SBC_Scene->B_Object[Count]->S_Message[0]->BackGround_Colour.y;
-				z = App->SBC_Scene->B_Object[Count]->S_Message[0]->BackGround_Colour.z;
-				w = App->SBC_Scene->B_Object[Count]->S_Message[0]->BackGround_Colour.w;
+				x = App->SBC_Scene->V_Object[Count]->S_Message[0]->BackGround_Colour.x;
+				y = App->SBC_Scene->V_Object[Count]->S_Message[0]->BackGround_Colour.y;
+				z = App->SBC_Scene->V_Object[Count]->S_Message[0]->BackGround_Colour.z;
+				w = App->SBC_Scene->V_Object[Count]->S_Message[0]->BackGround_Colour.w;
 				fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Message_BackGround_Colour=", x, y, z, w);
 
-				fprintf(WriteFile, "%s%i\n", "Message_Show_BackGround=", App->SBC_Scene->B_Object[Count]->S_Message[0]->Show_BackGround);
+				fprintf(WriteFile, "%s%i\n", "Message_Show_BackGround=", App->SBC_Scene->V_Object[Count]->S_Message[0]->Show_BackGround);
 			}
 
 			//---------------------------------------------------------------------------------- Sound Entity
-			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Sound)
+			if (App->SBC_Scene->V_Object[Count]->Usage == Enums::Usage_Sound)
 			{
-				fprintf(WriteFile, "%s%s\n", "Sound_File=", App->SBC_Scene->B_Object[Count]->Sound_File);
-				fprintf(WriteFile, "%s%f\n", "Sound_Volume=", App->SBC_Scene->B_Object[Count]->SndVolume);
+				fprintf(WriteFile, "%s%s\n", "Sound_File=", App->SBC_Scene->V_Object[Count]->Sound_File);
+				fprintf(WriteFile, "%s%f\n", "Sound_Volume=", App->SBC_Scene->V_Object[Count]->SndVolume);
 			}
 
 			//---------------------------------------------------------------------------------- Colectable Entity
-			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Colectable)
+			if (App->SBC_Scene->V_Object[Count]->Usage == Enums::Usage_Colectable)
 			{
-				fprintf(WriteFile, "%s%s\n", "Col_Sound_File=", App->SBC_Scene->B_Object[Count]->S_Collectable[0]->Sound_File);
-				fprintf(WriteFile, "%s%f\n", "Col_Sound_Volume=", App->SBC_Scene->B_Object[Count]->S_Collectable[0]->SndVolume);
-				fprintf(WriteFile, "%s%i\n", "Col_Play=", App->SBC_Scene->B_Object[Count]->S_Collectable[0]->Play);
-				fprintf(WriteFile, "%s%s\n", "Col_Counter_Name=", App->SBC_Scene->B_Object[Count]->S_Collectable[0]->Counter_Name);
-				fprintf(WriteFile, "%s%i\n", "Col_Counter_ID=", App->SBC_Scene->B_Object[Count]->S_Collectable[0]->Counter_ID);
-				fprintf(WriteFile, "%s%i\n", "Col_Maths=", App->SBC_Scene->B_Object[Count]->S_Collectable[0]->Maths);
-				fprintf(WriteFile, "%s%i\n", "Col_Value=", App->SBC_Scene->B_Object[Count]->S_Collectable[0]->Value);
-				fprintf(WriteFile, "%s%i\n", "Col_Disabled=", App->SBC_Scene->B_Object[Count]->S_Collectable[0]->Counter_Disabled);
+				fprintf(WriteFile, "%s%s\n", "Col_Sound_File=", App->SBC_Scene->V_Object[Count]->S_Collectable[0]->Sound_File);
+				fprintf(WriteFile, "%s%f\n", "Col_Sound_Volume=", App->SBC_Scene->V_Object[Count]->S_Collectable[0]->SndVolume);
+				fprintf(WriteFile, "%s%i\n", "Col_Play=", App->SBC_Scene->V_Object[Count]->S_Collectable[0]->Play);
+				fprintf(WriteFile, "%s%s\n", "Col_Counter_Name=", App->SBC_Scene->V_Object[Count]->S_Collectable[0]->Counter_Name);
+				fprintf(WriteFile, "%s%i\n", "Col_Counter_ID=", App->SBC_Scene->V_Object[Count]->S_Collectable[0]->Counter_ID);
+				fprintf(WriteFile, "%s%i\n", "Col_Maths=", App->SBC_Scene->V_Object[Count]->S_Collectable[0]->Maths);
+				fprintf(WriteFile, "%s%i\n", "Col_Value=", App->SBC_Scene->V_Object[Count]->S_Collectable[0]->Value);
+				fprintf(WriteFile, "%s%i\n", "Col_Disabled=", App->SBC_Scene->V_Object[Count]->S_Collectable[0]->Counter_Disabled);
 
 			}
 
 			//---------------------------------------------------------------------------------- Move Entity
-			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Move)
+			if (App->SBC_Scene->V_Object[Count]->Usage == Enums::Usage_Move)
 			{
-				fprintf(WriteFile, "%s%f\n", "Move_Distance=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Move_Distance);
-				fprintf(WriteFile, "%s%i\n", "Move_IsNegative=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->IsNegative);
-				//	fprintf(WriteFile, "%s%s\n", "Move_MeshPos=", App->SBC_Scene->B_Object[Count]->S_MoveType->MeshPos);
-				fprintf(WriteFile, "%s%f\n", "Move_NewPos=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Newpos);
-				fprintf(WriteFile, "%s%i\n", "Move_ObjectID=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Object_To_Move_Index);
-				fprintf(WriteFile, "%s%s\n", "Move_ObjectName=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Object_Name);
-				//	fprintf(WriteFile, "%s%s\n", "Move_PhysicsPos=", App->SBC_Scene->B_Object[Count]->S_MoveType->PhysicsPos);
-				fprintf(WriteFile, "%s%i\n", "Move_Re_Trigger=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Re_Trigger);
-				fprintf(WriteFile, "%s%f\n", "Move_Speed=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Speed);
-				fprintf(WriteFile, "%s%i\n", "Move_Triggered=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Triggered);
-				fprintf(WriteFile, "%s%i\n", "Move_WhatDirection=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->WhatDirection);
+				fprintf(WriteFile, "%s%f\n", "Move_Distance=", App->SBC_Scene->V_Object[Count]->S_MoveType[0]->Move_Distance);
+				fprintf(WriteFile, "%s%i\n", "Move_IsNegative=", App->SBC_Scene->V_Object[Count]->S_MoveType[0]->IsNegative);
+				//	fprintf(WriteFile, "%s%s\n", "Move_MeshPos=", App->SBC_Scene->V_Object[Count]->S_MoveType->MeshPos);
+				fprintf(WriteFile, "%s%f\n", "Move_NewPos=", App->SBC_Scene->V_Object[Count]->S_MoveType[0]->Newpos);
+				fprintf(WriteFile, "%s%i\n", "Move_ObjectID=", App->SBC_Scene->V_Object[Count]->S_MoveType[0]->Object_To_Move_Index);
+				fprintf(WriteFile, "%s%s\n", "Move_ObjectName=", App->SBC_Scene->V_Object[Count]->S_MoveType[0]->Object_Name);
+				//	fprintf(WriteFile, "%s%s\n", "Move_PhysicsPos=", App->SBC_Scene->V_Object[Count]->S_MoveType->PhysicsPos);
+				fprintf(WriteFile, "%s%i\n", "Move_Re_Trigger=", App->SBC_Scene->V_Object[Count]->S_MoveType[0]->Re_Trigger);
+				fprintf(WriteFile, "%s%f\n", "Move_Speed=", App->SBC_Scene->V_Object[Count]->S_MoveType[0]->Speed);
+				fprintf(WriteFile, "%s%i\n", "Move_Triggered=", App->SBC_Scene->V_Object[Count]->S_MoveType[0]->Triggered);
+				fprintf(WriteFile, "%s%i\n", "Move_WhatDirection=", App->SBC_Scene->V_Object[Count]->S_MoveType[0]->WhatDirection);
 
 				// Move Sound
-				fprintf(WriteFile, "%s%s\n", "Move_Sound=", App->SBC_Scene->B_Object[Count]->Sound_File);
-				fprintf(WriteFile, "%s%i\n", "Move_Play_Sound=", App->SBC_Scene->B_Object[Count]->Play_Sound);
-				fprintf(WriteFile, "%s%f\n", "Move_Volume=", App->SBC_Scene->B_Object[Count]->SndVolume);
+				fprintf(WriteFile, "%s%s\n", "Move_Sound=", App->SBC_Scene->V_Object[Count]->Sound_File);
+				fprintf(WriteFile, "%s%i\n", "Move_Play_Sound=", App->SBC_Scene->V_Object[Count]->Play_Sound);
+				fprintf(WriteFile, "%s%f\n", "Move_Volume=", App->SBC_Scene->V_Object[Count]->SndVolume);
 
 				// Move Counter
-				fprintf(WriteFile, "%s%i\n", "Move_Counter_ID=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Counter_ID);
-				fprintf(WriteFile, "%s%i\n", "Move_Trigger_Value=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Trigger_Value);
-				fprintf(WriteFile, "%s%i\n", "Move_Counter_Disabled=", App->SBC_Scene->B_Object[Count]->S_MoveType[0]->Counter_Disabled);
+				fprintf(WriteFile, "%s%i\n", "Move_Counter_ID=", App->SBC_Scene->V_Object[Count]->S_MoveType[0]->Counter_ID);
+				fprintf(WriteFile, "%s%i\n", "Move_Trigger_Value=", App->SBC_Scene->V_Object[Count]->S_MoveType[0]->Trigger_Value);
+				fprintf(WriteFile, "%s%i\n", "Move_Counter_Disabled=", App->SBC_Scene->V_Object[Count]->S_MoveType[0]->Counter_Disabled);
 	
 			}
 
 			//---------------------------------------------------------------------------------- Teleport Entity
-			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Teleport)
+			if (App->SBC_Scene->V_Object[Count]->Usage == Enums::Usage_Teleport)
 			{
-				fprintf(WriteFile, "%s%s\n", "Tele_Goto=", App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Name);
+				fprintf(WriteFile, "%s%s\n", "Tele_Goto=", App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Name);
 
-				fprintf(WriteFile, "%s%i\n", "Tele_ID=", App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Location_ID);
+				fprintf(WriteFile, "%s%i\n", "Tele_ID=", App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Location_ID);
 
-				fprintf(WriteFile, "%s%s\n", "Tele_Sound=", App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Sound_File);
-				fprintf(WriteFile, "%s%f\n", "Tele_Volume=", App->SBC_Scene->B_Object[Count]->S_Teleport[0]->SndVolume);
-				fprintf(WriteFile, "%s%i\n", "Tele_Play=", App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Play);
+				fprintf(WriteFile, "%s%s\n", "Tele_Sound=", App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Sound_File);
+				fprintf(WriteFile, "%s%f\n", "Tele_Volume=", App->SBC_Scene->V_Object[Count]->S_Teleport[0]->SndVolume);
+				fprintf(WriteFile, "%s%i\n", "Tele_Play=", App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Play);
 
-				x = App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Player_Position.x;
-				y = App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Player_Position.y;
-				z = App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Player_Position.z;
+				x = App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Player_Position.x;
+				y = App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Player_Position.y;
+				z = App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Player_Position.z;
 				fprintf(WriteFile, "%s%f,%f,%f\n", "Tele_Mesh_Position=", x, y, z);
 
-				x = App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Position.getX();
-				y = App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Position.getY();
-				z = App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Position.getZ();
+				x = App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Physics_Position.getX();
+				y = App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Physics_Position.getY();
+				z = App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Physics_Position.getZ();
 				fprintf(WriteFile, "%s%f,%f,%f\n", "Tele_Physics_Position=", x, y, z);
 
-				w = App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Rotation.getW();
-				x = App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Rotation.getX();
-				y = App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Rotation.getY();
-				z = App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Physics_Rotation.getZ();
+				w = App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Physics_Rotation.getW();
+				x = App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Physics_Rotation.getX();
+				y = App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Physics_Rotation.getY();
+				z = App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Physics_Rotation.getZ();
 				fprintf(WriteFile, "%s%f,%f,%f,%f\n", "Tele_Physics_Rotation=", w, x, y, z);
 
 				// Teleport Counter
-				fprintf(WriteFile, "%s%i\n", "Tele_Counter_ID=", App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Counter_ID);
-				fprintf(WriteFile, "%s%i\n", "Tele_Trigger_Value=", App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Trigger_Value);
-				fprintf(WriteFile, "%s%i\n", "Tele_Counter_Disabled=", App->SBC_Scene->B_Object[Count]->S_Teleport[0]->Counter_Disabled);
+				fprintf(WriteFile, "%s%i\n", "Tele_Counter_ID=", App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Counter_ID);
+				fprintf(WriteFile, "%s%i\n", "Tele_Trigger_Value=", App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Trigger_Value);
+				fprintf(WriteFile, "%s%i\n", "Tele_Counter_Disabled=", App->SBC_Scene->V_Object[Count]->S_Teleport[0]->Counter_Disabled);
 
 				//--------------- Environment
 				fprintf(WriteFile, "%s\n", "------------------------------------------------------------------------------ Teleporter Environ");
-				fprintf(WriteFile, "%s%i\n", "Environ_Enabled=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Environ_Enabled);
-				fprintf(WriteFile, "%s%s\n", "Environment_Name=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Environment_Name);
-				fprintf(WriteFile, "%s%i\n", "Environment_ID=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Environment_ID);
+				fprintf(WriteFile, "%s%i\n", "Environ_Enabled=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Environ_Enabled);
+				fprintf(WriteFile, "%s%s\n", "Environment_Name=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Environment_Name);
+				fprintf(WriteFile, "%s%i\n", "Environment_ID=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Environment_ID);
 
 				//--------------- Sound
-				fprintf(WriteFile, "%s%s\n", "Sound_File=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Sound_File);
-				fprintf(WriteFile, "%s%f\n", "Snd_Volume=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->SndVolume);
+				fprintf(WriteFile, "%s%s\n", "Sound_File=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Sound_File);
+				fprintf(WriteFile, "%s%f\n", "Snd_Volume=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->SndVolume);
 
-				fprintf(WriteFile, "%s%i\n", "Sound_Play=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Play);
-				fprintf(WriteFile, "%s%i\n", "Sound_Loop=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Loop);
+				fprintf(WriteFile, "%s%i\n", "Sound_Play=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Play);
+				fprintf(WriteFile, "%s%i\n", "Sound_Loop=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Loop);
 
 				//--------------- Light
 
-				x = App->SBC_Scene->B_Object[Count]->S_Environ[0]->AmbientColour.x;
-				y = App->SBC_Scene->B_Object[Count]->S_Environ[0]->AmbientColour.y;
-				z = App->SBC_Scene->B_Object[Count]->S_Environ[0]->AmbientColour.z;
+				x = App->SBC_Scene->V_Object[Count]->S_Environ[0]->AmbientColour.x;
+				y = App->SBC_Scene->V_Object[Count]->S_Environ[0]->AmbientColour.y;
+				z = App->SBC_Scene->V_Object[Count]->S_Environ[0]->AmbientColour.z;
 				fprintf(WriteFile, "%s%f,%f,%f\n", "Ambient_Colour=", x, y, z);
 
-				x = App->SBC_Scene->B_Object[Count]->S_Environ[0]->Light_Position.x;
-				y = App->SBC_Scene->B_Object[Count]->S_Environ[0]->Light_Position.y;
-				z = App->SBC_Scene->B_Object[Count]->S_Environ[0]->Light_Position.z;
+				x = App->SBC_Scene->V_Object[Count]->S_Environ[0]->Light_Position.x;
+				y = App->SBC_Scene->V_Object[Count]->S_Environ[0]->Light_Position.y;
+				z = App->SBC_Scene->V_Object[Count]->S_Environ[0]->Light_Position.z;
 				fprintf(WriteFile, "%s%f,%f,%f\n", "Light_Position=", x, y, z);
 
 				//--------------- Sky
-				fprintf(WriteFile, "%s%i\n", "Sky_Enable=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Enabled);
-				fprintf(WriteFile, "%s%i\n", "Sky_Type=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->type);
-				fprintf(WriteFile, "%s%s\n", "Sky_Material=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Material);
-				fprintf(WriteFile, "%s%f\n", "Sky_Curvature=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Curvature);
-				fprintf(WriteFile, "%s%f\n", "Sky_Tiling=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Tiling);
-				fprintf(WriteFile, "%s%f\n", "Sky_Distance=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Distance);
+				fprintf(WriteFile, "%s%i\n", "Sky_Enable=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Enabled);
+				fprintf(WriteFile, "%s%i\n", "Sky_Type=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->type);
+				fprintf(WriteFile, "%s%s\n", "Sky_Material=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Material);
+				fprintf(WriteFile, "%s%f\n", "Sky_Curvature=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Curvature);
+				fprintf(WriteFile, "%s%f\n", "Sky_Tiling=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Tiling);
+				fprintf(WriteFile, "%s%f\n", "Sky_Distance=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Distance);
 
 				//--------------- Fog
-				fprintf(WriteFile, "%s%i\n", "Fog_On=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_On);
-				fprintf(WriteFile, "%s%i\n", "Fog_Mode=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_Mode);
+				fprintf(WriteFile, "%s%i\n", "Fog_On=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_On);
+				fprintf(WriteFile, "%s%i\n", "Fog_Mode=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_Mode);
 
-				x = App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_Colour.x;
-				y = App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_Colour.y;
-				z = App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_Colour.z;
+				x = App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_Colour.x;
+				y = App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_Colour.y;
+				z = App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_Colour.z;
 				fprintf(WriteFile, "%s%f,%f,%f\n", "Fog_Colour=", x, y, z);
 
-				fprintf(WriteFile, "%s%f\n", "Fog_Start=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_Start);
-				fprintf(WriteFile, "%s%f\n", "Fog_End=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_End);
-				fprintf(WriteFile, "%s%f\n", "Fog_Density=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_Density);
+				fprintf(WriteFile, "%s%f\n", "Fog_Start=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_Start);
+				fprintf(WriteFile, "%s%f\n", "Fog_End=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_End);
+				fprintf(WriteFile, "%s%f\n", "Fog_Density=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_Density);
 
 				
 			}
 
 			//---------------------------------------------------------------------------------- Environ Entity
-			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_EnvironEntity)
+			if (App->SBC_Scene->V_Object[Count]->Usage == Enums::Usage_EnvironEntity)
 			{
 				fprintf(WriteFile, "%s\n", "------------------- EnvironEntity");
-				fprintf(WriteFile, "%s%s\n", "Environment_Name=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Environment_Name);
-				fprintf(WriteFile, "%s%i\n", "Environment_ID=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Environment_ID);
+				fprintf(WriteFile, "%s%s\n", "Environment_Name=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Environment_Name);
+				fprintf(WriteFile, "%s%i\n", "Environment_ID=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Environment_ID);
 
 				//--------------- Sound
-				fprintf(WriteFile, "%s%s\n", "Sound_File=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Sound_File);
-				fprintf(WriteFile, "%s%f\n", "Snd_Volume=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->SndVolume);
+				fprintf(WriteFile, "%s%s\n", "Sound_File=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Sound_File);
+				fprintf(WriteFile, "%s%f\n", "Snd_Volume=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->SndVolume);
 
-				fprintf(WriteFile, "%s%i\n", "Sound_Play=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Play);
-				fprintf(WriteFile, "%s%i\n", "Sound_Loop=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Loop);
+				fprintf(WriteFile, "%s%i\n", "Sound_Play=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Play);
+				fprintf(WriteFile, "%s%i\n", "Sound_Loop=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Loop);
 
 				//--------------- Light
 
-				x = App->SBC_Scene->B_Object[Count]->S_Environ[0]->AmbientColour.x;
-				y = App->SBC_Scene->B_Object[Count]->S_Environ[0]->AmbientColour.y;
-				z = App->SBC_Scene->B_Object[Count]->S_Environ[0]->AmbientColour.z;
+				x = App->SBC_Scene->V_Object[Count]->S_Environ[0]->AmbientColour.x;
+				y = App->SBC_Scene->V_Object[Count]->S_Environ[0]->AmbientColour.y;
+				z = App->SBC_Scene->V_Object[Count]->S_Environ[0]->AmbientColour.z;
 				fprintf(WriteFile, "%s%f,%f,%f\n", "Ambient_Colour=", x, y, z);
 
-				x = App->SBC_Scene->B_Object[Count]->S_Environ[0]->Light_Position.x;
-				y = App->SBC_Scene->B_Object[Count]->S_Environ[0]->Light_Position.y;
-				z = App->SBC_Scene->B_Object[Count]->S_Environ[0]->Light_Position.z;
+				x = App->SBC_Scene->V_Object[Count]->S_Environ[0]->Light_Position.x;
+				y = App->SBC_Scene->V_Object[Count]->S_Environ[0]->Light_Position.y;
+				z = App->SBC_Scene->V_Object[Count]->S_Environ[0]->Light_Position.z;
 				fprintf(WriteFile, "%s%f,%f,%f\n", "Light_Position=", x, y, z);
 
 				//--------------- Sky
-				fprintf(WriteFile, "%s%i\n", "Sky_Enable=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Enabled);
-				fprintf(WriteFile, "%s%i\n", "Sky_Type=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->type);
-				fprintf(WriteFile, "%s%s\n", "Sky_Material=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Material);
-				fprintf(WriteFile, "%s%f\n", "Sky_Curvature=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Curvature);
-				fprintf(WriteFile, "%s%f\n", "Sky_Tiling=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Tiling);
-				fprintf(WriteFile, "%s%f\n", "Sky_Distance=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Distance);
+				fprintf(WriteFile, "%s%i\n", "Sky_Enable=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Enabled);
+				fprintf(WriteFile, "%s%i\n", "Sky_Type=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->type);
+				fprintf(WriteFile, "%s%s\n", "Sky_Material=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Material);
+				fprintf(WriteFile, "%s%f\n", "Sky_Curvature=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Curvature);
+				fprintf(WriteFile, "%s%f\n", "Sky_Tiling=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Tiling);
+				fprintf(WriteFile, "%s%f\n", "Sky_Distance=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Distance);
 
 				//--------------- Fog
-				fprintf(WriteFile, "%s%i\n", "Fog_On=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_On);
-				fprintf(WriteFile, "%s%i\n", "Fog_Mode=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_Mode);
+				fprintf(WriteFile, "%s%i\n", "Fog_On=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_On);
+				fprintf(WriteFile, "%s%i\n", "Fog_Mode=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_Mode);
 
-				x = App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_Colour.x;
-				y = App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_Colour.y;
-				z = App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_Colour.z;
+				x = App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_Colour.x;
+				y = App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_Colour.y;
+				z = App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_Colour.z;
 				fprintf(WriteFile, "%s%f,%f,%f\n", "Fog_Colour=", x, y, z);
 
-				fprintf(WriteFile, "%s%f\n", "Fog_Start=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_Start);
-				fprintf(WriteFile, "%s%f\n", "Fog_End=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_End);
-				fprintf(WriteFile, "%s%f\n", "Fog_Density=", App->SBC_Scene->B_Object[Count]->S_Environ[0]->Fog_Density);
+				fprintf(WriteFile, "%s%f\n", "Fog_Start=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_Start);
+				fprintf(WriteFile, "%s%f\n", "Fog_End=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_End);
+				fprintf(WriteFile, "%s%f\n", "Fog_Density=", App->SBC_Scene->V_Object[Count]->S_Environ[0]->Fog_Density);
 
 			}
 			
 			//---------------------------------------------------------------------------------- Particle
-			if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Particle)
+			if (App->SBC_Scene->V_Object[Count]->Usage == Enums::Usage_Particle)
 			{
 				fprintf(WriteFile, "%s\n", "-- Particle");
-				fprintf(WriteFile, "%s%s\n", "Particle_Script=", App->SBC_Scene->B_Object[Count]->S_Particle[0]->ParticleScript);
-				fprintf(WriteFile, "%s%f\n", "Particle_SpeedFactor=", App->SBC_Scene->B_Object[Count]->S_Particle[0]->SpeedFactor);
+				fprintf(WriteFile, "%s%s\n", "Particle_Script=", App->SBC_Scene->V_Object[Count]->S_Particle[0]->ParticleScript);
+				fprintf(WriteFile, "%s%f\n", "Particle_SpeedFactor=", App->SBC_Scene->V_Object[Count]->S_Particle[0]->SpeedFactor);
 
 			}
 

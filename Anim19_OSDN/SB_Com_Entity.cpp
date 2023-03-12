@@ -44,31 +44,31 @@ bool SB_Com_Entity::Add_New_Teleporter()
 
 	int Index = App->SBC_Scene->Object_Count;
 
-	App->SBC_Scene->B_Object[Index] = new Base_Object();
+	App->SBC_Scene->V_Object[Index] = new Base_Object();
 
-	App->SBC_Scene->B_Object[Index]->S_Teleport[0] = new Teleport_type;
-	Set_Teleports_Defaults(Index);
+	App->SBC_Scene->V_Object[Index]->S_Teleport[0] = new Teleport_type;
+	V_Set_Teleports_Defaults(Index);
 
-	App->SBC_Scene->B_Object[Index]->Type = Enums::Bullet_Type_Static;
-	App->SBC_Scene->B_Object[Index]->Shape = Enums::Shape_Box;
-	App->SBC_Scene->B_Object[Index]->This_Object_UniqueID = App->SBC_Scene->UniqueID_Object_Counter; // Unique ID
+	App->SBC_Scene->V_Object[Index]->Type = Enums::Bullet_Type_Static;
+	App->SBC_Scene->V_Object[Index]->Shape = Enums::Shape_Box;
+	App->SBC_Scene->V_Object[Index]->This_Object_UniqueID = App->SBC_Scene->UniqueID_Object_Counter; // Unique ID
 
-	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_FileName, "TeleportSend.mesh");
+	strcpy(App->SBC_Scene->V_Object[Index]->Mesh_FileName, "TeleportSend.mesh");
 
 	strcpy_s(B_Name, "Teleport_Ent_");
 	_itoa(Index, ConNum, 10);
 	strcat(B_Name, ConNum);
-	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_Name, B_Name);
+	strcpy(App->SBC_Scene->V_Object[Index]->Mesh_Name, B_Name);
 
 	Ogre::Vector3 Pos = App->SBC_Object->GetPlacement(-50);
-	App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
+	App->SBC_Scene->V_Object[Index]->Mesh_Pos = Pos;
 
 	Create_Teleport_Entity(Index);
 
-	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Teleporters_Folder, App->SBC_Scene->B_Object[Index]->Mesh_Name, Index, true);
-	App->SBC_Scene->B_Object[Index]->FileViewItem = Temp;
+	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Teleporters_Folder, App->SBC_Scene->V_Object[Index]->Mesh_Name, Index, true);
+	App->SBC_Scene->V_Object[Index]->FileViewItem = Temp;
 
-	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[Index]->FileViewItem);
+	App->SBC_FileView->SelectItem(App->SBC_Scene->V_Object[Index]->FileViewItem);
 
 	App->SBC_Scene->UniqueID_Object_Counter++;
 	App->SBC_Scene->Object_Count++;
@@ -87,7 +87,7 @@ bool SB_Com_Entity::Create_Teleport_Entity(int Index)
 	char ConNum[256];
 	char Ogre_Name[256];
 
-	Base_Object* Object = App->SBC_Scene->B_Object[Index];
+	Base_Object* Object = App->SBC_Scene->V_Object[Index];
 
 	// ----------------- Mesh
 
@@ -162,41 +162,11 @@ bool SB_Com_Entity::Create_Teleport_Entity(int Index)
 
 	App->SBC_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
-	App->SBC_Scene->B_Object[Index]->Physics_Valid = 1;
+	App->SBC_Scene->V_Object[Index]->Physics_Valid = 1;
 
 	App->SBC_Physics->Set_Physics(Index);
 
 	return 1;
-}
-
-// *************************************************************************
-// *	  Set_Teleports_Defaults:- Terry and Hazel Flanigan 2022	 	   *
-// *************************************************************************
-void SB_Com_Entity::Set_Teleports_Defaults(int Index)
-{
-	float x = 0;
-	float y = 0;
-	float z = 0;
-
-	App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Location_ID = 0;
-
-	strcpy(App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Name, "Start_Location");
-
-	strcpy(App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Sound_File, "magicspell.ogg");
-	App->SBC_Scene->B_Object[Index]->S_Teleport[0]->SndVolume = 0.5;
-	App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Play = 1;
-
-	x = App->SBC_Scene->B_Player[0]->StartPos.x;
-	y = App->SBC_Scene->B_Player[0]->StartPos.y;
-	z = App->SBC_Scene->B_Player[0]->StartPos.z;
-
-	App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Physics_Position = btVector3(x, y, z);
-	App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Physics_Rotation = App->SBC_Scene->B_Player[0]->Physics_Rotation;
-
-	App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Trigger_Value = 0;
-	App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Counter_ID = 0;
-	strcpy(App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Counter_Name, "None");
-	App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Counter_Disabled = 1;
 }
 
 // *************************************************************************
@@ -242,35 +212,35 @@ bool SB_Com_Entity::Add_New_Sound()
 
 	int Index = App->SBC_Scene->Object_Count;
 
-	App->SBC_Scene->B_Object[Index] = new Base_Object();
+	App->SBC_Scene->V_Object[Index] = new Base_Object();
 
-	strcpy(App->SBC_Scene->B_Object[Index]->Sound_File, "Welcome.ogg");
-	strcpy(App->SBC_Scene->B_Object[Index]->Sound_Path, App->SBC_SoundMgr->Default_Folder);
-	strcat(App->SBC_Scene->B_Object[Index]->Sound_Path, "\\Media\\Sounds\\");
-	strcat(App->SBC_Scene->B_Object[Index]->Sound_Path, "Welcome.ogg");
+	strcpy(App->SBC_Scene->V_Object[Index]->Sound_File, "Welcome.ogg");
+	strcpy(App->SBC_Scene->V_Object[Index]->Sound_Path, App->SBC_SoundMgr->Default_Folder);
+	strcat(App->SBC_Scene->V_Object[Index]->Sound_Path, "\\Media\\Sounds\\");
+	strcat(App->SBC_Scene->V_Object[Index]->Sound_Path, "Welcome.ogg");
 
-	App->SBC_Scene->B_Object[Index]->HasSound = 1;
+	App->SBC_Scene->V_Object[Index]->HasSound = 1;
 
-	App->SBC_Scene->B_Object[Index]->Type = Enums::Bullet_Type_Static;
-	App->SBC_Scene->B_Object[Index]->Shape = Enums::Shape_Box;
-	App->SBC_Scene->B_Object[Index]->This_Object_UniqueID = App->SBC_Scene->UniqueID_Object_Counter; // Unique ID
+	App->SBC_Scene->V_Object[Index]->Type = Enums::Bullet_Type_Static;
+	App->SBC_Scene->V_Object[Index]->Shape = Enums::Shape_Box;
+	App->SBC_Scene->V_Object[Index]->This_Object_UniqueID = App->SBC_Scene->UniqueID_Object_Counter; // Unique ID
 
-	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_FileName, "SoundEntity_GD.mesh");
+	strcpy(App->SBC_Scene->V_Object[Index]->Mesh_FileName, "SoundEntity_GD.mesh");
 
 	strcpy_s(B_Name, "Sound_");
 	_itoa(Index, ConNum, 10);
 	strcat(B_Name, ConNum);
-	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_Name, B_Name);
+	strcpy(App->SBC_Scene->V_Object[Index]->Mesh_Name, B_Name);
 
 	Ogre::Vector3 Pos = App->SBC_Object->GetPlacement(-50);
-	App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
+	App->SBC_Scene->V_Object[Index]->Mesh_Pos = Pos;
 
 	Create_Sound_Entity(Index);
 
-	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Sounds_Folder, App->SBC_Scene->B_Object[Index]->Mesh_Name, Index, true);
-	App->SBC_Scene->B_Object[Index]->FileViewItem = Temp;
+	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Sounds_Folder, App->SBC_Scene->V_Object[Index]->Mesh_Name, Index, true);
+	App->SBC_Scene->V_Object[Index]->FileViewItem = Temp;
 
-	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[Index]->FileViewItem);
+	App->SBC_FileView->SelectItem(App->SBC_Scene->V_Object[Index]->FileViewItem);
 
 	App->SBC_Scene->UniqueID_Object_Counter++;
 	App->SBC_Scene->Object_Count++;
@@ -288,7 +258,7 @@ bool SB_Com_Entity::Create_Sound_Entity(int Index)
 	char ConNum[256];
 	char Ogre_Name[256];
 
-	Base_Object* Object = App->SBC_Scene->B_Object[Index];
+	Base_Object* Object = App->SBC_Scene->V_Object[Index];
 
 	// ----------------- Mesh
 
@@ -363,7 +333,7 @@ bool SB_Com_Entity::Create_Sound_Entity(int Index)
 
 	App->SBC_Bullet->dynamicsWorld->addRigidBody(Object->Phys_Body);
 
-	App->SBC_Scene->B_Object[Index]->Physics_Valid = 1;
+	App->SBC_Scene->V_Object[Index]->Physics_Valid = 1;
 
 	App->SBC_Physics->Set_Physics(Index);
 
@@ -381,34 +351,34 @@ bool SB_Com_Entity::Add_New_Message()
 
 	int Index = App->SBC_Scene->Object_Count;
 
-	App->SBC_Scene->B_Object[Index] = new Base_Object();
-	App->SBC_Scene->B_Object[Index]->S_Message[0] = new Message_type;
-	Set_Message_Defaults(Index);
+	App->SBC_Scene->V_Object[Index] = new Base_Object();
+	App->SBC_Scene->V_Object[Index]->S_Message[0] = new Message_type;
+	V_Set_Message_Defaults(Index);
 
-	App->SBC_Scene->B_Object[Index]->Type = Enums::Bullet_Type_Static;
-	App->SBC_Scene->B_Object[Index]->Shape = Enums::Shape_Box;
-	App->SBC_Scene->B_Object[Index]->This_Object_UniqueID = App->SBC_Scene->UniqueID_Object_Counter; // Unique ID
+	App->SBC_Scene->V_Object[Index]->Type = Enums::Bullet_Type_Static;
+	App->SBC_Scene->V_Object[Index]->Shape = Enums::Shape_Box;
+	App->SBC_Scene->V_Object[Index]->This_Object_UniqueID = App->SBC_Scene->UniqueID_Object_Counter; // Unique ID
 
-	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_FileName, "Test_cube.mesh");
+	strcpy(App->SBC_Scene->V_Object[Index]->Mesh_FileName, "Test_cube.mesh");
 
 	strcpy_s(B_Name, "Message_");
 	_itoa(Index, ConNum, 10);
 	strcat(B_Name, ConNum);
-	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_Name, B_Name);
+	strcpy(App->SBC_Scene->V_Object[Index]->Mesh_Name, B_Name);
 
 	Ogre::Vector3 Pos = App->SBC_Object->GetPlacement(-50);
-	App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
+	App->SBC_Scene->V_Object[Index]->Mesh_Pos = Pos;
 
 	Create_Message_Entity(Index);
 
-	App->SBC_Scene->B_Object[Index]->Set_ImGui_Panel_Name();
+	App->SBC_Scene->V_Object[Index]->Set_ImGui_Panel_Name();
 
 
 
-	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Message_Trigger_Folder, App->SBC_Scene->B_Object[Index]->Mesh_Name, Index, true);
-	App->SBC_Scene->B_Object[Index]->FileViewItem = Temp;
+	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Message_Trigger_Folder, App->SBC_Scene->V_Object[Index]->Mesh_Name, Index, true);
+	App->SBC_Scene->V_Object[Index]->FileViewItem = Temp;
 
-	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[Index]->FileViewItem);
+	App->SBC_FileView->SelectItem(App->SBC_Scene->V_Object[Index]->FileViewItem);
 
 	App->SBC_Scene->UniqueID_Object_Counter++;
 	App->SBC_Scene->Object_Count++;
@@ -426,7 +396,7 @@ bool SB_Com_Entity::Create_Message_Entity(int Index)
 	char ConNum[256];
 	char Ogre_Name[256];
 
-	Base_Object* MObject = App->SBC_Scene->B_Object[Index];
+	Base_Object* MObject = App->SBC_Scene->V_Object[Index];
 
 	// ----------------- Mesh
 
@@ -502,36 +472,11 @@ bool SB_Com_Entity::Create_Message_Entity(int Index)
 
 	App->SBC_Bullet->dynamicsWorld->addRigidBody(MObject->Phys_Body);
 
-	App->SBC_Scene->B_Object[Index]->Physics_Valid = 1;
+	App->SBC_Scene->V_Object[Index]->Physics_Valid = 1;
 
 	App->SBC_Physics->Set_Physics(Index);
 
 	return 1;
-}
-
-// *************************************************************************
-// *		Set_Message_Defaults:- Terry and Hazel Flanigan 2022	  	   *
-// *************************************************************************
-void SB_Com_Entity::Set_Message_Defaults(int Index)
-{
-	
-	App->SBC_Scene->B_Object[Index]->S_Message[0]->Trigger_Value = 0;
-	App->SBC_Scene->B_Object[Index]->S_Message[0]->Counter_ID = 0;
-	strcpy(App->SBC_Scene->B_Object[Index]->S_Message[0]->Counter_Name, "None");
-	App->SBC_Scene->B_Object[Index]->S_Message[0]->Counter_Disabled = 1;
-
-	strcpy(App->SBC_Scene->B_Object[Index]->S_Message[0]->Message_Text, "Welcome");
-	App->SBC_Scene->B_Object[Index]->S_Message[0]->Message_PosX = 250;
-	App->SBC_Scene->B_Object[Index]->S_Message[0]->Message_PosY = 10;
-
-	App->SBC_Scene->B_Object[Index]->S_Message[0]->PosXCentre_Flag = 0;
-	App->SBC_Scene->B_Object[Index]->S_Message[0]->PosYCentre_Flag = 0;
-
-	App->SBC_Scene->B_Object[Index]->S_Message[0]->Text_Colour = Ogre::Vector4(0, 0, 0, 255);
-	App->SBC_Scene->B_Object[Index]->S_Message[0]->BackGround_Colour = Ogre::Vector4(239, 239, 239, 255);
-
-	App->SBC_Scene->B_Object[Index]->S_Message[0]->Show_BackGround = 1;
-	return;
 }
 
 // *************************************************************************
@@ -572,33 +517,33 @@ void SB_Com_Entity::Add_New_Particle(char* Script)
 
 	int Index = App->SBC_Scene->Object_Count;
 
-	App->SBC_Scene->B_Object[Index] = new Base_Object();
-	App->SBC_Scene->B_Object[Index]->S_Particle[0] = new Particle_type;
-	Set_Particle_Defaults(Index);
+	App->SBC_Scene->V_Object[Index] = new Base_Object();
+	App->SBC_Scene->V_Object[Index]->S_Particle[0] = new Particle_type;
+	V_Set_Particle_Defaults(Index);
 
-	strcpy(App->SBC_Scene->B_Object[Index]->S_Particle[0]->ParticleScript, Script);
+	strcpy(App->SBC_Scene->V_Object[Index]->S_Particle[0]->ParticleScript, Script);
 
-	App->SBC_Scene->B_Object[Index]->Type = Enums::Bullet_Type_None;
-	App->SBC_Scene->B_Object[Index]->Shape = Enums::NoShape;
-	App->SBC_Scene->B_Object[Index]->This_Object_UniqueID = App->SBC_Scene->UniqueID_Object_Counter; // Unique ID
+	App->SBC_Scene->V_Object[Index]->Type = Enums::Bullet_Type_None;
+	App->SBC_Scene->V_Object[Index]->Shape = Enums::NoShape;
+	App->SBC_Scene->V_Object[Index]->This_Object_UniqueID = App->SBC_Scene->UniqueID_Object_Counter; // Unique ID
 
-	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_FileName, "DoorEntity_GD.mesh");
+	strcpy(App->SBC_Scene->V_Object[Index]->Mesh_FileName, "DoorEntity_GD.mesh");
 
 	strcpy_s(B_Name, "Particle_");
 	_itoa(Index, ConNum, 10);
 	strcat(B_Name, ConNum);
-	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_Name, B_Name);
+	strcpy(App->SBC_Scene->V_Object[Index]->Mesh_Name, B_Name);
 
 	Ogre::Vector3 Pos = App->SBC_Object->GetPlacement(-50);
-	App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
-	App->SBC_Scene->B_Object[Index]->Mesh_Scale = Ogre::Vector3(1, 1, 1);
+	App->SBC_Scene->V_Object[Index]->Mesh_Pos = Pos;
+	App->SBC_Scene->V_Object[Index]->Mesh_Scale = Ogre::Vector3(1, 1, 1);
 
 	CreateParticle(Index);
 
-	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Particles_Folder, App->SBC_Scene->B_Object[Index]->Mesh_Name, Index, true);
-	App->SBC_Scene->B_Object[Index]->FileViewItem = Temp;
+	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Particles_Folder, App->SBC_Scene->V_Object[Index]->Mesh_Name, Index, true);
+	App->SBC_Scene->V_Object[Index]->FileViewItem = Temp;
 
-	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[Index]->FileViewItem);
+	App->SBC_FileView->SelectItem(App->SBC_Scene->V_Object[Index]->FileViewItem);
 
 	App->SBC_Scene->UniqueID_Object_Counter++;
 	App->SBC_Scene->Object_Count++;
@@ -614,7 +559,7 @@ void SB_Com_Entity::CreateParticle(int Index)
 	char ConNum[256];
 	char Ogre_Name[256];
 
-	Base_Object* Object = App->SBC_Scene->B_Object[Index];
+	Base_Object* Object = App->SBC_Scene->V_Object[Index];
 
 
 	// ----------------- Mesh
@@ -661,20 +606,6 @@ void SB_Com_Entity::CreateParticle(int Index)
 }
 
 // *************************************************************************
-// *		Set_Particle_Defaults:- Terry and Hazel Flanigan 2022		   *
-// *************************************************************************
-void SB_Com_Entity::Set_Particle_Defaults(int Index)
-{
-	App->SBC_Scene->B_Object[Index]->Phys_Body = NULL;
-	App->SBC_Scene->B_Object[Index]->Physics_Valid = 0;
-	App->SBC_Scene->B_Object[Index]->Usage = Enums::Usage_Particle;
-
-	App->SBC_Scene->B_Object[Index]->S_Particle[0]->Particle = NULL;
-	App->SBC_Scene->B_Object[Index]->S_Particle[0]->SpeedFactor = 0.5;
-	strcpy(App->SBC_Scene->B_Object[Index]->S_Particle[0]->ParticleScript, "GD_Smoke1");
-}
-
-// *************************************************************************
 // *		V_Set_Particle_Defaults:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
 void SB_Com_Entity::V_Set_Particle_Defaults(int Index)
@@ -701,11 +632,11 @@ bool SB_Com_Entity::Add_New_Collectable()
 
 	int Index = App->SBC_Scene->Object_Count;
 
-	App->SBC_Scene->B_Object[Index] = new Base_Object();
-	App->SBC_Scene->B_Object[Index]->S_Collectable[0] = new Collectable_type;
-	App->SBC_Com_Entity->Set_Collectables_Defaults(Index);
+	App->SBC_Scene->V_Object[Index] = new Base_Object();
+	App->SBC_Scene->V_Object[Index]->S_Collectable[0] = new Collectable_type;
+	App->SBC_Com_Entity->V_Set_Collectables_Defaults(Index);
 
-	Base_Object* Object = App->SBC_Scene->B_Object[Index];
+	Base_Object* Object = App->SBC_Scene->V_Object[Index];
 	Object->This_Object_UniqueID = App->SBC_Scene->UniqueID_Object_Counter; // Unique ID
 
 	strcpy(Object->Mesh_Name, App->SBC_MeshViewer->Object_Name);
@@ -716,10 +647,10 @@ bool SB_Com_Entity::Add_New_Collectable()
 	strcpy_s(B_Name, "Collectable_");
 	_itoa(Index, ConNum, 10);
 	strcat(B_Name, ConNum);
-	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_Name, B_Name);
+	strcpy(App->SBC_Scene->V_Object[Index]->Mesh_Name, B_Name);
 
 	Ogre::Vector3 Pos = App->SBC_Object->GetPlacement(-50);
-	App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
+	App->SBC_Scene->V_Object[Index]->Mesh_Pos = Pos;
 
 	Object->Type = Enums::Bullet_Type_Static;
 	Object->Shape = Enums::Shape_Box;
@@ -727,16 +658,16 @@ bool SB_Com_Entity::Add_New_Collectable()
 
 	Create_Collectable_Entity(Index);
 
-	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Collectables_Folder, App->SBC_Scene->B_Object[Index]->Mesh_Name, Index, true);
-	App->SBC_Scene->B_Object[Index]->FileViewItem = Temp;
+	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Collectables_Folder, App->SBC_Scene->V_Object[Index]->Mesh_Name, Index, true);
+	App->SBC_Scene->V_Object[Index]->FileViewItem = Temp;
 
-	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[Index]->FileViewItem);
+	App->SBC_FileView->SelectItem(App->SBC_Scene->V_Object[Index]->FileViewItem);
 	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_EntitiesFolder);
 
 	App->SBC_Scene->UniqueID_Object_Counter++; // Unique ID
 	App->SBC_Scene->Object_Count++;  // Must be last line
 
-	App->SBC_Scene->B_Object[Index]->Altered = 1;
+	App->SBC_Scene->V_Object[Index]->Altered = 1;
 	App->SBC_Scene->Scene_Modified = 1;
 
 	return 1;
@@ -751,7 +682,7 @@ bool SB_Com_Entity::Create_Collectable_Entity(int Index)
 	char ConNum[256];
 	char Ogre_Name[256];
 
-	Base_Object* Object = App->SBC_Scene->B_Object[Index];
+	Base_Object* Object = App->SBC_Scene->V_Object[Index];
 
 
 	strcpy_s(Ogre_Name, "GDEnt_");
@@ -830,29 +761,9 @@ bool SB_Com_Entity::Create_Collectable_Entity(int Index)
 
 	App->SBC_Physics->Set_Physics(Index);
 
-	App->SBC_Scene->B_Object[Index]->Folder = Enums::Folder_Collectables;
+	App->SBC_Scene->V_Object[Index]->Folder = Enums::Folder_Collectables;
 
 	return 1;
-}
-
-// *************************************************************************
-// *		Set_Collectables_Defaults:- Terry and Hazel Flanigan 2022	   *
-// *************************************************************************
-void SB_Com_Entity::Set_Collectables_Defaults(int Index)
-{
-	App->SBC_Scene->B_Object[Index]->Altered = 0;
-
-	strcpy(App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Sound_File, "footstep.ogg");
-	App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Play = 1;
-	App->SBC_Scene->B_Object[Index]->S_Collectable[0]->SndVolume = 0.5;
-
-	App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Maths = 1; // Add
-	App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Value = 1;
-
-	App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Counter_ID = 0;
-	strcpy(App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Counter_Name, "Not_Set");
-
-	App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Counter_Disabled = 0;
 }
 
 // *************************************************************************
@@ -887,32 +798,32 @@ void SB_Com_Entity::Add_New_User_Object(void)
 
 	int Index = App->SBC_Scene->Object_Count;
 
-	App->SBC_Scene->B_Object[Index] = new Base_Object();
-	//App->SBC_Scene->B_Object[Index]->S_Light[0] = new Light_type;
+	App->SBC_Scene->V_Object[Index] = new Base_Object();
+	//App->SBC_Scene->V_Object[Index]->S_Light[0] = new Light_type;
 
 	Set_User_Objects_Defaults(Index);
 
-	App->SBC_Scene->B_Object[Index]->Type = Enums::Bullet_Type_None;
-	App->SBC_Scene->B_Object[Index]->Shape = Enums::NoShape;
-	App->SBC_Scene->B_Object[Index]->This_Object_UniqueID = App->SBC_Scene->UniqueID_Object_Counter; // Unique ID
+	App->SBC_Scene->V_Object[Index]->Type = Enums::Bullet_Type_None;
+	App->SBC_Scene->V_Object[Index]->Shape = Enums::NoShape;
+	App->SBC_Scene->V_Object[Index]->This_Object_UniqueID = App->SBC_Scene->UniqueID_Object_Counter; // Unique ID
 
-	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_FileName, "Cube.mesh");
+	strcpy(App->SBC_Scene->V_Object[Index]->Mesh_FileName, "Cube.mesh");
 
 	strcpy_s(B_Name, "User_");
 	_itoa(Index, ConNum, 10);
 	strcat(B_Name, ConNum);
-	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_Name, B_Name);
+	strcpy(App->SBC_Scene->V_Object[Index]->Mesh_Name, B_Name);
 
 	Ogre::Vector3 Pos = App->SBC_Object->GetPlacement(-50);
-	App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
-	App->SBC_Scene->B_Object[Index]->Mesh_Scale = Ogre::Vector3(1, 1, 1);
+	App->SBC_Scene->V_Object[Index]->Mesh_Pos = Pos;
+	App->SBC_Scene->V_Object[Index]->Mesh_Scale = Ogre::Vector3(1, 1, 1);
 
 	Create_User_Object(Index);
 
-	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_UserObjects_Folder, App->SBC_Scene->B_Object[Index]->Mesh_Name, Index, true);
-	App->SBC_Scene->B_Object[Index]->FileViewItem = Temp;
+	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_UserObjects_Folder, App->SBC_Scene->V_Object[Index]->Mesh_Name, Index, true);
+	App->SBC_Scene->V_Object[Index]->FileViewItem = Temp;
 
-	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[Index]->FileViewItem);
+	App->SBC_FileView->SelectItem(App->SBC_Scene->V_Object[Index]->FileViewItem);
 
 	App->SBC_Scene->UniqueID_Object_Counter++;
 	App->SBC_Scene->Object_Count++;
@@ -928,7 +839,7 @@ void SB_Com_Entity::Create_User_Object(int Index)
 	char ConNum[256];
 	char Ogre_Name[256];
 
-	Base_Object* Object = App->SBC_Scene->B_Object[Index];
+	Base_Object* Object = App->SBC_Scene->V_Object[Index];
 
 
 	// ----------------- Mesh
@@ -958,8 +869,8 @@ void SB_Com_Entity::Create_User_Object(int Index)
 // *************************************************************************
 void SB_Com_Entity::Set_User_Objects_Defaults(int Index)
 {
-	App->SBC_Scene->B_Object[Index]->Phys_Body = NULL;
-	App->SBC_Scene->B_Object[Index]->Physics_Valid = 0;
-	App->SBC_Scene->B_Object[Index]->Usage = Enums::Usage_UserObject;
+	App->SBC_Scene->V_Object[Index]->Phys_Body = NULL;
+	App->SBC_Scene->V_Object[Index]->Physics_Valid = 0;
+	App->SBC_Scene->V_Object[Index]->Usage = Enums::Usage_UserObject;
 
 }

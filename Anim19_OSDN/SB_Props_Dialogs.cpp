@@ -152,10 +152,10 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_Dimensions_Proc(HWND hDlg, UINT messag
 				//if (EditCat == Enums::FV_Edit_Object || EditCat == Enums::Edit_Teleport)
 				{
 					int Index = App->SBC_Properties->Current_Selected_Object;
-					App->SBC_Scene->B_Object[Index]->Dimensions_Locked = 1;
+					App->SBC_Scene->V_Object[Index]->Dimensions_Locked = 1;
 
-					App->SBC_Scene->B_Object[Index]->Altered = 1;
-					App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Object[Index]->FileViewItem);
+					App->SBC_Scene->V_Object[Index]->Altered = 1;
+					App->SBC_FileView->Mark_Altered(App->SBC_Scene->V_Object[Index]->FileViewItem);
 					App->SBC_Scene->Scene_Modified = 1;
 				}
 
@@ -170,10 +170,10 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_Dimensions_Proc(HWND hDlg, UINT messag
 				//if (EditCat == Enums::FV_Edit_Object || EditCat == Enums::Edit_Teleport)
 				{
 					int Index = App->SBC_Properties->Current_Selected_Object;
-					App->SBC_Scene->B_Object[Index]->Dimensions_Locked = 0;
+					App->SBC_Scene->V_Object[Index]->Dimensions_Locked = 0;
 
-					App->SBC_Scene->B_Object[Index]->Altered = 1;
-					App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Object[Index]->FileViewItem);
+					App->SBC_Scene->V_Object[Index]->Altered = 1;
+					App->SBC_FileView->Mark_Altered(App->SBC_Scene->V_Object[Index]->FileViewItem);
 					App->SBC_Scene->Scene_Modified = 1;
 				}
 
@@ -517,13 +517,13 @@ LRESULT CALLBACK SB_Props_Dialogs::Panels_Test_Proc(HWND hDlg, UINT message, WPA
 
 			if (App->SBC_Properties->Edit_Category == Enums::Edit_Message)
 			{
-				if (App->SBC_Scene->B_Object[App->SBC_Properties->Current_Selected_Object]->Show_Message_Flag == 1)
+				if (App->SBC_Scene->V_Object[App->SBC_Properties->Current_Selected_Object]->Show_Message_Flag == 1)
 				{
-					App->SBC_Scene->B_Object[App->SBC_Properties->Current_Selected_Object]->Show_Message_Flag = 0;
+					App->SBC_Scene->V_Object[App->SBC_Properties->Current_Selected_Object]->Show_Message_Flag = 0;
 				}
 				else
 				{
-					App->SBC_Scene->B_Object[App->SBC_Properties->Current_Selected_Object]->Show_Message_Flag = 1;
+					App->SBC_Scene->V_Object[App->SBC_Properties->Current_Selected_Object]->Show_Message_Flag = 1;
 				}
 			}
 
@@ -603,7 +603,7 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_Debug_Proc(HWND hDlg, UINT message, WP
 				int Index = App->SBC_Properties->Current_Selected_Object;
 
 				LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-				App->Custom_Button_Toggle(item, App->SBC_Scene->B_Object[Index]->Physics_Debug_On);
+				App->Custom_Button_Toggle(item, App->SBC_Scene->V_Object[Index]->Physics_Debug_On);
 				return CDRF_DODEFAULT;
 			}
 			else
@@ -690,12 +690,12 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_Debug_Proc(HWND hDlg, UINT message, WP
 
 			if (App->SBC_Object->Show_Mesh_Debug == 1)
 			{
-				App->SBC_Scene->B_Object[Index]->Object_Node->setVisible(false);
+				App->SBC_Scene->V_Object[Index]->Object_Node->setVisible(false);
 				App->SBC_Object->Show_Mesh_Debug = 0;
 			}
 			else
 			{
-				App->SBC_Scene->B_Object[Index]->Object_Node->setVisible(true);
+				App->SBC_Scene->V_Object[Index]->Object_Node->setVisible(true);
 				App->SBC_Object->Show_Mesh_Debug = 1;
 			}
 
@@ -739,14 +739,14 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_Debug_Proc(HWND hDlg, UINT message, WP
 			// -----------------------  Objects
 			if (App->SBC_Scene->Object_Count > 0)
 			{
-				int f = App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionFlags();
+				int f = App->SBC_Scene->V_Object[Index]->Phys_Body->getCollisionFlags();
 
-				if (App->SBC_Scene->B_Object[Index]->Physics_Debug_On == 1)
+				if (App->SBC_Scene->V_Object[Index]->Physics_Debug_On == 1)
 				{
 					App->SBC_Object->Show_Physics_Debug = 0;
-					App->SBC_Scene->B_Object[Index]->Phys_Body->setCollisionFlags(f | (1 << 5)); // Off
+					App->SBC_Scene->V_Object[Index]->Phys_Body->setCollisionFlags(f | (1 << 5)); // Off
 
-					App->SBC_Scene->B_Object[Index]->Physics_Debug_On = 0;
+					App->SBC_Scene->V_Object[Index]->Physics_Debug_On = 0;
 
 					App->CL_Ogre->BulletListener->Render_Debug_Flag = 0;
 					App->CL_Ogre->RenderFrame();
@@ -756,9 +756,9 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_Debug_Proc(HWND hDlg, UINT message, WP
 				}
 				else
 				{
-					App->SBC_Scene->B_Object[Index]->Physics_Debug_On = 1;
+					App->SBC_Scene->V_Object[Index]->Physics_Debug_On = 1;
 					App->SBC_Object->Show_Physics_Debug = 1;
-					App->SBC_Scene->B_Object[Index]->Phys_Body->setCollisionFlags(f & (~(1 << 5))); // on
+					App->SBC_Scene->V_Object[Index]->Phys_Body->setCollisionFlags(f & (~(1 << 5))); // on
 
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_PhysicsOn_Bmp);
 				}
@@ -1073,8 +1073,8 @@ LRESULT CALLBACK SB_Props_Dialogs::Details_Goto_Proc(HWND hDlg, UINT message, WP
 			}
 			else
 			{
-				Centre = App->SBC_Scene->B_Object[Index]->Object_Node->getAttachedObject(0)->getBoundingBox().getCenter();
-				WS = App->SBC_Scene->B_Object[Index]->Object_Node->convertLocalToWorldPosition(Centre);
+				Centre = App->SBC_Scene->V_Object[Index]->Object_Node->getAttachedObject(0)->getBoundingBox().getCenter();
+				WS = App->SBC_Scene->V_Object[Index]->Object_Node->convertLocalToWorldPosition(Centre);
 			}
 
 			App->CL_Ogre->mCamera->setPosition(WS);

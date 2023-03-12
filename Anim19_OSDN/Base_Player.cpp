@@ -46,7 +46,7 @@ Base_Player::Base_Player()
 	Physics_Rotation = btQuaternion(1, 0, 0, 0);
 
 	Forward_Timer = 0;
-	Ground_speed = 4.2;
+	Ground_speed = 10000;
 
 	Limit_Look_Up = 45;
 	Limit_Look_Down = -45;
@@ -59,7 +59,7 @@ Base_Player::Base_Player()
 
 	PlayerHeight = 16.0;
 
-	TurnRate = 0.000005;
+	TurnRate = 0.000008;
 
 	Compenstate = 100;
 

@@ -319,7 +319,7 @@ void VM_ImGui::Object_Selection(void)
 			RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 			//App->SBC_FileView->Select_Item(App->CL_Ogre->OgreListener->Selected_Entity_Index);
-			App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[App->CL_Ogre->OgreListener->Selected_Entity_Index]->FileViewItem);
+			App->SBC_FileView->SelectItem(App->SBC_Scene->V_Object[App->CL_Ogre->OgreListener->Selected_Entity_Index]->FileViewItem);
 			Show_Object_Selection = 0;
 		}
 
@@ -767,17 +767,17 @@ void VM_ImGui::ImGui_Object_Data(void)
 		}
 		else
 		{
-			ImGui::Text("Name: = %s", App->SBC_Scene->B_Object[Index]->Mesh_Name);
-			ImGui::Text("Mesh File Name: = %s", App->SBC_Scene->B_Object[Index]->Mesh_FileName);
-			ImGui::Text("Path: = %s", App->SBC_Scene->B_Object[Index]->Mesh_Resource_Path);
+			ImGui::Text("Name: = %s", App->SBC_Scene->V_Object[Index]->Mesh_Name);
+			ImGui::Text("Mesh File Name: = %s", App->SBC_Scene->V_Object[Index]->Mesh_FileName);
+			ImGui::Text("Path: = %s", App->SBC_Scene->V_Object[Index]->Mesh_Resource_Path);
 			ImGui::Text("Type: = %s", App->SBC_LookUps->Chr_Type);
 			ImGui::Text("Shape: = %s", App->SBC_LookUps->Chr_Shape);
 			ImGui::Text("Usage: = %s", App->SBC_LookUps->Chr_Usage);
-			ImGui::Text("Object_ID: = %i", App->SBC_Scene->B_Object[Index]->This_Object_UniqueID);
+			ImGui::Text("Object_ID: = %i", App->SBC_Scene->V_Object[Index]->This_Object_UniqueID);
 
-			if (App->SBC_Scene->B_Object[Index]->Phys_Body)
+			if (App->SBC_Scene->V_Object[Index]->Phys_Body)
 			{
-				ImGui::Text("CollisionFlags: = %i", App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionFlags());
+				ImGui::Text("CollisionFlags: = %i", App->SBC_Scene->V_Object[Index]->Phys_Body->getCollisionFlags());
 			}
 		}
 
@@ -788,15 +788,15 @@ void VM_ImGui::ImGui_Object_Data(void)
 		if (App->SBC_Properties->Edit_Category == Enums::Edit_Collectable)
 		{
 			ImGui::Text("------------ Collectable");
-			ImGui::Text("Sound_File: = %s", App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Sound_File);
-			ImGui::Text("Sound_Volume: = %f", App->SBC_Scene->B_Object[Index]->S_Collectable[0]->SndVolume);
-			ImGui::Text("Sound_Play: = %i", App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Play);
+			ImGui::Text("Sound_File: = %s", App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Sound_File);
+			ImGui::Text("Sound_Volume: = %f", App->SBC_Scene->V_Object[Index]->S_Collectable[0]->SndVolume);
+			ImGui::Text("Sound_Play: = %i", App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Play);
 
-			ImGui::Text("Counter_Name: = %s", App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Counter_Name);
-			ImGui::Text("Counter_ID: = %i", App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Counter_ID);
-			ImGui::Text("Counter_Value: = %i", App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Value);
-			ImGui::Text("Counter_Maths: = %i", App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Maths);
-			ImGui::Text("Counter_Disabled: = %i", App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Counter_Disabled);
+			ImGui::Text("Counter_Name: = %s", App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Counter_Name);
+			ImGui::Text("Counter_ID: = %i", App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Counter_ID);
+			ImGui::Text("Counter_Value: = %i", App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Value);
+			ImGui::Text("Counter_Maths: = %i", App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Maths);
+			ImGui::Text("Counter_Disabled: = %i", App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Counter_Disabled);
 
 			return;
 		}
@@ -805,40 +805,40 @@ void VM_ImGui::ImGui_Object_Data(void)
 		if (App->SBC_Properties->Edit_Category == Enums::Edit_Move_Entity)
 		{
 			ImGui::Text("------------ Move Entity");
-			//ImGui::Text("Sound_File: = %s", App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Sound_File);
-			//ImGui::Text("Sound_Volume: = %f", App->SBC_Scene->B_Object[Index]->S_Collectable[0]->SndVolume);
-			//ImGui::Text("Sound_Play: = %i", App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Play);
+			//ImGui::Text("Sound_File: = %s", App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Sound_File);
+			//ImGui::Text("Sound_Volume: = %f", App->SBC_Scene->V_Object[Index]->S_Collectable[0]->SndVolume);
+			//ImGui::Text("Sound_Play: = %i", App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Play);
 
-			//ImGui::Text("Counter_Name: = %s", App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Object_To_Move_Index);
+			//ImGui::Text("Counter_Name: = %s", App->SBC_Scene->V_Object[Index]->S_MoveType[0]->Object_To_Move_Index);
 		
-			//ImGui::Text("Counter_Name: = %s", App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Counter_Name);
-			//ImGui::Text("Counter_ID: = %i", App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Counter_ID);
-			//ImGui::Text("Counter_Value: = %i", App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Trigger_Value);
-			////ImGui::Text("Counter_Maths: = %i", App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Maths);
-			//ImGui::Text("Counter_Disabled: = %i", App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Counter_Disabled);
+			//ImGui::Text("Counter_Name: = %s", App->SBC_Scene->V_Object[Index]->S_MoveType[0]->Counter_Name);
+			//ImGui::Text("Counter_ID: = %i", App->SBC_Scene->V_Object[Index]->S_MoveType[0]->Counter_ID);
+			//ImGui::Text("Counter_Value: = %i", App->SBC_Scene->V_Object[Index]->S_MoveType[0]->Trigger_Value);
+			////ImGui::Text("Counter_Maths: = %i", App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Maths);
+			//ImGui::Text("Counter_Disabled: = %i", App->SBC_Scene->V_Object[Index]->S_MoveType[0]->Counter_Disabled);
 
 			return;
 		}
 
 
 
-		/*ImGui::Text("Physics_Mass: = %f", App->SBC_Scene->B_Object[Index]->Physics_Mass);
-		ImGui::Text("Physics_Restitution: = %f", App->SBC_Scene->B_Object[Index]->Physics_Restitution);
+		/*ImGui::Text("Physics_Mass: = %f", App->SBC_Scene->V_Object[Index]->Physics_Mass);
+		ImGui::Text("Physics_Restitution: = %f", App->SBC_Scene->V_Object[Index]->Physics_Restitution);
 
-		x = App->SBC_Scene->B_Object[Index]->Physics_Pos.x;
-		y = App->SBC_Scene->B_Object[Index]->Physics_Pos.y;
-		z = App->SBC_Scene->B_Object[Index]->Physics_Pos.z;
+		x = App->SBC_Scene->V_Object[Index]->Physics_Pos.x;
+		y = App->SBC_Scene->V_Object[Index]->Physics_Pos.y;
+		z = App->SBC_Scene->V_Object[Index]->Physics_Pos.z;
 		ImGui::Text("Physics_Pos: = %f,%f,%f", x, y, z);
 
-		x = App->SBC_Scene->B_Object[Index]->Physics_Scale.x;
-		y = App->SBC_Scene->B_Object[Index]->Physics_Scale.y;
-		z = App->SBC_Scene->B_Object[Index]->Physics_Scale.z;
+		x = App->SBC_Scene->V_Object[Index]->Physics_Scale.x;
+		y = App->SBC_Scene->V_Object[Index]->Physics_Scale.y;
+		z = App->SBC_Scene->V_Object[Index]->Physics_Scale.z;
 		ImGui::Text("Physics_Scale: = %f,%f,%f", x, y, z);
 
-		w = App->SBC_Scene->B_Object[Index]->Physics_Quat.w;
-		x = App->SBC_Scene->B_Object[Index]->Physics_Quat.x;
-		y = App->SBC_Scene->B_Object[Index]->Physics_Quat.y;
-		z = App->SBC_Scene->B_Object[Index]->Physics_Quat.z;
+		w = App->SBC_Scene->V_Object[Index]->Physics_Quat.w;
+		x = App->SBC_Scene->V_Object[Index]->Physics_Quat.x;
+		y = App->SBC_Scene->V_Object[Index]->Physics_Quat.y;
+		z = App->SBC_Scene->V_Object[Index]->Physics_Quat.z;
 		ImGui::Text("Physics_Quat: = %f,%f,%f,%f", w, x, y, z);*/
 
 		if (ImGui::Button("Close"))
@@ -851,40 +851,40 @@ void VM_ImGui::ImGui_Object_Data(void)
 }
 
 
-//x = App->SBC_Scene->B_Object[Index]->Object_Node->getPosition().x;
-//y = App->SBC_Scene->B_Object[Index]->Object_Node->getPosition().y;
-//z = App->SBC_Scene->B_Object[Index]->Object_Node->getPosition().z;
+//x = App->SBC_Scene->V_Object[Index]->Object_Node->getPosition().x;
+//y = App->SBC_Scene->V_Object[Index]->Object_Node->getPosition().y;
+//z = App->SBC_Scene->V_Object[Index]->Object_Node->getPosition().z;
 //ImGui::Text("Mesh_Pos: = %f,%f,%f", x, y, z);
 //
-//x = App->SBC_Scene->B_Object[Index]->Object_Node->getScale().x;
-//y = App->SBC_Scene->B_Object[Index]->Object_Node->getScale().y;
-//z = App->SBC_Scene->B_Object[Index]->Object_Node->getScale().z;
+//x = App->SBC_Scene->V_Object[Index]->Object_Node->getScale().x;
+//y = App->SBC_Scene->V_Object[Index]->Object_Node->getScale().y;
+//z = App->SBC_Scene->V_Object[Index]->Object_Node->getScale().z;
 //ImGui::Text("Mesh_Scale: = %f,%f,%f", x, y, z);
 //
-//w = App->SBC_Scene->B_Object[Index]->Mesh_Quat.w;
-//x = App->SBC_Scene->B_Object[Index]->Mesh_Quat.x;
-//y = App->SBC_Scene->B_Object[Index]->Mesh_Quat.y;
-//z = App->SBC_Scene->B_Object[Index]->Mesh_Quat.z;
+//w = App->SBC_Scene->V_Object[Index]->Mesh_Quat.w;
+//x = App->SBC_Scene->V_Object[Index]->Mesh_Quat.x;
+//y = App->SBC_Scene->V_Object[Index]->Mesh_Quat.y;
+//z = App->SBC_Scene->V_Object[Index]->Mesh_Quat.z;
 //ImGui::Text("Mesh_Quat: = %f,%f,%f,%f", w, x, y, z);
 //
 //ImGui::Spacing();
 //ImGui::Spacing();
 //
-//ImGui::Text("Physics_Mass: = %f", App->SBC_Scene->B_Object[Index]->Physics_Mass);
-//ImGui::Text("Physics_Restitution: = %f", App->SBC_Scene->B_Object[Index]->Physics_Restitution);
+//ImGui::Text("Physics_Mass: = %f", App->SBC_Scene->V_Object[Index]->Physics_Mass);
+//ImGui::Text("Physics_Restitution: = %f", App->SBC_Scene->V_Object[Index]->Physics_Restitution);
 //
-//x = App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().getOrigin().getX();
-//y = App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().getOrigin().getY();
-//z = App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().getOrigin().getZ();
+//x = App->SBC_Scene->V_Object[Index]->Phys_Body->getWorldTransform().getOrigin().getX();
+//y = App->SBC_Scene->V_Object[Index]->Phys_Body->getWorldTransform().getOrigin().getY();
+//z = App->SBC_Scene->V_Object[Index]->Phys_Body->getWorldTransform().getOrigin().getZ();
 //ImGui::Text("Physics_Pos: = %f,%f,%f", x, y, z);
 //
-//x = App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->getLocalScaling().getX();
-//y = App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->getLocalScaling().getY();
-//z = App->SBC_Scene->B_Object[Index]->Phys_Body->getCollisionShape()->getLocalScaling().getZ();
+//x = App->SBC_Scene->V_Object[Index]->Phys_Body->getCollisionShape()->getLocalScaling().getX();
+//y = App->SBC_Scene->V_Object[Index]->Phys_Body->getCollisionShape()->getLocalScaling().getY();
+//z = App->SBC_Scene->V_Object[Index]->Phys_Body->getCollisionShape()->getLocalScaling().getZ();
 //ImGui::Text("Physics_Scale: = %f,%f,%f", x, y, z);
 //
-//w = App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().getRotation().getW();
-//x = App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().getRotation().getX();
-//y = App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().getRotation().getY();;
-//z = App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().getRotation().getZ();;
+//w = App->SBC_Scene->V_Object[Index]->Phys_Body->getWorldTransform().getRotation().getW();
+//x = App->SBC_Scene->V_Object[Index]->Phys_Body->getWorldTransform().getRotation().getX();
+//y = App->SBC_Scene->V_Object[Index]->Phys_Body->getWorldTransform().getRotation().getY();;
+//z = App->SBC_Scene->V_Object[Index]->Phys_Body->getWorldTransform().getRotation().getZ();;
 //ImGui::Text("Physics_Quat: = %f,%f,%f,%f", w, x, y, z);

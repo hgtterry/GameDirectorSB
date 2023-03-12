@@ -53,7 +53,7 @@ public:
 	int Set_Object_SizeCounter();
 	int Get_Object_SizeCounter();
 
-	Base_Object*			B_Object[100];
+	//Base_Object*			B_Object[100];
 	Base_Player*			B_Player[20];
 	Base_Area*				B_Area[20];
 	Base_Camera*			B_Camera[20];

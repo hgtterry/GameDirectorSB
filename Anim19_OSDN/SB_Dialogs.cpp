@@ -448,9 +448,9 @@ void SB_Dialogs::ListObjects(HWND List)
 	while (Count < Total)
 	{
 		
-		if (App->SBC_Scene->B_Object[Count]->Usage == Enums::Usage_Static)
+		if (App->SBC_Scene->V_Object[Count]->Usage == Enums::Usage_Static)
 		{
-			SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->SBC_Scene->B_Object[Count]->Mesh_Name);
+			SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->SBC_Scene->V_Object[Count]->Mesh_Name);
 		}
 	
 		Count++;
@@ -877,16 +877,16 @@ LRESULT CALLBACK SB_Dialogs::Dialog_Counter_Proc(HWND hDlg, UINT message, WPARAM
 			// Collectables
 			if (App->SBC_Properties->Edit_Category == Enums::Edit_Collectable)
 			{
-				int Counter_Index = App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Counter_ID;
+				int Counter_Index = App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Counter_ID;
 
 				strcpy(App->Cl_Dialogs->btext, "Set Maths Option");
 
-				if (App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Maths == 1)
+				if (App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Maths == 1)
 				{
 					strcpy(App->SBC_Dialogs->Chr_DropText, "Add");
 				}
 
-				if (App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Maths == 2)
+				if (App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Maths == 2)
 				{
 					strcpy(App->SBC_Dialogs->Chr_DropText, "Subtract");
 				}
@@ -902,14 +902,14 @@ LRESULT CALLBACK SB_Dialogs::Dialog_Counter_Proc(HWND hDlg, UINT message, WPARAM
 					TestChr = strcmp(App->SBC_Dialogs->Chr_DropText, "Add");
 					if (TestChr == 0)
 					{
-						App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Maths = 1;
+						App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Maths = 1;
 					}
 
 					// Subtract
 					TestChr = strcmp(App->SBC_Dialogs->Chr_DropText, "Subtract");
 					if (TestChr == 0)
 					{
-						App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Maths = 2;
+						App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Maths = 2;
 					}
 
 					App->SBC_Dialogs->UpDate_Counter_Dialog(hDlg);
@@ -928,7 +928,7 @@ LRESULT CALLBACK SB_Dialogs::Dialog_Counter_Proc(HWND hDlg, UINT message, WPARAM
 
 			if (App->SBC_Properties->Edit_Category == Enums::Edit_Move_Entity)
 			{
-				int Counter_Index = App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Counter_ID;
+				int Counter_Index = App->SBC_Scene->V_Object[Index]->S_MoveType[0]->Counter_ID;
 
 				strcpy(App->SBC_Dialogs->Chr_DropText, App->SBC_Scene->B_Counter[Counter_Index]->Panel_Name);
 				App->SBC_Dialogs->DropList_Data = Enums::DropDialog_Counters;
@@ -936,11 +936,11 @@ LRESULT CALLBACK SB_Dialogs::Dialog_Counter_Proc(HWND hDlg, UINT message, WPARAM
 
 				if (App->SBC_Dialogs->Canceled == 0)
 				{
-					strcpy(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Counter_Name, App->SBC_Dialogs->Chr_DropText);
+					strcpy(App->SBC_Scene->V_Object[Index]->S_MoveType[0]->Counter_Name, App->SBC_Dialogs->Chr_DropText);
 
 					int CounterIndex = App->SBC_Display->GetIndex_By_Name(App->SBC_Dialogs->Chr_DropText);
 
-					App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Counter_ID = CounterIndex;
+					App->SBC_Scene->V_Object[Index]->S_MoveType[0]->Counter_ID = CounterIndex;
 
 				}
 
@@ -949,7 +949,7 @@ LRESULT CALLBACK SB_Dialogs::Dialog_Counter_Proc(HWND hDlg, UINT message, WPARAM
 
 			if (App->SBC_Properties->Edit_Category == Enums::Edit_Message)
 			{
-				int Counter_Index = App->SBC_Scene->B_Object[Index]->S_Message[0]->Counter_ID;
+				int Counter_Index = App->SBC_Scene->V_Object[Index]->S_Message[0]->Counter_ID;
 
 				strcpy(App->SBC_Dialogs->Chr_DropText, App->SBC_Scene->B_Counter[Counter_Index]->Panel_Name);
 				App->SBC_Dialogs->DropList_Data = Enums::DropDialog_Counters;
@@ -957,11 +957,11 @@ LRESULT CALLBACK SB_Dialogs::Dialog_Counter_Proc(HWND hDlg, UINT message, WPARAM
 
 				if (App->SBC_Dialogs->Canceled == 0)
 				{
-					strcpy(App->SBC_Scene->B_Object[Index]->S_Message[0]->Counter_Name, App->SBC_Dialogs->Chr_DropText);
+					strcpy(App->SBC_Scene->V_Object[Index]->S_Message[0]->Counter_Name, App->SBC_Dialogs->Chr_DropText);
 
 					int CounterIndex = App->SBC_Display->GetIndex_By_Name(App->SBC_Dialogs->Chr_DropText);
 
-					App->SBC_Scene->B_Object[Index]->S_Message[0]->Counter_ID = CounterIndex;
+					App->SBC_Scene->V_Object[Index]->S_Message[0]->Counter_ID = CounterIndex;
 
 				}
 
@@ -971,7 +971,7 @@ LRESULT CALLBACK SB_Dialogs::Dialog_Counter_Proc(HWND hDlg, UINT message, WPARAM
 			// Collectables
 			if (App->SBC_Properties->Edit_Category == Enums::Edit_Collectable)
 			{
-				int Counter_Index = App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Counter_ID;
+				int Counter_Index = App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Counter_ID;
 
 				strcpy(App->SBC_Dialogs->Chr_DropText, App->SBC_Scene->B_Counter[Counter_Index]->Panel_Name);
 				App->SBC_Dialogs->DropList_Data = Enums::DropDialog_Counters;
@@ -979,11 +979,11 @@ LRESULT CALLBACK SB_Dialogs::Dialog_Counter_Proc(HWND hDlg, UINT message, WPARAM
 
 				if (App->SBC_Dialogs->Canceled == 0)
 				{
-					strcpy(App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Counter_Name, App->SBC_Dialogs->Chr_DropText);
+					strcpy(App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Counter_Name, App->SBC_Dialogs->Chr_DropText);
 
 					int CounterIndex = App->SBC_Display->GetIndex_By_Name(App->SBC_Dialogs->Chr_DropText);
 
-					App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Counter_ID = CounterIndex;
+					App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Counter_ID = CounterIndex;
 
 				}
 
@@ -1007,28 +1007,28 @@ LRESULT CALLBACK SB_Dialogs::Dialog_Counter_Proc(HWND hDlg, UINT message, WPARAM
 				// Move Entity
 				if (App->SBC_Properties->Edit_Category == Enums::Edit_Move_Entity)
 				{
-					App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Counter_Disabled = 1;
+					App->SBC_Scene->V_Object[Index]->S_MoveType[0]->Counter_Disabled = 1;
 					return 1;
 				}
 
 				// Messages
 				if (App->SBC_Properties->Edit_Category == Enums::Edit_Message)
 				{
-					App->SBC_Scene->B_Object[Index]->S_Message[0]->Counter_Disabled = 1;
+					App->SBC_Scene->V_Object[Index]->S_Message[0]->Counter_Disabled = 1;
 					return 1;
 				}
 
 				// Collectables
 				if (App->SBC_Properties->Edit_Category == Enums::Edit_Collectable)
 				{
-					App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Counter_Disabled = 1;
+					App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Counter_Disabled = 1;
 					return 1;
 				}
 
 				// Teleporters
 				if (App->SBC_Properties->Edit_Category == Enums::Edit_Teleport)
 				{
-					App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Counter_Disabled = 1;
+					App->SBC_Scene->V_Object[Index]->S_Teleport[0]->Counter_Disabled = 1;
 					return 1;
 				}
 
@@ -1041,28 +1041,28 @@ LRESULT CALLBACK SB_Dialogs::Dialog_Counter_Proc(HWND hDlg, UINT message, WPARAM
 
 				if (App->SBC_Properties->Edit_Category == Enums::Edit_Move_Entity)
 				{
-					App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Counter_Disabled = 0;
+					App->SBC_Scene->V_Object[Index]->S_MoveType[0]->Counter_Disabled = 0;
 					return 1;
 				}
 
 				// Messages
 				if (App->SBC_Properties->Edit_Category == Enums::Edit_Message)
 				{
-					App->SBC_Scene->B_Object[Index]->S_Message[0]->Counter_Disabled = 0;
+					App->SBC_Scene->V_Object[Index]->S_Message[0]->Counter_Disabled = 0;
 					return 1;
 				}
 
 				// Collectables
 				if (App->SBC_Properties->Edit_Category == Enums::Edit_Collectable)
 				{
-					App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Counter_Disabled = 0;
+					App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Counter_Disabled = 0;
 					return 1;
 				}
 
 				// Teleporters
 				if (App->SBC_Properties->Edit_Category == Enums::Edit_Teleport)
 				{
-					App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Counter_Disabled = 0;
+					App->SBC_Scene->V_Object[Index]->S_Teleport[0]->Counter_Disabled = 0;
 					return 1;
 				}
 
@@ -1082,27 +1082,27 @@ LRESULT CALLBACK SB_Dialogs::Dialog_Counter_Proc(HWND hDlg, UINT message, WPARAM
 			if (App->SBC_Properties->Edit_Category == Enums::Edit_Move_Entity)
 			{
 				int Index = App->SBC_Properties->Current_Selected_Object;
-				App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Trigger_Value = atoi(buff);
+				App->SBC_Scene->V_Object[Index]->S_MoveType[0]->Trigger_Value = atoi(buff);
 			}
 
 			if (App->SBC_Properties->Edit_Category == Enums::Edit_Message)
 			{
 				int Index = App->SBC_Properties->Current_Selected_Object;
-				App->SBC_Scene->B_Object[Index]->S_Message[0]->Trigger_Value = atoi(buff);
+				App->SBC_Scene->V_Object[Index]->S_Message[0]->Trigger_Value = atoi(buff);
 			}
 
 			// Collectables
 			if (App->SBC_Properties->Edit_Category == Enums::Edit_Collectable)
 			{
 				int Index = App->SBC_Properties->Current_Selected_Object;
-				App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Value = atoi(buff);
+				App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Value = atoi(buff);
 			}
 
 			// Teleprters
 			if (App->SBC_Properties->Edit_Category == Enums::Edit_Teleport)
 			{
 				int Index = App->SBC_Properties->Current_Selected_Object;
-				App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Trigger_Value = atoi(buff);
+				App->SBC_Scene->V_Object[Index]->S_Teleport[0]->Trigger_Value = atoi(buff);
 			}
 
 			App->SBC_Dialogs->Canceled = 0;
@@ -1134,7 +1134,7 @@ bool SB_Dialogs::UpDate_Counter_Dialog(HWND hDlg)
 	// Move Entity
 	if (App->SBC_Properties->Edit_Category == Enums::Edit_Move_Entity)
 	{
-		if (App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Counter_Disabled == 1)
+		if (App->SBC_Scene->V_Object[Index]->S_MoveType[0]->Counter_Disabled == 1)
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_CK_ENABLE);
 			SendMessage(temp, BM_SETCHECK, 1, 0);
@@ -1148,11 +1148,11 @@ bool SB_Dialogs::UpDate_Counter_Dialog(HWND hDlg)
 		}
 
 		char chr_TriggerVal[20];
-		_itoa(App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Trigger_Value, chr_TriggerVal, 10);
+		_itoa(App->SBC_Scene->V_Object[Index]->S_MoveType[0]->Trigger_Value, chr_TriggerVal, 10);
 		SetDlgItemText(hDlg, IDC_EDTRIGGERVALUE, (LPCTSTR)chr_TriggerVal);
 
 		char chr_CounterName[20];
-		strcpy(chr_CounterName, App->SBC_Scene->B_Counter[App->SBC_Scene->B_Object[Index]->S_MoveType[0]->Counter_ID]->Panel_Name);
+		strcpy(chr_CounterName, App->SBC_Scene->B_Counter[App->SBC_Scene->V_Object[Index]->S_MoveType[0]->Counter_ID]->Panel_Name);
 		SetDlgItemText(hDlg, IDC_STCOUNTERNAME, (LPCTSTR)chr_CounterName);
 
 		return 1;
@@ -1161,7 +1161,7 @@ bool SB_Dialogs::UpDate_Counter_Dialog(HWND hDlg)
 	// Messages
 	if (App->SBC_Properties->Edit_Category == Enums::Edit_Message)
 	{
-		if (App->SBC_Scene->B_Object[Index]->S_Message[0]->Counter_Disabled == 1)
+		if (App->SBC_Scene->V_Object[Index]->S_Message[0]->Counter_Disabled == 1)
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_CK_ENABLE);
 			SendMessage(temp, BM_SETCHECK, 1, 0);
@@ -1175,11 +1175,11 @@ bool SB_Dialogs::UpDate_Counter_Dialog(HWND hDlg)
 		}
 
 		char chr_TriggerVal[20];
-		_itoa(App->SBC_Scene->B_Object[Index]->S_Message[0]->Trigger_Value, chr_TriggerVal, 10);
+		_itoa(App->SBC_Scene->V_Object[Index]->S_Message[0]->Trigger_Value, chr_TriggerVal, 10);
 		SetDlgItemText(hDlg, IDC_EDTRIGGERVALUE, (LPCTSTR)chr_TriggerVal);
 
 		char chr_CounterName[20];
-		strcpy(chr_CounterName, App->SBC_Scene->B_Counter[App->SBC_Scene->B_Object[Index]->S_Message[0]->Counter_ID]->Panel_Name);
+		strcpy(chr_CounterName, App->SBC_Scene->B_Counter[App->SBC_Scene->V_Object[Index]->S_Message[0]->Counter_ID]->Panel_Name);
 		SetDlgItemText(hDlg, IDC_STCOUNTERNAME, (LPCTSTR)chr_CounterName);
 		
 
@@ -1189,7 +1189,7 @@ bool SB_Dialogs::UpDate_Counter_Dialog(HWND hDlg)
 	// Collectables
 	if (App->SBC_Properties->Edit_Category == Enums::Edit_Collectable)
 	{
-		if (App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Counter_Disabled == 1)
+		if (App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Counter_Disabled == 1)
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_CK_ENABLE);
 			SendMessage(temp, BM_SETCHECK, 1, 0);
@@ -1203,19 +1203,19 @@ bool SB_Dialogs::UpDate_Counter_Dialog(HWND hDlg)
 		}
 
 		char chr_TriggerVal[20];
-		_itoa(App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Value, chr_TriggerVal, 10);
+		_itoa(App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Value, chr_TriggerVal, 10);
 		SetDlgItemText(hDlg, IDC_EDTRIGGERVALUE, (LPCTSTR)chr_TriggerVal);
 
 		char chr_CounterName[20];
-		strcpy(chr_CounterName, App->SBC_Scene->B_Counter[App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Counter_ID]->Panel_Name);
+		strcpy(chr_CounterName, App->SBC_Scene->B_Counter[App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Counter_ID]->Panel_Name);
 		SetDlgItemText(hDlg, IDC_STCOUNTERNAME, (LPCTSTR)chr_CounterName);
 
-		if (App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Maths == 1)
+		if (App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Maths == 1)
 		{
 			SetDlgItemText(hDlg, IDC_STMATHS, (LPCTSTR)"Add");
 		}
 
-		if (App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Maths == 2)
+		if (App->SBC_Scene->V_Object[Index]->S_Collectable[0]->Maths == 2)
 		{
 			SetDlgItemText(hDlg, IDC_STMATHS, "Subtract");
 		}
@@ -1226,7 +1226,7 @@ bool SB_Dialogs::UpDate_Counter_Dialog(HWND hDlg)
 	// Teleporters
 	if (App->SBC_Properties->Edit_Category == Enums::Edit_Teleport)
 	{
-		if (App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Counter_Disabled == 1)
+		if (App->SBC_Scene->V_Object[Index]->S_Teleport[0]->Counter_Disabled == 1)
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_CK_ENABLE);
 			SendMessage(temp, BM_SETCHECK, 1, 0);
@@ -1240,11 +1240,11 @@ bool SB_Dialogs::UpDate_Counter_Dialog(HWND hDlg)
 		}
 
 		char chr_TriggerVal[20];
-		_itoa(App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Trigger_Value, chr_TriggerVal, 10);
+		_itoa(App->SBC_Scene->V_Object[Index]->S_Teleport[0]->Trigger_Value, chr_TriggerVal, 10);
 		SetDlgItemText(hDlg, IDC_EDTRIGGERVALUE, (LPCTSTR)chr_TriggerVal);
 
 		char chr_CounterName[20];
-		strcpy(chr_CounterName, App->SBC_Scene->B_Counter[App->SBC_Scene->B_Object[Index]->S_Teleport[0]->Counter_ID]->Panel_Name);
+		strcpy(chr_CounterName, App->SBC_Scene->B_Counter[App->SBC_Scene->V_Object[Index]->S_Teleport[0]->Counter_ID]->Panel_Name);
 		SetDlgItemText(hDlg, IDC_STCOUNTERNAME, (LPCTSTR)chr_CounterName);
 
 		return 1;
@@ -1471,14 +1471,14 @@ LRESULT CALLBACK SB_Dialogs::Message_Settings_DLG_Proc(HWND hDlg, UINT message, 
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
-		if (App->SBC_Scene->B_Object[Index]->S_Message[0]->PosXCentre_Flag == 1)
+		if (App->SBC_Scene->V_Object[Index]->S_Message[0]->PosXCentre_Flag == 1)
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_CKMES_CENTREX);
 			SendMessage(temp, BM_SETCHECK, 1, 0);
 			EnableWindow(GetDlgItem(hDlg, IDC_EDMES_POSX), 0);
 		}
 
-		if (App->SBC_Scene->B_Object[Index]->S_Message[0]->PosYCentre_Flag == 1)
+		if (App->SBC_Scene->V_Object[Index]->S_Message[0]->PosYCentre_Flag == 1)
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_CKMES_CENTREY);
 			SendMessage(temp, BM_SETCHECK, 1, 0);
@@ -1486,13 +1486,13 @@ LRESULT CALLBACK SB_Dialogs::Message_Settings_DLG_Proc(HWND hDlg, UINT message, 
 		}
 
 		char buff[256];
-		sprintf(buff, "%i", (int)App->SBC_Scene->B_Object[Index]->S_Message[0]->Message_PosX);
+		sprintf(buff, "%i", (int)App->SBC_Scene->V_Object[Index]->S_Message[0]->Message_PosX);
 		SetDlgItemText(hDlg, IDC_EDMES_POSX, (LPCTSTR)buff);
 
-		sprintf(buff, "%i", (int)App->SBC_Scene->B_Object[Index]->S_Message[0]->Message_PosY);
+		sprintf(buff, "%i", (int)App->SBC_Scene->V_Object[Index]->S_Message[0]->Message_PosY);
 		SetDlgItemText(hDlg, IDC_EDMES_POSY, (LPCTSTR)buff);
 		
-		App->SBC_Scene->B_Object[Index]->Show_Message_Flag = 1;
+		App->SBC_Scene->V_Object[Index]->Show_Message_Flag = 1;
 
 		return TRUE;
 	}
@@ -1589,10 +1589,10 @@ LRESULT CALLBACK SB_Dialogs::Message_Settings_DLG_Proc(HWND hDlg, UINT message, 
 				int Green = GetGValue(App->SBC_FileIO->color.rgbResult);
 				int Blue = GetBValue(App->SBC_FileIO->color.rgbResult);
 
-				App->SBC_Scene->B_Object[Index]->S_Message[0]->Text_Colour.x = Red;
-				App->SBC_Scene->B_Object[Index]->S_Message[0]->Text_Colour.y = Green;
-				App->SBC_Scene->B_Object[Index]->S_Message[0]->Text_Colour.z = Blue;
-				//App->SBC_Scene->B_Object[Index]->S_Message[0]->Text_Colour.w = 250;
+				App->SBC_Scene->V_Object[Index]->S_Message[0]->Text_Colour.x = Red;
+				App->SBC_Scene->V_Object[Index]->S_Message[0]->Text_Colour.y = Green;
+				App->SBC_Scene->V_Object[Index]->S_Message[0]->Text_Colour.z = Blue;
+				//App->SBC_Scene->V_Object[Index]->S_Message[0]->Text_Colour.w = 250;
 				App->SBC_Properties->Mark_As_Altered(Index);
 			}
 
@@ -1607,19 +1607,19 @@ LRESULT CALLBACK SB_Dialogs::Message_Settings_DLG_Proc(HWND hDlg, UINT message, 
 			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
 			if (test == BST_CHECKED)
 			{
-				App->SBC_Scene->B_Object[Index]->S_Message[0]->PosXCentre_Flag = 1;
+				App->SBC_Scene->V_Object[Index]->S_Message[0]->PosXCentre_Flag = 1;
 				EnableWindow(GetDlgItem(hDlg, IDC_EDMES_POSX), 0);
 				App->SBC_Properties->Mark_As_Altered(Index);
 				return 1;
 			}
 			else
 			{
-				App->SBC_Scene->B_Object[Index]->S_Message[0]->PosXCentre_Flag = 0;
+				App->SBC_Scene->V_Object[Index]->S_Message[0]->PosXCentre_Flag = 0;
 				EnableWindow(GetDlgItem(hDlg, IDC_EDMES_POSX), 1);
 
 				char buff[MAX_PATH] = { 0 };
 				GetDlgItemText(hDlg, IDC_EDMES_POSX, (LPTSTR)buff, MAX_PATH);
-				App->SBC_Scene->B_Object[Index]->S_Message[0]->Message_PosX = (float)atof(buff);
+				App->SBC_Scene->V_Object[Index]->S_Message[0]->Message_PosX = (float)atof(buff);
 				App->SBC_Properties->Mark_As_Altered(Index);
 				return 1;
 			}
@@ -1635,19 +1635,19 @@ LRESULT CALLBACK SB_Dialogs::Message_Settings_DLG_Proc(HWND hDlg, UINT message, 
 			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
 			if (test == BST_CHECKED)
 			{
-				App->SBC_Scene->B_Object[Index]->S_Message[0]->PosYCentre_Flag = 1;
+				App->SBC_Scene->V_Object[Index]->S_Message[0]->PosYCentre_Flag = 1;
 				EnableWindow(GetDlgItem(hDlg, IDC_EDMES_POSY), 0);
 				App->SBC_Properties->Mark_As_Altered(Index);
 				return 1;
 			}
 			else
 			{
-				App->SBC_Scene->B_Object[Index]->S_Message[0]->PosYCentre_Flag = 0;
+				App->SBC_Scene->V_Object[Index]->S_Message[0]->PosYCentre_Flag = 0;
 				EnableWindow(GetDlgItem(hDlg, IDC_EDMES_POSY), 1);
 
 				char buff[MAX_PATH] = { 0 };
 				GetDlgItemText(hDlg, IDC_EDMES_POSY, (LPTSTR)buff, MAX_PATH);
-				App->SBC_Scene->B_Object[Index]->S_Message[0]->Message_PosY = (float)atof(buff);
+				App->SBC_Scene->V_Object[Index]->S_Message[0]->Message_PosY = (float)atof(buff);
 				App->SBC_Properties->Mark_As_Altered(Index);
 				return 1;
 			}
@@ -1661,10 +1661,10 @@ LRESULT CALLBACK SB_Dialogs::Message_Settings_DLG_Proc(HWND hDlg, UINT message, 
 
 			char buff[MAX_PATH];
 			GetDlgItemText(hDlg, IDC_EDMES_POSX, (LPTSTR)buff, MAX_PATH);
-			App->SBC_Scene->B_Object[Index]->S_Message[0]->Message_PosX = (float)atof(buff);
+			App->SBC_Scene->V_Object[Index]->S_Message[0]->Message_PosX = (float)atof(buff);
 
 			GetDlgItemText(hDlg, IDC_EDMES_POSY, (LPTSTR)buff, MAX_PATH);
-			App->SBC_Scene->B_Object[Index]->S_Message[0]->Message_PosY = (float)atof(buff);
+			App->SBC_Scene->V_Object[Index]->S_Message[0]->Message_PosY = (float)atof(buff);
 			App->SBC_Properties->Mark_As_Altered(Index);
 			return TRUE;
 		}
@@ -1673,7 +1673,7 @@ LRESULT CALLBACK SB_Dialogs::Message_Settings_DLG_Proc(HWND hDlg, UINT message, 
 		{
 			App->Disable_Panels(false);
 			App->Show_Panels(true);
-			App->SBC_Scene->B_Object[App->SBC_Properties->Current_Selected_Object]->Show_Message_Flag = 0;
+			App->SBC_Scene->V_Object[App->SBC_Properties->Current_Selected_Object]->Show_Message_Flag = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -1682,7 +1682,7 @@ LRESULT CALLBACK SB_Dialogs::Message_Settings_DLG_Proc(HWND hDlg, UINT message, 
 		{
 			App->Disable_Panels(false);
 			App->Show_Panels(true);
-			App->SBC_Scene->B_Object[App->SBC_Properties->Current_Selected_Object]->Show_Message_Flag = 0;
+			App->SBC_Scene->V_Object[App->SBC_Properties->Current_Selected_Object]->Show_Message_Flag = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}

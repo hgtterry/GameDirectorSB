@@ -31,7 +31,6 @@ public:
 	// ------------------------------------------ Teleporters
 	bool Add_New_Teleporter();
 	bool Create_Teleport_Entity(int Index);
-	void Set_Teleports_Defaults(int Index);
 	void V_Set_Teleports_Defaults(int Index);
 
 	// ------------------------------------------ Sounds
@@ -41,19 +40,16 @@ public:
 	// ------------------------------------------ Messages
 	bool Add_New_Message();
 	bool Create_Message_Entity(int Index);
-	void Set_Message_Defaults(int Index);
 	void V_Set_Message_Defaults(int Index);
 
 	// ------------------------------------------ Particles
 	void Add_New_Particle(char* Script);
 	void CreateParticle(int Index);
-	void Set_Particle_Defaults(int Index);
 	void V_Set_Particle_Defaults(int Index);
 
 	// ------------------------------------------ Collectables
 	bool Add_New_Collectable();
 	bool Create_Collectable_Entity(int Index);
-	void Set_Collectables_Defaults(int Index);
 	void V_Set_Collectables_Defaults(int Index);
 
 	// ------------------------------------------ User_Objects

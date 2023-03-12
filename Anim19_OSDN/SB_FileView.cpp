@@ -641,7 +641,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		ShowWindow(App->SBC_Properties->Properties_Dlg_hWnd, 1);
 
 		App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
-		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->B_Object[Index]->Dimensions_Locked);
+		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->V_Object[Index]->Dimensions_Locked);
 		App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
 		App->SBC_Props_Dialog->Hide_Material_Dlg(1);
 
@@ -740,7 +740,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		HideRightPanes();
 		ShowWindow(App->GD_Properties_Hwnd, 1);
 		App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
-		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->B_Object[Index]->Dimensions_Locked);
+		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->V_Object[Index]->Dimensions_Locked);
 		App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
 
 		App->SBC_Properties->Is_Player = 0;
@@ -772,7 +772,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		HideRightPanes();
 		ShowWindow(App->GD_Properties_Hwnd, 1);
 		App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
-		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->B_Object[Index]->Dimensions_Locked);
+		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->V_Object[Index]->Dimensions_Locked);
 		App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
 
 		App->SBC_Properties->Edit_Category = Enums::Edit_Environs;
@@ -804,7 +804,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		HideRightPanes();
 		ShowWindow(App->SBC_Properties->Properties_Dlg_hWnd, 1);
 		App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
-		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->B_Object[Index]->Dimensions_Locked);
+		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->V_Object[Index]->Dimensions_Locked);
 		App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
 		App->SBC_Props_Dialog->Hide_Panel_Test_Dlg(1);
 
@@ -838,7 +838,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		HideRightPanes();
 		ShowWindow(App->GD_Properties_Hwnd, 1);
 		App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
-		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->B_Object[Index]->Dimensions_Locked);
+		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->V_Object[Index]->Dimensions_Locked);
 		App->SBC_Props_Dialog->Hide_Physics_Reset_Dlg(1);
 		App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
 
@@ -873,7 +873,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		HideRightPanes();
 		ShowWindow(App->GD_Properties_Hwnd, 1);
 		App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
-		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->B_Object[Index]->Dimensions_Locked);
+		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->V_Object[Index]->Dimensions_Locked);
 		App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
 
 		App->SBC_Properties->Is_Player = 0; // Mark as Object selected
@@ -910,7 +910,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 		App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
 
-		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->B_Object[Index]->Dimensions_Locked);
+		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->V_Object[Index]->Dimensions_Locked);
 		App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
 		App->SBC_Props_Dialog->Hide_Material_Dlg(1);
 
@@ -945,7 +945,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		ShowWindow(App->GD_Properties_Hwnd, 1);
 
 		App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
-		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->B_Object[Index]->Dimensions_Locked);
+		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->V_Object[Index]->Dimensions_Locked);
 
 		App->SBC_Properties->Edit_Category = Enums::Edit_Particles;
 
@@ -979,7 +979,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		ShowWindow(App->GD_Properties_Hwnd, 1);
 
 		App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
-		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->B_Object[Index]->Dimensions_Locked);
+		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->V_Object[Index]->Dimensions_Locked);
 
 		App->SBC_Properties->Edit_Category = Enums::Edit_UserObjects;
 
@@ -1013,7 +1013,7 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 	//	ShowWindow(App->GD_Properties_Hwnd, 1);
 
 	//	//App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
-	//	App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->B_Object[Index]->Dimensions_Locked);
+	//	App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->V_Object[Index]->Dimensions_Locked);
 
 	//	App->SBC_Properties->Edit_Category = Enums::Edit_Lights;
 

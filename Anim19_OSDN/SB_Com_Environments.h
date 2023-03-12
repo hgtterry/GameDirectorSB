@@ -33,7 +33,6 @@ public:
 	bool Add_New_Environ_Entity(bool FirstOne);
 	bool Create_Environ_Entity(int Index);
 
-	void Set_Environ_Defaults(int Index);
 	void V_Set_Environ_Defaults(int Index);
 
 	void Set_First_Environment(int Index);

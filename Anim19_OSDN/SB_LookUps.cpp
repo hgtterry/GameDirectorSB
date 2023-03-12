@@ -66,7 +66,7 @@ bool SB_LookUps::Get_Type(int Index)
 	}
 	else
 	{
-		Type = App->SBC_Scene->B_Object[Index]->Type;
+		Type = App->SBC_Scene->V_Object[Index]->Type;
 	}
 
 	
@@ -106,7 +106,7 @@ bool SB_LookUps::Get_Shape(int Index)
 	}
 	else
 	{
-		Shape = App->SBC_Scene->B_Object[Index]->Shape;
+		Shape = App->SBC_Scene->V_Object[Index]->Shape;
 	}
 
 
@@ -159,7 +159,7 @@ bool SB_LookUps::Get_Usage(int Index)
 	}
 	else
 	{
-		Usage = App->SBC_Scene->B_Object[Index]->Usage;
+		Usage = App->SBC_Scene->V_Object[Index]->Usage;
 	}
 
 	switch (Usage)
@@ -303,10 +303,10 @@ int SB_LookUps::CheckNames_Objects(char* Name)
 
 	while (Count < Total)
 	{
-		if (App->SBC_Scene->B_Object[Count]->Deleted == 0)
+		if (App->SBC_Scene->V_Object[Count]->Deleted == 0)
 		{
 			int Result = 1;
-			Result = strcmp(App->SBC_Scene->B_Object[Count]->Mesh_Name, Name);
+			Result = strcmp(App->SBC_Scene->V_Object[Count]->Mesh_Name, Name);
 
 			if (Result == 0)
 			{
@@ -330,7 +330,7 @@ int SB_LookUps::Get_Adjusted_Object_Count(void)
 
 	while (Count < Total)
 	{
-		if (App->SBC_Scene->B_Object[Count]->Deleted == 0)
+		if (App->SBC_Scene->V_Object[Count]->Deleted == 0)
 		{
 			New_Count++;
 		}

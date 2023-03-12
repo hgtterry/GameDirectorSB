@@ -119,7 +119,7 @@ void SB_3DT::Fire(float deltaTime)
 					App->SBC_Markers->BoxNode->setVisible(true);
 					App->SBC_Markers->MarkerBB_Addjust(IntNum);
 					Selected_Entity_Index = IntNum;
-					strcpy(Selected_Object_Name, App->SBC_Scene->B_Object[IntNum]->Mesh_Name);
+					strcpy(Selected_Object_Name, App->SBC_Scene->V_Object[IntNum]->Mesh_Name);
 
 					App->SBC_Markers->Move_Target_Hit(Point);
 					//Remove_Oblect(Selected_Entity_Index);
@@ -144,6 +144,6 @@ void SB_3DT::Fire(float deltaTime)
 // *************************************************************************
 void SB_3DT::Remove_Oblect(int Index)
 {
-	App->SBC_Scene->B_Object[Index]->Object_Node->setVisible(false);
+	App->SBC_Scene->V_Object[Index]->Object_Node->setVisible(false);
 
 }

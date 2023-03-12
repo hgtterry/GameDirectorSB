@@ -32,7 +32,6 @@ public:
 	bool Add_New_Move_Entity();
 	bool Create_Move_Entity(int Index);
 
-	void Set_Move_Defaults(int Index);
 	void V_Set_Move_Defaults(int Index);
 
 	void Reset_Move_Entity(int Index);

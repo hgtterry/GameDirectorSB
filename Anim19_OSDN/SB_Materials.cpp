@@ -33,7 +33,7 @@ void SB_Materials::Start_Material_Editor()
 	}
 	else
 	{
-		BaseEntity = App->SBC_Scene->B_Object[Index]->Object_Ent;
+		BaseEntity = App->SBC_Scene->V_Object[Index]->Object_Ent;
 	}
 
 	// ---------------- Get Material Name

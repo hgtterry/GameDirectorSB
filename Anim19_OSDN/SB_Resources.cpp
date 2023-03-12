@@ -376,10 +376,10 @@ bool SB_Resources::Show_Scene_Meshes(HWND hDlg)
 	int Count = 0;
 	while (Count < App->SBC_Scene->Object_Count)
 	{
-		strcpy(pMeshName, App->SBC_Scene->B_Object[Count]->Mesh_FileName);
-		strcpy(pMaterialName, App->SBC_Scene->B_Object[Count]->Material_File);
+		strcpy(pMeshName, App->SBC_Scene->V_Object[Count]->Mesh_FileName);
+		strcpy(pMaterialName, App->SBC_Scene->V_Object[Count]->Material_File);
 
-		if (App->SBC_Scene->B_Object[Count]->UsageEX == 777)
+		if (App->SBC_Scene->V_Object[Count]->UsageEX == 777)
 		{
 			strcpy(pUsage, "In Scene");
 		}
@@ -1172,15 +1172,15 @@ void SB_Resources::List_MeshMaterials(HWND List)
 	{
 		char MeshName[255];
 
-		strcpy(MeshName, App->SBC_Scene->B_Object[Count]->Mesh_Name);
+		strcpy(MeshName, App->SBC_Scene->V_Object[Count]->Mesh_Name);
 		SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)MeshName);
 
-		int SubMeshCount = App->SBC_Scene->B_Object[Count]->Object_Ent->getNumSubEntities();
+		int SubMeshCount = App->SBC_Scene->V_Object[Count]->Object_Ent->getNumSubEntities();
 		int Index = 0;
 		while (Index < SubMeshCount)
 		{
 			char MaterialName[1024];
-			Ogre::SubMesh const *subMesh = App->SBC_Scene->B_Object[Count]->Object_Ent->getSubEntity(Index)->getSubMesh();
+			Ogre::SubMesh const *subMesh = App->SBC_Scene->V_Object[Count]->Object_Ent->getSubEntity(Index)->getSubMesh();
 			strcpy(MaterialName, subMesh->getMaterialName().c_str());
 			SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)MaterialName);
 			Index++;
