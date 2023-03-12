@@ -1,7 +1,7 @@
 # **GameDirectorSB**
 GameDirectorSB ( Pre - Alpha )
 
-## Updated:- 05-02-23  [ V1.22 ]
+## Updated:- 12-03-23   [V1.23]
 
 Change Log:- https://equitysb.sourceforge.io/ChangeLog.html
 
@@ -21,8 +21,4 @@ Any Problems or ideas you would like to see added please contact us.
 [terryinflanite@gmail.com](mailto:terryinflanite@gmail.com)
 
 ------
-
-
-
-
 

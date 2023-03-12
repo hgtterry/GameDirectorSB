@@ -117,7 +117,7 @@ ME_App::ME_App()
 	Hnd_PlayOn_Bmp = NULL;
 	Hnd_PlayStop_Bmp = NULL;
 
-	Debug_App = 1;
+	Debug_App = 0;
 
 	EquityDirecory_FullPath[0] = 0;
 	Version[0] = 0;

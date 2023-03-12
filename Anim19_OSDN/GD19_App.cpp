@@ -192,7 +192,7 @@ GD19_App::GD19_App(void)
 	CursorPosX = 500;
 	CursorPosY = 500;
 
-	Debug_App = 1;
+	Debug_App = 0;
 	V_New_Objects = 1;
 
 	EquityDirecory_FullPath[0] = 0;
@@ -590,7 +590,7 @@ bool GD19_App::Custom_Button_Normal(LPNMCUSTOMDRAW item)
 			HGDIOBJ old_pen = SelectObject(item->hdc, pen);
 			HGDIOBJ old_brush = SelectObject(item->hdc, App->Brush_But_Pressed);
 
-			RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
+			RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 1, 1);
 
 			//Clean up
 			SelectObject(item->hdc, old_pen);
@@ -609,7 +609,7 @@ bool GD19_App::Custom_Button_Normal(LPNMCUSTOMDRAW item)
 				HGDIOBJ old_pen = SelectObject(item->hdc, pen);
 				HGDIOBJ old_brush = SelectObject(item->hdc, App->Brush_But_Hover);
 
-				RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
+				RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 1, 1);
 
 				SelectObject(item->hdc, old_pen);
 				SelectObject(item->hdc, old_brush);
@@ -623,7 +623,7 @@ bool GD19_App::Custom_Button_Normal(LPNMCUSTOMDRAW item)
 			HGDIOBJ old_pen = SelectObject(item->hdc, pen);
 			HGDIOBJ old_brush = SelectObject(item->hdc, App->Brush_But_Normal);
 
-			RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
+			RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 1, 1);
 
 			SelectObject(item->hdc, old_pen);
 			SelectObject(item->hdc, old_brush);

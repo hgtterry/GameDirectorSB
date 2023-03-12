@@ -368,47 +368,6 @@ bool SB_FileIO::Directory_Vaild(LPCTSTR szPath)
 }
 
 // *************************************************************************
-// *		Get_FileName_FromPath:- Terry and Hazel Flanigan 2023	 	   *
-// *************************************************************************
-void SB_FileIO::Get_FileName_FromPath(char *pString, char *FileName)
-{
-	JustFileName[0] = 0;
-
-	int Count = 0;
-	int Mark = 0;
-	bool Test = 0;
-
-	while (*pString != 0)
-	{
-		if (*pString == '\\' || *pString == '/')
-		{
-			Test = 1;
-			Mark = Count;
-		}
-
-		Count++;
-		pString++;
-	}
-
-	if (Mark == 0 && Test == 0)
-	{
-		strcpy(JustFileName, FileName);
-	}
-	else
-	{
-		if (Mark == 0 && Test == 1)
-		{
-			Mark = 1;
-			strcpy(JustFileName, (FileName + Mark));
-		}
-		else
-		{
-			strcpy(JustFileName, (FileName + Mark) + 1);
-		}
-	}
-}
-
-// *************************************************************************
 // *					GetColor   Terry Bernie							   *
 // *************************************************************************
 bool SB_FileIO::GetColor()

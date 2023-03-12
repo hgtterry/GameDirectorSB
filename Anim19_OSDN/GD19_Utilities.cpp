@@ -156,3 +156,49 @@ float GD19_Utilities::RadiansToDegrees(float Radians)
 	float Degrees = 0;//(Radians * 180)/GE_PI;
 	return Degrees;
 }
+
+// *************************************************************************
+// *		Get_FileName_From_Path:- Terry and Hazel Flanigan 2023	 	   *
+// *************************************************************************
+std::string GD19_Utilities::Get_FileName_From_Path(char* pString)
+{
+	char JustFileName[MAX_PATH]{ 0 };
+	char FileName[MAX_PATH]{ 0 };
+
+	strcpy(FileName, pString);
+
+	int Count = 0;
+	int Mark = 0;
+	bool Test = 0;
+
+	while (*pString != 0)
+	{
+		if (*pString == '\\' || *pString == '/')
+		{
+			Test = 1;
+			Mark = Count;
+		}
+
+		Count++;
+		pString++;
+	}
+
+	if (Mark == 0 && Test == 0)
+	{
+		strcpy(JustFileName, FileName);
+	}
+	else
+	{
+		if (Mark == 0 && Test == 1)
+		{
+			Mark = 1;
+			strcpy(JustFileName, (FileName + Mark));
+		}
+		else
+		{
+			strcpy(JustFileName, (FileName + Mark) + 1);
+		}
+	}
+
+	return JustFileName;
+}

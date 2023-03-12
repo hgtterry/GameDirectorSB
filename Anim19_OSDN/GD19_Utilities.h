@@ -39,6 +39,8 @@ public:
 	float DegreesToRadians(float Degrees);
 	float RadiansToDegrees(float Radians);
 
+	std::string Get_FileName_From_Path(char* pString);
+
 	char Return_Chr[255];
 };
 

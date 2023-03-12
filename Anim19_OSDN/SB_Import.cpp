@@ -93,18 +93,11 @@ void SB_Import::Reload_FromResentFiles(char* ResentPathAndFile)
 		return;
 	}
 
-
 	strcpy(App->SBC_FileIO->Project_Path_File_Name, ResentPathAndFile);
 
-	char mPathAndFile[1024];
-	char mJustFileName[1024];
+	std::string mJustFileName = App->Cl_Utilities->Get_FileName_From_Path(ResentPathAndFile);
 
-	strcpy(mPathAndFile, ResentPathAndFile); // Full Path and File
-
-	App->SBC_FileIO->Get_FileName_FromPath(mPathAndFile, mPathAndFile);
-	strcpy(mJustFileName, App->SBC_FileIO->JustFileName); // Just File Name
-
-	strcpy(App->SBC_FileIO->Project_File_Name, mJustFileName);
+	strcpy(App->SBC_FileIO->Project_File_Name, mJustFileName.c_str());
 
 	bool test = App->SBC_Project->Load_Project();
 
