@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33424.131
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "World_Viewer", "World_Viewer\World_Viewer\World_Viewer.vcxproj", "{FBAA37DF-C9B6-4B21-815A-7E89AB0BF74D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FBAA37DF-C9B6-4B21-815A-7E89AB0BF74D}.Release|x86.ActiveCfg = Release|Win32
+		{FBAA37DF-C9B6-4B21-815A-7E89AB0BF74D}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E871C83B-432D-4EE5-BEC0-A1C270F0C8BA}
+	EndGlobalSection
+EndGlobal
