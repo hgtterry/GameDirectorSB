@@ -98,6 +98,7 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
+				EmbedManifest="false"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -252,6 +253,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\A_FaceDialog.cpp"
+				>
+			</File>
+			<File
 				RelativePath="A_FileIO.cpp"
 				>
 				<FileConfiguration
@@ -300,6 +305,10 @@
 						PreprocessorDefinitions=""
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\A_TextureDialog.cpp"
+				>
 			</File>
 			<File
 				RelativePath=".\A_TxlEditor.cpp"
@@ -2048,6 +2057,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\A_FaceDialog.h"
+				>
+			</File>
+			<File
 				RelativePath="A_FileIO.h"
 				>
 			</File>
@@ -2057,6 +2070,10 @@
 			</File>
 			<File
 				RelativePath="A_Scene.h"
+				>
+			</File>
+			<File
+				RelativePath=".\A_TextureDialog.h"
 				>
 			</File>
 			<File

@@ -82,6 +82,7 @@ public:
 	//{{AFX_MSG(CFusionApp)
 	afx_msg void OnTest();
 	afx_msg void Open_TxlEditor();
+	afx_msg void Open_FaceProperties();
 	afx_msg void OnAppAbout();
 	afx_msg void OnFileNew();
 	afx_msg void OnFileOpen();

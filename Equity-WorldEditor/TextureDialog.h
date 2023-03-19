@@ -59,6 +59,9 @@ public:
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	virtual	BOOL OnInitDialog();
+
+	HBRUSH CTextureDialog::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
+
 	//}}AFX_VIRTUAL
 
 // Implementation

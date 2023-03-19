@@ -36,8 +36,8 @@ static char THIS_FILE[] = __FILE__;
 
 #define BM_BORDER_SIZE_TOP	185
 #define BM_BORDER_SIZE_LEFT 60
-#define BM_WIDTH	256
-#define BM_HEIGHT	256
+#define BM_WIDTH	128
+#define BM_HEIGHT	128
 
 #define SIZETEXT_BORDER_SIZE_TOP	452
 #define SIZETEXT_BORDER_SIZE_LEFT	60
@@ -82,11 +82,17 @@ BEGIN_MESSAGE_MAP(CTextureDialog, CDialog)
 	ON_WM_PAINT()
 	ON_BN_CLICKED(IDC_ADDTEXTURE, OnAddtexture)
 	ON_BN_CLICKED(IDC_REMOVETEXTURE, OnRemovetexture)
+	//ON_WM_CTLCOLOR()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CTextureDialog message handlers
+
+HBRUSH CTextureDialog::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+{
+    return App->AppBackground;
+}
 
 void CTextureDialog::FillTheListbox ()
 {
@@ -107,11 +113,18 @@ void CTextureDialog::FillTheListbox ()
 			m_TextureList.SetItemData (lbIndex, index);
 		}
 	}
+
+	// hgtterry
+	App->CL_TextureDialog->Fill_ListBox();
+
 }
 
 BOOL CTextureDialog::OnInitDialog()
 {
-	//
+	SendDlgItemMessage(IDC_TEXTURELIST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+	SendDlgItemMessage(IDC_SIZETEXT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+	SendDlgItemMessage(IDC_STTXTFILE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+	
 	// At this point, all of the controls are created, but
 	// they're in the wrong places.
 	// We position and size them here...
@@ -469,7 +482,7 @@ void CTextureDialog::ClearTextureImage(CDC* pDC)
 
 	CBrush* pBrush;
 	CDC* pDCDialog = GetDC();
-	COLORREF BkColor = pDCDialog->GetPixel( 0, 0 );
+	COLORREF BkColor = 0x00FFFFFF;//(0,0);//pDCDialog->GetPixel( 0, 0 );
 	ReleaseDC( pDCDialog );
 
 	pBrush = new CBrush( BkColor );
@@ -569,6 +582,11 @@ void CTextureDialog::Update( CFusionDoc* pDoc )
 
 	// hgtterry -> set Texture Dialog TXL Name
 	SetDlgItemText(IDC_STTXTFILE,App->CL_Scene->Current_TXL_FileName);
+
+	if (App->CL_TextureDialog->f_TextureDlg_Active == 1)
+	{
+		App->CL_TextureDialog->Set_Txl_FileName();
+	}
 	
 	if ((m_pDoc == pDoc) && (m_TxlibChanged == false))
 	{

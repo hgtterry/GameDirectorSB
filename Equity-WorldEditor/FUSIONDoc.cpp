@@ -3719,8 +3719,11 @@ void CFusionDoc::SelectTextureFromFace3D(CPoint point, ViewVars *v)
 		if(bdat.CurFace)
 		{
 			mpMainFrame->m_wndTabControls->SelectTexture(Face_GetTextureDibId(bdat.CurFace));
+			App->CL_TextureDialog->Select_Texture(Face_GetTextureDibId(bdat.CurFace));
+
 		}
 	}
+
 }
 
 void CFusionDoc::UpdateFaceAttributesDlg (void)

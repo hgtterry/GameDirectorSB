@@ -14,7 +14,8 @@
 
 A_Dialogs::A_Dialogs()
 {
-
+	F_Textured = 0;
+	F_WireFrame = 1;
 }
 
 A_Dialogs::~A_Dialogs()
@@ -151,7 +152,13 @@ LRESULT CALLBACK A_Dialogs::FrontPanel_Proc(HWND hDlg, UINT message, WPARAM wPar
 	{
 	case WM_INITDIALOG:
 	{
-		//SendDlgItemMessage(hDlg, IDC_BTSETVIEW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BTSETVIEW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BTSELECTALL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BTDESELECTALL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BTWIRE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BTTESTDLG, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
+
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
@@ -168,15 +175,38 @@ LRESULT CALLBACK A_Dialogs::FrontPanel_Proc(HWND hDlg, UINT message, WPARAM wPar
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
+		if (some_item->idFrom == IDC_BTSETVIEW && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item,App->CL_Dialogs->F_Textured);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BTWIRE && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item,App->CL_Dialogs->F_WireFrame);
+			return CDRF_DODEFAULT;
+		}
+
+
+		if (some_item->idFrom == IDC_BTTESTDLG && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
 		return CDRF_DODEFAULT;
 	}
 
 	case WM_COMMAND:
 		{
-			// Textured
-			if (LOWORD(wParam) == IDC_BTSETVIEW)
+			
+			if (LOWORD(wParam) == IDC_BTTESTDLG)
 			{
-				App->CL_Render_App->Render3D_Mode(ID_VIEW_TEXTUREVIEW);
+				App->CL_TextureDialog->Start_TextureDialog();
+
 				return TRUE;
 			}
 
@@ -205,6 +235,23 @@ LRESULT CALLBACK A_Dialogs::FrontPanel_Proc(HWND hDlg, UINT message, WPARAM wPar
 			if (LOWORD(wParam) == IDC_BTWIRE)
 			{
 				App->CL_Render_App->Render3D_Mode(ID_VIEW_3DWIREFRAME);
+
+				App->CL_Dialogs->F_WireFrame = 1;
+				App->CL_Dialogs->F_Textured = 0;
+
+				InvalidateRect(hDlg, NULL, false);
+				return TRUE;
+			}
+
+			// Textured
+			if (LOWORD(wParam) == IDC_BTSETVIEW)
+			{
+				App->CL_Render_App->Render3D_Mode(ID_VIEW_TEXTUREVIEW);
+
+				App->CL_Dialogs->F_WireFrame = 0;
+				App->CL_Dialogs->F_Textured = 1;
+
+				InvalidateRect(hDlg, NULL, false);
 				return TRUE;
 			}
 

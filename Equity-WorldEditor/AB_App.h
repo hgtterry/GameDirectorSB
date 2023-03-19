@@ -9,7 +9,6 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-
 #include "FUSIONDoc.h"
 #include "AB_Export_RFW.h"
 #include "A_FileIO.h"
@@ -17,6 +16,8 @@
 #include "A_Scene.h"
 #include "A_Render_App.h"
 #include "A_TxlEditor.h"
+#include "A_TextureDialog.h"
+#include "A_FaceDialog.h"
 
 class A_App  
 {
@@ -31,6 +32,8 @@ public:
 	A_Scene*				CL_Scene;
 	A_Render_App*			CL_Render_App;
 	A_TxlEditor*			CL_TxlEditor;
+	A_TextureDialog*		CL_TextureDialog;
+	A_FaceDialog*			CL_FaceDialog;
 
 	bool InitApp(void);
 	void InitMFC(void);
@@ -40,11 +43,20 @@ public:
 	void Say(const char* Message);
 	void Say_Int(int Value);
 	void Say_Float(float Value);
+	void Start_Dialogs();
 
-	HBRUSH AppBackground;	// Main App Background Colour [120122]
-	HBRUSH BlackBrush;		// Black Brush Colour [120122]
-	HBRUSH Brush_White;		// Black Brush Colour [120122]
-	HBRUSH Brush_Green;		// Black Brush Colour [120122]
+	bool Custom_Button_Normal(LPNMCUSTOMDRAW item);
+	bool Custom_Button_Toggle(LPNMCUSTOMDRAW item, bool Toggle);
+	HBRUSH CreateGradientBrush(COLORREF top, COLORREF bottom, LPNMCUSTOMDRAW item);
+
+	HBRUSH AppBackground;	
+	HBRUSH BlackBrush;		
+	HBRUSH Brush_White;		
+	HBRUSH Brush_Green;		
+
+	HBRUSH Brush_But_Pressed;
+	HBRUSH Brush_But_Normal;
+	HBRUSH Brush_But_Hover;
 
 	HFONT Font_CB15;
 	HFONT Font_CB18;

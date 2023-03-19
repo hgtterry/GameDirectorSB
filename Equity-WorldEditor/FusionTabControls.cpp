@@ -219,6 +219,7 @@ void CFusionTabControls::UpdateTabs()
 
 	//	This one should always be invisible.  Even to start out with...
 	m_pTextureDialog->ShowWindow( SW_HIDE );
+	App->CL_TextureDialog->Show_Dialog(0);
 
 	//	Update all tabs...
 	ModelTab->Update(pDoc, Level_GetModelInfo (pDoc->pLevel)) ;
@@ -243,6 +244,7 @@ void CFusionTabControls::UpdateTabs()
 			{
 				//	Make it visible...
 				m_pTextureDialog->ShowWindow( SW_SHOW );
+				App->CL_TextureDialog->Show_Dialog(1);
 			}
 			break;
 

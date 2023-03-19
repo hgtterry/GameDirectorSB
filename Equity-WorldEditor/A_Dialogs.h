@@ -20,6 +20,9 @@ public:
 
 	void Start_FrontPanel();
 
+	bool F_WireFrame;
+	bool F_Textured;
+
 protected:
 
 	static LRESULT CALLBACK ListData_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);

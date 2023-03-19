@@ -56,8 +56,10 @@ BEGIN_MESSAGE_MAP(CFusionApp, CWinApp)
 	ON_UPDATE_COMMAND_UI(IDM_PREFERENCES, OnUpdatePreferences)
 	ON_COMMAND(ID_HELP_HOWDOI, OnHelpHowdoi)
 
-	ON_COMMAND(ID_DEBUG_TEST, OnTest) // hgtterry ON_COMMAND(ID_DEBUG_TEST, OnTest)
+	// hgtterry Menu Commands
+	ON_COMMAND(ID_DEBUG_TEST, OnTest)
 	ON_COMMAND(ID_EQUITYSB_TXLEDITOR, Open_TxlEditor)
+	ON_COMMAND(ID_EQUITYSB_FACEPROPERTIES, Open_FaceProperties)
 
 	//}}AFX_MSG_MAP
 	ON_COMMAND(ID_HELP_INDEX, OnHelpIndex)
@@ -375,6 +377,7 @@ BOOL CFusionApp::InitInstance() // hgtterry InitInstance
 
 	App->InitMFC(); // hgtterry
 	App->CL_Scene->Set_Paths();
+	App->Start_Dialogs();
 	return TRUE;
 }
 
@@ -394,16 +397,23 @@ void CFusionApp::OnAppAbout()
 	aboutDlg.DoModal() ;
 }
 
-// GameDirector Test
+// hgtterry 
 void CFusionApp::OnTest() // hgtterry void CFusionApp::OnTest()
 {
 	App->CL_Dialogs->Show_ListData();
 }
 
-void CFusionApp::Open_TxlEditor() // hgtterry void CFusionApp::OnTest()
+void CFusionApp::Open_TxlEditor() // hgtterry void CFusionApp::Open_TxlEditor()
 {
 	App->CL_TxlEditor->Start_Texl_Dialog();
 }
+
+void CFusionApp::Open_FaceProperties() // hgtterry void CFusionApp::Open_FaceProperties()
+{
+	App->CL_FaceDialog->Start_FaceDialog();
+}
+
+
 
 //	CHANGE!	03/29/97	John Moore
 void CFusionApp::InitUserPreferences(CMainFrame* pMainFrame)
