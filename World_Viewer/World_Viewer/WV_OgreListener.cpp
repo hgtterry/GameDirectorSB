@@ -87,8 +87,6 @@ WV_OgreListener::WV_OgreListener(void)
 
 	CameraMode = 1; // Model Mode
 
-	//ImGui_Render_Tab = Enums::ImGui_Camera;
-
 }
 
 WV_OgreListener::~WV_OgreListener(void)
@@ -171,7 +169,7 @@ bool WV_OgreListener::frameEnded(const FrameEvent& evt)
 }
 
 // *************************************************************************
-// *			Update_Game_Logic:- Terry and Hazel Flanigan 202		   *
+// *			Update_Game_Logic:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
 bool WV_OgreListener::Update_Game_Logic(float DeltaTime)
 {
@@ -183,6 +181,8 @@ bool WV_OgreListener::Update_Game_Logic(float DeltaTime)
 	{
 		ImGui::ShowDemoWindow();
 	}
+
+	App->CL_ImGui->ImGui_Editor_Loop();
 
 	return true;
 }

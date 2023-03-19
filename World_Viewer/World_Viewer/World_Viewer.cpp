@@ -76,7 +76,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     }
 
 	App->SetMainWinCentre();
-
+	App->CL_Loader->Start_Groups_Dialog();
 
 	SetTimer(App->MainHwnd, 1, 1, NULL);
 
@@ -168,7 +168,39 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // Parse the menu selections:
             switch (wmId)
             {
-			
+
+			case ID_DEBUG_TEST:
+			{
+				App->CL_Export_Ogre->Export_AssimpToOgre();
+
+				return 1;
+			}
+			case ID_DEBUG_MODELDATA:
+			{
+				if (App->CL_ImGui->Show_Model_Data_F == 1)
+				{
+					App->CL_ImGui->Close_Model_Data();
+				}
+				else
+				{
+					App->CL_ImGui->Start_Model_Data();
+				}
+				return 1;
+			}
+				
+			case ID_OPEN_WORLDEDITORPROJECT:
+			{
+				int Result = App->CL_Loader->Open_File_Model("GDSB File   *.Wepf\0*.Wepf\0", "GDSB File", NULL);
+				if (Result == 0)
+				{
+					return 1;
+				}
+
+				App->CL_Loader->Read_Project_File(App->CL_Loader->Path_FileName);
+				App->CL_Loader->Load_File_Wepf();
+				return 1;
+			}
+				
 			case ID_DEBUG_SHOWIMGUIDEMO:
 			{
 				

@@ -29,10 +29,15 @@ distribution.
 
 WV_App::WV_App(void)
 {
-
-	CL_Ogre = nullptr;
-	CL_Grid = nullptr;
-	CL_ImGui = nullptr;
+	CL_Ogre =			nullptr;
+	CL_Grid =			nullptr;
+	CL_ImGui =			nullptr;
+	CL_Loader =			nullptr;
+	CL_Ini =			nullptr;
+	CL_Assimp =			nullptr;
+	CL_Model =			nullptr;
+	CL_Export_Ogre =	nullptr;
+	CL_PB =				nullptr;
 
 	Fdlg = nullptr;
 	hInst = nullptr;
@@ -148,10 +153,16 @@ WV_App::~WV_App(void)
 bool WV_App::InitApp(void)
 {
 
-	CL_Ogre = new WV_Ogre();
-	CL_Grid = new WV_Grid();
-	CL_ImGui = new VM_ImGui();
-
+	CL_Ogre =			new WV_Ogre();
+	CL_Grid =			new WV_Grid();
+	CL_ImGui =			new WV_ImGui();
+	CL_Loader =			new WV_Loader();
+	CL_Ini =			new WV_Ini();
+	CL_Assimp =			new WV_Assimp();
+	CL_Model =			new WV_Model();
+	CL_Export_Ogre =	new WV_Export_Ogre();
+	CL_PB =				new WV_PB();
+	
 	SetBrushes_Fonts();
 
 	LoadString(hInst, IDS_APP_TITLE, Version, 255);

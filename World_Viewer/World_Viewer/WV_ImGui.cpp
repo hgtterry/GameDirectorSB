@@ -5,24 +5,29 @@
 #include "WV_ImGui.h"
 
 
-VM_ImGui::VM_ImGui()
+WV_ImGui::WV_ImGui()
 {
 	ImGui::CreateContext();
 	ImGui_Set_Colours();
 	Load_Font();
+
+	Model_Data_PosX = 500;
+	Model_Data_PosY = 500;
+
+	Show_Model_Data_F = 0;
 }
 
 
-VM_ImGui::~VM_ImGui()
+WV_ImGui::~WV_ImGui()
 {
 
 }
 
 
 // *************************************************************************
-// *						Load_Font  Terry Bernie						   *
+// *			Load_Font:- Terry and Hazel Flanigan 2023				   *
 // *************************************************************************
-void VM_ImGui::Load_Font(void)
+void WV_ImGui::Load_Font(void)
 {
 	ImGuiIO& io = ImGui::GetIO();
 	font1 = io.Fonts->AddFontFromFileTTF("Roboto-Medium.ttf", 20);
@@ -33,9 +38,9 @@ void VM_ImGui::Load_Font(void)
 }
 
 // *************************************************************************
-// *	  				ImGui_Set_Colours Terry Bernie					   *
+// *	  		ImGui_Set_Colours:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
-void VM_ImGui::ImGui_Set_Colours(void)
+void WV_ImGui::ImGui_Set_Colours(void)
 {
 	ImGuiStyle* style = &ImGui::GetStyle();
 	ImVec4* colors = style->Colors;
@@ -93,4 +98,74 @@ void VM_ImGui::ImGui_Set_Colours(void)
 	colors[ImGuiCol_NavWindowingHighlight] = ImVec4(0.70f, 0.70f, 0.70f, 0.70f);
 	colors[ImGuiCol_NavWindowingDimBg] = ImVec4(0.20f, 0.20f, 0.20f, 0.20f);
 	colors[ImGuiCol_ModalWindowDimBg] = ImVec4(0.20f, 0.20f, 0.20f, 0.35f);
+}
+
+// *************************************************************************
+// *		ImGui_Editor_Loop:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void WV_ImGui::ImGui_Editor_Loop(void)
+{
+	if (Show_Model_Data_F == 1)
+	{
+		Model_Data_GUI();
+	}
+}
+
+// *************************************************************************
+// *			Start_Model_Data:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void WV_ImGui::Start_Model_Data(void)
+{
+	Show_Model_Data_F = 1;
+}
+
+// *************************************************************************
+// *			Model_Data_GUI:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void WV_ImGui::Model_Data_GUI(void)
+{
+	ImGui::SetNextWindowPos(ImVec2(Model_Data_PosX, Model_Data_PosY));
+
+	if (!ImGui::Begin("Model Data", &Show_Model_Data_F, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize
+		| ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
+	{
+		ImGui::End();
+	}
+	else
+	{
+		ImGui::Spacing();
+		ImGui::Text("Model Info");
+		ImGui::Text("  ");
+		ImGui::Text("Model Name:- %s", App->CL_Model->JustName);
+		ImGui::Text("Model File Name:- %s", App->CL_Model->FileName);
+		ImGui::Text("Model Path:- %s", App->CL_Model->Path_FileName);
+		ImGui::Text("Texture Path:- %s", App->CL_Model->Texture_FolderPath);
+		ImGui::Text("  ");
+		ImGui::Text("Vertices:- %i", App->CL_Model->VerticeCount);
+		ImGui::Text("Faces:- %i", App->CL_Model->FaceCount);
+		ImGui::Text("Groups:- %i", App->CL_Model->Get_Groupt_Count());
+		ImGui::Text("Motions:- %i", App->CL_Model->MotionCount);
+		ImGui::Text("  ");
+
+		ImVec2 Size = ImGui::GetWindowSize();
+		Model_Data_PosX = ((float)App->CL_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);
+		Model_Data_PosY = ((float)App->CL_Ogre->OgreListener->View_Height / 2) - (Size.y / 2);;
+
+		ImGui::Separator();
+
+		if (ImGui::Button("Close"))
+		{
+			Close_Model_Data();
+		}
+
+		ImGui::End();
+	}
+}
+
+// *************************************************************************
+// *			Close_Model_Data:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void WV_ImGui::Close_Model_Data(void)
+{
+	Show_Model_Data_F = 0;
 }

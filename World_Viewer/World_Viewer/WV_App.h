@@ -26,16 +26,28 @@ distribution.
 #include "WV_Ogre.h"
 #include "WV_Grid.h"
 #include "WV_ImGui.h"
-
+#include "WV_Loader.h"
+#include "WV_Ini.h"
+#include "WV_Assimp.h"
+#include "WV_Model.h"
+#include "WV_Export_Ogre3D.h"
+#include "WV_PB.h"
 
 class WV_App
 {
 
 public:
 
-	WV_Ogre*	CL_Ogre;
-	WV_Grid*	CL_Grid;
-	VM_ImGui*	CL_ImGui;
+	WV_Ogre*		CL_Ogre;
+	WV_Grid*		CL_Grid;
+	WV_ImGui*		CL_ImGui;
+	WV_Loader*		CL_Loader;
+	WV_Ini*			CL_Ini;
+	WV_Assimp*		CL_Assimp;
+	WV_Model*		CL_Model;
+	WV_Export_Ogre*	CL_Export_Ogre;
+	WV_PB*			CL_PB;
+
 	// ----------------------------------- 
 	WV_App(void);
 	~WV_App(void);

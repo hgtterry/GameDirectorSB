@@ -30,6 +30,7 @@
 
 #define NOMINMAX
 #include <windows.h>
+#include "Genesis.h"
 #include "btBulletDynamicsCommon.h"
 
 // C RunTime Header Files
@@ -59,6 +60,8 @@
 
 #include <gl/gl.h>
 #include <gl/glu.h>
+
+
 
 namespace Enums
 {
