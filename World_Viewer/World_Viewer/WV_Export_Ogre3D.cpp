@@ -88,8 +88,6 @@ bool WV_Export_Ogre::Export_AssimpToOgre(void)
 	int Test = CreateDirectoryMesh();
 	if (Test == 0) { return 1; }
 
-	App->Say_Win("Here");
-
 	strcpy(mOgreMeshFileName, App->CL_Model->JustName);
 	strcpy(mOgreScriptFileName, App->CL_Model->JustName);
 	strcpy(mOgreSkellFileName, App->CL_Model->JustName);
@@ -98,6 +96,8 @@ bool WV_Export_Ogre::Export_AssimpToOgre(void)
 	strcat(mOgreMeshFileName, ".mesh");
 	strcat(mOgreScriptFileName, ".material");
 	strcat(mOgreSkellFileName, ".skeleton");
+
+	strcpy(App->CL_Load_Ogre->ModelName, mOgreMeshFileName);
 
 	App->CL_PB->Nudge("DecompileTextures");
 	DecompileTextures();
@@ -143,6 +143,8 @@ bool WV_Export_Ogre::Export_AssimpToOgre(void)
 	App->CL_PB->Nudge("Convert_To_Mesh");
 	
 	App->CL_PB->Stop_Progress_Bar("Export to Ogre Format Completed");
+
+	App->CL_Load_Ogre->AddToScene();
 
 	return 1;
 }
@@ -636,6 +638,8 @@ bool WV_Export_Ogre::CreateDirectoryMesh(void)
 
 	}
 	
+	strcpy(App->CL_Load_Ogre->ResourcePath, App->CL_Loader->szSelectedDir);
+
 	_getcwd(mCurrentFolder, 1024);
 
 	return 1;

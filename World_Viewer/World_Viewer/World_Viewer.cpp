@@ -169,6 +169,57 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             switch (wmId)
             {
 
+			// --------------------------- Camera
+			case ID_CAMERA_NONE:
+			{
+				App->CL_Grid->Reset_View();
+				App->CL_Grid->Grid_SetVisible(true);
+
+				App->CL_Ogre->OgreListener->CameraMode = 0;
+				return 1;
+			}
+
+			case ID_CAMERA_MODELMODE:
+			{
+				App->CL_Grid->Reset_View();
+				App->CL_Grid->Grid_SetVisible(true);
+
+				App->CL_Ogre->OgreListener->CameraMode = 1;
+				return 1;
+			}
+
+			case ID_CAMERA_FREEMODE:
+			{
+				App->CL_Grid->Reset_View();
+				App->CL_Grid->Grid_SetVisible(true);
+
+				App->CL_Ogre->OgreListener->CameraMode = 2;
+				return 1;
+			}
+			
+			// --------------------------- Windows
+			case ID_WINDOWS_SHOWFPS:
+			{
+				if (App->CL_ImGui->Show_FPS_F == 1)
+				{
+					App->CL_ImGui->Show_FPS_F = 0;
+				}
+				else
+				{
+					App->CL_ImGui->Show_FPS_F = 1;
+				}
+				return 1;
+			}
+			
+			//---------------------------------------------------
+			case ID_VIEW_RESETVIEW:
+			{
+				App->CL_Grid->Reset_View();
+				App->CL_Grid->Grid_SetVisible(true);
+
+				return 1;
+			}
+				
 			case ID_DEBUG_TEST:
 			{
 				App->CL_Export_Ogre->Export_AssimpToOgre();
@@ -373,19 +424,19 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 	case WM_MOUSEWHEEL:
 	{
 		//if (App->FullScreen == 1)
-		//{
-		//	int zDelta = (short)HIWORD(wParam);    // wheel rotation
+		{
+			int zDelta = (short)HIWORD(wParam);    // wheel rotation
 
-		//	if (zDelta > 0)
-		//	{
-		//		App->CL_Ogre->OgreListener->Wheel = -1;
-		//	}
-		//	else if (zDelta < 0)
-		//	{
-		//		App->CL_Ogre->OgreListener->Wheel = 1;
-		//	}
-		//	return 1;
-		//}
+			if (zDelta > 0)
+			{
+				App->CL_Ogre->OgreListener->Wheel = -1;
+			}
+			else if (zDelta < 0)
+			{
+				App->CL_Ogre->OgreListener->Wheel = 1;
+			}
+			return 1;
+		}
 	}
 
 	case WM_MOUSEMOVE: // ok up and running and we have a loop for mouse
@@ -579,8 +630,8 @@ void StartOgre()
 	strcat(Default_Project, "\\Projects\\RF_Project_Prj\\Project.SBProj");*/
 
 
-	App->CL_Ogre->mRoot->startRendering();
-	//App->CL_Ogre->Ogre_Render_Loop();
+	//App->CL_Ogre->mRoot->startRendering();
+	App->CL_Ogre->Ogre_Render_Loop();
 
 
 	Close_App();

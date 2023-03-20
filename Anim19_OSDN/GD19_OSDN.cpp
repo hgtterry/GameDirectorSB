@@ -52,7 +52,7 @@ void StartOgre();
 GD19_App *App = NULL;
 
 // *************************************************************************
-// *							WinMain HGT Software		  	 		   *
+// *				WinMain:- Terry and Hazel Flanigan 2023		  		   *
 // *************************************************************************
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	_In_opt_ HINSTANCE hPrevInstance,
@@ -159,7 +159,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 }
 
 // *************************************************************************
-// *						MyRegisterClass HGT Software	  	 		   *
+// *			MyRegisterClass:- Terry and Hazel Flanigan 2023	  	 	   *
 // *************************************************************************
 ATOM MyRegisterClass(HINSTANCE hInstance)
 {
@@ -183,7 +183,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 }
 
 // *************************************************************************
-// *						InitInstance HGT Software		  	 		   *
+// *			InitInstance:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
@@ -217,7 +217,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 }
 
 // *************************************************************************
-// *						WndProc HGT Software			  	 		   *
+// *				WndProc:- Terry and Hazel Flanigan 2023	  			   *
 // *************************************************************************
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -1046,7 +1046,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 }
 
 // *************************************************************************
-// *					Ogre3D_Proc Terry Bernie 						   *
+// *			Ogre3D_Proc:- Terry and Hazel Flanigan 2023				   *
 // *************************************************************************
 LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -1274,7 +1274,7 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 }
 
 // *************************************************************************
-// *					ViewerMain_Proc  (Terry Bernie)					   *
+// *			ViewerMain_Proc:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 LRESULT CALLBACK ViewerMain_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {

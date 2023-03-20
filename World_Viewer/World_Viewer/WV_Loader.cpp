@@ -100,16 +100,62 @@ void WV_Loader::Load_File_Wepf()
 
 	LoadTextures_TXL();
 
-	/*App->CL_Import->Set_Equity();
+	Set_Equity();
 
-	App->CL_Equity_SB->Adjust();
+	Adjust();
 
 	Ogre::Root::getSingletonPtr()->renderOneFrame();
 	Ogre::Root::getSingletonPtr()->renderOneFrame();
 
-	App->CL_Recent_Files->RecentFile_Projects_History_Update();*/
+	//App->CL_Recent_Files->RecentFile_Projects_History_Update();*/
+
+	App->CL_Export_Ogre->Export_AssimpToOgre();
 
 	App->Say_Win("Model Loaded");
+}
+
+// *************************************************************************
+// *						Adjust Terry Flanigan						   *
+// *************************************************************************
+void WV_Loader::Adjust()
+{
+	Rotate_Z_Model(90);
+	Rotate_X_Model(-90);
+	Centre_Model_Mid();
+
+	App->CL_Grid->Reset_View();
+
+}
+
+// *************************************************************************
+// *						Set_Equity Terry Flanigan					   *
+// *************************************************************************
+void WV_Loader::Set_Equity(void)
+{
+	App->CL_Model->Model_Loaded = 1;
+
+	App->CL_Grid->Reset_View();
+
+	char TitleBar[260];
+	strcpy(TitleBar, "Equity_ME");
+	strcat(TitleBar, "    ");
+	strcat(TitleBar, App->CL_Model->Path_FileName);
+	SetWindowText(App->MainHwnd, TitleBar);
+
+	//Set_Equity();
+	Ogre::Root::getSingletonPtr()->renderOneFrame();
+
+	//App->CL_FileView->Change_Level_Name();
+
+	//App->CL_TopBar->Set_Loaded();
+
+	//App->CL_FileView->ExpandRoot();
+
+	//App->CL_FileView->SelectItem(App->CL_Model->Group[0]->ListView_Item);  // Select First Group
+
+	//App->CL_Grid->Zoom();
+
+	//App->Say("Model Loaded");
 }
 
 // *************************************************************************
@@ -501,4 +547,158 @@ LRESULT CALLBACK WV_Loader::Groups_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *	  				Rotate_Z_Model Terry Bernie						   *
+// *************************************************************************
+void WV_Loader::Rotate_Z_Model(float Z)
+{
+	if (App->CL_Model->Model_Loaded == 1)
+	{
+
+		Ogre::Vector3 Centre;
+
+		Centre.x = App->CL_Model->S_BoundingBox[0]->Centre[0].x;
+		Centre.y = App->CL_Model->S_BoundingBox[0]->Centre[0].y;
+		Centre.z = App->CL_Model->S_BoundingBox[0]->Centre[0].z;
+
+		Ogre::Vector3 Rotate;
+		Rotate.x = 0;
+		Rotate.y = 0;
+		Rotate.z = Z;
+
+
+		int Count = 0;
+		int VertCount = 0;
+
+		int GroupCount = App->CL_Model->Get_Groupt_Count();
+
+		while (Count < GroupCount)
+		{
+			VertCount = 0;
+			while (VertCount < App->CL_Model->Group[Count]->GroupVertCount)
+			{
+				Ogre::Vector3 VertPos;
+				Ogre::Vector3 RotatedVert;
+
+				VertPos.x = App->CL_Model->Group[Count]->vertex_Data[VertCount].x;
+				VertPos.y = App->CL_Model->Group[Count]->vertex_Data[VertCount].y;
+				VertPos.z = App->CL_Model->Group[Count]->vertex_Data[VertCount].z;
+
+				if (Rotate.z != 0) // Dont bother if Zero
+				{
+					RotatedVert = (Ogre::Quaternion(Ogre::Degree(Rotate.z), Ogre::Vector3::UNIT_X) * (VertPos - Centre));
+				}
+				else
+				{
+					RotatedVert = VertPos - Centre;
+				}
+
+				RotatedVert += Centre;
+
+				App->CL_Model->Group[Count]->vertex_Data[VertCount].x = RotatedVert.x;
+				App->CL_Model->Group[Count]->vertex_Data[VertCount].y = RotatedVert.y;
+				App->CL_Model->Group[Count]->vertex_Data[VertCount].z = RotatedVert.z;
+
+				VertCount++;
+			}
+			Count++;
+		}
+
+		App->CL_Model->Set_BondingBox_Model(0);
+	}
+}
+
+// *************************************************************************
+// *	  					Rotate_X_Model Terry Bernie					   *
+// *************************************************************************
+void WV_Loader::Rotate_X_Model(float X)
+{
+	if (App->CL_Model->Model_Loaded == 1)
+	{
+
+		Ogre::Vector3 Centre;
+
+		Centre.x = App->CL_Model->S_BoundingBox[0]->Centre[0].x;
+		Centre.y = App->CL_Model->S_BoundingBox[0]->Centre[0].y;
+		Centre.z = App->CL_Model->S_BoundingBox[0]->Centre[0].z;
+
+		Ogre::Vector3 Rotate;
+		Rotate.x = X;
+		Rotate.y = 0;
+		Rotate.z = 0;
+
+		int Count = 0;
+		int VertCount = 0;
+
+		int GroupCount = App->CL_Model->Get_Groupt_Count();
+
+		while (Count < GroupCount)
+		{
+			VertCount = 0;
+			while (VertCount < App->CL_Model->Group[Count]->GroupVertCount)
+			{
+				Ogre::Vector3 VertPos;
+				Ogre::Vector3 RotatedVert;
+
+				VertPos.x = App->CL_Model->Group[Count]->vertex_Data[VertCount].x;
+				VertPos.y = App->CL_Model->Group[Count]->vertex_Data[VertCount].y;
+				VertPos.z = App->CL_Model->Group[Count]->vertex_Data[VertCount].z;
+
+				if (Rotate.x != 0) // Dont bother if Zero
+				{
+					RotatedVert = (Ogre::Quaternion(Ogre::Degree(Rotate.x), Ogre::Vector3::UNIT_Y) * (VertPos - Centre));
+				}
+				else
+				{
+					RotatedVert = VertPos - Centre;
+				}
+
+				RotatedVert += Centre;
+
+				App->CL_Model->Group[Count]->vertex_Data[VertCount].x = RotatedVert.x;
+				App->CL_Model->Group[Count]->vertex_Data[VertCount].y = RotatedVert.y;
+				App->CL_Model->Group[Count]->vertex_Data[VertCount].z = RotatedVert.z;
+
+				VertCount++;
+			}
+			Count++;
+		}
+
+		App->CL_Model->Set_BondingBox_Model(0);
+	}
+}
+
+// *************************************************************************
+// *	  				Centre_Model_Mid Terry Bernie					   *
+// *************************************************************************
+void WV_Loader::Centre_Model_Mid(void)
+{
+	if (App->CL_Model->Model_Loaded == 1)
+	{
+		float X = -App->CL_Model->S_BoundingBox[0]->Centre[0].x;
+		float Y = -App->CL_Model->S_BoundingBox[0]->Centre[0].y;
+		float Z = -App->CL_Model->S_BoundingBox[0]->Centre[0].z;
+
+		int Count = 0;
+		int VertCount = 0;
+		int Index = App->CL_Model->Get_Groupt_Count();
+
+		while (Count < Index)
+		{
+			VertCount = 0;
+			while (VertCount < App->CL_Model->Group[Count]->GroupVertCount)
+			{
+				App->CL_Model->Group[Count]->vertex_Data[VertCount].x += X;
+				App->CL_Model->Group[Count]->vertex_Data[VertCount].y += Y;
+				App->CL_Model->Group[Count]->vertex_Data[VertCount].z += Z;
+				VertCount++;
+			}
+			Count++;
+		}
+
+		App->CL_Model->Set_BondingBox_Model(0);
+
+	}
 }

@@ -35,6 +35,7 @@ public:
 	bool Open_File_Model(const char* Extension, const char* Title, const char* StartDirectory);
 	bool Read_Project_File(char* Path_And_File);
 	void Load_File_Wepf();
+	void Set_Equity(void);
 
 	char FileName[MAX_PATH];
 	char Path_FileName[MAX_PATH];
@@ -58,6 +59,12 @@ protected:
 	bool Check_in_Txl(char* FileName);
 	bool AddTexture(geVFile* BaseFile, const char* Path, int GroupIndex);
 	HBITMAP CreateHBitmapFromgeBitmap(geBitmap* Bitmap, HDC hdc);
+
+	void Adjust();
+
+	void Rotate_Z_Model(float Z);
+	void Rotate_X_Model(float X);
+	void Centre_Model_Mid(void);
 
 	int NameCount;
 	HWND RightGroups_Hwnd;

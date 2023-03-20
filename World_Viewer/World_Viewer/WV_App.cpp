@@ -38,6 +38,8 @@ WV_App::WV_App(void)
 	CL_Model =			nullptr;
 	CL_Export_Ogre =	nullptr;
 	CL_PB =				nullptr;
+	CL_Load_Ogre =		nullptr;
+	CL_Keyboard =		nullptr;
 
 	Fdlg = nullptr;
 	hInst = nullptr;
@@ -162,7 +164,9 @@ bool WV_App::InitApp(void)
 	CL_Model =			new WV_Model();
 	CL_Export_Ogre =	new WV_Export_Ogre();
 	CL_PB =				new WV_PB();
-	
+	CL_Load_Ogre =		new WV_Load_Ogre();
+	CL_Keyboard =		new WV_Keyboard();
+
 	SetBrushes_Fonts();
 
 	LoadString(hInst, IDS_APP_TITLE, Version, 255);

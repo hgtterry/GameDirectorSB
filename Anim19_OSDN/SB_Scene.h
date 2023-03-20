@@ -54,13 +54,16 @@ public:
 	int Get_Object_SizeCounter();
 
 	//Base_Object*			B_Object[100];
-	Base_Player*			B_Player[20];
+	//Base_Player*			B_Player[20];
+
 	Base_Area*				B_Area[20];
-	Base_Camera*			B_Camera[20];
+	//Base_Camera*			B_Camera[20];
 	Base_Locations*			B_Locations[20];
 	Base_Counter*			B_Counter[20];
 	
 	std::vector<Base_Object*> V_Object;
+	std::vector<Base_Player*> B_Player;
+	std::vector<Base_Camera*> B_Camera;
 
 	bool Scene_Loaded;	// Is the Scene Loaded
 

@@ -47,14 +47,22 @@ public:
 	bool Update_Game_Logic(float DeltaTime);
 
 	void WorldMode(float DeltaTime);
-	void ModelMode(float DeltaTime);
+
+	void Camera_Mode_Model(float DeltaTime);
+	void Camera_Mode_Free(float DeltaTime);
 
 	void MoveCamera(void);
 
-	bool Capture_Mouse_Free(void);
 
 	bool Capture_RightMouse_Model(void);
-	bool Capture_RightMouse_World(void);
+
+
+	// -------- Good
+	bool Capture_Left_Mouse_Free(void);
+	bool Capture_Right_Mouse_Free(void);
+	// --------------------------------
+
+
 
 	bool Capture_Mouse_FirstPerson(float DeltaTime);
 
@@ -129,7 +137,7 @@ public:
 
 	btScalar   _desiredVelocity;
 
-	bool CameraMode;
+	int CameraMode;
 
 };
 

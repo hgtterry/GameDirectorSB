@@ -151,7 +151,9 @@
     <ClInclude Include="WV_Grid.h" />
     <ClInclude Include="WV_ImGui.h" />
     <ClInclude Include="WV_Ini.h" />
+    <ClInclude Include="WV_Keyboard.h" />
     <ClInclude Include="WV_Loader.h" />
+    <ClInclude Include="WV_Load_Ogre.h" />
     <ClInclude Include="WV_Model.h" />
     <ClInclude Include="WV_Ogre.h" />
     <ClInclude Include="WV_OgreListener.h" />
@@ -177,7 +179,9 @@
     <ClCompile Include="WV_Grid.cpp" />
     <ClCompile Include="WV_ImGui.cpp" />
     <ClCompile Include="WV_Ini.cpp" />
+    <ClCompile Include="WV_Keyboard.cpp" />
     <ClCompile Include="WV_Loader.cpp" />
+    <ClCompile Include="WV_Load_Ogre.cpp" />
     <ClCompile Include="WV_Model.cpp" />
     <ClCompile Include="WV_Ogre.cpp" />
     <ClCompile Include="WV_OgreListener.cpp" />

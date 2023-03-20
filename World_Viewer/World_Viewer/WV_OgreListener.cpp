@@ -85,7 +85,7 @@ WV_OgreListener::WV_OgreListener(void)
 	
 	DistanceToCollision = 0;
 
-	CameraMode = 1; // Model Mode
+	CameraMode = 2; // Model Mode
 
 }
 
@@ -100,7 +100,7 @@ WV_OgreListener::~WV_OgreListener(void)
 void WV_OgreListener::Reset_Class(void)
 {
 	Animate_Ogre = 0;
-	CameraMode = 1;  // Model Mode
+	CameraMode = 2;  // Model Mode
 }
 
 // *************************************************************************
@@ -117,40 +117,19 @@ bool WV_OgreListener::frameStarted(const FrameEvent& evt)
 // *************************************************************************
 bool WV_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 {
-	OgreFrameTime = evt.timeSinceLastFrame;
-
-	App->CL_Ogre->m_imgui.render();
-
-	// Left Mouse
-	if (Pl_LeftMouseDown == 1 && Pl_RightMouseDown == 0)
+	if (CameraMode == 1)
 	{
-		if (GD_CameraMode == Enums::CamFirst)
-		{
-			Capture_Mouse_FirstPerson(evt.timeSinceLastFrame);
-			SetCursorPos(App->CursorPosX, App->CursorPosY);
-		}
-		else if (GD_CameraMode == Enums::CamNone)
-		{
-			Capture_LeftMouse();
-		}
-		else
-		{
-			Capture_Mouse_Free();
-		}
+		Camera_Mode_Model(evt.timeSinceLastFrame);
+		return 1;
 	}
 
-	if (Pl_LeftMouseDown == 1 && GD_CameraMode == Enums::CamDetached)
+	if (CameraMode == 2)
 	{
-		SetCursorPos(App->CursorPosX, App->CursorPosY);
+		Camera_Mode_Free(evt.timeSinceLastFrame);
+		return 1;
 	}
 
-	// Right Mouse
-	if (Pl_LeftMouseDown == 0 && Pl_RightMouseDown == 1)
-	{
-		Capture_RightMouse_World();
-	}
-
-	MoveCamera();
+	//OgreFrameTime = evt.timeSinceLastFrame;
 
 	return 1;
 }
@@ -166,6 +145,79 @@ bool WV_OgreListener::frameEnded(const FrameEvent& evt)
 	}
 
 	return true;
+}
+
+// *************************************************************************
+// *		Camera_Mode_Free:- Terry and Hazel Flanigan 2023   			   *
+// *************************************************************************
+void WV_OgreListener::Camera_Mode_Free(float DeltaTime)
+{
+	App->CL_Ogre->m_imgui.render();
+
+	mRotX = 0;
+	mRotY = 0;
+	mTranslateVector = Ogre::Vector3::ZERO;
+
+	mMoveScale = mMoveSensitivity * DeltaTime;
+
+	App->CL_Keyboard->Keyboard_Mode_Free(DeltaTime);
+
+	if (Pl_LeftMouseDown == 1 && Pl_RightMouseDown == 0)
+	{
+		Capture_Left_Mouse_Free();
+		SetCursorPos(App->CursorPosX, App->CursorPosY);
+	}
+
+	// Right Mouse
+	if (Pl_LeftMouseDown == 0 && Pl_RightMouseDown == 1)
+	{
+		Capture_Right_Mouse_Free();
+	}
+	
+
+	MoveCamera();
+}
+
+// *************************************************************************
+// *		Camera_Mode_Model:- Terry and Hazel Flanigan 2023  			   *
+// *************************************************************************
+void WV_OgreListener::Camera_Mode_Model(float DeltaTime)
+{
+	App->CL_Ogre->m_imgui.render();
+
+	mRotX = 0;
+	mRotY = 0;
+	mTranslateVector = Ogre::Vector3::ZERO;
+
+	mMoveScale = mMoveSensitivity * DeltaTime;
+
+	App->CL_Keyboard->Keyboard_Mode_Model(DeltaTime);
+	
+	// Left Mouse
+	if (Pl_LeftMouseDown == 1 && Pl_RightMouseDown == 0)
+	{
+		Capture_LeftMouse_Model();
+	}
+
+	// Right Mouse
+	if (Pl_LeftMouseDown == 0 && Pl_RightMouseDown == 1)
+	{
+		Capture_RightMouse_Model();
+	}
+
+	MoveCamera();
+}
+
+// *************************************************************************
+// *				moveCamera   Terry Bernie							   *
+// *************************************************************************
+void WV_OgreListener::MoveCamera(void)
+{
+	mCam->yaw(mRotX);
+	mCam->pitch(mRotY);
+	mCam->moveRelative(mTranslateVector); // Position Relative
+	Wheel = 0;
+
 }
 
 // *************************************************************************
@@ -318,7 +370,7 @@ void WV_OgreListener::WorldMode(float DeltaTime)
 
 	//if (GetAsyncKeyState(VK_ESCAPE) < 0) // Back to full Screen;
 	//{
-	//	App->CL_Ogre->ExitFullScreen();
+	//	//App->CL_Ogre->ExitFullScreen();
 	//}
 
 	//// Left Mouse
@@ -356,178 +408,67 @@ void WV_OgreListener::WorldMode(float DeltaTime)
 
 	//MoveCamera();
 
-	//if (App->Cl_Collision->DoMove == 1)
+	///*if (App->Cl_Collision->DoMove == 1)
 	//{
 	//	App->Cl_Collision->MoveObject(DeltaTime);
-	//}
+	//}*/
 }
 
+
 // *************************************************************************
-// *							ModelMode   							   *
+// *				Capture_Left_Mouse_Free   Terry Bernie				   *
 // *************************************************************************
-void WV_OgreListener::ModelMode(float DeltaTime)
+bool WV_OgreListener::Capture_Left_Mouse_Free(void)
 {
-	mRotX = 0;
-	mRotY = 0;
-	mTranslateVector = Ogre::Vector3::ZERO;
+	if (!ImGui::GetIO().WantCaptureMouse)
+	{
+		GetCursorPos(&Pl_pt);
+		Pl_MouseX = (int(Pl_pt.x));
+		Pl_MouseY = (int(Pl_pt.y));
 
-	mMoveScale = mMoveSensitivity  * DeltaTime;
-
-	App->CL_Ogre->m_imgui.render();
-
-	if (GetAsyncKeyState(88) < 0)
-	{
-		//SelectEntity();
-	}
-
-	if (GetAsyncKeyState(69) < 0) // Q key Down in Fly Mode
-	{
-		Ogre::Real Rate;
-		Rate = (mMoveSensitivity / 1000) * 2;    //0.1;//FlyRate;
-
-		Ogre::Vector3 OldPos;
-		OldPos = mCam->getPosition();
-
-		OldPos.y += Rate;
-		mCam->setPosition(OldPos);
-	}
-	//------------------------------------------------
-	if (GetAsyncKeyState(81) < 0) // E key Up in Fly Mode
-	{
-		Ogre::Real Rate;
-		Rate = (mMoveSensitivity / 1000) * 2;// 0.1;//FlyRate;
-
-		Ogre::Vector3 OldPos;
-		OldPos = mCam->getPosition();
-
-		OldPos.y -= Rate;
-		mCam->setPosition(OldPos);
-	}
-	//------------------------------------------------
-	if (Wheel < 0) // Mouse Wheel Forward
-	{
-		mTranslateVector.z = -mMoveScale * 30;
-	}
-	if (GetAsyncKeyState(87) < 0) // W Key
-	{
-		mTranslateVector.z = -mMoveScale;
-	}
-	////------------------------------------------------
-	//// back
-	if (Wheel > 0) // Mouse Wheel Back
-	{
-		mTranslateVector.z = mMoveScale * 30;
-	}
-	if (GetAsyncKeyState(83) < 0) // S Key	
-	{
-		mTranslateVector.z = mMoveScale;
-	}
-	//------------------------------------------------
-	// Right
-	if (GetAsyncKeyState(65) < 0)
-	{
-		mTranslateVector.x = mMoveScale;
-	}
-	// Left
-	if (GetAsyncKeyState(68) < 0)
-	{
-		mTranslateVector.x = -mMoveScale;
-	}
-
-	if (GetAsyncKeyState(VK_ESCAPE) < 0) // Back to full Screen;
-	{
-		if (App->FullScreen == 1)
+		// Left Right
+		if (Pl_MouseX < Pl_Cent500X)
 		{
-			App->FullScreen = 0;
+			long test = Pl_Cent500X - Pl_MouseX; // Positive
+			if (test > 2)
+			{
+				Pl_DeltaMouse = float(Pl_Cent500X - Pl_MouseX);
+				mRotX = Degree(Pl_DeltaMouse * (float)0.03);//S_Player[0]->TurnRate);
+			}
+		}
+		else if (Pl_MouseX > Pl_Cent500X)
+		{
+			long test = Pl_MouseX - Pl_Cent500X; // Positive
+
+			if (test > 2)
+			{
+				Pl_DeltaMouse = float(Pl_MouseX - Pl_Cent500X);
+				mRotX = Degree(-Pl_DeltaMouse * (float)0.03);//S_Player[0]->TurnRate);
+			}
+		}
+
+		// Up Down
+		if (Pl_MouseY < Pl_Cent500Y)
+		{
+			long test = Pl_Cent500Y - Pl_MouseY; // Positive
+
+			if (test > 2)
+			{
+				Pl_DeltaMouse = float(Pl_Cent500Y - Pl_MouseY);
+				mRotY = Degree(Pl_DeltaMouse * (float)0.03);//S_Player[0]->TurnRate);
+			}
+		}
+		else if (Pl_MouseY > Pl_Cent500Y)
+		{
+			long test = Pl_MouseY - Pl_Cent500Y; // Positive
+
+			if (test > 2)
+			{
+				Pl_DeltaMouse = float(Pl_MouseY - Pl_Cent500Y);
+				mRotY = Degree(-Pl_DeltaMouse * (float)0.03);//S_Player[0]->TurnRate);
+			}
 		}
 	}
-
-	if (GetAsyncKeyState(VK_END) < 0) // Back to full Screen;
-	{
-		//SelectEntity();
-	}
-
-	// Left Mouse
-	if (Pl_LeftMouseDown == 1 && Pl_RightMouseDown == 0)
-	{
-		Capture_LeftMouse_Model();
-	}
-
-	// Right Mouse
-	if (Pl_LeftMouseDown == 0 && Pl_RightMouseDown == 1)
-	{
-		Capture_RightMouse_World();
-	}
-
-	MoveCamera();
-}
-
-// *************************************************************************
-// *				moveCamera   Terry Bernie							   *
-// *************************************************************************
-void WV_OgreListener::MoveCamera(void)
-{
-	mCam->yaw(mRotX);
-	mCam->pitch(mRotY);
-	mCam->moveRelative(mTranslateVector); // Position Relative
-	Wheel = 0;
-
-}
-
-// *************************************************************************
-// *				Capture_Mouse_Free_World   Terry Bernie				   *
-// *************************************************************************
-bool WV_OgreListener::Capture_Mouse_Free(void)
-{
-	//if (!ImGui::GetIO().WantCaptureMouse)
-	//{
-	//	GetCursorPos(&Pl_pt);
-	//	Pl_MouseX = (int(Pl_pt.x));
-	//	Pl_MouseY = (int(Pl_pt.y));
-
-	//	// Left Right
-	//	if (Pl_MouseX < Pl_Cent500X)
-	//	{
-	//		long test = Pl_Cent500X - Pl_MouseX; // Positive
-	//		if (test > 2)
-	//		{
-	//			Pl_DeltaMouse = float(Pl_Cent500X - Pl_MouseX);
-	//			mRotX = Degree(Pl_DeltaMouse * (float)0.03);//S_Player[0]->TurnRate);
-	//		}
-	//	}
-	//	else if (Pl_MouseX > Pl_Cent500X)
-	//	{
-	//		long test = Pl_MouseX - Pl_Cent500X; // Positive
-
-	//		if (test > 2)
-	//		{
-	//			Pl_DeltaMouse = float(Pl_MouseX - Pl_Cent500X);
-	//			mRotX = Degree(-Pl_DeltaMouse * (float)0.03);//S_Player[0]->TurnRate);
-	//		}
-	//	}
-
-	//	// Up Down
-	//	if (Pl_MouseY < Pl_Cent500Y)
-	//	{
-	//		long test = Pl_Cent500Y - Pl_MouseY; // Positive
-
-	//		if (test > 2)
-	//		{
-	//			Pl_DeltaMouse = float(Pl_Cent500Y - Pl_MouseY);
-	//			mRotY = Degree(Pl_DeltaMouse * (float)0.03);//S_Player[0]->TurnRate);
-	//		}
-	//	}
-	//	else if (Pl_MouseY > Pl_Cent500Y)
-	//	{
-	//		long test = Pl_MouseY - Pl_Cent500Y; // Positive
-
-	//		if (test > 2)
-	//		{
-	//			Pl_DeltaMouse = float(Pl_MouseY - Pl_Cent500Y);
-	//			mRotY = Degree(-Pl_DeltaMouse * (float)0.03);//S_Player[0]->TurnRate);
-	//		}
-	//	}
-	//}
 
 	return 1;
 }
@@ -613,70 +554,70 @@ bool WV_OgreListener::Capture_LeftMouse_World(void)
 // *************************************************************************
 bool WV_OgreListener::Capture_LeftMouse_Model(void)
 {
-	//GetCursorPos(&Pl_pt);
+	GetCursorPos(&Pl_pt);
 
-	//Pl_MouseX = (int(Pl_pt.x));
-	//Pl_MouseY = (int(Pl_pt.y));
+	Pl_MouseX = (int(Pl_pt.x));
+	Pl_MouseY = (int(Pl_pt.y));
 
-	////// Left Right
-	//if (Pl_MouseX < Pl_Cent500X)
-	//{
-	//	long test = Pl_Cent500X - Pl_MouseX; // Positive
+	//// Left Right
+	if (Pl_MouseX < Pl_Cent500X)
+	{
+		long test = Pl_Cent500X - Pl_MouseX; // Positive
 
-	//	if (test > 2)
-	//	{
-	//		Pl_DeltaMouse = float(Pl_Cent500X - Pl_MouseX);
-	//		App->SBC_Grid->GridNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
-	//		App->SBC_Grid->HairNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
-	//		App->SBC_Grid->DummyNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
-	//		//App->CL_Ogre->RenderListener->RZ = App->CL_Ogre->RenderListener->RZ - (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
-	//		SetCursorPos(App->CursorPosX, App->CursorPosY);
-	//	}
-	//}
-	//else if (Pl_MouseX > Pl_Cent500X)
-	//{
-	//	long test = Pl_MouseX - Pl_Cent500X; // Positive
+		if (test > 2)
+		{
+			Pl_DeltaMouse = float(Pl_Cent500X - Pl_MouseX);
+			App->CL_Grid->GridNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
+			App->CL_Grid->HairNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
+			App->CL_Grid->DummyNode->yaw(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
+			//App->CL_Ogre->RenderListener->RZ = App->CL_Ogre->RenderListener->RZ - (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
+			SetCursorPos(App->CursorPosX, App->CursorPosY);
+		}
+	}
+	else if (Pl_MouseX > Pl_Cent500X)
+	{
+		long test = Pl_MouseX - Pl_Cent500X; // Positive
 
-	//	if (test > 2)
-	//	{
-	//		Pl_DeltaMouse = float(Pl_MouseX - Pl_Cent500X);
-	//		App->SBC_Grid->GridNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
-	//		App->SBC_Grid->HairNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
-	//		App->SBC_Grid->DummyNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
-	//		//App->CL_Ogre->RenderListener->RZ = App->CL_Ogre->RenderListener->RZ + (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
-	//		SetCursorPos(App->CursorPosX, App->CursorPosY);
-	//	}
-	//}
+		if (test > 2)
+		{
+			Pl_DeltaMouse = float(Pl_MouseX - Pl_Cent500X);
+			App->CL_Grid->GridNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
+			App->CL_Grid->HairNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
+			App->CL_Grid->DummyNode->yaw(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_LOCAL);
+			//App->CL_Ogre->RenderListener->RZ = App->CL_Ogre->RenderListener->RZ + (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
+			SetCursorPos(App->CursorPosX, App->CursorPosY);
+		}
+	}
 
-	//// Up Down
-	//if (Pl_MouseY < Pl_Cent500Y)
-	//{
-	//	long test = Pl_Cent500Y - Pl_MouseY; // Positive
+	// Up Down
+	if (Pl_MouseY < Pl_Cent500Y)
+	{
+		long test = Pl_Cent500Y - Pl_MouseY; // Positive
 
-	//	if (test > 2)
-	//	{
-	//		Pl_DeltaMouse = float(Pl_Cent500Y - Pl_MouseY);
-	//		App->SBC_Grid->GridNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
-	//		App->SBC_Grid->HairNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
-	//		App->SBC_Grid->DummyNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
-	//		//App->CL_Ogre->RenderListener->RX = App->CL_Ogre->RenderListener->RX - (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
-	//		SetCursorPos(App->CursorPosX, App->CursorPosY);
-	//	}
-	//}
-	//else if (Pl_MouseY > Pl_Cent500Y)
-	//{
-	//	long test = Pl_MouseY - Pl_Cent500Y; // Positive
+		if (test > 2)
+		{
+			Pl_DeltaMouse = float(Pl_Cent500Y - Pl_MouseY);
+			App->CL_Grid->GridNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+			App->CL_Grid->HairNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+			App->CL_Grid->DummyNode->pitch(Ogre::Degree(-Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+			//App->CL_Ogre->RenderListener->RX = App->CL_Ogre->RenderListener->RX - (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
+			SetCursorPos(App->CursorPosX, App->CursorPosY);
+		}
+	}
+	else if (Pl_MouseY > Pl_Cent500Y)
+	{
+		long test = Pl_MouseY - Pl_Cent500Y; // Positive
 
-	//	if (test > 2)
-	//	{
-	//		Pl_DeltaMouse = float(Pl_MouseY - Pl_Cent500Y);
-	//		App->SBC_Grid->GridNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
-	//		App->SBC_Grid->HairNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
-	//		App->SBC_Grid->DummyNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
-	//		//App->CL_Ogre->RenderListener->RX = App->CL_Ogre->RenderListener->RX + (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
-	//		SetCursorPos(App->CursorPosX, App->CursorPosY);
-	//	}
-	//}
+		if (test > 2)
+		{
+			Pl_DeltaMouse = float(Pl_MouseY - Pl_Cent500Y);
+			App->CL_Grid->GridNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+			App->CL_Grid->HairNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+			App->CL_Grid->DummyNode->pitch(Ogre::Degree(Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2), Ogre::Node::TS_PARENT);
+			//App->CL_Ogre->RenderListener->RX = App->CL_Ogre->RenderListener->RX + (Pl_DeltaMouse * (mMoveSensitivityMouse / 1000) * 2);
+			SetCursorPos(App->CursorPosX, App->CursorPosY);
+		}
+	}
 
 	return 1;
 }
@@ -849,85 +790,85 @@ bool WV_OgreListener::Capture_RightMouse_Model(void)
 }
 
 // *************************************************************************
-// *				Capture_RightMouse_World   Terry Bernie				   *
+// *				Capture_Right_Mouse_Free   Terry Bernie				   *
 // *************************************************************************
-bool WV_OgreListener::Capture_RightMouse_World(void)
+bool WV_OgreListener::Capture_Right_Mouse_Free(void)
 {
 
-	//if (App->CL_Ogre->OgreListener->GD_CameraMode == Enums::CamDetached)
-	//{
+	if (CameraMode == Enums::CamDetached)
+	{
 
-	//	GetCursorPos(&Pl_pt);
+		GetCursorPos(&Pl_pt);
 
-	//	Pl_MouseX = (int(Pl_pt.x));
-	//	Pl_MouseY = (int(Pl_pt.y));
+		Pl_MouseX = (int(Pl_pt.x));
+		Pl_MouseY = (int(Pl_pt.y));
 
-	//	//// Left Right
-	//	if (Pl_MouseX < Pl_Cent500X)
-	//	{
-	//		long test = Pl_Cent500X - Pl_MouseX; // Positive
+		//// Left Right
+		if (Pl_MouseX < Pl_Cent500X)
+		{
+			long test = Pl_Cent500X - Pl_MouseX; // Positive
 
-	//		if (test > 2)
-	//		{
-	//			Pl_DeltaMouse = float(Pl_Cent500X - Pl_MouseX);
-	//			mTranslateVector.x = Pl_DeltaMouse * (mMoveSensitivityMouse / 1000);
-	//			SetCursorPos(App->CursorPosX, App->CursorPosY);
-	//		}
-	//	}
-	//	else if (Pl_MouseX > Pl_Cent500X)
-	//	{
-	//		long test = Pl_MouseX - Pl_Cent500X; // Positive
+			if (test > 2)
+			{
+				Pl_DeltaMouse = float(Pl_Cent500X - Pl_MouseX);
+				mTranslateVector.x = Pl_DeltaMouse * (mMoveSensitivityMouse / 1000);
+				SetCursorPos(App->CursorPosX, App->CursorPosY);
+			}
+		}
+		else if (Pl_MouseX > Pl_Cent500X)
+		{
+			long test = Pl_MouseX - Pl_Cent500X; // Positive
 
-	//		if (test > 2)
-	//		{
-	//			Pl_DeltaMouse = float(Pl_MouseX - Pl_Cent500X);
-	//			mTranslateVector.x = -Pl_DeltaMouse * (mMoveSensitivityMouse / 1000);
-	//			SetCursorPos(App->CursorPosX, App->CursorPosY);
-	//		}
-	//	}
+			if (test > 2)
+			{
+				Pl_DeltaMouse = float(Pl_MouseX - Pl_Cent500X);
+				mTranslateVector.x = -Pl_DeltaMouse * (mMoveSensitivityMouse / 1000);
+				SetCursorPos(App->CursorPosX, App->CursorPosY);
+			}
+		}
 
-	//	//// Up Down
-	//	if (Pl_MouseY < Pl_Cent500Y)
-	//	{
-	//		long test = Pl_Cent500Y - Pl_MouseY; // Positive
+		//// Up Down
+		if (Pl_MouseY < Pl_Cent500Y)
+		{
+			long test = Pl_Cent500Y - Pl_MouseY; // Positive
 
-	//		if (test > 2)
-	//		{
-	//			Pl_DeltaMouse = float(Pl_Cent500Y - Pl_MouseY);
+			if (test > 2)
+			{
+				Pl_DeltaMouse = float(Pl_Cent500Y - Pl_MouseY);
 
-	//			Ogre::Real Rate;
-	//			Rate = Pl_DeltaMouse * (mMoveSensitivityMouse / 1000);
+				Ogre::Real Rate;
+				Rate = Pl_DeltaMouse * (mMoveSensitivityMouse / 1000);
 
-	//			Ogre::Vector3 OldPos;
-	//			OldPos = mCam->getPosition();
+				Ogre::Vector3 OldPos;
+				OldPos = mCam->getPosition();
 
-	//			OldPos.y -= Rate;
-	//			mCam->setPosition(OldPos);
-	//			SetCursorPos(App->CursorPosX, App->CursorPosY);
-	//		}
+				OldPos.y -= Rate;
+				mCam->setPosition(OldPos);
+				SetCursorPos(App->CursorPosX, App->CursorPosY);
+			}
 
-	//	}
-	//	else if (Pl_MouseY > Pl_Cent500Y)
-	//	{
-	//		long test = Pl_MouseY - Pl_Cent500Y; // Positive
+		}
+		else if (Pl_MouseY > Pl_Cent500Y)
+		{
+			long test = Pl_MouseY - Pl_Cent500Y; // Positive
 
-	//		if (test > 2)
-	//		{
-	//			Pl_DeltaMouse = float(Pl_MouseY - Pl_Cent500Y);
+			if (test > 2)
+			{
+				Pl_DeltaMouse = float(Pl_MouseY - Pl_Cent500Y);
 
-	//			Ogre::Real Rate;
-	//			Rate = Pl_DeltaMouse * (mMoveSensitivityMouse / 1000);
+				Ogre::Real Rate;
+				Rate = Pl_DeltaMouse * (mMoveSensitivityMouse / 1000);
 
-	//			Ogre::Vector3 OldPos;
-	//			OldPos = mCam->getPosition();
+				Ogre::Vector3 OldPos;
+				OldPos = mCam->getPosition();
 
-	//			OldPos.y += Rate;
-	//			mCam->setPosition(OldPos);
-	//			SetCursorPos(App->CursorPosX, App->CursorPosY);
-	//		}
+				OldPos.y += Rate;
+				mCam->setPosition(OldPos);
+				SetCursorPos(App->CursorPosX, App->CursorPosY);
+			}
 
-	//	}
-	//}
+		}
+	}
 
 	return 1;
 }

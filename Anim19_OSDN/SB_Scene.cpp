@@ -66,13 +66,15 @@ SB_Scene::SB_Scene()
 	GameMode_Running_Flag = 0;
 	FullScreenMode_Flag = 0;
 
-	B_Player[20] = { nullptr };
+	//B_Player[20] = { nullptr };
 	B_Area[20] = { nullptr };
-	B_Camera[20] = { nullptr };
+	//B_Camera[20] = { nullptr };
 	B_Locations[20] = { nullptr };
 	B_Counter[20] = { nullptr };
 
 	V_Object.reserve(200);
+	B_Player.reserve(20);
+	B_Camera.reserve(20);
 }
 
 

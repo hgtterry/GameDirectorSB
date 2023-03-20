@@ -11,10 +11,16 @@ WV_ImGui::WV_ImGui()
 	ImGui_Set_Colours();
 	Load_Font();
 
+	PosX = 500;
+	PosY = 500;
+
 	Model_Data_PosX = 500;
 	Model_Data_PosY = 500;
 
+	Show_FPS_F = 0;
 	Show_Model_Data_F = 0;
+
+	StartPos = 0;
 }
 
 
@@ -105,9 +111,46 @@ void WV_ImGui::ImGui_Set_Colours(void)
 // *************************************************************************
 void WV_ImGui::ImGui_Editor_Loop(void)
 {
+	if (Show_FPS_F == 1)
+	{
+		ImGui_FPS();
+	}
+
 	if (Show_Model_Data_F == 1)
 	{
 		Model_Data_GUI();
+	}
+}
+
+// *************************************************************************
+// *						ImGui_FPS  Terry Bernie						   *
+// *************************************************************************
+void WV_ImGui::ImGui_FPS(void)
+{
+	ImGui::SetNextWindowPos(ImVec2(PosX, PosY));
+
+	if (!ImGui::Begin("Ogre Data", &Show_FPS_F, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize
+		| ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
+	{
+		ImGui::End();
+	}
+	else
+	{
+		if (StartPos == 0)
+		{
+			ImGui::SetWindowPos("Ogre Data", ImVec2(500, 5));
+			ImGui::SetWindowSize(ImVec2(350, 90));
+			StartPos = 1;
+		}
+
+		ImGui::Spacing();
+		ImGui::Text("FPS average %.0f", ImGui::GetIO().Framerate);
+
+		ImVec2 Size = ImGui::GetWindowSize();
+		PosX = ((float)App->CL_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);
+		PosY = 10;
+
+		ImGui::End();
 	}
 }
 

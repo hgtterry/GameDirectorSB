@@ -230,7 +230,24 @@ void WV_Grid::Grid_SetVisible(bool Option)
 void WV_Grid::Hair_SetVisible(bool Option)
 {
 	HairNode->setVisible(Option);
+}
 
+// *************************************************************************
+// *					Reset_View Terry Flanigan						   *
+// *************************************************************************
+void WV_Grid::Reset_View(void)
+{
+	GridNode->setPosition(0, 0, 0);
+	GridNode->resetOrientation();
+
+	HairNode->setPosition(0, 0, 0);
+	HairNode->resetOrientation();
+
+	//App->CL_Ogre->OgreListener->RX = 0;
+	//App->CL_Ogre->RenderListener->RZ = 0;
+
+	App->CL_Ogre->mCamera->setPosition(Ogre::Vector3(0, 90, 100));
+	App->CL_Ogre->mCamera->lookAt(Ogre::Vector3(0, 30, 0));
 }
 
 

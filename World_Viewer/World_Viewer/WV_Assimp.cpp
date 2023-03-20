@@ -83,7 +83,7 @@ bool WV_Assimp::LoadFile(const char* pFile)
 
 		LoadTextures();
 
-		//App->CL_Model->Set_BondingBox_Model(1); // Create
+		App->CL_Model->Set_BondingBox_Model(1); // Create
 
 	}
 

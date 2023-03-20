@@ -32,6 +32,8 @@ distribution.
 #include "WV_Model.h"
 #include "WV_Export_Ogre3D.h"
 #include "WV_PB.h"
+#include "WV_Load_Ogre.h"
+#include "WV_Keyboard.h"
 
 class WV_App
 {
@@ -47,6 +49,8 @@ public:
 	WV_Model*		CL_Model;
 	WV_Export_Ogre*	CL_Export_Ogre;
 	WV_PB*			CL_PB;
+	WV_Load_Ogre*	CL_Load_Ogre;
+	WV_Keyboard*	CL_Keyboard;
 
 	// ----------------------------------- 
 	WV_App(void);

@@ -27,7 +27,7 @@
 #define NOMINMAX
 #include <windows.h>
 #include "btBulletDynamicsCommon.h"
-// C RunTime Header Files
+
 //#include <stdint.h>
 #include <stdlib.h>
 #include <malloc.h>

@@ -38,6 +38,8 @@ public:
 	void Grid_SetVisible(bool Option);
 	void Hair_SetVisible(bool Option);
 
+	void Reset_View(void);
+
 	Ogre::ColourValue ColourMain; 
 	Ogre::ColourValue ColourHairZ;
 	Ogre::ColourValue ColourHairX;

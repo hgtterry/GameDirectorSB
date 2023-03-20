@@ -15,7 +15,6 @@
 #define IDD_FILEVIEW                    129
 #define IDD_VIEWER3D                    130
 #define IDD_PROGRESS_BAR                131
-#define IDD_DIALOG1                     132
 #define IDD_RIGHTGROUPS                 132
 #define IDC_PBBANNER                    1000
 #define IDC_PBACTION                    1001
@@ -27,6 +26,11 @@
 #define ID_OPEN_WORLDEDITORPROJECT      32773
 #define ID_DEBUG_MODELDATA              32774
 #define ID_DEBUG_TEST                   32775
+#define ID_VIEW_RESETVIEW               32776
+#define ID_CAMERA_MODELMODE             32777
+#define ID_CAMERA_FREEMODE              32778
+#define ID_CAMERA_NONE                  32779
+#define ID_WINDOWS_SHOWFPS              32780
 #define IDC_STATIC                      -1
 
 // Next default values for new objects
@@ -35,7 +39,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        133
-#define _APS_NEXT_COMMAND_VALUE         32776
+#define _APS_NEXT_COMMAND_VALUE         32781
 #define _APS_NEXT_CONTROL_VALUE         1005
 #define _APS_NEXT_SYMED_VALUE           110
 #endif

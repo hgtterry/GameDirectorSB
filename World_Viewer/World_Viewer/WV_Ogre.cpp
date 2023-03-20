@@ -87,6 +87,9 @@ bool WV_Ogre::InitOgre(void)
 
 	createFrameListener();
 	
+	App->CL_Grid->Reset_View();
+	App->CL_Grid->Grid_SetVisible(true);
+
 	return 1;
 }
 
