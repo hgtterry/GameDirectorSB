@@ -147,6 +147,7 @@
     <ClInclude Include="World_Viewer.h" />
     <ClInclude Include="WV_App.h" />
     <ClInclude Include="WV_Assimp.h" />
+    <ClInclude Include="WV_Dialogs.h" />
     <ClInclude Include="WV_Export_Ogre3D.h" />
     <ClInclude Include="WV_Grid.h" />
     <ClInclude Include="WV_ImGui.h" />
@@ -175,6 +176,7 @@
     <ClCompile Include="World_Viewer.cpp" />
     <ClCompile Include="WV_App.cpp" />
     <ClCompile Include="WV_Assimp.cpp" />
+    <ClCompile Include="WV_Dialogs.cpp" />
     <ClCompile Include="WV_Export_Ogre3D.cpp" />
     <ClCompile Include="WV_Grid.cpp" />
     <ClCompile Include="WV_ImGui.cpp" />

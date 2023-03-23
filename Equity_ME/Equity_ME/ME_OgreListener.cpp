@@ -132,6 +132,8 @@ bool ME_OgreListener::frameEnded(const Ogre::FrameEvent& evt)
 // *************************************************************************
 bool ME_OgreListener::frameRenderingQueued(const Ogre::FrameEvent& evt)
 {
+	App->CL_Ogre->m_imgui.render();
+
 	Model_Mode(evt.timeSinceLastFrame);
 
 	return 1;
@@ -144,68 +146,68 @@ void ME_OgreListener::Model_Mode(float DeltaTime)
 {
 	mRotX = 0;
 	mRotY = 0;
-	mTranslateVector = Ogre::Vector3::ZERO;
 
+	mTranslateVector = Ogre::Vector3::ZERO;
 	mMoveScale = mMoveSensitivity  * DeltaTime;
 
-	App->CL_Ogre->m_imgui.render();
+	App->CL_Keyboards->Keyboard_Mode_Model(DeltaTime);
 
+	//if (GetAsyncKeyState(69) < 0) // Q key Down in Fly Mode
+	//{
+	//	Ogre::Real Rate;
+	//	Rate = (mMoveSensitivity / 1000) * 2;
 
-	if (GetAsyncKeyState(69) < 0) // Q key Down in Fly Mode
-	{
-		Ogre::Real Rate;
-		Rate = (mMoveSensitivity / 1000) * 2;
+	//	Ogre::Vector3 OldPos;
+	//	OldPos = mCam->getPosition();
 
-		Ogre::Vector3 OldPos;
-		OldPos = mCam->getPosition();
+	//	OldPos.y += Rate;
+	//	mCam->setPosition(OldPos);
+	//}
 
-		OldPos.y += Rate;
-		mCam->setPosition(OldPos);
-	}
-	//------------------------------------------------
-	if (GetAsyncKeyState(81) < 0) // E key Up in Fly Mode
-	{
-		Ogre::Real Rate;
-		Rate = (mMoveSensitivity / 1000) * 2;
+	////------------------------------------------------
+	//if (GetAsyncKeyState(81) < 0) // E key Up in Fly Mode
+	//{
+	//	Ogre::Real Rate;
+	//	Rate = (mMoveSensitivity / 1000) * 2;
 
-		Ogre::Vector3 OldPos;
-		OldPos = mCam->getPosition();
+	//	Ogre::Vector3 OldPos;
+	//	OldPos = mCam->getPosition();
 
-		OldPos.y -= Rate;
-		mCam->setPosition(OldPos);
-	}
-	//------------------------------------------------
-	if (Wheel < 0) // Mouse Wheel Forward
-	{
-		mTranslateVector.z = -mMoveScale * 30;
-	}
-	if (GetAsyncKeyState(87) < 0) // W Key
-	{
-		mTranslateVector.z = -mMoveScale;
-	}
+	//	OldPos.y -= Rate;
+	//	mCam->setPosition(OldPos);
+	//}
+
+	////------------------------------------------------
+	//if (Wheel < 0) // Mouse Wheel Forward
+	//{
+	//	mTranslateVector.z = -mMoveScale * 30;
+	//}
+	//if (GetAsyncKeyState(87) < 0) // W Key
+	//{
+	//	mTranslateVector.z = -mMoveScale;
+	//}
 	////------------------------------------------------
 	//// back
-	if (Wheel > 0) // Mouse Wheel Back
-	{
-		mTranslateVector.z = mMoveScale * 30;
-	}
-	if (GetAsyncKeyState(83) < 0) // S Key	
-	{
-		mTranslateVector.z = mMoveScale;
-	}
-	//------------------------------------------------
-	// Right
-	if (GetAsyncKeyState(65) < 0)
-	{
-		mTranslateVector.x = mMoveScale;
-	}
-	// Left
-	if (GetAsyncKeyState(68) < 0)
-	{
-		mTranslateVector.x = -mMoveScale;
-	}
+	//if (Wheel > 0) // Mouse Wheel Back
+	//{
+	//	mTranslateVector.z = mMoveScale * 30;
+	//}
+	//if (GetAsyncKeyState(83) < 0) // S Key	
+	//{
+	//	mTranslateVector.z = mMoveScale;
+	//}
+	////------------------------------------------------
+	//// Right
+	//if (GetAsyncKeyState(65) < 0)
+	//{
+	//	mTranslateVector.x = mMoveScale;
+	//}
+	//// Left
+	//if (GetAsyncKeyState(68) < 0)
+	//{
+	//	mTranslateVector.x = -mMoveScale;
+	//}
 
-	
 	// Left Mouse
 	if (Pl_LeftMouseDown == 1 && Pl_RightMouseDown == 0)
 	{

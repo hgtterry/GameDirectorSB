@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022 Equity_ME Model Editor -- HGT Software W.T.Flanigan H.C.Flanigan
+Copyright (c) 2023 AblexME Model Editor -- Ablex Software W.T.Flanigan H.C.Flanigan
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -60,6 +60,7 @@ distribution.
 #include "ME_Recent_Files.h"
 #include "ME_Editor_Gui.h"
 #include "ME_Logger.h"
+#include "ME_Keyboard.h"
 
 #include "SB_Dimensions.h"
 
@@ -105,6 +106,7 @@ public:
 	ME_Recent_Files*	CL_Recent_Files;
 	ME_Editor_Gui*		CL_Editor_Gui;
 	ME_Logger*			CL_Logger;
+	ME_Keyboard*		CL_Keyboards;
 
 	SB_Dimensions* SBC_Dimensions;
 
@@ -120,7 +122,8 @@ public:
 
 	HBRUSH CreateGradientBrush(COLORREF top, COLORREF bottom, LPNMCUSTOMDRAW item);
 
-	void Say(const char* Message);
+	void Say(const char* Message, char* Message2 = NULL);
+
 	void Say_Win(const char* Message);
 	void Say_Int(int Value);
 	void Say_Float(float Value);

@@ -56,20 +56,14 @@ bool WV_Loader::Read_Project_File(char* Path_And_File)
 
 	App->CL_Ini->SetPathName(Path_And_File);
 
-	App->CL_Ini->GetString("WE_Fast_Load", "Pref_WE_JustFileName", chr_Tag1, MAX_PATH);
+	App->CL_Ini->GetString("World_Data", "Pref_WE_JustFileName", chr_Tag1, MAX_PATH);
 	strcpy(WE_JustFileName, chr_Tag1);
 
-	App->CL_Ini->GetString("WE_Fast_Load", "Pref_WE_Path_FileName", chr_Tag1, MAX_PATH);
+	App->CL_Ini->GetString("World_Data", "G3ds_Path_FileName", chr_Tag1, MAX_PATH);
 	strcpy(WE_Path_FileName, chr_Tag1);
 
-	App->CL_Ini->GetString("WE_Fast_Load", "Pref_Txl_Path_FileName", chr_Tag2, MAX_PATH);
+	App->CL_Ini->GetString("World_Data", "Txl_Path_FileName", chr_Tag2, MAX_PATH);
 	strcpy(Txl_Path_FileName, chr_Tag2);
-
-	App->CL_Ini->GetString("WE_Fast_Load", "Pref_Ogre_JustFileName", chr_Tag2, MAX_PATH);
-	strcpy(Ogre_JustFileName, chr_Tag2);
-
-	App->CL_Ini->GetString("WE_Fast_Load", "Pref_Ogre_Path_FileName", chr_Tag2, MAX_PATH);
-	strcpy(Ogre_Path, chr_Tag2);
 
 	return 1;
 }
@@ -98,7 +92,12 @@ void WV_Loader::Load_File_Wepf()
 
 	//App->CL_Export_Ogre3D->Export_As_RF = 1;
 
-	LoadTextures_TXL();
+	bool test = LoadTextures_TXL();
+	if (test == 0)
+	{
+		App->Say("Failed Aborting");
+		return;
+	}
 
 	Set_Equity();
 
@@ -124,7 +123,6 @@ void WV_Loader::Adjust()
 	Centre_Model_Mid();
 
 	App->CL_Grid->Reset_View();
-
 }
 
 // *************************************************************************
@@ -165,35 +163,20 @@ bool WV_Loader::LoadTextures_TXL()
 {
 	geVFile* VFS = NULL;
 	geVFile_Finder* Finder = NULL;
-	geVFile_Finder* FinderCount = NULL;
-
+	
 	NameCount = 0;
 
 	VFS = geVFile_OpenNewSystem(NULL, GE_VFILE_TYPE_VIRTUAL, Txl_Path_FileName, NULL, GE_VFILE_OPEN_READONLY | GE_VFILE_OPEN_DIRECTORY);
 	if (!VFS)
 	{
-		App->Say("Could not open file");
+		App->Say("Could not open TXL file", Txl_Path_FileName);
 		return 0;
-	}
-
-	FinderCount = geVFile_CreateFinder(VFS, "*.*");
-	if (!FinderCount)
-	{
-		App->Say("Could not load textures from");
-		geVFile_Close(VFS);
-		return 0;
-	}
-
-	while (geVFile_FinderGetNextFile(FinderCount) != GE_FALSE)
-	{
-
-
 	}
 
 	Finder = geVFile_CreateFinder(VFS, "*.*");
 	if (!Finder)
 	{
-		App->Say("Could not load textures from 2 ");
+		App->Say("Could not create Finder *.* ");
 		geVFile_Close(VFS);
 		return 0;
 	}

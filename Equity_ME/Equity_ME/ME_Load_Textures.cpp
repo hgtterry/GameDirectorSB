@@ -377,7 +377,7 @@ bool ME_Load_Textures::Windows_Preview_FullPath(int Index, char* FullPath)
 }
 
 // *************************************************************************
-// *					Load_OpenGL_Textures  Terry Bernie   		  	   *
+// *		Load_OpenGL_Textures:- Terry and Hazel Flanigan 2023   	  	   *
 // *************************************************************************
 bool ME_Load_Textures::Load_OpenGL_Textures(int TextureID)
 {
@@ -432,7 +432,7 @@ bool ME_Load_Textures::Load_OpenGL_Textures(int TextureID)
 }
 
 // *************************************************************************
-// *					Soil_Load_Texture Terry Bernie		  		  	   *
+// *		 Soil_Load_Texture:- Terry and Hazel Flanigan 2023		  	   *
 // *************************************************************************
 bool  ME_Load_Textures::Soil_Load_Texture(UINT textureArray[], LPSTR strFileName, int textureID)
 {
@@ -477,7 +477,7 @@ bool  ME_Load_Textures::Soil_Load_Texture(UINT textureArray[], LPSTR strFileName
 }
 
 // *************************************************************************
-// *							Texture_To_Bmp				  		 	   *
+// *			Texture_To_Bmp:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 bool ME_Load_Textures::Texture_To_Bmp(char* File)
 {

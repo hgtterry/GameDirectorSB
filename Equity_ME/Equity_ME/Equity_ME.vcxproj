@@ -22,7 +22,7 @@
     <ProjectGuid>{067988B6-40D5-402B-8844-885952F6CF5D}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Equity_ME</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.22000.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -34,7 +34,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>false</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -169,6 +169,7 @@
     <ClInclude Include="ME_ImGui.h" />
     <ClInclude Include="ME_Import.h" />
     <ClInclude Include="ME_Ini.h" />
+    <ClInclude Include="ME_Keyboard.h" />
     <ClInclude Include="ME_Load_Textures.h" />
     <ClInclude Include="ME_Logger.h" />
     <ClInclude Include="ME_Model.h" />
@@ -221,6 +222,7 @@
     <ClCompile Include="ME_ImGui.cpp" />
     <ClCompile Include="ME_Import.cpp" />
     <ClCompile Include="ME_Ini.cpp" />
+    <ClCompile Include="ME_Keyboard.cpp" />
     <ClCompile Include="ME_Load_Textures.cpp" />
     <ClCompile Include="ME_Logger.cpp" />
     <ClCompile Include="ME_Model.cpp" />

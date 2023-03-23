@@ -30,7 +30,7 @@ public:
 
 	bool Show_ListData();
 	void Start_Speed_Camera();
-	void Message(char *pString);
+	void Message(char *pString, char* pString2);
 	void YesNo(char *Text, char *Text2);
 	void Dialog_Text();
 
@@ -63,6 +63,7 @@ protected:
 	bool Mouse_VerySlow;
 	bool Mouse_Fast;
 
-	char Message_Text[MAX_PATH];
+	char Message_Text_Header[MAX_PATH];
+	char Message_Text_Message[MAX_PATH];
 };
 

@@ -55,7 +55,7 @@ ME_Ogre::~ME_Ogre()
 }
 
 // *************************************************************************
-// *						InitOgre Terry Bernie						   *
+// *		    	InitOgre:- Terry and Hazel Flanigan 2023	 		   *
 // *************************************************************************
 bool ME_Ogre::Init_Ogre(void)
 {
@@ -131,7 +131,7 @@ bool ME_Ogre::Ogre_Render_Loop(void)
 }
 
 // *************************************************************************
-// *				Ogre_CreateRoot (Terry Bernie)						   *
+// *		  Ogre_CreateRoot:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 bool ME_Ogre::Ogre_CreateRoot(void)
 {
@@ -152,7 +152,7 @@ bool ME_Ogre::Ogre_CreateRoot(void)
 }
 
 // *************************************************************************
-// *				SetUpResources (Terry Bernie)						   *
+// *		  SetUpResources:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 bool ME_Ogre::SetUpResources(void)
 {
@@ -179,7 +179,7 @@ bool ME_Ogre::SetUpResources(void)
 }
 
 // *************************************************************************
-// *				Configure (Terry Bernie)							   *
+// *			  Configure:- Terry and Hazel Flanigan 2023				   *
 // *************************************************************************
 bool ME_Ogre::Configure(void)
 {
@@ -204,7 +204,7 @@ bool ME_Ogre::Configure(void)
 }
 
 // *************************************************************************
-// *				chooseSceneManager (Terry Bernie)					   *
+// *		 chooseSceneManager:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 bool ME_Ogre::chooseSceneManager(void)
 {
@@ -220,7 +220,7 @@ bool ME_Ogre::chooseSceneManager(void)
 }
 
 // *************************************************************************
-// *					createCamera (Terry Bernie)						   *
+// *			createCamera:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 bool ME_Ogre::createCamera(void)
 {

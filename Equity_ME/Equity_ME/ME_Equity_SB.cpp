@@ -48,7 +48,7 @@ ME_Equity_SB::~ME_Equity_SB()
 }
 
 // *************************************************************************
-// *	  				 Start_WE_import	Terry Flanigan				   *
+// *	    	Start_WE_import:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 bool ME_Equity_SB::Start_WE_import()
 {
@@ -57,7 +57,7 @@ bool ME_Equity_SB::Start_WE_import()
 }
 
 // *************************************************************************
-// *					WE_import_Proc	Terry Flanigan 					   *
+// *	    	WE_import_Proc:- Terry and Hazel Flanigan 2023 			   *
 // *************************************************************************
 LRESULT CALLBACK ME_Equity_SB::WE_import_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -298,7 +298,7 @@ LRESULT CALLBACK ME_Equity_SB::WE_import_Proc(HWND hDlg, UINT message, WPARAM wP
 }
 
 // *************************************************************************
-// *					Load_File_Wepf Terry Flanigan					   *
+// *			Load_File_Wepf:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 void ME_Equity_SB::Load_File_Wepf()
 {
@@ -314,15 +314,16 @@ void ME_Equity_SB::Load_File_Wepf()
 		return;
 	}
 
-	//strcpy(App->CL_FileIO->Model_Path_FileName, App->CL_Equity_SB->Pref_WE_Path_FileName);
-	//strcpy(App->CL_FileIO->Model_FileName, App->CL_Equity_SB->Pref_WE_JustFileName);
-
 	App->CL_Model->Set_Paths();
 
 	App->CL_Model->Model_Type = Enums::LoadedFile_Assimp;
 	App->CL_Export_Ogre3D->Export_As_RF = 1;
 
-	App->CL_Equity_SB->LoadTextures_TXL();
+	bool test = App->CL_Equity_SB->LoadTextures_TXL();
+	if (test == 0)
+	{
+		// Load Dummy Textures
+	}
 
 	App->CL_Import->Set_Equity();
 
@@ -337,7 +338,7 @@ void ME_Equity_SB::Load_File_Wepf()
 }
 
 // *************************************************************************
-// *						Adjust Terry Flanigan						   *
+// *				Adjust:- Terry and Hazel Flanigan 2023				   *
 // *************************************************************************
 void ME_Equity_SB::Adjust()
 {
@@ -350,41 +351,43 @@ void ME_Equity_SB::Adjust()
 }
 
 // *************************************************************************
-// *					LoadTextures_TXL  Terry Flanigan 				   *
+// *			LoadTextures_TXL:- Terry and Hazel Flanigan 2023 		   *
 // *************************************************************************
 bool ME_Equity_SB::LoadTextures_TXL()
 {
 	geVFile *			VFS = NULL;
 	geVFile_Finder *	Finder = NULL;
-	geVFile_Finder *	FinderCount = NULL;
 
 	NameCount = 0;
 
 	VFS = geVFile_OpenNewSystem(NULL, GE_VFILE_TYPE_VIRTUAL, App->CL_Equity_SB->Pref_Txl_Path_FileName, NULL, GE_VFILE_OPEN_READONLY | GE_VFILE_OPEN_DIRECTORY);
 	if (!VFS)
 	{
-		App->Say("Could not open file");
-		return 0;
+		App->Say("Could not open file", App->CL_Equity_SB->Pref_Txl_Path_FileName);
+
+		App->CL_Dialogs->YesNo("Look for TXL File", App->CL_Equity_SB->Pref_Txl_Path_FileName);
+		if (App->CL_Dialogs->Canceled == 1)
+		{
+			return 0;
+		}
+
+		int test = App->CL_FileIO->Open_File_Model("Texture Libary   *.txl\0*.txl\0", "Texure Editor", NULL);
+		if (test == 0)
+		{
+			return 0;
+		}
+
+		strcpy(App->CL_Equity_SB->Pref_Txl_Path_FileName, App->CL_FileIO->Model_FileName);
+		
 	}
 
-	FinderCount = geVFile_CreateFinder(VFS, "*.*");
-	if (!FinderCount)
-	{
-		App->Say("Could not load textures from");
-		geVFile_Close(VFS);
-		return 0;
-	}
-
-	while (geVFile_FinderGetNextFile(FinderCount) != GE_FALSE)
-	{
-
-
-	}
-
+	VFS = geVFile_OpenNewSystem(NULL, GE_VFILE_TYPE_VIRTUAL, App->CL_Equity_SB->Pref_Txl_Path_FileName, NULL, GE_VFILE_OPEN_READONLY | GE_VFILE_OPEN_DIRECTORY);
+	
 	Finder = geVFile_CreateFinder(VFS, "*.*");
 	if (!Finder)
 	{
-		App->Say("Could not load textures from 2 ");
+		App->Say("Could not create Finder *.* ");
+
 		geVFile_Close(VFS);
 		return 0;
 	}
@@ -412,7 +415,7 @@ bool ME_Equity_SB::LoadTextures_TXL()
 }
 
 // *************************************************************************
-// *	  			Copy_Texture_Names Terry Bernie						   *
+// *	  	Copy_Texture_Names:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 void ME_Equity_SB::Copy_Texture_Names()
 {
@@ -428,7 +431,7 @@ void ME_Equity_SB::Copy_Texture_Names()
 }
 
 // *************************************************************************
-// *	  			Check_for_Textures Terry Bernie						   *
+// *	  	Check_for_Textures:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 int ME_Equity_SB::Check_for_Textures(geVFile *BaseFile)
 {
@@ -449,14 +452,14 @@ int ME_Equity_SB::Check_for_Textures(geVFile *BaseFile)
 		{
 			if (!AddTexture(BaseFile, JustName, Count))
 			{
-				App->Say("Error");
+				App->Say("Could not add Texture", JustName);
+
 				return 0;
 			}
 		}
 		else
 		{
-			App->Say("unMatched");
-			App->Say(JustName);
+			App->Say("Texture NotFound", JustName);
 		}
 
 		Count++;
@@ -466,7 +469,7 @@ int ME_Equity_SB::Check_for_Textures(geVFile *BaseFile)
 }
 
 // *************************************************************************
-// *	  			Check_in_Txl Terry Bernie							   *
+// *	  	Check_in_Txl:- Terry and Hazel Flanigan 2023				   *
 // *************************************************************************
 bool ME_Equity_SB::Check_in_Txl(char *FileName)
 {
@@ -489,40 +492,35 @@ bool ME_Equity_SB::Check_in_Txl(char *FileName)
 }
 
 // *************************************************************************
-// *						AddTexture  06/06/08 				  		   *
+// *			AddTexture:- Terry and Hazel Flanigan 2023 		  		   *
 // *************************************************************************
 bool ME_Equity_SB::AddTexture(geVFile *BaseFile, const char *Path, int GroupIndex)
 {
 	
 	geBitmap *		Bitmap;
-
 	geVFile *		File;
-	char			FileName[_MAX_FNAME];
-	char *			Name;
 
 	Bitmap = NULL;
 	File = NULL;
 
-	_splitpath(Path, NULL, NULL, FileName, NULL);
-	Name = _strdup(FileName);
-	if (!Name)
-	{
-		App->Say_Win("Memory allocation error processing %s");
-		return FALSE;
-	}
-
 	if (BaseFile)
+	{
 		File = geVFile_Open(BaseFile, Path, GE_VFILE_OPEN_READONLY);
+	}
 	else
+	{
 		File = geVFile_OpenNewSystem(NULL, GE_VFILE_TYPE_DOS, Path, NULL, GE_VFILE_OPEN_READONLY);
+	}
 
 	if (!File)
 	{
-		//NonFatalError("Could not open %s", Path);
-		App->Say_Win("Could not open %s");
+		char buff[MAX_PATH];
+		strcpy(buff, Path);
+
+		App->Say("Could not open", buff);
+
 		return TRUE;
 	}
-
 
 	Bitmap = geBitmap_CreateFromFile(File);
 
@@ -530,7 +528,6 @@ bool ME_Equity_SB::AddTexture(geVFile *BaseFile, const char *Path, int GroupInde
 	{
 		App->CL_Model->Group[GroupIndex]->RF_Bitmap = Bitmap;
 	}
-
 
 	HWND	PreviewWnd;
 	HBITMAP	hbm;
@@ -542,7 +539,7 @@ bool ME_Equity_SB::AddTexture(geVFile *BaseFile, const char *Path, int GroupInde
 
 	App->CL_Model->Group[GroupIndex]->Base_Bitmap = hbm;
 
-	char TempTextureFile_BMP[1024];
+	char TempTextureFile_BMP[MAX_PATH];
 	strcpy(TempTextureFile_BMP, App->EquityDirecory_FullPath);
 	strcat(TempTextureFile_BMP, "\\");
 	strcat(TempTextureFile_BMP, "TextureLoad.bmp");
@@ -559,7 +556,7 @@ bool ME_Equity_SB::AddTexture(geVFile *BaseFile, const char *Path, int GroupInde
 }
 
 // *************************************************************************
-// *				CreateHBitmapFromgeBitmap  06/06/08 		  		   *
+// *	  CreateHBitmapFromgeBitmap:- Terry and Hazel Flanigan 2023 	   *
 // *************************************************************************
 HBITMAP ME_Equity_SB::CreateHBitmapFromgeBitmap(geBitmap *Bitmap, HDC hdc)
 {
@@ -646,7 +643,7 @@ HBITMAP ME_Equity_SB::CreateHBitmapFromgeBitmap(geBitmap *Bitmap, HDC hdc)
 }
 
 // *************************************************************************
-// *					Txt_OpenFile Terry Flanigan						   *
+// *			Txt_OpenFile:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 bool ME_Equity_SB::Txt_OpenFile(char* Extension, char* Title, char* StartDirectory)
 {
@@ -680,7 +677,7 @@ bool ME_Equity_SB::Txt_OpenFile(char* Extension, char* Title, char* StartDirecto
 }
 
 // *************************************************************************
-// *						Write_Project_File Terry Flanigan 			   *
+// *			Write_Project:- Terry and Hazel Flanigan 2023 			   *
 // *************************************************************************
 bool ME_Equity_SB::Write_Project_File(char* Path_And_File)
 {
@@ -709,32 +706,27 @@ bool ME_Equity_SB::Write_Project_File(char* Path_And_File)
 }
 
 // *************************************************************************
-// *						Load_Project_File Terry Flanigan 			   *
+// *		  Load_Project_File:- Terry and Hazel Flanigan 2023 		   *
 // *************************************************************************
 bool ME_Equity_SB::Read_Project_File(char* Path_And_File)
 {
-	char chr_Tag1[MAX_PATH];
-	char chr_Tag2[MAX_PATH];
+	char chr_Tag1[MAX_PATH]{ 0 };
+	char chr_Tag2[MAX_PATH]{ 0 };
 
 	chr_Tag1[0] = 0;
 	chr_Tag2[0] = 0;
 
 	App->CL_Ini->SetPathName(Path_And_File);
 
-	App->CL_Ini->GetString("WE_Fast_Load", "Pref_WE_JustFileName", chr_Tag1, MAX_PATH);
+	App->CL_Ini->GetString("World_Data", "Pref_WE_JustFileName", chr_Tag1, MAX_PATH);
 	strcpy(Pref_WE_JustFileName, chr_Tag1);
 
-	App->CL_Ini->GetString("WE_Fast_Load", "Pref_WE_Path_FileName", chr_Tag1, MAX_PATH);
+	App->CL_Ini->GetString("World_Data", "G3ds_Path_FileName", chr_Tag1, MAX_PATH);
 	strcpy(Pref_WE_Path_FileName, chr_Tag1);
 
-	App->CL_Ini->GetString("WE_Fast_Load", "Pref_Txl_Path_FileName", chr_Tag2, MAX_PATH);
+	App->CL_Ini->GetString("World_Data", "Txl_Path_FileName", chr_Tag2, MAX_PATH);
 	strcpy(Pref_Txl_Path_FileName, chr_Tag2);
 
-	App->CL_Ini->GetString("WE_Fast_Load", "Pref_Ogre_JustFileName", chr_Tag2, MAX_PATH);
-	strcpy(Pref_Ogre_JustFileName, chr_Tag2);
-
-	App->CL_Ini->GetString("WE_Fast_Load", "Pref_Ogre_Path_FileName", chr_Tag2, MAX_PATH);
-	strcpy(Pref_Ogre_Path, chr_Tag2);
-
+	
 	return 1;
 }

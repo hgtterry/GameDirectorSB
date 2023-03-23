@@ -34,6 +34,7 @@ distribution.
 #include "WV_PB.h"
 #include "WV_Load_Ogre.h"
 #include "WV_Keyboard.h"
+#include "WV_Dialogs.h"
 
 class WV_App
 {
@@ -51,6 +52,7 @@ public:
 	WV_PB*			CL_PB;
 	WV_Load_Ogre*	CL_Load_Ogre;
 	WV_Keyboard*	CL_Keyboard;
+	WV_Dialogs*		CL_Dialogs;
 
 	// ----------------------------------- 
 	WV_App(void);
@@ -76,7 +78,8 @@ public:
 	void LoadProgramResource(void);
 
 	void Debug_Text();
-	void Say(const char* Message);
+
+	void Say(const char* Message, char* Message2 = NULL);
 	void Say_Int(int Value);
 	void Say_Win(const char* Message);
 	
@@ -174,6 +177,7 @@ public:
 
 	HFONT Font_CB12;
 	HFONT Font_CB15;
+	HFONT Font_CB18;
 	HFONT Font_Arial20;
 	HFONT Font_CB15_Bold;
 	HFONT Font_Banner;

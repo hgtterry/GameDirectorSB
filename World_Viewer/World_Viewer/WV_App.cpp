@@ -40,6 +40,7 @@ WV_App::WV_App(void)
 	CL_PB =				nullptr;
 	CL_Load_Ogre =		nullptr;
 	CL_Keyboard =		nullptr;
+	CL_Dialogs =		nullptr;
 
 	Fdlg = nullptr;
 	hInst = nullptr;
@@ -111,6 +112,7 @@ WV_App::WV_App(void)
 	Hnd_HairOff_Bmp = NULL;
 
 	Font_CB12 = 0;
+	Font_CB18 = 0;
 	Font_CB15 = 0;
 	Font_CB15_Bold = 0;
 	Font_Arial20 = 0;
@@ -166,7 +168,8 @@ bool WV_App::InitApp(void)
 	CL_PB =				new WV_PB();
 	CL_Load_Ogre =		new WV_Load_Ogre();
 	CL_Keyboard =		new WV_Keyboard();
-
+	CL_Dialogs =		new WV_Dialogs();
+	
 	SetBrushes_Fonts();
 
 	LoadString(hInst, IDS_APP_TITLE, Version, 255);
@@ -315,6 +318,8 @@ void WV_App::SetBrushes_Fonts(void)
 
 	Font_CB12 = CreateFont(-12, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
 	Font_CB15 = CreateFont(-15, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
+	Font_CB18 = CreateFont(-18, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
+
 	Font_Arial20 = CreateFont(-20, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Arial");
 	Font_CB15_Bold = CreateFont(-15, 0, 0, 0, FW_BOLD, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
 
@@ -402,11 +407,23 @@ void WV_App::Set_Main_TitleBar(char * PathFile)
 // *************************************************************************
 // *				Say:- Terry and Hazel Flanigan 2023					   *
 // *************************************************************************
-void WV_App::Say(const char* Message)
+void WV_App::Say(const char* Message, char* Message2)
 {
-	char text[1024];
-	strcpy_s(text, Message);
-	//App->Cl_Dialogs->Message(text);
+	char text[MAX_PATH];
+	char text2[MAX_PATH];
+
+	strcpy(text, Message);
+
+	if (Message2 == NULL)
+	{
+		strcpy(text2, " ");
+	}
+	else
+	{
+		strcpy(text2, Message2);
+	}
+
+	App->CL_Dialogs->Message(text, text2);
 }
 
 // *************************************************************************

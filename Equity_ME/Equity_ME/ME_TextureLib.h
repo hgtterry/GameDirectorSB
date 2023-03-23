@@ -53,6 +53,7 @@ typedef	struct	BitmapEntry
 	HBITMAP		WinABitmap;
 	unsigned	Flags;
 	int			Dirty;
+	bool		Deleted;
 }	BitmapEntry;
  
 typedef struct	TPack_WindowData
@@ -109,7 +110,7 @@ public:
 	bool SelectBitmap();
 	int FindBitmap(TPack_WindowData *pData, const char *Name);
 	HBITMAP CreateHBitmapFromgeBitmap (geBitmap *Bitmap, HDC hdc);
-	bool UpDateGeList(int Location);
+	bool Up_Info_List(int Location);
 
 	bool TPack_ExtractSelected();
 	bool SaveSelectedFile(char* Extension,char* TszFile);
@@ -120,11 +121,11 @@ public:
 	bool CleanUp();
 	bool GetName();
 	bool ReName(const char *NewName);
-	bool UpDateList(const char *NewName);
+	bool UpDateList();
 
 	TPack_WindowData *pData;
 	BitmapEntry *	NewBitmapList[200];
-	BitmapEntry *   Entry;
+	BitmapEntry *   Current_Entry;
 	char LastPath [256];
 	char TextureName[256];
 	char NewTextureName[256];

@@ -36,7 +36,8 @@ ME_Dialogs::ME_Dialogs()
 	Mouse_VerySlow = 0;
 	Mouse_Fast = 0;
 
-	Message_Text[0] = 0;
+	Message_Text_Header[0] = 0;
+	Message_Text_Message[0] = 0;
 
 	Canceled = 0;
 	Is_Canceled = 0;
@@ -54,7 +55,7 @@ ME_Dialogs::~ME_Dialogs()
 }
 
 // *************************************************************************
-// *	  				Show_ListData Terry Flanigan					   *
+// *	  		Show_ListData:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 bool ME_Dialogs::Show_ListData()
 {
@@ -63,7 +64,7 @@ bool ME_Dialogs::Show_ListData()
 	return 1;
 }
 // *************************************************************************
-// *        		GroupData_Proc  Terry Flanigan						   *
+// *			GroupData_Proc:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 LRESULT CALLBACK ME_Dialogs::GroupData_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -126,7 +127,7 @@ LRESULT CALLBACK ME_Dialogs::GroupData_Proc(HWND hDlg, UINT message, WPARAM wPar
 }
 
 // *************************************************************************
-// *	  				List_GroupData Terry Flanigan					   *
+// *	  		List_GroupData:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 void ME_Dialogs::List_GroupData(HWND hDlg)
 {
@@ -176,7 +177,7 @@ void ME_Dialogs::List_GroupData(HWND hDlg)
 }
 
 // *************************************************************************
-// *	  				List_App_Data Terry Flanigan					   *
+// *	  		List_App_Data:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 void ME_Dialogs::List_App_Data(HWND hDlg)
 {
@@ -214,14 +215,14 @@ void ME_Dialogs::List_App_Data(HWND hDlg)
 }
 
 // *************************************************************************
-// *	  				Start_Speed_Camera Terry Flanigan				   *
+// *	  	Start_Speed_Camera:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 void ME_Dialogs::Start_Speed_Camera()
 {
 	DialogBox(App->hInst, (LPCTSTR)IDD_MOUSESENSITIVITY,App->Fdlg, (DLGPROC)Speed_Camera_Proc);
 }
 // *************************************************************************
-// *					Speed_Camera_Proc Terry Flanigan	  			   *
+// *		Speed_Camera_Proc:- Terry and Hazel Flanigan 2023	  		   *
 // *************************************************************************
 LRESULT CALLBACK ME_Dialogs::Speed_Camera_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -369,7 +370,7 @@ LRESULT CALLBACK ME_Dialogs::Speed_Camera_Proc(HWND hDlg, UINT message, WPARAM w
 }
 
 // *************************************************************************
-// *				UnCheck_All_SpeedMouseOption Terry Flanigan			   *
+// *	UnCheck_All_SpeedMouseOption:- Terry and Hazel Flanigan 2023	   *
 // *************************************************************************
 void ME_Dialogs::UnCheck_All_SpeedMouseOption()
 {
@@ -380,15 +381,17 @@ void ME_Dialogs::UnCheck_All_SpeedMouseOption()
 }
 
 // *************************************************************************
-// *	  				Message Terry Flanigan							   *
+// *	  		Message:- Terry and Hazel Flanigan 2023					   *
 // *************************************************************************
-void ME_Dialogs::Message(char *pString)
+void ME_Dialogs::Message(char *pString, char* pString2)
 {
-	strcpy(Message_Text, pString);
+	strcpy(Message_Text_Header, pString);
+	strcpy(Message_Text_Message, pString2);
+	
 	DialogBox(App->hInst, (LPCTSTR)IDD_MESSAGE, App->Fdlg, (DLGPROC)Message_Proc);
 }
 // *************************************************************************
-// *        			Message_Proc  Terry	Flanigan					   *
+// *        	Message_Proc:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 LRESULT CALLBACK ME_Dialogs::Message_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -397,13 +400,14 @@ LRESULT CALLBACK ME_Dialogs::Message_Proc(HWND hDlg, UINT message, WPARAM wParam
 	{
 	case WM_INITDIALOG:
 	{
-		HFONT Font;
-		Font = CreateFont(-20, 0, 0, 0, FW_BOLD, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
-		SendDlgItemMessage(hDlg, IDC_STTEXT, WM_SETFONT, (WPARAM)Font, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_BANNER, WM_SETFONT, (WPARAM)Font, MAKELPARAM(TRUE, 0));
 
-		SetDlgItemText(hDlg, IDC_STTEXT, App->CL_Dialogs->Message_Text);
-
+		SendDlgItemMessage(hDlg, IDC_BANNER, WM_SETFONT, (WPARAM)App->Font_Banner, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STTEXT, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STMESSAGE, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
+	
+		SetDlgItemText(hDlg, IDC_STTEXT, App->CL_Dialogs->Message_Text_Header);
+		SetDlgItemText(hDlg, IDC_STMESSAGE, App->CL_Dialogs->Message_Text_Message);
+		
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
@@ -415,6 +419,7 @@ LRESULT CALLBACK ME_Dialogs::Message_Proc(HWND hDlg, UINT message, WPARAM wParam
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
 		}
+
 		if (GetDlgItem(hDlg, IDC_STTEXT) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
@@ -422,6 +427,15 @@ LRESULT CALLBACK ME_Dialogs::Message_Proc(HWND hDlg, UINT message, WPARAM wParam
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
 		}
+
+		if (GetDlgItem(hDlg, IDC_STMESSAGE) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+		
 		return FALSE;
 	}
 
@@ -461,7 +475,7 @@ LRESULT CALLBACK ME_Dialogs::Message_Proc(HWND hDlg, UINT message, WPARAM wParam
 }
 
 // *************************************************************************
-// *	  					 YesNo Terry Bernie							   *
+// *	  			YesNo:- Terry and Hazel Flanigan 2023				   *
 // *************************************************************************
 void ME_Dialogs::YesNo(char *Text, char *Text2)
 {
@@ -475,7 +489,7 @@ void ME_Dialogs::YesNo(char *Text, char *Text2)
 	DialogBox(App->hInst, (LPCTSTR)IDD_YESNO, App->Fdlg, (DLGPROC)YesNo_Proc);
 }
 // *************************************************************************
-// *					YesNo_Proc_Proc Terry Bernie	  				   *
+// *		  YesNo_Proc_Proc:- Terry and Hazel Flanigan 2023	  		   *
 // *************************************************************************
 LRESULT CALLBACK ME_Dialogs::YesNo_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {

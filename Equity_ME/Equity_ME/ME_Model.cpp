@@ -71,7 +71,7 @@ ME_Model::~ME_Model()
 }
 
 // *************************************************************************
-// *					Reaet_Class Terry Flanigan						   *
+// *			Reaet_Class:- Terry and Hazel Flanigan 2023				   *
 // *************************************************************************
 void ME_Model::Reset_Class(void)
 {
@@ -126,7 +126,7 @@ void ME_Model::Reset_Class(void)
 }
 
 // *************************************************************************
-// *					Convert_To_GlobalMesh  Terry Bernie   	  	 	   *
+// *		Convert_To_GlobalMesh:- Terry and Hazel Flanigan 2023  	 	   *
 // *************************************************************************
 void ME_Model::Convert_To_GlobalMesh(void)
 {
@@ -144,7 +144,6 @@ void ME_Model::Convert_To_GlobalMesh(void)
 	App->CL_Model->MapCord_Data.resize(App->CL_Model->VerticeCount);
 	App->CL_Model->MatIndex_Data.resize(App->CL_Model->VerticeCount);
 
-	
 	while (Count < GroupCount)
 	{
 		GroupVertCount = 0;
@@ -169,7 +168,6 @@ void ME_Model::Convert_To_GlobalMesh(void)
 
 		Count++;
 	}
-
 
 	VC = 0;
 	Count = 0;
@@ -196,7 +194,6 @@ void ME_Model::Convert_To_GlobalMesh(void)
 
 	}
 
-
 	VC = 0;
 	Count = 0;
 	while (Count < GroupCount)
@@ -216,7 +213,7 @@ void ME_Model::Convert_To_GlobalMesh(void)
 }
 
 // *************************************************************************
-// *						Set_Groupt_Count Terry Flanigan		  	 	   *
+// *			Set_Groupt_Count:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
 void ME_Model::Set_Groupt_Count(int Count)
 {
@@ -224,7 +221,7 @@ void ME_Model::Set_Groupt_Count(int Count)
 }
 
 // *************************************************************************
-// *						Get_Groupt_Count Terry Flanigan		  	 	   *
+// *			Get_Groupt_Count:- Terry and Hazel Flanigan 2023	 	   *
 // *************************************************************************
 int ME_Model::Get_Groupt_Count()
 {
@@ -232,7 +229,7 @@ int ME_Model::Get_Groupt_Count()
 }
 
 // *************************************************************************
-// *						Set_Groupt_Count Terry Flanigan		  	 	   *
+// *			Set_Groupt_Count:- Terry and Hazel Flanigan 2023	   	   *
 // *************************************************************************
 void ME_Model::Set_Texture_Count(int Count)
 {
@@ -240,7 +237,7 @@ void ME_Model::Set_Texture_Count(int Count)
 }
 
 // *************************************************************************
-// *						Set_Groupt_Count Terry Flanigan		  	 	   *
+// *		  Set_Groupt_Count:- Terry and Hazel Flanigan 2023		 	   *
 // *************************************************************************
 void ME_Model::Set_Motion_Count(int Count)
 {
@@ -248,7 +245,7 @@ void ME_Model::Set_Motion_Count(int Count)
 }
 
 // *************************************************************************
-// *						Set_Paths Terry Bernie						   *
+// *			Set_Paths:- Terry and Hazel Flanigan 2023				   *
 // *************************************************************************
 void ME_Model::Set_Paths(void)
 {
@@ -297,7 +294,7 @@ void ME_Model::Set_Paths(void)
 }
 
 // *************************************************************************
-// *					Create_Mesh_Group Terry Flanigan		  	 	   *
+// *		Create_Mesh_Group:- Terry and Hazel Flanigan 2023		 	   *
 // *************************************************************************
 void ME_Model::Create_Mesh_Group(int Index)
 {
@@ -312,7 +309,7 @@ void ME_Model::Create_Mesh_Group(int Index)
 }
 
 // *************************************************************************
-// *				Create_BondingBox_Model Terry Bernie				   *
+// *		Create_BondingBox_Model:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
 void ME_Model::Set_BondingBox_Model(bool Create)
 {
@@ -360,7 +357,7 @@ void ME_Model::Set_BondingBox_Model(bool Create)
 }
 
 // *************************************************************************
-// *					Clear Model and Reste Terry Flanigan			   *
+// *			Clear Model:- Terry and Hazel Flanigan 2023				   *
 // *************************************************************************
 void ME_Model::Clear_Model_And_Reset(void)
 {

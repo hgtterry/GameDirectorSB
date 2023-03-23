@@ -48,7 +48,7 @@ ME_Motions::~ME_Motions()
 }
 
 // *************************************************************************
-// *				Start_Motions_Dialog Terry Flanigan		  		 	   *
+// *		Start_Motions_Dialog:- Terry and Hazel Flanigan 2023  	 	   *
 // *************************************************************************
 bool ME_Motions::Start_Motions_Dialog()
 {
@@ -59,7 +59,7 @@ bool ME_Motions::Start_Motions_Dialog()
 }
 
 // *************************************************************************
-// *						Groups_Proc Terry Bernie		  			   *
+// *	  Groups_Proc Terry Bernie:- Terry and Hazel Flanigan 2023	 	   *
 // *************************************************************************
 LRESULT CALLBACK ME_Motions::Motions_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -170,7 +170,7 @@ LRESULT CALLBACK ME_Motions::Motions_Proc(HWND hDlg, UINT message, WPARAM wParam
 }
 
 // *************************************************************************
-// *					Update_Motions  Terry Flanigan		  		 	   *
+// *			Update_Motions:- Terry and Hazel Flanigan 2023	 	 	   *
 // *************************************************************************
 bool ME_Motions::Update_Motions()
 {
@@ -219,7 +219,7 @@ bool ME_Motions::Update_Motions()
 }
 
 // *************************************************************************
-// *					Change_SelectedMotion Terry Bernie				   *
+// *		Change_SelectedMotion:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
 void ME_Motions::Change_SelectedMotion(char* mMotionName)
 {
@@ -245,7 +245,7 @@ void ME_Motions::Change_SelectedMotion(char* mMotionName)
 }
 
 // *************************************************************************
-// *					Play_SelectedMotion Terry Bernie				   *
+// *		Play_SelectedMotion:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 void ME_Motions::Play_SelectedMotion(void)
 {
@@ -281,7 +281,7 @@ void ME_Motions::Play_SelectedMotion(void)
 }
 
 // *************************************************************************
-// *					Stop_SelectedMotion Terry Bernie				   *
+// *		Stop_SelectedMotion:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 void ME_Motions::Stop_SelectedMotion(void)
 {

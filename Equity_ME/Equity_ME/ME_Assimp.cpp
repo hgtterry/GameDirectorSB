@@ -38,7 +38,7 @@ ME_Assimp::~ME_Assimp()
 }
 
 // *************************************************************************
-// *						logInfo Terry Bernie				  	 	   *
+// *			  logInfo:- Terry and Hazel Flanigan 2023		  	 	   *
 // *************************************************************************
 void ME_Assimp::logInfo(std::string logString)
 {
@@ -46,7 +46,7 @@ void ME_Assimp::logInfo(std::string logString)
 }
 
 // *************************************************************************
-// *						logDebug Terry Bernie				  	 	   *
+// *			  logDebug:- Terry and Hazel Flanigan 2023		  	 	   *
 // *************************************************************************
 void ME_Assimp::logDebug(const char* logString)
 {
@@ -54,7 +54,7 @@ void ME_Assimp::logDebug(const char* logString)
 }
 
 // *************************************************************************
-// *						LoadFile Terry Bernie				  	 	   *
+// *				LoadFile:- Terry and Hazel Flanigan 2023	  	 	   *
 // *************************************************************************
 bool ME_Assimp::LoadFile(const char* pFile)
 {
@@ -93,7 +93,7 @@ bool ME_Assimp::LoadFile(const char* pFile)
 }
 
 // *************************************************************************
-// *					StoreMeshData Terry Bernie Hazel			   	   *
+// *			StoreMeshData:- Terry and Hazel Flanigan 2023		   	   *
 // *************************************************************************
 void ME_Assimp::StoreMeshData(const aiScene* pScene)
 {
@@ -116,7 +116,6 @@ void ME_Assimp::StoreMeshData(const aiScene* pScene)
 
 		App->CL_Model->Group[GroupCount]->GroupFaceCount = mesh->mNumFaces;
 		App->CL_Model->Group[GroupCount]->FaceIndex_Data.resize(mesh->mNumFaces * 3);
-
 		App->CL_Model->Group[GroupCount]->Face_Data.resize(mesh->mNumFaces);
 
 		while (t < mesh->mNumFaces)
@@ -172,7 +171,7 @@ void ME_Assimp::StoreMeshData(const aiScene* pScene)
 }
 
 // *************************************************************************
-// *						GetBasicInfo Terry Bernie			  	 	   *
+// *			GetBasicInfo:- Terry and Hazel Flanigan 2023	  	 	   *
 // *************************************************************************
 void  ME_Assimp::GetBasicInfo(const aiScene* pScene)
 {
@@ -209,7 +208,7 @@ void  ME_Assimp::GetBasicInfo(const aiScene* pScene)
 }
 
 // *************************************************************************
-// *					Get_Group_VertCount Terry Bernie		  	 	   *
+// *		Get_Group_VertCount:- Terry and Hazel Flanigan 2023		   	   *
 // *************************************************************************
 void ME_Assimp::Get_Group_VertCount(const aiScene* pScene)
 {
@@ -262,7 +261,7 @@ void ME_Assimp::Get_Group_VertCount(const aiScene* pScene)
 }
 
 // *************************************************************************
-// *					Create_MeshGroups_ByIndex Terry Flanigan	 	   *
+// *		Create_MeshGroups_ByIndex:- Terry and Hazel Flanigan 2023	   *
 // *************************************************************************
 void ME_Assimp::Create_MeshGroups(const aiScene* pScene)
 {
@@ -338,7 +337,7 @@ void ME_Assimp::Create_MeshGroups(const aiScene* pScene)
 }
 
 // *************************************************************************
-// *					LoadTextures Terry Bernie Hazel			  	 	   *
+// *			LoadTextures:- Terry and Hazel Flanigan 2023	  	 	   *
 // *************************************************************************
 void ME_Assimp::LoadTextures()
 {

@@ -28,43 +28,44 @@ distribution.
 
 ME_App::ME_App()
 {
-	CL_Ogre =		nullptr;
-	CL_Utilities =	nullptr;
-	CL_Grid =		nullptr;
-	CL_ImGui =		nullptr;
-	CL_Assimp =		nullptr;
-	CL_Import =		nullptr;
-	CL_FileIO =		nullptr;
-	CL_Model =		nullptr;
-	CL_TopBar =		nullptr;
-	CL_FileView =	nullptr;
-	CL_Groups =		nullptr;
-	CL_Panels =		nullptr;
-	CL_Textures =	nullptr;
-	CL_Dialogs =	nullptr;
-	CL_Dimensions = nullptr;
+	CL_Ogre =			nullptr;
+	CL_Utilities =		nullptr;
+	CL_Grid =			nullptr;
+	CL_ImGui =			nullptr;
+	CL_Assimp =			nullptr;
+	CL_Import =			nullptr;
+	CL_FileIO =			nullptr;
+	CL_Model =			nullptr;
+	CL_TopBar =			nullptr;
+	CL_FileView =		nullptr;
+	CL_Groups =			nullptr;
+	CL_Panels =			nullptr;
+	CL_Textures =		nullptr;
+	CL_Dialogs =		nullptr;
+	CL_Dimensions =		nullptr;
 
-	CL_Export = nullptr;
-	CL_Export_Object = nullptr;
-	CL_Export_Milk = nullptr;
+	CL_Export =			nullptr;
+	CL_Export_Object =	nullptr;
+	CL_Export_Milk =	nullptr;
 
-	CL_Genesis3D = nullptr;
-	CL_Ogre3D = nullptr;
-	CL_Motions = nullptr;
-	CL_Equity_SB = nullptr;
-	CL_Prefs = nullptr;
-	CL_Ini = nullptr;
-	CL_Export_Ogre3D = nullptr;
-	CL_Texture_Lib = nullptr;
-	CL_WE_3DT = nullptr;
-	CL_PB = nullptr;
+	CL_Genesis3D =		nullptr;
+	CL_Ogre3D =			nullptr;
+	CL_Motions =		nullptr;
+	CL_Equity_SB =		nullptr;
+	CL_Prefs =			nullptr;
+	CL_Ini =			nullptr;
+	CL_Export_Ogre3D =	nullptr;
+	CL_Texture_Lib =	nullptr;
+	CL_WE_3DT =			nullptr;
+	CL_PB =				nullptr;
 
-	CL_Load_Textures = nullptr;
-	CL_Recent_Files = nullptr;
-	CL_Editor_Gui = nullptr;
-	CL_Logger = nullptr;
+	CL_Load_Textures =	nullptr;
+	CL_Recent_Files =	nullptr;
+	CL_Editor_Gui =		nullptr;
+	CL_Logger =			nullptr;
+	CL_Keyboards =		nullptr;
 
-	SBC_Dimensions = nullptr;
+	SBC_Dimensions =	nullptr;
 
 	
 	//----------------------------------------------
@@ -129,7 +130,7 @@ ME_App::~ME_App()
 }
 
 // *************************************************************************
-// *						InitApp Inflanite							   *
+// *				InitApp:- Terry and Hazel Flanigan 2023				   *
 // *************************************************************************
 bool ME_App::InitApp(void)
 {
@@ -167,9 +168,12 @@ bool ME_App::InitApp(void)
 	CL_Recent_Files =	new ME_Recent_Files();
 	CL_Editor_Gui =		new ME_Editor_Gui();
 	CL_Logger =			new ME_Logger();
+	CL_Keyboards =		new ME_Keyboard();
+	
 	
 	SBC_Dimensions =	new SB_Dimensions();
 	CL_PB =				new ME_PB();
+
 
 	// ----------------------------------------------
 	SetBrushes_Fonts();
@@ -192,7 +196,7 @@ bool ME_App::InitApp(void)
 }
 
 // *************************************************************************
-// *					SetMainWinCentre Inflanite						   *
+// *		SetMainWinCentre:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 bool ME_App::SetMainWin_Centre(void)
 {
@@ -211,7 +215,7 @@ bool ME_App::SetMainWin_Centre(void)
 }
 
 // *************************************************************************
-// *				LoadProgramResource  ( Terry Bernie )			  	   *
+// *		LoadProgramResource:- Terry and Hazel Flanigan 2023		  	   *
 // *************************************************************************
 void ME_App::LoadProgramResource(void)
 {
@@ -265,7 +269,7 @@ void ME_App::LoadProgramResource(void)
 }
 
 // *************************************************************************
-// *					SetBrushes_Fonts Inflanite						   *
+// *		SetBrushes_Fonts:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 void ME_App::SetBrushes_Fonts(void)
 {
@@ -289,7 +293,7 @@ void ME_App::SetBrushes_Fonts(void)
 }
 
 // *************************************************************************
-// *								Say_Win								   *
+// *				Say_Win:- Terry and Hazel Flanigan 2023				   *
 // *************************************************************************
 void ME_App::Say_Win(const char* Message)
 {
@@ -299,7 +303,7 @@ void ME_App::Say_Win(const char* Message)
 }
 
 // *************************************************************************
-// *								Say_Int								   *
+// *				Say_Int:- Terry and Hazel Flanigan 2023				   *
 // *************************************************************************
 void ME_App::Say_Int(int Value)
 {
@@ -309,7 +313,7 @@ void ME_App::Say_Int(int Value)
 }
 
 // *************************************************************************
-// *							Say_Float								   *
+// *			Say_Float:- Terry and Hazel Flanigan 2023				   *
 // *************************************************************************
 void ME_App::Say_Float(float Value)
 {
@@ -320,13 +324,25 @@ void ME_App::Say_Float(float Value)
 }
 
 // *************************************************************************
-// *									Say								   *
+// *				Say:- Terry and Hazel Flanigan 2023					   *
 // *************************************************************************
-void ME_App::Say(const char* Message)
+void ME_App::Say(const char* Message, char* Message2)
 {
-	char text[1024];
+	char text[MAX_PATH];
+	char text2[MAX_PATH];
+
 	strcpy(text, Message);
-	App->CL_Dialogs->Message(text);
+
+	if (Message2 == NULL)
+	{
+		strcpy(text2, " ");
+	}
+	else
+	{
+		strcpy(text2, Message2);
+	}
+	
+	App->CL_Dialogs->Message(text, text2);
 }
 
 // *************************************************************************

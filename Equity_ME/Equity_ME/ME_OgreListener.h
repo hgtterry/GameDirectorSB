@@ -59,6 +59,9 @@ public:
 	float mMoveSensitivity;
 	float mMoveSensitivityMouse;
 
+	float mMoveScale;
+	Ogre::Vector3		mTranslateVector;
+	Ogre::Camera* mCam;
 	Ogre::AnimationState*   Animate_State;
 
 protected:
@@ -68,14 +71,9 @@ protected:
 	bool Capture_LeftMouse_Model(void);
 	bool Capture_RightMouse_Model(void);
 
-	Ogre::Camera* mCam; // Copy Ogre Main Camera Handle [280122]
-
 	Ogre::Radian		mRotX; // Camera Rotation X [280122]
 	Ogre::Radian		mRotY; // Camera Rotation Y [280122]
-	Ogre::Vector3		mTranslateVector; // Camera Rotation XYZ[280122]
-
-	float mMoveScale;
-
+	
 	int Pl_MouseX;
 	int Pl_MouseY;
 

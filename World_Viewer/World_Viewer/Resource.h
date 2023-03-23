@@ -16,11 +16,15 @@
 #define IDD_VIEWER3D                    130
 #define IDD_PROGRESS_BAR                131
 #define IDD_RIGHTGROUPS                 132
+#define IDD_MESSAGE                     133
 #define IDC_PBBANNER                    1000
 #define IDC_PBACTION                    1001
 #define IDC_STBAR                       1002
 #define IDC_ST_PB_STATUS                1003
 #define IDC_BASETEXTURE2                1004
+#define IDC_BANNER                      1005
+#define IDC_STTEXT                      1006
+#define IDC_STMESSAGE                   1007
 #define ID_DEBUG_SHOWIMGUIDEMO          32771
 #define ID_FILE_OPEN                    32772
 #define ID_OPEN_WORLDEDITORPROJECT      32773
@@ -38,9 +42,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        133
+#define _APS_NEXT_RESOURCE_VALUE        134
 #define _APS_NEXT_COMMAND_VALUE         32781
-#define _APS_NEXT_CONTROL_VALUE         1005
+#define _APS_NEXT_CONTROL_VALUE         1008
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

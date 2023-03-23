@@ -36,7 +36,7 @@ ME_Import::~ME_Import()
 }
 
 // *************************************************************************
-// *						Set_Equity Terry Flanigan					   *
+// *				Set_Equity:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 void ME_Import::Set_Equity(void)
 {
@@ -67,7 +67,7 @@ void ME_Import::Set_Equity(void)
 }
 
 // *************************************************************************
-// *						Assimp_Loader Terry Bernie					   *
+// *			Assimp_Loader:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 bool ME_Import::Assimp_Loader(char* Extension, char* Extension2)
 {
@@ -103,7 +103,7 @@ bool ME_Import::Assimp_Loader(char* Extension, char* Extension2)
 }
 
 // *************************************************************************
-// *					RFActor_Loader Terry Terry Berine				   *
+// *			RFActor_Loader:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 bool ME_Import::RFActor_Loader(void)
 {
@@ -133,7 +133,7 @@ bool ME_Import::RFActor_Loader(void)
 }
 
 // *************************************************************************
-// *						Ogre_Loader Terry Bernie					   *
+// *			Ogre_Loader:- Terry and Hazel Flanigan 2023				   *
 // *************************************************************************
 bool ME_Import::Ogre_Loader(char* Extension, char* Extension2)
 {
@@ -199,7 +199,7 @@ bool ME_Import::Ogre_Loader(char* Extension, char* Extension2)
 }
 
 // *************************************************************************
-// *					Reload_FromResentFiles Terry Bernie				   *
+// *	  Reload_FromResentFiles:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
 void ME_Import::Reload_FromResentFiles(char* ResentPathAndFile)
 {
@@ -321,7 +321,7 @@ void ME_Import::Reload_FromResentFiles(char* ResentPathAndFile)
 }
 
 // *************************************************************************
-// *					WorldEditor_Loader Terry Terry Berine			   *
+// *		WorldEditor_Loader:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 bool ME_Import::WorldEditor_Loader(void)
 {
