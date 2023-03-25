@@ -44,6 +44,7 @@ SB_Dialogs::SB_Dialogs()
 
 	MessageString[0] = 0;;
 	MessageString2[0] = 0;
+
 }
 
 
@@ -1688,6 +1689,201 @@ LRESULT CALLBACK SB_Dialogs::Message_Settings_DLG_Proc(HWND hDlg, UINT message, 
 		}
 
 		break;
+	}
+	return FALSE;
+}
+
+// *************************************************************************
+// *	  		Start_Copy_Dlg:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+bool SB_Dialogs::Start_Copy_Dlg(int Usage, bool CheckForSpaces, bool Use_Camera)
+{
+
+	Canceled = 0;
+
+	App->Cl_Dialogs->CheckNames = Usage;
+	App->Cl_Dialogs->CheckSpaces = CheckForSpaces;
+
+	DialogBox(App->hInst, (LPCTSTR)IDD_OBJECT_COPY, App->Fdlg, (DLGPROC)Copy_Proc);
+
+	return 1;
+}
+
+// *************************************************************************
+// *			Copy_Proc:- Terry and Hazel Flanigan 2023  				   *
+// *************************************************************************
+LRESULT CALLBACK SB_Dialogs::Copy_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+
+		App->SetTitleBar(hDlg);
+
+		HFONT Font;
+		Font = CreateFont(-20, 0, 0, 0, FW_BOLD, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
+		SendDlgItemMessage(hDlg, IDC_TITLENAME, WM_SETFONT, (WPARAM)Font, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_EDITTEXT, WM_SETFONT, (WPARAM)App->Font_CB12, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STPLACEMENT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CKCAMERA, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CKORIGINAL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
+
+		SetDlgItemText(hDlg, IDC_TITLENAME, (LPCTSTR)App->SBC_Dialogs->btext);
+		SetDlgItemText(hDlg, IDC_EDITTEXT, (LPCTSTR)App->SBC_Dialogs->Chr_Text);
+
+		if (App->CL_Object->m_UseCamera_Placment_f == 1)
+		{
+			SendMessage(GetDlgItem(hDlg, IDC_CKCAMERA), BM_SETCHECK, 1, 0);
+			SendMessage(GetDlgItem(hDlg, IDC_CKORIGINAL), BM_SETCHECK, 0, 0);
+		}
+		else
+		{
+			SendMessage(GetDlgItem(hDlg, IDC_CKCAMERA), BM_SETCHECK, 0, 0);
+			SendMessage(GetDlgItem(hDlg, IDC_CKORIGINAL), BM_SETCHECK, 1, 0);
+		}
+
+
+		return TRUE;
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+		if (GetDlgItem(hDlg, IDC_TITLENAME) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STPLACEMENT) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_CKORIGINAL) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_CKCAMERA) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+		if (LOWORD(wParam) == IDC_CKCAMERA)
+		{
+			SendMessage(GetDlgItem(hDlg, IDC_CKCAMERA), BM_SETCHECK, 1, 0);
+			SendMessage(GetDlgItem(hDlg, IDC_CKORIGINAL), BM_SETCHECK, 0, 0);
+
+			App->CL_Object->m_UseCamera_Placment_f = 1;
+
+			return 1;
+		}
+
+		if (LOWORD(wParam) == IDC_CKORIGINAL)
+		{
+			SendMessage(GetDlgItem(hDlg, IDC_CKCAMERA), BM_SETCHECK, 0, 0);
+			SendMessage(GetDlgItem(hDlg, IDC_CKORIGINAL), BM_SETCHECK, 1, 0);
+
+			App->CL_Object->m_UseCamera_Placment_f = 0;
+
+			return 1;
+		}
+		
+
+		if (LOWORD(wParam) == IDOK)
+		{
+			char buff[255];
+			GetDlgItemText(hDlg, IDC_EDITTEXT, (LPTSTR)buff, 255);
+
+			// Checks for Spaces
+			if (App->Cl_Dialogs->CheckSpaces == 1)
+			{
+				App->Cl_Utilities->TestForBadCharactors(buff);
+				strcpy(buff, App->Cl_Utilities->Return_Chr);
+			}
+
+			// Checks name duplication Locations
+			if (App->Cl_Dialogs->CheckNames == Enums::Check_Names_Locatoins)
+			{
+				int test = App->Cl_LookUps->Player_Location_CheckNames(buff);
+				if (test == 1)
+				{
+					App->Say("Name Already Exsits");
+					return 1;
+				}
+			}
+
+			// Checks name duplication Objects
+			if (App->Cl_Dialogs->CheckNames == Enums::Check_Names_Objects)
+			{
+				int test = App->SBC_LookUps->CheckNames_Objects(buff);
+				if (test == 1)
+				{
+					App->Say("Name Already Exsits");
+					return 1;
+				}
+			}
+
+			strcpy(App->SBC_Dialogs->Chr_Text, buff);
+
+			App->SBC_Dialogs->Canceled = 0;
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			App->SBC_Dialogs->Canceled = 1;
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+	}
+
+	break;
+
 	}
 	return FALSE;
 }

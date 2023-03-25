@@ -40,7 +40,8 @@ public:
 	bool GameMode_StartPosition_Dlg();
 
 	bool Start_Message_Settings_DLG();
-
+	bool Start_Copy_Dlg(int Usage, bool CheckForSpaces, bool Use_Camera);
+	
 	bool DoFPS;
 	bool Saved_DoFPS;
 
@@ -65,6 +66,7 @@ protected:
 	static LRESULT CALLBACK Dialog_Counter_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK GameMode_StartPosition_Dlg_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Message_Settings_DLG_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Copy_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void ListObjects(HWND List);
 	void List_Locations(HWND List);

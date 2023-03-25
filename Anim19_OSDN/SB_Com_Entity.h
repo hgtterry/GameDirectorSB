@@ -42,16 +42,6 @@ public:
 	bool Create_Message_Entity(int Index);
 	void V_Set_Message_Defaults(int Index);
 
-	// ------------------------------------------ Particles
-	void Add_New_Particle(char* Script);
-	void CreateParticle(int Index);
-	void V_Set_Particle_Defaults(int Index);
-
-	// ------------------------------------------ Collectables
-	bool Add_New_Collectable();
-	bool Create_Collectable_Entity(int Index);
-	void V_Set_Collectables_Defaults(int Index);
-
 	// ------------------------------------------ User_Objects
 	void Add_New_User_Object(void);
 	void Create_User_Object(int Index);

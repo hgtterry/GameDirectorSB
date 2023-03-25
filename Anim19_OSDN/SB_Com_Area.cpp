@@ -86,7 +86,7 @@ bool SB_Com_Area::Add_New_Area()
 		
 		Area->This_Object_UniqueID = App->SBC_Scene->UniqueID_Area_Count;
 
-		Ogre::Vector3 Pos = App->SBC_Object->GetPlacement(-50);
+		Ogre::Vector3 Pos = App->CL_Object->GetPlacement(-50);
 		Area->Mesh_Pos = Pos;
 
 		Add_Aera_To_Project(Index, App->SBC_MeshViewer->Selected_MeshFile, App->SBC_MeshViewer->mResource_Folder);

@@ -1575,7 +1575,7 @@ void SB_MeshViewer::Show_Physics_Box()
 	btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
 	startTransform.setOrigin(initialPosition);
 
-	Ogre::Vector3 Size = App->SBC_Object->GetMesh_BB_Size(MvNode);
+	Ogre::Vector3 Size = App->CL_Object->GetMesh_BB_Size(MvNode);
 	float sx = Size.x / 2;
 	float sy = Size.y / 2;
 	float sz = Size.z / 2;
@@ -1636,12 +1636,12 @@ void SB_MeshViewer::Show_Physics_Capsule()
 
 	startTransform.setOrigin(initialPosition);
 
-	Ogre::Vector3 Size = App->SBC_Object->GetMesh_BB_Size(MvNode);
+	Ogre::Vector3 Size = App->CL_Object->GetMesh_BB_Size(MvNode);
 	float sx = Size.x / 2;
 	float sy = Size.y / 2;
 	float sz = Size.z / 2;
 
-	float Radius = App->SBC_Object->GetMesh_BB_Radius(MvNode);
+	float Radius = App->CL_Object->GetMesh_BB_Radius(MvNode);
 	
 	btCollisionShape* newRigidShape = new btCapsuleShape(Radius, sy);
 	newRigidShape->calculateLocalInertia(mass, localInertia);
@@ -1698,12 +1698,12 @@ void SB_MeshViewer::Show_Physics_Cone()
 
 	startTransform.setOrigin(initialPosition);
 
-	Ogre::Vector3 Size = App->SBC_Object->GetMesh_BB_Size(MvNode);
+	Ogre::Vector3 Size = App->CL_Object->GetMesh_BB_Size(MvNode);
 	float sx = Size.x / 2;
 	float sy = Size.y;// / 2;
 	float sz = Size.z / 2;
 
-	float Radius = App->SBC_Object->GetMesh_BB_Radius(MvNode);
+	float Radius = App->CL_Object->GetMesh_BB_Radius(MvNode);
 	
 	btCollisionShape* newRigidShape = new btConeShape(Radius, sy);
 	newRigidShape->calculateLocalInertia(mass, localInertia);
@@ -1760,7 +1760,7 @@ void SB_MeshViewer::Show_Physics_Sphere()
 
 	startTransform.setOrigin(initialPosition);
 
-	float Radius = App->SBC_Object->GetMesh_BB_Radius(MvNode);
+	float Radius = App->CL_Object->GetMesh_BB_Radius(MvNode);
 	
 	btCollisionShape* newRigidShape = new btSphereShape(Radius);
 	newRigidShape->calculateLocalInertia(mass, localInertia);
@@ -1818,12 +1818,12 @@ void SB_MeshViewer::Show_Physics_Cylinder()
 
 	startTransform.setOrigin(initialPosition);
 
-	Ogre::Vector3 Size = App->SBC_Object->GetMesh_BB_Size(MvNode);
+	Ogre::Vector3 Size = App->CL_Object->GetMesh_BB_Size(MvNode);
 	float sx = Size.x / 2;
 	float sy = Size.y / 2;
 	float sz = Size.z / 2;
 
-	float Radius = App->SBC_Object->GetMesh_BB_Radius(MvNode);
+	float Radius = App->CL_Object->GetMesh_BB_Radius(MvNode);
 	
 	btCollisionShape* newRigidShape = new btCylinderShape(btVector3(sx, sy, sz));
 	newRigidShape->calculateLocalInertia(mass, localInertia);

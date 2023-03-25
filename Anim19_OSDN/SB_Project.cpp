@@ -450,7 +450,7 @@ bool SB_Project::Save_Project()
 
 	App->Set_Main_TitleBar(App->SBC_FileIO->Project_Path_File_Name);
 
-	App->SBC_Object->Clear_Modified_Objects(); // Clear Altered FileView Items
+	App->CL_Object->Clear_Modified_Objects(); // Clear Altered FileView Items
 
 	App->SBC_Project->Directory_Changed_Flag = 0;
 
@@ -2345,7 +2345,7 @@ bool SB_Project::Read_Collectable(int Index, char* Section)
 	Base_Object* V_Object = App->SBC_Scene->V_Object[Index];
 
 	V_Object->S_Collectable[0] = new Collectable_type;
-	App->SBC_Com_Entity->V_Set_Collectables_Defaults(Index);
+	App->CL_Com_Collectables->Set_Collectables_Defaults(Index);
 
 	App->Cl_Ini->GetString(Section, "Col_Sound_File", chr_Tag1, MAX_PATH);
 	strcpy(V_Object->S_Collectable[0]->Sound_File, chr_Tag1);
@@ -2378,7 +2378,7 @@ bool SB_Project::Read_Particle(int Index, char* Section)
 	Base_Object* V_Object = App->SBC_Scene->V_Object[Index];
 
 	V_Object->S_Particle[0] = new Particle_type;
-	App->SBC_Com_Entity->V_Set_Particle_Defaults(Index);
+	App->CL_Com_Particles->Set_Particle_Defaults(Index);
 
 	int Test = App->Cl_Ini->GetString(Section, "Particle_Script", chr_Tag1, MAX_PATH);
 	strcpy(V_Object->S_Particle[0]->ParticleScript, chr_Tag1);

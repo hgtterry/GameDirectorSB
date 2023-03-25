@@ -62,7 +62,7 @@ GD19_App::GD19_App(void)
 	SBC_Import_Room =	nullptr;
 	SBC_Debug =			nullptr;
 	SBC_FileIO =		nullptr;
-	SBC_Object =		nullptr;
+	CL_Object =			nullptr;
 	SBC_Objects_Create = nullptr;
 	SBC_Dimensions =	nullptr;
 	SBC_Collision =		nullptr;
@@ -75,11 +75,15 @@ GD19_App::GD19_App(void)
 	SBC_Build =			nullptr;
 	SBC_Project_Create = nullptr;
 
+	// Coms
 	SBC_Com_Entity =		nullptr;
 	SBC_Com_MoveEntity =	nullptr;
 	SBC_Com_Area =			nullptr;
 	SBC_Com_Environments =	nullptr;
 	SBC_Com_Lights =		nullptr;
+	CL_Com_Particles =		nullptr;
+	CL_Com_Collectables =	nullptr;
+
 
 	SBC_Locations =			nullptr;
 	SBC_Gui_Dialogs =		nullptr;
@@ -192,7 +196,7 @@ GD19_App::GD19_App(void)
 	CursorPosX = 500;
 	CursorPosY = 500;
 
-	Debug_App = 0;
+	Debug_App = 1;
 	V_New_Objects = 1;
 
 	EquityDirecory_FullPath[0] = 0;
@@ -242,7 +246,7 @@ bool GD19_App::InitApp(void)
 	Com_CDialogs =		new  Com_Diaolgs();
 	SBC_Debug =			new SB_Debug();
 	SBC_FileIO =		new SB_FileIO();
-	SBC_Object =		new SB_Object();
+	CL_Object =			new SB_Object();
 	SBC_Objects_Create = new SB_Objects_Create();
 	SBC_Dimensions =	new SB_Dimensions();
 	SBC_Collision =		new SB_Collision();
@@ -258,12 +262,16 @@ bool GD19_App::InitApp(void)
 	
 	SBC_Project_Create = new SB_Project_Create;
 
+	// Coms
 	SBC_Com_Entity =		new SB_Com_Entity();
 	SBC_Com_MoveEntity =	new SB_Com_MoveEntity();
 	SBC_Com_Environments =	new SB_Com_Environments();
 	SBC_Gui_Dialogs =		new SB_Gui_Dialogs();
 	SBC_Gui_Environ =		new SB_Gui_Environment();
 	SBC_Materials =			new SB_Materials();
+	CL_Com_Particles =		new SB_Com_Particles();
+	CL_Com_Collectables =	new SB_Com_Collectables();
+
 	
 	SBC_Front_Dlg =			new Bass_Front_Dialog();
 

@@ -1439,7 +1439,7 @@ bool SB_Properties::Edit_Object_Onclick(LPARAM lParam)
 	result = strcmp(App->SBC_Properties->btext, "Name");
 	if (result == 0)
 	{
-		App->SBC_Object->Rename_Object(Index);
+		App->CL_Object->Rename_Object(Index);
 
 		Update_ListView_Objects();
 	}
@@ -1468,7 +1468,7 @@ void SB_Properties::Edit_Light_Onclick(LPARAM lParam)
 	result = strcmp(btext, "Name");
 	if (result == 0)
 	{
-		App->SBC_Object->Rename_Object(Index);
+		App->CL_Object->Rename_Object(Index);
 		Update_ListView_Particles();
 	}
 
@@ -1535,7 +1535,7 @@ void SB_Properties::Edit_UserObjects_Onclick(LPARAM lParam)
 	result = strcmp(btext, "Name");
 	if (result == 0)
 	{
-		App->SBC_Object->Rename_Object(Index);
+		App->CL_Object->Rename_Object(Index);
 		Update_ListView_UserObjects();
 	}
 
@@ -1562,7 +1562,7 @@ void SB_Properties::Edit_Particle_Onclick(LPARAM lParam)
 	result = strcmp(btext, "Name");
 	if (result == 0)
 	{
-		App->SBC_Object->Rename_Object(Index);
+		App->CL_Object->Rename_Object(Index);
 		Update_ListView_Particles();
 	}
 
@@ -2242,7 +2242,7 @@ bool SB_Properties::Edit_Move_Entity_OnClick(LPARAM lParam)
 		{
 			strcpy(App->SBC_Scene->V_Object[Index]->S_MoveType[0]->Object_Name, App->SBC_Dialogs->Chr_DropText);
 
-			int MoveObjectIndex = App->SBC_Object->GetIndex_By_Name(App->SBC_Scene->V_Object[Index]->S_MoveType[0]->Object_Name);
+			int MoveObjectIndex = App->CL_Object->GetIndex_By_Name(App->SBC_Scene->V_Object[Index]->S_MoveType[0]->Object_Name);
 
 			App->SBC_Scene->V_Object[Index]->S_MoveType[0]->Object_To_Move_Index = MoveObjectIndex;
 
@@ -3387,7 +3387,7 @@ bool SB_Properties::Edit_Teleport_OnClick(LPARAM lParam)
 // *************************************************************************
 void SB_Properties::Reset_Last_Selected_Object(int Index)
 {
-	App->SBC_Object->Show_Physics_Debug = 0;
+	App->CL_Object->Show_Physics_Debug = 0;
 
 
 	int f = App->SBC_Scene->V_Object[Index]->Phys_Body->getCollisionFlags();
@@ -3402,15 +3402,15 @@ void SB_Properties::Reset_Last_Selected_Object(int Index)
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_PhysicsOff_Bmp);
 
 	App->SBC_Scene->V_Object[Index]->Object_Node->setVisible(true);
-	App->SBC_Object->Show_Mesh_Debug = 1;
+	App->CL_Object->Show_Mesh_Debug = 1;
 
 	App->SBC_Markers->BoxNode->setVisible(false);
 	App->SBC_Markers->Arrow_Node->setVisible(false);
 
 	if (App->SBC_Scene->V_Object[Index]->Deleted == 0)
 	{
-		App->SBC_Object->Hide_AllObjects_Except(Index, true);
+		App->CL_Object->Hide_AllObjects_Except(Index, true);
 	}
 
-	App->SBC_Object->Hide_All_Except_Flag = 0;
+	App->CL_Object->Hide_All_Except_Flag = 0;
 }

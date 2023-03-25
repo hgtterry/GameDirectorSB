@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022 GameDirectorSB and EquityME -- Inflanite Software W.T.Flanigan H.C.Flanigan
+Copyright (c) 2022 - 2023 GameDirectorSB and EquityME -- HGTInflanite Software W.T.Flanigan H.C.Flanigan
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -34,7 +34,7 @@ SB_Com_Collectables::~SB_Com_Collectables()
 }
 
 // *************************************************************************
-//			Add_New_Collectable:- Terry and Hazel Flanigan 2022			   *
+// *		Add_New_Collectable:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 bool SB_Com_Collectables::Add_New_Collectable()
 {
@@ -43,11 +43,11 @@ bool SB_Com_Collectables::Add_New_Collectable()
 
 	int Index = App->SBC_Scene->Object_Count;
 
-	App->SBC_Scene->B_Object[Index] = new Base_Object();
-	App->SBC_Scene->B_Object[Index]->S_Collectable[0] = new Collectable_type;
-	App->SBC_Com_Collectables->Set_Collectables_Defaults(Index);
+	App->SBC_Scene->V_Object[Index] = new Base_Object();
+	App->SBC_Scene->V_Object[Index]->S_Collectable[0] = new Collectable_type;
+	App->CL_Com_Collectables->Set_Collectables_Defaults(Index);
 
-	Base_Object* Object = App->SBC_Scene->B_Object[Index];
+	Base_Object* Object = App->SBC_Scene->V_Object[Index];
 	Object->This_Object_UniqueID = App->SBC_Scene->UniqueID_Object_Counter; // Unique ID
 
 	strcpy(Object->Mesh_Name, App->SBC_MeshViewer->Object_Name);
@@ -58,34 +58,34 @@ bool SB_Com_Collectables::Add_New_Collectable()
 	strcpy_s(B_Name, "Collectable_");
 	_itoa(Index, ConNum, 10);
 	strcat(B_Name, ConNum);
-	strcpy(App->SBC_Scene->B_Object[Index]->Mesh_Name, B_Name);
+	strcpy(App->SBC_Scene->V_Object[Index]->Mesh_Name, B_Name);
 
-	Ogre::Vector3 Pos = App->SBC_Object->GetPlacement(-50);
-	App->SBC_Scene->B_Object[Index]->Mesh_Pos = Pos;
+	Ogre::Vector3 Pos = App->CL_Object->GetPlacement(-50);
+	App->SBC_Scene->V_Object[Index]->Mesh_Pos = Pos;
 
 	Object->Type = Enums::Bullet_Type_Static;
 	Object->Shape = Enums::Shape_Box;
 
-	
+
 	Create_Collectable_Entity(Index);
 
-	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Collectables_Folder, App->SBC_Scene->B_Object[Index]->Mesh_Name, Index, true);
-	App->SBC_Scene->B_Object[Index]->FileViewItem = Temp;
+	HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Collectables_Folder, App->SBC_Scene->V_Object[Index]->Mesh_Name, Index, true);
+	App->SBC_Scene->V_Object[Index]->FileViewItem = Temp;
 
-	App->SBC_FileView->SelectItem(App->SBC_Scene->B_Object[Index]->FileViewItem);
+	App->SBC_FileView->SelectItem(App->SBC_Scene->V_Object[Index]->FileViewItem);
 	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_EntitiesFolder);
 
 	App->SBC_Scene->UniqueID_Object_Counter++; // Unique ID
 	App->SBC_Scene->Object_Count++;  // Must be last line
 
-	App->SBC_Scene->B_Object[Index]->Altered = 1;
+	App->SBC_Scene->V_Object[Index]->Altered = 1;
 	App->SBC_Scene->Scene_Modified = 1;
 
 	return 1;
 }
 
 // *************************************************************************
-//		Create_Collectable_Entity:- Terry and Hazel Flanigan 2022		   *
+// *	Create_Collectable_Entity:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
 bool SB_Com_Collectables::Create_Collectable_Entity(int Index)
 {
@@ -93,7 +93,7 @@ bool SB_Com_Collectables::Create_Collectable_Entity(int Index)
 	char ConNum[256];
 	char Ogre_Name[256];
 
-	Base_Object* Object = App->SBC_Scene->B_Object[Index];
+	Base_Object* Object = App->SBC_Scene->V_Object[Index];
 
 
 	strcpy_s(Ogre_Name, "GDEnt_");
@@ -102,16 +102,23 @@ bool SB_Com_Collectables::Create_Collectable_Entity(int Index)
 
 	strcpy(Mesh_File, Object->Mesh_FileName);
 
-	Object->Object_Ent = App->SBC_Ogre->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->SBC_Scene->Project_Resource_Group);
-	Object->Object_Node = App->SBC_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	Object->Object_Ent = App->CL_Ogre->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->SBC_Scene->Project_Resource_Group);
+	Object->Object_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Object->Object_Node->attachObject(Object->Object_Ent);
+
+	// Get Material Name
+	Ogre::String text = Object->Object_Ent->getMesh()->getSubMesh(0)->getMaterialName().c_str();
+	Ogre::MaterialPtr  Mat = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(text));
+	strcpy(Object->Material_File, Mat->getOrigin().c_str());
+
+	Object->UsageEX = 777;
 
 	Object->Object_Node->setVisible(true);
 
 	Object->Object_Node->setOrientation(Object->Mesh_Quat);
 
 	Object->Object_Node->setPosition(Object->Mesh_Pos);
-	
+
 	App->SBC_Scene->Scene_Loaded = 1;
 
 	AxisAlignedBox worldAAB = Object->Object_Ent->getBoundingBox();
@@ -125,14 +132,14 @@ bool SB_Com_Collectables::Create_Collectable_Entity(int Index)
 	startTransform.setRotation(btQuaternion(0, 0, 0, 1));
 
 	btScalar mass;
-	
+
 	mass = 0.0f;
 
 	btVector3 localInertia(0, 0, 0);
 	btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
 	startTransform.setOrigin(initialPosition);
 
-	Ogre::Vector3 Size = App->SBC_Object->GetMesh_BB_Size(Object->Object_Node);
+	Ogre::Vector3 Size = App->CL_Object->GetMesh_BB_Size(Object->Object_Node);
 	float sx = Size.x / 2;
 	float sy = Size.y / 2;
 	float sz = Size.z / 2;
@@ -157,7 +164,7 @@ bool SB_Com_Collectables::Create_Collectable_Entity(int Index)
 	Object->Usage = Enums::Usage_Colectable;
 	Object->Phys_Body->setUserIndex(Enums::Usage_Colectable);
 	Object->Phys_Body->setUserIndex2(Index);
-	
+
 	int f = Object->Phys_Body->getCollisionFlags();
 	Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
@@ -165,28 +172,29 @@ bool SB_Com_Collectables::Create_Collectable_Entity(int Index)
 
 	App->SBC_Physics->Set_Physics(Index);
 
-	App->SBC_Scene->B_Object[Index]->Folder = Enums::Folder_Collectables;
+	App->SBC_Scene->V_Object[Index]->Folder = Enums::Folder_Collectables;
 
 	return 1;
 }
 
 // *************************************************************************
-// *		Set_Collectables_Defaults:- Terry and Hazel Flanigan 2022	   *
+// *		Set_Collectables_Defaults:- Terry and Hazel Flanigan 2023	   *
 // *************************************************************************
 void SB_Com_Collectables::Set_Collectables_Defaults(int Index)
 {
-	App->SBC_Scene->B_Object[Index]->Altered = 0;
+	Base_Object* V_Object = App->SBC_Scene->V_Object[Index];
 
-	strcpy(App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Sound_File, "footstep.ogg");
-	App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Play = 1;
-	App->SBC_Scene->B_Object[Index]->S_Collectable[0]->SndVolume = 0.5;
+	V_Object->Altered = 0;
 
-	App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Maths = 1; // Add
-	App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Value = 1;
+	strcpy(V_Object->S_Collectable[0]->Sound_File, "footstep.ogg");
+	V_Object->S_Collectable[0]->Play = 1;
+	V_Object->S_Collectable[0]->SndVolume = 0.5;
 
-	App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Counter_ID = 0;
-	strcpy(App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Counter_Name, "Not_Set");
+	V_Object->S_Collectable[0]->Maths = 1; // Add
+	V_Object->S_Collectable[0]->Value = 1;
 
-	App->SBC_Scene->B_Object[Index]->S_Collectable[0]->Counter_Disabled = 0;
+	V_Object->S_Collectable[0]->Counter_ID = 0;
+	strcpy(V_Object->S_Collectable[0]->Counter_Name, "Not_Set");
 
+	V_Object->S_Collectable[0]->Counter_Disabled = 0;
 }

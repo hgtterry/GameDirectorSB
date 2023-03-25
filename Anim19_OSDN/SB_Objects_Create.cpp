@@ -90,7 +90,7 @@ bool SB_Objects_Create::Add_Objects_From_File() // From File
 		else if (App->SBC_Scene->V_Object[Count]->Usage == Enums::Usage_Colectable)
 		{
 			
-			App->SBC_Com_Entity->Create_Collectable_Entity(Count);
+			App->CL_Com_Collectables->Create_Collectable_Entity(Count);
 
 			HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Collectables_Folder, App->SBC_Scene->V_Object[Count]->Mesh_Name, Count, false);
 			App->SBC_Scene->V_Object[Count]->FileViewItem = Temp;
@@ -111,7 +111,7 @@ bool SB_Objects_Create::Add_Objects_From_File() // From File
 		} // -------------------------------------------------------------------------- Particles
 		else if (App->SBC_Scene->V_Object[Count]->Usage == Enums::Usage_Particle)
 		{
-			App->SBC_Com_Entity->CreateParticle(Count);
+			App->CL_Com_Particles->Create_Particle_Entity(Count);
 
 			HTREEITEM Temp = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Particles_Folder, App->SBC_Scene->V_Object[Count]->Mesh_Name, Count, false);
 			App->SBC_Scene->V_Object[Count]->FileViewItem = Temp;
@@ -148,7 +148,7 @@ void SB_Objects_Create::Add_Objects_From_MeshViewer()
 
 	if (App->SBC_MeshViewer->Mesh_Viewer_Mode == Enums::Mesh_Viewer_Collectables) // Collectables
 	{
-		App->SBC_Com_Entity->Add_New_Collectable();
+		App->CL_Com_Collectables->Add_New_Collectable();
 		return;
 	}
 
@@ -238,10 +238,11 @@ bool SB_Objects_Create::Add_New_Object(int Index,bool From_MeshViewer)
 	Ogre::MaterialPtr  Mat = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(text));
 	strcpy(Object->Material_File, Mat->getOrigin().c_str());
 	Object->UsageEX = 777;
+
 	// If from MeshViewer Get Placement Method
 	if (From_MeshViewer == 1 && App->SBC_MeshViewer->Placement_Camera == 1)
 	{
-		Ogre::Vector3 Pos = App->SBC_Object->GetPlacement();
+		Ogre::Vector3 Pos = App->CL_Object->GetPlacement();
 		Object->Mesh_Pos = Pos;
 		Object->Object_Node->setPosition(Pos);
 	}
@@ -374,7 +375,7 @@ void SB_Objects_Create::Add_Physics_Box(bool Dynamic,int Index)
 	btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
 	startTransform.setOrigin(initialPosition);
 
-	Ogre::Vector3 Size = App->SBC_Object->GetMesh_BB_Size(Object->Object_Node);
+	Ogre::Vector3 Size = App->CL_Object->GetMesh_BB_Size(Object->Object_Node);
 	float sx = Size.x / 2;
 	float sy = Size.y / 2;
 	float sz = Size.z / 2;
@@ -465,7 +466,7 @@ void SB_Objects_Create::Add_Physics_Sphere(bool Dynamic, int Index)
 
 	startTransform.setOrigin(initialPosition);
 
-	float Radius = App->SBC_Object->GetMesh_BB_Radius(Object->Object_Node);
+	float Radius = App->CL_Object->GetMesh_BB_Radius(Object->Object_Node);
 	Object->Physics_Size = Ogre::Vector3(Radius, 0, 0);
 
 	btCollisionShape* newRigidShape = new btSphereShape(Radius);
@@ -552,12 +553,12 @@ void SB_Objects_Create::Add_Physics_Capsule(bool Dynamic, int Index)
 
 	startTransform.setOrigin(initialPosition);
 
-	Ogre::Vector3 Size = App->SBC_Object->GetMesh_BB_Size(Object->Object_Node);
+	Ogre::Vector3 Size = App->CL_Object->GetMesh_BB_Size(Object->Object_Node);
 	float sx = Size.x / 2;
 	float sy = Size.y / 2;
 	float sz = Size.z / 2;
 
-	float Radius = App->SBC_Object->GetMesh_BB_Radius(Object->Object_Node);
+	float Radius = App->CL_Object->GetMesh_BB_Radius(Object->Object_Node);
 	Object->Physics_Size = Ogre::Vector3(Radius, sy, 0);
 
 	btCollisionShape* newRigidShape = new btCapsuleShape(Radius, sy);
@@ -642,12 +643,12 @@ void SB_Objects_Create::Add_Physics_Cylinder(bool Dynamic, int Index)
 
 	startTransform.setOrigin(initialPosition);
 
-	Ogre::Vector3 Size = App->SBC_Object->GetMesh_BB_Size(Object->Object_Node);
+	Ogre::Vector3 Size = App->CL_Object->GetMesh_BB_Size(Object->Object_Node);
 	float sx = Size.x / 2;
 	float sy = Size.y / 2;
 	float sz = Size.z / 2;
 
-	float Radius = App->SBC_Object->GetMesh_BB_Radius(Object->Object_Node);
+	float Radius = App->CL_Object->GetMesh_BB_Radius(Object->Object_Node);
 	Object->Physics_Size = Ogre::Vector3(sx, sy, sz);
 
 	btCollisionShape* newRigidShape = new btCylinderShape(btVector3(sx, sy, sz));
@@ -706,7 +707,7 @@ void SB_Objects_Create::Add_Physics_Cone(bool Dynamic,int Index)
 		Object->Shape = Enums::Cone;
 	}
 
-	Ogre::Vector3 Centre = App->SBC_Object->Get_BoundingBox_World_Centre(Index);
+	Ogre::Vector3 Centre = App->CL_Object->Get_BoundingBox_World_Centre(Index);
 
 	Object->Physics_Pos = Ogre::Vector3(Centre.x, Centre.y, Centre.z);
 
@@ -729,12 +730,12 @@ void SB_Objects_Create::Add_Physics_Cone(bool Dynamic,int Index)
 
 	startTransform.setOrigin(initialPosition);
 
-	Ogre::Vector3 Size = App->SBC_Object->GetMesh_BB_Size(Object->Object_Node);
+	Ogre::Vector3 Size = App->CL_Object->GetMesh_BB_Size(Object->Object_Node);
 	float sx = Size.x / 2;
 	float sy = Size.y;// / 2;
 	float sz = Size.z / 2;
 
-	float Radius = App->SBC_Object->GetMesh_BB_Radius(Object->Object_Node);
+	float Radius = App->CL_Object->GetMesh_BB_Radius(Object->Object_Node);
 	Object->Physics_Size = Ogre::Vector3(Radius, sy, 0);
 
 	btCollisionShape* newRigidShape = new btConeShape(Radius, sy);

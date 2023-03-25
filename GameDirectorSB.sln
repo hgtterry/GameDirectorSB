@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.2017
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Equity15", "Anim19_OSDN\GameDirectorSB.vcxproj", "{FE2B8ABE-DBBE-466A-86BB-0B2344866A98}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameDirectorSB", "Anim19_OSDN\GameDirectorSB.vcxproj", "{FE2B8ABE-DBBE-466A-86BB-0B2344866A98}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

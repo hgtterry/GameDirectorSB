@@ -241,8 +241,7 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 	{
 		if (LOWORD(wParam) == IDM_COPY)
 		{
-			App->SBC_Object->Copy_Object(App->SBC_Properties->Current_Selected_Object);
-
+			App->SBC_FileView->Context_Copy(hDlg);
 			return TRUE;
 		}
 
@@ -756,6 +755,11 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		
 		App->SBC_Properties->Update_ListView_Sounds();
 		
+		if (App->SBC_Dimensions->Show_Dimensions == 1)
+		{
+			App->SBC_Dimensions->Prepare_Dimensions();
+		}
+
 		return;
 	}
 
@@ -786,6 +790,11 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		App->SBC_Markers->MarkerBB_Addjust(Index);
 
 		App->SBC_Properties->Update_ListView_Environs();
+
+		if (App->SBC_Dimensions->Show_Dimensions == 1)
+		{
+			App->SBC_Dimensions->Prepare_Dimensions();
+		}
 
 		return;
 	}
@@ -821,6 +830,11 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 		App->SBC_Properties->Update_ListView_Messages();
 		
+		if (App->SBC_Dimensions->Show_Dimensions == 1)
+		{
+			App->SBC_Dimensions->Prepare_Dimensions();
+		}
+
 		return;
 	}
 
@@ -856,6 +870,11 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 		App->SBC_Properties->Update_ListView_Move_Entities();
 
+		if (App->SBC_Dimensions->Show_Dimensions == 1)
+		{
+			App->SBC_Dimensions->Prepare_Dimensions();
+		}
+
 		return;
 	}
 
@@ -890,6 +909,10 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 		App->SBC_Properties->Update_ListView_Teleport();
 		
+		if (App->SBC_Dimensions->Show_Dimensions == 1)
+		{
+			App->SBC_Dimensions->Prepare_Dimensions();
+		}
 		return;
 	}
 
@@ -926,6 +949,11 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 
 		App->SBC_Properties->Update_ListView_Collectables();
 		
+		if (App->SBC_Dimensions->Show_Dimensions == 1)
+		{
+			App->SBC_Dimensions->Prepare_Dimensions();
+		}
+
 		return;
 	}
 
@@ -958,6 +986,11 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 		App->SBC_Markers->MarkerBB_Addjust(Index);
 
 		App->SBC_Properties->Update_ListView_Particles();
+
+		if (App->SBC_Dimensions->Show_Dimensions == 1)
+		{
+			App->SBC_Dimensions->Prepare_Dimensions();
+		}
 
 		return;
 	}
@@ -1352,8 +1385,8 @@ void SB_FileView::Context_Menu(HWND hDlg)
 			App->SBC_FileView->hMenu = CreatePopupMenu();
 
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
-			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
-			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING , IDM_COPY, L"&Create Copy");
+			//AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
 			AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
 			TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
@@ -1577,7 +1610,7 @@ void SB_FileView::Context_Menu(HWND hDlg)
 			Context_Selection = Enums::FileView_TextMessage_File;
 		}
 
-		//------------------------------------- Text_Messages
+		//------------------------------------- Particles
 		if (!strcmp(App->SBC_FileView->FileView_Folder, "Particles")) // Folder
 		{
 			App->SBC_FileView->hMenu = CreatePopupMenu();
@@ -1592,7 +1625,7 @@ void SB_FileView::Context_Menu(HWND hDlg)
 			App->SBC_FileView->hMenu = CreatePopupMenu();
 
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_FILE_RENAME, L"&Rename");
-			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING , IDM_COPY, L"&Create Copy");
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
 			AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_FILE_DELETE, L"&Delete");
@@ -1787,7 +1820,7 @@ void SB_FileView::Context_New(HWND hDlg)
 
 			if (App->SBC_Dialogs->Canceled == 0)
 			{
-				App->SBC_Com_Entity->Add_New_Particle(App->SBC_Dialogs->Chr_DropText);
+				App->CL_Com_Particles->Add_New_Particle(App->SBC_Dialogs->Chr_DropText);
 			}
 
 		}
@@ -1845,7 +1878,7 @@ void SB_FileView::Context_Delete(HWND hDlg)
 		bool Doit = App->SBC_Dialogs->Canceled;
 		if (Doit == 0)
 		{
-			App->SBC_Object->Delete_Object();
+			App->CL_Object->Delete_Object();
 			App->SBC_FileView->Mark_Altered_Folder(FV_Objects_Folder);
 		}
 
@@ -1860,7 +1893,7 @@ void SB_FileView::Context_Delete(HWND hDlg)
 		bool Doit = App->SBC_Dialogs->Canceled;
 		if (Doit == 0)
 		{
-			App->SBC_Object->Delete_Object();
+			App->CL_Object->Delete_Object();
 			App->SBC_FileView->Mark_Altered_Folder(FV_Message_Trigger_Folder);
 		}
 
@@ -1875,7 +1908,7 @@ void SB_FileView::Context_Delete(HWND hDlg)
 		bool Doit = App->SBC_Dialogs->Canceled;
 		if (Doit == 0)
 		{
-			App->SBC_Object->Delete_Object();
+			App->CL_Object->Delete_Object();
 			App->SBC_FileView->Mark_Altered_Folder(FV_Sounds_Folder);
 		}
 
@@ -1890,7 +1923,7 @@ void SB_FileView::Context_Delete(HWND hDlg)
 		bool Doit = App->SBC_Dialogs->Canceled;
 		if (Doit == 0)
 		{
-			App->SBC_Object->Delete_Object();
+			App->CL_Object->Delete_Object();
 			App->SBC_FileView->Mark_Altered_Folder(FV_Move_Folder);
 		}
 
@@ -1934,7 +1967,7 @@ void SB_FileView::Context_Delete(HWND hDlg)
 		bool Doit = App->SBC_Dialogs->Canceled;
 		if (Doit == 0)
 		{
-			App->SBC_Object->Delete_Object();
+			App->CL_Object->Delete_Object();
 			App->SBC_FileView->Mark_Altered_Folder(App->SBC_FileView->FV_Evirons_Folder);
 		}
 
@@ -1967,7 +2000,7 @@ void SB_FileView::Context_Rename(HWND hDlg)
 
 	if (App->SBC_FileView->Context_Selection == Enums::FileView_Collectables_File)
 	{
-		App->SBC_Object->Rename_Object(Index);
+		App->CL_Object->Rename_Object(Index);
 		App->SBC_Properties->Update_ListView_Collectables();
 		return;
 	}
@@ -1979,9 +2012,53 @@ void SB_FileView::Context_Rename(HWND hDlg)
 		return;
 	}
 
-	App->SBC_Object->Rename_Object(Index);
+	App->CL_Object->Rename_Object(Index);
 	App->SBC_Properties->Update_ListView_Objects();
+}
 
+// *************************************************************************
+// *				Context_Copy:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_FileView::Context_Copy(HWND hDlg)
+{
+	int Index = App->SBC_Properties->Current_Selected_Object;
+
+	if (Context_Selection == Enums::FileView_Cameras_File)
+	{
+		//App->SBC_Com_Camera->Rename_Camera(Index);
+		//App->SBC_Properties->Update_ListView_Camera();
+		return;
+	}
+
+	if (App->SBC_FileView->Context_Selection == Enums::FileView_Counters_File)
+	{
+		//App->SBC_Display->Rename_Counter(Index);
+		//App->SBC_Properties->Update_ListView_Counters();
+		return;
+	}
+
+	if (App->SBC_FileView->Context_Selection == Enums::FileView_Collectables_File)
+	{
+		//App->SBC_Object->Rename_Object(Index);
+		//App->SBC_Properties->Update_ListView_Collectables();
+		return;
+	}
+
+	if (App->SBC_FileView->Context_Selection == Enums::FileView_EnvironEntity_File)
+	{
+		//App->SBC_Com_Environments->Rename_Environ(Index);
+		//App->SBC_Properties->Update_ListView_Environs();
+		return;
+	}
+
+	if (App->SBC_FileView->Context_Selection == Enums::FileView_Particle_File)
+	{
+		App->CL_Com_Particles->Copy_Particle(Index);
+		return;
+	}
+
+	App->CL_Object->Copy_Object(Index);
+	
 }
 
 

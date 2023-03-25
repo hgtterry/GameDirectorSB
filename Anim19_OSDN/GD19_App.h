@@ -78,6 +78,8 @@ distribution.
 #include "SB_Com_Area.h"
 #include "SB_Com_Environments.h"
 #include "SB_Com_Lights.h"
+#include "SB_Com_Particles.h"
+#include "SB_Com_Collectables.h"
 
 #include "SB_Project_Create.h"
 #include "SB_Locations.h"
@@ -135,7 +137,7 @@ public:
 	SB_Debug*				SBC_Debug;
 	SB_FileIO*				SBC_FileIO;
 	SB_Import_Room*			SBC_Import_Room;
-	SB_Object*				SBC_Object;
+	SB_Object*				CL_Object;
 	SB_Objects_Create*		SBC_Objects_Create;
 	SB_Dimensions*			SBC_Dimensions;
 	SB_Collision*			SBC_Collision;
@@ -148,13 +150,15 @@ public:
 	SB_Build*				SBC_Build;
 	SB_Panels*				SBC_Panels;
 
-
+	// Coms
 	SB_Com_Entity*			SBC_Com_Entity;
 	SB_Com_MoveEntity*		SBC_Com_MoveEntity;
 	SB_Com_Area*			SBC_Com_Area;
 	SB_Com_Environments*	SBC_Com_Environments;
 	SB_Com_Lights*			SBC_Com_Lights;
-	
+	SB_Com_Particles*		CL_Com_Particles;
+	SB_Com_Collectables*	CL_Com_Collectables;
+
 	SB_Project_Create*		SBC_Project_Create;
 	SB_Locations*			SBC_Locations;
 	SB_Gui_Dialogs*			SBC_Gui_Dialogs;

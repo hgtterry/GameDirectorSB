@@ -1,5 +1,7 @@
+#pragma once
+
 /*
-Copyright (c) 2022 Scene Builder and Equity -- Inflanite Software W.T.Flanigan H.C.Flanigan
+Copyright (c) 2022 - 2023 GameDirectorSB and EquityME -- HGTInflanite Software W.T.Flanigan H.C.Flanigan
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -21,35 +23,17 @@ misrepresented as being the original software.
 distribution.
 */
 
-#pragma once
-class SB_Object
+class SB_Com_Particles
 {
 public:
-	SB_Object(void);
-	~SB_Object(void);
+	SB_Com_Particles();
+	~SB_Com_Particles();
 
-	void Hide_AllObjects_Except(int Index, bool Show);
-	void Delete_Object();
-	void Rename_Object(int Index);
-	void Clear_Modified_Objects();
-	Ogre::Vector3 GetPlacement(int Distance = -6);
+	void Set_Particle_Defaults(int Index);
+	void Add_New_Particle(char* Script);
+	void Create_Particle_Entity(int Index);
 
-	Ogre::Vector3 Get_BoundingBox_World_Centre(int Object_Index);
-	float GetMesh_BB_Radius(SceneNode* mNode);
-
-	int GetIndex_By_Name(char* Name);
-
-	void Copy_Object(int Object_Index);
-
-	Ogre::Vector3 GetMesh_BB_Size(SceneNode* mNode);
-
-	bool Show_Physics_Debug;
-	bool Show_Mesh_Debug;
-	bool Hide_All_Except_Flag;
-
-	bool m_UseCamera_Placment_f;
-
-protected:
+	void Copy_Particle(int Object_Index);
 
 };
 

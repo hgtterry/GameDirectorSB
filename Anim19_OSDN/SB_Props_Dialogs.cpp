@@ -617,14 +617,14 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_Debug_Proc(HWND hDlg, UINT message, WP
 		if (some_item->idFrom == IDC_BT_SHOWMESH && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->SBC_Object->Show_Mesh_Debug);
+			App->Custom_Button_Toggle(item, App->CL_Object->Show_Mesh_Debug);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_BT_ONLYMESH && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->SBC_Object->Hide_All_Except_Flag);
+			App->Custom_Button_Toggle(item, App->CL_Object->Hide_All_Except_Flag);
 			return CDRF_DODEFAULT;
 		}
 		
@@ -641,28 +641,28 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_Debug_Proc(HWND hDlg, UINT message, WP
 			// -----------------------  Area
 			if (App->SBC_Properties->Edit_Category == Enums::Edit_Area)
 			{
-				if (App->SBC_Object->Hide_All_Except_Flag == 1)
+				if (App->CL_Object->Hide_All_Except_Flag == 1)
 				{
-					App->SBC_Object->Hide_All_Except_Flag = 0;
-					App->SBC_Object->Hide_AllObjects_Except(Index, true);
+					App->CL_Object->Hide_All_Except_Flag = 0;
+					App->CL_Object->Hide_AllObjects_Except(Index, true);
 				}
 				else
 				{
-					App->SBC_Object->Hide_All_Except_Flag = 1;
-					App->SBC_Object->Hide_AllObjects_Except(Index, false);
+					App->CL_Object->Hide_All_Except_Flag = 1;
+					App->CL_Object->Hide_AllObjects_Except(Index, false);
 				}
 				return 1;
 			}
 
-			if (App->SBC_Object->Hide_All_Except_Flag == 1)
+			if (App->CL_Object->Hide_All_Except_Flag == 1)
 			{
-				App->SBC_Object->Hide_All_Except_Flag = 0;
-				App->SBC_Object->Hide_AllObjects_Except(Index, true);
+				App->CL_Object->Hide_All_Except_Flag = 0;
+				App->CL_Object->Hide_AllObjects_Except(Index, true);
 			}
 			else
 			{
-				App->SBC_Object->Hide_All_Except_Flag = 1;
-				App->SBC_Object->Hide_AllObjects_Except(Index, false);
+				App->CL_Object->Hide_All_Except_Flag = 1;
+				App->CL_Object->Hide_AllObjects_Except(Index, false);
 			}
 		
 			return 1;
@@ -675,28 +675,28 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_Debug_Proc(HWND hDlg, UINT message, WP
 			// -----------------------  Area
 			if (App->SBC_Properties->Edit_Category == Enums::Edit_Area)
 			{
-				if (App->SBC_Object->Show_Mesh_Debug == 1)
+				if (App->CL_Object->Show_Mesh_Debug == 1)
 				{
 					App->SBC_Scene->B_Area[Index]->Area_Node->setVisible(false);
-					App->SBC_Object->Show_Mesh_Debug = 0;
+					App->CL_Object->Show_Mesh_Debug = 0;
 				}
 				else
 				{
 					App->SBC_Scene->B_Area[Index]->Area_Node->setVisible(true);
-					App->SBC_Object->Show_Mesh_Debug = 1;
+					App->CL_Object->Show_Mesh_Debug = 1;
 				}
 				return 1;
 			}
 
-			if (App->SBC_Object->Show_Mesh_Debug == 1)
+			if (App->CL_Object->Show_Mesh_Debug == 1)
 			{
 				App->SBC_Scene->V_Object[Index]->Object_Node->setVisible(false);
-				App->SBC_Object->Show_Mesh_Debug = 0;
+				App->CL_Object->Show_Mesh_Debug = 0;
 			}
 			else
 			{
 				App->SBC_Scene->V_Object[Index]->Object_Node->setVisible(true);
-				App->SBC_Object->Show_Mesh_Debug = 1;
+				App->CL_Object->Show_Mesh_Debug = 1;
 			}
 
 			return 1;
@@ -743,7 +743,7 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_Debug_Proc(HWND hDlg, UINT message, WP
 
 				if (App->SBC_Scene->V_Object[Index]->Physics_Debug_On == 1)
 				{
-					App->SBC_Object->Show_Physics_Debug = 0;
+					App->CL_Object->Show_Physics_Debug = 0;
 					App->SBC_Scene->V_Object[Index]->Phys_Body->setCollisionFlags(f | (1 << 5)); // Off
 
 					App->SBC_Scene->V_Object[Index]->Physics_Debug_On = 0;
@@ -757,7 +757,7 @@ LRESULT CALLBACK SB_Props_Dialogs::Dialog_Debug_Proc(HWND hDlg, UINT message, WP
 				else
 				{
 					App->SBC_Scene->V_Object[Index]->Physics_Debug_On = 1;
-					App->SBC_Object->Show_Physics_Debug = 1;
+					App->CL_Object->Show_Physics_Debug = 1;
 					App->SBC_Scene->V_Object[Index]->Phys_Body->setCollisionFlags(f & (~(1 << 5))); // on
 
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_PhysicsOn_Bmp);
@@ -879,7 +879,7 @@ LRESULT CALLBACK SB_Props_Dialogs::Area_PropsPanel_Proc(HWND hDlg, UINT message,
 			if (App->SBC_Props_Dialog->Show_Area_Physics_Debug == 1)
 			{
 				App->SBC_Props_Dialog->Show_Area_Physics_Debug = 0;
-				App->SBC_Object->Hide_AllObjects_Except(Index, true);
+				App->CL_Object->Hide_AllObjects_Except(Index, true);
 
 				int Count = 0;
 				while (Count < App->SBC_Scene->Area_Count)
@@ -899,7 +899,7 @@ LRESULT CALLBACK SB_Props_Dialogs::Area_PropsPanel_Proc(HWND hDlg, UINT message,
 			else
 			{
 				App->SBC_Props_Dialog->Show_Area_Physics_Debug = 1;
-				App->SBC_Object->Hide_AllObjects_Except(Index, false);
+				App->CL_Object->Hide_AllObjects_Except(Index, false);
 
 				int Count = 0;
 				while (Count < App->SBC_Scene->Area_Count)

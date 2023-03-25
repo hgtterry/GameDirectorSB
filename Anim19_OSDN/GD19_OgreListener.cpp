@@ -327,7 +327,7 @@ bool GD19_OgreListener::Update_Game_Logic(float DeltaTime)
 					App->SBC_Scene->V_Object[Index]->Object_Node->setPosition(Ogre::Vector3(x, y, z));
 					App->SBC_Scene->V_Object[Index]->Object_Node->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
 
-					Ogre::Vector3 WC = App->SBC_Object->Get_BoundingBox_World_Centre(Index);
+					Ogre::Vector3 WC = App->CL_Object->Get_BoundingBox_World_Centre(Index);
 
 					Ogre::Vector3 NewPos = Ogre::Vector3(x, y, z) - WC;
 					App->SBC_Scene->V_Object[Index]->Object_Node->setPosition((Ogre::Vector3(x, y, z)) + NewPos);

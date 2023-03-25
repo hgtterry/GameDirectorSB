@@ -752,4 +752,3 @@ LRESULT CALLBACK GD19_Dialogs::Message_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 
 
-

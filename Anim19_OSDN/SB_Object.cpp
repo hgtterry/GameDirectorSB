@@ -34,6 +34,8 @@ SB_Object::SB_Object(void)
 	Show_Physics_Debug = 0;
 	Show_Mesh_Debug = 1;
 	Hide_All_Except_Flag = 0;
+
+	m_UseCamera_Placment_f = 0;
 }
 
 SB_Object::~SB_Object(void)
@@ -120,22 +122,24 @@ Ogre::Vector3 SB_Object::Get_BoundingBox_World_Centre(int Object_Index)
 // *************************************************************************
 void SB_Object::Copy_Object(int Object_Index)
 {
-	Base_Object* Object = App->SBC_Scene->V_Object[Object_Index];
+	Base_Object* Source_Object = App->SBC_Scene->V_Object[Object_Index];
+
 
 	char ConNum[256];
 	char NewName[MAX_PATH];
+
 	int Object_Count = App->SBC_Scene->Object_Count;
 
 	strcpy_s(NewName, "Object_");
 	_itoa(Object_Count, ConNum, 10);
 	strcat(NewName, ConNum);
 
-	strcpy(App->Cl_Dialogs->btext, "New Object Name");
-	strcpy(App->Cl_Dialogs->Chr_Text, NewName);
+	strcpy(App->SBC_Dialogs->btext, "New Object Name");
+	strcpy(App->SBC_Dialogs->Chr_Text, NewName);
 
-	App->Cl_Dialogs->Dialog_Text(2, 1);
-
-	if (App->Cl_Dialogs->Canceled == 1)
+	App->SBC_Dialogs->Start_Copy_Dlg(Enums::Check_Names_Objects,true,false);
+	
+	if (App->SBC_Dialogs->Canceled == 1)
 	{
 		return ;
 	}
@@ -143,24 +147,26 @@ void SB_Object::Copy_Object(int Object_Index)
 	App->SBC_Scene->V_Object[Object_Count] = new Base_Object();
 	Base_Object* New_Object = App->SBC_Scene->V_Object[Object_Count];
 
-	strcpy(New_Object->Mesh_Name, App->Cl_Dialogs->Chr_Text);
-	strcpy(New_Object->Mesh_FileName, Object->Mesh_FileName);
-	strcpy(New_Object->Mesh_Resource_Path, Object->Mesh_Resource_Path);
+	strcpy(New_Object->Mesh_Name, App->SBC_Dialogs->Chr_Text);
+	strcpy(New_Object->Mesh_FileName, Source_Object->Mesh_FileName);
+	strcpy(New_Object->Mesh_Resource_Path, Source_Object->Mesh_Resource_Path);
 
-	New_Object->Type = Object->Type;
-	New_Object->Shape = Object->Shape;
+	New_Object->Type = Source_Object->Type;
+	New_Object->Shape = Source_Object->Shape;
 
-	New_Object->Mesh_Pos = Object->Mesh_Pos;
-	New_Object->Mesh_Scale = Object->Mesh_Scale;
-	New_Object->Mesh_Rot = Object->Mesh_Rot;
-	New_Object->Mesh_Quat = Object->Mesh_Quat;
-	New_Object->Physics_Quat = Object->Physics_Quat;
+	New_Object->Mesh_Pos = Source_Object->Mesh_Pos;
+	New_Object->Mesh_Scale = Source_Object->Mesh_Scale;
+	New_Object->Mesh_Rot = Source_Object->Mesh_Rot;
+	New_Object->Mesh_Quat = Source_Object->Mesh_Quat;
+	New_Object->Physics_Quat = Source_Object->Physics_Quat;
 
-	App->SBC_Objects_Create->Add_New_Object(Object_Count,0);
+	App->SBC_Objects_Create->Add_New_Object(Object_Count, m_UseCamera_Placment_f);
 
 	App->SBC_Scene->V_Object[Object_Count]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Objects_Folder, App->SBC_Scene->V_Object[Object_Count]->Mesh_Name, Object_Count, false);
 	
 	App->SBC_Scene->Object_Count++;
+
+	App->SBC_FileView->SelectItem(App->SBC_Scene->V_Object[Object_Count]->FileViewItem);
 
 	App->Say("Copied");
 }

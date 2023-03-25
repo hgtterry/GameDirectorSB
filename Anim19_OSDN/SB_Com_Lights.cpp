@@ -59,7 +59,7 @@ void SB_Com_Lights::Add_New_Light(void)
 	strcat(B_Name, ConNum);
 	strcpy(App->SBC_Scene->V_Object[Index]->Mesh_Name, B_Name);
 
-	Ogre::Vector3 Pos = App->SBC_Object->GetPlacement(-50);
+	Ogre::Vector3 Pos = App->CL_Object->GetPlacement(-50);
 	App->SBC_Scene->V_Object[Index]->Mesh_Pos = Pos;
 	App->SBC_Scene->V_Object[Index]->Mesh_Scale = Ogre::Vector3(1, 1, 1);
 

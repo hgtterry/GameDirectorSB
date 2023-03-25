@@ -137,7 +137,7 @@ void SB_Dimensions::ImGui_Dimensions(void)
 
 	ImGuiStyle* style = &ImGui::GetStyle();
 
-	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(210, 210, 210, 210));
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(255, 255, 255, 240));
 	
 
 	if (!ImGui::Begin("Rotation2", &Show_Dimensions, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))

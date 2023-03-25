@@ -1,5 +1,7 @@
+#pragma once
+
 /*
-Copyright (c) 2022 GameDirectorSB and EquityME -- Inflanite Software W.T.Flanigan H.C.Flanigan
+Copyright (c) 2022 - 2023 GameDirectorSB and EquityME -- HGTInflanite Software W.T.Flanigan H.C.Flanigan
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -21,14 +23,14 @@ misrepresented as being the original software.
 distribution.
 */
 
-#pragma once
 class SB_Com_Collectables
 {
 public:
+
 	SB_Com_Collectables();
 	~SB_Com_Collectables();
 
-	bool SB_Com_Collectables::Add_New_Collectable();
+	bool Add_New_Collectable();
 	bool Create_Collectable_Entity(int Index);
 	void Set_Collectables_Defaults(int Index);
 };

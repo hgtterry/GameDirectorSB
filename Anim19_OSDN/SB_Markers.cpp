@@ -159,7 +159,7 @@ void SB_Markers::MarkerBB_Addjust(int Index)
 	Ogre::Vector3 Position = Object->Object_Node->getPosition();
 	Ogre::Quaternion Rot = Object->Object_Node->getOrientation();
 
-	Ogre::Vector3 Size = App->SBC_Object->GetMesh_BB_Size(Object->Object_Node);
+	Ogre::Vector3 Size = App->CL_Object->GetMesh_BB_Size(Object->Object_Node);
 	MarkerBB_Update(Size.x / 2, Size.y / 2, Size.z / 2);
 
 	Ogre::Vector3 Centre = Object->Object_Node->getAttachedObject(0)->getBoundingBox().getCenter();
@@ -294,7 +294,7 @@ void SB_Markers::Load_Blue_Axis()
 void SB_Markers::Update_Red_Axis_Marker(int Index)
 {
 
-	Ogre::Vector3 Centre = App->SBC_Object->Get_BoundingBox_World_Centre(Index);
+	Ogre::Vector3 Centre = App->CL_Object->Get_BoundingBox_World_Centre(Index);
 
 	App->SBC_Markers->RedAxis_Node->setPosition(Centre);
 	App->SBC_Markers->RedAxis_Node->setVisible(true);
@@ -306,7 +306,7 @@ void SB_Markers::Update_Red_Axis_Marker(int Index)
 void SB_Markers::Update_Green_Axis_Marker(int Index)
 {
 
-	Ogre::Vector3 Centre = App->SBC_Object->Get_BoundingBox_World_Centre(Index);
+	Ogre::Vector3 Centre = App->CL_Object->Get_BoundingBox_World_Centre(Index);
 
 	App->SBC_Markers->GreenAxis_Node->setPosition(Centre);
 	App->SBC_Markers->GreenAxis_Node->setVisible(true);
@@ -320,7 +320,7 @@ void SB_Markers::Update_Blue_Axis_Marker(int Index)
 
 	//App->SBC_Markers->BlueAxis_Node->setOrientation = App->SBC_Scene->B_Object[Index]->Object_Node->getOrientation();
 
-	Ogre::Vector3 Centre = App->SBC_Object->Get_BoundingBox_World_Centre(Index);
+	Ogre::Vector3 Centre = App->CL_Object->Get_BoundingBox_World_Centre(Index);
 
 	App->SBC_Markers->BlueAxis_Node->setPosition(Centre);
 	App->SBC_Markers->BlueAxis_Node->setVisible(true);
