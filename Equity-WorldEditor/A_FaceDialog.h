@@ -26,13 +26,33 @@ protected:
 
 	static LRESULT CALLBACK FaceDialog_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
-	static geBoolean FlipHorizontal3 (Face *pFace, void *);
-	static geBoolean ChangeTextureAngle (Face *pFace, void *lParam);
+	static geBoolean FlipHorizontal(Face *pFace, void *);
+	static geBoolean FlipVertical(Face *pFace, void *);
+
+	static geBoolean ChangeTextureAngle(Face *pFace, void *lParam);
+
+	static geBoolean ChangeYOffset(Face *pFace, void *lParam);
+	static geBoolean ChangeXOffset(Face *pFace, void *lParam);
+
+	static geBoolean ChangeTextureYScale(Face *pFace, void *lParam);
+	static geBoolean ChangeTextureXScale(Face *pFace, void *lParam);
 
 	bool On_FlipHorizontal();
+	void OnFlipvertical();
+
 	void OnKillfocusAngle();
 
+	void OnKillfocusYOffset();
+	void OnKillfocusXOffset();
+
+	void OnKillfocusYScale();
+	void OnKillfocusXScale();
+
 	void AssignCurrentToViews();
+
+	void Fill_ComboBox_OffSetValues(HWND hDlg);
+	void Fill_ComboBox_ScaleValues(HWND hDlg);
+	void Fill_ComboBox_AngleValues(HWND hDlg);
 
 	CString m_NumFaces;
 

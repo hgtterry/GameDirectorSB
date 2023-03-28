@@ -17,7 +17,7 @@
 	<Configurations>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory=".\Deliver"
+			OutputDirectory="..\Bin\Tools"
 			IntermediateDirectory=".\Release"
 			ConfigurationType="1"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC60.vsprops"
@@ -59,7 +59,7 @@
 				AssemblerListingLocation=".\Release/"
 				ObjectFile=".\Release/"
 				ProgramDataBaseFileName=".\Release/vc60.pdb"
-				BrowseInformation="2"
+				BrowseInformation="0"
 				BrowseInformationFile=".\Release/"
 				WarningLevel="4"
 				SuppressStartupBanner="true"
@@ -83,7 +83,7 @@
 				UseUnicodeResponseFiles="false"
 				AdditionalOptions="/INCREMENTAL:YES"
 				AdditionalDependencies="nafxcw.lib libcmt.lib .\GenesisSDK\lib\genesis.lib advapi32.lib ctl3d32.lib comctl32.lib comdlg32.lib gdi32.lib kernel32.lib oldnames.lib ole32.lib oleaut32.lib oledlg.lib shell32.lib urlmon.lib user32.lib uuid.lib winmm.lib winspool.lib"
-				OutputFile=".\Deliver/EQ_Fusion.exe"
+				OutputFile="..\Bin\Tools\EQ_Fusion.exe"
 				LinkIncremental="0"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="..\..\msdev60\lib,..\..\msdev60\mfc\lib"
@@ -230,6 +230,30 @@
 			Filter="cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
 			>
 			<File
+				RelativePath=".\A_CreateArchDialog.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\A_CreateBoxDialog.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\A_CreateConeDialog.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\A_CreateCylDialog.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\A_CreateSpheroidDialog.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\A_CreateStaircaseDialog.cpp"
+				>
+			</File>
+			<File
 				RelativePath="A_Dialogs.cpp"
 				>
 				<FileConfiguration
@@ -305,6 +329,18 @@
 						PreprocessorDefinitions=""
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\A_TabsControl.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\A_TabsGroups_Dlg.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\A_TabsTemplates_Dlg.cpp"
+				>
 			</File>
 			<File
 				RelativePath=".\A_TextureDialog.cpp"
@@ -637,53 +673,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="CompileDialog.cpp"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath="Compiler.cpp"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="ConsoleTab.cpp"
 				>
 				<FileConfiguration
 					Name="Release|Win32"
@@ -1395,29 +1385,6 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="ModelDialog.cpp"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath="MoveDialog.cpp"
 				>
 				<FileConfiguration
@@ -1649,29 +1616,6 @@
 			</File>
 			<File
 				RelativePath="SelFaceList.c"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="SkyDialog.cpp"
 				>
 				<FileConfiguration
 					Name="Release|Win32"
@@ -2053,6 +1997,30 @@
 			Filter="h;hpp;hxx;hm;inl;fi;fd"
 			>
 			<File
+				RelativePath=".\A_CreateArchDialog.h"
+				>
+			</File>
+			<File
+				RelativePath=".\A_CreateBoxDialog.h"
+				>
+			</File>
+			<File
+				RelativePath=".\A_CreateConeDialog.h"
+				>
+			</File>
+			<File
+				RelativePath=".\A_CreateCylDialog.h"
+				>
+			</File>
+			<File
+				RelativePath=".\A_CreateSpheroidDialog.h"
+				>
+			</File>
+			<File
+				RelativePath=".\A_CreateStaircaseDialog.h"
+				>
+			</File>
+			<File
 				RelativePath="A_Dialogs.h"
 				>
 			</File>
@@ -2070,6 +2038,18 @@
 			</File>
 			<File
 				RelativePath="A_Scene.h"
+				>
+			</File>
+			<File
+				RelativePath=".\A_TabsControl.h"
+				>
+			</File>
+			<File
+				RelativePath=".\A_TabsGroups_Dlg.h"
+				>
+			</File>
+			<File
+				RelativePath=".\A_TabsTemplates_Dlg.h"
 				>
 			</File>
 			<File
@@ -2137,15 +2117,7 @@
 				>
 			</File>
 			<File
-				RelativePath="CompileDialog.h"
-				>
-			</File>
-			<File
 				RelativePath="Compiler.h"
-				>
-			</File>
-			<File
-				RelativePath="ConsoleTab.h"
 				>
 			</File>
 			<File
@@ -2269,10 +2241,6 @@
 				>
 			</File>
 			<File
-				RelativePath="ModelDialog.h"
-				>
-			</File>
-			<File
 				RelativePath="MoveDialog.h"
 				>
 			</File>
@@ -2326,10 +2294,6 @@
 			</File>
 			<File
 				RelativePath="SelFaceList.h"
-				>
-			</File>
-			<File
-				RelativePath="SkyDialog.h"
 				>
 			</File>
 			<File

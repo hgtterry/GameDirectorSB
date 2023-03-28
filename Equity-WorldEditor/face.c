@@ -29,7 +29,6 @@
 #include "units.h"
 #include "box3d.h"
 #include "typeio.h"
-#include "consoletab.h"
 #include "ram.h"
 #include "quatern.h"
 #include "util.h"

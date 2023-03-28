@@ -96,7 +96,7 @@ BEGIN_MESSAGE_MAP(CFusionView, CCaptionView)
 	ON_UPDATE_COMMAND_UI(ID_SELECTALL, OnUpdateSelectall)
 	ON_COMMAND(ID_EDIT_SELECT_BRUSH_ALL, OnSelectAllBrushes)
 	ON_UPDATE_COMMAND_UI(ID_EDIT_SELECT_BRUSH_ALL, OnUpdateSelectAllBrushes)
-//	ON_COMMAND(ID_TOOLS_SCALEWORLD, OnToolsScaleworld)
+	ON_COMMAND(ID_TOOLS_SCALEWORLD, OnToolsScaleworld)
 	ON_COMMAND(ID_TOOLS_SETTEXTURESCALE, OnToolsSettexturescale)
 	ON_COMMAND(ID_TOOLS_NEXTBRUSH, OnToolsNextbrush)
 	ON_COMMAND(ID_TOOLS_PREVBRUSH, OnToolsPrevbrush)
@@ -2324,7 +2324,6 @@ LRESULT CFusionView::OnCompileMessage (WPARAM wParam, LPARAM lParam)
 		char *msg;
 
 		msg = (char *)lParam;
-		ConPrintf ("%s", msg);
 		geRam_Free (msg);
 	}
 	return 0;
@@ -2337,7 +2336,6 @@ LRESULT CFusionView::OnCompileError (WPARAM wParam, LPARAM lParam)
 		char *msg;
 
 		msg = (char *)lParam;
-		ConError ("%s", msg);
 		geRam_Free (msg);
 	}
 	return 0;
@@ -2361,25 +2359,7 @@ LRESULT CFusionView::OnCompileDone (WPARAM wParam, LPARAM lParam)
 
 void CFusionView::OnToolsScaleworld() 
 {
-	CString	szKey = "Enter world scale factor";
-	CString szVal;
-	int		ModalResult;
-	CDialog	*pEditDialog;
-	float scf;
-	CFusionDoc* pDoc = GetDocument();
-	
-	pEditDialog = new CFloatKeyEditDlg(this, szKey, &szVal);
-	if (pEditDialog != NULL)
-	{
-		ModalResult = pEditDialog->DoModal();
-		delete pEditDialog;
-		if(ModalResult == IDOK)
-		{
-			sscanf((LPCSTR)szVal, "%f", &scf);
-			pDoc->ScaleWorld(scf);			
-			pDoc->SetModifiedFlag();
-		}
-	}	
+	App->Say("Deleted");
 }
 
 void CFusionView::OnToolsSettexturescale() 

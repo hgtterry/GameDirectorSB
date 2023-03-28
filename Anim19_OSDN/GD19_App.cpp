@@ -83,7 +83,9 @@ GD19_App::GD19_App(void)
 	SBC_Com_Lights =		nullptr;
 	CL_Com_Particles =		nullptr;
 	CL_Com_Collectables =	nullptr;
-
+	CL_Com_Sounds =			nullptr;
+	CL_Com_Teleporters =	nullptr;
+	CL_Com_Messages =		nullptr;
 
 	SBC_Locations =			nullptr;
 	SBC_Gui_Dialogs =		nullptr;
@@ -271,7 +273,10 @@ bool GD19_App::InitApp(void)
 	SBC_Materials =			new SB_Materials();
 	CL_Com_Particles =		new SB_Com_Particles();
 	CL_Com_Collectables =	new SB_Com_Collectables();
-
+	CL_Com_Sounds =			new SB_Com_Sounds();
+	CL_Com_Teleporters =	new SB_Com_Teleporters();
+	CL_Com_Messages =		new SB_Com_Messages();
+	
 	
 	SBC_Front_Dlg =			new Bass_Front_Dialog();
 

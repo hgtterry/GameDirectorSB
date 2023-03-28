@@ -215,5 +215,4 @@ void SB_Com_Particles::Copy_Particle(int Object_Index)
 	App->SBC_FileView->SelectItem(App->SBC_Scene->V_Object[New_Object_Index]->FileViewItem);
 
 	App->Say("Copied");
-
 }

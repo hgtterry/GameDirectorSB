@@ -246,7 +246,6 @@ public:
 	void BrushListToMeters(void);
 	void BrushListToTexels(void);
 	void MakeSelectedBrushNewest(void);
-	void ScaleWorld(geFloat ScaleFactor);
 	void SetAllFacesTextureScale(geFloat ScaleVal);
 
 	void SetDefaultBrushTexInfo(Brush *);

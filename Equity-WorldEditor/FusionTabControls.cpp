@@ -33,8 +33,6 @@
 #include "brushgroupdialog.h"
 #include "FusionDoc.h"
 #include "Model.h"
-#include "ModelDialog.h"
-#include "SkyDialog.h"
 
 #include "MainFrm.h"
 
@@ -55,11 +53,9 @@ CFusionTabControls::CFusionTabControls( CDialogBar* pDBar)
 
 	m_pBrushEntityDialog=NULL;
 	m_pTextureDialog	=NULL;
-	ConTab				=NULL;
 	GrpTab				=NULL;
 	ModelTab			=NULL;
-	SkyTab				=NULL;
-
+	
 	//	Create a pointer to the main window's CDialogBar...
 	m_pDialogBar		=pDBar;
 }
@@ -76,26 +72,12 @@ CFusionTabControls::~CFusionTabControls()
 		delete m_pTextureDialog;
 		m_pTextureDialog = NULL;
 	}
-	if(ConTab)
-	{
-		delete ConTab;
-		ConTab=NULL;
-	}
 	if(GrpTab)
 	{
 		delete GrpTab;
 		GrpTab=NULL;
 	}
-	if( ModelTab)
-	{
-		delete ModelTab ;
-		ModelTab = NULL ;
-	}
-	if (SkyTab)
-	{
-		delete SkyTab;
-		SkyTab = NULL;
-	}
+	
 }/* ~CFusionTabControls */
 
 
@@ -120,9 +102,9 @@ static const TabItem Tabs[] =
 	{BRUSH_ENTITY_TAB,	"Templates"},
 	{TEXTURE_TAB,		"Textures"},
 	{GROUP_TAB,			"Groups"},
-	{CONSOLE_TAB,		"Console"},
-	{MODEL_TAB,			"Models"},
-	{SKY_TAB,			"Sky"}
+	//{CONSOLE_TAB,		"Console"},
+	//{MODEL_TAB,			"Models"},
+
 };
 	 
 static const int NumTabs = sizeof (Tabs) / sizeof (TabItem);
@@ -192,42 +174,23 @@ void CFusionTabControls::UpdateTabs()
 		m_pTextureDialog = new CTextureDialog( this, pDoc );
 		UpdateTexture = 0;
 	}
-	if(ConTab==NULL)
-	{
-		ConTab=new CConsoleTab(this, pDoc);
-	}
 	if(GrpTab==NULL)
 	{
 		GrpTab=new CBrushGroupDialog(this, pDoc);
 	}
-	if( ModelTab==NULL )
-	{
-		ModelTab=new CModelDialog( this ) ;
-		ModelTab->Create( IDD_MODELKEY, this ) ;
-	}
-	if (SkyTab == NULL)
-	{
-		SkyTab = new CSkyDialog (this, pDoc);
-	}
-
-	ConTab->ShowWindow(SW_HIDE);
-	ConTab->SetConHwnd();
-
+	
 	GrpTab->ShowWindow(SW_HIDE);
-	ModelTab->ShowWindow(SW_HIDE);
-	SkyTab->ShowWindow (SW_HIDE);
 
 	//	This one should always be invisible.  Even to start out with...
 	m_pTextureDialog->ShowWindow( SW_HIDE );
 	App->CL_TextureDialog->Show_Dialog(0);
 
 	//	Update all tabs...
-	ModelTab->Update(pDoc, Level_GetModelInfo (pDoc->pLevel)) ;
 	m_pBrushEntityDialog->Update( pDoc );
 	m_pTextureDialog->Update( pDoc );
 	GrpTab->UpdateTabDisplay(pDoc);
-	SkyTab->Update (pDoc);
-
+	App->CL_TabsGroups_Dlg->Fill_ListBox(); // hgtterry App->CL_TabsGroups_Dlg->Fill_ListBox()
+	
 	//	Which tab do we show..?
 	switch( m_CurrentTab )
 	{
@@ -250,18 +213,6 @@ void CFusionTabControls::UpdateTabs()
 
 		case GROUP_TAB:
 			GrpTab->ShowWindow(SW_SHOW);
-			break;
-
-		case CONSOLE_TAB:
-			ConTab->ShowWindow( SW_SHOW );
-			break;
-
-		case MODEL_TAB:
-			ModelTab->ShowWindow( SW_SHOW ) ;
-			break ;
-
-		case SKY_TAB :
-			SkyTab->ShowWindow (SW_SHOW);
 			break;
 	}
 
@@ -298,22 +249,21 @@ void CFusionTabControls::UpdateTextures (void)
 void CFusionTabControls::DisableAllTabDialogs()
 {
 	if( m_pBrushEntityDialog )
+	{
 		m_pBrushEntityDialog->ShowWindow( SW_HIDE );
-	if(ConTab)
-		ConTab->ShowWindow(SW_HIDE);
+	}
+
 	if(GrpTab)
+	{
 		GrpTab->ShowWindow(SW_HIDE);
-	if(ModelTab)
-		ModelTab->ShowWindow(SW_HIDE);
+	}
+
 	if( m_pTextureDialog )
 	{
 		m_pTextureDialog->Update( NULL );
 		m_pTextureDialog->ShowWindow( SW_HIDE );
 	}
-	if (SkyTab != NULL)
-	{
-		SkyTab->ShowWindow (SW_HIDE);
-	}
+	
 }/* CFusionTabControls::DisableAllTabDialogs */
 
 

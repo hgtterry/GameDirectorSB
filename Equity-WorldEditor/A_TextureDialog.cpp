@@ -65,7 +65,7 @@ void A_TextureDialog::Show_Dialog(bool Show)
 // *************************************************************************
 void A_TextureDialog::Start_TextureDialog()
 {
-	TextureDlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_DLGRIGHTPANE, App->MainHwnd, (DLGPROC)TextureDialog_Proc);
+	TextureDlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_TABSTEXTURES, App->CL_TabsControl->Tabs_Control_Hwnd, (DLGPROC)TextureDialog_Proc);
 
 	Set_Txl_FileName();
 	Fill_ListBox();
@@ -428,7 +428,7 @@ void A_TextureDialog::List_Selection_Changed()
 	int Index = SendDlgItemMessage(TextureDlg_Hwnd, IDC_LISTTDTEXTURES, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
 	if	(Index == LB_ERR)
 	{
-		App->Say("?");
+		App->Say("ListBox No Selection Available");
 	}
 	else
 	{
@@ -447,7 +447,7 @@ void A_TextureDialog::List_Selection_Changed()
 // *************************************************************************
 void A_TextureDialog::Set_Txl_FileName()
 {
-	SetDlgItemText(TextureDlg_Hwnd, IDC_STTDTXLNAME, (LPCTSTR)App->CL_Scene->Current_TXL_FileName);
+	SetDlgItemText(TextureDlg_Hwnd, IDC_STTDTXLNAME, (LPCTSTR)App->CL_World->mCurrent_TXL_FileName);
 }
 
 // *************************************************************************

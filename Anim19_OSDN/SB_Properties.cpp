@@ -792,6 +792,7 @@ bool SB_Properties::Update_ListView_Environs()
 // **************************************************************************
 bool SB_Properties::Update_ListView_Teleport()
 {
+	
 	int index = App->SBC_Properties->Current_Selected_Object;
 
 	char Num[10];
@@ -814,6 +815,7 @@ bool SB_Properties::Update_ListView_Teleport()
 		strcpy(chr_Play, "False");
 	}
 
+	
 	char chr_Goto_Location[100];
 	int Goto_ID = App->SBC_Scene->V_Object[index]->S_Teleport[0]->Location_ID;
 	strcpy(chr_Goto_Location, App->SBC_Scene->B_Locations[Goto_ID]->Name);
@@ -823,6 +825,7 @@ bool SB_Properties::Update_ListView_Teleport()
 	int Percent = int(sum2 * 100);
 	_itoa(Percent, chr_Volume, 10);
 
+	
 	char chr_Counter_Disabled[20];
 	if (App->SBC_Scene->V_Object[index]->S_Teleport[0]->Counter_Disabled == 1)
 	{
@@ -833,6 +836,7 @@ bool SB_Properties::Update_ListView_Teleport()
 		strcpy(chr_Counter_Disabled, "Enabled");
 	}
 
+	
 	// Environ
 	char chr_Environ_Disabled[100];
 	if (App->SBC_Scene->V_Object[index]->S_Environ[0]->Environ_Enabled == 1)
@@ -873,8 +877,6 @@ bool SB_Properties::Update_ListView_Teleport()
 			pitem.pszText = const_cast<char*>(grid[0][row].c_str());
 			ListView_InsertItem(Properties_hLV, &pitem);
 
-			//ListView_SetItemText
-
 			for (DWORD col = 1; col < NUM_COLS; col++)
 			{
 				ListView_SetItemText(Properties_hLV, row, col,
@@ -909,9 +911,6 @@ bool SB_Properties::Update_ListView_Teleport()
 			pitem.iItem = row;
 			pitem.pszText = const_cast<char*>(grid[0][row].c_str());
 			ListView_InsertItem(Properties_hLV, &pitem);
-
-			//ListView_SetItemText
-
 			for (DWORD col = 1; col < NUM_COLS; col++)
 			{
 				ListView_SetItemText(Properties_hLV, row, col,

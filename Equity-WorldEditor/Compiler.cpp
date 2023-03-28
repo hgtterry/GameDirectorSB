@@ -31,7 +31,6 @@
 #include <io.h>
 #include <fstream.h>
 #include "filepath.h"
-#include "consoletab.h"	// for ConPrintf (yes, it's ugly)
 #include "util.h"
 
 static CWinThread *CompilerThread = NULL;
@@ -96,8 +95,6 @@ CompilerErrorEnum Compiler_RunPreview
 			LastError = GetLastError();
 			if (LastError != ERROR_FILE_EXISTS)
 			{
-				ConPrintf("GPreviewPath: %s \n", GPreviewPath);
-				ConPrintf("CopyFile (%s, %s)\nGetLastError()==%d\n", PreviewFilename, DestBspName, LastError);
 				return COMPILER_ERROR_BSPCOPY;
 			}
 		}
@@ -117,8 +114,8 @@ CompilerErrorEnum Compiler_RunPreview
 				{
 					if(GetLastError() != ERROR_FILE_EXISTS)
 					{
-						ConPrintf ("%s", "Unable to copy the motion file.\n");
-						ConPrintf ("%s", "Continuing with preview.\n");
+						//ConPrintf ("%s", "Unable to copy the motion file.\n");
+						//ConPrintf ("%s", "Continuing with preview.\n");
 					}
 				}
 			}

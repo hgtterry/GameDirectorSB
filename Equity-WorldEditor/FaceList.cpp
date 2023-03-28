@@ -27,7 +27,7 @@
 #include <string.h>
 #include <malloc.h>
 #include <stdafx.h>
-#include "ConsoleTab.h"	//for conprintf
+
 // end change
 
 struct tag_FaceList
@@ -383,8 +383,6 @@ geBoolean	FaceList_GetUsedTextures(const FaceList *pList, geBoolean *WrittenTex,
 			WrittenTex[index]=GE_TRUE;
 		else
 		{
-			ConPrintf("Could not find texture '%s' in texture library.\n", Face_GetTextureName(pList->Faces[i]));
-			ConPrintf("Applying default texture '%s'.\n", WadFile->mBitmaps[0].Name);
 			WrittenTex[0]=GE_TRUE;
 			Face_SetTextureDibId (pList->Faces[i], 0);
 			Face_SetTextureName(pList->Faces[i], WadFile->mBitmaps[0].Name);

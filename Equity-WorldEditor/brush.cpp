@@ -31,7 +31,6 @@
 #include "units.h"
 #include "ram.h"
 #include "util.h"
-#include "ConsoleTab.h"	//for conprintf
 
 /*
 	Our brushes work as three different objects.  The basic square box is a leaf brush
@@ -946,6 +945,7 @@ geBoolean Brush_ExportTo3dtv1_32(const Brush *b, FILE *ofile)
 	if (fprintf(ofile, "\tModelId %d\n",b->ModelId) < 0) return GE_FALSE;
 	if (fprintf(ofile, "\tGroupId %d\n", b->GroupId) < 0) return GE_FALSE;
 	{
+
 		if (b->HullSize < 1.0f)
 		{
 			((Brush *)b)->HullSize = 1.0f;
@@ -2289,7 +2289,7 @@ int BrushList_Count
 
 // call CallBack for top level brushes in the list...
 geBoolean BrushList_Enum
-	(
+(
 		BrushList const *pList,
 		void *			lParam,
 		BrushList_CB	CallBack

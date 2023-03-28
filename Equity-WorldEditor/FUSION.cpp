@@ -57,7 +57,6 @@ BEGIN_MESSAGE_MAP(CFusionApp, CWinApp)
 	ON_COMMAND(ID_HELP_HOWDOI, OnHelpHowdoi)
 
 	// hgtterry Menu Commands
-	ON_COMMAND(ID_DEBUG_TEST, OnTest)
 	ON_COMMAND(ID_EQUITYSB_TXLEDITOR, Open_TxlEditor)
 	ON_COMMAND(ID_EQUITYSB_FACEPROPERTIES, Open_FaceProperties)
 
@@ -197,9 +196,10 @@ BOOL CFusionApp::InitInstance() // hgtterry InitInstance
 	App->InitApp();
 
 	char AppPath[MAX_PATH];
-	
 	::GetModuleFileName (NULL, AppPath, MAX_PATH);
 	FilePath_GetDriveAndDir (AppPath, AppPath);
+
+	strcpy(App->WorldEditor_Directory,AppPath);
 
 	SetUnhandledExceptionFilter(xxHandler);
 
@@ -328,6 +328,8 @@ BOOL CFusionApp::InitInstance() // hgtterry InitInstance
 	if( !IsFirstInstance() )
 		return FALSE;
 
+	App->LoadProgramResource();
+
 	//	Let's setup the brush/entities tab...
 	pMainFrame->m_wndTabControls->UpdateTabs();
 
@@ -351,33 +353,19 @@ BOOL CFusionApp::InitInstance() // hgtterry InitInstance
 
 
 	//	Setup user preferences...
+
 	InitUserPreferences(pMainFrame);
 
-	//	CHANGE!	04/01/97	John Moore
-	//	We don't care about the app right now...
-
-	App->CL_Dialogs->Start_FrontPanel(); // hgtterry
-
+	App->CL_Dialogs->Start_FrontPanel();
+	
 	//OnAppAbout();
-	//	End of CHANGE
-
-
-	// ROB: This is the timeout function, not needed for "release"
-#ifdef TIME_OUT
-	// stick in a nice date check here.  This
-	// copy will expire on september 1st
-	CTime t = CTime::GetCurrentTime();
-	// close the application.....
-	if( (t.GetMonth() >= 11) || (t.GetYear() != 1996) ) {
-		return FALSE;
-	}
-#endif
-
+	
 	pMainFrame->IsStartingApp = 0;
 
-	App->InitMFC(); // hgtterry
-	App->CL_Scene->Set_Paths();
-	App->Start_Dialogs();
+	App->InitMFC();
+	App->CL_World->Set_Paths();
+	App->CL_TabsControl->Start_Tabs_Control_Dlg();
+
 	return TRUE;
 }
 
@@ -395,12 +383,6 @@ void CFusionApp::OnAppAbout()
 	CAboutDlg aboutDlg;
 
 	aboutDlg.DoModal() ;
-}
-
-// hgtterry 
-void CFusionApp::OnTest() // hgtterry void CFusionApp::OnTest()
-{
-	App->CL_Dialogs->Show_ListData();
 }
 
 void CFusionApp::Open_TxlEditor() // hgtterry void CFusionApp::Open_TxlEditor()
@@ -616,11 +598,11 @@ BOOL CFusionApp::OnOpenRecentFile (UINT nID)
 
 		// hgtterry
 		CFusionDoc* pDoc2 = GetActiveFusionDoc() ;
-		strcpy(App->CL_Scene->Current_3DT_Path,pDoc2->GetPathName());
-		strcpy(App->CL_Scene->Current_3DT_File,pDoc2->GetTitle());
-		strcpy(App->CL_Scene->Current_TXL_FilePath,Level_GetWadPath (pDoc2->pLevel)); // hgtterry
+		//strcpy(App->CL_Scene->Current_3DT_Path,pDoc2->GetPathName());
+		//strcpy(App->CL_Scene->Current_3DT_File,pDoc2->GetTitle());
+		//strcpy(App->CL_Scene->Current_TXL_FilePath,Level_GetWadPath (pDoc2->pLevel)); // hgtterry
 
-		App->CL_Scene->Set_Paths();
+		App->CL_World->Set_Paths();
 	}
 
 	return rslt;

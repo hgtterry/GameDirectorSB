@@ -29,7 +29,6 @@
 #include "CreateCylDialog.h"
 #include "CreateSpheroidDialog.h"
 #include "CreateStaircaseDialog.h"
-#include "CompileDialog.h"
 #include "BrushGroupDialog.h"
 #include "gridsizedialog.h"
 #include "Entity.h"
@@ -53,7 +52,6 @@
 #include "brush.h"
 #include "node.h"
 #include "facelist.h"
-#include "ModelDialog.h"
 // changed QD 12/03
 #include "Export3dsDialog.h"
 // end change
@@ -133,7 +131,7 @@ BEGIN_MESSAGE_MAP(CFusionDoc, CDocument)
 	ON_UPDATE_COMMAND_UI(ID_EDIT_PASTE, OnUpdateEditPaste)
 	ON_COMMAND(ID_EDIT_CUT, OnEditCut)
 	ON_UPDATE_COMMAND_UI(ID_EDIT_CUT, OnUpdateEditCut)
-//	ON_COMMAND(ID_COMPILE, OnCompile)
+	ON_COMMAND(ID_COMPILE, OnCompile)
 	ON_UPDATE_COMMAND_UI(ID_BRUSH_SUBTRACTFROMWORLD, OnUpdateBrushSubtractfromworld)
 	ON_UPDATE_COMMAND_UI(ID_ENTITIES_EDITOR, OnUpdateEntitiesEditor)
 	ON_COMMAND(ID_NEW_LIB_OBJECT, OnNewLibObject)
@@ -1230,6 +1228,7 @@ void CFusionDoc::CopySelectedBrushes(void)
 
 	// Copying items places the new items in the same group, so we must update the UI
 	mpMainFrame->m_wndTabControls->GrpTab->UpdateTabDisplay( this ) ;
+	App->CL_TabsGroups_Dlg->Fill_ListBox(); // hgtterry App->CL_TabsGroups_Dlg->Fill_ListBox()
 	UpdateSelected();
 	UpdateAllViews( UAV_ALL3DVIEWS, NULL );
 }
@@ -1390,10 +1389,7 @@ geBoolean CFusionDoc::EntityIsVisible( const CEntity *pEntity ) const
 	}
 }/* CFusionDoc::EntityIsVisible */
 
-void CFusionDoc::CreateNewTemplateBrush
-	(
-	  Brush *pBrush
-	)
+void CFusionDoc::CreateNewTemplateBrush(Brush *pBrush)
 {
 	geVec3d *pTemplatePos;
 	geVec3d MoveVec;
@@ -1450,7 +1446,9 @@ void CFusionDoc::CreateCube()
 		if (pCube != NULL)
 		{
 			LastTemplateTypeName = "Box";
-			CreateNewTemplateBrush (pCube);
+
+			App->CL_TabsTemplates_Dlg->CreateNewTemplateBrush(pCube);
+			//CreateNewTemplateBrush (pCube);
 		}
 	}
 }/* CFusionDoc::CreateCube */
@@ -3732,7 +3730,14 @@ void CFusionDoc::UpdateFaceAttributesDlg (void)
 	if (mpMainFrame->mpFaceAttributes != NULL)
 	{
 //		mpFaceAttributes->UpdatePolygonFocus ();
-		mpMainFrame->mpFaceAttributes->UpdatePolygonFocus ();
+		mpMainFrame->mpFaceAttributes->UpdatePolygonFocus();
+
+		if (App->CL_FaceDialog->f_FaceDlg_Active == 1)
+		{
+			App->CL_FaceDialog->UpdatePolygonFocus();
+			App->CL_FaceDialog->UpdateDialog(App->CL_FaceDialog->FaceDlg_Hwnd);
+		}
+		
 	}
 }
 
@@ -3895,7 +3900,7 @@ void CFusionDoc::OnSelectedTypeCmdUI(CCmdUI* pCmdUI)
 // NO UI EXISTS FOR THIS FUNCTION
 void CFusionDoc::OnBrushSelectedCopytocurrent() 
 {
-	ConPrintf("Temporarily Disabled...\n");
+
 	return;
 	// make the current brush a copy of the other brush 
 //	BTemplate = *CurBrush;
@@ -3960,6 +3965,7 @@ BOOL CFusionDoc::DeleteSelectedBrushes(void)
 	if( bAlteredCurrentGroup )
 	{
 		mpMainFrame->m_wndTabControls->GrpTab->UpdateTabDisplay( this ) ;
+		App->CL_TabsGroups_Dlg->Fill_ListBox(); // hgtterry App->CL_TabsGroups_Dlg->Fill_ListBox()
 	}
 
 	UpdateSelected();
@@ -4158,6 +4164,7 @@ void	CFusionDoc::RebuildTrees(void)
 	BList = Level_GetBrushes (pLevel);
 	SetModifiedFlag();
 
+	
 	//do the world csg list and tree first
 	Node_ClearBsp(mWorldBsp);
 	mWorldBsp	=NULL;
@@ -4578,7 +4585,7 @@ void CFusionDoc::GetRotationPoint
 		ModelTab = mpMainFrame->GetModelTab ();
 		if (ModelTab != NULL)
 		{
-			ModelTab->GetTranslation (&Xlate);
+			//ModelTab->GetTranslation (&Xlate);
 		}
 		else
 		{
@@ -5661,6 +5668,7 @@ void CFusionDoc::OnEditPaste()
 	}
 	// Copying items places the new items in the same group, so we must update the UI
 	mpMainFrame->m_wndTabControls->GrpTab->UpdateTabDisplay( this ) ;
+	App->CL_TabsGroups_Dlg->Fill_ListBox(); // hgtterry App->CL_TabsGroups_Dlg->Fill_ListBox()
 	UpdateSelected();
 	UpdateAllViews( UAV_ALL3DVIEWS, NULL );
 	
@@ -5777,25 +5785,22 @@ void CFusionDoc::DoneShear(int sides, int inidx)
 	UpdateSelected();
 }
 
-int CFusionDoc::DoCompileDialog
-	(
-	  void
-	)
+int CFusionDoc::DoCompileDialog(void)
 {
-	CompileParamsType *CompileParams;
+	//CompileParamsType *CompileParams;
 
-	CompileParams = Level_GetCompileParams (pLevel);
-	// Build output file if none there...
-	if (CompileParams->Filename[0] == '\0')
-	{
-		FilePath_SetExt (GetPathName (), ".prebsp", CompileParams->Filename);
-	}
+	//CompileParams = Level_GetCompileParams (pLevel);
+	//// Build output file if none there...
+	//if (CompileParams->Filename[0] == '\0')
+	//{
+	//	FilePath_SetExt (GetPathName (), ".prebsp", CompileParams->Filename);
+	//}
 
-	CCompileDialog CompileDlg (AfxGetMainWnd (), CompileParams);
+	////CCompileDialog CompileDlg (AfxGetMainWnd (), CompileParams);
 
-	return CompileDlg.DoModal ();
+	return 0;//CompileDlg.DoModal ();
 
-	SetModifiedFlag();
+//	SetModifiedFlag();
 }
 
 static char *SkyFaceNames[6] =
@@ -6072,82 +6077,7 @@ geBoolean CFusionDoc::WriteLevelToMap
 
 void CFusionDoc::OnCompile() 
 {
-	int MsgBoxResult;
-	MsgBoxResult = AfxMessageBox ("Save changes before compile?", MB_ICONEXCLAMATION + MB_YESNOCANCEL);
-	
-	if (MsgBoxResult == IDCANCEL)
-		return;
-
-	if (MsgBoxResult == IDYES)
-		OnFileSave();
-	
-	geBoolean		NoErrors;
-	CompilerErrorEnum CompileRslt;
-	CompileParamsType *CompileParams = Level_GetCompileParams (pLevel);
-
-	if (Compiler_CompileInProgress ())
-	{
-		if (AfxMessageBox ("Abort current compile?", MB_ICONQUESTION + MB_YESNO + MB_DEFBUTTON2) == IDYES)
-		{
-			Compiler_CancelCompile ();
-		}
-		return;
-	}
-
-	// adjust tab dialog stuff...
-	ConClear();
-	SelectTab( CONSOLE_TAB ) ;
-
-	BOOL KeepGoing;
-	do
-	{
-		KeepGoing = FALSE;
-		// display the dialog.  Exit if user cancels
-		if (DoCompileDialog () != IDOK)
-		{
-			return;
-		}
-
-		NoErrors = GE_TRUE;
-
-		// set wait cursor
-		SetCursor(AfxGetApp()->LoadStandardCursor(IDC_WAIT));
-
-		//ensure lists and trees are updated
-		RebuildTrees();
-
-		NoErrors = WriteLevelToMap (CompileParams->Filename);
-		if (!NoErrors)
-		{
-			CString MsgString;
-
-			MsgString.LoadString (IDS_MAPERROR);
-			int rslt = AfxMessageBox (MsgString, MB_ICONEXCLAMATION + MB_OKCANCEL + MB_DEFBUTTON2);
-			KeepGoing = (rslt == IDOK);
-		}
-	} while (KeepGoing);
-
-	/*
-	  The idea here is that I want to spawn a thread to do the compile.
-	  When the compile is finished, we'll prompt the user and ask if he wants to
-	  run preview.
-	*/
-	if (NoErrors)
-	{
-		CMDIChildWnd	*pMDIChild	=(CMDIChildWnd *)mpMainFrame->MDIGetActive();
-		CFusionView	*cv	=(CFusionView *)pMDIChild->GetActiveView();
-
-		CompileRslt = Compiler_StartThreadedCompile (CompileParams, cv->m_hWnd);
-		NoErrors = (CompileRslt == COMPILER_ERROR_NONE);
-	}
-
-	// put cursor back
-	SetCursor(AfxGetApp()->LoadStandardCursor(IDC_ARROW));
-
-	if (!NoErrors)
-	{
-		AfxMessageBox ("Error: Unable to start compile.", MB_OK + MB_ICONERROR);
-	}
+	App->Say("Deleted");
 }
 
 void CFusionDoc::CompileDone (CompilerErrorEnum CompileRslt)
@@ -6204,53 +6134,6 @@ static geBoolean fdocScaleEntityCallback (CEntity &Ent, void *lParam)
 
 	Ent.Scale (pInfo->ScaleValue, pInfo->pEntityDefs);
 	return GE_TRUE;
-}
-
-void CFusionDoc::ScaleWorld(geFloat ScaleFactor)
-{
-// changed QD Actors 12/03
-	if (ScaleFactor <= 0.0f) return;
-
-// don't want to compile ActorBrushes
-	int i;
-	CEntityArray *Entities;
-	Entities = Level_GetEntities (pLevel);
-
-	for(i=0;i < Entities->GetSize();i++)
-	{
-		Brush *pBrush = (*Entities)[i].GetActorBrush();
-
-		if(pBrush!=NULL)
-			Level_RemoveBrush(pLevel, pBrush);
-	}
-// end change
-
-	// scale the brushes
-	BrushList_Scale (Level_GetBrushes (pLevel), ScaleFactor);
-
-// changed QD Actors 12/03
-	for(i=0;i < Entities->GetSize();i++)
-	{
-		Brush *pBrush = (*Entities)[i].GetActorBrush();
-
-		if(pBrush!=NULL)
-			Level_AppendBrush(pLevel, pBrush);
-	}
-// end change
-
-	// scale the entity positions
-	ScaleEntityInfo ScaleInfo;
-
-	ScaleInfo.pEntityDefs = Level_GetEntityDefs (pLevel);
-	ScaleInfo.ScaleValue = ScaleFactor;
-	Level_EnumEntities (pLevel, &ScaleInfo, ::fdocScaleEntityCallback);
-
-	// and scale the models
-	ModelList_ScaleAll (Level_GetModelInfo(pLevel)->Models, ScaleFactor);
-
-	UpdateAllViews( UAV_ALL3DVIEWS, NULL );
-
-	SetModifiedFlag();
 }
 
 typedef struct
@@ -6956,7 +6839,6 @@ static geBoolean fdocValidateEntity (CEntity &Ent, void *lParam)
 	if (!EntityTable_IsValidEntityType (pData->pEntityTable, cstr))
 	{
 		cstr = Ent.GetName() ;
-		ConPrintf ("Entity %s: type not found.\n", cstr );
 		pData->AllGood = GE_FALSE ;
 	}
 
@@ -6966,7 +6848,6 @@ static geBoolean fdocValidateEntity (CEntity &Ent, void *lParam)
 		if (GroupList_IsValidId (pData->Groups, nGroupId) == FALSE)
 		{
 			cstr = Ent.GetName() ;
-			ConPrintf("Entity %s: Group %d missing--set to no group\n", cstr, nGroupId );
 			Ent.SetGroupId( 0 ) ;
 			pData->AllGood = GE_FALSE;
 		}
@@ -7008,7 +6889,6 @@ geBoolean fdocValidateBrush (Brush *pBrush, void *lParam)
 			char const *pName;
 
 			pName = Brush_GetName (pBrush);
-			ConPrintf("Brush %s: Group %d missing--set to no group\n", pName, nGroupId );
 			Brush_SetGroupId( pBrush, 0 ) ;
 			pData->AllGood = GE_FALSE ;
 		}
@@ -7051,11 +6931,11 @@ void CFusionDoc::OnFileOpen()
 	if(dlg.DoModal()==IDOK)
 	{
 			AfxGetApp()->OpenDocumentFile(dlg.GetPathName());
-			strcpy(App->CL_Scene->Current_3DT_Path,dlg.GetPathName()); // hgtterry
-			strcpy(App->CL_Scene->Current_3DT_File,dlg.GetFileName()); // hgtterry
-			strcpy(App->CL_Scene->Current_TXL_FilePath,Level_GetWadPath (pLevel)); // hgtterry
+			//strcpy(App->CL_Scene->Current_3DT_Path,dlg.GetPathName()); // hgtterry
+			//strcpy(App->CL_Scene->Current_3DT_File,dlg.GetFileName()); // hgtterry
+			//strcpy(App->CL_Scene->Current_TXL_FilePath,Level_GetWadPath (pLevel)); // hgtterry
 
-			App->CL_Scene->Set_Paths();
+			App->CL_World->Set_Paths();
 	}
 }
 
@@ -7841,6 +7721,10 @@ static geBoolean fdocUpdateBrushFaceTextures (Brush *pBrush, void *pVoid)
 void CFusionDoc::OnLeveloptions() 
 {
 	SetModifiedFlag();
+	App->CL_Dialogs->Start_Properties();
+
+	return;
+	
 
 	CLevelOptions  Dlg;
 
@@ -7851,6 +7735,7 @@ void CFusionDoc::OnLeveloptions()
 // changed QD Actors
 	Dlg.m_ActorsDir = Level_GetActorsDirectory (pLevel);
 	Dlg.m_PawnIni = Level_GetPawnIniPath (pLevel);
+	
 // end change
 
 	if (Dlg.DoModal () == IDOK)
@@ -8469,7 +8354,7 @@ void CFusionDoc::ExportTo3dtv1_32(const char *FileName)
 
 	if(fResult == GE_FALSE)
 	{
-		ConPrintf("Error exporting file\n");
+	
 	}
 }
 
@@ -8611,7 +8496,7 @@ void CFusionDoc::ExportTo3ds(const char *FileName, int ExpSelected, geBoolean Ex
 
 			fResult = Level_ExportTo3ds(pLevel, NewFileName, SBList, ExpSelected, ExpLights, GroupID);
 			if(!fResult)
-				ConPrintf("Error exporting group %i\n", i);
+				App->Say("Brush List Fail");
 			BrushList_Destroy(&SBList);
 		}
 
@@ -8620,9 +8505,7 @@ void CFusionDoc::ExportTo3ds(const char *FileName, int ExpSelected, geBoolean Ex
 
 	if(fResult == GE_FALSE)
 	{
-		// Ok, the save was successful.  Gun any ".old" files we
-		// ..have laying around for this file.
-		ConPrintf("Error exporting file\n");
+		
 	}
 }
 
@@ -8765,7 +8648,7 @@ void CFusionDoc::ExportTo_RFW(const char *FileName, int ExpSelected, geBoolean E
 
 			fResult =App->ABC_Export_RFW->Level_ExportTo_RFW(reinterpret_cast<tag_Level2 *> (pLevel), NewFileName, SBList, ExpSelected, ExpLights, GroupID);
 			if(!fResult)
-				ConPrintf("Error exporting group %i\n", i);
+				App->Say("Error exporting group");
 			BrushList_Destroy(&SBList);
 		}
 
@@ -8776,7 +8659,7 @@ void CFusionDoc::ExportTo_RFW(const char *FileName, int ExpSelected, geBoolean E
 	{
 		// Ok, the save was successful.  Gun any ".old" files we
 		// ..have laying around for this file.
-		ConPrintf("Error exporting file\n");
+		App->Say("Error exporting file");
 	}
 	else
 	{

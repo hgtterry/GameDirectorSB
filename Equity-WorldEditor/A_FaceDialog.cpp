@@ -53,6 +53,21 @@ LRESULT CALLBACK A_FaceDialog::FaceDialog_Proc(HWND hDlg, UINT message, WPARAM w
 
 		App->CL_FaceDialog->UpdateDialog(hDlg);
 
+		HWND CB_hWnd = GetDlgItem(hDlg, IDC_CBXOFFSET);
+		App->CL_FaceDialog->Fill_ComboBox_OffSetValues(CB_hWnd);
+
+		CB_hWnd = GetDlgItem(hDlg, IDC_CBYOFFSET);
+		App->CL_FaceDialog->Fill_ComboBox_OffSetValues(CB_hWnd);
+
+		CB_hWnd = GetDlgItem(hDlg, IDC_CBXSCALE);
+		App->CL_FaceDialog->Fill_ComboBox_ScaleValues(CB_hWnd);
+
+		CB_hWnd = GetDlgItem(hDlg, IDC_CBYSCALE);
+		App->CL_FaceDialog->Fill_ComboBox_ScaleValues(CB_hWnd);
+
+		CB_hWnd = GetDlgItem(hDlg, IDC_CBANGLE);
+		App->CL_FaceDialog->Fill_ComboBox_AngleValues(CB_hWnd);
+
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
@@ -97,6 +112,14 @@ LRESULT CALLBACK A_FaceDialog::FaceDialog_Proc(HWND hDlg, UINT message, WPARAM w
 			return (UINT)App->AppBackground;
 		}
 
+		if (GetDlgItem(hDlg, IDC_TEXTURELOCK) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
 		return FALSE;
 	}
 
@@ -121,6 +144,7 @@ LRESULT CALLBACK A_FaceDialog::FaceDialog_Proc(HWND hDlg, UINT message, WPARAM w
 
 	case WM_VSCROLL:
 		{
+			// -------- Angle
 			if(HWND(lParam) == GetDlgItem(hDlg, IDC_SBANGLE_UNIT))
 			{
 				switch ((int)LOWORD(wParam))
@@ -139,31 +163,106 @@ LRESULT CALLBACK A_FaceDialog::FaceDialog_Proc(HWND hDlg, UINT message, WPARAM w
 					App->CL_FaceDialog->OnKillfocusAngle();
 
 					break;
-
 				}
 				
 				return 0;
 			}
 
-			/*if(HWND(lParam) == GetDlgItem(hDlg, IDC_SBYOFFSET_UNIT))
+			// -------- Offset X
+			if(HWND(lParam) == GetDlgItem(hDlg, IDC_SBXOFFSET_UNIT))
 			{
-				App->Say("offset");
-			}*/
+				switch ((int)LOWORD(wParam))
+				{
+				case SB_LINEUP:
 
-			/*switch ((int)LOWORD(wParam))
+					App->CL_FaceDialog->m_TextureXOffset++;
+					App->CL_FaceDialog->UpdateDialog(hDlg);
+					App->CL_FaceDialog->OnKillfocusXOffset() ;
+
+					break;
+
+				case SB_LINEDOWN:
+					App->CL_FaceDialog->m_TextureXOffset--;
+					App->CL_FaceDialog->UpdateDialog(hDlg);
+					App->CL_FaceDialog->OnKillfocusXOffset() ;
+
+					break;
+				}
+				
+				return 0;
+			}
+
+			// -------- Offset Y
+			if(HWND(lParam) == GetDlgItem(hDlg, IDC_SBYOFFSET_UNIT))
 			{
+				switch ((int)LOWORD(wParam))
+				{
+				case SB_LINEUP:
 
-			case SB_LINEUP:
+					App->CL_FaceDialog->m_TextureYOffset++;
+					App->CL_FaceDialog->UpdateDialog(hDlg);
+					App->CL_FaceDialog->OnKillfocusYOffset() ;
 
-				SetScrollPos((HWND)lParam, SB_CTL, 0, TRUE);
-				break;
+					break;
 
-			case SB_LINEDOWN:
+				case SB_LINEDOWN:
+					App->CL_FaceDialog->m_TextureYOffset--;
+					App->CL_FaceDialog->UpdateDialog(hDlg);
+					App->CL_FaceDialog->OnKillfocusYOffset() ;
 
-				SetScrollPos((HWND)lParam, SB_CTL, 100, TRUE);
-				break;
+					break;
+				}
+				
+				return 0;
+			}
 
-			}*/
+			// -------- Scale Y
+			if(HWND(lParam) == GetDlgItem(hDlg, IDC_SBYSCALE_UNIT))
+			{
+				switch ((int)LOWORD(wParam))
+				{
+				case SB_LINEUP:
+
+					App->CL_FaceDialog->m_TextureYScale = App->CL_FaceDialog->m_TextureYScale + (float)0.05;
+					App->CL_FaceDialog->UpdateDialog(hDlg);
+					App->CL_FaceDialog->OnKillfocusYScale() ;
+
+					break;
+
+				case SB_LINEDOWN:
+					App->CL_FaceDialog->m_TextureYScale = App->CL_FaceDialog->m_TextureYScale - (float)0.05;
+					App->CL_FaceDialog->UpdateDialog(hDlg);
+					App->CL_FaceDialog->OnKillfocusYScale() ;
+
+					break;
+				}
+				
+				return 0;
+			}
+
+			// -------- Scale X
+			if(HWND(lParam) == GetDlgItem(hDlg, IDC_SBXSCALE_UNIT))
+			{
+				switch ((int)LOWORD(wParam))
+				{
+				case SB_LINEUP:
+
+					App->CL_FaceDialog->m_TextureXScale = App->CL_FaceDialog->m_TextureXScale + (float)0.05;
+					App->CL_FaceDialog->UpdateDialog(hDlg);
+					App->CL_FaceDialog->OnKillfocusXScale() ;
+
+					break;
+
+				case SB_LINEDOWN:
+					App->CL_FaceDialog->m_TextureXScale = App->CL_FaceDialog->m_TextureXScale - (float)0.05;
+					App->CL_FaceDialog->UpdateDialog(hDlg);
+					App->CL_FaceDialog->OnKillfocusXScale() ;
+
+					break;
+				}
+				
+				return 0;
+			}
 
 			return 0;
 		}
@@ -176,11 +275,11 @@ LRESULT CALLBACK A_FaceDialog::FaceDialog_Proc(HWND hDlg, UINT message, WPARAM w
 				return TRUE;
 			}
 
-			/*if (LOWORD(wParam) == IDC_BTTDAPPLY)
+			if (LOWORD(wParam) == IDC_FLIPVERTICAL)
 			{
-				App->CL_TextureDialog->Apply_Texture();
+				App->CL_FaceDialog->OnFlipvertical();
 				return TRUE;
-			}*/
+			}
 
 			// -----------------------------------------------------------------
 			if (LOWORD(wParam) == IDOK)
@@ -201,6 +300,51 @@ LRESULT CALLBACK A_FaceDialog::FaceDialog_Proc(HWND hDlg, UINT message, WPARAM w
 		}
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *				Fill_ComboBox_OffSetValues Terry Flanigan	  		   *
+// *************************************************************************
+void A_FaceDialog::Fill_ComboBox_OffSetValues(HWND hDlg)
+{
+	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"4");
+	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"8");
+	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"16");
+	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"32");
+	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"64");
+	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"128");
+
+	SendMessage(hDlg, CB_SETCURSEL, 2, 0);
+}
+
+// *************************************************************************
+// *				Fill_ComboBox_ScaleValues Terry Flanigan	  		   *
+// *************************************************************************
+void A_FaceDialog::Fill_ComboBox_ScaleValues(HWND hDlg)
+{
+	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"0.1");
+	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"0.2");
+	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"0.5");
+	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"0.75");
+	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"1.0");
+	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"2.0");
+	
+	SendMessage(hDlg, CB_SETCURSEL, 2, 0);
+}
+
+// *************************************************************************
+// *				Fill_ComboBox_AngleValues Terry Flanigan	  		   *
+// *************************************************************************
+void A_FaceDialog::Fill_ComboBox_AngleValues(HWND hDlg)
+{
+	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"5");
+	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"10");
+	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"15");
+	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"30");
+	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"45");
+	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"90");
+	
+	SendMessage(hDlg, CB_SETCURSEL, 2, 0);
 }
 
 // *************************************************************************
@@ -233,6 +377,7 @@ void A_FaceDialog::UpdatePolygonFocus()
 	}
 
 	CString StringNumberOfFaces;
+
 	StringNumberOfFaces.Format("%d",NumberOfFaces);
 	m_NumFaces = TEXT_NUM_FACES + StringNumberOfFaces;
 	
@@ -241,22 +386,9 @@ void A_FaceDialog::UpdatePolygonFocus()
 		m_TextureAngle	= Face_GetTextureRotate (pFace);
 		Face_GetTextureShift (pFace, &m_TextureXOffset, &m_TextureYOffset);
 		Face_GetTextureScale (pFace, &m_TextureXScale, &m_TextureYScale);
-//		Face_GetLightScale (pFace, &m_LightXScale, &m_LightYScale);
-//		m_LightIntensity = Face_GetLightIntensity (pFace);
-//		m_MipMapBias = Face_GetMipMapBias (pFace);
-//		m_Translucency = Face_GetTranslucency (pFace);
-//		m_Reflectivity = Face_GetReflectivity (pFace);
-//
-//		m_Light			=Face_IsLight (pFace);
-//		m_FullBright	=Face_IsFullBright (pFace);
-//		m_Gouraud		=Face_IsGouraud (pFace);
-//		m_Flat			=Face_IsFlat (pFace);
+
 //		m_TextureLock	=Face_IsTextureLocked (pFace);
-//		m_Transparent	=Face_IsTransparent (pFace);
-//		m_Sky			=Face_IsSky (pFace);
-//		m_Mirror		=Face_IsMirror (pFace);
-//
-////		GetDlgItem( IDC_FACELIGHTINTENSITY )->EnableWindow( m_Light && !m_Sky) ;
+//		GetDlgItem( IDC_FACELIGHTINTENSITY )->EnableWindow( m_Light && !m_Sky) ;
 //		DisplayingNULL = FALSE;
 //		EnabledChange(TRUE);
 	}
@@ -284,15 +416,48 @@ void A_FaceDialog::UpdateDialog(HWND hDlg)
 	sprintf(buf, "%i", m_TextureYOffset);
 	SetDlgItemText(hDlg, IDC_EDITYOFFSET, (LPCTSTR)buf);
 
+	sprintf(buf, "%.2f", m_TextureXScale);
+	SetDlgItemText(hDlg, IDC_EDITXSCALE, (LPCTSTR)buf);
+
+	sprintf(buf, "%.2f", m_TextureYScale);
+	SetDlgItemText(hDlg, IDC_EDITYSCALE, (LPCTSTR)buf);
+
 	sprintf(buf, "%.0f", m_TextureAngle);
 	SetDlgItemText(hDlg, IDC_EDITANGLE, (LPCTSTR)buf);
 }
 
+// *************************************************************************
+// *		  FlipVertical:- Terry and Hazel Flanigan 2023				   *
+// *************************************************************************
+geBoolean A_FaceDialog::FlipVertical(Face *pFace, void *)
+{
+	float xScale, yScale;
+
+	Face_GetTextureScale (pFace, &xScale, &yScale);
+	Face_SetTextureScale (pFace, xScale, -yScale);
+	return GE_TRUE;
+}
+
+// *************************************************************************
+// *		  OnFlipvertical:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void A_FaceDialog::OnFlipvertical() 
+{
+	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+
+	if (m_pDoc)
+	{
+		m_pDoc->SetModifiedFlag();
+		m_TextureYScale = -m_TextureYScale;
+		SelFaceList_Enum (m_pDoc->pSelFaces, FlipVertical, NULL);
+		AssignCurrentToViews();
+	}
+}
 
 // *************************************************************************
 // *		  FlipHorizontal3:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-geBoolean A_FaceDialog::FlipHorizontal3 (Face *pFace, void *)
+geBoolean A_FaceDialog::FlipHorizontal(Face *pFace, void *)
 {
 	float xScale, yScale;
 
@@ -313,9 +478,7 @@ bool A_FaceDialog::On_FlipHorizontal()
 	{
 		m_pDoc->SetModifiedFlag();
 		m_TextureXScale = -m_TextureXScale;
-
-		SelFaceList_Enum (m_pDoc->pSelFaces, FlipHorizontal3, NULL);
-
+		SelFaceList_Enum (m_pDoc->pSelFaces, FlipHorizontal, NULL);
 		AssignCurrentToViews();
 	}
 
@@ -343,12 +506,130 @@ void A_FaceDialog::OnKillfocusAngle()
 	if (m_pDoc)
 	{
 		m_pDoc->SetModifiedFlag();
-
-		/*UpdateData (TRUE);
-		OnFloatKillFocus (m_EditAngle, &m_TextureAngle, 0, "0");*/
-
+		//UpdateData (TRUE);
+		//OnFloatKillFocus (m_EditAngle, &m_TextureAngle, 0, "0");
 		SelFaceList_Enum (m_pDoc->pSelFaces, ChangeTextureAngle, &m_TextureAngle);
 
+		AssignCurrentToViews ();
+	}
+}
+
+// *************************************************************************
+// *		  ChangeYOffset:- Terry and Hazel Flanigan 2023				   *
+// *************************************************************************
+geBoolean A_FaceDialog::ChangeYOffset (Face *pFace, void *lParam)
+{
+	int *pYOffset = (int *)(lParam);
+	int xOff, yOff;
+
+	Face_GetTextureShift (pFace, &xOff, &yOff);
+	Face_SetTextureShift (pFace, xOff, *pYOffset);
+	return GE_TRUE;	
+}
+
+// *************************************************************************
+// *		  OnKillfocusYOffset:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void A_FaceDialog::OnKillfocusYOffset() 
+{	
+	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+
+	if (m_pDoc)
+	{
+		m_pDoc->SetModifiedFlag();
+		//UpdateData (TRUE);
+		//OnIntKillFocus (m_EditYOffset, &m_TextureYOffset, 0, "0");
+		SelFaceList_Enum (m_pDoc->pSelFaces, ChangeYOffset, &m_TextureYOffset);
+		AssignCurrentToViews ();
+	}
+}
+
+// *************************************************************************
+// *		  ChangeXOffset:- Terry and Hazel Flanigan 2023				   *
+// *************************************************************************
+geBoolean A_FaceDialog::ChangeXOffset (Face *pFace, void *lParam)
+{
+	int *pXOffset = (int *)(lParam);
+	int xOff, yOff;
+	
+	Face_GetTextureShift (pFace, &xOff, &yOff);
+	Face_SetTextureShift (pFace, *pXOffset, yOff);
+	return GE_TRUE;	
+}
+
+// *************************************************************************
+// *		  OnKillfocusYOffset:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void A_FaceDialog::OnKillfocusXOffset() 
+{
+	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+
+	if (m_pDoc)
+	{
+		m_pDoc->SetModifiedFlag();
+		//UpdateData (TRUE);
+		//OnIntKillFocus (m_EditXOffset, &m_TextureXOffset, 0, "0");
+		SelFaceList_Enum (m_pDoc->pSelFaces, ChangeXOffset, &m_TextureXOffset);
+		AssignCurrentToViews ();
+	}
+}
+
+// *************************************************************************
+// *		  ChangeTextureYScale:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+geBoolean A_FaceDialog::ChangeTextureYScale (Face *pFace, void *lParam)
+{
+	float *pYScale = (float *)lParam;
+	float xScale, yScale;
+
+	Face_GetTextureScale (pFace, &xScale, &yScale);
+	Face_SetTextureScale (pFace, xScale, *pYScale);
+	return GE_TRUE;
+}
+
+// *************************************************************************
+// *		  OnKillfocusYScale:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void A_FaceDialog::OnKillfocusYScale() 
+{
+	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+
+	if (m_pDoc)
+	{
+		m_pDoc->SetModifiedFlag();
+		//UpdateData (TRUE);
+		//OnFloatKillFocus (m_EditYScale, &m_TextureYScale, 1.0f, "1.0");
+		SelFaceList_Enum (m_pDoc->pSelFaces, ChangeTextureYScale, &m_TextureYScale);
+		AssignCurrentToViews ();
+	}
+}
+
+// *************************************************************************
+// *		  ChangeTextureXScale:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+geBoolean A_FaceDialog::ChangeTextureXScale (Face *pFace, void *lParam)
+{
+	float *pXScale = (float *)lParam;
+	float xScale, yScale;
+
+	Face_GetTextureScale (pFace, &xScale, &yScale);
+	Face_SetTextureScale (pFace, *pXScale, yScale);
+	return GE_TRUE;
+}
+
+// *************************************************************************
+// *		  OnKillfocusXScale:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void A_FaceDialog::OnKillfocusXScale() 
+{
+	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+
+	if (m_pDoc)
+	{
+		m_pDoc->SetModifiedFlag();
+		//UpdateData (TRUE);
+		//OnFloatKillFocus (m_EditXScale, &m_TextureXScale, 1.0f, "1.0");
+		SelFaceList_Enum (m_pDoc->pSelFaces, ChangeTextureXScale, &m_TextureXScale);
 		AssignCurrentToViews ();
 	}
 }

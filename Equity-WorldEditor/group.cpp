@@ -853,6 +853,7 @@ void GroupList_FillCombobox( const GroupListType *pList, CComboBox * pCombo, int
 
 	pCombo->ResetContent() ;
 	Count = Group_GetCount( pList ) ;
+
 	assert( Count ) ;
 
 	pSortArray = (PCompare)geRam_Allocate ( sizeof(SCompare) * Count ) ;

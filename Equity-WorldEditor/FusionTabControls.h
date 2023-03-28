@@ -23,7 +23,6 @@
 #define FUSIONTABCONTROLS_H
 #include <stdafx.h>
 #include "resource.h"
-#include "ConsoleTab.h"
 #include "BrushEntityDialog.h"
 #include "brush.h"
 
@@ -31,15 +30,12 @@ class CBrushGroupDialog;
 class CTextureDialog;
 class CMainFrame;
 class CModelDialog;
-class CSkyDialog;
 
 #define BRUSH_ENTITY_TAB	0
 #define TEXTURE_TAB			1
 #define GROUP_TAB			2
 #define CONSOLE_TAB			3
 #define MODEL_TAB			4
-#define SKY_TAB				5
-
 
 #define FTC_BORDER_SIZE_TOP		4
 #define FTC_BORDER_SIZE_LEFT	4
@@ -62,10 +58,8 @@ public:
 	CWnd *LastView;
 	BOOL CreateTabs();
 	CFusionTabControls( CDialogBar* pDBar );
-	CConsoleTab			*ConTab;  //i just cant do the m thing
 	CBrushGroupDialog	*GrpTab;
 	CModelDialog		*ModelTab;
-	CSkyDialog			*SkyTab;
 
 // Attributes
 public:

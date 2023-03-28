@@ -25,7 +25,6 @@
 #include "resource.h"
 
 #include "FusionTabControls.h"
-#include "ModelDialog.h"
 #include "FUSIONDoc.h"
 #include "FUSIONView.h"
 #include "brushgroupdialog.h"
@@ -591,7 +590,7 @@ void CMainFrame::UpdateModelsDialog
 		pDoc = this->GetCurrentDoc ();
 		if(pDoc)
 		{
-			m_wndTabControls->ModelTab->Update (pDoc, Level_GetModelInfo (pDoc->pLevel));
+			//m_wndTabControls->ModelTab->Update (pDoc, Level_GetModelInfo (pDoc->pLevel));
 		}
 	}
 }
@@ -832,7 +831,9 @@ void CMainFrame::UpdateActiveDoc
 		mpBrushAttributes->UpdateBrushFocus();
 
 	if (mpFaceAttributes)
+	{
 		mpFaceAttributes->UpdatePolygonFocus();
+	}
 
 	CChildFrame	*pActiveChild	=(CChildFrame *)this->MDIGetActive();
 	if(pActiveChild)
@@ -847,6 +848,7 @@ void CMainFrame::UpdateActiveDoc
 				if(m_wndTabControls->GrpTab)
 				{
 					m_wndTabControls->GrpTab->UpdateTabDisplay(pDoc);
+					App->CL_TabsGroups_Dlg->Fill_ListBox(); // hgtterry App->CL_TabsGroups_Dlg->Fill_ListBox()
 				}
 			}
 			LoadComboBox() ;
@@ -867,7 +869,7 @@ void CMainFrame::UpdateSelectedModel
 
 	if (ModelTab != NULL)
 	{
-		ModelTab->UpdateSelectedModel( MoveRotate, pVecDelta );
+		//ModelTab->UpdateSelectedModel( MoveRotate, pVecDelta );
 	}
 }
 
@@ -1039,6 +1041,7 @@ void CMainFrame::OnSelchangeGroupList ()
 	{
 		pDoc->mCurrentGroup = m_wndGroupBar.m_comboBox.GetItemData (CurSel);
 		m_wndTabControls->GrpTab->UpdateTabDisplay (pDoc);
+		App->CL_TabsGroups_Dlg->Fill_ListBox(); // hgtterry App->CL_TabsGroups_Dlg->Fill_ListBox()
 	}
 }
 

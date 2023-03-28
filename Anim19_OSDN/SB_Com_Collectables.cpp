@@ -198,3 +198,80 @@ void SB_Com_Collectables::Set_Collectables_Defaults(int Index)
 
 	V_Object->S_Collectable[0]->Counter_Disabled = 0;
 }
+
+// *************************************************************************
+//				Copy_Collectable:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_Com_Collectables::Copy_Collectable(int Object_Index)
+{
+	Base_Object* Source_Object = App->SBC_Scene->V_Object[Object_Index];
+
+
+	char ConNum[256];
+	char NewName[MAX_PATH];
+	int New_Object_Index = App->SBC_Scene->Object_Count;
+
+	strcpy_s(NewName, "Collectable_");
+	_itoa(New_Object_Index, ConNum, 10);
+	strcat(NewName, ConNum);
+
+	strcpy(App->SBC_Dialogs->btext, "New Collectable Name");
+	strcpy(App->SBC_Dialogs->Chr_Text, NewName);
+
+	App->SBC_Dialogs->Start_Copy_Dlg(Enums::Check_Names_Objects, true, false);
+
+	if (App->SBC_Dialogs->Canceled == 1)
+	{
+		return;
+	}
+
+	App->SBC_Scene->V_Object[New_Object_Index] = new Base_Object();
+	App->SBC_Scene->V_Object[New_Object_Index]->S_Collectable[0] = new Collectable_type;
+	Set_Collectables_Defaults(New_Object_Index);
+
+	Base_Object* New_Object = App->SBC_Scene->V_Object[New_Object_Index];
+
+
+	strcpy(New_Object->Mesh_Name, App->SBC_Dialogs->Chr_Text);
+	strcpy(New_Object->Mesh_FileName, Source_Object->Mesh_FileName);
+	strcpy(New_Object->Mesh_Resource_Path, Source_Object->Mesh_Resource_Path);
+
+	New_Object->S_Collectable[0]->Counter_Disabled = Source_Object->S_Collectable[0]->Counter_Disabled;
+	New_Object->S_Collectable[0]->Counter_ID = Source_Object->S_Collectable[0]->Counter_ID;
+	New_Object->S_Collectable[0]->Maths = Source_Object->S_Collectable[0]->Maths;
+	New_Object->S_Collectable[0]->Play = Source_Object->S_Collectable[0]->Play;
+	New_Object->S_Collectable[0]->SndFile = Source_Object->S_Collectable[0]->SndFile;
+	New_Object->S_Collectable[0]->SndVolume = Source_Object->S_Collectable[0]->SndVolume;
+	New_Object->S_Collectable[0]->Value = Source_Object->S_Collectable[0]->Value;
+
+	strcpy(New_Object->S_Collectable[0]->Counter_Name, Source_Object->S_Collectable[0]->Counter_Name);
+	strcpy(New_Object->S_Collectable[0]->Sound_File, Source_Object->S_Collectable[0]->Sound_File);
+	
+
+	if (App->CL_Object->m_UseCamera_Placment_f == 1)
+	{
+		Ogre::Vector3 Pos = App->CL_Object->GetPlacement();
+		New_Object->Mesh_Pos = Pos;
+	}
+	else
+	{
+		New_Object->Mesh_Pos = Source_Object->Mesh_Pos;
+	}
+
+	New_Object->Type = Source_Object->Type;
+	New_Object->Shape = Source_Object->Shape;
+	New_Object->Mesh_Scale = Source_Object->Mesh_Scale;
+	New_Object->Mesh_Rot = Source_Object->Mesh_Rot;
+	New_Object->Mesh_Quat = Source_Object->Mesh_Quat;
+	New_Object->Physics_Quat = Source_Object->Physics_Quat;
+
+	Create_Collectable_Entity(New_Object_Index);
+
+	App->SBC_Scene->V_Object[New_Object_Index]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Collectables_Folder, App->SBC_Scene->V_Object[New_Object_Index]->Mesh_Name, New_Object_Index, false);
+
+	App->SBC_Scene->Object_Count++;
+
+	App->SBC_FileView->SelectItem(App->SBC_Scene->V_Object[New_Object_Index]->FileViewItem);
+
+	App->Say("Copied");
+}

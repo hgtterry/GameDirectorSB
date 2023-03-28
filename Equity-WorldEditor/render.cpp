@@ -28,7 +28,6 @@ permission.  http://www.d6.com/users/checker
 #include "node.h"
 #include "basetype.h"
 #include "units.h"
-#include "consoletab.h"
 #include "ram.h"
 #include "bitmap.h"
 

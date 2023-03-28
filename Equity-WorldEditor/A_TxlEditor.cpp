@@ -49,7 +49,7 @@ void A_TxlEditor::Start_Texl_Dialog()
 		return;
 	}*/
 
-	strcpy(FileName,App->CL_Scene->Current_TXL_FilePath);//"C:\\Users\\Acer\\Desktop\\RF_World\\rfpack1.txl");// App->CL_FileIO->Model_FileName);
+	strcpy(FileName,App->CL_World->mCurrent_TXL_FilePath);//"C:\\Users\\Acer\\Desktop\\RF_World\\rfpack1.txl");// App->CL_FileIO->Model_FileName);
 
 	DialogBox(App->hInst, (LPCTSTR)IDD_TEXTUREPACKER, App->MainHwnd, (DLGPROC)TextureLib_Proc);
 }

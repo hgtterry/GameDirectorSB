@@ -110,6 +110,12 @@
 #define IDD_EQ_FRONTPANEL               256
 #define IDD_TEXTUREPACKER               257
 #define IDD_DLGRIGHTPANE                258
+#define IDD_                            258
+#define IDD_SB_TABSTEXTURES             258
+#define IDD_MESSAGE                     259
+#define IDD_SB_TABSDIALOG               260
+#define IDD_DIALOG3                     261
+#define IDD_SB_BRUSH_PROPERTIES         261
 #define IDC_RESET_ALL                   1000
 #define IDC_EDIT1                       1001
 #define IDC_EDIT10                      1002
@@ -239,7 +245,10 @@
 #define IDC_TEXTURELIST                 1132
 #define IDD_TEXTUREDIALOG               1132
 #define IDC_TEXTUREIMAGE                1133
+#define IDD_LEVELOPTIONS_GD             1133
 #define IDC_APPLYTEXTURE                1134
+#define IDD_SB_TABSGROUPS               1134
+#define IDD_SB_TABSTEMPLATES            1135
 #define IDC_CUBE_PRIMITIVE              1138
 #define IDC_SPHEROID_PRIMITIVE          1139
 #define IDC_CYLINDER_PRIMITIVE          1140
@@ -490,6 +499,37 @@
 #define IDC_BASETEXTURE2                1362
 #define IDC_BUTTON1                     1363
 #define IDC_BTTDAPPLY                   1363
+#define IDC_BTBUILDVIEW                 1363
+#define IDC_TBTEMPLATES                 1363
+#define IDC_GD_CUBE_PRIMITIVE           1363
+#define IDC_BTTEST                      1363
+#define IDC_BANNER                      1364
+#define IDC_GD_CYLINDER_PRIMITIVE       1364
+#define IDC_STTEXT                      1365
+#define IDC_GD_SPHEROID_PRIMITIVE       1365
+#define IDC_STMESSAGE                   1366
+#define IDC_GD_CONE_PRIMITIVE           1366
+#define IDC_STTXL                       1367
+#define IDC_GD_STAIRCASE_PRIMITIVE      1367
+#define IDC_BTWORLDINFO                 1368
+#define IDC_GD_ARCH_PRIMITIVE           1368
+#define IDC_TBTEXTURES                  1369
+#define IDC_TBGROUPS                    1370
+#define IDC_STTOP                       1372
+#define IDC_STBOTTOM                    1373
+#define IDC_STGENERAL                   1374
+#define IDC_STTOPX                      1375
+#define IDC_STWALL                      1376
+#define IDC_STZTOP                      1377
+#define IDC_STBOTX                      1378
+#define IDC_STBOTZ                      1379
+#define IDC_STYSIZE                     1380
+#define IDC_GD_BRUSHLIST                1381
+#define IDC_ST_GD_GROUPS                1382
+#define IDC_BRUSHCOUNT                  1383
+#define IDC_ST_GD_BRUSHCOUNT            1384
+#define IDC_BT_GD_BRUSHPROPERTIES       1385
+#define IDC_BRUSH_PROPERTIESLIST        1386
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772
 #define ID_BRUSH_PRIMITIVES_SPHEROID    32773
@@ -667,9 +707,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        259
+#define _APS_NEXT_RESOURCE_VALUE        262
 #define _APS_NEXT_COMMAND_VALUE         33056
-#define _APS_NEXT_CONTROL_VALUE         1364
+#define _APS_NEXT_CONTROL_VALUE         1387
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

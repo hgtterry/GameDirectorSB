@@ -125,7 +125,7 @@ AB_Export_RFW::~AB_Export_RFW()
 // *************************************************************************
 void AB_Export_RFW::OnFileExportGDSB() 
 {
-	bool Test = App->CL_FileIO->SaveSelectedFile("Equity   *.G3ds\0**.G3ds\0", App->CL_Scene->Current_3DT_Just_Path);
+	bool Test = App->CL_FileIO->SaveSelectedFile("Equity   *.G3ds\0**.G3ds\0", App->CL_World->mCurrent_3DT_Path);
 
 	if (Test == 1)
 	{
@@ -537,13 +537,16 @@ bool AB_Export_RFW::Write_Project_File(char* Path_And_File,const char* Filename)
 		return 0;
 	}
 
-	fprintf(WriteScene, "%s\n", "[WE_Fast_Load]");
-	fprintf(WriteScene, "%s%s\n", "Pref_WE_JustFileName=",App->CL_Scene->Current_3DT_File);
-	fprintf(WriteScene, "%s%s\n", "Pref_WE_Path_FileName=",Filename);
-	fprintf(WriteScene, "%s%s\n", "Pref_Txl_Path_FileName=", App->CL_Scene->Current_TXL_FilePath);
+	fprintf(WriteScene, "%s\n", "[World_Data]");
 
-	fprintf(WriteScene, "%s%s\n", "Pref_Ogre_JustFileName=", "Test");
-	fprintf(WriteScene, "%s%s\n", "Pref_Ogre_Path_FileName=", "Test");
+	fprintf(WriteScene, "%s%s\n", "3dt_Path_FileName=",App->CL_World->mCurrent_3DT_PathAndFile);
+
+
+	fprintf(WriteScene, "%s%s\n", "G3ds_Path_FileName=",Filename);
+
+
+	fprintf(WriteScene, "%s%s\n", "Txl_Path_FileName=", App->CL_World->mCurrent_TXL_FilePath);
+
 
 	fprintf(WriteScene, "%s\n", " ");
 	fclose(WriteScene);

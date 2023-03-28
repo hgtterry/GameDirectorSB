@@ -28,20 +28,6 @@ public:
 	SB_Com_Entity();
 	~SB_Com_Entity();
 
-	// ------------------------------------------ Teleporters
-	bool Add_New_Teleporter();
-	bool Create_Teleport_Entity(int Index);
-	void V_Set_Teleports_Defaults(int Index);
-
-	// ------------------------------------------ Sounds
-	bool Add_New_Sound();
-	bool Create_Sound_Entity(int Index);
-
-	// ------------------------------------------ Messages
-	bool Add_New_Message();
-	bool Create_Message_Entity(int Index);
-	void V_Set_Message_Defaults(int Index);
-
 	// ------------------------------------------ User_Objects
 	void Add_New_User_Object(void);
 	void Create_User_Object(int Index);

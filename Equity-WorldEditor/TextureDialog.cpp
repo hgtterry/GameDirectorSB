@@ -581,7 +581,7 @@ void CTextureDialog::Update( CFusionDoc* pDoc )
 	CString FirstName;
 
 	// hgtterry -> set Texture Dialog TXL Name
-	SetDlgItemText(IDC_STTXTFILE,App->CL_Scene->Current_TXL_FileName);
+	SetDlgItemText(IDC_STTXTFILE,App->CL_World->mCurrent_TXL_FileName);
 
 	if (App->CL_TextureDialog->f_TextureDlg_Active == 1)
 	{

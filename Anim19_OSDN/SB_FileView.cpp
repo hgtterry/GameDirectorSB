@@ -998,9 +998,9 @@ void SB_FileView::Get_Selection(LPNMHDR lParam)
 	// ------------------------------------------------------------ User_Objects
 	if (!strcmp(FileView_Folder, "User_Objects")) // Folder
 	{
-		App->SBC_FileView->Context_Selection = Enums::FileView_UserObjects_Folder;
+		/*App->SBC_FileView->Context_Selection = Enums::FileView_UserObjects_Folder;
 		App->SBC_Properties->Current_Selected_Object = Index;
-		App->SBC_Com_Entity->Add_New_User_Object();
+		App->SBC_Com_Entity->Add_New_User_Object();*/
 		return;
 	}
 
@@ -1409,8 +1409,8 @@ void SB_FileView::Context_Menu(HWND hDlg)
 			App->SBC_FileView->hMenu = CreatePopupMenu();
 
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
-			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
-			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_COPY, L"&Create Copy");
+			//AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
 			AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
 			TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
@@ -1433,8 +1433,8 @@ void SB_FileView::Context_Menu(HWND hDlg)
 			App->SBC_FileView->hMenu = CreatePopupMenu();
 
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
-			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
-			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_COPY, L"&Create Copy");
+			//AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
 			AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
 			TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
@@ -1505,8 +1505,8 @@ void SB_FileView::Context_Menu(HWND hDlg)
 			App->SBC_FileView->hMenu = CreatePopupMenu();
 
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
-			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
-			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_COPY, L"&Create Copy");
+			//AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
 			AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
 			TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
@@ -1529,8 +1529,8 @@ void SB_FileView::Context_Menu(HWND hDlg)
 			App->SBC_FileView->hMenu = CreatePopupMenu();
 
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING , IDM_FILE_RENAME, L"&Rename");
-			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
-			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_COPY, L"&Create Copy");
+			//AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
 			AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
 			TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
@@ -1553,8 +1553,8 @@ void SB_FileView::Context_Menu(HWND hDlg)
 			App->SBC_FileView->hMenu = CreatePopupMenu();
 
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
-			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
-			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_COPY, L"&Create Copy");
+			//AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
 			AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
 			TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
@@ -1626,7 +1626,7 @@ void SB_FileView::Context_Menu(HWND hDlg)
 
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_FILE_RENAME, L"&Rename");
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING , IDM_COPY, L"&Create Copy");
-			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
+			//AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
 			AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_FILE_DELETE, L"&Delete");
 			TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
@@ -1704,7 +1704,7 @@ void SB_FileView::Context_New(HWND hDlg)
 		bool Doit = App->SBC_Dialogs->Canceled;
 		if (Doit == 0)
 		{
-			App->SBC_Com_Entity->Add_New_Message();
+			App->CL_Com_Messages->Add_New_Message();
 		}
 
 		return;
@@ -1717,7 +1717,7 @@ void SB_FileView::Context_New(HWND hDlg)
 		bool Doit = App->SBC_Dialogs->Canceled;
 		if (Doit == 0)
 		{
-			App->SBC_Com_Entity->Add_New_Sound();
+			App->CL_Com_Sounds->Add_New_Sound();
 		}
 
 		return;
@@ -1757,7 +1757,7 @@ void SB_FileView::Context_New(HWND hDlg)
 		bool Doit = App->SBC_Dialogs->Canceled;
 		if (Doit == 0)
 		{
-			App->SBC_Com_Entity->Add_New_Teleporter();
+			App->CL_Com_Teleporters->Add_New_Teleporter();
 		}
 
 		return;
@@ -2025,29 +2025,31 @@ void SB_FileView::Context_Copy(HWND hDlg)
 
 	if (Context_Selection == Enums::FileView_Cameras_File)
 	{
-		//App->SBC_Com_Camera->Rename_Camera(Index);
-		//App->SBC_Properties->Update_ListView_Camera();
+		
 		return;
 	}
 
 	if (App->SBC_FileView->Context_Selection == Enums::FileView_Counters_File)
 	{
-		//App->SBC_Display->Rename_Counter(Index);
-		//App->SBC_Properties->Update_ListView_Counters();
+		
 		return;
 	}
 
 	if (App->SBC_FileView->Context_Selection == Enums::FileView_Collectables_File)
 	{
-		//App->SBC_Object->Rename_Object(Index);
-		//App->SBC_Properties->Update_ListView_Collectables();
+		App->CL_Com_Collectables->Copy_Collectable(Index);
 		return;
 	}
 
 	if (App->SBC_FileView->Context_Selection == Enums::FileView_EnvironEntity_File)
 	{
-		//App->SBC_Com_Environments->Rename_Environ(Index);
-		//App->SBC_Properties->Update_ListView_Environs();
+		
+		return;
+	}
+
+	if (App->SBC_FileView->Context_Selection == Enums::FileView_Sounds_File)
+	{
+		App->CL_Com_Sounds->Copy_Sound(Index);
 		return;
 	}
 
@@ -2056,6 +2058,25 @@ void SB_FileView::Context_Copy(HWND hDlg)
 		App->CL_Com_Particles->Copy_Particle(Index);
 		return;
 	}
+
+	if (App->SBC_FileView->Context_Selection == Enums::FileView_Teleports_File)
+	{
+		App->CL_Com_Teleporters->Copy_Teleport(Index);
+		return;
+	}
+
+	if (App->SBC_FileView->Context_Selection == Enums::FileView_Messages_Triggers_File)
+	{
+		App->CL_Com_Messages->Copy_Message(Index);
+		return;
+	}
+
+	if (App->SBC_FileView->Context_Selection == Enums::FileView_Move_File)
+	{
+		App->SBC_Com_MoveEntity->Copy_Move_Entity(Index);
+		return;
+	}
+
 
 	App->CL_Object->Copy_Object(Index);
 	

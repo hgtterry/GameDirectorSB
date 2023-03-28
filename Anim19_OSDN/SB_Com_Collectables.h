@@ -33,5 +33,7 @@ public:
 	bool Add_New_Collectable();
 	bool Create_Collectable_Entity(int Index);
 	void Set_Collectables_Defaults(int Index);
+	void Copy_Collectable(int Object_Index);
+
 };
 

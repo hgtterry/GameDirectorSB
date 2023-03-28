@@ -2284,7 +2284,7 @@ bool SB_Project::Read_Message(int Index, char* Section)
 
 
 	V_Object->S_Message[0] = new Message_type;
-	App->SBC_Com_Entity->V_Set_Message_Defaults(Index);
+	App->CL_Com_Messages->Set_Message_Defaults(Index);
 
 	// --------------------------------
 
@@ -2493,7 +2493,7 @@ bool SB_Project::Read_Teleport(int Index, char* Section)
 	Base_Object* V_Object = App->SBC_Scene->V_Object[Index];
 
 	V_Object->S_Teleport[0] = new Teleport_type;
-	App->SBC_Com_Entity->V_Set_Teleports_Defaults(Index);
+	App->CL_Com_Teleporters->Set_Teleports_Defaults(Index);
 
 	V_Object->S_Environ[0] = new Environ_type;
 	App->SBC_Com_Environments->V_Set_Environ_Defaults(Index);
@@ -2632,7 +2632,7 @@ bool SB_Project::Read_MoveEntity(int Index, char* Section)
 	Base_Object* V_Object = App->SBC_Scene->V_Object[Index];
 
 	V_Object->S_MoveType[0] = new Move_Type;
-	App->SBC_Com_MoveEntity->V_Set_Move_Defaults(Index); // Check
+	App->SBC_Com_MoveEntity->Set_Move_Defaults(Index); // Check
 
 	//  Distance
 	App->Cl_Ini->GetString(Section, "Move_Distance", chr_Tag1, MAX_PATH);

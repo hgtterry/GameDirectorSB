@@ -46,7 +46,7 @@ bool SB_Com_MoveEntity::Add_New_Move_Entity()
 	App->SBC_Scene->V_Object[Index] = new Base_Object();
 
 	App->SBC_Scene->V_Object[Index]->S_MoveType[0] = new Move_Type;
-	V_Set_Move_Defaults(Index); // Check
+	Set_Move_Defaults(Index); // Check
 
 	App->SBC_Scene->V_Object[Index]->Type = Enums::Bullet_Type_Static;
 	App->SBC_Scene->V_Object[Index]->Shape = Enums::Shape_Box;
@@ -169,9 +169,9 @@ bool SB_Com_MoveEntity::Create_Move_Entity(int Index)
 }
 
 // *************************************************************************
-// *		V_Set_Move_Defaults:- Terry and Hazel Flanigan 2023		  	   *
+// *		Set_Move_Defaults:- Terry and Hazel Flanigan 2023		  	   *
 // *************************************************************************
-void SB_Com_MoveEntity::V_Set_Move_Defaults(int Index)
+void SB_Com_MoveEntity::Set_Move_Defaults(int Index)
 {
 	Base_Object* V_Object = App->SBC_Scene->V_Object[Index];
 
@@ -224,5 +224,74 @@ void SB_Com_MoveEntity::Reset_Move_Entity(int Index)
 void SB_Com_MoveEntity::Test_Move_Entity(int Index)
 {
 	App->SBC_Collision->Set_Move_Entity(Index);
+}
 
+// *************************************************************************
+// *			Copy_Move_Entity:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_Com_MoveEntity::Copy_Move_Entity(int Object_Index)
+{
+	Base_Object* Source_Object = App->SBC_Scene->V_Object[Object_Index];
+
+
+	char ConNum[256];
+	char NewName[MAX_PATH];
+	int New_Object_Index = App->SBC_Scene->Object_Count;
+
+	strcpy_s(NewName, "MoveEnt_");
+	_itoa(New_Object_Index, ConNum, 10);
+	strcat(NewName, ConNum);
+
+	strcpy(App->SBC_Dialogs->btext, "New Move Object Name");
+	strcpy(App->SBC_Dialogs->Chr_Text, NewName);
+
+	App->SBC_Dialogs->Start_Copy_Dlg(Enums::Check_Names_Objects, true, false);
+
+	if (App->SBC_Dialogs->Canceled == 1)
+	{
+		return;
+	}
+
+	App->SBC_Scene->V_Object[New_Object_Index] = new Base_Object();
+	App->SBC_Scene->V_Object[New_Object_Index]->S_MoveType[0] = new Move_Type;
+	Set_Move_Defaults(New_Object_Index); // Check
+
+	Base_Object* New_Object = App->SBC_Scene->V_Object[New_Object_Index];
+
+	New_Object->S_MoveType[0] = Source_Object->S_MoveType[0];
+	
+
+
+	strcpy(New_Object->Mesh_Name, App->SBC_Dialogs->Chr_Text);
+	strcpy(New_Object->Mesh_FileName, Source_Object->Mesh_FileName);
+	strcpy(New_Object->Mesh_Resource_Path, Source_Object->Mesh_Resource_Path);
+
+
+	New_Object->Type = Source_Object->Type;
+
+	if (App->CL_Object->m_UseCamera_Placment_f == 1)
+	{
+		Ogre::Vector3 Pos = App->CL_Object->GetPlacement();
+		New_Object->Mesh_Pos = Pos;
+	}
+	else
+	{
+		New_Object->Mesh_Pos = Source_Object->Mesh_Pos;
+	}
+
+	New_Object->Shape = Source_Object->Shape;
+	New_Object->Mesh_Scale = Source_Object->Mesh_Scale;
+	New_Object->Mesh_Rot = Source_Object->Mesh_Rot;
+	New_Object->Mesh_Quat = Source_Object->Mesh_Quat;
+	New_Object->Physics_Quat = Source_Object->Physics_Quat;
+
+	Create_Move_Entity(New_Object_Index);
+
+	App->SBC_Scene->V_Object[New_Object_Index]->FileViewItem = App->SBC_FileView->Add_Item(App->SBC_FileView->FV_Move_Folder, App->SBC_Scene->V_Object[New_Object_Index]->Mesh_Name, New_Object_Index, true);
+
+	App->SBC_Scene->Object_Count++;
+
+	App->SBC_FileView->SelectItem(App->SBC_Scene->V_Object[New_Object_Index]->FileViewItem);
+
+	App->Say("Copied");
 }
