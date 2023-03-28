@@ -1,5 +1,5 @@
 3dtVersion 1.34
-TextureLib "C:\\Users\\Acer\\Desktop\\SB_GD\\Equity-WorldEditor\\Deliver\\Equity.txl"
+TextureLib "C:\\Users\\Terry\\Desktop\\EquitySB\\Bin\\Tools\\Levels\\Equity.txl"
 HeadersDir "C:\\Users\\Acer\\Desktop\\SB_GD\\Equity-WorldEditor\\Deliver\\Headers"
 ActorsDir "C:\\Users\\Acer\\Desktop\\SB_GD\\Equity-WorldEditor\\Deliver\\Actors"
 PawnIni "C:\\Users\\Acer\\Desktop\\SB_GD\\Equity-WorldEditor\\Deliver\\Pawn.ini"
@@ -287,7 +287,7 @@ Brush "Box"
 		LightScale 2.000000 2.000000
 	Transform	0.000000 0.000000 1.000000 0.000000 1.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 0.000000 0.000000 
 	Pos	-96.000015 -44.000015 -7.999996 
-Brush "Box"
+Brush "BoxCUT"
 	Flags 128
 	ModelId 0
 	GroupId 0
