@@ -65,6 +65,21 @@ bool WV_Loader::Read_Project_File(char* Path_And_File)
 	App->CL_Ini->GetString("World_Data", "Txl_Path_FileName", chr_Tag2, MAX_PATH);
 	strcpy(Txl_Path_FileName, chr_Tag2);
 
+
+	if (App->Is_WorldEditor == 1)
+	{
+		Ogre::Vector4 V4 = Ogre::Vector4::ZERO;
+
+		App->CL_Ini->GetString("Special", "Position", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f %f %f", &V4.x, &V4.y, &V4.z);
+		App->CL_Model->Start_Cam_Pos = Ogre::Vector3(V4.x, V4.y, V4.z);
+
+		App->CL_Ini->GetString("Special", "Angles", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f %f %f", &V4.x, &V4.y, &V4.z);
+		App->CL_Model->Start_Cam_Angles = Ogre::Vector3(V4.x, V4.y+140, V4.z);
+
+	}
+
 	return 1;
 }
 
@@ -110,7 +125,19 @@ void WV_Loader::Load_File_Wepf()
 
 	App->CL_Export_Ogre->Export_AssimpToOgre();
 
-	App->Say_Win("Model Loaded");
+	if(App->Is_WorldEditor == 1)
+	{
+		App->CL_Ogre->mCamera->setPosition(App->CL_Model->Start_Cam_Pos);
+
+		App->CL_Ogre->mCamera->setOrientation(Ogre::Quaternion(1,0,0,0));
+		App->CL_Ogre->mCamera->pitch(Ogre::Angle(-App->CL_Model->Start_Cam_Angles.x));
+		App->CL_Ogre->mCamera->yaw(Ogre::Angle(App->CL_Model->Start_Cam_Angles.y));
+
+
+		App->CL_Ogre->mCamera->roll(Ogre::Radian(0));
+		//App->CL_Ogre->mCamera->yaw(Ogre::Degree(0));
+	}
+
 }
 
 // *************************************************************************
@@ -119,8 +146,8 @@ void WV_Loader::Load_File_Wepf()
 void WV_Loader::Adjust()
 {
 	Rotate_Z_Model(90);
-	Rotate_X_Model(-90);
-	Centre_Model_Mid();
+	//Rotate_X_Model(-90);
+	//Centre_Model_Mid();
 
 	App->CL_Grid->Reset_View();
 }

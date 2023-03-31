@@ -34,6 +34,7 @@ distribution.
 #define IDM_FILE_RENAME 3
 #define IDM_COPY 4
 #define IDM_PASTE 5
+#define IDM_GOTO 6
 
 SB_FileView::SB_FileView()
 {
@@ -239,6 +240,12 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 	}
 	case WM_COMMAND:
 	{
+		if (LOWORD(wParam) == IDM_GOTO)
+		{
+			App->SBC_FileView->Context_Goto(hDlg);
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDM_COPY)
 		{
 			App->SBC_FileView->Context_Copy(hDlg);
@@ -1385,8 +1392,9 @@ void SB_FileView::Context_Menu(HWND hDlg)
 			App->SBC_FileView->hMenu = CreatePopupMenu();
 
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_GOTO, L"&Goto Camera");
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING , IDM_COPY, L"&Create Copy");
-			//AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
+			
 			AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_DELETE, L"&Delete");
 			TrackPopupMenu(App->SBC_FileView->hMenu, TPM_RIGHTBUTTON, pt.x, pt.y, 0, App->ListPanel, NULL);
@@ -1409,6 +1417,7 @@ void SB_FileView::Context_Menu(HWND hDlg)
 			App->SBC_FileView->hMenu = CreatePopupMenu();
 
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_GOTO, L"&Goto Camera");
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_COPY, L"&Create Copy");
 			//AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
 			AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
@@ -1433,6 +1442,7 @@ void SB_FileView::Context_Menu(HWND hDlg)
 			App->SBC_FileView->hMenu = CreatePopupMenu();
 
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_GOTO, L"&Goto Camera");
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_COPY, L"&Create Copy");
 			//AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
 			AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
@@ -1457,6 +1467,7 @@ void SB_FileView::Context_Menu(HWND hDlg)
 			App->SBC_FileView->hMenu = CreatePopupMenu();
 
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_GOTO, L"&Goto Camera");
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_COPY, L"&Copy");
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
 			AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
@@ -1505,6 +1516,7 @@ void SB_FileView::Context_Menu(HWND hDlg)
 			App->SBC_FileView->hMenu = CreatePopupMenu();
 
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_GOTO, L"&Goto Camera");
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_COPY, L"&Create Copy");
 			//AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
 			AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
@@ -1529,6 +1541,7 @@ void SB_FileView::Context_Menu(HWND hDlg)
 			App->SBC_FileView->hMenu = CreatePopupMenu();
 
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING , IDM_FILE_RENAME, L"&Rename");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_GOTO, L"&Goto Camera");
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_COPY, L"&Create Copy");
 			//AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
 			AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
@@ -1553,6 +1566,7 @@ void SB_FileView::Context_Menu(HWND hDlg)
 			App->SBC_FileView->hMenu = CreatePopupMenu();
 
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_FILE_RENAME, L"&Rename");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_GOTO, L"&Goto Camera");
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_COPY, L"&Create Copy");
 			//AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
 			AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
@@ -1625,6 +1639,7 @@ void SB_FileView::Context_Menu(HWND hDlg)
 			App->SBC_FileView->hMenu = CreatePopupMenu();
 
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_FILE_RENAME, L"&Rename");
+			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING, IDM_GOTO, L"&Goto Camera");
 			AppendMenuW(App->SBC_FileView->hMenu, MF_STRING , IDM_COPY, L"&Create Copy");
 			//AppendMenuW(App->SBC_FileView->hMenu, MF_STRING | MF_GRAYED, IDM_PASTE, L"&Paste");
 			AppendMenuW(App->SBC_FileView->hMenu, MF_SEPARATOR, 0, NULL);
@@ -2077,9 +2092,16 @@ void SB_FileView::Context_Copy(HWND hDlg)
 		return;
 	}
 
-
 	App->CL_Object->Copy_Object(Index);
-	
+}
+
+// *************************************************************************
+// *				Context_Goto:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_FileView::Context_Goto(HWND hDlg)
+{
+	int Index = App->SBC_Properties->Current_Selected_Object;
+	App->CL_Object->Object_Camera_Goto(Index);
 }
 
 

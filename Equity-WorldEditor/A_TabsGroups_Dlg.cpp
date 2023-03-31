@@ -31,6 +31,7 @@ A_TabsGroups_Dlg::A_TabsGroups_Dlg(void)
 	GroupsDlg_Hwnd = NULL;
 	Groups_Dlg_Created = NULL;
 
+	Selected_Index = -1;
 	Selected_Brush = NULL;
 }
 
@@ -72,7 +73,7 @@ LRESULT CALLBACK A_TabsGroups_Dlg::Groups_Proc(HWND hDlg, UINT message, WPARAM w
 		SendDlgItemMessage(hDlg, IDC_ST_GD_GROUPS, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BRUSHCOUNT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_GD_BRUSHCOUNT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+	
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
@@ -127,8 +128,10 @@ LRESULT CALLBACK A_TabsGroups_Dlg::Groups_Proc(HWND hDlg, UINT message, WPARAM w
 		{
 			if (LOWORD(wParam) == IDC_GD_BRUSHLIST)
 			{
-				App->CL_TabsGroups_Dlg->List_Selection_Changed();
-
+				if (App->CL_TabsGroups_Dlg->Groups_Dlg_Created == 1)
+				{
+					App->CL_TabsGroups_Dlg->List_Selection_Changed();
+				}
 				return TRUE;
 			}
 
@@ -180,13 +183,17 @@ struct tag_BrushList
 void A_TabsGroups_Dlg::List_Selection_Changed()
 {
 	int Index = SendDlgItemMessage(GroupsDlg_Hwnd, IDC_GD_BRUSHLIST, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
-	if	(Index == LB_ERR)
+	if	(Index == -1)
 	{
 		//App->Say("ListBox No Selection Available");
 	}
 	else
 	{
-		OnSelchangeBrushlist(Index);
+		if (Groups_Dlg_Created == 1)
+		{
+			Selected_Index = Index;
+			OnSelchangeBrushlist(Index);
+		}
 	}
 }
 
@@ -406,11 +413,26 @@ struct tag_FaceList
 // *************************************************************************
 void A_TabsGroups_Dlg::List_BrushData(HWND hDlg)
 {
+	
+	char buf[255];
 	int c = App->CL_World->Get_Brush_Count();
 
 	if( c > 0 )
 	{
-		Show_Brush_Info(Selected_Brush, hDlg);
+		if (Selected_Brush && Selected_Index > -1)
+		{
+			Show_Brush_Info(Selected_Brush, hDlg);
+		}
+		else
+		{
+			sprintf(buf, "%s", "No Brush Selected");
+			SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+		}
+	}
+	else
+	{
+		sprintf(buf, "%s", "The World has No Brushes");
+		SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 	}
 
 }

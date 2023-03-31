@@ -509,20 +509,30 @@ LRESULT CALLBACK A_Dialogs::FrontPanel_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 			if (LOWORD(wParam) == IDC_BTBUILDVIEW)
 			{
+
 				bool test = App->IsProcessRunning("World_Viewer.exe");
 				if (test == 1)
 				{
-					App->Say("Running");
+					//App->Say("Running");
 				}
 				else
 				{
-					App->Say("Not Running");
+					//App->Say("Not Running");
+
+
+					CFusionDoc* pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+
+					pDoc->SelectAll() ;
+					pDoc->UpdateAllViews( UAV_ALL3DVIEWS, NULL ) ;
+
+
 
 					char Path[MAX_PATH];
 					strcpy(Path,App->WorldEditor_Directory);
 					strcat(Path,"World_Viewer.exe");
 
-					ShellExecute(App->MainHwnd, "open", Path, "poop",App->WorldEditor_Directory, SW_SHOW);
+					App->CL_Export_World->Export_World_GD3D(1);
+					ShellExecute(App->MainHwnd, "open", Path, "WorldEditor",App->WorldEditor_Directory, SW_SHOW);
 				}
 
 				
@@ -531,8 +541,17 @@ LRESULT CALLBACK A_Dialogs::FrontPanel_Proc(HWND hDlg, UINT message, WPARAM wPar
 			
 			if (LOWORD(wParam) == IDC_BTTESTDLG)
 			{
+				//CFusionDoc* pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+
+				//CWinApp::OnOpenRecentFile (1);
+
+				
 				//App->CL_TextureDialog->Start_TextureDialog();
 
+				/*char buf[MAX_PATH];
+				GetMenuStringA(App->hMenu, ID_FILE_MRU_FILE2, buf, MAX_PATH, 1);
+
+				App->Say(buf);*/
 				return TRUE;
 			}
 

@@ -727,6 +727,5 @@ bool ME_Equity_SB::Read_Project_File(char* Path_And_File)
 	App->CL_Ini->GetString("World_Data", "Txl_Path_FileName", chr_Tag2, MAX_PATH);
 	strcpy(Pref_Txl_Path_FileName, chr_Tag2);
 
-	
 	return 1;
 }

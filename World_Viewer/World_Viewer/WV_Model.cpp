@@ -54,6 +54,9 @@ WV_Model::WV_Model()
 	strcpy (Texture_FolderPath, "No Model Loaded");
 	JustName[0] = 0;
 
+	Start_Cam_Pos = Ogre::Vector3(0, 0, 0);
+	Start_Cam_Angles = Ogre::Vector3(0, 0, 0);
+
 	S_BoundingBox[0] = nullptr;
 
 	int Count = 0;

@@ -1060,24 +1060,7 @@ LRESULT CALLBACK SB_Props_Dialogs::Details_Goto_Proc(HWND hDlg, UINT message, WP
 
 		if (LOWORD(wParam) == IDC_BT_GOTO)
 		{
-			App->CL_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;
-
-			Ogre::Vector3 WS;
-			Ogre::Vector3 Centre;
-
-			int Index = App->SBC_Properties->Current_Selected_Object;
-			if (App->SBC_Properties->Edit_Category == Enums::Edit_Area)
-			{
-				Centre = App->SBC_Scene->B_Area[Index]->Area_Node->getAttachedObject(0)->getBoundingBox().getCenter();
-				WS = App->SBC_Scene->B_Area[Index]->Area_Node->convertLocalToWorldPosition(Centre);
-			}
-			else
-			{
-				Centre = App->SBC_Scene->V_Object[Index]->Object_Node->getAttachedObject(0)->getBoundingBox().getCenter();
-				WS = App->SBC_Scene->V_Object[Index]->Object_Node->convertLocalToWorldPosition(Centre);
-			}
-
-			App->CL_Ogre->mCamera->setPosition(WS);
+			App->CL_Object->Object_Camera_Goto(App->SBC_Properties->Current_Selected_Object);
 			return 1;
 		}
 

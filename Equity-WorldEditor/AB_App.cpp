@@ -46,6 +46,8 @@ A_App::A_App()
 	CL_CreateSpheroidDialog =	NULL;
 	CL_CreateStaircaseDialog  = NULL;
 
+	CL_Export_World =			NULL;
+
 	AppBackground = NULL;
 	BlackBrush =	NULL;
 	Brush_White =	NULL;
@@ -69,6 +71,8 @@ A_App::A_App()
 	WorldEditor_Directory[0] = 0;
 
 	Debug_App = 1;
+
+	hMenu = NULL;
 
 	// MFC
 	m_pMainFrame = NULL;
@@ -137,6 +141,9 @@ bool A_App::InitApp(void)
 	CL_CreateCylDialog =			new A_CreateCylDialog();
 	CL_CreateSpheroidDialog =		new A_CreateSpheroidDialog();
 	CL_CreateStaircaseDialog  =		new A_CreateStaircaseDialog();
+
+	CL_Export_World =				new A_Export_World();
+	
 
 	InitCommonControls();
 

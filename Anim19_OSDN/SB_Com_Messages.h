@@ -1,5 +1,7 @@
+#pragma once
+
 /*
-Copyright (c) 2022 Scene Builder and Equity -- Inflanite Software W.T.Flanigan H.C.Flanigan
+Copyright (c) 2022 - 2023 GameDirectorSB and EquityME -- HGTInflanite Software W.T.Flanigan H.C.Flanigan
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -21,37 +23,16 @@ misrepresented as being the original software.
 distribution.
 */
 
-#pragma once
-class SB_Object
+class SB_Com_Messages
 {
 public:
-	SB_Object(void);
-	~SB_Object(void);
+	SB_Com_Messages();
+	~SB_Com_Messages();
 
-	void Hide_AllObjects_Except(int Index, bool Show);
-	void Delete_Object();
-	void Rename_Object(int Index);
-	void Clear_Modified_Objects();
-	Ogre::Vector3 GetPlacement(int Distance = -6);
-
-	Ogre::Vector3 Get_BoundingBox_World_Centre(int Object_Index);
-	float GetMesh_BB_Radius(SceneNode* mNode);
-
-	int GetIndex_By_Name(char* Name);
-
-	void Copy_Object(int Object_Index);
-
-	void Object_Camera_Goto(int Object_Index);
-
-	Ogre::Vector3 GetMesh_BB_Size(SceneNode* mNode);
-
-	bool Show_Physics_Debug;
-	bool Show_Mesh_Debug;
-	bool Hide_All_Except_Flag;
-
-	bool m_UseCamera_Placment_f;
-
-protected:
+	bool Add_New_Message();
+	bool Create_Message_Entity(int Index);
+	void Set_Message_Defaults(int Index);
+	void Copy_Message(int Object_Index);
 
 };
 

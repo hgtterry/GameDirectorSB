@@ -1,5 +1,7 @@
+#pragma once
+
 /*
-Copyright (c) 2022 Scene Builder and Equity -- Inflanite Software W.T.Flanigan H.C.Flanigan
+Copyright (c) 2023 Equity_ME Model Editor -- Inflanite Software W.T.Flanigan H.C.Flanigan
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -21,37 +23,30 @@ misrepresented as being the original software.
 distribution.
 */
 
-#pragma once
-class SB_Object
+class ME_Logger
 {
 public:
-	SB_Object(void);
-	~SB_Object(void);
+	ME_Logger();
+	~ME_Logger();
 
-	void Hide_AllObjects_Except(int Index, bool Show);
-	void Delete_Object();
-	void Rename_Object(int Index);
-	void Clear_Modified_Objects();
-	Ogre::Vector3 GetPlacement(int Distance = -6);
+	void Log_Message_To_File(char* Message);
 
-	Ogre::Vector3 Get_BoundingBox_World_Centre(int Object_Index);
-	float GetMesh_BB_Radius(SceneNode* mNode);
+	void Show(int int_Number, float float_Number, char* Message, Ogre::Vector3 Vector3 = Ogre::Vector3(0, 0, 0));
 
-	int GetIndex_By_Name(char* Name);
+	void Show_Log();
+	void Log_Data_GUI(void);
+	void Close_Log(void);
 
-	void Copy_Object(int Object_Index);
+	bool Show_Log_Data_F;
 
-	void Object_Camera_Goto(int Object_Index);
+	char LogMessage_Text[MAX_PATH];
+	char LogMessage_Int[MAX_PATH];
+	char LogMessage_Float[MAX_PATH];
+	char LogMessage_Vector3[MAX_PATH];
 
-	Ogre::Vector3 GetMesh_BB_Size(SceneNode* mNode);
 
-	bool Show_Physics_Debug;
-	bool Show_Mesh_Debug;
-	bool Hide_All_Except_Flag;
+	std::vector<std::string> Log_Lines_v;
 
-	bool m_UseCamera_Placment_f;
-
-protected:
-
+	FILE* ReadLogFile;
 };
 

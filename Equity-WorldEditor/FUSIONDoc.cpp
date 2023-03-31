@@ -333,6 +333,7 @@ CFusionDoc::CFusionDoc() : CDocument (),
 
 	App->MainHwnd = AfxGetApp()->m_pMainWnd->m_hWnd; // hgtterry
 	App->hInst = AfxGetApp()->m_hInstance;
+	App->hMenu = GetMenu(App->MainHwnd);
 
 	pSelBrushes = SelBrushList_Create ();
 	pTempSelBrushes = SelBrushList_Create ();
@@ -1030,6 +1031,12 @@ void CFusionDoc::OnBrushAddtoworld()
 			{
 				Placed = PlaceObject (ObjectName, &mRegularEntity.mOrigin);
 				mpMainFrame->m_wndTabControls->GrpTab->UpdateAfterAddBrush();
+
+				/*if (App->CL_TabsGroups_Dlg->Groups_Dlg_Created == 1)
+				{
+					App->CL_TabsGroups_Dlg->Fill_ListBox();
+				}*/
+
 				UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 			}
 		}
@@ -1056,6 +1063,12 @@ void CFusionDoc::OnBrushAddtoworld()
 					Level_AddEntity (pLevel, NewEnt);
 					Placed = GE_TRUE;
 					mpMainFrame->m_wndTabControls->GrpTab->UpdateAfterAddBrush();
+
+					/*if (App->CL_TabsGroups_Dlg->Groups_Dlg_Created == 1)
+					{
+						App->CL_TabsGroups_Dlg->Fill_ListBox();
+					}*/
+
 					UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 				}
 			}
@@ -1099,6 +1112,11 @@ void CFusionDoc::OnBrushAddtoworld()
 
 		Placed = GE_TRUE;
 		mpMainFrame->m_wndTabControls->GrpTab->UpdateAfterAddBrush();
+
+		if (App->CL_TabsGroups_Dlg->Groups_Dlg_Created == 1)
+		{
+			App->CL_TabsGroups_Dlg->Fill_ListBox();
+		}
 
 	}
 	if (Placed)
@@ -6965,10 +6983,18 @@ void CFusionDoc::OnFileImport()
 		case 3 :
 			bLeakLoaded	=LoadLeakFile(dlg.GetPathName());
 		}
+
 		SetModifiedFlag();
 
 		UpdateAllViews(UAV_ALLVIEWS | REBUILD_QUICK, FALSE);
+
 		mpMainFrame->m_wndTabControls->GrpTab->UpdateAfterAddBrush();
+
+		if (App->CL_TabsGroups_Dlg->Groups_Dlg_Created == 1)
+		{
+			App->CL_TabsGroups_Dlg->Fill_ListBox();
+		}
+
 	}
 }
 
@@ -8555,13 +8581,13 @@ void CFusionDoc::ExportTo_RFW(const char *FileName, int ExpSelected, geBoolean E
 		}
 	}
 
-// changed QD 12/03
+// changed QD 12/03 77
 	BrushList *BList;
 	geBoolean fResult;
 
 	BList = Level_GetBrushes (pLevel);
 	if(!ExpSelected&&!ExpFiles)
-		fResult = App->ABC_Export_RFW->Level_ExportTo_RFW(reinterpret_cast<tag_Level2 *> (pLevel), FileName, BList, ExpSelected, ExpLights, -1);
+		fResult = App->CL_Export_World->Level_Build_G3ds(reinterpret_cast<tag_Level3 *> (pLevel), FileName, BList, ExpSelected, ExpLights, -1);
 
 	else
 	{
@@ -8646,7 +8672,7 @@ void CFusionDoc::ExportTo_RFW(const char *FileName, int ExpSelected, geBoolean E
 				::FilePath_ChangeName(FileName, Name, NewFileName);
 			}
 
-			fResult =App->ABC_Export_RFW->Level_ExportTo_RFW(reinterpret_cast<tag_Level2 *> (pLevel), NewFileName, SBList, ExpSelected, ExpLights, GroupID);
+			fResult = App->CL_Export_World->Level_Build_G3ds(reinterpret_cast<tag_Level3 *> (pLevel), NewFileName, SBList, ExpSelected, ExpLights, GroupID);
 			if(!fResult)
 				App->Say("Error exporting group");
 			BrushList_Destroy(&SBList);
@@ -8744,7 +8770,8 @@ void CFusionDoc::OnUpdateFileExportGDSB(CCmdUI* pCmdUI)
 // *************************************************************************
 void CFusionDoc::OnFileExportGDSB() 
 {
-	App->ABC_Export_RFW->OnFileExportGDSB();
+	//App->ABC_Export_RFW->OnFileExportGDSB();
+	App->CL_Export_World->Export_World_GD3D(0);
 }
 
 
@@ -9137,9 +9164,10 @@ void CFusionDoc::OnToolsTemplate()
 	ResetAllSelectedFaces();
 	ResetAllSelectedBrushes();
 
+	
 	UpdateBrushAttributesDlg();
 	UpdateFaceAttributesDlg();
-	
+
 	mModeTool = ID_TOOLS_TEMPLATE;
 //	if(pDoc->TempEnt) 
 //	{
@@ -9151,9 +9179,11 @@ void CFusionDoc::OnToolsTemplate()
 //	}
 
 //	pDoc->SetAdjustmentMode( ADJUST_MODE_BRUSH ) ;
+
 	SetAdjustmentMode( ADJUST_MODE_FACE ) ;
-	ConfigureCurrentTool();
-	mpMainFrame->m_wndTabControls->m_pBrushEntityDialog->Update(this);
+
+	//ConfigureCurrentTool();
+	//mpMainFrame->m_wndTabControls->m_pBrushEntityDialog->Update(this);
 }
 
 void CFusionDoc::OnPlaceOmniLight()
@@ -9198,7 +9228,7 @@ void CFusionDoc::Zero_Camera()
 
 void CFusionDoc::OnCameraGoto() 
 {
-	CEntity *pCameraEntity = FindCameraEntity ();
+	CEntity *pCameraEntity = FindCameraEntity();
 
 	if (pCameraEntity)
 	{

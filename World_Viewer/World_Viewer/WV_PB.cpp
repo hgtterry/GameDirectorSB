@@ -177,6 +177,8 @@ bool WV_PB::Stop_Progress_Bar(const char* ProcessText)
 
 	InvalidateRect(ProgBarHwnd, NULL, FALSE);
 
+	EndDialog(ProgBarHwnd, 0);
+	
 	return 1;
 }
 
@@ -206,6 +208,7 @@ bool WV_PB::Set_Progress(const char* ProcessText, float TotalSteps)
 	}
 
 	InvalidateRect(ProgBarHwnd, NULL, FALSE);
+
 	return 1;
 }
 

@@ -1,5 +1,7 @@
+#pragma once
+
 /*
-Copyright (c) 2022 Scene Builder and Equity -- Inflanite Software W.T.Flanigan H.C.Flanigan
+Copyright (c) World_Viewer 2023 Inflanite Software W.T.Flanigan H.C.Flanigan
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -21,37 +23,20 @@ misrepresented as being the original software.
 distribution.
 */
 
-#pragma once
-class SB_Object
+class WV_Dialogs
 {
 public:
-	SB_Object(void);
-	~SB_Object(void);
+	WV_Dialogs(void);
+	~WV_Dialogs(void);
 
-	void Hide_AllObjects_Except(int Index, bool Show);
-	void Delete_Object();
-	void Rename_Object(int Index);
-	void Clear_Modified_Objects();
-	Ogre::Vector3 GetPlacement(int Distance = -6);
+	void Message(char* pString, char* pString2);
 
-	Ogre::Vector3 Get_BoundingBox_World_Centre(int Object_Index);
-	float GetMesh_BB_Radius(SceneNode* mNode);
-
-	int GetIndex_By_Name(char* Name);
-
-	void Copy_Object(int Object_Index);
-
-	void Object_Camera_Goto(int Object_Index);
-
-	Ogre::Vector3 GetMesh_BB_Size(SceneNode* mNode);
-
-	bool Show_Physics_Debug;
-	bool Show_Mesh_Debug;
-	bool Hide_All_Except_Flag;
-
-	bool m_UseCamera_Placment_f;
+	char Message_Text_Header[MAX_PATH];
+	char Message_Text_Message[MAX_PATH];
 
 protected:
+
+	static LRESULT CALLBACK Message_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 };
 

@@ -31,7 +31,37 @@ public:
 
 	void Start_CreateCyl_Dlg();
 
+	BrushTemplate_Cylinder *pCylinderTemplate;
+
+	float	m_BotXOffset;
+	float	m_BotXSize;
+	float	m_BotZOffset;
+	float	m_BotZSize;
+	int		m_Solid;
+	float	m_TopXOffset;
+	float	m_TopXSize;
+	float	m_TopZOffset;
+	float	m_TopZSize;
+	float	m_YSize;
+	float	m_RingLength;
+	BOOL	m_TCut;
+	int		m_VerticalStripes;
+	float	m_Thickness;
+
+	CFusionDoc			*m_pDoc;
+
 private:
 
 	static LRESULT CALLBACK CreateCyl_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	void Set_Members();
+	void Set_DLG_Members(HWND hDlg);
+	void Get_DLG_Members(HWND hDlg);
+	void Set_CylinderTemplate();
+
+	void CreateCylinder();
+	void CreateNewTemplateBrush(Brush *pBrush);
+
+	char CylinderName[MAX_PATH];
+
 };

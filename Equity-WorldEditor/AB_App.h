@@ -49,6 +49,8 @@ distribution.
 #include "A_CreateSpheroidDialog.h"
 #include "A_CreateStaircaseDialog.h"
 
+#include "A_Export_World.h"
+
 class A_App  
 {
 public:
@@ -75,6 +77,7 @@ public:
 	A_CreateSpheroidDialog*		CL_CreateSpheroidDialog;
 	A_CreateStaircaseDialog*	CL_CreateStaircaseDialog;
 
+	A_Export_World*				CL_Export_World;
 
 	bool InitApp(void);
 	void InitMFC(void);
@@ -122,6 +125,7 @@ public:
 	HINSTANCE hInst;
 	HWND MainHwnd;
 
+	HMENU hMenu;
 
 	//      MFC
 	CMainFrame *m_pMainFrame;

@@ -137,6 +137,8 @@ WV_App::WV_App(void)
 
 	FollowFunctions = 0;
 
+	Is_WorldEditor = 0;
+
 	CursorPosX = 500;
 	CursorPosY = 500;
 
@@ -222,6 +224,7 @@ bool WV_App::InitApp(void)
 // *************************************************************************
 bool WV_App::SetMainWinCentre(void)
 {
+	
 	int ClientWidth_X = GetSystemMetrics(SM_CXSCREEN);
 	int ClientHeight_Y = GetSystemMetrics(SM_CYSCREEN);
 
@@ -231,8 +234,14 @@ bool WV_App::SetMainWinCentre(void)
 	int AllX = (ClientWidth_X / 2) - (Control.right / 2) - 10;
 	int AllY = (ClientHeight_Y / 2) - (Control.bottom / 2) - 30;
 
-	SetWindowPos(MainHwnd, NULL, AllX, AllY, 0, 0, SWP_NOSIZE);
+	SetWindowPos(MainHwnd, NULL, AllX, AllY, 0, 0,SWP_NOSIZE);
+	//SetWindowPos(MainHwnd, NULL, AllX, AllY, 0, 0, SWP_SHOWWINDOW);
 
+	//SetWindowPos(MainHwnd, 0, AllX, AllY, 0,0, SWP_NOZORDER);
+
+	//SetWindowPos(MainHwnd, GetNextWindow(App->cmdHandle, GW_HWNDPREV), 0, 0, 0, 0,
+		//SWP_SHOWWINDOW | SWP_NOMOVE | SWP_NOSIZE);
+	
 	return 1;
 }
 
@@ -838,6 +847,32 @@ bool WV_App::Custom_Button_Red(LPNMCUSTOMDRAW item)
 void WV_App::Flash_Window()
 {
 	FlashWindow(App->MainHwnd, true);
+}
+
+#include <tlhelp32.h>
+#include <tchar.h>
+
+bool WV_App::IsProcessRunning(char* executableName)
+{
+	PROCESSENTRY32 entry;
+	entry.dwSize = sizeof(PROCESSENTRY32);
+
+	const auto snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, NULL);
+
+	if (!Process32First(snapshot, &entry)) {
+		CloseHandle(snapshot);
+		return false;
+	}
+
+	do {
+		if (!_tcsicmp(entry.szExeFile, executableName)) {
+			CloseHandle(snapshot);
+			return true;
+		}
+	} while (Process32Next(snapshot, &entry));
+
+	CloseHandle(snapshot);
+	return false;
 }
 
 

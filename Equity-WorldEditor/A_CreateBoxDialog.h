@@ -49,14 +49,13 @@ private:
 
 	static LRESULT CALLBACK CreateBox_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
-	void Set_Members();
-
 	void Get_DLG_Members(HWND hDlg);
 	void Set_DLG_Members(HWND hDlg);
 
-	void Set_BoxTemplate();
 	void Set_Defaults();
 
 	void CreateCube();
 	void CreateNewTemplateBrush(Brush *pBrush);
+
+	char BoxName[MAX_PATH];
 };

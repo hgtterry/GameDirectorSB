@@ -79,6 +79,10 @@ public:
 
 	void Debug_Text();
 
+	HWND cmdHandle = NULL;
+
+	bool IsProcessRunning(char* executableName);
+
 	void Say(const char* Message, char* Message2 = NULL);
 	void Say_Int(int Value);
 	void Say_Win(const char* Message);
@@ -191,6 +195,7 @@ public:
 	bool OgreStarted;
 	bool Debug_App;
 	bool V_New_Objects;
+	bool Is_WorldEditor;
 
 	char EquityDirecory_FullPath[MAX_PATH];
 	char Version[100];

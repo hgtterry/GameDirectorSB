@@ -277,6 +277,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\A_Export_World.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\A_FaceDialog.cpp"
 				>
 			</File>
@@ -2022,6 +2026,10 @@
 			</File>
 			<File
 				RelativePath="A_Dialogs.h"
+				>
+			</File>
+			<File
+				RelativePath=".\A_Export_World.h"
 				>
 			</File>
 			<File

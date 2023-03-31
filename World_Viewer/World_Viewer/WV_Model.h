@@ -134,6 +134,9 @@ public:
 	std::vector<mapcoord_type> MapCord_Data;
 	std::vector<int> MatIndex_Data;
 
+	Ogre::Vector3 Start_Cam_Pos;
+	Ogre::Vector3 Start_Cam_Angles;
+
 protected:
 
 };

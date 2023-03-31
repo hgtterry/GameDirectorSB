@@ -190,6 +190,20 @@ void WV_ImGui::Model_Data_GUI(void)
 		ImGui::Text("Motions:- %i", App->CL_Model->MotionCount);
 		ImGui::Text("  ");
 
+		ImGui::Text("Came Pos:- %f %f %f", App->CL_Ogre->mCamera->getPosition().x, 
+			App->CL_Ogre->mCamera->getPosition().y,
+			App->CL_Ogre->mCamera->getPosition().z);
+
+
+		ImGui::Text("Came Angles:- %f %f %f", App->CL_Model->Start_Cam_Angles.x,
+			App->CL_Model->Start_Cam_Angles.y,
+			App->CL_Model->Start_Cam_Angles.z);
+
+		ImGui::Text("Pitch:- %f",App->CL_Ogre->mCamera->getOrientation().getPitch().valueDegrees());
+		ImGui::Text("Yaw:- %f", App->CL_Ogre->mCamera->getOrientation().getYaw().valueDegrees());
+			
+
+
 		ImVec2 Size = ImGui::GetWindowSize();
 		Model_Data_PosX = ((float)App->CL_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);
 		Model_Data_PosY = ((float)App->CL_Ogre->OgreListener->View_Height / 2) - (Size.y / 2);;

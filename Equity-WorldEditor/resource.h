@@ -114,7 +114,6 @@
 #define IDD_SB_TABSTEXTURES             258
 #define IDD_MESSAGE                     259
 #define IDD_SB_TABSDIALOG               260
-#define IDD_DIALOG3                     261
 #define IDD_SB_BRUSH_PROPERTIES         261
 #define IDC_RESET_ALL                   1000
 #define IDC_EDIT1                       1001
@@ -530,6 +529,19 @@
 #define IDC_ST_GD_BRUSHCOUNT            1384
 #define IDC_BT_GD_BRUSHPROPERTIES       1385
 #define IDC_BRUSH_PROPERTIESLIST        1386
+#define IDC_EDITNAME                    1387
+#define IDC_CHECK2                      1388
+#define IDC_STTOPXSIZE                  1389
+#define IDC_STTOPZSIZE                  1390
+#define IDC_STTOPXOFFSET                1391
+#define IDC_STTOPZOFFSET                1392
+#define IDC_STWALLTHICKNESS             1393
+#define IDC_STRINGLENGTH                1394
+#define IDC_STSTRIPES                   1395
+#define IDC_STBOTXSIZE                  1396
+#define IDC_STBOTZSIZE                  1397
+#define IDC_STBOTXOFFSET                1398
+#define IDC_STBOTZOFFSET                1399
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772
 #define ID_BRUSH_PRIMITIVES_SPHEROID    32773
@@ -709,7 +721,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        262
 #define _APS_NEXT_COMMAND_VALUE         33056
-#define _APS_NEXT_CONTROL_VALUE         1387
+#define _APS_NEXT_CONTROL_VALUE         1400
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

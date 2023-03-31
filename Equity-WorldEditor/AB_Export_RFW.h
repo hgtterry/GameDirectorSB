@@ -28,9 +28,8 @@ public:
 	AB_Export_RFW();
 	virtual ~AB_Export_RFW();
 
-	void OnFileExportGDSB();
 	void ExportTo_RFW(const char *FileName, int ExpSelected, geBoolean ExpLights, geBoolean ExpFiles);
-	bool Level_ExportTo_RFW(Level2 *pLevel, const char *Filename, BrushList *BList,int ExpSelected, geBoolean ExpLights, int GroupID);
+	
 
 	bool Write_Project_File(char* Path_And_File,const char* Filename);
 

@@ -98,6 +98,7 @@ protected:
 	void Context_Delete(HWND hDlg);
 	void Context_Rename(HWND hDlg);
 	void Context_Copy(HWND hDlg);
+	void Context_Goto(HWND hDlg);
 
 	TV_INSERTSTRUCT tvinsert;
 

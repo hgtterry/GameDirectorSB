@@ -37,6 +37,7 @@ BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
+
 void StartOgre();
 void Close_App();
 
@@ -47,13 +48,11 @@ int Block_Call = 0;
 
 WV_App* App = NULL;
 
+#include "Shlwapi.h"
 // *************************************************************************
 // *				WinMain:- Terry and Hazel Flanigan 2023		  		   *
 // *************************************************************************
-int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
-                     _In_opt_ HINSTANCE hPrevInstance,
-                     _In_ LPWSTR    lpCmdLine,
-                     _In_ int       nCmdShow)
+int APIENTRY wWinMain(_In_ HINSTANCE hInstance,_In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int  nCmdShow)
 {
     InitCommonControls();
 
@@ -61,6 +60,22 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     _getcwd(App->EquityDirecory_FullPath, 1024);
 
     App->InitApp();
+
+	char buff[255];
+	strcpy(buff, PathGetArgsA(GetCommandLineA()));
+	
+	int Result = strcmp(buff,"WorldEditor");
+	if (Result == 0)
+	{
+		//App->Say(buff);
+		App->Is_WorldEditor = 1;
+	}
+	else
+	{
+		App->Is_WorldEditor = 0;
+	}
+
+
 
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
@@ -148,6 +163,8 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    {
       return FALSE;
    }
+
+   App->cmdHandle = FindWindow(szWindowClass, szTitle);
 
    ShowWindow(App->MainHwnd, nCmdShow);
    UpdateWindow(App->MainHwnd);
@@ -302,7 +319,52 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		Root::getSingletonPtr()->renderOneFrame();
 		return 0;
 	}
+	case WM_ACTIVATEAPP:
+	{
+		if (wParam == 0)
+		{
+			//Sleep(1000);
+			//DWORD dwCurrentThread = GetCurrentThreadId();
+			//DWORD dwFGThread = GetWindowThreadProcessId(GetForegroundWindow(), NULL);
 
+			//AttachThreadInput(dwCurrentThread, dwFGThread, TRUE);
+
+			//SetForegroundWindow(App->MainHwnd);
+			////SetCapture(App->ViewGLhWnd);
+			//SetFocus(App->MainHwnd);
+			//SetActiveWindow(App->MainHwnd);
+			//EnableWindow(App->MainHwnd, TRUE);
+			////SetCursorPos(App->CursorPosX, App->CursorPosY);
+
+			//SetCapture(App->ViewGLhWnd);
+
+			//AttachThreadInput(dwCurrentThread, dwFGThread, FALSE);
+
+			//SetCapture(App->ViewGLhWnd);// Bernie
+			//SetCursorPos(App->CursorPosX, App->CursorPosY);
+			//Sleep(1000);
+			//SetWindowPos(App->MainHwnd, 0, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE); // force window to top
+			//SetWindowPos(App->MainHwnd, 0, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+			//
+			//ShowWindow(App->MainHwnd, 1);
+			//UpdateWindow(App->MainHwnd);
+		}
+
+		if (wParam == 1)
+		{
+			//Sleep(1000);
+			//SetWindowPos(App->MainHwnd, 0, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE); // force window to top
+			//SetWindowPos(App->MainHwnd, 0, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+
+			//ShowWindow(App->MainHwnd, 1);
+			//UpdateWindow(App->MainHwnd);
+		}
+
+		//App->SetMainWinCentre();
+
+
+		return 0;
+	}
 	case WM_SIZE:
 	{
 		App->Resize_OgreWin();
@@ -625,9 +687,20 @@ void StartOgre()
 
 	KillTimer(App->MainHwnd, 1);
 
-	/*char Default_Project[MAX_PATH];
-	strcpy(Default_Project, App->EquityDirecory_FullPath);
-	strcat(Default_Project, "\\Projects\\RF_Project_Prj\\Project.SBProj");*/
+	if (App->Is_WorldEditor == 1)
+	{
+		char Path[MAX_PATH];
+		strcpy(Path, App->EquityDirecory_FullPath);
+		strcat(Path, "\\Data\\Temp.Wepf");
+
+		strcpy(App->CL_Loader->Path_FileName, Path);
+		strcpy(App->CL_Loader->FileName,"Temp.Wepf");
+
+		//App->Say_Win(App->CL_Loader->Path_FileName);
+
+		App->CL_Loader->Read_Project_File(App->CL_Loader->Path_FileName);
+		App->CL_Loader->Load_File_Wepf();
+	}
 
 
 	//App->CL_Ogre->mRoot->startRendering();

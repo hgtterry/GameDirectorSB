@@ -27,6 +27,24 @@ distribution.
 
 A_CreateCylDialog::A_CreateCylDialog(void)
 {
+
+	m_BotXOffset = 0.0;
+	m_BotXSize = 128.0;
+	m_BotZOffset = 0.0;
+	m_BotZSize = 128.0;
+	m_Solid = 0;
+	m_TopXOffset = 0.0;
+	m_TopXSize = 128.0;
+	m_TopZOffset = 0.0;
+	m_TopZSize = 128.0;
+	m_YSize = 512.0;
+	m_RingLength = 0.0;
+	m_TCut = FALSE;
+	m_VerticalStripes = 0;
+	m_Thickness = 0.0f;
+
+	strcpy(CylinderName,"Cylinder Test");
+
 }
 
 A_CreateCylDialog::~A_CreateCylDialog(void)
@@ -38,9 +56,9 @@ A_CreateCylDialog::~A_CreateCylDialog(void)
 // *************************************************************************
 void A_CreateCylDialog::Start_CreateCyl_Dlg()
 {
-	/*m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
 
-	pBoxTemplate = Level_GetBoxTemplate (m_pDoc->pLevel);*/
+	pCylinderTemplate = Level_GetCylinderTemplate (m_pDoc->pLevel);
 
 	DialogBox(App->hInst, (LPCTSTR)IDD_CREATE_CYL, App->MainHwnd, (DLGPROC)CreateCyl_Proc);
 }
@@ -57,31 +75,17 @@ LRESULT CALLBACK A_CreateCylDialog::CreateCyl_Proc(HWND hDlg, UINT message, WPAR
 	{
 		//SendDlgItemMessage(hDlg, IDC_BTSETVIEW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		/*App->CL_CreateBoxDialog->Set_Members();
+		App->CL_CreateCylDialog->Set_Members();
 
-		App->CL_CreateBoxDialog->Set_DLG_Members(hDlg);
+		App->CL_CreateCylDialog->Set_DLG_Members(hDlg);
 
-		
-		HWND Temp = GetDlgItem(hDlg, IDC_PICTURE);
-
-		if(App->CL_CreateBoxDialog->pBoxTemplate->Solid == 0)
-		{
-			SendMessage(Temp, STM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_SolidBox_Bmp);
-			HWND temp = GetDlgItem(hDlg,IDC_SOLID);
-			SendMessage(temp,BM_SETCHECK,1,0);
-		}
-		else
-		{
-			SendMessage(Temp, STM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HollowBox_Bmp);
-			HWND temp = GetDlgItem(hDlg,IDC_HOLLOW);
-			SendMessage(temp,BM_SETCHECK,1,0);
-		}*/
+		SetDlgItemText(hDlg, IDC_EDITNAME, (LPCTSTR)"Cylinder_Test");
 
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
 	{
-		/*if (GetDlgItem(hDlg, IDC_STTOP) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_STTOP) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -97,22 +101,6 @@ LRESULT CALLBACK A_CreateCylDialog::CreateCyl_Proc(HWND hDlg, UINT message, WPAR
 			return (UINT)App->AppBackground;
 		}
 
-		if (GetDlgItem(hDlg, IDC_STTOPX) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}
-
-		if (GetDlgItem(hDlg, IDC_STWALL) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}
-
 		if (GetDlgItem(hDlg, IDC_STGENERAL) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
@@ -121,7 +109,7 @@ LRESULT CALLBACK A_CreateCylDialog::CreateCyl_Proc(HWND hDlg, UINT message, WPAR
 			return (UINT)App->AppBackground;
 		}
 
-		if (GetDlgItem(hDlg, IDC_SOLID) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_TCUT) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -145,7 +133,7 @@ LRESULT CALLBACK A_CreateCylDialog::CreateCyl_Proc(HWND hDlg, UINT message, WPAR
 			return (UINT)App->AppBackground;
 		}
 
-		if (GetDlgItem(hDlg, IDC_TCUT) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_RING) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -153,7 +141,8 @@ LRESULT CALLBACK A_CreateCylDialog::CreateCyl_Proc(HWND hDlg, UINT message, WPAR
 			return (UINT)App->AppBackground;
 		}
 
-		if (GetDlgItem(hDlg, IDC_TSHEET) == (HWND)lParam)
+	
+		if (GetDlgItem(hDlg, IDC_STTOPXSIZE) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -161,7 +150,7 @@ LRESULT CALLBACK A_CreateCylDialog::CreateCyl_Proc(HWND hDlg, UINT message, WPAR
 			return (UINT)App->AppBackground;
 		}
 
-		if (GetDlgItem(hDlg, IDC_STZTOP) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_STTOPZSIZE) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -169,7 +158,7 @@ LRESULT CALLBACK A_CreateCylDialog::CreateCyl_Proc(HWND hDlg, UINT message, WPAR
 			return (UINT)App->AppBackground;
 		}
 
-		if (GetDlgItem(hDlg, IDC_STBOTX) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_STTOPXOFFSET) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -177,7 +166,32 @@ LRESULT CALLBACK A_CreateCylDialog::CreateCyl_Proc(HWND hDlg, UINT message, WPAR
 			return (UINT)App->AppBackground;
 		}
 
-		if (GetDlgItem(hDlg, IDC_STBOTZ) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_STTOPZOFFSET) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+	
+		if (GetDlgItem(hDlg, IDC_STWALLTHICKNESS) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STRINGLENGTH) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STSTRIPES) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -191,7 +205,39 @@ LRESULT CALLBACK A_CreateCylDialog::CreateCyl_Proc(HWND hDlg, UINT message, WPAR
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
-		}*/
+		}
+
+		if (GetDlgItem(hDlg, IDC_STBOTXSIZE) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STBOTZSIZE) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STBOTXOFFSET) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STBOTZOFFSET) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
 
 		return FALSE;
 	}
@@ -275,11 +321,16 @@ LRESULT CALLBACK A_CreateCylDialog::CreateCyl_Proc(HWND hDlg, UINT message, WPAR
 			// -----------------------------------------------------------------
 			if (LOWORD(wParam) == IDOK)
 			{
-				/*App->CL_CreateBoxDialog->Get_DLG_Members(hDlg);
+				char buff[MAX_PATH];
+				GetDlgItemText(hDlg,IDC_EDITNAME,(LPTSTR)buff,MAX_PATH);
+				strcpy(App->CL_CreateCylDialog->CylinderName,buff);
 
-				App->CL_CreateBoxDialog->Set_BoxTemplate(); 
+				App->CL_CreateCylDialog->Get_DLG_Members(hDlg);
 
-				App->CL_CreateBoxDialog->CreateCube();*/
+				App->CL_CreateCylDialog->Set_CylinderTemplate(); 
+
+				App->CL_CreateCylDialog->CreateCylinder();
+
 				EndDialog(hDlg, LOWORD(wParam));
 				return TRUE;
 			}
@@ -294,4 +345,205 @@ LRESULT CALLBACK A_CreateCylDialog::CreateCyl_Proc(HWND hDlg, UINT message, WPAR
 		}
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *		   CreateCylinder:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void A_CreateCylDialog::CreateCylinder() 
+{
+	m_pDoc->OnToolsTemplate();
+
+	Brush *pCylinder;
+
+	pCylinder = BrushTemplate_CreateCylinder (pCylinderTemplate);
+	if (pCylinder != NULL)
+	{
+		m_pDoc->LastTemplateTypeName =CylinderName;
+		CreateNewTemplateBrush(pCylinder);
+	}
+	else
+	{
+		App->Say("No pCube");
+	}
+}
+
+// *************************************************************************
+// *       CreateNewTemplateBrush:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void A_CreateCylDialog::CreateNewTemplateBrush(Brush *pBrush)
+{
+	geVec3d *pTemplatePos;
+	geVec3d MoveVec;
+	geVec3d BrushPos;
+
+	assert (pBrush != NULL);
+
+	if (m_pDoc->BTemplate != NULL)
+	{
+		Brush_Destroy (&m_pDoc->BTemplate);
+	}
+
+	m_pDoc->CurBrush = pBrush;
+
+	m_pDoc->TempEnt	= FALSE;
+	m_pDoc->SetDefaultBrushTexInfo (m_pDoc->CurBrush);
+	Brush_Bound (m_pDoc->CurBrush);
+	Brush_Center (m_pDoc->CurBrush, &BrushPos);
+
+	pTemplatePos = Level_GetTemplatePos (m_pDoc->pLevel);
+
+	//pTemplatePos->X = pTemplatePos->X +500;
+	
+
+	geVec3d_Subtract (pTemplatePos, &BrushPos, &MoveVec);
+
+	Brush_Move (m_pDoc->CurBrush, &MoveVec);
+
+	m_pDoc->UpdateAllViews (UAV_ALL3DVIEWS, NULL);
+	m_pDoc->SetModifiedFlag ();
+}
+
+// *************************************************************************
+// *		 Set_Members:- Terry and Hazel Flanigan 2023				   *
+// *************************************************************************
+void A_CreateCylDialog::Set_Members() 
+{
+	m_BotXOffset = pCylinderTemplate->BotXOffset;
+	m_BotXSize = pCylinderTemplate->BotXSize;
+	m_BotZOffset = pCylinderTemplate->BotZOffset;
+	m_BotZSize = pCylinderTemplate->BotZSize;
+	m_Solid = pCylinderTemplate->Solid;
+	m_TopXOffset = pCylinderTemplate->TopXOffset;
+	m_TopXSize = pCylinderTemplate->TopXSize;
+	m_TopZOffset = pCylinderTemplate->TopZOffset;
+	m_TopZSize = pCylinderTemplate->TopZSize;
+	m_YSize = pCylinderTemplate->YSize;
+	m_RingLength = pCylinderTemplate->RingLength;
+	m_TCut = pCylinderTemplate->TCut;
+	m_VerticalStripes = pCylinderTemplate->VerticalStripes;
+	m_Thickness = pCylinderTemplate->Thickness;
+}
+
+// *************************************************************************
+// *		 Set_DLG_Members:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void A_CreateCylDialog::Set_DLG_Members(HWND hDlg) 
+{
+	char buf[MAX_PATH];
+	sprintf(buf, "%0.0f", m_TopXSize);
+	SetDlgItemText(hDlg, IDC_TOPXSIZE, (LPCTSTR)buf);
+
+	sprintf(buf, "%0.0f", m_TopZSize);
+	SetDlgItemText(hDlg, IDC_TOPZSIZE, (LPCTSTR)buf);
+
+	sprintf(buf, "%0.0f", m_TopXOffset);
+	SetDlgItemText(hDlg, IDC_TOPXOFF, (LPCTSTR)buf);
+
+	sprintf(buf, "%0.0f", m_TopZOffset);
+	SetDlgItemText(hDlg, IDC_TOPZOFF, (LPCTSTR)buf);
+
+
+	sprintf(buf, "%0.0f", m_BotXSize);
+	SetDlgItemText(hDlg, IDC_BOTXSIZE, (LPCTSTR)buf);
+
+	sprintf(buf, "%0.0f", m_BotZSize);
+	SetDlgItemText(hDlg, IDC_BOTZSIZE, (LPCTSTR)buf);
+
+	sprintf(buf, "%0.0f", m_BotXOffset);
+	SetDlgItemText(hDlg, IDC_BOTXOFF, (LPCTSTR)buf);
+
+	sprintf(buf, "%0.0f", m_BotZOffset);
+	SetDlgItemText(hDlg, IDC_BOTZOFF, (LPCTSTR)buf);
+
+
+	sprintf(buf, "%0.0f", m_YSize);
+	SetDlgItemText(hDlg, IDC_YSIZE, (LPCTSTR)buf);
+
+	sprintf(buf, "%i", m_VerticalStripes);
+	SetDlgItemText(hDlg, IDC_VERTSTRIPES, (LPCTSTR)buf);
+
+	sprintf(buf, "%0.0f", m_Thickness);
+	SetDlgItemText(hDlg, IDC_THICKNESS, (LPCTSTR)buf);
+
+	sprintf(buf, "%0.0f", m_RingLength);
+	SetDlgItemText(hDlg, IDC_RINGLENGTH, (LPCTSTR)buf);
+
+
+	HWND temp = GetDlgItem(hDlg, IDC_TCUT);
+	if (m_TCut == 1)
+	{
+		SendMessage(temp,BM_SETCHECK,1,0);
+	}
+	else
+	{
+		SendMessage(temp,BM_SETCHECK,0,0);
+	}
+}
+
+// *************************************************************************
+// *		 Get_DLG_Members:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void A_CreateCylDialog::Get_DLG_Members(HWND hDlg) 
+{
+	char buf[MAX_PATH];
+
+	GetDlgItemText(hDlg, IDC_TOPXSIZE, (LPTSTR)buf,MAX_PATH);
+	m_TopXSize = (float)atof(buf);
+
+	GetDlgItemText(hDlg, IDC_TOPZSIZE, (LPTSTR)buf,MAX_PATH);
+	m_TopZSize = (float)atof(buf);
+
+	GetDlgItemText(hDlg, IDC_TOPXOFF, (LPTSTR)buf,MAX_PATH);
+	m_TopXOffset = (float)atof(buf);
+	
+	GetDlgItemText(hDlg, IDC_TOPZOFF, (LPTSTR)buf,MAX_PATH);
+	m_TopZOffset = (float)atof(buf);
+
+
+	GetDlgItemText(hDlg, IDC_BOTXSIZE, (LPTSTR)buf,MAX_PATH);
+	m_BotXSize = (float)atof(buf);
+
+	GetDlgItemText(hDlg, IDC_BOTZSIZE, (LPTSTR)buf,MAX_PATH);
+	m_BotZSize = (float)atof(buf);
+
+	GetDlgItemText(hDlg, IDC_BOTXOFF, (LPTSTR)buf,MAX_PATH);
+	m_BotXOffset = (float)atof(buf);
+
+	GetDlgItemText(hDlg, IDC_BOTZOFF, (LPTSTR)buf,MAX_PATH);
+	m_BotZOffset = (float)atof(buf);
+
+
+	GetDlgItemText(hDlg, IDC_YSIZE, (LPTSTR)buf,MAX_PATH);
+	m_YSize = (float)atof(buf);
+
+	GetDlgItemText(hDlg, IDC_VERTSTRIPES, (LPTSTR)buf,MAX_PATH);
+	m_VerticalStripes = (int)atoi(buf);
+
+	GetDlgItemText(hDlg, IDC_THICKNESS, (LPTSTR)buf,MAX_PATH);
+	m_Thickness = (float)atof(buf);
+
+	GetDlgItemText(hDlg, IDC_RINGLENGTH, (LPTSTR)buf,MAX_PATH);
+	m_RingLength = (float)atof(buf);
+}
+
+// *************************************************************************
+// *		 Set_CylinderTemplate:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void A_CreateCylDialog::Set_CylinderTemplate() 
+{
+	pCylinderTemplate->BotXOffset = m_BotXOffset;
+	pCylinderTemplate->BotXSize = m_BotXSize;
+	pCylinderTemplate->BotZOffset = m_BotZOffset;
+	pCylinderTemplate->BotZSize = m_BotZSize;
+	pCylinderTemplate->Solid = m_Solid;
+	pCylinderTemplate->TopXOffset = m_TopXOffset;
+	pCylinderTemplate->TopXSize = m_TopXSize;
+	pCylinderTemplate->TopZOffset = m_TopZOffset;
+	pCylinderTemplate->TopZSize = m_TopZSize;
+	pCylinderTemplate->YSize = m_YSize;
+	pCylinderTemplate->RingLength = m_RingLength;
+	pCylinderTemplate->TCut = m_TCut;
+	pCylinderTemplate->VerticalStripes = m_VerticalStripes;
+	pCylinderTemplate->Thickness = m_Thickness;
 }

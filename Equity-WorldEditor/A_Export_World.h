@@ -23,38 +23,36 @@ misrepresented as being the original software.
 distribution.
 */
 
-class A_TabsGroups_Dlg
+#include "level.h"
+#include "entity.h"
+#include "brush.h"
+#include "model.h"
+#include "group.h"
+#include "wadfile.h"
+#include "compiler.h"
+#include "EntView.h"
+#include "BrushTemplate.h"
+#include "EntityTable.h"
+#include "basetype.h"
+typedef struct tag_Level3 Level3;
+
+class A_Export_World
 {
 public:
-	A_TabsGroups_Dlg(void);
-	~A_TabsGroups_Dlg(void);
+	A_Export_World(void);
+	~A_Export_World(void);
 
-	void Show_GroupsDialog(bool Show);
-	void Start_GroupsDialog();
-	void Start_Properties_Dlg();
+	void Export_World_GD3D(bool Silent);
 
-	void Fill_ListBox();
+	CFusionDoc			*m_pDoc;
 
-	bool Groups_Dlg_Created;
+	bool Level_Build_G3ds(Level3 *pLevel, const char *Filename, BrushList *BList,int ExpSelected, geBoolean ExpLights, int GroupID);
+	void ExportTo_RFW(const char *FileName, int ExpSelected, geBoolean ExpLights, geBoolean ExpFiles);
+	bool Write_Project_File(char* Path_And_File,const char* Filename);
 
-	HWND GroupsDlg_Hwnd;
+	//static geBoolean fdocBrushCSGCallback2 (const Brush *pBrush, void *lParam);
 
 private:
 
-	static LRESULT CALLBACK Groups_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-	static LRESULT CALLBACK Properties_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-
-	void List_Selection_Changed();
-	void OnSelchangeBrushlist(int Index);
-
-	void List_BrushData(HWND hDlg);
-
-	bool Show_Brush_Info(const Brush *b, HWND hDlg);
-	bool Show_Brush_ListInfo(BrushList *BList, HWND hDlg);
-	bool Show_Brush_Faces_Info(const FaceList *pList, HWND hDlg);
-	bool Show_Face_Data(const Face *f, HWND hDlg);
-
-	int Selected_Index;
-	Brush*	Selected_Brush;
-	CFusionDoc			*m_pDoc;
+	FILE* WriteScene;
 };

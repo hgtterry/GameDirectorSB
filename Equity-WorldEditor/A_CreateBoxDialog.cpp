@@ -36,6 +36,8 @@ A_CreateBoxDialog::A_CreateBoxDialog(void)
 	m_TCut = FALSE;
 	m_Thickness = 16.0f;
 	m_TSheet = FALSE;
+
+	strcpy(BoxName,"Box");
 }
 
 A_CreateBoxDialog::~A_CreateBoxDialog(void)
@@ -66,9 +68,9 @@ LRESULT CALLBACK A_CreateBoxDialog::CreateBox_Proc(HWND hDlg, UINT message, WPAR
 	{
 		//SendDlgItemMessage(hDlg, IDC_BTSETVIEW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		App->CL_CreateBoxDialog->Set_Members();
-
 		App->CL_CreateBoxDialog->Set_DLG_Members(hDlg);
+
+		SetDlgItemText(hDlg, IDC_EDITNAME, (LPCTSTR)"Box_Test");
 
 		
 		HWND Temp = GetDlgItem(hDlg, IDC_PICTURE);
@@ -284,11 +286,18 @@ LRESULT CALLBACK A_CreateBoxDialog::CreateBox_Proc(HWND hDlg, UINT message, WPAR
 			// -----------------------------------------------------------------
 			if (LOWORD(wParam) == IDOK)
 			{
+
+				char buff[MAX_PATH];
+				GetDlgItemText(hDlg,IDC_EDITNAME,(LPTSTR)buff,MAX_PATH);
+				strcpy(App->CL_CreateBoxDialog->BoxName,buff);
+
+
+				
 				App->CL_CreateBoxDialog->Get_DLG_Members(hDlg);
 
-				App->CL_CreateBoxDialog->Set_BoxTemplate(); 
-
+			
 				App->CL_CreateBoxDialog->CreateCube();
+
 				EndDialog(hDlg, LOWORD(wParam));
 				return TRUE;
 			}
@@ -306,7 +315,7 @@ LRESULT CALLBACK A_CreateBoxDialog::CreateBox_Proc(HWND hDlg, UINT message, WPAR
 }
 
 // *************************************************************************
-// *        CreateBox_Proc:- Terry and Hazel Flanigan 2023				   *
+// *		   CreateCube:- Terry and Hazel Flanigan 2023				   *
 // *************************************************************************
 void A_CreateBoxDialog::CreateCube() 
 {
@@ -317,7 +326,8 @@ void A_CreateBoxDialog::CreateCube()
 	pCube = BrushTemplate_CreateBox (pBoxTemplate);
 	if (pCube != NULL)
 	{
-		m_pDoc->LastTemplateTypeName = "Box";
+		
+		m_pDoc->LastTemplateTypeName = BoxName;
 		CreateNewTemplateBrush(pCube);
 	}
 	else
@@ -342,7 +352,7 @@ void A_CreateBoxDialog::CreateNewTemplateBrush(Brush *pBrush)
 		Brush_Destroy (&m_pDoc->BTemplate);
 	}
 
-	m_pDoc->BTemplate = pBrush;
+	//m_pDoc->BTemplate = pBrush;
 	m_pDoc->CurBrush = pBrush;
 
 	m_pDoc->TempEnt	= FALSE;
@@ -351,27 +361,17 @@ void A_CreateBoxDialog::CreateNewTemplateBrush(Brush *pBrush)
 	Brush_Center (m_pDoc->CurBrush, &BrushPos);
 
 	pTemplatePos = Level_GetTemplatePos (m_pDoc->pLevel);
+
+	//pTemplatePos->X = pTemplatePos->X +500;
+	
+
+
 	geVec3d_Subtract (pTemplatePos, &BrushPos, &MoveVec);
+
 	Brush_Move (m_pDoc->CurBrush, &MoveVec);
 
 	m_pDoc->UpdateAllViews (UAV_ALL3DVIEWS, NULL);
 	m_pDoc->SetModifiedFlag ();
-}
-
-// *************************************************************************
-// *		 Set_Members:- Terry and Hazel Flanigan 2023				   *
-// *************************************************************************
-void A_CreateBoxDialog::Set_Members() 
-{
-	m_YSize = pBoxTemplate->YSize;
-	m_Solid = pBoxTemplate->Solid;
-	m_XSizeBot = pBoxTemplate->XSizeBot;
-	m_XSizeTop = pBoxTemplate->XSizeTop;
-	m_ZSizeBot = pBoxTemplate->ZSizeBot;
-	m_ZSizeTop = pBoxTemplate->ZSizeTop;
-	m_TCut = pBoxTemplate->TCut;
-	m_Thickness = pBoxTemplate->Thickness;
-	m_TSheet = pBoxTemplate->TSheet;
 }
 
 // *************************************************************************
@@ -380,26 +380,26 @@ void A_CreateBoxDialog::Set_Members()
 void A_CreateBoxDialog::Set_DLG_Members(HWND hDlg) 
 {
 	char buf[MAX_PATH];
-	sprintf(buf, "%0.0f", App->CL_CreateBoxDialog->m_XSizeTop);
+	sprintf(buf, "%0.0f", pBoxTemplate->XSizeTop);
 	SetDlgItemText(hDlg, IDC_XSIZETOP, (LPCTSTR)buf);
 
-	sprintf(buf, "%0.0f", App->CL_CreateBoxDialog->m_ZSizeTop);
+	sprintf(buf, "%0.0f", pBoxTemplate->ZSizeTop);
 	SetDlgItemText(hDlg, IDC_ZSIZETOP, (LPCTSTR)buf);
 
-	sprintf(buf, "%0.0f", App->CL_CreateBoxDialog->m_XSizeBot);
+	sprintf(buf, "%0.0f", pBoxTemplate->XSizeBot);
 	SetDlgItemText(hDlg, IDC_XSIZEBOT, (LPCTSTR)buf);
 
-	sprintf(buf, "%0.0f", App->CL_CreateBoxDialog->m_ZSizeTop);
+	sprintf(buf, "%0.0f", pBoxTemplate->ZSizeBot);
 	SetDlgItemText(hDlg, IDC_ZSIZEBOT, (LPCTSTR)buf);
 
-	sprintf(buf, "%0.0f", App->CL_CreateBoxDialog->m_YSize);
+	sprintf(buf, "%0.0f", pBoxTemplate->YSize);
 	SetDlgItemText(hDlg, IDC_YSIZE, (LPCTSTR)buf);
 
-	sprintf(buf, "%0.0f", App->CL_CreateBoxDialog->m_Thickness);
+	sprintf(buf, "%0.0f", pBoxTemplate->Thickness);
 	SetDlgItemText(hDlg, IDC_THICKNESS, (LPCTSTR)buf);
 
 	HWND temp = GetDlgItem(hDlg, IDC_TCUT);
-	if (App->CL_CreateBoxDialog->m_TCut == 1)
+	if (pBoxTemplate->TCut == 1)
 	{
 		SendMessage(temp,BM_SETCHECK,1,0);
 	}
@@ -418,45 +418,22 @@ void A_CreateBoxDialog::Get_DLG_Members(HWND hDlg)
 	char buff[MAX_PATH];
 
 	GetDlgItemText(hDlg,IDC_YSIZE,(LPTSTR)buff,MAX_PATH);
-	m_YSize = (float)atof(buff);
+	pBoxTemplate->YSize = (float)atof(buff);
 
 	GetDlgItemText(hDlg,IDC_XSIZEBOT,(LPTSTR)buff,MAX_PATH);
-	m_XSizeBot = (float)atof(buff);
+	pBoxTemplate->XSizeBot = (float)atof(buff);
 
 	GetDlgItemText(hDlg,IDC_XSIZETOP,(LPTSTR)buff,MAX_PATH);
-	m_XSizeTop = (float)atof(buff);
+	pBoxTemplate->XSizeTop = (float)atof(buff);
 
 	GetDlgItemText(hDlg,IDC_ZSIZEBOT,(LPTSTR)buff,MAX_PATH);
-	m_ZSizeBot = (float)atof(buff);
+	pBoxTemplate->ZSizeBot = (float)atof(buff);
 
 	GetDlgItemText(hDlg,IDC_ZSIZETOP,(LPTSTR)buff,MAX_PATH);
-	m_ZSizeTop = (float)atof(buff);
-
-	//GetDlgItemText(hDlg,IDC_TCUT,(LPTSTR)buff,MAX_PATH);
-	//m_TCut = (bool)atoi(buff);
+	pBoxTemplate->ZSizeTop = (float)atof(buff);
 
 	GetDlgItemText(hDlg,IDC_THICKNESS,(LPTSTR)buff,MAX_PATH);
-	m_Thickness = (float)atof(buff);
-
-	//GetDlgItemText(hDlg,IDC_TSHEET,(LPTSTR)buff,MAX_PATH);
-	//m_TSheet = (bool)atoi(buff);
-	
-}
-
-// *************************************************************************
-// *		 Set_BoxTemplate:- Terry and Hazel Flanigan 2023			   *
-// *************************************************************************
-void A_CreateBoxDialog::Set_BoxTemplate() 
-{
-	pBoxTemplate->YSize = m_YSize;
-	pBoxTemplate->Solid = m_Solid;
-	pBoxTemplate->XSizeBot = m_XSizeBot;
-	pBoxTemplate->XSizeTop = m_XSizeTop;
-	pBoxTemplate->ZSizeBot = m_ZSizeBot;
-	pBoxTemplate->ZSizeTop = m_ZSizeTop;
-	pBoxTemplate->TCut = m_TCut;
-	pBoxTemplate->Thickness = m_Thickness;
-	pBoxTemplate->TSheet = m_TSheet;
+	pBoxTemplate->Thickness = (float)atof(buff);
 }
 
 // *************************************************************************
