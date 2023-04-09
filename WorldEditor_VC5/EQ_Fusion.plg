@@ -1,0 +1,302 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: FUSION - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x409 /x /fo".\Debug/FUSION.res" /i "..\..\msdev60\include" /i "..\..\msdev60\mfc\include" /i "C:\Program Files (x86)\Microsoft Visual Studio\VC98\MFC\Include" /i "C:\Program Files (x86)\Microsoft Visual Studio\VC98\Include" /d "NDEBUG" "C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\FUSION.rc"" 
+Creating temporary file "C:\Users\Acer\AppData\Local\Temp\RSP47CC.tmp" with contents
+[
+/nologo /MT /W4 /GX /Ot /Oa /X /I "." /I ".\GenesisSDK\include" /I ".\TypeParser" /I "..\..\msdev60\include" /I "..\..\msdev60\mfc\include" /I "C:\Program Files (x86)\Microsoft Visual Studio\VC98\MFC\Include" /I "C:\Program Files (x86)\Microsoft Visual Studio\VC98\Include" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "WIN32_LEAN_AND_MEAN" /Fr".\Release/" /Fp".\Release/Fusion.pch" /YX"stdafx.h" /Fo".\Release/" /Fd".\Release/" /FD /c 
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\TypeParser\cparser.c"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\TypeParser\cscanner.c"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\TypeParser\Hash.c"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\TypeParser\iden.C"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\TypeParser\scanner.c"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\TypeParser\symtab.c"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\TypeParser\type.c"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\A_Dialogs.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\A_FileIO.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\A_Scene.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\AB_App.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\AB_Export_RFW.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\about.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\ActivationWatch.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\array.c"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\box3d.c"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\brush.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\BrushAttributesDialog.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\BrushEntityDialog.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\BrushGroupDialog.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\BrushTemplate.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\CapView.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\ChildFrm.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\ColorBtn.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\CompileDialog.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\Compiler.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\ConsoleTab.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\CreateArchDialog.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\CreateBoxDialog.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\CreateConeDialog.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\CreateCylDialog.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\CreateSpheroidDialog.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\CreateStaircaseDialog.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\EntitiesDialog.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\Entity.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\EntityTable.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\EntityVisDlg.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\EntTypeName.c"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\EntView.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\Export3dsDialog.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\face.c"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\FaceAttributesDialog.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\FaceList.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\FilePath.c"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\FUSION.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\FUSIONDoc.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\FusionTabControls.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\FUSIONView.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\GridSizeDialog.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\group.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\KeyEditDlg.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\level.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\LevelOptions.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\List.c"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\MainFrm.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\model.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\ModelDialog.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\MoveDialog.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\NameWindow.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\node.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\Parse3dt.c"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\PreferencesDialog.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\Prefs.c"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\render.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\RotateDialog.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\ScaleDialog.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\SelBrushList.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\SelFaceList.c"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\SkyDialog.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\stack.c"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\TextureDialog.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\TexturePacker.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\typeio.c"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\undostack.cpp"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\util.c"
+"C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\WadFile.cpp"
+]
+Creating command line "cl.exe @C:\Users\Acer\AppData\Local\Temp\RSP47CC.tmp" 
+Creating temporary file "C:\Users\Acer\AppData\Local\Temp\RSP47CD.tmp" with contents
+[
+nafxcw.lib libcmt.lib .\GenesisSDK\lib\genesis.lib advapi32.lib ctl3d32.lib comctl32.lib comdlg32.lib gdi32.lib kernel32.lib oldnames.lib ole32.lib oleaut32.lib oledlg.lib shell32.lib urlmon.lib user32.lib uuid.lib winmm.lib winspool.lib /nologo /subsystem:windows /incremental:no /pdb:".\Debug/EQ_Fusion.pdb" /machine:I386 /nodefaultlib:"l" /out:".\Debug/EQ_Fusion.exe" /libpath:"..\..\msdev60\lib" /libpath:"..\..\msdev60\mfc\lib" 
+".\Release\cparser.obj"
+".\Release\cscanner.obj"
+".\Release\Hash.obj"
+".\Release\iden.obj"
+".\Release\scanner.obj"
+".\Release\symtab.obj"
+".\Release\type.obj"
+".\Release\A_Dialogs.obj"
+".\Release\A_FileIO.obj"
+".\Release\A_Scene.obj"
+".\Release\AB_App.obj"
+".\Release\AB_Export_RFW.obj"
+".\Release\about.obj"
+".\Release\ActivationWatch.obj"
+".\Release\array.obj"
+".\Release\box3d.obj"
+".\Release\brush.obj"
+".\Release\BrushAttributesDialog.obj"
+".\Release\BrushEntityDialog.obj"
+".\Release\BrushGroupDialog.obj"
+".\Release\BrushTemplate.obj"
+".\Release\CapView.obj"
+".\Release\ChildFrm.obj"
+".\Release\ColorBtn.obj"
+".\Release\CompileDialog.obj"
+".\Release\Compiler.obj"
+".\Release\ConsoleTab.obj"
+".\Release\CreateArchDialog.obj"
+".\Release\CreateBoxDialog.obj"
+".\Release\CreateConeDialog.obj"
+".\Release\CreateCylDialog.obj"
+".\Release\CreateSpheroidDialog.obj"
+".\Release\CreateStaircaseDialog.obj"
+".\Release\EntitiesDialog.obj"
+".\Release\Entity.obj"
+".\Release\EntityTable.obj"
+".\Release\EntityVisDlg.obj"
+".\Release\EntTypeName.obj"
+".\Release\EntView.obj"
+".\Release\Export3dsDialog.obj"
+".\Release\face.obj"
+".\Release\FaceAttributesDialog.obj"
+".\Release\FaceList.obj"
+".\Release\FilePath.obj"
+".\Release\FUSION.obj"
+".\Release\FUSIONDoc.obj"
+".\Release\FusionTabControls.obj"
+".\Release\FUSIONView.obj"
+".\Release\GridSizeDialog.obj"
+".\Release\group.obj"
+".\Release\KeyEditDlg.obj"
+".\Release\level.obj"
+".\Release\LevelOptions.obj"
+".\Release\List.obj"
+".\Release\MainFrm.obj"
+".\Release\model.obj"
+".\Release\ModelDialog.obj"
+".\Release\MoveDialog.obj"
+".\Release\NameWindow.obj"
+".\Release\node.obj"
+".\Release\Parse3dt.obj"
+".\Release\PreferencesDialog.obj"
+".\Release\Prefs.obj"
+".\Release\render.obj"
+".\Release\RotateDialog.obj"
+".\Release\ScaleDialog.obj"
+".\Release\SelBrushList.obj"
+".\Release\SelFaceList.obj"
+".\Release\SkyDialog.obj"
+".\Release\stack.obj"
+".\Release\TextureDialog.obj"
+".\Release\TexturePacker.obj"
+".\Release\typeio.obj"
+".\Release\undostack.obj"
+".\Release\util.obj"
+".\Release\WadFile.obj"
+".\Debug\FUSION.res"
+]
+Creating command line "link.exe @C:\Users\Acer\AppData\Local\Temp\RSP47CD.tmp"
+<h3>Output Window</h3>
+Compiling resources...
+Compiling...
+cparser.c
+cscanner.c
+Hash.c
+iden.C
+scanner.c
+symtab.c
+type.c
+Type_AddTypeField can't propagate memory allocation errors
+A_Dialogs.cpp
+A_FileIO.cpp
+A_Scene.cpp
+AB_App.cpp
+AB_Export_RFW.cpp
+C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\AB_Export_RFW.cpp(145) : warning C4100: 'ExpFiles' : unreferenced formal parameter
+C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\AB_Export_RFW.cpp(145) : warning C4100: 'ExpLights' : unreferenced formal parameter
+C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\AB_Export_RFW.cpp(145) : warning C4100: 'ExpSelected' : unreferenced formal parameter
+C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\AB_Export_RFW.cpp(145) : warning C4100: 'FileName' : unreferenced formal parameter
+C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\AB_Export_RFW.cpp(510) : warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\AB_Export_RFW.cpp(305) : warning C4100: 'GroupID' : unreferenced formal parameter
+C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\AB_Export_RFW.cpp(305) : warning C4100: 'ExpLights' : unreferenced formal parameter
+C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\AB_Export_RFW.cpp(305) : warning C4100: 'ExpSelected' : unreferenced formal parameter
+about.cpp
+ActivationWatch.cpp
+array.c
+box3d.c
+brush.cpp
+BrushAttributesDialog.cpp
+BrushEntityDialog.cpp
+BrushGroupDialog.cpp
+BrushTemplate.cpp
+CapView.cpp
+C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\CapView.cpp(68) : warning C4100: 'wParam' : unreferenced formal parameter
+C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\CapView.cpp(128) : warning C4100: 'point' : unreferenced formal parameter
+ChildFrm.cpp
+ColorBtn.cpp
+CompileDialog.cpp
+Compiler.cpp
+Should UpdateEntities return a GBSP_RETVAL?
+ConsoleTab.cpp
+CreateArchDialog.cpp
+CreateBoxDialog.cpp
+CreateConeDialog.cpp
+CreateCylDialog.cpp
+CreateSpheroidDialog.cpp
+CreateStaircaseDialog.cpp
+EntitiesDialog.cpp
+Entity.cpp
+C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\Entity.cpp(489) : warning C4101: 'BName' : unreferenced local variable
+C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\Entity.cpp(485) : warning C4101: 'Index' : unreferenced local variable
+C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\Entity.cpp(487) : warning C4101: 'BoneName' : unreferenced local variable
+C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\Entity.cpp(486) : warning C4101: 'BoneIndex' : unreferenced local variable
+C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\Entity.cpp(488) : warning C4101: 'Transform' : unreferenced local variable
+EntityTable.cpp
+EntityVisDlg.cpp
+EntTypeName.c
+EntView.cpp
+Export3dsDialog.cpp
+face.c
+this is an ugly hack.  Values should never be == 0.
+this is an ugly hack.  Values should never be == 0.
+New texture vector output!
+FaceAttributesDialog.cpp
+FaceList.cpp
+FilePath.c
+FUSION.cpp
+FUSIONDoc.cpp
+C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\FUSIONDoc.cpp(2411) : warning C4100: 'pCmdUI' : unreferenced formal parameter
+Need to reverse plane?
+FusionTabControls.cpp
+FUSIONView.cpp
+Can't do multiple brush scaling due to Brush_Resize implementation.
+Can't do multiple brush shear due to Brush_Shear implementation.
+GridSizeDialog.cpp
+group.cpp
+See if this entity is really in this group?
+KeyEditDlg.cpp
+level.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\VC98\MFC\Include\afxtempl.h(1566) : warning C4505: 'Level_LoadEntities' : unreferenced local function has been removed
+        C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\level.cpp(121) : see declaration of 'Level_LoadEntities'
+C:\Program Files (x86)\Microsoft Visual Studio\VC98\MFC\Include\afxtempl.h(1566) : warning C4505: 'Level_LoadSky' : unreferenced local function has been removed
+        C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\level.cpp(673) : see declaration of 'Level_LoadSky'
+C:\Program Files (x86)\Microsoft Visual Studio\VC98\MFC\Include\afxtempl.h(1566) : warning C4505: 'Level_LoadCompileInfo' : unreferenced local function has been removed
+        C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\level.cpp(721) : see declaration of 'Level_LoadCompileInfo'
+C:\Program Files (x86)\Microsoft Visual Studio\VC98\MFC\Include\afxtempl.h(1566) : warning C4505: 'Level_LoadGridInfo' : unreferenced local function has been removed
+        C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\level.cpp(775) : see declaration of 'Level_LoadGridInfo'
+C:\Program Files (x86)\Microsoft Visual Studio\VC98\MFC\Include\afxtempl.h(1566) : warning C4505: 'Level_LoadViewInfo' : unreferenced local function has been removed
+        C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\level.cpp(822) : see declaration of 'Level_LoadViewInfo'
+C:\Program Files (x86)\Microsoft Visual Studio\VC98\MFC\Include\afxtempl.h(1566) : warning C4505: 'Level_LoadBrushTemplates' : unreferenced local function has been removed
+        C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\level.cpp(840) : see declaration of 'Level_LoadBrushTemplates'
+C:\Program Files (x86)\Microsoft Visual Studio\VC98\MFC\Include\afxtempl.h(1566) : warning C4505: 'Level_WriteBrushTemplates' : unreferenced local function has been removed
+        C:\Users\Acer\Desktop\SB_GD\Equity-WorldEditor\level.cpp(1202) : see declaration of 'Level_WriteBrushTemplates'
+LevelOptions.cpp
+List.c
+MainFrm.cpp
+model.cpp
+ModelDialog.cpp
+Clean this up and move path/motion twiddling to Model.c
+MoveDialog.cpp
+NameWindow.cpp
+node.cpp
+Parse3dt.c
+PreferencesDialog.cpp
+Prefs.c
+render.cpp
+This function should not be called by non-ortho views.
+RotateDialog.cpp
+ScaleDialog.cpp
+SelBrushList.cpp
+SelFaceList.c
+SkyDialog.cpp
+stack.c
+TextureDialog.cpp
+Change this and the function above to use BrushList_EnumAll
+TexturePacker.cpp
+typeio.c
+undostack.cpp
+util.c
+WadFile.cpp
+Linking...
+
+
+
+<h3>Results</h3>
+EQ_Fusion.exe - 0 error(s), 23 warning(s)
+</pre>
+</body>
+</html>

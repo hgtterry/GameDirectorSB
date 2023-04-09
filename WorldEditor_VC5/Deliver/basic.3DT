@@ -1,0 +1,466 @@
+3dtVersion 1.34
+TextureLib "C:\\RealityFactory\\media\\levels\\rfpack.txl"
+HeadersDir "C:\\RealityFactory\\source"
+ActorsDir "C:\\RealityFactory\\media\\actors"
+PawnIni "C:\\RealityFactory\\tools\\Pawn.ini"
+NumEntities 3
+NumModels 0
+NumGroups 1
+Brushlist 1
+Brush "aztec66"
+	Flags 1025
+	ModelId 0
+	GroupId 0
+	HullSize 16.000000
+	Type 1
+Brushlist 2
+Brush "aztec66"
+	Flags 1025
+	ModelId 0
+	GroupId 0
+	HullSize 16.000000
+	Type 2
+	BrushFaces 6
+		NumPoints 4
+		Flags 512
+		Light 300
+		MipMapBias 1.000000
+		Translucency 255.000000
+		Reflectivity 1.000000
+			Vec3d 272.000000 272.000061 -272.000000
+			Vec3d 272.000000 272.000061 272.000000
+			Vec3d -399.999939 272.000061 272.000000
+			Vec3d -399.999939 272.000061 -272.000000
+			TexInfo Rotate 0.000000 Shift 0 0 Scale 1.000000 1.000000 Name "brwall01"
+		LightScale 2.000000 2.000000
+	Transform	1.000000 0.000000 0.000000 0.000000 -0.000691 1.000000 0.000000 -1.000000 -0.000691 0.000000 0.000000 0.000000 
+	Pos	-63.999939 163.999924 -8.000031 
+		NumPoints 4
+		Flags 512
+		Light 300
+		MipMapBias 1.000000
+		Translucency 255.000000
+		Reflectivity 1.000000
+			Vec3d -399.999939 -16.000000 272.000000
+			Vec3d 272.000000 -16.000000 272.000000
+			Vec3d 272.000000 -16.000000 -272.000000
+			Vec3d -399.999939 -16.000000 -272.000000
+			TexInfo Rotate 0.000000 Shift 0 0 Scale 1.000000 1.000000 Name "brwall01"
+		LightScale 2.000000 2.000000
+	Transform	1.000000 0.000000 0.000000 0.000000 -0.000691 1.000000 0.000000 -1.000000 -0.000691 0.000000 0.000000 0.000000 
+	Pos	-63.999939 163.999924 -8.000031 
+		NumPoints 4
+		Flags 512
+		Light 300
+		MipMapBias 1.000000
+		Translucency 255.000000
+		Reflectivity 1.000000
+			Vec3d 272.000000 272.000061 272.000000
+			Vec3d 272.000000 -16.000000 272.000000
+			Vec3d -399.999939 -16.000000 272.000000
+			Vec3d -399.999939 272.000061 272.000000
+			TexInfo Rotate 0.000000 Shift 0 0 Scale 1.000000 1.000000 Name "brwall01"
+		LightScale 2.000000 2.000000
+	Transform	1.000000 0.000000 0.000000 0.000000 -0.999999 -0.001381 0.000000 0.001381 -0.999999 0.000000 0.000000 0.000000 
+	Pos	-63.999939 163.999924 -8.000031 
+		NumPoints 4
+		Flags 512
+		Light 300
+		MipMapBias 1.000000
+		Translucency 255.000000
+		Reflectivity 1.000000
+			Vec3d -399.999939 -16.000000 -272.000000
+			Vec3d 272.000000 -16.000000 -272.000000
+			Vec3d 272.000000 272.000061 -272.000000
+			Vec3d -399.999939 272.000061 -272.000000
+			TexInfo Rotate 0.000000 Shift 0 0 Scale 1.000000 1.000000 Name "brwall01"
+		LightScale 2.000000 2.000000
+	Transform	1.000000 0.000000 0.000000 0.000000 -0.999999 -0.001381 0.000000 0.001381 -0.999999 0.000000 0.000000 0.000000 
+	Pos	-63.999939 163.999924 -8.000031 
+		NumPoints 4
+		Flags 512
+		Light 300
+		MipMapBias 1.000000
+		Translucency 255.000000
+		Reflectivity 1.000000
+			Vec3d -399.999939 272.000061 272.000000
+			Vec3d -399.999939 -16.000000 272.000000
+			Vec3d -399.999939 -16.000000 -272.000000
+			Vec3d -399.999939 272.000061 -272.000000
+			TexInfo Rotate 0.000000 Shift 0 0 Scale 1.000000 1.000000 Name "brwall01"
+		LightScale 2.000000 2.000000
+	Transform	0.000000 0.000000 1.000000 0.000000 1.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 0.000000 0.000000 
+	Pos	-63.999939 163.999924 -8.000031 
+		NumPoints 4
+		Flags 512
+		Light 300
+		MipMapBias 1.000000
+		Translucency 255.000000
+		Reflectivity 1.000000
+			Vec3d 272.000000 -16.000000 -272.000000
+			Vec3d 272.000000 -16.000000 272.000000
+			Vec3d 272.000000 272.000061 272.000000
+			Vec3d 272.000000 272.000061 -272.000000
+			TexInfo Rotate 0.000000 Shift 0 0 Scale 1.000000 1.000000 Name "brwall01"
+		LightScale 2.000000 2.000000
+	Transform	0.000000 0.000000 1.000000 0.000000 1.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 0.000000 0.000000 
+	Pos	-63.999939 163.999924 -8.000031 
+Brush "aztec66"
+	Flags 145
+	ModelId 0
+	GroupId 0
+	HullSize 16.000000
+	Type 2
+	BrushFaces 6
+		NumPoints 4
+		Flags 512
+		Light 300
+		MipMapBias 1.000000
+		Translucency 255.000000
+		Reflectivity 1.000000
+			Vec3d -383.999939 256.000061 -255.999924
+			Vec3d 256.000000 256.000061 -255.999924
+			Vec3d 256.000000 256.000061 255.999924
+			Vec3d -383.999939 256.000061 255.999924
+			TexInfo Rotate 0.000000 Shift 0 0 Scale 1.000000 1.000000 Name "ceillight"
+		LightScale 2.000000 2.000000
+	Transform	1.000000 0.000000 0.000000 0.000000 -0.000691 1.000000 0.000000 -1.000000 -0.000691 0.000000 0.000000 0.000000 
+	Pos	-63.999939 163.999924 -8.000031 
+		NumPoints 4
+		Flags 512
+		Light 300
+		MipMapBias 1.000000
+		Translucency 255.000000
+		Reflectivity 1.000000
+			Vec3d 256.000000 0.000000 -255.999924
+			Vec3d -383.999939 0.000000 -255.999924
+			Vec3d -383.999939 0.000000 255.999924
+			Vec3d 256.000000 0.000000 255.999924
+			TexInfo Rotate 0.000000 Shift 0 0 Scale 0.500000 0.500000 Name "stfloor01"
+		LightScale 2.000000 2.000000
+	Transform	1.000000 0.000000 0.000000 0.000000 -0.000691 1.000000 0.000000 -1.000000 -0.000691 0.000000 0.000000 0.000000 
+	Pos	-63.999939 163.999924 -8.000031 
+		NumPoints 4
+		Flags 512
+		Light 300
+		MipMapBias 1.000000
+		Translucency 255.000000
+		Reflectivity 1.000000
+			Vec3d 256.000000 0.000000 255.999924
+			Vec3d -383.999939 0.000000 255.999924
+			Vec3d -383.999939 256.000061 255.999924
+			Vec3d 256.000000 256.000061 255.999924
+			TexInfo Rotate 0.000000 Shift 0 0 Scale 1.000000 1.000000 Name "brwall01"
+		LightScale 2.000000 2.000000
+	Transform	1.000000 0.000000 0.000000 0.000000 -1.000000 -0.000488 0.000000 0.000488 -1.000000 0.000000 0.000000 0.000000 
+	Pos	-63.999939 163.999924 -8.000031 
+		NumPoints 4
+		Flags 512
+		Light 300
+		MipMapBias 1.000000
+		Translucency 255.000000
+		Reflectivity 1.000000
+			Vec3d 256.000000 256.000061 -255.999924
+			Vec3d -383.999939 256.000061 -255.999924
+			Vec3d -383.999939 0.000000 -255.999924
+			Vec3d 256.000000 0.000000 -255.999924
+			TexInfo Rotate 0.000000 Shift 0 0 Scale 1.000000 1.000000 Name "brwall01"
+		LightScale 2.000000 2.000000
+	Transform	1.000000 0.000000 0.000000 0.000000 -1.000000 -0.000488 0.000000 0.000488 -1.000000 0.000000 0.000000 0.000000 
+	Pos	-63.999939 163.999924 -8.000031 
+		NumPoints 4
+		Flags 512
+		Light 300
+		MipMapBias 1.000000
+		Translucency 255.000000
+		Reflectivity 1.000000
+			Vec3d -383.999939 0.000000 255.999924
+			Vec3d -383.999939 0.000000 -255.999924
+			Vec3d -383.999939 256.000061 -255.999924
+			Vec3d -383.999939 256.000061 255.999924
+			TexInfo Rotate 0.000000 Shift 0 0 Scale 1.000000 1.000000 Name "brwall01"
+		LightScale 2.000000 2.000000
+	Transform	0.000000 0.000000 1.000000 -0.000345 1.000000 0.000000 -1.000000 -0.000345 0.000000 0.000000 0.000000 0.000000 
+	Pos	-63.999939 163.999924 -8.000031 
+		NumPoints 4
+		Flags 512
+		Light 300
+		MipMapBias 1.000000
+		Translucency 255.000000
+		Reflectivity 1.000000
+			Vec3d 256.000000 256.000061 255.999924
+			Vec3d 256.000000 256.000061 -255.999924
+			Vec3d 256.000000 0.000000 -255.999924
+			Vec3d 256.000000 0.000000 255.999924
+			TexInfo Rotate 0.000000 Shift 0 0 Scale 1.000000 1.000000 Name "brwall01"
+		LightScale 2.000000 2.000000
+	Transform	0.000000 0.000000 1.000000 -0.000345 1.000000 0.000000 -1.000000 -0.000345 0.000000 0.000000 0.000000 0.000000 
+	Pos	-63.999939 163.999924 -8.000031 
+Class CEntList
+EntCount 3
+CurEnt 0
+CEntity
+eStyle 0
+eOrigin -55 1 14 2
+eFlags 0
+eGroup 0
+ePairCount 28
+Key ActorName Value "virgil.act"
+Key ActorRotation Value "-90 180 0"
+Key ActorScaleFactor Value "1.0"
+Key AttributeInfoFile Value "player.ini"
+Key classname Value "PlayerSetup"
+Key DeathFogColor Value "255 0 0"
+Key DeathFontSize Value "0"
+Key Deathlevel Value ""
+Key DeathMessage Value ""
+Key HeadBobbing Value "False"
+Key HeadBobLimit Value "8.0"
+Key HeadBobSpeed Value "1.0"
+Key HUDInfoFile Value "hud.ini"
+Key KeepAttrAtDeath Value "False"
+Key LevelViewPoint Value "0"
+Key LockView Value "False"
+Key MovieMode Value "False"
+Key OpeningCutScene Value ""
+Key origin Value "-55 1 14"
+Key PlayerScaleFactor Value "1.2"
+Key ShadowAlpha Value "0.0"
+Key ShadowAlphamap Value ""
+Key ShadowBitmap Value ""
+Key ShadowSize Value "0"
+Key UseDeathFog Value "False"
+Key UseProjectedShadows Value "False"
+Key UseStencilShadows Value "False"
+Key %name% Value "PlayerSetup1"
+End CEntity
+CEntity
+eStyle 0
+eOrigin -25 1 32 2
+eFlags 0
+eGroup 0
+ePairCount 9
+Key Angle Value "0 0 0"
+Key bSoundtrackLoops Value "False"
+Key classname Value "PlayerStart"
+Key origin Value "-25 1 32"
+Key szCDTrack Value ""
+Key szEntityName Value ""
+Key szMIDIFile Value ""
+Key szStreamingAudio Value ""
+Key %name% Value "PlayerStart1"
+End CEntity
+CEntity
+eStyle 0
+eOrigin 0 0 0 2
+eFlags 0
+eGroup 0
+ePairCount 4
+Key angles Value "180 0 0"
+Key classname Value "Camera"
+Key origin Value "0 0 0"
+Key %name% Value "Camera1"
+End CEntity
+Group "Default"
+	GroupId 0
+	Visible 1
+	Locked 0
+Color 255.000000 255.000000 255.000000
+Sky
+0 ""
+0 ""
+0 ""
+0 ""
+0 ""
+0 ""
+Axis 1.000000 0.000000 0.000000
+Speed 10.000000
+Scale 1.000000
+CompileInfo
+Filename "C:\\RealityFactory\\media\\levels\\basic.map"
+Vis 1
+Light 1
+Bsp 1
+Preview 1
+MinLight 1
+SuppressHidden 0
+EntitiesOnly 0
+VisDetail 0
+Verbose 0
+ExtraSamples 0
+LightScale 1.000000
+Radiosity 0
+NumBounce 10
+PatchSize 128.000000
+FastPatch 0
+ReflectScale 1.000000
+MinLight 128.000000 128.000000 128.000000
+VisVerbose 0
+FullVis 1
+SortPortals 1
+BspVerbose 0
+EntityVerbose 0
+ShowGroups 1
+EntityVis 73
+"WindGenerator" 1
+"CurvedSurfaceEnt" 1
+"CurvePatchEnt" 1
+"CurveEnt" 1
+"CurvePointEnt" 1
+"DSpotLight" 1
+"LiftBelt" 1
+"SkyDome" 1
+"ActMaterial" 1
+"CutScene" 1
+"EM_Morph" 1
+"ActorSpout" 1
+"Overlay" 1
+"ChangeAttribute" 1
+"CountDownTimer" 1
+"Pawn" 1
+"ScriptPoint" 1
+"ModifyAttribute" 1
+"Liquid" 1
+"ViewSwitch" 1
+"FixedCamera" 1
+"ScreenShake" 1
+"Explosion" 1
+"FlipBook" 1
+"Attribute" 1
+"ModelAttributes" 1
+"ModelStateModifier" 1
+"DestroyableModel" 1
+"FirePoint" 1
+"WallDecal" 1
+"DecalDefine" 1
+"Message" 1
+"LogicGate" 1
+"Trigger" 1
+"Flame" 1
+"Spout" 1
+"Rain" 1
+"EChaos" 1
+"FloatingParticles" 1
+"PlayerSetup" 1
+"PathFollower" 1
+"PathPoint" 1
+"TextureProc" 1
+"ElectricBolt" 1
+"ElectricBoltTerminus" 1
+"DynamicLight" 1
+"Corona" 1
+"EnvironmentSetup" 1
+"VideoTextureReplacer" 1
+"StreamingAudioProxy" 1
+"SoundtrackToggle" 1
+"ChangeLevel" 1
+"ParticleSystemProxy" 1
+"StaticMesh" 1
+"Foliage" 1
+"StaticEntityProxy" 1
+"AudioSource3D" 1
+"MorphingField" 1
+"PlayerStart" 1
+"TeleportTarget" 1
+"Teleporter" 1
+"LevelController" 1
+"MovingPlatform" 1
+"Door" 1
+"FogLight" 1
+"SunLight" 1
+"AreaSwitch" 1
+"FlipTree" 1
+"Sun" 1
+"Camera" 1
+"ModelOrigin" 1
+"spotlight" 1
+"light" 1
+Grid 1
+Type 1
+Snap 1
+Metric 10
+Texel 8
+Rotation 15
+BspRebuild 1
+TexturedView 1
+Zoom 0.581250
+PitchRollYaw 3.141433 0.000000 0.000000
+CamPos 0.000000 0.000000 0.000000
+TopView 1
+Zoom 0.793125
+PitchRollYaw 3.141593 0.000000 0.000000
+CamPos 0.000000 0.000000 0.000000
+FrontView 1
+Zoom 0.637500
+PitchRollYaw 3.141593 0.000000 0.000000
+CamPos 0.000000 0.000000 0.000000
+SideView 1
+Zoom 0.881250
+PitchRollYaw 3.141593 0.000000 0.000000
+CamPos 0.000000 0.000000 0.000000
+ArchTemplate
+NumSlits 3
+Thickness 150.000000
+Width 100.000000
+Radius 200.000000
+WallSize 16.000000
+Style 0
+EndAngle 180.000000
+StartAngle 0.000000
+TCut 0
+Sides 3
+CW 0
+Shape 0
+Radius2 64.000000
+Height 0.000000
+Massive 0
+Steps 0
+BoxTemplate
+Solid 1
+TCut 0
+TSheet 0
+Thickness 16.000000
+XSizeBot 680.000000
+XSizeTop 680.000000
+YSize 360.000000
+ZSizeBot 560.000000
+ZSizeTop 560.000000
+ConeTemplate
+Style 0
+Width 200.000000
+Height 300.000000
+VerticalStrips 4
+Thickness 16.000000
+TCut 0
+CylinderTemplate
+BotXOffset 0.000000
+BotXSize 128.000000
+BotZOffset 0.000000
+BotZSize 128.000000
+Solid 0
+Thickness 16.000000
+TopXOffset 0.000000
+TopXSize 128.000000
+TopZOffset 0.000000
+TopZSize 128.000000
+VerticalStripes 6
+YSize 512.000000
+RingLength 0.000000
+TCut 0
+SpheroidTemplate
+HorizontalBands 4
+VerticalBands 8
+YSize 256.000000
+Solid 0
+Thickness 16.000000
+TCut 0
+StaircaseTemplate
+Height 128.000000
+Length 128.000000
+NumberOfStairs 8
+Width 64.000000
+MakeRamp 0
+TCut 0
+TemplatePos 0.000000 147.999893 -8.000000
+DrawScale 1.000000
+LightmapScale 2.000000
