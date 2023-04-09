@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FUSION", "EQ_Fusion.vcproj", "{890F9AAF-1572-4BC2-9572-33BC83322E63}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EQ_FUSION", "WorldEditor_VC5\EQ_Fusion.vcproj", "{890F9AAF-1572-4BC2-9572-33BC83322E63}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
