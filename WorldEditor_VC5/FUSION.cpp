@@ -603,8 +603,11 @@ BOOL CFusionApp::OnOpenRecentFile (UINT nID)
 		// hgtterry
 		CFusionDoc* pDoc2 = GetActiveFusionDoc() ;
 		App->CL_World->Set_Paths();
+		App->CL_World->Reset_Editor();
 		App->CL_TabsGroups_Dlg->Fill_ListBox();
 		App->CL_TextureDialog->Fill_ListBox();
+
+		App->Say("Loaded",App->CL_World->mCurrent_3DT_File);
 	}
 
 	

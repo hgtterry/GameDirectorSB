@@ -98,11 +98,9 @@ public:
 	void Say_Float(float Value);
 	bool IsProcessRunning(char* executableName);
 
-	bool Custom_Button_Normal(LPNMCUSTOMDRAW item);
 	bool Custom_Button_Normal_MFC(LPDRAWITEMSTRUCT lpDIS,HWND hDlg);
-
-	bool Custom_Button_Toggle(LPNMCUSTOMDRAW item, bool Toggle);
 	bool Custom_Button_Toggle_MFC(LPDRAWITEMSTRUCT lpDIS,HWND hDlg, bool Toggle);
+	bool Custom_Button_Toggle_Tabs_MFC(LPDRAWITEMSTRUCT lpDIS,HWND hDlg, bool Toggle);
 
 	HBRUSH CreateGradientBrush(COLORREF top, COLORREF bottom, LPNMCUSTOMDRAW item);
 
@@ -116,6 +114,7 @@ public:
 	HBRUSH Brush_But_Pressed;
 	HBRUSH Brush_But_Normal;
 	HBRUSH Brush_But_Hover;
+	HBRUSH Brush_Tabs_UnSelected;
 
 	HFONT Font_CB15;
 	HFONT Font_CB18;

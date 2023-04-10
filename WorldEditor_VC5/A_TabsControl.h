@@ -33,8 +33,11 @@ public:
 	void Show_Tabs_Control_Dlg(bool Show);
 	void Select_Texture_Tab(int SelNum);
 	void Enable_Tabs_Dlg(bool Enable);
+	void Hide_Dialogs();
+
 
 	bool f_TabsDlg_Active;
+	bool Tab_Templates_Flag;
 
 	HWND Tabs_Control_Hwnd;
 
@@ -42,10 +45,6 @@ private:
 
 	static LRESULT CALLBACK Tabs_Control_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
-	void Hide_Dialogs();
-
 	bool Tab_Texture_Flag;
 	bool Tab_Group_Flag;
-	bool Tab_Templates_Flag;
-
 };

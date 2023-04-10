@@ -40,6 +40,7 @@ public:
 	void Get_FileName_FromPath(char *pString, char *FileName);
 	void Set_Current_TxlPath(void);
 	void Level_SetTxlPath(char* Path);
+	void Reset_Editor(void);
 
 	// Brush Percific
 	int Get_Brush_Count();

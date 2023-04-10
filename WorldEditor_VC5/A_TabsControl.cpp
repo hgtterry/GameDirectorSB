@@ -103,19 +103,19 @@ LRESULT CALLBACK A_TabsControl::Tabs_Control_Proc(HWND hDlg, UINT message, WPARA
 
 			if (lpDIS->CtlID == IDC_TBTEXTURES)
 			{
-				App->Custom_Button_Toggle_MFC(lpDIS,hDlg,App->CL_TabsControl->Tab_Texture_Flag);
+				App->Custom_Button_Toggle_Tabs_MFC(lpDIS,hDlg,App->CL_TabsControl->Tab_Texture_Flag);
 				return TRUE;
 			}
 
 			if (lpDIS->CtlID == IDC_TBTEMPLATES)
 			{
-				App->Custom_Button_Toggle_MFC(lpDIS,hDlg,App->CL_TabsControl->Tab_Templates_Flag);
+				App->Custom_Button_Toggle_Tabs_MFC(lpDIS,hDlg,App->CL_TabsControl->Tab_Templates_Flag);
 				return TRUE;
 			}
 
 			if (lpDIS->CtlID == IDC_TBGROUPS)
 			{
-				App->Custom_Button_Toggle_MFC(lpDIS,hDlg,App->CL_TabsControl->Tab_Group_Flag);
+				App->Custom_Button_Toggle_Tabs_MFC(lpDIS,hDlg,App->CL_TabsControl->Tab_Group_Flag);
 				return TRUE;
 			}
 
@@ -198,11 +198,14 @@ void A_TabsControl::Select_Texture_Tab(int SelNum)
 {
 	if(Tabs_Control_Hwnd && App->CL_TabsControl->f_TabsDlg_Active == 1)
 	{
+
+		App->CL_TabsControl->Hide_Dialogs();
 		App->CL_TextureDialog->Show_Dialog(true);
-		App->CL_TabsGroups_Dlg->Show_GroupsDialog(false);
-		App->CL_TabsTemplates_Dlg->Show_TemplatesDialog(false);
-	
 		App->CL_TextureDialog->Select_Texture(SelNum);
+
+		Tab_Texture_Flag = 1;
+		RedrawWindow(App->CL_TabsControl->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
 	}
 }
 

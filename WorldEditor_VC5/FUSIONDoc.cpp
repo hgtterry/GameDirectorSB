@@ -6495,7 +6495,8 @@ geBoolean CFusionDoc::ImportFile (const char *PathName, const geVec3d *location)
 {
 	App->CL_File->ImportFile(PathName,location);
 
-	App->Say("Imported");
+	App->CL_World->Reset_Editor();
+	App->Say("Imported",App->CL_World->mCurrent_3DT_File);
 
 	return GE_TRUE;
 }
@@ -6678,6 +6679,9 @@ void CFusionDoc::SelectTab( int nTabIndex )
 void CFusionDoc::OnFileOpen() 
 {
 	App->CL_File->Open_3dt_File(1);
+
+	App->CL_World->Reset_Editor();
+	App->Say("Loaded",App->CL_World->mCurrent_3DT_File);
 }
 
 
@@ -8500,6 +8504,7 @@ void CFusionDoc::OnFileExportGDSB()
 {
 	//App->ABC_Export_RFW->OnFileExportGDSB();
 	App->CL_Export_World->Export_World_GD3D(0);
+	App->Say("Exported");
 }
 
 
@@ -8892,26 +8897,15 @@ void CFusionDoc::OnToolsTemplate()
 	ResetAllSelectedFaces();
 	ResetAllSelectedBrushes();
 
-	
 	UpdateBrushAttributesDlg();
 	UpdateFaceAttributesDlg();
 
 	mModeTool = ID_TOOLS_TEMPLATE;
-//	if(pDoc->TempEnt) 
-//	{
-		mCurrentTool = ID_TOOLS_BRUSH_MOVEROTATEBRUSH;
-//	}
-//	else 
-//	{
-//		SetTool(ID_TOOLS_BRUSH_SCALEBRUSH);
-//	}
 
-//	pDoc->SetAdjustmentMode( ADJUST_MODE_BRUSH ) ;
+	mCurrentTool = ID_TOOLS_BRUSH_MOVEROTATEBRUSH;
 
 	SetAdjustmentMode( ADJUST_MODE_FACE ) ;
-
 	//ConfigureCurrentTool();
-	//mpMainFrame->m_wndTabControls->m_pBrushEntityDialog->Update(this);
 }
 
 void CFusionDoc::OnPlaceOmniLight()

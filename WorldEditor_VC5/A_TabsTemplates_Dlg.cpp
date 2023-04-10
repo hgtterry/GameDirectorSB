@@ -63,8 +63,8 @@ LRESULT CALLBACK A_TabsTemplates_Dlg::Templates_Proc(HWND hDlg, UINT message, WP
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_ST_GD_TEMPLATES, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_LISTTDTEXTURES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_BTTDAPPLY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));*/
+		SendDlgItemMessage(hDlg, IDC_BTINSERT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		//SendDlgItemMessage(hDlg, IDC_BTTDAPPLY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		return TRUE;
 	}
@@ -82,23 +82,23 @@ LRESULT CALLBACK A_TabsTemplates_Dlg::Templates_Proc(HWND hDlg, UINT message, WP
 	}
 
 	case WM_CTLCOLORDLG:
-	{
-		return (LONG)App->AppBackground;
-	}
-
-	case WM_NOTIFY:
-	{
-		LPNMHDR some_item = (LPNMHDR)lParam;
-
-		/*if (some_item->idFrom == IDC_BTTDAPPLY && some_item->code == NM_CUSTOMDRAW)
 		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
-			return CDRF_DODEFAULT;
-		}*/
+			return (LONG)App->AppBackground;
+		}
 
-		return CDRF_DODEFAULT;
-	}
+	case WM_DRAWITEM:
+		{
+
+			LPDRAWITEMSTRUCT lpDIS = (LPDRAWITEMSTRUCT)lParam;
+
+			if (lpDIS->CtlID == IDC_BTINSERT)
+			{
+				App->Custom_Button_Normal_MFC(lpDIS,hDlg);
+				return TRUE;
+			}
+
+			return TRUE;
+		}
 
 	case WM_COMMAND:
 		{
@@ -137,6 +137,23 @@ LRESULT CALLBACK A_TabsTemplates_Dlg::Templates_Proc(HWND hDlg, UINT message, WP
 				App->CL_CreateArchDialog->Start_CreateArch_Dlg();
 				return 1;
 			}
+
+			if (LOWORD(wParam) == IDC_BTINSERT)
+			{
+				App->CL_TabsTemplates_Dlg->m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+
+				if(App->CL_TabsTemplates_Dlg->m_pDoc->mModeTool == ID_TOOLS_TEMPLATE)
+				{
+					App->CL_TabsTemplates_Dlg->m_pDoc->AddBrushToWorld();
+					App->CL_TabsTemplates_Dlg->m_pDoc->SetModifiedFlag();
+				}
+
+				App->CL_TabsTemplates_Dlg->m_pDoc->DoGeneralSelect();
+				return 1;
+			}
+
+
+			
 			
 			// -----------------------------------------------------------------
 			if (LOWORD(wParam) == IDOK)

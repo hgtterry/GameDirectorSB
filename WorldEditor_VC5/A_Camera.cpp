@@ -206,14 +206,7 @@ LRESULT CALLBACK A_Camera::Move_Camera_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 	case WM_NOTIFY:
 	{
-		/*LPNMHDR some_item = (LPNMHDR)lParam;
-
-		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
-			return CDRF_DODEFAULT;
-		}*/
+		
 		return CDRF_DODEFAULT;
 	}
 	case WM_COMMAND:

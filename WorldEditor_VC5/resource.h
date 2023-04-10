@@ -191,8 +191,6 @@
 #define IDC_NAME                        1068
 #define IDC_CHECK3                      1068
 #define IDC_SKYTOP                      1068
-#define IDC_CKTBSHEAR                   1068
-#define IDC_CKTBBRUSHMODIFY             1068
 #define IDC_HULLSIZE                    1069
 #define IDC_CHECK4                      1069
 #define IDC_SKYBOTTOM                   1069
@@ -495,6 +493,7 @@
 #define IDC_BUTTON4                     1353
 #define IDC_BTTXLDELETE                 1353
 #define IDC_BT_TB_SELECTALL             1353
+#define IDC_BTTBSHEAR                   1353
 #define IDC_BUTTON5                     1354
 #define IDC_PREVIEW                     1355
 #define IDC_BUTTON6                     1356
@@ -513,6 +512,7 @@
 #define IDC_BTRESETANGLES               1363
 #define IDC_BT_TBF_QUICKLOAD            1363
 #define IDC_BT_TB_TEXTURED              1363
+#define IDC_BTTBSELECT                  1363
 #define IDC_BANNER                      1364
 #define IDC_GD_CYLINDER_PRIMITIVE       1364
 #define IDC_STTEXT                      1365
@@ -596,16 +596,16 @@
 #define IDC_BTEDITFILE                  1432
 #define IDC_STTEXTURE                   1433
 #define IDC_STALPHA                     1434
-#define IDC_CKSCALE                     1437
-#define IDC_CKTBWIRED                   1441
-#define IDC_CKTBSELECT                  1443
-#define IDC_CKTBMOVEROTATE              1444
-#define IDC_CKTBFILE                    1448
 #define IDC_BT_TB_BUILDPREVIEW          1449
 #define IDC_BT_TB_DESELECTALL           1450
 #define IDC_BT_TB_WORLDINFO             1451
-#define IDC_BUTTON2                     1452
 #define IDC_BT_TB_WIRED                 1452
+#define IDC_BT_TB_FILE                  1453
+#define IDC_BT_TB_MODIFY                1454
+#define IDC_BTTBMOVEROTATE              1455
+#define IDC_BTSCALE                     1456
+#define IDC_BUTTON2                     1458
+#define IDC_BTINSERT                    1458
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772
 #define ID_BRUSH_PRIMITIVES_SPHEROID    32773
@@ -785,7 +785,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        265
 #define _APS_NEXT_COMMAND_VALUE         33056
-#define _APS_NEXT_CONTROL_VALUE         1453
+#define _APS_NEXT_CONTROL_VALUE         1459
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

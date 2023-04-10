@@ -62,6 +62,34 @@ void A_World::Set_Paths(void)
 
 	Set_Current_3DT_Paths();
 	Set_Current_TxlPath();
+}
+
+
+// *************************************************************************
+// *			Reset_Editor:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void A_World::Reset_Editor(void)
+{
+	App->CL_TopTabs->Reset_Tabs_Buttons();
+	App->CL_TopTabs->Header_BrushModify_Flag = 1;
+	ShowWindow(App->CL_TopTabs->Brush_Modify_Panel_Hwnd, SW_SHOW);
+
+	App->CL_TopTabs->Reset_Render_Buttons();
+	App->CL_TopTabs->Textured_Flag = 1;
+
+	App->CL_TopTabs->Reset_Brush_Buttons();
+	App->CL_TopTabs->Brush_Select_Flag = 1;
+
+	App->CL_TopTabs->Select_Mode();
+
+	App->CL_TabsControl->Hide_Dialogs();
+	App->CL_TabsControl->Tab_Templates_Flag = 1;
+	App->CL_TabsTemplates_Dlg->Show_TemplatesDialog(true);
+
+	App->CL_Render_App->Render3D_Mode(ID_VIEW_TEXTUREVIEW);
+
+	RedrawWindow(App->CL_TabsControl->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	RedrawWindow(App->CL_TopTabs->Top_Tabs_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 }
 

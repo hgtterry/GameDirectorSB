@@ -46,6 +46,14 @@ A_TopTabs::A_TopTabs(void)
 
 	Textured_Flag = 0;
 	Wired_Flag = 0;
+
+	Header_File_Flag = 0;
+	Header_BrushModify_Flag = 0;
+
+	Brush_Select_Flag = 0;
+	Brush_MoveRotate_Flag = 0;
+	Brush_Scale_Flag = 0;
+	Brush_Shear_Flag = 0;
 }
 
 A_TopTabs::~A_TopTabs(void)
@@ -63,11 +71,11 @@ bool A_TopTabs::Start_Top_Tabs()
 	Start_File_Tab();
 
 	// Select File Tab
-	Reset_Tabs_Buttons(Top_Tabs_Hwnd);
+	Reset_Tabs_Buttons();
+	Header_File_Flag = 1;
+	RedrawWindow(Top_Tabs_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	ShowWindow(App->CL_TopTabs->File_Panel_Hwnd, SW_SHOW);
-	HWND temp = GetDlgItem(Top_Tabs_Hwnd, IDC_CKTBFILE);
-	SendMessage(temp, BM_SETCHECK, 1, 0);
-
+	
 	return 1;
 }
 
@@ -81,14 +89,16 @@ LRESULT CALLBACK A_TopTabs::Top_Tabs_Proc(HWND hDlg, UINT message, WPARAM wParam
 	{
 	case WM_INITDIALOG:
 	{
-		SendDlgItemMessage(hDlg, IDC_CKTBBRUSHMODIFY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_CKTBFILE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_TB_MODIFY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_TB_FILE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TB_TEXTURED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TB_WIRED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDC_BT_TB_SELECTALL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TB_DESELECTALL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TB_BUILDPREVIEW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_BT_TB_WORLDINFO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		return TRUE;
 	}
@@ -138,30 +148,47 @@ LRESULT CALLBACK A_TopTabs::Top_Tabs_Proc(HWND hDlg, UINT message, WPARAM wParam
 				return TRUE;
 			}
 
+			if (lpDIS->CtlID == IDC_BT_TB_WORLDINFO)
+			{
+				App->Custom_Button_Normal_MFC(lpDIS,hDlg);
+				return TRUE;
+			}
+
+			if (lpDIS->CtlID == IDC_BT_TB_FILE)
+			{
+				App->Custom_Button_Toggle_Tabs_MFC(lpDIS,hDlg,App->CL_TopTabs->Header_File_Flag);
+				return TRUE;
+			}
+
+			if (lpDIS->CtlID == IDC_BT_TB_MODIFY)
+			{
+				App->Custom_Button_Toggle_Tabs_MFC(lpDIS,hDlg,App->CL_TopTabs->Header_BrushModify_Flag);
+				return TRUE;
+			}
+
+
 			return TRUE;
 		}
 
 	case WM_COMMAND:
 		{
 			// ---------------- Tabs
-			if (LOWORD(wParam) == IDC_CKTBFILE)
+			if (LOWORD(wParam) == IDC_BT_TB_FILE)
 			{
-				App->CL_TopTabs->Reset_Tabs_Buttons(hDlg);
-				HWND temp = GetDlgItem(hDlg, IDC_CKTBFILE);
-				SendMessage(temp, BM_SETCHECK, 1, 0);
-
-				InvalidateRect(temp, NULL, TRUE);
+				App->CL_TopTabs->Reset_Tabs_Buttons();
+				App->CL_TopTabs->Header_File_Flag = 1;
+				RedrawWindow(App->CL_TopTabs->Top_Tabs_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+				
 				ShowWindow(App->CL_TopTabs->File_Panel_Hwnd, SW_SHOW);
-				UpdateWindow(App->CL_TopTabs->Top_Tabs_Hwnd);
-
+				
 				return TRUE;
 			}
 
-			if (LOWORD(wParam) == IDC_CKTBBRUSHMODIFY)
+			if (LOWORD(wParam) == IDC_BT_TB_MODIFY)
 			{
-				App->CL_TopTabs->Reset_Tabs_Buttons(hDlg);
-				HWND temp = GetDlgItem(hDlg, IDC_CKTBBRUSHMODIFY);
-				SendMessage(temp, BM_SETCHECK, 1, 0);
+				App->CL_TopTabs->Reset_Tabs_Buttons();
+				App->CL_TopTabs->Header_BrushModify_Flag = 1;
+				RedrawWindow(App->CL_TopTabs->Top_Tabs_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 				ShowWindow(App->CL_TopTabs->Brush_Modify_Panel_Hwnd, SW_SHOW);
 
@@ -171,7 +198,7 @@ LRESULT CALLBACK A_TopTabs::Top_Tabs_Proc(HWND hDlg, UINT message, WPARAM wParam
 			// --------------------
 			if (LOWORD(wParam) == IDC_BT_TB_TEXTURED)
 			{
-				App->CL_TopTabs->Reset_Render_Buttons(hDlg);
+				App->CL_TopTabs->Reset_Render_Buttons();
 				
 				App->CL_TopTabs->Textured_Flag = 1;
 				App->CL_Render_App->Render3D_Mode(ID_VIEW_TEXTUREVIEW);
@@ -182,7 +209,7 @@ LRESULT CALLBACK A_TopTabs::Top_Tabs_Proc(HWND hDlg, UINT message, WPARAM wParam
 
 			if (LOWORD(wParam) == IDC_BT_TB_WIRED)
 			{
-				App->CL_TopTabs->Reset_Render_Buttons(hDlg);
+				App->CL_TopTabs->Reset_Render_Buttons();
 
 				App->CL_TopTabs->Wired_Flag = 1;
 				App->CL_Render_App->Render3D_Mode(ID_VIEW_3DWIREFRAME);
@@ -274,23 +301,21 @@ LRESULT CALLBACK A_TopTabs::Top_Tabs_Proc(HWND hDlg, UINT message, WPARAM wParam
 // *************************************************************************
 // *	  	Reset_Tabs_Buttons:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-void A_TopTabs::Reset_Tabs_Buttons(HWND hDlg)
+void A_TopTabs::Reset_Tabs_Buttons()
 {
-	HWND temp = GetDlgItem(hDlg, IDC_CKTBFILE);
-	SendMessage(temp, BM_SETCHECK, 0, 0);
-
-	temp = GetDlgItem(hDlg, IDC_CKTBBRUSHMODIFY);
-	SendMessage(temp, BM_SETCHECK, 0, 0);
+	Header_File_Flag = 0;
+	Header_BrushModify_Flag = 0;
 
 	ShowWindow(Brush_Modify_Panel_Hwnd, SW_HIDE);
 	ShowWindow(File_Panel_Hwnd, SW_HIDE);
-	
+
+	RedrawWindow(App->CL_TopTabs->Top_Tabs_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 
 // *************************************************************************
 // *	  	Reset_Render_Buttons:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
-void A_TopTabs::Reset_Render_Buttons(HWND hDlg)
+void A_TopTabs::Reset_Render_Buttons()
 {
 	App->CL_TopTabs->Textured_Flag = 0;
 	App->CL_TopTabs->Wired_Flag = 0;
@@ -318,23 +343,15 @@ LRESULT CALLBACK A_TopTabs::BrushModify_Panel_Proc(HWND hDlg, UINT message, WPAR
 	{
 	case WM_INITDIALOG:
 	{
-		SendDlgItemMessage(hDlg, IDC_CKSCALE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_CKTBSELECT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_CKTBMOVEROTATE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_CKTBSHEAR, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BTSCALE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BTTBSELECT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BTTBMOVEROTATE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BTTBSHEAR, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
 	{
-		if (GetDlgItem(hDlg, IDC_CKSCALE) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 255, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->Brush_Green;
-		}
-
 		return FALSE;
 	}
 
@@ -343,43 +360,79 @@ LRESULT CALLBACK A_TopTabs::BrushModify_Panel_Proc(HWND hDlg, UINT message, WPAR
 			return (LONG)App->Brush_White;
 		}
 
+	case WM_DRAWITEM:
+		{
+
+			LPDRAWITEMSTRUCT lpDIS = (LPDRAWITEMSTRUCT)lParam;
+
+			if (lpDIS->CtlID == IDC_BTTBSELECT)
+			{
+				App->Custom_Button_Toggle_MFC(lpDIS,hDlg,App->CL_TopTabs->Brush_Select_Flag);
+				return TRUE;
+			}
+
+			if (lpDIS->CtlID == IDC_BTTBMOVEROTATE)
+			{
+				App->Custom_Button_Toggle_MFC(lpDIS,hDlg,App->CL_TopTabs->Brush_MoveRotate_Flag);
+				return TRUE;
+			}
+
+			if (lpDIS->CtlID == IDC_BTSCALE)
+			{
+				App->Custom_Button_Toggle_MFC(lpDIS,hDlg,App->CL_TopTabs->Brush_Scale_Flag);
+				return TRUE;
+			}
+
+			if (lpDIS->CtlID == IDC_BTTBSHEAR)
+			{
+				App->Custom_Button_Toggle_MFC(lpDIS,hDlg,App->CL_TopTabs->Brush_Shear_Flag);
+				return TRUE;
+			}
+
+			return TRUE;
+		}
+
 	case WM_COMMAND:
 		{
-			if (LOWORD(wParam) == IDC_CKTBMOVEROTATE)
+			if (LOWORD(wParam) == IDC_BTTBMOVEROTATE)
 			{
-				App->CL_TopTabs->Reset_Brush_Buttons(hDlg);
-				HWND temp = GetDlgItem(hDlg, IDC_CKTBMOVEROTATE);
-				SendMessage(temp, BM_SETCHECK, 1, 0);
+				App->CL_TopTabs->Reset_Brush_Buttons();
+				App->CL_TopTabs->Brush_MoveRotate_Flag = 1;
+
+				RedrawWindow(App->CL_TopTabs->Brush_Modify_Panel_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 				App->CL_TopTabs->Select_MoveRotate();
 				return TRUE;
 			}
 
-			if (LOWORD(wParam) == IDC_CKTBSHEAR)
+			if (LOWORD(wParam) == IDC_BTTBSHEAR)
 			{
-				App->CL_TopTabs->Reset_Brush_Buttons(hDlg);
-				HWND temp = GetDlgItem(hDlg, IDC_CKTBSHEAR);
-				SendMessage(temp, BM_SETCHECK, 1, 0);
+				App->CL_TopTabs->Reset_Brush_Buttons();
+				App->CL_TopTabs->Brush_Shear_Flag = 1;
+
+				RedrawWindow(App->CL_TopTabs->Brush_Modify_Panel_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 				App->CL_TopTabs->Select_Shear();
 				return TRUE;
 			}
 
-			if (LOWORD(wParam) == IDC_CKSCALE)
+			if (LOWORD(wParam) == IDC_BTSCALE)
 			{
-				App->CL_TopTabs->Reset_Brush_Buttons(hDlg);
-				HWND temp = GetDlgItem(hDlg, IDC_CKSCALE);
-				SendMessage(temp, BM_SETCHECK, 1, 0);
+				App->CL_TopTabs->Reset_Brush_Buttons();
+				App->CL_TopTabs->Brush_Scale_Flag = 1;
+
+				RedrawWindow(App->CL_TopTabs->Brush_Modify_Panel_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 				App->CL_TopTabs->Select_Scale();
 				return TRUE;
 			}
 
-			if (LOWORD(wParam) == IDC_CKTBSELECT)
+			if (LOWORD(wParam) == IDC_BTTBSELECT)
 			{
-				App->CL_TopTabs->Reset_Brush_Buttons(hDlg);
-				HWND temp = GetDlgItem(hDlg, IDC_CKTBSELECT);
-				SendMessage(temp, BM_SETCHECK, 1, 0);
+				App->CL_TopTabs->Reset_Brush_Buttons();
+				App->CL_TopTabs->Brush_Select_Flag = 1;
+
+				RedrawWindow(App->CL_TopTabs->Brush_Modify_Panel_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 				App->CL_TopTabs->Select_Mode();
 				return TRUE;
@@ -396,19 +449,14 @@ LRESULT CALLBACK A_TopTabs::BrushModify_Panel_Proc(HWND hDlg, UINT message, WPAR
 // *************************************************************************
 // *	  	Reset_Brush_Buttons:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-void A_TopTabs::Reset_Brush_Buttons(HWND hDlg)
+void A_TopTabs::Reset_Brush_Buttons()
 {
-	HWND temp = GetDlgItem(hDlg, IDC_CKTBSELECT);
-	SendMessage(temp, BM_SETCHECK, 0, 0);
+	Brush_Select_Flag = 0;
+	Brush_MoveRotate_Flag = 0;
+	Brush_Scale_Flag = 0;
+	Brush_Shear_Flag = 0;
 
-	temp = GetDlgItem(hDlg, IDC_CKSCALE);
-	SendMessage(temp, BM_SETCHECK, 0, 0);
-
-	temp = GetDlgItem(hDlg, IDC_CKTBMOVEROTATE);
-	SendMessage(temp, BM_SETCHECK, 0, 0);
-
-	temp = GetDlgItem(hDlg, IDC_CKTBSHEAR);
-	SendMessage(temp, BM_SETCHECK, 0, 0);
+	RedrawWindow(App->CL_TopTabs->Brush_Modify_Panel_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 
 // *************************************************************************
@@ -445,9 +493,18 @@ LRESULT CALLBACK A_TopTabs::Top_File_Proc(HWND hDlg, UINT message, WPARAM wParam
 			return (LONG)App->Brush_White;
 		}
 
-	case WM_NOTIFY:
+	case WM_DRAWITEM:
 		{
-			return CDRF_DODEFAULT;
+
+			LPDRAWITEMSTRUCT lpDIS = (LPDRAWITEMSTRUCT)lParam;
+
+			if (lpDIS->CtlID == IDC_BT_TBF_QUICKLOAD)
+			{
+				App->Custom_Button_Normal_MFC(lpDIS,hDlg);
+				return TRUE;
+			}
+
+			return TRUE;
 		}
 
 	case WM_COMMAND:
@@ -471,25 +528,13 @@ LRESULT CALLBACK A_TopTabs::Top_File_Proc(HWND hDlg, UINT message, WPARAM wParam
 
 				App->CL_World->Set_Paths();
 
-				// Select Brush Modify Tab
-				App->CL_TopTabs->Reset_Tabs_Buttons(App->CL_TopTabs->Top_Tabs_Hwnd);
-				ShowWindow(App->CL_TopTabs->Brush_Modify_Panel_Hwnd, SW_SHOW);
+				App->CL_World->Reset_Editor();
 
-				HWND temp = GetDlgItem(App->CL_TopTabs->Top_Tabs_Hwnd, IDC_CKTBFILE);
-				SendMessage(temp, BM_SETCHECK, 0, 0);
-
-				temp = GetDlgItem(App->CL_TopTabs->Top_Tabs_Hwnd, IDC_CKTBBRUSHMODIFY);
-				SendMessage(temp, BM_SETCHECK, 1, 0);
-
-				App->CL_TopTabs->Reset_Render_Buttons(hDlg);
-				App->CL_TopTabs->Textured_Flag = 1;
-				RedrawWindow(App->CL_TopTabs->Top_Tabs_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-
-				App->CL_Render_App->Render3D_Mode(ID_VIEW_TEXTUREVIEW);
 				App->CL_TabsGroups_Dlg->Fill_ListBox();
 
 				App->CL_World->Level_SetTxlPath(Txlpath);
 
+				App->Say("Loaded","StartRoom.3dt");
 				return TRUE;
 			}
 

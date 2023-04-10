@@ -35,34 +35,40 @@ public:
 	~A_TopTabs(void);
 
 	bool Start_Top_Tabs();
+	void Reset_Tabs_Buttons();
+	void Reset_Render_Buttons();
+	void Reset_Brush_Buttons();
+	void Select_Mode();
+
+	bool Header_BrushModify_Flag;
+	bool Textured_Flag;
+	bool Brush_Select_Flag;
 
 	HWND Top_Tabs_Hwnd;
+	HWND Brush_Modify_Panel_Hwnd;
+	HWND File_Panel_Hwnd;
 
 private:
 	static LRESULT CALLBACK Top_Tabs_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK BrushModify_Panel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Top_File_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
-	void Reset_Tabs_Buttons(HWND hDlg);
-	void Reset_Render_Buttons(HWND hDlg);
-
 	bool Start_File_Tab();
 
 	bool Start_BrushModify_Panel();
-	void Reset_Brush_Buttons(HWND hDlg);
-
-	void Select_Mode();
+	
 	void Select_MoveRotate();
 	void Select_Scale();
 	void Select_Shear();
 
-	bool Textured_Flag;
 	bool Wired_Flag;
 
-	HWND Brush_Modify_Panel_Hwnd;
-	HWND File_Panel_Hwnd;
+	bool Header_File_Flag;
+	
+	bool Brush_MoveRotate_Flag;
+	bool Brush_Scale_Flag;
+	bool Brush_Shear_Flag;
 
-//	CFusionView			*pView;
 	CFusionDoc			*m_pDoc;
 
 };
