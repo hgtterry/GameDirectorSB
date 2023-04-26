@@ -102,6 +102,7 @@ void ME_Ogre3D::AddToScene(void)
 	OgreModel_Node->attachObject(OgreModel_Ent);
 
 	OgreModel_Node->setVisible(false);
+	//OgreModel_Node->setPosition(268, 140, -240);
 	OgreModel_Node->setPosition(0, 0, 0);
 	OgreModel_Node->setScale(1, 1, 1);
 

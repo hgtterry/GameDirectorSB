@@ -182,6 +182,7 @@
     <ClInclude Include="ME_Preferences.h" />
     <ClInclude Include="ME_Recent_Files.h" />
     <ClInclude Include="ME_Render.h" />
+    <ClInclude Include="ME_Splitter.h" />
     <ClInclude Include="ME_TextureLib.h" />
     <ClInclude Include="ME_Textures.h" />
     <ClInclude Include="ME_TopBar.h" />
@@ -235,6 +236,7 @@
     <ClCompile Include="ME_Preferences.cpp" />
     <ClCompile Include="ME_Recent_Files.cpp" />
     <ClCompile Include="ME_Render.cpp" />
+    <ClCompile Include="ME_Splitter.cpp" />
     <ClCompile Include="ME_TextureLib.cpp" />
     <ClCompile Include="ME_Textures.cpp" />
     <ClCompile Include="ME_TopBar.cpp" />

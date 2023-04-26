@@ -342,11 +342,12 @@ void ME_Equity_SB::Load_File_Wepf()
 // *************************************************************************
 void ME_Equity_SB::Adjust()
 {
-	App->CL_Dimensions->Rotate_Z_Model(90);
-	App->CL_Dimensions->Rotate_X_Model(-90);
-	App->CL_Dimensions->Centre_Model_Mid();
+	
+	//App->CL_Dimensions->Rotate_Z_Model(90);
+	//App->CL_Dimensions->Rotate_X_Model(-90);
+	//App->CL_Dimensions->Centre_Model_Mid();
 
-	App->CL_Grid->Reset_View();
+	//App->CL_Grid->Reset_View();
 
 }
 

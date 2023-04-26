@@ -64,6 +64,8 @@ distribution.
 
 #include "SB_Dimensions.h"
 
+#include "ME_Splitter.h"
+
 class ME_App
 {
 public:
@@ -109,6 +111,8 @@ public:
 	ME_Keyboard*		CL_Keyboards;
 
 	SB_Dimensions* SBC_Dimensions;
+
+	ME_Splitter*		CL_Splitter;
 
 	bool InitApp(void);
 	bool SetMainWin_Centre(void);

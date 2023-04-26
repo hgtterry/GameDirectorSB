@@ -98,7 +98,7 @@ void ME_TopBar::Set_Loaded()
 }
 
 // *************************************************************************
-// *	  				Start_TopBar_Globals  	Terry					   *
+// *	  				Start_TopBar		  	Terry					   *
 // *************************************************************************
 bool ME_TopBar::Start_TopBar()
 {
@@ -968,6 +968,11 @@ LRESULT CALLBACK ME_TopBar::Model_TB_Proc(HWND hDlg, UINT message, WPARAM wParam
 
 	case WM_COMMAND:
 	{
+		if (LOWORD(wParam) == IDC_BT_SPLITTER)
+		{
+			App->CL_Splitter->Start_Splitter();
+		}
+
 		if (LOWORD(wParam) == IDC_BT_TEST)
 		{
 			//if (App->CL_Model->Model_Loaded == 1) // Check_Here

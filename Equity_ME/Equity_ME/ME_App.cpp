@@ -66,8 +66,9 @@ ME_App::ME_App()
 	CL_Keyboards =		nullptr;
 
 	SBC_Dimensions =	nullptr;
-
 	
+	CL_Splitter =		nullptr;
+
 	//----------------------------------------------
 	hInst =			nullptr;
 
@@ -173,8 +174,8 @@ bool ME_App::InitApp(void)
 	
 	SBC_Dimensions =	new SB_Dimensions();
 	CL_PB =				new ME_PB();
-
-
+	CL_Splitter =		new ME_Splitter();
+	
 	// ----------------------------------------------
 	SetBrushes_Fonts();
 
