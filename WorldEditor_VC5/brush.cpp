@@ -400,21 +400,22 @@ int			Brush_GetType (const Brush *b)
 	return b->Type;
 }
 
-const char	*Brush_GetName(const Brush *b)
-{
-	assert(b != NULL);
 
-	//are empty names ok?
-	return	b->Name;
-}
+//const char	*Brush_GetName(const Brush *b)
+//{
+//	assert(b != NULL);
+//
+//	//are empty names ok?
+//	return	b->Name;
+//}
 
-const BrushList	*Brush_GetBrushList(const Brush *b)
-{
-	assert(b != NULL);
-
-	//are empty names ok?
-	return	b->BList;
-}
+//const BrushList	*Brush_GetBrushList(const Brush *b)
+//{
+//	assert(b != NULL);
+//
+//	//are empty names ok?
+//	return	b->BList;
+//}
 
 
 void	Brush_SetModelId(Brush *b, const int mid)
@@ -1660,7 +1661,7 @@ void	Brush_Move(Brush *b,  const geVec3d *trans)
 {
 	assert(b && trans);
 
-	if(b->Type==BRUSH_MULTI)
+	if(b->Type == BRUSH_MULTI)
 	{
 		BrushList_Move(b->BList, trans);
 	}
@@ -1907,10 +1908,7 @@ Face	*Brush_RayCast(const Brush *b, geVec3d *CamOrg, geVec3d *dir, geFloat *dist
 /**************  BRUSH LIST HANDLERS *******************************/
 /*******************************************************************/
 
-BrushList *BrushList_Create
-	(
-	  void
-	)
+BrushList *BrushList_Create(void)
 {
 	BrushList *pList;
 

@@ -91,6 +91,7 @@ LRESULT CALLBACK A_TextureDialog::TextureDialog_Proc(HWND hDlg, UINT message, WP
 		SendDlgItemMessage(hDlg, IDC_LISTTDTEXTURES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BTTDAPPLY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BTEDITFILE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BTTDFACEPROPERTIES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		App->CL_TextureDialog->f_TextureDlg_Active = 1;
 
@@ -141,11 +142,23 @@ LRESULT CALLBACK A_TextureDialog::TextureDialog_Proc(HWND hDlg, UINT message, WP
 				return TRUE;
 			}
 
+			if (lpDIS->CtlID == IDC_BTTDFACEPROPERTIES)
+			{
+				App->Custom_Button_Normal_MFC(lpDIS,hDlg);
+				return TRUE;
+			}
+
 			return TRUE;
 		}
 
 	case WM_COMMAND:
 		{
+			if (LOWORD(wParam) == IDC_BTTDFACEPROPERTIES)
+			{
+				App->CL_FaceDialog->Start_FaceDialog();
+				return TRUE;
+			}
+			
 			if (LOWORD(wParam) == IDC_BTEDITFILE)
 			{
 				App->CL_TxlEditor->Start_Texl_Dialog();
@@ -306,7 +319,7 @@ static void TextureBrush(Brush *pBrush,int SelId,char const *Name,WadFileEntry* 
 	if(Brush_IsMulti(pBrush))
 	{
 		// changed QD 12/03
-		TextureBrushList((BrushList *)Brush_GetBrushList(pBrush), SelId, Name, pbmp);
+		TextureBrushList((BrushList *)App->CL_Brush->Brush_GetBrushList(pBrush), SelId, Name, pbmp);
 	}
 	else
 	{

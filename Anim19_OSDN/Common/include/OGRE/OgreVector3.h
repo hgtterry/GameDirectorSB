@@ -805,7 +805,8 @@ namespace Ogre
         static const Vector3 NEGATIVE_UNIT_Y;
         static const Vector3 NEGATIVE_UNIT_Z;
         static const Vector3 UNIT_SCALE;
-
+		static const Vector3 UNIT_TEST;
+		
         /** Function for writing to a stream.
         */
         inline _OgreExport friend std::ostream& operator <<

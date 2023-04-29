@@ -286,7 +286,7 @@ void CBrushAttributesDialog::AssignCurrentToValues()
 	{
 		Brush *pBrush = SelBrushList_GetBrush (pDoc->pSelBrushes, i);
 
-		pName = Brush_GetName (pBrush);	
+		pName = App->CL_Brush->Brush_GetName (pBrush);	
 		// Flags for the Types (RB's) are always up to date.
 		// changed QD 11/03
 		if( strcmp( pName, m_Name ) && !strstr(pName, ".act"))
@@ -361,7 +361,7 @@ void CBrushAttributesDialog::SetDialogFields (void)
 		m_Flocking		=Brush_IsFlocking (pBrush)		? TRUE : FALSE ;
 		m_Sheet			=Brush_IsSheet (pBrush)			? TRUE : FALSE ;
 
-		m_Name		=Brush_GetName (pBrush);
+		m_Name		= App->CL_Brush->Brush_GetName (pBrush);
 	/*
 		m_HullSize	=Brush_GetHullSize (pBrush);
 		if (m_HullSize < 1.0f)
@@ -698,7 +698,7 @@ static geBoolean SetName (Brush *pBrush, void *lParam)
 {
 	CString *pName = (CString *)lParam;
 // changed QD 11/03
-	if (strstr(Brush_GetName(pBrush),".act")!=NULL)
+	if (strstr(App->CL_Brush->Brush_GetName(pBrush),".act")!=NULL)
 		return GE_TRUE;
 // end change
 	Brush_SetName (pBrush, *pName);

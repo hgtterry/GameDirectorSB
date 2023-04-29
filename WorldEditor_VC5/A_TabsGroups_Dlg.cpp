@@ -140,6 +140,7 @@ LRESULT CALLBACK A_TabsGroups_Dlg::Groups_Proc(HWND hDlg, UINT message, WPARAM w
 			if (LOWORD(wParam) == IDC_BT_GD_BRUSHPROPERTIES)
 			{
 				App->CL_TabsGroups_Dlg->Start_Properties_Dlg();
+				SendDlgItemMessage(hDlg, IDC_GD_BRUSHLIST,LB_SETCURSEL, (WPARAM)App->CL_TabsGroups_Dlg->Selected_Index, (LPARAM)0);
 				return TRUE;
 			}
 
@@ -200,6 +201,38 @@ void A_TabsGroups_Dlg::List_Selection_Changed()
 }
 
 // *************************************************************************
+// *	  		Get_Index:- Terry and Hazel Flanigan 2023				   *
+// *************************************************************************
+void A_TabsGroups_Dlg::Get_Index(const Brush *b)
+{
+	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+
+	Level *pLevel = m_pDoc->pLevel;
+	BrushList *pList = Level_GetBrushes (m_pDoc->pLevel);
+
+	char buff[100];
+	int Selected = 0;
+	int Count = 0;
+	b = pList->First;
+	while (b != NULL)
+	{
+		Selected = m_pDoc->BrushIsSelected(b);
+
+		if (Selected == 1)
+		{
+			SendDlgItemMessage(GroupsDlg_Hwnd, IDC_GD_BRUSHLIST,LB_SETCURSEL, (WPARAM)Count, (LPARAM)0);
+			Selected_Index = Count;
+			List_Selection_Changed();
+		}
+
+		Count++;
+		b = b->Next;
+	}
+
+
+}
+
+// *************************************************************************
 // *		OnSelchangeBrushlist:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
 void A_TabsGroups_Dlg::OnSelchangeBrushlist(int Index) 
@@ -249,7 +282,7 @@ void A_TabsGroups_Dlg::Fill_ListBox()
 		b = pList->First;
 		while (b != NULL)
 		{
-			SendDlgItemMessage(GroupsDlg_Hwnd, IDC_GD_BRUSHLIST, LB_ADDSTRING, (WPARAM)0,(LPARAM)Brush_GetName(b));
+			SendDlgItemMessage(GroupsDlg_Hwnd, IDC_GD_BRUSHLIST, LB_ADDSTRING, (WPARAM)0,(LPARAM)App->CL_Brush->Brush_GetName(b));
 			Count++;
 			b = b->Next;
 		}
@@ -284,30 +317,6 @@ LRESULT CALLBACK A_TabsGroups_Dlg::Properties_Proc(HWND hDlg, UINT message, WPAR
 	}
 	case WM_CTLCOLORSTATIC:
 	{
-		/*if (GetDlgItem(hDlg, IDC_ST_GD_GROUPS) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 255));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}
-
-		if (GetDlgItem(hDlg, IDC_BRUSHCOUNT) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}
-
-		if (GetDlgItem(hDlg, IDC_ST_GD_BRUSHCOUNT) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}*/
-
 		return FALSE;
 	}
 
@@ -318,25 +327,6 @@ LRESULT CALLBACK A_TabsGroups_Dlg::Properties_Proc(HWND hDlg, UINT message, WPAR
 
 	case WM_COMMAND:
 		{
-			/*if (LOWORD(wParam) == IDC_GD_BRUSHLIST)
-			{
-				App->CL_TabsGroups_Dlg->List_Selection_Changed();
-
-				return TRUE;
-			}
-
-			if (LOWORD(wParam) == IDC_BT_GD_BRUSHPROPERTIES)
-			{
-				Debug
-				return TRUE;
-			}
-
-			if (LOWORD(wParam) == IDC_BTTEST)
-			{
-				App->CL_TabsGroups_Dlg->Fill_ListBox();
-				return TRUE;
-			}*/
-
 			// -----------------------------------------------------------------
 			if (LOWORD(wParam) == IDOK)
 			{
@@ -426,7 +416,7 @@ void A_TabsGroups_Dlg::List_BrushData(HWND hDlg)
 }
 
 // *************************************************************************
-// *	  	Show_BrushList:- Terry and Hazel Flanigan 2023				   *
+// *	  	Show_Brush_Info:- Terry and Hazel Flanigan 2023				   *
 // *************************************************************************
 bool A_TabsGroups_Dlg::Show_Brush_Info(const Brush *b, HWND hDlg)
 {

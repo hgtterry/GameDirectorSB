@@ -29,6 +29,8 @@ distribution.
 A_TabsTemplates_Dlg::A_TabsTemplates_Dlg(void)
 {
 	TemplatesDlg_Hwnd = NULL;
+
+	Insert_Enabled_Flag = 0;
 }
 
 A_TabsTemplates_Dlg::~A_TabsTemplates_Dlg(void)
@@ -50,6 +52,8 @@ void A_TabsTemplates_Dlg::Start_TemplatesDialog()
 {
 	TemplatesDlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_TABSTEMPLATES, App->CL_TabsControl->Tabs_Control_Hwnd, (DLGPROC)Templates_Proc);
 	Set_Icons();
+
+	Enable_Insert_Button(true);
 }
 
 // *************************************************************************
@@ -93,7 +97,7 @@ LRESULT CALLBACK A_TabsTemplates_Dlg::Templates_Proc(HWND hDlg, UINT message, WP
 
 			if (lpDIS->CtlID == IDC_BTINSERT)
 			{
-				App->Custom_Button_Normal_MFC(lpDIS,hDlg);
+				App->Custom_Button_Toggle_Disable(lpDIS, hDlg, App->CL_TabsTemplates_Dlg->Insert_Enabled_Flag);
 				return TRUE;
 			}
 
@@ -149,6 +153,8 @@ LRESULT CALLBACK A_TabsTemplates_Dlg::Templates_Proc(HWND hDlg, UINT message, WP
 				}
 
 				App->CL_TabsTemplates_Dlg->m_pDoc->DoGeneralSelect();
+
+				App->CL_TabsTemplates_Dlg->Enable_Insert_Button(false);
 				return 1;
 			}
 
@@ -199,6 +205,17 @@ void A_TabsTemplates_Dlg::Set_Icons()
 	Temp = GetDlgItem(TemplatesDlg_Hwnd, IDC_GD_ARCH_PRIMITIVE);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_ICON, (LPARAM)(HANDLE)App->Hnd_Arch_Icon);
 
+}
+
+// *************************************************************************
+// *	  	Enable_Insert_Button:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void A_TabsTemplates_Dlg::Enable_Insert_Button(bool Enable)
+{
+	EnableWindow(GetDlgItem(TemplatesDlg_Hwnd,IDC_BTINSERT),Enable);
+	Insert_Enabled_Flag = Enable;
+
+	RedrawWindow(App->CL_TabsTemplates_Dlg->TemplatesDlg_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 
 

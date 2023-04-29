@@ -198,14 +198,28 @@ void A_TabsControl::Select_Texture_Tab(int SelNum)
 {
 	if(Tabs_Control_Hwnd && App->CL_TabsControl->f_TabsDlg_Active == 1)
 	{
-
 		App->CL_TabsControl->Hide_Dialogs();
 		App->CL_TextureDialog->Show_Dialog(true);
 		App->CL_TextureDialog->Select_Texture(SelNum);
 
 		Tab_Texture_Flag = 1;
 		RedrawWindow(App->CL_TabsControl->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	}
+}
 
+// *************************************************************************
+// *	  	Select_Brushes_Tab:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void A_TabsControl::Select_Brushes_Tab(int SelNum)
+{
+	if(Tabs_Control_Hwnd && App->CL_TabsControl->f_TabsDlg_Active == 1)
+	{
+		App->CL_TabsControl->Hide_Dialogs();
+		App->CL_TabsGroups_Dlg->Show_GroupsDialog(true);
+		//App->CL_TextureDialog->Select_Texture(SelNum);
+
+		Tab_Group_Flag = 1;
+		RedrawWindow(App->CL_TabsControl->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	}
 }
 

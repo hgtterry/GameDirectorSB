@@ -72,8 +72,8 @@ LRESULT CALLBACK A_Camera::Move_Camera_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 		SendDlgItemMessage(hDlg, IDC_STCAMERA, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 
-		SendDlgItemMessage(hDlg, IDC_STPOSITION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_STANGLES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STPOSITION, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STANGLES, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDC_STCAMX, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_EDCAMX, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -93,6 +93,9 @@ LRESULT CALLBACK A_Camera::Move_Camera_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 		SendDlgItemMessage(hDlg, IDC_STCAMANGLEZ, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_EDCAMANGLEZ, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_BTRESETPOSITION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BTRESETANGLES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		char buf[255];
 
@@ -204,11 +207,26 @@ LRESULT CALLBACK A_Camera::Move_Camera_Proc(HWND hDlg, UINT message, WPARAM wPar
 		return (LONG)App->AppBackground;
 	}
 
-	case WM_NOTIFY:
-	{
-		
-		return CDRF_DODEFAULT;
-	}
+	case WM_DRAWITEM:
+		{
+
+			LPDRAWITEMSTRUCT lpDIS = (LPDRAWITEMSTRUCT)lParam;
+
+			if (lpDIS->CtlID == IDC_BTRESETPOSITION)
+			{
+				App->Custom_Button_Normal_MFC(lpDIS,hDlg);
+				return TRUE;
+			}
+
+			if (lpDIS->CtlID == IDC_BTRESETANGLES)
+			{
+				App->Custom_Button_Normal_MFC(lpDIS,hDlg);
+				return TRUE;
+			}
+
+			return TRUE;
+		}
+
 	case WM_COMMAND:
 
 		if (LOWORD(wParam) == IDC_BTRESETANGLES)
@@ -230,6 +248,32 @@ LRESULT CALLBACK A_Camera::Move_Camera_Proc(HWND hDlg, UINT message, WPARAM wPar
 			SetDlgItemText(hDlg, IDC_EDCAMANGLEZ,buf);
 
 			App->CL_Camera->pCameraEntity->SetAngles(&App->CL_Camera->Angles, Level_GetEntityDefs (App->CL_Camera->m_pDoc->pLevel) );
+
+			App->CL_Camera->m_pDoc->SetRenderedViewCamera( &(App->CL_Camera->pCameraEntity->mOrigin), &App->CL_Camera->Angles) ;
+			App->CL_Camera->m_pDoc->UpdateAllViews( UAV_ALLVIEWS, NULL );
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BTRESETPOSITION)
+		{
+	
+			App->CL_Camera->CameraPosition.X = 0; 
+			App->CL_Camera->CameraPosition.Y = 0;
+			App->CL_Camera->CameraPosition.Z = 0;
+
+			char buf[100];
+
+			sprintf(buf, "%f", App->CL_Camera->CameraPosition.X);
+			SetDlgItemText(hDlg, IDC_EDCAMX,buf);
+
+			sprintf(buf, "%f", App->CL_Camera->CameraPosition.Y);
+			SetDlgItemText(hDlg, IDC_EDCAMY,buf);
+
+			sprintf(buf, "%f", App->CL_Camera->CameraPosition.Z);
+			SetDlgItemText(hDlg, IDC_EDCAMZ,buf);
+
+			App->CL_Camera->pCameraEntity->SetOrigin(App->CL_Camera->CameraPosition.X,App->CL_Camera->CameraPosition.Y,App->CL_Camera->CameraPosition.Z, Level_GetEntityDefs(App->CL_Camera->m_pDoc->pLevel) );
 
 			App->CL_Camera->m_pDoc->SetRenderedViewCamera( &(App->CL_Camera->pCameraEntity->mOrigin), &App->CL_Camera->Angles) ;
 			App->CL_Camera->m_pDoc->UpdateAllViews( UAV_ALLVIEWS, NULL );

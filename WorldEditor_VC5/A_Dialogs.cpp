@@ -39,6 +39,11 @@ A_Dialogs::A_Dialogs()
 	Message_Text_Header[0] = 0;
 	Message_Text_Message[0] = 0;
 	Current_Txl_File[0] = 0;
+
+	CenterOfSelection.X = 0;
+	CenterOfSelection.Y = 0;
+	CenterOfSelection.Z = 0;
+
 }
 
 A_Dialogs::~A_Dialogs()
@@ -640,6 +645,205 @@ LRESULT CALLBACK A_Dialogs::About_Dlg_Proc(HWND hDlg, UINT message, WPARAM wPara
 		{
 			if (LOWORD(wParam) == IDOK)
 			{
+				EndDialog(hDlg, LOWORD(wParam));
+				return TRUE;
+			}
+
+			if (LOWORD(wParam) == IDCANCEL)
+			{
+				EndDialog(hDlg, LOWORD(wParam));
+				return TRUE;
+			}
+
+			break;
+		}
+	}
+
+	return FALSE;
+}
+
+// *************************************************************************
+// *	  	Start_Move_Brush_Dlg:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+bool A_Dialogs::Start_Move_Brush_Dlg()
+{
+
+	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+
+	CenterOfSelection = m_pDoc->SelectedGeoCenter;
+
+	DialogBox(App->hInst, (LPCTSTR)IDD_SB_MOVEBRUSH, App->MainHwnd, (DLGPROC)Move_Brush_Proc);
+
+	return 1;
+}
+
+// *************************************************************************
+// *        	Move_Brush_Proc:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+LRESULT CALLBACK A_Dialogs::Move_Brush_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+		{
+			SendDlgItemMessage(hDlg, IDC_STBRUSH, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
+			SendDlgItemMessage(hDlg, IDC_STPOSITION, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
+
+			SendDlgItemMessage(hDlg, IDC_STCAMX, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+			SendDlgItemMessage(hDlg, IDC_EDCAMX, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+			SendDlgItemMessage(hDlg, IDC_STCAMY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+			SendDlgItemMessage(hDlg, IDC_EDCAMY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+			SendDlgItemMessage(hDlg, IDC_STCAMZ, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+			SendDlgItemMessage(hDlg, IDC_EDCAMZ, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+			SendDlgItemMessage(hDlg, IDC_BTRESETPOSITION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+			char buf[255];
+
+			sprintf(buf, "%f", App->CL_Dialogs->CenterOfSelection.X);
+			SetDlgItemText(hDlg, IDC_EDCAMX,buf);
+
+			sprintf(buf, "%f", App->CL_Dialogs->CenterOfSelection.Y);
+			SetDlgItemText(hDlg, IDC_EDCAMY,buf);
+
+			sprintf(buf, "%f", App->CL_Dialogs->CenterOfSelection.Z);
+			SetDlgItemText(hDlg, IDC_EDCAMZ,buf);
+
+			return TRUE;
+
+		}
+	case WM_CTLCOLORSTATIC:
+		{
+
+			if (GetDlgItem(hDlg, IDC_STBRUSH) == (HWND)lParam)
+			{
+				SetBkColor((HDC)wParam, RGB(0, 255, 0));
+				SetTextColor((HDC)wParam, RGB(0, 0, 0));
+				SetBkMode((HDC)wParam, TRANSPARENT);
+				return (UINT)App->AppBackground;
+			}
+			if (GetDlgItem(hDlg, IDC_STPOSITION) == (HWND)lParam)
+			{
+				SetBkColor((HDC)wParam, RGB(0, 255, 0));
+				SetTextColor((HDC)wParam, RGB(0, 0, 0));
+				SetBkMode((HDC)wParam, TRANSPARENT);
+				return (UINT)App->AppBackground;
+			}
+
+			if (GetDlgItem(hDlg, IDC_STCAMX) == (HWND)lParam)
+			{
+				SetBkColor((HDC)wParam, RGB(0, 255, 0));
+				SetTextColor((HDC)wParam, RGB(0, 0, 0));
+				SetBkMode((HDC)wParam, TRANSPARENT);
+				return (UINT)App->AppBackground;
+			}
+			if (GetDlgItem(hDlg, IDC_STCAMY) == (HWND)lParam)
+			{
+				SetBkColor((HDC)wParam, RGB(0, 255, 0));
+				SetTextColor((HDC)wParam, RGB(0, 0, 0));
+				SetBkMode((HDC)wParam, TRANSPARENT);
+				return (UINT)App->AppBackground;
+			}
+
+			if (GetDlgItem(hDlg, IDC_STCAMZ) == (HWND)lParam)
+			{
+				SetBkColor((HDC)wParam, RGB(0, 255, 0));
+				SetTextColor((HDC)wParam, RGB(0, 0, 0));
+				SetBkMode((HDC)wParam, TRANSPARENT);
+				return (UINT)App->AppBackground;
+			}
+
+			return FALSE;
+		}
+
+	case WM_CTLCOLORDLG:
+		{
+			return (LONG)App->AppBackground;
+		}
+
+	case WM_DRAWITEM:
+		{
+
+			LPDRAWITEMSTRUCT lpDIS = (LPDRAWITEMSTRUCT)lParam;
+
+			if (lpDIS->CtlID == IDC_BTRESETPOSITION)
+			{
+				App->Custom_Button_Normal_MFC(lpDIS,hDlg);
+				return TRUE;
+			}
+
+			if (lpDIS->CtlID == IDC_BTRESETANGLES)
+			{
+				App->Custom_Button_Normal_MFC(lpDIS,hDlg);
+				return TRUE;
+			}
+
+			return TRUE;
+		}
+
+	case WM_COMMAND:
+		{
+			if (LOWORD(wParam) == IDC_BTRESETPOSITION)
+			{
+
+				App->CL_Dialogs->CenterOfSelection.X = 0; 
+				App->CL_Dialogs->CenterOfSelection.Y = 0;
+				App->CL_Dialogs->CenterOfSelection.Z = 0;
+
+				char buf[100];
+
+				sprintf(buf, "%f", App->CL_Dialogs->CenterOfSelection.X);
+				SetDlgItemText(hDlg, IDC_EDCAMX,buf);
+
+				sprintf(buf, "%f", App->CL_Dialogs->CenterOfSelection.Y);
+				SetDlgItemText(hDlg, IDC_EDCAMY,buf);
+
+				sprintf(buf, "%f", App->CL_Dialogs->CenterOfSelection.Z);
+				SetDlgItemText(hDlg, IDC_EDCAMZ,buf);
+
+				geVec3d_Subtract(&App->CL_Dialogs->CenterOfSelection, &App->CL_Dialogs->m_pDoc->SelectedGeoCenter, &App->CL_Dialogs->CenterOfSelection);
+				if (App->CL_Dialogs->m_pDoc->mModeTool == ID_TOOLS_TEMPLATE)
+				{
+					App->CL_Dialogs->m_pDoc->MoveTemplateBrush(&App->CL_Dialogs->CenterOfSelection);
+				}
+				else
+				{
+					App->CL_Dialogs->m_pDoc->MoveSelectedBrushList(App->CL_Dialogs->m_pDoc->pSelBrushes, &App->CL_Dialogs->CenterOfSelection);
+				}
+
+				App->CL_Dialogs->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+
+				return TRUE;
+			}
+
+			if (LOWORD(wParam) == IDOK)
+			{
+
+				char buff[100];
+				GetDlgItemText(hDlg,IDC_EDCAMX,(LPTSTR)buff,MAX_PATH);
+				App->CL_Dialogs->CenterOfSelection.X = (float)atof(buff);
+
+				GetDlgItemText(hDlg,IDC_EDCAMY,(LPTSTR)buff,MAX_PATH);
+				App->CL_Dialogs->CenterOfSelection.Y = (float)atof(buff);
+
+				GetDlgItemText(hDlg,IDC_EDCAMZ,(LPTSTR)buff,MAX_PATH);
+				App->CL_Dialogs->CenterOfSelection.Z = (float)atof(buff);
+
+				geVec3d_Subtract(&App->CL_Dialogs->CenterOfSelection, &App->CL_Dialogs->m_pDoc->SelectedGeoCenter, &App->CL_Dialogs->CenterOfSelection);
+				if (App->CL_Dialogs->m_pDoc->mModeTool == ID_TOOLS_TEMPLATE)
+				{
+					App->CL_Dialogs->m_pDoc->MoveTemplateBrush(&App->CL_Dialogs->CenterOfSelection);
+				}
+				else
+				{
+					App->CL_Dialogs->m_pDoc->MoveSelectedBrushList(App->CL_Dialogs->m_pDoc->pSelBrushes, &App->CL_Dialogs->CenterOfSelection);
+				}
+
+				App->CL_Dialogs->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+
 				EndDialog(hDlg, LOWORD(wParam));
 				return TRUE;
 			}

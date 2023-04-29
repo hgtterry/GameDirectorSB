@@ -234,7 +234,7 @@ void CChildFrame::OnSize(UINT nType, int cx, int cy) // hgtterry
 	if(InitDone &&(m_wndSplitter.GetRowCount()==2 && m_wndSplitter.GetColumnCount()==2))
 	{
 		m_wndSplitter.SetColumnInfo(0, (cx>>2)*2, 0);
-		m_wndSplitter.SetColumnInfo(1, cx>>2, 0);
+		m_wndSplitter.SetColumnInfo(1, cx>>3, 0);
 		m_wndSplitter.SetRowInfo(0, (cy>>2)*2, 0);
 		m_wndSplitter.SetRowInfo(1, cy>>2, 0);
 	}

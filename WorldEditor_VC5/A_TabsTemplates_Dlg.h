@@ -33,6 +33,7 @@ public:
 	void Start_TemplatesDialog();
 
 	void CreateNewTemplateBrush(Brush *pBrush);
+	void Enable_Insert_Button(bool Enable);
 
 	HWND TemplatesDlg_Hwnd;
 
@@ -41,6 +42,8 @@ private:
 	static LRESULT CALLBACK Templates_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Set_Icons();
+
+	bool Insert_Enabled_Flag;
 
 	CFusionDoc			*m_pDoc;
 };

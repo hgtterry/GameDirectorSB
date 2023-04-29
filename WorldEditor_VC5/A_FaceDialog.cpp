@@ -31,9 +31,11 @@ A_FaceDialog::~A_FaceDialog(void)
 // *************************************************************************
 void A_FaceDialog::Start_FaceDialog()
 {
-	FaceDlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_FACEDIALOG, App->MainHwnd, (DLGPROC)FaceDialog_Proc);
-
-	f_FaceDlg_Active = 1;
+	if (f_FaceDlg_Active == 0)
+	{
+		FaceDlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_FACE_PROPERTIES, App->MainHwnd, (DLGPROC)FaceDialog_Proc);
+		f_FaceDlg_Active = 1;
+	}
 }
 
 // *************************************************************************
@@ -46,8 +48,9 @@ LRESULT CALLBACK A_FaceDialog::FaceDialog_Proc(HWND hDlg, UINT message, WPARAM w
 	{
 	case WM_INITDIALOG:
 	{
-		//SendDlgItemMessage(hDlg, IDC_LABEL_NUM_FACES, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_LISTTDTEXTURES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_LABEL_NUM_FACES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STTEXT2, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STTEXT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		App->CL_FaceDialog->UpdatePolygonFocus();
 
@@ -72,7 +75,15 @@ LRESULT CALLBACK A_FaceDialog::FaceDialog_Proc(HWND hDlg, UINT message, WPARAM w
 	}
 	case WM_CTLCOLORSTATIC:
 	{
-		if (GetDlgItem(hDlg, IDC_GROUP_TEXTURE_OFFSET_SCALE) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_STTEXT2) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STTEXT) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -128,10 +139,26 @@ LRESULT CALLBACK A_FaceDialog::FaceDialog_Proc(HWND hDlg, UINT message, WPARAM w
 			return (LONG)App->AppBackground;
 		}
 
-	case WM_NOTIFY:
-	{
-		return CDRF_DODEFAULT;
-	}
+	case WM_DRAWITEM:
+		{
+
+			LPDRAWITEMSTRUCT lpDIS = (LPDRAWITEMSTRUCT)lParam;
+
+			if (lpDIS->CtlID == IDC_FLIPHORIZONTAL)
+			{
+				App->Custom_Button_Normal_MFC(lpDIS,hDlg);
+				return TRUE;
+			}
+
+			if (lpDIS->CtlID == IDC_FLIPVERTICAL)
+			{
+				App->Custom_Button_Normal_MFC(lpDIS,hDlg);
+				return TRUE;
+			}
+
+
+			return TRUE;
+		}
 
 	case WM_VSCROLL:
 		{

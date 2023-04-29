@@ -92,10 +92,10 @@ geFloat		Brush_GetHullSize(const Brush *b);
 uint32		Brush_GetColor(const Brush *b);
 int			Brush_GetType (const Brush *b);
 
-const char *Brush_GetName(const Brush *b);
+//const char *Brush_GetName(const Brush *b);
 Face		*Brush_GetSelectedFace(const Brush *b);
 const Box3d	*Brush_GetBoundingBox (const Brush *b);
-const BrushList	*Brush_GetBrushList(const Brush *b);
+//const BrushList	*Brush_GetBrushList(const Brush *b);
 geBoolean	Brush_GetParent(const BrushList	*pList,		//list to search
 							const Brush		*b,			//brush to find
 							Brush			**bParent);	//parent returned

@@ -118,6 +118,8 @@
 #define IDD_SB_MOVECAMERA               262
 #define IDD_SB_TOPTABS                  263
 #define IDD_SB_TB_PROPERTIES            264
+#define IDD_SB_TESTDIALOG               265
+#define IDD_SB_LEFTTOP                  266
 #define IDC_RESET_ALL                   1000
 #define IDC_EDIT1                       1001
 #define IDC_EDIT10                      1002
@@ -252,7 +254,9 @@
 #define IDD_SB_TABSGROUPS               1134
 #define IDD_SB_TABSTEMPLATES            1135
 #define IDD_SB_TB_FILES                 1136
+#define IDD_SB_MOVEBRUSH                1137
 #define IDC_CUBE_PRIMITIVE              1138
+#define IDD_SB_FACE_PROPERTIES          1138
 #define IDC_SPHEROID_PRIMITIVE          1139
 #define IDC_CYLINDER_PRIMITIVE          1140
 #define IDC_STAIRCASE_PRIMITIVE         1141
@@ -519,6 +523,7 @@
 #define IDC_GD_SPHEROID_PRIMITIVE       1365
 #define IDC_STMESSAGE                   1366
 #define IDC_GD_CONE_PRIMITIVE           1366
+#define IDC_STTEXT2                     1366
 #define IDC_STTXL                       1367
 #define IDC_GD_STAIRCASE_PRIMITIVE      1367
 #define IDC_BTWORLDINFO                 1368
@@ -604,8 +609,11 @@
 #define IDC_BT_TB_MODIFY                1454
 #define IDC_BTTBMOVEROTATE              1455
 #define IDC_BTSCALE                     1456
-#define IDC_BUTTON2                     1458
 #define IDC_BTINSERT                    1458
+#define IDC_BTRESETPOSITION             1459
+#define IDC_STBRUSH                     1460
+#define IDC_BTTDFACEPROPERTIES          1461
+#define IDC_STLEFTTOP                   1463
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772
 #define ID_BRUSH_PRIMITIVES_SPHEROID    32773
@@ -783,9 +791,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        265
+#define _APS_NEXT_RESOURCE_VALUE        267
 #define _APS_NEXT_COMMAND_VALUE         33056
-#define _APS_NEXT_CONTROL_VALUE         1459
+#define _APS_NEXT_CONTROL_VALUE         1464
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

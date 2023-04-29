@@ -272,11 +272,8 @@ geFloat Box3d_GetDepth
 	return (b->Max.Z - b->Min.Z + 1);
 }
 
-void Box3d_GetSize
-	(
-	  const Box3d *b,
-	  geVec3d *pSize
-	)
+
+void Box3d_GetSize(const Box3d *b,geVec3d *pSize)
 {
 	assert (Box3d_IsValid (b));
 	assert (pSize != NULL);

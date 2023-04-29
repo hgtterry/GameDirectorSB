@@ -1151,6 +1151,7 @@ void CFusionView::OnLButtonUp(UINT nFlags, CPoint point)
 #pragma warning (disable:4100)
 void CFusionView::OnLButtonDown(UINT nFlags, CPoint point)
 {
+	
 	/*
 	  These tables convert the index values returned by GetCursorBoxPos
 	  into the bitmapped values expected by the brush routines (the "sides" values).

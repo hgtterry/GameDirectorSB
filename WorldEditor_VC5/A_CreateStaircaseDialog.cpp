@@ -192,19 +192,6 @@ LRESULT CALLBACK A_CreateStaircaseDialog::CreateStaircase_Proc(HWND hDlg, UINT m
 		return (LONG)App->AppBackground;
 	}
 
-	case WM_NOTIFY:
-	{
-		LPNMHDR some_item = (LPNMHDR)lParam;
-
-		/*if (some_item->idFrom == IDC_BTSETVIEW && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item,App->CL_Dialogs->F_Textured);
-			return CDRF_DODEFAULT;
-		}*/
-
-		return CDRF_DODEFAULT;
-	}
 
 	case WM_COMMAND:
 		{
@@ -287,6 +274,9 @@ LRESULT CALLBACK A_CreateStaircaseDialog::CreateStaircase_Proc(HWND hDlg, UINT m
 				App->CL_CreateStaircaseDialog->CreateStaircase();
 
 				App->CL_TabsControl->Enable_Tabs_Dlg(true);
+
+				App->CL_TabsTemplates_Dlg->Enable_Insert_Button(true);
+
 				EndDialog(hDlg, LOWORD(wParam));
 				return TRUE;
 			}

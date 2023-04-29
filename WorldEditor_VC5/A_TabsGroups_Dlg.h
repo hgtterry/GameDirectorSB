@@ -33,6 +33,7 @@ public:
 	void Start_GroupsDialog();
 	void Start_Properties_Dlg();
 
+	void Get_Index(const Brush *b);
 	void Fill_ListBox();
 
 	bool Groups_Dlg_Created;

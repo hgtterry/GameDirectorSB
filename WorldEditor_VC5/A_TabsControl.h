@@ -32,7 +32,10 @@ public:
 	void Start_Tabs_Control_Dlg();
 	void Show_Tabs_Control_Dlg(bool Show);
 	void Select_Texture_Tab(int SelNum);
+
 	void Enable_Tabs_Dlg(bool Enable);
+	void Select_Brushes_Tab(int SelNum);
+
 	void Hide_Dialogs();
 
 

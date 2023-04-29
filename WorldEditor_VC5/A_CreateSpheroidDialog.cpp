@@ -212,20 +212,6 @@ LRESULT CALLBACK A_CreateSpheroidDialog::CreateSpheroid_Proc(HWND hDlg, UINT mes
 		return (LONG)App->AppBackground;
 	}
 
-	case WM_NOTIFY:
-	{
-		LPNMHDR some_item = (LPNMHDR)lParam;
-
-		/*if (some_item->idFrom == IDC_BTSETVIEW && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item,App->CL_Dialogs->F_Textured);
-			return CDRF_DODEFAULT;
-		}*/
-
-		return CDRF_DODEFAULT;
-	}
-
 	case WM_COMMAND:
 		{
 
@@ -291,17 +277,9 @@ LRESULT CALLBACK A_CreateSpheroidDialog::CreateSpheroid_Proc(HWND hDlg, UINT mes
 				return TRUE;
 			}
 
-			//if (LOWORD(wParam) == IDC_TSHEET)
-			//{
-			//	/*HWND Temp = GetDlgItem(hDlg, IDC_PICTURE);
-			//	SendMessage(Temp, STM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_SolidBox_Bmp);*/
-
-			//	return TRUE;
-			//}
-
 			if (LOWORD(wParam) == IDC_Defaults)
 			{
-				
+
 				App->CL_CreateSpheroidDialog->Set_Defaults(hDlg);
 				return TRUE;
 			}
@@ -316,6 +294,9 @@ LRESULT CALLBACK A_CreateSpheroidDialog::CreateSpheroid_Proc(HWND hDlg, UINT mes
 				App->CL_CreateSpheroidDialog->CreateSpheroid();
 
 				App->CL_TabsControl->Enable_Tabs_Dlg(true);
+
+				App->CL_TabsTemplates_Dlg->Enable_Insert_Button(true);
+
 				EndDialog(hDlg, LOWORD(wParam));
 				return TRUE;
 			}

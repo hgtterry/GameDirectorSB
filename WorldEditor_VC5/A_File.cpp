@@ -180,6 +180,7 @@ bool A_File::Load(const char *FileName)
 	{
 		Level_Destroy (&m_pDoc->pLevel);
 	}
+
 	m_pDoc->pLevel = NewLevel;
 //	pCameraEntity = NULL;
 

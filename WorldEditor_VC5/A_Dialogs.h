@@ -38,6 +38,8 @@ public:
 	bool Show_ListData();
 	void List_SceneData(HWND hDlg);
 	void Start_FrontPanel();
+	bool Start_Move_Brush_Dlg();
+
 	char Message_Text_Header[MAX_PATH];
 	char Message_Text_Message[MAX_PATH];
 
@@ -46,6 +48,8 @@ public:
 
 	bool F_ListData_Dlg_Active;
 
+	geVec3d CenterOfSelection;
+
 protected:
 
 	static LRESULT CALLBACK Message_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
@@ -53,8 +57,7 @@ protected:
 	static LRESULT CALLBACK ListData_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK FrontPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK About_Dlg_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-
-
+	static LRESULT CALLBACK Move_Brush_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void A_Dialogs::Get_Current_Document();
 

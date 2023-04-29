@@ -53,6 +53,9 @@ distribution.
 #include "A_Camera.h"
 #include "A_TopTabs.h"
 #include "A_File.h"
+#include "A_Brush.h"
+
+#include "A_MainView.h"
 
 #include "A_Export_World.h"
 
@@ -84,8 +87,11 @@ public:
 	A_Camera*					CL_Camera;
 	A_TopTabs*					CL_TopTabs;
 	A_File*						CL_File;
+	A_Brush*					CL_Brush;
 
 	A_Export_World*				CL_Export_World;
+
+	A_MainView*					CL_Main_View;
 
 	bool InitApp(void);
 	void InitMFC(void);
@@ -101,6 +107,7 @@ public:
 	bool Custom_Button_Normal_MFC(LPDRAWITEMSTRUCT lpDIS,HWND hDlg);
 	bool Custom_Button_Toggle_MFC(LPDRAWITEMSTRUCT lpDIS,HWND hDlg, bool Toggle);
 	bool Custom_Button_Toggle_Tabs_MFC(LPDRAWITEMSTRUCT lpDIS,HWND hDlg, bool Toggle);
+	bool Custom_Button_Toggle_Disable(LPDRAWITEMSTRUCT lpDIS,HWND hDlg, bool Toggle);
 
 	HBRUSH CreateGradientBrush(COLORREF top, COLORREF bottom, LPNMCUSTOMDRAW item);
 

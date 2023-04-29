@@ -48,8 +48,11 @@ A_App::A_App()
 	CL_Camera =					NULL;
 	CL_TopTabs =				NULL;
 	CL_File =					NULL;
+	CL_Brush =					NULL;
 
 	CL_Export_World =			NULL;
+
+	CL_Main_View =				NULL;
 
 	AppBackground = NULL;
 	BlackBrush =	NULL;
@@ -150,10 +153,12 @@ bool A_App::InitApp(void)
 	CL_Camera =						new A_Camera();
 	CL_TopTabs =					new A_TopTabs();
 	CL_File =						new	A_File();
+	CL_Brush =						new A_Brush();
 
 	CL_Export_World =				new A_Export_World();
 	
-
+	CL_Main_View =					new A_MainView();
+	
 	InitCommonControls();
 
 	hInst =NULL;
@@ -353,34 +358,38 @@ bool A_App::Custom_Button_Toggle_MFC(LPDRAWITEMSTRUCT lpDIS,HWND hDlg, bool Togg
 // *************************************************************************
 bool A_App::Custom_Button_Normal_MFC(LPDRAWITEMSTRUCT lpDIS,HWND hDlg)
 {
-	//if (lpDIS->itemState == 784 ) //Our mouse is over the button
-	//{
-	//	HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0));
+	HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0));
 
-	//	HGDIOBJ old_pen = SelectObject(lpDIS->hDC, pen);
-	//	HGDIOBJ old_brush = SelectObject(lpDIS->hDC, App->Brush_But_Pressed);
+	HGDIOBJ old_pen = SelectObject(lpDIS->hDC, pen);
+	HGDIOBJ old_brush = SelectObject(lpDIS->hDC, App->Brush_But_Normal);
 
-	//	RoundRect(lpDIS->hDC, lpDIS->rcItem.left, lpDIS->rcItem.top,
-	//		lpDIS->rcItem.right, lpDIS->rcItem.bottom, 2, 2);
+	RoundRect(lpDIS->hDC, lpDIS->rcItem.left, lpDIS->rcItem.top,
+		lpDIS->rcItem.right, lpDIS->rcItem.bottom, 2, 2);
 
-	//	char szBtnText[32] = { 0 };
+	char szBtnText[32] = { 0 };
 
-	//	HWND temp = GetDlgItem(hDlg, lpDIS->CtlID);
-	//	GetDlgItemText(hDlg,lpDIS->CtlID, szBtnText, sizeof(szBtnText)); 
+	HWND temp = GetDlgItem(hDlg, lpDIS->CtlID);
+	GetDlgItemText(hDlg,lpDIS->CtlID, szBtnText, sizeof(szBtnText)); 
 
-	//	SetTextColor(lpDIS->hDC, RGB(0, 0, 0));
-	//	SetBkMode(lpDIS->hDC, TRANSPARENT);
-	//	DrawText(lpDIS->hDC,szBtnText,strlen(szBtnText), &lpDIS->rcItem,DT_CENTER | DT_SINGLELINE | DT_VCENTER);
-	//	return 1;
-	//}
+	SetTextColor(lpDIS->hDC, RGB(0, 0, 0));
+	SetBkMode(lpDIS->hDC, TRANSPARENT);
+	DrawText(lpDIS->hDC,szBtnText,strlen(szBtnText), &lpDIS->rcItem,DT_CENTER | DT_SINGLELINE | DT_VCENTER);
+	return 1;
 
-	
-	//if (lpDIS->itemState == 768)
+	return 1;
+}
+
+// *************************************************************************
+// *	Custom_Button_Toggle_Disable:- Terry and Hazel Flanigan 2023	   *
+// *************************************************************************
+bool A_App::Custom_Button_Toggle_Disable(LPDRAWITEMSTRUCT lpDIS,HWND hDlg, bool Toggle)
+{
+	if (Toggle == 0)
 	{
 		HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0));
 
 		HGDIOBJ old_pen = SelectObject(lpDIS->hDC, pen);
-		HGDIOBJ old_brush = SelectObject(lpDIS->hDC, App->Brush_But_Normal);
+		HGDIOBJ old_brush = SelectObject(lpDIS->hDC, App->Brush_Tabs_UnSelected);
 
 		RoundRect(lpDIS->hDC, lpDIS->rcItem.left, lpDIS->rcItem.top,
 			lpDIS->rcItem.right, lpDIS->rcItem.bottom, 2, 2);
@@ -393,7 +402,25 @@ bool A_App::Custom_Button_Normal_MFC(LPDRAWITEMSTRUCT lpDIS,HWND hDlg)
 		SetTextColor(lpDIS->hDC, RGB(0, 0, 0));
 		SetBkMode(lpDIS->hDC, TRANSPARENT);
 		DrawText(lpDIS->hDC,szBtnText,strlen(szBtnText), &lpDIS->rcItem,DT_CENTER | DT_SINGLELINE | DT_VCENTER);
-		return 1;
+	}
+	else
+	{
+		HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0));
+
+		HGDIOBJ old_pen = SelectObject(lpDIS->hDC, pen);
+		HGDIOBJ old_brush = SelectObject(lpDIS->hDC, App->Brush_Green);
+
+		RoundRect(lpDIS->hDC, lpDIS->rcItem.left, lpDIS->rcItem.top,
+			lpDIS->rcItem.right, lpDIS->rcItem.bottom, 2, 2);
+
+		char szBtnText[32] = { 0 };
+
+		HWND temp = GetDlgItem(hDlg, lpDIS->CtlID);
+		GetDlgItemText(hDlg,lpDIS->CtlID, szBtnText, sizeof(szBtnText)); 
+
+		SetTextColor(lpDIS->hDC, RGB(0, 0, 0));
+		SetBkMode(lpDIS->hDC, TRANSPARENT);
+		DrawText(lpDIS->hDC,szBtnText,strlen(szBtnText), &lpDIS->rcItem,DT_CENTER | DT_SINGLELINE | DT_VCENTER);
 	}
 
 	return 1;

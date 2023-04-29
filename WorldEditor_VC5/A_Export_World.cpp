@@ -243,10 +243,12 @@ void A_Export_World::ExportTo_RFW(const char *FileName, int ExpSelected, geBoole
 
 	BList = Level_GetBrushes (m_pDoc->pLevel);
 	if(!ExpSelected&&!ExpFiles)
+	{
 		fResult = App->CL_Export_World->Level_Build_G3ds(reinterpret_cast<tag_Level3 *> (m_pDoc->pLevel), FileName, BList, ExpSelected, ExpLights, -1);
-
+	}
 	else
 	{
+		Debug
 		int i, GroupID, GroupCount;
 		char NewFileName[MAX_PATH];
 		strcpy(NewFileName, FileName);
@@ -272,7 +274,7 @@ void A_Export_World::ExportTo_RFW(const char *FileName, int ExpSelected, geBoole
 			pBrush = BrushList_GetFirst (BList, &bi);
 			while (pBrush != NULL)
 			{
-				if(!strstr(Brush_GetName(pBrush),".act"))
+				if(!strstr(App->CL_Brush->Brush_GetName(pBrush),".act"))
 				{
 					if(!ExpSelected || SelBrushList_Find(m_pDoc->pSelBrushes, pBrush))
 					{

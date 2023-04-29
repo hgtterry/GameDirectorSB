@@ -34,13 +34,49 @@ public:
 private:
 	static LRESULT CALLBACK Splitter_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Left_Window_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Right_Window_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
+	static LRESULT CALLBACK Bottom_Left_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Bottom_Right_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	bool Init_Views();
 
 	void Create_Left_Window();
+	void Create_Right_Window();
+
+	void Create_Bottom_Left_Window();
+	void Create_Bottom_Right_Window();
+
+	bool Resize_Windows(HWND hDlg, int NewWidth, int NewDepth);
+
+	bool ViewerTest(HWND hwnd);
+	bool Draw_Grid(HDC hDC, int Interval, RECT Rect);
 
 	HWND Spliter_Main_Hwnd;
 	HWND Left_Window_Hwnd;
 	HWND Right_Window_Hwnd;
+
+	HWND Bottom_Left_Hwnd;
+	HWND Bottom_Right_Hwnd;
+
+	HBRUSH BackGround_Brush;
+
+	int	left_Wnd_clr[3] = { 255, 255, 255 };
+
+	int LEFT_WINDOW_WIDTH;
+
+	int LEFT_WINDOW_DEPTH;
+	int TOP_POS_BOTLEFT;
+
+	int RIGHT_MINIMUM_SPACE;
+	int LEFT_MINIMUM_SPACE;
+
+	int nleftWnd_width;
+	int nleftWnd_Depth;
+
+	bool Do_Width;
+	bool Do_Depth;
+	bool Do_All;
 
 };
 
