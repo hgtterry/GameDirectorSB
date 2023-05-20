@@ -52,7 +52,7 @@
 				AdditionalOptions="/INCREMENTAL:YES"
 				Optimization="0"
 				FavorSizeOrSpeed="1"
-				AdditionalIncludeDirectories=".;.\GenesisSDK\include;.\TypeParser;..\..\msdev60\include;..\..\msdev60\mfc\include;&quot;C:\Program Files\Microsoft Visual Studio\VC98\MFC\Include&quot;;&quot;C:\Program Files\Microsoft Visual Studio\VC98\Include&quot;"
+				AdditionalIncludeDirectories=".;.\GenesisSDK\include;.\TypeParser;..\..\msdev60\include;..\..\msdev60\mfc\include;&quot;C:\Program Files (x86)\Microsoft Visual Studio\VC98\MFC\Include&quot;;&quot;C:\Program Files (x86)\Microsoft Visual Studio\VC98\Include&quot;"
 				PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;WIN32_LEAN_AND_MEAN"
 				IgnoreStandardIncludePath="true"
 				RuntimeLibrary="0"
@@ -73,7 +73,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="NDEBUG"
 				Culture="1033"
-				AdditionalIncludeDirectories="..\..\msdev60\include;..\..\msdev60\mfc\include;&quot;C:\Program Files\Microsoft Visual Studio\VC98\MFC\Include&quot;;&quot;C:\Program Files\Microsoft Visual Studio\VC98\Include&quot;"
+				AdditionalIncludeDirectories="..\..\msdev60\include;..\..\msdev60\mfc\include;&quot;C:\Program Files (x86)\Microsoft Visual Studio\VC98\MFC\Include&quot;;&quot;C:\Program Files (x86)\Microsoft Visual Studio\VC98\Include&quot;"
 				IgnoreStandardIncludePath="true"
 			/>
 			<Tool
