@@ -97,7 +97,7 @@ void F_View::Blit(ViewVars *VCam, CDC *c)
 
 	dcCompatible.FillSolidRect( &rect, Prefs_GetBackgroundColor (((CFusionApp *)AfxGetApp ())->GetPreferencesNormal ()));
 
-	App->CL_Main_View->RenderOrthoView(VCam, &dcCompatible);
+	RenderOrthoView(VCam, &dcCompatible,c->m_hDC);
 
 	// Do the Blit
 	c->BitBlt(rect.left,rect.top,rect.Width(),rect.Height(),&dcCompatible,rect.left,rect.top,SRCCOPY);
