@@ -1,5 +1,21 @@
 #pragma once
 
+enum ViewTypes
+{
+	VIEWSOLID = 1,
+	VIEWTEXTURE = 2,
+	VIEWWIRE = 4,
+	VIEWTOP = 8,
+	VIEWFRONT = 16,
+	VIEWSIDE = 32
+};
+
+enum
+{
+	GRID_TYPE_TEXEL,
+	GRID_TYPE_METRIC
+};
+
 typedef struct EdgeTag Edge;
 //typedef struct FPlane vPlane;
 
@@ -44,7 +60,17 @@ public:
 	CRender();
 	~CRender();
 
+	int	Render_GetHeight(const ViewVars* v);
+	int	Render_GetWidth(const ViewVars* v);
+	int	Render_GetInidx(const ViewVars* v);
+
+	geFloat	Render_GetFineGrid(const ViewVars* v, int GridType);
+	geFloat Render_ComputeGridDist(const ViewVars* v, int GridType);
+
+	void RenderOrthoView(ViewVars* v, HDC* pDC, HDC MemoryhDC);
 
 	void Render_RenderOrthoGridFromSize(ViewVars* v, geFloat Interval, HDC ViewDC);
+	void Render_ViewToWorld(const ViewVars* v, const int x, const int y, geVec3d* wp);
+	POINT Render_OrthoWorldToView(const ViewVars* v, geVec3d const* wp);
 };
 

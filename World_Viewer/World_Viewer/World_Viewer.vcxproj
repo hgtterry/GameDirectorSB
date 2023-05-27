@@ -143,7 +143,10 @@
     <ClInclude Include="Base_Area.h" />
     <ClInclude Include="Base_Group.h" />
     <ClInclude Include="Base_Player.h" />
+    <ClInclude Include="CBox3d.h" />
+    <ClInclude Include="CBrush.h" />
     <ClInclude Include="CBrushTemplate.h" />
+    <ClInclude Include="CFaceList.h" />
     <ClInclude Include="CFaces.h" />
     <ClInclude Include="CFusionDoc.h" />
     <ClInclude Include="CGroup.h" />
@@ -164,7 +167,6 @@
     <ClInclude Include="World_Viewer.h" />
     <ClInclude Include="WV_App.h" />
     <ClInclude Include="WV_Assimp.h" />
-    <ClInclude Include="WV_Brushes.h" />
     <ClInclude Include="WV_BrushTabs_Dlg.h" />
     <ClInclude Include="WV_Bullet.h" />
     <ClInclude Include="WV_Debug_Render.h" />
@@ -199,7 +201,10 @@
     <ClCompile Include="Base_Area.cpp" />
     <ClCompile Include="Base_Group.cpp" />
     <ClCompile Include="Base_Player.cpp" />
+    <ClCompile Include="CBox3d.cpp" />
+    <ClCompile Include="CBrush.cpp" />
     <ClCompile Include="CBrushTemplate.cpp" />
+    <ClCompile Include="CFaceList.cpp" />
     <ClCompile Include="CFaces.cpp" />
     <ClCompile Include="CFusionDoc.cpp" />
     <ClCompile Include="CGroup.cpp" />
@@ -221,7 +226,6 @@
     <ClCompile Include="World_Viewer.cpp" />
     <ClCompile Include="WV_App.cpp" />
     <ClCompile Include="WV_Assimp.cpp" />
-    <ClCompile Include="WV_Brushes.cpp" />
     <ClCompile Include="WV_BrushTabs_Dlg.cpp" />
     <ClCompile Include="WV_Bullet.cpp" />
     <ClCompile Include="WV_Debug_Render.cpp" />

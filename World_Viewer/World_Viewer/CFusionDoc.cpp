@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "WV_App.h"
 #include "CFusionDoc.h"
-#include "level.h"
+//#include "level.h"
 
 CFusionDoc::CFusionDoc()
 {

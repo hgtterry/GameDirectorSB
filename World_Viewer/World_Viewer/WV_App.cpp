@@ -48,7 +48,6 @@ WV_App::WV_App(void)
 	CL_Physics =		nullptr;
 	CL_Import_3DT =		nullptr;
 
-	CL_Brushes =		nullptr;
 	CL_Faces =			nullptr;
 	CL_BrushTabs_Dlg =	nullptr;
 	CL_Export_World =	nullptr;
@@ -67,6 +66,9 @@ WV_App::WV_App(void)
 	CL_CBrushTemplate = nullptr;
 	CL_CRender =		nullptr;
 	CL_CFaces =			nullptr;
+	CL_CBox3d =			nullptr;
+	CL_CBrush =			nullptr;
+	CL_CFaceList =		nullptr;
 
 	Fdlg = nullptr;
 	hInst = nullptr;
@@ -205,7 +207,6 @@ bool WV_App::InitApp(void)
 
 
 	CL_Import_3DT =		new WV_Import_3DT();
-	CL_Brushes =		new WV_Brushes();
 	CL_Faces =			new WV_Faces();
 
 	CL_BrushTabs_Dlg =	new WV_BrushTabs_Dlg();
@@ -213,6 +214,7 @@ bool WV_App::InitApp(void)
 	CL_SplitterViews =	new WE_SpliterViews();
 
 	// Fusion
+	CL_CBrush =			new CBrush();
 	CL_CBrushTemplate = new CBrushTemplate();
 	CL_CUtil =			new CUtil();
 	CL_CList =			new CList();
@@ -223,7 +225,9 @@ bool WV_App::InitApp(void)
 	CL_CLevel =			new	CLevel();
 	CL_CRender =		new CRender();
 	CL_CFaces =			new CFaces();
-
+	CL_CBox3d =			new CBox3d();
+	CL_CFaceList =		new CFaceList();
+	
 	SetBrushes_Fonts();
 
 	LoadString(hInst, IDS_APP_TITLE, Version, 255);

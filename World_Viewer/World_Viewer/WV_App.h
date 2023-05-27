@@ -43,7 +43,6 @@ distribution.
 #include "WV_Import_3DT.h"
 
 
-#include "WV_Brushes.h"
 #include "WV_Faces.h"
 
 #include "WV_BrushTabs_Dlg.h"
@@ -55,15 +54,19 @@ distribution.
 #include "WE_SPLITVIEWS.h"
 
 // Fusion
+#include "CLevel.h"
+#include "CFaceList.h"
+#include "CBox3d.h"
 #include "CFaces.h"
 #include "CRender.h"
+#include "CBrush.h"
 #include "CBrushTemplate.h"
 #include "CUtil.h"
 #include "CList.h"
 #include "CGroup.h"
 #include "CModel.h"
 #include "CFusionDoc.h"
-#include "CLevel.h"
+
 
 
 
@@ -92,7 +95,6 @@ public:
 	WV_Physics*		CL_Physics;
 	WV_Import_3DT*	CL_Import_3DT;
 
-	WV_Brushes*		CL_Brushes;
 	WV_Faces*		CL_Faces;
 
 	WV_BrushTabs_Dlg* CL_BrushTabs_Dlg;
@@ -113,6 +115,9 @@ public:
 	CBrushTemplate*		CL_CBrushTemplate;
 	CRender*			CL_CRender;
 	CFaces*				CL_CFaces;
+	CBox3d*				CL_CBox3d;
+	CBrush*				CL_CBrush;
+	CFaceList*			CL_CFaceList;
 	// ----------------------------------- 
 	WV_App(void);
 	~WV_App(void);

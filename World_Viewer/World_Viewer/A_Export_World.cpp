@@ -24,18 +24,12 @@ distribution.
 #include "stdafx.h"
 #include "WV_App.h"
 #include "A_Export_World.h"
-
-//#include "FUSIONDoc.h"
-//#include "FUSIONView.h"
-#include "level.h"
+#include "CBrush.h"
 #include "Parse3dt.h"
-//#include "EntTypeName.h"
+
 #include <assert.h>
 #include "ram.h"
-//#include "units.h"
-//#include "util.h"
-//#include "FilePath.h"
-// changed QD 12/03
+
 #include <malloc.h>
 #include "typeio.h"
 
@@ -64,7 +58,7 @@ struct tag_Level3
 
 //	ModelInfo_Type	ModelInfo;
 
-	SkyFaceTexture SkyFaces[6];
+//	SkyFaceTexture SkyFaces[6];
 	geVec3d SkyRotationAxis;
 	geFloat SkyRotationSpeed;
 	geFloat	SkyTextureScale;
@@ -242,7 +236,7 @@ void A_Export_World::ExportTo_RFW(const char *FileName, int ExpSelected, geBoole
 	BrushList *BList;
 	geBoolean fResult;
 
-	BList = App->CL_CFusionDoc->pLevel->Brushes;
+	BList = App->CL_CLevel->Level_GetBrushes(App->CL_CFusionDoc->pLevel);
 
 	if(!ExpSelected&&!ExpFiles)
 	{
@@ -271,9 +265,9 @@ void A_Export_World::ExportTo_RFW(const char *FileName, int ExpSelected, geBoole
 			Brush *pBrush;
 			BrushIterator bi;
 
-			SBList=BrushList_Create();
+			SBList = App->CL_CBrush->BrushList_Create();
 
-			pBrush = BrushList_GetFirst (BList, &bi);
+			pBrush = App->CL_CBrush->BrushList_GetFirst (BList, &bi);
 			while (pBrush != NULL)
 			{
 				/*if(!strstr(App->CL_Brush->Brush_GetName(pBrush),".act"))
@@ -288,7 +282,7 @@ void A_Export_World::ExportTo_RFW(const char *FileName, int ExpSelected, geBoole
 					}
 				}*/
 
-				pBrush = BrushList_GetNext(&bi);
+				pBrush = App->CL_CBrush->BrushList_GetNext(&bi);
 			}
 			// do CSG
 			{
@@ -335,7 +329,7 @@ void A_Export_World::ExportTo_RFW(const char *FileName, int ExpSelected, geBoole
 			fResult = App->CL_Export_World->Level_Build_G3ds(reinterpret_cast<tag_Level *> (App->CL_CFusionDoc->pLevel), NewFileName, SBList, ExpSelected, ExpLights, GroupID);
 			if(!fResult)
 				App->Say("Error exporting group");
-			BrushList_Destroy(&SBList);
+			App->CL_CBrush->BrushList_Destroy(&SBList);
 		}
 
 	}
@@ -519,7 +513,7 @@ bool A_Export_World::Level_Build_G3ds(Level *pLevel, const char *Filename, Brush
 	TypeIO_WriteFloat(f, 1.0f);
 
 	// export the brushes
-	if (BrushList_ExportTo3ds(BList, f, GE_FALSE) == GE_FALSE)
+	//if (App->CL_CBrush->BrushList_ExportTo3ds(BList, f, GE_FALSE) == GE_FALSE)
 	{
 		App->Say("BrushList_ExportTo3ds");
 		goto WriteDone;

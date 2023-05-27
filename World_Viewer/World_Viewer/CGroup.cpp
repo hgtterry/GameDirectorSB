@@ -107,3 +107,23 @@ const char* CGroup::Group_GetName(const Group* pGroup)
 
 	return pGroup->GroupName;
 }
+
+// *************************************************************************
+// * 							Group_GetFirstId						   *
+// *************************************************************************
+int CGroup::Group_GetFirstId(GroupListType const* pList, GroupIterator* gi)
+{
+	assert(pList != NULL);
+	assert(gi != NULL);
+
+	*gi = pList->First;
+
+	if (*gi != NULL)
+	{
+		return (*gi)->GroupId;
+	}
+	else
+	{
+		return NO_MORE_GROUPS;
+	}
+}

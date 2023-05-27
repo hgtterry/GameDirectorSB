@@ -186,7 +186,7 @@ void WV_ImGui::Model_Data_GUI(void)
 	}
 	else
 	{
-		int BrushCount = App->CL_Brushes->Get_Brush_Count();
+		/*int BrushCount = App->CL_CBrush->Get_Brush_Count();
 		int Count = 0;
 
 		while (Count < BrushCount)
@@ -194,7 +194,7 @@ void WV_ImGui::Model_Data_GUI(void)
 			Brush* b = App->CL_Brushes->Get_Brush_ByIndex(Count);
 			ImGui::Text("Names:- %s", b->Name);
 			Count++;
-		}
+		}*/
 		
 
 		/*ImGui::Spacing();

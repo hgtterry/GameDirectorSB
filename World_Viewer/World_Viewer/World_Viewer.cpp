@@ -25,7 +25,7 @@ distribution.
 #include "World_Viewer.h"
 //#include "scanner.h"
 #include "Header.h"
-#include "brush.h"
+//#include "brush.h"
 
 
 #define MAX_LOADSTRING 100

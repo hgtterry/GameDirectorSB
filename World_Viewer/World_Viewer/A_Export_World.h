@@ -23,9 +23,9 @@ misrepresented as being the original software.
 distribution.
 */
 
-#include "level.h"
+#include "CLevel.h"
 //#include "entity.h"
-#include "brush.h"
+//#include "brush.h"
 //#include "model.h"
 //#include "group.h"
 #include "wadfile.h"

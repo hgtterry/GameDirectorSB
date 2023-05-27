@@ -2,8 +2,55 @@
 #include "WV_App.h"
 #include "CLevel.h"
 
+#include "units.h"
 #include "ram.h"
 
+#define NUM_VIEWS (4)
+struct tag_Level
+{
+	BrushList* Brushes;
+	//CEntityArray* Entities;
+	char* WadPath;
+	char* HeadersDir;
+	// changed QD Actors
+	char* ActorsDir;
+	geBoolean ShowActors;
+	char* PawnIniPath;
+	// end change
+	//EntTypeNameList* EntTypeNames;
+	GroupListType* Groups;
+	SizeInfo* WadSizeInfos;
+	CWadFile* WadFile;
+	//EntityTable* pEntityDefs;
+
+	ModelInfo_Type	ModelInfo;
+
+	//SkyFaceTexture SkyFaces[6];
+	geVec3d SkyRotationAxis;
+	geFloat SkyRotationSpeed;
+	geFloat	SkyTextureScale;
+
+	// level edit settings
+	//CompileParamsType CompileParams;
+	int GroupVisSetting;
+	//EntityViewList* pEntityView;
+
+	GridInfo GridSettings;
+	geBoolean BspRebuildFlag;
+	ViewStateInfo ViewInfo[NUM_VIEWS];
+
+	BrushTemplate_Arch ArchTemplate;
+	BrushTemplate_Box	BoxTemplate;
+	BrushTemplate_Cone	ConeTemplate;
+	BrushTemplate_Cylinder CylinderTemplate;
+	BrushTemplate_Spheroid	SpheroidTemplate;
+	BrushTemplate_Staircase StaircaseTemplate;
+
+	geVec3d TemplatePos;
+
+	float DrawScale;		// default draw scale
+	float LightmapScale;	// default lightmap scale
+};
 
 CLevel::CLevel()
 {
@@ -180,13 +227,13 @@ Level* CLevel::Level_CreateFromFile(const char* FileName)// , const char** ErrMs
 		{
 			Brush* pBrush;
 
-			pBrush = Brush_CreateFromFile(Parser, VersionMajor, VersionMinor, &Expected);
+			pBrush = App->CL_CBrush->Brush_CreateFromFile(Parser, VersionMajor, VersionMinor, &Expected);
 			if (pBrush == NULL)
 			{
 				goto DoneLoad;
 			}
 
-			BrushList_Append(pLevel->Brushes, pBrush);
+			App->CL_CBrush->BrushList_Append(pLevel->Brushes, pBrush);
 		}
 
 
@@ -195,9 +242,9 @@ Level* CLevel::Level_CreateFromFile(const char* FileName)// , const char** ErrMs
 	{
 		if (pLevel->Brushes != NULL)
 		{
-			BrushList_Destroy(&pLevel->Brushes);
+			App->CL_CBrush->BrushList_Destroy(&pLevel->Brushes);
 		}
-		pLevel->Brushes = App->CL_Brushes->BrushList_CreateFromFile(Parser, VersionMajor, VersionMinor, &Expected);
+		pLevel->Brushes = App->CL_CBrush->BrushList_CreateFromFile(Parser, VersionMajor, VersionMinor, &Expected);
 		if (pLevel->Brushes == NULL)
 		{
 			goto DoneLoad;
@@ -234,7 +281,7 @@ AllDone:
 	//	//fixup hollows
 	if (pLevel != NULL)
 	{
-		BrushList_MakeHollowsMulti(pLevel->Brushes);
+		App->CL_CBrush->BrushList_MakeHollowsMulti(pLevel->Brushes);
 	}
 
 	return pLevel;
@@ -251,7 +298,7 @@ Level* CLevel::Level_Create(const char* pWadName, const char* HeadersDir, const 
 
 	if (pLevel != NULL)
 	{
-		pLevel->Brushes = BrushList_Create();
+		pLevel->Brushes = App->CL_CBrush->BrushList_Create();
 		if (pLevel->Brushes == NULL)
 		{
 			App->Say("Cant Create BrushList");
@@ -394,5 +441,61 @@ Level* CLevel::Level_Create(const char* pWadName, const char* HeadersDir, const 
 	//CreateError:
 	//	Level_Destroy(&pLevel);
 	//	return pLevel;
+}
+
+// *************************************************************************
+// * 						Level_GetGroups								   *
+// *************************************************************************
+GroupListType* CLevel::Level_GetGroups(Level* pLevel)
+{
+	assert(pLevel != NULL);
+
+	return pLevel->Groups;
+}
+
+// *************************************************************************
+// * 						Level_GetBrushes							   *
+// *************************************************************************
+BrushList* CLevel::Level_GetBrushes(Level* pLevel)
+{
+	return pLevel->Brushes;
+}
+
+// *************************************************************************
+// * 						Level_GetBrushes							   *
+// *************************************************************************
+int CLevel::Level_GetGroupVisibility(const Level* pLevel)
+{
+	assert(pLevel != NULL);
+
+	return pLevel->GroupVisSetting;
+}
+
+// *************************************************************************
+// * 						Level_GetGridSnapSize						   *
+// *************************************************************************
+float CLevel::Level_GetGridSnapSize(const Level* pLevel)
+{
+	const GridInfo* pGridInfo = &pLevel->GridSettings;
+
+	switch (pGridInfo->SnapType)
+	{
+	case GridMetric:
+		return CENTIMETERS_TO_ENGINE(pGridInfo->MetricSnapSize);
+		break;
+	default:
+		assert(0);
+	case GridTexel:
+		return (float)pGridInfo->TexelSnapSize;
+		break;
+	}
+}
+
+// *************************************************************************
+// * 						Level_GetGridType							   *
+// *************************************************************************
+int CLevel::Level_GetGridType(const Level* pLevel)
+{
+	return pLevel->GridSettings.GridType;
 }
 

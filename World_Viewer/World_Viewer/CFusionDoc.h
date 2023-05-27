@@ -1,5 +1,7 @@
 #pragma once
 
+typedef geBoolean(*BrushFlagTest)(const Brush* pBrush);
+
 class CFusionDoc
 {
 public:

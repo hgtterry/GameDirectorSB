@@ -111,9 +111,6 @@
     <ClInclude Include="WV_Import_3DT.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="WV_Brushes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="WV_Faces.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -154,6 +151,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CFaces.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CBox3d.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CBrush.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CFaceList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -266,9 +272,6 @@
     <ClCompile Include="WV_Import_3DT.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WV_Brushes.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="WV_Faces.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -309,6 +312,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CFaces.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CBox3d.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CBrush.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CFaceList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Parse3dt.h"
-#include "Box3d.h"
+//#include "Box3d.h"
 #include "face.h"
 
 

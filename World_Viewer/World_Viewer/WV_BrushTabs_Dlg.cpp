@@ -178,11 +178,11 @@ void WV_BrushTabs_Dlg::OnSelchangeBrushlist(int Index)
 	
 	int	c = 0;
 
-	c = App->CL_Brushes->Get_Brush_Count();
+	c = App->CL_CBrush->Get_Brush_Count();
 
 	if (c > 0)
 	{
-		Selected_Brush = App->CL_Brushes->Get_Brush_ByIndex(Index);
+		Selected_Brush = App->CL_CBrush->Get_Brush_ByIndex(Index);
 	}
 
 }
@@ -251,7 +251,7 @@ void WV_BrushTabs_Dlg::Fill_ListBox()
 	{
 		SendDlgItemMessage(BrushTabs_Dlg_Hwnd, IDC_GD_BRUSHLIST, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
-		BrushList* pList = App->CL_CFusionDoc->pLevel->Brushes;
+		BrushList* pList = App->CL_CLevel->Level_GetBrushes(App->CL_CFusionDoc->pLevel);
 
 		int Count = 0;
 		Brush* b;
@@ -277,7 +277,7 @@ void WV_BrushTabs_Dlg::List_BrushData(HWND hDlg)
 {
 
 	char buf[255];
-	int c = App->CL_Brushes->Get_Brush_Count();
+	int c = App->CL_CBrush->Get_Brush_Count();
 
 	if (c > 0)
 	{
@@ -345,7 +345,7 @@ bool WV_BrushTabs_Dlg::Show_Brush_ListInfo(BrushList* BList, HWND hDlg)
 	BrushIterator bi;
 	int Count;
 
-	Count = BrushList_Count(BList, (BRUSH_COUNT_MULTI | BRUSH_COUNT_LEAF | BRUSH_COUNT_NORECURSE));
+	Count = 0;// BrushList_Count(BList, (BRUSH_COUNT_MULTI | BRUSH_COUNT_LEAF | BRUSH_COUNT_NORECURSE));
 	if (Count < 0)
 	{
 		return 0;
@@ -356,12 +356,12 @@ bool WV_BrushTabs_Dlg::Show_Brush_ListInfo(BrushList* BList, HWND hDlg)
 		SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 	}
 
-	pBrush = BrushList_GetFirst(BList, &bi);
+	/*pBrush = App->BrushList_GetFirst(BList, &bi);
 	while (pBrush != NULL)
 	{
 		Show_Brush_Info(pBrush, hDlg);
 		pBrush = BrushList_GetNext(&bi);
-	}
+	}*/
 
 	return 1;
 }

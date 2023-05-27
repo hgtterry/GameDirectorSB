@@ -22,6 +22,8 @@ misrepresented as being the original software.
 distribution.
 */
 
+#include "CBrush.h"
+
 class WV_BrushTabs_Dlg
 {
 public:

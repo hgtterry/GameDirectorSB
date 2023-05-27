@@ -27,7 +27,6 @@ distribution.
 #include "Base_Group.h"
 #include "Base_Area.h"
 
-#include "level.h"
 
 typedef struct AABB_Type {
 	vertex_type BB_Max[1];
