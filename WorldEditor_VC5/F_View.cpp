@@ -52,6 +52,20 @@ F_View::~F_View(void)
 // *************************************************************************
 void F_View::OnDraw(UINT mViewType,ViewVars *VCam,CDC *c)
 {
+	
+	//App->Debug_Message("F_View::OnDraw ------------------------------------------------ ", 1);
+	App->Debug_Int(mViewType, 1);
+	App->Debug_Int(VCam->ViewType, 1);
+	App->Debug_Int(VCam->Width, 1);
+	App->Debug_Int(VCam->Height, 1);
+
+//	App->Debug_Float(VCam->ZoomFactor, 1);
+
+	//App->Wait_For_Key(100);
+
+
+
+
 
 	CMainFrame *m_pMainFrame;
 	m_pMainFrame		=(CMainFrame *)AfxGetMainWnd(); // MFC POO
@@ -97,7 +111,7 @@ void F_View::Blit(ViewVars *VCam, CDC *c)
 
 	dcCompatible.FillSolidRect( &rect, Prefs_GetBackgroundColor (((CFusionApp *)AfxGetApp ())->GetPreferencesNormal ()));
 
-	RenderOrthoView(VCam, &dcCompatible,c->m_hDC);
+	App->CL_Main_View->RenderOrthoView(VCam, &dcCompatible);
 
 	// Do the Blit
 	c->BitBlt(rect.left,rect.top,rect.Width(),rect.Height(),&dcCompatible,rect.left,rect.top,SRCCOPY);
@@ -451,7 +465,6 @@ static geBoolean BrushDrawSheetFacesOrtho(Brush *pBrush, void *lParam)
 void F_View::RenderOrthoView(ViewVars *v, CDC *pDC, HDC MemoryhDC) // hgtterry Render to views
 {
 	
-	//App->Say("RenderOrthoView");
 	CMainFrame *m_pMainFrame;
 	m_pMainFrame		=(CMainFrame *)AfxGetMainWnd(); // MFC POO
 
@@ -529,7 +542,6 @@ void F_View::RenderOrthoView(ViewVars *v, CDC *pDC, HDC MemoryhDC) // hgtterry R
 			SelectObject(MemoryhDC, pen2);
 			Render_RenderOrthoGridFromSize (v, 128, MemoryhDC);
 			DeleteObject(pen2);
-
 		}
 
 		//pDC->SelectObject (oldpen);

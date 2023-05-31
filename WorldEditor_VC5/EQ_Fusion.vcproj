@@ -73,7 +73,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="NDEBUG"
 				Culture="1033"
-				AdditionalIncludeDirectories="..\..\msdev60\include;..\..\msdev60\mfc\include;&quot;C:\Program Files (x86)\Microsoft Visual Studio\VC98\MFC\Include&quot;;&quot;C:\Program Files (x86)\Microsoft Visual Studio\VC98\Include&quot;"
+				AdditionalIncludeDirectories="VC6\MFC\Include;VC6\Include"
 				IgnoreStandardIncludePath="true"
 			/>
 			<Tool

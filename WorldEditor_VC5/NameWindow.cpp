@@ -57,7 +57,6 @@ void CNameWindow::OnPaint()
 
 void CNameWindow::Show(const char* pstr)
 {
-
 	m_strName = pstr; 
 	
 	if(!m_strName.IsEmpty())

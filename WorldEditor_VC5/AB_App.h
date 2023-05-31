@@ -113,6 +113,13 @@ public:
 	bool Custom_Button_Toggle_Tabs_MFC(LPDRAWITEMSTRUCT lpDIS,HWND hDlg, bool Toggle);
 	bool Custom_Button_Toggle_Disable(LPDRAWITEMSTRUCT lpDIS,HWND hDlg, bool Toggle);
 
+	void Debug_Set(void);
+	void Debug_Close(void);
+	void Debug_Message(char* Message, bool NewLine);
+	void Debug_Int(int Value, bool NewLine);
+	void Debug_Float(float Value, bool NewLine);
+	void Wait_For_Key(int Delay);
+
 	HBRUSH CreateGradientBrush(COLORREF top, COLORREF bottom, LPNMCUSTOMDRAW item);
 
 	char WorldEditor_Directory[MAX_PATH];
@@ -146,6 +153,7 @@ public:
 	HANDLE Hnd_Stairs_Icon;
 
 	bool Debug_App;
+	bool Debug_File;
 
 	HINSTANCE hInst;
 	HWND MainHwnd;
@@ -156,6 +164,7 @@ public:
 	CMainFrame *m_pMainFrame;
 	CFusionDoc *pCFusionDoc;
 
+	FILE *Write_DebugFile;
 	//m_pMainFrame		=(CMainFrame *)AfxGetMainWnd();
 };
 

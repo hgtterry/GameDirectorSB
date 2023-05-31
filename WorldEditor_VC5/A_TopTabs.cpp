@@ -531,7 +531,7 @@ LRESULT CALLBACK A_TopTabs::Top_File_Proc(HWND hDlg, UINT message, WPARAM wParam
 				char path[MAX_PATH];
 
 				strcpy(path,App->WorldEditor_Directory);
-				strcat(path,"Levels\\StartRoom.3dt");
+				strcat(path,"Levels\\Test.3dt");
 
 				strcpy(Txlpath,App->WorldEditor_Directory);
 				strcat(Txlpath,"Levels\\Equity.txl");
@@ -549,7 +549,7 @@ LRESULT CALLBACK A_TopTabs::Top_File_Proc(HWND hDlg, UINT message, WPARAM wParam
 
 				App->CL_World->Level_SetTxlPath(Txlpath);
 
-				App->Say("Loaded","StartRoom.3dt");
+				App->Say(path);
 				return TRUE;
 			}
 

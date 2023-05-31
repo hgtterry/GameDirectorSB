@@ -82,12 +82,15 @@ A_App::A_App()
 	WorldEditor_Directory[0] = 0;
 
 	Debug_App = 1;
+	Debug_File = 1;
 
 	hMenu = NULL;
 
 	// MFC
 	m_pMainFrame = NULL;
 	pCFusionDoc = NULL;
+
+	Write_DebugFile = NULL;
 }
 
 A_App::~A_App()
@@ -473,5 +476,105 @@ HBRUSH A_App::CreateGradientBrush(COLORREF top, COLORREF bottom, LPNMCUSTOMDRAW 
 	return pattern;
 }
 
+// *************************************************************************
+// *			Debug_Set:- Terry and Hazel Flanigan 2023				   *
+// *************************************************************************
+void A_App::Debug_Set(void)
+{
+	if (Debug_File == 1)
+	{
+		Write_DebugFile = NULL;
 
+		char Path[1024];
+		strcpy(Path,App->WorldEditor_Directory);
+		strcat(Path,"Debug.txt");
+
+		Write_DebugFile = fopen(Path, "wt");
+
+
+		if (!Write_DebugFile)
+		{
+			return;
+		}
+
+		fprintf(Write_DebugFile, "Debug File\n");
+	}
+}
+
+// *************************************************************************
+// *			Debug_Close:- Terry and Hazel Flanigan 2023				   *
+// *************************************************************************
+void A_App::Debug_Close(void)
+{
+	if (Debug_File == 1)
+	{
+		if (Write_DebugFile)
+		{
+			fclose(Write_DebugFile);
+			Write_DebugFile = NULL;
+		}
+	}
+}
+
+// *************************************************************************
+// *			Debug_Message:- Terry and Hazel Flanigan 2023				   *
+// *************************************************************************
+void A_App::Debug_Message(char* Message, bool NewLine)
+{
+	if (Debug_File == 1)
+	{
+		fprintf(Write_DebugFile, "%s ",Message);
+
+		if (NewLine == 1)
+		{
+			fprintf(Write_DebugFile, "%s","\n");
+		}
+	}
+}
+
+// *************************************************************************
+// *			Debug_Int:- Terry and Hazel Flanigan 2023				   *
+// *************************************************************************
+void A_App::Debug_Int(int Value, bool NewLine)
+{
+	if (Debug_File == 1)
+	{
+		fprintf(Write_DebugFile, "%i ",Value);
+
+		if (NewLine == 1)
+		{
+			fprintf(Write_DebugFile, "%s","\n");
+		}	
+	}
+}
+
+// *************************************************************************
+// *			Debug_Float:- Terry and Hazel Flanigan 2023				   *
+// *************************************************************************
+void A_App::Debug_Float(float Value, bool NewLine)
+{
+	if (Debug_File == 1)
+	{
+		fprintf(Write_DebugFile, "%f ",Value);
+
+		if (NewLine == 1)
+		{
+			fprintf(Write_DebugFile, "%s","\n");
+		}	
+	}
+}
+
+// *************************************************************************
+// *			Wait_For_Key:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void A_App::Wait_For_Key(int Delay)
+{
+	int Count = 0;
+
+	while (Count < Delay)
+	{
+		App->Flash_Window();
+		Count++;
+	}
+}
 

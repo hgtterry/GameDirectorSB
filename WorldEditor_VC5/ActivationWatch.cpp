@@ -35,6 +35,7 @@ IMPLEMENT_DYNCREATE(CActivationWatch, CWinThread)
 
 CActivationWatch::CActivationWatch()
 {
+	App->Debug_Message("CActivationWatch",1);
 }
 
 CActivationWatch::~CActivationWatch()

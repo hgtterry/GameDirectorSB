@@ -1424,7 +1424,7 @@ void CFusionView::OnDraw(CDC *c)
 {
 
 	App->CL_F_View->OnDraw(mViewType, VCam,c);
-
+	
 	if (IsDragging)
 	{
 		Drag(DRAG_BEGIN);
@@ -1433,6 +1433,9 @@ void CFusionView::OnDraw(CDC *c)
 
 void CFusionView::OnInitialUpdate() 
 {
+	//App->Debug_Message("OnInitialUpdate", 1);
+	
+
 	RECT r;
 	CFusionDoc*	pDoc = (CFusionDoc*) GetDocument();
 	SizeInfo *WadSizeInfos = Level_GetWadSizeInfos (pDoc->pLevel);
@@ -1498,7 +1501,8 @@ void CFusionView::OnInitialUpdate()
 // CFusionView construction/destruction
 CFusionView::CFusionView()
 {
-	VCam	=Render_AllocViewVars();
+	App->Debug_Message("CFusionView New View",1);
+	VCam	= Render_AllocViewVars();
 	Render_SetWadSizes(VCam, NULL);
 
 	mStartPoint.x=mStartPoint.y=0;
@@ -1524,6 +1528,9 @@ CFusionView::~CFusionView()
 
 BOOL CFusionView::PreCreateWindow(CREATESTRUCT& cs)
 {
+	App->Debug_Message("CFusionView::PreCreateWindow",1);
+	//App->Debug_Message("CFusionView::PreCreateWindow", 1);
+
 	//get rid of default cursor
 	cs.lpszClass = AfxRegisterWndClass( CS_DBLCLKS | CS_HREDRAW | CS_VREDRAW,
 		NULL, (HBRUSH)GetStockObject(GRAY_BRUSH));
@@ -1533,6 +1540,7 @@ BOOL CFusionView::PreCreateWindow(CREATESTRUCT& cs)
 
 CFusionDoc* CFusionView::GetDocument()
 {
+	//App->Debug_Message("CFusionView::GetDocument",1);
 	CFusionDoc *pDoc;
 
 	ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CFusionDoc)));
@@ -1544,6 +1552,12 @@ CFusionDoc* CFusionView::GetDocument()
 
 void CFusionView::OnSize(UINT nType, int cx, int cy) 
 {
+	App->Debug_Message("CFusionView::OnSize",1);
+	/*App->Debug_Message("CFusionView::OnSize", 0);
+	App->Debug_Int(cx, 0);
+	App->Debug_Int(cy, 1);*/
+	
+
 	CFusionDoc* pDoc = GetDocument();
 	SizeInfo *WadSizeInfos = Level_GetWadSizeInfos (pDoc->pLevel);
 
@@ -1803,8 +1817,12 @@ BOOL CFusionView::OnEraseBkgnd(CDC* pDC)
 // make sure when we add more view types that we update this.
 void CFusionView::OnViewType(UINT nID)
 {
+	/*App->Debug_Message("CFusionView::OnViewType", 0);
+	App->Debug_Int(nID, 1);*/
+	
 	CFusionDoc	*pDoc	=GetDocument();
 	mViewType	=nID;
+
 	SizeInfo *WadSizeInfos = Level_GetWadSizeInfos (pDoc->pLevel);
 
 	if(WadSizeInfos)

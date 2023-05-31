@@ -34,7 +34,7 @@ permission.  http://www.d6.com/users/checker
 #include <math.h>
 #include <assert.h>
 #include <float.h>
-
+#include "AB_App.h"
 
 #pragma warning (disable:4725)  // FDIV warning...whoopee!!
 
@@ -771,6 +771,11 @@ geVec3d Render_XFormVert(const ViewVars *v, const geVec3d *pin)
 
 void Render_ResizeView (ViewVars *v, long vx, long vy)
 {
+	/*App->Debug_Message("Render_ResizeView", 0);
+	App->Debug_Int(v->ViewType, 0);
+	App->Debug_Int(v->Width, 0);
+	App->Debug_Int(v->Height, 1);*/
+	//return;
 	HDC			ViewDC;
 
 	vx=(vx+3)&~3;	//Align scan delta
@@ -832,6 +837,10 @@ void Render_ResizeView (ViewVars *v, long vx, long vy)
 
 void Render_ResetSettings(ViewVars *v, long vx, long vy)
 {
+	/*App->Debug_Message("Render_ResetSettings", 0);
+	App->Debug_Int(vx, 0);
+	App->Debug_Int(vy, 1);*/
+	//return;
 	Render_ResizeView (v, vx, vy);
 
 	// Compute and set zoom factor

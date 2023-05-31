@@ -70,6 +70,7 @@ END_MESSAGE_MAP()
 
 CFusionApp::CFusionApp()
 {
+	//App->Debug_Message("CFusionApp",1);
 	// TODO: add construction code here,
 	// Place all significant initialization in InitInstance
 	NumCopiedBrushes=0;
@@ -199,6 +200,7 @@ BOOL CFusionApp::InitInstance() // hgtterry InitInstance
 	FilePath_GetDriveAndDir (AppPath, AppPath);
 
 	strcpy(App->WorldEditor_Directory,AppPath);
+	App->Debug_Set();
 
 	SetUnhandledExceptionFilter(xxHandler);
 

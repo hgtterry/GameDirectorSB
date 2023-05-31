@@ -31,6 +31,7 @@ static char THIS_FILE[] = __FILE__;
 
 CFixedSplitterWnd::CFixedSplitterWnd()
 {
+	App->Debug_Message("CFixedSplitterWnd",1);
 	m_hwndAct = NULL;
 }
 
@@ -140,6 +141,7 @@ END_MESSAGE_MAP()
 
 CChildFrame::CChildFrame()
 {
+	App->Debug_Message("CChildFrame",1);
 	InitDone=FALSE;
 }
 
@@ -156,6 +158,7 @@ BOOL CChildFrame::PreCreateWindow(CREATESTRUCT& cs)
 
 BOOL CChildFrame::OnCreateClient(LPCREATESTRUCT, CCreateContext* pContext)
 {
+	//App->Debug_Message("CChildFrame::OnCreateClient",1);
 	int x, y;
 	int x2, y2;
 	RECT r;
@@ -230,6 +233,7 @@ LRESULT CChildFrame::OnSetText(WPARAM wParam, LPARAM lParam)
 
 void CChildFrame::OnSize(UINT nType, int cx, int cy) // hgtterry
 {
+	//App->Debug_Message("CChildFrame::OnSize", 1);
 	//center the panes on a size
 	if(InitDone &&(m_wndSplitter.GetRowCount()==2 && m_wndSplitter.GetColumnCount()==2))
 	{

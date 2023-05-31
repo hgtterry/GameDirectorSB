@@ -98,7 +98,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWnd)
 	// Global help commands
 END_MESSAGE_MAP()
 
-
+#include "AB_App.h"
 /////////////////////////////////////////////////////////////////////////////
 // CMainFrame construction/destruction
 
@@ -107,6 +107,8 @@ CMainFrame::CMainFrame
 	  void
 	) : IsStartingApp(1), IsDestroyingApp(0)
 {
+
+	App->Debug_Message("CMainFrame",1);
 	mpBrushAttributes = NULL;
 	mpFaceAttributes = NULL;
 
@@ -597,6 +599,8 @@ void CMainFrame::UpdateModelsDialog
 
 CFrameWnd* CMainFrame::CreateNewGameViewFrame(CRuntimeClass* pViewClass,  CDocTemplate* pTemplate, CDocument* pDoc, CFrameWnd* pOther)
 {
+	//App->Debug_Message("CreateNewGameViewFrame", 1);
+
 	// make sure we have a doc
 	if (pDoc != NULL) 
 	{
@@ -636,6 +640,8 @@ CFrameWnd* CMainFrame::CreateNewGameViewFrame(CRuntimeClass* pViewClass,  CDocTe
 
 void CMainFrame::MakeNewView( CRuntimeClass* pViewRuntimeClass)
 {
+	//App->Debug_Message("MakeNewView", 1);
+
 	CDocument* pDocument;
 	CChildFrame *pActiveChild;
 
@@ -697,6 +703,8 @@ static int GetMag10
 // update the size of the grid in the pane
 void CMainFrame::UpdateGridSize(geFloat GridSize, int SnapOn, int snapto, int gunits, int snapunits)
 {
+	//App->Debug_Message("UpdateGridSize", 1);
+
 	int	GridIndex;
 	static const char *GridUnits[] =
 		{"CENTI", "DECI", "METER", "10MTR", "100METER", "KILO" };

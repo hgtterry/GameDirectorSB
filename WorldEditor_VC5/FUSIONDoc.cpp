@@ -289,6 +289,7 @@ CFusionDoc::CFusionDoc() : CDocument (),
 	mCurrentGroup (0), TempShearTemplate (NULL), PlaceObjectFlag (FALSE),
 	pSelFaces (NULL), pSelBrushes (NULL), pTempSelBrushes (NULL) //, pCameraEntity (NULL)
 {
+	App->Debug_Message("CFusionDoc()",1);
 	const char *DefaultWadName;
 	const Prefs  *pPrefs = GetPrefs ();
 
@@ -900,7 +901,7 @@ static geBoolean fdocSetEntityVisibility (CEntity &Ent, void *lParam)
 // *************************************************************************
 geBoolean CFusionDoc::Load(const char *FileName)
 {
-	MessageBox(NULL,"HERE Unerla","HERE UNREAL",MB_OK);
+	//MessageBox(NULL,"HERE Unerla","HERE UNREAL",MB_OK);
 	
 	const char		*Errmsg, *WadPath;
 	int				i;
@@ -5089,6 +5090,7 @@ void CFusionDoc::SetAdjustmentMode( fdocAdjustEnum nCmdIDMode )
 
 void CFusionDoc::OnCloseDocument() 
 {
+	App->Debug_Close();
 	CDocument::OnCloseDocument();
 }
 
