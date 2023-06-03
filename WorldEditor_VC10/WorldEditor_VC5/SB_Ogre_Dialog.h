@@ -14,8 +14,10 @@ public:
 	HWND OgreView_3D_hWnd;
 	HWND TestHwnd;
 
+	static bool CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
 private:
 	static LRESULT CALLBACK Ogre_Dialog_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-	static LRESULT CALLBACK OgreView_3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	
 };
 

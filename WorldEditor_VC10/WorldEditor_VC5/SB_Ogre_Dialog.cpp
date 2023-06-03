@@ -44,42 +44,7 @@ ATOM SB_Ogre_Dialog::MyRegisterClass(HINSTANCE hInstance)
 // *************************************************************************
 void SB_Ogre_Dialog::Start_Ogre_Dialog()
 {
-	/*DWORD		  dwStyleEx = 0;
-	static const TCHAR staticVar;
-	HINSTANCE hInst = NULL;
-	
-
-	UINT classStyle = CS_OWNDC;
-
-	WNDCLASS wc = { classStyle, WindowEventUtilities::_WndProc, 0, 0, App->hInst,
-				LoadIcon(NULL, IDI_APPLICATION), LoadCursor(NULL, IDC_ARROW),
-				(HBRUSH)GetStockObject(BLACK_BRUSH), NULL, "OgreGLWindow" };
-	RegisterClass(&wc);
-
-
-	HWND mHWnd = CreateWindowEx(dwStyleEx, "OgreGLWindow", "Test",
-		NULL, 0, 0, 500, 500, NULL, 0, hInst, NULL);*/
-
-
-
-	/*MyRegisterClass(App->hInst);
-
-	HWND MainHwnd = CreateWindow("STATIC", "Test", WS_OVERLAPPEDWINDOW,
-		0, 0, 500, 500, NULL, NULL, App->hInst, NULL);
-
-	if (!MainHwnd)
-	{
-		App->Say("Failed");
-		return;
-	}*/
-
-	//ShowWindow(mHWnd, 1);
-	//UpdateWindow(mHWnd);
-
-	//WindowEventUtilities::_addRenderWindow(this);
-
-	//App->CL_Ogre->RenderHwnd = mHWnd;
-	//TestHwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_OGREVIEWER, App->MainHwnd, NULL);// (DLGPROC)Ogre_Dialog_Proc);
+	TestHwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_OGREVIEWER, App->MainHwnd, (DLGPROC)Ogre_Dialog_Proc);
 	App->CL_Ogre->InitOgre();
 }
 
@@ -150,6 +115,28 @@ LRESULT CALLBACK SB_Ogre_Dialog::Ogre_Dialog_Proc(HWND hDlg, UINT message, WPARA
 		return CDRF_DODEFAULT;
 	}
 
+	case WM_MOUSEMOVE: // ok up and running and we have a loop for mouse
+	{
+		App->Flash_Window();
+		//SetFocus(App->SBC_MeshViewer->MeshView_3D_hWnd);
+		break;
+	}
+
+	case WM_RBUTTONDOWN: // BERNIE_HEAR_FIRE 
+	{
+		
+		//if (App->OgreStarted == 1)
+		//{
+		//	SetCapture(App->SBC_MeshViewer->MeshView_3D_hWnd);// Bernie
+		//	SetCursorPos(App->CursorPosX, App->CursorPosY);
+		//	App->SBC_MeshViewer->RenderListener->Pl_RightMouseDown = 1;
+		//	App->CUR = SetCursor(NULL);
+		//	return 1;
+		//}
+
+		return 1;
+	}
+
 	case WM_COMMAND:
 	{
 		
@@ -183,23 +170,24 @@ LRESULT CALLBACK SB_Ogre_Dialog::Ogre_Dialog_Proc(HWND hDlg, UINT message, WPARA
 // *************************************************************************
 // *		OgreView_3D_Proc:- Terry and Hazel Flanigan 2023 			   *
 // *************************************************************************
-LRESULT CALLBACK SB_Ogre_Dialog::OgreView_3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+bool CALLBACK SB_Ogre_Dialog::Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
 
-	case WM_INITDIALOG: // Bernie as the dialog is created
-	{
-		return TRUE;
-	}
+	//case WM_INITDIALOG: // Bernie as the dialog is created
+	//{
+	//	Debug
+	//	return TRUE;
+	//}
 
-	case WM_CTLCOLORDLG:
-	{
-		//if (App->OgreStarted == 0)
-		{
-			return (LONG)App->BlackBrush;
-		}
-	}
+	//case WM_CTLCOLORDLG:
+	//{
+	//	//if (App->OgreStarted == 0)
+	//	{
+	//		return (LONG)App->BlackBrush;
+	//	}
+	//}
 
 	//case WM_MOUSEWHEEL:
 	//{
@@ -222,93 +210,93 @@ LRESULT CALLBACK SB_Ogre_Dialog::OgreView_3D_Proc(HWND hDlg, UINT message, WPARA
 
 	//}
 
-	case WM_MOUSEMOVE: // ok up and running and we have a loop for mouse
-	{
+	//case WM_MOUSEMOVE: // ok up and running and we have a loop for mouse
+	//{
+	//	App->Flash_Window();
+	//	//SetFocus(App->SBC_MeshViewer->MeshView_3D_hWnd);
 
-		//SetFocus(App->SBC_MeshViewer->MeshView_3D_hWnd);
-
-		break;
-	}
+	//	break;
+	//}
 
 	// Right Mouse Button
-	case WM_RBUTTONDOWN: // BERNIE_HEAR_FIRE 
-	{
+	//case WM_RBUTTONDOWN: // BERNIE_HEAR_FIRE 
+	//{
+	//	
+	//	//if (App->OgreStarted == 1)
+	//	//{
+	//	//	SetCapture(App->SBC_MeshViewer->MeshView_3D_hWnd);// Bernie
+	//	//	SetCursorPos(App->CursorPosX, App->CursorPosY);
+	//	//	App->SBC_MeshViewer->RenderListener->Pl_RightMouseDown = 1;
+	//	//	App->CUR = SetCursor(NULL);
+	//	//	return 1;
+	//	//}
 
-		//if (App->OgreStarted == 1)
-		//{
-		//	SetCapture(App->SBC_MeshViewer->MeshView_3D_hWnd);// Bernie
-		//	SetCursorPos(App->CursorPosX, App->CursorPosY);
-		//	App->SBC_MeshViewer->RenderListener->Pl_RightMouseDown = 1;
-		//	App->CUR = SetCursor(NULL);
-		//	return 1;
-		//}
-
-		return 1;
-	}
-	case WM_RBUTTONUP:
-	{
+	//	return 1;
+	//}
+	//case WM_RBUTTONUP:
+	//{
 
 
-		/*if (App->OgreStarted == 1)
-		{
-			ReleaseCapture();
-			App->SBC_MeshViewer->RenderListener->Pl_RightMouseDown = 0;
-			SetCursor(App->CUR);
-			return 1;
-		}*/
+	//	/*if (App->OgreStarted == 1)
+	//	{
+	//		ReleaseCapture();
+	//		App->SBC_MeshViewer->RenderListener->Pl_RightMouseDown = 0;
+	//		SetCursor(App->CUR);
+	//		return 1;
+	//	}*/
 
-		return 1;
-	}
+	//	return 1;
+	//}
 	// Left Mouse Button
-	case WM_LBUTTONDOWN: // BERNIE_HEAR_FIRE 
-	{
-		//if (App->OgreStarted == 1)
-		//{
+	//case WM_LBUTTONDOWN: // BERNIE_HEAR_FIRE 
+	//{
+	//	//if (App->OgreStarted == 1)
+	//	//{
 
-		//	SetCapture(App->SBC_MeshViewer->MeshView_3D_hWnd);// Bernie
-		//	SetCursorPos(App->CursorPosX, App->CursorPosY);
+	//	//	SetCapture(App->SBC_MeshViewer->MeshView_3D_hWnd);// Bernie
+	//	//	SetCursorPos(App->CursorPosX, App->CursorPosY);
 
-		//	App->SBC_MeshViewer->RenderListener->Pl_LeftMouseDown = 1;
+	//	//	App->SBC_MeshViewer->RenderListener->Pl_LeftMouseDown = 1;
 
-		//	App->CUR = SetCursor(NULL);
+	//	//	App->CUR = SetCursor(NULL);
 
-		//	return 1;
-		//}
+	//	//	return 1;
+	//	//}
 
-		return 1;
-	}
+	//	return 1;
+	//}
 
-	case WM_LBUTTONUP:
-	{
+	//case WM_LBUTTONUP:
+	//{
 
-		/*if (App->OgreStarted == 1)
-		{
-			ReleaseCapture();
-			App->SBC_MeshViewer->RenderListener->Pl_LeftMouseDown = 0;
-			SetCursor(App->CUR);
-			return 1;
-		}*/
+	//	/*if (App->OgreStarted == 1)
+	//	{
+	//		ReleaseCapture();
+	//		App->SBC_MeshViewer->RenderListener->Pl_LeftMouseDown = 0;
+	//		SetCursor(App->CUR);
+	//		return 1;
+	//	}*/
 
-		return 1;
-	}
-	case WM_KEYDOWN:
-		switch (wParam)
-		{
-		case 'C':
-			if (GetAsyncKeyState(VK_CONTROL))
-			{
-				//		//		App->CL10_Objects_Com->Copy_Object();
-				//		//		return 1;
-			}
-		case 'V':
-			if (GetAsyncKeyState(VK_CONTROL))
-			{
-				//		//		App->CL10_Objects_Com->Paste_Object();
-				//		//		return 1;
-			}
-			//	return 1;
-			//	//	// more keys here
-		}break;
+	//	return 1;
+	//}
+	//case WM_KEYDOWN:
+	//	switch (wParam)
+	//	{
+	//	case 'C':
+	//		if (GetAsyncKeyState(VK_CONTROL))
+	//		{
+	//			//		//		App->CL10_Objects_Com->Copy_Object();
+	//			//		//		return 1;
+	//		}
+	//	case 'V':
+	//		if (GetAsyncKeyState(VK_CONTROL))
+	//		{
+	//			//		//		App->CL10_Objects_Com->Paste_Object();
+	//			//		//		return 1;
+	//		}
+	//		//	return 1;
+	//		//	//	// more keys here
+	//	}break;
 	}
 
 	return FALSE;

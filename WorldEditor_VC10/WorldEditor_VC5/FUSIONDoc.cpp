@@ -5096,10 +5096,9 @@ void CFusionDoc::OnCloseDocument()
 	{
 		delete App->CL_Ogre->mRoot;
 		App->CL_Ogre->mRoot = NULL;
-		App->Say("Close Ogre");
 	}
 
-	App->Say("Close");
+	//App->Say("Close");
 	CDocument::OnCloseDocument();
 }
 

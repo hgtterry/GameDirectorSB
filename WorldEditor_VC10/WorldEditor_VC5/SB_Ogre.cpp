@@ -101,24 +101,25 @@ bool SB_Ogre::InitOgre(void)
 		Debug
 	}
 
+	
 
-
-	HWND Check_hWnd = NULL;
-	Check_hWnd = SetParent(Test_hWnd, App->MainHwnd);
-
-	if (!Check_hWnd)
-	{
-		Debug
-	}
-
+	
 
 	SetWindowLongPtr(Test_hWnd, GWL_STYLE, WS_BORDER);
 	SetWindowPos(Test_hWnd, 0, 0, 0, 0, 0, SWP_NOZORDER | SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE | SWP_DRAWFRAME);
 	ShowWindow(Test_hWnd, SW_SHOW);
 
-	//SetWindowLongA(Test_hWnd, GWL_STYLE, WS_MAXIMIZE);
+	SetWindowPos(Test_hWnd, NULL, 4, 4, 820, 450, SWP_NOZORDER);
 
+	
+	HWND Check_hWnd = NULL;
+	Check_hWnd = SetParent(Test_hWnd, App->CL_Ogre_Dialog->TestHwnd);
 
+	if (!Check_hWnd)
+	{
+		Debug
+	}
+	//ShowWindow(Test_hWnd, SW_SHOW);
 	OgreIsRunning = 1;
 	App->CL_Ogre->Ogre_Render_Loop();
 	//App->CL_Ogre->mRoot->startRendering();
@@ -341,9 +342,17 @@ bool SB_Ogre::Configure(void)
 	mRoot->setRenderSystem(rs);
 	mWindow = mRoot->initialise(true,"XYZ");
 
+	mWindow->resize(200, 200);
+
 	HWND Test_hWnd = NULL;
 	Test_hWnd = FindWindow(0,"XYZ");
-	ShowWindow(Test_hWnd, SW_HIDE);
+	
+	//int test = SetWindowLong(Test_hWnd, GWL_WNDPROC, (LONG)App->CL_Ogre_Dialog->Ogre3D_Proc);
+
+	/*if (test)
+	{
+		App->Say("Failed");
+	}*/
 
 
 	//if (!Test_hWnd)
