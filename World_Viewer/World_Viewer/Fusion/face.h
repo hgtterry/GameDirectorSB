@@ -23,7 +23,7 @@
 
 #include "Vec3d.h"
 #include "xform3d.h"
-#include "box3d.h"
+#include "CBox3d.h"
 #include <stdio.h>
 #include "Parse3dt.h"
 
