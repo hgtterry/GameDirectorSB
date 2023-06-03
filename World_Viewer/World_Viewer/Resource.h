@@ -24,9 +24,12 @@
 #define IDD_BRUSHPROPERTIES             138
 #define IDD_SB_BRUSH_PROPERTIES         139
 #define IDD_VIEW_TOPLEFT                140
+#define ID_VIEW_TOPVIEW                 140
 #define IDD_VIEW_TOPRIGHT               141
+#define ID_VIEW_SIDEVIEW                141
 #define IDD_VIEW_TOPRIGHT1              142
 #define IDD_VIEW_BOTTOMLEFT             142
+#define ID_VIEW_FRONTVIEW               142
 #define IDC_PBBANNER                    1000
 #define IDC_PBACTION                    1001
 #define IDC_STBAR                       1002

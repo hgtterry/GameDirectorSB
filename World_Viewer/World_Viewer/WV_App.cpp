@@ -69,6 +69,7 @@ WV_App::WV_App(void)
 	CL_CBox3d =			nullptr;
 	CL_CBrush =			nullptr;
 	CL_CFaceList =		nullptr;
+	CL_CView =			nullptr;
 
 	Fdlg = nullptr;
 	hInst = nullptr;
@@ -227,6 +228,7 @@ bool WV_App::InitApp(void)
 	CL_CFaces =			new CFaces();
 	CL_CBox3d =			new CBox3d();
 	CL_CFaceList =		new CFaceList();
+	CL_CView =			new CView();
 	
 	SetBrushes_Fonts();
 

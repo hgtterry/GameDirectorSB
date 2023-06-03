@@ -99,6 +99,7 @@
       <AdditionalIncludeDirectories>..\..\Anim19_OSDN\Common\Devil\include\IL;..\..\Anim19_OSDN\Common\Genesis\Include2;..\..\Anim19_OSDN\Common\Genesis\Gen2;..\..\Anim19_OSDN\Common\Genesis\Gen;..\..\Anim19_OSDN\Common\Bullet\Source;..\..\Anim19_OSDN\Common\include\OGRE;..\..\Anim19_OSDN\Common\include\OGRE\Terrain;..\..\Anim19_OSDN\Common\include\OGRE\Overlay;..\..\Anim19_OSDN\Common\imGui\include;..\..\Anim19_OSDN\Common\Assimp\Include;Fusion;Fusion\GenesisSDK\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp14</LanguageStandard>
       <LanguageStandard_C>stdc11</LanguageStandard_C>
+      <AdditionalOptions>-Zm128 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -156,6 +157,7 @@
     <ClInclude Include="CollisionTools.h" />
     <ClInclude Include="CRender.h" />
     <ClInclude Include="CUtil.h" />
+    <ClInclude Include="CView.h" />
     <ClInclude Include="DynamicCharacterController.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="iden.H" />
@@ -214,6 +216,7 @@
     <ClCompile Include="CollisionTools.cpp" />
     <ClCompile Include="CRender.cpp" />
     <ClCompile Include="CUtil.cpp" />
+    <ClCompile Include="CView.cpp" />
     <ClCompile Include="DynamicCharacterController.cpp" />
     <ClCompile Include="OgreXMLMeshSerializer.cpp" />
     <ClCompile Include="stdafx.cpp">

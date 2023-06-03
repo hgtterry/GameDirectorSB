@@ -60,6 +60,14 @@ public:
 	CRender();
 	~CRender();
 
+	void Render_ResizeView(ViewVars* v, long vx, long vy);
+	void Render_ResetSettings(ViewVars* v, long vx, long vy);
+
+	void Render_SetZoom(ViewVars* v, const geFloat zf);
+	void Render_SetViewType(ViewVars* v, const int vt);
+	ViewVars* Render_AllocViewVars(void);
+	void Render_SetWadSizes(ViewVars* v, SizeInfo* ws);
+
 	int	Render_GetHeight(const ViewVars* v);
 	int	Render_GetWidth(const ViewVars* v);
 	int	Render_GetInidx(const ViewVars* v);
@@ -67,6 +75,7 @@ public:
 	geFloat	Render_GetFineGrid(const ViewVars* v, int GridType);
 	geFloat Render_ComputeGridDist(const ViewVars* v, int GridType);
 
+	
 	void RenderOrthoView(ViewVars* v, HDC* pDC, HDC MemoryhDC);
 
 	void Render_RenderOrthoGridFromSize(ViewVars* v, geFloat Interval, HDC ViewDC);

@@ -66,7 +66,7 @@ distribution.
 #include "CGroup.h"
 #include "CModel.h"
 #include "CFusionDoc.h"
-
+#include "CView.h"
 
 
 
@@ -118,6 +118,8 @@ public:
 	CBox3d*				CL_CBox3d;
 	CBrush*				CL_CBrush;
 	CFaceList*			CL_CFaceList;
+	CView*				CL_CView;
+
 	// ----------------------------------- 
 	WV_App(void);
 	~WV_App(void);

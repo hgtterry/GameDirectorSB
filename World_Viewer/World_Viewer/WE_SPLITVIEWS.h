@@ -23,6 +23,8 @@ misrepresented as being the original software.
 distribution.
 */ // :- Terry and Hazel Flanigan 2023
 
+#include "CRender.h"
+
 class WE_SpliterViews
 {
 public:
@@ -44,6 +46,9 @@ public:
 
 	void MoveCamera(HWND hwnd);
 
+
+	void Render_RenderOrthoGridFromSize(ViewVars* v, geFloat Interval, HDC ViewDC, RECT Rect);
+
 	HWND Left_Window_Hwnd;
 	HWND Right_Window_Hwnd;
 
@@ -57,8 +62,8 @@ public:
 
 private:
 
-	static LRESULT CALLBACK Left_Window_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-	static LRESULT CALLBACK Right_Window_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Top_Left_Window_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Top_Right_Window_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Bottom_Left_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	

@@ -2,10 +2,16 @@
 #include "WV_App.h"
 #include "CRender.h"
 #include "units.h"
+#include "ram.h"
 
 #define	VectorToSUB(a, b)			(*((((geFloat *)(&a))) + (b)))
 
 static const geVec3d	VecOrigin = { 0.0f, 0.0f, 0.0f };
+
+enum ViewFlags
+{
+	DIBDONE = 1,
+};
 
 typedef struct SurfTag
 {
@@ -32,6 +38,8 @@ typedef struct tagBrushDrawData
 	uint32		Color;
 } BrushDrawData;
 
+static	geFloat		mRoll[3][3], mPitch[3][3], mYaw[3][3];
+
 CRender::CRender()
 {
 }
@@ -41,7 +49,150 @@ CRender::~CRender()
 }
 
 // *************************************************************************
-// *	  						Render_GetHeight		Genesis			   *
+// *	  						Render_ResizeView						   *
+// *************************************************************************
+void CRender::Render_ResizeView(ViewVars* v, long vx, long vy)
+{
+	HDC			ViewDC;
+
+	vx = (vx + 3) & ~3;	//Align scan delta
+
+	if (vx && vy)
+	{
+		if (v->Flags & DIBDONE)
+		{
+			DeleteObject(v->hDibSec);
+			geRam_Free(v->pZBuffer);
+		}
+		else
+			v->Flags |= DIBDONE;
+
+		//Force top-down 8-bit bitmap of size WINDOW_WIDTH*WINDOW_HEIGHT.
+		v->ViewBMI.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+		v->ViewBMI.bmiHeader.biPlanes = 1;
+		v->ViewBMI.bmiHeader.biBitCount = 16;
+		v->ViewBMI.bmiHeader.biCompression = BI_RGB;
+		v->ViewBMI.bmiHeader.biSizeImage = 0;
+		v->ViewBMI.bmiHeader.biClrUsed = 0;
+		v->ViewBMI.bmiHeader.biClrImportant = 0;
+		v->ViewBMI.bmiHeader.biWidth = vx;
+		v->ViewBMI.bmiHeader.biHeight = -vy;    // Minus for top-down.
+
+		ViewDC = CreateCompatibleDC(NULL);
+		assert(ViewDC);
+
+		v->hDibSec = CreateDIBSection(ViewDC, (BITMAPINFO*)&v->ViewBMI, DIB_RGB_COLORS, (void**)&v->pBits, NULL, 0);
+		assert(v->hDibSec);
+
+		DeleteDC(ViewDC);
+
+		//allocate a 32 bit zbuffer
+		v->pZBuffer = (uint32*)geRam_Allocate(sizeof(uint32) * (vx * vy));
+	}
+
+	v->FieldOfView = 2.0f;	//fixed for now?
+	v->XScreenScale = ((geFloat)vx) / v->FieldOfView;
+	v->YScreenScale = ((geFloat)vy) / v->FieldOfView;
+	v->MaxScale = max(v->XScreenScale, v->YScreenScale);
+	v->MaxScreenScaleInv = 1.0f / v->MaxScale;
+	v->XCenter = ((geFloat)vx) / 2.0f - 0.5f;
+	v->YCenter = ((geFloat)vy) / 2.0f - 0.5f;
+
+	if (v->ViewType < VIEWTOP)
+	{
+		if (v->NewEdges)
+			geRam_Free(v->NewEdges);
+		if (v->RemoveEdges)
+			geRam_Free(v->RemoveEdges);
+
+		v->NewEdges = (Edge*)geRam_Allocate(vy * sizeof(Edge));
+		v->RemoveEdges = (Edge**)geRam_Allocate(vy * sizeof(Edge*));
+	}
+	v->Width = vx;
+	v->Height = vy;
+}
+
+// *************************************************************************
+// *	  						Render_ResetSettings					   *
+// *************************************************************************
+void CRender::Render_ResetSettings(ViewVars* v, long vx, long vy)
+{
+	Render_ResizeView(v, vx, vy);
+
+	// Compute and set zoom factor
+	Render_SetZoom(v, (v->Width / 640.0f));
+
+	geVec3d_Clear(&v->Vpn);
+	geVec3d_Clear(&v->Vright);
+	geVec3d_Clear(&v->Vup);
+
+	v->roll = 0.0f;
+	v->pitch = M_PI;
+	v->yaw = 0.0f;
+
+	mRoll[0][0] = 1;  mRoll[0][1] = 0;  mRoll[0][2] = 0;
+	mRoll[1][0] = 0;  mRoll[1][1] = 1;  mRoll[1][2] = 0;
+	mRoll[2][0] = 0;	mRoll[2][1] = 0;  mRoll[2][2] = 1;
+	mPitch[0][0] = 1; mPitch[0][1] = 0;	mPitch[0][2] = 0;
+	mPitch[1][0] = 0; mPitch[1][1] = 1; mPitch[1][2] = 0;
+	mPitch[2][0] = 0; mPitch[2][1] = 0; mPitch[2][2] = 1;
+	mYaw[0][0] = 1;	mYaw[0][1] = 0;	mYaw[0][2] = 0;
+	mYaw[1][0] = 0;	mYaw[1][1] = 1;	mYaw[1][2] = 0;
+	mYaw[2][0] = 0;	mYaw[2][1] = 0;	mYaw[2][2] = 1;
+
+	geVec3d_Clear(&v->CamPos);
+}
+
+// *************************************************************************
+// *	  						Render_SetZoom							   *
+// *************************************************************************
+void CRender::Render_SetZoom(ViewVars* v, const geFloat zf)
+{
+	assert(v);
+	v->ZoomFactor = zf;
+}
+
+// *************************************************************************
+// *	  						Render_SetViewType						   *
+// *************************************************************************
+void CRender::Render_SetViewType(ViewVars* v, const int vt)
+{
+	assert(v);
+
+	v->ViewType = vt;
+}
+
+// *************************************************************************
+// *	  						Render_AllocViewVars					   *
+// *************************************************************************
+ViewVars* CRender::Render_AllocViewVars(void)
+{
+	ViewVars* v;
+
+	v = (ViewVars*)geRam_Allocate(sizeof(ViewVars));
+
+	if (!v)
+	{
+		App->Say("WARNING:  Allocation failure in Render_AllocViewVars()\n");
+	}
+		
+	memset(v, 0, sizeof(ViewVars));
+
+	return	v;
+}
+
+// *************************************************************************
+// *	  						Render_SetWadSizes						   *
+// *************************************************************************
+void CRender::Render_SetWadSizes(ViewVars* v, SizeInfo* ws)
+{
+	assert(v);
+
+	v->WadSizes = ws;
+}
+
+// *************************************************************************
+// *	  						Render_GetHeight						   *
 // *************************************************************************
 int	CRender::Render_GetHeight(const ViewVars* v)
 {
@@ -187,7 +338,7 @@ static geBoolean fdocBrushNotDetail(const Brush* b)
 void CRender::RenderOrthoView(ViewVars* v, HDC* pDC, HDC MemoryhDC) // hgtterry Render to views
 {
 
-	App->Flash_Window();
+	//App->Flash_Window();
 	//CMainFrame* m_pMainFrame;
 	//m_pMainFrame = (CMainFrame*)AfxGetMainWnd(); // MFC POO
 
@@ -262,171 +413,171 @@ void CRender::RenderOrthoView(ViewVars* v, HDC* pDC, HDC MemoryhDC) // hgtterry 
 			SelectObject(MemoryhDC, pen2);
 			Render_RenderOrthoGridFromSize(v, 128, MemoryhDC);
 			DeleteObject(pen2);
-
+			App->Flash_Window();
 		}
 	}
 
 	GroupListType* Groups = App->CL_CLevel->Level_GetGroups(App->CL_CFusionDoc->pLevel);
 
-	GroupId = App->CL_CGroup->Group_GetFirstId(Groups, &gi);
-	while (GroupId != NO_MORE_GROUPS)
-	{
-		brushDrawData.FlagTest = fdocBrushNotDetail;
-		brushDrawData.GroupId = GroupId;
-//		if ((GroupVis == Group_ShowAll) ||
-//			((GroupVis == Group_ShowCurrent) && (GroupId == App->CL_CFusionDoc->mCurrentGroup)) ||
-//			((GroupVis == Group_ShowVisible) && (Group_IsVisible(Groups, GroupId)))
-//			)
-		{
-			const GE_RGBA* pRGB;
-//			pRGB = Group_GetColor(Groups, GroupId);
-			HPEN	PenThisGroup = CreatePen(PS_SOLID, 1, RGB(pRGB->r, pRGB->g, pRGB->b));
-
-			//pDC->SelectObject (&PenThisGroup);
-			SelectObject(MemoryhDC, PenThisGroup);
-
-//			Level_EnumLeafBrushes(App->CL_CFusionDoc->pLevel, &brushDrawData, BrushDraw2); // Draw Brushes
-//			if (m_pDoc->mShowEntities == GE_TRUE)
-			{
-				//Level_EnumEntities (m_pDoc->pLevel, &brushDrawData, EntityDraw);
-			}
-
-			DeleteObject(PenThisGroup);
-
-			// render cut brushes
-//			SelectObject(MemoryhDC, PenCutBrush2);
-//			brushDrawData.FlagTest = fdocBrushIsSubtract;
-//			Level_EnumLeafBrushes(m_pDoc->pLevel, &brushDrawData, BrushDraw2);
-
-			// details
-//			if (m_pDoc->bShowDetailBrushes)
-			{
-				// detail brushes
-//				SelectObject(MemoryhDC, PenDetailBrush2);
-//				brushDrawData.FlagTest = App->CL_CBrush->Brush_IsDetail;
-//				Level_EnumLeafBrushes(m_pDoc->pLevel, &brushDrawData, BrushDraw2);
-			}
-
-			// hints
-//			if (m_pDoc->bShowHintBrushes)
-			{
-				// Hint brushes
-//				SelectObject(MemoryhDC, PenHintBrush2);
-//				brushDrawData.FlagTest = Brush_IsHint;
-//				Level_EnumLeafBrushes(m_pDoc->pLevel, &brushDrawData, BrushDraw2);
-			}
-
-
-			// clip
-//			if (m_pDoc->bShowClipBrushes)
-			{
-				// Hint brushes
-//				SelectObject(MemoryhDC, Brush_IsClip);
-//				Level_EnumLeafBrushes(m_pDoc->pLevel, &brushDrawData, BrushDraw2);
-			}
-
-//			SelectObject(MemoryhDC, PenAllItems2);
-		}
-//		GroupId = Group_GetNextId(Groups, &gi);
-	}
-
-//	brushDrawData.GroupId = fdoc_SHOW_ALL_GROUPS;
-	brushDrawData.FlagTest = NULL;
-	{
-//		CEntityArray* Entities = Level_GetEntities(m_pDoc->pLevel);
-//		int NumSelBrushes = SelBrushList_GetSize(m_pDoc->pSelBrushes);
-
-		// render selected brushes and entities
-//		SelectObject(MemoryhDC, PenSelected2);
-
-//		for (i = 0; i < NumSelBrushes; i++)
-		{
-			Brush* pBrush;
-
-//			pBrush = SelBrushList_GetBrush(m_pDoc->pSelBrushes, i);
-//			if (m_pDoc->fdocShowBrush(pBrush, &ViewBox))
-			{
-//				if (Brush_IsMulti(pBrush))
-				{
-//					BrushList_EnumLeafBrushes(App->CL_Brush->Brush_GetBrushList(pBrush), &brushDrawData, BrushDraw2);
-				}
-//				else
-				{
-//					Render_RenderBrushFacesOrtho(v, pBrush, MemoryhDC);
-				}
-			}
-		}
-
-		//	for(i=0;i < Entities->GetSize();i++)
-		//	{
-		//		CEntity *pEnt;
-
-		//		pEnt = &(*Entities)[i];
-
-		//		if (pEnt->IsSelected ())
-		//		{
-		//			fdocDrawEntity (pEnt, v, pDC, Level_GetEntityDefs (m_pDoc->pLevel), (i==m_pDoc->mCurrentEntity) ? GE_TRUE : GE_FALSE ) ;
-		//		}
-		//	}
-	}
-
-	{
-		// render sheet faces
-		//pDC->SelectObject (&PenSheetFaces);
-//		SelectObject(MemoryhDC, PenSheetFaces2);
-//		BrushList_EnumLeafBrushes(BList, &brushDrawData, BrushDrawSheetFacesOrtho);
-	}
-	{
-		// render selected faces
-	//	pDC->SelectObject (&PenSelectedFaces);
-//		SelectObject(MemoryhDC, PenSelectedFaces2);
-//		BrushList_EnumLeafBrushes(BList, &brushDrawData, BrushDrawSelFacesOrtho);
-	}
-	{
-		// template brush/entity
-		//pDC->SelectObject (&PenTemplate);
-//		SelectObject(MemoryhDC, PenTemplate2);
-
-//		if ((m_pDoc->mModeTool == ID_TOOLS_TEMPLATE) ||
-//			(m_pDoc->mModeTool == ID_TOOLS_CAMERA && m_pDoc->GetSelState() == NOSELECTIONS))
-		{
-//			if (!m_pDoc->TempEnt)
-			{
-//				if (Brush_TestBoundsIntersect(m_pDoc->CurBrush, &ViewBox))
-				{
-//					if (Brush_IsMulti(m_pDoc->CurBrush))
-					{
-//						BrushList_EnumLeafBrushes(App->CL_Brush->Brush_GetBrushList(m_pDoc->CurBrush), &brushDrawData, BrushDraw2);
-					}
-//					else
-					{
-//						Render_RenderBrushFacesOrtho(v, m_pDoc->CurBrush, MemoryhDC);
-					}
-				}
-			}
-//			else
-			{
-				//fdocDrawEntity (&m_pDoc->mRegularEntity, v, pDC, Level_GetEntityDefs (m_pDoc->pLevel), GE_FALSE );
-			}
-		}
-	}
-
-	//// find and render the camera entity
-//	CEntity* pCameraEntity = m_pDoc->FindCameraEntity();
-
-//	if ((pCameraEntity != NULL))
-	{
-//		if (pCameraEntity->IsSelected())
-			//pDC->SelectObject (&PenSelected);
-//			SelectObject(MemoryhDC, PenSelected2);
-//		else
-			//pDC->SelectObject (&PenCamera);
-//			SelectObject(MemoryhDC, PenCamera2);
-
-//		fdocDrawEntity(pCameraEntity, v, MemoryhDC, Level_GetEntityDefs(m_pDoc->pLevel), GE_TRUE);
-	}
-
-	//pDC->SelectObject(oldpen);
+////	GroupId = App->CL_CGroup->Group_GetFirstId(Groups, &gi);
+////	while (GroupId != NO_MORE_GROUPS)
+////	{
+////		brushDrawData.FlagTest = fdocBrushNotDetail;
+////		brushDrawData.GroupId = GroupId;
+////		if ((GroupVis == Group_ShowAll) ||
+////			((GroupVis == Group_ShowCurrent) && (GroupId == App->CL_CFusionDoc->mCurrentGroup)) ||
+////			((GroupVis == Group_ShowVisible) && (Group_IsVisible(Groups, GroupId)))
+////			)
+//		{
+////			const GE_RGBA* pRGB;
+////			pRGB = Group_GetColor(Groups, GroupId);
+////			HPEN	PenThisGroup = CreatePen(PS_SOLID, 1, RGB(pRGB->r, pRGB->g, pRGB->b));
+//
+//			//pDC->SelectObject (&PenThisGroup);
+////			SelectObject(MemoryhDC, PenThisGroup);
+//
+////			Level_EnumLeafBrushes(App->CL_CFusionDoc->pLevel, &brushDrawData, BrushDraw2); // Draw Brushes
+////			if (m_pDoc->mShowEntities == GE_TRUE)
+////			{
+//				//Level_EnumEntities (m_pDoc->pLevel, &brushDrawData, EntityDraw);
+////			}
+//
+////			DeleteObject(PenThisGroup);
+//
+//			// render cut brushes
+////			SelectObject(MemoryhDC, PenCutBrush2);
+////			brushDrawData.FlagTest = fdocBrushIsSubtract;
+////			Level_EnumLeafBrushes(m_pDoc->pLevel, &brushDrawData, BrushDraw2);
+//
+//			// details
+////			if (m_pDoc->bShowDetailBrushes)
+//			{
+//				// detail brushes
+////				SelectObject(MemoryhDC, PenDetailBrush2);
+////				brushDrawData.FlagTest = App->CL_CBrush->Brush_IsDetail;
+////				Level_EnumLeafBrushes(m_pDoc->pLevel, &brushDrawData, BrushDraw2);
+//			}
+//
+//			// hints
+////			if (m_pDoc->bShowHintBrushes)
+//			{
+//				// Hint brushes
+////				SelectObject(MemoryhDC, PenHintBrush2);
+////				brushDrawData.FlagTest = Brush_IsHint;
+////				Level_EnumLeafBrushes(m_pDoc->pLevel, &brushDrawData, BrushDraw2);
+//			}
+//
+//
+//			// clip
+////			if (m_pDoc->bShowClipBrushes)
+//			{
+//				// Hint brushes
+////				SelectObject(MemoryhDC, Brush_IsClip);
+////				Level_EnumLeafBrushes(m_pDoc->pLevel, &brushDrawData, BrushDraw2);
+//			}
+//
+////			SelectObject(MemoryhDC, PenAllItems2);
+//		}
+////		GroupId = Group_GetNextId(Groups, &gi);
+//	}
+//
+////	brushDrawData.GroupId = fdoc_SHOW_ALL_GROUPS;
+////	brushDrawData.FlagTest = NULL;
+////	{
+////		CEntityArray* Entities = Level_GetEntities(m_pDoc->pLevel);
+////		int NumSelBrushes = SelBrushList_GetSize(m_pDoc->pSelBrushes);
+//
+//		// render selected brushes and entities
+////		SelectObject(MemoryhDC, PenSelected2);
+//
+////		for (i = 0; i < NumSelBrushes; i++)
+////		{
+////			Brush* pBrush;
+//
+////			pBrush = SelBrushList_GetBrush(m_pDoc->pSelBrushes, i);
+////			if (m_pDoc->fdocShowBrush(pBrush, &ViewBox))
+////			{
+////				if (Brush_IsMulti(pBrush))
+////				{
+////					BrushList_EnumLeafBrushes(App->CL_Brush->Brush_GetBrushList(pBrush), &brushDrawData, BrushDraw2);
+////				}
+////				else
+////				{
+////					Render_RenderBrushFacesOrtho(v, pBrush, MemoryhDC);
+////				}
+////			}
+////		}
+//
+//		//	for(i=0;i < Entities->GetSize();i++)
+//		//	{
+//		//		CEntity *pEnt;
+//
+//		//		pEnt = &(*Entities)[i];
+//
+//		//		if (pEnt->IsSelected ())
+//		//		{
+//		//			fdocDrawEntity (pEnt, v, pDC, Level_GetEntityDefs (m_pDoc->pLevel), (i==m_pDoc->mCurrentEntity) ? GE_TRUE : GE_FALSE ) ;
+//		//		}
+//		//	}
+////	}
+//
+////	{
+//		// render sheet faces
+//		//pDC->SelectObject (&PenSheetFaces);
+////		SelectObject(MemoryhDC, PenSheetFaces2);
+////		BrushList_EnumLeafBrushes(BList, &brushDrawData, BrushDrawSheetFacesOrtho);
+////	}
+////	{
+//		// render selected faces
+//	//	pDC->SelectObject (&PenSelectedFaces);
+////		SelectObject(MemoryhDC, PenSelectedFaces2);
+////		BrushList_EnumLeafBrushes(BList, &brushDrawData, BrushDrawSelFacesOrtho);
+////	}
+////	{
+//		// template brush/entity
+//		//pDC->SelectObject (&PenTemplate);
+////		SelectObject(MemoryhDC, PenTemplate2);
+//
+////		if ((m_pDoc->mModeTool == ID_TOOLS_TEMPLATE) ||
+////			(m_pDoc->mModeTool == ID_TOOLS_CAMERA && m_pDoc->GetSelState() == NOSELECTIONS))
+////		{
+////			if (!m_pDoc->TempEnt)
+////			{
+////				if (Brush_TestBoundsIntersect(m_pDoc->CurBrush, &ViewBox))
+////				{
+////					if (Brush_IsMulti(m_pDoc->CurBrush))
+////					{
+////						BrushList_EnumLeafBrushes(App->CL_Brush->Brush_GetBrushList(m_pDoc->CurBrush), &brushDrawData, BrushDraw2);
+////					}
+////					else
+////					{
+////						Render_RenderBrushFacesOrtho(v, m_pDoc->CurBrush, MemoryhDC);
+////					}
+////				}
+////			}
+////			else
+////			{
+//				//fdocDrawEntity (&m_pDoc->mRegularEntity, v, pDC, Level_GetEntityDefs (m_pDoc->pLevel), GE_FALSE );
+////			}
+////		}
+////	}
+//
+//	//// find and render the camera entity
+////	CEntity* pCameraEntity = m_pDoc->FindCameraEntity();
+//
+////	if ((pCameraEntity != NULL))
+////	{
+////		if (pCameraEntity->IsSelected())
+//			//pDC->SelectObject (&PenSelected);
+////			SelectObject(MemoryhDC, PenSelected2);
+////		else
+//			//pDC->SelectObject (&PenCamera);
+////			SelectObject(MemoryhDC, PenCamera2);
+//
+////		fdocDrawEntity(pCameraEntity, v, MemoryhDC, Level_GetEntityDefs(m_pDoc->pLevel), GE_TRUE);
+////	}
+//
+//	//pDC->SelectObject(oldpen);
 
 }
 

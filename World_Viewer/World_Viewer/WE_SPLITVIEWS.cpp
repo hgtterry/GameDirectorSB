@@ -25,6 +25,7 @@ distribution.
 #include "WV_App.h"
 #include "resource.h"
 #include "WE_SPLITVIEWS.h"
+#include "units.h"
 
 #define	TOP_POS					0
 #define	BOTTOM_POS				400
@@ -194,13 +195,11 @@ void WE_SpliterViews::MoveCamera(HWND hwnd)
 
 	HPEN pen = CreatePen(PS_SOLID, 0, RGB(0, 0, 0));
 	SelectObject(MemoryhDC, pen);
-	Draw_Grid(MemoryhDC, 8, Rect); // Snap
-
+	Render_RenderOrthoGridFromSize(App->CL_CView->VCam, 8, MemoryhDC, Rect);
 
 	HPEN pen2 = CreatePen(PS_SOLID, 0, RGB(112, 112, 112));
 	SelectObject(MemoryhDC, pen2);
-	Draw_Grid(MemoryhDC, 64, Rect); // Grid
-
+	Render_RenderOrthoGridFromSize(App->CL_CView->VCam, 64, MemoryhDC, Rect);
 
 	HPEN pen3 = CreatePen(PS_SOLID, 0, RGB(0, 255, 0));
 	SelectObject(MemoryhDC, pen3);
@@ -261,6 +260,83 @@ void WE_SpliterViews::MoveCamera(HWND hwnd)
 
 	DeleteObject(OffScreenBitmap);
 	DeleteDC(MemoryhDC);
+}
+
+#define	VectorToSUB(a, b)			(*((((geFloat *)(&a))) + (b)))
+static const geVec3d	VecOrigin = { 0.0f, 0.0f, 0.0f };
+
+// *************************************************************************
+// * 						Render_RenderOrthoGridFromSize				   *
+// *************************************************************************
+void WE_SpliterViews::Render_RenderOrthoGridFromSize(ViewVars* v, geFloat Interval, HDC ViewDC, RECT Rect)
+{
+	//App->Say_Int(v->ViewType);
+	Draw_Grid(ViewDC, Interval,Rect);
+	return;
+	geVec3d		ystep, xstep, Delt, Delt2;
+	int			i, cnt, xaxis, yaxis, inidx;
+	static int axidx[3][2] = { 2, 1, 0, 2, 0, 1 };
+	geFloat	gsinv;
+	Box3d ViewBox;
+	POINT		sp;
+
+	inidx = (v->ViewType >> 3) & 0x3;
+
+	xaxis = axidx[inidx][0];
+	yaxis = axidx[inidx][1];
+
+
+	App->CL_CRender->Render_ViewToWorld(v, Units_Round(-Interval), Units_Round(-Interval), &Delt);
+	App->CL_CRender->Render_ViewToWorld(v, Units_Round(v->Width + Interval), Units_Round(v->Height + Interval), &Delt2);
+
+	App->CL_CBox3d->Box3d_Set(&ViewBox, Delt.X, Delt.Y, Delt.Z, Delt2.X, Delt2.Y, Delt2.Z);
+
+	VectorToSUB(ViewBox.Min, inidx) = -FLT_MAX;
+	VectorToSUB(ViewBox.Max, inidx) = FLT_MAX;
+
+	//snap viewmin and viewmax to grid
+	gsinv = 1.0f / (geFloat)Interval;
+	for (i = 0; i < 3; i++)
+	{
+		VectorToSUB(ViewBox.Min, i) = (geFloat)((int)(VectorToSUB(ViewBox.Min, i) * gsinv)) * Interval;
+		VectorToSUB(ViewBox.Max, i) = (geFloat)((int)(VectorToSUB(ViewBox.Max, i) * gsinv)) * Interval;
+	}
+
+	geVec3d_Copy(&VecOrigin, &xstep);
+	geVec3d_Copy(&VecOrigin, &ystep);
+	VectorToSUB(ystep, yaxis) = (geFloat)Interval;
+	VectorToSUB(xstep, xaxis) = (geFloat)Interval;
+
+	// horizontal lines
+	geVec3d_Copy(&ViewBox.Min, &Delt);
+	geVec3d_Copy(&ViewBox.Min, &Delt2);
+	VectorToSUB(Delt2, xaxis) = VectorToSUB(ViewBox.Max, xaxis);
+	cnt = 100;// Units_Round((VectorToSUB(ViewBox.Max, yaxis) - VectorToSUB(ViewBox.Min, yaxis)) * gsinv);
+	for (i = 0; i <= cnt; i++)
+	{
+		sp = App->CL_CRender->Render_OrthoWorldToView(v, &Delt);
+		MoveToEx(ViewDC, 0, sp.y, NULL);
+		sp = App->CL_CRender->Render_OrthoWorldToView(v, &Delt2);
+		LineTo(ViewDC, v->Width, sp.y);
+		geVec3d_Add(&Delt, &ystep, &Delt);
+		geVec3d_Add(&Delt2, &ystep, &Delt2);
+	}
+
+	// vertical lines
+	geVec3d_Copy(&ViewBox.Min, &Delt);
+	geVec3d_Copy(&ViewBox.Min, &Delt2);
+	VectorToSUB(Delt2, yaxis) = VectorToSUB(ViewBox.Max, yaxis);
+	cnt = 100;// Units_Round((VectorToSUB(ViewBox.Max, xaxis) - VectorToSUB(ViewBox.Min, xaxis)) * gsinv);
+
+	/*for (i = 0; i <= cnt; i++)
+	{
+		sp = App->CL_CRender->Render_OrthoWorldToView(v, &Delt);
+		MoveToEx(ViewDC, sp.x, 0, NULL);
+		sp = App->CL_CRender->Render_OrthoWorldToView(v, &Delt2);
+		LineTo(ViewDC, sp.x, v->Height);
+		geVec3d_Add(&Delt, &xstep, &Delt);
+		geVec3d_Add(&Delt2, &xstep, &Delt2);
+	}*/
 }
 
 // *************************************************************************
@@ -576,13 +652,13 @@ LRESULT CALLBACK WE_SpliterViews::ViewerMain_Proc(HWND hDlg, UINT message, WPARA
 // *************************************************************************
 void WE_SpliterViews::Create_Left_Window()
 {
-	Left_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_VIEW_TOPLEFT, App->Fdlg, (DLGPROC)Left_Window_Proc);
+	Left_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)ID_VIEW_TOPVIEW, App->Fdlg, (DLGPROC)Top_Left_Window_Proc);
 }
 
 // *************************************************************************
 // *			Left_Window_Proc:- Terry and Hazel Flanigan 2023 		   *
 // *************************************************************************
-LRESULT CALLBACK WE_SpliterViews::Left_Window_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK WE_SpliterViews::Top_Left_Window_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 
 	switch (message)
@@ -590,6 +666,9 @@ LRESULT CALLBACK WE_SpliterViews::Left_Window_Proc(HWND hDlg, UINT message, WPAR
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_STBANNERTL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		App->CL_CView->OnViewType(ID_VIEW_TOPVIEW);
+
 		return TRUE;
 	}
 
@@ -612,6 +691,7 @@ LRESULT CALLBACK WE_SpliterViews::Left_Window_Proc(HWND hDlg, UINT message, WPAR
 
 	case WM_PAINT:
 	{
+		App->CL_CView->OnViewType(ID_VIEW_TOPVIEW);
 		App->CL_SplitterViews->MoveCamera(hDlg);
 		return 0;
 	}
@@ -639,7 +719,7 @@ void WE_SpliterViews::Create_Right_Window()
 {
 	RECT rect;
 
-	Right_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_VIEW_TOPRIGHT, App->Fdlg, (DLGPROC)Right_Window_Proc);
+	Right_Window_Hwnd = CreateDialog(App->hInst, (LPCTSTR)ID_VIEW_SIDEVIEW, App->Fdlg, (DLGPROC)Top_Right_Window_Proc);
 
 	GetClientRect(Right_Window_Hwnd, &rect);
 
@@ -654,12 +734,13 @@ void WE_SpliterViews::Create_Right_Window()
 // *************************************************************************
 // *			Right_Window_Proc:- Terry and Hazel Flanigan 2023 		   *
 // *************************************************************************
-LRESULT CALLBACK WE_SpliterViews::Right_Window_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK WE_SpliterViews::Top_Right_Window_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
 	case WM_INITDIALOG:
 	{
+		App->CL_CView->OnViewType(ID_VIEW_SIDEVIEW);
 		return TRUE;
 	}
 
@@ -670,6 +751,7 @@ LRESULT CALLBACK WE_SpliterViews::Right_Window_Proc(HWND hDlg, UINT message, WPA
 
 	case WM_PAINT:
 	{
+		App->CL_CView->OnViewType(ID_VIEW_SIDEVIEW);
 		App->CL_SplitterViews->MoveCamera(hDlg);
 		return 0;
 	}
@@ -686,7 +768,7 @@ void WE_SpliterViews::Create_Bottom_Left_Window()
 {
 	RECT rect;
 
-	Bottom_Left_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_VIEW_BOTTOMLEFT, App->Fdlg, (DLGPROC)Bottom_Left_Proc);
+	Bottom_Left_Hwnd = CreateDialog(App->hInst, (LPCTSTR)ID_VIEW_FRONTVIEW, App->Fdlg, (DLGPROC)Bottom_Left_Proc);
 
 	GetClientRect(Bottom_Left_Hwnd, &rect);
 
@@ -706,6 +788,7 @@ LRESULT CALLBACK WE_SpliterViews::Bottom_Left_Proc(HWND hDlg, UINT message, WPAR
 	{
 	case WM_INITDIALOG:
 	{
+		App->CL_CView->OnViewType(ID_VIEW_FRONTVIEW);
 		return TRUE;
 	}
 
