@@ -5091,6 +5091,15 @@ void CFusionDoc::SetAdjustmentMode( fdocAdjustEnum nCmdIDMode )
 void CFusionDoc::OnCloseDocument() 
 {
 	App->Debug_Close();
+
+	if (App->CL_Ogre->OgreIsRunning == 1)
+	{
+		delete App->CL_Ogre->mRoot;
+		App->CL_Ogre->mRoot = NULL;
+		App->Say("Close Ogre");
+	}
+
+	App->Say("Close");
 	CDocument::OnCloseDocument();
 }
 

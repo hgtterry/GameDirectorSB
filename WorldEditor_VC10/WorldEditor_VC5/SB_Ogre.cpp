@@ -51,6 +51,7 @@ SB_Ogre::SB_Ogre(void)
 	PCFreq = 0.0;
 	CounterStart = 0;
 
+	OgreIsRunning = 0;
 
 	FPStimer.reset();
 }
@@ -92,7 +93,33 @@ bool SB_Ogre::InitOgre(void)
 
 	Ogre::Root::getSingletonPtr()->renderOneFrame();
 
+	HWND Test_hWnd = NULL;
+	Test_hWnd = FindWindow(0, "XYZ");
 
+	if (!Test_hWnd)
+	{
+		Debug
+	}
+
+
+
+	HWND Check_hWnd = NULL;
+	Check_hWnd = SetParent(Test_hWnd, App->MainHwnd);
+
+	if (!Check_hWnd)
+	{
+		Debug
+	}
+
+
+	SetWindowLongPtr(Test_hWnd, GWL_STYLE, WS_BORDER);
+	SetWindowPos(Test_hWnd, 0, 0, 0, 0, 0, SWP_NOZORDER | SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE | SWP_DRAWFRAME);
+	ShowWindow(Test_hWnd, SW_SHOW);
+
+	//SetWindowLongA(Test_hWnd, GWL_STYLE, WS_MAXIMIZE);
+
+
+	OgreIsRunning = 1;
 	App->CL_Ogre->Ogre_Render_Loop();
 	//App->CL_Ogre->mRoot->startRendering();
 
@@ -312,8 +339,28 @@ bool SB_Ogre::Configure(void)
 
 	rs->setConfigOption("Full Screen", "No");
 	mRoot->setRenderSystem(rs);
-	mWindow = mRoot->initialise(true);
+	mWindow = mRoot->initialise(true,"XYZ");
 
+	HWND Test_hWnd = NULL;
+	Test_hWnd = FindWindow(0,"XYZ");
+	ShowWindow(Test_hWnd, SW_HIDE);
+
+
+	//if (!Test_hWnd)
+	//{
+	//	Debug
+	//}
+
+	//HWND Check_hWnd = NULL;
+	//Check_hWnd = SetParent(Test_hWnd, App->MainHwnd);
+
+	//if (!Check_hWnd)
+	//{
+	//	Debug
+	//}
+
+	////SetWindowLongA(Test_hWnd, GWL_STYLE, WS_BORDER);
+	//mWindow->
 	//Ogre::NameValuePairList options;
 
 	//options["vsync"] = true;
@@ -325,6 +372,7 @@ bool SB_Ogre::Configure(void)
 	if (RenderHwnd)
 	{
 		mWindow = mRoot->createRenderWindow("Main RenderWindow", 100, 100, false, &options);
+		Debug
 	}*/
 
 	return true;

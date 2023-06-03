@@ -90,6 +90,8 @@ public:
 
 	Ogre::Timer FPStimer;
 
+	bool OgreIsRunning;
+
 	int Fps_Tick;
 
 	int FPSLock;

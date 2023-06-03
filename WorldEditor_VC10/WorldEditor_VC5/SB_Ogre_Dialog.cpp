@@ -38,11 +38,30 @@ ATOM SB_Ogre_Dialog::MyRegisterClass(HINSTANCE hInstance)
 	return RegisterClassEx(&wcex);
 }
 
+
 // *************************************************************************
 // *			Start_Ogre_Dialog:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
 void SB_Ogre_Dialog::Start_Ogre_Dialog()
 {
+	/*DWORD		  dwStyleEx = 0;
+	static const TCHAR staticVar;
+	HINSTANCE hInst = NULL;
+	
+
+	UINT classStyle = CS_OWNDC;
+
+	WNDCLASS wc = { classStyle, WindowEventUtilities::_WndProc, 0, 0, App->hInst,
+				LoadIcon(NULL, IDI_APPLICATION), LoadCursor(NULL, IDC_ARROW),
+				(HBRUSH)GetStockObject(BLACK_BRUSH), NULL, "OgreGLWindow" };
+	RegisterClass(&wc);
+
+
+	HWND mHWnd = CreateWindowEx(dwStyleEx, "OgreGLWindow", "Test",
+		NULL, 0, 0, 500, 500, NULL, 0, hInst, NULL);*/
+
+
+
 	/*MyRegisterClass(App->hInst);
 
 	HWND MainHwnd = CreateWindow("STATIC", "Test", WS_OVERLAPPEDWINDOW,
@@ -52,12 +71,14 @@ void SB_Ogre_Dialog::Start_Ogre_Dialog()
 	{
 		App->Say("Failed");
 		return;
-	}
+	}*/
 
-	ShowWindow(MainHwnd, 1);
-	UpdateWindow(MainHwnd);
+	//ShowWindow(mHWnd, 1);
+	//UpdateWindow(mHWnd);
 
-	App->CL_Ogre->RenderHwnd = MainHwnd;*/
+	//WindowEventUtilities::_addRenderWindow(this);
+
+	//App->CL_Ogre->RenderHwnd = mHWnd;
 	//TestHwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_OGREVIEWER, App->MainHwnd, NULL);// (DLGPROC)Ogre_Dialog_Proc);
 	App->CL_Ogre->InitOgre();
 }
