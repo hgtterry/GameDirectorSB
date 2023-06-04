@@ -48,6 +48,8 @@ SB_Ogre::SB_Ogre(void)
 
 	Fps_Tick = 4000;
 
+	Ogre_Window_hWnd = nullptr;
+
 	PCFreq = 0.0;
 	CounterStart = 0;
 
@@ -119,15 +121,8 @@ bool SB_Ogre::InitOgre(void)
 	{
 		Debug
 	}
-	//ShowWindow(Test_hWnd, SW_SHOW);
-	OgreIsRunning = 1;
-	App->CL_Ogre->Ogre_Render_Loop();
-	//App->CL_Ogre->mRoot->startRendering();
+	
 
-	delete App->CL_Ogre->mRoot;
-	App->CL_Ogre->mRoot = NULL;
-
-	//App->Say("hererrrr");
 	return 1;
 }
 
@@ -344,47 +339,11 @@ bool SB_Ogre::Configure(void)
 
 	mWindow->resize(200, 200);
 
-	HWND Test_hWnd = NULL;
-	Test_hWnd = FindWindow(0,"XYZ");
+	Ogre_Window_hWnd = NULL;
+	Ogre_Window_hWnd = FindWindow(0,"XYZ");
 	
-	//int test = SetWindowLong(Test_hWnd, GWL_WNDPROC, (LONG)App->CL_Ogre_Dialog->Ogre3D_Proc);
-
-	//Ogre::WindowEventUtilities::addWindowEventListener(mWindow, App->CL_Ogre_Dialog->Ogre3D_Proc);
-	/*if (test)
-	{
-		App->Say("Failed");
-	}*/
-
-
-	//if (!Test_hWnd)
-	//{
-	//	Debug
-	//}
-
-	//HWND Check_hWnd = NULL;
-	//Check_hWnd = SetParent(Test_hWnd, App->MainHwnd);
-
-	//if (!Check_hWnd)
-	//{
-	//	Debug
-	//}
-
-	////SetWindowLongA(Test_hWnd, GWL_STYLE, WS_BORDER);
-	//mWindow->
-	//Ogre::NameValuePairList options;
-
-	//options["vsync"] = true;
-	//RenderHwnd = GetDlgItem(App->CL_Ogre_Dialog->TestHwnd, IDC_STATICTEST);
-
-	/*options["externalWindowHandle"] =
-		Ogre::StringConverter::toString((int)RenderHwnd);
+	int test = SetWindowLong(Ogre_Window_hWnd, GWL_WNDPROC, (LONG)App->CL_Ogre_Dialog->Ogre3D_Proc);
 	
-	if (RenderHwnd)
-	{
-		mWindow = mRoot->createRenderWindow("Main RenderWindow", 100, 100, false, &options);
-		Debug
-	}*/
-
 	return true;
 }
 

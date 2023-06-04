@@ -13,31 +13,25 @@ SB_Ogre_Dialog::~SB_Ogre_Dialog(void)
 {
 }
 
-
 // *************************************************************************
-// *			MyRegisterClass:- Terry and Hazel Flanigan 2023	  	 	   *
+// *			Switch_3D_Window:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
-ATOM SB_Ogre_Dialog::MyRegisterClass(HINSTANCE hInstance)
+void SB_Ogre_Dialog::Switch_3D_Window()
 {
-	WNDCLASSEX wcex;
+	App->CL_Ogre->InitOgre();
 
-	wcex.cbSize = sizeof(WNDCLASSEX);
 
-	wcex.style = 0;
-	wcex.lpfnWndProc = NULL;// WndProc;
-	wcex.cbClsExtra = 0;
-	wcex.cbWndExtra = 0;
-	wcex.hInstance = hInstance;
-	wcex.hIcon = NULL; //LoadIcon(hInstance, MAKEINTRESOURCE(IDI_WORLDVIEWER));
-	wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
-	wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
-	wcex.lpszMenuName = NULL;// MAKEINTRESOURCE(IDC_WORLDVIEWER);
-	wcex.lpszClassName = szWindowClass;
-	wcex.hIconSm = NULL;// LoadIcon(wcex.hInstance, NULL);// MAKEINTRESOURCE(IDI_SMALL));
 
-	return RegisterClassEx(&wcex);
+	App->CL_Ogre->OgreIsRunning = 1;
+	App->CL_Ogre->Ogre_Render_Loop();
+	
+	if (App->CL_Ogre->OgreIsRunning == 1)
+	{
+		Debug
+		delete App->CL_Ogre->mRoot;
+		App->CL_Ogre->mRoot = NULL;
+	}
 }
-
 
 // *************************************************************************
 // *			Start_Ogre_Dialog:- Terry and Hazel Flanigan 2023		   *
@@ -45,7 +39,7 @@ ATOM SB_Ogre_Dialog::MyRegisterClass(HINSTANCE hInstance)
 void SB_Ogre_Dialog::Start_Ogre_Dialog()
 {
 	TestHwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_OGREVIEWER, App->MainHwnd, (DLGPROC)Ogre_Dialog_Proc);
-	App->CL_Ogre->InitOgre();
+	Switch_3D_Window();
 }
 
 // **************************************************************************
@@ -117,7 +111,7 @@ LRESULT CALLBACK SB_Ogre_Dialog::Ogre_Dialog_Proc(HWND hDlg, UINT message, WPARA
 
 	case WM_MOUSEMOVE: // ok up and running and we have a loop for mouse
 	{
-		App->Flash_Window();
+		//App->Flash_Window();
 		//SetFocus(App->SBC_MeshViewer->MeshView_3D_hWnd);
 		break;
 	}
@@ -170,24 +164,10 @@ LRESULT CALLBACK SB_Ogre_Dialog::Ogre_Dialog_Proc(HWND hDlg, UINT message, WPARA
 // *************************************************************************
 // *		OgreView_3D_Proc:- Terry and Hazel Flanigan 2023 			   *
 // *************************************************************************
-bool CALLBACK SB_Ogre_Dialog::Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK SB_Ogre_Dialog::Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
-
-	//case WM_INITDIALOG: // Bernie as the dialog is created
-	//{
-	//	Debug
-	//	return TRUE;
-	//}
-
-	//case WM_CTLCOLORDLG:
-	//{
-	//	//if (App->OgreStarted == 0)
-	//	{
-	//		return (LONG)App->BlackBrush;
-	//	}
-	//}
 
 	//case WM_MOUSEWHEEL:
 	//{
@@ -210,13 +190,13 @@ bool CALLBACK SB_Ogre_Dialog::Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam
 
 	//}
 
-	//case WM_MOUSEMOVE: // ok up and running and we have a loop for mouse
-	//{
-	//	App->Flash_Window();
+	case WM_MOUSEMOVE: // ok up and running and we have a loop for mouse
+	{
+		App->Flash_Window();
 	//	//SetFocus(App->SBC_MeshViewer->MeshView_3D_hWnd);
 
-	//	break;
-	//}
+		break;
+	}
 
 	// Right Mouse Button
 	//case WM_RBUTTONDOWN: // BERNIE_HEAR_FIRE 
@@ -299,5 +279,5 @@ bool CALLBACK SB_Ogre_Dialog::Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam
 	//	}break;
 	}
 
-	return FALSE;
+	return DefWindowProc(hDlg, message, wParam, lParam);
 }
