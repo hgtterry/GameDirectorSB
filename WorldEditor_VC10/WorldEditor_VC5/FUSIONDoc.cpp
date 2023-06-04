@@ -3705,6 +3705,7 @@ BOOL CFusionDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	}
 
 	UpdateGridInformation();
+
 	IsNewDocument = 0;
 
 //	CFusionView* pFusionView = GetCameraView();

@@ -502,8 +502,19 @@ void Level_Destroy (Level **ppLevel)
 {
 	Level *pLevel;
 
-	assert (ppLevel != NULL);
-	assert (*ppLevel != NULL);
+	//assert (ppLevel != NULL);
+	//assert (*ppLevel != NULL);
+
+	if (ppLevel == NULL)
+	{
+		MessageBox(NULL, "Error", "Error", MB_OK);
+	}
+
+	if (*ppLevel == NULL)
+	{
+		MessageBox(NULL, "Error", "Error", MB_OK);
+	}
+
 
 	pLevel = *ppLevel;
 

@@ -194,9 +194,8 @@ BOOL CFusionApp::InitInstance() // hgtterry InitInstance
 {
 	App = new A_App();
 	App->InitApp();
-
-	//App->CL_Ogre_Dialog->Start_Ogre_Dialog();
-
+	App->CL_Ogre->InitOgre();
+	
 	char AppPath[MAX_PATH];
 	::GetModuleFileName (NULL, AppPath, MAX_PATH);
 	FilePath_GetDriveAndDir (AppPath, AppPath);
@@ -367,6 +366,7 @@ BOOL CFusionApp::InitInstance() // hgtterry InitInstance
 
 	App->InitMFC();
 	App->CL_World->Set_Paths();
+	App->CUR = GetCursor();
 
 	if (App->Debug_App == 1)
 	{

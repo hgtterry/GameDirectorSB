@@ -101,7 +101,6 @@ bool SB_Ogre::InitOgre(void)
 // *************************************************************************
 bool SB_Ogre::Ogre_Render_Loop(void)
 {
-	App->Flash_Window();
 	mRoot->clearEventTimes();
 
 	while (true)
@@ -145,17 +144,18 @@ bool SB_Ogre::Ogre_Render_Loop(void)
 // *************************************************************************
 bool SB_Ogre::OgreCreateRoot(void)
 {
+	mResourcePath = "";
 	Ogre::String pluginsPath;
 	pluginsPath = mResourcePath + "plugins.cfg";
 
 	if (App->Debug_App == 1)
 	{
-		mRoot = OGRE_NEW Ogre::Root(pluginsPath, mResourcePath + "Equity_CFG.cfg", mResourcePath + "WWSB.log");
+		mRoot = new Ogre::Root(pluginsPath, mResourcePath + "Equity_CFG.cfg", mResourcePath + "WWSB.log");
 		Ogre::LogManager::getSingleton().createLog(mResourcePath + "App.log");
 	}
 	else
 	{
-		mRoot = OGRE_NEW Ogre::Root(pluginsPath, mResourcePath + "Equity_CFG.cfg", mResourcePath + "");
+		mRoot = new Ogre::Root(pluginsPath, mResourcePath + "Equity_CFG.cfg", mResourcePath + "");
 	}
 	
 	return 1;
@@ -306,9 +306,9 @@ bool SB_Ogre::Configure(void)
 	rs->setConfigOption("Full Screen", "No");
 	mRoot->setRenderSystem(rs);
 	mWindow = mRoot->initialise(true,"XYZ");
-
+	mWindow->setHidden(true);
 	mWindow->resize(200, 200);
-
+	
 	Ogre_Window_hWnd = FindWindow(0,"XYZ");
 	return true;
 }

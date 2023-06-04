@@ -18,7 +18,7 @@ SB_Ogre_Dialog::~SB_Ogre_Dialog(void)
 // *************************************************************************
 void SB_Ogre_Dialog::Switch_3D_Window()
 {
-	App->CL_Ogre->InitOgre();
+	//App->CL_Ogre->InitOgre();
 	//Ogre::Root::getSingletonPtr()->renderOneFrame();
 
 	App->CL_Ogre->mWindow->resize(500, 500);
@@ -33,12 +33,12 @@ void SB_Ogre_Dialog::Switch_3D_Window()
 	HWND Check_hWnd = NULL;
 	Check_hWnd = SetParent(App->CL_Ogre->Ogre_Window_hWnd, App->CL_Ogre_Dialog->TestHwnd);
 
-	if (!Check_hWnd)
+	//if (!Check_hWnd)
 	{
-		Debug
+		//Debug
 	}
 
-	App->CL_Ogre->mWindow->resize(810, 450);
+	App->CL_Ogre->mWindow->resize(810, 400);
 	App->CL_Ogre->mWindow->windowMovedOrResized();
 	App->CL_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CL_Ogre->mWindow->getWidth() / (Ogre::Real)App->CL_Ogre->mWindow->getHeight());
 	App->CL_Ogre->mCamera->yaw(Ogre::Radian(0));
@@ -48,9 +48,10 @@ void SB_Ogre_Dialog::Switch_3D_Window()
 	
 	if (App->CL_Ogre->OgreIsRunning == 1)
 	{
-		Debug
+		App->Say("xxx");
 		delete App->CL_Ogre->mRoot;
 		App->CL_Ogre->mRoot = NULL;
+		App->CL_Ogre->OgreIsRunning = 0;
 	}
 }
 
@@ -157,8 +158,7 @@ LRESULT CALLBACK SB_Ogre_Dialog::Ogre_Dialog_Proc(HWND hDlg, UINT message, WPARA
 		
 		if (LOWORD(wParam) == IDC_TEST)
 		{
-
-			App->CL_Ogre->InitOgre();
+			App->CL_Ogre->OgreListener->StopOgre = 1;
 			return TRUE;
 		}
 
@@ -171,6 +171,8 @@ LRESULT CALLBACK SB_Ogre_Dialog::Ogre_Dialog_Proc(HWND hDlg, UINT message, WPARA
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
+			
+
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -218,66 +220,64 @@ LRESULT CALLBACK SB_Ogre_Dialog::Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wPa
 	}
 
 	// Right Mouse Button
-	//case WM_RBUTTONDOWN: // BERNIE_HEAR_FIRE 
-	//{
-	//	
-	//	//if (App->OgreStarted == 1)
-	//	//{
-	//	//	SetCapture(App->SBC_MeshViewer->MeshView_3D_hWnd);// Bernie
-	//	//	SetCursorPos(App->CursorPosX, App->CursorPosY);
-	//	//	App->SBC_MeshViewer->RenderListener->Pl_RightMouseDown = 1;
-	//	//	App->CUR = SetCursor(NULL);
-	//	//	return 1;
-	//	//}
+	case WM_RBUTTONDOWN: // BERNIE_HEAR_FIRE 
+	{
+		
+		if (App->CL_Ogre->OgreIsRunning == 1)
+		{
+			SetCapture(App->CL_Ogre->Ogre_Window_hWnd);// Bernie
+			SetCursorPos(App->CursorPosX, App->CursorPosY);
+			App->CL_Ogre->OgreListener->Pl_RightMouseDown = 1;
+			App->CUR = SetCursor(NULL);
+			return 1;
+		}
 
-	//	return 1;
-	//}
-	//case WM_RBUTTONUP:
-	//{
+		return 1;
+	}
+	case WM_RBUTTONUP:
+	{
+		if (App->CL_Ogre->OgreIsRunning == 1)
+		{
+			ReleaseCapture();
+			App->CL_Ogre->OgreListener->Pl_RightMouseDown = 0;
+			SetCursor(App->CUR);
+			return 1;
+		}
 
+		return 1;
+	}
 
-	//	/*if (App->OgreStarted == 1)
-	//	{
-	//		ReleaseCapture();
-	//		App->SBC_MeshViewer->RenderListener->Pl_RightMouseDown = 0;
-	//		SetCursor(App->CUR);
-	//		return 1;
-	//	}*/
-
-	//	return 1;
-	//}
 	// Left Mouse Button
-	//case WM_LBUTTONDOWN: // BERNIE_HEAR_FIRE 
-	//{
-	//	//if (App->OgreStarted == 1)
-	//	//{
+	case WM_LBUTTONDOWN: // BERNIE_HEAR_FIRE 
+	{
+		if (App->CL_Ogre->OgreIsRunning == 1)
+		{
+			SetCapture(App->CL_Ogre->Ogre_Window_hWnd);// Bernie
+			SetCursorPos(App->CursorPosX, App->CursorPosY);
 
-	//	//	SetCapture(App->SBC_MeshViewer->MeshView_3D_hWnd);// Bernie
-	//	//	SetCursorPos(App->CursorPosX, App->CursorPosY);
+			App->CL_Ogre->OgreListener->Pl_LeftMouseDown = 1;
 
-	//	//	App->SBC_MeshViewer->RenderListener->Pl_LeftMouseDown = 1;
+			App->CUR = SetCursor(NULL);
 
-	//	//	App->CUR = SetCursor(NULL);
+			return 1;
+		}
 
-	//	//	return 1;
-	//	//}
+		return 1;
+	}
 
-	//	return 1;
-	//}
+	case WM_LBUTTONUP:
+	{
 
-	//case WM_LBUTTONUP:
-	//{
+		if (App->CL_Ogre->OgreIsRunning == 1)
+		{
+			ReleaseCapture();
+			App->CL_Ogre->OgreListener->Pl_LeftMouseDown = 0;
+			SetCursor(App->CUR);
+			return 1;
+		}
 
-	//	/*if (App->OgreStarted == 1)
-	//	{
-	//		ReleaseCapture();
-	//		App->SBC_MeshViewer->RenderListener->Pl_LeftMouseDown = 0;
-	//		SetCursor(App->CUR);
-	//		return 1;
-	//	}*/
-
-	//	return 1;
-	//}
+		return 1;
+	}
 	//case WM_KEYDOWN:
 	//	switch (wParam)
 	//	{

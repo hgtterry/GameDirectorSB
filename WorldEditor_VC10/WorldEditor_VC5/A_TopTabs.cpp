@@ -544,9 +544,8 @@ LRESULT CALLBACK A_TopTabs::Top_File_Proc(HWND hDlg, UINT message, WPARAM wParam
 				strcat(Txlpath,"Levels\\Equity.txl");
 
 				strcpy(App->CL_File->PathFileName_3dt,path);
-				App->CL_File->Open_3dt_File(0);
 
-				//AfxGetApp()->OpenDocumentFile(path);
+				App->CL_File->Open_3dt_File(0);
 
 				App->CL_World->Set_Paths();
 
