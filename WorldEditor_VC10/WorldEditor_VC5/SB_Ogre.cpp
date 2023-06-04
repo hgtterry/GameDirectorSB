@@ -93,36 +93,6 @@ bool SB_Ogre::InitOgre(void)
 	App->CL_Grid->Reset_View();
 	App->CL_Grid->Grid_SetVisible(true);
 
-	Ogre::Root::getSingletonPtr()->renderOneFrame();
-
-	HWND Test_hWnd = NULL;
-	Test_hWnd = FindWindow(0, "XYZ");
-
-	if (!Test_hWnd)
-	{
-		Debug
-	}
-
-	
-
-	
-
-	SetWindowLongPtr(Test_hWnd, GWL_STYLE, WS_BORDER);
-	SetWindowPos(Test_hWnd, 0, 0, 0, 0, 0, SWP_NOZORDER | SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE | SWP_DRAWFRAME);
-	ShowWindow(Test_hWnd, SW_SHOW);
-
-	SetWindowPos(Test_hWnd, NULL, 4, 4, 820, 450, SWP_NOZORDER);
-
-	
-	HWND Check_hWnd = NULL;
-	Check_hWnd = SetParent(Test_hWnd, App->CL_Ogre_Dialog->TestHwnd);
-
-	if (!Check_hWnd)
-	{
-		Debug
-	}
-	
-
 	return 1;
 }
 
@@ -339,11 +309,7 @@ bool SB_Ogre::Configure(void)
 
 	mWindow->resize(200, 200);
 
-	Ogre_Window_hWnd = NULL;
 	Ogre_Window_hWnd = FindWindow(0,"XYZ");
-	
-	int test = SetWindowLong(Ogre_Window_hWnd, GWL_WNDPROC, (LONG)App->CL_Ogre_Dialog->Ogre3D_Proc);
-	
 	return true;
 }
 

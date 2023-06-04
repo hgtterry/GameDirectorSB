@@ -19,6 +19,25 @@ SB_Ogre_Dialog::~SB_Ogre_Dialog(void)
 void SB_Ogre_Dialog::Switch_3D_Window()
 {
 	App->CL_Ogre->InitOgre();
+	//Ogre::Root::getSingletonPtr()->renderOneFrame();
+
+	App->CL_Ogre->mWindow->resize(820, 450);
+	int test = SetWindowLong(App->CL_Ogre->Ogre_Window_hWnd, GWL_WNDPROC, (LONG)App->CL_Ogre_Dialog->Ogre3D_Proc);
+
+	SetWindowLongPtr(App->CL_Ogre->Ogre_Window_hWnd, GWL_STYLE, WS_BORDER);
+	SetWindowPos(App->CL_Ogre->Ogre_Window_hWnd, 0, 0, 0, 0, 0, SWP_NOZORDER | SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE | SWP_DRAWFRAME);
+	ShowWindow(App->CL_Ogre->Ogre_Window_hWnd, SW_SHOW);
+
+	SetWindowPos(App->CL_Ogre->Ogre_Window_hWnd, NULL, 4, 4, 820, 450, SWP_NOZORDER);
+	
+	HWND Check_hWnd = NULL;
+	Check_hWnd = SetParent(App->CL_Ogre->Ogre_Window_hWnd, App->CL_Ogre_Dialog->TestHwnd);
+
+	if (!Check_hWnd)
+	{
+		Debug
+	}
+
 
 
 
