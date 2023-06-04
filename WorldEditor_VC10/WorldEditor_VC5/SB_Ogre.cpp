@@ -349,6 +349,7 @@ bool SB_Ogre::Configure(void)
 	
 	//int test = SetWindowLong(Test_hWnd, GWL_WNDPROC, (LONG)App->CL_Ogre_Dialog->Ogre3D_Proc);
 
+	//Ogre::WindowEventUtilities::addWindowEventListener(mWindow, App->CL_Ogre_Dialog->Ogre3D_Proc);
 	/*if (test)
 	{
 		App->Say("Failed");
