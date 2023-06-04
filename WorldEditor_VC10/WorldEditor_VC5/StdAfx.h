@@ -63,7 +63,17 @@
 #include "OgreVertexIndexData.h"
 #include "OgreResourceGroupManager.h"
 
-
+namespace Enums
+{
+	enum Camera
+	{
+		CamNone = 0,
+		CamFirst = 1,
+		CamDetached = 2,
+		CamThird = 3,
+		CamModel = 4
+	};
+}
 // re-enable warnings except 4514
 #pragma warning(default : 4201 4214 4115)
 

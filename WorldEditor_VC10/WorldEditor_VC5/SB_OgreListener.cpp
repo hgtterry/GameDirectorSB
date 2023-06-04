@@ -183,15 +183,15 @@ bool SB_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 
 		App->CL_Ogre->Block_RenderingQueued = 0;
 		return 1;
-	}
+	}*/
 
 	if (CameraMode == Enums::CamDetached)
 	{
 		Camera_Mode_Free(evt.timeSinceLastFrame);
 
-		App->CL_Ogre->Block_RenderingQueued = 0;
+		//App->CL_Ogre->Block_RenderingQueued = 0;
 		return 1;
-	}*/
+	}
 
 	/*if (CameraMode == 3)
 	{
@@ -226,25 +226,25 @@ void SB_OgreListener::Camera_Mode_Free(float DeltaTime)
 {
 	//App->CL_Ogre->m_imgui.render();
 
-	//mRotX = 0;
-	//mRotY = 0;
-	//mTranslateVector = Ogre::Vector3::ZERO;
+	mRotX = 0;
+	mRotY = 0;
+	mTranslateVector = Ogre::Vector3::ZERO;
 
-	//mMoveScale = mMoveSensitivity * DeltaTime;
+	mMoveScale = mMoveSensitivity * DeltaTime;
 
-	//App->CL_Keyboard->Keyboard_Mode_Free(DeltaTime);
+	App->CL_Keyboard->Keyboard_Mode_Free(DeltaTime);
 
-	//if (Pl_LeftMouseDown == 1 && Pl_RightMouseDown == 0)
-	//{
-	//	Capture_Left_Mouse_Free();
-	//	SetCursorPos(App->CursorPosX, App->CursorPosY);
-	//}
+	if (Pl_LeftMouseDown == 1 && Pl_RightMouseDown == 0)
+	{
+		Capture_Left_Mouse_Free();
+		SetCursorPos(App->CursorPosX, App->CursorPosY);
+	}
 
-	//// Right Mouse
-	//if (Pl_LeftMouseDown == 0 && Pl_RightMouseDown == 1)
-	//{
-	//	Capture_Right_Mouse_Free();
-	//}
+	// Right Mouse
+	if (Pl_LeftMouseDown == 0 && Pl_RightMouseDown == 1)
+	{
+		Capture_Right_Mouse_Free();
+	}
 	
 
 	MoveCamera();

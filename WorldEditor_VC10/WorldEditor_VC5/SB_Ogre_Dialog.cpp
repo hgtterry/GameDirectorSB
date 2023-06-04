@@ -21,7 +21,7 @@ void SB_Ogre_Dialog::Switch_3D_Window()
 	App->CL_Ogre->InitOgre();
 	//Ogre::Root::getSingletonPtr()->renderOneFrame();
 
-	App->CL_Ogre->mWindow->resize(820, 450);
+	App->CL_Ogre->mWindow->resize(500, 500);
 	int test = SetWindowLong(App->CL_Ogre->Ogre_Window_hWnd, GWL_WNDPROC, (LONG)App->CL_Ogre_Dialog->Ogre3D_Proc);
 
 	SetWindowLongPtr(App->CL_Ogre->Ogre_Window_hWnd, GWL_STYLE, WS_BORDER);
@@ -38,8 +38,10 @@ void SB_Ogre_Dialog::Switch_3D_Window()
 		Debug
 	}
 
-
-
+	App->CL_Ogre->mWindow->resize(810, 450);
+	App->CL_Ogre->mWindow->windowMovedOrResized();
+	App->CL_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CL_Ogre->mWindow->getWidth() / (Ogre::Real)App->CL_Ogre->mWindow->getHeight());
+	App->CL_Ogre->mCamera->yaw(Ogre::Radian(0));
 
 	App->CL_Ogre->OgreIsRunning = 1;
 	App->CL_Ogre->Ogre_Render_Loop();
@@ -211,9 +213,7 @@ LRESULT CALLBACK SB_Ogre_Dialog::Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 	case WM_MOUSEMOVE: // ok up and running and we have a loop for mouse
 	{
-		App->Flash_Window();
 	//	//SetFocus(App->SBC_MeshViewer->MeshView_3D_hWnd);
-
 		break;
 	}
 

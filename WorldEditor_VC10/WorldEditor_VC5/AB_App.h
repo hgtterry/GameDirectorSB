@@ -64,6 +64,7 @@ distribution.
 #include "SB_Ogre.h"
 #include "SB_Grid.h"
 #include "SB_Ogre_Dialog.h"
+#include "SB_Keyboard.h"
 
 class A_App  
 {
@@ -105,7 +106,7 @@ public:
 	SB_Ogre*					CL_Ogre;
 	SB_Grid*					CL_Grid;
 	SB_Ogre_Dialog*				CL_Ogre_Dialog;
-
+	SB_Keyboard*				CL_Keyboard;
 
 	bool InitApp(void);
 	void InitMFC(void);
@@ -165,6 +166,11 @@ public:
 
 	bool Debug_App;
 	bool Debug_File;
+
+	HCURSOR CUR;
+
+	int CursorPosX;
+	int CursorPosY;
 
 	HINSTANCE hInst;
 	HWND MainHwnd;

@@ -60,7 +60,7 @@ A_App::A_App()
 	CL_Ogre =					nullptr;
 	CL_Grid =					nullptr;
 	CL_Ogre_Dialog =			nullptr;
-
+	CL_Keyboard =				nullptr;
 
 	AppBackground = NULL;
 	BlackBrush =	NULL;
@@ -86,6 +86,9 @@ A_App::A_App()
 	Hnd_Stairs_Icon =	NULL;
 
 	WorldEditor_Directory[0] = 0;
+
+	CursorPosX = 500;
+	CursorPosY = 500;
 
 	Debug_App = 1;
 	Debug_File = 1;
@@ -178,6 +181,7 @@ bool A_App::InitApp(void)
 	CL_Ogre =						new SB_Ogre();
 	CL_Grid =						new SB_Grid();
 	CL_Ogre_Dialog =				new SB_Ogre_Dialog();
+	CL_Keyboard =					new SB_Keyboard();
 
 	InitCommonControls();
 

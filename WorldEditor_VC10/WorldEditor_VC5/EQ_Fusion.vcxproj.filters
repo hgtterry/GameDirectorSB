@@ -279,6 +279,9 @@
     <ClCompile Include="SB_Ogre_Dialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SB_Keyboard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="FUSION.rc">
@@ -557,6 +560,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SB_Ogre_Dialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SB_Keyboard.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
