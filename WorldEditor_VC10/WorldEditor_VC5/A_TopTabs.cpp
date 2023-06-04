@@ -100,7 +100,8 @@ LRESULT CALLBACK A_TopTabs::Top_Tabs_Proc(HWND hDlg, UINT message, WPARAM wParam
 
 		SendDlgItemMessage(hDlg, IDC_BT_TB_WORLDINFO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TB_NEWVIEW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_STARTEQUITY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		return TRUE;
 	}
 
@@ -161,6 +162,12 @@ LRESULT CALLBACK A_TopTabs::Top_Tabs_Proc(HWND hDlg, UINT message, WPARAM wParam
 				return TRUE;
 			}
 
+			if (lpDIS->CtlID == IDC_STARTEQUITY)
+			{
+				App->Custom_Button_Normal_MFC(lpDIS, hDlg);
+				return TRUE;
+			}
+
 			if (lpDIS->CtlID == IDC_BT_TB_FILE)
 			{
 				App->Custom_Button_Toggle_Tabs_MFC(lpDIS,hDlg,App->CL_TopTabs->Header_File_Flag);
@@ -173,14 +180,13 @@ LRESULT CALLBACK A_TopTabs::Top_Tabs_Proc(HWND hDlg, UINT message, WPARAM wParam
 				return TRUE;
 			}
 
-
 			return TRUE;
 		}
 
 	case WM_COMMAND:
 		{
 			// ---------------- Tabs
-			if (LOWORD(wParam) == IDC_STARTOGRE)
+			if (LOWORD(wParam) == IDC_STARTEQUITY)
 			{
 				App->CL_Ogre_Dialog->Start_Ogre_Dialog();
 

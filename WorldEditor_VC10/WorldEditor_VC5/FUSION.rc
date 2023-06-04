@@ -1381,11 +1381,11 @@ BEGIN
     BEGIN
         BLOCK "040904b0"
         BEGIN
-            VALUE "FileDescription", "Genesis3D World Editor"
+            VALUE "FileDescription", "World Editor"
             VALUE "FileVersion", "2, 0, 0, 1"
             VALUE "InternalName", "WRLDEDIT"
             VALUE "OriginalFilename", "WrldEdit.exe"
-            VALUE "ProductName", "Genesis3D World Editor"
+            VALUE "ProductName", "World Editor"
             VALUE "ProductVersion", "2, 0, 0, 1"
         END
     END
@@ -1963,7 +1963,7 @@ BEGIN
     CONTROL         "File",IDC_BT_TB_FILE,"Button",BS_OWNERDRAW | WS_TABSTOP,144,7,70,14
     CONTROL         "Brush Modify",IDC_BT_TB_MODIFY,"Button",BS_OWNERDRAW | WS_TABSTOP,214,7,70,14
     CONTROL         "New View",IDC_BT_TB_NEWVIEW,"Button",BS_OWNERDRAW | WS_TABSTOP,563,4,70,14
-    PUSHBUTTON      "Start Ogre",IDC_STARTOGRE,376,5,50,14
+    CONTROL         "Start EquitySB",IDC_STARTEQUITY,"Button",BS_OWNERDRAW | WS_TABSTOP,360,5,66,14
 END
 
 IDD_SB_TB_PROPERTIES DIALOGEX 144, 20, 592, 26
@@ -2049,7 +2049,8 @@ END
 
 IDD_SB_OGREVIEWER DIALOGEX 0, 0, 557, 310
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
-CAPTION "Dialog"
+CAPTION "EquitySB"
+MENU IDR_MENUSB
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "OK",IDOK,157,289,50,14
@@ -2232,6 +2233,17 @@ BEGIN
     END
 END
 #endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MENUSB MENU
+BEGIN
+    MENUITEM "File",                        0
+END
 
 
 /////////////////////////////////////////////////////////////////////////////

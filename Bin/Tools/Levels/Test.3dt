@@ -1,5 +1,5 @@
 3dtVersion 1.34
-TextureLib "C:\\Users\\Acer\\Desktop\\SB_GD\\Bin\\Tools\\Levels\\Equity.txl"
+TextureLib "C:\\Users\\Terry\\Desktop\\SB_Git\\trunk\\Bin\\Tools\\Levels\\Equity.txl"
 HeadersDir "C:\\Users\\Acer\\Desktop\\SB_GD\\Equity-WorldEditor\\Deliver\\Headers"
 ActorsDir "C:\\Users\\Acer\\Desktop\\SB_GD\\Equity-WorldEditor\\Deliver\\Actors"
 PawnIni "C:\\Users\\Acer\\Desktop\\SB_GD\\Equity-WorldEditor\\Deliver\\Pawn.ini"
@@ -22,7 +22,7 @@ Brush "Box"
 	Type 2
 	BrushFaces 6
 		NumPoints 4
-		Flags 528
+		Flags 512
 		Light 300
 		MipMapBias 1.000000
 		Translucency 255.000000
@@ -36,7 +36,7 @@ Brush "Box"
 	Transform	1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 0.000000 
 	Pos	0.000000 0.000000 0.000000 
 		NumPoints 4
-		Flags 528
+		Flags 512
 		Light 300
 		MipMapBias 1.000000
 		Translucency 255.000000
@@ -50,7 +50,7 @@ Brush "Box"
 	Transform	1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 0.000000 
 	Pos	0.000000 0.000000 0.000000 
 		NumPoints 4
-		Flags 528
+		Flags 512
 		Light 300
 		MipMapBias 1.000000
 		Translucency 255.000000
@@ -64,7 +64,7 @@ Brush "Box"
 	Transform	1.000000 0.000000 0.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 
 	Pos	0.000000 0.000000 0.000000 
 		NumPoints 4
-		Flags 528
+		Flags 512
 		Light 300
 		MipMapBias 1.000000
 		Translucency 255.000000
@@ -78,7 +78,7 @@ Brush "Box"
 	Transform	1.000000 0.000000 0.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 
 	Pos	0.000000 0.000000 0.000000 
 		NumPoints 4
-		Flags 528
+		Flags 512
 		Light 300
 		MipMapBias 1.000000
 		Translucency 255.000000
@@ -92,7 +92,7 @@ Brush "Box"
 	Transform	0.000000 0.000000 1.000000 0.000000 1.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 0.000000 0.000000 
 	Pos	0.000000 0.000000 0.000000 
 		NumPoints 4
-		Flags 528
+		Flags 512
 		Light 300
 		MipMapBias 1.000000
 		Translucency 255.000000
@@ -113,7 +113,7 @@ Brush "Box"
 	Type 2
 	BrushFaces 6
 		NumPoints 4
-		Flags 528
+		Flags 512
 		Light 300
 		MipMapBias 1.000000
 		Translucency 255.000000
@@ -127,7 +127,7 @@ Brush "Box"
 	Transform	1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 0.000000 
 	Pos	0.000000 0.000000 0.000000 
 		NumPoints 4
-		Flags 528
+		Flags 512
 		Light 300
 		MipMapBias 1.000000
 		Translucency 255.000000
@@ -141,7 +141,7 @@ Brush "Box"
 	Transform	1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 0.000000 
 	Pos	0.000000 0.000000 0.000000 
 		NumPoints 4
-		Flags 528
+		Flags 512
 		Light 300
 		MipMapBias 1.000000
 		Translucency 255.000000
@@ -155,7 +155,7 @@ Brush "Box"
 	Transform	1.000000 0.000000 0.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 
 	Pos	0.000000 0.000000 0.000000 
 		NumPoints 4
-		Flags 528
+		Flags 512
 		Light 300
 		MipMapBias 1.000000
 		Translucency 255.000000
@@ -169,7 +169,7 @@ Brush "Box"
 	Transform	1.000000 0.000000 0.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 
 	Pos	0.000000 0.000000 0.000000 
 		NumPoints 4
-		Flags 528
+		Flags 512
 		Light 300
 		MipMapBias 1.000000
 		Translucency 255.000000
@@ -183,7 +183,7 @@ Brush "Box"
 	Transform	0.000000 0.000000 1.000000 0.000000 1.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 0.000000 0.000000 
 	Pos	0.000000 0.000000 0.000000 
 		NumPoints 4
-		Flags 528
+		Flags 512
 		Light 300
 		MipMapBias 1.000000
 		Translucency 255.000000
@@ -204,7 +204,7 @@ Brush "Box"
 	Type 2
 	BrushFaces 6
 		NumPoints 4
-		Flags 528
+		Flags 512
 		Light 300
 		MipMapBias 1.000000
 		Translucency 255.000000
@@ -218,7 +218,7 @@ Brush "Box"
 	Transform	1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 0.000000 
 	Pos	-96.000015 -44.000015 -7.999996 
 		NumPoints 4
-		Flags 528
+		Flags 512
 		Light 300
 		MipMapBias 1.000000
 		Translucency 255.000000
@@ -232,7 +232,7 @@ Brush "Box"
 	Transform	1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 0.000000 
 	Pos	-96.000015 -44.000015 -7.999996 
 		NumPoints 4
-		Flags 528
+		Flags 512
 		Light 300
 		MipMapBias 1.000000
 		Translucency 255.000000
@@ -246,7 +246,7 @@ Brush "Box"
 	Transform	1.000000 0.000000 0.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 
 	Pos	-96.000015 -44.000015 -7.999996 
 		NumPoints 4
-		Flags 528
+		Flags 512
 		Light 300
 		MipMapBias 1.000000
 		Translucency 255.000000
@@ -260,7 +260,7 @@ Brush "Box"
 	Transform	1.000000 0.000000 0.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 
 	Pos	-96.000015 -44.000015 -7.999996 
 		NumPoints 4
-		Flags 528
+		Flags 512
 		Light 300
 		MipMapBias 1.000000
 		Translucency 255.000000
@@ -274,7 +274,7 @@ Brush "Box"
 	Transform	0.000000 0.000000 1.000000 0.000000 1.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 0.000000 0.000000 
 	Pos	-96.000015 -44.000015 -7.999996 
 		NumPoints 4
-		Flags 528
+		Flags 512
 		Light 300
 		MipMapBias 1.000000
 		Translucency 255.000000
@@ -295,7 +295,7 @@ Brush "BoxCUT22"
 	Type 2
 	BrushFaces 6
 		NumPoints 4
-		Flags 528
+		Flags 512
 		Light 300
 		MipMapBias 1.000000
 		Translucency 255.000000
@@ -309,7 +309,7 @@ Brush "BoxCUT22"
 	Transform	1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 0.000000 
 	Pos	0.000000 0.000000 0.000000 
 		NumPoints 4
-		Flags 528
+		Flags 512
 		Light 300
 		MipMapBias 1.000000
 		Translucency 255.000000
@@ -323,7 +323,7 @@ Brush "BoxCUT22"
 	Transform	1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 0.000000 
 	Pos	0.000000 0.000000 0.000000 
 		NumPoints 4
-		Flags 528
+		Flags 512
 		Light 300
 		MipMapBias 1.000000
 		Translucency 255.000000
@@ -337,7 +337,7 @@ Brush "BoxCUT22"
 	Transform	1.000000 0.000000 0.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 
 	Pos	0.000000 0.000000 0.000000 
 		NumPoints 4
-		Flags 528
+		Flags 512
 		Light 300
 		MipMapBias 1.000000
 		Translucency 255.000000
@@ -351,7 +351,7 @@ Brush "BoxCUT22"
 	Transform	1.000000 0.000000 0.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 
 	Pos	0.000000 0.000000 0.000000 
 		NumPoints 4
-		Flags 528
+		Flags 512
 		Light 300
 		MipMapBias 1.000000
 		Translucency 255.000000
@@ -365,7 +365,7 @@ Brush "BoxCUT22"
 	Transform	0.000000 0.000000 1.000000 0.000000 1.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 0.000000 0.000000 
 	Pos	0.000000 0.000000 0.000000 
 		NumPoints 4
-		Flags 528
+		Flags 512
 		Light 300
 		MipMapBias 1.000000
 		Translucency 255.000000
@@ -393,7 +393,7 @@ Brush "Arch"
 	Type 2
 	BrushFaces 6
 		NumPoints 4
-		Flags 528
+		Flags 512
 		Light 300
 		MipMapBias 1.000000
 		Translucency 255.000000
@@ -407,7 +407,7 @@ Brush "Arch"
 	Transform	1.000000 0.000000 0.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 
 	Pos	0.000000 -151.554428 0.000000 
 		NumPoints 4
-		Flags 528
+		Flags 512
 		Light 300
 		MipMapBias 1.000000
 		Translucency 255.000000
@@ -421,7 +421,7 @@ Brush "Arch"
 	Transform	1.000000 0.000000 0.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 
 	Pos	0.000000 -151.554428 0.000000 
 		NumPoints 4
-		Flags 528
+		Flags 512
 		Light 300
 		MipMapBias 1.000000
 		Translucency 255.000000
@@ -435,7 +435,7 @@ Brush "Arch"
 	Transform	0.250000 -0.433013 0.866025 -0.433013 0.750000 0.500000 -0.866025 -0.500000 0.000000 0.000000 0.000000 0.000000 
 	Pos	0.000000 -151.554428 0.000000 
 		NumPoints 4
-		Flags 528
+		Flags 512
 		Light 300
 		MipMapBias 1.000000
 		Translucency 255.000000
@@ -449,7 +449,7 @@ Brush "Arch"
 	Transform	0.250000 -0.433013 0.866025 -0.433013 0.750000 0.500000 -0.866025 -0.500000 0.000000 0.000000 0.000000 0.000000 
 	Pos	0.000000 -151.554428 0.000000 
 		NumPoints 4
-		Flags 528
+		Flags 512
 		Light 300
 		MipMapBias 1.000000
 		Translucency 255.000000
@@ -463,7 +463,7 @@ Brush "Arch"
 	Transform	1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 0.000000 
 	Pos	0.000000 -151.554428 0.000000 
 		NumPoints 4
-		Flags 560
+		Flags 544
 		Light 300
 		MipMapBias 1.000000
 		Translucency 255.000000
@@ -484,7 +484,7 @@ Brush "Arch"
 	Type 2
 	BrushFaces 6
 		NumPoints 4
-		Flags 528
+		Flags 512
 		Light 300
 		MipMapBias 1.000000
 		Translucency 255.000000
@@ -498,7 +498,7 @@ Brush "Arch"
 	Transform	1.000000 0.000000 0.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 
 	Pos	0.000000 -151.554428 0.000000 
 		NumPoints 4
-		Flags 528
+		Flags 512
 		Light 300
 		MipMapBias 1.000000
 		Translucency 255.000000
@@ -512,7 +512,7 @@ Brush "Arch"
 	Transform	1.000000 0.000000 0.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 
 	Pos	0.000000 -151.554428 0.000000 
 		NumPoints 4
-		Flags 528
+		Flags 512
 		Light 300
 		MipMapBias 1.000000
 		Translucency 255.000000
@@ -526,7 +526,7 @@ Brush "Arch"
 	Transform	1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 0.000000 
 	Pos	0.000000 -151.554428 0.000000 
 		NumPoints 4
-		Flags 528
+		Flags 512
 		Light 300
 		MipMapBias 1.000000
 		Translucency 255.000000
@@ -540,7 +540,7 @@ Brush "Arch"
 	Transform	1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 0.000000 
 	Pos	0.000000 -151.554428 0.000000 
 		NumPoints 4
-		Flags 560
+		Flags 544
 		Light 300
 		MipMapBias 1.000000
 		Translucency 255.000000
@@ -554,7 +554,7 @@ Brush "Arch"
 	Transform	0.250000 0.433013 0.866025 0.433013 0.750000 -0.500000 -0.866025 0.500000 0.000000 0.000000 0.000000 0.000000 
 	Pos	0.000000 -151.554428 0.000000 
 		NumPoints 4
-		Flags 560
+		Flags 544
 		Light 300
 		MipMapBias 1.000000
 		Translucency 255.000000
@@ -575,7 +575,7 @@ Brush "Arch"
 	Type 2
 	BrushFaces 6
 		NumPoints 4
-		Flags 528
+		Flags 512
 		Light 300
 		MipMapBias 1.000000
 		Translucency 255.000000
@@ -589,7 +589,7 @@ Brush "Arch"
 	Transform	1.000000 0.000000 0.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 
 	Pos	0.000000 -151.554428 0.000000 
 		NumPoints 4
-		Flags 528
+		Flags 512
 		Light 300
 		MipMapBias 1.000000
 		Translucency 255.000000
@@ -603,7 +603,7 @@ Brush "Arch"
 	Transform	1.000000 0.000000 0.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 
 	Pos	0.000000 -151.554428 0.000000 
 		NumPoints 4
-		Flags 528
+		Flags 512
 		Light 300
 		MipMapBias 1.000000
 		Translucency 255.000000
@@ -617,7 +617,7 @@ Brush "Arch"
 	Transform	0.250000 0.433013 0.866026 0.433013 0.750000 -0.500000 -0.866026 0.500000 0.000000 0.000000 0.000000 0.000000 
 	Pos	0.000000 -151.554428 0.000000 
 		NumPoints 4
-		Flags 528
+		Flags 512
 		Light 300
 		MipMapBias 1.000000
 		Translucency 255.000000
@@ -631,7 +631,7 @@ Brush "Arch"
 	Transform	0.250000 0.433013 0.866025 0.433013 0.750000 -0.500000 -0.866025 0.500000 0.000000 0.000000 0.000000 0.000000 
 	Pos	0.000000 -151.554428 0.000000 
 		NumPoints 4
-		Flags 560
+		Flags 544
 		Light 300
 		MipMapBias 1.000000
 		Translucency 255.000000
@@ -645,7 +645,7 @@ Brush "Arch"
 	Transform	0.250000 -0.433013 0.866025 -0.433013 0.750000 0.500000 -0.866025 -0.500000 0.000000 0.000000 0.000000 0.000000 
 	Pos	0.000000 -151.554428 0.000000 
 		NumPoints 4
-		Flags 528
+		Flags 512
 		Light 300
 		MipMapBias 1.000000
 		Translucency 255.000000

@@ -158,7 +158,8 @@ LRESULT CALLBACK SB_Ogre_Dialog::Ogre_Dialog_Proc(HWND hDlg, UINT message, WPARA
 		
 		if (LOWORD(wParam) == IDC_TEST)
 		{
-			App->CL_Ogre->OgreListener->StopOgre = 1;
+			//App->CL_Ogre->OgreListener->StopOgre = 1;
+			//App->CL_Ogre->OgreIsRunning = 0;
 			return TRUE;
 		}
 

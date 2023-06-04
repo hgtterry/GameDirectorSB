@@ -123,6 +123,7 @@
 #define IDD_VIEW_BOTTOMLEFT             267
 #define IDD_SB_OGREVIEWER               268
 #define IDD_SB_3D_VIEWER                271
+#define IDR_MENUSB                      274
 #define IDC_RESET_ALL                   1000
 #define IDC_EDIT1                       1001
 #define IDC_EDIT10                      1002
@@ -623,7 +624,7 @@
 #define IDC_STBRUSH                     1460
 #define IDC_BTTDFACEPROPERTIES          1461
 #define IDC_STLEFTTOP                   1463
-#define IDC_STARTOGRE                   1464
+#define IDC_STARTEQUITY                 1464
 #define IDC_STATICTEST                  1465
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772
@@ -802,7 +803,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        273
+#define _APS_NEXT_RESOURCE_VALUE        275
 #define _APS_NEXT_COMMAND_VALUE         33056
 #define _APS_NEXT_CONTROL_VALUE         1466
 #define _APS_NEXT_SYMED_VALUE           112
