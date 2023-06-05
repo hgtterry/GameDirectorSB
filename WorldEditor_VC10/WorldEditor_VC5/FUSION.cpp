@@ -194,7 +194,7 @@ BOOL CFusionApp::InitInstance() // hgtterry InitInstance
 {
 	App = new A_App();
 	App->InitApp();
-	App->CL_Ogre->InitOgre();
+	App->CLSB_Ogre->InitOgre();
 	
 	char AppPath[MAX_PATH];
 	::GetModuleFileName (NULL, AppPath, MAX_PATH);

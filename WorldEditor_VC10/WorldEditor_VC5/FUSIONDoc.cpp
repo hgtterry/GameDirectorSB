@@ -5093,10 +5093,10 @@ void CFusionDoc::OnCloseDocument()
 {
 	App->Debug_Close();
 
-	if (App->CL_Ogre->OgreIsRunning == 1)
+	if (App->CLSB_Ogre->OgreIsRunning == 1)
 	{
-		delete App->CL_Ogre->mRoot;
-		App->CL_Ogre->mRoot = NULL;
+		delete App->CLSB_Ogre->mRoot;
+		App->CLSB_Ogre->mRoot = NULL;
 	}
 
 	//App->Say("Close");

@@ -21,37 +21,37 @@ void SB_Ogre_Dialog::Switch_3D_Window()
 	//App->CL_Ogre->InitOgre();
 	//Ogre::Root::getSingletonPtr()->renderOneFrame();
 
-	App->CL_Ogre->mWindow->resize(500, 500);
-	int test = SetWindowLong(App->CL_Ogre->Ogre_Window_hWnd, GWL_WNDPROC, (LONG)App->CL_Ogre_Dialog->Ogre3D_Proc);
+	App->CLSB_Ogre->mWindow->resize(500, 500);
+	int test = SetWindowLong(App->CLSB_Ogre->Ogre_Window_hWnd, GWL_WNDPROC, (LONG)App->CLSB_Ogre_Dialog->Ogre3D_Proc);
 
-	SetWindowLongPtr(App->CL_Ogre->Ogre_Window_hWnd, GWL_STYLE, WS_BORDER);
-	SetWindowPos(App->CL_Ogre->Ogre_Window_hWnd, 0, 0, 0, 0, 0, SWP_NOZORDER | SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE | SWP_DRAWFRAME);
-	ShowWindow(App->CL_Ogre->Ogre_Window_hWnd, SW_SHOW);
+	SetWindowLongPtr(App->CLSB_Ogre->Ogre_Window_hWnd, GWL_STYLE, WS_BORDER);
+	SetWindowPos(App->CLSB_Ogre->Ogre_Window_hWnd, 0, 0, 0, 0, 0, SWP_NOZORDER | SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE | SWP_DRAWFRAME);
+	ShowWindow(App->CLSB_Ogre->Ogre_Window_hWnd, SW_SHOW);
 
-	SetWindowPos(App->CL_Ogre->Ogre_Window_hWnd, NULL, 4, 4, 820, 450, SWP_NOZORDER);
+	SetWindowPos(App->CLSB_Ogre->Ogre_Window_hWnd, NULL, 4, 4, 820, 450, SWP_NOZORDER);
 	
 	HWND Check_hWnd = NULL;
-	Check_hWnd = SetParent(App->CL_Ogre->Ogre_Window_hWnd, App->CL_Ogre_Dialog->TestHwnd);
+	Check_hWnd = SetParent(App->CLSB_Ogre->Ogre_Window_hWnd, App->CLSB_Ogre_Dialog->TestHwnd);
 
 	//if (!Check_hWnd)
 	{
 		//Debug
 	}
 
-	App->CL_Ogre->mWindow->resize(810, 400);
-	App->CL_Ogre->mWindow->windowMovedOrResized();
-	App->CL_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CL_Ogre->mWindow->getWidth() / (Ogre::Real)App->CL_Ogre->mWindow->getHeight());
-	App->CL_Ogre->mCamera->yaw(Ogre::Radian(0));
+	App->CLSB_Ogre->mWindow->resize(810, 400);
+	App->CLSB_Ogre->mWindow->windowMovedOrResized();
+	App->CLSB_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CLSB_Ogre->mWindow->getWidth() / (Ogre::Real)App->CLSB_Ogre->mWindow->getHeight());
+	App->CLSB_Ogre->mCamera->yaw(Ogre::Radian(0));
 
-	App->CL_Ogre->OgreIsRunning = 1;
-	App->CL_Ogre->Ogre_Render_Loop();
+	App->CLSB_Ogre->OgreIsRunning = 1;
+	App->CLSB_Ogre->Ogre_Render_Loop();
 	
-	if (App->CL_Ogre->OgreIsRunning == 1)
+	if (App->CLSB_Ogre->OgreIsRunning == 1)
 	{
 		App->Say("xxx");
-		delete App->CL_Ogre->mRoot;
-		App->CL_Ogre->mRoot = NULL;
-		App->CL_Ogre->OgreIsRunning = 0;
+		delete App->CLSB_Ogre->mRoot;
+		App->CLSB_Ogre->mRoot = NULL;
+		App->CLSB_Ogre->OgreIsRunning = 0;
 	}
 }
 
@@ -230,11 +230,11 @@ LRESULT CALLBACK SB_Ogre_Dialog::Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wPa
 	case WM_RBUTTONDOWN: // BERNIE_HEAR_FIRE 
 	{
 		
-		if (App->CL_Ogre->OgreIsRunning == 1)
+		if (App->CLSB_Ogre->OgreIsRunning == 1)
 		{
-			SetCapture(App->CL_Ogre->Ogre_Window_hWnd);// Bernie
+			SetCapture(App->CLSB_Ogre->Ogre_Window_hWnd);// Bernie
 			SetCursorPos(App->CursorPosX, App->CursorPosY);
-			App->CL_Ogre->OgreListener->Pl_RightMouseDown = 1;
+			App->CLSB_Ogre->OgreListener->Pl_RightMouseDown = 1;
 			App->CUR = SetCursor(NULL);
 			return 1;
 		}
@@ -243,10 +243,10 @@ LRESULT CALLBACK SB_Ogre_Dialog::Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wPa
 	}
 	case WM_RBUTTONUP:
 	{
-		if (App->CL_Ogre->OgreIsRunning == 1)
+		if (App->CLSB_Ogre->OgreIsRunning == 1)
 		{
 			ReleaseCapture();
-			App->CL_Ogre->OgreListener->Pl_RightMouseDown = 0;
+			App->CLSB_Ogre->OgreListener->Pl_RightMouseDown = 0;
 			SetCursor(App->CUR);
 			return 1;
 		}
@@ -257,12 +257,12 @@ LRESULT CALLBACK SB_Ogre_Dialog::Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wPa
 	// Left Mouse Button
 	case WM_LBUTTONDOWN: // BERNIE_HEAR_FIRE 
 	{
-		if (App->CL_Ogre->OgreIsRunning == 1)
+		if (App->CLSB_Ogre->OgreIsRunning == 1)
 		{
-			SetCapture(App->CL_Ogre->Ogre_Window_hWnd);// Bernie
+			SetCapture(App->CLSB_Ogre->Ogre_Window_hWnd);// Bernie
 			SetCursorPos(App->CursorPosX, App->CursorPosY);
 
-			App->CL_Ogre->OgreListener->Pl_LeftMouseDown = 1;
+			App->CLSB_Ogre->OgreListener->Pl_LeftMouseDown = 1;
 
 			App->CUR = SetCursor(NULL);
 
@@ -275,10 +275,10 @@ LRESULT CALLBACK SB_Ogre_Dialog::Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wPa
 	case WM_LBUTTONUP:
 	{
 
-		if (App->CL_Ogre->OgreIsRunning == 1)
+		if (App->CLSB_Ogre->OgreIsRunning == 1)
 		{
 			ReleaseCapture();
-			App->CL_Ogre->OgreListener->Pl_LeftMouseDown = 0;
+			App->CLSB_Ogre->OgreListener->Pl_LeftMouseDown = 0;
 			SetCursor(App->CUR);
 			return 1;
 		}

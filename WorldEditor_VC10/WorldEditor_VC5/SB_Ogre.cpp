@@ -80,18 +80,18 @@ bool SB_Ogre::InitOgre(void)
 	ModelNode->attachObject(manObj);
 
 	// Set Up Grid Functions
-	App->CL_Grid->Grid_Update(1);
-	App->CL_Grid->Hair_Update(1);
+	App->CLSB_Grid->Grid_Update(1);
+	App->CLSB_Grid->Hair_Update(1);
 
 
-	App->CL_Grid->DummyNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	App->CLSB_Grid->DummyNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 
 	//m_imgui.Init(mSceneMgr,RenderHwnd);
 
 	createFrameListener();
 	
-	App->CL_Grid->Reset_View();
-	App->CL_Grid->Grid_SetVisible(true);
+	App->CLSB_Grid->Reset_View();
+	App->CLSB_Grid->Grid_SetVisible(true);
 
 	return 1;
 }

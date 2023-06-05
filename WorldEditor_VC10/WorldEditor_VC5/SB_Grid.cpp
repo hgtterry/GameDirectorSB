@@ -95,8 +95,8 @@ void SB_Grid::Reset_Class()
 // *************************************************************************
 void SB_Grid::Load_Crosshair()
 {
-	Crosshair_Ent = App->CL_Ogre->mSceneMgr->createEntity("Crosshair", "axes.mesh", App->CL_Ogre->App_Resource_Group);
-	Crosshair_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	Crosshair_Ent = App->CLSB_Ogre->mSceneMgr->createEntity("Crosshair", "axes.mesh", App->CLSB_Ogre->App_Resource_Group);
+	Crosshair_Node = App->CLSB_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Crosshair_Node->attachObject(Crosshair_Ent);
 
 	Crosshair_Node->setVisible(true);
@@ -114,7 +114,7 @@ void SB_Grid::Grid_Update(bool Create)
 
 	if (Create == 1)
 	{
-		GridManual = App->CL_Ogre->mSceneMgr->createManualObject("BoxManual");
+		GridManual = App->CLSB_Ogre->mSceneMgr->createManualObject("BoxManual");
 		GridManual->setRenderQueueGroup(1);
 	}
 
@@ -167,7 +167,7 @@ void SB_Grid::Grid_Update(bool Create)
 
 	if (Create == 1)
 	{
-		GridNode = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+		GridNode = App->CLSB_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 		GridNode->attachObject(GridManual);
 	}
 
@@ -182,7 +182,7 @@ void SB_Grid::Hair_Update(bool Create)
 {
 	if (Create == 1)
 	{
-		HairManual = App->CL_Ogre->mSceneMgr->createManualObject("HairManual");
+		HairManual = App->CLSB_Ogre->mSceneMgr->createManualObject("HairManual");
 		HairManual->setRenderQueueGroup(5);
 	}
 
@@ -209,7 +209,7 @@ void SB_Grid::Hair_Update(bool Create)
 
 	if (Create == 1)
 	{
-		HairNode = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+		HairNode = App->CLSB_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 		HairNode->attachObject(HairManual);
 	}
 
@@ -246,8 +246,8 @@ void SB_Grid::Reset_View(void)
 	//App->CL_Ogre->OgreListener->RX = 0;
 	//App->CL_Ogre->RenderListener->RZ = 0;
 
-	App->CL_Ogre->mCamera->setPosition(Ogre::Vector3(0, 90, 100));
-	App->CL_Ogre->mCamera->lookAt(Ogre::Vector3(0, 30, 0));
+	App->CLSB_Ogre->mCamera->setPosition(Ogre::Vector3(0, 90, 100));
+	App->CLSB_Ogre->mCamera->lookAt(Ogre::Vector3(0, 30, 0));
 }
 
 

@@ -57,10 +57,10 @@ A_App::A_App()
 	CL_F_View =					NULL;
 
 	// Scene Builder 
-	CL_Ogre =					nullptr;
-	CL_Grid =					nullptr;
-	CL_Ogre_Dialog =			nullptr;
-	CL_Keyboard =				nullptr;
+	CLSB_Ogre =					nullptr;
+	CLSB_Grid =					nullptr;
+	CLSB_Ogre_Dialog =			nullptr;
+	CLSB_Keyboard =				nullptr;
 	CLSB_Camera =				nullptr;
 
 
@@ -180,11 +180,11 @@ bool A_App::InitApp(void)
 
 
 	// Scene Builder 
-	CL_Ogre =						new SB_Ogre();
-	CL_Grid =						new SB_Grid();
-	CL_Ogre_Dialog =				new SB_Ogre_Dialog();
-	CL_Keyboard =					new SB_Keyboard();
-	CLSB_Camera =						new SB_Camera();
+	CLSB_Ogre =						new SB_Ogre();
+	CLSB_Grid =						new SB_Grid();
+	CLSB_Ogre_Dialog =				new SB_Ogre_Dialog();
+	CLSB_Keyboard =					new SB_Keyboard();
+	CLSB_Camera =					new SB_Camera();
 	
 	InitCommonControls();
 

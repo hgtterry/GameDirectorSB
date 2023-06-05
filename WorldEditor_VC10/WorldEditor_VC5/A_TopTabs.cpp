@@ -188,7 +188,7 @@ LRESULT CALLBACK A_TopTabs::Top_Tabs_Proc(HWND hDlg, UINT message, WPARAM wParam
 			// ---------------- Tabs
 			if (LOWORD(wParam) == IDC_STARTEQUITY)
 			{
-				App->CL_Ogre_Dialog->Start_Ogre_Dialog();
+				App->CLSB_Ogre_Dialog->Start_Ogre_Dialog();
 
 				return TRUE;
 			}
