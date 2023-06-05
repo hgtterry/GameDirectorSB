@@ -185,14 +185,14 @@ void CFusionApp::ResolvePreferencesPaths (void)
 }
 
 
-A_App* App = NULL;
+SB_App* App = NULL;
 
 // *************************************************************************
 // *							InitInstance							   *
 // *************************************************************************
 BOOL CFusionApp::InitInstance() // hgtterry InitInstance
 {
-	App = new A_App();
+	App = new SB_App();
 	App->InitApp();
 	App->CLSB_Ogre->InitOgre();
 	

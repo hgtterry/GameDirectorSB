@@ -67,12 +67,12 @@ distribution.
 #include "SB_Keyboard.h"
 #include "SB_Camera.h"
 
-class A_App  
+class SB_App
 {
 public:
 
-	A_App();
-	virtual ~A_App();
+	SB_App();
+	virtual ~SB_App();
 
 	AB_Export_RFW*				ABC_Export_RFW;
 	A_FileIO*					CL_FileIO;
@@ -185,9 +185,8 @@ public:
 	CFusionDoc *pCFusionDoc;
 
 	FILE *Write_DebugFile;
-	//m_pMainFrame		=(CMainFrame *)AfxGetMainWnd();
 };
 
-extern A_App* App;
+extern SB_App* App;
 
 #endif // !defined(AFX_SB_APP_H__F1CE337E_1C46_4F80_9639_566F8F7DFBD6__INCLUDED_)

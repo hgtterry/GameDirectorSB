@@ -25,7 +25,7 @@ distribution.
 #include "AB_App.h"
 
 
-A_App::A_App()
+SB_App::SB_App()
 {
 	ABC_Export_RFW =			NULL;
 	CL_FileIO =					NULL;
@@ -105,7 +105,7 @@ A_App::A_App()
 
 }
 
-A_App::~A_App()
+SB_App::~SB_App()
 {
 
 }
@@ -113,7 +113,7 @@ A_App::~A_App()
 #include <tlhelp32.h>
 #include <tchar.h>
 
-bool A_App::IsProcessRunning(char* executableName)
+bool SB_App::IsProcessRunning(char* executableName)
 {
 	PROCESSENTRY32 entry;
 	entry.dwSize = sizeof(PROCESSENTRY32);
@@ -139,7 +139,7 @@ bool A_App::IsProcessRunning(char* executableName)
 // *************************************************************************
 // *								InitMFC								   *
 // *************************************************************************
-void A_App::InitMFC(void)
+void SB_App::InitMFC(void)
 {	
 	m_pMainFrame = (CMainFrame *)AfxGetMainWnd();
 }
@@ -147,7 +147,7 @@ void A_App::InitMFC(void)
 // *************************************************************************
 // *						InitApp Inflanite							   *
 // *************************************************************************
-bool A_App::InitApp(void)
+bool SB_App::InitApp(void)
 {	
 	ABC_Export_RFW  =				new AB_Export_RFW();
 	CL_FileIO =						new	A_FileIO();
@@ -199,7 +199,7 @@ bool A_App::InitApp(void)
 // *************************************************************************
 // *					SetBrushes_Fonts Inflanite						   *
 // *************************************************************************
-void A_App::SetBrushes_Fonts(void)
+void SB_App::SetBrushes_Fonts(void)
 {
 	AppBackground = CreateSolidBrush(RGB(213, 222, 242));
 
@@ -223,7 +223,7 @@ void A_App::SetBrushes_Fonts(void)
 // *************************************************************************
 // *		LoadProgramResource:- Terry and Hazel Flanigan 2023		  	   *
 // *************************************************************************
-void A_App::LoadProgramResource(void)
+void SB_App::LoadProgramResource(void)
 {
 	Hnd_HollowBox_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_HOLLOWBOX);
 	Hnd_SolidBox_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_SOLIDBOX);
@@ -243,7 +243,7 @@ void A_App::LoadProgramResource(void)
 // *************************************************************************
 // *				Say:- Terry and Hazel Flanigan 2023					   *
 // *************************************************************************
-void A_App::Say(const char* Message, char* Message2)
+void SB_App::Say(const char* Message, char* Message2)
 {
 	char text[MAX_PATH];
 	char text2[MAX_PATH];
@@ -265,7 +265,7 @@ void A_App::Say(const char* Message, char* Message2)
 // *************************************************************************
 // *				Say_Int:- Terry and Hazel Flanigan 2023				   *
 // *************************************************************************
-void A_App::Say_Int(int Value)
+void SB_App::Say_Int(int Value)
 {
 	char buf[255];
 	itoa(Value, buf, 10);
@@ -275,7 +275,7 @@ void A_App::Say_Int(int Value)
 // *************************************************************************
 // *			Say_Float:- Terry and Hazel Flanigan 2023				   *
 // *************************************************************************
-void A_App::Say_Float(float Value)
+void SB_App::Say_Float(float Value)
 {
 	char buf[255];
 	sprintf(buf, "%f", Value);
@@ -285,7 +285,7 @@ void A_App::Say_Float(float Value)
 // *************************************************************************
 // *				FlashWindow:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-void A_App::Flash_Window()
+void SB_App::Flash_Window()
 {
 	FlashWindow(MainHwnd,true);
 }
@@ -293,7 +293,7 @@ void A_App::Flash_Window()
 // *************************************************************************
 // *	Custom_Button_Toggle_Tabs_MFC:- Terry and Hazel Flanigan 2023      *
 // *************************************************************************
-bool A_App::Custom_Button_Toggle_Tabs_MFC(LPDRAWITEMSTRUCT lpDIS,HWND hDlg, bool Toggle)
+bool SB_App::Custom_Button_Toggle_Tabs_MFC(LPDRAWITEMSTRUCT lpDIS,HWND hDlg, bool Toggle)
 {
 	if (Toggle == 0)
 	{
@@ -342,7 +342,7 @@ bool A_App::Custom_Button_Toggle_Tabs_MFC(LPDRAWITEMSTRUCT lpDIS,HWND hDlg, bool
 // *************************************************************************
 // *	Custom_Button_Toggle_MFC:- Terry and Hazel Flanigan 2023   	 	   *
 // *************************************************************************
-bool A_App::Custom_Button_Toggle_MFC(LPDRAWITEMSTRUCT lpDIS,HWND hDlg, bool Toggle)
+bool SB_App::Custom_Button_Toggle_MFC(LPDRAWITEMSTRUCT lpDIS,HWND hDlg, bool Toggle)
 {
 	if (Toggle == 0)
 	{
@@ -391,7 +391,7 @@ bool A_App::Custom_Button_Toggle_MFC(LPDRAWITEMSTRUCT lpDIS,HWND hDlg, bool Togg
 // *************************************************************************
 // *		Custom_Button_Normal_MFC:- Terry and Hazel Flanigan 2023  	   *
 // *************************************************************************
-bool A_App::Custom_Button_Normal_MFC(LPDRAWITEMSTRUCT lpDIS,HWND hDlg)
+bool SB_App::Custom_Button_Normal_MFC(LPDRAWITEMSTRUCT lpDIS,HWND hDlg)
 {
 	HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0));
 
@@ -417,7 +417,7 @@ bool A_App::Custom_Button_Normal_MFC(LPDRAWITEMSTRUCT lpDIS,HWND hDlg)
 // *************************************************************************
 // *	Custom_Button_Toggle_Disable:- Terry and Hazel Flanigan 2023	   *
 // *************************************************************************
-bool A_App::Custom_Button_Toggle_Disable(LPDRAWITEMSTRUCT lpDIS,HWND hDlg, bool Toggle)
+bool SB_App::Custom_Button_Toggle_Disable(LPDRAWITEMSTRUCT lpDIS,HWND hDlg, bool Toggle)
 {
 	if (Toggle == 0)
 	{
@@ -464,7 +464,7 @@ bool A_App::Custom_Button_Toggle_Disable(LPDRAWITEMSTRUCT lpDIS,HWND hDlg, bool 
 // *************************************************************************
 // *						CreateGradientBrush					 	 	   *
 // *************************************************************************
-HBRUSH A_App::CreateGradientBrush(COLORREF top, COLORREF bottom, LPNMCUSTOMDRAW item)
+HBRUSH SB_App::CreateGradientBrush(COLORREF top, COLORREF bottom, LPNMCUSTOMDRAW item)
 {
 	HBRUSH Brush = NULL;
 	HDC hdcmem = CreateCompatibleDC(item->hdc);
@@ -499,7 +499,7 @@ HBRUSH A_App::CreateGradientBrush(COLORREF top, COLORREF bottom, LPNMCUSTOMDRAW 
 // *************************************************************************
 // *			Debug_Set:- Terry and Hazel Flanigan 2023				   *
 // *************************************************************************
-void A_App::Debug_Set(void)
+void SB_App::Debug_Set(void)
 {
 	if (Debug_File == 1)
 	{
@@ -524,7 +524,7 @@ void A_App::Debug_Set(void)
 // *************************************************************************
 // *			Debug_Close:- Terry and Hazel Flanigan 2023				   *
 // *************************************************************************
-void A_App::Debug_Close(void)
+void SB_App::Debug_Close(void)
 {
 	if (Debug_File == 1)
 	{
@@ -539,7 +539,7 @@ void A_App::Debug_Close(void)
 // *************************************************************************
 // *			Debug_Message:- Terry and Hazel Flanigan 2023				   *
 // *************************************************************************
-void A_App::Debug_Message(char* Message, bool NewLine)
+void SB_App::Debug_Message(char* Message, bool NewLine)
 {
 	if (Debug_File == 1)
 	{
@@ -555,7 +555,7 @@ void A_App::Debug_Message(char* Message, bool NewLine)
 // *************************************************************************
 // *			Debug_Int:- Terry and Hazel Flanigan 2023				   *
 // *************************************************************************
-void A_App::Debug_Int(int Value, bool NewLine)
+void SB_App::Debug_Int(int Value, bool NewLine)
 {
 	if (Debug_File == 1)
 	{
@@ -571,7 +571,7 @@ void A_App::Debug_Int(int Value, bool NewLine)
 // *************************************************************************
 // *			Debug_Float:- Terry and Hazel Flanigan 2023				   *
 // *************************************************************************
-void A_App::Debug_Float(float Value, bool NewLine)
+void SB_App::Debug_Float(float Value, bool NewLine)
 {
 	if (Debug_File == 1)
 	{
@@ -587,7 +587,7 @@ void A_App::Debug_Float(float Value, bool NewLine)
 // *************************************************************************
 // *			Wait_For_Key:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-void A_App::Wait_For_Key(int Delay)
+void SB_App::Wait_For_Key(int Delay)
 {
 	int Count = 0;
 
