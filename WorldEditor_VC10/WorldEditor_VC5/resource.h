@@ -796,6 +796,10 @@
 #define ID_FILE_EXPORT_OLDEXPORT        33053
 #define ID_EQUITYSB_TXLEDITOR           33054
 #define ID_EQUITYSB_FACEPROPERTIES      33055
+#define ID_FILE                         33056
+#define ID_CAMERAMODE_MODEL             33057
+#define ID_CAMERAMODE_FREE              33058
+#define ID_CAMERAMODE_FIRST             33059
 #define IDS_HELPINFORMATION             38000
 
 // Next default values for new objects
@@ -804,7 +808,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        275
-#define _APS_NEXT_COMMAND_VALUE         33056
+#define _APS_NEXT_COMMAND_VALUE         33060
 #define _APS_NEXT_CONTROL_VALUE         1466
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
