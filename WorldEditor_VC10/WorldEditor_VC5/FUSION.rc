@@ -2243,11 +2243,13 @@ END
 IDR_MENUSB MENU
 BEGIN
     MENUITEM "File",                        ID_FILE
-    POPUP "Camera Mode"
+    POPUP "Camera"
     BEGIN
         MENUITEM "Model",                       ID_CAMERAMODE_MODEL
         MENUITEM "Free",                        ID_CAMERAMODE_FREE
         MENUITEM "First",                       ID_CAMERAMODE_FIRST
+        MENUITEM SEPARATOR
+        MENUITEM "Reset View",                  ID_CAMERA_RESETVIEW
     END
 END
 

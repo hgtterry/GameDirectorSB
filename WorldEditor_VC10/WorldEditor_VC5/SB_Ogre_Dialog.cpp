@@ -156,6 +156,12 @@ LRESULT CALLBACK SB_Ogre_Dialog::Ogre_Dialog_Proc(HWND hDlg, UINT message, WPARA
 	case WM_COMMAND:
 	{
 		
+		if (LOWORD(wParam) == ID_CAMERA_RESETVIEW)
+		{
+			App->CLSB_Camera->Reset_View();
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDC_TEST)
 		{
 			//App->CL_Ogre->OgreListener->StopOgre = 1;

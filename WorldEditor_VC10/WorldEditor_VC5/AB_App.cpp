@@ -61,6 +61,8 @@ A_App::A_App()
 	CL_Grid =					nullptr;
 	CL_Ogre_Dialog =			nullptr;
 	CL_Keyboard =				nullptr;
+	CLSB_Camera =				nullptr;
+
 
 	AppBackground = NULL;
 	BlackBrush =	NULL;
@@ -182,7 +184,8 @@ bool A_App::InitApp(void)
 	CL_Grid =						new SB_Grid();
 	CL_Ogre_Dialog =				new SB_Ogre_Dialog();
 	CL_Keyboard =					new SB_Keyboard();
-
+	CLSB_Camera =						new SB_Camera();
+	
 	InitCommonControls();
 
 	hInst =NULL;

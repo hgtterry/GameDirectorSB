@@ -65,6 +65,7 @@ distribution.
 #include "SB_Grid.h"
 #include "SB_Ogre_Dialog.h"
 #include "SB_Keyboard.h"
+#include "SB_Camera.h"
 
 class A_App  
 {
@@ -107,6 +108,8 @@ public:
 	SB_Grid*					CL_Grid;
 	SB_Ogre_Dialog*				CL_Ogre_Dialog;
 	SB_Keyboard*				CL_Keyboard;
+	SB_Camera*					CLSB_Camera;
+
 
 	bool InitApp(void);
 	void InitMFC(void);

@@ -31,7 +31,6 @@ SB_Keyboard::SB_Keyboard()
 	Rate = 0;
 	OldPos.ZERO;
 	Block_Keyboard = 0;
-
 }
 
 
