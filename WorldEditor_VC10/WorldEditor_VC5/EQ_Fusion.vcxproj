@@ -32,7 +32,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Test|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>.;.\GenesisSDK\include;.\TypeParser;..\..\Anim19_OSDN\Common\include\OGRE;..\..\Anim19_OSDN\Common\include\OGRE\Terrain;..\..\Anim19_OSDN\Common\include\OGRE\Overlay;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;.\GenesisSDK\include;.\TypeParser;..\..\Anim19_OSDN\Common\include\OGRE;..\..\Anim19_OSDN\Common\include\OGRE\Terrain;..\..\Anim19_OSDN\Common\include\OGRE\Overlay;..\..\Anim19_OSDN\Common\Assimp\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>MaxSpeed</Optimization>
       <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
@@ -48,13 +48,13 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>nafxcw.lib;libcmt.lib;.\GenesisSDK\lib\genesis.lib;advapi32.lib;comctl32.lib;comdlg32.lib;gdi32.lib;kernel32.lib;oldnames.lib;ole32.lib;oleaut32.lib;oledlg.lib;shell32.lib;urlmon.lib;user32.lib;uuid.lib;winmm.lib;winspool.lib;OgreMain.lib;OgreOverlay.lib;OgreTerrain.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>nafxcw.lib;libcmt.lib;.\GenesisSDK\lib\genesis.lib;advapi32.lib;comctl32.lib;comdlg32.lib;gdi32.lib;kernel32.lib;oldnames.lib;ole32.lib;oleaut32.lib;oledlg.lib;shell32.lib;urlmon.lib;user32.lib;uuid.lib;winmm.lib;winspool.lib;OgreMain.lib;OgreOverlay.lib;OgreTerrain.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <AssemblyDebug>false</AssemblyDebug>
       <IgnoreSpecificDefaultLibraries>libcmt.lib</IgnoreSpecificDefaultLibraries>
       <SubSystem>Windows</SubSystem>
       <OutputFile>..\..\Bin\Tools\EQ_Fusion.exe</OutputFile>
-      <AdditionalLibraryDirectories>..\..\Anim19_OSDN\Common\lib\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Anim19_OSDN\Common\lib\release;..\..\Anim19_OSDN\Common\Assimp\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -155,6 +155,7 @@
     </ClCompile>
     <ClCompile Include="render.cpp" />
     <ClCompile Include="RotateDialog.cpp" />
+    <ClCompile Include="SB_Assimp.cpp" />
     <ClCompile Include="SB_Camera.cpp" />
     <ClCompile Include="SB_Grid.cpp" />
     <ClCompile Include="SB_Keyboard.cpp" />
@@ -210,6 +211,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionTools.h" />
+    <ClInclude Include="SB_Assimp.h" />
     <ClInclude Include="SB_Camera.h" />
     <ClInclude Include="SB_Grid.h" />
     <ClInclude Include="SB_Keyboard.h" />

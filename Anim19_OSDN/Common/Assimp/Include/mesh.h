@@ -55,6 +55,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 extern "C" {
 #endif
 
+#pragma warning (disable:4351)
+
 // ---------------------------------------------------------------------------
 // Limits. These values are required to match the settings Assimp was
 // compiled against. Therefore, do not redefine them unless you build the
