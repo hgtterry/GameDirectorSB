@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2022 Equity_ME Model Editor -- Inflanite Software W.T.Flanigan H.C.Flanigan
+Copyright (c) 2023 World Editor -- HGT Software W.T.Flanigan H.C.Flanigan
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -22,36 +22,10 @@ distribution.
 */
 
 #pragma once
-
-#include "cimport.h"
-//#include "Importer.hpp"
-//#include "Exporter.hpp"
-#include "PostProcess.h"
-#include "Scene.h"
-#include "DefaultLogger.hpp"
-#include "LogStream.hpp"
-#include "matrix4x4.h"
-
-class SB_Assimp
+class SB_Model
 {
 public:
-	SB_Assimp();
-	~SB_Assimp();
-
-	bool LoadFile(const char* pFile);
-
-	long int SelectedPreset;
-	int mTotalVertices;
-
-protected:
-
-	void logInfo(std::string logString);
-	void logDebug(const char* logString);
-
-	void StoreMeshData(const aiScene* pScene);
-	void GetBasicInfo(const aiScene* pScene);
-	void Get_Group_VertCount(const aiScene* pScene);
-	void Create_MeshGroups(const aiScene* pScene);
-	void LoadTextures();
+	SB_Model(void);
+	~SB_Model(void);
 };
 

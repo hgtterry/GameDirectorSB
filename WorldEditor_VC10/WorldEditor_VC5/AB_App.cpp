@@ -62,7 +62,7 @@ SB_App::SB_App()
 	CLSB_Ogre_Dialog =			nullptr;
 	CLSB_Keyboard =				nullptr;
 	CLSB_Camera =				nullptr;
-
+	CLSB_Assimp =				nullptr;
 
 	AppBackground = NULL;
 	BlackBrush =	NULL;
@@ -185,7 +185,10 @@ bool SB_App::InitApp(void)
 	CLSB_Ogre_Dialog =				new SB_Ogre_Dialog();
 	CLSB_Keyboard =					new SB_Keyboard();
 	CLSB_Camera =					new SB_Camera();
-	
+	CLSB_Assimp =					new SB_Assimp();
+	CLSB_Model =					new SB_Model();
+	CLSB_Model =					nullptr;
+
 	InitCommonControls();
 
 	hInst =NULL;

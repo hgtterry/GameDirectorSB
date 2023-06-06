@@ -26,21 +26,21 @@ distribution.
 #include "SB_Assimp.h"
 
 
-WV_Assimp::WV_Assimp()
+SB_Assimp::SB_Assimp()
 {
 	SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
 	mTotalVertices = 0;
 }
 
 
-WV_Assimp::~WV_Assimp()
+SB_Assimp::~SB_Assimp()
 {
 }
 
 // *************************************************************************
 // *				logInfo:- Terry and Hazel Flanigan 2023		  	 	   *
 // *************************************************************************
-void WV_Assimp::logInfo(std::string logString)
+void SB_Assimp::logInfo(std::string logString)
 {
 	Assimp::DefaultLogger::get()->info(logString.c_str());
 }
@@ -48,7 +48,7 @@ void WV_Assimp::logInfo(std::string logString)
 // *************************************************************************
 // *				logDebug:- Terry and Hazel Flanigan 2023	  	 	   *
 // *************************************************************************
-void WV_Assimp::logDebug(const char* logString)
+void SB_Assimp::logDebug(const char* logString)
 {
 	Assimp::DefaultLogger::get()->debug(logString);
 }
@@ -56,7 +56,7 @@ void WV_Assimp::logDebug(const char* logString)
 // *************************************************************************
 // *			LoadFile:- Terry and Hazel Flanigan 2023		  	 	   *
 // *************************************************************************
-bool WV_Assimp::LoadFile(const char* pFile)
+bool SB_Assimp::LoadFile(const char* pFile)
 {
 
 	//SelectedPreset = GetUserPresets(); // See what user wants
@@ -94,7 +94,7 @@ bool WV_Assimp::LoadFile(const char* pFile)
 // *************************************************************************
 // *			StoreMeshData:- Terry and Hazel Flanigan 2023		   	   *
 // *************************************************************************
-void WV_Assimp::StoreMeshData(const aiScene* pScene)
+void SB_Assimp::StoreMeshData(const aiScene* pScene)
 {
 	//int FaceNum = 0;
 	//int FaceIndexNum = 0;
@@ -173,7 +173,7 @@ void WV_Assimp::StoreMeshData(const aiScene* pScene)
 // *************************************************************************
 // *			GetBasicInfo:- Terry and Hazel Flanigan 2023	  	 	   *
 // *************************************************************************
-void WV_Assimp::GetBasicInfo(const aiScene* pScene)
+void SB_Assimp::GetBasicInfo(const aiScene* pScene)
 {
 
 	/*bool test = pScene->HasMeshes();
@@ -209,7 +209,7 @@ void WV_Assimp::GetBasicInfo(const aiScene* pScene)
 // *************************************************************************
 // *		Get_Group_VertCount:- Terry and Hazel Flanigan 2023		  	   *
 // *************************************************************************
-void WV_Assimp::Get_Group_VertCount(const aiScene* pScene)
+void SB_Assimp::Get_Group_VertCount(const aiScene* pScene)
 {
 	/*int Count = 0;
 	unsigned int t = 0;
@@ -262,7 +262,7 @@ void WV_Assimp::Get_Group_VertCount(const aiScene* pScene)
 // *************************************************************************
 // *	Create_MeshGroups_ByIndex:- Terry and Hazel Flanigan 2023	 	   *
 // *************************************************************************
-void WV_Assimp::Create_MeshGroups(const aiScene* pScene)
+void SB_Assimp::Create_MeshGroups(const aiScene* pScene)
 {
 
 	//int Count = 0;
@@ -323,7 +323,7 @@ void WV_Assimp::Create_MeshGroups(const aiScene* pScene)
 // *************************************************************************
 // *			LoadTextures:- Terry and Hazel Flanigan 2023	 	 	   *
 // *************************************************************************
-void WV_Assimp::LoadTextures()
+void SB_Assimp::LoadTextures()
 {
 	//App->CL_Load_Textures->Load_Textures_Assimp();
 }

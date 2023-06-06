@@ -159,6 +159,7 @@
     <ClCompile Include="SB_Camera.cpp" />
     <ClCompile Include="SB_Grid.cpp" />
     <ClCompile Include="SB_Keyboard.cpp" />
+    <ClCompile Include="SB_Model.cpp" />
     <ClCompile Include="SB_Ogre.cpp" />
     <ClCompile Include="SB_OgreListener.cpp" />
     <ClCompile Include="SB_Ogre_Dialog.cpp" />
@@ -215,6 +216,7 @@
     <ClInclude Include="SB_Camera.h" />
     <ClInclude Include="SB_Grid.h" />
     <ClInclude Include="SB_Keyboard.h" />
+    <ClInclude Include="SB_Model.h" />
     <ClInclude Include="SB_Ogre.h" />
     <ClInclude Include="SB_OgreListener.h" />
     <ClInclude Include="SB_Ogre_Dialog.h" />
