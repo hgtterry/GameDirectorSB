@@ -156,6 +156,18 @@ LRESULT CALLBACK SB_Ogre_Dialog::Ogre_Dialog_Proc(HWND hDlg, UINT message, WPARA
 	case WM_COMMAND:
 	{
 		
+		if (LOWORD(wParam) == ID_CAMERAMODE_FREE)
+		{
+			App->CLSB_Camera->Set_Camera_Mode(Enums::CamDetached);
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == ID_CAMERAMODE_MODEL)
+		{
+			App->CLSB_Camera->Set_Camera_Mode(Enums::CamModel);
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == ID_CAMERA_RESETVIEW)
 		{
 			App->CLSB_Camera->Reset_View();
