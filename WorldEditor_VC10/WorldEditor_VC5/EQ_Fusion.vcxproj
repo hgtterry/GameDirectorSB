@@ -156,6 +156,7 @@
     <ClCompile Include="render.cpp" />
     <ClCompile Include="RotateDialog.cpp" />
     <ClCompile Include="SB_Assimp.cpp" />
+    <ClCompile Include="SB_Base_Group.cpp" />
     <ClCompile Include="SB_Camera.cpp" />
     <ClCompile Include="SB_Grid.cpp" />
     <ClCompile Include="SB_Keyboard.cpp" />
@@ -213,6 +214,7 @@
   <ItemGroup>
     <ClInclude Include="CollisionTools.h" />
     <ClInclude Include="SB_Assimp.h" />
+    <ClInclude Include="SB_Base_Group.h" />
     <ClInclude Include="SB_Camera.h" />
     <ClInclude Include="SB_Grid.h" />
     <ClInclude Include="SB_Keyboard.h" />

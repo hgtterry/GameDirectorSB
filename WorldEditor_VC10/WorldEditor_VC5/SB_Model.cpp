@@ -27,8 +27,60 @@ distribution.
 
 SB_Model::SB_Model(void)
 {
+	VerticeCount = 0;
+	FaceCount = 0;
+	GroupCount = 0;
+	TextureCount = 0;
+	MotionCount = 0;
 }
 
 SB_Model::~SB_Model(void)
 {
+}
+
+// *************************************************************************
+// *		Create_Mesh_Group:- Terry and Hazel Flanigan 2023		  	   *
+// *************************************************************************
+void SB_Model::Create_Mesh_Group(int Index)
+{
+	if (Group[Index] != nullptr)
+	{
+		delete Group[Index];
+		Group[Index] = nullptr;
+	}
+
+	Group[Index] = new Base_Group();
+
+}
+
+// *************************************************************************
+// *		Get_Groupt_Count:- Terry and Hazel Flanigan 2023		   	   *
+// *************************************************************************
+int SB_Model::Get_Groupt_Count()
+{
+	return GroupCount;
+}
+
+// *************************************************************************
+// *			Set_Groupt_Count:- Terry and Hazel Flanigan 2023	 	   *
+// *************************************************************************
+void SB_Model::Set_Groupt_Count(int Count)
+{
+	GroupCount = Count;
+}
+
+// *************************************************************************
+// *		Set_Groupt_Count:- Terry and Hazel Flanigan 2023	  		   *
+// *************************************************************************
+void SB_Model::Set_Texture_Count(int Count)
+{
+	TextureCount = Count;
+}
+
+// *************************************************************************
+// *			Set_Groupt_Count:- Terry and Hazel Flanigan 2023	   	   *
+// *************************************************************************
+void SB_Model::Set_Motion_Count(int Count)
+{
+	MotionCount = Count;
 }

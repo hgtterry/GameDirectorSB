@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2023 World Editor -- HGT Software W.T.Flanigan H.C.Flanigan
+Copyright (c) 2022 Equity_ME Model Editor -- HGT Software W.T.Flanigan H.C.Flanigan
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any damages
@@ -21,27 +21,34 @@ misrepresented as being the original software.
 distribution.
 */
 
+#include "stdafx.h"
 #include "SB_Base_Group.h"
 
-#pragma once
-class SB_Model
+Base_Group::Base_Group()
 {
-public:
-	SB_Model(void);
-	~SB_Model(void);
+	GroupName[0] = 0;
+	MaterialName[0] = 0;
+	Text_FileName[0] = 0;
 
-	Base_Group* Group[5000];
+	Texture_FolderPath[0] = 0;
+	Texture_PathFileName[0] = 0;
 
-	void Create_Mesh_Group(int Index);
-	int Get_Groupt_Count();
-	void Set_Groupt_Count(int Count);
-	void Set_Texture_Count(int Count);
-	void Set_Motion_Count(int Count);
+	Bitmap_Loaded = 0;
 
-	int VerticeCount;
-	int FaceCount;
-	int GroupCount;
-	int TextureCount;
-	int MotionCount;
-};
+	GroupVertCount = 0;
 
+	IndicesCount = 0; // Ogre
+	BoneAssignMentCount = 0; // Ogre
+
+	MaterialIndex = 0;
+	Soil_TextureIndex = 0;
+
+	Base_Bitmap = NULL;
+	//RF_Bitmap = NULL;
+	ListView_Item = NULL;
+}
+
+
+Base_Group::~Base_Group()
+{
+}
