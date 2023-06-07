@@ -147,11 +147,7 @@ void SB_Render::renderQueueEnded(Ogre::uint8 queueGroupId, const String& invocat
 	//}
 
 	PreRender();
-
-
 	Render_Loop();
-
-
 	PostRender();
 }
 // *************************************************************************
@@ -207,6 +203,8 @@ void SB_Render::PostRender()
 // *************************************************************************
 void SB_Render::Render_Loop()
 {
+	//App->Flash_Window();
+
 	GLboolean depthTestEnabled = glIsEnabled(GL_DEPTH_TEST);
 	glDisable(GL_DEPTH_TEST);
 	GLboolean stencilTestEnabled = glIsEnabled(GL_STENCIL_TEST);

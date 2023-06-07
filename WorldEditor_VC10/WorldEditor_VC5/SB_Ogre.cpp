@@ -370,6 +370,13 @@ bool SB_Ogre::createFrameListener(void)
 
 	String RenderSystemName = mSceneMgr->getDestinationRenderSystem()->getName();
 	
+	RenderListener = NULL;
+	if ("OpenGL Rendering Subsystem" == RenderSystemName)
+	{
+		RenderListener = new SB_Render();
+		mSceneMgr->addRenderQueueListener(RenderListener);
+	}
+
 	/*BulletListener = NULL;
 
 	if ("OpenGL Rendering Subsystem" == RenderSystemName)

@@ -26,6 +26,8 @@ distribution.
 #include "SB_OgreListener.h"
 #include "OgreOverlaySystem.h"
 #include <OgreParticleSystem.h>
+
+#include "SB_Render.h"
 //#include "ImguiManager.h"
 
 //#include "WV_Debug_Render.h"
@@ -83,6 +85,7 @@ public:
 	//Ogre::Billboard* sunBillboard;
 
 	SB_OgreListener*	OgreListener;
+	SB_Render*			RenderListener;
 
 	//WV_Debug_Render*	BulletListener;
 
