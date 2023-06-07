@@ -38,6 +38,14 @@ public:
 	void Set_Texture_Count(int Count);
 	void Set_Motion_Count(int Count);
 
+	void SB_Model::Set_Paths(void);
+
+	char FileName[MAX_PATH];
+	char Path_FileName[MAX_PATH];
+	char Model_FolderPath[MAX_PATH];
+	char Texture_FolderPath[MAX_PATH];
+	char JustName[MAX_PATH];
+
 	int VerticeCount;
 	int FaceCount;
 	int GroupCount;

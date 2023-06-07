@@ -32,6 +32,13 @@ SB_Model::SB_Model(void)
 	GroupCount = 0;
 	TextureCount = 0;
 	MotionCount = 0;
+
+
+	strcpy(FileName, "No Model Loaded");
+	strcpy(Path_FileName, "No Model Loaded");
+	strcpy(Model_FolderPath, "No Model Loaded");
+	strcpy(Texture_FolderPath, "No Model Loaded");
+	JustName[0] = 0;
 }
 
 SB_Model::~SB_Model(void)
@@ -83,4 +90,38 @@ void SB_Model::Set_Texture_Count(int Count)
 void SB_Model::Set_Motion_Count(int Count)
 {
 	MotionCount = Count;
+}
+
+// *************************************************************************
+// *			Set_Paths:- Terry and Hazel Flanigan 2023				   *
+// *************************************************************************
+void SB_Model::Set_Paths(void)
+{
+	strcpy(FileName, App->CLSB_Loader->FileName);
+	strcpy(Path_FileName, App->CLSB_Loader->Path_FileName);
+
+	// Get Texture path assumed at this point to be where model is
+	int len1 = strlen(FileName);
+	int len2 = strlen(Path_FileName);
+	strcpy(Model_FolderPath, Path_FileName);
+	Model_FolderPath[len2 - len1] = 0;
+
+	strcpy(Texture_FolderPath, Model_FolderPath); // Back Slash remains
+
+	if (_stricmp(FileName + strlen(FileName) - 5, ".Wepf") == 0)
+	{
+		char JustFileName[MAX_PATH];
+		GetFileTitleA(App->CLSB_Loader->Path_FileName, JustFileName, MAX_PATH);
+
+		strcpy(JustName, JustFileName);
+		int Len = strlen(JustFileName);
+		JustName[Len - 5] = 0;
+	}
+	else
+	{
+		App->Say("Wrong File Type");
+	}
+
+
+	//App->CL_Recent_Files->RecentFileHistory_Update();
 }

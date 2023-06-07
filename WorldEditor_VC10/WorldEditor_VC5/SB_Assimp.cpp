@@ -72,15 +72,16 @@ bool SB_Assimp::LoadFile(const char* pFile)
 	}
 	else
 	{
+		
 		GetBasicInfo(scene);
-
+		
 		Create_MeshGroups(scene);
-
 		Get_Group_VertCount(scene);
-
 		StoreMeshData(scene);
-
-		LoadTextures();
+		 
+		
+		Debug
+		//LoadTextures();
 
 		//App->CL_Scene->Set_BondingBox_Model(1); // Create
 

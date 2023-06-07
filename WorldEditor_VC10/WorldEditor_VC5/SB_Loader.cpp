@@ -90,7 +90,6 @@ void SB_Loader::Load_File_Wepf()
 {
 	//App->CL_Model->Clear_Model_And_Reset();
 
-
 	App->CLSB_Assimp->SelectedPreset = 8 + 8388608+64 + aiProcess_PreTransformVertices;
 
 	bool Test = App->CLSB_Assimp->LoadFile(WE_Path_FileName);
@@ -100,8 +99,8 @@ void SB_Loader::Load_File_Wepf()
 		return;
 	}
 
-
-//	App->CLSB_Model->Set_Paths();
+	return;
+	App->CLSB_Model->Set_Paths();
 
 	bool test = LoadTextures_TXL();
 	if (test == 0)
