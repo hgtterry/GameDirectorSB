@@ -801,6 +801,7 @@
 #define ID_CAMERAMODE_FREE              33058
 #define ID_CAMERAMODE_FIRST             33059
 #define ID_CAMERA_RESETVIEW             33060
+#define ID_FILE_WORLDEDITORPROJECT      33061
 #define IDS_HELPINFORMATION             38000
 
 // Next default values for new objects
@@ -809,7 +810,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        275
-#define _APS_NEXT_COMMAND_VALUE         33061
+#define _APS_NEXT_COMMAND_VALUE         33062
 #define _APS_NEXT_CONTROL_VALUE         1466
 #define _APS_NEXT_SYMED_VALUE           112
 #endif

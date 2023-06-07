@@ -1411,7 +1411,7 @@ IDC_EYEDROPPER          CURSOR                  "res\\cursor1.cur"
 
 STRINGTABLE
 BEGIN
-    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.26 - [06-06-23] -10"
+    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.26 - [07-06-23] -10"
     IDR_FUSIONTYPE          "Genesis3D World Editor\nWorld\nWorld\nWorld Files (*.3dt)\n.3dt\nWorldEditor.Document\nGenesis3D World Editor Document"
     IDS_LOAD_WARNING        "Some entities or brushes did not load properly, see console for details."
     IDS_NEWGROUP            "Group Name"
@@ -2242,7 +2242,10 @@ END
 
 IDR_MENUSB MENU
 BEGIN
-    MENUITEM "File",                        ID_FILE
+    POPUP "File"
+    BEGIN
+        MENUITEM "World Editor Project .Wepf...", ID_FILE_WORLDEDITORPROJECT
+    END
     POPUP "Camera"
     BEGIN
         MENUITEM "Model",                       ID_CAMERAMODE_MODEL
