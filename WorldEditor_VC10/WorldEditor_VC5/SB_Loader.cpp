@@ -99,7 +99,8 @@ void SB_Loader::Load_File_Wepf()
 		return;
 	}
 
-	return;
+	
+	
 	App->CLSB_Model->Set_Paths();
 
 	bool test = LoadTextures_TXL();
@@ -110,6 +111,9 @@ void SB_Loader::Load_File_Wepf()
 	}
 
 	Set_Equity();
+
+	Debug
+	return;
 
 	Adjust();
 
@@ -152,15 +156,15 @@ void SB_Loader::Adjust()
 // *************************************************************************
 void SB_Loader::Set_Equity(void)
 {
-//	App->CL_Scene->World_Loaded = 1;
+	App->CLSB_Model->Model_Loaded = 1;
 
 	App->CLSB_Grid->Reset_View();
 
 	char TitleBar[260];
 	strcpy(TitleBar, "World Viewer");
 	strcat(TitleBar, "    ");
-//	strcat(TitleBar, App->CL_Scene->Path_FileName);
-	SetWindowText(App->MainHwnd, TitleBar);
+	strcat(TitleBar, App->CLSB_Model->Path_FileName);
+	SetWindowText(App->CLSB_Ogre_Dialog->TestHwnd, TitleBar);
 
 	//Set_Equity();
 	Ogre::Root::getSingletonPtr()->renderOneFrame();
@@ -308,7 +312,7 @@ bool SB_Loader::AddTexture(geVFile* BaseFile, const char* Path, int GroupIndex)
 
 	if (geBitmap_HasAlpha(Bitmap))
 	{
-//		App->CLSB_Model->Group[GroupIndex]->RF_Bitmap = Bitmap;
+		App->CLSB_Model->Group[GroupIndex]->RF_Bitmap = Bitmap;
 	}
 
 
@@ -322,18 +326,7 @@ bool SB_Loader::AddTexture(geVFile* BaseFile, const char* Path, int GroupIndex)
 
 	App->CLSB_Model->Group[GroupIndex]->Base_Bitmap = hbm;
 
-	//char TempTextureFile_BMP[1024];
-	//strcpy(TempTextureFile_BMP, App->EquityDirecory_FullPath);
-	//strcat(TempTextureFile_BMP, "\\");
-	//strcat(TempTextureFile_BMP, "TextureLoad.bmp");
-
-	//App->CL_Textures->Genesis_WriteToBmp(Bitmap, TempTextureFile_BMP);
-
-	//App->CL_Textures->Soil_Load_Texture(App->CL_Ogre->RenderListener->g_Texture, TempTextureFile_BMP, GroupIndex);
-
 	geVFile_Close(File);
-
-	//DeleteFile((LPCTSTR)TempTextureFile_BMP);
 
 	return TRUE;
 }
@@ -599,7 +592,7 @@ void SB_Loader::Rotate_Z_Model(float Z)
 			Count++;
 		}
 
-//		App->CLSB_Model->Set_BondingBox_Model(0);
+		App->CLSB_Model->Set_BondingBox_Model(0);
 	}
 }
 
@@ -659,7 +652,7 @@ void SB_Loader::Rotate_X_Model(float X)
 			Count++;
 		}
 
-//		App->CLSB_Model->Set_BondingBox_Model(0);
+		App->CLSB_Model->Set_BondingBox_Model(0);
 	}
 }
 
@@ -691,7 +684,7 @@ void SB_Loader::Centre_Model_Mid(void)
 			Count++;
 		}
 
-//		App->CLSB_Model->Set_BondingBox_Model(0);
+		App->CLSB_Model->Set_BondingBox_Model(0);
 
 	}
 }
@@ -721,6 +714,6 @@ void SB_Loader::Translate_Model(float X, float Y, float Z)
 			Count++;
 		}
 
-//		App->CLSB_Model->Set_BondingBox_Model(0);
+		App->CLSB_Model->Set_BondingBox_Model(0);
 	}
 }

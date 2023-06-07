@@ -23,6 +23,14 @@ distribution.
 
 #include "SB_Base_Group.h"
 
+typedef struct AABB_Type {
+	vertex_type BB_Max[1];
+	vertex_type BB_Min[1];
+	vertex_type Size[1];
+	vertex_type Centre[1];
+	float radius;
+} AABB_Type;
+
 #pragma once
 class SB_Model
 {
@@ -38,13 +46,18 @@ public:
 	void Set_Texture_Count(int Count);
 	void Set_Motion_Count(int Count);
 
-	void SB_Model::Set_Paths(void);
+	void Set_Paths(void);
+	void Set_BondingBox_Model(bool Create);
 
 	char FileName[MAX_PATH];
 	char Path_FileName[MAX_PATH];
 	char Model_FolderPath[MAX_PATH];
 	char Texture_FolderPath[MAX_PATH];
 	char JustName[MAX_PATH];
+
+	AABB_Type* S_BoundingBox[1];
+
+	bool Model_Loaded;
 
 	int VerticeCount;
 	int FaceCount;

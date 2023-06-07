@@ -78,12 +78,9 @@ bool SB_Assimp::LoadFile(const char* pFile)
 		Create_MeshGroups(scene);
 		Get_Group_VertCount(scene);
 		StoreMeshData(scene);
-		 
-		
-		Debug
-		//LoadTextures();
+		LoadTextures();
 
-		//App->CL_Scene->Set_BondingBox_Model(1); // Create
+		App->CLSB_Model->Set_BondingBox_Model(1); // Create
 
 	}
 

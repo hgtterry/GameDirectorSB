@@ -74,7 +74,7 @@ public:
 	int BoneAssignMentCount; // Ogre
 
 	HBITMAP Base_Bitmap;
-	//geBitmap* RF_Bitmap;
+	geBitmap* RF_Bitmap;
 	
 	HTREEITEM ListView_Item;
 };

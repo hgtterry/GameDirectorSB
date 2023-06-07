@@ -48,6 +48,8 @@
 #include <afxcmn.h>			// MFC support for Windows 95 Common Controls
 #endif // _AFX_NO_AFXCMN_SUPPORT
 
+#include "Genesis.h"
+
 #include "Ogre.h"
 #include "OgreConfigFile.h"
 #include "OgreStringConverter.h"
