@@ -40,7 +40,7 @@ SB_Render::SB_Render()
 	Hair_1RotZ = 0;
 
 
-	ShowTextured = 0;
+	ShowTextured = 1;
 	ShowFaces = 0;
 	ShowBones = 0;
 	ShowPoints = 0;

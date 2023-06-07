@@ -70,6 +70,7 @@ distribution.
 #include "SB_Model.h"
 #include "SB_Loader.h"
 #include "SB_Ini.h"
+#include "SB_Load_Textures.h"
 
 class SB_App
 {
@@ -117,7 +118,7 @@ public:
 	SB_Model*					CLSB_Model;
 	SB_Loader*					CLSB_Loader;
 	SB_Ini*						CLSB_Ini;
-
+	SB_Load_Textures*			CLSB_Load_Textures;
 
 	bool InitApp(void);
 	void InitMFC(void);

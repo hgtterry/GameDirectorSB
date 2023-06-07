@@ -66,6 +66,7 @@ SB_App::SB_App()
 	CLSB_Model =				nullptr;
 	CLSB_Loader =				nullptr;
 	CLSB_Ini =					nullptr;
+	CLSB_Load_Textures =		nullptr;
 
 	AppBackground = NULL;
 	BlackBrush =	NULL;
@@ -192,6 +193,7 @@ bool SB_App::InitApp(void)
 	CLSB_Model =					new SB_Model();
 	CLSB_Loader =					new SB_Loader();
 	CLSB_Ini =						new SB_Ini();
+	CLSB_Load_Textures =			new SB_Load_Textures();
 
 	InitCommonControls();
 

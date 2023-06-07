@@ -32,7 +32,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Test|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>.;.\GenesisSDK\include;.\TypeParser;..\..\Anim19_OSDN\Common\include\OGRE;..\..\Anim19_OSDN\Common\include\OGRE\Terrain;..\..\Anim19_OSDN\Common\include\OGRE\Overlay;..\..\Anim19_OSDN\Common\Assimp\Include;..\..\Anim19_OSDN\Common\Genesis\Include2;..\..\Anim19_OSDN\Common\Genesis\Gen2;..\..\Anim19_OSDN\Common\Genesis\Gen;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;.\GenesisSDK\include;.\TypeParser;..\..\Anim19_OSDN\Common\include\OGRE;..\..\Anim19_OSDN\Common\include\OGRE\Terrain;..\..\Anim19_OSDN\Common\include\OGRE\Overlay;..\..\Anim19_OSDN\Common\Assimp\Include;..\..\Anim19_OSDN\Common\Genesis\Include2;..\..\Anim19_OSDN\Common\Genesis\Gen2;..\..\Anim19_OSDN\Common\Genesis\Gen;..\..\Anim19_OSDN\Common\Devil\include\IL;..\..\Anim19_OSDN\Common\Soil2\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>MaxSpeed</Optimization>
       <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
@@ -46,15 +46,16 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <AdditionalOptions>-Zm128 %(AdditionalOptions)</AdditionalOptions>
       <IntrinsicFunctions>true</IntrinsicFunctions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>nafxcw.lib;libcmt.lib;.\GenesisSDK\lib\genesis.lib;advapi32.lib;comctl32.lib;comdlg32.lib;gdi32.lib;kernel32.lib;oldnames.lib;ole32.lib;oleaut32.lib;oledlg.lib;shell32.lib;urlmon.lib;user32.lib;uuid.lib;winmm.lib;winspool.lib;OgreMain.lib;OgreOverlay.lib;OgreTerrain.lib;opengl32.lib;glu32.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>nafxcw.lib;libcmt.lib;.\GenesisSDK\lib\genesis.lib;advapi32.lib;comctl32.lib;comdlg32.lib;gdi32.lib;kernel32.lib;oldnames.lib;ole32.lib;oleaut32.lib;oledlg.lib;shell32.lib;urlmon.lib;user32.lib;uuid.lib;winmm.lib;winspool.lib;OgreMain.lib;OgreOverlay.lib;OgreTerrain.lib;opengl32.lib;glu32.lib;assimp-vc140-mt.lib;DevIL.lib;ILU.lib;ILUT.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <AssemblyDebug>false</AssemblyDebug>
-      <IgnoreSpecificDefaultLibraries>libcmt.lib</IgnoreSpecificDefaultLibraries>
+      <IgnoreSpecificDefaultLibraries>nafxcw.lib;Libcmt.lib</IgnoreSpecificDefaultLibraries>
       <SubSystem>Windows</SubSystem>
       <OutputFile>..\..\Bin\Tools\EQ_Fusion.exe</OutputFile>
-      <AdditionalLibraryDirectories>..\..\Anim19_OSDN\Common\lib\release;..\..\Anim19_OSDN\Common\Assimp\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Anim19_OSDN\Common\lib\release;..\..\Anim19_OSDN\Common\Assimp\Lib;..\..\Anim19_OSDN\Common\Devil\lib;..\..\Anim19_OSDN\Common\Soil2\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -162,6 +163,7 @@
     <ClCompile Include="SB_Ini.cpp" />
     <ClCompile Include="SB_Keyboard.cpp" />
     <ClCompile Include="SB_Loader.cpp" />
+    <ClCompile Include="SB_Load_Textures.cpp" />
     <ClCompile Include="SB_Model.cpp" />
     <ClCompile Include="SB_Ogre.cpp" />
     <ClCompile Include="SB_OgreListener.cpp" />
@@ -223,6 +225,7 @@
     <ClInclude Include="SB_Ini.h" />
     <ClInclude Include="SB_Keyboard.h" />
     <ClInclude Include="SB_Loader.h" />
+    <ClInclude Include="SB_Load_Textures.h" />
     <ClInclude Include="SB_Model.h" />
     <ClInclude Include="SB_Ogre.h" />
     <ClInclude Include="SB_OgreListener.h" />
