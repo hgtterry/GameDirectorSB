@@ -48,25 +48,25 @@ SB_Loader::~SB_Loader(void)
 // *************************************************************************
 bool SB_Loader::Read_Project_File(char* Path_And_File)
 {
-	/*char chr_Tag1[MAX_PATH]{ 0 };
-	char chr_Tag2[MAX_PATH]{ 0 };
+	char chr_Tag1[MAX_PATH];
+	char chr_Tag2[MAX_PATH];
 
 	chr_Tag1[0] = 0;
 	chr_Tag2[0] = 0;
 
-	App->CL_Ini->SetPathName(Path_And_File);
+	App->CLSB_Ini->SetPathName(Path_And_File);
 
-	App->CL_Ini->GetString("World_Data", "Pref_WE_JustFileName", chr_Tag1, MAX_PATH);
+	App->CLSB_Ini->GetString("World_Data", "Pref_WE_JustFileName", chr_Tag1, MAX_PATH);
 	strcpy(WE_JustFileName, chr_Tag1);
 
-	App->CL_Ini->GetString("World_Data", "G3ds_Path_FileName", chr_Tag1, MAX_PATH);
+	App->CLSB_Ini->GetString("World_Data", "G3ds_Path_FileName", chr_Tag1, MAX_PATH);
 	strcpy(WE_Path_FileName, chr_Tag1);
 
-	App->CL_Ini->GetString("World_Data", "Txl_Path_FileName", chr_Tag2, MAX_PATH);
+	App->CLSB_Ini->GetString("World_Data", "Txl_Path_FileName", chr_Tag2, MAX_PATH);
 	strcpy(Txl_Path_FileName, chr_Tag2);
 
 
-	if (App->Is_WorldEditor == 1)
+	/*if (App->Is_WorldEditor == 1)
 	{
 		Ogre::Vector4 V4 = Ogre::Vector4::ZERO;
 

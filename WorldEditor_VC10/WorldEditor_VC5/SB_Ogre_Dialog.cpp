@@ -158,14 +158,14 @@ LRESULT CALLBACK SB_Ogre_Dialog::Ogre_Dialog_Proc(HWND hDlg, UINT message, WPARA
 		// File
 		if (LOWORD(wParam) == ID_FILE_WORLDEDITORPROJECT)
 		{
-			/*int Result = App->CL_Loader->Open_File_Model("GDSB File   *.Wepf\0*.Wepf\0", "GDSB File", NULL);
+			int Result = App->CLSB_Loader->Open_File_Model("GDSB File   *.Wepf\0*.Wepf\0", "GDSB File", NULL);
 			if (Result == 0)
 			{
 				return 1;
-			}*/
+			}
 
-			/*App->CL_Loader->Read_Project_File(App->CL_Loader->Path_FileName);
-			App->CL_Loader->Load_File_Wepf();*/
+			App->CLSB_Loader->Read_Project_File(App->CLSB_Loader->Path_FileName);
+			App->CLSB_Loader->Load_File_Wepf();
 
 			return TRUE;
 		}

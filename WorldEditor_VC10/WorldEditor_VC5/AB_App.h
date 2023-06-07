@@ -68,6 +68,8 @@ distribution.
 #include "SB_Camera.h"
 #include "SB_Assimp.h"
 #include "SB_Model.h"
+#include "SB_Loader.h"
+#include "SB_Ini.h"
 
 class SB_App
 {
@@ -113,6 +115,9 @@ public:
 	SB_Camera*					CLSB_Camera;
 	SB_Assimp*					CLSB_Assimp;
 	SB_Model*					CLSB_Model;
+	SB_Loader*					CLSB_Loader;
+	SB_Ini*						CLSB_Ini;
+
 
 	bool InitApp(void);
 	void InitMFC(void);

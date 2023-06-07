@@ -297,6 +297,9 @@
     <ClCompile Include="SB_Loader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SB_Ini.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="FUSION.rc">
@@ -593,6 +596,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SB_Loader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SB_Ini.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
