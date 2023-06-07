@@ -112,9 +112,6 @@ void SB_Loader::Load_File_Wepf()
 
 	Set_Equity();
 
-	Debug
-	return;
-
 	Adjust();
 
 	Ogre::Root::getSingletonPtr()->renderOneFrame();
@@ -540,14 +537,14 @@ LRESULT CALLBACK SB_Loader::Groups_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 // *************************************************************************
 void SB_Loader::Rotate_Z_Model(float Z)
 {
-//	if (App->CL_Scene->World_Loaded == 1)
+	if (App->CLSB_Model->Model_Loaded == 1)
 	{
 
 		Ogre::Vector3 Centre;
 
-//		Centre.x = App->CLSB_Model->S_BoundingBox[0]->Centre[0].x;
-//		Centre.y = App->CLSB_Model->S_BoundingBox[0]->Centre[0].y;
-//		Centre.z = App->CLSB_Model->S_BoundingBox[0]->Centre[0].z;
+		Centre.x = App->CLSB_Model->S_BoundingBox[0]->Centre[0].x;
+		Centre.y = App->CLSB_Model->S_BoundingBox[0]->Centre[0].y;
+		Centre.z = App->CLSB_Model->S_BoundingBox[0]->Centre[0].z;
 
 		Ogre::Vector3 Rotate;
 		Rotate.x = 0;
@@ -601,14 +598,14 @@ void SB_Loader::Rotate_Z_Model(float Z)
 // *************************************************************************
 void SB_Loader::Rotate_X_Model(float X)
 {
-//	if (App->CLSB_Model->World_Loaded == 1)
+	if (App->CLSB_Model->Model_Loaded == 1)
 	{
 
 		Ogre::Vector3 Centre;
 
-//		Centre.x = App->CLSB_Model->S_BoundingBox[0]->Centre[0].x;
-//		Centre.y = App->CLSB_Model->S_BoundingBox[0]->Centre[0].y;
-//		Centre.z = App->CLSB_Model->S_BoundingBox[0]->Centre[0].z;
+		Centre.x = App->CLSB_Model->S_BoundingBox[0]->Centre[0].x;
+		Centre.y = App->CLSB_Model->S_BoundingBox[0]->Centre[0].y;
+		Centre.z = App->CLSB_Model->S_BoundingBox[0]->Centre[0].z;
 
 		Ogre::Vector3 Rotate;
 		Rotate.x = X;
@@ -661,11 +658,11 @@ void SB_Loader::Rotate_X_Model(float X)
 // *************************************************************************
 void SB_Loader::Centre_Model_Mid(void)
 {
-//	if (App->CLSB_Model->World_Loaded == 1)
+	if (App->CLSB_Model->Model_Loaded == 1)
 	{
-//		float X = -App->CLSB_Model->S_BoundingBox[0]->Centre[0].x;
-//		float Y = -App->CLSB_Model->S_BoundingBox[0]->Centre[0].y;
-//		float Z = -App->CLSB_Model->S_BoundingBox[0]->Centre[0].z;
+		float X = -App->CLSB_Model->S_BoundingBox[0]->Centre[0].x;
+		float Y = -App->CLSB_Model->S_BoundingBox[0]->Centre[0].y;
+		float Z = -App->CLSB_Model->S_BoundingBox[0]->Centre[0].z;
 
 		int Count = 0;
 		int VertCount = 0;
@@ -676,10 +673,10 @@ void SB_Loader::Centre_Model_Mid(void)
 			VertCount = 0;
 			while (VertCount < App->CLSB_Model->Group[Count]->GroupVertCount)
 			{
-				//App->CLSB_Model->Group[Count]->vertex_Data[VertCount].x += X;
-				//App->CLSB_Model->Group[Count]->vertex_Data[VertCount].y += Y;
-				//App->CLSB_Model->Group[Count]->vertex_Data[VertCount].z += Z;
-				//VertCount++;
+				App->CLSB_Model->Group[Count]->vertex_Data[VertCount].x += X;
+				App->CLSB_Model->Group[Count]->vertex_Data[VertCount].y += Y;
+				App->CLSB_Model->Group[Count]->vertex_Data[VertCount].z += Z;
+				VertCount++;
 			}
 			Count++;
 		}
@@ -694,7 +691,7 @@ void SB_Loader::Centre_Model_Mid(void)
 // *************************************************************************
 void SB_Loader::Translate_Model(float X, float Y, float Z)
 {
-//	if (App->CLSB_Model->World_Loaded == 1)
+	if (App->CLSB_Model->Model_Loaded == 1)
 	{
 		int Count = 0;
 		int VertCount = 0;

@@ -74,8 +74,10 @@ bool SB_Assimp::LoadFile(const char* pFile)
 	{
 		
 		GetBasicInfo(scene);
-		
+		Debug
 		Create_MeshGroups(scene);
+
+		Debug
 		Get_Group_VertCount(scene);
 		StoreMeshData(scene);
 		LoadTextures();
@@ -84,6 +86,7 @@ bool SB_Assimp::LoadFile(const char* pFile)
 
 	}
 
+	
 	aiReleaseImport(scene);
 
 	return 1;
