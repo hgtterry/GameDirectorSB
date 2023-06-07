@@ -189,6 +189,36 @@ LRESULT CALLBACK SB_Ogre_Dialog::Ogre_Dialog_Proc(HWND hDlg, UINT message, WPARA
 			return TRUE;
 		}
 
+		// Render
+		if (LOWORD(wParam) == ID_RENDER_CROSSHAIR)
+		{
+			if (App->CLSB_Ogre->RenderListener->Show_Crosshair == 1)
+			{
+				App->CLSB_Ogre->RenderListener->Show_Crosshair = 0;
+			}
+			else
+			{
+				App->CLSB_Ogre->RenderListener->Show_Crosshair = 1;
+			}
+			
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == ID_RENDER_FACES)
+		{
+			if (App->CLSB_Ogre->RenderListener->ShowFaces == 1)
+			{
+				App->CLSB_Ogre->RenderListener->ShowFaces = 0;
+			}
+			else
+			{
+				App->CLSB_Ogre->RenderListener->ShowFaces = 1;
+			}
+
+			return TRUE;
+		}
+
+
 		if (LOWORD(wParam) == IDC_TEST)
 		{
 			//App->CL_Ogre->OgreListener->StopOgre = 1;

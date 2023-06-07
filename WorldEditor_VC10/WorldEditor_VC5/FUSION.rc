@@ -2254,6 +2254,11 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "Reset View",                  ID_CAMERA_RESETVIEW
     END
+    POPUP "Render"
+    BEGIN
+        MENUITEM "Cross Hair",                  ID_RENDER_CROSSHAIR
+        MENUITEM "Faces",                       ID_RENDER_FACES
+    END
 END
 
 

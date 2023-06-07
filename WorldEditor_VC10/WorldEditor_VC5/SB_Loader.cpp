@@ -117,6 +117,8 @@ void SB_Loader::Load_File_Wepf()
 	Ogre::Root::getSingletonPtr()->renderOneFrame();
 	Ogre::Root::getSingletonPtr()->renderOneFrame();
 
+	App->CLSB_Model->Model_Type = Enums::LoadedFile_Assimp;
+
 	//App->CL_Recent_Files->RecentFile_Projects_History_Update();*/
 
 	//App->CL_Export_Ogre->Export_AssimpToOgre();
