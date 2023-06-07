@@ -28,7 +28,7 @@ distribution.
 
 #include "RAM.h"
 
-WV_Loader::WV_Loader(void)
+SB_Loader::SB_Loader(void)
 {
 	FileName[0] = 0;
 	Path_FileName[0] = 0;
@@ -39,14 +39,14 @@ WV_Loader::WV_Loader(void)
 	NameCount = 0;
 }
 
-WV_Loader::~WV_Loader(void)
+SB_Loader::~SB_Loader(void)
 {
 }
 
 // *************************************************************************
 // *			Load_Project_File:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
-bool WV_Loader::Read_Project_File(char* Path_And_File)
+bool SB_Loader::Read_Project_File(char* Path_And_File)
 {
 	/*char chr_Tag1[MAX_PATH]{ 0 };
 	char chr_Tag2[MAX_PATH]{ 0 };
@@ -86,7 +86,7 @@ bool WV_Loader::Read_Project_File(char* Path_And_File)
 // *************************************************************************
 // *			Load_File_Wepf:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-void WV_Loader::Load_File_Wepf()
+void SB_Loader::Load_File_Wepf()
 {
 	//App->CL_Model->Clear_Model_And_Reset();
 
@@ -135,7 +135,7 @@ void WV_Loader::Load_File_Wepf()
 // *************************************************************************
 // *						Adjust Terry Flanigan						   *
 // *************************************************************************
-void WV_Loader::Adjust()
+void SB_Loader::Adjust()
 {
 	Rotate_Z_Model(90);
 	//Rotate_X_Model(-90);
@@ -151,7 +151,7 @@ void WV_Loader::Adjust()
 // *************************************************************************
 // *						Set_Equity Terry Flanigan					   *
 // *************************************************************************
-void WV_Loader::Set_Equity(void)
+void SB_Loader::Set_Equity(void)
 {
 //	App->CL_Scene->World_Loaded = 1;
 
@@ -170,7 +170,7 @@ void WV_Loader::Set_Equity(void)
 // *************************************************************************
 // *		LoadTextures_TXL:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-bool WV_Loader::LoadTextures_TXL()
+bool SB_Loader::LoadTextures_TXL()
 {
 	geVFile* VFS = NULL;
 	geVFile_Finder* Finder = NULL;
@@ -218,7 +218,7 @@ bool WV_Loader::LoadTextures_TXL()
 // *************************************************************************
 // *	  	Copy_Texture_Names:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-void WV_Loader::Copy_Texture_Names()
+void SB_Loader::Copy_Texture_Names()
 {
 	int Count = 0;
 	int GroupCount = App->CLSB_Model->GroupCount;
@@ -234,7 +234,7 @@ void WV_Loader::Copy_Texture_Names()
 // *************************************************************************
 // *	  	Check_for_Textures:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-int WV_Loader::Check_for_Textures(geVFile* BaseFile)
+int SB_Loader::Check_for_Textures(geVFile* BaseFile)
 {
 	int Count = 0;
 	int GroupCount = App->CLSB_Model->GroupCount;
@@ -272,7 +272,7 @@ int WV_Loader::Check_for_Textures(geVFile* BaseFile)
 // *************************************************************************
 // *			AddTexture:- Terry and Hazel Flanigan 2023		  		   *
 // *************************************************************************
-bool WV_Loader::AddTexture(geVFile* BaseFile, const char* Path, int GroupIndex)
+bool SB_Loader::AddTexture(geVFile* BaseFile, const char* Path, int GroupIndex)
 {
 
 	geBitmap* Bitmap;
@@ -342,7 +342,7 @@ bool WV_Loader::AddTexture(geVFile* BaseFile, const char* Path, int GroupIndex)
 // *************************************************************************
 // *	CreateHBitmapFromgeBitmap:- Terry and Hazel Flanigan 2023 		   *
 // *************************************************************************
-HBITMAP WV_Loader::CreateHBitmapFromgeBitmap(geBitmap* Bitmap, HDC hdc)
+HBITMAP SB_Loader::CreateHBitmapFromgeBitmap(geBitmap* Bitmap, HDC hdc)
 {
 	geBitmap* Lock;
 	gePixelFormat Format;
@@ -429,7 +429,7 @@ HBITMAP WV_Loader::CreateHBitmapFromgeBitmap(geBitmap* Bitmap, HDC hdc)
 // *************************************************************************
 // *	  		Check_in_Txl:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-bool WV_Loader::Check_in_Txl(char* FileName)
+bool SB_Loader::Check_in_Txl(char* FileName)
 {
 	int loop = 0;
 	int TxlNameCount = NameCount;
@@ -452,7 +452,7 @@ bool WV_Loader::Check_in_Txl(char* FileName)
 // *************************************************************************
 // *				OpenFile:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-bool WV_Loader::Open_File_Model(const char* Extension, const char* Title, const char* StartDirectory)
+bool SB_Loader::Open_File_Model(const char* Extension, const char* Title, const char* StartDirectory)
 {
 
 	FileName[0] = 0;
@@ -488,7 +488,7 @@ bool WV_Loader::Open_File_Model(const char* Extension, const char* Title, const 
 // *************************************************************************
 // *			Start_Groups:- Terry and Hazel Flanigan 2023	  		   *
 // *************************************************************************
-bool WV_Loader::Start_Groups_Dialog()
+bool SB_Loader::Start_Groups_Dialog()
 {
 //	RightGroups_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_RIGHTGROUPS, App->MainHwnd, (DLGPROC)Groups_Proc);
 	ShowWindow(RightGroups_Hwnd, 0);
@@ -498,7 +498,7 @@ bool WV_Loader::Start_Groups_Dialog()
 // *************************************************************************
 // *			Groups_Proc:- Terry and Hazel Flanigan 2023		  		   *
 // *************************************************************************
-LRESULT CALLBACK WV_Loader::Groups_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK SB_Loader::Groups_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
@@ -546,7 +546,7 @@ LRESULT CALLBACK WV_Loader::Groups_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 // *************************************************************************
 // *	  				Rotate_Z_Model Terry Bernie						   *
 // *************************************************************************
-void WV_Loader::Rotate_Z_Model(float Z)
+void SB_Loader::Rotate_Z_Model(float Z)
 {
 //	if (App->CL_Scene->World_Loaded == 1)
 	{
@@ -607,7 +607,7 @@ void WV_Loader::Rotate_Z_Model(float Z)
 // *************************************************************************
 // *	  					Rotate_X_Model Terry Bernie					   *
 // *************************************************************************
-void WV_Loader::Rotate_X_Model(float X)
+void SB_Loader::Rotate_X_Model(float X)
 {
 //	if (App->CLSB_Model->World_Loaded == 1)
 	{
@@ -667,7 +667,7 @@ void WV_Loader::Rotate_X_Model(float X)
 // *************************************************************************
 // *	  				Centre_Model_Mid Terry Bernie					   *
 // *************************************************************************
-void WV_Loader::Centre_Model_Mid(void)
+void SB_Loader::Centre_Model_Mid(void)
 {
 //	if (App->CLSB_Model->World_Loaded == 1)
 	{
@@ -700,7 +700,7 @@ void WV_Loader::Centre_Model_Mid(void)
 // *************************************************************************
 // *	  				Translate_Model Terry Bernie					   *
 // *************************************************************************
-void WV_Loader::Translate_Model(float X, float Y, float Z)
+void SB_Loader::Translate_Model(float X, float Y, float Z)
 {
 //	if (App->CLSB_Model->World_Loaded == 1)
 	{

@@ -25,11 +25,11 @@ distribution.
 
 typedef struct Char_type2 { char Name[256]; }Char_type2;
 
-class WV_Loader
+class SB_Loader
 {
 public:
-	WV_Loader(void);
-	~WV_Loader(void);
+	SB_Loader(void);
+	~SB_Loader(void);
 
 	bool Start_Groups_Dialog();
 	bool Open_File_Model(const char* Extension, const char* Title, const char* StartDirectory);
