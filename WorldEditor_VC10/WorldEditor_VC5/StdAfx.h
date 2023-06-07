@@ -65,6 +65,9 @@
 #include "OgreVertexIndexData.h"
 #include "OgreResourceGroupManager.h"
 
+#include <gl/gl.h>
+#include <gl/glu.h>
+
 namespace Enums
 {
 	enum Camera
@@ -74,6 +77,15 @@ namespace Enums
 		CamDetached = 2,
 		CamThird = 3,
 		CamModel = 4
+	};
+
+	enum LoadedFile
+	{
+		LoadedFile_None = 0,
+		LoadedFile_Actor = 1,
+		LoadedFile_Assimp = 2,
+		LoadedFile_Ogre = 3,
+		LoadedFile_STL = 4
 	};
 }
 // re-enable warnings except 4514

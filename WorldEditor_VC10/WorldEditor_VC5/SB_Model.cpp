@@ -34,6 +34,7 @@ SB_Model::SB_Model(void)
 	MotionCount = 0;
 
 	Model_Loaded = 0;
+	Model_Type = Enums::LoadedFile_None;
 
 	strcpy(FileName, "No Model Loaded");
 	strcpy(Path_FileName, "No Model Loaded");

@@ -64,5 +64,6 @@ public:
 	int GroupCount;
 	int TextureCount;
 	int MotionCount;
+	int Model_Type;
 };
 
