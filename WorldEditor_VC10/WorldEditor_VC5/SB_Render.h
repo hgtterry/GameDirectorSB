@@ -25,11 +25,11 @@ distribution.
 
 #include "Ogre.h"
 
-class ME_Render : public RenderQueueListener
+class SB_Render : public RenderQueueListener
 {
 public:
-	ME_Render();
-	~ME_Render();
+	SB_Render();
+	~SB_Render();
 
 	void Reset_Class(void);
 

@@ -26,7 +26,7 @@ distribution.
 #include "SB_Render.h"
 
 
-ME_Render::ME_Render()
+SB_Render::SB_Render()
 {
 	RX = 0;
 	RZ = 0;
@@ -57,14 +57,14 @@ ME_Render::ME_Render()
 }
 
 
-ME_Render::~ME_Render()
+SB_Render::~SB_Render()
 {
 }
 
 // *************************************************************************
 // *						Reset_Class Terry Bernie					   *
 // *************************************************************************
-void ME_Render::Reset_Class(void)
+void SB_Render::Reset_Class(void)
 {
 	RX = 0;
 	RZ = 0;
@@ -95,7 +95,7 @@ void ME_Render::Reset_Class(void)
 // *************************************************************************
 // *						TestLight Terry Bernie						   *
 // *************************************************************************
-void ME_Render::TestLight(void)
+void SB_Render::TestLight(void)
 {
 	//glEnable(GL_LIGHTING);
 	//glEnable(GL_LIGHT0);
@@ -118,13 +118,14 @@ void ME_Render::TestLight(void)
 // *************************************************************************
 // *					renderQueueStarted Terry Bernie					   *
 // *************************************************************************
-void ME_Render::renderQueueStarted(Ogre::uint8 queueGroupId, const String& invocation, bool& skipThisInvocation)
+void SB_Render::renderQueueStarted(Ogre::uint8 queueGroupId, const String& invocation, bool& skipThisInvocation)
 {
 }
+
 // *************************************************************************
 // *					renderQueueEnded Terry Bernie					   *
 // *************************************************************************
-void ME_Render::renderQueueEnded(Ogre::uint8 queueGroupId, const String& invocation, bool& repeatThisInvocation)
+void SB_Render::renderQueueEnded(Ogre::uint8 queueGroupId, const String& invocation, bool& repeatThisInvocation)
 {
 	if (queueGroupId != RENDER_QUEUE_MAIN)
 	{
@@ -156,7 +157,7 @@ void ME_Render::renderQueueEnded(Ogre::uint8 queueGroupId, const String& invocat
 // *************************************************************************
 // *				PreRender   Terry Bernie							   *
 // *************************************************************************
-void ME_Render::PreRender()
+void SB_Render::PreRender()
 {
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
@@ -187,7 +188,7 @@ void ME_Render::PreRender()
 // *************************************************************************
 // *				PostRender   Terry Bernie							   *
 // *************************************************************************
-void ME_Render::PostRender()
+void SB_Render::PostRender()
 {
 	// restore original state
 	glPopAttrib();
@@ -204,7 +205,7 @@ void ME_Render::PostRender()
 // *************************************************************************
 // *					Render_Loop   Terry Bernie						   *
 // *************************************************************************
-void ME_Render::Render_Loop()
+void SB_Render::Render_Loop()
 {
 	GLboolean depthTestEnabled = glIsEnabled(GL_DEPTH_TEST);
 	glDisable(GL_DEPTH_TEST);
@@ -332,7 +333,7 @@ void ME_Render::Render_Loop()
 // *************************************************************************
 // *					Translate Terry Bernie							   *
 // *************************************************************************
-void ME_Render::Translate(void)
+void SB_Render::Translate(void)
 {
 
 	glRotatef(RX, 1.0, 0.0, 0.0); // Rotations of the object 
@@ -344,7 +345,7 @@ void ME_Render::Translate(void)
 // *************************************************************************
 // *						Assimp_Render_Faces Terry Bernie	   		   *
 // *************************************************************************
-bool ME_Render::Assimp_Render_Faces(void)
+bool SB_Render::Assimp_Render_Faces(void)
 {
 	int Count = 0;
 
@@ -363,7 +364,7 @@ bool ME_Render::Assimp_Render_Faces(void)
 // *************************************************************************
 // *					Assimp_Face_Parts Terry Bernie		   			   *
 // *************************************************************************
-bool ME_Render::Assimp_Face_Parts(int Count)
+bool SB_Render::Assimp_Face_Parts(int Count)
 {
 	int FaceCount = 0;
 	int A = 0;
@@ -400,7 +401,7 @@ bool ME_Render::Assimp_Face_Parts(int Count)
 // *************************************************************************
 // *						Assimp_Render_Points Terry Bernie	   		   *
 // *************************************************************************
-bool ME_Render::Assimp_Render_Points(void)
+bool SB_Render::Assimp_Render_Points(void)
 {
 	int Count = 0;
 
@@ -419,7 +420,7 @@ bool ME_Render::Assimp_Render_Points(void)
 // *************************************************************************
 // *					Render_As_Points_Parts Terry Bernie	   			   *
 // *************************************************************************
-bool ME_Render::Render_As_Points_Parts(int Count)
+bool SB_Render::Render_As_Points_Parts(int Count)
 {
 	glPointSize(5);
 
@@ -447,7 +448,7 @@ bool ME_Render::Render_As_Points_Parts(int Count)
 // *************************************************************************
 // *						Assimp_Render_Textures_Terry Bernie	   		   *
 // *************************************************************************
-bool ME_Render::Assimp_Render_Textures(void)
+bool SB_Render::Assimp_Render_Textures(void)
 {
 	int Count = 0;
 	glEnable(GL_BLEND);
@@ -500,7 +501,7 @@ bool ME_Render::Assimp_Render_Textures(void)
 // *************************************************************************
 // *					Assimp_Textured_Parts Terry Bernie		 		   *
 // *************************************************************************
-bool ME_Render::Assimp_Textured_Parts(int Count)
+bool SB_Render::Assimp_Textured_Parts(int Count)
 {
 	int VertCount = 0;
 	int A = 0;
@@ -556,7 +557,7 @@ bool ME_Render::Assimp_Textured_Parts(int Count)
 //*************************************************************************
 // *					Assimp_Render_Normals Terry Bernie	   			   *
 // *************************************************************************
-void ME_Render::Assimp_Render_Normals(void)
+void SB_Render::Assimp_Render_Normals(void)
 {
 	int Count = 0;
 
@@ -573,7 +574,7 @@ void ME_Render::Assimp_Render_Normals(void)
 // *************************************************************************
 // *					Render_AsNormals_Part Terry Bernie	   			   *
 // *************************************************************************
-void ME_Render::Render_As_Normals_Parts(int Count)
+void SB_Render::Render_As_Normals_Parts(int Count)
 {
 #define Scaler 2
 
@@ -600,7 +601,7 @@ void ME_Render::Render_As_Normals_Parts(int Count)
 // *************************************************************************
 // *					RF_Render_Normals Terry Bernie		  			   *
 // *************************************************************************
-void ME_Render::RF_Render_Normals(void)
+void SB_Render::RF_Render_Normals(void)
 {
 //#define t 2
 //
@@ -657,7 +658,7 @@ void ME_Render::RF_Render_Normals(void)
 // *************************************************************************
 // *				RenderBones 04/05/08   ( Terry Bernie ) 		  	   *
 // *************************************************************************
-bool ME_Render::As_RenderBones()
+bool SB_Render::As_RenderBones()
 {
 
 	//glDisable(GL_TEXTURE_2D);
@@ -724,7 +725,7 @@ bool ME_Render::As_RenderBones()
 // *************************************************************************
 // *				Render_BoundingBoxModel Terry Bernie	  			   *
 // *************************************************************************
-void ME_Render::Render_BoundingBoxModel(void)
+void SB_Render::Render_BoundingBoxModel(void)
 {
 	float m_xMin = App->CLSB_Model->S_BoundingBox[0]->BB_Min[0].x;
 	float m_yMin = App->CLSB_Model->S_BoundingBox[0]->BB_Min[0].y;
@@ -781,7 +782,7 @@ void ME_Render::Render_BoundingBoxModel(void)
 // *************************************************************************
 // *					RF_Render_All_Groups  ( Terry Bernie ) 			   *
 // *************************************************************************
-bool ME_Render::RF_Render_All_Groups()
+bool SB_Render::RF_Render_All_Groups()
 {
 	//const geBody_Triangle *SF;
 	//SF = App->CL_Vm_Genesis3D->ActorDef_Memory->Body->SkinFaces[GE_BODY_HIGHEST_LOD].FaceArray;
@@ -849,7 +850,7 @@ bool ME_Render::RF_Render_All_Groups()
 // *************************************************************************
 // *					RF_Render_Just_Group  ( Terry Bernie )			   *
 // *************************************************************************
-bool ME_Render::RF_Render_Just_Group()
+bool SB_Render::RF_Render_Just_Group()
 {
 	//const geBody_Triangle *SF;
 	//SF = App->CL_Vm_Genesis3D->ActorDef_Memory->Body->SkinFaces[GE_BODY_HIGHEST_LOD].FaceArray;
@@ -923,7 +924,7 @@ bool ME_Render::RF_Render_Just_Group()
 // *************************************************************************
 // *					RF_Render_Faces Terry Bernie	   				   *
 // *************************************************************************
-bool ME_Render::RF_Render_Faces(void)
+bool SB_Render::RF_Render_Faces(void)
 {
 	/*int Count = 0;
 	int MatIndex = 0;
@@ -946,7 +947,7 @@ bool ME_Render::RF_Render_Faces(void)
 // *************************************************************************
 // *					RF_Render_Points Terry Bernie					   *
 // *************************************************************************
-bool ME_Render::RF_Render_Points(void)
+bool SB_Render::RF_Render_Points(void)
 {
 	/*int Count = 0;
 	glPointSize(5);
@@ -970,7 +971,7 @@ bool ME_Render::RF_Render_Points(void)
 // **************************************************************************
 // *					RenderCrossHair Terry Bernie						*
 // **************************************************************************
-void ME_Render::RenderCrossHair(void)
+void SB_Render::RenderCrossHair(void)
 {
 	glDisable(GL_TEXTURE_2D);
 	//glDisable(GL_DEPTH_TEST);
@@ -1027,7 +1028,7 @@ void ME_Render::RenderCrossHair(void)
 // *************************************************************************
 // *					RenderByTexture  ( Terry Bernie ) 				   *
 // *************************************************************************
-bool ME_Render::RenderByTexture()
+bool SB_Render::RenderByTexture()
 {
 	//const geBody_Triangle *SF;
 	//SF = App->CL_Genesis3D->ActorDef_Memory->Body->SkinFaces[GE_BODY_HIGHEST_LOD].FaceArray;
