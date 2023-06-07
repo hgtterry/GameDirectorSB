@@ -40,6 +40,13 @@ SB_Model::SB_Model(void)
 	strcpy(Model_FolderPath, "No Model Loaded");
 	strcpy(Texture_FolderPath, "No Model Loaded");
 	JustName[0] = 0;
+
+	int Count = 0;
+	while (Count < 4999)
+	{
+		Group[Count] = nullptr;
+		Count++;
+	}
 }
 
 SB_Model::~SB_Model(void)
