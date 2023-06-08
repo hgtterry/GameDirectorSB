@@ -29,8 +29,6 @@ distribution.
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
-#include "SOIL2.h"
-
 #include "il.h"
 #include "ilu.h"
 #include "ilut.h"
@@ -460,13 +458,8 @@ bool  SB_Load_Textures::Soil_Load_Texture(UINT textureArray[], LPSTR strFileName
 		channels = force_channels;
 	}
 
-	/*	create a copy the image data	*/
-	//unsigned char* img;
-	//img = (unsigned char*)malloc(image_width*image_height*channels);
-//	memcpy(img, image_data, image_width*image_height*channels);
-
-	/*	does the user want me to invert the image?	*/
-	//if (flags & SOIL_FLAG_INVERT_Y)
+	bool INVERT_Y = 1;
+	if (INVERT_Y == 1)
 	{
 		int i, j;
 		for (j = 0; j * 2 < image_height; ++j)
@@ -484,20 +477,16 @@ bool  SB_Load_Textures::Soil_Load_Texture(UINT textureArray[], LPSTR strFileName
 		}
 	}
 
-	
-
 	GLuint image_texture;
-	//image_texture = textureArray[textureID];
 	glGenTextures(1, &image_texture);
 	glBindTexture(GL_TEXTURE_2D, image_texture);
 	
-	// Setup filtering parameters for display
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	
-//#if defined(GL_UNPACK_ROW_LENGTH) && !defined(__EMSCRIPTEN__)
-//	glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
-//#endif
+#if defined(GL_UNPACK_ROW_LENGTH) && !defined(__EMSCRIPTEN__)
+	glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
+#endif
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image_width, image_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_data);
 
 	textureArray[textureID] = image_texture;
