@@ -6,7 +6,9 @@ public:
 	~SB_Ogre_Dialog(void);
 
 	void Switch_3D_Window();
-	void Start_Ogre_Dialog();
+	void Start_Ogre_Dialog(bool AutoLoad);
+
+	bool mAutoLoad;
 
 	HWND OgreView_3D_hWnd;
 	HWND TestHwnd;
@@ -16,5 +18,8 @@ public:
 private:
 	static LRESULT CALLBACK Ogre_Dialog_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	
+	void Auto_Load_File();
+
+	bool EquitySB_Dialog_Created;
 };
 

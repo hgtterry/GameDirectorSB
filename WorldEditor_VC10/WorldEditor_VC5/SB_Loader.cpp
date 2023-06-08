@@ -146,8 +146,10 @@ void SB_Loader::Adjust()
 	//Translate_Model(0,0,-240);
 
 	
-
-	App->CLSB_Grid->Reset_View();
+	if (App->CLSB_Ogre_Dialog->mAutoLoad == 0)
+	{
+		App->CLSB_Grid->Reset_View();
+	}
 }
 
 // *************************************************************************
@@ -157,7 +159,10 @@ void SB_Loader::Set_Equity(void)
 {
 	App->CLSB_Model->Model_Loaded = 1;
 
-	App->CLSB_Grid->Reset_View();
+	if (App->CLSB_Ogre_Dialog->mAutoLoad == 0)
+	{
+		App->CLSB_Grid->Reset_View();
+	}
 
 	char TitleBar[260];
 	strcpy(TitleBar, "World Viewer");

@@ -272,7 +272,7 @@ void SB_Assimp::Create_MeshGroups(const aiScene* pScene)
 	char GroupNum[255];
 
 	int mGroupCount = App->CLSB_Model->Get_Groupt_Count();
-	Debug
+	
 	while (Count < mGroupCount)
 	{
 		aiMesh* mesh = pScene->mMeshes[Count];

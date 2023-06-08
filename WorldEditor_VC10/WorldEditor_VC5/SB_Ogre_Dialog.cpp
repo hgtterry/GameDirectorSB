@@ -5,6 +5,8 @@
 
 SB_Ogre_Dialog::SB_Ogre_Dialog(void)
 {
+	mAutoLoad = 0;
+	EquitySB_Dialog_Created = 0;
 	OgreView_3D_hWnd = NULL;
 	TestHwnd = NULL;
 }
@@ -43,6 +45,8 @@ void SB_Ogre_Dialog::Switch_3D_Window()
 	App->CLSB_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CLSB_Ogre->mWindow->getWidth() / (Ogre::Real)App->CLSB_Ogre->mWindow->getHeight());
 	App->CLSB_Ogre->mCamera->yaw(Ogre::Radian(0));
 
+	Auto_Load_File();
+
 	App->CLSB_Ogre->OgreIsRunning = 1;
 	App->CLSB_Ogre->Ogre_Render_Loop();
 	
@@ -56,12 +60,42 @@ void SB_Ogre_Dialog::Switch_3D_Window()
 }
 
 // *************************************************************************
+// *			Auto_Load_File:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void SB_Ogre_Dialog::Auto_Load_File()
+{
+	if (mAutoLoad == 1)
+	{
+		char Path[MAX_PATH];
+		strcpy(Path, App->WorldEditor_Directory);
+		strcat(Path, "Data\\Temp.Wepf");
+
+		strcpy(App->CLSB_Loader->Path_FileName, Path);
+		strcpy(App->CLSB_Loader->FileName, "Temp.Wepf");
+
+		App->CLSB_Loader->Read_Project_File(Path);
+		App->CLSB_Loader->Load_File_Wepf();
+	}
+}
+
+// *************************************************************************
 // *			Start_Ogre_Dialog:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
-void SB_Ogre_Dialog::Start_Ogre_Dialog()
+void SB_Ogre_Dialog::Start_Ogre_Dialog(bool AutoLoad)
 {
-	TestHwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_OGREVIEWER, App->MainHwnd, (DLGPROC)Ogre_Dialog_Proc);
-	Switch_3D_Window();
+	mAutoLoad = AutoLoad;
+
+	if (EquitySB_Dialog_Created == 0)
+	{
+		Debug
+		TestHwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_OGREVIEWER, App->MainHwnd, (DLGPROC)Ogre_Dialog_Proc);
+		EquitySB_Dialog_Created = 1;
+		Switch_3D_Window();	
+	}
+	else
+	{
+		Auto_Load_File();
+	}
 }
 
 // **************************************************************************
@@ -228,15 +262,14 @@ LRESULT CALLBACK SB_Ogre_Dialog::Ogre_Dialog_Proc(HWND hDlg, UINT message, WPARA
 
 		if (LOWORD(wParam) == IDOK)
 		{
-			
+			App->CLSB_Ogre_Dialog->EquitySB_Dialog_Created = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
-			
-
+			App->CLSB_Ogre_Dialog->EquitySB_Dialog_Created = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}

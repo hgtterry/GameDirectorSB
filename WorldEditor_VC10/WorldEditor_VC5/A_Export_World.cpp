@@ -248,7 +248,6 @@ void A_Export_World::ExportTo_RFW(const char *FileName, int ExpSelected, geBoole
 	}
 	else
 	{
-		Debug
 		int i, GroupID, GroupCount;
 		char NewFileName[MAX_PATH];
 		strcpy(NewFileName, FileName);

@@ -188,7 +188,7 @@ LRESULT CALLBACK A_TopTabs::Top_Tabs_Proc(HWND hDlg, UINT message, WPARAM wParam
 			// ---------------- Tabs
 			if (LOWORD(wParam) == IDC_STARTEQUITY)
 			{
-				App->CLSB_Ogre_Dialog->Start_Ogre_Dialog();
+				App->CLSB_Ogre_Dialog->Start_Ogre_Dialog(0);
 
 				return TRUE;
 			}
@@ -274,32 +274,18 @@ LRESULT CALLBACK A_TopTabs::Top_Tabs_Proc(HWND hDlg, UINT message, WPARAM wParam
 
 			if (LOWORD(wParam) == IDC_BT_TB_BUILDPREVIEW)
 			{
-				bool test = App->IsProcessRunning("World_Viewer.exe");
-				if (test == 1)
-				{
-					//App->Say("Running");
-				}
-				else
-				{
-					//App->Say("Not Running");
 
+				CFusionDoc* pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
 
-					CFusionDoc* pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+				pDoc->SelectAll();
+				pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 
-					pDoc->SelectAll();
-					pDoc->UpdateAllViews( UAV_ALL3DVIEWS, NULL );
+				App->CL_Export_World->Export_World_GD3D(1);
 
+				pDoc->ResetAllSelections();
+				pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 
-					char Path[MAX_PATH];
-					strcpy(Path,App->WorldEditor_Directory);
-					strcat(Path,"World_Viewer.exe");
-
-					App->CL_Export_World->Export_World_GD3D(1);
-					ShellExecute(App->MainHwnd, "open", Path, "WorldEditor",App->WorldEditor_Directory, SW_SHOW);
-
-					pDoc->ResetAllSelections();
-					pDoc->UpdateAllViews( UAV_ALL3DVIEWS, NULL );
-				}
+				App->CLSB_Ogre_Dialog->Start_Ogre_Dialog(1);
 
 				return TRUE;
 			}
