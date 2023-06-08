@@ -29,9 +29,15 @@ distribution.
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
+#include "SOIL2.h"
+
 #include "il.h"
 #include "ilu.h"
 #include "ilut.h"
+
+#include "bitmap.h"
+#include "bitmap._h"
+#include "bitmap.__h"
 
 SB_Load_Textures::SB_Load_Textures()
 {
@@ -437,20 +443,67 @@ bool SB_Load_Textures::Load_OpenGL_Textures(int TextureID)
 // *************************************************************************
 bool  SB_Load_Textures::Soil_Load_Texture(UINT textureArray[], LPSTR strFileName, int textureID)
 {
-	App->Say(strFileName,"");
 	int image_width = 0;
 	int image_height = 0;
-	unsigned char* image_data = stbi_load(strFileName, &image_width, &image_height, NULL, 4);
+	int channels = 0;
+	int force_channels = 4;
+
+	unsigned char* image_data = stbi_load(strFileName, &image_width, &image_height, &channels, force_channels);
 	if (image_data == NULL)
 	{
 		App->Say("Cant Create Texture");
 		return false;
 	}
 
-	glBindTexture(GL_TEXTURE_2D, textureArray[textureID]);
+	if ((force_channels >= 1) && (force_channels <= 4))
+	{
+		channels = force_channels;
+	}
 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	/*	create a copy the image data	*/
+	//unsigned char* img;
+	//img = (unsigned char*)malloc(image_width*image_height*channels);
+//	memcpy(img, image_data, image_width*image_height*channels);
+
+	/*	does the user want me to invert the image?	*/
+	//if (flags & SOIL_FLAG_INVERT_Y)
+	{
+		int i, j;
+		for (j = 0; j * 2 < image_height; ++j)
+		{
+			int index1 = j * image_width * channels;
+			int index2 = (image_height - 1 - j) * image_width * channels;
+			for (i = image_width * channels; i > 0; --i)
+			{
+				unsigned char temp = image_data[index1];
+				image_data[index1] = image_data[index2];
+				image_data[index2] = temp;
+				++index1;
+				++index2;
+			}
+		}
+	}
+
+	
+
+	GLuint image_texture;
+	//image_texture = textureArray[textureID];
+	glGenTextures(1, &image_texture);
+	glBindTexture(GL_TEXTURE_2D, image_texture);
+	
+	// Setup filtering parameters for display
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	
+//#if defined(GL_UNPACK_ROW_LENGTH) && !defined(__EMSCRIPTEN__)
+//	glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
+//#endif
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image_width, image_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_data);
+
+	textureArray[textureID] = image_texture;
+
+	stbi_image_free(image_data);
+
 
 
 	/*textureArray[textureID] = SOIL_load_OGL_texture
@@ -519,5 +572,118 @@ bool SB_Load_Textures::LoadDummyTexture(int Index)
 	App->CLSB_Model->Group[Index]->Height = 256;
 
 	App->CLSB_Model->Group[Index]->Bitmap_Loaded = -1;*/
+	return 1;
+}
+
+// *************************************************************************
+// *					Genesis_WriteToBmp Terry Bernie   		 	 	   *
+// *************************************************************************
+int SB_Load_Textures::Genesis_WriteToBmp(geBitmap* bmp, char* filename)
+{
+	BITMAPFILEHEADER 	bmfh;
+	BITMAPINFOHEADER	bmih;
+	int width, height, bpp;
+	int datasize;
+	geBitmap_Info Info;
+	geBitmap_Info Palette_Info;
+	void* data;
+	geBitmap_Palette* palette;
+	void* palette_data;
+	int colors = 256;
+	int palette_size = 0;
+	int myRowWidth, bmpRowWidth, pelBytes;
+	data = (void*)&bmp->Data[0];
+	geBitmap_GetInfo(bmp, &Info, NULL);
+	width = Info.Width;
+	height = Info.Height;
+
+	if (Info.Format == GE_PIXELFORMAT_8BIT_PAL)
+	{
+		palette_data = (void*)malloc(colors * 4);
+		palette = geBitmap_GetPalette(bmp);
+		geBitmap_Palette_GetInfo(palette, &Palette_Info);
+		geBitmap_Palette_GetData(palette, palette_data, GE_PIXELFORMAT_32BIT_XRGB, colors);
+		palette_size = colors * 4;
+		bpp = 1;
+	}
+
+	else if (Info.Format == GE_PIXELFORMAT_16BIT_565_RGB || Info.Format == GE_PIXELFORMAT_16BIT_555_RGB)
+	{
+
+		bpp = 2;
+	}
+	else if ((Info.Format == GE_PIXELFORMAT_24BIT_RGB) || (Info.Format == GE_PIXELFORMAT_24BIT_BGR))
+	{
+		bpp = 3;
+	}
+	else if (Info.Format == GE_PIXELFORMAT_32BIT_ARGB)
+	{
+		bpp = 4;
+	}
+
+	else if (Info.Format == GE_PIXELFORMAT_32BIT_RGBA)
+	{
+		bpp = 4;
+	}
+	else if (Info.Format == GE_PIXELFORMAT_32BIT_XRGB)
+	{
+		bpp = 4;
+	}
+	else if (Info.Format == GE_PIXELFORMAT_32BIT_XBGR)
+	{
+		bpp = 4;
+	}
+	else
+		return 0;
+
+	datasize = width * height * bpp;  //write the file header bmfh  
+	memset((void*)&bmfh, 0, sizeof(bmfh));
+	bmfh.bfType = 'B' + ('M' << 8);
+	bmfh.bfSize = sizeof(bmfh) + sizeof(bmih) + datasize;
+	bmfh.bfOffBits = sizeof(bmfh) + sizeof(bmih) + palette_size;
+	//write the info header bmih  
+	memset((void*)&bmih, 0, sizeof(bmih));
+	bmih.biSize = sizeof(bmih);
+	bmih.biWidth = width;
+	bmih.biHeight = height;
+	bmih.biPlanes = 1;
+	bmih.biBitCount = bpp * 8;
+
+	if (bpp == 1)
+	{
+		bmih.biClrUsed = 0;
+		bmih.biCompression = 0;
+	}
+	else
+	{
+		bmih.biCompression = BI_RGB;
+	}
+
+	bmih.biXPelsPerMeter = 2834;
+	bmih.biYPelsPerMeter = 2834;
+	FILE* file = fopen(filename, "wb");
+	if (!file)
+		return -1;
+	fwrite((void*)&bmfh, sizeof(bmfh), 1, file);
+	fwrite((void*)&bmih, sizeof(bmih), 1, file);
+	if (bpp == 1)
+		fwrite((void*)palette_data, colors * 4, 1, file);
+	pelBytes = bpp;
+	myRowWidth = bmp->Info.Stride * pelBytes;
+	bmpRowWidth = (((bmih.biWidth * pelBytes) + 3) & (~3));
+	if (bmih.biHeight > 0)
+	{
+		int y;
+		char* row;
+		row = (char*)bmp->Data[0];
+		row += (bmp->Info.Height - 1) * myRowWidth;
+		for (y = bmp->Info.Height; y--; )
+		{
+			fwrite((void*)row, bmpRowWidth, 1, file);
+			row -= myRowWidth;
+		}
+	}
+	fclose(file);
+
 	return 1;
 }

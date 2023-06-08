@@ -194,6 +194,7 @@ bool SB_Loader::LoadTextures_TXL()
 		return 0;
 	}
 
+	
 	BitMap_Names.resize(100);
 
 	while (geVFile_FinderGetNextFile(Finder) != GE_FALSE)
@@ -228,7 +229,6 @@ void SB_Loader::Copy_Texture_Names()
 	while (Count < GroupCount)
 	{
 		strcpy(App->CLSB_Model->Group[Count]->Text_FileName, App->CLSB_Model->Group[Count]->Equity_Text_FileName);
-
 		Count++;
 	}
 }
@@ -325,8 +325,18 @@ bool SB_Loader::AddTexture(geVFile* BaseFile, const char* Path, int GroupIndex)
 
 	App->CLSB_Model->Group[GroupIndex]->Base_Bitmap = hbm;
 
+	char TempTextureFile_BMP[1024];
+	strcpy(TempTextureFile_BMP, App->WorldEditor_Directory);
+	strcat(TempTextureFile_BMP, "\\");
+	strcat(TempTextureFile_BMP, "TextureLoad.bmp");
+
+	App->CLSB_Load_Textures->Genesis_WriteToBmp(Bitmap, TempTextureFile_BMP);
+
+	App->CLSB_Load_Textures->Soil_Load_Texture(App->CLSB_Ogre->RenderListener->g_Texture, TempTextureFile_BMP, GroupIndex);
+
 	geVFile_Close(File);
 
+	DeleteFile((LPCTSTR)TempTextureFile_BMP);
 	return TRUE;
 }
 

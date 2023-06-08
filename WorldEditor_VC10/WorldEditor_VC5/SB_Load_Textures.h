@@ -33,11 +33,15 @@ public:
 
 	bool Windows_Preview_FullPath(int Index, char* FullPath);
 	bool Load_OpenGL_Textures(int TextureID);
+
+	int Genesis_WriteToBmp(geBitmap* bmp, char* filename);
+	bool Soil_Load_Texture(UINT textureArray[], LPSTR strFileName, int textureID);
+
 	char TextureFileName[MAX_PATH];
 
 protected:
 
-	bool Soil_Load_Texture(UINT textureArray[], LPSTR strFileName, int textureID);
+	
 
 	bool Texture_To_Bmp(char* File);
 	bool LoadDummyTexture(int Index);
