@@ -300,6 +300,12 @@
     <ClCompile Include="SB_Ini.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SB_Load_Textures.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SB_Render.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="FUSION.rc">
@@ -599,6 +605,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SB_Ini.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SB_Load_Textures.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SB_Render.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tinystr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tinyxml.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
