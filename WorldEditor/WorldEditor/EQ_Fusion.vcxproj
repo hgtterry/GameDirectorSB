@@ -231,8 +231,6 @@
     <ClInclude Include="SB_OgreListener.h" />
     <ClInclude Include="SB_Ogre_Dialog.h" />
     <ClInclude Include="SB_Render.h" />
-    <ClInclude Include="tinystr.h" />
-    <ClInclude Include="tinyxml.h" />
     <ClInclude Include="TypeParser\cparser.h" />
     <ClInclude Include="TypeParser\cscanner.h" />
     <ClInclude Include="TypeParser\Hash.h" />

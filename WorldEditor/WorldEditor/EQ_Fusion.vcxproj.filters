@@ -613,12 +613,6 @@
     <ClInclude Include="SB_Render.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="tinystr.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="tinyxml.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="resource.hm">
