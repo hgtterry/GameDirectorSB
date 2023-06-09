@@ -626,6 +626,8 @@
 #define IDC_STLEFTTOP                   1463
 #define IDC_STARTEQUITY                 1464
 #define IDC_STATICTEST                  1465
+#define IDC_BUTTON2                     1466
+#define IDC_UPDATE                      1466
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772
 #define ID_BRUSH_PRIMITIVES_SPHEROID    32773
@@ -813,7 +815,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        275
 #define _APS_NEXT_COMMAND_VALUE         33064
-#define _APS_NEXT_CONTROL_VALUE         1466
+#define _APS_NEXT_CONTROL_VALUE         1467
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

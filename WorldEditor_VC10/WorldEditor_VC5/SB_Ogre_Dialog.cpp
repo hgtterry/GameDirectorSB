@@ -75,6 +75,7 @@ void SB_Ogre_Dialog::Auto_Load_File()
 
 		App->CLSB_Loader->Read_Project_File(Path);
 		App->CLSB_Loader->Load_File_Wepf();
+
 	}
 }
 
@@ -87,7 +88,6 @@ void SB_Ogre_Dialog::Start_Ogre_Dialog(bool AutoLoad)
 
 	if (EquitySB_Dialog_Created == 0)
 	{
-		Debug
 		TestHwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_OGREVIEWER, App->MainHwnd, (DLGPROC)Ogre_Dialog_Proc);
 		EquitySB_Dialog_Created = 1;
 		Switch_3D_Window();	
@@ -108,23 +108,8 @@ LRESULT CALLBACK SB_Ogre_Dialog::Ogre_Dialog_Proc(HWND hDlg, UINT message, WPARA
 	case WM_INITDIALOG:
 	{
 
-		/*App->SetTitleBar(hDlg);
-
-		HFONT Font;
-		Font = CreateFont(-20, 0, 0, 0, FW_BOLD, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
-		SendDlgItemMessage(hDlg, IDC_TITLENAME, WM_SETFONT, (WPARAM)Font, MAKELPARAM(TRUE, 0));
-
-		SendDlgItemMessage(hDlg, IDC_EDITTEXT, WM_SETFONT, (WPARAM)App->Font_CB12, MAKELPARAM(TRUE, 0));
-
-		SetDlgItemText(hDlg, IDC_TITLENAME, (LPCTSTR)App->SBC_Dialogs->btext);
-
-		SetDlgItemText(hDlg, IDC_EDITTEXT, (LPCTSTR)App->SBC_Dialogs->Chr_Text);*/
-
-		//App->CL_Ogre_Dialog->OgreView_3D_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_3D_VIEWER, hDlg, (DLGPROC)OgreView_3D_Proc);
-		//App->CL_Ogre->RenderHwnd = App->CL_Ogre_Dialog->OgreView_3D_hWnd;
-
-		//App->CL_Ogre->InitOgre();
-
+		SendDlgItemMessage(hDlg, IDC_UPDATE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
@@ -144,25 +129,18 @@ LRESULT CALLBACK SB_Ogre_Dialog::Ogre_Dialog_Proc(HWND hDlg, UINT message, WPARA
 		return (LONG)App->AppBackground;
 	}
 
-	case WM_NOTIFY:
+	case WM_DRAWITEM:
 	{
-		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		/*if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		LPDRAWITEMSTRUCT lpDIS = (LPDRAWITEMSTRUCT)lParam;
+
+		if (lpDIS->CtlID == IDC_UPDATE)
 		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
-			return CDRF_DODEFAULT;
+			App->Custom_Button_Normal_MFC(lpDIS, hDlg);
+			return TRUE;
 		}
 
-		if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
-			return CDRF_DODEFAULT;
-		}*/
-
-		return CDRF_DODEFAULT;
+		return TRUE;
 	}
 
 	case WM_MOUSEMOVE: // ok up and running and we have a loop for mouse
@@ -260,6 +238,24 @@ LRESULT CALLBACK SB_Ogre_Dialog::Ogre_Dialog_Proc(HWND hDlg, UINT message, WPARA
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_UPDATE)
+		{
+			CFusionDoc* pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+
+			pDoc->SelectAll();
+			pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+
+			App->CL_Export_World->Export_World_GD3D(1);
+
+			pDoc->ResetAllSelections();
+			pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+
+			App->CLSB_Ogre_Dialog->mAutoLoad = 1;
+			App->CLSB_Ogre_Dialog->Auto_Load_File();
+
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == IDOK)
 		{
 			App->CLSB_Ogre_Dialog->EquitySB_Dialog_Created = 0;
