@@ -170,7 +170,7 @@ LRESULT CALLBACK SB_Ogre_Dialog::Ogre_Dialog_Proc(HWND hDlg, UINT message, WPARA
 		// File
 		if (LOWORD(wParam) == ID_OGRE3D_MESH)
 		{
-			App->CLSB_Loader->Ogre3D_Model();
+			App->CLSB_Exporter->Ogre3D_Model();
 			return TRUE;
 		}
 		

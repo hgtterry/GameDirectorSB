@@ -31,8 +31,6 @@ public:
 	SB_Loader(void);
 	~SB_Loader(void);
 
-	void Ogre3D_Model(void);
-
 	bool Start_Groups_Dialog();
 	bool Open_File_Model(const char* Extension, const char* Title, const char* StartDirectory);
 	bool Read_Project_File(char* Path_And_File);

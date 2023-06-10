@@ -27,5 +27,7 @@ class SB_Exporter
 public:
 	SB_Exporter(void);
 	~SB_Exporter(void);
+
+	void Ogre3D_Model(void);
 };
 

@@ -32,3 +32,23 @@ SB_Exporter::SB_Exporter(void)
 SB_Exporter::~SB_Exporter(void)
 {
 }
+
+// *************************************************************************
+// *			Ogre3D_Model:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void SB_Exporter::Ogre3D_Model(void)
+{
+	if (App->CLSB_Model->Model_Loaded == 0)
+	{
+		App->Say("No Model Loaded to Export");
+		return;
+	}
+
+	if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Actor)
+	{
+		App->Say("Not available for the Actor format just yet.");
+		return;
+	}
+
+	//App->CL_Export_Ogre3D->Export_AssimpToOgre();
+}
