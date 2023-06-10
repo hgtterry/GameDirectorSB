@@ -136,13 +136,13 @@ LRESULT CALLBACK A_TxlEditor::TextureLib_Proc(HWND hDlg, UINT message, WPARAM wP
 		//--------------------------------- Add -----------------------
 		if (LOWORD(wParam) == IDC_ADD)
 		{
-			int test = App->CL_FileIO->Open_File_Model("Texture Files ( *.bmp *.tga )\0*.bmp;*.tga\0*.tga\0*.tga\0*.bmp\0*.bmp\0", "Add Texture", "Bitmap Files");
+			int test = App->CLSB_FileIO->Open_File_Model("Texture Files ( *.bmp *.tga )\0*.bmp;*.tga\0*.tga\0*.tga\0*.bmp\0*.bmp\0", "Add Texture", "Bitmap Files");
 			if (test == 0)
 			{
 				return TRUE;
 			}
 
-			strcpy(App->CL_TxlEditor->Add_Texture_FileName, App->CL_FileIO->FileName);
+			strcpy(App->CL_TxlEditor->Add_Texture_FileName, App->CLSB_FileIO->FileName);
 
 			App->CL_TxlEditor->AddTexture(NULL, App->CL_TxlEditor->Add_Texture_FileName);
 			App->CL_TxlEditor->pData->Dirty = 1;
@@ -197,13 +197,13 @@ LRESULT CALLBACK A_TxlEditor::TextureLib_Proc(HWND hDlg, UINT message, WPARAM wP
 		//--------------------------------- IDC_LOAD --------------------
 		if (LOWORD(wParam) == IDC_BTTXLOPEN)
 		{
-			int test = App->CL_FileIO->Open_File_Model("Texture Libary   *.txl\0*.txl\0", "Texure Editor", NULL);
+			int test = App->CLSB_FileIO->Open_File_Model("Texture Libary   *.txl\0*.txl\0", "Texure Editor", NULL);
 			if (test == 0)
 			{
 				return 1;
 			}
 
-			strcpy(App->CL_TxlEditor->FileName, App->CL_FileIO->FileName);
+			strcpy(App->CL_TxlEditor->FileName, App->CLSB_FileIO->FileName);
 			SendDlgItemMessage(App->CL_TxlEditor->pData->hwnd, IDC_TEXTURELIST2, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
 			App->CL_TxlEditor->CleanUp();

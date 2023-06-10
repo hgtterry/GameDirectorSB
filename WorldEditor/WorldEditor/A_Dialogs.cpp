@@ -200,13 +200,13 @@ LRESULT CALLBACK A_Dialogs::Properties_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 		if (LOWORD(wParam) == IDC_BROWSETXL)
 		{
-			int test = App->CL_FileIO->Open_File_Model("Texture Libary   *.txl\0*.txl\0", "Texure Editor", NULL);
+			int test = App->CLSB_FileIO->Open_File_Model("Texture Libary   *.txl\0*.txl\0", "Texure Editor", NULL);
 			if (test == 0)
 			{
 				return 1;
 			}
 
-			SetDlgItemText(hDlg, IDC_EDITTXL,App->CL_FileIO->PathFileName);
+			SetDlgItemText(hDlg, IDC_EDITTXL,App->CLSB_FileIO->PathFileName);
 
 			return TRUE;
 		}

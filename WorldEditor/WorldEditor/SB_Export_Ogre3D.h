@@ -28,5 +28,17 @@ public:
 	SB_Export_Ogre3D(void);
 	~SB_Export_Ogre3D(void);
 
+	bool Export_AssimpToOgre(void);
+
+private:
+
+	char mDecompileFolder[MAX_PATH];
+	char mOgreMeshFileName[MAX_PATH];
+	char mOgreScriptFileName[MAX_PATH];
+	char mOgreSkellFileName[MAX_PATH];
+	char mOgreSkellTagName[MAX_PATH];
+
+	char Directory_Name[MAX_PATH];
+
 };
 

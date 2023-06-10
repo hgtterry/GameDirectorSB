@@ -82,7 +82,7 @@ public:
 	virtual ~SB_App();
 
 	AB_Export_RFW*				ABC_Export_RFW;
-	A_FileIO*					CL_FileIO;
+	SB_FileIO*					CLSB_FileIO;
 	A_Dialogs*					CL_Dialogs;
 	A_World*					CL_World;
 	A_Render_App*				CL_Render_App;

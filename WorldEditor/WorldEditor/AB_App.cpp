@@ -28,7 +28,7 @@ distribution.
 SB_App::SB_App()
 {
 	ABC_Export_RFW =			NULL;
-	CL_FileIO =					NULL;
+	CLSB_FileIO =				NULL;
 	CL_Dialogs =				NULL;
 	CL_World =					NULL;
 	CL_Render_App =				NULL;
@@ -156,7 +156,7 @@ void SB_App::InitMFC(void)
 bool SB_App::InitApp(void)
 {	
 	ABC_Export_RFW  =				new AB_Export_RFW();
-	CL_FileIO =						new	A_FileIO();
+	CLSB_FileIO =					new	SB_FileIO();
 	CL_Dialogs =					new	A_Dialogs();
 	CL_World =						new	A_World();
 	CL_Render_App =					new	A_Render_App();

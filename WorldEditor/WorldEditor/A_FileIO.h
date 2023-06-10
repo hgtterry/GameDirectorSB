@@ -1,19 +1,34 @@
-// A_FileIO.h: interface for the A_FileIO class.
-//
-//////////////////////////////////////////////////////////////////////
+/*
+Copyright (c) 2023 World Editor -- HGT Software W.T.Flanigan H.C.Flanigan
 
-#if !defined(AFX_A_FILEIO_H__9F7DDFC3_E8DA_4580_8C8D_6D8C4839E168__INCLUDED_)
-#define AFX_A_FILEIO_H__9F7DDFC3_E8DA_4580_8C8D_6D8C4839E168__INCLUDED_
+This software is provided 'as-is', without any express or implied
+warranty. In no event will the authors be held liable for any damages
+arising from the use of this software.
 
-#if _MSC_VER > 1000
+Permission is granted to anyone to use this software for any purpose,
+including commercial applications, and to alter it and redistribute it
+freely, subject to the following restrictions:
+
+1. The origin of this software must not be misrepresented; you must not
+claim that you wrote the original software. If you use this software
+in a product, an acknowledgment in the product documentation would be
+appreciated but is not required.
+
+2. Altered source versions must be plainly marked as such, and must not be
+misrepresented as being the original software.
+
+3. This notice may not be removed or altered from any source
+distribution.
+*/
+
 #pragma once
-#endif // _MSC_VER > 1000
-
-class A_FileIO  
+class SB_FileIO  
 {
 public:
-	A_FileIO();
-	virtual ~A_FileIO();
+	SB_FileIO();
+	virtual ~SB_FileIO();
+
+	bool StartBrowser(char* szInitDir);
 
 	bool Open_File_Model(char* Extension, char* Title, char* StartDirectory);
 
@@ -23,7 +38,12 @@ public:
 
 	char FileName[MAX_PATH];
 	char PathFileName[MAX_PATH];
+	char BrowserMessage[MAX_PATH];
+
+	TCHAR szSelectedDir[MAX_PATH];
+
+private:
+	static int __stdcall BrowseCallbackProc(HWND  hwnd, UINT  uMsg, LPARAM  lParam, LPARAM  lpData);
 
 };
 
-#endif // !defined(AFX_A_FILEIO_H__9F7DDFC3_E8DA_4580_8C8D_6D8C4839E168__INCLUDED_)

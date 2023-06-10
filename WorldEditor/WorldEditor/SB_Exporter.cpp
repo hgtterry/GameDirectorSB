@@ -50,5 +50,5 @@ void SB_Exporter::Ogre3D_Model(void)
 		return;
 	}
 
-	//App->CL_Export_Ogre3D->Export_AssimpToOgre();
+	App->CLSB_Export_Ogre3D->Export_AssimpToOgre();
 }

@@ -91,8 +91,6 @@ bool ME_Export_Ogre3D::Export_AssimpToOgre(void)
 	strcpy(mOgreSkellFileName, App->CL_Model->JustName);
 	strcpy(mOgreSkellTagName, App->CL_Model->JustName);
 
-	
-
 	strcat(mOgreMeshFileName, ".mesh");
 	strcat(mOgreScriptFileName, ".material");
 	strcat(mOgreSkellFileName, ".skeleton");

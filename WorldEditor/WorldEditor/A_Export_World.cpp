@@ -156,19 +156,19 @@ void A_Export_World::Export_World_GD3D(bool Silent)
 
 	if (Silent == 0)
 	{
-		bool Test = App->CL_FileIO->SaveSelectedFile("Equity   *.G3ds\0**.G3ds\0", App->CL_World->mCurrent_3DT_Path);
+		bool Test = App->CLSB_FileIO->SaveSelectedFile("Equity   *.G3ds\0**.G3ds\0", App->CL_World->mCurrent_3DT_Path);
 
 		if (Test == 1)
 		{
-			bool Check = App->CL_FileIO->CheckExtention(App->CL_FileIO->PathFileName);
+			bool Check = App->CLSB_FileIO->CheckExtention(App->CLSB_FileIO->PathFileName);
 			if (Check==0)
 			{
-				strcat(App->CL_FileIO->PathFileName, ".G3ds");
-				strcat(App->CL_FileIO->FileName, ".G3ds");
+				strcat(App->CLSB_FileIO->PathFileName, ".G3ds");
+				strcat(App->CLSB_FileIO->FileName, ".G3ds");
 			}
 
 			//m_pDoc->ExportTo_RFW(App->CL_FileIO->PathFileName, 1, 0, 0);
-			ExportTo_RFW(App->CL_FileIO->PathFileName, 1, 0, 0);
+			ExportTo_RFW(App->CLSB_FileIO->PathFileName, 1, 0, 0);
 		}
 	}
 	else
