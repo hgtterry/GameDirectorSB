@@ -26,7 +26,7 @@ class SB_FileIO
 {
 public:
 	SB_FileIO();
-	virtual ~SB_FileIO();
+	~SB_FileIO();
 
 	bool StartBrowser(char* szInitDir);
 

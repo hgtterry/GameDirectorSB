@@ -171,6 +171,7 @@
     <ClCompile Include="SB_OgreListener.cpp" />
     <ClCompile Include="SB_Ogre_Dialog.cpp" />
     <ClCompile Include="SB_Render.cpp" />
+    <ClCompile Include="SB_Textures.cpp" />
     <ClCompile Include="ScaleDialog.cpp" />
     <ClCompile Include="SelBrushList.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Test|Win32'">NotUsing</PrecompiledHeader>
@@ -235,6 +236,7 @@
     <ClInclude Include="SB_OgreListener.h" />
     <ClInclude Include="SB_Ogre_Dialog.h" />
     <ClInclude Include="SB_Render.h" />
+    <ClInclude Include="SB_Textures.h" />
     <ClInclude Include="TypeParser\cparser.h" />
     <ClInclude Include="TypeParser\cscanner.h" />
     <ClInclude Include="TypeParser\Hash.h" />

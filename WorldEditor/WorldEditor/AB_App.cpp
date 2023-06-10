@@ -69,6 +69,7 @@ SB_App::SB_App()
 	CLSB_Load_Textures =		nullptr;
 	CLSB_Export_Ogre3D =		nullptr;
 	CLSB_Exporter =				nullptr;
+	CLSB_Textures =				nullptr;
 
 	AppBackground = NULL;
 	BlackBrush =	NULL;
@@ -198,7 +199,8 @@ bool SB_App::InitApp(void)
 	CLSB_Load_Textures =			new SB_Load_Textures();
 	CLSB_Export_Ogre3D =			new SB_Export_Ogre3D();
 	CLSB_Exporter =					new SB_Exporter();
-
+	CLSB_Textures =					new SB_Textures();
+	
 	InitCommonControls();
 
 	hInst =NULL;

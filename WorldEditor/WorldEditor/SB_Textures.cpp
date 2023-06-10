@@ -21,31 +21,14 @@ misrepresented as being the original software.
 distribution.
 */
 
-#pragma once
-class SB_Export_Ogre3D
+#include "StdAfx.h"
+#include "AB_App.h"
+#include "SB_Textures.h"
+
+SB_Textures::SB_Textures()
 {
-public:
-	SB_Export_Ogre3D(void);
-	~SB_Export_Ogre3D(void);
+}
 
-	bool Export_AssimpToOgre(void);
-
-	bool Add_Sub_Folder;
-	char NewDirectory[MAX_PATH];
-	char Directory_Name[MAX_PATH];
-
-private:
-
-	bool CreateDirectoryMesh(void);
-	bool DecompileTextures(void);
-
-	char mDecompileFolder[MAX_PATH];
-	char mOgreMeshFileName[MAX_PATH];
-	char mOgreScriptFileName[MAX_PATH];
-	char mOgreSkellFileName[MAX_PATH];
-	char mOgreSkellTagName[MAX_PATH];
-
-	char mCurrentFolder[MAX_PATH];
-
-};
-
+SB_Textures::~SB_Textures()
+{
+}
