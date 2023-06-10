@@ -27,5 +27,21 @@ class SB_Textures
 public:
 	SB_Textures();
 	~SB_Textures();
+
+	void Load_Textures_Assimp();
+	void Load_Textures_Ogre3D(void);
+
+	bool Windows_Preview_FullPath(int Index, char* FullPath);
+	bool Load_OpenGL_Textures(int TextureID);
+
+	int Genesis_WriteToBmp(geBitmap* bmp, char* filename);
+	bool Soil_Load_Texture(UINT textureArray[], LPSTR strFileName, int textureID);
+
+	char TextureFileName[MAX_PATH];
+
+protected:
+
+	bool Texture_To_Bmp(char* File);
+	bool LoadDummyTexture(int Index);
 };
 

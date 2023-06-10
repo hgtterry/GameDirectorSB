@@ -70,7 +70,6 @@ distribution.
 #include "SB_Model.h"
 #include "SB_Loader.h"
 #include "SB_Ini.h"
-#include "SB_Load_Textures.h"
 #include "SB_Export_Ogre3D.h"
 #include "SB_Exporter.h"
 #include "SB_Textures.h"
@@ -121,7 +120,6 @@ public:
 	SB_Model*					CLSB_Model;
 	SB_Loader*					CLSB_Loader;
 	SB_Ini*						CLSB_Ini;
-	SB_Load_Textures*			CLSB_Load_Textures;
 	SB_Export_Ogre3D*			CLSB_Export_Ogre3D;
 	SB_Exporter*				CLSB_Exporter;
 	SB_Textures*				CLSB_Textures;

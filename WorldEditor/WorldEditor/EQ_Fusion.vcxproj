@@ -165,7 +165,6 @@
     <ClCompile Include="SB_Ini.cpp" />
     <ClCompile Include="SB_Keyboard.cpp" />
     <ClCompile Include="SB_Loader.cpp" />
-    <ClCompile Include="SB_Load_Textures.cpp" />
     <ClCompile Include="SB_Model.cpp" />
     <ClCompile Include="SB_Ogre.cpp" />
     <ClCompile Include="SB_OgreListener.cpp" />
@@ -230,7 +229,6 @@
     <ClInclude Include="SB_Ini.h" />
     <ClInclude Include="SB_Keyboard.h" />
     <ClInclude Include="SB_Loader.h" />
-    <ClInclude Include="SB_Load_Textures.h" />
     <ClInclude Include="SB_Model.h" />
     <ClInclude Include="SB_Ogre.h" />
     <ClInclude Include="SB_OgreListener.h" />

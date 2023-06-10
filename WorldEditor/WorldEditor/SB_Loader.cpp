@@ -336,9 +336,9 @@ bool SB_Loader::AddTexture(geVFile* BaseFile, const char* Path, int GroupIndex)
 	strcat(TempTextureFile_BMP, "\\");
 	strcat(TempTextureFile_BMP, "TextureLoad.bmp");
 
-	App->CLSB_Load_Textures->Genesis_WriteToBmp(Bitmap, TempTextureFile_BMP);
+	App->CLSB_Textures->Genesis_WriteToBmp(Bitmap, TempTextureFile_BMP);
 
-	App->CLSB_Load_Textures->Soil_Load_Texture(App->CLSB_Ogre->RenderListener->g_Texture, TempTextureFile_BMP, GroupIndex);
+	App->CLSB_Textures->Soil_Load_Texture(App->CLSB_Ogre->RenderListener->g_Texture, TempTextureFile_BMP, GroupIndex);
 
 	geVFile_Close(File);
 
