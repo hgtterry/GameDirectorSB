@@ -27,6 +27,14 @@ distribution.
 
 SB_Export_Ogre3D::SB_Export_Ogre3D(void)
 {
+	mDecompileFolder[0] = 0;
+	mOgreMeshFileName[0] = 0;
+	mOgreScriptFileName[0] = 0;
+	mOgreSkellFileName[0] = 0;
+	mOgreSkellTagName[0] = 0;
+	Directory_Name[0] = 0;
+
+	Add_Sub_Folder = 1;
 }
 
 SB_Export_Ogre3D::~SB_Export_Ogre3D(void)
@@ -51,8 +59,6 @@ bool SB_Export_Ogre3D::Export_AssimpToOgre(void)
 	strcpy(App->CLSB_FileIO->BrowserMessage, "Select Folder To Place Ogre Files a sub folder will be created");
 	int Test = App->CLSB_FileIO->StartBrowser(App->CLSB_Model->Model_FolderPath);
 	if (Test == 0) { return 1; }
-
-	////App->CL_FileIO->Folder_Browser();
 
 	//App->CL_Export->Start_Export_Dlg();
 	//if (App->CL_Export->Is_Canceled == 1) { return 1; }

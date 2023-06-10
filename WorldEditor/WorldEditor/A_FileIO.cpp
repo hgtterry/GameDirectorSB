@@ -34,7 +34,6 @@ SB_FileIO::SB_FileIO()
 	PathFileName[0] = 0;
 	BrowserMessage[0] = 0;
 
-
 	szSelectedDir[0] = 0;
 }
 

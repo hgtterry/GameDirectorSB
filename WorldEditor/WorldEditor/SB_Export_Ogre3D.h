@@ -30,6 +30,10 @@ public:
 
 	bool Export_AssimpToOgre(void);
 
+	bool Add_Sub_Folder;
+
+	char Directory_Name[MAX_PATH];
+
 private:
 
 	char mDecompileFolder[MAX_PATH];
@@ -37,8 +41,6 @@ private:
 	char mOgreScriptFileName[MAX_PATH];
 	char mOgreSkellFileName[MAX_PATH];
 	char mOgreSkellTagName[MAX_PATH];
-
-	char Directory_Name[MAX_PATH];
 
 };
 
