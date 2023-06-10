@@ -72,6 +72,7 @@ distribution.
 #include "SB_Ini.h"
 #include "SB_Load_Textures.h"
 #include "SB_Export_Ogre3D.h"
+#include "SB_Exporter.h"
 
 class SB_App
 {
@@ -121,7 +122,7 @@ public:
 	SB_Ini*						CLSB_Ini;
 	SB_Load_Textures*			CLSB_Load_Textures;
 	SB_Export_Ogre3D*			CLSB_Export_Ogre3D;
-
+	SB_Exporter*				CLSB_Exporter;
 
 	bool InitApp(void);
 	void InitMFC(void);

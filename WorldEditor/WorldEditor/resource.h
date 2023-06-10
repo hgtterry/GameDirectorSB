@@ -806,6 +806,9 @@
 #define ID_FILE_WORLDEDITORPROJECT      33061
 #define ID_RENDER_CROSSHAIR             33062
 #define ID_RENDER_FACES                 33063
+#define ID_FILE_EXPORT33064             33064
+#define ID_EXPORT_OGRE3D                33065
+#define ID_OGRE3D_MESH                  33066
 #define IDS_HELPINFORMATION             38000
 
 // Next default values for new objects
@@ -814,7 +817,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        275
-#define _APS_NEXT_COMMAND_VALUE         33064
+#define _APS_NEXT_COMMAND_VALUE         33067
 #define _APS_NEXT_CONTROL_VALUE         1467
 #define _APS_NEXT_SYMED_VALUE           112
 #endif

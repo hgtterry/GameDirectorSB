@@ -309,6 +309,9 @@
     <ClCompile Include="SB_Export_Ogre3D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SB_Exporter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="FUSION.rc">
@@ -617,6 +620,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SB_Export_Ogre3D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SB_Exporter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -2245,6 +2245,14 @@ IDR_MENUSB MENU
 BEGIN
     POPUP "File"
     BEGIN
+        POPUP "Export"
+        BEGIN
+            POPUP "Ogre3D"
+            BEGIN
+                MENUITEM "Mesh",                        ID_OGRE3D_MESH
+            END
+        END
+        MENUITEM SEPARATOR
         MENUITEM "World Editor Project .Wepf...", ID_FILE_WORLDEDITORPROJECT
     END
     POPUP "Camera"
