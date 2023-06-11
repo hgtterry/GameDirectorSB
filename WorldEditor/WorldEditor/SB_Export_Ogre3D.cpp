@@ -209,17 +209,7 @@ bool SB_Export_Ogre3D::DecompileTextures(void)
 			strcat(mDirectory, "\\");
 			strcat(mDirectory, FileName);
 
-			//App->CL_Texture_Lib->WriteTGA(mDirectory, App->CLSB_Model->Group[Loop]->RF_Bitmap);
-
-			//int Len = strlen(FileName);
-			//FileName[Len - 4] = 0;
-			//strcat(FileName, ".jpg");
-			//
-			//App->CL_Textures->HBITMAP_TO_BmpFile(Data, FileName, "");
-			//geBitmap* Bitmap = geBitmap_CreateFromFile(FileName);
-
-			//App->CL_Textures->Jpg_To_Tga24(FileName);
-
+			App->CLSB_Textures->WriteTGA(mDirectory, App->CLSB_Model->Group[Loop]->RF_Bitmap);
 		}
 		else if (_stricmp(FileName + strlen(FileName) - 4, ".png") == 0)
 		{
@@ -227,8 +217,8 @@ bool SB_Export_Ogre3D::DecompileTextures(void)
 			FileName[Len - 4] = 0;
 			strcat(FileName, ".jpg");
 
-			//App->CL_Textures->HBITMAP_TO_BmpFile(Data, FileName, "");
-			//App->CL_Textures->Jpg_To_png24(FileName);
+			App->CLSB_Textures->HBITMAP_TO_BmpFile(Data, FileName, "");
+			App->CLSB_Textures->Jpg_To_png24(FileName);
 		}
 		else if (_stricmp(FileName + strlen(FileName) - 4, ".jpg") == 0)
 		{
@@ -236,13 +226,13 @@ bool SB_Export_Ogre3D::DecompileTextures(void)
 			FileName[Len - 4] = 0;
 			strcat(FileName, ".bmp");
 
-			//App->CL_Textures->HBITMAP_TO_BmpFile(Data, FileName, "");
-			//App->CL_Textures->Bmp_To_Jpg(FileName);
+			App->CLSB_Textures->HBITMAP_TO_BmpFile(Data, FileName, "");
+			App->CLSB_Textures->Bmp_To_Jpg(FileName);
 		}
 		else
 		{
 
-			//App->CL_Textures->HBITMAP_TO_BmpFile(Data, FileName, "");
+			App->CLSB_Textures->HBITMAP_TO_BmpFile(Data, FileName, "");
 		}
 
 		Loop++;

@@ -45,6 +45,7 @@ SB_Textures::~SB_Textures()
 {
 }
 
+
 // *************************************************************************
 // *			Load_Textures_Assimp Terry Bernie Hazel			  	 	   *
 // *************************************************************************
@@ -673,5 +674,306 @@ int SB_Textures::Genesis_WriteToBmp(geBitmap* bmp, char* filename)
 	}
 	fclose(file);
 
+	return 1;
+}
+
+// *************************************************************************
+// *				WriteTGA:- Terry and Hazel Flanigan 2023		  	   *
+// *************************************************************************
+int SB_Textures::WriteTGA(const char* pszFile, geBitmap* pBitmap)
+{
+	geBitmap* pLock = NULL;
+	geBitmap* pLockA = NULL;
+	gePixelFormat   Format;
+	gePixelFormat   FormatA;
+	geBitmap_Info   BitmapInfo;
+	int             nErrorCode = TPACKERROR_UNKNOWN;      // Return code
+	TGAHEADER		tgah;
+	long			footer = 0;
+	char			signature[18] = "TRUEVISION-XFILE.";
+
+	uint8* pPixelData;
+	uint8* pPixelDataA;
+
+	int             i, j;
+	HANDLE          hFile = NULL;
+	DWORD           nBytesWritten;
+
+	// Create the .TGA file.
+	hFile = CreateFile(pszFile,
+		GENERIC_READ | GENERIC_WRITE,
+		(DWORD)0,
+		NULL,
+		CREATE_ALWAYS,
+		FILE_ATTRIBUTE_NORMAL,
+		(HANDLE)NULL);
+
+	if (hFile == INVALID_HANDLE_VALUE)
+		return TPACKERROR_CREATEFILE;
+
+	// get 24-bit bitmap
+	Format = GE_PIXELFORMAT_24BIT_BGR;
+	FormatA = GE_PIXELFORMAT_8BIT_GRAY;
+
+	if (geBitmap_GetBits(pBitmap))
+	{
+		pLock = pBitmap;
+	}
+	else
+	{
+		if (!geBitmap_LockForRead(pBitmap, &pLock, 0, 0, Format, GE_FALSE, 0))
+		{
+			return FALSE;
+		}
+	}
+
+	if (geBitmap_GetBits(geBitmap_GetAlpha(pBitmap)))
+	{
+		pLockA = geBitmap_GetAlpha(pBitmap);
+	}
+	else
+	{
+		if (!geBitmap_LockForRead(geBitmap_GetAlpha(pBitmap), &pLockA, 0, 0, FormatA, GE_FALSE, 0))
+		{
+			return FALSE;
+		}
+	}
+
+	geBitmap_GetInfo(pLock, &BitmapInfo, NULL);
+	if (BitmapInfo.Format != Format)
+	{
+		nErrorCode = TPACKERROR_UNKNOWN;
+		goto ExitWriteBitmap;
+	}
+
+
+	tgah.IDLength = 0;
+	tgah.ColorMapType = 0;
+	tgah.ImageType = 2; // we create an uncompressed, true color image
+	tgah.CMFirstEntry = 0;
+	tgah.CMLength = 0;
+	tgah.CMEntrySize = 0;
+	tgah.Xorigin = 0;
+	tgah.Yorigin = 0;
+
+	tgah.Width = (uint16)BitmapInfo.Width;
+	tgah.Height = (uint16)BitmapInfo.Height;
+
+	tgah.PixelDepth = 32;
+	tgah.ImageDescriptor = 8; //00001000 - not flipped, 8 alpha bits
+
+
+	pPixelData = (uint8*)geBitmap_GetBits(pLock);
+
+	pPixelDataA = (uint8*)geBitmap_GetBits(pLockA);
+
+	// Write the tga header
+	if (!WriteFile(hFile, (LPVOID)&tgah, sizeof(TGAHEADER), (LPDWORD)&nBytesWritten, (NULL)))
+	{
+		nErrorCode = TPACKERROR_WRITE;
+		goto ExitWriteBitmap;
+	}
+
+	// write pixels
+	pPixelData += 3 * tgah.Width * (tgah.Height - 1);
+	pPixelDataA += tgah.Width * (tgah.Height - 1);
+	for (i = 0; i < tgah.Height; i++)
+	{
+		for (j = 0; j < tgah.Width; j++)
+		{
+			if (!WriteFile(hFile, (LPVOID)pPixelData, 3, (LPDWORD)&nBytesWritten, (NULL)))
+			{
+				nErrorCode = TPACKERROR_WRITE;
+				goto ExitWriteBitmap;
+			}
+
+			pPixelData += 3;
+
+
+			if (!WriteFile(hFile, (LPVOID)pPixelDataA, 1, (LPDWORD)&nBytesWritten, (NULL)))
+			{
+				nErrorCode = TPACKERROR_WRITE;
+				goto ExitWriteBitmap;
+			}
+			pPixelDataA++;
+		}
+
+		pPixelData -= 2 * 3 * tgah.Width;
+		pPixelDataA -= 2 * tgah.Width;
+	}
+
+	// write the signature
+	if (!WriteFile(hFile, (LPVOID)&footer, 4, (LPDWORD)&nBytesWritten, (NULL)))
+	{
+		nErrorCode = TPACKERROR_WRITE;
+		goto ExitWriteBitmap;
+	}
+
+	if (!WriteFile(hFile, (LPVOID)&footer, 4, (LPDWORD)&nBytesWritten, (NULL)))
+	{
+		nErrorCode = TPACKERROR_WRITE;
+		goto ExitWriteBitmap;
+	}
+
+	if (!WriteFile(hFile, (LPVOID)signature, 18, (LPDWORD)&nBytesWritten, (NULL)))
+	{
+		nErrorCode = TPACKERROR_WRITE;
+		goto ExitWriteBitmap;
+	}
+
+	CloseHandle(hFile);
+	hFile = NULL;
+
+	// Success!
+	nErrorCode = TPACKERROR_OK;
+
+ExitWriteBitmap:
+
+	// Clean-up
+	//------------------------------------
+	// Make sure the file gets closed
+	if (hFile)
+		CloseHandle(hFile);
+
+	// Unlock the geBitmap
+	if (pLock != pBitmap)
+	{
+		geBitmap_UnLock(pLock);
+	}
+
+	if (pLockA != geBitmap_GetAlpha(pBitmap))
+	{
+		geBitmap_UnLock(pLockA);
+	}
+
+	return nErrorCode;
+}
+
+// *************************************************************************
+// *						HBITMAP_TO_BmpFile						 	   *
+// *************************************************************************
+bool SB_Textures::HBITMAP_TO_BmpFile(HBITMAP Bitmap, char* Filename, char* SaveFolder)
+{
+	HDC hDC;
+	int iBits;
+	WORD wBitCount;
+	DWORD dwPaletteSize = 0, dwBmBitsSize = 0, dwDIBSize = 0, dwWritten = 0;
+	BITMAP Bitmap0;
+	BITMAPFILEHEADER bmfHdr;
+	BITMAPINFOHEADER bi;
+	LPBITMAPINFOHEADER lpbi;
+	HANDLE fh, hDib, hPal, hOldPal2 = NULL;
+	hDC = CreateDC(TEXT("DISPLAY"), NULL, NULL, NULL);
+	iBits = GetDeviceCaps(hDC, BITSPIXEL) * GetDeviceCaps(hDC, PLANES);
+	DeleteDC(hDC);
+	if (iBits <= 1)
+		wBitCount = 1;
+	else if (iBits <= 4)
+		wBitCount = 4;
+	else if (iBits <= 8)
+		wBitCount = 8;
+	else
+		wBitCount = 24;
+	GetObject(Bitmap, sizeof(Bitmap0), (LPSTR)&Bitmap0);
+	bi.biSize = sizeof(BITMAPINFOHEADER);
+	bi.biWidth = Bitmap0.bmWidth;
+	bi.biHeight = -Bitmap0.bmHeight;
+	bi.biPlanes = 1;
+	bi.biBitCount = wBitCount;
+	bi.biCompression = BI_RGB;
+	bi.biSizeImage = 0;
+	bi.biXPelsPerMeter = 0;
+	bi.biYPelsPerMeter = 0;
+	bi.biClrImportant = 0;
+	bi.biClrUsed = 256;
+	dwBmBitsSize = ((Bitmap0.bmWidth * wBitCount + 31) & ~31) / 8
+		* Bitmap0.bmHeight;
+	hDib = GlobalAlloc(GHND, dwBmBitsSize + dwPaletteSize + sizeof(BITMAPINFOHEADER));
+	lpbi = (LPBITMAPINFOHEADER)GlobalLock(hDib);
+	*lpbi = bi;
+
+	hPal = GetStockObject(DEFAULT_PALETTE);
+	if (hPal)
+	{
+		hDC = GetDC(NULL);
+		hOldPal2 = SelectPalette(hDC, (HPALETTE)hPal, FALSE);
+		RealizePalette(hDC);
+	}
+
+
+	GetDIBits(hDC, Bitmap, 0, (UINT)Bitmap0.bmHeight, (LPSTR)lpbi + sizeof(BITMAPINFOHEADER)
+		+ dwPaletteSize, (BITMAPINFO*)lpbi, DIB_RGB_COLORS);
+
+	if (hOldPal2)
+	{
+		SelectPalette(hDC, (HPALETTE)hOldPal2, TRUE);
+		RealizePalette(hDC);
+		ReleaseDC(NULL, hDC);
+	}
+
+	fh = CreateFile(Filename, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS,
+		FILE_ATTRIBUTE_NORMAL | FILE_FLAG_SEQUENTIAL_SCAN, NULL);
+
+	if (fh == INVALID_HANDLE_VALUE)
+		return FALSE;
+
+	bmfHdr.bfType = 0x4D42; // "BM"
+	dwDIBSize = sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER) + dwPaletteSize + dwBmBitsSize;
+	bmfHdr.bfSize = dwDIBSize;
+	bmfHdr.bfReserved1 = 0;
+	bmfHdr.bfReserved2 = 0;
+	bmfHdr.bfOffBits = (DWORD)sizeof(BITMAPFILEHEADER) + (DWORD)sizeof(BITMAPINFOHEADER) + dwPaletteSize;
+
+	WriteFile(fh, (LPSTR)&bmfHdr, sizeof(BITMAPFILEHEADER), &dwWritten, NULL);
+
+	WriteFile(fh, (LPSTR)lpbi, dwDIBSize, &dwWritten, NULL);
+	GlobalUnlock(hDib);
+	GlobalFree(hDib);
+	CloseHandle(fh);
+
+	return 1;
+}
+
+// *************************************************************************
+// *							Jpg_To_png24					  		 	   *
+// *************************************************************************
+bool SB_Textures::Jpg_To_png24(char* File)
+{
+	char OldFile[1024];
+	strcpy(OldFile, File);
+
+	ilLoadImage(File);
+
+	int Len = strlen(File);
+	File[Len - 4] = 0;
+	strcat(File, ".png");
+
+	ilSaveImage(File);
+
+	remove(OldFile);
+	return 1;
+}
+
+// *************************************************************************
+// *							Bmp_To_Jpg					  		 	   *
+// *************************************************************************
+bool SB_Textures::Bmp_To_Jpg(char* File)
+{
+	char OldFile[1024];
+	strcpy(OldFile, File);
+
+	bool test = ilLoadImage(File);
+	if (test == 0)
+	{
+		App->Say("Failed to load Texture Bmp_To_Jpg");
+	}
+
+	int Len = strlen(File);
+	File[Len - 4] = 0;
+	strcat(File, ".jpg");
+
+	ilSaveImage(File);
+
+	remove(OldFile);
 	return 1;
 }
