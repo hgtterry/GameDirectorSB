@@ -23,8 +23,7 @@ misrepresented as being the original software.
 distribution.
 */
 
-#if !defined(AFX_A_DIALOGS_H__373548E3_01B1_47FB_8C16_BF24D6C48B3A__INCLUDED_)
-#define AFX_A_DIALOGS_H__373548E3_01B1_47FB_8C16_BF24D6C48B3A__INCLUDED_
+#pragma once
 
 class A_Dialogs  
 {
@@ -66,4 +65,3 @@ protected:
 	CFusionDoc			*m_pDoc;
 };
 
-#endif // !defined(AFX_A_DIALOGS_H__373548E3_01B1_47FB_8C16_BF24D6C48B3A__INCLUDED_)

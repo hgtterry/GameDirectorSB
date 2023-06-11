@@ -73,6 +73,7 @@ distribution.
 #include "SB_Export_Ogre3D.h"
 #include "SB_Exporter.h"
 #include "SB_Textures.h"
+#include "SB_Dialogs.h"
 
 class SB_App
 {
@@ -123,6 +124,8 @@ public:
 	SB_Export_Ogre3D*			CLSB_Export_Ogre3D;
 	SB_Exporter*				CLSB_Exporter;
 	SB_Textures*				CLSB_Textures;
+	SB_Dialogs*					CLSB_Dialogs;
+
 
 	bool InitApp(void);
 	void InitMFC(void);

@@ -125,6 +125,8 @@
 #define IDD_SB_3D_VIEWER                271
 #define IDR_MENUSB                      274
 #define IDD_SB_EXPORTOPTIONS            275
+#define IDD_DIALOG3                     276
+#define IDD_SB_YESNO                    276
 #define IDC_RESET_ALL                   1000
 #define IDC_EDIT1                       1001
 #define IDC_EDIT10                      1002
@@ -532,7 +534,6 @@
 #define IDC_BT_BROWSE                   1364
 #define IDC_STTEXT                      1365
 #define IDC_GD_SPHEROID_PRIMITIVE       1365
-#define IDC_BUTTON8                     1365
 #define IDC_BT_FOLDER_NAME              1365
 #define IDC_STMESSAGE                   1366
 #define IDC_GD_CONE_PRIMITIVE           1366
@@ -828,7 +829,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        276
+#define _APS_NEXT_RESOURCE_VALUE        278
 #define _APS_NEXT_COMMAND_VALUE         33067
 #define _APS_NEXT_CONTROL_VALUE         1474
 #define _APS_NEXT_SYMED_VALUE           112

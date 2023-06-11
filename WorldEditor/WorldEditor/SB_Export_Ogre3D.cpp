@@ -162,9 +162,9 @@ bool SB_Export_Ogre3D::CreateDirectoryMesh(void)
 		}
 		else
 		{
-			/*App->CL_Dialogs->YesNo("File Exsits", "Do you want to update File");
+			App->CLSB_Dialogs->YesNo("File Exsits", "Do you want to update File");
 
-			bool Doit = App->CL_Dialogs->Canceled;
+			bool Doit = App->CLSB_Dialogs->Canceled;
 			if (Doit == 0)
 			{
 				strcpy(mDecompileFolder, App->CLSB_FileIO->szSelectedDir);
@@ -173,7 +173,7 @@ bool SB_Export_Ogre3D::CreateDirectoryMesh(void)
 			else
 			{
 				return 0;
-			}*/
+			}
 		}
 
 	}

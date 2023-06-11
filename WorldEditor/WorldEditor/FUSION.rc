@@ -1411,7 +1411,7 @@ IDC_EYEDROPPER          CURSOR                  "res\\cursor1.cur"
 
 STRINGTABLE
 BEGIN
-    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.26 - [10-06-23] -2"
+    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.26 - [11-06-23] -2"
     IDR_FUSIONTYPE          "Genesis3D World Editor\nWorld\nWorld\nWorld Files (*.3dt)\n.3dt\nWorldEditor.Document\nGenesis3D World Editor Document"
     IDS_LOAD_WARNING        "Some entities or brushes did not load properly, see console for details."
     IDS_NEWGROUP            "Group Name"
@@ -2085,6 +2085,17 @@ BEGIN
     CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME | SS_SUNKEN,7,149,315,1
 END
 
+IDD_SB_YESNO DIALOGEX 0, 0, 385, 88
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,142,67,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,194,67,50,14
+    CTEXT           "Static",IDC_BANNER,7,7,371,27,SS_CENTERIMAGE
+    CTEXT           "Static",IDC_STATIC,6,35,371,27,SS_CENTERIMAGE
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -2260,6 +2271,14 @@ BEGIN
         TOPMARGIN, 7
         BOTTOMMARGIN, 169
     END
+
+    IDD_SB_YESNO, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 378
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 81
+    END
 END
 #endif    // APSTUDIO_INVOKED
 
@@ -2325,6 +2344,11 @@ BEGIN
 END
 
 IDD_SB_EXPORTOPTIONS AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_SB_YESNO AFX_DIALOG_LAYOUT
 BEGIN
     0
 END
