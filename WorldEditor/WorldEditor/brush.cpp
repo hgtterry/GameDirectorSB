@@ -1006,19 +1006,23 @@ geBoolean Brush_ExportTo3ds(const Brush *b, FILE *ofile)
 {
 	assert(ofile);
 	assert(b);
-
+	
 	switch (b->Type)
 	{
 		case	BRUSH_MULTI:
 			return BrushList_ExportTo3ds (b->BList, ofile, GE_TRUE);
 
 		case	BRUSH_LEAF:
-			if(b->BList)
-				return BrushList_ExportTo3ds (b->BList, ofile, GE_TRUE);
+			if (b->BList)
+			{
+				return BrushList_ExportTo3ds(b->BList, ofile, GE_TRUE);
+			}
 			else
 			{
-				if(!(b->Flags&(BRUSH_HOLLOW|BRUSH_HOLLOWCUT|BRUSH_SUBTRACT)))
+				if (!(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT | BRUSH_SUBTRACT)))
+				{
 					return FaceList_ExportTo3ds(b->Faces, ofile, BrushCount, SubBrushCount);
+				}
 				else if((b->Flags&BRUSH_SUBTRACT)&&!(b->Flags&(BRUSH_HOLLOW|BRUSH_HOLLOWCUT)))
 					BrushCount--;
 			}
@@ -1033,6 +1037,7 @@ geBoolean Brush_ExportTo3ds(const Brush *b, FILE *ofile)
 			assert (0);		// invalid brush type
 			break;
 	}
+
 	return GE_TRUE;
 }
 // end change
@@ -3713,6 +3718,7 @@ geBoolean BrushList_ExportTo3ds (BrushList *BList, FILE *ofile, geBoolean SubBru
 
 
 	pBrush = BrushList_GetFirst (BList, &bi);
+	
 	while (pBrush != NULL)
 	{
 		if (!Brush_ExportTo3ds(pBrush, ofile)) return GE_FALSE;
@@ -3723,6 +3729,7 @@ geBoolean BrushList_ExportTo3ds (BrushList *BList, FILE *ofile, geBoolean SubBru
 		else
 			BrushCount++;
 	}
+
 	SubBrushCount=0;
 	if(!SubBrush)
 		BrushCount=0;

@@ -177,7 +177,6 @@ void A_Export_World::Export_World_GD3D(bool Silent)
 		char Path[MAX_PATH];
 		strcpy(Path,App->WorldEditor_Directory);
 		strcat(Path,"Data\\Temp.G3ds");
-
 		ExportTo_RFW(Path, 1, 0, 0);
 	}
 }
@@ -328,7 +327,7 @@ void A_Export_World::ExportTo_RFW(const char *FileName, int ExpSelected, geBoole
 
 				::FilePath_ChangeName(FileName, Name, NewFileName);
 			}
-
+			
 			fResult = App->CL_Export_World->Level_Build_G3ds(reinterpret_cast<tag_Level3 *> (m_pDoc->pLevel), NewFileName, SBList, ExpSelected, ExpLights, GroupID);
 			if(!fResult)
 				App->Say("Error exporting group");
@@ -378,7 +377,7 @@ bool A_Export_World::Level_Build_G3ds(Level3 *pLevel, const char *Filename, Brus
 	const int FileLength = 11;
 
 	fseek(f, 32L, SEEK_SET);
-
+	
 	// write all used materials to the file
 	for(i=0;i<pLevel->WadFile->mBitmapCount;i++)
 	{
@@ -508,15 +507,15 @@ bool A_Export_World::Level_Build_G3ds(Level3 *pLevel, const char *Filename, Brus
 			TypeIO_WriteUshort(f, 0);
 		}
 	}
-
+	
 	// write out the master scale
 	TypeIO_WriteUshort(f, MASTER_SCALE);
 	TypeIO_WriteInt(f, 10);
 	TypeIO_WriteFloat(f, 1.0f);
-
+	
 	// export the brushes
 	if (BrushList_ExportTo3ds (BList, f, GE_FALSE) == GE_FALSE) goto WriteDone;
-
+	
 // changed QD 12/03
 	int size_kf;
 	size_kf=0;
@@ -554,7 +553,7 @@ WriteDone:
 		_unlink(Filename);
 // end change
 
-
+	
 	Write_Project_File("GDSB.Wepf",Filename);
 
 	return WriteRslt;

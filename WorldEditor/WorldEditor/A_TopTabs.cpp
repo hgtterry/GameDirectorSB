@@ -281,7 +281,7 @@ LRESULT CALLBACK A_TopTabs::Top_Tabs_Proc(HWND hDlg, UINT message, WPARAM wParam
 				pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 
 				App->CL_Export_World->Export_World_GD3D(1);
-
+				
 				pDoc->ResetAllSelections();
 				pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 

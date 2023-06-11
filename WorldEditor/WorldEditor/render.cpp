@@ -144,7 +144,7 @@ geFloat Render_ComputeGridDist (const ViewVars *v, int GridType)
 	return dist;
 }
 
-static geFloat log2 (geFloat f)
+static geFloat log2x (geFloat f)
 {
 	return (geFloat)(log (f)/log (2.0f));
 }
@@ -164,7 +164,7 @@ geFloat	Render_GetFineGrid(const ViewVars *v, int GridType)
 			Interval = pow ((float)10, (int)(log10 (dist)));
 			break;
 		case GRID_TYPE_TEXEL :
-			Interval = pow ((float)2, (int)(log2 (dist)));
+			Interval = pow ((float)2, (int)(log2x (dist)));
 			break;
 		default :
 			assert (0);

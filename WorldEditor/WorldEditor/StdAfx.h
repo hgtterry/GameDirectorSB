@@ -25,12 +25,13 @@
 #ifndef STDAFX_H
 #define STDAFX_H
 
-#define WINVER 0x0500
+#define WINVER 0x0501
+
 
 #pragma comment(linker,"/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='x86' publicKeyToken='6595b64144ccf1df' language='*'\"")
 
 #define VC_EXTRALEAN		// Exclude rarely-used stuff from Windows headers
-
+#pragma comment(lib, "legacy_stdio_definitions.lib")
 
 /*
   Disable warnings for Windows headers

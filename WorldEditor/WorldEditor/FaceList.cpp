@@ -435,9 +435,10 @@ static void write_char(FILE *file,char i)
 // *************************************************************************
 geBoolean	FaceList_ExportTo3ds(const FaceList *pList, FILE *f, int BrushCount, int SubBrushCount)
 {
+	
 	int i, j, k, num_faces, num_verts, num_mats, num_chars, curnum_verts;
 	int size_verts, size_faces, size_trimesh, size_objblock, size_name, size_mapuv, size_mats;
-	char matname[10];
+	char matname[20];
 	
 	char *matf=(char *)calloc(sizeof(char), pList->NumFaces);
 
@@ -446,6 +447,7 @@ geBoolean	FaceList_ExportTo3ds(const FaceList *pList, FILE *f, int BrushCount, i
 
 	num_faces = num_verts = num_mats = num_chars = 0;
 	// get the total number of verts, faces and materials of the object
+	
 	for(i=0;i < pList->NumFaces; i++)
 	{
 		curnum_verts=Face_GetNumPoints(pList->Faces[i]);
@@ -464,12 +466,12 @@ geBoolean	FaceList_ExportTo3ds(const FaceList *pList, FILE *f, int BrushCount, i
 			}
 
 			strncpy (matname, Face_GetTextureName(pList->Faces[i]), 11);
-			matname[10] = '\0';
+			matname[10] = 0;
 			// get the number of characters for calculating size_mats
-			for(j=0;matname[j]!='\0';j++,num_chars++);
+			for(j=0;matname[j]!= 0;j++,num_chars++);
 		}
 	}
-
+	
 	for(i=0;i<pList->NumFaces;i++)
 		matf[i]=0;
 
@@ -481,7 +483,7 @@ geBoolean	FaceList_ExportTo3ds(const FaceList *pList, FILE *f, int BrushCount, i
 	size_mapuv		= SIZE_CHUNKID+SIZE_CHUNKLENGTH+SIZE_USHORT+2*SIZE_FLOAT*num_verts;
 	size_trimesh	= SIZE_CHUNKID+SIZE_CHUNKLENGTH+size_verts+size_faces+size_mapuv;
 	size_objblock	= SIZE_CHUNKID+SIZE_CHUNKLENGTH+size_name+size_trimesh;	
-
+	
 	// write the objblock
 	write_ushort(f,CHUNK_OBJBLOCK);
 	write_int(f,size_objblock);

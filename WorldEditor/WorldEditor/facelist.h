@@ -21,6 +21,7 @@
 #ifndef FACELIST_H
 #define FACELIST_H
 
+
 #include "face.h"
 // changed QD 12/03
 #include "WadFile.h"
