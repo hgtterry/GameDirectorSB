@@ -22,6 +22,24 @@ distribution.
 */
 
 #pragma once
+
+#define MAX_VERTICES 100000
+#define MAX_POLYGONS 100000
+
+typedef struct {
+	vertex_type XMLvertex[MAX_VERTICES];
+	normal_type XMLnormal[MAX_VERTICES];
+	polygon_type XMLpolygon[MAX_POLYGONS];
+	mapcoord_type mapcoord[MAX_VERTICES];
+	int BeenAdded[MAX_VERTICES];
+	int SortedVerticeCount;
+	int SortedPolyCount;
+	int SortedVertIndex[MAX_VERTICES];
+	int SXMLCount;
+	int BoneIndex[MAX_VERTICES];
+
+} XMLStore_Type;
+
 class SB_Export_Ogre3D
 {
 public:
@@ -38,6 +56,11 @@ private:
 
 	bool CreateDirectoryMesh(void);
 	bool DecompileTextures(void);
+	void CreateMaterialFile(char* MatFileName);
+	bool Write_XML_File();
+	bool RenderToXML(int GroupIndex);
+	bool WriteNewXML(int GroupIndex);
+	bool WriteSubMesh(int GroupIndex);
 
 	char mDecompileFolder[MAX_PATH];
 	char mOgreMeshFileName[MAX_PATH];
@@ -45,7 +68,22 @@ private:
 	char mOgreSkellFileName[MAX_PATH];
 	char mOgreSkellTagName[MAX_PATH];
 
+	char XmlMeshFileName[MAX_PATH];
+	char XmlScriptFileName[MAX_PATH];
+	char XmlSkellFileName[MAX_PATH];
+	char XmlSkellTagName[MAX_PATH];
+
 	char mCurrentFolder[MAX_PATH];
 
+	float nx;
+	float ny;
+	float nz;
+
+	float u;
+	float v;
+
+	XMLStore_Type* S_XMLStore[1];
+
+	FILE* WritePolyFile;
 };
 

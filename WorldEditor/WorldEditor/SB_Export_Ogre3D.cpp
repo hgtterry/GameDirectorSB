@@ -33,9 +33,24 @@ SB_Export_Ogre3D::SB_Export_Ogre3D(void)
 	mOgreScriptFileName[0] = 0;
 	mOgreSkellFileName[0] = 0;
 	mOgreSkellTagName[0] = 0;
+
+	XmlMeshFileName[0] = 0;
+	XmlScriptFileName[0] = 0;
+	XmlSkellFileName[0] = 0;
+	XmlSkellTagName[0] = 0;
+
 	NewDirectory[0] = 0;
 	Directory_Name[0] = 0;
 	mCurrentFolder[0] = 0;
+
+	nx = 0;
+	ny = 0;
+	nz = 0;
+
+	u = 0;
+	v = 0;
+
+	WritePolyFile = nullptr;
 
 	Add_Sub_Folder = 1;
 }
@@ -88,10 +103,10 @@ bool SB_Export_Ogre3D::Export_AssimpToOgre(void)
 	DecompileTextures();
 
 	//App->CL_PB->Nudge("CreateMaterialFile");
-	//CreateMaterialFile(mOgreScriptFileName);
+	CreateMaterialFile(mOgreScriptFileName);
 
 	//App->CL_PB->Nudge("Write_XML_File");
-	//Write_XML_File();
+	Write_XML_File();
 
 	//// ---------------------------------------------------- 
 	//char SourceFile[1024];
@@ -237,5 +252,309 @@ bool SB_Export_Ogre3D::DecompileTextures(void)
 
 		Loop++;
 	}
+	return 1;
+}
+
+// *************************************************************************
+// *						CreateMaterialFile				   		   	   *
+// *************************************************************************
+void SB_Export_Ogre3D::CreateMaterialFile(char* MatFileName)
+{
+	char MatName[255];
+	char File[255];
+	char MaterialNumber[255];
+
+	Ogre::String OMatFileName = MatFileName;
+	Ogre::String OFile;
+	Ogre::String OMatName;
+
+	int numMaterials = App->CLSB_Model->GroupCount;
+
+	Ogre::MaterialManager& matMgrSgl = Ogre::MaterialManager::getSingleton();
+	//matMgrSgl.initialise();
+
+	Ogre::MaterialSerializer matSer;
+
+	for (int i = 0; i < numMaterials; ++i)
+	{
+		_itoa(i, MaterialNumber, 10);
+		strcpy(MatName, App->CLSB_Model->JustName);
+		strcat(MatName, "_Material_");
+		strcat(MatName, MaterialNumber);
+
+		strcpy(File, App->CLSB_Model->Group[i]->Text_FileName);
+
+		OMatName = MatName;
+		OFile = File;
+
+		Ogre::MaterialPtr ogremat = matMgrSgl.create(OMatName,
+			Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+
+
+		if (0 < strlen(File))
+		{
+			/*if (_stricmp(File + strlen(File) - 4, ".TGA") == 0)
+			{
+				App->Say(File);
+			}*/
+
+			ogremat->getTechnique(0)->getPass(0)->createTextureUnitState(File);
+
+			if (_stricmp(File + strlen(File) - 4, ".TGA") == 0)
+			{
+				ogremat->getTechnique(0)->getPass(0)->setAlphaRejectSettings(Ogre::CMPF_GREATER, 128);
+			}
+		}
+
+		matSer.queueForExport(ogremat);
+	}
+
+	matSer.exportQueued(OMatFileName);
+}
+
+// *************************************************************************
+// *							Write_XML_File				   		   	   *
+// *************************************************************************
+bool SB_Export_Ogre3D::Write_XML_File()
+{
+	S_XMLStore[0] = new XMLStore_Type;
+	S_XMLStore[0]->SortedPolyCount = 0;
+
+	char XmlFileName[256];
+	char XFIle[256];
+
+	strcpy(XmlFileName, App->CLSB_Model->JustName);
+
+	strcpy(XmlMeshFileName, XmlFileName);
+	strcpy(XmlScriptFileName, XmlFileName);
+	strcpy(XmlSkellFileName, XmlFileName);
+	strcpy(XmlSkellTagName, XmlFileName);
+
+	strcpy(XFIle, XmlFileName);
+
+	strcat(XmlScriptFileName, "_");
+	strcat(XmlSkellTagName, "_");
+
+	strcpy(XFIle, XmlMeshFileName);
+
+	strcat(XmlMeshFileName, ".mesh.xml");
+	strcat(XmlScriptFileName, ".material");
+	strcat(XmlSkellFileName, ".skeleton.xml");
+	strcat(XmlSkellTagName, ".skeleton");
+
+	WritePolyFile = nullptr;
+
+	WritePolyFile = fopen(XmlMeshFileName, "wt");
+	if (!WritePolyFile)
+	{
+		return 0;
+	}
+
+	fprintf(WritePolyFile, "%s\n", "<mesh>");
+	fprintf(WritePolyFile, "%s\n", "    <submeshes>");
+
+	int Count = 0;
+	while (Count < App->CLSB_Model->GroupCount)
+	{
+		RenderToXML(Count);
+		WriteNewXML(Count);
+		Count++;
+	}
+
+
+	fprintf(WritePolyFile, "%s\n", "    </submeshes>");
+
+	/*if (DoSkell == 1)
+	{
+		fprintf(WritePolyFile, "%s%s%s\n", "    <skeletonlink name=\"", XmlSkellTagName, "\" />");
+	}*/
+
+	fprintf(WritePolyFile, "%s\n", "</mesh>");
+
+	fclose(WritePolyFile);
+
+	if (S_XMLStore[0])
+	{
+		delete S_XMLStore[0];
+		S_XMLStore[0] = NULL;
+
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *							RenderToXML					   		   	   *
+// *************************************************************************
+bool SB_Export_Ogre3D::RenderToXML(int GroupIndex)
+{
+	int FaceCount = 0;
+	int XMLCount = 0;
+	int Face = 0;
+
+	int A = 0;
+	int B = 0;
+	int C = 0;
+
+	while (FaceCount < App->CLSB_Model->Group[GroupIndex]->GroupFaceCount)
+	{
+		A = App->CLSB_Model->Group[GroupIndex]->Face_Data[FaceCount].a;
+		B = App->CLSB_Model->Group[GroupIndex]->Face_Data[FaceCount].b;
+		C = App->CLSB_Model->Group[GroupIndex]->Face_Data[FaceCount].c;
+
+		// first vector in face and vertic + normal and uv 
+		S_XMLStore[0]->XMLvertex[XMLCount].x = App->CLSB_Model->Group[GroupIndex]->vertex_Data[A].x;
+		S_XMLStore[0]->XMLvertex[XMLCount].y = App->CLSB_Model->Group[GroupIndex]->vertex_Data[A].y;
+		S_XMLStore[0]->XMLvertex[XMLCount].z = App->CLSB_Model->Group[GroupIndex]->vertex_Data[A].z;
+
+		S_XMLStore[0]->mapcoord[XMLCount].u = App->CLSB_Model->Group[GroupIndex]->MapCord_Data[A].u;
+		S_XMLStore[0]->mapcoord[XMLCount].v = App->CLSB_Model->Group[GroupIndex]->MapCord_Data[A].v;
+
+		S_XMLStore[0]->XMLnormal[XMLCount].x = App->CLSB_Model->Group[GroupIndex]->Normal_Data[A].x;
+		S_XMLStore[0]->XMLnormal[XMLCount].y = App->CLSB_Model->Group[GroupIndex]->Normal_Data[A].y;
+		S_XMLStore[0]->XMLnormal[XMLCount].z = App->CLSB_Model->Group[GroupIndex]->Normal_Data[A].z;
+
+		S_XMLStore[0]->BoneIndex[XMLCount] = 0;// SN[cube.polygon[Count].a].BoneIndex;
+		S_XMLStore[0]->XMLpolygon[Face].a = XMLCount;
+		XMLCount++;
+
+		// second vector in face and vertic + normal and uv 
+		S_XMLStore[0]->XMLvertex[XMLCount].x = App->CLSB_Model->Group[GroupIndex]->vertex_Data[B].x;
+		S_XMLStore[0]->XMLvertex[XMLCount].y = App->CLSB_Model->Group[GroupIndex]->vertex_Data[B].y;
+		S_XMLStore[0]->XMLvertex[XMLCount].z = App->CLSB_Model->Group[GroupIndex]->vertex_Data[B].z;
+
+		S_XMLStore[0]->mapcoord[XMLCount].u = App->CLSB_Model->Group[GroupIndex]->MapCord_Data[B].u;
+		S_XMLStore[0]->mapcoord[XMLCount].v = App->CLSB_Model->Group[GroupIndex]->MapCord_Data[B].v;
+
+		S_XMLStore[0]->XMLnormal[XMLCount].x = App->CLSB_Model->Group[GroupIndex]->Normal_Data[B].x;
+		S_XMLStore[0]->XMLnormal[XMLCount].y = App->CLSB_Model->Group[GroupIndex]->Normal_Data[B].y;
+		S_XMLStore[0]->XMLnormal[XMLCount].z = App->CLSB_Model->Group[GroupIndex]->Normal_Data[B].z;
+
+		S_XMLStore[0]->BoneIndex[XMLCount] = 0;// SN[cube.polygon[Count].a].BoneIndex;
+		S_XMLStore[0]->XMLpolygon[Face].b = XMLCount;
+		XMLCount++;
+
+		// third vector in face and vertic + normal and uv 
+		S_XMLStore[0]->XMLvertex[XMLCount].x = App->CLSB_Model->Group[GroupIndex]->vertex_Data[C].x;
+		S_XMLStore[0]->XMLvertex[XMLCount].y = App->CLSB_Model->Group[GroupIndex]->vertex_Data[C].y;
+		S_XMLStore[0]->XMLvertex[XMLCount].z = App->CLSB_Model->Group[GroupIndex]->vertex_Data[C].z;
+
+		S_XMLStore[0]->mapcoord[XMLCount].u = App->CLSB_Model->Group[GroupIndex]->MapCord_Data[C].u;
+		S_XMLStore[0]->mapcoord[XMLCount].v = App->CLSB_Model->Group[GroupIndex]->MapCord_Data[C].v;
+
+		S_XMLStore[0]->XMLnormal[XMLCount].x = App->CLSB_Model->Group[GroupIndex]->Normal_Data[C].x;
+		S_XMLStore[0]->XMLnormal[XMLCount].y = App->CLSB_Model->Group[GroupIndex]->Normal_Data[C].y;
+		S_XMLStore[0]->XMLnormal[XMLCount].z = App->CLSB_Model->Group[GroupIndex]->Normal_Data[C].z;
+
+		S_XMLStore[0]->BoneIndex[XMLCount] = 0;// SN[cube.polygon[Count].a].BoneIndex;
+		S_XMLStore[0]->XMLpolygon[Face].c = XMLCount;
+		XMLCount++;
+		Face++;
+
+		FaceCount++;
+	}
+
+	S_XMLStore[0]->SXMLCount = XMLCount;
+
+	return 1;
+}
+
+// *************************************************************************
+// *							WriteNewXML					   		   	   *
+// *************************************************************************
+bool SB_Export_Ogre3D::WriteNewXML(int GroupIndex)
+{
+	WriteSubMesh(GroupIndex);
+
+	fprintf(WritePolyFile, "%s\n", "                </vertexbuffer>");
+	fprintf(WritePolyFile, "%s\n", "            </geometry>");
+	fprintf(WritePolyFile, "%s\n", "        </submesh>");
+
+	return 1;
+}
+
+// *************************************************************************
+// *							WriteSubMesh				   		   	   *
+// *************************************************************************
+bool SB_Export_Ogre3D::WriteSubMesh(int GroupIndex)
+{
+	float x = 0;
+	float y = 0;
+	float z = 0;
+
+	int a = 0;
+	int b = 0;
+	int c = 0;
+
+	char MatName[256];
+
+	float V = 0;
+	int NewCount = S_XMLStore[0]->SXMLCount;
+	int PolyCount = S_XMLStore[0]->SXMLCount / 3;
+	int VertCount = S_XMLStore[0]->SXMLCount;
+	int Count = 0;
+
+
+	//------------------------------- texture
+	char MaterialNumber[255];
+	char SubMesh[256];
+	strcpy(SubMesh, "        <submesh material=\"");
+
+	/*strcpy(MatName, App->CL_Model->JustName);
+	strcat(MatName, "_");
+	strcat(MatName, App->CL_Model->Group[GroupIndex]->MaterialName);*/
+
+	_itoa(GroupIndex, MaterialNumber, 10);
+	strcpy(MatName, App->CLSB_Model->JustName);
+	strcat(MatName, "_Material_");
+	strcat(MatName, MaterialNumber);
+
+	fprintf(WritePolyFile, "%s%s%s %s\n", SubMesh, MatName, "\" usesharedvertices=\"false\"", "use32bitindexes=\"false\" operationtype=\"triangle_list\">");
+
+	//------------------------------- PolyGons
+	fprintf(WritePolyFile, "%s%i%s\n", "            <faces count=\"", PolyCount, "\">");
+
+	while (Count < NewCount / 3)
+	{
+		a = S_XMLStore[0]->XMLpolygon[Count].a;
+		b = S_XMLStore[0]->XMLpolygon[Count].b;
+		c = S_XMLStore[0]->XMLpolygon[Count].c;
+
+		fprintf(WritePolyFile, "%s%i%s%i%s%i%s\n", "                <face v1=\"", a, "\" v2=\"", b, "\" v3=\"", c, "\" />");
+		Count++;
+	}
+
+	fprintf(WritePolyFile, "%s\n", "            </faces>");
+
+	//------------------------------- Vertices
+	fprintf(WritePolyFile, "%s%i%s\n", "            <geometry vertexcount=\"", VertCount, "\">");
+	fprintf(WritePolyFile, "%s\n", "                <vertexbuffer positions=\"true\" normals=\"true\" texture_coord_dimensions_0=\"2\" texture_coords=\"1\">");
+
+	Count = 0;
+	while (Count < NewCount)
+	{
+		fprintf(WritePolyFile, "%s\n", "                    <vertex>");
+		x = S_XMLStore[0]->XMLvertex[Count].x;
+		y = S_XMLStore[0]->XMLvertex[Count].y;
+		z = S_XMLStore[0]->XMLvertex[Count].z;
+
+		u = S_XMLStore[0]->mapcoord[Count].u;
+		V = S_XMLStore[0]->mapcoord[Count].v;
+
+		v = 1 - V; // Swop V From RF to Ogre format
+
+		nx = S_XMLStore[0]->XMLnormal[Count].x;
+		ny = S_XMLStore[0]->XMLnormal[Count].y;
+		nz = S_XMLStore[0]->XMLnormal[Count].z;
+
+		fprintf(WritePolyFile, "%s%f%s%f%s%f%s\n", "                        <position x=\"", x, "\" y=\"", y, "\" z=\"", z, "\" />");
+		fprintf(WritePolyFile, "%s%f%s%f%s%f%s\n", "                        <normal x=\"", nx, "\" y=\"", ny, "\" z=\"", nz, "\" />");
+		fprintf(WritePolyFile, "%s%f%s%f%s\n", "                        <texcoord u=\"", u, "\" v=\"", v, "\" />");
+
+		fprintf(WritePolyFile, "%s\n", "                    </vertex>");
+		Count++;
+
+	}
+
 	return 1;
 }
