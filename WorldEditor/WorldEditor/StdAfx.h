@@ -31,6 +31,7 @@
 
 #define VC_EXTRALEAN		// Exclude rarely-used stuff from Windows headers
 
+
 /*
   Disable warnings for Windows headers
 	4201 - nonstandard extension used : nameless struct/union

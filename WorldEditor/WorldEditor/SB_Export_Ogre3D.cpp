@@ -39,6 +39,9 @@ SB_Export_Ogre3D::SB_Export_Ogre3D(void)
 	XmlSkellFileName[0] = 0;
 	XmlSkellTagName[0] = 0;
 
+	Source_Path_FileName[0] = 0;
+	Dest_Path_FileName[0] = 0;
+
 	NewDirectory[0] = 0;
 	Directory_Name[0] = 0;
 	mCurrentFolder[0] = 0;
@@ -109,33 +112,33 @@ bool SB_Export_Ogre3D::Export_AssimpToOgre(void)
 	Write_XML_File();
 
 	//// ---------------------------------------------------- 
-	//char SourceFile[1024];
-	//char OldFile[1024];
+	char SourceFile[1024];
+	char OldFile[1024];
 
 	//App->CL_PB->Nudge("Transfer");
-	//strcpy(OldFile, XmlMeshFileName);
+	strcpy(OldFile, XmlMeshFileName);
 
-	//strcpy(SourceFile, mCurrentFolder);
-	//strcat(SourceFile, "\\");
-	//strcat(SourceFile, XmlMeshFileName);
+	strcpy(SourceFile, mCurrentFolder);
+	strcat(SourceFile, "\\");
+	strcat(SourceFile, XmlMeshFileName);
 
-	//strcpy(Source_Path_FileName, SourceFile);
+	strcpy(Source_Path_FileName, SourceFile);
 
-	//int Len = strlen(XmlMeshFileName);
-	//XmlMeshFileName[Len - 4] = 0;
+	int Len = strlen(XmlMeshFileName);
+	XmlMeshFileName[Len - 4] = 0;
 
-	//char DestFile[1024];
-	//strcpy(DestFile, mCurrentFolder);
-	//strcat(DestFile, "\\");
-	//strcat(DestFile, XmlMeshFileName);
+	char DestFile[1024];
+	strcpy(DestFile, mCurrentFolder);
+	strcat(DestFile, "\\");
+	strcat(DestFile, XmlMeshFileName);
 
-	//strcpy(Dest_Path_FileName, DestFile);
+	strcpy(Dest_Path_FileName, DestFile);
 
 	//App->CL_PB->Nudge("Convert_To_Mesh");
-	//Convert_To_Mesh();
+	Convert_To_Mesh();
 
 	//App->CL_PB->Nudge("Remove Temp Files");
-	//remove(OldFile);
+	remove(OldFile);
 
 	//App->CL_PB->Nudge("Convert_To_Mesh");
 	//App->CL_PB->Nudge("Convert_To_Mesh");
@@ -144,7 +147,75 @@ bool SB_Export_Ogre3D::Export_AssimpToOgre(void)
 
 	//App->CL_PB->Stop_Progress_Bar("Export to Ogre Format Completed");
 
+	App->Say("Done");
 	return 1;
+}
+
+// *************************************************************************
+// *	  				 Convert_To_Mesh	Terry Bernie				   *
+// *************************************************************************
+bool SB_Export_Ogre3D::Convert_To_Mesh()
+{
+	try
+	{
+
+		XmlOptions opts = parseArgs();
+
+		opts.source = Source_Path_FileName;
+		opts.dest = Dest_Path_FileName;
+
+		meshSerializer = new MeshSerializer();
+		//xmlMeshSerializer = new XMLMeshSerializer();
+
+		//App->CL_PB->Nudge("XMLToBinary");
+		//XMLToBinary(opts);
+
+	}
+	catch (Exception& e)
+	{
+
+		MessageBox(App->MainHwnd, "Failed", "Message", MB_OK);
+		return 1;
+	}
+
+	Pass::processPendingPassUpdates(); // make sure passes are cleaned up
+
+	delete xmlMeshSerializer;
+	delete meshSerializer;
+
+	return 0;
+}
+
+// *************************************************************************
+// *	  					 parseArgs	Terry Bernie					   *
+// *************************************************************************
+XmlOptions SB_Export_Ogre3D::parseArgs()
+{
+	XmlOptions opts;
+
+	opts.interactiveMode = false;
+	opts.lodValue = 250000;
+	opts.lodFixed = 0;
+	opts.lodPercent = 20;
+	opts.numLods = 0;
+	opts.nuextremityPoints = 0;
+	opts.mergeTexcoordResult = 0;
+	opts.mergeTexcoordToDestroy = 0;
+	opts.usePercent = true;
+	opts.generateEdgeLists = true;
+	opts.generateTangents = false;
+	opts.tangentSemantic = VES_TANGENT;
+	opts.tangentUseParity = false;
+	opts.tangentSplitMirrored = false;
+	opts.tangentSplitRotated = false;
+	opts.reorganiseBuffers = true;
+	opts.optimiseAnimations = true;
+	opts.quietMode = true;
+	opts.endian = Serializer::ENDIAN_NATIVE;
+	opts.source = " ";
+	opts.dest = " ";
+
+	return opts;
 }
 
 // *************************************************************************

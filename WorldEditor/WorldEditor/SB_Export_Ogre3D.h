@@ -23,6 +23,11 @@ distribution.
 
 #pragma once
 
+#include "OgreXMLMeshSerializer.h"
+
+using namespace std;
+using namespace Ogre;
+
 #define MAX_VERTICES 100000
 #define MAX_POLYGONS 100000
 
@@ -39,6 +44,37 @@ typedef struct {
 	int BoneIndex[MAX_VERTICES];
 
 } XMLStore_Type;
+
+struct XmlOptions
+{
+	String source;
+	String dest;
+	String sourceExt;
+	String destExt;
+	String logFile;
+	bool interactiveMode;
+	unsigned short numLods;
+	Real lodValue;
+	String lodStrategy;
+	Real lodPercent;
+	size_t lodFixed;
+	size_t nuextremityPoints;
+	size_t mergeTexcoordResult;
+	size_t mergeTexcoordToDestroy;
+	bool usePercent;
+	bool generateEdgeLists;
+	bool generateTangents;
+	VertexElementSemantic tangentSemantic;
+	bool tangentUseParity;
+	bool tangentSplitMirrored;
+	bool tangentSplitRotated;
+	bool reorganiseBuffers;
+	bool optimiseAnimations;
+	bool quietMode;
+	bool d3d;
+	bool gl;
+	Serializer::Endian endian;
+};
 
 class SB_Export_Ogre3D
 {
@@ -61,6 +97,8 @@ private:
 	bool RenderToXML(int GroupIndex);
 	bool WriteNewXML(int GroupIndex);
 	bool WriteSubMesh(int GroupIndex);
+	bool Convert_To_Mesh();
+	XmlOptions parseArgs();
 
 	char mDecompileFolder[MAX_PATH];
 	char mOgreMeshFileName[MAX_PATH];
@@ -73,6 +111,9 @@ private:
 	char XmlSkellFileName[MAX_PATH];
 	char XmlSkellTagName[MAX_PATH];
 
+	char Source_Path_FileName[MAX_PATH];
+	char Dest_Path_FileName[MAX_PATH];
+
 	char mCurrentFolder[MAX_PATH];
 
 	float nx;
@@ -83,6 +124,9 @@ private:
 	float v;
 
 	XMLStore_Type* S_XMLStore[1];
+	
+	MeshSerializer* meshSerializer;
+	XMLMeshSerializer* xmlMeshSerializer;
 
 	FILE* WritePolyFile;
 };
