@@ -1,0 +1,102 @@
+
+material Temp_Material_0
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture stfloor1.bmp
+			}
+		}
+
+	}
+
+}
+
+material Temp_Material_1
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture concrete.bmp
+			}
+		}
+
+	}
+
+}
+
+material Temp_Material_2
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture Pine.bmp
+			}
+		}
+
+	}
+
+}
+
+material Temp_Material_3
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture aztec66.bmp
+			}
+		}
+
+	}
+
+}
+
+material Temp_Material_4
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture Mat06.bmp
+			}
+		}
+
+	}
+
+}
+
+material Temp_Material_5
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture Wall.bmp
+			}
+		}
+
+	}
+
+}
