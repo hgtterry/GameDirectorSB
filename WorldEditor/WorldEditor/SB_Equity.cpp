@@ -24,7 +24,7 @@ void SB_Equity::Switch_3D_Window()
 	//Ogre::Root::getSingletonPtr()->renderOneFrame();
 
 	App->CLSB_Ogre->mWindow->resize(500, 500);
-	int test = SetWindowLong(App->CLSB_Ogre->Ogre_Window_hWnd, GWL_WNDPROC, (LONG)App->CLSB_Ogre_Dialog->Ogre3D_Proc);
+	int test = SetWindowLong(App->CLSB_Ogre->Ogre_Window_hWnd, GWL_WNDPROC, (LONG)Ogre3D_Proc);
 
 	SetWindowLongPtr(App->CLSB_Ogre->Ogre_Window_hWnd, GWL_STYLE, WS_BORDER);
 	SetWindowPos(App->CLSB_Ogre->Ogre_Window_hWnd, 0, 0, 0, 0, 0, SWP_NOZORDER | SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE | SWP_DRAWFRAME);
@@ -33,7 +33,7 @@ void SB_Equity::Switch_3D_Window()
 	SetWindowPos(App->CLSB_Ogre->Ogre_Window_hWnd, NULL, 4, 4, 820, 450, SWP_NOZORDER);
 	
 	HWND Check_hWnd = NULL;
-	Check_hWnd = SetParent(App->CLSB_Ogre->Ogre_Window_hWnd, App->CLSB_Ogre_Dialog->Equity_Main_hWnd);
+	Check_hWnd = SetParent(App->CLSB_Ogre->Ogre_Window_hWnd, Equity_Main_hWnd);
 
 	//if (!Check_hWnd)
 	{
@@ -169,20 +169,14 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_Proc(HWND hDlg, UINT message, WPARAM w
 
 	case WM_SIZE:
 	{
-		App->CLSB_Ogre_Dialog->Resize_3DView();
+		App->CLSB_Equity->Resize_3DView();
 		Ogre::Root::getSingletonPtr()->renderOneFrame();
 	}break;
 
 	case WM_COMMAND:
 	{
-		// File
-		if (LOWORD(wParam) == ID_OGRE3D_MESH)
-		{
-			App->CLSB_Exporter->Ogre3D_Model();
-			return TRUE;
-		}
-		
-		if (LOWORD(wParam) == ID_FILE_WORLDEDITORPROJECT)
+		// File Import
+		if (LOWORD(wParam) == ID_IMPORT_WORLDEDITORPROJECT)
 		{
 			int Result = App->CLSB_Loader->Open_File_Model("GDSB File   *.Wepf\0*.Wepf\0", "GDSB File", NULL);
 			if (Result == 0)
@@ -193,6 +187,13 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_Proc(HWND hDlg, UINT message, WPARAM w
 			App->CLSB_Loader->Read_Project_File(App->CLSB_Loader->Path_FileName);
 			App->CLSB_Loader->Load_File_Wepf();
 
+			return TRUE;
+		}
+
+		// File Export
+		if (LOWORD(wParam) == ID_OGRE3D_MESH)
+		{
+			App->CLSB_Exporter->Ogre3D_Model();
 			return TRUE;
 		}
 		
@@ -244,6 +245,77 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_Proc(HWND hDlg, UINT message, WPARAM w
 			return TRUE;
 		}
 
+		//-------------------------------------------------------- Show Textures
+		if (LOWORD(wParam) == IDC_BTSHOWTEXTURES)
+		{
+			if (App->CLSB_Model->Model_Loaded == 1)
+			{
+				HWND Temp = GetDlgItem(hDlg, IDC_BTSHOWTEXTURES);
+
+				if (App->CLSB_Ogre->RenderListener->ShowTextured == 1)
+				{
+					App->CLSB_Ogre->RenderListener->ShowTextured = 0;
+
+					//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOff_Bmp);
+				}
+				else
+				{
+					App->CLSB_Ogre->RenderListener->ShowTextured = 1;
+
+					//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOn_Bmp);
+				}
+			}
+			return TRUE;
+		}
+
+		//-------------------------------------------------------- Show Hair
+		if (LOWORD(wParam) == IDC_TBSHOWHAIR)
+		{
+			HWND Temp = GetDlgItem(hDlg, IDC_TBSHOWHAIR);
+
+			if (App->CLSB_Grid->ShowHair == 1)
+			{
+				App->CLSB_Grid->ShowHair = 0;
+				App->CLSB_Grid->Hair_SetVisible(0);
+
+				//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HairOff_Bmp);
+			}
+			else
+			{
+				App->CLSB_Grid->ShowHair = 1;
+				App->CLSB_Grid->Hair_SetVisible(1);
+
+				//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HairOn_Bmp);
+			}
+			return TRUE;
+		}
+
+		//-------------------------------------------------------- Show Faces
+		if (LOWORD(wParam) == IDC_TBSHOWFACES)
+		{
+			if (App->CLSB_Model->Model_Loaded == 1)
+			{
+				HWND Temp = GetDlgItem(hDlg, IDC_TBSHOWFACES);
+
+				if (App->CLSB_Ogre->RenderListener->ShowFaces == 1)
+				{
+					if (App->CLSB_Ogre->RenderListener->ShowFaces == 1)
+						App->CLSB_Ogre->RenderListener->ShowFaces = 0;
+
+					//App->CL_TopBar->Toggle_Faces_Flag = 0;
+
+					//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
+				}
+				else
+				{
+					App->CLSB_Ogre->RenderListener->ShowFaces = 1;
+					//App->CL_TopBar->Toggle_Faces_Flag = 1;
+
+					//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOn_Bmp);
+				}
+			}
+			return TRUE;
+		}
 
 		if (LOWORD(wParam) == IDC_TEST)
 		{
@@ -264,22 +336,22 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_Proc(HWND hDlg, UINT message, WPARAM w
 			pDoc->ResetAllSelections();
 			pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 
-			App->CLSB_Ogre_Dialog->mAutoLoad = 1;
-			App->CLSB_Ogre_Dialog->Auto_Load_File();
+			App->CLSB_Equity->mAutoLoad = 1;
+			App->CLSB_Equity->Auto_Load_File();
 
 			return TRUE;
 		}
 		
 		if (LOWORD(wParam) == IDOK)
 		{
-			App->CLSB_Ogre_Dialog->EquitySB_Dialog_Created = 0;
+			App->CLSB_Equity->EquitySB_Dialog_Created = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
-			App->CLSB_Ogre_Dialog->EquitySB_Dialog_Created = 0;
+			App->CLSB_Equity->EquitySB_Dialog_Created = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -417,9 +489,9 @@ void SB_Equity::Resize_3DView()
 	GetClientRect(Equity_Main_hWnd, &rcl);
 
 	int X = rcl.right-10;
-	int Y = rcl.bottom - 50;
+	int Y = rcl.bottom - 90;
 
-	SetWindowPos(App->CLSB_Ogre->Ogre_Window_hWnd, NULL, 4, 40, X, Y, SWP_NOZORDER);
+	SetWindowPos(App->CLSB_Ogre->Ogre_Window_hWnd, NULL, 4, 80, X, Y, SWP_NOZORDER);
 
 	App->CLSB_Ogre->mWindow->windowMovedOrResized();
 	App->CLSB_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CLSB_Ogre->mWindow->getWidth() / (Ogre::Real)App->CLSB_Ogre->mWindow->getHeight());

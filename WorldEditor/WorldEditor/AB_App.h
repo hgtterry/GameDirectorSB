@@ -114,7 +114,7 @@ public:
 	// Scene Builder 
 	SB_Ogre*					CLSB_Ogre;
 	SB_Grid*					CLSB_Grid;
-	SB_Equity*					CLSB_Ogre_Dialog;
+	SB_Equity*					CLSB_Equity;
 	SB_Keyboard*				CLSB_Keyboard;
 	SB_Camera*					CLSB_Camera;
 	SB_Assimp*					CLSB_Assimp;

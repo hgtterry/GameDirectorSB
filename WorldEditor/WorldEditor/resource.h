@@ -508,11 +508,16 @@
 #define IDC_BTTXLDELETE                 1353
 #define IDC_BT_TB_SELECTALL             1353
 #define IDC_BTTBSHEAR                   1353
+#define IDC_BTSHOWTEXTURES              1353
 #define IDC_BUTTON5                     1354
 #define IDC_PREVIEW                     1355
+#define IDC_BUTTON7                     1355
+#define IDC_TBSHOWHAIR                  1355
 #define IDC_BUTTON6                     1356
 #define IDC_TEXTURELIST2                1357
+#define IDC_BUTTON8                     1357
 #define IDC_BTTXLOPEN                   1358
+#define IDC_BUTTON9                     1358
 #define IDC_BTTESTDLG                   1359
 #define IDC_STTDTXLNAME                 1360
 #define IDC_LISTTDTEXTURES              1361
@@ -641,6 +646,8 @@
 #define IDC_ST_FOLDER                   1471
 #define IDC_ST_SUBFOLDER_NAME           1472
 #define IDC_CK_SUBFOLDER                1473
+#define IDC_TBSHOWFACES                 1474
+#define IDC_TBSHOWFACES2                1475
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772
 #define ID_BRUSH_PRIMITIVES_SPHEROID    32773
@@ -822,6 +829,8 @@
 #define ID_FILE_EXPORT33064             33064
 #define ID_EXPORT_OGRE3D                33065
 #define ID_OGRE3D_MESH                  33066
+#define ID_FILE_IMPORT33067             33067
+#define ID_IMPORT_WORLDEDITORPROJECT    33068
 #define IDS_HELPINFORMATION             38000
 
 // Next default values for new objects
@@ -830,8 +839,8 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        278
-#define _APS_NEXT_COMMAND_VALUE         33067
-#define _APS_NEXT_CONTROL_VALUE         1474
+#define _APS_NEXT_COMMAND_VALUE         33069
+#define _APS_NEXT_CONTROL_VALUE         1475
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

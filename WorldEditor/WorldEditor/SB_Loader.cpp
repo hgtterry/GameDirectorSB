@@ -151,7 +151,7 @@ void SB_Loader::Adjust()
 	//Translate_Model(0,0,-240);
 
 	
-	if (App->CLSB_Ogre_Dialog->mAutoLoad == 0)
+	if (App->CLSB_Equity->mAutoLoad == 0)
 	{
 		App->CLSB_Grid->Reset_View();
 	}
@@ -164,16 +164,16 @@ void SB_Loader::Set_Equity(void)
 {
 	App->CLSB_Model->Model_Loaded = 1;
 
-	if (App->CLSB_Ogre_Dialog->mAutoLoad == 0)
+	if (App->CLSB_Equity->mAutoLoad == 0)
 	{
 		App->CLSB_Grid->Reset_View();
 	}
 
-	char TitleBar[260];
+	char TitleBar[MAX_PATH];
 	strcpy(TitleBar, "World Viewer");
 	strcat(TitleBar, "    ");
 	strcat(TitleBar, App->CLSB_Model->Path_FileName);
-	SetWindowText(App->CLSB_Ogre_Dialog->Equity_Main_hWnd, TitleBar);
+	SetWindowText(App->CLSB_Equity->Equity_Main_hWnd, TitleBar);
 
 	//Set_Equity();
 	Ogre::Root::getSingletonPtr()->renderOneFrame();

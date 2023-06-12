@@ -188,7 +188,7 @@ LRESULT CALLBACK A_TopTabs::Top_Tabs_Proc(HWND hDlg, UINT message, WPARAM wParam
 			// ---------------- Tabs
 			if (LOWORD(wParam) == IDC_STARTEQUITY)
 			{
-				App->CLSB_Ogre_Dialog->Start_Equity_Dialog(0);
+				App->CLSB_Equity->Start_Equity_Dialog(0);
 
 				return TRUE;
 			}
@@ -286,7 +286,7 @@ LRESULT CALLBACK A_TopTabs::Top_Tabs_Proc(HWND hDlg, UINT message, WPARAM wParam
 				pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 
 
-				App->CLSB_Ogre_Dialog->Start_Equity_Dialog(1);
+				App->CLSB_Equity->Start_Equity_Dialog(1);
 
 				return TRUE;
 			}
