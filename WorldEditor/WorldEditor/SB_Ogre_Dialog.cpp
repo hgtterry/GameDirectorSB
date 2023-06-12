@@ -40,10 +40,12 @@ void SB_Ogre_Dialog::Switch_3D_Window()
 		//Debug
 	}
 
-	App->CLSB_Ogre->mWindow->resize(810, 400);
+	Resize_3DView();
+
+	/*App->CLSB_Ogre->mWindow->resize(810, 400);
 	App->CLSB_Ogre->mWindow->windowMovedOrResized();
 	App->CLSB_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CLSB_Ogre->mWindow->getWidth() / (Ogre::Real)App->CLSB_Ogre->mWindow->getHeight());
-	App->CLSB_Ogre->mCamera->yaw(Ogre::Radian(0));
+	App->CLSB_Ogre->mCamera->yaw(Ogre::Radian(0));*/
 
 	Auto_Load_File();
 
@@ -164,6 +166,12 @@ LRESULT CALLBACK SB_Ogre_Dialog::Ogre_Dialog_Proc(HWND hDlg, UINT message, WPARA
 
 		return 1;
 	}
+
+	case WM_SIZE:
+	{
+		App->CLSB_Ogre_Dialog->Resize_3DView();
+
+	}break;
 
 	case WM_COMMAND:
 	{
@@ -398,4 +406,23 @@ LRESULT CALLBACK SB_Ogre_Dialog::Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wPa
 	}
 
 	return DefWindowProc(hDlg, message, wParam, lParam);
+}
+
+// *************************************************************************
+// *			Resize_3DView:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void SB_Ogre_Dialog::Resize_3DView()
+{
+	RECT rcl;
+	GetClientRect(TestHwnd, &rcl);
+
+	int X = rcl.right-25;
+	int Y = rcl.bottom - 90;
+
+	SetWindowPos(App->CLSB_Ogre->Ogre_Window_hWnd, NULL, 4, 40, X, Y, SWP_NOZORDER);
+
+	App->CLSB_Ogre->mWindow->resize(X, Y);
+	App->CLSB_Ogre->mWindow->windowMovedOrResized();
+	App->CLSB_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CLSB_Ogre->mWindow->getWidth() / (Ogre::Real)App->CLSB_Ogre->mWindow->getHeight());
+	App->CLSB_Ogre->mCamera->yaw(Ogre::Radian(0));
 }

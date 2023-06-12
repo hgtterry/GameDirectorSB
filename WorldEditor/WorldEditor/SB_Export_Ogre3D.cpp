@@ -68,7 +68,7 @@ SB_Export_Ogre3D::~SB_Export_Ogre3D(void)
 }
 
 // *************************************************************************
-// *					Export_AssimpToOgre Terry Bernie  			 	   *
+// *		Export_AssimpToOgre:- Terry and Hazel Flanigan 2023 	 	   *
 // *************************************************************************
 bool SB_Export_Ogre3D::Export_AssimpToOgre(void)
 {
@@ -157,7 +157,7 @@ bool SB_Export_Ogre3D::Export_AssimpToOgre(void)
 }
 
 // *************************************************************************
-// *	  				 Convert_To_Mesh	Terry Bernie				   *
+// *	  		Convert_To_Mesh:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 bool SB_Export_Ogre3D::Convert_To_Mesh()
 {
@@ -192,7 +192,7 @@ bool SB_Export_Ogre3D::Convert_To_Mesh()
 }
 
 // *************************************************************************
-// *	  					 XMLToBinary	Terry Bernie				   *
+// *	  		XMLToBinary:- Terry and Hazel Flanigan 2023				   *
 // *************************************************************************
 void SB_Export_Ogre3D::XMLToBinary(XmlOptions opts)
 {
@@ -573,7 +573,7 @@ void SB_Export_Ogre3D::XMLToBinary(XmlOptions opts)
 }
 
 // *************************************************************************
-// *	  					 parseArgs	Terry Bernie					   *
+// *	  		parseArgs:- Terry and Hazel Flanigan 2023				   *
 // *************************************************************************
 XmlOptions SB_Export_Ogre3D::parseArgs()
 {
@@ -605,7 +605,7 @@ XmlOptions SB_Export_Ogre3D::parseArgs()
 }
 
 // *************************************************************************
-// *							CreateDirectoryMesh			   		   	   *
+// *		CreateDirectoryMesh:- Terry and Hazel Flanigan 2023	 	 	   *
 // *************************************************************************
 bool SB_Export_Ogre3D::CreateDirectoryMesh(void)
 {
@@ -656,7 +656,7 @@ bool SB_Export_Ogre3D::CreateDirectoryMesh(void)
 }
 
 // *************************************************************************
-// *			DecompileTextures  30/03/04   					   	   	   *
+// *		DecompileTextures:- Terry and Hazel Flanigan 2023  		   	   *
 // *************************************************************************
 bool SB_Export_Ogre3D::DecompileTextures(void)
 {
@@ -713,7 +713,7 @@ bool SB_Export_Ogre3D::DecompileTextures(void)
 }
 
 // *************************************************************************
-// *						CreateMaterialFile				   		   	   *
+// *		CreateMaterialFile:- Terry and Hazel Flanigan 2023		   	   *
 // *************************************************************************
 void SB_Export_Ogre3D::CreateMaterialFile(char* MatFileName)
 {
@@ -770,7 +770,7 @@ void SB_Export_Ogre3D::CreateMaterialFile(char* MatFileName)
 }
 
 // *************************************************************************
-// *							Write_XML_File				   		   	   *
+// *			Write_XML_File:- Terry and Hazel Flanigan 2023		   	   *
 // *************************************************************************
 bool SB_Export_Ogre3D::Write_XML_File()
 {
@@ -841,7 +841,7 @@ bool SB_Export_Ogre3D::Write_XML_File()
 }
 
 // *************************************************************************
-// *							RenderToXML					   		   	   *
+// *			RenderToXML:- Terry and Hazel Flanigan 2023			 	   *
 // *************************************************************************
 bool SB_Export_Ogre3D::RenderToXML(int GroupIndex)
 {
@@ -917,7 +917,7 @@ bool SB_Export_Ogre3D::RenderToXML(int GroupIndex)
 }
 
 // *************************************************************************
-// *							WriteNewXML					   		   	   *
+// *			WriteNewXML:- Terry and Hazel Flanigan 2023	  		   	   *
 // *************************************************************************
 bool SB_Export_Ogre3D::WriteNewXML(int GroupIndex)
 {
@@ -931,7 +931,7 @@ bool SB_Export_Ogre3D::WriteNewXML(int GroupIndex)
 }
 
 // *************************************************************************
-// *							WriteSubMesh				   		   	   *
+// *			WriteSubMesh:- Terry and Hazel Flanigan 2023   		   	   *
 // *************************************************************************
 bool SB_Export_Ogre3D::WriteSubMesh(int GroupIndex)
 {

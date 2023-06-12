@@ -19,6 +19,7 @@ private:
 	static LRESULT CALLBACK Ogre_Dialog_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	
 	void Auto_Load_File();
+	void Resize_3DView();
 
 	bool EquitySB_Dialog_Created;
 };
