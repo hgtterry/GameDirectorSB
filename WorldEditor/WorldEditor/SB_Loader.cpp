@@ -120,6 +120,10 @@ void SB_Loader::Load_File_Wepf()
 
 	App->CLSB_Model->Model_Type = Enums::LoadedFile_Assimp;
 
+	App->CLSB_Camera->Reset_Orientation();
+	App->CLSB_Camera->Set_Camera_Mode(Enums::CamDetached);
+
+
 	//App->CL_Recent_Files->RecentFile_Projects_History_Update();*/
 
 	//App->CL_Export_Ogre->Export_AssimpToOgre();
@@ -169,7 +173,7 @@ void SB_Loader::Set_Equity(void)
 	strcpy(TitleBar, "World Viewer");
 	strcat(TitleBar, "    ");
 	strcat(TitleBar, App->CLSB_Model->Path_FileName);
-	SetWindowText(App->CLSB_Ogre_Dialog->TestHwnd, TitleBar);
+	SetWindowText(App->CLSB_Ogre_Dialog->Equity_Main_hWnd, TitleBar);
 
 	//Set_Equity();
 	Ogre::Root::getSingletonPtr()->renderOneFrame();

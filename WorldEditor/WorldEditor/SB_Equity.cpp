@@ -8,7 +8,7 @@ SB_Equity::SB_Equity(void)
 	mAutoLoad = 0;
 	EquitySB_Dialog_Created = 0;
 	OgreView_3D_hWnd = NULL;
-	TestHwnd = NULL;
+	Equity_Main_hWnd = NULL;
 }
 
 SB_Equity::~SB_Equity(void)
@@ -33,7 +33,7 @@ void SB_Equity::Switch_3D_Window()
 	SetWindowPos(App->CLSB_Ogre->Ogre_Window_hWnd, NULL, 4, 4, 820, 450, SWP_NOZORDER);
 	
 	HWND Check_hWnd = NULL;
-	Check_hWnd = SetParent(App->CLSB_Ogre->Ogre_Window_hWnd, App->CLSB_Ogre_Dialog->TestHwnd);
+	Check_hWnd = SetParent(App->CLSB_Ogre->Ogre_Window_hWnd, App->CLSB_Ogre_Dialog->Equity_Main_hWnd);
 
 	//if (!Check_hWnd)
 	{
@@ -82,15 +82,15 @@ void SB_Equity::Auto_Load_File()
 }
 
 // *************************************************************************
-// *			Start_Ogre_Dialog:- Terry and Hazel Flanigan 2023		   *
+// *			Start_Equity_Dialog:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
-void SB_Equity::Start_Ogre_Dialog(bool AutoLoad)
+void SB_Equity::Start_Equity_Dialog(bool AutoLoad)
 {
 	mAutoLoad = AutoLoad;
 
 	if (EquitySB_Dialog_Created == 0)
 	{
-		TestHwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_OGREVIEWER, App->MainHwnd, (DLGPROC)Ogre_Dialog_Proc);
+		Equity_Main_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_OGREVIEWER, App->MainHwnd, (DLGPROC)Equity_Dialog_Proc);
 		EquitySB_Dialog_Created = 1;
 		Switch_3D_Window();	
 	}
@@ -101,9 +101,9 @@ void SB_Equity::Start_Ogre_Dialog(bool AutoLoad)
 }
 
 // **************************************************************************
-// *				Ogre_Dialog_Proc:- Terry and Hazel Flanigan 2022		*
+// *				Equity_Dialog_Proc:- Terry and Hazel Flanigan 2022		*
 // **************************************************************************
-LRESULT CALLBACK SB_Equity::Ogre_Dialog_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK SB_Equity::Equity_Dialog_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
@@ -170,7 +170,7 @@ LRESULT CALLBACK SB_Equity::Ogre_Dialog_Proc(HWND hDlg, UINT message, WPARAM wPa
 	case WM_SIZE:
 	{
 		App->CLSB_Ogre_Dialog->Resize_3DView();
-
+		Ogre::Root::getSingletonPtr()->renderOneFrame();
 	}break;
 
 	case WM_COMMAND:
@@ -414,15 +414,16 @@ LRESULT CALLBACK SB_Equity::Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 void SB_Equity::Resize_3DView()
 {
 	RECT rcl;
-	GetClientRect(TestHwnd, &rcl);
+	GetClientRect(Equity_Main_hWnd, &rcl);
 
-	int X = rcl.right-25;
-	int Y = rcl.bottom - 90;
+	int X = rcl.right-10;
+	int Y = rcl.bottom - 50;
 
 	SetWindowPos(App->CLSB_Ogre->Ogre_Window_hWnd, NULL, 4, 40, X, Y, SWP_NOZORDER);
 
-	App->CLSB_Ogre->mWindow->resize(X, Y);
 	App->CLSB_Ogre->mWindow->windowMovedOrResized();
 	App->CLSB_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CLSB_Ogre->mWindow->getWidth() / (Ogre::Real)App->CLSB_Ogre->mWindow->getHeight());
 	App->CLSB_Ogre->mCamera->yaw(Ogre::Radian(0));
+
+	Root::getSingletonPtr()->renderOneFrame();
 }

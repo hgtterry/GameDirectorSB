@@ -29,6 +29,7 @@ public:
 	~SB_Camera(void);
 
 	void Reset_View(void);
+	void Reset_Orientation(void);
 	void Set_Camera_Mode(int Mode);
 };
 

@@ -52,6 +52,18 @@ void SB_Camera::Reset_View(void)
 }
 
 // *************************************************************************
+// *		Reset_Orientation:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void SB_Camera::Reset_Orientation(void)
+{
+	App->CLSB_Grid->GridNode->resetOrientation();
+	App->CLSB_Grid->HairNode->resetOrientation();
+
+	App->CLSB_Ogre->RenderListener->RX = 0;
+	App->CLSB_Ogre->RenderListener->RZ = 0;
+}
+
+// *************************************************************************
 // *			Set_Camera_Mode:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 void SB_Camera::Set_Camera_Mode(int Mode)
