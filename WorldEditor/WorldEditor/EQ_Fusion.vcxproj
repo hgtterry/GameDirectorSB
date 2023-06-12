@@ -148,6 +148,7 @@
     <ClCompile Include="node.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Test|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="OgreXMLMeshSerializer.cpp" />
     <ClCompile Include="Parse3dt.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Test|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>

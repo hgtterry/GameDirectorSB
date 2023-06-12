@@ -98,6 +98,7 @@ private:
 	bool WriteNewXML(int GroupIndex);
 	bool WriteSubMesh(int GroupIndex);
 	bool Convert_To_Mesh();
+	void XMLToBinary(XmlOptions opts);
 	XmlOptions parseArgs();
 
 	char mDecompileFolder[MAX_PATH];
