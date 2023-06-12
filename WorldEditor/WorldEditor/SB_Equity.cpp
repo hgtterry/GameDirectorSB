@@ -1,9 +1,9 @@
 #include "StdAfx.h"
 #include "AB_App.h"
 #include "resource.h"
-#include "SB_Ogre_Dialog.h"
+#include "SB_Equity.h"
 
-SB_Ogre_Dialog::SB_Ogre_Dialog(void)
+SB_Equity::SB_Equity(void)
 {
 	mAutoLoad = 0;
 	EquitySB_Dialog_Created = 0;
@@ -11,14 +11,14 @@ SB_Ogre_Dialog::SB_Ogre_Dialog(void)
 	TestHwnd = NULL;
 }
 
-SB_Ogre_Dialog::~SB_Ogre_Dialog(void)
+SB_Equity::~SB_Equity(void)
 {
 }
 
 // *************************************************************************
 // *			Switch_3D_Window:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
-void SB_Ogre_Dialog::Switch_3D_Window()
+void SB_Equity::Switch_3D_Window()
 {
 	//App->CL_Ogre->InitOgre();
 	//Ogre::Root::getSingletonPtr()->renderOneFrame();
@@ -64,7 +64,7 @@ void SB_Ogre_Dialog::Switch_3D_Window()
 // *************************************************************************
 // *			Auto_Load_File:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-void SB_Ogre_Dialog::Auto_Load_File()
+void SB_Equity::Auto_Load_File()
 {
 	if (mAutoLoad == 1)
 	{
@@ -84,7 +84,7 @@ void SB_Ogre_Dialog::Auto_Load_File()
 // *************************************************************************
 // *			Start_Ogre_Dialog:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
-void SB_Ogre_Dialog::Start_Ogre_Dialog(bool AutoLoad)
+void SB_Equity::Start_Ogre_Dialog(bool AutoLoad)
 {
 	mAutoLoad = AutoLoad;
 
@@ -103,7 +103,7 @@ void SB_Ogre_Dialog::Start_Ogre_Dialog(bool AutoLoad)
 // **************************************************************************
 // *				Ogre_Dialog_Proc:- Terry and Hazel Flanigan 2022		*
 // **************************************************************************
-LRESULT CALLBACK SB_Ogre_Dialog::Ogre_Dialog_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK SB_Equity::Ogre_Dialog_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
@@ -294,7 +294,7 @@ LRESULT CALLBACK SB_Ogre_Dialog::Ogre_Dialog_Proc(HWND hDlg, UINT message, WPARA
 // *************************************************************************
 // *		OgreView_3D_Proc:- Terry and Hazel Flanigan 2023 			   *
 // *************************************************************************
-LRESULT CALLBACK SB_Ogre_Dialog::Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK SB_Equity::Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
@@ -411,7 +411,7 @@ LRESULT CALLBACK SB_Ogre_Dialog::Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wPa
 // *************************************************************************
 // *			Resize_3DView:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-void SB_Ogre_Dialog::Resize_3DView()
+void SB_Equity::Resize_3DView()
 {
 	RECT rcl;
 	GetClientRect(TestHwnd, &rcl);

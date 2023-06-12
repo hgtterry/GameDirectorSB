@@ -54,7 +54,7 @@ static UINT indicators[] =
 	ID_INDICATOR_SNAP			// Snap Info
 };
 
-typedef enum eINDICATORS
+enum eINDICATORS
 {
 	ID_SLOCK_PANE = 1,
 	ID_SELINFO_PANE,

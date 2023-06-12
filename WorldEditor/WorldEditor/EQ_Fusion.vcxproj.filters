@@ -276,9 +276,6 @@
     <ClCompile Include="SB_Grid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SB_Ogre_Dialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SB_Keyboard.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -328,6 +325,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OgreXMLMeshSerializer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SB_Equity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -607,9 +607,6 @@
     <ClInclude Include="SB_Grid.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SB_Ogre_Dialog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="SB_Keyboard.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -650,6 +647,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="tinyxml.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SB_Equity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

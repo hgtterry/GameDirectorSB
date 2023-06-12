@@ -1,9 +1,9 @@
 #pragma once
-class SB_Ogre_Dialog
+class SB_Equity
 {
 public:
-	SB_Ogre_Dialog(void);
-	~SB_Ogre_Dialog(void);
+	SB_Equity(void);
+	~SB_Equity(void);
 
 	void Switch_3D_Window();
 	void Start_Ogre_Dialog(bool AutoLoad);

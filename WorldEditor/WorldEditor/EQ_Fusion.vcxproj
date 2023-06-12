@@ -162,6 +162,7 @@
     <ClCompile Include="SB_Base_Group.cpp" />
     <ClCompile Include="SB_Camera.cpp" />
     <ClCompile Include="SB_Dialogs.cpp" />
+    <ClCompile Include="SB_Equity.cpp" />
     <ClCompile Include="SB_Exporter.cpp" />
     <ClCompile Include="SB_Export_Ogre3D.cpp" />
     <ClCompile Include="SB_Grid.cpp" />
@@ -171,7 +172,6 @@
     <ClCompile Include="SB_Model.cpp" />
     <ClCompile Include="SB_Ogre.cpp" />
     <ClCompile Include="SB_OgreListener.cpp" />
-    <ClCompile Include="SB_Ogre_Dialog.cpp" />
     <ClCompile Include="SB_Render.cpp" />
     <ClCompile Include="SB_Textures.cpp" />
     <ClCompile Include="ScaleDialog.cpp" />
@@ -231,6 +231,7 @@
     <ClInclude Include="SB_Base_Group.h" />
     <ClInclude Include="SB_Camera.h" />
     <ClInclude Include="SB_Dialogs.h" />
+    <ClInclude Include="SB_Equity.h" />
     <ClInclude Include="SB_Exporter.h" />
     <ClInclude Include="SB_Export_Ogre3D.h" />
     <ClInclude Include="SB_Grid.h" />
@@ -240,7 +241,6 @@
     <ClInclude Include="SB_Model.h" />
     <ClInclude Include="SB_Ogre.h" />
     <ClInclude Include="SB_OgreListener.h" />
-    <ClInclude Include="SB_Ogre_Dialog.h" />
     <ClInclude Include="SB_Render.h" />
     <ClInclude Include="SB_Textures.h" />
     <ClInclude Include="tinystr.h" />

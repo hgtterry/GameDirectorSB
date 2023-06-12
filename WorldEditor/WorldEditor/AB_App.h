@@ -63,7 +63,7 @@ distribution.
 // Scene Builder 
 #include "SB_Ogre.h"
 #include "SB_Grid.h"
-#include "SB_Ogre_Dialog.h"
+#include "SB_Equity.h"
 #include "SB_Keyboard.h"
 #include "SB_Camera.h"
 #include "SB_Assimp.h"
@@ -114,7 +114,7 @@ public:
 	// Scene Builder 
 	SB_Ogre*					CLSB_Ogre;
 	SB_Grid*					CLSB_Grid;
-	SB_Ogre_Dialog*				CLSB_Ogre_Dialog;
+	SB_Equity*					CLSB_Ogre_Dialog;
 	SB_Keyboard*				CLSB_Keyboard;
 	SB_Camera*					CLSB_Camera;
 	SB_Assimp*					CLSB_Assimp;
