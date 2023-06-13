@@ -127,6 +127,7 @@
 #define IDD_SB_EXPORTOPTIONS            275
 #define IDD_DIALOG3                     276
 #define IDD_SB_YESNO                    276
+#define IDD_SB_TB_BUTTONS               278
 #define IDC_RESET_ALL                   1000
 #define IDC_EDIT1                       1001
 #define IDC_EDIT10                      1002
@@ -511,13 +512,12 @@
 #define IDC_BTSHOWTEXTURES              1353
 #define IDC_BUTTON5                     1354
 #define IDC_PREVIEW                     1355
-#define IDC_BUTTON7                     1355
 #define IDC_TBSHOWHAIR                  1355
 #define IDC_BUTTON6                     1356
 #define IDC_TEXTURELIST2                1357
-#define IDC_BUTTON8                     1357
+#define IDC_TBBOUNDBOX                  1357
 #define IDC_BTTXLOPEN                   1358
-#define IDC_BUTTON9                     1358
+#define IDC_BTSHOWLIGHT2                1358
 #define IDC_BTTESTDLG                   1359
 #define IDC_STTDTXLNAME                 1360
 #define IDC_LISTTDTEXTURES              1361
@@ -534,9 +534,12 @@
 #define IDC_BTTBSELECT                  1363
 #define IDC_TEST                        1363
 #define IDC_BT_CHANGE_NAME              1363
+#define IDC_BTSHOWBONES                 1363
 #define IDC_BANNER                      1364
 #define IDC_GD_CYLINDER_PRIMITIVE       1364
 #define IDC_BT_BROWSE                   1364
+#define IDC_BUTTON7                     1364
+#define IDC_TBINFO2                     1364
 #define IDC_STTEXT                      1365
 #define IDC_GD_SPHEROID_PRIMITIVE       1365
 #define IDC_BT_FOLDER_NAME              1365
@@ -647,7 +650,9 @@
 #define IDC_ST_SUBFOLDER_NAME           1472
 #define IDC_CK_SUBFOLDER                1473
 #define IDC_TBSHOWFACES                 1474
-#define IDC_TBSHOWFACES2                1475
+#define IDC_TBSHOWGRID                  1475
+#define IDC_BTSHOWNORMALS               1476
+#define IDC_BTSHOWPOINTS                1477
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772
 #define ID_BRUSH_PRIMITIVES_SPHEROID    32773
@@ -838,9 +843,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        278
+#define _APS_NEXT_RESOURCE_VALUE        280
 #define _APS_NEXT_COMMAND_VALUE         33069
-#define _APS_NEXT_CONTROL_VALUE         1475
+#define _APS_NEXT_CONTROL_VALUE         1478
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

@@ -7,8 +7,9 @@ SB_Equity::SB_Equity(void)
 {
 	mAutoLoad = 0;
 	EquitySB_Dialog_Created = 0;
-	OgreView_3D_hWnd = NULL;
-	Equity_Main_hWnd = NULL;
+	OgreView_3D_hWnd =		nullptr;
+	Equity_Main_hWnd =		nullptr;
+	Render_Buttons_hWnd =	nullptr;
 }
 
 SB_Equity::~SB_Equity(void)
@@ -91,6 +92,9 @@ void SB_Equity::Start_Equity_Dialog(bool AutoLoad)
 	if (EquitySB_Dialog_Created == 0)
 	{
 		Equity_Main_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_OGREVIEWER, App->MainHwnd, (DLGPROC)Equity_Dialog_Proc);
+		
+		Start_Render_Buttons();
+		
 		EquitySB_Dialog_Created = 1;
 		Switch_3D_Window();	
 	}
@@ -145,28 +149,6 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_Proc(HWND hDlg, UINT message, WPARAM w
 		return TRUE;
 	}
 
-	case WM_MOUSEMOVE: // ok up and running and we have a loop for mouse
-	{
-		//App->Flash_Window();
-		//SetFocus(App->SBC_MeshViewer->MeshView_3D_hWnd);
-		break;
-	}
-
-	case WM_RBUTTONDOWN: // BERNIE_HEAR_FIRE 
-	{
-		
-		//if (App->OgreStarted == 1)
-		//{
-		//	SetCapture(App->SBC_MeshViewer->MeshView_3D_hWnd);// Bernie
-		//	SetCursorPos(App->CursorPosX, App->CursorPosY);
-		//	App->SBC_MeshViewer->RenderListener->Pl_RightMouseDown = 1;
-		//	App->CUR = SetCursor(NULL);
-		//	return 1;
-		//}
-
-		return 1;
-	}
-
 	case WM_SIZE:
 	{
 		App->CLSB_Equity->Resize_3DView();
@@ -216,107 +198,6 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_Proc(HWND hDlg, UINT message, WPARAM w
 			return TRUE;
 		}
 
-		// Render
-		if (LOWORD(wParam) == ID_RENDER_CROSSHAIR)
-		{
-			if (App->CLSB_Ogre->RenderListener->Show_Crosshair == 1)
-			{
-				App->CLSB_Ogre->RenderListener->Show_Crosshair = 0;
-			}
-			else
-			{
-				App->CLSB_Ogre->RenderListener->Show_Crosshair = 1;
-			}
-			
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == ID_RENDER_FACES)
-		{
-			if (App->CLSB_Ogre->RenderListener->ShowFaces == 1)
-			{
-				App->CLSB_Ogre->RenderListener->ShowFaces = 0;
-			}
-			else
-			{
-				App->CLSB_Ogre->RenderListener->ShowFaces = 1;
-			}
-
-			return TRUE;
-		}
-
-		//-------------------------------------------------------- Show Textures
-		if (LOWORD(wParam) == IDC_BTSHOWTEXTURES)
-		{
-			if (App->CLSB_Model->Model_Loaded == 1)
-			{
-				HWND Temp = GetDlgItem(hDlg, IDC_BTSHOWTEXTURES);
-
-				if (App->CLSB_Ogre->RenderListener->ShowTextured == 1)
-				{
-					App->CLSB_Ogre->RenderListener->ShowTextured = 0;
-
-					//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOff_Bmp);
-				}
-				else
-				{
-					App->CLSB_Ogre->RenderListener->ShowTextured = 1;
-
-					//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOn_Bmp);
-				}
-			}
-			return TRUE;
-		}
-
-		//-------------------------------------------------------- Show Hair
-		if (LOWORD(wParam) == IDC_TBSHOWHAIR)
-		{
-			HWND Temp = GetDlgItem(hDlg, IDC_TBSHOWHAIR);
-
-			if (App->CLSB_Grid->ShowHair == 1)
-			{
-				App->CLSB_Grid->ShowHair = 0;
-				App->CLSB_Grid->Hair_SetVisible(0);
-
-				//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HairOff_Bmp);
-			}
-			else
-			{
-				App->CLSB_Grid->ShowHair = 1;
-				App->CLSB_Grid->Hair_SetVisible(1);
-
-				//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HairOn_Bmp);
-			}
-			return TRUE;
-		}
-
-		//-------------------------------------------------------- Show Faces
-		if (LOWORD(wParam) == IDC_TBSHOWFACES)
-		{
-			if (App->CLSB_Model->Model_Loaded == 1)
-			{
-				HWND Temp = GetDlgItem(hDlg, IDC_TBSHOWFACES);
-
-				if (App->CLSB_Ogre->RenderListener->ShowFaces == 1)
-				{
-					if (App->CLSB_Ogre->RenderListener->ShowFaces == 1)
-						App->CLSB_Ogre->RenderListener->ShowFaces = 0;
-
-					//App->CL_TopBar->Toggle_Faces_Flag = 0;
-
-					//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
-				}
-				else
-				{
-					App->CLSB_Ogre->RenderListener->ShowFaces = 1;
-					//App->CL_TopBar->Toggle_Faces_Flag = 1;
-
-					//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOn_Bmp);
-				}
-			}
-			return TRUE;
-		}
-
 		if (LOWORD(wParam) == IDC_TEST)
 		{
 			//App->CL_Ogre->OgreListener->StopOgre = 1;
@@ -359,6 +240,277 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_Proc(HWND hDlg, UINT message, WPARAM w
 
 	break;
 
+	}
+	return FALSE;
+}
+
+// *************************************************************************
+// *	  				Start_Render_Buttons		  	Terry			   *
+// *************************************************************************
+bool SB_Equity::Start_Render_Buttons()
+{
+	Render_Buttons_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_TB_BUTTONS, Equity_Main_hWnd, (DLGPROC)Render_Buttons_Proc);
+	//Init_Bmps_Globals();
+	return 1;
+}
+
+// *************************************************************************
+// *						Render_Buttons_Proc Terry					   *
+// *************************************************************************
+LRESULT CALLBACK SB_Equity::Render_Buttons_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		return TRUE;
+	}
+
+	case WM_CTLCOLORSTATIC:
+	{
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_COMMAND:
+
+		//-------------------------------------------------------- Show Grid
+		if (LOWORD(wParam) == IDC_TBSHOWGRID)
+		{
+			/*HWND Temp = GetDlgItem(hDlg, IDC_TBSHOWGRID);
+
+			if (App->CL_Grid->ShowGridFlag == 1)
+			{
+				App->CL_Grid->Grid_SetVisible(0);
+				App->CL_Grid->ShowGridFlag = 0;
+
+				App->CL_TopBar->Toggle_Grid_Flag = 0;
+
+				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_GridOff_Bmp);
+			}
+			else
+			{
+				App->CL_Grid->Grid_SetVisible(1);
+				App->CL_Grid->ShowGridFlag = 1;
+
+				App->CL_TopBar->Toggle_Grid_Flag = 1;
+
+				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_GridOn_Bmp);
+
+			}*/
+			return TRUE;
+		}
+
+		//-------------------------------------------------------- Show Hair
+		if (LOWORD(wParam) == IDC_TBSHOWHAIR)
+		{
+			/*HWND Temp = GetDlgItem(hDlg, IDC_TBSHOWHAIR);
+
+			if (App->CL_Grid->ShowHair == 1)
+			{
+				App->CL_Grid->ShowHair = 0;
+				App->CL_Grid->Hair_SetVisible(0);
+
+				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HairOff_Bmp);
+			}
+			else
+			{
+				App->CL_Grid->ShowHair = 1;
+				App->CL_Grid->Hair_SetVisible(1);
+
+				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HairOn_Bmp);
+			}*/
+			return TRUE;
+		}
+
+		//-------------------------------------------------------- Show Info
+		if (LOWORD(wParam) == IDC_TBINFO2)
+		{
+			/*if (App->CL_Editor_Gui->Show_Model_Data_F == 1)
+			{
+				App->CL_Editor_Gui->Close_Model_Data();
+			}
+			else
+			{
+				App->CL_Editor_Gui->Start_Model_Data();
+			}*/
+
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_TBSHOWFACES)
+		{
+			/*if (App->CL_Model->Model_Loaded == 1)
+			{
+				HWND Temp = GetDlgItem(hDlg, IDC_TBSHOWFACES);
+
+				if (App->CL_Ogre->RenderListener->ShowFaces == 1)
+				{
+					if (App->CL_Ogre->RenderListener->ShowFaces == 1)
+						App->CL_Ogre->RenderListener->ShowFaces = 0;
+
+					App->CL_TopBar->Toggle_Faces_Flag = 0;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
+				}
+				else
+				{
+					App->CL_Ogre->RenderListener->ShowFaces = 1;
+					App->CL_TopBar->Toggle_Faces_Flag = 1;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOn_Bmp);
+				}
+			}*/
+			return TRUE;
+		}
+
+		//-------------------------------------------------------- Show Textures
+		if (LOWORD(wParam) == IDC_BTSHOWTEXTURES)
+		{
+			/*if (App->CL_Model->Model_Loaded == 1)
+			{
+				HWND Temp = GetDlgItem(hDlg, IDC_BTSHOWTEXTURES);
+
+				if (App->CL_Ogre->RenderListener->ShowTextured == 1)
+				{
+					App->CL_Ogre->RenderListener->ShowTextured = 0;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOff_Bmp);
+				}
+				else
+				{
+					App->CL_Ogre->RenderListener->ShowTextured = 1;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOn_Bmp);
+				}
+			}*/
+			return TRUE;
+		}
+
+		//-------------------------------------------------------- Show Normals
+		if (LOWORD(wParam) == IDC_BTSHOWNORMALS)
+		{
+			/*if (App->CL_Model->Model_Loaded == 1)
+			{
+				HWND Temp = GetDlgItem(hDlg, IDC_BTSHOWNORMALS);
+
+				if (App->CL_Ogre->RenderListener->ShowNormals == 1)
+				{
+					App->CL_Ogre->RenderListener->ShowNormals = 0;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_NormalsOff_Bmp);
+				}
+				else
+				{
+					App->CL_Ogre->RenderListener->ShowNormals = 1;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_NormalsOn_Bmp);
+				}
+			}*/
+			return TRUE;
+		}
+
+		//-------------------------------------------------------- Show Light
+		if (LOWORD(wParam) == IDC_BTSHOWLIGHT2)
+		{
+			/*if (App->CL_Model->Model_Loaded == 1)
+			{
+				HWND Temp = GetDlgItem(hDlg, IDC_BTSHOWLIGHT);
+
+				if (App->CL_Ogre->RenderListener->Light_Activated == 1)
+				{
+					App->CL_Ogre->RenderListener->Light_Activated = 0;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_LightsOff_Bmp);
+				}
+				else
+				{
+					App->CL_Ogre->RenderListener->Light_Activated = 1;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_LightsOn_Bmp);
+				}
+			}*/
+			return TRUE;
+		}
+
+		//-------------------------------------------------------- Show Points
+		if (LOWORD(wParam) == IDC_BTSHOWPOINTS)
+		{
+			/*if (App->CL_Model->Model_Loaded == 1)
+			{
+				HWND Temp = GetDlgItem(hDlg, IDC_BTSHOWPOINTS);
+
+				if (App->CL_Ogre->RenderListener->ShowPoints == 1)
+				{
+					App->CL_Ogre->RenderListener->ShowPoints = 0;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshPointsOff_Bmp);
+				}
+				else
+				{
+					App->CL_Ogre->RenderListener->ShowPoints = 1;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshPointsOn_Bmp);
+				}
+			}*/
+			return TRUE;
+		}
+
+		//-------------------------------------------------------- Show Bones
+		if (LOWORD(wParam) == IDC_BTSHOWBONES)
+		{
+			/*if (App->CL_Model->Model_Loaded == 1)
+			{
+				HWND Temp = GetDlgItem(hDlg, IDC_BTSHOWBONES);
+
+				if (App->CL_Ogre->RenderListener->ShowBones == 1)
+				{
+					App->CL_Ogre->RenderListener->ShowBones = 0;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BonesOff_Bmp);
+				}
+				else
+				{
+					App->CL_Ogre->RenderListener->ShowBones = 1;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BonesOn_Bmp);
+				}
+			}*/
+			return TRUE;
+		}
+
+		//-------------------------------------------------------- Show Bound Box
+		if (LOWORD(wParam) == IDC_TBBOUNDBOX)
+		{
+			/*if (App->CL_Model->Model_Loaded == 1)
+			{
+				HWND Temp = GetDlgItem(hDlg, IDC_TBBOUNDBOX);
+
+				if (App->CL_Ogre->RenderListener->ShowBoundingBox == 1)
+				{
+					App->CL_Ogre->RenderListener->ShowBoundingBox = 0;
+					App->CL_TopBar->Toggle_BBox_Flag = 0;
+
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOff_Bmp);
+				}
+				else
+				{
+					App->CL_Ogre->RenderListener->ShowBoundingBox = 1;
+					App->CL_TopBar->Toggle_BBox_Flag = 1;
+
+					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOn_Bmp);
+				}
+			}*/
+			return TRUE;
+		}
+		break;
 	}
 	return FALSE;
 }
