@@ -1,25 +1,25 @@
 #include "stdafx.h"
-#include "ME_App.h"
-#include "ME_Export_Object.h"
+#include "AB_App.h"
+#include "SB_Export_Object.h"
 
 
-ME_Export_Object::ME_Export_Object()
+SB_Export_Object::SB_Export_Object()
 {
 }
 
 
-ME_Export_Object::~ME_Export_Object()
+SB_Export_Object::~SB_Export_Object()
 {
 }
 
 // *************************************************************************
 // *					Create_ObjectFile Terry Bernie Hazel   		 	   *
 // *************************************************************************
-bool ME_Export_Object::Create_ObjectFile(void)
+bool SB_Export_Object::Create_ObjectFile(void)
 {
 
-	strcpy(App->CL_FileIO->BrowserMessage, "Select Folder To Place Object Files a sub folder will be created");
-	int Test = App->CL_FileIO->StartBrowser("");
+	strcpy(App->CLSB_FileIO->BrowserMessage, "Select Folder To Place Object Files a sub folder will be created");
+	int Test = App->CLSB_FileIO->StartBrowser("");
 
 	if (Test == 0)
 	{
@@ -29,9 +29,9 @@ bool ME_Export_Object::Create_ObjectFile(void)
 	strcpy(OutputFolder, "");
 
 	char buff[1024];
-	strcpy(buff, App->CL_FileIO->szSelectedDir);
+	strcpy(buff, App->CLSB_FileIO->szSelectedDir);
 	strcat(buff, "\\");
-	strcat(buff, App->CL_Model->JustName);
+	strcat(buff, App->CLSB_Model->JustName);
 	strcat(buff, "_Object");
 	strcat(buff, "\\");
 
@@ -39,17 +39,17 @@ bool ME_Export_Object::Create_ObjectFile(void)
 
 	CreateDirectory(OutputFolder, NULL);
 
-	App->CL_Textures->DecompileTextures(OutputFolder);
+//	App->CLSB_Textures->DecompileTextures(OutputFolder);
 
 	strcpy(Object_FileName, OutputFolder);
-	strcat(Object_FileName, App->CL_Model->JustName);
+	strcat(Object_FileName, App->CLSB_Model->JustName);
 	strcat(Object_FileName, ".obj");
 
 	strcpy(mtl_FileName, OutputFolder);
-	strcat(mtl_FileName, App->CL_Model->JustName);
+	strcat(mtl_FileName, App->CLSB_Model->JustName);
 	strcat(mtl_FileName, ".mtl");
 
-	strcpy(Just_mtl_FileName, App->CL_Model->JustName);
+	strcpy(Just_mtl_FileName, App->CLSB_Model->JustName);
 	strcat(Just_mtl_FileName, ".mtl");
 
 	Write_ObjectFile();
@@ -62,7 +62,7 @@ bool ME_Export_Object::Create_ObjectFile(void)
 // *************************************************************************
 // *				Write_ObjectFile Terry Bernie Hazel  				   *
 // *************************************************************************
-void ME_Export_Object::Write_ObjectFile(void)
+void SB_Export_Object::Write_ObjectFile(void)
 {
 	Write_OBJECTFILE = 0;
 
@@ -74,7 +74,7 @@ void ME_Export_Object::Write_ObjectFile(void)
 	{
 		return;
 	}
-	if (App->CL_Model->Model_Type == Enums::LoadedFile_Assimp)
+	if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Assimp)
 	{
 		Write_ObjectFile_Commit();
 	}
@@ -85,7 +85,7 @@ void ME_Export_Object::Write_ObjectFile(void)
 // *************************************************************************
 // *				Write_ObjectFile_Commit Terry Bernie Hazel  		   *
 // *************************************************************************
-void ME_Export_Object::Write_ObjectFile_Commit(void)
+void SB_Export_Object::Write_ObjectFile_Commit(void)
 {
 
 	fprintf(Write_OBJECTFILE, "#\n");
@@ -102,23 +102,23 @@ void ME_Export_Object::Write_ObjectFile_Commit(void)
 	int FaceCount = 0;
 	int FaceIndex = 1;
 
-	int GroupCountTotal = App->CL_Model->Get_Groupt_Count();
+	int GroupCountTotal = App->CLSB_Model->Get_Groupt_Count();
 
 	//	char GroupName[255];
 	char MaterialName[255];
 
 	//--------------------------------------------- Vertices v-
 
-	fprintf(Write_OBJECTFILE, "%s %i\n", "#", App->CL_Model->VerticeCount);
+	fprintf(Write_OBJECTFILE, "%s %i\n", "#", App->CLSB_Model->VerticeCount);
 
 	while (GroupCount < GroupCountTotal)
 	{
 		VertCount = 0;
-		while (VertCount < App->CL_Model->Group[GroupCount]->GroupVertCount)
+		while (VertCount < App->CLSB_Model->Group[GroupCount]->GroupVertCount)
 		{
-			float X = App->CL_Model->Group[GroupCount]->vertex_Data[VertCount].x;
-			float Y = App->CL_Model->Group[GroupCount]->vertex_Data[VertCount].y;
-			float Z = App->CL_Model->Group[GroupCount]->vertex_Data[VertCount].z;
+			float X = App->CLSB_Model->Group[GroupCount]->vertex_Data[VertCount].x;
+			float Y = App->CLSB_Model->Group[GroupCount]->vertex_Data[VertCount].y;
+			float Z = App->CLSB_Model->Group[GroupCount]->vertex_Data[VertCount].z;
 
 			fprintf(Write_OBJECTFILE, "v %.06f %.06f %.06f\n", X, Y, Z);
 
@@ -131,17 +131,17 @@ void ME_Export_Object::Write_ObjectFile_Commit(void)
 
 	//--------------------------------------------- Texture Cords vt-
 
-	fprintf(Write_OBJECTFILE, "%s %i\n", "#", App->CL_Model->VerticeCount);
+	fprintf(Write_OBJECTFILE, "%s %i\n", "#", App->CLSB_Model->VerticeCount);
 
 	GroupCount = 0;
 	
 	while (GroupCount < GroupCountTotal)
 	{
 		VertTextCords = 0;
-		while (VertTextCords < App->CL_Model->Group[GroupCount]->GroupVertCount)
+		while (VertTextCords < App->CLSB_Model->Group[GroupCount]->GroupVertCount)
 		{
-			float U = App->CL_Model->Group[GroupCount]->MapCord_Data[VertTextCords].u;
-			float V = App->CL_Model->Group[GroupCount]->MapCord_Data[VertTextCords].v;
+			float U = App->CLSB_Model->Group[GroupCount]->MapCord_Data[VertTextCords].u;
+			float V = App->CLSB_Model->Group[GroupCount]->MapCord_Data[VertTextCords].v;
 
 			fprintf(Write_OBJECTFILE, "vt %.06f %.06f\n", U, V);
 
@@ -154,18 +154,18 @@ void ME_Export_Object::Write_ObjectFile_Commit(void)
 
 	//--------------------------------------------- Normals vn-
 
-	fprintf(Write_OBJECTFILE, "%s %i\n", "#", App->CL_Model->VerticeCount);
+	fprintf(Write_OBJECTFILE, "%s %i\n", "#", App->CLSB_Model->VerticeCount);
 
 	GroupCount = 0;
 
 	while (GroupCount < GroupCountTotal)
 	{
 		VertNormals = 0;
-		while (VertNormals < App->CL_Model->Group[GroupCount]->GroupVertCount)
+		while (VertNormals < App->CLSB_Model->Group[GroupCount]->GroupVertCount)
 		{
-			float X = App->CL_Model->Group[GroupCount]->Normal_Data[VertNormals].x;
-			float Y = App->CL_Model->Group[GroupCount]->Normal_Data[VertNormals].y;
-			float Z = App->CL_Model->Group[GroupCount]->Normal_Data[VertNormals].z;
+			float X = App->CLSB_Model->Group[GroupCount]->Normal_Data[VertNormals].x;
+			float Y = App->CLSB_Model->Group[GroupCount]->Normal_Data[VertNormals].y;
+			float Z = App->CLSB_Model->Group[GroupCount]->Normal_Data[VertNormals].z;
 
 			fprintf(Write_OBJECTFILE, "vn %.06f %.06f %.06f\n", X, Y, Z);
 
@@ -184,22 +184,22 @@ void ME_Export_Object::Write_ObjectFile_Commit(void)
 		FaceCount = 0;
 		int LineIndex = 0;
 
-		strcpy(MaterialName, App->CL_Model->Group[GroupCount]->MaterialName);
+		strcpy(MaterialName, App->CLSB_Model->Group[GroupCount]->MaterialName);
 		fprintf(Write_OBJECTFILE, "usemtl %s\n", MaterialName);
 
-		while (FaceCount < App->CL_Model->Group[GroupCount]->GroupFaceCount)
+		while (FaceCount < App->CLSB_Model->Group[GroupCount]->GroupFaceCount)
 		{
-			int A0 = App->CL_Model->Group[GroupCount]->Face_Data[FaceCount].a + Offset;
-			int B0 = App->CL_Model->Group[GroupCount]->Face_Data[FaceCount].a + Offset;
-			int C0 = App->CL_Model->Group[GroupCount]->Face_Data[FaceCount].a + Offset;
+			int A0 = App->CLSB_Model->Group[GroupCount]->Face_Data[FaceCount].a + Offset;
+			int B0 = App->CLSB_Model->Group[GroupCount]->Face_Data[FaceCount].a + Offset;
+			int C0 = App->CLSB_Model->Group[GroupCount]->Face_Data[FaceCount].a + Offset;
 
-			int A1 = App->CL_Model->Group[GroupCount]->Face_Data[FaceCount].b + Offset;
-			int B1 = App->CL_Model->Group[GroupCount]->Face_Data[FaceCount].b + Offset;
-			int C1 = App->CL_Model->Group[GroupCount]->Face_Data[FaceCount].b + Offset;
+			int A1 = App->CLSB_Model->Group[GroupCount]->Face_Data[FaceCount].b + Offset;
+			int B1 = App->CLSB_Model->Group[GroupCount]->Face_Data[FaceCount].b + Offset;
+			int C1 = App->CLSB_Model->Group[GroupCount]->Face_Data[FaceCount].b + Offset;
 
-			int A2 = App->CL_Model->Group[GroupCount]->Face_Data[FaceCount].c + Offset;
-			int B2 = App->CL_Model->Group[GroupCount]->Face_Data[FaceCount].c + Offset;
-			int C2 = App->CL_Model->Group[GroupCount]->Face_Data[FaceCount].c + Offset;
+			int A2 = App->CLSB_Model->Group[GroupCount]->Face_Data[FaceCount].c + Offset;
+			int B2 = App->CLSB_Model->Group[GroupCount]->Face_Data[FaceCount].c + Offset;
+			int C2 = App->CLSB_Model->Group[GroupCount]->Face_Data[FaceCount].c + Offset;
 
 			FaceCount++;
 
@@ -207,7 +207,7 @@ void ME_Export_Object::Write_ObjectFile_Commit(void)
 
 		}
 
-		Offset = Offset + App->CL_Model->Group[GroupCount]->GroupVertCount;
+		Offset = Offset + App->CLSB_Model->Group[GroupCount]->GroupVertCount;
 
 		fprintf(Write_OBJECTFILE, "%s \n", " ");
 		GroupCount++;
@@ -217,7 +217,7 @@ void ME_Export_Object::Write_ObjectFile_Commit(void)
 // *************************************************************************
 // *					WriteMTLFile Terry Bernie Hazel 		   	   	   *
 // *************************************************************************
-bool ME_Export_Object::WriteMTLFile(void)
+bool SB_Export_Object::WriteMTLFile(void)
 {
 	Write_MTLFile = 0;
 
@@ -237,11 +237,11 @@ bool ME_Export_Object::WriteMTLFile(void)
 	fprintf(Write_MTLFile, "%s \n", " ");
 
 	int GroupCount = 0;
-	int GroupCountTotal = App->CL_Model->Get_Groupt_Count();
+	int GroupCountTotal = App->CLSB_Model->Get_Groupt_Count();
 
 	while (GroupCount < GroupCountTotal)
 	{
-		strcpy(buf, App->CL_Model->Group[GroupCount]->MaterialName);
+		strcpy(buf, App->CLSB_Model->Group[GroupCount]->MaterialName);
 		fprintf(Write_MTLFile, "newmtl %s\n", buf);
 
 		fprintf(Write_MTLFile, "illum 2\n");
@@ -251,7 +251,7 @@ bool ME_Export_Object::WriteMTLFile(void)
 		fprintf(Write_MTLFile, "Ke 0.000000 0.000000 0.000000\n");
 		fprintf(Write_MTLFile, "Ns 0.000000\n");
 
-		strcpy(buf, App->CL_Model->Group[GroupCount]->Text_FileName);
+		strcpy(buf, App->CLSB_Model->Group[GroupCount]->Text_FileName);
 		int Len = strlen(buf);
 		buf[Len - 4] = 0;
 		strcat(buf, ".jpg");

@@ -1,9 +1,9 @@
 #pragma once
-class ME_Export_Object
+class SB_Export_Object
 {
 public:
-	ME_Export_Object();
-	~ME_Export_Object();
+	SB_Export_Object();
+	~SB_Export_Object();
 
 	bool Create_ObjectFile(void);
 

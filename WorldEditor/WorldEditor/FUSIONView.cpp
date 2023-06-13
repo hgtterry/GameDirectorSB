@@ -612,7 +612,7 @@ void CFusionView::OnMouseMove (UINT nFlags, CPoint point)
 			Tool = GetTool ();
 			if (mViewIs3d)
 			{
-//				if (ShiftHeld)
+	//			if (ShiftHeld)
 				if (RMouseButtonDown && !LMouseButtonDown)
 				{
 					SetCursor (AfxGetApp()->LoadCursor (IDC_EYEDROPPER));

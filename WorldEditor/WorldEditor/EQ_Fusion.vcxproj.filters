@@ -330,6 +330,9 @@
     <ClCompile Include="SB_Equity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SB_Export_Object.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="FUSION.rc">
@@ -650,6 +653,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SB_Equity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SB_Export_Object.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

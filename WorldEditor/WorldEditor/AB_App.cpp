@@ -248,7 +248,7 @@ void SB_App::SetBrushes_Fonts(void)
 	Brush_Tabs_UnSelected = CreateSolidBrush(RGB(190, 190, 190));
 
 	Brush_But_Normal = CreateSolidBrush(RGB(255, 255, 150));
-	Brush_But_Hover = CreateSolidBrush(RGB(255, 255, 200));
+	Brush_But_Hover = CreateSolidBrush(RGB(255, 255, 230));
 	Brush_But_Pressed = CreateSolidBrush(RGB(240, 240, 190));
 
 	Font_CB15 = CreateFont(-15, 0, 0, 0, 0, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
@@ -453,6 +453,132 @@ bool SB_App::Custom_Button_Toggle_MFC(LPDRAWITEMSTRUCT lpDIS,HWND hDlg, bool Tog
 	}
 
 	return 1;
+}
+
+// *************************************************************************
+// *					Custom_Button_Normal Terry Bernie   		  	   *
+// *************************************************************************
+bool SB_App::Custom_Button_Normal(LPNMCUSTOMDRAW item)
+{
+	{
+		if (item->uItemState & CDIS_SELECTED) // Push Down
+		{
+			//Create pen for button border
+			HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0));
+
+			//Select our brush into hDC
+			HGDIOBJ old_pen = SelectObject(item->hdc, pen);
+			HGDIOBJ old_brush = SelectObject(item->hdc, App->Brush_But_Pressed);
+
+			RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 1, 1);
+
+			//Clean up
+			SelectObject(item->hdc, old_pen);
+			SelectObject(item->hdc, old_brush);
+			DeleteObject(pen);
+
+			return CDRF_DODEFAULT;
+		}
+		else
+		{
+			if (item->uItemState & CDIS_HOT) //Our mouse is over the button
+			{
+
+				HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 255, 0));
+
+				HGDIOBJ old_pen = SelectObject(item->hdc, pen);
+				HGDIOBJ old_brush = SelectObject(item->hdc, App->Brush_But_Hover);
+
+				RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 1, 1);
+
+				SelectObject(item->hdc, old_pen);
+				SelectObject(item->hdc, old_brush);
+				DeleteObject(pen);
+
+				return CDRF_DODEFAULT;
+			}
+
+			HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0)); // Idle 
+
+			HGDIOBJ old_pen = SelectObject(item->hdc, pen);
+			HGDIOBJ old_brush = SelectObject(item->hdc, App->Brush_But_Normal);
+
+			RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 1, 1);
+
+			SelectObject(item->hdc, old_pen);
+			SelectObject(item->hdc, old_brush);
+			DeleteObject(pen);
+
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+}
+
+// *************************************************************************
+// *					Custom_Button Terry Bernie   			 	 	   *
+// *************************************************************************
+bool SB_App::Custom_Button_Toggle(LPNMCUSTOMDRAW item, bool Toggle)
+{
+	static HBRUSH defaultbrush = NULL;
+	static HBRUSH hotbrush = NULL;
+	static HBRUSH selectbrush = NULL;
+
+	{
+		if (item->uItemState & CDIS_HOT) //Our mouse is over the button
+		{
+			//Select our colour when the mouse hovers our button
+
+			if (Toggle == 1)
+			{
+				hotbrush = CreateGradientBrush(RGB(0, 240, 0), RGB(0, 240, 0), item);
+			}
+			else
+			{
+				hotbrush = CreateGradientBrush(RGB(240, 240, 240), RGB(240, 240, 240), item);;
+			}
+
+			HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0));
+
+			HGDIOBJ old_pen = SelectObject(item->hdc, pen);
+			HGDIOBJ old_brush = SelectObject(item->hdc, hotbrush);
+
+			RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 0, 0);
+
+			SelectObject(item->hdc, old_pen);
+			SelectObject(item->hdc, old_brush);
+			DeleteObject(pen);
+
+			return CDRF_DODEFAULT;
+		}
+
+		//Select our colour when our button is doing nothing
+
+		if (Toggle == 1)
+		{
+			defaultbrush = App->Brush_Green;
+		}
+		else
+		{
+			defaultbrush = App->Brush_White;
+		}
+
+		HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0));
+
+		HGDIOBJ old_pen = SelectObject(item->hdc, pen);
+		HGDIOBJ old_brush = SelectObject(item->hdc, defaultbrush);
+
+		RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 0, 0);
+
+		SelectObject(item->hdc, old_pen);
+		SelectObject(item->hdc, old_brush);
+		DeleteObject(pen);
+
+		return CDRF_DODEFAULT;
+	}
+
+	return CDRF_DODEFAULT;
 }
 
 // *************************************************************************

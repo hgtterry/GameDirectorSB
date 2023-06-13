@@ -97,7 +97,8 @@ LRESULT CALLBACK A_TopTabs::Top_Tabs_Proc(HWND hDlg, UINT message, WPARAM wParam
 		SendDlgItemMessage(hDlg, IDC_BT_TB_SELECTALL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TB_DESELECTALL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TB_BUILDPREVIEW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_PREVIEWSELECTED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		SendDlgItemMessage(hDlg, IDC_BT_TB_WORLDINFO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TB_NEWVIEW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STARTEQUITY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -120,37 +121,7 @@ LRESULT CALLBACK A_TopTabs::Top_Tabs_Proc(HWND hDlg, UINT message, WPARAM wParam
 
 			LPDRAWITEMSTRUCT lpDIS = (LPDRAWITEMSTRUCT)lParam;
 
-			if (lpDIS->CtlID == IDC_BT_TB_TEXTURED)
-			{
-				App->Custom_Button_Toggle_MFC(lpDIS,hDlg,App->CL_TopTabs->Textured_Flag);
-				return TRUE;
-			}
-
-			if (lpDIS->CtlID == IDC_BT_TB_WIRED)
-			{
-				App->Custom_Button_Toggle_MFC(lpDIS,hDlg,App->CL_TopTabs->Wired_Flag);
-				return TRUE;
-			}
-
 			if (lpDIS->CtlID == IDC_BT_TB_NEWVIEW)
-			{
-				App->Custom_Button_Normal_MFC(lpDIS,hDlg);
-				return TRUE;
-			}
-
-			if (lpDIS->CtlID == IDC_BT_TB_SELECTALL)
-			{
-				App->Custom_Button_Normal_MFC(lpDIS,hDlg);
-				return TRUE;
-			}
-
-			if (lpDIS->CtlID == IDC_BT_TB_DESELECTALL)
-			{
-				App->Custom_Button_Normal_MFC(lpDIS,hDlg);
-				return TRUE;
-			}
-
-			if (lpDIS->CtlID == IDC_BT_TB_BUILDPREVIEW)
 			{
 				App->Custom_Button_Normal_MFC(lpDIS,hDlg);
 				return TRUE;
@@ -182,6 +153,55 @@ LRESULT CALLBACK A_TopTabs::Top_Tabs_Proc(HWND hDlg, UINT message, WPARAM wParam
 
 			return TRUE;
 		}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_BT_TB_BUILDPREVIEW && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_PREVIEWSELECTED && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_TB_TEXTURED && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_TopTabs->Textured_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_TB_WIRED && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_TopTabs->Wired_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_TB_SELECTALL && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_TB_DESELECTALL && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
 
 	case WM_COMMAND:
 		{
@@ -291,7 +311,19 @@ LRESULT CALLBACK A_TopTabs::Top_Tabs_Proc(HWND hDlg, UINT message, WPARAM wParam
 				return TRUE;
 			}
 
+			if (LOWORD(wParam) == IDC_PREVIEWSELECTED)
+			{
 
+				CFusionDoc* pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+
+				App->CL_Export_World->Export_World_GD3D(1);
+				/*pDoc->ResetAllSelections();
+				pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);*/
+
+				App->CLSB_Equity->Start_Equity_Dialog(1);
+
+				return TRUE;
+			}
 
 			if (LOWORD(wParam) == IDOK)
 			{

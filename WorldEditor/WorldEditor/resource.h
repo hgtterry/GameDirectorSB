@@ -661,6 +661,7 @@
 #define IDC_STATICTEST                  1465
 #define IDC_BUTTON2                     1466
 #define IDC_UPDATE                      1466
+#define IDC_PREVIEWSELECTED             1466
 #define IDC_ST_BANNER                   1467
 #define IDC_ST_FN                       1468
 #define IDC_ST_NAME                     1469
