@@ -108,6 +108,10 @@ void SB_Keyboard::Keyboard_Mode_Model(float deltaTime)
 void SB_Keyboard::Keyboard_Mode_Free(float deltaTime)
 {
 	// Forward
+	if (App->CLSB_Ogre->OgreListener->Wheel < 0) // Mouse Wheel Forward
+	{
+		App->CLSB_Ogre->OgreListener->mTranslateVector.z = -App->CLSB_Ogre->OgreListener->mMoveScale * 30;
+	}
 	if (GetAsyncKeyState(87) < 0) // W Key
 	{
 		if (App->CLSB_Ogre->OgreListener->CameraMode == Enums::CamDetached)
@@ -117,6 +121,10 @@ void SB_Keyboard::Keyboard_Mode_Free(float deltaTime)
 	}
 
 	// Back
+	if (App->CLSB_Ogre->OgreListener->Wheel > 0) // Mouse Wheel Back
+	{
+		App->CLSB_Ogre->OgreListener->mTranslateVector.z = App->CLSB_Ogre->OgreListener->mMoveScale * 30;
+	}
 	if (GetAsyncKeyState(83) < 0) // S Key	
 	{
 		if (App->CLSB_Ogre->OgreListener->CameraMode == Enums::CamDetached)

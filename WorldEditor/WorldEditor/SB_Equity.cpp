@@ -692,11 +692,11 @@ LRESULT CALLBACK SB_Equity::Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 
 				if (zDelta > 0)
 				{
-					//App->CLSB_Ogre->OgreListener->Wheel_Move = -1;
+					App->CLSB_Ogre->OgreListener->Wheel = -1;
 				}
 				else if (zDelta < 0)
 				{
-					//App->CLSB_Ogre->OgreListener->Wheel_Move = 1;
+					App->CLSB_Ogre->OgreListener->Wheel = 1;
 				}
 				return 1;
 			}
