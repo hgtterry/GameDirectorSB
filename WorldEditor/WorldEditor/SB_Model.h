@@ -48,6 +48,8 @@ public:
 
 	void Set_Paths(void);
 	void Set_BondingBox_Model(bool Create);
+	void Clear_Model_And_Reset(void);
+	void Reset_Class(void);
 
 	char FileName[MAX_PATH];
 	char Path_FileName[MAX_PATH];

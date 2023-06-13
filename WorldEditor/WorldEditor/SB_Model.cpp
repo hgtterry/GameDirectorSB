@@ -55,6 +55,61 @@ SB_Model::~SB_Model(void)
 }
 
 // *************************************************************************
+// *			Reaet_Class:- Terry and Hazel Flanigan 2023				   *
+// *************************************************************************
+void SB_Model::Reset_Class(void)
+{
+	Model_Loaded = 0;
+	Model_Type = Enums::LoadedFile_None;
+
+	int Count = 0;
+	int Index = GroupCount;
+
+	//--------------------- Clear Groups
+	while (Count < Index)
+	{
+		if (Group[Count] != nullptr)
+		{
+			Group[Count]->vertex_Data.clear();
+			Group[Count]->vertex_Data.resize(0);
+			Group[Count]->Face_Data.resize(0);
+			Group[Count]->Normal_Data.resize(0);
+			Group[Count]->MapCord_Data.resize(0);
+
+
+			if (Group[Count]->Base_Bitmap)
+			{
+				DeleteObject(Group[Count]->Base_Bitmap);
+			}
+
+			delete Group[Count];
+			Group[Count] = nullptr;
+		}
+
+		Count++;
+	}
+
+	//--------------------- Clear Bounding box data
+	if (S_BoundingBox[0] != nullptr)
+	{
+		delete S_BoundingBox[0];
+		S_BoundingBox[0] = nullptr;
+	}
+
+	FileName[0] = 0;
+	Path_FileName[0] = 0;
+	Model_FolderPath[0] = 0;
+	Texture_FolderPath[0] = 0;
+	JustName[0] = 0;
+	GroupCount = 0;
+	TextureCount = 0;
+	VerticeCount = 0;
+	FaceCount = 0;
+	MotionCount = 0;
+
+}
+
+// *************************************************************************
 // *		Create_Mesh_Group:- Terry and Hazel Flanigan 2023		  	   *
 // *************************************************************************
 void SB_Model::Create_Mesh_Group(int Index)
@@ -182,3 +237,26 @@ void SB_Model::Set_BondingBox_Model(bool Create)
 	S_BoundingBox[0]->Centre[0].y = (S_BoundingBox[0]->BB_Min[0].y + S_BoundingBox[0]->BB_Max[0].y) / 2.0f;
 	S_BoundingBox[0]->Centre[0].z = (S_BoundingBox[0]->BB_Min[0].z + S_BoundingBox[0]->BB_Max[0].z) / 2.0f;
 }
+
+// *************************************************************************
+// *			Clear Model:- Terry and Hazel Flanigan 2023				   *
+// *************************************************************************
+void SB_Model::Clear_Model_And_Reset(void)
+{
+	Reset_Class(); // Reset this Class
+
+	//App->CL_FileView->Reset_Class(); // Reset List View
+
+	//App->CL_Groups->Reset_Class();
+
+	//App->CL_Grid->Reset_Class();
+
+	//App->CL_TopBar->Reset_Class();
+
+	//App->CL_Ogre->Ogre_Listener->ImGui_Render_Tab = Enums::ImGui_Render_Model;
+
+	//App->CL_Export_Ogre3D->Export_As_RF = 0;
+
+	SetWindowText(App->MainHwnd, "Equity_ME");
+}
+

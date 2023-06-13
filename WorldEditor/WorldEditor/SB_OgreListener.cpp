@@ -89,6 +89,8 @@ SB_OgreListener::SB_OgreListener(void)
 
 	CameraMode = Enums::CamModel;// CamDetached; // 2
 
+	m_pDoc = NULL;
+	m_pMainFrame = NULL;
 }
 
 SB_OgreListener::~SB_OgreListener(void)
@@ -215,6 +217,12 @@ bool SB_OgreListener::frameEnded(const FrameEvent& evt)
 	{
 		return false;
 	}
+
+
+	m_pMainFrame = (CMainFrame*)AfxGetMainWnd(); // MFC POO
+	char info[256];
+	m_pDoc = (CFusionDoc*)m_pMainFrame->GetCurrentDoc();
+	m_pDoc->GetCursorInfo(info, 255);
 
 	return true;
 }

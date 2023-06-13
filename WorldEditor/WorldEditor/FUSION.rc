@@ -2370,6 +2370,7 @@ BEGIN
             END
         END
         MENUITEM SEPARATOR
+        MENUITEM "Clear Model",                 ID_FILE_CLEARMODEL
     END
     POPUP "Camera"
     BEGIN

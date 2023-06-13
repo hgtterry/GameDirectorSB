@@ -84,8 +84,8 @@ void F_View::OnDraw(UINT mViewType,ViewVars *VCam,CDC *c)
 	case ID_VIEW_TOPVIEW:
 	case ID_VIEW_SIDEVIEW:
 	case ID_VIEW_FRONTVIEW:
-		App->CL_F_View->Blit_New(VCam,c);
-		//App->CL_F_View->Blit(VCam,c);
+		//App->CL_F_View->Blit_New(VCam,c);
+		App->CL_F_View->Blit(VCam,c);
 	}
 }
 

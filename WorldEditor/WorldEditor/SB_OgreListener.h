@@ -139,5 +139,7 @@ public:
 
 	int CameraMode;
 
+	CMainFrame* m_pMainFrame;
+	CFusionDoc* m_pDoc;
 };
 

@@ -193,6 +193,7 @@ void CMainFrame::OnUpdateSelInfo(CCmdUI *pCmdUI)
 
 void CMainFrame::OnUpdateCursorInfo(CCmdUI *pCmdUI)
 {
+
 	pCmdUI->Enable();
 	char info[256];
 	CFusionDoc* pDoc;

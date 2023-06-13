@@ -178,6 +178,15 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_Proc(HWND hDlg, UINT message, WPARAM w
 			App->CLSB_Exporter->Ogre3D_Model();
 			return TRUE;
 		}
+
+		// File Clear Model
+		if (LOWORD(wParam) == ID_FILE_CLEARMODEL)
+		{
+			App->CLSB_Model->Clear_Model_And_Reset();
+			return TRUE;
+		}
+
+		
 		
 		// Camera
 		if (LOWORD(wParam) == ID_CAMERAMODE_FREE)
@@ -206,8 +215,8 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_Proc(HWND hDlg, UINT message, WPARAM w
 
 		if (LOWORD(wParam) == IDC_TEST)
 		{
-			//App->CL_Ogre->OgreListener->StopOgre = 1;
-			//App->CL_Ogre->OgreIsRunning = 0;
+			App->CLSB_Ogre->OgreListener->StopOgre = 1;
+			App->CLSB_Ogre->OgreIsRunning = 0;
 			return TRUE;
 		}
 
@@ -667,30 +676,37 @@ LRESULT CALLBACK SB_Equity::Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 	switch (message)
 	{
 
-	//case WM_MOUSEWHEEL:
-	//{
-	//	if (App->SBC_MeshViewer->RenderListener->Pl_LeftMouseDown == 0)
-	//	{
-	//		{
-	//			int zDelta = (short)HIWORD(wParam);    // wheel rotation
+	/*case WM_ACTIVATE:
+	{
+	
+		Beep(400, 50);
+		break;
+	}*/
 
-	//			if (zDelta > 0)
-	//			{
-	//				App->SBC_MeshViewer->RenderListener->Wheel_Move = -1;
-	//			}
-	//			else if (zDelta < 0)
-	//			{
-	//				App->SBC_MeshViewer->RenderListener->Wheel_Move = 1;
-	//			}
-	//			return 1;
-	//		}
-	//	}
+	case WM_MOUSEWHEEL:
+	{
+		if (App->CLSB_Ogre->OgreListener->Pl_LeftMouseDown == 0)
+		{
+			{
+				int zDelta = (short)HIWORD(wParam);    // wheel rotation
 
-	//}
+				if (zDelta > 0)
+				{
+					//App->CLSB_Ogre->OgreListener->Wheel_Move = -1;
+				}
+				else if (zDelta < 0)
+				{
+					//App->CLSB_Ogre->OgreListener->Wheel_Move = 1;
+				}
+				return 1;
+			}
+		}
+	}
 
 	case WM_MOUSEMOVE: // ok up and running and we have a loop for mouse
 	{
-	//	//SetFocus(App->SBC_MeshViewer->MeshView_3D_hWnd);
+		//App->Flash_Window();
+		//SetFocus(App->CLSB_Ogre->Ogre_Window_hWnd);
 		break;
 	}
 
