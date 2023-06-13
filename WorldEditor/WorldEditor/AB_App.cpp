@@ -88,6 +88,27 @@ SB_App::SB_App()
 	Hnd_HollowSpheroid_Bmp = NULL;
 	Hnd_SolidSpheroid_Bmp = NULL;
 
+	Hnd_ModelInfo_Bmp = NULL;
+	Hnd_ModelInfoOn_Bmp = NULL;
+	Hnd_GridOn_Bmp = NULL;
+	Hnd_GridOff_Bmp = NULL;
+	Hnd_BBOn_Bmp = NULL;
+	Hnd_BBOff_Bmp = NULL;
+	Hnd_MeshOn_Bmp = NULL;
+	Hnd_MeshOff_Bmp = NULL;
+	Hnd_HairOn_Bmp = NULL;
+	Hnd_HairOff_Bmp = NULL;
+	Hnd_TexturesOn_Bmp = NULL;
+	Hnd_TexturesOff_Bmp = NULL;
+	Hnd_MeshPointsOn_Bmp = NULL;
+	Hnd_MeshPointsOff_Bmp = NULL;
+	Hnd_BonesOn_Bmp = NULL;
+	Hnd_BonesOff_Bmp = NULL;
+	Hnd_NormalsOn_Bmp = NULL;
+	Hnd_NormalsOff_Bmp = NULL;
+	Hnd_LightsOn_Bmp = NULL;
+	Hnd_LightsOff_Bmp = NULL;
+
 	Hnd_Arch_Icon =		NULL;
 	Hnd_Cone_Icon =		NULL;
 	Hnd_Cyl_Icon =		NULL;
@@ -253,6 +274,36 @@ void SB_App::LoadProgramResource(void)
 	Hnd_Spheriod_Icon = LoadIcon(hInst, (LPCTSTR)IDI_SPHEROID_PRIMITIVE);
 	Hnd_Box_Icon = LoadIcon(hInst, (LPCTSTR)IDI_CUBE_PRIMITIVE);
 	Hnd_Stairs_Icon = LoadIcon(hInst, (LPCTSTR)IDI_STAIRCASE_PRIMITIVE);
+
+	Hnd_MeshOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_MESHON);
+	Hnd_MeshOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_MESHOFF);
+
+	Hnd_MeshPointsOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_MESHPOINTSON);
+	Hnd_MeshPointsOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_MESHPOINTSOFF);
+
+	Hnd_BBOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_BONDINGBOXON);
+	Hnd_BBOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_BONDINGBOXOFF);
+
+	Hnd_BonesOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_BONESON);
+	Hnd_BonesOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_BONESOFF);
+
+	Hnd_GridOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_GRIDON);
+	Hnd_GridOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_GRIDOFF);
+
+	Hnd_HairOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_HAIRON);
+	Hnd_HairOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_HAIROFF);
+
+	Hnd_TexturesOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_TEXTURESON);
+	Hnd_TexturesOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_TEXTURESOFF);
+
+	Hnd_NormalsOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_NORMALSON);
+	Hnd_NormalsOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_NORMALSOFF);
+
+	Hnd_LightsOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_LIGHTON);
+	Hnd_LightsOff_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_LIGHTOFF);
+
+	Hnd_ModelInfo_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_TB_MODELDATA);
+	Hnd_ModelInfoOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_TB_MODELDATAON);
 
 }
 

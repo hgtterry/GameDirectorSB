@@ -24,6 +24,7 @@ private:
 
 
 	bool Start_Render_Buttons();
+	void Init_Bmps_Globals(void);
 
 	void Auto_Load_File();
 	void Resize_3DView();

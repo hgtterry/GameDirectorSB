@@ -176,6 +176,27 @@ public:
 	HANDLE Hnd_HollowSpheroid_Bmp;
 	HANDLE Hnd_SolidSpheroid_Bmp;
 
+	HANDLE Hnd_GridOn_Bmp;
+	HANDLE Hnd_GridOff_Bmp;
+	HANDLE Hnd_ModelInfo_Bmp;		// Bitmap for button Model Info Screen
+	HANDLE Hnd_ModelInfoOn_Bmp;
+	HANDLE Hnd_BBOn_Bmp;
+	HANDLE Hnd_BBOff_Bmp;
+	HANDLE Hnd_MeshOn_Bmp;
+	HANDLE Hnd_MeshOff_Bmp;
+	HANDLE Hnd_HairOn_Bmp;
+	HANDLE Hnd_HairOff_Bmp;
+	HANDLE Hnd_TexturesOn_Bmp;
+	HANDLE Hnd_TexturesOff_Bmp;
+	HANDLE Hnd_MeshPointsOn_Bmp;
+	HANDLE Hnd_MeshPointsOff_Bmp;
+	HANDLE Hnd_BonesOn_Bmp;
+	HANDLE Hnd_BonesOff_Bmp;
+	HANDLE Hnd_NormalsOn_Bmp;
+	HANDLE Hnd_NormalsOff_Bmp;
+	HANDLE Hnd_LightsOn_Bmp;
+	HANDLE Hnd_LightsOff_Bmp;
+
 	HANDLE Hnd_Arch_Icon;
 	HANDLE Hnd_Cone_Icon;
 	HANDLE Hnd_Cyl_Icon;

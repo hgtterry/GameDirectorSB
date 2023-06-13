@@ -250,7 +250,7 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_Proc(HWND hDlg, UINT message, WPARAM w
 bool SB_Equity::Start_Render_Buttons()
 {
 	Render_Buttons_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_TB_BUTTONS, Equity_Main_hWnd, (DLGPROC)Render_Buttons_Proc);
-	//Init_Bmps_Globals();
+	Init_Bmps_Globals();
 	return 1;
 }
 
@@ -282,49 +282,51 @@ LRESULT CALLBACK SB_Equity::Render_Buttons_Proc(HWND hDlg, UINT message, WPARAM 
 		//-------------------------------------------------------- Show Grid
 		if (LOWORD(wParam) == IDC_TBSHOWGRID)
 		{
-			/*HWND Temp = GetDlgItem(hDlg, IDC_TBSHOWGRID);
+			HWND Temp = GetDlgItem(hDlg, IDC_TBSHOWGRID);
 
-			if (App->CL_Grid->ShowGridFlag == 1)
+			if (App->CLSB_Grid->ShowGridFlag == 1)
 			{
-				App->CL_Grid->Grid_SetVisible(0);
-				App->CL_Grid->ShowGridFlag = 0;
+				App->CLSB_Grid->Grid_SetVisible(0);
+				App->CLSB_Grid->ShowGridFlag = 0;
 
-				App->CL_TopBar->Toggle_Grid_Flag = 0;
+				//App->CLSB_TopBar->Toggle_Grid_Flag = 0;
 
-				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_GridOff_Bmp);
+				//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_GridOff_Bmp);
 			}
 			else
 			{
-				App->CL_Grid->Grid_SetVisible(1);
-				App->CL_Grid->ShowGridFlag = 1;
+				App->CLSB_Grid->Grid_SetVisible(1);
+				App->CLSB_Grid->ShowGridFlag = 1;
 
-				App->CL_TopBar->Toggle_Grid_Flag = 1;
+				//App->CLSB_TopBar->Toggle_Grid_Flag = 1;
 
-				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_GridOn_Bmp);
+				//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_GridOn_Bmp);
 
-			}*/
+			}
+
 			return TRUE;
 		}
 
 		//-------------------------------------------------------- Show Hair
 		if (LOWORD(wParam) == IDC_TBSHOWHAIR)
 		{
-			/*HWND Temp = GetDlgItem(hDlg, IDC_TBSHOWHAIR);
+			HWND Temp = GetDlgItem(hDlg, IDC_TBSHOWHAIR);
 
-			if (App->CL_Grid->ShowHair == 1)
+			if (App->CLSB_Grid->ShowHair == 1)
 			{
-				App->CL_Grid->ShowHair = 0;
-				App->CL_Grid->Hair_SetVisible(0);
+				App->CLSB_Grid->ShowHair = 0;
+				App->CLSB_Grid->Hair_SetVisible(0);
 
-				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HairOff_Bmp);
+				//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HairOff_Bmp);
 			}
 			else
 			{
-				App->CL_Grid->ShowHair = 1;
-				App->CL_Grid->Hair_SetVisible(1);
+				App->CLSB_Grid->ShowHair = 1;
+				App->CLSB_Grid->Hair_SetVisible(1);
 
-				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HairOn_Bmp);
-			}*/
+				//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HairOn_Bmp);
+			}
+
 			return TRUE;
 		}
 
@@ -346,173 +348,309 @@ LRESULT CALLBACK SB_Equity::Render_Buttons_Proc(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDC_TBSHOWFACES)
 		{
-			/*if (App->CL_Model->Model_Loaded == 1)
+			if (App->CLSB_Model->Model_Loaded == 1)
 			{
 				HWND Temp = GetDlgItem(hDlg, IDC_TBSHOWFACES);
 
-				if (App->CL_Ogre->RenderListener->ShowFaces == 1)
+				if (App->CLSB_Ogre->RenderListener->ShowFaces == 1)
 				{
-					if (App->CL_Ogre->RenderListener->ShowFaces == 1)
-						App->CL_Ogre->RenderListener->ShowFaces = 0;
+					if (App->CLSB_Ogre->RenderListener->ShowFaces == 1)
+						App->CLSB_Ogre->RenderListener->ShowFaces = 0;
 
-					App->CL_TopBar->Toggle_Faces_Flag = 0;
+					//App->CLSB_TopBar->Toggle_Faces_Flag = 0;
 
-					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
+					//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
 				}
 				else
 				{
-					App->CL_Ogre->RenderListener->ShowFaces = 1;
-					App->CL_TopBar->Toggle_Faces_Flag = 1;
+					App->CLSB_Ogre->RenderListener->ShowFaces = 1;
+					//App->CLSB_TopBar->Toggle_Faces_Flag = 1;
 
-					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOn_Bmp);
+					//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOn_Bmp);
 				}
-			}*/
+			}
+
 			return TRUE;
 		}
 
 		//-------------------------------------------------------- Show Textures
 		if (LOWORD(wParam) == IDC_BTSHOWTEXTURES)
 		{
-			/*if (App->CL_Model->Model_Loaded == 1)
+			if (App->CLSB_Model->Model_Loaded == 1)
 			{
 				HWND Temp = GetDlgItem(hDlg, IDC_BTSHOWTEXTURES);
 
-				if (App->CL_Ogre->RenderListener->ShowTextured == 1)
+				if (App->CLSB_Ogre->RenderListener->ShowTextured == 1)
 				{
-					App->CL_Ogre->RenderListener->ShowTextured = 0;
+					App->CLSB_Ogre->RenderListener->ShowTextured = 0;
 
-					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOff_Bmp);
+					//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOff_Bmp);
 				}
 				else
 				{
-					App->CL_Ogre->RenderListener->ShowTextured = 1;
+					App->CLSB_Ogre->RenderListener->ShowTextured = 1;
 
-					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOn_Bmp);
+					//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOn_Bmp);
 				}
-			}*/
+			}
+
 			return TRUE;
 		}
 
 		//-------------------------------------------------------- Show Normals
 		if (LOWORD(wParam) == IDC_BTSHOWNORMALS)
 		{
-			/*if (App->CL_Model->Model_Loaded == 1)
+			if (App->CLSB_Model->Model_Loaded == 1)
 			{
 				HWND Temp = GetDlgItem(hDlg, IDC_BTSHOWNORMALS);
 
-				if (App->CL_Ogre->RenderListener->ShowNormals == 1)
+				if (App->CLSB_Ogre->RenderListener->ShowNormals == 1)
 				{
-					App->CL_Ogre->RenderListener->ShowNormals = 0;
+					App->CLSB_Ogre->RenderListener->ShowNormals = 0;
 
-					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_NormalsOff_Bmp);
+					//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_NormalsOff_Bmp);
 				}
 				else
 				{
-					App->CL_Ogre->RenderListener->ShowNormals = 1;
+					App->CLSB_Ogre->RenderListener->ShowNormals = 1;
 
-					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_NormalsOn_Bmp);
+					//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_NormalsOn_Bmp);
 				}
-			}*/
+			}
+
 			return TRUE;
 		}
 
 		//-------------------------------------------------------- Show Light
 		if (LOWORD(wParam) == IDC_BTSHOWLIGHT2)
 		{
-			/*if (App->CL_Model->Model_Loaded == 1)
+			if (App->CLSB_Model->Model_Loaded == 1)
 			{
-				HWND Temp = GetDlgItem(hDlg, IDC_BTSHOWLIGHT);
+				HWND Temp = GetDlgItem(hDlg, IDC_BTSHOWLIGHT2);
 
-				if (App->CL_Ogre->RenderListener->Light_Activated == 1)
+				if (App->CLSB_Ogre->RenderListener->Light_Activated == 1)
 				{
-					App->CL_Ogre->RenderListener->Light_Activated = 0;
+					App->CLSB_Ogre->RenderListener->Light_Activated = 0;
 
-					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_LightsOff_Bmp);
+					//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_LightsOff_Bmp);
 				}
 				else
 				{
-					App->CL_Ogre->RenderListener->Light_Activated = 1;
+					App->CLSB_Ogre->RenderListener->Light_Activated = 1;
 
-					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_LightsOn_Bmp);
+					//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_LightsOn_Bmp);
 				}
-			}*/
+			}
+
 			return TRUE;
 		}
 
 		//-------------------------------------------------------- Show Points
 		if (LOWORD(wParam) == IDC_BTSHOWPOINTS)
 		{
-			/*if (App->CL_Model->Model_Loaded == 1)
+			if (App->CLSB_Model->Model_Loaded == 1)
 			{
 				HWND Temp = GetDlgItem(hDlg, IDC_BTSHOWPOINTS);
 
-				if (App->CL_Ogre->RenderListener->ShowPoints == 1)
+				if (App->CLSB_Ogre->RenderListener->ShowPoints == 1)
 				{
-					App->CL_Ogre->RenderListener->ShowPoints = 0;
+					App->CLSB_Ogre->RenderListener->ShowPoints = 0;
 
-					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshPointsOff_Bmp);
+					//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshPointsOff_Bmp);
 				}
 				else
 				{
-					App->CL_Ogre->RenderListener->ShowPoints = 1;
+					App->CLSB_Ogre->RenderListener->ShowPoints = 1;
 
-					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshPointsOn_Bmp);
+					//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshPointsOn_Bmp);
 				}
-			}*/
+			} 
 			return TRUE;
 		}
 
 		//-------------------------------------------------------- Show Bones
 		if (LOWORD(wParam) == IDC_BTSHOWBONES)
 		{
-			/*if (App->CL_Model->Model_Loaded == 1)
+			if (App->CLSB_Model->Model_Loaded == 1)
 			{
 				HWND Temp = GetDlgItem(hDlg, IDC_BTSHOWBONES);
 
-				if (App->CL_Ogre->RenderListener->ShowBones == 1)
+				if (App->CLSB_Ogre->RenderListener->ShowBones == 1)
 				{
-					App->CL_Ogre->RenderListener->ShowBones = 0;
+					App->CLSB_Ogre->RenderListener->ShowBones = 0;
 
-					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BonesOff_Bmp);
+					//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BonesOff_Bmp);
 				}
 				else
 				{
-					App->CL_Ogre->RenderListener->ShowBones = 1;
+					App->CLSB_Ogre->RenderListener->ShowBones = 1;
 
-					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BonesOn_Bmp);
+					//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BonesOn_Bmp);
 				}
-			}*/
+			}
+
 			return TRUE;
 		}
 
 		//-------------------------------------------------------- Show Bound Box
 		if (LOWORD(wParam) == IDC_TBBOUNDBOX)
 		{
-			/*if (App->CL_Model->Model_Loaded == 1)
+			if (App->CLSB_Model->Model_Loaded == 1)
 			{
 				HWND Temp = GetDlgItem(hDlg, IDC_TBBOUNDBOX);
 
-				if (App->CL_Ogre->RenderListener->ShowBoundingBox == 1)
+				if (App->CLSB_Ogre->RenderListener->ShowBoundingBox == 1)
 				{
-					App->CL_Ogre->RenderListener->ShowBoundingBox = 0;
-					App->CL_TopBar->Toggle_BBox_Flag = 0;
+					App->CLSB_Ogre->RenderListener->ShowBoundingBox = 0;
+					//App->CLSB_TopBar->Toggle_BBox_Flag = 0;
 
-
-					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOff_Bmp);
+					//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOff_Bmp);
 				}
 				else
 				{
-					App->CL_Ogre->RenderListener->ShowBoundingBox = 1;
-					App->CL_TopBar->Toggle_BBox_Flag = 1;
+					App->CLSB_Ogre->RenderListener->ShowBoundingBox = 1;
+					//App->CLSB_TopBar->Toggle_BBox_Flag = 1;
 
-					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOn_Bmp);
+					//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOn_Bmp);
 				}
-			}*/
+			}
+
 			return TRUE;
 		}
 		break;
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *						Init_Bmps_Globals Terry Bernie				   *
+// *************************************************************************
+void SB_Equity::Init_Bmps_Globals(void)
+{
+
+	HWND Temp = GetDlgItem(Render_Buttons_hWnd, IDC_TBSHOWGRID);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_GridOn_Bmp);
+
+	Temp = GetDlgItem(Render_Buttons_hWnd, IDC_TBSHOWHAIR);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HairOn_Bmp);
+
+	Temp = GetDlgItem(Render_Buttons_hWnd, IDC_TBINFO2);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfo_Bmp);
+
+	Temp = GetDlgItem(Render_Buttons_hWnd, IDC_TBBOUNDBOX);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BBOff_Bmp);
+
+	Temp = GetDlgItem(Render_Buttons_hWnd, IDC_TBSHOWFACES);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
+
+	Temp = GetDlgItem(Render_Buttons_hWnd, IDC_BTSHOWTEXTURES);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOff_Bmp);
+
+	Temp = GetDlgItem(Render_Buttons_hWnd, IDC_BTSHOWPOINTS);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshPointsOff_Bmp);
+
+	Temp = GetDlgItem(Render_Buttons_hWnd, IDC_BTSHOWBONES);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_BonesOff_Bmp);
+
+	Temp = GetDlgItem(Render_Buttons_hWnd, IDC_BTSHOWNORMALS);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_NormalsOff_Bmp);
+
+	Temp = GetDlgItem(Render_Buttons_hWnd, IDC_BTSHOWLIGHT2);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_LightsOff_Bmp);
+
+
+	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
+
+	Temp = GetDlgItem(Render_Buttons_hWnd, IDC_TBINFO2);
+	TOOLINFO ti8 = { 0 };
+	ti8.cbSize = sizeof(ti8);
+	ti8.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti8.uId = (UINT_PTR)Temp;
+	ti8.lpszText = "Show Model Information";
+	ti8.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti8);
+
+	Temp = GetDlgItem(Render_Buttons_hWnd, IDC_TBSHOWHAIR);
+	TOOLINFO ti9 = { 0 };
+	ti9.cbSize = sizeof(ti9);
+	ti9.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti9.uId = (UINT_PTR)Temp;
+	ti9.lpszText = "Toggle Main Cross Hair";
+	ti9.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti9);
+
+	Temp = GetDlgItem(Render_Buttons_hWnd, IDC_TBSHOWGRID);
+	TOOLINFO ti10 = { 0 };
+	ti10.cbSize = sizeof(ti10);
+	ti10.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti10.uId = (UINT_PTR)Temp;
+	ti10.lpszText = "Toggle Main Grid";
+	ti10.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti10);
+
+	Temp = GetDlgItem(Render_Buttons_hWnd, IDC_TBBOUNDBOX);
+	TOOLINFO ti11 = { 0 };
+	ti11.cbSize = sizeof(ti11);
+	ti11.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti11.uId = (UINT_PTR)Temp;
+	ti11.lpszText = "Toggle Bounding Box";
+	ti11.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti11);
+
+	Temp = GetDlgItem(Render_Buttons_hWnd, IDC_TBSHOWFACES);
+	TOOLINFO ti12 = { 0 };
+	ti12.cbSize = sizeof(ti12);
+	ti12.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti12.uId = (UINT_PTR)Temp;
+	ti12.lpszText = "Toggle Show Faces";
+	ti12.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti12);
+
+	Temp = GetDlgItem(Render_Buttons_hWnd, IDC_BTSHOWTEXTURES);
+	TOOLINFO ti13 = { 0 };
+	ti13.cbSize = sizeof(ti13);
+	ti13.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti13.uId = (UINT_PTR)Temp;
+	ti13.lpszText = "Toggle Show Textures";
+	ti13.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti13);
+
+	Temp = GetDlgItem(Render_Buttons_hWnd, IDC_BTSHOWPOINTS);
+	TOOLINFO ti14 = { 0 };
+	ti14.cbSize = sizeof(ti14);
+	ti14.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti14.uId = (UINT_PTR)Temp;
+	ti14.lpszText = "Toggle Show Mesh Points";
+	ti14.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti14);
+
+	Temp = GetDlgItem(Render_Buttons_hWnd, IDC_BTSHOWBONES);
+	TOOLINFO ti15 = { 0 };
+	ti15.cbSize = sizeof(ti15);
+	ti15.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti15.uId = (UINT_PTR)Temp;
+	ti15.lpszText = "Toggle Show Bones";
+	ti15.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti15);
+
+	Temp = GetDlgItem(Render_Buttons_hWnd, IDC_BTSHOWNORMALS);
+	TOOLINFO ti16 = { 0 };
+	ti16.cbSize = sizeof(ti16);
+	ti16.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti16.uId = (UINT_PTR)Temp;
+	ti16.lpszText = "Toggle Show Normals";
+	ti16.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti16);
+
+	Temp = GetDlgItem(Render_Buttons_hWnd, IDC_BTSHOWLIGHT2);
+	TOOLINFO ti17 = { 0 };
+	ti17.cbSize = sizeof(ti17);
+	ti17.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti17.uId = (UINT_PTR)Temp;
+	ti17.lpszText = "Toggle Show Light";
+	ti17.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti17);
+
 }
 
 // *************************************************************************
