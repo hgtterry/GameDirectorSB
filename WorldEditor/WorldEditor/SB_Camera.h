@@ -31,5 +31,6 @@ public:
 	void Reset_View(void);
 	void Reset_Orientation(void);
 	void Set_Camera_Mode(int Mode);
+	void Zero_View(void);
 };
 

@@ -2378,6 +2378,7 @@ BEGIN
         MENUITEM "First",                       ID_CAMERAMODE_FIRST
         MENUITEM SEPARATOR
         MENUITEM "Reset View",                  ID_CAMERA_RESETVIEW
+        MENUITEM "Zero View",                   ID_CAMERA_ZEROVIEW
     END
     POPUP "Render"
     BEGIN

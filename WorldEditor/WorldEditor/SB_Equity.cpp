@@ -198,6 +198,12 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_Proc(HWND hDlg, UINT message, WPARAM w
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == ID_CAMERA_ZEROVIEW)
+		{
+			App->CLSB_Camera->Zero_View();
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDC_TEST)
 		{
 			//App->CL_Ogre->OgreListener->StopOgre = 1;

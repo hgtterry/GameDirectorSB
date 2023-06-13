@@ -147,7 +147,6 @@
 #define IDB_LIGHTON                     297
 #define IDB_LIGHTOFF                    298
 #define IDB_TB_MODELDATA                299
-#define IDB_BITMAP2                     300
 #define IDB_TB_MODELDATAON              300
 #define IDC_RESET_ALL                   1000
 #define IDC_EDIT1                       1001
@@ -856,6 +855,7 @@
 #define ID_OGRE3D_MESH                  33066
 #define ID_FILE_IMPORT33067             33067
 #define ID_IMPORT_WORLDEDITORPROJECT    33068
+#define ID_CAMERA_ZEROVIEW              33069
 #define IDS_HELPINFORMATION             38000
 
 // Next default values for new objects
@@ -864,7 +864,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        301
-#define _APS_NEXT_COMMAND_VALUE         33069
+#define _APS_NEXT_COMMAND_VALUE         33070
 #define _APS_NEXT_CONTROL_VALUE         1478
 #define _APS_NEXT_SYMED_VALUE           112
 #endif

@@ -70,3 +70,12 @@ void SB_Camera::Set_Camera_Mode(int Mode)
 {
 	App->CLSB_Ogre->OgreListener->CameraMode = Mode;
 }
+
+// *************************************************************************
+// *			Zero_View:- Terry and Hazel Flanigan 2023				   *
+// *************************************************************************
+void SB_Camera::Zero_View(void)
+{
+	App->CLSB_Ogre->mCamera->setPosition(Ogre::Vector3(0, 0, 0));
+	App->CLSB_Ogre->mCamera->lookAt(Ogre::Vector3(0, 0, 0));
+}
