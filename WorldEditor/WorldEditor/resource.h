@@ -128,6 +128,27 @@
 #define IDD_DIALOG3                     276
 #define IDD_SB_YESNO                    276
 #define IDD_SB_TB_BUTTONS               278
+#define IDB_GRIDOFF                     280
+#define IDB_GRIDON                      282
+#define IDB_MESHON                      283
+#define IDB_MESHOFF                     284
+#define IDB_MESHPOINTSON                285
+#define IDB_MESHPOINTSOFF               286
+#define IDB_BONDINGBOXON                287
+#define IDB_BONDINGBOXOFF               288
+#define IDB_BONESON                     289
+#define IDB_BONESOFF                    290
+#define IDB_HAIRON                      291
+#define IDB_HAIROFF                     292
+#define IDB_TEXTURESON                  293
+#define IDB_TEXTURESOFF                 294
+#define IDB_NORMALSON                   295
+#define IDB_NORMALSOFF                  296
+#define IDB_LIGHTON                     297
+#define IDB_LIGHTOFF                    298
+#define IDB_TB_MODELDATA                299
+#define IDB_BITMAP2                     300
+#define IDB_TB_MODELDATAON              300
 #define IDC_RESET_ALL                   1000
 #define IDC_EDIT1                       1001
 #define IDC_EDIT10                      1002
@@ -538,7 +559,6 @@
 #define IDC_BANNER                      1364
 #define IDC_GD_CYLINDER_PRIMITIVE       1364
 #define IDC_BT_BROWSE                   1364
-#define IDC_BUTTON7                     1364
 #define IDC_TBINFO2                     1364
 #define IDC_STTEXT                      1365
 #define IDC_GD_SPHEROID_PRIMITIVE       1365
@@ -843,7 +863,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        280
+#define _APS_NEXT_RESOURCE_VALUE        301
 #define _APS_NEXT_COMMAND_VALUE         33069
 #define _APS_NEXT_CONTROL_VALUE         1478
 #define _APS_NEXT_SYMED_VALUE           112

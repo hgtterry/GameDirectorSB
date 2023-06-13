@@ -809,4 +809,69 @@
     </None>
     <None Include="Fusion.mak" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\MenuBar\GridOff.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\bitmap2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\MenuBar\GridOn.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\MenuBar\ShowMeshOn.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\MenuBar\ShowMeshOff.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\MenuBar\MeshPointsOn.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\MenuBar\MeshPointsOff.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\MenuBar\BondingBoxOn.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\MenuBar\BondingBoxOff.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\MenuBar\BonesOn.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\MenuBar\BonesOff.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\MenuBar\TargetOn.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\MenuBar\TargetOff.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\MenuBar\TexturesOn.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\MenuBar\TexturesOff.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\MenuBar\bitmap2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\MenuBar\bitmap1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\MenuBar\LightOn.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\MenuBar\LightOff.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\MenuBar\ModelData.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\MenuBar\ModelDataOn.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
 </Project>

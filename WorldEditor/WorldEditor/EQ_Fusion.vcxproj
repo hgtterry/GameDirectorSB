@@ -386,6 +386,29 @@
     <None Include="res\Whoosh.wav" />
     <None Include="Fusion.mak" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\bitmap2.bmp" />
+    <Image Include="res\MenuBar\bitmap1.bmp" />
+    <Image Include="res\MenuBar\bitmap2.bmp" />
+    <Image Include="res\MenuBar\BondingBoxOff.bmp" />
+    <Image Include="res\MenuBar\BondingBoxOn.bmp" />
+    <Image Include="res\MenuBar\BonesOff.bmp" />
+    <Image Include="res\MenuBar\BonesOn.bmp" />
+    <Image Include="res\MenuBar\GridOff.bmp" />
+    <Image Include="res\MenuBar\GridOn.bmp" />
+    <Image Include="res\MenuBar\LightOff.bmp" />
+    <Image Include="res\MenuBar\LightOn.bmp" />
+    <Image Include="res\MenuBar\MeshPointsOff.bmp" />
+    <Image Include="res\MenuBar\MeshPointsOn.bmp" />
+    <Image Include="res\MenuBar\ModelData.bmp" />
+    <Image Include="res\MenuBar\ModelDataOn.bmp" />
+    <Image Include="res\MenuBar\ShowMeshOff.bmp" />
+    <Image Include="res\MenuBar\ShowMeshOn.bmp" />
+    <Image Include="res\MenuBar\TargetOff.bmp" />
+    <Image Include="res\MenuBar\TargetOn.bmp" />
+    <Image Include="res\MenuBar\TexturesOff.bmp" />
+    <Image Include="res\MenuBar\TexturesOn.bmp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

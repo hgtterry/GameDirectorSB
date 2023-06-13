@@ -2097,20 +2097,20 @@ BEGIN
     CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME | SS_SUNKEN,7,67,371,1
 END
 
-IDD_SB_TB_BUTTONS DIALOGEX 2, 2, 131, 44
-STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_VISIBLE | WS_BORDER
+IDD_SB_TB_BUTTONS DIALOGEX 2, 2, 137, 44
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_VISIBLE
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    PUSHBUTTON      "F",IDC_TBSHOWFACES,53,0,25,22,NOT WS_TABSTOP
-    PUSHBUTTON      "G",IDC_TBSHOWGRID,0,22,25,22
-    PUSHBUTTON      "T",IDC_BTSHOWTEXTURES,26,0,25,22
-    PUSHBUTTON      "N",IDC_BTSHOWNORMALS,26,22,25,22
-    PUSHBUTTON      "H",IDC_TBSHOWHAIR,0,0,25,22
-    PUSHBUTTON      "P",IDC_BTSHOWPOINTS,79,0,25,22
-    PUSHBUTTON      "Bx",IDC_TBBOUNDBOX,53,22,25,22
-    PUSHBUTTON      "L",IDC_BTSHOWLIGHT2,79,22,25,22
-    PUSHBUTTON      "Bn",IDC_BTSHOWBONES,105,0,25,22
-    PUSHBUTTON      "I",IDC_TBINFO2,105,22,25,22
+    PUSHBUTTON      "",IDC_TBSHOWFACES,58,0,25,22,BS_BITMAP | NOT WS_TABSTOP
+    PUSHBUTTON      "",IDC_TBSHOWGRID,0,22,25,22,BS_BITMAP
+    PUSHBUTTON      "",IDC_BTSHOWTEXTURES,32,0,25,22,BS_BITMAP
+    PUSHBUTTON      "",IDC_BTSHOWNORMALS,32,22,25,22,BS_BITMAP
+    PUSHBUTTON      "",IDC_TBSHOWHAIR,0,0,25,22,BS_BITMAP
+    PUSHBUTTON      "",IDC_BTSHOWPOINTS,84,0,25,22,BS_BITMAP
+    PUSHBUTTON      "",IDC_TBBOUNDBOX,58,22,25,22,BS_BITMAP
+    PUSHBUTTON      "",IDC_BTSHOWLIGHT2,84,22,25,22,BS_BITMAP
+    PUSHBUTTON      "",IDC_BTSHOWBONES,110,0,25,22,BS_BITMAP
+    PUSHBUTTON      "",IDC_TBINFO2,110,22,25,22,BS_BITMAP
 END
 
 
@@ -2297,10 +2297,56 @@ BEGIN
 
     IDD_SB_TB_BUTTONS, DIALOG
     BEGIN
-        RIGHTMARGIN, 105
+        RIGHTMARGIN, 111
     END
 END
 #endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_GRIDOFF             BITMAP                  "res\\MenuBar\\GridOff.bmp"
+
+IDB_GRIDON              BITMAP                  "res\\MenuBar\\GridOn.bmp"
+
+IDB_MESHON              BITMAP                  "res\\MenuBar\\ShowMeshOn.bmp"
+
+IDB_MESHOFF             BITMAP                  "res\\MenuBar\\ShowMeshOff.bmp"
+
+IDB_MESHPOINTSON        BITMAP                  "res\\MenuBar\\MeshPointsOn.bmp"
+
+IDB_MESHPOINTSOFF       BITMAP                  "res\\MenuBar\\MeshPointsOff.bmp"
+
+IDB_BONDINGBOXON        BITMAP                  "res\\MenuBar\\BondingBoxOn.bmp"
+
+IDB_BONDINGBOXOFF       BITMAP                  "res\\MenuBar\\BondingBoxOff.bmp"
+
+IDB_BONESON             BITMAP                  "res\\MenuBar\\BonesOn.bmp"
+
+IDB_BONESOFF            BITMAP                  "res\\MenuBar\\BonesOff.bmp"
+
+IDB_HAIRON              BITMAP                  "res\\MenuBar\\TargetOn.bmp"
+
+IDB_HAIROFF             BITMAP                  "res\\MenuBar\\TargetOff.bmp"
+
+IDB_TEXTURESON          BITMAP                  "res\\MenuBar\\TexturesOn.bmp"
+
+IDB_TEXTURESOFF         BITMAP                  "res\\MenuBar\\TexturesOff.bmp"
+
+IDB_NORMALSON           BITMAP                  "res\\MenuBar\\bitmap2.bmp"
+
+IDB_NORMALSOFF          BITMAP                  "res\\MenuBar\\bitmap1.bmp"
+
+IDB_LIGHTON             BITMAP                  "res\\MenuBar\\LightOn.bmp"
+
+IDB_LIGHTOFF            BITMAP                  "res\\MenuBar\\LightOff.bmp"
+
+IDB_TB_MODELDATA        BITMAP                  "res\\MenuBar\\ModelData.bmp"
+
+IDB_TB_MODELDATAON      BITMAP                  "res\\MenuBar\\ModelDataOn.bmp"
 
 
 /////////////////////////////////////////////////////////////////////////////
