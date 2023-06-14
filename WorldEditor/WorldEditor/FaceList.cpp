@@ -18,6 +18,9 @@
 /*  Copyright (C) 1996-1999 Eclipse Entertainment, L.L.C. All Rights Reserved           */
 /*                                                                                      */
 /****************************************************************************************/
+#include <stdio.h>
+#include <stdlib.h>
+
 #include "facelist.h"
 #include <assert.h>
 #include "typeio.h"

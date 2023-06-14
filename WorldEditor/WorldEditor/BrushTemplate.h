@@ -24,6 +24,8 @@
 #include "basetype.h"
 #include "brush.h"
 
+
+
 #ifdef __cplusplus
 	extern "C" {
 #endif

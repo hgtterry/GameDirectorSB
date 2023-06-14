@@ -18,10 +18,16 @@
 /*  Copyright (C) 1996-1999 Eclipse Entertainment, L.L.C. All Rights Reserved           */
 /*                                                                                      */
 /****************************************************************************************/
+
+#include <stdio.h>
+#include <stdlib.h>
+
 #include "BrushTemplate.h"
 #include "units.h"
 #include "facelist.h"
 #include "ram.h"
+
+
 
 #pragma warning (disable:4514)  // FDIV warning...whoopee!!
 
