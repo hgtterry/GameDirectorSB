@@ -237,6 +237,7 @@ void A_TabsGroups_Dlg::Get_Index(const Brush *b)
 // *************************************************************************
 void A_TabsGroups_Dlg::OnSelchangeBrushlist(int Index) 
 {
+	return;
 	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
 
 	int			c ;
