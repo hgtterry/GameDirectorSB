@@ -81,7 +81,7 @@ void CNameWindow::Show(const char* pstr)
 		r.bottom = pt.y + sz.cy + 4;
 
 		MoveWindow( &r );
-
+		
 
 		ShowWindow(SW_SHOW);
 

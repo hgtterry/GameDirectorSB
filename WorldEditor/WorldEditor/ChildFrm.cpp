@@ -158,6 +158,7 @@ BOOL CChildFrame::PreCreateWindow(CREATESTRUCT& cs)
 
 BOOL CChildFrame::OnCreateClient(LPCREATESTRUCT, CCreateContext* pContext)
 {
+
 	//App->Debug_Message("CChildFrame::OnCreateClient",1);
 	int x, y;
 	int x2, y2;

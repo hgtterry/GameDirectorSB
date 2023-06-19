@@ -522,9 +522,27 @@ bool A_TabsGroups_Dlg::Show_Brush_Info(const Brush *b, HWND hDlg)
 	sprintf(buf, "%s%s", "Brush Name ",b->Name);
 	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
-	sprintf(buf, "%s%d", "Flags ",b->Flags);
-	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
+	if (b->Flags & 128)
+	{
+		sprintf(buf, "%s%d%s", "Type Flags ", b->Flags, "  - Cut Brush");
+		SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	}
+	else if (b->Flags & 1)
+	{
+		sprintf(buf, "%s%d%s", "Type Flags ", b->Flags, "  - Solid Brush");
+		SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	}
+	else if (b->Flags & 1024)
+	{
+		sprintf(buf, "%s%d%s", "Type Flags ", b->Flags, "  - Hollow Brush");
+		SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	}
+	else
+	{
+		sprintf(buf, "%s%d", "Type Flags ", b->Flags);
+		SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	}
+	
 	sprintf(buf, "%s%d", "Model ID ",b->ModelId);
 	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
