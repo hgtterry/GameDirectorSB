@@ -349,6 +349,8 @@ LRESULT CALLBACK A_TabsGroups_Dlg::Properties_Proc(HWND hDlg, UINT message, WPAR
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_LIST_SELECTEDBRUSHES, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
+
 		SendDlgItemMessage(hDlg, IDC_ST_BP_SELECTEDBRUSHES, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		
 		App->CL_TabsGroups_Dlg->List_SelectedBrushes(hDlg);
@@ -375,24 +377,43 @@ LRESULT CALLBACK A_TabsGroups_Dlg::Properties_Proc(HWND hDlg, UINT message, WPAR
 	}
 
 	case WM_COMMAND:
+	{
+
+		if (LOWORD(wParam) == IDC_LIST_SELECTEDBRUSHES)
 		{
-			// -----------------------------------------------------------------
-			if (LOWORD(wParam) == IDOK)
+		
+			int Index = SendDlgItemMessage(hDlg, IDC_LIST_SELECTEDBRUSHES, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+			if (Index == -1)
 			{
-				//App->CL_TextureDialog->f_TextureDlg_Active = 0;
-				EndDialog(hDlg, LOWORD(wParam));
-				return TRUE;
+			
+			}
+			else
+			{
+				App->CL_TabsGroups_Dlg->Selected_Index = Index;
+				App->CL_TabsGroups_Dlg->Selected_Brush = SelBrushList_GetBrush(App->CL_TabsGroups_Dlg->m_pDoc->pSelBrushes, Index);
+				App->CL_TabsGroups_Dlg->List_BrushData(hDlg);
 			}
 
-			if (LOWORD(wParam) == IDCANCEL)
-			{
-				//App->CL_TextureDialog->f_TextureDlg_Active = 0;
-				EndDialog(hDlg, LOWORD(wParam));
-				return TRUE;
-			}
-
-			break;
+			return TRUE;
 		}
+
+		// -----------------------------------------------------------------
+		if (LOWORD(wParam) == IDOK)
+		{
+			//App->CL_TextureDialog->f_TextureDlg_Active = 0;
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			//App->CL_TextureDialog->f_TextureDlg_Active = 0;
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		break;
+	}
 	}
 	return FALSE;
 }
@@ -440,7 +461,26 @@ struct tag_FaceList
 // *************************************************************************
 void A_TabsGroups_Dlg::List_SelectedBrushes(HWND hDlg)
 {
+	SendDlgItemMessage(hDlg, IDC_LIST_SELECTEDBRUSHES, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
+	int NumSelBrushes = SelBrushList_GetSize(m_pDoc->pSelBrushes);
+
+	if (NumSelBrushes == 0)
+	{
+		Selected_Index = -1;
+		return;
+	}
+
+	for (int i = 0; i < NumSelBrushes; ++i)
+	{
+		Brush* pBrush = SelBrushList_GetBrush(m_pDoc->pSelBrushes, i);
+		SendDlgItemMessage(hDlg, IDC_LIST_SELECTEDBRUSHES, LB_ADDSTRING, (WPARAM)0, (LPARAM)pBrush->Name);
+	}
+
+	SendDlgItemMessage(hDlg, IDC_LIST_SELECTEDBRUSHES, LB_SETCURSEL, (WPARAM) 0, (LPARAM)0);
+
+	Selected_Index = 0;
+	Selected_Brush = SelBrushList_GetBrush(m_pDoc->pSelBrushes, 0);
 }
 
 // *************************************************************************
@@ -448,7 +488,7 @@ void A_TabsGroups_Dlg::List_SelectedBrushes(HWND hDlg)
 // *************************************************************************
 void A_TabsGroups_Dlg::List_BrushData(HWND hDlg)
 {
-	
+	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 	char buf[255];
 	int c = App->CL_World->Get_Brush_Count();
 
