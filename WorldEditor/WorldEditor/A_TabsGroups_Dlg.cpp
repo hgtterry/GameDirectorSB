@@ -77,6 +77,9 @@ LRESULT CALLBACK A_TabsGroups_Dlg::Groups_Proc(HWND hDlg, UINT message, WPARAM w
 		SendDlgItemMessage(hDlg, IDC_ST_GD_BRUSHCOUNT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_GD_BRUSHPROPERTIES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+		SendDlgItemMessage(hDlg, IDC_ST_GD_SELECTED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ST_SELECTED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
@@ -105,6 +108,22 @@ LRESULT CALLBACK A_TabsGroups_Dlg::Groups_Proc(HWND hDlg, UINT message, WPARAM w
 			return (UINT)App->AppBackground;
 		}
 
+		if (GetDlgItem(hDlg, IDC_ST_GD_SELECTED) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_ST_SELECTED) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+		
 		return FALSE;
 	}
 
@@ -181,6 +200,39 @@ struct tag_BrushList
 };
 
 // *************************************************************************
+// *	  		Get_Index:- Terry and Hazel Flanigan 2023				   *
+// *************************************************************************
+void A_TabsGroups_Dlg::Get_Index(const Brush* b)
+{
+	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+
+	Level* pLevel = m_pDoc->pLevel;
+	BrushList* pList = Level_GetBrushes(m_pDoc->pLevel);
+
+	int Selected = 0;
+	int Count = 0;
+
+	b = pList->First;
+
+	while (b != NULL)
+	{
+		Selected = m_pDoc->BrushIsSelected(b);
+
+		if (Selected == 1)
+		{
+			SendDlgItemMessage(GroupsDlg_Hwnd, IDC_GD_BRUSHLIST, LB_SETCURSEL, (WPARAM)Count, (LPARAM)0);
+			Selected_Index = Count;
+			List_Selection_Changed();
+		}
+
+		Count++;
+		b = b->Next;
+	}
+
+	Update_Dlg_SelectedBrushesCount();
+}
+
+// *************************************************************************
 // *	  	List_Selection_Changed:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
 void A_TabsGroups_Dlg::List_Selection_Changed()
@@ -201,43 +253,19 @@ void A_TabsGroups_Dlg::List_Selection_Changed()
 }
 
 // *************************************************************************
-// *	  		Get_Index:- Terry and Hazel Flanigan 2023				   *
-// *************************************************************************
-void A_TabsGroups_Dlg::Get_Index(const Brush *b)
-{
-	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
-
-	Level *pLevel = m_pDoc->pLevel;
-	BrushList *pList = Level_GetBrushes (m_pDoc->pLevel);
-
-	char buff[100];
-	int Selected = 0;
-	int Count = 0;
-	b = pList->First;
-	while (b != NULL)
-	{
-		Selected = m_pDoc->BrushIsSelected(b);
-
-		if (Selected == 1)
-		{
-			SendDlgItemMessage(GroupsDlg_Hwnd, IDC_GD_BRUSHLIST,LB_SETCURSEL, (WPARAM)Count, (LPARAM)0);
-			Selected_Index = Count;
-			List_Selection_Changed();
-		}
-
-		Count++;
-		b = b->Next;
-	}
-
-
-}
-
-// *************************************************************************
 // *		OnSelchangeBrushlist:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
 void A_TabsGroups_Dlg::OnSelchangeBrushlist(int Index) 
 {
 	return;
+
+	//NumSelBrushes = SelBrushList_GetSize(m_pDoc->pSelBrushes);
+	//for (int i = 0; i < NumSelBrushes; ++i)
+	//{
+	//	Brush* pBrush = SelBrushList_GetBrush(m_pDoc->pSelBrushes, i);
+	//	Brush_UpdateChildFaces(pBrush);
+	//}
+
 	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
 
 	int			c ;
@@ -261,7 +289,6 @@ void A_TabsGroups_Dlg::OnSelchangeBrushlist(int Index)
 		m_pDoc->UpdateSelected() ;
 		m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 	}
-
 }
 
 // *************************************************************************
@@ -294,6 +321,16 @@ void A_TabsGroups_Dlg::Fill_ListBox()
 }
 
 // *************************************************************************
+// *	Update_Dlg_SelectedBrushesCount:- Terry and Hazel Flanigan 2023	   *
+// *************************************************************************
+void A_TabsGroups_Dlg::Update_Dlg_SelectedBrushesCount()
+{
+	char buff[100];
+	int NumSelBrushes = SelBrushList_GetSize(m_pDoc->pSelBrushes);
+	SetDlgItemText(GroupsDlg_Hwnd, IDC_ST_GD_SELECTED, itoa(NumSelBrushes, buff, 10));
+}
+
+// *************************************************************************
 // *	  	Start_Properties_Dlg:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
 void A_TabsGroups_Dlg::Start_Properties_Dlg()
@@ -312,15 +349,26 @@ LRESULT CALLBACK A_TabsGroups_Dlg::Properties_Proc(HWND hDlg, UINT message, WPAR
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_ST_BP_SELECTEDBRUSHES, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
+		
+		App->CL_TabsGroups_Dlg->List_SelectedBrushes(hDlg);
 		App->CL_TabsGroups_Dlg->List_BrushData(hDlg);
+
 		return TRUE;
 	}
+	
 	case WM_CTLCOLORSTATIC:
 	{
+		if (GetDlgItem(hDlg, IDC_ST_BP_SELECTEDBRUSHES) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
 		return FALSE;
 	}
-
+	
 	case WM_CTLCOLORDLG:
 	{
 		return (LONG)App->AppBackground;
@@ -388,7 +436,15 @@ struct tag_FaceList
 };
 
 // *************************************************************************
-// *	  				List_BrushData Terry Flanigan					   *
+// *	  List_SelectedBrushes:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void A_TabsGroups_Dlg::List_SelectedBrushes(HWND hDlg)
+{
+
+}
+
+// *************************************************************************
+// *	  	   List_BrushData:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 void A_TabsGroups_Dlg::List_BrushData(HWND hDlg)
 {

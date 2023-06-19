@@ -279,6 +279,8 @@ LRESULT CALLBACK A_TopTabs::Top_Tabs_Proc(HWND hDlg, UINT message, WPARAM wParam
 				pDoc->UpdateSelected();
 				pDoc->UpdateAllViews( UAV_ALL3DVIEWS, NULL ) ;
 
+				App->CL_TabsGroups_Dlg->Update_Dlg_SelectedBrushesCount();
+
 				return TRUE;
 			}
 
@@ -288,6 +290,8 @@ LRESULT CALLBACK A_TopTabs::Top_Tabs_Proc(HWND hDlg, UINT message, WPARAM wParam
 
 				pDoc->SelectAll() ;
 				pDoc->UpdateAllViews( UAV_ALL3DVIEWS, NULL ) ;
+
+				App->CL_TabsGroups_Dlg->Update_Dlg_SelectedBrushesCount();
 
 				return TRUE;
 			}

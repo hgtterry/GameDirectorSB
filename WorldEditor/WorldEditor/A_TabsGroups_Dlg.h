@@ -35,6 +35,7 @@ public:
 
 	void Get_Index(const Brush *b);
 	void Fill_ListBox();
+	void Update_Dlg_SelectedBrushesCount();
 
 	bool Groups_Dlg_Created;
 
@@ -54,6 +55,8 @@ private:
 	bool Show_Brush_ListInfo(BrushList *BList, HWND hDlg);
 	bool Show_Brush_Faces_Info(const FaceList *pList, HWND hDlg);
 	bool Show_Face_Data(const Face *f, HWND hDlg);
+
+	void List_SelectedBrushes(HWND hDlg);
 
 	int Selected_Index;
 	Brush*	Selected_Brush;
