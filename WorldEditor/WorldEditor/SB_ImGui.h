@@ -22,11 +22,11 @@ distribution.
 */
 
 #pragma once
-class ME_ImGui
+class SB_ImGui
 {
 public:
-	ME_ImGui();
-	~ME_ImGui();
+	SB_ImGui();
+	~SB_ImGui();
 
 	void Render_FPS(void);
 	void ImGui_Render_Model(void);

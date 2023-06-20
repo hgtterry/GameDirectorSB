@@ -354,6 +354,9 @@
     <ClCompile Include="..\..\Anim19_OSDN\Common\imGui\ImGui_cpp\ImguiRenderable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SB_ImGui.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="FUSION.rc">
@@ -677,6 +680,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SB_Export_Object.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SB_ImGui.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -70,7 +70,7 @@ SB_App::SB_App()
 	CLSB_Exporter =				nullptr;
 	CLSB_Textures =				nullptr;
 	CLSB_Dialogs =				nullptr;
-
+	CLSB_ImGui =				nullptr;
 
 	AppBackground = NULL;
 	BlackBrush =	NULL;
@@ -222,7 +222,8 @@ bool SB_App::InitApp(void)
 	CLSB_Exporter =					new SB_Exporter();
 	CLSB_Textures =					new SB_Textures();
 	CLSB_Dialogs =					new SB_Dialogs();
-
+	CLSB_ImGui =					new SB_ImGui();
+	
 	InitCommonControls();
 
 	hInst =NULL;

@@ -86,6 +86,7 @@ bool SB_Ogre::InitOgre(void)
 
 	App->CLSB_Grid->DummyNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 
+	m_imgui.Init(mSceneMgr, Ogre_Window_hWnd);
 
 	createFrameListener();
 	

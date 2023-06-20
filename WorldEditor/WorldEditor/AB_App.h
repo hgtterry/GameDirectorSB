@@ -74,6 +74,7 @@ distribution.
 #include "SB_Exporter.h"
 #include "SB_Textures.h"
 #include "SB_Dialogs.h"
+#include "SB_ImGui.h"
 
 class SB_App
 {
@@ -125,7 +126,7 @@ public:
 	SB_Exporter*				CLSB_Exporter;
 	SB_Textures*				CLSB_Textures;
 	SB_Dialogs*					CLSB_Dialogs;
-
+	SB_ImGui*					CLSB_ImGui;
 
 	bool InitApp(void);
 	void InitMFC(void);
