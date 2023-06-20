@@ -303,6 +303,21 @@ LRESULT CALLBACK SB_Equity::Render_Buttons_Proc(HWND hDlg, UINT message, WPARAM 
 
 	case WM_COMMAND:
 
+		//-------------------------------------------------------- Show Info
+		if (LOWORD(wParam) == IDC_TBINFO2)
+		{
+			if (App->CLSB_ImGui->Show_Model_Data_F == 1)
+			{
+				App->CLSB_ImGui->Close_Model_Data();
+			}
+			else
+			{
+				App->CLSB_ImGui->Start_Model_Data();
+			}
+
+			return TRUE;
+		}
+
 		//-------------------------------------------------------- Show Grid
 		if (LOWORD(wParam) == IDC_TBSHOWGRID)
 		{

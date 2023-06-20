@@ -28,29 +28,30 @@ public:
 	SB_ImGui();
 	~SB_ImGui();
 
-	void Render_FPS(void);
-	void ImGui_Render_Model(void);
+	void ImGui_Editor_Loop(void);
 
+	void Render_FPS(void);
 	void ImGui_FPS(void);
+
+	void Start_Model_Data(void);
+	void Model_Data_GUI(void);
+	void Close_Model_Data(void);
 
 	bool Show_FPS;  // Show Frames Per Second [150122]
 	bool StartPos;  // Position FPS Frame Flag [150122]
 
-	void ImGui_Dimensions(void);
-
-	bool Show_Dimensions;
-	bool Show_ImGui_Test;
+	bool Show_Model_Data_F;
 
 	float PosX;
 	float PosY;
+
+	float Model_Data_PosX;
+	float Model_Data_PosY;
 
 protected:
 
 	void Load_Font(void);
 	void ImGui_Set_Colours(void);
-
-	void ImGui_Rotation(void);
-	void ImGui_Position(void);
 
 	ImFont* font0;
 	ImFont* font1;

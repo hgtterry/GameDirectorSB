@@ -607,6 +607,7 @@ bool SB_OgreListener::Update_Game_Logic(float DeltaTime)
 
 	App->CLSB_Ogre->m_imgui.NewFrame(DeltaTime, (float)View_Width, (float)View_Height);
 
+	App->CLSB_ImGui->Render_FPS();
 	//if (Dubug_Physics_Draw == 1)
 	//{
 	//	App->CL_Bullet->dynamicsWorld->debugDrawWorld();
@@ -619,10 +620,10 @@ bool SB_OgreListener::Update_Game_Logic(float DeltaTime)
 
 	//if (Show_DemoWindow == 1)
 	//{
-		ImGui::ShowDemoWindow();
+		//ImGui::ShowDemoWindow();
 	//}
 
-	//App->CL_ImGui->ImGui_Editor_Loop();
+	App->CLSB_ImGui->ImGui_Editor_Loop();
 
 	//if (GD_Run_Physics == 1 && App->CL_Scene->Player_Added == 1)
 	//{

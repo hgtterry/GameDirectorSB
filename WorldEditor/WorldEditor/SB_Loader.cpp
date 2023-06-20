@@ -62,6 +62,8 @@ void SB_Loader::Assimp_Loader(char* Extension, char* Extension2)
 
 	App->CLSB_Model->Set_Paths();
 
+	App->CLSB_Assimp->DoTextures = 1;
+
 	bool Test = App->CLSB_Assimp->LoadFile(App->CLSB_Loader->Path_FileName);
 	if (Test == 0)
 	{
@@ -129,9 +131,11 @@ bool SB_Loader::Read_Project_File(char* Path_And_File)
 // *************************************************************************
 void SB_Loader::Load_File_Wepf()
 {
-	//App->CL_Model->Clear_Model_And_Reset();
+	App->CLSB_Model->Clear_Model_And_Reset();
 
 	App->CLSB_Assimp->SelectedPreset = 8 + 8388608+64 + aiProcess_PreTransformVertices;
+
+	App->CLSB_Assimp->DoTextures = 0;
 
 	bool Test = App->CLSB_Assimp->LoadFile(WE_Path_FileName);
 	if (Test == 0)

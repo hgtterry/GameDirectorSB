@@ -43,6 +43,8 @@ public:
 	long int SelectedPreset;
 	int mTotalVertices;
 
+	bool DoTextures;
+
 protected:
 
 	void logInfo(std::string logString);

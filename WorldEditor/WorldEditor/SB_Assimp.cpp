@@ -30,6 +30,7 @@ SB_Assimp::SB_Assimp()
 {
 	SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
 	mTotalVertices = 0;
+	DoTextures = 0;
 }
 
 
@@ -81,7 +82,10 @@ bool SB_Assimp::LoadFile(const char* pFile)
 
 		StoreMeshData(scene);
 
-		LoadTextures();
+		if (DoTextures == 1)
+		{
+			LoadTextures();
+		}
 
 		App->CLSB_Model->Set_BondingBox_Model(1); // Create
 
