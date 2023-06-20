@@ -179,6 +179,13 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_Proc(HWND hDlg, UINT message, WPARAM w
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == ID_IMPORT_WAVEFRONTOBJ)
+		{
+			App->CLSB_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
+			App->CLSB_Loader->Assimp_Loader("Wavefront OBJ   *.obj\0*.obj\0", "Wavefront OBJ");
+			return TRUE;
+		}
+
 		// File Clear Model
 		if (LOWORD(wParam) == ID_FILE_CLEARMODEL)
 		{
@@ -186,8 +193,6 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_Proc(HWND hDlg, UINT message, WPARAM w
 			return TRUE;
 		}
 
-		
-		
 		// Camera
 		if (LOWORD(wParam) == ID_CAMERAMODE_FREE)
 		{

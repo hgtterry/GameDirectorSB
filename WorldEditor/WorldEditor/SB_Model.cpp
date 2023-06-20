@@ -183,7 +183,9 @@ void SB_Model::Set_Paths(void)
 	}
 	else
 	{
-		App->Say("Wrong File Type");
+		strcpy(JustName, FileName);
+		int Len = strlen(JustName);
+		JustName[Len - 4] = 0;
 	}
 
 

@@ -34,6 +34,8 @@ public:
 	bool Start_Groups_Dialog();
 	bool Open_File_Model(const char* Extension, const char* Title, const char* StartDirectory);
 	bool Read_Project_File(char* Path_And_File);
+
+	void Assimp_Loader(char* Extension, char* Extension2);
 	void Load_File_Wepf();
 	void Set_Equity(void);
 

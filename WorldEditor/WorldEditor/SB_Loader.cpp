@@ -45,6 +45,42 @@ SB_Loader::~SB_Loader(void)
 
 
 // *************************************************************************
+// *			Assimp_Loader:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void SB_Loader::Assimp_Loader(char* Extension, char* Extension2)
+{
+	int Result = App->CLSB_FileIO->Open_File_Model(Extension, Extension2, NULL);
+	if (Result == 0)
+	{
+		return;
+	}
+
+	App->CLSB_Model->Clear_Model_And_Reset();
+
+	char Model_Path_And_File[MAX_PATH];
+	strcpy(Model_Path_And_File, App->CLSB_FileIO->PathFileName);
+
+	App->CLSB_Model->Set_Paths();
+
+	bool Test = App->CLSB_Assimp->LoadFile(Model_Path_And_File);
+	if (Test == 0)
+	{
+		App->Say("Failed To Load");
+		return;
+	}
+
+	App->CLSB_Model->Model_Type = Enums::LoadedFile_Assimp;
+
+	Set_Equity();
+
+	//App->CL_Recent_Files->RecentFile_Models_History_Update();
+
+	//App->CL_Prefs->Update_User_File(Model_Path_And_File);
+
+	return;
+}
+
+// *************************************************************************
 // *			Load_Project_File:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
 bool SB_Loader::Read_Project_File(char* Path_And_File)
@@ -100,8 +136,6 @@ void SB_Loader::Load_File_Wepf()
 		return;
 	}
 
-	
-	
 	App->CLSB_Model->Set_Paths();
 
 	bool test = LoadTextures_TXL();

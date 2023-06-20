@@ -1415,7 +1415,7 @@ IDC_EYEDROPPER          CURSOR                  "res\\cursor1.cur"
 
 STRINGTABLE
 BEGIN
-    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.26 - [19-06-23] -17"
+    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.26 - [20-06-23] -17"
     IDR_FUSIONTYPE          "Genesis3D World Editor\nWorld\nWorld\nWorld Files (*.3dt)\n.3dt\nWorldEditor.Document\nGenesis3D World Editor Document"
     IDS_LOAD_WARNING        "Some entities or brushes did not load properly, see console for details."
     IDS_NEWGROUP            "Group Name"
@@ -2370,6 +2370,7 @@ BEGIN
         POPUP "Import"
         BEGIN
             MENUITEM "World Editor Project .Wepf...", ID_IMPORT_WORLDEDITORPROJECT
+            MENUITEM "Wavefront    obj...",         ID_IMPORT_WAVEFRONTOBJ
         END
         POPUP "Export"
         BEGIN
