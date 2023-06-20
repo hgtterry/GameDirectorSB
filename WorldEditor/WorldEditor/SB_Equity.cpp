@@ -91,7 +91,7 @@ void SB_Equity::Start_Equity_Dialog(bool AutoLoad)
 
 	if (EquitySB_Dialog_Created == 0)
 	{
-		Equity_Main_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_OGREVIEWER, App->MainHwnd, (DLGPROC)Equity_Dialog_Proc);
+		Equity_Main_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_EQUITYME, App->MainHwnd, (DLGPROC)Equity_Dialog_Proc);
 		
 		Start_Render_Buttons();
 		

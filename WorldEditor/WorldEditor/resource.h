@@ -122,6 +122,7 @@
 #define IDD_SB_LEFTTOP                  266
 #define IDD_VIEW_BOTTOMLEFT             267
 #define IDD_SB_OGREVIEWER               268
+#define IDD_SB_EQUITYME                 268
 #define IDD_SB_3D_VIEWER                271
 #define IDR_MENUSB                      274
 #define IDD_SB_EXPORTOPTIONS            275

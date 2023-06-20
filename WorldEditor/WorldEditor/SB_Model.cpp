@@ -188,8 +188,27 @@ void SB_Model::Set_Paths(void)
 		JustName[Len - 4] = 0;
 	}
 
-
 	//App->CL_Recent_Files->RecentFileHistory_Update();
+}
+
+// *************************************************************************
+// *			Set_Equity:- Terry and Hazel Flanigan 2023				   *
+// *************************************************************************
+void SB_Model::Set_Equity(void)
+{
+	App->CLSB_Model->Model_Loaded = 1;
+
+	if (App->CLSB_Equity->mAutoLoad == 0)
+	{
+		App->CLSB_Grid->Reset_View();
+	}
+
+	char TitleBar[MAX_PATH];
+	strcpy(TitleBar, "Equity_ME - ");
+	strcat(TitleBar, App->CLSB_Model->Path_FileName);
+	SetWindowText(App->CLSB_Equity->Equity_Main_hWnd, TitleBar);
+
+	Ogre::Root::getSingletonPtr()->renderOneFrame();
 }
 
 // *************************************************************************
@@ -259,6 +278,6 @@ void SB_Model::Clear_Model_And_Reset(void)
 
 	//App->CL_Export_Ogre3D->Export_As_RF = 0;
 
-	SetWindowText(App->MainHwnd, "Equity_ME");
+	SetWindowText(App->CLSB_Equity->Equity_Main_hWnd, "Equity_ME");
 }
 

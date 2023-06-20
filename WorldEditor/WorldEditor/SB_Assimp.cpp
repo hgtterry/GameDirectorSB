@@ -325,5 +325,5 @@ void SB_Assimp::Create_MeshGroups(const aiScene* pScene)
 // *************************************************************************
 void SB_Assimp::LoadTextures()
 {
-	//App->CLSB_Load_Textures->Load_Textures_Assimp();
+	App->CLSB_Textures->Load_Textures_Assimp();
 }

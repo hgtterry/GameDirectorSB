@@ -57,12 +57,12 @@ void SB_Loader::Assimp_Loader(char* Extension, char* Extension2)
 
 	App->CLSB_Model->Clear_Model_And_Reset();
 
-	char Model_Path_And_File[MAX_PATH];
-	strcpy(Model_Path_And_File, App->CLSB_FileIO->PathFileName);
+	strcpy(App->CLSB_Loader->Path_FileName, App->CLSB_FileIO->PathFileName);
+	strcpy(App->CLSB_Loader->FileName, App->CLSB_FileIO->FileName);
 
 	App->CLSB_Model->Set_Paths();
 
-	bool Test = App->CLSB_Assimp->LoadFile(Model_Path_And_File);
+	bool Test = App->CLSB_Assimp->LoadFile(App->CLSB_Loader->Path_FileName);
 	if (Test == 0)
 	{
 		App->Say("Failed To Load");
@@ -71,7 +71,11 @@ void SB_Loader::Assimp_Loader(char* Extension, char* Extension2)
 
 	App->CLSB_Model->Model_Type = Enums::LoadedFile_Assimp;
 
-	Set_Equity();
+	App->CLSB_Model->Set_Equity();
+
+	App->CLSB_Grid->Reset_View();
+	App->CLSB_Ogre->RenderListener->RX = 0;
+	App->CLSB_Ogre->RenderListener->RZ = 0;
 
 	//App->CL_Recent_Files->RecentFile_Models_History_Update();
 
@@ -145,7 +149,7 @@ void SB_Loader::Load_File_Wepf()
 		return;
 	}
 
-	Set_Equity();
+	App->CLSB_Model->Set_Equity();
 
 	Adjust();
 
@@ -189,28 +193,6 @@ void SB_Loader::Adjust()
 	{
 		App->CLSB_Grid->Reset_View();
 	}
-}
-
-// *************************************************************************
-// *						Set_Equity Terry Flanigan					   *
-// *************************************************************************
-void SB_Loader::Set_Equity(void)
-{
-	App->CLSB_Model->Model_Loaded = 1;
-
-	if (App->CLSB_Equity->mAutoLoad == 0)
-	{
-		App->CLSB_Grid->Reset_View();
-	}
-
-	char TitleBar[MAX_PATH];
-	strcpy(TitleBar, "World Viewer");
-	strcat(TitleBar, "    ");
-	strcat(TitleBar, App->CLSB_Model->Path_FileName);
-	SetWindowText(App->CLSB_Equity->Equity_Main_hWnd, TitleBar);
-
-	//Set_Equity();
-	Ogre::Root::getSingletonPtr()->renderOneFrame();
 }
 
 // *************************************************************************

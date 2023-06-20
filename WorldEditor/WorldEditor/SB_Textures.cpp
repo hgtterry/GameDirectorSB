@@ -74,7 +74,7 @@ void SB_Textures::Load_Textures_Assimp()
 
 			strcpy(TextureFileName, ImageFullPath);
 
-			Windows_Preview_FullPath(v, ImageFullPath);
+			//Windows_Preview_FullPath(v, ImageFullPath);
 
 			Load_OpenGL_Textures(App->CLSB_Model->Group[Count]->MaterialIndex);
 

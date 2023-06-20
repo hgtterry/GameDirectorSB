@@ -37,8 +37,7 @@ public:
 
 	void Assimp_Loader(char* Extension, char* Extension2);
 	void Load_File_Wepf();
-	void Set_Equity(void);
-
+	
 	char FileName[MAX_PATH];
 	char Path_FileName[MAX_PATH];
 
