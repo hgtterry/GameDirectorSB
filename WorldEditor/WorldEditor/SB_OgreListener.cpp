@@ -121,8 +121,11 @@ bool SB_OgreListener::frameStarted(const FrameEvent& evt)
 // *************************************************************************
 bool SB_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 {
+	
 	//App->Flash_Window();
 	OgreFrameTime = evt.timeSinceLastFrame;
+
+	App->CLSB_Ogre->m_imgui.render();
 
 	/*if (App->CL_Ogre->Block_RenderingQueued == 1)
 	{
@@ -602,7 +605,7 @@ bool SB_OgreListener::Update_Game_Logic(float DeltaTime)
 
 	App->CLSB_Ogre->Get_View_Height_Width();
 
-	//App->CL_Ogre->m_imgui.NewFrame(DeltaTime, (float)View_Width, (float)View_Height);
+	App->CLSB_Ogre->m_imgui.NewFrame(DeltaTime, (float)View_Width, (float)View_Height);
 
 	//if (Dubug_Physics_Draw == 1)
 	//{
@@ -616,7 +619,7 @@ bool SB_OgreListener::Update_Game_Logic(float DeltaTime)
 
 	//if (Show_DemoWindow == 1)
 	//{
-	//	ImGui::ShowDemoWindow();
+		ImGui::ShowDemoWindow();
 	//}
 
 	//App->CL_ImGui->ImGui_Editor_Loop();
