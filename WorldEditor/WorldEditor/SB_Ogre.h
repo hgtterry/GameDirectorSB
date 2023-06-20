@@ -28,7 +28,7 @@ distribution.
 #include <OgreParticleSystem.h>
 
 #include "SB_Render.h"
-//#include "ImguiManager.h"
+#include "ImguiManager.h"
 
 //#include "WV_Debug_Render.h"
 
@@ -89,7 +89,7 @@ public:
 
 	//WV_Debug_Render*	BulletListener;
 
-	//OgreImGui  m_imgui;
+	OgreImGui  m_imgui;
 
 	HWND Ogre_Window_hWnd;
 

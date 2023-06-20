@@ -32,7 +32,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Test|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>.;.\GenesisSDK\include;.\TypeParser;..\..\Anim19_OSDN\Common\include\OGRE;..\..\Anim19_OSDN\Common\include\OGRE\Terrain;..\..\Anim19_OSDN\Common\include\OGRE\Overlay;..\..\Anim19_OSDN\Common\Assimp\Include;..\..\Anim19_OSDN\Common\Genesis\Include2;..\..\Anim19_OSDN\Common\Genesis\Gen2;..\..\Anim19_OSDN\Common\Genesis\Gen;..\..\Anim19_OSDN\Common\Devil\include\IL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;.\GenesisSDK\include;.\TypeParser;..\..\Anim19_OSDN\Common\include\OGRE;..\..\Anim19_OSDN\Common\include\OGRE\Terrain;..\..\Anim19_OSDN\Common\include\OGRE\Overlay;..\..\Anim19_OSDN\Common\Assimp\Include;..\..\Anim19_OSDN\Common\Genesis\Include2;..\..\Anim19_OSDN\Common\Genesis\Gen2;..\..\Anim19_OSDN\Common\Genesis\Gen;..\..\Anim19_OSDN\Common\Devil\include\IL;..\..\Anim19_OSDN\Common\imGui\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>MaxSpeed</Optimization>
       <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
@@ -60,6 +60,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Anim19_OSDN\Common\imGui\ImGui_cpp\imgui.cpp" />
+    <ClCompile Include="..\..\Anim19_OSDN\Common\imGui\ImGui_cpp\ImguiManager.cpp" />
+    <ClCompile Include="..\..\Anim19_OSDN\Common\imGui\ImGui_cpp\ImguiRenderable.cpp" />
+    <ClCompile Include="..\..\Anim19_OSDN\Common\imGui\ImGui_cpp\imgui_demo.cpp" />
+    <ClCompile Include="..\..\Anim19_OSDN\Common\imGui\ImGui_cpp\imgui_draw.cpp" />
+    <ClCompile Include="..\..\Anim19_OSDN\Common\imGui\ImGui_cpp\imgui_tables.cpp" />
+    <ClCompile Include="..\..\Anim19_OSDN\Common\imGui\ImGui_cpp\imgui_widgets.cpp" />
     <ClCompile Include="A_Brush.cpp" />
     <ClCompile Include="A_Camera.cpp" />
     <ClCompile Include="A_CreateArchDialog.cpp" />

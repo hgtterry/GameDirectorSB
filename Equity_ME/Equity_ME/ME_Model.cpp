@@ -282,7 +282,6 @@ void ME_Model::Set_Paths(void)
 		int Len = strlen(JustFileName);
 		JustName[Len - 5] = 0;
 	}
-
 	else
 	{
 		strcpy(JustName, FileName);

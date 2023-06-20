@@ -36,6 +36,8 @@ void SB_Equity::Switch_3D_Window()
 	HWND Check_hWnd = NULL;
 	Check_hWnd = SetParent(App->CLSB_Ogre->Ogre_Window_hWnd, Equity_Main_hWnd);
 
+
+	
 	//if (!Check_hWnd)
 	{
 		//Debug
@@ -49,6 +51,8 @@ void SB_Equity::Switch_3D_Window()
 	App->CLSB_Ogre->mCamera->yaw(Ogre::Radian(0));*/
 
 	Auto_Load_File();
+
+	//App->CLSB_Ogre->m_imgui.Init(App->CLSB_Ogre->mSceneMgr, Equity_Main_hWnd);
 
 	App->CLSB_Ogre->OgreIsRunning = 1;
 	App->CLSB_Ogre->Ogre_Render_Loop();

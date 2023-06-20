@@ -77,8 +77,8 @@ void SB_Loader::Assimp_Loader(char* Extension, char* Extension2)
 	App->CLSB_Ogre->RenderListener->RX = 0;
 	App->CLSB_Ogre->RenderListener->RZ = 0;
 
-	//App->CL_Recent_Files->RecentFile_Models_History_Update();
 
+	//App->CL_Recent_Files->RecentFile_Models_History_Update();
 	//App->CL_Prefs->Update_User_File(Model_Path_And_File);
 
 	return;
