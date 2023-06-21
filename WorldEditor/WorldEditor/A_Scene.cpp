@@ -196,6 +196,7 @@ int A_World::Get_Brush_Count()
 	Level *pLevel = m_pDoc->pLevel;
 	BrushList *pList = Level_GetBrushes (m_pDoc->pLevel);
 
+
 	int Count = 0;
 	Brush * b;
 	b = pList->First;

@@ -26,6 +26,7 @@ distribution.
 #include "resource.h"
 #include "SB_Loader.h"
 
+
 #include "RAM.h"
 
 SB_Loader::SB_Loader(void)
@@ -191,7 +192,7 @@ void SB_Loader::Adjust()
 	Centre_Model_Mid();
 
 	//Translate_Model(0,0,-240);
-
+	//Brush  = (*(Level->Entities))[j].CreateActorBrush(ActorFile, ActorDir, PawnIni);
 	
 	if (App->CLSB_Equity->mAutoLoad == 0)
 	{
@@ -755,4 +756,168 @@ void SB_Loader::Translate_Model(float X, float Y, float Z)
 
 		App->CLSB_Model->Set_BondingBox_Model(0);
 	}
+}
+
+#include "FaceList.h"
+
+typedef Gint16 geBody_Index;
+// *************************************************************************
+// *	  			Load_ActorWorld:- Terry and Hazel Flanigan 2023        *
+// *************************************************************************
+bool SB_Loader::Load_ActorWorld()
+{
+	char* ActorFile;
+
+	char filename[255];
+	geVFile* ActFile;
+	geActor_Def* mActorDef;
+	geActor* Actor;
+	CString ActorRotStr;
+	geVec3d ActorRotation;
+	geXForm3d thePosition;
+	geFloat Scale;
+	CString ActorScale;
+
+	ActFile = geVFile_OpenNewSystem(NULL, GE_VFILE_TYPE_DOS, filename, NULL, GE_VFILE_OPEN_READONLY);
+	if (ActFile)
+	{
+		mActorDef = geActor_DefCreateFromFile(ActFile);
+		if (!mActorDef)
+		{
+			geVFile_Close(ActFile);
+			AfxMessageBox("Failed to create ActorDef", MB_ICONEXCLAMATION | MB_OK);
+			return NULL;
+		}
+	}
+	else
+	{
+		//		AfxMessageBox("Can't open actor file", MB_ICONEXCLAMATION | MB_OK);
+		return NULL;
+	}
+	geVFile_Close(ActFile);
+
+	Actor = geActor_Create(mActorDef);
+
+	geVec3d_Clear(&ActorRotation);	// Initialize
+	Scale = 1.0f;
+	geXForm3d_SetIdentity(&thePosition);
+
+	geBody* B = geActor_GetBody(mActorDef);
+
+	if (!B)
+	{
+		if (mActorDef != NULL)
+			geActor_DefDestroy(&mActorDef);
+
+		if (Actor != NULL)
+			geActor_Destroy(&Actor);
+
+		return NULL;
+	}
+
+
+	FaceList* fl;
+	Face* f;
+
+	{
+		int i, NumFaces = 0;
+		geBody_Index Index;
+		geBody_Index BoneIndex;
+		char BoneName[255];
+		geXForm3d Transform;
+		const char* BName;
+
+
+		//		NumFaces = B->SkinFaces[0].FaceCount;
+
+		// create the facelist for the brush
+		fl = FaceList_Create(NumFaces);
+		if (!fl)
+		{
+			char szError[256];
+			sprintf(szError, "Error creating FaceList: '%s'", ActorFile);
+			AfxMessageBox(szError, MB_ICONEXCLAMATION | MB_OK);
+
+			if (mActorDef != NULL)
+				geActor_DefDestroy(&mActorDef);
+			if (Actor != NULL)
+				geActor_Destroy(&Actor);
+
+			return NULL;
+		}
+
+		for (i = 0; i < NumFaces; i++)
+		{
+			geVec3d FaceVerts[3];
+
+			for (int j = 0; j < 3; j++)
+			{
+				// have to reverse vertex order for some reason
+//				Index = B->SkinFaces[0].FaceArray[i].VtxIndex[j];
+//				geVec3d_Copy(&(B->XSkinVertexArray[Index].XPoint),&(FaceVerts[2-j]));
+
+				// transform vertex point by bone transformation
+//				BoneIndex = B->XSkinVertexArray[Index].BoneIndex;
+//				BName = geStrBlock_GetString(B->BoneNames, BoneIndex);
+//				strcpy(BoneName,BName);
+//				geActor_GetBoneTransform(Actor, BoneName, &Transform);
+//				geXForm3d_Transform(&Transform,&(FaceVerts[2-j]),&(FaceVerts[2-j]));
+
+//				geVec3d_Scale(&FaceVerts[2-j], Scale, &FaceVerts[2-j]);
+			}
+
+			// create faces and add them to the facelist
+			f = Face_Create(3, FaceVerts, 0);
+
+			if (f)
+				FaceList_AddFace(fl, f);
+			else
+			{
+				// hack; if original face has no normal create a valid face instead
+				geVec3d_Set(&(FaceVerts[0]), 10000.0f, 10000.0f, 10000.0f);
+				geVec3d_Set(&(FaceVerts[1]), 10001.0f, 10000.0f, 10000.0f);
+				geVec3d_Set(&(FaceVerts[2]), 10000.0f, 10001.0f, 10000.0f);
+
+				f = Face_Create(3, FaceVerts, 0);
+
+				if (f)
+					FaceList_AddFace(fl, f);
+			}
+		}
+	}
+
+	Brush* mActorBrush;
+
+	mActorBrush = Brush_Create(BRUSH_LEAF, fl, NULL);
+	if (!mActorBrush)
+	{
+		char szError[256];
+		sprintf(szError, "Error creating brush: '%s'", ActorFile);
+		AfxMessageBox(szError, MB_ICONEXCLAMATION | MB_OK);
+
+		FaceList_Destroy(&fl);
+
+		if (mActorDef != NULL)
+			geActor_DefDestroy(&mActorDef);
+
+		if (Actor != NULL)
+			geActor_Destroy(&Actor);
+
+		return NULL;
+	}
+
+	Brush_SetName(mActorBrush, ActorFile);
+
+	if (mActorDef != NULL)
+		geActor_DefDestroy(&mActorDef);
+
+	if (Actor != NULL)
+		geActor_Destroy(&Actor);
+
+	// move the brush to the right position
+
+	geVec3d	mOrigin;
+	Brush_Move(mActorBrush, &mOrigin);
+
+	return 1;
 }
