@@ -162,6 +162,19 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_Proc(HWND hDlg, UINT message, WPARAM w
 	case WM_COMMAND:
 	{
 		// File Import
+		if (LOWORD(wParam) == ID_IMPORT_GENESIS3DACT)
+		{
+			App->CLSB_Loader->RFActor_Loader();
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == ID_IMPORT_WAVEFRONTOBJ)
+		{
+			App->CLSB_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
+			App->CLSB_Loader->Assimp_Loader("Wavefront OBJ   *.obj\0*.obj\0", "Wavefront OBJ");
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == ID_IMPORT_WORLDEDITORPROJECT)
 		{
 			int Result = App->CLSB_Loader->Open_File_Model("GDSB File   *.Wepf\0*.Wepf\0", "GDSB File", NULL);
@@ -180,13 +193,6 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_Proc(HWND hDlg, UINT message, WPARAM w
 		if (LOWORD(wParam) == ID_OGRE3D_MESH)
 		{
 			App->CLSB_Exporter->Ogre3D_Model();
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == ID_IMPORT_WAVEFRONTOBJ)
-		{
-			App->CLSB_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
-			App->CLSB_Loader->Assimp_Loader("Wavefront OBJ   *.obj\0*.obj\0", "Wavefront OBJ");
 			return TRUE;
 		}
 

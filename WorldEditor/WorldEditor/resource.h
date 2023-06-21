@@ -864,6 +864,7 @@
 #define ID_CAMERA_ZEROVIEW              33069
 #define ID_FILE_CLEARMODEL              33070
 #define ID_IMPORT_WAVEFRONTOBJ          33071
+#define ID_IMPORT_GENESIS3DACT          33072
 #define IDS_HELPINFORMATION             38000
 
 // Next default values for new objects
@@ -872,7 +873,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        303
-#define _APS_NEXT_COMMAND_VALUE         33072
+#define _APS_NEXT_COMMAND_VALUE         33073
 #define _APS_NEXT_CONTROL_VALUE         1482
 #define _APS_NEXT_SYMED_VALUE           112
 #endif

@@ -2371,6 +2371,7 @@ BEGIN
         BEGIN
             MENUITEM "World Editor Project .Wepf...", ID_IMPORT_WORLDEDITORPROJECT
             MENUITEM "Wavefront    obj...",         ID_IMPORT_WAVEFRONTOBJ
+            MENUITEM "Genesis3D    act...",         ID_IMPORT_GENESIS3DACT
         END
         POPUP "Export"
         BEGIN

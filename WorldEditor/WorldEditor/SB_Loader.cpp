@@ -758,6 +758,36 @@ void SB_Loader::Translate_Model(float X, float Y, float Z)
 	}
 }
 
+// *************************************************************************
+// *			RFActor_Loader:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+bool SB_Loader::RFActor_Loader(void)
+{
+	int Result = App->CLSB_FileIO->Open_File_Model("RF Actor   *.act\0*.act\0", "RF Actor", NULL);
+	if (Result == 0)
+	{
+		return 0;
+	}
+
+
+	App->CLSB_Model->Clear_Model_And_Reset();
+
+	char Model_Path_And_File[MAX_PATH];
+	strcpy(Model_Path_And_File, App->CLSB_FileIO->PathFileName);
+
+	App->CLSB_Model->Set_Paths();
+
+	//App->CLSB_Genesis3D->LoadActor();
+
+	App->CLSB_Model->Model_Type = Enums::LoadedFile_Actor;
+
+	App->CLSB_Model->Set_Equity();
+
+	//App->CL_Recent_Files->RecentFile_Models_History_Update();
+	//App->CL_Prefs->Update_User_File(Model_Path_And_File);
+
+	return 1;
+}
 #include "FaceList.h"
 
 typedef Gint16 geBody_Index;
