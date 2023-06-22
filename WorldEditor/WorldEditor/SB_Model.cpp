@@ -32,6 +32,8 @@ SB_Model::SB_Model(void)
 	GroupCount = 0;
 	TextureCount = 0;
 	MotionCount = 0;
+	BoneCount = 0;
+	NormalsCount = 0;
 
 	Model_Loaded = 0;
 	Model_Type = Enums::LoadedFile_None;
@@ -106,7 +108,8 @@ void SB_Model::Reset_Class(void)
 	VerticeCount = 0;
 	FaceCount = 0;
 	MotionCount = 0;
-
+	BoneCount = 0;
+	NormalsCount = 0;
 }
 
 // *************************************************************************

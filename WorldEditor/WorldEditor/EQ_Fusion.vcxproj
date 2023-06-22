@@ -173,6 +173,7 @@
     <ClCompile Include="SB_Exporter.cpp" />
     <ClCompile Include="SB_Export_Object.cpp" />
     <ClCompile Include="SB_Export_Ogre3D.cpp" />
+    <ClCompile Include="SB_Genesis3D.cpp" />
     <ClCompile Include="SB_Grid.cpp" />
     <ClCompile Include="SB_ImGui.cpp" />
     <ClCompile Include="SB_Ini.cpp" />
@@ -244,6 +245,7 @@
     <ClInclude Include="SB_Exporter.h" />
     <ClInclude Include="SB_Export_Object.h" />
     <ClInclude Include="SB_Export_Ogre3D.h" />
+    <ClInclude Include="SB_Genesis3D.h" />
     <ClInclude Include="SB_Grid.h" />
     <ClInclude Include="SB_ImGui.h" />
     <ClInclude Include="SB_Ini.h" />

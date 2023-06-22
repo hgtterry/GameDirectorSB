@@ -357,6 +357,9 @@
     <ClCompile Include="SB_ImGui.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SB_Genesis3D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="FUSION.rc">
@@ -683,6 +686,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SB_ImGui.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SB_Genesis3D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
