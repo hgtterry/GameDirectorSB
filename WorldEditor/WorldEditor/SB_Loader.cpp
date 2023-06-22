@@ -777,7 +777,7 @@ bool SB_Loader::RFActor_Loader(void)
 
 	App->CLSB_Model->Set_Paths();
 
-	//App->CLSB_Genesis3D->LoadActor();
+	App->CLSB_Genesis3D->LoadActor();
 
 	App->CLSB_Model->Model_Type = Enums::LoadedFile_Actor;
 

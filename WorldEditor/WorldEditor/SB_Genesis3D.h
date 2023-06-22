@@ -37,11 +37,11 @@ distribution.
 #include "mkbody.h"
 #include "bitmap.h"
 
-class ME_Genesis3D
+class SB_Genesis3D
 {
 public:
-	ME_Genesis3D();
-	~ME_Genesis3D();
+	SB_Genesis3D();
+	~SB_Genesis3D();
 
 	void LoadActor(void);
 	bool GetMotion(char *mMotionName);

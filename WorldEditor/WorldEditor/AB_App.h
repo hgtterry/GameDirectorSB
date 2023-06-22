@@ -75,6 +75,7 @@ distribution.
 #include "SB_Textures.h"
 #include "SB_Dialogs.h"
 #include "SB_ImGui.h"
+#include "SB_Genesis3D.h"
 
 class SB_App
 {
@@ -127,6 +128,7 @@ public:
 	SB_Textures*				CLSB_Textures;
 	SB_Dialogs*					CLSB_Dialogs;
 	SB_ImGui*					CLSB_ImGui;
+	SB_Genesis3D*				CLSB_Genesis3D;
 
 	bool InitApp(void);
 	void InitMFC(void);

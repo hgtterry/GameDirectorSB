@@ -48,7 +48,7 @@
 // end change
 
 #include <afxole.h>
-#pragma warning(disable : 4201 4214 4115)
+#pragma warning(disable : 4201 4214 4115 4477)
 #include <mmsystem.h>
 #pragma warning(default : 4201 4214 4115)
 #include <errno.h>

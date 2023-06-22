@@ -36,7 +36,7 @@ typedef enum
 	GE_BODYINST_FACE_TRIFAN
 } geBodyInst_FaceType;
 
-ME_Genesis3D::ME_Genesis3D()
+SB_Genesis3D::SB_Genesis3D()
 {
 	ActorDef_Memory = nullptr;
 	ActorBody_Memory = nullptr;
@@ -51,14 +51,14 @@ ME_Genesis3D::ME_Genesis3D()
 }
 
 
-ME_Genesis3D::~ME_Genesis3D()
+SB_Genesis3D::~SB_Genesis3D()
 {
 }
 
 // *************************************************************************
 // *						LoadActor Terry Bernie					 	   *
 // *************************************************************************
-void ME_Genesis3D::LoadActor(void)
+void SB_Genesis3D::LoadActor(void)
 {
 
 	AddActor(App->CLSB_Model->Path_FileName);
@@ -83,7 +83,7 @@ void ME_Genesis3D::LoadActor(void)
 // *************************************************************************
 // *					Set_BondingBox_Model Terry Flanigan				   *
 // *************************************************************************
-bool ME_Genesis3D::Set_BondingBox_Model(bool Create)
+bool SB_Genesis3D::Set_BondingBox_Model(bool Create)
 {
 
 	if (Create == 1)
@@ -132,7 +132,7 @@ bool ME_Genesis3D::Set_BondingBox_Model(bool Create)
 // *************************************************************************
 // *						LoadActorTextures							   *
 // *************************************************************************
-bool ME_Genesis3D::LoadActorTextures(void)
+bool SB_Genesis3D::LoadActorTextures(void)
 {
 	strcpy(TempTextureFile_BMP, App->CLSB_Model->Texture_FolderPath);
 	strcat(TempTextureFile_BMP, "TextureLoad.bmp");
@@ -212,7 +212,7 @@ bool ME_Genesis3D::LoadActorTextures(void)
 // *************************************************************************
 // *						SetTexture_Type Terry Bernie				   *
 // *************************************************************************
-bool ME_Genesis3D::SetTexture_Type(void)
+bool SB_Genesis3D::SetTexture_Type(void)
 {
 	const char *MaterialName;
 	int MatIndex = -1;
@@ -243,7 +243,7 @@ bool ME_Genesis3D::SetTexture_Type(void)
 // *************************************************************************
 // *					CreateTextureInfo Terry Bernie	   		 	   	   *
 // *************************************************************************
-void ME_Genesis3D::CreateTextureInfo(void)
+void SB_Genesis3D::CreateTextureInfo(void)
 {
 	int Count = 0;
 
@@ -261,7 +261,7 @@ void ME_Genesis3D::CreateTextureInfo(void)
 // *************************************************************************
 // *					FillTextureInfo	Terry Bernie	   		 	   	   *
 // *************************************************************************
-bool ME_Genesis3D::FillTextureInfo(void)
+bool SB_Genesis3D::FillTextureInfo(void)
 {
 	int Count = 0;
 	int Index = 0;
@@ -321,7 +321,7 @@ bool ME_Genesis3D::FillTextureInfo(void)
 // *************************************************************************
 // *					GetDefaultBones Terry Bernie	   			  	   *
 // *************************************************************************
-bool ME_Genesis3D::GetDefaultBones(void)
+bool SB_Genesis3D::GetDefaultBones(void)
 {
 	const char *BoneName;
 
@@ -369,7 +369,7 @@ bool ME_Genesis3D::GetDefaultBones(void)
 // *************************************************************************
 // *					SetCounters Terry Bernin		  			 	   *
 // *************************************************************************
-void ME_Genesis3D::SetCounters(void)
+void SB_Genesis3D::SetCounters(void)
 {
 	App->CLSB_Model->TextureCount = ActorDef_Memory->Body->MaterialCount;
 	App->CLSB_Model->MotionCount = ActorDef_Memory->MotionCount;
@@ -380,7 +380,7 @@ void ME_Genesis3D::SetCounters(void)
 // *************************************************************************
 // *						AddActor Terry Bernie	  			  	 	   *
 // *************************************************************************
-bool ME_Genesis3D::AddActor(char* FileName)
+bool SB_Genesis3D::AddActor(char* FileName)
 {
 	if (TestActor)
 	{
@@ -425,7 +425,7 @@ bool ME_Genesis3D::AddActor(char* FileName)
 // *************************************************************************
 // *						GetUVs								  	 	   *
 // *************************************************************************
-bool ME_Genesis3D::GetUVs()
+bool SB_Genesis3D::GetUVs()
 {
 	int Count = 0;
 	float U = 0;
@@ -451,7 +451,7 @@ bool ME_Genesis3D::GetUVs()
 // *************************************************************************
 // *						Animate Terry Bernie	 			  	 	   *
 // *************************************************************************
-bool ME_Genesis3D::Animate(int Do)
+bool SB_Genesis3D::Animate(int Do)
 {
 	if (Do == 1)
 	{
@@ -592,7 +592,7 @@ bool ME_Genesis3D::Animate(int Do)
 // *************************************************************************
 // *						RenderActor Terry Bernie	   		  	 	   *
 // *************************************************************************
-bool ME_Genesis3D::RenderActor(const gePuppet *P, const gePose *Joints)
+bool SB_Genesis3D::RenderActor(const gePuppet *P, const gePose *Joints)
 {
 	const geXFArray *JointTransforms;
 	geVec3d Scale;
@@ -607,7 +607,7 @@ bool ME_Genesis3D::RenderActor(const gePuppet *P, const gePose *Joints)
 // *************************************************************************
 // *					GetGeometry	Terry Bernie	   			  	 	   *
 // *************************************************************************
-geBodyInst_Geometry* ME_Genesis3D::GetGeometry(
+geBodyInst_Geometry* SB_Genesis3D::GetGeometry(
 	const geBodyInst *BI,
 	const geVec3d *ScaleVector,
 	const geXFArray *BoneTransformArray,
@@ -737,7 +737,7 @@ geBodyInst_Geometry* ME_Genesis3D::GetGeometry(
 // *************************************************************************
 // *						TPostScale Terry Bernie	 			  	 	   *
 // *************************************************************************
-void ME_Genesis3D::TPostScale(const geXForm3d *M, const geVec3d *S, geXForm3d *Scaled)
+void SB_Genesis3D::TPostScale(const geXForm3d *M, const geVec3d *S, geXForm3d *Scaled)
 {
 	Scaled->AX = M->AX * S->X;
 	Scaled->BX = M->BX * S->X;
@@ -756,7 +756,7 @@ void ME_Genesis3D::TPostScale(const geXForm3d *M, const geVec3d *S, geXForm3d *S
 // *************************************************************************
 // *						TGetGeometryPrep	   			  		 	   *
 // *************************************************************************
-geBodyInst_Geometry* ME_Genesis3D::TGetGeometryPrep(geBodyInst *BI, int LevelOfDetail)
+geBodyInst_Geometry* SB_Genesis3D::TGetGeometryPrep(geBodyInst *BI, int LevelOfDetail)
 {
 	const geBody *B;
 	geBodyInst_Geometry *G;
@@ -826,7 +826,7 @@ geBodyInst_Geometry* ME_Genesis3D::TGetGeometryPrep(geBodyInst *BI, int LevelOfD
 // *************************************************************************
 // *						BuildActor Terry Bernie     		  	 	   *
 // *************************************************************************
-bool ME_Genesis3D::BuildActor(geActor *Actor)
+bool SB_Genesis3D::BuildActor(geActor *Actor)
 {
 	Actor->Puppet = CreatePuppet(Actor->ActorDefinition->TextureFileContext,Actor->ActorDefinition->Body);
 
@@ -842,7 +842,7 @@ bool ME_Genesis3D::BuildActor(geActor *Actor)
 // *************************************************************************
 // *						CreatePuppet	   					  	 	   *
 // *************************************************************************
-gePuppet* ME_Genesis3D::CreatePuppet(geVFile *TextureFS, const geBody *B)
+gePuppet* SB_Genesis3D::CreatePuppet(geVFile *TextureFS, const geBody *B)
 {
 	gePuppet *P;
 
@@ -894,7 +894,7 @@ gePuppet* ME_Genesis3D::CreatePuppet(geVFile *TextureFS, const geBody *B)
 // *************************************************************************
 // *						CreateGeometry Terry Bernie   			   	   *
 // *************************************************************************
-geBodyInst* ME_Genesis3D::CreateGeometry(const geBody *B)
+geBodyInst* SB_Genesis3D::CreateGeometry(const geBody *B)
 {
 	geBodyInst *BI;
 	assert(B != NULL);
@@ -930,7 +930,7 @@ geBodyInst* ME_Genesis3D::CreateGeometry(const geBody *B)
 // *************************************************************************
 // *				Update_Model_File_View Terry Bernie					   *
 // *************************************************************************
-bool ME_Genesis3D::Update_Model_File_View(void)
+bool SB_Genesis3D::Update_Model_File_View(void)
 {
 	if (App->CLSB_Model->TextureCount == 0) { return 0; }
 
@@ -971,7 +971,7 @@ bool ME_Genesis3D::Update_Model_File_View(void)
 // *************************************************************************
 // *					FileView_AddMotions Terry Bernie			 	   *
 // *************************************************************************
-bool ME_Genesis3D::FileView_AddMotions(void)
+bool SB_Genesis3D::FileView_AddMotions(void)
 {
 	
 	//if (App->CLSB_Model->MotionCount == 0)
@@ -1013,7 +1013,7 @@ bool ME_Genesis3D::FileView_AddMotions(void)
 // *************************************************************************
 // *					GetEndTime  ( Terry Bernie ) 					   *
 // *************************************************************************
-bool ME_Genesis3D::GetMotion(char *mMotionName)
+bool SB_Genesis3D::GetMotion(char *mMotionName)
 {
 	geMotion* Motion = NULL;
 	float StartTime = 0;
@@ -1034,7 +1034,7 @@ bool ME_Genesis3D::GetMotion(char *mMotionName)
 // *************************************************************************
 // *					GetBoneMoveMent Terry Bernie	   			  	   *
 // *************************************************************************
-void ME_Genesis3D::GetBoneMoveMent(void)
+void SB_Genesis3D::GetBoneMoveMent(void)
 {
 	const char *BoneNameQ;
 	int pb;

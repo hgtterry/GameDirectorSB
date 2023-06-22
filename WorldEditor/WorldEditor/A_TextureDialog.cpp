@@ -32,6 +32,8 @@ distribution.
 #include "FUSIONView.h"
 #include "FUSIONDoc.h"
 
+#pragma warning(disable : 4715)
+
 A_TextureDialog::A_TextureDialog(void)
 {
 	f_TextureDlg_Active = 0;
