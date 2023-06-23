@@ -924,20 +924,20 @@ bool SB_Render::RF_Render_Just_Group()
 // *************************************************************************
 bool SB_Render::RF_Render_Faces(void)
 {
-	/*int Count = 0;
+	int Count = 0;
 	int MatIndex = 0;
 
 	glColor3f(0.9f, 0.9f, 0.9f);
 	while (Count < App->CLSB_Model->FaceCount)
 	{
 		glBegin(GL_POLYGON);
-		glVertex3f(App->CLSB_Model->vertex_Data[App->CLSB_Model->Face_Data[Count].a].x, App->CLSB_Model->vertex_Data[App->CLSB_Model->Face_Data[Count].a].y, App->CL_Model->vertex_Data[App->CL_Model->Face_Data[Count].a].z);
-		glVertex3f(App->CLSB_Model->vertex_Data[App->CLSB_Model->Face_Data[Count].b].x, App->CLSB_Model->vertex_Data[App->CLSB_Model->Face_Data[Count].b].y, App->CL_Model->vertex_Data[App->CL_Model->Face_Data[Count].b].z);
-		glVertex3f(App->CLSB_Model->vertex_Data[App->CLSB_Model->Face_Data[Count].c].x, App->CLSB_Model->vertex_Data[App->CLSB_Model->Face_Data[Count].c].y, App->CL_Model->vertex_Data[App->CL_Model->Face_Data[Count].c].z);
+		glVertex3f(App->CLSB_Model->vertex_Data[App->CLSB_Model->Face_Data[Count].a].x, App->CLSB_Model->vertex_Data[App->CLSB_Model->Face_Data[Count].a].y, App->CLSB_Model->vertex_Data[App->CLSB_Model->Face_Data[Count].a].z);
+		glVertex3f(App->CLSB_Model->vertex_Data[App->CLSB_Model->Face_Data[Count].b].x, App->CLSB_Model->vertex_Data[App->CLSB_Model->Face_Data[Count].b].y, App->CLSB_Model->vertex_Data[App->CLSB_Model->Face_Data[Count].b].z);
+		glVertex3f(App->CLSB_Model->vertex_Data[App->CLSB_Model->Face_Data[Count].c].x, App->CLSB_Model->vertex_Data[App->CLSB_Model->Face_Data[Count].c].y, App->CLSB_Model->vertex_Data[App->CLSB_Model->Face_Data[Count].c].z);
 		glEnd();
 
 		Count++;
-	}*/
+	}
 
 	return 1;
 }
@@ -947,21 +947,21 @@ bool SB_Render::RF_Render_Faces(void)
 // *************************************************************************
 bool SB_Render::RF_Render_Points(void)
 {
-	/*int Count = 0;
+	int Count = 0;
 	glPointSize(5);
 
 	glColor3f(1.0f, 1.0f, 0.0f);
 
-	while (Count < App->CL_Model->VerticeCount)
+	while (Count < App->CLSB_Model->VerticeCount)
 	{
 		glBegin(GL_POINTS);
 
-		glVertex3fv(&App->CL_Model->vertex_Data[Count].x);
+		glVertex3fv(&App->CLSB_Model->vertex_Data[Count].x);
 
 		glEnd();
 
 		Count++;
-	}*/
+	}
 
 	return 1;
 }

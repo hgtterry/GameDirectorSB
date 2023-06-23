@@ -60,24 +60,80 @@ SB_Genesis3D::~SB_Genesis3D()
 // *************************************************************************
 void SB_Genesis3D::LoadActor(void)
 {
+	bool test = AddActor(App->CLSB_Model->Path_FileName);
 
-	AddActor(App->CLSB_Model->Path_FileName);
-
-	
+	if (test == 0)
+	{
+		return;
+	}
 
 	SetCounters();
 	
-	//	ListMotions();
+//	//	ListMotions();
 
 	GetDefaultBones();
 
-	LoadActorTextures();
+//	LoadActorTextures();
 
 	Set_BondingBox_Model(1); // Create
 
-	FileView_AddMotions();
+//	FileView_AddMotions();
 
 	//App->CL_Model_Data->HasMesh = 1;
+
+	App->Say("Ok");
+}
+
+// *************************************************************************
+// *						AddActor Terry Bernie	  			  	 	   *
+// *************************************************************************
+bool SB_Genesis3D::AddActor(char* FileName)
+{
+	App->Say(FileName);
+
+	if (TestActor)
+	{
+		TestActor = nullptr;
+	}
+
+	geVFile* HFile;
+
+	HFile = geVFile_OpenNewSystem(NULL, GE_VFILE_TYPE_DOS,
+		FileName, NULL, GE_VFILE_OPEN_READONLY);
+
+	if (HFile)
+	{
+		ActorDef_Memory = geActor_DefCreateFromFile(HFile);
+
+		if (ActorDef_Memory)
+		{
+			TestActor = geActor_Create(ActorDef_Memory);
+
+			geActor_SetScale(TestActor, 1, 1, 1);
+
+			BuildActor(TestActor);
+		}
+		else
+		{
+			App->Say("Cant Create HFile");
+			return 0;
+		}
+	}
+	else
+	{
+		App->Say("Failed");
+		return 0;
+	}
+
+	geVFile_Close(HFile);
+
+	RenderActor(TestActor->Puppet, TestActor->Pose);
+
+	Animate(0);
+
+	GetUVs();
+
+	return 1;
 }
 
 // *************************************************************************
@@ -375,51 +431,6 @@ void SB_Genesis3D::SetCounters(void)
 	App->CLSB_Model->MotionCount = ActorDef_Memory->MotionCount;
 	App->CLSB_Model->BoneCount = ActorDef_Memory->Body->BoneCount;
 	App->CLSB_Model->VerticeCount = ActorDef_Memory->Body->XSkinVertexCount;
-}
-
-// *************************************************************************
-// *						AddActor Terry Bernie	  			  	 	   *
-// *************************************************************************
-bool SB_Genesis3D::AddActor(char* FileName)
-{
-	if (TestActor)
-	{
-		TestActor = nullptr;
-	}
-
-	geVFile* HFile;
-
-	HFile = geVFile_OpenNewSystem(NULL, GE_VFILE_TYPE_DOS,
-		FileName, NULL, GE_VFILE_OPEN_READONLY);
-
-	if (HFile)
-	{
-		ActorDef_Memory = geActor_DefCreateFromFile(HFile);
-
-		if (ActorDef_Memory)
-		{
-			TestActor = geActor_Create(ActorDef_Memory);
-
-			geActor_SetScale(TestActor, 1, 1, 1);
-
-			BuildActor(TestActor);
-		}
-		else
-		{
-			App->Say("Cant Create HFile");
-			return 0;
-		}
-	}
-
-	geVFile_Close(HFile);
-
-	RenderActor(TestActor->Puppet, TestActor->Pose);
-
-	Animate(0);
-
-	GetUVs();
-
-	return 1;
 }
 
 // *************************************************************************

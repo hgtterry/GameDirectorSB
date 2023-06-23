@@ -770,12 +770,14 @@ bool SB_Loader::RFActor_Loader(void)
 	}
 
 
-	App->CLSB_Model->Clear_Model_And_Reset();
+	//App->CLSB_Model->Clear_Model_And_Reset();
 
-	char Model_Path_And_File[MAX_PATH];
-	strcpy(Model_Path_And_File, App->CLSB_FileIO->PathFileName);
+	strcpy(App->CLSB_Loader->Path_FileName, App->CLSB_FileIO->PathFileName);
+	strcpy(App->CLSB_Loader->FileName, App->CLSB_FileIO->FileName);
 
 	App->CLSB_Model->Set_Paths();
+
+
 
 	App->CLSB_Genesis3D->LoadActor();
 

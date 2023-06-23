@@ -212,7 +212,7 @@ bool SB_App::InitApp(void)
 	// Scene Builder 
 	CLSB_Ogre =						new SB_Ogre();
 	CLSB_Grid =						new SB_Grid();
-	CLSB_Equity =				new SB_Equity();
+	CLSB_Equity =					new SB_Equity();
 	CLSB_Keyboard =					new SB_Keyboard();
 	CLSB_Camera =					new SB_Camera();
 	CLSB_Assimp =					new SB_Assimp();
