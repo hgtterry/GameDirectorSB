@@ -70,17 +70,17 @@ void A_World::Set_Paths(void)
 // *************************************************************************
 void A_World::Reset_Editor(void)
 {
-	App->CL_TopTabs->Reset_Tabs_Buttons();
-	App->CL_TopTabs->Header_BrushModify_Flag = 1;
-	ShowWindow(App->CL_TopTabs->Brush_Modify_Panel_Hwnd, SW_SHOW);
+	App->CLSB_TopTabs->Reset_Tabs_Buttons();
+	App->CLSB_TopTabs->Header_BrushModify_Flag = 1;
+	ShowWindow(App->CLSB_TopTabs->Brush_Modify_Panel_Hwnd, SW_SHOW);
 
-	App->CL_TopTabs->Reset_Render_Buttons();
-	App->CL_TopTabs->Textured_Flag = 1;
+	App->CLSB_TopTabs->Reset_Render_Buttons();
+	App->CLSB_TopTabs->Textured_Flag = 1;
 
-	App->CL_TopTabs->Reset_Brush_Buttons();
-	App->CL_TopTabs->Brush_Select_Flag = 1;
+	App->CLSB_TopTabs->Reset_Brush_Buttons();
+	App->CLSB_TopTabs->Brush_Select_Flag = 1;
 
-	App->CL_TopTabs->Select_Mode();
+	App->CLSB_TopTabs->Select_Mode();
 
 	App->CL_TabsControl->Hide_Dialogs();
 	App->CL_TabsControl->Tab_Templates_Flag = 1;
@@ -91,7 +91,7 @@ void A_World::Reset_Editor(void)
 	App->CL_TabsTemplates_Dlg->Enable_Insert_Button(false);
 
 	RedrawWindow(App->CL_TabsControl->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-	RedrawWindow(App->CL_TopTabs->Top_Tabs_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	RedrawWindow(App->CLSB_TopTabs->Top_Tabs_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 }
 

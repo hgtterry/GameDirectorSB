@@ -54,6 +54,9 @@ protected:
 	void Fill_ComboBox_ScaleValues(HWND hDlg);
 	void Fill_ComboBox_AngleValues(HWND hDlg);
 
+	float ScaleX_Delta;
+	float ScaleY_Delta;
+
 	CString m_NumFaces;
 
 	CFusionDoc			*m_pDoc;

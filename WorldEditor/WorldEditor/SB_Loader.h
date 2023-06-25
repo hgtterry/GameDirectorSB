@@ -76,6 +76,8 @@ protected:
 
 	std::vector<Char_type2> BitMap_Names;
 
+	CFusionDoc* m_pDoc;
+
 	OPENFILENAME ofn;
 };
 

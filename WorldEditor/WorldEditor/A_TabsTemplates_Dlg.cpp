@@ -68,7 +68,7 @@ LRESULT CALLBACK A_TabsTemplates_Dlg::Templates_Proc(HWND hDlg, UINT message, WP
 	{
 		SendDlgItemMessage(hDlg, IDC_ST_GD_TEMPLATES, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BTINSERT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_BTTDAPPLY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ACTOR, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		return TRUE;
 	}
@@ -90,94 +90,99 @@ LRESULT CALLBACK A_TabsTemplates_Dlg::Templates_Proc(HWND hDlg, UINT message, WP
 			return (LONG)App->AppBackground;
 		}
 
-	case WM_DRAWITEM:
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_ACTOR && some_item->code == NM_CUSTOMDRAW)
 		{
-
-			LPDRAWITEMSTRUCT lpDIS = (LPDRAWITEMSTRUCT)lParam;
-
-			if (lpDIS->CtlID == IDC_BTINSERT)
-			{
-				App->Custom_Button_Toggle_Disable(lpDIS, hDlg, App->CL_TabsTemplates_Dlg->Insert_Enabled_Flag);
-				return TRUE;
-			}
-
-			return TRUE;
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
 		}
+
+		return CDRF_DODEFAULT;
+	}
 
 	case WM_COMMAND:
 		{
-			if (LOWORD(wParam) == IDC_GD_CUBE_PRIMITIVE)
-			{
-				App->CL_CreateBoxDialog->Start_CreateBox_Dlg();
-				return 1;
-			}
-
-			if (LOWORD(wParam) == IDC_GD_CYLINDER_PRIMITIVE)
-			{
-				App->CL_CreateCylDialog->Start_CreateCyl_Dlg();
-				return 1;
-			}
-
-			if (LOWORD(wParam) == IDC_GD_CONE_PRIMITIVE)
-			{
-				App->CL_CreateConeDialog->Start_CreateCone_Dlg();
-				return 1;
-			}
-
-			if (LOWORD(wParam) == IDC_GD_SPHEROID_PRIMITIVE)
-			{
-				App->CL_CreateSpheroidDialog->Start_CreateSpheroid_Dlg();
-				return 1;
-			}
-
-			if (LOWORD(wParam) == IDC_GD_STAIRCASE_PRIMITIVE)
-			{
-				App->CL_CreateStaircaseDialog->Start_CreateStaircase_Dlg();
-				return 1;
-			}
-
-			if (LOWORD(wParam) == IDC_GD_ARCH_PRIMITIVE)
-			{
-				App->CL_CreateArchDialog->Start_CreateArch_Dlg();
-				return 1;
-			}
-
-			if (LOWORD(wParam) == IDC_BTINSERT)
-			{
-				App->CL_TabsTemplates_Dlg->m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
-
-				if(App->CL_TabsTemplates_Dlg->m_pDoc->mModeTool == ID_TOOLS_TEMPLATE)
-				{
-					App->CL_TabsTemplates_Dlg->m_pDoc->AddBrushToWorld();
-					App->CL_TabsTemplates_Dlg->m_pDoc->SetModifiedFlag();
-				}
-
-				App->CL_TabsTemplates_Dlg->m_pDoc->DoGeneralSelect();
-
-				App->CL_TabsTemplates_Dlg->Enable_Insert_Button(false);
-				return 1;
-			}
-
-
-			
-			
-			// -----------------------------------------------------------------
-			if (LOWORD(wParam) == IDOK)
-			{
-				//App->CL_TextureDialog->f_TextureDlg_Active = 0;
-				//EndDialog(hDlg, LOWORD(wParam));
-				return TRUE;
-			}
-
-			if (LOWORD(wParam) == IDCANCEL)
-			{
-				//App->CL_TextureDialog->f_TextureDlg_Active = 0;
-				//EndDialog(hDlg, LOWORD(wParam));
-				return TRUE;
-			}
-
-			break;
+		if (LOWORD(wParam) == IDC_ACTOR)
+		{
+			App->CLSB_Loader->Load_ActorWorld();
+			return 1;
 		}
+		if (LOWORD(wParam) == IDC_GD_CUBE_PRIMITIVE)
+		{
+			App->CL_CreateBoxDialog->Start_CreateBox_Dlg();
+			return 1;
+		}
+
+		if (LOWORD(wParam) == IDC_GD_CYLINDER_PRIMITIVE)
+		{
+			App->CL_CreateCylDialog->Start_CreateCyl_Dlg();
+			return 1;
+		}
+
+		if (LOWORD(wParam) == IDC_GD_CONE_PRIMITIVE)
+		{
+			App->CL_CreateConeDialog->Start_CreateCone_Dlg();
+			return 1;
+		}
+
+		if (LOWORD(wParam) == IDC_GD_SPHEROID_PRIMITIVE)
+		{
+			App->CL_CreateSpheroidDialog->Start_CreateSpheroid_Dlg();
+			return 1;
+		}
+
+		if (LOWORD(wParam) == IDC_GD_STAIRCASE_PRIMITIVE)
+		{
+			App->CL_CreateStaircaseDialog->Start_CreateStaircase_Dlg();
+			return 1;
+		}
+
+		if (LOWORD(wParam) == IDC_GD_ARCH_PRIMITIVE)
+		{
+			App->CL_CreateArchDialog->Start_CreateArch_Dlg();
+			return 1;
+		}
+
+		if (LOWORD(wParam) == IDC_BTINSERT)
+		{
+			App->CL_TabsTemplates_Dlg->m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+
+			if (App->CL_TabsTemplates_Dlg->m_pDoc->mModeTool == ID_TOOLS_TEMPLATE)
+			{
+				App->CL_TabsTemplates_Dlg->m_pDoc->AddBrushToWorld();
+				App->CL_TabsTemplates_Dlg->m_pDoc->SetModifiedFlag();
+			}
+
+			App->CL_TabsTemplates_Dlg->m_pDoc->DoGeneralSelect();
+
+			App->CL_TabsTemplates_Dlg->Enable_Insert_Button(false);
+			return 1;
+		}
+
+
+
+
+		// -----------------------------------------------------------------
+		if (LOWORD(wParam) == IDOK)
+		{
+			//App->CL_TextureDialog->f_TextureDlg_Active = 0;
+			//EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			//App->CL_TextureDialog->f_TextureDlg_Active = 0;
+			//EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		break;
+	}
 	}
 	return FALSE;
 }

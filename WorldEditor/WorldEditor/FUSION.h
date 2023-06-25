@@ -85,6 +85,7 @@ public:
 	afx_msg void OnAppAbout();
 	afx_msg void OnFileNew();
 	afx_msg void OnFileOpen();
+	afx_msg void CloseDocument();
 	afx_msg BOOL OnOpenRecentFile (UINT nID);
 	afx_msg void OnPreferences();
 	afx_msg void OnUpdatePreferences(CCmdUI* pCmdUI);

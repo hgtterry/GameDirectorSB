@@ -638,21 +638,54 @@ bool A_TabsGroups_Dlg::Show_Face_Data(const Face *f, HWND hDlg)
 	sprintf(buf, "%s%d", "NumPoints",f->NumPoints);
 	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
-	/*if (fprintf(wf, "\t\tNumPoints %d\n", f->NumPoints) < 0) return GE_FALSE;
-	if (fprintf(wf, "\t\tFlags %d\n", f->Flags) < 0) return GE_FALSE;
-	if (fprintf(wf, "\t\tLight %d\n", f->LightIntensity) < 0) return GE_FALSE;
-	if (fprintf(wf, "\t\tMipMapBias %f\n", f->MipMapBias) < 0) return GE_FALSE;
-	if (fprintf(wf, "\t\tTranslucency %f\n", f->Translucency) < 0) return GE_FALSE;
-	if (fprintf(wf, "\t\tReflectivity %f\n", f->Reflectivity) < 0) return GE_FALSE;*/
-
 	for(i=0;i < f->NumPoints;i++)
 	{
-		//if (fprintf(wf, "\t\t\tVec3d %f %f %f\n", f->Points[i].X, f->Points[i].Y, f->Points[i].Z) < 0) return GE_FALSE;
-
 		sprintf(buf, "Vec3d %f %f %f",f->Points[i].X,f->Points[i].Y,f->Points[i].Z);
 		SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 	}
+	
 
+	const TexInfo_Vectors* TVecs = Face_GetTextureVecs(f);
+	geVec3d uVec, vVec;
+	geFloat U, V;
+
+	int txSize, tySize;
+
+	Face_GetTextureSize(f, &txSize, &tySize);
+
+	// make sure that the texture size is set correctly (division!)
+	if (txSize == 0)
+		txSize = 32;
+	if (tySize == 0)
+		tySize = 32;
+
+	geVec3d_Scale(&TVecs->uVec, 1.f / (geFloat)txSize, &uVec);
+	geVec3d_Scale(&TVecs->vVec, -1.f / (geFloat)tySize, &vVec);
+
+	const geVec3d* verts = Face_GetPoints(f);
+	//int curnum_verts = f->NumPoints;
+
+	int j = 0;
+	for (j = 0; j < f->NumPoints; j++)
+	{
+		U = geVec3d_DotProduct(&(verts[j]), &uVec);
+		V = geVec3d_DotProduct(&(verts[j]), &vVec);
+		U += (TVecs->uOffset / txSize);
+		V -= (TVecs->vOffset / tySize);
+		//write_float(f, U);
+		//write_float(f, V);
+
+		sprintf(buf, "UV %.3f %.3f",U,V);
+		SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	}
+
+	
+	//Face_UpdateTextureVecs((Face*)f);
+
+	strcpy(buf, Face_GetTextureName(f));
+	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+	//f->Tex.
 	//Face_GetTextureShift (f, &xShift, &yShift);
 	//Face_GetTextureScale (f, &xScale, &yScale);
 	//rot		=Face_GetTextureRotate (f);

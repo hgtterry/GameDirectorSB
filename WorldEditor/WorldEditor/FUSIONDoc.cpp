@@ -144,6 +144,7 @@ BEGIN_MESSAGE_MAP(CFusionDoc, CDocument)
 	ON_COMMAND(ID_BRUSH_PRIMITIVES_ARCH, OnBrushPrimitivesArch)
 	ON_COMMAND(ID_BRUSH_PRIMITIVES_CONE, OnBrushPrimitivesCone)
 	ON_COMMAND(ID_FILE_IMPORT, OnFileImport)
+	ON_COMMAND(ID_IMPORT_GENESIS3DACTOR, OnFileImportActor)
 	ON_COMMAND(ID_ENTITYVISIBILITY, OnEntityVisibility)
 	ON_COMMAND(IDM_REBUILD_BSP, OnRebuildBsp)
 	ON_UPDATE_COMMAND_UI(IDM_REBUILD_BSP, OnUpdateRebuildBsp)
@@ -173,6 +174,9 @@ BEGIN_MESSAGE_MAP(CFusionDoc, CDocument)
 	ON_COMMAND( ID_VIEW_TEXTUREVIEW, OnViewTypeTexture) // hgtterry [281221]
 	ON_COMMAND( ID_DEBUG_SETVIEW, OnEquity_SetView) // hgtterry [090123]
 	ON_COMMAND( ID_EQUITYSB_ZEROCAMERA, Zero_Camera) // hgtterry [090123]
+	ON_COMMAND( ID_WINDOW_QUICKCOMMAND, Start_QuickView) // hgtterry [090123]
+	ON_COMMAND(ID_WINDOW_COMMANDPANEL, Start_CommandPanel) // hgtterry [090123]
+	
 
 	ON_UPDATE_COMMAND_UI(ID_VIEW_3DWIREFRAME, OnUpdateViewTypeWireFrame)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_TEXTUREVIEW, OnUpdateViewTypeTexture)
@@ -6425,6 +6429,10 @@ void CFusionDoc::OnFileOpen()
 	App->Say("Loaded",App->CL_World->mCurrent_3DT_File);
 }
 
+void CFusionDoc::OnFileImportActor()
+{
+	App->CLSB_Loader->Load_ActorWorld();
+}
 
 void CFusionDoc::OnFileImport() 
 {
@@ -8465,22 +8473,16 @@ void CFusionDoc::OnViewTypeTexture()
 void CFusionDoc::OnEquity_SetView() // GD_Terry [090123]
 {
 	App->CL_Main_View->Start_Main_View_Dlg();
-	/*SetModifiedFlag();
+}
 
-	CFusionView* pFusionView = GetCameraView();
-	if (!pFusionView)
-		return;
-	
-	pFusionView->OnViewType(ID_VIEW_TEXTUREVIEW);
+void CFusionDoc::Start_QuickView()
+{
+	App->CLSB_TopTabs->Start_Headers_Tabs();
+}
 
-	Level_SetBspRebuild (pLevel, !Level_RebuildBspAlways (pLevel));
-
-	if (Level_RebuildBspAlways (pLevel))
-	{
-		RebuildTrees();
-		UpdateAllViews(UAV_ALL3DVIEWS, NULL);
-	}*/
-
+void CFusionDoc::Start_CommandPanel()
+{
+	App->CL_TabsControl->Start_Tabs_Control_Dlg();
 }
 
 void CFusionDoc::OnUpdateViewTypeWireFrame(CCmdUI* pCmdUI)

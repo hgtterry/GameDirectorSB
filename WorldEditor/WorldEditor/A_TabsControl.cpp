@@ -29,7 +29,9 @@ distribution.
 A_TabsControl::A_TabsControl(void)
 {
 	f_TabsDlg_Active = 0;
-	Tabs_Control_Hwnd = NULL;
+	Tabs_Control_Hwnd = nullptr;
+
+	Command_Panel_Started = 0;
 
 	Tab_Texture_Flag = 0;
 	Tab_Group_Flag = 0;
@@ -56,7 +58,7 @@ void A_TabsControl::Show_Tabs_Control_Dlg(bool Show)
 // *************************************************************************
 void A_TabsControl::Start_Tabs_Control_Dlg()
 {
-	if (App->Debug_App == 1)
+	if (Command_Panel_Started == 0)
 	{
 		Tabs_Control_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_TABSDIALOG, App->MainHwnd, (DLGPROC)Tabs_Control_Proc);
 
@@ -67,6 +69,7 @@ void A_TabsControl::Start_Tabs_Control_Dlg()
 		App->CL_TabsTemplates_Dlg->Start_TemplatesDialog();
 		App->CL_TabsTemplates_Dlg->Show_TemplatesDialog(true);
 
+		Command_Panel_Started = 1;
 	}
 }
 
@@ -96,31 +99,33 @@ LRESULT CALLBACK A_TabsControl::Tabs_Control_Proc(HWND hDlg, UINT message, WPARA
 		return (LONG)App->AppBackground;
 	}
 
-	case WM_DRAWITEM:
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_TBTEXTURES && some_item->code == NM_CUSTOMDRAW)
 		{
-
-			LPDRAWITEMSTRUCT lpDIS = (LPDRAWITEMSTRUCT)lParam;
-
-			if (lpDIS->CtlID == IDC_TBTEXTURES)
-			{
-				App->Custom_Button_Toggle_Tabs_MFC(lpDIS,hDlg,App->CL_TabsControl->Tab_Texture_Flag);
-				return TRUE;
-			}
-
-			if (lpDIS->CtlID == IDC_TBTEMPLATES)
-			{
-				App->Custom_Button_Toggle_Tabs_MFC(lpDIS,hDlg,App->CL_TabsControl->Tab_Templates_Flag);
-				return TRUE;
-			}
-
-			if (lpDIS->CtlID == IDC_TBGROUPS)
-			{
-				App->Custom_Button_Toggle_Tabs_MFC(lpDIS,hDlg,App->CL_TabsControl->Tab_Group_Flag);
-				return TRUE;
-			}
-
-			return TRUE;
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle_Tabs(item, App->CL_TabsControl->Tab_Texture_Flag);
+			return CDRF_DODEFAULT;
 		}
+
+		if (some_item->idFrom == IDC_TBTEMPLATES && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle_Tabs(item, App->CL_TabsControl->Tab_Templates_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_TBGROUPS && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle_Tabs(item, App->CL_TabsControl->Tab_Group_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
 
 	case WM_COMMAND:
 		{
@@ -157,6 +162,7 @@ LRESULT CALLBACK A_TabsControl::Tabs_Control_Proc(HWND hDlg, UINT message, WPARA
 			// -----------------------------------------------------------------
 			if (LOWORD(wParam) == IDOK)
 			{
+				App->CL_TabsControl->Command_Panel_Started = 0;
 				App->CL_TabsControl->f_TabsDlg_Active = 0;
 				EndDialog(hDlg, LOWORD(wParam));
 				return TRUE;
@@ -164,6 +170,7 @@ LRESULT CALLBACK A_TabsControl::Tabs_Control_Proc(HWND hDlg, UINT message, WPARA
 
 			if (LOWORD(wParam) == IDCANCEL)
 			{
+				App->CL_TabsControl->Command_Panel_Started = 0;
 				App->CL_TabsControl->f_TabsDlg_Active = 0;
 				EndDialog(hDlg, LOWORD(wParam));
 				return TRUE;

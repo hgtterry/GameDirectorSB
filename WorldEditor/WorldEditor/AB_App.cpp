@@ -46,7 +46,7 @@ SB_App::SB_App()
 	CL_CreateSpheroidDialog =	NULL;
 	CL_CreateStaircaseDialog  = NULL;
 	CL_Camera =					NULL;
-	CL_TopTabs =				NULL;
+	CLSB_TopTabs =				NULL;
 	CL_File =					NULL;
 	CL_Brush =					NULL;
 
@@ -78,6 +78,7 @@ SB_App::SB_App()
 	Brush_White =	NULL;
 	Brush_Green =	NULL;
 	Brush_Tabs_UnSelected = NULL;
+	Brush_Tabs = NULL;
 
 	Font_CB15 = 0;
 	Font_CB18 = 0;
@@ -198,7 +199,7 @@ bool SB_App::InitApp(void)
 	CL_CreateSpheroidDialog =		new A_CreateSpheroidDialog();
 	CL_CreateStaircaseDialog  =		new A_CreateStaircaseDialog();
 	CL_Camera =						new A_Camera();
-	CL_TopTabs =					new A_TopTabs();
+	CLSB_TopTabs =					new SB_TopTabs();
 	CL_File =						new	A_File();
 	CL_Brush =						new A_Brush();
 
@@ -247,7 +248,7 @@ void SB_App::SetBrushes_Fonts(void)
 	Brush_White = CreateSolidBrush(RGB(255, 255, 255));
 	Brush_Green = CreateSolidBrush(RGB(0, 255, 0));
 
-	//Brush_Tabs = CreateSolidBrush(RGB(255, 255, 255));
+	Brush_Tabs = CreateSolidBrush(RGB(255, 255, 255));
 	Brush_Tabs_UnSelected = CreateSolidBrush(RGB(190, 190, 190));
 
 	Brush_But_Normal = CreateSolidBrush(RGB(255, 255, 150));
@@ -358,55 +359,6 @@ void SB_App::Say_Float(float Value)
 void SB_App::Flash_Window()
 {
 	FlashWindow(MainHwnd,true);
-}
-
-// *************************************************************************
-// *	Custom_Button_Toggle_Tabs_MFC:- Terry and Hazel Flanigan 2023      *
-// *************************************************************************
-bool SB_App::Custom_Button_Toggle_Tabs_MFC(LPDRAWITEMSTRUCT lpDIS,HWND hDlg, bool Toggle)
-{
-	if (Toggle == 0)
-	{
-		HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(190, 190, 190));
-
-		HGDIOBJ old_pen = SelectObject(lpDIS->hDC, pen);
-		HGDIOBJ old_brush = SelectObject(lpDIS->hDC, App->Brush_Tabs_UnSelected);
-
-		RoundRect(lpDIS->hDC, lpDIS->rcItem.left, lpDIS->rcItem.top,
-			lpDIS->rcItem.right, lpDIS->rcItem.bottom, 0, 0);
-
-		char szBtnText[32] = { 0 };
-
-		HWND temp = GetDlgItem(hDlg, lpDIS->CtlID);
-		GetDlgItemText(hDlg,lpDIS->CtlID, szBtnText, sizeof(szBtnText)); 
-
-		SetTextColor(lpDIS->hDC, RGB(0, 0, 0));
-		SetBkMode(lpDIS->hDC, TRANSPARENT);
-		DrawText(lpDIS->hDC,szBtnText,strlen(szBtnText), &lpDIS->rcItem,DT_CENTER | DT_SINGLELINE | DT_VCENTER);
-
-	}
-	else
-	{
-		HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(255, 255, 255));
-
-		HGDIOBJ old_pen = SelectObject(lpDIS->hDC, pen);
-		HGDIOBJ old_brush = SelectObject(lpDIS->hDC, App->Brush_White);
-
-		RoundRect(lpDIS->hDC, lpDIS->rcItem.left, lpDIS->rcItem.top,
-			lpDIS->rcItem.right, lpDIS->rcItem.bottom, 0, 0);
-
-		char szBtnText[32] = { 0 };
-
-		HWND temp = GetDlgItem(hDlg, lpDIS->CtlID);
-		GetDlgItemText(hDlg,lpDIS->CtlID, szBtnText, sizeof(szBtnText)); 
-
-		SetTextColor(lpDIS->hDC, RGB(0, 0, 0));
-		SetBkMode(lpDIS->hDC, TRANSPARENT);
-		DrawText(lpDIS->hDC,szBtnText,strlen(szBtnText), &lpDIS->rcItem,DT_CENTER | DT_SINGLELINE | DT_VCENTER);
-
-	}
-
-	return 1;
 }
 
 // *************************************************************************
@@ -568,6 +520,72 @@ bool SB_App::Custom_Button_Toggle(LPNMCUSTOMDRAW item, bool Toggle)
 		}
 
 		HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 0));
+
+		HGDIOBJ old_pen = SelectObject(item->hdc, pen);
+		HGDIOBJ old_brush = SelectObject(item->hdc, defaultbrush);
+
+		RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 0, 0);
+
+		SelectObject(item->hdc, old_pen);
+		SelectObject(item->hdc, old_brush);
+		DeleteObject(pen);
+
+		return CDRF_DODEFAULT;
+	}
+
+	return CDRF_DODEFAULT;
+}
+
+// *************************************************************************
+// *		Custom_Button_Toggle_Tabs Terry Bernie   			 	 	   *
+// *************************************************************************
+bool SB_App::Custom_Button_Toggle_Tabs(LPNMCUSTOMDRAW item, bool Toggle)
+{
+	static HBRUSH defaultbrush = NULL;
+	static HBRUSH hotbrush = NULL;
+	static HBRUSH selectbrush = NULL;
+
+	{
+		if (item->uItemState & CDIS_HOT) //Our mouse is over the button
+		{
+			//Select our colour when the mouse hovers our button
+
+			if (Toggle == 1)
+			{
+				hotbrush = CreateGradientBrush(RGB(240, 240, 240), RGB(240, 240, 240), item);
+			}
+			else
+			{
+				//hotbrush = Brush_Tabs_UnSelected; // Unselected 
+				hotbrush = CreateGradientBrush(RGB(240, 240, 240), RGB(240, 240, 240), item);;
+			}
+
+			HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(240, 240, 240));
+
+			HGDIOBJ old_pen = SelectObject(item->hdc, pen);
+			HGDIOBJ old_brush = SelectObject(item->hdc, hotbrush);
+
+			RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 0, 0);
+
+			SelectObject(item->hdc, old_pen);
+			SelectObject(item->hdc, old_brush);
+			DeleteObject(pen);
+
+			return CDRF_DODEFAULT;
+		}
+
+		//Select our colour when our button is doing nothing
+
+		if (Toggle == 1)
+		{
+			defaultbrush = App->Brush_Tabs; // Selected
+		}
+		else
+		{
+			defaultbrush = Brush_Tabs_UnSelected; // Unselected 
+		}
+
+		HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(255, 255, 255));
 
 		HGDIOBJ old_pen = SelectObject(item->hdc, pen);
 		HGDIOBJ old_brush = SelectObject(item->hdc, defaultbrush);

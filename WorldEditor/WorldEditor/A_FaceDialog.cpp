@@ -19,6 +19,10 @@ A_FaceDialog::A_FaceDialog(void)
 	m_TextureXOffset = 0;
 
 	f_FaceDlg_Active = 0;
+
+	ScaleX_Delta = 0.05;
+	ScaleY_Delta = 0.05;
+
 	FaceDlg_Hwnd = NULL;
 }
 
@@ -241,14 +245,14 @@ LRESULT CALLBACK A_FaceDialog::FaceDialog_Proc(HWND hDlg, UINT message, WPARAM w
 				{
 				case SB_LINEUP:
 
-					App->CL_FaceDialog->m_TextureYScale = App->CL_FaceDialog->m_TextureYScale + (float)0.05;
+					App->CL_FaceDialog->m_TextureYScale = App->CL_FaceDialog->m_TextureYScale + App->CL_FaceDialog->ScaleY_Delta;
 					App->CL_FaceDialog->UpdateDialog(hDlg);
 					App->CL_FaceDialog->OnKillfocusYScale() ;
 
 					break;
 
 				case SB_LINEDOWN:
-					App->CL_FaceDialog->m_TextureYScale = App->CL_FaceDialog->m_TextureYScale - (float)0.05;
+					App->CL_FaceDialog->m_TextureYScale = App->CL_FaceDialog->m_TextureYScale - App->CL_FaceDialog->ScaleY_Delta;
 					App->CL_FaceDialog->UpdateDialog(hDlg);
 					App->CL_FaceDialog->OnKillfocusYScale() ;
 
@@ -265,14 +269,14 @@ LRESULT CALLBACK A_FaceDialog::FaceDialog_Proc(HWND hDlg, UINT message, WPARAM w
 				{
 				case SB_LINEUP:
 
-					App->CL_FaceDialog->m_TextureXScale = App->CL_FaceDialog->m_TextureXScale + (float)0.05;
+					App->CL_FaceDialog->m_TextureXScale = App->CL_FaceDialog->m_TextureXScale + App->CL_FaceDialog->ScaleX_Delta;
 					App->CL_FaceDialog->UpdateDialog(hDlg);
 					App->CL_FaceDialog->OnKillfocusXScale() ;
 
 					break;
 
 				case SB_LINEDOWN:
-					App->CL_FaceDialog->m_TextureXScale = App->CL_FaceDialog->m_TextureXScale - (float)0.05;
+					App->CL_FaceDialog->m_TextureXScale = App->CL_FaceDialog->m_TextureXScale - App->CL_FaceDialog->ScaleX_Delta;
 					App->CL_FaceDialog->UpdateDialog(hDlg);
 					App->CL_FaceDialog->OnKillfocusXScale() ;
 
@@ -287,35 +291,78 @@ LRESULT CALLBACK A_FaceDialog::FaceDialog_Proc(HWND hDlg, UINT message, WPARAM w
 
 	case WM_COMMAND:
 		{
-			if (LOWORD(wParam) == IDC_FLIPHORIZONTAL)
+
+		if (LOWORD(wParam) == IDC_CBXSCALE)
+		{
+			switch (HIWORD(wParam)) // Find out what message it was
 			{
-				App->CL_FaceDialog->On_FlipHorizontal();
-				return TRUE;
+			case CBN_DROPDOWN:
+				break;
+			case CBN_CLOSEUP:
+			{
+				char buff[MAX_PATH]{ 0 };
+
+				HWND temp = GetDlgItem(hDlg, IDC_CBXSCALE);
+				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
+				SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)buff);
+				
+				App->CL_FaceDialog->ScaleX_Delta = atof(buff);
+			}
 			}
 
-			if (LOWORD(wParam) == IDC_FLIPVERTICAL)
-			{
-				App->CL_FaceDialog->OnFlipvertical();
-				return TRUE;
-			}
-
-			// -----------------------------------------------------------------
-			if (LOWORD(wParam) == IDOK)
-			{
-				App->CL_FaceDialog->f_FaceDlg_Active = 0;
-				EndDialog(hDlg, LOWORD(wParam));
-				return TRUE;
-			}
-
-			if (LOWORD(wParam) == IDCANCEL)
-			{
-				App->CL_FaceDialog->f_FaceDlg_Active = 0;
-				EndDialog(hDlg, LOWORD(wParam));
-				return TRUE;
-			}
-
-			break;
+			return TRUE;
 		}
+
+		if (LOWORD(wParam) == IDC_CBYSCALE)
+		{
+			switch (HIWORD(wParam)) // Find out what message it was
+			{
+			case CBN_DROPDOWN:
+				break;
+			case CBN_CLOSEUP:
+			{
+				char buff[MAX_PATH]{ 0 };
+
+				HWND temp = GetDlgItem(hDlg, IDC_CBYSCALE);
+				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
+				SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)buff);
+
+				App->CL_FaceDialog->ScaleY_Delta = atof(buff);
+			}
+			}
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_FLIPHORIZONTAL)
+		{
+			App->CL_FaceDialog->On_FlipHorizontal();
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_FLIPVERTICAL)
+		{
+			App->CL_FaceDialog->OnFlipvertical();
+			return TRUE;
+		}
+
+		// -----------------------------------------------------------------
+		if (LOWORD(wParam) == IDOK)
+		{
+			App->CL_FaceDialog->f_FaceDlg_Active = 0;
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			App->CL_FaceDialog->f_FaceDlg_Active = 0;
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		break;
+	}
 	}
 	return FALSE;
 }
@@ -340,14 +387,16 @@ void A_FaceDialog::Fill_ComboBox_OffSetValues(HWND hDlg)
 // *************************************************************************
 void A_FaceDialog::Fill_ComboBox_ScaleValues(HWND hDlg)
 {
-	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"0.1");
-	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"0.2");
-	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"0.5");
-	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"0.75");
+	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"0.001");
+	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"0.01");
+	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"0.02");
+	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"0.05");
+	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"0.10");
+	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"0.50");
 	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"1.0");
 	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"2.0");
 	
-	SendMessage(hDlg, CB_SETCURSEL, 2, 0);
+	SendMessage(hDlg, CB_SETCURSEL, 3, 0);
 }
 
 // *************************************************************************
@@ -434,10 +483,10 @@ void A_FaceDialog::UpdateDialog(HWND hDlg)
 	sprintf(buf, "%i", m_TextureYOffset);
 	SetDlgItemText(hDlg, IDC_EDITYOFFSET, (LPCTSTR)buf);
 
-	sprintf(buf, "%.2f", m_TextureXScale);
+	sprintf(buf, "%.3f", m_TextureXScale);
 	SetDlgItemText(hDlg, IDC_EDITXSCALE, (LPCTSTR)buf);
 
-	sprintf(buf, "%.2f", m_TextureYScale);
+	sprintf(buf, "%.3f", m_TextureYScale);
 	SetDlgItemText(hDlg, IDC_EDITYSCALE, (LPCTSTR)buf);
 
 	sprintf(buf, "%.0f", m_TextureAngle);

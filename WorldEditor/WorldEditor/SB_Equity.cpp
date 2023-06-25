@@ -161,6 +161,13 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_Proc(HWND hDlg, UINT message, WPARAM w
 
 	case WM_COMMAND:
 	{
+		// File Debug
+		if (LOWORD(wParam) == ID_DEBUG_ACTORTOWORLD)
+		{
+			App->CLSB_Loader->Load_ActorWorld();
+			return TRUE;
+		}
+		
 		// File Import
 		if (LOWORD(wParam) == ID_IMPORT_GENESIS3DACT)
 		{
@@ -735,28 +742,40 @@ LRESULT CALLBACK SB_Equity::Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 
 	case WM_MOUSEMOVE: // ok up and running and we have a loop for mouse
 	{
-		//App->Flash_Window();
-		//SetFocus(App->CLSB_Ogre->Ogre_Window_hWnd);
+		App->CLSB_Ogre->m_imgui.mouseMoved();
+
+		//SetFocus(App->ViewGLhWnd);
 		break;
 	}
 
 	// Right Mouse Button
 	case WM_RBUTTONDOWN: // BERNIE_HEAR_FIRE 
 	{
-		
-		if (App->CLSB_Ogre->OgreIsRunning == 1)
+		App->CLSB_Ogre->m_imgui.mousePressed();
+
+		if (!ImGui::GetIO().WantCaptureMouse)
 		{
-			SetCapture(App->CLSB_Ogre->Ogre_Window_hWnd);// Bernie
-			SetCursorPos(App->CursorPosX, App->CursorPosY);
-			App->CLSB_Ogre->OgreListener->Pl_RightMouseDown = 1;
-			App->CUR = SetCursor(NULL);
-			return 1;
+			if (App->CLSB_Ogre->OgreIsRunning == 1)
+			{
+				SetCapture(App->CLSB_Ogre->Ogre_Window_hWnd);
+				SetCursorPos(App->CursorPosX, App->CursorPosY);
+				App->CLSB_Ogre->OgreListener->Pl_RightMouseDown = 1;
+				App->CUR = SetCursor(NULL);
+				return 1;
+			}
+			else
+			{
+				App->CLSB_Ogre->OgreListener->Pl_LeftMouseDown = 1;
+			}
+
 		}
 
 		return 1;
 	}
 	case WM_RBUTTONUP:
 	{
+		App->CLSB_Ogre->m_imgui.mousePressed();
+
 		if (App->CLSB_Ogre->OgreIsRunning == 1)
 		{
 			ReleaseCapture();
@@ -771,16 +790,25 @@ LRESULT CALLBACK SB_Equity::Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 	// Left Mouse Button
 	case WM_LBUTTONDOWN: // BERNIE_HEAR_FIRE 
 	{
-		if (App->CLSB_Ogre->OgreIsRunning == 1)
+		App->CLSB_Ogre->m_imgui.mousePressed();
+
+		if (!ImGui::GetIO().WantCaptureMouse)
 		{
-			SetCapture(App->CLSB_Ogre->Ogre_Window_hWnd);// Bernie
-			SetCursorPos(App->CursorPosX, App->CursorPosY);
+			if (App->CLSB_Ogre->OgreIsRunning == 1)
+			{
+				SetCapture(App->CLSB_Ogre->Ogre_Window_hWnd);// Bernie
+				SetCursorPos(App->CursorPosX, App->CursorPosY);
 
-			App->CLSB_Ogre->OgreListener->Pl_LeftMouseDown = 1;
+				App->CLSB_Ogre->OgreListener->Pl_LeftMouseDown = 1;
 
-			App->CUR = SetCursor(NULL);
+				App->CUR = SetCursor(NULL);
 
-			return 1;
+				return 1;
+			}
+			else
+			{
+				App->CLSB_Ogre->OgreListener->Pl_LeftMouseDown = 1;
+			}
 		}
 
 		return 1;
@@ -788,6 +816,7 @@ LRESULT CALLBACK SB_Equity::Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 
 	case WM_LBUTTONUP:
 	{
+		App->CLSB_Ogre->m_imgui.mouseReleased();
 
 		if (App->CLSB_Ogre->OgreIsRunning == 1)
 		{

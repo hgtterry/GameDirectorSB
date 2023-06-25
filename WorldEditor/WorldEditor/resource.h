@@ -284,6 +284,7 @@
 #define IDD_SB_TABSTEMPLATES            1135
 #define IDD_SB_TB_FILES                 1136
 #define IDD_SB_MOVEBRUSH                1137
+#define IDD_SB_TB_FILES2                1137
 #define IDC_CUBE_PRIMITIVE              1138
 #define IDD_SB_FACE_PROPERTIES          1138
 #define IDC_SPHEROID_PRIMITIVE          1139
@@ -295,6 +296,7 @@
 #define IDC_LIGHT_ENTITY                1142
 #define IDC_BUILDALWAYS                 1142
 #define IDC_ENTITIES                    1142
+#define IDD_SB_TB_TEST                  1142
 #define IDC_PLAYERSTART_ENTITY          1143
 #define IDC_FLIPVERTICAL                1143
 #define IDC_ACTOR_ENTITY                1144
@@ -663,6 +665,7 @@
 #define IDC_BUTTON2                     1466
 #define IDC_UPDATE                      1466
 #define IDC_PREVIEWSELECTED             1466
+#define IDC_ACTOR                       1466
 #define IDC_ST_BANNER                   1467
 #define IDC_ST_FN                       1468
 #define IDC_ST_NAME                     1469
@@ -678,6 +681,7 @@
 #define IDC_ST_SELECTED                 1479
 #define IDC_ST_BP_SELECTEDBRUSHES       1480
 #define IDC_LIST_SELECTEDBRUSHES        1481
+#define IDC_BT_TB_TEST                  1482
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772
 #define ID_BRUSH_PRIMITIVES_SPHEROID    32773
@@ -865,6 +869,12 @@
 #define ID_FILE_CLEARMODEL              33070
 #define ID_IMPORT_WAVEFRONTOBJ          33071
 #define ID_IMPORT_GENESIS3DACT          33072
+#define ID_DEBUG_ACTORTOWORLD           33073
+#define ID_FILE_IMPORT33074             33074
+#define ID_IMPORT_GENESIS3DACTOR        33075
+#define ID_WINDOW_QUICKCOMMAND          33076
+#define ID_WINDOW_COMMANDPANEL          33077
+#define ID_FILE_CLOSE33078              33078
 #define IDS_HELPINFORMATION             38000
 
 // Next default values for new objects
@@ -872,9 +882,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        303
-#define _APS_NEXT_COMMAND_VALUE         33073
-#define _APS_NEXT_CONTROL_VALUE         1482
+#define _APS_NEXT_RESOURCE_VALUE        306
+#define _APS_NEXT_COMMAND_VALUE         33079
+#define _APS_NEXT_CONTROL_VALUE         1483
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

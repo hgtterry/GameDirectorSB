@@ -399,6 +399,7 @@ protected:
 	afx_msg void OnBrushPrimitivesArch();
 	afx_msg void OnBrushPrimitivesCone();
 	afx_msg void OnFileImport();
+	afx_msg void OnFileImportActor();
 	afx_msg void OnEntityVisibility();
 	afx_msg void OnRebuildBsp();
 	afx_msg void OnUpdateRebuildBsp(CCmdUI* pCmdUI);
@@ -426,6 +427,9 @@ protected:
 	// EquitySB
 	afx_msg void OnEquity_SetView(); // hgtterry [090123]
 	afx_msg void Zero_Camera(); // hgtterry [090123]
+	afx_msg void Start_QuickView();
+	afx_msg void Start_CommandPanel();
+
 
 	afx_msg void OnViewTypeTexture();
 	afx_msg void OnUpdateViewTypeWireFrame(CCmdUI* pCmdUI);

@@ -27,14 +27,14 @@ distribution.
 //#include "FUSIONDoc.h"
 
 
-class A_TopTabs
+class SB_TopTabs
 {
 
 public:
-	A_TopTabs(void);
-	~A_TopTabs(void);
+	SB_TopTabs(void);
+	~SB_TopTabs(void);
 
-	bool Start_Top_Tabs();
+	bool Start_Headers_Tabs();
 	void Reset_Tabs_Buttons();
 	void Reset_Render_Buttons();
 	void Reset_Brush_Buttons();
@@ -47,13 +47,16 @@ public:
 	HWND Top_Tabs_Hwnd;
 	HWND Brush_Modify_Panel_Hwnd;
 	HWND File_Panel_Hwnd;
+	HWND Test_Panel_Hwnd;
 
 private:
-	static LRESULT CALLBACK Top_Tabs_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK TB_Headers_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK BrushModify_Panel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Top_File_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Top_Test_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	bool Start_File_Tab();
+	bool Start_Test_Tab();
 
 	bool Start_BrushModify_Panel();
 	
@@ -63,7 +66,10 @@ private:
 
 	bool Wired_Flag;
 
+	bool Quick_Command_Started;
+
 	bool Header_File_Flag;
+	bool Header_Test_Flag;
 	
 	bool Brush_MoveRotate_Flag;
 	bool Brush_Scale_Flag;

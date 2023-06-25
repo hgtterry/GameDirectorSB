@@ -58,6 +58,7 @@ BEGIN_MESSAGE_MAP(CFusionApp, CWinApp)
 	// hgtterry Menu Commands
 	ON_COMMAND(ID_EQUITYSB_TXLEDITOR, Open_TxlEditor)
 	ON_COMMAND(ID_EQUITYSB_FACEPROPERTIES, Open_FaceProperties)
+	ON_COMMAND(ID_FILE_CLOSE33078, CloseDocument)
 
 	//}}AFX_MSG_MAP
 	ON_COMMAND(ID_HELP_INDEX, OnHelpIndex)
@@ -359,7 +360,7 @@ BOOL CFusionApp::InitInstance() // hgtterry InitInstance
 	InitUserPreferences(pMainFrame);
 
 	//App->CL_Dialogs->Start_FrontPanel();
-	App->CL_TopTabs->Start_Top_Tabs();
+	App->CLSB_TopTabs->Start_Headers_Tabs();
 	//OnAppAbout();
 	
 	pMainFrame->IsStartingApp = 0;
@@ -584,6 +585,19 @@ void CFusionApp::OnFileOpen()
 	CWinApp::OnFileOpen ();
 
 	this->pMainFrame->UpdateActiveDoc ();
+}
+
+// hgtterry CloseDocument
+void CFusionApp::CloseDocument()
+{
+	// If the current document is unmodified and has no brushes, wipe it
+	CFusionDoc* pDoc = GetActiveFusionDoc();
+	this->pMainFrame->SendMessage(WM_COMMAND, ID_FILE_CLOSE, 0);
+	Debug
+	/*if (pDoc && (pDoc->IsModified() == FALSE) && BrushList_Count(Level_GetBrushes(pDoc->pLevel), BRUSH_COUNT_ALL) == 0)
+	{
+		this->pMainFrame->SendMessage(WM_COMMAND, ID_FILE_CLOSE, 0);
+	}*/
 }
 
 BOOL CFusionApp::OnOpenRecentFile (UINT nID)

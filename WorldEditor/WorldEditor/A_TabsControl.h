@@ -50,4 +50,6 @@ private:
 
 	bool Tab_Texture_Flag;
 	bool Tab_Group_Flag;
+
+	bool Command_Panel_Started;
 };

@@ -790,17 +790,31 @@ bool SB_Loader::RFActor_Loader(void)
 
 	return 1;
 }
-#include "FaceList.h"
 
+#include "FaceList.h"
 typedef Gint16 geBody_Index;
 // *************************************************************************
 // *	  			Load_ActorWorld:- Terry and Hazel Flanigan 2023        *
 // *************************************************************************
 bool SB_Loader::Load_ActorWorld()
 {
-	char* ActorFile;
+	int Result = App->CLSB_FileIO->Open_File_Model("RF Actor   *.act\0*.act\0", "RF Actor", NULL);
+	if (Result == 0)
+	{
+		return 0;
+	}
 
-	char filename[255];
+	strcpy(App->CLSB_Loader->Path_FileName, App->CLSB_FileIO->PathFileName);
+	strcpy(App->CLSB_Loader->FileName, App->CLSB_FileIO->FileName);
+
+	char filename[MAX_PATH];
+	strcpy(filename, App->CLSB_Loader->Path_FileName);
+
+	char ActorFile[MAX_PATH];;
+	strcpy(ActorFile, App->CLSB_Loader->FileName);
+
+	App->Say(filename);
+
 	geVFile* ActFile;
 	geActor_Def* mActorDef;
 	geActor* Actor;
@@ -823,7 +837,7 @@ bool SB_Loader::Load_ActorWorld()
 	}
 	else
 	{
-		//		AfxMessageBox("Can't open actor file", MB_ICONEXCLAMATION | MB_OK);
+		App->Say("Failed");
 		return NULL;
 	}
 	geVFile_Close(ActFile);
@@ -847,7 +861,6 @@ bool SB_Loader::Load_ActorWorld()
 		return NULL;
 	}
 
-
 	FaceList* fl;
 	Face* f;
 
@@ -859,8 +872,7 @@ bool SB_Loader::Load_ActorWorld()
 		geXForm3d Transform;
 		const char* BName;
 
-
-		//		NumFaces = B->SkinFaces[0].FaceCount;
+		NumFaces = B->SkinFaces[0].FaceCount;
 
 		// create the facelist for the brush
 		fl = FaceList_Create(NumFaces);
@@ -885,17 +897,17 @@ bool SB_Loader::Load_ActorWorld()
 			for (int j = 0; j < 3; j++)
 			{
 				// have to reverse vertex order for some reason
-//				Index = B->SkinFaces[0].FaceArray[i].VtxIndex[j];
-//				geVec3d_Copy(&(B->XSkinVertexArray[Index].XPoint),&(FaceVerts[2-j]));
+				Index = B->SkinFaces[0].FaceArray[i].VtxIndex[j];
+				geVec3d_Copy(&(B->XSkinVertexArray[Index].XPoint),&(FaceVerts[2-j]));
 
 				// transform vertex point by bone transformation
-//				BoneIndex = B->XSkinVertexArray[Index].BoneIndex;
-//				BName = geStrBlock_GetString(B->BoneNames, BoneIndex);
-//				strcpy(BoneName,BName);
-//				geActor_GetBoneTransform(Actor, BoneName, &Transform);
-//				geXForm3d_Transform(&Transform,&(FaceVerts[2-j]),&(FaceVerts[2-j]));
+				BoneIndex = B->XSkinVertexArray[Index].BoneIndex;
+				BName = geStrBlock_GetString(B->BoneNames, BoneIndex);
+				strcpy(BoneName,BName);
+				geActor_GetBoneTransform(Actor, BoneName, &Transform);
+				geXForm3d_Transform(&Transform,&(FaceVerts[2-j]),&(FaceVerts[2-j]));
 
-//				geVec3d_Scale(&FaceVerts[2-j], Scale, &FaceVerts[2-j]);
+				geVec3d_Scale(&FaceVerts[2-j], Scale, &FaceVerts[2-j]);
 			}
 
 			// create faces and add them to the facelist
@@ -938,7 +950,7 @@ bool SB_Loader::Load_ActorWorld()
 		return NULL;
 	}
 
-	Brush_SetName(mActorBrush, ActorFile);
+	
 
 	if (mActorDef != NULL)
 		geActor_DefDestroy(&mActorDef);
@@ -949,7 +961,28 @@ bool SB_Loader::Load_ActorWorld()
 	// move the brush to the right position
 
 	geVec3d	mOrigin;
+
+	mOrigin.X = 0;
+	mOrigin.Y = 0;
+	mOrigin.Z = 0;
+
 	Brush_Move(mActorBrush, &mOrigin);
 
+	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+
+	Level_AppendBrush(m_pDoc->pLevel, mActorBrush);
+	Brush_SetVisible(mActorBrush, GE_TRUE);
+	SelBrushList_Add(m_pDoc->pSelBrushes, mActorBrush);
+
+	m_pDoc->SetDefaultBrushTexInfo(mActorBrush);
+	Brush_Bound(mActorBrush);
+	Brush_Center(mActorBrush, &mOrigin);
+
+	Brush_SetName(mActorBrush, "Test");
+
+	m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+	m_pDoc->SetModifiedFlag();
+
+	App->Say("Added");
 	return 1;
 }

@@ -127,31 +127,33 @@ LRESULT CALLBACK A_TextureDialog::TextureDialog_Proc(HWND hDlg, UINT message, WP
 		return (LONG)App->AppBackground;
 	}
 
-	case WM_DRAWITEM:
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_BTTDAPPLY && some_item->code == NM_CUSTOMDRAW)
 		{
-
-			LPDRAWITEMSTRUCT lpDIS = (LPDRAWITEMSTRUCT)lParam;
-
-			if (lpDIS->CtlID == IDC_BTTDAPPLY)
-			{
-				App->Custom_Button_Normal_MFC(lpDIS,hDlg);
-				return TRUE;
-			}
-
-			if (lpDIS->CtlID == IDC_BTEDITFILE)
-			{
-				App->Custom_Button_Normal_MFC(lpDIS,hDlg);
-				return TRUE;
-			}
-
-			if (lpDIS->CtlID == IDC_BTTDFACEPROPERTIES)
-			{
-				App->Custom_Button_Normal_MFC(lpDIS,hDlg);
-				return TRUE;
-			}
-
-			return TRUE;
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
 		}
+
+		if (some_item->idFrom == IDC_BTEDITFILE && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BTTDFACEPROPERTIES && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
 
 	case WM_COMMAND:
 		{

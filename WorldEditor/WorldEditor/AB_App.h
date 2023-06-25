@@ -103,7 +103,7 @@ public:
 	A_CreateSpheroidDialog*		CL_CreateSpheroidDialog;
 	A_CreateStaircaseDialog*	CL_CreateStaircaseDialog;
 	A_Camera*					CL_Camera;
-	A_TopTabs*					CL_TopTabs;
+	SB_TopTabs*					CLSB_TopTabs;
 	A_File*						CL_File;
 	A_Brush*					CL_Brush;
 
@@ -144,10 +144,10 @@ public:
 
 	bool Custom_Button_Normal(LPNMCUSTOMDRAW item);
 	bool Custom_Button_Toggle(LPNMCUSTOMDRAW item, bool Toggle);
+	bool Custom_Button_Toggle_Tabs(LPNMCUSTOMDRAW item, bool Toggle);
 
 	bool Custom_Button_Normal_MFC(LPDRAWITEMSTRUCT lpDIS,HWND hDlg);
 	bool Custom_Button_Toggle_MFC(LPDRAWITEMSTRUCT lpDIS,HWND hDlg, bool Toggle);
-	bool Custom_Button_Toggle_Tabs_MFC(LPDRAWITEMSTRUCT lpDIS,HWND hDlg, bool Toggle);
 	bool Custom_Button_Toggle_Disable(LPDRAWITEMSTRUCT lpDIS,HWND hDlg, bool Toggle);
 
 	void Debug_Set(void);
@@ -170,6 +170,7 @@ public:
 	HBRUSH Brush_But_Normal;
 	HBRUSH Brush_But_Hover;
 	HBRUSH Brush_Tabs_UnSelected;
+	HBRUSH Brush_Tabs;
 
 	HFONT Font_CB15;
 	HFONT Font_CB18;
