@@ -165,6 +165,7 @@ void SB_Loader::Load_File_Wepf()
 
 	App->CLSB_Camera->Reset_Orientation();
 	App->CLSB_Camera->Set_Camera_Mode(Enums::CamDetached);
+	
 	//App->CLSB_Camera->Zero_View();
 
 	//App->CL_Recent_Files->RecentFile_Projects_History_Update();*/

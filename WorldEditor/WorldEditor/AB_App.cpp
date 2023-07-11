@@ -23,6 +23,7 @@ distribution.
 
 #include "stdafx.h"
 #include "AB_App.h"
+#include  <stdint.h>
 
 
 SB_App::SB_App()
@@ -67,11 +68,14 @@ SB_App::SB_App()
 	CLSB_Loader =				nullptr;
 	CLSB_Ini =					nullptr;
 	CLSB_Export_Ogre3D =		nullptr;
+	CLSB_Export_Object =		nullptr;
 	CLSB_Exporter =				nullptr;
 	CLSB_Textures =				nullptr;
 	CLSB_Dialogs =				nullptr;
 	CLSB_ImGui =				nullptr;
 	CLSB_Genesis3D =			nullptr;
+	CLSB_Brushes =				nullptr;
+	CLSB_RecentFiles =			nullptr;
 
 	AppBackground = NULL;
 	BlackBrush =	NULL;
@@ -175,6 +179,9 @@ void SB_App::InitMFC(void)
 	m_pMainFrame = (CMainFrame *)AfxGetMainWnd();
 }
 
+#include <ShlObj.h>
+//#include <shlobj_core.h>"
+
 // *************************************************************************
 // *						InitApp Inflanite							   *
 // *************************************************************************
@@ -221,11 +228,15 @@ bool SB_App::InitApp(void)
 	CLSB_Loader =					new SB_Loader();
 	CLSB_Ini =						new SB_Ini();
 	CLSB_Export_Ogre3D =			new SB_Export_Ogre3D();
+	CLSB_Export_Object =			new SB_Export_Object();
 	CLSB_Exporter =					new SB_Exporter();
 	CLSB_Textures =					new SB_Textures();
 	CLSB_Dialogs =					new SB_Dialogs();
 	CLSB_ImGui =					new SB_ImGui();
 	CLSB_Genesis3D =				new SB_Genesis3D();
+	CLSB_Brushes =					new SB_Brushes();
+	CLSB_RecentFiles =				new SB_RecentFiles();
+
 
 	InitCommonControls();
 
@@ -233,7 +244,20 @@ bool SB_App::InitApp(void)
 	MainHwnd = NULL;
 	
 	SetBrushes_Fonts();
+	
+	char path [MAX_PATH];
 
+	if (SUCCEEDED(SHGetFolderPathA(NULL, CSIDL_APPDATA, NULL, 0, path)))//KF_FLAG_CREATE
+	{
+		//App->Say(path);
+		strcpy(App->CLSB_RecentFiles->UserData_Folder, path);
+	}
+	else
+	{
+		App->Say("Can not access user folder");
+	}
+
+	
 	return 1;
 }
 
@@ -749,6 +773,27 @@ void SB_App::Debug_Close(void)
 		}
 	}
 }
+
+// *************************************************************************
+// *			Debug_Close:- Terry and Hazel Flanigan 2023				   *
+// *************************************************************************
+uint64_t SB_App::Get_Stack(void)
+{
+	volatile uint8_t var;
+
+	MEMORY_BASIC_INFORMATION mbi;
+
+	auto virtualQuerySuccess = VirtualQuery((LPCVOID)&var, &mbi, sizeof(mbi));
+
+	if (!virtualQuerySuccess)
+	{
+		Say("Stack Query Failed");
+		return 0;
+	}
+
+	return &var - mbi.AllocationBase;
+}
+
 
 // *************************************************************************
 // *			Debug_Message:- Terry and Hazel Flanigan 2023				   *

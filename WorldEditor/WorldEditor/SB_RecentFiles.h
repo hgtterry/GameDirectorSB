@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 Copyright (c) 2023 World Editor -- HGT Software W.T.Flanigan H.C.Flanigan
 
@@ -21,29 +23,34 @@ misrepresented as being the original software.
 distribution.
 */
 
-#pragma once
-
-class SB_Export_Object
+class SB_RecentFiles
 {
 public:
-	SB_Export_Object();
-	~SB_Export_Object();
+	SB_RecentFiles(void);
+	~SB_RecentFiles(void);
 
-	bool Create_ObjectFile(void);
+	void Start_RecentFiles_Dlg();
 
-protected:
+	void Init_History();
 
-	void Write_ObjectFile(void);
-	void Write_ObjectFile_Commit(void);
-	bool WriteMTLFile(void);
-	
-	char OutputFolder[1024];
+	char UserData_Folder[MAX_PATH];
 
-	char Object_FileName[255];
-	char mtl_FileName[255];
-	char Just_mtl_FileName[255];
+private:
 
-	FILE *Write_OBJECTFILE;
-	FILE *Write_MTLFile;
+	static LRESULT CALLBACK RecentFiles_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	bool Search_For_Folder(char* FolderPath);
+	void ResentHistory_Files_Clear();
+	void Save_FileHistory_Files();
+	void LoadHistory_Files();
+	bool Check_File_Exist(char* Full_Path);
+	void List_Recent_Files(HWND hDlg);
+
+	std::vector<std::string> mPreviousFiles_Files;
+
+	FILE* WriteRecentFiles;
+	FILE* ReadRecentFiles;
+
+#define RECENT_FILES 0x8
 };
 

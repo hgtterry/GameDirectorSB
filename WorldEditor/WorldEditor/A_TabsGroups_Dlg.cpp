@@ -54,7 +54,7 @@ void A_TabsGroups_Dlg::Show_GroupsDialog(bool Show)
 // *************************************************************************
 void A_TabsGroups_Dlg::Start_GroupsDialog()
 {
-	GroupsDlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_TABSGROUPS, App->CL_TabsControl->Tabs_Control_Hwnd, (DLGPROC)Groups_Proc);
+	GroupsDlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_TABSBRUSHES, App->CL_TabsControl->Tabs_Control_Hwnd, (DLGPROC)Groups_Proc);
 
 	Groups_Dlg_Created = 1;
 
@@ -79,6 +79,7 @@ LRESULT CALLBACK A_TabsGroups_Dlg::Groups_Proc(HWND hDlg, UINT message, WPARAM w
 
 		SendDlgItemMessage(hDlg, IDC_ST_GD_SELECTED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_SELECTED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_DIMENSIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		return TRUE;
 	}
@@ -132,21 +133,36 @@ LRESULT CALLBACK A_TabsGroups_Dlg::Groups_Proc(HWND hDlg, UINT message, WPARAM w
 		return (LONG)App->AppBackground;
 	}
 
-	case WM_DRAWITEM:
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_BT_GD_BRUSHPROPERTIES && some_item->code == NM_CUSTOMDRAW)
 		{
-			LPDRAWITEMSTRUCT lpDIS = (LPDRAWITEMSTRUCT)lParam;
-
-			if (lpDIS->CtlID == IDC_BT_GD_BRUSHPROPERTIES)
-			{
-				App->Custom_Button_Normal_MFC(lpDIS,hDlg);
-				return TRUE;
-			}
-
-			return TRUE;
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
 		}
+
+		if (some_item->idFrom == IDC_BT_DIMENSIONS && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
 
 	case WM_COMMAND:
 		{
+		
+			if (LOWORD(wParam) == IDC_BT_DIMENSIONS)
+			{
+				App->CLSB_Brushes->Start_Dimensions_Dlg();
+				return TRUE;
+			}
+
 			if (LOWORD(wParam) == IDC_GD_BRUSHLIST)
 			{
 				if (App->CL_TabsGroups_Dlg->Groups_Dlg_Created == 1)
@@ -160,13 +176,6 @@ LRESULT CALLBACK A_TabsGroups_Dlg::Groups_Proc(HWND hDlg, UINT message, WPARAM w
 			{
 				App->CL_TabsGroups_Dlg->Start_Properties_Dlg();
 				SendDlgItemMessage(hDlg, IDC_GD_BRUSHLIST,LB_SETCURSEL, (WPARAM)App->CL_TabsGroups_Dlg->Selected_Index, (LPARAM)0);
-				return TRUE;
-			}
-
-			if (LOWORD(wParam) == IDC_BTTEST)
-			{
-				//Brush_Scale(App->CL_TabsGroups_Dlg->Selected_Brush,10);
-				//Debug
 				return TRUE;
 			}
 

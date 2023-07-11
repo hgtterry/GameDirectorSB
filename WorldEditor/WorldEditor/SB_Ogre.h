@@ -96,6 +96,7 @@ public:
 	Ogre::Timer FPStimer;
 
 	bool OgreIsRunning;
+	bool Pause_Rendring;
 
 	int Fps_Tick;
 

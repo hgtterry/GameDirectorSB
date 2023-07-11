@@ -180,6 +180,11 @@ void SB_ImGui::ImGui_FPS(void)
 
 		ImGui::Spacing();
 		ImGui::Text("FPS average %.0f", ImGui::GetIO().Framerate);
+
+		int Stack_Memory = App->Get_Stack();
+		float used = ((float)(2097152 - Stack_Memory) / 1024);
+		ImGui::Text("Stack Used %f", used);
+		
 		
 		ImVec2 Size = ImGui::GetWindowSize();
 		PosX = ((float)App->CLSB_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);

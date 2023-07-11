@@ -76,12 +76,16 @@ void SB_Textures::Load_Textures_Assimp()
 
 			//Windows_Preview_FullPath(v, ImageFullPath);
 
-			Load_OpenGL_Textures(App->CLSB_Model->Group[Count]->MaterialIndex);
-
+			bool test = Load_OpenGL_Textures(App->CLSB_Model->Group[Count]->MaterialIndex);
+			if (test == 0)
+			{
+				App->Say("Dummy");
+			}
 			v++;
 		}
 		else
 		{
+			Debug
 			//LoadDummyTexture();
 
 			//int MatIndex = App->CL_Vm_Model->S_MeshGroup[Count]->MaterialIndex;
@@ -401,13 +405,25 @@ bool SB_Textures::Load_OpenGL_Textures(int TextureID)
 	// ----------------------------------- Bitmap
 	if (_stricmp(TextureFileName + strlen(TextureFileName) - 4, ".BMP") == 0)
 	{
-		Soil_Load_Texture(Texture_List, TextureFileName, TextureID);
+		bool test = Soil_Load_Texture(Texture_List, TextureFileName, TextureID);
+		if (test == 0)
+		{
+			return 0;
+		}
+
 		return 1;
 	}
 	// ------------------------------------ JPEG
 	if (_stricmp(TextureFileName + strlen(TextureFileName) - 4, ".JPG") == 0)
 	{
-		Soil_Load_Texture(Texture_List, TextureFileName, TextureID);
+		bool test = Soil_Load_Texture(Texture_List, TextureFileName, TextureID);
+
+		if (test == 0)
+		{
+			App->Say("No JPG");
+			return 0;
+		}
+
 		return 1;
 	}
 	// ------------------------------------ TGA
@@ -449,8 +465,8 @@ bool  SB_Textures::Soil_Load_Texture(UINT textureArray[], LPSTR strFileName, int
 	unsigned char* image_data = stbi_load(strFileName, &image_width, &image_height, &channels, force_channels);
 	if (image_data == NULL)
 	{
-		App->Say("Cant Create Texture");
-		return false;
+		//App->Say("Cant Create Texture");
+		return 0;
 	}
 
 	if ((force_channels >= 1) && (force_channels <= 4))

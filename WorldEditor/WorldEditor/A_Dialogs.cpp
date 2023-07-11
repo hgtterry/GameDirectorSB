@@ -361,6 +361,18 @@ void A_Dialogs::List_SceneData(HWND hDlg)
 	sprintf(buf, "%s%i", "Brush Count = ",App->CL_World->Get_Brush_Count());
 	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
+	int Stack_Memory = App->Get_Stack();
+	sprintf(buf, "%s%i", "Stack Bytes= ", Stack_Memory);
+	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+	float megs = ((float)Stack_Memory / 1024) / 1024;
+	sprintf(buf, "%s%f", "Stack megs= ", megs);
+	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+	float used = ((float)(2097152 -Stack_Memory) / 1024);
+	sprintf(buf, "%s%f", "Stack Used K= ", used);
+
+	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 	return;
 
 	//sprintf(buf, "%s", "Scene Info");
@@ -409,7 +421,7 @@ void A_Dialogs::List_SceneData(HWND hDlg)
 	//sprintf(buf, "%s", "    ");
 	//sprintf(buf, "Current File and Path:- %s",Level_GetWadPath(m_pDoc->pLevel));
 	//SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
+	
 }
 
 // *************************************************************************
@@ -822,7 +834,7 @@ LRESULT CALLBACK A_Dialogs::Move_Brush_Proc(HWND hDlg, UINT message, WPARAM wPar
 			if (LOWORD(wParam) == IDOK)
 			{
 
-				char buff[100];
+				char buff[MAX_PATH];
 				GetDlgItemText(hDlg,IDC_EDCAMX,(LPTSTR)buff,MAX_PATH);
 				App->CL_Dialogs->CenterOfSelection.X = (float)atof(buff);
 

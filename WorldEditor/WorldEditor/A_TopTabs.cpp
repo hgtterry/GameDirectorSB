@@ -670,6 +670,8 @@ LRESULT CALLBACK SB_TopTabs::Top_Test_Proc(HWND hDlg, UINT message, WPARAM wPara
 			App->CL_Export_World->Export_World_GD3D(1);
 			App->CLSB_Equity->Start_Equity_Dialog(1);
 
+			App->CLSB_Camera->Set_Camera_Mode(Enums::CamModel);
+		
 			return TRUE;
 		}
 

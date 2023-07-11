@@ -22,28 +22,32 @@ distribution.
 */
 
 #pragma once
-
-class SB_Export_Object
+class SB_Brushes
 {
 public:
-	SB_Export_Object();
-	~SB_Export_Object();
+	SB_Brushes(void);
+	~SB_Brushes(void);
 
-	bool Create_ObjectFile(void);
+	void Start_Dimensions_Dlg();
+	void Update_Pos_Dlg();
 
-protected:
+	bool Dimensions_Dlg_Running;
 
-	void Write_ObjectFile(void);
-	void Write_ObjectFile_Commit(void);
-	bool WriteMTLFile(void);
-	
-	char OutputFolder[1024];
+private:
+	static LRESULT CALLBACK Dimensions_Dlg_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
-	char Object_FileName[255];
-	char mtl_FileName[255];
-	char Just_mtl_FileName[255];
+	void Fill_ComboBox_PosDelta(HWND hDlg);
+	void Move_Brush();
+	void Lock_Textures(bool flag);
 
-	FILE *Write_OBJECTFILE;
-	FILE *Write_MTLFile;
+	float PosX_Delta;
+	float PosY_Delta;
+	float PosZ_Delta;
+
+	HWND Dimensions_Dlg_hWnd;
+
+	geVec3d CenterOfSelection;
+
+	CFusionDoc* m_pDoc;
 };
 

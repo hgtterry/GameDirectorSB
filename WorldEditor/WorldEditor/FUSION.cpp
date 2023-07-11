@@ -374,7 +374,10 @@ BOOL CFusionApp::InitInstance() // hgtterry InitInstance
 		App->CL_TabsControl->Start_Tabs_Control_Dlg();
 	}
 
-	//App->CL_Ogre_Dialog->Start_Ogre_Dialog();
+	App->CLSB_RecentFiles->Init_History();
+
+	//App->CLSB_Equity->Start_Equity_Dialog(0);
+
 	return TRUE;
 }
 

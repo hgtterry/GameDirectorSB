@@ -43,6 +43,7 @@ SB_Ogre::SB_Ogre(void)
 	App_Resource_Group = "App_Resource_Group";
 
 	Block_RenderingQueued = 0;
+	Pause_Rendring = 0;
 
 	FPSLock = 4200;
 
@@ -111,7 +112,7 @@ bool SB_Ogre::Ogre_Render_Loop(void)
 
 		if (FPStimer.getMicroseconds() > Fps_Tick) // FPSLock)
 		{
-			if (Block_RenderingQueued == 0)
+			if (Block_RenderingQueued == 0 && Pause_Rendring == 0)
 			{
 
 				// mRoot->renderOneFrame()

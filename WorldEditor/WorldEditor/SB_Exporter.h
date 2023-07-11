@@ -29,6 +29,8 @@ public:
 	~SB_Exporter(void);
 
 	void Ogre3D_Model(void);
+	void Object_Model(void);
+
 	void Start_Export_Dlg();
 
 	bool Is_Canceled;

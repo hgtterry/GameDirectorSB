@@ -94,6 +94,7 @@ LRESULT CALLBACK A_TextureDialog::TextureDialog_Proc(HWND hDlg, UINT message, WP
 		SendDlgItemMessage(hDlg, IDC_BTTDAPPLY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BTEDITFILE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BTTDFACEPROPERTIES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STWIDTHHEIGHT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		App->CL_TextureDialog->f_TextureDlg_Active = 1;
 
@@ -112,6 +113,14 @@ LRESULT CALLBACK A_TextureDialog::TextureDialog_Proc(HWND hDlg, UINT message, WP
 		}
 
 		if (GetDlgItem(hDlg, IDC_STTDTXLNAME) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STWIDTHHEIGHT) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -487,7 +496,12 @@ void A_TextureDialog::List_Selection_Changed()
 		strcpy(m_CurrentTexture,TextureName);
 		Get_BitMap();
 	}
-
+	
+	char buf[255];
+	sprintf(buf, "%i X %i", BasePicWidth, BasePicHeight);
+	SetDlgItemText(TextureDlg_Hwnd, IDC_STWIDTHHEIGHT, (LPCTSTR)buf);
+	
+	//IDC_STWIDTHHEIGHT
 	//	Also set the current selection value in the document...
 	//m_pDoc->mCurTextureSelection = SelNum;
 }

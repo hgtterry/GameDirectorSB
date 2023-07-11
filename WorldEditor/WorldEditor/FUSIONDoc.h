@@ -429,7 +429,7 @@ protected:
 	afx_msg void Zero_Camera(); // hgtterry [090123]
 	afx_msg void Start_QuickView();
 	afx_msg void Start_CommandPanel();
-
+	afx_msg void Start_RecentFiles();
 
 	afx_msg void OnViewTypeTexture();
 	afx_msg void OnUpdateViewTypeWireFrame(CCmdUI* pCmdUI);
@@ -489,8 +489,10 @@ private:
 
 	// our current setting for our grid movement
 	int mCurrentBrushId;
-
+public:
 	void RotateSelectedBrushList (SelBrushList *pList, geVec3d const *v);
+private:
+
 	void GetRotationPoint (geVec3d *pVec);
 	void CreateNewTemplateBrush (Brush *pBrush);
 	void AddCameraEntityToLevel (void);

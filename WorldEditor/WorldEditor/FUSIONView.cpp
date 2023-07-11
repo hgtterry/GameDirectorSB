@@ -1093,10 +1093,16 @@ void CFusionView::OnLButtonUp(UINT nFlags, CPoint point)
 					break;
 
 				case ID_TOOLS_BRUSH_MOVEROTATEBRUSH :
-				case ID_TOOLS_BRUSH_MOVESELECTEDBRUSHES :
-						DoneMovingBrushes ();
-						pDoc->SetModifiedFlag();
-					break; 
+				case ID_TOOLS_BRUSH_MOVESELECTEDBRUSHES:
+				{
+					DoneMovingBrushes();
+					pDoc->SetModifiedFlag();
+					if (App->CLSB_Brushes->Dimensions_Dlg_Running == 1)
+					{
+						App->CLSB_Brushes->Update_Pos_Dlg();
+					}
+					break;
+				}
 
 				case ID_TOOLS_BRUSH_SCALEBRUSH :
 					pDoc->SetModifiedFlag();
@@ -1151,7 +1157,7 @@ void CFusionView::OnLButtonUp(UINT nFlags, CPoint point)
 #pragma warning (disable:4100)
 void CFusionView::OnLButtonDown(UINT nFlags, CPoint point)
 {
-	
+
 	/*
 	  These tables convert the index values returned by GetCursorBoxPos
 	  into the bitmapped values expected by the brush routines (the "sides" values).

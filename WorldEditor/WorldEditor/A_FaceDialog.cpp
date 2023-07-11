@@ -292,6 +292,45 @@ LRESULT CALLBACK A_FaceDialog::FaceDialog_Proc(HWND hDlg, UINT message, WPARAM w
 	case WM_COMMAND:
 		{
 
+		if (LOWORD(wParam) == IDC_TEXTURELOCK)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_TEXTURELOCK);
+
+			App->CL_FaceDialog->m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+			Face* pFace;
+			int NumberOfFaces;
+
+			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
+			if (test == BST_CHECKED)
+			{
+				NumberOfFaces = SelFaceList_GetSize(App->CL_FaceDialog->m_pDoc->pSelFaces);
+
+				for (int i = 0; i < NumberOfFaces; ++i)
+				{
+					pFace = SelFaceList_GetFace(App->CL_FaceDialog->m_pDoc->pSelFaces,i);
+					Face_SetTextureLock(pFace,true);
+				}
+
+				App->CL_FaceDialog->m_pDoc->UpdateAllViews(UAV_RENDER_ONLY, NULL);
+				
+				return 1;
+			}
+			else
+			{
+				NumberOfFaces = SelFaceList_GetSize(App->CL_FaceDialog->m_pDoc->pSelFaces);
+
+				for (int i = 0; i < NumberOfFaces; ++i)
+				{
+					pFace = SelFaceList_GetFace(App->CL_FaceDialog->m_pDoc->pSelFaces, i);
+					Face_SetTextureLock(pFace, false);
+				}
+
+				App->CL_FaceDialog->m_pDoc->UpdateAllViews(UAV_RENDER_ONLY, NULL);
+				return 1;
+			}
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDC_CBXSCALE)
 		{
 			switch (HIWORD(wParam)) // Find out what message it was

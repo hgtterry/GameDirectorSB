@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
-// Used by FUSION.rc
+// Used by GD_WorldEditor.rc
 //
 #define ID_DEFAULTS                     3
 #define ID_DEFAULT                      3
@@ -149,6 +149,8 @@
 #define IDB_LIGHTOFF                    298
 #define IDB_TB_MODELDATA                299
 #define IDB_TB_MODELDATAON              300
+#define IDD_SB_BRUSHDIMENSIONS          308
+#define IDD_SB_RECENTPRJ                310
 #define IDC_RESET_ALL                   1000
 #define IDC_EDIT1                       1001
 #define IDC_EDIT10                      1002
@@ -281,6 +283,7 @@
 #define IDD_LEVELOPTIONS_GD             1133
 #define IDC_APPLYTEXTURE                1134
 #define IDD_SB_TABSGROUPS               1134
+#define IDD_SB_TABSBRUSHES              1134
 #define IDD_SB_TABSTEMPLATES            1135
 #define IDD_SB_TB_FILES                 1136
 #define IDD_SB_MOVEBRUSH                1137
@@ -609,6 +612,8 @@
 #define IDC_STPOSITION                  1405
 #define IDC_EDCAMZ                      1406
 #define IDC_STDIAMETER                  1406
+#define IDC_STROTITION                  1406
+#define IDC_STROTATION                  1406
 #define IDC_STCAMZ                      1407
 #define IDC_STVERTSTRIPS                1407
 #define IDC_EDCAMANGLEX                 1408
@@ -666,6 +671,7 @@
 #define IDC_UPDATE                      1466
 #define IDC_PREVIEWSELECTED             1466
 #define IDC_ACTOR                       1466
+#define IDC_BT_DIMENSIONS               1466
 #define IDC_ST_BANNER                   1467
 #define IDC_ST_FN                       1468
 #define IDC_ST_NAME                     1469
@@ -682,6 +688,32 @@
 #define IDC_ST_BP_SELECTEDBRUSHES       1480
 #define IDC_LIST_SELECTEDBRUSHES        1481
 #define IDC_BT_TB_TEST                  1482
+#define IDC_STWIDTHHEIGHT               1483
+#define IDC_ED_BRUSH_POSX               1484
+#define IDC_ED_BRUSH_POSY               1485
+#define IDC_ED_BRUSH_POSZ               1486
+#define IDC_SBPOSX                      1487
+#define IDC_CBPOSXDELTA                 1488
+#define IDC_STPOSX                      1489
+#define IDC_CBPOSYDELTA                 1490
+#define IDC_CBPOSZDELTA                 1491
+#define IDC_SBPOSY                      1492
+#define IDC_SBPOSZ                      1493
+#define IDC_STPOSY                      1494
+#define IDC_STPOSZ                      1495
+#define IDC_ED_BRUSH_POSX2              1496
+#define IDC_RECENTPRJLIST               1496
+#define IDC_STROTX                      1497
+#define IDC_ED_BRUSH_POSY2              1498
+#define IDC_STROTY                      1499
+#define IDC_ED_BRUSH_POSZ2              1500
+#define IDC_STROTZ                      1501
+#define IDC_SBPOSX2                     1502
+#define IDC_CBPOSXDELTA2                1503
+#define IDC_CBPOSYDELTA2                1504
+#define IDC_CBPOSZDELTA2                1505
+#define IDC_SBPOSY2                     1506
+#define IDC_SBPOSZ2                     1507
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772
 #define ID_BRUSH_PRIMITIVES_SPHEROID    32773
@@ -875,6 +907,8 @@
 #define ID_WINDOW_QUICKCOMMAND          33076
 #define ID_WINDOW_COMMANDPANEL          33077
 #define ID_FILE_CLOSE33078              33078
+#define ID_EXPORT_WAVEFRONTOBJ          33079
+#define ID_FILE_RECENT                  33080
 #define IDS_HELPINFORMATION             38000
 
 // Next default values for new objects
@@ -882,9 +916,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        306
-#define _APS_NEXT_COMMAND_VALUE         33079
-#define _APS_NEXT_CONTROL_VALUE         1483
+#define _APS_NEXT_RESOURCE_VALUE        312
+#define _APS_NEXT_COMMAND_VALUE         33081
+#define _APS_NEXT_CONTROL_VALUE         1497
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

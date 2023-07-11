@@ -58,6 +58,7 @@
       <OutputFile>..\..\Bin\GD_WorldEditor.exe</OutputFile>
       <AdditionalLibraryDirectories>..\..\Anim19_OSDN\Common\lib\release;..\..\Anim19_OSDN\Common\Assimp\Lib;..\..\Anim19_OSDN\Common\Devil\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <StackReserveSize>2097152</StackReserveSize>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -184,6 +185,7 @@
     <ClCompile Include="SB_Model.cpp" />
     <ClCompile Include="SB_Ogre.cpp" />
     <ClCompile Include="SB_OgreListener.cpp" />
+    <ClCompile Include="SB_RecentFiles.cpp" />
     <ClCompile Include="SB_Render.cpp" />
     <ClCompile Include="SB_Textures.cpp" />
     <ClCompile Include="ScaleDialog.cpp" />
@@ -235,7 +237,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="FUSION.rc" />
+    <ResourceCompile Include="GD_WorldEditor.rc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionTools.h" />
@@ -257,6 +259,7 @@
     <ClInclude Include="SB_Model.h" />
     <ClInclude Include="SB_Ogre.h" />
     <ClInclude Include="SB_OgreListener.h" />
+    <ClInclude Include="SB_RecentFiles.h" />
     <ClInclude Include="SB_Render.h" />
     <ClInclude Include="SB_Textures.h" />
     <ClInclude Include="tinystr.h" />

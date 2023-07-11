@@ -360,6 +360,9 @@
     <ClCompile Include="SB_Genesis3D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SB_Brushes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="FUSION.rc">
@@ -691,6 +694,9 @@
     <ClInclude Include="SB_Genesis3D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SB_Brushes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="resource.hm">
@@ -910,6 +916,9 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="res\MenuBar\ModelDataOn.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\small.ico">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

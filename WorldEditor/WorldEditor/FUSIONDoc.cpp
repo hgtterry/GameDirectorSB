@@ -171,13 +171,13 @@ BEGIN_MESSAGE_MAP(CFusionDoc, CDocument)
 	ON_COMMAND( ID_VIEW_3DWIREFRAME, OnViewTypeWireFrame)
 
 	// EquitySB
-	ON_COMMAND( ID_VIEW_TEXTUREVIEW, OnViewTypeTexture) // hgtterry [281221]
-	ON_COMMAND( ID_DEBUG_SETVIEW, OnEquity_SetView) // hgtterry [090123]
-	ON_COMMAND( ID_EQUITYSB_ZEROCAMERA, Zero_Camera) // hgtterry [090123]
-	ON_COMMAND( ID_WINDOW_QUICKCOMMAND, Start_QuickView) // hgtterry [090123]
-	ON_COMMAND(ID_WINDOW_COMMANDPANEL, Start_CommandPanel) // hgtterry [090123]
+	ON_COMMAND( ID_VIEW_TEXTUREVIEW, OnViewTypeTexture) // hgtterry Menu Commands
+	ON_COMMAND( ID_DEBUG_SETVIEW, OnEquity_SetView) 
+	ON_COMMAND( ID_EQUITYSB_ZEROCAMERA, Zero_Camera) 
+	ON_COMMAND( ID_WINDOW_QUICKCOMMAND, Start_QuickView) 
+	ON_COMMAND(ID_WINDOW_COMMANDPANEL, Start_CommandPanel) 
+	ON_COMMAND(ID_FILE_RECENT, Start_RecentFiles)
 	
-
 	ON_UPDATE_COMMAND_UI(ID_VIEW_3DWIREFRAME, OnUpdateViewTypeWireFrame)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_TEXTUREVIEW, OnUpdateViewTypeTexture)
 	ON_COMMAND(ID_CAMERA_CENTERONSELECTION, OnCameraCenteronselection)
@@ -8483,6 +8483,11 @@ void CFusionDoc::Start_QuickView()
 void CFusionDoc::Start_CommandPanel()
 {
 	App->CL_TabsControl->Start_Tabs_Control_Dlg();
+}
+
+void CFusionDoc::Start_RecentFiles()
+{
+	App->CLSB_RecentFiles->Start_RecentFiles_Dlg();
 }
 
 void CFusionDoc::OnUpdateViewTypeWireFrame(CCmdUI* pCmdUI)

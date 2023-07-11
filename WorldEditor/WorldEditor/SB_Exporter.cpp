@@ -296,3 +296,22 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 
 	return FALSE;
 }
+
+// *************************************************************************
+// *					Object_Model Terry Bernie						   *
+// *************************************************************************
+void SB_Exporter::Object_Model(void)
+{
+	if (App->CLSB_Model->Model_Loaded == 0)
+	{
+		App->Say("No Model Loaded to Export");
+		return;
+	}
+
+	bool test = App->CLSB_Export_Object->Create_ObjectFile();
+
+	if (test == 1)
+	{
+		App->Say("Wavefront Object file Created successfully");
+	}
+}

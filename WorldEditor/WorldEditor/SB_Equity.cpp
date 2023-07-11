@@ -21,11 +21,16 @@ SB_Equity::~SB_Equity(void)
 // *************************************************************************
 void SB_Equity::Switch_3D_Window()
 {
-	//App->CL_Ogre->InitOgre();
-	//Ogre::Root::getSingletonPtr()->renderOneFrame();
-
 	App->CLSB_Ogre->mWindow->resize(500, 500);
-	int test = SetWindowLong(App->CLSB_Ogre->Ogre_Window_hWnd, GWL_WNDPROC, (LONG)Ogre3D_Proc);
+
+	int test = 0;
+	test = SetWindowLong(App->CLSB_Ogre->Ogre_Window_hWnd, GWL_WNDPROC, (LONG)Ogre3D_Proc);
+
+	if (!test)
+	{
+		App->Say("Cant Start Ogre Proc");
+		return;
+	}
 
 	SetWindowLongPtr(App->CLSB_Ogre->Ogre_Window_hWnd, GWL_STYLE, WS_BORDER);
 	SetWindowPos(App->CLSB_Ogre->Ogre_Window_hWnd, 0, 0, 0, 0, 0, SWP_NOZORDER | SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE | SWP_DRAWFRAME);
@@ -36,23 +41,15 @@ void SB_Equity::Switch_3D_Window()
 	HWND Check_hWnd = NULL;
 	Check_hWnd = SetParent(App->CLSB_Ogre->Ogre_Window_hWnd, Equity_Main_hWnd);
 
-
-	
-	//if (!Check_hWnd)
+	if (!Check_hWnd)
 	{
-		//Debug
+		App->Say("Cant Start Ogre");
+		return;
 	}
 
 	Resize_3DView();
 
-	/*App->CLSB_Ogre->mWindow->resize(810, 400);
-	App->CLSB_Ogre->mWindow->windowMovedOrResized();
-	App->CLSB_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CLSB_Ogre->mWindow->getWidth() / (Ogre::Real)App->CLSB_Ogre->mWindow->getHeight());
-	App->CLSB_Ogre->mCamera->yaw(Ogre::Radian(0));*/
-
 	Auto_Load_File();
-
-	//App->CLSB_Ogre->m_imgui.Init(App->CLSB_Ogre->mSceneMgr, Equity_Main_hWnd);
 
 	App->CLSB_Ogre->OgreIsRunning = 1;
 	App->CLSB_Ogre->Ogre_Render_Loop();
@@ -200,6 +197,12 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_Proc(HWND hDlg, UINT message, WPARAM w
 		if (LOWORD(wParam) == ID_OGRE3D_MESH)
 		{
 			App->CLSB_Exporter->Ogre3D_Model();
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == ID_EXPORT_WAVEFRONTOBJ)
+		{
+			App->CLSB_Exporter->Object_Model();
 			return TRUE;
 		}
 
@@ -757,6 +760,14 @@ LRESULT CALLBACK SB_Equity::Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 		{
 			if (App->CLSB_Ogre->OgreIsRunning == 1)
 			{
+				POINT p;
+				GetCursorPos(&p);
+				ScreenToClient(App->MainHwnd, &p);
+				App->CursorPosX = p.x;
+				App->CursorPosY = p.y;
+				App->CLSB_Ogre->OgreListener->Pl_Cent500X = p.x;
+				App->CLSB_Ogre->OgreListener->Pl_Cent500Y = p.y;
+
 				SetCapture(App->CLSB_Ogre->Ogre_Window_hWnd);
 				SetCursorPos(App->CursorPosX, App->CursorPosY);
 				App->CLSB_Ogre->OgreListener->Pl_RightMouseDown = 1;
@@ -796,6 +807,15 @@ LRESULT CALLBACK SB_Equity::Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 		{
 			if (App->CLSB_Ogre->OgreIsRunning == 1)
 			{
+
+				POINT p;
+				GetCursorPos(&p);
+				ScreenToClient(App->MainHwnd, &p);
+				App->CursorPosX = p.x;
+				App->CursorPosY = p.y;
+				App->CLSB_Ogre->OgreListener->Pl_Cent500X = p.x;
+				App->CLSB_Ogre->OgreListener->Pl_Cent500Y = p.y;
+
 				SetCapture(App->CLSB_Ogre->Ogre_Window_hWnd);// Bernie
 				SetCursorPos(App->CursorPosX, App->CursorPosY);
 
@@ -810,6 +830,7 @@ LRESULT CALLBACK SB_Equity::Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 				App->CLSB_Ogre->OgreListener->Pl_LeftMouseDown = 1;
 			}
 		}
+
 
 		return 1;
 	}

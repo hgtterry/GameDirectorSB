@@ -71,11 +71,15 @@ distribution.
 #include "SB_Loader.h"
 #include "SB_Ini.h"
 #include "SB_Export_Ogre3D.h"
+#include "SB_Export_Object.h"
 #include "SB_Exporter.h"
 #include "SB_Textures.h"
 #include "SB_Dialogs.h"
 #include "SB_ImGui.h"
 #include "SB_Genesis3D.h"
+#include "SB_Brushes.h"
+#include "SB_RecentFiles.h"
+//#include <stack>
 
 class SB_App
 {
@@ -83,6 +87,8 @@ public:
 
 	SB_App();
 	virtual ~SB_App();
+
+	//std::stack::size();
 
 	AB_Export_RFW*				ABC_Export_RFW;
 	SB_FileIO*					CLSB_FileIO;
@@ -124,11 +130,14 @@ public:
 	SB_Loader*					CLSB_Loader;
 	SB_Ini*						CLSB_Ini;
 	SB_Export_Ogre3D*			CLSB_Export_Ogre3D;
+	SB_Export_Object*			CLSB_Export_Object;
 	SB_Exporter*				CLSB_Exporter;
 	SB_Textures*				CLSB_Textures;
 	SB_Dialogs*					CLSB_Dialogs;
 	SB_ImGui*					CLSB_ImGui;
 	SB_Genesis3D*				CLSB_Genesis3D;
+	SB_Brushes*					CLSB_Brushes;
+	SB_RecentFiles*				CLSB_RecentFiles;
 
 	bool InitApp(void);
 	void InitMFC(void);
@@ -141,7 +150,7 @@ public:
 	void Say_Float(float Value);
 	void Flash_Window();
 	bool IsProcessRunning(char* executableName);
-
+	uint64_t Get_Stack(void);
 	bool Custom_Button_Normal(LPNMCUSTOMDRAW item);
 	bool Custom_Button_Toggle(LPNMCUSTOMDRAW item, bool Toggle);
 	bool Custom_Button_Toggle_Tabs(LPNMCUSTOMDRAW item, bool Toggle);

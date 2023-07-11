@@ -101,6 +101,13 @@ LRESULT CALLBACK A_TabsTemplates_Dlg::Templates_Proc(HWND hDlg, UINT message, WP
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BTINSERT && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
 		return CDRF_DODEFAULT;
 	}
 
