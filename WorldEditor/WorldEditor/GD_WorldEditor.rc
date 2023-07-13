@@ -1134,8 +1134,6 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "&Properties...",              IDM_LEVELOPTIONS
         MENUITEM SEPARATOR
-        MENUITEM "Recent File",                 ID_FILE_MRU_FILE1
-        MENUITEM SEPARATOR
         MENUITEM "Recent_Files",                ID_FILE_RECENT
         MENUITEM SEPARATOR
         MENUITEM "E&xit",                       ID_APP_EXIT
@@ -1444,7 +1442,7 @@ END
 
 STRINGTABLE
 BEGIN
-    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.26 - [11-07-23] -17"
+    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.26 - [13-07-23] -17"
     IDR_FUSIONTYPE          "Genesis3D World Editor\nWorld\nWorld\nWorld Files (*.3dt)\n.3dt\nWorldEditor.Document\nGenesis3D World Editor Document"
     IDS_LOAD_WARNING        "Some entities or brushes did not load properly, see console for details."
     IDS_NEWGROUP            "Group Name"
@@ -2199,10 +2197,11 @@ STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | WS_CAPTI
 CAPTION "Recent Files"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    DEFPUSHBUTTON   "OK",IDOK,198,155,50,14
+    DEFPUSHBUTTON   "Load",IDOK,198,155,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,259,155,50,14
     LISTBOX         IDC_RECENTPRJLIST,7,7,477,118,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
     CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME | SS_SUNKEN,7,148,477,1
+    PUSHBUTTON      "Clear History",IDC_BTCLEARFILES,7,131,80,14
 END
 
 

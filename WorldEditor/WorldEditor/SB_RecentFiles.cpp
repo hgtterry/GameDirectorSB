@@ -28,6 +28,7 @@ distribution.
 SB_RecentFiles::SB_RecentFiles(void)
 {
 	UserData_Folder[0] = 0;
+	mFileAndPath[0] = 0;
 
 	WriteRecentFiles = nullptr;
 	ReadRecentFiles = nullptr;
@@ -56,12 +57,14 @@ LRESULT CALLBACK SB_RecentFiles::RecentFiles_Proc(HWND hDlg, UINT message, WPARA
 	{
 
 		SendDlgItemMessage(hDlg, IDC_RECENTPRJLIST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_BTCLEARFILES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BTCLEARFILES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 	
 		SendDlgItemMessage(hDlg, IDC_RECENTPRJLIST, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+
+		EnableWindow(GetDlgItem(hDlg, IDOK), FALSE);
 
 		App->CLSB_RecentFiles->List_Recent_Files(hDlg);
 
@@ -95,7 +98,7 @@ LRESULT CALLBACK SB_RecentFiles::RecentFiles_Proc(HWND hDlg, UINT message, WPARA
 			return CDRF_DODEFAULT;
 		}
 
-		/*if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
@@ -107,16 +110,16 @@ LRESULT CALLBACK SB_RecentFiles::RecentFiles_Proc(HWND hDlg, UINT message, WPARA
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
-		}*/
+		}
 
 		return CDRF_DODEFAULT;
 	}
 
 	case WM_COMMAND:
 	{
-		/*if (LOWORD(wParam) == IDC_RECENTPRJLIST)
+		if (LOWORD(wParam) == IDC_RECENTPRJLIST)
 		{
-			App->CL_FileIO->RecentFile[0] = 0;
+			App->CLSB_RecentFiles->mFileAndPath[0] = 0;
 			int Index = 0;
 
 			Index = SendDlgItemMessage(hDlg, IDC_RECENTPRJLIST, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
@@ -126,45 +129,35 @@ LRESULT CALLBACK SB_RecentFiles::RecentFiles_Proc(HWND hDlg, UINT message, WPARA
 			}
 			else
 			{
-				SendDlgItemMessage(hDlg, IDC_RECENTPRJLIST, LB_GETTEXT, (WPARAM)Index, (LPARAM)App->CL_FileIO->RecentFile);
-
+				SendDlgItemMessage(hDlg, IDC_RECENTPRJLIST, LB_GETTEXT, (WPARAM)Index, (LPARAM)App->CLSB_RecentFiles->mFileAndPath);
+				EnableWindow(GetDlgItem(hDlg, IDOK), TRUE);
 			}
 
 			return TRUE;
-		}*/
+		}
 
-		/*if (LOWORD(wParam) == IDC_BTCLEARFILES)
+		if (LOWORD(wParam) == IDC_BTCLEARFILES)
 		{
-			if (App->CL_FileIO->mSelected_Recent == 0)
-			{
-				App->CL_Dialogs->YesNo("Delete file history.", "Are you sure all Models history will be Deleted Procede.");
-				if (App->CL_Dialogs->Canceled == 1)
-				{
-					return 1;
-				}
-				App->CL_Recent_Files->ResentHistory_Models_Clear();
-			}
 
-			if (App->CL_FileIO->mSelected_Recent == 1)
+			App->CLSB_Dialogs->YesNo("Delete file history.", "Are you sure all Models history will be Deleted Procede.");
+			if (App->CLSB_Dialogs->Canceled == 1)
 			{
-				App->CL_Dialogs->YesNo("Delete file history.", "Are you sure all Projects history will be Deleted Procede.");
-				if (App->CL_Dialogs->Canceled == 1)
-				{
-					return 1;
-				}
-				App->CL_Recent_Files->ResentHistory_Projects_Clear();
+				return 1;
 			}
-
+			App->CLSB_RecentFiles->ResentHistory_Files_Clear();
 
 			SendDlgItemMessage(hDlg, IDC_RECENTPRJLIST, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
 			return TRUE;
-		}*/
+		}
 
 		if (LOWORD(wParam) == IDOK)
 		{
 			EndDialog(hDlg, LOWORD(wParam));
-			//App->CL_Import->Reload_FromResentFiles(App->CL_FileIO->RecentFile);
+			
+			strcpy(App->CL_File->PathFileName_3dt, App->CLSB_RecentFiles->mFileAndPath);
+			App->CL_File->Open_3dt_File(0);
+
 			return TRUE;
 		}
 
@@ -390,6 +383,40 @@ void SB_RecentFiles::LoadHistory_Files()
 		Result = strcmp("<empty>", szText);
 
 	}
+
+	return;
+}
+
+// *************************************************************************
+// *		RecentFile_Files_Update:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_RecentFiles::RecentFile_Files_Update()
+{
+
+	std::string sz = std::string(App->CL_World->mCurrent_3DT_PathAndFile);
+	if (mPreviousFiles_Files[RECENT_FILES - 1] == sz)return;
+
+	// add the new file to the list of recent files
+	for (unsigned int i = 0; i < RECENT_FILES - 1; ++i)
+	{
+		mPreviousFiles_Files[i] = mPreviousFiles_Files[i + 1];
+	}
+
+	mPreviousFiles_Files[RECENT_FILES - 1] = sz;
+
+	// Check for empty slots and gray out
+	for (int i = RECENT_FILES - 1; i >= 0; --i)
+	{
+		char szText[1024];
+		strcpy(szText, mPreviousFiles_Files[i].c_str());
+
+		UINT iFlags = 0;
+		int Result = 0;
+		Result = strcmp("<empty>", szText);
+	}
+
+	// Save Changes
+	Save_FileHistory_Files();
 
 	return;
 }

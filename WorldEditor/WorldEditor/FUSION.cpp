@@ -50,7 +50,7 @@ BEGIN_MESSAGE_MAP(CFusionApp, CWinApp)
 	ON_COMMAND(ID_APP_ABOUT, OnAppAbout)
 	ON_COMMAND(ID_FILE_NEW, OnFileNew)
 //	ON_COMMAND(ID_FILE_OPEN, OnFileOpen)
-	ON_COMMAND_EX_RANGE(ID_FILE_MRU_FILE1, ID_FILE_MRU_FILE16, OnOpenRecentFile)
+//	ON_COMMAND_EX_RANGE(ID_FILE_MRU_FILE1, ID_FILE_MRU_FILE16, OnOpenRecentFile)
 	ON_COMMAND(IDM_PREFERENCES, OnPreferences)
 	ON_UPDATE_COMMAND_UI(IDM_PREFERENCES, OnUpdatePreferences)
 	ON_COMMAND(ID_HELP_HOWDOI, OnHelpHowdoi)
@@ -605,7 +605,9 @@ void CFusionApp::CloseDocument()
 
 BOOL CFusionApp::OnOpenRecentFile (UINT nID)
 {
-	
+	Debug
+	return 0;
+
 	BOOL rslt;
 
 	// If the current document is unmodified and has no brushes, wipe it

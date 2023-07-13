@@ -30,8 +30,8 @@ public:
 	~SB_RecentFiles(void);
 
 	void Start_RecentFiles_Dlg();
-
 	void Init_History();
+	void RecentFile_Files_Update();
 
 	char UserData_Folder[MAX_PATH];
 
@@ -46,10 +46,14 @@ private:
 	bool Check_File_Exist(char* Full_Path);
 	void List_Recent_Files(HWND hDlg);
 
+	char mFileAndPath[MAX_PATH];
+
 	std::vector<std::string> mPreviousFiles_Files;
 
 	FILE* WriteRecentFiles;
 	FILE* ReadRecentFiles;
+
+
 
 #define RECENT_FILES 0x8
 };

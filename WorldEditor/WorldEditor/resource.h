@@ -561,6 +561,7 @@
 #define IDC_TEST                        1363
 #define IDC_BT_CHANGE_NAME              1363
 #define IDC_BTSHOWBONES                 1363
+#define IDC_BTCLEARFILES                1363
 #define IDC_BANNER                      1364
 #define IDC_GD_CYLINDER_PRIMITIVE       1364
 #define IDC_BT_BROWSE                   1364

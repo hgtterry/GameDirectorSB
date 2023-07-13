@@ -113,6 +113,7 @@ static geBoolean fdocSetEntityVisibility (CEntity &Ent, void *lParam)
 // *************************************************************************
 bool A_File::Open_3dt_File(bool UseDialogLoader)
 {
+	
 	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
 
 	if (UseDialogLoader == 1)
@@ -130,7 +131,10 @@ bool A_File::Open_3dt_File(bool UseDialogLoader)
 	App->CL_World->Set_Paths();
 	App->CL_TabsGroups_Dlg->Fill_ListBox();
 	App->CL_TextureDialog->Fill_ListBox();
+	
+	App->CLSB_RecentFiles->RecentFile_Files_Update();
 
+	App->Say("Loaded", App->CL_World->mCurrent_3DT_File);
 	return 1;
 }
 
@@ -307,6 +311,7 @@ static geBoolean fdocAddPremadeEntity (CEntity &Ent, void *lParam)
 // *************************************************************************
 bool A_File::ImportFile (const char *PathName, const geVec3d *location)
 {
+	//Debug
 	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
 
 	m_pDoc->SetModifiedFlag();

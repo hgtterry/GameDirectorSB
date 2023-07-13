@@ -6421,12 +6421,10 @@ void CFusionDoc::SelectTab( int nTabIndex )
 
 /* EOF: FusionDoc.cpp */
 
-void CFusionDoc::OnFileOpen() 
+void CFusionDoc::OnFileOpen() // hgtterry On File Open
 {
 	App->CL_File->Open_3dt_File(1);
-
 	App->CL_World->Reset_Editor();
-	App->Say("Loaded",App->CL_World->mCurrent_3DT_File);
 }
 
 void CFusionDoc::OnFileImportActor()
