@@ -414,7 +414,7 @@ void CFusionApp::Open_FaceProperties() // hgtterry void CFusionApp::Open_FacePro
 void CFusionApp::InitUserPreferences(CMainFrame* pMainFrame)
 {
 	//	Get rid of the previous default view that is created...
-//	pMainFrame->HideAllViews();
+	//pMainFrame->HideAllViews();
 
 	// Let's show the window as maximized...
 	m_nCmdShow = SW_MAXIMIZE;
