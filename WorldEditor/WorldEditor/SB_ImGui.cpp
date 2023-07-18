@@ -28,6 +28,8 @@ distribution.
 #include "imgui_internal.h"
 #include "SB_ImGui.h"
 
+#define	M_PI		((geFloat)3.14159265358979323846f)
+#define Units_RadiansToDegrees(r) ((((geFloat)(r)) * 180.0f) / M_PI)
 
 SB_ImGui::SB_ImGui()
 {
@@ -281,34 +283,57 @@ void SB_ImGui::Start_Camera_Pos(void)
 // *************************************************************************
 void SB_ImGui::Camera_Pos_GUI(void)
 {
-	ImGui::SetNextWindowPos(ImVec2(Model_Data_PosX, Model_Data_PosY));
+	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowSize(ImVec2(500, 500), ImGuiCond_FirstUseEver);
 
 	if (!ImGui::Begin("Camera_Pos", &Show_Camera_Pos_F, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize
-		| ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
+		| ImGuiWindowFlags_NoTitleBar))
 	{
 		ImGui::End();
 	}
 	else
 	{
-		ImGui::Spacing();
-		ImGui::Text("World Editor Pos");
-		ImGui::Text("X:- %f", pCameraEntity->mOrigin.X);
-		ImGui::Text("Y:- %f", pCameraEntity->mOrigin.Y);
-		ImGui::Text("Z:- %f", pCameraEntity->mOrigin.Z);
+		ImGui::Columns(2);
+		ImGui::SetColumnWidth(10, 120);
+
+		ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(2, 2));
+
+		geVec3d Angles;
+		pCameraEntity->GetAngles(&Angles, Level_GetEntityDefs(m_pDoc->pLevel));
+
+		ImGui::Text("World Editor Position");
+		ImGui::Text("X = %f", pCameraEntity->mOrigin.X);
+		ImGui::Text("Y = %f", pCameraEntity->mOrigin.Y);
+		ImGui::Text("Z = %f", pCameraEntity->mOrigin.Z);
+		
+		ImGui::Text("  ");
+		ImGui::Text("Equity Position");
+
+		ImGui::Text("X = %f", App->CLSB_Ogre->mCamera->getPosition().x);
+		ImGui::Text("Y = %f", App->CLSB_Ogre->mCamera->getPosition().y);
+		ImGui::Text("Z = %f", App->CLSB_Ogre->mCamera->getPosition().z);
 		ImGui::Text("  ");
 
-		ImGui::Text("Equity Pos");
-		ImGui::Text("X:- %f", App->CLSB_Ogre->mCamera->getPosition().x);
-		ImGui::Text("Y:- %f", App->CLSB_Ogre->mCamera->getPosition().y);
-		ImGui::Text("Z:- %f", App->CLSB_Ogre->mCamera->getPosition().z);
-		ImGui::Text("  ");
+		ImGui::NextColumn();
+		//ImGui::AlignTextToFramePadding();
 
+		ImGui::Text("World Editor Rotation");
+		ImGui::Text("X = %f", Units_RadiansToDegrees(Angles.X));
+		ImGui::Text("Y = %f", Units_RadiansToDegrees(Angles.Y));
+		ImGui::Text("Z = %f", Units_RadiansToDegrees(Angles.Z));
+
+		ImGui::Text("  ");
+		ImGui::Text("Equity Rotation");
 
 		ImVec2 Size = ImGui::GetWindowSize();
 		Model_Data_PosX = ((float)App->CLSB_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);
 		Model_Data_PosY = ((float)App->CLSB_Ogre->OgreListener->View_Height / 2) - (Size.y / 2);;
 
-		ImGui::Separator();
+		ImGui::PopStyleVar();
+		ImGui::Columns(0);
+
+		ImGui::Spacing();
+		ImGui::Spacing();
 
 		if (ImGui::Button("Close"))
 		{
