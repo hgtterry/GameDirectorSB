@@ -64,6 +64,8 @@ private:
 	void Select_Scale();
 	void Select_Shear();
 
+	void Move_Window(void);
+
 	bool Wired_Flag;
 
 	bool Quick_Command_Started;

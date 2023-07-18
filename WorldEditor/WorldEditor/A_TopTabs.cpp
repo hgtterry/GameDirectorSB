@@ -73,6 +73,8 @@ bool SB_TopTabs::Start_Headers_Tabs()
 	{
 		Top_Tabs_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_TOPTABS, App->MainHwnd, (DLGPROC)TB_Headers_Proc);
 
+		Move_Window();
+
 		Start_BrushModify_Panel();
 		Start_File_Tab();
 		Start_Test_Tab();
@@ -799,4 +801,21 @@ void SB_TopTabs::Select_Shear()
 
 		m_pDoc->ConfigureCurrentTool();
 	}
+}
+
+// *************************************************************************
+// *				Move_Window:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void SB_TopTabs::Move_Window(void)
+{
+
+	RECT rect;
+	GetWindowRect(App->MainHwnd, &rect);
+
+	int widthX = rect.right - rect.left;
+	int heightY = rect.bottom - rect.top;
+
+	SetWindowPos(Top_Tabs_Hwnd, NULL, (rect.left+ (rect.right/2))-300, rect.top+100,
+		0, 0, SWP_NOSIZE | SWP_NOZORDER);
+
 }
