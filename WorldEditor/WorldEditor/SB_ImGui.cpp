@@ -314,9 +314,9 @@ void SB_ImGui::Camera_Pos_GUI(void)
 		ImGui::Text("Z = %f", App->CLSB_Ogre->mCamera->getPosition().z);
 		ImGui::Text("  ");
 
+		// --------------------------------------------------
 		ImGui::NextColumn();
-		//ImGui::AlignTextToFramePadding();
-
+	
 		ImGui::Text("World Editor Rotation");
 		ImGui::Text("X = %f", Units_RadiansToDegrees(Angles.X));
 		ImGui::Text("Y = %f", Units_RadiansToDegrees(Angles.Y));
@@ -324,6 +324,10 @@ void SB_ImGui::Camera_Pos_GUI(void)
 
 		ImGui::Text("  ");
 		ImGui::Text("Equity Rotation");
+
+		ImGui::Text("X = %f", App->CLSB_Ogre->mCamera->getOrientation().getPitch().valueDegrees());
+		ImGui::Text("Y = %f", App->CLSB_Ogre->mCamera->getOrientation().getYaw().valueDegrees());
+		ImGui::Text("Z = %f", App->CLSB_Ogre->mCamera->getOrientation().getRoll().valueDegrees());
 
 		ImVec2 Size = ImGui::GetWindowSize();
 		Model_Data_PosX = ((float)App->CLSB_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);

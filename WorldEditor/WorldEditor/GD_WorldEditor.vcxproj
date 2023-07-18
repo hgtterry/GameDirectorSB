@@ -188,6 +188,7 @@
     <ClCompile Include="SB_RecentFiles.cpp" />
     <ClCompile Include="SB_Render.cpp" />
     <ClCompile Include="SB_Textures.cpp" />
+    <ClCompile Include="SB_TopTabs_Equity.cpp" />
     <ClCompile Include="ScaleDialog.cpp" />
     <ClCompile Include="SelBrushList.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Test|Win32'">NotUsing</PrecompiledHeader>
@@ -262,6 +263,7 @@
     <ClInclude Include="SB_RecentFiles.h" />
     <ClInclude Include="SB_Render.h" />
     <ClInclude Include="SB_Textures.h" />
+    <ClInclude Include="SB_TopTabs_Equity.h" />
     <ClInclude Include="tinystr.h" />
     <ClInclude Include="tinyxml.h" />
     <ClInclude Include="TypeParser\cparser.h" />

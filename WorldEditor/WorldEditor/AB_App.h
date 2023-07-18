@@ -79,6 +79,7 @@ distribution.
 #include "SB_Genesis3D.h"
 #include "SB_Brushes.h"
 #include "SB_RecentFiles.h"
+#include "SB_TopTabs_Equity.h"
 //#include <stack>
 
 class SB_App
@@ -138,6 +139,7 @@ public:
 	SB_Genesis3D*				CLSB_Genesis3D;
 	SB_Brushes*					CLSB_Brushes;
 	SB_RecentFiles*				CLSB_RecentFiles;
+	SB_TopTabs_Equity*			CLSB_TopTabs_Equity;
 
 	bool InitApp(void);
 	void InitMFC(void);

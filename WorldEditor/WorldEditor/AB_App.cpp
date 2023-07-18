@@ -76,6 +76,7 @@ SB_App::SB_App()
 	CLSB_Genesis3D =			nullptr;
 	CLSB_Brushes =				nullptr;
 	CLSB_RecentFiles =			nullptr;
+	CLSB_TopTabs_Equity =		nullptr;
 
 	AppBackground = NULL;
 	BlackBrush =	NULL;
@@ -236,7 +237,7 @@ bool SB_App::InitApp(void)
 	CLSB_Genesis3D =				new SB_Genesis3D();
 	CLSB_Brushes =					new SB_Brushes();
 	CLSB_RecentFiles =				new SB_RecentFiles();
-
+	CLSB_TopTabs_Equity =			new SB_TopTabs_Equity();
 
 	InitCommonControls();
 
