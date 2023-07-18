@@ -28,5 +28,13 @@ class SB_TopTabs_Equity
 public:
 	SB_TopTabs_Equity(void);
 	~SB_TopTabs_Equity(void);
+
+	void Start_Tabs_Headers(void);
+
+	HWND Tabs_TB_hWnd_Eq;
+private:
+
+	static LRESULT CALLBACK Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 };
+
 
