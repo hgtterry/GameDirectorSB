@@ -158,13 +158,26 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_Proc(HWND hDlg, UINT message, WPARAM w
 
 	case WM_COMMAND:
 	{
-		// File Debug
+		// Debug
 		if (LOWORD(wParam) == ID_DEBUG_ACTORTOWORLD)
 		{
 			App->CLSB_Loader->Load_ActorWorld();
 			return TRUE;
 		}
-		
+
+		if (LOWORD(wParam) == ID_DEBUG_SHOWCAMERAPOSITIONS)
+		{
+			if (App->CLSB_ImGui->Show_Camera_Pos_F == 1)
+			{
+				App->CLSB_ImGui->Close_Camera_Pos();
+			}
+			else
+			{
+				App->CLSB_ImGui->Start_Camera_Pos();
+			}
+			return TRUE;
+		}
+
 		// File Import
 		if (LOWORD(wParam) == ID_IMPORT_GENESIS3DACT)
 		{

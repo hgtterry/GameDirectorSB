@@ -910,6 +910,7 @@
 #define ID_FILE_CLOSE33078              33078
 #define ID_EXPORT_WAVEFRONTOBJ          33079
 #define ID_FILE_RECENT                  33080
+#define ID_DEBUG_SHOWCAMERAPOSITIONS    33081
 #define IDS_HELPINFORMATION             38000
 
 // Next default values for new objects
@@ -917,8 +918,8 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        312
-#define _APS_NEXT_COMMAND_VALUE         33081
+#define _APS_NEXT_RESOURCE_VALUE        313
+#define _APS_NEXT_COMMAND_VALUE         33082
 #define _APS_NEXT_CONTROL_VALUE         1497
 #define _APS_NEXT_SYMED_VALUE           112
 #endif

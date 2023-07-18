@@ -45,10 +45,14 @@ SB_ImGui::SB_ImGui()
 	StartPos = 0;
 	
 	Show_Model_Data_F = 0;
+	Show_Camera_Pos_F = 0;
 
 	PosX_Selected = 1;
 	PosY_Selected = 0;
 	PosZ_Selected = 0;
+
+	m_pDoc = nullptr;
+	pCameraEntity = nullptr;
 
 }
 
@@ -65,6 +69,11 @@ void SB_ImGui::ImGui_Editor_Loop(void)
 	if (Show_Model_Data_F == 1)
 	{
 		Model_Data_GUI();
+	}
+
+	if (Show_Camera_Pos_F == 1)
+	{
+		Camera_Pos_GUI();
 	}
 }
 
@@ -199,11 +208,6 @@ void SB_ImGui::ImGui_FPS(void)
 // *************************************************************************
 void SB_ImGui::Start_Model_Data(void)
 {
-	//HWND Temp = GetDlgItem(App->CL_TopBar->TabsHwnd, IDC_TBINFO);
-	//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfoOn_Bmp);
-
-	//App->CL_Panels->Enable_Panels(0);
-
 	Show_Model_Data_F = 1;
 }
 
@@ -255,11 +259,72 @@ void SB_ImGui::Model_Data_GUI(void)
 // *************************************************************************
 void SB_ImGui::Close_Model_Data(void)
 {
-	//App->CL_Panels->Enable_Panels(1);
-
-	//HWND Temp = GetDlgItem(App->CL_TopBar->TabsHwnd, IDC_TBINFO);
-	//SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_ModelInfo_Bmp);
-
 	Show_Model_Data_F = 0;
 }
+
+// *************************************************************************
+// *		Start_Camera_Pos:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void SB_ImGui::Start_Camera_Pos(void)
+{
+	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+
+	pCameraEntity = m_pDoc->FindCameraEntity();
+
+	//CameraPosition = pCameraEntity->mOrigin;
+
+	Show_Camera_Pos_F = 1;
+}
+
+// *************************************************************************
+// *			Camera_Pos_GUI:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void SB_ImGui::Camera_Pos_GUI(void)
+{
+	ImGui::SetNextWindowPos(ImVec2(Model_Data_PosX, Model_Data_PosY));
+
+	if (!ImGui::Begin("Camera_Pos", &Show_Camera_Pos_F, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize
+		| ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
+	{
+		ImGui::End();
+	}
+	else
+	{
+		ImGui::Spacing();
+		ImGui::Text("World Editor Pos");
+		ImGui::Text("X:- %f", pCameraEntity->mOrigin.X);
+		ImGui::Text("Y:- %f", pCameraEntity->mOrigin.Y);
+		ImGui::Text("Z:- %f", pCameraEntity->mOrigin.Z);
+		ImGui::Text("  ");
+
+		ImGui::Text("Equity Pos");
+		ImGui::Text("X:- %f", App->CLSB_Ogre->mCamera->getPosition().x);
+		ImGui::Text("Y:- %f", App->CLSB_Ogre->mCamera->getPosition().y);
+		ImGui::Text("Z:- %f", App->CLSB_Ogre->mCamera->getPosition().z);
+		ImGui::Text("  ");
+
+
+		ImVec2 Size = ImGui::GetWindowSize();
+		Model_Data_PosX = ((float)App->CLSB_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);
+		Model_Data_PosY = ((float)App->CLSB_Ogre->OgreListener->View_Height / 2) - (Size.y / 2);;
+
+		ImGui::Separator();
+
+		if (ImGui::Button("Close"))
+		{
+			Close_Camera_Pos();
+		}
+
+		ImGui::End();
+	}
+}
+
+// *************************************************************************
+// *			Close_Camera_Pos:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_ImGui::Close_Camera_Pos(void)
+{
+	Show_Camera_Pos_F = 0;
+}
+
 

@@ -37,10 +37,15 @@ public:
 	void Model_Data_GUI(void);
 	void Close_Model_Data(void);
 
+	void Start_Camera_Pos(void);
+	void Camera_Pos_GUI(void);
+	void Close_Camera_Pos(void);
+
 	bool Show_FPS;  // Show Frames Per Second [150122]
 	bool StartPos;  // Position FPS Frame Flag [150122]
 
 	bool Show_Model_Data_F;
+	bool Show_Camera_Pos_F;
 
 	float PosX;
 	float PosY;
@@ -57,6 +62,9 @@ protected:
 	ImFont* font1;
 	ImFont* font2;
 	ImFont* fontDroid;
+
+	CFusionDoc* m_pDoc;
+	CEntity* pCameraEntity;
 
 	bool PosX_Selected;
 	bool PosY_Selected;
