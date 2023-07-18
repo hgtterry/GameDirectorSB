@@ -7,7 +7,7 @@ public:
 
 	void Switch_3D_Window();
 	void Start_Equity_Dialog(bool AutoLoad);
-
+	void Auto_Load_File();
 	bool mAutoLoad;
 
 	bool EquitySB_Dialog_Created;
@@ -26,7 +26,6 @@ private:
 	bool Start_Render_Buttons();
 	void Init_Bmps_Globals(void);
 
-	void Auto_Load_File();
 	void Resize_3DView();
 
 };

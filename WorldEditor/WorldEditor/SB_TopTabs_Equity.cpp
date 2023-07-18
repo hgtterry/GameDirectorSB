@@ -28,10 +28,23 @@ distribution.
 SB_TopTabs_Equity::SB_TopTabs_Equity(void)
 {
 	Tabs_TB_hWnd_Eq = nullptr;
+	Test_TB_hWnd = nullptr;
+
+
+	Toggle_Tabs_Test_Flag = 1;
 }
 
 SB_TopTabs_Equity::~SB_TopTabs_Equity(void)
 {
+}
+
+// *************************************************************************
+// *						Start_Tabs Terry							   *
+// *************************************************************************
+void SB_TopTabs_Equity::Start_Tabs(void)
+{
+	Start_Tabs_Headers();
+	Start_Files_TB();
 }
 
 // *************************************************************************
@@ -52,11 +65,8 @@ LRESULT CALLBACK SB_TopTabs_Equity::Tabs_Headers_Proc(HWND hDlg, UINT message, W
 	{
 	case WM_INITDIALOG:
 	{
-		/*SendDlgItemMessage(hDlg, IDC_TBGROUP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_TBMODEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_TBCAMERA, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_TBANIMATION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_TBFILE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));*/
+		SendDlgItemMessage(hDlg, IDC_BT_TT_TEST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 
 		return TRUE;
 	}
@@ -70,49 +80,22 @@ LRESULT CALLBACK SB_TopTabs_Equity::Tabs_Headers_Proc(HWND hDlg, UINT message, W
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		/*if (some_item->idFrom == IDC_TBGROUP && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BT_TT_TEST && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle_Tabs(item, App->CL_TopBar->Toggle_Tabs_Group_Flag);
+			App->Custom_Button_Toggle_Tabs(item, App->CLSB_TopTabs_Equity->Toggle_Tabs_Test_Flag);
 			return CDRF_DODEFAULT;
 		}
-
-		if (some_item->idFrom == IDC_TBMODEL && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle_Tabs(item, App->CL_TopBar->Toggle_Tabs_Model_Flag);
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_TBCAMERA && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle_Tabs(item, App->CL_TopBar->Toggle_Tabs_Camera_Flag);
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_TBANIMATION && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle_Tabs(item, App->CL_TopBar->Toggle_Tabs_Animation_Flag);
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_TBFILE && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle_Tabs(item, App->CL_TopBar->Toggle_Tabs_File_Flag);
-			return CDRF_DODEFAULT;
-		}*/
 
 		return CDRF_DODEFAULT;
 	}
 
 	case WM_COMMAND:
 	{
-		/*if (LOWORD(wParam) == IDC_TBFILE)
+		if (LOWORD(wParam) == IDC_BT_TT_TEST)
 		{
-			App->CL_TopBar->Hide_Tabs();
+			Debug
+			/*App->CL_TopBar->Hide_Tabs();
 			ShowWindow(App->CL_TopBar->Files_TB_hWnd, SW_SHOW);
 			App->CL_TopBar->Toggle_Tabs_File_Flag = 1;
 
@@ -120,12 +103,12 @@ LRESULT CALLBACK SB_TopTabs_Equity::Tabs_Headers_Proc(HWND hDlg, UINT message, W
 
 			App->CL_Ogre->Ogre_Listener->ImGui_Render_Tab = Enums::ImGui_Render_Group;
 
-			App->CL_Panels->Show_Panels(1);
+			App->CL_Panels->Show_Panels(1);*/
 
 			return TRUE;
 		}
 
-		if (LOWORD(wParam) == IDC_TBGROUP)
+		/*if (LOWORD(wParam) == IDC_TBGROUP)
 		{
 			App->CL_TopBar->Hide_Tabs();
 			ShowWindow(App->CL_TopBar->Group_TB_hWnd, SW_SHOW);
@@ -193,6 +176,75 @@ LRESULT CALLBACK SB_TopTabs_Equity::Tabs_Headers_Proc(HWND hDlg, UINT message, W
 		}*/
 
 	}
+	}
+	return FALSE;
+}
+
+// *************************************************************************
+// *						Start_Files_TB Terry Flanigan				   *
+// *************************************************************************
+void SB_TopTabs_Equity::Start_Files_TB(void)
+{
+	Test_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_EQ_TEST, Tabs_TB_hWnd_Eq, (DLGPROC)Files_TB_Proc);
+}
+
+// *************************************************************************
+// *								Files_TB_Proc						   *
+// *************************************************************************
+LRESULT CALLBACK SB_TopTabs_Equity::Files_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_UPDATE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		return TRUE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->Brush_Tabs;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_UPDATE && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+
+		if (LOWORD(wParam) == IDC_UPDATE)
+		{
+			CFusionDoc* pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+
+			pDoc->SelectAll();
+			pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+
+			App->CL_Export_World->Export_World_GD3D(1);
+
+			pDoc->ResetAllSelections();
+			pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+
+			App->CLSB_Equity->mAutoLoad = 1;
+			App->CLSB_Equity->Auto_Load_File();
+			return 1;
+		}
+
+		return FALSE;
+	}
+
 	}
 	return FALSE;
 }

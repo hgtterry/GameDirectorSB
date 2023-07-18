@@ -151,8 +151,8 @@
 #define IDB_TB_MODELDATAON              300
 #define IDD_SB_BRUSHDIMENSIONS          308
 #define IDD_SB_RECENTPRJ                310
-#define IDD_DIALOG4                     313
 #define IDD_TOPTABS_EQUITY              313
+#define IDD_TB_EQ_TEST                  315
 #define IDC_RESET_ALL                   1000
 #define IDC_EDIT1                       1001
 #define IDC_EDIT10                      1002
@@ -564,6 +564,7 @@
 #define IDC_BT_CHANGE_NAME              1363
 #define IDC_BTSHOWBONES                 1363
 #define IDC_BTCLEARFILES                1363
+#define IDC_BT_TT_TEST                  1363
 #define IDC_BANNER                      1364
 #define IDC_GD_CYLINDER_PRIMITIVE       1364
 #define IDC_BT_BROWSE                   1364
@@ -920,7 +921,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        315
+#define _APS_NEXT_RESOURCE_VALUE        317
 #define _APS_NEXT_COMMAND_VALUE         33082
 #define _APS_NEXT_CONTROL_VALUE         1497
 #define _APS_NEXT_SYMED_VALUE           112

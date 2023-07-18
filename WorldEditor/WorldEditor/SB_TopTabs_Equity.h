@@ -29,12 +29,20 @@ public:
 	SB_TopTabs_Equity(void);
 	~SB_TopTabs_Equity(void);
 
+	void Start_Tabs(void);
 	void Start_Tabs_Headers(void);
 
 	HWND Tabs_TB_hWnd_Eq;
 private:
 
 	static LRESULT CALLBACK Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Files_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	void Start_Files_TB(void);
+
+	HWND Test_TB_hWnd;
+
+	bool Toggle_Tabs_Test_Flag;
 };
 
 

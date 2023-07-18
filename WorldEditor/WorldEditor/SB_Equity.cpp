@@ -95,7 +95,9 @@ void SB_Equity::Start_Equity_Dialog(bool AutoLoad)
 		Equity_Main_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_EQUITYME, App->MainHwnd, (DLGPROC)Equity_Dialog_Proc);
 		
 		Start_Render_Buttons();
-		
+
+		App->CLSB_TopTabs_Equity->Start_Tabs();
+
 		EquitySB_Dialog_Created = 1;
 		Switch_3D_Window();	
 	}
@@ -114,11 +116,9 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_Proc(HWND hDlg, UINT message, WPARAM w
 	{
 	case WM_INITDIALOG:
 	{
-
-		SendDlgItemMessage(hDlg, IDC_UPDATE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		
 		return TRUE;
 	}
+
 	case WM_CTLCOLORSTATIC:
 	{
 		/*if (GetDlgItem(hDlg, IDC_TITLENAME) == (HWND)lParam)
@@ -134,20 +134,6 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_Proc(HWND hDlg, UINT message, WPARAM w
 	case WM_CTLCOLORDLG:
 	{
 		return (LONG)App->AppBackground;
-	}
-
-	case WM_DRAWITEM:
-	{
-
-		LPDRAWITEMSTRUCT lpDIS = (LPDRAWITEMSTRUCT)lParam;
-
-		if (lpDIS->CtlID == IDC_UPDATE)
-		{
-			App->Custom_Button_Normal_MFC(lpDIS, hDlg);
-			return TRUE;
-		}
-
-		return TRUE;
 	}
 
 	case WM_SIZE:
@@ -251,31 +237,13 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_Proc(HWND hDlg, UINT message, WPARAM w
 			return TRUE;
 		}
 
-		if (LOWORD(wParam) == IDC_TEST)
+		/*if (LOWORD(wParam) == IDC_TEST)
 		{
 			App->CLSB_Ogre->OgreListener->StopOgre = 1;
 			App->CLSB_Ogre->OgreIsRunning = 0;
 			return TRUE;
-		}
+		}*/
 
-		if (LOWORD(wParam) == IDC_UPDATE)
-		{
-			CFusionDoc* pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
-
-			pDoc->SelectAll();
-			pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
-
-			App->CL_Export_World->Export_World_GD3D(1);
-
-			pDoc->ResetAllSelections();
-			pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
-
-			App->CLSB_Equity->mAutoLoad = 1;
-			App->CLSB_Equity->Auto_Load_File();
-
-			return TRUE;
-		}
-		
 		if (LOWORD(wParam) == IDOK)
 		{
 			App->CLSB_Equity->EquitySB_Dialog_Created = 0;
