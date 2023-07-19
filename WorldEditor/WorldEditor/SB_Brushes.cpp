@@ -224,22 +224,14 @@ LRESULT CALLBACK SB_Brushes::Dimensions_Dlg_Proc(HWND hDlg, UINT message, WPARAM
 			case SB_LINEUP:
 			{
 				App->CLSB_Brushes->CenterOfSelection.X += App->CLSB_Brushes->PosX_Delta;
-				geVec3d_Subtract(&App->CLSB_Brushes->CenterOfSelection, &App->CLSB_Brushes->m_pDoc->SelectedGeoCenter, &App->CLSB_Brushes->CenterOfSelection);
-				
-				App->CLSB_Brushes->m_pDoc->MoveSelectedBrushList(App->CLSB_Brushes->m_pDoc->pSelBrushes, &App->CLSB_Brushes->CenterOfSelection);
-				
-				App->CLSB_Brushes->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+				App->CLSB_Brushes->Move_Brush();
 				break;
 			}
 
 			case SB_LINEDOWN:
 			{
 				App->CLSB_Brushes->CenterOfSelection.X -= App->CLSB_Brushes->PosX_Delta;
-				geVec3d_Subtract(&App->CLSB_Brushes->CenterOfSelection, &App->CLSB_Brushes->m_pDoc->SelectedGeoCenter, &App->CLSB_Brushes->CenterOfSelection);
-
-				App->CLSB_Brushes->m_pDoc->MoveSelectedBrushList(App->CLSB_Brushes->m_pDoc->pSelBrushes, &App->CLSB_Brushes->CenterOfSelection);
-
-				App->CLSB_Brushes->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+				App->CLSB_Brushes->Move_Brush();
 				break;
 			}
 			}
@@ -381,6 +373,18 @@ LRESULT CALLBACK SB_Brushes::Dimensions_Dlg_Proc(HWND hDlg, UINT message, WPARAM
 }
 
 // *************************************************************************
+// *				Move_Brush:- Terry and Hazel Flanigan 2023		  	   *
+// *************************************************************************
+void SB_Brushes::Move_Brush()
+{
+	geVec3d_Subtract(&App->CLSB_Brushes->CenterOfSelection, &App->CLSB_Brushes->m_pDoc->SelectedGeoCenter, &App->CLSB_Brushes->CenterOfSelection);
+
+	App->CLSB_Brushes->m_pDoc->MoveSelectedBrushList(App->CLSB_Brushes->m_pDoc->pSelBrushes, &App->CLSB_Brushes->CenterOfSelection);
+
+	App->CLSB_Brushes->m_pDoc->UpdateAllViews(UAV_ALLVIEWS | REBUILD_QUICK, NULL);
+}
+
+// *************************************************************************
 // *		Fill_ComboBox_PosDelta:- Terry and Hazel Flanigan 2023	  	   *
 // *************************************************************************
 void SB_Brushes::Fill_ComboBox_PosDelta(HWND hDlg)
@@ -413,22 +417,6 @@ void SB_Brushes::Update_Pos_Dlg()
 
 	sprintf(buf, "%f", CenterOfSelection.Z);
 	SetDlgItemText(Dimensions_Dlg_hWnd, IDC_ED_BRUSH_POSZ, buf);
-}
-
-// *************************************************************************
-// *				Move_Brush:- Terry and Hazel Flanigan 2023		  	   *
-// *************************************************************************
-void SB_Brushes::Move_Brush()
-{
-	geVec3d BrushPos;
-	geVec3d MoveVec;
-
-	Brush_Bound(m_pDoc->CurBrush);
-	Brush_Center(m_pDoc->CurBrush, &BrushPos);
-	geVec3d_Subtract(&CenterOfSelection, &BrushPos, &MoveVec);
-
-	m_pDoc->MoveSelectedBrushList(App->CLSB_Brushes->m_pDoc->pSelBrushes, &MoveVec);
-	m_pDoc->UpdateAllViews(UAV_ALLVIEWS | REBUILD_QUICK, NULL);
 }
 
 // *************************************************************************
