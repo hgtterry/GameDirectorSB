@@ -32,6 +32,7 @@ SB_TopTabs_Equity::SB_TopTabs_Equity(void)
 
 
 	Toggle_Tabs_Test_Flag = 1;
+	Toggle_Dimensions_Flag = 0;
 }
 
 SB_TopTabs_Equity::~SB_TopTabs_Equity(void)
@@ -199,7 +200,7 @@ LRESULT CALLBACK SB_TopTabs_Equity::Files_TB_Proc(HWND hDlg, UINT message, WPARA
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_UPDATE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_BTTBDIMENSIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		return TRUE;
 	}
 
@@ -216,6 +217,13 @@ LRESULT CALLBACK SB_TopTabs_Equity::Files_TB_Proc(HWND hDlg, UINT message, WPARA
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BTTBDIMENSIONS && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CLSB_TopTabs_Equity->Toggle_Dimensions_Flag);
 			return CDRF_DODEFAULT;
 		}
 
@@ -240,6 +248,23 @@ LRESULT CALLBACK SB_TopTabs_Equity::Files_TB_Proc(HWND hDlg, UINT message, WPARA
 			App->CLSB_Equity->mAutoLoad = 1;
 			App->CLSB_Equity->Auto_Load_File();
 			return 1;
+		}
+
+		if (LOWORD(wParam) == IDC_BTTBDIMENSIONS)
+		{
+			Debug
+				/*if (App->SBC_Dimensions->Show_Position == 1)
+				{
+					App->SBC_Dimensions->Show_Position = 0;
+					App->CL_Panels->Show_Panels(1);
+				}
+				else
+				{
+					App->SBC_Dimensions->Show_Position = 1;
+					App->CL_Panels->Show_Panels(0);
+				}*/
+
+				return 1;
 		}
 
 		return FALSE;

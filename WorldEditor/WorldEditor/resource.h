@@ -708,6 +708,7 @@
 #define IDC_ED_BRUSH_POSX2              1496
 #define IDC_RECENTPRJLIST               1496
 #define IDC_STROTX                      1497
+#define IDC_BTTBDIMENSIONS              1497
 #define IDC_ED_BRUSH_POSY2              1498
 #define IDC_STROTY                      1499
 #define IDC_ED_BRUSH_POSZ2              1500
@@ -923,7 +924,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        317
 #define _APS_NEXT_COMMAND_VALUE         33082
-#define _APS_NEXT_CONTROL_VALUE         1497
+#define _APS_NEXT_CONTROL_VALUE         1498
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

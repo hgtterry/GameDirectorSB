@@ -43,6 +43,7 @@ private:
 	HWND Test_TB_hWnd;
 
 	bool Toggle_Tabs_Test_Flag;
+	bool Toggle_Dimensions_Flag;
 };
 
 
