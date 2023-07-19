@@ -192,7 +192,12 @@ void SB_Loader::Adjust()
 	//Rotate_X_Model(-90);
 	//Centre_Model_Mid();
 
-	//Translate_Model(0,0,-240);
+	float x = App->CLSB_Equity->Position_Offsets.x;
+	float y = App->CLSB_Equity->Position_Offsets.y;
+	float z = App->CLSB_Equity->Position_Offsets.z;
+
+	//Translate_Model(x,y,z);
+
 	//Brush  = (*(Level->Entities))[j].CreateActorBrush(ActorFile, ActorDir, PawnIni);
 	
 	if (App->CLSB_Equity->mAutoLoad == 0)
