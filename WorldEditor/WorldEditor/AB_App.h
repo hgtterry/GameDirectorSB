@@ -80,6 +80,7 @@ distribution.
 #include "SB_Brushes.h"
 #include "SB_RecentFiles.h"
 #include "SB_TopTabs_Equity.h"
+#include "SB_Dimensions.h"
 //#include <stack>
 
 class SB_App
@@ -140,6 +141,7 @@ public:
 	SB_Brushes*					CLSB_Brushes;
 	SB_RecentFiles*				CLSB_RecentFiles;
 	SB_TopTabs_Equity*			CLSB_TopTabs_Equity;
+	SB_Dimensions*				CLSB_Dimensions;
 
 	bool InitApp(void);
 	void InitMFC(void);

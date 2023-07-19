@@ -172,6 +172,7 @@
     <ClCompile Include="SB_Brushes.cpp" />
     <ClCompile Include="SB_Camera.cpp" />
     <ClCompile Include="SB_Dialogs.cpp" />
+    <ClCompile Include="SB_Dimensions.cpp" />
     <ClCompile Include="SB_Equity.cpp" />
     <ClCompile Include="SB_Exporter.cpp" />
     <ClCompile Include="SB_Export_Object.cpp" />
@@ -247,6 +248,7 @@
     <ClInclude Include="SB_Brushes.h" />
     <ClInclude Include="SB_Camera.h" />
     <ClInclude Include="SB_Dialogs.h" />
+    <ClInclude Include="SB_Dimensions.h" />
     <ClInclude Include="SB_Equity.h" />
     <ClInclude Include="SB_Exporter.h" />
     <ClInclude Include="SB_Export_Object.h" />

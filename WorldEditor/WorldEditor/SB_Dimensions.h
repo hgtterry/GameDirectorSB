@@ -55,6 +55,10 @@ protected:
 
 	void Set_Physics_Position(int Index);
 
+	void Rotate_X_Model(float X);
+	void Rotate_Y_Model(float Y);
+	void Rotate_Z_Model(float Z);
+
 	bool PosX_Selected;
 	bool PosY_Selected;
 	bool PosZ_Selected;

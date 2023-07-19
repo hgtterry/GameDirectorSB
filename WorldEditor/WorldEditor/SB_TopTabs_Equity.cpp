@@ -252,19 +252,19 @@ LRESULT CALLBACK SB_TopTabs_Equity::Files_TB_Proc(HWND hDlg, UINT message, WPARA
 
 		if (LOWORD(wParam) == IDC_BTTBDIMENSIONS)
 		{
-			Debug
-				/*if (App->SBC_Dimensions->Show_Position == 1)
-				{
-					App->SBC_Dimensions->Show_Position = 0;
-					App->CL_Panels->Show_Panels(1);
-				}
-				else
-				{
-					App->SBC_Dimensions->Show_Position = 1;
-					App->CL_Panels->Show_Panels(0);
-				}*/
 
-				return 1;
+			if (App->CLSB_Dimensions->Show_Position == 1)
+			{
+				App->CLSB_Dimensions->Show_Position = 0;
+				//App->CL_Panels->Show_Panels(1);
+			}
+			else
+			{
+				App->CLSB_Dimensions->Show_Position = 1;
+				//App->CL_Panels->Show_Panels(0);
+			}
+
+			return 1;
 		}
 
 		return FALSE;

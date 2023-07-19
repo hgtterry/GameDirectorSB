@@ -22,7 +22,7 @@ distribution.
 */
 
 #include "stdafx.h"
-#include "ME_App.h"
+#include "AB_App.h"
 #include "resource.h"
 #include "SB_Dimensions.h"
 
@@ -68,7 +68,7 @@ void SB_Dimensions::Dimesions_Select(void)
 	if (Show_Position == 1 || Show_Scale == 1 || Show_Rotation == 1)
 	{
 		Show_Dimensions = 1;
-		App->SBC_Dimensions->ImGui_Dimensions();
+		App->CLSB_Dimensions->ImGui_Dimensions();
 	}
 	else
 	{
@@ -212,15 +212,15 @@ void SB_Dimensions::ImGui_Position(void)
 
 	Ogre::Vector3 Pos = Ogre::Vector3(0, 0, 0);
 
-	if (App->CL_Model->Model_Type == Enums::LoadedFile_Assimp)
+	if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Assimp)
 	{
-		Pos.x = App->CL_Model->S_BoundingBox[0]->Centre->x;
-		Pos.y = App->CL_Model->S_BoundingBox[0]->Centre->y;
-		Pos.z = App->CL_Model->S_BoundingBox[0]->Centre->z;
+		Pos.x = App->CLSB_Model->S_BoundingBox[0]->Centre->x;
+		Pos.y = App->CLSB_Model->S_BoundingBox[0]->Centre->y;
+		Pos.z = App->CLSB_Model->S_BoundingBox[0]->Centre->z;
 
-		App->CL_Ogre->RenderListener->Hair_1PosX = Pos.x;
-		App->CL_Ogre->RenderListener->Hair_1PosY = Pos.y;
-		App->CL_Ogre->RenderListener->Hair_1PosZ = Pos.z;
+		App->CLSB_Ogre->RenderListener->Hair_1PosX = Pos.x;
+		App->CLSB_Ogre->RenderListener->Hair_1PosY = Pos.y;
+		App->CLSB_Ogre->RenderListener->Hair_1PosZ = Pos.z;
 	}
 
 	ImGuiStyle* style = &ImGui::GetStyle();
@@ -303,7 +303,7 @@ void SB_Dimensions::ImGui_Position(void)
 	ImGui::PushButtonRepeat(true);
 	if (ImGui::ArrowButton("##leftXX", ImGuiDir_Left))
 	{
-		if (App->CL_Model->Model_Loaded == 1)
+		if (App->CLSB_Model->Model_Loaded == 1)
 		{
 			if (PosX_Selected == 1)
 			{
@@ -325,7 +325,7 @@ void SB_Dimensions::ImGui_Position(void)
 	ImGui::SameLine(0.0f, spacingX);
 	if (ImGui::ArrowButton("##rightXX", ImGuiDir_Right))
 	{
-		if (App->CL_Model->Model_Loaded == 1)
+		if (App->CLSB_Model->Model_Loaded == 1)
 		{
 			if (PosX_Selected == 1)
 			{
@@ -369,27 +369,27 @@ void SB_Dimensions::ImGui_Position(void)
 // *************************************************************************
 void SB_Dimensions::Set_Position(float X, float Y, float Z)
 {
-	if (App->CL_Model->Model_Loaded == 1)
+	if (App->CLSB_Model->Model_Loaded == 1)
 	{
 		int Count = 0;
 		int VertCount = 0;
 
-		int GroupCount = App->CL_Model->Get_Groupt_Count();
+		int GroupCount = App->CLSB_Model->Get_Groupt_Count();
 
 		while (Count < GroupCount)
 		{
 			VertCount = 0;
-			while (VertCount < App->CL_Model->Group[Count]->GroupVertCount)
+			while (VertCount < App->CLSB_Model->Group[Count]->GroupVertCount)
 			{
-				App->CL_Model->Group[Count]->vertex_Data[VertCount].x += X;
-				App->CL_Model->Group[Count]->vertex_Data[VertCount].y += Y;
-				App->CL_Model->Group[Count]->vertex_Data[VertCount].z += Z;
+				App->CLSB_Model->Group[Count]->vertex_Data[VertCount].x += X;
+				App->CLSB_Model->Group[Count]->vertex_Data[VertCount].y += Y;
+				App->CLSB_Model->Group[Count]->vertex_Data[VertCount].z += Z;
 				VertCount++;
 			}
 			Count++;
 		}
 
-		App->CL_Model->Set_BondingBox_Model(0);
+		App->CLSB_Model->Set_BondingBox_Model(0);
 	}
 }
 
@@ -514,7 +514,7 @@ void SB_Dimensions::ImGui_Scale(void)
 	ImGui::PushButtonRepeat(true);
 	if (ImGui::ArrowButton("##leftSX", ImGuiDir_Left))
 	{
-		if (App->CL_Model->Model_Loaded == 1)
+		if (App->CLSB_Model->Model_Loaded == 1)
 		{
 			if (Scale_Lock == 1)
 			{
@@ -552,7 +552,7 @@ void SB_Dimensions::ImGui_Scale(void)
 	ImGui::SameLine(0.0f, spacingX);
 	if (ImGui::ArrowButton("##rightSX", ImGuiDir_Right))
 	{
-		if (App->CL_Model->Model_Loaded == 1)
+		if (App->CLSB_Model->Model_Loaded == 1)
 		{
 			if (Scale_Lock == 1)
 			{
@@ -623,7 +623,7 @@ void SB_Dimensions::ImGui_Scale(void)
 // *************************************************************************
 void SB_Dimensions::Set_Scale(bool Mode, float X, float Y, float Z)
 {
-	if (App->CL_Model->Model_Loaded == 1)
+	if (App->CLSB_Model->Model_Loaded == 1)
 	{
 		if (Scale_Lock == 1)
 		{
@@ -646,22 +646,22 @@ void SB_Dimensions::Set_Scale(bool Mode, float X, float Y, float Z)
 			int Count = 0;
 			int VertCount = 0;
 
-			int GroupCount = App->CL_Model->Get_Groupt_Count();
+			int GroupCount = App->CLSB_Model->Get_Groupt_Count();
 
 			while (Count < GroupCount)
 			{
 				VertCount = 0;
-				while (VertCount < App->CL_Model->Group[Count]->GroupVertCount)
+				while (VertCount < App->CLSB_Model->Group[Count]->GroupVertCount)
 				{
-					App->CL_Model->Group[Count]->vertex_Data[VertCount].x *= Scale.x;
-					App->CL_Model->Group[Count]->vertex_Data[VertCount].y *= Scale.y;
-					App->CL_Model->Group[Count]->vertex_Data[VertCount].z *= Scale.z;
+					App->CLSB_Model->Group[Count]->vertex_Data[VertCount].x *= Scale.x;
+					App->CLSB_Model->Group[Count]->vertex_Data[VertCount].y *= Scale.y;
+					App->CLSB_Model->Group[Count]->vertex_Data[VertCount].z *= Scale.z;
 					VertCount++;
 				}
 				Count++;
 			}
 
-			App->CL_Model->Set_BondingBox_Model(0);
+			App->CLSB_Model->Set_BondingBox_Model(0);
 
 		}
 		else
@@ -671,22 +671,22 @@ void SB_Dimensions::Set_Scale(bool Mode, float X, float Y, float Z)
 			int Count = 0;
 			int VertCount = 0;
 
-			int GroupCount = App->CL_Model->Get_Groupt_Count();
+			int GroupCount = App->CLSB_Model->Get_Groupt_Count();
 
 			while (Count < GroupCount)
 			{
 				VertCount = 0;
-				while (VertCount < App->CL_Model->Group[Count]->GroupVertCount)
+				while (VertCount < App->CLSB_Model->Group[Count]->GroupVertCount)
 				{
-					App->CL_Model->Group[Count]->vertex_Data[VertCount].x *= X;
-					App->CL_Model->Group[Count]->vertex_Data[VertCount].y *= Y;
-					App->CL_Model->Group[Count]->vertex_Data[VertCount].z *= Z;
+					App->CLSB_Model->Group[Count]->vertex_Data[VertCount].x *= X;
+					App->CLSB_Model->Group[Count]->vertex_Data[VertCount].y *= Y;
+					App->CLSB_Model->Group[Count]->vertex_Data[VertCount].z *= Z;
 					VertCount++;
 				}
 				Count++;
 			}
 
-			App->CL_Model->Set_BondingBox_Model(0);
+			App->CLSB_Model->Set_BondingBox_Model(0);
 		}
 	}
 }
@@ -769,22 +769,22 @@ void SB_Dimensions::ImGui_Rotation(void)
 	ImGui::PushButtonRepeat(true);
 	if (ImGui::ArrowButton("##leftRX", ImGuiDir_Left))
 	{
-		if (App->CL_Model->Model_Loaded == 1)
+		if (App->CLSB_Model->Model_Loaded == 1)
 		{
 
 			if (RotationX_Selected == 1)
 			{
-				App->CL_Dimensions->Rotate_X_Model(Model_Rotation_Delta);
+				App->CLSB_Dimensions->Rotate_X_Model(Model_Rotation_Delta);
 			}
 
 			if (RotationY_Selected == 1)
 			{
-				App->CL_Dimensions->Rotate_Y_Model(Model_Rotation_Delta);
+				App->CLSB_Dimensions->Rotate_Y_Model(Model_Rotation_Delta);
 			}
 
 			if (RotationZ_Selected == 1)
 			{
-				App->CL_Dimensions->Rotate_Z_Model(Model_Rotation_Delta);
+				App->CLSB_Dimensions->Rotate_Z_Model(Model_Rotation_Delta);
 			}
 
 		}
@@ -793,22 +793,22 @@ void SB_Dimensions::ImGui_Rotation(void)
 	ImGui::SameLine(0.0f, spacingX);
 	if (ImGui::ArrowButton("##rightRX", ImGuiDir_Right))
 	{
-		if (App->CL_Model->Model_Loaded == 1)
+		if (App->CLSB_Model->Model_Loaded == 1)
 		{
 			
 				if (RotationX_Selected == 1)
 				{
-					App->CL_Dimensions->Rotate_X_Model(-Model_Rotation_Delta);
+					App->CLSB_Dimensions->Rotate_X_Model(-Model_Rotation_Delta);
 				}
 
 				if (RotationY_Selected == 1)
 				{
-					App->CL_Dimensions->Rotate_Y_Model(-Model_Rotation_Delta);
+					App->CLSB_Dimensions->Rotate_Y_Model(-Model_Rotation_Delta);
 				}
 
 				if (RotationZ_Selected == 1)
 				{
-					App->CL_Dimensions->Rotate_Z_Model(-Model_Rotation_Delta);
+					App->CLSB_Dimensions->Rotate_Z_Model(-Model_Rotation_Delta);
 				}
 			
 		}
@@ -837,6 +837,186 @@ void SB_Dimensions::ImGui_Rotation(void)
 	ImGui::Unindent();
 }
 
+// *************************************************************************
+// *	  					Rotate_X_Model Terry Bernie					   *
+// *************************************************************************
+void SB_Dimensions::Rotate_X_Model(float X)
+{
+	if (App->CLSB_Model->Model_Loaded == 1)
+	{
+
+		Ogre::Vector3 Centre;
+
+		Centre.x = App->CLSB_Model->S_BoundingBox[0]->Centre[0].x;
+		Centre.y = App->CLSB_Model->S_BoundingBox[0]->Centre[0].y;
+		Centre.z = App->CLSB_Model->S_BoundingBox[0]->Centre[0].z;
+
+		Ogre::Vector3 Rotate;
+		Rotate.x = X;
+		Rotate.y = 0;
+		Rotate.z = 0;
+
+		int Count = 0;
+		int VertCount = 0;
+
+		int GroupCount = App->CLSB_Model->Get_Groupt_Count();
+
+		while (Count < GroupCount)
+		{
+			VertCount = 0;
+			while (VertCount < App->CLSB_Model->Group[Count]->GroupVertCount)
+			{
+				Ogre::Vector3 VertPos;
+				Ogre::Vector3 RotatedVert;
+
+				VertPos.x = App->CLSB_Model->Group[Count]->vertex_Data[VertCount].x;
+				VertPos.y = App->CLSB_Model->Group[Count]->vertex_Data[VertCount].y;
+				VertPos.z = App->CLSB_Model->Group[Count]->vertex_Data[VertCount].z;
+
+				if (Rotate.x != 0) // Dont bother if Zero
+				{
+					RotatedVert = (Ogre::Quaternion(Ogre::Degree(Rotate.x), Ogre::Vector3::UNIT_Y) * (VertPos - Centre));
+				}
+				else
+				{
+					RotatedVert = VertPos - Centre;
+				}
+
+				RotatedVert += Centre;
+
+				App->CLSB_Model->Group[Count]->vertex_Data[VertCount].x = RotatedVert.x;
+				App->CLSB_Model->Group[Count]->vertex_Data[VertCount].y = RotatedVert.y;
+				App->CLSB_Model->Group[Count]->vertex_Data[VertCount].z = RotatedVert.z;
+
+				VertCount++;
+			}
+			Count++;
+		}
+
+		App->CLSB_Model->Set_BondingBox_Model(0);
+	}
+}
+
+// *************************************************************************
+// *	  				Rotate_Y_Model Terry Bernie						   *
+// *************************************************************************
+void SB_Dimensions::Rotate_Y_Model(float Y)
+{
+	if (App->CLSB_Model->Model_Loaded == 1)
+	{
+
+		Ogre::Vector3 Centre;
+
+		Centre.x = App->CLSB_Model->S_BoundingBox[0]->Centre[0].x;
+		Centre.y = App->CLSB_Model->S_BoundingBox[0]->Centre[0].y;
+		Centre.z = App->CLSB_Model->S_BoundingBox[0]->Centre[0].z;
+
+		Ogre::Vector3 Rotate;
+		Rotate.x = 0;
+		Rotate.y = Y;
+		Rotate.z = 0;
+
+
+		int Count = 0;
+		int VertCount = 0;
+
+		int GroupCount = App->CLSB_Model->Get_Groupt_Count();
+
+		while (Count < GroupCount)
+		{
+			VertCount = 0;
+			while (VertCount < App->CLSB_Model->Group[Count]->GroupVertCount)
+			{
+				Ogre::Vector3 VertPos;
+				Ogre::Vector3 RotatedVert;
+
+				VertPos.x = App->CLSB_Model->Group[Count]->vertex_Data[VertCount].x;
+				VertPos.y = App->CLSB_Model->Group[Count]->vertex_Data[VertCount].y;
+				VertPos.z = App->CLSB_Model->Group[Count]->vertex_Data[VertCount].z;
+
+				if (Rotate.y != 0) // Dont bother if Zero
+				{
+					RotatedVert = (Ogre::Quaternion(Ogre::Degree(Rotate.y), Ogre::Vector3::UNIT_Z) * (VertPos - Centre));
+				}
+				else
+				{
+					RotatedVert = VertPos - Centre;
+				}
+
+				RotatedVert += Centre;
+
+				App->CLSB_Model->Group[Count]->vertex_Data[VertCount].x = RotatedVert.x;
+				App->CLSB_Model->Group[Count]->vertex_Data[VertCount].y = RotatedVert.y;
+				App->CLSB_Model->Group[Count]->vertex_Data[VertCount].z = RotatedVert.z;
+
+				VertCount++;
+			}
+			Count++;
+		}
+		App->CLSB_Model->Set_BondingBox_Model(0);
+	}
+}
+
+// *************************************************************************
+// *	  				Rotate_Z_Model Terry Bernie						   *
+// *************************************************************************
+void SB_Dimensions::Rotate_Z_Model(float Z)
+{
+	if (App->CLSB_Model->Model_Loaded == 1)
+	{
+
+		Ogre::Vector3 Centre;
+
+		Centre.x = App->CLSB_Model->S_BoundingBox[0]->Centre[0].x;
+		Centre.y = App->CLSB_Model->S_BoundingBox[0]->Centre[0].y;
+		Centre.z = App->CLSB_Model->S_BoundingBox[0]->Centre[0].z;
+
+		Ogre::Vector3 Rotate;
+		Rotate.x = 0;
+		Rotate.y = 0;
+		Rotate.z = Z;
+
+
+		int Count = 0;
+		int VertCount = 0;
+
+		int GroupCount = App->CLSB_Model->Get_Groupt_Count();
+
+		while (Count < GroupCount)
+		{
+			VertCount = 0;
+			while (VertCount < App->CLSB_Model->Group[Count]->GroupVertCount)
+			{
+				Ogre::Vector3 VertPos;
+				Ogre::Vector3 RotatedVert;
+
+				VertPos.x = App->CLSB_Model->Group[Count]->vertex_Data[VertCount].x;
+				VertPos.y = App->CLSB_Model->Group[Count]->vertex_Data[VertCount].y;
+				VertPos.z = App->CLSB_Model->Group[Count]->vertex_Data[VertCount].z;
+
+				if (Rotate.z != 0) // Dont bother if Zero
+				{
+					RotatedVert = (Ogre::Quaternion(Ogre::Degree(Rotate.z), Ogre::Vector3::UNIT_X) * (VertPos - Centre));
+				}
+				else
+				{
+					RotatedVert = VertPos - Centre;
+				}
+
+				RotatedVert += Centre;
+
+				App->CLSB_Model->Group[Count]->vertex_Data[VertCount].x = RotatedVert.x;
+				App->CLSB_Model->Group[Count]->vertex_Data[VertCount].y = RotatedVert.y;
+				App->CLSB_Model->Group[Count]->vertex_Data[VertCount].z = RotatedVert.z;
+
+				VertCount++;
+			}
+			Count++;
+		}
+
+		App->CLSB_Model->Set_BondingBox_Model(0);
+	}
+}
 // *************************************************************************
 // *				UpDate_Physics_And_Visuals Terry Flanigtan		 	   *
 // *************************************************************************
