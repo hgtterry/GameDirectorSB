@@ -48,6 +48,7 @@ SB_ImGui::SB_ImGui()
 	
 	Show_Model_Data_F = 0;
 	Show_Camera_Pos_F = 0;
+	Show_BB_Data_F = 0;
 
 	PosX_Selected = 1;
 	PosY_Selected = 0;
@@ -76,6 +77,11 @@ void SB_ImGui::ImGui_Editor_Loop(void)
 	if (Show_Camera_Pos_F == 1)
 	{
 		Camera_Pos_GUI();
+	}
+
+	if (Show_BB_Data_F == 1)
+	{
+		Model_BB_GUI();
 	}
 }
 
@@ -354,6 +360,72 @@ void SB_ImGui::Camera_Pos_GUI(void)
 void SB_ImGui::Close_Camera_Pos(void)
 {
 	Show_Camera_Pos_F = 0;
+}
+
+// *************************************************************************
+// *			Start_BB_Data:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void SB_ImGui::Start_BB_Data(void)
+{
+	Show_BB_Data_F = 1;
+}
+
+// *************************************************************************
+// *			Model_BB_GUI:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void SB_ImGui::Model_BB_GUI(void)
+{
+	ImGui::SetNextWindowPos(ImVec2(Model_Data_PosX, Model_Data_PosY));
+
+	if (!ImGui::Begin("BB Data", &Show_BB_Data_F, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize
+		| ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
+	{
+		ImGui::End();
+	}
+	else
+	{
+		ImGui::Spacing();
+		ImGui::Text("Bounding Box Info");
+		ImGui::Text("  ");
+		ImGui::Text("Min X:- %f", App->CLSB_Model->S_BoundingBox[0]->BB_Min[0].x);
+		ImGui::Text("Min Y:- %f", App->CLSB_Model->S_BoundingBox[0]->BB_Min[0].y);
+		ImGui::Text("Min Z:- %f", App->CLSB_Model->S_BoundingBox[0]->BB_Min[0].z);
+		ImGui::Text("  ");
+		ImGui::Text("Max X:- %f", App->CLSB_Model->S_BoundingBox[0]->BB_Max[0].x);
+		ImGui::Text("Max Y:- %f", App->CLSB_Model->S_BoundingBox[0]->BB_Max[0].y);
+		ImGui::Text("Max Z:- %f", App->CLSB_Model->S_BoundingBox[0]->BB_Max[0].z);
+		ImGui::Text("  ");
+		ImGui::Text("Size X:- %f", App->CLSB_Model->S_BoundingBox[0]->Size[0].x);
+		ImGui::Text("Size Y:- %f", App->CLSB_Model->S_BoundingBox[0]->Size[0].y);
+		ImGui::Text("Size Z:- %f", App->CLSB_Model->S_BoundingBox[0]->Size[0].z);
+		ImGui::Text("  ");
+		ImGui::Text("Centre X:- %f", App->CLSB_Model->S_BoundingBox[0]->Centre[0].x);
+		ImGui::Text("Centre Y:- %f", App->CLSB_Model->S_BoundingBox[0]->Centre[0].y);
+		ImGui::Text("Centre Z:- %f", App->CLSB_Model->S_BoundingBox[0]->Centre[0].z);
+		ImGui::Text("  ");
+		ImGui::Text("Radius:- %f", App->CLSB_Model->S_BoundingBox[0]->radius);
+
+		ImVec2 Size = ImGui::GetWindowSize();
+		Model_Data_PosX = ((float)App->CLSB_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);
+		Model_Data_PosY = ((float)App->CLSB_Ogre->OgreListener->View_Height / 2) - (Size.y / 2);;
+
+		ImGui::Separator();
+
+		if (ImGui::Button("Close"))
+		{
+			Close_BB_Data();
+		}
+
+		ImGui::End();
+	}
+}
+
+// *************************************************************************
+// *			Close_BB_Data:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void SB_ImGui::Close_BB_Data(void)
+{
+	Show_BB_Data_F = 0;
 }
 
 

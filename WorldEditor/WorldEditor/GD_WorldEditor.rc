@@ -2521,6 +2521,7 @@ BEGIN
     BEGIN
         MENUITEM "Actor To World",              ID_DEBUG_ACTORTOWORLD
         MENUITEM "Show Camera Positions",       ID_DEBUG_SHOWCAMERAPOSITIONS
+        MENUITEM "Bounding Box",                ID_DEBUG_BOUNDINGBOX
     END
 END
 

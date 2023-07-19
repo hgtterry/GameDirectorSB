@@ -41,11 +41,16 @@ public:
 	void Camera_Pos_GUI(void);
 	void Close_Camera_Pos(void);
 
+	void Start_BB_Data(void);
+	void Model_BB_GUI(void);
+	void Close_BB_Data(void);
+
 	bool Show_FPS;  // Show Frames Per Second [150122]
 	bool StartPos;  // Position FPS Frame Flag [150122]
 
 	bool Show_Model_Data_F;
 	bool Show_Camera_Pos_F;
+	bool Show_BB_Data_F;
 
 	float PosX;
 	float PosY;

@@ -164,6 +164,19 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_Proc(HWND hDlg, UINT message, WPARAM w
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == ID_DEBUG_BOUNDINGBOX)
+		{
+			if (App->CLSB_ImGui->Show_BB_Data_F == 1)
+			{
+				App->CLSB_ImGui->Close_BB_Data();
+			}
+			else
+			{
+				App->CLSB_ImGui->Start_BB_Data();
+			}
+			return TRUE;
+		}
+		
 		// File Import
 		if (LOWORD(wParam) == ID_IMPORT_GENESIS3DACT)
 		{

@@ -719,12 +719,7 @@ void CFusionView::OnMouseMove (UINT nFlags, CPoint point) // hgtterry OnMouseMov
 
 						if (LButtonIsDown)
 						{
-							LockAxis( &dv ) ;
-
-							dv.X = 1;
-							dv.Y = 0;
-							dv.Z = 0;
-
+							LockAxis( &dv );
 							pDoc->MoveSelectedBrushes(&dv);
 						}// LButtonDown
 						if (RButtonIsDown)
