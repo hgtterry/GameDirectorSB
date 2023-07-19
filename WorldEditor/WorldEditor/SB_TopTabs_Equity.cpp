@@ -39,7 +39,7 @@ SB_TopTabs_Equity::~SB_TopTabs_Equity(void)
 }
 
 // *************************************************************************
-// *						Start_Tabs Terry							   *
+// *			Start_Tabs:- Terry and Hazel Flanigan 2023				   *
 // *************************************************************************
 void SB_TopTabs_Equity::Start_Tabs(void)
 {
@@ -48,7 +48,7 @@ void SB_TopTabs_Equity::Start_Tabs(void)
 }
 
 // *************************************************************************
-// *						Start_Tabs_Headers Terry					   *
+// *		Start_Tabs_Headers:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 void SB_TopTabs_Equity::Start_Tabs_Headers(void)
 {
@@ -56,7 +56,7 @@ void SB_TopTabs_Equity::Start_Tabs_Headers(void)
 }
 
 // *************************************************************************
-// *							Tabs_Headers_Proc_Proc					   *
+// *		Tabs_Headers_Proc_Proc:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
 LRESULT CALLBACK SB_TopTabs_Equity::Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -181,7 +181,7 @@ LRESULT CALLBACK SB_TopTabs_Equity::Tabs_Headers_Proc(HWND hDlg, UINT message, W
 }
 
 // *************************************************************************
-// *						Start_Files_TB Terry Flanigan				   *
+// *			Start_Files_TB:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 void SB_TopTabs_Equity::Start_Files_TB(void)
 {
@@ -189,7 +189,7 @@ void SB_TopTabs_Equity::Start_Files_TB(void)
 }
 
 // *************************************************************************
-// *								Files_TB_Proc						   *
+// *			Files_TB_Proc:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 LRESULT CALLBACK SB_TopTabs_Equity::Files_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {

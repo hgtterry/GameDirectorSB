@@ -134,7 +134,6 @@ bool A_File::Open_3dt_File(bool UseDialogLoader)
 	
 	App->CLSB_RecentFiles->RecentFile_Files_Update();
 
-	App->Say("Loaded", App->CL_World->mCurrent_3DT_File);
 	return 1;
 }
 

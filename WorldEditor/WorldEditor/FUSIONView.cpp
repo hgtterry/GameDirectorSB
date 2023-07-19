@@ -532,7 +532,7 @@ void CFusionView::ShearSelected (CFusionDoc *pDoc, int dx, int dy)
 }
 
 #pragma warning (disable:4100)
-void CFusionView::OnMouseMove (UINT nFlags, CPoint point)
+void CFusionView::OnMouseMove (UINT nFlags, CPoint point) // hgtterry OnMouseMove
 {
 	int			dx, dy;
 	geVec3d		sp, wp, dv;
@@ -720,6 +720,11 @@ void CFusionView::OnMouseMove (UINT nFlags, CPoint point)
 						if (LButtonIsDown)
 						{
 							LockAxis( &dv ) ;
+
+							dv.X = 1;
+							dv.Y = 0;
+							dv.Z = 0;
+
 							pDoc->MoveSelectedBrushes(&dv);
 						}// LButtonDown
 						if (RButtonIsDown)

@@ -511,18 +511,19 @@ LRESULT CALLBACK SB_TopTabs::Top_File_Proc(HWND hDlg, UINT message, WPARAM wPara
 				strcat(Txlpath,"Levels\\Equity.txl");
 
 				strcpy(App->CL_File->PathFileName_3dt,path);
-
+				
 				App->CL_File->Open_3dt_File(0);
-
+				
 				App->CL_World->Set_Paths();
-
+				
 				App->CL_World->Reset_Editor();
 
 				App->CL_TabsGroups_Dlg->Fill_ListBox();
 
 				App->CL_World->Level_SetTxlPath(Txlpath);
 
-				App->Say(path);
+				App->Say("Loaded", path);
+				
 				return TRUE;
 			}
 

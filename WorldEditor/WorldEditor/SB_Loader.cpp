@@ -190,7 +190,7 @@ void SB_Loader::Adjust()
 {
 	Rotate_Z_Model(90);
 	//Rotate_X_Model(-90);
-	Centre_Model_Mid();
+	//Centre_Model_Mid();
 
 	//Translate_Model(0,0,-240);
 	//Brush  = (*(Level->Entities))[j].CreateActorBrush(ActorFile, ActorDir, PawnIni);

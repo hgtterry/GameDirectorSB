@@ -55,6 +55,8 @@ void SB_Brushes::Start_Dimensions_Dlg()
 
 		Lock_Textures(true);
 
+		SelBrushList_Center(m_pDoc->pSelBrushes, &m_pDoc->SelectedGeoCenter);
+
 		CenterOfSelection = m_pDoc->SelectedGeoCenter;
 
 		Dimensions_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_BRUSHDIMENSIONS, App->MainHwnd, (DLGPROC)Dimensions_Dlg_Proc);
@@ -220,14 +222,26 @@ LRESULT CALLBACK SB_Brushes::Dimensions_Dlg_Proc(HWND hDlg, UINT message, WPARAM
 			switch ((int)LOWORD(wParam))
 			{
 			case SB_LINEUP:
+			{
 				App->CLSB_Brushes->CenterOfSelection.X += App->CLSB_Brushes->PosX_Delta;
-				App->CLSB_Brushes->Move_Brush();
+				geVec3d_Subtract(&App->CLSB_Brushes->CenterOfSelection, &App->CLSB_Brushes->m_pDoc->SelectedGeoCenter, &App->CLSB_Brushes->CenterOfSelection);
+				
+				App->CLSB_Brushes->m_pDoc->MoveSelectedBrushList(App->CLSB_Brushes->m_pDoc->pSelBrushes, &App->CLSB_Brushes->CenterOfSelection);
+				
+				App->CLSB_Brushes->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 				break;
+			}
 
 			case SB_LINEDOWN:
+			{
 				App->CLSB_Brushes->CenterOfSelection.X -= App->CLSB_Brushes->PosX_Delta;
-				App->CLSB_Brushes->Move_Brush();
+				geVec3d_Subtract(&App->CLSB_Brushes->CenterOfSelection, &App->CLSB_Brushes->m_pDoc->SelectedGeoCenter, &App->CLSB_Brushes->CenterOfSelection);
+
+				App->CLSB_Brushes->m_pDoc->MoveSelectedBrushList(App->CLSB_Brushes->m_pDoc->pSelBrushes, &App->CLSB_Brushes->CenterOfSelection);
+
+				App->CLSB_Brushes->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 				break;
+			}
 			}
 
 			App->CLSB_Brushes->Update_Pos_Dlg();
