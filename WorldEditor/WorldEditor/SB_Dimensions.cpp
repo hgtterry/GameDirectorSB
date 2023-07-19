@@ -91,7 +91,6 @@ void SB_Dimensions::ImGui_Dimensions(void)
 	}
 	else
 	{
-		
 		ImGui::Indent();
 		ImGui::Indent();
 
@@ -197,8 +196,8 @@ void SB_Dimensions::ImGui_Dimensions(void)
 			Show_Position = 0;
 			Show_Scale = 0;
 			Show_Rotation = 0;
-
 		}
+
 		ImGui::End();
 	}
 }

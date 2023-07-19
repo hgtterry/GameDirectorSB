@@ -122,11 +122,10 @@ bool SB_OgreListener::frameStarted(const FrameEvent& evt)
 bool SB_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 {
 	
-	//App->Flash_Window();
 	OgreFrameTime = evt.timeSinceLastFrame;
 
 	App->CLSB_Ogre->m_imgui.render();
-
+	
 	/*if (App->CL_Ogre->Block_RenderingQueued == 1)
 	{
 		return 1;
@@ -608,6 +607,7 @@ bool SB_OgreListener::Update_Game_Logic(float DeltaTime)
 	App->CLSB_Ogre->m_imgui.NewFrame(DeltaTime, (float)View_Width, (float)View_Height);
 
 	App->CLSB_ImGui->Render_FPS();
+	App->CLSB_Dimensions->Dimesions_Select();
 	//if (Dubug_Physics_Draw == 1)
 	//{
 	//	App->CL_Bullet->dynamicsWorld->debugDrawWorld();
