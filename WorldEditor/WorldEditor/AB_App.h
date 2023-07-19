@@ -150,6 +150,7 @@ public:
 	void Say(const char* Message, char* Message2 = NULL);
 	void Say_Int(int Value);
 	void Say_Float(float Value);
+	void Say_Vector3(Ogre::Vector3 Vector);
 	void Flash_Window();
 	bool IsProcessRunning(char* executableName);
 	uint64_t Get_Stack(void);

@@ -639,11 +639,20 @@ LRESULT CALLBACK SB_TopTabs::Top_Test_Proc(HWND hDlg, UINT message, WPARAM wPara
 
 		if (LOWORD(wParam) == IDC_BT_TB_BUILDPREVIEW)
 		{
+			App->CLSB_Equity->Position_Offsets.x = 0;
+			App->CLSB_Equity->Position_Offsets.y = 0;
+			App->CLSB_Equity->Position_Offsets.z = 0;
 
 			CFusionDoc* pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
 
 			pDoc->SelectAll();
 			pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+
+			App->CLSB_Equity->Position_Offsets.x = pDoc->SelectedGeoCenter.X;
+			App->CLSB_Equity->Position_Offsets.y = pDoc->SelectedGeoCenter.Y;
+			App->CLSB_Equity->Position_Offsets.z = pDoc->SelectedGeoCenter.Z;
+
+			App->Say_Vector3(App->CLSB_Equity->Position_Offsets);
 
 			App->CL_Export_World->Export_World_GD3D(1);
 

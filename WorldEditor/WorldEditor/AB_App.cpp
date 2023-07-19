@@ -379,6 +379,16 @@ void SB_App::Say_Float(float Value)
 }
 
 // *************************************************************************
+// *			SB_App::Say_Vector3:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_App::Say_Vector3(Ogre::Vector3 Vector)
+{
+	char buf[255];
+	sprintf(buf, "%f %f %f", Vector.x, Vector.y, Vector.z);
+	MessageBox(MainHwnd, buf, "Equity Notice", MB_OK);
+}
+
+// *************************************************************************
 // *				FlashWindow:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 void SB_App::Flash_Window()
