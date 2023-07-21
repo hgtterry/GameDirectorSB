@@ -788,7 +788,7 @@ void SB_App::Debug_Close(void)
 }
 
 // *************************************************************************
-// *			Debug_Close:- Terry and Hazel Flanigan 2023				   *
+// *			Get_Stack:- Terry and Hazel Flanigan 2023				   *
 // *************************************************************************
 uint64_t SB_App::Get_Stack(void)
 {

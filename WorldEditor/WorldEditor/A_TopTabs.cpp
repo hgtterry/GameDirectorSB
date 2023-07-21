@@ -657,9 +657,9 @@ LRESULT CALLBACK SB_TopTabs::Top_Test_Proc(HWND hDlg, UINT message, WPARAM wPara
 			pDoc->ResetAllSelections();
 			pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 
-
+			
 			App->CLSB_Equity->Start_Equity_Dialog(1);
-
+			
 			return TRUE;
 		}
 

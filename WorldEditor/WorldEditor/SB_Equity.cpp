@@ -49,7 +49,9 @@ void SB_Equity::Switch_3D_Window()
 
 	Resize_3DView();
 
+	App->Say("Auto_Load_File");
 	Auto_Load_File();
+	App->Say("Auto_Load_File");
 
 	App->CLSB_Ogre->OgreIsRunning = 1;
 	App->CLSB_Ogre->Ogre_Render_Loop();
@@ -100,9 +102,12 @@ void SB_Equity::Start_Equity_Dialog(bool AutoLoad)
 
 		EquitySB_Dialog_Created = 1;
 		Switch_3D_Window();	
+
+		App->Say("Created");
 	}
 	else
 	{
+		App->Say("Auto_Load_File 2");
 		Auto_Load_File();
 	}
 }
@@ -166,13 +171,16 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_Proc(HWND hDlg, UINT message, WPARAM w
 
 		if (LOWORD(wParam) == ID_DEBUG_BOUNDINGBOX)
 		{
-			if (App->CLSB_ImGui->Show_BB_Data_F == 1)
+			if (App->CLSB_Model->Model_Loaded == 1)
 			{
-				App->CLSB_ImGui->Close_BB_Data();
-			}
-			else
-			{
-				App->CLSB_ImGui->Start_BB_Data();
+				if (App->CLSB_ImGui->Show_BB_Data_F == 1)
+				{
+					App->CLSB_ImGui->Close_BB_Data();
+				}
+				else
+				{
+					App->CLSB_ImGui->Start_BB_Data();
+				}
 			}
 			return TRUE;
 		}
