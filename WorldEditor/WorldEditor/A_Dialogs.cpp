@@ -34,8 +34,7 @@ A_Dialogs::A_Dialogs()
 {
 	F_Textured = 0;
 	F_WireFrame = 1;
-	F_ListData_Dlg_Active = 0;
-
+	
 	Message_Text_Header[0] = 0;
 	Message_Text_Message[0] = 0;
 	Current_Txl_File[0] = 0;
@@ -249,182 +248,6 @@ LRESULT CALLBACK A_Dialogs::Properties_Proc(HWND hDlg, UINT message, WPARAM wPar
 }
 
 // *************************************************************************
-// *	  		Show_ListData:- Terry and Hazel Flanigan 2023			   *
-// *************************************************************************
-bool A_Dialogs::Show_ListData()
-{
-	if (F_ListData_Dlg_Active == 1)
-	{
-		return 1;
-	}
-
-	Get_Current_Document();
-	DialogBox(App->hInst, (LPCTSTR)IDD_SCENEDATA, App->MainHwnd, (DLGPROC)ListData_Proc);
-
-	return 1;
-}
-// *************************************************************************
-// *			ListData_Proc:- Terry and Hazel Flanigan 2023			   *
-// *************************************************************************
-LRESULT CALLBACK A_Dialogs::ListData_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
-{
-
-	switch (message)
-	{
-	case WM_INITDIALOG:
-	{
-		SendDlgItemMessage(hDlg, IDC_LISTGROUP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
-		SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
-
-		App->CL_Dialogs->List_SceneData(hDlg);
-
-		App->CL_Dialogs->F_ListData_Dlg_Active = 1;
-
-		return TRUE;
-	}
-	case WM_CTLCOLORSTATIC:
-	{
-		return FALSE;
-	}
-
-	case WM_CTLCOLORDLG:
-	{
-		return (LONG)App->AppBackground;
-	}
-
-	case WM_NOTIFY:
-	{
-		LPNMHDR some_item = (LPNMHDR)lParam;
-
-		return CDRF_DODEFAULT;
-	}
-
-	case WM_COMMAND:
-		if (LOWORD(wParam) == IDOK)
-		{
-			App->CL_Dialogs->F_ListData_Dlg_Active = 0;
-			EndDialog(hDlg, LOWORD(wParam));
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDCANCEL)
-		{
-			App->CL_Dialogs->F_ListData_Dlg_Active = 0;
-			EndDialog(hDlg, LOWORD(wParam));
-			return TRUE;
-		}
-
-		break;
-	}
-	return FALSE;
-}
-
-// *************************************************************************
-// *	  	List_SceneData:- Terry and Hazel Flanigan 2023				   *
-// *************************************************************************
-void A_Dialogs::List_SceneData(HWND hDlg)
-{
-
-	char buf[255];
-
-	sprintf(buf, "%s", "3DT File--------------------------------");
-	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
-	sprintf(buf, "%s%s", "File = ",App->CL_World->mCurrent_3DT_File);
-	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
-	sprintf(buf, "%s%s", "Path = ",App->CL_World->mCurrent_3DT_Path);
-	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-	
-	sprintf(buf, "%s%s", "Path and File = ",App->CL_World->mCurrent_3DT_PathAndFile);
-	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
-	//--------------------------------
-	sprintf(buf, "%s", "    ");
-	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
-	sprintf(buf, "%s", "    ");
-	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
-	// ----------------------------------------- TXL_FilePath
-	sprintf(buf, "%s", "TXL File --------------------------------");
-	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
-	sprintf(buf, "File = %s",App->CL_World->mCurrent_TXL_FileName);
-	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
-	sprintf(buf, "Path and File = %s",App->CL_World->mCurrent_TXL_FilePath);
-	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
-	
-	sprintf(buf, "%s%i", "Brush Count = ",App->CL_World->Get_Brush_Count());
-	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
-	int Stack_Memory = App->Get_Stack();
-	sprintf(buf, "%s%i", "Stack Bytes= ", Stack_Memory);
-	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
-	float megs = ((float)Stack_Memory / 1024) / 1024;
-	sprintf(buf, "%s%f", "Stack megs= ", megs);
-	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
-	float used = ((float)(2097152 -Stack_Memory) / 1024);
-	sprintf(buf, "%s%f", "Stack Used K= ", used);
-
-	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-	return;
-
-	//sprintf(buf, "%s", "Scene Info");
-	//SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
-	//sprintf(buf, "%s", "    ");
-	//SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
-	//sprintf(buf, "%s%s","Last Saved EBR Path = ",App->CL_FileIO->PathFileName);
-	//SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
-	//sprintf(buf, "%s%s", "File = ", App->CL_Scene->Current_3DT_File);
-	//SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
-	//sprintf(buf, "%s%s", "Current 3DT Path = ", App->CL_Scene->Current_3DT_Path);
-	//SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
-	//sprintf(buf, "%s%s", "Current 3DT Path = ",App->CL_Scene->mCurrent_3DT_PathAndFile);
-	//SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
-
-	//// ----------------------------------------- Just 3DT Path
-	//sprintf(buf, "%s", "    ");
-	//SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
-	//sprintf(buf, "%s", "Just 3DT Path");
-	//SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
-	//sprintf(buf, "%s",App->CL_Scene->Current_3DT_Just_Path);
-	//SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
-
-	//// ----------------------------------------- TXL_FilePath
-	//sprintf(buf, "%s", "    ");
-	//SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
-	//sprintf(buf, "%s", "TXL File --------------------------------");
-	//SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
-	//sprintf(buf, "File Name And Path:- %s",App->CL_Scene->mCurrent_TXL_FilePath);
-	//SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
-	//sprintf(buf, "Just File Name:- %s",App->CL_Scene->mCurrent_TXL_FileName);
-	//SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
-	//sprintf(buf, "%s", "    ");
-	//sprintf(buf, "Current File and Path:- %s",Level_GetWadPath(m_pDoc->pLevel));
-	//SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-	
-}
-
-// *************************************************************************
 // *	  	Start_FrontPanel:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 void A_Dialogs::Start_FrontPanel()
@@ -471,7 +294,7 @@ LRESULT CALLBACK A_Dialogs::FrontPanel_Proc(HWND hDlg, UINT message, WPARAM wPar
 		{
 			if (LOWORD(wParam) == IDC_BTWORLDINFO)
 			{
-				App->CL_Dialogs->Show_ListData();
+				App->CLSB_Dialogs->Start_ListData();
 				return TRUE;
 			}
 

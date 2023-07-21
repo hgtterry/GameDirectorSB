@@ -34,8 +34,6 @@ public:
 	bool Show_About_Dlg();
 	void Message(char* pString, char* pString2);
 	void Start_Properties();
-	bool Show_ListData();
-	void List_SceneData(HWND hDlg);
 	void Start_FrontPanel();
 	bool Start_Move_Brush_Dlg();
 
@@ -45,15 +43,12 @@ public:
 	bool F_WireFrame;
 	bool F_Textured;
 
-	bool F_ListData_Dlg_Active;
-
 	geVec3d CenterOfSelection;
 
 protected:
 
 	static LRESULT CALLBACK Message_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Properties_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-	static LRESULT CALLBACK ListData_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK FrontPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK About_Dlg_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Move_Brush_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);

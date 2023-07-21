@@ -29,6 +29,7 @@ public:
 	~SB_Dialogs(void);
 
 	void YesNo(char* Text, char* Text2);
+	bool Start_ListData();
 
 	bool Canceled;
 
@@ -38,5 +39,13 @@ public:
 
 private:
 	static LRESULT CALLBACK YesNo_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK ListData_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	void List_SceneData(HWND hDlg);
+	void List_BoundingBox(HWND hDlg);
+
+	bool F_ListData_Dlg_Active;
+
+	CFusionDoc* m_pDoc;
 };
 
