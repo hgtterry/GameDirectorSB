@@ -620,7 +620,10 @@ LRESULT CALLBACK SB_TopTabs::Top_Test_Proc(HWND hDlg, UINT message, WPARAM wPara
 	{
 		if (LOWORD(wParam) == IDC_STARTEQUITY)
 		{
-			//App->CLSB_Equity->Start_Equity_Dialog(0);
+			App->CLSB_Model->Clear_Model_And_Reset();
+
+			App->CLSB_Grid->Reset_View();
+			App->CLSB_Camera->Set_Camera_Mode(Enums::CamModel);
 
 			App->CLSB_Equity->Show_Equity_Dialog(true);
 
