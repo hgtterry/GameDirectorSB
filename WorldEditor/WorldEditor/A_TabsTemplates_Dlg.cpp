@@ -166,6 +166,8 @@ LRESULT CALLBACK A_TabsTemplates_Dlg::Templates_Proc(HWND hDlg, UINT message, WP
 
 			App->CL_TabsTemplates_Dlg->m_pDoc->DoGeneralSelect();
 
+			App->CL_World->Reset_Editor();
+
 			App->CL_TabsTemplates_Dlg->Enable_Insert_Button(false);
 			return 1;
 		}

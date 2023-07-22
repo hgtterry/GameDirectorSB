@@ -11,6 +11,7 @@ public:
 	void Show_Equity_Dialog(bool Show);
 
 	void Preview_Selected();
+	void Preview_All();
 
 	bool mAutoLoad;
 

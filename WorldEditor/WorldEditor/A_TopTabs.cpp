@@ -517,7 +517,7 @@ LRESULT CALLBACK SB_TopTabs::Top_File_Proc(HWND hDlg, UINT message, WPARAM wPara
 				App->CL_World->Set_Paths();
 				
 				App->CL_World->Reset_Editor();
-
+				
 				App->CL_TabsGroups_Dlg->Fill_ListBox();
 
 				App->CL_World->Level_SetTxlPath(Txlpath);
@@ -641,28 +641,8 @@ LRESULT CALLBACK SB_TopTabs::Top_Test_Proc(HWND hDlg, UINT message, WPARAM wPara
 
 		if (LOWORD(wParam) == IDC_BT_TB_BUILDPREVIEW)
 		{
-			App->CLSB_Equity->Position_Offsets.x = 0;
-			App->CLSB_Equity->Position_Offsets.y = 0;
-			App->CLSB_Equity->Position_Offsets.z = 0;
+			App->CLSB_Equity->Preview_All();
 
-			CFusionDoc* pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
-
-			pDoc->SelectAll();
-			pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
-
-			App->CLSB_Equity->Position_Offsets.x = pDoc->SelectedGeoCenter.X;
-			App->CLSB_Equity->Position_Offsets.y = pDoc->SelectedGeoCenter.Y;
-			App->CLSB_Equity->Position_Offsets.z = pDoc->SelectedGeoCenter.Z;
-
-			App->CL_Export_World->Export_World_GD3D(1);
-
-			pDoc->ResetAllSelections();
-			pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
-
-			App->CLSB_Equity->mAutoLoad = 1;
-			App->CLSB_Equity->Auto_Load_File();
-			App->CLSB_Equity->Show_Equity_Dialog(true);
-			
 			return TRUE;
 		}
 
