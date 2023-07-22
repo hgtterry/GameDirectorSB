@@ -94,8 +94,12 @@ void SB_Equity::Auto_Load_File()
 		App->Message_ToFile("Auto_Load_File about to Read_Project_File");
 
 		App->CLSB_Loader->Read_Project_File(Path);
+
+		App->Message_ToFile("Auto_Load_File Read_Project_File Done");
+
 		App->CLSB_Loader->Load_File_Wepf();
 
+		App->Message_ToFile("Auto_Load_File Load_File_Wepf Done");
 	}
 }
 

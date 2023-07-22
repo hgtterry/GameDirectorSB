@@ -167,7 +167,6 @@ void A_Export_World::Export_World_GD3D(bool Silent)
 				strcat(App->CLSB_FileIO->FileName, ".G3ds");
 			}
 
-			//m_pDoc->ExportTo_RFW(App->CL_FileIO->PathFileName, 1, 0, 0);
 			ExportTo_RFW(App->CLSB_FileIO->PathFileName, 1, 0, 0);
 		}
 	}
@@ -184,8 +183,6 @@ void A_Export_World::Export_World_GD3D(bool Silent)
 
 static geBoolean fdocBrushCSGCallback2 (const Brush *pBrush, void *lParam)
 {
-	//CFusionDoc *pDoc = (CFusionDoc *)lParam;
-
 	return (App->CL_Export_World->m_pDoc->BrushIsVisible (pBrush) && (!Brush_IsHint(pBrush)) && (!Brush_IsClip(pBrush)));
 }
 

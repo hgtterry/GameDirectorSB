@@ -44,15 +44,13 @@ public:
 
 	void Export_World_GD3D(bool Silent);
 
-	CFusionDoc			*m_pDoc;
-
 	bool Level_Build_G3ds(Level3 *pLevel, const char *Filename, BrushList *BList,int ExpSelected, geBoolean ExpLights, int GroupID);
 	void ExportTo_RFW(const char *FileName, int ExpSelected, geBoolean ExpLights, geBoolean ExpFiles);
 	bool Write_Project_File(char* Path_And_File,const char* Filename);
 
-	//static geBoolean fdocBrushCSGCallback2 (const Brush *pBrush, void *lParam);
-
 private:
 
 	FILE* WriteScene;
+
+	CFusionDoc* m_pDoc;
 };
