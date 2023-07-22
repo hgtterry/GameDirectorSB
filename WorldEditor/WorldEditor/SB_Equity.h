@@ -6,9 +6,11 @@ public:
 	~SB_Equity(void);
 
 	void Switch_3D_Window();
-	void Start_Equity_Dialog(bool AutoLoad);
+	void Start_Equity_Dialog();
 	void Auto_Load_File();
 	void Show_Equity_Dialog(bool Show);
+
+	void Preview_Selected();
 
 	bool mAutoLoad;
 
@@ -32,5 +34,6 @@ private:
 
 	void Resize_3DView();
 
+	CFusionDoc* m_pDoc;
 };
 

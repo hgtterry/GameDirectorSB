@@ -10,6 +10,8 @@ SB_Equity::SB_Equity(void)
 	OgreView_3D_hWnd =		nullptr;
 	Equity_Main_hWnd =		nullptr;
 	Render_Buttons_hWnd =	nullptr;
+
+	m_pDoc = nullptr;
 }
 
 SB_Equity::~SB_Equity(void)
@@ -103,27 +105,17 @@ void SB_Equity::Show_Equity_Dialog(bool Show)
 // *************************************************************************
 // *			Start_Equity_Dialog:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
-void SB_Equity::Start_Equity_Dialog(bool AutoLoad)
+void SB_Equity::Start_Equity_Dialog()
 {
-	mAutoLoad = AutoLoad;
-
 	if (EquitySB_Dialog_Created == 0)
 	{
 		Equity_Main_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_EQUITYME, App->MainHwnd, (DLGPROC)Equity_Dialog_Proc);
 		
 		Start_Render_Buttons();
-
 		App->CLSB_TopTabs_Equity->Start_Tabs();
 
 		EquitySB_Dialog_Created = 1;
 		Switch_3D_Window();	
-
-		App->Say("Created");
-	}
-	else
-	{
-		App->Say("Auto_Load_File 2");
-		Auto_Load_File();
 	}
 }
 
@@ -909,4 +901,29 @@ void SB_Equity::Resize_3DView()
 	App->CLSB_Ogre->mCamera->yaw(Ogre::Radian(0));
 
 	Root::getSingletonPtr()->renderOneFrame();
+}
+
+// *************************************************************************
+// *			Preview_Selected:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_Equity::Preview_Selected()
+{
+	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+
+	int NumSelBrushes = SelBrushList_GetSize(m_pDoc->pSelBrushes);
+
+	if (NumSelBrushes == 0)
+	{
+		App->Say("No Brushes Selected");
+		return;
+	}
+
+
+	App->CL_Export_World->Export_World_GD3D(1);
+
+	App->CLSB_Equity->mAutoLoad = 1;
+	App->CLSB_Equity->Auto_Load_File();
+	App->CLSB_Equity->Show_Equity_Dialog(true);
+
+	App->CLSB_Camera->Set_Camera_Mode(Enums::CamModel);
 }
