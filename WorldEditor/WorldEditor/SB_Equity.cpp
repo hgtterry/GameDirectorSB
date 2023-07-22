@@ -81,6 +81,16 @@ void SB_Equity::Auto_Load_File()
 		strcpy(App->CLSB_Loader->Path_FileName, Path);
 		strcpy(App->CLSB_Loader->FileName, "Temp.Wepf");
 
+		bool test = App->CLSB_FileIO->Check_File_Exist(Path);
+		if (test == 0)
+		{
+			App->Say("No File");
+		}
+		else
+		{
+			App->Say("Ok");
+		}
+
 		App->CLSB_Loader->Read_Project_File(Path);
 		App->CLSB_Loader->Load_File_Wepf();
 

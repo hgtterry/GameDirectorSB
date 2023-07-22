@@ -109,21 +109,6 @@ bool SB_Loader::Read_Project_File(char* Path_And_File)
 	App->CLSB_Ini->GetString("World_Data", "Txl_Path_FileName", chr_Tag2, MAX_PATH);
 	strcpy(Txl_Path_FileName, chr_Tag2);
 
-
-	/*if (App->Is_WorldEditor == 1)
-	{
-		Ogre::Vector4 V4 = Ogre::Vector4::ZERO;
-
-		App->CL_Ini->GetString("Special", "Position", chr_Tag1, MAX_PATH);
-		sscanf(chr_Tag1, "%f %f %f", &V4.x, &V4.y, &V4.z);
-		App->CL_Scene->Start_Cam_Pos = Ogre::Vector3(V4.x, V4.y, V4.z);
-
-		App->CL_Ini->GetString("Special", "Angles", chr_Tag1, MAX_PATH);
-		sscanf(chr_Tag1, "%f %f %f", &V4.x, &V4.y, &V4.z);
-		App->CL_Scene->Start_Cam_Angles = Ogre::Vector3(V4.x, V4.y+140, V4.z);
-
-	}*/
-
 	return 1;
 }
 
