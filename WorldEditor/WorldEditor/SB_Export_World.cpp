@@ -23,7 +23,7 @@ distribution.
 
 #include "stdafx.h"
 #include "AB_App.h"
-#include "A_Export_World.h"
+#include "SB_Export_World.h"
 
 #include "FUSIONDoc.h"
 #include "FUSIONView.h"

@@ -78,7 +78,6 @@
     <ClCompile Include="A_CreateSpheroidDialog.cpp" />
     <ClCompile Include="A_CreateStaircaseDialog.cpp" />
     <ClCompile Include="A_Dialogs.cpp" />
-    <ClCompile Include="A_Export_World.cpp" />
     <ClCompile Include="A_FaceDialog.cpp" />
     <ClCompile Include="A_File.cpp" />
     <ClCompile Include="A_FileIO.cpp" />
@@ -177,6 +176,7 @@
     <ClCompile Include="SB_Exporter.cpp" />
     <ClCompile Include="SB_Export_Object.cpp" />
     <ClCompile Include="SB_Export_Ogre3D.cpp" />
+    <ClCompile Include="SB_Export_World.cpp" />
     <ClCompile Include="SB_Genesis3D.cpp" />
     <ClCompile Include="SB_Grid.cpp" />
     <ClCompile Include="SB_ImGui.cpp" />
@@ -253,6 +253,7 @@
     <ClInclude Include="SB_Exporter.h" />
     <ClInclude Include="SB_Export_Object.h" />
     <ClInclude Include="SB_Export_Ogre3D.h" />
+    <ClInclude Include="SB_Export_World.h" />
     <ClInclude Include="SB_Genesis3D.h" />
     <ClInclude Include="SB_Grid.h" />
     <ClInclude Include="SB_ImGui.h" />
@@ -284,7 +285,6 @@
     <ClInclude Include="A_CreateSpheroidDialog.h" />
     <ClInclude Include="A_CreateStaircaseDialog.h" />
     <ClInclude Include="A_Dialogs.h" />
-    <ClInclude Include="A_Export_World.h" />
     <ClInclude Include="A_FaceDialog.h" />
     <ClInclude Include="A_File.h" />
     <ClInclude Include="A_FileIO.h" />
