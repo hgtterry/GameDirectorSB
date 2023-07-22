@@ -8,6 +8,8 @@ public:
 	void Switch_3D_Window();
 	void Start_Equity_Dialog(bool AutoLoad);
 	void Auto_Load_File();
+	void Show_Equity_Dialog(bool Show);
+
 	bool mAutoLoad;
 
 	bool EquitySB_Dialog_Created;

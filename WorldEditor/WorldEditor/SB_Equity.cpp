@@ -49,9 +49,9 @@ void SB_Equity::Switch_3D_Window()
 
 	Resize_3DView();
 
-	App->Say("Auto_Load_File");
+	//App->Say("Auto_Load_File");
 	Auto_Load_File();
-	App->Say("Auto_Load_File");
+	//App->Say("Auto_Load_File");
 
 	App->CLSB_Ogre->OgreIsRunning = 1;
 	App->CLSB_Ogre->Ogre_Render_Loop();
@@ -82,6 +82,21 @@ void SB_Equity::Auto_Load_File()
 		App->CLSB_Loader->Read_Project_File(Path);
 		App->CLSB_Loader->Load_File_Wepf();
 
+	}
+}
+
+// *************************************************************************
+// *			Show_Equity_Dialog:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_Equity::Show_Equity_Dialog(bool Show)
+{
+	if (Show == 1)
+	{
+		ShowWindow(Equity_Main_hWnd, SW_SHOW);
+	}
+	else
+	{
+		ShowWindow(Equity_Main_hWnd, SW_HIDE);
 	}
 }
 
@@ -267,15 +282,17 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_Proc(HWND hDlg, UINT message, WPARAM w
 
 		if (LOWORD(wParam) == IDOK)
 		{
-			App->CLSB_Equity->EquitySB_Dialog_Created = 0;
-			EndDialog(hDlg, LOWORD(wParam));
+			/*App->CLSB_Equity->EquitySB_Dialog_Created = 0;
+			EndDialog(hDlg, LOWORD(wParam));*/
+			App->CLSB_Equity->Show_Equity_Dialog(false);
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
-			App->CLSB_Equity->EquitySB_Dialog_Created = 0;
-			EndDialog(hDlg, LOWORD(wParam));
+			/*App->CLSB_Equity->EquitySB_Dialog_Created = 0;
+			EndDialog(hDlg, LOWORD(wParam));*/
+			App->CLSB_Equity->Show_Equity_Dialog(false);
 			return TRUE;
 		}
 	}
