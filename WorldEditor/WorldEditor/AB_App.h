@@ -115,7 +115,7 @@ public:
 	A_File*						CL_File;
 	A_Brush*					CL_Brush;
 
-	A_Export_World*				CL_Export_World;
+	SB_Export_World*			CLSB_Export_World;
 
 	A_MainView*					CL_Main_View;
 

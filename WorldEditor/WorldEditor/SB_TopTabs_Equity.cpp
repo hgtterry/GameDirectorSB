@@ -240,7 +240,7 @@ LRESULT CALLBACK SB_TopTabs_Equity::Files_TB_Proc(HWND hDlg, UINT message, WPARA
 			pDoc->SelectAll();
 			pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 
-			App->CL_Export_World->Export_World_GD3D(1);
+			App->CLSB_Export_World->Export_World_GD3D(1);
 
 			pDoc->ResetAllSelections();
 			pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);

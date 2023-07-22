@@ -935,7 +935,7 @@ void SB_Equity::Preview_Selected()
 	}
 
 
-	App->CL_Export_World->Export_World_GD3D(1);
+	App->CLSB_Export_World->Export_World_GD3D(1);
 
 	App->CLSB_Equity->mAutoLoad = 1;
 	App->CLSB_Equity->Auto_Load_File();
@@ -962,7 +962,7 @@ void SB_Equity::Preview_All()
 	App->CLSB_Equity->Position_Offsets.y = m_pDoc->SelectedGeoCenter.Y;
 	App->CLSB_Equity->Position_Offsets.z = m_pDoc->SelectedGeoCenter.Z;
 
-	App->CL_Export_World->Export_World_GD3D(1);
+	App->CLSB_Export_World->Export_World_GD3D(1);
 
 	m_pDoc->ResetAllSelections();
 	m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);

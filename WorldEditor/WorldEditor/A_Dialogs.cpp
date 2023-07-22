@@ -323,7 +323,7 @@ LRESULT CALLBACK A_Dialogs::FrontPanel_Proc(HWND hDlg, UINT message, WPARAM wPar
 					strcpy(Path,App->WorldEditor_Directory);
 					strcat(Path,"World_Viewer.exe");
 
-					App->CL_Export_World->Export_World_GD3D(1);
+					App->CLSB_Export_World->Export_World_GD3D(1);
 					ShellExecute(App->MainHwnd, "open", Path, "WorldEditor",App->WorldEditor_Directory, SW_SHOW);
 
 					pDoc->ResetAllSelections();

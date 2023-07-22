@@ -36,11 +36,11 @@ distribution.
 #include "basetype.h"
 typedef struct tag_Level3 Level3;
 
-class A_Export_World
+class SB_Export_World
 {
 public:
-	A_Export_World(void);
-	~A_Export_World(void);
+	SB_Export_World(void);
+	~SB_Export_World(void);
 
 	void Export_World_GD3D(bool Silent);
 
@@ -48,9 +48,10 @@ public:
 	void ExportTo_RFW(const char *FileName, int ExpSelected, geBoolean ExpLights, geBoolean ExpFiles);
 	bool Write_Project_File(char* Path_And_File,const char* Filename);
 
+	CFusionDoc* m_pDoc;
+
 private:
 
 	FILE* WriteScene;
 
-	CFusionDoc* m_pDoc;
 };

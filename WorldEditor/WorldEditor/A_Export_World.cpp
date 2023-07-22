@@ -91,13 +91,13 @@ struct tag_Level3
 	float LightmapScale;	// default lightmap scale
 };
 
-A_Export_World::A_Export_World(void)
+SB_Export_World::SB_Export_World(void)
 {
 	m_pDoc = NULL;
 	WriteScene = NULL;
 }
 
-A_Export_World::~A_Export_World(void)
+SB_Export_World::~SB_Export_World(void)
 {
 
 }
@@ -150,7 +150,7 @@ A_Export_World::~A_Export_World(void)
 // *************************************************************************
 // * 		Export_World_GD3D:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-void A_Export_World::Export_World_GD3D(bool Silent) 
+void SB_Export_World::Export_World_GD3D(bool Silent)
 {
 	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
 
@@ -183,13 +183,13 @@ void A_Export_World::Export_World_GD3D(bool Silent)
 
 static geBoolean fdocBrushCSGCallback2 (const Brush *pBrush, void *lParam)
 {
-	return (App->CL_Export_World->m_pDoc->BrushIsVisible (pBrush) && (!Brush_IsHint(pBrush)) && (!Brush_IsClip(pBrush)));
+	return (App->CLSB_Export_World->m_pDoc->BrushIsVisible (pBrush) && (!Brush_IsHint(pBrush)) && (!Brush_IsClip(pBrush)));
 }
 
 // *************************************************************************
 // *				ExportTo_RFW	// Old Exporter						   *
 // *************************************************************************
-void A_Export_World::ExportTo_RFW(const char *FileName, int ExpSelected, geBoolean ExpLights, geBoolean ExpFiles)
+void SB_Export_World::ExportTo_RFW(const char *FileName, int ExpSelected, geBoolean ExpLights, geBoolean ExpFiles)
 {
 	{
 		// update view information in level
@@ -240,7 +240,7 @@ void A_Export_World::ExportTo_RFW(const char *FileName, int ExpSelected, geBoole
 	BList = Level_GetBrushes (m_pDoc->pLevel);
 	if(!ExpSelected&&!ExpFiles)
 	{
-		fResult = App->CL_Export_World->Level_Build_G3ds(reinterpret_cast<tag_Level3 *> (m_pDoc->pLevel), FileName, BList, ExpSelected, ExpLights, -1);
+		fResult = App->CLSB_Export_World->Level_Build_G3ds(reinterpret_cast<tag_Level3 *> (m_pDoc->pLevel), FileName, BList, ExpSelected, ExpLights, -1);
 	}
 	else
 	{
@@ -325,7 +325,7 @@ void A_Export_World::ExportTo_RFW(const char *FileName, int ExpSelected, geBoole
 				::FilePath_ChangeName(FileName, Name, NewFileName);
 			}
 			
-			fResult = App->CL_Export_World->Level_Build_G3ds(reinterpret_cast<tag_Level3 *> (m_pDoc->pLevel), NewFileName, SBList, ExpSelected, ExpLights, GroupID);
+			fResult = App->CLSB_Export_World->Level_Build_G3ds(reinterpret_cast<tag_Level3 *> (m_pDoc->pLevel), NewFileName, SBList, ExpSelected, ExpLights, GroupID);
 			if(!fResult)
 				App->Say("Error exporting group");
 			BrushList_Destroy(&SBList);
@@ -349,7 +349,7 @@ void A_Export_World::ExportTo_RFW(const char *FileName, int ExpSelected, geBoole
 // *************************************************************************
 // *			Level_Build_G3ds:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
-bool A_Export_World::Level_Build_G3ds(Level3 *pLevel, const char *Filename, BrushList *BList,int ExpSelected, geBoolean ExpLights, int GroupID)
+bool SB_Export_World::Level_Build_G3ds(Level3 *pLevel, const char *Filename, BrushList *BList,int ExpSelected, geBoolean ExpLights, int GroupID)
 {
 	FILE	*f;
 	geBoolean WriteRslt;
@@ -559,7 +559,7 @@ WriteDone:
 // *************************************************************************
 // *						Write_Project_File Terry Flanigan 			   *
 // *************************************************************************
-bool A_Export_World::Write_Project_File(char* Path_And_File,const char* Filename)
+bool SB_Export_World::Write_Project_File(char* Path_And_File,const char* Filename)
 {
 	char NewFile[MAX_PATH];
 

@@ -51,7 +51,7 @@ SB_App::SB_App()
 	CL_File =					NULL;
 	CL_Brush =					NULL;
 
-	CL_Export_World =			NULL;
+	CLSB_Export_World =			NULL;
 
 	CL_Main_View =				NULL;
 
@@ -212,7 +212,7 @@ bool SB_App::InitApp(void)
 	CL_File =						new	A_File();
 	CL_Brush =						new A_Brush();
 
-	CL_Export_World =				new A_Export_World();
+	CLSB_Export_World =				new SB_Export_World();
 	
 	CL_Main_View =					new A_MainView();
 

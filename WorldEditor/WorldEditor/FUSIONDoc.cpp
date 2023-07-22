@@ -8066,7 +8066,7 @@ void CFusionDoc::ExportTo_RFW(const char *FileName, int ExpSelected, geBoolean E
 
 	BList = Level_GetBrushes (pLevel);
 	if(!ExpSelected&&!ExpFiles)
-		fResult = App->CL_Export_World->Level_Build_G3ds(reinterpret_cast<tag_Level3 *> (pLevel), FileName, BList, ExpSelected, ExpLights, -1);
+		fResult = App->CLSB_Export_World->Level_Build_G3ds(reinterpret_cast<tag_Level3 *> (pLevel), FileName, BList, ExpSelected, ExpLights, -1);
 
 	else
 	{
@@ -8151,7 +8151,7 @@ void CFusionDoc::ExportTo_RFW(const char *FileName, int ExpSelected, geBoolean E
 				::FilePath_ChangeName(FileName, Name, NewFileName);
 			}
 
-			fResult = App->CL_Export_World->Level_Build_G3ds(reinterpret_cast<tag_Level3 *> (pLevel), NewFileName, SBList, ExpSelected, ExpLights, GroupID);
+			fResult = App->CLSB_Export_World->Level_Build_G3ds(reinterpret_cast<tag_Level3 *> (pLevel), NewFileName, SBList, ExpSelected, ExpLights, GroupID);
 			if(!fResult)
 				App->Say("Error exporting group");
 			BrushList_Destroy(&SBList);
@@ -8250,7 +8250,7 @@ void CFusionDoc::OnUpdateFileExportGDSB(CCmdUI* pCmdUI)
 void CFusionDoc::OnFileExportGDSB() 
 {
 	//App->ABC_Export_RFW->OnFileExportGDSB();
-	App->CL_Export_World->Export_World_GD3D(0);
+	App->CLSB_Export_World->Export_World_GD3D(0);
 	App->Say("Exported");
 }
 
