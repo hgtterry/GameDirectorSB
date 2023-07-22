@@ -37,13 +37,20 @@ private:
 
 	static LRESULT CALLBACK Tabs_Headers_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Files_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	void Hide_Tabs(void);
 
 	void Start_Files_TB(void);
+	void Start_Camera_TB(void);
 
 	HWND Test_TB_hWnd;
+	HWND Camera_TB_hWnd;
 
 	bool Toggle_Tabs_Test_Flag;
 	bool Toggle_Dimensions_Flag;
+
+	bool Toggle_Tabs_Camera_Flag;
 };
 
 

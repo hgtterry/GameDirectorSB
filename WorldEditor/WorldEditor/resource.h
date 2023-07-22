@@ -304,6 +304,7 @@
 #define IDD_SB_TB_TEST                  1142
 #define IDC_PLAYERSTART_ENTITY          1143
 #define IDC_FLIPVERTICAL                1143
+#define IDD_TB_EQ_CAMERA                1143
 #define IDC_ACTOR_ENTITY                1144
 #define IDC_FLIPHORIZONTAL              1144
 #define IDC_ARCH_PRIMITIVE              1145
@@ -676,6 +677,7 @@
 #define IDC_PREVIEWSELECTED             1466
 #define IDC_ACTOR                       1466
 #define IDC_BT_DIMENSIONS               1466
+#define IDC_BT_TT_CAMERA                1466
 #define IDC_ST_BANNER                   1467
 #define IDC_ST_FN                       1468
 #define IDC_ST_NAME                     1469
