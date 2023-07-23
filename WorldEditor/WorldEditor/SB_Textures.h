@@ -42,6 +42,8 @@ public:
 	bool Jpg_To_png24(char* File);
 	bool Bmp_To_Jpg(char* File);
 
+	bool Create_DummyTexture(char* Folder);
+
 	char TextureFileName[MAX_PATH];
 
 protected:

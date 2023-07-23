@@ -79,13 +79,14 @@ void SB_Textures::Load_Textures_Assimp()
 			bool test = Load_OpenGL_Textures(App->CLSB_Model->Group[Count]->MaterialIndex);
 			if (test == 0)
 			{
-				App->Say("Dummy");
+				App->Error_ToFile("Loading Dummy Texture Instead");
+				App->CLSB_Textures->Create_DummyTexture(App->CLSB_Model->Texture_FolderPath);
 			}
 			v++;
 		}
 		else
 		{
-			Debug
+			App->Error_ToFile("No Texture in File");
 			//LoadDummyTexture();
 
 			//int MatIndex = App->CL_Vm_Model->S_MeshGroup[Count]->MaterialIndex;
@@ -420,7 +421,7 @@ bool SB_Textures::Load_OpenGL_Textures(int TextureID)
 
 		if (test == 0)
 		{
-			App->Say("No JPG");
+			App->Error_ToFile("Failed to load JPG", TextureFileName);
 			return 0;
 		}
 
@@ -992,4 +993,21 @@ bool SB_Textures::Bmp_To_Jpg(char* File)
 
 	remove(OldFile);
 	return 1;
+}
+
+// *************************************************************************
+// *						Create_DummyTexture 29/04/04   		 	 	   *
+// *************************************************************************
+bool SB_Textures::Create_DummyTexture(char* Folder)
+{
+	HBITMAP hbmpTemp;
+	hbmpTemp = LoadBitmap(App->hInst, MAKEINTRESOURCE(IDB_DUMMY));
+
+	char OutFile[MAX_PATH];
+	strcpy(OutFile, Folder);
+	strcat(OutFile, "TTemp.bmp");
+	
+	HBITMAP_TO_BmpFile(hbmpTemp, OutFile, "");
+	return 1;
+
 }

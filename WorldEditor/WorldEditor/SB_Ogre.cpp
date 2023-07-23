@@ -153,10 +153,12 @@ bool SB_Ogre::OgreCreateRoot(void)
 	{
 		mRoot = new Ogre::Root(pluginsPath, mResourcePath + "Equity_CFG.cfg", mResourcePath + "WWSB.log");
 		Ogre::LogManager::getSingleton().createLog(mResourcePath + "App.log");
+		Ogre::LogManager::getSingleton().createLog(mResourcePath + "Error.log");
 	}
 	else
 	{
 		mRoot = new Ogre::Root(pluginsPath, mResourcePath + "Equity_CFG.cfg", mResourcePath + "");
+		Ogre::LogManager::getSingleton().createLog(mResourcePath + "Error.log");
 	}
 	
 	return 1;

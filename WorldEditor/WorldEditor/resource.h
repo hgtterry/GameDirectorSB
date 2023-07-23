@@ -153,6 +153,8 @@
 #define IDD_SB_RECENTPRJ                310
 #define IDD_TOPTABS_EQUITY              313
 #define IDD_TB_EQ_TEST                  315
+#define IDB_BITMAP1                     317
+#define IDB_DUMMY                       317
 #define IDC_RESET_ALL                   1000
 #define IDC_EDIT1                       1001
 #define IDC_EDIT10                      1002
@@ -715,7 +717,6 @@
 #define IDC_STROTX                      1497
 #define IDC_BTTBDIMENSIONS              1497
 #define IDC_ED_BRUSH_POSY2              1498
-#define IDC_BT_TT_RESET                 1498
 #define IDC_BT_TT_RESETCAM              1498
 #define IDC_STROTY                      1499
 #define IDC_ED_BRUSH_POSZ2              1500
@@ -930,7 +931,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        317
+#define _APS_NEXT_RESOURCE_VALUE        318
 #define _APS_NEXT_COMMAND_VALUE         33083
 #define _APS_NEXT_CONTROL_VALUE         1499
 #define _APS_NEXT_SYMED_VALUE           112

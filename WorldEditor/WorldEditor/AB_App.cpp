@@ -405,6 +405,38 @@ void SB_App::Message_ToFile(char* Message)
 }
 
 // *************************************************************************
+// *			Error_ToFile:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void SB_App::Error_ToFile(char* Message, char* Message2)
+{
+	char text[MAX_PATH];
+	char text2[MAX_PATH];
+	char OutMessage[MAX_PATH];
+
+	strcpy(text, Message);
+
+	if (Message2 == NULL)
+	{
+		strcpy(text2," ");
+		strcpy(OutMessage, Message);
+		strcat(OutMessage, " ");
+		strcat(OutMessage, text2);
+	}
+	else
+	{
+		strcpy(text2, Message2);
+		strcpy(OutMessage, Message);
+		strcat(OutMessage, " ");
+		strcat(OutMessage, text2);
+	}
+
+	Ogre::LogManager::getSingleton().setDefaultLog(Ogre::LogManager::getSingleton().getLog("Error.log"));
+	Ogre::LogManager::getSingleton().logMessage(OutMessage);
+	Ogre::LogManager::getSingleton().setDefaultLog(Ogre::LogManager::getSingleton().getLog("WWSB.log"));
+
+}
+
+// *************************************************************************
 // *				FlashWindow:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 void SB_App::Flash_Window()

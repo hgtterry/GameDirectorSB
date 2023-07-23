@@ -411,6 +411,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\bitmap2.bmp" />
+    <Image Include="res\Dummy.bmp" />
     <Image Include="res\MenuBar\bitmap1.bmp" />
     <Image Include="res\MenuBar\bitmap2.bmp" />
     <Image Include="res\MenuBar\BondingBoxOff.bmp" />

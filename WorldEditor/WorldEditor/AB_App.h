@@ -154,7 +154,8 @@ public:
 	void Say_Float(float Value);
 	void Say_Vector3(Ogre::Vector3 Vector);
 	void Message_ToFile(char* Message);
-	
+	void Error_ToFile(char* Message, char* Message2 = NULL);
+
 	void Flash_Window();
 	bool IsProcessRunning(char* executableName);
 	uint64_t Get_Stack(void);

@@ -2491,6 +2491,8 @@ IDB_TB_MODELDATA        BITMAP                  "res\\MenuBar\\ModelData.bmp"
 
 IDB_TB_MODELDATAON      BITMAP                  "res\\MenuBar\\ModelDataOn.bmp"
 
+IDB_DUMMY               BITMAP                  "res\\Dummy.bmp"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
