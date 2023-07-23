@@ -539,6 +539,7 @@
 #define IDC_BT_TB_SELECTALL             1353
 #define IDC_BTTBSHEAR                   1353
 #define IDC_BTSHOWTEXTURES              1353
+#define IDC_BT_TT_ZEROCAM               1353
 #define IDC_BUTTON5                     1354
 #define IDC_PREVIEW                     1355
 #define IDC_TBSHOWHAIR                  1355
@@ -714,6 +715,8 @@
 #define IDC_STROTX                      1497
 #define IDC_BTTBDIMENSIONS              1497
 #define IDC_ED_BRUSH_POSY2              1498
+#define IDC_BT_TT_RESET                 1498
+#define IDC_BT_TT_RESETCAM              1498
 #define IDC_STROTY                      1499
 #define IDC_ED_BRUSH_POSZ2              1500
 #define IDC_STROTZ                      1501
@@ -929,7 +932,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        317
 #define _APS_NEXT_COMMAND_VALUE         33083
-#define _APS_NEXT_CONTROL_VALUE         1498
+#define _APS_NEXT_CONTROL_VALUE         1499
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif
