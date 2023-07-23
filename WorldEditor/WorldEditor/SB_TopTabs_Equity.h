@@ -50,6 +50,10 @@ private:
 	bool Toggle_Tabs_Test_Flag;
 	bool Toggle_Dimensions_Flag;
 
+	bool Toggle_Camera_Model_Flag;
+	bool Toggle_Camera_First_Flag;
+	bool Toggle_Camera_Free_Flag;
+
 	bool Toggle_Tabs_Camera_Flag;
 };
 

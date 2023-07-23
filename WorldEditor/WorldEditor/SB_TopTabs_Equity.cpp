@@ -34,6 +34,10 @@ SB_TopTabs_Equity::SB_TopTabs_Equity(void)
 	Toggle_Tabs_Test_Flag = 1;
 	Toggle_Dimensions_Flag = 0;
 
+	Toggle_Camera_First_Flag = 0;
+	Toggle_Camera_Free_Flag = 0;
+	Toggle_Camera_Model_Flag = 0;
+
 	Toggle_Tabs_Camera_Flag = 0;
 }
 
@@ -259,8 +263,8 @@ LRESULT CALLBACK SB_TopTabs_Equity::Camera_TB_Proc(HWND hDlg, UINT message, WPAR
 	{
 	case WM_INITDIALOG:
 	{
-		//SendDlgItemMessage(hDlg, IDC_UPDATE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		//SendDlgItemMessage(hDlg, IDC_BTTBDIMENSIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_TT_MODEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_TT_FREE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		return TRUE;
 	}
 
@@ -273,59 +277,45 @@ LRESULT CALLBACK SB_TopTabs_Equity::Camera_TB_Proc(HWND hDlg, UINT message, WPAR
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		/*if (some_item->idFrom == IDC_UPDATE && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BT_TT_MODEL && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+			App->Custom_Button_Toggle(item, App->CLSB_TopTabs_Equity->Toggle_Camera_Model_Flag);
 			return CDRF_DODEFAULT;
 		}
 
-		if (some_item->idFrom == IDC_BTTBDIMENSIONS && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BT_TT_FREE && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CLSB_TopTabs_Equity->Toggle_Dimensions_Flag);
+			App->Custom_Button_Toggle(item, App->CLSB_TopTabs_Equity->Toggle_Camera_Free_Flag);
 			return CDRF_DODEFAULT;
-		}*/
+		}
 
 		return CDRF_DODEFAULT;
 	}
 
 	case WM_COMMAND:
 	{
+		
+		if (LOWORD(wParam) == IDC_BT_TT_MODEL)
+		{
+			App->CLSB_Camera->Set_Camera_Mode(Enums::CamModel);
+			App->CLSB_TopTabs_Equity->Toggle_Camera_Model_Flag = 1;
+			App->CLSB_TopTabs_Equity->Toggle_Camera_Free_Flag = 0;
 
-		//if (LOWORD(wParam) == IDC_UPDATE)
-		//{
-		//	CFusionDoc* pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+			RedrawWindow(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			return 1;
+		}
 
-		//	pDoc->SelectAll();
-		//	pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+		if (LOWORD(wParam) == IDC_BT_TT_FREE)
+		{
+			App->CLSB_Camera->Set_Camera_Mode(Enums::CamDetached);
+			App->CLSB_TopTabs_Equity->Toggle_Camera_Free_Flag = 1;
+			App->CLSB_TopTabs_Equity->Toggle_Camera_Model_Flag = 0;
 
-		//	App->CLSB_Export_World->Export_World_GD3D(1);
-
-		//	pDoc->ResetAllSelections();
-		//	pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
-
-		//	App->CLSB_Equity->mAutoLoad = 1;
-		//	App->CLSB_Equity->Auto_Load_File();
-		//	return 1;
-		//}
-
-		//if (LOWORD(wParam) == IDC_BTTBDIMENSIONS)
-		//{
-
-		//	if (App->CLSB_Dimensions->Show_Position == 1)
-		//	{
-		//		App->CLSB_Dimensions->Show_Position = 0;
-		//		//App->CL_Panels->Show_Panels(1);
-		//	}
-		//	else
-		//	{
-		//		App->CLSB_Dimensions->Show_Position = 1;
-		//		//App->CL_Panels->Show_Panels(0);
-		//	}
-
-		//	return 1;
-		//}
+			RedrawWindow(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			return 1;
+		}
 
 		return FALSE;
 	}

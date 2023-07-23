@@ -566,6 +566,7 @@
 #define IDC_BTSHOWBONES                 1363
 #define IDC_BTCLEARFILES                1363
 #define IDC_BT_TT_TEST                  1363
+#define IDC_BT_TT_MODEL                 1363
 #define IDC_BANNER                      1364
 #define IDC_GD_CYLINDER_PRIMITIVE       1364
 #define IDC_BT_BROWSE                   1364
@@ -678,6 +679,7 @@
 #define IDC_ACTOR                       1466
 #define IDC_BT_DIMENSIONS               1466
 #define IDC_BT_TT_CAMERA                1466
+#define IDC_BT_TT_FREE                  1466
 #define IDC_ST_BANNER                   1467
 #define IDC_ST_FN                       1468
 #define IDC_ST_NAME                     1469
