@@ -35,6 +35,8 @@ public:
 	bool Load_OpenGL_Textures(int TextureID);
 
 	int WriteTGA(const char* pszFile, geBitmap* pBitmap);
+	int WriteBMP8(const char* pszFile, geBitmap* pBitmap);
+
 	int Genesis_WriteToBmp(geBitmap* bmp, char* filename);
 	bool Soil_Load_Texture(UINT textureArray[], LPSTR strFileName, int textureID);
 	bool HBITMAP_TO_BmpFile(HBITMAP Bitmap, char* Filename, char* SaveFolder);
@@ -43,6 +45,7 @@ public:
 	bool Bmp_To_Jpg(char* File);
 
 	bool Create_DummyTexture(char* Folder);
+	bool Extract_TXL_Texture(char* Name, char* Folder);
 
 	char TextureFileName[MAX_PATH];
 
@@ -50,5 +53,7 @@ protected:
 
 	bool Texture_To_Bmp(char* File);
 	bool LoadDummyTexture(int Index);
+
+	CFusionDoc* m_pDoc;
 };
 

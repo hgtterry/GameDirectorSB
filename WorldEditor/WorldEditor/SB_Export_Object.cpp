@@ -62,7 +62,7 @@ bool SB_Export_Object::Create_ObjectFile(void)
 
 	CreateDirectory(OutputFolder, NULL);
 
-//	App->CLSB_Textures->DecompileTextures(OutputFolder);
+	Export_Textures();
 
 	strcpy(Object_FileName, OutputFolder);
 	strcat(Object_FileName, App->CLSB_Model->JustName);
@@ -277,7 +277,7 @@ bool SB_Export_Object::WriteMTLFile(void)
 		strcpy(buf, App->CLSB_Model->Group[GroupCount]->Text_FileName);
 		int Len = strlen(buf);
 		buf[Len - 4] = 0;
-		strcat(buf, ".jpg");
+		strcat(buf, ".bmp");
 
 		fprintf(Write_MTLFile, "map_Kd %s\n", buf);
 
@@ -287,6 +287,30 @@ bool SB_Export_Object::WriteMTLFile(void)
 	}
 
 	fclose(Write_MTLFile);
+
+	return 1;
+}
+
+// *************************************************************************
+// *					Export_Textures Terry Bernie Hazel 		   	   	   *
+// *************************************************************************
+bool SB_Export_Object::Export_Textures(void)
+{
+	char buf[MAX_PATH];
+
+	int GroupCount = 0;
+	int GroupCountTotal = App->CLSB_Model->Get_Groupt_Count();
+
+	while (GroupCount < GroupCountTotal)
+	{
+		strcpy(buf, App->CLSB_Model->Group[GroupCount]->Text_FileName);
+		int Len = strlen(buf);
+		buf[Len - 4] = 0;
+
+		App->CLSB_Textures->Extract_TXL_Texture(buf, OutputFolder);
+		
+		GroupCount++;
+	}
 
 	return 1;
 }

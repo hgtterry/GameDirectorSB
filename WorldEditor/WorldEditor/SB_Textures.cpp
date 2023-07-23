@@ -875,6 +875,215 @@ ExitWriteBitmap:
 	return nErrorCode;
 }
 
+int SB_Textures::WriteBMP8(const char* pszFile, geBitmap* pBitmap)
+{
+	geBitmap* pLock = NULL;
+	gePixelFormat    Format;
+	geBitmap_Info    BitmapInfo;
+	int              nErrorCode = TPACKERROR_UNKNOWN;      // Return code
+	BITMAPFILEHEADER BmpHeader;                            // bitmap file-header 
+	MY_BITMAPINFO    BmInfo;
+	Ogre::uint32           nBytesPerPixel;
+	void* pPixelData;
+	Ogre::uint8* pOut = NULL;
+	Ogre::uint8* pTmp = NULL;
+	int              nNewStride = 0;
+	int              nOldStride = 0;
+	int              i;
+	HANDLE           hFile = NULL;
+	DWORD            nBytesWritten;
+	Ogre::uint8* pNew;
+	Ogre::uint8* pOld;
+	int    y;
+
+	// Create the .BMP file.
+	hFile = CreateFile(pszFile,
+		GENERIC_READ | GENERIC_WRITE,
+		(DWORD)0,
+		NULL,
+		CREATE_ALWAYS,
+		FILE_ATTRIBUTE_NORMAL,
+		(HANDLE)NULL);
+
+	if (hFile == INVALID_HANDLE_VALUE)
+
+		return TPACKERROR_CREATEFILE;
+
+	// get 8-bit palettized bitmap
+	Format = GE_PIXELFORMAT_8BIT;
+
+	if (geBitmap_GetBits(pBitmap))
+	{
+		pLock = pBitmap;
+	}
+	else
+	{
+		if (!geBitmap_LockForRead(pBitmap, &pLock, 0, 0, Format, GE_FALSE, 0))
+		{
+			return FALSE;
+		}
+	}
+
+	geBitmap_GetInfo(pLock, &BitmapInfo, NULL);
+	if (BitmapInfo.Format != Format)
+	{
+		nErrorCode = TPACKERROR_UNKNOWN;
+		goto ExitWriteBitmap;
+	}
+
+
+	for (i = 0; i < 256; i++)
+	{
+		int r, g, b, a;
+		geBitmap_Palette_GetEntryColor(BitmapInfo.Palette, i, &r, &g, &b, &a);
+
+		BmInfo.bmiColors[i].rgbRed = (Ogre::uint8)r;
+		BmInfo.bmiColors[i].rgbGreen = (Ogre::uint8)g;
+		BmInfo.bmiColors[i].rgbBlue = (Ogre::uint8)b;
+		BmInfo.bmiColors[i].rgbReserved = (Ogre::uint8)0;
+	}
+
+	nBytesPerPixel = gePixelFormat_BytesPerPel(Format);
+	pPixelData = geBitmap_GetBits(pLock);
+
+	// Build bitmap info
+	BmInfo.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+	BmInfo.bmiHeader.biWidth = BitmapInfo.Width;
+	BmInfo.bmiHeader.biHeight = BitmapInfo.Height;    // Bitmap are bottom-up
+	BmInfo.bmiHeader.biPlanes = 1;
+	BmInfo.bmiHeader.biBitCount = (WORD)8;
+	BmInfo.bmiHeader.biCompression = BI_RGB;
+	BmInfo.bmiHeader.biSizeImage = 0;
+	BmInfo.bmiHeader.biXPelsPerMeter = BmInfo.bmiHeader.biYPelsPerMeter = 0;   // 10000;
+
+	if (BmInfo.bmiHeader.biBitCount < 24)
+		BmInfo.bmiHeader.biClrUsed = (1 << BmInfo.bmiHeader.biBitCount);
+	else
+		BmInfo.bmiHeader.biClrUsed = 0;
+
+	BmInfo.bmiHeader.biClrImportant = 0;
+
+	nNewStride = PAD32(BitmapInfo.Width * BmInfo.bmiHeader.biBitCount);
+	nOldStride = BitmapInfo.Width * nBytesPerPixel;
+
+	BmInfo.bmiHeader.biSizeImage = nNewStride * BitmapInfo.Height;
+
+	if (nNewStride == nOldStride)
+	{
+		pTmp = (Ogre::uint8*)pPixelData;
+	}
+
+	// Allocate new pixel buffer.
+	else
+	{
+		pTmp = (Ogre::uint8*)geRam_Allocate(nNewStride * BitmapInfo.Height);
+		if (pTmp == (Ogre::uint8*)0)
+		{
+			// Memory allocation error
+			nErrorCode = TPACKERROR_MEMORYALLOCATION;
+			goto ExitWriteBitmap;
+		}
+
+
+		pNew = (Ogre::uint8*)pTmp;
+		pOld = (Ogre::uint8*)pPixelData;
+
+		// Copy old to new
+		for (y = 0; y < BitmapInfo.Height; y++)
+		{
+			memcpy(pNew, pOld, nOldStride);
+
+			// Next row
+			pOld += nOldStride;
+			pNew += nNewStride;
+		}
+	}
+
+	pOut = (Ogre::uint8*)geRam_Allocate(nNewStride * BitmapInfo.Height);
+	if (pOut == (Ogre::uint8*)0)
+	{
+		// Memory allocation error
+		nErrorCode = TPACKERROR_MEMORYALLOCATION;
+		goto ExitWriteBitmap;
+	}
+
+	pNew = (Ogre::uint8*)pOut;
+	pOld = (Ogre::uint8*)(pTmp + (nNewStride * (BitmapInfo.Height - 1)));
+
+	// Copy old to new
+	for (y = 0; y < BitmapInfo.Height; y++)
+	{
+		memcpy(pNew, pOld, nNewStride);
+
+		// Next row
+		pOld -= nNewStride;
+		pNew += nNewStride;
+	}
+
+	if (pTmp && nNewStride != nOldStride)
+		geRam_Free(pTmp);
+
+	// Build the file header
+	BmpHeader.bfType = 0x4d42;        // 0x42 = "B" 0x4d = "M" 
+
+	// Compute the size of the entire file. 
+	BmpHeader.bfSize = (DWORD)(sizeof(BITMAPFILEHEADER) +
+		BmInfo.bmiHeader.biSize +
+		(BmInfo.bmiHeader.biClrUsed * sizeof(RGBQUAD)) +
+		(nNewStride * BitmapInfo.Height));
+	BmpHeader.bfReserved1 = 0;
+	BmpHeader.bfReserved2 = 0;
+
+	// Compute the offset to the array of color indices. 
+	BmpHeader.bfOffBits = (DWORD)sizeof(BITMAPFILEHEADER) +
+		BmInfo.bmiHeader.biSize +
+		(BmInfo.bmiHeader.biClrUsed * sizeof(RGBQUAD));
+
+	// Write the BMP file header
+	if (!WriteFile(hFile, (LPVOID)&BmpHeader, sizeof(BITMAPFILEHEADER), (LPDWORD)&nBytesWritten, (NULL)))
+	{
+		nErrorCode = TPACKERROR_WRITE;
+		goto ExitWriteBitmap;
+	}
+
+	// Write the Bitmap infor header and palette
+	if (!WriteFile(hFile, (LPVOID)&BmInfo, sizeof(MY_BITMAPINFO), (LPDWORD)&nBytesWritten, (NULL)))
+	{
+		nErrorCode = TPACKERROR_WRITE;
+		goto ExitWriteBitmap;
+	}
+
+	// Write the pixel data
+	if (!WriteFile(hFile, (LPVOID)pOut, nNewStride * BitmapInfo.Height, (LPDWORD)&nBytesWritten, (NULL)))
+	{
+		nErrorCode = TPACKERROR_WRITE;
+		goto ExitWriteBitmap;
+	}
+
+	CloseHandle(hFile);
+	hFile = NULL;
+
+	// Success!
+	nErrorCode = TPACKERROR_OK;
+
+ExitWriteBitmap:
+
+	// Clean-up
+	//------------------------------------
+	// Make sure the file gets closed
+	if (hFile)
+		CloseHandle(hFile);
+
+	geRam_Free(pOut);
+
+	// Unlock the geBitmap
+	if (pLock != pBitmap)
+	{
+		geBitmap_UnLock(pLock);
+	}
+	return nErrorCode;
+}
+
 // *************************************************************************
 // *		HBITMAP_TO_BmpFile:- Terry and Hazel Flanigan 2023		 	   *
 // *************************************************************************
@@ -1018,5 +1227,42 @@ bool SB_Textures::Create_DummyTexture(char* Folder)
 	
 	HBITMAP_TO_BmpFile(hbmpTemp, OutFile, "");
 	return 1;
+}
 
+// *************************************************************************
+// *		Extract_TXL_Texture:- Terry and Hazel Flanigan 2023    	 	   *
+// *************************************************************************
+bool SB_Textures::Extract_TXL_Texture(char* Name, char* Folder)
+{
+	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+	WadFileEntry* BitmapPtr = m_pDoc->GetDibBitmap(Name);
+
+	//App->Say(BitmapPtr->Name);
+
+	char Name2[200];
+	strcpy(Name2, Folder);
+
+	App->Say(Folder);
+	if (geBitmap_HasAlpha(BitmapPtr->bmp))
+	{
+		char Buf1[200];
+		strcpy(Buf1, BitmapPtr->Name);
+		strcat(Buf1, ".tga");
+
+		strcat(Name2, Buf1);
+		WriteTGA(Name2, BitmapPtr->bmp);
+	}
+	else
+	{
+		char Buf1[200];
+		strcpy(Buf1, BitmapPtr->Name);
+		strcat(Buf1, ".bmp");
+
+		strcat(Name2, Buf1);
+
+		App->Say(Name2);
+		WriteBMP8(Name2, BitmapPtr->bmp);
+	}
+
+	return 1;
 }
