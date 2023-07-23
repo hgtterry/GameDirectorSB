@@ -47,12 +47,13 @@ SB_Textures::~SB_Textures()
 
 
 // *************************************************************************
-// *			Load_Textures_Assimp Terry Bernie Hazel			  	 	   *
+// *		Load_Textures_Assimp:- Terry and Hazel Flanigan 2023	  	   *
 // *************************************************************************
 void SB_Textures::Load_Textures_Assimp()
 {
 	int v = 0;
 	int Count = 0;
+	bool DummyCreated = 0;
 
 	int mGroupCount = App->CLSB_Model->Get_Groupt_Count();
 
@@ -81,37 +82,42 @@ void SB_Textures::Load_Textures_Assimp()
 			{
 				App->Error_ToFile("Loading Dummy Texture Instead");
 				App->CLSB_Textures->Create_DummyTexture(App->CLSB_Model->Texture_FolderPath);
+
+				char buf[MAX_PATH];
+				strcpy(buf, App->CLSB_Model->Texture_FolderPath);
+				strcat(buf, "TTemp.bmp");
+				UINT* Texture_List = App->CLSB_Ogre->RenderListener->g_Texture;
+				Soil_Load_Texture(Texture_List, buf, App->CLSB_Model->Group[Count]->MaterialIndex);
+
+				DummyCreated = 1;
 			}
 			v++;
 		}
 		else
 		{
 			App->Error_ToFile("No Texture in File");
-			//LoadDummyTexture();
+			App->Error_ToFile("Loading Dummy Texture Instead");
+			App->CLSB_Textures->Create_DummyTexture(App->CLSB_Model->Texture_FolderPath);
 
-			//int MatIndex = App->CL_Vm_Model->S_MeshGroup[Count]->MaterialIndex;
-			//App->CL_Vm_Model->S_TextureInfo[Count]->ActorMaterialIndex = MatIndex;
-
-			//App->CL_Vm_Model->S_MeshGroup[v]->Soil_TextureIndex = MatIndex;
-
-			//strcpy(App->CL_Vm_Model->S_MeshGroup[v]->Text_FileName, "Etemp.bmp");
-			//strcpy(App->CL_Vm_Model->S_TextureInfo[Count]->MaterialName, "Etemp.bmp");
-
-			//char ImageFullPath[1024];
-			//strcpy(ImageFullPath, App->CL_Vm_Model->Texture_FolderPath);
-			//strcat(ImageFullPath, "Etemp.bmp");
-
-			//strcpy(App->CL_Vm_Model->S_MeshGroup[v]->Text_PathFileName, ImageFullPath);
-			//strcpy(App->CL_Vm_Textures->TextureFileName, ImageFullPath);
-
-			//App->CL_Vm_Textures->TexureToWinPreviewFullPath(v, ImageFullPath);
-			//App->CL_Vm_Textures->Soil_DecodeTextures(MatIndex); // ??
-
-			//		remove(ImageFullPath);
+			char buf[MAX_PATH];
+			strcpy(buf, App->CLSB_Model->Texture_FolderPath);
+			strcat(buf, "TTemp.bmp");
+			UINT* Texture_List = App->CLSB_Ogre->RenderListener->g_Texture;
+			Soil_Load_Texture(Texture_List, buf, App->CLSB_Model->Group[Count]->MaterialIndex);
+			DummyCreated = 1;
 
 			v++;
 		}
+
 		Count++;
+	}
+
+	if (DummyCreated == 1)
+	{
+		char buf[MAX_PATH];
+		strcpy(buf, App->CLSB_Model->Texture_FolderPath);
+		strcat(buf, "TTemp.bmp");
+		remove(buf);
 	}
 }
 
@@ -867,7 +873,7 @@ ExitWriteBitmap:
 }
 
 // *************************************************************************
-// *						HBITMAP_TO_BmpFile						 	   *
+// *		HBITMAP_TO_BmpFile:- Terry and Hazel Flanigan 2023		 	   *
 // *************************************************************************
 bool SB_Textures::HBITMAP_TO_BmpFile(HBITMAP Bitmap, char* Filename, char* SaveFolder)
 {
@@ -972,7 +978,7 @@ bool SB_Textures::Jpg_To_png24(char* File)
 }
 
 // *************************************************************************
-// *							Bmp_To_Jpg					  		 	   *
+// *			Bmp_To_Jpg:- Terry and Hazel Flanigan 2023		  	 	   *
 // *************************************************************************
 bool SB_Textures::Bmp_To_Jpg(char* File)
 {
@@ -996,7 +1002,7 @@ bool SB_Textures::Bmp_To_Jpg(char* File)
 }
 
 // *************************************************************************
-// *						Create_DummyTexture 29/04/04   		 	 	   *
+// *		Create_DummyTexture:- Terry and Hazel Flanigan 2023    	 	   *
 // *************************************************************************
 bool SB_Textures::Create_DummyTexture(char* Folder)
 {
