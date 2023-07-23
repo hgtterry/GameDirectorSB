@@ -51,11 +51,10 @@ void SB_Equity::Switch_3D_Window()
 
 	Resize_3DView();
 
-	//App->Say("Auto_Load_File");
 	Auto_Load_File();
-	//App->Say("Auto_Load_File");
-
+	
 	App->CLSB_Ogre->OgreIsRunning = 1;
+
 	App->CLSB_Ogre->Ogre_Render_Loop();
 	
 	if (App->CLSB_Ogre->OgreIsRunning == 1)
@@ -108,13 +107,19 @@ void SB_Equity::Auto_Load_File()
 // *************************************************************************
 void SB_Equity::Show_Equity_Dialog(bool Show)
 {
-	if (Show == 1)
+
+	if (Equity_Main_hWnd)
 	{
-		ShowWindow(Equity_Main_hWnd, SW_SHOW);
-	}
-	else
-	{
-		ShowWindow(Equity_Main_hWnd, SW_HIDE);
+		Debug
+
+		if (Show == 1)
+		{
+			ShowWindow(Equity_Main_hWnd, SW_SHOW);
+		}
+		else
+		{
+			ShowWindow(Equity_Main_hWnd, SW_HIDE);
+		}
 	}
 }
 
@@ -125,6 +130,9 @@ void SB_Equity::Start_Equity_Dialog()
 {
 	if (EquitySB_Dialog_Created == 0)
 	{
+		Equity_Main_hWnd = nullptr;
+		mAutoLoad = 0;
+
 		Equity_Main_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_EQUITYME, App->MainHwnd, (DLGPROC)Equity_Dialog_Proc);
 		
 		Start_Render_Buttons();
@@ -217,8 +225,18 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_Proc(HWND hDlg, UINT message, WPARAM w
 
 		if (LOWORD(wParam) == ID_IMPORT_WAVEFRONTOBJ)
 		{
+			App->Clear_ErrorLog();
+			App->CLSB_Loader->LoadError = 0;
+			
 			App->CLSB_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
 			App->CLSB_Loader->Assimp_Loader("Wavefront OBJ   *.obj\0*.obj\0", "Wavefront OBJ");
+
+			if (App->CLSB_Loader->LoadError == 1)
+			{
+				App->Say("Loaded With Errors");
+				App->CLSB_Dialogs->Start_ListData(1);
+			}
+
 			return TRUE;
 		}
 

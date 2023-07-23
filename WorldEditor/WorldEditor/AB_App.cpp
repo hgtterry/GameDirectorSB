@@ -437,6 +437,21 @@ void SB_App::Error_ToFile(char* Message, char* Message2)
 }
 
 // *************************************************************************
+// *			Clear_ErrorLog:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void SB_App::Clear_ErrorLog()
+{
+	/*Ogre::LogManager::getSingleton().destroyLog("Error.log");
+
+	char Path[MAX_PATH];
+	strcpy(Path, App->WorldEditor_Directory);
+	strcat(Path, "Error.log");
+	remove(Path);
+
+	Ogre::LogManager::getSingleton().createLog(Path);*/
+}
+
+// *************************************************************************
 // *				FlashWindow:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 void SB_App::Flash_Window()

@@ -638,7 +638,7 @@ LRESULT CALLBACK SB_TopTabs::Top_Test_Proc(HWND hDlg, UINT message, WPARAM wPara
 
 		if (LOWORD(wParam) == IDC_BT_TB_WORLDINFO)
 		{
-			App->CLSB_Dialogs->Start_ListData();
+			App->CLSB_Dialogs->Start_ListData(0);
 			return TRUE;
 		}
 

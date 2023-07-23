@@ -51,6 +51,8 @@ public:
 	char Ogre_Path[MAX_PATH];
 	char WE_Path_FileName[MAX_PATH];
 
+	bool LoadError;
+
 	TCHAR szSelectedDir[MAX_PATH];
 
 protected:

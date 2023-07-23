@@ -29,7 +29,7 @@ public:
 	~SB_Dialogs(void);
 
 	void YesNo(char* Text, char* Text2);
-	bool Start_ListData();
+	bool Start_ListData(int WhatList);
 
 	bool Canceled;
 
@@ -43,8 +43,10 @@ private:
 
 	void List_SceneData(HWND hDlg);
 	void List_BoundingBox(HWND hDlg);
+	void Read_ErrorLog(HWND hDlg);
 
 	bool F_ListData_Dlg_Active;
+	int mWhatList;
 
 	CFusionDoc* m_pDoc;
 };

@@ -294,7 +294,7 @@ LRESULT CALLBACK A_Dialogs::FrontPanel_Proc(HWND hDlg, UINT message, WPARAM wPar
 		{
 			if (LOWORD(wParam) == IDC_BTWORLDINFO)
 			{
-				App->CLSB_Dialogs->Start_ListData();
+				App->CLSB_Dialogs->Start_ListData(0);
 				return TRUE;
 			}
 

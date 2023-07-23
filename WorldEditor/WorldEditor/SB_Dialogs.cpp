@@ -34,7 +34,7 @@ SB_Dialogs::SB_Dialogs(void)
 	F_ListData_Dlg_Active = 0;
 
 	Canceled = 0;
-
+	mWhatList = 0;
 	m_pDoc = nullptr;
 }
 
@@ -144,16 +144,16 @@ LRESULT CALLBACK SB_Dialogs::YesNo_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 // *************************************************************************
 // *	  		Start_ListData:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-bool SB_Dialogs::Start_ListData()
+bool SB_Dialogs::Start_ListData(int WhatList)
 {
+	mWhatList = WhatList;
+
 	if (F_ListData_Dlg_Active == 1)
 	{
 		return 1;
 	}
 
-
 	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
-
 	DialogBox(App->hInst, (LPCTSTR)IDD_SCENEDATA, App->MainHwnd, (DLGPROC)ListData_Proc);
 
 	return 1;
@@ -172,7 +172,15 @@ LRESULT CALLBACK SB_Dialogs::ListData_Proc(HWND hDlg, UINT message, WPARAM wPara
 
 		SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
-		App->CLSB_Dialogs->List_SceneData(hDlg);
+		if (App->CLSB_Dialogs->mWhatList == 0)
+		{
+			App->CLSB_Dialogs->List_SceneData(hDlg);
+		}
+
+		if (App->CLSB_Dialogs->mWhatList == 1)
+		{
+			App->CLSB_Dialogs->Read_ErrorLog(hDlg);
+		}
 
 		App->CLSB_Dialogs->F_ListData_Dlg_Active = 1;
 
@@ -324,4 +332,36 @@ void SB_Dialogs::List_BoundingBox(HWND hDlg)
 
 	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
+}
+
+// *************************************************************************
+// *		 	Read_ErrorLog:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void SB_Dialogs::Read_ErrorLog(HWND hDlg)
+{
+	FILE* fp = NULL;
+
+	char buffer[MAX_PATH];
+
+	char Path[MAX_PATH];
+	strcpy(Path, App->WorldEditor_Directory);
+	strcat(Path,"Error.log");
+
+	fp = fopen(Path, "r");
+	if (!fp)
+	{
+		App->Say("Cant Find File", Path);
+		return;
+	}
+
+	while (!feof(fp))
+	{
+		buffer[0] = 0;
+		fgets(buffer, MAX_PATH, fp);
+		SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buffer);
+	}
+
+	fclose(fp);
+
+	unlink(Path);
 }

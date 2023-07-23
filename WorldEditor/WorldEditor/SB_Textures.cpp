@@ -89,6 +89,7 @@ void SB_Textures::Load_Textures_Assimp()
 				UINT* Texture_List = App->CLSB_Ogre->RenderListener->g_Texture;
 				Soil_Load_Texture(Texture_List, buf, App->CLSB_Model->Group[Count]->MaterialIndex);
 
+				App->CLSB_Loader->LoadError = 1;
 				DummyCreated = 1;
 			}
 			v++;
@@ -104,6 +105,8 @@ void SB_Textures::Load_Textures_Assimp()
 			strcat(buf, "TTemp.bmp");
 			UINT* Texture_List = App->CLSB_Ogre->RenderListener->g_Texture;
 			Soil_Load_Texture(Texture_List, buf, App->CLSB_Model->Group[Count]->MaterialIndex);
+
+			App->CLSB_Loader->LoadError = 1;
 			DummyCreated = 1;
 
 			v++;

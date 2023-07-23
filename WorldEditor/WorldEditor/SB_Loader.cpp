@@ -38,6 +38,8 @@ SB_Loader::SB_Loader(void)
 	RightGroups_Hwnd = nullptr;
 
 	NameCount = 0;
+
+	LoadError = 0;
 }
 
 SB_Loader::~SB_Loader(void)

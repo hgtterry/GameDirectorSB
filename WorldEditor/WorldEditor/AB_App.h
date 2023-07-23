@@ -155,6 +155,7 @@ public:
 	void Say_Vector3(Ogre::Vector3 Vector);
 	void Message_ToFile(char* Message);
 	void Error_ToFile(char* Message, char* Message2 = NULL);
+	void Clear_ErrorLog();
 
 	void Flash_Window();
 	bool IsProcessRunning(char* executableName);
