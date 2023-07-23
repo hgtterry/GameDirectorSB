@@ -441,14 +441,26 @@ void SB_App::Error_ToFile(char* Message, char* Message2)
 // *************************************************************************
 void SB_App::Clear_ErrorLog()
 {
-	/*Ogre::LogManager::getSingleton().destroyLog("Error.log");
+	/*FILE* fp = NULL;
+
+	char buffer[MAX_PATH];
 
 	char Path[MAX_PATH];
 	strcpy(Path, App->WorldEditor_Directory);
 	strcat(Path, "Error.log");
-	remove(Path);
 
-	Ogre::LogManager::getSingleton().createLog(Path);*/
+	fp = fopen(Path, "w+");
+	if (!fp)
+	{
+		App->Say("Cant Find File", Path);
+		return;
+	}
+
+	fprintf(fp, "Error File");
+
+	fclose(fp);
+
+	unlink(Path);*/
 }
 
 // *************************************************************************
