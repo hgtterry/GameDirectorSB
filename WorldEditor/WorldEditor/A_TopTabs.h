@@ -43,6 +43,7 @@ public:
 	bool Header_BrushModify_Flag;
 	bool Textured_Flag;
 	bool Brush_Select_Flag;
+	bool OgreRunning_Flag;
 
 	HWND Top_Tabs_Hwnd;
 	HWND Brush_Modify_Panel_Hwnd;

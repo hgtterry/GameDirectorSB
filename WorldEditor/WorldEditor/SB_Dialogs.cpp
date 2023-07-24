@@ -96,7 +96,7 @@ LRESULT CALLBACK SB_Dialogs::YesNo_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 	}
 	case WM_NOTIFY:
 	{
-		/*LPNMHDR some_item = (LPNMHDR)lParam;
+		LPNMHDR some_item = (LPNMHDR)lParam;
 
 		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
 		{
@@ -110,7 +110,7 @@ LRESULT CALLBACK SB_Dialogs::YesNo_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
-		}*/
+		}
 
 		return CDRF_DODEFAULT;
 	}
@@ -364,4 +364,161 @@ void SB_Dialogs::Read_ErrorLog(HWND hDlg)
 	fclose(fp);
 
 	unlink(Path);
+}
+
+// *************************************************************************
+// *	  	Start_Speed_Camera:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void SB_Dialogs::Start_Speed_Camera()
+{
+	DialogBox(App->hInst, (LPCTSTR)IDD_MOUSESENSITIVITY, App->CLSB_Equity->Equity_Main_hWnd, (DLGPROC)Speed_Camera_Proc);
+}
+
+// *************************************************************************
+// *		Speed_Camera_Proc:- Terry and Hazel Flanigan 2023	  		   *
+// *************************************************************************
+LRESULT CALLBACK SB_Dialogs::Speed_Camera_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_STBANNER, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+
+		/*SendDlgItemMessage(hDlg, IDC_CKNORMAL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CKSLOW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CKVERYSLOW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CKFAST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));*/
+
+		return TRUE;
+	}
+
+	case WM_CTLCOLORSTATIC:
+	{
+		if (GetDlgItem(hDlg, IDC_STBANNER) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		/*if (some_item->idFrom == IDC_CKNORMAL && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_Dialogs->Mouse_Normal);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_CKSLOW && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_Dialogs->Mouse_Slow);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_CKVERYSLOW && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_Dialogs->Mouse_VerySlow);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_CKFAST && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_Dialogs->Mouse_Fast);
+			return CDRF_DODEFAULT;
+		}*/
+
+		if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+
+		/*if (LOWORD(wParam) == IDC_CKNORMAL)
+		{
+
+			App->CL_Ogre->Ogre_Listener->mMoveSensitivity = 50;
+			App->CL_Ogre->Ogre_Listener->mMoveSensitivityMouse = 50;
+
+
+			App->CL_Dialogs->UnCheck_All_SpeedMouseOption();
+			App->CL_Dialogs->Mouse_Normal = 1;
+
+			InvalidateRect(hDlg, NULL, false);
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_CKSLOW)
+		{
+
+			App->CL_Ogre->Ogre_Listener->mMoveSensitivity = 5;
+			App->CL_Ogre->Ogre_Listener->mMoveSensitivityMouse = 5;
+
+			App->CL_Dialogs->UnCheck_All_SpeedMouseOption();
+			App->CL_Dialogs->Mouse_Slow = 1;
+
+			InvalidateRect(hDlg, NULL, false);
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_CKVERYSLOW)
+		{
+
+			App->CL_Ogre->Ogre_Listener->mMoveSensitivity = 1;
+			App->CL_Ogre->Ogre_Listener->mMoveSensitivityMouse = 1;
+
+
+			App->CL_Dialogs->UnCheck_All_SpeedMouseOption();
+			App->CL_Dialogs->Mouse_VerySlow = 1;
+
+			InvalidateRect(hDlg, NULL, false);
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_CKFAST)
+		{
+
+			App->CL_Ogre->Ogre_Listener->mMoveSensitivity = 250;
+			App->CL_Ogre->Ogre_Listener->mMoveSensitivityMouse = 250;
+
+			App->CL_Dialogs->UnCheck_All_SpeedMouseOption();
+			App->CL_Dialogs->Mouse_Fast = 1;
+
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}*/
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		break;
+	}
+	return FALSE;
 }

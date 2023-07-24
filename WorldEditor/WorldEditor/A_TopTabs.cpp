@@ -58,6 +58,8 @@ SB_TopTabs::SB_TopTabs(void)
 	Brush_MoveRotate_Flag = 0;
 	Brush_Scale_Flag = 0;
 	Brush_Shear_Flag = 0;
+
+	OgreRunning_Flag = 0;
 }
 
 SB_TopTabs::~SB_TopTabs(void)
@@ -610,6 +612,13 @@ LRESULT CALLBACK SB_TopTabs::Top_Test_Proc(HWND hDlg, UINT message, WPARAM wPara
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_OGRERUNNING && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CLSB_TopTabs->OgreRunning_Flag);
 			return CDRF_DODEFAULT;
 		}
 

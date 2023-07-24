@@ -154,6 +154,7 @@
 #define IDD_TOPTABS_EQUITY              313
 #define IDD_TB_EQ_TEST                  315
 #define IDB_DUMMY                       317
+#define IDD_MOUSESENSITIVITY            319
 #define IDC_RESET_ALL                   1000
 #define IDC_EDIT1                       1001
 #define IDC_EDIT10                      1002
@@ -569,16 +570,20 @@
 #define IDC_BTCLEARFILES                1363
 #define IDC_BT_TT_TEST                  1363
 #define IDC_BT_TT_MODEL                 1363
+#define IDC_BT_OGRERUNNING              1363
 #define IDC_BANNER                      1364
 #define IDC_GD_CYLINDER_PRIMITIVE       1364
 #define IDC_BT_BROWSE                   1364
 #define IDC_TBINFO2                     1364
+#define IDC_BUTTON7                     1364
 #define IDC_STTEXT                      1365
 #define IDC_GD_SPHEROID_PRIMITIVE       1365
 #define IDC_BT_FOLDER_NAME              1365
+#define IDC_BUTTON8                     1365
 #define IDC_STMESSAGE                   1366
 #define IDC_GD_CONE_PRIMITIVE           1366
 #define IDC_STTEXT2                     1366
+#define IDC_BUTTON9                     1366
 #define IDC_STTXL                       1367
 #define IDC_GD_STAIRCASE_PRIMITIVE      1367
 #define IDC_BTWORLDINFO                 1368
@@ -624,6 +629,7 @@
 #define IDC_STROTATION                  1406
 #define IDC_STCAMZ                      1407
 #define IDC_STVERTSTRIPS                1407
+#define IDC_STROTATION2                 1407
 #define IDC_EDCAMANGLEX                 1408
 #define IDC_STWALLSIZE                  1408
 #define IDC_STCAMANGLEX                 1409
@@ -726,8 +732,23 @@
 #define IDC_CBPOSZDELTA2                1505
 #define IDC_SBPOSY2                     1506
 #define IDC_SBPOSZ2                     1507
-#define IDC_SCROLLBAR1                  1508
 #define IDC_SBPOSXH                     1508
+#define IDC_SBPOSYH                     1509
+#define IDC_SBPOSZH                     1510
+#define IDC_BT_CAMERASPEED              1510
+#define IDC_ED_BRUSH_POSX3              1511
+#define IDC_STBANNER                    1511
+#define IDC_STROTX2                     1512
+#define IDC_ED_BRUSH_POSY3              1513
+#define IDC_STROTY2                     1514
+#define IDC_ED_BRUSH_POSZ3              1515
+#define IDC_STROTZ2                     1516
+#define IDC_SBPOSX3                     1517
+#define IDC_CBPOSXDELTA3                1518
+#define IDC_CBPOSYDELTA3                1519
+#define IDC_CBPOSZDELTA3                1520
+#define IDC_SBPOSY3                     1521
+#define IDC_SBPOSZ3                     1522
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772
 #define ID_BRUSH_PRIMITIVES_SPHEROID    32773
@@ -932,9 +953,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        319
+#define _APS_NEXT_RESOURCE_VALUE        321
 #define _APS_NEXT_COMMAND_VALUE         33083
-#define _APS_NEXT_CONTROL_VALUE         1509
+#define _APS_NEXT_CONTROL_VALUE         1512
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

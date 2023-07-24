@@ -184,8 +184,6 @@ LRESULT CALLBACK SB_Brushes::Dimensions_Dlg_Proc(HWND hDlg, UINT message, WPARAM
 			return (UINT)App->AppBackground;
 		}
 
-		
-		
 		return FALSE;
 	}
 	case WM_NOTIFY:
@@ -221,14 +219,14 @@ LRESULT CALLBACK SB_Brushes::Dimensions_Dlg_Proc(HWND hDlg, UINT message, WPARAM
 		{
 			switch ((int)LOWORD(wParam))
 			{
-			case SB_LINEUP:
+			case SB_LINERIGHT:
 			{
 				App->CLSB_Brushes->CenterOfSelection.X += App->CLSB_Brushes->PosX_Delta;
 				App->CLSB_Brushes->Move_Brush();
 				break;
 			}
 
-			case SB_LINEDOWN:
+			case SB_LINELEFT:
 			{
 				App->CLSB_Brushes->CenterOfSelection.X -= App->CLSB_Brushes->PosX_Delta;
 				App->CLSB_Brushes->Move_Brush();
@@ -241,72 +239,49 @@ LRESULT CALLBACK SB_Brushes::Dimensions_Dlg_Proc(HWND hDlg, UINT message, WPARAM
 			return 0;
 		}
 
-		return 0;
-	}
-
-	case WM_VSCROLL:
-	{
-		// -------- Pos X
-		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBPOSX))
+		// ------- Pos Y
+		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBPOSYH))
 		{
 			switch ((int)LOWORD(wParam))
 			{
-			case SB_LINEUP:
+			case SB_LINERIGHT:
 			{
-				App->CLSB_Brushes->CenterOfSelection.X += App->CLSB_Brushes->PosX_Delta;
-				App->CLSB_Brushes->Move_Brush();
-				break;
-			}
-
-			case SB_LINEDOWN:
-			{
-				App->CLSB_Brushes->CenterOfSelection.X -= App->CLSB_Brushes->PosX_Delta;
-				App->CLSB_Brushes->Move_Brush();
-				break;
-			}
-			}
-
-			App->CLSB_Brushes->Update_Pos_Dlg();
-
-			return 0;
-		}
-
-		// -------- Pos Y
-		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBPOSY))
-		{
-			switch ((int)LOWORD(wParam))
-			{
-			case SB_LINEUP:
 				App->CLSB_Brushes->CenterOfSelection.Y += App->CLSB_Brushes->PosY_Delta;
 				App->CLSB_Brushes->Move_Brush();
 				break;
+			}
 
-			case SB_LINEDOWN:
-
+			case SB_LINELEFT:
+			{
 				App->CLSB_Brushes->CenterOfSelection.Y -= App->CLSB_Brushes->PosY_Delta;
 				App->CLSB_Brushes->Move_Brush();
 				break;
 			}
+			}
 
 			App->CLSB_Brushes->Update_Pos_Dlg();
 
 			return 0;
 		}
 
-		// -------- Pos Z
-		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBPOSZ))
+		// ------- Pos Y
+		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBPOSZH))
 		{
 			switch ((int)LOWORD(wParam))
 			{
-			case SB_LINEUP:
+			case SB_LINERIGHT:
+			{
 				App->CLSB_Brushes->CenterOfSelection.Z += App->CLSB_Brushes->PosZ_Delta;
 				App->CLSB_Brushes->Move_Brush();
 				break;
+			}
 
-			case SB_LINEDOWN:
+			case SB_LINELEFT:
+			{
 				App->CLSB_Brushes->CenterOfSelection.Z -= App->CLSB_Brushes->PosZ_Delta;
 				App->CLSB_Brushes->Move_Brush();
 				break;
+			}
 			}
 
 			App->CLSB_Brushes->Update_Pos_Dlg();

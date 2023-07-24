@@ -107,13 +107,12 @@ void SB_Equity::Auto_Load_File()
 // *************************************************************************
 void SB_Equity::Show_Equity_Dialog(bool Show)
 {
-
+	
 	if (Equity_Main_hWnd)
 	{
-		Debug
-
 		if (Show == 1)
 		{
+			Sleep(500);
 			ShowWindow(Equity_Main_hWnd, SW_SHOW);
 		}
 		else
@@ -334,6 +333,8 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_Proc(HWND hDlg, UINT message, WPARAM w
 // *************************************************************************
 bool SB_Equity::Start_Render_Buttons()
 {
+	Render_Buttons_hWnd = nullptr;
+
 	Render_Buttons_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_TB_BUTTONS, Equity_Main_hWnd, (DLGPROC)Render_Buttons_Proc);
 	Init_Bmps_Globals();
 	return 1;

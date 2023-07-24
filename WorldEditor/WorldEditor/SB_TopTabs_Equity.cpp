@@ -60,6 +60,8 @@ void SB_TopTabs_Equity::Start_Tabs(void)
 // *************************************************************************
 void SB_TopTabs_Equity::Start_Tabs_Headers(void)
 {
+	Tabs_TB_hWnd_Eq = nullptr;
+
 	Tabs_TB_hWnd_Eq = CreateDialog(App->hInst, (LPCTSTR)IDD_TOPTABS_EQUITY, App->CLSB_Equity->Equity_Main_hWnd, (DLGPROC)Tabs_Headers_Proc);
 }
 
@@ -157,6 +159,8 @@ void SB_TopTabs_Equity::Hide_Tabs(void)
 // *************************************************************************
 void SB_TopTabs_Equity::Start_Files_TB(void)
 {
+	Test_TB_hWnd = nullptr;
+
 	Test_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_EQ_TEST, Tabs_TB_hWnd_Eq, (DLGPROC)Files_TB_Proc);
 }
 
@@ -250,6 +254,8 @@ LRESULT CALLBACK SB_TopTabs_Equity::Files_TB_Proc(HWND hDlg, UINT message, WPARA
 // *************************************************************************
 void SB_TopTabs_Equity::Start_Camera_TB(void)
 {
+	Camera_TB_hWnd = nullptr;
+
 	Camera_TB_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_TB_EQ_CAMERA, Tabs_TB_hWnd_Eq, (DLGPROC)Camera_TB_Proc);
 }
 
@@ -267,8 +273,8 @@ LRESULT CALLBACK SB_TopTabs_Equity::Camera_TB_Proc(HWND hDlg, UINT message, WPAR
 		SendDlgItemMessage(hDlg, IDC_BT_TT_FREE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TT_RESETCAM, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TT_ZEROCAM, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
-
+		SendDlgItemMessage(hDlg, IDC_BT_CAMERASPEED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		return TRUE;
 	}
 
@@ -303,6 +309,13 @@ LRESULT CALLBACK SB_TopTabs_Equity::Camera_TB_Proc(HWND hDlg, UINT message, WPAR
 		}
 
 		if (some_item->idFrom == IDC_BT_TT_ZEROCAM && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_CAMERASPEED && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
@@ -344,6 +357,12 @@ LRESULT CALLBACK SB_TopTabs_Equity::Camera_TB_Proc(HWND hDlg, UINT message, WPAR
 		if (LOWORD(wParam) == IDC_BT_TT_ZEROCAM)
 		{
 			App->CLSB_Camera->Zero_View();
+			return 1;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_CAMERASPEED)
+		{
+			App->CLSB_Dialogs->Start_Speed_Camera();
 			return 1;
 		}
 

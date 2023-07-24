@@ -103,6 +103,7 @@ bool SB_Ogre::InitOgre(void)
 bool SB_Ogre::Ogre_Render_Loop(void)
 {
 	mRoot->clearEventTimes();
+	App->CLSB_TopTabs->OgreRunning_Flag = 1;
 
 	while (true)
 	{
@@ -114,8 +115,6 @@ bool SB_Ogre::Ogre_Render_Loop(void)
 		{
 			if (Block_RenderingQueued == 0 && Pause_Rendring == 0)
 			{
-
-				// mRoot->renderOneFrame()
 				if (!mRoot->_fireFrameStarted())
 				{
 					return false;
@@ -132,7 +131,6 @@ bool SB_Ogre::Ogre_Render_Loop(void)
 				}
 
 				FPStimer.reset();
-		
 			}
 		}
 	}
