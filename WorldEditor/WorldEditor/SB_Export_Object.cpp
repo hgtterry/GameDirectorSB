@@ -275,9 +275,11 @@ bool SB_Export_Object::WriteMTLFile(void)
 		fprintf(Write_MTLFile, "Ns 0.000000\n");
 
 		strcpy(buf, App->CLSB_Model->Group[GroupCount]->Text_FileName);
+		/*App->Say(App->CLSB_Model->Group[GroupCount]->Text_FileName);
 		int Len = strlen(buf);
 		buf[Len - 4] = 0;
-		strcat(buf, ".bmp");
+		
+		strcat(buf, ".bmp");*/
 
 		fprintf(Write_MTLFile, "map_Kd %s\n", buf);
 

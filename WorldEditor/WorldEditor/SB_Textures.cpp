@@ -1237,12 +1237,9 @@ bool SB_Textures::Extract_TXL_Texture(char* Name, char* Folder)
 	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
 	WadFileEntry* BitmapPtr = m_pDoc->GetDibBitmap(Name);
 
-	//App->Say(BitmapPtr->Name);
-
 	char Name2[200];
 	strcpy(Name2, Folder);
 
-	App->Say(Folder);
 	if (geBitmap_HasAlpha(BitmapPtr->bmp))
 	{
 		char Buf1[200];
@@ -1260,7 +1257,6 @@ bool SB_Textures::Extract_TXL_Texture(char* Name, char* Folder)
 
 		strcat(Name2, Buf1);
 
-		App->Say(Name2);
 		WriteBMP8(Name2, BitmapPtr->bmp);
 	}
 
