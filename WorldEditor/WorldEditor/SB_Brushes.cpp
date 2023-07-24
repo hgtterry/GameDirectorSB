@@ -214,6 +214,36 @@ LRESULT CALLBACK SB_Brushes::Dimensions_Dlg_Proc(HWND hDlg, UINT message, WPARAM
 		return (LONG)App->AppBackground;
 	}
 
+	case WM_HSCROLL:
+	{
+		// -------- Pos X
+		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBPOSXH))
+		{
+			switch ((int)LOWORD(wParam))
+			{
+			case SB_LINEUP:
+			{
+				App->CLSB_Brushes->CenterOfSelection.X += App->CLSB_Brushes->PosX_Delta;
+				App->CLSB_Brushes->Move_Brush();
+				break;
+			}
+
+			case SB_LINEDOWN:
+			{
+				App->CLSB_Brushes->CenterOfSelection.X -= App->CLSB_Brushes->PosX_Delta;
+				App->CLSB_Brushes->Move_Brush();
+				break;
+			}
+			}
+
+			App->CLSB_Brushes->Update_Pos_Dlg();
+
+			return 0;
+		}
+
+		return 0;
+	}
+
 	case WM_VSCROLL:
 	{
 		// -------- Pos X

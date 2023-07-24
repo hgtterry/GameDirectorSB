@@ -153,7 +153,6 @@
 #define IDD_SB_RECENTPRJ                310
 #define IDD_TOPTABS_EQUITY              313
 #define IDD_TB_EQ_TEST                  315
-#define IDB_BITMAP1                     317
 #define IDB_DUMMY                       317
 #define IDC_RESET_ALL                   1000
 #define IDC_EDIT1                       1001
@@ -727,6 +726,8 @@
 #define IDC_CBPOSZDELTA2                1505
 #define IDC_SBPOSY2                     1506
 #define IDC_SBPOSZ2                     1507
+#define IDC_SCROLLBAR1                  1508
+#define IDC_SBPOSXH                     1508
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772
 #define ID_BRUSH_PRIMITIVES_SPHEROID    32773
@@ -931,9 +932,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        318
+#define _APS_NEXT_RESOURCE_VALUE        319
 #define _APS_NEXT_COMMAND_VALUE         33083
-#define _APS_NEXT_CONTROL_VALUE         1499
+#define _APS_NEXT_CONTROL_VALUE         1509
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif
