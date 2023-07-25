@@ -569,6 +569,7 @@ LRESULT CALLBACK SB_Dialogs::Dialog_DropGen_Proc(HWND hDlg, UINT message, WPARAM
 
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_EQ_UPDATE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDC_LISTSELECTION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STSELECTED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -584,6 +585,10 @@ LRESULT CALLBACK SB_Dialogs::Dialog_DropGen_Proc(HWND hDlg, UINT message, WPARAM
 			App->CLSB_Ogre->RenderListener->ShowBoundingGroup = 1;
 			
 			App->CLSB_Dialogs->ListGroups(tempList);
+
+			HWND tempList2 = GetDlgItem(hDlg, IDC_LISTGROUPDETAIL);
+			App->CLSB_Dialogs->UpdateGroupDetails(tempList2);
+
 			return TRUE;
 		}
 
@@ -629,6 +634,14 @@ LRESULT CALLBACK SB_Dialogs::Dialog_DropGen_Proc(HWND hDlg, UINT message, WPARAM
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_EQ_UPDATE && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+	
 		return CDRF_DODEFAULT;
 	}
 
@@ -658,9 +671,22 @@ LRESULT CALLBACK SB_Dialogs::Dialog_DropGen_Proc(HWND hDlg, UINT message, WPARAM
 				App->CLSB_Ogre->RenderListener->GroupNumber = Index;
 			}
 
+			HWND tempList2 = GetDlgItem(hDlg, IDC_LISTGROUPDETAIL);
+			App->CLSB_Dialogs->UpdateGroupDetails(tempList2);
+
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_BT_EQ_UPDATE)
+		{
+			App->CLSB_Model->Set_BondingBoxes_AllGroups();
+
+			HWND tempList2 = GetDlgItem(hDlg, IDC_LISTGROUPDETAIL);
+			App->CLSB_Dialogs->UpdateGroupDetails(tempList2);
+
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == IDOK)
 		{
 			char buff[256];
@@ -700,3 +726,23 @@ void SB_Dialogs::ListGroups(HWND List)
 
 	SendMessage(List, LB_SETCURSEL, 0, 0);
 }
+
+// *************************************************************************
+// *		UpdateGroupDetails:- Terry and Hazel Flanigan 2023		 	   *
+// *************************************************************************
+void SB_Dialogs::UpdateGroupDetails(HWND List)
+{
+	SendMessage(List, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+
+	char buf[MAX_PATH];
+
+	int Num = App->CLSB_Ogre->RenderListener->GroupNumber;
+
+	sprintf(buf, "Centre X= %f Y= %f Z = %f", App->CLSB_Model->Group[Num]->Centre.x, App->CLSB_Model->Group[Num]->Centre.y, App->CLSB_Model->Group[Num]->Centre.z);
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buf);
+
+	sprintf(buf, "Size X= %f Y= %f Z = %f", App->CLSB_Model->Group[Num]->Size.x, App->CLSB_Model->Group[Num]->Size.y, App->CLSB_Model->Group[Num]->Size.z);
+	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buf);
+}
+
+	

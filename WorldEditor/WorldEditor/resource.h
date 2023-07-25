@@ -574,6 +574,7 @@
 #define IDC_BT_OGRERUNNING              1363
 #define IDC_CKNORMAL                    1363
 #define IDC_BT_EQ_GROUPS                1363
+#define IDC_BT_EQ_UPDATE                1363
 #define IDC_BANNER                      1364
 #define IDC_GD_CYLINDER_PRIMITIVE       1364
 #define IDC_BT_BROWSE                   1364
@@ -748,6 +749,7 @@
 #define IDC_STROTY2                     1514
 #define IDC_LISTSELECTION               1514
 #define IDC_ED_BRUSH_POSZ3              1515
+#define IDC_LISTGROUPDETAIL             1515
 #define IDC_STROTZ2                     1516
 #define IDC_SBPOSX3                     1517
 #define IDC_CBPOSXDELTA3                1518
@@ -962,7 +964,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        323
 #define _APS_NEXT_COMMAND_VALUE         33084
-#define _APS_NEXT_CONTROL_VALUE         1515
+#define _APS_NEXT_CONTROL_VALUE         1516
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

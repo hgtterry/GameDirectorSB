@@ -53,6 +53,7 @@ private:
 	void Read_ErrorLog(HWND hDlg);
 	void UnCheck_All_SpeedMouseOption();
 	void ListGroups(HWND List);
+	void UpdateGroupDetails(HWND List);
 
 	bool F_ListData_Dlg_Active;
 	int mWhatList;
