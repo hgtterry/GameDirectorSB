@@ -31,22 +31,28 @@ public:
 	void YesNo(char* Text, char* Text2);
 	bool Start_ListData(int WhatList);
 	void Start_Speed_Camera();
+	bool Start_Dialog_DropGen();
 
 	bool Canceled;
 
 	char MessageString[100];
 	char MessageString2[100];
 
+	char btext[100];
+	char Chr_DropText[MAX_PATH];
+	int DropList_Data;
 
 private:
 	static LRESULT CALLBACK YesNo_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK ListData_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Speed_Camera_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Dialog_DropGen_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void List_SceneData(HWND hDlg);
 	void List_BoundingBox(HWND hDlg);
 	void Read_ErrorLog(HWND hDlg);
 	void UnCheck_All_SpeedMouseOption();
+	void ListGroups(HWND List);
 
 	bool F_ListData_Dlg_Active;
 	int mWhatList;

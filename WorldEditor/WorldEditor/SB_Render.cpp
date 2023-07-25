@@ -54,6 +54,7 @@ SB_Render::SB_Render()
 	Show_Crosshair = 0;
 
 	Selected_Group = 0;
+	GroupNumber = 0;
 	//TestLight();
 }
 
@@ -796,8 +797,6 @@ void SB_Render::Render_BoundingBoxGroup(void)
 	float m_xMax = 0;
 	float m_yMax = 0;
 	float m_zMax = 0;
-
-	int GroupNumber = 0;
 
 	m_xMin = App->CLSB_Model->Group[GroupNumber]->vertex_Data[0].x;
 	m_yMin = App->CLSB_Model->Group[GroupNumber]->vertex_Data[0].y;

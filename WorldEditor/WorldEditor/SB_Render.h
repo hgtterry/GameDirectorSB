@@ -59,6 +59,7 @@ public:
 	bool Show_Crosshair;
 
 	int Selected_Group;
+	int GroupNumber;
 
 	bool RenderByTexture();
 

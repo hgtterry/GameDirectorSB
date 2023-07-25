@@ -155,6 +155,7 @@
 #define IDD_TB_EQ_TEST                  315
 #define IDB_DUMMY                       317
 #define IDD_MOUSESENSITIVITY            319
+#define IDD_EQ_DROPGEN                  321
 #define IDC_RESET_ALL                   1000
 #define IDC_EDIT1                       1001
 #define IDC_EDIT10                      1002
@@ -572,6 +573,7 @@
 #define IDC_BT_TT_MODEL                 1363
 #define IDC_BT_OGRERUNNING              1363
 #define IDC_CKNORMAL                    1363
+#define IDC_BT_EQ_GROUPS                1363
 #define IDC_BANNER                      1364
 #define IDC_GD_CYLINDER_PRIMITIVE       1364
 #define IDC_BT_BROWSE                   1364
@@ -740,8 +742,11 @@
 #define IDC_ED_BRUSH_POSX3              1511
 #define IDC_STBANNER                    1511
 #define IDC_STROTX2                     1512
+#define IDC_TITLE                       1512
 #define IDC_ED_BRUSH_POSY3              1513
+#define IDC_STSELECTED                  1513
 #define IDC_STROTY2                     1514
+#define IDC_LISTSELECTION               1514
 #define IDC_ED_BRUSH_POSZ3              1515
 #define IDC_STROTZ2                     1516
 #define IDC_SBPOSX3                     1517
@@ -955,9 +960,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        321
+#define _APS_NEXT_RESOURCE_VALUE        323
 #define _APS_NEXT_COMMAND_VALUE         33084
-#define _APS_NEXT_CONTROL_VALUE         1512
+#define _APS_NEXT_CONTROL_VALUE         1515
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

@@ -176,6 +176,8 @@ LRESULT CALLBACK SB_TopTabs_Equity::Files_TB_Proc(HWND hDlg, UINT message, WPARA
 	{
 		SendDlgItemMessage(hDlg, IDC_UPDATE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BTTBDIMENSIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_EQ_GROUPS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		return TRUE;
 	}
 
@@ -189,6 +191,13 @@ LRESULT CALLBACK SB_TopTabs_Equity::Files_TB_Proc(HWND hDlg, UINT message, WPARA
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
 		if (some_item->idFrom == IDC_UPDATE && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_EQ_GROUPS && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
@@ -239,6 +248,19 @@ LRESULT CALLBACK SB_TopTabs_Equity::Files_TB_Proc(HWND hDlg, UINT message, WPARA
 				//App->CL_Panels->Show_Panels(0);
 			}
 
+			return 1;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_EQ_GROUPS)
+		{
+			if (App->CLSB_Model->Model_Loaded == 1)
+			{
+				strcpy(App->CLSB_Dialogs->btext, "Groups");
+				strcpy(App->CLSB_Dialogs->Chr_DropText, App->CLSB_Model->Group[0]->GroupName);
+				App->CLSB_Dialogs->DropList_Data = 0;
+
+				App->CLSB_Dialogs->Start_Dialog_DropGen();
+			}
 			return 1;
 		}
 

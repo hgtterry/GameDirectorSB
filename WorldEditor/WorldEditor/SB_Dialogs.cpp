@@ -40,6 +40,11 @@ SB_Dialogs::SB_Dialogs(void)
 
 	Canceled = 0;
 	mWhatList = 0;
+
+	btext[0] = 0;
+	Chr_DropText[0] = 0;
+	DropList_Data = 0;
+
 	m_pDoc = nullptr;
 }
 
@@ -536,4 +541,162 @@ void SB_Dialogs::UnCheck_All_SpeedMouseOption()
 	Mouse_Slow = 0;
 	Mouse_VerySlow = 0;
 	Mouse_Fast = 0;
+}
+
+// *************************************************************************
+// *	  	Start_Dialog_DropGen:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+bool SB_Dialogs::Start_Dialog_DropGen()
+{
+	CreateDialog(App->hInst, (LPCTSTR)IDD_EQ_DROPGEN, App->CLSB_Equity->Equity_Main_hWnd, (DLGPROC)Dialog_DropGen_Proc);
+
+	return 1;
+}
+// *************************************************************************
+// *		Dialog_DropGen_Proc:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+LRESULT CALLBACK SB_Dialogs::Dialog_DropGen_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+
+		//App->SetTitleBar(hDlg);
+
+		SendDlgItemMessage(hDlg, IDC_TITLE, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_LISTSELECTION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STSELECTED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SetDlgItemText(hDlg, IDC_TITLE, (LPCTSTR)App->CLSB_Dialogs->btext);
+		SetDlgItemText(hDlg, IDC_STSELECTED, (LPCTSTR)App->CLSB_Dialogs->Chr_DropText);
+
+		HWND tempList = GetDlgItem(hDlg, IDC_LISTSELECTION);
+
+		if (App->CLSB_Dialogs->DropList_Data == 0)
+		{
+			App->CLSB_Ogre->RenderListener->GroupNumber = 0;
+			App->CLSB_Ogre->RenderListener->ShowBoundingGroup = 1;
+			
+			App->CLSB_Dialogs->ListGroups(tempList);
+			return TRUE;
+		}
+
+		return TRUE;
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+
+		if (GetDlgItem(hDlg, IDC_TITLE) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STSELECTED) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->Brush_White;
+		}
+
+		return FALSE;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+	case WM_COMMAND:
+
+		if (LOWORD(wParam) == IDC_LISTSELECTION)
+		{
+			char buff[256];
+			int Index = 0;
+			Index = SendDlgItemMessage(hDlg, IDC_LISTSELECTION, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+
+			if (Index == -1)
+			{
+				return 1;
+			}
+
+			SendDlgItemMessage(hDlg, IDC_LISTSELECTION, LB_GETTEXT, (WPARAM)Index, (LPARAM)buff);
+
+			SetDlgItemText(hDlg, IDC_STSELECTED, buff);
+
+			if (App->CLSB_Dialogs->DropList_Data == 0)
+			{
+				App->CLSB_Ogre->RenderListener->GroupNumber = Index;
+			}
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDOK)
+		{
+			char buff[256];
+			GetDlgItemText(hDlg, IDC_STSELECTED, (LPTSTR)buff, 256);
+			strcpy(App->CLSB_Dialogs->Chr_DropText, buff);
+
+			App->CLSB_Dialogs->Canceled = 0;
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			App->CLSB_Dialogs->Canceled = 1;
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		break;
+	}
+	return FALSE;
+}
+
+// *************************************************************************
+// *			ListGroups:- Terry and Hazel Flanigan 2023		 		   *
+// *************************************************************************
+void SB_Dialogs::ListGroups(HWND List)
+{
+	int GroupCount = App->CLSB_Model->Get_Groupt_Count();
+
+	int Count = 0;
+	while (Count < GroupCount)
+	{
+		SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CLSB_Model->Group[Count]->GroupName);
+		Count++;
+	}
+
+	SendMessage(List, LB_SETCURSEL, 0, 0);
 }
