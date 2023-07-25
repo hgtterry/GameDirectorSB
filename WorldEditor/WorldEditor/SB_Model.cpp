@@ -269,13 +269,13 @@ void SB_Model::Set_BondingBox_Model(bool Create)
 // *************************************************************************
 void SB_Model::Set_BondingBox_Group(int GroupID)
 {
-	Group[GroupID]->BB_Min.x = Group[0]->vertex_Data[GroupID].x;
-	Group[GroupID]->BB_Min.y = Group[0]->vertex_Data[GroupID].y;
-	Group[GroupID]->BB_Min.z = Group[0]->vertex_Data[GroupID].z;
+	Group[GroupID]->BB_Min.x = Group[GroupID]->vertex_Data[0].x;
+	Group[GroupID]->BB_Min.y = Group[GroupID]->vertex_Data[0].y;
+	Group[GroupID]->BB_Min.z = Group[GroupID]->vertex_Data[0].z;
 
-	Group[GroupID]->BB_Max.x = Group[0]->vertex_Data[GroupID].x;
-	Group[GroupID]->BB_Max.y = Group[0]->vertex_Data[GroupID].y;
-	Group[GroupID]->BB_Max.z = Group[0]->vertex_Data[GroupID].z;
+	Group[GroupID]->BB_Max.x = Group[GroupID]->vertex_Data[0].x;
+	Group[GroupID]->BB_Max.y = Group[GroupID]->vertex_Data[0].y;
+	Group[GroupID]->BB_Max.z = Group[GroupID]->vertex_Data[0].z;
 
 	int Count = GroupID;
 	int VertCount = 0;
@@ -301,6 +301,21 @@ void SB_Model::Set_BondingBox_Group(int GroupID)
 	Group[GroupID]->Centre.x = (Group[GroupID]->BB_Min.x + Group[GroupID]->BB_Max.x) / 2.0f;
 	Group[GroupID]->Centre.y = (Group[GroupID]->BB_Min.y + Group[GroupID]->BB_Max.y) / 2.0f;
 	Group[GroupID]->Centre.z = (Group[GroupID]->BB_Min.z + Group[GroupID]->BB_Max.z) / 2.0f;
+
+}
+
+// *************************************************************************
+// *	Set_BondingBoxes_AllGroups:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_Model::Set_BondingBoxes_AllGroups()
+{
+	int mGroupCount = Get_Groupt_Count();
+	int GroupCount = 0;
+	while (GroupCount < mGroupCount)
+	{
+		Set_BondingBox_Group(GroupCount);
+		GroupCount++;
+	}
 
 }
 

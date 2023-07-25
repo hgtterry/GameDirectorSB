@@ -112,13 +112,17 @@ void SB_Equity::Show_Equity_Dialog(bool Show)
 	{
 		if (Show == 1)
 		{
-			Sleep(500);
+			Debug
 			ShowWindow(Equity_Main_hWnd, SW_SHOW);
 		}
 		else
 		{
 			ShowWindow(Equity_Main_hWnd, SW_HIDE);
 		}
+	}
+	else
+	{
+		App->Say("Cant Start");
 	}
 }
 

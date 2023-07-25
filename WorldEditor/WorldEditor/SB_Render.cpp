@@ -790,15 +790,15 @@ void SB_Render::Render_BoundingBoxModel(void)
 // *************************************************************************
 void SB_Render::Render_BoundingBoxGroup(void)
 {
-	float m_xMin = 0;
-	float m_yMin = 0;
-	float m_zMin = 0;
+	float m_xMin = App->CLSB_Model->Group[GroupNumber]->BB_Min.x;
+	float m_yMin = App->CLSB_Model->Group[GroupNumber]->BB_Min.y;
+	float m_zMin = App->CLSB_Model->Group[GroupNumber]->BB_Min.z;
 
-	float m_xMax = 0;
-	float m_yMax = 0;
-	float m_zMax = 0;
+	float m_xMax = App->CLSB_Model->Group[GroupNumber]->BB_Max.x;
+	float m_yMax = App->CLSB_Model->Group[GroupNumber]->BB_Max.y;
+	float m_zMax = App->CLSB_Model->Group[GroupNumber]->BB_Max.z;
 
-	m_xMin = App->CLSB_Model->Group[GroupNumber]->vertex_Data[0].x;
+	/*m_xMin = App->CLSB_Model->Group[GroupNumber]->vertex_Data[0].x;
 	m_yMin = App->CLSB_Model->Group[GroupNumber]->vertex_Data[0].y;
 	m_zMin = App->CLSB_Model->Group[GroupNumber]->vertex_Data[0].z;
 
@@ -818,7 +818,7 @@ void SB_Render::Render_BoundingBoxGroup(void)
 		if (App->CLSB_Model->Group[Count]->vertex_Data[VertCount].y > m_yMax) m_yMax = App->CLSB_Model->Group[Count]->vertex_Data[VertCount].y;
 		if (App->CLSB_Model->Group[Count]->vertex_Data[VertCount].z > m_zMax) m_zMax = App->CLSB_Model->Group[Count]->vertex_Data[VertCount].z;
 		VertCount++;
-	}
+	}*/
 	
 	glDisable(GL_TEXTURE_2D);
 	glColor3f(1.0f, 0.0f, 0.0f);

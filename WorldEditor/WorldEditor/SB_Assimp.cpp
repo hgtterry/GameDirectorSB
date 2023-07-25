@@ -90,14 +90,7 @@ bool SB_Assimp::LoadFile(const char* pFile)
 		App->CLSB_Model->Set_BondingBox_Model(1); // Create Main Bounding Box
 
 		// Create Groups Bounding Boxes
-		int mGroupCount = App->CLSB_Model->Get_Groupt_Count();
-		int GroupCount = 0;
-		while (GroupCount < mGroupCount)
-		{
-			App->CLSB_Model->Set_BondingBox_Group(GroupCount);
-			GroupCount++;
-		}
-
+		App->CLSB_Model->Set_BondingBoxes_AllGroups();
 	}
 
 	
