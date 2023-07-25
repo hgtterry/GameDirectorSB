@@ -18,6 +18,20 @@ SB_Equity::~SB_Equity(void)
 {
 }
 
+
+// *************************************************************************
+// *		Get_CurrentDocument:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void SB_Equity::Get_CurrentDocument()
+{
+	m_pDoc = NULL;
+	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+	if (m_pDoc == NULL)
+	{
+		App->Say("Cant Get Current Document");
+	}
+}
+
 // *************************************************************************
 // *			Switch_3D_Window:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
@@ -962,8 +976,8 @@ void SB_Equity::Resize_3DView()
 // *************************************************************************
 void SB_Equity::Preview_Selected()
 {
-	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
-
+	Get_CurrentDocument();
+	
 	int NumSelBrushes = SelBrushList_GetSize(m_pDoc->pSelBrushes);
 
 	if (NumSelBrushes == 0)
@@ -987,11 +1001,11 @@ void SB_Equity::Preview_Selected()
 // *************************************************************************
 void SB_Equity::Preview_All()
 {
+	Get_CurrentDocument();
+
 	App->CLSB_Equity->Position_Offsets.x = 0;
 	App->CLSB_Equity->Position_Offsets.y = 0;
 	App->CLSB_Equity->Position_Offsets.z = 0;
-
-	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
 
 	m_pDoc->SelectAll();
 	m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);

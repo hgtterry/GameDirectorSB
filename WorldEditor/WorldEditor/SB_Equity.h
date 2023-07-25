@@ -35,6 +35,8 @@ private:
 
 	void Resize_3DView();
 
+	void Get_CurrentDocument();
+
 	CFusionDoc* m_pDoc;
 };
 
