@@ -2574,6 +2574,7 @@ BEGIN
     END
     POPUP "Debug"
     BEGIN
+        MENUITEM "General",                     ID_DEBUG_GENERAL
         MENUITEM "Actor To World",              ID_DEBUG_ACTORTOWORLD
         MENUITEM "Show Camera Positions",       ID_DEBUG_SHOWCAMERAPOSITIONS
         MENUITEM "Bounding Box",                ID_DEBUG_BOUNDINGBOX

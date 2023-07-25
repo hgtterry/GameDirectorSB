@@ -180,6 +180,21 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_Proc(HWND hDlg, UINT message, WPARAM w
 	case WM_COMMAND:
 	{
 		// Debug
+
+		if (LOWORD(wParam) == ID_DEBUG_GENERAL)
+		{
+			if (App->CLSB_Ogre->RenderListener->ShowBoundingGroup == 1)
+			{
+				App->CLSB_Ogre->RenderListener->ShowBoundingGroup = 0;
+			}
+			else
+			{
+				App->CLSB_Ogre->RenderListener->ShowBoundingGroup = 1;
+			}
+
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == ID_DEBUG_ACTORTOWORLD)
 		{
 			App->CLSB_Loader->Load_ActorWorld();

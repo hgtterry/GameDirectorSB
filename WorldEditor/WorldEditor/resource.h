@@ -584,7 +584,6 @@
 #define IDC_STMESSAGE                   1366
 #define IDC_GD_CONE_PRIMITIVE           1366
 #define IDC_STTEXT2                     1366
-#define IDC_BUTTON9                     1366
 #define IDC_CKFAST                      1366
 #define IDC_STTXL                       1367
 #define IDC_GD_STAIRCASE_PRIMITIVE      1367
@@ -948,6 +947,7 @@
 #define ID_FILE_RECENT                  33080
 #define ID_DEBUG_SHOWCAMERAPOSITIONS    33081
 #define ID_DEBUG_BOUNDINGBOX            33082
+#define ID_DEBUG_GENERAL                33083
 #define IDS_HELPINFORMATION             38000
 
 // Next default values for new objects
@@ -956,7 +956,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        321
-#define _APS_NEXT_COMMAND_VALUE         33083
+#define _APS_NEXT_COMMAND_VALUE         33084
 #define _APS_NEXT_CONTROL_VALUE         1512
 #define _APS_NEXT_SYMED_VALUE           112
 #endif

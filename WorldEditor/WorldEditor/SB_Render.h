@@ -51,6 +51,7 @@ public:
 	bool ShowPoints;
 	bool ShowNormals;
 	bool ShowBoundingBox;
+	bool ShowBoundingGroup;
 	bool PlayActive;
 	bool Light_Activated;
 	bool ShowOnlySubMesh;
@@ -91,6 +92,7 @@ protected:
 	bool As_RenderBones();
 
 	void Render_BoundingBoxModel(void);
+	void Render_BoundingBoxGroup(void);
 
 	bool RF_Render_Points(void);
 	bool RF_Render_Faces(void);

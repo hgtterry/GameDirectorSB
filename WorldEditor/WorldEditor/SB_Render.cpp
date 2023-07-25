@@ -46,6 +46,7 @@ SB_Render::SB_Render()
 	ShowPoints = 0;
 	ShowNormals = 0;
 	ShowBoundingBox = 0;
+	ShowBoundingGroup = 0;
 	PlayActive = 0;
 	Light_Activated = 0;
 	ShowOnlySubMesh = 0;
@@ -303,6 +304,12 @@ void SB_Render::Render_Loop()
 		{
 		RenderPoints();
 		}*/
+	}
+
+	// ---------------------- Bounding Box Group
+	if (App->CLSB_Model->Model_Loaded == 1 && ShowBoundingGroup == 1)
+	{
+		Render_BoundingBoxGroup();
 	}
 
 	//// ---------------------- Bones
@@ -776,6 +783,64 @@ void SB_Render::Render_BoundingBoxModel(void)
 	glEnd();
 	glEnable(GL_TEXTURE_2D);
 }
+
+// *************************************************************************
+// *				Render_BoundingBoxGroup Terry Bernie	  			   *
+// *************************************************************************
+void SB_Render::Render_BoundingBoxGroup(void)
+{
+	float m_xMin = App->CLSB_Model->S_BoundingBox[0]->BB_Min[0].x;
+	float m_yMin = App->CLSB_Model->S_BoundingBox[0]->BB_Min[0].y;
+	float m_zMin = App->CLSB_Model->S_BoundingBox[0]->BB_Min[0].z;
+
+	float m_xMax = App->CLSB_Model->S_BoundingBox[0]->BB_Max[0].x;
+	float m_yMax = App->CLSB_Model->S_BoundingBox[0]->BB_Max[0].y;
+	float m_zMax = App->CLSB_Model->S_BoundingBox[0]->BB_Max[0].z;
+
+	glDisable(GL_TEXTURE_2D);
+	glColor3f(1.0f, 0.0f, 0.0f);
+	glBegin(GL_LINES);
+
+	glVertex3f(m_xMin, m_yMin, m_zMin);
+	glVertex3f(m_xMin, m_yMin, m_zMax);
+
+	glVertex3f(m_xMax, m_yMin, m_zMin);
+	glVertex3f(m_xMax, m_yMin, m_zMax);
+
+	glVertex3f(m_xMin, m_yMax, m_zMin);
+	glVertex3f(m_xMin, m_yMax, m_zMax);
+
+	glVertex3f(m_xMax, m_yMax, m_zMin);
+	glVertex3f(m_xMax, m_yMax, m_zMax);
+
+	glVertex3f(m_xMin, m_yMin, m_zMin);
+	glVertex3f(m_xMax, m_yMin, m_zMin);
+
+	glVertex3f(m_xMin, m_yMin, m_zMin);
+	glVertex3f(m_xMin, m_yMax, m_zMin);
+
+	glVertex3f(m_xMax, m_yMin, m_zMin);
+	glVertex3f(m_xMax, m_yMax, m_zMin);
+
+	glVertex3f(m_xMin, m_yMax, m_zMin);
+	glVertex3f(m_xMax, m_yMax, m_zMin);
+
+	glVertex3f(m_xMin, m_yMin, m_zMax);
+	glVertex3f(m_xMax, m_yMin, m_zMax);
+
+	glVertex3f(m_xMin, m_yMin, m_zMax);
+	glVertex3f(m_xMin, m_yMax, m_zMax);
+
+	glVertex3f(m_xMax, m_yMin, m_zMax);
+	glVertex3f(m_xMax, m_yMax, m_zMax);
+
+	glVertex3f(m_xMin, m_yMax, m_zMax);
+	glVertex3f(m_xMax, m_yMax, m_zMax);
+
+	glEnd();
+	glEnable(GL_TEXTURE_2D);
+}
+
 
 // *************************************************************************
 // *					RF_Render_All_Groups  ( Terry Bernie ) 			   *

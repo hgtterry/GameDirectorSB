@@ -281,8 +281,9 @@ void SB_Assimp::Create_MeshGroups(const aiScene* pScene)
 	while (Count < mGroupCount)
 	{
 		aiMesh* mesh = pScene->mMeshes[Count];
-
 		App->CLSB_Model->Create_Mesh_Group(Count);
+
+		//App->Say(mesh->mName.C_Str());
 
 		_itoa(Count, GroupNum, 10);
 		strcpy(GroupName, "Group_");
