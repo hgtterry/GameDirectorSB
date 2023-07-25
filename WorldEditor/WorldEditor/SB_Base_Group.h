@@ -28,14 +28,6 @@ typedef struct vertex_type
 	float x, y, z;
 }vertex_type;
 
-typedef struct AABB2_Type {
-	vertex_type BB_Max[1];
-	vertex_type BB_Min[1];
-	vertex_type Size[1];
-	vertex_type Centre[1];
-	float radius;
-} AABB2_Type;
-
 typedef struct polygon_type { int a, b, c, Group; }polygon_type;
 typedef struct normal_type { float x, y, z; }normal_type;
 typedef struct mapcoord_type { float u, v; }mapcoord_type;
@@ -81,7 +73,12 @@ public:
 	std::vector<float_type> BA_Weight_Data; // Ogre
 	int BoneAssignMentCount; // Ogre
 
-	AABB2_Type* S_BoundingBox[1];
+	// Bounding Box
+	vertex_type BB_Max;
+	vertex_type BB_Min;
+	vertex_type Size;
+	vertex_type Centre;
+	float radius;
 
 	HBITMAP Base_Bitmap;
 	geBitmap* RF_Bitmap;

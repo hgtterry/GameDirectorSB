@@ -46,6 +46,25 @@ Base_Group::Base_Group()
 	Base_Bitmap = NULL;
 	//RF_Bitmap = NULL;
 	ListView_Item = NULL;
+
+	// Bounding Box
+	BB_Max.x = 0;
+	BB_Max.y = 0;
+	BB_Max.z = 0;
+
+	BB_Min.x = 0;
+	BB_Min.y = 0;
+	BB_Min.z = 0;
+
+	Size.x = 0;
+	Size.y = 0;
+	Size.z = 0;
+
+	Centre.x = 0;
+	Centre.y = 0;
+	Centre.z = 0;
+
+	radius = 0;;
 }
 
 

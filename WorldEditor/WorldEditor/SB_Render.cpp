@@ -797,33 +797,30 @@ void SB_Render::Render_BoundingBoxGroup(void)
 	float m_yMax = 0;
 	float m_zMax = 0;
 
-	m_xMin = App->CLSB_Model->Group[0]->vertex_Data[0].x;
-	m_yMin = App->CLSB_Model->Group[0]->vertex_Data[0].y;
-	m_zMin = App->CLSB_Model->Group[0]->vertex_Data[0].z;
+	int GroupNumber = 0;
 
-	m_xMax = App->CLSB_Model->Group[0]->vertex_Data[0].x;
-	m_yMax = App->CLSB_Model->Group[0]->vertex_Data[0].y;
-	m_zMax = App->CLSB_Model->Group[0]->vertex_Data[0].z;
+	m_xMin = App->CLSB_Model->Group[GroupNumber]->vertex_Data[0].x;
+	m_yMin = App->CLSB_Model->Group[GroupNumber]->vertex_Data[0].y;
+	m_zMin = App->CLSB_Model->Group[GroupNumber]->vertex_Data[0].z;
 
-	int Count = 0;
+	m_xMax = App->CLSB_Model->Group[GroupNumber]->vertex_Data[0].x;
+	m_yMax = App->CLSB_Model->Group[GroupNumber]->vertex_Data[0].y;
+	m_zMax = App->CLSB_Model->Group[GroupNumber]->vertex_Data[0].z;
+
+	int Count = GroupNumber;
 	int VertCount = 0;
 
-	while (Count < App->CLSB_Model->GroupCount)
+	while (VertCount < App->CLSB_Model->Group[GroupNumber]->GroupVertCount)
 	{
-		VertCount = 0;
-		while (VertCount < App->CLSB_Model->Group[Count]->GroupVertCount)
-		{
-			if (App->CLSB_Model->Group[Count]->vertex_Data[VertCount].x < m_xMin) m_xMin = App->CLSB_Model->Group[Count]->vertex_Data[VertCount].x;
-			if (App->CLSB_Model->Group[Count]->vertex_Data[VertCount].y < m_yMin) m_yMin = App->CLSB_Model->Group[Count]->vertex_Data[VertCount].y;
-			if (App->CLSB_Model->Group[Count]->vertex_Data[VertCount].z < m_zMin) m_zMin = App->CLSB_Model->Group[Count]->vertex_Data[VertCount].z;
-			if (App->CLSB_Model->Group[Count]->vertex_Data[VertCount].x > m_xMax) m_xMax = App->CLSB_Model->Group[Count]->vertex_Data[VertCount].x;
-			if (App->CLSB_Model->Group[Count]->vertex_Data[VertCount].y > m_yMax) m_yMax = App->CLSB_Model->Group[Count]->vertex_Data[VertCount].y;
-			if (App->CLSB_Model->Group[Count]->vertex_Data[VertCount].z > m_zMax) m_zMax = App->CLSB_Model->Group[Count]->vertex_Data[VertCount].z;
-			VertCount++;
-		}
-		Count++;
+		if (App->CLSB_Model->Group[Count]->vertex_Data[VertCount].x < m_xMin) m_xMin = App->CLSB_Model->Group[Count]->vertex_Data[VertCount].x;
+		if (App->CLSB_Model->Group[Count]->vertex_Data[VertCount].y < m_yMin) m_yMin = App->CLSB_Model->Group[Count]->vertex_Data[VertCount].y;
+		if (App->CLSB_Model->Group[Count]->vertex_Data[VertCount].z < m_zMin) m_zMin = App->CLSB_Model->Group[Count]->vertex_Data[VertCount].z;
+		if (App->CLSB_Model->Group[Count]->vertex_Data[VertCount].x > m_xMax) m_xMax = App->CLSB_Model->Group[Count]->vertex_Data[VertCount].x;
+		if (App->CLSB_Model->Group[Count]->vertex_Data[VertCount].y > m_yMax) m_yMax = App->CLSB_Model->Group[Count]->vertex_Data[VertCount].y;
+		if (App->CLSB_Model->Group[Count]->vertex_Data[VertCount].z > m_zMax) m_zMax = App->CLSB_Model->Group[Count]->vertex_Data[VertCount].z;
+		VertCount++;
 	}
-
+	
 	glDisable(GL_TEXTURE_2D);
 	glColor3f(1.0f, 0.0f, 0.0f);
 	glBegin(GL_LINES);
