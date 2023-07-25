@@ -243,6 +243,7 @@ void SB_Model::Set_BondingBox_Model(bool Create)
 			if (Group[Count]->vertex_Data[VertCount].x < S_BoundingBox[0]->BB_Min[0].x) S_BoundingBox[0]->BB_Min[0].x = Group[Count]->vertex_Data[VertCount].x;
 			if (Group[Count]->vertex_Data[VertCount].y < S_BoundingBox[0]->BB_Min[0].y) S_BoundingBox[0]->BB_Min[0].y = Group[Count]->vertex_Data[VertCount].y;
 			if (Group[Count]->vertex_Data[VertCount].z < S_BoundingBox[0]->BB_Min[0].z) S_BoundingBox[0]->BB_Min[0].z = Group[Count]->vertex_Data[VertCount].z;
+
 			if (Group[Count]->vertex_Data[VertCount].x > S_BoundingBox[0]->BB_Max[0].x) S_BoundingBox[0]->BB_Max[0].x = Group[Count]->vertex_Data[VertCount].x;
 			if (Group[Count]->vertex_Data[VertCount].y > S_BoundingBox[0]->BB_Max[0].y) S_BoundingBox[0]->BB_Max[0].y = Group[Count]->vertex_Data[VertCount].y;
 			if (Group[Count]->vertex_Data[VertCount].z > S_BoundingBox[0]->BB_Max[0].z) S_BoundingBox[0]->BB_Max[0].z = Group[Count]->vertex_Data[VertCount].z;
@@ -260,6 +261,47 @@ void SB_Model::Set_BondingBox_Model(bool Create)
 	S_BoundingBox[0]->Centre[0].x = (S_BoundingBox[0]->BB_Min[0].x + S_BoundingBox[0]->BB_Max[0].x) / 2.0f;
 	S_BoundingBox[0]->Centre[0].y = (S_BoundingBox[0]->BB_Min[0].y + S_BoundingBox[0]->BB_Max[0].y) / 2.0f;
 	S_BoundingBox[0]->Centre[0].z = (S_BoundingBox[0]->BB_Min[0].z + S_BoundingBox[0]->BB_Max[0].z) / 2.0f;
+
+}
+
+// *************************************************************************
+// *		Set_BondingBox_Group:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_Model::Set_BondingBox_Group(int GroupID)
+{
+	Group[GroupID]->BB_Min.x = Group[0]->vertex_Data[GroupID].x;
+	Group[GroupID]->BB_Min.y = Group[0]->vertex_Data[GroupID].y;
+	Group[GroupID]->BB_Min.z = Group[0]->vertex_Data[GroupID].z;
+
+	Group[GroupID]->BB_Max.x = Group[0]->vertex_Data[GroupID].x;
+	Group[GroupID]->BB_Max.y = Group[0]->vertex_Data[GroupID].y;
+	Group[GroupID]->BB_Max.z = Group[0]->vertex_Data[GroupID].z;
+
+	int Count = GroupID;
+	int VertCount = 0;
+
+	while (VertCount < Group[Count]->GroupVertCount)
+	{
+		if (Group[Count]->vertex_Data[VertCount].x < Group[GroupID]->BB_Min.x) Group[GroupID]->BB_Min.x = Group[Count]->vertex_Data[VertCount].x;
+		if (Group[Count]->vertex_Data[VertCount].y < Group[GroupID]->BB_Min.y) Group[GroupID]->BB_Min.y = Group[Count]->vertex_Data[VertCount].y;
+		if (Group[Count]->vertex_Data[VertCount].z < Group[GroupID]->BB_Min.z) Group[GroupID]->BB_Min.z = Group[Count]->vertex_Data[VertCount].z;
+
+		if (Group[Count]->vertex_Data[VertCount].x > Group[GroupID]->BB_Max.x) Group[GroupID]->BB_Max.x = Group[Count]->vertex_Data[VertCount].x;
+		if (Group[Count]->vertex_Data[VertCount].y > Group[GroupID]->BB_Max.y) Group[GroupID]->BB_Max.y = Group[Count]->vertex_Data[VertCount].y;
+		if (Group[Count]->vertex_Data[VertCount].z > Group[GroupID]->BB_Max.z) Group[GroupID]->BB_Max.z = Group[Count]->vertex_Data[VertCount].z;
+		VertCount++;
+	}
+	
+	Group[GroupID]->Size.x = (fabs(Group[GroupID]->BB_Max.x - Group[GroupID]->BB_Min.x));
+	Group[GroupID]->Size.y = (fabs(Group[GroupID]->BB_Max.y - Group[GroupID]->BB_Min.y));
+	Group[GroupID]->Size.z = (fabs(Group[GroupID]->BB_Max.z - Group[GroupID]->BB_Min.z));
+
+	Group[GroupID]->radius = (Group[GroupID]->Size.x > Group[GroupID]->Size.z) ? Group[GroupID]->Size.z / 2.0f : Group[GroupID]->Size.x / 2.0f;
+
+	Group[GroupID]->Centre.x = (Group[GroupID]->BB_Min.x + Group[GroupID]->BB_Max.x) / 2.0f;
+	Group[GroupID]->Centre.y = (Group[GroupID]->BB_Min.y + Group[GroupID]->BB_Max.y) / 2.0f;
+	Group[GroupID]->Centre.z = (Group[GroupID]->BB_Min.z + Group[GroupID]->BB_Max.z) / 2.0f;
+
 }
 
 // *************************************************************************
