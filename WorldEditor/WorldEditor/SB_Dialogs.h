@@ -46,9 +46,15 @@ private:
 	void List_SceneData(HWND hDlg);
 	void List_BoundingBox(HWND hDlg);
 	void Read_ErrorLog(HWND hDlg);
+	void UnCheck_All_SpeedMouseOption();
 
 	bool F_ListData_Dlg_Active;
 	int mWhatList;
+
+	bool Mouse_Normal;
+	bool Mouse_Slow;
+	bool Mouse_VerySlow;
+	bool Mouse_Fast;
 
 	CFusionDoc* m_pDoc;
 };

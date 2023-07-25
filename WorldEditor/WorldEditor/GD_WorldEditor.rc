@@ -1442,7 +1442,7 @@ END
 
 STRINGTABLE
 BEGIN
-    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.26 - [24-07-23] -17"
+    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.26 - [25-07-23] -17"
     IDR_FUSIONTYPE          "Genesis3D World Editor\nWorld\nWorld\nWorld Files (*.3dt)\n.3dt\nWorldEditor.Document\nGenesis3D World Editor Document"
     IDS_LOAD_WARNING        "Some entities or brushes did not load properly, see console for details."
     IDS_NEWGROUP            "Group Name"
@@ -2249,10 +2249,10 @@ FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,80,155,50,14
     CTEXT           "Camera/Mouse Speed",IDC_STBANNER,7,7,195,21,SS_CENTERIMAGE
-    PUSHBUTTON      "Button1",IDC_BUTTON1,39,34,131,21
-    PUSHBUTTON      "Button1",IDC_BUTTON7,39,82,131,21
-    PUSHBUTTON      "Button1",IDC_BUTTON8,39,57,131,21
-    PUSHBUTTON      "Button1",IDC_BUTTON9,39,106,131,21
+    PUSHBUTTON      "Normal",IDC_CKNORMAL,39,34,131,21
+    PUSHBUTTON      "Very Slow",IDC_CKVERYSLOW,39,82,131,21
+    PUSHBUTTON      "Slow",IDC_CKSLOW,39,57,131,21
+    PUSHBUTTON      "Fast",IDC_CKFAST,39,106,131,21
     CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME | SS_SUNKEN,7,148,195,1
 END
 
