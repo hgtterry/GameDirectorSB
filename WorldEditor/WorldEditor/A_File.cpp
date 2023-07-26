@@ -30,6 +30,7 @@ distribution.
 #include "EntView.h"
 #include "units.h"
 //#include "FilePath.h"
+#include "FUSIONView.h"
 
 #define NUM_VIEWS (4)
 struct tag_Level
@@ -94,6 +95,7 @@ typedef struct
 	Level *NewLevel;
 } fdocAddPremadeData;
 
+
 // *************************************************************************
 // * 			( Static in Class )	fdocSetEntityVisibility				   *
 // *************************************************************************
@@ -106,6 +108,19 @@ static geBoolean fdocSetEntityVisibility (CEntity &Ent, void *lParam)
 		Ent.SetVisible (pEntry->IsVisible);
 	}
 	return GE_TRUE;
+}
+
+// *************************************************************************
+// *		Get_CurrentDocument:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void A_File::Get_CurrentDocument()
+{
+	m_pDoc = NULL;
+	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+	if (m_pDoc == NULL)
+	{
+		App->Say("Cant Get Current Document");
+	}
 }
 
 // *************************************************************************
@@ -147,7 +162,7 @@ bool A_File::Open_3dt_File(bool UseDialogLoader)
 bool A_File::Load(const char *FileName)
 {
 	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
-
+	
 	//MessageBox(NULL,"ME Know","ME Know",MB_OK);
 	
 	const char		*Errmsg, *WadPath;
@@ -615,6 +630,7 @@ Level* A_File::Level_CreateFromFile (const char *FileName, const char **ErrMsg, 
 			pBrush	=Brush_CreateFromFile(Parser, VersionMajor, VersionMinor, &Expected);
 			if (pBrush == NULL) goto DoneLoad;
 			BrushList_Append (pLevel->Brushes, pBrush);
+			
 		}
 	}
 	else
@@ -623,6 +639,7 @@ Level* A_File::Level_CreateFromFile (const char *FileName, const char **ErrMsg, 
 		{
 			BrushList_Destroy (&pLevel->Brushes);
 		}
+
 		pLevel->Brushes = BrushList_CreateFromFile (Parser, VersionMajor, VersionMinor, &Expected);
 		if (pLevel->Brushes == NULL)
 			goto DoneLoad;
@@ -698,3 +715,133 @@ bool A_File::Open_File_Dialog(char* Extension, char* Title, char* StartDirectory
 
 	return 0;
 }
+
+// *************************************************************************
+// *		Open_File_Dialog:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+bool A_File::Save(const char* FileName)
+{
+	Get_CurrentDocument();
+
+	// update view information in level
+	ViewStateInfo* pViewStateInfo;
+	POSITION		pos;
+	CFusionView* pView;
+	int iView;
+
+	pos = m_pDoc->GetFirstViewPosition();
+	while (pos != NULL)
+	{
+		pView = (CFusionView*)m_pDoc->GetNextView(pos);
+		switch (Render_GetViewType(pView->VCam))
+		{
+		case VIEWSOLID:
+		case VIEWTEXTURE:
+		case VIEWWIRE:
+			iView = 0;
+			break;
+		case VIEWTOP:
+			iView = 1;
+			break;
+		case VIEWFRONT:
+			iView = 2;
+			break;
+		case VIEWSIDE:
+			iView = 3;
+			break;
+		default:
+			iView = -1;
+		}
+		if (iView != -1)
+		{
+			pViewStateInfo = Level_GetViewStateInfo(m_pDoc->pLevel, iView);
+			pViewStateInfo->IsValid = GE_TRUE;
+			pViewStateInfo->ZoomFactor = Render_GetZoom(pView->VCam);
+			Render_GetPitchRollYaw(pView->VCam, &pViewStateInfo->PitchRollYaw);
+			Render_GetCameraPos(pView->VCam, &pViewStateInfo->CameraPos);
+		}
+	}
+
+	// and then write the level info to the file
+	return Level_WriteToFile2(m_pDoc->pLevel, FileName);
+}
+
+#include "util.h"
+// *************************************************************************
+// *		Level_WriteToFile2:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+bool A_File::Level_WriteToFile2(Level* pLevel, const char* Filename)
+{
+	FILE* ArFile;
+	char QuotedString[MAX_PATH];
+	geBoolean WriteRslt;
+
+	assert(pLevel != NULL);
+	assert(Filename != NULL);
+
+	// error checking required!
+	ArFile = fopen(Filename, "wt");
+
+	if (ArFile == NULL)
+	{
+		return GE_FALSE;
+	}
+
+	WriteRslt = GE_FALSE;
+	if (fprintf(ArFile, "3dtVersion %d.%d\n", LEVEL_VERSION_MAJOR, LEVEL_VERSION_MINOR) < 0) goto WriteDone;
+
+	Util_QuoteString(m_pDoc->pLevel->WadPath, QuotedString);
+	if (fprintf(ArFile, "TextureLib %s\n", QuotedString) < 0) goto WriteDone;
+
+	Util_QuoteString(m_pDoc->pLevel->HeadersDir, QuotedString);
+	if (fprintf(ArFile, "HeadersDir %s\n", QuotedString) < 0) goto WriteDone;
+
+	// changed QD Actors
+	Util_QuoteString(m_pDoc->pLevel->ActorsDir, QuotedString);
+	if (fprintf(ArFile, "ActorsDir %s\n", QuotedString) < 0) goto WriteDone;
+
+	Util_QuoteString(m_pDoc->pLevel->PawnIniPath, QuotedString);
+	if (fprintf(ArFile, "PawnIni %s\n", QuotedString) < 0) goto WriteDone;
+	// remove ActorBrushes from List, so they don't get written to the file
+	int i;
+	for (i = 0; i < m_pDoc->pLevel->Entities->GetSize(); ++i)
+	{
+		Brush* b = (*(m_pDoc->pLevel->Entities))[i].GetActorBrush();
+		if (b != NULL)
+			Level_RemoveBrush(m_pDoc->pLevel, b);
+	}
+	// end change
+
+	if (fprintf(ArFile, "NumEntities %d\n", m_pDoc->pLevel->Entities->GetSize()) < 0) goto WriteDone;
+	if (fprintf(ArFile, "NumModels %d\n", ModelList_GetCount(m_pDoc->pLevel->ModelInfo.Models)) < 0) goto WriteDone;
+	if (fprintf(ArFile, "NumGroups %d\n", Group_GetCount(m_pDoc->pLevel->Groups)) < 0) goto WriteDone;
+	if (BrushList_Write(m_pDoc->pLevel->Brushes, ArFile) == GE_FALSE) goto WriteDone;
+	
+	fprintf(ArFile, "Equity %s\n", "V1.1");
+	// changed QD Actors
+	// add ActorBrushes to the List again
+	for (i = 0; i < m_pDoc->pLevel->Entities->GetSize(); ++i)
+	{
+		Brush* b = (*(m_pDoc->pLevel->Entities))[i].GetActorBrush();
+		if (b != NULL)
+			Level_AppendBrush(m_pDoc->pLevel, b);
+	}
+	// end change
+	WriteRslt = GE_TRUE;
+
+WriteDone:
+
+	char path[MAX_PATH];
+	strcpy(path, Filename);
+
+	if (fclose(ArFile) != 0)
+	{
+		App->Say("Error Cant Save File", path);
+		return GE_FALSE;
+	}
+
+	App->Say("Saved", path);
+
+	return GE_TRUE;
+}
+

@@ -194,6 +194,7 @@ Brush	*Brush_Create(int Type, const FaceList *fl, const BrushList *BList)
 		pBrush->Color	=0;
 		pBrush->Name	=Util_Strdup("NoName");
 		pBrush->Type	=Type;
+		pBrush->Centre_Marker = 0;
 		switch(Type)
 		{
 		case	BRUSH_MULTI:

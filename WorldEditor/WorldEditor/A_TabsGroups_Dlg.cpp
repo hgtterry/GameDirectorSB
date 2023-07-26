@@ -530,6 +530,9 @@ bool A_TabsGroups_Dlg::Show_Brush_Info(const Brush *b, HWND hDlg)
 	sprintf(buf, "%s%s", "Brush Name ",b->Name);
 	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
+	sprintf(buf, "%s%i", "Centre_Marker ", b->Centre_Marker);
+	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
 	if (b->Flags & 128)
 	{
 		sprintf(buf, "%s%d%s", "Type Flags ", b->Flags, "  - Cut Brush");

@@ -280,6 +280,7 @@ const char *CFusionDoc::FindTextureLibrary (char const *WadName)
 }
 
 CFusionDoc::CFusionDoc() : CDocument (), 
+
 	SelectLock (FALSE), TempEnt (FALSE), SelState (NOSELECTIONS),
 	mShowSelectedFaces (FALSE), mShowSelectedBrushes (FALSE),
 	LeakPoints (NULL), NumLeakPoints (0), bLeakLoaded (FALSE), bShowLeak (TRUE),
@@ -293,7 +294,7 @@ CFusionDoc::CFusionDoc() : CDocument (),
 	mCurrentGroup (0), TempShearTemplate (NULL), PlaceObjectFlag (FALSE),
 	pSelFaces (NULL), pSelBrushes (NULL), pTempSelBrushes (NULL) //, pCameraEntity (NULL)
 {
-	App->Debug_Message("CFusionDoc()",1);
+
 	const char *DefaultWadName;
 	const Prefs  *pPrefs = GetPrefs ();
 
@@ -844,49 +845,9 @@ BOOL CFusionDoc::OnNewDocument()
 
 geBoolean CFusionDoc::Save(const char *FileName)
 {
-	{
-		// update view information in level
-		ViewStateInfo *pViewStateInfo;
-		POSITION		pos;
-		CFusionView	*	pView;
-		int iView;
+	// Moved to A_File::Save(const char* FileName)
 
-		pos = GetFirstViewPosition();
-		while( pos != NULL )
-		{
-			pView = (CFusionView*)GetNextView(pos) ;
-			switch (Render_GetViewType (pView->VCam))
-			{
-				case VIEWSOLID :
-				case VIEWTEXTURE :
-				case VIEWWIRE :
-					iView = 0;
-					break;
-				case VIEWTOP :
-					iView = 1;
-					break;
-				case VIEWFRONT :
-					iView = 2;
-					break;
-				case VIEWSIDE :
-					iView = 3;
-					break;
-				default :
-					iView = -1;
-			}
-			if (iView != -1)
-			{
-				pViewStateInfo = Level_GetViewStateInfo (pLevel, iView);
-				pViewStateInfo->IsValid = GE_TRUE;
-				pViewStateInfo->ZoomFactor = Render_GetZoom (pView->VCam);
-				Render_GetPitchRollYaw (pView->VCam, &pViewStateInfo->PitchRollYaw);
-				Render_GetCameraPos (pView->VCam, &pViewStateInfo->CameraPos);
-			}
-		}
-	}
-
-	// and then write the level info to the file
-	return Level_WriteToFile (pLevel, FileName);
+	return App->CL_File->Save(FileName);
 }
 
 static geBoolean fdocSetEntityVisibility (CEntity &Ent, void *lParam)
@@ -906,7 +867,6 @@ static geBoolean fdocSetEntityVisibility (CEntity &Ent, void *lParam)
 geBoolean CFusionDoc::Load(const char *FileName)
 {
 	//MessageBox(NULL,"HERE Unerla","HERE UNREAL",MB_OK);
-	
 	const char		*Errmsg, *WadPath;
 	int				i;
 	Level			*NewLevel;
@@ -8680,13 +8640,13 @@ void CFusionDoc::Zero_Camera()
 
 		geVec3d Angles;
 
-		Angles.X = 0;
+		Angles.X = 3.141593;
 		Angles.Y = 0;
 		Angles.Z = 0;
 
 		pCameraEntity->SetAngles( &Angles, Level_GetEntityDefs (pLevel) );
 
-		Angles.X = 0;
+		Angles.X = 3.141593;
 		Angles.Y = 0;
 		Angles.Z = 0;
 

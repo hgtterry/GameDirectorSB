@@ -984,6 +984,7 @@ Level *Level_CreateFromFile (const char *FileName, const char **ErrMsg, const ch
 			pBrush	=Brush_CreateFromFile(Parser, VersionMajor, VersionMinor, &Expected);
 			if (pBrush == NULL) goto DoneLoad;
 			BrushList_Append (pLevel->Brushes, pBrush);
+			
 		}
 	}
 	else

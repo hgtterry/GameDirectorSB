@@ -75,6 +75,7 @@ typedef struct BrushTag
 	Guint32			Color;
 	char			*Name;
 	Box3d			BoundingBox;
+	bool			Centre_Marker;
 } Brush;
 
 //instancing / init
