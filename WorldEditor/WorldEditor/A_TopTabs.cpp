@@ -542,6 +542,8 @@ LRESULT CALLBACK SB_TopTabs::Top_File_Proc(HWND hDlg, UINT message, WPARAM wPara
 // *************************************************************************
 bool SB_TopTabs::Start_Test_Tab()
 {
+	Test_Panel_Hwnd = NULL;
+
 	Test_Panel_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_TB_TEST, Top_Tabs_Hwnd, (DLGPROC)Top_Test_Proc);
 
 	return 1;
@@ -629,8 +631,10 @@ LRESULT CALLBACK SB_TopTabs::Top_Test_Proc(HWND hDlg, UINT message, WPARAM wPara
 	{
 		if (LOWORD(wParam) == IDC_STARTEQUITY)
 		{
+			
 			App->CLSB_Model->Clear_Model_And_Reset();
 
+			Debug
 			App->CLSB_Grid->Reset_View();
 			App->CLSB_Camera->Set_Camera_Mode(Enums::CamModel);
 
