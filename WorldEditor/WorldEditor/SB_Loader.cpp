@@ -572,9 +572,9 @@ void SB_Loader::Rotate_Z_Model(float Z)
 
 		Ogre::Vector3 Centre;
 
-		Centre.x = App->CLSB_Model->S_BoundingBox[0]->Centre[0].x;
-		Centre.y = App->CLSB_Model->S_BoundingBox[0]->Centre[0].y;
-		Centre.z = App->CLSB_Model->S_BoundingBox[0]->Centre[0].z;
+		Centre.x = App->CLSB_Model->Centre.x;
+		Centre.y = App->CLSB_Model->Centre.y;
+		Centre.z = App->CLSB_Model->Centre.z;
 
 		Ogre::Vector3 Rotate;
 		Rotate.x = 0;
@@ -633,9 +633,9 @@ void SB_Loader::Rotate_X_Model(float X)
 
 		Ogre::Vector3 Centre;
 
-		Centre.x = App->CLSB_Model->S_BoundingBox[0]->Centre[0].x;
-		Centre.y = App->CLSB_Model->S_BoundingBox[0]->Centre[0].y;
-		Centre.z = App->CLSB_Model->S_BoundingBox[0]->Centre[0].z;
+		Centre.x = App->CLSB_Model->Centre.x;
+		Centre.y = App->CLSB_Model->Centre.y;
+		Centre.z = App->CLSB_Model->Centre.z;
 
 		Ogre::Vector3 Rotate;
 		Rotate.x = X;
@@ -690,9 +690,9 @@ void SB_Loader::Centre_Model_Mid(void)
 {
 	if (App->CLSB_Model->Model_Loaded == 1)
 	{
-		float X = -App->CLSB_Model->S_BoundingBox[0]->Centre[0].x;
-		float Y = -App->CLSB_Model->S_BoundingBox[0]->Centre[0].y;
-		float Z = -App->CLSB_Model->S_BoundingBox[0]->Centre[0].z;
+		float X = -App->CLSB_Model->Centre.x;
+		float Y = -App->CLSB_Model->Centre.y;
+		float Z = -App->CLSB_Model->Centre.z;
 
 		int Count = 0;
 		int VertCount = 0;

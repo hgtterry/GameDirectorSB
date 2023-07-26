@@ -92,11 +92,11 @@ void SB_Model::Reset_Class(void)
 	}
 
 	//--------------------- Clear Bounding box data
-	if (S_BoundingBox[0] != nullptr)
+	/*if (S_BoundingBox[0] != nullptr)
 	{
 		delete S_BoundingBox[0];
 		S_BoundingBox[0] = nullptr;
-	}
+	}*/
 
 	FileName[0] = 0;
 	Path_FileName[0] = 0;
@@ -219,18 +219,18 @@ void SB_Model::Set_Equity(void)
 // *************************************************************************
 void SB_Model::Set_BondingBox_Model(bool Create)
 {
-	if (Create == 1)
+	/*if (Create == 1)
 	{
 		S_BoundingBox[0] = new AABB_Type;
-	}
+	}*/
 
-	S_BoundingBox[0]->BB_Min[0].x = Group[0]->vertex_Data[0].x;
-	S_BoundingBox[0]->BB_Min[0].y = Group[0]->vertex_Data[0].y;
-	S_BoundingBox[0]->BB_Min[0].z = Group[0]->vertex_Data[0].z;
+	BB_Min.x = Group[0]->vertex_Data[0].x;
+	BB_Min.y = Group[0]->vertex_Data[0].y;
+	BB_Min.z = Group[0]->vertex_Data[0].z;
 
-	S_BoundingBox[0]->BB_Max[0].x = Group[0]->vertex_Data[0].x;
-	S_BoundingBox[0]->BB_Max[0].y = Group[0]->vertex_Data[0].y;
-	S_BoundingBox[0]->BB_Max[0].z = Group[0]->vertex_Data[0].z;
+	BB_Max.x = Group[0]->vertex_Data[0].x;
+	BB_Max.y = Group[0]->vertex_Data[0].y;
+	BB_Max.z = Group[0]->vertex_Data[0].z;
 
 	int Count = 0;
 	int VertCount = 0;
@@ -240,27 +240,27 @@ void SB_Model::Set_BondingBox_Model(bool Create)
 		VertCount = 0;
 		while (VertCount < Group[Count]->GroupVertCount)
 		{
-			if (Group[Count]->vertex_Data[VertCount].x < S_BoundingBox[0]->BB_Min[0].x) S_BoundingBox[0]->BB_Min[0].x = Group[Count]->vertex_Data[VertCount].x;
-			if (Group[Count]->vertex_Data[VertCount].y < S_BoundingBox[0]->BB_Min[0].y) S_BoundingBox[0]->BB_Min[0].y = Group[Count]->vertex_Data[VertCount].y;
-			if (Group[Count]->vertex_Data[VertCount].z < S_BoundingBox[0]->BB_Min[0].z) S_BoundingBox[0]->BB_Min[0].z = Group[Count]->vertex_Data[VertCount].z;
+			if (Group[Count]->vertex_Data[VertCount].x < BB_Min.x) BB_Min.x = Group[Count]->vertex_Data[VertCount].x;
+			if (Group[Count]->vertex_Data[VertCount].y < BB_Min.y) BB_Min.y = Group[Count]->vertex_Data[VertCount].y;
+			if (Group[Count]->vertex_Data[VertCount].z < BB_Min.z) BB_Min.z = Group[Count]->vertex_Data[VertCount].z;
 
-			if (Group[Count]->vertex_Data[VertCount].x > S_BoundingBox[0]->BB_Max[0].x) S_BoundingBox[0]->BB_Max[0].x = Group[Count]->vertex_Data[VertCount].x;
-			if (Group[Count]->vertex_Data[VertCount].y > S_BoundingBox[0]->BB_Max[0].y) S_BoundingBox[0]->BB_Max[0].y = Group[Count]->vertex_Data[VertCount].y;
-			if (Group[Count]->vertex_Data[VertCount].z > S_BoundingBox[0]->BB_Max[0].z) S_BoundingBox[0]->BB_Max[0].z = Group[Count]->vertex_Data[VertCount].z;
+			if (Group[Count]->vertex_Data[VertCount].x > BB_Max.x) BB_Max.x = Group[Count]->vertex_Data[VertCount].x;
+			if (Group[Count]->vertex_Data[VertCount].y > BB_Max.y) BB_Max.y = Group[Count]->vertex_Data[VertCount].y;
+			if (Group[Count]->vertex_Data[VertCount].z > BB_Max.z) BB_Max.z = Group[Count]->vertex_Data[VertCount].z;
 			VertCount++;
 		}
 		Count++;
 	}
 
-	S_BoundingBox[0]->Size[0].x = (fabs(S_BoundingBox[0]->BB_Max[0].x - S_BoundingBox[0]->BB_Min[0].x));
-	S_BoundingBox[0]->Size[0].y = (fabs(S_BoundingBox[0]->BB_Max[0].y - S_BoundingBox[0]->BB_Min[0].y));
-	S_BoundingBox[0]->Size[0].z = (fabs(S_BoundingBox[0]->BB_Max[0].z - S_BoundingBox[0]->BB_Min[0].z));
+	Size.x = (fabs(BB_Max.x - BB_Min.x));
+	Size.y = (fabs(BB_Max.y - BB_Min.y));
+	Size.z = (fabs(BB_Max.z - BB_Min.z));
 
-	S_BoundingBox[0]->radius = (S_BoundingBox[0]->Size[0].x > S_BoundingBox[0]->Size[0].z) ? S_BoundingBox[0]->Size[0].z / 2.0f : S_BoundingBox[0]->Size[0].x / 2.0f;
+	radius = (Size.x > Size.z) ? Size.z / 2.0f : Size.x / 2.0f;
 
-	S_BoundingBox[0]->Centre[0].x = (S_BoundingBox[0]->BB_Min[0].x + S_BoundingBox[0]->BB_Max[0].x) / 2.0f;
-	S_BoundingBox[0]->Centre[0].y = (S_BoundingBox[0]->BB_Min[0].y + S_BoundingBox[0]->BB_Max[0].y) / 2.0f;
-	S_BoundingBox[0]->Centre[0].z = (S_BoundingBox[0]->BB_Min[0].z + S_BoundingBox[0]->BB_Max[0].z) / 2.0f;
+	Centre.x = (BB_Min.x + BB_Max.x) / 2.0f;
+	Centre.y = (BB_Min.y + BB_Max.y) / 2.0f;
+	Centre.z = (BB_Min.z + BB_Max.z) / 2.0f;
 
 }
 

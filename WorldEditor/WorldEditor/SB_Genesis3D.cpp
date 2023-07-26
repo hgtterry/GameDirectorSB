@@ -142,19 +142,13 @@ bool SB_Genesis3D::AddActor(char* FileName)
 bool SB_Genesis3D::Set_BondingBox_Model(bool Create)
 {
 
-	if (Create == 1)
-	{
-		App->CLSB_Model->S_BoundingBox[0] = new AABB_Type;
+	App->CLSB_Model->BB_Min.x = App->CLSB_Model->vertex_Data[0].x;
+	App->CLSB_Model->BB_Min.y = App->CLSB_Model->vertex_Data[0].y;
+	App->CLSB_Model->BB_Min.z = App->CLSB_Model->vertex_Data[0].z;
 
-	}
-
-	App->CLSB_Model->S_BoundingBox[0]->BB_Min[0].x = App->CLSB_Model->vertex_Data[0].x;
-	App->CLSB_Model->S_BoundingBox[0]->BB_Min[0].y = App->CLSB_Model->vertex_Data[0].y;
-	App->CLSB_Model->S_BoundingBox[0]->BB_Min[0].z = App->CLSB_Model->vertex_Data[0].z;
-
-	App->CLSB_Model->S_BoundingBox[0]->BB_Max[0].x = App->CLSB_Model->vertex_Data[0].x;
-	App->CLSB_Model->S_BoundingBox[0]->BB_Max[0].y = App->CLSB_Model->vertex_Data[0].y;
-	App->CLSB_Model->S_BoundingBox[0]->BB_Max[0].z = App->CLSB_Model->vertex_Data[0].z;
+	App->CLSB_Model->BB_Max.x = App->CLSB_Model->vertex_Data[0].x;
+	App->CLSB_Model->BB_Max.y = App->CLSB_Model->vertex_Data[0].y;
+	App->CLSB_Model->BB_Max.z = App->CLSB_Model->vertex_Data[0].z;
 
 	int Count = 0;
 	int VertCount = 0;
@@ -162,24 +156,25 @@ bool SB_Genesis3D::Set_BondingBox_Model(bool Create)
 	VertCount = 0;
 	while (VertCount < App->CLSB_Model->VerticeCount)
 	{
-		if (App->CLSB_Model->vertex_Data[VertCount].x < App->CLSB_Model->S_BoundingBox[0]->BB_Min[0].x) App->CLSB_Model->S_BoundingBox[0]->BB_Min[0].x = App->CLSB_Model->vertex_Data[VertCount].x;
-		if (App->CLSB_Model->vertex_Data[VertCount].y < App->CLSB_Model->S_BoundingBox[0]->BB_Min[0].y) App->CLSB_Model->S_BoundingBox[0]->BB_Min[0].y = App->CLSB_Model->vertex_Data[VertCount].y;
-		if (App->CLSB_Model->vertex_Data[VertCount].z < App->CLSB_Model->S_BoundingBox[0]->BB_Min[0].z) App->CLSB_Model->S_BoundingBox[0]->BB_Min[0].z = App->CLSB_Model->vertex_Data[VertCount].z;
-		if (App->CLSB_Model->vertex_Data[VertCount].x > App->CLSB_Model->S_BoundingBox[0]->BB_Max[0].x) App->CLSB_Model->S_BoundingBox[0]->BB_Max[0].x = App->CLSB_Model->vertex_Data[VertCount].x;
-		if (App->CLSB_Model->vertex_Data[VertCount].y > App->CLSB_Model->S_BoundingBox[0]->BB_Max[0].y) App->CLSB_Model->S_BoundingBox[0]->BB_Max[0].y = App->CLSB_Model->vertex_Data[VertCount].y;
-		if (App->CLSB_Model->vertex_Data[VertCount].z > App->CLSB_Model->S_BoundingBox[0]->BB_Max[0].z)App->CLSB_Model->S_BoundingBox[0]->BB_Max[0].z = App->CLSB_Model->vertex_Data[VertCount].z;
+		if (App->CLSB_Model->vertex_Data[VertCount].x < App->CLSB_Model->BB_Min.x) App->CLSB_Model->BB_Min.x = App->CLSB_Model->vertex_Data[VertCount].x;
+		if (App->CLSB_Model->vertex_Data[VertCount].y < App->CLSB_Model->BB_Min.y) App->CLSB_Model->BB_Min.y = App->CLSB_Model->vertex_Data[VertCount].y;
+		if (App->CLSB_Model->vertex_Data[VertCount].z < App->CLSB_Model->BB_Min.z) App->CLSB_Model->BB_Min.z = App->CLSB_Model->vertex_Data[VertCount].z;
+		
+		if (App->CLSB_Model->vertex_Data[VertCount].x > App->CLSB_Model->BB_Max.x) App->CLSB_Model->BB_Max.x = App->CLSB_Model->vertex_Data[VertCount].x;
+		if (App->CLSB_Model->vertex_Data[VertCount].y > App->CLSB_Model->BB_Max.y) App->CLSB_Model->BB_Max.y = App->CLSB_Model->vertex_Data[VertCount].y;
+		if (App->CLSB_Model->vertex_Data[VertCount].z > App->CLSB_Model->BB_Max.z)App->CLSB_Model->BB_Max.z = App->CLSB_Model->vertex_Data[VertCount].z;
 		VertCount++;
 	}
 	
-	App->CLSB_Model->S_BoundingBox[0]->Size[0].x = (fabs(App->CLSB_Model->S_BoundingBox[0]->BB_Max[0].x - App->CLSB_Model->S_BoundingBox[0]->BB_Min[0].x));
-	App->CLSB_Model->S_BoundingBox[0]->Size[0].y = (fabs(App->CLSB_Model->S_BoundingBox[0]->BB_Max[0].y - App->CLSB_Model->S_BoundingBox[0]->BB_Min[0].y));
-	App->CLSB_Model->S_BoundingBox[0]->Size[0].z = (fabs(App->CLSB_Model->S_BoundingBox[0]->BB_Max[0].z - App->CLSB_Model->S_BoundingBox[0]->BB_Min[0].z));
+	App->CLSB_Model->Size.x = (fabs(App->CLSB_Model->BB_Max.x - App->CLSB_Model->BB_Min.x));
+	App->CLSB_Model->Size.y = (fabs(App->CLSB_Model->BB_Max.y - App->CLSB_Model->BB_Min.y));
+	App->CLSB_Model->Size.z = (fabs(App->CLSB_Model->BB_Max.z - App->CLSB_Model->BB_Min.z));
 
-	App->CLSB_Model->S_BoundingBox[0]->radius = (App->CLSB_Model->S_BoundingBox[0]->Size[0].x>App->CLSB_Model->S_BoundingBox[0]->Size[0].z) ? App->CLSB_Model->S_BoundingBox[0]->Size[0].z / 2.0f : App->CLSB_Model->S_BoundingBox[0]->Size[0].x / 2.0f;
+	App->CLSB_Model->radius = (App->CLSB_Model->Size.x>App->CLSB_Model->Size.z) ? App->CLSB_Model->Size.z / 2.0f : App->CLSB_Model->Size.x / 2.0f;
 
-	App->CLSB_Model->S_BoundingBox[0]->Centre[0].x = (App->CLSB_Model->S_BoundingBox[0]->BB_Min[0].x + App->CLSB_Model->S_BoundingBox[0]->BB_Max[0].x) / 2.0f;
-	App->CLSB_Model->S_BoundingBox[0]->Centre[0].y = (App->CLSB_Model->S_BoundingBox[0]->BB_Min[0].y + App->CLSB_Model->S_BoundingBox[0]->BB_Max[0].y) / 2.0f;
-	App->CLSB_Model->S_BoundingBox[0]->Centre[0].z = (App->CLSB_Model->S_BoundingBox[0]->BB_Min[0].z + App->CLSB_Model->S_BoundingBox[0]->BB_Max[0].z) / 2.0f;
+	App->CLSB_Model->Centre.x = (App->CLSB_Model->BB_Min.x + App->CLSB_Model->BB_Max.x) / 2.0f;
+	App->CLSB_Model->Centre.y = (App->CLSB_Model->BB_Min.y + App->CLSB_Model->BB_Max.y) / 2.0f;
+	App->CLSB_Model->Centre.z = (App->CLSB_Model->BB_Min.z + App->CLSB_Model->BB_Max.z) / 2.0f;
 
 	return 1;
 }

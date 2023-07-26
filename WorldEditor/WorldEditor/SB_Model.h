@@ -72,13 +72,13 @@ typedef	struct GLTextureInfo_Type
 	float	B;
 } GLTextureInfo_Type;
 
-typedef struct AABB_Type {
-	vertex_type BB_Max[1];
-	vertex_type BB_Min[1];
-	vertex_type Size[1];
-	vertex_type Centre[1];
-	float radius;
-} AABB_Type;
+//typedef struct AABB_Type {
+//	vertex_type BB_Max[1];
+//	vertex_type BB_Min[1];
+//	vertex_type Size[1];
+//	vertex_type Centre[1];
+//	float radius;
+//} AABB_Type;
 
 #pragma once
 class SB_Model
@@ -111,7 +111,7 @@ public:
 	char Texture_FolderPath[MAX_PATH];
 	char JustName[MAX_PATH];
 
-	AABB_Type* S_BoundingBox[1];
+	//AABB_Type* S_BoundingBox[1];
 	Bone_Type* S_Bones[200];
 	Texture_Type* S_Texture[1];
 	GLTextureInfo_Type* S_TextureInfo[30];
@@ -122,6 +122,12 @@ public:
 	std::vector<normal_type> Normal_Data;
 	std::vector<mapcoord_type> MapCord_Data;
 	std::vector<int> MatIndex_Data;
+
+	vertex_type BB_Max;
+	vertex_type BB_Min;
+	vertex_type Size;
+	vertex_type Centre;
+	float radius;
 
 	bool Model_Loaded;
 

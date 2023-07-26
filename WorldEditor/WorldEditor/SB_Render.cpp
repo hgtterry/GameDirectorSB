@@ -733,13 +733,13 @@ bool SB_Render::As_RenderBones()
 // *************************************************************************
 void SB_Render::Render_BoundingBoxModel(void)
 {
-	float m_xMin = App->CLSB_Model->S_BoundingBox[0]->BB_Min[0].x;
-	float m_yMin = App->CLSB_Model->S_BoundingBox[0]->BB_Min[0].y;
-	float m_zMin = App->CLSB_Model->S_BoundingBox[0]->BB_Min[0].z;
+	float m_xMin = App->CLSB_Model->BB_Min.x;
+	float m_yMin = App->CLSB_Model->BB_Min.y;
+	float m_zMin = App->CLSB_Model->BB_Min.z;
 
-	float m_xMax = App->CLSB_Model->S_BoundingBox[0]->BB_Max[0].x;
-	float m_yMax = App->CLSB_Model->S_BoundingBox[0]->BB_Max[0].y;
-	float m_zMax = App->CLSB_Model->S_BoundingBox[0]->BB_Max[0].z;
+	float m_xMax = App->CLSB_Model->BB_Max.x;
+	float m_yMax = App->CLSB_Model->BB_Max.y;
+	float m_zMax = App->CLSB_Model->BB_Max.z;
 
 	glDisable(GL_TEXTURE_2D);
 	glColor3f(1.0f, 0.0f, 0.0f);

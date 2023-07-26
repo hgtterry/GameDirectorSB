@@ -131,6 +131,10 @@ bool A_File::Open_3dt_File(bool UseDialogLoader)
 	App->CL_World->Set_Paths();
 	App->CL_TabsGroups_Dlg->Fill_ListBox();
 	App->CL_TextureDialog->Fill_ListBox();
+
+	App->CL_World->Set_Paths();
+	App->CL_World->Reset_Editor();
+
 	
 	App->CLSB_RecentFiles->RecentFile_Files_Update();
 

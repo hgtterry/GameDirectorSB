@@ -213,9 +213,9 @@ void SB_Dimensions::ImGui_Position(void)
 
 	if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Assimp)
 	{
-		Pos.x = App->CLSB_Model->S_BoundingBox[0]->Centre->x;
-		Pos.y = App->CLSB_Model->S_BoundingBox[0]->Centre->y;
-		Pos.z = App->CLSB_Model->S_BoundingBox[0]->Centre->z;
+		Pos.x = App->CLSB_Model->Centre.x;
+		Pos.y = App->CLSB_Model->Centre.y;
+		Pos.z = App->CLSB_Model->Centre.z;
 
 		App->CLSB_Ogre->RenderListener->Hair_1PosX = Pos.x;
 		App->CLSB_Ogre->RenderListener->Hair_1PosY = Pos.y;
@@ -846,9 +846,9 @@ void SB_Dimensions::Rotate_X_Model(float X)
 
 		Ogre::Vector3 Centre;
 
-		Centre.x = App->CLSB_Model->S_BoundingBox[0]->Centre[0].x;
-		Centre.y = App->CLSB_Model->S_BoundingBox[0]->Centre[0].y;
-		Centre.z = App->CLSB_Model->S_BoundingBox[0]->Centre[0].z;
+		Centre.x = App->CLSB_Model->Centre.x;
+		Centre.y = App->CLSB_Model->Centre.y;
+		Centre.z = App->CLSB_Model->Centre.z;
 
 		Ogre::Vector3 Rotate;
 		Rotate.x = X;
@@ -906,9 +906,9 @@ void SB_Dimensions::Rotate_Y_Model(float Y)
 
 		Ogre::Vector3 Centre;
 
-		Centre.x = App->CLSB_Model->S_BoundingBox[0]->Centre[0].x;
-		Centre.y = App->CLSB_Model->S_BoundingBox[0]->Centre[0].y;
-		Centre.z = App->CLSB_Model->S_BoundingBox[0]->Centre[0].z;
+		Centre.x = App->CLSB_Model->Centre.x;
+		Centre.y = App->CLSB_Model->Centre.y;
+		Centre.z = App->CLSB_Model->Centre.z;
 
 		Ogre::Vector3 Rotate;
 		Rotate.x = 0;
@@ -966,9 +966,9 @@ void SB_Dimensions::Rotate_Z_Model(float Z)
 
 		Ogre::Vector3 Centre;
 
-		Centre.x = App->CLSB_Model->S_BoundingBox[0]->Centre[0].x;
-		Centre.y = App->CLSB_Model->S_BoundingBox[0]->Centre[0].y;
-		Centre.z = App->CLSB_Model->S_BoundingBox[0]->Centre[0].z;
+		Centre.x = App->CLSB_Model->Centre.x;
+		Centre.y = App->CLSB_Model->Centre.y;
+		Centre.z = App->CLSB_Model->Centre.z;
 
 		Ogre::Vector3 Rotate;
 		Rotate.x = 0;
