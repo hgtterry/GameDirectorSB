@@ -113,6 +113,20 @@ static geBoolean fdocSetEntityVisibility (CEntity &Ent, void *lParam)
 }
 
 // *************************************************************************
+// *			Open_Dialog:- Terry and Hazel Flanigan 2023				   *
+// *************************************************************************
+bool SB_File_WE::Open_Dialog()
+{
+	bool test = Open_File_Dialog("World File   **.3dt\0*.3dt\0", " Open World File", NULL);
+	if (test == 0)
+	{
+		return 0;
+	}
+
+	return 1;
+}
+
+// *************************************************************************
 // *			Open_3dt_File:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 bool SB_File_WE::Open_3dt_File(bool UseDialogLoader)
@@ -123,13 +137,12 @@ bool SB_File_WE::Open_3dt_File(bool UseDialogLoader)
 		{
 			if (UseDialogLoader == 1)
 			{
-				bool test = Open_File_Dialog("World File   **.3dt\0*.3dt\0", "World File", NULL);
+				bool test = Open_File_Dialog("World File   **.3dt\0*.3dt\0", " Open World File", NULL);
 				if (test == 0)
 				{
 					return 0;
 				}
 			}
-
 
 			//AfxGetApp()->OpenDocumentFile(PathFileName_3dt);
 
@@ -152,7 +165,7 @@ bool SB_File_WE::Open_3dt_File(bool UseDialogLoader)
 	}
 	else
 	{
-		Load_New("");
+		return Load_New("");
 	}
 
 	return 1;
@@ -163,14 +176,38 @@ bool SB_File_WE::Open_3dt_File(bool UseDialogLoader)
 // *************************************************************************
 bool SB_File_WE::Load_New(const char* FileName)
 {
-	MessageBox(NULL, "New Load", "ME Know Also", MB_OK);
+	//MessageBox(NULL, "New Load", "ME Know Also", MB_OK);
 
 	App->Get_Current_Document();
 
 	// Check Old File is not Modified
 	if (App->m_pDoc && (App->m_pDoc->IsModified() == TRUE))
 	{
-		App->Say("Save");
+		char Text[200];
+		strcpy(Text,"Save Changes To " );
+		strcat(Text, App->CL_World->mCurrent_3DT_File);
+
+		int Test = MessageBox(App->MainHwnd, Text, "File has been Modified", MB_YESNOCANCEL);
+		if (Test == IDYES)
+		{
+			Save(App->CL_World->mCurrent_3DT_PathAndFile);
+		}
+
+		if (Test == IDNO)
+		{
+			//App->Say("No");
+		}
+
+		if (Test == IDCANCEL)
+		{
+			return 0;
+		}
+	}
+
+	bool test = Open_Dialog();
+	if (test == 0)
+	{
+		return 0;
 	}
 
 	// Select All
@@ -184,7 +221,7 @@ bool SB_File_WE::Load_New(const char* FileName)
 	App->m_pDoc->SetTitle("No File");
 
 	TestNewLoad = 0;
-	Open_3dt_File(1);
+	Open_3dt_File(0);
 	return 1;
 }
 
@@ -200,7 +237,7 @@ bool SB_File_WE::Load(const char *FileName)
 	}
 
 	App->Get_Current_Document();
-
+	
 	//MessageBox(NULL,"ME Know","ME Know",MB_OK);
 	
 	const char		*Errmsg, *WadPath;
@@ -219,6 +256,8 @@ bool SB_File_WE::Load(const char *FileName)
 // changed QD Actors
 	NewLevel = Level_CreateFromFile (FileName, &Errmsg, Prefs_GetHeadersList (pPrefs),
 		Prefs_GetActorsList(pPrefs), Prefs_GetPawnIni(pPrefs));
+
+
 // end change
 	if (NewLevel == NULL)
 	{
@@ -253,18 +292,22 @@ bool SB_File_WE::Load(const char *FileName)
 
 	GroupIterator gi;
 	GroupListType *Groups;
-
+	
 	Groups = Level_GetGroups (App->m_pDoc->pLevel);
 	App->m_pDoc->mCurrentGroup = Group_GetFirstId (Groups, &gi);
-
+	//App->Say(FileName);
 	{
 		Brush *pBox = BrushTemplate_CreateBox (Level_GetBoxTemplate (App->m_pDoc->pLevel));
 		if (pBox != NULL)
 		{
 			CreateNewTemplateBrush(pBox);
 		}
+		else
+		{
+			App->Say("Error");
+		}
 	}
-
+	//App->Say(FileName);
 	// update entity visibility info
 	pEntityView	=Level_GetEntityVisibilityInfo (App->m_pDoc->pLevel);
 	for (i = 0; i < pEntityView->nEntries; ++i)
@@ -272,9 +315,12 @@ bool SB_File_WE::Load(const char *FileName)
 		Level_EnumEntities (App->m_pDoc->pLevel, &pEntityView->pEntries[i], ::fdocSetEntityVisibility);
 	}
 
+	
 	AddCameraEntityToLevel();
 
 	App->m_pDoc->DoGeneralSelect();
+
+	
 	return GE_TRUE;
 LoadError:
 	if (NewLevel != NULL)

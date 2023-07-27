@@ -37,6 +37,8 @@ public:
 
 	bool Save(const char* FileName);
 
+	bool Open_Dialog();
+
 	bool Open_3dt_File(bool UseDialogLoader);
 
 	bool TestNewLoad;

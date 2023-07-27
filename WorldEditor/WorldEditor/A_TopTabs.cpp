@@ -516,6 +516,7 @@ LRESULT CALLBACK SB_TopTabs::Top_File_Proc(HWND hDlg, UINT message, WPARAM wPara
 				strcpy(App->CLSB_File_WE->PathFileName_3dt,path);
 				
 				App->CLSB_File_WE->TestNewLoad = 0;
+
 				App->CLSB_File_WE->Open_3dt_File(0);
 				
 				App->CL_World->Set_Paths();
