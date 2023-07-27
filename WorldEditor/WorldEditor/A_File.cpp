@@ -131,7 +131,12 @@ bool SB_File_WE::Open_3dt_File(bool UseDialogLoader)
 			}
 
 
-			AfxGetApp()->OpenDocumentFile(PathFileName_3dt);
+			//AfxGetApp()->OpenDocumentFile(PathFileName_3dt);
+
+			Load(PathFileName_3dt);
+
+			App->m_pDoc->SetTitle(PathFileName_3dt);
+			App->m_pDoc->SetPathName(PathFileName_3dt, FALSE);
 
 			App->CL_World->Set_Paths();
 			App->CL_TabsGroups_Dlg->Fill_ListBox();
@@ -142,6 +147,7 @@ bool SB_File_WE::Open_3dt_File(bool UseDialogLoader)
 
 
 			App->CLSB_RecentFiles->RecentFile_Files_Update();
+
 		}
 	}
 	else
@@ -177,6 +183,8 @@ bool SB_File_WE::Load_New(const char* FileName)
 
 	App->m_pDoc->SetTitle("No File");
 
+	TestNewLoad = 0;
+	Open_3dt_File(1);
 	return 1;
 }
 

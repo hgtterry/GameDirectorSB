@@ -6384,7 +6384,7 @@ void CFusionDoc::SelectTab( int nTabIndex )
 
 void CFusionDoc::OnFileOpen() // hgtterry On File Open from menu
 {
-	App->CLSB_File_WE->TestNewLoad = 0;
+	App->CLSB_File_WE->TestNewLoad = 1;
 	App->CLSB_File_WE->Open_3dt_File(1);
 	App->CL_World->Reset_Editor();
 
