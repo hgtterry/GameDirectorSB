@@ -7254,7 +7254,7 @@ void CFusionDoc::UpdateAfterWadChange()
 
 	// update textures tab
 	mCurTextureSelection = 0;
-	mpMainFrame->m_wndTabControls->UpdateTextures ();
+	App->CL_TextureDialog->Fill_ListBox();
 
 	// update all brush faces
 	BrushList_EnumLeafBrushes (Level_GetBrushes (pLevel), this, ::fdocUpdateBrushFaceTextures);

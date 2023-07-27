@@ -174,6 +174,14 @@ bool SB_App::IsProcessRunning(char* executableName)
 }
 
 // *************************************************************************
+// *	  	Get_Current_Document:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_App::Get_Current_Document()
+{
+	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+}
+
+// *************************************************************************
 // *								InitMFC								   *
 // *************************************************************************
 void SB_App::InitMFC(void)

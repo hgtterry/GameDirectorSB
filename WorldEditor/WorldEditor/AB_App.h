@@ -247,6 +247,10 @@ public:
 	CFusionDoc *pCFusionDoc;
 
 	FILE *Write_DebugFile;
+
+	void Get_Current_Document();
+
+	CFusionDoc* m_pDoc;
 };
 
 extern SB_App* App;

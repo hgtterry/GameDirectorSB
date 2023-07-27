@@ -145,7 +145,8 @@ LRESULT CALLBACK A_Dialogs::Message_Proc(HWND hDlg, UINT message, WPARAM wParam,
 // *************************************************************************
 void A_Dialogs::Start_Properties()
 {
-	Get_Current_Document();
+	
+	App->Get_Current_Document();
 	Current_Txl_File[0] = 0;
 
 	DialogBox(App->hInst, (LPCTSTR)IDD_LEVELOPTIONS_GD, App->MainHwnd, (DLGPROC)Properties_Proc);
@@ -164,10 +165,16 @@ LRESULT CALLBACK A_Dialogs::Properties_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 		SendDlgItemMessage(hDlg, IDC_STTXL, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_EDITTXL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		
-		SetDlgItemText(hDlg, IDC_EDITTXL, Level_GetWadPath(App->CL_Dialogs->m_pDoc->pLevel));
 
-		strcpy(App->CL_Dialogs->Current_Txl_File,Level_GetWadPath(App->CL_Dialogs->m_pDoc->pLevel));
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_BROWSETXL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
+		
+		SetDlgItemText(hDlg, IDC_EDITTXL, Level_GetWadPath(App->m_pDoc->pLevel));
+
+		strcpy(App->CL_Dialogs->Current_Txl_File,Level_GetWadPath(App->m_pDoc->pLevel));
 
 		return TRUE;
 
@@ -192,9 +199,32 @@ LRESULT CALLBACK A_Dialogs::Properties_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 	case WM_NOTIFY:
 	{
-		
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BROWSETXL && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
 		return CDRF_DODEFAULT;
 	}
+
 	case WM_COMMAND:
 
 		if (LOWORD(wParam) == IDC_BROWSETXL)
@@ -224,11 +254,11 @@ LRESULT CALLBACK A_Dialogs::Properties_Proc(HWND hDlg, UINT message, WPARAM wPar
 			}
 			else
 			{
-				Level_SetWadPath(App->CL_Dialogs->m_pDoc->pLevel,buff);
+				Level_SetWadPath(App->m_pDoc->pLevel,buff);
 
 				App->CL_World->Set_Current_TxlPath();
 
-				App->CL_Dialogs->m_pDoc->UpdateAfterWadChange();
+				App->m_pDoc->UpdateAfterWadChange();
 
 			}
 
