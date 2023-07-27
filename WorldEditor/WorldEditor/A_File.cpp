@@ -83,6 +83,8 @@ SB_File_WE::SB_File_WE(void)
 {
 	FileName_3dt[0] = 0;
 	PathFileName_3dt[0] = 0;
+
+	TestNewLoad = 0;
 }
 
 SB_File_WE::~SB_File_WE(void)
@@ -111,47 +113,69 @@ static geBoolean fdocSetEntityVisibility (CEntity &Ent, void *lParam)
 }
 
 // *************************************************************************
-// *		Get_CurrentDocument:- Terry and Hazel Flanigan 2023			   *
-// *************************************************************************
-void SB_File_WE::Get_CurrentDocument()
-{
-	m_pDoc = NULL;
-	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
-	if (m_pDoc == NULL)
-	{
-		App->Say("Cant Get Current Document");
-	}
-}
-
-// *************************************************************************
 // *			Open_3dt_File:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 bool SB_File_WE::Open_3dt_File(bool UseDialogLoader)
 {
 	
-	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
-
-	if (UseDialogLoader == 1)
+	if (TestNewLoad == 0)
 	{
-		bool test = Open_File_Dialog("World File   **.3dt\0*.3dt\0", "World File", NULL);
-		if (test == 0)
 		{
-			return 0;
+			if (UseDialogLoader == 1)
+			{
+				bool test = Open_File_Dialog("World File   **.3dt\0*.3dt\0", "World File", NULL);
+				if (test == 0)
+				{
+					return 0;
+				}
+			}
+
+
+			AfxGetApp()->OpenDocumentFile(PathFileName_3dt);
+
+			App->CL_World->Set_Paths();
+			App->CL_TabsGroups_Dlg->Fill_ListBox();
+			App->CL_TextureDialog->Fill_ListBox();
+
+			App->CL_World->Set_Paths();
+			App->CL_World->Reset_Editor();
+
+
+			App->CLSB_RecentFiles->RecentFile_Files_Update();
 		}
 	}
+	else
+	{
+		Load_New("");
+	}
 
-	
-	AfxGetApp()->OpenDocumentFile(PathFileName_3dt);
+	return 1;
+}
 
-	App->CL_World->Set_Paths();
-	App->CL_TabsGroups_Dlg->Fill_ListBox();
-	App->CL_TextureDialog->Fill_ListBox();
+// *************************************************************************
+// *								Load_New 							   *
+// *************************************************************************
+bool SB_File_WE::Load_New(const char* FileName)
+{
+	MessageBox(NULL, "New Load", "ME Know Also", MB_OK);
 
-	App->CL_World->Set_Paths();
-	App->CL_World->Reset_Editor();
+	App->Get_Current_Document();
 
-	
-	App->CLSB_RecentFiles->RecentFile_Files_Update();
+	// Check Old File is not Modified
+	if (App->m_pDoc && (App->m_pDoc->IsModified() == TRUE))
+	{
+		App->Say("Save");
+	}
+
+	// Select All
+	App->m_pDoc->SelectAll();
+	App->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+	App->CL_TabsGroups_Dlg->Update_Dlg_SelectedBrushesCount();
+
+	// Delete All Bruses and Faces
+	App->m_pDoc->DeleteCurrentThing();
+
+	App->m_pDoc->SetTitle("No File");
 
 	return 1;
 }
@@ -161,15 +185,21 @@ bool SB_File_WE::Open_3dt_File(bool UseDialogLoader)
 // *************************************************************************
 bool SB_File_WE::Load(const char *FileName)
 {
-	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
-	
+	if (TestNewLoad == 1)
+	{
+		Load_New(FileName);
+		return 1;
+	}
+
+	App->Get_Current_Document();
+
 	//MessageBox(NULL,"ME Know","ME Know",MB_OK);
 	
 	const char		*Errmsg, *WadPath;
 	int				i;
 	Level			*NewLevel;
 	EntityViewList	*pEntityView;
-	const Prefs *pPrefs = m_pDoc->GetPrefs ();
+	const Prefs *pPrefs = App->m_pDoc->GetPrefs ();
 
 	{
 		//char WorkingDir[MAX_PATH];
@@ -198,16 +228,16 @@ bool SB_File_WE::Load(const char *FileName)
 	}
 	Level_EnumLeafBrushes (NewLevel, NewLevel, Level_FaceFixupCallback);
 
-	if (m_pDoc->pLevel != NULL)
+	if (App->m_pDoc->pLevel != NULL)
 	{
-		Level_Destroy (&m_pDoc->pLevel);
+		Level_Destroy (&App->m_pDoc->pLevel);
 	}
 
-	m_pDoc->pLevel = NewLevel;
+	App->m_pDoc->pLevel = NewLevel;
 //	pCameraEntity = NULL;
 
 	// Validate data, groups are read after entities and brushes, so this must be last
-	if(m_pDoc->ValidateEntities( ) == FALSE || m_pDoc->ValidateBrushes( ) == FALSE )
+	if(App->m_pDoc->ValidateEntities( ) == FALSE || App->m_pDoc->ValidateBrushes( ) == FALSE )
 	{
 		//m_pDoc->SelectTab( m_pDoc->CONSOLE_TAB ) ;
 		AfxMessageBox( IDS_LOAD_WARNING, MB_OK + MB_ICONERROR ) ;
@@ -216,11 +246,11 @@ bool SB_File_WE::Load(const char *FileName)
 	GroupIterator gi;
 	GroupListType *Groups;
 
-	Groups = Level_GetGroups (m_pDoc->pLevel);
-	m_pDoc->mCurrentGroup = Group_GetFirstId (Groups, &gi);
+	Groups = Level_GetGroups (App->m_pDoc->pLevel);
+	App->m_pDoc->mCurrentGroup = Group_GetFirstId (Groups, &gi);
 
 	{
-		Brush *pBox = BrushTemplate_CreateBox (Level_GetBoxTemplate (m_pDoc->pLevel));
+		Brush *pBox = BrushTemplate_CreateBox (Level_GetBoxTemplate (App->m_pDoc->pLevel));
 		if (pBox != NULL)
 		{
 			CreateNewTemplateBrush(pBox);
@@ -228,15 +258,15 @@ bool SB_File_WE::Load(const char *FileName)
 	}
 
 	// update entity visibility info
-	pEntityView	=Level_GetEntityVisibilityInfo (m_pDoc->pLevel);
+	pEntityView	=Level_GetEntityVisibilityInfo (App->m_pDoc->pLevel);
 	for (i = 0; i < pEntityView->nEntries; ++i)
 	{
-		Level_EnumEntities (m_pDoc->pLevel, &pEntityView->pEntries[i], ::fdocSetEntityVisibility);
+		Level_EnumEntities (App->m_pDoc->pLevel, &pEntityView->pEntries[i], ::fdocSetEntityVisibility);
 	}
 
 	AddCameraEntityToLevel();
 
-	m_pDoc->DoGeneralSelect();
+	App->m_pDoc->DoGeneralSelect();
 	return GE_TRUE;
 LoadError:
 	if (NewLevel != NULL)
@@ -258,25 +288,25 @@ void SB_File_WE::CreateNewTemplateBrush(Brush *pBrush)
 
 	assert (pBrush != NULL);
 
-	if (m_pDoc->BTemplate != NULL)
+	if (App->m_pDoc->BTemplate != NULL)
 	{
-		Brush_Destroy (&m_pDoc->BTemplate);
+		Brush_Destroy (&App->m_pDoc->BTemplate);
 	}
 
-	m_pDoc->BTemplate = pBrush;
-	m_pDoc->CurBrush = pBrush;
+	App->m_pDoc->BTemplate = pBrush;
+	App->m_pDoc->CurBrush = pBrush;
 
-	m_pDoc->TempEnt	= FALSE;
-	m_pDoc->SetDefaultBrushTexInfo (m_pDoc->CurBrush);
-	Brush_Bound (m_pDoc->CurBrush);
-	Brush_Center (m_pDoc->CurBrush, &BrushPos);
+	App->m_pDoc->TempEnt	= FALSE;
+	App->m_pDoc->SetDefaultBrushTexInfo (App->m_pDoc->CurBrush);
+	Brush_Bound (App->m_pDoc->CurBrush);
+	Brush_Center (App->m_pDoc->CurBrush, &BrushPos);
 
-	pTemplatePos = Level_GetTemplatePos (m_pDoc->pLevel);
+	pTemplatePos = Level_GetTemplatePos (App->m_pDoc->pLevel);
 	geVec3d_Subtract (pTemplatePos, &BrushPos, &MoveVec);
-	Brush_Move (m_pDoc->CurBrush, &MoveVec);
+	Brush_Move (App->m_pDoc->CurBrush, &MoveVec);
 
-	m_pDoc->UpdateAllViews (UAV_ALL3DVIEWS, NULL);
-	m_pDoc->SetModifiedFlag ();
+	App->m_pDoc->UpdateAllViews (UAV_ALL3DVIEWS, NULL);
+	App->m_pDoc->SetModifiedFlag ();
 }
 
 // *************************************************************************
@@ -284,18 +314,18 @@ void SB_File_WE::CreateNewTemplateBrush(Brush *pBrush)
 // *************************************************************************
 void SB_File_WE::AddCameraEntityToLevel(void)
 {
-	CEntity* pCameraEntity = m_pDoc->FindCameraEntity();
+	CEntity* pCameraEntity = App->m_pDoc->FindCameraEntity();
 	if (!pCameraEntity)
 	{
 		// Make default camera entity
 		CEntity CameraEntity ;
 		CString cstr;
 
-		m_pDoc->CreateEntityFromName( "Camera", CameraEntity ) ;
+		App->m_pDoc->CreateEntityFromName( "Camera", CameraEntity ) ;
 		cstr.LoadString( IDS_CAMERAENTITYNAME ) ;
 		CameraEntity.SetKeyValue ("%name%", cstr );
-		CameraEntity.SetOrigin ( 0.0f, 0.0f, 0.0f, Level_GetEntityDefs (m_pDoc->pLevel) );
-		Level_AddEntity (m_pDoc->pLevel, CameraEntity);
+		CameraEntity.SetOrigin ( 0.0f, 0.0f, 0.0f, Level_GetEntityDefs (App->m_pDoc->pLevel) );
+		Level_AddEntity (App->m_pDoc->pLevel, CameraEntity);
 	}
 }
 
@@ -330,9 +360,9 @@ static geBoolean fdocAddPremadeEntity (CEntity &Ent, void *lParam)
 bool SB_File_WE::ImportFile (const char *PathName, const geVec3d *location)
 {
 	//Debug
-	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+	App->m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
 
-	m_pDoc->SetModifiedFlag();
+	App->m_pDoc->SetModifiedFlag();
 
 	SetCursor(AfxGetApp()->LoadStandardCursor(IDC_WAIT));
 
@@ -340,7 +370,7 @@ bool SB_File_WE::ImportFile (const char *PathName, const geVec3d *location)
 	Level			*NewLevel;
 	EntityViewList	*pEntityView;
 	int				i;
-	const Prefs *pPrefs = m_pDoc->GetPrefs ();
+	const Prefs *pPrefs = App->m_pDoc->GetPrefs ();
 
 	NewLevel = Level_CreateFromFile(PathName, &ErrMsg, Prefs_GetHeadersList (pPrefs),Prefs_GetActorsList (pPrefs), Prefs_GetPawnIni (pPrefs));
 
@@ -352,7 +382,7 @@ bool SB_File_WE::ImportFile (const char *PathName, const geVec3d *location)
 	}
 
 	// Unselects everything so that brushes/entities can be added
-	m_pDoc->ResetAllSelections ();
+	App->m_pDoc->ResetAllSelections ();
 
 	// move the object to the new position
 	Level_TranslateAll (NewLevel, location);
@@ -364,10 +394,10 @@ bool SB_File_WE::ImportFile (const char *PathName, const geVec3d *location)
 		GroupListType *OldGroups;
 		GroupIterator gi;
 
-		OldGroups = Level_GetGroups (m_pDoc->pLevel);
+		OldGroups = Level_GetGroups (App->m_pDoc->pLevel);
 		NewGroups = Level_GetGroups (NewLevel);
 
-		Level_CollapseGroups (m_pDoc->pLevel, 1);
+		Level_CollapseGroups (App->m_pDoc->pLevel, 1);
 		Level_CollapseGroups (NewLevel, Group_GetCount (OldGroups));
 
 		GroupId = Group_GetFirstId (NewGroups, &gi);
@@ -403,10 +433,10 @@ bool SB_File_WE::ImportFile (const char *PathName, const geVec3d *location)
 		ModelIterator mi;
 		Model *pModel;
 
-		OldModels = Level_GetModelInfo (m_pDoc->pLevel)->Models;
+		OldModels = Level_GetModelInfo (App->m_pDoc->pLevel)->Models;
 		NewModels = Level_GetModelInfo (NewLevel)->Models;
 
-		Level_CollapseModels (m_pDoc->pLevel, 1);
+		Level_CollapseModels (App->m_pDoc->pLevel, 1);
 		Level_CollapseModels (NewLevel, ModelList_GetCount (OldModels) + 1);
 
 		pModel = ModelList_GetFirst (NewModels, &mi);
@@ -432,7 +462,7 @@ bool SB_File_WE::ImportFile (const char *PathName, const geVec3d *location)
 	{
 		fdocAddPremadeData AddPremadeData;
 
-		AddPremadeData.pDoc = m_pDoc;//this;
+		AddPremadeData.pDoc = App->m_pDoc;//this;
 		AddPremadeData.NewLevel = NewLevel;
 		//changed QD Actors
 		CEntityArray *Entities;
@@ -445,7 +475,7 @@ bool SB_File_WE::ImportFile (const char *PathName, const geVec3d *location)
 
 			if(pBrush!=NULL)
 			{
-				SelBrushList_Remove(m_pDoc->pSelBrushes, pBrush);
+				SelBrushList_Remove(App->m_pDoc->pSelBrushes, pBrush);
 				Level_RemoveBrush(NewLevel, pBrush);
 				(*Entities)[i].DeleteActorBrush();
 			}
@@ -462,7 +492,7 @@ bool SB_File_WE::ImportFile (const char *PathName, const geVec3d *location)
 		BrushIterator bi;
 
 		// fixup DIB ids on brush faces
-		Level_EnumLeafBrushes (NewLevel, m_pDoc->pLevel, Level_FaceFixupCallback);
+		Level_EnumLeafBrushes (NewLevel, App->m_pDoc->pLevel, Level_FaceFixupCallback);
 
 		// Move brushes from loaded level to doc's level
 		NewBrushes = Level_GetBrushes (NewLevel);
@@ -472,15 +502,15 @@ bool SB_File_WE::ImportFile (const char *PathName, const geVec3d *location)
 			NewBrush = pBrush;
 			pBrush = BrushList_GetNext (&bi);
 			Level_RemoveBrush (NewLevel, NewBrush);
-			Level_AppendBrush (m_pDoc->pLevel, NewBrush);
+			Level_AppendBrush (App->m_pDoc->pLevel, NewBrush);
 		}
 	}
 
 	// update entity visibility info
-	pEntityView	=Level_GetEntityVisibilityInfo (m_pDoc->pLevel);
+	pEntityView	=Level_GetEntityVisibilityInfo (App->m_pDoc->pLevel);
 	for (i = 0; i < pEntityView->nEntries; ++i)
 	{
-		Level_EnumEntities (m_pDoc->pLevel, &pEntityView->pEntries[i], ::fdocSetEntityVisibility);
+		Level_EnumEntities (App->m_pDoc->pLevel, &pEntityView->pEntries[i], ::fdocSetEntityVisibility);
 	}
 
 	Level_Destroy (&NewLevel);
@@ -721,7 +751,7 @@ bool SB_File_WE::Open_File_Dialog(char* Extension, char* Title, char* StartDirec
 // *************************************************************************
 bool SB_File_WE::Save(const char* FileName)
 {
-	Get_CurrentDocument();
+	App->Get_Current_Document();
 
 	// update view information in level
 	ViewStateInfo* pViewStateInfo;
@@ -729,10 +759,10 @@ bool SB_File_WE::Save(const char* FileName)
 	CFusionView* pView;
 	int iView;
 
-	pos = m_pDoc->GetFirstViewPosition();
+	pos = App->m_pDoc->GetFirstViewPosition();
 	while (pos != NULL)
 	{
-		pView = (CFusionView*)m_pDoc->GetNextView(pos);
+		pView = (CFusionView*)App->m_pDoc->GetNextView(pos);
 		switch (Render_GetViewType(pView->VCam))
 		{
 		case VIEWSOLID:
@@ -754,7 +784,7 @@ bool SB_File_WE::Save(const char* FileName)
 		}
 		if (iView != -1)
 		{
-			pViewStateInfo = Level_GetViewStateInfo(m_pDoc->pLevel, iView);
+			pViewStateInfo = Level_GetViewStateInfo(App->m_pDoc->pLevel, iView);
 			pViewStateInfo->IsValid = GE_TRUE;
 			pViewStateInfo->ZoomFactor = Render_GetZoom(pView->VCam);
 			Render_GetPitchRollYaw(pView->VCam, &pViewStateInfo->PitchRollYaw);
@@ -763,7 +793,7 @@ bool SB_File_WE::Save(const char* FileName)
 	}
 
 	// and then write the level info to the file
-	return Level_WriteToFile2(m_pDoc->pLevel, FileName);
+	return Level_WriteToFile2(App->m_pDoc->pLevel, FileName);
 }
 
 #include "util.h"
@@ -790,41 +820,41 @@ bool SB_File_WE::Level_WriteToFile2(Level* pLevel, const char* Filename)
 	WriteRslt = GE_FALSE;
 	if (fprintf(ArFile, "3dtVersion %d.%d\n", LEVEL_VERSION_MAJOR, LEVEL_VERSION_MINOR) < 0) goto WriteDone;
 
-	Util_QuoteString(m_pDoc->pLevel->WadPath, QuotedString);
+	Util_QuoteString(App->m_pDoc->pLevel->WadPath, QuotedString);
 	if (fprintf(ArFile, "TextureLib %s\n", QuotedString) < 0) goto WriteDone;
 
-	Util_QuoteString(m_pDoc->pLevel->HeadersDir, QuotedString);
+	Util_QuoteString(App->m_pDoc->pLevel->HeadersDir, QuotedString);
 	if (fprintf(ArFile, "HeadersDir %s\n", QuotedString) < 0) goto WriteDone;
 
 	// changed QD Actors
-	Util_QuoteString(m_pDoc->pLevel->ActorsDir, QuotedString);
+	Util_QuoteString(App->m_pDoc->pLevel->ActorsDir, QuotedString);
 	if (fprintf(ArFile, "ActorsDir %s\n", QuotedString) < 0) goto WriteDone;
 
-	Util_QuoteString(m_pDoc->pLevel->PawnIniPath, QuotedString);
+	Util_QuoteString(App->m_pDoc->pLevel->PawnIniPath, QuotedString);
 	if (fprintf(ArFile, "PawnIni %s\n", QuotedString) < 0) goto WriteDone;
 	// remove ActorBrushes from List, so they don't get written to the file
 	int i;
-	for (i = 0; i < m_pDoc->pLevel->Entities->GetSize(); ++i)
+	for (i = 0; i < App->m_pDoc->pLevel->Entities->GetSize(); ++i)
 	{
-		Brush* b = (*(m_pDoc->pLevel->Entities))[i].GetActorBrush();
+		Brush* b = (*(App->m_pDoc->pLevel->Entities))[i].GetActorBrush();
 		if (b != NULL)
-			Level_RemoveBrush(m_pDoc->pLevel, b);
+			Level_RemoveBrush(App->m_pDoc->pLevel, b);
 	}
 	// end change
 
-	if (fprintf(ArFile, "NumEntities %d\n", m_pDoc->pLevel->Entities->GetSize()) < 0) goto WriteDone;
-	if (fprintf(ArFile, "NumModels %d\n", ModelList_GetCount(m_pDoc->pLevel->ModelInfo.Models)) < 0) goto WriteDone;
-	if (fprintf(ArFile, "NumGroups %d\n", Group_GetCount(m_pDoc->pLevel->Groups)) < 0) goto WriteDone;
-	if (BrushList_Write(m_pDoc->pLevel->Brushes, ArFile) == GE_FALSE) goto WriteDone;
+	if (fprintf(ArFile, "NumEntities %d\n", App->m_pDoc->pLevel->Entities->GetSize()) < 0) goto WriteDone;
+	if (fprintf(ArFile, "NumModels %d\n", ModelList_GetCount(App->m_pDoc->pLevel->ModelInfo.Models)) < 0) goto WriteDone;
+	if (fprintf(ArFile, "NumGroups %d\n", Group_GetCount(App->m_pDoc->pLevel->Groups)) < 0) goto WriteDone;
+	if (BrushList_Write(App->m_pDoc->pLevel->Brushes, ArFile) == GE_FALSE) goto WriteDone;
 	
 	fprintf(ArFile, "Equity %s\n", "V1.1");
 	// changed QD Actors
 	// add ActorBrushes to the List again
-	for (i = 0; i < m_pDoc->pLevel->Entities->GetSize(); ++i)
+	for (i = 0; i < App->m_pDoc->pLevel->Entities->GetSize(); ++i)
 	{
-		Brush* b = (*(m_pDoc->pLevel->Entities))[i].GetActorBrush();
+		Brush* b = (*(App->m_pDoc->pLevel->Entities))[i].GetActorBrush();
 		if (b != NULL)
-			Level_AppendBrush(m_pDoc->pLevel, b);
+			Level_AppendBrush(App->m_pDoc->pLevel, b);
 	}
 	// end change
 	WriteRslt = GE_TRUE;

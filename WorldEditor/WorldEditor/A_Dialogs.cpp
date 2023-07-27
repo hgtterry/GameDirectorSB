@@ -145,8 +145,8 @@ LRESULT CALLBACK A_Dialogs::Message_Proc(HWND hDlg, UINT message, WPARAM wParam,
 // *************************************************************************
 void A_Dialogs::Start_Properties()
 {
-	
 	App->Get_Current_Document();
+
 	Current_Txl_File[0] = 0;
 
 	DialogBox(App->hInst, (LPCTSTR)IDD_LEVELOPTIONS_GD, App->MainHwnd, (DLGPROC)Properties_Proc);

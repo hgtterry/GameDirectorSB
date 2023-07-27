@@ -62,7 +62,5 @@ private:
 	bool Mouse_Slow;
 	bool Mouse_VerySlow;
 	bool Mouse_Fast;
-
-	CFusionDoc* m_pDoc;
 };
 

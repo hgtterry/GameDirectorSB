@@ -3671,6 +3671,7 @@ BOOL CFusionDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	UpdateGridInformation();
 
 	IsNewDocument = 0;
+	SetModifiedFlag(FALSE);
 
 //	CFusionView* pFusionView = GetCameraView();
 //	if (!pFusionView)
@@ -6381,10 +6382,14 @@ void CFusionDoc::SelectTab( int nTabIndex )
 
 /* EOF: FusionDoc.cpp */
 
-void CFusionDoc::OnFileOpen() // hgtterry On File Open
+void CFusionDoc::OnFileOpen() // hgtterry On File Open from menu
 {
+	App->CLSB_File_WE->TestNewLoad = 0;
 	App->CLSB_File_WE->Open_3dt_File(1);
 	App->CL_World->Reset_Editor();
+
+	IsNewDocument = 0;
+	SetModifiedFlag(FALSE);
 }
 
 void CFusionDoc::OnFileImportActor()

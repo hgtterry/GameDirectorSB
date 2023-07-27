@@ -44,8 +44,6 @@ SB_Dialogs::SB_Dialogs(void)
 	btext[0] = 0;
 	Chr_DropText[0] = 0;
 	DropList_Data = 0;
-
-	m_pDoc = nullptr;
 }
 
 SB_Dialogs::~SB_Dialogs(void)
@@ -163,7 +161,8 @@ bool SB_Dialogs::Start_ListData(int WhatList)
 		return 1;
 	}
 
-	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+	App->Get_Current_Document();
+
 	DialogBox(App->hInst, (LPCTSTR)IDD_SCENEDATA, App->MainHwnd, (DLGPROC)ListData_Proc);
 
 	return 1;
@@ -284,8 +283,18 @@ void SB_Dialogs::List_SceneData(HWND hDlg)
 
 	float used = ((float)(2097152 - Stack_Memory) / 1024);
 	sprintf(buf, "%s%f", "Stack Used K= ", used);
-
 	SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+	if (App->m_pDoc && (App->m_pDoc->IsModified() == TRUE))
+	{
+		sprintf(buf, "%s", "File Modified Yes");
+		SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	}
+	else
+	{
+		sprintf(buf, "%s", "File Modified No");
+		SendDlgItemMessage(hDlg, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	}
 }
 
 // *************************************************************************

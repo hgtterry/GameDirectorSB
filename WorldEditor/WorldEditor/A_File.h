@@ -33,9 +33,13 @@ public:
 	Level* Level_CreateFromFile (const char *FileName, const char **ErrMsg, const char *DefaultHeadersDir,const char *DefaultActorsDir, const char *DefaultPawnIni);
 
 	bool Load(const char *FileName);
+	bool Load_New(const char* FileName);
+
 	bool Save(const char* FileName);
 
 	bool Open_3dt_File(bool UseDialogLoader);
+
+	bool TestNewLoad;
 
 	char FileName_3dt[MAX_PATH];
 	char PathFileName_3dt[MAX_PATH];
@@ -48,7 +52,4 @@ private:
 	void AddCameraEntityToLevel(void);
 	bool Level_WriteToFile2(Level* pLevel, const char* Filename);
 
-	void Get_CurrentDocument();
-
-	CFusionDoc			*m_pDoc;
 };
