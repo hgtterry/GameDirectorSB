@@ -48,7 +48,7 @@ SB_App::SB_App()
 	CL_CreateStaircaseDialog  = NULL;
 	CL_Camera =					NULL;
 	CLSB_TopTabs =				NULL;
-	CL_File =					NULL;
+	CLSB_File_WE =				NULL;
 	CL_Brush =					NULL;
 
 	CLSB_Export_World =			NULL;
@@ -209,7 +209,7 @@ bool SB_App::InitApp(void)
 	CL_CreateStaircaseDialog  =		new A_CreateStaircaseDialog();
 	CL_Camera =						new A_Camera();
 	CLSB_TopTabs =					new SB_TopTabs();
-	CL_File =						new	A_File();
+	CLSB_File_WE =					new	SB_File_WE();
 	CL_Brush =						new A_Brush();
 
 	CLSB_Export_World =				new SB_Export_World();

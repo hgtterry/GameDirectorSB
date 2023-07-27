@@ -1442,7 +1442,7 @@ END
 
 STRINGTABLE
 BEGIN
-    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.26 - [26-07-23] -17"
+    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.26 - [27-07-23] -17"
     IDR_FUSIONTYPE          "Genesis3D World Editor\nWorld\nWorld\nWorld Files (*.3dt)\n.3dt\nWorldEditor.Document\nGenesis3D World Editor Document"
     IDS_LOAD_WARNING        "Some entities or brushes did not load properly, see console for details."
     IDS_NEWGROUP            "Group Name"
@@ -1926,7 +1926,8 @@ BEGIN
     PUSHBUTTON      "Properties",IDC_BT_GD_BRUSHPROPERTIES,38,258,78,14
     LTEXT           "0",IDC_ST_GD_SELECTED,65,232,31,11,SS_CENTERIMAGE
     LTEXT           "Selected",IDC_ST_SELECTED,7,232,57,11,SS_CENTERIMAGE
-    PUSHBUTTON      "Dimensions",IDC_BT_DIMENSIONS,38,295,78,14
+    PUSHBUTTON      "Dimensions",IDC_BT_DIMENSIONS,38,280,78,14
+    PUSHBUTTON      "Delete",IDC_BT_DELETEBRUSH,38,314,78,14
 END
 
 IDD_SB_TABSTEMPLATES DIALOGEX 0, 25, 160, 365

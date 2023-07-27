@@ -226,6 +226,7 @@ LRESULT CALLBACK SB_TopTabs::TB_Headers_Proc(HWND hDlg, UINT message, WPARAM wPa
 				App->CL_Render_App->Render3D_Mode(ID_VIEW_TEXTUREVIEW);
 
 				RedrawWindow(App->CLSB_TopTabs->Top_Tabs_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
 				return TRUE;
 			}
 
@@ -512,9 +513,9 @@ LRESULT CALLBACK SB_TopTabs::Top_File_Proc(HWND hDlg, UINT message, WPARAM wPara
 				strcpy(Txlpath,App->WorldEditor_Directory);
 				strcat(Txlpath,"Levels\\Equity.txl");
 
-				strcpy(App->CL_File->PathFileName_3dt,path);
+				strcpy(App->CLSB_File_WE->PathFileName_3dt,path);
 				
-				App->CL_File->Open_3dt_File(0);
+				App->CLSB_File_WE->Open_3dt_File(0);
 				
 				App->CL_World->Set_Paths();
 				

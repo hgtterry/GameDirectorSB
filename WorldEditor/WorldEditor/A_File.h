@@ -23,13 +23,13 @@ misrepresented as being the original software.
 distribution.
 */
 
-class A_File
+class SB_File_WE
 {
 public:
-	A_File(void);
-	~A_File(void);
+	SB_File_WE(void);
+	~SB_File_WE(void);
 
-	bool A_File::ImportFile (const char *PathName, const geVec3d *location);
+	bool  ImportFile (const char *PathName, const geVec3d *location);
 	Level* Level_CreateFromFile (const char *FileName, const char **ErrMsg, const char *DefaultHeadersDir,const char *DefaultActorsDir, const char *DefaultPawnIni);
 
 	bool Load(const char *FileName);

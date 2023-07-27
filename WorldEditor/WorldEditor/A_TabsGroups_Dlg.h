@@ -60,5 +60,6 @@ private:
 
 	int Selected_Index;
 	Brush*	Selected_Brush;
+
 	CFusionDoc			*m_pDoc;
 };

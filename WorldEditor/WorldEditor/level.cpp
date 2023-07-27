@@ -1962,7 +1962,7 @@ geBoolean Level_RebuildBspAlways (const Level *pLevel)
 
 void Level_SetBspRebuild (Level *pLevel, geBoolean RebuildFlag)
 {
-	pLevel->BspRebuildFlag = RebuildFlag;
+	pLevel->BspRebuildFlag = 1;// RebuildFlag;
 }
 
 ViewStateInfo *Level_GetViewStateInfo (Level *pLevel, int iView)

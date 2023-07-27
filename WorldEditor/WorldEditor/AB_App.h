@@ -112,7 +112,7 @@ public:
 	A_CreateStaircaseDialog*	CL_CreateStaircaseDialog;
 	A_Camera*					CL_Camera;
 	SB_TopTabs*					CLSB_TopTabs;
-	A_File*						CL_File;
+	SB_File_WE*					CLSB_File_WE;
 	A_Brush*					CL_Brush;
 
 	SB_Export_World*			CLSB_Export_World;

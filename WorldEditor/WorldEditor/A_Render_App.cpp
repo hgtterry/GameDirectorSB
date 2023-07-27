@@ -39,4 +39,5 @@ void A_Render_App::Render3D_Mode(UINT nID)
 		pDoc->RebuildTrees();
 		pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 	}
+
 }

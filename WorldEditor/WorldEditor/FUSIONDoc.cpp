@@ -847,7 +847,7 @@ geBoolean CFusionDoc::Save(const char *FileName)
 {
 	// Moved to A_File::Save(const char* FileName)
 
-	return App->CL_File->Save(FileName);
+	return App->CLSB_File_WE->Save(FileName);
 }
 
 static geBoolean fdocSetEntityVisibility (CEntity &Ent, void *lParam)
@@ -3662,7 +3662,7 @@ BOOL CFusionDoc::OnOpenDocument(LPCTSTR lpszPathName)
 {
 	::FilePath_GetDriveAndDir (lpszPathName, LastPath);	
 
-	bool test = App->CL_File->Load(lpszPathName);
+	bool test = App->CLSB_File_WE->Load(lpszPathName);
 	if (test == 0)
 	{
 		return FALSE;
@@ -6198,7 +6198,7 @@ geBoolean CFusionDoc::PlaceObject( const char *ObjectName, const geVec3d *locati
 
 geBoolean CFusionDoc::ImportFile (const char *PathName, const geVec3d *location) // hgterry ImportFile
 {
-	App->CL_File->ImportFile(PathName,location);
+	App->CLSB_File_WE->ImportFile(PathName,location);
 
 	App->CL_World->Reset_Editor();
 	App->Say("Imported",App->CL_World->mCurrent_3DT_File);
@@ -6383,7 +6383,7 @@ void CFusionDoc::SelectTab( int nTabIndex )
 
 void CFusionDoc::OnFileOpen() // hgtterry On File Open
 {
-	App->CL_File->Open_3dt_File(1);
+	App->CLSB_File_WE->Open_3dt_File(1);
 	App->CL_World->Reset_Editor();
 }
 

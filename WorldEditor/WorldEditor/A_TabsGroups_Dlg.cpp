@@ -80,6 +80,7 @@ LRESULT CALLBACK A_TabsGroups_Dlg::Groups_Proc(HWND hDlg, UINT message, WPARAM w
 		SendDlgItemMessage(hDlg, IDC_ST_GD_SELECTED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_SELECTED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_DIMENSIONS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_DELETEBRUSH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		return TRUE;
 	}
@@ -151,51 +152,71 @@ LRESULT CALLBACK A_TabsGroups_Dlg::Groups_Proc(HWND hDlg, UINT message, WPARAM w
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_DELETEBRUSH && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
 		return CDRF_DODEFAULT;
 	}
 
 	case WM_COMMAND:
+	{
+		if (LOWORD(wParam) == IDC_BT_DELETEBRUSH)
 		{
-		
-			if (LOWORD(wParam) == IDC_BT_DIMENSIONS)
+			App->CLSB_Dialogs->YesNo("Are you sure", "Do you want to Delete the selected Brushes");
+
+			bool Doit = App->CLSB_Dialogs->Canceled;
+			if (Doit == 0)
 			{
-				App->CLSB_Brushes->Start_Dimensions_Dlg();
-				return TRUE;
+				App->CL_TabsGroups_Dlg->m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+				App->CL_TabsGroups_Dlg->m_pDoc->DeleteCurrentThing();
 			}
 
-			if (LOWORD(wParam) == IDC_GD_BRUSHLIST)
-			{
-				if (App->CL_TabsGroups_Dlg->Groups_Dlg_Created == 1)
-				{
-					App->CL_TabsGroups_Dlg->List_Selection_Changed();
-				}
-				return TRUE;
-			}
-
-			if (LOWORD(wParam) == IDC_BT_GD_BRUSHPROPERTIES)
-			{
-				App->CL_TabsGroups_Dlg->Start_Properties_Dlg();
-				SendDlgItemMessage(hDlg, IDC_GD_BRUSHLIST,LB_SETCURSEL, (WPARAM)App->CL_TabsGroups_Dlg->Selected_Index, (LPARAM)0);
-				return TRUE;
-			}
-
-			// -----------------------------------------------------------------
-			if (LOWORD(wParam) == IDOK)
-			{
-				//App->CL_TextureDialog->f_TextureDlg_Active = 0;
-				//EndDialog(hDlg, LOWORD(wParam));
-				return TRUE;
-			}
-
-			if (LOWORD(wParam) == IDCANCEL)
-			{
-				//App->CL_TextureDialog->f_TextureDlg_Active = 0;
-				//EndDialog(hDlg, LOWORD(wParam));
-				return TRUE;
-			}
-
-			break;
+			return TRUE;
 		}
+
+		if (LOWORD(wParam) == IDC_BT_DIMENSIONS)
+		{
+			App->CLSB_Brushes->Start_Dimensions_Dlg();
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_GD_BRUSHLIST)
+		{
+			if (App->CL_TabsGroups_Dlg->Groups_Dlg_Created == 1)
+			{
+				App->CL_TabsGroups_Dlg->List_Selection_Changed();
+			}
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_GD_BRUSHPROPERTIES)
+		{
+			App->CL_TabsGroups_Dlg->Start_Properties_Dlg();
+			SendDlgItemMessage(hDlg, IDC_GD_BRUSHLIST, LB_SETCURSEL, (WPARAM)App->CL_TabsGroups_Dlg->Selected_Index, (LPARAM)0);
+			return TRUE;
+		}
+
+		// -----------------------------------------------------------------
+		if (LOWORD(wParam) == IDOK)
+		{
+			//App->CL_TextureDialog->f_TextureDlg_Active = 0;
+			//EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			//App->CL_TextureDialog->f_TextureDlg_Active = 0;
+			//EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		break;
+	}
 	}
 	return FALSE;
 }

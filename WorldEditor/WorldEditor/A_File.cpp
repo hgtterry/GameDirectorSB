@@ -79,13 +79,13 @@ struct tag_Level
 	float LightmapScale;	// default lightmap scale
 };
 
-A_File::A_File(void)
+SB_File_WE::SB_File_WE(void)
 {
 	FileName_3dt[0] = 0;
 	PathFileName_3dt[0] = 0;
 }
 
-A_File::~A_File(void)
+SB_File_WE::~SB_File_WE(void)
 {
 }
 
@@ -113,7 +113,7 @@ static geBoolean fdocSetEntityVisibility (CEntity &Ent, void *lParam)
 // *************************************************************************
 // *		Get_CurrentDocument:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-void A_File::Get_CurrentDocument()
+void SB_File_WE::Get_CurrentDocument()
 {
 	m_pDoc = NULL;
 	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
@@ -126,7 +126,7 @@ void A_File::Get_CurrentDocument()
 // *************************************************************************
 // *			Open_3dt_File:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-bool A_File::Open_3dt_File(bool UseDialogLoader)
+bool SB_File_WE::Open_3dt_File(bool UseDialogLoader)
 {
 	
 	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
@@ -159,7 +159,7 @@ bool A_File::Open_3dt_File(bool UseDialogLoader)
 // *************************************************************************
 // *									Load 							   *
 // *************************************************************************
-bool A_File::Load(const char *FileName)
+bool SB_File_WE::Load(const char *FileName)
 {
 	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
 	
@@ -250,7 +250,7 @@ LoadError:
 // *************************************************************************
 // * 						CreateNewTemplateBrush						   *
 // *************************************************************************
-void A_File::CreateNewTemplateBrush(Brush *pBrush)
+void SB_File_WE::CreateNewTemplateBrush(Brush *pBrush)
 {
 	geVec3d *pTemplatePos;
 	geVec3d MoveVec;
@@ -282,7 +282,7 @@ void A_File::CreateNewTemplateBrush(Brush *pBrush)
 // *************************************************************************
 // * 						AddCameraEntityToLevel						   *
 // *************************************************************************
-void A_File::AddCameraEntityToLevel(void)
+void SB_File_WE::AddCameraEntityToLevel(void)
 {
 	CEntity* pCameraEntity = m_pDoc->FindCameraEntity();
 	if (!pCameraEntity)
@@ -327,7 +327,7 @@ static geBoolean fdocAddPremadeEntity (CEntity &Ent, void *lParam)
 // *************************************************************************
 // * 							ImportFile								   *
 // *************************************************************************
-bool A_File::ImportFile (const char *PathName, const geVec3d *location)
+bool SB_File_WE::ImportFile (const char *PathName, const geVec3d *location)
 {
 	//Debug
 	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
@@ -517,7 +517,7 @@ static void Level_BrushListToTexels(Level *pLevel)
 // *************************************************************************
 // * 						Level_CreateFromFile						   *
 // *************************************************************************
-Level* A_File::Level_CreateFromFile (const char *FileName, const char **ErrMsg, const char *DefaultHeadersDir,const char *DefaultActorsDir, const char *DefaultPawnIni)
+Level* SB_File_WE::Level_CreateFromFile (const char *FileName, const char **ErrMsg, const char *DefaultHeadersDir,const char *DefaultActorsDir, const char *DefaultPawnIni)
 {
 	int NumModels;
 	int VersionMajor, VersionMinor;
@@ -682,7 +682,7 @@ AllDone:
 // *************************************************************************
 // *		Open_File_Dialog:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-bool A_File::Open_File_Dialog(char* Extension, char* Title, char* StartDirectory)
+bool SB_File_WE::Open_File_Dialog(char* Extension, char* Title, char* StartDirectory)
 {
 	FileName_3dt[0] = 0;
 	PathFileName_3dt[0] = 0;
@@ -719,7 +719,7 @@ bool A_File::Open_File_Dialog(char* Extension, char* Title, char* StartDirectory
 // *************************************************************************
 // *		Open_File_Dialog:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-bool A_File::Save(const char* FileName)
+bool SB_File_WE::Save(const char* FileName)
 {
 	Get_CurrentDocument();
 
@@ -770,7 +770,7 @@ bool A_File::Save(const char* FileName)
 // *************************************************************************
 // *		Level_WriteToFile2:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-bool A_File::Level_WriteToFile2(Level* pLevel, const char* Filename)
+bool SB_File_WE::Level_WriteToFile2(Level* pLevel, const char* Filename)
 {
 	FILE* ArFile;
 	char QuotedString[MAX_PATH];

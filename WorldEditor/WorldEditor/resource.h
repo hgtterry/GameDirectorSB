@@ -575,6 +575,7 @@
 #define IDC_CKNORMAL                    1363
 #define IDC_BT_EQ_GROUPS                1363
 #define IDC_BT_EQ_UPDATE                1363
+#define IDC_BT_DELETEBRUSH              1363
 #define IDC_BANNER                      1364
 #define IDC_GD_CYLINDER_PRIMITIVE       1364
 #define IDC_BT_BROWSE                   1364
