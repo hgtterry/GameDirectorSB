@@ -6384,8 +6384,9 @@ void CFusionDoc::SelectTab( int nTabIndex )
 
 void CFusionDoc::OnFileOpen() // hgtterry On File Open from menu
 {
-	App->CLSB_File_WE->TestNewLoad = 1;
-	bool test = App->CLSB_File_WE->Open_3dt_File(1);
+	//bool test = App->CLSB_File_WE->Open_3dt_File(1);
+
+	bool test = App->CLSB_File_WE->Load_New("",1);
 	if (test == 0)
 	{
 		return;

@@ -83,8 +83,6 @@ SB_File_WE::SB_File_WE(void)
 {
 	FileName_3dt[0] = 0;
 	PathFileName_3dt[0] = 0;
-
-	TestNewLoad = 0;
 }
 
 SB_File_WE::~SB_File_WE(void)
@@ -127,54 +125,9 @@ bool SB_File_WE::Open_Dialog()
 }
 
 // *************************************************************************
-// *			Open_3dt_File:- Terry and Hazel Flanigan 2023			   *
-// *************************************************************************
-bool SB_File_WE::Open_3dt_File(bool UseDialogLoader)
-{
-	
-	if (TestNewLoad == 0)
-	{
-		{
-			if (UseDialogLoader == 1)
-			{
-				bool test = Open_File_Dialog("World File   **.3dt\0*.3dt\0", " Open World File", NULL);
-				if (test == 0)
-				{
-					return 0;
-				}
-			}
-
-			//AfxGetApp()->OpenDocumentFile(PathFileName_3dt);
-
-			Load(PathFileName_3dt);
-
-			App->m_pDoc->SetTitle(PathFileName_3dt);
-			App->m_pDoc->SetPathName(PathFileName_3dt, FALSE);
-
-			App->CL_World->Set_Paths();
-			App->CL_TabsGroups_Dlg->Fill_ListBox();
-			App->CL_TextureDialog->Fill_ListBox();
-
-			App->CL_World->Set_Paths();
-			App->CL_World->Reset_Editor();
-
-
-			App->CLSB_RecentFiles->RecentFile_Files_Update();
-
-		}
-	}
-	else
-	{
-		return Load_New("");
-	}
-
-	return 1;
-}
-
-// *************************************************************************
 // *								Load_New 							   *
 // *************************************************************************
-bool SB_File_WE::Load_New(const char* FileName)
+bool SB_File_WE::Load_New(const char* FileName, bool UseDialogLoader)
 {
 	//MessageBox(NULL, "New Load", "ME Know Also", MB_OK);
 
@@ -184,7 +137,7 @@ bool SB_File_WE::Load_New(const char* FileName)
 	if (App->m_pDoc && (App->m_pDoc->IsModified() == TRUE))
 	{
 		char Text[200];
-		strcpy(Text,"Save Changes To " );
+		strcpy(Text, "Save Changes To ");
 		strcat(Text, App->CL_World->mCurrent_3DT_File);
 
 		int Test = MessageBox(App->MainHwnd, Text, "File has been Modified", MB_YESNOCANCEL);
@@ -204,10 +157,13 @@ bool SB_File_WE::Load_New(const char* FileName)
 		}
 	}
 
-	bool test = Open_Dialog();
-	if (test == 0)
+	if (UseDialogLoader == 1)
 	{
-		return 0;
+		bool test = Open_Dialog();
+		if (test == 0)
+		{
+			return 0;
+		}
 	}
 
 	// Select All
@@ -218,23 +174,52 @@ bool SB_File_WE::Load_New(const char* FileName)
 	// Delete All Bruses and Faces
 	App->m_pDoc->DeleteCurrentThing();
 
-	App->m_pDoc->SetTitle("No File");
+	App->m_pDoc->SetTitle(" ");
 
-	TestNewLoad = 0;
 	Open_3dt_File(0);
 	return 1;
 }
+
+// *************************************************************************
+// *			Open_3dt_File:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+bool SB_File_WE::Open_3dt_File(bool UseDialogLoader)
+{
+		if (UseDialogLoader == 1)
+		{
+			bool test = Open_File_Dialog("World File   **.3dt\0*.3dt\0", " Open World File", NULL);
+			if (test == 0)
+			{
+				return 0;
+			}
+		}
+
+		//AfxGetApp()->OpenDocumentFile(PathFileName_3dt);
+
+		Load(PathFileName_3dt);
+
+		App->m_pDoc->SetTitle(PathFileName_3dt);
+		App->m_pDoc->SetPathName(PathFileName_3dt, FALSE);
+
+		App->CL_World->Set_Paths();
+		App->CL_TabsGroups_Dlg->Fill_ListBox();
+		App->CL_TextureDialog->Fill_ListBox();
+
+		App->CL_World->Set_Paths();
+		App->CL_World->Reset_Editor();
+
+		App->CLSB_RecentFiles->RecentFile_Files_Update();
+
+	return 1;
+}
+
+
 
 // *************************************************************************
 // *									Load 							   *
 // *************************************************************************
 bool SB_File_WE::Load(const char *FileName)
 {
-	if (TestNewLoad == 1)
-	{
-		Load_New(FileName);
-		return 1;
-	}
 
 	App->Get_Current_Document();
 	
