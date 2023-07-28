@@ -29,7 +29,7 @@ distribution.
 #include "EntTypeName.h"
 #include "EntView.h"
 #include "units.h"
-//#include "FilePath.h"
+#include "util.h"
 #include "FUSIONView.h"
 
 #define NUM_VIEWS (4)
@@ -125,9 +125,9 @@ bool SB_File_WE::Open_Dialog()
 }
 
 // *************************************************************************
-// *								Load_New 							   *
+// *			Start_Load:- Terry and Hazel Flanigan 2023 				   *
 // *************************************************************************
-bool SB_File_WE::Load_New(const char* FileName, bool UseDialogLoader)
+bool SB_File_WE::Start_Load(const char* FileName, bool UseDialogLoader)
 {
 	//MessageBox(NULL, "New Load", "ME Know Also", MB_OK);
 
@@ -176,27 +176,38 @@ bool SB_File_WE::Load_New(const char* FileName, bool UseDialogLoader)
 
 	App->m_pDoc->SetTitle(" ");
 
-	Open_3dt_File(0);
+	bool Test = Open_3dt_File();
+	if (Test == 1)
+	{
+		App->CL_World->Reset_Editor();
+
+		App->CL_Camera->Reset_Camera_Position();
+		App->CL_Camera->Reset_Camera_Angles();
+
+		App->m_pDoc->IsNewDocument = 0;
+		App->m_pDoc->SetModifiedFlag(FALSE);
+
+
+		App->Say("Loaded", PathFileName_3dt);
+	}
+	else
+	{
+		App->Say("Can not Open File", PathFileName_3dt);
+	}
+
+	
 	return 1;
 }
 
 // *************************************************************************
 // *			Open_3dt_File:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-bool SB_File_WE::Open_3dt_File(bool UseDialogLoader)
+bool SB_File_WE::Open_3dt_File()
 {
-		if (UseDialogLoader == 1)
-		{
-			bool test = Open_File_Dialog("World File   **.3dt\0*.3dt\0", " Open World File", NULL);
-			if (test == 0)
-			{
-				return 0;
-			}
-		}
 
 		//AfxGetApp()->OpenDocumentFile(PathFileName_3dt);
 
-		Load(PathFileName_3dt);
+		Load_File(PathFileName_3dt);
 
 		App->m_pDoc->SetTitle(PathFileName_3dt);
 		App->m_pDoc->SetPathName(PathFileName_3dt, FALSE);
@@ -216,14 +227,12 @@ bool SB_File_WE::Open_3dt_File(bool UseDialogLoader)
 
 
 // *************************************************************************
-// *									Load 							   *
+// *								Load_File 							   *
 // *************************************************************************
-bool SB_File_WE::Load(const char *FileName)
+bool SB_File_WE::Load_File(const char *FileName)
 {
 
 	App->Get_Current_Document();
-	
-	//MessageBox(NULL,"ME Know","ME Know",MB_OK);
 	
 	const char		*Errmsg, *WadPath;
 	int				i;
@@ -231,33 +240,26 @@ bool SB_File_WE::Load(const char *FileName)
 	EntityViewList	*pEntityView;
 	const Prefs *pPrefs = App->m_pDoc->GetPrefs ();
 
-	{
-		//char WorkingDir[MAX_PATH];
-
-		//FilePath_GetDriveAndDir (FileName, WorkingDir);
-//		::SetCurrentDirectory (WorkingDir);
-	}
-
-// changed QD Actors
-	NewLevel = Level_CreateFromFile (FileName, &Errmsg, Prefs_GetHeadersList (pPrefs),
+	/*char WorkingDir[MAX_PATH];
+	FilePath_GetDriveAndDir(FileName, WorkingDir);
+	::SetCurrentDirectory(WorkingDir);*/
+	
+	bool Test = NewLevel = Level_CreateFromFile (FileName, &Errmsg, Prefs_GetHeadersList (pPrefs),
 		Prefs_GetActorsList(pPrefs), Prefs_GetPawnIni(pPrefs));
 
-
-// end change
 	if (NewLevel == NULL)
 	{
 		goto LoadError;
 	}
+
 	// get fully-qualified path name to texture library
 	WadPath = Level_GetWadPath (NewLevel);
 
 	if (!Level_LoadWad (NewLevel))
 	{
-		CString Msg;
-
-		AfxFormatString1 (Msg, IDS_CANTLOADTXL, WadPath);
-		AfxMessageBox (Msg, MB_OK + MB_ICONERROR);
+		App->Say("Can not open TXL File");
 	}
+
 	Level_EnumLeafBrushes (NewLevel, NewLevel, Level_FaceFixupCallback);
 
 	if (App->m_pDoc->pLevel != NULL)
@@ -266,13 +268,12 @@ bool SB_File_WE::Load(const char *FileName)
 	}
 
 	App->m_pDoc->pLevel = NewLevel;
-//	pCameraEntity = NULL;
 
 	// Validate data, groups are read after entities and brushes, so this must be last
 	if(App->m_pDoc->ValidateEntities( ) == FALSE || App->m_pDoc->ValidateBrushes( ) == FALSE )
 	{
 		//m_pDoc->SelectTab( m_pDoc->CONSOLE_TAB ) ;
-		AfxMessageBox( IDS_LOAD_WARNING, MB_OK + MB_ICONERROR ) ;
+		App->Say("Can not open Validate Brushes");
 	}
 
 	GroupIterator gi;
@@ -280,7 +281,6 @@ bool SB_File_WE::Load(const char *FileName)
 	
 	Groups = Level_GetGroups (App->m_pDoc->pLevel);
 	App->m_pDoc->mCurrentGroup = Group_GetFirstId (Groups, &gi);
-	//App->Say(FileName);
 	{
 		Brush *pBox = BrushTemplate_CreateBox (Level_GetBoxTemplate (App->m_pDoc->pLevel));
 		if (pBox != NULL)
@@ -292,7 +292,7 @@ bool SB_File_WE::Load(const char *FileName)
 			App->Say("Error");
 		}
 	}
-	//App->Say(FileName);
+
 	// update entity visibility info
 	pEntityView	=Level_GetEntityVisibilityInfo (App->m_pDoc->pLevel);
 	for (i = 0; i < pEntityView->nEntries; ++i)
@@ -305,14 +305,14 @@ bool SB_File_WE::Load(const char *FileName)
 
 	App->m_pDoc->DoGeneralSelect();
 
-	
 	return GE_TRUE;
 LoadError:
 	if (NewLevel != NULL)
 	{
 		Level_Destroy (&NewLevel);
 	}
-	AfxMessageBox (Errmsg, MB_OK + MB_ICONERROR);
+
+	App->Say("Error Loading File");
 	return GE_FALSE;
 }
 
@@ -835,7 +835,6 @@ bool SB_File_WE::Save(const char* FileName)
 	return Level_WriteToFile2(App->m_pDoc->pLevel, FileName);
 }
 
-#include "util.h"
 // *************************************************************************
 // *		Level_WriteToFile2:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************

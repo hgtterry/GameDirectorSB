@@ -812,10 +812,7 @@ void CMainFrame::OnBrushGroupsMakenewgroup()
 	}
 }/* CMainFrame::OnBrushGroupsMakenewgroup */
 
-CFusionDoc *CMainFrame::GetCurrentDoc 
-	(
-	  void
-	)
+CFusionDoc *CMainFrame::GetCurrentDoc (void)
 {
 	CChildFrame* pActiveChild;
 	CFusionDoc *pDoc;
@@ -827,13 +824,11 @@ CFusionDoc *CMainFrame::GetCurrentDoc
 	{
 		pDoc =(CFusionDoc*)pActiveChild->GetActiveDocument();
 	}
+
 	return pDoc;
 }
 
-void CMainFrame::UpdateActiveDoc
-	(
-	  void
-	)
+void CMainFrame::UpdateActiveDoc(void)
 {
 	if (mpBrushAttributes)
 		mpBrushAttributes->UpdateBrushFocus();

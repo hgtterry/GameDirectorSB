@@ -3662,7 +3662,7 @@ BOOL CFusionDoc::OnOpenDocument(LPCTSTR lpszPathName)
 {
 	::FilePath_GetDriveAndDir (lpszPathName, LastPath);	
 
-	bool test = App->CLSB_File_WE->Load(lpszPathName);
+	bool test = App->CLSB_File_WE->Load_File(lpszPathName);
 	if (test == 0)
 	{
 		return FALSE;
@@ -6384,18 +6384,11 @@ void CFusionDoc::SelectTab( int nTabIndex )
 
 void CFusionDoc::OnFileOpen() // hgtterry On File Open from menu
 {
-	//bool test = App->CLSB_File_WE->Open_3dt_File(1);
-
-	bool test = App->CLSB_File_WE->Load_New("",1);
+	bool test = App->CLSB_File_WE->Start_Load("",1);
 	if (test == 0)
 	{
 		return;
 	}
-
-	App->CL_World->Reset_Editor();
-
-	IsNewDocument = 0;
-	SetModifiedFlag(FALSE);
 }
 
 void CFusionDoc::OnFileImportActor()

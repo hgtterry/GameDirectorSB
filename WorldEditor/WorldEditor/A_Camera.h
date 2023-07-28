@@ -32,6 +32,10 @@ public:
 	void Start_Move_Camera();
 	geVec3d Get_Camera_Position();
 
+	void Reset_Camera_Position();
+	void Reset_Camera_Angles();
+
+
 private:
 
 	static LRESULT CALLBACK Move_Camera_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);

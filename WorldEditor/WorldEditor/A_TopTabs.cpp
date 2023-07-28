@@ -516,7 +516,7 @@ LRESULT CALLBACK SB_TopTabs::Top_File_Proc(HWND hDlg, UINT message, WPARAM wPara
 				strcpy(App->CLSB_File_WE->PathFileName_3dt,path);
 				
 
-				App->CLSB_File_WE->Load_New(App->CLSB_File_WE->PathFileName_3dt,0);
+				App->CLSB_File_WE->Start_Load(App->CLSB_File_WE->PathFileName_3dt,0);
 				
 				/*App->CL_World->Set_Paths();
 				
@@ -525,8 +525,6 @@ LRESULT CALLBACK SB_TopTabs::Top_File_Proc(HWND hDlg, UINT message, WPARAM wPara
 				App->CL_TabsGroups_Dlg->Fill_ListBox();
 
 				App->CL_World->Level_SetTxlPath(Txlpath);*/
-
-				App->Say("Loaded", path);
 
 				return TRUE;
 			}

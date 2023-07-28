@@ -156,7 +156,7 @@ LRESULT CALLBACK SB_RecentFiles::RecentFiles_Proc(HWND hDlg, UINT message, WPARA
 			EndDialog(hDlg, LOWORD(wParam));
 			
 			strcpy(App->CLSB_File_WE->PathFileName_3dt, App->CLSB_RecentFiles->mFileAndPath);
-			App->CLSB_File_WE->Open_3dt_File(0);
+			App->CLSB_File_WE->Start_Load(App->CLSB_File_WE->PathFileName_3dt,0);
 
 			return TRUE;
 		}

@@ -232,9 +232,7 @@ LRESULT CALLBACK A_Camera::Move_Camera_Proc(HWND hDlg, UINT message, WPARAM wPar
 		if (LOWORD(wParam) == IDC_BTRESETANGLES)
 		{
 	
-			App->CL_Camera->Angles.X = 3.141593; // Radians
-			App->CL_Camera->Angles.Y = 0;
-			App->CL_Camera->Angles.Z = 0;
+			App->CL_Camera->Reset_Camera_Angles();
 
 			char buf[100];
 
@@ -247,20 +245,13 @@ LRESULT CALLBACK A_Camera::Move_Camera_Proc(HWND hDlg, UINT message, WPARAM wPar
 			sprintf(buf, "%f", App->CL_Camera->Angles.Z);
 			SetDlgItemText(hDlg, IDC_EDCAMANGLEZ,buf);
 
-			App->CL_Camera->pCameraEntity->SetAngles(&App->CL_Camera->Angles, Level_GetEntityDefs (App->CL_Camera->m_pDoc->pLevel) );
-
-			App->CL_Camera->m_pDoc->SetRenderedViewCamera( &(App->CL_Camera->pCameraEntity->mOrigin), &App->CL_Camera->Angles) ;
-			App->CL_Camera->m_pDoc->UpdateAllViews( UAV_ALLVIEWS, NULL );
-
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_BTRESETPOSITION)
 		{
 	
-			App->CL_Camera->CameraPosition.X = 0; 
-			App->CL_Camera->CameraPosition.Y = 0;
-			App->CL_Camera->CameraPosition.Z = 0;
+			App->CL_Camera->Reset_Camera_Position();
 
 			char buf[100];
 
@@ -272,11 +263,6 @@ LRESULT CALLBACK A_Camera::Move_Camera_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 			sprintf(buf, "%f", App->CL_Camera->CameraPosition.Z);
 			SetDlgItemText(hDlg, IDC_EDCAMZ,buf);
-
-			App->CL_Camera->pCameraEntity->SetOrigin(App->CL_Camera->CameraPosition.X,App->CL_Camera->CameraPosition.Y,App->CL_Camera->CameraPosition.Z, Level_GetEntityDefs(App->CL_Camera->m_pDoc->pLevel) );
-
-			App->CL_Camera->m_pDoc->SetRenderedViewCamera( &(App->CL_Camera->pCameraEntity->mOrigin), &App->CL_Camera->Angles) ;
-			App->CL_Camera->m_pDoc->UpdateAllViews( UAV_ALLVIEWS, NULL );
 
 			return TRUE;
 		}
@@ -352,4 +338,44 @@ geVec3d A_Camera::Get_Camera_Position()
 	pCameraEntity = m_pDoc->FindCameraEntity();
 
 	return pCameraEntity->mOrigin;
+}
+
+// *************************************************************************
+// *		 Reset_Camera_Position:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void A_Camera::Reset_Camera_Position()
+{
+	App->Get_Current_Document();
+
+	pCameraEntity = App->m_pDoc->FindCameraEntity();
+	
+	App->CL_Camera->CameraPosition.X = 0;
+	App->CL_Camera->CameraPosition.Y = 0;
+	App->CL_Camera->CameraPosition.Z = 0;
+
+	App->CL_Camera->pCameraEntity->SetOrigin(App->CL_Camera->CameraPosition.X, App->CL_Camera->CameraPosition.Y, App->CL_Camera->CameraPosition.Z, Level_GetEntityDefs(App->m_pDoc->pLevel));
+
+	App->m_pDoc->SetRenderedViewCamera(&(App->CL_Camera->pCameraEntity->mOrigin), &App->CL_Camera->Angles);
+	App->m_pDoc->UpdateAllViews(UAV_ALLVIEWS, NULL);
+
+}
+
+// *************************************************************************
+// *		 Reset_Camera_Angles:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void A_Camera::Reset_Camera_Angles()
+{
+	App->Get_Current_Document();
+
+	pCameraEntity = App->m_pDoc->FindCameraEntity();
+	
+	App->CL_Camera->Angles.X = 3.141593; // Radians
+	App->CL_Camera->Angles.Y = 0;
+	App->CL_Camera->Angles.Z = 0;
+
+	App->CL_Camera->pCameraEntity->SetAngles(&App->CL_Camera->Angles, Level_GetEntityDefs(App->m_pDoc->pLevel));
+
+	App->m_pDoc->SetRenderedViewCamera(&(App->CL_Camera->pCameraEntity->mOrigin), &App->CL_Camera->Angles);
+	App->m_pDoc->UpdateAllViews(UAV_ALLVIEWS, NULL);
+
 }
