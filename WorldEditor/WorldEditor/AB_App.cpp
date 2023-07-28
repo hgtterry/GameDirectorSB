@@ -46,7 +46,7 @@ SB_App::SB_App()
 	CL_CreateCylDialog =		NULL;
 	CL_CreateSpheroidDialog =	NULL;
 	CL_CreateStaircaseDialog  = NULL;
-	CL_Camera =					NULL;
+	CLSB_Camera_WE =			NULL;
 	CLSB_TopTabs =				NULL;
 	CLSB_File_WE =				NULL;
 	CL_Brush =					NULL;
@@ -62,7 +62,7 @@ SB_App::SB_App()
 	CLSB_Grid =					nullptr;
 	CLSB_Equity =				nullptr;
 	CLSB_Keyboard =				nullptr;
-	CLSB_Camera =				nullptr;
+	CLSB_Camera_EQ =			nullptr;
 	CLSB_Assimp =				nullptr;
 	CLSB_Model =				nullptr;
 	CLSB_Loader =				nullptr;
@@ -215,7 +215,7 @@ bool SB_App::InitApp(void)
 	CL_CreateCylDialog =			new A_CreateCylDialog();
 	CL_CreateSpheroidDialog =		new A_CreateSpheroidDialog();
 	CL_CreateStaircaseDialog  =		new A_CreateStaircaseDialog();
-	CL_Camera =						new A_Camera();
+	CLSB_Camera_WE =				new SB_Camera_WE();
 	CLSB_TopTabs =					new SB_TopTabs();
 	CLSB_File_WE =					new	SB_File_WE();
 	CL_Brush =						new A_Brush();
@@ -232,7 +232,7 @@ bool SB_App::InitApp(void)
 	CLSB_Grid =						new SB_Grid();
 	CLSB_Equity =					new SB_Equity();
 	CLSB_Keyboard =					new SB_Keyboard();
-	CLSB_Camera =					new SB_Camera();
+	CLSB_Camera_EQ =				new SB_Camera_EQ();
 	CLSB_Assimp =					new SB_Assimp();
 	CLSB_Model =					new SB_Model();
 	CLSB_Loader =					new SB_Loader();

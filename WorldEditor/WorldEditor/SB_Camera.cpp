@@ -25,18 +25,18 @@ distribution.
 #include "AB_App.h"
 #include "SB_Camera.h"
 
-SB_Camera::SB_Camera(void)
+SB_Camera_EQ::SB_Camera_EQ(void)
 {
 }
 
-SB_Camera::~SB_Camera(void)
+SB_Camera_EQ::~SB_Camera_EQ(void)
 {
 }
 
 // *************************************************************************
 // *			Reset_View:- Terry and Hazel Flanigan 2023				   *
 // *************************************************************************
-void SB_Camera::Reset_View(void)
+void SB_Camera_EQ::Reset_View(void)
 {
 	App->CLSB_Grid->GridNode->setPosition(0, 0, 0);
 	App->CLSB_Grid->GridNode->resetOrientation();
@@ -54,7 +54,7 @@ void SB_Camera::Reset_View(void)
 // *************************************************************************
 // *		Reset_Orientation:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-void SB_Camera::Reset_Orientation(void)
+void SB_Camera_EQ::Reset_Orientation(void)
 {
 	App->CLSB_Grid->GridNode->resetOrientation();
 	App->CLSB_Grid->HairNode->resetOrientation();
@@ -66,7 +66,7 @@ void SB_Camera::Reset_Orientation(void)
 // *************************************************************************
 // *			Set_Camera_Mode:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-void SB_Camera::Set_Camera_Mode(int Mode)
+void SB_Camera_EQ::Set_Camera_Mode(int Mode)
 {
 	App->CLSB_Ogre->OgreListener->CameraMode = Mode;
 }
@@ -74,7 +74,7 @@ void SB_Camera::Set_Camera_Mode(int Mode)
 // *************************************************************************
 // *			Zero_View:- Terry and Hazel Flanigan 2023				   *
 // *************************************************************************
-void SB_Camera::Zero_View(void)
+void SB_Camera_EQ::Zero_View(void)
 {
 	App->CLSB_Ogre->mCamera->setPosition(Ogre::Vector3(0, 0, 0));
 	App->CLSB_Ogre->mCamera->lookAt(Ogre::Vector3(0, 0, 0));

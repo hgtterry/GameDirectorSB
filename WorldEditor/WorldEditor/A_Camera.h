@@ -23,11 +23,11 @@ misrepresented as being the original software.
 distribution.
 */
 
-class A_Camera
+class SB_Camera_WE
 {
 public:
-	A_Camera(void);
-	~A_Camera(void);
+	SB_Camera_WE(void);
+	~SB_Camera_WE(void);
 
 	void Start_Move_Camera();
 	geVec3d Get_Camera_Position();
@@ -39,8 +39,6 @@ public:
 private:
 
 	static LRESULT CALLBACK Move_Camera_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-
-	CFusionDoc			*m_pDoc;
 
 	CEntity *pCameraEntity;
 	geVec3d CameraPosition;

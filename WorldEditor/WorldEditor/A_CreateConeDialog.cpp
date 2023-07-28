@@ -371,7 +371,7 @@ void A_CreateConeDialog::CreateNewTemplateBrush(Brush *pBrush)
 	{
 		geVec3d Pos;
 
-		Pos = App->CL_Camera->Get_Camera_Position();
+		Pos = App->CLSB_Camera_WE->Get_Camera_Position();
 
 		pTemplatePos->X = Pos.X;
 		pTemplatePos->Y = Pos.Y;

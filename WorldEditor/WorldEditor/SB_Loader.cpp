@@ -151,8 +151,8 @@ void SB_Loader::Load_File_Wepf()
 
 	App->CLSB_Model->Model_Type = Enums::LoadedFile_Assimp;
 
-	App->CLSB_Camera->Reset_Orientation();
-	App->CLSB_Camera->Set_Camera_Mode(Enums::CamDetached);
+	App->CLSB_Camera_EQ->Reset_Orientation();
+	App->CLSB_Camera_EQ->Set_Camera_Mode(Enums::CamDetached);
 	
 	App->CLSB_Model->Set_BondingBoxes_AllGroups();
 	//App->CLSB_Camera->Zero_View();

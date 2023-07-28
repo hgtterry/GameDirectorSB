@@ -8662,7 +8662,7 @@ void CFusionDoc::Zero_Camera()
 
 void CFusionDoc::OnCameraGoto() 
 {
-	App->CL_Camera->Start_Move_Camera();
+	App->CLSB_Camera_WE->Start_Move_Camera();
 }
 
 void CFusionDoc::OnModifyMove() 

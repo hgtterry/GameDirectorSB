@@ -309,25 +309,25 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_Proc(HWND hDlg, UINT message, WPARAM w
 		// Camera
 		if (LOWORD(wParam) == ID_CAMERAMODE_FREE)
 		{
-			App->CLSB_Camera->Set_Camera_Mode(Enums::CamDetached);
+			App->CLSB_Camera_EQ->Set_Camera_Mode(Enums::CamDetached);
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == ID_CAMERAMODE_MODEL)
 		{
-			App->CLSB_Camera->Set_Camera_Mode(Enums::CamModel);
+			App->CLSB_Camera_EQ->Set_Camera_Mode(Enums::CamModel);
 			return TRUE;
 		}
 		
 		if (LOWORD(wParam) == ID_CAMERA_RESETVIEW)
 		{
-			App->CLSB_Camera->Reset_View();
+			App->CLSB_Camera_EQ->Reset_View();
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == ID_CAMERA_ZEROVIEW)
 		{
-			App->CLSB_Camera->Zero_View();
+			App->CLSB_Camera_EQ->Zero_View();
 			return TRUE;
 		}
 
@@ -993,7 +993,7 @@ void SB_Equity::Preview_Selected()
 	App->CLSB_Equity->Auto_Load_File();
 	App->CLSB_Equity->Show_Equity_Dialog(true);
 
-	App->CLSB_Camera->Set_Camera_Mode(Enums::CamModel);
+	App->CLSB_Camera_EQ->Set_Camera_Mode(Enums::CamModel);
 }
 
 // *************************************************************************

@@ -27,7 +27,7 @@ distribution.
 
 #include "Entity.h"
 
-A_Camera::A_Camera(void)
+SB_Camera_WE::SB_Camera_WE(void)
 {
 	pCameraEntity = NULL;
 
@@ -38,20 +38,22 @@ A_Camera::A_Camera(void)
 	Angles.X = 0;
 	Angles.Y = 0;
 	Angles.Z = 0;
+
+	pCameraEntity = NULL;
 }
 
-A_Camera::~A_Camera(void)
+SB_Camera_WE::~SB_Camera_WE(void)
 {
 }
 
 // *************************************************************************
 // *	  		Start_Move_Camera:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
-void A_Camera::Start_Move_Camera()
+void SB_Camera_WE::Start_Move_Camera()
 {
-	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+	App->Get_Current_Document();
 
-	pCameraEntity = m_pDoc->FindCameraEntity();
+	pCameraEntity = App->m_pDoc->FindCameraEntity();
 
 	CameraPosition = pCameraEntity->mOrigin;
 
@@ -62,7 +64,7 @@ void A_Camera::Start_Move_Camera()
 // *************************************************************************
 // *        Move_Camera_Proc:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-LRESULT CALLBACK A_Camera::Move_Camera_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK SB_Camera_WE::Move_Camera_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 
 	switch (message)
@@ -99,18 +101,18 @@ LRESULT CALLBACK A_Camera::Move_Camera_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 		char buf[255];
 
-		sprintf(buf, "%f", App->CL_Camera->CameraPosition.X);
+		sprintf(buf, "%f", App->CLSB_Camera_WE->CameraPosition.X);
 		SetDlgItemText(hDlg, IDC_EDCAMX,buf);
 
-		sprintf(buf, "%f", App->CL_Camera->CameraPosition.Y);
+		sprintf(buf, "%f", App->CLSB_Camera_WE->CameraPosition.Y);
 		SetDlgItemText(hDlg, IDC_EDCAMY,buf);
 
-		sprintf(buf, "%f", App->CL_Camera->CameraPosition.Z);
+		sprintf(buf, "%f", App->CLSB_Camera_WE->CameraPosition.Z);
 		SetDlgItemText(hDlg, IDC_EDCAMZ,buf);
 
 
 		geVec3d Angles;
-		App->CL_Camera->pCameraEntity->GetAngles( &Angles, Level_GetEntityDefs (App->CL_Camera->m_pDoc->pLevel) );
+		App->CLSB_Camera_WE->pCameraEntity->GetAngles( &Angles, Level_GetEntityDefs (App->m_pDoc->pLevel) );
 
 		sprintf(buf, "%f", Angles.X);
 		SetDlgItemText(hDlg, IDC_EDCAMANGLEX,buf);
@@ -232,17 +234,17 @@ LRESULT CALLBACK A_Camera::Move_Camera_Proc(HWND hDlg, UINT message, WPARAM wPar
 		if (LOWORD(wParam) == IDC_BTRESETANGLES)
 		{
 	
-			App->CL_Camera->Reset_Camera_Angles();
+			App->CLSB_Camera_WE->Reset_Camera_Angles();
 
 			char buf[100];
 
-			sprintf(buf, "%f", App->CL_Camera->Angles.X);
+			sprintf(buf, "%f", App->CLSB_Camera_WE->Angles.X);
 			SetDlgItemText(hDlg, IDC_EDCAMANGLEX,buf);
 
-			sprintf(buf, "%f", App->CL_Camera->Angles.Y);
+			sprintf(buf, "%f", App->CLSB_Camera_WE->Angles.Y);
 			SetDlgItemText(hDlg, IDC_EDCAMANGLEY,buf);
 
-			sprintf(buf, "%f", App->CL_Camera->Angles.Z);
+			sprintf(buf, "%f", App->CLSB_Camera_WE->Angles.Z);
 			SetDlgItemText(hDlg, IDC_EDCAMANGLEZ,buf);
 
 			return TRUE;
@@ -251,17 +253,17 @@ LRESULT CALLBACK A_Camera::Move_Camera_Proc(HWND hDlg, UINT message, WPARAM wPar
 		if (LOWORD(wParam) == IDC_BTRESETPOSITION)
 		{
 	
-			App->CL_Camera->Reset_Camera_Position();
+			App->CLSB_Camera_WE->Reset_Camera_Position();
 
 			char buf[100];
 
-			sprintf(buf, "%f", App->CL_Camera->CameraPosition.X);
+			sprintf(buf, "%f", App->CLSB_Camera_WE->CameraPosition.X);
 			SetDlgItemText(hDlg, IDC_EDCAMX,buf);
 
-			sprintf(buf, "%f", App->CL_Camera->CameraPosition.Y);
+			sprintf(buf, "%f", App->CLSB_Camera_WE->CameraPosition.Y);
 			SetDlgItemText(hDlg, IDC_EDCAMY,buf);
 
-			sprintf(buf, "%f", App->CL_Camera->CameraPosition.Z);
+			sprintf(buf, "%f", App->CLSB_Camera_WE->CameraPosition.Z);
 			SetDlgItemText(hDlg, IDC_EDCAMZ,buf);
 
 			return TRUE;
@@ -273,17 +275,17 @@ LRESULT CALLBACK A_Camera::Move_Camera_Proc(HWND hDlg, UINT message, WPARAM wPar
 			//App->CL_Camera->pCameraEntity->mOrigin.Y = 0;
 			//App->CL_Camera->pCameraEntity->mOrigin.Z = 0;
 
-			App->CL_Camera->Get_Values_Dlg(hDlg);
+			App->CLSB_Camera_WE->Get_Values_Dlg(hDlg);
 
 			//geVec3d Angles2 = ;
 			//Angles.X = 3.141593; // Radians
 			//Angles.Y = 0;
 			//Angles.Z = 0;
 
-			App->CL_Camera->pCameraEntity->SetAngles(&App->CL_Camera->Angles, Level_GetEntityDefs (App->CL_Camera->m_pDoc->pLevel) );
+			App->CLSB_Camera_WE->pCameraEntity->SetAngles(&App->CLSB_Camera_WE->Angles, Level_GetEntityDefs (App->m_pDoc->pLevel) );
 
-			App->CL_Camera->m_pDoc->SetRenderedViewCamera( &(App->CL_Camera->pCameraEntity->mOrigin), &App->CL_Camera->Angles) ;
-			App->CL_Camera->m_pDoc->UpdateAllViews( UAV_ALLVIEWS, NULL );
+			App->m_pDoc->SetRenderedViewCamera( &(App->CLSB_Camera_WE->pCameraEntity->mOrigin), &App->CLSB_Camera_WE->Angles) ;
+			App->m_pDoc->UpdateAllViews( UAV_ALLVIEWS, NULL );
 
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
@@ -303,7 +305,7 @@ LRESULT CALLBACK A_Camera::Move_Camera_Proc(HWND hDlg, UINT message, WPARAM wPar
 // *************************************************************************
 // *		 Get_Values_Dlg:- Terry and Hazel Flanigan 2023				   *
 // *************************************************************************
-void A_Camera::Get_Values_Dlg(HWND hDlg) 
+void SB_Camera_WE::Get_Values_Dlg(HWND hDlg)
 {
 
 	char buff[MAX_PATH];
@@ -331,11 +333,11 @@ void A_Camera::Get_Values_Dlg(HWND hDlg)
 // *************************************************************************
 // *		 Get_Camera_Position:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
-geVec3d A_Camera::Get_Camera_Position() 
+geVec3d SB_Camera_WE::Get_Camera_Position()
 {
-	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+	App->Get_Current_Document();
 
-	pCameraEntity = m_pDoc->FindCameraEntity();
+	pCameraEntity = App->m_pDoc->FindCameraEntity();
 
 	return pCameraEntity->mOrigin;
 }
@@ -343,19 +345,19 @@ geVec3d A_Camera::Get_Camera_Position()
 // *************************************************************************
 // *		 Reset_Camera_Position:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
-void A_Camera::Reset_Camera_Position()
+void SB_Camera_WE::Reset_Camera_Position()
 {
 	App->Get_Current_Document();
 
 	pCameraEntity = App->m_pDoc->FindCameraEntity();
 	
-	App->CL_Camera->CameraPosition.X = 0;
-	App->CL_Camera->CameraPosition.Y = 0;
-	App->CL_Camera->CameraPosition.Z = 0;
+	App->CLSB_Camera_WE->CameraPosition.X = 0;
+	App->CLSB_Camera_WE->CameraPosition.Y = 0;
+	App->CLSB_Camera_WE->CameraPosition.Z = 0;
 
-	App->CL_Camera->pCameraEntity->SetOrigin(App->CL_Camera->CameraPosition.X, App->CL_Camera->CameraPosition.Y, App->CL_Camera->CameraPosition.Z, Level_GetEntityDefs(App->m_pDoc->pLevel));
+	App->CLSB_Camera_WE->pCameraEntity->SetOrigin(App->CLSB_Camera_WE->CameraPosition.X, App->CLSB_Camera_WE->CameraPosition.Y, App->CLSB_Camera_WE->CameraPosition.Z, Level_GetEntityDefs(App->m_pDoc->pLevel));
 
-	App->m_pDoc->SetRenderedViewCamera(&(App->CL_Camera->pCameraEntity->mOrigin), &App->CL_Camera->Angles);
+	App->m_pDoc->SetRenderedViewCamera(&(App->CLSB_Camera_WE->pCameraEntity->mOrigin), &App->CLSB_Camera_WE->Angles);
 	App->m_pDoc->UpdateAllViews(UAV_ALLVIEWS, NULL);
 
 }
@@ -363,19 +365,19 @@ void A_Camera::Reset_Camera_Position()
 // *************************************************************************
 // *		 Reset_Camera_Angles:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
-void A_Camera::Reset_Camera_Angles()
+void SB_Camera_WE::Reset_Camera_Angles()
 {
 	App->Get_Current_Document();
 
 	pCameraEntity = App->m_pDoc->FindCameraEntity();
 	
-	App->CL_Camera->Angles.X = 3.141593; // Radians
-	App->CL_Camera->Angles.Y = 0;
-	App->CL_Camera->Angles.Z = 0;
+	App->CLSB_Camera_WE->Angles.X = 3.141593; // Radians
+	App->CLSB_Camera_WE->Angles.Y = 0;
+	App->CLSB_Camera_WE->Angles.Z = 0;
 
-	App->CL_Camera->pCameraEntity->SetAngles(&App->CL_Camera->Angles, Level_GetEntityDefs(App->m_pDoc->pLevel));
+	App->CLSB_Camera_WE->pCameraEntity->SetAngles(&App->CLSB_Camera_WE->Angles, Level_GetEntityDefs(App->m_pDoc->pLevel));
 
-	App->m_pDoc->SetRenderedViewCamera(&(App->CL_Camera->pCameraEntity->mOrigin), &App->CL_Camera->Angles);
+	App->m_pDoc->SetRenderedViewCamera(&(App->CLSB_Camera_WE->pCameraEntity->mOrigin), &App->CLSB_Camera_WE->Angles);
 	App->m_pDoc->UpdateAllViews(UAV_ALLVIEWS, NULL);
 
 }

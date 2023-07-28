@@ -352,7 +352,7 @@ LRESULT CALLBACK SB_TopTabs_Equity::Camera_TB_Proc(HWND hDlg, UINT message, WPAR
 		
 		if (LOWORD(wParam) == IDC_BT_TT_MODEL)
 		{
-			App->CLSB_Camera->Set_Camera_Mode(Enums::CamModel);
+			App->CLSB_Camera_EQ->Set_Camera_Mode(Enums::CamModel);
 			App->CLSB_TopTabs_Equity->Toggle_Camera_Model_Flag = 1;
 			App->CLSB_TopTabs_Equity->Toggle_Camera_Free_Flag = 0;
 
@@ -362,7 +362,7 @@ LRESULT CALLBACK SB_TopTabs_Equity::Camera_TB_Proc(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == IDC_BT_TT_FREE)
 		{
-			App->CLSB_Camera->Set_Camera_Mode(Enums::CamDetached);
+			App->CLSB_Camera_EQ->Set_Camera_Mode(Enums::CamDetached);
 			App->CLSB_TopTabs_Equity->Toggle_Camera_Free_Flag = 1;
 			App->CLSB_TopTabs_Equity->Toggle_Camera_Model_Flag = 0;
 
@@ -372,13 +372,13 @@ LRESULT CALLBACK SB_TopTabs_Equity::Camera_TB_Proc(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == IDC_BT_TT_RESETCAM)
 		{
-			App->CLSB_Camera->Reset_View();
+			App->CLSB_Camera_EQ->Reset_View();
 			return 1;
 		}
 
 		if (LOWORD(wParam) == IDC_BT_TT_ZEROCAM)
 		{
-			App->CLSB_Camera->Zero_View();
+			App->CLSB_Camera_EQ->Zero_View();
 			return 1;
 		}
 

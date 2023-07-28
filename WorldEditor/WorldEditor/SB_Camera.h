@@ -22,11 +22,11 @@ distribution.
 */
 
 #pragma once
-class SB_Camera
+class SB_Camera_EQ
 {
 public:
-	SB_Camera(void);
-	~SB_Camera(void);
+	SB_Camera_EQ(void);
+	~SB_Camera_EQ(void);
 
 	void Reset_View(void);
 	void Reset_Orientation(void);

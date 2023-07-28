@@ -181,8 +181,8 @@ bool SB_File_WE::Start_Load(const char* FileName, bool UseDialogLoader)
 	{
 		App->CL_World->Reset_Editor();
 
-		App->CL_Camera->Reset_Camera_Position();
-		App->CL_Camera->Reset_Camera_Angles();
+		App->CLSB_Camera_WE->Reset_Camera_Position();
+		App->CLSB_Camera_WE->Reset_Camera_Angles();
 
 		App->m_pDoc->IsNewDocument = 0;
 		App->m_pDoc->SetModifiedFlag(FALSE);

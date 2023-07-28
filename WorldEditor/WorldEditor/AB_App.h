@@ -110,7 +110,7 @@ public:
 	A_CreateCylDialog*			CL_CreateCylDialog;
 	A_CreateSpheroidDialog*		CL_CreateSpheroidDialog;
 	A_CreateStaircaseDialog*	CL_CreateStaircaseDialog;
-	A_Camera*					CL_Camera;
+	SB_Camera_WE*				CLSB_Camera_WE;
 	SB_TopTabs*					CLSB_TopTabs;
 	SB_File_WE*					CLSB_File_WE;
 	A_Brush*					CL_Brush;
@@ -126,7 +126,7 @@ public:
 	SB_Grid*					CLSB_Grid;
 	SB_Equity*					CLSB_Equity;
 	SB_Keyboard*				CLSB_Keyboard;
-	SB_Camera*					CLSB_Camera;
+	SB_Camera_EQ*				CLSB_Camera_EQ;
 	SB_Assimp*					CLSB_Assimp;
 	SB_Model*					CLSB_Model;
 	SB_Loader*					CLSB_Loader;
