@@ -29,7 +29,8 @@ public:
 	A_CreateBoxDialog(void);
 	~A_CreateBoxDialog(void);
 
-	void A_CreateBoxDialog::Start_CreateBox_Dlg();
+	void Start_CreateBox_Dlg();
+	void CreateDefault_TemplateCube();
 
 	BrushTemplate_Box *pBoxTemplate;
 
@@ -54,11 +55,12 @@ private:
 	void Set_Members();
 	void Get_DLG_Members(HWND hDlg);
 	void Set_DLG_Members(HWND hDlg);
+	
+	void CreateCube();
 	void Set_BoxTemplate();
 
 	void Set_Defaults(HWND hDlg);
 
-	void CreateCube();
 	void CreateNewTemplateBrush(Brush *pBrush);
 
 	char BoxName[MAX_PATH];

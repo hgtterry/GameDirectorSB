@@ -362,16 +362,19 @@ LRESULT CALLBACK A_CreateBoxDialog::CreateBox_Proc(HWND hDlg, UINT message, WPAR
 // *************************************************************************
 void A_CreateBoxDialog::CreateCube() 
 {
-	m_pDoc->OnToolsTemplate();
+	App->Get_Current_Document();
+
+	App->m_pDoc->OnToolsTemplate();
 
 	Brush *pCube;
-
 	pCube = BrushTemplate_CreateBox (pBoxTemplate);
 	if (pCube != NULL)
 	{
 		
-		m_pDoc->LastTemplateTypeName = BoxName;
+		App->m_pDoc->LastTemplateTypeName = BoxName;
+		
 		CreateNewTemplateBrush(pCube);
+		Debug
 	}
 	else
 	{
@@ -384,25 +387,27 @@ void A_CreateBoxDialog::CreateCube()
 // *************************************************************************
 void A_CreateBoxDialog::CreateNewTemplateBrush(Brush *pBrush)
 {
+	App->Get_Current_Document();
+		
 	geVec3d *pTemplatePos;
 	geVec3d MoveVec;
 	geVec3d BrushPos;
 
 	assert (pBrush != NULL);
 
-	if (m_pDoc->BTemplate != NULL)
+	if (App->m_pDoc->BTemplate != NULL)
 	{
-		Brush_Destroy (&m_pDoc->BTemplate);
+		Brush_Destroy (&App->m_pDoc->BTemplate);
 	}
 
-	m_pDoc->CurBrush = pBrush;
+	App->m_pDoc->CurBrush = pBrush;
 
-	m_pDoc->TempEnt	= FALSE;
-	m_pDoc->SetDefaultBrushTexInfo (m_pDoc->CurBrush);
-	Brush_Bound (m_pDoc->CurBrush);
-	Brush_Center (m_pDoc->CurBrush, &BrushPos);
+	App->m_pDoc->TempEnt	= FALSE;
+	App->m_pDoc->SetDefaultBrushTexInfo (App->m_pDoc->CurBrush);
+	Brush_Bound (App->m_pDoc->CurBrush);
+	Brush_Center (App->m_pDoc->CurBrush, &BrushPos);
 
-	pTemplatePos = Level_GetTemplatePos (m_pDoc->pLevel);
+	pTemplatePos = Level_GetTemplatePos (App->m_pDoc->pLevel);
 
 	if (m_UseCamPos == 1)
 	{
@@ -424,10 +429,10 @@ void A_CreateBoxDialog::CreateNewTemplateBrush(Brush *pBrush)
 
 	geVec3d_Subtract (pTemplatePos, &BrushPos, &MoveVec);
 
-	Brush_Move (m_pDoc->CurBrush, &MoveVec);
+	Brush_Move (App->m_pDoc->CurBrush, &MoveVec);
 
-	m_pDoc->UpdateAllViews (UAV_ALL3DVIEWS, NULL);
-	m_pDoc->SetModifiedFlag ();
+	App->m_pDoc->UpdateAllViews (UAV_ALL3DVIEWS, NULL);
+	App->m_pDoc->SetModifiedFlag ();
 }
 
 // *************************************************************************
@@ -566,4 +571,36 @@ void A_CreateBoxDialog::Set_Defaults(HWND hDlg)
 		temp = GetDlgItem(hDlg,IDC_SOLID);
 		SendMessage(temp,BM_SETCHECK,0,0);
 	}
+}
+
+// *************************************************************************
+// *	CreateDefault_TemplateCube:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void A_CreateBoxDialog::CreateDefault_TemplateCube()
+{
+	App->Get_Current_Document();
+
+	pBoxTemplate = Level_GetBoxTemplate(App->m_pDoc->pLevel);
+
+	//Set_Members();
+
+	//Set_BoxTemplate();
+
+	Brush* pCube;
+	pCube = BrushTemplate_CreateBox(pBoxTemplate);
+	if (pCube != NULL)
+	{
+		App->m_pDoc->LastTemplateTypeName = BoxName;
+		CreateNewTemplateBrush(pCube);
+
+		App->CL_TabsControl->Enable_Tabs_Dlg(true);
+		App->CL_TabsTemplates_Dlg->Enable_Insert_Button(true);
+
+		Debug
+	}
+	else
+	{
+		App->Say("No pCube");
+	}
+
 }

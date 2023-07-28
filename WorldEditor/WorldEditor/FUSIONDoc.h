@@ -501,7 +501,11 @@ private:
 	geBoolean FindClosestBrush (POINT const *ptFrom, ViewVars *v, Brush **ppFoundBrush, geFloat *pMinEdgeDist);
 
 	void SetupDefaultFilename (void);
+
+public:
 	const char *FindTextureLibrary (char const *WadName);
+
+private:
 	Face *FindSelectedFace (void);
 //	void DeleteBrushAttributes (void);
 //	void DeleteFaceAttributes (void);

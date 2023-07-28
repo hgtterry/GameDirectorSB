@@ -503,6 +503,8 @@ LRESULT CALLBACK SB_TopTabs::Top_File_Proc(HWND hDlg, UINT message, WPARAM wPara
 		{
 			if (LOWORD(wParam) == IDC_BT_TBF_QUICKLOAD)
 			{
+				/*App->CLSB_File_WE->New_File();
+				return TRUE;*/
 
 				char Txlpath[MAX_PATH];
 				char path[MAX_PATH];
@@ -518,14 +520,6 @@ LRESULT CALLBACK SB_TopTabs::Top_File_Proc(HWND hDlg, UINT message, WPARAM wPara
 
 				App->CLSB_File_WE->Start_Load(App->CLSB_File_WE->PathFileName_3dt,0);
 				
-				/*App->CL_World->Set_Paths();
-				
-				App->CL_World->Reset_Editor();
-				
-				App->CL_TabsGroups_Dlg->Fill_ListBox();
-
-				App->CL_World->Level_SetTxlPath(Txlpath);*/
-
 				return TRUE;
 			}
 

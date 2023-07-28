@@ -573,9 +573,10 @@ void CFusionApp::CommandLineExport( CString* pMapFileName )
 // called when user creates a new file
 void CFusionApp::OnFileNew() 
 {
-	// first call down to CWinApp::FileNew()
 	CWinApp::OnFileNew();
 	this->pMainFrame->UpdateActiveDoc ();
+
+	//App->CLSB_File_WE->New_File();
 }
 
 void CFusionApp::OnFileOpen() 

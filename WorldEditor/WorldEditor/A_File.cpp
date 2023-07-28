@@ -916,7 +916,7 @@ WriteDone:
 }
 
 // *************************************************************************
-// *		Level_WriteToFile2:- Terry and Hazel Flanigan 2023			   *
+// *			Reset_View:- Terry and Hazel Flanigan 2023				   *
 // *************************************************************************
 void SB_File_WE::Reset_View(float Zoom)
 {
@@ -938,6 +938,96 @@ void SB_File_WE::Reset_View(float Zoom)
 	pView = (CFusionView*)App->m_pDoc->GetNextView(pos);
 	Render_SetZoom(pView->VCam, Zoom);
 	pView->OnViewportCenteroncamera();
+}
 
+// *************************************************************************
+// *			New_File:- Terry and Hazel Flanigan 2023				   *
+// *************************************************************************
+bool SB_File_WE::New_File()
+{
+	App->Get_Current_Document();
+
+	App->m_pDoc->SelectAll();
+	App->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+	App->CL_TabsGroups_Dlg->Update_Dlg_SelectedBrushesCount();
+
+	// Delete All Bruses and Faces
+	App->m_pDoc->DeleteCurrentThing();
+
+	App->m_pDoc->SetTitle("X");
+
+	const char* DefaultWadName;
+	const Prefs* pPrefs = App->m_pDoc->GetPrefs();
+
+	App->m_pDoc->LastTemplateTypeName = "Box";
+
+	DefaultWadName = Prefs_GetTxlName(pPrefs);
+
+	strcpy(App->m_pDoc->LastPath, Prefs_GetProjectDir(pPrefs));
+	
+	const char* WadPath = App->m_pDoc->FindTextureLibrary(DefaultWadName);
+
+	//App->m_pDoc->pLevel = Level_Create(WadPath, Prefs_GetHeadersList(pPrefs),
+		//Prefs_GetActorsList(pPrefs), Prefs_GetPawnIni(pPrefs));
+
+
+	if (!Level_LoadWad(App->m_pDoc->pLevel))
+	{
+		CString Msg;
+
+		AfxFormatString1(Msg, IDS_CANTLOADTXL, WadPath);
+		AfxMessageBox(Msg, MB_OK + MB_ICONERROR);
+	}
+
+
+	App->m_pDoc->pSelBrushes = SelBrushList_Create();
+	App->m_pDoc->pTempSelBrushes = SelBrushList_Create();
+	App->m_pDoc->pSelFaces = SelFaceList_Create();
+
+	App->m_pDoc->SetLockAxis(0);	// Start with no axis locked
+
+	{
+		BrushTemplate_Box* pBoxTemplate;
+		pBoxTemplate = Level_GetBoxTemplate(App->m_pDoc->pLevel);
+
+		App->m_pDoc->BTemplate = BrushTemplate_CreateBox(pBoxTemplate);
+	}
+
+	Brush_Bound(App->m_pDoc->BTemplate);
+	App->m_pDoc->CurBrush = App->m_pDoc->BTemplate;
+
+	geVec3d_Clear(&App->m_pDoc->SelectedGeoCenter);
+
+	char PathAndFile[MAX_PATH];
+	strcpy(PathAndFile, App->m_pDoc->LastPath);
+	strcat(PathAndFile, "\\");
+	strcat(PathAndFile, "New_File.3dt");
+
+	App->m_pDoc->SetTitle("New_File.3dt");
+	App->m_pDoc->SetPathName(PathAndFile, FALSE);
+
+	App->CL_World->Set_Paths();
+
+	App->CL_CreateBoxDialog->CreateDefault_TemplateCube();
+
+	App->CL_TabsGroups_Dlg->Fill_ListBox();
+	App->CL_TextureDialog->Fill_ListBox();
+
+	App->CL_World->Set_Paths();
+	App->CL_World->Reset_Editor();
+
+	App->CLSB_Camera_WE->Reset_Camera_Position();
+	App->CLSB_Camera_WE->Reset_Camera_Angles();
+
+	Reset_View(1.0);
+
+	App->m_pDoc->IsNewDocument = 0;
+	App->m_pDoc->SetModifiedFlag(FALSE);
+
+	//App->CL_CreateBoxDialog->CreateDefault_TemplateCube();
+	
+	App->Say("New Level Created", PathAndFile);
+
+	return 1;
 }
 

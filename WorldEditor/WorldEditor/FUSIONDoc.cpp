@@ -315,6 +315,7 @@ CFusionDoc::CFusionDoc() : CDocument (),
 */
 // end change
 // changed QD Actors
+	
 	pLevel = Level_Create (WadPath, Prefs_GetHeadersList (pPrefs),
 		Prefs_GetActorsList (pPrefs), Prefs_GetPawnIni (pPrefs));
 // end change
