@@ -160,7 +160,9 @@ protected:
 	afx_msg void OnUpdateEditDeselectFaces(CCmdUI* pCmdUI);
 	afx_msg void OnKillFocus(CWnd* pNewWnd);
 	afx_msg void OnSetFocus(CWnd* pOldWnd);
+	public:
 	afx_msg void OnViewportCenteroncamera();
+	protected:
 	afx_msg void OnUpdateViewportCenteroncamera(CCmdUI* pCmdUI);
 	afx_msg void OnViewportCenteronselection();
 	afx_msg void OnUpdateViewportCenteronselection(CCmdUI* pCmdUI);

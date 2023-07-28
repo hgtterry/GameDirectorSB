@@ -184,6 +184,8 @@ bool SB_File_WE::Start_Load(const char* FileName, bool UseDialogLoader)
 		App->CLSB_Camera_WE->Reset_Camera_Position();
 		App->CLSB_Camera_WE->Reset_Camera_Angles();
 
+		Reset_View(1.0);
+
 		App->m_pDoc->IsNewDocument = 0;
 		App->m_pDoc->SetModifiedFlag(FALSE);
 
@@ -911,5 +913,31 @@ WriteDone:
 	App->Say("Saved", path);
 
 	return GE_TRUE;
+}
+
+// *************************************************************************
+// *		Level_WriteToFile2:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void SB_File_WE::Reset_View(float Zoom)
+{
+	App->Get_Current_Document();
+
+	CView* pAView = NULL;
+	CFusionView* pView;
+
+	POSITION		pos;
+	pos = App->m_pDoc->GetFirstViewPosition();
+	pView = (CFusionView*)App->m_pDoc->GetNextView(pos);
+	Render_SetZoom(pView->VCam, Zoom);
+	pView->OnViewportCenteroncamera();
+
+	pView = (CFusionView*)App->m_pDoc->GetNextView(pos);
+	Render_SetZoom(pView->VCam, Zoom);
+	pView->OnViewportCenteroncamera();
+
+	pView = (CFusionView*)App->m_pDoc->GetNextView(pos);
+	Render_SetZoom(pView->VCam, Zoom);
+	pView->OnViewportCenteroncamera();
+
 }
 

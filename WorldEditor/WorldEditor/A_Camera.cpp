@@ -24,8 +24,8 @@ distribution.
 #include "stdafx.h"
 #include "AB_App.h"
 #include "A_Camera.h"
-
-#include "Entity.h"
+#include "level.h"
+#include "FUSIONView.h"
 
 SB_Camera_WE::SB_Camera_WE(void)
 {
@@ -56,7 +56,6 @@ void SB_Camera_WE::Start_Move_Camera()
 	pCameraEntity = App->m_pDoc->FindCameraEntity();
 
 	CameraPosition = pCameraEntity->mOrigin;
-
 
 	DialogBox(App->hInst, (LPCTSTR)IDD_SB_MOVECAMERA, App->MainHwnd, (DLGPROC)Move_Camera_Proc);
 
@@ -361,6 +360,53 @@ void SB_Camera_WE::Reset_Camera_Position()
 	App->m_pDoc->UpdateAllViews(UAV_ALLVIEWS, NULL);
 
 }
+
+#define NUM_VIEWS (4)
+struct tag_Level
+{
+	BrushList* Brushes;
+	CEntityArray* Entities;
+	char* WadPath;
+	char* HeadersDir;
+	// changed QD Actors
+	char* ActorsDir;
+	geBoolean ShowActors;
+	char* PawnIniPath;
+	// end change
+	//EntTypeNameList* EntTypeNames;
+	GroupListType* Groups;
+	SizeInfo* WadSizeInfos;
+	CWadFile* WadFile;
+	EntityTable* pEntityDefs;
+
+	ModelInfo_Type	ModelInfo;
+
+	SkyFaceTexture SkyFaces[6];
+	geVec3d SkyRotationAxis;
+	geFloat SkyRotationSpeed;
+	geFloat	SkyTextureScale;
+
+	// level edit settings
+	CompileParamsType CompileParams;
+	int GroupVisSetting;
+	EntityViewList* pEntityView;
+
+	GridInfo GridSettings;
+	geBoolean BspRebuildFlag;
+	ViewStateInfo ViewInfo[NUM_VIEWS];
+
+	BrushTemplate_Arch ArchTemplate;
+	BrushTemplate_Box	BoxTemplate;
+	BrushTemplate_Cone	ConeTemplate;
+	BrushTemplate_Cylinder CylinderTemplate;
+	BrushTemplate_Spheroid	SpheroidTemplate;
+	BrushTemplate_Staircase StaircaseTemplate;
+
+	geVec3d TemplatePos;
+
+	float DrawScale;		// default draw scale
+	float LightmapScale;	// default lightmap scale
+};
 
 // *************************************************************************
 // *		 Reset_Camera_Angles:- Terry and Hazel Flanigan 2023		   *

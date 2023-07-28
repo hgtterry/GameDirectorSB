@@ -41,6 +41,8 @@ public:
 
 	bool Open_3dt_File();
 
+	void SB_File_WE::Reset_View(float Zoom);
+
 	char FileName_3dt[MAX_PATH];
 	char PathFileName_3dt[MAX_PATH];
 
