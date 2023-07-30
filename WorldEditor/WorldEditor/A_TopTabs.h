@@ -49,15 +49,18 @@ public:
 	HWND Brush_Modify_Panel_Hwnd;
 	HWND File_Panel_Hwnd;
 	HWND Test_Panel_Hwnd;
+	HWND Faces_Panel_Hwnd;
 
 private:
 	static LRESULT CALLBACK TB_Headers_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK BrushModify_Panel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Top_File_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Top_Test_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Top_Faces_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	bool Start_File_Tab();
 	bool Start_Test_Tab();
+	bool Start_Faces_Tab();
 
 	bool Start_BrushModify_Panel();
 	
@@ -73,6 +76,7 @@ private:
 
 	bool Header_File_Flag;
 	bool Header_Test_Flag;
+	bool Header_Faces_Flag;
 	
 	bool Brush_MoveRotate_Flag;
 	bool Brush_Scale_Flag;

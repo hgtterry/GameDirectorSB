@@ -44,6 +44,7 @@ SB_TopTabs::SB_TopTabs(void)
 	Brush_Modify_Panel_Hwnd = nullptr;
 	File_Panel_Hwnd = nullptr;
 	Test_Panel_Hwnd = nullptr;
+	Faces_Panel_Hwnd = nullptr;
 
 	Quick_Command_Started = 0;
 
@@ -53,6 +54,7 @@ SB_TopTabs::SB_TopTabs(void)
 	Header_File_Flag = 0;
 	Header_BrushModify_Flag = 0;
 	Header_Test_Flag = 0;
+	Header_Faces_Flag = 0;
 	
 	Brush_Select_Flag = 0;
 	Brush_MoveRotate_Flag = 0;
@@ -80,6 +82,7 @@ bool SB_TopTabs::Start_Headers_Tabs()
 		Start_BrushModify_Panel();
 		Start_File_Tab();
 		Start_Test_Tab();
+		Start_Faces_Tab();
 
 		Reset_Tabs_Buttons();
 		Header_File_Flag = 1;
@@ -104,7 +107,8 @@ LRESULT CALLBACK SB_TopTabs::TB_Headers_Proc(HWND hDlg, UINT message, WPARAM wPa
 		SendDlgItemMessage(hDlg, IDC_BT_TB_MODIFY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TB_FILE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TB_TEST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_BT_TB_FACES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		SendDlgItemMessage(hDlg, IDC_BT_TB_TEXTURED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TB_WIRED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
@@ -178,6 +182,13 @@ LRESULT CALLBACK SB_TopTabs::TB_Headers_Proc(HWND hDlg, UINT message, WPARAM wPa
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_TB_FACES && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle_Tabs(item, App->CLSB_TopTabs->Header_Faces_Flag);
+			return CDRF_DODEFAULT;
+		}
+
 		return CDRF_DODEFAULT;
 	}
 
@@ -191,6 +202,17 @@ LRESULT CALLBACK SB_TopTabs::TB_Headers_Proc(HWND hDlg, UINT message, WPARAM wPa
 				RedrawWindow(App->CLSB_TopTabs->Top_Tabs_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 				ShowWindow(App->CLSB_TopTabs->Test_Panel_Hwnd, SW_SHOW);
+
+				return TRUE;
+			}
+
+			if (LOWORD(wParam) == IDC_BT_TB_FACES)
+			{
+				App->CLSB_TopTabs->Reset_Tabs_Buttons();
+				App->CLSB_TopTabs->Header_Faces_Flag = 1;
+				RedrawWindow(App->CLSB_TopTabs->Top_Tabs_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+				ShowWindow(App->CLSB_TopTabs->Faces_Panel_Hwnd, SW_SHOW);
 
 				return TRUE;
 			}
@@ -296,11 +318,13 @@ void SB_TopTabs::Reset_Tabs_Buttons()
 	Header_File_Flag = 0;
 	Header_BrushModify_Flag = 0;
 	Header_Test_Flag = 0;
+	Header_Faces_Flag = 0;
 
 	ShowWindow(Brush_Modify_Panel_Hwnd, SW_HIDE);
 	ShowWindow(File_Panel_Hwnd, SW_HIDE);
 	ShowWindow(Test_Panel_Hwnd, SW_HIDE);
-
+	ShowWindow(Faces_Panel_Hwnd, SW_HIDE);
+	
 	RedrawWindow(Top_Tabs_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 
@@ -671,6 +695,70 @@ LRESULT CALLBACK SB_TopTabs::Top_Test_Proc(HWND hDlg, UINT message, WPARAM wPara
 	return FALSE;
 }
 
+// *************************************************************************
+// *	  		Start_Faces_Tab:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+bool SB_TopTabs::Start_Faces_Tab()
+{
+	Faces_Panel_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_TB_FACES, Top_Tabs_Hwnd, (DLGPROC)Top_Faces_Proc);
+
+	return 1;
+}
+
+// *************************************************************************
+// *			Top_Faces_Proc:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+LRESULT CALLBACK SB_TopTabs::Top_Faces_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_BT_TT_ALL_BRUSH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		return TRUE;
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->Brush_White;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_BT_TT_ALL_BRUSH && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+		if (LOWORD(wParam) == IDC_BT_TT_ALL_BRUSH)
+		{
+			
+			Debug
+			return TRUE;
+		}
+
+		break;
+	}
+
+	}
+
+	return FALSE;
+}
 // *************************************************************************
 // *		 	Select_Mode:- Terry and Hazel Flanigan 2023				   *
 // *************************************************************************

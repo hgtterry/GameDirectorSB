@@ -310,6 +310,7 @@
 #define IDD_TB_EQ_CAMERA                1143
 #define IDC_ACTOR_ENTITY                1144
 #define IDC_FLIPHORIZONTAL              1144
+#define IDD_SB_TB_FACES                 1144
 #define IDC_ARCH_PRIMITIVE              1145
 #define IDC_CONE_PRIMITIVE              1146
 #define IDC_STARTANGLE                  1148
@@ -693,6 +694,7 @@
 #define IDC_BT_DIMENSIONS               1466
 #define IDC_BT_TT_CAMERA                1466
 #define IDC_BT_TT_FREE                  1466
+#define IDC_BT_TB_FACES                 1466
 #define IDC_ST_BANNER                   1467
 #define IDC_ST_FN                       1468
 #define IDC_ST_NAME                     1469
@@ -752,6 +754,7 @@
 #define IDC_ED_BRUSH_POSZ3              1515
 #define IDC_LISTGROUPDETAIL             1515
 #define IDC_STROTZ2                     1516
+#define IDC_BT_TT_ALL_BRUSH             1516
 #define IDC_SBPOSX3                     1517
 #define IDC_CBPOSXDELTA3                1518
 #define IDC_CBPOSYDELTA3                1519
@@ -965,7 +968,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        323
 #define _APS_NEXT_COMMAND_VALUE         33084
-#define _APS_NEXT_CONTROL_VALUE         1516
+#define _APS_NEXT_CONTROL_VALUE         1517
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

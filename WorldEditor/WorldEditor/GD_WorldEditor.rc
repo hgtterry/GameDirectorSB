@@ -1452,7 +1452,7 @@ END
 
 STRINGTABLE
 BEGIN
-    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.26 - [28-07-23] -17"
+    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.26 - [30-07-23] -17"
     IDR_FUSIONTYPE          "Genesis3D World Editor\nWorld\nWorld\nWorld Files (*.3dt)\n.3dt\nWorldEditor.Document\nGenesis3D World Editor Document"
     IDS_LOAD_WARNING        "Some entities or brushes did not load properly, see console for details."
     IDS_NEWGROUP            "Group Name"
@@ -2008,6 +2008,7 @@ BEGIN
     PUSHBUTTON      "File",IDC_BT_TB_FILE,144,2,70,14
     PUSHBUTTON      "Brush Modify",IDC_BT_TB_MODIFY,214,2,70,14
     PUSHBUTTON      "Test",IDC_BT_TB_TEST,284,2,70,14
+    PUSHBUTTON      "Faces",IDC_BT_TB_FACES,354,2,70,14
 END
 
 IDD_SB_TB_PROPERTIES DIALOGEX 144, 15, 592, 26
@@ -2283,6 +2284,13 @@ BEGIN
     PUSHBUTTON      "Update",IDC_BT_EQ_UPDATE,90,290,50,14
 END
 
+IDD_SB_TB_FACES DIALOGEX 144, 15, 592, 26
+STYLE DS_SETFONT | DS_FIXEDSYS | DS_NOFAILCREATE | WS_CHILD | WS_VISIBLE
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    PUSHBUTTON      "Select all in Brush",IDC_BT_TT_ALL_BRUSH,11,6,94,14
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -2515,6 +2523,11 @@ BEGIN
         TOPMARGIN, 7
         BOTTOMMARGIN, 332
     END
+
+    IDD_SB_TB_FACES, DIALOG
+    BEGIN
+        RIGHTMARGIN, 590
+    END
 END
 #endif    // APSTUDIO_INVOKED
 
@@ -2733,6 +2746,11 @@ BEGIN
 END
 
 IDD_EQ_DROPGEN AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_SB_TB_FACES AFX_DIALOG_LAYOUT
 BEGIN
     0
 END
