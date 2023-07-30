@@ -376,32 +376,36 @@ LRESULT CALLBACK SB_TopTabs::BrushModify_Panel_Proc(HWND hDlg, UINT message, WPA
 			return (LONG)App->Brush_White;
 		}
 
-	case WM_DRAWITEM:
+	case  WM_NOTIFY:
 		{
 
-			LPDRAWITEMSTRUCT lpDIS = (LPDRAWITEMSTRUCT)lParam;
+		LPNMHDR some_item = (LPNMHDR)lParam;
 
-			if (lpDIS->CtlID == IDC_BTTBSELECT)
+			if (some_item->idFrom == IDC_BTTBSELECT && some_item->code == NM_CUSTOMDRAW)
 			{
-				App->Custom_Button_Toggle_MFC(lpDIS,hDlg,App->CLSB_TopTabs->Brush_Select_Flag);
+				LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+				App->Custom_Button_Toggle(item,App->CLSB_TopTabs->Brush_Select_Flag);
 				return TRUE;
 			}
 
-			if (lpDIS->CtlID == IDC_BTTBMOVEROTATE)
+			if (some_item->idFrom == IDC_BTTBMOVEROTATE && some_item->code == NM_CUSTOMDRAW)
 			{
-				App->Custom_Button_Toggle_MFC(lpDIS,hDlg,App->CLSB_TopTabs->Brush_MoveRotate_Flag);
+				LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+				App->Custom_Button_Toggle(item,App->CLSB_TopTabs->Brush_MoveRotate_Flag);
 				return TRUE;
 			}
 
-			if (lpDIS->CtlID == IDC_BTSCALE)
+			if (some_item->idFrom == IDC_BTSCALE && some_item->code == NM_CUSTOMDRAW)
 			{
-				App->Custom_Button_Toggle_MFC(lpDIS,hDlg,App->CLSB_TopTabs->Brush_Scale_Flag);
+				LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+				App->Custom_Button_Toggle(item,App->CLSB_TopTabs->Brush_Scale_Flag);
 				return TRUE;
 			}
 
-			if (lpDIS->CtlID == IDC_BTTBSHEAR)
+			if (some_item->idFrom == IDC_BTTBSHEAR && some_item->code == NM_CUSTOMDRAW)
 			{
-				App->Custom_Button_Toggle_MFC(lpDIS,hDlg,App->CLSB_TopTabs->Brush_Shear_Flag);
+				LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+				App->Custom_Button_Toggle(item,App->CLSB_TopTabs->Brush_Shear_Flag);
 				return TRUE;
 			}
 
@@ -541,9 +545,11 @@ LRESULT CALLBACK SB_TopTabs::Top_File_Proc(HWND hDlg, UINT message, WPARAM wPara
 
 				strcpy(App->CLSB_File_WE->PathFileName_3dt,path);
 				
+				App->CLSB_File_WE->Quick_load_Flag = 1;
 
 				App->CLSB_File_WE->Start_Load(App->CLSB_File_WE->PathFileName_3dt,0);
 				
+				App->CLSB_File_WE->Quick_load_Flag = 0;
 				return TRUE;
 			}
 
@@ -747,8 +753,10 @@ LRESULT CALLBACK SB_TopTabs::Top_Faces_Proc(HWND hDlg, UINT message, WPARAM wPar
 	{
 		if (LOWORD(wParam) == IDC_BT_TT_ALL_BRUSH)
 		{
-			
-			Debug
+			App->Get_Current_Document();
+
+			App->m_pDoc->SelectAllFacesInBrushes();
+			App->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 			return TRUE;
 		}
 

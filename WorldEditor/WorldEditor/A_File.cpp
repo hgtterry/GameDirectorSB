@@ -83,6 +83,8 @@ SB_File_WE::SB_File_WE(void)
 {
 	FileName_3dt[0] = 0;
 	PathFileName_3dt[0] = 0;
+
+	Quick_load_Flag = 0;
 }
 
 SB_File_WE::~SB_File_WE(void)
@@ -216,7 +218,25 @@ bool SB_File_WE::Open_3dt_File()
 
 		App->CL_World->Set_Paths();
 		App->CL_TabsGroups_Dlg->Fill_ListBox();
-		App->CL_TextureDialog->Fill_ListBox();
+
+
+		if (Quick_load_Flag == 0)
+		{
+			App->CL_TextureDialog->Fill_ListBox();
+		}
+		else
+		{
+			char Txlpath[MAX_PATH];
+			strcpy(Txlpath, App->WorldEditor_Directory);
+			strcat(Txlpath, "Levels\\Equity.txl");
+
+			Level_SetWadPath(App->m_pDoc->pLevel, Txlpath);
+			App->CL_World->Set_Current_TxlPath();
+			App->m_pDoc->UpdateAfterWadChange();
+			App->CL_TabsGroups_Dlg->Fill_ListBox();
+		}
+
+
 
 		App->CL_World->Set_Paths();
 		App->CL_World->Reset_Editor();

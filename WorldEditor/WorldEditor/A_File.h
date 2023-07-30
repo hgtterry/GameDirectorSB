@@ -45,6 +45,8 @@ public:
 	void Reset_View(float Zoom);
 	bool New_File();
 
+	bool Quick_load_Flag;
+
 	char FileName_3dt[MAX_PATH];
 	char PathFileName_3dt[MAX_PATH];
 
