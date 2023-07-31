@@ -59,6 +59,8 @@ void SB_Brushes::Start_Dimensions_Dlg()
 
 		CenterOfSelection = m_pDoc->SelectedGeoCenter;
 
+		Get_Brush();
+
 		Dimensions_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_BRUSHDIMENSIONS, App->MainHwnd, (DLGPROC)Dimensions_Dlg_Proc);
 
 		Dimensions_Dlg_Running = 1;
@@ -87,9 +89,17 @@ LRESULT CALLBACK SB_Brushes::Dimensions_Dlg_Proc(HWND hDlg, UINT message, WPARAM
 		SendDlgItemMessage(hDlg, IDC_STROTY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STROTZ, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+		SendDlgItemMessage(hDlg, IDC_STSIZEX, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STSIZEY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STSIZEZ, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		SendDlgItemMessage(hDlg, IDC_ED_BRUSH_POSX, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ED_BRUSH_POSY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ED_BRUSH_POSZ, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_ED_BRUSH_SCALEX, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ED_BRUSH_SCALEY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ED_BRUSH_SCALEZ, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDC_CBPOSXDELTA, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CBPOSYDELTA, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -104,15 +114,7 @@ LRESULT CALLBACK SB_Brushes::Dimensions_Dlg_Proc(HWND hDlg, UINT message, WPARAM
 		CB_hWnd = GetDlgItem(hDlg, IDC_CBPOSZDELTA);
 		App->CLSB_Brushes->Fill_ComboBox_PosDelta(CB_hWnd);
 
-		char buf[255];
-		sprintf(buf, "%f", App->CLSB_Brushes->CenterOfSelection.X);
-		SetDlgItemText(hDlg, IDC_ED_BRUSH_POSX, buf);
-
-		sprintf(buf, "%f", App->CLSB_Brushes->CenterOfSelection.Y);
-		SetDlgItemText(hDlg, IDC_ED_BRUSH_POSY, buf);
-
-		sprintf(buf, "%f", App->CLSB_Brushes->CenterOfSelection.Z);
-		SetDlgItemText(hDlg, IDC_ED_BRUSH_POSZ, buf);
+		App->CLSB_Brushes->Update_Pos_Dlg(hDlg);
 
 		return TRUE;
 	}
@@ -234,7 +236,7 @@ LRESULT CALLBACK SB_Brushes::Dimensions_Dlg_Proc(HWND hDlg, UINT message, WPARAM
 			}
 			}
 
-			App->CLSB_Brushes->Update_Pos_Dlg();
+			App->CLSB_Brushes->Update_Pos_Dlg(hDlg);
 
 			return 0;
 		}
@@ -259,7 +261,7 @@ LRESULT CALLBACK SB_Brushes::Dimensions_Dlg_Proc(HWND hDlg, UINT message, WPARAM
 			}
 			}
 
-			App->CLSB_Brushes->Update_Pos_Dlg();
+			App->CLSB_Brushes->Update_Pos_Dlg(hDlg);
 
 			return 0;
 		}
@@ -284,7 +286,7 @@ LRESULT CALLBACK SB_Brushes::Dimensions_Dlg_Proc(HWND hDlg, UINT message, WPARAM
 			}
 			}
 
-			App->CLSB_Brushes->Update_Pos_Dlg();
+			App->CLSB_Brushes->Update_Pos_Dlg(hDlg);
 
 			return 0;
 		}
@@ -409,19 +411,32 @@ void SB_Brushes::Fill_ComboBox_PosDelta(HWND hDlg)
 // *************************************************************************
 // *			Update_Pos_Dlg:- Terry and Hazel Flanigan 2023		  	   *
 // *************************************************************************
-void SB_Brushes::Update_Pos_Dlg()
+void SB_Brushes::Update_Pos_Dlg(HWND hDlg)
 {
 	CenterOfSelection = m_pDoc->SelectedGeoCenter;
 
 	char buf[255];
+
+	// Pos
 	sprintf(buf, "%f", CenterOfSelection.X);
-	SetDlgItemText(Dimensions_Dlg_hWnd, IDC_ED_BRUSH_POSX, buf);
+	SetDlgItemText(hDlg, IDC_ED_BRUSH_POSX, buf);
 
 	sprintf(buf, "%f", CenterOfSelection.Y);
-	SetDlgItemText(Dimensions_Dlg_hWnd, IDC_ED_BRUSH_POSY, buf);
+	SetDlgItemText(hDlg, IDC_ED_BRUSH_POSY, buf);
 
 	sprintf(buf, "%f", CenterOfSelection.Z);
-	SetDlgItemText(Dimensions_Dlg_hWnd, IDC_ED_BRUSH_POSZ, buf);
+	SetDlgItemText(hDlg, IDC_ED_BRUSH_POSZ, buf);
+
+	// Scale
+	sprintf(buf, "%f", Size.x);
+	SetDlgItemText(hDlg, IDC_ED_BRUSH_SCALEX, buf);
+
+	sprintf(buf, "%f", Size.y);
+	SetDlgItemText(hDlg, IDC_ED_BRUSH_SCALEY, buf);
+
+	sprintf(buf, "%f", Size.z);
+	SetDlgItemText(hDlg, IDC_ED_BRUSH_SCALEZ, buf);
+
 }
 
 // *************************************************************************
@@ -443,4 +458,38 @@ void SB_Brushes::Lock_Textures(bool flag)
 	}
 
 	//m_pDoc->UpdateAllViews(UAV_RENDER_ONLY, NULL);
+}
+
+// *************************************************************************
+// *			 	Get_Brush:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void SB_Brushes::Get_Brush()
+{
+	App->Get_Current_Document();
+
+	int NumberOfBrushes;
+	Brush* pBrush;
+
+	NumberOfBrushes = SelBrushList_GetSize(App->m_pDoc->pSelBrushes);
+
+	if (NumberOfBrushes)
+	{
+		pBrush = SelBrushList_GetBrush(App->m_pDoc->pSelBrushes, (NumberOfBrushes - 1));
+	}
+	else
+	{
+		App->Say("Cant Get Brush");
+	}
+
+	Size.x = (fabs(pBrush->BoundingBox.Max.X - pBrush->BoundingBox.Min.X));
+	Size.y = (fabs(pBrush->BoundingBox.Max.Y - pBrush->BoundingBox.Min.Y));
+	Size.z = (fabs(pBrush->BoundingBox.Max.Z - pBrush->BoundingBox.Min.Z));
+
+	geVec3d mSize;
+	mSize.X = 2;
+	mSize.Y = 2;
+	mSize.Z = 2;
+
+	//Brush_Scale3d(pBrush, &mSize);
+	//App->Say(pBrush->Name);
 }

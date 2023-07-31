@@ -29,9 +29,11 @@ public:
 	~SB_Brushes(void);
 
 	void Start_Dimensions_Dlg();
-	void Update_Pos_Dlg();
+	void Update_Pos_Dlg(HWND hDlg);
 
 	bool Dimensions_Dlg_Running;
+
+	HWND Dimensions_Dlg_hWnd;
 
 private:
 	static LRESULT CALLBACK Dimensions_Dlg_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
@@ -40,11 +42,13 @@ private:
 	void Move_Brush();
 	void Lock_Textures(bool flag);
 
+	void Get_Brush();
+
 	float PosX_Delta;
 	float PosY_Delta;
 	float PosZ_Delta;
 
-	HWND Dimensions_Dlg_hWnd;
+	vertex_type Size;
 
 	geVec3d CenterOfSelection;
 

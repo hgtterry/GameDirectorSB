@@ -1099,7 +1099,7 @@ void CFusionView::OnLButtonUp(UINT nFlags, CPoint point)
 					pDoc->SetModifiedFlag();
 					if (App->CLSB_Brushes->Dimensions_Dlg_Running == 1)
 					{
-						App->CLSB_Brushes->Update_Pos_Dlg();
+						App->CLSB_Brushes->Update_Pos_Dlg(App->CLSB_Brushes->Dimensions_Dlg_hWnd);
 					}
 					break;
 				}
