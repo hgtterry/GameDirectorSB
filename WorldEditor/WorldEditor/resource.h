@@ -229,6 +229,7 @@
 #define IDC_NAME                        1068
 #define IDC_CHECK3                      1068
 #define IDC_SKYTOP                      1068
+#define IDC_SIZELOCK                    1068
 #define IDC_HULLSIZE                    1069
 #define IDC_CHECK4                      1069
 #define IDC_SKYBOTTOM                   1069
@@ -742,12 +743,14 @@
 #define IDC_SBPOSX2                     1502
 #define IDC_SBSCALEX                    1502
 #define IDC_CBPOSXDELTA2                1503
+#define IDC_CBSIZEXDELTA                1503
 #define IDC_CBPOSYDELTA2                1504
+#define IDC_CBSIZEYDELTA                1504
 #define IDC_CBPOSZDELTA2                1505
+#define IDC_CBSIZEZDELTA                1505
 #define IDC_SBPOSY2                     1506
 #define IDC_SBSCALEY                    1506
 #define IDC_SBPOSZ2                     1507
-#define IDC_SBSCALEX3                   1507
 #define IDC_SBSCALEZ                    1507
 #define IDC_SBPOSXH                     1508
 #define IDC_SBPOSYH                     1509

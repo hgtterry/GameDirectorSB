@@ -41,9 +41,13 @@ private:
 	void Fill_ComboBox_PosDelta(HWND hDlg);
 
 	void Move_Brush();
+
 	void Scale_Brush(float SX, float SY, float SZ);
+	void Scale_Brush_Lock(bool increase);
 
 	void Lock_Textures(bool flag);
+
+	void EnableScaleControls_Dlg(HWND hDlg, bool Enable);
 
 	void Get_Brush();
 
@@ -51,6 +55,11 @@ private:
 	float PosY_Delta;
 	float PosZ_Delta;
 
+	float ScaleX_Delta;
+	float ScaleY_Delta;
+	float ScaleZ_Delta;
+
+	bool ScaleLock_Flag;
 
 	vertex_type Size;
 	vertex_type Scale;

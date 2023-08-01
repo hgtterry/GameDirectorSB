@@ -41,6 +41,12 @@ SB_Brushes::SB_Brushes(void)
 	PosY_Delta = 1;
 	PosZ_Delta = 1;
 
+	ScaleX_Delta = 1;
+	ScaleY_Delta = 1;
+	ScaleZ_Delta = 1;
+
+	ScaleLock_Flag = 1;
+
 	Dimensions_Dlg_Running = 0;
 }
 
@@ -66,6 +72,8 @@ void SB_Brushes::Start_Dimensions_Dlg()
 		Get_Brush();
 
 		Dimensions_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_BRUSHDIMENSIONS, App->MainHwnd, (DLGPROC)Dimensions_Dlg_Proc);
+
+		ScaleLock_Flag = 1;
 
 		Dimensions_Dlg_Running = 1;
 	}
@@ -109,6 +117,8 @@ LRESULT CALLBACK SB_Brushes::Dimensions_Dlg_Proc(HWND hDlg, UINT message, WPARAM
 		SendDlgItemMessage(hDlg, IDC_CBPOSYDELTA, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CBPOSZDELTA, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+		SendDlgItemMessage(hDlg, IDC_SIZELOCK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		HWND CB_hWnd = GetDlgItem(hDlg, IDC_CBPOSXDELTA);
 		App->CLSB_Brushes->Fill_ComboBox_PosDelta(CB_hWnd);
 
@@ -117,6 +127,14 @@ LRESULT CALLBACK SB_Brushes::Dimensions_Dlg_Proc(HWND hDlg, UINT message, WPARAM
 
 		CB_hWnd = GetDlgItem(hDlg, IDC_CBPOSZDELTA);
 		App->CLSB_Brushes->Fill_ComboBox_PosDelta(CB_hWnd);
+
+		// ----------- ScaleLock
+		if (App->CLSB_Brushes->ScaleLock_Flag == 1)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_SIZELOCK);
+			SendMessage(temp, BM_SETCHECK, 1, 0);
+			App->CLSB_Brushes->EnableScaleControls_Dlg(hDlg, false);
+		}
 
 		App->CLSB_Brushes->Update_Pos_Dlg(hDlg);
 
@@ -190,6 +208,14 @@ LRESULT CALLBACK SB_Brushes::Dimensions_Dlg_Proc(HWND hDlg, UINT message, WPARAM
 			return (UINT)App->AppBackground;
 		}
 
+		if (GetDlgItem(hDlg, IDC_SIZELOCK) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
 		return FALSE;
 	}
 	case WM_NOTIFY:
@@ -227,17 +253,37 @@ LRESULT CALLBACK SB_Brushes::Dimensions_Dlg_Proc(HWND hDlg, UINT message, WPARAM
 			{
 			case SB_LINERIGHT:
 			{
-				float scale = (App->CLSB_Brushes->Size.x + 1) / App->CLSB_Brushes->Size.x;
+				if (App->CLSB_Brushes->ScaleLock_Flag == 1)
+				{
+					App->CLSB_Brushes->Scale_Brush_Lock(1);
+				}
+				else
+				{
+					float Delta = App->CLSB_Brushes->ScaleX_Delta;
+					float scale = (App->CLSB_Brushes->Size.x + Delta) / App->CLSB_Brushes->Size.x;
 
-				App->CLSB_Brushes->Scale_Brush(scale,1,1);
+					App->CLSB_Brushes->Scale_Brush(scale, 1, 1);
+				}
+
 				break;
 			}
 
 			case SB_LINELEFT:
 			{
-				float scale = (App->CLSB_Brushes->Size.x + -1) / App->CLSB_Brushes->Size.x;
+				if (App->CLSB_Brushes->ScaleLock_Flag == 1)
+				{
+					App->CLSB_Brushes->Scale_Brush_Lock(0);
+				}
+				else
+				{
+					if (App->CLSB_Brushes->Size.x > 1)
+					{
+						float Delta = App->CLSB_Brushes->ScaleX_Delta;
+						float scale = (App->CLSB_Brushes->Size.x + -Delta) / App->CLSB_Brushes->Size.x;
 
-				App->CLSB_Brushes->Scale_Brush(scale, 1, 1);
+						App->CLSB_Brushes->Scale_Brush(scale, 1, 1);
+					}
+				}
 				break;
 			}
 			}
@@ -262,9 +308,12 @@ LRESULT CALLBACK SB_Brushes::Dimensions_Dlg_Proc(HWND hDlg, UINT message, WPARAM
 
 			case SB_LINELEFT:
 			{
-				float scale = (App->CLSB_Brushes->Size.y + -1) / App->CLSB_Brushes->Size.y;
+				if (App->CLSB_Brushes->Size.y > 1)
+				{
+					float scale = (App->CLSB_Brushes->Size.y + -1) / App->CLSB_Brushes->Size.y;
 
-				App->CLSB_Brushes->Scale_Brush(1, scale, 1);
+					App->CLSB_Brushes->Scale_Brush(1, scale, 1);
+				}
 				break;
 			}
 			}
@@ -289,9 +338,12 @@ LRESULT CALLBACK SB_Brushes::Dimensions_Dlg_Proc(HWND hDlg, UINT message, WPARAM
 
 			case SB_LINELEFT:
 			{
-				float scale = (App->CLSB_Brushes->Size.z + -1) / App->CLSB_Brushes->Size.z;
+				if (App->CLSB_Brushes->Size.z > 1)
+				{
+					float scale = (App->CLSB_Brushes->Size.z + -1) / App->CLSB_Brushes->Size.z;
 
-				App->CLSB_Brushes->Scale_Brush(1, 1, scale);
+					App->CLSB_Brushes->Scale_Brush(1, 1, scale);
+				}
 				break;
 			}
 			}
@@ -380,6 +432,27 @@ LRESULT CALLBACK SB_Brushes::Dimensions_Dlg_Proc(HWND hDlg, UINT message, WPARAM
 	}
 
 	case WM_COMMAND:
+
+		if (LOWORD(wParam) == IDC_SIZELOCK)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_SIZELOCK);
+
+			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
+			if (test == BST_CHECKED)
+			{
+				App->CLSB_Brushes->ScaleLock_Flag = 1;
+				App->CLSB_Brushes->EnableScaleControls_Dlg(hDlg,false);
+				return 1;
+			}
+			else
+			{
+				App->CLSB_Brushes->ScaleLock_Flag = 0;
+				App->CLSB_Brushes->EnableScaleControls_Dlg(hDlg, true);
+				return 1;
+			}
+
+			return TRUE;
+		}
 
 		if (LOWORD(wParam) == IDC_CBPOSXDELTA)
 		{
@@ -493,6 +566,39 @@ void SB_Brushes::Scale_Brush(float SX, float SY, float SZ)
 }
 
 // *************************************************************************
+// *			Scale_Brush_Lock:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_Brushes::Scale_Brush_Lock(bool increase)
+{
+	App->Get_Current_Document();
+
+	float scaleX = 1;
+	float scaleY = 1;
+	float scaleZ = 1;
+
+	if (increase == 1)
+	{
+		scaleX = (App->CLSB_Brushes->Size.x + 1) / App->CLSB_Brushes->Size.x;
+		scaleY = (App->CLSB_Brushes->Size.y + 1) / App->CLSB_Brushes->Size.y;
+		scaleZ = (App->CLSB_Brushes->Size.z + 1) / App->CLSB_Brushes->Size.z;
+	}
+	else
+	{
+		scaleX = (App->CLSB_Brushes->Size.x + -1) / App->CLSB_Brushes->Size.x;
+		scaleY = (App->CLSB_Brushes->Size.y + -1) / App->CLSB_Brushes->Size.y;
+		scaleZ = (App->CLSB_Brushes->Size.z + -1) / App->CLSB_Brushes->Size.z;
+	}
+	
+	FinalScale.X = scaleX;
+	FinalScale.Y = scaleY;
+	FinalScale.Z = scaleZ;
+
+	App->m_pDoc->ScaleSelectedBrushes(&FinalScale);
+
+	App->CLSB_Brushes->m_pDoc->UpdateAllViews(UAV_ALLVIEWS | REBUILD_QUICK, NULL);
+}
+
+// *************************************************************************
 // *		Fill_ComboBox_PosDelta:- Terry and Hazel Flanigan 2023	  	   *
 // *************************************************************************
 void SB_Brushes::Fill_ComboBox_PosDelta(HWND hDlg)
@@ -530,14 +636,30 @@ void SB_Brushes::Update_Pos_Dlg(HWND hDlg)
 	SetDlgItemText(hDlg, IDC_ED_BRUSH_POSZ, buf);
 
 	// Scale
-	sprintf(buf, "%f", Size.x);
+	sprintf(buf, "%.2f", Size.x);
 	SetDlgItemText(hDlg, IDC_ED_BRUSH_SCALEX, buf);
 
-	sprintf(buf, "%f", Size.y);
+	sprintf(buf, "%.2f", Size.y);
 	SetDlgItemText(hDlg, IDC_ED_BRUSH_SCALEY, buf);
 
-	sprintf(buf, "%f", Size.z);
+	sprintf(buf, "%.2f", Size.z);
 	SetDlgItemText(hDlg, IDC_ED_BRUSH_SCALEZ, buf);
+
+}
+
+// *************************************************************************
+// *		EnableScaleControls_Dlg:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_Brushes::EnableScaleControls_Dlg(HWND hDlg, bool Enable)
+{
+	EnableWindow(GetDlgItem(hDlg, IDC_ED_BRUSH_SCALEY), Enable);
+	EnableWindow(GetDlgItem(hDlg, IDC_ED_BRUSH_SCALEZ), Enable);
+	
+	EnableWindow(GetDlgItem(hDlg, IDC_SBSCALEY), Enable);
+	EnableWindow(GetDlgItem(hDlg, IDC_SBSCALEZ), Enable);
+	
+	EnableWindow(GetDlgItem(hDlg, IDC_CBSIZEYDELTA), Enable);
+	EnableWindow(GetDlgItem(hDlg, IDC_CBSIZEZDELTA), Enable);
 
 }
 
