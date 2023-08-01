@@ -1111,6 +1111,7 @@ void CFusionView::OnLButtonUp(UINT nFlags, CPoint point)
 					if(pDoc->mLastOp == BRUSH_SCALE)
 					{
 						pDoc->DoneResize(sides, Render_GetInidx(VCam));
+						App->CLSB_Brushes->Update_Pos_Dlg(App->CLSB_Brushes->Dimensions_Dlg_hWnd);
 					}
 
 					pDoc->UpdateSelected();

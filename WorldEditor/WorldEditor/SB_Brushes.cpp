@@ -33,6 +33,10 @@ SB_Brushes::SB_Brushes(void)
 	CenterOfSelection.Y = 0;
 	CenterOfSelection.Z = 0;
 
+	FinalScale.X = 1;
+	FinalScale.Y = 1;
+	FinalScale.Z = 1;
+
 	PosX_Delta = 1;
 	PosY_Delta = 1;
 	PosZ_Delta = 1;
@@ -216,6 +220,87 @@ LRESULT CALLBACK SB_Brushes::Dimensions_Dlg_Proc(HWND hDlg, UINT message, WPARAM
 
 	case WM_HSCROLL:
 	{
+		// -------- Scale X
+		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBSCALEX))
+		{
+			switch ((int)LOWORD(wParam))
+			{
+			case SB_LINERIGHT:
+			{
+				float scale = (App->CLSB_Brushes->Size.x + 1) / App->CLSB_Brushes->Size.x;
+
+				App->CLSB_Brushes->Scale_Brush(scale,1,1);
+				break;
+			}
+
+			case SB_LINELEFT:
+			{
+				float scale = (App->CLSB_Brushes->Size.x + -1) / App->CLSB_Brushes->Size.x;
+
+				App->CLSB_Brushes->Scale_Brush(scale, 1, 1);
+				break;
+			}
+			}
+
+			App->CLSB_Brushes->Update_Pos_Dlg(hDlg);
+
+			return 0;
+		}
+
+		// -------- Scale Y
+		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBSCALEY))
+		{
+			switch ((int)LOWORD(wParam))
+			{
+			case SB_LINERIGHT:
+			{
+				float scale = (App->CLSB_Brushes->Size.y + 1) / App->CLSB_Brushes->Size.y;
+
+				App->CLSB_Brushes->Scale_Brush(1, scale, 1);
+				break;
+			}
+
+			case SB_LINELEFT:
+			{
+				float scale = (App->CLSB_Brushes->Size.y + -1) / App->CLSB_Brushes->Size.y;
+
+				App->CLSB_Brushes->Scale_Brush(1, scale, 1);
+				break;
+			}
+			}
+
+			App->CLSB_Brushes->Update_Pos_Dlg(hDlg);
+
+			return 0;
+		}
+
+		// -------- Scale Z
+		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBSCALEZ))
+		{
+			switch ((int)LOWORD(wParam))
+			{
+			case SB_LINERIGHT:
+			{
+				float scale = (App->CLSB_Brushes->Size.z + 1) / App->CLSB_Brushes->Size.z;
+
+				App->CLSB_Brushes->Scale_Brush(1, 1,scale);
+				break;
+			}
+
+			case SB_LINELEFT:
+			{
+				float scale = (App->CLSB_Brushes->Size.z + -1) / App->CLSB_Brushes->Size.z;
+
+				App->CLSB_Brushes->Scale_Brush(1, 1, scale);
+				break;
+			}
+			}
+
+			App->CLSB_Brushes->Update_Pos_Dlg(hDlg);
+
+			return 0;
+		}
+
 		// -------- Pos X
 		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBPOSXH))
 		{
@@ -392,6 +477,22 @@ void SB_Brushes::Move_Brush()
 }
 
 // *************************************************************************
+// *				Scale_Brush:- Terry and Hazel Flanigan 2023		  	   *
+// *************************************************************************
+void SB_Brushes::Scale_Brush(float SX, float SY, float SZ)
+{
+	App->Get_Current_Document();
+
+	FinalScale.X = SX;
+	FinalScale.Y = SY;
+	FinalScale.Z = SZ;
+
+	App->m_pDoc->ScaleSelectedBrushes(&FinalScale);
+
+	App->CLSB_Brushes->m_pDoc->UpdateAllViews(UAV_ALLVIEWS | REBUILD_QUICK, NULL);
+}
+
+// *************************************************************************
 // *		Fill_ComboBox_PosDelta:- Terry and Hazel Flanigan 2023	  	   *
 // *************************************************************************
 void SB_Brushes::Fill_ComboBox_PosDelta(HWND hDlg)
@@ -414,6 +515,7 @@ void SB_Brushes::Fill_ComboBox_PosDelta(HWND hDlg)
 void SB_Brushes::Update_Pos_Dlg(HWND hDlg)
 {
 	CenterOfSelection = m_pDoc->SelectedGeoCenter;
+	Get_Brush();
 
 	char buf[255];
 

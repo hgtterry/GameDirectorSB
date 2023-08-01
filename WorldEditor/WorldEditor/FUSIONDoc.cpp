@@ -8717,6 +8717,11 @@ void CFusionDoc::OnModifyScale()
 		ScaleSelectedBrushes(&ScaleVector);
 
 		UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+
+		if (App->CLSB_Brushes->Dimensions_Dlg_Running == 1)
+		{
+			App->CLSB_Brushes->Update_Pos_Dlg(App->CLSB_Brushes->Dimensions_Dlg_hWnd);
+		}
 	}
 }
 

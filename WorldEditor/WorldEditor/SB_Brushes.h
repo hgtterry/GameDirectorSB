@@ -39,7 +39,10 @@ private:
 	static LRESULT CALLBACK Dimensions_Dlg_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Fill_ComboBox_PosDelta(HWND hDlg);
+
 	void Move_Brush();
+	void Scale_Brush(float SX, float SY, float SZ);
+
 	void Lock_Textures(bool flag);
 
 	void Get_Brush();
@@ -48,9 +51,12 @@ private:
 	float PosY_Delta;
 	float PosZ_Delta;
 
+
 	vertex_type Size;
+	vertex_type Scale;
 
 	geVec3d CenterOfSelection;
+	geVec3d FinalScale;
 
 	CFusionDoc* m_pDoc;
 };

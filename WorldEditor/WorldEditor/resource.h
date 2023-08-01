@@ -740,11 +740,15 @@
 #define IDC_STROTZ                      1501
 #define IDC_STSIZEZ                     1501
 #define IDC_SBPOSX2                     1502
+#define IDC_SBSCALEX                    1502
 #define IDC_CBPOSXDELTA2                1503
 #define IDC_CBPOSYDELTA2                1504
 #define IDC_CBPOSZDELTA2                1505
 #define IDC_SBPOSY2                     1506
+#define IDC_SBSCALEY                    1506
 #define IDC_SBPOSZ2                     1507
+#define IDC_SBSCALEX3                   1507
+#define IDC_SBSCALEZ                    1507
 #define IDC_SBPOSXH                     1508
 #define IDC_SBPOSYH                     1509
 #define IDC_SBPOSZH                     1510
