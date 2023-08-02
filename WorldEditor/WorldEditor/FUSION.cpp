@@ -221,18 +221,6 @@ BOOL CFusionApp::InitInstance() // hgtterry InitInstance
 		m_pszHelpFilePath=_tcsdup(_T(HelpFilePath));
 	}
 
-	// Initialize OLE 2.0 libraries
-	/*if (!AfxOleInit())
-	{
-		AfxMessageBox("Cannot load OLE");
-		return FALSE;
-	}*/
-
-	// Standard initialization
-	// If you are not using these features and wish to reduce the size
-	//  of your final executable, you should remove from the following
-	//  the specific initialization routines you do not need.
-
 #ifdef _AFXDLL
 	Enable3dControls();			// Call this when using MFC in a shared DLL
 #else
@@ -359,8 +347,6 @@ BOOL CFusionApp::InitInstance() // hgtterry InitInstance
 
 	InitUserPreferences(pMainFrame);
 
-	//App->CL_Dialogs->Start_FrontPanel();
-	App->CLSB_TopTabs->Start_Headers_Tabs();
 	//OnAppAbout();
 	
 	pMainFrame->IsStartingApp = 0;
@@ -369,12 +355,19 @@ BOOL CFusionApp::InitInstance() // hgtterry InitInstance
 	App->CL_World->Set_Paths();
 	App->CUR = GetCursor();
 
-	if (App->Debug_App == 1)
+	if (App->Just_Equity == 1)
 	{
+		ShowWindow(AfxGetApp()->m_pMainWnd->m_hWnd, false);
+	}
+	else
+	{
+		App->CLSB_TopTabs->Start_Headers_Tabs();
 		App->CL_TabsControl->Start_Tabs_Control_Dlg();
 	}
 
 	App->CLSB_RecentFiles->Init_History();
+
+	
 
 	App->CLSB_Equity->Start_Equity_Dialog();
 

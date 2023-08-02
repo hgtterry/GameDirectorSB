@@ -131,6 +131,7 @@ SB_App::SB_App()
 
 	Debug_App = 1;
 	Debug_File = 1;
+	Just_Equity = 0;
 
 	hMenu = NULL;
 

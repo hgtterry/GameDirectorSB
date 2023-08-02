@@ -5055,9 +5055,9 @@ void CFusionDoc::SetAdjustmentMode( fdocAdjustEnum nCmdIDMode )
 }
 
 
-void CFusionDoc::OnCloseDocument() 
+void CFusionDoc::OnCloseDocument() // hgtterry Exit Aplication
 {
-	App->Debug_Close();
+	//App->Debug_Close();
 
 	if (App->CLSB_Ogre->OgreIsRunning == 1)
 	{

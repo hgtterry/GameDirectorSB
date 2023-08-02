@@ -67,6 +67,11 @@ void SB_Equity::Switch_3D_Window()
 
 	Auto_Load_File();
 	
+	if (App->Just_Equity == 1)
+	{
+		App->CLSB_Equity->Show_Equity_Dialog(true);
+	}
+
 	App->CLSB_Ogre->OgreIsRunning = 1;
 
 	App->CLSB_Ogre->Ogre_Render_Loop();
@@ -126,7 +131,7 @@ void SB_Equity::Show_Equity_Dialog(bool Show)
 	{
 		if (Show == 1)
 		{
-			Debug
+			//Debug
 			ShowWindow(Equity_Main_hWnd, SW_SHOW);
 		}
 		else
@@ -348,8 +353,14 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_Proc(HWND hDlg, UINT message, WPARAM w
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
-			/*App->CLSB_Equity->EquitySB_Dialog_Created = 0;
-			EndDialog(hDlg, LOWORD(wParam));*/
+
+			if (App->Just_Equity == 1)
+			{
+				EndDialog(hDlg, LOWORD(wParam));
+				App->Get_Current_Document();
+				App->m_pDoc->OnCloseDocument();
+			}
+
 			App->CLSB_Equity->Show_Equity_Dialog(false);
 			return TRUE;
 		}

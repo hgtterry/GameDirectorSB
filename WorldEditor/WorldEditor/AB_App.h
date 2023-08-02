@@ -231,6 +231,7 @@ public:
 
 	bool Debug_App;
 	bool Debug_File;
+	bool Just_Equity;
 
 	HCURSOR CUR;
 
