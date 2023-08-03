@@ -11,6 +11,8 @@ SB_Equity::SB_Equity(void)
 	Equity_Main_hWnd =		nullptr;
 	Render_Buttons_hWnd =	nullptr;
 
+	Close_Equity_Flag = 0;
+
 	m_pDoc = nullptr;
 }
 
@@ -226,7 +228,12 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_Proc(HWND hDlg, UINT message, WPARAM w
 
 	case WM_COMMAND:
 	{
-		// Debug
+		
+		if (LOWORD(wParam) == ID_DEBUG_PREFERENCESWE)
+		{
+			App->CLSB_Preferences->Start_Preferences_Dlg();
+			return TRUE;
+		}
 
 		if (LOWORD(wParam) == ID_DEBUG_GENERAL)
 		{
@@ -369,6 +376,7 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_Proc(HWND hDlg, UINT message, WPARAM w
 
 		if (LOWORD(wParam) == IDOK)
 		{
+
 			/*App->CLSB_Equity->EquitySB_Dialog_Created = 0;
 			EndDialog(hDlg, LOWORD(wParam));*/
 			App->CLSB_Equity->Show_Equity_Dialog(false);
@@ -378,7 +386,7 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_Proc(HWND hDlg, UINT message, WPARAM w
 		if (LOWORD(wParam) == IDCANCEL)
 		{
 
-			if (App->Just_Equity == 1)
+			if (App->CLSB_Equity->Close_Equity_Flag == 1)
 			{
 				EndDialog(hDlg, LOWORD(wParam));
 				App->Get_Current_Document();

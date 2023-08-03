@@ -56,7 +56,8 @@ LRESULT CALLBACK SB_Preferences::Preferences_Dlg_Proc(HWND hDlg, UINT message, W
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_CK_JUSTEQUITY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_CK_NEWEQUITY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		if (App->Just_Equity == 1)
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_CK_JUSTEQUITY);
@@ -67,6 +68,18 @@ LRESULT CALLBACK SB_Preferences::Preferences_Dlg_Proc(HWND hDlg, UINT message, W
 			HWND temp = GetDlgItem(hDlg, IDC_CK_JUSTEQUITY);
 			SendMessage(temp, BM_SETCHECK, 0, 0);
 		}
+
+		if (App->New_Equity_Flag == 1)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_NEWEQUITY);
+			SendMessage(temp, BM_SETCHECK, 1, 0);
+		}
+		else
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_NEWEQUITY);
+			SendMessage(temp, BM_SETCHECK, 0, 0);
+		}
+
 		return TRUE;
 
 	}
@@ -79,6 +92,15 @@ LRESULT CALLBACK SB_Preferences::Preferences_Dlg_Proc(HWND hDlg, UINT message, W
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
 		}
+
+		if (GetDlgItem(hDlg, IDC_CK_NEWEQUITY) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
 
 		return FALSE;
 	}
@@ -110,6 +132,25 @@ LRESULT CALLBACK SB_Preferences::Preferences_Dlg_Proc(HWND hDlg, UINT message, W
 			else
 			{
 				App->Just_Equity = 0;
+				return 1;
+			}
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_CK_NEWEQUITY)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_NEWEQUITY);
+
+			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
+			if (test == BST_CHECKED)
+			{
+				App->New_Equity_Flag = 1;
+				return 1;
+			}
+			else
+			{
+				App->New_Equity_Flag = 0;
 				return 1;
 			}
 
@@ -154,8 +195,18 @@ bool SB_Preferences::Read_Preferences()
 
 	App->CLSB_Ini->SetPathName(Preferences_Path);
 
+
 	App->Just_Equity = App->CLSB_Ini->GetInt("Equity","Just_Equity", 0, 10);
 	App->New_Equity_Flag = App->CLSB_Ini->GetInt("Equity","New_Equity", 0, 10);
+
+	if (App->Just_Equity == 1)
+	{
+		App->CLSB_Equity->Close_Equity_Flag = 1;
+	}
+	else
+	{
+		App->CLSB_Equity->Close_Equity_Flag = 0;
+	}
 
 	return 1;
 }
@@ -175,7 +226,7 @@ bool SB_Preferences::Write_Preferences()
 	strcat(Preferences_Path, "\\");
 	strcat(Preferences_Path, "PreferencesWE.ini");
 
-	App->Say(Preferences_Path);
+	//App->Say(Preferences_Path);
 
 	WriteData = fopen(Preferences_Path, "wt");
 	if (!WriteData)
@@ -188,6 +239,8 @@ bool SB_Preferences::Write_Preferences()
 	fprintf(WriteData, "%s%i\n", "Just_Equity=", App->Just_Equity);
 	fprintf(WriteData, "%s%i\n", "New_Equity=", App->New_Equity_Flag);
 
+	fclose(WriteData);
+	
 	//Read_Preferences();
 	return 1;
 }

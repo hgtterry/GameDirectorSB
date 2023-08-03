@@ -772,6 +772,7 @@
 #define IDC_SBPOSX3                     1517
 #define IDC_CK_JUSTEQUITY               1517
 #define IDC_CBPOSXDELTA3                1518
+#define IDC_CK_NEWEQUITY                1518
 #define IDC_CBPOSYDELTA3                1519
 #define IDC_CBPOSZDELTA3                1520
 #define IDC_SBPOSY3                     1521
@@ -975,6 +976,7 @@
 #define ID_DEBUG_BOUNDINGBOX            33082
 #define ID_DEBUG_GENERAL                33083
 #define ID_EQUITYSB_PREFERENCESWE       33084
+#define ID_DEBUG_PREFERENCESWE          33085
 #define IDS_HELPINFORMATION             38000
 
 // Next default values for new objects
@@ -983,7 +985,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        325
-#define _APS_NEXT_COMMAND_VALUE         33085
+#define _APS_NEXT_COMMAND_VALUE         33086
 #define _APS_NEXT_CONTROL_VALUE         1518
 #define _APS_NEXT_SYMED_VALUE           112
 #endif

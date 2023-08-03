@@ -24,6 +24,8 @@ public:
 	HWND Equity_Main_hWnd;
 	HWND Render_Buttons_hWnd;
 
+	bool Close_Equity_Flag;
+
 	Ogre::Vector3 Position_Offsets;
 
 	static LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
