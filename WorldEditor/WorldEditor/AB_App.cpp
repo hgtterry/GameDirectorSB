@@ -78,6 +78,7 @@ SB_App::SB_App()
 	CLSB_RecentFiles =			nullptr;
 	CLSB_TopTabs_Equity =		nullptr;
 	CLSB_Dimensions =			nullptr;
+	CLSB_Preferences =			nullptr;
 
 	AppBackground = NULL;
 	BlackBrush =	NULL;
@@ -250,6 +251,7 @@ bool SB_App::InitApp(void)
 	CLSB_RecentFiles =				new SB_RecentFiles();
 	CLSB_TopTabs_Equity =			new SB_TopTabs_Equity();
 	CLSB_Dimensions =				new SB_Dimensions();
+	CLSB_Preferences =				new SB_Preferences();
 
 	InitCommonControls();
 
