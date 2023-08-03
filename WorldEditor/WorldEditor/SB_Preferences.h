@@ -28,5 +28,12 @@ class SB_Preferences
 public:
 	SB_Preferences(void);
 	~SB_Preferences(void);
+
+	bool Read_Preferences();
+	bool Write_Preferences();
+
+protected:
+
+	FILE* WriteData;
 };
 

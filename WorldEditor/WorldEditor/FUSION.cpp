@@ -196,6 +196,14 @@ BOOL CFusionApp::InitInstance() // hgtterry InitInstance
 	App = new SB_App();
 	App->InitApp();
 
+	char AppPath[MAX_PATH];
+	::GetModuleFileName(NULL, AppPath, MAX_PATH);
+	FilePath_GetDriveAndDir(AppPath, AppPath);
+
+	strcpy(App->WorldEditor_Directory, AppPath);
+
+	App->CLSB_Preferences->Read_Preferences();
+
 	if (App->New_Equity_Flag == 1)
 	{
 
@@ -205,11 +213,6 @@ BOOL CFusionApp::InitInstance() // hgtterry InitInstance
 		App->CLSB_Ogre->InitOgre();
 	}
 	
-	char AppPath[MAX_PATH];
-	::GetModuleFileName (NULL, AppPath, MAX_PATH);
-	FilePath_GetDriveAndDir (AppPath, AppPath);
-
-	strcpy(App->WorldEditor_Directory,AppPath);
 	App->Debug_Set();
 
 	SetUnhandledExceptionFilter(xxHandler);
