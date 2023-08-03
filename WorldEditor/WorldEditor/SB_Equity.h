@@ -6,7 +6,10 @@ public:
 	~SB_Equity(void);
 
 	void Switch_3D_Window();
+
 	void Start_Equity_Dialog();
+	void Start_Equity_Dialog_New();
+
 	void Auto_Load_File();
 	void Show_Equity_Dialog(bool Show);
 

@@ -195,7 +195,15 @@ BOOL CFusionApp::InitInstance() // hgtterry InitInstance
 {
 	App = new SB_App();
 	App->InitApp();
-	App->CLSB_Ogre->InitOgre();
+
+	if (App->New_Equity_Flag == 1)
+	{
+
+	}
+	else
+	{
+		App->CLSB_Ogre->InitOgre();
+	}
 	
 	char AppPath[MAX_PATH];
 	::GetModuleFileName (NULL, AppPath, MAX_PATH);
@@ -367,8 +375,29 @@ BOOL CFusionApp::InitInstance() // hgtterry InitInstance
 
 	App->CLSB_RecentFiles->Init_History();
 
-	App->CLSB_Equity->Start_Equity_Dialog();
+	if (App->New_Equity_Flag == 1)
+	{
+		App->CLSB_Equity->Start_Equity_Dialog_New();
+		App->CLSB_Ogre->InitOgre();
 
+		int test = 0;
+		test = SetWindowLong(App->CLSB_Ogre->RenderHwnd, GWL_WNDPROC, (LONG)App->CLSB_Equity->Ogre3D_Proc);
+
+		if (!test)
+		{
+			App->Say("Cant Start Ogre Proc");
+			//return;
+		}
+
+		App->CLSB_Ogre->OgreIsRunning = 1;
+
+		App->CLSB_Ogre->Ogre_Render_Loop();
+	}
+	else
+	{
+		App->CLSB_Equity->Start_Equity_Dialog();
+	}
+	
 	return TRUE;
 }
 

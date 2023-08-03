@@ -65,6 +65,7 @@ public:
 
 
 	HWND RenderHwnd;
+
 	Ogre::Root* mRoot;
 	Ogre::RenderWindow* mWindow;
 	Ogre::SceneManager* mSceneMgr;

@@ -146,6 +146,30 @@ void SB_Equity::Show_Equity_Dialog(bool Show)
 }
 
 // *************************************************************************
+// *		Start_Equity_Dialog_New:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_Equity::Start_Equity_Dialog_New()
+{
+	if (EquitySB_Dialog_Created == 0)
+	{
+		Equity_Main_hWnd = nullptr;
+		mAutoLoad = 0;
+
+		Equity_Main_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_EQUITYME, App->MainHwnd, (DLGPROC)Equity_Dialog_Proc);
+
+		Start_Render_Buttons();
+		App->CLSB_TopTabs_Equity->Start_Tabs();
+
+		EquitySB_Dialog_Created = 1;
+
+		App->CLSB_Ogre->RenderHwnd = Equity_Main_hWnd;
+
+		//Resize_3DView();
+		Debug
+	}
+}
+
+// *************************************************************************
 // *			Start_Equity_Dialog:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
 void SB_Equity::Start_Equity_Dialog()
