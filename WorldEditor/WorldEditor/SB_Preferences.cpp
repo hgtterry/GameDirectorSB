@@ -35,6 +35,108 @@ SB_Preferences::~SB_Preferences(void)
 }
 
 // *************************************************************************
+// *	  	Start_Preferences_Dlg:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+bool SB_Preferences::Start_Preferences_Dlg()
+{
+
+	DialogBox(App->hInst, (LPCTSTR)IDD_SB_PREFERENCES, App->MainHwnd, (DLGPROC)Preferences_Dlg_Proc);
+
+	return 1;
+}
+
+// *************************************************************************
+// *        Preferences_Dlg_Proc:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+LRESULT CALLBACK SB_Preferences::Preferences_Dlg_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_CK_JUSTEQUITY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		if (App->Just_Equity == 1)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_JUSTEQUITY);
+			SendMessage(temp, BM_SETCHECK, 1, 0);
+		}
+		else
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_JUSTEQUITY);
+			SendMessage(temp, BM_SETCHECK, 0, 0);
+		}
+		return TRUE;
+
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+		if (GetDlgItem(hDlg, IDC_CK_JUSTEQUITY) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+		if (LOWORD(wParam) == IDC_CK_JUSTEQUITY)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_JUSTEQUITY);
+
+			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
+			if (test == BST_CHECKED)
+			{
+				App->Just_Equity = 1;
+				return 1;
+			}
+			else
+			{
+				App->Just_Equity = 0;
+				return 1;
+			}
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDOK)
+		{
+			App->CLSB_Preferences->Write_Preferences();
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		break;
+	}
+	}
+
+	return FALSE;
+}
+
+// *************************************************************************
 // *						Read_Preferences Terry Flanigan 			   *
 // *************************************************************************
 bool SB_Preferences::Read_Preferences()
@@ -50,8 +152,10 @@ bool SB_Preferences::Read_Preferences()
 	strcat(Preferences_Path, "\\");
 	strcat(Preferences_Path, "PreferencesWE.ini");
 
-	App->Just_Equity = App->CLSB_Ini->GetInt("Equity", "Just_Equity", 0, 10);
-	App->New_Equity_Flag = App->CLSB_Ini->GetInt("Equity", "New_Equity", 0, 10);
+	App->CLSB_Ini->SetPathName(Preferences_Path);
+
+	App->Just_Equity = App->CLSB_Ini->GetInt("Equity","Just_Equity", 0, 10);
+	App->New_Equity_Flag = App->CLSB_Ini->GetInt("Equity","New_Equity", 0, 10);
 
 	return 1;
 }
@@ -66,10 +170,12 @@ bool SB_Preferences::Write_Preferences()
 	char Preferences_Path[MAX_PATH];
 
 	strcpy(Preferences_Path, App->WorldEditor_Directory);
-	strcat(Preferences_Path, "\\");
+	//strcat(Preferences_Path, "\\");
 	strcat(Preferences_Path, "Data");
 	strcat(Preferences_Path, "\\");
 	strcat(Preferences_Path, "PreferencesWE.ini");
+
+	App->Say(Preferences_Path);
 
 	WriteData = fopen(Preferences_Path, "wt");
 	if (!WriteData)
@@ -81,23 +187,6 @@ bool SB_Preferences::Write_Preferences()
 	fprintf(WriteData, "%s\n", "[Equity]");
 	fprintf(WriteData, "%s%i\n", "Just_Equity=", App->Just_Equity);
 	fprintf(WriteData, "%s%i\n", "New_Equity=", App->New_Equity_Flag);
-
-	fprintf(WriteData, "%s\n", " ");
-
-	//fprintf(WriteData, "%s\n", "[Start_Up]");
-	//fprintf(WriteData, "%s%i\n", "Start_FullScreen=", Prefs_FullScreen_Flag);
-
-	fprintf(WriteData, "%s\n", " ");
-
-	/*fprintf(WriteScene, "%s\n", "[WE_Fast_Load]");
-	fprintf(WriteScene, "%s%s\n", "Pref_WE_JustFileName=", Pref_WE_JustFileName);
-	fprintf(WriteScene, "%s%s\n", "Pref_WE_Path_FileName=", Pref_WE_Path_FileName);
-	fprintf(WriteScene, "%s%s\n", "Pref_Txl_Path_FileName=", Pref_Txl_Path_FileName);
-	fprintf(WriteScene, "%s%s\n", "Pref_Ogre_JustFileName=", Pref_Ogre_JustFileName);
-	fprintf(WriteScene, "%s%s\n", "Pref_Ogre_Path_FileName=", Pref_Ogre_Path);*/
-
-	fprintf(WriteData, "%s\n", " ");
-	fclose(WriteData);
 
 	//Read_Preferences();
 	return 1;

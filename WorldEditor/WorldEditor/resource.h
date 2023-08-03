@@ -156,6 +156,7 @@
 #define IDB_DUMMY                       317
 #define IDD_MOUSESENSITIVITY            319
 #define IDD_EQ_DROPGEN                  321
+#define IDD_SB_PREFERENCES              323
 #define IDC_RESET_ALL                   1000
 #define IDC_EDIT1                       1001
 #define IDC_EDIT10                      1002
@@ -769,6 +770,7 @@
 #define IDC_STROTZ2                     1516
 #define IDC_BT_TT_ALL_BRUSH             1516
 #define IDC_SBPOSX3                     1517
+#define IDC_CK_JUSTEQUITY               1517
 #define IDC_CBPOSXDELTA3                1518
 #define IDC_CBPOSYDELTA3                1519
 #define IDC_CBPOSZDELTA3                1520
@@ -972,6 +974,7 @@
 #define ID_DEBUG_SHOWCAMERAPOSITIONS    33081
 #define ID_DEBUG_BOUNDINGBOX            33082
 #define ID_DEBUG_GENERAL                33083
+#define ID_EQUITYSB_PREFERENCESWE       33084
 #define IDS_HELPINFORMATION             38000
 
 // Next default values for new objects
@@ -979,9 +982,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        323
-#define _APS_NEXT_COMMAND_VALUE         33084
-#define _APS_NEXT_CONTROL_VALUE         1517
+#define _APS_NEXT_RESOURCE_VALUE        325
+#define _APS_NEXT_COMMAND_VALUE         33085
+#define _APS_NEXT_CONTROL_VALUE         1518
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

@@ -29,10 +29,13 @@ public:
 	SB_Preferences(void);
 	~SB_Preferences(void);
 
+	bool Start_Preferences_Dlg();
+
 	bool Read_Preferences();
 	bool Write_Preferences();
 
 protected:
+	static LRESULT CALLBACK Preferences_Dlg_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	FILE* WriteData;
 };
