@@ -32,6 +32,9 @@ public:
 	void Start_Tabs(void);
 	void Start_Tabs_Headers(void);
 
+	void SB_TopTabs_Equity::Camera_Set_Model(void);
+	void SB_TopTabs_Equity::Camera_Set_Free(void);
+
 	HWND Tabs_TB_hWnd_Eq;
 private:
 

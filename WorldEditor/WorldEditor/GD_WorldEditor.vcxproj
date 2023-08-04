@@ -51,6 +51,7 @@
       <AdditionalOptions>-Zm128 %(AdditionalOptions)</AdditionalOptions>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
       <AdditionalDependencies>nafxcw.lib;libcmt.lib;.\GenesisSDK\lib\genesis.lib;advapi32.lib;comctl32.lib;comdlg32.lib;gdi32.lib;kernel32.lib;oldnames.lib;ole32.lib;oleaut32.lib;oledlg.lib;shell32.lib;urlmon.lib;user32.lib;uuid.lib;winmm.lib;winspool.lib;OgreMain.lib;OgreOverlay.lib;OgreTerrain.lib;opengl32.lib;glu32.lib;assimp-vc140-mt.lib;DevIL.lib;ILU.lib;ILUT.lib;%(AdditionalDependencies)</AdditionalDependencies>
