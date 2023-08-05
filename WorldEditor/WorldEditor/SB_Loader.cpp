@@ -153,6 +153,7 @@ void SB_Loader::Load_File_Wepf()
 
 	App->CLSB_Camera_EQ->Reset_Orientation();
 	App->CLSB_Camera_EQ->Set_Camera_Mode(Enums::CamDetached);
+	App->CLSB_TopTabs_Equity->Camera_Set_Free();
 	
 	App->CLSB_Model->Set_BondingBoxes_AllGroups();
 	//App->CLSB_Camera->Zero_View();

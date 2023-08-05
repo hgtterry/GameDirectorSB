@@ -208,25 +208,26 @@ LRESULT CALLBACK SB_Camera_WE::Move_Camera_Proc(HWND hDlg, UINT message, WPARAM 
 		return (LONG)App->AppBackground;
 	}
 
-	case WM_DRAWITEM:
+	case WM_NOTIFY:
+	{
+
+		LPNMHDR some_item = (LPNMHDR)lParam;
+		LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+
+		if (some_item->idFrom == IDC_BTRESETPOSITION && some_item->code == NM_CUSTOMDRAW)
 		{
-
-			LPDRAWITEMSTRUCT lpDIS = (LPDRAWITEMSTRUCT)lParam;
-
-			if (lpDIS->CtlID == IDC_BTRESETPOSITION)
-			{
-				App->Custom_Button_Normal_MFC(lpDIS,hDlg);
-				return TRUE;
-			}
-
-			if (lpDIS->CtlID == IDC_BTRESETANGLES)
-			{
-				App->Custom_Button_Normal_MFC(lpDIS,hDlg);
-				return TRUE;
-			}
-
+			App->Custom_Button_Normal(item);
 			return TRUE;
 		}
+
+		if (some_item->idFrom == IDC_BTRESETANGLES && some_item->code == NM_CUSTOMDRAW)
+		{
+			App->Custom_Button_Normal(item);
+			return TRUE;
+		}
+
+		return TRUE;
+	}
 
 	case WM_COMMAND:
 

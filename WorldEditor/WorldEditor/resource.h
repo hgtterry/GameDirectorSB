@@ -123,7 +123,6 @@
 #define IDD_VIEW_BOTTOMLEFT             267
 #define IDD_SB_OGREVIEWER               268
 #define IDD_SB_EQUITYME                 268
-#define IDD_SB_3D_VIEWER                271
 #define IDR_MENUSB                      274
 #define IDD_SB_EXPORTOPTIONS            275
 #define IDD_DIALOG3                     276
@@ -157,6 +156,7 @@
 #define IDD_MOUSESENSITIVITY            319
 #define IDD_EQ_DROPGEN                  321
 #define IDD_SB_PREFERENCES              323
+#define IDD_SB_VIEWER3D                 326
 #define IDC_RESET_ALL                   1000
 #define IDC_EDIT1                       1001
 #define IDC_EDIT10                      1002
@@ -984,7 +984,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        325
+#define _APS_NEXT_RESOURCE_VALUE        328
 #define _APS_NEXT_COMMAND_VALUE         33086
 #define _APS_NEXT_CONTROL_VALUE         1518
 #define _APS_NEXT_SYMED_VALUE           112

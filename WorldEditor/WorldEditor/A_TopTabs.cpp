@@ -662,10 +662,6 @@ LRESULT CALLBACK SB_TopTabs::Top_Test_Proc(HWND hDlg, UINT message, WPARAM wPara
 			App->CLSB_Grid->Reset_View();
 
 			App->CLSB_TopTabs_Equity->Camera_Set_Model();
-			/*App->CLSB_Camera_EQ->Set_Camera_Mode(Enums::CamModel);
-			App->CLSB_TopTabs_Equity->Toggle_Camera_Model_Flag = 1;
-			App->CLSB_TopTabs_Equity->Toggle_Camera_Free_Flag = 0;*/
-
 			App->CLSB_Equity->Show_Equity_Dialog(true);
 
 			return TRUE;

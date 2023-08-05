@@ -157,18 +157,232 @@ void SB_Equity::Start_Equity_Dialog_New()
 		Equity_Main_hWnd = nullptr;
 		mAutoLoad = 0;
 
-		Equity_Main_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_EQUITYME, App->MainHwnd, (DLGPROC)Equity_Dialog_Proc);
+		Equity_Main_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_EQUITYME, App->MainHwnd, (DLGPROC)Equity_Dialog_New_Proc);
 
 		Start_Render_Buttons();
 		App->CLSB_TopTabs_Equity->Start_Tabs();
 
 		EquitySB_Dialog_Created = 1;
 
-		App->CLSB_Ogre->RenderHwnd = Equity_Main_hWnd;
+		App->CLSB_Ogre->RenderHwnd = App->ViewGLhWnd;
 
 		//Resize_3DView();
 		Debug
 	}
+}
+
+// **************************************************************************
+// *			Equity_Dialog_New_Proc:- Terry and Hazel Flanigan 2022		*
+// **************************************************************************
+LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		App->ViewGLhWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_VIEWER3D, hDlg, NULL);// (DLGPROC)Ogre3D_Proc);
+		return TRUE;
+	}
+
+	case WM_CTLCOLORSTATIC:
+	{
+		/*if (GetDlgItem(hDlg, IDC_TITLENAME) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}*/
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_SIZE:
+	{
+		App->CLSB_Equity->Resize_3DView();
+		Ogre::Root::getSingletonPtr()->renderOneFrame();
+	}break;
+
+	case WM_COMMAND:
+	{
+
+		if (LOWORD(wParam) == ID_DEBUG_PREFERENCESWE)
+		{
+			App->CLSB_Preferences->Start_Preferences_Dlg();
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == ID_DEBUG_GENERAL)
+		{
+			if (App->CLSB_Ogre->RenderListener->ShowBoundingGroup == 1)
+			{
+				App->CLSB_Ogre->RenderListener->ShowBoundingGroup = 0;
+			}
+			else
+			{
+				App->CLSB_Ogre->RenderListener->ShowBoundingGroup = 1;
+			}
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == ID_DEBUG_ACTORTOWORLD)
+		{
+			App->CLSB_Loader->Load_ActorWorld();
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == ID_DEBUG_SHOWCAMERAPOSITIONS)
+		{
+			if (App->CLSB_ImGui->Show_Camera_Pos_F == 1)
+			{
+				App->CLSB_ImGui->Close_Camera_Pos();
+			}
+			else
+			{
+				App->CLSB_ImGui->Start_Camera_Pos();
+			}
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == ID_DEBUG_BOUNDINGBOX)
+		{
+			if (App->CLSB_Model->Model_Loaded == 1)
+			{
+				if (App->CLSB_ImGui->Show_BB_Data_F == 1)
+				{
+					App->CLSB_ImGui->Close_BB_Data();
+				}
+				else
+				{
+					App->CLSB_ImGui->Start_BB_Data();
+				}
+			}
+			return TRUE;
+		}
+
+		// File Import
+		if (LOWORD(wParam) == ID_IMPORT_GENESIS3DACT)
+		{
+			App->CLSB_Loader->RFActor_Loader();
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == ID_IMPORT_WAVEFRONTOBJ)
+		{
+			App->Clear_ErrorLog();
+			App->CLSB_Loader->LoadError = 0;
+
+			App->CLSB_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
+			App->CLSB_Loader->Assimp_Loader("Wavefront OBJ   *.obj\0*.obj\0", "Wavefront OBJ");
+
+			if (App->CLSB_Loader->LoadError == 1)
+			{
+				App->Say("Loaded With Errors");
+				App->CLSB_Dialogs->Start_ListData(1);
+			}
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == ID_IMPORT_WORLDEDITORPROJECT)
+		{
+			int Result = App->CLSB_Loader->Open_File_Model("GDSB File   *.Wepf\0*.Wepf\0", "GDSB File", NULL);
+			if (Result == 0)
+			{
+				return 1;
+			}
+
+			App->CLSB_Loader->Read_Project_File(App->CLSB_Loader->Path_FileName);
+			App->CLSB_Loader->Load_File_Wepf();
+
+			return TRUE;
+		}
+
+		// File Export
+		if (LOWORD(wParam) == ID_OGRE3D_MESH)
+		{
+			App->CLSB_Exporter->Ogre3D_Model();
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == ID_EXPORT_WAVEFRONTOBJ)
+		{
+			App->CLSB_Exporter->Object_Model();
+			return TRUE;
+		}
+
+		// File Clear Model
+		if (LOWORD(wParam) == ID_FILE_CLEARMODEL)
+		{
+			App->CLSB_Model->Clear_Model_And_Reset();
+			return TRUE;
+		}
+
+		// Camera
+		if (LOWORD(wParam) == ID_CAMERAMODE_FREE)
+		{
+			App->CLSB_Camera_EQ->Set_Camera_Mode(Enums::CamDetached);
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == ID_CAMERAMODE_MODEL)
+		{
+			App->CLSB_Camera_EQ->Set_Camera_Mode(Enums::CamModel);
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == ID_CAMERA_RESETVIEW)
+		{
+			App->CLSB_Camera_EQ->Reset_View();
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == ID_CAMERA_ZEROVIEW)
+		{
+			App->CLSB_Camera_EQ->Zero_View();
+			return TRUE;
+		}
+
+		/*if (LOWORD(wParam) == IDC_TEST)
+		{
+			App->CLSB_Ogre->OgreListener->StopOgre = 1;
+			App->CLSB_Ogre->OgreIsRunning = 0;
+			return TRUE;
+		}*/
+
+		if (LOWORD(wParam) == IDOK)
+		{
+
+			/*App->CLSB_Equity->EquitySB_Dialog_Created = 0;
+			EndDialog(hDlg, LOWORD(wParam));*/
+			App->CLSB_Equity->Show_Equity_Dialog(false);
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+
+			if (App->CLSB_Equity->Close_Equity_Flag == 1)
+			{
+				EndDialog(hDlg, LOWORD(wParam));
+				App->Get_Current_Document();
+				App->m_pDoc->OnCloseDocument();
+			}
+
+			App->CLSB_Equity->Show_Equity_Dialog(false);
+			return TRUE;
+		}
+	}
+
+	break;
+
+	}
+	return FALSE;
 }
 
 // *************************************************************************
@@ -838,12 +1052,10 @@ LRESULT CALLBACK SB_Equity::Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, 
 	switch (message)
 	{
 
-	/*case WM_ACTIVATE:
+	case WM_INITDIALOG:
 	{
-	
-		Beep(400, 50);
-		break;
-	}*/
+		return TRUE;
+	}
 
 	case WM_MOUSEWHEEL:
 	{

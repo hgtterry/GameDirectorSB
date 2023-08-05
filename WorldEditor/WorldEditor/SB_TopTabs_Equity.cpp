@@ -353,24 +353,12 @@ LRESULT CALLBACK SB_TopTabs_Equity::Camera_TB_Proc(HWND hDlg, UINT message, WPAR
 		if (LOWORD(wParam) == IDC_BT_TT_MODEL)
 		{
 			App->CLSB_TopTabs_Equity->Camera_Set_Model();
-
-			/*App->CLSB_Camera_EQ->Set_Camera_Mode(Enums::CamModel);
-			App->CLSB_TopTabs_Equity->Toggle_Camera_Model_Flag = 1;
-			App->CLSB_TopTabs_Equity->Toggle_Camera_Free_Flag = 0;
-
-			RedrawWindow(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);*/
 			return 1;
 		}
 
 		if (LOWORD(wParam) == IDC_BT_TT_FREE)
 		{
 			App->CLSB_TopTabs_Equity->Camera_Set_Free();
-
-			/*App->CLSB_Camera_EQ->Set_Camera_Mode(Enums::CamDetached);
-			App->CLSB_TopTabs_Equity->Toggle_Camera_Free_Flag = 1;
-			App->CLSB_TopTabs_Equity->Toggle_Camera_Model_Flag = 0;
-
-			RedrawWindow(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);*/
 			return 1;
 		}
 

@@ -137,6 +137,8 @@ SB_App::SB_App()
 
 	hMenu = NULL;
 
+	MainHwnd = NULL;
+	ViewGLhWnd = NULL;
 	// MFC
 	m_pMainFrame = NULL;
 	pCFusionDoc = NULL;

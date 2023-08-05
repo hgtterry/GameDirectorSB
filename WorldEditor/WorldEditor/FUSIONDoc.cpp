@@ -3512,7 +3512,7 @@ void CFusionDoc::OnBrushSelectedCopytocurrent()
 //	ConfigureCurrentTool();
 }
 
-BOOL CFusionDoc::DeleteSelectedBrushes(void)
+BOOL CFusionDoc::DeleteSelectedBrushes(void) // hgtterry DeleteSelectedBrushes
 {
     geBoolean	bAlteredCurrentGroup = GE_FALSE ;
     CEntityArray *Entities = Level_GetEntities (pLevel);

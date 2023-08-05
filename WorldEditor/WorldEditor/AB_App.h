@@ -243,7 +243,7 @@ public:
 
 	HINSTANCE hInst;
 	HWND MainHwnd;
-
+	HWND ViewGLhWnd;
 	HMENU hMenu;
 
 	//      MFC
