@@ -224,10 +224,8 @@ public:
 	void MoveTemplateBrush (geVec3d *);
 //	void ChangeGridSize(geFloat Increment, CView* pSender );
 	void UpdateGridInformation();
-	void DeleteCurrentThing();
 	void MoveEntity(geVec3d *);
 	void DoneMoveEntity();
-	void DeleteEntity(int EntityIndex);
 	void DoneRotateBrush();
 	void OnSelectedTypeCmdUI(CCmdUI* pCmdUI);
 	int AreBrushesSelected();
@@ -252,7 +250,6 @@ public:
 	void SelectOrthoRect(CPoint ptStart, CPoint ptEnd, ViewVars *v) ;
 	void SelectRay(CPoint point, ViewVars *v);
 	WadFileEntry* GetDibBitmap(const char *Name);
-	BOOL DeleteSelectedBrushes();
 	BOOL TempDeleteSelected(void);
 	int	MakeNewBrushGroup ( CWnd * pParent );
 	int FillBrushGroupCombo (CComboBox &cb);

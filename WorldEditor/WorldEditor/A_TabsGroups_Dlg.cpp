@@ -172,7 +172,7 @@ LRESULT CALLBACK A_TabsGroups_Dlg::Groups_Proc(HWND hDlg, UINT message, WPARAM w
 			if (Doit == 0)
 			{
 				App->CL_TabsGroups_Dlg->m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
-				App->CL_TabsGroups_Dlg->m_pDoc->DeleteCurrentThing();
+				App->CLSB_Doc->DeleteCurrentThing();
 			}
 
 			return TRUE;

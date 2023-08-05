@@ -174,8 +174,8 @@ bool SB_File_WE::Start_Load(const char* FileName, bool UseDialogLoader)
 	App->CL_TabsGroups_Dlg->Update_Dlg_SelectedBrushesCount();
 
 	// Delete All Bruses and Faces
-	App->m_pDoc->DeleteCurrentThing();
-
+	App->CLSB_Doc->DeleteCurrentThing();
+	
 	App->m_pDoc->SetTitle(" ");
 
 	bool Test = Open_3dt_File();
@@ -972,7 +972,7 @@ bool SB_File_WE::New_File()
 	App->CL_TabsGroups_Dlg->Update_Dlg_SelectedBrushesCount();
 
 	// Delete All Bruses and Faces
-	App->m_pDoc->DeleteCurrentThing();
+	App->CLSB_Doc->DeleteCurrentThing();
 
 	App->m_pDoc->SetTitle("X");
 

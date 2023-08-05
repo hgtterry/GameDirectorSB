@@ -2593,27 +2593,6 @@ void CFusionDoc::SetSelectedEntity( int ID )
 }
 //	End of CHANGE
 
-void CFusionDoc::DeleteEntity(int EntityIndex)
-{
-    CEntityArray *Entities;
-
-    // now delete the entity, we'll do the fixups later
-    Entities = Level_GetEntities (pLevel);
-
-    DeselectEntity (&(*Entities)[EntityIndex]);
-// changed QD Actors
-    Brush *b = (*Entities)[EntityIndex].GetActorBrush();
-    if(b!=NULL)
-    {
-        SelBrushList_Remove(pSelBrushes, b);
-        Level_RemoveBrush(pLevel, b);
-    }
-// end change
-    Entities->RemoveAt( EntityIndex );
-    SelState&=(~ENTITYCLEAR);
-    SelState|=(NumSelEntities >1)? MULTIENTITY : (NumSelEntities+1)<<7;
-}
-
 void CFusionDoc::AdjustEntityAngle( const ViewVars * v, const geFloat dx )
 {
     CEntity *	pEnt ;
@@ -3512,69 +3491,6 @@ void CFusionDoc::OnBrushSelectedCopytocurrent()
 //	ConfigureCurrentTool();
 }
 
-BOOL CFusionDoc::DeleteSelectedBrushes(void) // hgtterry DeleteSelectedBrushes
-{
-    geBoolean	bAlteredCurrentGroup = GE_FALSE ;
-    CEntityArray *Entities = Level_GetEntities (pLevel);
-
-    for(int Ent=0;Ent < Entities->GetSize() && (!(GetSelState() & NOENTITIES)); Ent++)
-    {
-        if((*Entities)[Ent].IsSelected ())
-        {
-            if( (*Entities)[Ent].IsCamera() == GE_FALSE )	// Exclude Cameras
-            {
-                if( (*Entities)[Ent].GetGroupId() == mCurrentGroup )
-                {
-                    bAlteredCurrentGroup = GE_TRUE ;
-                }
-                
-                DeleteEntity(Ent--);
-                SetModifiedFlag();
-            }
-        }
-    }
-
-    if(GetSelState() & ANYBRUSH)
-    {
-        int NumSelBrushes = SelBrushList_GetSize (pSelBrushes);
-        for(int i=0;i < NumSelBrushes;i++)
-        {
-            Brush *pBrush;
-
-            pBrush = SelBrushList_GetBrush (pSelBrushes, 0);
-// changed QD Actors
-// no chance to delete ActorBrushes!!!
-            if(strstr(App->CL_Brush->Brush_GetName(pBrush),".act")!=NULL)
-                continue;
-// end change
-            if( Brush_GetGroupId(pBrush) == mCurrentGroup )
-            {
-                bAlteredCurrentGroup = GE_TRUE ;
-            }
-            
-            Level_RemoveBrush (pLevel, pBrush);
-            SelBrushList_Remove (pSelBrushes, pBrush);
-            Brush_Destroy (&pBrush);
-        }
-
-        //turn off any operation tools
-        mCurrentTool = CURTOOL_NONE ;
-
-        SetModifiedFlag();
-    }
-
-    // Deleting items removed group members so we must update the UI
-    if( bAlteredCurrentGroup )
-    {
-        //mpMainFrame->m_wndTabControls->GrpTab->UpdateTabDisplay( this ) ;
-        App->CL_TabsGroups_Dlg->Fill_ListBox(); // hgtterry App->CL_TabsGroups_Dlg->Fill_ListBox()
-    }
-
-    UpdateSelected();
-
-    return FALSE;
-}
-
 BOOL CFusionDoc::TempDeleteSelected(void)
 {
     BOOL	ret;
@@ -3597,7 +3513,7 @@ BOOL CFusionDoc::TempDeleteSelected(void)
 
 void CFusionDoc::OnBrushSelectedDelete() 
 {
-    DeleteSelectedBrushes();
+    App->CLSB_Doc->DeleteSelectedBrushes();
 }
 
 
@@ -3824,41 +3740,6 @@ void CFusionDoc::OnGbspnowater()
     RebuildTrees();
     UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 }
-
-
-//==============================================================
-// This function will delete our current thing if we 
-// have something. e.g. entity or brush
-//==============================================================
-void CFusionDoc::DeleteCurrentThing()
-{
-    BOOL	ReBuild;
-
-//	if(mAdjustMode==ADJUST_MODE_BRUSH
-//		&& mModeTool==ID_GENERALSELECT)
-    if(mModeTool==ID_GENERALSELECT)
-    {
-        // set wait cursor
-        SetCursor(AfxGetApp()->LoadStandardCursor(IDC_WAIT));
-
-        ResetAllSelectedFaces();
-        ReBuild	=(GetSelState() & ANYBRUSH);
-        DeleteSelectedBrushes();
-
-        if(ReBuild && Level_RebuildBspAlways(pLevel))
-        {
-            UpdateAllViews(UAV_ALL3DVIEWS | REBUILD_QUICK, NULL, TRUE );
-        }
-        else
-        {
-            UpdateAllViews(UAV_ALL3DVIEWS, NULL);
-        }
-
-        // put cursor back
-        SetCursor(AfxGetApp()->LoadStandardCursor(IDC_ARROW));
-    }
-}
-
 
 //===============================================
 // this function will update the information on the status bar
@@ -5120,7 +5001,7 @@ void CFusionDoc::OnEditCut()
     BOOL	Flag	=(GetSelState() & ANYBRUSH);
 
     OnEditCopy();
-    DeleteSelectedBrushes();
+    App->CLSB_Doc->DeleteSelectedBrushes();
 
     if( Flag )
         UpdateAllViews(UAV_ALL3DVIEWS | REBUILD_QUICK, NULL);
@@ -5132,7 +5013,7 @@ void CFusionDoc::OnEditCut()
 
 void CFusionDoc::OnEditDelete() 
 {
-    DeleteCurrentThing ();
+    App->CLSB_Doc->DeleteCurrentThing();
     SetModifiedFlag();
 }
 
@@ -8212,9 +8093,8 @@ void CFusionDoc::OnUpdateFileExportGDSB(CCmdUI* pCmdUI)
 // *************************************************************************
 // * 						OnFileExportGDSB:- hgtterry					   *
 // *************************************************************************
-void CFusionDoc::OnFileExportGDSB() 
+void CFusionDoc::OnFileExportGDSB()
 {
-    //App->ABC_Export_RFW->OnFileExportGDSB();
     App->CLSB_Export_World->Export_World_GD3D(0);
     App->Say("Exported");
 }
