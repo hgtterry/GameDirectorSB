@@ -82,6 +82,7 @@ distribution.
 #include "SB_TopTabs_Equity.h"
 #include "SB_Dimensions.h"
 #include "SB_Preferences.h"
+#include "SB_Doc.h"
 //#include <stack>
 
 class SB_App
@@ -144,6 +145,7 @@ public:
 	SB_TopTabs_Equity*			CLSB_TopTabs_Equity;
 	SB_Dimensions*				CLSB_Dimensions;
 	SB_Preferences*				CLSB_Preferences;
+	SB_Doc*						CLSB_Doc;
 
 	bool InitApp(void);
 	void InitMFC(void);
