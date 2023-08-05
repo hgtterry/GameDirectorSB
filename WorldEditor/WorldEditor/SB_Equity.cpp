@@ -1045,6 +1045,168 @@ void SB_Equity::Init_Bmps_Globals(void)
 }
 
 // *************************************************************************
+// *		OgreView_3D_New_Proc:- Terry and Hazel Flanigan 2023 		   *
+// *************************************************************************
+LRESULT CALLBACK SB_Equity::Ogre3D_New_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+
+	case WM_INITDIALOG:
+	{
+		return TRUE;
+	}
+
+	case WM_MOUSEWHEEL:
+	{
+		if (App->CLSB_Ogre->OgreListener->Pl_LeftMouseDown == 0)
+		{
+			{
+				int zDelta = (short)HIWORD(wParam);    // wheel rotation
+
+				if (zDelta > 0)
+				{
+					App->CLSB_Ogre->OgreListener->Wheel = -1;
+				}
+				else if (zDelta < 0)
+				{
+					App->CLSB_Ogre->OgreListener->Wheel = 1;
+				}
+				return 1;
+			}
+		}
+	}
+
+	case WM_MOUSEMOVE: // ok up and running and we have a loop for mouse
+	{
+		App->CLSB_Ogre->m_imgui.mouseMoved();
+
+		//SetFocus(App->ViewGLhWnd);
+		break;
+	}
+
+	// Right Mouse Button
+	case WM_RBUTTONDOWN: // BERNIE_HEAR_FIRE 
+	{
+		App->CLSB_Ogre->m_imgui.mousePressed();
+
+		if (!ImGui::GetIO().WantCaptureMouse)
+		{
+			if (App->CLSB_Ogre->OgreIsRunning == 1)
+			{
+				POINT p;
+				GetCursorPos(&p);
+				ScreenToClient(App->MainHwnd, &p);
+				App->CursorPosX = p.x;
+				App->CursorPosY = p.y;
+				App->CLSB_Ogre->OgreListener->Pl_Cent500X = p.x;
+				App->CLSB_Ogre->OgreListener->Pl_Cent500Y = p.y;
+
+				SetCapture(App->ViewGLhWnd);
+				SetCursorPos(App->CursorPosX, App->CursorPosY);
+				App->CLSB_Ogre->OgreListener->Pl_RightMouseDown = 1;
+				App->CUR = SetCursor(NULL);
+				return 1;
+			}
+			else
+			{
+				App->CLSB_Ogre->OgreListener->Pl_LeftMouseDown = 1;
+			}
+
+		}
+
+		return 1;
+	}
+	case WM_RBUTTONUP:
+	{
+		App->CLSB_Ogre->m_imgui.mousePressed();
+
+		if (App->CLSB_Ogre->OgreIsRunning == 1)
+		{
+			ReleaseCapture();
+			App->CLSB_Ogre->OgreListener->Pl_RightMouseDown = 0;
+			SetCursor(App->CUR);
+			return 1;
+		}
+
+		return 1;
+	}
+
+	// Left Mouse Button
+	case WM_LBUTTONDOWN: // BERNIE_HEAR_FIRE 
+	{
+		App->CLSB_Ogre->m_imgui.mousePressed();
+
+		if (!ImGui::GetIO().WantCaptureMouse)
+		{
+			if (App->CLSB_Ogre->OgreIsRunning == 1)
+			{
+
+				POINT p;
+				GetCursorPos(&p);
+				ScreenToClient(App->MainHwnd, &p);
+				App->CursorPosX = p.x;
+				App->CursorPosY = p.y;
+				App->CLSB_Ogre->OgreListener->Pl_Cent500X = p.x;
+				App->CLSB_Ogre->OgreListener->Pl_Cent500Y = p.y;
+
+				SetCapture(App->ViewGLhWnd);// Bernie
+				SetCursorPos(App->CursorPosX, App->CursorPosY);
+
+				App->CLSB_Ogre->OgreListener->Pl_LeftMouseDown = 1;
+
+				App->CUR = SetCursor(NULL);
+
+				return 1;
+			}
+			else
+			{
+				App->CLSB_Ogre->OgreListener->Pl_LeftMouseDown = 1;
+			}
+		}
+
+
+		return 1;
+	}
+
+	case WM_LBUTTONUP:
+	{
+		App->CLSB_Ogre->m_imgui.mouseReleased();
+
+		if (App->CLSB_Ogre->OgreIsRunning == 1)
+		{
+			ReleaseCapture();
+			App->CLSB_Ogre->OgreListener->Pl_LeftMouseDown = 0;
+			SetCursor(App->CUR);
+			return 1;
+		}
+
+		return 1;
+	}
+	//case WM_KEYDOWN:
+	//	switch (wParam)
+	//	{
+	//	case 'C':
+	//		if (GetAsyncKeyState(VK_CONTROL))
+	//		{
+	//			//		//		App->CL10_Objects_Com->Copy_Object();
+	//			//		//		return 1;
+	//		}
+	//	case 'V':
+	//		if (GetAsyncKeyState(VK_CONTROL))
+	//		{
+	//			//		//		App->CL10_Objects_Com->Paste_Object();
+	//			//		//		return 1;
+	//		}
+	//		//	return 1;
+	//		//	//	// more keys here
+	//	}break;
+	}
+
+	return DefWindowProc(hDlg, message, wParam, lParam);
+}
+
+// *************************************************************************
 // *		OgreView_3D_Proc:- Terry and Hazel Flanigan 2023 			   *
 // *************************************************************************
 LRESULT CALLBACK SB_Equity::Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
@@ -1217,8 +1379,15 @@ void SB_Equity::Resize_3DView()
 	int X = rcl.right-10;
 	int Y = rcl.bottom - 90;
 
-	SetWindowPos(App->CLSB_Ogre->Ogre_Window_hWnd, NULL, 4, 80, X, Y, SWP_NOZORDER);
-
+	if (App->New_Equity_Flag == 1)
+	{
+		SetWindowPos(App->ViewGLhWnd, NULL, 4, 80, X, Y, SWP_NOZORDER);
+	}
+	else
+	{
+		SetWindowPos(App->CLSB_Ogre->Ogre_Window_hWnd, NULL, 4, 80, X, Y, SWP_NOZORDER);
+	}
+	
 	App->CLSB_Ogre->mWindow->windowMovedOrResized();
 	App->CLSB_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CLSB_Ogre->mWindow->getWidth() / (Ogre::Real)App->CLSB_Ogre->mWindow->getHeight());
 	App->CLSB_Ogre->mCamera->yaw(Ogre::Radian(0));

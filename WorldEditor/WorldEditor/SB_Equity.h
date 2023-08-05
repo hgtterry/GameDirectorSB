@@ -29,6 +29,7 @@ public:
 	Ogre::Vector3 Position_Offsets;
 
 	static LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Ogre3D_New_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 private:
 	static LRESULT CALLBACK Equity_Dialog_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);

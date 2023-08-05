@@ -385,7 +385,7 @@ BOOL CFusionApp::InitInstance() // hgtterry InitInstance
 		App->CLSB_Ogre->InitOgre();
 
 		int test = 0;
-		test = SetWindowLong(App->CLSB_Ogre->RenderHwnd, GWL_WNDPROC, (LONG)App->CLSB_Equity->Ogre3D_Proc);
+		test = SetWindowLong(App->CLSB_Ogre->RenderHwnd, GWL_WNDPROC, (LONG)App->CLSB_Equity->Ogre3D_New_Proc);
 
 		if (!test)
 		{
