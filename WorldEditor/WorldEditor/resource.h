@@ -773,7 +773,10 @@
 #define IDC_CK_JUSTEQUITY               1517
 #define IDC_CBPOSXDELTA3                1518
 #define IDC_CK_NEWEQUITY                1518
+#define IDC_SBFORWARDBACK               1518
 #define IDC_CBPOSYDELTA3                1519
+#define IDC_SCROLLBAR2                  1519
+#define IDC_SBLEFTRIGHT                 1519
 #define IDC_CBPOSZDELTA3                1520
 #define IDC_SBPOSY3                     1521
 #define IDC_SBPOSZ3                     1522
@@ -986,7 +989,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        328
 #define _APS_NEXT_COMMAND_VALUE         33086
-#define _APS_NEXT_CONTROL_VALUE         1518
+#define _APS_NEXT_CONTROL_VALUE         1520
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

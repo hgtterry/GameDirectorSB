@@ -404,6 +404,8 @@ protected:
 	afx_msg void OnToolsToggleadjustmode();
 	afx_msg void OnUpdateToolsToggleadjustmode(CCmdUI* pCmdUI);
 	afx_msg void OnLeveloptions();
+
+	public:
 	afx_msg void OnCameraForward();
 	afx_msg void OnCameraBack();
 	afx_msg void OnCameraLeft();
@@ -412,6 +414,8 @@ protected:
 	afx_msg void OnCameraLookDown();
 	afx_msg void OnCameraUp();
 	afx_msg void OnCameraDown();
+	protected:
+
 	afx_msg void OnFileExport();
 
 	afx_msg void OnFileExportGDSB(); // hgtterry [100123]

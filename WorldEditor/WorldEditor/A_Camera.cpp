@@ -99,6 +99,9 @@ LRESULT CALLBACK SB_Camera_WE::Move_Camera_Proc(HWND hDlg, UINT message, WPARAM 
 		SendDlgItemMessage(hDlg, IDC_BTRESETPOSITION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BTRESETANGLES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		char buf[255];
 
 		sprintf(buf, "%f", App->CLSB_Camera_WE->CameraPosition.X);
@@ -227,26 +230,85 @@ LRESULT CALLBACK SB_Camera_WE::Move_Camera_Proc(HWND hDlg, UINT message, WPARAM 
 			return TRUE;
 		}
 
+		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		{
+			App->Custom_Button_Normal(item);
+			return TRUE;
+		}
+
+		if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
+		{
+			App->Custom_Button_Normal(item);
+			return TRUE;
+		}
+
 		return TRUE;
 	}
 
+	case WM_VSCROLL:
+	{
+		// -------- Scale X
+		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBFORWARDBACK))
+		{
+			switch ((int)LOWORD(wParam))
+			{
+			case SB_LINEUP:
+			{
+				App->m_pDoc->OnCameraForward();
+				break;
+			}
+
+			case SB_LINEDOWN:
+			{
+				App->m_pDoc->OnCameraBack();
+				break;
+			}
+			}
+
+			App->CLSB_Camera_WE->Get_Camera_Position();
+			App->CLSB_Camera_WE->Update_Dlg(hDlg);
+
+			return 0;
+		}
+
+		return 0;
+	}
+
+	case WM_HSCROLL:
+	{
+		// -------- Scale X
+		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBLEFTRIGHT))
+		{
+			switch ((int)LOWORD(wParam))
+			{
+			case SB_LINERIGHT:
+			{
+				App->m_pDoc->OnCameraRight();
+				break;
+			}
+
+			case SB_LINELEFT:
+			{
+				App->m_pDoc->OnCameraLeft();
+				break;
+			}
+			}
+
+			App->CLSB_Camera_WE->Get_Camera_Position();
+			App->CLSB_Camera_WE->Update_Dlg(hDlg);
+
+			return 0;
+		}
+
+		return 0;
+	}
 	case WM_COMMAND:
 
 		if (LOWORD(wParam) == IDC_BTRESETANGLES)
 		{
 	
 			App->CLSB_Camera_WE->Reset_Camera_Angles();
-
-			char buf[100];
-
-			sprintf(buf, "%f", App->CLSB_Camera_WE->Angles.X);
-			SetDlgItemText(hDlg, IDC_EDCAMANGLEX,buf);
-
-			sprintf(buf, "%f", App->CLSB_Camera_WE->Angles.Y);
-			SetDlgItemText(hDlg, IDC_EDCAMANGLEY,buf);
-
-			sprintf(buf, "%f", App->CLSB_Camera_WE->Angles.Z);
-			SetDlgItemText(hDlg, IDC_EDCAMANGLEZ,buf);
+			App->CLSB_Camera_WE->Update_Dlg(hDlg);
 
 			return TRUE;
 		}
@@ -255,18 +317,8 @@ LRESULT CALLBACK SB_Camera_WE::Move_Camera_Proc(HWND hDlg, UINT message, WPARAM 
 		{
 	
 			App->CLSB_Camera_WE->Reset_Camera_Position();
-
-			char buf[100];
-
-			sprintf(buf, "%f", App->CLSB_Camera_WE->CameraPosition.X);
-			SetDlgItemText(hDlg, IDC_EDCAMX,buf);
-
-			sprintf(buf, "%f", App->CLSB_Camera_WE->CameraPosition.Y);
-			SetDlgItemText(hDlg, IDC_EDCAMY,buf);
-
-			sprintf(buf, "%f", App->CLSB_Camera_WE->CameraPosition.Z);
-			SetDlgItemText(hDlg, IDC_EDCAMZ,buf);
-
+			App->CLSB_Camera_WE->Update_Dlg(hDlg);
+		
 			return TRUE;
 		}
 		
@@ -301,6 +353,32 @@ LRESULT CALLBACK SB_Camera_WE::Move_Camera_Proc(HWND hDlg, UINT message, WPARAM 
 		break;
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *			Update_Dlg:- Terry and Hazel Flanigan 2023			  	   *
+// *************************************************************************
+void SB_Camera_WE::Update_Dlg(HWND hDlg)
+{
+	char buf[100];
+
+	sprintf(buf, "%f", pCameraEntity->mOrigin.X);
+	SetDlgItemText(hDlg, IDC_EDCAMX, buf);
+
+	sprintf(buf, "%f", pCameraEntity->mOrigin.Y);
+	SetDlgItemText(hDlg, IDC_EDCAMY, buf);
+
+	sprintf(buf, "%f", pCameraEntity->mOrigin.Z);
+	SetDlgItemText(hDlg, IDC_EDCAMZ, buf);
+
+	sprintf(buf, "%f", App->CLSB_Camera_WE->Angles.X);
+	SetDlgItemText(hDlg, IDC_EDCAMANGLEX, buf);
+
+	sprintf(buf, "%f", App->CLSB_Camera_WE->Angles.Y);
+	SetDlgItemText(hDlg, IDC_EDCAMANGLEY, buf);
+
+	sprintf(buf, "%f", App->CLSB_Camera_WE->Angles.Z);
+	SetDlgItemText(hDlg, IDC_EDCAMANGLEZ, buf);
 }
 
 // *************************************************************************

@@ -46,5 +46,6 @@ private:
 	geVec3d CameraPosition;
 	geVec3d Angles;
 
+	void Update_Dlg(HWND hDlg);
 	void Get_Values_Dlg(HWND hDlg);
 };

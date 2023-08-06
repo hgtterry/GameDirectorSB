@@ -1,5 +1,5 @@
 3dtVersion 1.34
-TextureLib "C:\\Users\\Acer\\Desktop\\GDSB_Git\\trunk\\Bin\\Levels\\Equity.txl"
+TextureLib "C:\\Users\\Terry\\Desktop\\GDSB_Git\\trunk\\Bin\\Levels\\Equity.txl"
 HeadersDir "C:\\Users\\Acer\\Desktop\\SB_GD\\Equity-WorldEditor\\Deliver\\Headers"
 ActorsDir "C:\\Users\\Acer\\Desktop\\SB_GD\\Equity-WorldEditor\\Deliver\\Actors"
 PawnIni "C:\\Users\\Acer\\Desktop\\SB_GD\\Equity-WorldEditor\\Deliver\\Pawn.ini"
@@ -386,7 +386,7 @@ Brush "Centre"
 	Type 2
 	BrushFaces 6
 		NumPoints 4
-		Flags 784
+		Flags 768
 		Light 300
 		MipMapBias 1.000000
 		Translucency 255.000000
@@ -400,7 +400,7 @@ Brush "Centre"
 	Transform	1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 0.000000 
 	Pos	0.000000 0.000000 0.000000 
 		NumPoints 4
-		Flags 784
+		Flags 768
 		Light 300
 		MipMapBias 1.000000
 		Translucency 255.000000
@@ -414,7 +414,7 @@ Brush "Centre"
 	Transform	1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 0.000000 
 	Pos	0.000000 0.000000 0.000000 
 		NumPoints 4
-		Flags 784
+		Flags 768
 		Light 300
 		MipMapBias 1.000000
 		Translucency 255.000000
@@ -428,7 +428,7 @@ Brush "Centre"
 	Transform	1.000000 0.000000 0.000000 0.000000 -1.000000 -0.000000 0.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 
 	Pos	0.000000 0.000000 0.000000 
 		NumPoints 4
-		Flags 784
+		Flags 768
 		Light 300
 		MipMapBias 1.000000
 		Translucency 255.000000
@@ -442,7 +442,7 @@ Brush "Centre"
 	Transform	1.000000 0.000000 0.000000 0.000000 -1.000000 -0.000000 0.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 
 	Pos	0.000000 0.000000 0.000000 
 		NumPoints 4
-		Flags 784
+		Flags 768
 		Light 300
 		MipMapBias 1.000000
 		Translucency 255.000000
@@ -456,7 +456,7 @@ Brush "Centre"
 	Transform	0.000000 0.000000 1.000000 0.000000 1.000000 0.000000 -1.000000 0.000000 0.000000 0.000000 0.000000 0.000000 
 	Pos	0.000000 0.000000 0.000000 
 		NumPoints 4
-		Flags 784
+		Flags 768
 		Light 300
 		MipMapBias 1.000000
 		Translucency 255.000000
