@@ -53,13 +53,14 @@ void SB_Camera_WE::Start_Move_Camera()
 {
 	App->Get_Current_Document();
 
-	pCameraEntity = App->m_pDoc->FindCameraEntity();
+	pCameraEntity = App->CLSB_Camera_WE->FindCameraEntity();
 
 	CameraPosition = pCameraEntity->mOrigin;
 
 	DialogBox(App->hInst, (LPCTSTR)IDD_SB_MOVECAMERA, App->MainHwnd, (DLGPROC)Move_Camera_Proc);
 
 }
+
 // *************************************************************************
 // *        Move_Camera_Proc:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
@@ -331,13 +332,40 @@ void SB_Camera_WE::Get_Values_Dlg(HWND hDlg)
 }
 
 // *************************************************************************
+// *		 FindCameraEntity:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+CEntity* SB_Camera_WE::FindCameraEntity()
+{
+	
+	App->Get_Current_Document();
+
+	CEntityArray* Entities = Level_GetEntities(App->m_pDoc->pLevel);
+	int i;
+	int j = Entities->GetSize();
+
+	
+	for (i = 0; i < j; ++i)
+	{
+		CEntity* pEnt;
+
+		pEnt = &(*Entities)[i];
+		if (pEnt->IsCamera())
+		{
+			return pEnt;
+		}
+	}
+
+	return NULL;
+}
+
+// *************************************************************************
 // *		 Get_Camera_Position:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
 geVec3d SB_Camera_WE::Get_Camera_Position()
 {
 	App->Get_Current_Document();
 
-	pCameraEntity = App->m_pDoc->FindCameraEntity();
+	pCameraEntity = App->CLSB_Camera_WE->FindCameraEntity();
 
 	return pCameraEntity->mOrigin;
 }
@@ -349,7 +377,7 @@ void SB_Camera_WE::Reset_Camera_Position()
 {
 	App->Get_Current_Document();
 
-	pCameraEntity = App->m_pDoc->FindCameraEntity();
+	pCameraEntity = App->CLSB_Camera_WE->FindCameraEntity();
 	
 	App->CLSB_Camera_WE->CameraPosition.X = 0;
 	App->CLSB_Camera_WE->CameraPosition.Y = 0;
@@ -416,7 +444,7 @@ void SB_Camera_WE::Reset_Camera_Angles()
 {
 	App->Get_Current_Document();
 
-	pCameraEntity = App->m_pDoc->FindCameraEntity();
+	pCameraEntity = App->CLSB_Camera_WE->FindCameraEntity();
 	
 	App->CLSB_Camera_WE->Angles.X = 3.141593; // Radians
 	App->CLSB_Camera_WE->Angles.Y = 0;
@@ -426,5 +454,41 @@ void SB_Camera_WE::Reset_Camera_Angles()
 
 	App->m_pDoc->SetRenderedViewCamera(&(App->CLSB_Camera_WE->pCameraEntity->mOrigin), &App->CLSB_Camera_WE->Angles);
 	App->m_pDoc->UpdateAllViews(UAV_ALLVIEWS, NULL);
+
+}
+
+// *************************************************************************
+// *	  		Zero_Camera:- Terry and Hazel Flanigan 2023				   *
+// *************************************************************************
+void SB_Camera_WE::Zero_Camera()
+{
+	App->Get_Current_Document();
+
+	CEntity* pCameraEntity = App->CLSB_Camera_WE->FindCameraEntity();
+
+	if (pCameraEntity)
+	{
+		App->m_pDoc->SetModifiedFlag();
+
+		pCameraEntity->mOrigin.X = 0;
+		pCameraEntity->mOrigin.Y = 0;
+		pCameraEntity->mOrigin.Z = 0;
+
+		geVec3d Angles;
+
+		Angles.X = 3.141593;
+		Angles.Y = 0;
+		Angles.Z = 0;
+
+		pCameraEntity->SetAngles(&Angles, Level_GetEntityDefs(App->m_pDoc->pLevel));
+
+		Angles.X = 3.141593;
+		Angles.Y = 0;
+		Angles.Z = 0;
+
+		App->m_pDoc->SetRenderedViewCamera(&(pCameraEntity->mOrigin), &Angles);
+
+		App->m_pDoc->UpdateAllViews(UAV_ALLVIEWS, NULL);
+	}
 
 }

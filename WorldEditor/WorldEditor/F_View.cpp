@@ -693,7 +693,7 @@ void F_View::RenderOrthoView(ViewVars *v, CDC *pDC, HDC MemoryhDC) // hgtterry R
 	}
 
 	//// find and render the camera entity
-	CEntity *pCameraEntity = m_pDoc->FindCameraEntity ();
+	CEntity *pCameraEntity = App->CLSB_Camera_WE->FindCameraEntity();
 
 	if ((pCameraEntity != NULL))
 	{

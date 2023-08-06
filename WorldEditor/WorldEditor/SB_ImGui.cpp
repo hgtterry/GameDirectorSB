@@ -277,7 +277,7 @@ void SB_ImGui::Start_Camera_Pos(void)
 {
 	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
 
-	pCameraEntity = m_pDoc->FindCameraEntity();
+	pCameraEntity = App->CLSB_Camera_WE->FindCameraEntity();
 
 	//CameraPosition = pCameraEntity->mOrigin;
 

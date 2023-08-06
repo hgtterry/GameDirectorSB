@@ -591,7 +591,7 @@ bool SB_Export_World::Write_Project_File(char* Path_And_File,const char* Filenam
 	fprintf(WriteScene, "%s%s\n", "Txl_Path_FileName=", App->CL_World->mCurrent_TXL_FilePath);
 	fprintf(WriteScene, "%s\n", " ");
 
-	CEntity *pCameraEntity = m_pDoc->FindCameraEntity();
+	CEntity *pCameraEntity = App->CLSB_Camera_WE->FindCameraEntity();
 	geVec3d CameraPosition;
 	CameraPosition = pCameraEntity->mOrigin;
 

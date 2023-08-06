@@ -360,7 +360,7 @@ CFusionDoc::CFusionDoc() : CDocument (),
 void CFusionDoc::AddCameraEntityToLevel (void)
 {
 
-    CEntity* pCameraEntity = FindCameraEntity();
+    CEntity* pCameraEntity = App->CLSB_Camera_WE->FindCameraEntity();
     if (!pCameraEntity)
     {
         // Make default camera entity
@@ -1935,28 +1935,6 @@ static geBoolean fdocBrushNotDetail (const Brush *b)
 static geBoolean fdocBrushIsSubtract (const Brush *b)
 {
     return (Brush_IsSubtract (b) && !Brush_IsHollowCut (b));
-}
-
-CEntity *CFusionDoc::FindCameraEntity (void)
-{
-//	if (pCameraEntity) return pCameraEntity;
-
-    CEntityArray *Entities = Level_GetEntities (pLevel);
-    int i;
-    int j = Entities->GetSize ();
-
-    for (i = 0; i < j; ++i)
-    {
-        CEntity *pEnt;
-
-        pEnt = &(*Entities)[i];
-        if (pEnt->IsCamera ())
-        {
-            return pEnt;
-        }
-    }
-    return NULL;
-
 }
 
 void CFusionDoc::OnUpdateBrushAdjustmentmode(CCmdUI* pCmdUI) 
@@ -4266,7 +4244,7 @@ void CFusionDoc::DoneRotate(void)
 
     // Find the camera entity and update the rendered view's camera position
     {
-        CEntity *pCameraEntity = FindCameraEntity ();
+        CEntity *pCameraEntity = App->CLSB_Camera_WE->FindCameraEntity();
 
         if (pCameraEntity != NULL)
         {
@@ -4758,15 +4736,6 @@ void CFusionDoc::UpdateSelected(void)
 
 //void CFusionDoc::NullBrushAttributes(void){  mpBrushAttributes=NULL;  }
 
-void CFusionDoc::AddBrushToWorld(void)
-{
-    if(TempEnt || !Brush_IsSubtract (CurBrush))
-        OnBrushAddtoworld();
-    else
-        OnBrushSubtractfromworld();
-    SetModifiedFlag();
-}
-
 void CFusionDoc::ResetAllSelectedBrushes(void)
 {
     SelBrushList_RemoveAll (pSelBrushes);
@@ -5013,8 +4982,7 @@ void CFusionDoc::OnEditCut()
 
 void CFusionDoc::OnEditDelete() 
 {
-    App->CLSB_Doc->DeleteCurrentThing();
-    SetModifiedFlag();
+    App->CLSB_Doc->OnEditDelete();
 }
 
 void CFusionDoc::OnUpdateEditCut(CCmdUI* pCmdUI) 
@@ -7173,7 +7141,7 @@ void CFusionDoc::OnCameraForward()
 {
     SetModifiedFlag();
 
-    CEntity *pCameraEntity = FindCameraEntity ();
+    CEntity *pCameraEntity = App->CLSB_Camera_WE->FindCameraEntity();
 
     if (pCameraEntity)
     {
@@ -7205,7 +7173,7 @@ void CFusionDoc::OnCameraBack()
 {
     SetModifiedFlag();
 
-    CEntity *pCameraEntity = FindCameraEntity ();
+    CEntity *pCameraEntity = App->CLSB_Camera_WE->FindCameraEntity();
 
     if (pCameraEntity)
     {
@@ -7237,7 +7205,7 @@ void CFusionDoc::OnCameraLeft()
 {
     SetModifiedFlag();
 
-    CEntity *pCameraEntity = FindCameraEntity ();
+    CEntity *pCameraEntity = App->CLSB_Camera_WE->FindCameraEntity();
 
     if (pCameraEntity)
     {
@@ -7254,7 +7222,7 @@ void CFusionDoc::OnCameraRight()
 {
     SetModifiedFlag();
 
-    CEntity *pCameraEntity = FindCameraEntity ();
+    CEntity *pCameraEntity = App->CLSB_Camera_WE->FindCameraEntity();
 
     if (pCameraEntity)
     {
@@ -7271,7 +7239,7 @@ void CFusionDoc::OnCameraLookUp()
 {
     SetModifiedFlag();
 
-    CEntity *pCameraEntity = FindCameraEntity ();
+    CEntity *pCameraEntity = App->CLSB_Camera_WE->FindCameraEntity();
 
     if (pCameraEntity)
     {
@@ -7291,7 +7259,7 @@ void CFusionDoc::OnCameraLookDown()
 {
     SetModifiedFlag();
 
-    CEntity *pCameraEntity = FindCameraEntity ();
+    CEntity *pCameraEntity = App->CLSB_Camera_WE->FindCameraEntity();
 
     if (pCameraEntity)
     {
@@ -7311,7 +7279,7 @@ void CFusionDoc::OnCameraUp()
 {
     SetModifiedFlag();
 
-    CEntity *pCameraEntity = FindCameraEntity ();
+    CEntity *pCameraEntity = App->CLSB_Camera_WE->FindCameraEntity();
 
     if (pCameraEntity)
     {
@@ -7327,7 +7295,7 @@ void CFusionDoc::OnCameraDown()
 {
     SetModifiedFlag();
 
-    CEntity *pCameraEntity = FindCameraEntity ();
+    CEntity *pCameraEntity = App->CLSB_Camera_WE->FindCameraEntity();
 
     if (pCameraEntity)
     {
@@ -8293,24 +8261,13 @@ CEntity* CFusionDoc::GetSelectedEntity()
 // make sure when we add more view types that we update this.
 void CFusionDoc::OnViewTypeWireFrame()
 {
-    SetModifiedFlag();
+    App->CLSB_Doc->OnViewTypeWireFrame();
 
-    CFusionView* pFusionView = GetCameraView();
-    if (!pFusionView)
-        return;
-    
-    pFusionView->OnViewType(ID_VIEW_3DWIREFRAME);
 }
 
 void CFusionDoc::OnViewTypeTexture()
 {
-    SetModifiedFlag();
-
-    CFusionView* pFusionView = GetCameraView();
-    if (!pFusionView)
-        return;
-    
-    pFusionView->OnViewType(ID_VIEW_TEXTUREVIEW);
+    App->CLSB_Doc->OnViewTypeTexture();
 }
 
 void CFusionDoc::OnEquity_SetView() // GD_Terry [090123]
@@ -8387,7 +8344,7 @@ CFusionView* CFusionDoc::GetCameraView()
 
 void CFusionDoc::OnCameraCenteronselection() 
 {
-    CEntity *pCameraEntity = FindCameraEntity ();
+    CEntity *pCameraEntity = App->CLSB_Camera_WE->FindCameraEntity();
     if (!pCameraEntity)
         return;
 
@@ -8513,32 +8470,8 @@ void CFusionDoc::OnPlaceSpotLight()
 
 void CFusionDoc::Zero_Camera() 
 {
-    CEntity *pCameraEntity = FindCameraEntity ();
-
-    if (pCameraEntity)
-    {
-        SetModifiedFlag();
-        
-        pCameraEntity->mOrigin.X = 0;
-        pCameraEntity->mOrigin.Y = 0;
-        pCameraEntity->mOrigin.Z = 0;
-
-        geVec3d Angles;
-
-        Angles.X = 3.141593;
-        Angles.Y = 0;
-        Angles.Z = 0;
-
-        pCameraEntity->SetAngles( &Angles, Level_GetEntityDefs (pLevel) );
-
-        Angles.X = 3.141593;
-        Angles.Y = 0;
-        Angles.Z = 0;
-
-        SetRenderedViewCamera( &(pCameraEntity->mOrigin), &Angles) ;
-
-        UpdateAllViews( UAV_ALLVIEWS, NULL );
-    }
+    App->CLSB_Camera_WE->Zero_Camera();
+ 
 }
 
 void CFusionDoc::OnCameraGoto() 

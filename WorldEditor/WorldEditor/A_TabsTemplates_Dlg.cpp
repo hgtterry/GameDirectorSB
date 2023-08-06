@@ -160,7 +160,7 @@ LRESULT CALLBACK A_TabsTemplates_Dlg::Templates_Proc(HWND hDlg, UINT message, WP
 
 			if (App->CL_TabsTemplates_Dlg->m_pDoc->mModeTool == ID_TOOLS_TEMPLATE)
 			{
-				App->CL_TabsTemplates_Dlg->m_pDoc->AddBrushToWorld();
+				App->CLSB_Doc->AddBrushToWorld();
 				App->CL_TabsTemplates_Dlg->m_pDoc->SetModifiedFlag();
 			}
 

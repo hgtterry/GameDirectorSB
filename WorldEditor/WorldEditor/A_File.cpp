@@ -375,7 +375,7 @@ void SB_File_WE::CreateNewTemplateBrush(Brush *pBrush)
 // *************************************************************************
 void SB_File_WE::AddCameraEntityToLevel(void)
 {
-	CEntity* pCameraEntity = App->m_pDoc->FindCameraEntity();
+	CEntity* pCameraEntity = App->CLSB_Camera_WE->FindCameraEntity();
 	if (!pCameraEntity)
 	{
 		// Make default camera entity

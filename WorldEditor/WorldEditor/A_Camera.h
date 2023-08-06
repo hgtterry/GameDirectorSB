@@ -32,6 +32,8 @@ public:
 	void Start_Move_Camera();
 	geVec3d Get_Camera_Position();
 
+	CEntity* FindCameraEntity();
+	void Zero_Camera();
 	void Reset_Camera_Position();
 	void Reset_Camera_Angles();
 

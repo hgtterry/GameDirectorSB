@@ -206,7 +206,6 @@ public:
 	void MoveToNearest(void);
 	void ResetAllSelectedFaces();
 	void ResetAllSelectedBrushes();
-	void AddBrushToWorld();
 	void NullBrushAttributes();
 	void ConfigureCurrentTool();
 	void UpdateCameraEntity( const ViewVars *v ) ;
@@ -301,8 +300,6 @@ public:
 	const char* ReturnThingUnderPoint(CPoint point, ViewVars *v);
 	const char* GetObjectName3D(CPoint point, ViewVars *v);
 
-	CEntity *FindCameraEntity (void);
-
 	CEntity* GetSelectedEntity();
 
 	void OnUpdateViewType(CCmdUI* pCmdUI);
@@ -366,7 +363,9 @@ protected:
 	afx_msg void OnUpdateConstrainhollows(CCmdUI* pCmdUI);
 	afx_msg void OnGeneralselect();
 	afx_msg void OnUpdateGeneralselect(CCmdUI* pCmdUI);
+	public:
 	afx_msg void OnBrushSubtractfromworld();
+	protected:
 	afx_msg void OnEditCopy();
 	afx_msg void OnEditPaste();
 	afx_msg void OnUpdateEditCopy(CCmdUI* pCmdUI);

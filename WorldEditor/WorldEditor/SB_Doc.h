@@ -5,9 +5,15 @@ public:
 	SB_Doc(void);
 	~SB_Doc(void);
 
+	void AddBrushToWorld();
+
 	bool DeleteSelectedBrushes();
 	void DeleteCurrentThing();
 	void DeleteEntity(int EntityIndex);
+
+	void OnEditDelete();
+	void OnViewTypeWireFrame();
+	void OnViewTypeTexture();
 
 };
 

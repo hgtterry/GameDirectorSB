@@ -275,6 +275,8 @@ BOOL CFusionApp::InitInstance() // hgtterry InitInstance
 		return FALSE;
 	m_pMainWnd = pMainFrame;
 
+	App->InitMFC();
+
 	// Enable drag/drop open
 	m_pMainWnd->DragAcceptFiles();
 
@@ -363,7 +365,7 @@ BOOL CFusionApp::InitInstance() // hgtterry InitInstance
 	
 	pMainFrame->IsStartingApp = 0;
 
-	App->InitMFC();
+	//App->InitMFC();
 	App->CL_World->Set_Paths();
 	App->CUR = GetCursor();
 

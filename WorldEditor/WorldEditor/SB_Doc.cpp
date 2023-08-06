@@ -2,12 +2,33 @@
 #include "AB_App.h"
 #include "SB_Doc.h"
 
+#include "FUSIONView.h"
+
 SB_Doc::SB_Doc(void)
 {
 }
 
 SB_Doc::~SB_Doc(void)
 {
+}
+
+// *************************************************************************
+// *			        	AddBrushToWorld	                           	   *
+// *************************************************************************
+void SB_Doc::AddBrushToWorld()
+{
+    App->Get_Current_Document();
+
+    if (App->m_pDoc->TempEnt || !Brush_IsSubtract(App->m_pDoc->CurBrush))
+    {
+        App->m_pDoc->OnBrushAddtoworld();
+    }
+    else
+    {
+        App->m_pDoc->OnBrushSubtractfromworld();
+    }
+
+    App->m_pDoc->SetModifiedFlag();
 }
 
 // *************************************************************************
@@ -133,4 +154,49 @@ void SB_Doc::DeleteEntity(int EntityIndex)
     Entities->RemoveAt(EntityIndex);
     App->m_pDoc->SelState &= (~ENTITYCLEAR);
     App->m_pDoc->SelState |= (App->m_pDoc->NumSelEntities > 1) ? MULTIENTITY : (App->m_pDoc->NumSelEntities + 1) << 7;
+}
+
+// *************************************************************************
+// *			        	    OnEditDelete                           	   *
+// *************************************************************************
+void SB_Doc::OnEditDelete()
+{
+    App->Get_Current_Document();
+
+    DeleteCurrentThing();
+    App->m_pDoc->SetModifiedFlag();
+}
+
+// *************************************************************************
+// *			        	    OnViewTypeWireFrame                    	   *
+// *************************************************************************
+void SB_Doc::OnViewTypeWireFrame()
+{
+    App->Get_Current_Document();
+
+    App->m_pDoc->SetModifiedFlag();
+
+    CFusionView* pFusionView = App->m_pDoc->GetCameraView();
+    if (!pFusionView)
+        return;
+
+    pFusionView->OnViewType(ID_VIEW_3DWIREFRAME);
+   
+}
+
+// *************************************************************************
+// *			        	    OnViewTypeTexture                    	   *
+// *************************************************************************
+void SB_Doc::OnViewTypeTexture()
+{
+    App->Get_Current_Document();
+
+    App->m_pDoc->SetModifiedFlag();
+
+    CFusionView* pFusionView = App->m_pDoc->GetCameraView();
+    if (!pFusionView)
+        return;
+
+    pFusionView->OnViewType(ID_VIEW_TEXTUREVIEW);
+
 }

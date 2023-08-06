@@ -2388,7 +2388,7 @@ void CFusionView::OnToolsAddtolevel()
 
 	if(GetModeTool()==ID_TOOLS_TEMPLATE)
 	{
-		pDoc->AddBrushToWorld();
+		App->CLSB_Doc->AddBrushToWorld();
 		pDoc->SetModifiedFlag();
 	}
 
@@ -2888,7 +2888,7 @@ void CFusionView::OnViewportCenteroncamera()
 	else
 	{
 
-		CEntity *p = pDoc->FindCameraEntity();
+		CEntity *p = App->CLSB_Camera_WE->FindCameraEntity();
 		if(!p)
 			return;
 		
@@ -2947,7 +2947,7 @@ void CFusionView::OnCameraCenteronview()
 	if(!pDoc)
 		return;
 
-	CEntity *pCameraEntity = pDoc->FindCameraEntity ();
+	CEntity *pCameraEntity = App->CLSB_Camera_WE->FindCameraEntity();
 
 	if (pCameraEntity)
 	{
