@@ -37,6 +37,10 @@ public:
 	void Reset_Camera_Position();
 	void Reset_Camera_Angles();
 
+	void Move_Camera_Forward(float Step);
+	void Move_Camera_Back(float Step);
+
+	bool KeyBeingPresed_Flag;
 
 private:
 

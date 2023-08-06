@@ -58,6 +58,7 @@ BEGIN_MESSAGE_MAP(CFusionView, CCaptionView)
 	ON_WM_LBUTTONDOWN()
 	ON_WM_LBUTTONUP()
 	ON_WM_MOUSEMOVE()
+	ON_WM_KEYDOWN()
 	ON_COMMAND(ID_TOOLS_CAMERA, OnToolsCamera)
 	ON_UPDATE_COMMAND_UI(ID_TOOLS_CAMERA, OnUpdateToolsCamera)
 	ON_WM_RBUTTONDOWN()
@@ -529,6 +530,33 @@ void CFusionView::ShearSelected (CFusionDoc *pDoc, int dx, int dy)
 	ZoomInv	=(ZoomInv > .5)? 0.5f / ZoomInv : 1.0f;
 
 	pDoc->ShearSelected(-(((float)dy)*ZoomInv), -(((float)dx)*ZoomInv), sides, Render_GetInidx(VCam));
+}
+
+void CFusionView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) // hgtterry KeyDown
+{
+	App->Get_Current_Document();
+
+	App->CLSB_Camera_WE->KeyBeingPresed_Flag = 1;
+
+	switch (nChar)
+	{
+
+	case 0x57:
+	{
+		App->CLSB_Camera_WE->Move_Camera_Forward(1);
+		break;
+	}
+	case 0x53:
+	{
+		App->CLSB_Camera_WE->Move_Camera_Back(1);
+		break;
+	}
+	case VK_DELETE:
+	{
+		break;
+	}
+	}
+
 }
 
 #pragma warning (disable:4100)
@@ -2853,6 +2881,8 @@ void CFusionView::OnMouseHover(POINT pt)
 
 BOOL CFusionView::PreTranslateMessage(MSG* pMsg) 
 {
+	//App->Flash_Window();
+
 	if(pMsg->message == WM_MOUSEHOVER)
 	{
 		POINTS point = MAKEPOINTS(pMsg->lParam);

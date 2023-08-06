@@ -117,6 +117,7 @@ void SB_Keyboard::Keyboard_Mode_Free(float deltaTime)
 		if (App->CLSB_Ogre->OgreListener->CameraMode == Enums::CamDetached)
 		{
 			App->CLSB_Ogre->OgreListener->mTranslateVector.z = -App->CLSB_Ogre->OgreListener->mMoveScale;
+			//App->CLSB_Camera_WE->Move_Camera_Forward(App->CLSB_Ogre->OgreListener->mMoveScale);
 		}
 	}
 

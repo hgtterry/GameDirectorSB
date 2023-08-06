@@ -45,6 +45,7 @@ SB_TopTabs::SB_TopTabs(void)
 	File_Panel_Hwnd = nullptr;
 	Test_Panel_Hwnd = nullptr;
 	Faces_Panel_Hwnd = nullptr;
+	Camera_Panel_Hwnd = nullptr;
 
 	Quick_Command_Started = 0;
 
@@ -55,7 +56,8 @@ SB_TopTabs::SB_TopTabs(void)
 	Header_BrushModify_Flag = 0;
 	Header_Test_Flag = 0;
 	Header_Faces_Flag = 0;
-	
+	Header_Camera_Flag = 0;
+
 	Brush_Select_Flag = 0;
 	Brush_MoveRotate_Flag = 0;
 	Brush_Scale_Flag = 0;
@@ -83,6 +85,7 @@ bool SB_TopTabs::Start_Headers_Tabs()
 		Start_File_Tab();
 		Start_Test_Tab();
 		Start_Faces_Tab();
+		Start_Camera_Tab();
 
 		Reset_Tabs_Buttons();
 		Header_File_Flag = 1;
@@ -108,6 +111,7 @@ LRESULT CALLBACK SB_TopTabs::TB_Headers_Proc(HWND hDlg, UINT message, WPARAM wPa
 		SendDlgItemMessage(hDlg, IDC_BT_TB_FILE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TB_TEST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TB_FACES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_TB_CAMERA, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SendDlgItemMessage(hDlg, IDC_BT_TB_TEXTURED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TB_WIRED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -189,121 +193,140 @@ LRESULT CALLBACK SB_TopTabs::TB_Headers_Proc(HWND hDlg, UINT message, WPARAM wPa
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_TB_CAMERA && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle_Tabs(item, App->CLSB_TopTabs->Header_Camera_Flag);
+			return CDRF_DODEFAULT;
+		}
+
 		return CDRF_DODEFAULT;
 	}
 
 	case WM_COMMAND:
+	{
+		// ---------------- Headers
+
+		if (LOWORD(wParam) == IDC_BT_TB_CAMERA)
 		{
-			// ---------------- Headers
-			if (LOWORD(wParam) == IDC_BT_TB_TEST)
-			{
-				App->CLSB_TopTabs->Reset_Tabs_Buttons();
-				App->CLSB_TopTabs->Header_Test_Flag = 1;
-				RedrawWindow(App->CLSB_TopTabs->Top_Tabs_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			App->CLSB_TopTabs->Reset_Tabs_Buttons();
+			App->CLSB_TopTabs->Header_Camera_Flag = 1;
+			RedrawWindow(App->CLSB_TopTabs->Top_Tabs_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-				ShowWindow(App->CLSB_TopTabs->Test_Panel_Hwnd, SW_SHOW);
+			ShowWindow(App->CLSB_TopTabs->Camera_Panel_Hwnd, SW_SHOW);
 
-				return TRUE;
-			}
-
-			if (LOWORD(wParam) == IDC_BT_TB_FACES)
-			{
-				App->CLSB_TopTabs->Reset_Tabs_Buttons();
-				App->CLSB_TopTabs->Header_Faces_Flag = 1;
-				RedrawWindow(App->CLSB_TopTabs->Top_Tabs_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-
-				ShowWindow(App->CLSB_TopTabs->Faces_Panel_Hwnd, SW_SHOW);
-
-				return TRUE;
-			}
-
-			if (LOWORD(wParam) == IDC_BT_TB_FILE)
-			{
-				App->CLSB_TopTabs->Reset_Tabs_Buttons();
-				App->CLSB_TopTabs->Header_File_Flag = 1;
-				RedrawWindow(App->CLSB_TopTabs->Top_Tabs_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-				
-				ShowWindow(App->CLSB_TopTabs->File_Panel_Hwnd, SW_SHOW);
-				
-				return TRUE;
-			}
-
-			if (LOWORD(wParam) == IDC_BT_TB_MODIFY)
-			{
-				App->CLSB_TopTabs->Reset_Tabs_Buttons();
-				App->CLSB_TopTabs->Header_BrushModify_Flag = 1;
-				RedrawWindow(App->CLSB_TopTabs->Top_Tabs_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-
-				ShowWindow(App->CLSB_TopTabs->Brush_Modify_Panel_Hwnd, SW_SHOW);
-
-				return TRUE;
-			}
-			
-			// --------------------
-			if (LOWORD(wParam) == IDC_BT_TB_TEXTURED)
-			{
-				App->CLSB_TopTabs->Reset_Render_Buttons();
-				
-				App->CLSB_TopTabs->Textured_Flag = 1;
-				App->CL_Render_App->Render3D_Mode(ID_VIEW_TEXTUREVIEW);
-
-				RedrawWindow(App->CLSB_TopTabs->Top_Tabs_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-
-				return TRUE;
-			}
-
-			if (LOWORD(wParam) == IDC_BT_TB_WIRED)
-			{
-				App->CLSB_TopTabs->Reset_Render_Buttons();
-
-				App->CLSB_TopTabs->Wired_Flag = 1;
-				App->CL_Render_App->Render3D_Mode(ID_VIEW_3DWIREFRAME);
-
-				RedrawWindow(App->CLSB_TopTabs->Top_Tabs_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-				return TRUE;
-			}
-
-			if (LOWORD(wParam) == IDC_BT_TB_SELECTALL)
-			{
-				CFusionDoc* pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
-
-				pDoc->SelectAll() ;
-				pDoc->UpdateAllViews( UAV_ALL3DVIEWS, NULL ) ;
-
-				App->CL_TabsGroups_Dlg->Update_Dlg_SelectedBrushesCount();
-
-				return TRUE;
-			}
-
-			if (LOWORD(wParam) == IDC_BT_TB_DESELECTALL)
-			{
-				CFusionDoc* pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
-
-				pDoc->ResetAllSelections();
-				pDoc->UpdateSelected();
-				pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
-
-				App->CL_TabsGroups_Dlg->Update_Dlg_SelectedBrushesCount();
-
-				return TRUE;
-			}
-
-			if (LOWORD(wParam) == IDOK)
-			{
-				App->CLSB_TopTabs->Quick_Command_Started = 0;
-				EndDialog(hDlg, LOWORD(wParam));
-				return TRUE;
-			}
-
-			if (LOWORD(wParam) == IDCANCEL)
-			{
-				App->CLSB_TopTabs->Quick_Command_Started = 0;
-				EndDialog(hDlg, LOWORD(wParam));
-				return TRUE;
-			}
-
-			break;
+			return TRUE;
 		}
+
+		if (LOWORD(wParam) == IDC_BT_TB_TEST)
+		{
+			App->CLSB_TopTabs->Reset_Tabs_Buttons();
+			App->CLSB_TopTabs->Header_Test_Flag = 1;
+			RedrawWindow(App->CLSB_TopTabs->Top_Tabs_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			ShowWindow(App->CLSB_TopTabs->Test_Panel_Hwnd, SW_SHOW);
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_TB_FACES)
+		{
+			App->CLSB_TopTabs->Reset_Tabs_Buttons();
+			App->CLSB_TopTabs->Header_Faces_Flag = 1;
+			RedrawWindow(App->CLSB_TopTabs->Top_Tabs_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			ShowWindow(App->CLSB_TopTabs->Faces_Panel_Hwnd, SW_SHOW);
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_TB_FILE)
+		{
+			App->CLSB_TopTabs->Reset_Tabs_Buttons();
+			App->CLSB_TopTabs->Header_File_Flag = 1;
+			RedrawWindow(App->CLSB_TopTabs->Top_Tabs_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			ShowWindow(App->CLSB_TopTabs->File_Panel_Hwnd, SW_SHOW);
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_TB_MODIFY)
+		{
+			App->CLSB_TopTabs->Reset_Tabs_Buttons();
+			App->CLSB_TopTabs->Header_BrushModify_Flag = 1;
+			RedrawWindow(App->CLSB_TopTabs->Top_Tabs_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			ShowWindow(App->CLSB_TopTabs->Brush_Modify_Panel_Hwnd, SW_SHOW);
+
+			return TRUE;
+		}
+
+		// --------------------
+		if (LOWORD(wParam) == IDC_BT_TB_TEXTURED)
+		{
+			App->CLSB_TopTabs->Reset_Render_Buttons();
+
+			App->CLSB_TopTabs->Textured_Flag = 1;
+			App->CL_Render_App->Render3D_Mode(ID_VIEW_TEXTUREVIEW);
+
+			RedrawWindow(App->CLSB_TopTabs->Top_Tabs_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_TB_WIRED)
+		{
+			App->CLSB_TopTabs->Reset_Render_Buttons();
+
+			App->CLSB_TopTabs->Wired_Flag = 1;
+			App->CL_Render_App->Render3D_Mode(ID_VIEW_3DWIREFRAME);
+
+			RedrawWindow(App->CLSB_TopTabs->Top_Tabs_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_TB_SELECTALL)
+		{
+			CFusionDoc* pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+
+			pDoc->SelectAll();
+			pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+
+			App->CL_TabsGroups_Dlg->Update_Dlg_SelectedBrushesCount();
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_TB_DESELECTALL)
+		{
+			CFusionDoc* pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+
+			pDoc->ResetAllSelections();
+			pDoc->UpdateSelected();
+			pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+
+			App->CL_TabsGroups_Dlg->Update_Dlg_SelectedBrushesCount();
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDOK)
+		{
+			App->CLSB_TopTabs->Quick_Command_Started = 0;
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			App->CLSB_TopTabs->Quick_Command_Started = 0;
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		break;
+	}
 
 	}
 
@@ -319,12 +342,14 @@ void SB_TopTabs::Reset_Tabs_Buttons()
 	Header_BrushModify_Flag = 0;
 	Header_Test_Flag = 0;
 	Header_Faces_Flag = 0;
+	Header_Camera_Flag = 0;
 
 	ShowWindow(Brush_Modify_Panel_Hwnd, SW_HIDE);
 	ShowWindow(File_Panel_Hwnd, SW_HIDE);
 	ShowWindow(Test_Panel_Hwnd, SW_HIDE);
 	ShowWindow(Faces_Panel_Hwnd, SW_HIDE);
-	
+	ShowWindow(Camera_Panel_Hwnd, SW_HIDE);
+
 	RedrawWindow(Top_Tabs_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 
@@ -757,6 +782,87 @@ LRESULT CALLBACK SB_TopTabs::Top_Faces_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 			App->m_pDoc->SelectAllFacesInBrushes();
 			App->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+			return TRUE;
+		}
+	}
+
+	}
+
+	return FALSE;
+}
+
+// *************************************************************************
+// *	  		Start_Camera_Tab:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+bool SB_TopTabs::Start_Camera_Tab()
+{
+	Camera_Panel_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_TB_CAMERA, Top_Tabs_Hwnd, (DLGPROC)Top_Camera_Proc);
+
+	return 1;
+}
+
+// *************************************************************************
+// *			Top_Faces_Proc:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+LRESULT CALLBACK SB_TopTabs::Top_Camera_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_BT_TT_ZEROCAMRA, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_TT_MOVECAMRA, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		return TRUE;
+	}
+
+	case WM_CTLCOLORSTATIC:
+	{
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->Brush_White;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_BT_TT_ZEROCAMRA && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_TT_MOVECAMRA && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+		if (LOWORD(wParam) == IDC_BT_TT_ZEROCAMRA)
+		{
+			App->Get_Current_Document();
+
+			App->CLSB_Camera_WE->Zero_Camera();
+
+			App->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_TT_MOVECAMRA)
+		{
+			App->CLSB_Camera_WE->Start_Move_Camera();
 			return TRUE;
 		}
 

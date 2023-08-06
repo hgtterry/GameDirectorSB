@@ -493,6 +493,8 @@ BOOL CFusionApp::OnIdle(LONG lCount)
 		pMainFrame->LoadComboBox() ;
 	}
 	
+	//App->Flash_Window();
+
 	return CWinApp::OnIdle(lCount);
 }
 

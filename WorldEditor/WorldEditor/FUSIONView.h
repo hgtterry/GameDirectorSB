@@ -94,6 +94,7 @@ protected:
 	LRESULT OnCompileError (WPARAM wParam, LPARAM lParam);
 	LRESULT OnCompileDone (WPARAM wParam, LPARAM lParam);
 	//{{AFX_MSG(CFusionView)
+	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);

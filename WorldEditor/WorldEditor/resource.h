@@ -314,6 +314,7 @@
 #define IDC_FLIPHORIZONTAL              1144
 #define IDD_SB_TB_FACES                 1144
 #define IDC_ARCH_PRIMITIVE              1145
+#define IDD_SB_TB_CAMERA                1145
 #define IDC_CONE_PRIMITIVE              1146
 #define IDC_STARTANGLE                  1148
 #define IDC_ENDANGLE                    1149
@@ -579,6 +580,7 @@
 #define IDC_BT_EQ_GROUPS                1363
 #define IDC_BT_EQ_UPDATE                1363
 #define IDC_BT_DELETEBRUSH              1363
+#define IDC_BT_TT_MOVECAMRA             1363
 #define IDC_BANNER                      1364
 #define IDC_GD_CYLINDER_PRIMITIVE       1364
 #define IDC_BT_BROWSE                   1364
@@ -775,10 +777,11 @@
 #define IDC_CK_NEWEQUITY                1518
 #define IDC_SBFORWARDBACK               1518
 #define IDC_CBPOSYDELTA3                1519
-#define IDC_SCROLLBAR2                  1519
 #define IDC_SBLEFTRIGHT                 1519
 #define IDC_CBPOSZDELTA3                1520
+#define IDC_BT_TB_CAMERA                1520
 #define IDC_SBPOSY3                     1521
+#define IDC_BT_TT_ZEROCAMRA             1521
 #define IDC_SBPOSZ3                     1522
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772
@@ -989,7 +992,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        328
 #define _APS_NEXT_COMMAND_VALUE         33086
-#define _APS_NEXT_CONTROL_VALUE         1520
+#define _APS_NEXT_CONTROL_VALUE         1522
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

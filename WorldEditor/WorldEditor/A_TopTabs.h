@@ -50,6 +50,7 @@ public:
 	HWND File_Panel_Hwnd;
 	HWND Test_Panel_Hwnd;
 	HWND Faces_Panel_Hwnd;
+	HWND Camera_Panel_Hwnd;
 
 private:
 	static LRESULT CALLBACK TB_Headers_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
@@ -57,10 +58,12 @@ private:
 	static LRESULT CALLBACK Top_File_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Top_Test_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Top_Faces_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-
+	static LRESULT CALLBACK Top_Camera_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	
 	bool Start_File_Tab();
 	bool Start_Test_Tab();
 	bool Start_Faces_Tab();
+	bool Start_Camera_Tab();
 
 	bool Start_BrushModify_Panel();
 	
@@ -77,6 +80,7 @@ private:
 	bool Header_File_Flag;
 	bool Header_Test_Flag;
 	bool Header_Faces_Flag;
+	bool Header_Camera_Flag;
 	
 	bool Brush_MoveRotate_Flag;
 	bool Brush_Scale_Flag;

@@ -25,7 +25,9 @@ distribution.
 #include "AB_App.h"
 #include "A_Camera.h"
 #include "level.h"
+
 #include "FUSIONView.h"
+#include "units.h"
 
 SB_Camera_WE::SB_Camera_WE(void)
 {
@@ -38,6 +40,8 @@ SB_Camera_WE::SB_Camera_WE(void)
 	Angles.X = 0;
 	Angles.Y = 0;
 	Angles.Z = 0;
+
+	KeyBeingPresed_Flag = 0;
 
 	pCameraEntity = NULL;
 }
@@ -283,13 +287,13 @@ LRESULT CALLBACK SB_Camera_WE::Move_Camera_Proc(HWND hDlg, UINT message, WPARAM 
 			{
 			case SB_LINERIGHT:
 			{
-				App->m_pDoc->OnCameraRight();
+				App->m_pDoc->OnCameraLookUp();// OnCameraUp();// OnCameraRight();
 				break;
 			}
 
 			case SB_LINELEFT:
 			{
-				App->m_pDoc->OnCameraLeft();
+				App->m_pDoc->OnCameraLookDown();
 				break;
 			}
 			}
@@ -361,6 +365,7 @@ LRESULT CALLBACK SB_Camera_WE::Move_Camera_Proc(HWND hDlg, UINT message, WPARAM 
 void SB_Camera_WE::Update_Dlg(HWND hDlg)
 {
 	char buf[100];
+	pCameraEntity->GetAngles(&Angles, Level_GetEntityDefs(App->m_pDoc->pLevel));
 
 	sprintf(buf, "%f", pCameraEntity->mOrigin.X);
 	SetDlgItemText(hDlg, IDC_EDCAMX, buf);
@@ -371,13 +376,13 @@ void SB_Camera_WE::Update_Dlg(HWND hDlg)
 	sprintf(buf, "%f", pCameraEntity->mOrigin.Z);
 	SetDlgItemText(hDlg, IDC_EDCAMZ, buf);
 
-	sprintf(buf, "%f", App->CLSB_Camera_WE->Angles.X);
+	sprintf(buf, "%f", Angles.X);
 	SetDlgItemText(hDlg, IDC_EDCAMANGLEX, buf);
 
-	sprintf(buf, "%f", App->CLSB_Camera_WE->Angles.Y);
+	sprintf(buf, "%f", Angles.Y);
 	SetDlgItemText(hDlg, IDC_EDCAMANGLEY, buf);
 
-	sprintf(buf, "%f", App->CLSB_Camera_WE->Angles.Z);
+	sprintf(buf, "%f", Angles.Z);
 	SetDlgItemText(hDlg, IDC_EDCAMANGLEZ, buf);
 }
 
@@ -569,4 +574,74 @@ void SB_Camera_WE::Zero_Camera()
 		App->m_pDoc->UpdateAllViews(UAV_ALLVIEWS, NULL);
 	}
 
+}
+
+// *************************************************************************
+// *	  	Move_Camera_Forward:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void SB_Camera_WE::Move_Camera_Forward(float Step)
+{
+	App->Get_Current_Document();
+
+	CEntity* pCameraEntity = App->CLSB_Camera_WE->FindCameraEntity();
+
+	if (pCameraEntity)
+	{
+		geVec3d Angles;
+		pCameraEntity->GetAngles(&Angles, Level_GetEntityDefs(App->m_pDoc->pLevel));
+
+		geXForm3d TransformOrigin;
+		geXForm3d_SetIdentity(&TransformOrigin);
+
+		geXForm3d_RotateZ(&TransformOrigin, Angles.X);
+		geXForm3d_RotateX(&TransformOrigin, Angles.Z);
+		geXForm3d_RotateY(&TransformOrigin, (-Angles.Y - M_PI / 2.0f));
+
+		geXForm3d_Translate(&TransformOrigin, pCameraEntity->mOrigin.X, pCameraEntity->mOrigin.Y, pCameraEntity->mOrigin.Z);
+
+		geXForm3d Delta;
+		geXForm3d_SetTranslation(&Delta, Step, 0, 0);
+
+		geXForm3d_Multiply(&TransformOrigin, &Delta, &TransformOrigin);
+
+		geVec3d_Copy(&(TransformOrigin.Translation), &(pCameraEntity->mOrigin));
+
+		App->m_pDoc->SetRenderedViewCamera(&(pCameraEntity->mOrigin), &Angles);
+		App->m_pDoc->UpdateAllViews(UAV_ALLVIEWS, NULL);
+	}
+}
+
+// *************************************************************************
+// *	  	Move_Camera_Back:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void SB_Camera_WE::Move_Camera_Back(float Step)
+{
+	App->Get_Current_Document();
+
+	CEntity* pCameraEntity = App->CLSB_Camera_WE->FindCameraEntity();
+
+	if (pCameraEntity)
+	{
+		geVec3d Angles;
+		pCameraEntity->GetAngles(&Angles, Level_GetEntityDefs(App->m_pDoc->pLevel));
+
+		geXForm3d TransformOrigin;
+		geXForm3d_SetIdentity(&TransformOrigin);
+
+		geXForm3d_RotateZ(&TransformOrigin, Angles.X);
+		geXForm3d_RotateX(&TransformOrigin, Angles.Z);
+		geXForm3d_RotateY(&TransformOrigin, (-Angles.Y - M_PI / 2.0f));
+
+		geXForm3d_Translate(&TransformOrigin, pCameraEntity->mOrigin.X, pCameraEntity->mOrigin.Y, pCameraEntity->mOrigin.Z);
+
+		geXForm3d Delta;
+		geXForm3d_SetTranslation(&Delta, -Step, 0, 0);
+
+		geXForm3d_Multiply(&TransformOrigin, &Delta, &TransformOrigin);
+
+		geVec3d_Copy(&(TransformOrigin.Translation), &(pCameraEntity->mOrigin));
+
+		App->m_pDoc->SetRenderedViewCamera(&(pCameraEntity->mOrigin), &Angles);
+		App->m_pDoc->UpdateAllViews(UAV_ALLVIEWS, NULL);
+	}
 }
