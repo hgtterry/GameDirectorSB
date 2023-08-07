@@ -245,7 +245,6 @@ public:
 	void SetAllFacesTextureScale(geFloat ScaleVal);
 
 	void SetDefaultBrushTexInfo(Brush *);
-	void SelectOrtho(CPoint point, ViewVars *v);
 	void SelectOrthoRect(CPoint ptStart, CPoint ptEnd, ViewVars *v) ;
 	void SelectRay(CPoint point, ViewVars *v);
 	WadFileEntry* GetDibBitmap(const char *Name);

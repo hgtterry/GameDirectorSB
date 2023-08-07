@@ -15,5 +15,7 @@ public:
 	void OnViewTypeWireFrame();
 	void OnViewTypeTexture();
 
+	void SelectOrtho(CPoint point, ViewVars* v);
+
 };
 

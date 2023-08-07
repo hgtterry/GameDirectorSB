@@ -1108,7 +1108,7 @@ void CFusionView::OnLButtonUp(UINT nFlags, CPoint point)
 						}
 						else
 						{
-							pDoc->SelectOrtho(point, VCam);
+							App->CLSB_Doc->SelectOrtho(point, VCam);
 							pDoc->UpdateAllViews( UAV_ALL3DVIEWS, NULL );
 						}
 					}

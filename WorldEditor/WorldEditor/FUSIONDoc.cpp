@@ -75,7 +75,7 @@ static char THIS_FILE[] = __FILE__;
 // Must be within this distance (in pixels) to select anything.
 // (Yes, 10,000 is a big number.  Right now we want to select the closest thing,
 // no matter how far away it is...)
-#define MAX_PIXEL_SELECT_DIST (10000)
+#define MAX_PIXEL_SELECT_DIST (100)
 #define MIN_ENTITY_SELECT_DIST (8.0f)
 #define MAX_PIXEL_SELECT_THINGNAME (20)
 
@@ -2646,61 +2646,6 @@ void  CFusionDoc::AdjustEntityRadius( const geVec3d *pVec )
     }
     pEnt->SetRadius( fRadius, Level_GetEntityDefs (pLevel) ) ;
 }
-
-
-void CFusionDoc::SelectOrtho(CPoint point, ViewVars *v) // hgtterry void CFusionDoc::SelectOrtho
-{
-    Brush *pMinBrush;
-    CEntity *pMinEntity;
-    geFloat Dist;
-    int FoundThingType;
-
-    if(IsSelectionLocked())
-    {
-        return;
-    }
-
-    // if Control key isn't pressed, then clear all current selections
-    if ((GetAsyncKeyState(VK_SHIFT) & 0x8000) == 0)
-    {
-        ResetAllSelections ();
-    }
-
-    FoundThingType = FindClosestThing (&point, v, &pMinBrush, &pMinEntity, &Dist);
-
-    if ((FoundThingType != fctNOTHING) && (Dist <= MAX_PIXEL_SELECT_DIST))
-    {
-        switch (FoundThingType)
-        {
-        case fctBRUSH :
-            {
-                DoBrushSelection (pMinBrush, brushSelToggle);
-                break;
-            }
-        case fctENTITY :
-            DoEntitySelection (pMinEntity);
-            break;
-        default :
-            // bad value returned from FindClosestThing
-            assert (0);
-        }
-    }
-
-/*
-    if (SelBrushList_GetSize (pSelBrushes) == 0)
-    {
-        DeleteBrushAttributes ();
-    }
-*/
-
-    UpdateSelected();
-
-    App->CL_TabsControl->Select_Brushes_Tab(0);
-    App->CL_TabsGroups_Dlg->Get_Index(CurBrush);
-//	UpdateBrushAttributesDlg ();
-//	UpdateFaceAttributesDlg ();
-}
-
 
 void CFusionDoc::SelectOrthoRect(CPoint ptStart, CPoint ptEnd, ViewVars *v)
 {

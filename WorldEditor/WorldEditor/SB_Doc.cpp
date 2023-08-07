@@ -3,6 +3,7 @@
 #include "SB_Doc.h"
 
 #include "FUSIONView.h"
+#include "units.h"
 
 SB_Doc::SB_Doc(void)
 {
@@ -199,4 +200,71 @@ void SB_Doc::OnViewTypeTexture()
 
     pFusionView->OnViewType(ID_VIEW_TEXTUREVIEW);
 
+}
+
+#define MAX_PIXEL_SELECT_DIST (100)
+
+// *************************************************************************
+// *			        	   SelectOrtho                             	   *
+// *************************************************************************
+void SB_Doc::SelectOrtho(CPoint point, ViewVars* v)
+{
+	App->Get_Current_Document();
+
+	Brush* pMinBrush;
+	CEntity* pMinEntity;
+	geFloat Dist;
+	int FoundThingType;
+
+	if (App->m_pDoc->IsSelectionLocked())
+	{
+		return;
+	}
+
+	// if Control key isn't pressed, then clear all current selections
+	if ((GetAsyncKeyState(VK_SHIFT) & 0x8000) == 0)
+	{
+		App->m_pDoc->ResetAllSelections();
+	}
+
+	FoundThingType = App->m_pDoc->FindClosestThing(&point, v, &pMinBrush, &pMinEntity, &Dist);
+
+	if ((FoundThingType != fctNOTHING) && (Dist <= MAX_PIXEL_SELECT_DIST))
+	{
+		switch (FoundThingType)
+		{
+		case fctBRUSH:
+		{
+			App->m_pDoc->DoBrushSelection(pMinBrush, brushSelToggle);
+			break;
+		}
+		case fctENTITY:
+			App->m_pDoc->DoEntitySelection(pMinEntity);
+			break;
+		default:
+			// bad value returned from FindClosestThing
+			assert(0);
+		}
+	}
+
+	/*
+		if (SelBrushList_GetSize (pSelBrushes) == 0)
+		{
+			DeleteBrushAttributes ();
+		}
+	*/
+
+	App->m_pDoc->UpdateSelected();
+
+	App->CL_TabsControl->Select_Brushes_Tab(0);
+	App->CL_TabsGroups_Dlg->Get_Index(App->m_pDoc->CurBrush);
+
+	int NumSelBrushes = SelBrushList_GetSize(App->m_pDoc->pSelBrushes);
+	if (NumSelBrushes == 0)
+	{
+		App->Say("No Brushes");
+	}
+
+	//	UpdateBrushAttributesDlg ();
+	//	UpdateFaceAttributesDlg ();
 }
