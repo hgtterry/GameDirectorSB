@@ -260,6 +260,6 @@ void SB_Doc::SelectOrtho(CPoint point, ViewVars* v)
 	App->CL_TabsGroups_Dlg->Get_Index(App->m_pDoc->CurBrush);
 
 	App->CL_TabsGroups_Dlg->Update_Dlg_Controls();
+    App->CLSB_TopTabs->Update_Dlg_Controls();
 
-	//	UpdateFaceAttributesDlg ();
 }

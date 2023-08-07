@@ -92,6 +92,8 @@ bool SB_TopTabs::Start_Headers_Tabs()
 		RedrawWindow(Top_Tabs_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 		ShowWindow(File_Panel_Hwnd, SW_SHOW);
 
+		Update_Dlg_Controls();
+
 		Quick_Command_Started = 1;
 	}
 	
@@ -295,6 +297,7 @@ LRESULT CALLBACK SB_TopTabs::TB_Headers_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 			App->CL_TabsGroups_Dlg->Update_Dlg_SelectedBrushesCount();
 			App->CL_TabsGroups_Dlg->Update_Dlg_Controls();
+			App->CLSB_TopTabs->Update_Dlg_Controls();
 
 			return TRUE;
 		}
@@ -309,6 +312,7 @@ LRESULT CALLBACK SB_TopTabs::TB_Headers_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 			App->CL_TabsGroups_Dlg->Update_Dlg_SelectedBrushesCount();
 			App->CL_TabsGroups_Dlg->Update_Dlg_Controls();
+			App->CLSB_TopTabs->Update_Dlg_Controls();
 
 			return TRUE;
 		}
@@ -372,6 +376,8 @@ void SB_TopTabs::Reset_Render_Buttons()
 // *************************************************************************
 bool SB_TopTabs::Start_BrushModify_Panel()
 {
+	App->Get_Current_Document();
+
 	Brush_Modify_Panel_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_TB_PROPERTIES,Top_Tabs_Hwnd, (DLGPROC)BrushModify_Panel_Proc);
 	return 1;
 }
@@ -932,28 +938,28 @@ void SB_TopTabs::Select_MoveRotate()
 // *************************************************************************
 void SB_TopTabs::Select_Scale()
 {
-	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+	App->Get_Current_Document();
 
-	int mode = m_pDoc->mModeTool;// pView->GetModeTool();
+	int mode = App->m_pDoc->mModeTool;// pView->GetModeTool();
 
 	if(mode == ID_TOOLS_TEMPLATE)
 	{
-		m_pDoc->mCurrentTool = ID_TOOLS_BRUSH_SCALEBRUSH;
-		m_pDoc->ConfigureCurrentTool();
+		App->m_pDoc->mCurrentTool = ID_TOOLS_BRUSH_SCALEBRUSH;
+		App->m_pDoc->ConfigureCurrentTool();
 	} 
 	else 
 	{
-		if(m_pDoc->mCurrentTool == ID_TOOLS_BRUSH_SCALEBRUSH)
+		if(App->m_pDoc->mCurrentTool == ID_TOOLS_BRUSH_SCALEBRUSH)
 		{
-			m_pDoc->mCurrentTool = CURTOOL_NONE;
-			m_pDoc->mAdjustMode = ADJUST_MODE_FACE;
+			App->m_pDoc->mCurrentTool = CURTOOL_NONE;
+			App->m_pDoc->mAdjustMode = ADJUST_MODE_FACE;
 		} 
 		else 
 		{
-			m_pDoc->mCurrentTool = ID_TOOLS_BRUSH_SCALEBRUSH;
+			App->m_pDoc->mCurrentTool = ID_TOOLS_BRUSH_SCALEBRUSH;
 		}
 
-		m_pDoc->ConfigureCurrentTool();
+		App->m_pDoc->ConfigureCurrentTool();
 	}
 }
 
@@ -962,20 +968,20 @@ void SB_TopTabs::Select_Scale()
 // *************************************************************************
 void SB_TopTabs::Select_Shear()
 {
+	App->Get_Current_Document();
+
 	CFusionView			*pView;
 
-	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
-
 	POSITION pos;
-	pos = m_pDoc->GetFirstViewPosition();
-	pView = (CFusionView*)m_pDoc->GetNextView(pos) ;
+	pos = App->m_pDoc->GetFirstViewPosition();
+	pView = (CFusionView*)App->m_pDoc->GetNextView(pos) ;
 
 	int mode = pView->GetModeTool();
 
 	if(mode == ID_TOOLS_TEMPLATE)
 	{
 		pView->SetTool( ID_TOOLS_BRUSH_SHEARBRUSH);
-		m_pDoc->ConfigureCurrentTool();
+		App->m_pDoc->ConfigureCurrentTool();
 	} 
 	else 
 	{
@@ -989,7 +995,7 @@ void SB_TopTabs::Select_Shear()
 			pView->SetTool(ID_TOOLS_BRUSH_SHEARBRUSH);
 		}
 
-		m_pDoc->ConfigureCurrentTool();
+		App->m_pDoc->ConfigureCurrentTool();
 	}
 }
 
@@ -1007,5 +1013,31 @@ void SB_TopTabs::Move_Window(void)
 
 	SetWindowPos(Top_Tabs_Hwnd, NULL, (rect.left+ (rect.right/2))-300, rect.top+100,
 		0, 0, SWP_NOSIZE | SWP_NOZORDER);
+}
 
+// *************************************************************************
+// *		  Update_Dlg_Controls:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_TopTabs::Update_Dlg_Controls()
+{
+	App->Get_Current_Document();
+
+	int NumSelBrushes = SelBrushList_GetSize(App->m_pDoc->pSelBrushes);
+	if (NumSelBrushes == 0)
+	{
+		EnableWindow(GetDlgItem(Brush_Modify_Panel_Hwnd, IDC_BTTBMOVEROTATE), 0);
+		EnableWindow(GetDlgItem(Brush_Modify_Panel_Hwnd, IDC_BTSCALE), 0);
+		EnableWindow(GetDlgItem(Brush_Modify_Panel_Hwnd, IDC_BTTBSHEAR), 0);
+
+		App->CLSB_TopTabs->Reset_Brush_Buttons();
+		App->CLSB_TopTabs->Brush_Select_Flag = 1;
+		RedrawWindow(App->CLSB_TopTabs->Brush_Modify_Panel_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+		App->CLSB_TopTabs->Select_Mode();
+	}
+	else
+	{
+		EnableWindow(GetDlgItem(Brush_Modify_Panel_Hwnd, IDC_BTTBMOVEROTATE), 1);
+		EnableWindow(GetDlgItem(Brush_Modify_Panel_Hwnd, IDC_BTSCALE), 1);
+		EnableWindow(GetDlgItem(Brush_Modify_Panel_Hwnd, IDC_BTTBSHEAR), 1);
+	}
 }

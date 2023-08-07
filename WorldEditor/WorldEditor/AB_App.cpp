@@ -143,6 +143,7 @@ SB_App::SB_App()
 	// MFC
 	m_pMainFrame = NULL;
 	pCFusionDoc = NULL;
+	m_pDoc = NULL;
 
 	Write_DebugFile = NULL;
 
@@ -185,6 +186,12 @@ bool SB_App::IsProcessRunning(char* executableName)
 void SB_App::Get_Current_Document()
 {
 	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+	if (m_pDoc == NULL)
+	{
+		Say("Bad m_pDoc Pointer");
+	}
+
+
 }
 
 // *************************************************************************

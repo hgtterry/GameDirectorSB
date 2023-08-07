@@ -40,6 +40,8 @@ public:
 	void Reset_Brush_Buttons();
 	void Select_Mode();
 
+	void Update_Dlg_Controls();
+
 	bool Header_BrushModify_Flag;
 	bool Textured_Flag;
 	bool Brush_Select_Flag;
