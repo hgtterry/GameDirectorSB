@@ -59,6 +59,7 @@ void A_TabsGroups_Dlg::Start_GroupsDialog()
 	Groups_Dlg_Created = 1;
 
 	Fill_ListBox();
+	Update_Dlg_Controls();
 }
 
 // *************************************************************************
@@ -750,3 +751,28 @@ bool A_TabsGroups_Dlg::Show_Face_Data(const Face *f, HWND hDlg)
 
 	return 1;
 }
+
+// *************************************************************************
+// *		  Update_Dlg_Controls:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void A_TabsGroups_Dlg::Update_Dlg_Controls()
+{
+	App->Get_Current_Document();
+
+	int NumSelBrushes = SelBrushList_GetSize(App->m_pDoc->pSelBrushes);
+	if (NumSelBrushes == 0)
+	{
+		EnableWindow(GetDlgItem(GroupsDlg_Hwnd, IDC_BT_GD_BRUSHPROPERTIES), 0);
+		EnableWindow(GetDlgItem(GroupsDlg_Hwnd, IDC_BT_DIMENSIONS), 0);
+		EnableWindow(GetDlgItem(GroupsDlg_Hwnd, IDC_BT_DELETEBRUSH), 0);
+
+		SendDlgItemMessage(GroupsDlg_Hwnd, IDC_GD_BRUSHLIST, LB_SETCURSEL, (WPARAM)-1, (LPARAM)0);
+	}
+	else
+	{
+		EnableWindow(GetDlgItem(GroupsDlg_Hwnd, IDC_BT_GD_BRUSHPROPERTIES), 1);
+		EnableWindow(GetDlgItem(GroupsDlg_Hwnd, IDC_BT_DIMENSIONS), 1);
+		EnableWindow(GetDlgItem(GroupsDlg_Hwnd, IDC_BT_DELETEBRUSH), 1);
+	}
+}
+

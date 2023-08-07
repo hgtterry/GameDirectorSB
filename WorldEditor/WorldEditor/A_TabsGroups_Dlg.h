@@ -36,6 +36,7 @@ public:
 	void Get_Index(const Brush *b);
 	void Fill_ListBox();
 	void Update_Dlg_SelectedBrushesCount();
+	void Update_Dlg_Controls();
 
 	bool Groups_Dlg_Created;
 

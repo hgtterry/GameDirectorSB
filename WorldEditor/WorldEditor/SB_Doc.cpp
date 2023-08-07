@@ -259,12 +259,7 @@ void SB_Doc::SelectOrtho(CPoint point, ViewVars* v)
 	App->CL_TabsControl->Select_Brushes_Tab(0);
 	App->CL_TabsGroups_Dlg->Get_Index(App->m_pDoc->CurBrush);
 
-	int NumSelBrushes = SelBrushList_GetSize(App->m_pDoc->pSelBrushes);
-	if (NumSelBrushes == 0)
-	{
-		App->Say("No Brushes");
-	}
+	App->CL_TabsGroups_Dlg->Update_Dlg_Controls();
 
-	//	UpdateBrushAttributesDlg ();
 	//	UpdateFaceAttributesDlg ();
 }

@@ -294,6 +294,7 @@ LRESULT CALLBACK SB_TopTabs::TB_Headers_Proc(HWND hDlg, UINT message, WPARAM wPa
 			pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 
 			App->CL_TabsGroups_Dlg->Update_Dlg_SelectedBrushesCount();
+			App->CL_TabsGroups_Dlg->Update_Dlg_Controls();
 
 			return TRUE;
 		}
@@ -307,6 +308,7 @@ LRESULT CALLBACK SB_TopTabs::TB_Headers_Proc(HWND hDlg, UINT message, WPARAM wPa
 			pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 
 			App->CL_TabsGroups_Dlg->Update_Dlg_SelectedBrushesCount();
+			App->CL_TabsGroups_Dlg->Update_Dlg_Controls();
 
 			return TRUE;
 		}
