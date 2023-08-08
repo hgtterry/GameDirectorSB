@@ -17,5 +17,7 @@ public:
 
 	void SelectOrtho(CPoint point, ViewVars* v);
 
+	void DoneResize(int sides, int inidx);
+	void DoneMove(void);
 };
 

@@ -148,9 +148,7 @@ public:
 	geBoolean EntityIsVisible( const CEntity *pEntity ) const ;
 	void TempCopySelectedBrushes();
 	void DoneRotate(void);
-	void DoneResize(int sides, int inidx);
 	void DoneShear(int sides, int inidx);
-	void DoneMove(void);
 	void SnapScaleNearest(int sides, int inidx, ViewVars *v);
 	DWORD GetSelState(void){  return SelState;  }
 	int	 GetLockAxis( void ) { return mLockAxis ; } ;
@@ -479,7 +477,9 @@ private:
 	geBoolean Load( const char *FileName );  // Loads from filename
 	geBoolean Save( const char *FileName );  // saves filename
 
+public:
 	void UpdateSelectedModel (int MoveRotate, geVec3d const *pVecDelta);
+private:
 
 	// insures all of the Dib ID's in the brush are correct
 	// returns GE_TRUE if all textures fixed up.

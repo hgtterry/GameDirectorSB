@@ -1082,7 +1082,7 @@ void CFusionDoc::OnBrushAddtoworld()
     mCurrentTool=ID_TOOLS_BRUSH_MOVEROTATEBRUSH;
     ConfigureCurrentTool();
     // fake a move
-    DoneMove ();
+    App->CLSB_Doc->DoneMove();
     // Back to select mode
     DoGeneralSelect();
     // ~MS
@@ -4230,95 +4230,6 @@ void CFusionDoc::UpdateSelectedModel
         pModel = ModelList_GetNext (ModelInfo->Models, &mi);
     }
 }
-
-void CFusionDoc::DoneResize(int sides, int inidx)
-{
-    mLastOp	=BRUSH_SCALE;
-
-    TempDeleteSelected();
-
-    if (mModeTool==ID_TOOLS_TEMPLATE)
-    {
-        if(Brush_IsMulti(CurBrush))
-        {
-            BrushList_ClearCSGAndHollows((BrushList *)App->CL_Brush->Brush_GetBrushList(CurBrush), Brush_GetModelId(CurBrush));
-            BrushList_RebuildHollowFaces((BrushList *)App->CL_Brush->Brush_GetBrushList(CurBrush), Brush_GetModelId(CurBrush), ::fdocBrushCSGCallback, this);
-        }
-        return;
-    }
-
-    int NumSelBrushes = SelBrushList_GetSize (pSelBrushes);
-    for (int i = 0; i < NumSelBrushes; ++i)
-    {
-        Brush *pBrush;
-
-        pBrush = SelBrushList_GetBrush (pSelBrushes, i);
-// changed QD Actors
-// don't resize ActorBrushes
-        if(strstr(App->CL_Brush->Brush_GetName(pBrush),".act")!=NULL)
-            continue;
-// end change
-        Brush_ResizeFinal(pBrush, sides, inidx, &FinalScale);
-        if(Brush_IsMulti(pBrush))
-        {
-            BrushList_ClearCSGAndHollows((BrushList *)App->CL_Brush->Brush_GetBrushList(pBrush), Brush_GetModelId(pBrush));
-            BrushList_RebuildHollowFaces((BrushList *)App->CL_Brush->Brush_GetBrushList(pBrush), Brush_GetModelId(pBrush), ::fdocBrushCSGCallback, this);
-        }
-    }
-    UpdateSelected();
-}
-
-void CFusionDoc::DoneMove (void)
-{
-    int	i;
-//	BrushList *BList = Level_GetBrushes (pLevel);
-
-    mLastOp	=BRUSH_MOVE;
-
-    TempDeleteSelected();
-
-    if(mModeTool == ID_TOOLS_TEMPLATE)
-    {
-        if (TempEnt)
-        {
-            DoneMoveEntity ();
-        }
-        else
-        {
-            Brush_Move (CurBrush, &FinalPos);
-        }
-        return;
-    }
-    else
-    {
-        int NumSelBrushes = SelBrushList_GetSize (pSelBrushes);
-        for(i=0;i < NumSelBrushes;i++)
-        {
-            Brush *pBrush;
-
-            pBrush = SelBrushList_GetBrush (pSelBrushes, i);
-// changed QD Actors
-// ActorBrushes will be moved via their entities
-            if(strstr(App->CL_Brush->Brush_GetName(pBrush),".act")!=NULL)
-                continue;
-// end change
-            Brush_Move (pBrush, &FinalPos);
-        }
-
-        if (GetSelState() & ANYENTITY)
-        {
-            DoneMoveEntity();
-        }
-
-        UpdateSelected();
-
-        UpdateSelectedModel (BRUSH_MOVE, &FinalPos);
-    }
-//	UndoStack_Move (pUndoStack, &FinalPos, NumSelBrushes, SelListBrush, Level_GetEntities (pLevel));
-
-    geVec3d_Clear (&FinalPos);
-}
-
 
 void CFusionDoc::DoneMoveEntity(void)
 {

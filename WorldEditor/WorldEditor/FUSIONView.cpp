@@ -952,7 +952,7 @@ void CFusionView::DoneMovingBrushes ()
 		}
 	}
 
-	pDoc->DoneMove ();
+	App->CLSB_Doc->DoneMove();
 
 	pDoc->UpdateSelected();
 
@@ -1138,7 +1138,7 @@ void CFusionView::OnLButtonUp(UINT nFlags, CPoint point)
 					pDoc->SnapScaleNearest(sides, Render_GetInidx(VCam), VCam);
 					if(pDoc->mLastOp == BRUSH_SCALE)
 					{
-						pDoc->DoneResize(sides, Render_GetInidx(VCam));
+						App->CLSB_Doc->DoneResize(sides, Render_GetInidx(VCam));
 
 						if (App->CLSB_Brushes->Dimensions_Dlg_Running == 1)
 						{

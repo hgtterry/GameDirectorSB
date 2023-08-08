@@ -5,6 +5,8 @@
 #include "FUSIONView.h"
 #include "units.h"
 
+#define MAX_PIXEL_SELECT_DIST (100)
+
 SB_Doc::SB_Doc(void)
 {
 }
@@ -202,7 +204,6 @@ void SB_Doc::OnViewTypeTexture()
 
 }
 
-#define MAX_PIXEL_SELECT_DIST (100)
 
 // *************************************************************************
 // *			        	   SelectOrtho                             	   *
@@ -261,5 +262,107 @@ void SB_Doc::SelectOrtho(CPoint point, ViewVars* v)
 
 	App->CL_TabsGroups_Dlg->Update_Dlg_Controls();
     App->CLSB_TopTabs->Update_Dlg_Controls();
+
+}
+
+static geBoolean fdocBrushCSGCallback(const Brush* pBrush, void* lParam)
+{
+    CFusionDoc* pDoc = (CFusionDoc*)lParam;
+
+    return (pDoc->BrushIsVisible(pBrush) && (!Brush_IsHint(pBrush)) && (!Brush_IsClip(pBrush)));
+}
+
+// *************************************************************************
+// *			                     DoneResize                       	   *
+// *************************************************************************
+void SB_Doc::DoneResize(int sides, int inidx)
+{
+    App->Get_Current_Document();
+
+    App->m_pDoc->mLastOp = BRUSH_SCALE;
+
+    App->m_pDoc->TempDeleteSelected();
+
+    if (App->m_pDoc->mModeTool == ID_TOOLS_TEMPLATE)
+    {
+        if (Brush_IsMulti(App->m_pDoc->CurBrush))
+        {
+            BrushList_ClearCSGAndHollows((BrushList*)App->CL_Brush->Brush_GetBrushList(App->m_pDoc->CurBrush), Brush_GetModelId(App->m_pDoc->CurBrush));
+            BrushList_RebuildHollowFaces((BrushList*)App->CL_Brush->Brush_GetBrushList(App->m_pDoc->CurBrush), Brush_GetModelId(App->m_pDoc->CurBrush), ::fdocBrushCSGCallback, this);
+        }
+        return;
+    }
+
+    int NumSelBrushes = SelBrushList_GetSize(App->m_pDoc->pSelBrushes);
+    for (int i = 0; i < NumSelBrushes; ++i)
+    {
+        Brush* pBrush;
+
+        pBrush = SelBrushList_GetBrush(App->m_pDoc->pSelBrushes, i);
+       
+        if (strstr(App->CL_Brush->Brush_GetName(pBrush), ".act") != NULL)
+            continue;
+       
+        Brush_ResizeFinal(pBrush, sides, inidx, &App->m_pDoc->FinalScale);
+        if (Brush_IsMulti(pBrush))
+        {
+            BrushList_ClearCSGAndHollows((BrushList*)App->CL_Brush->Brush_GetBrushList(pBrush), Brush_GetModelId(pBrush));
+            BrushList_RebuildHollowFaces((BrushList*)App->CL_Brush->Brush_GetBrushList(pBrush), Brush_GetModelId(pBrush), ::fdocBrushCSGCallback, this);
+        }
+    }
+
+    App->m_pDoc->UpdateSelected();
+}
+
+// *************************************************************************
+// *			                 DoneMove                           	   *
+// *************************************************************************
+void SB_Doc::DoneMove(void)
+{
+    int	i;
+    //	BrushList *BList = Level_GetBrushes (pLevel);
+
+    App->m_pDoc->mLastOp = BRUSH_MOVE;
+
+    App->m_pDoc->TempDeleteSelected();
+
+    if (App->m_pDoc->mModeTool == ID_TOOLS_TEMPLATE)
+    {
+        if (App->m_pDoc->TempEnt)
+        {
+            App->m_pDoc->DoneMoveEntity();
+        }
+        else
+        {
+            Brush_Move(App->m_pDoc->CurBrush, &App->m_pDoc->FinalPos);
+        }
+        return;
+    }
+    else
+    {
+        int NumSelBrushes = SelBrushList_GetSize(App->m_pDoc->pSelBrushes);
+        for (i = 0; i < NumSelBrushes; i++)
+        {
+            Brush* pBrush;
+
+            pBrush = SelBrushList_GetBrush(App->m_pDoc->pSelBrushes, i);
+           
+            if (strstr(App->CL_Brush->Brush_GetName(pBrush), ".act") != NULL)
+                continue;
+            
+            Brush_Move(pBrush, &App->m_pDoc->FinalPos);
+        }
+
+        if (App->m_pDoc->GetSelState() & ANYENTITY)
+        {
+            App->m_pDoc->DoneMoveEntity();
+        }
+
+        App->m_pDoc->UpdateSelected();
+
+        App->m_pDoc->UpdateSelectedModel(BRUSH_MOVE, &App->m_pDoc->FinalPos);
+    }
+   
+    geVec3d_Clear(&App->m_pDoc->FinalPos);
 
 }
