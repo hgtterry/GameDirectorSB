@@ -333,6 +333,11 @@ void A_TabsGroups_Dlg::OnSelchangeBrushlist(int Index, bool Clear)
 
 		SelBrushList_Add(m_pDoc->pSelBrushes, Selected_Brush);
 
+		if (Clear == 1)
+		{
+			Update_Dlg_Controls();
+			App->CLSB_TopTabs->Update_Dlg_Controls();
+		}
 		//m_pDoc->DoBrushSelection( Selected_Brush, brushSelToggle) ;
 		bChanged = GE_TRUE;
 	}

@@ -911,9 +911,6 @@ LRESULT CALLBACK SB_TopTabs::Top_Camera_Proc(HWND hDlg, UINT message, WPARAM wPa
 // *************************************************************************
 void SB_TopTabs::Select_Mode()
 {
-	/*AfxGetApp()->OpenDocumentFile("C:\\Users\\Acer\\Desktop\\SB_GD\\Bin\\Tools\\Levels\\StartRoom.3dt");
-	App->CL_World->Set_Paths();*/
-
 	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
 
 	m_pDoc->mCurrentTool = CURTOOL_NONE;
@@ -1057,7 +1054,7 @@ void SB_TopTabs::Update_Dlg_Controls()
 		App->CLSB_TopTabs->Reset_Brush_Buttons();
 		App->CLSB_TopTabs->Brush_Select_Flag = 1;
 		RedrawWindow(App->CLSB_TopTabs->Brush_Modify_Panel_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-		App->CLSB_TopTabs->Select_Mode();
+		//App->CLSB_TopTabs->Select_Mode();
 	}
 	else
 	{
