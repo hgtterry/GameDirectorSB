@@ -424,21 +424,46 @@ LRESULT CALLBACK SB_TopTabs::BrushModify_Panel_Proc(HWND hDlg, UINT message, WPA
 			if (some_item->idFrom == IDC_BTTBMOVEROTATE && some_item->code == NM_CUSTOMDRAW)
 			{
 				LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-				App->Custom_Button_Toggle(item,App->CLSB_TopTabs->Brush_MoveRotate_Flag);
+				bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BTTBMOVEROTATE));
+				if (test == 0)
+				{
+					App->Custom_Button_Greyed(item);
+				}
+				else
+				{
+					App->Custom_Button_Toggle(item, App->CLSB_TopTabs->Brush_MoveRotate_Flag);
+				}
+
 				return TRUE;
 			}
 
 			if (some_item->idFrom == IDC_BTSCALE && some_item->code == NM_CUSTOMDRAW)
 			{
 				LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-				App->Custom_Button_Toggle(item,App->CLSB_TopTabs->Brush_Scale_Flag);
+				bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BTSCALE));
+				if (test == 0)
+				{
+					App->Custom_Button_Greyed(item);
+				}
+				else
+				{
+					App->Custom_Button_Toggle(item, App->CLSB_TopTabs->Brush_Scale_Flag);
+				}
 				return TRUE;
 			}
 
 			if (some_item->idFrom == IDC_BTTBSHEAR && some_item->code == NM_CUSTOMDRAW)
 			{
 				LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-				App->Custom_Button_Toggle(item,App->CLSB_TopTabs->Brush_Shear_Flag);
+				bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BTTBSHEAR));
+				if (test == 0)
+				{
+					App->Custom_Button_Greyed(item);
+				}
+				else
+				{
+					App->Custom_Button_Toggle(item, App->CLSB_TopTabs->Brush_Shear_Flag);
+				}
 				return TRUE;
 			}
 
