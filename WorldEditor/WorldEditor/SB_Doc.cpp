@@ -267,9 +267,9 @@ void SB_Doc::SelectOrtho(CPoint point, ViewVars* v)
 
 static geBoolean fdocBrushCSGCallback(const Brush* pBrush, void* lParam)
 {
-    CFusionDoc* pDoc = (CFusionDoc*)lParam;
+    App->Get_Current_Document();
 
-    return (pDoc->BrushIsVisible(pBrush) && (!Brush_IsHint(pBrush)) && (!Brush_IsClip(pBrush)));
+    return (App->m_pDoc->BrushIsVisible(pBrush) && (!Brush_IsHint(pBrush)) && (!Brush_IsClip(pBrush)));
 }
 
 // *************************************************************************
@@ -288,7 +288,7 @@ void SB_Doc::DoneResize(int sides, int inidx)
         if (Brush_IsMulti(App->m_pDoc->CurBrush))
         {
             BrushList_ClearCSGAndHollows((BrushList*)App->CL_Brush->Brush_GetBrushList(App->m_pDoc->CurBrush), Brush_GetModelId(App->m_pDoc->CurBrush));
-            BrushList_RebuildHollowFaces((BrushList*)App->CL_Brush->Brush_GetBrushList(App->m_pDoc->CurBrush), Brush_GetModelId(App->m_pDoc->CurBrush), ::fdocBrushCSGCallback, this);
+            BrushList_RebuildHollowFaces((BrushList*)App->CL_Brush->Brush_GetBrushList(App->m_pDoc->CurBrush), Brush_GetModelId(App->m_pDoc->CurBrush), fdocBrushCSGCallback, NULL);
         }
         return;
     }
@@ -307,7 +307,7 @@ void SB_Doc::DoneResize(int sides, int inidx)
         if (Brush_IsMulti(pBrush))
         {
             BrushList_ClearCSGAndHollows((BrushList*)App->CL_Brush->Brush_GetBrushList(pBrush), Brush_GetModelId(pBrush));
-            BrushList_RebuildHollowFaces((BrushList*)App->CL_Brush->Brush_GetBrushList(pBrush), Brush_GetModelId(pBrush), ::fdocBrushCSGCallback, this);
+            BrushList_RebuildHollowFaces((BrushList*)App->CL_Brush->Brush_GetBrushList(pBrush), Brush_GetModelId(pBrush), fdocBrushCSGCallback, NULL);
         }
     }
 

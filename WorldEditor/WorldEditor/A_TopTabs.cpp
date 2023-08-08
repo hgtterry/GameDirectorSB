@@ -962,6 +962,7 @@ void SB_TopTabs::Select_Scale()
 {
 	App->Get_Current_Document();
 
+
 	int mode = App->m_pDoc->mModeTool;// pView->GetModeTool();
 
 	if(mode == ID_TOOLS_TEMPLATE)

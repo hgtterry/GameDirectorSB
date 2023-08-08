@@ -1065,12 +1065,6 @@ void CFusionView::OnLButtonUp(UINT nFlags, CPoint point)
 				pDoc->PlaceTemplateEntity3D(point, VCam);	
 				pDoc->SetModifiedFlag();
 			}
-/*
-			else if (IsKeyDown (VK_SHIFT))
-			{
-				pDoc->SelectTextureFromFace3D (point, VCam);
-			}
-*/
 			else
 			{
 				switch (AdjustMode)
