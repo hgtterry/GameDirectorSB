@@ -215,7 +215,7 @@ LRESULT CALLBACK A_TabsGroups_Dlg::Groups_Proc(HWND hDlg, UINT message, WPARAM w
 		{
 			if (App->CL_TabsGroups_Dlg->Groups_Dlg_Created == 1)
 			{
-				App->CL_TabsGroups_Dlg->List_Selection_Changed();
+				App->CL_TabsGroups_Dlg->List_Selection_Changed(1);
 			}
 			return TRUE;
 		}
@@ -279,7 +279,7 @@ void A_TabsGroups_Dlg::Get_Index(const Brush* b)
 		{
 			SendDlgItemMessage(GroupsDlg_Hwnd, IDC_GD_BRUSHLIST, LB_SETCURSEL, (WPARAM)Count, (LPARAM)0);
 			Selected_Index = Count;
-			List_Selection_Changed();
+			List_Selection_Changed(0);
 		}
 
 		Count++;
@@ -292,7 +292,7 @@ void A_TabsGroups_Dlg::Get_Index(const Brush* b)
 // *************************************************************************
 // *	  	List_Selection_Changed:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
-void A_TabsGroups_Dlg::List_Selection_Changed()
+void A_TabsGroups_Dlg::List_Selection_Changed(bool Clear)
 {
 	int Index = SendDlgItemMessage(GroupsDlg_Hwnd, IDC_GD_BRUSHLIST, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
 	if	(Index == -1)
@@ -304,7 +304,7 @@ void A_TabsGroups_Dlg::List_Selection_Changed()
 		if (Groups_Dlg_Created == 1)
 		{
 			Selected_Index = Index;
-			OnSelchangeBrushlist(Index);
+			OnSelchangeBrushlist(Index,Clear);
 		}
 	}
 }
@@ -312,17 +312,8 @@ void A_TabsGroups_Dlg::List_Selection_Changed()
 // *************************************************************************
 // *		OnSelchangeBrushlist:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
-void A_TabsGroups_Dlg::OnSelchangeBrushlist(int Index) 
+void A_TabsGroups_Dlg::OnSelchangeBrushlist(int Index, bool Clear)
 {
-	return;
-
-	//NumSelBrushes = SelBrushList_GetSize(m_pDoc->pSelBrushes);
-	//for (int i = 0; i < NumSelBrushes; ++i)
-	//{
-	//	Brush* pBrush = SelBrushList_GetBrush(m_pDoc->pSelBrushes, i);
-	//	Brush_UpdateChildFaces(pBrush);
-	//}
-
 	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
 
 	int			c ;
@@ -332,11 +323,17 @@ void A_TabsGroups_Dlg::OnSelchangeBrushlist(int Index)
 
 	if( c > 0 )
 	{
-		m_pDoc->ResetAllSelections() ;
-		m_pDoc->UpdateSelected();
+		if (Clear == 1)
+		{
+			m_pDoc->ResetAllSelections() ;
+			m_pDoc->UpdateSelected();
+		}
 		
 		Selected_Brush = App->CL_World->Get_Brush_ByIndex( Index );
-		m_pDoc->DoBrushSelection( Selected_Brush, brushSelToggle) ;
+
+		SelBrushList_Add(m_pDoc->pSelBrushes, Selected_Brush);
+
+		//m_pDoc->DoBrushSelection( Selected_Brush, brushSelToggle) ;
 		bChanged = GE_TRUE;
 	}
 

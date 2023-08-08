@@ -2348,6 +2348,7 @@ void CFusionView::OnToolsSettexturescale()
 
 void CFusionView::OnToolsNextbrush() 
 {
+
 	CFusionDoc *pDoc = GetDocument ();
 	BrushList *BList = Level_GetBrushes (pDoc->pLevel);
 

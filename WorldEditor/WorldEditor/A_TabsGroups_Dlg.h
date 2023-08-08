@@ -47,8 +47,8 @@ private:
 	static LRESULT CALLBACK Groups_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Properties_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
-	void List_Selection_Changed();
-	void OnSelchangeBrushlist(int Index);
+	void List_Selection_Changed(bool Clear);
+	void OnSelchangeBrushlist(int Index,bool Clear);
 
 	void List_BrushData(HWND hDlg);
 
