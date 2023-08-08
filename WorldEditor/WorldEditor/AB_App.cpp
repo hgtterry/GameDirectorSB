@@ -544,11 +544,30 @@ bool SB_App::Custom_Button_Toggle_MFC(LPDRAWITEMSTRUCT lpDIS,HWND hDlg, bool Tog
 }
 
 // *************************************************************************
+// *					Custom_Button_Greyed Terry Bernie   		  	   *
+// *************************************************************************
+bool SB_App::Custom_Button_Greyed(LPNMCUSTOMDRAW item)
+{
+	HPEN pen = CreatePen(PS_INSIDEFRAME, 0, RGB(0, 0, 255)); // Idle 
+
+	HGDIOBJ old_pen = SelectObject(item->hdc, pen);
+	HGDIOBJ old_brush = SelectObject(item->hdc, Brush_Tabs_UnSelected);
+
+	RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 1, 1);
+
+	SelectObject(item->hdc, old_pen);
+	SelectObject(item->hdc, old_brush);
+	DeleteObject(pen);
+
+	return CDRF_DODEFAULT;
+}
+
+// *************************************************************************
 // *					Custom_Button_Normal Terry Bernie   		  	   *
 // *************************************************************************
 bool SB_App::Custom_Button_Normal(LPNMCUSTOMDRAW item)
 {
-	{
+	
 		if (item->uItemState & CDIS_SELECTED) // Push Down
 		{
 			//Create pen for button border
@@ -596,12 +615,11 @@ bool SB_App::Custom_Button_Normal(LPNMCUSTOMDRAW item)
 			SelectObject(item->hdc, old_pen);
 			SelectObject(item->hdc, old_brush);
 			DeleteObject(pen);
-
+			
 			return CDRF_DODEFAULT;
 		}
-
+	
 		return CDRF_DODEFAULT;
-	}
 }
 
 // *************************************************************************
