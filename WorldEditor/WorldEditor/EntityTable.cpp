@@ -207,6 +207,16 @@ static const char FixedEntityDefinitions[] =
 		"#pragma GE_Angles(angles)\n"
 		"#pragma GE_DefaultValue(angles, \"180 0 0\")\n"
 	"} Camera;\n"
+	"// Zero\n"									// Zero entity
+	"#pragma GE_Type(\"BMP_DEFAULT\")\n"
+	"typedef struct tag_Zero\n"
+	"{\n"
+	"geVec3d origin;\n"
+	"geVec3d angles;\n"
+	"#pragma GE_Origin(origin)\n"
+	"#pragma GE_Angles(angles)\n"
+	"#pragma GE_DefaultValue(angles, \"0 0 0\")\n"
+	"} Zero;\n"
 	"\0xFFFF";				// EOF required by parser
 
 #pragma warning (disable:4100)

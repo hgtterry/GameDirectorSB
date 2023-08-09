@@ -388,6 +388,28 @@ void SB_File_WE::AddCameraEntityToLevel(void)
 		CameraEntity.SetOrigin ( 0.0f, 0.0f, 0.0f, Level_GetEntityDefs (App->m_pDoc->pLevel) );
 		Level_AddEntity (App->m_pDoc->pLevel, CameraEntity);
 	}
+
+	AddZeroEntityToLevel();
+}
+
+// *************************************************************************
+// * 						AddZeroEntityToLevel						   *
+// *************************************************************************
+void SB_File_WE::AddZeroEntityToLevel(void)
+{
+	//CEntity* pCameraEntity = App->CLSB_Camera_WE->FindCameraEntity();
+	//if (!pCameraEntity)
+	{
+		// Make default camera entity
+		CEntity ZeroEntity;
+		CString cstr;
+
+		App->m_pDoc->CreateEntityFromName("Zero", ZeroEntity);
+		cstr.LoadString(IDS_CAMERAENTITYNAME);
+		ZeroEntity.SetKeyValue("%name%", "Zero");
+		ZeroEntity.SetOrigin(0.0f, 0.0f, 0.0f, Level_GetEntityDefs(App->m_pDoc->pLevel));
+		Level_AddEntity(App->m_pDoc->pLevel, ZeroEntity);
+	}
 }
 
 // *************************************************************************
