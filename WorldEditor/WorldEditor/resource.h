@@ -316,6 +316,8 @@
 #define IDC_ARCH_PRIMITIVE              1145
 #define IDD_SB_TB_CAMERA                1145
 #define IDC_CONE_PRIMITIVE              1146
+#define IDD_SB_TB_TEST1                 1146
+#define IDD_SB_TB_EQUITY                1146
 #define IDC_STARTANGLE                  1148
 #define IDC_ENDANGLE                    1149
 #define IDC_STATUSPROGRESS1             1149
@@ -715,6 +717,7 @@
 #define IDC_ST_BP_SELECTEDBRUSHES       1480
 #define IDC_LIST_SELECTEDBRUSHES        1481
 #define IDC_BT_TB_TEST                  1482
+#define IDC_BT_TB_EQUITY                1482
 #define IDC_STWIDTHHEIGHT               1483
 #define IDC_ED_BRUSH_POSX               1484
 #define IDC_ED_BRUSH_POSY               1485
@@ -783,6 +786,7 @@
 #define IDC_SBPOSY3                     1521
 #define IDC_BT_TT_ZEROCAMRA             1521
 #define IDC_SBPOSZ3                     1522
+#define IDC_BT_TB_TEST2                 1522
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772
 #define ID_BRUSH_PRIMITIVES_SPHEROID    32773
@@ -992,7 +996,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        328
 #define _APS_NEXT_COMMAND_VALUE         33086
-#define _APS_NEXT_CONTROL_VALUE         1522
+#define _APS_NEXT_CONTROL_VALUE         1523
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

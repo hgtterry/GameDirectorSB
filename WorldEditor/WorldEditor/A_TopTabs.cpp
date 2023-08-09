@@ -44,6 +44,7 @@ SB_TopTabs::SB_TopTabs(void)
 	Brush_Modify_Panel_Hwnd = nullptr;
 	File_Panel_Hwnd = nullptr;
 	Test_Panel_Hwnd = nullptr;
+	Equity_Panel_Hwnd = nullptr;
 	Faces_Panel_Hwnd = nullptr;
 	Camera_Panel_Hwnd = nullptr;
 
@@ -55,6 +56,7 @@ SB_TopTabs::SB_TopTabs(void)
 	Header_File_Flag = 0;
 	Header_BrushModify_Flag = 0;
 	Header_Test_Flag = 0;
+	Header_Equity_Flag = 0;
 	Header_Faces_Flag = 0;
 	Header_Camera_Flag = 0;
 
@@ -84,6 +86,7 @@ bool SB_TopTabs::Start_Headers_Tabs()
 		Start_BrushModify_Panel();
 		Start_File_Tab();
 		Start_Test_Tab();
+		Start_Equity_Tab();
 		Start_Faces_Tab();
 		Start_Camera_Tab();
 
@@ -112,6 +115,7 @@ LRESULT CALLBACK SB_TopTabs::TB_Headers_Proc(HWND hDlg, UINT message, WPARAM wPa
 		SendDlgItemMessage(hDlg, IDC_BT_TB_MODIFY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TB_FILE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TB_TEST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_TB_EQUITY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TB_FACES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TB_CAMERA, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
@@ -180,11 +184,18 @@ LRESULT CALLBACK SB_TopTabs::TB_Headers_Proc(HWND hDlg, UINT message, WPARAM wPa
 			App->Custom_Button_Toggle_Tabs(item, App->CLSB_TopTabs->Header_File_Flag);
 			return CDRF_DODEFAULT;
 		}
-
-		if (some_item->idFrom == IDC_BT_TB_TEST && some_item->code == NM_CUSTOMDRAW)
+		
+		if (some_item->idFrom == IDC_BT_TB_TEST2 && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle_Tabs(item, App->CLSB_TopTabs->Header_Test_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_TB_EQUITY && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle_Tabs(item, App->CLSB_TopTabs->Header_Equity_Flag);
 			return CDRF_DODEFAULT;
 		}
 
@@ -220,7 +231,18 @@ LRESULT CALLBACK SB_TopTabs::TB_Headers_Proc(HWND hDlg, UINT message, WPARAM wPa
 			return TRUE;
 		}
 
-		if (LOWORD(wParam) == IDC_BT_TB_TEST)
+		if (LOWORD(wParam) == IDC_BT_TB_EQUITY)
+		{
+			App->CLSB_TopTabs->Reset_Tabs_Buttons();
+			App->CLSB_TopTabs->Header_Equity_Flag = 1;
+			RedrawWindow(App->CLSB_TopTabs->Top_Tabs_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+			ShowWindow(App->CLSB_TopTabs->Equity_Panel_Hwnd, SW_SHOW);
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_TB_TEST2)
 		{
 			App->CLSB_TopTabs->Reset_Tabs_Buttons();
 			App->CLSB_TopTabs->Header_Test_Flag = 1;
@@ -347,12 +369,14 @@ void SB_TopTabs::Reset_Tabs_Buttons()
 	Header_File_Flag = 0;
 	Header_BrushModify_Flag = 0;
 	Header_Test_Flag = 0;
+	Header_Equity_Flag = 0;
 	Header_Faces_Flag = 0;
 	Header_Camera_Flag = 0;
 
 	ShowWindow(Brush_Modify_Panel_Hwnd, SW_HIDE);
 	ShowWindow(File_Panel_Hwnd, SW_HIDE);
 	ShowWindow(Test_Panel_Hwnd, SW_HIDE);
+	ShowWindow(Equity_Panel_Hwnd, SW_HIDE);
 	ShowWindow(Faces_Panel_Hwnd, SW_HIDE);
 	ShowWindow(Camera_Panel_Hwnd, SW_HIDE);
 
@@ -714,6 +738,146 @@ LRESULT CALLBACK SB_TopTabs::Top_Test_Proc(HWND hDlg, UINT message, WPARAM wPara
 		if (LOWORD(wParam) == IDC_STARTEQUITY)
 		{
 			
+			App->CLSB_Model->Clear_Model_And_Reset();
+
+			//Debug
+			App->CLSB_Grid->Reset_View();
+
+			App->CLSB_TopTabs_Equity->Camera_Set_Model();
+			App->CLSB_Equity->Show_Equity_Dialog(true);
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_TB_NEWVIEW)
+		{
+			App->CL_Main_View->Start_Main_View_Dlg();
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_TB_WORLDINFO)
+		{
+			App->CLSB_Dialogs->Start_ListData(0);
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_TB_BUILDPREVIEW)
+		{
+			App->CLSB_Equity->Preview_All();
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_PREVIEWSELECTED)
+		{
+			App->CLSB_Equity->Preview_Selected();
+
+			return TRUE;
+		}
+
+		break;
+	}
+
+	}
+
+	return FALSE;
+}
+
+// *************************************************************************
+// *	  		Start_Equity_Tab:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+bool SB_TopTabs::Start_Equity_Tab()
+{
+	Equity_Panel_Hwnd = NULL;
+
+	Equity_Panel_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_TB_EQUITY, Top_Tabs_Hwnd, (DLGPROC)Top_Equity_Proc);
+
+	return 1;
+}
+
+// *************************************************************************
+// *			Top_Equity_Proc:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+LRESULT CALLBACK SB_TopTabs::Top_Equity_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_BT_TB_BUILDPREVIEW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_PREVIEWSELECTED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_BT_TB_WORLDINFO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_TB_NEWVIEW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STARTEQUITY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		return TRUE;
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->Brush_White;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_BT_TB_BUILDPREVIEW && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_PREVIEWSELECTED && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_TB_NEWVIEW && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_TB_WORLDINFO && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_STARTEQUITY && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_OGRERUNNING && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CLSB_TopTabs->OgreRunning_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+		if (LOWORD(wParam) == IDC_STARTEQUITY)
+		{
+
 			App->CLSB_Model->Clear_Model_And_Reset();
 
 			//Debug

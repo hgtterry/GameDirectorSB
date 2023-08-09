@@ -166,7 +166,7 @@ void SB_Equity::Start_Equity_Dialog_New()
 
 		App->CLSB_Ogre->RenderHwnd = App->ViewGLhWnd;
 
-		//Resize_3DView();
+		Resize_3DView();
 		Debug
 	}
 }
@@ -1379,6 +1379,7 @@ void SB_Equity::Resize_3DView()
 	int X = rcl.right-10;
 	int Y = rcl.bottom - 90;
 
+	
 	if (App->New_Equity_Flag == 1)
 	{
 		SetWindowPos(App->ViewGLhWnd, NULL, 4, 80, X, Y, SWP_NOZORDER);
@@ -1388,11 +1389,14 @@ void SB_Equity::Resize_3DView()
 		SetWindowPos(App->CLSB_Ogre->Ogre_Window_hWnd, NULL, 4, 80, X, Y, SWP_NOZORDER);
 	}
 	
-	App->CLSB_Ogre->mWindow->windowMovedOrResized();
-	App->CLSB_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CLSB_Ogre->mWindow->getWidth() / (Ogre::Real)App->CLSB_Ogre->mWindow->getHeight());
-	App->CLSB_Ogre->mCamera->yaw(Ogre::Radian(0));
+	//if (App->CLSB_Ogre->OgreIsRunning == 1)
+	{
+		App->CLSB_Ogre->mWindow->windowMovedOrResized();
+		App->CLSB_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CLSB_Ogre->mWindow->getWidth() / (Ogre::Real)App->CLSB_Ogre->mWindow->getHeight());
+		App->CLSB_Ogre->mCamera->yaw(Ogre::Radian(0));
 
-	Root::getSingletonPtr()->renderOneFrame();
+		Root::getSingletonPtr()->renderOneFrame();
+	}
 }
 
 // *************************************************************************
