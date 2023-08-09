@@ -48,8 +48,8 @@ SB_Ogre::SB_Ogre(void)
 	FPSLock = 4200;
 
 	Fps_Tick = 4000;
-
-	Ogre_Window_hWnd = nullptr;
+	RenderHwnd = nullptr;
+	//Ogre_Window_hWnd = nullptr;
 
 	PCFreq = 0.0;
 	CounterStart = 0;
@@ -87,7 +87,7 @@ bool SB_Ogre::InitOgre(void)
 
 	App->CLSB_Grid->DummyNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 
-	m_imgui.Init(mSceneMgr, Ogre_Window_hWnd);
+	m_imgui.Init(mSceneMgr, RenderHwnd);
 
 	createFrameListener();
 	
@@ -324,7 +324,7 @@ bool SB_Ogre::Configure(void)
 		mWindow->setHidden(true);
 		mWindow->resize(200, 200);
 
-		Ogre_Window_hWnd = FindWindow(0, "XYZ");
+		RenderHwnd = FindWindow(0, "XYZ");
 	}
 	
 	return true;

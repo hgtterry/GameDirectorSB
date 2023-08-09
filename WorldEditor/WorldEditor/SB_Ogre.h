@@ -92,7 +92,7 @@ public:
 
 	OgreImGui  m_imgui;
 
-	HWND Ogre_Window_hWnd;
+	//HWND Ogre_Window_hWnd;
 
 	Ogre::Timer FPStimer;
 
