@@ -54,6 +54,13 @@ SB_ImGui::SB_ImGui()
 	PosY_Selected = 0;
 	PosZ_Selected = 0;
 
+	// -------------- Physics Console
+	Disable_Physics_Console = 0;
+	Show_Physics_Console = 1;
+	Physics_PosX = 500;
+	Physics_PosY = 500;
+	Physics_Console_StartPos = 0;
+
 	m_pDoc = nullptr;
 	pCameraEntity = nullptr;
 
@@ -82,6 +89,12 @@ void SB_ImGui::ImGui_Editor_Loop(void)
 	if (Show_BB_Data_F == 1)
 	{
 		Model_BB_GUI();
+	}
+
+	// SBC_Gui_Dialogs - Physics Console
+	if (Show_Physics_Console == 1)
+	{
+		Physics_Console_Gui();
 	}
 }
 
@@ -426,6 +439,154 @@ void SB_ImGui::Model_BB_GUI(void)
 void SB_ImGui::Close_BB_Data(void)
 {
 	Show_BB_Data_F = 0;
+}
+
+// *************************************************************************
+// *						Physics_Console  Terry Bernie				   *
+// *************************************************************************
+void SB_ImGui::Physics_Console_Gui(void)
+{
+	ImGui::SetNextWindowPos(ImVec2(Physics_PosX, Physics_PosY), ImGuiCond_FirstUseEver);
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
+	ImGuiStyle* style = &ImGui::GetStyle();
+
+	if (!ImGui::Begin("Physics_Console", &Show_Physics_Console, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar))
+	{
+		ImGui::End();
+	}
+	else
+	{
+		if (Disable_Physics_Console == 1)
+		{
+			ImGui::BeginDisabled(true);
+		}
+
+		ImGui::Text("Physics Console");
+
+		ImGui::SameLine(0, 270);
+		if (ImGui::Button("H"))
+		{
+			//App->Cl_Utilities->OpenHTML("Help\\Physics_Console.html");
+		}
+
+		ImGui::SameLine();
+		if (ImGui::Button("X"))
+		{
+			//CheckMenuItem(App->mMenu, ID_WINDOWS_SHOWPHYSICSPANEL, MF_BYCOMMAND | MF_UNCHECKED);
+			Physics_Console_StartPos = 0;
+			Show_Physics_Console = 0;
+		}
+
+		ImGui::Separator();
+
+		if (App->CLSB_Ogre->OgreListener->GD_Run_Physics == 1)
+		{
+			style->Colors[ImGuiCol_Button] = ImVec4(0.0f, 1.0f, 0.0f, 1.00f);
+		}
+		else
+		{
+			style->Colors[ImGuiCol_Button] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
+		}
+
+		if (ImGui::Button("Physics On"))
+		{
+			if (App->CLSB_Model->Model_Loaded == 1)
+			{
+				if (App->CLSB_Ogre->OgreListener->GD_Run_Physics == 1)
+				{
+					App->CLSB_Ogre->OgreListener->GD_Run_Physics = 0;
+				}
+				else
+				{
+					App->CLSB_Ogre->OgreListener->GD_Run_Physics = 1;
+				}
+
+				//App->RedrawWindow_Dlg(App->Physics_Console_Hwnd);
+			}
+		}
+
+		if (App->CLSB_Ogre->OgreListener->Dubug_Physics_Draw == 1)
+		{
+			style->Colors[ImGuiCol_Button] = ImVec4(0.0f, 1.0f, 0.0f, 1.00f);
+		}
+		else
+		{
+			style->Colors[ImGuiCol_Button] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
+		}
+
+		ImGui::SameLine();
+		if (ImGui::Button("Physics Outline"))
+		{
+			if (App->CLSB_Ogre->OgreListener->Dubug_Physics_Draw == 1)
+			{
+				App->CLSB_Ogre->OgreListener->Dubug_Physics_Draw = 0;
+				App->CLSB_Ogre->BulletListener->Render_Debug_Flag = 0;
+			}
+			else
+			{
+				App->CLSB_Ogre->OgreListener->Dubug_Physics_Draw = 1;
+				App->CLSB_Ogre->BulletListener->Render_Debug_Flag = 1;
+			}
+		}
+
+		//ImGui::SameLine();
+		//if (ImGui::Button("Reset Entities"))
+		//{
+		//	/*if (App->SBC_Scene->Scene_Loaded == 1)
+		//	{
+		//		App->SBC_Physics->Reset_Triggers();
+		//	}*/
+		//}
+
+		ImGui::SameLine();
+		//if (ImGui::Button("Reset Scene"))
+		//{
+		//	//if (App->SBC_Scene->Scene_Loaded == 1)
+		//	//{
+
+		//	//	int Saved = App->CL_Ogre->OgreListener->GD_CameraMode;
+		//	//	App->CL_Ogre->OgreListener->GD_CameraMode = Enums::CamFirst;
+
+		//	//	App->SBC_Physics->Reset_Physics();
+		//	//	App->CL_Ogre->OgreListener->GD_Run_Physics = 1;
+		//	//	App->SBC_Physics->Reset_Triggers();
+		//	//	App->CL_Ogre->OgreListener->GD_Run_Physics = 1;
+
+		//	//	App->SBC_TopTabs->Toggle_FirstCam_Flag = 1;
+		//	//	App->SBC_TopTabs->Toggle_FreeCam_Flag = 0;
+		//	//	RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+		//	//	/*App->SBC_TopTabs->Toggle_FirstCam_Flag = 0;
+		//	//	App->SBC_TopTabs->Toggle_FreeCam_Flag = 1;
+		//	//	RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+		//	//	App->CL_Ogre->OgreListener->GD_CameraMode = Enums::CamDetached;*/
+
+		//	//	App->SBC_Com_Environments->GameMode(0);
+
+		//	//}
+		//}
+
+		if (Physics_Console_StartPos == 0)
+		{
+			ImVec2 Size = ImGui::GetWindowSize();
+			Physics_PosX = 10;
+			Physics_PosY = ((float)App->CLSB_Ogre->OgreListener->View_Height) - (Size.y) - 50;
+			ImGui::SetWindowPos("Physics_Console", ImVec2(Physics_PosX, Physics_PosY));
+
+			Physics_Console_StartPos = 1;
+		}
+
+		style->Colors[ImGuiCol_Button] = ImVec4(0.26f, 0.59f, 0.98f, 0.40f);
+		ImGui::PopStyleColor();
+
+
+		if (Disable_Physics_Console == 1)
+		{
+			ImGui::EndDisabled();
+		}
+
+		ImGui::End();
+	}
 }
 
 

@@ -122,6 +122,8 @@
       <EnablePREfast>false</EnablePREfast>
       <LanguageStandard_C>stdc11</LanguageStandard_C>
       <LanguageStandard>stdcpp14</LanguageStandard>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -129,7 +131,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <AdditionalLibraryDirectories>Common\lib\Release;Common\Bullet\lib;Common\irrKlang\Libs;Common\Soil\lib;Common\Devil\lib;Common\Assimp\Lib;Common\Tiny</AdditionalLibraryDirectories>
-      <AdditionalDependencies>comctl32.lib;OgreMain.lib;OgreOverlay.lib;OgreTerrain.lib;opengl32.lib;glu32.lib;BulletDynamics.lib;BulletCollision.lib;LinearMath.lib;irrKlang.lib;SOIL.lib;DevIL.lib;ILU.lib;ILUT.lib;assimp-vc140-mt.lib;Tiny.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>comctl32.lib;OgreMain.lib;OgreOverlay.lib;OgreTerrain.lib;opengl32.lib;glu32.lib;BulletDynamicsMD.lib;BulletCollisionMD.lib;LinearMathMD.lib;irrKlang.lib;SOIL.lib;DevIL.lib;ILU.lib;ILUT.lib;assimp-vc140-mt.lib;Tiny.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)GameDirectorSB.exe</OutputFile>
       <IgnoreSpecificDefaultLibraries>LIBCMT.lib;libcpmt.lib</IgnoreSpecificDefaultLibraries>
       <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>

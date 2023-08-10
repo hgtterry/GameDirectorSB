@@ -45,6 +45,8 @@ public:
 	void Model_BB_GUI(void);
 	void Close_BB_Data(void);
 
+	void Physics_Console_Gui(void);
+
 	bool Show_FPS;  // Show Frames Per Second [150122]
 	bool StartPos;  // Position FPS Frame Flag [150122]
 
@@ -57,6 +59,13 @@ public:
 
 	float Model_Data_PosX;
 	float Model_Data_PosY;
+
+	// -------------- Physics Console
+	bool Disable_Physics_Console;
+	bool Show_Physics_Console;
+	float Physics_PosX;
+	float Physics_PosY;
+	bool Physics_Console_StartPos;
 
 protected:
 
