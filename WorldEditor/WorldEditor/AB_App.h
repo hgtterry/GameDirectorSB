@@ -83,6 +83,8 @@ distribution.
 #include "SB_Dimensions.h"
 #include "SB_Preferences.h"
 #include "SB_Doc.h"
+
+#include "SB_Bullet.h"
 //#include <stack>
 
 class SB_App
@@ -146,6 +148,7 @@ public:
 	SB_Dimensions*				CLSB_Dimensions;
 	SB_Preferences*				CLSB_Preferences;
 	SB_Doc*						CLSB_Doc;
+	SB_Bullet*					CLSB_Bullet;
 
 	bool InitApp(void);
 	void InitMFC(void);

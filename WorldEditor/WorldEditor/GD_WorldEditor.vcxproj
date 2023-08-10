@@ -10,7 +10,7 @@
     <ProjectGuid>{890F9AAF-1572-4BC2-9572-33BC83322E63}</ProjectGuid>
     <RootNamespace>FUSION</RootNamespace>
     <Keyword>MFCProj</Keyword>
-    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.22000.0</WindowsTargetPlatformVersion>
     <ProjectName>GD_WorldEditor</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />

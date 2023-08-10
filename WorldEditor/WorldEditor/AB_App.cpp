@@ -80,6 +80,7 @@ SB_App::SB_App()
 	CLSB_Dimensions =			nullptr;
 	CLSB_Preferences =			nullptr;
 	CLSB_Doc =					nullptr;
+	CLSB_Bullet =				nullptr;
 
 	AppBackground = NULL;
 	BlackBrush =	NULL;
@@ -263,6 +264,7 @@ bool SB_App::InitApp(void)
 	CLSB_Dimensions =				new SB_Dimensions();
 	CLSB_Preferences =				new SB_Preferences();
 	CLSB_Doc =						new SB_Doc();
+	CLSB_Bullet =					new SB_Bullet();
 
 	InitCommonControls();
 

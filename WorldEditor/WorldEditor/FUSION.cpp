@@ -404,6 +404,8 @@ BOOL CFusionApp::InitInstance() // hgtterry InitInstance
 		App->CLSB_Equity->Start_Equity_Dialog();
 	}
 	
+	App->CLSB_Bullet->Init_Bullet();
+
 	return TRUE;
 }
 
