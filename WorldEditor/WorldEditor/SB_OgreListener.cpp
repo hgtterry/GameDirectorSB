@@ -61,6 +61,7 @@ SB_OgreListener::SB_OgreListener(void)
 
 	GD_Run_Physics = 0;
 	Dubug_Physics_Draw = 0;
+
 	Equity_Running = 0;
 	MeshViewer_Running = 0;
 
@@ -608,15 +609,16 @@ bool SB_OgreListener::Update_Game_Logic(float DeltaTime)
 
 	App->CLSB_ImGui->Render_FPS();
 	App->CLSB_Dimensions->Dimesions_Select();
-	//if (Dubug_Physics_Draw == 1)
-	//{
-	//	App->CL_Bullet->dynamicsWorld->debugDrawWorld();
-	//}
 
-	//if (GD_Run_Physics == 1)
-	//{
-	//	App->CL_Bullet->dynamicsWorld->stepSimulation(DeltaTime * Bullet_Step);
-	//}
+	if (Dubug_Physics_Draw == 1)
+	{
+		App->CLSB_Bullet->dynamicsWorld->debugDrawWorld();
+	}
+
+	if (GD_Run_Physics == 1)
+	{
+		App->CLSB_Bullet->dynamicsWorld->stepSimulation(DeltaTime * Bullet_Step);
+	}
 
 	//if (Show_DemoWindow == 1)
 	//{

@@ -265,6 +265,34 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 			return TRUE;
 		}
 
+		// Physics
+		if (LOWORD(wParam) == ID_PHYSICS_PHYSICS)
+		{
+			if (App->CLSB_Ogre->OgreListener->GD_Run_Physics == 1)
+			{
+				App->CLSB_Ogre->OgreListener->GD_Run_Physics = 0;
+			}
+			else
+			{
+				App->CLSB_Ogre->OgreListener->GD_Run_Physics = 1;
+			}
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == ID_PHYSICS_DEBUGDRAW)
+		{
+			if (App->CLSB_Ogre->OgreListener->Dubug_Physics_Draw == 1)
+			{
+				App->CLSB_Ogre->OgreListener->Dubug_Physics_Draw = 0;
+			}
+			else
+			{
+				App->CLSB_Ogre->OgreListener->Dubug_Physics_Draw = 1;
+			}
+			
+			return TRUE;
+		}
+
 		// File Import
 		if (LOWORD(wParam) == ID_IMPORT_GENESIS3DACT)
 		{
@@ -498,6 +526,34 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_Proc(HWND hDlg, UINT message, WPARAM w
 			return TRUE;
 		}
 		
+		// Physics
+		if (LOWORD(wParam) == ID_PHYSICS_PHYSICS)
+		{
+			if (App->CLSB_Ogre->OgreListener->GD_Run_Physics == 1)
+			{
+				App->CLSB_Ogre->OgreListener->GD_Run_Physics = 0;
+			}
+			else
+			{
+				App->CLSB_Ogre->OgreListener->GD_Run_Physics = 1;
+			}
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == ID_PHYSICS_DEBUGDRAW)
+		{
+			if (App->CLSB_Ogre->OgreListener->Dubug_Physics_Draw == 1)
+			{
+				App->CLSB_Ogre->OgreListener->Dubug_Physics_Draw = 0;
+			}
+			else
+			{
+				App->CLSB_Ogre->OgreListener->Dubug_Physics_Draw = 1;
+			}
+
+			return TRUE;
+		}
+
 		// File Import
 		if (LOWORD(wParam) == ID_IMPORT_GENESIS3DACT)
 		{

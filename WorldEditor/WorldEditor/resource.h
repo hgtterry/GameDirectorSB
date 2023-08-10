@@ -987,6 +987,8 @@
 #define ID_DEBUG_GENERAL                33083
 #define ID_EQUITYSB_PREFERENCESWE       33084
 #define ID_DEBUG_PREFERENCESWE          33085
+#define ID_PHYSICS_PHYSICS              33086
+#define ID_PHYSICS_DEBUGDRAW            33087
 #define IDS_HELPINFORMATION             38000
 
 // Next default values for new objects
@@ -995,7 +997,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        328
-#define _APS_NEXT_COMMAND_VALUE         33086
+#define _APS_NEXT_COMMAND_VALUE         33088
 #define _APS_NEXT_CONTROL_VALUE         1523
 #define _APS_NEXT_SYMED_VALUE           112
 #endif

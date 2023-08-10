@@ -2678,6 +2678,11 @@ BEGIN
         MENUITEM "Bounding Box",                ID_DEBUG_BOUNDINGBOX
         MENUITEM "PreferencesWE",               ID_DEBUG_PREFERENCESWE
     END
+    POPUP "Physics"
+    BEGIN
+        MENUITEM "Physics On",                  ID_PHYSICS_PHYSICS
+        MENUITEM "Debug Draw",                  ID_PHYSICS_DEBUGDRAW
+    END
 END
 
 

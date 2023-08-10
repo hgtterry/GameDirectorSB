@@ -381,6 +381,8 @@ BOOL CFusionApp::InitInstance() // hgtterry InitInstance
 
 	App->CLSB_RecentFiles->Init_History();
 
+	App->CLSB_Bullet->Init_Bullet();
+
 	if (App->New_Equity_Flag == 1)
 	{
 		App->CLSB_Equity->Start_Equity_Dialog_New();
@@ -396,15 +398,16 @@ BOOL CFusionApp::InitInstance() // hgtterry InitInstance
 		}
 
 		App->CLSB_Ogre->OgreIsRunning = 1;
-
+		
 		App->CLSB_Ogre->Ogre_Render_Loop();
 	}
 	else
 	{
 		App->CLSB_Equity->Start_Equity_Dialog();
+
 	}
 	
-	App->CLSB_Bullet->Init_Bullet();
+	
 
 	return TRUE;
 }

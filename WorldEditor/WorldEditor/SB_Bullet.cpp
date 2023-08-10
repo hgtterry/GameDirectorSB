@@ -46,6 +46,7 @@ bool SB_Bullet::Init_Bullet()
 
 	btAlignedObjectArray<btCollisionShape*> collisionShapes;
 
+	Debug
 	return 0;
 }
 
