@@ -100,6 +100,7 @@
     <ClCompile Include="array.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Test|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Base_Player.cpp" />
     <ClCompile Include="box3d.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Test|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -193,6 +194,7 @@
     <ClCompile Include="SB_Model.cpp" />
     <ClCompile Include="SB_Ogre.cpp" />
     <ClCompile Include="SB_OgreListener.cpp" />
+    <ClCompile Include="SB_Player.cpp" />
     <ClCompile Include="SB_Preferences.cpp" />
     <ClCompile Include="SB_RecentFiles.cpp" />
     <ClCompile Include="SB_Render.cpp" />
@@ -250,6 +252,7 @@
     <ResourceCompile Include="GD_WorldEditor.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Base_Player.h" />
     <ClInclude Include="CollisionTools.h" />
     <ClInclude Include="SB_Assimp.h" />
     <ClInclude Include="SB_Base_Group.h" />
@@ -274,6 +277,7 @@
     <ClInclude Include="SB_Model.h" />
     <ClInclude Include="SB_Ogre.h" />
     <ClInclude Include="SB_OgreListener.h" />
+    <ClInclude Include="SB_Player.h" />
     <ClInclude Include="SB_Preferences.h" />
     <ClInclude Include="SB_RecentFiles.h" />
     <ClInclude Include="SB_Render.h" />
