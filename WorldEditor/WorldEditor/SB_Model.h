@@ -22,6 +22,7 @@ distribution.
 */
 
 #include "SB_Base_Group.h"
+#include "Base_Player.h"
 
 typedef struct Bone_Vert { float x, y, z; }Bone_Vert;
 typedef struct Translation_Type { float X, Y, Z; }Translation_Type;
@@ -88,7 +89,7 @@ public:
 	~SB_Model(void);
 
 	Base_Group* Group[5000];
-
+	
 	void Create_Mesh_Group(int Index);
 	int Get_Groupt_Count();
 	void Set_Groupt_Count(int Count);
@@ -116,6 +117,7 @@ public:
 	Texture_Type* S_Texture[1];
 	GLTextureInfo_Type* S_TextureInfo[30];
 
+	std::vector<Base_Player*> B_Player;
 
 	std::vector<vertex_type> vertex_Data;
 	std::vector<polygon_type> Face_Data;
@@ -130,7 +132,9 @@ public:
 	float radius;
 
 	bool Model_Loaded;
+	bool Player_Added;
 
+	int Player_Count;
 	int VerticeCount;
 	int FaceCount;
 	int GroupCount;

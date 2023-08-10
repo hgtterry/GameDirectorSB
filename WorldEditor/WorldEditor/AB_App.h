@@ -85,6 +85,7 @@ distribution.
 #include "SB_Doc.h"
 
 #include "SB_Bullet.h"
+#include "SB_Player.h"
 //#include <stack>
 
 class SB_App
@@ -149,6 +150,7 @@ public:
 	SB_Preferences*				CLSB_Preferences;
 	SB_Doc*						CLSB_Doc;
 	SB_Bullet*					CLSB_Bullet;
+	SB_Player*					CLSB_Player;
 
 	bool InitApp(void);
 	void InitMFC(void);
