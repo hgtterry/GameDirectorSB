@@ -30,7 +30,7 @@ distribution.
 #include "SB_Render.h"
 #include "ImguiManager.h"
 
-//#include "WV_Debug_Render.h"
+#include "SB_Bt_Render.h"
 
 //#include <chrono>
 
@@ -88,7 +88,7 @@ public:
 	SB_OgreListener*	OgreListener;
 	SB_Render*			RenderListener;
 
-	//WV_Debug_Render*	BulletListener;
+	GD_Bt_Render*		BulletListener;
 
 	OgreImGui  m_imgui;
 

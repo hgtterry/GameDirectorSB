@@ -152,7 +152,7 @@ btBvhTriangleMeshShape* SB_Bullet::create_New_Trimesh(int Index)
 	
 	int f = Phys_Body->getCollisionFlags();
 	Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
-	
+	Phys_Body->setCollisionFlags(f & (~(1 << 5)));
 	//Object->Type = Enums::Bullet_Type_TriMesh;
 	//Object->Shape = Enums::Shape_TriMesh;
 	

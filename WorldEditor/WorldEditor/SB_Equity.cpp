@@ -284,10 +284,12 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 			if (App->CLSB_Ogre->OgreListener->Dubug_Physics_Draw == 1)
 			{
 				App->CLSB_Ogre->OgreListener->Dubug_Physics_Draw = 0;
+				App->CLSB_Ogre->BulletListener->Render_Debug_Flag = 0;
 			}
 			else
 			{
 				App->CLSB_Ogre->OgreListener->Dubug_Physics_Draw = 1;
+				App->CLSB_Ogre->BulletListener->Render_Debug_Flag = 1;
 			}
 			
 			return TRUE;

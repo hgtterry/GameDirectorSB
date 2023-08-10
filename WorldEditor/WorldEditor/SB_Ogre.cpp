@@ -394,18 +394,19 @@ bool SB_Ogre::createFrameListener(void)
 		mSceneMgr->addRenderQueueListener(RenderListener);
 	}
 
-	/*BulletListener = NULL;
+	BulletListener = NULL;
 
 	if ("OpenGL Rendering Subsystem" == RenderSystemName)
 	{
-		BulletListener = new WV_Debug_Render();
+		BulletListener = new GD_Bt_Render();
 
 		mSceneMgr->addRenderQueueListener(BulletListener);
 
 		BulletListener->setDebugMode(BulletListener->getDebugMode()
 			| btIDebugDraw::DBG_MAX_DEBUG_DRAW_MODE);
-		App->CL_Bullet->dynamicsWorld->setDebugDrawer(BulletListener);
-	}*/
+
+		App->CLSB_Bullet->dynamicsWorld->setDebugDrawer(BulletListener);
+	}
 
 	return 1;
 }

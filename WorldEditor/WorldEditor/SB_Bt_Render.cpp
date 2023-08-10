@@ -30,10 +30,8 @@ distribution.
 GD_Bt_Render::GD_Bt_Render(void)
 {
 	
-
 	Render_Debug_Flag = 0;
 	
-
 	ColourMain = ColourValue(1, 1, 1, 1);
 
 	btDebug_Manual = App->CLSB_Ogre->mSceneMgr->createManualObject("btManual");
@@ -51,7 +49,6 @@ GD_Bt_Render::GD_Bt_Render(void)
 
 	btDebug_Node = App->CLSB_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	btDebug_Node->attachObject(btDebug_Manual);
-
 
 	vertex_From.resize(100000);
 	vertex_To.resize(100000);
@@ -172,6 +169,7 @@ bool GD_Bt_Render::Render_Debug(void)
 {
 	if (Render_Debug_Flag == 1)
 	{
+		
 
 		if (V_Count > 0)
 		{
@@ -189,7 +187,7 @@ bool GD_Bt_Render::Render_Debug(void)
 			}
 
 			btDebug_Manual->end();
-
+			//App->Flash_Window();
 			V_Count = 0;
 		}
 
