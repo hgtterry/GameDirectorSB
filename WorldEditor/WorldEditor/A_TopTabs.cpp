@@ -911,6 +911,7 @@ LRESULT CALLBACK SB_TopTabs::Top_Equity_Proc(HWND hDlg, UINT message, WPARAM wPa
 		if (LOWORD(wParam) == IDC_PREVIEWSELECTED)
 		{
 			App->CLSB_Equity->Preview_Selected();
+			App->CLSB_Bullet->create_New_Trimesh(0);
 
 			return TRUE;
 		}

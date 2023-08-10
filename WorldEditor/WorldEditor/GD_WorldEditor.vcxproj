@@ -173,6 +173,7 @@
     <ClCompile Include="SB_Assimp.cpp" />
     <ClCompile Include="SB_Base_Group.cpp" />
     <ClCompile Include="SB_Brushes.cpp" />
+    <ClCompile Include="SB_Bt_Render.cpp" />
     <ClCompile Include="SB_Bullet.cpp" />
     <ClCompile Include="SB_Camera.cpp" />
     <ClCompile Include="SB_Dialogs.cpp" />
@@ -253,6 +254,7 @@
     <ClInclude Include="SB_Assimp.h" />
     <ClInclude Include="SB_Base_Group.h" />
     <ClInclude Include="SB_Brushes.h" />
+    <ClInclude Include="SB_Bt_Render.h" />
     <ClInclude Include="SB_Bullet.h" />
     <ClInclude Include="SB_Camera.h" />
     <ClInclude Include="SB_Dialogs.h" />
