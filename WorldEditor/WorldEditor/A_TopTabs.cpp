@@ -838,7 +838,16 @@ LRESULT CALLBACK SB_TopTabs::Top_Equity_Proc(HWND hDlg, UINT message, WPARAM wPa
 		if (some_item->idFrom == IDC_PREVIEWSELECTED && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_PREVIEWSELECTED));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Normal(item);
+			}
+
 			return CDRF_DODEFAULT;
 		}
 
@@ -1217,6 +1226,8 @@ void SB_TopTabs::Update_Dlg_Controls()
 		EnableWindow(GetDlgItem(Brush_Modify_Panel_Hwnd, IDC_BTSCALE), 0);
 		EnableWindow(GetDlgItem(Brush_Modify_Panel_Hwnd, IDC_BTTBSHEAR), 0);
 
+		EnableWindow(GetDlgItem(Equity_Panel_Hwnd, IDC_PREVIEWSELECTED), 0);
+
 		App->CLSB_TopTabs->Reset_Brush_Buttons();
 		App->CLSB_TopTabs->Brush_Select_Flag = 1;
 		RedrawWindow(App->CLSB_TopTabs->Brush_Modify_Panel_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
@@ -1227,5 +1238,7 @@ void SB_TopTabs::Update_Dlg_Controls()
 		EnableWindow(GetDlgItem(Brush_Modify_Panel_Hwnd, IDC_BTTBMOVEROTATE), 1);
 		EnableWindow(GetDlgItem(Brush_Modify_Panel_Hwnd, IDC_BTSCALE), 1);
 		EnableWindow(GetDlgItem(Brush_Modify_Panel_Hwnd, IDC_BTTBSHEAR), 1);
+
+		EnableWindow(GetDlgItem(Equity_Panel_Hwnd, IDC_PREVIEWSELECTED), 1);
 	}
 }
