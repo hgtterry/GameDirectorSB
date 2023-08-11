@@ -761,13 +761,6 @@ LRESULT CALLBACK SB_TopTabs::Top_Test_Proc(HWND hDlg, UINT message, WPARAM wPara
 			return TRUE;
 		}
 
-		if (LOWORD(wParam) == IDC_BT_TB_BUILDPREVIEW)
-		{
-			App->CLSB_Equity->Preview_All();
-
-			return TRUE;
-		}
-
 		if (LOWORD(wParam) == IDC_PREVIEWSELECTED)
 		{
 			App->CLSB_Equity->Preview_Selected();
@@ -912,7 +905,12 @@ LRESULT CALLBACK SB_TopTabs::Top_Equity_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 		if (LOWORD(wParam) == IDC_BT_TB_BUILDPREVIEW)
 		{
-			App->CLSB_Equity->Preview_All();
+			bool test = App->CLSB_Equity->Preview_All();
+			if (test == 0)
+			{
+				return TRUE;
+			}
+
 			App->CLSB_Bullet->create_New_Trimesh(0);
 
 			if (App->CLSB_Model->Player_Count == 0)

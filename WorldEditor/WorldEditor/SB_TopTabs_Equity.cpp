@@ -292,6 +292,7 @@ LRESULT CALLBACK SB_TopTabs_Equity::Camera_TB_Proc(HWND hDlg, UINT message, WPAR
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_BT_TT_MODEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_FIRST_MODEX, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TT_FREE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TT_RESETCAM, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TT_ZEROCAM, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -313,6 +314,13 @@ LRESULT CALLBACK SB_TopTabs_Equity::Camera_TB_Proc(HWND hDlg, UINT message, WPAR
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Toggle(item, App->CLSB_TopTabs_Equity->Toggle_Camera_Model_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_FIRST_MODEX && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CLSB_TopTabs_Equity->Toggle_Camera_First_Flag);
 			return CDRF_DODEFAULT;
 		}
 
@@ -356,6 +364,13 @@ LRESULT CALLBACK SB_TopTabs_Equity::Camera_TB_Proc(HWND hDlg, UINT message, WPAR
 			return 1;
 		}
 
+		if (LOWORD(wParam) == IDC_FIRST_MODEX)
+		{
+			App->CLSB_TopTabs_Equity->Camera_Set_First();
+
+			return 1;
+		}
+
 		if (LOWORD(wParam) == IDC_BT_TT_FREE)
 		{
 			App->CLSB_TopTabs_Equity->Camera_Set_Free();
@@ -395,6 +410,7 @@ void SB_TopTabs_Equity::Camera_Set_Model(void)
 	App->CLSB_Camera_EQ->Set_Camera_Mode(Enums::CamModel);
 	App->CLSB_TopTabs_Equity->Toggle_Camera_Model_Flag = 1;
 	App->CLSB_TopTabs_Equity->Toggle_Camera_Free_Flag = 0;
+	App->CLSB_TopTabs_Equity->Toggle_Camera_First_Flag = 0;
 
 	RedrawWindow(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
@@ -407,6 +423,43 @@ void SB_TopTabs_Equity::Camera_Set_Free(void)
 	App->CLSB_Camera_EQ->Set_Camera_Mode(Enums::CamDetached);
 	App->CLSB_TopTabs_Equity->Toggle_Camera_Free_Flag = 1;
 	App->CLSB_TopTabs_Equity->Toggle_Camera_Model_Flag = 0;
+	App->CLSB_TopTabs_Equity->Toggle_Camera_First_Flag = 0;
+
+	if (App->CLSB_Model->Player_Added == 1)
+	{
+		int f = App->CLSB_Model->B_Player[0]->Phys_Body->getCollisionFlags();
+		App->CLSB_Model->B_Player[0]->Phys_Body->setCollisionFlags(f & (~(1 << 5)));
+	}
 
 	RedrawWindow(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
+
+// *************************************************************************
+// *			Camera_Set_First:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_TopTabs_Equity::Camera_Set_First(void)
+{
+	if (App->CLSB_Model->Player_Added == 1)
+	{
+		App->CLSB_Ogre->OgreListener->GD_CameraMode = Enums::CamFirst;
+		App->CLSB_TopTabs_Equity->Toggle_Camera_First_Flag = 1;
+		App->CLSB_TopTabs_Equity->Toggle_Camera_Model_Flag = 0;
+		App->CLSB_TopTabs_Equity->Toggle_Camera_Free_Flag = 0;
+
+		App->CLSB_Model->B_Player[0]->Player_Node->setVisible(false);
+
+		int f = App->CLSB_Model->B_Player[0]->Phys_Body->getCollisionFlags();
+		App->CLSB_Model->B_Player[0]->Phys_Body->setCollisionFlags(f | (1 << 5));
+
+		App->CLSB_Ogre->BulletListener->Render_Debug_Flag = 0;
+		App->CLSB_Ogre->RenderFrame();
+		App->CLSB_Ogre->BulletListener->Render_Debug_Flag = 1;
+
+		App->CLSB_Ogre->OgreListener->GD_Run_Physics = 1;
+
+		RedrawWindow(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	}
+
+}
+
+

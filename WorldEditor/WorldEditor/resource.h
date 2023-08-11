@@ -787,6 +787,7 @@
 #define IDC_BT_TT_ZEROCAMRA             1521
 #define IDC_SBPOSZ3                     1522
 #define IDC_BT_TB_TEST2                 1522
+#define IDC_FIRST_MODEX                 1523
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772
 #define ID_BRUSH_PRIMITIVES_SPHEROID    32773
@@ -998,7 +999,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        328
 #define _APS_NEXT_COMMAND_VALUE         33088
-#define _APS_NEXT_CONTROL_VALUE         1523
+#define _APS_NEXT_CONTROL_VALUE         1524
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

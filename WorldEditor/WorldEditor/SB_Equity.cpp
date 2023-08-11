@@ -1485,9 +1485,16 @@ void SB_Equity::Preview_Selected()
 // *************************************************************************
 // *			Preview_All:- Terry and Hazel Flanigan 2023				   *
 // *************************************************************************
-void SB_Equity::Preview_All()
+bool SB_Equity::Preview_All()
 {
 	Get_CurrentDocument();
+
+	int BCount = App->CL_World->Get_Brush_Count();
+	if (BCount == 0)
+	{
+		App->Say("No Scene to Preview");
+		return 0;
+	}
 
 	App->CLSB_Equity->Position_Offsets.x = 0;
 	App->CLSB_Equity->Position_Offsets.y = 0;
@@ -1505,7 +1512,11 @@ void SB_Equity::Preview_All()
 	m_pDoc->ResetAllSelections();
 	m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 
+	App->CLSB_TopTabs->Update_Dlg_Controls();
+
 	App->CLSB_Equity->mAutoLoad = 1;
 	App->CLSB_Equity->Auto_Load_File();
 	App->CLSB_Equity->Show_Equity_Dialog(true);
+
+	return 1;
 }
