@@ -45,8 +45,11 @@ public:
 	void updateAction(btCollisionWorld* collisionWorld, btScalar deltaTimeStep);
 	void updateVelocity(float dt);
 	btVector3 mMoveDirection;
+	btVector3 mWorld_Height;
+	bool mJump;
+	bool AddGravity;
 	bool Is_On_Ground;
-
+	bool Get_Height(void);
 
 	int Col_numManifolds;
 	int Col_Player_Index;

@@ -26,7 +26,6 @@ distribution.
 #include "AB_App.h"
 #include "SB_Player.h"
 
-
 SB_Player::SB_Player()
 {
 	Player_Props_HWND = nullptr;
@@ -50,13 +49,14 @@ SB_Player::SB_Player()
 	is_Animated = 0;
 
 	Last_Message_Index = 0;
-
+	mJump = 0;
 	Current_Position.ZERO;
 	Physics_Position.setZero();
 	Physics_Rotation = btQuaternion(1, 0, 0, 0);
 
 	mMoveDirection.setValue(0, 0, 0);
 	Is_On_Ground = 0;
+	AddGravity = 0;
 }
 
 
@@ -885,7 +885,9 @@ void SB_Player::Check_Collisions_New(void)
 // *************************************************************************
 void SB_Player::updateAction(btCollisionWorld* collisionWorld, btScalar deltaTimeStep)
 {
-	//Get_Height();
+	mWorld_Height = App->CLSB_Model->B_Player[0]->Phys_Body->getWorldTransform().getOrigin();
+
+	Get_Height();
 	//FindGroundAndSteps groundSteps(this, collisionWorld);
 	//collisionWorld->contactTest(mRigidBody, groundSteps);
 
@@ -927,7 +929,7 @@ void SB_Player::updateVelocity(float dt)
 		linearVelocity *= mSpeedDamping;
 	}
 	else*/
-	//if (Is_On_Ground == 1)// || mJump == 1)
+	if (Is_On_Ground == 1)// || mJump == 1)
 	{
 		btVector3 dv = mMoveDirection * (App->CLSB_Model->B_Player[0]->Ground_speed * dt);
 		linearVelocity = dv;
@@ -940,15 +942,16 @@ void SB_Player::updateVelocity(float dt)
 			linearVelocity[1] *= correction;
 		}*/
 	}
-	//else
+	else
 	{
-		//if (AddGravity == 1)
+		if (AddGravity == 1)
 		{
 			linearVelocity[1] = 100;
+			
 		}
-		//else
+		else
 		{
-			//linearVelocity[1] = 10;
+			linearVelocity[1] = 10;
 		}
 	}
 
@@ -967,5 +970,30 @@ void SB_Player::updateVelocity(float dt)
 	App->CLSB_Model->B_Player[0]->Phys_Body->setLinearVelocity(basis * linearVelocity);
 
 	//App->Flash_Window();
+}
+
+// *************************************************************************
+// *					Get_Height   Terry Bernie						   *
+// *************************************************************************
+bool SB_Player::Get_Height(void)
+{
+	btVector3 Origin = App->CLSB_Model->B_Player[0]->Phys_Body->getWorldTransform().getOrigin();
+	btVector3 from = btVector3(Origin.getX(), Origin.getY(), Origin.getZ());
+	btVector3 to = btVector3(Origin.getX(), Origin.getY()-15, Origin.getZ());
+
+	btCollisionWorld::ClosestRayResultCallback resultCallback(from, to);
+	App->CLSB_Bullet->dynamicsWorld->rayTest(from, to, resultCallback);
+	if (resultCallback.hasHit())
+	{
+		AddGravity = 0;
+		Is_On_Ground = 1;
+	}
+	else
+	{
+		AddGravity = 1;
+		Is_On_Ground = 0;
+	}
+
+	return 1;
 }
 

@@ -122,8 +122,6 @@ bool DynamicCharacterController::Get_Height(void)
 			AddGravity = 0;
 		}
 
-		
-
 		char buff[255];
 		strcpy(buff, App->CL_Ogre->OgreListener->Pl_Entity_Name.c_str());
 
