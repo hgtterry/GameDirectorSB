@@ -39,9 +39,6 @@ public:
 
 	void Adjust_Capsule(void);
 
-	void Check_Collisions(void);
-	void Check_Collisions_New(void);
-
 	void updateAction(btCollisionWorld* collisionWorld, btScalar deltaTimeStep);
 	void updateVelocity(float dt);
 	btVector3 mMoveDirection;
