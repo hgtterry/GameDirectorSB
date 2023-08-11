@@ -31,14 +31,14 @@ SB_TopTabs_Equity::SB_TopTabs_Equity(void)
 	Test_TB_hWnd = nullptr;
 	Camera_TB_hWnd = nullptr;
 
-	Toggle_Tabs_Test_Flag = 1;
+	Toggle_Tabs_Test_Flag = 0;
 	Toggle_Dimensions_Flag = 0;
 
 	Toggle_Camera_First_Flag = 0;
 	Toggle_Camera_Free_Flag = 0;
 	Toggle_Camera_Model_Flag = 1;
 
-	Toggle_Tabs_Camera_Flag = 0;
+	Toggle_Tabs_Camera_Flag = 1;
 }
 
 SB_TopTabs_Equity::~SB_TopTabs_Equity(void)
@@ -53,6 +53,12 @@ void SB_TopTabs_Equity::Start_Tabs(void)
 	Start_Tabs_Headers();
 	Start_Files_TB();
 	Start_Camera_TB();
+
+	Hide_Tabs();
+	ShowWindow(Camera_TB_hWnd, SW_SHOW);
+	Toggle_Tabs_Camera_Flag = 1;
+
+	RedrawWindow(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 
 // *************************************************************************

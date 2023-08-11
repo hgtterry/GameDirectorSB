@@ -54,6 +54,9 @@ SB_Player::SB_Player()
 	Current_Position.ZERO;
 	Physics_Position.setZero();
 	Physics_Rotation = btQuaternion(1, 0, 0, 0);
+
+	mMoveDirection.setValue(0, 0, 0);
+	Is_On_Ground = 0;
 }
 
 
@@ -875,6 +878,94 @@ void SB_Player::Check_Collisions_New(void)
 	//	}
 	//	
 	//}
+}
 
+// *************************************************************************
+// *							updateAction							   *
+// *************************************************************************
+void SB_Player::updateAction(btCollisionWorld* collisionWorld, btScalar deltaTimeStep)
+{
+	//Get_Height();
+	//FindGroundAndSteps groundSteps(this, collisionWorld);
+	//collisionWorld->contactTest(mRigidBody, groundSteps);
+
+	//Is_On_Ground = groundSteps.mHaveGround;
+	//mGroundPoint = groundSteps.mGroundPoint;
+	//mWorld_Height = mRigidBody->getWorldTransform().getOrigin();
+
+	updateVelocity(deltaTimeStep);
+	//if (mStepping || groundSteps.mHaveStep) {
+	//	if (!mStepping) {
+	//		mSteppingTo = groundSteps.mStepPoint;
+	//		mSteppingInvNormal = groundSteps.getInvNormal();
+	//	}
+	//	stepUp(deltaTimeStep);
+	//}
+
+	/*if (mOnGround || mStepping) {
+		mRigidBody->setGravity({ 0, 0, 0 });
+	} else {
+		mRigidBody->setGravity(mGravity);
+	}*/
+}
+
+// *************************************************************************
+// *							updateVelocity							   *
+// *************************************************************************
+void SB_Player::updateVelocity(float dt)
+{
+	btTransform transform;
+	App->CLSB_Model->B_Player[0]->Phys_Body->getMotionState()->getWorldTransform(transform);
+	btMatrix3x3& basis = transform.getBasis();
+
+	btMatrix3x3 inv = basis.transpose();
+
+	btVector3 linearVelocity = inv * App->CLSB_Model->B_Player[0]->Phys_Body->getLinearVelocity();
+
+	/*if (mMoveDirection.fuzzyZero() && mOnGround2)
+	{
+		linearVelocity *= mSpeedDamping;
+	}
+	else*/
+	//if (Is_On_Ground == 1)// || mJump == 1)
+	{
+		btVector3 dv = mMoveDirection * (App->CLSB_Model->B_Player[0]->Ground_speed * dt);
+		linearVelocity = dv;
+
+		/*btScalar speed2 = pow(linearVelocity.x(), 2)+ pow(linearVelocity.y(), 2);
+		if (speed2 > mMaxLinearVelocity2)
+		{
+			btScalar correction = sqrt(mMaxLinearVelocity2 / speed2);
+			linearVelocity[0] *= correction;
+			linearVelocity[1] *= correction;
+		}*/
+	}
+	//else
+	{
+		//if (AddGravity == 1)
+		{
+			linearVelocity[1] = 100;
+		}
+		//else
+		{
+			//linearVelocity[1] = 10;
+		}
+	}
+
+	/*if (mJump)
+	{
+		Get_Height();
+		linearVelocity += mJumpSpeed * mJumpDir;
+
+		if (App->CL_Ogre->OgreListener->DistanceToCollision > 30)
+		{
+			mJump = false;
+		}
+		cancelStep();
+	}*/
+	//linearVelocity[2] = -100;
+	App->CLSB_Model->B_Player[0]->Phys_Body->setLinearVelocity(basis * linearVelocity);
+
+	//App->Flash_Window();
 }
 

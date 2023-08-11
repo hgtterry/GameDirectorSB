@@ -138,7 +138,7 @@ bool SB_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 	if (CameraMode == Enums::CamFirst)
 	{
 
-		App->CLSB_Ogre->m_imgui.render();
+		//App->CLSB_Ogre->m_imgui.render();
 
 		mRotX = 0;
 		mRotY = 0;
@@ -171,12 +171,10 @@ bool SB_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 			SetCursorPos(App->CursorPosX, App->CursorPosY);
 		}
 
-
-		
-		//App->CL_DCC->updateAction(App->CL_Bullet->dynamicsWorld, evt.timeSinceLastFrame);
+		App->CLSB_Player->updateAction(NULL, evt.timeSinceLastFrame);
 
 		MoveCamera();
-
+		//App->Flash_Window();
 		//App->CL_Ogre->Block_RenderingQueued = 0;
 		return 1;
 	}
@@ -619,6 +617,12 @@ bool SB_OgreListener::Update_Game_Logic(float DeltaTime)
 	{
 		App->CLSB_Bullet->dynamicsWorld->stepSimulation(DeltaTime * Bullet_Step);
 	}
+
+	//if (App->CLSB_Model->Player_Added == 1)
+	//{
+	//	//App->Flash_Window();
+	//	App->CLSB_Player->updateAction(NULL, DeltaTime);
+	//}
 
 	//if (Show_DemoWindow == 1)
 	//{

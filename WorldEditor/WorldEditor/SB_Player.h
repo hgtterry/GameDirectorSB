@@ -42,6 +42,12 @@ public:
 	void Check_Collisions(void);
 	void Check_Collisions_New(void);
 
+	void updateAction(btCollisionWorld* collisionWorld, btScalar deltaTimeStep);
+	void updateVelocity(float dt);
+	btVector3 mMoveDirection;
+	bool Is_On_Ground;
+
+
 	int Col_numManifolds;
 	int Col_Player_Index;
 	int Col_Usage_Index;
