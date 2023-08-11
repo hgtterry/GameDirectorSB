@@ -897,86 +897,84 @@ bool SB_OgreListener::Capture_LeftMouse_World(void)
 // *************************************************************************
 bool SB_OgreListener::Capture_Mouse_FirstPerson(float DeltaTime)
 {
-	//if (App->CL_Scene->Player_Added == 0)
-	//{
-	//	return 0;
-	//}
-	//
-	//GetCursorPos(&Pl_pt);
+	if (App->CLSB_Model->Player_Added == 0)
+	{
+		return 0;
+	}
+	
+	GetCursorPos(&Pl_pt);
 
-	//Pl_MouseX = (int(Pl_pt.x));
-	//Pl_MouseY = (int(Pl_pt.y));
+	Pl_MouseX = (int(Pl_pt.x));
+	Pl_MouseY = (int(Pl_pt.y));
 
-	//// Left Right
-	//if (Pl_MouseX < Pl_Cent500X)
-	//{
-	//	long test = Pl_Cent500X - Pl_MouseX; // Rotate Left
-	//	if (test > 2)
-	//	{
-	//		Pl_DeltaMouse = float(Pl_Cent500X - Pl_MouseX);
+	// Left Right
+	if (Pl_MouseX < Pl_Cent500X)
+	{
+		long test = Pl_Cent500X - Pl_MouseX; // Rotate Left
+		if (test > 2)
+		{
+			Pl_DeltaMouse = float(Pl_Cent500X - Pl_MouseX);
 
-	//		float Delta2 = DeltaTime * 150;
-	//		float mTurn = (App->CL_Scene->B_Player[0]->TurnRate * Pl_DeltaMouse) * Delta2;
+			float Delta2 = DeltaTime * 150;
+			float mTurn = (App->CLSB_Model->B_Player[0]->TurnRate * Pl_DeltaMouse) * Delta2;
 
-	//		App->CL_Scene->B_Player[0]->Rotate_FromCam(Ogre::Vector3(0,-1,0), mTurn, false);
-	//	
-	//	}
-	//}
-	//else if (Pl_MouseX > Pl_Cent500X)
-	//{
-	//	
-	//	long test = Pl_MouseX - Pl_Cent500X; // Rotate Right
+			App->CLSB_Model->B_Player[0]->Rotate_FromCam(Ogre::Vector3(0,-1,0), mTurn, false);
+		
+		}
+	}
+	else if (Pl_MouseX > Pl_Cent500X)
+	{
+		long test = Pl_MouseX - Pl_Cent500X; // Rotate Right
+		if (test > 2)
+		{
+			Pl_DeltaMouse = float(Pl_MouseX - Pl_Cent500X);
 
-	//	if (test > 2)
-	//	{
-	//		Pl_DeltaMouse = float(Pl_MouseX - Pl_Cent500X);
+			float Delta2 = DeltaTime * 150;
+			float mTurn = (App->CLSB_Model->B_Player[0]->TurnRate * Pl_DeltaMouse)* Delta2;
 
-	//		float Delta2 = DeltaTime * 150;
-	//		float mTurn = (App->CL_Scene->B_Player[0]->TurnRate * Pl_DeltaMouse)* Delta2;
+			App->CLSB_Model->B_Player[0]->Rotate_FromCam(Ogre::Vector3(0,1,0), mTurn, false);
 
-	//		App->CL_Scene->B_Player[0]->Rotate_FromCam(Ogre::Vector3(0,1,0), mTurn, false);
-	//	}
-	//}
+		}
+	}
 
-	////Up Down
-	//if (Pl_MouseY < Pl_Cent500Y)
-	//{
-	//	long test = Pl_Cent500Y - Pl_MouseY; // Look Up
+	//Up Down
+	if (Pl_MouseY < Pl_Cent500Y)
+	{
+		long test = Pl_Cent500Y - Pl_MouseY; // Look Up
 
-	//	if (test > 1)
-	//	{
-	//		if (App->CL_Scene->B_Player[0]->CameraPitch->getOrientation().getPitch().valueDegrees() > App->CL_Scene->B_Player[0]->Limit_Look_Up)
-	//		{
+		if (test > 1)
+		{
+			if (App->CLSB_Model->B_Player[0]->CameraPitch->getOrientation().getPitch().valueDegrees() > App->CLSB_Model->B_Player[0]->Limit_Look_Up)
+			{
 
-	//		}
-	//		else
-	//		{
-	//			Pl_DeltaMouse = float(Pl_Cent500Y - Pl_MouseY);
-	//			Ogre::Radian pp = Degree(Pl_DeltaMouse * DeltaTime) * 2;
-	//			App->CL_Scene->B_Player[0]->CameraPitch->pitch(pp);
-	//		}
+			}
+			else
+			{
+				Pl_DeltaMouse = float(Pl_Cent500Y - Pl_MouseY);
+				Ogre::Radian pp = Degree(Pl_DeltaMouse * DeltaTime) * 2;
+				App->CLSB_Model->B_Player[0]->CameraPitch->pitch(pp);
+			}
+		}
 
-	//	}
+	}
+	else if (Pl_MouseY > Pl_Cent500Y)
+	{
+		long test = Pl_MouseY - Pl_Cent500Y; // Look Down
 
-	//}
-	//else if (Pl_MouseY > Pl_Cent500Y)
-	//{
-	//	long test = Pl_MouseY - Pl_Cent500Y; // Look Down
+		if (test > 1)
+		{
+			if (App->CLSB_Model->B_Player[0]->CameraPitch->getOrientation().getPitch().valueDegrees() < App->CLSB_Model->B_Player[0]->Limit_Look_Down)
+			{
 
-	//	if (test > 1)
-	//	{
-	//		if (App->CL_Scene->B_Player[0]->CameraPitch->getOrientation().getPitch().valueDegrees() < App->CL_Scene->B_Player[0]->Limit_Look_Down)
-	//		{
-
-	//		}
-	//		else
-	//		{
-	//			Pl_DeltaMouse = float(Pl_MouseY - Pl_Cent500Y);
-	//			Ogre::Radian pp = Degree(-Pl_DeltaMouse * DeltaTime) * 2;
-	//			App->CL_Scene->B_Player[0]->CameraPitch->pitch(pp);
-	//		}
-	//	}
-	//}
+			}
+			else
+			{
+				Pl_DeltaMouse = float(Pl_MouseY - Pl_Cent500Y);
+				Ogre::Radian pp = Degree(-Pl_DeltaMouse * DeltaTime) * 2;
+				App->CLSB_Model->B_Player[0]->CameraPitch->pitch(pp);
+			}
+		}
+	}
 
 	return 1;
 }
