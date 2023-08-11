@@ -102,10 +102,8 @@ void SB_Player::Create_Player_Object(void)
 {
 	int Index = App->CLSB_Model->Player_Count;
 
-	Debug
 	App->CLSB_Model->B_Player[Index] = new Base_Player();
 
-	Debug
 	Initialize();
 
 	App->CLSB_Model->B_Player[Index]->CameraPitch = App->CLSB_Ogre->mSceneMgr->createCamera("PlayerPitch");

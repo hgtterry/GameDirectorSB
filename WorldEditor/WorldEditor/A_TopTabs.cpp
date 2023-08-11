@@ -914,7 +914,12 @@ LRESULT CALLBACK SB_TopTabs::Top_Equity_Proc(HWND hDlg, UINT message, WPARAM wPa
 		{
 			App->CLSB_Equity->Preview_All();
 			App->CLSB_Bullet->create_New_Trimesh(0);
-			App->CLSB_Player->Create_Player_Object();
+
+			if (App->CLSB_Model->Player_Count == 0)
+			{
+				App->CLSB_Player->Create_Player_Object();
+			}
+
 			return TRUE;
 		}
 

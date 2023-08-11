@@ -99,22 +99,6 @@ btBvhTriangleMeshShape* SB_Bullet::create_New_Trimesh(int Index)
 		Count++;
 	}
 
-	//for (size_t y = 0; y < indexData->indexCount / 3; y++) 
-	//{
-		// Set each vertex
-	//	vert0.setValue(vertices[indices[i]].x, vertices[indices[i]].y, vertices[indices[i]].z);
-	//	vert1.setValue(vertices[indices[i + 1]].x, vertices[indices[i + 1]].y, vertices[indices[i + 1]].z);
-	//	vert2.setValue(vertices[indices[i + 2]].x, vertices[indices[i + 2]].y, vertices[indices[i + 2]].z);
-
-	//	// Add the triangle into the triangle mesh
-	//	triMesh->addTriangle(vert0, vert1, vert2);
-
-	//	// Increase index count
-	//	i += 3;
-	//}
-
-	//App->Say("here");
-
 	const bool useQuantizedAABB = true;
 	btBvhTriangleMeshShape* mShape = new btBvhTriangleMeshShape(triMesh, false, true);
 	//mShape->buildOptimizedBvh();
@@ -143,6 +127,12 @@ btBvhTriangleMeshShape* SB_Bullet::create_New_Trimesh(int Index)
 		mShape,      // collision shape of body
 		inertia   // local inertia
 	);
+
+	if (Phys_Body)
+	{
+		dynamicsWorld->removeCollisionObject(Phys_Body);
+		Phys_Body = NULL;
+	}
 
 	Phys_Body = new btRigidBody(rigidBodyCI);
 	Phys_Body->clearForces();
