@@ -441,7 +441,7 @@ void SB_TopTabs_Equity::Camera_Set_First(void)
 {
 	if (App->CLSB_Model->Player_Added == 1)
 	{
-		App->CLSB_Ogre->OgreListener->GD_CameraMode = Enums::CamFirst;
+		App->CLSB_Ogre->OgreListener->CameraMode = Enums::CamFirst;
 		App->CLSB_TopTabs_Equity->Toggle_Camera_First_Flag = 1;
 		App->CLSB_TopTabs_Equity->Toggle_Camera_Model_Flag = 0;
 		App->CLSB_TopTabs_Equity->Toggle_Camera_Free_Flag = 0;

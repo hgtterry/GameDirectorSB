@@ -135,10 +135,10 @@ bool SB_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 	App->CL_Ogre->Block_RenderingQueued = 1;*/
 
 	
-	/*if (GD_CameraMode == Enums::CamFirst)
+	if (CameraMode == Enums::CamFirst)
 	{
 
-		App->CL_Ogre->m_imgui.render();
+		App->CLSB_Ogre->m_imgui.render();
 
 		mRotX = 0;
 		mRotY = 0;
@@ -150,20 +150,20 @@ bool SB_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 		Ogre::Radian mmPitch;
 		Ogre::Radian mYaw;
 
-		Pos = App->CL_Scene->B_Player[0]->Player_Node->getPosition();
+		Pos = App->CLSB_Model->B_Player[0]->Player_Node->getPosition();
 
-		mmPitch = App->CL_Scene->B_Player[0]->CameraPitch->getOrientation().getPitch();
-		mYaw = App->CL_Scene->B_Player[0]->Player_Node->getOrientation().getYaw();
-		Pos.y = Pos.y + App->CL_Scene->B_Player[0]->PlayerHeight;
+		mmPitch = App->CLSB_Model->B_Player[0]->CameraPitch->getOrientation().getPitch();
+		mYaw = App->CLSB_Model->B_Player[0]->Player_Node->getOrientation().getYaw();
+		Pos.y = Pos.y + App->CLSB_Model->B_Player[0]->PlayerHeight;
 
-		App->CL_Ogre->mCamera->setPosition(Pos);
-		App->CL_Ogre->mCamera->setOrientation(Ogre::Quaternion(1, 0, 0, 0));
-		App->CL_Ogre->mCamera->yaw(mYaw);
-		App->CL_Ogre->mCamera->pitch(mmPitch);
-		App->CL_Ogre->mCamera->yaw(Ogre::Degree(180));
+		App->CLSB_Ogre->mCamera->setPosition(Pos);
+		App->CLSB_Ogre->mCamera->setOrientation(Ogre::Quaternion(1, 0, 0, 0));
+		App->CLSB_Ogre->mCamera->yaw(mYaw);
+		App->CLSB_Ogre->mCamera->pitch(mmPitch);
+		App->CLSB_Ogre->mCamera->yaw(Ogre::Degree(180));
 
 
-		App->CL_Keyboard->Keyboard_Mode_First(evt.timeSinceLastFrame);
+		App->CLSB_Keyboard->Keyboard_Mode_First(evt.timeSinceLastFrame);
 
 		if (Pl_LeftMouseDown == 1 && Pl_RightMouseDown == 0)
 		{
@@ -173,13 +173,13 @@ bool SB_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 
 
 		
-		App->CL_DCC->updateAction(App->CL_Bullet->dynamicsWorld, evt.timeSinceLastFrame);
+		//App->CL_DCC->updateAction(App->CL_Bullet->dynamicsWorld, evt.timeSinceLastFrame);
 
 		MoveCamera();
 
-		App->CL_Ogre->Block_RenderingQueued = 0;
+		//App->CL_Ogre->Block_RenderingQueued = 0;
 		return 1;
-	}*/
+	}
 
 
 	if (CameraMode == Enums::CamModel)
@@ -627,16 +627,16 @@ bool SB_OgreListener::Update_Game_Logic(float DeltaTime)
 
 	App->CLSB_ImGui->ImGui_Editor_Loop();
 
-	//if (GD_Run_Physics == 1 && App->CL_Scene->Player_Added == 1)
-	//{
-	//	//App->Flash_Window();
-	//	btTransform trans;
-	//	App->CL_Scene->B_Player[0]->Phys_Body->getMotionState()->getWorldTransform(trans);
-	//	btQuaternion orientation = trans.getRotation();
-	//	App->CL_Scene->B_Player[0]->Player_Node->setPosition(Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ()));
-	//	App->CL_Scene->B_Player[0]->Player_Node->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
-	//	App->CL_Scene->B_Player[0]->Player_Node->pitch(Ogre::Degree(180));
-	//}
+	if (GD_Run_Physics == 1 && App->CLSB_Model->Player_Added == 1)
+	{
+		//App->Flash_Window();
+		btTransform trans;
+		App->CLSB_Model->B_Player[0]->Phys_Body->getMotionState()->getWorldTransform(trans);
+		btQuaternion orientation = trans.getRotation();
+		App->CLSB_Model->B_Player[0]->Player_Node->setPosition(Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ()));
+		App->CLSB_Model->B_Player[0]->Player_Node->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
+		App->CLSB_Model->B_Player[0]->Player_Node->pitch(Ogre::Degree(180));
+	}
 
 	return true;
 }
