@@ -430,7 +430,7 @@ LRESULT CALLBACK SB_TopTabs::BrushModify_Panel_Proc(HWND hDlg, UINT message, WPA
 
 	case WM_CTLCOLORDLG:
 		{
-			return (LONG)App->Brush_White;
+			return (LONG)App->AppBackground;
 		}
 
 	case  WM_NOTIFY:
@@ -592,7 +592,7 @@ LRESULT CALLBACK SB_TopTabs::Top_File_Proc(HWND hDlg, UINT message, WPARAM wPara
 
 	case WM_CTLCOLORDLG:
 		{
-			return (LONG)App->Brush_White;
+			return (LONG)App->AppBackground;
 		}
 
 	case WM_NOTIFY:
@@ -681,7 +681,7 @@ LRESULT CALLBACK SB_TopTabs::Top_Test_Proc(HWND hDlg, UINT message, WPARAM wPara
 
 	case WM_CTLCOLORDLG:
 	{
-		return (LONG)App->Brush_White;
+		return (LONG)App->AppBackground;
 	}
 
 	case WM_NOTIFY:
@@ -814,7 +814,7 @@ LRESULT CALLBACK SB_TopTabs::Top_Equity_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 	case WM_CTLCOLORDLG:
 	{
-		return (LONG)App->Brush_White;
+		return (LONG)App->AppBackground;
 	}
 
 	case WM_NOTIFY:
@@ -968,7 +968,7 @@ LRESULT CALLBACK SB_TopTabs::Top_Faces_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 	case WM_CTLCOLORDLG:
 	{
-		return (LONG)App->Brush_White;
+		return (LONG)App->AppBackground;
 	}
 
 	case WM_NOTIFY:
@@ -1035,7 +1035,7 @@ LRESULT CALLBACK SB_TopTabs::Top_Camera_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 	case WM_CTLCOLORDLG:
 	{
-		return (LONG)App->Brush_White;
+		return (LONG)App->AppBackground;
 	}
 
 	case WM_NOTIFY:

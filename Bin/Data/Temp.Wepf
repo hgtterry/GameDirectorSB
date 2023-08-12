@@ -1,8 +1,8 @@
 [World_Data]
-3dt_Path_FileName=C:\Users\Terry\Desktop\GDSB_Git\trunk\Bin\Levels\Test.3dt
-G3ds_Path_FileName=C:\Users\Terry\Desktop\GDSB_Git\trunk\Bin\Data\Temp.G3ds
-Txl_Path_FileName=C:\Users\Terry\Desktop\GDSB_Git\trunk\Bin\Levels\Equity.txl
+3dt_Path_FileName=C:\Users\Acer\Desktop\GDSB_Git\trunk\Bin\Levels\Test.3dt
+G3ds_Path_FileName=C:\Users\Acer\Desktop\GDSB_Git\trunk\Bin\Data\Temp.G3ds
+Txl_Path_FileName=C:\Users\Acer\Desktop\GDSB_Git\trunk\Bin\Levels\Equity.txl
  
 [Special]
-Position= -47.285461 -2.142315 -29.027971
-Angles= 3.227391 2.514794 0.000000
+Position= 0.000000 0.000000 0.000000
+Angles= 3.141593 0.000000 0.000000

@@ -1453,7 +1453,7 @@ END
 
 STRINGTABLE
 BEGIN
-    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.26 - [11-08-23] -17"
+    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.26 - [12-08-23] -17"
     IDR_FUSIONTYPE          "Genesis3D World Editor\nWorld\nWorld\nWorld Files (*.3dt)\n.3dt\nWorldEditor.Document\nGenesis3D World Editor Document"
     IDS_LOAD_WARNING        "Some entities or brushes did not load properly, see console for details."
     IDS_NEWGROUP            "Group Name"
@@ -2008,12 +2008,12 @@ BEGIN
     PUSHBUTTON      "Deselect All",IDC_BT_TB_DESELECTALL,65,21,62,19
     PUSHBUTTON      "Textured",IDC_BT_TB_TEXTURED,2,2,62,19
     PUSHBUTTON      "Wire",IDC_BT_TB_WIRED,2,21,62,19
-    PUSHBUTTON      "File",IDC_BT_TB_FILE,144,2,46,14
-    PUSHBUTTON      "Brush Modify",IDC_BT_TB_MODIFY,190,2,70,14
-    PUSHBUTTON      "Equity",IDC_BT_TB_EQUITY,260,2,48,14
-    PUSHBUTTON      "Faces",IDC_BT_TB_FACES,308,2,41,14
-    PUSHBUTTON      "Camera",IDC_BT_TB_CAMERA,349,2,47,14
-    PUSHBUTTON      "Test",IDC_BT_TB_TEST2,397,2,50,14
+    PUSHBUTTON      "File",IDC_BT_TB_FILE,132,2,46,14
+    PUSHBUTTON      "Brush Modify",IDC_BT_TB_MODIFY,180,2,70,14
+    PUSHBUTTON      "Equity",IDC_BT_TB_EQUITY,252,2,48,14
+    PUSHBUTTON      "Faces",IDC_BT_TB_FACES,302,2,41,14
+    PUSHBUTTON      "Camera",IDC_BT_TB_CAMERA,345,2,47,14
+    PUSHBUTTON      "Test",IDC_BT_TB_TEST2,394,2,50,14
 END
 
 IDD_SB_TB_PROPERTIES DIALOGEX 144, 15, 592, 26
@@ -2026,11 +2026,11 @@ BEGIN
     PUSHBUTTON      "Shear",IDC_BTTBSHEAR,231,6,56,14
 END
 
-IDD_SB_TB_FILES DIALOGEX 144, 15, 592, 26
+IDD_SB_TB_FILES DIALOGEX 132, 18, 592, 23
 STYLE DS_SETFONT | DS_FIXEDSYS | DS_NOFAILCREATE | WS_CHILD | WS_VISIBLE
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    PUSHBUTTON      "Quick Load",IDC_BT_TBF_QUICKLOAD,11,6,66,14
+    PUSHBUTTON      "Quick Load",IDC_BT_TBF_QUICKLOAD,0,0,66,21
 END
 
 IDD_SB_MOVEBRUSH DIALOGEX 0, 0, 193, 164
