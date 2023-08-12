@@ -28,5 +28,7 @@ class SB_Panels
 public:
 	SB_Panels();
 	~SB_Panels();
+
+	void Centre_QC_Dialog();
 };
 

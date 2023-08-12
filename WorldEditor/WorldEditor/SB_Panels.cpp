@@ -32,3 +32,24 @@ SB_Panels::SB_Panels()
 SB_Panels::~SB_Panels()
 {
 }
+
+// *************************************************************************
+// *	  	Centre_QC_Dialog:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void SB_Panels::Centre_QC_Dialog()
+{
+	RECT rcl;
+
+	GetClientRect(App->MainHwnd, &rcl);
+	int MX = rcl.right/2;
+	int MY = rcl.bottom;
+	int Top = rcl.top;
+
+	GetClientRect(App->CLSB_TopTabs->Top_Tabs_Hwnd, &rcl);
+	int PX = rcl.right/2;
+	int PY = rcl.bottom;
+
+
+	SetWindowPos(App->CLSB_TopTabs->Top_Tabs_Hwnd, NULL, (MX-PX), Top + 100,
+		0, 0, SWP_NOSIZE | SWP_NOZORDER);
+}
