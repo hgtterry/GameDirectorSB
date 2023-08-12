@@ -80,6 +80,8 @@ SB_App::SB_App()
 	CLSB_Dimensions =			nullptr;
 	CLSB_Preferences =			nullptr;
 	CLSB_Doc =					nullptr;
+	CLSB_Panels =				nullptr;
+
 	CLSB_Bullet =				nullptr;
 	CLSB_Player =				nullptr;
 
@@ -265,6 +267,8 @@ bool SB_App::InitApp(void)
 	CLSB_Dimensions =				new SB_Dimensions();
 	CLSB_Preferences =				new SB_Preferences();
 	CLSB_Doc =						new SB_Doc();
+	CLSB_Panels =					new	SB_Panels();
+	
 	CLSB_Bullet =					new SB_Bullet();
 	CLSB_Player =					new SB_Player();
 

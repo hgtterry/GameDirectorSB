@@ -83,6 +83,7 @@ distribution.
 #include "SB_Dimensions.h"
 #include "SB_Preferences.h"
 #include "SB_Doc.h"
+#include "SB_Panels.h"
 
 #include "SB_Bullet.h"
 #include "SB_Player.h"
@@ -149,6 +150,8 @@ public:
 	SB_Dimensions*				CLSB_Dimensions;
 	SB_Preferences*				CLSB_Preferences;
 	SB_Doc*						CLSB_Doc;
+	SB_Panels*					CLSB_Panels;
+
 	SB_Bullet*					CLSB_Bullet;
 	SB_Player*					CLSB_Player;
 
