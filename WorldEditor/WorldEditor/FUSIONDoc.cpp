@@ -846,8 +846,6 @@ BOOL CFusionDoc::OnNewDocument()
 
 geBoolean CFusionDoc::Save(const char *FileName)
 {
-    // Moved to A_File::Save(const char* FileName)
-
     return App->CLSB_File_WE->Save(FileName);
 }
 
@@ -3490,9 +3488,11 @@ BOOL CFusionDoc::OnSaveDocument(LPCTSTR lpszPathName)
         AfxMessageBox ("Error: Unable to save file.\rThe disk may be full, write protected, or you may not have sufficient permissions.", MB_OK + MB_ICONERROR);
         return FALSE;
     }
+   
     IsNewDocument = 0;
     SetModifiedFlag (FALSE);
-    return TRUE;
+
+    return 0;
 }
 
 // *************************************************************************
