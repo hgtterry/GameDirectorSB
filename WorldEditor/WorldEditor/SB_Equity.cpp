@@ -114,6 +114,9 @@ void SB_Equity::Start_Equity_Dialog_New()
 		App->CLSB_Ogre->RenderHwnd = App->ViewGLhWnd;
 
 		Resize_3DView();
+
+		Set_Mode_Equity();
+
 		//Debug
 	}
 }
@@ -1043,7 +1046,20 @@ bool SB_Equity::Preview_All()
 // *************************************************************************
 void SB_Equity::Set_Mode_Equity()
 {
+	App->CLSB_TopTabs_Equity->Hide_Tabs();
+	ShowWindow(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, SW_SHOW);
+	App->CLSB_TopTabs_Equity->Toggle_Tabs_Camera_Flag = 1;
+
+	App->CLSB_ImGui->Show_Physics_Console = 0;
+
+	App->CLSB_TopTabs_Equity->Toggle_Camera_Model_Flag = 1;
+
+	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_BT_TT_MODEL), 1);
+	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_FIRST_MODEX), 0);
+	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_BT_TT_FREE), 0);
+	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Test_TB_hWnd, IDC_UPDATE), 0);
 	
+	RedrawWindow(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 
 // *************************************************************************
@@ -1051,7 +1067,14 @@ void SB_Equity::Set_Mode_Equity()
 // *************************************************************************
 void SB_Equity::Set_Mode_Preview_All()
 {
+	App->CLSB_ImGui->Show_Physics_Console = 1;
 
+	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_BT_TT_MODEL), 0);
+	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_FIRST_MODEX), 1);
+	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_BT_TT_FREE), 1);
+	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Test_TB_hWnd, IDC_UPDATE), 1);
+
+	RedrawWindow(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 
 // *************************************************************************

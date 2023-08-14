@@ -199,7 +199,16 @@ LRESULT CALLBACK SB_TopTabs_Equity::Files_TB_Proc(HWND hDlg, UINT message, WPARA
 		if (some_item->idFrom == IDC_UPDATE && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_FIRST_MODEX));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Normal(item);
+			}
+
 			return CDRF_DODEFAULT;
 		}
 
@@ -319,21 +328,48 @@ LRESULT CALLBACK SB_TopTabs_Equity::Camera_TB_Proc(HWND hDlg, UINT message, WPAR
 		if (some_item->idFrom == IDC_BT_TT_MODEL && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CLSB_TopTabs_Equity->Toggle_Camera_Model_Flag);
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_TT_MODEL));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle(item, App->CLSB_TopTabs_Equity->Toggle_Camera_Model_Flag);
+			}
+
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_FIRST_MODEX && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CLSB_TopTabs_Equity->Toggle_Camera_First_Flag);
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_FIRST_MODEX));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle(item, App->CLSB_TopTabs_Equity->Toggle_Camera_First_Flag);
+			}
+
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_BT_TT_FREE && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CLSB_TopTabs_Equity->Toggle_Camera_Free_Flag);
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_FIRST_MODEX));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Toggle(item, App->CLSB_TopTabs_Equity->Toggle_Camera_Free_Flag);
+			}
+
 			return CDRF_DODEFAULT;
 		}
 
