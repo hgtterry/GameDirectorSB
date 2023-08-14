@@ -189,7 +189,7 @@ LRESULT CALLBACK SB_TopTabs_Equity::Files_TB_Proc(HWND hDlg, UINT message, WPARA
 
 	case WM_CTLCOLORDLG:
 	{
-		return (LONG)App->Brush_Tabs;
+		return (LONG)App->AppBackground;
 	}
 
 	case WM_NOTIFY:
@@ -309,7 +309,7 @@ LRESULT CALLBACK SB_TopTabs_Equity::Camera_TB_Proc(HWND hDlg, UINT message, WPAR
 
 	case WM_CTLCOLORDLG:
 	{
-		return (LONG)App->Brush_Tabs;
+		return (LONG)App->AppBackground;
 	}
 
 	case WM_NOTIFY:

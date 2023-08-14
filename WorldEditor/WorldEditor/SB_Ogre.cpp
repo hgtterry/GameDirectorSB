@@ -304,28 +304,17 @@ bool SB_Ogre::Configure(void)
 		return false; //No RenderSystem found
 	}
 
-	if (App->New_Equity_Flag == 1)
-	{
-		mRoot->setRenderSystem(rs);
+	
+	mRoot->setRenderSystem(rs);
 
-		mWindow = mRoot->initialise(false);
-		Ogre::NameValuePairList options;
+	mWindow = mRoot->initialise(false);
+	Ogre::NameValuePairList options;
 
-		options["externalWindowHandle"] =
-			Ogre::StringConverter::toString((size_t)RenderHwnd);
+	options["externalWindowHandle"] =
+		Ogre::StringConverter::toString((size_t)RenderHwnd);
 
-		mWindow = mRoot->createRenderWindow("Main RenderWindow", 1024, 768, false, &options);
-	}
-	else
-	{
-		rs->setConfigOption("Full Screen", "No");
-		mRoot->setRenderSystem(rs);
-		mWindow = mRoot->initialise(true, "XYZ");
-		mWindow->setHidden(true);
-		mWindow->resize(200, 200);
-
-		RenderHwnd = FindWindow(0, "XYZ");
-	}
+	mWindow = mRoot->createRenderWindow("Main RenderWindow", 1024, 768, false, &options);
+	
 	
 	return true;
 }

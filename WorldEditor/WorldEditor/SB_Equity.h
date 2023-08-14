@@ -7,7 +7,6 @@ public:
 
 	void Switch_3D_Window();
 
-	void Start_Equity_Dialog();
 	void Start_Equity_Dialog_New();
 
 	void Auto_Load_File();
@@ -32,7 +31,7 @@ public:
 	static LRESULT CALLBACK Ogre3D_New_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 private:
-	static LRESULT CALLBACK Equity_Dialog_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
 	static LRESULT CALLBACK Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	static LRESULT CALLBACK Render_Buttons_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);

@@ -205,15 +205,6 @@ BOOL CFusionApp::InitInstance() // hgtterry InitInstance
 
 	App->CLSB_Preferences->Read_Preferences();
 
-	if (App->New_Equity_Flag == 1)
-	{
-
-	}
-	else
-	{
-		App->CLSB_Ogre->InitOgre();
-	}
-	
 	App->Debug_Set();
 
 	SetUnhandledExceptionFilter(xxHandler);
@@ -383,32 +374,24 @@ BOOL CFusionApp::InitInstance() // hgtterry InitInstance
 
 	App->CLSB_Bullet->Init_Bullet();
 
-	if (App->New_Equity_Flag == 1)
+	
+	App->CLSB_Equity->Start_Equity_Dialog_New();
+	App->CLSB_Ogre->InitOgre();
+
+	int test = 0;
+	test = SetWindowLong(App->CLSB_Ogre->RenderHwnd, GWL_WNDPROC, (LONG)App->CLSB_Equity->Ogre3D_New_Proc);
+
+	if (!test)
 	{
-		App->CLSB_Equity->Start_Equity_Dialog_New();
-		App->CLSB_Ogre->InitOgre();
-
-		int test = 0;
-		test = SetWindowLong(App->CLSB_Ogre->RenderHwnd, GWL_WNDPROC, (LONG)App->CLSB_Equity->Ogre3D_New_Proc);
-
-		if (!test)
-		{
-			App->Say("Cant Start Ogre Proc");
-			//return;
-		}
-
-		App->CLSB_Ogre->OgreIsRunning = 1;
-		
-		App->CLSB_Ogre->Ogre_Render_Loop();
+		App->Say("Cant Start Ogre Proc");
+		//return;
 	}
-	else
-	{
-		App->CLSB_Equity->Start_Equity_Dialog();
 
-	}
+	App->CLSB_Ogre->OgreIsRunning = 1;
+
+	App->CLSB_Ogre->Ogre_Render_Loop();
 	
 	
-
 	return TRUE;
 }
 

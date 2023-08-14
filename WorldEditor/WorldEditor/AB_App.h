@@ -246,8 +246,7 @@ public:
 	bool Debug_App;
 	bool Debug_File;
 	bool Just_Equity;
-	bool New_Equity_Flag;
-
+	
 	HCURSOR CUR;
 
 	int CursorPosX;

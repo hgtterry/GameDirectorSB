@@ -69,16 +69,10 @@ LRESULT CALLBACK SB_Preferences::Preferences_Dlg_Proc(HWND hDlg, UINT message, W
 			SendMessage(temp, BM_SETCHECK, 0, 0);
 		}
 
-		if (App->New_Equity_Flag == 1)
-		{
-			HWND temp = GetDlgItem(hDlg, IDC_CK_NEWEQUITY);
-			SendMessage(temp, BM_SETCHECK, 1, 0);
-		}
-		else
-		{
-			HWND temp = GetDlgItem(hDlg, IDC_CK_NEWEQUITY);
-			SendMessage(temp, BM_SETCHECK, 0, 0);
-		}
+		
+		HWND temp = GetDlgItem(hDlg, IDC_CK_NEWEQUITY);
+		SendMessage(temp, BM_SETCHECK, 1, 0);
+		
 
 		return TRUE;
 
@@ -138,25 +132,6 @@ LRESULT CALLBACK SB_Preferences::Preferences_Dlg_Proc(HWND hDlg, UINT message, W
 			return TRUE;
 		}
 
-		if (LOWORD(wParam) == IDC_CK_NEWEQUITY)
-		{
-			HWND temp = GetDlgItem(hDlg, IDC_CK_NEWEQUITY);
-
-			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
-			if (test == BST_CHECKED)
-			{
-				App->New_Equity_Flag = 1;
-				return 1;
-			}
-			else
-			{
-				App->New_Equity_Flag = 0;
-				return 1;
-			}
-
-			return TRUE;
-		}
-
 		if (LOWORD(wParam) == IDOK)
 		{
 			App->CLSB_Preferences->Write_Preferences();
@@ -197,8 +172,7 @@ bool SB_Preferences::Read_Preferences()
 
 
 	App->Just_Equity = App->CLSB_Ini->GetInt("Equity","Just_Equity", 0, 10);
-	App->New_Equity_Flag = App->CLSB_Ini->GetInt("Equity","New_Equity", 0, 10);
-
+	
 	if (App->Just_Equity == 1)
 	{
 		App->CLSB_Equity->Close_Equity_Flag = 1;
@@ -237,8 +211,7 @@ bool SB_Preferences::Write_Preferences()
 
 	fprintf(WriteData, "%s\n", "[Equity]");
 	fprintf(WriteData, "%s%i\n", "Just_Equity=", App->Just_Equity);
-	fprintf(WriteData, "%s%i\n", "New_Equity=", App->New_Equity_Flag);
-
+	
 	fclose(WriteData);
 	
 	//Read_Preferences();
