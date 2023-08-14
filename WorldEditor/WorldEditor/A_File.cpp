@@ -191,6 +191,7 @@ bool SB_File_WE::Start_Load(const char* FileName, bool UseDialogLoader)
 		App->m_pDoc->IsNewDocument = 0;
 		App->m_pDoc->SetModifiedFlag(FALSE);
 
+		App->CLSB_TopTabs->Update_Dlg_Controls();
 
 		App->Say("Loaded", PathFileName_3dt);
 	}

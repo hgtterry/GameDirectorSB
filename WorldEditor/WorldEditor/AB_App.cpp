@@ -304,7 +304,7 @@ void SB_App::SetBrushes_Fonts(void)
 	Brush_Green = CreateSolidBrush(RGB(0, 255, 0));
 
 	Brush_Tabs = CreateSolidBrush(RGB(255, 255, 255));
-	Brush_Tabs_UnSelected = CreateSolidBrush(RGB(200,200,200));
+	Brush_Tabs_UnSelected = CreateSolidBrush(RGB(240,240,240));
 
 	Brush_But_Normal = CreateSolidBrush(RGB(255, 255, 150));
 	Brush_But_Hover = CreateSolidBrush(RGB(255, 255, 230));

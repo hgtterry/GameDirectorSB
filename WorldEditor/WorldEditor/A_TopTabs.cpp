@@ -824,7 +824,15 @@ LRESULT CALLBACK SB_TopTabs::Top_Equity_Proc(HWND hDlg, UINT message, WPARAM wPa
 		if (some_item->idFrom == IDC_BT_TB_BUILDPREVIEW && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_TB_BUILDPREVIEW));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Normal(item);
+			}
 			return CDRF_DODEFAULT;
 		}
 
@@ -1206,6 +1214,16 @@ void SB_TopTabs::Select_Shear()
 void SB_TopTabs::Update_Dlg_Controls()
 {
 	App->Get_Current_Document();
+
+	int NumBrushes = App->CL_World->Get_Brush_Count();
+	if (NumBrushes == 0)
+	{
+		EnableWindow(GetDlgItem(Equity_Panel_Hwnd, IDC_BT_TB_BUILDPREVIEW), 0);
+	}
+	else
+	{
+		EnableWindow(GetDlgItem(Equity_Panel_Hwnd, IDC_BT_TB_BUILDPREVIEW), 1);
+	}
 
 	int NumSelBrushes = SelBrushList_GetSize(App->m_pDoc->pSelBrushes);
 	if (NumSelBrushes == 0)
