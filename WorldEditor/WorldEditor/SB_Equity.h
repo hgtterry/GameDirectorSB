@@ -5,8 +5,6 @@ public:
 	SB_Equity(void);
 	~SB_Equity(void);
 
-	void Switch_3D_Window();
-
 	void Start_Equity_Dialog_New();
 
 	void Auto_Load_File();
@@ -14,6 +12,10 @@ public:
 
 	void Preview_Selected();
 	bool Preview_All();
+
+	void Set_Mode_Equity();
+	void Set_Mode_Preview_All();
+	void Set_Mode_Preview_Selected();
 
 	bool mAutoLoad;
 
@@ -27,7 +29,6 @@ public:
 
 	Ogre::Vector3 Position_Offsets;
 
-	static LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Ogre3D_New_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 private:

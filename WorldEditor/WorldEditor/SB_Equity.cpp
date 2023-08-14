@@ -35,59 +35,6 @@ void SB_Equity::Get_CurrentDocument()
 }
 
 // *************************************************************************
-// *			Switch_3D_Window:- Terry and Hazel Flanigan 2023		   *
-// *************************************************************************
-void SB_Equity::Switch_3D_Window()
-{
-	App->CLSB_Ogre->mWindow->resize(500, 500);
-
-	int test = 0;
-	test = SetWindowLong(App->CLSB_Ogre->RenderHwnd, GWL_WNDPROC, (LONG)Ogre3D_Proc);
-
-	if (!test)
-	{
-		App->Say("Cant Start Ogre Proc");
-		return;
-	}
-
-	SetWindowLongPtr(App->CLSB_Ogre->RenderHwnd, GWL_STYLE, WS_BORDER);
-	SetWindowPos(App->CLSB_Ogre->RenderHwnd, 0, 0, 0, 0, 0, SWP_NOZORDER | SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE | SWP_DRAWFRAME);
-	ShowWindow(App->CLSB_Ogre->RenderHwnd, SW_SHOW);
-
-	SetWindowPos(App->CLSB_Ogre->RenderHwnd, NULL, 4, 4, 820, 450, SWP_NOZORDER);
-	
-	HWND Check_hWnd = NULL;
-	Check_hWnd = SetParent(App->CLSB_Ogre->RenderHwnd, Equity_Main_hWnd);
-
-	if (!Check_hWnd)
-	{
-		App->Say("Cant Start Ogre");
-		return;
-	}
-
-	Resize_3DView();
-
-	Auto_Load_File();
-	
-	if (App->Just_Equity == 1)
-	{
-		App->CLSB_Equity->Show_Equity_Dialog(true);
-	}
-
-	App->CLSB_Ogre->OgreIsRunning = 1;
-
-	App->CLSB_Ogre->Ogre_Render_Loop();
-	
-	if (App->CLSB_Ogre->OgreIsRunning == 1)
-	{
-		App->Say("xxx");
-		delete App->CLSB_Ogre->mRoot;
-		App->CLSB_Ogre->mRoot = NULL;
-		App->CLSB_Ogre->OgreIsRunning = 0;
-	}
-}
-
-// *************************************************************************
 // *			Auto_Load_File:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 void SB_Equity::Auto_Load_File()
@@ -1004,168 +951,6 @@ LRESULT CALLBACK SB_Equity::Ogre3D_New_Proc(HWND hDlg, UINT message, WPARAM wPar
 }
 
 // *************************************************************************
-// *		OgreView_3D_Proc:- Terry and Hazel Flanigan 2023 			   *
-// *************************************************************************
-LRESULT CALLBACK SB_Equity::Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
-{
-	switch (message)
-	{
-
-	case WM_INITDIALOG:
-	{
-		return TRUE;
-	}
-
-	case WM_MOUSEWHEEL:
-	{
-		if (App->CLSB_Ogre->OgreListener->Pl_LeftMouseDown == 0)
-		{
-			{
-				int zDelta = (short)HIWORD(wParam);    // wheel rotation
-
-				if (zDelta > 0)
-				{
-					App->CLSB_Ogre->OgreListener->Wheel = -1;
-				}
-				else if (zDelta < 0)
-				{
-					App->CLSB_Ogre->OgreListener->Wheel = 1;
-				}
-				return 1;
-			}
-		}
-	}
-
-	case WM_MOUSEMOVE: // ok up and running and we have a loop for mouse
-	{
-		App->CLSB_Ogre->m_imgui.mouseMoved();
-
-		//SetFocus(App->ViewGLhWnd);
-		break;
-	}
-
-	// Right Mouse Button
-	case WM_RBUTTONDOWN: // BERNIE_HEAR_FIRE 
-	{
-		App->CLSB_Ogre->m_imgui.mousePressed();
-
-		if (!ImGui::GetIO().WantCaptureMouse)
-		{
-			if (App->CLSB_Ogre->OgreIsRunning == 1)
-			{
-				POINT p;
-				GetCursorPos(&p);
-				ScreenToClient(App->MainHwnd, &p);
-				App->CursorPosX = p.x;
-				App->CursorPosY = p.y;
-				App->CLSB_Ogre->OgreListener->Pl_Cent500X = p.x;
-				App->CLSB_Ogre->OgreListener->Pl_Cent500Y = p.y;
-
-				SetCapture(App->CLSB_Ogre->RenderHwnd);
-				SetCursorPos(App->CursorPosX, App->CursorPosY);
-				App->CLSB_Ogre->OgreListener->Pl_RightMouseDown = 1;
-				App->CUR = SetCursor(NULL);
-				return 1;
-			}
-			else
-			{
-				App->CLSB_Ogre->OgreListener->Pl_LeftMouseDown = 1;
-			}
-
-		}
-
-		return 1;
-	}
-	case WM_RBUTTONUP:
-	{
-		App->CLSB_Ogre->m_imgui.mousePressed();
-
-		if (App->CLSB_Ogre->OgreIsRunning == 1)
-		{
-			ReleaseCapture();
-			App->CLSB_Ogre->OgreListener->Pl_RightMouseDown = 0;
-			SetCursor(App->CUR);
-			return 1;
-		}
-
-		return 1;
-	}
-
-	// Left Mouse Button
-	case WM_LBUTTONDOWN: // BERNIE_HEAR_FIRE 
-	{
-		App->CLSB_Ogre->m_imgui.mousePressed();
-
-		if (!ImGui::GetIO().WantCaptureMouse)
-		{
-			if (App->CLSB_Ogre->OgreIsRunning == 1)
-			{
-
-				POINT p;
-				GetCursorPos(&p);
-				ScreenToClient(App->MainHwnd, &p);
-				App->CursorPosX = p.x;
-				App->CursorPosY = p.y;
-				App->CLSB_Ogre->OgreListener->Pl_Cent500X = p.x;
-				App->CLSB_Ogre->OgreListener->Pl_Cent500Y = p.y;
-
-				SetCapture(App->CLSB_Ogre->RenderHwnd);// Bernie
-				SetCursorPos(App->CursorPosX, App->CursorPosY);
-
-				App->CLSB_Ogre->OgreListener->Pl_LeftMouseDown = 1;
-
-				App->CUR = SetCursor(NULL);
-
-				return 1;
-			}
-			else
-			{
-				App->CLSB_Ogre->OgreListener->Pl_LeftMouseDown = 1;
-			}
-		}
-
-
-		return 1;
-	}
-
-	case WM_LBUTTONUP:
-	{
-		App->CLSB_Ogre->m_imgui.mouseReleased();
-
-		if (App->CLSB_Ogre->OgreIsRunning == 1)
-		{
-			ReleaseCapture();
-			App->CLSB_Ogre->OgreListener->Pl_LeftMouseDown = 0;
-			SetCursor(App->CUR);
-			return 1;
-		}
-
-		return 1;
-	}
-	//case WM_KEYDOWN:
-	//	switch (wParam)
-	//	{
-	//	case 'C':
-	//		if (GetAsyncKeyState(VK_CONTROL))
-	//		{
-	//			//		//		App->CL10_Objects_Com->Copy_Object();
-	//			//		//		return 1;
-	//		}
-	//	case 'V':
-	//		if (GetAsyncKeyState(VK_CONTROL))
-	//		{
-	//			//		//		App->CL10_Objects_Com->Paste_Object();
-	//			//		//		return 1;
-	//		}
-	//		//	return 1;
-	//		//	//	// more keys here
-	//	}break;
-	}
-
-	return DefWindowProc(hDlg, message, wParam, lParam);
-}
-
-// *************************************************************************
 // *			Resize_3DView:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 void SB_Equity::Resize_3DView()
@@ -1251,4 +1036,28 @@ bool SB_Equity::Preview_All()
 	App->CLSB_Equity->Show_Equity_Dialog(true);
 
 	return 1;
+}
+
+// *************************************************************************
+// *	  		Set_Mode_Equity:- Terry and Hazel Flanigan 2023				*
+// *************************************************************************
+void SB_Equity::Set_Mode_Equity()
+{
+	
+}
+
+// *************************************************************************
+// *	  	Set_Mode_Preview_All:- Terry and Hazel Flanigan 2023    	   *
+// *************************************************************************
+void SB_Equity::Set_Mode_Preview_All()
+{
+
+}
+
+// *************************************************************************
+// *	  Set_Mode_Preview_Selected:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_Equity::Set_Mode_Preview_Selected()
+{
+
 }
