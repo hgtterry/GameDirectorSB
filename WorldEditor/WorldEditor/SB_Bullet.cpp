@@ -159,5 +159,46 @@ btBvhTriangleMeshShape* SB_Bullet::create_New_Trimesh(int Index)
 
 }
 
+// *************************************************************************
+// *	  		Reset_Physics:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void SB_Bullet::Reset_Physics(void)
+{
+	App->CLSB_Ogre->OgreListener->GD_Run_Physics = 0;
+
+	float w = 1;
+	float x = 0;
+	float y = 0;
+	float z = 0;
+
+	if (App->CLSB_Model->Player_Added == 1)// && GD_Reset_Player == 1)
+	{
+		btVector3 zeroVector(0, 0, 0);
+
+		x = App->CLSB_Model->B_Player[0]->StartPos.x;
+		y = App->CLSB_Model->B_Player[0]->StartPos.y;
+		z = App->CLSB_Model->B_Player[0]->StartPos.z;
+
+		btVector3 initialPosition(x, y, z);
+
+		btTransform startTransform;
+		startTransform.setIdentity();
+		startTransform.setRotation(btQuaternion(1.0f, 0.0f, 0.0f, 0.0f));
+		startTransform.setOrigin(initialPosition);
+
+		App->CLSB_Model->B_Player[0]->Phys_Body->clearForces();
+		App->CLSB_Model->B_Player[0]->Phys_Body->setLinearVelocity(zeroVector);
+		App->CLSB_Model->B_Player[0]->Phys_Body->setAngularVelocity(zeroVector);
+
+		App->CLSB_Model->B_Player[0]->Phys_Body->setWorldTransform(startTransform);
+		App->CLSB_Model->B_Player[0]->Phys_Body->getMotionState()->setWorldTransform(startTransform);
+		App->CLSB_Model->B_Player[0]->Phys_Body->activate(true);
+
+		App->CLSB_Model->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CLSB_Model->B_Player[0]->Physics_Rotation);
+	}
+
+	//App->CL_Ogre->OgreListener->GD_Run_Physics = 1;
+}
+
 
 

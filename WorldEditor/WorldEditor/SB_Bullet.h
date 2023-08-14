@@ -7,7 +7,8 @@ public:
 	~SB_Bullet(void);
 
 	bool Init_Bullet();
-	
+	void Reset_Physics(void);
+
 	btDefaultCollisionConfiguration* collisionConfiguration;
 	btCollisionDispatcher* dispatcher;
 	btBroadphaseInterface* overlappingPairCache;

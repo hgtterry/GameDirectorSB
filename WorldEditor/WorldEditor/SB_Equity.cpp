@@ -1082,5 +1082,6 @@ void SB_Equity::Set_Mode_Preview_All()
 // *************************************************************************
 void SB_Equity::Set_Mode_Preview_Selected()
 {
+	App->CLSB_ImGui->Show_Physics_Console = 0;
 
 }

@@ -529,6 +529,15 @@ void SB_ImGui::Physics_Console_Gui(void)
 			}
 		}
 
+		ImGui::SameLine();
+		if (ImGui::Button("Reset Physics"))
+		{
+			if (App->CLSB_Model->Model_Loaded == 1)
+			{
+				App->CLSB_Bullet->Reset_Physics();
+			}
+		}
+
 		//ImGui::SameLine();
 		//if (ImGui::Button("Reset Entities"))
 		//{
