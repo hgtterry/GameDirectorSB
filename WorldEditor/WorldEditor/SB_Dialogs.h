@@ -29,11 +29,15 @@ public:
 	~SB_Dialogs(void);
 
 	void YesNo(char* Text, char* Text2);
+	void YesNoCancel(char* Text, char* Text2);
+
 	bool Start_ListData(int WhatList);
 	void Start_Speed_Camera();
 	bool Start_Dialog_DropGen();
 
 	bool Canceled;
+
+	int YesNoCancel_Result;
 
 	char MessageString[100];
 	char MessageString2[100];
@@ -44,6 +48,7 @@ public:
 
 private:
 	static LRESULT CALLBACK YesNo_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK YesNoCancel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK ListData_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Speed_Camera_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Dialog_DropGen_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);

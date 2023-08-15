@@ -318,6 +318,7 @@
 #define IDC_CONE_PRIMITIVE              1146
 #define IDD_SB_TB_TEST1                 1146
 #define IDD_SB_TB_EQUITY                1146
+#define IDD_SB_YESNOCANCEL              1147
 #define IDC_STARTANGLE                  1148
 #define IDC_ENDANGLE                    1149
 #define IDC_STATUSPROGRESS1             1149
@@ -583,6 +584,8 @@
 #define IDC_BT_EQ_UPDATE                1363
 #define IDC_BT_DELETEBRUSH              1363
 #define IDC_BT_TT_MOVECAMRA             1363
+#define IDC_NOX                         1363
+#define IDC_NONO                        1363
 #define IDC_BANNER                      1364
 #define IDC_GD_CYLINDER_PRIMITIVE       1364
 #define IDC_BT_BROWSE                   1364

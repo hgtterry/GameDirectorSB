@@ -970,10 +970,37 @@ void CMainFrame::OnUpdateTabbar(CCmdUI* pCmdUI)
 	}
 }
 
-void CMainFrame::OnClose() 
+void CMainFrame::OnClose() // hgtterr Close Application Main
 {
-	SaveBarState( "DESKTOP" ) ;	
-	CMDIFrameWnd::OnClose();
+	if (App->m_pDoc && (App->m_pDoc->IsModified() == TRUE))
+	{
+		App->CLSB_Dialogs->YesNoCancel("Save Changes To", App->CL_World->mCurrent_3DT_File);
+
+		if (App->CLSB_Dialogs->YesNoCancel_Result == 1)
+		{
+			App->CLSB_File_WE->Save(App->CL_World->mCurrent_3DT_PathAndFile);
+			CFrameWnd::OnDestroy();
+		}
+
+		if (App->CLSB_Dialogs->YesNoCancel_Result == 2)
+		{
+			CFrameWnd::OnDestroy();
+		}
+
+		if (App->CLSB_Dialogs->YesNoCancel_Result == 3)
+		{
+
+		}
+	}
+	else
+	{
+		CFrameWnd::OnDestroy();
+	}
+	
+	return;
+
+	//SaveBarState( "DESKTOP" ) ;	
+	//CMDIFrameWnd::OnClose();
 }
 
 void CMainFrame::DockControlBarLeftOf(CToolBar* Bar,CToolBar* LeftOf)
