@@ -974,7 +974,11 @@ void CMainFrame::OnClose() // hgtterr Close Application Main
 {
 	if (App->m_pDoc && (App->m_pDoc->IsModified() == TRUE))
 	{
-		App->CLSB_Dialogs->YesNoCancel("Save Changes To", App->CL_World->mCurrent_3DT_File);
+		char Text[200];
+		strcpy(Text, "Save Changes To ");
+		strcat(Text, App->CL_World->mCurrent_3DT_File);
+
+		App->CLSB_Dialogs->YesNoCancel("File has been Modified",Text);
 
 		if (App->CLSB_Dialogs->YesNoCancel_Result == 1)
 		{

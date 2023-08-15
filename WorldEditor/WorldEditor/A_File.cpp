@@ -142,18 +142,18 @@ bool SB_File_WE::Start_Load(const char* FileName, bool UseDialogLoader)
 		strcpy(Text, "Save Changes To ");
 		strcat(Text, App->CL_World->mCurrent_3DT_File);
 
-		int Test = MessageBox(App->MainHwnd, Text, "File has been Modified", MB_YESNOCANCEL);
-		if (Test == IDYES)
+		App->CLSB_Dialogs->YesNoCancel("File has been Modified",Text);
+
+		if (App->CLSB_Dialogs->YesNoCancel_Result == 1)
 		{
 			Save(App->CL_World->mCurrent_3DT_PathAndFile);
 		}
 
-		if (Test == IDNO)
+		if (App->CLSB_Dialogs->YesNoCancel_Result == 2)
 		{
-			//App->Say("No");
 		}
 
-		if (Test == IDCANCEL)
+		if (App->CLSB_Dialogs->YesNoCancel_Result == 3)
 		{
 			return 0;
 		}
