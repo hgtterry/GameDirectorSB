@@ -558,7 +558,7 @@ bool SB_App::Custom_Button_Greyed(LPNMCUSTOMDRAW item)
 	HGDIOBJ old_pen = SelectObject(item->hdc, pen);
 	HGDIOBJ old_brush = SelectObject(item->hdc, Brush_Tabs_UnSelected);
 
-	RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 1, 1);
+	RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
 
 	SelectObject(item->hdc, old_pen);
 	SelectObject(item->hdc, old_brush);
@@ -582,7 +582,7 @@ bool SB_App::Custom_Button_Normal(LPNMCUSTOMDRAW item)
 			HGDIOBJ old_pen = SelectObject(item->hdc, pen);
 			HGDIOBJ old_brush = SelectObject(item->hdc, App->Brush_But_Pressed);
 
-			RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 1, 1);
+			RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
 
 			//Clean up
 			SelectObject(item->hdc, old_pen);
@@ -601,7 +601,7 @@ bool SB_App::Custom_Button_Normal(LPNMCUSTOMDRAW item)
 				HGDIOBJ old_pen = SelectObject(item->hdc, pen);
 				HGDIOBJ old_brush = SelectObject(item->hdc, App->Brush_But_Hover);
 
-				RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 1, 1);
+				RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
 
 				SelectObject(item->hdc, old_pen);
 				SelectObject(item->hdc, old_brush);
@@ -615,7 +615,7 @@ bool SB_App::Custom_Button_Normal(LPNMCUSTOMDRAW item)
 			HGDIOBJ old_pen = SelectObject(item->hdc, pen);
 			HGDIOBJ old_brush = SelectObject(item->hdc, App->Brush_But_Normal);
 
-			RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 1, 1);
+			RoundRect(item->hdc, item->rc.left, item->rc.top, item->rc.right, item->rc.bottom, 5, 5);
 
 			SelectObject(item->hdc, old_pen);
 			SelectObject(item->hdc, old_brush);
