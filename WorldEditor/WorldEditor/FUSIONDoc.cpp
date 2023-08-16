@@ -843,12 +843,6 @@ BOOL CFusionDoc::OnNewDocument()
     return TRUE;
 }
 
-
-geBoolean CFusionDoc::Save(const char *FileName)
-{
-    return App->CLSB_File_WE->Save(FileName);
-}
-
 static geBoolean fdocSetEntityVisibility (CEntity &Ent, void *lParam)
 {
     EntityViewEntry *pEntry = (EntityViewEntry *)lParam;
@@ -3479,13 +3473,13 @@ void CFusionDoc::OnFileSaveAs()
 }
 
 
-BOOL CFusionDoc::OnSaveDocument(LPCTSTR lpszPathName)
+BOOL CFusionDoc::OnSaveDocument(LPCTSTR lpszPathName) // hgtterry OnSaveDocument
 {
     ::FilePath_GetDriveAndDir (lpszPathName, LastPath);
 
-    if (Save( lpszPathName ) == GE_FALSE)
+    if (App->CLSB_File_WE->Save(lpszPathName) == GE_FALSE)
     {
-        AfxMessageBox ("Error: Unable to save file.\rThe disk may be full, write protected, or you may not have sufficient permissions.", MB_OK + MB_ICONERROR);
+        App->Say("Error: Unable to save file");
         return FALSE;
     }
    

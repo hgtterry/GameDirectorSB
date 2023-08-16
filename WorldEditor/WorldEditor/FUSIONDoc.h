@@ -475,7 +475,6 @@ private:
 	geBoolean WriteLevelToMap (const char *Filename);
 
 	geBoolean Load( const char *FileName );  // Loads from filename
-	geBoolean Save( const char *FileName );  // saves filename
 
 public:
 	void UpdateSelectedModel (int MoveRotate, geVec3d const *pVecDelta);
