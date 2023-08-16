@@ -499,6 +499,7 @@ void SB_TopTabs_Equity::Camera_Set_First(void)
 
 		App->CLSB_Ogre->OgreListener->GD_Run_Physics = 1;
 
+
 		RedrawWindow(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 	}
 
