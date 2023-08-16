@@ -3477,14 +3477,7 @@ void CFusionDoc::OnFileSaveAs()
 // *************************************************************************
 void CFusionDoc::Save_SB()
 {
-	if (App->CLSB_File_WE->Save(App->CL_World->mCurrent_3DT_PathAndFile) == GE_FALSE)
-	{
-		App->Say("Error: Unable to save file");
-		return;;
-	}
-
-	IsNewDocument = 0;
-	SetModifiedFlag(FALSE);
+    App->CLSB_File_WE->Save_Document();
 }
 
 // *************************************************************************

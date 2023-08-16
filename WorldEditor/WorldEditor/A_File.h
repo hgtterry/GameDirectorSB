@@ -34,7 +34,7 @@ public:
 
 	bool Load_File(const char *FileName);
 	
-
+	void Save_Document();
 	bool Save(const char* FileName);
 	bool Start_Load(const char* FileName, bool UseDialogLoader);
 

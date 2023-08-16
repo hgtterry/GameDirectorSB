@@ -982,7 +982,7 @@ void CMainFrame::OnClose() // hgtterr Close Application Main
 
 		if (App->CLSB_Dialogs->YesNoCancel_Result == 1)
 		{
-			App->CLSB_File_WE->Save(App->CL_World->mCurrent_3DT_PathAndFile);
+			App->CLSB_File_WE->Save_Document();
 			CFrameWnd::OnDestroy();
 		}
 
