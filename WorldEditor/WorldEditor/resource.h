@@ -705,7 +705,9 @@
 #define IDC_BT_TT_FREE                  1466
 #define IDC_BT_TB_FACES                 1466
 #define IDC_ST_BANNER                   1467
+#define IDC_UPDATE2                     1467
 #define IDC_ST_FN                       1468
+#define IDC_UPDATE3                     1468
 #define IDC_ST_NAME                     1469
 #define IDC_ST_FLD                      1470
 #define IDC_ST_FOLDER                   1471

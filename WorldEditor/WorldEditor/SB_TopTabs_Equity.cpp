@@ -83,7 +83,8 @@ LRESULT CALLBACK SB_TopTabs_Equity::Tabs_Headers_Proc(HWND hDlg, UINT message, W
 	{
 		SendDlgItemMessage(hDlg, IDC_BT_TT_TEST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TT_CAMERA, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		
+		SendDlgItemMessage(hDlg, IDC_UPDATE2, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		return TRUE;
 	}
 
@@ -95,6 +96,22 @@ LRESULT CALLBACK SB_TopTabs_Equity::Tabs_Headers_Proc(HWND hDlg, UINT message, W
 	case WM_NOTIFY:
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_UPDATE2 && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_UPDATE2));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Normal(item);
+			}
+
+			return CDRF_DODEFAULT;
+		}
 
 		if (some_item->idFrom == IDC_BT_TT_TEST && some_item->code == NM_CUSTOMDRAW)
 		{
@@ -138,6 +155,41 @@ LRESULT CALLBACK SB_TopTabs_Equity::Tabs_Headers_Proc(HWND hDlg, UINT message, W
 			RedrawWindow(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_UPDATE2)
+		{
+			bool First = 0;
+			if (App->CLSB_Ogre->OgreListener->CameraMode == Enums::CamFirst)
+			{
+				First = 1;
+			}
+
+			App->Get_Current_Document();
+
+			App->m_pDoc->SelectAll();
+			App->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+
+			App->CLSB_Export_World->Export_World_GD3D(1);
+
+			App->m_pDoc->ResetAllSelections();
+			App->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+
+			App->CLSB_Equity->mAutoLoad = 1;
+			App->CLSB_Equity->Auto_Load_File();
+
+			App->CLSB_Bullet->create_New_Trimesh(0);
+
+			if (First == 1)
+			{
+				App->CLSB_Ogre->OgreListener->CameraMode = Enums::CamFirst;
+				App->CLSB_TopTabs_Equity->Toggle_Camera_First_Flag = 1;
+				App->CLSB_TopTabs_Equity->Toggle_Camera_Model_Flag = 0;
+				App->CLSB_TopTabs_Equity->Toggle_Camera_Free_Flag = 0;
+				RedrawWindow(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			}
+
+			return 1;
 		}
 	}
 	}
@@ -234,18 +286,22 @@ LRESULT CALLBACK SB_TopTabs_Equity::Files_TB_Proc(HWND hDlg, UINT message, WPARA
 
 		if (LOWORD(wParam) == IDC_UPDATE)
 		{
-			CFusionDoc* pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+			
+			App->Get_Current_Document();
 
-			pDoc->SelectAll();
-			pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+			App->m_pDoc->SelectAll();
+			App->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 
 			App->CLSB_Export_World->Export_World_GD3D(1);
 
-			pDoc->ResetAllSelections();
-			pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+			App->m_pDoc->ResetAllSelections();
+			App->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 
 			App->CLSB_Equity->mAutoLoad = 1;
 			App->CLSB_Equity->Auto_Load_File();
+
+			App->CLSB_Bullet->create_New_Trimesh(0);
+
 			return 1;
 		}
 

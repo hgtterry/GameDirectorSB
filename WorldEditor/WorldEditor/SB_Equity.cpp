@@ -1055,7 +1055,7 @@ void SB_Equity::Set_Mode_Equity()
 	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_BT_TT_MODEL), 1);
 	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_FIRST_MODEX), 0);
 	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_BT_TT_FREE), 0);
-	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Test_TB_hWnd, IDC_UPDATE), 0);
+	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, IDC_UPDATE2), 0);
 
 	if (App->CLSB_Ogre->OgreIsRunning == 1)
 	{
@@ -1077,7 +1077,7 @@ void SB_Equity::Set_Mode_Preview_All()
 	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_BT_TT_MODEL), 0);
 	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_FIRST_MODEX), 1);
 	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_BT_TT_FREE), 1);
-	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Test_TB_hWnd, IDC_UPDATE), 1);
+	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, IDC_UPDATE2), 1);
 
 	App->CLSB_Ogre->BulletListener->Render_Debug_Flag = 1;
 
@@ -1130,7 +1130,7 @@ bool SB_Equity::Set_Mode_Preview_Selected()
 	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_BT_TT_FREE), 0);
 	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_BT_TT_MODEL), 1);
 	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_FIRST_MODEX), 0);
-	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Test_TB_hWnd, IDC_UPDATE), 0);
+	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, IDC_UPDATE2), 0);
 
 	App->CLSB_ImGui->Show_Physics_Console = 0;
 	App->CLSB_Ogre->BulletListener->Render_Debug_Flag = 0;
