@@ -915,8 +915,11 @@ LRESULT CALLBACK SB_TopTabs::Top_Equity_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 		if (LOWORD(wParam) == IDC_PREVIEWSELECTED)
 		{
-			App->CLSB_Equity->Set_Mode_Preview_Selected();
-			App->CLSB_Bullet->create_New_Trimesh(0);
+			bool test = App->CLSB_Equity->Set_Mode_Preview_Selected();
+			if (test == 1)
+			{
+				App->CLSB_Bullet->create_New_Trimesh(0);
+			}
 
 			return TRUE;
 		}

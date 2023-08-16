@@ -7,14 +7,14 @@ public:
 
 	void Start_Equity_Dialog_New();
 
-	void Auto_Load_File();
+	bool Auto_Load_File();
 	void Show_Equity_Dialog(bool Show);
 
 	bool Preview_All();
 
 	void Set_Mode_Equity();
 	void Set_Mode_Preview_All();
-	void Set_Mode_Preview_Selected();
+	bool Set_Mode_Preview_Selected();
 
 	bool mAutoLoad;
 

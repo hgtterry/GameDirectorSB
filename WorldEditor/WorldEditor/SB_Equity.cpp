@@ -40,7 +40,7 @@ void SB_Equity::Get_CurrentDocument()
 // *************************************************************************
 // *			Auto_Load_File:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-void SB_Equity::Auto_Load_File()
+bool SB_Equity::Auto_Load_File()
 {
 	if (mAutoLoad == 1)
 	{
@@ -62,9 +62,17 @@ void SB_Equity::Auto_Load_File()
 		}
 
 		App->CLSB_Loader->Read_Project_File(Path);
-		App->CLSB_Loader->Load_File_Wepf();
 
+		test = App->CLSB_Loader->Load_File_Wepf();
+		if (test == 0)
+		{
+			return 0;
+		}
+
+		return 1;
 	}
+
+	return 1;
 }
 
 // *************************************************************************
@@ -1083,7 +1091,7 @@ void SB_Equity::Set_Mode_Preview_All()
 // *************************************************************************
 // *	  Set_Mode_Preview_Selected:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
-void SB_Equity::Set_Mode_Preview_Selected()
+bool SB_Equity::Set_Mode_Preview_Selected()
 {
 	Equity_Mode = 3;
 
@@ -1094,15 +1102,22 @@ void SB_Equity::Set_Mode_Preview_Selected()
 	if (NumSelBrushes == 0)
 	{
 		App->Say("No Brushes Selected");
-		return;
+		return 0;
 	}
 
 
 	App->CLSB_Export_World->Export_World_GD3D(1);
-
+	
 	App->CLSB_Equity->mAutoLoad = 1;
-	App->CLSB_Equity->Auto_Load_File();
+
+	bool test = App->CLSB_Equity->Auto_Load_File();
+	if (test == 0)
+	{
+		return 0;
+	}
+
 	App->CLSB_Equity->Show_Equity_Dialog(true);
+
 
 	App->CLSB_Camera_EQ->Set_Camera_Mode(Enums::CamModel);
 
@@ -1128,4 +1143,6 @@ void SB_Equity::Set_Mode_Preview_Selected()
 	}
 
 	RedrawWindow(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+	return 1;
 }

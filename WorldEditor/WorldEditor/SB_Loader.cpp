@@ -117,7 +117,7 @@ bool SB_Loader::Read_Project_File(char* Path_And_File)
 // *************************************************************************
 // *			Load_File_Wepf:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-void SB_Loader::Load_File_Wepf()
+bool SB_Loader::Load_File_Wepf()
 {
 	App->CLSB_Model->Clear_Model_And_Reset();
 
@@ -129,7 +129,7 @@ void SB_Loader::Load_File_Wepf()
 	if (Test == 0)
 	{
 		App->Say("Failed To Load");
-		return;
+		return 0;
 	}
 
 	App->CLSB_Model->Set_Paths();
@@ -138,7 +138,7 @@ void SB_Loader::Load_File_Wepf()
 	if (test == 0)
 	{
 		App->Say("Failed Aborting");
-		return;
+		return 0;
 	}
 
 	App->CLSB_Model->Set_Equity();
@@ -156,6 +156,8 @@ void SB_Loader::Load_File_Wepf()
 	App->CLSB_TopTabs_Equity->Camera_Set_Free();
 	
 	App->CLSB_Model->Set_BondingBoxes_AllGroups();
+
+	return 1;
 }
 
 // *************************************************************************
