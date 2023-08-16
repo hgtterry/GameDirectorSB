@@ -320,7 +320,6 @@ public:
 	virtual BOOL OnNewDocument();
 	virtual void Serialize(CArchive& ar);
 	virtual BOOL OnOpenDocument(LPCTSTR lpszPathName);
-	virtual BOOL OnSaveDocument(LPCTSTR lpszPathName);
 	virtual void OnCloseDocument();
 	//}}AFX_VIRTUAL
 
@@ -427,7 +426,8 @@ protected:
 	afx_msg void Start_QuickView();
 	afx_msg void Start_CommandPanel();
 	afx_msg void Start_RecentFiles();
-
+	afx_msg void Save_SB();
+	
 	afx_msg void OnViewTypeTexture();
 	afx_msg void OnUpdateViewTypeWireFrame(CCmdUI* pCmdUI);
 	afx_msg void OnUpdateViewTypeTexture(CCmdUI* pCmdUI);

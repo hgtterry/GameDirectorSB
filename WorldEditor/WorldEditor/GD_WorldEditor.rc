@@ -1121,7 +1121,7 @@ BEGIN
         MENUITEM "&Open...\tCtrl+O",            ID_FILE_OPEN
         MENUITEM "Close",                       ID_FILE_CLOSE33078
         MENUITEM SEPARATOR
-        MENUITEM "&Save\tCtrl+S",               ID_FILE_SAVE
+        MENUITEM "Save",                        ID_FILE_SAVESB
         MENUITEM "Save &As...",                 ID_FILE_SAVE_AS
         MENUITEM SEPARATOR
         MENUITEM "&Import...",                  ID_FILE_IMPORT

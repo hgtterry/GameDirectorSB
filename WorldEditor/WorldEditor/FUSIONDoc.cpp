@@ -148,7 +148,6 @@ BEGIN_MESSAGE_MAP(CFusionDoc, CDocument)
     ON_COMMAND(ID_ENTITYVISIBILITY, OnEntityVisibility)
     ON_COMMAND(IDM_REBUILD_BSP, OnRebuildBsp)
     ON_UPDATE_COMMAND_UI(IDM_REBUILD_BSP, OnUpdateRebuildBsp)
-    ON_COMMAND(ID_FILE_SAVE, OnFileSave)
     ON_COMMAND(ID_FILE_SAVE_AS, OnFileSaveAs)
     ON_COMMAND(ID_TOOLS_TOGGLEADJUSTMODE, OnToolsToggleadjustmode)
     ON_UPDATE_COMMAND_UI(ID_TOOLS_TOGGLEADJUSTMODE, OnUpdateToolsToggleadjustmode)
@@ -177,6 +176,7 @@ BEGIN_MESSAGE_MAP(CFusionDoc, CDocument)
     ON_COMMAND( ID_WINDOW_QUICKCOMMAND, Start_QuickView) 
     ON_COMMAND(ID_WINDOW_COMMANDPANEL, Start_CommandPanel) 
     ON_COMMAND(ID_FILE_RECENT, Start_RecentFiles)
+    ON_COMMAND(ID_FILE_SAVESB, Save_SB)
     
     ON_UPDATE_COMMAND_UI(ID_VIEW_3DWIREFRAME, OnUpdateViewTypeWireFrame)
     ON_UPDATE_COMMAND_UI(ID_VIEW_TEXTUREVIEW, OnUpdateViewTypeTexture)
@@ -3472,21 +3472,19 @@ void CFusionDoc::OnFileSaveAs()
     CDocument::OnFileSaveAs ();
 }
 
-
-BOOL CFusionDoc::OnSaveDocument(LPCTSTR lpszPathName) // hgtterry OnSaveDocument
+// *************************************************************************
+// *	            Save_SB:- Terry and Hazel Flanigan 2023	               *
+// *************************************************************************
+void CFusionDoc::Save_SB()
 {
-    ::FilePath_GetDriveAndDir (lpszPathName, LastPath);
+	if (App->CLSB_File_WE->Save(App->CL_World->mCurrent_3DT_PathAndFile) == GE_FALSE)
+	{
+		App->Say("Error: Unable to save file");
+		return;;
+	}
 
-    if (App->CLSB_File_WE->Save(lpszPathName) == GE_FALSE)
-    {
-        App->Say("Error: Unable to save file");
-        return FALSE;
-    }
-   
-    IsNewDocument = 0;
-    SetModifiedFlag (FALSE);
-
-    return 0;
+	IsNewDocument = 0;
+	SetModifiedFlag(FALSE);
 }
 
 // *************************************************************************
