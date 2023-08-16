@@ -10,7 +10,6 @@ public:
 	void Auto_Load_File();
 	void Show_Equity_Dialog(bool Show);
 
-	void Preview_Selected();
 	bool Preview_All();
 
 	void Set_Mode_Equity();
@@ -20,6 +19,7 @@ public:
 	bool mAutoLoad;
 
 	bool EquitySB_Dialog_Created;
+	bool EquitySB_Dialog_Visible;
 
 	HWND OgreView_3D_hWnd;
 	HWND Equity_Main_hWnd;

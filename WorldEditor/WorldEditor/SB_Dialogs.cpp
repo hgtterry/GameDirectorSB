@@ -64,7 +64,14 @@ void SB_Dialogs::YesNo(char* Text, char* Text2)
 	strcpy(MessageString, Text);
 	strcpy(MessageString2, Text2);
 
-	DialogBox(App->hInst, (LPCTSTR)IDD_SB_YESNO, App->MainHwnd, (DLGPROC)YesNo_Proc);
+	if (App->CLSB_Equity->EquitySB_Dialog_Visible == 0)
+	{
+		DialogBox(App->hInst, (LPCTSTR)IDD_SB_YESNO, App->MainHwnd, (DLGPROC)YesNo_Proc);
+	}
+	else
+	{
+		DialogBox(App->hInst, (LPCTSTR)IDD_SB_YESNO, App->CLSB_Equity->Equity_Main_hWnd, (DLGPROC)YesNo_Proc);
+	}
 }
 
 // *************************************************************************

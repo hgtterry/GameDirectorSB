@@ -139,8 +139,6 @@ bool SB_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 	if (CameraMode == Enums::CamFirst)
 	{
 
-		//App->CLSB_Ogre->m_imgui.render();
-
 		mRotX = 0;
 		mRotY = 0;
 		mTranslateVector = Ogre::Vector3::ZERO;
