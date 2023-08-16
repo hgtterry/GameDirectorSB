@@ -8,7 +8,7 @@ SB_Equity::SB_Equity(void)
 	mAutoLoad = 0;
 	EquitySB_Dialog_Created = 0;
 	EquitySB_Dialog_Visible = 0;
-
+	Equity_Mode = 0;
 
 	OgreView_3D_hWnd =		nullptr;
 	Equity_Main_hWnd =		nullptr;
@@ -61,15 +61,9 @@ void SB_Equity::Auto_Load_File()
 			App->Message_ToFile("Auto_Load_File File Ok");
 		}
 
-		App->Message_ToFile("Auto_Load_File about to Read_Project_File");
-
 		App->CLSB_Loader->Read_Project_File(Path);
-
-		App->Message_ToFile("Auto_Load_File Read_Project_File Done");
-
 		App->CLSB_Loader->Load_File_Wepf();
 
-		App->Message_ToFile("Auto_Load_File Load_File_Wepf Done");
 	}
 }
 
@@ -88,6 +82,11 @@ void SB_Equity::Show_Equity_Dialog(bool Show)
 		}
 		else
 		{
+			if (Equity_Mode == 2)
+			{
+				App->CLSB_Camera_EQ->Save_Camera_Pos();
+			}
+			
 			EquitySB_Dialog_Visible = 0;
 			ShowWindow(Equity_Main_hWnd, SW_HIDE);
 		}
@@ -1019,6 +1018,12 @@ bool SB_Equity::Preview_All()
 
 	App->CLSB_Equity->mAutoLoad = 1;
 	App->CLSB_Equity->Auto_Load_File();
+
+	Ogre::Vector3 OldCamPos = App->CLSB_Camera_EQ->Saved_Pos;
+	Ogre::Quaternion OldCamRot = App->CLSB_Camera_EQ->Saved_Rotation;
+	App->CLSB_Ogre->mCamera->setPosition(Ogre::Vector3(OldCamPos.x, OldCamPos.y, OldCamPos.z));
+	App->CLSB_Ogre->mCamera->setOrientation(OldCamRot);
+
 	App->CLSB_Equity->Show_Equity_Dialog(true);
 
 	return 1;
@@ -1029,6 +1034,8 @@ bool SB_Equity::Preview_All()
 // *************************************************************************
 void SB_Equity::Set_Mode_Equity()
 {
+	Equity_Mode = 1;
+
 	App->CLSB_TopTabs_Equity->Hide_Tabs();
 	ShowWindow(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, SW_SHOW);
 	App->CLSB_TopTabs_Equity->Toggle_Tabs_Camera_Flag = 1;
@@ -1055,6 +1062,8 @@ void SB_Equity::Set_Mode_Equity()
 // *************************************************************************
 void SB_Equity::Set_Mode_Preview_All()
 {
+	Equity_Mode = 2;
+
 	App->CLSB_ImGui->Show_Physics_Console = 1;
 
 	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_BT_TT_MODEL), 0);
@@ -1065,6 +1074,10 @@ void SB_Equity::Set_Mode_Preview_All()
 	App->CLSB_Ogre->BulletListener->Render_Debug_Flag = 1;
 
 	RedrawWindow(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+	Ogre::Vector3 OldCamPos = App->CLSB_Camera_EQ->Saved_Pos;
+	App->CLSB_Ogre->mCamera->setPosition(Ogre::Vector3(OldCamPos.x, OldCamPos.y, OldCamPos.z));
+
 }
 
 // *************************************************************************
@@ -1072,6 +1085,8 @@ void SB_Equity::Set_Mode_Preview_All()
 // *************************************************************************
 void SB_Equity::Set_Mode_Preview_Selected()
 {
+	Equity_Mode = 3;
+
 	Get_CurrentDocument();
 
 	int NumSelBrushes = SelBrushList_GetSize(m_pDoc->pSelBrushes);
@@ -1104,9 +1119,6 @@ void SB_Equity::Set_Mode_Preview_Selected()
 
 	App->CLSB_ImGui->Show_Physics_Console = 0;
 	App->CLSB_Ogre->BulletListener->Render_Debug_Flag = 0;
-
-	App->CLSB_TopTabs_Equity->Camera_Set_Model();
-	App->CLSB_TopTabs_Equity->Toggle_Camera_Model_Flag = 1;
 
 	App->CLSB_Camera_EQ->Reset_View();
 

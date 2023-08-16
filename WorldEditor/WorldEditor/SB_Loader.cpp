@@ -156,21 +156,6 @@ void SB_Loader::Load_File_Wepf()
 	App->CLSB_TopTabs_Equity->Camera_Set_Free();
 	
 	App->CLSB_Model->Set_BondingBoxes_AllGroups();
-	//App->CLSB_Camera->Zero_View();
-
-	//App->CL_Recent_Files->RecentFile_Projects_History_Update();*/
-
-	//App->CL_Export_Ogre->Export_AssimpToOgre();
-
-	//App->CL_Player->Create_Player_Object();
-
-
-
-	//App->CL_Physics->Reset_Physics();
-	//App->CL_Ogre->OgreListener->Dubug_Physics_Draw = 1;
-
-	//App->CL_Scene->B_Area[0]->Area_Node->setPosition(0, 0, 0);
-
 }
 
 // *************************************************************************

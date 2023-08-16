@@ -27,6 +27,9 @@ distribution.
 
 SB_Camera_EQ::SB_Camera_EQ(void)
 {
+	Saved_Pos.x = 0;
+	Saved_Pos.y = 90;
+	Saved_Pos.z = 100;
 }
 
 SB_Camera_EQ::~SB_Camera_EQ(void)
@@ -78,4 +81,13 @@ void SB_Camera_EQ::Zero_View(void)
 {
 	App->CLSB_Ogre->mCamera->setPosition(Ogre::Vector3(0, 0, 0));
 	App->CLSB_Ogre->mCamera->lookAt(Ogre::Vector3(0, 0, 0));
+}
+
+// *************************************************************************
+// *		Save_Camera_Pos:- Terry and Hazel Flanigan 2023				   *
+// *************************************************************************
+void SB_Camera_EQ::Save_Camera_Pos(void)
+{
+	Saved_Pos = App->CLSB_Ogre->mCamera->getPosition();
+	Saved_Rotation = App->CLSB_Ogre->mCamera->getOrientation();
 }

@@ -32,5 +32,11 @@ public:
 	void Reset_Orientation(void);
 	void Set_Camera_Mode(int Mode);
 	void Zero_View(void);
+
+	void Save_Camera_Pos(void);
+
+	Ogre::Vector3 Saved_Pos;
+	Ogre::Quaternion Saved_Rotation;
+
 };
 
