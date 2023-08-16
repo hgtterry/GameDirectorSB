@@ -231,15 +231,17 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == ID_PHYSICS_DEBUGDRAW)
 		{
-			if (App->CLSB_Ogre->OgreListener->Dubug_Physics_Draw == 1)
+			int f = App->CLSB_Bullet->Phys_Body->getCollisionFlags();
+			
+			if (App->CLSB_Ogre->OgreListener->Dubug_Physics_DrawAll == 1)
 			{
-				App->CLSB_Ogre->OgreListener->Dubug_Physics_Draw = 0;
-				App->CLSB_Ogre->BulletListener->Render_Debug_Flag = 0;
+				App->CLSB_Ogre->OgreListener->Dubug_Physics_DrawAll = 0;
+				App->CLSB_Bullet->Phys_Body->setCollisionFlags(f | (1 << 5));
 			}
 			else
 			{
-				App->CLSB_Ogre->OgreListener->Dubug_Physics_Draw = 1;
-				App->CLSB_Ogre->BulletListener->Render_Debug_Flag = 1;
+				App->CLSB_Ogre->OgreListener->Dubug_Physics_DrawAll = 1;
+				App->CLSB_Bullet->Phys_Body->setCollisionFlags(f& (~(1 << 5)));
 			}
 			
 			return TRUE;
@@ -1058,7 +1060,12 @@ void SB_Equity::Set_Mode_Equity()
 	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_FIRST_MODEX), 0);
 	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_BT_TT_FREE), 0);
 	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Test_TB_hWnd, IDC_UPDATE), 0);
-	
+
+	if (App->CLSB_Ogre->OgreIsRunning == 1)
+	{
+		App->CLSB_Ogre->BulletListener->Render_Debug_Flag = 0;
+	}
+
 	RedrawWindow(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 
@@ -1074,6 +1081,8 @@ void SB_Equity::Set_Mode_Preview_All()
 	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_BT_TT_FREE), 1);
 	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Test_TB_hWnd, IDC_UPDATE), 1);
 
+	App->CLSB_Ogre->BulletListener->Render_Debug_Flag = 1;
+
 	RedrawWindow(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 
@@ -1083,5 +1092,5 @@ void SB_Equity::Set_Mode_Preview_All()
 void SB_Equity::Set_Mode_Preview_Selected()
 {
 	App->CLSB_ImGui->Show_Physics_Console = 0;
-
+	App->CLSB_Ogre->BulletListener->Render_Debug_Flag = 0;
 }

@@ -142,7 +142,8 @@ btBvhTriangleMeshShape* SB_Bullet::create_New_Trimesh(int Index)
 	
 	int f = Phys_Body->getCollisionFlags();
 	Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
-	Phys_Body->setCollisionFlags(f & (~(1 << 5)));
+
+	//Phys_Body->setCollisionFlags(f & (~(1 << 5)));
 	//Object->Type = Enums::Bullet_Type_TriMesh;
 	//Object->Shape = Enums::Shape_TriMesh;
 	
@@ -197,7 +198,14 @@ void SB_Bullet::Reset_Physics(void)
 		App->CLSB_Model->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CLSB_Model->B_Player[0]->Physics_Rotation);
 	}
 
-	//App->CL_Ogre->OgreListener->GD_Run_Physics = 1;
+	App->CLSB_Dialogs->YesNo("Physics", "Do you want to restart Physics");
+
+	bool Doit = App->CLSB_Dialogs->Canceled;
+	if (Doit == 0)
+	{
+		App->CLSB_Ogre->OgreListener->GD_Run_Physics = 1;
+	}
+
 }
 
 

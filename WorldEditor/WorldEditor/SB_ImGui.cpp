@@ -514,7 +514,7 @@ void SB_ImGui::Physics_Console_Gui(void)
 			style->Colors[ImGuiCol_Button] = ImVec4(1.0f, 1.0f, 1.0f, 1.00f);
 		}
 
-		ImGui::SameLine();
+		/*ImGui::SameLine();
 		if (ImGui::Button("Physics Outline"))
 		{
 			if (App->CLSB_Ogre->OgreListener->Dubug_Physics_Draw == 1)
@@ -527,7 +527,7 @@ void SB_ImGui::Physics_Console_Gui(void)
 				App->CLSB_Ogre->OgreListener->Dubug_Physics_Draw = 1;
 				App->CLSB_Ogre->BulletListener->Render_Debug_Flag = 1;
 			}
-		}
+		}*/
 
 		ImGui::SameLine();
 		if (ImGui::Button("Reset Physics"))
