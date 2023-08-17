@@ -105,7 +105,10 @@ public:
 
 	bool LoadFile(HWND ChDlg);
 	bool NonFatalError(const char *Msg, ...);
+
 	bool AddTexture(geVFile *BaseFile, const char *Path);
+	bool CreateTexture(geVFile* BaseFile, const char* Path);
+
 	bool SelectBitmap();
 	int FindBitmap(TPack_WindowData *pData, const char *Name);
 	HBITMAP CreateHBitmapFromgeBitmap (geBitmap *Bitmap, HDC hdc);

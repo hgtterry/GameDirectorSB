@@ -32,6 +32,12 @@ distribution.
 #include "util.h"
 #include "FUSIONView.h"
 
+struct tag_BrushList
+{
+	Brush* First;
+	Brush* Last;
+};
+
 #define NUM_VIEWS (4)
 struct tag_Level
 {
@@ -192,6 +198,85 @@ bool SB_File_WE::Start_Load(const char* FileName, bool UseDialogLoader)
 		App->m_pDoc->SetModifiedFlag(FALSE);
 
 		App->CLSB_TopTabs->Update_Dlg_Controls();
+
+		//---------------------------------------------------------------------------
+		Level* pLevel = App->m_pDoc->pLevel;
+		BrushList* pList = Level_GetBrushes(App->m_pDoc->pLevel);
+
+		int Result = 1;
+		bool GotIt = 0;
+		Brush* b;
+
+		b = pList->First;
+		while (b != NULL)
+		{
+			Result = strcmp(b->Name, "XYZ");
+			if (Result == 0)
+			{
+				GotIt = 1;
+				break;
+			}
+
+			b = b->Next;
+		}
+
+		if (GotIt == 0)
+		{
+			
+			//App->Say("Create XYZ");
+
+			App->m_pDoc->OnToolsTemplate();
+
+			BrushTemplate_Box* pBoxTemplate;
+			pBoxTemplate = Level_GetBoxTemplate(App->m_pDoc->pLevel);
+
+			pBoxTemplate->Solid = 0;
+			pBoxTemplate->XSizeBot = 2;
+			pBoxTemplate->XSizeTop = 2;
+			pBoxTemplate->ZSizeBot = 2;
+			pBoxTemplate->ZSizeTop = 2;
+			pBoxTemplate->YSize = 2;
+
+			Brush* pCube;
+			pCube = BrushTemplate_CreateBox(pBoxTemplate);
+			if (pCube != NULL)
+			{
+				App->m_pDoc->LastTemplateTypeName = "XYZ";
+
+				CreateNewTemplateBrush(pCube);
+				App->CLSB_Doc->AddBrushToWorld();
+
+				//BrushTexSetData* pData;
+				//pData = (BrushTexSetData*)lParam;
+
+				const int NumFaces = Brush_GetNumFaces(pCube);
+				Brush_SelectFirstFace(pCube);
+
+				//copy face TexInfos
+				int			i;
+				for (i = 0; i < NumFaces; i++)
+				{
+					Face* f = Brush_GetFace(pCube, i);
+					WadFileEntry* pbmp;
+					
+					Face_SetTextureName(f,"Pine");
+					Face_SetTextureDibId(f, Level_GetDibId(App->m_pDoc->pLevel, "Pine"));
+					pbmp = Level_GetWadBitmap(App->m_pDoc->pLevel, "Pine");
+					if (pbmp != NULL)
+					{
+						Face_SetTextureSize(f, pbmp->Width, pbmp->Height);
+						//Debug
+					}
+				}
+
+				Brush_UpdateChildFaces(pCube);
+				Brush_SetFaceListDirty(pCube);
+				App->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+				App->m_pDoc->SetModifiedFlag();
+			}
+		}
+		
+		//---------------------------------------------------------------------------
 
 		App->Say("Loaded", PathFileName_3dt);
 	}

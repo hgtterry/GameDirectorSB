@@ -32,6 +32,8 @@ public:
 	void Start_CreateBox_Dlg();
 	void CreateDefault_TemplateCube();
 
+	void CreateCube();
+
 	BrushTemplate_Box *pBoxTemplate;
 
 	float	m_YSize;
@@ -56,7 +58,6 @@ private:
 	void Get_DLG_Members(HWND hDlg);
 	void Set_DLG_Members(HWND hDlg);
 	
-	void CreateCube();
 	void Set_BoxTemplate();
 
 	void Set_Defaults(HWND hDlg);

@@ -188,11 +188,12 @@ LRESULT CALLBACK A_TxlEditor::TextureLib_Proc(HWND hDlg, UINT message, WPARAM wP
 		//	return TRUE;
 		//}
 		////--------------------------------- Save AS --------------------
-		//if (LOWORD(wParam) == IDC_SAVEAS)
-		//{
-		//	App->CL_Texture_Lib->Save(NULL);
-		//	return TRUE;
-		//}
+		if (LOWORD(wParam) == IDC_TEST)
+		{
+			App->CL_TxlEditor->CreateTexture(NULL, App->CL_TxlEditor->Add_Texture_FileName);
+			App->CL_TxlEditor->pData->Dirty = 1;
+			return TRUE;
+		}
 
 		//--------------------------------- IDC_LOAD --------------------
 		if (LOWORD(wParam) == IDC_BTTXLOPEN)
@@ -899,7 +900,7 @@ bool A_TxlEditor::AddTexture(geVFile *BaseFile, const char *Path)
 		NonFatalError("Could not open %s", Path);
 		return TRUE;
 	}
-
+	//geBitmap_Create()
 	Bitmap = geBitmap_CreateFromFile(File);
 	geVFile_Close(File);
 	if	(!Bitmap)
@@ -935,6 +936,31 @@ bool A_TxlEditor::AddTexture(geVFile *BaseFile, const char *Path)
 
 }
 
+// *************************************************************************
+// *						CreateTexture  06/06/08 			  		   *
+// *************************************************************************
+bool A_TxlEditor::CreateTexture(geVFile* BaseFile, const char* Path)
+{
+	char Path2[MAX_PATH];
+	strcpy(Path2, App->WorldEditor_Directory);
+	strcat(Path2, "Data");
+	strcat(Path2, "\\");
+	strcat(Path2, "Dummy.bmp");
+
+	HBITMAP Base_Bitmap = LoadBitmap(App->hInst, MAKEINTRESOURCE(IDB_DUMMY));
+	App->CLSB_Textures->HBITMAP_TO_BmpFile(Base_Bitmap, Path2, "");
+
+	strcpy(Path2, App->WorldEditor_Directory);
+	strcat(Path2, "Data");
+	strcat(Path2, "\\");
+	strcat(Path2, "Dummy.bmp");
+
+	AddTexture(NULL, Path2);
+
+
+	return TRUE;
+
+}
 
 // *************************************************************************
 // *						SelectBitmap  06/06/08 				  		   *
@@ -977,11 +1003,11 @@ bool A_TxlEditor::SelectBitmap()
 				ReleaseDC(PreviewWnd, hDC);
 			}
 	
-			if	(!NewBitmapList[location]->WinBitmap)
-			{
-				NonFatalError("Memory allocation error creating bitmap");
-				return 0;
-			}
+			//if	(!NewBitmapList[location]->WinBitmap)
+			//{
+			//	NonFatalError("Memory allocation error creating bitmap Select");
+			//	return 0;
+			//}
 		}
 
 		InvalidateRect(GetDlgItem(pData->hwnd, IDC_PREVIEW), NULL, TRUE);

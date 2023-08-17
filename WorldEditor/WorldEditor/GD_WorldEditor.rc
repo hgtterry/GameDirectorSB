@@ -1453,7 +1453,7 @@ END
 
 STRINGTABLE
 BEGIN
-    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.26 - [16-08-23] -17"
+    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.26 - [17-08-23] -17"
     IDR_FUSIONTYPE          "Genesis3D World Editor\nWorld\nWorld\nWorld Files (*.3dt)\n.3dt\nWorldEditor.Document\nGenesis3D World Editor Document"
     IDS_LOAD_WARNING        "Some entities or brushes did not load properly, see console for details."
     IDS_NEWGROUP            "Group Name"
@@ -1877,7 +1877,7 @@ BEGIN
     PUSHBUTTON      "Add",IDC_ADD,57,296,50,14
     PUSHBUTTON      "Button1",IDC_BUTTON3,313,302,50,14,NOT WS_VISIBLE
     PUSHBUTTON      "Delete",IDC_BTTXLDELETE,107,296,50,14
-    PUSHBUTTON      "Button1",IDC_BUTTON5,266,326,50,14,NOT WS_VISIBLE
+    PUSHBUTTON      "Test",IDC_TEST,266,329,50,14
     PUSHBUTTON      "Button1",IDC_BUTTON6,317,329,50,14,NOT WS_VISIBLE
     PUSHBUTTON      "Open",IDC_BTTXLOPEN,4,296,50,14
 END
@@ -2651,6 +2651,8 @@ IDB_TB_MODELDATAON      BITMAP                  "res\\MenuBar\\ModelDataOn.bmp"
 
 IDB_DUMMY               BITMAP                  "res\\Dummy.bmp"
 
+IDB_BMPXYZ              BITMAP                  "res\\menubar\\bmp00001.bmp"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -2854,6 +2856,11 @@ BEGIN
 END
 
 IDD_SB_YESNOCANCEL AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_TEXTUREPACKER AFX_DIALOG_LAYOUT
 BEGIN
     0
 END

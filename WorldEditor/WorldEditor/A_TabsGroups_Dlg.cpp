@@ -28,6 +28,12 @@ distribution.
 
 #pragma warning( disable : 4101)
 
+struct tag_BrushList
+{
+	Brush* First;
+	Brush* Last;
+};
+
 A_TabsGroups_Dlg::A_TabsGroups_Dlg(void)
 {
 	GroupsDlg_Hwnd = NULL;
@@ -247,14 +253,6 @@ LRESULT CALLBACK A_TabsGroups_Dlg::Groups_Proc(HWND hDlg, UINT message, WPARAM w
 	}
 	return FALSE;
 }
-
-
-
-struct tag_BrushList
-{
-	Brush *First;
-	Brush *Last;
-};
 
 // *************************************************************************
 // *	  		Get_Index:- Terry and Hazel Flanigan 2023				   *
