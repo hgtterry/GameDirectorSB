@@ -246,13 +246,13 @@ LRESULT CALLBACK A_Dialogs::Properties_Proc(HWND hDlg, UINT message, WPARAM wPar
 			GetDlgItemText(hDlg,IDC_EDITTXL,buff,MAX_PATH);
 
 
-			int Result = 0;
-			Result = strcmp(buff, App->CL_Dialogs->Current_Txl_File);
-			if (Result == 0)
-			{
-				//App->Say("The Same");
-			}
-			else
+			//int Result = 0;
+			//Result = strcmp(buff, App->CL_Dialogs->Current_Txl_File);
+			//if (Result == 0)
+			//{
+			//	//App->Say("The Same");
+			//}
+			//else
 			{
 				Level_SetWadPath(App->m_pDoc->pLevel,buff);
 

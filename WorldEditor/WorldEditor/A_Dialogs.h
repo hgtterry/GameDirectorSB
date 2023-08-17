@@ -40,6 +40,8 @@ public:
 	char Message_Text_Header[MAX_PATH];
 	char Message_Text_Message[MAX_PATH];
 
+	char Current_Txl_File[MAX_PATH];
+
 	bool F_WireFrame;
 	bool F_Textured;
 
@@ -54,8 +56,6 @@ protected:
 	static LRESULT CALLBACK Move_Brush_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void A_Dialogs::Get_Current_Document();
-
-	char Current_Txl_File[MAX_PATH];
 
 	CFusionDoc			*m_pDoc;
 };

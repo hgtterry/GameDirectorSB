@@ -175,6 +175,14 @@ LRESULT CALLBACK A_TextureDialog::TextureDialog_Proc(HWND hDlg, UINT message, WP
 			if (LOWORD(wParam) == IDC_BTEDITFILE)
 			{
 				App->CL_TxlEditor->Start_Texl_Dialog();
+
+				App->Get_Current_Document();
+
+				Level_SetWadPath(App->m_pDoc->pLevel, Level_GetWadPath(App->m_pDoc->pLevel));
+				App->CL_World->Set_Current_TxlPath();
+				App->m_pDoc->UpdateAfterWadChange();
+
+				App->CL_TextureDialog->Fill_ListBox();
 				return TRUE;
 			}
 	

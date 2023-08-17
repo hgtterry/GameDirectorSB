@@ -263,18 +263,13 @@ LRESULT CALLBACK A_TxlEditor::TextureLib_Proc(HWND hDlg, UINT message, WPARAM wP
 					MB_YESNOCANCEL);
 
 				if (Result == IDCANCEL)
+				{
 					return 0;
+				}
 
 				if (Result == IDYES)
 				{
-					if (App->CL_TxlEditor->pData->FileNameIsValid)
-					{
-						App->CL_TxlEditor->Save(App->CL_TxlEditor->pData->TXLFileName);
-					}
-					else
-					{
-						App->CL_TxlEditor->Save(NULL);
-					}
+					App->CL_TxlEditor->Save(App->CL_TxlEditor->pData->TXLFileName);
 				}
 			}
 
@@ -1478,20 +1473,24 @@ bool A_TxlEditor::Save(const char *Path)
 		geVFile *	File;
 		geBoolean	WriteResult;
 
-		File = geVFile_Open(VFS, NewBitmapList[i]->Name, GE_VFILE_OPEN_CREATE);
-		if	(!File)
+		if (NewBitmapList[i]->Deleted == 0)
 		{
-			NonFatalError("Could not save bitmap %s",NewBitmapList[i]->Name);
-			geVFile_Close(VFS);
-			return 0;
-		}
-		WriteResult = geBitmap_WriteToFile(NewBitmapList[i]->Bitmap, File);
-		geVFile_Close(File);
-		if	(WriteResult == GE_FALSE)
-		{
-			NonFatalError("Could not save bitmap %s",NewBitmapList[i]->Name);
-			geVFile_Close(VFS);
-			return 0;
+			File = geVFile_Open(VFS, NewBitmapList[i]->Name, GE_VFILE_OPEN_CREATE);
+			if (!File)
+			{
+				NonFatalError("Could not save bitmap %s", NewBitmapList[i]->Name);
+				geVFile_Close(VFS);
+				return 0;
+			}
+
+			WriteResult = geBitmap_WriteToFile(NewBitmapList[i]->Bitmap, File);
+			geVFile_Close(File);
+			if (WriteResult == GE_FALSE)
+			{
+				NonFatalError("Could not save bitmap %s", NewBitmapList[i]->Name);
+				geVFile_Close(VFS);
+				return 0;
+			}
 		}
 	}
 
