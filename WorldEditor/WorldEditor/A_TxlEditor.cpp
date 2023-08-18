@@ -45,12 +45,6 @@ A_TxlEditor::~A_TxlEditor()
 // *************************************************************************
 void A_TxlEditor::Start_Texl_Dialog()
 {
-	/*int test = App->CL_FileIO->Open_File_Model("Texture Libary   *.txl\0*.txl\0", "Texure Editor", NULL);
-	if (test == 0)
-	{
-		return;
-	}*/
-
 	strcpy(FileName,App->CL_World->mCurrent_TXL_FilePath);
 
 	DialogBox(App->hInst, (LPCTSTR)IDD_TEXTUREPACKER, App->MainHwnd, (DLGPROC)TextureLib_Proc);
@@ -65,10 +59,10 @@ LRESULT CALLBACK A_TxlEditor::TextureLib_Proc(HWND hDlg, UINT message, WPARAM wP
 	{
 	case WM_INITDIALOG:
 	{
-
+		SendDlgItemMessage(hDlg, IDC_STTXLFILE, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STTEXTURE, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STALPHA, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
-
+		
 		SendDlgItemMessage(hDlg, IDC_TEXTURELIST2, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_GEINFO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
@@ -76,6 +70,8 @@ LRESULT CALLBACK A_TxlEditor::TextureLib_Proc(HWND hDlg, UINT message, WPARAM wP
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDC_ADD, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BTTXLDELETE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_EXPORTSELECTED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		App->CL_TxlEditor->Entry = new BitmapEntry;
 		App->CL_TxlEditor->Entry->Bitmap = NULL;
@@ -87,11 +83,14 @@ LRESULT CALLBACK A_TxlEditor::TextureLib_Proc(HWND hDlg, UINT message, WPARAM wP
 
 		bool Test = App->CL_TxlEditor->LoadFile(hDlg);
 
+		SetWindowText(hDlg, "Texture Library Editor");
+
 		char buf1[200];
 		strcpy(buf1, "Texture library: - ");
 		strcat(buf1, App->CL_TxlEditor->pData->TXLFileName);
-		SetWindowText(hDlg, buf1);
-
+	
+		SetDlgItemText(hDlg, IDC_STTXLFILE, buf1);
+		
 		return 1;
 	}
 
@@ -118,6 +117,14 @@ LRESULT CALLBACK A_TxlEditor::TextureLib_Proc(HWND hDlg, UINT message, WPARAM wP
 			return (UINT)App->AppBackground;
 		}
 
+		if (GetDlgItem(hDlg, IDC_STTXLFILE) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+		
 		break;
 	}
 
@@ -126,6 +133,20 @@ LRESULT CALLBACK A_TxlEditor::TextureLib_Proc(HWND hDlg, UINT message, WPARAM wP
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
 		if (some_item->idFrom == IDC_ADD && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BTTXLDELETE && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_EXPORTSELECTED && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);

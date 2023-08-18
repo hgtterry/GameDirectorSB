@@ -563,7 +563,6 @@
 #define IDC_BTTESTDLG                   1359
 #define IDC_BUTTON7                     1359
 #define IDC_STTDTXLNAME                 1360
-#define IDC_BUTTON8                     1360
 #define IDC_LISTTDTEXTURES              1361
 #define IDC_BASETEXTURE2                1362
 #define IDC_BUTTON1                     1363
@@ -796,6 +795,7 @@
 #define IDC_SBPOSZ3                     1522
 #define IDC_BT_TB_TEST2                 1522
 #define IDC_FIRST_MODEX                 1523
+#define IDC_STTXLFILE                   1524
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772
 #define ID_BRUSH_PRIMITIVES_SPHEROID    32773
@@ -1009,7 +1009,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        330
 #define _APS_NEXT_COMMAND_VALUE         33090
-#define _APS_NEXT_CONTROL_VALUE         1524
+#define _APS_NEXT_CONTROL_VALUE         1525
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif
