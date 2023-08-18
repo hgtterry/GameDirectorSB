@@ -1453,7 +1453,7 @@ END
 
 STRINGTABLE
 BEGIN
-    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.26 - [17-08-23] -17"
+    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.26 - [18-08-23] -17"
     IDR_FUSIONTYPE          "Genesis3D World Editor\nWorld\nWorld\nWorld Files (*.3dt)\n.3dt\nWorldEditor.Document\nGenesis3D World Editor Document"
     IDS_LOAD_WARNING        "Some entities or brushes did not load properly, see console for details."
     IDS_NEWGROUP            "Group Name"
@@ -2650,8 +2650,6 @@ IDB_TB_MODELDATA        BITMAP                  "res\\MenuBar\\ModelData.bmp"
 IDB_TB_MODELDATAON      BITMAP                  "res\\MenuBar\\ModelDataOn.bmp"
 
 IDB_DUMMY               BITMAP                  "res\\Dummy.bmp"
-
-IDB_BMPXYZ              BITMAP                  "res\\menubar\\bmp00001.bmp"
 
 
 /////////////////////////////////////////////////////////////////////////////
