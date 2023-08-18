@@ -389,6 +389,7 @@ void SB_Dimensions::Set_Position(float X, float Y, float Z)
 		}
 
 		App->CLSB_Model->Set_BondingBox_Model(0);
+		Set_Physics_Position(0);
 	}
 }
 
@@ -1047,11 +1048,14 @@ void SB_Dimensions::UpDate_Physics_And_Visuals(int Index)
 // *************************************************************************
 void SB_Dimensions::Set_Physics_Position(int Index)
 {
-	/*AxisAlignedBox worldAAB = App->SBC_Scene->B_Object[Index]->Object_Ent->getBoundingBox();
-	worldAAB.transformAffine(App->SBC_Scene->B_Object[Index]->Object_Node->_getFullTransform());
-	Ogre::Vector3 Centre = worldAAB.getCenter();
-	App->SBC_Scene->B_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
-	App->SBC_Scene->B_Object[Index]->Physics_Pos = Centre;*/
+	Ogre::Vector3 Centre;
+
+	Centre.x = App->CLSB_Model->Centre.x;
+	Centre.y = App->CLSB_Model->Centre.y;
+	Centre.z = App->CLSB_Model->Centre.z;
+
+	App->CLSB_Bullet->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+
 }
 
 // *************************************************************************

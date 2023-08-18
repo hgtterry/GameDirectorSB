@@ -855,7 +855,12 @@ void SB_Dialogs::ListGroups(HWND List)
 	int Count = 0;
 	while (Count < GroupCount)
 	{
-		SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)App->CLSB_Model->Group[Count]->GroupName);
+		char Detail[MAX_PATH];
+		strcpy(Detail, App->CLSB_Model->Group[Count]->GroupName);
+		strcat(Detail, " Texture - ");
+		strcat(Detail, App->CLSB_Model->Group[Count]->MaterialName);
+		
+		SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)Detail);
 		Count++;
 	}
 
