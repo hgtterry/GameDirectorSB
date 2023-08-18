@@ -177,11 +177,7 @@ public:
 	bool Custom_Button_Normal(LPNMCUSTOMDRAW item);
 	bool Custom_Button_Toggle(LPNMCUSTOMDRAW item, bool Toggle);
 	bool Custom_Button_Toggle_Tabs(LPNMCUSTOMDRAW item, bool Toggle);
-
-	bool Custom_Button_Normal_MFC(LPDRAWITEMSTRUCT lpDIS,HWND hDlg);
-	bool Custom_Button_Toggle_MFC(LPDRAWITEMSTRUCT lpDIS,HWND hDlg, bool Toggle);
-	bool Custom_Button_Toggle_Disable(LPDRAWITEMSTRUCT lpDIS,HWND hDlg, bool Toggle);
-
+	
 	void Debug_Set(void);
 	void Debug_Close(void);
 	void Debug_Message(char* Message, bool NewLine);
@@ -255,7 +251,7 @@ public:
 	HINSTANCE hInst;
 	HWND MainHwnd;
 	HWND ViewGLhWnd;
-	HMENU hMenu;
+	HMENU hMenu_WE;
 
 	//      MFC
 	CMainFrame *m_pMainFrame;

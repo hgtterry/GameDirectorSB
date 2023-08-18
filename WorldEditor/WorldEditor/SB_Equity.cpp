@@ -8,7 +8,7 @@ SB_Equity::SB_Equity(void)
 	mAutoLoad = 0;
 	EquitySB_Dialog_Created = 0;
 	EquitySB_Dialog_Visible = 0;
-	Equity_Mode = 0;
+	Equity_Start_Mode = 0;
 
 	OgreView_3D_hWnd =		nullptr;
 	Equity_Main_hWnd =		nullptr;
@@ -90,7 +90,7 @@ void SB_Equity::Show_Equity_Dialog(bool Show)
 		}
 		else
 		{
-			if (Equity_Mode == 2)
+			if (Equity_Start_Mode == 2)
 			{
 				App->CLSB_Camera_EQ->Save_Camera_Pos();
 			}
@@ -1042,7 +1042,7 @@ bool SB_Equity::Preview_All()
 // *************************************************************************
 void SB_Equity::Set_Mode_Equity()
 {
-	Equity_Mode = 1;
+	Equity_Start_Mode = 1;
 
 	App->CLSB_TopTabs_Equity->Hide_Tabs();
 	ShowWindow(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, SW_SHOW);
@@ -1070,7 +1070,7 @@ void SB_Equity::Set_Mode_Equity()
 // *************************************************************************
 void SB_Equity::Set_Mode_Preview_All()
 {
-	Equity_Mode = 2;
+	Equity_Start_Mode = 2;
 
 	App->CLSB_ImGui->Show_Physics_Console = 1;
 
@@ -1093,7 +1093,7 @@ void SB_Equity::Set_Mode_Preview_All()
 // *************************************************************************
 bool SB_Equity::Set_Mode_Preview_Selected()
 {
-	Equity_Mode = 3;
+	Equity_Start_Mode = 3;
 
 	Get_CurrentDocument();
 

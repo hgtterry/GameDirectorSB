@@ -38,7 +38,6 @@ A_TextureDialog::A_TextureDialog(void)
 {
 	f_TextureDlg_Active = 0;
 	TextureDlg_Hwnd = NULL;
-	m_pDoc = NULL;
 
 	strcpy(m_CurrentTexture,"aztec66");
 
@@ -383,47 +382,57 @@ static void TextureBrushList
 // *************************************************************************
 void A_TextureDialog::Apply_Texture() 
 {
-	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+	App->Get_Current_Document();
 
 	int SelectedItem;
-	int SelId;
 	int		i;
-	
+
+	char TextureName[MAX_PATH];
+
 	SelectedItem = SendDlgItemMessage(TextureDlg_Hwnd, IDC_LISTTDTEXTURES, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
-
-	//SetCurSel( SelectedItem );
 	
-	SelId = SelectedItem;// = LBIndex;SelectedItem;//0;//m_TextureList.GetItemData (SelectedItem);
-
-	if(m_pDoc->mModeTool==ID_TOOLS_TEMPLATE)
+	SendDlgItemMessage(TextureDlg_Hwnd, IDC_LISTTDTEXTURES, LB_GETTEXT, (WPARAM)SelectedItem, (LPARAM)TextureName);
+	
+	SelectedItem = Get_Index_FromName(TextureName);
+	if (SelectedItem == -1)
+	{
+		App->Say("Cant Find Texture");
 		return;
-	
-	m_pDoc->SetModifiedFlag();	
+	}
 
-	switch (m_pDoc->mAdjustMode)
+	SelectedItem = SelectedItem;
+
+	if (App->m_pDoc->mModeTool == ID_TOOLS_TEMPLATE)
+	{
+		return;
+	}
+	
+	App->m_pDoc->SetModifiedFlag();
+
+	switch (App->m_pDoc->mAdjustMode)
 	{
 		case ADJUST_MODE_FACE :
 		{
 			int Size;
 
-			Size = SelFaceList_GetSize (m_pDoc->pSelFaces);
+			Size = SelFaceList_GetSize (App->m_pDoc->pSelFaces);
 			for (i = 0; i < Size; ++i)
 			{
 				Face *pFace;
-				pFace = SelFaceList_GetFace (m_pDoc->pSelFaces, i);
+				pFace = SelFaceList_GetFace (App->m_pDoc->pSelFaces, i);
 
 				// changed QD 12/03
-				WadFileEntry* BitmapPtr = m_pDoc->GetDibBitmap( m_CurrentTexture );
-				::TextureFace (pFace, SelId, (LPCSTR)m_CurrentTexture, BitmapPtr);
+				WadFileEntry* BitmapPtr = App->m_pDoc->GetDibBitmap( m_CurrentTexture );
+				::TextureFace (pFace, SelectedItem, (LPCSTR)m_CurrentTexture, BitmapPtr);
 				// end change
 			}
 			// have to go through the selected brushes and update their child faces
-			int NumSelBrushes = SelBrushList_GetSize (m_pDoc->pSelBrushes);
+			int NumSelBrushes = SelBrushList_GetSize (App->m_pDoc->pSelBrushes);
 			for (i = 0; i < NumSelBrushes; ++i)
 			{
 				Brush *pBrush;
 
-				pBrush = SelBrushList_GetBrush (m_pDoc->pSelBrushes, i);
+				pBrush = SelBrushList_GetBrush (App->m_pDoc->pSelBrushes, i);
 				Brush_UpdateChildFaces (pBrush);
 			}
 			break;
@@ -431,15 +440,15 @@ void A_TextureDialog::Apply_Texture()
 
 		case ADJUST_MODE_BRUSH :
 		{
-			if(m_pDoc->GetSelState() & MULTIBRUSH)
+			if(App->m_pDoc->GetSelState() & MULTIBRUSH)
 			{
-				int NumSelBrushes = SelBrushList_GetSize (m_pDoc->pSelBrushes);
+				int NumSelBrushes = SelBrushList_GetSize (App->m_pDoc->pSelBrushes);
 				for (i = 0; i < NumSelBrushes; ++i)
 				{
-					Brush *pBrush = SelBrushList_GetBrush (m_pDoc->pSelBrushes, i);
+					Brush *pBrush = SelBrushList_GetBrush (App->m_pDoc->pSelBrushes, i);
 					// changed QD 12/03
-					WadFileEntry* BitmapPtr = m_pDoc->GetDibBitmap( m_CurrentTexture );
-					::TextureBrush (pBrush, SelId, (LPCSTR)m_CurrentTexture, BitmapPtr);
+					WadFileEntry* BitmapPtr = App->m_pDoc->GetDibBitmap( m_CurrentTexture );
+					::TextureBrush (pBrush, SelectedItem, (LPCSTR)m_CurrentTexture, BitmapPtr);
 					// end change
 					Brush_UpdateChildFaces (pBrush);
 				}
@@ -447,10 +456,10 @@ void A_TextureDialog::Apply_Texture()
 			else
 			{
 				// changed QD 12/03
-				WadFileEntry* BitmapPtr = m_pDoc->GetDibBitmap( m_CurrentTexture );
-				::TextureBrush (m_pDoc->CurBrush, SelId, (LPCSTR)m_CurrentTexture, BitmapPtr);
+				WadFileEntry* BitmapPtr = App->m_pDoc->GetDibBitmap( m_CurrentTexture );
+				::TextureBrush (App->m_pDoc->CurBrush, SelectedItem, (LPCSTR)m_CurrentTexture, BitmapPtr);
 				// end change
-				Brush_UpdateChildFaces (m_pDoc->CurBrush);
+				Brush_UpdateChildFaces (App->m_pDoc->CurBrush);
 			}
 			break;
 		}
@@ -459,11 +468,7 @@ void A_TextureDialog::Apply_Texture()
 			return;
 	}
 
-	//if(m_pParentCtrl->LastView)
-		//m_pParentCtrl->LastView->SetFocus();
-
-	m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
-	
+	App->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 }
 
 // *************************************************************************
@@ -527,8 +532,8 @@ void A_TextureDialog::Set_Txl_FileName()
 // *************************************************************************
 void A_TextureDialog::Get_BitMap()
 {
-	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
-	WadFileEntry* BitmapPtr = m_pDoc->GetDibBitmap(m_CurrentTexture);
+	App->m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+	WadFileEntry* BitmapPtr = App->m_pDoc->GetDibBitmap(m_CurrentTexture);
 
 	HWND	PreviewWnd;
 	HBITMAP	hbm;
@@ -664,16 +669,17 @@ HBITMAP A_TextureDialog::CreateHBitmapFromgeBitmap (geBitmap *Bitmap, HDC hdc)
 // *************************************************************************
 void A_TextureDialog::Fill_ListBox()
 {
+	App->Get_Current_Document();
+	int LBIndex;
+
 	if (f_TextureDlg_Active == 1)
 	{
-		m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
-
 		CWadFile *pWad;
 		pWad = NULL;
 
 		SendDlgItemMessage(TextureDlg_Hwnd, IDC_LISTTDTEXTURES, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
-		pWad = Level_GetWadFile (m_pDoc->pLevel);
+		pWad = Level_GetWadFile (App->m_pDoc->pLevel);
 		if (pWad == NULL)
 		{
 			App->Say("Error Getting Wad File");
@@ -687,17 +693,17 @@ void A_TextureDialog::Fill_ListBox()
 			CString Name = pWad->mBitmaps[index].Name;
 			strcpy(mName,Name);
 
-
-			int LBIndex = SendDlgItemMessage(TextureDlg_Hwnd, IDC_LISTTDTEXTURES, LB_ADDSTRING, (WPARAM)0,(LPARAM) mName);
+			/*bool test = strcmp(mName, "Dummy");
+			if (test == 0)
+			{
+				
+			}
+			else*/
+			{
+				LBIndex = SendDlgItemMessage(TextureDlg_Hwnd, IDC_LISTTDTEXTURES, LB_ADDSTRING, (WPARAM)0, (LPARAM)mName);
+			}
 
 			ItemData[index] = LBIndex;
-
-			//// Listbox is sorted, so we need to put the wad file index into the item data.
-			//int lbIndex = m_TextureList.AddString( (LPCTSTR) Name );
-			//if (lbIndex != LB_ERR)
-			//{
-			//	m_TextureList.SetItemData (lbIndex, index);
-			//}
 		}
 
 		SendDlgItemMessage(TextureDlg_Hwnd, IDC_LISTTDTEXTURES,LB_SETCURSEL, (WPARAM)0, (LPARAM)0);
@@ -706,5 +712,33 @@ void A_TextureDialog::Fill_ListBox()
 	}
 }
 
+// *************************************************************************
+// *	  	Get_Index_FromName:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+int A_TextureDialog::Get_Index_FromName(char* TextureName)
+{
+	CWadFile* pWad;
+	pWad = NULL;
 
-//IDC_LISTTDTEXTURES
+	pWad = Level_GetWadFile(App->m_pDoc->pLevel);
+	if (pWad == NULL)
+	{
+		App->Say("Error Getting Wad File");
+		return -1;
+	}
+
+	for (int index = 0; index < pWad->mBitmapCount; index++)
+	{
+		char mName[MAX_PATH];
+		CString Name = pWad->mBitmaps[index].Name;
+		strcpy(mName, Name);
+
+		bool test = strcmp(mName, TextureName);
+		if (test == 0)
+		{
+			return index;
+		}
+	}
+
+	return -1;
+}

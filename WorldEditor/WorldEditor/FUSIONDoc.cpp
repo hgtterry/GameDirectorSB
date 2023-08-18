@@ -331,7 +331,7 @@ CFusionDoc::CFusionDoc() : CDocument (),
 
     App->MainHwnd = AfxGetApp()->m_pMainWnd->m_hWnd; // hgtterry
     App->hInst = AfxGetApp()->m_hInstance;
-    App->hMenu = GetMenu(App->MainHwnd);
+    App->hMenu_WE = GetMenu(App->MainHwnd);
 
     pSelBrushes = SelBrushList_Create ();
     pTempSelBrushes = SelBrushList_Create ();

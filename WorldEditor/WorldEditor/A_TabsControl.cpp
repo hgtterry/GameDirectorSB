@@ -69,6 +69,8 @@ void A_TabsControl::Start_Tabs_Control_Dlg()
 		App->CL_TabsTemplates_Dlg->Start_TemplatesDialog();
 		App->CL_TabsTemplates_Dlg->Show_TemplatesDialog(true);
 
+		//CheckMenuItem(App->hMenu_WE, ID_WINDOW_COMMANDPANEL, MF_BYCOMMAND | MF_CHECKED);
+
 		Command_Panel_Started = 1;
 	}
 }

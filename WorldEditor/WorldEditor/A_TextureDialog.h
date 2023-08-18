@@ -40,6 +40,7 @@ public:
 	void List_Selection_Changed();
 	void Select_Texture(int SelNum);
 	void Show_Dialog(bool Show);
+	int Get_Index_FromName(char* TextureName);
 
 	HBITMAP	Sel_BaseBitmap;
 	long BasePicWidth;
@@ -49,8 +50,6 @@ public:
 
 	bool f_TextureDlg_Active;
 	HWND TextureDlg_Hwnd;
-
-	CFusionDoc			*m_pDoc;
 
 protected:
 
