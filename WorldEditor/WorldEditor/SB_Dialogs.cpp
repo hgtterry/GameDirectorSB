@@ -213,6 +213,7 @@ LRESULT CALLBACK SB_Dialogs::YesNoCancel_Proc(HWND hDlg, UINT message, WPARAM wP
 		}
 		return FALSE;
 	}
+
 	case WM_NOTIFY:
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;

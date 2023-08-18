@@ -561,7 +561,9 @@
 #define IDC_BTTXLOPEN                   1358
 #define IDC_BTSHOWLIGHT2                1358
 #define IDC_BTTESTDLG                   1359
+#define IDC_BUTTON7                     1359
 #define IDC_STTDTXLNAME                 1360
+#define IDC_BUTTON8                     1360
 #define IDC_LISTTDTEXTURES              1361
 #define IDC_BASETEXTURE2                1362
 #define IDC_BUTTON1                     1363
