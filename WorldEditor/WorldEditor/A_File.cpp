@@ -305,6 +305,36 @@ bool SB_File_WE::Open_3dt_File()
 		App->CL_World->Set_Paths();
 		App->CL_TabsGroups_Dlg->Fill_ListBox();
 
+		WadFileEntry* pbmp;
+		pbmp = NULL;
+		pbmp = Level_GetWadBitmap(App->m_pDoc->pLevel, "Dummy");
+		if (pbmp == NULL)
+		{
+			App->Say("Not Found");
+			App->CL_TextureDialog->Open_TXL_File(App->CL_World->mCurrent_TXL_FilePath);
+
+			char Path2[MAX_PATH];
+			strcpy(Path2, App->WorldEditor_Directory);
+			strcat(Path2, "Data");
+			strcat(Path2, "\\");
+			strcat(Path2, "Dummy.bmp");
+
+			HBITMAP Base_Bitmap = LoadBitmap(App->hInst, MAKEINTRESOURCE(IDB_DUMMY));
+			App->CLSB_Textures->HBITMAP_TO_BmpFile(Base_Bitmap, Path2, "");
+
+			App->CL_TextureDialog->AddTexture(NULL, Path2);
+			
+			App->CL_TextureDialog->Save(App->CL_World->mCurrent_TXL_FilePath);
+
+			Level_SetWadPath(App->m_pDoc->pLevel, Level_GetWadPath(App->m_pDoc->pLevel));
+			App->CL_World->Set_Current_TxlPath();
+			App->m_pDoc->UpdateAfterWadChange();
+
+		}
+		else
+		{
+			//App->Say("Found");
+		}
 
 		if (Quick_load_Flag == 0)
 		{

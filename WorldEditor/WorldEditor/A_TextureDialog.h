@@ -42,6 +42,11 @@ public:
 	void Show_Dialog(bool Show);
 	int Get_Index_FromName(char* TextureName);
 
+	bool Open_TXL_File(char* TXL_Filename);
+	bool AddTexture(geVFile* BaseFile, const char* Path);
+	bool Save(const char* Path);
+
+
 	HBITMAP	Sel_BaseBitmap;
 	long BasePicWidth;
 	long BasePicHeight;
@@ -50,6 +55,9 @@ public:
 
 	bool f_TextureDlg_Active;
 	HWND TextureDlg_Hwnd;
+
+	TPack_WindowData* pData;
+	BitmapEntry* NewBitmapList[200];
 
 protected:
 

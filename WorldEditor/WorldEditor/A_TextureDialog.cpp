@@ -743,3 +743,236 @@ int A_TextureDialog::Get_Index_FromName(char* TextureName)
 
 	return -1;
 }
+
+// *************************************************************************
+// *			Open_TXL_File:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+bool A_TextureDialog::Open_TXL_File(char* TXL_Filename)
+{
+	geVFile* VFS;
+	geVFile_Finder* Finder = NULL;
+
+	pData = new TPack_WindowData;
+	//pData->hwnd = ChDlg;
+	pData->BitmapCount = 0;
+
+	int TextureCount = 0;
+
+	VFS = geVFile_OpenNewSystem(NULL, GE_VFILE_TYPE_VIRTUAL, TXL_Filename, NULL, GE_VFILE_OPEN_READONLY | GE_VFILE_OPEN_DIRECTORY);
+	if (!VFS)
+	{
+		App->Say("Could not open file %s");
+		return 0;
+	}
+
+	geVFile_Finder* Finder2;
+	Finder2 = geVFile_CreateFinder(VFS, "*.*");
+	if (!Finder2)
+	{
+		App->Say("XX Could not load textures from %s");
+		geVFile_Close(VFS);
+		return 0;
+	}
+
+	while (geVFile_FinderGetNextFile(Finder2) != GE_FALSE)
+	{
+
+		TextureCount++;
+
+	}
+
+	Finder = geVFile_CreateFinder(VFS, "*.*");
+	if (!Finder)
+	{
+		App->Say("Could not load textures from %s");
+		geVFile_Close(VFS);
+		return 0;
+	}
+
+	while (geVFile_FinderGetNextFile(Finder) != GE_FALSE)
+	{
+		geVFile_Properties	Properties;
+
+		geVFile_FinderGetProperties(Finder, &Properties);
+		if (!AddTexture(VFS, Properties.Name))
+		{
+			geVFile_Close(VFS);
+			return 0;
+		}
+	}
+
+	strcpy(pData->TXLFileName, TXL_Filename);
+	pData->FileNameIsValid = TRUE;
+	pData->Dirty = FALSE;
+	geVFile_Close(VFS);
+
+	return 1;
+}
+
+// *************************************************************************
+// *						AddTexture  06/06/08 				  		   *
+// *************************************************************************
+bool A_TextureDialog::AddTexture(geVFile* BaseFile, const char* Path)
+{
+	geBitmap_Info	PInfo;
+	geBitmap_Info	SInfo;
+	geBitmap* Bitmap;
+
+	geVFile* File;
+	char			FileName[_MAX_FNAME];
+	char* Name;
+
+	Bitmap = NULL;
+	File = NULL;
+
+	_splitpath(Path, NULL, NULL, FileName, NULL);
+	Name = strdup(FileName);
+	if (!Name)
+	{
+		App->Say("Error");
+		return FALSE;
+	}
+
+	if (BaseFile)
+		File = geVFile_Open(BaseFile, Path, GE_VFILE_OPEN_READONLY);
+	else
+		File = geVFile_OpenNewSystem(NULL, GE_VFILE_TYPE_DOS, Path, NULL, GE_VFILE_OPEN_READONLY);
+
+	if (!File)
+	{
+		App->Say("Error");
+		return TRUE;
+	}
+	//geBitmap_Create()
+	Bitmap = geBitmap_CreateFromFile(File);
+	geVFile_Close(File);
+	if (!Bitmap)
+	{
+		App->Say("Error");
+		return TRUE;
+	}
+	geBitmap_GetInfo(Bitmap, &PInfo, &SInfo);
+	
+	NewBitmapList[pData->BitmapCount] = new BitmapEntry;
+	if (!NewBitmapList)
+	{
+		App->Say("Error");
+		return TRUE;
+	}
+
+	NewBitmapList[pData->BitmapCount]->Name = Name;
+	NewBitmapList[pData->BitmapCount]->Bitmap = Bitmap;
+	NewBitmapList[pData->BitmapCount]->WinBitmap = NULL;
+	NewBitmapList[pData->BitmapCount]->WinABitmap = NULL;
+	NewBitmapList[pData->BitmapCount]->Flags = 0;
+	NewBitmapList[pData->BitmapCount]->Deleted = 0;
+	pData->BitmapCount++;
+
+	return TRUE;
+}
+
+// *************************************************************************
+// *						Save/SaveAs  13/06/08 				  		   *
+// *************************************************************************
+bool A_TextureDialog::Save(const char* Path)
+{
+	char		FileName[_MAX_PATH];
+	geVFile* VFS;
+	int			i;
+
+	if (!Path)
+	{
+		OPENFILENAME ofn;	// Windows open filename structure...
+		char Filter[_MAX_PATH];
+		char	Dir[_MAX_PATH];
+
+		FileName[0] = '\0';
+
+		GetCurrentDirectory(sizeof(Dir), Dir);
+
+		ofn.lStructSize = sizeof(OPENFILENAME);
+		ofn.hwndOwner = pData->hwnd;
+		ofn.hInstance = pData->Instance;
+		{
+			char* c;
+
+			// build actor file filter string
+			strcpy(Filter, "Texture Libraries (*.txl)");
+			c = &Filter[strlen(Filter)] + 1;
+			// c points one beyond end of string
+			strcpy(c, "*.txl");
+			c = &c[strlen(c)] + 1;
+			*c = '\0';	// 2nd terminating nul character
+		}
+		ofn.lpstrFilter = Filter;
+		ofn.lpstrCustomFilter = NULL;
+		ofn.nMaxCustFilter = 0;
+		ofn.nFilterIndex = 1;
+		ofn.lpstrFile = FileName;
+		ofn.nMaxFile = sizeof(FileName);
+		ofn.lpstrFileTitle = FileName;
+		ofn.nMaxFileTitle = sizeof(FileName);
+		ofn.lpstrInitialDir = Dir;
+		ofn.lpstrTitle = NULL;
+		ofn.Flags = OFN_HIDEREADONLY;
+		ofn.nFileOffset = 0;
+		ofn.nFileExtension = 0;
+		ofn.lpstrDefExt = "txl";
+		ofn.lCustData = 0;
+		ofn.lpfnHook = NULL;
+		ofn.lpTemplateName = NULL;
+
+		if (!GetSaveFileName(&ofn))
+			return 0;
+
+		Path = FileName;
+	}
+
+	_unlink(Path);
+	VFS = geVFile_OpenNewSystem(NULL, GE_VFILE_TYPE_VIRTUAL, Path, NULL, GE_VFILE_OPEN_CREATE | GE_VFILE_OPEN_DIRECTORY);
+	if (!VFS)
+	{
+		App->Say("Error");
+		return 0;
+	}
+
+	for (i = 0; i < pData->BitmapCount; i++)
+	{
+		geVFile* File;
+		geBoolean	WriteResult;
+
+		if (NewBitmapList[i]->Deleted == 0)
+		{
+			File = geVFile_Open(VFS, NewBitmapList[i]->Name, GE_VFILE_OPEN_CREATE);
+			if (!File)
+			{
+				App->Say("Error");
+				geVFile_Close(VFS);
+				return 0;
+			}
+
+			WriteResult = geBitmap_WriteToFile(NewBitmapList[i]->Bitmap, File);
+			geVFile_Close(File);
+			if (WriteResult == GE_FALSE)
+			{
+				App->Say("Error");
+				geVFile_Close(VFS);
+				return 0;
+			}
+		}
+	}
+
+	strcpy(pData->TXLFileName, Path);
+	pData->FileNameIsValid = TRUE;
+
+	if (geVFile_Close(VFS) == GE_FALSE)
+	{
+		App->Say("Error");
+	}
+	else
+	{
+		pData->Dirty = FALSE;
+	}
+
+	return 1;
+}
