@@ -295,8 +295,6 @@ bool SB_File_WE::Start_Load(const char* FileName, bool UseDialogLoader)
 bool SB_File_WE::Open_3dt_File()
 {
 
-		//AfxGetApp()->OpenDocumentFile(PathFileName_3dt);
-
 		Load_File(PathFileName_3dt);
 
 		App->m_pDoc->SetTitle(PathFileName_3dt);
@@ -310,7 +308,7 @@ bool SB_File_WE::Open_3dt_File()
 		pbmp = Level_GetWadBitmap(App->m_pDoc->pLevel, "Dummy");
 		if (pbmp == NULL)
 		{
-			App->Say("Not Found");
+
 			App->CL_TextureDialog->Open_TXL_File(App->CL_World->mCurrent_TXL_FilePath);
 
 			char Path2[MAX_PATH];

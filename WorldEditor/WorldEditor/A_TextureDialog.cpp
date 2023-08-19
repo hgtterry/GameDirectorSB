@@ -776,9 +776,7 @@ bool A_TextureDialog::Open_TXL_File(char* TXL_Filename)
 
 	while (geVFile_FinderGetNextFile(Finder2) != GE_FALSE)
 	{
-
 		TextureCount++;
-
 	}
 
 	Finder = geVFile_CreateFinder(VFS, "*.*");
