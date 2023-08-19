@@ -32,6 +32,7 @@ public:
 	void ImGui_Dimensions(void);
 	void UpDate_Physics_And_Visuals(int Index);
 	void Dimesions_Select(void);
+	void Set_Position(float X, float Y, float Z);
 
 	bool Show_Dimensions;
 
@@ -46,8 +47,7 @@ public:
 protected:
 
 	void ImGui_Position(void);
-	void Set_Position(float X, float Y, float Z);
-
+	
 	void ImGui_Scale(void);
 	void Set_Scale(bool Mode, float X, float Y, float Z);
 

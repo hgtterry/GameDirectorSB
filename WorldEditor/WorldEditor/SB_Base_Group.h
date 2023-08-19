@@ -61,6 +61,8 @@ public:
 	
 	bool Bitmap_Loaded;
 
+	bool Dont_Use;
+
 	std::vector<vertex_type> vertex_Data;		// XYZ
 	std::vector<polygon_type> Face_Data;		// ABC
 	std::vector<normal_type> Normal_Data;		// XYZ

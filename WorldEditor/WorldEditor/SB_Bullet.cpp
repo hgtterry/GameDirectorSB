@@ -81,19 +81,26 @@ btBvhTriangleMeshShape* SB_Bullet::create_New_Trimesh(int Index)
 		int C = 0;
 		int FaceCount = 0;
 
-		while (FaceCount < App->CLSB_Model->Group[Count]->GroupFaceCount)
+		if (App->Centre_Debug == 1 && App->CLSB_Model->Group[Count]->Dont_Use == 1)
 		{
-			A = App->CLSB_Model->Group[Count]->Face_Data[FaceCount].a;
-			B = App->CLSB_Model->Group[Count]->Face_Data[FaceCount].b;
-			C = App->CLSB_Model->Group[Count]->Face_Data[FaceCount].c;
 
-			vert0.setValue(App->CLSB_Model->Group[Count]->vertex_Data[A].x, App->CLSB_Model->Group[Count]->vertex_Data[A].y, App->CLSB_Model->Group[Count]->vertex_Data[A].z);
-			vert1.setValue(App->CLSB_Model->Group[Count]->vertex_Data[B].x, App->CLSB_Model->Group[Count]->vertex_Data[B].y, App->CLSB_Model->Group[Count]->vertex_Data[B].z);
-			vert2.setValue(App->CLSB_Model->Group[Count]->vertex_Data[C].x, App->CLSB_Model->Group[Count]->vertex_Data[C].y, App->CLSB_Model->Group[Count]->vertex_Data[C].z);
+		}
+		else
+		{
+			while (FaceCount < App->CLSB_Model->Group[Count]->GroupFaceCount)
+			{
+				A = App->CLSB_Model->Group[Count]->Face_Data[FaceCount].a;
+				B = App->CLSB_Model->Group[Count]->Face_Data[FaceCount].b;
+				C = App->CLSB_Model->Group[Count]->Face_Data[FaceCount].c;
 
-			triMesh->addTriangle(vert0, vert1, vert2);
+				vert0.setValue(App->CLSB_Model->Group[Count]->vertex_Data[A].x, App->CLSB_Model->Group[Count]->vertex_Data[A].y, App->CLSB_Model->Group[Count]->vertex_Data[A].z);
+				vert1.setValue(App->CLSB_Model->Group[Count]->vertex_Data[B].x, App->CLSB_Model->Group[Count]->vertex_Data[B].y, App->CLSB_Model->Group[Count]->vertex_Data[B].z);
+				vert2.setValue(App->CLSB_Model->Group[Count]->vertex_Data[C].x, App->CLSB_Model->Group[Count]->vertex_Data[C].y, App->CLSB_Model->Group[Count]->vertex_Data[C].z);
 
-			FaceCount++;
+				triMesh->addTriangle(vert0, vert1, vert2);
+
+				FaceCount++;
+			}
 		}
 
 		Count++;

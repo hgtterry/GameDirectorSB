@@ -34,6 +34,7 @@ Base_Group::Base_Group()
 	Texture_PathFileName[0] = 0;
 
 	Bitmap_Loaded = 0;
+	Dont_Use = 0;
 
 	GroupVertCount = 0;
 

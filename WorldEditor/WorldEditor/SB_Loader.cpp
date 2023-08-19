@@ -159,7 +159,7 @@ bool SB_Loader::Load_File_Wepf()
 
 	return 1;
 }
-
+#include <functional>
 // *************************************************************************
 // *						Adjust Terry Flanigan						   *
 // *************************************************************************
@@ -169,10 +169,46 @@ void SB_Loader::Adjust()
 	//Rotate_X_Model(-90);
 	Centre_Model_Mid();
 
+	App->CLSB_Model->Set_BondingBoxes_AllGroups();
+
+	if (App->Centre_Debug == 1)
+	{
+		int GroupCount = App->CLSB_Model->Get_Groupt_Count();
+		int test = -1;
+		int Count = 0;
+		Ogre::Vector3 Centre;
+
+		while (Count < GroupCount)
+		{
+			test = strcmp(App->CLSB_Model->Group[Count]->MaterialName, "dummy");
+			if (test == 0)
+			{
+				App->CLSB_Model->Group[Count]->Dont_Use = 1;
+
+				//App->Say(App->CLSB_Model->Group[Count]->MaterialName);
+
+				Centre.x = App->CLSB_Model->Group[Count]->Centre.x;
+				Centre.y = App->CLSB_Model->Group[Count]->Centre.y;
+				Centre.z = App->CLSB_Model->Group[Count]->Centre.z;
+
+				float x = -1 * Centre.x;
+				float y = -1 * Centre.y;
+				float z = -1 * Centre.z;
+
+				App->CLSB_Dimensions->Set_Position(x, y, z);
+			}
+
+			Count++;
+		}
+
+		//App->CLSB_Camera_EQ->Zero_View();
+	}
+
 	if (App->CLSB_Equity->mAutoLoad == 0)
 	{
 		App->CLSB_Grid->Reset_View();
 	}
+
 }
 
 // *************************************************************************

@@ -242,7 +242,8 @@ public:
 	bool Debug_App;
 	bool Debug_File;
 	bool Just_Equity;
-	
+	bool Centre_Debug;
+
 	HCURSOR CUR;
 
 	int CursorPosX;

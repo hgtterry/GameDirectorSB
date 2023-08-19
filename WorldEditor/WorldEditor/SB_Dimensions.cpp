@@ -389,7 +389,7 @@ void SB_Dimensions::Set_Position(float X, float Y, float Z)
 		}
 
 		App->CLSB_Model->Set_BondingBox_Model(0);
-		Set_Physics_Position(0);
+		//Set_Physics_Position(0);
 	}
 }
 

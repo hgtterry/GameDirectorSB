@@ -138,6 +138,7 @@ SB_App::SB_App()
 	Debug_App = 1;
 	Debug_File = 1;
 	Just_Equity = 0;
+	Centre_Debug = 1;
 
 	hMenu_WE = NULL;
 

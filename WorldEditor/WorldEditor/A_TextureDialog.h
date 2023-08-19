@@ -58,5 +58,4 @@ protected:
 
 	bool RenderTexture_Blit(HDC hDC, HBITMAP Bmp, const RECT *SourceRect, const RECT *DestRect);
 
-	int ItemData[100];
 };
