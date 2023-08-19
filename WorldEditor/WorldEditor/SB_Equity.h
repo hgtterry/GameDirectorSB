@@ -17,7 +17,7 @@ public:
 	bool Set_Mode_Preview_Selected();
 
 	bool mAutoLoad;
-
+	bool First_Run;
 	bool EquitySB_Dialog_Created;
 	bool EquitySB_Dialog_Visible;
 	int Equity_Start_Mode;

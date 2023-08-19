@@ -910,6 +910,11 @@ LRESULT CALLBACK SB_TopTabs::Top_Equity_Proc(HWND hDlg, UINT message, WPARAM wPa
 				App->CLSB_Player->Create_Player_Object();
 			}
 
+			if (App->CLSB_Equity->First_Run == 1)
+			{
+				App->CLSB_Camera_EQ->Zero_View();
+				App->CLSB_Equity->First_Run = 0;
+			}
 			return TRUE;
 		}
 

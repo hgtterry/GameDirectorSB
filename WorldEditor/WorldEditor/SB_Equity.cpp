@@ -14,6 +14,8 @@ SB_Equity::SB_Equity(void)
 	Equity_Main_hWnd =		nullptr;
 	Render_Buttons_hWnd =	nullptr;
 
+	First_Run = 1;
+
 	Close_Equity_Flag = 0;
 
 	m_pDoc = nullptr;
