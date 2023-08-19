@@ -151,7 +151,7 @@ void SB_Player::Initialize()
 	//// ------------------------ Bulet
 	btVector3 pos = btVector3(Pos.x, Pos.y, Pos.z);
 	btVector3 inertia = btVector3(0, 0, 0);
-	btQuaternion rot = btQuaternion(0,0,0,1);
+	btQuaternion rot = btQuaternion(0,1,0,0);
 	btDefaultMotionState *state = new btDefaultMotionState(btTransform(rot, pos));
 
 	pBase->Phys_Shape = new btCapsuleShape(btScalar(pBase->Capsule_Radius), btScalar(pBase->Capsule_Height));

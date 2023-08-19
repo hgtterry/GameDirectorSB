@@ -43,7 +43,7 @@ Base_Player::Base_Player()
 	StartPos.y = 0;
 	StartPos.z = 0;
 
-	Physics_Rotation = btQuaternion(1, 0, 0, 0);
+	Physics_Rotation = btQuaternion(0, 0, 1, 0);
 
 	Forward_Timer = 0;
 	Ground_speed = 10000;
