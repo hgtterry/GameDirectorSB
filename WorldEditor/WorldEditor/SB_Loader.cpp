@@ -187,15 +187,11 @@ void SB_Loader::Adjust()
 
 				//App->Say(App->CLSB_Model->Group[Count]->MaterialName);
 
-				Centre.x = App->CLSB_Model->Group[Count]->Centre.x;
-				Centre.y = App->CLSB_Model->Group[Count]->Centre.y;
-				Centre.z = App->CLSB_Model->Group[Count]->Centre.z;
+				Centre.x = -1 * App->CLSB_Model->Group[Count]->Centre.x;
+				Centre.y = -1 * App->CLSB_Model->Group[Count]->Centre.y;
+				Centre.z = -1 * App->CLSB_Model->Group[Count]->Centre.z;
 
-				float x = -1 * Centre.x;
-				float y = -1 * Centre.y;
-				float z = -1 * Centre.z;
-
-				App->CLSB_Dimensions->Set_Position(x, y, z);
+				App->CLSB_Dimensions->Set_Position(Centre.x, Centre.y, Centre.z);
 			}
 
 			Count++;

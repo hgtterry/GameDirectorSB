@@ -38,7 +38,7 @@ public:
 
 	void Apply_Texture();
 	void List_Selection_Changed();
-	void Select_Texture(int SelNum);
+	void Select_Texture(int SelNum,char* TextName);
 	void Show_Dialog(bool Show);
 	int Get_Index_FromName(char* TextureName);
 

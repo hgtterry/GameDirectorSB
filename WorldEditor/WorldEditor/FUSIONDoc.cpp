@@ -3213,8 +3213,12 @@ void CFusionDoc::SelectTextureFromFace3D(CPoint point, ViewVars *v)
     {
         if(bdat.CurFace)
         {
+            char TextName[MAX_PATH];
+            strcpy(TextName, Face_GetTextureName(bdat.CurFace));
             mpMainFrame->m_wndTabControls->SelectTexture(Face_GetTextureDibId(bdat.CurFace));
-            App->CL_TabsControl->Select_Texture_Tab(Face_GetTextureDibId(bdat.CurFace));
+           
+            App->CL_TabsControl->Select_Texture_Tab(Face_GetTextureDibId(bdat.CurFace), TextName);
+
         }
     }
 

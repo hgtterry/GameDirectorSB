@@ -203,13 +203,13 @@ void A_TabsControl::Hide_Dialogs()
 // *************************************************************************
 // *	  	Select_Texture_Tab:- Terry and Hazel Flanigan 2023				   *
 // *************************************************************************
-void A_TabsControl::Select_Texture_Tab(int SelNum)
+void A_TabsControl::Select_Texture_Tab(int SelNum ,char* TextName)
 {
 	if(Tabs_Control_Hwnd && App->CL_TabsControl->f_TabsDlg_Active == 1)
 	{
 		App->CL_TabsControl->Hide_Dialogs();
 		App->CL_TextureDialog->Show_Dialog(true);
-		App->CL_TextureDialog->Select_Texture(SelNum);
+		App->CL_TextureDialog->Select_Texture(SelNum, TextName);
 
 		Tab_Texture_Flag = 1;
 		RedrawWindow(App->CL_TabsControl->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);

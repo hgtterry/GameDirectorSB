@@ -474,22 +474,12 @@ void A_TextureDialog::Apply_Texture()
 // *************************************************************************
 // *			Select_Texture:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-void A_TextureDialog::Select_Texture(int SelNum)
+void A_TextureDialog::Select_Texture(int SelNum, char* TextName)
 {
 
-	SendDlgItemMessage(TextureDlg_Hwnd, IDC_LISTTDTEXTURES,LB_SETCURSEL, (WPARAM)SelNum, (LPARAM)0);
+	SendDlgItemMessage(TextureDlg_Hwnd, IDC_LISTTDTEXTURES, LB_SELECTSTRING, (WPARAM)-1, (LPARAM)TextName);
 	List_Selection_Changed();
 
-	/*for (int i = 0; i < m_TextureList.GetCount(); ++i)
-	{
-		int SelId = m_TextureList.GetItemData (i);
-		if (SelNum == SelId)
-		{
-			SetCurSel(i);
-			OnSelchangetexturelist();
-			return;
-		}
-	}*/
 }
 
 // *************************************************************************

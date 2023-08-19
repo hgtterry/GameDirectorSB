@@ -999,7 +999,6 @@ bool A_TxlEditor::CreateTexture(geVFile* BaseFile, const char* Path)
 
 	AddTexture(NULL, Path2);
 
-
 	return TRUE;
 
 }
