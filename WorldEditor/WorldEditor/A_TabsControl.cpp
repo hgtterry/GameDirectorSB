@@ -209,10 +209,14 @@ void A_TabsControl::Select_Texture_Tab(int SelNum ,char* TextName)
 	{
 		App->CL_TabsControl->Hide_Dialogs();
 		App->CL_TextureDialog->Show_Dialog(true);
-		App->CL_TextureDialog->Select_Texture(SelNum, TextName);
 
-		Tab_Texture_Flag = 1;
-		RedrawWindow(App->CL_TabsControl->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+		bool test = App->CL_TextureDialog->Select_Texture(SelNum, TextName);
+		if (test == 1)
+		{
+			Tab_Texture_Flag = 1;
+			RedrawWindow(App->CL_TabsControl->Tabs_Control_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+		}
 	}
 }
 

@@ -375,8 +375,6 @@ static void TextureBrushList
 }
 
 
-
-
 // *************************************************************************
 // *			Apply_Texture:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
@@ -474,12 +472,19 @@ void A_TextureDialog::Apply_Texture()
 // *************************************************************************
 // *			Select_Texture:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-void A_TextureDialog::Select_Texture(int SelNum, char* TextName)
+bool A_TextureDialog::Select_Texture(int SelNum, char* TextName)
 {
+	int test = SendDlgItemMessage(TextureDlg_Hwnd, IDC_LISTTDTEXTURES, LB_SELECTSTRING, (WPARAM)-1, (LPARAM)TextName);
+	if (test == LB_ERR)
+	{
+		return 0;
+	}
+	else
+	{
+		List_Selection_Changed();
+	}
 
-	SendDlgItemMessage(TextureDlg_Hwnd, IDC_LISTTDTEXTURES, LB_SELECTSTRING, (WPARAM)-1, (LPARAM)TextName);
-	List_Selection_Changed();
-
+	return 1;
 }
 
 // *************************************************************************
