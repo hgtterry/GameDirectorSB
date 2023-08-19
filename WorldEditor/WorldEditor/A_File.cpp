@@ -503,7 +503,7 @@ void SB_File_WE::AddCameraEntityToLevel(void)
 		Level_AddEntity (App->m_pDoc->pLevel, CameraEntity);
 	}
 
-	AddZeroEntityToLevel();
+	//AddZeroEntityToLevel();
 }
 
 // *************************************************************************
