@@ -20,8 +20,8 @@ A_FaceDialog::A_FaceDialog(void)
 
 	f_FaceDlg_Active = 0;
 
-	ScaleX_Delta = 0.05;
-	ScaleY_Delta = 0.05;
+	ScaleX_Delta = 0.01;
+	ScaleY_Delta = 0.01;
 
 	FaceDlg_Hwnd = NULL;
 }
@@ -140,9 +140,9 @@ LRESULT CALLBACK A_FaceDialog::FaceDialog_Proc(HWND hDlg, UINT message, WPARAM w
 	}
 
 	case WM_CTLCOLORDLG:
-		{
-			return (LONG)App->AppBackground;
-		}
+	{
+		return (LONG)App->AppBackground;
+	}
 
 	case WM_NOTIFY:
 	{
@@ -304,36 +304,37 @@ LRESULT CALLBACK A_FaceDialog::FaceDialog_Proc(HWND hDlg, UINT message, WPARAM w
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_TEXTURELOCK);
 
-			App->CL_FaceDialog->m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+			App->Get_Current_Document();
+
 			Face* pFace;
 			int NumberOfFaces;
 
 			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
 			if (test == BST_CHECKED)
 			{
-				NumberOfFaces = SelFaceList_GetSize(App->CL_FaceDialog->m_pDoc->pSelFaces);
+				NumberOfFaces = SelFaceList_GetSize(App->m_pDoc->pSelFaces);
 
 				for (int i = 0; i < NumberOfFaces; ++i)
 				{
-					pFace = SelFaceList_GetFace(App->CL_FaceDialog->m_pDoc->pSelFaces,i);
+					pFace = SelFaceList_GetFace(App->m_pDoc->pSelFaces,i);
 					Face_SetTextureLock(pFace,true);
 				}
 
-				App->CL_FaceDialog->m_pDoc->UpdateAllViews(UAV_RENDER_ONLY, NULL);
+				App->m_pDoc->UpdateAllViews(UAV_RENDER_ONLY, NULL);
 				
 				return 1;
 			}
 			else
 			{
-				NumberOfFaces = SelFaceList_GetSize(App->CL_FaceDialog->m_pDoc->pSelFaces);
+				NumberOfFaces = SelFaceList_GetSize(App->m_pDoc->pSelFaces);
 
 				for (int i = 0; i < NumberOfFaces; ++i)
 				{
-					pFace = SelFaceList_GetFace(App->CL_FaceDialog->m_pDoc->pSelFaces, i);
+					pFace = SelFaceList_GetFace(App->m_pDoc->pSelFaces, i);
 					Face_SetTextureLock(pFace, false);
 				}
 
-				App->CL_FaceDialog->m_pDoc->UpdateAllViews(UAV_RENDER_ONLY, NULL);
+				App->m_pDoc->UpdateAllViews(UAV_RENDER_ONLY, NULL);
 				return 1;
 			}
 			return TRUE;
@@ -443,7 +444,7 @@ void A_FaceDialog::Fill_ComboBox_ScaleValues(HWND hDlg)
 	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"1.0");
 	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"2.0");
 	
-	SendMessage(hDlg, CB_SETCURSEL, 3, 0);
+	SendMessage(hDlg, CB_SETCURSEL, 1, 0);
 }
 
 // *************************************************************************
@@ -466,17 +467,19 @@ void A_FaceDialog::Fill_ComboBox_AngleValues(HWND hDlg)
 // *************************************************************************
 void A_FaceDialog::UpdatePolygonFocus()
 {
+	App->Get_Current_Document();
+
 	int NumberOfFaces = 0;
 	Face *pFace;
 
-	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+	App->m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
 	
-	if (m_pDoc)
+	if (App->m_pDoc)
 	{
-		NumberOfFaces = SelFaceList_GetSize (m_pDoc->pSelFaces);
+		NumberOfFaces = SelFaceList_GetSize (App->m_pDoc->pSelFaces);
 //		pFace = SelFaceList_GetFace (pDoc->pSelFaces, 0);
 		if (NumberOfFaces)
-			pFace = SelFaceList_GetFace (m_pDoc->pSelFaces, (NumberOfFaces-1));
+			pFace = SelFaceList_GetFace (App->m_pDoc->pSelFaces, (NumberOfFaces-1));
 		else
 			pFace = NULL;
 	}
@@ -495,7 +498,7 @@ void A_FaceDialog::UpdatePolygonFocus()
 	StringNumberOfFaces.Format("%d",NumberOfFaces);
 	m_NumFaces = TEXT_NUM_FACES + StringNumberOfFaces;
 	
-	if (m_pDoc && NumberOfFaces && pFace)
+	if (App->m_pDoc && NumberOfFaces && pFace)
 	{
 		m_TextureAngle	= Face_GetTextureRotate (pFace);
 		Face_GetTextureShift (pFace, &m_TextureXOffset, &m_TextureYOffset);
@@ -557,13 +560,13 @@ geBoolean A_FaceDialog::FlipVertical(Face *pFace, void *)
 // *************************************************************************
 void A_FaceDialog::OnFlipvertical() 
 {
-	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+	App->m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
 
-	if (m_pDoc)
+	if (App->m_pDoc)
 	{
-		m_pDoc->SetModifiedFlag();
+		App->m_pDoc->SetModifiedFlag();
 		m_TextureYScale = -m_TextureYScale;
-		SelFaceList_Enum (m_pDoc->pSelFaces, FlipVertical, NULL);
+		SelFaceList_Enum (App->m_pDoc->pSelFaces, FlipVertical, NULL);
 		AssignCurrentToViews();
 	}
 }
@@ -586,13 +589,11 @@ geBoolean A_FaceDialog::FlipHorizontal(Face *pFace, void *)
 // *************************************************************************
 bool A_FaceDialog::On_FlipHorizontal()
 {
-	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
-
-	if (m_pDoc)
+	if (App->m_pDoc)
 	{
-		m_pDoc->SetModifiedFlag();
+		App->m_pDoc->SetModifiedFlag();
 		m_TextureXScale = -m_TextureXScale;
-		SelFaceList_Enum (m_pDoc->pSelFaces, FlipHorizontal, NULL);
+		SelFaceList_Enum (App->m_pDoc->pSelFaces, FlipHorizontal, NULL);
 		AssignCurrentToViews();
 	}
 
@@ -615,14 +616,14 @@ geBoolean A_FaceDialog::ChangeTextureAngle (Face *pFace, void *lParam)
 // *************************************************************************
 void A_FaceDialog::OnKillfocusAngle() 
 {	
-	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+	App->Get_Current_Document();
 
-	if (m_pDoc)
+	if (App->m_pDoc)
 	{
-		m_pDoc->SetModifiedFlag();
+		App->m_pDoc->SetModifiedFlag();
 		//UpdateData (TRUE);
 		//OnFloatKillFocus (m_EditAngle, &m_TextureAngle, 0, "0");
-		SelFaceList_Enum (m_pDoc->pSelFaces, ChangeTextureAngle, &m_TextureAngle);
+		SelFaceList_Enum (App->m_pDoc->pSelFaces, ChangeTextureAngle, &m_TextureAngle);
 
 		AssignCurrentToViews ();
 	}
@@ -646,14 +647,14 @@ geBoolean A_FaceDialog::ChangeYOffset (Face *pFace, void *lParam)
 // *************************************************************************
 void A_FaceDialog::OnKillfocusYOffset() 
 {	
-	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+	App->Get_Current_Document();
 
-	if (m_pDoc)
+	if (App->m_pDoc)
 	{
-		m_pDoc->SetModifiedFlag();
+		App->m_pDoc->SetModifiedFlag();
 		//UpdateData (TRUE);
 		//OnIntKillFocus (m_EditYOffset, &m_TextureYOffset, 0, "0");
-		SelFaceList_Enum (m_pDoc->pSelFaces, ChangeYOffset, &m_TextureYOffset);
+		SelFaceList_Enum (App->m_pDoc->pSelFaces, ChangeYOffset, &m_TextureYOffset);
 		AssignCurrentToViews ();
 	}
 }
@@ -676,14 +677,14 @@ geBoolean A_FaceDialog::ChangeXOffset (Face *pFace, void *lParam)
 // *************************************************************************
 void A_FaceDialog::OnKillfocusXOffset() 
 {
-	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+	App->Get_Current_Document();
 
-	if (m_pDoc)
+	if (App->m_pDoc)
 	{
-		m_pDoc->SetModifiedFlag();
+		App->m_pDoc->SetModifiedFlag();
 		//UpdateData (TRUE);
 		//OnIntKillFocus (m_EditXOffset, &m_TextureXOffset, 0, "0");
-		SelFaceList_Enum (m_pDoc->pSelFaces, ChangeXOffset, &m_TextureXOffset);
+		SelFaceList_Enum (App->m_pDoc->pSelFaces, ChangeXOffset, &m_TextureXOffset);
 		AssignCurrentToViews ();
 	}
 }
@@ -706,14 +707,14 @@ geBoolean A_FaceDialog::ChangeTextureYScale (Face *pFace, void *lParam)
 // *************************************************************************
 void A_FaceDialog::OnKillfocusYScale() 
 {
-	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+	App->Get_Current_Document();
 
-	if (m_pDoc)
+	if (App->m_pDoc)
 	{
-		m_pDoc->SetModifiedFlag();
+		App->m_pDoc->SetModifiedFlag();
 		//UpdateData (TRUE);
 		//OnFloatKillFocus (m_EditYScale, &m_TextureYScale, 1.0f, "1.0");
-		SelFaceList_Enum (m_pDoc->pSelFaces, ChangeTextureYScale, &m_TextureYScale);
+		SelFaceList_Enum (App->m_pDoc->pSelFaces, ChangeTextureYScale, &m_TextureYScale);
 		AssignCurrentToViews ();
 	}
 }
@@ -736,14 +737,14 @@ geBoolean A_FaceDialog::ChangeTextureXScale (Face *pFace, void *lParam)
 // *************************************************************************
 void A_FaceDialog::OnKillfocusXScale() 
 {
-	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+	App->Get_Current_Document();
 
-	if (m_pDoc)
+	if (App->m_pDoc)
 	{
-		m_pDoc->SetModifiedFlag();
+		App->m_pDoc->SetModifiedFlag();
 		//UpdateData (TRUE);
 		//OnFloatKillFocus (m_EditXScale, &m_TextureXScale, 1.0f, "1.0");
-		SelFaceList_Enum (m_pDoc->pSelFaces, ChangeTextureXScale, &m_TextureXScale);
+		SelFaceList_Enum (App->m_pDoc->pSelFaces, ChangeTextureXScale, &m_TextureXScale);
 		AssignCurrentToViews ();
 	}
 }
@@ -753,22 +754,22 @@ void A_FaceDialog::OnKillfocusXScale()
 // *************************************************************************
 void A_FaceDialog::AssignCurrentToViews()
 {
-	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+	App->Get_Current_Document();
 
-	if (m_pDoc)
+	if (App->m_pDoc)
 	{
-		m_pDoc->SetModifiedFlag();
+		App->m_pDoc->SetModifiedFlag();
 
 		// update child faces on all selected brushes
 		int NumSelBrushes;
 
-		NumSelBrushes = SelBrushList_GetSize (m_pDoc->pSelBrushes);
+		NumSelBrushes = SelBrushList_GetSize (App->m_pDoc->pSelBrushes);
 		for (int i = 0; i < NumSelBrushes; ++i)
 		{
-			Brush *pBrush = SelBrushList_GetBrush (m_pDoc->pSelBrushes, i);
+			Brush *pBrush = SelBrushList_GetBrush (App->m_pDoc->pSelBrushes, i);
 			Brush_UpdateChildFaces (pBrush);
 		}
 
-		m_pDoc->UpdateAllViews(UAV_RENDER_ONLY, NULL);
+		App->m_pDoc->UpdateAllViews(UAV_RENDER_ONLY, NULL);
 	}
 }

@@ -59,5 +59,4 @@ protected:
 
 	CString m_NumFaces;
 
-	CFusionDoc			*m_pDoc;
 };
