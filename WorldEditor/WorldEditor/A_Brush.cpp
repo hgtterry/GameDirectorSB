@@ -87,4 +87,33 @@ int A_Brush::Get_Brush_Count(void)
 	return Count;
 }
 
+// *************************************************************************
+// *							Get_By_Name								   *
+// *************************************************************************
+Brush* A_Brush::Get_By_Name(char* BrushName)
+{
+	App->Get_Current_Document();
+
+	int Count = 0;
+	int Result = 1;
+	Brush* b;
+
+	Level* pLevel = App->m_pDoc->pLevel;
+	BrushList* pList = Level_GetBrushes(App->m_pDoc->pLevel);
+
+	b = pList->First;
+	while (b != NULL)
+	{
+		Result = strcmp(b->Name, "XYZ");
+		if (Result == 0)
+		{
+			return b;
+		}
+		Count++;
+		b = b->Next;
+	}
+
+	return NULL;
+}
+
 

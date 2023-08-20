@@ -14,7 +14,7 @@ public:
 	const char* Brush_GetName(const Brush *b);
 	const BrushList* Brush_GetBrushList(const Brush *b);
 	int Get_Brush_Count(void);
-
+	Brush* Get_By_Name(char* BrushName);
 	BrushList* BrushList_Create(void);
 };
 

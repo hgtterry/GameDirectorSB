@@ -589,6 +589,7 @@
 #define IDC_BT_TT_MOVECAMRA             1363
 #define IDC_NOX                         1363
 #define IDC_NONO                        1363
+#define IDC_WETEST                      1363
 #define IDC_BANNER                      1364
 #define IDC_GD_CYLINDER_PRIMITIVE       1364
 #define IDC_BT_BROWSE                   1364

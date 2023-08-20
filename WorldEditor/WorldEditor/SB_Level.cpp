@@ -179,6 +179,11 @@ bool SB_Level::Change_Centre_Brush_Texture()
 
 	}
 
+	App->m_pDoc->ResetAllSelections();
+	App->m_pDoc->UpdateSelected();
+
+	Brush_SetVisible(Selected_Brush, GE_FALSE);
+
 	Brush_UpdateChildFaces(Selected_Brush);
 	Brush_SetFaceListDirty(Selected_Brush);
 	App->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
