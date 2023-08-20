@@ -46,7 +46,6 @@ public:
 	bool AddTexture(geVFile* BaseFile, const char* Path);
 	bool Save(const char* Path);
 
-
 	HBITMAP	Sel_BaseBitmap;
 	long BasePicWidth;
 	long BasePicHeight;
