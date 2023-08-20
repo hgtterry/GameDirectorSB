@@ -204,7 +204,7 @@ LRESULT CALLBACK A_TabsGroups_Dlg::Groups_Proc(HWND hDlg, UINT message, WPARAM w
 			bool Doit = App->CLSB_Dialogs->Canceled;
 			if (Doit == 0)
 			{
-				App->CL_TabsGroups_Dlg->m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+				App->m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
 				App->CLSB_Doc->DeleteCurrentThing();
 			}
 
@@ -259,10 +259,10 @@ LRESULT CALLBACK A_TabsGroups_Dlg::Groups_Proc(HWND hDlg, UINT message, WPARAM w
 // *************************************************************************
 void A_TabsGroups_Dlg::Get_Index(const Brush* b)
 {
-	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+	App->Get_Current_Document();
 
-	Level* pLevel = m_pDoc->pLevel;
-	BrushList* pList = Level_GetBrushes(m_pDoc->pLevel);
+	Level* pLevel = App->m_pDoc->pLevel;
+	BrushList* pList = Level_GetBrushes(App->m_pDoc->pLevel);
 
 	int Selected = 0;
 	int Count = 0;
@@ -271,7 +271,7 @@ void A_TabsGroups_Dlg::Get_Index(const Brush* b)
 
 	while (b != NULL)
 	{
-		Selected = m_pDoc->BrushIsSelected(b);
+		Selected = App->m_pDoc->BrushIsSelected(b);
 
 		if (Selected == 1)
 		{
@@ -312,7 +312,7 @@ void A_TabsGroups_Dlg::List_Selection_Changed(bool Clear)
 // *************************************************************************
 void A_TabsGroups_Dlg::OnSelchangeBrushlist(int Index, bool Clear)
 {
-	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+	App->Get_Current_Document();
 
 	int			c ;
 	geBoolean	bChanged = FALSE ;
@@ -323,13 +323,13 @@ void A_TabsGroups_Dlg::OnSelchangeBrushlist(int Index, bool Clear)
 	{
 		if (Clear == 1)
 		{
-			m_pDoc->ResetAllSelections() ;
-			m_pDoc->UpdateSelected();
+			App->m_pDoc->ResetAllSelections() ;
+			App->m_pDoc->UpdateSelected();
 		}
 		
 		Selected_Brush = App->CL_World->Get_Brush_ByIndex( Index );
 
-		SelBrushList_Add(m_pDoc->pSelBrushes, Selected_Brush);
+		SelBrushList_Add(App->m_pDoc->pSelBrushes, Selected_Brush);
 
 		if (Clear == 1)
 		{
@@ -343,8 +343,8 @@ void A_TabsGroups_Dlg::OnSelchangeBrushlist(int Index, bool Clear)
 
 	if( bChanged )
 	{
-		m_pDoc->UpdateSelected() ;
-		m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+		App->m_pDoc->UpdateSelected() ;
+		App->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 	}
 }
 
@@ -357,10 +357,10 @@ void A_TabsGroups_Dlg::Fill_ListBox()
 	{
 		SendDlgItemMessage(GroupsDlg_Hwnd, IDC_GD_BRUSHLIST, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
-		m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+		App->m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
 
-		Level *pLevel = m_pDoc->pLevel;
-		BrushList *pList = Level_GetBrushes (m_pDoc->pLevel);
+		Level *pLevel = App->m_pDoc->pLevel;
+		BrushList *pList = Level_GetBrushes (App->m_pDoc->pLevel);
 
 		int Count = 0;
 		Brush * b;
@@ -384,7 +384,7 @@ void A_TabsGroups_Dlg::Fill_ListBox()
 void A_TabsGroups_Dlg::Update_Dlg_SelectedBrushesCount()
 {
 	char buff[100];
-	int NumSelBrushes = SelBrushList_GetSize(m_pDoc->pSelBrushes);
+	int NumSelBrushes = SelBrushList_GetSize(App->m_pDoc->pSelBrushes);
 	SetDlgItemText(GroupsDlg_Hwnd, IDC_ST_GD_SELECTED, itoa(NumSelBrushes, buff, 10));
 }
 
@@ -448,7 +448,7 @@ LRESULT CALLBACK A_TabsGroups_Dlg::Properties_Proc(HWND hDlg, UINT message, WPAR
 			else
 			{
 				App->CL_TabsGroups_Dlg->Selected_Index = Index;
-				App->CL_TabsGroups_Dlg->Selected_Brush = SelBrushList_GetBrush(App->CL_TabsGroups_Dlg->m_pDoc->pSelBrushes, Index);
+				App->CL_TabsGroups_Dlg->Selected_Brush = SelBrushList_GetBrush(App->m_pDoc->pSelBrushes, Index);
 				App->CL_TabsGroups_Dlg->List_BrushData(hDlg);
 			}
 
@@ -521,7 +521,7 @@ void A_TabsGroups_Dlg::List_SelectedBrushes(HWND hDlg)
 {
 	SendDlgItemMessage(hDlg, IDC_LIST_SELECTEDBRUSHES, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
-	int NumSelBrushes = SelBrushList_GetSize(m_pDoc->pSelBrushes);
+	int NumSelBrushes = SelBrushList_GetSize(App->m_pDoc->pSelBrushes);
 
 	if (NumSelBrushes == 0)
 	{
@@ -531,14 +531,14 @@ void A_TabsGroups_Dlg::List_SelectedBrushes(HWND hDlg)
 
 	for (int i = 0; i < NumSelBrushes; ++i)
 	{
-		Brush* pBrush = SelBrushList_GetBrush(m_pDoc->pSelBrushes, i);
+		Brush* pBrush = SelBrushList_GetBrush(App->m_pDoc->pSelBrushes, i);
 		SendDlgItemMessage(hDlg, IDC_LIST_SELECTEDBRUSHES, LB_ADDSTRING, (WPARAM)0, (LPARAM)pBrush->Name);
 	}
 
 	SendDlgItemMessage(hDlg, IDC_LIST_SELECTEDBRUSHES, LB_SETCURSEL, (WPARAM) 0, (LPARAM)0);
 
 	Selected_Index = 0;
-	Selected_Brush = SelBrushList_GetBrush(m_pDoc->pSelBrushes, 0);
+	Selected_Brush = SelBrushList_GetBrush(App->m_pDoc->pSelBrushes, 0);
 }
 
 // *************************************************************************

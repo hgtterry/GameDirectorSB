@@ -370,11 +370,10 @@ void A_CreateBoxDialog::CreateCube()
 	pCube = BrushTemplate_CreateBox (pBoxTemplate);
 	if (pCube != NULL)
 	{
-		
 		App->m_pDoc->LastTemplateTypeName = BoxName;
 		
 		CreateNewTemplateBrush(pCube);
-		Debug
+
 	}
 	else
 	{
