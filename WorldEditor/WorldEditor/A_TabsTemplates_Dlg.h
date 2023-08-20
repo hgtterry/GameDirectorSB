@@ -45,5 +45,4 @@ private:
 
 	bool Insert_Enabled_Flag;
 
-	CFusionDoc			*m_pDoc;
 };

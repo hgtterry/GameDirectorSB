@@ -109,7 +109,6 @@ bool SB_Level::Check_For_Centre_Brush()
 
 	if (GotIt == 0)
 	{
-
 		//App->Say("Create XYZ");
 
 		App->m_pDoc->OnToolsTemplate();
@@ -133,33 +132,6 @@ bool SB_Level::Check_For_Centre_Brush()
 			App->CLSB_File_WE->CreateNewTemplateBrush(pCube);
 			App->CLSB_Doc->AddBrushToWorld();
 
-			//BrushTexSetData* pData;
-			//pData = (BrushTexSetData*)lParam;
-
-			//const int NumFaces = Brush_GetNumFaces(pCube);
-			//Brush_SelectFirstFace(pCube);
-
-			////copy face TexInfos
-			//int			i;
-			//for (i = 0; i < NumFaces; i++)
-			//{
-			//	Face* f = Brush_GetFace(pCube, i);
-			//	WadFileEntry* pbmp;
-
-			//	Face_SetTextureName(f, "Pine");
-			//	Face_SetTextureDibId(f, Level_GetDibId(App->m_pDoc->pLevel, "Pine"));
-			//	pbmp = Level_GetWadBitmap(App->m_pDoc->pLevel, "Pine");
-			//	if (pbmp != NULL)
-			//	{
-			//		Face_SetTextureSize(f, pbmp->Width, pbmp->Height);
-			//		//Debug
-			//	}
-			//}
-
-			//Brush_UpdateChildFaces(pCube);
-			//Brush_SetFaceListDirty(pCube);
-			//App->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
-			//App->m_pDoc->SetModifiedFlag();
 		}
 	}
 
@@ -188,32 +160,29 @@ bool SB_Level::Change_Centre_Brush_Texture()
 
 	App->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 
+	const int NumFaces = Brush_GetNumFaces(Selected_Brush);
+	
+	//copy face TexInfos
+	int			i;
+	for (i = 0; i < NumFaces; i++)
+	{
+		Face* f = Brush_GetFace(Selected_Brush, i);
+		WadFileEntry* pbmp;
 
+		Face_SetTextureName(f, "Dummy");
+		Face_SetTextureDibId(f, Level_GetDibId(App->m_pDoc->pLevel, "Dummy"));
+		pbmp = Level_GetWadBitmap(App->m_pDoc->pLevel, "Dummy");
+		if (pbmp != NULL)
+		{
+			Face_SetTextureSize(f, pbmp->Width, pbmp->Height);
+		}
 
-	//const int NumFaces = Brush_GetNumFaces(pCube);
-	//Brush_SelectFirstFace(pCube);
+	}
 
-	////copy face TexInfos
-	//int			i;
-	//for (i = 0; i < NumFaces; i++)
-	//{
-	//	Face* f = Brush_GetFace(pCube, i);
-	//	WadFileEntry* pbmp;
-
-	//	Face_SetTextureName(f, "Pine");
-	//	Face_SetTextureDibId(f, Level_GetDibId(App->m_pDoc->pLevel, "Pine"));
-	//	pbmp = Level_GetWadBitmap(App->m_pDoc->pLevel, "Pine");
-	//	if (pbmp != NULL)
-	//	{
-	//		Face_SetTextureSize(f, pbmp->Width, pbmp->Height);
-	//		//Debug
-	//	}
-	//}
-
-	//Brush_UpdateChildFaces(pCube);
-	//Brush_SetFaceListDirty(pCube);
-	//App->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
-	//App->m_pDoc->SetModifiedFlag();
+	Brush_UpdateChildFaces(Selected_Brush);
+	Brush_SetFaceListDirty(Selected_Brush);
+	App->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+	App->m_pDoc->SetModifiedFlag();
 
 	return 1;
 }

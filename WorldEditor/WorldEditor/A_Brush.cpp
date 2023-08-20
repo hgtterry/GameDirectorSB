@@ -3,6 +3,12 @@
 #include "A_Brush.h"
 #include "ram.h"
 
+struct tag_BrushList
+{
+	Brush* First;
+	Brush* Last;
+};
+
 #pragma warning(disable : 4201 4214 4115 4514 4711)
 
 A_Brush::A_Brush(void)
@@ -13,11 +19,6 @@ A_Brush::~A_Brush(void)
 {
 }
 
-struct tag_BrushList
-{
-	Brush *First;
-	Brush *Last;
-};
 
 // *************************************************************************
 // *							Brush_GetName							   *
@@ -61,6 +62,29 @@ BrushList* A_Brush::BrushList_Create(void)
 		pList->Last = NULL;
 	}
 	return pList;
+}
+
+// *************************************************************************
+// *						Get_Brush_Count								   *
+// *************************************************************************
+int A_Brush::Get_Brush_Count(void)
+{
+	App->Get_Current_Document();
+
+	int Count = 0;
+	Brush* b;
+
+	Level* pLevel = App->m_pDoc->pLevel;
+	BrushList* pList = Level_GetBrushes(App->m_pDoc->pLevel);
+
+	b = pList->First;
+	while (b != NULL)
+	{
+		Count++;
+		b = b->Next;
+	}
+
+	return Count;
 }
 
 

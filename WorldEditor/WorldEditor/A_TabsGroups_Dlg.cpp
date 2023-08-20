@@ -372,6 +372,7 @@ void A_TabsGroups_Dlg::Fill_ListBox()
 			b = b->Next;
 		}
 
+
 		char buff[100];
 		SetDlgItemText(GroupsDlg_Hwnd, IDC_BRUSHCOUNT, itoa(Count, buff, 10));
 	}

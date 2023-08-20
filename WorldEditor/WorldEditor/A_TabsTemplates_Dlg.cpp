@@ -50,6 +50,8 @@ void A_TabsTemplates_Dlg::Show_TemplatesDialog(bool Show)
 // *************************************************************************
 void A_TabsTemplates_Dlg::Start_TemplatesDialog()
 {
+	App->Get_Current_Document();
+
 	TemplatesDlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_TABSTEMPLATES, App->CL_TabsControl->Tabs_Control_Hwnd, (DLGPROC)Templates_Proc);
 	Set_Icons();
 
@@ -156,24 +158,36 @@ LRESULT CALLBACK A_TabsTemplates_Dlg::Templates_Proc(HWND hDlg, UINT message, WP
 
 		if (LOWORD(wParam) == IDC_BTINSERT)
 		{
-			App->CL_TabsTemplates_Dlg->m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+			App->Get_Current_Document();
 
-			if (App->CL_TabsTemplates_Dlg->m_pDoc->mModeTool == ID_TOOLS_TEMPLATE)
+			if (App->m_pDoc->mModeTool == ID_TOOLS_TEMPLATE)
 			{
-				App->CLSB_Doc->AddBrushToWorld();
-				App->CL_TabsTemplates_Dlg->m_pDoc->SetModifiedFlag();
+				if (App->CL_Brush->Get_Brush_Count() == 0)
+				{
+					App->CLSB_Doc->AddBrushToWorld();
+
+					App->CLSB_Level->Check_For_Centre_Texture();
+					App->CLSB_Level->Check_For_Centre_Brush();
+					App->CLSB_Level->Change_Centre_Brush_Texture();
+
+					App->m_pDoc->SetModifiedFlag();
+				}
+				else
+				{
+					App->CLSB_Doc->AddBrushToWorld();
+					App->m_pDoc->SetModifiedFlag();
+				}
+				
 			}
 
-			App->CL_TabsTemplates_Dlg->m_pDoc->DoGeneralSelect();
+			App->m_pDoc->DoGeneralSelect();
 
 			App->CL_World->Reset_Editor();
 
 			App->CL_TabsTemplates_Dlg->Enable_Insert_Button(false);
+
 			return 1;
 		}
-
-
-
 
 		// -----------------------------------------------------------------
 		if (LOWORD(wParam) == IDOK)
@@ -238,31 +252,31 @@ void A_TabsTemplates_Dlg::Enable_Insert_Button(bool Enable)
 // *************************************************************************
 void A_TabsTemplates_Dlg::CreateNewTemplateBrush(Brush *pBrush)
 {
-	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
-
+	App->Get_Current_Document();
+	
 	geVec3d *pTemplatePos;
 	geVec3d MoveVec;
 	geVec3d BrushPos;
 
 	assert (pBrush != NULL);
 
-	if (m_pDoc->BTemplate != NULL)
+	if (App->m_pDoc->BTemplate != NULL)
 	{
-		Brush_Destroy (&m_pDoc->BTemplate);
+		Brush_Destroy (&App->m_pDoc->BTemplate);
 	}
 
-	m_pDoc->BTemplate = pBrush;
-	m_pDoc->CurBrush = pBrush;
+	App->m_pDoc->BTemplate = pBrush;
+	App->m_pDoc->CurBrush = pBrush;
 
-	m_pDoc->TempEnt	= FALSE;
-	m_pDoc->SetDefaultBrushTexInfo (m_pDoc->CurBrush);
-	Brush_Bound (m_pDoc->CurBrush);
-	Brush_Center (m_pDoc->CurBrush, &BrushPos);
+	App->m_pDoc->TempEnt	= FALSE;
+	App->m_pDoc->SetDefaultBrushTexInfo (App->m_pDoc->CurBrush);
+	Brush_Bound (App->m_pDoc->CurBrush);
+	Brush_Center (App->m_pDoc->CurBrush, &BrushPos);
 
-	pTemplatePos = Level_GetTemplatePos (m_pDoc->pLevel);
+	pTemplatePos = Level_GetTemplatePos (App->m_pDoc->pLevel);
 	geVec3d_Subtract (pTemplatePos, &BrushPos, &MoveVec);
-	Brush_Move (m_pDoc->CurBrush, &MoveVec);
+	Brush_Move (App->m_pDoc->CurBrush, &MoveVec);
 
-	m_pDoc->UpdateAllViews (UAV_ALL3DVIEWS, NULL);
-	m_pDoc->SetModifiedFlag ();
+	App->m_pDoc->UpdateAllViews (UAV_ALL3DVIEWS, NULL);
+	App->m_pDoc->SetModifiedFlag ();
 }

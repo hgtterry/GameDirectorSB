@@ -1,8 +1,8 @@
 [World_Data]
-3dt_Path_FileName=C:\Users\Terry\Desktop\RF_World\rfdemov1.3DT
+3dt_Path_FileName=C:\Users\Terry\Desktop\GDSB_Git\trunk\Bin\Levels\World1.3dt
 G3ds_Path_FileName=C:\Users\Terry\Desktop\GDSB_Git\trunk\Bin\Data\Temp.G3ds
-Txl_Path_FileName=C:\Users\Terry\Desktop\RF_World\rfpack1.txl
+Txl_Path_FileName=C:\Users\Terry\Desktop\GDSB_Git\trunk\Bin\Levels\Equity.txl
  
 [Special]
-Position= 0.000000 0.000000 0.000000
-Angles= 3.141593 0.000000 0.000000
+Position= -15.751034 -0.000004 -42.349834
+Angles= 3.141593 0.011836 0.000000
