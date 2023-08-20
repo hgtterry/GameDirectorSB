@@ -47,6 +47,8 @@ public:
 
 	void AddZeroEntityToLevel(void);
 
+	void CreateNewTemplateBrush(Brush* pBrush);
+
 	bool Quick_load_Flag;
 
 	char FileName_3dt[MAX_PATH];
@@ -56,7 +58,6 @@ private:
 
 	bool Open_File_Dialog(char* Extension, char* Title, char* StartDirectory);
 
-	void CreateNewTemplateBrush(Brush *pBrush);
 	void AddCameraEntityToLevel(void);
 	bool Level_WriteToFile2(Level* pLevel, const char* Filename);
 

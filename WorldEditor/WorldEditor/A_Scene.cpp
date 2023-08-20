@@ -237,6 +237,36 @@ Brush* A_World::Get_Brush_ByIndex(int Index)
 }
 
 // *************************************************************************
+// *		Get_Brush_Index_By_Name:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+int A_World::Get_Brush_Index_By_Name(char* BrushName)
+{
+	App->Get_Current_Document();
+
+	Level* pLevel = App->m_pDoc->pLevel;
+	BrushList* pList = Level_GetBrushes(App->m_pDoc->pLevel);
+
+	int Count = 0;
+	Brush* b;
+	b = pList->First;
+
+	while (b != NULL)
+	{
+		bool test = strcmp(b->Name, BrushName);
+		if (test == 0)
+		{
+			return Count;
+		}
+
+		Count++;
+
+		b = b->Next;
+	}
+
+	return -1;
+}
+
+// *************************************************************************
 // *			Level_SetTxlPath:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
 void A_World::Level_SetTxlPath(char* Path)

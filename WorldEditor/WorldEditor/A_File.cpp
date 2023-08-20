@@ -199,85 +199,8 @@ bool SB_File_WE::Start_Load(const char* FileName, bool UseDialogLoader)
 
 		App->CLSB_TopTabs->Update_Dlg_Controls();
 
-		//---------------------------------------------------------------------------
-		Level* pLevel = App->m_pDoc->pLevel;
-		BrushList* pList = Level_GetBrushes(App->m_pDoc->pLevel);
-
-		int Result = 1;
-		bool GotIt = 0;
-		Brush* b;
-
-		b = pList->First;
-		while (b != NULL)
-		{
-			Result = strcmp(b->Name, "XYZ");
-			if (Result == 0)
-			{
-				GotIt = 1;
-				break;
-			}
-
-			b = b->Next;
-		}
-
-		if (GotIt == 0)
-		{
-			
-			//App->Say("Create XYZ");
-
-			App->m_pDoc->OnToolsTemplate();
-
-			BrushTemplate_Box* pBoxTemplate;
-			pBoxTemplate = Level_GetBoxTemplate(App->m_pDoc->pLevel);
-
-			pBoxTemplate->Solid = 0;
-			pBoxTemplate->XSizeBot = 2;
-			pBoxTemplate->XSizeTop = 2;
-			pBoxTemplate->ZSizeBot = 2;
-			pBoxTemplate->ZSizeTop = 2;
-			pBoxTemplate->YSize = 2;
-
-			Brush* pCube;
-			pCube = BrushTemplate_CreateBox(pBoxTemplate);
-			if (pCube != NULL)
-			{
-				App->m_pDoc->LastTemplateTypeName = "XYZ";
-
-				CreateNewTemplateBrush(pCube);
-				App->CLSB_Doc->AddBrushToWorld();
-
-				//BrushTexSetData* pData;
-				//pData = (BrushTexSetData*)lParam;
-
-				const int NumFaces = Brush_GetNumFaces(pCube);
-				Brush_SelectFirstFace(pCube);
-
-				//copy face TexInfos
-				int			i;
-				for (i = 0; i < NumFaces; i++)
-				{
-					Face* f = Brush_GetFace(pCube, i);
-					WadFileEntry* pbmp;
-					
-					Face_SetTextureName(f,"Pine");
-					Face_SetTextureDibId(f, Level_GetDibId(App->m_pDoc->pLevel, "Pine"));
-					pbmp = Level_GetWadBitmap(App->m_pDoc->pLevel, "Pine");
-					if (pbmp != NULL)
-					{
-						Face_SetTextureSize(f, pbmp->Width, pbmp->Height);
-						//Debug
-					}
-				}
-
-				Brush_UpdateChildFaces(pCube);
-				Brush_SetFaceListDirty(pCube);
-				App->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
-				App->m_pDoc->SetModifiedFlag();
-			}
-		}
+		App->CLSB_Level->Check_For_Centre_Brush(); // Centre Brush XYZ
 		
-		//---------------------------------------------------------------------------
-
 		App->Say("Loaded", PathFileName_3dt);
 	}
 	else
@@ -294,46 +217,15 @@ bool SB_File_WE::Start_Load(const char* FileName, bool UseDialogLoader)
 // *************************************************************************
 bool SB_File_WE::Open_3dt_File()
 {
-
 		Load_File(PathFileName_3dt);
 
 		App->m_pDoc->SetTitle(PathFileName_3dt);
 		App->m_pDoc->SetPathName(PathFileName_3dt, FALSE);
 
 		App->CL_World->Set_Paths();
-		App->CL_TabsGroups_Dlg->Fill_ListBox();
-
-		WadFileEntry* pbmp;
-		pbmp = NULL;
-		pbmp = Level_GetWadBitmap(App->m_pDoc->pLevel, "Dummy");
-		if (pbmp == NULL)
-		{
-
-			App->CL_TextureDialog->Open_TXL_File(App->CL_World->mCurrent_TXL_FilePath);
-
-			char Path2[MAX_PATH];
-			strcpy(Path2, App->WorldEditor_Directory);
-			strcat(Path2, "Data");
-			strcat(Path2, "\\");
-			strcat(Path2, "Dummy.bmp");
-
-			HBITMAP Base_Bitmap = LoadBitmap(App->hInst, MAKEINTRESOURCE(IDB_DUMMY));
-			App->CLSB_Textures->HBITMAP_TO_BmpFile(Base_Bitmap, Path2, "");
-
-			App->CL_TextureDialog->AddTexture(NULL, Path2);
-			
-			App->CL_TextureDialog->Save(App->CL_World->mCurrent_TXL_FilePath);
-
-			Level_SetWadPath(App->m_pDoc->pLevel, Level_GetWadPath(App->m_pDoc->pLevel));
-			App->CL_World->Set_Current_TxlPath();
-			App->m_pDoc->UpdateAfterWadChange();
-
-		}
-		else
-		{
-			//App->Say("Found");
-		}
-
+		
+		App->CLSB_Level->Check_For_Centre_Texture(); // Centre Texture Dummy
+		
 		if (Quick_load_Flag == 0)
 		{
 			App->CL_TextureDialog->Fill_ListBox();
@@ -347,10 +239,12 @@ bool SB_File_WE::Open_3dt_File()
 			Level_SetWadPath(App->m_pDoc->pLevel, Txlpath);
 			App->CL_World->Set_Current_TxlPath();
 			App->m_pDoc->UpdateAfterWadChange();
-			App->CL_TabsGroups_Dlg->Fill_ListBox();
+			App->CL_TextureDialog->Fill_ListBox();
 		}
 
+		App->CL_TabsGroups_Dlg->Fill_ListBox();
 
+		App->CLSB_Level->Change_Centre_Brush_Texture();
 
 		App->CL_World->Set_Paths();
 		App->CL_World->Reset_Editor();

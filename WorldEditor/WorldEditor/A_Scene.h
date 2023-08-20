@@ -45,7 +45,7 @@ public:
 	// Brush Percific
 	int Get_Brush_Count();
 	Brush* Get_Brush_ByIndex(int Index);
-
+	int Get_Brush_Index_By_Name(char* BrushName);
 
 
 
