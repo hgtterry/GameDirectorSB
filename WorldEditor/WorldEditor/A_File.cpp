@@ -691,7 +691,47 @@ Level* SB_File_WE::Level_CreateFromFile (const char *FileName, const char **ErrM
 	}
 	else
 	{
-		if (!Parse3dt_GetLiteral (Parser, (Expected = "TextureLib"), WadPath)) goto DoneLoad;
+		if (!Parse3dt_GetLiteral(Parser, (Expected = "TextureLib"), WadPath))
+		{
+			goto DoneLoad;
+		}
+
+		// Check Folder in file if not check Level Folder
+		bool test = App->CLSB_FileIO->Check_File_Exist(WadPath); 
+		if (test == 0)
+		{
+			char m_NewPath[MAX_PATH];
+			char m_3DT_PathAndFile[MAX_PATH];
+
+			char m_Txl_FileName[MAX_PATH];
+			char m_3DT_FileName[MAX_PATH];
+			strcpy(m_3DT_PathAndFile, FileName);
+			App->CL_World->Get_FileName_FromPath(m_3DT_PathAndFile, m_3DT_PathAndFile);
+			strcpy(m_3DT_FileName, App->CL_World->JustFileName);
+
+			int len1 = strlen(m_3DT_FileName);
+			int len2 = strlen(m_3DT_PathAndFile);
+			strcpy(m_NewPath, FileName);
+			m_NewPath[len2 - len1] = 0;
+
+			App->CL_World->Get_FileName_FromPath(WadPath, WadPath);
+
+			strcpy(m_Txl_FileName,App->CL_World->JustFileName);
+			strcat(m_NewPath, m_Txl_FileName);
+
+			bool test = App->CLSB_FileIO->Check_File_Exist(m_NewPath);
+			if (test == 0)
+			{
+				App->Say("Cant Find Txl File in 3dt Folder");
+				goto DoneLoad;
+			}
+			else
+			{
+				strcpy(WadPath, m_NewPath);
+			}
+
+		}
+		
 	}
 
 	// headers directory

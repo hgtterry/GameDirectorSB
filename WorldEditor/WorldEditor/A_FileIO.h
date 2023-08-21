@@ -34,6 +34,8 @@ public:
 
 	bool SaveSelectedFile(char* Extension,char* TszFile);
 	bool CheckExtention(char *FileName);
+
+	// 1 = File Exsits    0 = No File
 	bool Check_File_Exist(char* Full_Path);
 
 	char FileName[MAX_PATH];

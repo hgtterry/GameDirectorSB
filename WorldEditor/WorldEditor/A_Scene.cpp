@@ -113,10 +113,12 @@ void A_World::Set_Current_3DT_Paths(void)
 
 	strcpy(mFileName, mCurrent_3DT_File);
 	strcpy(mPath_FileName, mCurrent_3DT_Path);
+
 	int len1 = strlen(mFileName);
 	int len2 = strlen(mCurrent_3DT_PathAndFile);
 	strcpy(mCurrent_3DT_Path, mCurrent_3DT_PathAndFile);
 
+	
 	mCurrent_3DT_Path[len2 - len1] = 0;
 
 }
