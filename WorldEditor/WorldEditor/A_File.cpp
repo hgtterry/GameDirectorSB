@@ -224,8 +224,6 @@ bool SB_File_WE::Open_3dt_File()
 
 		App->CL_World->Set_Paths();
 		
-		App->CLSB_Level->Check_For_Centre_Texture(); // Centre Texture Dummy
-		
 		if (Quick_load_Flag == 0)
 		{
 			App->CL_TextureDialog->Fill_ListBox();
@@ -240,7 +238,12 @@ bool SB_File_WE::Open_3dt_File()
 			App->CL_World->Set_Current_TxlPath();
 			App->m_pDoc->UpdateAfterWadChange();
 			App->CL_TextureDialog->Fill_ListBox();
+
+			strcpy(App->CL_World->mCurrent_TXL_FileName, Txlpath);
+
 		}
+
+		App->CLSB_Level->Check_For_Centre_Texture(); // Centre Texture Dummy
 
 		App->CL_TabsGroups_Dlg->Fill_ListBox();
 

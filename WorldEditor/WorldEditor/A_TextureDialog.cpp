@@ -761,7 +761,7 @@ bool A_TextureDialog::Open_TXL_File(char* TXL_Filename)
 	VFS = geVFile_OpenNewSystem(NULL, GE_VFILE_TYPE_VIRTUAL, TXL_Filename, NULL, GE_VFILE_OPEN_READONLY | GE_VFILE_OPEN_DIRECTORY);
 	if (!VFS)
 	{
-		App->Say("Could not open file %s");
+		//App->Say("Could not open file2 %s");
 		return 0;
 	}
 

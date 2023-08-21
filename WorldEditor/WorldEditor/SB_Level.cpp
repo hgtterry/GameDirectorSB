@@ -53,7 +53,11 @@ bool SB_Level::Check_For_Centre_Texture()
 	{
 		//App->Say("Not Found");
 
-		App->CL_TextureDialog->Open_TXL_File(App->CL_World->mCurrent_TXL_FilePath);
+		bool test = App->CL_TextureDialog->Open_TXL_File(App->CL_World->mCurrent_TXL_FilePath);
+		if (test == 0)
+		{
+			App->Say(App->CL_World->mCurrent_TXL_FilePath);
+		}
 
 		char Path2[MAX_PATH];
 		strcpy(Path2, App->WorldEditor_Directory);
