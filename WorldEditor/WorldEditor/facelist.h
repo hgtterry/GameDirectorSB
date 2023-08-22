@@ -47,6 +47,7 @@ geBoolean	FaceList_SetNextSelectedFace(FaceList *fl);
 geBoolean	FaceList_SetPrevSelectedFace(FaceList *fl);
 void		FaceList_SetTranslucency(const FaceList *fl, geFloat trans);
 void		FaceList_SetTransparent (const FaceList *fl, geBoolean trans);
+void		FaceList_SetTextureLock(const FaceList* fl, geBoolean Lock);
 
 void		FaceList_GetCenter(const FaceList *pList, geVec3d *pCenter);
 void		FaceList_GetBounds(const FaceList *pList, Box3d *pBounds);

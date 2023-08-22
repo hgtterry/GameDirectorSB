@@ -1194,9 +1194,13 @@ Brush	*Brush_CreateFromFile
 		b->ModelId	=tmpModelId;
 		b->GroupId	=tmpGroupId;
 		Brush_SetName (b, szTemp);
+
+		//FaceList_SetTextureLock(fl, true);
 	}
 
 DoneLoad:
+
+	
 	return	b;
 }
 

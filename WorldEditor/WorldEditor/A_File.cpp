@@ -200,6 +200,8 @@ bool SB_File_WE::Start_Load(const char* FileName, bool UseDialogLoader)
 		App->CLSB_TopTabs->Update_Dlg_Controls();
 
 		App->CLSB_Level->Check_For_Centre_Brush(); // Centre Brush XYZ
+
+		App->CLSB_Doc->Lock_AllTextures();
 		
 		App->Say("Loaded", PathFileName_3dt);
 	}

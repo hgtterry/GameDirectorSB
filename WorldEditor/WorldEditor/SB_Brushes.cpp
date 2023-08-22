@@ -63,7 +63,7 @@ void SB_Brushes::Start_Dimensions_Dlg()
 	{
 		m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
 
-		Lock_Textures(true);
+		//Lock_Textures(true);
 
 		SelBrushList_Center(m_pDoc->pSelBrushes, &m_pDoc->SelectedGeoCenter);
 
@@ -621,9 +621,12 @@ void SB_Brushes::Fill_ComboBox_PosDelta(HWND hDlg)
 // *************************************************************************
 void SB_Brushes::Update_Pos_Dlg(HWND hDlg)
 {
-	CenterOfSelection = m_pDoc->SelectedGeoCenter;
-	Get_Brush();
+	//Lock_Textures(true);
 
+	Get_Brush();
+	SelBrushList_Center(m_pDoc->pSelBrushes, &m_pDoc->SelectedGeoCenter);
+	CenterOfSelection = m_pDoc->SelectedGeoCenter;
+	
 	char buf[255];
 
 	// Pos
@@ -679,7 +682,7 @@ void SB_Brushes::Lock_Textures(bool flag)
 	for (int i = 0; i < NumberOfFaces; ++i)
 	{
 		pFace = SelFaceList_GetFace(m_pDoc->pSelFaces, i);
-		Face_SetTextureLock(pFace, flag);
+		Face_SetTextureLock(pFace, 256);
 	}
 
 	//m_pDoc->UpdateAllViews(UAV_RENDER_ONLY, NULL);

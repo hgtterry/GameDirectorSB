@@ -891,7 +891,7 @@ void	FaceList_SetTranslucency(const FaceList *fl, geFloat trans)
 }
 
 // sets every face to translucent
-void		FaceList_SetTransparent (const FaceList *fl, geBoolean trans)
+void FaceList_SetTransparent (const FaceList *fl, geBoolean trans)
 {
 	int			i;
 
@@ -900,6 +900,19 @@ void		FaceList_SetTransparent (const FaceList *fl, geBoolean trans)
 	for(i=0;i < fl->NumFaces;i++)
 	{
 		Face_SetTransparent (fl->Faces[i], trans);
+	}
+}
+
+// sets every face to Texure Lock
+void FaceList_SetTextureLock(const FaceList* fl, geBoolean Lock)
+{
+	int			i;
+
+	assert(fl != NULL);
+
+	for (i = 0; i < fl->NumFaces; i++)
+	{
+		Face_SetTextureLock(fl->Faces[i], TRUE);
 	}
 }
 

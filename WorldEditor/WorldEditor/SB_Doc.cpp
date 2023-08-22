@@ -5,7 +5,7 @@
 #include "FUSIONView.h"
 #include "units.h"
 
-#define MAX_PIXEL_SELECT_DIST (100)
+#define MAX_PIXEL_SELECT_DIST (50)
 
 SB_Doc::SB_Doc(void)
 {
@@ -237,6 +237,10 @@ void SB_Doc::SelectOrtho(CPoint point, ViewVars* v)
 		case fctBRUSH:
 		{
 			App->m_pDoc->DoBrushSelection(pMinBrush, brushSelToggle);
+            if (App->CLSB_Brushes->Dimensions_Dlg_Running == 1)
+            {
+                App->CLSB_Brushes->Update_Pos_Dlg(App->CLSB_Brushes->Dimensions_Dlg_hWnd);
+            }
 			break;
 		}
 		case fctENTITY:
@@ -247,13 +251,6 @@ void SB_Doc::SelectOrtho(CPoint point, ViewVars* v)
 			assert(0);
 		}
 	}
-
-	/*
-		if (SelBrushList_GetSize (pSelBrushes) == 0)
-		{
-			DeleteBrushAttributes ();
-		}
-	*/
 
 	App->m_pDoc->UpdateSelected();
 
@@ -364,5 +361,34 @@ void SB_Doc::DoneMove(void)
     }
    
     geVec3d_Clear(&App->m_pDoc->FinalPos);
+
+}
+
+// *************************************************************************
+//          Lock_AllTextures:- Terry and Hazel Flanigan 2023           	   *
+// *************************************************************************
+void SB_Doc::Lock_AllTextures(void)
+{
+    // Texture Lock All Faces
+
+    App->Get_Current_Document();
+
+    App->m_pDoc->SelectAll();
+    App->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+
+    Face* pFace;
+    int NumberOfFaces;
+
+    NumberOfFaces = SelFaceList_GetSize(App->m_pDoc->pSelFaces);
+
+    for (int i = 0; i < NumberOfFaces; ++i)
+    {
+        pFace = SelFaceList_GetFace(App->m_pDoc->pSelFaces, i);
+        Face_SetTextureLock(pFace, true);
+    }
+
+    App->m_pDoc->ResetAllSelections();
+    App->m_pDoc->UpdateSelected();
+    App->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 
 }
