@@ -33,7 +33,8 @@ public:
 	Level* Level_CreateFromFile (const char *FileName, const char **ErrMsg, const char *DefaultHeadersDir,const char *DefaultActorsDir, const char *DefaultPawnIni);
 
 	bool Load_File(const char *FileName);
-	
+	bool Resolve_TXL_File(char* WadPath, char* FileName);
+
 	void Save_Document();
 	bool Save(const char* FileName);
 	bool Start_Load(const char* FileName, bool UseDialogLoader);

@@ -353,6 +353,7 @@ LRESULT CALLBACK SB_Brushes::Dimensions_Dlg_Proc(HWND hDlg, UINT message, WPARAM
 			return 0;
 		}
 
+		// ------------------------------------------------------------- Position
 		// -------- Pos X
 		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBPOSXH))
 		{
@@ -626,13 +627,13 @@ void SB_Brushes::Update_Pos_Dlg(HWND hDlg)
 	char buf[255];
 
 	// Pos
-	sprintf(buf, "%f", CenterOfSelection.X);
+	sprintf(buf, "%.3f", CenterOfSelection.X);
 	SetDlgItemText(hDlg, IDC_ED_BRUSH_POSX, buf);
 
-	sprintf(buf, "%f", CenterOfSelection.Y);
+	sprintf(buf, "%.3f", CenterOfSelection.Y);
 	SetDlgItemText(hDlg, IDC_ED_BRUSH_POSY, buf);
 
-	sprintf(buf, "%f", CenterOfSelection.Z);
+	sprintf(buf, "%.3f", CenterOfSelection.Z);
 	SetDlgItemText(hDlg, IDC_ED_BRUSH_POSZ, buf);
 
 	// Scale
