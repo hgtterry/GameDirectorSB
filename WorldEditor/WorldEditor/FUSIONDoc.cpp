@@ -2433,7 +2433,16 @@ static geBoolean fdocSelectBrush (Brush *pBrush, void *lParam)
 {
     CFusionDoc *pDoc = (CFusionDoc *)lParam;
 
-    SelBrushList_Add (pDoc->pSelBrushes, pBrush);
+    bool test = strcmp(pBrush->Name, "XYZ");
+    if (test == 0)
+    {
+       
+    }
+    else
+    {
+        SelBrushList_Add(pDoc->pSelBrushes, pBrush);
+    }
+   
     return GE_TRUE;
 }
 
@@ -2466,20 +2475,22 @@ void CFusionDoc::SelectAll (void)
     int iBrush;
     int NumSelBrushes = SelBrushList_GetSize (pSelBrushes);
 
-    for (iBrush = 0; iBrush < NumSelBrushes; ++iBrush)
-    {
-        Brush *pBrush;
+	for (iBrush = 0; iBrush < NumSelBrushes; ++iBrush)
+	{
+		Brush* pBrush;
 
-        pBrush = SelBrushList_GetBrush (pSelBrushes, iBrush);
-        if (Brush_IsMulti (pBrush))
-        {
-            BrushList_EnumLeafBrushes (App->CL_Brush->Brush_GetBrushList (pBrush), this, ::SelAllBrushFaces);
-        }
-        else
-        {
-            ::SelAllBrushFaces (pBrush, this);
-        }
-    }
+		pBrush = SelBrushList_GetBrush(pSelBrushes, iBrush);
+
+		if (Brush_IsMulti(pBrush))
+		{
+			BrushList_EnumLeafBrushes(App->CL_Brush->Brush_GetBrushList(pBrush), this, ::SelAllBrushFaces);
+		}
+		else
+		{
+			::SelAllBrushFaces(pBrush, this);
+		}
+
+	}
 
     UpdateSelected();
 

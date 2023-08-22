@@ -219,42 +219,43 @@ bool SB_File_WE::Start_Load(const char* FileName, bool UseDialogLoader)
 // *************************************************************************
 bool SB_File_WE::Open_3dt_File()
 {
-		Load_File(PathFileName_3dt);
+	Load_File(PathFileName_3dt);
 
-		App->m_pDoc->SetTitle(PathFileName_3dt);
-		App->m_pDoc->SetPathName(PathFileName_3dt, FALSE);
+	App->m_pDoc->SetTitle(PathFileName_3dt);
+	App->m_pDoc->SetPathName(PathFileName_3dt, FALSE);
 
-		App->CL_World->Set_Paths();
-		
-		if (Quick_load_Flag == 0)
-		{
-			App->CL_TextureDialog->Fill_ListBox();
-		}
-		else
-		{
-			char Txlpath[MAX_PATH];
-			strcpy(Txlpath, App->WorldEditor_Directory);
-			strcat(Txlpath, "Levels\\Equity.txl");
+	App->CL_World->Set_Paths();
 
-			Level_SetWadPath(App->m_pDoc->pLevel, Txlpath);
-			App->CL_World->Set_Current_TxlPath();
-			App->m_pDoc->UpdateAfterWadChange();
-			App->CL_TextureDialog->Fill_ListBox();
+	if (Quick_load_Flag == 0)
+	{
+		App->CL_TextureDialog->Fill_ListBox();
+	}
+	else
+	{
+		char Txlpath[MAX_PATH];
+		strcpy(Txlpath, App->WorldEditor_Directory);
+		strcat(Txlpath, "Levels\\Equity.txl");
 
-			strcpy(App->CL_World->mCurrent_TXL_FileName, Txlpath);
+		Level_SetWadPath(App->m_pDoc->pLevel, Txlpath);
+		App->CL_World->Set_Current_TxlPath();
+		App->m_pDoc->UpdateAfterWadChange();
+		App->CL_TextureDialog->Fill_ListBox();
 
-		}
+		strcpy(App->CL_World->mCurrent_TXL_FileName, Txlpath);
 
-		App->CLSB_Level->Check_For_Centre_Texture(); // Centre Texture Dummy
+	}
 
-		App->CL_TabsGroups_Dlg->Fill_ListBox();
+	App->CLSB_Level->Check_For_Centre_Brush(); // Centre Brush XYZ
+	App->CLSB_Level->Check_For_Centre_Texture(); // Centre Texture Dummy
 
-		App->CLSB_Level->Change_Centre_Brush_Texture();
+	App->CL_TabsGroups_Dlg->Fill_ListBox();
 
-		App->CL_World->Set_Paths();
-		App->CL_World->Reset_Editor();
+	App->CLSB_Level->Change_Centre_Brush_Texture();
 
-		App->CLSB_RecentFiles->RecentFile_Files_Update();
+	App->CL_World->Set_Paths();
+	App->CL_World->Reset_Editor();
+
+	App->CLSB_RecentFiles->RecentFile_Files_Update();
 
 	return 1;
 }
