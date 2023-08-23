@@ -1012,6 +1012,10 @@ bool SB_Equity::Preview_All()
 	App->CLSB_Equity->Position_Offsets.y = 0;
 	App->CLSB_Equity->Position_Offsets.z = 0;
 
+	m_pDoc->ResetAllSelections();
+
+	App->CLSB_Brushes->Centre_CentreBrush();
+	
 	m_pDoc->SelectAll();
 	m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 

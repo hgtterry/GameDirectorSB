@@ -2433,15 +2433,7 @@ static geBoolean fdocSelectBrush (Brush *pBrush, void *lParam)
 {
     CFusionDoc *pDoc = (CFusionDoc *)lParam;
 
-    bool test = strcmp(pBrush->Name, "XYZ");
-    if (test == 0)
-    {
-       
-    }
-    else
-    {
-        SelBrushList_Add(pDoc->pSelBrushes, pBrush);
-    }
+    SelBrushList_Add(pDoc->pSelBrushes, pBrush);
    
     return GE_TRUE;
 }

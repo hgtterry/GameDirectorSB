@@ -30,6 +30,7 @@ public:
 
 	void Start_Dimensions_Dlg();
 	void Update_Pos_Dlg(HWND hDlg);
+	void Centre_CentreBrush();
 
 	bool Dimensions_Dlg_Running;
 

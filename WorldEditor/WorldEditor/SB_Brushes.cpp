@@ -846,3 +846,36 @@ void SB_Brushes::Get_Brush()
 	//Brush_Scale3d(pBrush, &mSize);
 	//App->Say(pBrush->Name);
 }
+
+// *************************************************************************
+// *			Centre_CentreBrush:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_Brushes::Centre_CentreBrush()
+{
+	App->Get_Current_Document();
+
+	int Index = App->CL_World->Get_Brush_Index_By_Name("XYZ");
+	if (Index == -1)
+	{
+		App->Say("Error");
+		return;
+	}
+
+	Brush* Selected_Brush = NULL;
+	Selected_Brush = App->CL_World->Get_Brush_ByIndex(Index);
+	if (Selected_Brush == NULL)
+	{
+		App->Say("Error");
+		return;
+	}
+	else
+	{
+		geVec3d Centre;
+		Centre.X = 0;
+		Centre.Y = 0;
+		Centre.Z = 0;
+
+		SelBrushList_Add(App->m_pDoc->pSelBrushes, Selected_Brush);
+		App->m_pDoc->MoveSelectedBrushList(App->m_pDoc->pSelBrushes, &Centre);
+	}
+}
