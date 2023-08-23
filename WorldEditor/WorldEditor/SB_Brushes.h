@@ -41,7 +41,7 @@ private:
 	void Fill_ComboBox_PosDelta(HWND hDlg);
 
 	void Move_Brush();
-
+	void Rotate_Brush(float SX, float SY, float SZ);
 	void Scale_Brush(float SX, float SY, float SZ);
 	void Scale_Brush_Lock(bool increase);
 

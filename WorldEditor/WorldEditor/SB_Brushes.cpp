@@ -92,14 +92,15 @@ LRESULT CALLBACK SB_Brushes::Dimensions_Dlg_Proc(HWND hDlg, UINT message, WPARAM
 
 		SendDlgItemMessage(hDlg, IDC_STPOSITION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STROTITION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STROTATION2, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SendDlgItemMessage(hDlg, IDC_STPOSX, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STPOSY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STPOSZ, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		SendDlgItemMessage(hDlg, IDC_STROTX, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_STROTY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_STROTZ, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STROTX2, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STROTY2, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STROTZ2, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDC_STSIZEX, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STSIZEY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -176,7 +177,8 @@ LRESULT CALLBACK SB_Brushes::Dimensions_Dlg_Proc(HWND hDlg, UINT message, WPARAM
 		}
 
 		// Rotation
-		if (GetDlgItem(hDlg, IDC_STROTX) == (HWND)lParam)
+
+		if (GetDlgItem(hDlg, IDC_STROTATION2) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -184,7 +186,7 @@ LRESULT CALLBACK SB_Brushes::Dimensions_Dlg_Proc(HWND hDlg, UINT message, WPARAM
 			return (UINT)App->AppBackground;
 		}
 
-		if (GetDlgItem(hDlg, IDC_STROTY) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_STROTX2) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -192,7 +194,15 @@ LRESULT CALLBACK SB_Brushes::Dimensions_Dlg_Proc(HWND hDlg, UINT message, WPARAM
 			return (UINT)App->AppBackground;
 		}
 
-		if (GetDlgItem(hDlg, IDC_STROTZ) == (HWND)lParam)
+		if (GetDlgItem(hDlg, IDC_STROTY2) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STROTZ2) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -201,6 +211,31 @@ LRESULT CALLBACK SB_Brushes::Dimensions_Dlg_Proc(HWND hDlg, UINT message, WPARAM
 		}
 
 		if (GetDlgItem(hDlg, IDC_STROTATION) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		
+		if (GetDlgItem(hDlg, IDC_STSIZEX) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STSIZEY) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_STSIZEZ) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 255, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -246,6 +281,155 @@ LRESULT CALLBACK SB_Brushes::Dimensions_Dlg_Proc(HWND hDlg, UINT message, WPARAM
 
 	case WM_HSCROLL:
 	{
+		// ------------------------------------------------------------- Position
+		// -------- Pos X
+		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBPOSXH))
+		{
+			switch ((int)LOWORD(wParam))
+			{
+			case SB_LINERIGHT:
+			{
+				App->CLSB_Brushes->CenterOfSelection.X += App->CLSB_Brushes->PosX_Delta;
+				App->CLSB_Brushes->Move_Brush();
+				break;
+			}
+
+			case SB_LINELEFT:
+			{
+				App->CLSB_Brushes->CenterOfSelection.X -= App->CLSB_Brushes->PosX_Delta;
+				App->CLSB_Brushes->Move_Brush();
+				break;
+			}
+			}
+
+			App->CLSB_Brushes->Update_Pos_Dlg(hDlg);
+
+			return 0;
+		}
+
+		// ------- Pos Y
+		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBPOSYH))
+		{
+			switch ((int)LOWORD(wParam))
+			{
+			case SB_LINERIGHT:
+			{
+				App->CLSB_Brushes->CenterOfSelection.Y += App->CLSB_Brushes->PosY_Delta;
+				App->CLSB_Brushes->Move_Brush();
+				break;
+			}
+
+			case SB_LINELEFT:
+			{
+				App->CLSB_Brushes->CenterOfSelection.Y -= App->CLSB_Brushes->PosY_Delta;
+				App->CLSB_Brushes->Move_Brush();
+				break;
+			}
+			}
+
+			App->CLSB_Brushes->Update_Pos_Dlg(hDlg);
+
+			return 0;
+		}
+
+		// ------- Pos Y
+		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBPOSZH))
+		{
+			switch ((int)LOWORD(wParam))
+			{
+			case SB_LINERIGHT:
+			{
+				App->CLSB_Brushes->CenterOfSelection.Z += App->CLSB_Brushes->PosZ_Delta;
+				App->CLSB_Brushes->Move_Brush();
+				break;
+			}
+
+			case SB_LINELEFT:
+			{
+				App->CLSB_Brushes->CenterOfSelection.Z -= App->CLSB_Brushes->PosZ_Delta;
+				App->CLSB_Brushes->Move_Brush();
+				break;
+			}
+			}
+
+			App->CLSB_Brushes->Update_Pos_Dlg(hDlg);
+
+			return 0;
+		}
+
+		// ------------------------------------------------------------- Rotation
+		// -------- Pos X
+		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBROTXH))
+		{
+			switch ((int)LOWORD(wParam))
+			{
+			case SB_LINERIGHT:
+			{
+				App->CLSB_Brushes->Rotate_Brush(0.0174533,0,0);
+				break;
+			}
+
+			case SB_LINELEFT:
+			{
+				App->CLSB_Brushes->Rotate_Brush(-0.0174533,0,0);
+				break;
+			}
+			}
+
+			App->CLSB_Brushes->Update_Pos_Dlg(hDlg);
+
+			return 0;
+		}
+
+		// ------- Pos Y
+		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBROTYH))
+		{
+			switch ((int)LOWORD(wParam))
+			{
+			case SB_LINERIGHT:
+			{
+				App->CLSB_Brushes->Rotate_Brush(0,0.0174533, 0);
+				break;
+			}
+
+			case SB_LINELEFT:
+			{
+				App->CLSB_Brushes->Rotate_Brush(0, -0.0174533, 0);
+				break;
+			}
+			}
+
+			App->CLSB_Brushes->Update_Pos_Dlg(hDlg);
+
+			return 0;
+		}
+
+		// ------- Pos Y
+		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBROTZH))
+		{
+			switch ((int)LOWORD(wParam))
+			{
+			case SB_LINERIGHT:
+			{
+				App->CLSB_Brushes->Rotate_Brush(0,0, 0.0174533);
+				App->CLSB_Brushes->Move_Brush();
+				break;
+			}
+
+			case SB_LINELEFT:
+			{
+
+				App->CLSB_Brushes->Rotate_Brush(0, 0, -0.0174533);
+				break;
+			}
+			}
+
+			App->CLSB_Brushes->Update_Pos_Dlg(hDlg);
+
+			return 0;
+		}
+
+		// ------------------------------------------------------------- SCALE
 		// -------- Scale X
 		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBSCALEX))
 		{
@@ -353,82 +537,7 @@ LRESULT CALLBACK SB_Brushes::Dimensions_Dlg_Proc(HWND hDlg, UINT message, WPARAM
 			return 0;
 		}
 
-		// ------------------------------------------------------------- Position
-		// -------- Pos X
-		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBPOSXH))
-		{
-			switch ((int)LOWORD(wParam))
-			{
-			case SB_LINERIGHT:
-			{
-				App->CLSB_Brushes->CenterOfSelection.X += App->CLSB_Brushes->PosX_Delta;
-				App->CLSB_Brushes->Move_Brush();
-				break;
-			}
-
-			case SB_LINELEFT:
-			{
-				App->CLSB_Brushes->CenterOfSelection.X -= App->CLSB_Brushes->PosX_Delta;
-				App->CLSB_Brushes->Move_Brush();
-				break;
-			}
-			}
-
-			App->CLSB_Brushes->Update_Pos_Dlg(hDlg);
-
-			return 0;
-		}
-
-		// ------- Pos Y
-		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBPOSYH))
-		{
-			switch ((int)LOWORD(wParam))
-			{
-			case SB_LINERIGHT:
-			{
-				App->CLSB_Brushes->CenterOfSelection.Y += App->CLSB_Brushes->PosY_Delta;
-				App->CLSB_Brushes->Move_Brush();
-				break;
-			}
-
-			case SB_LINELEFT:
-			{
-				App->CLSB_Brushes->CenterOfSelection.Y -= App->CLSB_Brushes->PosY_Delta;
-				App->CLSB_Brushes->Move_Brush();
-				break;
-			}
-			}
-
-			App->CLSB_Brushes->Update_Pos_Dlg(hDlg);
-
-			return 0;
-		}
-
-		// ------- Pos Y
-		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBPOSZH))
-		{
-			switch ((int)LOWORD(wParam))
-			{
-			case SB_LINERIGHT:
-			{
-				App->CLSB_Brushes->CenterOfSelection.Z += App->CLSB_Brushes->PosZ_Delta;
-				App->CLSB_Brushes->Move_Brush();
-				break;
-			}
-
-			case SB_LINELEFT:
-			{
-				App->CLSB_Brushes->CenterOfSelection.Z -= App->CLSB_Brushes->PosZ_Delta;
-				App->CLSB_Brushes->Move_Brush();
-				break;
-			}
-			}
-
-			App->CLSB_Brushes->Update_Pos_Dlg(hDlg);
-
-			return 0;
-		}
-
+		
 		return 0;
 	}
 
@@ -551,6 +660,22 @@ void SB_Brushes::Move_Brush()
 }
 
 // *************************************************************************
+// *				Rotate_Brush:- Terry and Hazel Flanigan 2023	  	   *
+// *************************************************************************
+void SB_Brushes::Rotate_Brush(float SX, float SY, float SZ)
+{
+	App->Get_Current_Document();
+
+	FinalScale.X = SX;
+	FinalScale.Y = SY;
+	FinalScale.Z = SZ;
+
+	App->m_pDoc->RotateSelectedBrushList(App->CLSB_Brushes->m_pDoc->pSelBrushes, &FinalScale);
+
+	App->CLSB_Brushes->m_pDoc->UpdateAllViews(UAV_ALLVIEWS | REBUILD_QUICK, NULL);
+}
+
+// *************************************************************************
 // *				Scale_Brush:- Terry and Hazel Flanigan 2023		  	   *
 // *************************************************************************
 void SB_Brushes::Scale_Brush(float SX, float SY, float SZ)
@@ -562,7 +687,7 @@ void SB_Brushes::Scale_Brush(float SX, float SY, float SZ)
 	FinalScale.Z = SZ;
 
 	App->m_pDoc->ScaleSelectedBrushes(&FinalScale);
-
+	
 	App->CLSB_Brushes->m_pDoc->UpdateAllViews(UAV_ALLVIEWS | REBUILD_QUICK, NULL);
 }
 

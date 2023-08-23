@@ -797,6 +797,10 @@
 #define IDC_BT_TB_TEST2                 1522
 #define IDC_FIRST_MODEX                 1523
 #define IDC_STTXLFILE                   1524
+#define IDC_SBROTXH                     1525
+#define IDC_SBROTYH                     1526
+#define IDC_SCROLLBAR3                  1527
+#define IDC_SBROTZH                     1527
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772
 #define ID_BRUSH_PRIMITIVES_SPHEROID    32773
@@ -1010,7 +1014,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        330
 #define _APS_NEXT_COMMAND_VALUE         33090
-#define _APS_NEXT_CONTROL_VALUE         1525
+#define _APS_NEXT_CONTROL_VALUE         1526
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif
