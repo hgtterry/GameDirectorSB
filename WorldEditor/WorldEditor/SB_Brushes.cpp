@@ -33,6 +33,10 @@ SB_Brushes::SB_Brushes(void)
 	CenterOfSelection.Y = 0;
 	CenterOfSelection.Z = 0;
 
+	Rotation.x = 0;
+	Rotation.y = 0;
+	Rotation.z = 0;
+
 	FinalScale.X = 1;
 	FinalScale.Y = 1;
 	FinalScale.Z = 1;
@@ -110,6 +114,10 @@ LRESULT CALLBACK SB_Brushes::Dimensions_Dlg_Proc(HWND hDlg, UINT message, WPARAM
 		SendDlgItemMessage(hDlg, IDC_ED_BRUSH_POSY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ED_BRUSH_POSZ, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+		SendDlgItemMessage(hDlg, IDC_ED_BRUSH_ROTX3, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ED_BRUSH_ROTY3, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ED_BRUSH_ROTZ3, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		SendDlgItemMessage(hDlg, IDC_ED_BRUSH_SCALEX, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ED_BRUSH_SCALEY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ED_BRUSH_SCALEZ, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -763,6 +771,16 @@ void SB_Brushes::Update_Pos_Dlg(HWND hDlg)
 
 	sprintf(buf, "%.3f", CenterOfSelection.Z);
 	SetDlgItemText(hDlg, IDC_ED_BRUSH_POSZ, buf);
+
+	// Rotation
+	sprintf(buf, "%.2f", Rotation.x);
+	SetDlgItemText(hDlg, IDC_ED_BRUSH_ROTX3, buf);
+
+	sprintf(buf, "%.2f", Rotation.y);
+	SetDlgItemText(hDlg, IDC_ED_BRUSH_ROTY3, buf);
+
+	sprintf(buf, "%.2f", Rotation.z);
+	SetDlgItemText(hDlg, IDC_ED_BRUSH_ROTZ3, buf);
 
 	// Scale
 	sprintf(buf, "%.2f", Size.x);

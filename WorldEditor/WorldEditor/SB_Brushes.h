@@ -64,6 +64,7 @@ private:
 
 	vertex_type Size;
 	vertex_type Scale;
+	vertex_type Rotation;
 
 	geVec3d CenterOfSelection;
 	geVec3d FinalScale;

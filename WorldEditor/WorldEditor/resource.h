@@ -772,14 +772,17 @@
 #define IDC_BT_CAMERASPEED              1510
 #define IDC_ED_BRUSH_POSX3              1511
 #define IDC_STBANNER                    1511
+#define IDC_ED_BRUSH_ROTX3              1511
 #define IDC_STROTX2                     1512
 #define IDC_TITLE                       1512
 #define IDC_ED_BRUSH_POSY3              1513
 #define IDC_STSELECTED                  1513
+#define IDC_ED_BRUSH_ROTY3              1513
 #define IDC_STROTY2                     1514
 #define IDC_LISTSELECTION               1514
 #define IDC_ED_BRUSH_POSZ3              1515
 #define IDC_LISTGROUPDETAIL             1515
+#define IDC_ED_BRUSH_ROTZ3              1515
 #define IDC_STROTZ2                     1516
 #define IDC_BT_TT_ALL_BRUSH             1516
 #define IDC_SBPOSX3                     1517
