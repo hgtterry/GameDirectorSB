@@ -45,6 +45,28 @@ distribution.
 
 #define NUM_VIEWS (4)
 
+enum BrushFlags
+{
+	BRUSH_SOLID = 0x0001,
+	BRUSH_WINDOW = 0x0002,
+	BRUSH_WAVY = 0x0004,
+	BRUSH_DETAIL = 0x0008,	//not included in vis calculations
+	BRUSH_HOLLOWCUT = 0x0010,
+	BRUSH_TRANSLUCENT = 0x0020,
+	BRUSH_EMPTY = 0x0040,
+	BRUSH_SUBTRACT = 0x0080,
+	BRUSH_CLIP = 0x0100,
+	BRUSH_FLOCKING = 0x0200,
+	BRUSH_HOLLOW = 0x0400,
+	BRUSH_SHEET = 0x0800,
+	BRUSH_HIDDEN = 0x1000,
+	BRUSH_LOCKED = 0x2000,
+	BRUSH_HINT = 0x4000,
+	BRUSH_AREA = 0x8000
+	// All flags larger than 0x8000 (i.e. 0x00010000 through 0x80000000)
+	// are reserved for user contents.
+};
+
 struct tag_Level3
 {
     BrushList *Brushes;
@@ -93,7 +115,6 @@ struct tag_Level3
 
 SB_Export_World::SB_Export_World(void)
 {
-	m_pDoc = NULL;
 	WriteScene = NULL;
 }
 
@@ -152,8 +173,8 @@ SB_Export_World::~SB_Export_World(void)
 // *************************************************************************
 void SB_Export_World::Export_World_GD3D(bool Silent)
 {
-	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
-
+	App->Get_Current_Document();
+	
 	if (Silent == 0)
 	{
 		bool Test = App->CLSB_FileIO->SaveSelectedFile("Equity   *.G3ds\0**.G3ds\0", App->CL_World->mCurrent_3DT_Path);
@@ -183,7 +204,7 @@ void SB_Export_World::Export_World_GD3D(bool Silent)
 
 static geBoolean fdocBrushCSGCallback2 (const Brush *pBrush, void *lParam)
 {
-	return (App->CLSB_Export_World->m_pDoc->BrushIsVisible (pBrush) && (!Brush_IsHint(pBrush)) && (!Brush_IsClip(pBrush)));
+	return (App->m_pDoc->BrushIsVisible (pBrush) && (!Brush_IsHint(pBrush)) && (!Brush_IsClip(pBrush)));
 }
 
 // *************************************************************************
@@ -198,10 +219,10 @@ void SB_Export_World::ExportTo_RFW(const char *FileName, int ExpSelected, geBool
 		CFusionView	*	pView;
 		int iView;
 
-		pos = m_pDoc->GetFirstViewPosition();
+		pos = App->m_pDoc->GetFirstViewPosition();
 		while( pos != NULL )
 		{
-			pView = (CFusionView*)m_pDoc->GetNextView(pos) ;
+			pView = (CFusionView*)App->m_pDoc->GetNextView(pos) ;
 			switch (Render_GetViewType (pView->VCam))
 			{
 				case VIEWSOLID :
@@ -223,7 +244,7 @@ void SB_Export_World::ExportTo_RFW(const char *FileName, int ExpSelected, geBool
 			}
 			if (iView != -1)
 			{
-				pViewStateInfo = Level_GetViewStateInfo (m_pDoc->pLevel, iView);
+				pViewStateInfo = Level_GetViewStateInfo (App->m_pDoc->pLevel, iView);
 				pViewStateInfo->IsValid = GE_TRUE;
 				pViewStateInfo->ZoomFactor = Render_GetZoom (pView->VCam);
 				Render_GetPitchRollYaw (pView->VCam, &pViewStateInfo->PitchRollYaw);
@@ -237,10 +258,10 @@ void SB_Export_World::ExportTo_RFW(const char *FileName, int ExpSelected, geBool
 	BrushList *BList;
 	geBoolean fResult;
 
-	BList = Level_GetBrushes (m_pDoc->pLevel);
+	BList = Level_GetBrushes (App->m_pDoc->pLevel);
 	if(!ExpSelected&&!ExpFiles)
 	{
-		fResult = App->CLSB_Export_World->Level_Build_G3ds(reinterpret_cast<tag_Level3 *> (m_pDoc->pLevel), FileName, BList, ExpSelected, ExpLights, -1);
+		fResult = App->CLSB_Export_World->Level_Build_G3ds(reinterpret_cast<tag_Level3 *> (App->m_pDoc->pLevel), FileName, BList, ExpSelected, ExpLights, -1);
 	}
 	else
 	{
@@ -254,7 +275,7 @@ void SB_Export_World::ExportTo_RFW(const char *FileName, int ExpSelected, geBool
 		{
 			GroupListType *GroupList;
 
-			GroupList=Level_GetGroups(m_pDoc->pLevel);
+			GroupList=Level_GetGroups(App->m_pDoc->pLevel);
 			GroupCount=Group_GetCount(GroupList);
 		}
 
@@ -271,7 +292,7 @@ void SB_Export_World::ExportTo_RFW(const char *FileName, int ExpSelected, geBool
 			{
 				if(!strstr(App->CL_Brush->Brush_GetName(pBrush),".act"))
 				{
-					if(!ExpSelected || SelBrushList_Find(m_pDoc->pSelBrushes, pBrush))
+					if(!ExpSelected || SelBrushList_Find(App->m_pDoc->pSelBrushes, pBrush))
 					{
 						if(!ExpFiles || Brush_GetGroupId(pBrush)==i)
 						{
@@ -295,7 +316,7 @@ void SB_Export_World::ExportTo_RFW(const char *FileName, int ExpSelected, geBool
 				BrushList_DoCSG(SBList, CurId, ::fdocBrushCSGCallback2, this);
 
 				//build individual model mini trees
-				ModelInfo = Level_GetModelInfo (m_pDoc->pLevel);
+				ModelInfo = Level_GetModelInfo (App->m_pDoc->pLevel);
 				pMod = ModelList_GetFirst (ModelInfo->Models, &mi);
 
 				for(i=0;i < ModelList_GetCount(ModelInfo->Models);i++)
@@ -325,7 +346,7 @@ void SB_Export_World::ExportTo_RFW(const char *FileName, int ExpSelected, geBool
 				::FilePath_ChangeName(FileName, Name, NewFileName);
 			}
 			
-			fResult = App->CLSB_Export_World->Level_Build_G3ds(reinterpret_cast<tag_Level3 *> (m_pDoc->pLevel), NewFileName, SBList, ExpSelected, ExpLights, GroupID);
+			fResult = App->CLSB_Export_World->Level_Build_G3ds(reinterpret_cast<tag_Level3 *> (App->m_pDoc->pLevel), NewFileName, SBList, ExpSelected, ExpLights, GroupID);
 			if(!fResult)
 				App->Say("Error exporting group");
 			BrushList_Destroy(&SBList);
@@ -599,11 +620,108 @@ bool SB_Export_World::Write_Project_File(char* Path_And_File,const char* Filenam
 	fprintf(WriteScene, "%s %f %f %f\n", "Position=",CameraPosition.X,CameraPosition.Y,CameraPosition.Z);
 
 	geVec3d Angles;
-	pCameraEntity->GetAngles( &Angles, Level_GetEntityDefs (m_pDoc->pLevel) );
+	pCameraEntity->GetAngles( &Angles, Level_GetEntityDefs (App->m_pDoc->pLevel) );
 	fprintf(WriteScene, "%s %f %f %f\n", "Angles=",Angles.X,Angles.Y,Angles.Z);
 
 
 	fclose(WriteScene);
 
 	return 1;
+}
+
+// *************************************************************************
+// * 		Export_Text_GD3D:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void SB_Export_World::Export_Text_GD3D()
+{
+	BrushList* BList;
+	geBoolean fResult;
+
+	BList = Level_GetBrushes(App->m_pDoc->pLevel);
+	
+	fResult = App->CLSB_Export_World->Level_Build_Text_G3ds(reinterpret_cast<tag_Level3*> (App->m_pDoc->pLevel), "FileName", BList, 0, 0, -1);
+}
+
+// *************************************************************************
+// *		Level_Build_Text_G3ds:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+bool SB_Export_World::Level_Build_Text_G3ds(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, geBoolean ExpLights, int GroupID)
+{
+	FILE* f;
+	BrushList_ExportToText(BList, f, GE_FALSE);
+	return 1;
+}
+
+static int	BrushCount;
+static int	SubBrushCount;
+
+// *************************************************************************
+// *		BrushList_ExportToText:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+bool SB_Export_World::BrushList_ExportToText(BrushList* BList, FILE* ofile, geBoolean SubBrush)
+{
+	Brush* pBrush;
+	BrushIterator bi;
+
+
+	pBrush = BrushList_GetFirst(BList, &bi);
+
+	while (pBrush != NULL)
+	{
+		if (!Brush_ExportTo3ds(pBrush, ofile)) return GE_FALSE;
+		pBrush = BrushList_GetNext(&bi);
+
+		if (SubBrush)
+			SubBrushCount++;
+		else
+			BrushCount++;
+	}
+
+	SubBrushCount = 0;
+	if (!SubBrush)
+		BrushCount = 0;
+	return GE_TRUE;
+}
+
+#include "facelist.h"
+// *************************************************************************
+// *		Brush_ExportToText:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+bool SB_Export_World::Brush_ExportToText(const Brush* b, FILE* ofile)
+{
+	assert(ofile);
+	assert(b);
+
+	switch (b->Type)
+	{
+	case	BRUSH_MULTI:
+		return BrushList_ExportTo3ds(b->BList, ofile, GE_TRUE);
+
+	case	BRUSH_LEAF:
+		if (b->BList)
+		{
+			return BrushList_ExportTo3ds(b->BList, ofile, GE_TRUE);
+		}
+		else
+		{
+			if (!(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT | BRUSH_SUBTRACT)))
+			{
+				return FaceList_ExportTo3ds(b->Faces, ofile, BrushCount, SubBrushCount);
+			}
+			else if ((b->Flags & BRUSH_SUBTRACT) && !(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT)))
+				BrushCount--;
+		}
+		break;
+
+
+	case	BRUSH_CSG:
+		if (!(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT | BRUSH_SUBTRACT)))
+			return FaceList_ExportTo3ds(b->Faces, ofile, BrushCount, SubBrushCount);
+		break;
+	default:
+		assert(0);		// invalid brush type
+		break;
+	}
+
+	return GE_TRUE;
 }

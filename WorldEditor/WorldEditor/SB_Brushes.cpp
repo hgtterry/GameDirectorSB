@@ -49,7 +49,6 @@ SB_Brushes::SB_Brushes(void)
 	ScaleY_Delta = 1;
 	ScaleZ_Delta = 1;
 
-	// Radians
 	RotX_Delta = 1;
 	RotY_Delta = 1;
 	RotZ_Delta = 1;
