@@ -668,7 +668,7 @@ bool SB_Export_World::BrushList_ExportToText(BrushList* BList, FILE* ofile, geBo
 
 	while (pBrush != NULL)
 	{
-		if (!Brush_ExportTo3ds(pBrush, ofile)) return GE_FALSE;
+		if (!Brush_ExportToText(pBrush, ofile)) return GE_FALSE;
 		pBrush = BrushList_GetNext(&bi);
 
 		if (SubBrush)
@@ -695,18 +695,18 @@ bool SB_Export_World::Brush_ExportToText(const Brush* b, FILE* ofile)
 	switch (b->Type)
 	{
 	case	BRUSH_MULTI:
-		return BrushList_ExportTo3ds(b->BList, ofile, GE_TRUE);
+		return BrushList_ExportToText(b->BList, ofile, GE_TRUE);
 
 	case	BRUSH_LEAF:
 		if (b->BList)
 		{
-			return BrushList_ExportTo3ds(b->BList, ofile, GE_TRUE);
+			return BrushList_ExportToText(b->BList, ofile, GE_TRUE);
 		}
 		else
 		{
 			if (!(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT | BRUSH_SUBTRACT)))
 			{
-				return FaceList_ExportTo3ds(b->Faces, ofile, BrushCount, SubBrushCount);
+				return FaceList_ExportToText(b->Faces, ofile, BrushCount, SubBrushCount);
 			}
 			else if ((b->Flags & BRUSH_SUBTRACT) && !(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT)))
 				BrushCount--;
@@ -716,12 +716,236 @@ bool SB_Export_World::Brush_ExportToText(const Brush* b, FILE* ofile)
 
 	case	BRUSH_CSG:
 		if (!(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT | BRUSH_SUBTRACT)))
-			return FaceList_ExportTo3ds(b->Faces, ofile, BrushCount, SubBrushCount);
+			return FaceList_ExportToText(b->Faces, ofile, BrushCount, SubBrushCount);
 		break;
 	default:
 		assert(0);		// invalid brush type
 		break;
 	}
+
+	return GE_TRUE;
+}
+
+struct tag_FaceList
+{
+	int NumFaces;
+	int Limit;
+	Face** Faces;
+	geBoolean Dirty;
+	Box3d Bounds;
+};
+
+// *************************************************************************
+// *							FaceList_ExportToTexxt					   *
+// *************************************************************************
+bool SB_Export_World::FaceList_ExportToText(const FaceList* pList, FILE* f, int BrushCount, int SubBrushCount)
+{
+
+	int i, j, k, num_faces, num_verts, num_mats, num_chars, curnum_verts;
+	int size_verts, size_faces, size_trimesh, size_objblock, size_name, size_mapuv, size_mats;
+	char matname[20];
+
+	char* matf = (char*)calloc(sizeof(char), pList->NumFaces);
+
+	assert(pList != NULL);
+	assert(f != NULL);
+
+	num_faces = num_verts = num_mats = num_chars = 0;
+	// get the total number of verts, faces and materials of the object
+
+	for (i = 0; i < pList->NumFaces; i++)
+	{
+		curnum_verts = Face_GetNumPoints(pList->Faces[i]);
+		num_faces += (curnum_verts - 2);
+		num_verts += curnum_verts;
+
+		if (!matf[i])
+		{
+			matf[i] = 1;
+			num_mats++;
+
+			for (j = i + 1; j < pList->NumFaces; j++)
+			{
+				if (strcmp(Face_GetTextureName(pList->Faces[i]), Face_GetTextureName(pList->Faces[j])) == 0)
+					matf[j] = 1;
+			}
+
+			strncpy(matname, Face_GetTextureName(pList->Faces[i]), 11);
+			matname[10] = 0;
+			// get the number of characters for calculating size_mats
+			for (j = 0; matname[j] != 0; j++, num_chars++);
+		}
+	}
+
+	for (i = 0; i < pList->NumFaces; i++)
+		matf[i] = 0;
+
+	// calculate the size of the different chunks
+	//size_name = 7; //xxx_xx\0
+	//size_verts = SIZE_CHUNKID + SIZE_CHUNKLENGTH + SIZE_USHORT + 3 * SIZE_FLOAT * num_verts;
+	//size_mats = (SIZE_CHUNKID + SIZE_CHUNKLENGTH + SIZE_USHORT) * num_mats + (num_chars + num_mats) + SIZE_USHORT * num_faces;
+	//size_faces = SIZE_CHUNKID + SIZE_CHUNKLENGTH + SIZE_USHORT + 4 * SIZE_USHORT * num_faces + size_mats;
+	//size_mapuv = SIZE_CHUNKID + SIZE_CHUNKLENGTH + SIZE_USHORT + 2 * SIZE_FLOAT * num_verts;
+	//size_trimesh = SIZE_CHUNKID + SIZE_CHUNKLENGTH + size_verts + size_faces + size_mapuv;
+	//size_objblock = SIZE_CHUNKID + SIZE_CHUNKLENGTH + size_name + size_trimesh;
+
+	// write the objblock
+	//write_ushort(f, CHUNK_OBJBLOCK);
+	//write_int(f, size_objblock);
+	//// give each object a unique name xxx_xx\0
+	//write_char(f, (char)(48 + (BrushCount - BrushCount % 100) / 100));
+	//write_char(f, (char)(48 + ((BrushCount - BrushCount % 10) / 10) % 10));
+	//write_char(f, (char)(48 + BrushCount % 10));
+	//write_char(f, '_');
+	//write_char(f, (char)(48 + (SubBrushCount - SubBrushCount % 10) / 10));
+	//write_char(f, (char)(48 + SubBrushCount % 10));
+	//write_char(f, '\0');
+	// end name of this object
+
+	// this object is a trimesh
+	/*write_ushort(f, CHUNK_TRIMESH);
+	write_int(f, size_trimesh);*/
+
+	// write all vertices of each face of this object
+	/*write_ushort(f, CHUNK_VERTLIST);
+	write_int(f, size_verts);
+	write_ushort(f, (unsigned short)num_verts);*/
+	for (i = 0; i < pList->NumFaces; i++)
+	{
+		const geVec3d* verts;
+		verts = Face_GetPoints(pList->Faces[i]);
+		curnum_verts = Face_GetNumPoints(pList->Faces[i]);
+		for (j = 0; j < curnum_verts; j++)
+		{
+			/*write_float(f, verts[j].X);
+			write_float(f, verts[j].Y);
+			write_float(f, verts[j].Z);*/
+		}
+	}
+
+	// write MAPPING COORDINATES
+	/*
+	Although from the chunk id you would suppose that FACELIST (0x4120) and
+	CHUNK_MATLIST (0x4130) would be the next chunks, 3ds max does not recognize the
+	mapping coordinates if they are not after the vertlist chunk!
+	*/
+	/*write_ushort(f, CHUNK_MAPLIST);
+	write_int(f, size_mapuv);
+	write_ushort(f, (unsigned short)num_verts);*/
+	for (i = 0; i < pList->NumFaces; i++)
+	{
+		const TexInfo_Vectors* TVecs = Face_GetTextureVecs(pList->Faces[i]);
+		const geVec3d* verts;
+		geVec3d uVec, vVec;
+		geFloat U, V;
+
+		int txSize, tySize;
+
+		Face_GetTextureSize(pList->Faces[i], &txSize, &tySize);
+
+		// make sure that the texture size is set correctly (division!)
+		if (txSize == 0)
+			txSize = 32;
+		if (tySize == 0)
+			tySize = 32;
+
+		geVec3d_Scale(&TVecs->uVec, 1.f / (geFloat)txSize, &uVec);
+		geVec3d_Scale(&TVecs->vVec, -1.f / (geFloat)tySize, &vVec);
+
+		verts = Face_GetPoints(pList->Faces[i]);
+		curnum_verts = Face_GetNumPoints(pList->Faces[i]);
+
+		for (j = 0; j < curnum_verts; j++)
+		{
+			U = geVec3d_DotProduct(&(verts[j]), &uVec);
+			V = geVec3d_DotProduct(&(verts[j]), &vVec);
+			U += (TVecs->uOffset / txSize);
+			V -= (TVecs->vOffset / tySize);
+			/*write_float(f, U);
+			write_float(f, V);*/
+		}
+	}
+
+	// write all faces of this object (all faces are split into triangles)
+	/*write_ushort(f, CHUNK_FACELIST);
+	write_int(f, size_faces);
+	write_ushort(f, (unsigned short)num_faces);*/
+	num_verts = 0;
+	for (i = 0; i < pList->NumFaces; i++)
+	{
+		curnum_verts = Face_GetNumPoints(pList->Faces[i]);
+		for (j = 0; j < curnum_verts - 2; j++)
+		{
+			/*write_ushort(f, (unsigned short)num_verts);
+			write_ushort(f, (unsigned short)(num_verts + 2 + j));
+			write_ushort(f, (unsigned short)(num_verts + 1 + j));
+			write_ushort(f, 6);*/
+		}
+		num_verts += curnum_verts;
+	}
+
+	// write MATERIALS
+	for (i = 0; i < pList->NumFaces; i++)
+	{
+		if (!matf[i])
+		{
+			matf[i] = 1;
+
+			int curnum_faces = (Face_GetNumPoints(pList->Faces[i]) - 2);
+
+			for (j = i + 1; j < pList->NumFaces; j++)
+			{
+				if (strcmp(Face_GetTextureName(pList->Faces[i]), Face_GetTextureName(pList->Faces[j])) == 0)
+				{
+					curnum_faces += (Face_GetNumPoints(pList->Faces[j]) - 2);
+				}
+			}
+
+			strncpy(matname, Face_GetTextureName(pList->Faces[i]), 11);
+			matname[10] = '\0';
+			for (num_chars = 0; matname[num_chars] != '\0'; num_chars++);
+
+			/*write_ushort(f, CHUNK_MATLIST);
+			int size = SIZE_CHUNKID + SIZE_CHUNKLENGTH + (num_chars + 1) + SIZE_USHORT + SIZE_USHORT * curnum_faces;
+			write_int(f, size);*/
+
+			// write matname
+			for (j = 0; j <= num_chars; j++)
+				//write_char(f, matname[j]);
+
+			// write number of faces that have this texture
+			//write_ushort(f, (unsigned short)curnum_faces);
+
+			// write face numbers
+			curnum_faces = 0;
+			for (j = 0; j < i; j++)
+				curnum_faces += (Face_GetNumPoints(pList->Faces[j]) - 2);
+
+			curnum_verts = Face_GetNumPoints(pList->Faces[i]);
+			for (j = 0; j < curnum_verts - 2; j++)
+			{
+				//write_ushort(f, (unsigned short)(curnum_faces + j));
+			}
+
+
+			curnum_faces += (curnum_verts - 2);
+
+			for (j = i + 1; j < pList->NumFaces; j++)
+			{
+				curnum_verts = Face_GetNumPoints(pList->Faces[j]);
+				if (strcmp(Face_GetTextureName(pList->Faces[i]), Face_GetTextureName(pList->Faces[j])) == 0)
+				{
+					matf[j] = 1;
+					for (k = 0; k < curnum_verts - 2; k++)
+					{
+						//write_ushort(f, (unsigned short)(curnum_faces + k));
+					}
+				}
+				curnum_faces += (curnum_verts - 2);
+			}
+		}
+	}
+	free(matf);
 
 	return GE_TRUE;
 }

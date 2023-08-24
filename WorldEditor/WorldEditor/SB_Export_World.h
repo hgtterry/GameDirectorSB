@@ -53,6 +53,7 @@ public:
 	bool Level_Build_Text_G3ds(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, geBoolean ExpLights, int GroupID);
 	bool BrushList_ExportToText(BrushList* BList, FILE* ofile, geBoolean SubBrush);
 	bool Brush_ExportToText(const Brush* b, FILE* ofile);
+	bool SB_Export_World::FaceList_ExportToText(const FaceList* pList, FILE* f, int BrushCount, int SubBrushCount);
 
 private:
 
