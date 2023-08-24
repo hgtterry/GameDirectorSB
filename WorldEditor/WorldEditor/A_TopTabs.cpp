@@ -1217,6 +1217,9 @@ void SB_TopTabs::Update_Dlg_Controls()
 	int NumSelBrushes = SelBrushList_GetSize(App->m_pDoc->pSelBrushes);
 	if (NumSelBrushes == 0)
 	{
+		EndDialog(App->CLSB_Brushes->Dimensions_Dlg_hWnd, 0);
+		App->CLSB_Brushes->Dimensions_Dlg_Running = 0;
+		
 		EnableWindow(GetDlgItem(Brush_Modify_Panel_Hwnd, IDC_BTTBMOVEROTATE), 0);
 		EnableWindow(GetDlgItem(Brush_Modify_Panel_Hwnd, IDC_BTSCALE), 0);
 		EnableWindow(GetDlgItem(Brush_Modify_Panel_Hwnd, IDC_BTTBSHEAR), 0);
@@ -1230,6 +1233,8 @@ void SB_TopTabs::Update_Dlg_Controls()
 	}
 	else
 	{
+		App->CLSB_Brushes->Start_Dimensions_Dlg();
+
 		EnableWindow(GetDlgItem(Brush_Modify_Panel_Hwnd, IDC_BTTBMOVEROTATE), 1);
 		EnableWindow(GetDlgItem(Brush_Modify_Panel_Hwnd, IDC_BTSCALE), 1);
 		EnableWindow(GetDlgItem(Brush_Modify_Panel_Hwnd, IDC_BTTBSHEAR), 1);
