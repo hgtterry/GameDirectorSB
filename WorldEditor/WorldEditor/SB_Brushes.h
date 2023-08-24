@@ -30,6 +30,7 @@ public:
 
 	void Start_Dimensions_Dlg();
 	void Update_Pos_Dlg(HWND hDlg);
+	void Update_Deltas_Dlg(HWND hDlg);
 	void Centre_CentreBrush();
 
 	bool Dimensions_Dlg_Running;
@@ -40,6 +41,7 @@ private:
 	static LRESULT CALLBACK Dimensions_Dlg_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Fill_ComboBox_PosDelta(HWND hDlg);
+	void Fill_ComboBox_RotDelta(HWND hDlg);
 
 	void Move_Brush();
 	void Rotate_Brush(float SX, float SY, float SZ);
@@ -55,6 +57,10 @@ private:
 	float PosX_Delta;
 	float PosY_Delta;
 	float PosZ_Delta;
+
+	float RotX_Delta;
+	float RotY_Delta;
+	float RotZ_Delta;
 
 	float ScaleX_Delta;
 	float ScaleY_Delta;

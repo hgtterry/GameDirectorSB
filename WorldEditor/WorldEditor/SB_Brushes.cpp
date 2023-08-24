@@ -49,6 +49,11 @@ SB_Brushes::SB_Brushes(void)
 	ScaleY_Delta = 1;
 	ScaleZ_Delta = 1;
 
+	// Radians
+	RotX_Delta = 1;
+	RotY_Delta = 1;
+	RotZ_Delta = 1;
+
 	ScaleLock_Flag = 1;
 
 	Dimensions_Dlg_Running = 0;
@@ -126,16 +131,13 @@ LRESULT CALLBACK SB_Brushes::Dimensions_Dlg_Proc(HWND hDlg, UINT message, WPARAM
 		SendDlgItemMessage(hDlg, IDC_CBPOSYDELTA, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CBPOSZDELTA, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+		SendDlgItemMessage(hDlg, IDC_CBROTXDELTA3, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CBROTYDELTA3, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CBROTZDELTA3, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		SendDlgItemMessage(hDlg, IDC_SIZELOCK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
-		HWND CB_hWnd = GetDlgItem(hDlg, IDC_CBPOSXDELTA);
-		App->CLSB_Brushes->Fill_ComboBox_PosDelta(CB_hWnd);
-
-		CB_hWnd = GetDlgItem(hDlg, IDC_CBPOSYDELTA);
-		App->CLSB_Brushes->Fill_ComboBox_PosDelta(CB_hWnd);
-
-		CB_hWnd = GetDlgItem(hDlg, IDC_CBPOSZDELTA);
-		App->CLSB_Brushes->Fill_ComboBox_PosDelta(CB_hWnd);
+		App->CLSB_Brushes->Update_Deltas_Dlg(hDlg);
 
 		// ----------- ScaleLock
 		if (App->CLSB_Brushes->ScaleLock_Flag == 1)
@@ -366,20 +368,25 @@ LRESULT CALLBACK SB_Brushes::Dimensions_Dlg_Proc(HWND hDlg, UINT message, WPARAM
 		}
 
 		// ------------------------------------------------------------- Rotation
-		// -------- Pos X
+		// -------- Rot X
 		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBROTXH))
 		{
+			float m_Delta = App->CLSB_Brushes->RotX_Delta * GE_PI/180;
+
 			switch ((int)LOWORD(wParam))
 			{
 			case SB_LINERIGHT:
 			{
-				App->CLSB_Brushes->Rotate_Brush(0.0174533,0,0);
+
+				App->CLSB_Brushes->Rotation.x += +App->CLSB_Brushes->RotX_Delta;
+				App->CLSB_Brushes->Rotate_Brush(m_Delta,0,0);
 				break;
 			}
 
 			case SB_LINELEFT:
 			{
-				App->CLSB_Brushes->Rotate_Brush(-0.0174533,0,0);
+				App->CLSB_Brushes->Rotation.x += -App->CLSB_Brushes->RotX_Delta;
+				App->CLSB_Brushes->Rotate_Brush(-m_Delta,0,0);
 				break;
 			}
 			}
@@ -389,20 +396,24 @@ LRESULT CALLBACK SB_Brushes::Dimensions_Dlg_Proc(HWND hDlg, UINT message, WPARAM
 			return 0;
 		}
 
-		// ------- Pos Y
+		// ------- Rot Y
 		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBROTYH))
 		{
+			float m_Delta = App->CLSB_Brushes->RotY_Delta * GE_PI / 180;
+
 			switch ((int)LOWORD(wParam))
 			{
 			case SB_LINERIGHT:
 			{
-				App->CLSB_Brushes->Rotate_Brush(0,0.0174533, 0);
+				App->CLSB_Brushes->Rotation.y += +App->CLSB_Brushes->RotY_Delta;
+				App->CLSB_Brushes->Rotate_Brush(0, m_Delta, 0);
 				break;
 			}
 
 			case SB_LINELEFT:
 			{
-				App->CLSB_Brushes->Rotate_Brush(0, -0.0174533, 0);
+				App->CLSB_Brushes->Rotation.y += -App->CLSB_Brushes->RotY_Delta;
+				App->CLSB_Brushes->Rotate_Brush(0, -m_Delta, 0);
 				break;
 			}
 			}
@@ -412,22 +423,25 @@ LRESULT CALLBACK SB_Brushes::Dimensions_Dlg_Proc(HWND hDlg, UINT message, WPARAM
 			return 0;
 		}
 
-		// ------- Pos Y
+		// ------- Rot Y
 		if (HWND(lParam) == GetDlgItem(hDlg, IDC_SBROTZH))
 		{
+			float m_Delta = App->CLSB_Brushes->RotZ_Delta * GE_PI / 180;
+
 			switch ((int)LOWORD(wParam))
 			{
 			case SB_LINERIGHT:
 			{
-				App->CLSB_Brushes->Rotate_Brush(0,0, 0.0174533);
+				App->CLSB_Brushes->Rotation.z += +App->CLSB_Brushes->RotZ_Delta;
+				App->CLSB_Brushes->Rotate_Brush(0,0, m_Delta);
 				App->CLSB_Brushes->Move_Brush();
 				break;
 			}
 
 			case SB_LINELEFT:
 			{
-
-				App->CLSB_Brushes->Rotate_Brush(0, 0, -0.0174533);
+				App->CLSB_Brushes->Rotation.z += -App->CLSB_Brushes->RotZ_Delta;
+				App->CLSB_Brushes->Rotate_Brush(0, 0, -m_Delta);
 				break;
 			}
 			}
@@ -635,6 +649,69 @@ LRESULT CALLBACK SB_Brushes::Dimensions_Dlg_Proc(HWND hDlg, UINT message, WPARAM
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_CBROTXDELTA3)
+		{
+			switch (HIWORD(wParam)) // Find out what message it was
+			{
+			case CBN_DROPDOWN:
+				break;
+			case CBN_CLOSEUP:
+			{
+				char buff[MAX_PATH]{ 0 };
+
+				HWND temp = GetDlgItem(hDlg, IDC_CBROTXDELTA3);
+				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
+				SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)buff);
+
+				App->CLSB_Brushes->RotX_Delta = atof(buff);
+			}
+			}
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_CBROTYDELTA3)
+		{
+			switch (HIWORD(wParam)) // Find out what message it was
+			{
+			case CBN_DROPDOWN:
+				break;
+			case CBN_CLOSEUP:
+			{
+				char buff[MAX_PATH]{ 0 };
+
+				HWND temp = GetDlgItem(hDlg, IDC_CBROTYDELTA3);
+				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
+				SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)buff);
+
+				App->CLSB_Brushes->RotY_Delta = atof(buff);
+			}
+			}
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_CBROTZDELTA3)
+		{
+			switch (HIWORD(wParam)) // Find out what message it was
+			{
+			case CBN_DROPDOWN:
+				break;
+			case CBN_CLOSEUP:
+			{
+				char buff[MAX_PATH]{ 0 };
+
+				HWND temp = GetDlgItem(hDlg, IDC_CBROTZDELTA3);
+				int Index = SendMessage(temp, CB_GETCURSEL, 0, 0);
+				SendMessage(temp, CB_GETLBTEXT, Index, (LPARAM)buff);
+
+				App->CLSB_Brushes->RotZ_Delta = atof(buff);
+			}
+			}
+
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDOK)
 		{
 			App->CLSB_Brushes->Dimensions_Dlg_Running = 0;
@@ -680,7 +757,7 @@ void SB_Brushes::Rotate_Brush(float SX, float SY, float SZ)
 
 	App->m_pDoc->RotateSelectedBrushList(App->CLSB_Brushes->m_pDoc->pSelBrushes, &FinalScale);
 
-	App->CLSB_Brushes->m_pDoc->UpdateAllViews(UAV_ALLVIEWS | REBUILD_QUICK, NULL);
+	App->CLSB_Brushes->m_pDoc->UpdateAllViews(UAV_ALLVIEWS | UAV_ALL3DVIEWS | REBUILD_QUICK, NULL);
 }
 
 // *************************************************************************
@@ -747,6 +824,44 @@ void SB_Brushes::Fill_ComboBox_PosDelta(HWND hDlg)
 	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"128");
 
 	SendMessage(hDlg, CB_SETCURSEL, 3, 0);
+}
+
+// *************************************************************************
+// *		Fill_ComboBox_RotDelta:- Terry and Hazel Flanigan 2023	  	   *
+// *************************************************************************
+void SB_Brushes::Fill_ComboBox_RotDelta(HWND hDlg)
+{
+	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"1");
+	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"45");
+	SendMessage(hDlg, CB_ADDSTRING, 0, (LPARAM)(LPCTSTR)"90");
+
+	SendMessage(hDlg, CB_SETCURSEL, 0, 0);
+}
+
+// *************************************************************************
+// *			Update_Deltas_Dlg:- Terry and Hazel Flanigan 2023	 	   *
+// *************************************************************************
+void SB_Brushes::Update_Deltas_Dlg(HWND hDlg)
+{
+	// Pos
+	HWND CB_hWnd = GetDlgItem(hDlg, IDC_CBPOSXDELTA);
+	App->CLSB_Brushes->Fill_ComboBox_PosDelta(CB_hWnd);
+
+	CB_hWnd = GetDlgItem(hDlg, IDC_CBPOSYDELTA);
+	App->CLSB_Brushes->Fill_ComboBox_PosDelta(CB_hWnd);
+
+	CB_hWnd = GetDlgItem(hDlg, IDC_CBPOSZDELTA);
+	App->CLSB_Brushes->Fill_ComboBox_PosDelta(CB_hWnd);
+
+	// Rot
+	CB_hWnd = GetDlgItem(hDlg, IDC_CBROTXDELTA3);
+	App->CLSB_Brushes->Fill_ComboBox_RotDelta(CB_hWnd);
+
+	CB_hWnd = GetDlgItem(hDlg, IDC_CBROTYDELTA3);
+	App->CLSB_Brushes->Fill_ComboBox_RotDelta(CB_hWnd);
+
+	CB_hWnd = GetDlgItem(hDlg, IDC_CBROTZDELTA3);
+	App->CLSB_Brushes->Fill_ComboBox_RotDelta(CB_hWnd);
 }
 
 // *************************************************************************

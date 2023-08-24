@@ -1,8 +1,8 @@
 [World_Data]
-3dt_Path_FileName=C:\Users\Acer\Desktop\RF_World\rfdemov1.3DT
-G3ds_Path_FileName=C:\Users\Acer\Desktop\GDSB_Git\trunk\Bin\Data\Temp.G3ds
-Txl_Path_FileName=C:\RealityFactory\media\levels\rfpack1.txl
+3dt_Path_FileName=C:\Users\Terry\Desktop\GDSB_Git\trunk\Bin\Levels\Test.3dt
+G3ds_Path_FileName=C:\Users\Terry\Desktop\GDSB_Git\trunk\Bin\Data\Temp.G3ds
+Txl_Path_FileName=C:\Users\Terry\Desktop\GDSB_Git\trunk\Bin\Levels\Equity.txl
  
 [Special]
-Position= -8.984789 0.000000 8.170835
-Angles= 3.141593 2.432772 0.000000
+Position= 126.144363 -7.999920 197.466492
+Angles= 3.141593 5.505079 0.000000

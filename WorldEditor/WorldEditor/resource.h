@@ -790,10 +790,13 @@
 #define IDC_CBPOSXDELTA3                1518
 #define IDC_CK_NEWEQUITY                1518
 #define IDC_SBFORWARDBACK               1518
+#define IDC_CBROTXDELTA3                1518
 #define IDC_CBPOSYDELTA3                1519
 #define IDC_SBLEFTRIGHT                 1519
+#define IDC_CBROTYDELTA3                1519
 #define IDC_CBPOSZDELTA3                1520
 #define IDC_BT_TB_CAMERA                1520
+#define IDC_CBROTZDELTA3                1520
 #define IDC_SBPOSY3                     1521
 #define IDC_BT_TT_ZEROCAMRA             1521
 #define IDC_SBPOSZ3                     1522
