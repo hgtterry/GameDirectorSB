@@ -633,7 +633,7 @@ bool SB_Export_World::Write_Project_File(char* Path_And_File,const char* Filenam
 // *************************************************************************
 // * 		Export_World_Text:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-void SB_Export_World::Export_World_Text()
+void SB_Export_World::Export_World_Text(int ExpSelected)
 {
 	WriteScene_TXT = NULL;
 
@@ -654,8 +654,69 @@ void SB_Export_World::Export_World_Text()
 	geBoolean fResult;
 
 	BList = Level_GetBrushes(App->m_pDoc->pLevel);
-	
-	fResult = Level_Build_Text_G3ds(reinterpret_cast<tag_Level3*> (App->m_pDoc->pLevel), "FileName", BList, 0, 0, -1);
+	if (!ExpSelected)
+	{
+		fResult = Level_Build_Text_G3ds(reinterpret_cast<tag_Level3*> (App->m_pDoc->pLevel), "FileName", BList, 0, 0, -1);
+	}
+	else
+	{
+		int i, GroupID, GroupCount;
+		char NewFileName[MAX_PATH];
+		GroupID = -1;
+		GroupCount = 1;
+
+		for (i = 0; i < GroupCount; i++)
+		{
+			BrushList* SBList;
+			Brush* pBrush;
+			BrushIterator bi;
+
+			SBList = BrushList_Create();
+			pBrush = BrushList_GetFirst(BList, &bi);
+
+			while (pBrush != NULL)
+			{
+
+				if (SelBrushList_Find(App->m_pDoc->pSelBrushes, pBrush))
+				{
+					Brush* pClone = Brush_Clone(pBrush);
+					BrushList_Append(SBList, pClone);
+				}
+
+				pBrush = BrushList_GetNext(&bi);
+			}
+			// do CSG
+			{
+				ModelIterator	mi;
+				int				i, CurId = 0;
+				ModelInfo_Type* ModelInfo;
+				Model* pMod;
+
+				BrushList_ClearAllCSG(SBList);
+
+				BrushList_DoCSG(SBList, CurId, ::fdocBrushCSGCallback2, this);
+
+				//build individual model mini trees
+				ModelInfo = Level_GetModelInfo(App->m_pDoc->pLevel);
+				pMod = ModelList_GetFirst(ModelInfo->Models, &mi);
+
+				for (i = 0; i < ModelList_GetCount(ModelInfo->Models); i++)
+				{
+					CurId = Model_GetId(pMod);
+
+					BrushList_DoCSG(SBList, CurId, ::fdocBrushCSGCallback2, this);
+				}
+			}
+
+			fResult = Level_Build_Text_G3ds(reinterpret_cast<tag_Level3*> (App->m_pDoc->pLevel), NewFileName, SBList, 0, 0, -1);
+			if (!fResult)
+			{
+				App->Say("Error exporting group");
+			}
+
+			BrushList_Destroy(&SBList);
+		}
+	}
 
 	fclose(WriteScene_TXT);
 
@@ -811,7 +872,6 @@ bool SB_Export_World::FaceList_ExportToText(const Brush* b,const FaceList* pList
 		for (j = 0; j < curnum_verts; j++)
 		{
 			fprintf(WriteScene_TXT, "V = %f %f %f\n", verts[j].X, verts[j].Y, verts[j].Z);
-
 		}
 	}
 
@@ -861,8 +921,8 @@ bool SB_Export_World::FaceList_ExportToText(const Brush* b,const FaceList* pList
 		for (j = 0; j < curnum_verts - 2; j++)
 		{
 			fprintf(WriteScene_TXT, "F = %i %i %i\n", num_verts, num_verts + 2 + j, num_verts + 1 + j);
-
 		}
+
 		num_verts += curnum_verts;
 	}
 
@@ -920,10 +980,12 @@ bool SB_Export_World::FaceList_ExportToText(const Brush* b,const FaceList* pList
 						fprintf(WriteScene_TXT, "FN = %i\n", curnum_faces + k);
 					}
 				}
+
 				curnum_faces += (curnum_verts - 2);
 			}
 		}
 	}
+
 	free(matf);
 
 	return GE_TRUE;

@@ -49,7 +49,7 @@ public:
 	bool Write_Project_File(char* Path_And_File,const char* Filename);
 
 
-	void Export_World_Text();
+	void Export_World_Text(int ExpSelected);
 	bool Level_Build_Text_G3ds(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, geBoolean ExpLights, int GroupID);
 	bool BrushList_ExportToText(BrushList* BList, geBoolean SubBrush);
 	bool Brush_ExportToText(const Brush* b);
