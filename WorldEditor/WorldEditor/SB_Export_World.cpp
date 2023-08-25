@@ -819,6 +819,8 @@ struct tag_FaceList
 // *************************************************************************
 bool SB_Export_World::FaceList_ExportToText(const Brush* b,const FaceList* pList, int BrushCount, int SubBrushCount)
 {
+	App->CLSB_Model->Create_Brush(App->CLSB_Model->BrushCount);
+
 
 	int i, j, k, num_faces, num_verts, num_mats, num_chars, curnum_verts;
 	char matname[20];
@@ -988,5 +990,7 @@ bool SB_Export_World::FaceList_ExportToText(const Brush* b,const FaceList* pList
 
 	free(matf);
 
+	App->CLSB_Model->BrushCount++;
+	Debug
 	return GE_TRUE;
 }

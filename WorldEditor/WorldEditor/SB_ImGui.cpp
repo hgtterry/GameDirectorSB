@@ -258,6 +258,8 @@ void SB_ImGui::Model_Data_GUI(void)
 		ImGui::Text("Faces:- %i", App->CLSB_Model->FaceCount);
 		ImGui::Text("Groups:- %i", App->CLSB_Model->Get_Groupt_Count());
 		ImGui::Text("Motions:- %i", App->CLSB_Model->MotionCount);
+		ImGui::Text(" --------------------------- Brushes  ");
+		ImGui::Text("Brushes:- %i", App->CLSB_Model->BrushCount);
 		ImGui::Text("  ");
 
 		ImVec2 Size = ImGui::GetWindowSize();

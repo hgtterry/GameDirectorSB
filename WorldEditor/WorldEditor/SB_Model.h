@@ -23,6 +23,7 @@ distribution.
 
 #include "SB_Base_Group.h"
 #include "Base_Player.h"
+#include "Base_Brush.h"
 
 typedef struct Bone_Vert { float x, y, z; }Bone_Vert;
 typedef struct Translation_Type { float X, Y, Z; }Translation_Type;
@@ -89,8 +90,11 @@ public:
 	~SB_Model(void);
 
 	Base_Group* Group[5000];
-	
+	Base_Brush* B_Brush[200];
+
 	void Create_Mesh_Group(int Index);
+	void Create_Brush(int Index);
+
 	int Get_Groupt_Count();
 	void Set_Groupt_Count(int Count);
 	void Set_Texture_Count(int Count);
@@ -143,5 +147,7 @@ public:
 	int Model_Type;
 	int BoneCount;
 	int NormalsCount;
+
+	int BrushCount;
 };
 

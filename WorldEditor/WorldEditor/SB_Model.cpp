@@ -38,6 +38,7 @@ SB_Model::SB_Model(void)
 
 	Player_Added = 0;
 	Model_Loaded = 0;
+	BrushCount = 0;
 
 	Model_Type = Enums::LoadedFile_None;
 
@@ -51,6 +52,13 @@ SB_Model::SB_Model(void)
 	while (Count < 4999)
 	{
 		Group[Count] = nullptr;
+		Count++;
+	}
+
+	Count = 0;
+	while (Count < 199)
+	{
+		B_Brush[Count] = nullptr;
 		Count++;
 	}
 
@@ -96,13 +104,6 @@ void SB_Model::Reset_Class(void)
 		Count++;
 	}
 
-	//--------------------- Clear Bounding box data
-	/*if (S_BoundingBox[0] != nullptr)
-	{
-		delete S_BoundingBox[0];
-		S_BoundingBox[0] = nullptr;
-	}*/
-
 	FileName[0] = 0;
 	Path_FileName[0] = 0;
 	Model_FolderPath[0] = 0;
@@ -115,6 +116,8 @@ void SB_Model::Reset_Class(void)
 	MotionCount = 0;
 	BoneCount = 0;
 	NormalsCount = 0;
+
+	//BrushCount = 0;
 }
 
 // *************************************************************************
@@ -129,7 +132,23 @@ void SB_Model::Create_Mesh_Group(int Index)
 	}
 
 	Group[Index] = new Base_Group();
+}
 
+// *************************************************************************
+// *		Create_Mesh_Group:- Terry and Hazel Flanigan 2023		  	   *
+// *************************************************************************
+void SB_Model::Create_Brush(int Index)
+{
+	if (B_Brush[Index] != nullptr)
+	{
+		delete B_Brush[Index];
+		B_Brush[Index] = nullptr;
+	}
+
+	B_Brush[Index] = new Base_Brush();
+
+	B_Brush[Index]->Vertice_Count = 0;
+	B_Brush[Index]->Face_Count = 0;
 }
 
 // *************************************************************************

@@ -3,6 +3,8 @@
 
 Base_Brush::Base_Brush()
 {
+	Vertice_Count = 0;
+	Face_Count = 0;
 }
 
 Base_Brush::~Base_Brush()
