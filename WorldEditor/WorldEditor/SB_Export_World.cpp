@@ -730,6 +730,38 @@ void SB_Export_World::Export_World_Text(int ExpSelected)
 // *************************************************************************
 bool SB_Export_World::Level_Build_Text_G3ds(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, geBoolean ExpLights, int GroupID)
 {
+	int i;
+	geBoolean* WrittenTex;
+
+	WrittenTex = (geBoolean*)calloc(sizeof(geBoolean), pLevel->WadFile->mBitmapCount);
+	// which textures are used?
+	BrushList_GetUsedTextures(BList, WrittenTex, pLevel->WadFile);
+
+	// write all used materials to the file
+	for (i = 0; i < pLevel->WadFile->mBitmapCount; i++)
+	{
+		if (WrittenTex[i])
+		{
+			char matname[MAX_PATH];
+			int j, k;
+			strncpy(matname, pLevel->WadFile->mBitmaps[i].Name, MAX_PATH - 1);
+			fprintf(WriteScene_TXT, "%s %i\n", matname,i);
+
+			/*if (geBitmap_HasAlpha(pLevel->WadFile->mBitmaps[i].bmp))
+			{
+				TypeIO_WriteUChar(f, 't');
+				TypeIO_WriteUChar(f, 'g');
+				TypeIO_WriteUChar(f, 'a');
+			}
+			else
+			{
+				TypeIO_WriteUChar(f, 'b');
+				TypeIO_WriteUChar(f, 'm');
+				TypeIO_WriteUChar(f, 'p');
+			}*/
+		}
+	}
+
 	BrushList_ExportToText(BList, GE_FALSE);
 	return 1;
 }
@@ -817,7 +849,7 @@ struct tag_FaceList
 };
 
 // *************************************************************************
-// *							FaceList_ExportToTexxt					   *
+// *							FaceList_ExportToText					   *
 // *************************************************************************
 bool SB_Export_World::FaceList_ExportToText(const Brush* b,const FaceList* pList, int BrushCount, int SubBrushCount)
 {
@@ -964,7 +996,8 @@ bool SB_Export_World::FaceList_ExportToText(const Brush* b,const FaceList* pList
 			for (num_chars = 0; matname[num_chars] != '\0'; num_chars++);
 
 			// Material Name
-			fprintf(WriteScene_TXT, "MT = %s\n", matname);
+			int DibId = Face_GetTextureDibId(pList->Faces[i]);
+			fprintf(WriteScene_TXT, "MT = %s %i\n", matname, DibId);
 
 			// write number of faces that have this texture
 			fprintf(WriteScene_TXT, "# Number of Faces = %i \n", curnum_faces);

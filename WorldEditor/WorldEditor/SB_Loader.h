@@ -63,7 +63,7 @@ protected:
 	void Copy_Texture_Names();
 	int Check_for_Textures(geVFile* BaseFile);
 	bool Check_in_Txl(char* FileName);
-	bool AddTexture(geVFile* BaseFile, const char* Path, int GroupIndex);
+	bool AddTexture(geVFile* BaseFile, const char* TextureName, int GroupIndex);
 	HBITMAP CreateHBitmapFromgeBitmap(geBitmap* Bitmap, HDC hdc);
 
 	void Adjust();

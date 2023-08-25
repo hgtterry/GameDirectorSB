@@ -67,6 +67,7 @@ public:
 	void TestLight(void);
 
 	UINT  g_Texture[400];
+	UINT  g_BrushTexture[400];
 
 protected:
 

@@ -312,69 +312,49 @@ int SB_Loader::Check_for_Textures(geVFile* BaseFile)
 // *************************************************************************
 // *			AddTexture:- Terry and Hazel Flanigan 2023		  		   *
 // *************************************************************************
-bool SB_Loader::AddTexture(geVFile* BaseFile, const char* Path, int GroupIndex)
+bool SB_Loader::AddTexture(geVFile* BaseFile, const char* TextureName, int GroupIndex)
 {
-
-	geBitmap* Bitmap;
-
-	geVFile* File;
-	char			FileName[_MAX_FNAME];
-	char* Name;
-
-	Bitmap = NULL;
-	File = NULL;
-
-	_splitpath(Path, NULL, NULL, FileName, NULL);
-	Name = _strdup(FileName);
-	if (!Name)
-	{
-		App->Say("Memory allocation error processing %s");
-		return FALSE;
-	}
-
-	if (BaseFile)
-		File = geVFile_Open(BaseFile, Path, GE_VFILE_OPEN_READONLY);
-	else
-		File = geVFile_OpenNewSystem(NULL, GE_VFILE_TYPE_DOS, Path, NULL, GE_VFILE_OPEN_READONLY);
-
-	if (!File)
-	{
-		//NonFatalError("Could not open %s", Path);
-		App->Say("Could not open %s");
-		return TRUE;
-	}
-
-
-	Bitmap = geBitmap_CreateFromFile(File);
-
-	if (geBitmap_HasAlpha(Bitmap))
-	{
-		App->CLSB_Model->Group[GroupIndex]->RF_Bitmap = Bitmap;
-	}
-
+	App->Get_Current_Document();
 
 	HWND	PreviewWnd;
 	HBITMAP	hbm;
 	HDC		hDC;
 
-	PreviewWnd = GetDlgItem(RightGroups_Hwnd, IDC_BASETEXTURE2);
-	hDC = GetDC(PreviewWnd);
-	hbm = CreateHBitmapFromgeBitmap(Bitmap, hDC);
+	geBitmap* Bitmap = NULL;
+	CWadFile* pWad;
+	pWad = NULL;
+	pWad = Level_GetWadFile(App->m_pDoc->pLevel);
+	for (int index = 0; index < pWad->mBitmapCount; index++)
+	{
+		char mName[MAX_PATH];
 
-	App->CLSB_Model->Group[GroupIndex]->Base_Bitmap = hbm;
+		CString Name = pWad->mBitmaps[index].Name;
+		strcpy(mName, Name);
 
-	char TempTextureFile_BMP[1024];
-	strcpy(TempTextureFile_BMP, App->WorldEditor_Directory);
-	strcat(TempTextureFile_BMP, "\\");
-	strcat(TempTextureFile_BMP, "TextureLoad.bmp");
+		bool test = strcmp(mName, TextureName);
+		if (test == 0)
+		{
+			Bitmap = pWad->mBitmaps[index].bmp;
 
-	App->CLSB_Textures->Genesis_WriteToBmp(Bitmap, TempTextureFile_BMP);
+			PreviewWnd = GetDlgItem(RightGroups_Hwnd, IDC_BASETEXTURE2);
+			hDC = GetDC(PreviewWnd);
+			hbm = CreateHBitmapFromgeBitmap(Bitmap, hDC);
+			
+			App->CLSB_Model->Group[GroupIndex]->Base_Bitmap = hbm;
+			
+			char TempTextureFile_BMP[MAX_PATH];
+			strcpy(TempTextureFile_BMP, App->WorldEditor_Directory);
+			strcat(TempTextureFile_BMP, "\\");
+			strcat(TempTextureFile_BMP, "TextureLoad.bmp");
 
-	App->CLSB_Textures->Soil_Load_Texture(App->CLSB_Ogre->RenderListener->g_Texture, TempTextureFile_BMP, GroupIndex);
+			App->CLSB_Textures->Genesis_WriteToBmp(Bitmap, TempTextureFile_BMP);
 
-	geVFile_Close(File);
+			App->CLSB_Textures->Soil_Load_Texture(App->CLSB_Ogre->RenderListener->g_Texture, TempTextureFile_BMP, GroupIndex);
 
-	DeleteFile((LPCTSTR)TempTextureFile_BMP);
+			DeleteFile((LPCTSTR)TempTextureFile_BMP);
+		}
+	}
+	
 	return TRUE;
 }
 
