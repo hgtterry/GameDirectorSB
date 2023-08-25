@@ -49,14 +49,14 @@ public:
 	bool Write_Project_File(char* Path_And_File,const char* Filename);
 
 
-	void Export_Text_GD3D();
+	void Export_World_Text();
 	bool Level_Build_Text_G3ds(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, geBoolean ExpLights, int GroupID);
-	bool BrushList_ExportToText(BrushList* BList, FILE* ofile, geBoolean SubBrush);
-	bool Brush_ExportToText(const Brush* b, FILE* ofile);
-	bool SB_Export_World::FaceList_ExportToText(const FaceList* pList, FILE* f, int BrushCount, int SubBrushCount);
+	bool BrushList_ExportToText(BrushList* BList, geBoolean SubBrush);
+	bool Brush_ExportToText(const Brush* b);
+	bool SB_Export_World::FaceList_ExportToText(const FaceList* pList, int BrushCount, int SubBrushCount);
 
 private:
 
 	FILE* WriteScene;
-
+	FILE* WriteScene_TXT;
 };

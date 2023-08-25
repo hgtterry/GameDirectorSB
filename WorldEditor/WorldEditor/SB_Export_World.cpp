@@ -116,6 +116,7 @@ struct tag_Level3
 SB_Export_World::SB_Export_World(void)
 {
 	WriteScene = NULL;
+	WriteScene_TXT = NULL;
 }
 
 SB_Export_World::~SB_Export_World(void)
@@ -630,16 +631,36 @@ bool SB_Export_World::Write_Project_File(char* Path_And_File,const char* Filenam
 }
 
 // *************************************************************************
-// * 		Export_Text_GD3D:- Terry and Hazel Flanigan 2023			   *
+// * 		Export_World_Text:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-void SB_Export_World::Export_Text_GD3D()
+void SB_Export_World::Export_World_Text()
 {
+	WriteScene_TXT = NULL;
+
+	char Path[MAX_PATH];
+	strcpy(Path, App->WorldEditor_Directory);
+	strcat(Path, "Data\\3DSTemp.txt");
+
+	WriteScene_TXT = fopen(Path, "wt");
+	if (!WriteScene_TXT)
+	{
+		App->Say("Cant Create Save File");
+		return;
+	}
+
+	fprintf(WriteScene_TXT, "%s\n", "[Special]");
+
+	
 	BrushList* BList;
 	geBoolean fResult;
 
 	BList = Level_GetBrushes(App->m_pDoc->pLevel);
 	
-	fResult = App->CLSB_Export_World->Level_Build_Text_G3ds(reinterpret_cast<tag_Level3*> (App->m_pDoc->pLevel), "FileName", BList, 0, 0, -1);
+	fResult = Level_Build_Text_G3ds(reinterpret_cast<tag_Level3*> (App->m_pDoc->pLevel), "FileName", BList, 0, 0, -1);
+
+	fclose(WriteScene_TXT);
+
+	App->Say("Saved");
 }
 
 // *************************************************************************
@@ -647,8 +668,7 @@ void SB_Export_World::Export_Text_GD3D()
 // *************************************************************************
 bool SB_Export_World::Level_Build_Text_G3ds(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, geBoolean ExpLights, int GroupID)
 {
-	FILE* f;
-	BrushList_ExportToText(BList, f, GE_FALSE);
+	BrushList_ExportToText(BList, GE_FALSE);
 	return 1;
 }
 
@@ -658,7 +678,7 @@ static int	SubBrushCount;
 // *************************************************************************
 // *		BrushList_ExportToText:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
-bool SB_Export_World::BrushList_ExportToText(BrushList* BList, FILE* ofile, geBoolean SubBrush)
+bool SB_Export_World::BrushList_ExportToText(BrushList* BList, geBoolean SubBrush)
 {
 	Brush* pBrush;
 	BrushIterator bi;
@@ -668,7 +688,7 @@ bool SB_Export_World::BrushList_ExportToText(BrushList* BList, FILE* ofile, geBo
 
 	while (pBrush != NULL)
 	{
-		if (!Brush_ExportToText(pBrush, ofile)) return GE_FALSE;
+		if (!Brush_ExportToText(pBrush)) return GE_FALSE;
 		pBrush = BrushList_GetNext(&bi);
 
 		if (SubBrush)
@@ -687,7 +707,7 @@ bool SB_Export_World::BrushList_ExportToText(BrushList* BList, FILE* ofile, geBo
 // *************************************************************************
 // *		Brush_ExportToText:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-bool SB_Export_World::Brush_ExportToText(const Brush* b, FILE* ofile)
+bool SB_Export_World::Brush_ExportToText(const Brush* b)
 {
 	assert(ofile);
 	assert(b);
@@ -695,18 +715,18 @@ bool SB_Export_World::Brush_ExportToText(const Brush* b, FILE* ofile)
 	switch (b->Type)
 	{
 	case	BRUSH_MULTI:
-		return BrushList_ExportToText(b->BList, ofile, GE_TRUE);
+		return BrushList_ExportToText(b->BList,GE_TRUE);
 
 	case	BRUSH_LEAF:
 		if (b->BList)
 		{
-			return BrushList_ExportToText(b->BList, ofile, GE_TRUE);
+			return BrushList_ExportToText(b->BList,GE_TRUE);
 		}
 		else
 		{
 			if (!(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT | BRUSH_SUBTRACT)))
 			{
-				return FaceList_ExportToText(b->Faces, ofile, BrushCount, SubBrushCount);
+				return FaceList_ExportToText(b->Faces, BrushCount, SubBrushCount);
 			}
 			else if ((b->Flags & BRUSH_SUBTRACT) && !(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT)))
 				BrushCount--;
@@ -716,7 +736,7 @@ bool SB_Export_World::Brush_ExportToText(const Brush* b, FILE* ofile)
 
 	case	BRUSH_CSG:
 		if (!(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT | BRUSH_SUBTRACT)))
-			return FaceList_ExportToText(b->Faces, ofile, BrushCount, SubBrushCount);
+			return FaceList_ExportToText(b->Faces, BrushCount, SubBrushCount);
 		break;
 	default:
 		assert(0);		// invalid brush type
@@ -738,7 +758,7 @@ struct tag_FaceList
 // *************************************************************************
 // *							FaceList_ExportToTexxt					   *
 // *************************************************************************
-bool SB_Export_World::FaceList_ExportToText(const FaceList* pList, FILE* f, int BrushCount, int SubBrushCount)
+bool SB_Export_World::FaceList_ExportToText(const FaceList* pList, int BrushCount, int SubBrushCount)
 {
 
 	int i, j, k, num_faces, num_verts, num_mats, num_chars, curnum_verts;

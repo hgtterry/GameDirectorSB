@@ -715,20 +715,7 @@ LRESULT CALLBACK SB_TopTabs::Top_Test_Proc(HWND hDlg, UINT message, WPARAM wPara
 	{
 		if (LOWORD(wParam) == IDC_WETEST)
 		{
-			Brush* B = NULL;
-
-			B = App->CL_Brush->Get_By_Name("XYZ");
-
-			if (Brush_IsVisible(B))
-			{
-				Brush_SetVisible(B, GE_FALSE);
-			}
-			else
-			{
-				Brush_SetVisible(B, GE_TRUE);
-			}
-
-			App->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS | REBUILD_QUICK, NULL);
+			App->CLSB_Export_World->Export_World_Text();
 
 			return TRUE;
 		}
