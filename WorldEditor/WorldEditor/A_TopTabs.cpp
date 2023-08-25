@@ -853,8 +853,7 @@ LRESULT CALLBACK SB_TopTabs::Top_Equity_Proc(HWND hDlg, UINT message, WPARAM wPa
 		{
 
 			App->CLSB_Model->Clear_Model_And_Reset();
-
-			//Debug
+			
 			App->CLSB_Grid->Reset_View();
 
 			App->CLSB_TopTabs_Equity->Camera_Set_Model();

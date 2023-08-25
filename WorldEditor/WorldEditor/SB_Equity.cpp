@@ -483,22 +483,6 @@ LRESULT CALLBACK SB_Equity::Render_Buttons_Proc(HWND hDlg, UINT message, WPARAM 
 			return TRUE;
 		}
 
-		//-------------------------------------------------------- Show Info
-		if (LOWORD(wParam) == IDC_TBINFO2)
-		{
-			/*if (App->CL_Editor_Gui->Show_Model_Data_F == 1)
-			{
-				App->CL_Editor_Gui->Close_Model_Data();
-			}
-			else
-			{
-				App->CL_Editor_Gui->Start_Model_Data();
-			}*/
-
-
-			return TRUE;
-		}
-
 		if (LOWORD(wParam) == IDC_TBSHOWFACES)
 		{
 			if (App->CLSB_Model->Model_Loaded == 1)

@@ -117,7 +117,7 @@ void SB_Model::Reset_Class(void)
 	BoneCount = 0;
 	NormalsCount = 0;
 
-	//BrushCount = 0;
+	BrushCount = 0;
 }
 
 // *************************************************************************

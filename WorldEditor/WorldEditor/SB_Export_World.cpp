@@ -720,7 +720,7 @@ void SB_Export_World::Export_World_Text(int ExpSelected)
 
 	fclose(WriteScene_TXT);
 
-	App->Say("Saved");
+	//App->Say("Saved");
 }
 
 // *************************************************************************
@@ -991,6 +991,6 @@ bool SB_Export_World::FaceList_ExportToText(const Brush* b,const FaceList* pList
 	free(matf);
 
 	App->CLSB_Model->BrushCount++;
-	Debug
+	
 	return GE_TRUE;
 }

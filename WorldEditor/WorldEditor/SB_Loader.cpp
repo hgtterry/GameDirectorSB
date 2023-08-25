@@ -59,7 +59,7 @@ void SB_Loader::Assimp_Loader(char* Extension, char* Extension2)
 	}
 
 	App->CLSB_Model->Clear_Model_And_Reset();
-
+	
 	strcpy(App->CLSB_Loader->Path_FileName, App->CLSB_FileIO->PathFileName);
 	strcpy(App->CLSB_Loader->FileName, App->CLSB_FileIO->FileName);
 
@@ -120,6 +120,8 @@ bool SB_Loader::Read_Project_File(char* Path_And_File)
 bool SB_Loader::Load_File_Wepf()
 {
 	App->CLSB_Model->Clear_Model_And_Reset();
+
+	App->CLSB_Export_World->Export_World_Text(1);
 
 	App->CLSB_Assimp->SelectedPreset = 8 + 8388608+64 + aiProcess_PreTransformVertices;
 
