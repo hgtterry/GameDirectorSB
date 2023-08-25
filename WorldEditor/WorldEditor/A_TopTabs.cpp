@@ -886,6 +886,8 @@ LRESULT CALLBACK SB_TopTabs::Top_Equity_Proc(HWND hDlg, UINT message, WPARAM wPa
 				return TRUE;
 			}
 
+			
+
 			App->CLSB_Bullet->create_New_Trimesh(0);
 
 			if (App->CLSB_Model->Player_Count == 0)

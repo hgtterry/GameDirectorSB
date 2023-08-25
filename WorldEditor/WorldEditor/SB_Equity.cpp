@@ -172,7 +172,20 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 
 	case WM_COMMAND:
 	{
+		if (LOWORD(wParam) == ID_RENDER_BRUSEHS)
+		{
+			if (App->CLSB_Ogre->RenderListener->ShowBrushes == 1)
+			{
+				App->CLSB_Ogre->RenderListener->ShowBrushes = 0;
+			}
+			else
+			{
+				App->CLSB_Ogre->RenderListener->ShowBrushes = 1;
+			}
 
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == ID_DEBUG_PREFERENCESWE)
 		{
 			App->CLSB_Preferences->Start_Preferences_Dlg();
@@ -1002,6 +1015,8 @@ bool SB_Equity::Preview_All()
 	
 	m_pDoc->SelectAll();
 	m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+
+	App->CLSB_Export_World->Export_World_Text(1);
 
 	App->CLSB_Equity->Position_Offsets.x = m_pDoc->SelectedGeoCenter.X;
 	App->CLSB_Equity->Position_Offsets.y = m_pDoc->SelectedGeoCenter.Y;

@@ -2696,6 +2696,7 @@ BEGIN
     BEGIN
         MENUITEM "Cross Hair",                  ID_RENDER_CROSSHAIR
         MENUITEM "Faces",                       ID_RENDER_FACES
+        MENUITEM "Brusehs",                     ID_RENDER_BRUSEHS
     END
     POPUP "Debug"
     BEGIN

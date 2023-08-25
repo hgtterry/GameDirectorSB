@@ -819,6 +819,7 @@ struct tag_FaceList
 // *************************************************************************
 bool SB_Export_World::FaceList_ExportToText(const Brush* b,const FaceList* pList, int BrushCount, int SubBrushCount)
 {
+
 	App->CLSB_Model->Create_Brush(App->CLSB_Model->BrushCount);
 
 
@@ -863,8 +864,11 @@ bool SB_Export_World::FaceList_ExportToText(const Brush* b,const FaceList* pList
 	// Name of Brush SubBrush
 	fprintf(WriteScene_TXT,"%s %i %i\n",b->Name,BrushCount, SubBrushCount);
 	
-	// this object is a trimesh
-	// write all vertices of each face of this object
+	int VertIndex = 0;
+	// -----------------------------------  Vertices
+	fprintf(WriteScene_TXT, "# Number of Vertices = %i \n", num_verts);
+	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Vertice_Count = num_verts;
+	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->vertex_Data.resize(num_verts);
 	
 	for (i = 0; i < pList->NumFaces; i++)
 	{
@@ -874,11 +878,13 @@ bool SB_Export_World::FaceList_ExportToText(const Brush* b,const FaceList* pList
 		for (j = 0; j < curnum_verts; j++)
 		{
 			fprintf(WriteScene_TXT, "V = %f %f %f\n", verts[j].X, verts[j].Y, verts[j].Z);
+			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->vertex_Data[VertIndex].x = verts[j].X;
+			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->vertex_Data[VertIndex].y = verts[j].Y;
+			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->vertex_Data[VertIndex].z = verts[j].Z;
+			VertIndex++;
 		}
 	}
 
-	
-	//write_ushort(f, (unsigned short)num_verts);
 	for (i = 0; i < pList->NumFaces; i++)
 	{
 		const TexInfo_Vectors* TVecs = Face_GetTextureVecs(pList->Faces[i]);
@@ -912,10 +918,12 @@ bool SB_Export_World::FaceList_ExportToText(const Brush* b,const FaceList* pList
 		}
 	}
 
-	// write all faces of this object (all faces are split into triangles)
-	//write_ushort(f, (unsigned short)num_faces);
-
+	int FaceIndex = 0;
+	// -----------------------------------  Faces
 	fprintf(WriteScene_TXT, "# Number of Faces = %i \n", num_faces);
+	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Count = num_faces;
+	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Data.resize(num_faces);
+	
 	num_verts = 0;
 	for (i = 0; i < pList->NumFaces; i++)
 	{
@@ -923,6 +931,10 @@ bool SB_Export_World::FaceList_ExportToText(const Brush* b,const FaceList* pList
 		for (j = 0; j < curnum_verts - 2; j++)
 		{
 			fprintf(WriteScene_TXT, "F = %i %i %i\n", num_verts, num_verts + 2 + j, num_verts + 1 + j);
+			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Data[FaceIndex].a = num_verts;
+			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Data[FaceIndex].b = num_verts + 2 + j;
+			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Data[FaceIndex].c = num_verts + 1 + j;
+			FaceIndex++;
 		}
 
 		num_verts += curnum_verts;

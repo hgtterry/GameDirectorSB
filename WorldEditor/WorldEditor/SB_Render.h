@@ -47,6 +47,7 @@ public:
 
 	bool ShowTextured;
 	bool ShowFaces;
+	bool ShowBrushes;
 	bool ShowBones;
 	bool ShowPoints;
 	bool ShowNormals;
@@ -87,6 +88,9 @@ protected:
 	bool Assimp_Render_Faces(void);
 	bool Assimp_Face_Parts(int Count);
 	void Assimp_Render_Normals(void);
+
+	bool Brushes_Render_Faces(void);
+	bool Brushes_Face_Parts(int Count);
 
 	void Render_As_Normals_Parts(int Count);
 

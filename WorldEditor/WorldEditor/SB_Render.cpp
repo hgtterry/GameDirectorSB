@@ -42,6 +42,7 @@ SB_Render::SB_Render()
 
 	ShowTextured = 1;
 	ShowFaces = 0;
+	ShowBrushes = 0;
 	ShowBones = 0;
 	ShowPoints = 0;
 	ShowNormals = 0;
@@ -266,6 +267,15 @@ void SB_Render::Render_Loop()
 		}
 	}
 
+	// ---------------------- Brushes
+	if (App->CLSB_Model->Model_Loaded == 1 && ShowBrushes == 1)
+	{
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+		Brushes_Render_Faces();
+		
+	}
+
 	// ---------------------- Points
 	if (App->CLSB_Model->Model_Loaded == 1 && ShowPoints == 1)
 	{
@@ -346,6 +356,65 @@ void SB_Render::Translate(void)
 
 	glRotatef(RZ, 0.0, 1.0, 0.0);
 	glRotatef(0.0, 0.0, 0.0, 1.0);
+}
+
+// *************************************************************************
+// *						Bruses_Render_Faces Terry Bernie	   		   *
+// *************************************************************************
+bool SB_Render::Brushes_Render_Faces(void)
+{
+	int Count = 0;
+
+	glColor3f(1, 0, 0);
+
+	int BrushCount = App->CLSB_Model->BrushCount;
+
+	while (Count < BrushCount)
+	{
+		Brushes_Face_Parts(Count);
+		Count++;
+	}
+
+	return 1;
+}
+// *************************************************************************
+// *					Bruses_Face_Parts Terry Bernie		   			   *
+// *************************************************************************
+bool SB_Render::Brushes_Face_Parts(int Count)
+{
+	int FaceCount = 0;
+	int A = 0;
+	int B = 0;
+	int C = 0;
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+	while (FaceCount < App->CLSB_Model->B_Brush[Count]->Face_Count)
+	{
+		A = App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].a;
+		B = App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].b;
+		C = App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].c;
+
+		glBegin(GL_POLYGON);
+
+		//-----------------------------------------------
+		glVertex3fv(&App->CLSB_Model->B_Brush[Count]->vertex_Data[A].x);
+
+		//-----------------------------------------------
+		glVertex3fv(&App->CLSB_Model->B_Brush[Count]->vertex_Data[B].x);
+
+		//-----------------------------------------------
+		glVertex3fv(&App->CLSB_Model->B_Brush[Count]->vertex_Data[C].x);
+
+		FaceCount++;
+		//-----------------------------------------------
+
+		glEnd();
+	}
+
+	//App->Flash_Window();
+
+	return 1;
 }
 
 // *************************************************************************
