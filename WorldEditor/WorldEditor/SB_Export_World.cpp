@@ -683,7 +683,6 @@ bool SB_Export_World::BrushList_ExportToText(BrushList* BList, geBoolean SubBrus
 	Brush* pBrush;
 	BrushIterator bi;
 
-
 	pBrush = BrushList_GetFirst(BList, &bi);
 
 	while (pBrush != NULL)
@@ -813,10 +812,11 @@ bool SB_Export_World::FaceList_ExportToText(const FaceList* pList, int BrushCoun
 	//write_ushort(f, CHUNK_OBJBLOCK);
 	//write_int(f, size_objblock);
 	//// give each object a unique name xxx_xx\0
-	//write_char(f, (char)(48 + (BrushCount - BrushCount % 100) / 100));
+	fprintf(WriteScene_TXT,"%i %i\n",BrushCount, SubBrushCount);
 	//write_char(f, (char)(48 + ((BrushCount - BrushCount % 10) / 10) % 10));
 	//write_char(f, (char)(48 + BrushCount % 10));
 	//write_char(f, '_');
+	//fprintf(WriteScene_TXT, "%i\n", SubBrushCount);
 	//write_char(f, (char)(48 + (SubBrushCount - SubBrushCount % 10) / 10));
 	//write_char(f, (char)(48 + SubBrushCount % 10));
 	//write_char(f, '\0');
@@ -825,7 +825,6 @@ bool SB_Export_World::FaceList_ExportToText(const FaceList* pList, int BrushCoun
 	// this object is a trimesh
 	/*write_ushort(f, CHUNK_TRIMESH);
 	write_int(f, size_trimesh);*/
-
 	// write all vertices of each face of this object
 	/*write_ushort(f, CHUNK_VERTLIST);
 	write_int(f, size_verts);
@@ -837,6 +836,9 @@ bool SB_Export_World::FaceList_ExportToText(const FaceList* pList, int BrushCoun
 		curnum_verts = Face_GetNumPoints(pList->Faces[i]);
 		for (j = 0; j < curnum_verts; j++)
 		{
+			fprintf(WriteScene_TXT, "%f %f %f\n", verts[j].X, verts[j].Y, verts[j].Z);
+			//fprintf(WriteScene_TXT, "%f\n", verts[j].Y);
+			//fprintf(WriteScene_TXT, "%f\n", verts[j].Z);
 			/*write_float(f, verts[j].X);
 			write_float(f, verts[j].Y);
 			write_float(f, verts[j].Z);*/
