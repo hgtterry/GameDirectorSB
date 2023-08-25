@@ -648,9 +648,8 @@ void SB_Export_World::Export_World_Text()
 		return;
 	}
 
-	fprintf(WriteScene_TXT, "%s\n", "[Special]");
+	fprintf(WriteScene_TXT, "%s\n", "[GameDirector]");
 
-	
 	BrushList* BList;
 	geBoolean fResult;
 
@@ -761,7 +760,6 @@ bool SB_Export_World::FaceList_ExportToText(const Brush* b,const FaceList* pList
 {
 
 	int i, j, k, num_faces, num_verts, num_mats, num_chars, curnum_verts;
-	int size_verts, size_faces, size_trimesh, size_objblock, size_name, size_mapuv, size_mats;
 	char matname[20];
 
 	char* matf = (char*)calloc(sizeof(char), pList->NumFaces);
@@ -799,36 +797,12 @@ bool SB_Export_World::FaceList_ExportToText(const Brush* b,const FaceList* pList
 	for (i = 0; i < pList->NumFaces; i++)
 		matf[i] = 0;
 
-	// calculate the size of the different chunks
-	//size_name = 7; //xxx_xx\0
-	//size_verts = SIZE_CHUNKID + SIZE_CHUNKLENGTH + SIZE_USHORT + 3 * SIZE_FLOAT * num_verts;
-	//size_mats = (SIZE_CHUNKID + SIZE_CHUNKLENGTH + SIZE_USHORT) * num_mats + (num_chars + num_mats) + SIZE_USHORT * num_faces;
-	//size_faces = SIZE_CHUNKID + SIZE_CHUNKLENGTH + SIZE_USHORT + 4 * SIZE_USHORT * num_faces + size_mats;
-	//size_mapuv = SIZE_CHUNKID + SIZE_CHUNKLENGTH + SIZE_USHORT + 2 * SIZE_FLOAT * num_verts;
-	//size_trimesh = SIZE_CHUNKID + SIZE_CHUNKLENGTH + size_verts + size_faces + size_mapuv;
-	//size_objblock = SIZE_CHUNKID + SIZE_CHUNKLENGTH + size_name + size_trimesh;
-
-	// write the objblock
-	//write_ushort(f, CHUNK_OBJBLOCK);
-	//write_int(f, size_objblock);
-	//// give each object a unique name xxx_xx\0
+	// Name of Brush SubBrush
 	fprintf(WriteScene_TXT,"%s %i %i\n",b->Name,BrushCount, SubBrushCount);
-	//write_char(f, (char)(48 + ((BrushCount - BrushCount % 10) / 10) % 10));
-	//write_char(f, (char)(48 + BrushCount % 10));
-	//write_char(f, '_');
-	//fprintf(WriteScene_TXT, "%i\n", SubBrushCount);
-	//write_char(f, (char)(48 + (SubBrushCount - SubBrushCount % 10) / 10));
-	//write_char(f, (char)(48 + SubBrushCount % 10));
-	//write_char(f, '\0');
-	// end name of this object
-
+	
 	// this object is a trimesh
-	/*write_ushort(f, CHUNK_TRIMESH);
-	write_int(f, size_trimesh);*/
 	// write all vertices of each face of this object
-	/*write_ushort(f, CHUNK_VERTLIST);
-	write_int(f, size_verts);
-	write_ushort(f, (unsigned short)num_verts);*/
+	
 	for (i = 0; i < pList->NumFaces; i++)
 	{
 		const geVec3d* verts;
@@ -836,24 +810,13 @@ bool SB_Export_World::FaceList_ExportToText(const Brush* b,const FaceList* pList
 		curnum_verts = Face_GetNumPoints(pList->Faces[i]);
 		for (j = 0; j < curnum_verts; j++)
 		{
-			fprintf(WriteScene_TXT, "%f %f %f\n", verts[j].X, verts[j].Y, verts[j].Z);
-			//fprintf(WriteScene_TXT, "%f\n", verts[j].Y);
-			//fprintf(WriteScene_TXT, "%f\n", verts[j].Z);
-			/*write_float(f, verts[j].X);
-			write_float(f, verts[j].Y);
-			write_float(f, verts[j].Z);*/
+			fprintf(WriteScene_TXT, "V = %f %f %f\n", verts[j].X, verts[j].Y, verts[j].Z);
+
 		}
 	}
 
-	// write MAPPING COORDINATES
-	/*
-	Although from the chunk id you would suppose that FACELIST (0x4120) and
-	CHUNK_MATLIST (0x4130) would be the next chunks, 3ds max does not recognize the
-	mapping coordinates if they are not after the vertlist chunk!
-	*/
-	/*write_ushort(f, CHUNK_MAPLIST);
-	write_int(f, size_mapuv);
-	write_ushort(f, (unsigned short)num_verts);*/
+	
+	//write_ushort(f, (unsigned short)num_verts);
 	for (i = 0; i < pList->NumFaces; i++)
 	{
 		const TexInfo_Vectors* TVecs = Face_GetTextureVecs(pList->Faces[i]);
@@ -883,26 +846,22 @@ bool SB_Export_World::FaceList_ExportToText(const Brush* b,const FaceList* pList
 			V = geVec3d_DotProduct(&(verts[j]), &vVec);
 			U += (TVecs->uOffset / txSize);
 			V -= (TVecs->vOffset / tySize);
-			/*write_float(f, U);
-			write_float(f, V);*/
+			fprintf(WriteScene_TXT, "UV = %f %f\n", U,V);
 		}
 	}
 
 	// write all faces of this object (all faces are split into triangles)
-	/*write_ushort(f, CHUNK_FACELIST);
-	write_int(f, size_faces);
-	write_ushort(f, (unsigned short)num_faces);*/
+	//write_ushort(f, (unsigned short)num_faces);
+
+	fprintf(WriteScene_TXT, "# Number of Faces = %i \n", num_faces);
 	num_verts = 0;
 	for (i = 0; i < pList->NumFaces; i++)
 	{
 		curnum_verts = Face_GetNumPoints(pList->Faces[i]);
 		for (j = 0; j < curnum_verts - 2; j++)
 		{
-			fprintf(WriteScene_TXT, "%i %i %i\n", num_verts, num_verts + 2 + j, num_verts + 1 + j);
-			/*write_ushort(f, (unsigned short)num_verts);
-			write_ushort(f, (unsigned short)(num_verts + 2 + j));
-			write_ushort(f, (unsigned short)(num_verts + 1 + j));
-			write_ushort(f, 6);*/
+			fprintf(WriteScene_TXT, "F = %i %i %i\n", num_verts, num_verts + 2 + j, num_verts + 1 + j);
+
 		}
 		num_verts += curnum_verts;
 	}
@@ -928,26 +887,23 @@ bool SB_Export_World::FaceList_ExportToText(const Brush* b,const FaceList* pList
 			matname[10] = '\0';
 			for (num_chars = 0; matname[num_chars] != '\0'; num_chars++);
 
-			/*write_ushort(f, CHUNK_MATLIST);
-			int size = SIZE_CHUNKID + SIZE_CHUNKLENGTH + (num_chars + 1) + SIZE_USHORT + SIZE_USHORT * curnum_faces;
-			write_int(f, size);*/
-
-			// write matname
-			for (j = 0; j <= num_chars; j++)
-				//write_char(f, matname[j]);
+			// Material Name
+			fprintf(WriteScene_TXT, "MT = %s\n", matname);
 
 			// write number of faces that have this texture
-			//write_ushort(f, (unsigned short)curnum_faces);
+			fprintf(WriteScene_TXT, "# Number of Faces = %i \n", curnum_faces);
 
 			// write face numbers
 			curnum_faces = 0;
 			for (j = 0; j < i; j++)
+			{
 				curnum_faces += (Face_GetNumPoints(pList->Faces[j]) - 2);
+			}
 
 			curnum_verts = Face_GetNumPoints(pList->Faces[i]);
 			for (j = 0; j < curnum_verts - 2; j++)
 			{
-				//write_ushort(f, (unsigned short)(curnum_faces + j));
+				fprintf(WriteScene_TXT, "FN %i\n", curnum_faces + j);
 			}
 
 
@@ -961,7 +917,7 @@ bool SB_Export_World::FaceList_ExportToText(const Brush* b,const FaceList* pList
 					matf[j] = 1;
 					for (k = 0; k < curnum_verts - 2; k++)
 					{
-						//write_ushort(f, (unsigned short)(curnum_faces + k));
+						fprintf(WriteScene_TXT, "FN = %i\n", curnum_faces + k);
 					}
 				}
 				curnum_faces += (curnum_verts - 2);
