@@ -725,7 +725,7 @@ bool SB_Export_World::Brush_ExportToText(const Brush* b)
 		{
 			if (!(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT | BRUSH_SUBTRACT)))
 			{
-				return FaceList_ExportToText(b->Faces, BrushCount, SubBrushCount);
+				return FaceList_ExportToText(b,b->Faces, BrushCount, SubBrushCount);
 			}
 			else if ((b->Flags & BRUSH_SUBTRACT) && !(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT)))
 				BrushCount--;
@@ -735,7 +735,7 @@ bool SB_Export_World::Brush_ExportToText(const Brush* b)
 
 	case	BRUSH_CSG:
 		if (!(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT | BRUSH_SUBTRACT)))
-			return FaceList_ExportToText(b->Faces, BrushCount, SubBrushCount);
+			return FaceList_ExportToText(b,b->Faces, BrushCount, SubBrushCount);
 		break;
 	default:
 		assert(0);		// invalid brush type
@@ -757,7 +757,7 @@ struct tag_FaceList
 // *************************************************************************
 // *							FaceList_ExportToTexxt					   *
 // *************************************************************************
-bool SB_Export_World::FaceList_ExportToText(const FaceList* pList, int BrushCount, int SubBrushCount)
+bool SB_Export_World::FaceList_ExportToText(const Brush* b,const FaceList* pList, int BrushCount, int SubBrushCount)
 {
 
 	int i, j, k, num_faces, num_verts, num_mats, num_chars, curnum_verts;
@@ -812,7 +812,7 @@ bool SB_Export_World::FaceList_ExportToText(const FaceList* pList, int BrushCoun
 	//write_ushort(f, CHUNK_OBJBLOCK);
 	//write_int(f, size_objblock);
 	//// give each object a unique name xxx_xx\0
-	fprintf(WriteScene_TXT,"%i %i\n",BrushCount, SubBrushCount);
+	fprintf(WriteScene_TXT,"%s %i %i\n",b->Name,BrushCount, SubBrushCount);
 	//write_char(f, (char)(48 + ((BrushCount - BrushCount % 10) / 10) % 10));
 	//write_char(f, (char)(48 + BrushCount % 10));
 	//write_char(f, '_');
@@ -898,6 +898,7 @@ bool SB_Export_World::FaceList_ExportToText(const FaceList* pList, int BrushCoun
 		curnum_verts = Face_GetNumPoints(pList->Faces[i]);
 		for (j = 0; j < curnum_verts - 2; j++)
 		{
+			fprintf(WriteScene_TXT, "%i %i %i\n", num_verts, num_verts + 2 + j, num_verts + 1 + j);
 			/*write_ushort(f, (unsigned short)num_verts);
 			write_ushort(f, (unsigned short)(num_verts + 2 + j));
 			write_ushort(f, (unsigned short)(num_verts + 1 + j));
