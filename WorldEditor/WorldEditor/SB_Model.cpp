@@ -56,7 +56,7 @@ SB_Model::SB_Model(void)
 	}
 
 	Count = 0;
-	while (Count < 199)
+	while (Count < 1999)
 	{
 		B_Brush[Count] = nullptr;
 		Count++;
@@ -117,7 +117,7 @@ void SB_Model::Reset_Class(void)
 	BoneCount = 0;
 	NormalsCount = 0;
 
-	BrushCount = 0;
+	//BrushCount = 0;
 }
 
 // *************************************************************************

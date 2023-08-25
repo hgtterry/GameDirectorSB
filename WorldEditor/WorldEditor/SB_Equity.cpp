@@ -1016,7 +1016,7 @@ bool SB_Equity::Preview_All()
 	m_pDoc->SelectAll();
 	m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 
-	App->CLSB_Export_World->Export_World_Text(1);
+	App->CLSB_Export_World->Export_World_Text(0);
 
 	App->CLSB_Equity->Position_Offsets.x = m_pDoc->SelectedGeoCenter.X;
 	App->CLSB_Equity->Position_Offsets.y = m_pDoc->SelectedGeoCenter.Y;

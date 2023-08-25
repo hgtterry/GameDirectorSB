@@ -121,8 +121,6 @@ bool SB_Loader::Load_File_Wepf()
 {
 	App->CLSB_Model->Clear_Model_And_Reset();
 
-	App->CLSB_Export_World->Export_World_Text(1);
-
 	App->CLSB_Assimp->SelectedPreset = 8 + 8388608+64 + aiProcess_PreTransformVertices;
 
 	App->CLSB_Assimp->DoTextures = 0;

@@ -635,6 +635,8 @@ bool SB_Export_World::Write_Project_File(char* Path_And_File,const char* Filenam
 // *************************************************************************
 void SB_Export_World::Export_World_Text(int ExpSelected)
 {
+	App->CLSB_Model->BrushCount = 0;
+
 	WriteScene_TXT = NULL;
 
 	char Path[MAX_PATH];
