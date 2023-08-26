@@ -20,6 +20,7 @@ public:
 	bool Physics_Dlg_Active;
 
 	btBvhTriangleMeshShape* create_New_Trimesh(int Index);
+	btBvhTriangleMeshShape* Create_Brush_Trimesh(int Index);
 
 	btRigidBody* Phys_Body;
 protected:

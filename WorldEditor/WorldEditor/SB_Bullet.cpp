@@ -53,6 +53,105 @@ bool SB_Bullet::Init_Bullet()
 }
 
 // *************************************************************************
+//			Create_Brush_Trimesh:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+btBvhTriangleMeshShape* SB_Bullet::Create_Brush_Trimesh(int Index)
+{
+
+	// Create the triangle mesh
+	btTriangleMesh* triMesh = NULL;
+	btVector3 vert0, vert1, vert2;
+	int i = 0;
+
+	if (triMesh == nullptr)
+	{
+		triMesh = new btTriangleMesh(true);
+	}
+
+	int BrushCount = App->CLSB_Model->BrushCount;
+	int Count = 0;
+	while (Count < BrushCount)
+	{
+		int A = 0;
+		int B = 0;
+		int C = 0;
+		int FaceCount = 0;
+
+
+		while (FaceCount < App->CLSB_Model->B_Brush[Count]->Face_Count)
+		{
+			A = App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].a;
+			B = App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].b;
+			C = App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].c;
+
+			vert0.setValue(App->CLSB_Model->B_Brush[Count]->vertex_Data[A].x, App->CLSB_Model->B_Brush[Count]->vertex_Data[A].y, App->CLSB_Model->B_Brush[Count]->vertex_Data[A].z);
+			vert1.setValue(App->CLSB_Model->B_Brush[Count]->vertex_Data[B].x, App->CLSB_Model->B_Brush[Count]->vertex_Data[B].y, App->CLSB_Model->B_Brush[Count]->vertex_Data[B].z);
+			vert2.setValue(App->CLSB_Model->B_Brush[Count]->vertex_Data[C].x, App->CLSB_Model->B_Brush[Count]->vertex_Data[C].y, App->CLSB_Model->B_Brush[Count]->vertex_Data[C].z);
+
+			triMesh->addTriangle(vert0, vert1, vert2);
+
+			FaceCount++;
+		}
+		
+
+		Count++;
+	}
+
+	const bool useQuantizedAABB = true;
+	btBvhTriangleMeshShape* mShape = new btBvhTriangleMeshShape(triMesh, false, true);
+	//mShape->buildOptimizedBvh();
+
+	float x = 0; // Object->Object_Node->getPosition().x;
+	float y = 0; //Object->Object_Node->getPosition().y;
+	float z = 0; //Object->Object_Node->getPosition().z;
+
+
+	btVector3 inertia(0, 0, 0);
+	mShape->calculateLocalInertia(0.0, inertia);
+
+	btTransform startTransform;
+	startTransform.setIdentity();
+	startTransform.setRotation(btQuaternion(0.0f, 0.0f, 0.0f, 1));
+	btVector3 initialPosition(x, y, z);
+	startTransform.setOrigin(initialPosition);
+
+	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
+
+
+	btRigidBody::btRigidBodyConstructionInfo rigidBodyCI
+	(
+		0,  // mass
+		myMotionState,// initial position
+		mShape,      // collision shape of body
+		inertia   // local inertia
+	);
+
+	if (Phys_Body)
+	{
+		dynamicsWorld->removeCollisionObject(Phys_Body);
+		Phys_Body = NULL;
+	}
+
+	Phys_Body = new btRigidBody(rigidBodyCI);
+	Phys_Body->clearForces();
+	Phys_Body->setLinearVelocity(btVector3(0, 0, 0));
+	Phys_Body->setAngularVelocity(btVector3(0, 0, 0));
+	Phys_Body->setWorldTransform(startTransform);
+
+	int f = Phys_Body->getCollisionFlags();
+	Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+
+	//Phys_Body->setCollisionFlags(f & (~(1 << 5)));
+	
+	Phys_Body->setUserIndex(123);
+	Phys_Body->setUserIndex2(Index);
+
+	dynamicsWorld->addRigidBody(Phys_Body);
+
+	return mShape;
+}
+
+// *************************************************************************
 //			Create_New_Trimesh:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 btBvhTriangleMeshShape* SB_Bullet::create_New_Trimesh(int Index)

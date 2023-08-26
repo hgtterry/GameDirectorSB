@@ -167,18 +167,22 @@ LRESULT CALLBACK SB_TopTabs_Equity::Tabs_Headers_Proc(HWND hDlg, UINT message, W
 
 			App->Get_Current_Document();
 
-			App->m_pDoc->SelectAll();
-			App->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+			//App->m_pDoc->SelectAll();
+			//App->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 
-			App->CLSB_Export_World->Export_World_GD3D(1);
+			//App->CLSB_Export_World->Export_World_GD3D(1);
 
-			App->m_pDoc->ResetAllSelections();
-			App->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+			//App->m_pDoc->ResetAllSelections();
+			//App->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 
-			App->CLSB_Equity->mAutoLoad = 1;
-			App->CLSB_Equity->Auto_Load_File();
+			//App->CLSB_Equity->mAutoLoad = 1;
+			//App->CLSB_Equity->Auto_Load_File();
 
-			App->CLSB_Bullet->create_New_Trimesh(0);
+			//App->CLSB_Bullet->create_New_Trimesh(0);
+			//App->CLSB_Bullet->Create_Brush_Trimesh(0);
+
+			App->CLSB_Export_World->Export_World_Text(0);
+			App->CLSB_Bullet->Create_Brush_Trimesh(0);
 
 			if (First == 1)
 			{
@@ -287,7 +291,7 @@ LRESULT CALLBACK SB_TopTabs_Equity::Files_TB_Proc(HWND hDlg, UINT message, WPARA
 		if (LOWORD(wParam) == IDC_UPDATE)
 		{
 			
-			App->Get_Current_Document();
+			/*App->Get_Current_Document();
 
 			App->m_pDoc->SelectAll();
 			App->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
@@ -300,8 +304,10 @@ LRESULT CALLBACK SB_TopTabs_Equity::Files_TB_Proc(HWND hDlg, UINT message, WPARA
 			App->CLSB_Equity->mAutoLoad = 1;
 			App->CLSB_Equity->Auto_Load_File();
 
-			App->CLSB_Bullet->create_New_Trimesh(0);
+			App->CLSB_Export_World->Export_World_Text(0);
 
+			App->CLSB_Bullet->create_New_Trimesh(0);*/
+			Debug
 			return 1;
 		}
 

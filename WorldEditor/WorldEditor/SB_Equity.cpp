@@ -1005,7 +1005,7 @@ bool SB_Equity::Preview_All()
 		return 0;
 	}
 
-	App->CLSB_Equity->Position_Offsets.x = 0;
+	/*App->CLSB_Equity->Position_Offsets.x = 0;
 	App->CLSB_Equity->Position_Offsets.y = 0;
 	App->CLSB_Equity->Position_Offsets.z = 0;
 
@@ -1016,7 +1016,7 @@ bool SB_Equity::Preview_All()
 	m_pDoc->SelectAll();
 	m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 
-	App->CLSB_Export_World->Export_World_Text(0);
+	
 
 	App->CLSB_Equity->Position_Offsets.x = m_pDoc->SelectedGeoCenter.X;
 	App->CLSB_Equity->Position_Offsets.y = m_pDoc->SelectedGeoCenter.Y;
@@ -1025,17 +1025,29 @@ bool SB_Equity::Preview_All()
 	App->CLSB_Export_World->Export_World_GD3D(1);
 
 	m_pDoc->ResetAllSelections();
-	m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+	m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);*/
 
 	App->CLSB_TopTabs->Update_Dlg_Controls();
 
-	App->CLSB_Equity->mAutoLoad = 1;
-	App->CLSB_Equity->Auto_Load_File();
+	//App->CLSB_Equity->mAutoLoad = 1;
+	//App->CLSB_Equity->Auto_Load_File();
 
 	Ogre::Vector3 OldCamPos = App->CLSB_Camera_EQ->Saved_Pos;
 	Ogre::Quaternion OldCamRot = App->CLSB_Camera_EQ->Saved_Rotation;
 	App->CLSB_Ogre->mCamera->setPosition(Ogre::Vector3(OldCamPos.x, OldCamPos.y, OldCamPos.z));
 	App->CLSB_Ogre->mCamera->setOrientation(OldCamRot);
+
+	App->CLSB_Export_World->Export_World_Text(0);
+	App->CLSB_Bullet->Create_Brush_Trimesh(0);
+
+
+	App->CLSB_Model->Set_Equity();
+	App->CLSB_Camera_EQ->Reset_Orientation();
+	App->CLSB_Camera_EQ->Set_Camera_Mode(Enums::CamDetached);
+	App->CLSB_TopTabs_Equity->Camera_Set_Free();
+
+	App->CLSB_Model->Model_Loaded = 1;
+	App->CLSB_Ogre->RenderListener->ShowBrushes = 1;
 
 	App->CLSB_Equity->Show_Equity_Dialog(true);
 
@@ -1110,17 +1122,14 @@ bool SB_Equity::Set_Mode_Preview_Selected()
 		return 0;
 	}
 
-
-	App->CLSB_Export_World->Export_World_GD3D(1);
 	
-	App->CLSB_Equity->mAutoLoad = 1;
 
-	bool test = App->CLSB_Equity->Auto_Load_File();
-	if (test == 0)
-	{
-		return 0;
-	}
+	App->CLSB_Model->Set_Equity();
+	App->CLSB_Camera_EQ->Reset_Orientation();
+	
+	App->CLSB_Model->Model_Loaded = 1;
 
+	App->CLSB_Ogre->RenderListener->ShowBrushes = 1;
 	App->CLSB_Equity->Show_Equity_Dialog(true);
 
 
