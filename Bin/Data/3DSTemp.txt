@@ -9,8 +9,9 @@
 7 stfloor01 9
 8 stwall02 11
 9 stwall03 12
-10 brick005 21
-11 brwall02 27
+10 tiles01 13
+11 brick005 21
+12 brwall02 27
 Box 0 0
 # Number of Vertices = 24 
 V = 216.000000 -128.000076 -399.999939
@@ -1281,33 +1282,33 @@ F = 16 18 17
 F = 16 19 18
 F = 20 22 21
 F = 20 23 22
-MT = 0 brick005 10
+MT = 0 brick005 11
 # Number of Faces = 10 
-FN 0 10
-FN 1 10
-FN = 2 10
-FN = 3 10
-FN = 4 10
-FN = 5 10
-FN = 6 10
-FN = 7 10
-FN = 8 10
-FN = 9 10
+FN 0 11
+FN 1 11
+FN = 2 11
+FN = 3 11
+FN = 4 11
+FN = 5 11
+FN = 6 11
+FN = 7 11
+FN = 8 11
+FN = 9 11
 MT = 5 ceillight 3
 # Number of Faces = 2 
 FN 10 3
 FN 11 3
 -----------------------
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
 DN = 3
 DN = 3
 -----------------------
@@ -1374,33 +1375,33 @@ F = 16 18 17
 F = 16 19 18
 F = 20 22 21
 F = 20 23 22
-MT = 0 brick005 10
+MT = 0 brick005 11
 # Number of Faces = 10 
-FN 0 10
-FN 1 10
-FN = 2 10
-FN = 3 10
-FN = 4 10
-FN = 5 10
-FN = 6 10
-FN = 7 10
-FN = 8 10
-FN = 9 10
+FN 0 11
+FN 1 11
+FN = 2 11
+FN = 3 11
+FN = 4 11
+FN = 5 11
+FN = 6 11
+FN = 7 11
+FN = 8 11
+FN = 9 11
 MT = 5 ceillight 3
 # Number of Faces = 2 
 FN 10 3
 FN 11 3
 -----------------------
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
 DN = 3
 DN = 3
 -----------------------
@@ -1467,33 +1468,33 @@ F = 16 18 17
 F = 16 19 18
 F = 20 22 21
 F = 20 23 22
-MT = 0 brick005 10
+MT = 0 brick005 11
 # Number of Faces = 10 
-FN 0 10
-FN 1 10
-FN = 2 10
-FN = 3 10
-FN = 4 10
-FN = 5 10
-FN = 6 10
-FN = 7 10
-FN = 8 10
-FN = 9 10
+FN 0 11
+FN 1 11
+FN = 2 11
+FN = 3 11
+FN = 4 11
+FN = 5 11
+FN = 6 11
+FN = 7 11
+FN = 8 11
+FN = 9 11
 MT = 5 ceillight 3
 # Number of Faces = 2 
 FN 10 3
 FN 11 3
 -----------------------
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
 DN = 3
 DN = 3
 -----------------------
@@ -1560,33 +1561,33 @@ F = 16 18 17
 F = 16 19 18
 F = 20 22 21
 F = 20 23 22
-MT = 0 brick005 10
+MT = 0 brick005 11
 # Number of Faces = 10 
-FN 0 10
-FN 1 10
-FN = 2 10
-FN = 3 10
-FN = 4 10
-FN = 5 10
-FN = 6 10
-FN = 7 10
-FN = 8 10
-FN = 9 10
+FN 0 11
+FN 1 11
+FN = 2 11
+FN = 3 11
+FN = 4 11
+FN = 5 11
+FN = 6 11
+FN = 7 11
+FN = 8 11
+FN = 9 11
 MT = 5 ceillight 3
 # Number of Faces = 2 
 FN 10 3
 FN 11 3
 -----------------------
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
 DN = 3
 DN = 3
 -----------------------
@@ -1653,33 +1654,33 @@ F = 16 18 17
 F = 16 19 18
 F = 20 22 21
 F = 20 23 22
-MT = 0 brick005 10
+MT = 0 brick005 11
 # Number of Faces = 10 
-FN 0 10
-FN 1 10
-FN = 2 10
-FN = 3 10
-FN = 4 10
-FN = 5 10
-FN = 6 10
-FN = 7 10
-FN = 8 10
-FN = 9 10
+FN 0 11
+FN 1 11
+FN = 2 11
+FN = 3 11
+FN = 4 11
+FN = 5 11
+FN = 6 11
+FN = 7 11
+FN = 8 11
+FN = 9 11
 MT = 5 ceillight 3
 # Number of Faces = 2 
 FN 10 3
 FN 11 3
 -----------------------
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
 DN = 3
 DN = 3
 -----------------------
@@ -1746,33 +1747,33 @@ F = 16 18 17
 F = 16 19 18
 F = 20 22 21
 F = 20 23 22
-MT = 0 brick005 10
+MT = 0 brick005 11
 # Number of Faces = 10 
-FN 0 10
-FN 1 10
-FN = 2 10
-FN = 3 10
-FN = 4 10
-FN = 5 10
-FN = 6 10
-FN = 7 10
-FN = 8 10
-FN = 9 10
+FN 0 11
+FN 1 11
+FN = 2 11
+FN = 3 11
+FN = 4 11
+FN = 5 11
+FN = 6 11
+FN = 7 11
+FN = 8 11
+FN = 9 11
 MT = 5 ceillight 3
 # Number of Faces = 2 
 FN 10 3
 FN 11 3
 -----------------------
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
 DN = 3
 DN = 3
 -----------------------
@@ -1839,33 +1840,33 @@ F = 16 18 17
 F = 16 19 18
 F = 20 22 21
 F = 20 23 22
-MT = 0 brick005 10
+MT = 0 brick005 11
 # Number of Faces = 10 
-FN 0 10
-FN 1 10
-FN = 2 10
-FN = 3 10
-FN = 4 10
-FN = 5 10
-FN = 6 10
-FN = 7 10
-FN = 8 10
-FN = 9 10
+FN 0 11
+FN 1 11
+FN = 2 11
+FN = 3 11
+FN = 4 11
+FN = 5 11
+FN = 6 11
+FN = 7 11
+FN = 8 11
+FN = 9 11
 MT = 5 ceillight 3
 # Number of Faces = 2 
 FN 10 3
 FN 11 3
 -----------------------
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
 DN = 3
 DN = 3
 -----------------------
@@ -1932,33 +1933,33 @@ F = 16 18 17
 F = 16 19 18
 F = 20 22 21
 F = 20 23 22
-MT = 0 brick005 10
+MT = 0 brick005 11
 # Number of Faces = 10 
-FN 0 10
-FN 1 10
-FN = 2 10
-FN = 3 10
-FN = 4 10
-FN = 5 10
-FN = 6 10
-FN = 7 10
-FN = 8 10
-FN = 9 10
+FN 0 11
+FN 1 11
+FN = 2 11
+FN = 3 11
+FN = 4 11
+FN = 5 11
+FN = 6 11
+FN = 7 11
+FN = 8 11
+FN = 9 11
 MT = 5 ceillight 3
 # Number of Faces = 2 
 FN 10 3
 FN 11 3
 -----------------------
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
 DN = 3
 DN = 3
 -----------------------
@@ -2025,33 +2026,33 @@ F = 16 18 17
 F = 16 19 18
 F = 20 22 21
 F = 20 23 22
-MT = 0 brick005 10
+MT = 0 brick005 11
 # Number of Faces = 10 
-FN 0 10
-FN 1 10
-FN = 2 10
-FN = 3 10
-FN = 4 10
-FN = 5 10
-FN = 6 10
-FN = 7 10
-FN = 8 10
-FN = 9 10
+FN 0 11
+FN 1 11
+FN = 2 11
+FN = 3 11
+FN = 4 11
+FN = 5 11
+FN = 6 11
+FN = 7 11
+FN = 8 11
+FN = 9 11
 MT = 5 ceillight 3
 # Number of Faces = 2 
 FN 10 3
 FN 11 3
 -----------------------
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
 DN = 3
 DN = 3
 -----------------------
@@ -2118,16 +2119,16 @@ F = 16 18 17
 F = 16 19 18
 F = 20 22 21
 F = 20 23 22
-MT = 0 brick005 10
+MT = 0 brick005 11
 # Number of Faces = 8 
-FN 0 10
-FN 1 10
-FN = 2 10
-FN = 3 10
-FN = 4 10
-FN = 5 10
-FN = 6 10
-FN = 7 10
+FN 0 11
+FN 1 11
+FN = 2 11
+FN = 3 11
+FN = 4 11
+FN = 5 11
+FN = 6 11
+FN = 7 11
 MT = 4 ceillight 3
 # Number of Faces = 4 
 FN 8 3
@@ -2135,14 +2136,14 @@ FN 9 3
 FN = 10 3
 FN = 11 3
 -----------------------
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
 DN = 3
 DN = 3
 DN = 3
@@ -2211,16 +2212,16 @@ F = 16 18 17
 F = 16 19 18
 F = 20 22 21
 F = 20 23 22
-MT = 0 brick005 10
+MT = 0 brick005 11
 # Number of Faces = 8 
-FN 0 10
-FN 1 10
-FN = 2 10
-FN = 3 10
-FN = 4 10
-FN = 5 10
-FN = 6 10
-FN = 7 10
+FN 0 11
+FN 1 11
+FN = 2 11
+FN = 3 11
+FN = 4 11
+FN = 5 11
+FN = 6 11
+FN = 7 11
 MT = 4 ceillight 3
 # Number of Faces = 4 
 FN 8 3
@@ -2228,14 +2229,14 @@ FN 9 3
 FN = 10 3
 FN = 11 3
 -----------------------
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
 DN = 3
 DN = 3
 DN = 3
@@ -2304,33 +2305,33 @@ F = 16 18 17
 F = 16 19 18
 F = 20 22 21
 F = 20 23 22
-MT = 0 brick005 10
+MT = 0 brick005 11
 # Number of Faces = 12 
-FN 0 10
-FN 1 10
-FN = 2 10
-FN = 3 10
-FN = 4 10
-FN = 5 10
-FN = 6 10
-FN = 7 10
-FN = 8 10
-FN = 9 10
-FN = 10 10
-FN = 11 10
+FN 0 11
+FN 1 11
+FN = 2 11
+FN = 3 11
+FN = 4 11
+FN = 5 11
+FN = 6 11
+FN = 7 11
+FN = 8 11
+FN = 9 11
+FN = 10 11
+FN = 11 11
 -----------------------
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
 -----------------------
 Staircase 3 2
 # Number of Vertices = 24 
@@ -2395,33 +2396,33 @@ F = 16 18 17
 F = 16 19 18
 F = 20 22 21
 F = 20 23 22
-MT = 0 brick005 10
+MT = 0 brick005 11
 # Number of Faces = 12 
-FN 0 10
-FN 1 10
-FN = 2 10
-FN = 3 10
-FN = 4 10
-FN = 5 10
-FN = 6 10
-FN = 7 10
-FN = 8 10
-FN = 9 10
-FN = 10 10
-FN = 11 10
+FN 0 11
+FN 1 11
+FN = 2 11
+FN = 3 11
+FN = 4 11
+FN = 5 11
+FN = 6 11
+FN = 7 11
+FN = 8 11
+FN = 9 11
+FN = 10 11
+FN = 11 11
 -----------------------
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
 -----------------------
 Staircase 3 3
 # Number of Vertices = 24 
@@ -2486,33 +2487,33 @@ F = 16 18 17
 F = 16 19 18
 F = 20 22 21
 F = 20 23 22
-MT = 0 brick005 10
+MT = 0 brick005 11
 # Number of Faces = 12 
-FN 0 10
-FN 1 10
-FN = 2 10
-FN = 3 10
-FN = 4 10
-FN = 5 10
-FN = 6 10
-FN = 7 10
-FN = 8 10
-FN = 9 10
-FN = 10 10
-FN = 11 10
+FN 0 11
+FN 1 11
+FN = 2 11
+FN = 3 11
+FN = 4 11
+FN = 5 11
+FN = 6 11
+FN = 7 11
+FN = 8 11
+FN = 9 11
+FN = 10 11
+FN = 11 11
 -----------------------
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
 -----------------------
 Cylinder 4 0
 # Number of Vertices = 36 
@@ -2609,49 +2610,49 @@ F = 28 30 29
 F = 28 31 30
 F = 32 34 33
 F = 32 35 34
-MT = 0 brick005 10
+MT = 0 brick005 11
 # Number of Faces = 20 
-FN 0 10
-FN 1 10
-FN 2 10
-FN 3 10
-FN = 4 10
-FN = 5 10
-FN = 6 10
-FN = 7 10
-FN = 8 10
-FN = 9 10
-FN = 10 10
-FN = 11 10
-FN = 12 10
-FN = 13 10
-FN = 14 10
-FN = 15 10
-FN = 16 10
-FN = 17 10
-FN = 18 10
-FN = 19 10
+FN 0 11
+FN 1 11
+FN 2 11
+FN 3 11
+FN = 4 11
+FN = 5 11
+FN = 6 11
+FN = 7 11
+FN = 8 11
+FN = 9 11
+FN = 10 11
+FN = 11 11
+FN = 12 11
+FN = 13 11
+FN = 14 11
+FN = 15 11
+FN = 16 11
+FN = 17 11
+FN = 18 11
+FN = 19 11
 -----------------------
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
-DN = 10
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
+DN = 11
 -----------------------
 Ramp 5 0
 # Number of Vertices = 18 
@@ -2783,12 +2784,12 @@ F = 16 18 17
 F = 16 19 18
 F = 20 22 21
 F = 20 23 22
-MT = 0 brwall02 11
+MT = 0 brwall02 12
 # Number of Faces = 4 
-FN 0 11
-FN 1 11
-FN = 6 11
-FN = 7 11
+FN 0 12
+FN 1 12
+FN = 6 12
+FN = 7 12
 MT = 1 stfloor01 7
 # Number of Faces = 2 
 FN 2 7
@@ -2804,14 +2805,14 @@ FN 9 2
 FN = 10 2
 FN = 11 2
 -----------------------
-DN = 11
-DN = 11
+DN = 12
+DN = 12
 DN = 7
 DN = 7
 DN = 8
 DN = 8
-DN = 11
-DN = 11
+DN = 12
+DN = 12
 DN = 2
 DN = 2
 DN = 2
@@ -2880,12 +2881,12 @@ F = 16 18 17
 F = 16 19 18
 F = 20 22 21
 F = 20 23 22
-MT = 0 brwall02 11
+MT = 0 brwall02 12
 # Number of Faces = 4 
-FN 0 11
-FN 1 11
-FN = 6 11
-FN = 7 11
+FN 0 12
+FN 1 12
+FN = 6 12
+FN = 7 12
 MT = 1 stfloor01 7
 # Number of Faces = 2 
 FN 2 7
@@ -2901,14 +2902,14 @@ FN 9 2
 FN = 10 2
 FN = 11 2
 -----------------------
-DN = 11
-DN = 11
+DN = 12
+DN = 12
 DN = 7
 DN = 7
 DN = 9
 DN = 9
-DN = 11
-DN = 11
+DN = 12
+DN = 12
 DN = 2
 DN = 2
 DN = 2
@@ -2977,16 +2978,16 @@ F = 16 18 17
 F = 16 19 18
 F = 20 22 21
 F = 20 23 22
-MT = 0 brwall02 11
+MT = 0 brwall02 12
 # Number of Faces = 4 
-FN 0 11
-FN 1 11
-FN = 8 11
-FN = 9 11
-MT = 1 ceillight 3
+FN 0 12
+FN 1 12
+FN = 8 12
+FN = 9 12
+MT = 1 tiles01 10
 # Number of Faces = 2 
-FN 2 3
-FN 3 3
+FN 2 10
+FN 3 10
 MT = 2 stwall03 9
 # Number of Faces = 2 
 FN 4 9
@@ -3000,16 +3001,16 @@ MT = 5 brwall01 2
 FN 10 2
 FN 11 2
 -----------------------
-DN = 11
-DN = 11
-DN = 3
-DN = 3
+DN = 12
+DN = 12
+DN = 10
+DN = 10
 DN = 9
 DN = 9
 DN = 8
 DN = 8
-DN = 11
-DN = 11
+DN = 12
+DN = 12
 DN = 2
 DN = 2
 -----------------------
@@ -3076,35 +3077,35 @@ F = 16 18 17
 F = 16 19 18
 F = 20 22 21
 F = 20 23 22
-MT = 0 brwall02 11
+MT = 0 brwall02 12
 # Number of Faces = 10 
-FN 0 11
-FN 1 11
-FN = 2 11
-FN = 3 11
-FN = 4 11
-FN = 5 11
-FN = 6 11
-FN = 7 11
-FN = 8 11
-FN = 9 11
-MT = 5 ceillight 3
+FN 0 12
+FN 1 12
+FN = 2 12
+FN = 3 12
+FN = 4 12
+FN = 5 12
+FN = 6 12
+FN = 7 12
+FN = 8 12
+FN = 9 12
+MT = 5 tiles01 10
 # Number of Faces = 2 
-FN 10 3
-FN 11 3
+FN 10 10
+FN 11 10
 -----------------------
-DN = 11
-DN = 11
-DN = 11
-DN = 11
-DN = 11
-DN = 11
-DN = 11
-DN = 11
-DN = 11
-DN = 11
-DN = 3
-DN = 3
+DN = 12
+DN = 12
+DN = 12
+DN = 12
+DN = 12
+DN = 12
+DN = 12
+DN = 12
+DN = 12
+DN = 12
+DN = 10
+DN = 10
 -----------------------
 Box 6 4
 # Number of Vertices = 24 
@@ -3169,33 +3170,33 @@ F = 16 18 17
 F = 16 19 18
 F = 20 22 21
 F = 20 23 22
-MT = 0 brwall02 11
+MT = 0 brwall02 12
 # Number of Faces = 10 
-FN 0 11
-FN 1 11
-FN = 2 11
-FN = 3 11
-FN = 4 11
-FN = 5 11
-FN = 6 11
-FN = 7 11
-FN = 8 11
-FN = 9 11
+FN 0 12
+FN 1 12
+FN = 2 12
+FN = 3 12
+FN = 4 12
+FN = 5 12
+FN = 6 12
+FN = 7 12
+FN = 8 12
+FN = 9 12
 MT = 5 stfloor01 7
 # Number of Faces = 2 
 FN 10 7
 FN 11 7
 -----------------------
-DN = 11
-DN = 11
-DN = 11
-DN = 11
-DN = 11
-DN = 11
-DN = 11
-DN = 11
-DN = 11
-DN = 11
+DN = 12
+DN = 12
+DN = 12
+DN = 12
+DN = 12
+DN = 12
+DN = 12
+DN = 12
+DN = 12
+DN = 12
 DN = 7
 DN = 7
 -----------------------
@@ -3262,18 +3263,18 @@ F = 16 18 17
 F = 16 19 18
 F = 20 22 21
 F = 20 23 22
-MT = 0 brwall02 11
+MT = 0 brwall02 12
 # Number of Faces = 6 
-FN 0 11
-FN 1 11
-FN = 2 11
-FN = 3 11
-FN = 4 11
-FN = 5 11
-MT = 3 ceillight 3
+FN 0 12
+FN 1 12
+FN = 2 12
+FN = 3 12
+FN = 4 12
+FN = 5 12
+MT = 3 tiles01 10
 # Number of Faces = 2 
-FN 6 3
-FN 7 3
+FN 6 10
+FN 7 10
 MT = 4 stfloor01 7
 # Number of Faces = 2 
 FN 8 7
@@ -3283,14 +3284,14 @@ MT = 5 stwall03 9
 FN 10 9
 FN 11 9
 -----------------------
-DN = 11
-DN = 11
-DN = 11
-DN = 11
-DN = 11
-DN = 11
-DN = 3
-DN = 3
+DN = 12
+DN = 12
+DN = 12
+DN = 12
+DN = 12
+DN = 12
+DN = 10
+DN = 10
 DN = 7
 DN = 7
 DN = 9
@@ -3359,18 +3360,18 @@ F = 16 18 17
 F = 16 19 18
 F = 20 22 21
 F = 20 23 22
-MT = 0 brwall02 11
+MT = 0 brwall02 12
 # Number of Faces = 6 
-FN 0 11
-FN 1 11
-FN = 2 11
-FN = 3 11
-FN = 4 11
-FN = 5 11
-MT = 3 ceillight 3
+FN 0 12
+FN 1 12
+FN = 2 12
+FN = 3 12
+FN = 4 12
+FN = 5 12
+MT = 3 tiles01 10
 # Number of Faces = 2 
-FN 6 3
-FN 7 3
+FN 6 10
+FN 7 10
 MT = 4 stfloor01 7
 # Number of Faces = 2 
 FN 8 7
@@ -3380,14 +3381,14 @@ MT = 5 stwall02 8
 FN 10 8
 FN 11 8
 -----------------------
-DN = 11
-DN = 11
-DN = 11
-DN = 11
-DN = 11
-DN = 11
-DN = 3
-DN = 3
+DN = 12
+DN = 12
+DN = 12
+DN = 12
+DN = 12
+DN = 12
+DN = 10
+DN = 10
 DN = 7
 DN = 7
 DN = 8
@@ -3456,14 +3457,14 @@ F = 16 18 17
 F = 16 19 18
 F = 20 22 21
 F = 20 23 22
-MT = 0 brwall02 11
+MT = 0 brwall02 12
 # Number of Faces = 2 
-FN 0 11
-FN 1 11
-MT = 1 ceillight 3
+FN 0 12
+FN 1 12
+MT = 1 tiles01 10
 # Number of Faces = 2 
-FN 2 3
-FN 3 3
+FN 2 10
+FN 3 10
 MT = 2 stfloor01 7
 # Number of Faces = 2 
 FN 4 7
@@ -3479,10 +3480,10 @@ FN 9 8
 FN = 10 8
 FN = 11 8
 -----------------------
-DN = 11
-DN = 11
-DN = 3
-DN = 3
+DN = 12
+DN = 12
+DN = 10
+DN = 10
 DN = 7
 DN = 7
 DN = 9

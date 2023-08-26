@@ -1056,18 +1056,10 @@ bool SB_Export_World::FaceList_ExportToText(const Brush* b,const FaceList* pList
 	}
 
 
-	
-
-	
-
 	num_faces = num_verts = num_mats = num_chars = 0;
 
 	for (i = 0; i < pList->NumFaces; i++)
 	{
-		//int DibId2 = Get_Adjusted_Index(Face_GetTextureDibId(pList->Faces[i]));
-
-		//App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->TextID_Data[i].ID = DibId2;
-
 		curnum_verts = Face_GetNumPoints(pList->Faces[i]);
 		num_faces += (curnum_verts - 2);
 		num_verts += curnum_verts;
