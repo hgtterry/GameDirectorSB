@@ -56,7 +56,7 @@ public:
 	bool Brush_ExportToText(const Brush* b);
 	bool FaceList_ExportToText(const Brush* b, const FaceList* pList, int BrushCount, int SubBrushCount);
 	int Get_Adjusted_Index(int RealIndex);
-	bool AddTexture(geVFile* BaseFile, const char* TextureName, int GroupIndex);
+	bool AddTexture_GL(geVFile* BaseFile, const char* TextureName, int GroupIndex);
 
 	int AdjusedIndex_Store[500];
 

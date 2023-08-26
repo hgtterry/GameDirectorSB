@@ -460,30 +460,22 @@ bool SB_Render::Brush_Textured_Parts(int Count)
 	int C = 0;
 
 	int OldId = 0;
-	/*if (App->CLSB_Model->Group[Count]->MaterialIndex > -1)
-	{
-		glEnable(GL_TEXTURE_2D);
-		glColor3f(1, 1, 1);
-
-		glBindTexture(GL_TEXTURE_2D, g_Texture[0]);
-	}*/
-	/*else
-	{
-		glDisable(GL_TEXTURE_2D);
-	}*/
+	
 	if (App->CLSB_Model->B_Brush[Count]->Face_Count > 0)
 	{
 		OldId = App->CLSB_Model->B_Brush[Count]->TextID_Data[0].ID;
+		glBindTexture(GL_TEXTURE_2D, g_BrushTexture[App->CLSB_Model->B_Brush[Count]->TextID_Data[0].ID]);
+
 	}
 	
 	while (FaceCount < App->CLSB_Model->B_Brush[Count]->Face_Count)
 	{
-		//if (OldId > App->CLSB_Model->B_Brush[Count]->TextID_Data[FaceCount].ID)
-		//{
-
-		//}
+		if (OldId > App->CLSB_Model->B_Brush[Count]->TextID_Data[FaceCount].ID || OldId < App->CLSB_Model->B_Brush[Count]->TextID_Data[FaceCount].ID)
+		{
+			glBindTexture(GL_TEXTURE_2D, g_BrushTexture[App->CLSB_Model->B_Brush[Count]->TextID_Data[FaceCount].ID]);
+			OldId = App->CLSB_Model->B_Brush[Count]->TextID_Data[FaceCount].ID;
+		}
 	
-		glBindTexture(GL_TEXTURE_2D, g_BrushTexture[App->CLSB_Model->B_Brush[Count]->TextID_Data[FaceCount].ID]);
 
 		A = App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].a;
 		B = App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].b;
