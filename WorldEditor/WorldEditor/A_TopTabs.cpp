@@ -762,7 +762,7 @@ LRESULT CALLBACK SB_TopTabs::Top_Equity_Proc(HWND hDlg, UINT message, WPARAM wPa
 	{
 	case WM_INITDIALOG:
 	{
-		SendDlgItemMessage(hDlg, IDC_BT_TB_BUILDPREVIEW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_TB_PREVIEWALL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_PREVIEWSELECTED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDC_BT_TB_WORLDINFO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -785,10 +785,10 @@ LRESULT CALLBACK SB_TopTabs::Top_Equity_Proc(HWND hDlg, UINT message, WPARAM wPa
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
-		if (some_item->idFrom == IDC_BT_TB_BUILDPREVIEW && some_item->code == NM_CUSTOMDRAW)
+		if (some_item->idFrom == IDC_BT_TB_PREVIEWALL && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_TB_BUILDPREVIEW));
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_TB_PREVIEWALL));
 			if (test == 0)
 			{
 				App->Custom_Button_Greyed(item);
@@ -876,44 +876,15 @@ LRESULT CALLBACK SB_TopTabs::Top_Equity_Proc(HWND hDlg, UINT message, WPARAM wPa
 			return TRUE;
 		}
 
-		if (LOWORD(wParam) == IDC_BT_TB_BUILDPREVIEW)
+		if (LOWORD(wParam) == IDC_BT_TB_PREVIEWALL)
 		{
-			App->CLSB_Equity->Set_Mode_Preview_All();
-			bool test = App->CLSB_Equity->Preview_All();
-			if (test == 0)
-			{
-				return TRUE;
-			}
-
-			//App->CLSB_Bullet->create_New_Trimesh(0);
-
-			//App->CLSB_Bullet->Create_Brush_Trimesh(0);
-
-			if (App->CLSB_Model->Player_Count == 0)
-			{
-				App->CLSB_Player->Create_Player_Object();
-			}
-
-			if (App->CLSB_Equity->First_Run == 1)
-			{
-				App->CLSB_Camera_EQ->Zero_View();
-				App->CLSB_Equity->First_Run = 0;
-			}
+			App->CLSB_Equity->Do_Preview_All();
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_PREVIEWSELECTED)
 		{
-			bool test = App->CLSB_Equity->Set_Mode_Preview_Selected();
-			if (test == 1)
-			{
-				//App->CLSB_Bullet->create_New_Trimesh(0);
-				//App->CLSB_Bullet->Create_Brush_Trimesh(0);
-			}
-
-			App->CLSB_Export_World->Export_World_Text(1);
-			App->CLSB_Bullet->Create_Brush_Trimesh(0);
-
+			App->CLSB_Equity->Do_Preview_Selected();
 			return TRUE;
 		}
 
@@ -1198,11 +1169,11 @@ void SB_TopTabs::Update_Dlg_Controls()
 	int NumBrushes = App->CL_World->Get_Brush_Count();
 	if (NumBrushes == 0)
 	{
-		EnableWindow(GetDlgItem(Equity_Panel_Hwnd, IDC_BT_TB_BUILDPREVIEW), 0);
+		EnableWindow(GetDlgItem(Equity_Panel_Hwnd, IDC_BT_TB_PREVIEWALL), 0);
 	}
 	else
 	{
-		EnableWindow(GetDlgItem(Equity_Panel_Hwnd, IDC_BT_TB_BUILDPREVIEW), 1);
+		EnableWindow(GetDlgItem(Equity_Panel_Hwnd, IDC_BT_TB_PREVIEWALL), 1);
 	}
 
 	int NumSelBrushes = SelBrushList_GetSize(App->m_pDoc->pSelBrushes);

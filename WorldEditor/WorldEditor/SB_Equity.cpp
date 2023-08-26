@@ -990,70 +990,6 @@ void SB_Equity::Resize_3DView()
 	}
 }
 
-
-// *************************************************************************
-// *			Preview_All:- Terry and Hazel Flanigan 2023				   *
-// *************************************************************************
-bool SB_Equity::Preview_All()
-{
-	Get_CurrentDocument();
-
-	int BCount = App->CL_World->Get_Brush_Count();
-	if (BCount == 0)
-	{
-		App->Say("No Scene to Preview");
-		return 0;
-	}
-
-	/*App->CLSB_Equity->Position_Offsets.x = 0;
-	App->CLSB_Equity->Position_Offsets.y = 0;
-	App->CLSB_Equity->Position_Offsets.z = 0;
-
-	m_pDoc->ResetAllSelections();
-
-	App->CLSB_Brushes->Centre_CentreBrush();
-	
-	m_pDoc->SelectAll();
-	m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
-
-	
-
-	App->CLSB_Equity->Position_Offsets.x = m_pDoc->SelectedGeoCenter.X;
-	App->CLSB_Equity->Position_Offsets.y = m_pDoc->SelectedGeoCenter.Y;
-	App->CLSB_Equity->Position_Offsets.z = m_pDoc->SelectedGeoCenter.Z;
-
-	App->CLSB_Export_World->Export_World_GD3D(1);
-
-	m_pDoc->ResetAllSelections();
-	m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);*/
-
-	App->CLSB_TopTabs->Update_Dlg_Controls();
-
-	//App->CLSB_Equity->mAutoLoad = 1;
-	//App->CLSB_Equity->Auto_Load_File();
-
-	Ogre::Vector3 OldCamPos = App->CLSB_Camera_EQ->Saved_Pos;
-	Ogre::Quaternion OldCamRot = App->CLSB_Camera_EQ->Saved_Rotation;
-	App->CLSB_Ogre->mCamera->setPosition(Ogre::Vector3(OldCamPos.x, OldCamPos.y, OldCamPos.z));
-	App->CLSB_Ogre->mCamera->setOrientation(OldCamRot);
-
-	App->CLSB_Export_World->Export_World_Text(0);
-	App->CLSB_Bullet->Create_Brush_Trimesh(0);
-
-
-	App->CLSB_Model->Set_Equity();
-	App->CLSB_Camera_EQ->Reset_Orientation();
-	App->CLSB_Camera_EQ->Set_Camera_Mode(Enums::CamDetached);
-	App->CLSB_TopTabs_Equity->Camera_Set_Free();
-
-	App->CLSB_Model->Model_Loaded = 1;
-	App->CLSB_Ogre->RenderListener->ShowBrushes = 1;
-
-	App->CLSB_Equity->Show_Equity_Dialog(true);
-
-	return 1;
-}
-
 // *************************************************************************
 // *	  		Set_Mode_Equity:- Terry and Hazel Flanigan 2023				*
 // *************************************************************************
@@ -1083,32 +1019,9 @@ void SB_Equity::Set_Mode_Equity()
 }
 
 // *************************************************************************
-// *	  	Set_Mode_Preview_All:- Terry and Hazel Flanigan 2023    	   *
+// *			Do_Preview_Selected:- Terry and Hazel Flanigan 2023	  	   *
 // *************************************************************************
-void SB_Equity::Set_Mode_Preview_All()
-{
-	Equity_Start_Mode = 2;
-
-	App->CLSB_ImGui->Show_Physics_Console = 1;
-
-	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_BT_TT_MODEL), 0);
-	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_FIRST_MODEX), 1);
-	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_BT_TT_FREE), 1);
-	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, IDC_UPDATE2), 1);
-
-	App->CLSB_Ogre->BulletListener->Render_Debug_Flag = 1;
-
-	RedrawWindow(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-
-	Ogre::Vector3 OldCamPos = App->CLSB_Camera_EQ->Saved_Pos;
-	App->CLSB_Ogre->mCamera->setPosition(Ogre::Vector3(OldCamPos.x, OldCamPos.y, OldCamPos.z));
-
-}
-
-// *************************************************************************
-// *	  Set_Mode_Preview_Selected:- Terry and Hazel Flanigan 2023		   *
-// *************************************************************************
-bool SB_Equity::Set_Mode_Preview_Selected()
+void SB_Equity::Do_Preview_Selected()
 {
 	Equity_Start_Mode = 3;
 
@@ -1119,19 +1032,12 @@ bool SB_Equity::Set_Mode_Preview_Selected()
 	if (NumSelBrushes == 0)
 	{
 		App->Say("No Brushes Selected");
-		return 0;
+		return;
 	}
 
-	
 
 	App->CLSB_Model->Set_Equity();
 	App->CLSB_Camera_EQ->Reset_Orientation();
-	
-	App->CLSB_Model->Model_Loaded = 1;
-
-	App->CLSB_Ogre->RenderListener->ShowBrushes = 1;
-	App->CLSB_Equity->Show_Equity_Dialog(true);
-
 
 	App->CLSB_Camera_EQ->Set_Camera_Mode(Enums::CamModel);
 
@@ -1140,7 +1046,7 @@ bool SB_Equity::Set_Mode_Preview_Selected()
 	App->CLSB_TopTabs_Equity->Toggle_Tabs_Camera_Flag = 1;
 
 	App->CLSB_TopTabs_Equity->Camera_Set_Model();
-	
+
 	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_BT_TT_FREE), 0);
 	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_BT_TT_MODEL), 1);
 	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_FIRST_MODEX), 0);
@@ -1158,5 +1064,77 @@ bool SB_Equity::Set_Mode_Preview_Selected()
 
 	RedrawWindow(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-	return 1;
+	App->CLSB_Export_World->Export_World_Text(1);
+	App->CLSB_Bullet->Create_Brush_Trimesh(0);
+
+	App->CLSB_Model->Model_Loaded = 1;
+	App->CLSB_Ogre->RenderListener->ShowBrushes = 1;
+	App->CLSB_Equity->Show_Equity_Dialog(true);
+
+}
+
+// *************************************************************************
+// *			Do_Preview_All():- Terry and Hazel Flanigan 2023	  	   *
+// *************************************************************************
+void SB_Equity::Do_Preview_All()
+{
+	Get_CurrentDocument();
+
+	Equity_Start_Mode = 2;
+
+	App->CLSB_ImGui->Show_Physics_Console = 1;
+
+	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_BT_TT_MODEL), 0);
+	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_FIRST_MODEX), 1);
+	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_BT_TT_FREE), 1);
+	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, IDC_UPDATE2), 1);
+
+	App->CLSB_Ogre->BulletListener->Render_Debug_Flag = 1;
+
+	RedrawWindow(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+	Ogre::Vector3 OldCamPos = App->CLSB_Camera_EQ->Saved_Pos;
+	App->CLSB_Ogre->mCamera->setPosition(Ogre::Vector3(OldCamPos.x, OldCamPos.y, OldCamPos.z));
+
+
+	//------------------------------------------------------
+	int BCount = App->CL_World->Get_Brush_Count();
+	if (BCount == 0)
+	{
+		App->Say("No Scene to Preview");
+		return;
+	}
+
+	App->CLSB_TopTabs->Update_Dlg_Controls();
+
+	OldCamPos = App->CLSB_Camera_EQ->Saved_Pos;
+	Ogre::Quaternion OldCamRot = App->CLSB_Camera_EQ->Saved_Rotation;
+	App->CLSB_Ogre->mCamera->setPosition(Ogre::Vector3(OldCamPos.x, OldCamPos.y, OldCamPos.z));
+	App->CLSB_Ogre->mCamera->setOrientation(OldCamRot);
+
+	App->CLSB_Export_World->Export_World_Text(0);
+	App->CLSB_Bullet->Create_Brush_Trimesh(0);
+
+
+	App->CLSB_Model->Set_Equity();
+	App->CLSB_Camera_EQ->Reset_Orientation();
+	App->CLSB_Camera_EQ->Set_Camera_Mode(Enums::CamDetached);
+	App->CLSB_TopTabs_Equity->Camera_Set_Free();
+
+	App->CLSB_Model->Model_Loaded = 1;
+	App->CLSB_Ogre->RenderListener->ShowBrushes = 1;
+	App->CLSB_Equity->Show_Equity_Dialog(true);
+
+	//-----------------------------------------------------
+	if (App->CLSB_Model->Player_Count == 0)
+	{
+		App->CLSB_Player->Create_Player_Object();
+	}
+
+	if (App->CLSB_Equity->First_Run == 1)
+	{
+		App->CLSB_Camera_EQ->Zero_View();
+		App->CLSB_Equity->First_Run = 0;
+	}
+
 }

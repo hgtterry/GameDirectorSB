@@ -10,11 +10,10 @@ public:
 	bool Auto_Load_File();
 	void Show_Equity_Dialog(bool Show);
 
-	bool Preview_All();
-
 	void Set_Mode_Equity();
-	void Set_Mode_Preview_All();
-	bool Set_Mode_Preview_Selected();
+	
+	void Do_Preview_Selected();
+	void Do_Preview_All();
 
 	bool mAutoLoad;
 	bool First_Run;

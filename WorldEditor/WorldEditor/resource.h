@@ -683,7 +683,7 @@
 #define IDC_BTEDITFILE                  1432
 #define IDC_STTEXTURE                   1433
 #define IDC_STALPHA                     1434
-#define IDC_BT_TB_BUILDPREVIEW          1449
+#define IDC_BT_TB_PREVIEWALL            1449
 #define IDC_BT_TB_DESELECTALL           1450
 #define IDC_BT_TB_WORLDINFO             1451
 #define IDC_BT_TB_WIRED                 1452
