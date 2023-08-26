@@ -41,6 +41,8 @@ public:
 	bool RFActor_Loader(void);
 	bool Load_ActorWorld();
 
+	HBITMAP CreateHBitmapFromgeBitmap(geBitmap* Bitmap, HDC hdc);
+
 	char FileName[MAX_PATH];
 	char Path_FileName[MAX_PATH];
 
@@ -53,6 +55,8 @@ public:
 
 	bool LoadError;
 
+	HWND RightGroups_Hwnd;
+
 	TCHAR szSelectedDir[MAX_PATH];
 
 protected:
@@ -64,7 +68,7 @@ protected:
 	int Check_for_Textures(geVFile* BaseFile);
 	bool Check_in_Txl(char* FileName);
 	bool AddTexture(geVFile* BaseFile, const char* TextureName, int GroupIndex);
-	HBITMAP CreateHBitmapFromgeBitmap(geBitmap* Bitmap, HDC hdc);
+	
 
 	void Adjust();
 
@@ -74,7 +78,7 @@ protected:
 	void Translate_Model(float X, float Y, float Z);
 
 	int NameCount;
-	HWND RightGroups_Hwnd;
+	
 
 	std::vector<Char_type2> BitMap_Names;
 

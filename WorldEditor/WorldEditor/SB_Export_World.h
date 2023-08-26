@@ -52,8 +52,13 @@ public:
 	void Export_World_Text(int ExpSelected);
 	bool Level_Build_Text_G3ds(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, geBoolean ExpLights, int GroupID);
 	bool BrushList_ExportToText(BrushList* BList, geBoolean SubBrush);
+	
 	bool Brush_ExportToText(const Brush* b);
 	bool FaceList_ExportToText(const Brush* b, const FaceList* pList, int BrushCount, int SubBrushCount);
+	int Get_Adjusted_Index(int RealIndex);
+	bool AddTexture(geVFile* BaseFile, const char* TextureName, int GroupIndex);
+
+	int AdjusedIndex_Store[500];
 
 private:
 

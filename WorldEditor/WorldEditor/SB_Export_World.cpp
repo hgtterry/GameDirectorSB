@@ -736,7 +736,7 @@ bool SB_Export_World::Level_Build_Text_G3ds(Level3* pLevel, const char* Filename
 	WrittenTex = (geBoolean*)calloc(sizeof(geBoolean), pLevel->WadFile->mBitmapCount);
 	// which textures are used?
 	BrushList_GetUsedTextures(BList, WrittenTex, pLevel->WadFile);
-
+	int AdjustedIndex = 0;
 	// write all used materials to the file
 	for (i = 0; i < pLevel->WadFile->mBitmapCount; i++)
 	{
@@ -745,8 +745,12 @@ bool SB_Export_World::Level_Build_Text_G3ds(Level3* pLevel, const char* Filename
 			char matname[MAX_PATH];
 			int j, k;
 			strncpy(matname, pLevel->WadFile->mBitmaps[i].Name, MAX_PATH - 1);
-			fprintf(WriteScene_TXT, "%s %i\n", matname,i);
+			fprintf(WriteScene_TXT, "%i %s %i\n", AdjustedIndex, matname,i);
+			AdjusedIndex_Store[AdjustedIndex] = i;
 
+			AddTexture(NULL, matname, AdjustedIndex);
+
+			AdjustedIndex++;
 			/*if (geBitmap_HasAlpha(pLevel->WadFile->mBitmaps[i].bmp))
 			{
 				TypeIO_WriteUChar(f, 't');
@@ -858,7 +862,7 @@ bool SB_Export_World::FaceList_ExportToText(const Brush* b,const FaceList* pList
 
 
 	int i, j, k, num_faces, num_verts, num_mats, num_chars, curnum_verts;
-	char matname[20];
+	char matname[MAX_PATH];
 
 	char* matf = (char*)calloc(sizeof(char), pList->NumFaces);
 
@@ -885,10 +889,7 @@ bool SB_Export_World::FaceList_ExportToText(const Brush* b,const FaceList* pList
 					matf[j] = 1;
 			}
 
-			strncpy(matname, Face_GetTextureName(pList->Faces[i]), 11);
-			matname[10] = 0;
-			// get the number of characters for calculating size_mats
-			for (j = 0; matname[j] != 0; j++, num_chars++);
+			strncpy(matname, Face_GetTextureName(pList->Faces[i]), MAX_PATH);
 		}
 	}
 
@@ -969,7 +970,6 @@ bool SB_Export_World::FaceList_ExportToText(const Brush* b,const FaceList* pList
 	fprintf(WriteScene_TXT, "# Number of Faces = %i \n", num_faces);
 	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Count = num_faces;
 	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Data.resize(num_faces);
-	
 	num_verts = 0;
 	for (i = 0; i < pList->NumFaces; i++)
 	{
@@ -980,12 +980,16 @@ bool SB_Export_World::FaceList_ExportToText(const Brush* b,const FaceList* pList
 			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Data[FaceIndex].a = num_verts;
 			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Data[FaceIndex].b = num_verts + 2 + j;
 			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Data[FaceIndex].c = num_verts + 1 + j;
+
 			FaceIndex++;
 		}
 
 		num_verts += curnum_verts;
 	}
 
+	int DibIndex2 = 0;
+
+	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->TextID_Data.resize(200);
 	// write MATERIALS
 	for (i = 0; i < pList->NumFaces; i++)
 	{
@@ -1004,13 +1008,11 @@ bool SB_Export_World::FaceList_ExportToText(const Brush* b,const FaceList* pList
 			}
 
 			strncpy(matname, Face_GetTextureName(pList->Faces[i]), 11);
-			matname[10] = '\0';
-			for (num_chars = 0; matname[num_chars] != '\0'; num_chars++);
-
+			
 			// Material Name
-			int DibId = Face_GetTextureDibId(pList->Faces[i]);
-			fprintf(WriteScene_TXT, "MT = %s %i\n", matname, DibId);
-
+			int DibId =Get_Adjusted_Index(Face_GetTextureDibId(pList->Faces[i]));
+			fprintf(WriteScene_TXT, "MT = %i %s %i\n", i, matname, DibId);
+			
 			// write number of faces that have this texture
 			fprintf(WriteScene_TXT, "# Number of Faces = %i \n", curnum_faces);
 
@@ -1024,7 +1026,10 @@ bool SB_Export_World::FaceList_ExportToText(const Brush* b,const FaceList* pList
 			curnum_verts = Face_GetNumPoints(pList->Faces[i]);
 			for (j = 0; j < curnum_verts - 2; j++)
 			{
-				fprintf(WriteScene_TXT, "FN %i\n", curnum_faces + j);
+				int DibId2 = Get_Adjusted_Index(Face_GetTextureDibId(pList->Faces[i]));
+				App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->TextID_Data[curnum_faces + j].ID = DibId2;
+				fprintf(WriteScene_TXT, "FN %i %i\n", curnum_faces + j, DibId2);
+				DibIndex2++;
 			}
 
 
@@ -1038,7 +1043,10 @@ bool SB_Export_World::FaceList_ExportToText(const Brush* b,const FaceList* pList
 					matf[j] = 1;
 					for (k = 0; k < curnum_verts - 2; k++)
 					{
-						fprintf(WriteScene_TXT, "FN = %i\n", curnum_faces + k);
+						int DibId2 = Get_Adjusted_Index(Face_GetTextureDibId(pList->Faces[i]));
+						App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->TextID_Data[curnum_faces+k].ID = DibId2;
+						fprintf(WriteScene_TXT, "FN = %i %i\n", curnum_faces + k, DibId2);
+						DibIndex2++;
 					}
 				}
 
@@ -1047,9 +1055,106 @@ bool SB_Export_World::FaceList_ExportToText(const Brush* b,const FaceList* pList
 		}
 	}
 
+
+	
+
+	
+
+	num_faces = num_verts = num_mats = num_chars = 0;
+
+	for (i = 0; i < pList->NumFaces; i++)
+	{
+		//int DibId2 = Get_Adjusted_Index(Face_GetTextureDibId(pList->Faces[i]));
+
+		//App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->TextID_Data[i].ID = DibId2;
+
+		curnum_verts = Face_GetNumPoints(pList->Faces[i]);
+		num_faces += (curnum_verts - 2);
+		num_verts += curnum_verts;
+	}
+
+	fprintf(WriteScene_TXT, "%s\n","-----------------------");
+	int poo = 0;
+	while (poo < num_faces)
+	{
+		int dd = App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->TextID_Data[poo].ID;
+		fprintf(WriteScene_TXT, "DN = %i\n", dd);
+		poo++;
+	}
+	fprintf(WriteScene_TXT, "%s\n", "-----------------------");
+
+
 	free(matf);
 
 	App->CLSB_Model->BrushCount++;
 	
 	return GE_TRUE;
+}
+
+// *************************************************************************
+// *							Get_Adjusted_Index						   *
+// *************************************************************************
+int SB_Export_World::Get_Adjusted_Index(int RealIndex)
+{
+	int Count = 0;
+	while (Count < 500)
+	{
+		if (AdjusedIndex_Store[Count] == RealIndex)
+		{
+			return Count;
+		}
+
+		Count++;
+	}
+
+	return -1;
+}
+
+// *************************************************************************
+// *			AddTexture:- Terry and Hazel Flanigan 2023		  		   *
+// *************************************************************************
+bool SB_Export_World::AddTexture(geVFile* BaseFile, const char* TextureName, int GroupIndex)
+{
+	App->Get_Current_Document();
+
+	HWND	PreviewWnd;
+	HBITMAP	hbm;
+	HDC		hDC;
+
+	geBitmap* Bitmap = NULL;
+	CWadFile* pWad;
+	pWad = NULL;
+	pWad = Level_GetWadFile(App->m_pDoc->pLevel);
+	for (int index = 0; index < pWad->mBitmapCount; index++)
+	{
+		char mName[MAX_PATH];
+
+		CString Name = pWad->mBitmaps[index].Name;
+		strcpy(mName, Name);
+
+		bool test = strcmp(mName, TextureName);
+		if (test == 0)
+		{
+			Bitmap = pWad->mBitmaps[index].bmp;
+
+			//PreviewWnd = GetDlgItem(App->CLSB_Loader->RightGroups_Hwnd, IDC_BASETEXTURE2);
+			//hDC = GetDC(PreviewWnd);
+			//hbm = App->CLSB_Loader->CreateHBitmapFromgeBitmap(Bitmap, hDC);
+
+			//App->CLSB_Model->Group[GroupIndex]->Base_Bitmap = hbm;
+
+			char TempTextureFile_BMP[MAX_PATH];
+			strcpy(TempTextureFile_BMP, App->WorldEditor_Directory);
+			strcat(TempTextureFile_BMP, "\\");
+			strcat(TempTextureFile_BMP, "TextureLoad.bmp");
+
+			App->CLSB_Textures->Genesis_WriteToBmp(Bitmap, TempTextureFile_BMP);
+
+			App->CLSB_Textures->Soil_Load_Texture(App->CLSB_Ogre->RenderListener->g_BrushTexture, TempTextureFile_BMP, GroupIndex);
+
+			DeleteFile((LPCTSTR)TempTextureFile_BMP);
+		}
+	}
+
+	return TRUE;
 }
