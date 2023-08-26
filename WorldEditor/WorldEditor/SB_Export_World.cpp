@@ -898,11 +898,12 @@ bool SB_Export_World::FaceList_ExportToText(const Brush* b,const FaceList* pList
 	// Name of Brush SubBrush
 	fprintf(WriteScene_TXT,"%s %i %i\n",b->Name,BrushCount, SubBrushCount);
 	
-	int VertIndex = 0;
 	// -----------------------------------  Vertices
+	int VertIndex = 0;
 	fprintf(WriteScene_TXT, "# Number of Vertices = %i \n", num_verts);
 	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Vertice_Count = num_verts;
 	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->vertex_Data.resize(num_verts);
+	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Normal_Data.resize(num_verts);
 	
 	for (i = 0; i < pList->NumFaces; i++)
 	{
@@ -915,10 +916,18 @@ bool SB_Export_World::FaceList_ExportToText(const Brush* b,const FaceList* pList
 			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->vertex_Data[VertIndex].x = verts[j].X;
 			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->vertex_Data[VertIndex].y = verts[j].Y;
 			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->vertex_Data[VertIndex].z = verts[j].Z;
+
+			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Normal_Data[VertIndex].x = 0.5;
+			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Normal_Data[VertIndex].y = 0.5;
+			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Normal_Data[VertIndex].z = 0.5;
+
 			VertIndex++;
 		}
 	}
 
+	int UVIndex = 0;
+	// -----------------------------------  UVS
+	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->MapCord_Data.resize(num_verts);
 	for (i = 0; i < pList->NumFaces; i++)
 	{
 		const TexInfo_Vectors* TVecs = Face_GetTextureVecs(pList->Faces[i]);
@@ -949,6 +958,9 @@ bool SB_Export_World::FaceList_ExportToText(const Brush* b,const FaceList* pList
 			U += (TVecs->uOffset / txSize);
 			V -= (TVecs->vOffset / tySize);
 			fprintf(WriteScene_TXT, "UV = %f %f\n", U,V);
+			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->MapCord_Data[UVIndex].u = U;
+			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->MapCord_Data[UVIndex].v = V;
+			UVIndex++;
 		}
 	}
 

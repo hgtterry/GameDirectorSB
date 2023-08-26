@@ -270,10 +270,15 @@ void SB_Render::Render_Loop()
 	// ---------------------- Brushes
 	if (App->CLSB_Model->Model_Loaded == 1 && ShowBrushes == 1)
 	{
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		glEnable(GL_DEPTH_TEST);
+		glShadeModel(GL_SMOOTH);
 
-		Brushes_Render_Faces();
-		
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+		//Brushes_Render_Faces();
+		Brush_Render_Textures();
 	}
 
 	// ---------------------- Points
@@ -413,6 +418,87 @@ bool SB_Render::Brushes_Face_Parts(int Count)
 	}
 
 	//App->Flash_Window();
+
+	return 1;
+}
+
+// *************************************************************************
+// *						Brush_Render_Textures_Terry Bernie	   		   *
+// *************************************************************************
+bool SB_Render::Brush_Render_Textures(void)
+{
+	int Count = 0;
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	glEnable(GL_TEXTURE_2D);
+	glColor3f(1, 1, 1);
+
+	//glLineWidth(10);
+
+	int BrushCount = App->CLSB_Model->BrushCount;
+
+	Count = 0;
+	while (Count < BrushCount)
+	{
+		Brush_Textured_Parts(Count);
+		Count++;
+	}
+
+	glDisable(GL_TEXTURE_2D);
+
+	return 1;
+}
+// *************************************************************************
+// *					Brush_Textured_Parts Terry Bernie		 		   *
+// *************************************************************************
+bool SB_Render::Brush_Textured_Parts(int Count)
+{
+	int FaceCount = 0;
+	int A = 0;
+	int B = 0;
+	int C = 0;
+
+	//if (App->CLSB_Model->Group[Count]->MaterialIndex > -1)
+	{
+		glEnable(GL_TEXTURE_2D);
+		glColor3f(1, 1, 1);
+
+		glBindTexture(GL_TEXTURE_2D, g_Texture[1]);
+	}
+	/*else
+	{
+		glDisable(GL_TEXTURE_2D);
+	}*/
+
+	while (FaceCount < App->CLSB_Model->B_Brush[Count]->Face_Count)
+	{
+		A = App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].a;
+		B = App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].b;
+		C = App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].c;
+
+		glBegin(GL_POLYGON);
+
+		//-----------------------------------------------
+		glTexCoord2f(App->CLSB_Model->B_Brush[Count]->MapCord_Data[A].u, App->CLSB_Model->B_Brush[Count]->MapCord_Data[A].v);
+		glNormal3fv(&App->CLSB_Model->B_Brush[Count]->Normal_Data[A].x);
+		glVertex3fv(&App->CLSB_Model->B_Brush[Count]->vertex_Data[A].x);
+		
+		//-----------------------------------------------
+		glTexCoord2f(App->CLSB_Model->B_Brush[Count]->MapCord_Data[B].u, App->CLSB_Model->B_Brush[Count]->MapCord_Data[B].v);
+		glNormal3fv(&App->CLSB_Model->B_Brush[Count]->Normal_Data[B].x);
+		glVertex3fv(&App->CLSB_Model->B_Brush[Count]->vertex_Data[B].x);
+		
+		//-----------------------------------------------
+		glTexCoord2f(App->CLSB_Model->B_Brush[Count]->MapCord_Data[C].u, App->CLSB_Model->B_Brush[Count]->MapCord_Data[C].v);
+		glNormal3fv(&App->CLSB_Model->B_Brush[Count]->Normal_Data[C].x);
+		glVertex3fv(&App->CLSB_Model->B_Brush[Count]->vertex_Data[C].x);
+		FaceCount++;
+		//-----------------------------------------------
+
+		glEnd();
+
+	}
 
 	return 1;
 }
@@ -607,14 +693,12 @@ bool SB_Render::Assimp_Textured_Parts(int Count)
 		glTexCoord2f(App->CLSB_Model->Group[Count]->MapCord_Data[A].u, App->CLSB_Model->Group[Count]->MapCord_Data[A].v);
 		glNormal3fv(&App->CLSB_Model->Group[Count]->Normal_Data[A].x);
 		glVertex3fv(&App->CLSB_Model->Group[Count]->vertex_Data[A].x);
-		//VertCount++;
-
+		
 		//-----------------------------------------------
 		glTexCoord2f(App->CLSB_Model->Group[Count]->MapCord_Data[B].u, App->CLSB_Model->Group[Count]->MapCord_Data[B].v);
 		glNormal3fv(&App->CLSB_Model->Group[Count]->Normal_Data[B].x);
 		glVertex3fv(&App->CLSB_Model->Group[Count]->vertex_Data[B].x);
-		//VertCount++;
-
+		
 		//-----------------------------------------------
 		glTexCoord2f(App->CLSB_Model->Group[Count]->MapCord_Data[C].u, App->CLSB_Model->Group[Count]->MapCord_Data[C].v);
 		glNormal3fv(&App->CLSB_Model->Group[Count]->Normal_Data[C].x);

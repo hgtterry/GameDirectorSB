@@ -88,12 +88,14 @@ protected:
 	bool Render_As_Points_Parts(int Count);
 	bool Assimp_Render_Faces(void);
 	bool Assimp_Face_Parts(int Count);
+	
 	void Assimp_Render_Normals(void);
+	void Render_As_Normals_Parts(int Count);
 
 	bool Brushes_Render_Faces(void);
 	bool Brushes_Face_Parts(int Count);
-
-	void Render_As_Normals_Parts(int Count);
+	bool Brush_Render_Textures(void);
+	bool Brush_Textured_Parts(int Count);
 
 	bool As_RenderBones();
 
