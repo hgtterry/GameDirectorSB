@@ -12,6 +12,7 @@ public:
 
 	void Set_Mode_Equity();
 	
+	void Do_Equity();
 	void Do_Preview_Selected();
 	void Do_Preview_All();
 

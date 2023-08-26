@@ -849,21 +849,6 @@ LRESULT CALLBACK SB_TopTabs::Top_Equity_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 	case WM_COMMAND:
 	{
-		if (LOWORD(wParam) == IDC_STARTEQUITY)
-		{
-
-			App->CLSB_Model->Clear_Model_And_Reset();
-			
-			App->CLSB_Grid->Reset_View();
-
-			App->CLSB_TopTabs_Equity->Camera_Set_Model();
-			App->CLSB_Equity->Set_Mode_Equity();
-
-			App->CLSB_Equity->Show_Equity_Dialog(true);
-
-			return TRUE;
-		}
-
 		if (LOWORD(wParam) == IDC_BT_TB_NEWVIEW)
 		{
 			App->CL_Main_View->Start_Main_View_Dlg();
@@ -873,6 +858,12 @@ LRESULT CALLBACK SB_TopTabs::Top_Equity_Proc(HWND hDlg, UINT message, WPARAM wPa
 		if (LOWORD(wParam) == IDC_BT_TB_WORLDINFO)
 		{
 			App->CLSB_Dialogs->Start_ListData(0);
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_STARTEQUITY)
+		{
+			App->CLSB_Equity->Do_Equity();
 			return TRUE;
 		}
 
