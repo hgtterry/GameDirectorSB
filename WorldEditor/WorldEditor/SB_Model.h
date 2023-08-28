@@ -104,6 +104,7 @@ public:
 	void Set_BondingBox_Model(bool Create);
 	void Set_BondingBox_Group(int GroupID);
 	void Set_BondingBoxes_AllGroups();
+	void Set_BondingBox_Brushes();
 
 	void Set_Paths(void);
 	void Set_Equity(void);

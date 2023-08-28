@@ -288,42 +288,20 @@ LRESULT CALLBACK SB_TopTabs_Equity::Files_TB_Proc(HWND hDlg, UINT message, WPARA
 	case WM_COMMAND:
 	{
 
-		if (LOWORD(wParam) == IDC_UPDATE)
-		{
-			
-			/*App->Get_Current_Document();
-
-			App->m_pDoc->SelectAll();
-			App->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
-
-			App->CLSB_Export_World->Export_World_GD3D(1);
-
-			App->m_pDoc->ResetAllSelections();
-			App->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
-
-			App->CLSB_Equity->mAutoLoad = 1;
-			App->CLSB_Equity->Auto_Load_File();
-
-			App->CLSB_Export_World->Export_World_Text(0);
-
-			App->CLSB_Bullet->create_New_Trimesh(0);*/
-			Debug
-			return 1;
-		}
-
+		
 		if (LOWORD(wParam) == IDC_BTTBDIMENSIONS)
 		{
 
-			if (App->CLSB_Dimensions->Show_Position == 1)
-			{
-				App->CLSB_Dimensions->Show_Position = 0;
-				//App->CL_Panels->Show_Panels(1);
-			}
-			else
-			{
-				App->CLSB_Dimensions->Show_Position = 1;
-				//App->CL_Panels->Show_Panels(0);
-			}
+			//if (App->CLSB_Dimensions->Show_Position == 1)
+			//{
+			//	App->CLSB_Dimensions->Show_Position = 0;
+			//	//App->CL_Panels->Show_Panels(1);
+			//}
+			//else
+			//{
+			//	App->CLSB_Dimensions->Show_Position = 1;
+			//	//App->CL_Panels->Show_Panels(0);
+			//}
 
 			return 1;
 		}
@@ -332,11 +310,11 @@ LRESULT CALLBACK SB_TopTabs_Equity::Files_TB_Proc(HWND hDlg, UINT message, WPARA
 		{
 			if (App->CLSB_Model->Model_Loaded == 1)
 			{
-				strcpy(App->CLSB_Dialogs->btext, "Groups");
-				strcpy(App->CLSB_Dialogs->Chr_DropText, App->CLSB_Model->Group[0]->GroupName);
-				App->CLSB_Dialogs->DropList_Data = 0;
+				//strcpy(App->CLSB_Dialogs->btext, "Groups");
+				//strcpy(App->CLSB_Dialogs->Chr_DropText, App->CLSB_Model->Group[0]->GroupName);
+				//App->CLSB_Dialogs->DropList_Data = 0;
 
-				App->CLSB_Dialogs->Start_Dialog_DropGen();
+				//App->CLSB_Dialogs->Start_Dialog_DropGen();
 			}
 			return 1;
 		}

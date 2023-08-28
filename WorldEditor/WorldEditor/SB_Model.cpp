@@ -243,11 +243,6 @@ void SB_Model::Set_Equity(void)
 // *************************************************************************
 void SB_Model::Set_BondingBox_Model(bool Create)
 {
-	/*if (Create == 1)
-	{
-		S_BoundingBox[0] = new AABB_Type;
-	}*/
-
 	BB_Min.x = Group[0]->vertex_Data[0].x;
 	BB_Min.y = Group[0]->vertex_Data[0].y;
 	BB_Min.z = Group[0]->vertex_Data[0].z;
@@ -285,7 +280,50 @@ void SB_Model::Set_BondingBox_Model(bool Create)
 	Centre.x = (BB_Min.x + BB_Max.x) / 2.0f;
 	Centre.y = (BB_Min.y + BB_Max.y) / 2.0f;
 	Centre.z = (BB_Min.z + BB_Max.z) / 2.0f;
+}
 
+// *************************************************************************
+// *	   Create_BondingBox_Brushes:- Terry and Hazel Flanigan 2023	   *
+// *************************************************************************
+void SB_Model::Set_BondingBox_Brushes()
+{
+	BB_Min.x = B_Brush[0]->vertex_Data[0].x;
+	BB_Min.y = B_Brush[0]->vertex_Data[0].y;
+	BB_Min.z = B_Brush[0]->vertex_Data[0].z;
+
+	BB_Max.x = B_Brush[0]->vertex_Data[0].x;
+	BB_Max.y = B_Brush[0]->vertex_Data[0].y;
+	BB_Max.z = B_Brush[0]->vertex_Data[0].z;
+
+	int Count = 0;
+	int VertCount = 0;
+
+	while (Count < BrushCount)
+	{
+		VertCount = 0;
+		while (VertCount < B_Brush[Count]->Face_Count)
+		{
+			if (B_Brush[Count]->vertex_Data[VertCount].x < BB_Min.x) BB_Min.x = B_Brush[Count]->vertex_Data[VertCount].x;
+			if (B_Brush[Count]->vertex_Data[VertCount].y < BB_Min.y) BB_Min.y = B_Brush[Count]->vertex_Data[VertCount].y;
+			if (B_Brush[Count]->vertex_Data[VertCount].z < BB_Min.z) BB_Min.z = B_Brush[Count]->vertex_Data[VertCount].z;
+
+			if (B_Brush[Count]->vertex_Data[VertCount].x > BB_Max.x) BB_Max.x = B_Brush[Count]->vertex_Data[VertCount].x;
+			if (B_Brush[Count]->vertex_Data[VertCount].y > BB_Max.y) BB_Max.y = B_Brush[Count]->vertex_Data[VertCount].y;
+			if (B_Brush[Count]->vertex_Data[VertCount].z > BB_Max.z) BB_Max.z = B_Brush[Count]->vertex_Data[VertCount].z;
+			VertCount++;
+		}
+		Count++;
+	}
+
+	Size.x = (fabs(BB_Max.x - BB_Min.x));
+	Size.y = (fabs(BB_Max.y - BB_Min.y));
+	Size.z = (fabs(BB_Max.z - BB_Min.z));
+
+	radius = (Size.x > Size.z) ? Size.z / 2.0f : Size.x / 2.0f;
+
+	Centre.x = (BB_Min.x + BB_Max.x) / 2.0f;
+	Centre.y = (BB_Min.y + BB_Max.y) / 2.0f;
+	Centre.z = (BB_Min.z + BB_Max.z) / 2.0f;
 }
 
 // *************************************************************************

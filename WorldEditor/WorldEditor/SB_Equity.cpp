@@ -1058,6 +1058,8 @@ void SB_Equity::Do_Equity()
 // *************************************************************************
 void SB_Equity::Do_Preview_Selected()
 {
+	bool AllGood = 0;
+
 	Equity_Start_Mode = 3;
 
 	Get_CurrentDocument();
@@ -1070,43 +1072,62 @@ void SB_Equity::Do_Preview_Selected()
 		return;
 	}
 
-
-	App->CLSB_Model->Set_Equity();
-	App->CLSB_Camera_EQ->Reset_Orientation();
-
-	App->CLSB_Camera_EQ->Set_Camera_Mode(Enums::CamModel);
-
-	App->CLSB_TopTabs_Equity->Hide_Tabs();
-	ShowWindow(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, SW_SHOW);
-	App->CLSB_TopTabs_Equity->Toggle_Tabs_Camera_Flag = 1;
-
-	App->CLSB_TopTabs_Equity->Camera_Set_Model();
-
-	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_BT_TT_FREE), 0);
-	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_BT_TT_MODEL), 1);
-	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_FIRST_MODEX), 0);
-	EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, IDC_UPDATE2), 0);
-
-	App->CLSB_ImGui->Show_Physics_Console = 0;
-	App->CLSB_Ogre->BulletListener->Render_Debug_Flag = 0;
-
-	App->CLSB_Camera_EQ->Reset_View();
-
-	if (App->CLSB_Ogre->OgreIsRunning == 1)
+	
+	for (int i = 0; i < NumSelBrushes; ++i)
 	{
-		App->CLSB_Ogre->OgreListener->GD_Run_Physics = 0;
+		Brush* pBrush = SelBrushList_GetBrush(App->m_pDoc->pSelBrushes, i);
+		if (pBrush->Flags & 1 || pBrush->Flags & 1024)
+		{
+			AllGood = 1;
+		}
 	}
 
-	RedrawWindow(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+	if (AllGood == 1)
+	{
+		App->CLSB_Model->Set_Equity();
+		App->CLSB_Camera_EQ->Reset_Orientation();
 
-	App->CLSB_Export_World->Export_World_Text(1);
-	App->CLSB_Bullet->Create_Brush_Trimesh(0);
+		App->CLSB_Camera_EQ->Set_Camera_Mode(Enums::CamModel);
 
-	App->CLSB_Model->Model_Loaded = 1;
-	App->CLSB_Ogre->RenderListener->ShowBrushes = 1;
-	App->CLSB_Ogre->RenderListener->ShowTextured = 1;
-	App->CLSB_Model->Model_Type = Enums::LoadedFile_Brushes;
-	App->CLSB_Equity->Show_Equity_Dialog(true);
+		App->CLSB_TopTabs_Equity->Hide_Tabs();
+		ShowWindow(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, SW_SHOW);
+		App->CLSB_TopTabs_Equity->Toggle_Tabs_Camera_Flag = 1;
+
+		App->CLSB_TopTabs_Equity->Camera_Set_Model();
+
+		EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_BT_TT_FREE), 0);
+		EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_BT_TT_MODEL), 1);
+		EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, IDC_FIRST_MODEX), 0);
+		EnableWindow(GetDlgItem(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, IDC_UPDATE2), 0);
+
+		App->CLSB_ImGui->Show_Physics_Console = 0;
+		App->CLSB_Ogre->BulletListener->Render_Debug_Flag = 0;
+
+		App->CLSB_Camera_EQ->Reset_View();
+
+		if (App->CLSB_Ogre->OgreIsRunning == 1)
+		{
+			App->CLSB_Ogre->OgreListener->GD_Run_Physics = 0;
+		}
+
+		RedrawWindow(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+		App->CLSB_Export_World->Export_World_Text(1);
+		App->CLSB_Bullet->Create_Brush_Trimesh(0);
+		App->CLSB_Model->Set_BondingBox_Brushes();
+
+
+		App->CLSB_Model->Model_Loaded = 1;
+		App->CLSB_Ogre->RenderListener->ShowBrushes = 1;
+		App->CLSB_Ogre->RenderListener->ShowTextured = 1;
+		App->CLSB_Model->Model_Type = Enums::LoadedFile_Brushes;
+		App->CLSB_Equity->Show_Equity_Dialog(true);
+	}
+	else
+	{
+		App->Say("Only Cut Brush Selected","Cant not build Geometry from only Cut Brushes");
+
+	}
 
 }
 
@@ -1151,6 +1172,7 @@ void SB_Equity::Do_Preview_All()
 
 	App->CLSB_Export_World->Export_World_Text(0);
 	App->CLSB_Bullet->Create_Brush_Trimesh(0);
+	App->CLSB_Model->Set_BondingBox_Brushes();
 
 
 	App->CLSB_Model->Set_Equity();

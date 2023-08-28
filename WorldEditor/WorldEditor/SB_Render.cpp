@@ -229,7 +229,7 @@ void SB_Render::Render_Loop()
 	Translate();
 
 
-	 //---------------------- Textured
+	//---------------------- Textured
 	if (App->CLSB_Model->Model_Loaded == 1 && ShowTextured == 1)
 	{
 		glEnable(GL_DEPTH_TEST);
@@ -296,7 +296,7 @@ void SB_Render::Render_Loop()
 
 	}
 
-	//// ---------------------- Normals
+	// ---------------------- Normals
 	if (App->CLSB_Model->Model_Loaded == 1 && ShowNormals == 1)
 	{
 		if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Actor)
@@ -334,7 +334,7 @@ void SB_Render::Render_Loop()
 		Render_BoundingBoxGroup();
 	}
 
-	//// ---------------------- Bones
+	// ---------------------- Bones
 	if (App->CLSB_Model->Model_Loaded == 1 && ShowBones == 1)
 	{
 		As_RenderBones();
