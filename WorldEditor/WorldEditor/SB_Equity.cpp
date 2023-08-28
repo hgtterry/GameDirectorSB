@@ -693,7 +693,7 @@ void SB_Equity::Init_Bmps_Globals(void)
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
 
 	Temp = GetDlgItem(Render_Buttons_hWnd, IDC_BTSHOWTEXTURES);
-	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOff_Bmp);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_TexturesOn_Bmp);
 
 	Temp = GetDlgItem(Render_Buttons_hWnd, IDC_BTSHOWPOINTS);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshPointsOff_Bmp);
@@ -1158,6 +1158,10 @@ void SB_Equity::Do_Preview_All()
 
 	App->CLSB_Model->Model_Loaded = 1;
 	App->CLSB_Ogre->RenderListener->ShowBrushes = 1;
+
+	App->CLSB_Ogre->RenderListener->ShowTextured = 1;
+	App->CLSB_Model->Model_Type = Enums::LoadedFile_Brushes;
+
 	App->CLSB_Equity->Show_Equity_Dialog(true);
 
 	//-----------------------------------------------------

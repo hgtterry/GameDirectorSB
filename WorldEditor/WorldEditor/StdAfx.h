@@ -89,7 +89,8 @@ namespace Enums
 		LoadedFile_Actor = 1,
 		LoadedFile_Assimp = 2,
 		LoadedFile_Ogre = 3,
-		LoadedFile_STL = 4
+		LoadedFile_STL = 4,
+		LoadedFile_Brushes = 5
 	};
 }
 // re-enable warnings except 4514

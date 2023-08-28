@@ -41,7 +41,7 @@ SB_Render::SB_Render()
 
 	ShowTextured = 0;
 	ShowFaces = 0;
-	ShowBrushes = 1;
+	ShowBrushes = 0;
 	ShowBones = 0;
 	ShowPoints = 0;
 	ShowNormals = 0;
@@ -205,8 +205,6 @@ void SB_Render::PostRender()
 // *************************************************************************
 void SB_Render::Render_Loop()
 {
-	//App->Flash_Window();
-
 	GLboolean depthTestEnabled = glIsEnabled(GL_DEPTH_TEST);
 	glDisable(GL_DEPTH_TEST);
 	GLboolean stencilTestEnabled = glIsEnabled(GL_STENCIL_TEST);
@@ -248,6 +246,12 @@ void SB_Render::Render_Loop()
 		{
 			Assimp_Render_Textures();
 		}
+
+		if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Brushes)
+		{
+			Brush_Render_Textures();;
+		}
+
 	}
 
 	// ---------------------- Mesh
@@ -264,21 +268,13 @@ void SB_Render::Render_Loop()
 		{
 			Assimp_Render_Faces();
 		}
+
+		if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Brushes)
+		{
+			//Assimp_Render_Faces();
+		}
 	}
 
-	// ---------------------- Brushes
-	if (App->CLSB_Model->Model_Loaded == 1 && ShowBrushes == 1)
-	{
-		glEnable(GL_DEPTH_TEST);
-		glShadeModel(GL_SMOOTH);
-
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
-		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-		//Brushes_Render_Faces();
-		Brush_Render_Textures();
-	}
 
 	// ---------------------- Points
 	if (App->CLSB_Model->Model_Loaded == 1 && ShowPoints == 1)
