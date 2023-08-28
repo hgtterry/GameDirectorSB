@@ -1017,6 +1017,42 @@ void SB_Dimensions::Rotate_Z_Model(float Z)
 		App->CLSB_Model->Set_BondingBox_Model(0);
 	}
 }
+
+// *************************************************************************
+// *	  Centre_Model_Mid_Brushes:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_Dimensions::Centre_Model_Mid_Brushes(void)
+{
+	if (App->CLSB_Model->Model_Loaded == 1)
+	{
+		float X = -App->CLSB_Model->Centre.x;
+		float Y = -App->CLSB_Model->Centre.y;
+		float Z = -App->CLSB_Model->Centre.z;
+
+		int Count = 0;
+		int VertCount = 0;
+		int BrushCount = App->CLSB_Model->BrushCount;
+
+		while (Count < BrushCount)
+		{
+			VertCount = 0;
+			while (VertCount < App->CLSB_Model->B_Brush[Count]->Vertice_Count)
+			{
+				App->CLSB_Model->B_Brush[Count]->vertex_Data[VertCount].x += X;
+				App->CLSB_Model->B_Brush[Count]->vertex_Data[VertCount].y += Y;
+				App->CLSB_Model->B_Brush[Count]->vertex_Data[VertCount].z += Z;
+
+				VertCount++;
+			}
+
+			Count++;
+		}
+
+		App->CLSB_Model->Set_BondingBox_Brushes();
+
+	}
+}
+
 // *************************************************************************
 // *				UpDate_Physics_And_Visuals Terry Flanigtan		 	   *
 // *************************************************************************

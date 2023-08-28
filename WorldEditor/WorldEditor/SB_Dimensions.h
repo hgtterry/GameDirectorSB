@@ -34,6 +34,8 @@ public:
 	void Dimesions_Select(void);
 	void Set_Position(float X, float Y, float Z);
 
+	void Centre_Model_Mid_Brushes(void);
+
 	bool Show_Dimensions;
 
 	bool Show_Position;

@@ -1115,7 +1115,7 @@ void SB_Equity::Do_Preview_Selected()
 		App->CLSB_Export_World->Export_World_Text(1);
 		App->CLSB_Bullet->Create_Brush_Trimesh(0);
 		App->CLSB_Model->Set_BondingBox_Brushes();
-
+		App->CLSB_Dimensions->Centre_Model_Mid_Brushes();
 
 		App->CLSB_Model->Model_Loaded = 1;
 		App->CLSB_Ogre->RenderListener->ShowBrushes = 1;
