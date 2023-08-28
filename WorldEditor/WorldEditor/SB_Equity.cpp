@@ -1104,6 +1104,8 @@ void SB_Equity::Do_Preview_Selected()
 
 	App->CLSB_Model->Model_Loaded = 1;
 	App->CLSB_Ogre->RenderListener->ShowBrushes = 1;
+	App->CLSB_Ogre->RenderListener->ShowTextured = 1;
+	App->CLSB_Model->Model_Type = Enums::LoadedFile_Brushes;
 	App->CLSB_Equity->Show_Equity_Dialog(true);
 
 }
@@ -1158,10 +1160,8 @@ void SB_Equity::Do_Preview_All()
 
 	App->CLSB_Model->Model_Loaded = 1;
 	App->CLSB_Ogre->RenderListener->ShowBrushes = 1;
-
 	App->CLSB_Ogre->RenderListener->ShowTextured = 1;
 	App->CLSB_Model->Model_Type = Enums::LoadedFile_Brushes;
-
 	App->CLSB_Equity->Show_Equity_Dialog(true);
 
 	//-----------------------------------------------------

@@ -96,6 +96,10 @@ protected:
 	bool Brushes_Face_Parts(int Count);
 	bool Brush_Render_Textures(void);
 	bool Brush_Textured_Parts(int Count);
+	bool Brush_Render_Points(void);
+	bool Brush_As_Points_Parts(int Count);
+	void Brush_Render_Normals(void);
+	void Brush_As_Normals_Parts(int Count);
 
 	bool As_RenderBones();
 
