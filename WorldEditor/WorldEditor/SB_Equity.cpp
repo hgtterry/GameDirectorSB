@@ -707,8 +707,11 @@ void SB_Equity::Init_Bmps_Globals(void)
 	Temp = GetDlgItem(Render_Buttons_hWnd, IDC_BTSHOWLIGHT2);
 	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_LightsOff_Bmp);
 
+	Temp = GetDlgItem(Render_Buttons_hWnd, IDC_BTTB_FULLSCREEN);
+	SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_FullScreen_Bmp);
 
 	HWND hTooltip_TB_2 = CreateWindowEx(0, TOOLTIPS_CLASS, "", TTS_ALWAYSTIP | TTS_BALLOON, 0, 0, 0, 0, App->MainHwnd, 0, App->hInst, 0);
+	SendMessage(hTooltip_TB_2, TTM_SETMAXTIPWIDTH, 0, 150);
 
 	Temp = GetDlgItem(Render_Buttons_hWnd, IDC_TBINFO2);
 	TOOLINFO ti8 = { 0 };
@@ -799,6 +802,15 @@ void SB_Equity::Init_Bmps_Globals(void)
 	ti17.lpszText = "Toggle Show Light";
 	ti17.hwnd = App->MainHwnd;
 	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti17);
+
+	Temp = GetDlgItem(Render_Buttons_hWnd, IDC_BTTB_FULLSCREEN);
+	TOOLINFO ti18 = { 0 };
+	ti18.cbSize = sizeof(ti11);
+	ti18.uFlags = TTF_IDISHWND | TTF_SUBCLASS | TTF_CENTERTIP;
+	ti18.uId = (UINT_PTR)Temp;
+	ti18.lpszText = "Full Screen Mode\r\nPress Esc to Exit";
+	ti18.hwnd = App->MainHwnd;
+	SendMessage(hTooltip_TB_2, TTM_ADDTOOL, 0, (LPARAM)&ti18);
 
 }
 

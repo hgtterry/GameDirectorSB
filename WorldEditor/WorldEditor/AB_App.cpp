@@ -82,6 +82,7 @@ SB_App::SB_App()
 	CLSB_Doc =					nullptr;
 	CLSB_Panels =				nullptr;
 	CLSB_Level =				nullptr;
+	CLSB_Scene =				nullptr;
 
 	CLSB_Bullet =				nullptr;
 	CLSB_Player =				nullptr;
@@ -123,6 +124,7 @@ SB_App::SB_App()
 	Hnd_NormalsOff_Bmp = NULL;
 	Hnd_LightsOn_Bmp = NULL;
 	Hnd_LightsOff_Bmp = NULL;
+	Hnd_FullScreen_Bmp = NULL;
 
 	Hnd_Arch_Icon =		NULL;
 	Hnd_Cone_Icon =		NULL;
@@ -268,6 +270,7 @@ bool SB_App::InitApp(void)
 	CLSB_Doc =						new SB_Doc();
 	CLSB_Panels =					new	SB_Panels();
 	CLSB_Level =					new SB_Level();
+	CLSB_Scene =					new SB_Scene();
 	
 	CLSB_Bullet =					new SB_Bullet();
 	CLSB_Player =					new SB_Player();
@@ -366,6 +369,8 @@ void SB_App::LoadProgramResource(void)
 
 	Hnd_ModelInfo_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_TB_MODELDATA);
 	Hnd_ModelInfoOn_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_TB_MODELDATAON);
+
+	Hnd_FullScreen_Bmp = LoadBitmap(hInst, (LPCTSTR)IDB_FULLSCREEN);
 
 }
 

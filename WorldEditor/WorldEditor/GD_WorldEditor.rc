@@ -1457,7 +1457,7 @@ END
 
 STRINGTABLE
 BEGIN
-    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.26 - [28-08-23] -17"
+    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.26 - [29-08-23] -17"
     IDR_FUSIONTYPE          "Genesis3D World Editor\nWorld\nWorld\nWorld Files (*.3dt)\n.3dt\nWorldEditor.Document\nGenesis3D World Editor Document"
     IDS_LOAD_WARNING        "Some entities or brushes did not load properly, see console for details."
     IDS_NEWGROUP            "Group Name"
@@ -2143,7 +2143,7 @@ BEGIN
     CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME | SS_SUNKEN,7,67,371,1
 END
 
-IDD_SB_TB_BUTTONS DIALOGEX 2, 2, 137, 44
+IDD_SB_TB_BUTTONS DIALOGEX 2, 2, 161, 44
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_VISIBLE
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
@@ -2157,6 +2157,8 @@ BEGIN
     PUSHBUTTON      "",IDC_BTSHOWLIGHT2,84,22,25,22,BS_BITMAP
     PUSHBUTTON      "",IDC_BTSHOWBONES,110,0,25,22,BS_BITMAP
     PUSHBUTTON      "",IDC_TBINFO2,110,22,25,22,BS_BITMAP
+    PUSHBUTTON      "",IDC_BUTTON2,135,0,25,22
+    PUSHBUTTON      "",IDC_BTTB_FULLSCREEN,135,22,25,22,BS_BITMAP
 END
 
 IDD_SB_TB_TEST DIALOGEX 132, 18, 592, 23
@@ -2517,7 +2519,6 @@ BEGIN
 
     IDD_SB_TB_BUTTONS, DIALOG
     BEGIN
-        RIGHTMARGIN, 111
     END
 
     IDD_SB_TB_TEST, DIALOG
@@ -2654,6 +2655,8 @@ IDB_TB_MODELDATA        BITMAP                  "res\\MenuBar\\ModelData.bmp"
 IDB_TB_MODELDATAON      BITMAP                  "res\\MenuBar\\ModelDataOn.bmp"
 
 IDB_DUMMY               BITMAP                  "res\\Dummy.bmp"
+
+IDB_FULLSCREEN          BITMAP                  "res\\MenuBar\\FullScreen.bmp"
 
 
 /////////////////////////////////////////////////////////////////////////////

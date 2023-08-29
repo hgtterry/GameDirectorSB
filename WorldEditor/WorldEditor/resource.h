@@ -159,6 +159,8 @@
 #define IDD_SB_VIEWER3D                 326
 #define IDB_BITMAP1                     329
 #define IDB_BMPXYZ                      329
+#define IDB_BITMAP2                     330
+#define IDB_FULLSCREEN                  330
 #define IDC_RESET_ALL                   1000
 #define IDC_EDIT1                       1001
 #define IDC_EDIT10                      1002
@@ -710,6 +712,7 @@
 #define IDC_BT_TB_FACES                 1466
 #define IDC_ST_BANNER                   1467
 #define IDC_UPDATE2                     1467
+#define IDC_BTTB_FULLSCREEN             1467
 #define IDC_ST_FN                       1468
 #define IDC_ST_NAME                     1469
 #define IDC_ST_FLD                      1470
@@ -1019,7 +1022,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        330
+#define _APS_NEXT_RESOURCE_VALUE        331
 #define _APS_NEXT_COMMAND_VALUE         33091
 #define _APS_NEXT_CONTROL_VALUE         1526
 #define _APS_NEXT_SYMED_VALUE           112

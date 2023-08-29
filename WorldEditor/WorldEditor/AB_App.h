@@ -85,6 +85,7 @@ distribution.
 #include "SB_Doc.h"
 #include "SB_Panels.h"
 #include "SB_Level.h"
+#include "SB_Scene.h"
 
 #include "SB_Bullet.h"
 #include "SB_Player.h"
@@ -93,9 +94,8 @@ distribution.
 class SB_App
 {
 public:
-
 	SB_App();
-	virtual ~SB_App();
+	~SB_App();
 
 	//std::stack::size();
 
@@ -153,6 +153,7 @@ public:
 	SB_Doc*						CLSB_Doc;
 	SB_Panels*					CLSB_Panels;
 	SB_Level*					CLSB_Level;
+	SB_Scene*					CLSB_Scene;
 
 	SB_Bullet*					CLSB_Bullet;
 	SB_Player*					CLSB_Player;
@@ -233,6 +234,7 @@ public:
 	HANDLE Hnd_NormalsOff_Bmp;
 	HANDLE Hnd_LightsOn_Bmp;
 	HANDLE Hnd_LightsOff_Bmp;
+	HANDLE Hnd_FullScreen_Bmp;
 
 	HANDLE Hnd_Arch_Icon;
 	HANDLE Hnd_Cone_Icon;

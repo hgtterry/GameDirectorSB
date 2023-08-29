@@ -403,3 +403,4 @@ void SB_Model::Clear_Model_And_Reset(void)
 	SetWindowText(App->CLSB_Equity->Equity_Main_hWnd, "Equity_ME");
 }
 
+

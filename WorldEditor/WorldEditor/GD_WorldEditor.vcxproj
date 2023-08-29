@@ -201,6 +201,7 @@
     <ClCompile Include="SB_Preferences.cpp" />
     <ClCompile Include="SB_RecentFiles.cpp" />
     <ClCompile Include="SB_Render.cpp" />
+    <ClCompile Include="SB_Scene.cpp" />
     <ClCompile Include="SB_Textures.cpp" />
     <ClCompile Include="SB_TopTabs_Equity.cpp" />
     <ClCompile Include="ScaleDialog.cpp" />
@@ -287,6 +288,7 @@
     <ClInclude Include="SB_Preferences.h" />
     <ClInclude Include="SB_RecentFiles.h" />
     <ClInclude Include="SB_Render.h" />
+    <ClInclude Include="SB_Scene.h" />
     <ClInclude Include="SB_Textures.h" />
     <ClInclude Include="SB_TopTabs_Equity.h" />
     <ClInclude Include="tinystr.h" />
@@ -441,6 +443,7 @@
     <Image Include="res\MenuBar\BondingBoxOn.bmp" />
     <Image Include="res\MenuBar\BonesOff.bmp" />
     <Image Include="res\MenuBar\BonesOn.bmp" />
+    <Image Include="res\MenuBar\FullScreen.bmp" />
     <Image Include="res\MenuBar\GridOff.bmp" />
     <Image Include="res\MenuBar\GridOn.bmp" />
     <Image Include="res\MenuBar\LightOff.bmp" />
