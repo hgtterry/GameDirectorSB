@@ -446,3 +446,28 @@ void SB_Ogre::GetVersion_OpenGL(char* buff)
 	strcat(buff, ".");
 	strcat(buff, cMinor);
 }
+
+// *************************************************************************
+// *	  						ExitFullScreen							   *
+// *************************************************************************
+bool SB_Ogre::ExitFullScreen()
+{
+	//if(Flags[0]->OgreIsRunning==1)
+	{
+
+		//App->FullScreen = 0;
+		SetParent(App->ViewGLhWnd, App->CLSB_Equity->Equity_Main_hWnd);
+		SetWindowPos(App->ViewGLhWnd, HWND_TOP, 235, 11, 542, 455, SWP_NOZORDER);
+		App->CLSB_Equity->Resize_3DView();
+
+		mWindow->windowMovedOrResized();
+		mCamera->setAspectRatio((Ogre::Real)mWindow->getWidth() / (Ogre::Real)mWindow->getHeight());
+		mCamera->yaw(Radian(0));
+		Root::getSingletonPtr()->renderOneFrame();
+
+		App->CLSB_Scene->FullScreenMode_Flag = 0;
+		//App->SBC_Scene->Editor_Mode();
+
+	}
+	return 1;
+}

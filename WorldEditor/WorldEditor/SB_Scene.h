@@ -29,5 +29,7 @@ public:
 	~SB_Scene();
 
 	void Go_FullScreen_Mode(void);
+
+	bool FullScreenMode_Flag;
 };
 

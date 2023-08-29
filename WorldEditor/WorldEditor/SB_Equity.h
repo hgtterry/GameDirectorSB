@@ -15,6 +15,7 @@ public:
 	void Do_Equity();
 	void Do_Preview_Selected();
 	void Do_Preview_All();
+	void Resize_3DView();
 
 	bool mAutoLoad;
 	bool First_Run;
@@ -41,8 +42,6 @@ private:
 
 	bool Start_Render_Buttons();
 	void Init_Bmps_Globals(void);
-
-	void Resize_3DView();
 
 	void Get_CurrentDocument();
 

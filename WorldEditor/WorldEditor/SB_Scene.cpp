@@ -27,6 +27,7 @@ distribution.
 
 SB_Scene::SB_Scene()
 {
+	FullScreenMode_Flag = 0;
 }
 
 SB_Scene::~SB_Scene()
@@ -38,11 +39,11 @@ SB_Scene::~SB_Scene()
 // *************************************************************************
 void SB_Scene::Go_FullScreen_Mode(void)
 {
-	/*FullScreenMode_Flag = 1;
+	FullScreenMode_Flag = 1;
 
-	App->SBC_Scene->CurrentCamMode = App->CL_Ogre->OgreListener->GD_CameraMode;
+	//App->SBC_Scene->CurrentCamMode = App->CL_Ogre->OgreListener->GD_CameraMode;
 
-	App->FullScreen = 1;
+	//App->FullScreen = 1;
 	int cx = GetSystemMetrics(SM_CXSCREEN);
 	int cy = GetSystemMetrics(SM_CYSCREEN);
 
@@ -50,10 +51,10 @@ void SB_Scene::Go_FullScreen_Mode(void)
 
 	SetParent(App->ViewGLhWnd, NULL);
 
-	App->CL_Ogre->mWindow->resize(cx, cy);
+	App->CLSB_Ogre->mWindow->resize(cx, cy);
 
-	App->CL_Ogre->mWindow->windowMovedOrResized();
-	App->CL_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CL_Ogre->mWindow->getWidth() / (Ogre::Real)App->CL_Ogre->mWindow->getHeight());*/
+	App->CLSB_Ogre->mWindow->windowMovedOrResized();
+	App->CLSB_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CLSB_Ogre->mWindow->getWidth() / (Ogre::Real)App->CLSB_Ogre->mWindow->getHeight());
 
 	Root::getSingletonPtr()->renderOneFrame();
 }

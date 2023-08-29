@@ -61,6 +61,8 @@ public:
 
 	void GetVersion_OpenGL(char* buff);
 
+	bool ExitFullScreen();
+
 	bool Block_RenderingQueued;
 
 

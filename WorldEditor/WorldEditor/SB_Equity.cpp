@@ -429,6 +429,13 @@ LRESULT CALLBACK SB_Equity::Render_Buttons_Proc(HWND hDlg, UINT message, WPARAM 
 
 	case WM_COMMAND:
 
+		//-------------------------------------------------------- Full Screen
+		if (LOWORD(wParam) == IDC_BTTB_FULLSCREEN)
+		{
+			App->CLSB_Scene->Go_FullScreen_Mode();
+
+			return TRUE;
+		}
 		//-------------------------------------------------------- Show Info
 		if (LOWORD(wParam) == IDC_TBINFO2)
 		{
