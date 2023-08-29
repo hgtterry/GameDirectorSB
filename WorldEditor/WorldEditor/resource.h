@@ -160,7 +160,6 @@
 #define IDB_BITMAP1                     329
 #define IDB_BMPXYZ                      329
 #define IDB_FULLSCREEN                  330
-#define IDD_DIALOG4                     331
 #define IDD_SB_VIEWMANAGER              331
 #define IDC_RESET_ALL                   1000
 #define IDC_EDIT1                       1001
@@ -593,19 +592,24 @@
 #define IDC_NOX                         1363
 #define IDC_NONO                        1363
 #define IDC_WETEST                      1363
+#define IDC_BT_UPPERLEFT                1363
 #define IDC_BANNER                      1364
 #define IDC_GD_CYLINDER_PRIMITIVE       1364
 #define IDC_BT_BROWSE                   1364
 #define IDC_TBINFO2                     1364
 #define IDC_CKVERYSLOW                  1364
+#define IDC_BT_LOWERRIGHT               1364
 #define IDC_STTEXT                      1365
 #define IDC_GD_SPHEROID_PRIMITIVE       1365
 #define IDC_BT_FOLDER_NAME              1365
 #define IDC_CKSLOW                      1365
+#define IDC_BUTTON9                     1365
+#define IDC_BT_LOWERLEFT                1365
 #define IDC_STMESSAGE                   1366
 #define IDC_GD_CONE_PRIMITIVE           1366
 #define IDC_STTEXT2                     1366
 #define IDC_CKFAST                      1366
+#define IDC_BT_UPPERRIGHT               1366
 #define IDC_STTXL                       1367
 #define IDC_GD_STAIRCASE_PRIMITIVE      1367
 #define IDC_BTWORLDINFO                 1368
@@ -809,6 +813,7 @@
 #define IDC_STTXLFILE                   1524
 #define IDC_SBROTXH                     1525
 #define IDC_SBROTYH                     1526
+#define IDC_BT_RESTORE                  1526
 #define IDC_SCROLLBAR3                  1527
 #define IDC_SBROTZH                     1527
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
@@ -1025,7 +1030,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        333
 #define _APS_NEXT_COMMAND_VALUE         33091
-#define _APS_NEXT_CONTROL_VALUE         1526
+#define _APS_NEXT_CONTROL_VALUE         1527
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

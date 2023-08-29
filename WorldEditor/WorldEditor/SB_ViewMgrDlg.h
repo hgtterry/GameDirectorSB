@@ -7,9 +7,14 @@ public:
 
 	void Start_View_MgrDlg();
 
-	void MaximizeUpperLeftPane();
+	void RestoreAllPanes();
 
 private:
 	static LRESULT CALLBACK View_MgrDlg_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	void MaximizeUpperLeftPane();
+	void MaximizeUpperRightPane();
+	void MaximizeLowerLeftPane();
+	void MaximizeLowerRightPane();
 };
 

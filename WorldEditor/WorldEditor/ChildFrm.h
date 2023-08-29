@@ -78,7 +78,13 @@ public:
 public:
 	virtual ~CChildFrame();
 	virtual BOOL OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext);
+
 	bool	MaximizeUpperLeftPane();
+	bool	MaximizeUpperRightPane();
+	bool	MaximizeLowerLeftPane();
+	bool	MaximizeLowerRightPane();
+	bool	RestoreAllPanes();
+
 	CFixedSplitterWnd m_wndSplitter;
 
 	// Generated message map functions

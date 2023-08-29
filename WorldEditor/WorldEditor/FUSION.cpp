@@ -368,6 +368,7 @@ BOOL CFusionApp::InitInstance() // hgtterry InitInstance
 	{
 		App->CLSB_TopTabs->Start_Headers_Tabs();
 		App->CL_TabsControl->Start_Tabs_Control_Dlg();
+		App->CLSB_ViewMgrDlg->Start_View_MgrDlg();
 	}
 
 	App->CLSB_RecentFiles->Init_History();

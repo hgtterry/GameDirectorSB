@@ -286,3 +286,102 @@ bool CChildFrame::MaximizeUpperLeftPane()
 
 	return true;
 }
+
+// *************************************************************************
+// *	  						MaximizeUpperRightPane					   *
+// *************************************************************************
+bool CChildFrame::MaximizeUpperRightPane()
+{
+	HWND hWnd = NULL;
+	hWnd = m_wndSplitter.GetSafeHwnd();
+	if (hWnd == NULL || !::IsWindow(hWnd))
+		return false;
+
+	CRect	rect;
+	GetClientRect(&rect);
+	CSize size = rect.Size();
+
+	m_wndSplitter.SetColumnInfo(0, 0, 0);
+	m_wndSplitter.SetColumnInfo(1, size.cx, 0);
+	m_wndSplitter.SetRowInfo(0, size.cy, 0);
+	m_wndSplitter.SetRowInfo(1, 0, 0);
+
+	m_wndSplitter.RecalcLayout();
+
+	return true;
+}
+
+// *************************************************************************
+// *	  						MaximizeLowerLeftPane					   *
+// *************************************************************************
+bool CChildFrame::MaximizeLowerLeftPane()
+{
+	HWND hWnd = NULL;
+	hWnd = m_wndSplitter.GetSafeHwnd();
+	if (hWnd == NULL || !::IsWindow(hWnd))
+		return false;
+
+	CRect	rect;
+	GetClientRect(&rect);
+	CSize size = rect.Size();
+
+	m_wndSplitter.SetColumnInfo(0, size.cx, 0);
+	m_wndSplitter.SetColumnInfo(1, 0, 0);
+	m_wndSplitter.SetRowInfo(0, 0, 0);
+	m_wndSplitter.SetRowInfo(1, size.cy, 0);
+
+	m_wndSplitter.RecalcLayout();
+
+	return true;
+}
+
+// *************************************************************************
+// *	  						MaximizeLowerRightPane					   *
+// *************************************************************************
+bool CChildFrame::MaximizeLowerRightPane()
+{
+	HWND hWnd = NULL;
+	hWnd = m_wndSplitter.GetSafeHwnd();
+	if (hWnd == NULL || !::IsWindow(hWnd))
+		return false;
+
+	CRect	rect;
+	GetClientRect(&rect);
+	CSize size = rect.Size();
+
+	m_wndSplitter.SetColumnInfo(0, 0, 0);
+	m_wndSplitter.SetColumnInfo(1, size.cx, 0);
+	m_wndSplitter.SetRowInfo(0, 0, 0);
+	m_wndSplitter.SetRowInfo(1, size.cy, 0);
+
+	m_wndSplitter.RecalcLayout();
+
+	return true;
+}
+
+// *************************************************************************
+// *	  						RestoreAllPanes							   *
+// *************************************************************************
+bool CChildFrame::RestoreAllPanes()
+{
+	HWND hWnd = NULL;
+	hWnd = m_wndSplitter.GetSafeHwnd();
+	if (hWnd == NULL || !::IsWindow(hWnd))
+		return false;
+
+	int correctedHeight;
+	CRect	propPanelRect, childFrameRect;
+
+	GetClientRect(&childFrameRect);
+
+	correctedHeight = childFrameRect.Height();
+
+	m_wndSplitter.SetColumnInfo(0, childFrameRect.Width() / 2, 0);
+	m_wndSplitter.SetColumnInfo(1, childFrameRect.Width() / 2, 0);
+	m_wndSplitter.SetRowInfo(0, correctedHeight / 2, 0);
+	m_wndSplitter.SetRowInfo(1, correctedHeight / 2, 0);
+
+	m_wndSplitter.RecalcLayout();
+
+	return true;
+}
