@@ -37,8 +37,16 @@ void A_FaceDialog::Start_FaceDialog()
 {
 	if (f_FaceDlg_Active == 0)
 	{
-		FaceDlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_FACE_PROPERTIES, App->MainHwnd, (DLGPROC)FaceDialog_Proc);
-		f_FaceDlg_Active = 1;
+		if (App->CLSB_Equity->EquitySB_Dialog_Visible == 1)
+		{
+			FaceDlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_FACE_PROPERTIES, App->CLSB_Equity->Equity_Main_hWnd, (DLGPROC)FaceDialog_Proc);
+			f_FaceDlg_Active = 1;
+		}
+		else
+		{
+			FaceDlg_Hwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_FACE_PROPERTIES, App->MainHwnd, (DLGPROC)FaceDialog_Proc);
+			f_FaceDlg_Active = 1;
+		}
 	}
 }
 

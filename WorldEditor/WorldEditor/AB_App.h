@@ -86,6 +86,7 @@ distribution.
 #include "SB_Panels.h"
 #include "SB_Level.h"
 #include "SB_Scene.h"
+#include "SB_ViewMgrDlg.h"
 
 #include "SB_Bullet.h"
 #include "SB_Player.h"
@@ -154,6 +155,7 @@ public:
 	SB_Panels*					CLSB_Panels;
 	SB_Level*					CLSB_Level;
 	SB_Scene*					CLSB_Scene;
+	SB_ViewMgrDlg*				CLSB_ViewMgrDlg;
 
 	SB_Bullet*					CLSB_Bullet;
 	SB_Player*					CLSB_Player;

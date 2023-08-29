@@ -31,7 +31,6 @@ static char THIS_FILE[] = __FILE__;
 
 CFixedSplitterWnd::CFixedSplitterWnd()
 {
-	App->Debug_Message("CFixedSplitterWnd",1);
 	m_hwndAct = NULL;
 }
 
@@ -159,7 +158,6 @@ BOOL CChildFrame::PreCreateWindow(CREATESTRUCT& cs)
 BOOL CChildFrame::OnCreateClient(LPCREATESTRUCT, CCreateContext* pContext)
 {
 
-	//App->Debug_Message("CChildFrame::OnCreateClient",1);
 	int x, y;
 	int x2, y2;
 	RECT r;
@@ -263,4 +261,28 @@ void CChildFrame::OnSetFocus(CWnd* pOldWnd)
 	{
 		pParent->SendMessage (WM_NOTIFY, 0, (LPARAM)&hdr);
 	}
+}
+
+// *************************************************************************
+// *	  						MaximizeUpperLeftPane					   *
+// *************************************************************************
+bool CChildFrame::MaximizeUpperLeftPane()
+{
+	HWND hWnd = NULL;
+	hWnd = m_wndSplitter.GetSafeHwnd();
+	if (hWnd == NULL || !::IsWindow(hWnd))
+		return false;
+
+	CRect	rect;
+	GetClientRect(&rect);
+	CSize size = rect.Size();
+
+	m_wndSplitter.SetColumnInfo(0, size.cx, 0);
+	m_wndSplitter.SetColumnInfo(1, 0, 0);
+	m_wndSplitter.SetRowInfo(0, size.cy, 0);
+	m_wndSplitter.SetRowInfo(1, 0, 0);
+
+	m_wndSplitter.RecalcLayout();
+
+	return true;
 }

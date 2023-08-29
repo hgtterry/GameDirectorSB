@@ -715,7 +715,7 @@ LRESULT CALLBACK SB_TopTabs::Top_Test_Proc(HWND hDlg, UINT message, WPARAM wPara
 	{
 		if (LOWORD(wParam) == IDC_WETEST)
 		{
-			App->CLSB_Export_World->Export_World_Text(1);
+			App->CLSB_ViewMgrDlg->MaximizeUpperLeftPane();
 
 			return TRUE;
 		}
