@@ -135,6 +135,12 @@ bool SB_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 
 	App->CL_Ogre->Block_RenderingQueued = 1;*/
 
+
+	if (App->CLSB_Equity->EquitySB_Dialog_Visible == 0)
+	{
+		App->CLSB_Keyboard->Keyboard_Mode_WorldEditor(evt.timeSinceLastFrame);
+		return 1;
+	}
 	
 	if (CameraMode == Enums::CamFirst)
 	{

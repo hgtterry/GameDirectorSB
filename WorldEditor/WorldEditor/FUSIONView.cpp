@@ -464,10 +464,14 @@ void CFusionView::Pan
 		else if (LButtonIsDown)
 		{
 			geVec3d_Set (&MoveVec, 0.0f, 0.0f, (float)-dy);
-			Render_MoveCamPos( VCam, &MoveVec ) ;
+			//Render_MoveCamPos( VCam, &MoveVec ) ;
+
+			Render_IncrementPitch(VCam, (float)(dy));
+
 			if (Render_UpIsDown (VCam))
 			{
-				Render_IncrementYaw (VCam, (float)(-dx));
+				Render_IncrementPitch(VCam, (float)(-dx));
+				//Render_IncrementYaw (VCam, (float)(-dx));
 			}
 			else
 			{
@@ -534,28 +538,28 @@ void CFusionView::ShearSelected (CFusionDoc *pDoc, int dx, int dy)
 
 void CFusionView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) // hgtterry KeyDown
 {
-	App->Get_Current_Document();
+	//App->Get_Current_Document();
 
-	App->CLSB_Camera_WE->KeyBeingPresed_Flag = 1;
+	//App->CLSB_Camera_WE->KeyBeingPresed_Flag = 1;
 
-	switch (nChar)
-	{
+	//switch (nChar)
+	//{
 
-	case 0x57:
-	{
-		App->CLSB_Camera_WE->Move_Camera_Forward(1);
-		break;
-	}
-	case 0x53:
-	{
-		App->CLSB_Camera_WE->Move_Camera_Back(1);
-		break;
-	}
-	case VK_DELETE:
-	{
-		break;
-	}
-	}
+	//case 0x57:
+	//{
+	//	//App->CLSB_Camera_WE->Move_Camera_Forward(1);
+	//	break;
+	//}
+	//case 0x53:
+	//{
+	//	//App->CLSB_Camera_WE->Move_Camera_Back(1);
+	//	break;
+	//}
+	//case VK_DELETE:
+	//{
+	//	break;
+	//}
+	//}
 
 }
 
@@ -606,14 +610,12 @@ void CFusionView::OnMouseMove (UINT nFlags, CPoint point) // hgtterry OnMouseMov
 	  really interested is the current state, so we can throw out old messages.
 	*/
 	ShiftHeld = IsKeyDown (VK_SHIFT);
-	ControlHeld = IsKeyDown (VK_CONTROL);
+	ControlHeld = 1;// IsKeyDown(VK_CONTROL);
 	LButtonIsDown = LMouseButtonDown;//IsKeyDown (VK_LBUTTON);
 	RButtonIsDown = RMouseButtonDown;//IsKeyDown (VK_RBUTTON);
 	//SpaceHeld	= IsKeyDown (VK_SPACE);
 
-//	IsPanning	=((ControlHeld || IsPanning) &&
-//				  (LButtonIsDown | RButtonIsDown) && ThisIsCaptured);
-	IsPanning	=((ControlHeld || BeganWithPan) &&
+	IsPanning =  ((ControlHeld || BeganWithPan) &&
 				  (LButtonIsDown | RButtonIsDown) && ThisIsCaptured);
 
 
@@ -680,7 +682,13 @@ void CFusionView::OnMouseMove (UINT nFlags, CPoint point) // hgtterry OnMouseMov
 	//camera and space hold panning
 	if ((ModeTool == ID_TOOLS_CAMERA)||IsPanning)
 	{
-		Pan (pDoc, dx, dy, &dv, LButtonIsDown, RButtonIsDown);
+		int Tolarance1 = 2;
+		int Tolarance2 = -2;
+
+		if (dx > Tolarance1 || dy > Tolarance1 || dx < Tolarance2 || dy < Tolarance2)
+		{
+			Pan(pDoc, dx, dy, &dv, LButtonIsDown, RButtonIsDown);
+		}
 	}
 	else if (!mViewIs3d)
 	// none of this stuff should be available in the 3d view.

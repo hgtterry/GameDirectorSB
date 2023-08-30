@@ -508,3 +508,61 @@ void SB_Keyboard::Keyboard_Mode_First(float deltaTime)
 		}
 	}
 }
+
+// *************************************************************************
+// *						Keyboard_Mode_WorldEditor					   *
+// *************************************************************************
+void SB_Keyboard::Keyboard_Mode_WorldEditor(float deltaTime)
+{
+	//	Pan Up
+	if (GetAsyncKeyState(69) < 0) // E key 
+	{
+		App->CLSB_Camera_WE->Move_Camera_Up(2);
+	}
+
+	// Pan Down
+	if (GetAsyncKeyState(81) < 0)  // Q Key
+	{
+		App->CLSB_Camera_WE->Move_Camera_Down(2);
+	}
+
+	// Forward
+	if (App->CLSB_Ogre->OgreListener->Wheel < 0) // Mouse Wheel Forward
+	{
+	}
+	if (GetAsyncKeyState(87) < 0) // W Key
+	{
+		App->CLSB_Camera_WE->Move_Camera_Forward(2);
+	}
+
+	// Back
+	if (App->CLSB_Ogre->OgreListener->Wheel > 0) // Mouse Wheel Back
+	{
+	
+	}
+	if (GetAsyncKeyState(83) < 0) // S Key	
+	{
+		App->CLSB_Camera_WE->Move_Camera_Back(2);
+	}
+
+	// Pan Left
+	if (GetAsyncKeyState(65) < 0) // A Key
+	{
+		App->CLSB_Camera_WE->Move_Camera_Left(2);
+	}
+
+	// Pan Right
+	if (GetAsyncKeyState(68) < 0)  // D Key
+	{
+		App->CLSB_Camera_WE->Move_Camera_Right(2);
+	}
+
+	////------------------------------------------------ Escape 
+	//if (GetAsyncKeyState(VK_ESCAPE) < 0) // Back to Editor mode;
+	//{
+	//	if (App->CLSB_Scene->FullScreenMode_Flag == 1)
+	//	{
+	//		App->CLSB_Ogre->ExitFullScreen();
+	//	}
+	//}
+}

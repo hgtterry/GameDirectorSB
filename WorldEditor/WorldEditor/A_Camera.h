@@ -40,6 +40,12 @@ public:
 	void Move_Camera_Forward(float Step);
 	void Move_Camera_Back(float Step);
 
+	void Move_Camera_Down(float Step);
+	void Move_Camera_Up(float Step);
+
+	void Move_Camera_Right(float Step);
+	void Move_Camera_Left(float Step);
+
 	bool KeyBeingPresed_Flag;
 
 private:

@@ -645,3 +645,143 @@ void SB_Camera_WE::Move_Camera_Back(float Step)
 		App->m_pDoc->UpdateAllViews(UAV_ALLVIEWS, NULL);
 	}
 }
+
+// *************************************************************************
+// *			Move_Camera_Down:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_Camera_WE::Move_Camera_Down(float Step)
+{
+	App->Get_Current_Document();
+
+	CEntity* pCameraEntity = App->CLSB_Camera_WE->FindCameraEntity();
+
+	if (pCameraEntity)
+	{
+		geVec3d Angles;
+		pCameraEntity->GetAngles(&Angles, Level_GetEntityDefs(App->m_pDoc->pLevel));
+
+		geXForm3d TransformOrigin;
+		geXForm3d_SetIdentity(&TransformOrigin);
+
+		geXForm3d_RotateZ(&TransformOrigin, Angles.X);
+		geXForm3d_RotateX(&TransformOrigin, Angles.Z);
+		geXForm3d_RotateY(&TransformOrigin, (-Angles.Y - M_PI / 2.0f));
+
+		geXForm3d_Translate(&TransformOrigin, pCameraEntity->mOrigin.X, pCameraEntity->mOrigin.Y, pCameraEntity->mOrigin.Z);
+
+		geXForm3d Delta;
+		geXForm3d_SetTranslation(&Delta, 0, Step, 0);
+
+		geXForm3d_Multiply(&TransformOrigin, &Delta, &TransformOrigin);
+
+		geVec3d_Copy(&(TransformOrigin.Translation), &(pCameraEntity->mOrigin));
+
+		App->m_pDoc->SetRenderedViewCamera(&(pCameraEntity->mOrigin), &Angles);
+		App->m_pDoc->UpdateAllViews(UAV_ALLVIEWS, NULL);
+	}
+}
+
+// *************************************************************************
+// *			Move_Camera_Up:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_Camera_WE::Move_Camera_Up(float Step)
+{
+	App->Get_Current_Document();
+
+	CEntity* pCameraEntity = App->CLSB_Camera_WE->FindCameraEntity();
+
+	if (pCameraEntity)
+	{
+		geVec3d Angles;
+		pCameraEntity->GetAngles(&Angles, Level_GetEntityDefs(App->m_pDoc->pLevel));
+
+		geXForm3d TransformOrigin;
+		geXForm3d_SetIdentity(&TransformOrigin);
+
+		geXForm3d_RotateZ(&TransformOrigin, Angles.X);
+		geXForm3d_RotateX(&TransformOrigin, Angles.Z);
+		geXForm3d_RotateY(&TransformOrigin, (-Angles.Y - M_PI / 2.0f));
+
+		geXForm3d_Translate(&TransformOrigin, pCameraEntity->mOrigin.X, pCameraEntity->mOrigin.Y, pCameraEntity->mOrigin.Z);
+
+		geXForm3d Delta;
+		geXForm3d_SetTranslation(&Delta, 0, -Step, 0);
+
+		geXForm3d_Multiply(&TransformOrigin, &Delta, &TransformOrigin);
+
+		geVec3d_Copy(&(TransformOrigin.Translation), &(pCameraEntity->mOrigin));
+
+		App->m_pDoc->SetRenderedViewCamera(&(pCameraEntity->mOrigin), &Angles);
+		App->m_pDoc->UpdateAllViews(UAV_ALLVIEWS, NULL);
+	}
+}
+
+// *************************************************************************
+// *			Move_Camera_Right:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_Camera_WE::Move_Camera_Right(float Step)
+{
+	App->Get_Current_Document();
+
+	CEntity* pCameraEntity = App->CLSB_Camera_WE->FindCameraEntity();
+
+	if (pCameraEntity)
+	{
+		geVec3d Angles;
+		pCameraEntity->GetAngles(&Angles, Level_GetEntityDefs(App->m_pDoc->pLevel));
+
+		geXForm3d TransformOrigin;
+		geXForm3d_SetIdentity(&TransformOrigin);
+
+		geXForm3d_RotateZ(&TransformOrigin, Angles.X);
+		geXForm3d_RotateX(&TransformOrigin, Angles.Z);
+		geXForm3d_RotateY(&TransformOrigin, (-Angles.Y - M_PI / 2.0f));
+
+		geXForm3d_Translate(&TransformOrigin, pCameraEntity->mOrigin.X, pCameraEntity->mOrigin.Y, pCameraEntity->mOrigin.Z);
+
+		geXForm3d Delta;
+		geXForm3d_SetTranslation(&Delta, 0, 0, -Step);
+
+		geXForm3d_Multiply(&TransformOrigin, &Delta, &TransformOrigin);
+
+		geVec3d_Copy(&(TransformOrigin.Translation), &(pCameraEntity->mOrigin));
+
+		App->m_pDoc->SetRenderedViewCamera(&(pCameraEntity->mOrigin), &Angles);
+		App->m_pDoc->UpdateAllViews(UAV_ALLVIEWS, NULL);
+	}
+}
+
+// *************************************************************************
+// *			Move_Camera_Left:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_Camera_WE::Move_Camera_Left(float Step)
+{
+	App->Get_Current_Document();
+
+	CEntity* pCameraEntity = App->CLSB_Camera_WE->FindCameraEntity();
+
+	if (pCameraEntity)
+	{
+		geVec3d Angles;
+		pCameraEntity->GetAngles(&Angles, Level_GetEntityDefs(App->m_pDoc->pLevel));
+
+		geXForm3d TransformOrigin;
+		geXForm3d_SetIdentity(&TransformOrigin);
+
+		geXForm3d_RotateZ(&TransformOrigin, Angles.X);
+		geXForm3d_RotateX(&TransformOrigin, Angles.Z);
+		geXForm3d_RotateY(&TransformOrigin, (-Angles.Y - M_PI / 2.0f));
+
+		geXForm3d_Translate(&TransformOrigin, pCameraEntity->mOrigin.X, pCameraEntity->mOrigin.Y, pCameraEntity->mOrigin.Z);
+
+		geXForm3d Delta;
+		geXForm3d_SetTranslation(&Delta, 0, 0, Step);
+
+		geXForm3d_Multiply(&TransformOrigin, &Delta, &TransformOrigin);
+
+		geVec3d_Copy(&(TransformOrigin.Translation), &(pCameraEntity->mOrigin));
+
+		App->m_pDoc->SetRenderedViewCamera(&(pCameraEntity->mOrigin), &Angles);
+		App->m_pDoc->UpdateAllViews(UAV_ALLVIEWS, NULL);
+	}
+}

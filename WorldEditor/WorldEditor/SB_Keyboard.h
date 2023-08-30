@@ -34,6 +34,7 @@ public:
 
 	void Keyboard_Mode_First(float deltaTime);
 
+	void Keyboard_Mode_WorldEditor(float deltaTime);
 
 	Ogre::Real Rate;
 	Ogre::Vector3 OldPos;
