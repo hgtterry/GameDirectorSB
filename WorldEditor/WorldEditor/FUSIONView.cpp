@@ -621,6 +621,7 @@ void CFusionView::OnMouseMove (UINT nFlags, CPoint point) // hgtterry OnMouseMov
 
 	if(mViewIs3d && !( IsPanning || IsDragging ))
 	{
+	
 		TRACKMOUSEEVENT et;
 		et.cbSize = sizeof(TRACKMOUSEEVENT);
 		et.dwFlags = TME_HOVER | TME_LEAVE;
@@ -680,7 +681,7 @@ void CFusionView::OnMouseMove (UINT nFlags, CPoint point) // hgtterry OnMouseMov
 	geVec3d_Subtract(&wp, &sp, &dv);	// delta in world space
 
 	//camera and space hold panning
-	if ((ModeTool == ID_TOOLS_CAMERA)||IsPanning)
+	if ((ModeTool == ID_TOOLS_CAMERA) ||IsPanning)
 	{
 		int Tolarance1 = 2;
 		int Tolarance2 = -2;
@@ -693,6 +694,7 @@ void CFusionView::OnMouseMove (UINT nFlags, CPoint point) // hgtterry OnMouseMov
 	else if (!mViewIs3d)
 	// none of this stuff should be available in the 3d view.
 	{
+		
 		switch (ModeTool)
 		{
 			case ID_GENERALSELECT :
@@ -752,7 +754,7 @@ void CFusionView::OnMouseMove (UINT nFlags, CPoint point) // hgtterry OnMouseMov
 					case ID_TOOLS_BRUSH_MOVEROTATEBRUSH :
 						// moving/rotating brushes and entities
 						SetTool(ID_TOOLS_BRUSH_MOVESELECTEDBRUSHES);
-
+						
 						if (LButtonIsDown)
 						{
 							LockAxis( &dv );

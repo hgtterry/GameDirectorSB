@@ -12,6 +12,9 @@ SB_ViewMgrDlg::SB_ViewMgrDlg(void)
 	BottomLeft_Flag = 0;
 	BottomRight_Flag = 0;
 
+	MgrDlg_hWnd = nullptr;
+	View_MgrDlg_Active = 0;
+
 }
 
 SB_ViewMgrDlg::~SB_ViewMgrDlg(void)
@@ -24,7 +27,13 @@ SB_ViewMgrDlg::~SB_ViewMgrDlg(void)
 // *************************************************************************
 void SB_ViewMgrDlg::Start_View_MgrDlg()
 {
-	CreateDialog(App->hInst, (LPCTSTR)IDD_SB_VIEWMANAGER, App->MainHwnd, (DLGPROC)View_MgrDlg_Proc);
+	if (View_MgrDlg_Active == 0)
+	{
+		MgrDlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_VIEWMANAGER, App->MainHwnd, (DLGPROC)View_MgrDlg_Proc);
+		View_MgrDlg_Active = 1;
+
+		App->CLSB_TopTabs->Update_Dlg_Controls();
+	}
 }
 
 // *************************************************************************
@@ -96,14 +105,31 @@ LRESULT CALLBACK SB_ViewMgrDlg::View_MgrDlg_Proc(HWND hDlg, UINT message, WPARAM
 		if (some_item->idFrom == IDC_BT_PREVIEW && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_PREVIEW));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Normal(item);
+			}
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_BT_SELECTED && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_SELECTED));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Normal(item);
+			}
+
 			return CDRF_DODEFAULT;
 		}
 
@@ -175,14 +201,14 @@ LRESULT CALLBACK SB_ViewMgrDlg::View_MgrDlg_Proc(HWND hDlg, UINT message, WPARAM
 		
 		if (LOWORD(wParam) == IDOK)
 		{
-			//App->CLSB_Dialogs->Canceled = 0;
+			App->CLSB_ViewMgrDlg->View_MgrDlg_Active = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
-			//App->CLSB_Dialogs->Canceled = 1;
+			App->CLSB_ViewMgrDlg->View_MgrDlg_Active = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}

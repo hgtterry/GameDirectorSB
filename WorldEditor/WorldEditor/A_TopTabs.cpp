@@ -1161,10 +1161,20 @@ void SB_TopTabs::Update_Dlg_Controls()
 	if (NumBrushes == 0)
 	{
 		EnableWindow(GetDlgItem(Equity_Panel_Hwnd, IDC_BT_TB_PREVIEWALL), 0);
+
+		if (App->CLSB_ViewMgrDlg->View_MgrDlg_Active == 1)
+		{
+			EnableWindow(GetDlgItem(App->CLSB_ViewMgrDlg->MgrDlg_hWnd, IDC_BT_PREVIEW), 0);
+		}
 	}
 	else
 	{
 		EnableWindow(GetDlgItem(Equity_Panel_Hwnd, IDC_BT_TB_PREVIEWALL), 1);
+
+		if (App->CLSB_ViewMgrDlg->View_MgrDlg_Active == 1)
+		{
+			EnableWindow(GetDlgItem(App->CLSB_ViewMgrDlg->MgrDlg_hWnd, IDC_BT_PREVIEW), 1);
+		}
 	}
 
 	int NumSelBrushes = SelBrushList_GetSize(App->m_pDoc->pSelBrushes);
@@ -1182,16 +1192,27 @@ void SB_TopTabs::Update_Dlg_Controls()
 		App->CLSB_TopTabs->Reset_Brush_Buttons();
 		App->CLSB_TopTabs->Brush_Select_Flag = 1;
 		RedrawWindow(App->CLSB_TopTabs->Brush_Modify_Panel_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+		if (App->CLSB_ViewMgrDlg->View_MgrDlg_Active == 1)
+		{
+			EnableWindow(GetDlgItem(App->CLSB_ViewMgrDlg->MgrDlg_hWnd, IDC_BT_SELECTED), 0);
+		}
+		
 		//App->CLSB_TopTabs->Select_Mode();
 	}
 	else
 	{
-		App->CLSB_Brushes->Start_Dimensions_Dlg();
+		//App->CLSB_Brushes->Start_Dimensions_Dlg();
 
 		EnableWindow(GetDlgItem(Brush_Modify_Panel_Hwnd, IDC_BTTBMOVEROTATE), 1);
 		EnableWindow(GetDlgItem(Brush_Modify_Panel_Hwnd, IDC_BTSCALE), 1);
 		EnableWindow(GetDlgItem(Brush_Modify_Panel_Hwnd, IDC_BTTBSHEAR), 1);
 
 		EnableWindow(GetDlgItem(Equity_Panel_Hwnd, IDC_PREVIEWSELECTED), 1);
+
+		if (App->CLSB_ViewMgrDlg->View_MgrDlg_Active == 1)
+		{
+			EnableWindow(GetDlgItem(App->CLSB_ViewMgrDlg->MgrDlg_hWnd, IDC_BT_SELECTED), 1);
+		}
 	}
 }
