@@ -56,7 +56,7 @@ SB_Model::SB_Model(void)
 	}
 
 	Count = 0;
-	while (Count < 1999)
+	while (Count < 11999)
 	{
 		B_Brush[Count] = nullptr;
 		Count++;
