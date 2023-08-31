@@ -689,7 +689,6 @@
 #define IDC_BTEDITFILE                  1432
 #define IDC_STTEXTURE                   1433
 #define IDC_STALPHA                     1434
-#define IDC_BT_TB_PREVIEWALL            1449
 #define IDC_BT_TB_DESELECTALL           1450
 #define IDC_BT_TB_WORLDINFO             1451
 #define IDC_BT_TB_WIRED                 1452
@@ -708,7 +707,6 @@
 #define IDC_STATICTEST                  1465
 #define IDC_BUTTON2                     1466
 #define IDC_UPDATE                      1466
-#define IDC_PREVIEWSELECTED             1466
 #define IDC_ACTOR                       1466
 #define IDC_BT_DIMENSIONS               1466
 #define IDC_BT_TT_CAMERA                1466
@@ -816,7 +814,6 @@
 #define IDC_SCROLLBAR3                  1527
 #define IDC_SBROTZH                     1527
 #define IDC_BT_PREVIEW                  1527
-#define IDC_BT_PREVIEW2                 1528
 #define IDC_BT_SELECTED                 1528
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772

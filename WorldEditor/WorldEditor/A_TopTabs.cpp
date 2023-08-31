@@ -762,9 +762,6 @@ LRESULT CALLBACK SB_TopTabs::Top_Equity_Proc(HWND hDlg, UINT message, WPARAM wPa
 	{
 	case WM_INITDIALOG:
 	{
-		SendDlgItemMessage(hDlg, IDC_BT_TB_PREVIEWALL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-		SendDlgItemMessage(hDlg, IDC_PREVIEWSELECTED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
 		SendDlgItemMessage(hDlg, IDC_BT_TB_WORLDINFO, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_TB_NEWVIEW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STARTEQUITY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -784,37 +781,6 @@ LRESULT CALLBACK SB_TopTabs::Top_Equity_Proc(HWND hDlg, UINT message, WPARAM wPa
 	case WM_NOTIFY:
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
-
-		if (some_item->idFrom == IDC_BT_TB_PREVIEWALL && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_TB_PREVIEWALL));
-			if (test == 0)
-			{
-				App->Custom_Button_Greyed(item);
-			}
-			else
-			{
-				App->Custom_Button_Normal(item);
-			}
-			return CDRF_DODEFAULT;
-		}
-
-		if (some_item->idFrom == IDC_PREVIEWSELECTED && some_item->code == NM_CUSTOMDRAW)
-		{
-			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_PREVIEWSELECTED));
-			if (test == 0)
-			{
-				App->Custom_Button_Greyed(item);
-			}
-			else
-			{
-				App->Custom_Button_Normal(item);
-			}
-
-			return CDRF_DODEFAULT;
-		}
 
 		if (some_item->idFrom == IDC_BT_TB_NEWVIEW && some_item->code == NM_CUSTOMDRAW)
 		{
@@ -864,18 +830,6 @@ LRESULT CALLBACK SB_TopTabs::Top_Equity_Proc(HWND hDlg, UINT message, WPARAM wPa
 		if (LOWORD(wParam) == IDC_STARTEQUITY)
 		{
 			App->CLSB_Equity->Do_Equity();
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDC_BT_TB_PREVIEWALL)
-		{
-			App->CLSB_Equity->Do_Preview_All();
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDC_PREVIEWSELECTED)
-		{
-			App->CLSB_Equity->Do_Preview_Selected();
 			return TRUE;
 		}
 
@@ -1160,8 +1114,6 @@ void SB_TopTabs::Update_Dlg_Controls()
 	int NumBrushes = App->CL_World->Get_Brush_Count();
 	if (NumBrushes == 0)
 	{
-		EnableWindow(GetDlgItem(Equity_Panel_Hwnd, IDC_BT_TB_PREVIEWALL), 0);
-
 		if (App->CLSB_ViewMgrDlg->View_MgrDlg_Active == 1)
 		{
 			EnableWindow(GetDlgItem(App->CLSB_ViewMgrDlg->MgrDlg_hWnd, IDC_BT_PREVIEW), 0);
@@ -1169,8 +1121,6 @@ void SB_TopTabs::Update_Dlg_Controls()
 	}
 	else
 	{
-		EnableWindow(GetDlgItem(Equity_Panel_Hwnd, IDC_BT_TB_PREVIEWALL), 1);
-
 		if (App->CLSB_ViewMgrDlg->View_MgrDlg_Active == 1)
 		{
 			EnableWindow(GetDlgItem(App->CLSB_ViewMgrDlg->MgrDlg_hWnd, IDC_BT_PREVIEW), 1);
@@ -1186,8 +1136,6 @@ void SB_TopTabs::Update_Dlg_Controls()
 		EnableWindow(GetDlgItem(Brush_Modify_Panel_Hwnd, IDC_BTTBMOVEROTATE), 0);
 		EnableWindow(GetDlgItem(Brush_Modify_Panel_Hwnd, IDC_BTSCALE), 0);
 		EnableWindow(GetDlgItem(Brush_Modify_Panel_Hwnd, IDC_BTTBSHEAR), 0);
-
-		EnableWindow(GetDlgItem(Equity_Panel_Hwnd, IDC_PREVIEWSELECTED), 0);
 
 		App->CLSB_TopTabs->Reset_Brush_Buttons();
 		App->CLSB_TopTabs->Brush_Select_Flag = 1;
@@ -1207,8 +1155,6 @@ void SB_TopTabs::Update_Dlg_Controls()
 		EnableWindow(GetDlgItem(Brush_Modify_Panel_Hwnd, IDC_BTTBMOVEROTATE), 1);
 		EnableWindow(GetDlgItem(Brush_Modify_Panel_Hwnd, IDC_BTSCALE), 1);
 		EnableWindow(GetDlgItem(Brush_Modify_Panel_Hwnd, IDC_BTTBSHEAR), 1);
-
-		EnableWindow(GetDlgItem(Equity_Panel_Hwnd, IDC_PREVIEWSELECTED), 1);
 
 		if (App->CLSB_ViewMgrDlg->View_MgrDlg_Active == 1)
 		{
