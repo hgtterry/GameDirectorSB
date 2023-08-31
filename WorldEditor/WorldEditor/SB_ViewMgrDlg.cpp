@@ -7,6 +7,11 @@
 
 SB_ViewMgrDlg::SB_ViewMgrDlg(void)
 {
+	TopLeft_Flag = 0;
+	TopRight_Flag = 0;
+	BottomLeft_Flag = 0;
+	BottomRight_Flag = 0;
+
 }
 
 SB_ViewMgrDlg::~SB_ViewMgrDlg(void)
@@ -45,21 +50,6 @@ LRESULT CALLBACK SB_ViewMgrDlg::View_MgrDlg_Proc(HWND hDlg, UINT message, WPARAM
 	}
 	case WM_CTLCOLORSTATIC:
 	{
-		/*if (GetDlgItem(hDlg, IDC_BANNER) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 255, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 255));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}
-		if (GetDlgItem(hDlg, IDC_STTEXT) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 255, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}*/
-
 		return FALSE;
 	}
 	case WM_NOTIFY:
@@ -69,28 +59,28 @@ LRESULT CALLBACK SB_ViewMgrDlg::View_MgrDlg_Proc(HWND hDlg, UINT message, WPARAM
 		if (some_item->idFrom == IDC_BT_UPPERLEFT && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+			App->Custom_Button_Toggle(item, App->CLSB_ViewMgrDlg->TopLeft_Flag);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_BT_UPPERRIGHT && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+			App->Custom_Button_Toggle(item, App->CLSB_ViewMgrDlg->TopRight_Flag);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_BT_LOWERLEFT && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+			App->Custom_Button_Toggle(item, App->CLSB_ViewMgrDlg->BottomLeft_Flag);
 			return CDRF_DODEFAULT;
 		}
 
 		if (some_item->idFrom == IDC_BT_LOWERRIGHT && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Normal(item);
+			App->Custom_Button_Toggle(item, App->CLSB_ViewMgrDlg->BottomRight_Flag);
 			return CDRF_DODEFAULT;
 		}
 
@@ -120,30 +110,44 @@ LRESULT CALLBACK SB_ViewMgrDlg::View_MgrDlg_Proc(HWND hDlg, UINT message, WPARAM
 		if (LOWORD(wParam) == IDC_BT_UPPERLEFT)
 		{
 			App->CLSB_ViewMgrDlg->MaximizeUpperLeftPane();
+			App->CLSB_ViewMgrDlg->Reset_Flags();
+			App->CLSB_ViewMgrDlg->TopLeft_Flag = 1;
+			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_BT_UPPERRIGHT)
 		{
 			App->CLSB_ViewMgrDlg->MaximizeUpperRightPane();
+			App->CLSB_ViewMgrDlg->Reset_Flags();
+			App->CLSB_ViewMgrDlg->TopRight_Flag = 1;
+			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_BT_LOWERLEFT)
 		{
 			App->CLSB_ViewMgrDlg->MaximizeLowerLeftPane();
+			App->CLSB_ViewMgrDlg->Reset_Flags();
+			App->CLSB_ViewMgrDlg->BottomLeft_Flag = 1;
+			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_BT_LOWERRIGHT)
 		{
 			App->CLSB_ViewMgrDlg->MaximizeLowerRightPane();
+			App->CLSB_ViewMgrDlg->Reset_Flags();
+			App->CLSB_ViewMgrDlg->BottomRight_Flag = 1;
+			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_BT_RESTORE)
 		{
 			App->CLSB_ViewMgrDlg->RestoreAllPanes();
+			App->CLSB_ViewMgrDlg->Reset_Flags();
+			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 			return TRUE;
 		}
 
@@ -278,4 +282,15 @@ void SB_ViewMgrDlg::RestoreAllPanes()
 			pChildFrame->RestoreAllPanes();
 		}
 	}
+}
+
+// *************************************************************************
+// *		  	Reset_Flags:- Terry and Hazel Flanigan 2023				   *
+// *************************************************************************
+void SB_ViewMgrDlg::Reset_Flags()
+{
+	TopLeft_Flag = 0;
+	TopRight_Flag = 0;
+	BottomLeft_Flag = 0;
+	BottomRight_Flag = 0;
 }

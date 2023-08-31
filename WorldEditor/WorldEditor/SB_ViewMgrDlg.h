@@ -16,5 +16,13 @@ private:
 	void MaximizeUpperRightPane();
 	void MaximizeLowerLeftPane();
 	void MaximizeLowerRightPane();
+
+	void Reset_Flags();
+
+	bool TopLeft_Flag;
+	bool TopRight_Flag;
+	bool BottomLeft_Flag;
+	bool BottomRight_Flag;
+
 };
 
