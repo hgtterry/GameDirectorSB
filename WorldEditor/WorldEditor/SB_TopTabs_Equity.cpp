@@ -287,7 +287,11 @@ LRESULT CALLBACK SB_TopTabs_Equity::Files_TB_Proc(HWND hDlg, UINT message, WPARA
 
 	case WM_COMMAND:
 	{
-
+		if (LOWORD(wParam) == IDC_ADDTOSCENE)
+		{
+			App->CL_Brush->Brush_Create_From_Equity();
+			return 1;
+		}
 		
 		if (LOWORD(wParam) == IDC_BTTBDIMENSIONS)
 		{

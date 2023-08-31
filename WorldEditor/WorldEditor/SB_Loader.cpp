@@ -785,7 +785,7 @@ typedef Gint16 geBody_Index;
 // *************************************************************************
 bool SB_Loader::Load_ActorWorld()
 {
-	int Result = App->CLSB_FileIO->Open_File_Model(App->CLSB_Equity->Equity_Main_hWnd,"RF Actor   *.act\0*.act\0", "RF Actor", NULL);
+	int Result = App->CLSB_FileIO->Open_File_Model(App->MainHwnd,"RF Actor   *.act\0*.act\0", "RF Actor", NULL);
 	if (Result == 0)
 	{
 		return 0;

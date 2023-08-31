@@ -1070,7 +1070,8 @@ void SB_Equity::Do_Equity()
 	RedrawWindow(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 	App->CLSB_Model->Model_Type = Enums::LoadedFile_Assimp;
-
+	App->CLSB_Ogre->RenderListener->ShowTextured = 1;
+	App->CLSB_Model->Model_Loaded = 1;
 	App->CLSB_Equity->Show_Equity_Dialog(true);
 }
 

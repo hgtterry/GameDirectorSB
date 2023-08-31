@@ -16,6 +16,8 @@ public:
 	int Get_Brush_Count(void);
 	Brush* Get_By_Name(char* BrushName);
 	BrushList* BrushList_Create(void);
+
+	bool Brush_Create_From_Equity();
 };
 
 
