@@ -162,7 +162,7 @@ bool SB_FileIO::SaveSelectedFile(char* Extension,char* File)
 // *************************************************************************
 // *						OpenFile Terry Bernie						   *
 // *************************************************************************
-bool SB_FileIO::Open_File_Model(char* Extension, char* Title, char* StartDirectory)
+bool SB_FileIO::Open_File_Model(HWND Owner, char* Extension, char* Title, char* StartDirectory)
 {
 	FileName[0] = 0;
 	PathFileName[0] = 0;
@@ -171,7 +171,7 @@ bool SB_FileIO::Open_File_Model(char* Extension, char* Title, char* StartDirecto
 
 	ZeroMemory(&ofn, sizeof(ofn));
 	ofn.lStructSize = sizeof(ofn);
-	ofn.hwndOwner = App->MainHwnd;
+	ofn.hwndOwner = Owner;
 	ofn.hInstance = App->hInst;
 	ofn.lpstrFile = PathFileName;						// full path and file name
 	ofn.nMaxFile = sizeof(PathFileName);

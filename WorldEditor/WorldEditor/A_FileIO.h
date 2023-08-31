@@ -30,7 +30,7 @@ public:
 
 	bool StartBrowser(char* szInitDir);
 
-	bool Open_File_Model(char* Extension, char* Title, char* StartDirectory);
+	bool Open_File_Model(HWND Owner, char* Extension, char* Title, char* StartDirectory);
 
 	bool SaveSelectedFile(char* Extension,char* TszFile);
 	bool CheckExtention(char *FileName);

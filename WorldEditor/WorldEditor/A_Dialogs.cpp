@@ -66,7 +66,14 @@ void A_Dialogs::Message(char* pString, char* pString2)
 	strcpy(Message_Text_Header, pString);
 	strcpy(Message_Text_Message, pString2);
 
-	DialogBox(App->hInst, (LPCTSTR)IDD_MESSAGE, App->MainHwnd, (DLGPROC)Message_Proc);
+	if (App->CLSB_Equity->EquitySB_Dialog_Visible == 0)
+	{
+		DialogBox(App->hInst, (LPCTSTR)IDD_MESSAGE, App->MainHwnd, (DLGPROC)Message_Proc);
+	}
+	else
+	{
+		DialogBox(App->hInst, (LPCTSTR)IDD_MESSAGE, App->CLSB_Equity->Equity_Main_hWnd, (DLGPROC)Message_Proc);
+	}
 }
 // *************************************************************************
 // *        	Message_Proc:- Terry and Hazel Flanigan 2023			   *
@@ -229,7 +236,7 @@ LRESULT CALLBACK A_Dialogs::Properties_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 		if (LOWORD(wParam) == IDC_BROWSETXL)
 		{
-			int test = App->CLSB_FileIO->Open_File_Model("Texture Libary   *.txl\0*.txl\0", "Texure Editor", NULL);
+			int test = App->CLSB_FileIO->Open_File_Model(App->MainHwnd,"Texture Libary   *.txl\0*.txl\0", "Texure Editor", NULL);
 			if (test == 0)
 			{
 				return 1;

@@ -2689,9 +2689,9 @@ BEGIN
     BEGIN
         POPUP "Import"
         BEGIN
-            MENUITEM "World Editor Project .Wepf...", ID_IMPORT_WORLDEDITORPROJECT
+            MENUITEM "World Editor Project .Wepf...", ID_IMPORT_WORLDEDITORPROJECT, GRAYED
             MENUITEM "Wavefront    obj...",         ID_IMPORT_WAVEFRONTOBJ
-            MENUITEM "Genesis3D    act...",         ID_IMPORT_GENESIS3DACT
+            MENUITEM "Genesis3D    act...",         ID_IMPORT_GENESIS3DACT, GRAYED
         END
         POPUP "Export"
         BEGIN
