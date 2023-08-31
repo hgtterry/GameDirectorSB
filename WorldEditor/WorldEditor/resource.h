@@ -816,6 +816,8 @@
 #define IDC_SCROLLBAR3                  1527
 #define IDC_SBROTZH                     1527
 #define IDC_BT_PREVIEW                  1527
+#define IDC_BT_PREVIEW2                 1528
+#define IDC_BT_SELECTED                 1528
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772
 #define ID_BRUSH_PRIMITIVES_SPHEROID    32773
