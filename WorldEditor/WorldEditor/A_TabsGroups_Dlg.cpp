@@ -612,8 +612,28 @@ bool A_TabsGroups_Dlg::Show_Brush_Info(const Brush *b, HWND hDlg)
 	sprintf(buf, "%s%f", "Hull Size ",b->HullSize);
 	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
-	sprintf(buf, "%s%d", "Type ",b->Type);
-	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	if (b->Type == BRUSH_MULTI)
+	{
+		sprintf(buf, "%s%i%s", "Type ", b->Type, "  - BRUSH_MULTI");
+		SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	}
+	else if (b->Type == BRUSH_LEAF)
+	{
+		sprintf(buf, "%s%i%s", "Type ", b->Type, "  - BRUSH_LEAF");
+		SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	}
+	else if (b->Type == BRUSH_CSG)
+	{
+		sprintf(buf, "%s%i%s", "Type ", b->Type, "  - BRUSH_CSG");
+		SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	}
+	else
+	{
+		sprintf(buf, "%s%i%s", "Type ", b->Type,"Unknown");
+		SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	}
+
+
 
 	// Bounding Box
 	sprintf(buf, "Max X = %f Y = %f Z = %f",b->BoundingBox.Max.X, b->BoundingBox.Max.Y, b->BoundingBox.Max.Z);
@@ -636,7 +656,7 @@ bool A_TabsGroups_Dlg::Show_Brush_Info(const Brush *b, HWND hDlg)
 }
 
 // *************************************************************************
-// *	  	Show_BrushList:- Terry and Hazel Flanigan 2023				   *
+// *	  	Show_Brush_ListInfo:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 bool A_TabsGroups_Dlg::Show_Brush_ListInfo(BrushList *BList, HWND hDlg)
 {
@@ -648,21 +668,20 @@ bool A_TabsGroups_Dlg::Show_Brush_ListInfo(BrushList *BList, HWND hDlg)
 	Count = BrushList_Count (BList, (BRUSH_COUNT_MULTI | BRUSH_COUNT_LEAF | BRUSH_COUNT_NORECURSE));
 	if (Count < 0)
 	{
+		sprintf(buf, "%s%d", "Sub Brushes ", Count);
+		SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 		return 0;
 	}
 	else
 	{
-		sprintf(buf, "%s%d", "Type ",Count);
+		sprintf(buf, "%s%d", "Sub Brushes ",Count-1);
 		SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 	}
 	
 	pBrush = BrushList_GetFirst (BList, &bi);
 	while (pBrush != NULL)
 	{
-		//if (!Brush_ExportTo3dtv1_32(pBrush, ofile)) return GE_FALSE;
-
 		Show_Brush_Info(pBrush,hDlg);
-
 		pBrush = BrushList_GetNext (&bi);
 	}
 
@@ -699,16 +718,23 @@ bool A_TabsGroups_Dlg::Show_Brush_Faces_Info(const FaceList *pList, HWND hDlg)
 // *************************************************************************
 bool A_TabsGroups_Dlg::Show_Face_Data(const Face *f, HWND hDlg)
 {
+	
 	char buf[MAX_PATH];
 	int		i, xShift, yShift, Rotate;
 	geFloat xScale, yScale, rot;
+
+	sprintf(buf, "%s", " -------------------------------------------");
+	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+	sprintf(buf, "%s%i", "Flags ",f->Flags);
+	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
 	sprintf(buf, "%s%d", "NumPoints",f->NumPoints);
 	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
 	for(i=0;i < f->NumPoints;i++)
 	{
-		sprintf(buf, "Vec3d %f %f %f",f->Points[i].X,f->Points[i].Y,f->Points[i].Z);
+		sprintf(buf, "XYZ %f %f %f",f->Points[i].X,f->Points[i].Y,f->Points[i].Z);
 		SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 	}
 	
@@ -747,12 +773,10 @@ bool A_TabsGroups_Dlg::Show_Face_Data(const Face *f, HWND hDlg)
 		SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 	}
 
-	
-	//Face_UpdateTextureVecs((Face*)f);
-
+	char buf2[MAX_PATH];
 	strcpy(buf, Face_GetTextureName(f));
-	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
+	sprintf(buf2, "%s%s", "Texture: = ", buf);
+	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf2);
 	//f->Tex.
 	//Face_GetTextureShift (f, &xShift, &yShift);
 	//Face_GetTextureScale (f, &xScale, &yScale);

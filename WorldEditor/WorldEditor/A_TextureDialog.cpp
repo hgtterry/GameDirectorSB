@@ -690,15 +690,7 @@ void A_TextureDialog::Fill_ListBox()
 
 			if (App->Centre_Debug == 1)
 			{
-				bool test = strcmp(mName, "Dummy");
-				if (test == 0)
-				{
-
-				}
-				else
-				{
-					LBIndex = SendDlgItemMessage(TextureDlg_Hwnd, IDC_LISTTDTEXTURES, LB_ADDSTRING, (WPARAM)0, (LPARAM)mName);
-				}
+				LBIndex = SendDlgItemMessage(TextureDlg_Hwnd, IDC_LISTTDTEXTURES, LB_ADDSTRING, (WPARAM)0, (LPARAM)mName);
 			}
 			else
 			{

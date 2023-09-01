@@ -2829,7 +2829,7 @@ static geBoolean SelectBrush3DCB(Brush *b, void * lParam)
             if (HitFace != NULL)
             {
                 pData->HitFace = HitFace;
-                if(CurDist < pData->MinBDist)
+                if (CurDist < pData->MinBDist)
                 {
                     pData->CurDist = CurDist;
                     pData->MinBDist	=pData->CurDist;
@@ -3043,7 +3043,7 @@ void CFusionDoc::SelectRay(CPoint point, ViewVars *v) // hgtterry Select Ray
     bdat.pDoc		= this;
     BrushList_EnumCSGBrushes(BList, &bdat, SelectBrush3DCB);
         
-    if((bdat.MinBDist < 999999.0f) && (MinEDist > MIN_ENTITY_SELECT_DIST))
+    if ((bdat.MinBDist < 999999.0f) && (MinEDist > MIN_ENTITY_SELECT_DIST))
     {
         //check the distance of the hit wall
         //see if the closest entity is occluded
