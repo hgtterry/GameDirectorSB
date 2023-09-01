@@ -152,7 +152,7 @@ static geBoolean fdocBrushCSGCallback2(const Brush* pBrush, void* lParam)
 }
 
 // *************************************************************************
-// * 		Export_World_Text:- Terry and Hazel Flanigan 2023			   *
+// * 				Build_World:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 void SB_Scene::Build_World(int ExpSelected)
 {
@@ -164,7 +164,7 @@ void SB_Scene::Build_World(int ExpSelected)
 	BList = Level_GetBrushes(App->m_pDoc->pLevel);
 	if (!ExpSelected)
 	{
-		fResult = Level_Build_Text_G3ds(reinterpret_cast<tag_Level3*> (App->m_pDoc->pLevel), "FileName", BList, 0, 0, -1);
+		fResult = Level_Build_G3ds(reinterpret_cast<tag_Level3*> (App->m_pDoc->pLevel), "FileName", BList, 0, 0, -1);
 	}
 	else
 	{
@@ -216,7 +216,7 @@ void SB_Scene::Build_World(int ExpSelected)
 				}
 			}
 
-			fResult = Level_Build_Text_G3ds(reinterpret_cast<tag_Level3*> (App->m_pDoc->pLevel), NewFileName, SBList, 0, 0, -1);
+			fResult = Level_Build_G3ds(reinterpret_cast<tag_Level3*> (App->m_pDoc->pLevel), NewFileName, SBList, 0, 0, -1);
 			if (!fResult)
 			{
 				App->Say("Error exporting group");
@@ -229,12 +229,13 @@ void SB_Scene::Build_World(int ExpSelected)
 	//App->Say("Saved");
 }
 
-#include "level.h"
 // *************************************************************************
-// *		Level_Build_Text_G3ds:- Terry and Hazel Flanigan 2023		   *
+// *		Level_Build_G3ds:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-bool SB_Scene::Level_Build_Text_G3ds(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, geBoolean ExpLights, int GroupID)
+bool SB_Scene::Level_Build_G3ds(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, geBoolean ExpLights, int GroupID)
 {
+	App->CLSB_Model->XBrushCount = 0;
+
 	int i;
 	geBoolean* WrittenTex;
 
@@ -261,7 +262,7 @@ bool SB_Scene::Level_Build_Text_G3ds(Level3* pLevel, const char* Filename, Brush
 		}
 	}
 
-	BrushList_ExportToText(BList, GE_FALSE);
+	BrushList_Export(BList, GE_FALSE);
 
 	free(WrittenTex);
 
@@ -272,9 +273,9 @@ static int	BrushCount;
 static int	SubBrushCount;
 
 // *************************************************************************
-// *		BrushList_ExportToText:- Terry and Hazel Flanigan 2023		   *
+// *		BrushList_Export:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-bool SB_Scene::BrushList_ExportToText(BrushList* BList, geBoolean SubBrush)
+bool SB_Scene::BrushList_Export(BrushList* BList, geBoolean SubBrush)
 {
 	Brush* pBrush;
 	BrushIterator bi;
@@ -283,7 +284,16 @@ bool SB_Scene::BrushList_ExportToText(BrushList* BList, geBoolean SubBrush)
 
 	while (pBrush != NULL)
 	{
-		if (!Brush_ExportToText(pBrush)) return GE_FALSE;
+		if (SubBrush == GE_FALSE)
+		{
+			App->CLSB_Model->Create_XBrush(App->CLSB_Model->XBrushCount);
+		}
+
+		if (!Brush_Export(pBrush))
+		{
+			return GE_FALSE;
+		}
+
 		pBrush = BrushList_GetNext(&bi);
 
 		if (SubBrush)
@@ -294,7 +304,14 @@ bool SB_Scene::BrushList_ExportToText(BrushList* BList, geBoolean SubBrush)
 		{
 			BrushCount++;
 		}
+
+		if (SubBrush == GE_FALSE)
+		{
+			App->CLSB_Model->XBrushCount++;
+		}
 	}
+
+	
 
 	SubBrushCount = 0;
 
@@ -307,9 +324,9 @@ bool SB_Scene::BrushList_ExportToText(BrushList* BList, geBoolean SubBrush)
 }
 
 // *************************************************************************
-// *		Brush_ExportToText:- Terry and Hazel Flanigan 2023			   *
+// *			Brush_Export:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-bool SB_Scene::Brush_ExportToText(const Brush* b)
+bool SB_Scene::Brush_Export(const Brush* b)
 {
 	assert(ofile);
 	assert(b);
@@ -317,28 +334,30 @@ bool SB_Scene::Brush_ExportToText(const Brush* b)
 	switch (b->Type)
 	{
 	case	BRUSH_MULTI:
-		return BrushList_ExportToText(b->BList, GE_TRUE);
+		return BrushList_Export(b->BList, GE_TRUE);
 
 	case	BRUSH_LEAF:
 		if (b->BList)
 		{
-			return BrushList_ExportToText(b->BList, GE_TRUE);
+			return BrushList_Export(b->BList, GE_TRUE);
 		}
 		else
 		{
 			if (!(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT | BRUSH_SUBTRACT)))
 			{
-				return FaceList_ExportToText(b, b->Faces, BrushCount, SubBrushCount);
+				return FaceList_Export(b, b->Faces, BrushCount, SubBrushCount);
 			}
 			else if ((b->Flags & BRUSH_SUBTRACT) && !(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT)))
+			{
 				BrushCount--;
+			}
 		}
 		break;
 
 
 	case	BRUSH_CSG:
 		if (!(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT | BRUSH_SUBTRACT)))
-			return FaceList_ExportToText(b, b->Faces, BrushCount, SubBrushCount);
+			return FaceList_Export(b, b->Faces, BrushCount, SubBrushCount);
 		break;
 	default:
 		assert(0);		// invalid brush type
@@ -349,9 +368,9 @@ bool SB_Scene::Brush_ExportToText(const Brush* b)
 }
 
 // *************************************************************************
-// *							FaceList_ExportToText					   *
+// *						FaceList_Export								   *
 // *************************************************************************
-bool SB_Scene::FaceList_ExportToText(const Brush* b, const FaceList* pList, int BrushCount, int SubBrushCount)
+bool SB_Scene::FaceList_Export(const Brush* b, const FaceList* pList, int BrushCount, int SubBrushCount)
 {
 
 	App->CLSB_Model->Create_Brush(App->CLSB_Model->BrushCount);

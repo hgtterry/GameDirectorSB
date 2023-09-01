@@ -1133,7 +1133,7 @@ void SB_Equity::Do_Preview_Selected()
 
 		RedrawWindow(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-		App->CLSB_Export_World->Export_World_Text(1);
+		App->CLSB_Scene->Build_World(1);
 		App->CLSB_Bullet->Create_Brush_Trimesh(0);
 		App->CLSB_Model->Set_BondingBox_Brushes();
 		App->CLSB_Dimensions->Centre_Model_Mid_Brushes();
