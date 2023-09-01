@@ -757,7 +757,6 @@ bool A_TabsGroups_Dlg::Show_Face_Data(const Face *f, HWND hDlg)
 	geVec3d_Scale(&TVecs->vVec, -1.f / (geFloat)tySize, &vVec);
 
 	const geVec3d* verts = Face_GetPoints(f);
-	//int curnum_verts = f->NumPoints;
 
 	int j = 0;
 	for (j = 0; j < f->NumPoints; j++)
@@ -766,9 +765,7 @@ bool A_TabsGroups_Dlg::Show_Face_Data(const Face *f, HWND hDlg)
 		V = geVec3d_DotProduct(&(verts[j]), &vVec);
 		U += (TVecs->uOffset / txSize);
 		V -= (TVecs->vOffset / tySize);
-		//write_float(f, U);
-		//write_float(f, V);
-
+		
 		sprintf(buf, "UV %.3f %.3f",U,V);
 		SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 	}

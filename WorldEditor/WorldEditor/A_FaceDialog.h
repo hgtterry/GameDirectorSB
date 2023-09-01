@@ -37,6 +37,8 @@ protected:
 	static geBoolean ChangeTextureYScale(Face *pFace, void *lParam);
 	static geBoolean ChangeTextureXScale(Face *pFace, void *lParam);
 
+	void Update_FaceProperties_Dlg(HWND hDlg);
+
 	bool On_FlipHorizontal();
 	void OnFlipvertical();
 

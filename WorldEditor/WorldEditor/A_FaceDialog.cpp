@@ -6,6 +6,35 @@
 #include "FUSIONView.h"
 #include "FUSIONDoc.h"
 
+typedef struct TexInfoTag
+{
+	geVec3d VecNormal;
+	geFloat xScale, yScale;
+	int xShift, yShift;
+	geFloat	Rotate;			// texture rotation angle in degrees
+	TexInfo_Vectors TVecs;
+	int Dib;				// index into the wad
+	char Name[16];
+	geBoolean DirtyFlag;
+	geVec3d Pos;
+	int txSize, tySize;		// texture size (not currently used)
+	geXForm3d XfmFaceAngle;	// face rotation angle
+} TexInfo;
+
+typedef struct FaceTag
+{
+	int			NumPoints;
+	int			Flags;
+	Plane		Face_Plane;
+	int			LightIntensity;
+	geFloat		Reflectivity;
+	geFloat		Translucency;
+	geFloat		MipMapBias;
+	geFloat		LightXScale, LightYScale;
+	TexInfo		Tex;
+	geVec3d* Points;
+} Face;
+
 static CString TEXT_NUM_FACES = "Number of Faces Selected: ";
 
 A_FaceDialog::A_FaceDialog(void)
@@ -65,9 +94,13 @@ LRESULT CALLBACK A_FaceDialog::FaceDialog_Proc(HWND hDlg, UINT message, WPARAM w
 		SendDlgItemMessage(hDlg, IDC_STTEXT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+		SendDlgItemMessage(hDlg, IDC_LISTFACEPROPERTIES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		App->CL_FaceDialog->UpdatePolygonFocus();
 
 		App->CL_FaceDialog->UpdateDialog(hDlg);
+
+		App->CL_FaceDialog->Update_FaceProperties_Dlg(hDlg);
 
 		HWND CB_hWnd = GetDlgItem(hDlg, IDC_CBXOFFSET);
 		App->CL_FaceDialog->Fill_ComboBox_OffSetValues(CB_hWnd);
@@ -393,12 +426,14 @@ LRESULT CALLBACK A_FaceDialog::FaceDialog_Proc(HWND hDlg, UINT message, WPARAM w
 		if (LOWORD(wParam) == IDC_FLIPHORIZONTAL)
 		{
 			App->CL_FaceDialog->On_FlipHorizontal();
+			App->CL_FaceDialog->Update_FaceProperties_Dlg(hDlg);
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_FLIPVERTICAL)
 		{
 			App->CL_FaceDialog->OnFlipvertical();
+			App->CL_FaceDialog->Update_FaceProperties_Dlg(hDlg);
 			return TRUE;
 		}
 
@@ -529,6 +564,70 @@ void A_FaceDialog::UpdatePolygonFocus()
 }
 
 // *************************************************************************
+// *	Update_FaceProperties_Dlg:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void A_FaceDialog::Update_FaceProperties_Dlg(HWND hDlg)
+{
+	App->Get_Current_Document();
+	
+	SendDlgItemMessage(hDlg, IDC_LISTFACEPROPERTIES, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+
+	char buf[MAX_PATH];
+	int NumberOfFaces = 0;
+	Face* pFace;
+
+
+	NumberOfFaces = SelFaceList_GetSize(App->m_pDoc->pSelFaces);
+	//		pFace = SelFaceList_GetFace (pDoc->pSelFaces, 0);
+	if (NumberOfFaces)
+	{
+		pFace = SelFaceList_GetFace(App->m_pDoc->pSelFaces, (NumberOfFaces - 1));
+	}
+	else
+	{
+		pFace = NULL;
+	}
+
+	if (pFace == NULL)
+	{
+		NumberOfFaces = 0;
+		return;
+	}
+	
+	const TexInfo_Vectors* TVecs = Face_GetTextureVecs(pFace);
+	geVec3d uVec, vVec;
+	geFloat U, V;
+
+	int txSize, tySize;
+
+	Face_GetTextureSize(pFace, &txSize, &tySize);
+
+	// make sure that the texture size is set correctly (division!)
+	if (txSize == 0)
+		txSize = 32;
+	if (tySize == 0)
+		tySize = 32;
+
+	geVec3d_Scale(&TVecs->uVec, 1.f / (geFloat)txSize, &uVec);
+	geVec3d_Scale(&TVecs->vVec, -1.f / (geFloat)tySize, &vVec);
+
+	const geVec3d* verts = Face_GetPoints(pFace);
+	
+	int j = 0;
+	for (j = 0; j < pFace->NumPoints; j++)
+	{
+		U = geVec3d_DotProduct(&(verts[j]), &uVec);
+		V = geVec3d_DotProduct(&(verts[j]), &vVec);
+		U += (TVecs->uOffset / txSize);
+		V -= (TVecs->vOffset / tySize);
+		
+		sprintf(buf, "UV %.3f %.3f", U, V);
+		SendDlgItemMessage(hDlg, IDC_LISTFACEPROPERTIES, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	}
+
+}
+
+// *************************************************************************
 // *		  UpdateDialog:- Terry and Hazel Flanigan 2023				   *
 // *************************************************************************
 void A_FaceDialog::UpdateDialog(HWND hDlg)
@@ -551,6 +650,8 @@ void A_FaceDialog::UpdateDialog(HWND hDlg)
 
 	sprintf(buf, "%.0f", m_TextureAngle);
 	SetDlgItemText(hDlg, IDC_EDITANGLE, (LPCTSTR)buf);
+
+	Update_FaceProperties_Dlg(hDlg);
 }
 
 // *************************************************************************
@@ -631,8 +732,6 @@ void A_FaceDialog::OnKillfocusAngle()
 	if (App->m_pDoc)
 	{
 		App->m_pDoc->SetModifiedFlag();
-		//UpdateData (TRUE);
-		//OnFloatKillFocus (m_EditAngle, &m_TextureAngle, 0, "0");
 		SelFaceList_Enum (App->m_pDoc->pSelFaces, ChangeTextureAngle, &m_TextureAngle);
 
 		AssignCurrentToViews ();
@@ -662,8 +761,6 @@ void A_FaceDialog::OnKillfocusYOffset()
 	if (App->m_pDoc)
 	{
 		App->m_pDoc->SetModifiedFlag();
-		//UpdateData (TRUE);
-		//OnIntKillFocus (m_EditYOffset, &m_TextureYOffset, 0, "0");
 		SelFaceList_Enum (App->m_pDoc->pSelFaces, ChangeYOffset, &m_TextureYOffset);
 		AssignCurrentToViews ();
 	}
@@ -692,8 +789,6 @@ void A_FaceDialog::OnKillfocusXOffset()
 	if (App->m_pDoc)
 	{
 		App->m_pDoc->SetModifiedFlag();
-		//UpdateData (TRUE);
-		//OnIntKillFocus (m_EditXOffset, &m_TextureXOffset, 0, "0");
 		SelFaceList_Enum (App->m_pDoc->pSelFaces, ChangeXOffset, &m_TextureXOffset);
 		AssignCurrentToViews ();
 	}
@@ -722,8 +817,6 @@ void A_FaceDialog::OnKillfocusYScale()
 	if (App->m_pDoc)
 	{
 		App->m_pDoc->SetModifiedFlag();
-		//UpdateData (TRUE);
-		//OnFloatKillFocus (m_EditYScale, &m_TextureYScale, 1.0f, "1.0");
 		SelFaceList_Enum (App->m_pDoc->pSelFaces, ChangeTextureYScale, &m_TextureYScale);
 		AssignCurrentToViews ();
 	}
@@ -752,8 +845,6 @@ void A_FaceDialog::OnKillfocusXScale()
 	if (App->m_pDoc)
 	{
 		App->m_pDoc->SetModifiedFlag();
-		//UpdateData (TRUE);
-		//OnFloatKillFocus (m_EditXScale, &m_TextureXScale, 1.0f, "1.0");
 		SelFaceList_Enum (App->m_pDoc->pSelFaces, ChangeTextureXScale, &m_TextureXScale);
 		AssignCurrentToViews ();
 	}

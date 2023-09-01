@@ -102,6 +102,7 @@
     </ClCompile>
     <ClCompile Include="Base_Brush.cpp" />
     <ClCompile Include="Base_Player.cpp" />
+    <ClCompile Include="Base_XBrush.cpp" />
     <ClCompile Include="box3d.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Test|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -259,6 +260,7 @@
   <ItemGroup>
     <ClInclude Include="Base_Brush.h" />
     <ClInclude Include="Base_Player.h" />
+    <ClInclude Include="Base_XBrush.h" />
     <ClInclude Include="CollisionTools.h" />
     <ClInclude Include="SB_Assimp.h" />
     <ClInclude Include="SB_Base_Group.h" />
