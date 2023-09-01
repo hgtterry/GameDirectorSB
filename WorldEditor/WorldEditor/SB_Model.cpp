@@ -38,7 +38,9 @@ SB_Model::SB_Model(void)
 
 	Player_Added = 0;
 	Model_Loaded = 0;
+
 	BrushCount = 0;
+	XBrushCount = 0;
 
 	Model_Type = Enums::LoadedFile_None;
 
@@ -56,9 +58,16 @@ SB_Model::SB_Model(void)
 	}
 
 	Count = 0;
-	while (Count < 11999)
+	while (Count < 1999)
 	{
 		B_Brush[Count] = nullptr;
+		Count++;
+	}
+
+	Count = 0;
+	while (Count < 1999)
+	{
+		B_XBrush[Count] = nullptr;
 		Count++;
 	}
 
@@ -149,6 +158,23 @@ void SB_Model::Create_Brush(int Index)
 
 	B_Brush[Index]->Vertice_Count = 0;
 	B_Brush[Index]->Face_Count = 0;
+}
+
+// *************************************************************************
+// *		Create_XMesh_Group:- Terry and Hazel Flanigan 2023		  	   *
+// *************************************************************************
+void SB_Model::Create_XBrush(int Index)
+{
+	if (B_XBrush[Index] != nullptr)
+	{
+		delete B_XBrush[Index];
+		B_XBrush[Index] = nullptr;
+	}
+
+	B_XBrush[Index] = new Base_XBrush();
+
+	//B_Brush[Index]->Vertice_Count = 0;
+	//B_Brush[Index]->Face_Count = 0;
 }
 
 // *************************************************************************

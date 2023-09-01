@@ -30,6 +30,14 @@ public:
 
 	void Go_FullScreen_Mode(void);
 
+	void Build_BrushData();
+	bool Show_Brush_Info(const Brush* b);
+	bool Show_Brush_ListInfo(BrushList* BList);
+	bool Show_Brush_Faces_Info(const FaceList* pList);
+	bool Show_Face_Data(const Face* f);
+
+	Brush* Selected_Brush;
+
 	bool FullScreenMode_Flag;
 };
 

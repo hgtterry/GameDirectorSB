@@ -260,6 +260,7 @@ void SB_ImGui::Model_Data_GUI(void)
 		ImGui::Text("Motions:- %i", App->CLSB_Model->MotionCount);
 		ImGui::Text(" --------------------------- Brushes  ");
 		ImGui::Text("Brushes:- %i", App->CLSB_Model->BrushCount);
+		ImGui::Text("XBrushes:- %i", App->CLSB_Model->XBrushCount);
 		ImGui::Text("  ");
 
 		ImVec2 Size = ImGui::GetWindowSize();
