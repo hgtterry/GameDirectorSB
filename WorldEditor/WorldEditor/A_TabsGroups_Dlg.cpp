@@ -777,28 +777,6 @@ bool A_TabsGroups_Dlg::Show_Face_Data(const Face *f, HWND hDlg)
 	strcpy(buf, Face_GetTextureName(f));
 	sprintf(buf2, "%s%s", "Texture: = ", buf);
 	SendDlgItemMessage(hDlg, IDC_BRUSH_PROPERTIESLIST, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf2);
-	//f->Tex.
-	//Face_GetTextureShift (f, &xShift, &yShift);
-	//Face_GetTextureScale (f, &xScale, &yScale);
-	//rot		=Face_GetTextureRotate (f);
-	//Rotate	=Units_Round(rot);
-
-	//{
-	//	char QuotedValue[SCANNER_MAXDATA];
-
-	//	// Quote the texture name
-	//	Util_QuoteString (Face_GetTextureName (f), QuotedValue);
-	//	if (fprintf(wf, "\t\t\tTexInfo Rotate %d Shift %d %d Scale %f %f Name %s\n",
-	//		Rotate, xShift, yShift, xScale, yScale, QuotedValue) < 0) return GE_FALSE;
-	//}
-
-	//if (fprintf(wf, "\t\tLightScale %f %f\n", f->LightXScale, f->LightYScale) < 0) return GE_FALSE;
-
-	//if (fprintf (wf, "%s", "\tTransform\t") < 0) return GE_FALSE;
-	//if (!TypeIO_WriteXForm3dText (wf, &(f->Tex.XfmFaceAngle))) return GE_FALSE;
-
-	//if (fprintf (wf, "%s", "\tPos\t") < 0) return GE_FALSE;
-	//if( !TypeIO_WriteVec3dText(wf, &f->Tex.Pos )) return GE_FALSE;
 
 	return 1;
 }

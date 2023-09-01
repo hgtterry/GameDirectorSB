@@ -72,7 +72,7 @@ void A_Dialogs::Message(char* pString, char* pString2)
 	}
 	else
 	{
-		DialogBox(App->hInst, (LPCTSTR)IDD_MESSAGE, App->CLSB_Equity->Equity_Main_hWnd, (DLGPROC)Message_Proc);
+		DialogBox(App->hInst, (LPCTSTR)IDD_MESSAGE, App->Equity_Dlg_hWnd, (DLGPROC)Message_Proc);
 	}
 }
 // *************************************************************************

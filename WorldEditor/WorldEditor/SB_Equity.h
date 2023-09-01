@@ -24,7 +24,6 @@ public:
 	int Equity_Start_Mode;
 
 	HWND OgreView_3D_hWnd;
-	HWND Equity_Main_hWnd;
 	HWND Render_Buttons_hWnd;
 
 	bool Close_Equity_Flag;

@@ -480,16 +480,18 @@ void A_FaceDialog::UpdatePolygonFocus()
 	int NumberOfFaces = 0;
 	Face *pFace;
 
-	App->m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
-	
 	if (App->m_pDoc)
 	{
 		NumberOfFaces = SelFaceList_GetSize (App->m_pDoc->pSelFaces);
 //		pFace = SelFaceList_GetFace (pDoc->pSelFaces, 0);
 		if (NumberOfFaces)
-			pFace = SelFaceList_GetFace (App->m_pDoc->pSelFaces, (NumberOfFaces-1));
+		{
+			pFace = SelFaceList_GetFace(App->m_pDoc->pSelFaces, (NumberOfFaces - 1));
+		}
 		else
+		{
 			pFace = NULL;
+		}
 	}
 	else
 	{

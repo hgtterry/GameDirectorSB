@@ -260,6 +260,8 @@ public:
 	HWND ViewGLhWnd;
 	HMENU hMenu_WE;
 
+	HWND Equity_Dlg_hWnd;
+
 	//      MFC
 	CMainFrame *m_pMainFrame;
 	CFusionDoc *pCFusionDoc;

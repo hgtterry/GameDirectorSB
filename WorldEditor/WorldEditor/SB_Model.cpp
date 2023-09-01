@@ -233,7 +233,7 @@ void SB_Model::Set_Equity(void)
 	char TitleBar[MAX_PATH];
 	strcpy(TitleBar, "Equity_ME - ");
 	strcat(TitleBar, App->CLSB_Model->Path_FileName);
-	SetWindowText(App->CLSB_Equity->Equity_Main_hWnd, TitleBar);
+	SetWindowText(App->Equity_Dlg_hWnd, TitleBar);
 
 	Ogre::Root::getSingletonPtr()->renderOneFrame();
 }
@@ -400,7 +400,7 @@ void SB_Model::Clear_Model_And_Reset(void)
 
 	//App->CL_Export_Ogre3D->Export_As_RF = 0;
 
-	SetWindowText(App->CLSB_Equity->Equity_Main_hWnd, "Equity_ME");
+	SetWindowText(App->Equity_Dlg_hWnd, "Equity_ME");
 }
 
 

@@ -149,6 +149,9 @@ SB_App::SB_App()
 
 	MainHwnd = NULL;
 	ViewGLhWnd = NULL;
+
+	Equity_Dlg_hWnd = NULL;
+
 	// MFC
 	m_pMainFrame = NULL;
 	pCFusionDoc = NULL;

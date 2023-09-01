@@ -456,7 +456,7 @@ bool SB_Ogre::ExitFullScreen()
 	{
 
 		//App->FullScreen = 0;
-		SetParent(App->ViewGLhWnd, App->CLSB_Equity->Equity_Main_hWnd);
+		SetParent(App->ViewGLhWnd, App->Equity_Dlg_hWnd);
 		SetWindowPos(App->ViewGLhWnd, HWND_TOP, 235, 11, 542, 455, SWP_NOZORDER);
 		App->CLSB_Equity->Resize_3DView();
 

@@ -52,7 +52,7 @@ SB_Loader::~SB_Loader(void)
 // *************************************************************************
 void SB_Loader::Assimp_Loader(HWND Owner, char* Extension, char* Extension2)
 {
-	int Result = App->CLSB_FileIO->Open_File_Model(App->CLSB_Equity->Equity_Main_hWnd,Extension, Extension2, NULL);
+	int Result = App->CLSB_FileIO->Open_File_Model(App->Equity_Dlg_hWnd,Extension, Extension2, NULL);
 	if (Result == 0)
 	{
 		return;
@@ -750,7 +750,7 @@ void SB_Loader::Translate_Model(float X, float Y, float Z)
 // *************************************************************************
 bool SB_Loader::RFActor_Loader(void)
 {
-	int Result = App->CLSB_FileIO->Open_File_Model(App->CLSB_Equity->Equity_Main_hWnd,"RF Actor   *.act\0*.act\0", "RF Actor", NULL);
+	int Result = App->CLSB_FileIO->Open_File_Model(App->Equity_Dlg_hWnd,"RF Actor   *.act\0*.act\0", "RF Actor", NULL);
 	if (Result == 0)
 	{
 		return 0;

@@ -11,7 +11,6 @@ SB_Equity::SB_Equity(void)
 	Equity_Start_Mode = 0;
 
 	OgreView_3D_hWnd =		nullptr;
-	Equity_Main_hWnd =		nullptr;
 	Render_Buttons_hWnd =	nullptr;
 
 	First_Run = 1;
@@ -83,12 +82,12 @@ bool SB_Equity::Auto_Load_File()
 void SB_Equity::Show_Equity_Dialog(bool Show)
 {
 	
-	if (Equity_Main_hWnd)
+	if (App->Equity_Dlg_hWnd)
 	{
 		if (Show == 1)
 		{
 			EquitySB_Dialog_Visible = 1;
-			ShowWindow(Equity_Main_hWnd, SW_SHOW);
+			ShowWindow(App->Equity_Dlg_hWnd, SW_SHOW);
 		}
 		else
 		{
@@ -98,7 +97,7 @@ void SB_Equity::Show_Equity_Dialog(bool Show)
 			}
 			
 			EquitySB_Dialog_Visible = 0;
-			ShowWindow(Equity_Main_hWnd, SW_HIDE);
+			ShowWindow(App->Equity_Dlg_hWnd, SW_HIDE);
 		}
 	}
 	else
@@ -114,10 +113,10 @@ void SB_Equity::Start_Equity_Dialog_New()
 {
 	if (EquitySB_Dialog_Created == 0)
 	{
-		Equity_Main_hWnd = nullptr;
+		App->Equity_Dlg_hWnd = nullptr;
 		mAutoLoad = 0;
 
-		Equity_Main_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_EQUITYME, App->MainHwnd, (DLGPROC)Equity_Dialog_New_Proc);
+		App->Equity_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_EQUITYME, App->MainHwnd, (DLGPROC)Equity_Dialog_New_Proc);
 
 		Start_Render_Buttons();
 		App->CLSB_TopTabs_Equity->Start_Tabs();
@@ -285,7 +284,7 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 			App->CLSB_Loader->LoadError = 0;
 
 			App->CLSB_Assimp->SelectedPreset = 8 + 8388608 + 64 + aiProcess_PreTransformVertices;
-			App->CLSB_Loader->Assimp_Loader(App->CLSB_Equity->Equity_Main_hWnd,"Wavefront OBJ   *.obj\0*.obj\0", "Wavefront OBJ");
+			App->CLSB_Loader->Assimp_Loader(App->Equity_Dlg_hWnd,"Wavefront OBJ   *.obj\0*.obj\0", "Wavefront OBJ");
 
 			if (App->CLSB_Loader->LoadError == 1)
 			{
@@ -399,7 +398,7 @@ bool SB_Equity::Start_Render_Buttons()
 {
 	Render_Buttons_hWnd = nullptr;
 
-	Render_Buttons_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_TB_BUTTONS, Equity_Main_hWnd, (DLGPROC)Render_Buttons_Proc);
+	Render_Buttons_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_TB_BUTTONS, App->Equity_Dlg_hWnd, (DLGPROC)Render_Buttons_Proc);
 	Init_Bmps_Globals();
 	return 1;
 }
@@ -990,7 +989,7 @@ LRESULT CALLBACK SB_Equity::Ogre3D_New_Proc(HWND hDlg, UINT message, WPARAM wPar
 void SB_Equity::Resize_3DView()
 {
 	RECT rcl;
-	GetClientRect(Equity_Main_hWnd, &rcl);
+	GetClientRect(App->Equity_Dlg_hWnd, &rcl);
 
 	int X = rcl.right-10;
 	int Y = rcl.bottom - 90;

@@ -70,7 +70,7 @@ void SB_Dialogs::YesNo(char* Text, char* Text2)
 	}
 	else
 	{
-		DialogBox(App->hInst, (LPCTSTR)IDD_SB_YESNO, App->CLSB_Equity->Equity_Main_hWnd, (DLGPROC)YesNo_Proc);
+		DialogBox(App->hInst, (LPCTSTR)IDD_SB_YESNO, App->Equity_Dlg_hWnd, (DLGPROC)YesNo_Proc);
 	}
 }
 
@@ -516,7 +516,7 @@ void SB_Dialogs::Read_ErrorLog(HWND hDlg)
 // *************************************************************************
 void SB_Dialogs::Start_Speed_Camera()
 {
-	DialogBox(App->hInst, (LPCTSTR)IDD_MOUSESENSITIVITY, App->CLSB_Equity->Equity_Main_hWnd, (DLGPROC)Speed_Camera_Proc);
+	DialogBox(App->hInst, (LPCTSTR)IDD_MOUSESENSITIVITY, App->Equity_Dlg_hWnd, (DLGPROC)Speed_Camera_Proc);
 }
 
 // *************************************************************************
@@ -683,7 +683,7 @@ void SB_Dialogs::UnCheck_All_SpeedMouseOption()
 // *************************************************************************
 bool SB_Dialogs::Start_Dialog_DropGen()
 {
-	CreateDialog(App->hInst, (LPCTSTR)IDD_EQ_DROPGEN, App->CLSB_Equity->Equity_Main_hWnd, (DLGPROC)Dialog_DropGen_Proc);
+	CreateDialog(App->hInst, (LPCTSTR)IDD_EQ_DROPGEN, App->Equity_Dlg_hWnd, (DLGPROC)Dialog_DropGen_Proc);
 
 	return 1;
 }

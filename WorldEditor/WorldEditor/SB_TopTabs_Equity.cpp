@@ -68,7 +68,7 @@ void SB_TopTabs_Equity::Start_Tabs_Headers(void)
 {
 	Tabs_TB_hWnd_Eq = nullptr;
 
-	Tabs_TB_hWnd_Eq = CreateDialog(App->hInst, (LPCTSTR)IDD_TOPTABS_EQUITY, App->CLSB_Equity->Equity_Main_hWnd, (DLGPROC)Tabs_Headers_Proc);
+	Tabs_TB_hWnd_Eq = CreateDialog(App->hInst, (LPCTSTR)IDD_TOPTABS_EQUITY, App->Equity_Dlg_hWnd, (DLGPROC)Tabs_Headers_Proc);
 }
 
 // *************************************************************************
