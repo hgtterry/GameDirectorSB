@@ -636,7 +636,7 @@ bool SB_Export_World::Write_Project_File(char* Path_And_File,const char* Filenam
 void SB_Export_World::Export_World_Text(int ExpSelected)
 {
 	App->CLSB_Model->BrushCount = 0;
-	App->CLSB_Model->XBrushCount = 0;
+	
 
 	WriteScene_TXT = NULL;
 
@@ -1095,7 +1095,7 @@ int SB_Export_World::Get_Adjusted_Index(int RealIndex)
 }
 
 // *************************************************************************
-// *			AddTexture:- Terry and Hazel Flanigan 2023		  		   *
+// *			AddTexture_GL:- Terry and Hazel Flanigan 2023		  	   *
 // *************************************************************************
 bool SB_Export_World::AddTexture_GL(geVFile* BaseFile, const char* TextureName, int GroupIndex)
 {

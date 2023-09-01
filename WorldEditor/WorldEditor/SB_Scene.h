@@ -30,13 +30,18 @@ public:
 
 	void Go_FullScreen_Mode(void);
 
-	void Build_BrushData();
-	bool Show_Brush_Info(const Brush* b);
-	bool Show_Brush_ListInfo(BrushList* BList);
-	bool Show_Brush_Faces_Info(const FaceList* pList);
-	bool Show_Face_Data(const Face* f);
+
+	void Build_World(int ExpSelected);
+	bool Level_Build_Text_G3ds(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, geBoolean ExpLights, int GroupID);
+	bool BrushList_ExportToText(BrushList* BList, geBoolean SubBrush);
+	bool Brush_ExportToText(const Brush* b);
+	bool FaceList_ExportToText(const Brush* b, const FaceList* pList, int BrushCount, int SubBrushCount);
+	int Get_Adjusted_Index(int RealIndex);
+	bool AddTexture_GL(geVFile* BaseFile, const char* TextureName, int GroupIndex);
 
 	Brush* Selected_Brush;
+
+	int AdjusedIndex_Store[500];
 
 	bool FullScreenMode_Flag;
 };

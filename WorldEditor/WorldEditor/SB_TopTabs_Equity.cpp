@@ -289,7 +289,7 @@ LRESULT CALLBACK SB_TopTabs_Equity::Files_TB_Proc(HWND hDlg, UINT message, WPARA
 	{
 		if (LOWORD(wParam) == IDC_BT_ETEST)
 		{
-			App->CLSB_Scene->Build_BrushData();
+			//App->CLSB_Scene->Build_BrushData();
 			return 1;
 		}
 		
