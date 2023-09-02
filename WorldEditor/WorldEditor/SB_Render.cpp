@@ -313,7 +313,7 @@ void SB_Render::Render_Loop()
 
 		if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Brushes)
 		{
-			Brush_Render_Normals();
+			//Brush_Render_Normals();
 		}
 	}
 
@@ -371,148 +371,7 @@ void SB_Render::Translate(void)
 	glRotatef(0.0, 0.0, 0.0, 1.0);
 }
 
-// *************************************************************************
-// *						Bruses_Render_Faces Terry Bernie	   		   *
-// *************************************************************************
-bool SB_Render::Brushes_Render_Faces(void)
-{
-	int Count = 0;
 
-	glColor3f(1, 1, 1);
-
-	int BrushCount = App->CLSB_Model->BrushCount;
-
-	while (Count < BrushCount)
-	{
-		Brushes_Face_Parts(Count);
-		Count++;
-	}
-
-	return 1;
-}
-// *************************************************************************
-// *					Bruses_Face_Parts Terry Bernie		   			   *
-// *************************************************************************
-bool SB_Render::Brushes_Face_Parts(int Count)
-{
-	int FaceCount = 0;
-	int A = 0;
-	int B = 0;
-	int C = 0;
-
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-	while (FaceCount < App->CLSB_Model->B_Brush[Count]->Face_Count)
-	{
-		A = App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].a;
-		B = App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].b;
-		C = App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].c;
-
-		glBegin(GL_POLYGON);
-
-		//-----------------------------------------------
-		glVertex3fv(&App->CLSB_Model->B_Brush[Count]->vertex_Data[A].x);
-
-		//-----------------------------------------------
-		glVertex3fv(&App->CLSB_Model->B_Brush[Count]->vertex_Data[B].x);
-
-		//-----------------------------------------------
-		glVertex3fv(&App->CLSB_Model->B_Brush[Count]->vertex_Data[C].x);
-
-		FaceCount++;
-		//-----------------------------------------------
-
-		glEnd();
-	}
-
-
-	return 1;
-}
-
-// *************************************************************************
-// *						Brush_Render_Textures_Terry Bernie	   		   *
-// *************************************************************************
-bool SB_Render::Brush_Render_Textures(void)
-{
-	int Count = 0;
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	glEnable(GL_TEXTURE_2D);
-	glColor3f(1, 1, 1);
-
-	//glLineWidth(10);
-
-	int BrushCount = App->CLSB_Model->BrushCount;
-
-	Count = 0;
-	while (Count < BrushCount)
-	{
-		Brush_Textured_Parts(Count);
-		Count++;
-	}
-
-	glDisable(GL_TEXTURE_2D);
-
-	return 1;
-}
-// *************************************************************************
-// *					Brush_Textured_Parts Terry Bernie		 		   *
-// *************************************************************************
-bool SB_Render::Brush_Textured_Parts(int Count)
-{
-	int FaceCount = 0;
-	int A = 0;
-	int B = 0;
-	int C = 0;
-
-	int OldId = 0;
-	
-	if (App->CLSB_Model->B_Brush[Count]->Face_Count > 0)
-	{
-		OldId = App->CLSB_Model->B_Brush[Count]->TextID_Data[0].ID;
-		glBindTexture(GL_TEXTURE_2D, g_BrushTexture[App->CLSB_Model->B_Brush[Count]->TextID_Data[0].ID]);
-
-	}
-	
-	while (FaceCount < App->CLSB_Model->B_Brush[Count]->Face_Count)
-	{
-		if (OldId > App->CLSB_Model->B_Brush[Count]->TextID_Data[FaceCount].ID || OldId < App->CLSB_Model->B_Brush[Count]->TextID_Data[FaceCount].ID)
-		{
-			glBindTexture(GL_TEXTURE_2D, g_BrushTexture[App->CLSB_Model->B_Brush[Count]->TextID_Data[FaceCount].ID]);
-			OldId = App->CLSB_Model->B_Brush[Count]->TextID_Data[FaceCount].ID;
-		}
-	
-
-		A = App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].a;
-		B = App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].b;
-		C = App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].c;
-
-		glBegin(GL_POLYGON);
-
-		//-----------------------------------------------
-		glTexCoord2f(App->CLSB_Model->B_Brush[Count]->MapCord_Data[A].u, App->CLSB_Model->B_Brush[Count]->MapCord_Data[A].v);
-		glNormal3fv(&App->CLSB_Model->B_Brush[Count]->Normal_Data[A].x);
-		glVertex3fv(&App->CLSB_Model->B_Brush[Count]->vertex_Data[A].x);
-		
-		//-----------------------------------------------
-		glTexCoord2f(App->CLSB_Model->B_Brush[Count]->MapCord_Data[B].u, App->CLSB_Model->B_Brush[Count]->MapCord_Data[B].v);
-		glNormal3fv(&App->CLSB_Model->B_Brush[Count]->Normal_Data[B].x);
-		glVertex3fv(&App->CLSB_Model->B_Brush[Count]->vertex_Data[B].x);
-		
-		//-----------------------------------------------
-		glTexCoord2f(App->CLSB_Model->B_Brush[Count]->MapCord_Data[C].u, App->CLSB_Model->B_Brush[Count]->MapCord_Data[C].v);
-		glNormal3fv(&App->CLSB_Model->B_Brush[Count]->Normal_Data[C].x);
-		glVertex3fv(&App->CLSB_Model->B_Brush[Count]->vertex_Data[C].x);
-		FaceCount++;
-		//-----------------------------------------------
-
-		glEnd();
-
-	}
-
-	return 1;
-}
 
 // *************************************************************************
 // *						XBruses_Render_Faces Terry Bernie	   		   *
@@ -676,51 +535,6 @@ bool SB_Render::XBrush_Textured_Parts(int Count)
 	return 1;
 }
 
-
-//**************************************************************************
-// *					Brush_Render_Normals Terry Bernie	   			   *
-// *************************************************************************
-void SB_Render::Brush_Render_Normals(void)
-{
-	int Count = 0;
-
-	glColor3f(1, 1, 1);
-
-	int BrushCount = App->CLSB_Model->BrushCount;
-
-	while (Count < BrushCount)
-	{
-		Brush_As_Normals_Parts(Count);
-		Count++;
-	}
-}
-// *************************************************************************
-// *					Brush_AsNormals_Part Terry Bernie	   			   *
-// *************************************************************************
-void SB_Render::Brush_As_Normals_Parts(int Count)
-{
-#define Scaler 2
-
-	int VertCount = 0;
-
-	glPointSize(3);
-	glBegin(GL_LINES);
-
-	while (VertCount < App->CLSB_Model->B_Brush[Count]->Face_Count)
-	{
-		//-----------------------------------------------
-		glVertex3fv(&App->CLSB_Model->B_Brush[Count]->vertex_Data[VertCount].x);
-
-		glVertex3f(App->CLSB_Model->B_Brush[Count]->vertex_Data[VertCount].x + App->CLSB_Model->B_Brush[Count]->Normal_Data[VertCount].x * Scaler,
-			App->CLSB_Model->B_Brush[Count]->vertex_Data[VertCount].y + App->CLSB_Model->B_Brush[Count]->Normal_Data[VertCount].y * Scaler,
-			App->CLSB_Model->B_Brush[Count]->vertex_Data[VertCount].z + App->CLSB_Model->B_Brush[Count]->Normal_Data[VertCount].z * Scaler);
-		VertCount++;
-
-	}
-
-	glEnd();
-}
-
 // *************************************************************************
 // *						Assimp_Render_Faces Terry Bernie	   		   *
 // *************************************************************************
@@ -828,7 +642,7 @@ bool SB_Render::Render_As_Points_Parts(int Count)
 // *************************************************************************
 bool SB_Render::Brush_Render_Points(void)
 {
-	int Count = 0;
+	/*int Count = 0;
 
 	glColor3f(1.0f, 1.0f, 0.0f);
 
@@ -838,7 +652,7 @@ bool SB_Render::Brush_Render_Points(void)
 	{
 		Brush_As_Points_Parts(Count);
 		Count++;
-	}
+	}*/
 
 	return 1;
 }
@@ -847,24 +661,24 @@ bool SB_Render::Brush_Render_Points(void)
 // *************************************************************************
 bool SB_Render::Brush_As_Points_Parts(int Count)
 {
-	glPointSize(5);
+	//glPointSize(5);
 
-	int VertCount = 0;
+	//int VertCount = 0;
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-	int GroupVertCount = App->CLSB_Model->B_Brush[Count]->Face_Count;
+	////int GroupVertCount = App->CLSB_Model->B_Brush[Count]->Face_Count;
 
-	while (VertCount < GroupVertCount)
-	{
-		glBegin(GL_POINTS);
+	//while (VertCount < GroupVertCount)
+	//{
+	//	glBegin(GL_POINTS);
 
-		glVertex3fv(&App->CLSB_Model->B_Brush[Count]->vertex_Data[VertCount].x);
+	//	//glVertex3fv(&App->CLSB_Model->B_Brush[Count]->vertex_Data[VertCount].x);
 
-		glEnd();
+	//	glEnd();
 
-		VertCount++;
-	}
+	//	VertCount++;
+	//}
 
 	return 1;
 }

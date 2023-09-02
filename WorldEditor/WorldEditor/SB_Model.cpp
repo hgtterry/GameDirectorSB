@@ -39,7 +39,6 @@ SB_Model::SB_Model(void)
 	Player_Added = 0;
 	Model_Loaded = 0;
 
-	BrushCount = 0;
 	XBrushCount = 0;
 
 	Model_Type = Enums::LoadedFile_None;
@@ -54,13 +53,6 @@ SB_Model::SB_Model(void)
 	while (Count < 4999)
 	{
 		Group[Count] = nullptr;
-		Count++;
-	}
-
-	Count = 0;
-	while (Count < 111999)
-	{
-		B_Brush[Count] = nullptr;
 		Count++;
 	}
 
@@ -141,23 +133,6 @@ void SB_Model::Create_Mesh_Group(int Index)
 	}
 
 	Group[Index] = new Base_Group();
-}
-
-// *************************************************************************
-// *		Create_Mesh_Group:- Terry and Hazel Flanigan 2023		  	   *
-// *************************************************************************
-void SB_Model::Create_Brush(int Index)
-{
-	if (B_Brush[Index] != nullptr)
-	{
-		delete B_Brush[Index];
-		B_Brush[Index] = nullptr;
-	}
-
-	B_Brush[Index] = new Base_Brush();
-
-	B_Brush[Index]->Vertice_Count = 0;
-	B_Brush[Index]->Face_Count = 0;
 }
 
 // *************************************************************************
@@ -313,31 +288,41 @@ void SB_Model::Set_BondingBox_Model(bool Create)
 // *************************************************************************
 void SB_Model::Set_BondingBox_Brushes()
 {
-	BB_Min.x = B_Brush[0]->vertex_Data[0].x;
-	BB_Min.y = B_Brush[0]->vertex_Data[0].y;
-	BB_Min.z = B_Brush[0]->vertex_Data[0].z;
+	BB_Min.x = B_XBrush[0]->B_Brush[0]->vertex_Data[0].x;
+	BB_Min.y = B_XBrush[0]->B_Brush[0]->vertex_Data[0].y;
+	BB_Min.z = B_XBrush[0]->B_Brush[0]->vertex_Data[0].z;
 
-	BB_Max.x = B_Brush[0]->vertex_Data[0].x;
-	BB_Max.y = B_Brush[0]->vertex_Data[0].y;
-	BB_Max.z = B_Brush[0]->vertex_Data[0].z;
+	BB_Max.x = B_XBrush[0]->B_Brush[0]->vertex_Data[0].x;
+	BB_Max.y = B_XBrush[0]->B_Brush[0]->vertex_Data[0].y;
+	BB_Max.z = B_XBrush[0]->B_Brush[0]->vertex_Data[0].z;
 
 	int Count = 0;
 	int VertCount = 0;
 
-	while (Count < BrushCount)
+	while (Count < XBrushCount)
 	{
-		VertCount = 0;
-		while (VertCount < B_Brush[Count]->Face_Count)
-		{
-			if (B_Brush[Count]->vertex_Data[VertCount].x < BB_Min.x) BB_Min.x = B_Brush[Count]->vertex_Data[VertCount].x;
-			if (B_Brush[Count]->vertex_Data[VertCount].y < BB_Min.y) BB_Min.y = B_Brush[Count]->vertex_Data[VertCount].y;
-			if (B_Brush[Count]->vertex_Data[VertCount].z < BB_Min.z) BB_Min.z = B_Brush[Count]->vertex_Data[VertCount].z;
+		int BrushLoop = 0;
+		int SubBrushCount = B_XBrush[Count]->Brush_Count;
 
-			if (B_Brush[Count]->vertex_Data[VertCount].x > BB_Max.x) BB_Max.x = B_Brush[Count]->vertex_Data[VertCount].x;
-			if (B_Brush[Count]->vertex_Data[VertCount].y > BB_Max.y) BB_Max.y = B_Brush[Count]->vertex_Data[VertCount].y;
-			if (B_Brush[Count]->vertex_Data[VertCount].z > BB_Max.z) BB_Max.z = B_Brush[Count]->vertex_Data[VertCount].z;
-			VertCount++;
+		while (BrushLoop < SubBrushCount)
+		{
+			VertCount = 0;
+			while (VertCount < B_XBrush[Count]->B_Brush[BrushLoop]->Face_Count)
+			{
+				if (B_XBrush[Count]->B_Brush[BrushLoop]->vertex_Data[VertCount].x < BB_Min.x) BB_Min.x = B_XBrush[Count]->B_Brush[BrushLoop]->vertex_Data[VertCount].x;
+				if (B_XBrush[Count]->B_Brush[BrushLoop]->vertex_Data[VertCount].y < BB_Min.y) BB_Min.y = B_XBrush[Count]->B_Brush[BrushLoop]->vertex_Data[VertCount].y;
+				if (B_XBrush[Count]->B_Brush[BrushLoop]->vertex_Data[VertCount].z < BB_Min.z) BB_Min.z = B_XBrush[Count]->B_Brush[BrushLoop]->vertex_Data[VertCount].z;
+
+				if (B_XBrush[Count]->B_Brush[BrushLoop]->vertex_Data[VertCount].x > BB_Max.x) BB_Max.x = B_XBrush[Count]->B_Brush[BrushLoop]->vertex_Data[VertCount].x;
+				if (B_XBrush[Count]->B_Brush[BrushLoop]->vertex_Data[VertCount].y > BB_Max.y) BB_Max.y = B_XBrush[Count]->B_Brush[BrushLoop]->vertex_Data[VertCount].y;
+				if (B_XBrush[Count]->B_Brush[BrushLoop]->vertex_Data[VertCount].z > BB_Max.z) BB_Max.z = B_XBrush[Count]->B_Brush[BrushLoop]->vertex_Data[VertCount].z;
+
+				VertCount++;
+			}
+
+			BrushLoop++;
 		}
+
 		Count++;
 	}
 

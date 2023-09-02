@@ -635,9 +635,6 @@ bool SB_Export_World::Write_Project_File(char* Path_And_File,const char* Filenam
 // *************************************************************************
 void SB_Export_World::Export_World_Text(int ExpSelected)
 {
-	App->CLSB_Model->BrushCount = 0;
-	
-
 	WriteScene_TXT = NULL;
 
 	char Path[MAX_PATH];
@@ -860,10 +857,6 @@ struct tag_FaceList
 // *************************************************************************
 bool SB_Export_World::FaceList_ExportToText(const Brush* b,const FaceList* pList, int BrushCount, int SubBrushCount)
 {
-
-	App->CLSB_Model->Create_Brush(App->CLSB_Model->BrushCount);
-
-
 	int i, j, k, num_faces, num_verts, num_mats, num_chars, curnum_verts;
 	char matname[MAX_PATH];
 
@@ -905,10 +898,7 @@ bool SB_Export_World::FaceList_ExportToText(const Brush* b,const FaceList* pList
 	// -----------------------------------  Vertices
 	int VertIndex = 0;
 	fprintf(WriteScene_TXT, "# Number of Vertices = %i \n", num_verts);
-	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Vertice_Count = num_verts;
-	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->vertex_Data.resize(num_verts);
-	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Normal_Data.resize(num_verts);
-	
+
 	for (i = 0; i < pList->NumFaces; i++)
 	{
 		const geVec3d* verts;
@@ -917,21 +907,14 @@ bool SB_Export_World::FaceList_ExportToText(const Brush* b,const FaceList* pList
 		for (j = 0; j < curnum_verts; j++)
 		{
 			fprintf(WriteScene_TXT, "V = %f %f %f\n", verts[j].X, verts[j].Y, verts[j].Z);
-			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->vertex_Data[VertIndex].x = verts[j].X;
-			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->vertex_Data[VertIndex].y = verts[j].Y;
-			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->vertex_Data[VertIndex].z = verts[j].Z;
-
-			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Normal_Data[VertIndex].x = 0.5;
-			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Normal_Data[VertIndex].y = 0.5;
-			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Normal_Data[VertIndex].z = 0.5;
-
+			
 			VertIndex++;
 		}
 	}
 
 	int UVIndex = 0;
 	// -----------------------------------  UVS
-	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->MapCord_Data.resize(num_verts);
+	
 	for (i = 0; i < pList->NumFaces; i++)
 	{
 		const TexInfo_Vectors* TVecs = Face_GetTextureVecs(pList->Faces[i]);
@@ -963,8 +946,7 @@ bool SB_Export_World::FaceList_ExportToText(const Brush* b,const FaceList* pList
 			V -= (TVecs->vOffset / tySize);
 
 			fprintf(WriteScene_TXT, "UV = %f %f\n", U,V);
-			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->MapCord_Data[UVIndex].u = U;
-			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->MapCord_Data[UVIndex].v = V;
+			
 			UVIndex++;
 		}
 	}
@@ -972,8 +954,7 @@ bool SB_Export_World::FaceList_ExportToText(const Brush* b,const FaceList* pList
 	int FaceIndex = 0;
 	// -----------------------------------  Faces
 	fprintf(WriteScene_TXT, "# Number of Faces = %i \n", num_faces);
-	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Count = num_faces;
-	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Data.resize(num_faces);
+	
 	num_verts = 0;
 	for (i = 0; i < pList->NumFaces; i++)
 	{
@@ -981,9 +962,7 @@ bool SB_Export_World::FaceList_ExportToText(const Brush* b,const FaceList* pList
 		for (j = 0; j < curnum_verts - 2; j++)
 		{
 			fprintf(WriteScene_TXT, "F = %i %i %i\n", num_verts, num_verts + 2 + j, num_verts + 1 + j);
-			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Data[FaceIndex].a = num_verts;
-			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Data[FaceIndex].b = num_verts + 2 + j;
-			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Data[FaceIndex].c = num_verts + 1 + j;
+			
 
 			FaceIndex++;
 		}
@@ -992,7 +971,7 @@ bool SB_Export_World::FaceList_ExportToText(const Brush* b,const FaceList* pList
 	}
 
 	// -----------------------------------  Texture IDs
-	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->TextID_Data.resize(200);
+	
 	for (i = 0; i < pList->NumFaces; i++)
 	{
 		if (!matf[i])
@@ -1029,7 +1008,7 @@ bool SB_Export_World::FaceList_ExportToText(const Brush* b,const FaceList* pList
 			for (j = 0; j < curnum_verts - 2; j++)
 			{
 				int DibId2 = Get_Adjusted_Index(Face_GetTextureDibId(pList->Faces[i]));
-				App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->TextID_Data[curnum_faces + j].ID = DibId2;
+		
 				fprintf(WriteScene_TXT, "FN %i %i\n", curnum_faces + j, DibId2);
 			
 			}
@@ -1045,7 +1024,7 @@ bool SB_Export_World::FaceList_ExportToText(const Brush* b,const FaceList* pList
 					for (k = 0; k < curnum_verts - 2; k++)
 					{
 						int DibId2 = Get_Adjusted_Index(Face_GetTextureDibId(pList->Faces[i]));
-						App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->TextID_Data[curnum_faces+k].ID = DibId2;
+						
 						fprintf(WriteScene_TXT, "FN = %i %i\n", curnum_faces + k, DibId2);
 			
 					}
@@ -1061,8 +1040,6 @@ bool SB_Export_World::FaceList_ExportToText(const Brush* b,const FaceList* pList
 	int poo = 0;
 	while (poo < num_faces)
 	{
-		int dd = App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->TextID_Data[poo].ID;
-		fprintf(WriteScene_TXT, "DN = %i\n", dd);
 		poo++;
 	}
 	fprintf(WriteScene_TXT, "%s\n", "-----------------------");
@@ -1070,8 +1047,6 @@ bool SB_Export_World::FaceList_ExportToText(const Brush* b,const FaceList* pList
 
 	free(matf);
 
-	App->CLSB_Model->BrushCount++;
-	
 	return GE_TRUE;
 }
 

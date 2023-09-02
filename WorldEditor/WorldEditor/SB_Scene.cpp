@@ -159,7 +159,6 @@ static geBoolean fdocBrushCSGCallback2(const Brush* pBrush, void* lParam)
 // *************************************************************************
 void SB_Scene::Build_World(int ExpSelected)
 {
-	App->CLSB_Model->BrushCount = 0;
 	BrushChange = -1;
 	SubBrushChange = 0;
 
@@ -289,18 +288,7 @@ bool SB_Scene::BrushList_Export(BrushList* BList, geBoolean SubBrush)
 
 	while (pBrush != NULL)
 	{
-		//App->Say(pBrush->Name);
-
-		if (SubBrush == GE_FALSE)
-		{
-			//App->CLSB_Model->Create_XBrush(App->CLSB_Model->XBrushCount);
-
-			//strcpy(App->CLSB_Model->B_XBrush[App->CLSB_Model->XBrushCount]->BrushName, pBrush->Name);
-			//App->CLSB_Model->B_XBrush[App->CLSB_Model->XBrushCount]->SubBrush_Count = 0;
-
-			//SameBrush = 1;
-		}
-
+		
 		if (!Brush_Export(pBrush))
 		{
 			return GE_FALSE;
@@ -320,7 +308,6 @@ bool SB_Scene::BrushList_Export(BrushList* BList, geBoolean SubBrush)
 		if (SubBrush == GE_FALSE)
 		{
 			SameBrush = 0;
-			//App->CLSB_Model->XBrushCount++;
 		}
 	}
 

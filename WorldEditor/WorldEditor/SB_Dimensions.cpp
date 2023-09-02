@@ -1031,18 +1031,26 @@ void SB_Dimensions::Centre_Model_Mid_Brushes(void)
 
 		int Count = 0;
 		int VertCount = 0;
-		int BrushCount = App->CLSB_Model->BrushCount;
+		int BrushCount = App->CLSB_Model->XBrushCount;
 
 		while (Count < BrushCount)
 		{
-			VertCount = 0;
-			while (VertCount < App->CLSB_Model->B_Brush[Count]->Vertice_Count)
-			{
-				App->CLSB_Model->B_Brush[Count]->vertex_Data[VertCount].x += X;
-				App->CLSB_Model->B_Brush[Count]->vertex_Data[VertCount].y += Y;
-				App->CLSB_Model->B_Brush[Count]->vertex_Data[VertCount].z += Z;
+			int BrushLoop = 0;
+			int SubBrushCount = App->CLSB_Model->B_XBrush[Count]->Brush_Count;
 
-				VertCount++;
+			while (BrushLoop < SubBrushCount)
+			{
+				VertCount = 0;
+				while (VertCount < App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->Vertice_Count)
+				{
+					App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->vertex_Data[VertCount].x += X;
+					App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->vertex_Data[VertCount].y += Y;
+					App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->vertex_Data[VertCount].z += Z;
+
+					VertCount++;
+				}
+
+				BrushLoop++;
 			}
 
 			Count++;

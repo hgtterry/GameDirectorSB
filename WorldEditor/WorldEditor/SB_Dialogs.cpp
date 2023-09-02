@@ -864,18 +864,18 @@ LRESULT CALLBACK SB_Dialogs::Dialog_DropGen_Proc(HWND hDlg, UINT message, WPARAM
 void SB_Dialogs::ListGroups(HWND List)
 {
 	char buf[MAX_PATH];
-	int BrushCount = App->CLSB_Model->BrushCount;
+	//int BrushCount = App->CLSB_Model->BrushCount;
 
-	sprintf(buf, "Brush Count = %i", BrushCount);
-	SendDlgItemMessage(List, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	//sprintf(buf, "Brush Count = %i", BrushCount);
+	//SendDlgItemMessage(List, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
 	int Count = 0;
-	while (Count < BrushCount)
+	/*while (Count < BrushCount)
 	{
 		sprintf(buf, "%i %s %i %i", Count, App->CLSB_Model->B_Brush[Count]->BrushName, App->CLSB_Model->B_Brush[Count]->Brush_Count, App->CLSB_Model->B_Brush[Count]->SubBrush_Count);
 		SendDlgItemMessage(List, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 		Count++;
-	}
+	}*/
 
 	sprintf(buf, " -----------------------");
 	SendDlgItemMessage(List, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
