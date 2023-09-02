@@ -542,9 +542,9 @@ bool SB_Scene::FaceList_Export(const Brush* b, const FaceList* pList, int BrushC
 		curnum_verts = Face_GetNumPoints(pList->Faces[i]);
 		for (j = 0; j < curnum_verts - 2; j++)
 		{
-			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Data[FaceIndex].a = num_verts;
-			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Data[FaceIndex].b = num_verts + 2 + j;
-			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Data[FaceIndex].c = num_verts + 1 + j;
+			//App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Data[FaceIndex].a = num_verts;
+			//App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Data[FaceIndex].b = num_verts + 2 + j;
+			//App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Data[FaceIndex].c = num_verts + 1 + j;
 
 			App->CLSB_Model->B_XBrush[BrushCount]->B_Brush[SubBrushChange]->Face_Data[FaceIndex].a = num_verts;
 			App->CLSB_Model->B_XBrush[BrushCount]->B_Brush[SubBrushChange]->Face_Data[FaceIndex].b = num_verts + 2 + j;
@@ -557,7 +557,7 @@ bool SB_Scene::FaceList_Export(const Brush* b, const FaceList* pList, int BrushC
 	}
 
 	// -----------------------------------  Texture IDs
-	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->TextID_Data.resize(200);
+	//App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->TextID_Data.resize(200);
 	App->CLSB_Model->B_XBrush[BrushCount]->B_Brush[SubBrushChange]->TextID_Data.resize(200);
 
 	for (i = 0; i < pList->NumFaces; i++)
@@ -592,7 +592,7 @@ bool SB_Scene::FaceList_Export(const Brush* b, const FaceList* pList, int BrushC
 			for (j = 0; j < curnum_verts - 2; j++)
 			{
 				int DibId2 = Get_Adjusted_Index(Face_GetTextureDibId(pList->Faces[i]));
-				App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->TextID_Data[curnum_faces + j].ID = DibId2;
+				//App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->TextID_Data[curnum_faces + j].ID = DibId2;
 				App->CLSB_Model->B_XBrush[BrushCount]->B_Brush[SubBrushChange]->TextID_Data[curnum_faces + j].ID = DibId2;
 			}
 
@@ -607,7 +607,7 @@ bool SB_Scene::FaceList_Export(const Brush* b, const FaceList* pList, int BrushC
 					for (k = 0; k < curnum_verts - 2; k++)
 					{
 						int DibId2 = Get_Adjusted_Index(Face_GetTextureDibId(pList->Faces[i]));
-						App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->TextID_Data[curnum_faces + k].ID = DibId2;
+						//App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->TextID_Data[curnum_faces + k].ID = DibId2;
 						App->CLSB_Model->B_XBrush[BrushCount]->B_Brush[SubBrushChange]->TextID_Data[curnum_faces + k].ID = DibId2;
 					}
 				}
@@ -620,7 +620,7 @@ bool SB_Scene::FaceList_Export(const Brush* b, const FaceList* pList, int BrushC
 	int poo = 0;
 	while (poo < num_faces)
 	{
-		int dd = App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->TextID_Data[poo].ID;
+		//int dd = App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->TextID_Data[poo].ID;
 		poo++;
 	}
 

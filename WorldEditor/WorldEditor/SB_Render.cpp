@@ -249,8 +249,8 @@ void SB_Render::Render_Loop()
 
 		if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Brushes)
 		{
-			Brush_Render_Textures();
-			//XBrush_Render_Textures();
+			//Brush_Render_Textures();
+			XBrush_Render_Textures();
 		}
 
 	}
@@ -272,7 +272,8 @@ void SB_Render::Render_Loop()
 
 		if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Brushes)
 		{
-			Brushes_Render_Faces();
+			//Brushes_Render_Faces();
+			XBrushes_Render_Faces();
 		}
 	}
 
@@ -424,7 +425,6 @@ bool SB_Render::Brushes_Face_Parts(int Count)
 		glEnd();
 	}
 
-	//App->Flash_Window();
 
 	return 1;
 }
@@ -515,6 +515,72 @@ bool SB_Render::Brush_Textured_Parts(int Count)
 }
 
 // *************************************************************************
+// *						XBruses_Render_Faces Terry Bernie	   		   *
+// *************************************************************************
+bool SB_Render::XBrushes_Render_Faces(void)
+{
+	int Count = 0;
+
+	glColor3f(1, 1, 1);
+
+	int BrushCount = App->CLSB_Model->XBrushCount;;
+
+	while (Count < BrushCount)
+	{
+		XBrushes_Face_Parts(Count);
+		Count++;
+	}
+
+	return 1;
+}
+// *************************************************************************
+// *					XBruses_Face_Parts Terry Bernie		   			   *
+// *************************************************************************
+bool SB_Render::XBrushes_Face_Parts(int Count)
+{
+	int FaceCount = 0;
+	int A = 0;
+	int B = 0;
+	int C = 0;
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	int BrushLoop = 0;
+	int SubBrushCount = App->CLSB_Model->B_XBrush[Count]->Brush_Count;
+
+	while (BrushLoop < SubBrushCount)
+	{
+		FaceCount = 0;
+
+		while (FaceCount < App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->Face_Count)
+		{
+			A = App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->Face_Data[FaceCount].a;
+			B = App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->Face_Data[FaceCount].b;
+			C = App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->Face_Data[FaceCount].c;
+
+			glBegin(GL_POLYGON);
+
+			//-----------------------------------------------
+			glVertex3fv(&App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->vertex_Data[A].x);
+
+			//-----------------------------------------------
+			glVertex3fv(&App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->vertex_Data[B].x);
+
+			//-----------------------------------------------
+			glVertex3fv(&App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->vertex_Data[C].x);
+
+			FaceCount++;
+	
+			glEnd();
+		}
+
+		BrushLoop++;
+	}
+
+
+	return 1;
+}
+
+// *************************************************************************
 // *						XBrush_Render_Textures_Terry Bernie	   		   *
 // *************************************************************************
 bool SB_Render::XBrush_Render_Textures(void)
@@ -525,8 +591,6 @@ bool SB_Render::XBrush_Render_Textures(void)
 
 	glEnable(GL_TEXTURE_2D);
 	glColor3f(1, 1, 1);
-
-	//glLineWidth(10);
 
 	int BrushCount = App->CLSB_Model->XBrushCount;
 
@@ -558,7 +622,7 @@ bool SB_Render::XBrush_Textured_Parts(int Count)
 	
 	while (BrushLoop < SubBrushCount)
 	{
-		//OldId = 0;
+		OldId = 0;
 		FaceCount = 0;
 		A = 0;
 		B = 0;
@@ -572,10 +636,10 @@ bool SB_Render::XBrush_Textured_Parts(int Count)
 
 		while (FaceCount < App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->Face_Count)
 		{
-			if (OldId > App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->TextID_Data[FaceCount].ID || OldId < App->CLSB_Model->B_XBrush[Count]->TextID_Data[FaceCount].ID)
+			if (OldId > App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->TextID_Data[FaceCount].ID || OldId < App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->TextID_Data[FaceCount].ID)
 			{
-				//glBindTexture(GL_TEXTURE_2D, g_BrushTexture[App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->TextID_Data[FaceCount].ID]);
-				//OldId = App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->TextID_Data[FaceCount].ID;
+				glBindTexture(GL_TEXTURE_2D, g_BrushTexture[App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->TextID_Data[FaceCount].ID]);
+				OldId = App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->TextID_Data[FaceCount].ID;
 			}
 
 

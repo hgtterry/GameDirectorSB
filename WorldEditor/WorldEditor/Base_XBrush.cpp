@@ -11,7 +11,7 @@ Base_XBrush::Base_XBrush(void)
 	BrushName[0] = 0;
 
 	int Count = 0;
-	while (Count < 19)
+	while (Count < 111999)
 	{
 		B_Brush[Count] = nullptr;
 		Count++;

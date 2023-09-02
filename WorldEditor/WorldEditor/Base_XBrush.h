@@ -27,7 +27,7 @@ public:
 
 	void Create_Brush(int Index);
 
-	Brush_type* B_Brush[20];
+	Brush_type* B_Brush[112000];
 
 	std::vector<vertex_type4> vertex_Data;		// XYZ
 	std::vector<polygon_type4> Face_Data;		// ABC

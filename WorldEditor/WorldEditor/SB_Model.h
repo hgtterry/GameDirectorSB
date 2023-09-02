@@ -91,8 +91,8 @@ public:
 	~SB_Model(void);
 
 	Base_Group* Group[5000];
-	Base_Brush* B_Brush[2000];
-	Base_XBrush* B_XBrush[2000];
+	Base_Brush* B_Brush[112000];
+	Base_XBrush* B_XBrush[112000];
 
 	void Create_Mesh_Group(int Index);
 	void Create_Brush(int Index);
