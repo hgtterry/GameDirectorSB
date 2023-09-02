@@ -383,9 +383,6 @@ bool SB_Scene::Brush_Export(const Brush* b)
 // *************************************************************************
 bool SB_Scene::FaceList_Export(const Brush* b, const FaceList* pList, int BrushCount, int SubBrushCount)
 {
-
-	App->CLSB_Model->Create_Brush(App->CLSB_Model->BrushCount);
-
 	if (BrushCount > BrushChange)
 	{
 		App->CLSB_Model->Create_XBrush(BrushCount);
@@ -442,16 +439,9 @@ bool SB_Scene::FaceList_Export(const Brush* b, const FaceList* pList, int BrushC
 	char buf[MAX_PATH];
 	sprintf(buf, "%s_%i", b->Name, BrushCount);
 	
-	strcpy(App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->BrushName, buf);
-	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Brush_Count = BrushCount;
-	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->SubBrush_Count = SubBrushChange;
-	
 	// -----------------------------------  Vertices
 	int VertIndex = 0;
-	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Vertice_Count = num_verts;
-	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->vertex_Data.resize(num_verts);
-	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Normal_Data.resize(num_verts);
-
+	
 	App->CLSB_Model->B_XBrush[BrushCount]->B_Brush[SubBrushChange]->Vertice_Count = num_verts;
 	App->CLSB_Model->B_XBrush[BrushCount]->B_Brush[SubBrushChange]->vertex_Data.resize(num_verts);
 	App->CLSB_Model->B_XBrush[BrushCount]->B_Brush[SubBrushChange]->Normal_Data.resize(num_verts);
@@ -463,14 +453,6 @@ bool SB_Scene::FaceList_Export(const Brush* b, const FaceList* pList, int BrushC
 		curnum_verts = Face_GetNumPoints(pList->Faces[i]);
 		for (j = 0; j < curnum_verts; j++)
 		{
-			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->vertex_Data[VertIndex].x = verts[j].X;
-			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->vertex_Data[VertIndex].y = verts[j].Y;
-			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->vertex_Data[VertIndex].z = verts[j].Z;
-
-			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Normal_Data[VertIndex].x = 0.5;
-			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Normal_Data[VertIndex].y = 0.5;
-			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Normal_Data[VertIndex].z = 0.5;
-
 			App->CLSB_Model->B_XBrush[BrushCount]->B_Brush[SubBrushChange]->vertex_Data[VertIndex].x = verts[j].X;
 			App->CLSB_Model->B_XBrush[BrushCount]->B_Brush[SubBrushChange]->vertex_Data[VertIndex].y = verts[j].Y;
 			App->CLSB_Model->B_XBrush[BrushCount]->B_Brush[SubBrushChange]->vertex_Data[VertIndex].z = verts[j].Z;
@@ -485,7 +467,6 @@ bool SB_Scene::FaceList_Export(const Brush* b, const FaceList* pList, int BrushC
 
 	int UVIndex = 0;
 	// -----------------------------------  UVS
-	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->MapCord_Data.resize(num_verts);
 	App->CLSB_Model->B_XBrush[BrushCount]->B_Brush[SubBrushChange]->MapCord_Data.resize(num_verts);
 
 	for (i = 0; i < pList->NumFaces; i++)
@@ -518,9 +499,6 @@ bool SB_Scene::FaceList_Export(const Brush* b, const FaceList* pList, int BrushC
 			U += (TVecs->uOffset / txSize);
 			V -= (TVecs->vOffset / tySize);
 
-			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->MapCord_Data[UVIndex].u = U;
-			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->MapCord_Data[UVIndex].v = V;
-
 			App->CLSB_Model->B_XBrush[BrushCount]->B_Brush[SubBrushChange]->MapCord_Data[UVIndex].u = U;
 			App->CLSB_Model->B_XBrush[BrushCount]->B_Brush[SubBrushChange]->MapCord_Data[UVIndex].v = V;
 
@@ -530,9 +508,7 @@ bool SB_Scene::FaceList_Export(const Brush* b, const FaceList* pList, int BrushC
 
 	int FaceIndex = 0;
 	// -----------------------------------  Faces
-	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Count = num_faces;
-	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Data.resize(num_faces);
-
+	
 	App->CLSB_Model->B_XBrush[BrushCount]->B_Brush[SubBrushChange]->Face_Count = num_faces;
 	App->CLSB_Model->B_XBrush[BrushCount]->B_Brush[SubBrushChange]->Face_Data.resize(num_faces);
 
@@ -542,10 +518,6 @@ bool SB_Scene::FaceList_Export(const Brush* b, const FaceList* pList, int BrushC
 		curnum_verts = Face_GetNumPoints(pList->Faces[i]);
 		for (j = 0; j < curnum_verts - 2; j++)
 		{
-			//App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Data[FaceIndex].a = num_verts;
-			//App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Data[FaceIndex].b = num_verts + 2 + j;
-			//App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Data[FaceIndex].c = num_verts + 1 + j;
-
 			App->CLSB_Model->B_XBrush[BrushCount]->B_Brush[SubBrushChange]->Face_Data[FaceIndex].a = num_verts;
 			App->CLSB_Model->B_XBrush[BrushCount]->B_Brush[SubBrushChange]->Face_Data[FaceIndex].b = num_verts + 2 + j;
 			App->CLSB_Model->B_XBrush[BrushCount]->B_Brush[SubBrushChange]->Face_Data[FaceIndex].c = num_verts + 1 + j;
@@ -557,7 +529,6 @@ bool SB_Scene::FaceList_Export(const Brush* b, const FaceList* pList, int BrushC
 	}
 
 	// -----------------------------------  Texture IDs
-	//App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->TextID_Data.resize(200);
 	App->CLSB_Model->B_XBrush[BrushCount]->B_Brush[SubBrushChange]->TextID_Data.resize(200);
 
 	for (i = 0; i < pList->NumFaces; i++)
@@ -592,7 +563,6 @@ bool SB_Scene::FaceList_Export(const Brush* b, const FaceList* pList, int BrushC
 			for (j = 0; j < curnum_verts - 2; j++)
 			{
 				int DibId2 = Get_Adjusted_Index(Face_GetTextureDibId(pList->Faces[i]));
-				//App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->TextID_Data[curnum_faces + j].ID = DibId2;
 				App->CLSB_Model->B_XBrush[BrushCount]->B_Brush[SubBrushChange]->TextID_Data[curnum_faces + j].ID = DibId2;
 			}
 
@@ -607,7 +577,6 @@ bool SB_Scene::FaceList_Export(const Brush* b, const FaceList* pList, int BrushC
 					for (k = 0; k < curnum_verts - 2; k++)
 					{
 						int DibId2 = Get_Adjusted_Index(Face_GetTextureDibId(pList->Faces[i]));
-						//App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->TextID_Data[curnum_faces + k].ID = DibId2;
 						App->CLSB_Model->B_XBrush[BrushCount]->B_Brush[SubBrushChange]->TextID_Data[curnum_faces + k].ID = DibId2;
 					}
 				}
@@ -620,7 +589,6 @@ bool SB_Scene::FaceList_Export(const Brush* b, const FaceList* pList, int BrushC
 	int poo = 0;
 	while (poo < num_faces)
 	{
-		//int dd = App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->TextID_Data[poo].ID;
 		poo++;
 	}
 
@@ -628,9 +596,6 @@ bool SB_Scene::FaceList_Export(const Brush* b, const FaceList* pList, int BrushC
 	free(matf);
 
 	SubBrushChange++;
-
-	App->CLSB_Model->BrushCount++;
-
 	return GE_TRUE;
 }
 
