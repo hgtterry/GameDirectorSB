@@ -29,8 +29,6 @@ public:
 	~SB_Scene();
 
 	void Go_FullScreen_Mode(void);
-
-
 	void Build_World(int ExpSelected);
 	bool Level_Build_G3ds(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, geBoolean ExpLights, int GroupID);
 	bool BrushList_Export(BrushList* BList, geBoolean SubBrush);

@@ -1192,6 +1192,7 @@ void SB_Equity::Do_Preview_All()
 	App->CLSB_Ogre->mCamera->setOrientation(OldCamRot);
 
 	App->CLSB_Scene->Build_World(0);
+	
 	App->CLSB_Bullet->Create_Brush_Trimesh(0);
 	App->CLSB_Model->Set_BondingBox_Brushes();
 

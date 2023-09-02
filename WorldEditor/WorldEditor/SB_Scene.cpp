@@ -516,7 +516,7 @@ bool SB_Scene::FaceList_Export(const Brush* b, const FaceList* pList, int BrushC
 	}
 
 	// -----------------------------------  Texture IDs
-	App->CLSB_Model->B_XBrush[BrushCount]->B_Brush[SubBrushChange]->TextID_Data.resize(200);
+	App->CLSB_Model->B_XBrush[BrushCount]->B_Brush[SubBrushChange]->TextID_Data.resize(500);
 
 	for (i = 0; i < pList->NumFaces; i++)
 	{
@@ -572,13 +572,6 @@ bool SB_Scene::FaceList_Export(const Brush* b, const FaceList* pList, int BrushC
 			}
 		}
 	}
-
-	int poo = 0;
-	while (poo < num_faces)
-	{
-		poo++;
-	}
-
 
 	free(matf);
 
