@@ -660,6 +660,7 @@ bool SB_Scene::AddTexture_GL(geVFile* BaseFile, const char* TextureName, int Gro
 {
 	App->Get_Current_Document();
 
+	//Debug
 	HWND	PreviewWnd;
 	HBITMAP	hbm;
 	HDC		hDC;
