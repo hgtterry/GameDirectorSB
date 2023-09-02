@@ -44,5 +44,9 @@ public:
 	int AdjusedIndex_Store[500];
 
 	bool FullScreenMode_Flag;
+	bool SameBrush;
+
+	int BrushChange;
+	int SubBrushChange;
 };
 

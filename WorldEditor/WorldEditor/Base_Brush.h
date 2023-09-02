@@ -20,5 +20,10 @@ public:
 
 	int Vertice_Count;
 	int Face_Count;
+
+	int Brush_Count;
+	int SubBrush_Count;
+
+	char BrushName[MAX_PATH];
 };
 

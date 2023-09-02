@@ -320,11 +320,7 @@ LRESULT CALLBACK SB_TopTabs_Equity::Files_TB_Proc(HWND hDlg, UINT message, WPARA
 		{
 			if (App->CLSB_Model->Model_Loaded == 1)
 			{
-				//strcpy(App->CLSB_Dialogs->btext, "Groups");
-				//strcpy(App->CLSB_Dialogs->Chr_DropText, App->CLSB_Model->Group[0]->GroupName);
-				//App->CLSB_Dialogs->DropList_Data = 0;
-
-				//App->CLSB_Dialogs->Start_Dialog_DropGen();
+				App->CLSB_Dialogs->Start_ListData(2);
 			}
 			return 1;
 		}

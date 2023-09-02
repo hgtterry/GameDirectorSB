@@ -101,6 +101,9 @@ protected:
 	void Brush_Render_Normals(void);
 	void Brush_As_Normals_Parts(int Count);
 
+	bool XBrush_Render_Textures(void);
+	bool XBrush_Textured_Parts(int Count);
+
 	bool As_RenderBones();
 
 	void Render_BoundingBoxModel(void);

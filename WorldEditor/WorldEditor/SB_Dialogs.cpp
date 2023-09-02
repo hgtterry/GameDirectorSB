@@ -289,7 +289,14 @@ bool SB_Dialogs::Start_ListData(int WhatList)
 
 	App->Get_Current_Document();
 
-	DialogBox(App->hInst, (LPCTSTR)IDD_SCENEDATA, App->MainHwnd, (DLGPROC)ListData_Proc);
+	if (App->CLSB_Equity->EquitySB_Dialog_Visible == 0)
+	{
+		DialogBox(App->hInst, (LPCTSTR)IDD_SCENEDATA, App->MainHwnd, (DLGPROC)ListData_Proc);
+	}
+	else
+	{
+		DialogBox(App->hInst, (LPCTSTR)IDD_SCENEDATA, App->Equity_Dlg_hWnd, (DLGPROC)ListData_Proc);
+	}
 
 	return 1;
 }
@@ -315,6 +322,11 @@ LRESULT CALLBACK SB_Dialogs::ListData_Proc(HWND hDlg, UINT message, WPARAM wPara
 		if (App->CLSB_Dialogs->mWhatList == 1)
 		{
 			App->CLSB_Dialogs->Read_ErrorLog(hDlg);
+		}
+
+		if (App->CLSB_Dialogs->mWhatList == 2)
+		{
+			App->CLSB_Dialogs->ListGroups(hDlg);
 		}
 
 		App->CLSB_Dialogs->F_ListData_Dlg_Active = 1;
@@ -716,13 +728,14 @@ LRESULT CALLBACK SB_Dialogs::Dialog_DropGen_Proc(HWND hDlg, UINT message, WPARAM
 
 		if (App->CLSB_Dialogs->DropList_Data == 0)
 		{
-			App->CLSB_Ogre->RenderListener->GroupNumber = 0;
-			App->CLSB_Ogre->RenderListener->ShowBoundingGroup = 1;
+
+			//App->CLSB_Ogre->RenderListener->GroupNumber = 0;
+			//App->CLSB_Ogre->RenderListener->ShowBoundingGroup = 1;
 			
 			App->CLSB_Dialogs->ListGroups(tempList);
 
-			HWND tempList2 = GetDlgItem(hDlg, IDC_LISTGROUPDETAIL);
-			App->CLSB_Dialogs->UpdateGroupDetails(tempList2);
+			//HWND tempList2 = GetDlgItem(hDlg, IDC_LISTGROUPDETAIL);
+			//App->CLSB_Dialogs->UpdateGroupDetails(tempList2);
 
 			return TRUE;
 		}
@@ -850,21 +863,34 @@ LRESULT CALLBACK SB_Dialogs::Dialog_DropGen_Proc(HWND hDlg, UINT message, WPARAM
 // *************************************************************************
 void SB_Dialogs::ListGroups(HWND List)
 {
-	int GroupCount = App->CLSB_Model->Get_Groupt_Count();
+	char buf[MAX_PATH];
+	int BrushCount = App->CLSB_Model->BrushCount;
+
+	sprintf(buf, "Brush Count = %i", BrushCount);
+	SendDlgItemMessage(List, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
 	int Count = 0;
-	while (Count < GroupCount)
+	while (Count < BrushCount)
 	{
-		char Detail[MAX_PATH];
-		strcpy(Detail, App->CLSB_Model->Group[Count]->GroupName);
-		strcat(Detail, " Texture - ");
-		strcat(Detail, App->CLSB_Model->Group[Count]->MaterialName);
-		
-		SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)Detail);
+		sprintf(buf, "%i %s %i %i", Count, App->CLSB_Model->B_Brush[Count]->BrushName, App->CLSB_Model->B_Brush[Count]->Brush_Count, App->CLSB_Model->B_Brush[Count]->SubBrush_Count);
+		SendDlgItemMessage(List, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 		Count++;
 	}
 
-	SendMessage(List, LB_SETCURSEL, 0, 0);
+	sprintf(buf, " -----------------------");
+	SendDlgItemMessage(List, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	
+	sprintf(buf,"%s %i","X_Brush Count = ", App->CLSB_Model->XBrushCount);
+	SendDlgItemMessage(List, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+	Count = 0;
+	while (Count < App->CLSB_Model->XBrushCount)
+	{
+		sprintf(buf, "%s %i", "Sub Brush Count = ", App->CLSB_Model->B_XBrush[Count]->Brush_Count);
+		SendDlgItemMessage(List, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+		Count++;
+	}
+	
 }
 
 // *************************************************************************
@@ -883,6 +909,7 @@ void SB_Dialogs::UpdateGroupDetails(HWND List)
 
 	sprintf(buf, "Size X= %f Y= %f Z = %f", App->CLSB_Model->Group[Num]->Size.x, App->CLSB_Model->Group[Num]->Size.y, App->CLSB_Model->Group[Num]->Size.z);
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buf);
+
 }
 
 	

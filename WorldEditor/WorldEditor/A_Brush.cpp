@@ -116,6 +116,36 @@ Brush* A_Brush::Get_By_Name(char* BrushName)
 	return NULL;
 }
 
+// *************************************************************************
+// *							Get_By_Index							   *
+// *************************************************************************
+Brush* A_Brush::Get_By_Index(int Index)
+{
+	App->Get_Current_Document();
+
+	int Count = 0;
+	int Result = 1;
+	Brush* b;
+
+	Level* pLevel = App->m_pDoc->pLevel;
+	BrushList* pList = Level_GetBrushes(App->m_pDoc->pLevel);
+
+	b = pList->First;
+	while (b != NULL)
+	{
+		if (Count == Index)
+		{
+			return b;
+		}
+
+		Count++;
+
+		b = b->Next;
+	}
+
+	return NULL;
+}
+
 #include "FaceList.h"
 typedef Gint16 geBody_Index;
 // *************************************************************************
