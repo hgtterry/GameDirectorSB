@@ -41,6 +41,5 @@ public:
 	int Brush_Count;
 
 	char BrushName[MAX_PATH];
-
 };
 

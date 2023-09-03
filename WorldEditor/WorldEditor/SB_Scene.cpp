@@ -389,11 +389,10 @@ bool SB_Scene::FaceList_Export(const Brush* b, const FaceList* pList, int BrushC
 	bool test =App->CLSB_Model->B_XBrush[BrushCount]->Create_Brush(SubBrushChange);
 	if (test == 0)
 	{
-		App->Message_ToFile(b->Name, "create sub Brush");
 		App->Say("Cant create sub Brush");
 	}
 
-	App->Message_ToFile(b->Name, "create sub Brush");
+	App->Message_ToFile(b->Name, "created sub Brush");
 
 	int i, j, k, num_faces, num_verts, num_mats, num_chars, curnum_verts;
 	char matname[MAX_PATH];

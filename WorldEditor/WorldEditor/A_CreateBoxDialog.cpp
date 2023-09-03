@@ -39,6 +39,10 @@ A_CreateBoxDialog::A_CreateBoxDialog(void)
 
 	m_UseCamPos = 0;
 
+	Solid_Flag = 1;
+	Hollow_Flag = 0;
+	Cut_Flag = 0;
+
 	strcpy(BoxName,"Box");
 }
 
@@ -70,11 +74,36 @@ LRESULT CALLBACK A_CreateBoxDialog::CreateBox_Proc(HWND hDlg, UINT message, WPAR
 	{
 	case WM_INITDIALOG:
 	{
+		SendDlgItemMessage(hDlg, IDC_STBOTTOM, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STBOTX, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STBOTZ, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_XSIZEBOT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ZSIZEBOT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
+		SendDlgItemMessage(hDlg, IDC_STTOP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STTOPX, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STZTOP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_XSIZETOP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_ZSIZETOP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
+		SendDlgItemMessage(hDlg, IDC_BT_BOXSOLID, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_BOXHOLLOW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_BOXCUTBRUSH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_STGENERAL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STYSIZE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_STWALL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_YSIZE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_THICKNESS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+	
+		SendDlgItemMessage(hDlg, IDC_STNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_EDITNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		App->CL_CreateBoxDialog->Set_Members();
 		App->CL_CreateBoxDialog->Set_DLG_Members(hDlg);
+		App->CL_CreateBoxDialog->Set_Defaults(hDlg);
 
-		SetDlgItemText(hDlg, IDC_EDITNAME, (LPCTSTR)"Box");
+		SetDlgItemText(hDlg, IDC_EDITNAME, (LPCTSTR)"Box3");
 
 		
 		HWND Temp = GetDlgItem(hDlg, IDC_PICTURE);
@@ -256,103 +285,182 @@ LRESULT CALLBACK A_CreateBoxDialog::CreateBox_Proc(HWND hDlg, UINT message, WPAR
 		return (LONG)App->AppBackground;
 	}
 
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDC_BT_BOXSOLID && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_CreateBoxDialog->Solid_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_BOXHOLLOW && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_CreateBoxDialog->Hollow_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_BOXCUTBRUSH && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CL_CreateBoxDialog->Cut_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
 	case WM_COMMAND:
+	{
+
+		if (LOWORD(wParam) == IDC_BT_BOXSOLID)
+		{
+			HWND Temp = GetDlgItem(hDlg, IDC_PICTURE);
+			SendMessage(Temp, STM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_SolidBox_Bmp);
+
+			App->CL_CreateBoxDialog->Zero_Dlg_Flags(hDlg);
+			App->CL_CreateBoxDialog->m_Solid = 0;
+			App->CL_CreateBoxDialog->Solid_Flag = 1;
+
+			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_BOXHOLLOW)
+		{
+			HWND Temp = GetDlgItem(hDlg, IDC_PICTURE);
+			SendMessage(Temp, STM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HollowBox_Bmp);
+			
+			App->CL_CreateBoxDialog->Zero_Dlg_Flags(hDlg);
+			App->CL_CreateBoxDialog->m_Solid = 1;
+			App->CL_CreateBoxDialog->Hollow_Flag = 1;
+
+			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_BOXCUTBRUSH)
 		{
 
-			if (LOWORD(wParam) == IDC_CKWORLDCENTRE)
+			if (App->CL_CreateBoxDialog->Cut_Flag == 0)
 			{
-				HWND temp = GetDlgItem(hDlg, IDC_CKWORLDCENTRE);
-				SendMessage(temp,BM_SETCHECK,1,0);
+				//App->CL_CreateBoxDialog->Zero_Dlg_Flags(hDlg);
+				App->CL_CreateBoxDialog->m_TCut = 1;
+				App->CL_CreateBoxDialog->Cut_Flag = 1;
 
-				temp = GetDlgItem(hDlg, IDC_CKCAMPOSITION);
-				SendMessage(temp,BM_SETCHECK,0,0);
+				RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+				return 1;
+			}
+			else
+			{
+				//App->CL_CreateBoxDialog->Zero_Dlg_Flags(hDlg);
+				App->CL_CreateBoxDialog->m_TCut = 0;
+				App->CL_CreateBoxDialog->Cut_Flag = 0;
 
-				App->CL_CreateBoxDialog->m_UseCamPos = 0;
-				return TRUE;
+				RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+				return 1;
 			}
 
-			if (LOWORD(wParam) == IDC_CKCAMPOSITION)
-			{
-				HWND temp = GetDlgItem(hDlg, IDC_CKCAMPOSITION);
-				SendMessage(temp,BM_SETCHECK,1,0);
-
-				temp = GetDlgItem(hDlg, IDC_CKWORLDCENTRE);
-				SendMessage(temp,BM_SETCHECK,0,0);
-
-				App->CL_CreateBoxDialog->m_UseCamPos = 1;
-				return TRUE;
-			}
-
-			if (LOWORD(wParam) == IDC_HOLLOW)
-			{
-				HWND Temp = GetDlgItem(hDlg, IDC_PICTURE);
-				SendMessage(Temp, STM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HollowBox_Bmp);
-				App->CL_CreateBoxDialog->m_Solid = 1;
-
-				return TRUE;
-			}
-
-			if (LOWORD(wParam) == IDC_SOLID)
-			{
-				HWND Temp = GetDlgItem(hDlg, IDC_PICTURE);
-				SendMessage(Temp, STM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_SolidBox_Bmp);
-
-				App->CL_CreateBoxDialog->m_Solid = 0;
-
-				return TRUE;
-			}
-
-			if (LOWORD(wParam) == IDC_TCUT)
-			{
-				HWND temp = GetDlgItem(hDlg, IDC_TCUT);
-
-				int test = SendMessage(temp, BM_GETCHECK, 0, 0);
-				if (test == BST_CHECKED)
-				{
-					App->CL_CreateBoxDialog->m_TCut = 1;
-					return 1;
-				}
-				else
-				{
-					App->CL_CreateBoxDialog->m_TCut = 0;
-					return 1;
-				}
-
-				return TRUE;
-			}
-
-			if (LOWORD(wParam) == IDC_Defaults)
-			{
-				App->CL_CreateBoxDialog->Set_Defaults(hDlg);
-				return TRUE;
-			}
-
-			// -----------------------------------------------------------------
-			if (LOWORD(wParam) == IDOK)
-			{
-
-				App->CL_CreateBoxDialog->Get_DLG_Members(hDlg);
-				App->CL_CreateBoxDialog->Set_BoxTemplate(); 
-				App->CL_CreateBoxDialog->CreateCube();
-
-				App->CL_TabsControl->Enable_Tabs_Dlg(true);
-				App->CL_TabsTemplates_Dlg->Enable_Insert_Button(true);
-
-				EndDialog(hDlg, LOWORD(wParam));
-				return TRUE;
-
-			}
-
-			if (LOWORD(wParam) == IDCANCEL)
-			{
-				App->CL_TabsControl->Enable_Tabs_Dlg(true);
-				EndDialog(hDlg, LOWORD(wParam));
-				return TRUE;
-
-			}
-
-			break;
+			return TRUE;
 		}
+
+		if (LOWORD(wParam) == IDC_CKWORLDCENTRE)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CKWORLDCENTRE);
+			SendMessage(temp, BM_SETCHECK, 1, 0);
+
+			temp = GetDlgItem(hDlg, IDC_CKCAMPOSITION);
+			SendMessage(temp, BM_SETCHECK, 0, 0);
+
+			App->CL_CreateBoxDialog->m_UseCamPos = 0;
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_CKCAMPOSITION)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CKCAMPOSITION);
+			SendMessage(temp, BM_SETCHECK, 1, 0);
+
+			temp = GetDlgItem(hDlg, IDC_CKWORLDCENTRE);
+			SendMessage(temp, BM_SETCHECK, 0, 0);
+
+			App->CL_CreateBoxDialog->m_UseCamPos = 1;
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_HOLLOW)
+		{
+			HWND Temp = GetDlgItem(hDlg, IDC_PICTURE);
+			SendMessage(Temp, STM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HollowBox_Bmp);
+			App->CL_CreateBoxDialog->m_Solid = 1;
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_SOLID)
+		{
+			HWND Temp = GetDlgItem(hDlg, IDC_PICTURE);
+			SendMessage(Temp, STM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_SolidBox_Bmp);
+
+			App->CL_CreateBoxDialog->m_Solid = 0;
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_TCUT)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_TCUT);
+
+			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
+			if (test == BST_CHECKED)
+			{
+				App->CL_CreateBoxDialog->m_TCut = 1;
+				return 1;
+			}
+			else
+			{
+				App->CL_CreateBoxDialog->m_TCut = 0;
+				return 1;
+			}
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_Defaults)
+		{
+			App->CL_CreateBoxDialog->Set_Defaults(hDlg);
+			return TRUE;
+		}
+
+		// -----------------------------------------------------------------
+		if (LOWORD(wParam) == IDOK)
+		{
+
+			App->CL_CreateBoxDialog->Get_DLG_Members(hDlg);
+			App->CL_CreateBoxDialog->Set_BoxTemplate();
+			App->CL_CreateBoxDialog->CreateCube();
+
+			App->CL_TabsControl->Enable_Tabs_Dlg(true);
+			App->CL_TabsTemplates_Dlg->Enable_Insert_Button(true);
+
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			App->CL_TabsControl->Enable_Tabs_Dlg(true);
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+
+		}
+
+		break;
+	}
 	}
 	return FALSE;
 }
@@ -601,5 +709,16 @@ void A_CreateBoxDialog::CreateDefault_TemplateCube()
 	{
 		App->Say("No pCube");
 	}
+}
 
+// *************************************************************************
+// *			Zero_Dlg_Flags:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void A_CreateBoxDialog::Zero_Dlg_Flags(HWND hDlg)
+{
+
+	Solid_Flag = 0;
+	Hollow_Flag = 0;
+
+	RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }

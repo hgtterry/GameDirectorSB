@@ -819,6 +819,9 @@
 #define IDC_FACELIST                    1529
 #define IDC_LISTFACEPROPERTIES          1530
 #define IDC_BT_ETEST                    1531
+#define IDC_BT_BOXSOLID                 1532
+#define IDC_BT_BOXHOLLOW                1533
+#define IDC_BT_BOXCUTBRUSH              1534
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772
 #define ID_BRUSH_PRIMITIVES_SPHEROID    32773
@@ -1031,9 +1034,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        333
+#define _APS_NEXT_RESOURCE_VALUE        334
 #define _APS_NEXT_COMMAND_VALUE         33091
-#define _APS_NEXT_CONTROL_VALUE         1532
+#define _APS_NEXT_CONTROL_VALUE         1535
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

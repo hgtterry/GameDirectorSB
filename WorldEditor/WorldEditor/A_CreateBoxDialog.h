@@ -63,6 +63,11 @@ private:
 	void Set_Defaults(HWND hDlg);
 
 	void CreateNewTemplateBrush(Brush *pBrush);
+	void Zero_Dlg_Flags(HWND hDlg);
+
+	bool Solid_Flag;
+	bool Hollow_Flag;
+	bool Cut_Flag;
 
 	char BoxName[MAX_PATH];
 };
