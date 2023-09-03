@@ -862,7 +862,10 @@ LRESULT CALLBACK SB_TopTabs::Top_Faces_Proc(HWND hDlg, UINT message, WPARAM wPar
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_BT_TT_ALL_BRUSH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BTFACENEXT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BTFACEPREVIOUS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+		
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
@@ -886,6 +889,20 @@ LRESULT CALLBACK SB_TopTabs::Top_Faces_Proc(HWND hDlg, UINT message, WPARAM wPar
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BTFACENEXT && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BTFACEPREVIOUS && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
 		return CDRF_DODEFAULT;
 	}
 
@@ -897,6 +914,35 @@ LRESULT CALLBACK SB_TopTabs::Top_Faces_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 			App->m_pDoc->SelectAllFacesInBrushes();
 			App->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BTFACENEXT)
+		{
+			App->Get_Current_Document();
+
+			CFusionView* pView;
+			POSITION		pos;
+			pos = App->m_pDoc->GetFirstViewPosition();
+
+			pView = (CFusionView*)App->m_pDoc->GetNextView(pos);
+
+			pView->OnEditSelectFacesNext();
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BTFACEPREVIOUS)
+		{
+			App->Get_Current_Document();
+
+			CFusionView* pView;
+			POSITION		pos;
+			pos = App->m_pDoc->GetFirstViewPosition();
+
+			pView = (CFusionView*)App->m_pDoc->GetNextView(pos);
+
+			pView->OnEditSelectFacesPrevious();
 			return TRUE;
 		}
 	}

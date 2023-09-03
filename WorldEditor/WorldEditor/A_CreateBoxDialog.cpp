@@ -105,11 +105,15 @@ LRESULT CALLBACK A_CreateBoxDialog::CreateBox_Proc(HWND hDlg, UINT message, WPAR
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
+		SendDlgItemMessage(hDlg, IDC_STCAMPOS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CKWORLDCENTRE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CKCAMPOSITION, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		App->CL_CreateBoxDialog->Set_Members();
 		App->CL_CreateBoxDialog->Set_DLG_Members(hDlg);
 		App->CL_CreateBoxDialog->Set_Defaults(hDlg);
 
-		int Count = App->CL_Brush->Get_Brush_Count();
+		int Count = App->CL_Brush->Get_Brush_Count()+1;
 		char Num[32];
 		char Name[32];
 		itoa(Count, Num, 10);
@@ -162,22 +166,6 @@ LRESULT CALLBACK A_CreateBoxDialog::CreateBox_Proc(HWND hDlg, UINT message, WPAR
 		}
 
 		if (GetDlgItem(hDlg, IDC_STGENERAL) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}
-
-		if (GetDlgItem(hDlg, IDC_TCUT) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}
-
-		if (GetDlgItem(hDlg, IDC_TSHEET) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -393,25 +381,6 @@ LRESULT CALLBACK A_CreateBoxDialog::CreateBox_Proc(HWND hDlg, UINT message, WPAR
 			return TRUE;
 		}
 
-		if (LOWORD(wParam) == IDC_TCUT)
-		{
-			HWND temp = GetDlgItem(hDlg, IDC_TCUT);
-
-			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
-			if (test == BST_CHECKED)
-			{
-				App->CL_CreateBoxDialog->m_TCut = 1;
-				return 1;
-			}
-			else
-			{
-				App->CL_CreateBoxDialog->m_TCut = 0;
-				return 1;
-			}
-
-			return TRUE;
-		}
-
 		if (LOWORD(wParam) == IDC_BOXDEFAULTS)
 		{
 			App->CL_CreateBoxDialog->Set_Defaults(hDlg);
@@ -464,7 +433,8 @@ void A_CreateBoxDialog::CreateCube()
 	App->m_pDoc->OnToolsTemplate();
 
 	Brush *pCube;
-	pCube = BrushTemplate_CreateBox (pBoxTemplate);
+	pCube = BrushTemplate_CreateBox(pBoxTemplate);
+	//pCube = BrushTemplate_BoxReverseTexture(pBoxTemplate);
 	if (pCube != NULL)
 	{
 		App->m_pDoc->LastTemplateTypeName = BoxName;
@@ -570,16 +540,6 @@ void A_CreateBoxDialog::Set_DLG_Members(HWND hDlg)
 
 	sprintf(buf, "%0.0f", m_Thickness);
 	SetDlgItemText(hDlg, IDC_THICKNESS, (LPCTSTR)buf);
-
-	HWND temp = GetDlgItem(hDlg, IDC_TCUT);
-	if (m_TCut == 1)
-	{
-		SendMessage(temp,BM_SETCHECK,1,0);
-	}
-	else
-	{
-		SendMessage(temp,BM_SETCHECK,0,0);
-	}
 }
 
 // *************************************************************************
@@ -654,6 +614,9 @@ void A_CreateBoxDialog::Set_Defaults(HWND hDlg)
 	App->CL_CreateBoxDialog->m_TCut = 0;
 	App->CL_CreateBoxDialog->Cut_Flag = 0;
 
+	HWND Temp = GetDlgItem(hDlg, IDC_PICTURE);
+	SendMessage(Temp, STM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_SolidBox_Bmp);
+
 	RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 
@@ -681,6 +644,9 @@ void A_CreateBoxDialog::Set_Room(HWND hDlg)
 
 	App->CL_CreateBoxDialog->m_TCut = 0;
 	App->CL_CreateBoxDialog->Cut_Flag = 0;
+
+	HWND Temp = GetDlgItem(hDlg, IDC_PICTURE);
+	SendMessage(Temp, STM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HollowBox_Bmp);
 
 	RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }

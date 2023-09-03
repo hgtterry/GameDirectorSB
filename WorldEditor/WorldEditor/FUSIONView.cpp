@@ -2563,7 +2563,9 @@ void CFusionView::OnEditSelectFacesNext()
 			pFace = SelFaceList_GetFace (pDoc->pSelFaces, nSelectedFaces-1);
 			// Remove all face selections
 			if (!(IsKeyDown(VK_SHIFT)))
-				pDoc->ResetAllSelectedFaces ();
+			{
+				pDoc->ResetAllSelectedFaces();
+			}
 
 			Face_SetSelected (pFace, GE_TRUE);
 			pBrush = BrushList_FindTopLevelFaceParent (Level_GetBrushes (pDoc->pLevel), pFace);
@@ -2582,7 +2584,7 @@ void CFusionView::OnEditSelectFacesNext()
 		SelFaceList_Add (pDoc->pSelFaces, pFace);
 		pDoc->UpdateSelected ();
 							
-		pDoc->UpdateFaceAttributesDlg ();
+		//pDoc->UpdateFaceAttributesDlg ();
 		pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 	}
 }
@@ -2614,7 +2616,9 @@ void CFusionView::OnEditSelectFacesPrevious()
 
 			// Remove all face selections
 			if (!(IsKeyDown(VK_SHIFT)))
-				pDoc->ResetAllSelectedFaces ();
+			{
+				pDoc->ResetAllSelectedFaces();
+			}
 
 			// Select the next face in order, using selected brush list...
 			pBrush = BrushList_FindTopLevelFaceParent (Level_GetBrushes (pDoc->pLevel), pFace);
@@ -2634,7 +2638,7 @@ void CFusionView::OnEditSelectFacesPrevious()
 		SelFaceList_Add (pDoc->pSelFaces, pFace);
 		pDoc->UpdateSelected ();
 							
-		pDoc->UpdateFaceAttributesDlg ();
+		//pDoc->UpdateFaceAttributesDlg ();
 		pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 	}
 

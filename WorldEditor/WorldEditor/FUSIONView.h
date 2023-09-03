@@ -147,8 +147,10 @@ protected:
 	afx_msg void OnUpdateViewZoomout(CCmdUI* pCmdUI);
 	afx_msg void OnCenterthing();
 	afx_msg void OnUpdateCenterthing(CCmdUI* pCmdUI);
+	public:
 	afx_msg void OnEditSelectFacesNext();
 	afx_msg void OnEditSelectFacesPrevious();
+	protected:
 	afx_msg void OnEditSelectFacesAllinselectedbrushes();
 	afx_msg void OnEditSelectEntitiesAll();
 	afx_msg void OnEditSelectEntitiesNext();

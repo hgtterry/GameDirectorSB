@@ -600,6 +600,8 @@
 #define IDC_TBINFO2                     1364
 #define IDC_CKVERYSLOW                  1364
 #define IDC_BT_LOWERRIGHT               1364
+#define IDC_BUTTON8                     1364
+#define IDC_BTFACEPREVIOUS              1364
 #define IDC_STTEXT                      1365
 #define IDC_GD_SPHEROID_PRIMITIVE       1365
 #define IDC_BT_FOLDER_NAME              1365
@@ -824,6 +826,7 @@
 #define IDC_BT_BOXHOLLOW                1533
 #define IDC_BT_BOXCUTBRUSH              1534
 #define IDC_BOXDEFAULTS                 1535
+#define IDC_BTFACENEXT                  1536
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772
 #define ID_BRUSH_PRIMITIVES_SPHEROID    32773
@@ -1038,7 +1041,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        334
 #define _APS_NEXT_COMMAND_VALUE         33091
-#define _APS_NEXT_CONTROL_VALUE         1536
+#define _APS_NEXT_CONTROL_VALUE         1537
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

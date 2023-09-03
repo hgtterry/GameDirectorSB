@@ -808,6 +808,146 @@ Brush *BrushTemplate_CreateArch (const BrushTemplate_Arch *pTemplate)
 	return	b;
 }
 
+Brush* BrushTemplate_BoxReverseTexture(const BrushTemplate_Box* pTemplate)
+{
+	//revisit for error handling when merged
+	geVec3d		Verts[8];
+	geVec3d		FaceVerts[4];
+	FaceList* fl;
+	Face* f;
+	Brush* b;
+
+	fl = FaceList_Create(6);
+
+	// Vertices 0 to 3 are the 4 corners of the top face
+	geVec3d_Set(&Verts[0], (float)-(pTemplate->XSizeTop / 2), (float)(pTemplate->YSize / 2), (float)-(pTemplate->ZSizeTop / 2));
+	geVec3d_Set(&Verts[1], (float)-(pTemplate->XSizeTop / 2), (float)(pTemplate->YSize / 2), (float)(pTemplate->ZSizeTop / 2));
+	geVec3d_Set(&Verts[2], (float)(pTemplate->XSizeTop / 2), (float)(pTemplate->YSize / 2), (float)(pTemplate->ZSizeTop / 2));
+	geVec3d_Set(&Verts[3], (float)(pTemplate->XSizeTop / 2), (float)(pTemplate->YSize / 2), (float)-(pTemplate->ZSizeTop / 2));
+
+	// Vertices 4 to 7 are the 4 corners of the bottom face
+	geVec3d_Set(&Verts[4], (float)-(pTemplate->XSizeBot / 2), (float)-(pTemplate->YSize / 2), (float)-(pTemplate->ZSizeBot / 2));
+	geVec3d_Set(&Verts[5], (float)(pTemplate->XSizeBot / 2), (float)-(pTemplate->YSize / 2), (float)-(pTemplate->ZSizeBot / 2));
+	geVec3d_Set(&Verts[6], (float)(pTemplate->XSizeBot / 2), (float)-(pTemplate->YSize / 2), (float)(pTemplate->ZSizeBot / 2));
+	geVec3d_Set(&Verts[7], (float)-(pTemplate->XSizeBot / 2), (float)-(pTemplate->YSize / 2), (float)(pTemplate->ZSizeBot / 2));
+
+	FaceVerts[0] = Verts[0];
+	FaceVerts[1] = Verts[1];
+	FaceVerts[2] = Verts[2];
+	FaceVerts[3] = Verts[3];
+
+	f = Face_Create(4, FaceVerts, 0);
+	if (f)
+	{
+		FaceList_AddFace(fl, f);
+	}
+
+	FaceVerts[0] = Verts[4];
+	FaceVerts[1] = Verts[5];
+	FaceVerts[2] = Verts[6];
+	FaceVerts[3] = Verts[7];
+
+	f = Face_Create(4, FaceVerts, 0);
+	if (f)
+	{
+		FaceList_AddFace(fl, f);
+	}
+
+	FaceVerts[0] = Verts[1];
+	FaceVerts[1] = Verts[7];
+	FaceVerts[2] = Verts[6];
+	FaceVerts[3] = Verts[2];
+
+	f = Face_Create(4, FaceVerts, 0);
+	if (f)
+	{
+		FaceList_AddFace(fl, f);
+	}
+
+	FaceVerts[0] = Verts[0];
+	FaceVerts[1] = Verts[3];
+	FaceVerts[2] = Verts[5];
+	FaceVerts[3] = Verts[4];
+
+	f = Face_Create(4, FaceVerts, 0);
+	if (f)
+	{
+		FaceList_AddFace(fl, f);
+	}
+
+	FaceVerts[0] = Verts[0];
+	FaceVerts[1] = Verts[4];
+	FaceVerts[2] = Verts[7];
+	FaceVerts[3] = Verts[1];
+
+	f = Face_Create(4, FaceVerts, 0);
+	if (f)
+	{
+		FaceList_AddFace(fl, f);
+	}
+
+	FaceVerts[0] = Verts[3];
+	FaceVerts[1] = Verts[2];
+	FaceVerts[2] = Verts[6];
+	FaceVerts[3] = Verts[5];
+
+	f = Face_Create(4, FaceVerts, 0);
+	if (f)
+	{
+		FaceList_AddFace(fl, f);
+	}
+
+	if (!pTemplate->Solid)
+	{
+		b = Brush_Create(BRUSH_LEAF, fl, 0);
+		if (b)
+		{
+			Brush_SetSubtract(b, pTemplate->TCut);
+			Brush_SetSheet(b, pTemplate->TSheet);
+		}
+		return	b;
+	}
+	else
+	{
+		// hollow brush
+		BrushList* bl = BrushList_Create();
+		Brush* bh, * bm;
+
+		b = Brush_Create(BRUSH_LEAF, fl, 0);
+		if (b)
+		{
+			Brush_SetHollow(b, GE_TRUE);
+			Brush_SetHullSize(b, (float)pTemplate->Thickness);
+			bh = Brush_CreateHollowFromBrush(b);
+			if (bh)
+			{
+				Brush_SetHollowCut(bh, GE_TRUE);
+				BrushList_Append(bl, b);
+				BrushList_Append(bl, bh);
+
+				bm = Brush_Create(BRUSH_MULTI, 0, bl);
+				if (bm)
+				{
+					Brush_SetHollow(bm, GE_TRUE);
+					Brush_SetSubtract(bm, pTemplate->TCut);
+					Brush_SetHullSize(bm, (float)pTemplate->Thickness);
+					return	bm;
+				}
+			}
+			else
+			{
+				Brush_Destroy(&b);
+				BrushList_Destroy(&bl);
+			}
+		}
+		else
+		{
+			BrushList_Destroy(&bl);
+		}
+	}
+
+	return	0;
+}
 
 Brush *BrushTemplate_CreateBox (const BrushTemplate_Box *pTemplate)
 {

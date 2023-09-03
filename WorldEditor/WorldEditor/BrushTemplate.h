@@ -123,6 +123,8 @@ Brush *BrushTemplate_CreateCylinder  (const BrushTemplate_Cylinder *Template);
 Brush *BrushTemplate_CreateSpheroid  (const BrushTemplate_Spheroid *Template);
 Brush *BrushTemplate_CreateStaircase (const BrushTemplate_Staircase *Template);
 
+Brush* BrushTemplate_BoxReverseTexture(const BrushTemplate_Box* pTemplate);
+
 void BrushTemplate_ArchDefaults (BrushTemplate_Arch *pArchTemplate);
 geBoolean BrushTemplate_WriteArch (const BrushTemplate_Arch *pArchTemplate, FILE *f);
 // changed QD 11/03
