@@ -61,6 +61,7 @@ private:
 	void Set_BoxTemplate();
 
 	void Set_Defaults(HWND hDlg);
+	void Set_Room(HWND hDlg);
 
 	void CreateNewTemplateBrush(Brush *pBrush);
 	void Zero_Dlg_Flags(HWND hDlg);

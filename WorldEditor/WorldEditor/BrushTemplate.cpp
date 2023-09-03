@@ -837,6 +837,11 @@ Brush *BrushTemplate_CreateBox (const BrushTemplate_Box *pTemplate)
 	FaceVerts[1]	=Verts[2];
 	FaceVerts[0]	=Verts[3];
 
+	/*FaceVerts[0] = Verts[0];
+	FaceVerts[1] = Verts[1];
+	FaceVerts[2] = Verts[2];
+	FaceVerts[3] = Verts[3];*/
+
 	f	=Face_Create(4, FaceVerts, 0);
 	if(f)
 	{

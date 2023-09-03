@@ -99,28 +99,27 @@ LRESULT CALLBACK A_CreateBoxDialog::CreateBox_Proc(HWND hDlg, UINT message, WPAR
 		SendDlgItemMessage(hDlg, IDC_STNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_EDITNAME, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+		SendDlgItemMessage(hDlg, IDC_BOXDEFAULTS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_BOXROOM, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		App->CL_CreateBoxDialog->Set_Members();
 		App->CL_CreateBoxDialog->Set_DLG_Members(hDlg);
 		App->CL_CreateBoxDialog->Set_Defaults(hDlg);
 
-		SetDlgItemText(hDlg, IDC_EDITNAME, (LPCTSTR)"Box3");
+		int Count = App->CL_Brush->Get_Brush_Count();
+		char Num[32];
+		char Name[32];
+		itoa(Count, Num, 10);
+		strcpy(Name, "Box_");
+		strcat(Name, Num);
+
+		SetDlgItemText(hDlg, IDC_EDITNAME, (LPCTSTR)Name);
 
 		
 		HWND Temp = GetDlgItem(hDlg, IDC_PICTURE);
-
-		if(App->CL_CreateBoxDialog->m_Solid == 0)
-		{
-			SendMessage(Temp, STM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_SolidBox_Bmp);
-			HWND temp = GetDlgItem(hDlg,IDC_SOLID);
-			SendMessage(temp,BM_SETCHECK,1,0);
-		}
-		else
-		{
-			SendMessage(Temp, STM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HollowBox_Bmp);
-			HWND temp = GetDlgItem(hDlg,IDC_HOLLOW);
-			SendMessage(temp,BM_SETCHECK,1,0);
-		}
-
 
 		Temp = GetDlgItem(hDlg, IDC_CKWORLDCENTRE);
 		SendMessage(Temp,BM_SETCHECK,1,0);
@@ -163,30 +162,6 @@ LRESULT CALLBACK A_CreateBoxDialog::CreateBox_Proc(HWND hDlg, UINT message, WPAR
 		}
 
 		if (GetDlgItem(hDlg, IDC_STGENERAL) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}
-
-		if (GetDlgItem(hDlg, IDC_SOLID) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}
-
-		if (GetDlgItem(hDlg, IDC_SOLID) == (HWND)lParam)
-		{
-			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(0, 0, 0));
-			SetBkMode((HDC)wParam, TRANSPARENT);
-			return (UINT)App->AppBackground;
-		}
-
-		if (GetDlgItem(hDlg, IDC_HOLLOW) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
 			SetTextColor((HDC)wParam, RGB(0, 0, 0));
@@ -275,8 +250,6 @@ LRESULT CALLBACK A_CreateBoxDialog::CreateBox_Proc(HWND hDlg, UINT message, WPAR
 			return (UINT)App->AppBackground;
 		}
 
-
-		
 		return FALSE;
 	}
 
@@ -310,6 +283,35 @@ LRESULT CALLBACK A_CreateBoxDialog::CreateBox_Proc(HWND hDlg, UINT message, WPAR
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BOXDEFAULTS && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_BOXROOM && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+		
+		
 		return CDRF_DODEFAULT;
 	}
 
@@ -391,25 +393,6 @@ LRESULT CALLBACK A_CreateBoxDialog::CreateBox_Proc(HWND hDlg, UINT message, WPAR
 			return TRUE;
 		}
 
-		if (LOWORD(wParam) == IDC_HOLLOW)
-		{
-			HWND Temp = GetDlgItem(hDlg, IDC_PICTURE);
-			SendMessage(Temp, STM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HollowBox_Bmp);
-			App->CL_CreateBoxDialog->m_Solid = 1;
-
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == IDC_SOLID)
-		{
-			HWND Temp = GetDlgItem(hDlg, IDC_PICTURE);
-			SendMessage(Temp, STM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_SolidBox_Bmp);
-
-			App->CL_CreateBoxDialog->m_Solid = 0;
-
-			return TRUE;
-		}
-
 		if (LOWORD(wParam) == IDC_TCUT)
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_TCUT);
@@ -429,12 +412,18 @@ LRESULT CALLBACK A_CreateBoxDialog::CreateBox_Proc(HWND hDlg, UINT message, WPAR
 			return TRUE;
 		}
 
-		if (LOWORD(wParam) == IDC_Defaults)
+		if (LOWORD(wParam) == IDC_BOXDEFAULTS)
 		{
 			App->CL_CreateBoxDialog->Set_Defaults(hDlg);
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_BT_BOXROOM)
+		{
+			App->CL_CreateBoxDialog->Set_Room(hDlg);
+			return TRUE;
+		}
+		
 		// -----------------------------------------------------------------
 		if (LOWORD(wParam) == IDOK)
 		{
@@ -658,26 +647,42 @@ void A_CreateBoxDialog::Set_Defaults(HWND hDlg)
 
 	Set_DLG_Members(hDlg);
 
-	HWND Temp = GetDlgItem(hDlg, IDC_PICTURE);
+	App->CL_CreateBoxDialog->Zero_Dlg_Flags(hDlg);
+	App->CL_CreateBoxDialog->m_Solid = 0;
+	App->CL_CreateBoxDialog->Solid_Flag = 1;
 
-	if(m_Solid == 0)
-	{
-		SendMessage(Temp, STM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_SolidBox_Bmp);
-		HWND temp = GetDlgItem(hDlg,IDC_SOLID);
-		SendMessage(temp,BM_SETCHECK,1,0);
+	App->CL_CreateBoxDialog->m_TCut = 0;
+	App->CL_CreateBoxDialog->Cut_Flag = 0;
 
-		temp = GetDlgItem(hDlg,IDC_HOLLOW);
-		SendMessage(temp,BM_SETCHECK,0,0);
-	}
-	else
-	{
-		SendMessage(Temp, STM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_HollowBox_Bmp);
-		HWND temp = GetDlgItem(hDlg,IDC_HOLLOW);
-		SendMessage(temp,BM_SETCHECK,1,0);
+	RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+}
 
-		temp = GetDlgItem(hDlg,IDC_SOLID);
-		SendMessage(temp,BM_SETCHECK,0,0);
-	}
+// *************************************************************************
+// *	    		Set_Room:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void A_CreateBoxDialog::Set_Room(HWND hDlg)
+{
+	m_YSize = 360.0f;
+	m_Solid = 1;
+	m_XSizeBot = 680.0f;
+	m_XSizeTop = 680.0f;
+	m_ZSizeBot = 560.0f;
+	m_ZSizeTop = 560.0f;
+	m_TCut = false;
+	m_Thickness = 16.0f;
+	m_TSheet = false;
+
+	Set_DLG_Members(hDlg);
+
+	App->CL_CreateBoxDialog->Zero_Dlg_Flags(hDlg);
+	App->CL_CreateBoxDialog->m_Solid = 1;
+	App->CL_CreateBoxDialog->Solid_Flag = 0;
+	App->CL_CreateBoxDialog->Hollow_Flag = 1;
+
+	App->CL_CreateBoxDialog->m_TCut = 0;
+	App->CL_CreateBoxDialog->Cut_Flag = 0;
+
+	RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 }
 
 // *************************************************************************
