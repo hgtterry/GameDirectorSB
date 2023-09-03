@@ -580,6 +580,7 @@ void CFusionView::OnMouseMove (UINT nFlags, CPoint point) // hgtterry OnMouseMov
 	POINT		RealCursorPosition;
 
 	pDoc	=GetDocument();
+
 	ThisIsCaptured = (this == GetCapture ());
 	ModeTool = GetModeTool ();
 	Tool		= GetTool ();
@@ -610,7 +611,16 @@ void CFusionView::OnMouseMove (UINT nFlags, CPoint point) // hgtterry OnMouseMov
 	  really interested is the current state, so we can throw out old messages.
 	*/
 	ShiftHeld = IsKeyDown (VK_SHIFT);
-	ControlHeld = 1;// IsKeyDown(VK_CONTROL);
+
+	if (mViewIs3d)
+	{
+		ControlHeld = 1;
+	}
+	else
+	{
+		ControlHeld = IsKeyDown(VK_CONTROL);
+	}
+	
 	LButtonIsDown = LMouseButtonDown;//IsKeyDown (VK_LBUTTON);
 	RButtonIsDown = RMouseButtonDown;//IsKeyDown (VK_RBUTTON);
 	//SpaceHeld	= IsKeyDown (VK_SPACE);
