@@ -25,7 +25,7 @@ public:
 	Base_XBrush(void);
 	~Base_XBrush(void);
 
-	void Create_Brush(int Index);
+	bool Create_Brush(int Index);
 
 	Brush_type* B_Brush[112000];
 

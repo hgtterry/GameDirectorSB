@@ -140,16 +140,22 @@ void SB_Model::Create_Mesh_Group(int Index)
 // *************************************************************************
 void SB_Model::Create_XBrush(int Index)
 {
-	if (B_XBrush[Index] != nullptr)
+	if (B_XBrush[Index] != NULL)
 	{
 		delete B_XBrush[Index];
-		B_XBrush[Index] = nullptr;
+		B_XBrush[Index] = NULL;
 	}
 
+	B_XBrush[Index] = NULL;
 	B_XBrush[Index] = new Base_XBrush();
+	if (B_XBrush[Index] == NULL)
+	{
+		App->Say("Cant create Brush");
+	}
 
-	//B_Brush[Index]->Vertice_Count = 0;
-	//B_Brush[Index]->Face_Count = 0;
+	B_XBrush[Index]->Vertice_Count = 0;
+	B_XBrush[Index]->Face_Count = 0;
+
 }
 
 // *************************************************************************

@@ -288,9 +288,11 @@ bool SB_Scene::BrushList_Export(BrushList* BList, geBoolean SubBrush)
 
 	while (pBrush != NULL)
 	{
-		
+		//App->Message_ToFile(pBrush->Name);
+
 		if (!Brush_Export(pBrush))
 		{
+			App->Say("Cant Convert Brush");
 			return GE_FALSE;
 		}
 
@@ -326,15 +328,13 @@ bool SB_Scene::BrushList_Export(BrushList* BList, geBoolean SubBrush)
 // *************************************************************************
 bool SB_Scene::Brush_Export(const Brush* b)
 {
-	assert(ofile);
-	assert(b);
-
+	
 	switch (b->Type)
 	{
-	case	BRUSH_MULTI:
+	case BRUSH_MULTI:
 		return BrushList_Export(b->BList, GE_TRUE);
 
-	case	BRUSH_LEAF:
+	case BRUSH_LEAF:
 		if (b->BList)
 		{
 			return BrushList_Export(b->BList, GE_TRUE);
@@ -343,6 +343,7 @@ bool SB_Scene::Brush_Export(const Brush* b)
 		{
 			if (!(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT | BRUSH_SUBTRACT)))
 			{
+				App->Message_ToFile(b->Name,"BRUSH_LEAF");
 				return FaceList_Export(b, b->Faces, BrushCount, SubBrushCount);
 			}
 			else if ((b->Flags & BRUSH_SUBTRACT) && !(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT)))
@@ -352,14 +353,19 @@ bool SB_Scene::Brush_Export(const Brush* b)
 		}
 		break;
 
-
-	case	BRUSH_CSG:
+	case BRUSH_CSG:
 		if (!(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT | BRUSH_SUBTRACT)))
+		{
+			App->Message_ToFile(b->Name,"BRUSH_CSG");
 			return FaceList_Export(b, b->Faces, BrushCount, SubBrushCount);
+		}
 		break;
 	default:
+	{
 		assert(0);		// invalid brush type
 		break;
+	}
+
 	}
 
 	return GE_TRUE;
@@ -373,13 +379,22 @@ bool SB_Scene::FaceList_Export(const Brush* b, const FaceList* pList, int BrushC
 	if (BrushCount > BrushChange)
 	{
 		App->CLSB_Model->Create_XBrush(BrushCount);
+		App->Message_ToFile(b->Name, "Brush Created");
+
 		App->CLSB_Model->XBrushCount = BrushCount+1;
 		BrushChange = BrushCount;
 		SubBrushChange = 0;
 	}
 
-	App->CLSB_Model->B_XBrush[BrushCount]->Create_Brush(SubBrushChange);
-	
+	bool test =App->CLSB_Model->B_XBrush[BrushCount]->Create_Brush(SubBrushChange);
+	if (test == 0)
+	{
+		App->Message_ToFile(b->Name, "create sub Brush");
+		App->Say("Cant create sub Brush");
+	}
+
+	App->Message_ToFile(b->Name, "create sub Brush");
+
 	int i, j, k, num_faces, num_verts, num_mats, num_chars, curnum_verts;
 	char matname[MAX_PATH];
 

@@ -435,12 +435,25 @@ void SB_App::Say_Vector3(Ogre::Vector3 Vector)
 // *************************************************************************
 // *			Message_ToFile:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-void SB_App::Message_ToFile(char* Message)
+void SB_App::Message_ToFile(char* Message, char* Message2)
 {
 	if (App->Debug_App == 1)
 	{
+		char text[MAX_PATH];
+		strcpy(text, Message);
+
+		if (Message2 == NULL)
+		{
+			
+		}
+		else
+		{
+			strcat(text, " ");
+			strcat(text, Message2);
+		}
+
 		Ogre::LogManager::getSingleton().setDefaultLog(Ogre::LogManager::getSingleton().getLog("App.log"));
-		Ogre::LogManager::getSingleton().logMessage(Message);
+		Ogre::LogManager::getSingleton().logMessage(text);
 		Ogre::LogManager::getSingleton().setDefaultLog(Ogre::LogManager::getSingleton().getLog("WWSB.log"));
 
 	}

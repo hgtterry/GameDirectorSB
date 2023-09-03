@@ -170,7 +170,7 @@ public:
 	void Say_Int(int Value);
 	void Say_Float(float Value);
 	void Say_Vector3(Ogre::Vector3 Vector);
-	void Message_ToFile(char* Message);
+	void Message_ToFile(char* Message, char* Message2 = NULL);
 	void Error_ToFile(char* Message, char* Message2 = NULL);
 	void Clear_ErrorLog();
 
