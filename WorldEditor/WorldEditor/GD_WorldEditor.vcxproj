@@ -201,6 +201,7 @@
     <ClCompile Include="SB_Panels.cpp" />
     <ClCompile Include="SB_Player.cpp" />
     <ClCompile Include="SB_Preferences.cpp" />
+    <ClCompile Include="SB_Properties.cpp" />
     <ClCompile Include="SB_RecentFiles.cpp" />
     <ClCompile Include="SB_Render.cpp" />
     <ClCompile Include="SB_Scene.cpp" />
@@ -291,6 +292,7 @@
     <ClInclude Include="SB_Panels.h" />
     <ClInclude Include="SB_Player.h" />
     <ClInclude Include="SB_Preferences.h" />
+    <ClInclude Include="SB_Properties.h" />
     <ClInclude Include="SB_RecentFiles.h" />
     <ClInclude Include="SB_Render.h" />
     <ClInclude Include="SB_Scene.h" />

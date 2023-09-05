@@ -90,6 +90,7 @@ SB_App::SB_App()
 	CLSB_Player =				nullptr;
 
 	CLSB_FileView =				nullptr;
+	CLSB_Properties =			nullptr;
 
 	AppBackground = NULL;
 	BlackBrush =	NULL;
@@ -285,7 +286,8 @@ bool SB_App::InitApp(void)
 	CLSB_Player =					new SB_Player();
 
 	CLSB_FileView =					new SB_FileView();
-	
+	CLSB_Properties =				new SB_Properties;
+
 	InitCommonControls();
 
 	hInst =NULL;

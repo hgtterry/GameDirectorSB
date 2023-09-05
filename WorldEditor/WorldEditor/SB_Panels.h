@@ -30,5 +30,8 @@ public:
 	~SB_Panels();
 
 	void Centre_QC_Dialog();
+	void Move_FileView_Window(void);
+	void MovePhysicsView(void);
+	void Place_GlobalGroups(void);
 };
 

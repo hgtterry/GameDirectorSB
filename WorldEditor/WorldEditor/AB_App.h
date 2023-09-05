@@ -92,6 +92,7 @@ distribution.
 #include "SB_Player.h"
 
 #include "SB_FileView.h"
+#include "SB_Properties.h"
 //#include <stack>
 
 class SB_App
@@ -163,6 +164,7 @@ public:
 	SB_Player*					CLSB_Player;
 
 	SB_FileView*				CLSB_FileView;
+	SB_Properties*				CLSB_Properties;
 
 	bool InitApp(void);
 	void InitMFC(void);

@@ -581,9 +581,9 @@ void SB_ImGui::Physics_Console_Gui(void)
 		{
 			ImVec2 Size = ImGui::GetWindowSize();
 			Physics_PosX = 10;
-			Physics_PosY = ((float)App->CLSB_Ogre->OgreListener->View_Height) - (Size.y) - 50;
+			Physics_PosY = ((float)App->CLSB_Ogre->OgreListener->View_Height) - (Size.y) - 5;// 50;
 			ImGui::SetWindowPos("Physics_Console", ImVec2(Physics_PosX, Physics_PosY));
-
+			
 			Physics_Console_StartPos = 1;
 		}
 

@@ -120,13 +120,21 @@ void SB_Equity::Start_Equity_Dialog_New()
 
 		Start_Render_Buttons();
 		App->CLSB_TopTabs_Equity->Start_Tabs();
-		App->CLSB_FileView->Start_FileView();
+
+		
+		
 
 		EquitySB_Dialog_Created = 1;
 
 		App->CLSB_Ogre->RenderHwnd = App->ViewGLhWnd;
 
 		Resize_3DView();
+
+		App->CLSB_FileView->Start_FileView();
+		App->CLSB_Panels->Move_FileView_Window();
+		App->CLSB_Panels->MovePhysicsView();
+
+		App->CLSB_Properties->Start_GD_Properties();
 
 		Set_Mode_Equity();
 
@@ -163,10 +171,26 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 		return (LONG)App->AppBackground;
 	}
 
+	case WM_MOVING:
+	{
+		App->CLSB_Panels->Move_FileView_Window();
+		App->CLSB_Panels->MovePhysicsView();
+		App->CLSB_Panels->Place_GlobalGroups();
+
+		Root::getSingletonPtr()->renderOneFrame();
+		return 0;
+	}
+
 	case WM_SIZE:
 	{
 		App->CLSB_Equity->Resize_3DView();
+
+		App->CLSB_Panels->Move_FileView_Window();
+		App->CLSB_Panels->MovePhysicsView();
+		App->CLSB_Panels->Place_GlobalGroups();
+
 		Ogre::Root::getSingletonPtr()->renderOneFrame();
+
 	}break;
 
 	case WM_COMMAND:
@@ -382,6 +406,7 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 			}
 
 			ShowWindow(App->ListPanel, false);
+			ShowWindow(App->CLSB_Properties->Properties_Dlg_hWnd, false);
 
 			App->CLSB_Equity->Show_Equity_Dialog(false);
 			return TRUE;
@@ -1076,6 +1101,7 @@ void SB_Equity::Do_Equity()
 	App->CLSB_Model->Model_Loaded = 1;
 
 	ShowWindow(App->ListPanel, false);
+	ShowWindow(App->CLSB_Properties->Properties_Dlg_hWnd, false);
 
 	App->CLSB_Equity->Show_Equity_Dialog(true);
 }
@@ -1150,6 +1176,7 @@ void SB_Equity::Do_Preview_Selected()
 		App->CLSB_Model->Model_Type = Enums::LoadedFile_Brushes;
 
 		ShowWindow(App->ListPanel, false);
+		ShowWindow(App->CLSB_Properties->Properties_Dlg_hWnd, false);
 
 		App->CLSB_Equity->Show_Equity_Dialog(true);
 	}
@@ -1217,6 +1244,7 @@ void SB_Equity::Do_Preview_All()
 	App->CLSB_Model->Model_Type = Enums::LoadedFile_Brushes;
 
 	ShowWindow(App->ListPanel, true);
+	ShowWindow(App->CLSB_Properties->Properties_Dlg_hWnd, true);
 
 	App->CLSB_Equity->Show_Equity_Dialog(true);
 

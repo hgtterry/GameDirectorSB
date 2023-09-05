@@ -53,3 +53,57 @@ void SB_Panels::Centre_QC_Dialog()
 	SetWindowPos(App->CLSB_TopTabs->Top_Tabs_Hwnd, NULL, (MX-PX), Top + 100,
 		0, 0, SWP_NOSIZE | SWP_NOZORDER);
 }
+
+// *************************************************************************
+// *		Move_FileView_Window:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+void SB_Panels::Move_FileView_Window(void)
+{
+	POINT p = { 0 };
+
+	int Diff = MapWindowPoints(App->ViewGLhWnd, NULL, &p, 1);
+
+	int PosX = p.x;
+	int PosY = p.y;
+
+	SetWindowPos(App->ListPanel, NULL, PosX + 0, PosY + 5,
+		0, 0, SWP_NOSIZE | SWP_NOZORDER);
+
+}
+
+// *************************************************************************
+// *			MovePhysicsPanel:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_Panels::MovePhysicsView(void)
+{
+	if (App->CLSB_ImGui->Show_Physics_Console == 1)
+	{
+		App->CLSB_ImGui->Physics_Console_StartPos = 0;
+	}
+
+}
+
+// *************************************************************************
+// *			Place_GlobalGroups:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+void SB_Panels::Place_GlobalGroups(void)
+{
+	POINT p = { 0 };
+
+	int Diff = MapWindowPoints(App->ViewGLhWnd, NULL, &p, 1);
+
+	HDWP hdwp;
+
+	RECT rect;
+	GetWindowRect(App->ViewGLhWnd, &rect);
+
+	int widthX = rect.right - rect.left;
+	int heightY = rect.bottom - rect.top;
+
+	int PosX = p.x;
+	int PosY = p.y;
+
+	SetWindowPos(App->CLSB_Properties->Properties_Dlg_hWnd, NULL, p.x + widthX - 255, PosY + 5,
+		0, 0, SWP_NOSIZE | SWP_NOZORDER);
+
+}
