@@ -89,6 +89,8 @@ SB_App::SB_App()
 	CLSB_Bullet =				nullptr;
 	CLSB_Player =				nullptr;
 
+	CLSB_FileView =				nullptr;
+
 	AppBackground = NULL;
 	BlackBrush =	NULL;
 	Brush_White =	NULL;
@@ -281,6 +283,8 @@ bool SB_App::InitApp(void)
 	CLSB_Bullet =					new SB_Bullet();
 	CLSB_Player =					new SB_Player();
 
+	CLSB_FileView =					new SB_FileView();
+	
 	InitCommonControls();
 
 	hInst =NULL;

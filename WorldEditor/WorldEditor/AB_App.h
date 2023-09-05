@@ -90,6 +90,8 @@ distribution.
 
 #include "SB_Bullet.h"
 #include "SB_Player.h"
+
+#include "SB_FileView.h"
 //#include <stack>
 
 class SB_App
@@ -159,6 +161,8 @@ public:
 
 	SB_Bullet*					CLSB_Bullet;
 	SB_Player*					CLSB_Player;
+
+	SB_FileView*				CLSB_FileView;
 
 	bool InitApp(void);
 	void InitMFC(void);

@@ -187,6 +187,7 @@
     <ClCompile Include="SB_Export_Object.cpp" />
     <ClCompile Include="SB_Export_Ogre3D.cpp" />
     <ClCompile Include="SB_Export_World.cpp" />
+    <ClCompile Include="SB_FileView.cpp" />
     <ClCompile Include="SB_Genesis3D.cpp" />
     <ClCompile Include="SB_Grid.cpp" />
     <ClCompile Include="SB_ImGui.cpp" />
@@ -276,6 +277,7 @@
     <ClInclude Include="SB_Export_Object.h" />
     <ClInclude Include="SB_Export_Ogre3D.h" />
     <ClInclude Include="SB_Export_World.h" />
+    <ClInclude Include="SB_FileView.h" />
     <ClInclude Include="SB_Genesis3D.h" />
     <ClInclude Include="SB_Grid.h" />
     <ClInclude Include="SB_ImGui.h" />
