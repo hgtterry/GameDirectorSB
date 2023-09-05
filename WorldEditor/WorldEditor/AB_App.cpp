@@ -151,6 +151,7 @@ SB_App::SB_App()
 
 	MainHwnd = NULL;
 	ViewGLhWnd = NULL;
+	ListPanel = NULL;
 
 	Equity_Dlg_hWnd = NULL;
 
@@ -896,5 +897,16 @@ void SB_App::Wait_For_Key(int Delay)
 		App->Flash_Window();
 		Count++;
 	}
+}
+
+// *************************************************************************
+// *			Start_Dialogs:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void SB_App::Start_Dialogs()
+{
+	CLSB_TopTabs->Start_Headers_Tabs();
+	CL_TabsControl->Start_Tabs_Control_Dlg();
+	CLSB_ViewMgrDlg->Start_View_MgrDlg();
+
 }
 

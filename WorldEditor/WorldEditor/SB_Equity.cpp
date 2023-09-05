@@ -120,6 +120,7 @@ void SB_Equity::Start_Equity_Dialog_New()
 
 		Start_Render_Buttons();
 		App->CLSB_TopTabs_Equity->Start_Tabs();
+		App->CLSB_FileView->Start_FileView();
 
 		EquitySB_Dialog_Created = 1;
 
@@ -379,6 +380,8 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 				App->Get_Current_Document();
 				App->m_pDoc->OnCloseDocument();
 			}
+
+			ShowWindow(App->ListPanel, false);
 
 			App->CLSB_Equity->Show_Equity_Dialog(false);
 			return TRUE;
@@ -1071,6 +1074,9 @@ void SB_Equity::Do_Equity()
 	App->CLSB_Model->Model_Type = Enums::LoadedFile_Assimp;
 	App->CLSB_Ogre->RenderListener->ShowTextured = 1;
 	App->CLSB_Model->Model_Loaded = 1;
+
+	ShowWindow(App->ListPanel, false);
+
 	App->CLSB_Equity->Show_Equity_Dialog(true);
 }
 
@@ -1142,6 +1148,9 @@ void SB_Equity::Do_Preview_Selected()
 		App->CLSB_Ogre->RenderListener->ShowBrushes = 1;
 		App->CLSB_Ogre->RenderListener->ShowTextured = 1;
 		App->CLSB_Model->Model_Type = Enums::LoadedFile_Brushes;
+
+		ShowWindow(App->ListPanel, false);
+
 		App->CLSB_Equity->Show_Equity_Dialog(true);
 	}
 	else
@@ -1206,6 +1215,9 @@ void SB_Equity::Do_Preview_All()
 	App->CLSB_Ogre->RenderListener->ShowBrushes = 1;
 	App->CLSB_Ogre->RenderListener->ShowTextured = 1;
 	App->CLSB_Model->Model_Type = Enums::LoadedFile_Brushes;
+
+	ShowWindow(App->ListPanel, true);
+
 	App->CLSB_Equity->Show_Equity_Dialog(true);
 
 	//-----------------------------------------------------

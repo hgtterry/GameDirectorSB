@@ -170,6 +170,8 @@ public:
 	void SetBrushes_Fonts(void);
 	void LoadProgramResource(void);
 
+	void Start_Dialogs();
+
 	void Say(const char* Message, char* Message2 = NULL);
 	void Say_Int(int Value);
 	void Say_Float(float Value);
@@ -262,6 +264,7 @@ public:
 	HINSTANCE hInst;
 	HWND MainHwnd;
 	HWND ViewGLhWnd;
+	HWND ListPanel;
 	HMENU hMenu_WE;
 
 	HWND Equity_Dlg_hWnd;
