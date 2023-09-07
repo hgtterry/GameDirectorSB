@@ -289,10 +289,7 @@ bool SB_Scene::BrushList_Export(BrushList* BList, geBoolean SubBrush)
 	Brush* pBrush;
 	BrushIterator bi;
 
-	
-
 	pBrush = BrushList_GetFirst(BList, &bi);
-
 
 	while (pBrush != NULL)
 	{

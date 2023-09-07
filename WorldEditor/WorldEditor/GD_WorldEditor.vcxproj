@@ -100,7 +100,9 @@
     <ClCompile Include="array.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Test|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Base_Brush.cpp" />
+    <ClCompile Include="Base_Brush.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Test|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="Base_Player.cpp" />
     <ClCompile Include="Base_XBrush.cpp" />
     <ClCompile Include="box3d.c">

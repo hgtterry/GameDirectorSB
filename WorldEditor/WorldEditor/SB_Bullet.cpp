@@ -72,35 +72,43 @@ btBvhTriangleMeshShape* SB_Bullet::Create_Brush_Trimesh(int Index)
 	int Count = 0;
 	while (Count < BrushCount)
 	{
-		int A = 0;
-		int B = 0;
-		int C = 0;
-
-		int BrushLoop = 0;
-		int SubBrushCount = App->CLSB_Model->B_XBrush[Count]->Brush_Count;
-
-		while (BrushLoop < SubBrushCount)
+		bool test = strcmp(App->CLSB_Model->B_XBrush[Count]->BrushName, "XYZ");
+		if (App->Centre_Debug == 1 && test == 0)
 		{
-			int FaceCount = 0;
-			while (FaceCount < App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->Face_Count)
+
+		}
+		else
+		{
+
+			int A = 0;
+			int B = 0;
+			int C = 0;
+
+			int BrushLoop = 0;
+			int SubBrushCount = App->CLSB_Model->B_XBrush[Count]->Brush_Count;
+
+			while (BrushLoop < SubBrushCount)
 			{
-				A = App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->Face_Data[FaceCount].a;
-				B = App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->Face_Data[FaceCount].b;
-				C = App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->Face_Data[FaceCount].c;
+				int FaceCount = 0;
+				while (FaceCount < App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->Face_Count)
+				{
+					A = App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->Face_Data[FaceCount].a;
+					B = App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->Face_Data[FaceCount].b;
+					C = App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->Face_Data[FaceCount].c;
 
-				vert0.setValue(App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->vertex_Data[A].x, App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->vertex_Data[A].y, App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->vertex_Data[A].z);
-				vert1.setValue(App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->vertex_Data[B].x, App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->vertex_Data[B].y, App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->vertex_Data[B].z);
-				vert2.setValue(App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->vertex_Data[C].x, App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->vertex_Data[C].y, App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->vertex_Data[C].z);
+					vert0.setValue(App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->vertex_Data[A].x, App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->vertex_Data[A].y, App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->vertex_Data[A].z);
+					vert1.setValue(App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->vertex_Data[B].x, App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->vertex_Data[B].y, App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->vertex_Data[B].z);
+					vert2.setValue(App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->vertex_Data[C].x, App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->vertex_Data[C].y, App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->vertex_Data[C].z);
 
-				triMesh->addTriangle(vert0, vert1, vert2);
+					triMesh->addTriangle(vert0, vert1, vert2);
 
-				FaceCount++;
+					FaceCount++;
+				}
+
+				BrushLoop++;
 			}
-
-			BrushLoop++;
 		}
 		
-
 		Count++;
 	}
 
