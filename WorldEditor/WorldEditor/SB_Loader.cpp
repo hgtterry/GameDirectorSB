@@ -40,6 +40,7 @@ SB_Loader::SB_Loader(void)
 	NameCount = 0;
 
 	LoadError = 0;
+
 }
 
 SB_Loader::~SB_Loader(void)
@@ -206,6 +207,7 @@ void SB_Loader::Adjust()
 	}
 
 }
+
 
 // *************************************************************************
 // *		LoadTextures_TXL:- Terry and Hazel Flanigan 2023			   *

@@ -47,6 +47,9 @@ public:
 
 	void Physics_Console_Gui(void);
 
+	void Start_Dialog_Float(float Step, float StartValue, char* Banner);
+	void BackGround_Render_Loop(void);
+
 	bool Show_FPS;  // Show Frames Per Second [150122]
 	bool StartPos;  // Position FPS Frame Flag [150122]
 
@@ -67,10 +70,24 @@ public:
 	float Physics_PosY;
 	bool Physics_Console_StartPos;
 
+	// -------------- Float Dialog
+	bool Show_Dialog_Float;
+	float Float_Step;
+	bool Float_Canceld;
+	bool Float_StartPos;
+	float Float_PosX;
+	float Float_PosY;
+	float m_Dialog_Float;
+	float m_Dialog_Float_Copy;
+	char Float_Banner[MAX_PATH];
+	bool Float_Exit;
+
 protected:
 
 	void Load_Font(void);
 	void ImGui_Set_Colours(void);
+
+	void Dialog_Float(void);
 
 	ImFont* font0;
 	ImFont* font1;

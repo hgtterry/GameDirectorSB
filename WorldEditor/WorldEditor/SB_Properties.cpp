@@ -467,29 +467,31 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 	if (result == 0)
 	{
 
-		/*App->SBC_Gui_Dialogs->Start_Dialog_Float(1.0, App->SBC_Scene->B_Player[0]->Ground_speed / 100, "Ground Speed");
+		App->CLSB_ImGui->Start_Dialog_Float(1.0, App->CLSB_Model->B_Player[0]->Ground_speed / 100, "Ground Speed");
 
-		while (App->SBC_Gui_Dialogs->Show_Dialog_Float == 1)
+		while (App->CLSB_ImGui->Show_Dialog_Float == 1)
 		{
-			App->SBC_Gui_Dialogs->BackGround_Render_Loop();
+			App->CLSB_ImGui->BackGround_Render_Loop();
+			App->CLSB_Model->B_Player[0]->Ground_speed = App->CLSB_ImGui->m_Dialog_Float * 100;
 		}
 
-		if (App->SBC_Gui_Dialogs->Float_Canceld == 0)
+		if (App->CLSB_ImGui->Float_Canceld == 0)
 		{
-			App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
-			App->SBC_Scene->B_Player[0]->Ground_speed = App->SBC_Gui_Dialogs->m_Dialog_Float * 100;
+			App->CLSB_ImGui->Show_Dialog_Float = 0;
+			App->CLSB_Model->B_Player[0]->Ground_speed = App->CLSB_ImGui->m_Dialog_Float * 100;
 
-			App->SBC_Scene->B_Player[0]->Altered = 1;
-			App->SBC_Scene->Scene_Modified = 1;
-			App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);
+			App->CLSB_Model->B_Player[0]->Altered = 1;
+			//App->CLSB_Model->Scene_Modified = 1;
+			//App->SBC_FileView->Mark_Altered(App->CLSB_Model->B_Player[0]->FileViewItem);
 		}
 		else
 		{
-			App->SBC_Gui_Dialogs->m_Dialog_Float = App->SBC_Gui_Dialogs->m_Dialog_Float_Copy;
+			App->CLSB_ImGui->m_Dialog_Float = App->CLSB_ImGui->m_Dialog_Float_Copy * 100;
+			App->CLSB_Model->B_Player[0]->Ground_speed = App->CLSB_ImGui->m_Dialog_Float_Copy * 100;
 		}
 
-		App->Disable_Panels(false);
-		Update_ListView_Player();*/
+		//App->Disable_Panels(false);
+		Update_ListView_Player();
 
 		return 1;
 	}
@@ -524,38 +526,38 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 	result = strcmp(btext, "Player Height");
 	if (result == 0)
 	{
-		/*App->SBC_Gui_Dialogs->Start_Dialog_Float(0.10, App->SBC_Scene->B_Player[0]->PlayerHeight, "Player Height");
+		App->CLSB_ImGui->Start_Dialog_Float(0.10, App->CLSB_Model->B_Player[0]->PlayerHeight, "Player Height");
 
-		while (App->SBC_Gui_Dialogs->Show_Dialog_Float == 1)
+		while (App->CLSB_ImGui->Show_Dialog_Float == 1)
 		{
-			App->SBC_Gui_Dialogs->BackGround_Render_Loop();
+			App->CLSB_ImGui->BackGround_Render_Loop();
 
-			App->SBC_Scene->B_Player[0]->PlayerHeight = App->SBC_Gui_Dialogs->m_Dialog_Float;
+			App->CLSB_Model->B_Player[0]->PlayerHeight = App->CLSB_ImGui->m_Dialog_Float;
 		}
 
-		App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
+		App->CLSB_ImGui->Show_Dialog_Float = 0;
 
-		if (App->SBC_Gui_Dialogs->Float_Canceld == 0)
+		if (App->CLSB_ImGui->Float_Canceld == 0)
 		{
-			App->SBC_Gui_Dialogs->Show_Dialog_Float = 0;
+			App->CLSB_ImGui->Show_Dialog_Float = 0;
 
-			App->SBC_Scene->B_Player[0]->PlayerHeight = App->SBC_Gui_Dialogs->m_Dialog_Float;
+			App->CLSB_Model->B_Player[0]->PlayerHeight = App->CLSB_ImGui->m_Dialog_Float;
 
-			App->SBC_Scene->Scene_Modified = 1;
+			//App->SBC_Scene->Scene_Modified = 1;
 
-			App->SBC_Scene->B_Player[0]->Altered = 1;
-			App->SBC_Scene->Scene_Modified = 1;
-			App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);
+			//App->SBC_Scene->B_Player[0]->Altered = 1;
+			//App->SBC_Scene->Scene_Modified = 1;
+			//App->SBC_FileView->Mark_Altered(App->SBC_Scene->B_Player[0]->FileViewItem);
 		}
 		else
 		{
-			App->SBC_Gui_Dialogs->m_Dialog_Float = App->SBC_Gui_Dialogs->m_Dialog_Float_Copy;
-			App->SBC_Scene->B_Player[0]->PlayerHeight = App->SBC_Gui_Dialogs->m_Dialog_Float_Copy;
+			App->CLSB_ImGui->m_Dialog_Float = App->CLSB_ImGui->m_Dialog_Float_Copy;
+			App->CLSB_Model->B_Player[0]->PlayerHeight = App->CLSB_ImGui->m_Dialog_Float_Copy;
 		}
 
-		App->Disable_Panels(false);
+		//App->Disable_Panels(false);
 
-		Update_ListView_Player();*/
+		Update_ListView_Player();
 		return 1;
 	}
 

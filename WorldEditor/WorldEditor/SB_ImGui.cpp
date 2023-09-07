@@ -61,6 +61,19 @@ SB_ImGui::SB_ImGui()
 	Physics_PosY = 500;
 	Physics_Console_StartPos = 0;
 
+	// -------------- Float
+	Show_Dialog_Float = 0;
+	Float_StartPos = 0;
+	Float_PosX = 0;
+	Float_PosY = 0;
+	Float_Step = 0.05f;
+	Float_Canceld = 0;
+	Float_Exit = 0;
+	strcpy(Float_Banner, "Banner");
+	m_Dialog_Float_Copy = 0;
+	m_Dialog_Float = 10.222;
+
+
 	m_pDoc = nullptr;
 	pCameraEntity = nullptr;
 
@@ -69,6 +82,24 @@ SB_ImGui::SB_ImGui()
 
 SB_ImGui::~SB_ImGui()
 {
+}
+
+// *************************************************************************
+// *		BackGround_Render_Loop:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+void SB_ImGui::BackGround_Render_Loop(void)
+{
+	Ogre::WindowEventUtilities::messagePump();
+
+	if (App->CLSB_Ogre->mWindow->isClosed()) return;
+
+	if (App->CLSB_Ogre->FPStimer.getMilliseconds() > 3)
+	{
+		App->CLSB_Ogre->mRoot->_fireFrameStarted();
+		App->CLSB_Ogre->mRoot->_updateAllRenderTargets();
+		App->CLSB_Ogre->mRoot->_fireFrameEnded();
+		App->CLSB_Ogre->FPStimer.reset();
+	}
 }
 
 // *************************************************************************
@@ -95,6 +126,12 @@ void SB_ImGui::ImGui_Editor_Loop(void)
 	if (Show_Physics_Console == 1)
 	{
 		Physics_Console_Gui();
+	}
+
+	// SBC_Gui_Dialogs
+	if (Show_Dialog_Float == 1)
+	{
+		Dialog_Float();
 	}
 }
 
@@ -597,6 +634,101 @@ void SB_ImGui::Physics_Console_Gui(void)
 		}
 
 		ImGui::End();
+	}
+}
+
+// *************************************************************************
+// *		Start_Dialog_Float:- Terry and Hazel Flanigan 2023  		   *
+// *************************************************************************
+void SB_ImGui::Start_Dialog_Float(float Step, float StartValue, char* Banner)
+{
+	Float_Exit = 0;
+	Float_Canceld = 0;
+	Float_Step = Step;
+	m_Dialog_Float = StartValue;
+	strcpy(Float_Banner, Banner);
+
+	m_Dialog_Float_Copy = StartValue;
+
+	//App->Disable_Panels(true);
+
+	Float_PosX = ((float)App->CLSB_Ogre->OgreListener->View_Width / 2) - (200 / 2);
+	Float_PosY = ((float)App->CLSB_Ogre->OgreListener->View_Height / 2) - (130 / 2);
+
+	Float_StartPos = 0;
+
+	Show_Dialog_Float = 1;
+}
+
+// *************************************************************************
+// *			Dialog_Float:- Terry and Hazel Flanigan 2023  			   *
+// *************************************************************************
+void SB_ImGui::Dialog_Float(void)
+{
+
+	ImGui::SetNextWindowPos(ImVec2(Float_PosX, Float_PosY), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowSize(ImVec2(200, 130), ImGuiCond_FirstUseEver);
+
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, IM_COL32(239, 239, 239, 255));
+
+	if (!ImGui::Begin(Float_Banner, &Show_Dialog_Float, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize))
+	{
+		ImGui::End();
+	}
+	else
+	{
+		if (Float_StartPos == 0)
+		{
+			Float_PosX = ((float)App->CLSB_Ogre->OgreListener->View_Width / 2) - (200 / 2);
+			Float_PosY = ((float)App->CLSB_Ogre->OgreListener->View_Height / 2) - (130 / 2);
+			ImGui::SetWindowPos(Float_Banner, ImVec2(Float_PosX, Float_PosY));
+
+			Float_StartPos = 1;
+		}
+
+		float spacingX = ImGui::GetStyle().ItemInnerSpacing.x;
+
+		ImGui::Indent();
+		ImGui::Spacing();
+
+		ImGui::InputFloat("", &m_Dialog_Float, Float_Step, 0, "%.3f");
+
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Separator();
+		ImGui::Spacing();
+		ImGui::Spacing();
+		ImGui::Indent();
+
+		if (ImGui::Button("Apply"))
+		{
+			Float_Exit = 1;
+			Show_Dialog_Float = 0;
+			Float_StartPos = 0;
+			Float_Canceld = 0;
+			ImGui::PopStyleColor();
+			ImGui::End();
+		}
+
+		ImGui::SameLine(0.0f, spacingX);
+
+		if (ImGui::Button("Close"))
+		{
+			Float_StartPos = 0;
+			Float_Exit = 1;
+			Show_Dialog_Float = 0;
+			Float_Canceld = 1;
+			ImGui::PopStyleColor();
+			ImGui::End();
+		}
+
+		if (Float_Exit == 0)
+		{
+			Float_Canceld = 1;
+			ImGui::PopStyleColor();
+			ImGui::End();
+		}
 	}
 }
 
