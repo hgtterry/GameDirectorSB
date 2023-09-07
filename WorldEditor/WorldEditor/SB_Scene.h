@@ -51,7 +51,10 @@ public:
 	bool FullScreenMode_Flag;
 	bool SameBrush;
 
+	bool Scene_Modified;
+
 	int BrushChange;
 	int SubBrushChange;
+
 };
 

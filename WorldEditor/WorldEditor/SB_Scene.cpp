@@ -139,7 +139,7 @@ SB_Scene::SB_Scene()
 {
 	FullScreenMode_Flag = 0;
 	SameBrush = 0;
-
+	Scene_Modified = 0;
 	BrushChange = -1;
 
 	Selected_Brush = NULL;
@@ -289,11 +289,27 @@ bool SB_Scene::BrushList_Export(BrushList* BList, geBoolean SubBrush)
 	Brush* pBrush;
 	BrushIterator bi;
 
+	
+
 	pBrush = BrushList_GetFirst(BList, &bi);
+
 
 	while (pBrush != NULL)
 	{
-		//App->Message_ToFile(pBrush->Name);
+		
+		if (SubBrushCount == 0 && pBrush->Flags & 1 || pBrush->Flags & 1024)
+		{
+			if (SubBrush == 0)
+			{
+				App->CLSB_Model->Create_XBrush(BrushCount);
+				strcpy(App->CLSB_Model->B_XBrush[BrushCount]->BrushName, pBrush->Name);
+
+				App->CLSB_Model->B_XBrush[BrushCount]->Index = BrushCount;
+
+				App->CLSB_Model->XBrushCount = BrushCount + 1;
+			}
+
+		}
 
 		if (!Brush_Export(pBrush))
 		{
@@ -302,7 +318,7 @@ bool SB_Scene::BrushList_Export(BrushList* BList, geBoolean SubBrush)
 		}
 
 		pBrush = BrushList_GetNext(&bi);
-
+		
 		if (SubBrush)
 		{
 			SubBrushCount++;
@@ -383,10 +399,6 @@ bool SB_Scene::FaceList_Export(const Brush* b, const FaceList* pList, int BrushC
 {
 	if (BrushCount > BrushChange)
 	{
-		App->CLSB_Model->Create_XBrush(BrushCount);
-		App->Message_ToFile(b->Name, "Brush Created");
-
-		App->CLSB_Model->XBrushCount = BrushCount+1;
 		BrushChange = BrushCount;
 		SubBrushChange = 0;
 	}

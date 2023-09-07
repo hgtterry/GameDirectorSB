@@ -7,8 +7,9 @@ Base_XBrush::Base_XBrush(void)
 	Face_Count = 0;
 	SubBrush_Count = 0;
 	Brush_Count = 0;
+	Index = 0;
 
-	BrushName[0] = 0;
+	strcpy(BrushName,"Not Named");
 
 	int Count = 0;
 	while (Count < 111999)

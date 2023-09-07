@@ -883,10 +883,13 @@ void SB_Dialogs::ListGroups(HWND List)
 	sprintf(buf,"%s %i","X_Brush Count = ", App->CLSB_Model->XBrushCount);
 	SendDlgItemMessage(List, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
+	
+	SendDlgItemMessage(List, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)" ");
+
 	Count = 0;
 	while (Count < App->CLSB_Model->XBrushCount)
 	{
-		sprintf(buf, "%s %i", "Sub Brush Count = ", App->CLSB_Model->B_XBrush[Count]->Brush_Count);
+		sprintf(buf, "%i %s %s %i", App->CLSB_Model->B_XBrush[Count]->Index, App->CLSB_Model->B_XBrush[Count]->BrushName ,"        Count = ", App->CLSB_Model->B_XBrush[Count]->Brush_Count);
 		SendDlgItemMessage(List, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
 		/*int loop = 0;

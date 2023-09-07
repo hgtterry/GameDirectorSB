@@ -40,6 +40,8 @@ public:
 	int SubBrush_Count;
 	int Brush_Count;
 
+	int Index;
+
 	char BrushName[MAX_PATH];
 };
 
