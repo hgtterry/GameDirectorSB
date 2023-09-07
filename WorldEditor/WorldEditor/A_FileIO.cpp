@@ -50,7 +50,16 @@ bool SB_FileIO::StartBrowser(char* szInitDir)
 	TCHAR dname[MAX_PATH * 2];
 	IMalloc* imalloc; SHGetMalloc(&imalloc);
 	BROWSEINFO bi; ZeroMemory(&bi, sizeof(bi));
-	bi.hwndOwner = App->MainHwnd;
+
+	if (App->CLSB_Equity->EquitySB_Dialog_Visible == 0)
+	{
+		bi.hwndOwner = App->MainHwnd;
+	}
+	else
+	{
+		bi.hwndOwner = App->Equity_Dlg_hWnd;
+	}
+
 	bi.pszDisplayName = dname;
 	bi.lpszTitle = BrowserMessage;
 	bi.lParam = (LPARAM)szInitDir;

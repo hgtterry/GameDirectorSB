@@ -79,7 +79,14 @@ void SB_Brushes::Start_Dimensions_Dlg()
 
 		Get_Brush();
 
-		Dimensions_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_BRUSHDIMENSIONS, App->MainHwnd, (DLGPROC)Dimensions_Dlg_Proc);
+		if (App->CLSB_Equity->EquitySB_Dialog_Visible == 0)
+		{
+			Dimensions_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_BRUSHDIMENSIONS, App->MainHwnd, (DLGPROC)Dimensions_Dlg_Proc);
+		}
+		else
+		{
+			Dimensions_Dlg_hWnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_BRUSHDIMENSIONS, App->Equity_Dlg_hWnd, (DLGPROC)Dimensions_Dlg_Proc);
+		}
 
 		ScaleLock_Flag = 1;
 
