@@ -31,9 +31,24 @@ public:
 
 	void Start_GD_Properties(void);
 
+
+	void Update_ListView_Player();
+
+	int Edit_Category;
+
 	HWND Properties_Dlg_hWnd;
 
 private:
 	static LRESULT CALLBACK GD_Properties_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	void Create_Properties_hLV(void);
+	void ListView_OnClickOptions(LPARAM lParam);
+
+	
+
+	bool Edit_Player_Onclick(LPARAM lParam);
+	char btext[20];
+
+	HWND Properties_hLV;
 };
 

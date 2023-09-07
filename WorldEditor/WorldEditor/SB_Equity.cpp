@@ -1020,7 +1020,7 @@ void SB_Equity::Resize_3DView()
 	GetClientRect(App->Equity_Dlg_hWnd, &rcl);
 
 	int X = rcl.right-10;
-	int Y = rcl.bottom - 90;
+	int Y = rcl.bottom - 85;
 
 	SetWindowPos(App->ViewGLhWnd, NULL, 4, 80, X, Y, SWP_NOZORDER);
 	
@@ -1252,6 +1252,7 @@ void SB_Equity::Do_Preview_All()
 	if (App->CLSB_Model->Player_Count == 0)
 	{
 		App->CLSB_Player->Create_Player_Object();
+		App->CLSB_Properties->Update_ListView_Player();
 	}
 
 	if (App->CLSB_Equity->First_Run == 1)
