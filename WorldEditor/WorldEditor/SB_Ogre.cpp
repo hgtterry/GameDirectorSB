@@ -488,6 +488,6 @@ void SB_Ogre::Do_Basketball()
 
 	//Object_Node->setOrientation(Object->Mesh_Quat);
 
-	Object_Node->setPosition(0,0,0);
+	Object_Node->setPosition(0,-10,-50);
 
 }
