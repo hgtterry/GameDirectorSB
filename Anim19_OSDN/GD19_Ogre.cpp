@@ -472,3 +472,4 @@ void SB_Ogre::GetVersion_OpenGL(char* buff)
 	strcat(buff, ".");
 	strcat(buff, cMinor);
 }
+

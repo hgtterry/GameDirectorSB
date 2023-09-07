@@ -471,3 +471,23 @@ bool SB_Ogre::ExitFullScreen()
 	}
 	return 1;
 }
+
+// *************************************************************************
+// *					Do_Basketball (Terry Bernie)					   *
+// *************************************************************************
+void SB_Ogre::Do_Basketball()
+{
+	Ogre::Entity* Object_Ent;
+	Ogre::SceneNode* Object_Node;
+
+	Object_Ent = mSceneMgr->createEntity("Ball", "basketball.mesh", App_Resource_Group);
+	Object_Node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	Object_Node->attachObject(Object_Ent);
+
+	Object_Node->setVisible(true);
+
+	//Object_Node->setOrientation(Object->Mesh_Quat);
+
+	Object_Node->setPosition(0,0,0);
+
+}

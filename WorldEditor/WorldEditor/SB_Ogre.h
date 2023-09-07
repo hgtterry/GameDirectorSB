@@ -63,6 +63,8 @@ public:
 
 	bool ExitFullScreen();
 
+	void Do_Basketball();
+
 	bool Block_RenderingQueued;
 
 
