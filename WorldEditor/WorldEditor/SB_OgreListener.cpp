@@ -155,11 +155,11 @@ bool SB_OgreListener::frameRenderingQueued(const FrameEvent& evt)
 		Ogre::Radian mmPitch;
 		Ogre::Radian mYaw;
 
-		Pos = App->CLSB_Model->B_Player[0]->Player_Node->getPosition();
+		Pos = App->CLSB_Scene->B_Player[0]->Player_Node->getPosition();
 
-		mmPitch = App->CLSB_Model->B_Player[0]->CameraPitch->getOrientation().getPitch();
-		mYaw = App->CLSB_Model->B_Player[0]->Player_Node->getOrientation().getYaw();
-		Pos.y = Pos.y + App->CLSB_Model->B_Player[0]->PlayerHeight;
+		mmPitch = App->CLSB_Scene->B_Player[0]->CameraPitch->getOrientation().getPitch();
+		mYaw = App->CLSB_Scene->B_Player[0]->Player_Node->getOrientation().getYaw();
+		Pos.y = Pos.y + App->CLSB_Scene->B_Player[0]->PlayerHeight;
 
 		App->CLSB_Ogre->mCamera->setPosition(Pos);
 		App->CLSB_Ogre->mCamera->setOrientation(Ogre::Quaternion(1, 0, 0, 0));
@@ -641,15 +641,15 @@ bool SB_OgreListener::Update_Game_Logic(float DeltaTime)
 
 	App->CLSB_ImGui->ImGui_Editor_Loop();
 
-	if (GD_Run_Physics == 1 && App->CLSB_Model->Player_Added == 1)
+	if (GD_Run_Physics == 1 && App->CLSB_Scene->Player_Added == 1)
 	{
 		//App->Flash_Window();
 		btTransform trans;
-		App->CLSB_Model->B_Player[0]->Phys_Body->getMotionState()->getWorldTransform(trans);
+		App->CLSB_Scene->B_Player[0]->Phys_Body->getMotionState()->getWorldTransform(trans);
 		btQuaternion orientation = trans.getRotation();
-		App->CLSB_Model->B_Player[0]->Player_Node->setPosition(Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ()));
-		App->CLSB_Model->B_Player[0]->Player_Node->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
-		App->CLSB_Model->B_Player[0]->Player_Node->pitch(Ogre::Degree(180));
+		App->CLSB_Scene->B_Player[0]->Player_Node->setPosition(Ogre::Vector3(trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ()));
+		App->CLSB_Scene->B_Player[0]->Player_Node->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
+		App->CLSB_Scene->B_Player[0]->Player_Node->pitch(Ogre::Degree(180));
 	}
 
 	return true;
@@ -911,7 +911,7 @@ bool SB_OgreListener::Capture_LeftMouse_World(void)
 // *************************************************************************
 bool SB_OgreListener::Capture_Mouse_FirstPerson(float DeltaTime)
 {
-	if (App->CLSB_Model->Player_Added == 0)
+	if (App->CLSB_Scene->Player_Added == 0)
 	{
 		return 0;
 	}
@@ -930,9 +930,9 @@ bool SB_OgreListener::Capture_Mouse_FirstPerson(float DeltaTime)
 			Pl_DeltaMouse = float(Pl_Cent500X - Pl_MouseX);
 
 			float Delta2 = DeltaTime * 150;
-			float mTurn = (App->CLSB_Model->B_Player[0]->TurnRate * Pl_DeltaMouse) * Delta2;
+			float mTurn = (App->CLSB_Scene->B_Player[0]->TurnRate * Pl_DeltaMouse) * Delta2;
 
-			App->CLSB_Model->B_Player[0]->Rotate_FromCam(Ogre::Vector3(0,-1,0), mTurn, false);
+			App->CLSB_Scene->B_Player[0]->Rotate_FromCam(Ogre::Vector3(0,-1,0), mTurn, false);
 		
 		}
 	}
@@ -944,9 +944,9 @@ bool SB_OgreListener::Capture_Mouse_FirstPerson(float DeltaTime)
 			Pl_DeltaMouse = float(Pl_MouseX - Pl_Cent500X);
 
 			float Delta2 = DeltaTime * 150;
-			float mTurn = (App->CLSB_Model->B_Player[0]->TurnRate * Pl_DeltaMouse)* Delta2;
+			float mTurn = (App->CLSB_Scene->B_Player[0]->TurnRate * Pl_DeltaMouse)* Delta2;
 
-			App->CLSB_Model->B_Player[0]->Rotate_FromCam(Ogre::Vector3(0,1,0), mTurn, false);
+			App->CLSB_Scene->B_Player[0]->Rotate_FromCam(Ogre::Vector3(0,1,0), mTurn, false);
 
 		}
 	}
@@ -958,7 +958,7 @@ bool SB_OgreListener::Capture_Mouse_FirstPerson(float DeltaTime)
 
 		if (test > 1)
 		{
-			if (App->CLSB_Model->B_Player[0]->CameraPitch->getOrientation().getPitch().valueDegrees() > App->CLSB_Model->B_Player[0]->Limit_Look_Up)
+			if (App->CLSB_Scene->B_Player[0]->CameraPitch->getOrientation().getPitch().valueDegrees() > App->CLSB_Scene->B_Player[0]->Limit_Look_Up)
 			{
 
 			}
@@ -966,7 +966,7 @@ bool SB_OgreListener::Capture_Mouse_FirstPerson(float DeltaTime)
 			{
 				Pl_DeltaMouse = float(Pl_Cent500Y - Pl_MouseY);
 				Ogre::Radian pp = Degree(Pl_DeltaMouse * DeltaTime) * 2;
-				App->CLSB_Model->B_Player[0]->CameraPitch->pitch(pp);
+				App->CLSB_Scene->B_Player[0]->CameraPitch->pitch(pp);
 			}
 		}
 
@@ -977,7 +977,7 @@ bool SB_OgreListener::Capture_Mouse_FirstPerson(float DeltaTime)
 
 		if (test > 1)
 		{
-			if (App->CLSB_Model->B_Player[0]->CameraPitch->getOrientation().getPitch().valueDegrees() < App->CLSB_Model->B_Player[0]->Limit_Look_Down)
+			if (App->CLSB_Scene->B_Player[0]->CameraPitch->getOrientation().getPitch().valueDegrees() < App->CLSB_Scene->B_Player[0]->Limit_Look_Down)
 			{
 
 			}
@@ -985,7 +985,7 @@ bool SB_OgreListener::Capture_Mouse_FirstPerson(float DeltaTime)
 			{
 				Pl_DeltaMouse = float(Pl_MouseY - Pl_Cent500Y);
 				Ogre::Radian pp = Degree(-Pl_DeltaMouse * DeltaTime) * 2;
-				App->CLSB_Model->B_Player[0]->CameraPitch->pitch(pp);
+				App->CLSB_Scene->B_Player[0]->CameraPitch->pitch(pp);
 			}
 		}
 	}

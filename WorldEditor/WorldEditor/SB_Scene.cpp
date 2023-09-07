@@ -143,6 +143,11 @@ SB_Scene::SB_Scene()
 	BrushChange = -1;
 
 	Selected_Brush = NULL;
+
+	Player_Count = 0;
+	Player_Added = 0;
+
+	B_Player.reserve(2);
 }
 
 SB_Scene::~SB_Scene()

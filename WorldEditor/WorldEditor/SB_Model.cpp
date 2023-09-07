@@ -34,9 +34,7 @@ SB_Model::SB_Model(void)
 	MotionCount = 0;
 	BoneCount = 0;
 	NormalsCount = 0;
-	Player_Count = 0;
 
-	Player_Added = 0;
 	Model_Loaded = 0;
 
 	XBrushCount = 0;
@@ -63,7 +61,6 @@ SB_Model::SB_Model(void)
 		Count++;
 	}
 
-	B_Player.reserve(2);
 }
 
 SB_Model::~SB_Model(void)

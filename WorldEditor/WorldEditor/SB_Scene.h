@@ -22,6 +22,8 @@ misrepresented as being the original software.
 distribution.
 */
 
+#include "Base_Player.h"
+
 class SB_Scene
 {
 public:
@@ -38,6 +40,11 @@ public:
 	bool AddTexture_GL(geVFile* BaseFile, const char* TextureName, int GroupIndex);
 
 	Brush* Selected_Brush;
+
+	std::vector<Base_Player*> B_Player;
+
+	bool Player_Added;
+	int Player_Count;
 
 	int AdjusedIndex_Store[500];
 

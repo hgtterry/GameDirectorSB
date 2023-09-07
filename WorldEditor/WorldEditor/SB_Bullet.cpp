@@ -283,13 +283,13 @@ void SB_Bullet::Reset_Physics(void)
 	float y = 0;
 	float z = 0;
 
-	if (App->CLSB_Model->Player_Added == 1)// && GD_Reset_Player == 1)
+	if (App->CLSB_Scene->Player_Added == 1)// && GD_Reset_Player == 1)
 	{
 		btVector3 zeroVector(0, 0, 0);
 
-		x = App->CLSB_Model->B_Player[0]->StartPos.x;
-		y = App->CLSB_Model->B_Player[0]->StartPos.y;
-		z = App->CLSB_Model->B_Player[0]->StartPos.z;
+		x = App->CLSB_Scene->B_Player[0]->StartPos.x;
+		y = App->CLSB_Scene->B_Player[0]->StartPos.y;
+		z = App->CLSB_Scene->B_Player[0]->StartPos.z;
 
 		btVector3 initialPosition(x, y, z);
 
@@ -298,15 +298,15 @@ void SB_Bullet::Reset_Physics(void)
 		startTransform.setRotation(btQuaternion(1.0f, 0.0f, 0.0f, 0.0f));
 		startTransform.setOrigin(initialPosition);
 
-		App->CLSB_Model->B_Player[0]->Phys_Body->clearForces();
-		App->CLSB_Model->B_Player[0]->Phys_Body->setLinearVelocity(zeroVector);
-		App->CLSB_Model->B_Player[0]->Phys_Body->setAngularVelocity(zeroVector);
+		App->CLSB_Scene->B_Player[0]->Phys_Body->clearForces();
+		App->CLSB_Scene->B_Player[0]->Phys_Body->setLinearVelocity(zeroVector);
+		App->CLSB_Scene->B_Player[0]->Phys_Body->setAngularVelocity(zeroVector);
 
-		App->CLSB_Model->B_Player[0]->Phys_Body->setWorldTransform(startTransform);
-		App->CLSB_Model->B_Player[0]->Phys_Body->getMotionState()->setWorldTransform(startTransform);
-		App->CLSB_Model->B_Player[0]->Phys_Body->activate(true);
+		App->CLSB_Scene->B_Player[0]->Phys_Body->setWorldTransform(startTransform);
+		App->CLSB_Scene->B_Player[0]->Phys_Body->getMotionState()->setWorldTransform(startTransform);
+		App->CLSB_Scene->B_Player[0]->Phys_Body->activate(true);
 
-		App->CLSB_Model->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CLSB_Model->B_Player[0]->Physics_Rotation);
+		App->CLSB_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CLSB_Scene->B_Player[0]->Physics_Rotation);
 	}
 
 	App->CLSB_Dialogs->YesNo("Physics", "Do you want to restart Physics");

@@ -22,7 +22,6 @@ distribution.
 */
 
 #include "SB_Base_Group.h"
-#include "Base_Player.h"
 #include "Base_XBrush.h"
 
 typedef struct Bone_Vert { float x, y, z; }Bone_Vert;
@@ -123,8 +122,6 @@ public:
 	Texture_Type* S_Texture[1];
 	GLTextureInfo_Type* S_TextureInfo[30];
 
-	std::vector<Base_Player*> B_Player;
-
 	std::vector<vertex_type> vertex_Data;
 	std::vector<polygon_type> Face_Data;
 	std::vector<normal_type> Normal_Data;
@@ -138,9 +135,7 @@ public:
 	float radius;
 
 	bool Model_Loaded;
-	bool Player_Added;
 
-	int Player_Count;
 	int VerticeCount;
 	int FaceCount;
 	int GroupCount;

@@ -1249,7 +1249,7 @@ void SB_Equity::Do_Preview_All()
 	App->CLSB_Equity->Show_Equity_Dialog(true);
 
 	//-----------------------------------------------------
-	if (App->CLSB_Model->Player_Count == 0)
+	if (App->CLSB_Scene->Player_Count == 0)
 	{
 		App->CLSB_Player->Create_Player_Object();
 		App->CLSB_Properties->Update_ListView_Player();

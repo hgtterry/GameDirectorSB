@@ -371,18 +371,18 @@ void SB_Properties::Update_ListView_Player()
 	char chr_LookUp_Limit[100];
 	char chr_LookDown_Limit[100];
 
-	sprintf(chr_Speed, "%.3f ", App->CLSB_Model->B_Player[0]->Ground_speed / 100);
+	sprintf(chr_Speed, "%.3f ", App->CLSB_Scene->B_Player[0]->Ground_speed / 100);
 
-	sprintf(chr_TurnRate, "%.6f ", App->CLSB_Model->B_Player[0]->TurnRate);
+	sprintf(chr_TurnRate, "%.6f ", App->CLSB_Scene->B_Player[0]->TurnRate);
 
-	sprintf(chr_Height, "%.3f ", App->CLSB_Model->B_Player[0]->PlayerHeight);
+	sprintf(chr_Height, "%.3f ", App->CLSB_Scene->B_Player[0]->PlayerHeight);
 
-	sprintf(chr_StartPosX, "%.3f ", App->CLSB_Model->B_Player[0]->StartPos.x);
-	sprintf(chr_StartPosY, "%.3f ", App->CLSB_Model->B_Player[0]->StartPos.y);
-	sprintf(chr_StartPosZ, "%.3f ", App->CLSB_Model->B_Player[0]->StartPos.z);
+	sprintf(chr_StartPosX, "%.3f ", App->CLSB_Scene->B_Player[0]->StartPos.x);
+	sprintf(chr_StartPosY, "%.3f ", App->CLSB_Scene->B_Player[0]->StartPos.y);
+	sprintf(chr_StartPosZ, "%.3f ", App->CLSB_Scene->B_Player[0]->StartPos.z);
 
-	sprintf(chr_LookUp_Limit, "%.3f ", App->CLSB_Model->B_Player[0]->Limit_Look_Up);
-	sprintf(chr_LookDown_Limit, "%.3f ", App->CLSB_Model->B_Player[0]->Limit_Look_Down);
+	sprintf(chr_LookUp_Limit, "%.3f ", App->CLSB_Scene->B_Player[0]->Limit_Look_Up);
+	sprintf(chr_LookDown_Limit, "%.3f ", App->CLSB_Scene->B_Player[0]->Limit_Look_Down);
 
 
 	const int NUM_ITEMS = 13;
@@ -392,7 +392,7 @@ void SB_Properties::Update_ListView_Player()
 	memset(&pitem, 0, sizeof(LV_ITEM));
 	pitem.mask = LVIF_TEXT;
 
-	grid[0][0] = "Name", grid[1][0] = App->CLSB_Model->B_Player[0]->Player_Name;
+	grid[0][0] = "Name", grid[1][0] = App->CLSB_Scene->B_Player[0]->Player_Name;
 	grid[0][1] = "Mode", grid[1][1] = "1st_Person";
 	grid[0][2] = " ", grid[1][2] = " ";
 	grid[0][3] = "Ground Speed", grid[1][3] = chr_Speed;
@@ -467,27 +467,27 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 	if (result == 0)
 	{
 
-		App->CLSB_ImGui->Start_Dialog_Float(1.0, App->CLSB_Model->B_Player[0]->Ground_speed / 100, "Ground Speed");
+		App->CLSB_ImGui->Start_Dialog_Float(1.0, App->CLSB_Scene->B_Player[0]->Ground_speed / 100, "Ground Speed");
 
 		while (App->CLSB_ImGui->Show_Dialog_Float == 1)
 		{
 			App->CLSB_ImGui->BackGround_Render_Loop();
-			App->CLSB_Model->B_Player[0]->Ground_speed = App->CLSB_ImGui->m_Dialog_Float * 100;
+			App->CLSB_Scene->B_Player[0]->Ground_speed = App->CLSB_ImGui->m_Dialog_Float * 100;
 		}
 
 		if (App->CLSB_ImGui->Float_Canceld == 0)
 		{
 			App->CLSB_ImGui->Show_Dialog_Float = 0;
-			App->CLSB_Model->B_Player[0]->Ground_speed = App->CLSB_ImGui->m_Dialog_Float * 100;
+			App->CLSB_Scene->B_Player[0]->Ground_speed = App->CLSB_ImGui->m_Dialog_Float * 100;
 
-			App->CLSB_Model->B_Player[0]->Altered = 1;
+			App->CLSB_Scene->B_Player[0]->Altered = 1;
 			//App->CLSB_Model->Scene_Modified = 1;
 			//App->SBC_FileView->Mark_Altered(App->CLSB_Model->B_Player[0]->FileViewItem);
 		}
 		else
 		{
 			App->CLSB_ImGui->m_Dialog_Float = App->CLSB_ImGui->m_Dialog_Float_Copy * 100;
-			App->CLSB_Model->B_Player[0]->Ground_speed = App->CLSB_ImGui->m_Dialog_Float_Copy * 100;
+			App->CLSB_Scene->B_Player[0]->Ground_speed = App->CLSB_ImGui->m_Dialog_Float_Copy * 100;
 		}
 
 		//App->Disable_Panels(false);
@@ -526,13 +526,13 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 	result = strcmp(btext, "Player Height");
 	if (result == 0)
 	{
-		App->CLSB_ImGui->Start_Dialog_Float(0.10, App->CLSB_Model->B_Player[0]->PlayerHeight, "Player Height");
+		App->CLSB_ImGui->Start_Dialog_Float(0.10, App->CLSB_Scene->B_Player[0]->PlayerHeight, "Player Height");
 
 		while (App->CLSB_ImGui->Show_Dialog_Float == 1)
 		{
 			App->CLSB_ImGui->BackGround_Render_Loop();
 
-			App->CLSB_Model->B_Player[0]->PlayerHeight = App->CLSB_ImGui->m_Dialog_Float;
+			App->CLSB_Scene->B_Player[0]->PlayerHeight = App->CLSB_ImGui->m_Dialog_Float;
 		}
 
 		App->CLSB_ImGui->Show_Dialog_Float = 0;
@@ -541,7 +541,7 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 		{
 			App->CLSB_ImGui->Show_Dialog_Float = 0;
 
-			App->CLSB_Model->B_Player[0]->PlayerHeight = App->CLSB_ImGui->m_Dialog_Float;
+			App->CLSB_Scene->B_Player[0]->PlayerHeight = App->CLSB_ImGui->m_Dialog_Float;
 
 			//App->SBC_Scene->Scene_Modified = 1;
 
@@ -552,7 +552,7 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 		else
 		{
 			App->CLSB_ImGui->m_Dialog_Float = App->CLSB_ImGui->m_Dialog_Float_Copy;
-			App->CLSB_Model->B_Player[0]->PlayerHeight = App->CLSB_ImGui->m_Dialog_Float_Copy;
+			App->CLSB_Scene->B_Player[0]->PlayerHeight = App->CLSB_ImGui->m_Dialog_Float_Copy;
 		}
 
 		//App->Disable_Panels(false);

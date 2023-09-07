@@ -513,10 +513,10 @@ void SB_TopTabs_Equity::Camera_Set_Free(void)
 	App->CLSB_TopTabs_Equity->Toggle_Camera_Model_Flag = 0;
 	App->CLSB_TopTabs_Equity->Toggle_Camera_First_Flag = 0;
 
-	if (App->CLSB_Model->Player_Added == 1)
+	if (App->CLSB_Scene->Player_Added == 1)
 	{
-		int f = App->CLSB_Model->B_Player[0]->Phys_Body->getCollisionFlags();
-		App->CLSB_Model->B_Player[0]->Phys_Body->setCollisionFlags(f & (~(1 << 5)));
+		int f = App->CLSB_Scene->B_Player[0]->Phys_Body->getCollisionFlags();
+		App->CLSB_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f & (~(1 << 5)));
 	}
 
 	RedrawWindow(App->CLSB_TopTabs_Equity->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
@@ -527,17 +527,17 @@ void SB_TopTabs_Equity::Camera_Set_Free(void)
 // *************************************************************************
 void SB_TopTabs_Equity::Camera_Set_First(void)
 {
-	if (App->CLSB_Model->Player_Added == 1)
+	if (App->CLSB_Scene->Player_Added == 1)
 	{
 		App->CLSB_Ogre->OgreListener->CameraMode = Enums::CamFirst;
 		App->CLSB_TopTabs_Equity->Toggle_Camera_First_Flag = 1;
 		App->CLSB_TopTabs_Equity->Toggle_Camera_Model_Flag = 0;
 		App->CLSB_TopTabs_Equity->Toggle_Camera_Free_Flag = 0;
 
-		App->CLSB_Model->B_Player[0]->Player_Node->setVisible(false);
+		App->CLSB_Scene->B_Player[0]->Player_Node->setVisible(false);
 
-		int f = App->CLSB_Model->B_Player[0]->Phys_Body->getCollisionFlags();
-		App->CLSB_Model->B_Player[0]->Phys_Body->setCollisionFlags(f | (1 << 5));
+		int f = App->CLSB_Scene->B_Player[0]->Phys_Body->getCollisionFlags();
+		App->CLSB_Scene->B_Player[0]->Phys_Body->setCollisionFlags(f | (1 << 5));
 
 		App->CLSB_Ogre->BulletListener->Render_Debug_Flag = 0;
 		App->CLSB_Ogre->RenderFrame();

@@ -103,15 +103,15 @@ void SB_Player::Reset_Class(void)
 // *************************************************************************
 void SB_Player::Create_Player_Object(void)
 {
-	int Index = App->CLSB_Model->Player_Count;
+	int Index = App->CLSB_Scene->Player_Count;
 
-	App->CLSB_Model->B_Player[Index] = new Base_Player();
+	App->CLSB_Scene->B_Player[Index] = new Base_Player();
 
 	Initialize();
 
-	App->CLSB_Model->B_Player[Index]->CameraPitch = App->CLSB_Ogre->mSceneMgr->createCamera("PlayerPitch");
+	App->CLSB_Scene->B_Player[Index]->CameraPitch = App->CLSB_Ogre->mSceneMgr->createCamera("PlayerPitch");
 
-	App->CLSB_Model->Player_Count++;
+	App->CLSB_Scene->Player_Count++;
 
 }
 
@@ -122,9 +122,9 @@ void SB_Player::Initialize()
 {
 	Ogre::Vector3 Pos;
 
-	int Index = App->CLSB_Model->Player_Count;
+	int Index = App->CLSB_Scene->Player_Count;
 
-	Base_Player* pBase = App->CLSB_Model->B_Player[Index];
+	Base_Player* pBase = App->CLSB_Scene->B_Player[Index];
 
 	// ------------------- Ogre
 	if (pBase->Player_Ent && pBase->Player_Node)
@@ -169,7 +169,7 @@ void SB_Player::Initialize()
 	pBase->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 	pBase->Phys_Body->setCollisionFlags(f & (~(1 << 5)));
 
-	App->CLSB_Model->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CLSB_Model->B_Player[0]->Physics_Rotation);
+	App->CLSB_Scene->B_Player[0]->Phys_Body->getWorldTransform().setRotation(App->CLSB_Scene->B_Player[0]->Physics_Rotation);
 	App->CLSB_Bullet->dynamicsWorld->addRigidBody(pBase->Phys_Body);
 
 	// Save for later
@@ -177,7 +177,7 @@ void SB_Player::Initialize()
 	Physics_Position = pBase->Phys_Body->getWorldTransform().getOrigin();
 	Physics_Rotation = pBase->Phys_Body->getWorldTransform().getRotation();
 
-	App->CLSB_Model->Player_Added = 1;
+	App->CLSB_Scene->Player_Added = 1;
 
 }
 
@@ -434,7 +434,7 @@ bool SB_Player::OnGround() const
 // *************************************************************************
 void SB_Player::updateAction(btCollisionWorld* collisionWorld, btScalar deltaTimeStep)
 {
-	mWorld_Height = App->CLSB_Model->B_Player[0]->Phys_Body->getWorldTransform().getOrigin();
+	mWorld_Height = App->CLSB_Scene->B_Player[0]->Phys_Body->getWorldTransform().getOrigin();
 
 	Get_Height();
 	//FindGroundAndSteps groundSteps(this, collisionWorld);
@@ -466,17 +466,17 @@ void SB_Player::updateAction(btCollisionWorld* collisionWorld, btScalar deltaTim
 void SB_Player::updateVelocity(float dt)
 {
 	btTransform transform;
-	App->CLSB_Model->B_Player[0]->Phys_Body->getMotionState()->getWorldTransform(transform);
+	App->CLSB_Scene->B_Player[0]->Phys_Body->getMotionState()->getWorldTransform(transform);
 	btMatrix3x3& basis = transform.getBasis();
 
 	btMatrix3x3 inv = basis.transpose();
 
-	btVector3 linearVelocity = inv * App->CLSB_Model->B_Player[0]->Phys_Body->getLinearVelocity();
+	btVector3 linearVelocity = inv * App->CLSB_Scene->B_Player[0]->Phys_Body->getLinearVelocity();
 
 
 	if (Is_On_Ground == 1)// || mJump == 1)
 	{
-		btVector3 dv = mMoveDirection * (App->CLSB_Model->B_Player[0]->Ground_speed * dt);
+		btVector3 dv = mMoveDirection * (App->CLSB_Scene->B_Player[0]->Ground_speed * dt);
 		linearVelocity = dv;
 	}
 	else
@@ -504,7 +504,7 @@ void SB_Player::updateVelocity(float dt)
 		cancelStep();
 	}*/
 	
-	App->CLSB_Model->B_Player[0]->Phys_Body->setLinearVelocity(basis * linearVelocity);
+	App->CLSB_Scene->B_Player[0]->Phys_Body->setLinearVelocity(basis * linearVelocity);
 
 }
 
@@ -513,7 +513,7 @@ void SB_Player::updateVelocity(float dt)
 // *************************************************************************
 bool SB_Player::Get_Height(void)
 {
-	btVector3 Origin = App->CLSB_Model->B_Player[0]->Phys_Body->getWorldTransform().getOrigin();
+	btVector3 Origin = App->CLSB_Scene->B_Player[0]->Phys_Body->getWorldTransform().getOrigin();
 	btVector3 from = btVector3(Origin.getX(), Origin.getY(), Origin.getZ());
 	btVector3 to = btVector3(Origin.getX(), Origin.getY()-15, Origin.getZ());
 
