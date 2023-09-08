@@ -32,3 +32,23 @@ SB_Object::SB_Object()
 SB_Object::~SB_Object()
 {
 }
+
+// *************************************************************************
+//		Get_BoundingBox_World_Centre:- Terry and Hazel Flanigan 2023	   *
+// *************************************************************************
+Ogre::Vector3 SB_Object::Get_BoundingBox_World_Centre(int Object_Index)
+{
+	/*if (App->SBC_Scene->V_Object[Object_Index]->Shape == Enums::Shape_TriMesh)
+	{
+		Ogre::Vector3 Pos = App->SBC_Scene->V_Object[Object_Index]->Object_Node->getPosition();
+		return Pos;
+	}
+	else*/
+	{
+		AxisAlignedBox worldAAB = App->CLSB_Scene->V_Object[Object_Index]->Object_Ent->getBoundingBox();
+		worldAAB.transformAffine(App->CLSB_Scene->V_Object[Object_Index]->Object_Node->_getFullTransform());
+		Ogre::Vector3 Centre = worldAAB.getCenter();
+
+		return Centre;
+	}
+}

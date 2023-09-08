@@ -477,21 +477,21 @@ bool SB_Ogre::ExitFullScreen()
 // *************************************************************************
 void SB_Ogre::Do_Basketball()
 {
-	Ogre::Entity* Object_Ent;
-	Ogre::SceneNode* Object_Node;
+	App->CLSB_Scene->V_Object.push_back(new Base_Object());
 
-	Object_Ent = mSceneMgr->createEntity("Ball", "basketball.mesh", App_Resource_Group);
-	Object_Node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	Object_Node->attachObject(Object_Ent);
+	Base_Object* m_Object = App->CLSB_Scene->V_Object[0];
 
-	Object_Node->setVisible(true);
+	m_Object->Object_Ent = mSceneMgr->createEntity("Ball", "basketball.mesh", App_Resource_Group);
+	m_Object->Object_Node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	m_Object->Object_Node->attachObject(m_Object->Object_Ent);
 
-	//Object_Node->setOrientation(Object->Mesh_Quat);
+	m_Object->Object_Node->setVisible(true);
 
-	Object_Node->setPosition(0,-10,-50);
+	m_Object->Object_Node->setPosition(0,-10,-50);
+	m_Object->Object_Node->scale(2, 2, 2);
 
-	AxisAlignedBox worldAAB = Object_Ent->getBoundingBox();
-	worldAAB.transformAffine(Object_Node->_getFullTransform());
+	AxisAlignedBox worldAAB = m_Object->Object_Ent->getBoundingBox();
+	worldAAB.transformAffine(m_Object->Object_Node->_getFullTransform());
 	Ogre::Vector3 Centre = worldAAB.getCenter();
 
 	btTransform startTransform;
@@ -506,7 +506,7 @@ void SB_Ogre::Do_Basketball()
 
 	startTransform.setOrigin(initialPosition);
 
-	float Radius = 8;// App->CL_Object->GetMesh_BB_Radius(Object_Node);
+	float Radius = 16;// App->CL_Object->GetMesh_BB_Radius(Object_Node);
 	
 
 	btCollisionShape* newRigidShape = new btSphereShape(Radius);
@@ -518,17 +518,19 @@ void SB_Ogre::Do_Basketball()
 
 	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, newRigidShape, localInertia);
 
-	btRigidBody* Phys_Body;
+	m_Object->Phys_Body = new btRigidBody(rbInfo);
+	m_Object->Phys_Body->setRestitution(1.0);
+	m_Object->Phys_Body->setFriction(1.5);
+	m_Object->Phys_Body->setUserPointer(m_Object->Object_Node);
+	m_Object->Phys_Body->setWorldTransform(startTransform);
 
-	Phys_Body = new btRigidBody(rbInfo);
-	Phys_Body->setRestitution(1.0);
-	Phys_Body->setFriction(1.5);
-	Phys_Body->setUserPointer(Object_Node);
-	Phys_Body->setWorldTransform(startTransform);
+	int f = m_Object->Phys_Body->getCollisionFlags();
+	m_Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
 
-	//int f = Phys_Body->getCollisionFlags();
-	//Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+	m_Object->Usage = Enums::Usage_Dynamic;
+	m_Object->Phys_Body->setUserIndex(Enums::Usage_Dynamic);
+	m_Object->Phys_Body->setUserIndex2(0);
 
-	App->CLSB_Bullet->dynamicsWorld->addRigidBody(Phys_Body);
+	App->CLSB_Bullet->dynamicsWorld->addRigidBody(m_Object->Phys_Body);
 
 }

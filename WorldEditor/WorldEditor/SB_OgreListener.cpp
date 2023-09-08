@@ -645,7 +645,7 @@ bool SB_OgreListener::Update_Game_Logic(float DeltaTime)
 				int Index = body->getUserIndex2();
 
 
-				//if (UI == Enums::Usage_Dynamic && App->SBC_Scene->V_Object[Index]->Deleted == 0)
+				if (UI == Enums::Usage_Dynamic) //&& App->SBC_Scene->V_Object[Index]->Deleted == 0)
 				{
 					body->getMotionState()->getWorldTransform(trans);
 					btQuaternion orientation = trans.getRotation();
@@ -654,13 +654,13 @@ bool SB_OgreListener::Update_Game_Logic(float DeltaTime)
 					float y = trans.getOrigin().getY();
 					float z = trans.getOrigin().getZ();
 
-					/*App->SBC_Scene->V_Object[Index]->Object_Node->setPosition(Ogre::Vector3(x, y, z));
-					App->SBC_Scene->V_Object[Index]->Object_Node->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
+					App->CLSB_Scene->V_Object[Index]->Object_Node->setPosition(Ogre::Vector3(x, y, z));
+					App->CLSB_Scene->V_Object[Index]->Object_Node->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
 
-					Ogre::Vector3 WC = App->CL_Object->Get_BoundingBox_World_Centre(Index);
+					Ogre::Vector3 WC = App->CLSB_Object->Get_BoundingBox_World_Centre(Index);
 
 					Ogre::Vector3 NewPos = Ogre::Vector3(x, y, z) - WC;
-					App->SBC_Scene->V_Object[Index]->Object_Node->setPosition((Ogre::Vector3(x, y, z)) + NewPos);*/
+					App->CLSB_Scene->V_Object[Index]->Object_Node->setPosition((Ogre::Vector3(x, y, z)) + NewPos);
 				}
 
 			}

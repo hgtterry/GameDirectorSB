@@ -92,6 +92,34 @@ namespace Enums
 		LoadedFile_STL = 4,
 		LoadedFile_Brushes = 5
 	};
+
+	enum Usage
+	{
+		Usage_None = -1,
+		Usage_Room = 0,
+		Usage_Static = 1,
+		Usage_Dynamic = 2,
+		Usage_Object = 3,
+		Usage_Ammo = 4,
+		Usage_Weapon = 5,
+		Usage_Teleport = 6,
+		Usage_ChangeLevel = 7,
+		Usage_MediKit = 8,
+		Usage_Recevier = 9,
+		Usage_Particle = 10,
+		Usage_Light = 11,
+		Usage_Colectable = 12,
+		Usage_Message = 13,
+		Usage_Move = 14,
+		Usage_Sound = 15,
+		Usage_PlayerDeath = 16,
+		Usage_Counter = 17,
+		Usage_Player = 18,
+		Usage_Environment = 19,
+		Usage_RoomChange = 20,
+		Usage_EnvironEntity = 21,
+		Usage_UserObject = 22
+	};
 }
 // re-enable warnings except 4514
 #pragma warning(default : 4201 4214 4115)
