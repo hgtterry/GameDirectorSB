@@ -23,6 +23,7 @@ distribution.
 */
 
 #include "Base_Player.h"
+#include "Base_Object.h"
 
 class SB_Scene
 {
@@ -42,6 +43,7 @@ public:
 	Brush* Selected_Brush;
 
 	std::vector<Base_Player*> B_Player;
+	std::vector<Base_Object*> V_Object;
 
 	bool Player_Added;
 	int Player_Count;

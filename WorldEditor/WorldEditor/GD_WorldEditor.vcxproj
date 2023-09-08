@@ -199,6 +199,7 @@
     <ClCompile Include="SB_Level.cpp" />
     <ClCompile Include="SB_Loader.cpp" />
     <ClCompile Include="SB_Model.cpp" />
+    <ClCompile Include="SB_Object.cpp" />
     <ClCompile Include="SB_Ogre.cpp" />
     <ClCompile Include="SB_OgreListener.cpp" />
     <ClCompile Include="SB_Panels.cpp" />
@@ -291,6 +292,7 @@
     <ClInclude Include="SB_Level.h" />
     <ClInclude Include="SB_Loader.h" />
     <ClInclude Include="SB_Model.h" />
+    <ClInclude Include="SB_Object.h" />
     <ClInclude Include="SB_Ogre.h" />
     <ClInclude Include="SB_OgreListener.h" />
     <ClInclude Include="SB_Panels.h" />

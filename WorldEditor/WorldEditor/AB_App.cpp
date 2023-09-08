@@ -91,6 +91,7 @@ SB_App::SB_App()
 
 	CLSB_FileView =				nullptr;
 	CLSB_Properties =			nullptr;
+	CLSB_Object =				nullptr;
 
 	AppBackground = NULL;
 	BlackBrush =	NULL;
@@ -287,6 +288,7 @@ bool SB_App::InitApp(void)
 
 	CLSB_FileView =					new SB_FileView();
 	CLSB_Properties =				new SB_Properties;
+	CLSB_Object =					new SB_Object();
 
 	InitCommonControls();
 
