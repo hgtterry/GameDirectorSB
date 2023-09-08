@@ -628,16 +628,48 @@ bool SB_OgreListener::Update_Game_Logic(float DeltaTime)
 		App->CLSB_Bullet->dynamicsWorld->stepSimulation(DeltaTime * Bullet_Step);
 	}
 
-	//if (App->CLSB_Model->Player_Added == 1)
-	//{
-	//	//App->Flash_Window();
-	//	App->CLSB_Player->updateAction(NULL, DeltaTime);
-	//}
+	if (GD_Run_Physics == 1)
+	{
+		App->CLSB_Bullet->dynamicsWorld->stepSimulation(DeltaTime * Bullet_Step); //suppose you have 60 frames per second	
 
-	//if (Show_DemoWindow == 1)
-	//{
-		//ImGui::ShowDemoWindow();
-	//}
+
+		for (int j = App->CLSB_Bullet->dynamicsWorld->getNumCollisionObjects() - 1; j >= 0; j--)
+		{
+			btCollisionObject* obj = App->CLSB_Bullet->dynamicsWorld->getCollisionObjectArray()[j];
+			btRigidBody* body = btRigidBody::upcast(obj);
+			btTransform trans;
+
+			if (body && body->getMotionState())
+			{
+				int UI = body->getUserIndex();
+				int Index = body->getUserIndex2();
+
+
+				//if (UI == Enums::Usage_Dynamic && App->SBC_Scene->V_Object[Index]->Deleted == 0)
+				{
+					body->getMotionState()->getWorldTransform(trans);
+					btQuaternion orientation = trans.getRotation();
+
+					float x = trans.getOrigin().getX();
+					float y = trans.getOrigin().getY();
+					float z = trans.getOrigin().getZ();
+
+					/*App->SBC_Scene->V_Object[Index]->Object_Node->setPosition(Ogre::Vector3(x, y, z));
+					App->SBC_Scene->V_Object[Index]->Object_Node->setOrientation(Ogre::Quaternion(orientation.getW(), orientation.getX(), orientation.getY(), orientation.getZ()));
+
+					Ogre::Vector3 WC = App->CL_Object->Get_BoundingBox_World_Centre(Index);
+
+					Ogre::Vector3 NewPos = Ogre::Vector3(x, y, z) - WC;
+					App->SBC_Scene->V_Object[Index]->Object_Node->setPosition((Ogre::Vector3(x, y, z)) + NewPos);*/
+				}
+
+			}
+			else
+			{
+				trans = obj->getWorldTransform();
+			}
+		}
+	}
 
 	App->CLSB_ImGui->ImGui_Editor_Loop();
 

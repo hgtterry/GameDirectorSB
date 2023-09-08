@@ -490,4 +490,45 @@ void SB_Ogre::Do_Basketball()
 
 	Object_Node->setPosition(0,-10,-50);
 
+	AxisAlignedBox worldAAB = Object_Ent->getBoundingBox();
+	worldAAB.transformAffine(Object_Node->_getFullTransform());
+	Ogre::Vector3 Centre = worldAAB.getCenter();
+
+	btTransform startTransform;
+	startTransform.setIdentity();
+	startTransform.setRotation(btQuaternion(0.0f, 0.0f, 0.0f, 1));
+
+	btScalar mass;
+	mass = 1.0f;
+	
+	btVector3 localInertia(0, 0, 0);
+	btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
+
+	startTransform.setOrigin(initialPosition);
+
+	float Radius = 8;// App->CL_Object->GetMesh_BB_Radius(Object_Node);
+	
+
+	btCollisionShape* newRigidShape = new btSphereShape(Radius);
+	newRigidShape->calculateLocalInertia(mass, localInertia);
+
+	App->CLSB_Bullet->collisionShapes.push_back(newRigidShape);
+
+	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
+
+	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, newRigidShape, localInertia);
+
+	btRigidBody* Phys_Body;
+
+	Phys_Body = new btRigidBody(rbInfo);
+	Phys_Body->setRestitution(1.0);
+	Phys_Body->setFriction(1.5);
+	Phys_Body->setUserPointer(Object_Node);
+	Phys_Body->setWorldTransform(startTransform);
+
+	//int f = Phys_Body->getCollisionFlags();
+	//Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
+
+	App->CLSB_Bullet->dynamicsWorld->addRigidBody(Phys_Body);
+
 }
