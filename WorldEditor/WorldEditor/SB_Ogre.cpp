@@ -466,71 +466,10 @@ bool SB_Ogre::ExitFullScreen()
 		Root::getSingletonPtr()->renderOneFrame();
 
 		App->CLSB_Scene->FullScreenMode_Flag = 0;
+		App->CLSB_ImGui->Show_Physics_Console = 1;
 		//App->SBC_Scene->Editor_Mode();
 
 	}
 	return 1;
 }
 
-// *************************************************************************
-// *					Do_Basketball (Terry Bernie)					   *
-// *************************************************************************
-void SB_Ogre::Do_Basketball()
-{
-	App->CLSB_Scene->V_Object.push_back(new Base_Object());
-
-	Base_Object* m_Object = App->CLSB_Scene->V_Object[0];
-
-	m_Object->Object_Ent = mSceneMgr->createEntity("Ball", "basketball.mesh", App_Resource_Group);
-	m_Object->Object_Node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	m_Object->Object_Node->attachObject(m_Object->Object_Ent);
-
-	m_Object->Object_Node->setVisible(true);
-
-	m_Object->Object_Node->setPosition(0,-10,-50);
-	m_Object->Object_Node->scale(2, 2, 2);
-
-	AxisAlignedBox worldAAB = m_Object->Object_Ent->getBoundingBox();
-	worldAAB.transformAffine(m_Object->Object_Node->_getFullTransform());
-	Ogre::Vector3 Centre = worldAAB.getCenter();
-
-	btTransform startTransform;
-	startTransform.setIdentity();
-	startTransform.setRotation(btQuaternion(0.0f, 0.0f, 0.0f, 1));
-
-	btScalar mass;
-	mass = 1.0f;
-	
-	btVector3 localInertia(0, 0, 0);
-	btVector3 initialPosition(Centre.x, Centre.y, Centre.z);
-
-	startTransform.setOrigin(initialPosition);
-
-	float Radius = 16;// App->CL_Object->GetMesh_BB_Radius(Object_Node);
-	
-
-	btCollisionShape* newRigidShape = new btSphereShape(Radius);
-	newRigidShape->calculateLocalInertia(mass, localInertia);
-
-	App->CLSB_Bullet->collisionShapes.push_back(newRigidShape);
-
-	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
-
-	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, newRigidShape, localInertia);
-
-	m_Object->Phys_Body = new btRigidBody(rbInfo);
-	m_Object->Phys_Body->setRestitution(1.0);
-	m_Object->Phys_Body->setFriction(1.5);
-	m_Object->Phys_Body->setUserPointer(m_Object->Object_Node);
-	m_Object->Phys_Body->setWorldTransform(startTransform);
-
-	int f = m_Object->Phys_Body->getCollisionFlags();
-	m_Object->Phys_Body->setCollisionFlags(f | btCollisionObject::CF_DISABLE_VISUALIZE_OBJECT);
-
-	m_Object->Usage = Enums::Usage_Dynamic;
-	m_Object->Phys_Body->setUserIndex(Enums::Usage_Dynamic);
-	m_Object->Phys_Body->setUserIndex2(0);
-
-	App->CLSB_Bullet->dynamicsWorld->addRigidBody(m_Object->Phys_Body);
-
-}

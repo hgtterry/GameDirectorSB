@@ -291,6 +291,44 @@ void SB_Bullet::Reset_Physics(void)
 	float y = 0;
 	float z = 0;
 
+	int Count = 0;
+	while (Count < App->CLSB_Scene->Object_Count)
+	{
+		if (App->CLSB_Scene->V_Object[Count]->Usage == Enums::Usage_Dynamic)
+		{
+			btVector3 zeroVector(0, 0, 0);
+
+			x = 0; //App->CLSB_Scene->V_Object[Count]->Physics_Pos.x;
+			y = -10; // App->CLSB_Scene->V_Object[Count]->Physics_Pos.y;
+			z = -50;// App->CLSB_Scene->V_Object[Count]->Physics_Pos.z;
+			btVector3 initialPosition(x, y, z);
+
+			btTransform startTransform;
+			startTransform.setIdentity();
+
+			/*startTransform.setRotation(btQuaternion(App->CLSB_Scene->V_Object[Count]->Physics_Quat.x,
+				App->CLSB_Scene->V_Object[Count]->Physics_Quat.y,
+				App->CLSB_Scene->V_Object[Count]->Physics_Quat.z,
+				App->CLSB_Scene->V_Object[Count]->Physics_Quat.w));*/
+
+			startTransform.setOrigin(initialPosition);
+
+			App->CLSB_Scene->V_Object[Count]->Phys_Body->clearForces();
+			App->CLSB_Scene->V_Object[Count]->Phys_Body->setLinearVelocity(zeroVector);
+			App->CLSB_Scene->V_Object[Count]->Phys_Body->setAngularVelocity(zeroVector);
+
+			App->CLSB_Scene->V_Object[Count]->Phys_Body->setWorldTransform(startTransform);
+			App->CLSB_Scene->V_Object[Count]->Phys_Body->getMotionState()->setWorldTransform(startTransform);
+			App->CLSB_Scene->V_Object[Count]->Phys_Body->activate(true);
+
+			App->CLSB_Scene->V_Object[Count]->Object_Node->setPosition(0, -10, -50);
+			//App->CLSB_Scene->V_Object[Count]->Object_Node->setOrientation(App->CLSB_Scene->V_Object[Count]->Mesh_Quat);
+
+		}
+
+		Count++;
+	}
+
 	if (App->CLSB_Scene->Player_Added == 1)// && GD_Reset_Player == 1)
 	{
 		btVector3 zeroVector(0, 0, 0);

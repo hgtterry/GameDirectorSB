@@ -146,6 +146,7 @@ SB_Scene::SB_Scene()
 
 	Player_Count = 0;
 	Player_Added = 0;
+	Object_Count = 0;
 
 	B_Player.reserve(2);
 }
@@ -691,6 +692,8 @@ void SB_Scene::Go_FullScreen_Mode(void)
 
 	App->CLSB_Ogre->mWindow->windowMovedOrResized();
 	App->CLSB_Ogre->mCamera->setAspectRatio((Ogre::Real)App->CLSB_Ogre->mWindow->getWidth() / (Ogre::Real)App->CLSB_Ogre->mWindow->getHeight());
+
+	App->CLSB_ImGui->Show_Physics_Console = 0;
 
 	Root::getSingletonPtr()->renderOneFrame();
 }

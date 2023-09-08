@@ -289,7 +289,7 @@ LRESULT CALLBACK SB_TopTabs_Equity::Files_TB_Proc(HWND hDlg, UINT message, WPARA
 	{
 		if (LOWORD(wParam) == IDC_BT_ETEST)
 		{
-			App->CLSB_Ogre->Do_Basketball();
+			//App->CLSB_Ogre->Do_Basketball();
 
 			return 1;
 		}

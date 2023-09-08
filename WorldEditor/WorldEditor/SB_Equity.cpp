@@ -1246,6 +1246,8 @@ void SB_Equity::Do_Preview_All()
 	ShowWindow(App->ListPanel, true);
 	ShowWindow(App->CLSB_Properties->Properties_Dlg_hWnd, true);
 
+	App->CLSB_Object->Do_Basketball();
+
 	App->CLSB_Equity->Show_Equity_Dialog(true);
 
 	//-----------------------------------------------------

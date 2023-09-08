@@ -47,6 +47,7 @@ public:
 
 	bool Player_Added;
 	int Player_Count;
+	int Object_Count;
 
 	int AdjusedIndex_Store[500];
 
