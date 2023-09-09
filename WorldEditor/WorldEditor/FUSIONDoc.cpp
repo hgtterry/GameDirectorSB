@@ -224,7 +224,7 @@ void CFusionDoc::Serialize(CArchive& ar)
 
 WadFileEntry* CFusionDoc::GetDibBitmap(const char *Name)
 {
-    return Level_GetWadBitmap (pLevel, Name);
+    return Level_GetWadBitmap (App->CLSB_Doc->pLevel, Name);
 }
 
 const char *CFusionDoc::FindTextureLibrary (char const *WadName)
@@ -316,10 +316,10 @@ CFusionDoc::CFusionDoc() : CDocument (),
 // end change
 // changed QD Actors
     
-    pLevel = Level_Create (WadPath, Prefs_GetHeadersList (pPrefs),
+    App->CLSB_Doc->pLevel = Level_Create (WadPath, Prefs_GetHeadersList (pPrefs),
         Prefs_GetActorsList (pPrefs), Prefs_GetPawnIni (pPrefs));
 // end change
-    if (!Level_LoadWad (pLevel))
+    if (!Level_LoadWad (App->CLSB_Doc->pLevel))
     {
         CString Msg;
 
@@ -342,7 +342,7 @@ CFusionDoc::CFusionDoc() : CDocument (),
     {
         // create our default box
         BrushTemplate_Box *pBoxTemplate;
-        pBoxTemplate = Level_GetBoxTemplate (pLevel);
+        pBoxTemplate = Level_GetBoxTemplate (App->CLSB_Doc->pLevel);
 
         BTemplate = BrushTemplate_CreateBox (pBoxTemplate);
     }
@@ -370,8 +370,8 @@ void CFusionDoc::AddCameraEntityToLevel (void)
         CreateEntityFromName( "Camera", CameraEntity ) ;
         cstr.LoadString( IDS_CAMERAENTITYNAME ) ;
         CameraEntity.SetKeyValue ("%name%", cstr );
-        CameraEntity.SetOrigin ( 0.0f, 0.0f, 0.0f, Level_GetEntityDefs (pLevel) );
-        Level_AddEntity (pLevel, CameraEntity);
+        CameraEntity.SetOrigin ( 0.0f, 0.0f, 0.0f, Level_GetEntityDefs (App->CLSB_Doc->pLevel) );
+        Level_AddEntity (App->CLSB_Doc->pLevel, CameraEntity);
 
 //		pCameraEntity = FindCameraEntity();
     }
@@ -381,8 +381,8 @@ CFusionDoc::~CFusionDoc()
 {
     if (mWorldBsp != NULL)		Node_ClearBsp(mWorldBsp);
     mWorldBsp = NULL;
-    if (pLevel != NULL)				Level_Destroy (&pLevel);
-    pLevel = NULL;
+    if (App->CLSB_Doc->pLevel != NULL)				Level_Destroy (&App->CLSB_Doc->pLevel);
+    App->CLSB_Doc->pLevel = NULL;
     if (BTemplate != NULL)		Brush_Destroy (&BTemplate);
     BTemplate = NULL;
     if (pUndoStack != NULL)		UndoStack_Destroy (&pUndoStack);
@@ -763,7 +763,7 @@ static geBoolean EntityDraw( CEntity& Entity, void * lParam )
 
     if ( (Entity.IsSelected() == GE_FALSE ) && pData->pDoc->EntityIsVisible( &Entity ) )
     {
-        fdocDrawEntity (&Entity, pData->v, pData->pDC, Level_GetEntityDefs (pData->pDoc->pLevel), GE_FALSE );
+        fdocDrawEntity (&Entity, pData->v, pData->pDC, Level_GetEntityDefs (App->CLSB_Doc->pLevel), GE_FALSE );
     }
     return GE_TRUE ;
 }/* ::EntityDraw */
@@ -893,11 +893,11 @@ geBoolean CFusionDoc::Load(const char *FileName)
     }
     Level_EnumLeafBrushes (NewLevel, NewLevel, Level_FaceFixupCallback);
 
-    if (pLevel != NULL)
+    if (App->CLSB_Doc->pLevel != NULL)
     {
-        Level_Destroy (&pLevel);
+        Level_Destroy (&App->CLSB_Doc->pLevel);
     }
-    pLevel = NewLevel;
+    App->CLSB_Doc->pLevel = NewLevel;
 //	pCameraEntity = NULL;
 
     // Validate data, groups are read after entities and brushes, so this must be last
@@ -910,11 +910,11 @@ geBoolean CFusionDoc::Load(const char *FileName)
     GroupIterator gi;
     GroupListType *Groups;
 
-    Groups = Level_GetGroups (pLevel);
+    Groups = Level_GetGroups (App->CLSB_Doc->pLevel);
     mCurrentGroup = Group_GetFirstId (Groups, &gi);
 
     {
-        Brush *pBox = BrushTemplate_CreateBox (Level_GetBoxTemplate (pLevel));
+        Brush *pBox = BrushTemplate_CreateBox (Level_GetBoxTemplate (App->CLSB_Doc->pLevel));
         if (pBox != NULL)
         {
             CreateNewTemplateBrush (pBox);
@@ -922,10 +922,10 @@ geBoolean CFusionDoc::Load(const char *FileName)
     }
 
     // update entity visibility info
-    pEntityView	=Level_GetEntityVisibilityInfo (pLevel);
+    pEntityView	=Level_GetEntityVisibilityInfo (App->CLSB_Doc->pLevel);
     for (i = 0; i < pEntityView->nEntries; ++i)
     {
-        Level_EnumEntities (pLevel, &pEntityView->pEntries[i], ::fdocSetEntityVisibility);
+        Level_EnumEntities (App->CLSB_Doc->pLevel, &pEntityView->pEntries[i], ::fdocSetEntityVisibility);
     }
 
     AddCameraEntityToLevel ();
@@ -993,7 +993,7 @@ void CFusionDoc::OnBrushAddtoworld()
             CEntity NewEnt;
             char EntityName[MAX_PATH];
 
-            mRegularEntity.DoneMove (1, Level_GetEntityDefs (pLevel));
+            mRegularEntity.DoneMove (1, Level_GetEntityDefs (App->CLSB_Doc->pLevel));
 
             // now create a new entity of the currently-selected type
             //GotName = mpMainFrame->m_wndTabControls->m_pBrushEntityDialog->GetCurrentEntityName (EntityName);
@@ -1030,7 +1030,7 @@ void CFusionDoc::OnBrushAddtoworld()
 
         SetDefaultBrushTexInfo(nb);
         Brush_Bound (nb);
-        pTemplatePos = Level_GetTemplatePos (pLevel);
+        pTemplatePos = Level_GetTemplatePos (App->CLSB_Doc->pLevel);
         Brush_Center (nb, pTemplatePos);
         // add to current group
         Brush_SetGroupId (nb, mCurrentGroup);
@@ -1039,13 +1039,13 @@ void CFusionDoc::OnBrushAddtoworld()
             // set draw scale and lightmap scale defaults for all faces
             fdocFaceScales Scales;
 
-            Scales.DrawScale = Level_GetDrawScale (pLevel);
-            Scales.LightmapScale = Level_GetLightmapScale (pLevel);
+            Scales.DrawScale = Level_GetDrawScale (App->CLSB_Doc->pLevel);
+            Scales.LightmapScale = Level_GetLightmapScale (App->CLSB_Doc->pLevel);
             Brush_EnumFaces (nb, &Scales, ::fdocSetFaceScales);
 
         }
 
-        Level_AppendBrush (pLevel, nb);
+        Level_AppendBrush (App->CLSB_Doc->pLevel, nb);
 
         if(!Brush_IsHollow(nb) && !Brush_IsMulti(nb))
         {
@@ -1087,7 +1087,7 @@ void CFusionDoc::OnBrushAddtoworld()
 void CFusionDoc::OnBrushSubtractfromworld() 
 {
     Brush	*nb;
-    BrushList *BList = Level_GetBrushes (pLevel);
+    BrushList *BList = Level_GetBrushes (App->CLSB_Doc->pLevel);
 
     if ((mModeTool==ID_GENERALSELECT) && (BrushList_Count (BList, BRUSH_COUNT_MULTI | BRUSH_COUNT_LEAF) < 2))
     {
@@ -1147,7 +1147,7 @@ void CFusionDoc::CopySelectedBrushes(void)
                 continue;
 // end change
             pClone = Brush_Clone (pBrush);
-            Level_AppendBrush (pLevel, pClone);
+            Level_AppendBrush (App->CLSB_Doc->pLevel, pClone);
             SelBrushList_Add (pSelBrushes, pClone);
             SelBrushList_Remove (pSelBrushes, pBrush);
         }
@@ -1158,7 +1158,7 @@ void CFusionDoc::CopySelectedBrushes(void)
     CEntityArray *Entities;
     int cnt;
 
-    Entities = Level_GetEntities (pLevel);
+    Entities = Level_GetEntities (App->CLSB_Doc->pLevel);
 
     cnt = Entities->GetSize() ;
     for( i=0 ; i < cnt; i++ )
@@ -1182,7 +1182,7 @@ void CFusionDoc::CopySelectedBrushes(void)
                 int		Index ;
 
                 WorkingEntity = *pEnt;
-                Index = Level_AddEntity (pLevel, WorkingEntity);
+                Index = Level_AddEntity (App->CLSB_Doc->pLevel, WorkingEntity);
 
                 SelectEntity( &(*Entities)[Index] );
             }
@@ -1202,8 +1202,8 @@ void CFusionDoc::MakeSelectedBrushNewest(void)
 {
     if(GetSelState()==ONEBRUSHONLY)
     {
-        Level_RemoveBrush (pLevel, CurBrush);
-        Level_AppendBrush (pLevel, CurBrush);
+        Level_RemoveBrush (App->CLSB_Doc->pLevel, CurBrush);
+        Level_AppendBrush (App->CLSB_Doc->pLevel, CurBrush);
     }
 }
 
@@ -1224,7 +1224,7 @@ void CFusionDoc::TempCopySelectedBrushes(void)
 
         pBrush = SelBrushList_GetBrush (pSelBrushes, i);
         pClone = Brush_Clone (pBrush);
-        Level_AppendBrush (pLevel, pClone);
+        Level_AppendBrush (App->CLSB_Doc->pLevel, pClone);
         SelBrushList_Add (pTempSelBrushes, pClone);
     }
 }
@@ -1257,8 +1257,8 @@ static geBoolean	BrushTexSetCB (Brush *b, void *lParam)
 //		Face_SetTextureDibId(f, Level_GetDibId (pData->pDoc->pLevel, BrushName));
 //		pbmp = Level_GetWadBitmap (pData->pDoc->pLevel, BrushName);
         Face_SetTextureName(f, pData->TexName);
-        Face_SetTextureDibId(f, Level_GetDibId (pData->pDoc->pLevel, pData->TexName));
-        pbmp = Level_GetWadBitmap (pData->pDoc->pLevel, pData->TexName);
+        Face_SetTextureDibId(f, Level_GetDibId (App->CLSB_Doc->pLevel, pData->TexName));
+        pbmp = Level_GetWadBitmap (App->CLSB_Doc->pLevel, pData->TexName);
         if (pbmp != NULL)
         {
             Face_SetTextureSize (f, pbmp->Width, pbmp->Height);
@@ -1301,7 +1301,7 @@ geBoolean CFusionDoc::BrushIsVisible( const Brush * pBrush ) const
     }
     GroupId = Brush_GetGroupId (pBrush);
 
-    switch (Level_GetGroupVisibility (pLevel))
+    switch (Level_GetGroupVisibility (App->CLSB_Doc->pLevel))
     {
         case Group_ShowAll :
             return GE_TRUE;
@@ -1310,7 +1310,7 @@ geBoolean CFusionDoc::BrushIsVisible( const Brush * pBrush ) const
             return (GroupId == mCurrentGroup);
     
         case Group_ShowVisible :
-            return Group_IsVisible (Level_GetGroups (pLevel), GroupId);
+            return Group_IsVisible (Level_GetGroups (App->CLSB_Doc->pLevel), GroupId);
     
         default :
             assert (0);
@@ -1337,7 +1337,7 @@ geBoolean CFusionDoc::EntityIsVisible( const CEntity *pEntity ) const
 
     GroupId = pEntity->GetGroupId( );
 
-    switch (Level_GetGroupVisibility (pLevel))
+    switch (Level_GetGroupVisibility (App->CLSB_Doc->pLevel))
     {
         case Group_ShowAll :
             return GE_TRUE;
@@ -1346,7 +1346,7 @@ geBoolean CFusionDoc::EntityIsVisible( const CEntity *pEntity ) const
             return (GroupId == mCurrentGroup);
 
         case Group_ShowVisible :
-            return Group_IsVisible (Level_GetGroups (pLevel), GroupId);
+            return Group_IsVisible (Level_GetGroups (App->CLSB_Doc->pLevel), GroupId);
 
         default :
             assert (0);
@@ -1374,7 +1374,7 @@ void CFusionDoc::CreateNewTemplateBrush(Brush *pBrush)
     Brush_Bound (CurBrush);
     Brush_Center (CurBrush, &BrushPos);
 
-    pTemplatePos = Level_GetTemplatePos (pLevel);
+    pTemplatePos = Level_GetTemplatePos (App->CLSB_Doc->pLevel);
     geVec3d_Subtract (pTemplatePos, &BrushPos, &MoveVec);
     Brush_Move (CurBrush, &MoveVec);
 
@@ -1480,7 +1480,7 @@ geBoolean CFusionDoc::BrushIsSelected
 
 void CFusionDoc::OnToolsUsegrid() 
 {
-    GridInfo *pGridInfo = Level_GetGridInfo (pLevel);
+    GridInfo *pGridInfo = Level_GetGridInfo (App->CLSB_Doc->pLevel);
 
     pGridInfo->UseGrid = !(pGridInfo->UseGrid);
 
@@ -1490,7 +1490,7 @@ void CFusionDoc::OnToolsUsegrid()
 
 void CFusionDoc::OnUpdateToolsUsegrid(CCmdUI* pCmdUI) 
 {
-    pCmdUI->SetCheck( Level_UseGrid (pLevel));
+    pCmdUI->SetCheck( Level_UseGrid (App->CLSB_Doc->pLevel));
 }
 
 void CFusionDoc::OnToolsGridsettings() 
@@ -1501,7 +1501,7 @@ void CFusionDoc::OnToolsGridsettings()
     static int TexelSnapValues[] = {1, 2, 4, 8, 16, 32};
     static int nSnapValues = sizeof (TexelSnapValues)/sizeof (int);
 
-    pGridInfo = Level_GetGridInfo (pLevel);
+    pGridInfo = Level_GetGridInfo (App->CLSB_Doc->pLevel);
 
     dlg.m_UseSnap			=pGridInfo->UseGrid;
     dlg.m_SnapDegrees		=pGridInfo->RotationSnap;
@@ -1654,7 +1654,7 @@ void CFusionDoc::OnUpdateEditRedo(CCmdUI* pCmdUI)
 void CFusionDoc::OnEntitiesEditor() 
 {
     CEntitiesDialog Dialog (AfxGetMainWnd ());
-    CEntityArray *Entities = Level_GetEntities (pLevel);
+    CEntityArray *Entities = Level_GetEntities (App->CLSB_Doc->pLevel);
 
     Dialog.EditEntity( *Entities, mCurrentEntity, this);
     UpdateEntityOrigins();
@@ -1672,7 +1672,7 @@ geBoolean CFusionDoc::CreateEntityFromName(char const *pEntityType,CEntity &NewE
     // get all properties for this entity type...
     EntityPropertiesList *pProps;
 
-    pProps = EntityTable_GetEntityPropertiesFromName (Level_GetEntityDefs (pLevel), pEntityType, ET_ALL);
+    pProps = EntityTable_GetEntityPropertiesFromName (Level_GetEntityDefs (App->CLSB_Doc->pLevel), pEntityType, ET_ALL);
     if (pProps == NULL)
     {
         return FALSE;
@@ -1690,7 +1690,7 @@ geBoolean CFusionDoc::CreateEntityFromName(char const *pEntityType,CEntity &NewE
     EntityTable_ReleaseEntityProperties (pProps);
 
     NewEnt.SetGroupId ( 0 );
-    NewEnt.UpdateOrigin (Level_GetEntityDefs (pLevel));
+    NewEnt.UpdateOrigin (Level_GetEntityDefs (App->CLSB_Doc->pLevel));
     return TRUE;
 }
 
@@ -1730,7 +1730,7 @@ void CFusionDoc::CreateObjectTemplate()
     {
         TempEnt=TRUE;
 
-        NewEnt.SetOrigin (0.0f, 0.0f, 0.0f, Level_GetEntityDefs (pLevel));
+        NewEnt.SetOrigin (0.0f, 0.0f, 0.0f, Level_GetEntityDefs (App->CLSB_Doc->pLevel));
 
         mRegularEntity=NewEnt;
         mCurrentEntity=-1;
@@ -1769,7 +1769,7 @@ void CFusionDoc::OnUpdateEntitiesShow(CCmdUI* pCmdUI)
 void CFusionDoc::OnViewShowAllGroups() 
 {
     CurBrush	=BTemplate;
-    Level_SetGroupVisibility (pLevel, Group_ShowAll);
+    Level_SetGroupVisibility (App->CLSB_Doc->pLevel, Group_ShowAll);
 
     UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 }
@@ -1778,7 +1778,7 @@ void CFusionDoc::OnViewShowAllGroups()
 void CFusionDoc::OnViewShowCurrentGroup() 
 {
     CurBrush = BTemplate;
-    Level_SetGroupVisibility (pLevel, Group_ShowCurrent);
+    Level_SetGroupVisibility (App->CLSB_Doc->pLevel, Group_ShowCurrent);
 
     UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 }
@@ -1786,7 +1786,7 @@ void CFusionDoc::OnViewShowCurrentGroup()
 void CFusionDoc::OnViewShowVisibleGroups() 
 {
     CurBrush	=BTemplate;
-    Level_SetGroupVisibility (pLevel, Group_ShowVisible);
+    Level_SetGroupVisibility (App->CLSB_Doc->pLevel, Group_ShowVisible);
     
     UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 }
@@ -1796,8 +1796,8 @@ void CFusionDoc::OnUpdateViewShowVisibleGroups(CCmdUI* pCmdUI)
     BOOL	bEnable ;
     int Setting;
 
-    Setting = Level_GetGroupVisibility (pLevel);
-    bEnable = ( Group_GetCount( Level_GetGroups (pLevel)) ) ? TRUE : FALSE ;
+    Setting = Level_GetGroupVisibility (App->CLSB_Doc->pLevel);
+    bEnable = ( Group_GetCount( Level_GetGroups (App->CLSB_Doc->pLevel)) ) ? TRUE : FALSE ;
     
     if (((pCmdUI->m_nID == ID_VIEW_SHOW_ALLGROUPS) && (Setting == Group_ShowAll)) ||
         ((pCmdUI->m_nID == ID_VIEW_SHOW_CURRENTGROUP) && (Setting == Group_ShowCurrent)) ||
@@ -1844,11 +1844,11 @@ void CFusionDoc::UpdateEntityOrigins()
     int	i;
     CEntityArray *Entities;
 
-    Entities = Level_GetEntities (pLevel);
+    Entities = Level_GetEntities (App->CLSB_Doc->pLevel);
 
     for(i=0;i < Entities->GetSize();i++)
     {
-        (*Entities)[i].UpdateOrigin(Level_GetEntityDefs (pLevel));
+        (*Entities)[i].UpdateOrigin(Level_GetEntityDefs (App->CLSB_Doc->pLevel));
     }
 }
 
@@ -1858,12 +1858,12 @@ void CFusionDoc::UpdateEntityActors()
     int i;
     CEntityArray *Entities;
 
-    Entities = Level_GetEntities (pLevel);
+    Entities = Level_GetEntities (App->CLSB_Doc->pLevel);
 
     for(i=0;i < Entities->GetSize();i++)
     {
         char ActorFile[256], ActorDir[256], PawnIni[256];
-        strcpy(PawnIni, Level_GetPawnIniPath(pLevel));
+        strcpy(PawnIni, Level_GetPawnIniPath(App->CLSB_Doc->pLevel));
         if((*Entities)[i].HasActor(ActorFile, PawnIni))
         {
             Brush *pBrush = (*Entities)[i].GetActorBrush();
@@ -1871,16 +1871,16 @@ void CFusionDoc::UpdateEntityActors()
             if(pBrush)
             {
                 SelBrushList_Remove(pSelBrushes, pBrush);
-                Level_RemoveBrush(pLevel, pBrush);
+                Level_RemoveBrush(App->CLSB_Doc->pLevel, pBrush);
                 (*Entities)[i].DeleteActorBrush();
             }
 
-            strcpy(ActorDir, Level_GetActorsDirectory(pLevel));
+            strcpy(ActorDir, Level_GetActorsDirectory(App->CLSB_Doc->pLevel));
 
             pBrush=(*Entities)[i].CreateActorBrush(ActorFile, ActorDir, PawnIni);
             if(pBrush)
             {
-                Level_AppendBrush(pLevel,pBrush);
+                Level_AppendBrush(App->CLSB_Doc->pLevel,pBrush);
                 if((*Entities)[i].IsSelected())
                     SelBrushList_Add(pSelBrushes, pBrush);
                 if(!bShowActors)
@@ -1893,7 +1893,7 @@ void CFusionDoc::UpdateEntityActors()
             if(pBrush!=NULL)
             {
                 SelBrushList_Remove(pSelBrushes, pBrush);
-                Level_RemoveBrush(pLevel, pBrush);
+                Level_RemoveBrush(App->CLSB_Doc->pLevel, pBrush);
                 (*Entities)[i].DeleteActorBrush();
             }
         }
@@ -1912,7 +1912,7 @@ void CFusionDoc::MoveEntity(geVec3d *v)
     }
     else
     {
-        CEntityArray *Entities = Level_GetEntities (pLevel);
+        CEntityArray *Entities = Level_GetEntities (App->CLSB_Doc->pLevel);
 
         (*Entities)[mCurrentEntity].Move(v);
         SetModifiedFlag();
@@ -2091,7 +2091,7 @@ geBoolean CFusionDoc::FindClosestBrush
     fci.pMinEdgeDist	=pMinEdgeDist;
     fci.ptFrom			=ptFrom;
 
-    BrushList_EnumLeafBrushes(Level_GetBrushes (pLevel), &fci, ::FindClosestBrushCB);
+    BrushList_EnumLeafBrushes(Level_GetBrushes (App->CLSB_Doc->pLevel), &fci, ::FindClosestBrushCB);
 
     return	(*ppFoundBrush)? GE_TRUE : GE_FALSE;
 }
@@ -2107,7 +2107,7 @@ geBoolean CFusionDoc::FindClosestEntity
     geBoolean rslt;
     CEntityArray *Entities;
 
-    Entities = Level_GetEntities (pLevel);
+    Entities = Level_GetEntities (App->CLSB_Doc->pLevel);
     rslt = GE_FALSE;
     // determine distance to closest entity in the current view
     *pMinEntityDist = FLT_MAX;
@@ -2205,9 +2205,9 @@ void CFusionDoc::DoBrushSelection(Brush	*	pBrush,BrushSel	nSelType) //	brushSelT
     BrushList *BList;
     Brush	*pBParent=NULL;
 
-    ModelInfo = Level_GetModelInfo (pLevel);
-    Groups = Level_GetGroups (pLevel);
-    BList = Level_GetBrushes (pLevel);
+    ModelInfo = Level_GetModelInfo (App->CLSB_Doc->pLevel);
+    Groups = Level_GetGroups (App->CLSB_Doc->pLevel);
+    BList = Level_GetBrushes (App->CLSB_Doc->pLevel);
 
     if(Brush_GetParent(BList, pBrush, &pBParent))
     {
@@ -2259,7 +2259,7 @@ void CFusionDoc::DoBrushSelection(Brush	*	pBrush,BrushSel	nSelType) //	brushSelT
 // changed QD Actors
             if(strstr(App->CL_Brush->Brush_GetName(pBrush),".act")!=NULL)
             {
-                CEntityArray *Entities = Level_GetEntities (pLevel);
+                CEntityArray *Entities = Level_GetEntities (App->CLSB_Doc->pLevel);
 
                 for(int i=0;i < Entities->GetSize();i++)
                 {
@@ -2294,7 +2294,7 @@ void CFusionDoc::DoBrushSelection(Brush	*	pBrush,BrushSel	nSelType) //	brushSelT
 // changed QD Actors
             if(strstr(App->CL_Brush->Brush_GetName(pBrush),".act")!=NULL)
             {
-                CEntityArray *Entities = Level_GetEntities (pLevel);
+                CEntityArray *Entities = Level_GetEntities (App->CLSB_Doc->pLevel);
 
                 for(int i=0;i < Entities->GetSize();i++)
                 {
@@ -2366,7 +2366,7 @@ void CFusionDoc::DoEntitySelection
     // an entity is closest.  Select/deselect it.
     int GroupId;
     geBoolean GroupLocked;
-    GroupListType *Groups = Level_GetGroups (pLevel);
+    GroupListType *Groups = Level_GetGroups (App->CLSB_Doc->pLevel);
 
     assert (pEntity != NULL);
 
@@ -2416,7 +2416,7 @@ void CFusionDoc::ResetAllSelectedEntities()
 {
     DoGeneralSelect ();
 
-    Level_EnumEntities (pLevel, this, ::fdocDeselectEntity);
+    Level_EnumEntities (App->CLSB_Doc->pLevel, this, ::fdocDeselectEntity);
 }
 
 
@@ -2459,7 +2459,7 @@ void CFusionDoc::SelectAllBrushes (void)
 {
     DoGeneralSelect ();
 
-    Level_EnumBrushes (pLevel, this, ::fdocSelectBrush);	
+    Level_EnumBrushes (App->CLSB_Doc->pLevel, this, ::fdocSelectBrush);
 
     App->CLSB_Doc->UpdateSelected();
 }
@@ -2469,7 +2469,7 @@ void CFusionDoc::SelectAllEntities (void)
     DoGeneralSelect ();
 
     NumSelEntities = 0;
-    Level_EnumEntities (pLevel, this, ::fdocSelectEntity);
+    Level_EnumEntities (App->CLSB_Doc->pLevel, this, ::fdocSelectEntity);
 
     App->CLSB_Doc->UpdateSelected();
 }
@@ -2505,7 +2505,7 @@ BOOL CFusionDoc::IsEntitySelected(void)
 {
     CEntityArray *Entities;
 
-    Entities = Level_GetEntities (pLevel);
+    Entities = Level_GetEntities (App->CLSB_Doc->pLevel);
 
     for( int Ent = 0; Ent < Entities->GetSize(); Ent++ )
     {
@@ -2524,7 +2524,7 @@ void CFusionDoc::SetSelectedEntity( int ID )
 {
     CEntityArray *Entities;
 
-    Entities = Level_GetEntities (pLevel);
+    Entities = Level_GetEntities (App->CLSB_Doc->pLevel);
     ResetAllSelectedEntities();
     mCurrentEntity = ID;
     SelectEntity (&(*Entities)[ID]);
@@ -2539,7 +2539,7 @@ void CFusionDoc::AdjustEntityAngle( const ViewVars * v, const geFloat dx )
     geVec3d		Angles ;
     CEntityArray *Entities;
 
-    Entities = Level_GetEntities (pLevel);
+    Entities = Level_GetEntities (App->CLSB_Doc->pLevel);
 
     pEnt = &(*Entities)[mCurrentEntity];
 
@@ -2561,9 +2561,9 @@ void CFusionDoc::AdjustEntityAngle( const ViewVars * v, const geFloat dx )
         Render_ViewDeltaToRotation ( v, dx, &Vec);
     }
 
-    pEnt->GetAngles( &Angles, Level_GetEntityDefs (pLevel) ) ;
+    pEnt->GetAngles( &Angles, Level_GetEntityDefs (App->CLSB_Doc->pLevel) ) ;
     geVec3d_Add (&Angles, &Vec, &Angles);
-    pEnt->SetAngles( &Angles, Level_GetEntityDefs (pLevel) ) ;
+    pEnt->SetAngles( &Angles, Level_GetEntityDefs (App->CLSB_Doc->pLevel) ) ;
 }
 
 void CFusionDoc::AdjustEntityArc( const ViewVars * v, const geFloat dx )
@@ -2571,11 +2571,11 @@ void CFusionDoc::AdjustEntityArc( const ViewVars * v, const geFloat dx )
     CEntity *	pEnt ;
     geFloat		fArc ;
     geFloat		fArcDelta ;
-    CEntityArray *Entities = Level_GetEntities (pLevel);
+    CEntityArray *Entities = Level_GetEntities (App->CLSB_Doc->pLevel);
 
     pEnt = &(*Entities)[mCurrentEntity];
 
-    pEnt->GetArc( &fArc, Level_GetEntityDefs (pLevel) ) ;
+    pEnt->GetArc( &fArc, Level_GetEntityDefs (App->CLSB_Doc->pLevel) ) ;
     
     fArcDelta = Render_ViewDeltaToRadians( v, dx ) ;
     fArc -= fArcDelta;
@@ -2588,24 +2588,24 @@ void CFusionDoc::AdjustEntityArc( const ViewVars * v, const geFloat dx )
         fArc += 2*M_PI;
     }
 
-    pEnt->SetArc( fArc, Level_GetEntityDefs (pLevel) ) ;
+    pEnt->SetArc( fArc, Level_GetEntityDefs (App->CLSB_Doc->pLevel) ) ;
 }
 
 void  CFusionDoc::AdjustEntityRadius( const geVec3d *pVec )
 {
     CEntity *	pEnt ;
     geFloat		fRadius ;
-    CEntityArray *Entities = Level_GetEntities (pLevel);
+    CEntityArray *Entities = Level_GetEntities (App->CLSB_Doc->pLevel);
 
     pEnt = &(*Entities)[mCurrentEntity];
 
-    pEnt->GetRadius( &fRadius, Level_GetEntityDefs (pLevel) ) ;
+    pEnt->GetRadius( &fRadius, Level_GetEntityDefs (App->CLSB_Doc->pLevel) ) ;
     fRadius += geVec3d_Length (pVec);
     if( fRadius < 0.0f )
     {
         fRadius = 0.0f ;
     }
-    pEnt->SetRadius( fRadius, Level_GetEntityDefs (pLevel) ) ;
+    pEnt->SetRadius( fRadius, Level_GetEntityDefs (App->CLSB_Doc->pLevel) ) ;
 }
 
 void CFusionDoc::SelectOrthoRect(CPoint ptStart, CPoint ptEnd, ViewVars *v)
@@ -2619,7 +2619,7 @@ void CFusionDoc::SelectOrthoRect(CPoint ptStart, CPoint ptEnd, ViewVars *v)
     POINT			EntPosView;
     geBoolean		bSelectedSomething = GE_FALSE ;
     CRect			viewRect( ptStart, ptEnd ) ;		//Selection Rect in view coords
-    BrushList	*	BList = Level_GetBrushes (pLevel);
+    BrushList	*	BList = Level_GetBrushes (App->CLSB_Doc->pLevel);
 
     viewRect.NormalizeRect() ;
 
@@ -2652,7 +2652,7 @@ void CFusionDoc::SelectOrthoRect(CPoint ptStart, CPoint ptEnd, ViewVars *v)
         pBrush = BrushList_GetNext (&bi);
     }
 
-    CEntityArray *Entities = Level_GetEntities (pLevel);
+    CEntityArray *Entities = Level_GetEntities (App->CLSB_Doc->pLevel);
 
     for( i = 0; i < Entities->GetSize(); ++i)
     {
@@ -2755,8 +2755,8 @@ void CFusionDoc::ScaleSelectedBrushes(geVec3d *ScaleVector)
             }
         }
 
-        CEntityArray *Entities = Level_GetEntities (pLevel);
-        const EntityTable *EntityDefs = Level_GetEntityDefs (pLevel);
+        CEntityArray *Entities = Level_GetEntities (App->CLSB_Doc->pLevel);
+        const EntityTable *EntityDefs = Level_GetEntityDefs (App->CLSB_Doc->pLevel);
         int NumEntities = Entities->GetSize();
         for(i=0;i < NumEntities;i++)
         {
@@ -2810,7 +2810,7 @@ static geBoolean SelectBrush3DCB(Brush *b, void * lParam)
 
 void CFusionDoc::PlaceTemplateEntity3D(CPoint point, ViewVars *v)
 {
-    BrushList	*BList = Level_GetBrushes (pLevel);
+    BrushList	*BList = Level_GetBrushes (App->CLSB_Doc->pLevel);
     SelectBrush3DCBData	bdat;
     geVec3d ClickPosWorld;
     const GPlane	*p;
@@ -2973,8 +2973,8 @@ void CFusionDoc::SelectRay(CPoint point, ViewVars *v) // hgtterry Select Ray
 {
     int			CurEnt = 0;
     geFloat		MinEDist;
-    CEntityArray *Entities = Level_GetEntities (pLevel);
-    BrushList	*BList = Level_GetBrushes (pLevel);
+    CEntityArray *Entities = Level_GetEntities (App->CLSB_Doc->pLevel);
+    BrushList	*BList = Level_GetBrushes (App->CLSB_Doc->pLevel);
     SelectBrush3DCBData	bdat;
     geVec3d ClickPosWorld;
     geBoolean	EntitySelected	=FALSE;
@@ -3166,7 +3166,7 @@ void CFusionDoc::SelectRay(CPoint point, ViewVars *v) // hgtterry Select Ray
 //selects the texture of the face clicked (doesn't select the face)
 void CFusionDoc::SelectTextureFromFace3D(CPoint point, ViewVars *v)
 {
-    BrushList	*BList = Level_GetBrushes (pLevel);
+    BrushList	*BList = Level_GetBrushes (App->CLSB_Doc->pLevel);
     SelectBrush3DCBData	bdat;
 
     Render_ViewToWorld(v, point.x, point.y, &bdat.vp);
@@ -3225,14 +3225,14 @@ void CFusionDoc::UpdateCameraEntity( const ViewVars *v )
     CEntity *	pEnt ;
     geVec3d		Vec ;
 
-    pEnt = EntityList_FindByClassName( Level_GetEntities (pLevel), "Camera" ) ;
+    pEnt = EntityList_FindByClassName( Level_GetEntities (App->CLSB_Doc->pLevel), "Camera" ) ;
 //	pEnt = pCameraEntity;
     if( pEnt )
     {
         Render_GetCameraPos( v, &Vec ) ;
-        pEnt->SetOrigin( Vec.X, Vec.Y, Vec.Z, Level_GetEntityDefs (pLevel) ) ;
+        pEnt->SetOrigin( Vec.X, Vec.Y, Vec.Z, Level_GetEntityDefs (App->CLSB_Doc->pLevel) ) ;
         Render_GetPitchRollYaw( v, &Vec ) ;
-        pEnt->SetAngles( &Vec, Level_GetEntityDefs (pLevel) ) ;
+        pEnt->SetAngles( &Vec, Level_GetEntityDefs (App->CLSB_Doc->pLevel) ) ;
         UpdateAllViews( UAV_ALL3DVIEWS, NULL );
     }
 
@@ -3391,7 +3391,7 @@ BOOL CFusionDoc::TempDeleteSelected(void)
 
         pBrush = SelBrushList_GetBrush (pTempSelBrushes, 0);
 
-        Level_RemoveBrush (pLevel, pBrush);
+        Level_RemoveBrush (App->CLSB_Doc->pLevel, pBrush);
         SelBrushList_Remove (pTempSelBrushes, pBrush);
         Brush_Destroy(&pBrush);
         ret	=TRUE;
@@ -3535,7 +3535,7 @@ void	CFusionDoc::InvalidateDrawTreeOriginalFaces(void)
 
     Node_InvalidateTreeOGFaces(mWorldBsp);
 
-    ModelInfo	=Level_GetModelInfo(pLevel);
+    ModelInfo	=Level_GetModelInfo(App->CLSB_Doc->pLevel);
     pMod		=ModelList_GetFirst(ModelInfo->Models, &mi);
     n			=NULL;
     for(i=0;i < ModelList_GetCount(ModelInfo->Models);i++, n=NULL)
@@ -3565,7 +3565,7 @@ void	CFusionDoc::RebuildTrees(void)
     UpdateEntityActors();
 // end change
 
-    BList = Level_GetBrushes (pLevel);
+    BList = Level_GetBrushes (App->CLSB_Doc->pLevel);
     SetModifiedFlag();
 
     
@@ -3587,7 +3587,7 @@ void	CFusionDoc::RebuildTrees(void)
     BrushList_EnumCSGBrushes (BList, &BspCallbackData, ::AddBrushToBspCB) ;
 
     //build individual model mini trees
-    ModelInfo = Level_GetModelInfo (pLevel);
+    ModelInfo = Level_GetModelInfo (App->CLSB_Doc->pLevel);
     pMod = ModelList_GetFirst (ModelInfo->Models, &mi);
     n		=NULL;
     for(i=0;i < ModelList_GetCount(ModelInfo->Models);i++, n=NULL)
@@ -3636,7 +3636,7 @@ void CFusionDoc::UpdateGridInformation()
             CFusionView	*cv	=(CFusionView *)pMDIChild->GetActiveView();
             if(cv)
             {
-                GridInfo *pGridInfo = Level_GetGridInfo (pLevel);
+                GridInfo *pGridInfo = Level_GetGridInfo (App->CLSB_Doc->pLevel);
 
                 mpMainFrame->UpdateGridSize(
                     Render_GetFineGrid(cv->VCam, (pGridInfo->GridType == GridMetric) ? GRID_TYPE_METRIC : GRID_TYPE_TEXEL),
@@ -3693,13 +3693,13 @@ void CFusionDoc::RenderWorld(ViewVars *v, CDC *pDC) // hgtterry RenderWorld
         return ;
     }
 */
-    if (pLevel == NULL)
+    if (App->CLSB_Doc->pLevel == NULL)
     {
         // must not be loaded yet...
         return ;
     }
 
-    BList = Level_GetBrushes (pLevel);
+    BList = Level_GetBrushes (App->CLSB_Doc->pLevel);
     Render_UpdateViewPos(v);
     Render_SetUpFrustum(v);
 
@@ -3735,7 +3735,7 @@ void CFusionDoc::RenderWorld(ViewVars *v, CDC *pDC) // hgtterry RenderWorld
         BrushList_EnumLeafBrushes(BList, &brushDrawData, ::BrushDrawWire3dZBufferCB);
     }
 
-    CEntityArray *Entities = Level_GetEntities (pLevel);
+    CEntityArray *Entities = Level_GetEntities (App->CLSB_Doc->pLevel);
 
     for(i=0;i < Entities->GetSize();i++)
     {
@@ -3752,7 +3752,7 @@ void CFusionDoc::RenderWorld(ViewVars *v, CDC *pDC) // hgtterry RenderWorld
         if (pEnt->IsSelected ())
             continue;
 
-        ::DrawEntity (pEnt, v, Level_GetEntityDefs (pLevel));
+        ::DrawEntity (pEnt, v, Level_GetEntityDefs (App->CLSB_Doc->pLevel));
     }
 
     if(!(GetSelState() & NOENTITIES))
@@ -3769,7 +3769,7 @@ void CFusionDoc::RenderWorld(ViewVars *v, CDC *pDC) // hgtterry RenderWorld
 
             const geBitmap *pBitmap;
 
-            pBitmap = pEnt->GetBitmapPtr (Level_GetEntityDefs (pLevel));
+            pBitmap = pEnt->GetBitmapPtr (Level_GetEntityDefs (App->CLSB_Doc->pLevel));
 
             Render_3DTextureZBufferOutline(v, &pEnt->mOrigin, pBitmap, RGB(0,255,255));
         }
@@ -3777,7 +3777,7 @@ void CFusionDoc::RenderWorld(ViewVars *v, CDC *pDC) // hgtterry RenderWorld
 
     if(DoBlit)
     {
-        ModelInfo_Type *ModelInfo = Level_GetModelInfo (pLevel);
+        ModelInfo_Type *ModelInfo = Level_GetModelInfo (App->CLSB_Doc->pLevel);
 
         //render the models
         pModel = ModelList_GetFirst (ModelInfo->Models, &mi);
@@ -3843,7 +3843,7 @@ void CFusionDoc::RenderWorld(ViewVars *v, CDC *pDC) // hgtterry RenderWorld
         {
             if(Render_PointInFrustum(v, &mRegularEntity.mOrigin))
             {
-                ::DrawEntity (&mRegularEntity, v, Level_GetEntityDefs (pLevel));
+                ::DrawEntity (&mRegularEntity, v, Level_GetEntityDefs (App->CLSB_Doc->pLevel));
             }
         }
     }
@@ -3881,7 +3881,7 @@ void CFusionDoc::MoveSelectedBrushList
         Brush_Move (pBrush, v);
     }
 
-    CEntityArray *Entities = Level_GetEntities (pLevel);
+    CEntityArray *Entities = Level_GetEntities (App->CLSB_Doc->pLevel);
     int NumEntities = Entities->GetSize();
     for(i=0;i < NumEntities;i++)
     {
@@ -3918,7 +3918,7 @@ void CFusionDoc::MoveTemplateBrush(geVec3d *v)
         geVec3d *pTemplatePos;
 
         Brush_Move (CurBrush, v);
-        pTemplatePos = Level_GetTemplatePos (pLevel);
+        pTemplatePos = Level_GetTemplatePos (App->CLSB_Doc->pLevel);
         Brush_Center (CurBrush, pTemplatePos);
     }
 }
@@ -3940,7 +3940,7 @@ void CFusionDoc::GetRotationPoint
     )
 {
     Model *pModel;
-    ModelInfo_Type *ModelInfo = Level_GetModelInfo (pLevel);
+    ModelInfo_Type *ModelInfo = Level_GetModelInfo (App->CLSB_Doc->pLevel);
 
     pModel = ModelList_GetAnimatingModel (ModelInfo->Models);
     if (pModel != NULL)
@@ -4001,8 +4001,8 @@ void CFusionDoc::RotateSelectedBrushList
         Brush_Rotate (pBrush, &rm, &RotationPoint);
     }
 
-    CEntityArray *Entities = Level_GetEntities (pLevel);
-    const EntityTable *EntityTable = Level_GetEntityDefs (pLevel);
+    CEntityArray *Entities = Level_GetEntities (App->CLSB_Doc->pLevel);
+    const EntityTable *EntityTable = Level_GetEntityDefs (App->CLSB_Doc->pLevel);
     for(i=0;i < Entities->GetSize();i++)
     {
         if ((*Entities)[i].IsSelected ())
@@ -4039,7 +4039,7 @@ void CFusionDoc::SetAllFacesTextureScale(geFloat ScaleVal)
     if (SelBrushList_GetSize (pSelBrushes) > 0)
     {
         SelBrushList_Enum (pSelBrushes, fdocBrushTextureScaleCallback, &ScaleVal);
-        if (Level_RebuildBspAlways (pLevel))
+        if (Level_RebuildBspAlways (App->CLSB_Doc->pLevel))
         {
             RebuildTrees();
             UpdateAllViews (UAV_ALL3DVIEWS, NULL);
@@ -4064,9 +4064,9 @@ void CFusionDoc::DoneRotate(void)
 
     GetRotationPoint (&RotationPoint);
 
-    if((SelState & NOENTITIES) && Level_UseGrid (pLevel))
+    if((SelState & NOENTITIES) && Level_UseGrid (App->CLSB_Doc->pLevel))
     {
-        RSnap		=Units_DegreesToRadians ((float)Level_GetRotationSnap (pLevel));
+        RSnap		=Units_DegreesToRadians ((float)Level_GetRotationSnap (App->CLSB_Doc->pLevel));
         FinalRot.X	=((float)((int)(FinalRot.X / RSnap))) * RSnap;
         FinalRot.Y	=((float)((int)(FinalRot.Y / RSnap))) * RSnap;
         FinalRot.Z	=((float)((int)(FinalRot.Z / RSnap))) * RSnap;
@@ -4110,7 +4110,7 @@ void CFusionDoc::DoneRotate(void)
     }
     else
     {
-        BrushList *BList = Level_GetBrushes (pLevel);
+        BrushList *BList = Level_GetBrushes (App->CLSB_Doc->pLevel);
         for(i=0;i < NumSelBrushes;i++)
         {
             // Replace the sel list brushes with the TSelList brushes
@@ -4153,7 +4153,7 @@ void CFusionDoc::DoneRotate(void)
         {
             geVec3d Angles;
 
-            pCameraEntity->GetAngles( &Angles, Level_GetEntityDefs (pLevel) ) ;
+            pCameraEntity->GetAngles( &Angles, Level_GetEntityDefs (App->CLSB_Doc->pLevel) ) ;
             SetRenderedViewCamera( &(pCameraEntity->mOrigin), &Angles) ;
         }
     }
@@ -4167,8 +4167,8 @@ void CFusionDoc::UpdateSelectedModel
 {
     ModelIterator mi;
     Model *pModel;
-    ModelInfo_Type *ModelInfo = Level_GetModelInfo (pLevel);
-    BrushList *BList = Level_GetBrushes (pLevel);
+    ModelInfo_Type *ModelInfo = Level_GetModelInfo (App->CLSB_Doc->pLevel);
+    BrushList *BList = Level_GetBrushes (App->CLSB_Doc->pLevel);
 
     // notify model dialog so that it can update animation deltas if required
     mpMainFrame->UpdateSelectedModel (MoveRotate, pVecDelta);
@@ -4193,14 +4193,14 @@ void CFusionDoc::DoneMoveEntity(void)
 {
     int		i;
     float	SnapSize;
-    CEntityArray *Entities = Level_GetEntities (pLevel);
+    CEntityArray *Entities = Level_GetEntities (App->CLSB_Doc->pLevel);
     CEntity *pEnt;
 
     if (mCurrentTool==ID_TOOLS_BRUSH_MOVEROTATEBRUSH)
     {
-        if ((GetSelState()==ONEENTITYONLY) && Level_UseGrid (pLevel))
+        if ((GetSelState()==ONEENTITYONLY) && Level_UseGrid (App->CLSB_Doc->pLevel))
         {
-            SnapSize = Level_GetGridSnapSize (pLevel);
+            SnapSize = Level_GetGridSnapSize (App->CLSB_Doc->pLevel);
         }
         else
         {
@@ -4213,13 +4213,13 @@ void CFusionDoc::DoneMoveEntity(void)
 
             if (pEnt->IsSelected ())
             {
-                pEnt->DoneMove (SnapSize, Level_GetEntityDefs (pLevel));
+                pEnt->DoneMove (SnapSize, Level_GetEntityDefs (App->CLSB_Doc->pLevel));
                 if( pEnt->IsCamera() == GE_TRUE )	// Camera Entity?
 //				if( pEnt==pCameraEntity )	// Camera Entity?
                 {				
                     geVec3d	PitchRollYaw ;
 
-                    pEnt->GetAngles( &PitchRollYaw, Level_GetEntityDefs (pLevel) ) ;
+                    pEnt->GetAngles( &PitchRollYaw, Level_GetEntityDefs (App->CLSB_Doc->pLevel) ) ;
                     SetRenderedViewCamera( &(pEnt->mOrigin), &PitchRollYaw ) ;
                     UpdateAllViews(UAV_RENDER_ONLY, NULL);		
                 }// Camera entity, update camera
@@ -4238,11 +4238,11 @@ void CFusionDoc::DoneMoveEntity(void)
         }
 
         SnapSize = 1.0f;
-        if( Level_UseGrid (pLevel))
+        if( Level_UseGrid (App->CLSB_Doc->pLevel))
         {
-            SnapSize = Level_GetGridSnapSize (pLevel);
+            SnapSize = Level_GetGridSnapSize (App->CLSB_Doc->pLevel);
         }
-        pEnt->DoneMove(SnapSize, Level_GetEntityDefs (pLevel));
+        pEnt->DoneMove(SnapSize, Level_GetEntityDefs (App->CLSB_Doc->pLevel));
     }
     SetModifiedFlag();
 }/* CFusionDoc::DoneMoveEntity */
@@ -4251,11 +4251,11 @@ void CFusionDoc::DoneMoveEntity(void)
 void CFusionDoc::UpdateAllViews(int Mode, CView* pSender, BOOL Override)
 {
     //App->Say("UpdateAllViews");
-    if(IsModified() && ((Mode & REBUILD_QUICK ) && (Level_RebuildBspAlways (pLevel)))||(Override))
+    if(IsModified() && ((Mode & REBUILD_QUICK ) && (Level_RebuildBspAlways (App->CLSB_Doc->pLevel)))||(Override))
     {
         RebuildTrees();
     }
-    else if((Mode & REBUILD_QUICK) && (!Level_RebuildBspAlways (pLevel)))
+    else if((Mode & REBUILD_QUICK) && (!Level_RebuildBspAlways (App->CLSB_Doc->pLevel)))
     {
         InvalidateDrawTreeOriginalFaces();
     }
@@ -4480,7 +4480,7 @@ static geBoolean	ResetSelectedFacesCB(Brush *b, void *pVoid)
 
 void CFusionDoc::ResetAllSelectedFaces(void)
 {
-    BrushList_EnumLeafBrushes(Level_GetBrushes (pLevel), NULL, ::ResetSelectedFacesCB) ;
+    BrushList_EnumLeafBrushes(Level_GetBrushes (App->CLSB_Doc->pLevel), NULL, ::ResetSelectedFacesCB) ;
     SelFaceList_RemoveAll (pSelFaces);
 }
 
@@ -4508,7 +4508,7 @@ Face *CFusionDoc::FindSelectedFace (void)
     Face *pSelectedFace;
 
     pSelectedFace = NULL;
-    BrushList_EnumLeafBrushes (Level_GetBrushes (pLevel), &pSelectedFace, ::FindSelectedFaceCB);
+    BrushList_EnumLeafBrushes (Level_GetBrushes (App->CLSB_Doc->pLevel), &pSelectedFace, ::FindSelectedFaceCB);
     return pSelectedFace;
 }
 
@@ -4580,7 +4580,7 @@ void CFusionDoc::SetAdjustmentMode( fdocAdjustEnum nCmdIDMode )
 
             // go through brush list and select any brush that has selected faces.
             // Ensure that all brushes in a locked group or model set are selected...
-            Level_EnumLeafBrushes (pLevel, this, ::fdocSelectBrushesFromFaces);
+            Level_EnumLeafBrushes (App->CLSB_Doc->pLevel, this, ::fdocSelectBrushesFromFaces);
 
             ResetAllSelectedFaces();
             App->CLSB_Doc->UpdateSelected();
@@ -4762,7 +4762,7 @@ void CFusionDoc::OnEditCopy()
 
     int		NumSelEntities = 0;
 
-    Entities = Level_GetEntities (pLevel);
+    Entities = Level_GetEntities (App->CLSB_Doc->pLevel);
 
     cnt = Entities->GetSize() ;
     for( i=0 ; i < cnt; i++ )
@@ -4830,13 +4830,13 @@ void CFusionDoc::OnEditPaste()
 
                 Brush *pClone;
                 pClone = Brush_Clone ((*CopiedBrushes)[i]);
-                Level_AppendBrush (pLevel, pClone);
+                Level_AppendBrush (App->CLSB_Doc->pLevel, pClone);
                 SelBrushList_Add (pSelBrushes, pClone);
             }
         }
 
         CEntityArray *Entities;
-        Entities = Level_GetEntities (pLevel);
+        Entities = Level_GetEntities (App->CLSB_Doc->pLevel);
 
         for(i=0;i < (*NumCopiedEntities);i++)
         {
@@ -4847,7 +4847,7 @@ void CFusionDoc::OnEditPaste()
 
                 CloneEntity = (*(*CopiedEntities)[i]);
 
-                Index = Level_AddEntity(pLevel, CloneEntity);
+                Index = Level_AddEntity(App->CLSB_Doc->pLevel, CloneEntity);
 
                 SelectEntity( &(*Entities)[Index] );
             }
@@ -4904,9 +4904,9 @@ void CFusionDoc::DoneShear(int sides, int inidx)
     mLastOp	=BRUSH_SHEAR;
 
     bsnap = 1.0f;
-    if(Level_UseGrid (pLevel))
+    if(Level_UseGrid (App->CLSB_Doc->pLevel))
     {
-        bsnap = Level_GetGridSnapSize (pLevel);
+        bsnap = Level_GetGridSnapSize (App->CLSB_Doc->pLevel);
     }
 
     if(mModeTool==ID_TOOLS_TEMPLATE)
@@ -5046,17 +5046,17 @@ static geBoolean fdocEntityToMap (CEntity &Ent, void *lParam)
     pData = (fdocEntityToMapData *)lParam;
     if (!Ent.IsCamera ())
     {
-        CompileParamsType *CompileParams = Level_GetCompileParams (pData->pDoc->pLevel);
+        CompileParamsType *CompileParams = Level_GetCompileParams (App->CLSB_Doc->pLevel);
         if(CompileParams->SuppressHidden)
         {
             if(pData->pDoc->EntityIsVisible(&Ent))
             {
-                Ent.WriteToMap (pData->f, pData->Models, pData->Entities, Level_GetEntityDefs (pData->pDoc->pLevel));
+                Ent.WriteToMap (pData->f, pData->Models, pData->Entities, Level_GetEntityDefs (App->CLSB_Doc->pLevel));
             }
         }
         else
         {
-            Ent.WriteToMap (pData->f, pData->Models, pData->Entities, Level_GetEntityDefs (pData->pDoc->pLevel));
+            Ent.WriteToMap (pData->f, pData->Models, pData->Entities, Level_GetEntityDefs (App->CLSB_Doc->pLevel));
         }
     }
     return GE_TRUE;
@@ -5074,7 +5074,7 @@ static geBoolean fdocCountNonCameraEntities (CEntity &Ent, void *lParam)
     fdocEntityCountData	*ecnt	=(fdocEntityCountData *)lParam;
     if(!Ent.IsCamera())
     {
-        CompileParamsType *CompileParams = Level_GetCompileParams (ecnt->pDoc->pLevel);
+        CompileParamsType *CompileParams = Level_GetCompileParams (App->CLSB_Doc->pLevel);
         if(CompileParams->SuppressHidden)
         {
             if(ecnt->pDoc->EntityIsVisible(&Ent))
@@ -5103,22 +5103,22 @@ geBoolean CFusionDoc::WriteLevelToMap
     ModelInfo_Type *ModelInfo;
     BrushList *BList;
     fdocEntityCountData	ecnt;
-    CompileParamsType *CompileParams = Level_GetCompileParams (pLevel);
+    CompileParamsType *CompileParams = Level_GetCompileParams (App->CLSB_Doc->pLevel);
 
 // changed QD Actors
 // don't want to compile ActorBrushes
     CEntityArray *Entities;
-    Entities = Level_GetEntities (pLevel);
+    Entities = Level_GetEntities (App->CLSB_Doc->pLevel);
 
     for(i=0;i < Entities->GetSize();i++)
     {
         Brush *pBrush = (*Entities)[i].GetActorBrush();
 
         if(pBrush!=NULL)
-            Level_RemoveBrush(pLevel, pBrush);
+            Level_RemoveBrush(App->CLSB_Doc->pLevel, pBrush);
     }
 // end change
-    BList = Level_GetBrushes (pLevel);
+    BList = Level_GetBrushes (App->CLSB_Doc->pLevel);
 
     assert (BList != NULL);
 
@@ -5129,7 +5129,7 @@ geBoolean CFusionDoc::WriteLevelToMap
         return GE_FALSE;
     }
 
-    ModelInfo = Level_GetModelInfo (pLevel);
+    ModelInfo = Level_GetModelInfo (App->CLSB_Doc->pLevel);
     // write header information
     TypeIO_WriteInt (exfile, Version);
     TypeIO_WriteInt (exfile, ftag);
@@ -5143,10 +5143,10 @@ geBoolean CFusionDoc::WriteLevelToMap
     */
     ecnt.Count	= 1;		// world entity
     ecnt.pDoc	= this;
-    Level_EnumEntities(pLevel, &ecnt, ::fdocCountNonCameraEntities);
+    Level_EnumEntities(App->CLSB_Doc->pLevel, &ecnt, ::fdocCountNonCameraEntities);
 
     NumEntities = ecnt.Count + ModelList_GetCount (ModelInfo->Models) +	// models
-                   EntityTable_GetTypeCount (Level_GetEntityDefs (pLevel));			// type information
+                   EntityTable_GetTypeCount (Level_GetEntityDefs (App->CLSB_Doc->pLevel));			// type information
 
     TypeIO_WriteInt (exfile, NumEntities);
 
@@ -5163,7 +5163,7 @@ geBoolean CFusionDoc::WriteLevelToMap
         EnumData.BrushCount = 0;
         EnumData.f = exfile;
 
-        BList = Level_GetBrushes (pLevel);
+        BList = Level_GetBrushes (App->CLSB_Doc->pLevel);
 
         BrushList_EnumCSGBrushes (BList, &EnumData, ::fdocBrushCountCallback);
     
@@ -5180,7 +5180,7 @@ geBoolean CFusionDoc::WriteLevelToMap
         geVec3d SkyRotationAxis;
         geFloat SkyRotationSpeed, SkyTextureScale;
 
-        SkyFaces = Level_GetSkyInfo (pLevel, &SkyRotationAxis, &SkyRotationSpeed, &SkyTextureScale);
+        SkyFaces = Level_GetSkyInfo (App->CLSB_Doc->pLevel, &SkyRotationAxis, &SkyRotationSpeed, &SkyTextureScale);
 
         // determine how many sky faces to write...
         nSkyFaces = 0;
@@ -5198,7 +5198,7 @@ geBoolean CFusionDoc::WriteLevelToMap
         TypeIO_WriteInt (exfile, 0);  // no motion data for this model
         TypeIO_WriteInt (exfile, 4+nSkyFaces);  // numfields = #sky faces + TextureLibrary + SkyAxis + SkyRotation + SkyScaling
         TypeIO_WriteString (exfile, "TextureLib");
-        TypeIO_WriteString (exfile, Level_GetWadPath (pLevel));
+        TypeIO_WriteString (exfile, Level_GetWadPath (App->CLSB_Doc->pLevel));
         
         // write sky information
         {
@@ -5239,13 +5239,13 @@ geBoolean CFusionDoc::WriteLevelToMap
 
         etmData.f = exfile;
         etmData.Models = ModelInfo->Models;
-        etmData.Entities = Level_GetEntities (pLevel);
+        etmData.Entities = Level_GetEntities (App->CLSB_Doc->pLevel);
         etmData.pDoc	=this;
 
-        Level_EnumEntities (pLevel, &etmData, ::fdocEntityToMap);
+        Level_EnumEntities (App->CLSB_Doc->pLevel, &etmData, ::fdocEntityToMap);
     }
         
-    EntityTable_WriteTypesToMap (Level_GetEntityDefs (pLevel), exfile);
+    EntityTable_WriteTypesToMap (Level_GetEntityDefs (App->CLSB_Doc->pLevel), exfile);
     fclose(exfile);
 
 // changed QD Actors
@@ -5254,7 +5254,7 @@ geBoolean CFusionDoc::WriteLevelToMap
         Brush *pBrush = (*Entities)[i].GetActorBrush();
 
         if(pBrush!=NULL)
-            Level_AppendBrush(pLevel, pBrush);
+            Level_AppendBrush(App->CLSB_Doc->pLevel, pBrush);
     }
 // end change
 
@@ -5273,7 +5273,7 @@ void CFusionDoc::CompileDone (CompilerErrorEnum CompileRslt)
     static const char ErrorMessage[] = "Error: Unable to compile.";
     static const char PreviewMessage[] = "Run preview?";
     static const char CancelMessage[] = "Compile cancelled by user.";
-    CompileParamsType *CompileParams = Level_GetCompileParams (pLevel);
+    CompileParamsType *CompileParams = Level_GetCompileParams (App->CLSB_Doc->pLevel);
 
     switch (CompileRslt)
     {
@@ -5363,7 +5363,7 @@ void CFusionDoc::SelectModelBrushes
 
     // Go through the brush list and add all brushes that have
     // this model's id to the selection list.
-    Level_EnumBrushes (pLevel, &bsData, ::fdocSelectBrushCallback);
+    Level_EnumBrushes (App->CLSB_Doc->pLevel, &bsData, ::fdocSelectBrushCallback);
 
     App->CLSB_Doc->UpdateSelected ();
 }
@@ -5382,7 +5382,7 @@ BOOL CFusionDoc::MakeNewBrushGroup
     CString	szDefault ;
     int		NewGroupId = 0 ;
     int		ModalResult ;
-    GroupListType *Groups = Level_GetGroups (pLevel);
+    GroupListType *Groups = Level_GetGroups (App->CLSB_Doc->pLevel);
 
     szDefault.LoadString( IDS_NEWGROUP ) ;
     CKeyEditDlg * GNameDlg = new CKeyEditDlg( pParent, szDefault, &szName ) ;
@@ -5422,7 +5422,7 @@ int CFusionDoc::FillBrushGroupCombo
     )
 {// Fill brush group combo box with group names and IDs
     int CurSel = LB_ERR;
-    GroupList_FillCombobox( Level_GetGroups (pLevel), &cb, mCurrentGroup ) ;
+    GroupList_FillCombobox( Level_GetGroups (App->CLSB_Doc->pLevel), &cb, mCurrentGroup ) ;
     return CurSel;
 }
 
@@ -5453,7 +5453,7 @@ void CFusionDoc::AddSelToGroup
     fdocAddEntityData entData;
     int NumSelBrushes = SelBrushList_GetSize (pSelBrushes);
 
-    entData.Groups = Level_GetGroups (pLevel);
+    entData.Groups = Level_GetGroups (App->CLSB_Doc->pLevel);
     entData.CurrentGroup = mCurrentGroup;
 
     // tag all selected brushes with this group id...
@@ -5469,7 +5469,7 @@ void CFusionDoc::AddSelToGroup
         Group_AddBrush (entData.Groups, mCurrentGroup, pBrush);
     }
     // tag all selected entities with this group id...
-    Level_EnumEntities (pLevel, &entData, ::fdocAddEntityToGroupCallback);
+    Level_EnumEntities (App->CLSB_Doc->pLevel, &entData, ::fdocAddEntityToGroupCallback);
 
     SetModifiedFlag();
 }
@@ -5498,7 +5498,7 @@ void CFusionDoc::RemovesSelFromGroup
     fdocAddEntityData entData;
     int NumSelBrushes = SelBrushList_GetSize (pSelBrushes);
 
-    entData.Groups = Level_GetGroups (pLevel);
+    entData.Groups = Level_GetGroups (App->CLSB_Doc->pLevel);
     entData.CurrentGroup = mCurrentGroup;
 
     for(int i = 0; i < NumSelBrushes; i++)
@@ -5512,7 +5512,7 @@ void CFusionDoc::RemovesSelFromGroup
         }
     }
 
-    Level_EnumEntities (pLevel, &entData, ::fdocRemoveEntityFromGroupCallback);
+    Level_EnumEntities (App->CLSB_Doc->pLevel, &entData, ::fdocRemoveEntityFromGroupCallback);
 }
 
 void CFusionDoc::SelectGroupBrushes
@@ -5527,8 +5527,8 @@ void CFusionDoc::SelectGroupBrushes
     SelectData.WhichGroup = WhichGroup;
     SelectData.pDoc = this;
 
-    Level_EnumBrushes (pLevel, &SelectData, ::BrushSelect ) ;
-    Level_EnumEntities (pLevel, &SelectData, ::EntitySelect ) ;
+    Level_EnumBrushes (App->CLSB_Doc->pLevel, &SelectData, ::BrushSelect ) ;
+    Level_EnumEntities (App->CLSB_Doc->pLevel, &SelectData, ::EntitySelect ) ;
     App->CLSB_Doc->UpdateSelected ();		// update selection information
 }
 
@@ -5555,7 +5555,7 @@ void CFusionDoc::OnUpdateEntitiesEditor(CCmdUI* pCmdUI)
 {
     BOOL	bEnable ;
 
-    bEnable = (	Level_GetEntities (pLevel)->GetSize() ) ? TRUE : FALSE ;
+    bEnable = (	Level_GetEntities (App->CLSB_Doc->pLevel)->GetSize() ) ? TRUE : FALSE ;
     pCmdUI->Enable( bEnable ) ;
 }
 
@@ -5663,8 +5663,8 @@ void CFusionDoc::OnNewLibObject()
     }
 
 // changed QD Actors
-    NewLevel = Level_Create (Level_GetWadPath (pLevel), Level_GetHeadersDirectory (pLevel),
-        Level_GetActorsDirectory (pLevel), Level_GetPawnIniPath (pLevel));
+    NewLevel = Level_Create (Level_GetWadPath (App->CLSB_Doc->pLevel), Level_GetHeadersDirectory (App->CLSB_Doc->pLevel),
+        Level_GetActorsDirectory (App->CLSB_Doc->pLevel), Level_GetPawnIniPath (App->CLSB_Doc->pLevel));
 // end change
     if (NewLevel == NULL)
     {
@@ -5673,7 +5673,7 @@ void CFusionDoc::OnNewLibObject()
     }
 
     EnumData.NewLevel = NewLevel;
-    EnumData.OldLevel = pLevel;
+    EnumData.OldLevel = App->CLSB_Doc->pLevel;
 
     int NumSelBrushes = SelBrushList_GetSize (pSelBrushes);
     // add all selected brushes and entities to the new level
@@ -5695,7 +5695,7 @@ void CFusionDoc::OnNewLibObject()
         ::fdocAddReferencedGroup (&EnumData, Brush_GetGroupId (NewBrush));
     }
 
-    Level_EnumEntities (pLevel, &EnumData, ::fdocAddSelectedEntities);
+    Level_EnumEntities (App->CLSB_Doc->pLevel, &EnumData, ::fdocAddSelectedEntities);
 
     // SelectedGeoCenter contains center.  We're going to translate
     // the center to the origin.  That means that every brush and
@@ -5739,8 +5739,8 @@ static geBoolean fdocAddPremadeEntity (CEntity &Ent, void *lParam)
     {
     pData = (fdocAddPremadeData *)lParam;
 
-    Index = Level_AddEntity (pData->pDoc->pLevel, Ent);
-    Entities = Level_GetEntities (pData->pDoc->pLevel);
+    Index = Level_AddEntity (App->CLSB_Doc->pLevel, Ent);
+    Entities = Level_GetEntities (App->CLSB_Doc->pLevel);
     NewEnt = &((*Entities)[Index]);
 
     pData->pDoc->SelectEntity (NewEnt);
@@ -5800,7 +5800,7 @@ geBoolean CFusionDoc::FixUpBrushDibIDs(Brush *b)
 
         pFace = Brush_GetFace (b, i);
         pName = Face_GetTextureName (pFace);
-        DibId = Level_GetDibId (pLevel, pName);
+        DibId = Level_GetDibId (App->CLSB_Doc->pLevel, pName);
         if (DibId == 0xffff)
         {
             DibId = 1;
@@ -5809,7 +5809,7 @@ geBoolean CFusionDoc::FixUpBrushDibIDs(Brush *b)
         Face_SetTextureDibId (pFace, DibId);
         if (NoErrors)
         {
-            const WadFileEntry * const pbmp = Level_GetWadBitmap (pLevel, pName);
+            const WadFileEntry * const pbmp = Level_GetWadBitmap (App->CLSB_Doc->pLevel, pName);
 
             Face_SetTextureSize (pFace, pbmp->Width, pbmp->Height);
         }
@@ -5828,9 +5828,9 @@ void CFusionDoc::SnapScaleNearest(int sides, int inidx, ViewVars *v)
     mLastOp		=BRUSH_SCALE;
 
     bsnap = 1.0f ;
-    if (Level_UseGrid (pLevel))
+    if (Level_UseGrid (App->CLSB_Doc->pLevel))
     {
-        bsnap = Level_GetGridSnapSize (pLevel);
+        bsnap = Level_GetGridSnapSize (App->CLSB_Doc->pLevel);
     }
 
     if(mModeTool == ID_TOOLS_TEMPLATE)
@@ -5892,11 +5892,11 @@ geBoolean CFusionDoc::ValidateEntities( void )
 {
     fdocEntityValidateData evData;
 
-    evData.Groups = Level_GetGroups (pLevel);
+    evData.Groups = Level_GetGroups (App->CLSB_Doc->pLevel);
     evData.AllGood = GE_TRUE;
-    evData.pEntityTable = Level_GetEntityDefs (pLevel);
+    evData.pEntityTable = Level_GetEntityDefs (App->CLSB_Doc->pLevel);
 
-    Level_EnumEntities (pLevel, &evData, ::fdocValidateEntity);
+    Level_EnumEntities (App->CLSB_Doc->pLevel, &evData, ::fdocValidateEntity);
 
     return evData.AllGood;
 }
@@ -5932,10 +5932,10 @@ geBoolean CFusionDoc::ValidateBrushes( void )
 {
     fdocBrushValidateData bvData;
     
-    bvData.Groups = Level_GetGroups (pLevel);
+    bvData.Groups = Level_GetGroups (App->CLSB_Doc->pLevel);
     bvData.AllGood = GE_TRUE;
         
-    Level_EnumBrushes (pLevel, &bvData, ::fdocValidateBrush);
+    Level_EnumBrushes (App->CLSB_Doc->pLevel, &bvData, ::fdocValidateBrush);
 
     return bvData.AllGood ;
 }
@@ -6186,7 +6186,7 @@ geBoolean	CFusionDoc::LoadMapFile(const char *FileName)
                         //get )
                         for(bc=fgetc(mf);bc!=EOF && bc!=')';bc=fgetc(mf));
                         fscanf(mf, "%s %i %i %f %f %f", szTex, &sx, &sy, &rot, &scx, &scy);// changed QD
-                        dibid	=Level_GetDibId(pLevel, szTex);
+                        dibid	=Level_GetDibId(App->CLSB_Doc->pLevel, szTex);
                         if(dibid == 0xffff)
                         {
                             //try stripping /
@@ -6194,7 +6194,7 @@ geBoolean	CFusionDoc::LoadMapFile(const char *FileName)
                             if(sp)
                             {
                                 sp++;
-                                dibid	=Level_GetDibId(pLevel, sp);
+                                dibid	=Level_GetDibId(App->CLSB_Doc->pLevel, sp);
                             }
                         }
                         if(!sp)
@@ -6279,7 +6279,7 @@ geBoolean	CFusionDoc::LoadMapFile(const char *FileName)
                     Brush_SealFaces(&b);
                     if(b)
                     {
-                        Level_AppendBrush	(pLevel, b);
+                        Level_AppendBrush	(App->CLSB_Doc->pLevel, b);
                         Brush_SetSolid		(b, (contents	&	CONTENTS_SOLID));
                         Brush_SetEmpty		(b, (contents	&	CONTENTS_EMPTY));
                         Brush_SetWindow		(b, (contents	&	CONTENTS_WINDOW));
@@ -6409,7 +6409,7 @@ geBoolean	CFusionDoc::LoadMapFile(const char *FileName)
                                     //get )
                                     for(bc=fgetc(mf);bc!=EOF && bc!=')';bc=fgetc(mf));
                                     fscanf(mf, "%s %i %i %f %f %f", szTex, &sx, &sy, &rot, &scx, &scy);//changed QD
-                                    dibid	=Level_GetDibId(pLevel, szTex);
+                                    dibid	=Level_GetDibId(App->CLSB_Doc->pLevel, szTex);
                                     if(dibid == 0xffff)
                                     {
                                         //try stripping /
@@ -6417,7 +6417,7 @@ geBoolean	CFusionDoc::LoadMapFile(const char *FileName)
                                         if(sp)
                                         {
                                             sp++;
-                                            dibid	=Level_GetDibId(pLevel, sp);
+                                            dibid	=Level_GetDibId(App->CLSB_Doc->pLevel, sp);
                                         }
                                     }
                                     if(!sp)
@@ -6498,7 +6498,7 @@ geBoolean	CFusionDoc::LoadMapFile(const char *FileName)
                                 Brush_SealFaces(&b);
                                 if(b)
                                 {
-                                    Level_AppendBrush	(pLevel, b);
+                                    Level_AppendBrush	(App->CLSB_Doc->pLevel, b);
                                     Brush_SetSolid		(b, (contents	&	CONTENTS_SOLID));
                                     Brush_SetWindow		(b, (contents	&	CONTENTS_WINDOW));
                                     Brush_SetWavy		(b, (contents	&	CONTENTS_WAVY));
@@ -6530,7 +6530,7 @@ geBoolean	CFusionDoc::LoadMapFile(const char *FileName)
                     i	=0;
                     sprintf(Key, "%s%d", NewEnt.GetClassname(), i++);
 
-                    ModelInfo_Type *ModelInfo = Level_GetModelInfo (pLevel);
+                    ModelInfo_Type *ModelInfo = Level_GetModelInfo (App->CLSB_Doc->pLevel);
                     while (ModelList_FindByName (ModelInfo->Models, Key) != NULL)
                     {
                         sprintf(Key, "%s%d", NewEnt.GetClassname(), i++);
@@ -6566,8 +6566,8 @@ geBoolean	CFusionDoc::LoadMapFile(const char *FileName)
             else if(bc=='}')
             {
                 NewEnt.SetGroupId ( 0 );
-                NewEnt.UpdateOrigin (Level_GetEntityDefs (pLevel));
-                Level_AddEntity (pLevel, NewEnt);
+                NewEnt.UpdateOrigin (Level_GetEntityDefs (App->CLSB_Doc->pLevel));
+                Level_AddEntity (App->CLSB_Doc->pLevel, NewEnt);
             }
         }
     }
@@ -6668,7 +6668,7 @@ void CFusionDoc::OnEntityVisibility()
     EntityViewList *pListCopy;
     EntityViewList *pEntityView;
 
-    pEntityView = Level_GetEntityVisibilityInfo (pLevel);
+    pEntityView = Level_GetEntityVisibilityInfo (App->CLSB_Doc->pLevel);
 
     // copy existing...
     pListCopy = EntityViewList_Copy (pEntityView);
@@ -6695,7 +6695,7 @@ void CFusionDoc::OnEntityVisibility()
                 {
                     Changed = GE_TRUE;
 
-                    Level_EnumEntities (pLevel, pEntry, ::fdocSetEntityVisibility);
+                    Level_EnumEntities (App->CLSB_Doc->pLevel, pEntry, ::fdocSetEntityVisibility);
                 }
             }
         }
@@ -6715,9 +6715,9 @@ void CFusionDoc::OnRebuildBsp()
 {
     SetModifiedFlag();
 
-    Level_SetBspRebuild (pLevel, !Level_RebuildBspAlways (pLevel));
+    Level_SetBspRebuild (App->CLSB_Doc->pLevel, !Level_RebuildBspAlways (App->CLSB_Doc->pLevel));
 
-    if (Level_RebuildBspAlways (pLevel))
+    if (Level_RebuildBspAlways (App->CLSB_Doc->pLevel))
     {
         RebuildTrees();
         UpdateAllViews(UAV_ALL3DVIEWS, NULL);
@@ -6726,7 +6726,7 @@ void CFusionDoc::OnRebuildBsp()
 
 void CFusionDoc::OnUpdateRebuildBsp(CCmdUI* pCmdUI) 
 {
-    pCmdUI->SetCheck (Level_RebuildBspAlways (pLevel));
+    pCmdUI->SetCheck (Level_RebuildBspAlways (App->CLSB_Doc->pLevel));
 }
 
 const Prefs *CFusionDoc::GetPrefs (void)
@@ -6741,9 +6741,9 @@ static geBoolean fdocUpdateFaceTextures (Face *pFace, void *lParam)
     CFusionDoc *pDoc = (CFusionDoc *)lParam;
 
 
-    Face_SetTextureDibId (pFace, Level_GetDibId (pDoc->pLevel, Face_GetTextureName (pFace)));
+    Face_SetTextureDibId (pFace, Level_GetDibId (App->CLSB_Doc->pLevel, Face_GetTextureName (pFace)));
 // changed QD 12/03
-    const WadFileEntry * const pbmp = Level_GetWadBitmap (pDoc->pLevel, Face_GetTextureName (pFace));
+    const WadFileEntry * const pbmp = Level_GetWadBitmap (App->CLSB_Doc->pLevel, Face_GetTextureName (pFace));
     if(pbmp)
         Face_SetTextureSize (pFace, pbmp->Width, pbmp->Height);
 // end change
@@ -6766,28 +6766,28 @@ void CFusionDoc::OnLeveloptions()
 
     CLevelOptions  Dlg;
 
-    Dlg.m_DrawScale = Level_GetDrawScale (pLevel);
-    Dlg.m_LightmapScale = Level_GetLightmapScale (pLevel);
-    Dlg.m_TextureLib = Level_GetWadPath (pLevel);
-    Dlg.m_HeadersDir = Level_GetHeadersDirectory (pLevel);
+    Dlg.m_DrawScale = Level_GetDrawScale (App->CLSB_Doc->pLevel);
+    Dlg.m_LightmapScale = Level_GetLightmapScale (App->CLSB_Doc->pLevel);
+    Dlg.m_TextureLib = Level_GetWadPath (App->CLSB_Doc->pLevel);
+    Dlg.m_HeadersDir = Level_GetHeadersDirectory (App->CLSB_Doc->pLevel);
 // changed QD Actors
-    Dlg.m_ActorsDir = Level_GetActorsDirectory (pLevel);
-    Dlg.m_PawnIni = Level_GetPawnIniPath (pLevel);
+    Dlg.m_ActorsDir = Level_GetActorsDirectory (App->CLSB_Doc->pLevel);
+    Dlg.m_PawnIni = Level_GetPawnIniPath (App->CLSB_Doc->pLevel);
     
 // end change
 
     if (Dlg.DoModal () == IDOK)
     {
-        Level_SetDrawScale (pLevel, Dlg.m_DrawScale);
-        Level_SetLightmapScale (pLevel, Dlg.m_LightmapScale);
+        Level_SetDrawScale (App->CLSB_Doc->pLevel, Dlg.m_DrawScale);
+        Level_SetLightmapScale (App->CLSB_Doc->pLevel, Dlg.m_LightmapScale);
         if (Dlg.m_TxlChanged)
         {
-            Level_SetWadPath (pLevel, Dlg.m_TextureLib);
+            Level_SetWadPath (App->CLSB_Doc->pLevel, Dlg.m_TextureLib);
             UpdateAfterWadChange();
         }
         if (Dlg.m_HeadersChanged)
         {
-            Level_LoadEntityDefs (pLevel, Dlg.m_HeadersDir);
+            Level_LoadEntityDefs (App->CLSB_Doc->pLevel, Dlg.m_HeadersDir);
             if (ValidateEntities( ) == FALSE)
             {
                 SelectTab( CONSOLE_TAB ) ;
@@ -6798,13 +6798,13 @@ void CFusionDoc::OnLeveloptions()
 // changed QD Actors
         if (Dlg.m_ActorsChanged)
         {
-            Level_SetActorsDir(pLevel, Dlg.m_ActorsDir);
+            Level_SetActorsDir(App->CLSB_Doc->pLevel, Dlg.m_ActorsDir);
             UpdateEntityActors();
             UpdateAllViews(UAV_ALL3DVIEWS | REBUILD_QUICK, NULL);
         }
         if (Dlg.m_PawnIniChanged)
         {
-            Level_SetPawnIniPath (pLevel, Dlg.m_PawnIni);
+            Level_SetPawnIniPath (App->CLSB_Doc->pLevel, Dlg.m_PawnIni);
             UpdateEntityActors();
             UpdateAllViews(UAV_ALL3DVIEWS | REBUILD_QUICK, NULL);
         }
@@ -6817,11 +6817,11 @@ void CFusionDoc::UpdateAfterWadChange()
 {
     SetModifiedFlag();
 
-    if (!Level_LoadWad (pLevel))
+    if (!Level_LoadWad (App->CLSB_Doc->pLevel))
     {
         CString Msg;
 
-        AfxFormatString1 (Msg, IDS_CANTLOADTXL, Level_GetWadPath(pLevel));
+        AfxFormatString1 (Msg, IDS_CANTLOADTXL, Level_GetWadPath(App->CLSB_Doc->pLevel));
         AfxMessageBox (Msg, MB_OK + MB_ICONERROR);
     }
 
@@ -6830,7 +6830,7 @@ void CFusionDoc::UpdateAfterWadChange()
     App->CL_TextureDialog->Fill_ListBox();
 
     // update all brush faces
-    BrushList_EnumLeafBrushes (Level_GetBrushes (pLevel), this, ::fdocUpdateBrushFaceTextures);
+    BrushList_EnumLeafBrushes (Level_GetBrushes (App->CLSB_Doc->pLevel), this, ::fdocUpdateBrushFaceTextures);
     {
         // find the rendered view and set the wad size infos for it
         POSITION		pos;
@@ -6842,13 +6842,13 @@ void CFusionDoc::UpdateAfterWadChange()
             pView = (CFusionView*)GetNextView(pos) ;
             if( Render_GetViewType( pView->VCam ) & (VIEWSOLID|VIEWTEXTURE|VIEWWIRE) )
             {
-                Render_SetWadSizes (pView->VCam, Level_GetWadSizeInfos (pLevel));
+                Render_SetWadSizes (pView->VCam, Level_GetWadSizeInfos (App->CLSB_Doc->pLevel));
                 break ;	// Only 1 rendered view for now
             }
         }
     }
 
-    if (Level_RebuildBspAlways (pLevel))
+    if (Level_RebuildBspAlways (App->CLSB_Doc->pLevel))
     {
         RebuildTrees();
         UpdateAllViews (UAV_ALL3DVIEWS, NULL);
@@ -6865,7 +6865,7 @@ void CFusionDoc::OnCameraForward()
     if (pCameraEntity)
     {
         geVec3d Angles;
-        pCameraEntity->GetAngles( &Angles, Level_GetEntityDefs (pLevel) );
+        pCameraEntity->GetAngles( &Angles, Level_GetEntityDefs (App->CLSB_Doc->pLevel) );
 
         geXForm3d TransformOrigin;
         geXForm3d_SetIdentity(&TransformOrigin);
@@ -6897,7 +6897,7 @@ void CFusionDoc::OnCameraBack()
     if (pCameraEntity)
     {
         geVec3d Angles;
-        pCameraEntity->GetAngles( &Angles, Level_GetEntityDefs (pLevel) );
+        pCameraEntity->GetAngles( &Angles, Level_GetEntityDefs (App->CLSB_Doc->pLevel) );
 
         geXForm3d TransformOrigin;
         geXForm3d_SetIdentity(&TransformOrigin);
@@ -6929,9 +6929,9 @@ void CFusionDoc::OnCameraLeft()
     if (pCameraEntity)
     {
         geVec3d Angles;
-        pCameraEntity->GetAngles( &Angles, Level_GetEntityDefs (pLevel) );
+        pCameraEntity->GetAngles( &Angles, Level_GetEntityDefs (App->CLSB_Doc->pLevel) );
         Angles.Y = Render_NormalizeAngle(Angles.Y - CAMERA_MOVEMENT_ANGLE);
-        pCameraEntity->SetAngles( &Angles, Level_GetEntityDefs (pLevel) ) ;
+        pCameraEntity->SetAngles( &Angles, Level_GetEntityDefs (App->CLSB_Doc->pLevel) ) ;
         SetRenderedViewCamera( &(pCameraEntity->mOrigin), &Angles) ;
         UpdateAllViews( UAV_ALLVIEWS, NULL );
     }
@@ -6946,9 +6946,9 @@ void CFusionDoc::OnCameraRight()
     if (pCameraEntity)
     {
         geVec3d Angles;
-        pCameraEntity->GetAngles( &Angles, Level_GetEntityDefs (pLevel) );
+        pCameraEntity->GetAngles( &Angles, Level_GetEntityDefs (App->CLSB_Doc->pLevel) );
         Angles.Y = Render_NormalizeAngle(Angles.Y + CAMERA_MOVEMENT_ANGLE);
-        pCameraEntity->SetAngles( &Angles, Level_GetEntityDefs (pLevel) ) ;
+        pCameraEntity->SetAngles( &Angles, Level_GetEntityDefs (App->CLSB_Doc->pLevel) ) ;
         SetRenderedViewCamera( &(pCameraEntity->mOrigin), &Angles) ;
         UpdateAllViews( UAV_ALLVIEWS, NULL );
     }
@@ -6963,12 +6963,12 @@ void CFusionDoc::OnCameraLookUp()
     if (pCameraEntity)
     {
         geVec3d Angles;
-        pCameraEntity->GetAngles( &Angles, Level_GetEntityDefs (pLevel) );
+        pCameraEntity->GetAngles( &Angles, Level_GetEntityDefs (App->CLSB_Doc->pLevel) );
         Angles.X = Angles.X - CAMERA_MOVEMENT_ANGLE;
         if (Angles.X < (M_PI / 2))
             Angles.X = (M_PI / 2);
         Render_NormalizeAngle(Angles.X);
-        pCameraEntity->SetAngles( &Angles, Level_GetEntityDefs (pLevel) ) ;
+        pCameraEntity->SetAngles( &Angles, Level_GetEntityDefs (App->CLSB_Doc->pLevel) ) ;
         SetRenderedViewCamera( &(pCameraEntity->mOrigin), &Angles) ;
         UpdateAllViews( UAV_ALLVIEWS, NULL );
     }
@@ -6983,12 +6983,12 @@ void CFusionDoc::OnCameraLookDown()
     if (pCameraEntity)
     {
         geVec3d Angles;
-        pCameraEntity->GetAngles( &Angles, Level_GetEntityDefs (pLevel) );
+        pCameraEntity->GetAngles( &Angles, Level_GetEntityDefs (App->CLSB_Doc->pLevel) );
         Angles.X = Angles.X + CAMERA_MOVEMENT_ANGLE;
         if (Angles.X > (3 * M_PI / 2))
             Angles.X = (3 * M_PI / 2);
         Render_NormalizeAngle(Angles.X);
-        pCameraEntity->SetAngles( &Angles, Level_GetEntityDefs (pLevel) ) ;
+        pCameraEntity->SetAngles( &Angles, Level_GetEntityDefs (App->CLSB_Doc->pLevel) ) ;
         SetRenderedViewCamera( &(pCameraEntity->mOrigin), &Angles) ;
         UpdateAllViews( UAV_ALLVIEWS, NULL );
     }
@@ -7003,7 +7003,7 @@ void CFusionDoc::OnCameraUp()
     if (pCameraEntity)
     {
         geVec3d Angles;
-        pCameraEntity->GetAngles( &Angles, Level_GetEntityDefs (pLevel) );
+        pCameraEntity->GetAngles( &Angles, Level_GetEntityDefs (App->CLSB_Doc->pLevel) );
         pCameraEntity->mOrigin.Y = pCameraEntity->mOrigin.Y + CAMERA_MOVEMENT_DISTANCE;
         SetRenderedViewCamera( &(pCameraEntity->mOrigin), &Angles) ;
         UpdateAllViews( UAV_ALLVIEWS, NULL );
@@ -7019,7 +7019,7 @@ void CFusionDoc::OnCameraDown()
     if (pCameraEntity)
     {
         geVec3d Angles;
-        pCameraEntity->GetAngles( &Angles, Level_GetEntityDefs (pLevel) );
+        pCameraEntity->GetAngles( &Angles, Level_GetEntityDefs (App->CLSB_Doc->pLevel) );
         pCameraEntity->mOrigin.Y = pCameraEntity->mOrigin.Y - CAMERA_MOVEMENT_DISTANCE;
         SetRenderedViewCamera( &(pCameraEntity->mOrigin), &Angles) ;
         UpdateAllViews( UAV_ALLVIEWS, NULL );
@@ -7037,8 +7037,8 @@ void CFusionDoc::ExportWorldFile(const char *FileName)
     AddPremadeEnumData EnumData;
 
 // changed QD Actors
-    NewLevel = Level_Create (Level_GetWadPath (pLevel), Level_GetHeadersDirectory (pLevel),
-        Level_GetActorsDirectory (pLevel), Level_GetPawnIniPath (pLevel));
+    NewLevel = Level_Create (Level_GetWadPath (App->CLSB_Doc->pLevel), Level_GetHeadersDirectory (App->CLSB_Doc->pLevel),
+        Level_GetActorsDirectory (App->CLSB_Doc->pLevel), Level_GetPawnIniPath (App->CLSB_Doc->pLevel));
 // end change
     if (NewLevel == NULL)
     {
@@ -7048,7 +7048,7 @@ void CFusionDoc::ExportWorldFile(const char *FileName)
     }
 
     EnumData.NewLevel = NewLevel;
-    EnumData.OldLevel = pLevel;
+    EnumData.OldLevel = App->CLSB_Doc->pLevel;
 
     int NumSelBrushes = SelBrushList_GetSize (pSelBrushes);
 
@@ -7071,7 +7071,7 @@ void CFusionDoc::ExportWorldFile(const char *FileName)
         ::fdocAddReferencedGroup (&EnumData, Brush_GetGroupId (NewBrush));
     }
 
-    Level_EnumEntities (pLevel, &EnumData, ::fdocAddSelectedEntities);
+    Level_EnumEntities (App->CLSB_Doc->pLevel, &EnumData, ::fdocAddSelectedEntities);
 
     // ok, everything's added.  Write it to the file.
     if (!Level_WriteToFile (NewLevel, FileName))
@@ -7378,7 +7378,7 @@ void CFusionDoc::ExportTo3dtv1_32(const char *FileName)
             }
             if (iView != -1)
             {
-                pViewStateInfo = Level_GetViewStateInfo (pLevel, iView);
+                pViewStateInfo = Level_GetViewStateInfo (App->CLSB_Doc->pLevel, iView);
                 pViewStateInfo->IsValid = GE_TRUE;
                 pViewStateInfo->ZoomFactor = Render_GetZoom (pView->VCam);
                 Render_GetPitchRollYaw (pView->VCam, &pViewStateInfo->PitchRollYaw);
@@ -7388,7 +7388,7 @@ void CFusionDoc::ExportTo3dtv1_32(const char *FileName)
     }
 
     // and then write the level info to the file
-    geBoolean fResult = Level_ExportTo3dtv1_32(pLevel, FileName);
+    geBoolean fResult = Level_ExportTo3dtv1_32(App->CLSB_Doc->pLevel, FileName);
 
     if(fResult == GE_FALSE)
     {
@@ -7433,7 +7433,7 @@ void CFusionDoc::ExportTo3ds(const char *FileName, int ExpSelected, geBoolean Ex
             }
             if (iView != -1)
             {
-                pViewStateInfo = Level_GetViewStateInfo (pLevel, iView);
+                pViewStateInfo = Level_GetViewStateInfo (App->CLSB_Doc->pLevel, iView);
                 pViewStateInfo->IsValid = GE_TRUE;
                 pViewStateInfo->ZoomFactor = Render_GetZoom (pView->VCam);
                 Render_GetPitchRollYaw (pView->VCam, &pViewStateInfo->PitchRollYaw);
@@ -7446,9 +7446,9 @@ void CFusionDoc::ExportTo3ds(const char *FileName, int ExpSelected, geBoolean Ex
     BrushList *BList;
     geBoolean fResult;
 
-    BList = Level_GetBrushes (pLevel);
+    BList = Level_GetBrushes (App->CLSB_Doc->pLevel);
     if(!ExpSelected&&!ExpFiles)
-        fResult = Level_ExportTo3ds(pLevel, FileName, BList, ExpSelected, ExpLights, -1);
+        fResult = Level_ExportTo3ds(App->CLSB_Doc->pLevel, FileName, BList, ExpSelected, ExpLights, -1);
     else
     {
         int i, GroupID, GroupCount;
@@ -7461,7 +7461,7 @@ void CFusionDoc::ExportTo3ds(const char *FileName, int ExpSelected, geBoolean Ex
         {
             GroupListType *GroupList;
 
-            GroupList=Level_GetGroups(pLevel);
+            GroupList=Level_GetGroups(App->CLSB_Doc->pLevel);
             GroupCount=Group_GetCount(GroupList);
         }
 
@@ -7502,7 +7502,7 @@ void CFusionDoc::ExportTo3ds(const char *FileName, int ExpSelected, geBoolean Ex
                 BrushList_DoCSG(SBList, CurId, ::fdocBrushCSGCallback, this);
 
                 //build individual model mini trees
-                ModelInfo = Level_GetModelInfo (pLevel);
+                ModelInfo = Level_GetModelInfo (App->CLSB_Doc->pLevel);
                 pMod = ModelList_GetFirst (ModelInfo->Models, &mi);
 
                 for(i=0;i < ModelList_GetCount(ModelInfo->Models);i++)
@@ -7532,7 +7532,7 @@ void CFusionDoc::ExportTo3ds(const char *FileName, int ExpSelected, geBoolean Ex
                 ::FilePath_ChangeName(FileName, Name, NewFileName);
             }
 
-            fResult = Level_ExportTo3ds(pLevel, NewFileName, SBList, ExpSelected, ExpLights, GroupID);
+            fResult = Level_ExportTo3ds(App->CLSB_Doc->pLevel, NewFileName, SBList, ExpSelected, ExpLights, GroupID);
             if(!fResult)
                 App->Say("Brush List Fail");
             BrushList_Destroy(&SBList);
@@ -7584,7 +7584,7 @@ void CFusionDoc::ExportTo_RFW(const char *FileName, int ExpSelected, geBoolean E
             }
             if (iView != -1)
             {
-                pViewStateInfo = Level_GetViewStateInfo (pLevel, iView);
+                pViewStateInfo = Level_GetViewStateInfo (App->CLSB_Doc->pLevel, iView);
                 pViewStateInfo->IsValid = GE_TRUE;
                 pViewStateInfo->ZoomFactor = Render_GetZoom (pView->VCam);
                 Render_GetPitchRollYaw (pView->VCam, &pViewStateInfo->PitchRollYaw);
@@ -7597,9 +7597,9 @@ void CFusionDoc::ExportTo_RFW(const char *FileName, int ExpSelected, geBoolean E
     BrushList *BList;
     geBoolean fResult;
 
-    BList = Level_GetBrushes (pLevel);
+    BList = Level_GetBrushes (App->CLSB_Doc->pLevel);
     if(!ExpSelected&&!ExpFiles)
-        fResult = App->CLSB_Export_World->Level_Build_G3ds(reinterpret_cast<tag_Level3 *> (pLevel), FileName, BList, ExpSelected, ExpLights, -1);
+        fResult = App->CLSB_Export_World->Level_Build_G3ds(reinterpret_cast<tag_Level3 *> (App->CLSB_Doc->pLevel), FileName, BList, ExpSelected, ExpLights, -1);
 
     else
     {
@@ -7613,7 +7613,7 @@ void CFusionDoc::ExportTo_RFW(const char *FileName, int ExpSelected, geBoolean E
         {
             GroupListType *GroupList;
 
-            GroupList=Level_GetGroups(pLevel);
+            GroupList=Level_GetGroups(App->CLSB_Doc->pLevel);
             GroupCount=Group_GetCount(GroupList);
         }
 
@@ -7654,7 +7654,7 @@ void CFusionDoc::ExportTo_RFW(const char *FileName, int ExpSelected, geBoolean E
                 BrushList_DoCSG(SBList, CurId, ::fdocBrushCSGCallback, this);
 
                 //build individual model mini trees
-                ModelInfo = Level_GetModelInfo (pLevel);
+                ModelInfo = Level_GetModelInfo (App->CLSB_Doc->pLevel);
                 pMod = ModelList_GetFirst (ModelInfo->Models, &mi);
 
                 for(i=0;i < ModelList_GetCount(ModelInfo->Models);i++)
@@ -7684,7 +7684,7 @@ void CFusionDoc::ExportTo_RFW(const char *FileName, int ExpSelected, geBoolean E
                 ::FilePath_ChangeName(FileName, Name, NewFileName);
             }
 
-            fResult = App->CLSB_Export_World->Level_Build_G3ds(reinterpret_cast<tag_Level3 *> (pLevel), NewFileName, SBList, ExpSelected, ExpLights, GroupID);
+            fResult = App->CLSB_Export_World->Level_Build_G3ds(reinterpret_cast<tag_Level3 *> (App->CLSB_Doc->pLevel), NewFileName, SBList, ExpSelected, ExpLights, GroupID);
             if(!fResult)
                 App->Say("Error exporting group");
             BrushList_Destroy(&SBList);
@@ -7818,8 +7818,8 @@ const char* CFusionDoc::GetObjectName3D(CPoint point, ViewVars *v)
 {
     int			CurEnt = 0;
     geFloat		MinEDist;
-    CEntityArray *Entities = Level_GetEntities (pLevel);
-    BrushList	*BList = Level_GetBrushes (pLevel);
+    CEntityArray *Entities = Level_GetEntities (App->CLSB_Doc->pLevel);
+    BrushList	*BList = Level_GetBrushes (App->CLSB_Doc->pLevel);
     SelectBrush3DCBData	bdat;
     geVec3d ClickPosWorld;
 //	geBoolean	EntitySelected	=FALSE;
@@ -7953,7 +7953,7 @@ CEntity* CFusionDoc::GetSelectedEntity()
 
     if(SelState & ONEENTITY)
     {
-        CEntityArray *Entities = Level_GetEntities (pLevel);
+        CEntityArray *Entities = Level_GetEntities (App->CLSB_Doc->pLevel);
 
         //for(int i=0;i < Entities->GetSize() && !((CEntity*)(Entities)[i]->IsSelected ());i++);
         
@@ -8088,7 +8088,7 @@ void CFusionDoc::OnCameraCenteronselection()
         if (NumSelEntities)
         {
             CEntityArray *Entities;
-            Entities = Level_GetEntities (pLevel);
+            Entities = Level_GetEntities (App->CLSB_Doc->pLevel);
             if (Entities)
             {
                 int NumEntities = Entities->GetSize();
@@ -8145,7 +8145,7 @@ void CFusionDoc::OnCameraCenteronselection()
         Angles.X = Render_NormalizeAngle(Angles.X);
         Angles.Y = Render_NormalizeAngle(Angles.Y);
 
-        pCameraEntity->SetAngles( &Angles, Level_GetEntityDefs (pLevel) ) ;
+        pCameraEntity->SetAngles( &Angles, Level_GetEntityDefs (App->CLSB_Doc->pLevel) ) ;
 
         SetRenderedViewCamera( &(pCameraEntity->mOrigin), &Angles) ;
         UpdateAllViews( UAV_ALLVIEWS, NULL );
@@ -8422,8 +8422,8 @@ void CFusionDoc::OnTemplateSunlight()
 void CFusionDoc::OnViewShowActors()
 {
     bShowActors	=!(bShowActors);
-    Level_SetShowActors(pLevel, bShowActors);
-    CEntityArray *Entities = Level_GetEntities (pLevel);
+    Level_SetShowActors(App->CLSB_Doc->pLevel, bShowActors);
+    CEntityArray *Entities = Level_GetEntities (App->CLSB_Doc->pLevel);
     int i;
 
     if(!bShowActors)

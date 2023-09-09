@@ -32,9 +32,9 @@ void A_Render_App::Render3D_Mode(UINT nID)
 
 	pView->OnViewType(nID);
 
-	Level_SetBspRebuild (pDoc->pLevel, !Level_RebuildBspAlways (pDoc->pLevel));
+	Level_SetBspRebuild (App->CLSB_Doc->pLevel, !Level_RebuildBspAlways (App->CLSB_Doc->pLevel));
 
-	if (Level_RebuildBspAlways (pDoc->pLevel))
+	if (Level_RebuildBspAlways (App->CLSB_Doc->pLevel))
 	{
 		pDoc->RebuildTrees();
 		pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);

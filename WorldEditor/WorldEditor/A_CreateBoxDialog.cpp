@@ -57,7 +57,7 @@ void A_CreateBoxDialog::Start_CreateBox_Dlg()
 {
 	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
 
-	pBoxTemplate = Level_GetBoxTemplate (m_pDoc->pLevel);
+	pBoxTemplate = Level_GetBoxTemplate (App->CLSB_Doc->pLevel);
 
 	App->CL_TabsControl->Enable_Tabs_Dlg(false);
 
@@ -473,7 +473,7 @@ void A_CreateBoxDialog::CreateNewTemplateBrush(Brush *pBrush)
 	Brush_Bound (App->m_pDoc->CurBrush);
 	Brush_Center (App->m_pDoc->CurBrush, &BrushPos);
 
-	pTemplatePos = Level_GetTemplatePos (App->m_pDoc->pLevel);
+	pTemplatePos = Level_GetTemplatePos (App->CLSB_Doc->pLevel);
 
 	if (m_UseCamPos == 1)
 	{
@@ -658,7 +658,7 @@ void A_CreateBoxDialog::CreateDefault_TemplateCube()
 {
 	App->Get_Current_Document();
 
-	pBoxTemplate = Level_GetBoxTemplate(App->m_pDoc->pLevel);
+	pBoxTemplate = Level_GetBoxTemplate(App->CLSB_Doc->pLevel);
 
 	//Set_Members();
 

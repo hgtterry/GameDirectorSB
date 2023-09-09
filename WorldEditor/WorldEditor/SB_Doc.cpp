@@ -53,7 +53,7 @@ void SB_Doc::DeleteCurrentThing()
 
         DeleteSelectedBrushes();
 
-        if (ReBuild && Level_RebuildBspAlways(App->m_pDoc->pLevel))
+        if (ReBuild && Level_RebuildBspAlways(pLevel))
         {
             App->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS | REBUILD_QUICK, NULL, TRUE);
         }
@@ -75,7 +75,7 @@ bool SB_Doc::DeleteSelectedBrushes()
     App->Get_Current_Document();
 
     geBoolean	bAlteredCurrentGroup = GE_FALSE;
-    CEntityArray* Entities = Level_GetEntities(App->m_pDoc->pLevel);
+    CEntityArray* Entities = Level_GetEntities(pLevel);
 
     for (int Ent = 0; Ent < Entities->GetSize() && (!(App->m_pDoc->GetSelState() & NOENTITIES)); Ent++)
     {
@@ -111,7 +111,7 @@ bool SB_Doc::DeleteSelectedBrushes()
                 bAlteredCurrentGroup = GE_TRUE;
             }
 
-            Level_RemoveBrush(App->m_pDoc->pLevel, pBrush);
+            Level_RemoveBrush(pLevel, pBrush);
             SelBrushList_Remove(App->m_pDoc->pSelBrushes, pBrush);
             Brush_Destroy(&pBrush);
         }
@@ -143,7 +143,7 @@ void SB_Doc::DeleteEntity(int EntityIndex)
     CEntityArray* Entities;
 
     // now delete the entity, we'll do the fixups later
-    Entities = Level_GetEntities(App->m_pDoc->pLevel);
+    Entities = Level_GetEntities(pLevel);
 
     App->m_pDoc->DeselectEntity(&(*Entities)[EntityIndex]);
     // changed QD Actors
@@ -151,7 +151,7 @@ void SB_Doc::DeleteEntity(int EntityIndex)
     if (b != NULL)
     {
         SelBrushList_Remove(App->m_pDoc->pSelBrushes, b);
-        Level_RemoveBrush(App->m_pDoc->pLevel, b);
+        Level_RemoveBrush(pLevel, b);
     }
     // end change
     Entities->RemoveAt(EntityIndex);
@@ -434,8 +434,8 @@ void SB_Doc::SelectAll(void)
     App->m_pDoc->DoGeneralSelect();
 
     App->m_pDoc->NumSelEntities = 0;
-    Level_EnumEntities(App->m_pDoc->pLevel, this, fdocSelectEntity);
-    Level_EnumBrushes(App->m_pDoc->pLevel, this, fdocSelectBrush);
+    Level_EnumEntities(pLevel, this, fdocSelectEntity);
+    Level_EnumBrushes(pLevel, this, fdocSelectBrush);
 
     // Select all faces on all selected brushes
     int iBrush;
@@ -503,7 +503,7 @@ void SB_Doc::UpdateSelected(void)
     else if (App->m_pDoc->SelState != NOSELECTIONS)
     {
         Model* pModel;
-        ModelInfo_Type* ModelInfo = Level_GetModelInfo(App->m_pDoc->pLevel);
+        ModelInfo_Type* ModelInfo = Level_GetModelInfo(pLevel);
 
         pModel = ModelList_GetAnimatingModel(ModelInfo->Models);
         if (pModel != NULL)
@@ -522,7 +522,7 @@ void SB_Doc::UpdateSelected(void)
                 geVec3d EntitySelectionCenter = { 0.0f,0.0f,0.0f };
 
                 CEntityArray* Entities;
-                Entities = Level_GetEntities(App->m_pDoc->pLevel);
+                Entities = Level_GetEntities(pLevel);
                 if (Entities)
                 {
                     int NumEntities = Entities->GetSize();
@@ -543,7 +543,7 @@ void SB_Doc::UpdateSelected(void)
 
     if (App->m_pDoc->SelState & ONEENTITY)
     {
-        CEntityArray* Entities = Level_GetEntities(App->m_pDoc->pLevel);
+        CEntityArray* Entities = Level_GetEntities(pLevel);
 
         for (i = 0; i < Entities->GetSize() && !((*Entities)[i].IsSelected()); i++);
         App->m_pDoc->mCurrentEntity = i;

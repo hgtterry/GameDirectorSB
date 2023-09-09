@@ -325,7 +325,7 @@ bool SB_Loader::AddTexture(geVFile* BaseFile, const char* TextureName, int Group
 	geBitmap* Bitmap = NULL;
 	CWadFile* pWad;
 	pWad = NULL;
-	pWad = Level_GetWadFile(App->m_pDoc->pLevel);
+	pWad = Level_GetWadFile(App->CLSB_Doc->pLevel);
 	for (int index = 0; index < pWad->mBitmapCount; index++)
 	{
 		char mName[MAX_PATH];
@@ -959,7 +959,7 @@ bool SB_Loader::Load_ActorWorld()
 
 	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
 
-	Level_AppendBrush(m_pDoc->pLevel, mActorBrush);
+	Level_AppendBrush(App->CLSB_Doc->pLevel, mActorBrush);
 	Brush_SetVisible(mActorBrush, GE_TRUE);
 	SelBrushList_Add(m_pDoc->pSelBrushes, mActorBrush);
 

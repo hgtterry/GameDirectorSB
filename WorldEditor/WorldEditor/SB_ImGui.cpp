@@ -357,7 +357,7 @@ void SB_ImGui::Camera_Pos_GUI(void)
 		ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(2, 2));
 
 		geVec3d Angles;
-		pCameraEntity->GetAngles(&Angles, Level_GetEntityDefs(m_pDoc->pLevel));
+		pCameraEntity->GetAngles(&Angles, Level_GetEntityDefs(App->CLSB_Doc->pLevel));
 
 		ImGui::Text("World Editor Position");
 		ImGui::Text("X = %f", pCameraEntity->mOrigin.X);

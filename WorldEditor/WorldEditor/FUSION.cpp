@@ -602,7 +602,7 @@ void CFusionApp::OnFileOpen()
 {
 	// If the current document is unmodified and has no brushes, wipe it
 	CFusionDoc* pDoc = GetActiveFusionDoc() ;
-	if( pDoc && ( pDoc->IsModified() == FALSE ) && BrushList_Count( Level_GetBrushes (pDoc->pLevel), BRUSH_COUNT_ALL ) == 0 )
+	if( pDoc && ( pDoc->IsModified() == FALSE ) && BrushList_Count( Level_GetBrushes (App->CLSB_Doc->pLevel), BRUSH_COUNT_ALL ) == 0 )
 	{
 		this->pMainFrame->SendMessage( WM_COMMAND, ID_FILE_CLOSE, 0 ) ;
 	}
@@ -633,7 +633,7 @@ BOOL CFusionApp::OnOpenRecentFile (UINT nID)
 
 	// If the current document is unmodified and has no brushes, wipe it
 	CFusionDoc* pDoc = GetActiveFusionDoc() ;
-	if( pDoc && ( pDoc->IsModified() == FALSE ) && BrushList_Count( Level_GetBrushes (pDoc->pLevel), BRUSH_COUNT_ALL ) == 0 )
+	if( pDoc && ( pDoc->IsModified() == FALSE ) && BrushList_Count( Level_GetBrushes (App->CLSB_Doc->pLevel), BRUSH_COUNT_ALL ) == 0 )
 	{
 		this->pMainFrame->SendMessage( WM_COMMAND, ID_FILE_CLOSE, 0 ) ;
 	}

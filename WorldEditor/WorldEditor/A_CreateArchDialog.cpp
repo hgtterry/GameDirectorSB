@@ -62,7 +62,7 @@ void A_CreateArchDialog::Start_CreateArch_Dlg()
 {
 	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
 
-	pArchTemplate = Level_GetArchTemplate (m_pDoc->pLevel);
+	pArchTemplate = Level_GetArchTemplate (App->CLSB_Doc->pLevel);
 
 	App->CL_TabsControl->Enable_Tabs_Dlg(false);
 	DialogBox(App->hInst, (LPCTSTR)IDD_CREATE_ARCH, App->MainHwnd, (DLGPROC)CreateArch_Proc);
@@ -587,7 +587,7 @@ void A_CreateArchDialog::CreateNewTemplateBrush(Brush *pBrush)
 	Brush_Bound (m_pDoc->CurBrush);
 	Brush_Center (m_pDoc->CurBrush, &BrushPos);
 
-	pTemplatePos = Level_GetTemplatePos (m_pDoc->pLevel);
+	pTemplatePos = Level_GetTemplatePos (App->CLSB_Doc->pLevel);
 
 	if (m_UseCamPos == 1)
 	{

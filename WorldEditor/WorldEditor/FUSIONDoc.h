@@ -111,7 +111,7 @@ protected: // create from serialization only
 	DECLARE_SERIAL(CFusionDoc);
 
 public:
-	Level *pLevel;
+	//Level *pLevel;
 
 	//states and stats
 	int	NumSelEntities;

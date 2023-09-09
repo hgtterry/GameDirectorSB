@@ -48,7 +48,7 @@ bool SB_Level::Check_For_Centre_Texture()
 
 	WadFileEntry* pbmp;
 	pbmp = NULL;
-	pbmp = Level_GetWadBitmap(App->m_pDoc->pLevel, "Dummy");
+	pbmp = Level_GetWadBitmap(App->CLSB_Doc->pLevel, "Dummy");
 	if (pbmp == NULL)
 	{
 		//App->Say("Not Found");
@@ -72,7 +72,7 @@ bool SB_Level::Check_For_Centre_Texture()
 
 		App->CL_TextureDialog->Save(App->CL_World->mCurrent_TXL_FilePath);
 
-		Level_SetWadPath(App->m_pDoc->pLevel, Level_GetWadPath(App->m_pDoc->pLevel));
+		Level_SetWadPath(App->CLSB_Doc->pLevel, Level_GetWadPath(App->CLSB_Doc->pLevel));
 
 		App->CL_World->Set_Current_TxlPath();
 		App->m_pDoc->UpdateAfterWadChange();
@@ -91,8 +91,8 @@ bool SB_Level::Check_For_Centre_Texture()
 // *************************************************************************
 bool SB_Level::Check_For_Centre_Brush()
 {
-	Level* pLevel = App->m_pDoc->pLevel;
-	BrushList* pList = Level_GetBrushes(App->m_pDoc->pLevel);
+	Level* pLevel = App->CLSB_Doc->pLevel;
+	BrushList* pList = Level_GetBrushes(App->CLSB_Doc->pLevel);
 
 	int Result = 1;
 	bool GotIt = 0;
@@ -118,7 +118,7 @@ bool SB_Level::Check_For_Centre_Brush()
 		App->m_pDoc->OnToolsTemplate();
 
 		BrushTemplate_Box* pBoxTemplate;
-		pBoxTemplate = Level_GetBoxTemplate(App->m_pDoc->pLevel);
+		pBoxTemplate = Level_GetBoxTemplate(App->CLSB_Doc->pLevel);
 
 		pBoxTemplate->Solid = 0;
 		pBoxTemplate->XSizeBot = 2;
@@ -185,8 +185,8 @@ bool SB_Level::Change_Centre_Brush_Texture()
 		WadFileEntry* pbmp;
 
 		Face_SetTextureName(f, "Dummy");
-		Face_SetTextureDibId(f, Level_GetDibId(App->m_pDoc->pLevel, "Dummy"));
-		pbmp = Level_GetWadBitmap(App->m_pDoc->pLevel, "Dummy");
+		Face_SetTextureDibId(f, Level_GetDibId(App->CLSB_Doc->pLevel, "Dummy"));
+		pbmp = Level_GetWadBitmap(App->CLSB_Doc->pLevel, "Dummy");
 		if (pbmp != NULL)
 		{
 			Face_SetTextureSize(f, pbmp->Width, pbmp->Height);

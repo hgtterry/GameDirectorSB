@@ -74,8 +74,8 @@ int A_Brush::Get_Brush_Count(void)
 	int Count = 0;
 	Brush* b;
 
-	Level* pLevel = App->m_pDoc->pLevel;
-	BrushList* pList = Level_GetBrushes(App->m_pDoc->pLevel);
+	Level* pLevel = App->CLSB_Doc->pLevel;
+	BrushList* pList = Level_GetBrushes(App->CLSB_Doc->pLevel);
 
 	b = pList->First;
 	while (b != NULL)
@@ -98,8 +98,8 @@ Brush* A_Brush::Get_By_Name(char* BrushName)
 	int Result = 1;
 	Brush* b;
 
-	Level* pLevel = App->m_pDoc->pLevel;
-	BrushList* pList = Level_GetBrushes(App->m_pDoc->pLevel);
+	Level* pLevel = App->CLSB_Doc->pLevel;
+	BrushList* pList = Level_GetBrushes(App->CLSB_Doc->pLevel);
 
 	b = pList->First;
 	while (b != NULL)
@@ -127,8 +127,8 @@ Brush* A_Brush::Get_By_Index(int Index)
 	int Result = 1;
 	Brush* b;
 
-	Level* pLevel = App->m_pDoc->pLevel;
-	BrushList* pList = Level_GetBrushes(App->m_pDoc->pLevel);
+	Level* pLevel = App->CLSB_Doc->pLevel;
+	BrushList* pList = Level_GetBrushes(App->CLSB_Doc->pLevel);
 
 	b = pList->First;
 	while (b != NULL)
@@ -227,7 +227,7 @@ bool A_Brush::Brush_Create_From_Equity()
 
 	Brush_Move(pBrush, &mOrigin);
 
-	Level_AppendBrush(App->m_pDoc->pLevel, pBrush);
+	Level_AppendBrush(App->CLSB_Doc->pLevel, pBrush);
 	Brush_SetVisible(pBrush, GE_TRUE);
 	SelBrushList_Add(App->m_pDoc->pSelBrushes, pBrush);
 

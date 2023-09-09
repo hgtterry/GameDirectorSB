@@ -132,7 +132,7 @@ void A_World::Set_Current_TxlPath(void)
 	CFusionDoc* pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
 
 	const char *WadFilePath;
-	WadFilePath = Level_GetWadPath(pDoc->pLevel);
+	WadFilePath = Level_GetWadPath(App->CLSB_Doc->pLevel);
 
 	strcpy(mCurrent_TXL_FilePath,WadFilePath);
 
@@ -196,8 +196,8 @@ int A_World::Get_Brush_Count()
 {
 	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
 
-	Level *pLevel = m_pDoc->pLevel;
-	BrushList *pList = Level_GetBrushes (m_pDoc->pLevel);
+	Level *pLevel = App->CLSB_Doc->pLevel;
+	BrushList *pList = Level_GetBrushes (App->CLSB_Doc->pLevel);
 
 
 	int Count = 0;
@@ -219,8 +219,8 @@ Brush* A_World::Get_Brush_ByIndex(int Index)
 {
 	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
 
-	Level *pLevel = m_pDoc->pLevel;
-	BrushList *pList = Level_GetBrushes (m_pDoc->pLevel);
+	Level *pLevel = App->CLSB_Doc->pLevel;
+	BrushList *pList = Level_GetBrushes (App->CLSB_Doc->pLevel);
 
 	int Count = 0;
 	Brush * b;
@@ -246,8 +246,8 @@ int A_World::Get_Brush_Index_By_Name(char* BrushName)
 {
 	App->Get_Current_Document();
 
-	Level* pLevel = App->m_pDoc->pLevel;
-	BrushList* pList = Level_GetBrushes(App->m_pDoc->pLevel);
+	Level* pLevel = App->CLSB_Doc->pLevel;
+	BrushList* pList = Level_GetBrushes(App->CLSB_Doc->pLevel);
 
 	int Count = 0;
 	Brush* b;
@@ -276,7 +276,7 @@ void A_World::Level_SetTxlPath(char* Path)
 {
 	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
 
-	Level_SetWadPath(m_pDoc->pLevel,Path);
+	Level_SetWadPath(App->CLSB_Doc->pLevel,Path);
 	App->CL_World->Set_Current_TxlPath();
 	m_pDoc->UpdateAfterWadChange();
 }

@@ -119,7 +119,7 @@ LRESULT CALLBACK SB_Camera_WE::Move_Camera_Proc(HWND hDlg, UINT message, WPARAM 
 
 
 		geVec3d Angles;
-		App->CLSB_Camera_WE->pCameraEntity->GetAngles( &Angles, Level_GetEntityDefs (App->m_pDoc->pLevel) );
+		App->CLSB_Camera_WE->pCameraEntity->GetAngles( &Angles, Level_GetEntityDefs (App->CLSB_Doc->pLevel) );
 
 		sprintf(buf, "%f", Angles.X);
 		SetDlgItemText(hDlg, IDC_EDCAMANGLEX,buf);
@@ -339,7 +339,7 @@ LRESULT CALLBACK SB_Camera_WE::Move_Camera_Proc(HWND hDlg, UINT message, WPARAM 
 			//Angles.Y = 0;
 			//Angles.Z = 0;
 
-			App->CLSB_Camera_WE->pCameraEntity->SetAngles(&App->CLSB_Camera_WE->Angles, Level_GetEntityDefs (App->m_pDoc->pLevel) );
+			App->CLSB_Camera_WE->pCameraEntity->SetAngles(&App->CLSB_Camera_WE->Angles, Level_GetEntityDefs (App->CLSB_Doc->pLevel) );
 
 			App->m_pDoc->SetRenderedViewCamera( &(App->CLSB_Camera_WE->pCameraEntity->mOrigin), &App->CLSB_Camera_WE->Angles) ;
 			App->m_pDoc->UpdateAllViews( UAV_ALLVIEWS, NULL );
@@ -365,7 +365,7 @@ LRESULT CALLBACK SB_Camera_WE::Move_Camera_Proc(HWND hDlg, UINT message, WPARAM 
 void SB_Camera_WE::Update_Dlg(HWND hDlg)
 {
 	char buf[100];
-	pCameraEntity->GetAngles(&Angles, Level_GetEntityDefs(App->m_pDoc->pLevel));
+	pCameraEntity->GetAngles(&Angles, Level_GetEntityDefs(App->CLSB_Doc->pLevel));
 
 	sprintf(buf, "%f", pCameraEntity->mOrigin.X);
 	SetDlgItemText(hDlg, IDC_EDCAMX, buf);
@@ -422,7 +422,7 @@ CEntity* SB_Camera_WE::FindCameraEntity()
 	
 	App->Get_Current_Document();
 
-	CEntityArray* Entities = Level_GetEntities(App->m_pDoc->pLevel);
+	CEntityArray* Entities = Level_GetEntities(App->CLSB_Doc->pLevel);
 	int i;
 	int j = Entities->GetSize();
 
@@ -466,7 +466,7 @@ void SB_Camera_WE::Reset_Camera_Position()
 	App->CLSB_Camera_WE->CameraPosition.Y = 0;
 	App->CLSB_Camera_WE->CameraPosition.Z = 0;
 
-	App->CLSB_Camera_WE->pCameraEntity->SetOrigin(App->CLSB_Camera_WE->CameraPosition.X, App->CLSB_Camera_WE->CameraPosition.Y, App->CLSB_Camera_WE->CameraPosition.Z, Level_GetEntityDefs(App->m_pDoc->pLevel));
+	App->CLSB_Camera_WE->pCameraEntity->SetOrigin(App->CLSB_Camera_WE->CameraPosition.X, App->CLSB_Camera_WE->CameraPosition.Y, App->CLSB_Camera_WE->CameraPosition.Z, Level_GetEntityDefs(App->CLSB_Doc->pLevel));
 
 	App->m_pDoc->SetRenderedViewCamera(&(App->CLSB_Camera_WE->pCameraEntity->mOrigin), &App->CLSB_Camera_WE->Angles);
 	App->m_pDoc->UpdateAllViews(UAV_ALLVIEWS, NULL);
@@ -533,7 +533,7 @@ void SB_Camera_WE::Reset_Camera_Angles()
 	App->CLSB_Camera_WE->Angles.Y = 0;
 	App->CLSB_Camera_WE->Angles.Z = 0;
 
-	App->CLSB_Camera_WE->pCameraEntity->SetAngles(&App->CLSB_Camera_WE->Angles, Level_GetEntityDefs(App->m_pDoc->pLevel));
+	App->CLSB_Camera_WE->pCameraEntity->SetAngles(&App->CLSB_Camera_WE->Angles, Level_GetEntityDefs(App->CLSB_Doc->pLevel));
 
 	App->m_pDoc->SetRenderedViewCamera(&(App->CLSB_Camera_WE->pCameraEntity->mOrigin), &App->CLSB_Camera_WE->Angles);
 	App->m_pDoc->UpdateAllViews(UAV_ALLVIEWS, NULL);
@@ -563,7 +563,7 @@ void SB_Camera_WE::Zero_Camera()
 		Angles.Y = 0;
 		Angles.Z = 0;
 
-		pCameraEntity->SetAngles(&Angles, Level_GetEntityDefs(App->m_pDoc->pLevel));
+		pCameraEntity->SetAngles(&Angles, Level_GetEntityDefs(App->CLSB_Doc->pLevel));
 
 		Angles.X = 3.141593;
 		Angles.Y = 0;
@@ -588,7 +588,7 @@ void SB_Camera_WE::Move_Camera_Forward(float Step)
 	if (pCameraEntity)
 	{
 		geVec3d Angles;
-		pCameraEntity->GetAngles(&Angles, Level_GetEntityDefs(App->m_pDoc->pLevel));
+		pCameraEntity->GetAngles(&Angles, Level_GetEntityDefs(App->CLSB_Doc->pLevel));
 
 		geXForm3d TransformOrigin;
 		geXForm3d_SetIdentity(&TransformOrigin);
@@ -623,7 +623,7 @@ void SB_Camera_WE::Move_Camera_Back(float Step)
 	if (pCameraEntity)
 	{
 		geVec3d Angles;
-		pCameraEntity->GetAngles(&Angles, Level_GetEntityDefs(App->m_pDoc->pLevel));
+		pCameraEntity->GetAngles(&Angles, Level_GetEntityDefs(App->CLSB_Doc->pLevel));
 
 		geXForm3d TransformOrigin;
 		geXForm3d_SetIdentity(&TransformOrigin);
@@ -658,7 +658,7 @@ void SB_Camera_WE::Move_Camera_Down(float Step)
 	if (pCameraEntity)
 	{
 		geVec3d Angles;
-		pCameraEntity->GetAngles(&Angles, Level_GetEntityDefs(App->m_pDoc->pLevel));
+		pCameraEntity->GetAngles(&Angles, Level_GetEntityDefs(App->CLSB_Doc->pLevel));
 
 		geXForm3d TransformOrigin;
 		geXForm3d_SetIdentity(&TransformOrigin);
@@ -693,7 +693,7 @@ void SB_Camera_WE::Move_Camera_Up(float Step)
 	if (pCameraEntity)
 	{
 		geVec3d Angles;
-		pCameraEntity->GetAngles(&Angles, Level_GetEntityDefs(App->m_pDoc->pLevel));
+		pCameraEntity->GetAngles(&Angles, Level_GetEntityDefs(App->CLSB_Doc->pLevel));
 
 		geXForm3d TransformOrigin;
 		geXForm3d_SetIdentity(&TransformOrigin);
@@ -728,7 +728,7 @@ void SB_Camera_WE::Move_Camera_Right(float Step)
 	if (pCameraEntity)
 	{
 		geVec3d Angles;
-		pCameraEntity->GetAngles(&Angles, Level_GetEntityDefs(App->m_pDoc->pLevel));
+		pCameraEntity->GetAngles(&Angles, Level_GetEntityDefs(App->CLSB_Doc->pLevel));
 
 		geXForm3d TransformOrigin;
 		geXForm3d_SetIdentity(&TransformOrigin);
@@ -763,7 +763,7 @@ void SB_Camera_WE::Move_Camera_Left(float Step)
 	if (pCameraEntity)
 	{
 		geVec3d Angles;
-		pCameraEntity->GetAngles(&Angles, Level_GetEntityDefs(App->m_pDoc->pLevel));
+		pCameraEntity->GetAngles(&Angles, Level_GetEntityDefs(App->CLSB_Doc->pLevel));
 
 		geXForm3d TransformOrigin;
 		geXForm3d_SetIdentity(&TransformOrigin);

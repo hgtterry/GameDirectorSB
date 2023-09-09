@@ -24,5 +24,7 @@ public:
 
 	void SelectAll(void);
 	void UpdateSelected(void);
+
+	Level* pLevel;
 };
 

@@ -245,7 +245,7 @@ void SB_Export_World::ExportTo_RFW(const char *FileName, int ExpSelected, geBool
 			}
 			if (iView != -1)
 			{
-				pViewStateInfo = Level_GetViewStateInfo (App->m_pDoc->pLevel, iView);
+				pViewStateInfo = Level_GetViewStateInfo (App->CLSB_Doc->pLevel, iView);
 				pViewStateInfo->IsValid = GE_TRUE;
 				pViewStateInfo->ZoomFactor = Render_GetZoom (pView->VCam);
 				Render_GetPitchRollYaw (pView->VCam, &pViewStateInfo->PitchRollYaw);
@@ -259,10 +259,10 @@ void SB_Export_World::ExportTo_RFW(const char *FileName, int ExpSelected, geBool
 	BrushList *BList;
 	geBoolean fResult;
 
-	BList = Level_GetBrushes (App->m_pDoc->pLevel);
+	BList = Level_GetBrushes (App->CLSB_Doc->pLevel);
 	if(!ExpSelected&&!ExpFiles)
 	{
-		fResult = App->CLSB_Export_World->Level_Build_G3ds(reinterpret_cast<tag_Level3 *> (App->m_pDoc->pLevel), FileName, BList, ExpSelected, ExpLights, -1);
+		fResult = App->CLSB_Export_World->Level_Build_G3ds(reinterpret_cast<tag_Level3 *> (App->CLSB_Doc->pLevel), FileName, BList, ExpSelected, ExpLights, -1);
 	}
 	else
 	{
@@ -276,7 +276,7 @@ void SB_Export_World::ExportTo_RFW(const char *FileName, int ExpSelected, geBool
 		{
 			GroupListType *GroupList;
 
-			GroupList=Level_GetGroups(App->m_pDoc->pLevel);
+			GroupList=Level_GetGroups(App->CLSB_Doc->pLevel);
 			GroupCount=Group_GetCount(GroupList);
 		}
 
@@ -317,7 +317,7 @@ void SB_Export_World::ExportTo_RFW(const char *FileName, int ExpSelected, geBool
 				BrushList_DoCSG(SBList, CurId, ::fdocBrushCSGCallback2, this);
 
 				//build individual model mini trees
-				ModelInfo = Level_GetModelInfo (App->m_pDoc->pLevel);
+				ModelInfo = Level_GetModelInfo (App->CLSB_Doc->pLevel);
 				pMod = ModelList_GetFirst (ModelInfo->Models, &mi);
 
 				for(i=0;i < ModelList_GetCount(ModelInfo->Models);i++)
@@ -347,7 +347,7 @@ void SB_Export_World::ExportTo_RFW(const char *FileName, int ExpSelected, geBool
 				::FilePath_ChangeName(FileName, Name, NewFileName);
 			}
 			
-			fResult = App->CLSB_Export_World->Level_Build_G3ds(reinterpret_cast<tag_Level3 *> (App->m_pDoc->pLevel), NewFileName, SBList, ExpSelected, ExpLights, GroupID);
+			fResult = App->CLSB_Export_World->Level_Build_G3ds(reinterpret_cast<tag_Level3 *> (App->CLSB_Doc->pLevel), NewFileName, SBList, ExpSelected, ExpLights, GroupID);
 			if(!fResult)
 				App->Say("Error exporting group");
 			BrushList_Destroy(&SBList);
@@ -621,7 +621,7 @@ bool SB_Export_World::Write_Project_File(char* Path_And_File,const char* Filenam
 	fprintf(WriteScene, "%s %f %f %f\n", "Position=",CameraPosition.X,CameraPosition.Y,CameraPosition.Z);
 
 	geVec3d Angles;
-	pCameraEntity->GetAngles( &Angles, Level_GetEntityDefs (App->m_pDoc->pLevel) );
+	pCameraEntity->GetAngles( &Angles, Level_GetEntityDefs (App->CLSB_Doc->pLevel) );
 	fprintf(WriteScene, "%s %f %f %f\n", "Angles=",Angles.X,Angles.Y,Angles.Z);
 
 
@@ -653,10 +653,10 @@ void SB_Export_World::Export_World_Text(int ExpSelected)
 	BrushList* BList;
 	geBoolean fResult;
 
-	BList = Level_GetBrushes(App->m_pDoc->pLevel);
+	BList = Level_GetBrushes(App->CLSB_Doc->pLevel);
 	if (!ExpSelected)
 	{
-		fResult = Level_Build_Text_G3ds(reinterpret_cast<tag_Level3*> (App->m_pDoc->pLevel), "FileName", BList, 0, 0, -1);
+		fResult = Level_Build_Text_G3ds(reinterpret_cast<tag_Level3*> (App->CLSB_Doc->pLevel), "FileName", BList, 0, 0, -1);
 	}
 	else
 	{
@@ -697,7 +697,7 @@ void SB_Export_World::Export_World_Text(int ExpSelected)
 				BrushList_DoCSG(SBList, CurId, ::fdocBrushCSGCallback2, this);
 
 				//build individual model mini trees
-				ModelInfo = Level_GetModelInfo(App->m_pDoc->pLevel);
+				ModelInfo = Level_GetModelInfo(App->CLSB_Doc->pLevel);
 				pMod = ModelList_GetFirst(ModelInfo->Models, &mi);
 
 				for (i = 0; i < ModelList_GetCount(ModelInfo->Models); i++)
@@ -708,7 +708,7 @@ void SB_Export_World::Export_World_Text(int ExpSelected)
 				}
 			}
 
-			fResult = Level_Build_Text_G3ds(reinterpret_cast<tag_Level3*> (App->m_pDoc->pLevel), NewFileName, SBList, 0, 0, -1);
+			fResult = Level_Build_Text_G3ds(reinterpret_cast<tag_Level3*> (App->CLSB_Doc->pLevel), NewFileName, SBList, 0, 0, -1);
 			if (!fResult)
 			{
 				App->Say("Error exporting group");
@@ -1083,7 +1083,7 @@ bool SB_Export_World::AddTexture_GL(geVFile* BaseFile, const char* TextureName, 
 	geBitmap* Bitmap = NULL;
 	CWadFile* pWad;
 	pWad = NULL;
-	pWad = Level_GetWadFile(App->m_pDoc->pLevel);
+	pWad = Level_GetWadFile(App->CLSB_Doc->pLevel);
 	for (int index = 0; index < pWad->mBitmapCount; index++)
 	{
 		char mName[MAX_PATH];

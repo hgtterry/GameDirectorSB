@@ -261,8 +261,8 @@ void A_TabsGroups_Dlg::Get_Index(const Brush* b)
 {
 	App->Get_Current_Document();
 
-	Level* pLevel = App->m_pDoc->pLevel;
-	BrushList* pList = Level_GetBrushes(App->m_pDoc->pLevel);
+	Level* pLevel = App->CLSB_Doc->pLevel;
+	BrushList* pList = Level_GetBrushes(App->CLSB_Doc->pLevel);
 
 	int Selected = 0;
 	int Count = 0;
@@ -359,8 +359,8 @@ void A_TabsGroups_Dlg::Fill_ListBox()
 
 		App->m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
 
-		Level *pLevel = App->m_pDoc->pLevel;
-		BrushList *pList = Level_GetBrushes (App->m_pDoc->pLevel);
+		Level *pLevel = App->CLSB_Doc->pLevel;
+		BrushList *pList = Level_GetBrushes (App->CLSB_Doc->pLevel);
 
 		int Count = 0;
 		Brush * b;

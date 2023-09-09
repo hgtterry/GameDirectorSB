@@ -177,7 +177,7 @@ LRESULT CALLBACK A_TextureDialog::TextureDialog_Proc(HWND hDlg, UINT message, WP
 
 				App->Get_Current_Document();
 
-				Level_SetWadPath(App->m_pDoc->pLevel, Level_GetWadPath(App->m_pDoc->pLevel));
+				Level_SetWadPath(App->CLSB_Doc->pLevel, Level_GetWadPath(App->CLSB_Doc->pLevel));
 				App->CL_World->Set_Current_TxlPath();
 				App->m_pDoc->UpdateAfterWadChange();
 
@@ -674,7 +674,7 @@ void A_TextureDialog::Fill_ListBox()
 
 		SendDlgItemMessage(TextureDlg_Hwnd, IDC_LISTTDTEXTURES, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
-		pWad = Level_GetWadFile (App->m_pDoc->pLevel);
+		pWad = Level_GetWadFile (App->CLSB_Doc->pLevel);
 		if (pWad == NULL)
 		{
 			App->Say("Error Getting Wad File");
@@ -713,7 +713,7 @@ int A_TextureDialog::Get_Index_FromName(char* TextureName)
 	CWadFile* pWad;
 	pWad = NULL;
 
-	pWad = Level_GetWadFile(App->m_pDoc->pLevel);
+	pWad = Level_GetWadFile(App->CLSB_Doc->pLevel);
 	if (pWad == NULL)
 	{
 		App->Say("Error Getting Wad File");

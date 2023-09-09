@@ -273,7 +273,7 @@ void A_TabsTemplates_Dlg::CreateNewTemplateBrush(Brush *pBrush)
 	Brush_Bound (App->m_pDoc->CurBrush);
 	Brush_Center (App->m_pDoc->CurBrush, &BrushPos);
 
-	pTemplatePos = Level_GetTemplatePos (App->m_pDoc->pLevel);
+	pTemplatePos = Level_GetTemplatePos (App->CLSB_Doc->pLevel);
 	geVec3d_Subtract (pTemplatePos, &BrushPos, &MoveVec);
 	Brush_Move (App->m_pDoc->CurBrush, &MoveVec);
 

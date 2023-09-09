@@ -236,7 +236,7 @@ bool SB_File_WE::Open_3dt_File()
 		strcpy(Txlpath, App->WorldEditor_Directory);
 		strcat(Txlpath, "Levels\\Equity.txl");
 
-		Level_SetWadPath(App->m_pDoc->pLevel, Txlpath);
+		Level_SetWadPath(App->CLSB_Doc->pLevel, Txlpath);
 		App->CL_World->Set_Current_TxlPath();
 		App->m_pDoc->UpdateAfterWadChange();
 		App->CL_TextureDialog->Fill_ListBox();
@@ -298,12 +298,12 @@ bool SB_File_WE::Load_File(const char *FileName)
 
 	Level_EnumLeafBrushes (NewLevel, NewLevel, Level_FaceFixupCallback);
 
-	if (App->m_pDoc->pLevel != NULL)
+	if (App->CLSB_Doc->pLevel != NULL)
 	{
-		Level_Destroy (&App->m_pDoc->pLevel);
+		Level_Destroy (&App->CLSB_Doc->pLevel);
 	}
 
-	App->m_pDoc->pLevel = NewLevel;
+	App->CLSB_Doc->pLevel = NewLevel;
 
 	// Validate data, groups are read after entities and brushes, so this must be last
 	if(App->m_pDoc->ValidateEntities( ) == FALSE || App->m_pDoc->ValidateBrushes( ) == FALSE )
@@ -315,10 +315,10 @@ bool SB_File_WE::Load_File(const char *FileName)
 	GroupIterator gi;
 	GroupListType *Groups;
 	
-	Groups = Level_GetGroups (App->m_pDoc->pLevel);
+	Groups = Level_GetGroups (App->CLSB_Doc->pLevel);
 	App->m_pDoc->mCurrentGroup = Group_GetFirstId (Groups, &gi);
 	{
-		Brush *pBox = BrushTemplate_CreateBox (Level_GetBoxTemplate (App->m_pDoc->pLevel));
+		Brush *pBox = BrushTemplate_CreateBox (Level_GetBoxTemplate (App->CLSB_Doc->pLevel));
 		if (pBox != NULL)
 		{
 			CreateNewTemplateBrush(pBox);
@@ -330,10 +330,10 @@ bool SB_File_WE::Load_File(const char *FileName)
 	}
 
 	// update entity visibility info
-	pEntityView	=Level_GetEntityVisibilityInfo (App->m_pDoc->pLevel);
+	pEntityView	=Level_GetEntityVisibilityInfo (App->CLSB_Doc->pLevel);
 	for (i = 0; i < pEntityView->nEntries; ++i)
 	{
-		Level_EnumEntities (App->m_pDoc->pLevel, &pEntityView->pEntries[i], ::fdocSetEntityVisibility);
+		Level_EnumEntities (App->CLSB_Doc->pLevel, &pEntityView->pEntries[i], ::fdocSetEntityVisibility);
 	}
 
 	
@@ -376,7 +376,7 @@ void SB_File_WE::CreateNewTemplateBrush(Brush *pBrush)
 	Brush_Bound (App->m_pDoc->CurBrush);
 	Brush_Center (App->m_pDoc->CurBrush, &BrushPos);
 
-	pTemplatePos = Level_GetTemplatePos (App->m_pDoc->pLevel);
+	pTemplatePos = Level_GetTemplatePos (App->CLSB_Doc->pLevel);
 	geVec3d_Subtract (pTemplatePos, &BrushPos, &MoveVec);
 	Brush_Move (App->m_pDoc->CurBrush, &MoveVec);
 
@@ -399,8 +399,8 @@ void SB_File_WE::AddCameraEntityToLevel(void)
 		App->m_pDoc->CreateEntityFromName( "Camera", CameraEntity ) ;
 		cstr.LoadString( IDS_CAMERAENTITYNAME ) ;
 		CameraEntity.SetKeyValue ("%name%", cstr );
-		CameraEntity.SetOrigin ( 0.0f, 0.0f, 0.0f, Level_GetEntityDefs (App->m_pDoc->pLevel) );
-		Level_AddEntity (App->m_pDoc->pLevel, CameraEntity);
+		CameraEntity.SetOrigin ( 0.0f, 0.0f, 0.0f, Level_GetEntityDefs (App->CLSB_Doc->pLevel) );
+		Level_AddEntity (App->CLSB_Doc->pLevel, CameraEntity);
 	}
 
 	//AddZeroEntityToLevel();
@@ -421,8 +421,8 @@ void SB_File_WE::AddZeroEntityToLevel(void)
 		App->m_pDoc->CreateEntityFromName("Zero", ZeroEntity);
 		cstr.LoadString(IDS_CAMERAENTITYNAME);
 		ZeroEntity.SetKeyValue("%name%", "Zero");
-		ZeroEntity.SetOrigin(0.0f, 0.0f, 0.0f, Level_GetEntityDefs(App->m_pDoc->pLevel));
-		Level_AddEntity(App->m_pDoc->pLevel, ZeroEntity);
+		ZeroEntity.SetOrigin(0.0f, 0.0f, 0.0f, Level_GetEntityDefs(App->CLSB_Doc->pLevel));
+		Level_AddEntity(App->CLSB_Doc->pLevel, ZeroEntity);
 	}
 }
 
@@ -440,8 +440,8 @@ static geBoolean fdocAddPremadeEntity (CEntity &Ent, void *lParam)
 	{
 	pData = (fdocAddPremadeData *)lParam;
 
-	Index = Level_AddEntity (pData->pDoc->pLevel, Ent);
-	Entities = Level_GetEntities (pData->pDoc->pLevel);
+	Index = Level_AddEntity (App->CLSB_Doc->pLevel, Ent);
+	Entities = Level_GetEntities (App->CLSB_Doc->pLevel);
 	NewEnt = &((*Entities)[Index]);
 
 	pData->pDoc->SelectEntity (NewEnt);
@@ -491,10 +491,10 @@ bool SB_File_WE::ImportFile (const char *PathName, const geVec3d *location)
 		GroupListType *OldGroups;
 		GroupIterator gi;
 
-		OldGroups = Level_GetGroups (App->m_pDoc->pLevel);
+		OldGroups = Level_GetGroups (App->CLSB_Doc->pLevel);
 		NewGroups = Level_GetGroups (NewLevel);
 
-		Level_CollapseGroups (App->m_pDoc->pLevel, 1);
+		Level_CollapseGroups (App->CLSB_Doc->pLevel, 1);
 		Level_CollapseGroups (NewLevel, Group_GetCount (OldGroups));
 
 		GroupId = Group_GetFirstId (NewGroups, &gi);
@@ -530,10 +530,10 @@ bool SB_File_WE::ImportFile (const char *PathName, const geVec3d *location)
 		ModelIterator mi;
 		Model *pModel;
 
-		OldModels = Level_GetModelInfo (App->m_pDoc->pLevel)->Models;
+		OldModels = Level_GetModelInfo (App->CLSB_Doc->pLevel)->Models;
 		NewModels = Level_GetModelInfo (NewLevel)->Models;
 
-		Level_CollapseModels (App->m_pDoc->pLevel, 1);
+		Level_CollapseModels (App->CLSB_Doc->pLevel, 1);
 		Level_CollapseModels (NewLevel, ModelList_GetCount (OldModels) + 1);
 
 		pModel = ModelList_GetFirst (NewModels, &mi);
@@ -589,7 +589,7 @@ bool SB_File_WE::ImportFile (const char *PathName, const geVec3d *location)
 		BrushIterator bi;
 
 		// fixup DIB ids on brush faces
-		Level_EnumLeafBrushes (NewLevel, App->m_pDoc->pLevel, Level_FaceFixupCallback);
+		Level_EnumLeafBrushes (NewLevel, App->CLSB_Doc->pLevel, Level_FaceFixupCallback);
 
 		// Move brushes from loaded level to doc's level
 		NewBrushes = Level_GetBrushes (NewLevel);
@@ -599,15 +599,15 @@ bool SB_File_WE::ImportFile (const char *PathName, const geVec3d *location)
 			NewBrush = pBrush;
 			pBrush = BrushList_GetNext (&bi);
 			Level_RemoveBrush (NewLevel, NewBrush);
-			Level_AppendBrush (App->m_pDoc->pLevel, NewBrush);
+			Level_AppendBrush (App->CLSB_Doc->pLevel, NewBrush);
 		}
 	}
 
 	// update entity visibility info
-	pEntityView	=Level_GetEntityVisibilityInfo (App->m_pDoc->pLevel);
+	pEntityView	=Level_GetEntityVisibilityInfo (App->CLSB_Doc->pLevel);
 	for (i = 0; i < pEntityView->nEntries; ++i)
 	{
-		Level_EnumEntities (App->m_pDoc->pLevel, &pEntityView->pEntries[i], ::fdocSetEntityVisibility);
+		Level_EnumEntities (App->CLSB_Doc->pLevel, &pEntityView->pEntries[i], ::fdocSetEntityVisibility);
 	}
 
 	Level_Destroy (&NewLevel);
@@ -959,7 +959,7 @@ bool SB_File_WE::Save(const char* FileName)
 		}
 		if (iView != -1)
 		{
-			pViewStateInfo = Level_GetViewStateInfo(App->m_pDoc->pLevel, iView);
+			pViewStateInfo = Level_GetViewStateInfo(App->CLSB_Doc->pLevel, iView);
 			pViewStateInfo->IsValid = GE_TRUE;
 			pViewStateInfo->ZoomFactor = Render_GetZoom(pView->VCam);
 			Render_GetPitchRollYaw(pView->VCam, &pViewStateInfo->PitchRollYaw);
@@ -968,7 +968,7 @@ bool SB_File_WE::Save(const char* FileName)
 	}
 
 	// and then write the level info to the file
-	return Level_WriteToFile2(App->m_pDoc->pLevel, FileName);
+	return Level_WriteToFile2(App->CLSB_Doc->pLevel, FileName);
 }
 
 // *************************************************************************
@@ -994,41 +994,41 @@ bool SB_File_WE::Level_WriteToFile2(Level* pLevel, const char* Filename)
 	WriteRslt = GE_FALSE;
 	if (fprintf(ArFile, "3dtVersion %d.%d\n", LEVEL_VERSION_MAJOR, LEVEL_VERSION_MINOR) < 0) goto WriteDone;
 
-	Util_QuoteString(App->m_pDoc->pLevel->WadPath, QuotedString);
+	Util_QuoteString(App->CLSB_Doc->pLevel->WadPath, QuotedString);
 	if (fprintf(ArFile, "TextureLib %s\n", QuotedString) < 0) goto WriteDone;
 
-	Util_QuoteString(App->m_pDoc->pLevel->HeadersDir, QuotedString);
+	Util_QuoteString(App->CLSB_Doc->pLevel->HeadersDir, QuotedString);
 	if (fprintf(ArFile, "HeadersDir %s\n", QuotedString) < 0) goto WriteDone;
 
 	// changed QD Actors
-	Util_QuoteString(App->m_pDoc->pLevel->ActorsDir, QuotedString);
+	Util_QuoteString(App->CLSB_Doc->pLevel->ActorsDir, QuotedString);
 	if (fprintf(ArFile, "ActorsDir %s\n", QuotedString) < 0) goto WriteDone;
 
-	Util_QuoteString(App->m_pDoc->pLevel->PawnIniPath, QuotedString);
+	Util_QuoteString(App->CLSB_Doc->pLevel->PawnIniPath, QuotedString);
 	if (fprintf(ArFile, "PawnIni %s\n", QuotedString) < 0) goto WriteDone;
 	// remove ActorBrushes from List, so they don't get written to the file
 	int i;
-	for (i = 0; i < App->m_pDoc->pLevel->Entities->GetSize(); ++i)
+	for (i = 0; i < App->CLSB_Doc->pLevel->Entities->GetSize(); ++i)
 	{
-		Brush* b = (*(App->m_pDoc->pLevel->Entities))[i].GetActorBrush();
+		Brush* b = (*(App->CLSB_Doc->pLevel->Entities))[i].GetActorBrush();
 		if (b != NULL)
-			Level_RemoveBrush(App->m_pDoc->pLevel, b);
+			Level_RemoveBrush(App->CLSB_Doc->pLevel, b);
 	}
 	// end change
 
-	if (fprintf(ArFile, "NumEntities %d\n", App->m_pDoc->pLevel->Entities->GetSize()) < 0) goto WriteDone;
-	if (fprintf(ArFile, "NumModels %d\n", ModelList_GetCount(App->m_pDoc->pLevel->ModelInfo.Models)) < 0) goto WriteDone;
-	if (fprintf(ArFile, "NumGroups %d\n", Group_GetCount(App->m_pDoc->pLevel->Groups)) < 0) goto WriteDone;
-	if (BrushList_Write(App->m_pDoc->pLevel->Brushes, ArFile) == GE_FALSE) goto WriteDone;
+	if (fprintf(ArFile, "NumEntities %d\n", App->CLSB_Doc->pLevel->Entities->GetSize()) < 0) goto WriteDone;
+	if (fprintf(ArFile, "NumModels %d\n", ModelList_GetCount(App->CLSB_Doc->pLevel->ModelInfo.Models)) < 0) goto WriteDone;
+	if (fprintf(ArFile, "NumGroups %d\n", Group_GetCount(App->CLSB_Doc->pLevel->Groups)) < 0) goto WriteDone;
+	if (BrushList_Write(App->CLSB_Doc->pLevel->Brushes, ArFile) == GE_FALSE) goto WriteDone;
 	
 	fprintf(ArFile, "Equity %s\n", "V1.1");
 	// changed QD Actors
 	// add ActorBrushes to the List again
-	for (i = 0; i < App->m_pDoc->pLevel->Entities->GetSize(); ++i)
+	for (i = 0; i < App->CLSB_Doc->pLevel->Entities->GetSize(); ++i)
 	{
-		Brush* b = (*(App->m_pDoc->pLevel->Entities))[i].GetActorBrush();
+		Brush* b = (*(App->CLSB_Doc->pLevel->Entities))[i].GetActorBrush();
 		if (b != NULL)
-			Level_AppendBrush(App->m_pDoc->pLevel, b);
+			Level_AppendBrush(App->CLSB_Doc->pLevel, b);
 	}
 	// end change
 	WriteRslt = GE_TRUE;
@@ -1103,7 +1103,7 @@ bool SB_File_WE::New_File()
 		//Prefs_GetActorsList(pPrefs), Prefs_GetPawnIni(pPrefs));
 
 
-	if (!Level_LoadWad(App->m_pDoc->pLevel))
+	if (!Level_LoadWad(App->CLSB_Doc->pLevel))
 	{
 		CString Msg;
 
@@ -1120,7 +1120,7 @@ bool SB_File_WE::New_File()
 
 	{
 		BrushTemplate_Box* pBoxTemplate;
-		pBoxTemplate = Level_GetBoxTemplate(App->m_pDoc->pLevel);
+		pBoxTemplate = Level_GetBoxTemplate(App->CLSB_Doc->pLevel);
 
 		App->m_pDoc->BTemplate = BrushTemplate_CreateBox(pBoxTemplate);
 	}

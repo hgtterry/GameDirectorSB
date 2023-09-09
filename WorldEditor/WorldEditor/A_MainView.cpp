@@ -1018,7 +1018,7 @@ static geBoolean EntityDraw( CEntity& Entity, void * lParam )
 
 	if ( (Entity.IsSelected() == GE_FALSE ) && pData->pDoc->EntityIsVisible( &Entity ) )
 	{
-		fdocDrawEntity (&Entity, pData->v, pData->pDC, Level_GetEntityDefs (pData->pDoc->pLevel), GE_FALSE );
+		fdocDrawEntity (&Entity, pData->v, pData->pDC, Level_GetEntityDefs (App->CLSB_Doc->pLevel), GE_FALSE );
 	}
 
 	return GE_TRUE ;
@@ -1044,7 +1044,7 @@ void A_MainView::RenderOrthoView(ViewVars *v, CDC *pDC) // hgtterry Render to vi
 	BrushDrawData	brushDrawData ;
 	BrushList		*BList;
 
-	if (m_pDoc->pLevel == NULL)
+	if (App->CLSB_Doc->pLevel == NULL)
 	{
 		return;
 	}
@@ -1062,9 +1062,9 @@ void A_MainView::RenderOrthoView(ViewVars *v, CDC *pDC) // hgtterry Render to vi
 
 	geVec3d		XTemp;
 	Box3d ViewBox;
-	int GroupVis = Level_GetGroupVisibility (m_pDoc->pLevel);
+	int GroupVis = Level_GetGroupVisibility (App->CLSB_Doc->pLevel);
 
-	BList = Level_GetBrushes (m_pDoc->pLevel);
+	BList = Level_GetBrushes (App->CLSB_Doc->pLevel);
 	inidx	=Render_GetInidx(v);
 	
 	Box3d_SetBogusBounds (&ViewBox);
@@ -1098,13 +1098,13 @@ void A_MainView::RenderOrthoView(ViewVars *v, CDC *pDC) // hgtterry Render to vi
 		CPen	PenSnapGrid (PS_SOLID, 1, Prefs_GetSnapGridColor (pPrefs));
 
 
-		GridSize = Render_GetFineGrid(v, (Level_GetGridType (m_pDoc->pLevel) == GridTexel) ? GRID_TYPE_TEXEL : GRID_TYPE_METRIC);
-		if (Level_GetGridType (m_pDoc->pLevel) == GridMetric)
+		GridSize = Render_GetFineGrid(v, (Level_GetGridType (App->CLSB_Doc->pLevel) == GridTexel) ? GRID_TYPE_TEXEL : GRID_TYPE_METRIC);
+		if (Level_GetGridType (App->CLSB_Doc->pLevel) == GridMetric)
 		{
 			GridSize /= 2.54f;
 		}
 
-		GridSnapSize = Level_GetGridSnapSize (m_pDoc->pLevel);
+		GridSnapSize = Level_GetGridSnapSize (App->CLSB_Doc->pLevel);
 
 		{
 			if (GridSnapSize >= GridSize)
@@ -1122,7 +1122,7 @@ void A_MainView::RenderOrthoView(ViewVars *v, CDC *pDC) // hgtterry Render to vi
 		pDC->SelectObject (oldpen);
 	}
 
-	GroupListType *Groups = Level_GetGroups (m_pDoc->pLevel);
+	GroupListType *Groups = Level_GetGroups (App->CLSB_Doc->pLevel);
 
 	GroupId	=Group_GetFirstId(Groups, &gi);
 	while(GroupId != NO_MORE_GROUPS )
@@ -1139,16 +1139,16 @@ void A_MainView::RenderOrthoView(ViewVars *v, CDC *pDC) // hgtterry Render to vi
 			CPen	PenThisGroup(PS_SOLID, 1, RGB(pRGB->r,pRGB->g,pRGB->b));
 
 			pDC->SelectObject (&PenThisGroup);
-			Level_EnumLeafBrushes (m_pDoc->pLevel, &brushDrawData, BrushDraw); // Draw Brushes
+			Level_EnumLeafBrushes (App->CLSB_Doc->pLevel, &brushDrawData, BrushDraw); // Draw Brushes
 			if( m_pDoc->mShowEntities == GE_TRUE )
 			{
-				Level_EnumEntities (m_pDoc->pLevel, &brushDrawData, EntityDraw);
+				Level_EnumEntities (App->CLSB_Doc->pLevel, &brushDrawData, EntityDraw);
 			}
 
 			// render cut brushes
 			pDC->SelectObject (&PenCutBrush);
 			brushDrawData.FlagTest = fdocBrushIsSubtract;
-			Level_EnumLeafBrushes (m_pDoc->pLevel, &brushDrawData, BrushDraw);
+			Level_EnumLeafBrushes (App->CLSB_Doc->pLevel, &brushDrawData, BrushDraw);
 
 			// details
 			if (m_pDoc->bShowDetailBrushes)
@@ -1156,7 +1156,7 @@ void A_MainView::RenderOrthoView(ViewVars *v, CDC *pDC) // hgtterry Render to vi
 				// detail brushes
 				pDC->SelectObject (&PenDetailBrush);
 				brushDrawData.FlagTest = Brush_IsDetail;
-				Level_EnumLeafBrushes (m_pDoc->pLevel, &brushDrawData, BrushDraw);
+				Level_EnumLeafBrushes (App->CLSB_Doc->pLevel, &brushDrawData, BrushDraw);
 			}
 
 			// hints
@@ -1165,7 +1165,7 @@ void A_MainView::RenderOrthoView(ViewVars *v, CDC *pDC) // hgtterry Render to vi
 				// Hint brushes
 				pDC->SelectObject (&PenHintBrush);
 				brushDrawData.FlagTest = Brush_IsHint;
-				Level_EnumLeafBrushes (m_pDoc->pLevel, &brushDrawData, BrushDraw);
+				Level_EnumLeafBrushes (App->CLSB_Doc->pLevel, &brushDrawData, BrushDraw);
 			}
 
 
@@ -1175,7 +1175,7 @@ void A_MainView::RenderOrthoView(ViewVars *v, CDC *pDC) // hgtterry Render to vi
 				// Hint brushes
 				pDC->SelectObject (&PenClipBrush);
 				brushDrawData.FlagTest = Brush_IsClip;
-				Level_EnumLeafBrushes (m_pDoc->pLevel, &brushDrawData, BrushDraw);
+				Level_EnumLeafBrushes (App->CLSB_Doc->pLevel, &brushDrawData, BrushDraw);
 			}
 
 			pDC->SelectObject (&PenAllItems);
@@ -1186,7 +1186,7 @@ void A_MainView::RenderOrthoView(ViewVars *v, CDC *pDC) // hgtterry Render to vi
 	brushDrawData.GroupId = fdoc_SHOW_ALL_GROUPS;
 	brushDrawData.FlagTest = NULL;
 	{
-		CEntityArray *Entities = Level_GetEntities (m_pDoc->pLevel);
+		CEntityArray *Entities = Level_GetEntities (App->CLSB_Doc->pLevel);
 		int NumSelBrushes = SelBrushList_GetSize (m_pDoc->pSelBrushes);
 				
 		// render selected brushes and entities
@@ -1218,7 +1218,7 @@ void A_MainView::RenderOrthoView(ViewVars *v, CDC *pDC) // hgtterry Render to vi
 
 			if (pEnt->IsSelected ())
 			{
-				fdocDrawEntity (pEnt, v, pDC, Level_GetEntityDefs (m_pDoc->pLevel), (i==m_pDoc->mCurrentEntity) ? GE_TRUE : GE_FALSE ) ;
+				fdocDrawEntity (pEnt, v, pDC, Level_GetEntityDefs (App->CLSB_Doc->pLevel), (i==m_pDoc->mCurrentEntity) ? GE_TRUE : GE_FALSE ) ;
 			}
 		}
 	}
@@ -1256,7 +1256,7 @@ void A_MainView::RenderOrthoView(ViewVars *v, CDC *pDC) // hgtterry Render to vi
 			}
 			else
 			{
-				fdocDrawEntity (&m_pDoc->mRegularEntity, v, pDC, Level_GetEntityDefs (m_pDoc->pLevel), GE_FALSE );
+				fdocDrawEntity (&m_pDoc->mRegularEntity, v, pDC, Level_GetEntityDefs (App->CLSB_Doc->pLevel), GE_FALSE );
 			}
 		}
 	}
@@ -1271,7 +1271,7 @@ void A_MainView::RenderOrthoView(ViewVars *v, CDC *pDC) // hgtterry Render to vi
 		else
 			pDC->SelectObject (&PenCamera);
 
-		fdocDrawEntity (pCameraEntity, v, pDC, Level_GetEntityDefs (m_pDoc->pLevel), GE_TRUE);
+		fdocDrawEntity (pCameraEntity, v, pDC, Level_GetEntityDefs (App->CLSB_Doc->pLevel), GE_TRUE);
 	}
 
 	pDC->SelectObject(oldpen);

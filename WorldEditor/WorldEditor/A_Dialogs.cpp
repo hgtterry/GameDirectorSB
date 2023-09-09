@@ -179,9 +179,9 @@ LRESULT CALLBACK A_Dialogs::Properties_Proc(HWND hDlg, UINT message, WPARAM wPar
 		SendDlgItemMessage(hDlg, IDC_BROWSETXL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		
-		SetDlgItemText(hDlg, IDC_EDITTXL, Level_GetWadPath(App->m_pDoc->pLevel));
+		SetDlgItemText(hDlg, IDC_EDITTXL, Level_GetWadPath(App->CLSB_Doc->pLevel));
 
-		strcpy(App->CL_Dialogs->Current_Txl_File,Level_GetWadPath(App->m_pDoc->pLevel));
+		strcpy(App->CL_Dialogs->Current_Txl_File,Level_GetWadPath(App->CLSB_Doc->pLevel));
 
 		return TRUE;
 
@@ -261,7 +261,7 @@ LRESULT CALLBACK A_Dialogs::Properties_Proc(HWND hDlg, UINT message, WPARAM wPar
 			//}
 			//else
 			{
-				Level_SetWadPath(App->m_pDoc->pLevel,buff);
+				Level_SetWadPath(App->CLSB_Doc->pLevel,buff);
 
 				App->CL_World->Set_Current_TxlPath();
 

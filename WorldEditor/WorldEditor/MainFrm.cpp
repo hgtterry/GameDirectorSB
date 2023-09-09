@@ -240,7 +240,7 @@ void CMainFrame::OnUpdateWorldPos(CCmdUI *pCmdUI)
 				CFusionDoc	*pDoc	=pView->GetDocument();
 				if(pDoc)
 				{
-					if (Level_GetGridType (pDoc->pLevel) == GridMetric)
+					if (Level_GetGridType (App->CLSB_Doc->pLevel) == GridMetric)
 					{
 						geVec3d_Scale (&wp, Units_EngineToCentimeters (1.0f), &wp);
 					}
@@ -569,7 +569,7 @@ void CMainFrame::LoadComboBox()
 	m_wndGroupBar.m_comboBox.ResetContent() ;
 	if (pDoc != NULL)
 	{
-		GroupListType *Groups = Level_GetGroups (pDoc->pLevel);
+		GroupListType *Groups = Level_GetGroups (App->CLSB_Doc->pLevel);
 		if( Groups )
 		{
 			if( Group_GetCount( Groups ) )

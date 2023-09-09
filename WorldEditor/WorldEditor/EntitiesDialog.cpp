@@ -225,7 +225,7 @@ BOOL CEntitiesDialog::NeedTextNotify( UINT id, NMHDR * pNMHDR, LRESULT * pResult
 
 	m_PropertiesList.GetText (UglyGlobalItemId, FieldName);
 
-	pDocField = EntityTable_GetEntityFieldDoc (Level_GetEntityDefs (pDoc->pLevel), EntityClassname, FieldName);
+	pDocField = EntityTable_GetEntityFieldDoc (Level_GetEntityDefs (App->CLSB_Doc->pLevel), EntityClassname, FieldName);
 	if (pDocField != NULL)
 	{
 		strncpy (pTTT->szText, pDocField, sizeof (pTTT->szText));
@@ -424,7 +424,7 @@ void CEntitiesDialog::FillInKeyValuePairs(int Selection)
 
 	// Get sorted list of published key/value pairs
 	CString EntityClassname = Ent->GetClassname ();
-	pProps = EntityTable_GetEntityPropertiesFromName (Level_GetEntityDefs (pDoc->pLevel), EntityClassname, ET_PUBLISHED);
+	pProps = EntityTable_GetEntityPropertiesFromName (Level_GetEntityDefs (App->CLSB_Doc->pLevel), EntityClassname, ET_PUBLISHED);
 	if (pProps != NULL)
 	{
 		// Add key/value pairs to the listbox
@@ -511,7 +511,7 @@ void CEntitiesDialog::OnDblclkPropertieslist()
 		
 		TopType eType;
 		
-		if (EntityTable_GetEntityPropertyType (Level_GetEntityDefs (pDoc->pLevel), EntityTypeName, KeyName, &eType))
+		if (EntityTable_GetEntityPropertyType (Level_GetEntityDefs (App->CLSB_Doc->pLevel), EntityTypeName, KeyName, &eType))
 		{
 			CDialog *pEditDialog = NULL;
 
@@ -534,10 +534,10 @@ void CEntitiesDialog::OnDblclkPropertieslist()
 					pEditDialog = new CKeyEditDlg (this, KeyName, &TheValue);
 					break;
 				case T_MODEL :
-					pEditDialog = new CModelKeyEditDlg (this, Level_GetModelInfo (pDoc->pLevel)->Models, KeyName, &TheValue);
+					pEditDialog = new CModelKeyEditDlg (this, Level_GetModelInfo (App->CLSB_Doc->pLevel)->Models, KeyName, &TheValue);
 					break;
 				case T_STRUCT :
-					pEditDialog = new CStructKeyEditDlg (this, *Ent, KeyName, mEntityArray, &TheValue, Level_GetEntityDefs (pDoc->pLevel));
+					pEditDialog = new CStructKeyEditDlg (this, *Ent, KeyName, mEntityArray, &TheValue, Level_GetEntityDefs (App->CLSB_Doc->pLevel));
 					break;
 				case T_BOOLEAN :
 					pEditDialog = new CBoolKeyEditDlg (this, KeyName, &TheValue);

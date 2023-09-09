@@ -49,7 +49,7 @@ A_CreateConeDialog::~A_CreateConeDialog(void)
 void A_CreateConeDialog::Start_CreateCone_Dlg()
 {
 	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
-	pConeTemplate = Level_GetConeTemplate (m_pDoc->pLevel);
+	pConeTemplate = Level_GetConeTemplate (App->CLSB_Doc->pLevel);
 
 	App->CL_TabsControl->Enable_Tabs_Dlg(false);
 	DialogBox(App->hInst, (LPCTSTR)IDD_CREATE_CONE, App->MainHwnd, (DLGPROC)CreateCone_Proc);
@@ -365,7 +365,7 @@ void A_CreateConeDialog::CreateNewTemplateBrush(Brush *pBrush)
 	Brush_Bound (m_pDoc->CurBrush);
 	Brush_Center (m_pDoc->CurBrush, &BrushPos);
 
-	pTemplatePos = Level_GetTemplatePos (m_pDoc->pLevel);
+	pTemplatePos = Level_GetTemplatePos (App->CLSB_Doc->pLevel);
 
 	if (m_UseCamPos == 1)
 	{

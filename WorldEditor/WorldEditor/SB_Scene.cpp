@@ -171,10 +171,10 @@ void SB_Scene::Build_World(int ExpSelected)
 	BrushList* BList;
 	geBoolean fResult;
 
-	BList = Level_GetBrushes(App->m_pDoc->pLevel);
+	BList = Level_GetBrushes(App->CLSB_Doc->pLevel);
 	if (!ExpSelected)
 	{
-		fResult = Level_Build_G3ds(reinterpret_cast<tag_Level3*> (App->m_pDoc->pLevel), "FileName", BList, 0, 0, -1);
+		fResult = Level_Build_G3ds(reinterpret_cast<tag_Level3*> (App->CLSB_Doc->pLevel), "FileName", BList, 0, 0, -1);
 	}
 	else
 	{
@@ -215,7 +215,7 @@ void SB_Scene::Build_World(int ExpSelected)
 				BrushList_DoCSG(SBList, CurId, ::fdocBrushCSGCallback2, this);
 
 				//build individual model mini trees
-				ModelInfo = Level_GetModelInfo(App->m_pDoc->pLevel);
+				ModelInfo = Level_GetModelInfo(App->CLSB_Doc->pLevel);
 				pMod = ModelList_GetFirst(ModelInfo->Models, &mi);
 
 				for (i = 0; i < ModelList_GetCount(ModelInfo->Models); i++)
@@ -226,7 +226,7 @@ void SB_Scene::Build_World(int ExpSelected)
 				}
 			}
 
-			fResult = Level_Build_G3ds(reinterpret_cast<tag_Level3*> (App->m_pDoc->pLevel), NewFileName, SBList, 0, 0, -1);
+			fResult = Level_Build_G3ds(reinterpret_cast<tag_Level3*> (App->CLSB_Doc->pLevel), NewFileName, SBList, 0, 0, -1);
 			if (!fResult)
 			{
 				App->Say("Error exporting group");
@@ -642,7 +642,7 @@ bool SB_Scene::AddTexture_GL(geVFile* BaseFile, const char* TextureName, int Gro
 	geBitmap* Bitmap = NULL;
 	CWadFile* pWad;
 	pWad = NULL;
-	pWad = Level_GetWadFile(App->m_pDoc->pLevel);
+	pWad = Level_GetWadFile(App->CLSB_Doc->pLevel);
 	for (int index = 0; index < pWad->mBitmapCount; index++)
 	{
 		char mName[MAX_PATH];

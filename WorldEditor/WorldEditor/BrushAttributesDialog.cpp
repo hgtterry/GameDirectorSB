@@ -378,7 +378,7 @@ void CBrushAttributesDialog::SetDialogFields (void)
 		// set user contents flags...
 		m_ContentsList.ResetContent ();
 		unsigned long UserFlags = Brush_GetUserFlags (pBrush);
-		ContentsTable *ContentsList = EntityTable_GetContentsList (Level_GetEntityDefs (pDoc->pLevel));
+		ContentsTable *ContentsList = EntityTable_GetContentsList (Level_GetEntityDefs (App->CLSB_Doc->pLevel));
 
 		for (int i = 0; i < ContentsList->nEntries; ++i)
 		{

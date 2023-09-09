@@ -928,9 +928,9 @@ void CFusionView::DoneMovingBrushes ()
 		geBoolean SnapX, SnapY, SnapZ;
 
 		fSnapSize = 1.0f;
-		if (Level_UseGrid (pDoc->pLevel))
+		if (Level_UseGrid (App->CLSB_Doc->pLevel))
 		{
-			fSnapSize = Level_GetGridSnapSize (pDoc->pLevel);
+			fSnapSize = Level_GetGridSnapSize (App->CLSB_Doc->pLevel);
 		}
 		// do the snap thing...
 		pBox = Brush_GetBoundingBox (pDoc->CurBrush);
@@ -1491,7 +1491,7 @@ void CFusionView::OnInitialUpdate()
 
 	RECT r;
 	CFusionDoc*	pDoc = (CFusionDoc*) GetDocument();
-	SizeInfo *WadSizeInfos = Level_GetWadSizeInfos (pDoc->pLevel);
+	SizeInfo *WadSizeInfos = Level_GetWadSizeInfos (App->CLSB_Doc->pLevel);
 	int iView;
 
 	CCaptionView::OnInitialUpdate();
@@ -1537,7 +1537,7 @@ void CFusionView::OnInitialUpdate()
 		// Update view state information that was saved in level
 		ViewStateInfo *pViewStateInfo;
 
-		pViewStateInfo = Level_GetViewStateInfo (pDoc->pLevel, iView);
+		pViewStateInfo = Level_GetViewStateInfo (App->CLSB_Doc->pLevel, iView);
 		if (pViewStateInfo->IsValid)
 		{
 			Render_SetZoom (VCam, pViewStateInfo->ZoomFactor);
@@ -1612,7 +1612,7 @@ void CFusionView::OnSize(UINT nType, int cx, int cy)
 	
 
 	CFusionDoc* pDoc = GetDocument();
-	SizeInfo *WadSizeInfos = Level_GetWadSizeInfos (pDoc->pLevel);
+	SizeInfo *WadSizeInfos = Level_GetWadSizeInfos (App->CLSB_Doc->pLevel);
 
 	// call our oldself
 	CCaptionView::OnSize(nType, cx, cy);
@@ -1876,7 +1876,7 @@ void CFusionView::OnViewType(UINT nID)
 	CFusionDoc	*pDoc	=GetDocument();
 	mViewType	=nID;
 
-	SizeInfo *WadSizeInfos = Level_GetWadSizeInfos (pDoc->pLevel);
+	SizeInfo *WadSizeInfos = Level_GetWadSizeInfos (App->CLSB_Doc->pLevel);
 
 	if(WadSizeInfos)
 	{
@@ -2364,7 +2364,7 @@ void CFusionView::OnToolsNextbrush()
 {
 
 	CFusionDoc *pDoc = GetDocument ();
-	BrushList *BList = Level_GetBrushes (pDoc->pLevel);
+	BrushList *BList = Level_GetBrushes (App->CLSB_Doc->pLevel);
 
 	if(GetModeTool()==ID_GENERALSELECT && !pDoc->IsSelectionLocked())
 	{
@@ -2398,7 +2398,7 @@ void CFusionView::OnToolsNextbrush()
 void CFusionView::OnToolsPrevbrush() 
 {
 	CFusionDoc *pDoc = GetDocument ();
-	BrushList *BList = Level_GetBrushes (pDoc->pLevel);
+	BrushList *BList = Level_GetBrushes (App->CLSB_Doc->pLevel);
 
 	if(GetModeTool()==ID_GENERALSELECT && !pDoc->IsSelectionLocked())
 	{
@@ -2540,7 +2540,7 @@ void CFusionView::Drag(dragtime Now)
 void CFusionView::OnEditSelectFacesNext() 
 {
 	CFusionDoc *pDoc = GetDocument ();
-	BrushList *BList = Level_GetBrushes (pDoc->pLevel);
+	BrushList *BList = Level_GetBrushes (App->CLSB_Doc->pLevel);
 
 	if(GetModeTool()==ID_GENERALSELECT && !pDoc->IsSelectionLocked())
 	{
@@ -2568,7 +2568,7 @@ void CFusionView::OnEditSelectFacesNext()
 			}
 
 			Face_SetSelected (pFace, GE_TRUE);
-			pBrush = BrushList_FindTopLevelFaceParent (Level_GetBrushes (pDoc->pLevel), pFace);
+			pBrush = BrushList_FindTopLevelFaceParent (Level_GetBrushes (App->CLSB_Doc->pLevel), pFace);
 
 			// select next face
 			if(!Brush_SetNextSelectedFace(pBrush))
@@ -2592,7 +2592,7 @@ void CFusionView::OnEditSelectFacesNext()
 void CFusionView::OnEditSelectFacesPrevious() 
 {
 	CFusionDoc *pDoc = GetDocument ();
-	BrushList *BList = Level_GetBrushes (pDoc->pLevel);
+	BrushList *BList = Level_GetBrushes (App->CLSB_Doc->pLevel);
 
 	if(GetModeTool()==ID_GENERALSELECT && !pDoc->IsSelectionLocked())
 	{
@@ -2621,7 +2621,7 @@ void CFusionView::OnEditSelectFacesPrevious()
 			}
 
 			// Select the next face in order, using selected brush list...
-			pBrush = BrushList_FindTopLevelFaceParent (Level_GetBrushes (pDoc->pLevel), pFace);
+			pBrush = BrushList_FindTopLevelFaceParent (Level_GetBrushes (App->CLSB_Doc->pLevel), pFace);
 			Face_SetSelected (pFace, GE_TRUE);
 
 			// select next face
@@ -2673,7 +2673,7 @@ void CFusionView::OnEditSelectEntitiesNext()
 	{
 
 		CEntityArray *Entities;
-		Entities = Level_GetEntities (pDoc->pLevel);
+		Entities = Level_GetEntities (App->CLSB_Doc->pLevel);
 
 		int NumEntities = Entities->GetSize();
 
@@ -2741,7 +2741,7 @@ void CFusionView::OnEditSelectEntitiesPrevious()
 	{
 
 		CEntityArray *Entities;
-		Entities = Level_GetEntities (pDoc->pLevel);
+		Entities = Level_GetEntities (App->CLSB_Doc->pLevel);
 
 		int NumEntities = Entities->GetSize();
 
@@ -3008,7 +3008,7 @@ void CFusionView::OnCameraCenteronview()
 		Render_GetCameraPos(VCam, &CurrentPosition);
 		
 		geVec3d Angles;
-		pCameraEntity->GetAngles( &Angles, Level_GetEntityDefs (pDoc->pLevel) );
+		pCameraEntity->GetAngles( &Angles, Level_GetEntityDefs (App->CLSB_Doc->pLevel) );
 
 		switch (mViewType)
 		{
