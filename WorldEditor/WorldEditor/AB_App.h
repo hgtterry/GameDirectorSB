@@ -94,7 +94,7 @@ distribution.
 #include "SB_FileView.h"
 #include "SB_Properties.h"
 #include "SB_Object.h"
-//#include <stack>
+#include "SB_Project.h"
 
 class SB_App
 {
@@ -167,7 +167,7 @@ public:
 	SB_FileView*				CLSB_FileView;
 	SB_Properties*				CLSB_Properties;
 	SB_Object*					CLSB_Object;
-
+	SB_Project*					CLSB_Project;
 
 	bool InitApp(void);
 	void InitMFC(void);
