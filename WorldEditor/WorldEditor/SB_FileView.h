@@ -30,10 +30,14 @@ public:
 	~SB_FileView(void);
 
 	void Start_FileView(void);
+	void Init_FileView(void);
 
 private:
 
 	static LRESULT CALLBACK ListPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	HIMAGELIST hImageList;
+	HBITMAP hBitMap;
 
 };
 

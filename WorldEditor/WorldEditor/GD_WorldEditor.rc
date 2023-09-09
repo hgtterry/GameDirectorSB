@@ -2727,6 +2727,20 @@ IDB_DUMMY               BITMAP                  "res\\Dummy.bmp"
 
 IDB_FULLSCREEN          BITMAP                  "res\\MenuBar\\FullScreen.bmp"
 
+IDB_FILECHANGED         BITMAP                  "res\\FileView\\filechanged.bmp"
+
+IDB_FILECHANGEDSELECTED BITMAP                  "res\\FileView\\fileChange_Selected.bmp"
+
+IDB_FILEINACTIVE        BITMAP                  "res\\FileView\\FileInactive.bmp"
+
+IDB_TREE                BITMAP                  "res\\FileView\\Folder.bmp"
+
+IDB_FILE                BITMAP                  "res\\FileView\\File.bmp"
+
+IDB_FILESELECTED        BITMAP                  "res\\FileView\\FIleSelected.bmp"
+
+IDB_FVFOLDERRED         BITMAP                  "res\\FileView\\Folder_Altered.bmp"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //

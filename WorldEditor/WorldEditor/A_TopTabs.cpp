@@ -1196,8 +1196,6 @@ void SB_TopTabs::Update_Dlg_Controls()
 	}
 	else
 	{
-		//App->CLSB_Brushes->Start_Dimensions_Dlg();
-
 		EnableWindow(GetDlgItem(Brush_Modify_Panel_Hwnd, IDC_BTTBMOVEROTATE), 1);
 		EnableWindow(GetDlgItem(Brush_Modify_Panel_Hwnd, IDC_BTSCALE), 1);
 		EnableWindow(GetDlgItem(Brush_Modify_Panel_Hwnd, IDC_BTTBSHEAR), 1);
@@ -1206,6 +1204,8 @@ void SB_TopTabs::Update_Dlg_Controls()
 		{
 			EnableWindow(GetDlgItem(App->CLSB_ViewMgrDlg->MgrDlg_hWnd, IDC_BT_SELECTED), 1);
 		}
+
+		Show_BrushPanel();
 	}
 
 	if (App->CLSB_Equity->EquitySB_Dialog_Visible == 0)
@@ -1222,4 +1222,17 @@ void SB_TopTabs::Update_Dlg_Controls()
 			EnableWindow(GetDlgItem(App->CLSB_ViewMgrDlg->MgrDlg_hWnd, IDC_BT_VIEWUPDATE), 1);
 		}
 	}
+
+}
+
+// *************************************************************************
+// *			 Show_BrushPanel:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_TopTabs::Show_BrushPanel()
+{
+	App->CLSB_TopTabs->Reset_Tabs_Buttons();
+	App->CLSB_TopTabs->Header_BrushModify_Flag = 1;
+	RedrawWindow(App->CLSB_TopTabs->Top_Tabs_Hwnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
+	ShowWindow(App->CLSB_TopTabs->Brush_Modify_Panel_Hwnd, SW_SHOW);
 }

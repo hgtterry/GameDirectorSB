@@ -42,6 +42,8 @@ public:
 
 	void Update_Dlg_Controls();
 
+	void Show_BrushPanel();
+
 	bool Header_BrushModify_Flag;
 	bool Textured_Flag;
 	bool Brush_Select_Flag;
