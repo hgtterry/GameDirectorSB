@@ -32,10 +32,11 @@ SB_FileView::SB_FileView(void)
 
 	Root = nullptr;
 	GD_ProjectFolder =	nullptr;
-	FV_Players_Folder = nullptr;;	// Players Folder FileFView
-	FV_Areas_Folder =	nullptr;;	// Areas/Rooms Folder FileFView
-	FV_LevelFolder =	nullptr;;
-	FV_Cameras_Folder = nullptr;;
+	FV_Players_Folder = nullptr;	// Players Folder FileFView
+	FV_Areas_Folder =	nullptr;	// Areas/Rooms Folder FileFView
+	FV_LevelFolder =	nullptr;
+	FV_Cameras_Folder = nullptr;
+	FV_Objects_Folder = nullptr;
 }
 
 SB_FileView::~SB_FileView(void)
@@ -323,5 +324,82 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	tvinsert.item.iImage = 0;
 	tvinsert.item.iSelectedImage = 1;
 	FV_Players_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+
+	tvinsert.hParent = FV_LevelFolder;
+	tvinsert.hInsertAfter = TVI_LAST;
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	tvinsert.item.pszText = "Area";
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
+	FV_Areas_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+
+	tvinsert.hParent = FV_LevelFolder;
+	tvinsert.hInsertAfter = TVI_LAST;
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	tvinsert.item.pszText = "Objects";
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
+	FV_Objects_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+
+}
+
+// *************************************************************************
+// *				Add_Item:- Terry and Hazel Flanigan 2022		 	   *
+// *************************************************************************
+HTREEITEM SB_FileView::Add_Item(HTREEITEM Folder, char* SFileName, int Index, bool NewItem)
+{
+	HWND Temp2 = GetDlgItem(App->ListPanel, IDC_TREE1);
+
+	tvinsert.hParent = Folder;
+	tvinsert.hInsertAfter = TVI_LAST;
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE | TVIF_PARAM;
+	tvinsert.item.pszText = SFileName;
+
+	if (NewItem == 1)
+	{
+		tvinsert.item.iImage = 6;
+		tvinsert.item.iSelectedImage = 7;
+		tvinsert.item.lParam = Index;
+	}
+	else
+	{
+		tvinsert.item.iImage = 4;
+		tvinsert.item.iSelectedImage = 5;
+		tvinsert.item.lParam = Index;
+	}
+
+	HTREEITEM Temp = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+
+	return Temp;
+}
+
+// *************************************************************************
+// *			Set_FolderActive:- Terry and Hazel Flanigan 2022	 	   *
+// *************************************************************************
+void SB_FileView::Set_FolderActive(HTREEITEM Folder)
+{
+	TVITEM Sitem;
+
+	Sitem.mask = TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	Sitem.hItem = Folder;
+	Sitem.iImage = 3;
+	Sitem.iSelectedImage = 3;
+
+	SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_SETITEM, 0, (LPARAM)(const LPTVITEM)&Sitem);
+}
+
+// *************************************************************************
+// *				SelectItem:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void SB_FileView::SelectItem(HTREEITEM TreeItem)
+{
+
+	HWND Temp = GetDlgItem(App->ListPanel, IDC_TREE1);
+
+	//if (Flags[0]->FileView_SceneLoaded == 1)
+	{
+		//TreeView_Select(Temp, NULL, TVGN_CARET);
+		TreeView_Select(Temp, TreeItem, TVGN_CARET);
+	}
 
 }

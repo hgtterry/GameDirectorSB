@@ -42,6 +42,9 @@ public:
 	char PathFileName[MAX_PATH];
 	char BrowserMessage[MAX_PATH];
 
+	char Project_File_Name[MAX_PATH];
+	char Project_Path_File_Name[MAX_PATH];
+
 	TCHAR szSelectedDir[MAX_PATH];
 
 private:

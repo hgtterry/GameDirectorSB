@@ -23,10 +23,42 @@ misrepresented as being the original software.
 distribution.
 */
 
+// ------------------------ Load Options
+typedef struct Load_Options
+{
+	int Has_Area;
+	int Has_Player;
+	int Has_Camera;
+	int Has_Objects;
+	int Has_Counters;
+
+}Load_Options;
+
 class SB_Project
 {
 public:
 	SB_Project(void);
 	~SB_Project(void);
+
+	bool Load_Project();
+
+	char m_Project_Name[MAX_PATH];
+	char m_Level_Name[MAX_PATH];
+	char m_Level_File_Name[MAX_PATH];
+	char m_Aera_Folder_Path[MAX_PATH];
+	char m_Level_Folder_Path[MAX_PATH];		// Level Just Path
+	char m_Players_Folder_Path[MAX_PATH];
+	char m_Objects_Folder_Path[MAX_PATH];
+	char m_Cameras_Folder_Path[MAX_PATH];
+	char m_Display_Folder_Path[MAX_PATH];
+	char m_Enviromnet_Folder_Path[MAX_PATH];
+
+	char m_Main_Assets_Path[MAX_PATH];		// Asset Path where Object mesh are added too and used on Loading
+	char m_Project_Sub_Folder[MAX_PATH];	// Curent Default Project Location not including project folder
+
+	char m_Ini_Path_File_Name[MAX_PATH];
+
+private:
+	void Set_Paths();
 };
 

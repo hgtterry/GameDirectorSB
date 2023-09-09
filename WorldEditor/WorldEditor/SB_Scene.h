@@ -31,6 +31,7 @@ public:
 	SB_Scene();
 	~SB_Scene();
 
+	bool Clear_Level();
 	void Go_FullScreen_Mode(void);
 	void Build_World(int ExpSelected);
 	bool Level_Build_G3ds(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, geBoolean ExpLights, int GroupID);
@@ -45,6 +46,8 @@ public:
 
 	std::vector<Base_Player*> B_Player;
 	std::vector<Base_Object*> V_Object;
+
+	bool Scene_Loaded;
 
 	bool Player_Added;
 	int Player_Count;

@@ -31,6 +31,12 @@ public:
 
 	void Start_FileView(void);
 	void Init_FileView(void);
+	HTREEITEM Add_Item(HTREEITEM Folder, char* SFileName, int Index, bool NewItem);
+	void Set_FolderActive(HTREEITEM Folder);
+	void SelectItem(HTREEITEM TreeItem);
+	void ExpandRoot(void);
+
+	HTREEITEM FV_Players_Folder;	// Players Folder FileFView
 
 private:
 
@@ -38,16 +44,16 @@ private:
 
 	void AddRootFolder(void);
 	void MoreFoldersD(void);
-	void ExpandRoot(void);
+	
 
 	TV_INSERTSTRUCT tvinsert;
 
 	HTREEITEM Root;
 	HTREEITEM GD_ProjectFolder;
-	HTREEITEM FV_Players_Folder;	// Players Folder FileFView
 	HTREEITEM FV_Areas_Folder;		// Areas/Rooms Folder FileFView
 	HTREEITEM FV_LevelFolder;
 	HTREEITEM FV_Cameras_Folder;
+	HTREEITEM FV_Objects_Folder;
 
 	HIMAGELIST hImageList;
 	HBITMAP hBitMap;

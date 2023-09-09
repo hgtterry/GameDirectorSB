@@ -1265,4 +1265,9 @@ void SB_Equity::Do_Preview_All()
 		App->CLSB_Equity->First_Run = 0;
 	}
 
+	if (App->CLSB_Scene->Scene_Loaded == 0)
+	{
+		App->CLSB_Project->Load_Project();
+	}
+
 }
