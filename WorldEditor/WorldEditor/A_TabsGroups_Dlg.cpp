@@ -324,7 +324,7 @@ void A_TabsGroups_Dlg::OnSelchangeBrushlist(int Index, bool Clear)
 		if (Clear == 1)
 		{
 			App->m_pDoc->ResetAllSelections() ;
-			App->m_pDoc->UpdateSelected();
+			App->CLSB_Doc->UpdateSelected();
 		}
 		
 		Selected_Brush = App->CL_World->Get_Brush_ByIndex( Index );
@@ -343,7 +343,7 @@ void A_TabsGroups_Dlg::OnSelchangeBrushlist(int Index, bool Clear)
 
 	if( bChanged )
 	{
-		App->m_pDoc->UpdateSelected() ;
+		App->CLSB_Doc->UpdateSelected() ;
 		App->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 	}
 }

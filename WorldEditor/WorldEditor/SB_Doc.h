@@ -22,5 +22,7 @@ public:
 
 	void Lock_AllTextures(void);
 
+	void SelectAll(void);
+	void UpdateSelected(void);
 };
 

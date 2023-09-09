@@ -175,7 +175,7 @@ bool SB_File_WE::Start_Load(const char* FileName, bool UseDialogLoader)
 	}
 
 	// Select All
-	App->m_pDoc->SelectAll();
+	App->CLSB_Doc->SelectAll();
 	App->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 	App->CL_TabsGroups_Dlg->Update_Dlg_SelectedBrushesCount();
 
@@ -1079,7 +1079,7 @@ bool SB_File_WE::New_File()
 {
 	App->Get_Current_Document();
 
-	App->m_pDoc->SelectAll();
+	App->CLSB_Doc->SelectAll();
 	App->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 	App->CL_TabsGroups_Dlg->Update_Dlg_SelectedBrushesCount();
 

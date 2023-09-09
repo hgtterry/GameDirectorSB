@@ -155,9 +155,8 @@ public:
 	void SetLockAxis( int Lock ) { mLockAxis = Lock ; } ;
 	void SetCurrentBrushTexture();
 	BOOL IsEntitySelected();
-	void SelectAll (void);
 	void DeleteSelectedEntities();
-	void UpdateSelected();
+	
 	void ResetAllSelectedEntities();
 	void CopySelectedBrushes();
 	void SetSelectedEntity( int ID );

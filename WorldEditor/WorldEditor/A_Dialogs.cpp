@@ -351,7 +351,7 @@ LRESULT CALLBACK A_Dialogs::FrontPanel_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 					CFusionDoc* pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
 
-					pDoc->SelectAll();
+					App->CLSB_Doc->SelectAll();
 					pDoc->UpdateAllViews( UAV_ALL3DVIEWS, NULL );
 
 
@@ -398,7 +398,7 @@ LRESULT CALLBACK A_Dialogs::FrontPanel_Proc(HWND hDlg, UINT message, WPARAM wPar
 			{
 				CFusionDoc* pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
 
-				pDoc->SelectAll() ;
+				App->CLSB_Doc->SelectAll() ;
 				pDoc->UpdateAllViews( UAV_ALL3DVIEWS, NULL ) ;
 
 				return TRUE;
@@ -409,7 +409,7 @@ LRESULT CALLBACK A_Dialogs::FrontPanel_Proc(HWND hDlg, UINT message, WPARAM wPar
 				CFusionDoc* pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
 
 				pDoc->ResetAllSelections() ;
-				pDoc->UpdateSelected();
+				App->CLSB_Doc->UpdateSelected();
 				pDoc->UpdateAllViews( UAV_ALL3DVIEWS, NULL ) ;
 
 				return TRUE;

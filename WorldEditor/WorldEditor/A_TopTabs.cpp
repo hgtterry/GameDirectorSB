@@ -314,7 +314,7 @@ LRESULT CALLBACK SB_TopTabs::TB_Headers_Proc(HWND hDlg, UINT message, WPARAM wPa
 		{
 			CFusionDoc* pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
 
-			pDoc->SelectAll();
+			App->CLSB_Doc->SelectAll();
 			pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 
 			App->CL_TabsGroups_Dlg->Update_Dlg_SelectedBrushesCount();
@@ -329,7 +329,7 @@ LRESULT CALLBACK SB_TopTabs::TB_Headers_Proc(HWND hDlg, UINT message, WPARAM wPa
 			CFusionDoc* pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
 
 			pDoc->ResetAllSelections();
-			pDoc->UpdateSelected();
+			App->CLSB_Doc->UpdateSelected();
 			pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 
 			App->CL_TabsGroups_Dlg->Update_Dlg_SelectedBrushesCount();

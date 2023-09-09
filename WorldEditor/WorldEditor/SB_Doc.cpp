@@ -128,7 +128,7 @@ bool SB_Doc::DeleteSelectedBrushes()
         App->CL_TabsGroups_Dlg->Fill_ListBox();
     }
 
-    App->m_pDoc->UpdateSelected();
+    UpdateSelected();
 
 	return FALSE;
 }
@@ -252,7 +252,7 @@ void SB_Doc::SelectOrtho(CPoint point, ViewVars* v)
 		}
 	}
 
-	App->m_pDoc->UpdateSelected();
+	UpdateSelected();
 
 	App->CL_TabsControl->Select_Brushes_Tab(0);
 	App->CL_TabsGroups_Dlg->Get_Index(App->m_pDoc->CurBrush);
@@ -308,7 +308,7 @@ void SB_Doc::DoneResize(int sides, int inidx)
         }
     }
 
-    App->m_pDoc->UpdateSelected();
+    UpdateSelected();
 }
 
 // *************************************************************************
@@ -355,7 +355,7 @@ void SB_Doc::DoneMove(void)
             App->m_pDoc->DoneMoveEntity();
         }
 
-        App->m_pDoc->UpdateSelected();
+        UpdateSelected();
 
         App->m_pDoc->UpdateSelectedModel(BRUSH_MOVE, &App->m_pDoc->FinalPos);
     }
@@ -373,7 +373,7 @@ void SB_Doc::Lock_AllTextures(void)
 
     App->Get_Current_Document();
 
-    App->m_pDoc->SelectAll();
+    SelectAll();
     App->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 
     Face* pFace;
@@ -388,7 +388,176 @@ void SB_Doc::Lock_AllTextures(void)
     }
 
     App->m_pDoc->ResetAllSelections();
-    App->m_pDoc->UpdateSelected();
+    UpdateSelected();
     App->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+
+}
+
+static geBoolean fdocSelectEntity(CEntity& Ent, void* lParam)
+{
+    Ent.DeSelect();
+    App->m_pDoc->SelectEntity(&Ent);
+    return GE_TRUE;
+}
+
+static geBoolean fdocSelectBrush(Brush* pBrush, void* lParam)
+{
+    
+    SelBrushList_Add(App->m_pDoc->pSelBrushes, pBrush);
+
+    return GE_TRUE;
+}
+
+static geBoolean SelAllBrushFaces(Brush* pBrush, void* lParam)
+{
+    int iFace, nFaces;
+    
+    nFaces = Brush_GetNumFaces(pBrush);
+    for (iFace = 0; iFace < nFaces; ++iFace)
+    {
+        Face* pFace;
+
+        pFace = Brush_GetFace(pBrush, iFace);
+        Face_SetSelected(pFace, GE_TRUE);
+        SelFaceList_Add(App->m_pDoc->pSelFaces, pFace);
+    }
+    return GE_TRUE;
+}
+
+// *************************************************************************
+// *              SelectAll:- Terry and Hazel Flanigan 2023           	   *
+// *************************************************************************
+void SB_Doc::SelectAll(void)
+{
+    App->Get_Current_Document();
+
+    App->m_pDoc->DoGeneralSelect();
+
+    App->m_pDoc->NumSelEntities = 0;
+    Level_EnumEntities(App->m_pDoc->pLevel, this, fdocSelectEntity);
+    Level_EnumBrushes(App->m_pDoc->pLevel, this, fdocSelectBrush);
+
+    // Select all faces on all selected brushes
+    int iBrush;
+    int NumSelBrushes = SelBrushList_GetSize(App->m_pDoc->pSelBrushes);
+
+    for (iBrush = 0; iBrush < NumSelBrushes; ++iBrush)
+    {
+        Brush* pBrush;
+
+        pBrush = SelBrushList_GetBrush(App->m_pDoc->pSelBrushes, iBrush);
+
+        if (Brush_IsMulti(pBrush))
+        {
+            BrushList_EnumLeafBrushes(App->CL_Brush->Brush_GetBrushList(pBrush), this, SelAllBrushFaces);
+        }
+        else
+        {
+            SelAllBrushFaces(pBrush, this);
+        }
+
+    }
+
+    UpdateSelected();
+
+    App->m_pDoc->ConfigureCurrentTool();
+}
+
+// *************************************************************************
+// *             UpdateSelected:- Terry and Hazel Flanigan 2023            *
+// *************************************************************************
+void SB_Doc::UpdateSelected(void)
+{
+    App->Get_Current_Document();
+
+    int		i;
+    int NumSelFaces = SelFaceList_GetSize(App->m_pDoc->pSelFaces);
+    int NumSelBrushes = SelBrushList_GetSize(App->m_pDoc->pSelBrushes);
+
+    App->m_pDoc->SelState = (NumSelBrushes > 1) ? MULTIBRUSH : NumSelBrushes;
+    App->m_pDoc->SelState |= (NumSelFaces > 1) ? MULTIFACE : (NumSelFaces + 1) << 3;
+    App->m_pDoc->SelState |= (App->m_pDoc->NumSelEntities > 1) ? MULTIENTITY : (App->m_pDoc->NumSelEntities + 1) << 7;
+
+
+    if (App->m_pDoc->mModeTool == ID_GENERALSELECT)
+    {
+        if (App->m_pDoc->GetSelState() & ONEBRUSH)
+            App->m_pDoc->CurBrush = SelBrushList_GetBrush(App->m_pDoc->pSelBrushes, 0);
+        else
+            App->m_pDoc->CurBrush = App->m_pDoc->BTemplate;
+    }
+
+    geVec3d_Clear(&App->m_pDoc->SelectedGeoCenter);
+
+    if (App->m_pDoc->mModeTool == ID_TOOLS_TEMPLATE)
+    {
+        if (App->m_pDoc->TempEnt)
+        {
+            App->m_pDoc->SelectedGeoCenter = App->m_pDoc->mRegularEntity.mOrigin;
+        }
+        else
+        {
+            Brush_Center(App->m_pDoc->CurBrush, &App->m_pDoc->SelectedGeoCenter);
+        }
+    }
+    else if (App->m_pDoc->SelState != NOSELECTIONS)
+    {
+        Model* pModel;
+        ModelInfo_Type* ModelInfo = Level_GetModelInfo(App->m_pDoc->pLevel);
+
+        pModel = ModelList_GetAnimatingModel(ModelInfo->Models);
+        if (pModel != NULL)
+        {
+            // we're animating a model, so use its current position
+            Model_GetCurrentPos(pModel, &App->m_pDoc->SelectedGeoCenter);
+        }
+        else
+        {
+            if (NumSelBrushes)
+            {
+                SelBrushList_Center(App->m_pDoc->pSelBrushes, &App->m_pDoc->SelectedGeoCenter);
+            }
+            else if (App->m_pDoc->NumSelEntities)
+            {
+                geVec3d EntitySelectionCenter = { 0.0f,0.0f,0.0f };
+
+                CEntityArray* Entities;
+                Entities = Level_GetEntities(App->m_pDoc->pLevel);
+                if (Entities)
+                {
+                    int NumEntities = Entities->GetSize();
+
+                    for (int i = 0; i < NumEntities; i++)
+                    {
+                        if ((*Entities)[i].IsSelected())
+                        {
+                            geVec3d_Add(&EntitySelectionCenter, &(*Entities)[i].mOrigin, &EntitySelectionCenter);
+                        }
+                    }
+                }
+
+                geVec3d_Scale(&EntitySelectionCenter, 1 / (float)(App->m_pDoc->NumSelEntities), &App->m_pDoc->SelectedGeoCenter);
+            }
+        }
+    }
+
+    if (App->m_pDoc->SelState & ONEENTITY)
+    {
+        CEntityArray* Entities = Level_GetEntities(App->m_pDoc->pLevel);
+
+        for (i = 0; i < Entities->GetSize() && !((*Entities)[i].IsSelected()); i++);
+        App->m_pDoc->mCurrentEntity = i;
+    }
+    else
+    {
+        App->m_pDoc->mCurrentEntity = -1;
+    }
+
+    App->m_pDoc->UpdateFaceAttributesDlg();
+    App->m_pDoc->UpdateBrushAttributesDlg();
+
+    //assert( mpMainFrame->m_wndTabControls ) ;
+    //assert( mpMainFrame->m_wndTabControls->GrpTab ) ;
+    //mpMainFrame->m_wndTabControls->GrpTab->UpdateGroupSelection( ) ;
 
 }

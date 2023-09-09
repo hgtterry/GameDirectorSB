@@ -1118,7 +1118,7 @@ void CFusionDoc::OnBrushSubtractfromworld()
 
         BrushList_Append (BList, nb);
     }
-    UpdateSelected();
+    App->CLSB_Doc->UpdateSelected();
     UpdateAllViews(UAV_ALL3DVIEWS | REBUILD_QUICK, NULL, TRUE);
 }
 
@@ -1194,7 +1194,7 @@ void CFusionDoc::CopySelectedBrushes(void)
     // Copying items places the new items in the same group, so we must update the UI
 //	mpMainFrame->m_wndTabControls->GrpTab->UpdateTabDisplay( this ) ;
     App->CL_TabsGroups_Dlg->Fill_ListBox(); // hgtterry App->CL_TabsGroups_Dlg->Fill_ListBox()
-    UpdateSelected();
+    App->CLSB_Doc->UpdateSelected();
     UpdateAllViews( UAV_ALL3DVIEWS, NULL );
 }
 
@@ -2455,47 +2455,13 @@ static geBoolean SelAllBrushFaces (Brush *pBrush, void *lParam)
     return GE_TRUE;
 }
 
-void CFusionDoc::SelectAll (void)
-{
-    DoGeneralSelect ();
-
-    NumSelEntities = 0;
-    Level_EnumEntities (pLevel, this, ::fdocSelectEntity);
-    Level_EnumBrushes (pLevel, this, ::fdocSelectBrush);	
-
-    // Select all faces on all selected brushes
-    int iBrush;
-    int NumSelBrushes = SelBrushList_GetSize (pSelBrushes);
-
-	for (iBrush = 0; iBrush < NumSelBrushes; ++iBrush)
-	{
-		Brush* pBrush;
-
-		pBrush = SelBrushList_GetBrush(pSelBrushes, iBrush);
-
-		if (Brush_IsMulti(pBrush))
-		{
-			BrushList_EnumLeafBrushes(App->CL_Brush->Brush_GetBrushList(pBrush), this, ::SelAllBrushFaces);
-		}
-		else
-		{
-			::SelAllBrushFaces(pBrush, this);
-		}
-
-	}
-
-    UpdateSelected();
-
-    ConfigureCurrentTool();
-}
-
 void CFusionDoc::SelectAllBrushes (void)
 {
     DoGeneralSelect ();
 
     Level_EnumBrushes (pLevel, this, ::fdocSelectBrush);	
 
-    UpdateSelected();
+    App->CLSB_Doc->UpdateSelected();
 }
 
 void CFusionDoc::SelectAllEntities (void)
@@ -2505,7 +2471,7 @@ void CFusionDoc::SelectAllEntities (void)
     NumSelEntities = 0;
     Level_EnumEntities (pLevel, this, ::fdocSelectEntity);
 
-    UpdateSelected();
+    App->CLSB_Doc->UpdateSelected();
 }
 
 void CFusionDoc::SelectAllFacesInBrushes (void)
@@ -2530,7 +2496,7 @@ void CFusionDoc::SelectAllFacesInBrushes (void)
             ::SelAllBrushFaces (pBrush, this);
         }
     }
-    UpdateSelected ();
+    App->CLSB_Doc->UpdateSelected ();
 
     ConfigureCurrentTool();
 }
@@ -2562,7 +2528,7 @@ void CFusionDoc::SetSelectedEntity( int ID )
     ResetAllSelectedEntities();
     mCurrentEntity = ID;
     SelectEntity (&(*Entities)[ID]);
-    UpdateSelected() ;
+    App->CLSB_Doc->UpdateSelected() ;
 }
 //	End of CHANGE
 
@@ -2707,7 +2673,7 @@ void CFusionDoc::SelectOrthoRect(CPoint ptStart, CPoint ptEnd, ViewVars *v)
     }
 
     if( bSelectedSomething )
-        UpdateSelected ();
+        App->CLSB_Doc->UpdateSelected ();
 
 }/* CFusionDoc::SelectOrthoRect */
 
@@ -3180,7 +3146,7 @@ void CFusionDoc::SelectRay(CPoint point, ViewVars *v) // hgtterry Select Ray
         }
     }
 
-    UpdateSelected();
+    App->CLSB_Doc->UpdateSelected();
 
 /*
     if ((bdat.CurFace == NULL) ||
@@ -4173,7 +4139,7 @@ void CFusionDoc::DoneRotate(void)
             Brush_Destroy (&OldBrush);
         }
     }
-    UpdateSelected();
+    App->CLSB_Doc->UpdateSelected();
 
     UpdateSelectedModel (BRUSH_ROTATE, &FinalRot);
 
@@ -4432,7 +4398,7 @@ void CFusionDoc::ConfigureCurrentTool(void)
             mShowSelectedFaces	=FALSE;
             mShowSelectedBrushes=TRUE;
             
-            UpdateSelected();
+            App->CLSB_Doc->UpdateSelected();
             Redraw	=TRUE;
             break;
 
@@ -4440,7 +4406,7 @@ void CFusionDoc::ConfigureCurrentTool(void)
             mShowSelectedFaces	=TRUE;
             mShowSelectedBrushes=FALSE;
 
-            UpdateSelected();
+            App->CLSB_Doc->UpdateSelected();
             Redraw	=TRUE;
             break;
 
@@ -4487,100 +4453,6 @@ void CFusionDoc::ConfigureCurrentTool(void)
     if(Redraw)
         UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 }
-
-void CFusionDoc::UpdateSelected(void)
-{
-    int		i;
-    int NumSelFaces = SelFaceList_GetSize (pSelFaces);
-    int NumSelBrushes = SelBrushList_GetSize (pSelBrushes);
-
-    SelState=(NumSelBrushes > 1)? MULTIBRUSH : NumSelBrushes;
-    SelState|=(NumSelFaces >1)? MULTIFACE : (NumSelFaces+1)<<3;
-    SelState|=(NumSelEntities >1)? MULTIENTITY : (NumSelEntities+1)<<7;
-
-
-    if(mModeTool==ID_GENERALSELECT)
-    {
-        if(GetSelState() & ONEBRUSH)
-            CurBrush	=SelBrushList_GetBrush (pSelBrushes, 0);
-        else
-            CurBrush	=BTemplate;
-    }
-
-    geVec3d_Clear (&SelectedGeoCenter);
-
-    if (mModeTool==ID_TOOLS_TEMPLATE)
-    {
-        if (TempEnt)
-        {
-            SelectedGeoCenter = mRegularEntity.mOrigin;
-        }
-        else
-        {
-            Brush_Center (CurBrush, &SelectedGeoCenter);
-        }
-    }
-    else if (SelState != NOSELECTIONS)
-    {
-        Model *pModel;
-        ModelInfo_Type *ModelInfo = Level_GetModelInfo (pLevel);
-
-        pModel = ModelList_GetAnimatingModel (ModelInfo->Models);
-        if (pModel != NULL)
-        {
-            // we're animating a model, so use its current position
-            Model_GetCurrentPos (pModel, &SelectedGeoCenter);
-        }
-        else
-        {
-            if (NumSelBrushes)
-            {
-                SelBrushList_Center(pSelBrushes, &SelectedGeoCenter);
-            }
-            else if (NumSelEntities)
-            {
-                geVec3d EntitySelectionCenter = {0.0f,0.0f,0.0f};
-
-                CEntityArray *Entities;
-                Entities = Level_GetEntities (pLevel);
-                if (Entities)
-                {
-                    int NumEntities = Entities->GetSize();
-
-                    for (int i=0;i<NumEntities;i++)
-                    {
-                        if ((*Entities)[i].IsSelected())
-                        {
-                            geVec3d_Add(&EntitySelectionCenter, &(*Entities)[i].mOrigin, &EntitySelectionCenter);
-                        }
-                    }
-                }
-
-                geVec3d_Scale(&EntitySelectionCenter, 1/(float)(NumSelEntities), &SelectedGeoCenter);
-            }
-        }
-    }
-
-    if(SelState & ONEENTITY)
-    {
-        CEntityArray *Entities = Level_GetEntities (pLevel);
-
-        for(i=0;i < Entities->GetSize() && !((*Entities)[i].IsSelected ());i++);
-        mCurrentEntity	=i;
-    }
-    else
-        mCurrentEntity	=-1;
-
-    UpdateFaceAttributesDlg ();
-    UpdateBrushAttributesDlg ();
-
-    //assert( mpMainFrame->m_wndTabControls ) ;
-    //assert( mpMainFrame->m_wndTabControls->GrpTab ) ;
-    //mpMainFrame->m_wndTabControls->GrpTab->UpdateGroupSelection( ) ;
-
-    
-
-}/* CFusionDoc::UpdateSelected */
 
 //void CFusionDoc::NullBrushAttributes(void){  mpBrushAttributes=NULL;  }
 
@@ -4711,7 +4583,7 @@ void CFusionDoc::SetAdjustmentMode( fdocAdjustEnum nCmdIDMode )
             Level_EnumLeafBrushes (pLevel, this, ::fdocSelectBrushesFromFaces);
 
             ResetAllSelectedFaces();
-            UpdateSelected();
+            App->CLSB_Doc->UpdateSelected();
 
             //remove face attributes dialog if present...
 //			DeleteFaceAttributes ();
@@ -4740,7 +4612,7 @@ void CFusionDoc::SetAdjustmentMode( fdocAdjustEnum nCmdIDMode )
                     ::SelAllBrushFaces (pBrush, this);
                 }
             }
-            UpdateSelected ();
+            App->CLSB_Doc->UpdateSelected ();
             //remove brush attributes dialog if present...
 //			DeleteBrushAttributes ();
             ConfigureCurrentTool();
@@ -4984,7 +4856,7 @@ void CFusionDoc::OnEditPaste()
     // Copying items places the new items in the same group, so we must update the UI
 //	mpMainFrame->m_wndTabControls->GrpTab->UpdateTabDisplay( this ) ;
     App->CL_TabsGroups_Dlg->Fill_ListBox(); // hgtterry App->CL_TabsGroups_Dlg->Fill_ListBox()
-    UpdateSelected();
+    App->CLSB_Doc->UpdateSelected();
     UpdateAllViews( UAV_ALL3DVIEWS, NULL );
     
     SetModifiedFlag();
@@ -5097,7 +4969,7 @@ void CFusionDoc::DoneShear(int sides, int inidx)
         Brush_SnapShearNearest(pBrush, bsnap, sides, inidx, snapside);
     }
     TempDeleteSelected();
-    UpdateSelected();
+    App->CLSB_Doc->UpdateSelected();
 }
 
 int CFusionDoc::DoCompileDialog(void)
@@ -5493,7 +5365,7 @@ void CFusionDoc::SelectModelBrushes
     // this model's id to the selection list.
     Level_EnumBrushes (pLevel, &bsData, ::fdocSelectBrushCallback);
 
-    UpdateSelected ();
+    App->CLSB_Doc->UpdateSelected ();
 }
 
 /******************************************************
@@ -5657,7 +5529,7 @@ void CFusionDoc::SelectGroupBrushes
 
     Level_EnumBrushes (pLevel, &SelectData, ::BrushSelect ) ;
     Level_EnumEntities (pLevel, &SelectData, ::EntitySelect ) ;
-    UpdateSelected ();		// update selection information
+    App->CLSB_Doc->UpdateSelected ();		// update selection information
 }
 
 

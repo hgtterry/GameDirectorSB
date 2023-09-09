@@ -150,7 +150,7 @@ bool SB_Level::Change_Centre_Brush_Texture()
 	App->Get_Current_Document();
 
 	App->m_pDoc->ResetAllSelections();
-	App->m_pDoc->UpdateSelected();
+	App->CLSB_Doc->UpdateSelected();
 	
 	int Index = App->CL_World->Get_Brush_Index_By_Name("XYZ");
 	if (Index == -1)
@@ -169,7 +169,7 @@ bool SB_Level::Change_Centre_Brush_Texture()
 
 	SelBrushList_Add(App->m_pDoc->pSelBrushes, Selected_Brush);
 	
-	App->m_pDoc->UpdateSelected();
+	App->CLSB_Doc->UpdateSelected();
 
 	App->m_pDoc->SelectAllFacesInBrushes();
 
@@ -195,7 +195,7 @@ bool SB_Level::Change_Centre_Brush_Texture()
 	}
 
 	App->m_pDoc->ResetAllSelections();
-	App->m_pDoc->UpdateSelected();
+	App->CLSB_Doc->UpdateSelected();
 
 	Brush_SetVisible(Selected_Brush, GE_FALSE);
 
