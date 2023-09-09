@@ -97,6 +97,8 @@ void SB_Equity::Show_Equity_Dialog(bool Show)
 			}
 			
 			EquitySB_Dialog_Visible = 0;
+			App->CLSB_TopTabs->Update_Dlg_Controls();
+
 			ShowWindow(App->Equity_Dlg_hWnd, SW_HIDE);
 		}
 	}
@@ -397,7 +399,6 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == IDCANCEL)
 		{
-
 			if (App->CLSB_Equity->Close_Equity_Flag == 1)
 			{
 				EndDialog(hDlg, LOWORD(wParam));
@@ -407,7 +408,7 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 
 			ShowWindow(App->ListPanel, false);
 			ShowWindow(App->CLSB_Properties->Properties_Dlg_hWnd, false);
-
+			
 			App->CLSB_Equity->Show_Equity_Dialog(false);
 			return TRUE;
 		}
@@ -1249,6 +1250,7 @@ void SB_Equity::Do_Preview_All()
 	App->CLSB_Object->Do_Basketball();
 
 	App->CLSB_Equity->Show_Equity_Dialog(true);
+	App->CLSB_TopTabs->Update_Dlg_Controls();
 
 	//-----------------------------------------------------
 	if (App->CLSB_Scene->Player_Count == 0)

@@ -162,7 +162,6 @@
 #define IDB_FULLSCREEN                  330
 #define IDD_SB_VIEWMANAGER              331
 #define IDD_SB_LIST                     334
-#define IDD_DIALOG4                     336
 #define IDD_SB_PROPERTIES               336
 #define IDC_RESET_ALL                   1000
 #define IDC_EDIT1                       1001
@@ -831,6 +830,7 @@
 #define IDC_BOXDEFAULTS                 1535
 #define IDC_BTFACENEXT                  1536
 #define IDC_TREE1                       1537
+#define IDC_BT_VIEWUPDATE               1538
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772
 #define ID_BRUSH_PRIMITIVES_SPHEROID    32773
@@ -1045,7 +1045,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        338
 #define _APS_NEXT_COMMAND_VALUE         33091
-#define _APS_NEXT_CONTROL_VALUE         1538
+#define _APS_NEXT_CONTROL_VALUE         1539
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

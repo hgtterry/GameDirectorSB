@@ -1207,4 +1207,19 @@ void SB_TopTabs::Update_Dlg_Controls()
 			EnableWindow(GetDlgItem(App->CLSB_ViewMgrDlg->MgrDlg_hWnd, IDC_BT_SELECTED), 1);
 		}
 	}
+
+	if (App->CLSB_Equity->EquitySB_Dialog_Visible == 0)
+	{
+		if (App->CLSB_ViewMgrDlg->View_MgrDlg_Active == 1)
+		{
+			EnableWindow(GetDlgItem(App->CLSB_ViewMgrDlg->MgrDlg_hWnd, IDC_BT_VIEWUPDATE), 0);
+		}
+	}
+	else
+	{
+		if (App->CLSB_ViewMgrDlg->View_MgrDlg_Active == 1)
+		{
+			EnableWindow(GetDlgItem(App->CLSB_ViewMgrDlg->MgrDlg_hWnd, IDC_BT_VIEWUPDATE), 1);
+		}
+	}
 }

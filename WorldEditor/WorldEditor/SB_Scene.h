@@ -39,6 +39,7 @@ public:
 	bool FaceList_Export(const Brush* b, const FaceList* pList, int BrushCount, int SubBrushCount);
 	int Get_Adjusted_Index(int RealIndex);
 	bool AddTexture_GL(geVFile* BaseFile, const char* TextureName, int GroupIndex);
+	void Update_Scene(void);
 
 	Brush* Selected_Brush;
 
