@@ -29,6 +29,13 @@ SB_FileView::SB_FileView(void)
 {
 	hImageList = nullptr;
 	hBitMap = nullptr;
+
+	Root = nullptr;
+	GD_ProjectFolder =	nullptr;
+	FV_Players_Folder = nullptr;;	// Players Folder FileFView
+	FV_Areas_Folder =	nullptr;;	// Areas/Rooms Folder FileFView
+	FV_LevelFolder =	nullptr;;
+	FV_Cameras_Folder = nullptr;;
 }
 
 SB_FileView::~SB_FileView(void)
@@ -42,6 +49,7 @@ void SB_FileView::Start_FileView(void)
 {
 	App->ListPanel = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_LIST, App->Equity_Dlg_hWnd, (DLGPROC)ListPanel_Proc);
 	//Init_Bmps_FileView();
+	Init_FileView();
 }
 
 // *************************************************************************
@@ -54,16 +62,16 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 	case WM_INITDIALOG:
 	{
-		/*App->SBC_FileView->FileView_Active = 1;
+		//App->SBC_FileView->FileView_Active = 1;
 		SendDlgItemMessage(hDlg, IDC_TREE1, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		CheckMenuItem(App->mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND | MF_CHECKED);*/
+		//CheckMenuItem(App->mMenu, ID_WINDOWS_FILEVIEW, MF_BYCOMMAND | MF_CHECKED);
 		return TRUE;
 	}
 
 	case WM_CTLCOLORDLG:
 	{
-		return (LONG)App->Brush_White;
+		return (LONG)App->AppBackground;
 	}
 
 	case WM_SIZE:
@@ -253,7 +261,67 @@ void SB_FileView::Init_FileView(void)
 
 	TreeView_SetBkColor(Temp, (COLORREF)RGB(255, 255, 255));
 
-	//AddRootFolder();
-	//MoreFoldersD(); //  Folders under root 
-	//ExpandRoot();
+	AddRootFolder();
+	MoreFoldersD(); //  Folders under root 
+	ExpandRoot();
+}
+
+// *************************************************************************
+// *			ExpandRoot:- Terry and Hazel Flanigan 2022				   *
+// *************************************************************************
+void SB_FileView::ExpandRoot(void)
+{
+	HWND Temp = GetDlgItem(App->ListPanel, IDC_TREE1);
+	HTREEITEM i = TreeView_GetSelection(Temp);
+
+	TreeView_Expand(Temp, GD_ProjectFolder, TVE_EXPAND);
+	TreeView_Expand(Temp, FV_LevelFolder, TVE_EXPAND);
+	TreeView_Expand(Temp, FV_Players_Folder, TVE_EXPAND);
+}
+
+// *************************************************************************
+// *			AddRootFolder:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void SB_FileView::AddRootFolder(void)
+{
+	tvinsert.hParent = Root;			// top most level no need handle
+	tvinsert.hInsertAfter = TVI_LAST; // work as root level
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	tvinsert.item.pszText = "Project";// App->SBC_Project->m_Project_Name;
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
+	GD_ProjectFolder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+}
+
+// *************************************************************************
+// *			MoreFoldersD:- Terry and Hazel Flanigan 2022 		 	   *
+// *************************************************************************
+void SB_FileView::MoreFoldersD(void) // last folder level
+{
+	//------------------------------------------------------- Level 
+	tvinsert.hParent = GD_ProjectFolder;
+	tvinsert.hInsertAfter = TVI_LAST;
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	tvinsert.item.pszText = "Level"; // App->SBC_Project->m_Level_Name;
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
+	FV_LevelFolder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+
+	////------------------------------------------------------- Camera
+	tvinsert.hParent = FV_LevelFolder;
+	tvinsert.hInsertAfter = TVI_LAST;
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	tvinsert.item.pszText = "Camera";
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
+	FV_Cameras_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+
+	tvinsert.hParent = FV_LevelFolder;
+	tvinsert.hInsertAfter = TVI_LAST;
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	tvinsert.item.pszText = "Player";
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
+	FV_Players_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+
 }

@@ -36,6 +36,19 @@ private:
 
 	static LRESULT CALLBACK ListPanel_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
+	void AddRootFolder(void);
+	void MoreFoldersD(void);
+	void ExpandRoot(void);
+
+	TV_INSERTSTRUCT tvinsert;
+
+	HTREEITEM Root;
+	HTREEITEM GD_ProjectFolder;
+	HTREEITEM FV_Players_Folder;	// Players Folder FileFView
+	HTREEITEM FV_Areas_Folder;		// Areas/Rooms Folder FileFView
+	HTREEITEM FV_LevelFolder;
+	HTREEITEM FV_Cameras_Folder;
+
 	HIMAGELIST hImageList;
 	HBITMAP hBitMap;
 
