@@ -14,7 +14,7 @@ SB_Equity::SB_Equity(void)
 	Render_Buttons_hWnd =	nullptr;
 
 	First_Run = 1;
-
+	Saved_Camera_Mode = 0;
 	Close_Equity_Flag = 0;
 
 	m_pDoc = nullptr;
@@ -94,6 +94,7 @@ void SB_Equity::Show_Equity_Dialog(bool Show)
 			if (Equity_Start_Mode == 2)
 			{
 				App->CLSB_Camera_EQ->Save_Camera_Pos();
+				Saved_Camera_Mode = App->CLSB_TopTabs_Equity->Toggle_Camera_First_Flag;
 			}
 			
 			EquitySB_Dialog_Visible = 0;
@@ -1209,10 +1210,8 @@ void SB_Equity::Do_Preview_All()
 
 	RedrawWindow(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-	Ogre::Vector3 OldCamPos = App->CLSB_Camera_EQ->Saved_Pos;
-	App->CLSB_Ogre->mCamera->setPosition(Ogre::Vector3(OldCamPos.x, OldCamPos.y, OldCamPos.z));
-
-
+	Ogre::Vector3 OldCamPos;
+	
 	//------------------------------------------------------
 	int BCount = App->CL_World->Get_Brush_Count();
 	if (BCount == 0)
@@ -1229,12 +1228,6 @@ void SB_Equity::Do_Preview_All()
 		Ogre::Quaternion OldCamRot = App->CLSB_Camera_EQ->Saved_Rotation;
 		App->CLSB_Ogre->mCamera->setPosition(Ogre::Vector3(OldCamPos.x, OldCamPos.y, OldCamPos.z));
 		App->CLSB_Ogre->mCamera->setOrientation(OldCamRot);
-
-		App->CLSB_Scene->Build_World(0);
-
-		App->CLSB_Bullet->Create_Brush_Trimesh(0);
-		App->CLSB_Model->Set_BondingBox_Brushes();
-
 
 		App->CLSB_Model->Set_Equity();
 		App->CLSB_Camera_EQ->Reset_Orientation();
@@ -1254,13 +1247,6 @@ void SB_Equity::Do_Preview_All()
 		App->CLSB_Equity->Show_Equity_Dialog(true);
 		App->CLSB_TopTabs->Update_Dlg_Controls();
 
-		//-----------------------------------------------------
-		if (App->CLSB_Scene->Player_Count == 0)
-		{
-			App->CLSB_Player->Create_Player_Object();
-			App->CLSB_Properties->Update_ListView_Player();
-		}
-
 		if (App->CLSB_Equity->First_Run == 1)
 		{
 			App->CLSB_Camera_EQ->Zero_View();
@@ -1271,21 +1257,38 @@ void SB_Equity::Do_Preview_All()
 	}
 	else
 	{
-
 		App->CLSB_Scene->Build_World(0);
 		App->CLSB_Bullet->Create_Brush_Trimesh(0);
 		App->CLSB_Model->Set_BondingBox_Brushes();
 
-		App->CLSB_Camera_EQ->Reset_Orientation();
-		App->CLSB_Camera_EQ->Set_Camera_Mode(Enums::CamDetached);
-		App->CLSB_TopTabs_Equity->Camera_Set_Free();
+		if (Saved_Camera_Mode == 0)
+		{
+			App->CLSB_Camera_EQ->Reset_Orientation();
+			App->CLSB_Camera_EQ->Set_Camera_Mode(Enums::CamDetached);
+			App->CLSB_TopTabs_Equity->Camera_Set_Free();
+		}
+		else
+		{
+			App->CLSB_Ogre->OgreListener->CameraMode = Enums::CamFirst;
+			App->CLSB_TopTabs_Equity->Camera_Set_First();
+		}
 
 		OldCamPos = App->CLSB_Camera_EQ->Saved_Pos;
 		Ogre::Quaternion OldCamRot = App->CLSB_Camera_EQ->Saved_Rotation;
 		App->CLSB_Ogre->mCamera->setPosition(Ogre::Vector3(OldCamPos.x, OldCamPos.y, OldCamPos.z));
 		App->CLSB_Ogre->mCamera->setOrientation(OldCamRot);
 
+		App->CLSB_Model->Model_Loaded = 1;
+		App->CLSB_Ogre->RenderListener->ShowBrushes = 1;
+		App->CLSB_Ogre->RenderListener->ShowTextured = 1;
+		App->CLSB_Model->Model_Type = Enums::LoadedFile_Brushes;
+
+		ShowWindow(App->ListPanel, true);
+		ShowWindow(App->CLSB_Properties->Properties_Dlg_hWnd, true);
+
 		App->CLSB_Equity->Show_Equity_Dialog(true);
+		App->CLSB_TopTabs->Update_Dlg_Controls();
+
 	}
 
 }

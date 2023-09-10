@@ -38,6 +38,8 @@ public:
 
 	void Hide_Tabs(void);
 
+	bool Toggle_Camera_First_Flag;
+
 	bool Toggle_Tabs_Camera_Flag;
 	bool Toggle_Camera_Model_Flag;;
 
@@ -54,15 +56,10 @@ private:
 	void Start_Files_TB(void);
 	void Start_Camera_TB(void);
 
-	
-
 	bool Toggle_Tabs_Test_Flag;
 	bool Toggle_Dimensions_Flag;
-
-	bool Toggle_Camera_First_Flag;
 	bool Toggle_Camera_Free_Flag;
 
-	
 };
 
 

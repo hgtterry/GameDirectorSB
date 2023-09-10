@@ -23,6 +23,8 @@ public:
 	bool EquitySB_Dialog_Visible;
 	int Equity_Start_Mode;
 
+	bool Saved_Camera_Mode;
+
 	HWND OgreView_3D_hWnd;
 	HWND Render_Buttons_hWnd;
 

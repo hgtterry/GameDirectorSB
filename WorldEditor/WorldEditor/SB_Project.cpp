@@ -126,12 +126,18 @@ bool SB_Project::Load_Project()
 	//	App->SBC_Scene->Area_Added = 1;
 	//}
 
+	App->CLSB_Scene->Build_World(0);
+	App->CLSB_Bullet->Create_Brush_Trimesh(0);
+	App->CLSB_Model->Set_BondingBox_Brushes();
+
 	//// ------------------------------------- Player
 	//if (Options->Has_Player > 0)
 	//{
 	//	bool test = Load_Project_Player();
 	//	App->SBC_DCC->Player_CanJump = App->CL_Prefs->Prefs_PlayerCanJump_Flag;
 	//}
+	App->CLSB_Player->Create_Player_Object();
+	App->CLSB_Properties->Update_ListView_Player();
 
 	App->CLSB_Scene->B_Player[0]->FileViewItem = App->CLSB_FileView->Add_Item(App->CLSB_FileView->FV_Players_Folder, "Player_1", 0, false);
 	App->CLSB_FileView->Set_FolderActive(App->CLSB_FileView->FV_Players_Folder);
