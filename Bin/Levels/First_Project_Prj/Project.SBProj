@@ -7,7 +7,7 @@ Level_Name=First_Level
 Game_Name=YourGameName
  
 [Options]
-Areas_Count=2
+Areas_Count=1
 Areas_ID_Count=2
 Players_Count=1
 Cameras_Count=1

@@ -41,6 +41,9 @@ public:
 	int Get_Adjusted_Index(int RealIndex);
 	bool AddTexture_GL(geVFile* BaseFile, const char* TextureName, int GroupIndex);
 	void Update_Scene(void);
+	bool Create_Resources_Group();
+	bool Delete_Resources_Group();
+	bool Add_Resource_Location_Project(char* Resource_Location);
 
 	Brush* Selected_Brush;
 
@@ -48,7 +51,7 @@ public:
 	std::vector<Base_Object*> V_Object;
 
 	bool Scene_Loaded;
-
+	bool Area_Added;
 	bool Player_Added;
 	int Player_Count;
 	int Object_Count;
@@ -59,9 +62,11 @@ public:
 	bool SameBrush;
 
 	bool Scene_Modified;
+	bool Project_Resources_Created;
 
 	int BrushChange;
 	int SubBrushChange;
 
+	Ogre::String Project_Resource_Group;
 };
 

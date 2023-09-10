@@ -82,7 +82,7 @@ public:
 	Ogre::String mResourcePath;
 
 	Ogre::String App_Resource_Group;		// App Resource Group
-	
+
 	Ogre::OverlaySystem *mOverlaySystem;
 
 	//Ogre::Billboard* sunBillboard;

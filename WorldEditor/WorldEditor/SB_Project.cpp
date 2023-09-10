@@ -67,11 +67,18 @@ SB_Project::~SB_Project(void)
 // *************************************************************************
 bool SB_Project::Load_Project()
 {
+	char Default_Project[MAX_PATH];
+	strcpy(Default_Project, App->WorldEditor_Directory);
+	strcat(Default_Project, "\\Levels\\First_Project_Prj\\Project.SBProj");
+
+	strcpy(App->CLSB_FileIO->Project_Path_File_Name, Default_Project);
+	strcpy(App->CLSB_FileIO->Project_Path_File_Name, Default_Project);
+	strcpy(App->CLSB_FileIO->Project_Path_File_Name, Default_Project);
 
 	m_Ini_Path_File_Name[0] = 0;
 
 	App->CLSB_Scene->Clear_Level();
-	//App->SBC_Scene->Create_Resources_Group();
+	App->CLSB_Scene->Create_Resources_Group();
 
 	Set_Paths();
 
@@ -91,20 +98,20 @@ bool SB_Project::Load_Project()
 	chr_Tag1[0] = 0;
 	chr_Tag2[0] = 0;
 
-	//App->Cl_Ini->SetPathName(m_Ini_Path_File_Name);
+	App->CLSB_Ini->SetPathName(m_Ini_Path_File_Name);
 
-	//App->Cl_Ini->GetString("Version_Data", "Version", chr_Tag1, 1024);
-
+	App->CLSB_Ini->GetString("Version_Data", "Version", chr_Tag1, 1024);
+	
 	//App->Cl_Ini->GetString("Files", "Level_Name", m_Level_Name, MAX_PATH);
 	//App->Cl_Ini->GetString("Files", "Project_Name", m_Project_Name, MAX_PATH);
 	//App->Cl_Ini->GetString("Files", "Game_Name", App->SBC_Build->GameName, MAX_PATH, "YourGameName");
 
 
-	//Options->Has_Area = App->Cl_Ini->GetInt("Options", "Areas_Count", 0, 10);
-	//Options->Has_Player = App->Cl_Ini->GetInt("Options", "Players_Count", 0, 10);
-	//Options->Has_Camera = App->Cl_Ini->GetInt("Options", "Cameras_Count", 0, 10);
-	//Options->Has_Objects = App->Cl_Ini->GetInt("Options", "Objects_Count", 0, 10);
-	//Options->Has_Counters = App->Cl_Ini->GetInt("Options", "Counters_Count", 0, 10);
+	Options->Has_Area = App->CLSB_Ini->GetInt("Options", "Areas_Count", 0, 10);
+	Options->Has_Player = App->CLSB_Ini->GetInt("Options", "Players_Count", 0, 10);
+	Options->Has_Camera = App->CLSB_Ini->GetInt("Options", "Cameras_Count", 0, 10);
+	Options->Has_Objects = App->CLSB_Ini->GetInt("Options", "Objects_Count", 0, 10);
+	Options->Has_Counters = App->CLSB_Ini->GetInt("Options", "Counters_Count", 0, 10);
 
 	//App->SBC_Scene->UniqueID_Object_Counter = App->Cl_Ini->GetInt("Options", "Objects_ID_Count", 0, 10);
 	//App->SBC_Scene->UniqueID_Counters_Count = App->Cl_Ini->GetInt("Options", "Counters_ID_Count", 0, 10);
@@ -117,18 +124,18 @@ bool SB_Project::Load_Project()
 
 	////-------------------------------------- Set Resource Path
 
-	//Load_Get_Resource_Path();
+	Load_Get_Resource_Path();
 
-	//// ------------------------------------- Aera
-	//if (Options->Has_Area > 0)
-	//{
-	//	bool test = Load_Project_Aera();
-	//	App->SBC_Scene->Area_Added = 1;
-	//}
+	// ------------------------------------- Aera
+	if (Options->Has_Area > 0)
+	{
+		//bool test = Load_Project_Aera();
+		App->CLSB_Scene->Build_World(0);
+		App->CLSB_Bullet->Create_Brush_Trimesh(0);
+		App->CLSB_Model->Set_BondingBox_Brushes();
 
-	App->CLSB_Scene->Build_World(0);
-	App->CLSB_Bullet->Create_Brush_Trimesh(0);
-	App->CLSB_Model->Set_BondingBox_Brushes();
+		App->CLSB_Scene->Area_Added = 1;
+	}
 
 	//// ------------------------------------- Player
 	//if (Options->Has_Player > 0)
@@ -224,4 +231,26 @@ void SB_Project::Set_Paths()
 	m_Project_Sub_Folder[len2 - (len1 + 1)] = 0;
 
 	//GetFileTitleA(App->CL_Equity_SB->Pref_WE_Path_FileName, JustFileName, MAX_PATH);
+}
+
+// *************************************************************************
+// *	  	Load_Get_Resource_Path:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+bool SB_Project::Load_Get_Resource_Path()
+{
+	
+	m_Main_Assets_Path[0] = 0;
+
+	strcpy(m_Main_Assets_Path, m_Project_Sub_Folder);
+	strcat(m_Main_Assets_Path, "\\");
+
+	strcat(m_Main_Assets_Path, m_Level_Name);
+	strcat(m_Main_Assets_Path, "\\");
+
+	strcat(m_Main_Assets_Path, "Assets");
+	strcat(m_Main_Assets_Path, "\\");
+
+	App->CLSB_Scene->Add_Resource_Location_Project(m_Main_Assets_Path);
+
+	return 1;
 }

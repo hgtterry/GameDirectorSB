@@ -137,17 +137,21 @@ struct tag_FaceList
 
 SB_Scene::SB_Scene()
 {
+	Project_Resource_Group = "Project_Resource_Group";
+
 	FullScreenMode_Flag = 0;
 	SameBrush = 0;
 	Scene_Modified = 0;
 	Scene_Loaded = 0;
 	BrushChange = -1;
-
+	Area_Added = 0;
 	Selected_Brush = NULL;
 
 	Player_Count = 0;
 	Player_Added = 0;
 	Object_Count = 0;
+
+	Project_Resources_Created = 0;
 
 	B_Player.reserve(2);
 }
@@ -205,8 +209,8 @@ bool SB_Scene::Clear_Level()
 
 	//App->SBC_Com_Camera->Reset_View();
 
-	//Delete_Resources_Group();
-	//Project_Resources_Created = 0;
+	Delete_Resources_Group();
+	Project_Resources_Created = 0;
 
 	//Reset_Counters();
 
@@ -764,4 +768,50 @@ void SB_Scene::Update_Scene(void)
 	Build_World(0);
 	App->CLSB_Bullet->Create_Brush_Trimesh(0);
 	App->CLSB_Model->Set_BondingBox_Brushes();
+}
+
+// *************************************************************************
+// *		Create_Resources_Group:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+bool SB_Scene::Create_Resources_Group()
+{
+	if (Project_Resources_Created == 0)
+	{
+		Ogre::ResourceGroupManager::getSingleton().createResourceGroup(Project_Resource_Group);
+		Project_Resources_Created = 1;
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *		Delete_Resources_Group:- Terry and Hazel Flanigan 2022 		   *
+// *************************************************************************
+bool SB_Scene::Delete_Resources_Group()
+{
+
+	if (Project_Resources_Created == 1)
+	{
+		Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(Project_Resource_Group);
+		Project_Resources_Created = 0;
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *	Add_Resource_Location_Project:- Terry and Hazel Flanigan 2022	   *
+// *************************************************************************
+bool SB_Scene::Add_Resource_Location_Project(char* Resource_Location)
+{
+	bool Test = Ogre::ResourceGroupManager::getSingleton().resourceLocationExists(Resource_Location, Project_Resource_Group);
+
+	if (Test == 0)
+	{
+		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(Resource_Location, "FileSystem", Project_Resource_Group);
+		Ogre::ResourceGroupManager::getSingleton().clearResourceGroup(Project_Resource_Group);
+		Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(Project_Resource_Group);
+	}
+
+	return 1;
 }
