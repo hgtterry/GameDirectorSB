@@ -1221,53 +1221,71 @@ void SB_Equity::Do_Preview_All()
 		return;
 	}
 
-	App->CLSB_TopTabs->Update_Dlg_Controls();
-
-	OldCamPos = App->CLSB_Camera_EQ->Saved_Pos;
-	Ogre::Quaternion OldCamRot = App->CLSB_Camera_EQ->Saved_Rotation;
-	App->CLSB_Ogre->mCamera->setPosition(Ogre::Vector3(OldCamPos.x, OldCamPos.y, OldCamPos.z));
-	App->CLSB_Ogre->mCamera->setOrientation(OldCamRot);
-
-	App->CLSB_Scene->Build_World(0);
-	
-	App->CLSB_Bullet->Create_Brush_Trimesh(0);
-	App->CLSB_Model->Set_BondingBox_Brushes();
-
-
-	App->CLSB_Model->Set_Equity();
-	App->CLSB_Camera_EQ->Reset_Orientation();
-	App->CLSB_Camera_EQ->Set_Camera_Mode(Enums::CamDetached);
-	App->CLSB_TopTabs_Equity->Camera_Set_Free();
-
-	App->CLSB_Model->Model_Loaded = 1;
-	App->CLSB_Ogre->RenderListener->ShowBrushes = 1;
-	App->CLSB_Ogre->RenderListener->ShowTextured = 1;
-	App->CLSB_Model->Model_Type = Enums::LoadedFile_Brushes;
-
-	ShowWindow(App->ListPanel, true);
-	ShowWindow(App->CLSB_Properties->Properties_Dlg_hWnd, true);
-
-	App->CLSB_Object->Do_Basketball();
-
-	App->CLSB_Equity->Show_Equity_Dialog(true);
-	App->CLSB_TopTabs->Update_Dlg_Controls();
-
-	//-----------------------------------------------------
-	if (App->CLSB_Scene->Player_Count == 0)
-	{
-		App->CLSB_Player->Create_Player_Object();
-		App->CLSB_Properties->Update_ListView_Player();
-	}
-
-	if (App->CLSB_Equity->First_Run == 1)
-	{
-		App->CLSB_Camera_EQ->Zero_View();
-		App->CLSB_Equity->First_Run = 0;
-	}
-
 	if (App->CLSB_Scene->Scene_Loaded == 0)
 	{
+		App->CLSB_TopTabs->Update_Dlg_Controls();
+
+		OldCamPos = App->CLSB_Camera_EQ->Saved_Pos;
+		Ogre::Quaternion OldCamRot = App->CLSB_Camera_EQ->Saved_Rotation;
+		App->CLSB_Ogre->mCamera->setPosition(Ogre::Vector3(OldCamPos.x, OldCamPos.y, OldCamPos.z));
+		App->CLSB_Ogre->mCamera->setOrientation(OldCamRot);
+
+		App->CLSB_Scene->Build_World(0);
+
+		App->CLSB_Bullet->Create_Brush_Trimesh(0);
+		App->CLSB_Model->Set_BondingBox_Brushes();
+
+
+		App->CLSB_Model->Set_Equity();
+		App->CLSB_Camera_EQ->Reset_Orientation();
+		App->CLSB_Camera_EQ->Set_Camera_Mode(Enums::CamDetached);
+		App->CLSB_TopTabs_Equity->Camera_Set_Free();
+
+		App->CLSB_Model->Model_Loaded = 1;
+		App->CLSB_Ogre->RenderListener->ShowBrushes = 1;
+		App->CLSB_Ogre->RenderListener->ShowTextured = 1;
+		App->CLSB_Model->Model_Type = Enums::LoadedFile_Brushes;
+
+		ShowWindow(App->ListPanel, true);
+		ShowWindow(App->CLSB_Properties->Properties_Dlg_hWnd, true);
+
+		App->CLSB_Object->Do_Basketball();
+
+		App->CLSB_Equity->Show_Equity_Dialog(true);
+		App->CLSB_TopTabs->Update_Dlg_Controls();
+
+		//-----------------------------------------------------
+		if (App->CLSB_Scene->Player_Count == 0)
+		{
+			App->CLSB_Player->Create_Player_Object();
+			App->CLSB_Properties->Update_ListView_Player();
+		}
+
+		if (App->CLSB_Equity->First_Run == 1)
+		{
+			App->CLSB_Camera_EQ->Zero_View();
+			App->CLSB_Equity->First_Run = 0;
+		}
+
 		App->CLSB_Project->Load_Project();
+	}
+	else
+	{
+
+		App->CLSB_Scene->Build_World(0);
+		App->CLSB_Bullet->Create_Brush_Trimesh(0);
+		App->CLSB_Model->Set_BondingBox_Brushes();
+
+		App->CLSB_Camera_EQ->Reset_Orientation();
+		App->CLSB_Camera_EQ->Set_Camera_Mode(Enums::CamDetached);
+		App->CLSB_TopTabs_Equity->Camera_Set_Free();
+
+		OldCamPos = App->CLSB_Camera_EQ->Saved_Pos;
+		Ogre::Quaternion OldCamRot = App->CLSB_Camera_EQ->Saved_Rotation;
+		App->CLSB_Ogre->mCamera->setPosition(Ogre::Vector3(OldCamPos.x, OldCamPos.y, OldCamPos.z));
+		App->CLSB_Ogre->mCamera->setOrientation(OldCamRot);
+
+		App->CLSB_Equity->Show_Equity_Dialog(true);
 	}
 
 }
