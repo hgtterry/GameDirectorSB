@@ -1,0 +1,13 @@
+material bkt_ball
+{
+    technique
+    {
+         pass
+         {
+             texture_unit
+             {
+                 texture bkt_ball.png
+             }
+         }
+    }
+}

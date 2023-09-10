@@ -1269,6 +1269,7 @@ void SB_Equity::Do_Preview_All()
 		}
 		else
 		{
+			App->CLSB_Camera_EQ->Reset_Orientation();
 			App->CLSB_Ogre->OgreListener->CameraMode = Enums::CamFirst;
 			App->CLSB_TopTabs_Equity->Camera_Set_First();
 		}
