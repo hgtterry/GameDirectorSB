@@ -137,19 +137,21 @@ bool SB_Project::Load_Project()
 		App->CLSB_Scene->Area_Added = 1;
 	}
 
-	//// ------------------------------------- Player
-	//if (Options->Has_Player > 0)
-	//{
+	// ------------------------------------- Player
+	if (Options->Has_Player > 0)
+	{
 	//	bool test = Load_Project_Player();
 	//	App->SBC_DCC->Player_CanJump = App->CL_Prefs->Prefs_PlayerCanJump_Flag;
-	//}
-	App->CLSB_Player->Create_Player_Object();
-	App->CLSB_Properties->Update_ListView_Player();
 
-	App->CLSB_Scene->B_Player[0]->FileViewItem = App->CLSB_FileView->Add_Item(App->CLSB_FileView->FV_Players_Folder, "Player_1", 0, false);
-	App->CLSB_FileView->Set_FolderActive(App->CLSB_FileView->FV_Players_Folder);
-	App->CLSB_FileView->SelectItem(App->CLSB_FileView->FV_Players_Folder);
-	App->CLSB_FileView->ExpandRoot();
+		App->CLSB_Player->Create_Player_Object();
+		App->CLSB_Properties->Update_ListView_Player();
+
+		App->CLSB_Scene->B_Player[0]->FileViewItem = App->CLSB_FileView->Add_Item(App->CLSB_FileView->FV_Players_Folder, "Player_1", 0, false);
+		App->CLSB_FileView->Set_FolderActive(App->CLSB_FileView->FV_Players_Folder);
+		App->CLSB_FileView->SelectItem(App->CLSB_FileView->FV_Players_Folder);
+		App->CLSB_FileView->ExpandRoot();
+	}
+	
 	//// ------------------------------------- Camera
 	//if (Options->Has_Camera > 0)
 	//{
