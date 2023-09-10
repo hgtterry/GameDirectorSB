@@ -620,10 +620,10 @@ LRESULT CALLBACK SB_TopTabs::Top_File_Proc(HWND hDlg, UINT message, WPARAM wPara
 				char path[MAX_PATH];
 
 				strcpy(path,App->WorldEditor_Directory);
-				strcat(path,"Levels\\Test.3dt");
+				strcat(path,"Levels\\First_Project_Prj\\Test.3dt");
 
 				strcpy(Txlpath,App->WorldEditor_Directory);
-				strcat(Txlpath,"Levels\\Equity.txl");
+				strcat(Txlpath,"Levels\\First_Project_Prj\\Equity.txl");
 
 				strcpy(App->CLSB_File_WE->PathFileName_3dt,path);
 				
