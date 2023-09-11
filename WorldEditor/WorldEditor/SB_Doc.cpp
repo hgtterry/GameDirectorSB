@@ -596,7 +596,7 @@ void SB_Doc::ResetAllSelectedFaces(void)
 {
     App->Get_Current_Document();
 
-    BrushList_EnumLeafBrushes(Level_GetBrushes(App->CLSB_Doc->pLevel), NULL, ResetSelectedFacesCB);
+    BrushList_EnumLeafBrushes(Level_GetBrushes(pLevel), NULL, ResetSelectedFacesCB);
     SelFaceList_RemoveAll(App->m_pDoc->pSelFaces);
 }
 
@@ -628,5 +628,5 @@ void SB_Doc::ResetAllSelectedEntities()
 
     App->m_pDoc->DoGeneralSelect();
 
-    Level_EnumEntities(App->CLSB_Doc->pLevel, this, fdocDeselectEntity);
+    Level_EnumEntities(pLevel, this, fdocDeselectEntity);
 }
