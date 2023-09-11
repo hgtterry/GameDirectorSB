@@ -158,6 +158,30 @@ namespace Enums
 		Type_JustOgre = 5,
 		Bullet_Type_Volume = 6
 	};
+
+	enum Edit_Type
+	{
+		Edit_None = 0,
+		FV_Edit_Object = 1,
+		Edit_Physics_Object = 2,
+		Edit_Player = 3,
+		Edit_Message = 4,
+		Edit_Move_Entity = 5,
+		Edit_Sounds = 6,
+		Edit_Collectable = 7,
+		Edit_Teleport = 8,
+		Edit_Environment = 9,
+		Edit_Area_Change = 10,
+		Edit_Change_Level = 11,
+		Edit_Particles = 12,
+		Edit_Camera = 13,
+		Edit_Area = 14,
+		FV_Edit_Level = 15,
+		Edit_Counters = 16,
+		Edit_Environs = 17,
+		Edit_Lights = 18,
+		Edit_UserObjects = 19
+	};
 }
 // re-enable warnings except 4514
 #pragma warning(default : 4201 4214 4115)

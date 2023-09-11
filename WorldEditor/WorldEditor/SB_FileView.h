@@ -45,7 +45,10 @@ private:
 
 	void AddRootFolder(void);
 	void MoreFoldersD(void);
-	
+	void Get_Selection(LPNMHDR lParam);
+
+	char FileView_Folder[255];
+	char FileView_File[255];
 
 	TV_INSERTSTRUCT tvinsert;
 

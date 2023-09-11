@@ -33,8 +33,10 @@ public:
 
 
 	void Update_ListView_Player();
+	bool Update_ListView_Objects();
 
 	int Edit_Category;
+	int Current_Selected_Object;
 
 	HWND Properties_Dlg_hWnd;
 

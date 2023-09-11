@@ -37,6 +37,9 @@ SB_FileView::SB_FileView(void)
 	FV_LevelFolder =	nullptr;
 	FV_Cameras_Folder = nullptr;
 	FV_Objects_Folder = nullptr;
+
+	FileView_Folder[0] = 0;
+	FileView_File[0] = 0;
 }
 
 SB_FileView::~SB_FileView(void)
@@ -90,20 +93,20 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 	case WM_NOTIFY:
 	{
 		LPNMHDR nmhdr = (LPNMHDR)lParam;
-		/*if (nmhdr->idFrom == IDC_TREE1)
+		if (nmhdr->idFrom == IDC_TREE1)
 		{
 			switch (nmhdr->code)
 			{
 
 			case TVN_SELCHANGED:
 			{
-				App->SBC_FileView->Get_Selection((LPNMHDR)lParam);
+				App->CLSB_FileView->Get_Selection((LPNMHDR)lParam);
 			}
 
 			}
 		}
 
-		LPNMHDR some_item = (LPNMHDR)lParam;
+		/*LPNMHDR some_item = (LPNMHDR)lParam;
 
 		if (some_item->idFrom == IDC_LEVELS && some_item->code == NM_CUSTOMDRAW)
 		{
@@ -340,6 +343,191 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	tvinsert.item.iImage = 0;
 	tvinsert.item.iSelectedImage = 1;
 	FV_Objects_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+
+}
+
+// *************************************************************************
+// *		Get_Selection Terry:- Terry and Hazel Flanigan 2022		 	   *
+// *************************************************************************
+void SB_FileView::Get_Selection(LPNMHDR lParam)
+{
+
+	strcpy(FileView_Folder, "");
+	strcpy(FileView_File, "");
+
+	int Index = 0;
+	HWND Temp = GetDlgItem(App->ListPanel, IDC_TREE1);
+	HTREEITEM i = TreeView_GetSelection(Temp);
+
+	TVITEM item;
+	item.hItem = i;
+	item.pszText = FileView_Folder;
+	item.cchTextMax = sizeof(FileView_Folder);
+	item.mask = TVIF_TEXT | TVIF_PARAM;
+	TreeView_GetItem(((LPNMHDR)lParam)->hwndFrom, &item);
+	Index = item.lParam;
+
+	HTREEITEM p = TreeView_GetParent(Temp, i);
+
+	TVITEM item1;
+	item1.hItem = p;
+	item1.pszText = FileView_File;
+	item1.cchTextMax = sizeof(FileView_File);
+	item1.mask = TVIF_TEXT;
+	TreeView_GetItem(((LPNMHDR)lParam)->hwndFrom, &item1);
+
+
+	//--------------------------------------------------------------------------
+
+	//if (!strcmp(FileView_Folder, App->SBC_Project->m_Level_Name)) // Level Folder
+	//{
+	//	HideRightPanes();
+	//	ShowWindow(App->GD_Properties_Hwnd, 1);
+
+	//	App->SBC_Properties->Edit_Category = Enums::FV_Edit_Level;
+	//	App->SBC_Properties->Update_ListView_Level();
+	//}
+
+	// ------------------------------------------------------------ Areas
+	if (!strcmp(FileView_Folder, "Area")) // Folder
+	{
+		//App->SBC_FileView->Context_Selection = Enums::FileView_Areas_Folder;
+
+		return;
+	}
+
+	if (!strcmp(FileView_File, "Area"))
+	{
+		//App->SBC_FileView->Context_Selection = Enums::FileView_Areas_File;
+		//App->SBC_Properties->Edit_Category = Enums::Edit_Area;
+		//App->SBC_Properties->Current_Selected_Object = Index;
+
+		//HideRightPanes();
+		//ShowWindow(App->GD_Properties_Hwnd, 1);
+
+		//App->SBC_Props_Dialog->Hide_Area_Dlg(1);
+		//App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
+		//App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, 1);
+		//App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
+		//App->SBC_Props_Dialog->Hide_Material_Dlg(1);
+
+		////----------------------------------------------------------------------------
+		////App->SBC_Properties->Current_Selected_Object = Index;
+		////App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
+		////App->SBC_Properties->Last_Selected_Object = Index;
+		////----------------------------------------------------------------------------
+
+		//App->SBC_Properties->Update_ListView_Area();
+
+
+		//if (App->SBC_Dimensions->Show_Dimensions == 1)
+		//{
+		//	App->SBC_Dimensions->Prepare_Dimensions();
+		//}
+
+		return;
+
+	}
+
+	// ------------------------------------------------------------ Objects
+	if (!strcmp(FileView_Folder, "Objects")) // Folder
+	{
+		//App->SBC_FileView->Context_Selection = Enums::FileView_Objects_Folder;
+		return;
+	}
+	if (!strcmp(FileView_File, "Objects"))
+	{
+		//App->SBC_FileView->Context_Selection = Enums::FileView_Objects_File;
+
+		/*HideRightPanes();
+		ShowWindow(App->SBC_Properties->Properties_Dlg_hWnd, 1);
+
+		App->SBC_Props_Dialog->Hide_Details_Goto_Dlg(1);
+		App->SBC_Props_Dialog->Hide_Dimensions_Dlg(1, App->SBC_Scene->V_Object[Index]->Dimensions_Locked);
+		App->SBC_Props_Dialog->Hide_Debug_Dlg(1);
+		App->SBC_Props_Dialog->Hide_Material_Dlg(1);*/
+
+
+		App->CLSB_Properties->Edit_Category = Enums::FV_Edit_Object;
+
+		//----------------------------------------------------------------------------
+		App->CLSB_Properties->Current_Selected_Object = Index;
+		//App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
+		//App->SBC_Properties->Last_Selected_Object = Index;
+		//----------------------------------------------------------------------------
+
+		//App->SBC_LookUps->Update_Types();
+
+		//App->SBC_Markers->MarkerBB_Addjust(Index);
+
+		App->CLSB_Properties->Update_ListView_Objects();
+
+
+		/*if (App->SBC_Dimensions->Show_Dimensions == 1)
+		{
+			App->SBC_Dimensions->Prepare_Dimensions();
+		}*/
+
+		return;
+	}
+
+	// ------------------------------------------------------------ Players
+	//if (!strcmp(FileView_Folder, "Player")) // Folder
+	//{
+	//	App->SBC_FileView->Context_Selection = Enums::FileView_Player_Folder;
+	//	return;
+	//}
+	//if (!strcmp(FileView_File, "Player"))
+	//{
+	//	App->SBC_FileView->Context_Selection = Enums::FileView_Player_File;
+
+	//	HideRightPanes();
+	//	ShowWindow(App->SBC_Properties->Properties_Dlg_hWnd, 1);
+	//	App->SBC_Player->Hide_Player_Dlg(1);
+
+	//	App->SBC_Properties->Edit_Category = Enums::Edit_Player;
+
+	//	//----------------------------------------------------------------------------
+	//	App->SBC_Properties->Current_Selected_Object = Index;
+	//	App->SBC_Properties->Reset_Last_Selected_Object(App->SBC_Properties->Last_Selected_Object);
+	//	App->SBC_Properties->Last_Selected_Object = Index;
+	//	//----------------------------------------------------------------------------
+
+	//	if (App->SBC_Properties->Edit_Physics == 0)
+	//	{
+	//		App->SBC_Properties->Update_ListView_Player();
+	//	}
+	//	else
+	//	{
+	//		App->SBC_Properties->Update_ListView_Player_Physics();
+	//	}
+	//	return;
+	//}
+
+	// ------------------------------------------------------------ Cameras
+	/*if (!strcmp(FileView_Folder, "Camera"))
+	{
+		App->SBC_FileView->Context_Selection = Enums::FileView_Cameras_Folder;
+
+		return;
+	}
+
+	if (!strcmp(FileView_File, "Camera"))
+	{
+		App->SBC_FileView->Context_Selection = Enums::FileView_Cameras_File;
+
+		HideRightPanes();
+		ShowWindow(App->GD_Properties_Hwnd, 0);
+		App->SBC_Com_Camera->Hide_Cam_Dlg(1);
+
+		App->SBC_Properties->Edit_Category = Enums::Edit_Camera;
+
+		App->SBC_Properties->Current_Selected_Object = Index;
+
+		App->SBC_Properties->Update_ListView_Camera();
+
+		return;
+	}*/
 
 }
 

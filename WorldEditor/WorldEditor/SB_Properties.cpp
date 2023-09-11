@@ -31,6 +31,8 @@ SB_Properties::SB_Properties()
 	Properties_hLV = nullptr;
 
 	Edit_Category = 3; // Player Enums::FV_Edit_Object;
+
+	Current_Selected_Object = 0;
 }
 
 SB_Properties::~SB_Properties()
@@ -431,7 +433,7 @@ void SB_Properties::Update_ListView_Player()
 // *************************************************************************
 bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 {
-	//int Index = App->SBC_Properties->Current_Selected_Object;
+	int Index = Current_Selected_Object;
 	int result = 1;
 	int test;
 
@@ -755,6 +757,60 @@ bool SB_Properties::Edit_Player_Onclick(LPARAM lParam)
 		return 1;
 	}
 
+
+	return 1;
+}
+
+// *************************************************************************
+// *			Update_ListView_Objects	Terry Bernie 				 	   *
+// *************************************************************************
+bool SB_Properties::Update_ListView_Objects()
+{
+	int index = Current_Selected_Object;
+
+	char Num[10];
+	char chr_ID[50];
+	char IndexNum[10];
+	_itoa(App->CLSB_Scene->V_Object[index]->This_Object_UniqueID, Num, 10);
+	_itoa(index, IndexNum, 10);
+	strcpy(chr_ID, "Unique ID ");
+	strcat(chr_ID, Num);
+	strcat(chr_ID, "  Object Index ");
+	strcat(chr_ID, IndexNum);
+
+
+	//SetWindowText(Properties_Dlg_hWnd, chr_ID);
+	//SetDlgItemText(Properties_Dlg_hWnd, IDC_STOBJECTNAME, (LPCTSTR)App->SBC_Scene->V_Object[index]->Mesh_Name);
+
+
+	const int NUM_ITEMS = 4;
+	const int NUM_COLS = 2;
+	std::string grid[NUM_COLS][NUM_ITEMS]; // string table
+	LV_ITEM pitem;
+	memset(&pitem, 0, sizeof(LV_ITEM));
+	pitem.mask = LVIF_TEXT;
+
+	grid[0][0] = "Name", grid[1][0] = App->CLSB_Scene->V_Object[index]->Mesh_Name;
+	grid[0][1] = "Mesh File", grid[1][1] = App->CLSB_Scene->V_Object[index]->Mesh_FileName;
+	grid[0][2] = "Materials", grid[1][2] = App->CLSB_Scene->V_Object[index]->Material_File;
+	grid[0][3] = " ", grid[1][3] = " ";
+
+	ListView_DeleteAllItems(Properties_hLV);
+
+	for (DWORD row = 0; row < NUM_ITEMS; row++)
+	{
+		pitem.iItem = row;
+		pitem.pszText = const_cast<char*>(grid[0][row].c_str());
+		ListView_InsertItem(Properties_hLV, &pitem);
+
+		//ListView_SetItemText
+
+		for (DWORD col = 1; col < NUM_COLS; col++)
+		{
+			ListView_SetItemText(Properties_hLV, row, col,
+				const_cast<char*>(grid[col][row].c_str()));
+		}
+	}
 
 	return 1;
 }
