@@ -32,3 +32,64 @@ SB_Physics::SB_Physics(void)
 SB_Physics::~SB_Physics(void)
 {
 }
+
+// *************************************************************************
+//							Set_Physics Terry Bernie					   *
+// *************************************************************************
+void SB_Physics::Set_Physics(int Index)
+{
+	App->CLSB_Scene->V_Object[Index]->Physics_Quat = App->CLSB_Scene->V_Object[Index]->Object_Node->getOrientation();
+
+	float w = App->CLSB_Scene->V_Object[Index]->Physics_Quat.w;
+	float x = App->CLSB_Scene->V_Object[Index]->Physics_Quat.x;
+	float y = App->CLSB_Scene->V_Object[Index]->Physics_Quat.y;
+	float z = App->CLSB_Scene->V_Object[Index]->Physics_Quat.z;
+	App->CLSB_Scene->V_Object[Index]->Phys_Body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
+
+	App->CLSB_Scene->V_Object[Index]->Object_Node->setScale(App->CLSB_Scene->V_Object[Index]->Mesh_Scale);
+
+	Ogre::Vector3 Scale = App->CLSB_Scene->V_Object[Index]->Object_Node->getScale();
+	App->CLSB_Scene->V_Object[Index]->Phys_Body->getCollisionShape()->setLocalScaling(btVector3(Scale.x, Scale.y, Scale.z));
+
+	UpDate_Physics_And_Visuals(Index);
+
+	App->CLSB_Scene->V_Object[Index]->Physics_Valid = 1;
+}
+
+// *************************************************************************
+// *				UpDate_Physics_And_Visuals Terry Flanigtan		 	   *
+// *************************************************************************
+void SB_Physics::UpDate_Physics_And_Visuals(int Index)
+{
+	if (App->CLSB_Scene->V_Object[Index]->Shape == Enums::Shape_TriMesh)
+	{
+
+	}
+	else
+	{
+		//if (App->SBC_Scene->V_Object[Index]->Physics_Valid == 1)
+		{
+			Set_Physics_Position(Index);
+		}
+	}
+
+
+	//App->SBC_Markers->MarkerBB_Addjust(Index);
+
+	// Needs Looking at
+	//App->SBC_Scene->V_Object[Index]->Altered = 1;
+	//App->SBC_FileView->Mark_Altered(App->SBC_Scene->V_Object[Index]->FileViewItem);
+	//App->SBC_Scene->Scene_Modified = 1;
+}
+
+// *************************************************************************
+// *	  				Set_Physics_Position Terry Flanigan				   *
+// *************************************************************************
+void SB_Physics::Set_Physics_Position(int Index)
+{
+	AxisAlignedBox worldAAB = App->CLSB_Scene->V_Object[Index]->Object_Ent->getBoundingBox();
+	worldAAB.transformAffine(App->CLSB_Scene->V_Object[Index]->Object_Node->_getFullTransform());
+	Ogre::Vector3 Centre = worldAAB.getCenter();
+	App->CLSB_Scene->V_Object[Index]->Phys_Body->getWorldTransform().setOrigin(btVector3(Centre.x, Centre.y, Centre.z));
+	App->CLSB_Scene->V_Object[Index]->Physics_Pos = Centre;
+}

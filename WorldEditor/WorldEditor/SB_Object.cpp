@@ -39,6 +39,8 @@ SB_Object::~SB_Object()
 // *************************************************************************
 void SB_Object::Do_Basketball()
 {
+	BasketBall_Done = 1;
+	return;
 	if (BasketBall_Done == 0)
 	{
 	

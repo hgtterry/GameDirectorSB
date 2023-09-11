@@ -248,7 +248,7 @@ void SB_Objects_Create::Add_Physics_Sphere(bool Dynamic, int Index)
 
 	Object->Phys_Body = new btRigidBody(rbInfo);
 	Object->Phys_Body->setRestitution(1.0);
-	Object->Phys_Body->setFriction(1.5);
+	Object->Phys_Body->setFriction(2.5);
 	Object->Phys_Body->setUserPointer(Object->Object_Node);
 	Object->Phys_Body->setWorldTransform(startTransform);
 
@@ -272,5 +272,6 @@ void SB_Objects_Create::Add_Physics_Sphere(bool Dynamic, int Index)
 
 	App->CLSB_Scene->V_Object[Index]->Physics_Valid = 1;
 
-	//App->CLSB_Physics->Set_Physics(Index);
+	App->CLSB_Physics->Set_Physics(Index);
+
 }

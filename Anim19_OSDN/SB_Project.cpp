@@ -1653,6 +1653,7 @@ bool SB_Project::V_Load_Project_Objects()
 	strcat(Object_Ini_Path, "Objects");
 	strcat(Object_Ini_Path, "\\");
 
+	App->Say(m_Level_Name);
 	//---------------------------------------------------
 
 	strcat(Object_Ini_Path, "Objects.efd");

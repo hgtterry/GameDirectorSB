@@ -69,12 +69,11 @@ bool SB_Project::Load_Project()
 {
 	char Default_Project[MAX_PATH];
 	strcpy(Default_Project, App->WorldEditor_Directory);
-	strcat(Default_Project, "\\Levels\\First_Project_Prj\\Project.SBProj");
+	strcat(Default_Project, "Levels\\First_Project_Prj\\Project.SBProj");
 
+	strcpy(App->CLSB_FileIO->Project_File_Name,"First_Level");
 	strcpy(App->CLSB_FileIO->Project_Path_File_Name, Default_Project);
-	strcpy(App->CLSB_FileIO->Project_Path_File_Name, Default_Project);
-	strcpy(App->CLSB_FileIO->Project_Path_File_Name, Default_Project);
-
+	
 	m_Ini_Path_File_Name[0] = 0;
 
 	App->CLSB_Scene->Clear_Level();
@@ -229,22 +228,26 @@ bool SB_Project::V_Load_Project_Objects()
 	float y = 0;
 	float z = 0;
 
-	strcpy(Object_Ini_Path, m_Project_Sub_Folder);
-	strcat(Object_Ini_Path, "\\");
+	strcpy(Object_Ini_Path, App->WorldEditor_Directory);
+	strcat(Object_Ini_Path, "\\Levels\\First_Project_Prj\\First_Level\\Objects\\");
 
-	strcat(Object_Ini_Path, m_Level_Name);
-	strcat(Object_Ini_Path, "\\");
+	//strcat(Object_Ini_Path, m_Level_Name);
+	//strcat(Object_Ini_Path, "\\");
 
-	strcat(Object_Ini_Path, "Objects");
-	strcat(Object_Ini_Path, "\\");
+	//strcat(Object_Ini_Path, "Objects");
+	//strcat(Object_Ini_Path, "\\");
 
-	//---------------------------------------------------
+	////---------------------------------------------------
 
 	strcat(Object_Ini_Path, "Objects.efd");
+
+	//App->Say(Object_Ini_Path);
 
 	App->CLSB_Ini->SetPathName(Object_Ini_Path);
 
 	Object_Count = App->CLSB_Ini->GetInt("Counters", "Objects_Count", 0);
+
+	//App->Say_Int(Object_Count);
 
 	int Count = 0;
 	while (Count < Object_Count)

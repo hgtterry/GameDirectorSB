@@ -28,5 +28,9 @@ class SB_Physics
 public:
 	SB_Physics(void);
 	~SB_Physics(void);
+
+	void Set_Physics(int Index);
+	void UpDate_Physics_And_Visuals(int Index);
+	void Set_Physics_Position(int Index);
 };
 
