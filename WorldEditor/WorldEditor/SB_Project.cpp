@@ -161,12 +161,12 @@ bool SB_Project::Load_Project()
 	//	App->SBC_FileView->Set_FolderActive(App->SBC_FileView->FV_Cameras_Folder);
 	//}
 
-	//// ------------------------------------- Objects
-	//if (Options->Has_Objects > 0)
-	//{
-	//	V_Load_Project_Objects();
-	//	App->SBC_Objects_Create->Add_Objects_From_File();
-	//}
+	// ------------------------------------- Objects
+	if (Options->Has_Objects > 0)
+	{
+		V_Load_Project_Objects();
+		//App->SBC_Objects_Create->Add_Objects_From_File();
+	}
 
 	//// ------------------------------------- Counters
 	//if (Options->Has_Counters > 0)
@@ -210,6 +210,107 @@ bool SB_Project::Load_Project()
 	//App->SBC_FileView->SelectItem(App->SBC_FileView->FV_LevelFolder);
 
 	//EnableMenuItem(App->mMenu, ID_FILE_SAVEPROJECTALL, MF_GRAYED);
+
+	return 1;
+}
+
+// *************************************************************************
+// *	  	V_Load_Project_Objects:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+bool SB_Project::V_Load_Project_Objects()
+{
+	int Int_Tag = 0;
+	char Object_Ini_Path[MAX_PATH];
+	char chr_Tag1[MAX_PATH];
+	int Object_Count = 0;
+
+	float w = 0;
+	float x = 0;
+	float y = 0;
+	float z = 0;
+
+	strcpy(Object_Ini_Path, m_Project_Sub_Folder);
+	strcat(Object_Ini_Path, "\\");
+
+	strcat(Object_Ini_Path, m_Level_Name);
+	strcat(Object_Ini_Path, "\\");
+
+	strcat(Object_Ini_Path, "Objects");
+	strcat(Object_Ini_Path, "\\");
+
+	//---------------------------------------------------
+
+	strcat(Object_Ini_Path, "Objects.efd");
+
+	App->CLSB_Ini->SetPathName(Object_Ini_Path);
+
+	Object_Count = App->CLSB_Ini->GetInt("Counters", "Objects_Count", 0);
+
+	int Count = 0;
+	while (Count < Object_Count)
+	{
+		char mNumChr[MAX_PATH] = { 0 };
+		char mSection[MAX_PATH] = { 0 };
+
+		strcpy(mSection, "Object_");
+		_itoa(Count, mNumChr, 10);
+		strcat(mSection, mNumChr);
+
+		App->CLSB_Scene->V_Object.push_back(new Base_Object());
+
+		Base_Object* V_Object = App->CLSB_Scene->V_Object[Count];
+
+		App->CLSB_Ini->GetString(mSection, "Mesh_Name", V_Object->Mesh_Name, MAX_PATH);
+		App->CLSB_Ini->GetString(mSection, "Mesh_File", V_Object->Mesh_FileName, MAX_PATH);
+		App->CLSB_Ini->GetString(mSection, "Mesh_Resource_Path", V_Object->Mesh_Resource_Path, MAX_PATH);
+		App->CLSB_Ini->GetString(mSection, "Material_File", V_Object->Material_File, MAX_PATH);
+
+		// ------------- Types
+		V_Object->This_Object_UniqueID = App->CLSB_Ini->GetInt(mSection, "Object_ID", 0);
+		V_Object->Type = App->CLSB_Ini->GetInt(mSection, "Object_Type", 0);
+		V_Object->Shape = App->CLSB_Ini->GetInt(mSection, "Object_Shape", 0);
+		V_Object->Usage = App->CLSB_Ini->GetInt(mSection, "Object_Usage", 0);
+
+		// ------------- Pos
+		App->CLSB_Ini->GetString(mSection, "Mesh_Pos", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+		V_Object->Mesh_Pos = Ogre::Vector3(x, y, z);
+
+		// ------------- Scale
+		App->CLSB_Ini->GetString(mSection, "Mesh_Scale", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+		V_Object->Mesh_Scale = Ogre::Vector3(x, y, z);
+
+		// ------------- Rotation
+		App->CLSB_Ini->GetString(mSection, "Mesh_Rot", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f", &x, &y, &z);
+		V_Object->Mesh_Rot = Ogre::Vector3(x, y, z);
+
+		// ------------- Mesh_Quat
+		App->CLSB_Ini->GetString(mSection, "Mesh_Quat", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f,%f", &w, &x, &y, &z);
+
+		V_Object->Mesh_Quat.w = w;
+		V_Object->Mesh_Quat.x = x;
+		V_Object->Mesh_Quat.y = y;
+		V_Object->Mesh_Quat.z = z;
+
+		// ------------- Physics_Quat
+		App->CLSB_Ini->GetString(mSection, "Physics_Quat", chr_Tag1, MAX_PATH);
+		sscanf(chr_Tag1, "%f,%f,%f,%f", &w, &x, &y, &z);
+
+		V_Object->Physics_Quat.w = w;
+		V_Object->Physics_Quat.x = x;
+		V_Object->Physics_Quat.y = y;
+		V_Object->Physics_Quat.z = z;
+
+		V_Object->Dimensions_Locked = App->CLSB_Ini->GetInt(mSection, "Dimensions_Lock", 0);
+
+		Count++;
+
+	}
+
+	App->CLSB_Scene->Object_Count = Count;
 
 	return 1;
 }

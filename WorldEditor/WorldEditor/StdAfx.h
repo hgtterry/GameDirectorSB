@@ -120,6 +120,21 @@ namespace Enums
 		Usage_EnvironEntity = 21,
 		Usage_UserObject = 22
 	};
+
+	enum Folder_Type
+	{
+		Folder_None = 0,
+		Folder_Objects = 1,
+		Folder_Sound_Entity = 2,
+		Folder_Message_Entity = 3,
+		Folder_Move_Entity = 4,
+		Folder_Collectables = 5,
+		Folder_Teleports = 6,
+		Folder_Environment = 7,
+		Folder_RoomChange = 8,
+		Folder_Change_Level = 9,
+		Folder_Particle = 10
+	};
 }
 // re-enable warnings except 4514
 #pragma warning(default : 4201 4214 4115)
