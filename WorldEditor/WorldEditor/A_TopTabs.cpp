@@ -328,7 +328,7 @@ LRESULT CALLBACK SB_TopTabs::TB_Headers_Proc(HWND hDlg, UINT message, WPARAM wPa
 		{
 			CFusionDoc* pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
 
-			pDoc->ResetAllSelections();
+			App->CLSB_Doc->ResetAllSelections();
 			App->CLSB_Doc->UpdateSelected();
 			pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 

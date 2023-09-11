@@ -323,7 +323,7 @@ void A_TabsGroups_Dlg::OnSelchangeBrushlist(int Index, bool Clear)
 	{
 		if (Clear == 1)
 		{
-			App->m_pDoc->ResetAllSelections() ;
+			App->CLSB_Doc->ResetAllSelections() ;
 			App->CLSB_Doc->UpdateSelected();
 		}
 		

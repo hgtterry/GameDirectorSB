@@ -1747,14 +1747,6 @@ void CFusionDoc::CreateObjectTemplate()
     }
 }
 
-void CFusionDoc::ResetAllSelections (void)
-{
-    ResetAllSelectedFaces();
-    ResetAllSelectedBrushes();
-    ResetAllSelectedEntities();
-}
-
-
 void CFusionDoc::OnEntitiesShow(void)
 {
     mShowEntities = !mShowEntities;
@@ -2404,22 +2396,6 @@ void CFusionDoc::DoEntitySelection
     }
 }
 
-static geBoolean fdocDeselectEntity (CEntity &Ent, void *lParam)
-{
-    CFusionDoc *pDoc = (CFusionDoc *)lParam;
-
-    pDoc->DeselectEntity (&Ent);
-    return GE_TRUE;
-}
-
-void CFusionDoc::ResetAllSelectedEntities()
-{
-    DoGeneralSelect ();
-
-    Level_EnumEntities (App->CLSB_Doc->pLevel, this, ::fdocDeselectEntity);
-}
-
-
 static geBoolean fdocSelectEntity (CEntity &Ent, void *lParam)
 {
     CFusionDoc *pDoc = (CFusionDoc *)lParam;
@@ -2525,7 +2501,7 @@ void CFusionDoc::SetSelectedEntity( int ID )
     CEntityArray *Entities;
 
     Entities = Level_GetEntities (App->CLSB_Doc->pLevel);
-    ResetAllSelectedEntities();
+    App->CLSB_Doc->ResetAllSelectedEntities();
     mCurrentEntity = ID;
     SelectEntity (&(*Entities)[ID]);
     App->CLSB_Doc->UpdateSelected() ;
@@ -2631,7 +2607,7 @@ void CFusionDoc::SelectOrthoRect(CPoint ptStart, CPoint ptEnd, ViewVars *v)
     // if Control key isn't pressed, then clear all current selections
     if ((GetAsyncKeyState(VK_SHIFT) & 0x8000) == 0)
     {
-        ResetAllSelections ();
+        App->CLSB_Doc->ResetAllSelections();
     }
 
     // Should use ENUM function here
@@ -3035,7 +3011,7 @@ void CFusionDoc::SelectRay(CPoint point, ViewVars *v) // hgtterry Select Ray
                 {
                     if((GetAsyncKeyState(VK_SHIFT) & 0x8000) == 0)
                     {
-                        ResetAllSelections ();
+                        App->CLSB_Doc->ResetAllSelections();
                     }
                     DoEntitySelection(&(*Entities)[CurEnt]);
                     EntitySelected	=GE_TRUE;
@@ -3049,7 +3025,7 @@ void CFusionDoc::SelectRay(CPoint point, ViewVars *v) // hgtterry Select Ray
         // if Control key isn't pressed, then clear all current selections
         if ((GetAsyncKeyState(VK_SHIFT) & 0x8000) == 0)
         {
-            ResetAllSelections ();
+            App->CLSB_Doc->ResetAllSelections();
         }
         /*
           At this point, bdat.CurBrush points to the CSG brush that contains
@@ -4456,33 +4432,8 @@ void CFusionDoc::ConfigureCurrentTool(void)
 
 //void CFusionDoc::NullBrushAttributes(void){  mpBrushAttributes=NULL;  }
 
-void CFusionDoc::ResetAllSelectedBrushes(void)
-{
-    SelBrushList_RemoveAll (pSelBrushes);
-    CurBrush		=BTemplate;
-}
-
 #pragma warning (disable:4100)
-static geBoolean	ResetSelectedFacesCB(Brush *b, void *pVoid)
-{
-    int	i;
-
-    for(i=0;i < Brush_GetNumFaces(b);i++)
-    {
-        Face	*pFace;
-
-        pFace	=Brush_GetFace(b, i);
-        Face_SetSelected(pFace, GE_FALSE);
-    }
-    return GE_TRUE ;
-}
 #pragma warning (default:4100)
-
-void CFusionDoc::ResetAllSelectedFaces(void)
-{
-    BrushList_EnumLeafBrushes(Level_GetBrushes (App->CLSB_Doc->pLevel), NULL, ::ResetSelectedFacesCB) ;
-    SelFaceList_RemoveAll (pSelFaces);
-}
 
 static geBoolean FindSelectedFaceCB (Brush *b, void *lParam)
 {
@@ -4582,7 +4533,7 @@ void CFusionDoc::SetAdjustmentMode( fdocAdjustEnum nCmdIDMode )
             // Ensure that all brushes in a locked group or model set are selected...
             Level_EnumLeafBrushes (App->CLSB_Doc->pLevel, this, ::fdocSelectBrushesFromFaces);
 
-            ResetAllSelectedFaces();
+            App->CLSB_Doc->ResetAllSelectedFaces();
             App->CLSB_Doc->UpdateSelected();
 
             //remove face attributes dialog if present...
@@ -4819,7 +4770,7 @@ void CFusionDoc::OnEditPaste()
 
     if ((*NumCopiedBrushes) || (*NumCopiedEntities)) {
         
-        ResetAllSelections();
+        App->CLSB_Doc->ResetAllSelections();
     
         int		i;
 
@@ -8162,9 +8113,9 @@ void CFusionDoc::OnUpdateCameraCenteronselection(CCmdUI* pCmdUI)
 
 void CFusionDoc::OnToolsTemplate()
 {
-    ResetAllSelectedEntities();
-    ResetAllSelectedFaces();
-    ResetAllSelectedBrushes();
+    App->CLSB_Doc->ResetAllSelectedEntities();
+    App->CLSB_Doc->ResetAllSelectedFaces();
+    App->CLSB_Doc->ResetAllSelectedBrushes();
 
     UpdateBrushAttributesDlg();
     UpdateFaceAttributesDlg();

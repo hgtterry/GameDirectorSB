@@ -24,6 +24,10 @@ public:
 
 	void SelectAll(void);
 	void UpdateSelected(void);
+	void ResetAllSelections(void);
+	void ResetAllSelectedFaces(void);
+	void ResetAllSelectedBrushes(void);
+	void ResetAllSelectedEntities();
 
 	Level* pLevel;
 };

@@ -48,7 +48,7 @@ void SB_Doc::DeleteCurrentThing()
         // set wait cursor
         SetCursor(AfxGetApp()->LoadStandardCursor(IDC_WAIT));
 
-        App->m_pDoc->ResetAllSelectedFaces();
+        ResetAllSelectedFaces();
         ReBuild = (App->m_pDoc->GetSelState() & ANYBRUSH);
 
         DeleteSelectedBrushes();
@@ -225,7 +225,7 @@ void SB_Doc::SelectOrtho(CPoint point, ViewVars* v)
 	// if Control key isn't pressed, then clear all current selections
 	if ((GetAsyncKeyState(VK_SHIFT) & 0x8000) == 0)
 	{
-		App->m_pDoc->ResetAllSelections();
+		ResetAllSelections();
 	}
 
 	FoundThingType = App->m_pDoc->FindClosestThing(&point, v, &pMinBrush, &pMinEntity, &Dist);
@@ -387,7 +387,7 @@ void SB_Doc::Lock_AllTextures(void)
         Face_SetTextureLock(pFace, true);
     }
 
-    App->m_pDoc->ResetAllSelections();
+    ResetAllSelections();
     UpdateSelected();
     App->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 
@@ -560,4 +560,73 @@ void SB_Doc::UpdateSelected(void)
     //assert( mpMainFrame->m_wndTabControls->GrpTab ) ;
     //mpMainFrame->m_wndTabControls->GrpTab->UpdateGroupSelection( ) ;
 
+}
+
+// *************************************************************************
+// *           ResetAllSelections:- Terry and Hazel Flanigan 2023          *
+// *************************************************************************
+void SB_Doc::ResetAllSelections(void)
+{
+    ResetAllSelectedFaces();
+    ResetAllSelectedBrushes();
+    ResetAllSelectedEntities();
+}
+
+
+#pragma warning (disable:4100)
+static geBoolean ResetSelectedFacesCB(Brush* b, void* pVoid)
+{
+    int	i;
+
+    for (i = 0; i < Brush_GetNumFaces(b); i++)
+    {
+        Face* pFace;
+
+        pFace = Brush_GetFace(b, i);
+        Face_SetSelected(pFace, GE_FALSE);
+    }
+    return GE_TRUE;
+}
+#pragma warning (default:4100)
+
+// *************************************************************************
+// *          ResetAllSelectedFaces:- Terry and Hazel Flanigan 2023        *
+// *************************************************************************
+void SB_Doc::ResetAllSelectedFaces(void)
+{
+    App->Get_Current_Document();
+
+    BrushList_EnumLeafBrushes(Level_GetBrushes(App->CLSB_Doc->pLevel), NULL, ResetSelectedFacesCB);
+    SelFaceList_RemoveAll(App->m_pDoc->pSelFaces);
+}
+
+// *************************************************************************
+// *         ResetAllSelectedBrushes:- Terry and Hazel Flanigan 2023       *
+// *************************************************************************
+void SB_Doc::ResetAllSelectedBrushes(void)
+{
+    App->Get_Current_Document();
+
+    SelBrushList_RemoveAll(App->m_pDoc->pSelBrushes);
+    App->m_pDoc->CurBrush = App->m_pDoc->BTemplate;
+}
+
+static geBoolean fdocDeselectEntity(CEntity& Ent, void* lParam)
+{
+    CFusionDoc* pDoc = (CFusionDoc*)lParam;
+
+    pDoc->DeselectEntity(&Ent);
+    return GE_TRUE;
+}
+
+// *************************************************************************
+// *         ResetAllSelectedEntities:- Terry and Hazel Flanigan 2023      *
+// *************************************************************************
+void SB_Doc::ResetAllSelectedEntities()
+{
+    App->Get_Current_Document();
+
+    App->m_pDoc->DoGeneralSelect();
+
+    Level_EnumEntities(App->CLSB_Doc->pLevel, this, fdocDeselectEntity);
 }

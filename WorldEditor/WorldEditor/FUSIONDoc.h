@@ -157,7 +157,7 @@ public:
 	BOOL IsEntitySelected();
 	void DeleteSelectedEntities();
 	
-	void ResetAllSelectedEntities();
+	
 	void CopySelectedBrushes();
 	void SetSelectedEntity( int ID );
 	void AdjustEntityAngle( const ViewVars * v, const geFloat dx ) ;
@@ -168,7 +168,7 @@ public:
 	void SelectAllBrushes();
 	void SelectAllEntities();
 	void SelectAllFacesInBrushes();
-	void ResetAllSelections();
+
 	void SelectGroupBrushes (BOOL Select, int WhichGroup);
 	void SelectModelBrushes (BOOL Select, int ModelId);
 
@@ -201,8 +201,8 @@ public:
 	void SelectTextureFromFace3D(CPoint point, ViewVars *v);
 	void PlaceTemplateEntity3D(CPoint point, ViewVars *v);
 	void MoveToNearest(void);
-	void ResetAllSelectedFaces();
-	void ResetAllSelectedBrushes();
+
+
 	void NullBrushAttributes();
 	void ConfigureCurrentTool();
 	void UpdateCameraEntity( const ViewVars *v ) ;

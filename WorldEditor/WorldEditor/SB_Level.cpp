@@ -149,7 +149,7 @@ bool SB_Level::Change_Centre_Brush_Texture()
 {
 	App->Get_Current_Document();
 
-	App->m_pDoc->ResetAllSelections();
+	App->CLSB_Doc->ResetAllSelections();
 	App->CLSB_Doc->UpdateSelected();
 	
 	int Index = App->CL_World->Get_Brush_Index_By_Name("XYZ");
@@ -194,7 +194,7 @@ bool SB_Level::Change_Centre_Brush_Texture()
 
 	}
 
-	App->m_pDoc->ResetAllSelections();
+	App->CLSB_Doc->ResetAllSelections();
 	App->CLSB_Doc->UpdateSelected();
 
 	Brush_SetVisible(Selected_Brush, GE_FALSE);

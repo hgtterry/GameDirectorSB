@@ -363,7 +363,7 @@ LRESULT CALLBACK A_Dialogs::FrontPanel_Proc(HWND hDlg, UINT message, WPARAM wPar
 					App->CLSB_Export_World->Export_World_GD3D(1);
 					ShellExecute(App->MainHwnd, "open", Path, "WorldEditor",App->WorldEditor_Directory, SW_SHOW);
 
-					pDoc->ResetAllSelections();
+					App->CLSB_Doc->ResetAllSelections();
 					pDoc->UpdateAllViews( UAV_ALL3DVIEWS, NULL );
 
 				}
@@ -408,7 +408,7 @@ LRESULT CALLBACK A_Dialogs::FrontPanel_Proc(HWND hDlg, UINT message, WPARAM wPar
 			{
 				CFusionDoc* pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
 
-				pDoc->ResetAllSelections() ;
+				App->CLSB_Doc->ResetAllSelections() ;
 				App->CLSB_Doc->UpdateSelected();
 				pDoc->UpdateAllViews( UAV_ALL3DVIEWS, NULL ) ;
 

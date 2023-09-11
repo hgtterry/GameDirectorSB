@@ -479,7 +479,7 @@ bool SB_File_WE::ImportFile (const char *PathName, const geVec3d *location)
 	}
 
 	// Unselects everything so that brushes/entities can be added
-	App->m_pDoc->ResetAllSelections ();
+	App->CLSB_Doc->ResetAllSelections ();
 
 	// move the object to the new position
 	Level_TranslateAll (NewLevel, location);

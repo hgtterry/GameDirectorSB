@@ -2247,7 +2247,7 @@ void CFusionView::OnDeselectall()
 {
 	CFusionDoc* pDoc = GetDocument();
 
-	pDoc->ResetAllSelections() ;
+	App->CLSB_Doc->ResetAllSelections() ;
 	App->CLSB_Doc->UpdateSelected();
 	pDoc->UpdateAllViews( UAV_ALL3DVIEWS, NULL ) ;
 }
@@ -2280,7 +2280,7 @@ void CFusionView::OnSelectAllBrushes()
 	CFusionDoc* pDoc = GetDocument();
 
 	if (!(IsKeyDown(VK_SHIFT)))
-		pDoc->ResetAllSelections() ;
+		App->CLSB_Doc->ResetAllSelections() ;
 	
 	pDoc->SelectAllBrushes () ;
 	pDoc->UpdateAllViews( UAV_ALL3DVIEWS, NULL ) ;
@@ -2564,7 +2564,7 @@ void CFusionView::OnEditSelectFacesNext()
 			// Remove all face selections
 			if (!(IsKeyDown(VK_SHIFT)))
 			{
-				pDoc->ResetAllSelectedFaces();
+				App->CLSB_Doc->ResetAllSelectedFaces();
 			}
 
 			Face_SetSelected (pFace, GE_TRUE);
@@ -2617,7 +2617,7 @@ void CFusionView::OnEditSelectFacesPrevious()
 			// Remove all face selections
 			if (!(IsKeyDown(VK_SHIFT)))
 			{
-				pDoc->ResetAllSelectedFaces();
+				App->CLSB_Doc->ResetAllSelectedFaces();
 			}
 
 			// Select the next face in order, using selected brush list...
@@ -2658,7 +2658,7 @@ void CFusionView::OnEditSelectEntitiesAll()
 	CFusionDoc* pDoc = GetDocument();
 
 	if (!(IsKeyDown(VK_SHIFT)))
-		pDoc->ResetAllSelections() ;
+		App->CLSB_Doc->ResetAllSelections() ;
 	
 	pDoc->SelectAllEntities () ;
 	pDoc->UpdateAllViews( UAV_ALL3DVIEWS, NULL ) ;
@@ -2722,7 +2722,7 @@ void CFusionView::OnEditSelectEntitiesNext()
 				if (NextEntity)
 				{
 					if (!(IsKeyDown(VK_SHIFT)))
-						pDoc->ResetAllSelectedEntities();
+						App->CLSB_Doc->ResetAllSelectedEntities();
 
 					pDoc->SelectEntity(NextEntity);
 					App->CLSB_Doc->UpdateSelected ();
@@ -2790,7 +2790,7 @@ void CFusionView::OnEditSelectEntitiesPrevious()
 				if (NextEntity)
 				{
 					if (!(IsKeyDown(VK_SHIFT)))
-						pDoc->ResetAllSelectedEntities();
+						App->CLSB_Doc->ResetAllSelectedEntities();
 
 					pDoc->SelectEntity(NextEntity);
 					App->CLSB_Doc->UpdateSelected ();
@@ -2805,7 +2805,7 @@ void CFusionView::OnEditDeselectBrushes()
 {
 	CFusionDoc* pDoc = GetDocument();
 
-	pDoc->ResetAllSelectedBrushes() ;
+	App->CLSB_Doc->ResetAllSelectedBrushes() ;
 	App->CLSB_Doc->UpdateSelected();
 	pDoc->UpdateAllViews( UAV_ALL3DVIEWS, NULL ) ;
 }
@@ -2814,7 +2814,7 @@ void CFusionView::OnEditDeselectEntities()
 {
 	CFusionDoc* pDoc = GetDocument();
 
-	pDoc->ResetAllSelectedEntities() ;
+	App->CLSB_Doc->ResetAllSelectedEntities() ;
 	App->CLSB_Doc->UpdateSelected();
 	pDoc->UpdateAllViews( UAV_ALL3DVIEWS, NULL ) ;
 }
@@ -2823,7 +2823,7 @@ void CFusionView::OnEditDeselectFaces()
 {
 	CFusionDoc* pDoc = GetDocument();
 
-	pDoc->ResetAllSelectedFaces() ;
+	App->CLSB_Doc->ResetAllSelectedFaces() ;
 	App->CLSB_Doc->UpdateSelected();
 	pDoc->UpdateAllViews( UAV_ALL3DVIEWS, NULL ) ;
 }
