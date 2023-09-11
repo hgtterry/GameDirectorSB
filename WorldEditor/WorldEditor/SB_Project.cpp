@@ -165,7 +165,7 @@ bool SB_Project::Load_Project()
 	if (Options->Has_Objects > 0)
 	{
 		V_Load_Project_Objects();
-		//App->SBC_Objects_Create->Add_Objects_From_File();
+		App->CLSB_Objects_Create->Add_Objects_From_File();
 	}
 
 	//// ------------------------------------- Counters

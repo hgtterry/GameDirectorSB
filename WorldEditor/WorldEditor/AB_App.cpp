@@ -93,6 +93,8 @@ SB_App::SB_App()
 	CLSB_Properties =			nullptr;
 	CLSB_Object =				nullptr;
 	CLSB_Project =				nullptr;
+	CLSB_Objects_Create =		nullptr;
+	CLSB_Physics =				nullptr;
 
 	AppBackground = NULL;
 	BlackBrush =	NULL;
@@ -291,7 +293,10 @@ bool SB_App::InitApp(void)
 	CLSB_Properties =				new SB_Properties;
 	CLSB_Object =					new SB_Object();
 	CLSB_Project =					new SB_Project();
+	CLSB_Objects_Create =			new SB_Objects_Create();
+	CLSB_Physics =					new SB_Physics();
 
+	
 	InitCommonControls();
 
 	hInst =NULL;

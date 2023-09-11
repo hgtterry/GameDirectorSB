@@ -200,9 +200,11 @@
     <ClCompile Include="SB_Loader.cpp" />
     <ClCompile Include="SB_Model.cpp" />
     <ClCompile Include="SB_Object.cpp" />
+    <ClCompile Include="SB_Objects_Create.cpp" />
     <ClCompile Include="SB_Ogre.cpp" />
     <ClCompile Include="SB_OgreListener.cpp" />
     <ClCompile Include="SB_Panels.cpp" />
+    <ClCompile Include="SB_Physics.cpp" />
     <ClCompile Include="SB_Player.cpp" />
     <ClCompile Include="SB_Preferences.cpp" />
     <ClCompile Include="SB_Project.cpp" />
@@ -294,9 +296,11 @@
     <ClInclude Include="SB_Loader.h" />
     <ClInclude Include="SB_Model.h" />
     <ClInclude Include="SB_Object.h" />
+    <ClInclude Include="SB_Objects_Create.h" />
     <ClInclude Include="SB_Ogre.h" />
     <ClInclude Include="SB_OgreListener.h" />
     <ClInclude Include="SB_Panels.h" />
+    <ClInclude Include="SB_Physics.h" />
     <ClInclude Include="SB_Player.h" />
     <ClInclude Include="SB_Preferences.h" />
     <ClInclude Include="SB_Project.h" />

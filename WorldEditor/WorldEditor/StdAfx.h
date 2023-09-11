@@ -135,6 +135,29 @@ namespace Enums
 		Folder_Change_Level = 9,
 		Folder_Particle = 10
 	};
+
+	enum Shape
+	{
+		NoShape = 0,
+		Shape_Box = 1,
+		Sphere = 2,
+		Capsule = 3,
+		Cylinder = 4,
+		Cone = 5,
+		Shape_TriMesh = 6,
+		VolumeBox = 7
+	};
+
+	enum Bullet_Type // Dont Forget GD19_LookUps::Get_Type_Category_String(void)
+	{
+		Bullet_Type_None = 0,
+		Bullet_Type_Dynamic = 1, // Free Moving Physics
+		Bullet_Type_Static = 2, // Fixed Non Moving Shape
+		Bullet_Type_TriMesh = 3,
+		Type_NXS_Convex = 4,
+		Type_JustOgre = 5,
+		Bullet_Type_Volume = 6
+	};
 }
 // re-enable warnings except 4514
 #pragma warning(default : 4201 4214 4115)

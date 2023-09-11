@@ -95,6 +95,8 @@ distribution.
 #include "SB_Properties.h"
 #include "SB_Object.h"
 #include "SB_Project.h"
+#include "SB_Objects_Create.h"
+#include "SB_Physics.h"
 
 class SB_App
 {
@@ -168,6 +170,8 @@ public:
 	SB_Properties*				CLSB_Properties;
 	SB_Object*					CLSB_Object;
 	SB_Project*					CLSB_Project;
+	SB_Objects_Create*			CLSB_Objects_Create;
+	SB_Physics*					CLSB_Physics;
 
 	bool InitApp(void);
 	void InitMFC(void);

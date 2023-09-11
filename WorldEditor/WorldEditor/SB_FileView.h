@@ -37,6 +37,7 @@ public:
 	void ExpandRoot(void);
 
 	HTREEITEM FV_Players_Folder;	// Players Folder FileFView
+	HTREEITEM FV_Objects_Folder;
 
 private:
 
@@ -53,7 +54,7 @@ private:
 	HTREEITEM FV_Areas_Folder;		// Areas/Rooms Folder FileFView
 	HTREEITEM FV_LevelFolder;
 	HTREEITEM FV_Cameras_Folder;
-	HTREEITEM FV_Objects_Folder;
+	
 
 	HIMAGELIST hImageList;
 	HBITMAP hBitMap;
