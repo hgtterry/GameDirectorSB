@@ -902,15 +902,17 @@ Brush* BrushTemplate_BoxReverseTexture(const BrushTemplate_Box* pTemplate)
 		b = Brush_Create(BRUSH_LEAF, fl, 0);
 		if (b)
 		{
-			Brush_SetSubtract(b, pTemplate->TCut);
-			Brush_SetSheet(b, pTemplate->TSheet);
+			//Brush_SetSubtract(b, pTemplate->TCut);
+			//Brush_SetSheet(b, pTemplate->TSheet);
+
 		}
 		return	b;
 	}
 	else
 	{
 		// hollow brush
-		BrushList* bl = BrushList_Create();
+
+		/*BrushList* bl = BrushList_Create();
 		Brush* bh, * bm;
 
 		b = Brush_Create(BRUSH_LEAF, fl, 0);
@@ -943,7 +945,7 @@ Brush* BrushTemplate_BoxReverseTexture(const BrushTemplate_Box* pTemplate)
 		else
 		{
 			BrushList_Destroy(&bl);
-		}
+		}*/
 	}
 
 	return	0;
