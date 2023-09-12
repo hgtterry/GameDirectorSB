@@ -37,7 +37,7 @@ void A_Render_App::Render3D_Mode(UINT nID)
 	if (Level_RebuildBspAlways (App->CLSB_Doc->pLevel))
 	{
 		pDoc->RebuildTrees();
-		pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+		App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 	}
 
 }

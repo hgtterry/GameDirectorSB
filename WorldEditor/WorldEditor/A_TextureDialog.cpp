@@ -466,7 +466,7 @@ void A_TextureDialog::Apply_Texture()
 			return;
 	}
 
-	App->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+	App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 }
 
 // *************************************************************************

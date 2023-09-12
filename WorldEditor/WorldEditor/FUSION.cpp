@@ -716,7 +716,7 @@ void CFusionApp::OnPreferences()
 		CFusionDoc* pDoc = GetActiveFusionDoc() ;
 		if( pDoc != NULL )
 		{
-			pDoc->UpdateAllViews( UAV_ALL3DVIEWS, NULL );
+			App->CLSB_Doc->UpdateAllViews( UAV_ALL3DVIEWS, NULL );
 		}
 		if (OldObjectsDir != PrefsDlg.m_ObjectsDir)
 		{

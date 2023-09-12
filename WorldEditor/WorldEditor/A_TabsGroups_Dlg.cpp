@@ -344,7 +344,7 @@ void A_TabsGroups_Dlg::OnSelchangeBrushlist(int Index, bool Clear)
 	if( bChanged )
 	{
 		App->CLSB_Doc->UpdateSelected() ;
-		App->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+		App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 	}
 }
 

@@ -277,6 +277,6 @@ void A_TabsTemplates_Dlg::CreateNewTemplateBrush(Brush *pBrush)
 	geVec3d_Subtract (pTemplatePos, &BrushPos, &MoveVec);
 	Brush_Move (App->m_pDoc->CurBrush, &MoveVec);
 
-	App->m_pDoc->UpdateAllViews (UAV_ALL3DVIEWS, NULL);
+	App->CLSB_Doc->UpdateAllViews (UAV_ALL3DVIEWS, NULL);
 	App->m_pDoc->SetModifiedFlag ();
 }

@@ -487,7 +487,7 @@ void CEntitiesDialog::OnSelchangeEntitylist()
 		mCurrentEntity = m_EntityCombo.GetItemData( CurrentSelection );
 		//	Set this as the current entity...
 		pDoc->SetSelectedEntity( mCurrentEntity ) ;
-		pDoc->UpdateAllViews( UAV_ALL3DVIEWS, NULL );
+		App->CLSB_Doc->UpdateAllViews( UAV_ALL3DVIEWS, NULL );
 	}
 
 	FillInKeyValuePairs (0);

@@ -747,7 +747,7 @@ void SB_Brushes::Move_Brush()
 
 	App->CLSB_Brushes->m_pDoc->MoveSelectedBrushList(App->CLSB_Brushes->m_pDoc->pSelBrushes, &App->CLSB_Brushes->CenterOfSelection);
 
-	App->CLSB_Brushes->m_pDoc->UpdateAllViews(UAV_ALLVIEWS | REBUILD_QUICK, NULL);
+	App->CLSB_Doc->UpdateAllViews(UAV_ALLVIEWS | REBUILD_QUICK, NULL);
 }
 
 // *************************************************************************
@@ -763,7 +763,7 @@ void SB_Brushes::Rotate_Brush(float SX, float SY, float SZ)
 
 	App->m_pDoc->RotateSelectedBrushList(App->CLSB_Brushes->m_pDoc->pSelBrushes, &FinalScale);
 
-	App->CLSB_Brushes->m_pDoc->UpdateAllViews(UAV_ALLVIEWS | UAV_ALL3DVIEWS | REBUILD_QUICK, NULL);
+	App->CLSB_Doc->UpdateAllViews(UAV_ALLVIEWS | UAV_ALL3DVIEWS | REBUILD_QUICK, NULL);
 }
 
 // *************************************************************************
@@ -779,7 +779,7 @@ void SB_Brushes::Scale_Brush(float SX, float SY, float SZ)
 
 	App->m_pDoc->ScaleSelectedBrushes(&FinalScale);
 	
-	App->CLSB_Brushes->m_pDoc->UpdateAllViews(UAV_ALLVIEWS | REBUILD_QUICK, NULL);
+	App->CLSB_Doc->UpdateAllViews(UAV_ALLVIEWS | REBUILD_QUICK, NULL);
 }
 
 // *************************************************************************
@@ -812,7 +812,7 @@ void SB_Brushes::Scale_Brush_Lock(bool increase)
 
 	App->m_pDoc->ScaleSelectedBrushes(&FinalScale);
 
-	App->CLSB_Brushes->m_pDoc->UpdateAllViews(UAV_ALLVIEWS | REBUILD_QUICK, NULL);
+	App->CLSB_Doc->UpdateAllViews(UAV_ALLVIEWS | REBUILD_QUICK, NULL);
 }
 
 // *************************************************************************

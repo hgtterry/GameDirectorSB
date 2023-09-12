@@ -361,7 +361,7 @@ LRESULT CALLBACK A_FaceDialog::FaceDialog_Proc(HWND hDlg, UINT message, WPARAM w
 					Face_SetTextureLock(pFace,true);
 				}
 
-				App->m_pDoc->UpdateAllViews(UAV_RENDER_ONLY, NULL);
+				App->CLSB_Doc->UpdateAllViews(UAV_RENDER_ONLY, NULL);
 				
 				return 1;
 			}
@@ -375,7 +375,7 @@ LRESULT CALLBACK A_FaceDialog::FaceDialog_Proc(HWND hDlg, UINT message, WPARAM w
 					Face_SetTextureLock(pFace, false);
 				}
 
-				App->m_pDoc->UpdateAllViews(UAV_RENDER_ONLY, NULL);
+				App->CLSB_Doc->UpdateAllViews(UAV_RENDER_ONLY, NULL);
 				return 1;
 			}
 			return TRUE;
@@ -871,6 +871,6 @@ void A_FaceDialog::AssignCurrentToViews()
 			Brush_UpdateChildFaces (pBrush);
 		}
 
-		App->m_pDoc->UpdateAllViews(UAV_RENDER_ONLY, NULL);
+		App->CLSB_Doc->UpdateAllViews(UAV_RENDER_ONLY, NULL);
 	}
 }

@@ -342,7 +342,7 @@ LRESULT CALLBACK SB_Camera_WE::Move_Camera_Proc(HWND hDlg, UINT message, WPARAM 
 			App->CLSB_Camera_WE->pCameraEntity->SetAngles(&App->CLSB_Camera_WE->Angles, Level_GetEntityDefs (App->CLSB_Doc->pLevel) );
 
 			App->m_pDoc->SetRenderedViewCamera( &(App->CLSB_Camera_WE->pCameraEntity->mOrigin), &App->CLSB_Camera_WE->Angles) ;
-			App->m_pDoc->UpdateAllViews( UAV_ALLVIEWS, NULL );
+			App->CLSB_Doc->UpdateAllViews( UAV_ALLVIEWS, NULL );
 
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
@@ -469,7 +469,7 @@ void SB_Camera_WE::Reset_Camera_Position()
 	App->CLSB_Camera_WE->pCameraEntity->SetOrigin(App->CLSB_Camera_WE->CameraPosition.X, App->CLSB_Camera_WE->CameraPosition.Y, App->CLSB_Camera_WE->CameraPosition.Z, Level_GetEntityDefs(App->CLSB_Doc->pLevel));
 
 	App->m_pDoc->SetRenderedViewCamera(&(App->CLSB_Camera_WE->pCameraEntity->mOrigin), &App->CLSB_Camera_WE->Angles);
-	App->m_pDoc->UpdateAllViews(UAV_ALLVIEWS, NULL);
+	App->CLSB_Doc->UpdateAllViews(UAV_ALLVIEWS, NULL);
 
 }
 
@@ -536,7 +536,7 @@ void SB_Camera_WE::Reset_Camera_Angles()
 	App->CLSB_Camera_WE->pCameraEntity->SetAngles(&App->CLSB_Camera_WE->Angles, Level_GetEntityDefs(App->CLSB_Doc->pLevel));
 
 	App->m_pDoc->SetRenderedViewCamera(&(App->CLSB_Camera_WE->pCameraEntity->mOrigin), &App->CLSB_Camera_WE->Angles);
-	App->m_pDoc->UpdateAllViews(UAV_ALLVIEWS, NULL);
+	App->CLSB_Doc->UpdateAllViews(UAV_ALLVIEWS, NULL);
 
 }
 
@@ -571,7 +571,7 @@ void SB_Camera_WE::Zero_Camera()
 
 		App->m_pDoc->SetRenderedViewCamera(&(pCameraEntity->mOrigin), &Angles);
 
-		App->m_pDoc->UpdateAllViews(UAV_ALLVIEWS, NULL);
+		App->CLSB_Doc->UpdateAllViews(UAV_ALLVIEWS, NULL);
 	}
 
 }
@@ -607,7 +607,7 @@ void SB_Camera_WE::Move_Camera_Forward(float Step)
 		geVec3d_Copy(&(TransformOrigin.Translation), &(pCameraEntity->mOrigin));
 
 		App->m_pDoc->SetRenderedViewCamera(&(pCameraEntity->mOrigin), &Angles);
-		App->m_pDoc->UpdateAllViews(UAV_ALLVIEWS, NULL);
+		App->CLSB_Doc->UpdateAllViews(UAV_ALLVIEWS, NULL);
 	}
 }
 
@@ -642,7 +642,7 @@ void SB_Camera_WE::Move_Camera_Back(float Step)
 		geVec3d_Copy(&(TransformOrigin.Translation), &(pCameraEntity->mOrigin));
 
 		App->m_pDoc->SetRenderedViewCamera(&(pCameraEntity->mOrigin), &Angles);
-		App->m_pDoc->UpdateAllViews(UAV_ALLVIEWS, NULL);
+		App->CLSB_Doc->UpdateAllViews(UAV_ALLVIEWS, NULL);
 	}
 }
 
@@ -677,7 +677,7 @@ void SB_Camera_WE::Move_Camera_Down(float Step)
 		geVec3d_Copy(&(TransformOrigin.Translation), &(pCameraEntity->mOrigin));
 
 		App->m_pDoc->SetRenderedViewCamera(&(pCameraEntity->mOrigin), &Angles);
-		App->m_pDoc->UpdateAllViews(UAV_ALLVIEWS, NULL);
+		App->CLSB_Doc->UpdateAllViews(UAV_ALLVIEWS, NULL);
 	}
 }
 
@@ -712,7 +712,7 @@ void SB_Camera_WE::Move_Camera_Up(float Step)
 		geVec3d_Copy(&(TransformOrigin.Translation), &(pCameraEntity->mOrigin));
 
 		App->m_pDoc->SetRenderedViewCamera(&(pCameraEntity->mOrigin), &Angles);
-		App->m_pDoc->UpdateAllViews(UAV_ALLVIEWS, NULL);
+		App->CLSB_Doc->UpdateAllViews(UAV_ALLVIEWS, NULL);
 	}
 }
 
@@ -747,7 +747,7 @@ void SB_Camera_WE::Move_Camera_Right(float Step)
 		geVec3d_Copy(&(TransformOrigin.Translation), &(pCameraEntity->mOrigin));
 
 		App->m_pDoc->SetRenderedViewCamera(&(pCameraEntity->mOrigin), &Angles);
-		App->m_pDoc->UpdateAllViews(UAV_ALLVIEWS, NULL);
+		App->CLSB_Doc->UpdateAllViews(UAV_ALLVIEWS, NULL);
 	}
 }
 
@@ -782,6 +782,6 @@ void SB_Camera_WE::Move_Camera_Left(float Step)
 		geVec3d_Copy(&(TransformOrigin.Translation), &(pCameraEntity->mOrigin));
 
 		App->m_pDoc->SetRenderedViewCamera(&(pCameraEntity->mOrigin), &Angles);
-		App->m_pDoc->UpdateAllViews(UAV_ALLVIEWS, NULL);
+		App->CLSB_Doc->UpdateAllViews(UAV_ALLVIEWS, NULL);
 	}
 }

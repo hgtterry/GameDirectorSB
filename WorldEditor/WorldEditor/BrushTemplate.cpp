@@ -831,10 +831,10 @@ Brush* BrushTemplate_BoxReverseTexture(const BrushTemplate_Box* pTemplate)
 	geVec3d_Set(&Verts[6], (float)(pTemplate->XSizeBot / 2), (float)-(pTemplate->YSize / 2), (float)(pTemplate->ZSizeBot / 2));
 	geVec3d_Set(&Verts[7], (float)-(pTemplate->XSizeBot / 2), (float)-(pTemplate->YSize / 2), (float)(pTemplate->ZSizeBot / 2));
 
-	FaceVerts[0] = Verts[0];
-	FaceVerts[1] = Verts[1];
-	FaceVerts[2] = Verts[2];
 	FaceVerts[3] = Verts[3];
+	FaceVerts[2] = Verts[2];
+	FaceVerts[1] = Verts[1];
+	FaceVerts[0] = Verts[0];
 
 	f = Face_Create(4, FaceVerts, 0);
 	if (f)
@@ -842,10 +842,10 @@ Brush* BrushTemplate_BoxReverseTexture(const BrushTemplate_Box* pTemplate)
 		FaceList_AddFace(fl, f);
 	}
 
-	FaceVerts[0] = Verts[4];
-	FaceVerts[1] = Verts[5];
-	FaceVerts[2] = Verts[6];
 	FaceVerts[3] = Verts[7];
+	FaceVerts[2] = Verts[6];
+	FaceVerts[1] = Verts[5];
+	FaceVerts[0] = Verts[4];
 
 	f = Face_Create(4, FaceVerts, 0);
 	if (f)
@@ -853,43 +853,43 @@ Brush* BrushTemplate_BoxReverseTexture(const BrushTemplate_Box* pTemplate)
 		FaceList_AddFace(fl, f);
 	}
 
-	FaceVerts[0] = Verts[1];
-	FaceVerts[1] = Verts[7];
-	FaceVerts[2] = Verts[6];
 	FaceVerts[3] = Verts[2];
-
-	f = Face_Create(4, FaceVerts, 0);
-	if (f)
-	{
-		FaceList_AddFace(fl, f);
-	}
-
-	FaceVerts[0] = Verts[0];
-	FaceVerts[1] = Verts[3];
-	FaceVerts[2] = Verts[5];
-	FaceVerts[3] = Verts[4];
-
-	f = Face_Create(4, FaceVerts, 0);
-	if (f)
-	{
-		FaceList_AddFace(fl, f);
-	}
-
-	FaceVerts[0] = Verts[0];
-	FaceVerts[1] = Verts[4];
-	FaceVerts[2] = Verts[7];
-	FaceVerts[3] = Verts[1];
-
-	f = Face_Create(4, FaceVerts, 0);
-	if (f)
-	{
-		FaceList_AddFace(fl, f);
-	}
-
-	FaceVerts[0] = Verts[3];
-	FaceVerts[1] = Verts[2];
 	FaceVerts[2] = Verts[6];
+	FaceVerts[1] = Verts[7];
+	FaceVerts[0] = Verts[1];
+
+	f = Face_Create(4, FaceVerts, 0);
+	if (f)
+	{
+		FaceList_AddFace(fl, f);
+	}
+
+	FaceVerts[3] = Verts[4];
+	FaceVerts[2] = Verts[5];
+	FaceVerts[1] = Verts[3];
+	FaceVerts[0] = Verts[0];
+
+	f = Face_Create(4, FaceVerts, 0);
+	if (f)
+	{
+		FaceList_AddFace(fl, f);
+	}
+
+	FaceVerts[3] = Verts[1];
+	FaceVerts[2] = Verts[7];
+	FaceVerts[1] = Verts[4];
+	FaceVerts[0] = Verts[0];
+
+	f = Face_Create(4, FaceVerts, 0);
+	if (f)
+	{
+		FaceList_AddFace(fl, f);
+	}
+
 	FaceVerts[3] = Verts[5];
+	FaceVerts[2] = Verts[6];
+	FaceVerts[1] = Verts[2];
+	FaceVerts[0] = Verts[3];
 
 	f = Face_Create(4, FaceVerts, 0);
 	if (f)
@@ -978,11 +978,6 @@ Brush *BrushTemplate_CreateBox (const BrushTemplate_Box *pTemplate)
 	FaceVerts[2]	=Verts[1];
 	FaceVerts[1]	=Verts[2];
 	FaceVerts[0]	=Verts[3];
-
-	/*FaceVerts[0] = Verts[0];
-	FaceVerts[1] = Verts[1];
-	FaceVerts[2] = Verts[2];
-	FaceVerts[3] = Verts[3];*/
 
 	f	=Face_Create(4, FaceVerts, 0);
 	if(f)

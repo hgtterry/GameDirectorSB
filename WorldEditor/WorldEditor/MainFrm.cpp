@@ -1038,7 +1038,7 @@ void CMainFrame::OnViewLeakFinder()
 	if(pDoc != NULL)
 	{
 		pDoc->SetShowLeakFinder(!pDoc->bShowLeakFinder());
-		pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+		App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 	}
 }
 

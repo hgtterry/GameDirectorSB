@@ -173,7 +173,7 @@ bool SB_Level::Change_Centre_Brush_Texture()
 
 	App->m_pDoc->SelectAllFacesInBrushes();
 
-	App->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+	App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 
 	const int NumFaces = Brush_GetNumFaces(Selected_Brush);
 	
@@ -201,7 +201,7 @@ bool SB_Level::Change_Centre_Brush_Texture()
 
 	Brush_UpdateChildFaces(Selected_Brush);
 	Brush_SetFaceListDirty(Selected_Brush);
-	App->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+	App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 	App->m_pDoc->SetModifiedFlag();
 
 	return 1;

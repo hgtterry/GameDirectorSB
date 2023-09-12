@@ -312,10 +312,8 @@ LRESULT CALLBACK SB_TopTabs::TB_Headers_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 		if (LOWORD(wParam) == IDC_BT_TB_SELECTALL)
 		{
-			CFusionDoc* pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
-
 			App->CLSB_Doc->SelectAll();
-			pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+			App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 
 			App->CL_TabsGroups_Dlg->Update_Dlg_SelectedBrushesCount();
 			App->CL_TabsGroups_Dlg->Update_Dlg_Controls();
@@ -326,11 +324,9 @@ LRESULT CALLBACK SB_TopTabs::TB_Headers_Proc(HWND hDlg, UINT message, WPARAM wPa
 
 		if (LOWORD(wParam) == IDC_BT_TB_DESELECTALL)
 		{
-			CFusionDoc* pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
-
 			App->CLSB_Doc->ResetAllSelections();
 			App->CLSB_Doc->UpdateSelected();
-			pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+			App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 
 			App->CL_TabsGroups_Dlg->Update_Dlg_SelectedBrushesCount();
 			App->CL_TabsGroups_Dlg->Update_Dlg_Controls();
@@ -913,7 +909,7 @@ LRESULT CALLBACK SB_TopTabs::Top_Faces_Proc(HWND hDlg, UINT message, WPARAM wPar
 			App->Get_Current_Document();
 
 			App->m_pDoc->SelectAllFacesInBrushes();
-			App->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+			App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 			return TRUE;
 		}
 
@@ -1013,11 +1009,8 @@ LRESULT CALLBACK SB_TopTabs::Top_Camera_Proc(HWND hDlg, UINT message, WPARAM wPa
 	{
 		if (LOWORD(wParam) == IDC_BT_TT_ZEROCAMRA)
 		{
-			App->Get_Current_Document();
-
 			App->CLSB_Camera_WE->Zero_Camera();
-
-			App->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+			App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 			return TRUE;
 		}
 

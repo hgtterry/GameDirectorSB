@@ -497,7 +497,7 @@ void A_CreateBoxDialog::CreateNewTemplateBrush(Brush *pBrush)
 
 	Brush_Move (App->m_pDoc->CurBrush, &MoveVec);
 
-	App->m_pDoc->UpdateAllViews (UAV_ALL3DVIEWS, NULL);
+	App->CLSB_Doc->UpdateAllViews (UAV_ALL3DVIEWS, NULL);
 	App->m_pDoc->SetModifiedFlag ();
 }
 

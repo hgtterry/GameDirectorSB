@@ -28,6 +28,7 @@ public:
 	void ResetAllSelectedFaces(void);
 	void ResetAllSelectedBrushes(void);
 	void ResetAllSelectedEntities();
+	void UpdateAllViews(int Mode, CView* pSender, BOOL Override = FALSE);
 
 	Level* pLevel;
 };

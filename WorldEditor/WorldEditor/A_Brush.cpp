@@ -237,7 +237,7 @@ bool A_Brush::Brush_Create_From_Equity()
 
 	Brush_SetName(pBrush, "Test");
 
-	App->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+	App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 	App->m_pDoc->SetModifiedFlag();
 
 	App->Say("Added New");

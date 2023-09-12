@@ -453,7 +453,7 @@ void CFaceAttributesDialog::AssignCurrentToViews()
 		Brush *pBrush = SelBrushList_GetBrush (pDoc->pSelBrushes, i);
 		Brush_UpdateChildFaces (pBrush);
 	}
-	pDoc->UpdateAllViews(UAV_RENDER_ONLY, NULL);
+	App->CLSB_Doc->UpdateAllViews(UAV_RENDER_ONLY, NULL);
 	}
 }
 

@@ -55,11 +55,11 @@ void SB_Doc::DeleteCurrentThing()
 
         if (ReBuild && Level_RebuildBspAlways(pLevel))
         {
-            App->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS | REBUILD_QUICK, NULL, TRUE);
+            UpdateAllViews(UAV_ALL3DVIEWS | REBUILD_QUICK, NULL, TRUE);
         }
         else
         {
-            App->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+            UpdateAllViews(UAV_ALL3DVIEWS, NULL);
         }
 
         // put cursor back
@@ -374,7 +374,7 @@ void SB_Doc::Lock_AllTextures(void)
     App->Get_Current_Document();
 
     SelectAll();
-    App->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+    UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 
     Face* pFace;
     int NumberOfFaces;
@@ -389,7 +389,7 @@ void SB_Doc::Lock_AllTextures(void)
 
     ResetAllSelections();
     UpdateSelected();
-    App->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+    UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 
 }
 
@@ -629,4 +629,118 @@ void SB_Doc::ResetAllSelectedEntities()
     App->m_pDoc->DoGeneralSelect();
 
     Level_EnumEntities(pLevel, this, fdocDeselectEntity);
+}
+
+// *************************************************************************
+// *         UpdateAllViews:- Terry and Hazel Flanigan 2023                *
+// *************************************************************************
+void SB_Doc::UpdateAllViews(int Mode, CView* pSender, BOOL Override)
+{
+    App->Get_Current_Document();
+
+    if (App->m_pDoc->IsModified() && ((Mode & REBUILD_QUICK) && (Level_RebuildBspAlways(App->CLSB_Doc->pLevel))) || (Override))
+    {
+        App->m_pDoc->RebuildTrees();
+    }
+    else if ((Mode & REBUILD_QUICK) && (!Level_RebuildBspAlways(App->CLSB_Doc->pLevel)))
+    {
+        App->m_pDoc->InvalidateDrawTreeOriginalFaces();
+    }
+
+    if (Mode & REBUILD_QUICK)
+        Mode &= ~REBUILD_QUICK;
+
+    //	Do we want to redraw everything?
+    if (Mode & UAV_ALLVIEWS)
+    {
+        App->m_pDoc->CDocument::UpdateAllViews(pSender);
+        return;
+    }
+
+    POSITION pos = App->m_pDoc->GetFirstViewPosition();
+
+    while (pos != NULL)
+    {
+        CView* pView = App->m_pDoc->GetNextView(pos);
+
+        if (pView->IsKindOf(RUNTIME_CLASS(CFusionView)))
+        {
+            CFusionView* pFusionView = (CFusionView*)pView;
+            CDC* pDC = pFusionView->GetDC();
+
+            switch (Mode)
+            {
+            case UAV_ACTIVE3DVIEW_ONLY:
+
+                if (pFusionView->GetParentFrame() == App->m_pDoc->mpActiveViewFrame)
+                    pFusionView->Invalidate(TRUE);
+                break;
+
+            case UAV_NONACTIVE3DVIEWS_ONLY:
+
+                if (pFusionView->GetParentFrame() != App->m_pDoc->mpActiveViewFrame)
+                    pFusionView->Invalidate(TRUE);
+                break;
+
+            case UAV_TEXTUREVIEW_ONLY:
+
+                if (pFusionView->mViewType == ID_VIEW_TEXTUREVIEW)
+                    pFusionView->Invalidate(TRUE);
+                break;
+
+            case UAV_RENDER_ONLY:
+
+                switch (pFusionView->mViewType)
+                {
+                case ID_VIEW_3DWIREFRAME:
+                case ID_VIEW_TEXTUREVIEW:
+
+                    pFusionView->Invalidate(TRUE);
+                    break;
+
+                default:
+                    break;
+                }
+                break;
+
+            case UAV_GRID_ONLY:
+
+                switch (pFusionView->mViewType)
+                {
+                case ID_VIEW_TOPVIEW:
+                case ID_VIEW_SIDEVIEW:
+                case ID_VIEW_FRONTVIEW:
+
+                    pFusionView->Invalidate(TRUE);
+                    break;
+                }
+                break;
+
+
+            case UAV_THIS_GRID_ONLY:
+                if (pFusionView == pSender)
+                {
+                    switch (pFusionView->mViewType)
+                    {
+                    case ID_VIEW_TOPVIEW:
+                    case ID_VIEW_SIDEVIEW:
+                    case ID_VIEW_FRONTVIEW:
+                        pFusionView->Invalidate(TRUE);
+                        break;
+                    }
+                }
+                break;
+
+            case UAV_ALL3DVIEWS:
+
+                pFusionView->Invalidate(TRUE);
+                break;
+
+            default:
+                break;
+            }
+
+            pFusionView->ReleaseDC(pDC);
+        }
+    }
 }

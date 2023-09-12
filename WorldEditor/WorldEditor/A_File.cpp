@@ -176,7 +176,7 @@ bool SB_File_WE::Start_Load(const char* FileName, bool UseDialogLoader)
 
 	// Select All
 	App->CLSB_Doc->SelectAll();
-	App->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+	App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 	App->CL_TabsGroups_Dlg->Update_Dlg_SelectedBrushesCount();
 
 	// Delete All Bruses and Faces
@@ -380,7 +380,7 @@ void SB_File_WE::CreateNewTemplateBrush(Brush *pBrush)
 	geVec3d_Subtract (pTemplatePos, &BrushPos, &MoveVec);
 	Brush_Move (App->m_pDoc->CurBrush, &MoveVec);
 
-	App->m_pDoc->UpdateAllViews (UAV_ALL3DVIEWS, NULL);
+	App->CLSB_Doc->UpdateAllViews (UAV_ALL3DVIEWS, NULL);
 	App->m_pDoc->SetModifiedFlag ();
 }
 
@@ -1080,7 +1080,7 @@ bool SB_File_WE::New_File()
 	App->Get_Current_Document();
 
 	App->CLSB_Doc->SelectAll();
-	App->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+	App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 	App->CL_TabsGroups_Dlg->Update_Dlg_SelectedBrushesCount();
 
 	// Delete All Bruses and Faces

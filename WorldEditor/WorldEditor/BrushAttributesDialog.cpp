@@ -319,11 +319,7 @@ void CBrushAttributesDialog::AssignCurrentToValues()
 
 void CBrushAttributesDialog::AssignCurrentToViews()
 {
-	CFusionDoc *pDoc = m_pMainFrame->GetCurrentDoc();
-	if (pDoc)
-	{
-	pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
-	}
+	App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 }
 
 void CBrushAttributesDialog::SetDialogFields (void)

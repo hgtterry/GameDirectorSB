@@ -210,7 +210,7 @@ void CFusionView::OnCenterthing()
 	else
 		pDoc->MoveSelectedBrushList(pDoc->pSelBrushes, &MoveDelta);
 
-	pDoc->UpdateAllViews( UAV_ALL3DVIEWS, NULL );
+	App->CLSB_Doc->UpdateAllViews( UAV_ALL3DVIEWS, NULL );
 }
 
 geBoolean CFusionView::IsKeyDown (int Key)
@@ -289,12 +289,12 @@ void CFusionView::OnToolsBrushRotate45()
 	{
 		pDoc->RotateTemplateBrush(&rp);
 		App->CLSB_Doc->UpdateSelected();
-		pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+		App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 	}
 	else
 	{
 		pDoc->RotateSelectedBrushesDirect (&rp);
-		pDoc->UpdateAllViews(UAV_ALL3DVIEWS | REBUILD_QUICK, NULL);
+		App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS | REBUILD_QUICK, NULL);
 	}
 }
 
@@ -979,11 +979,11 @@ void CFusionView::DoneMovingBrushes ()
 	if ((ModeTool == ID_TOOLS_TEMPLATE) ||
 		((pDoc->GetSelState() & ANYENTITY) && (!(pDoc->GetSelState() & ANYBRUSH))) )
 	{			
-		pDoc->UpdateAllViews( UAV_ALL3DVIEWS, NULL );
+		App->CLSB_Doc->UpdateAllViews( UAV_ALL3DVIEWS, NULL );
 	}
 	else
 	{
-		pDoc->UpdateAllViews( UAV_ALL3DVIEWS | REBUILD_QUICK, NULL );
+		App->CLSB_Doc->UpdateAllViews( UAV_ALL3DVIEWS | REBUILD_QUICK, NULL );
 	}
 }
 
@@ -1068,7 +1068,7 @@ void CFusionView::OnLButtonUp(UINT nFlags, CPoint point)
 			if( IsDragging )
 			{
 				pDoc->SelectOrthoRect( mDragStartPoint, mDragCurrentPoint, VCam );
-				pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+				App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 				IsDragging = FALSE ;
 				Drag(DRAG_END);
 			}
@@ -1092,7 +1092,7 @@ void CFusionView::OnLButtonUp(UINT nFlags, CPoint point)
 					case ADJUST_MODE_BRUSH :
 					case ADJUST_MODE_FACE :
 						pDoc->SelectRay (point, VCam);
-						pDoc->UpdateAllViews (UAV_ALL3DVIEWS, NULL);
+						App->CLSB_Doc->UpdateAllViews (UAV_ALL3DVIEWS, NULL);
 						break;
 					
 					default :
@@ -1110,7 +1110,7 @@ void CFusionView::OnLButtonUp(UINT nFlags, CPoint point)
 						if( IsDragging )
 						{
 							pDoc->SelectOrthoRect( mDragStartPoint, mDragCurrentPoint, VCam );
-							pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+							App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 							IsDragging = FALSE ;
 							Drag(DRAG_END);
 						}
@@ -1123,7 +1123,7 @@ void CFusionView::OnLButtonUp(UINT nFlags, CPoint point)
 						else
 						{
 							App->CLSB_Doc->SelectOrtho(point, VCam);
-							pDoc->UpdateAllViews( UAV_ALL3DVIEWS, NULL );
+							App->CLSB_Doc->UpdateAllViews( UAV_ALL3DVIEWS, NULL );
 						}
 					}
 /*
@@ -1164,11 +1164,11 @@ void CFusionView::OnLButtonUp(UINT nFlags, CPoint point)
 					if((ModeTool == ID_TOOLS_TEMPLATE) ||
 					   ((pDoc->GetSelState() & ANYENTITY) && (!(pDoc->GetSelState() & ANYBRUSH))) )
 					{			
-						pDoc->UpdateAllViews( UAV_ALL3DVIEWS, NULL );
+						App->CLSB_Doc->UpdateAllViews( UAV_ALL3DVIEWS, NULL );
 					}
 					else
 					{
-						pDoc->UpdateAllViews( UAV_ALL3DVIEWS | REBUILD_QUICK, NULL );
+						App->CLSB_Doc->UpdateAllViews( UAV_ALL3DVIEWS | REBUILD_QUICK, NULL );
 					}
 					break;
 
@@ -1182,11 +1182,11 @@ void CFusionView::OnLButtonUp(UINT nFlags, CPoint point)
 					if((ModeTool == ID_TOOLS_TEMPLATE) ||
 					   ((pDoc->GetSelState() & ANYENTITY) && (!(pDoc->GetSelState() & ANYBRUSH))) )
 					{			
-						pDoc->UpdateAllViews( UAV_ALL3DVIEWS, NULL );
+						App->CLSB_Doc->UpdateAllViews( UAV_ALL3DVIEWS, NULL );
 					}
 					else
 					{
-						pDoc->UpdateAllViews( UAV_ALL3DVIEWS | REBUILD_QUICK, NULL );
+						App->CLSB_Doc->UpdateAllViews( UAV_ALL3DVIEWS | REBUILD_QUICK, NULL );
 					}
 					break;
 
@@ -1428,7 +1428,7 @@ void CFusionView::OnRButtonUp(UINT nFlags, CPoint point)
 			if( IsDragging )
 			{
 				pDoc->SelectOrthoRect( mDragStartPoint, mDragCurrentPoint, VCam );
-				pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+				App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 				IsDragging = FALSE ;
 				Drag(DRAG_END);
 			}
@@ -1441,7 +1441,7 @@ void CFusionView::OnRButtonUp(UINT nFlags, CPoint point)
 		{
 			ShowTheCursor ();
 			pDoc->SelectOrthoRect( mDragStartPoint, mDragCurrentPoint, VCam );
-			pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+			App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 			IsDragging = FALSE ;
 			Drag(DRAG_END);
 			return;
@@ -1461,9 +1461,9 @@ void CFusionView::OnRButtonUp(UINT nFlags, CPoint point)
 			}
 
 			if (SelBrushList_GetSize (pDoc->pSelBrushes) != 0)
-				pDoc->UpdateAllViews(UAV_ALL3DVIEWS | REBUILD_QUICK, NULL);
+				App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS | REBUILD_QUICK, NULL);
 			else
-				pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+				App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 		}
 	}
 
@@ -1839,7 +1839,7 @@ void CFusionView::OnToolsBrushShowbrush()
 	pDoc->mShowBrush ^= 1;
 
 	// redraw the screen
-	pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+	App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 }
 
 void CFusionView::OnUpdateToolsBrushShowbrush(CCmdUI* pCmdUI) 
@@ -2245,11 +2245,9 @@ void CFusionView::DrawLeakPoints3D(HDC ViewDC, geVec3d *LeakPoints, int NumLeakP
 
 void CFusionView::OnDeselectall() 
 {
-	CFusionDoc* pDoc = GetDocument();
-
 	App->CLSB_Doc->ResetAllSelections() ;
 	App->CLSB_Doc->UpdateSelected();
-	pDoc->UpdateAllViews( UAV_ALL3DVIEWS, NULL ) ;
+	App->CLSB_Doc->UpdateAllViews( UAV_ALL3DVIEWS, NULL ) ;
 }
 
 void CFusionView::OnUpdateDeselectall(CCmdUI* pCmdUI) 
@@ -2263,10 +2261,8 @@ void CFusionView::OnUpdateDeselectall(CCmdUI* pCmdUI)
 
 void CFusionView::OnSelectall() 
 {
-	CFusionDoc* pDoc = GetDocument();
-	
 	App->CLSB_Doc->SelectAll () ;
-	pDoc->UpdateAllViews( UAV_ALL3DVIEWS, NULL ) ;
+	App->CLSB_Doc->UpdateAllViews( UAV_ALL3DVIEWS, NULL ) ;
 }
 
 void CFusionView::OnUpdateSelectall(CCmdUI* pCmdUI) 
@@ -2283,7 +2279,7 @@ void CFusionView::OnSelectAllBrushes()
 		App->CLSB_Doc->ResetAllSelections() ;
 	
 	pDoc->SelectAllBrushes () ;
-	pDoc->UpdateAllViews( UAV_ALL3DVIEWS, NULL ) ;
+	App->CLSB_Doc->UpdateAllViews( UAV_ALL3DVIEWS, NULL ) ;
 }
 
 void CFusionView::OnUpdateSelectAllBrushes(CCmdUI* pCmdUI) 
@@ -2377,7 +2373,7 @@ void CFusionView::OnToolsNextbrush()
 		
 			//update the brush attributes dialog...
 //			pDoc->UpdateBrushAttributesDlg ();
-			pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+			App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 		}
 		else if(!(pDoc->GetSelState() & ANYBRUSH))
 		{
@@ -2389,7 +2385,7 @@ void CFusionView::OnToolsNextbrush()
 			{
 				SelBrushList_Add (pDoc->pSelBrushes, pBrush);
 				App->CLSB_Doc->UpdateSelected();
-				pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+				App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 			}
 		}
 	}
@@ -2411,7 +2407,7 @@ void CFusionView::OnToolsPrevbrush()
 		
 			//update the brush attributes dialog...
 //			pDoc->UpdateBrushAttributesDlg ();
-			pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+			App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 		}
 		else if(!(pDoc->GetSelState() & ANYBRUSH))
 		{
@@ -2423,7 +2419,7 @@ void CFusionView::OnToolsPrevbrush()
 			{
 				SelBrushList_Add (pDoc->pSelBrushes, pBrush);
 				App->CLSB_Doc->UpdateSelected();
-				pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+				App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 			}
 		}
 	}
@@ -2585,7 +2581,7 @@ void CFusionView::OnEditSelectFacesNext()
 		App->CLSB_Doc->UpdateSelected ();
 							
 		//pDoc->UpdateFaceAttributesDlg ();
-		pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+		App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 	}
 }
 
@@ -2639,7 +2635,7 @@ void CFusionView::OnEditSelectFacesPrevious()
 		App->CLSB_Doc->UpdateSelected ();
 							
 		//pDoc->UpdateFaceAttributesDlg ();
-		pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+		App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 	}
 
 }
@@ -2650,7 +2646,7 @@ void CFusionView::OnEditSelectFacesAllinselectedbrushes()
 	CFusionDoc* pDoc = GetDocument();
 
 	pDoc->SelectAllFacesInBrushes() ;
-	pDoc->UpdateAllViews( UAV_ALL3DVIEWS, NULL ) ;
+	App->CLSB_Doc->UpdateAllViews( UAV_ALL3DVIEWS, NULL ) ;
 }
 
 void CFusionView::OnEditSelectEntitiesAll() 
@@ -2661,7 +2657,7 @@ void CFusionView::OnEditSelectEntitiesAll()
 		App->CLSB_Doc->ResetAllSelections() ;
 	
 	pDoc->SelectAllEntities () ;
-	pDoc->UpdateAllViews( UAV_ALL3DVIEWS, NULL ) ;
+	App->CLSB_Doc->UpdateAllViews( UAV_ALL3DVIEWS, NULL ) ;
 }
 
 
@@ -2683,7 +2679,7 @@ void CFusionView::OnEditSelectEntitiesNext()
 			{
 				pDoc->SelectEntity(&(*Entities)[0]);
 				App->CLSB_Doc->UpdateSelected ();
-				pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+				App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 			}
 			else
 			{
@@ -2726,7 +2722,7 @@ void CFusionView::OnEditSelectEntitiesNext()
 
 					pDoc->SelectEntity(NextEntity);
 					App->CLSB_Doc->UpdateSelected ();
-					pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+					App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 				}
 			}
 		}
@@ -2751,7 +2747,7 @@ void CFusionView::OnEditSelectEntitiesPrevious()
 			{
 				pDoc->SelectEntity(&(*Entities)[0]);
 				App->CLSB_Doc->UpdateSelected ();
-				pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+				App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 			}
 			else
 			{
@@ -2794,7 +2790,7 @@ void CFusionView::OnEditSelectEntitiesPrevious()
 
 					pDoc->SelectEntity(NextEntity);
 					App->CLSB_Doc->UpdateSelected ();
-					pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+					App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 				}
 			}
 		}
@@ -2807,7 +2803,7 @@ void CFusionView::OnEditDeselectBrushes()
 
 	App->CLSB_Doc->ResetAllSelectedBrushes() ;
 	App->CLSB_Doc->UpdateSelected();
-	pDoc->UpdateAllViews( UAV_ALL3DVIEWS, NULL ) ;
+	App->CLSB_Doc->UpdateAllViews( UAV_ALL3DVIEWS, NULL ) ;
 }
 
 void CFusionView::OnEditDeselectEntities() 
@@ -2816,7 +2812,7 @@ void CFusionView::OnEditDeselectEntities()
 
 	App->CLSB_Doc->ResetAllSelectedEntities() ;
 	App->CLSB_Doc->UpdateSelected();
-	pDoc->UpdateAllViews( UAV_ALL3DVIEWS, NULL ) ;
+	App->CLSB_Doc->UpdateAllViews( UAV_ALL3DVIEWS, NULL ) ;
 }
 
 void CFusionView::OnEditDeselectFaces() 
@@ -2825,7 +2821,7 @@ void CFusionView::OnEditDeselectFaces()
 
 	App->CLSB_Doc->ResetAllSelectedFaces() ;
 	App->CLSB_Doc->UpdateSelected();
-	pDoc->UpdateAllViews( UAV_ALL3DVIEWS, NULL ) ;
+	App->CLSB_Doc->UpdateAllViews( UAV_ALL3DVIEWS, NULL ) ;
 }
 
 void CFusionView::OnUpdateEditDeselectBrushes(CCmdUI* pCmdUI) 
@@ -3034,7 +3030,7 @@ void CFusionView::OnCameraCenteronview()
 		
 		pDoc->SetRenderedViewCamera( &(pCameraEntity->mOrigin), &Angles) ;
 		pDoc->SetModifiedFlag();
-		pDoc->UpdateAllViews( UAV_ALLVIEWS, NULL );
+		App->CLSB_Doc->UpdateAllViews( UAV_ALLVIEWS, NULL );
 	}
 }
 
@@ -3157,13 +3153,13 @@ void CFusionView::OnModifyRotate()
 		{
 			pDoc->RotateTemplateBrush(&RotateVector);
 			App->CLSB_Doc->UpdateSelected();
-			pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+			App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 		}
 		else
 		{
 			pDoc->RotateSelectedBrushesDirect (&RotateVector);
 			pDoc->SetModifiedFlag();
-			pDoc->UpdateAllViews(UAV_ALL3DVIEWS | REBUILD_QUICK, NULL);
+			App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS | REBUILD_QUICK, NULL);
 		}
 	}
 }

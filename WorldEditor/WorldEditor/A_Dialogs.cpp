@@ -352,7 +352,7 @@ LRESULT CALLBACK A_Dialogs::FrontPanel_Proc(HWND hDlg, UINT message, WPARAM wPar
 					CFusionDoc* pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
 
 					App->CLSB_Doc->SelectAll();
-					pDoc->UpdateAllViews( UAV_ALL3DVIEWS, NULL );
+					App->CLSB_Doc->UpdateAllViews( UAV_ALL3DVIEWS, NULL );
 
 
 
@@ -364,7 +364,7 @@ LRESULT CALLBACK A_Dialogs::FrontPanel_Proc(HWND hDlg, UINT message, WPARAM wPar
 					ShellExecute(App->MainHwnd, "open", Path, "WorldEditor",App->WorldEditor_Directory, SW_SHOW);
 
 					App->CLSB_Doc->ResetAllSelections();
-					pDoc->UpdateAllViews( UAV_ALL3DVIEWS, NULL );
+					App->CLSB_Doc->UpdateAllViews( UAV_ALL3DVIEWS, NULL );
 
 				}
 
@@ -396,21 +396,17 @@ LRESULT CALLBACK A_Dialogs::FrontPanel_Proc(HWND hDlg, UINT message, WPARAM wPar
 			// Wired Framed
 			if (LOWORD(wParam) == IDC_BTSELECTALL)
 			{
-				CFusionDoc* pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
-
 				App->CLSB_Doc->SelectAll() ;
-				pDoc->UpdateAllViews( UAV_ALL3DVIEWS, NULL ) ;
+				App->CLSB_Doc->UpdateAllViews( UAV_ALL3DVIEWS, NULL ) ;
 
 				return TRUE;
 			}
 
 			if (LOWORD(wParam) == IDC_BTDESELECTALL)
 			{
-				CFusionDoc* pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
-
 				App->CLSB_Doc->ResetAllSelections() ;
 				App->CLSB_Doc->UpdateSelected();
-				pDoc->UpdateAllViews( UAV_ALL3DVIEWS, NULL ) ;
+				App->CLSB_Doc->UpdateAllViews( UAV_ALL3DVIEWS, NULL ) ;
 
 				return TRUE;
 			}
@@ -697,7 +693,7 @@ LRESULT CALLBACK A_Dialogs::Move_Brush_Proc(HWND hDlg, UINT message, WPARAM wPar
 					App->CL_Dialogs->m_pDoc->MoveSelectedBrushList(App->CL_Dialogs->m_pDoc->pSelBrushes, &App->CL_Dialogs->CenterOfSelection);
 				}
 
-				App->CL_Dialogs->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+				App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 
 				return TRUE;
 			}
@@ -725,7 +721,7 @@ LRESULT CALLBACK A_Dialogs::Move_Brush_Proc(HWND hDlg, UINT message, WPARAM wPar
 					App->CL_Dialogs->m_pDoc->MoveSelectedBrushList(App->CL_Dialogs->m_pDoc->pSelBrushes, &App->CL_Dialogs->CenterOfSelection);
 				}
 
-				App->CL_Dialogs->m_pDoc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+				App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 
 				EndDialog(hDlg, LOWORD(wParam));
 				return TRUE;

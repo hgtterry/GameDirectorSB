@@ -210,7 +210,7 @@ public:
 	geBoolean GetCursorInfo(char *info, int MaxSize);
 	void NullFaceAttributes();
 	void FaceAttributesDialog ();
-	void UpdateAllViews(int Mode, CView* pSender, BOOL Override = FALSE );
+//	void UpdateAllViews(int Mode, CView* pSender, BOOL Override = FALSE );
 	int SubtractBrushFromList(Brush& Brush);
 	void ResetSelectedFaceAttributes ();
 	void ResizeSelected(float dx, float dy, int sides, int inidx);

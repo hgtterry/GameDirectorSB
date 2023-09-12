@@ -382,7 +382,7 @@ void A_CreateSpheroidDialog::CreateNewTemplateBrush(Brush *pBrush)
 
 	Brush_Move (m_pDoc->CurBrush, &MoveVec);
 
-	m_pDoc->UpdateAllViews (UAV_ALL3DVIEWS, NULL);
+	App->CLSB_Doc->UpdateAllViews (UAV_ALL3DVIEWS, NULL);
 	m_pDoc->SetModifiedFlag ();
 }
 
