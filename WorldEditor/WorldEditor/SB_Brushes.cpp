@@ -745,7 +745,7 @@ void SB_Brushes::Move_Brush()
 {
 	geVec3d_Subtract(&App->CLSB_Brushes->CenterOfSelection, &App->CLSB_Brushes->m_pDoc->SelectedGeoCenter, &App->CLSB_Brushes->CenterOfSelection);
 
-	App->CLSB_Brushes->m_pDoc->MoveSelectedBrushList(App->CLSB_Brushes->m_pDoc->pSelBrushes, &App->CLSB_Brushes->CenterOfSelection);
+	App->CLSB_Doc->MoveSelectedBrushList(App->CLSB_Brushes->m_pDoc->pSelBrushes, &App->CLSB_Brushes->CenterOfSelection);
 
 	App->CLSB_Doc->UpdateAllViews(UAV_ALLVIEWS | REBUILD_QUICK, NULL);
 }
@@ -1015,6 +1015,6 @@ void SB_Brushes::Centre_CentreBrush()
 		Centre.Z = 0;
 
 		SelBrushList_Add(App->m_pDoc->pSelBrushes, Selected_Brush);
-		App->m_pDoc->MoveSelectedBrushList(App->m_pDoc->pSelBrushes, &Centre);
+		App->CLSB_Doc->MoveSelectedBrushList(App->m_pDoc->pSelBrushes, &Centre);
 	}
 }

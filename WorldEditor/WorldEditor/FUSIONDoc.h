@@ -215,7 +215,7 @@ public:
 	void ResetSelectedFaceAttributes ();
 	void ResizeSelected(float dx, float dy, int sides, int inidx);
 	void ShearSelected(float dx, float dy, int sides, int inidx);
-	void MoveSelectedBrushes (geVec3d const *v);
+
 	void MoveSelectedClone (geVec3d const *v);
 	void MoveTemplateBrush (geVec3d *);
 //	void ChangeGridSize(geFloat Increment, CView* pSender );
@@ -306,8 +306,7 @@ public:
 
 	CString LastTemplateTypeName;
 
-	void MoveSelectedBrushList (SelBrushList *pList, geVec3d const *v);
-
+	
 	void ScaleSelectedBrushes(geVec3d *ScaleVector);
 
 

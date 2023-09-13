@@ -208,7 +208,7 @@ void CFusionView::OnCenterthing()
 	if (pDoc->mModeTool == ID_TOOLS_TEMPLATE)
 		pDoc->MoveTemplateBrush (&MoveDelta);
 	else
-		pDoc->MoveSelectedBrushList(pDoc->pSelBrushes, &MoveDelta);
+		App->CLSB_Doc->MoveSelectedBrushList(pDoc->pSelBrushes, &MoveDelta);
 
 	App->CLSB_Doc->UpdateAllViews( UAV_ALL3DVIEWS, NULL );
 }
@@ -768,7 +768,7 @@ void CFusionView::OnMouseMove (UINT nFlags, CPoint point) // hgtterry OnMouseMov
 						if (LButtonIsDown)
 						{
 							LockAxis( &dv );
-							pDoc->MoveSelectedBrushes(&dv);
+							App->CLSB_Doc->MoveSelectedBrushes(&dv);
 						}// LButtonDown
 						if (RButtonIsDown)
 						{

@@ -3830,52 +3830,10 @@ void CFusionDoc::RenderWorld(ViewVars *v, CDC *pDC) // hgtterry RenderWorld
     }
 }
 
-void CFusionDoc::MoveSelectedBrushList
-    (
-      SelBrushList *pList,
-      geVec3d const *v
-    )
-{
-    int		i;
-    int NumBrushes;
-
-    mLastOp	=BRUSH_MOVE;
-
-    geVec3d_Add (&SelectedGeoCenter, v, &SelectedGeoCenter);
-    geVec3d_Add(v, &FinalPos, &FinalPos);
-
-    NumBrushes = SelBrushList_GetSize (pList);
-    for(i=0;i < NumBrushes;i++)
-    {
-        Brush *pBrush;
-
-        pBrush = SelBrushList_GetBrush (pList, i);
-// changed QD Actors
-        if(strstr(App->CL_Brush->Brush_GetName(pBrush),".act")!=NULL)
-            continue;
-// end change
-        Brush_Move (pBrush, v);
-    }
-
-    CEntityArray *Entities = Level_GetEntities (App->CLSB_Doc->pLevel);
-    int NumEntities = Entities->GetSize();
-    for(i=0;i < NumEntities;i++)
-    {
-        if ((*Entities)[i].IsSelected ())
-        {
-            (*Entities)[i].Move (v);
-        }
-    }
-}
-
-void CFusionDoc::MoveSelectedBrushes(geVec3d const *v)
-{
-    MoveSelectedBrushList (pTempSelBrushes, v);
-}
 
 void CFusionDoc::MoveSelectedClone(geVec3d const *v)
 {
-    MoveSelectedBrushList (pSelBrushes, v);
+    App->CLSB_Doc->MoveSelectedBrushList (pSelBrushes, v);
 }
 
 void CFusionDoc::MoveTemplateBrush(geVec3d *v)

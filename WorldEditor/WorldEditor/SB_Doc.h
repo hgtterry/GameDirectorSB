@@ -30,6 +30,9 @@ public:
 	void ResetAllSelectedEntities();
 	void UpdateAllViews(int Mode, CView* pSender, BOOL Override = FALSE);
 
+	void MoveSelectedBrushes(geVec3d const* v);
+	void MoveSelectedBrushList(SelBrushList* pList, geVec3d const* v);
+
 	Level* pLevel;
 };
 

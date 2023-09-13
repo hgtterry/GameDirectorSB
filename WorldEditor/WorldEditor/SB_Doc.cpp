@@ -744,3 +744,51 @@ void SB_Doc::UpdateAllViews(int Mode, CView* pSender, BOOL Override)
         }
     }
 }
+
+// *************************************************************************
+// *         MoveSelectedBrushes:- Terry and Hazel Flanigan 2023           *
+// *************************************************************************
+void SB_Doc::MoveSelectedBrushes(geVec3d const* v)
+{
+    App->Get_Current_Document();
+
+    MoveSelectedBrushList(App->m_pDoc->pTempSelBrushes, v);
+}
+
+// *************************************************************************
+// *         MoveSelectedBrushList:- Terry and Hazel Flanigan 2023         *
+// *************************************************************************
+void SB_Doc::MoveSelectedBrushList(SelBrushList* pList,geVec3d const* v)
+{
+    App->Get_Current_Document();
+
+    int		i;
+    int NumBrushes;
+    App->m_pDoc->mLastOp = BRUSH_MOVE;
+
+    geVec3d_Add(&App->m_pDoc->SelectedGeoCenter, v, &App->m_pDoc->SelectedGeoCenter);
+    geVec3d_Add(v, &App->m_pDoc->FinalPos, &App->m_pDoc->FinalPos);
+
+    NumBrushes = SelBrushList_GetSize(pList);
+    for (i = 0; i < NumBrushes; i++)
+    {
+        Brush* pBrush;
+
+        pBrush = SelBrushList_GetBrush(pList, i);
+        // changed QD Actors
+        if (strstr(App->CL_Brush->Brush_GetName(pBrush), ".act") != NULL)
+            continue;
+        // end change
+        Brush_Move(pBrush, v);
+    }
+
+    CEntityArray* Entities = Level_GetEntities(pLevel);
+    int NumEntities = Entities->GetSize();
+    for (i = 0; i < NumEntities; i++)
+    {
+        if ((*Entities)[i].IsSelected())
+        {
+            (*Entities)[i].Move(v);
+        }
+    }
+}
