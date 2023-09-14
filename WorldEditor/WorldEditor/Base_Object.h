@@ -23,6 +23,44 @@ misrepresented as being the original software.
 distribution.
 */
 
+typedef struct Environ_type
+{
+	int Environment_ID;
+	char Environment_Name[MAX_PATH];
+
+	bool Environ_Enabled;
+
+	//--------------- Sound
+	//irrklang::ISound* SndFile;
+	Ogre::Real SndVolume;
+	char Sound_File[MAX_PATH];
+	bool Play;
+	bool Loop;
+
+	//--------------- Light
+	Ogre::Vector3 AmbientColour;
+	Ogre::Vector3 Light_Position;
+
+	//--------------- Sky
+	bool Enabled;
+	int type;
+	char Material[MAX_PATH];
+	float Curvature;
+	float Tiling;
+	float Distance;
+
+	//--------------- Fog
+	int Fog_On;
+	int Fog_Mode;
+	Ogre::Vector3 Fog_Colour;
+	float Fog_Start;
+	float Fog_End;
+	float Fog_Density;
+
+	bool IsMainEnvironment;
+
+}Environ_type;
+
 class Base_Object
 {
 public:
@@ -99,9 +137,11 @@ public:
 	Move_Type* S_MoveType[1];
 	Teleport_type* S_Teleport[1];
 	Collectable_type* S_Collectable[1];
-	Message_type* S_Message[1];
+	Message_type* S_Message[1];*/
+
 	Environ_type* S_Environ[1];
-	Particle_type* S_Particle[1];
+
+	/*Particle_type* S_Particle[1];
 	Light_type* S_Light[1];*/
 
 	bool Show_Message_Flag;

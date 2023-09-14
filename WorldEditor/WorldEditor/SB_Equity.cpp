@@ -1244,7 +1244,8 @@ void SB_Equity::Do_Preview_All()
 
 		App->CLSB_Object->Do_Basketball();
 
-		App->CLSB_Ogre->mSceneMgr->setSkyDome(true, "Examples/CloudySky", 5, 8);
+		//App->CLSB_Environment->Add_New_Environ_Entity(true);
+		//App->CLSB_Ogre->mSceneMgr->setSkyDome(true, "Examples/CloudySky", 5, 8);
 
 		App->CLSB_Equity->Show_Equity_Dialog(true);
 		App->CLSB_TopTabs->Update_Dlg_Controls();
@@ -1256,6 +1257,9 @@ void SB_Equity::Do_Preview_All()
 		}
 
 		App->CLSB_Project->Load_Project();
+
+		App->CLSB_Environment->Add_New_Environ_Entity(true);
+		App->CLSB_Environment->Set_First_Environment(App->CLSB_Scene->Object_Count - 1);
 	}
 	else
 	{

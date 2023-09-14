@@ -839,6 +839,7 @@
 #define IDC_BTFACENEXT                  1536
 #define IDC_TREE1                       1537
 #define IDC_BT_VIEWUPDATE               1538
+#define IDC_BT_ENVIRONMENT              1539
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772
 #define ID_BRUSH_PRIMITIVES_SPHEROID    32773
@@ -1053,7 +1054,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        345
 #define _APS_NEXT_COMMAND_VALUE         33091
-#define _APS_NEXT_CONTROL_VALUE         1539
+#define _APS_NEXT_CONTROL_VALUE         1540
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

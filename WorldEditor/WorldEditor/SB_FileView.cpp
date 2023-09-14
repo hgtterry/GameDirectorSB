@@ -37,6 +37,8 @@ SB_FileView::SB_FileView(void)
 	FV_LevelFolder =	nullptr;
 	FV_Cameras_Folder = nullptr;
 	FV_Objects_Folder = nullptr;
+	FV_EntitiesFolder = nullptr;
+	FV_Evirons_Folder = nullptr;
 
 	FileView_Folder[0] = 0;
 	FileView_File[0] = 0;
@@ -194,6 +196,14 @@ LRESULT CALLBACK SB_FileView::ListPanel_Proc(HWND hDlg, UINT message, WPARAM wPa
 		//	App->Cl_Utilities->OpenHTML("Help\\FileView.html");
 		//	return TRUE;
 		//}
+
+		if (LOWORD(wParam) == IDC_BT_ENVIRONMENT)
+		{
+			Debug
+			return TRUE;
+		}
+
+		
 		break;
 	}
 
@@ -344,6 +354,22 @@ void SB_FileView::MoreFoldersD(void) // last folder level
 	tvinsert.item.iSelectedImage = 1;
 	FV_Objects_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
 
+	tvinsert.hParent = FV_LevelFolder;
+	tvinsert.hInsertAfter = TVI_LAST;
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	tvinsert.item.pszText = "Entities";
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
+	FV_EntitiesFolder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
+
+	//--------------------------------------- Evironments Eviron_Entity
+	tvinsert.hParent = FV_EntitiesFolder;
+	tvinsert.hInsertAfter = TVI_LAST;
+	tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	tvinsert.item.pszText = "Evironments";
+	tvinsert.item.iImage = 0;
+	tvinsert.item.iSelectedImage = 1;
+	FV_Evirons_Folder = (HTREEITEM)SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_INSERTITEM, 0, (LPARAM)&tvinsert);
 }
 
 // *************************************************************************

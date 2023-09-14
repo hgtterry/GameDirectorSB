@@ -38,6 +38,8 @@ public:
 
 	HTREEITEM FV_Players_Folder;	// Players Folder FileFView
 	HTREEITEM FV_Objects_Folder;
+	HTREEITEM FV_EntitiesFolder;
+	HTREEITEM FV_Evirons_Folder;
 
 private:
 
