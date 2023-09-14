@@ -1113,7 +1113,7 @@ bool SB_File_WE::New_File()
 
 
 	App->m_pDoc->pSelBrushes = SelBrushList_Create();
-	App->m_pDoc->pTempSelBrushes = SelBrushList_Create();
+	App->CLSB_Doc->pTempSelBrushes = SelBrushList_Create();
 	App->m_pDoc->pSelFaces = SelFaceList_Create();
 
 	App->m_pDoc->SetLockAxis(0);	// Start with no axis locked

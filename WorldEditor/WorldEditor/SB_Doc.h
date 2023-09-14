@@ -34,7 +34,9 @@ public:
 	void MoveSelectedBrushList(SelBrushList* pList, geVec3d const* v);
 
 	int mLastOp;
-	geVec3d	SelectedGeoCenter;
+	geVec3d	SelectedGeoCenter, FinalPos;
+
+	SelBrushList* pTempSelBrushes;
 
 	Level* pLevel;
 };

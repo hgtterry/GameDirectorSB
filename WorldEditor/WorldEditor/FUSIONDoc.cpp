@@ -292,7 +292,7 @@ CFusionDoc::CFusionDoc() : CDocument (),
     mCurrentTool (ID_TOOLS_BRUSH_MOVEROTATEBRUSH), mShowBrush (TRUE), mConstrainHollows (GE_TRUE),
     mCurrentBitmap (0), NumSelEntities (0), //mTextureBrowserOpen (0), 
     mCurrentGroup (0), TempShearTemplate (NULL), PlaceObjectFlag (FALSE),
-    pSelFaces (NULL), pSelBrushes (NULL), pTempSelBrushes (NULL) //, pCameraEntity (NULL)
+    pSelFaces (NULL), pSelBrushes (NULL)//, pCameraEntity (NULL)
 {
 
     const char *DefaultWadName;
@@ -334,7 +334,7 @@ CFusionDoc::CFusionDoc() : CDocument (),
     App->hMenu_WE = GetMenu(App->MainHwnd);
 
     pSelBrushes = SelBrushList_Create ();
-    pTempSelBrushes = SelBrushList_Create ();
+    App->CLSB_Doc->pTempSelBrushes = SelBrushList_Create ();
     pSelFaces = SelFaceList_Create ();
 
     SetLockAxis( 0 ) ;	// Start with no axis locked
@@ -389,8 +389,8 @@ CFusionDoc::~CFusionDoc()
     pUndoStack = NULL;
     if (pSelBrushes != NULL)	SelBrushList_Destroy (&pSelBrushes);
     pSelBrushes = NULL;
-    if (pTempSelBrushes != NULL)SelBrushList_Destroy (&pTempSelBrushes);
-    pTempSelBrushes = NULL;
+    if (App->CLSB_Doc->pTempSelBrushes != NULL)SelBrushList_Destroy (&App->CLSB_Doc->pTempSelBrushes);
+    App->CLSB_Doc->pTempSelBrushes = NULL;
     if (LeakPoints != NULL)		geRam_Free(LeakPoints);
     LeakPoints = NULL;
     if (pSelFaces != NULL)		SelFaceList_Destroy (&pSelFaces);
@@ -1215,7 +1215,7 @@ void CFusionDoc::TempCopySelectedBrushes(void)
 
     NumSelBrushes = SelBrushList_GetSize (pSelBrushes);
 
-    SelBrushList_RemoveAll (pTempSelBrushes);
+    SelBrushList_RemoveAll (App->CLSB_Doc->pTempSelBrushes);
 
     // make copies of selected brushes
     for(i=0;i < NumSelBrushes;i++)
@@ -1225,7 +1225,7 @@ void CFusionDoc::TempCopySelectedBrushes(void)
         pBrush = SelBrushList_GetBrush (pSelBrushes, i);
         pClone = Brush_Clone (pBrush);
         Level_AppendBrush (App->CLSB_Doc->pLevel, pClone);
-        SelBrushList_Add (pTempSelBrushes, pClone);
+        SelBrushList_Add (App->CLSB_Doc->pTempSelBrushes, pClone);
     }
 }
 
@@ -2671,13 +2671,13 @@ void CFusionDoc::ResizeSelected(float dx, float dy, int sides, int inidx)
         int i;
         int NumBrushes;
 
-        NumBrushes = SelBrushList_GetSize (pTempSelBrushes);
+        NumBrushes = SelBrushList_GetSize (App->CLSB_Doc->pTempSelBrushes);
 
         for (i = 0; i < NumBrushes; ++i)
         {
             Brush *pBrush;
             
-            pBrush = SelBrushList_GetBrush (pTempSelBrushes, i);
+            pBrush = SelBrushList_GetBrush (App->CLSB_Doc->pTempSelBrushes, i);
 
             Brush_Resize (pBrush, dx, dy, sides, inidx, &FinalScale, &ScaleNum);
             if (Brush_IsMulti(pBrush))
@@ -3359,16 +3359,16 @@ BOOL CFusionDoc::TempDeleteSelected(void)
 {
     BOOL	ret;
     int		i;
-    int		NumTSelBrushes = SelBrushList_GetSize (pTempSelBrushes);
+    int		NumTSelBrushes = SelBrushList_GetSize (App->CLSB_Doc->pTempSelBrushes);
 
     for(ret=FALSE, i=0;i < NumTSelBrushes;i++)
     {
         Brush *pBrush;
 
-        pBrush = SelBrushList_GetBrush (pTempSelBrushes, 0);
+        pBrush = SelBrushList_GetBrush (App->CLSB_Doc->pTempSelBrushes, 0);
 
         Level_RemoveBrush (App->CLSB_Doc->pLevel, pBrush);
-        SelBrushList_Remove (pTempSelBrushes, pBrush);
+        SelBrushList_Remove (App->CLSB_Doc->pTempSelBrushes, pBrush);
         Brush_Destroy(&pBrush);
         ret	=TRUE;
     }
@@ -3841,7 +3841,7 @@ void CFusionDoc::MoveTemplateBrush(geVec3d *v)
     App->CLSB_Doc->mLastOp	=BRUSH_MOVE;
 
     geVec3d_Add (&App->CLSB_Doc->SelectedGeoCenter, v, &App->CLSB_Doc->SelectedGeoCenter);
-    geVec3d_Add (v, &FinalPos, &FinalPos);
+    geVec3d_Add (v, &App->CLSB_Doc->FinalPos, &App->CLSB_Doc->FinalPos);
 
     if(TempEnt)
     {
@@ -3949,7 +3949,7 @@ void CFusionDoc::RotateSelectedBrushList
 
 void CFusionDoc::RotateSelectedBrushes(geVec3d const *v)
 {
-    RotateSelectedBrushList (pTempSelBrushes, v);
+    RotateSelectedBrushList (App->CLSB_Doc->pTempSelBrushes, v);
 }
 
 void CFusionDoc::RotateSelectedBrushesDirect(geVec3d const *v)
@@ -4029,7 +4029,7 @@ void CFusionDoc::DoneRotate(void)
     {
         Brush *pBrush;
 
-        pBrush = SelBrushList_GetBrush (pTempSelBrushes, i);
+        pBrush = SelBrushList_GetBrush (App->CLSB_Doc->pTempSelBrushes, i);
 // changed QD Actors
 // don't rotate ActorBrushes
         if(strstr(App->CL_Brush->Brush_GetName(pBrush),".act")!=NULL)
@@ -4050,13 +4050,13 @@ void CFusionDoc::DoneRotate(void)
             // Replace the sel list brushes with the TSelList brushes
             Brush *TempBrush, *OldBrush;
 
-            TempBrush = SelBrushList_GetBrush (pTempSelBrushes, 0);
+            TempBrush = SelBrushList_GetBrush (App->CLSB_Doc->pTempSelBrushes, 0);
             OldBrush = SelBrushList_GetBrush (pSelBrushes, 0);
 // changed QD Actors
             if(strstr(App->CL_Brush->Brush_GetName(OldBrush),".act")!=NULL)
             {
                 BrushList_Remove (BList, TempBrush);
-                SelBrushList_Remove (pTempSelBrushes, TempBrush);
+                SelBrushList_Remove (App->CLSB_Doc->pTempSelBrushes, TempBrush);
                 continue;
             }
 // end change
@@ -4066,7 +4066,7 @@ void CFusionDoc::DoneRotate(void)
             BrushList_Remove (BList, OldBrush);
 
             SelBrushList_Remove (pSelBrushes, OldBrush);
-            SelBrushList_Remove (pTempSelBrushes, TempBrush);
+            SelBrushList_Remove (App->CLSB_Doc->pTempSelBrushes, TempBrush);
 
             SelBrushList_Add (pSelBrushes, TempBrush);
 
@@ -4788,12 +4788,12 @@ void CFusionDoc::ShearSelected(float dx, float dy, int sides, int inidx)
 
         TempDeleteSelected();
         TempCopySelectedBrushes();
-        NumSelBrushes = SelBrushList_GetSize (pTempSelBrushes);
+        NumSelBrushes = SelBrushList_GetSize (App->CLSB_Doc->pTempSelBrushes);
         for (i = 0; i < NumSelBrushes; ++i)
         {
             Brush *pBrush;
 
-            pBrush = SelBrushList_GetBrush (pTempSelBrushes, i);
+            pBrush = SelBrushList_GetBrush (App->CLSB_Doc->pTempSelBrushes, i);
             Brush_ShearFixed(pBrush, dx, dy, sides, inidx, &FinalScale, &ScaleNum);
         }
     }
@@ -4855,7 +4855,7 @@ void CFusionDoc::DoneShear(int sides, int inidx)
         Brush *tBrush;
 
         pBrush = SelBrushList_GetBrush (pSelBrushes, i);
-        tBrush = SelBrushList_GetBrush (pTempSelBrushes, i);
+        tBrush = SelBrushList_GetBrush (App->CLSB_Doc->pTempSelBrushes, i);
 // changed QD Actors
 // don't shear ActorBrushes
         if(strstr(App->CL_Brush->Brush_GetName(pBrush),".act")!=NULL)
@@ -5749,11 +5749,11 @@ void CFusionDoc::SnapScaleNearest(int sides, int inidx, ViewVars *v)
     else
     {
         int i;
-        int NumBrushes = SelBrushList_GetSize (pTempSelBrushes);
+        int NumBrushes = SelBrushList_GetSize (App->CLSB_Doc->pTempSelBrushes);
 
         for (i = 0; i < NumBrushes; ++i)
         {
-            Brush *pBrush = SelBrushList_GetBrush (pTempSelBrushes, i);
+            Brush *pBrush = SelBrushList_GetBrush (App->CLSB_Doc->pTempSelBrushes, i);
             Brush_SnapScaleNearest(pBrush, bsnap, sides, inidx, &FinalScale, &ScaleNum);
         }
     }

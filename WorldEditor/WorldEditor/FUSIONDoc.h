@@ -132,13 +132,13 @@ public:
 	//list related
 	Brush	*BTemplate, *CurBrush, *TempShearTemplate;
 	SelBrushList *pSelBrushes;
-	SelBrushList *pTempSelBrushes;
+	
 	SelFaceList *pSelFaces;
 
 	GNode			*mWorldBsp;
 	CEntity			mRegularEntity;
 	int				mCurrentEntity, ScaleNum;
-	geVec3d			FinalRot, FinalScale, FinalPos;
+	geVec3d			FinalRot, FinalScale;
 
 	//dialogs / controls
 	CFrameWnd *mpActiveViewFrame;

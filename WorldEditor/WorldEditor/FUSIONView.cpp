@@ -943,32 +943,32 @@ void CFusionView::DoneMovingBrushes ()
 		  clear the delta before computing the snap, we have to save these
 		  flags.
 		*/
-		SnapX = (pDoc->FinalPos.X != 0.0f);
-		SnapY = (pDoc->FinalPos.Y != 0.0f);
-		SnapZ = (pDoc->FinalPos.Z != 0.0f);
+		SnapX = (App->CLSB_Doc->FinalPos.X != 0.0f);
+		SnapY = (App->CLSB_Doc->FinalPos.Y != 0.0f);
+		SnapZ = (App->CLSB_Doc->FinalPos.Z != 0.0f);
 		if ((ModeTool == ID_TOOLS_TEMPLATE) || IsCopying)
 		{
-			geVec3d_Clear (&pDoc->FinalPos);
+			geVec3d_Clear (&App->CLSB_Doc->FinalPos);
 		}
 		if (SnapX)
 		{
-			SnapDelta.X = ::SnapSide (vMin->X, vMax->X, pDoc->FinalPos.X, fSnapSize);
+			SnapDelta.X = ::SnapSide (vMin->X, vMax->X, App->CLSB_Doc->FinalPos.X, fSnapSize);
 		}
 		if (SnapY)
 		{
-			SnapDelta.Y = ::SnapSide (vMin->Y, vMax->Y, pDoc->FinalPos.Y, fSnapSize);
+			SnapDelta.Y = ::SnapSide (vMin->Y, vMax->Y, App->CLSB_Doc->FinalPos.Y, fSnapSize);
 		}
 		if (SnapZ)
 		{
-			SnapDelta.Z = ::SnapSide (vMin->Z, vMax->Z, pDoc->FinalPos.Z, fSnapSize);
+			SnapDelta.Z = ::SnapSide (vMin->Z, vMax->Z, App->CLSB_Doc->FinalPos.Z, fSnapSize);
 		}
 		if (ModeTool == ID_TOOLS_TEMPLATE)
 		{
-			pDoc->FinalPos = SnapDelta;
+			App->CLSB_Doc->FinalPos = SnapDelta;
 		}
 		else
 		{
-			geVec3d_Add (&pDoc->FinalPos, &SnapDelta, &pDoc->FinalPos);
+			geVec3d_Add (&App->CLSB_Doc->FinalPos, &SnapDelta, &App->CLSB_Doc->FinalPos);
 		}
 	}
 
@@ -1320,7 +1320,7 @@ void CFusionView::OnLButtonDown(UINT nFlags, CPoint point)
 			}
 			else if ((Tool == ID_TOOLS_BRUSH_MOVEROTATEBRUSH) || (Tool == ID_TOOLS_BRUSH_MOVESELECTEDBRUSHES))
 			{
-				geVec3d_Clear (&pDoc->FinalPos);
+				geVec3d_Clear (&App->CLSB_Doc->FinalPos);
 				pDoc->TempCopySelectedBrushes();
 			}
 		}// Not Drag-select 

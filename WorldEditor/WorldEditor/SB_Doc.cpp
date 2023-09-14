@@ -9,6 +9,7 @@
 
 SB_Doc::SB_Doc(void)
 {
+    pTempSelBrushes = NULL;
 }
 
 SB_Doc::~SB_Doc(void)
@@ -331,7 +332,7 @@ void SB_Doc::DoneMove(void)
         }
         else
         {
-            Brush_Move(App->m_pDoc->CurBrush, &App->m_pDoc->FinalPos);
+            Brush_Move(App->m_pDoc->CurBrush, &FinalPos);
         }
         return;
     }
@@ -347,7 +348,7 @@ void SB_Doc::DoneMove(void)
             if (strstr(App->CL_Brush->Brush_GetName(pBrush), ".act") != NULL)
                 continue;
             
-            Brush_Move(pBrush, &App->m_pDoc->FinalPos);
+            Brush_Move(pBrush, &FinalPos);
         }
 
         if (App->m_pDoc->GetSelState() & ANYENTITY)
@@ -357,10 +358,10 @@ void SB_Doc::DoneMove(void)
 
         UpdateSelected();
 
-        App->m_pDoc->UpdateSelectedModel(BRUSH_MOVE, &App->m_pDoc->FinalPos);
+        App->m_pDoc->UpdateSelectedModel(BRUSH_MOVE, &FinalPos);
     }
    
-    geVec3d_Clear(&App->m_pDoc->FinalPos);
+    geVec3d_Clear(&FinalPos);
 
 }
 
@@ -750,9 +751,7 @@ void SB_Doc::UpdateAllViews(int Mode, CView* pSender, BOOL Override)
 // *************************************************************************
 void SB_Doc::MoveSelectedBrushes(geVec3d const* v)
 {
-    App->Get_Current_Document();
-
-    MoveSelectedBrushList(App->m_pDoc->pTempSelBrushes, v);
+    MoveSelectedBrushList(pTempSelBrushes, v);
 }
 
 // *************************************************************************
@@ -760,14 +759,12 @@ void SB_Doc::MoveSelectedBrushes(geVec3d const* v)
 // *************************************************************************
 void SB_Doc::MoveSelectedBrushList(SelBrushList* pList,geVec3d const* v)
 {
-    App->Get_Current_Document();
-
     int		i;
     int NumBrushes;
     mLastOp = BRUSH_MOVE;
 
     geVec3d_Add(&SelectedGeoCenter, v, &SelectedGeoCenter);
-    geVec3d_Add(v, &App->m_pDoc->FinalPos, &App->m_pDoc->FinalPos);
+    geVec3d_Add(v, &FinalPos, &FinalPos);
 
     NumBrushes = SelBrushList_GetSize(pList);
     for (i = 0; i < NumBrushes; i++)
