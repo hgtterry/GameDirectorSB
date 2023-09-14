@@ -119,7 +119,7 @@ public:
 	int mShowSelectedFaces;
 	int mCurrentTool, mCurrentBitmap, mShowBrush, mModeTool;
 	int mShowEntities, mCurrentGroup, mCurTextureSelection;
-	int IsNewDocument, mActiveView, mLastOp;
+	int IsNewDocument, mActiveView;
 	fdocAdjustEnum mAdjustMode;
 	int mShowSelectedBrushes;
 	int mLockAxis;
@@ -138,7 +138,7 @@ public:
 	GNode			*mWorldBsp;
 	CEntity			mRegularEntity;
 	int				mCurrentEntity, ScaleNum;
-	geVec3d			SelectedGeoCenter, FinalRot, FinalScale, FinalPos;
+	geVec3d			FinalRot, FinalScale, FinalPos;
 
 	//dialogs / controls
 	CFrameWnd *mpActiveViewFrame;

@@ -33,6 +33,9 @@ public:
 	void MoveSelectedBrushes(geVec3d const* v);
 	void MoveSelectedBrushList(SelBrushList* pList, geVec3d const* v);
 
+	int mLastOp;
+	geVec3d	SelectedGeoCenter;
+
 	Level* pLevel;
 };
 

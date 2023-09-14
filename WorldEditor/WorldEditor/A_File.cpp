@@ -1128,7 +1128,7 @@ bool SB_File_WE::New_File()
 	Brush_Bound(App->m_pDoc->BTemplate);
 	App->m_pDoc->CurBrush = App->m_pDoc->BTemplate;
 
-	geVec3d_Clear(&App->m_pDoc->SelectedGeoCenter);
+	geVec3d_Clear(&App->CLSB_Doc->SelectedGeoCenter);
 
 	char PathAndFile[MAX_PATH];
 	strcpy(PathAndFile, App->m_pDoc->LastPath);

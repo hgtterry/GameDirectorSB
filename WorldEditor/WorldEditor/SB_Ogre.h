@@ -62,9 +62,11 @@ public:
 	void GetVersion_OpenGL(char* buff);
 
 	bool ExitFullScreen();
+	bool ReverseBackSlash(char* buf);
 
 	bool Block_RenderingQueued;
 
+	char Return_Chr[255];
 
 	HWND RenderHwnd;
 

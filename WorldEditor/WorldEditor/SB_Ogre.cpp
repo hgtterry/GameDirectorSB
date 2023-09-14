@@ -172,8 +172,8 @@ bool SB_Ogre::SetUpResources(void)
 	char Copy[1024];
 
 	strcpy(Copy, App->WorldEditor_Directory);
-	//App->Cl_Utilities->ReverseBackSlash(Copy);
-	//File = App->Cl_Utilities->Return_Chr;
+	ReverseBackSlash(Copy);
+	File = Return_Chr;
 	
 	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App_Resource_Group);
 
@@ -184,6 +184,41 @@ bool SB_Ogre::SetUpResources(void)
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/App_Resources" ,"FileSystem", App_Resource_Group);
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(File + "/Media/New_Particles", "FileSystem", App_Resource_Group);
 	
+	return 1;
+}
+
+// *************************************************************************
+// *				ReverseBackSlash  Terry Bernie				  	 	   *
+// *************************************************************************
+bool SB_Ogre::ReverseBackSlash(char* buf)
+{
+	strcpy(Return_Chr, "");
+	char bufnew[256];
+	strcpy(bufnew, "");
+	char seps[] = "\\";
+	char* token;
+	bool tt = 0;
+
+	token = strtok(buf, seps);
+	while (token != NULL)
+	{
+		tt = 1;
+		strcat(bufnew, token);
+		strcat(bufnew, "/");
+		token = strtok(NULL, seps);
+	}
+
+	if (tt == 1)
+	{
+		int len = strlen(bufnew);
+		bufnew[len - 1] = 0;
+		strcpy(Return_Chr, bufnew);
+	}
+	else
+	{
+		tt = 0;
+		strcpy(Return_Chr, buf);
+	}
 	return 1;
 }
 

@@ -276,7 +276,7 @@ void SB_Doc::DoneResize(int sides, int inidx)
 {
     App->Get_Current_Document();
 
-    App->m_pDoc->mLastOp = BRUSH_SCALE;
+    mLastOp = BRUSH_SCALE;
 
     App->m_pDoc->TempDeleteSelected();
 
@@ -319,7 +319,7 @@ void SB_Doc::DoneMove(void)
     int	i;
     //	BrushList *BList = Level_GetBrushes (pLevel);
 
-    App->m_pDoc->mLastOp = BRUSH_MOVE;
+    mLastOp = BRUSH_MOVE;
 
     App->m_pDoc->TempDeleteSelected();
 
@@ -487,17 +487,17 @@ void SB_Doc::UpdateSelected(void)
             App->m_pDoc->CurBrush = App->m_pDoc->BTemplate;
     }
 
-    geVec3d_Clear(&App->m_pDoc->SelectedGeoCenter);
+    geVec3d_Clear(&SelectedGeoCenter);
 
     if (App->m_pDoc->mModeTool == ID_TOOLS_TEMPLATE)
     {
         if (App->m_pDoc->TempEnt)
         {
-            App->m_pDoc->SelectedGeoCenter = App->m_pDoc->mRegularEntity.mOrigin;
+            SelectedGeoCenter = App->m_pDoc->mRegularEntity.mOrigin;
         }
         else
         {
-            Brush_Center(App->m_pDoc->CurBrush, &App->m_pDoc->SelectedGeoCenter);
+            Brush_Center(App->m_pDoc->CurBrush, &SelectedGeoCenter);
         }
     }
     else if (App->m_pDoc->SelState != NOSELECTIONS)
@@ -509,13 +509,13 @@ void SB_Doc::UpdateSelected(void)
         if (pModel != NULL)
         {
             // we're animating a model, so use its current position
-            Model_GetCurrentPos(pModel, &App->m_pDoc->SelectedGeoCenter);
+            Model_GetCurrentPos(pModel, &SelectedGeoCenter);
         }
         else
         {
             if (NumSelBrushes)
             {
-                SelBrushList_Center(App->m_pDoc->pSelBrushes, &App->m_pDoc->SelectedGeoCenter);
+                SelBrushList_Center(App->m_pDoc->pSelBrushes, &SelectedGeoCenter);
             }
             else if (App->m_pDoc->NumSelEntities)
             {
@@ -536,7 +536,7 @@ void SB_Doc::UpdateSelected(void)
                     }
                 }
 
-                geVec3d_Scale(&EntitySelectionCenter, 1 / (float)(App->m_pDoc->NumSelEntities), &App->m_pDoc->SelectedGeoCenter);
+                geVec3d_Scale(&EntitySelectionCenter, 1 / (float)(App->m_pDoc->NumSelEntities), &SelectedGeoCenter);
             }
         }
     }
@@ -764,9 +764,9 @@ void SB_Doc::MoveSelectedBrushList(SelBrushList* pList,geVec3d const* v)
 
     int		i;
     int NumBrushes;
-    App->m_pDoc->mLastOp = BRUSH_MOVE;
+    mLastOp = BRUSH_MOVE;
 
-    geVec3d_Add(&App->m_pDoc->SelectedGeoCenter, v, &App->m_pDoc->SelectedGeoCenter);
+    geVec3d_Add(&SelectedGeoCenter, v, &SelectedGeoCenter);
     geVec3d_Add(v, &App->m_pDoc->FinalPos, &App->m_pDoc->FinalPos);
 
     NumBrushes = SelBrushList_GetSize(pList);

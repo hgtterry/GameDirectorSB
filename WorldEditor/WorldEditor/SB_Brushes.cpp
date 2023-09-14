@@ -73,9 +73,9 @@ void SB_Brushes::Start_Dimensions_Dlg()
 
 		//Lock_Textures(true);
 
-		SelBrushList_Center(m_pDoc->pSelBrushes, &m_pDoc->SelectedGeoCenter);
+		SelBrushList_Center(m_pDoc->pSelBrushes, &App->CLSB_Doc->SelectedGeoCenter);
 
-		CenterOfSelection = m_pDoc->SelectedGeoCenter;
+		CenterOfSelection = App->CLSB_Doc->SelectedGeoCenter;
 
 		Get_Brush();
 
@@ -743,7 +743,7 @@ LRESULT CALLBACK SB_Brushes::Dimensions_Dlg_Proc(HWND hDlg, UINT message, WPARAM
 // *************************************************************************
 void SB_Brushes::Move_Brush()
 {
-	geVec3d_Subtract(&App->CLSB_Brushes->CenterOfSelection, &App->CLSB_Brushes->m_pDoc->SelectedGeoCenter, &App->CLSB_Brushes->CenterOfSelection);
+	geVec3d_Subtract(&App->CLSB_Brushes->CenterOfSelection, &App->CLSB_Doc->SelectedGeoCenter, &App->CLSB_Brushes->CenterOfSelection);
 
 	App->CLSB_Doc->MoveSelectedBrushList(App->CLSB_Brushes->m_pDoc->pSelBrushes, &App->CLSB_Brushes->CenterOfSelection);
 
@@ -878,8 +878,8 @@ void SB_Brushes::Update_Pos_Dlg(HWND hDlg)
 	//Lock_Textures(true);
 
 	Get_Brush();
-	SelBrushList_Center(m_pDoc->pSelBrushes, &m_pDoc->SelectedGeoCenter);
-	CenterOfSelection = m_pDoc->SelectedGeoCenter;
+	SelBrushList_Center(m_pDoc->pSelBrushes, &App->CLSB_Doc->SelectedGeoCenter);
+	CenterOfSelection = App->CLSB_Doc->SelectedGeoCenter;
 	
 	char buf[255];
 

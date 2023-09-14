@@ -535,10 +535,7 @@ LRESULT CALLBACK A_Dialogs::About_Dlg_Proc(HWND hDlg, UINT message, WPARAM wPara
 // *************************************************************************
 bool A_Dialogs::Start_Move_Brush_Dlg()
 {
-
-	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
-
-	CenterOfSelection = m_pDoc->SelectedGeoCenter;
+	CenterOfSelection = App->CLSB_Doc->SelectedGeoCenter;
 
 	DialogBox(App->hInst, (LPCTSTR)IDD_SB_MOVEBRUSH, App->MainHwnd, (DLGPROC)Move_Brush_Proc);
 
@@ -683,7 +680,7 @@ LRESULT CALLBACK A_Dialogs::Move_Brush_Proc(HWND hDlg, UINT message, WPARAM wPar
 				sprintf(buf, "%f", App->CL_Dialogs->CenterOfSelection.Z);
 				SetDlgItemText(hDlg, IDC_EDCAMZ,buf);
 
-				geVec3d_Subtract(&App->CL_Dialogs->CenterOfSelection, &App->CL_Dialogs->m_pDoc->SelectedGeoCenter, &App->CL_Dialogs->CenterOfSelection);
+				geVec3d_Subtract(&App->CL_Dialogs->CenterOfSelection, &App->CLSB_Doc->SelectedGeoCenter, &App->CL_Dialogs->CenterOfSelection);
 				if (App->CL_Dialogs->m_pDoc->mModeTool == ID_TOOLS_TEMPLATE)
 				{
 					App->CL_Dialogs->m_pDoc->MoveTemplateBrush(&App->CL_Dialogs->CenterOfSelection);
@@ -711,7 +708,7 @@ LRESULT CALLBACK A_Dialogs::Move_Brush_Proc(HWND hDlg, UINT message, WPARAM wPar
 				GetDlgItemText(hDlg,IDC_EDCAMZ,(LPTSTR)buff,MAX_PATH);
 				App->CL_Dialogs->CenterOfSelection.Z = (float)atof(buff);
 
-				geVec3d_Subtract(&App->CL_Dialogs->CenterOfSelection, &App->CL_Dialogs->m_pDoc->SelectedGeoCenter, &App->CL_Dialogs->CenterOfSelection);
+				geVec3d_Subtract(&App->CL_Dialogs->CenterOfSelection, &App->CLSB_Doc->SelectedGeoCenter, &App->CL_Dialogs->CenterOfSelection);
 				if (App->CL_Dialogs->m_pDoc->mModeTool == ID_TOOLS_TEMPLATE)
 				{
 					App->CL_Dialogs->m_pDoc->MoveTemplateBrush(&App->CL_Dialogs->CenterOfSelection);

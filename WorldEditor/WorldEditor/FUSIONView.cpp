@@ -183,7 +183,7 @@ void CFusionView::OnCenterthing()
 	// One dimension won't be changed (i.e. in the top view, the Y won't be modified)
 	geVec3d MoveDelta;
 
-	geVec3d_Subtract (&NewWorldPos, &pDoc->SelectedGeoCenter, &MoveDelta);
+	geVec3d_Subtract (&NewWorldPos, &App->CLSB_Doc->SelectedGeoCenter, &MoveDelta);
 
 	switch (mViewType)
 	{
@@ -1150,7 +1150,7 @@ void CFusionView::OnLButtonUp(UINT nFlags, CPoint point)
 					pDoc->SetModifiedFlag();
 					SetCursor(AfxGetApp()->LoadStandardCursor(IDC_ARROW));
 					pDoc->SnapScaleNearest(sides, Render_GetInidx(VCam), VCam);
-					if(pDoc->mLastOp == BRUSH_SCALE)
+					if(App->CLSB_Doc->mLastOp == BRUSH_SCALE)
 					{
 						App->CLSB_Doc->DoneResize(sides, Render_GetInidx(VCam));
 
@@ -1175,7 +1175,7 @@ void CFusionView::OnLButtonUp(UINT nFlags, CPoint point)
 				case ID_TOOLS_BRUSH_SHEARBRUSH :
 					pDoc->SetModifiedFlag();
 					SetCursor(AfxGetApp()->LoadStandardCursor(IDC_ARROW));
-					if(pDoc->mLastOp==BRUSH_SHEAR)
+					if(App->CLSB_Doc->mLastOp==BRUSH_SHEAR)
 						pDoc->DoneShear(sides, Render_GetInidx(VCam));
 
 					App->CLSB_Doc->UpdateSelected();
@@ -2962,7 +2962,7 @@ void CFusionView::OnViewportCenteronselection()
 	if(!pDoc)
 		return;
 
-	Render_SetCameraPos(VCam, &pDoc->SelectedGeoCenter);
+	Render_SetCameraPos(VCam, &App->CLSB_Doc->SelectedGeoCenter);
 
 	pDoc->LinkViewports();
 	pDoc->SetModifiedFlag();

@@ -350,7 +350,7 @@ CFusionDoc::CFusionDoc() : CDocument (),
     Brush_Bound(BTemplate);
     CurBrush	=BTemplate;
 
-    geVec3d_Clear(&SelectedGeoCenter);
+    geVec3d_Clear(&App->CLSB_Doc->SelectedGeoCenter);
 
     //AddCameraEntityToLevel ();
 
@@ -2655,7 +2655,7 @@ void CFusionDoc::SelectOrthoRect(CPoint ptStart, CPoint ptEnd, ViewVars *v)
 
 void CFusionDoc::ResizeSelected(float dx, float dy, int sides, int inidx)
 {
-    mLastOp				=BRUSH_SCALE;
+    App->CLSB_Doc->mLastOp				=BRUSH_SCALE;
 
     if(mModeTool == ID_TOOLS_TEMPLATE)
     {
@@ -2691,14 +2691,14 @@ void CFusionDoc::ResizeSelected(float dx, float dy, int sides, int inidx)
 
 void CFusionDoc::ScaleSelectedBrushes(geVec3d *ScaleVector)
 {
-    mLastOp				=BRUSH_SCALE;
+    App->CLSB_Doc->mLastOp				=BRUSH_SCALE;
 
     geVec3d	VecOrigin	={ 0.0f, 0.0f, 0.0f };
 
     geVec3d MoveTo;
     geVec3d MoveBack;
-    geVec3d_Subtract(&VecOrigin, &SelectedGeoCenter, &MoveTo);
-    geVec3d_Subtract(&SelectedGeoCenter, &VecOrigin, &MoveBack);
+    geVec3d_Subtract(&VecOrigin, &App->CLSB_Doc->SelectedGeoCenter, &MoveTo);
+    geVec3d_Subtract(&App->CLSB_Doc->SelectedGeoCenter, &VecOrigin, &MoveBack);
 
     if(mModeTool == ID_TOOLS_TEMPLATE)
     {
@@ -3838,9 +3838,9 @@ void CFusionDoc::MoveSelectedClone(geVec3d const *v)
 
 void CFusionDoc::MoveTemplateBrush(geVec3d *v)
 {
-    mLastOp	=BRUSH_MOVE;
+    App->CLSB_Doc->mLastOp	=BRUSH_MOVE;
 
-    geVec3d_Add (&SelectedGeoCenter, v, &SelectedGeoCenter);
+    geVec3d_Add (&App->CLSB_Doc->SelectedGeoCenter, v, &App->CLSB_Doc->SelectedGeoCenter);
     geVec3d_Add (v, &FinalPos, &FinalPos);
 
     if(TempEnt)
@@ -3861,11 +3861,11 @@ void CFusionDoc::RotateTemplateBrush(geVec3d *v)
 {
     geXForm3d	rm;
 
-    mLastOp	=BRUSH_ROTATE;
+    App->CLSB_Doc->mLastOp	=BRUSH_ROTATE;
 
     geVec3d_Add(v, &FinalRot, &FinalRot);
     geXForm3d_SetEulerAngles(&rm, v);
-    Brush_Rotate (CurBrush, &rm, &SelectedGeoCenter);
+    Brush_Rotate (CurBrush, &rm, &App->CLSB_Doc->SelectedGeoCenter);
 }
 
 void CFusionDoc::GetRotationPoint
@@ -3898,7 +3898,7 @@ void CFusionDoc::GetRotationPoint
     }
     else
     {
-        *pVec = SelectedGeoCenter;
+        *pVec = App->CLSB_Doc->SelectedGeoCenter;
     }
 }
 
@@ -3913,7 +3913,7 @@ void CFusionDoc::RotateSelectedBrushList
     geVec3d RotationPoint;
     int NumBrushes = SelBrushList_GetSize (pList);
 
-    mLastOp = BRUSH_ROTATE;
+    App->CLSB_Doc->mLastOp = BRUSH_ROTATE;
 
     // if we're animating a model, we want to rotate about the
     // model's current rotation origin--taking into account any
@@ -3991,7 +3991,7 @@ void CFusionDoc::DoneRotate(void)
 
     TemplateReversalRot = FinalRot;
 
-    mLastOp		=BRUSH_ROTATE;
+    App->CLSB_Doc->mLastOp		=BRUSH_ROTATE;
 
     TempDeleteSelected();
     TempCopySelectedBrushes();
@@ -4773,7 +4773,7 @@ void CFusionDoc::OnEditPaste()
 
 void CFusionDoc::ShearSelected(float dx, float dy, int sides, int inidx)
 {
-    mLastOp				=BRUSH_SHEAR;
+    App->CLSB_Doc->mLastOp				=BRUSH_SHEAR;
 
     if(mModeTool == ID_TOOLS_TEMPLATE)
     {
@@ -4810,7 +4810,7 @@ void CFusionDoc::DoneShear(int sides, int inidx)
 
     SetModifiedFlag();
     
-    mLastOp	=BRUSH_SHEAR;
+    App->CLSB_Doc->mLastOp	=BRUSH_SHEAR;
 
     bsnap = 1.0f;
     if(Level_UseGrid (App->CLSB_Doc->pLevel))
@@ -5613,7 +5613,7 @@ void CFusionDoc::OnNewLibObject()
     {
         geVec3d VecXlate;
 
-        geVec3d_Scale (&SelectedGeoCenter, -1.0f, &VecXlate);
+        geVec3d_Scale (&App->CLSB_Doc->SelectedGeoCenter, -1.0f, &VecXlate);
         Level_TranslateAll (NewLevel, &VecXlate);
     }
 
@@ -5734,7 +5734,7 @@ void CFusionDoc::SnapScaleNearest(int sides, int inidx, ViewVars *v)
 
     SetModifiedFlag();
 
-    mLastOp		=BRUSH_SCALE;
+    App->CLSB_Doc->mLastOp		=BRUSH_SCALE;
 
     bsnap = 1.0f ;
     if (Level_UseGrid (App->CLSB_Doc->pLevel))

@@ -1244,6 +1244,8 @@ void SB_Equity::Do_Preview_All()
 
 		App->CLSB_Object->Do_Basketball();
 
+		App->CLSB_Ogre->mSceneMgr->setSkyDome(true, "Examples/CloudySky", 5, 8);
+
 		App->CLSB_Equity->Show_Equity_Dialog(true);
 		App->CLSB_TopTabs->Update_Dlg_Controls();
 
