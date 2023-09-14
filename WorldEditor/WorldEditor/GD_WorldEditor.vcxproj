@@ -103,6 +103,7 @@
     <ClCompile Include="Base_Brush.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Test|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Base_Environment.cpp" />
     <ClCompile Include="Base_Object.cpp" />
     <ClCompile Include="Base_Player.cpp" />
     <ClCompile Include="Base_XBrush.cpp" />
@@ -185,6 +186,7 @@
     <ClCompile Include="SB_Dialogs.cpp" />
     <ClCompile Include="SB_Dimensions.cpp" />
     <ClCompile Include="SB_Doc.cpp" />
+    <ClCompile Include="SB_Environment.cpp" />
     <ClCompile Include="SB_Equity.cpp" />
     <ClCompile Include="SB_Exporter.cpp" />
     <ClCompile Include="SB_Export_Object.cpp" />
@@ -268,6 +270,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base_Brush.h" />
+    <ClInclude Include="Base_Environment.h" />
     <ClInclude Include="Base_Object.h" />
     <ClInclude Include="Base_Player.h" />
     <ClInclude Include="Base_XBrush.h" />
@@ -281,6 +284,7 @@
     <ClInclude Include="SB_Dialogs.h" />
     <ClInclude Include="SB_Dimensions.h" />
     <ClInclude Include="SB_Doc.h" />
+    <ClInclude Include="SB_Environment.h" />
     <ClInclude Include="SB_Equity.h" />
     <ClInclude Include="SB_Exporter.h" />
     <ClInclude Include="SB_Export_Object.h" />

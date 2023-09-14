@@ -97,6 +97,7 @@ distribution.
 #include "SB_Project.h"
 #include "SB_Objects_Create.h"
 #include "SB_Physics.h"
+#include "SB_Environment.h"
 
 class SB_App
 {
@@ -172,6 +173,7 @@ public:
 	SB_Project*					CLSB_Project;
 	SB_Objects_Create*			CLSB_Objects_Create;
 	SB_Physics*					CLSB_Physics;
+	SB_Environment*				CLSB_Environment;
 
 	bool InitApp(void);
 	void InitMFC(void);
