@@ -158,7 +158,7 @@ void CFusionView::OnUpdateCenterthing(CCmdUI* pCmdUI)
 		return;
 	}
 
-	if ((pDoc->GetSelState()!=NOSELECTIONS) || (pDoc->mModeTool==ID_TOOLS_TEMPLATE))
+	if ((pDoc->GetSelState()!=NOSELECTIONS) || (App->CLSB_Doc->mModeTool==ID_TOOLS_TEMPLATE))
 		pCmdUI->Enable( TRUE );
 	else
 		pCmdUI->Enable( FALSE );
@@ -205,7 +205,7 @@ void CFusionView::OnCenterthing()
 	}
 
 	// We've computed the delta, so move the thing...
-	if (pDoc->mModeTool == ID_TOOLS_TEMPLATE)
+	if (App->CLSB_Doc->mModeTool == ID_TOOLS_TEMPLATE)
 		pDoc->MoveTemplateBrush (&MoveDelta);
 	else
 		App->CLSB_Doc->MoveSelectedBrushList(pDoc->pSelBrushes, &MoveDelta);
@@ -675,7 +675,7 @@ void CFusionView::OnMouseMove (UINT nFlags, CPoint point) // hgtterry OnMouseMov
 	
 	if(this==GetParentFrame()->GetActiveView())
 	{
-		pDoc->mActiveView	=mViewType;
+		App->CLSB_Doc->mActiveView	=mViewType;
 	}
 
 	dx = (RealCursorPosition.x - mStartPoint.x);
@@ -1832,11 +1832,8 @@ void CFusionView::OnUpdateToolsBrushScalebrush(CCmdUI* pCmdUI)
 
 void CFusionView::OnToolsBrushShowbrush() 
 {
-
-	CFusionDoc* pDoc = GetDocument();
-
 	// toggle brush
-	pDoc->mShowBrush ^= 1;
+	App->CLSB_Doc->mShowBrush ^= 1;
 
 	// redraw the screen
 	App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
@@ -1844,9 +1841,7 @@ void CFusionView::OnToolsBrushShowbrush()
 
 void CFusionView::OnUpdateToolsBrushShowbrush(CCmdUI* pCmdUI) 
 {
-	CFusionDoc* pDoc = GetDocument();
-
-	pCmdUI->SetCheck (pDoc->mShowBrush);
+	pCmdUI->SetCheck (App->CLSB_Doc->mShowBrush);
 }
 
 
@@ -2045,9 +2040,7 @@ void CFusionView::OnUpdateToolsBrushShearbrush(CCmdUI* pCmdUI)
 
 int CFusionView::GetTool(void)
 {
-	CFusionDoc* pDoc = GetDocument();
-
-	return pDoc->mCurrentTool;
+	return App->CLSB_Doc->mCurrentTool;
 }
 
 fdocAdjustEnum CFusionView::GetAdjustMode(void)
@@ -2059,16 +2052,12 @@ fdocAdjustEnum CFusionView::GetAdjustMode(void)
 
 int CFusionView::GetModeTool(void)
 {
-	CFusionDoc* pDoc = GetDocument();
-	
-	return pDoc->mModeTool;
+	return App->CLSB_Doc->mModeTool;
 }
 
 void CFusionView::SetTool(int Tool)
 {
-	CFusionDoc* pDoc = GetDocument();
-	
-	pDoc->mCurrentTool = Tool;
+	App->CLSB_Doc->mCurrentTool = Tool;
 }
 
 void CFusionView::SetAdjustMode(fdocAdjustEnum Mode)
@@ -2081,9 +2070,7 @@ void CFusionView::SetAdjustMode(fdocAdjustEnum Mode)
 
 void CFusionView::SetModeTool(int Tool)
 {
-	CFusionDoc* pDoc = GetDocument();
-	
-	pDoc->mModeTool = Tool;
+	App->CLSB_Doc->mModeTool = Tool;
 }
 
 
@@ -2125,7 +2112,7 @@ void CFusionView::OnUpdateBrushRemoveselectedfromgroup(CCmdUI* pCmdUI)
 {
 	CFusionDoc* pDoc = GetDocument();
 
-	if( (pDoc->mCurrentGroup == 0) || (pDoc->GetSelState() == NOSELECTIONS) )
+	if( (App->CLSB_Doc->mCurrentGroup == 0) || (pDoc->GetSelState() == NOSELECTIONS) )
 		pCmdUI->Enable( FALSE ) ;
 	else
 		pCmdUI->Enable( TRUE ) ;
@@ -2675,7 +2662,7 @@ void CFusionView::OnEditSelectEntitiesNext()
 
 		if (NumEntities)
 		{
-			if (pDoc->NumSelEntities == 0)
+			if (App->CLSB_Doc->NumSelEntities == 0)
 			{
 				pDoc->SelectEntity(&(*Entities)[0]);
 				App->CLSB_Doc->UpdateSelected ();
@@ -2743,7 +2730,7 @@ void CFusionView::OnEditSelectEntitiesPrevious()
 
 		if (NumEntities)
 		{
-			if (pDoc->NumSelEntities == 0)
+			if (App->CLSB_Doc->NumSelEntities == 0)
 			{
 				pDoc->SelectEntity(&(*Entities)[0]);
 				App->CLSB_Doc->UpdateSelected ();
@@ -2977,7 +2964,7 @@ void CFusionView::OnUpdateViewportCenteronselection(CCmdUI* pCmdUI)
 	{
 		CFusionDoc *pDoc = GetDocument ();
 		if (pDoc) {
-			if ((pDoc->GetSelState()!=NOSELECTIONS) || (pDoc->mModeTool == ID_TOOLS_TEMPLATE))
+			if ((pDoc->GetSelState()!=NOSELECTIONS) || (App->CLSB_Doc->mModeTool == ID_TOOLS_TEMPLATE))
 				pCmdUI->Enable( TRUE );
 			else
 				pCmdUI->Enable( FALSE );
@@ -3179,7 +3166,7 @@ void CFusionView::OnUpdateModifyRotate(CCmdUI* pCmdUI)
 		return;
 	}
 
-	if ((pDoc->GetSelState()!=NOSELECTIONS) || ((pDoc->mModeTool==ID_TOOLS_TEMPLATE) && !pDoc->PlaceObjectFlag))
+	if ((pDoc->GetSelState()!=NOSELECTIONS) || ((App->CLSB_Doc->mModeTool==ID_TOOLS_TEMPLATE) && !pDoc->PlaceObjectFlag))
 		pCmdUI->Enable( TRUE );
 	else
 		pCmdUI->Enable( FALSE );

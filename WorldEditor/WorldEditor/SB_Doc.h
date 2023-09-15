@@ -33,6 +33,12 @@ public:
 	void MoveSelectedBrushes(geVec3d const* v);
 	void MoveSelectedBrushList(SelBrushList* pList, geVec3d const* v);
 
+	int	NumSelEntities;
+	int mShowSelectedFaces;
+	int mCurrentTool, mCurrentBitmap, mShowBrush, mModeTool;
+	int mShowEntities, mCurrentGroup, mCurTextureSelection;
+	int IsNewDocument, mActiveView;
+
 	int mLastOp, mCurrentEntity, ScaleNum;
 
 	geVec3d	SelectedGeoCenter, FinalPos, FinalRot, FinalScale;

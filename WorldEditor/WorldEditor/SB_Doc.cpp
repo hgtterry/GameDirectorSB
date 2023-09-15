@@ -11,6 +11,17 @@ SB_Doc::SB_Doc(void)
 {
     pTempSelBrushes = NULL;
     mCurrentEntity = -1;
+    mShowSelectedFaces = FALSE;
+    IsNewDocument = 1;
+    mShowEntities = GE_TRUE;
+    mCurTextureSelection = 1;
+    mActiveView = -1;
+    mModeTool = ID_TOOLS_TEMPLATE;
+    mShowBrush = TRUE;
+    mCurrentTool = ID_TOOLS_BRUSH_MOVEROTATEBRUSH;
+    mCurrentBitmap = 0;
+    NumSelEntities = 0;
+    mCurrentGroup = 0;
 }
 
 SB_Doc::~SB_Doc(void)
@@ -45,7 +56,7 @@ void SB_Doc::DeleteCurrentThing()
 
     BOOL	ReBuild;
 
-    if (App->m_pDoc->mModeTool == ID_GENERALSELECT)
+    if (mModeTool == ID_GENERALSELECT)
     {
         // set wait cursor
         SetCursor(AfxGetApp()->LoadStandardCursor(IDC_WAIT));
@@ -85,7 +96,7 @@ bool SB_Doc::DeleteSelectedBrushes()
         {
             if ((*Entities)[Ent].IsCamera() == GE_FALSE)	// Exclude Cameras
             {
-                if ((*Entities)[Ent].GetGroupId() == App->m_pDoc->mCurrentGroup)
+                if ((*Entities)[Ent].GetGroupId() == mCurrentGroup)
                 {
                     bAlteredCurrentGroup = GE_TRUE;
                 }
@@ -108,7 +119,7 @@ bool SB_Doc::DeleteSelectedBrushes()
             if (strstr(App->CL_Brush->Brush_GetName(pBrush), ".act") != NULL)
                 continue;
         
-            if (Brush_GetGroupId(pBrush) == App->m_pDoc->mCurrentGroup)
+            if (Brush_GetGroupId(pBrush) == mCurrentGroup)
             {
                 bAlteredCurrentGroup = GE_TRUE;
             }
@@ -119,7 +130,7 @@ bool SB_Doc::DeleteSelectedBrushes()
         }
 
         //turn off any operation tools
-        App->m_pDoc->mCurrentTool = CURTOOL_NONE;
+        mCurrentTool = CURTOOL_NONE;
 
         App->m_pDoc->SetModifiedFlag();
     }
@@ -158,7 +169,7 @@ void SB_Doc::DeleteEntity(int EntityIndex)
     // end change
     Entities->RemoveAt(EntityIndex);
     App->m_pDoc->SelState &= (~ENTITYCLEAR);
-    App->m_pDoc->SelState |= (App->m_pDoc->NumSelEntities > 1) ? MULTIENTITY : (App->m_pDoc->NumSelEntities + 1) << 7;
+    App->m_pDoc->SelState |= (NumSelEntities > 1) ? MULTIENTITY : (NumSelEntities + 1) << 7;
 }
 
 // *************************************************************************
@@ -282,7 +293,7 @@ void SB_Doc::DoneResize(int sides, int inidx)
 
     App->m_pDoc->TempDeleteSelected();
 
-    if (App->m_pDoc->mModeTool == ID_TOOLS_TEMPLATE)
+    if (mModeTool == ID_TOOLS_TEMPLATE)
     {
         if (Brush_IsMulti(App->m_pDoc->CurBrush))
         {
@@ -325,7 +336,7 @@ void SB_Doc::DoneMove(void)
 
     App->m_pDoc->TempDeleteSelected();
 
-    if (App->m_pDoc->mModeTool == ID_TOOLS_TEMPLATE)
+    if (mModeTool == ID_TOOLS_TEMPLATE)
     {
         if (App->m_pDoc->TempEnt)
         {
@@ -435,7 +446,7 @@ void SB_Doc::SelectAll(void)
 
     App->m_pDoc->DoGeneralSelect();
 
-    App->m_pDoc->NumSelEntities = 0;
+    NumSelEntities = 0;
     Level_EnumEntities(pLevel, this, fdocSelectEntity);
     Level_EnumBrushes(pLevel, this, fdocSelectBrush);
 
@@ -478,10 +489,10 @@ void SB_Doc::UpdateSelected(void)
 
     App->m_pDoc->SelState = (NumSelBrushes > 1) ? MULTIBRUSH : NumSelBrushes;
     App->m_pDoc->SelState |= (NumSelFaces > 1) ? MULTIFACE : (NumSelFaces + 1) << 3;
-    App->m_pDoc->SelState |= (App->m_pDoc->NumSelEntities > 1) ? MULTIENTITY : (App->m_pDoc->NumSelEntities + 1) << 7;
+    App->m_pDoc->SelState |= (NumSelEntities > 1) ? MULTIENTITY : (NumSelEntities + 1) << 7;
 
 
-    if (App->m_pDoc->mModeTool == ID_GENERALSELECT)
+    if (mModeTool == ID_GENERALSELECT)
     {
         if (App->m_pDoc->GetSelState() & ONEBRUSH)
             App->m_pDoc->CurBrush = SelBrushList_GetBrush(App->m_pDoc->pSelBrushes, 0);
@@ -491,7 +502,7 @@ void SB_Doc::UpdateSelected(void)
 
     geVec3d_Clear(&SelectedGeoCenter);
 
-    if (App->m_pDoc->mModeTool == ID_TOOLS_TEMPLATE)
+    if (mModeTool == ID_TOOLS_TEMPLATE)
     {
         if (App->m_pDoc->TempEnt)
         {
@@ -519,7 +530,7 @@ void SB_Doc::UpdateSelected(void)
             {
                 SelBrushList_Center(App->m_pDoc->pSelBrushes, &SelectedGeoCenter);
             }
-            else if (App->m_pDoc->NumSelEntities)
+            else if (NumSelEntities)
             {
                 geVec3d EntitySelectionCenter = { 0.0f,0.0f,0.0f };
 
@@ -538,7 +549,7 @@ void SB_Doc::UpdateSelected(void)
                     }
                 }
 
-                geVec3d_Scale(&EntitySelectionCenter, 1 / (float)(App->m_pDoc->NumSelEntities), &SelectedGeoCenter);
+                geVec3d_Scale(&EntitySelectionCenter, 1 / (float)(NumSelEntities), &SelectedGeoCenter);
             }
         }
     }

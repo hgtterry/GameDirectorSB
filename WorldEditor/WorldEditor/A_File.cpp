@@ -194,7 +194,7 @@ bool SB_File_WE::Start_Load(const char* FileName, bool UseDialogLoader)
 
 		Reset_View(1.0);
 
-		App->m_pDoc->IsNewDocument = 0;
+		App->CLSB_Doc->IsNewDocument = 0;
 		App->m_pDoc->SetModifiedFlag(FALSE);
 
 		App->CLSB_TopTabs->Update_Dlg_Controls();
@@ -316,7 +316,7 @@ bool SB_File_WE::Load_File(const char *FileName)
 	GroupListType *Groups;
 	
 	Groups = Level_GetGroups (App->CLSB_Doc->pLevel);
-	App->m_pDoc->mCurrentGroup = Group_GetFirstId (Groups, &gi);
+	App->CLSB_Doc->mCurrentGroup = Group_GetFirstId (Groups, &gi);
 	{
 		Brush *pBox = BrushTemplate_CreateBox (Level_GetBoxTemplate (App->CLSB_Doc->pLevel));
 		if (pBox != NULL)
@@ -915,7 +915,7 @@ void SB_File_WE::Save_Document()
 		return;;
 	}
 
-	App->m_pDoc->IsNewDocument = 0;
+	App->CLSB_Doc->IsNewDocument = 0;
 	App->m_pDoc->SetModifiedFlag(FALSE);
 
 	App->Say("Saved", App->CL_World->mCurrent_3DT_PathAndFile);
@@ -1153,7 +1153,7 @@ bool SB_File_WE::New_File()
 
 	Reset_View(1.0);
 
-	App->m_pDoc->IsNewDocument = 0;
+	App->CLSB_Doc->IsNewDocument = 0;
 	App->m_pDoc->SetModifiedFlag(FALSE);
 
 	//App->CL_CreateBoxDialog->CreateDefault_TemplateCube();

@@ -1130,7 +1130,7 @@ void A_MainView::RenderOrthoView(ViewVars *v, CDC *pDC) // hgtterry Render to vi
 	    brushDrawData.FlagTest = ::fdocBrushNotDetail;
 		brushDrawData.GroupId = GroupId;
 		if( (GroupVis == Group_ShowAll) ||
-			((GroupVis == Group_ShowCurrent) && (GroupId == m_pDoc->mCurrentGroup)) ||
+			((GroupVis == Group_ShowCurrent) && (GroupId == App->CLSB_Doc->mCurrentGroup)) ||
 			((GroupVis == Group_ShowVisible) && (Group_IsVisible (Groups, GroupId)))
 		)
 		{
@@ -1140,7 +1140,7 @@ void A_MainView::RenderOrthoView(ViewVars *v, CDC *pDC) // hgtterry Render to vi
 
 			pDC->SelectObject (&PenThisGroup);
 			Level_EnumLeafBrushes (App->CLSB_Doc->pLevel, &brushDrawData, BrushDraw); // Draw Brushes
-			if( m_pDoc->mShowEntities == GE_TRUE )
+			if(App->CLSB_Doc->mShowEntities == GE_TRUE )
 			{
 				Level_EnumEntities (App->CLSB_Doc->pLevel, &brushDrawData, EntityDraw);
 			}
@@ -1237,8 +1237,8 @@ void A_MainView::RenderOrthoView(ViewVars *v, CDC *pDC) // hgtterry Render to vi
 		// template brush/entity
 		pDC->SelectObject (&PenTemplate);
 
-		if((m_pDoc->mModeTool==ID_TOOLS_TEMPLATE)||
-			(m_pDoc->mModeTool==ID_TOOLS_CAMERA && m_pDoc->GetSelState()==NOSELECTIONS))
+		if((App->CLSB_Doc->mModeTool==ID_TOOLS_TEMPLATE)||
+			(App->CLSB_Doc->mModeTool==ID_TOOLS_CAMERA && m_pDoc->GetSelState()==NOSELECTIONS))
 		{
 			if(!m_pDoc->TempEnt)
 			{

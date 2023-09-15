@@ -681,7 +681,7 @@ LRESULT CALLBACK A_Dialogs::Move_Brush_Proc(HWND hDlg, UINT message, WPARAM wPar
 				SetDlgItemText(hDlg, IDC_EDCAMZ,buf);
 
 				geVec3d_Subtract(&App->CL_Dialogs->CenterOfSelection, &App->CLSB_Doc->SelectedGeoCenter, &App->CL_Dialogs->CenterOfSelection);
-				if (App->CL_Dialogs->m_pDoc->mModeTool == ID_TOOLS_TEMPLATE)
+				if (App->CLSB_Doc->mModeTool == ID_TOOLS_TEMPLATE)
 				{
 					App->CL_Dialogs->m_pDoc->MoveTemplateBrush(&App->CL_Dialogs->CenterOfSelection);
 				}
@@ -709,7 +709,7 @@ LRESULT CALLBACK A_Dialogs::Move_Brush_Proc(HWND hDlg, UINT message, WPARAM wPar
 				App->CL_Dialogs->CenterOfSelection.Z = (float)atof(buff);
 
 				geVec3d_Subtract(&App->CL_Dialogs->CenterOfSelection, &App->CLSB_Doc->SelectedGeoCenter, &App->CL_Dialogs->CenterOfSelection);
-				if (App->CL_Dialogs->m_pDoc->mModeTool == ID_TOOLS_TEMPLATE)
+				if (App->CLSB_Doc->mModeTool == ID_TOOLS_TEMPLATE)
 				{
 					App->CL_Dialogs->m_pDoc->MoveTemplateBrush(&App->CL_Dialogs->CenterOfSelection);
 				}

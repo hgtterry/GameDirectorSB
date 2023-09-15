@@ -1034,8 +1034,8 @@ void SB_TopTabs::Select_Mode()
 {
 	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
 
-	m_pDoc->mCurrentTool = CURTOOL_NONE;
-	m_pDoc->mModeTool = ID_GENERALSELECT;
+	App->CLSB_Doc->mCurrentTool = CURTOOL_NONE;
+	App->CLSB_Doc->mModeTool = ID_GENERALSELECT;
 	m_pDoc->ConfigureCurrentTool();
 
 }
@@ -1084,23 +1084,23 @@ void SB_TopTabs::Select_Scale()
 	App->Get_Current_Document();
 
 
-	int mode = App->m_pDoc->mModeTool;// pView->GetModeTool();
+	int mode = App->CLSB_Doc->mModeTool;// pView->GetModeTool();
 
 	if(mode == ID_TOOLS_TEMPLATE)
 	{
-		App->m_pDoc->mCurrentTool = ID_TOOLS_BRUSH_SCALEBRUSH;
+		App->CLSB_Doc->mCurrentTool = ID_TOOLS_BRUSH_SCALEBRUSH;
 		App->m_pDoc->ConfigureCurrentTool();
 	} 
 	else 
 	{
-		if(App->m_pDoc->mCurrentTool == ID_TOOLS_BRUSH_SCALEBRUSH)
+		if(App->CLSB_Doc->mCurrentTool == ID_TOOLS_BRUSH_SCALEBRUSH)
 		{
-			App->m_pDoc->mCurrentTool = CURTOOL_NONE;
+			App->CLSB_Doc->mCurrentTool = CURTOOL_NONE;
 			App->m_pDoc->mAdjustMode = ADJUST_MODE_FACE;
 		} 
 		else 
 		{
-			App->m_pDoc->mCurrentTool = ID_TOOLS_BRUSH_SCALEBRUSH;
+			App->CLSB_Doc->mCurrentTool = ID_TOOLS_BRUSH_SCALEBRUSH;
 		}
 
 		App->m_pDoc->ConfigureCurrentTool();

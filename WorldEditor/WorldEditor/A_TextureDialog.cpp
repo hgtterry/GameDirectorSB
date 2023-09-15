@@ -400,7 +400,7 @@ void A_TextureDialog::Apply_Texture()
 
 	SelectedItem = SelectedItem;
 
-	if (App->m_pDoc->mModeTool == ID_TOOLS_TEMPLATE)
+	if (App->CLSB_Doc->mModeTool == ID_TOOLS_TEMPLATE)
 	{
 		return;
 	}

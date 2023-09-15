@@ -160,7 +160,7 @@ LRESULT CALLBACK A_TabsTemplates_Dlg::Templates_Proc(HWND hDlg, UINT message, WP
 		{
 			App->Get_Current_Document();
 
-			if (App->m_pDoc->mModeTool == ID_TOOLS_TEMPLATE)
+			if (App->CLSB_Doc->mModeTool == ID_TOOLS_TEMPLATE)
 			{
 				if (App->CL_Brush->Get_Brush_Count() == 0)
 				{

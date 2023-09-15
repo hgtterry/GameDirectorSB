@@ -111,15 +111,7 @@ protected: // create from serialization only
 	DECLARE_SERIAL(CFusionDoc);
 
 public:
-	//Level *pLevel;
-
-	//states and stats
-	int	NumSelEntities;
-
-	int mShowSelectedFaces;
-	int mCurrentTool, mCurrentBitmap, mShowBrush, mModeTool;
-	int mShowEntities, mCurrentGroup, mCurTextureSelection;
-	int IsNewDocument, mActiveView;
+	
 	fdocAdjustEnum mAdjustMode;
 	int mShowSelectedBrushes;
 	int mLockAxis;

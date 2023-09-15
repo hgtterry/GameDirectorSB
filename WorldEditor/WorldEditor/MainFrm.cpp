@@ -164,11 +164,11 @@ void CMainFrame::OnUpdateSelInfo(CCmdUI *pCmdUI)
 		int NumSelFaces = SelFaceList_GetSize (pDoc->pSelFaces);
 		int NumSelBrushes = SelBrushList_GetSize (pDoc->pSelBrushes);
 
-		etxt.Format("Entities: %d", pDoc->NumSelEntities);
+		etxt.Format("Entities: %d", App->CLSB_Doc->NumSelEntities);
 		btxt.Format(" Brushes: %d", NumSelBrushes);
 		ftxt.Format(" Faces: %d", NumSelFaces);
 		Text.Format("%s%s%s",
-			pDoc->NumSelEntities ? etxt : "",
+			App->CLSB_Doc->NumSelEntities ? etxt : "",
 			NumSelBrushes ? btxt : "",
 			NumSelFaces ? ftxt : "");
 
@@ -1060,13 +1060,12 @@ void CMainFrame::OnUpdateViewLeakFinder(CCmdUI* pCmdUI)
 
 void CMainFrame::OnSelchangeGroupList ()
 {
-	CFusionDoc *pDoc = GetCurrentDoc ();
 	int CurSel;
 
 	CurSel = m_wndGroupBar.m_comboBox.GetCurSel ();
 	if (CurSel != LB_ERR)
 	{
-		pDoc->mCurrentGroup = m_wndGroupBar.m_comboBox.GetItemData (CurSel);
+		App->CLSB_Doc->mCurrentGroup = m_wndGroupBar.m_comboBox.GetItemData (CurSel);
 		App->CL_TabsGroups_Dlg->Fill_ListBox(); // hgtterry App->CL_TabsGroups_Dlg->Fill_ListBox()
 	}
 }
