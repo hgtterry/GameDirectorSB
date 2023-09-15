@@ -137,9 +137,7 @@ public:
 
 	GNode			*mWorldBsp;
 	CEntity			mRegularEntity;
-	int				mCurrentEntity, ScaleNum;
-	geVec3d			FinalRot, FinalScale;
-
+	
 	//dialogs / controls
 	CFrameWnd *mpActiveViewFrame;
 	CMainFrame *mpMainFrame;

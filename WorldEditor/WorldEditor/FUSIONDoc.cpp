@@ -287,7 +287,7 @@ CFusionDoc::CFusionDoc() : CDocument (),
     IsNewDocument (1), mShowEntities (GE_TRUE), mCurTextureSelection (1),
     bShowClipBrushes (GE_TRUE), bShowDetailBrushes (GE_TRUE), bShowHintBrushes (GE_TRUE), bShowActors(GE_TRUE)/*changed QD*/,
     mpActiveViewFrame (NULL), // mpBrushAttributes (NULL), mpFaceAttributes (NULL),
-    /*mpTextureView (NULL), */mWorldBsp (NULL), mActiveView (-1), mCurrentEntity (-1),
+    /*mpTextureView (NULL), */mWorldBsp (NULL), mActiveView (-1),
     mModeTool (ID_TOOLS_TEMPLATE), mAdjustMode (ADJUST_MODE_FACE),
     mCurrentTool (ID_TOOLS_BRUSH_MOVEROTATEBRUSH), mShowBrush (TRUE), mConstrainHollows (GE_TRUE),
     mCurrentBitmap (0), NumSelEntities (0), //mTextureBrowserOpen (0), 
@@ -1656,7 +1656,7 @@ void CFusionDoc::OnEntitiesEditor()
     CEntitiesDialog Dialog (AfxGetMainWnd ());
     CEntityArray *Entities = Level_GetEntities (App->CLSB_Doc->pLevel);
 
-    Dialog.EditEntity( *Entities, mCurrentEntity, this);
+    Dialog.EditEntity( *Entities, App->CLSB_Doc->mCurrentEntity, this);
     UpdateEntityOrigins();
 // changed QD Actors
     UpdateEntityActors();
@@ -1706,7 +1706,7 @@ void CFusionDoc::CreateEntity
         TempEnt = TRUE;
 
         mRegularEntity = NewEnt;
-        mCurrentEntity = -1;
+        App->CLSB_Doc->mCurrentEntity = -1;
         // set this flag so that doc knows when enter is pressed that user is NOT adding 
         // objects to level
         PlaceObjectFlag = FALSE;
@@ -1733,7 +1733,7 @@ void CFusionDoc::CreateObjectTemplate()
         NewEnt.SetOrigin (0.0f, 0.0f, 0.0f, Level_GetEntityDefs (App->CLSB_Doc->pLevel));
 
         mRegularEntity=NewEnt;
-        mCurrentEntity=-1;
+        App->CLSB_Doc->mCurrentEntity=-1;
 
         // set this flag so that doc knows when enter is pressed that user is adding objects
         // to level
@@ -1898,7 +1898,7 @@ void CFusionDoc::MoveEntity(geVec3d *v)
 {
     assert (v != NULL);
 
-    if(mCurrentEntity < 0) //template
+    if(App->CLSB_Doc->mCurrentEntity < 0) //template
     {
         mRegularEntity.Move (v);
     }
@@ -1906,7 +1906,7 @@ void CFusionDoc::MoveEntity(geVec3d *v)
     {
         CEntityArray *Entities = Level_GetEntities (App->CLSB_Doc->pLevel);
 
-        (*Entities)[mCurrentEntity].Move(v);
+        (*Entities)[App->CLSB_Doc->mCurrentEntity].Move(v);
         SetModifiedFlag();
     }
 }
@@ -2502,7 +2502,7 @@ void CFusionDoc::SetSelectedEntity( int ID )
 
     Entities = Level_GetEntities (App->CLSB_Doc->pLevel);
     App->CLSB_Doc->ResetAllSelectedEntities();
-    mCurrentEntity = ID;
+    App->CLSB_Doc->mCurrentEntity = ID;
     SelectEntity (&(*Entities)[ID]);
     App->CLSB_Doc->UpdateSelected() ;
 }
@@ -2517,7 +2517,7 @@ void CFusionDoc::AdjustEntityAngle( const ViewVars * v, const geFloat dx )
 
     Entities = Level_GetEntities (App->CLSB_Doc->pLevel);
 
-    pEnt = &(*Entities)[mCurrentEntity];
+    pEnt = &(*Entities)[App->CLSB_Doc->mCurrentEntity];
 
     
     if (pEnt->IsCamera ())
@@ -2549,7 +2549,7 @@ void CFusionDoc::AdjustEntityArc( const ViewVars * v, const geFloat dx )
     geFloat		fArcDelta ;
     CEntityArray *Entities = Level_GetEntities (App->CLSB_Doc->pLevel);
 
-    pEnt = &(*Entities)[mCurrentEntity];
+    pEnt = &(*Entities)[App->CLSB_Doc->mCurrentEntity];
 
     pEnt->GetArc( &fArc, Level_GetEntityDefs (App->CLSB_Doc->pLevel) ) ;
     
@@ -2573,7 +2573,7 @@ void  CFusionDoc::AdjustEntityRadius( const geVec3d *pVec )
     geFloat		fRadius ;
     CEntityArray *Entities = Level_GetEntities (App->CLSB_Doc->pLevel);
 
-    pEnt = &(*Entities)[mCurrentEntity];
+    pEnt = &(*Entities)[App->CLSB_Doc->mCurrentEntity];
 
     pEnt->GetRadius( &fRadius, Level_GetEntityDefs (App->CLSB_Doc->pLevel) ) ;
     fRadius += geVec3d_Length (pVec);
@@ -2659,7 +2659,7 @@ void CFusionDoc::ResizeSelected(float dx, float dy, int sides, int inidx)
 
     if(mModeTool == ID_TOOLS_TEMPLATE)
     {
-        Brush_Resize(CurBrush, dx, dy, sides, inidx, &FinalScale, &ScaleNum);
+        Brush_Resize(CurBrush, dx, dy, sides, inidx, &App->CLSB_Doc->FinalScale, &App->CLSB_Doc->ScaleNum);
         if(Brush_IsMulti(CurBrush))
         {
             BrushList_ClearCSGAndHollows((BrushList *)App->CL_Brush->Brush_GetBrushList(CurBrush), Brush_GetModelId(CurBrush));
@@ -2679,7 +2679,7 @@ void CFusionDoc::ResizeSelected(float dx, float dy, int sides, int inidx)
             
             pBrush = SelBrushList_GetBrush (App->CLSB_Doc->pTempSelBrushes, i);
 
-            Brush_Resize (pBrush, dx, dy, sides, inidx, &FinalScale, &ScaleNum);
+            Brush_Resize (pBrush, dx, dy, sides, inidx, &App->CLSB_Doc->FinalScale, &App->CLSB_Doc->ScaleNum);
             if (Brush_IsMulti(pBrush))
             {
                 BrushList_ClearCSGAndHollows((BrushList *)App->CL_Brush->Brush_GetBrushList(pBrush), Brush_GetModelId(pBrush));
@@ -3863,7 +3863,7 @@ void CFusionDoc::RotateTemplateBrush(geVec3d *v)
 
     App->CLSB_Doc->mLastOp	=BRUSH_ROTATE;
 
-    geVec3d_Add(v, &FinalRot, &FinalRot);
+    geVec3d_Add(v, &App->CLSB_Doc->FinalRot, &App->CLSB_Doc->FinalRot);
     geXForm3d_SetEulerAngles(&rm, v);
     Brush_Rotate (CurBrush, &rm, &App->CLSB_Doc->SelectedGeoCenter);
 }
@@ -3921,7 +3921,7 @@ void CFusionDoc::RotateSelectedBrushList
     GetRotationPoint (&RotationPoint);
 
     
-    geVec3d_Add(v, &FinalRot, &FinalRot);
+    geVec3d_Add(v, &App->CLSB_Doc->FinalRot, &App->CLSB_Doc->FinalRot);
     geXForm3d_SetEulerAngles(&rm, v);
 
     for(i=0;i < NumBrushes;i++)
@@ -3956,7 +3956,7 @@ void CFusionDoc::RotateSelectedBrushesDirect(geVec3d const *v)
 {
     RotateSelectedBrushList (pSelBrushes, v);
     UpdateSelectedModel (BRUSH_ROTATE, v);
-    geVec3d_Clear (&FinalRot);
+    geVec3d_Clear (&App->CLSB_Doc->FinalRot);
 }
 
 static geBoolean fdocBrushTextureScaleCallback (Brush *pBrush, void *lParam)
@@ -3989,7 +3989,7 @@ void CFusionDoc::DoneRotate(void)
     geVec3d RotationPoint;
     geVec3d TemplateReversalRot;
 
-    TemplateReversalRot = FinalRot;
+    TemplateReversalRot = App->CLSB_Doc->FinalRot;
 
     App->CLSB_Doc->mLastOp		=BRUSH_ROTATE;
 
@@ -4001,15 +4001,15 @@ void CFusionDoc::DoneRotate(void)
     if((SelState & NOENTITIES) && Level_UseGrid (App->CLSB_Doc->pLevel))
     {
         RSnap		=Units_DegreesToRadians ((float)Level_GetRotationSnap (App->CLSB_Doc->pLevel));
-        FinalRot.X	=((float)((int)(FinalRot.X / RSnap))) * RSnap;
-        FinalRot.Y	=((float)((int)(FinalRot.Y / RSnap))) * RSnap;
-        FinalRot.Z	=((float)((int)(FinalRot.Z / RSnap))) * RSnap;
+        App->CLSB_Doc->FinalRot.X	=((float)((int)(App->CLSB_Doc->FinalRot.X / RSnap))) * RSnap;
+        App->CLSB_Doc->FinalRot.Y	=((float)((int)(App->CLSB_Doc->FinalRot.Y / RSnap))) * RSnap;
+        App->CLSB_Doc->FinalRot.Z	=((float)((int)(App->CLSB_Doc->FinalRot.Z / RSnap))) * RSnap;
     }
 
     if(mModeTool == ID_TOOLS_TEMPLATE)
-        geVec3d_Subtract(&FinalRot, &TemplateReversalRot, &FinalRot);
+        geVec3d_Subtract(&App->CLSB_Doc->FinalRot, &TemplateReversalRot, &App->CLSB_Doc->FinalRot);
 
-    geXForm3d_SetEulerAngles(&rm, &FinalRot);
+    geXForm3d_SetEulerAngles(&rm, &App->CLSB_Doc->FinalRot);
 
     if(mModeTool == ID_TOOLS_TEMPLATE)
     {
@@ -4075,9 +4075,9 @@ void CFusionDoc::DoneRotate(void)
     }
     App->CLSB_Doc->UpdateSelected();
 
-    UpdateSelectedModel (BRUSH_ROTATE, &FinalRot);
+    UpdateSelectedModel (BRUSH_ROTATE, &App->CLSB_Doc->FinalRot);
 
-    geVec3d_Clear (&FinalRot);
+    geVec3d_Clear (&App->CLSB_Doc->FinalRot);
 
     // Find the camera entity and update the rendered view's camera position
     {
@@ -4162,13 +4162,13 @@ void CFusionDoc::DoneMoveEntity(void)
     }
     else
     {
-        if(mCurrentEntity < 0) //template
+        if(App->CLSB_Doc->mCurrentEntity < 0) //template
         {
             pEnt = &mRegularEntity;
         }
         else
         {
-            pEnt = &(*Entities)[mCurrentEntity];
+            pEnt = &(*Entities)[App->CLSB_Doc->mCurrentEntity];
         }
 
         SnapSize = 1.0f;
@@ -4381,7 +4381,7 @@ void CFusionDoc::ConfigureCurrentTool(void)
 
     }
     if(mModeTool==ID_TOOLS_TEMPLATE && TempEnt)
-        mCurrentEntity=-1;
+        App->CLSB_Doc->mCurrentEntity=-1;
 
     Redraw	=TRUE;
     if(Redraw)
@@ -4779,7 +4779,7 @@ void CFusionDoc::ShearSelected(float dx, float dy, int sides, int inidx)
     {
         Brush_Destroy(&CurBrush);
         CurBrush	=BTemplate	=Brush_Clone(TempShearTemplate);
-        Brush_ShearFixed(CurBrush, dx, dy, sides, inidx, &FinalScale, &ScaleNum);
+        Brush_ShearFixed(CurBrush, dx, dy, sides, inidx, &App->CLSB_Doc->FinalScale, &App->CLSB_Doc->ScaleNum);
     }
     else
     {
@@ -4794,7 +4794,7 @@ void CFusionDoc::ShearSelected(float dx, float dy, int sides, int inidx)
             Brush *pBrush;
 
             pBrush = SelBrushList_GetBrush (App->CLSB_Doc->pTempSelBrushes, i);
-            Brush_ShearFixed(pBrush, dx, dy, sides, inidx, &FinalScale, &ScaleNum);
+            Brush_ShearFixed(pBrush, dx, dy, sides, inidx, &App->CLSB_Doc->FinalScale, &App->CLSB_Doc->ScaleNum);
         }
     }
 
@@ -4824,7 +4824,7 @@ void CFusionDoc::DoneShear(int sides, int inidx)
         {						//by rapid clicking
             Brush_Destroy(&CurBrush);
             CurBrush	=BTemplate	=Brush_Clone(TempShearTemplate);
-            Brush_ShearFinal(CurBrush, sides, inidx, &FinalScale);
+            Brush_ShearFinal(CurBrush, sides, inidx, &App->CLSB_Doc->FinalScale);
 
             //check which side of the bounds changed
             bx1	=Brush_GetBoundingBox(CurBrush);
@@ -4862,7 +4862,7 @@ void CFusionDoc::DoneShear(int sides, int inidx)
             continue;
 // end change
 
-        Brush_ShearFinal(pBrush, sides, inidx, &FinalScale);
+        Brush_ShearFinal(pBrush, sides, inidx, &App->CLSB_Doc->FinalScale);
 
         //check which side of the bounds changed
         bx1	=Brush_GetBoundingBox(pBrush);
@@ -5744,7 +5744,7 @@ void CFusionDoc::SnapScaleNearest(int sides, int inidx, ViewVars *v)
 
     if(mModeTool == ID_TOOLS_TEMPLATE)
     {
-        Brush_SnapScaleNearest(CurBrush, bsnap, sides, inidx, &FinalScale, &ScaleNum);
+        Brush_SnapScaleNearest(CurBrush, bsnap, sides, inidx, &App->CLSB_Doc->FinalScale, &App->CLSB_Doc->ScaleNum);
     }
     else
     {
@@ -5754,7 +5754,7 @@ void CFusionDoc::SnapScaleNearest(int sides, int inidx, ViewVars *v)
         for (i = 0; i < NumBrushes; ++i)
         {
             Brush *pBrush = SelBrushList_GetBrush (App->CLSB_Doc->pTempSelBrushes, i);
-            Brush_SnapScaleNearest(pBrush, bsnap, sides, inidx, &FinalScale, &ScaleNum);
+            Brush_SnapScaleNearest(pBrush, bsnap, sides, inidx, &App->CLSB_Doc->FinalScale, &App->CLSB_Doc->ScaleNum);
         }
     }
 }
@@ -7873,11 +7873,11 @@ CEntity* CFusionDoc::GetSelectedEntity()
             if(p->IsSelected())
                 break;
         }
-        mCurrentEntity	= i;
-        if(mCurrentEntity > Entities->GetSize()-1 )
+        App->CLSB_Doc->mCurrentEntity	= i;
+        if(App->CLSB_Doc->mCurrentEntity > Entities->GetSize()-1 )
             return NULL;
     
-        pEnt = &(*Entities)[mCurrentEntity];
+        pEnt = &(*Entities)[App->CLSB_Doc->mCurrentEntity];
 
         return pEnt;	
     }

@@ -1299,16 +1299,16 @@ void CFusionView::OnLButtonDown(UINT nFlags, CPoint point)
 
 			if(Tool == ID_TOOLS_BRUSH_SCALEBRUSH)
 			{
-				pDoc->ScaleNum	=0;
+				App->CLSB_Doc->ScaleNum	=0;
 			
-				geVec3d_Set (&pDoc->FinalScale, 1.0f, 1.0f, 1.0f);
+				geVec3d_Set (&App->CLSB_Doc->FinalScale, 1.0f, 1.0f, 1.0f);
 				pDoc->TempCopySelectedBrushes();
 			}
 			else if(Tool == ID_TOOLS_BRUSH_SHEARBRUSH)
 			{
-				pDoc->ScaleNum	=0;
+				App->CLSB_Doc->ScaleNum	=0;
 			
-				geVec3d_Clear (&pDoc->FinalScale);
+				geVec3d_Clear (&App->CLSB_Doc->FinalScale);
 				if (ModeTool == ID_TOOLS_TEMPLATE)
 				{
 					pDoc->TempShearTemplate	=Brush_Clone(pDoc->CurBrush);
@@ -1375,7 +1375,7 @@ void CFusionView::OnRButtonDown(UINT nFlags, CPoint point)
 
 		if ((Tool == ID_TOOLS_BRUSH_MOVEROTATEBRUSH) || (Tool == ID_TOOLS_BRUSH_MOVESELECTEDBRUSHES))
 		{
-			geVec3d_Set (&(pDoc->FinalRot), 0.0f, 0.0f, 0.0f);
+			geVec3d_Set (&(App->CLSB_Doc->FinalRot), 0.0f, 0.0f, 0.0f);
 			pDoc->TempCopySelectedBrushes();
 			pDoc->SetModifiedFlag();
 		}

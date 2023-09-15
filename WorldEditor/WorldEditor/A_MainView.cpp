@@ -1218,7 +1218,7 @@ void A_MainView::RenderOrthoView(ViewVars *v, CDC *pDC) // hgtterry Render to vi
 
 			if (pEnt->IsSelected ())
 			{
-				fdocDrawEntity (pEnt, v, pDC, Level_GetEntityDefs (App->CLSB_Doc->pLevel), (i==m_pDoc->mCurrentEntity) ? GE_TRUE : GE_FALSE ) ;
+				fdocDrawEntity (pEnt, v, pDC, Level_GetEntityDefs (App->CLSB_Doc->pLevel), (i==App->CLSB_Doc->mCurrentEntity) ? GE_TRUE : GE_FALSE ) ;
 			}
 		}
 	}

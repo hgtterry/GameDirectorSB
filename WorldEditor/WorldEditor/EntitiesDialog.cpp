@@ -122,7 +122,7 @@ int CEntitiesDialog::EditEntity( CEntityArray& Entities, int CurrentEntity, CFus
 			{
 				App->CLSB_Doc->ResetAllSelectedEntities();
 				pDoc->SelectEntity (&(*mEntityArray)[mCurrentEntity]);
-				pDoc->mCurrentEntity = mCurrentEntity;
+				App->CLSB_Doc->mCurrentEntity = mCurrentEntity;
 			}
 		}
 	}

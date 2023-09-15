@@ -10,6 +10,7 @@
 SB_Doc::SB_Doc(void)
 {
     pTempSelBrushes = NULL;
+    mCurrentEntity = -1;
 }
 
 SB_Doc::~SB_Doc(void)
@@ -301,7 +302,7 @@ void SB_Doc::DoneResize(int sides, int inidx)
         if (strstr(App->CL_Brush->Brush_GetName(pBrush), ".act") != NULL)
             continue;
        
-        Brush_ResizeFinal(pBrush, sides, inidx, &App->m_pDoc->FinalScale);
+        Brush_ResizeFinal(pBrush, sides, inidx, &FinalScale);
         if (Brush_IsMulti(pBrush))
         {
             BrushList_ClearCSGAndHollows((BrushList*)App->CL_Brush->Brush_GetBrushList(pBrush), Brush_GetModelId(pBrush));
@@ -547,11 +548,11 @@ void SB_Doc::UpdateSelected(void)
         CEntityArray* Entities = Level_GetEntities(pLevel);
 
         for (i = 0; i < Entities->GetSize() && !((*Entities)[i].IsSelected()); i++);
-        App->m_pDoc->mCurrentEntity = i;
+        mCurrentEntity = i;
     }
     else
     {
-        App->m_pDoc->mCurrentEntity = -1;
+        mCurrentEntity = -1;
     }
 
     App->m_pDoc->UpdateFaceAttributesDlg();

@@ -615,5 +615,19 @@ void SB_FileView::SelectItem(HTREEITEM TreeItem)
 		//TreeView_Select(Temp, NULL, TVGN_CARET);
 		TreeView_Select(Temp, TreeItem, TVGN_CARET);
 	}
+}
 
+// *************************************************************************
+// *			Mark_Altered:- Terry and Hazel Flanigan 2022		 	   *
+// *************************************************************************
+void SB_FileView::Mark_Altered(HTREEITEM Item)
+{
+	TVITEM Sitem;
+	Sitem.mask = TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	Sitem.hItem = Item;
+	Sitem.iImage = 6;
+	Sitem.iSelectedImage = 7;
+	SendDlgItemMessage(App->ListPanel, IDC_TREE1, TVM_SETITEM, 0, (LPARAM)(const LPTVITEM)&Sitem);
+
+	//EnableMenuItem(App->mMenu, ID_FILE_SAVEPROJECTALL, MF_ENABLED);
 }

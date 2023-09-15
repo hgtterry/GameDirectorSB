@@ -35,6 +35,7 @@ public:
 	void Set_FolderActive(HTREEITEM Folder);
 	void SelectItem(HTREEITEM TreeItem);
 	void ExpandRoot(void);
+	void Mark_Altered(HTREEITEM Item);
 
 	HTREEITEM FV_Players_Folder;	// Players Folder FileFView
 	HTREEITEM FV_Objects_Folder;
