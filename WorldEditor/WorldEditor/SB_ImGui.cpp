@@ -133,6 +133,11 @@ void SB_ImGui::ImGui_Editor_Loop(void)
 	{
 		Dialog_Float();
 	}
+
+	if (App->CLSB_Environment->Show_PropertyEditor == 1)
+	{
+		App->CLSB_Environment->Environ_PropertyEditor();
+	}
 }
 
 // *************************************************************************

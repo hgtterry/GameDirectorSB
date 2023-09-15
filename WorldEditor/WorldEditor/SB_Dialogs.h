@@ -34,8 +34,11 @@ public:
 	bool Start_ListData(int WhatList);
 	void Start_Speed_Camera();
 	bool Start_Dialog_DropGen();
+	void Dialog_TrueFlase(HWND Parent);
 
 	bool Canceled;
+	bool TrueFlase;
+
 
 	int YesNoCancel_Result;
 
@@ -52,6 +55,7 @@ private:
 	static LRESULT CALLBACK ListData_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Speed_Camera_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Dialog_DropGen_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Dialog_TrueFlase_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void List_SceneData(HWND hDlg);
 	void List_BoundingBox(HWND hDlg);

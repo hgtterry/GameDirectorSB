@@ -631,3 +631,18 @@ void SB_FileView::Mark_Altered(HTREEITEM Item)
 
 	//EnableMenuItem(App->mMenu, ID_FILE_SAVEPROJECTALL, MF_ENABLED);
 }
+
+// **************************************************************************
+// *			Show_FileView:- Terry and Hazel Flanigan 2022				*
+// **************************************************************************
+void SB_FileView::Show_FileView(bool show)
+{
+	if (show == 1)
+	{
+		ShowWindow(App->ListPanel, SW_SHOW);
+	}
+	else
+	{
+		ShowWindow(App->ListPanel, SW_HIDE);
+	}
+}

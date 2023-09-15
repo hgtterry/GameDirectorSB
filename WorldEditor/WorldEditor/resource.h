@@ -171,6 +171,7 @@
 #define IDB_FILESELECTED                343
 #define IDB_BITMAP2                     344
 #define IDB_FVFOLDERRED                 344
+#define IDD_SB_TRUEFALSE                345
 #define IDC_RESET_ALL                   1000
 #define IDC_EDIT1                       1001
 #define IDC_EDIT10                      1002
@@ -241,6 +242,8 @@
 #define IDC_BRUSHLIST                   1067
 #define IDC_SKYRIGHT                    1067
 #define IDC_VISDETAIL                   1067
+#define IDC_CHECK2                      1067
+#define IDC_CHECKNO                     1067
 #define IDC_NAME                        1068
 #define IDC_CHECK3                      1068
 #define IDC_SKYTOP                      1068
@@ -840,6 +843,8 @@
 #define IDC_TREE1                       1537
 #define IDC_BT_VIEWUPDATE               1538
 #define IDC_BT_ENVIRONMENT              1539
+#define IDC_TITLENAME                   1540
+#define IDC_CHECKYES                    1541
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772
 #define ID_BRUSH_PRIMITIVES_SPHEROID    32773
@@ -1052,9 +1057,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        345
+#define _APS_NEXT_RESOURCE_VALUE        347
 #define _APS_NEXT_COMMAND_VALUE         33091
-#define _APS_NEXT_CONTROL_VALUE         1540
+#define _APS_NEXT_CONTROL_VALUE         1542
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif
