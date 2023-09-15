@@ -34,7 +34,7 @@ public:
 	bool Start_ListData(int WhatList);
 	void Start_Speed_Camera();
 	bool Start_Dialog_DropGen();
-	void Dialog_TrueFlase(HWND Parent);
+	void Dialog_TrueFlase();
 
 	bool Canceled;
 	bool TrueFlase;

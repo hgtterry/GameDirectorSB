@@ -29,11 +29,7 @@ public:
 	SB_Object();
 	~SB_Object();
 
-	void Do_Basketball();
-
 	Ogre::Vector3 Get_BoundingBox_World_Centre(int Object_Index);
 	float GetMesh_BB_Radius(SceneNode* mNode);
-
-	bool BasketBall_Done;
 };
 

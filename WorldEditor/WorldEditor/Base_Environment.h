@@ -38,7 +38,7 @@ public:
 	HTREEITEM FileViewItem;
 
 	//--------------- Sound
-	//irrklang::ISound* SndFile;
+	irrklang::ISound* SndFile;
 	Ogre::Real SndVolume;
 	char Sound_File[MAX_PATH];
 	bool Play;

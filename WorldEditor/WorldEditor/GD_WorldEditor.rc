@@ -2383,7 +2383,7 @@ BEGIN
     DEFPUSHBUTTON   "OK",IDOK,101,245,8,14,NOT WS_VISIBLE
     PUSHBUTTON      "Cancel",IDCANCEL,118,245,8,14,NOT WS_VISIBLE
     CONTROL         "",IDC_TREE1,"SysTreeView32",TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | TVS_SHOWSELALWAYS | WS_BORDER | WS_HSCROLL | WS_TABSTOP,7,7,119,213
-    PUSHBUTTON      "Environment",IDC_BT_ENVIRONMENT,7,222,119,21
+    PUSHBUTTON      "Main Environment",IDC_BT_ENVIRONMENT,7,222,119,21
 END
 
 IDD_SB_PROPERTIES DIALOGEX 613, 52, 161, 363
@@ -2397,14 +2397,14 @@ END
 
 IDD_SB_TRUEFALSE DIALOGEX 0, 0, 213, 100
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Dialog"
+CAPTION "True/False"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "OK",IDOK,52,79,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,111,79,50,14
     CTEXT           "Static",IDC_TITLENAME,7,7,199,26,SS_CENTERIMAGE
     CONTROL         "True",IDC_CHECKYES,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,60,45,31,10
-    CONTROL         "False",IDC_CHECKNO,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,120,45,33,10
+    CONTROL         "False",IDC_CHECKNO,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,120,45,49,10
     CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME | SS_SUNKEN,6,73,200,1
 END
 
@@ -2776,17 +2776,19 @@ BEGIN
         POPUP "Import"
         BEGIN
             MENUITEM "World Editor Project .Wepf...", ID_IMPORT_WORLDEDITORPROJECT, GRAYED
-            MENUITEM "Wavefront    obj...",         ID_IMPORT_WAVEFRONTOBJ
+            MENUITEM "Wavefront    obj...",         ID_IMPORT_WAVEFRONTOBJ, GRAYED
             MENUITEM "Genesis3D    act...",         ID_IMPORT_GENESIS3DACT, GRAYED
         END
         POPUP "Export"
         BEGIN
-            POPUP "Ogre3D"
+            POPUP "Ogre3D", GRAYED
             BEGIN
                 MENUITEM "Mesh",                        ID_OGRE3D_MESH
             END
-            MENUITEM "Wavefront obj...",            ID_EXPORT_WAVEFRONTOBJ
+            MENUITEM "Wavefront obj...",            ID_EXPORT_WAVEFRONTOBJ, GRAYED
         END
+        MENUITEM SEPARATOR
+        MENUITEM "Save Scene",                  ID_FILE_SAVESCENE
         MENUITEM SEPARATOR
         MENUITEM "Clear Model",                 ID_FILE_CLEARMODEL
     END

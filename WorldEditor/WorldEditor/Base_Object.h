@@ -31,7 +31,7 @@ typedef struct Environ_type
 	bool Environ_Enabled;
 
 	//--------------- Sound
-	//irrklang::ISound* SndFile;
+	irrklang::ISound* SndFile;
 	Ogre::Real SndVolume;
 	char Sound_File[MAX_PATH];
 	bool Play;

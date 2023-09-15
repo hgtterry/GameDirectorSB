@@ -98,6 +98,7 @@ distribution.
 #include "SB_Objects_Create.h"
 #include "SB_Physics.h"
 #include "SB_Environment.h"
+#include "SB_SoundMgr.h"
 
 class SB_App
 {
@@ -174,6 +175,8 @@ public:
 	SB_Objects_Create*			CLSB_Objects_Create;
 	SB_Physics*					CLSB_Physics;
 	SB_Environment*				CLSB_Environment;
+	SB_SoundMgr*				CLSB_SoundMgr;
+
 
 	bool InitApp(void);
 	void InitMFC(void);

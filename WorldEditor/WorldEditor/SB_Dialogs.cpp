@@ -909,9 +909,16 @@ void SB_Dialogs::ListGroups(HWND List)
 // *************************************************************************
 // *	  					 TrueFlase Terry Bernie						   *
 // *************************************************************************
-void SB_Dialogs::Dialog_TrueFlase(HWND Parent)
+void SB_Dialogs::Dialog_TrueFlase()
 {
-	DialogBox(App->hInst, (LPCTSTR)IDD_SB_TRUEFALSE, Parent, (DLGPROC)Dialog_TrueFlase_Proc);
+	if (App->CLSB_Equity->EquitySB_Dialog_Visible == 0)
+	{
+		DialogBox(App->hInst, (LPCTSTR)IDD_SB_TRUEFALSE, App->MainHwnd, (DLGPROC)Dialog_TrueFlase_Proc);
+	}
+	else
+	{
+		DialogBox(App->hInst, (LPCTSTR)IDD_SB_TRUEFALSE, App->Equity_Dlg_hWnd, (DLGPROC)Dialog_TrueFlase_Proc);
+	}
 }
 // *************************************************************************
 // *						Dialog_TrueFlase_Proc	  					   *

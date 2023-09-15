@@ -96,6 +96,7 @@ SB_App::SB_App()
 	CLSB_Objects_Create =		nullptr;
 	CLSB_Physics =				nullptr;
 	CLSB_Environment =			nullptr;
+	CLSB_SoundMgr =				nullptr;
 
 	AppBackground = NULL;
 	BlackBrush =	NULL;
@@ -297,7 +298,8 @@ bool SB_App::InitApp(void)
 	CLSB_Objects_Create =			new SB_Objects_Create();
 	CLSB_Physics =					new SB_Physics();
 	CLSB_Environment =				new SB_Environment();
-	
+	CLSB_SoundMgr =					new SB_SoundMgr();
+
 	InitCommonControls();
 
 	hInst =NULL;

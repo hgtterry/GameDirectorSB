@@ -337,7 +337,13 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 			return TRUE;
 		}
 
-		// File Export
+		// File Export/Save
+		if (LOWORD(wParam) == ID_FILE_SAVESCENE)
+		{
+			Debug
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == ID_OGRE3D_MESH)
 		{
 			App->CLSB_Exporter->Ogre3D_Model();
@@ -1242,13 +1248,10 @@ void SB_Equity::Do_Preview_All()
 		ShowWindow(App->ListPanel, true);
 		ShowWindow(App->CLSB_Properties->Properties_Dlg_hWnd, true);
 
-		App->CLSB_Object->Do_Basketball();
-
-		//App->CLSB_Environment->Add_New_Environ_Entity(true);
-		//App->CLSB_Ogre->mSceneMgr->setSkyDome(true, "Examples/CloudySky", 5, 8);
-
 		App->CLSB_Equity->Show_Equity_Dialog(true);
 		App->CLSB_TopTabs->Update_Dlg_Controls();
+		App->CLSB_Equity->Resize_3DView();
+		App->CLSB_Panels->MovePhysicsView();
 
 		if (App->CLSB_Equity->First_Run == 1)
 		{

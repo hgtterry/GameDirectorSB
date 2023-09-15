@@ -242,7 +242,6 @@
 #define IDC_BRUSHLIST                   1067
 #define IDC_SKYRIGHT                    1067
 #define IDC_VISDETAIL                   1067
-#define IDC_CHECK2                      1067
 #define IDC_CHECKNO                     1067
 #define IDC_NAME                        1068
 #define IDC_CHECK3                      1068
@@ -1050,6 +1049,7 @@
 #define ID_FILE_SAVE33088               33088
 #define ID_FILE_SAVESB                  33089
 #define ID_RENDER_BRUSEHS               33090
+#define ID_FILE_SAVESCENE               33091
 #define IDS_HELPINFORMATION             38000
 
 // Next default values for new objects
@@ -1058,7 +1058,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        347
-#define _APS_NEXT_COMMAND_VALUE         33091
+#define _APS_NEXT_COMMAND_VALUE         33092
 #define _APS_NEXT_CONTROL_VALUE         1542
 #define _APS_NEXT_SYMED_VALUE           112
 #endif

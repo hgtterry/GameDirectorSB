@@ -68,6 +68,7 @@
 #include "OgreHardwareVertexBuffer.h"
 #include "OgreVertexIndexData.h"
 #include "OgreResourceGroupManager.h"
+#include "irrKlang.h"
 
 #include <gl/gl.h>
 #include <gl/glu.h>

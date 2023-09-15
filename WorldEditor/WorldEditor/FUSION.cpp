@@ -386,6 +386,8 @@ BOOL CFusionApp::InitInstance() // hgtterry InitInstance
 		//return;
 	}
 
+	App->CLSB_SoundMgr->Play_StartUp_Sound();
+
 	App->CLSB_Ogre->OgreIsRunning = 1;
 
 	App->CLSB_Ogre->Ogre_Render_Loop();

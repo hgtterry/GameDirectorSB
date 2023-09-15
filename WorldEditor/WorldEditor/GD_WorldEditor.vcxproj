@@ -36,7 +36,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Test|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>.;.\GenesisSDK\include;.\TypeParser;..\..\Anim19_OSDN\Common\Bullet\Source;..\..\Anim19_OSDN\Common\include\OGRE;..\..\Anim19_OSDN\Common\include\OGRE\Terrain;..\..\Anim19_OSDN\Common\include\OGRE\Overlay;..\..\Anim19_OSDN\Common\Assimp\Include;..\..\Anim19_OSDN\Common\Genesis\Include2;..\..\Anim19_OSDN\Common\Genesis\Gen2;..\..\Anim19_OSDN\Common\Genesis\Gen;..\..\Anim19_OSDN\Common\Devil\include\IL;..\..\Anim19_OSDN\Common\imGui\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;.\GenesisSDK\include;.\TypeParser;..\..\Anim19_OSDN\Common\Bullet\Source;..\..\Anim19_OSDN\Common\include\OGRE;..\..\Anim19_OSDN\Common\include\OGRE\Terrain;..\..\Anim19_OSDN\Common\include\OGRE\Overlay;..\..\Anim19_OSDN\Common\irrKlang\Headers;..\..\Anim19_OSDN\Common\Assimp\Include;..\..\Anim19_OSDN\Common\Genesis\Include2;..\..\Anim19_OSDN\Common\Genesis\Gen2;..\..\Anim19_OSDN\Common\Genesis\Gen;..\..\Anim19_OSDN\Common\Devil\include\IL;..\..\Anim19_OSDN\Common\imGui\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>MaxSpeed</Optimization>
       <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
@@ -54,13 +54,13 @@
       <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>nafxcw.lib;libcmt.lib;.\GenesisSDK\lib\genesis.lib;advapi32.lib;comctl32.lib;comdlg32.lib;gdi32.lib;kernel32.lib;oldnames.lib;ole32.lib;oleaut32.lib;oledlg.lib;shell32.lib;urlmon.lib;user32.lib;uuid.lib;winmm.lib;winspool.lib;OgreMain.lib;OgreOverlay.lib;OgreTerrain.lib;opengl32.lib;glu32.lib;BulletDynamics.lib;BulletCollision.lib;LinearMath.lib;assimp-vc140-mt.lib;DevIL.lib;ILU.lib;ILUT.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>nafxcw.lib;libcmt.lib;.\GenesisSDK\lib\genesis.lib;advapi32.lib;comctl32.lib;comdlg32.lib;gdi32.lib;kernel32.lib;oldnames.lib;ole32.lib;oleaut32.lib;oledlg.lib;shell32.lib;urlmon.lib;user32.lib;uuid.lib;winmm.lib;winspool.lib;OgreMain.lib;OgreOverlay.lib;OgreTerrain.lib;opengl32.lib;glu32.lib;BulletDynamics.lib;BulletCollision.lib;LinearMath.lib;irrKlang.lib;assimp-vc140-mt.lib;DevIL.lib;ILU.lib;ILUT.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <AssemblyDebug>false</AssemblyDebug>
       <IgnoreSpecificDefaultLibraries>nafxcw.lib;Libcmt.lib</IgnoreSpecificDefaultLibraries>
       <SubSystem>Windows</SubSystem>
       <OutputFile>..\..\Bin\GD_WorldEditor.exe</OutputFile>
-      <AdditionalLibraryDirectories>..\..\Anim19_OSDN\Common\lib\release;..\..\Anim19_OSDN\Common\Bullet\lib;..\..\Anim19_OSDN\Common\Assimp\Lib;..\..\Anim19_OSDN\Common\Devil\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Anim19_OSDN\Common\lib\release;..\..\Anim19_OSDN\Common\Bullet\lib;..\..\Anim19_OSDN\Common\irrKlang\Libs;..\..\Anim19_OSDN\Common\Assimp\Lib;..\..\Anim19_OSDN\Common\Devil\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <StackReserveSize>2097152</StackReserveSize>
     </Link>
@@ -214,6 +214,7 @@
     <ClCompile Include="SB_RecentFiles.cpp" />
     <ClCompile Include="SB_Render.cpp" />
     <ClCompile Include="SB_Scene.cpp" />
+    <ClCompile Include="SB_SoundMgr.cpp" />
     <ClCompile Include="SB_Textures.cpp" />
     <ClCompile Include="SB_TopTabs_Equity.cpp" />
     <ClCompile Include="SB_ViewMgrDlg.cpp" />
@@ -312,6 +313,7 @@
     <ClInclude Include="SB_RecentFiles.h" />
     <ClInclude Include="SB_Render.h" />
     <ClInclude Include="SB_Scene.h" />
+    <ClInclude Include="SB_SoundMgr.h" />
     <ClInclude Include="SB_Textures.h" />
     <ClInclude Include="SB_TopTabs_Equity.h" />
     <ClInclude Include="SB_ViewMgrDlg.h" />
