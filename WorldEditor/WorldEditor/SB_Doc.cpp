@@ -858,3 +858,88 @@ geBoolean SB_Doc::CreateEntityFromName(char const* pEntityType, CEntity& NewEnt)
     NewEnt.UpdateOrigin(Level_GetEntityDefs(App->CLSB_Doc->pLevel));
     return TRUE;
 }
+
+// *************************************************************************
+// *              DoneShear:- Terry and Hazel Flanigan 2023                  *
+// *************************************************************************
+void SB_Doc::DoneShear(int sides, int inidx)
+{
+    App->Get_Current_Document();
+
+    //	BrushList	*BList = Level_GetBrushes (pLevel);
+    const Box3d* bx1, * bx2;
+    int			snapside = 0;
+    geFloat		bsnap;
+
+    App->m_pDoc->SetModifiedFlag();
+
+    mLastOp = BRUSH_SHEAR;
+
+    bsnap = 1.0f;
+    if (Level_UseGrid(pLevel))
+    {
+        bsnap = Level_GetGridSnapSize(pLevel);
+    }
+
+    if (mModeTool == ID_TOOLS_TEMPLATE)
+    {
+        if (TempShearTemplate)	//can get here without shearing
+        {						//by rapid clicking
+            Brush_Destroy(&CurBrush);
+            CurBrush = BTemplate = Brush_Clone(TempShearTemplate);
+            Brush_ShearFinal(CurBrush, sides, inidx, &FinalScale);
+
+            //check which side of the bounds changed
+            bx1 = Brush_GetBoundingBox(CurBrush);
+            bx2 = Brush_GetBoundingBox(TempShearTemplate);
+
+            if (bx1->Max.X != bx2->Max.X)	snapside |= 2;
+            if (bx1->Max.Y != bx2->Max.Y)	snapside |= 8;
+            if (bx1->Max.Z != bx2->Max.Z)	snapside |= 32;
+            if (bx1->Min.X != bx2->Min.X)	snapside |= 1;
+            if (bx1->Min.Y != bx2->Min.Y)	snapside |= 4;
+            if (bx1->Min.Z != bx2->Min.Z)	snapside |= 16;
+            Brush_SnapShearNearest(CurBrush, bsnap, sides, inidx, snapside);
+            Brush_Destroy(&TempShearTemplate);
+        }
+        return;
+    }
+
+    int NumSelBrushes = SelBrushList_GetSize(pSelBrushes);
+
+    App->m_pDoc->TempDeleteSelected();
+    App->m_pDoc->TempCopySelectedBrushes();
+
+    int i;
+
+    for (i = 0; i < NumSelBrushes; ++i)
+    {
+        Brush* pBrush;
+        Brush* tBrush;
+
+        pBrush = SelBrushList_GetBrush(pSelBrushes, i);
+        tBrush = SelBrushList_GetBrush(pTempSelBrushes, i);
+        // changed QD Actors
+        // don't shear ActorBrushes
+        if (strstr(App->CL_Brush->Brush_GetName(pBrush), ".act") != NULL)
+            continue;
+        // end change
+
+        Brush_ShearFinal(pBrush, sides, inidx, &FinalScale);
+
+        //check which side of the bounds changed
+        bx1 = Brush_GetBoundingBox(pBrush);
+        bx2 = Brush_GetBoundingBox(tBrush);
+
+        if (bx1->Max.X != bx2->Max.X)	snapside |= 2;
+        if (bx1->Max.Y != bx2->Max.Y)	snapside |= 8;
+        if (bx1->Max.Z != bx2->Max.Z)	snapside |= 32;
+        if (bx1->Min.X != bx2->Min.X)	snapside |= 1;
+        if (bx1->Min.Y != bx2->Min.Y)	snapside |= 4;
+        if (bx1->Min.Z != bx2->Min.Z)	snapside |= 16;
+
+        Brush_SnapShearNearest(pBrush, bsnap, sides, inidx, snapside);
+    }
+    App->m_pDoc->TempDeleteSelected();
+    UpdateSelected();
+}

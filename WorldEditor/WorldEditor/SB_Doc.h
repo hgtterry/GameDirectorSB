@@ -39,6 +39,8 @@ public:
 	void AddCameraEntityToLevel(void);
 	geBoolean CreateEntityFromName(char const* pEntityType, CEntity& NewEnt);
 
+	void DoneShear(int sides, int inidx);
+
 	int	NumSelEntities;
 	int mShowSelectedFaces;
 	int mCurrentTool, mCurrentBitmap, mShowBrush, mModeTool;

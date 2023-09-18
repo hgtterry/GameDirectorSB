@@ -132,7 +132,7 @@ public:
 	geBoolean EntityIsVisible( const CEntity *pEntity ) const ;
 	void TempCopySelectedBrushes();
 	void DoneRotate(void);
-	void DoneShear(int sides, int inidx);
+	
 	void SnapScaleNearest(int sides, int inidx, ViewVars *v);
 	DWORD GetSelState(void){  return SelState;  }
 	int	 GetLockAxis( void ) { return mLockAxis ; } ;

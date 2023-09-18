@@ -1176,7 +1176,7 @@ void CFusionView::OnLButtonUp(UINT nFlags, CPoint point)
 					pDoc->SetModifiedFlag();
 					SetCursor(AfxGetApp()->LoadStandardCursor(IDC_ARROW));
 					if(App->CLSB_Doc->mLastOp==BRUSH_SHEAR)
-						pDoc->DoneShear(sides, Render_GetInidx(VCam));
+						App->CLSB_Doc->DoneShear(sides, Render_GetInidx(VCam));
 
 					App->CLSB_Doc->UpdateSelected();
 					if((ModeTool == ID_TOOLS_TEMPLATE) ||
