@@ -40,6 +40,10 @@ public:
 	geBoolean CreateEntityFromName(char const* pEntityType, CEntity& NewEnt);
 
 	void DoneShear(int sides, int inidx);
+	BOOL TempDeleteSelected(void);
+	void BrushSelect(Brush* pBrush);
+	int FindClosestThing(POINT const* ptFrom, ViewVars* v, Brush** ppMinBrush, CEntity** ppMinEntity, geFloat* pDist);
+	geBoolean FindClosestBrush(POINT const* ptFrom, ViewVars* v, Brush** ppFoundBrush, geFloat* pMinEdgeDist);
 
 	int	NumSelEntities;
 	int mShowSelectedFaces;

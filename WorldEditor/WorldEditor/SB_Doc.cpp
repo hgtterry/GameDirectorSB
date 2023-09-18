@@ -245,7 +245,7 @@ void SB_Doc::SelectOrtho(CPoint point, ViewVars* v)
 		ResetAllSelections();
 	}
 
-	FoundThingType = App->m_pDoc->FindClosestThing(&point, v, &pMinBrush, &pMinEntity, &Dist);
+	FoundThingType = FindClosestThing(&point, v, &pMinBrush, &pMinEntity, &Dist);
 
 	if ((FoundThingType != fctNOTHING) && (Dist <= MAX_PIXEL_SELECT_DIST))
 	{
@@ -295,7 +295,7 @@ void SB_Doc::DoneResize(int sides, int inidx)
 
     mLastOp = BRUSH_SCALE;
 
-    App->m_pDoc->TempDeleteSelected();
+    TempDeleteSelected();
 
     if (mModeTool == ID_TOOLS_TEMPLATE)
     {
@@ -338,7 +338,7 @@ void SB_Doc::DoneMove(void)
 
     mLastOp = BRUSH_MOVE;
 
-    App->m_pDoc->TempDeleteSelected();
+    TempDeleteSelected();
 
     if (mModeTool == ID_TOOLS_TEMPLATE)
     {
@@ -860,7 +860,7 @@ geBoolean SB_Doc::CreateEntityFromName(char const* pEntityType, CEntity& NewEnt)
 }
 
 // *************************************************************************
-// *              DoneShear:- Terry and Hazel Flanigan 2023                  *
+// *              DoneShear:- Terry and Hazel Flanigan 2023                *
 // *************************************************************************
 void SB_Doc::DoneShear(int sides, int inidx)
 {
@@ -907,7 +907,7 @@ void SB_Doc::DoneShear(int sides, int inidx)
 
     int NumSelBrushes = SelBrushList_GetSize(pSelBrushes);
 
-    App->m_pDoc->TempDeleteSelected();
+    TempDeleteSelected();
     App->m_pDoc->TempCopySelectedBrushes();
 
     int i;
@@ -940,6 +940,196 @@ void SB_Doc::DoneShear(int sides, int inidx)
 
         Brush_SnapShearNearest(pBrush, bsnap, sides, inidx, snapside);
     }
-    App->m_pDoc->TempDeleteSelected();
+    TempDeleteSelected();
     UpdateSelected();
+}
+
+// *************************************************************************
+// *          TempDeleteSelected:- Terry and Hazel Flanigan 2023           *
+// *************************************************************************
+BOOL SB_Doc::TempDeleteSelected(void)
+{
+    BOOL	ret;
+    int		i;
+    int		NumTSelBrushes = SelBrushList_GetSize(pTempSelBrushes);
+
+    for (ret = FALSE, i = 0; i < NumTSelBrushes; i++)
+    {
+        Brush* pBrush;
+
+        pBrush = SelBrushList_GetBrush(pTempSelBrushes, 0);
+
+        Level_RemoveBrush(pLevel, pBrush);
+        SelBrushList_Remove(pTempSelBrushes, pBrush);
+        Brush_Destroy(&pBrush);
+        ret = TRUE;
+    }
+    return	ret;
+}
+
+// *************************************************************************
+// *              BrushSelect:- Terry and Hazel Flanigan 2023              *
+// *************************************************************************
+void SB_Doc::BrushSelect(Brush* pBrush)
+{
+    // if the brush is already selected, then unselect it.
+    // if not currently selected, then select it.
+    if (!SelBrushList_Remove(pSelBrushes, pBrush))
+    {
+        SelBrushList_Add(pSelBrushes, pBrush);
+    }
+}
+
+typedef struct FindClosestInfoTag
+{
+    CFusionDoc* pDoc;
+    ViewVars* v;
+    Brush** ppFoundBrush;
+    geFloat* pMinEdgeDist;
+    const POINT* ptFrom;
+} FindClosestInfo;
+
+static geFloat PointToLineDist
+(
+    POINT const* ptFrom,
+    POINT const* ptLine1,
+    POINT const* ptLine2
+)
+{
+    geFloat xkj, ykj;
+    geFloat xlk, ylk;
+    geFloat denom;
+    geFloat dist;
+
+    xkj = (geFloat)(ptLine1->x - ptFrom->x);
+    ykj = (geFloat)(ptLine1->y - ptFrom->y);
+    xlk = (geFloat)(ptLine2->x - ptLine1->x);
+    ylk = (geFloat)(ptLine2->y - ptLine1->y);
+    denom = (xlk * xlk) + (ylk * ylk);
+    if (denom < .0005f)
+    {
+        // segment ends coincide
+        dist = xkj * xkj + ykj * ykj;
+    }
+    else
+    {
+        geFloat t;
+        geFloat xfac, yfac;
+
+        t = -(xkj * xlk + ykj * ylk) / denom;
+        t = std::max(t, 0.0f);
+        t = std::min(t, 1.0f);
+        xfac = xkj + t * xlk;
+        yfac = ykj + t * ylk;
+        dist = xfac * xfac + yfac * yfac;
+    }
+    return (geFloat)sqrt(dist);
+}
+
+static geBoolean FindClosestBrushCB(Brush* pBrush, void* pVoid)
+{
+    FindClosestInfo* fci = (FindClosestInfo*)pVoid;
+
+    if (fci->pDoc->BrushIsVisible(pBrush))
+    {
+        // for each face...
+        for (int iFace = 0; iFace < Brush_GetNumFaces(pBrush); ++iFace)
+        {
+            POINT			pt1, pt2;
+            Face* pFace = Brush_GetFace(pBrush, iFace);
+            const geVec3d* FacePoints = Face_GetPoints(pFace);
+            int				NumPoints = Face_GetNumPoints(pFace);
+
+            // Starting with the edge formed by the last point and the first point,
+            // determine distance from mouse cursor pos to the edge.
+            pt1 = Render_OrthoWorldToView(fci->v, &FacePoints[NumPoints - 1]);
+            for (int iPoint = 0; iPoint < NumPoints; ++iPoint)
+            {
+                geFloat Dist;
+
+                pt2 = Render_OrthoWorldToView(fci->v, &FacePoints[iPoint]);
+                Dist = PointToLineDist(fci->ptFrom, &pt1, &pt2);
+                if (Dist < *fci->pMinEdgeDist)
+                {
+                    *fci->pMinEdgeDist = Dist;
+                    *fci->ppFoundBrush = pBrush;
+                }
+                pt1 = pt2;	// next edge...
+            }
+        }
+    }
+    return GE_TRUE;
+}
+
+// *************************************************************************
+// *            FindClosestThing:- Terry and Hazel Flanigan 2023           *
+// *************************************************************************
+int SB_Doc::FindClosestThing(POINT const* ptFrom,ViewVars* v,Brush** ppMinBrush,CEntity** ppMinEntity,geFloat* pDist)
+{
+    App->Get_Current_Document();
+
+    int rslt;
+
+    geBoolean FoundBrush;
+    geFloat MinEdgeDist;
+    Brush* pMinBrush;
+
+    geBoolean FoundEntity;
+    geFloat MinEntityDist;
+    CEntity* pMinEntity;
+
+    rslt = fctNOTHING;
+    FoundBrush = FindClosestBrush(ptFrom, v, &pMinBrush, &MinEdgeDist);
+    FoundEntity = App->m_pDoc->FindClosestEntity(ptFrom, v, &pMinEntity, &MinEntityDist);
+
+
+    if (FoundEntity)
+    {
+        if ((!FoundBrush) || (MinEntityDist < MinEdgeDist))
+        {
+            *pDist = MinEntityDist;
+            if (ppMinEntity != NULL)
+                *ppMinEntity = pMinEntity;
+            rslt = fctENTITY;
+        }
+        else
+        {
+            *pDist = MinEdgeDist;
+            if (ppMinBrush != NULL)
+                *ppMinBrush = pMinBrush;
+            rslt = fctBRUSH;
+        }
+    }
+    else if (FoundBrush)
+    {
+        *pDist = MinEdgeDist;
+        if (ppMinBrush != NULL)
+            *ppMinBrush = pMinBrush;
+        rslt = fctBRUSH;
+    }
+    return rslt;
+}
+
+// *************************************************************************
+// *            FindClosestBrush:- Terry and Hazel Flanigan 2023           *
+// *************************************************************************
+geBoolean SB_Doc::FindClosestBrush(POINT const* ptFrom, ViewVars* v, Brush** ppFoundBrush, geFloat* pMinEdgeDist)
+{
+    App->Get_Current_Document();
+
+    // determine the distance to the closest brush edge in the current view.
+    FindClosestInfo	fci;
+
+    *pMinEdgeDist = FLT_MAX;
+    *ppFoundBrush = NULL;
+
+    fci.pDoc = App->m_pDoc;
+    fci.v = v;
+    fci.ppFoundBrush = ppFoundBrush;
+    fci.pMinEdgeDist = pMinEdgeDist;
+    fci.ptFrom = ptFrom;
+
+    BrushList_EnumLeafBrushes(Level_GetBrushes(App->CLSB_Doc->pLevel), &fci, ::FindClosestBrushCB);
+
+    return	(*ppFoundBrush) ? GE_TRUE : GE_FALSE;
 }

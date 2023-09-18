@@ -229,7 +229,7 @@ public:
 	void SelectOrthoRect(CPoint ptStart, CPoint ptEnd, ViewVars *v) ;
 	void SelectRay(CPoint point, ViewVars *v);
 	WadFileEntry* GetDibBitmap(const char *Name);
-	BOOL TempDeleteSelected(void);
+	
 	int	MakeNewBrushGroup ( CWnd * pParent );
 	int FillBrushGroupCombo (CComboBox &cb);
 	int DoBrushGroupEditor (CComboBox &cb);
@@ -248,12 +248,11 @@ public:
 	geBoolean	ValidateBrushes( void ) ;
 	void		SelectTab( int nTabIndex ) ;
 
-	void BrushSelect (Brush *pBrush);
 	geBoolean BrushIsSelected (Brush const *pBrush);
 
 	void DoBrushSelection (Brush *pBrush, BrushSel nSelType ) ;
 	void DoEntitySelection (CEntity *pEntity);
-	int FindClosestThing (POINT const *ptFrom, ViewVars *v, Brush **ppMinBrush, CEntity **ppMinEntity, geFloat *pDist);
+	
 	geBoolean	fdocShowBrush( Brush const *b, Box3d const *ViewBox ) ;
 
 	geBoolean	bShowLeakFinder(void) { return bShowLeak; }
@@ -476,8 +475,9 @@ private:
 	void GetRotationPoint (geVec3d *pVec);
 	void CreateNewTemplateBrush (Brush *pBrush);
 
+public:
 	geBoolean FindClosestEntity (POINT const *ptFrom, ViewVars *v, CEntity **ppMinEntity, geFloat *pMinEntityDist);
-	geBoolean FindClosestBrush (POINT const *ptFrom, ViewVars *v, Brush **ppFoundBrush, geFloat *pMinEdgeDist);
+private:
 
 	void SetupDefaultFilename (void);
 

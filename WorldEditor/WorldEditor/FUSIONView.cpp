@@ -1060,7 +1060,7 @@ void CFusionView::OnLButtonUp(UINT nFlags, CPoint point)
 			  move and pan at the same time.  Of course, I'd like to get rid of the whole
 			  temp selected thing, too, but that'll have to wait...
 			*/
-			pDoc->TempDeleteSelected();
+			App->CLSB_Doc->TempDeleteSelected();
 
 			IsPanning = FALSE;
 			ShowTheCursor ();
@@ -1420,7 +1420,7 @@ void CFusionView::OnRButtonUp(UINT nFlags, CPoint point)
 //		if((IsKeyDown (VK_SPACE)) || IsPanning || GetModeTool()==ID_TOOLS_CAMERA)
 		if((IsKeyDown (VK_CONTROL)) || IsPanning || GetModeTool()==ID_TOOLS_CAMERA)
 		{
-			pDoc->TempDeleteSelected();
+			App->CLSB_Doc->TempDeleteSelected();
 			IsPanning	=FALSE;
 
 			ShowTheCursor ();

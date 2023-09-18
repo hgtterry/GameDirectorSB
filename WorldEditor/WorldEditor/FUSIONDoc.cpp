@@ -1432,19 +1432,6 @@ void CFusionDoc::CreateCone()
     App->Say("Gone");
 }
 
-void CFusionDoc::BrushSelect
-    (
-      Brush *pBrush
-    )
-{
-    // if the brush is already selected, then unselect it.
-    // if not currently selected, then select it.
-    if (!SelBrushList_Remove (App->CLSB_Doc->pSelBrushes, pBrush))
-    {
-        SelBrushList_Add (App->CLSB_Doc->pSelBrushes, pBrush);
-    }
-}
-
 geBoolean CFusionDoc::BrushIsSelected
     (
       Brush const *pBrush
@@ -1932,114 +1919,6 @@ void CFusionDoc::OnUpdateToolsToggleadjustmode(CCmdUI* pCmdUI)
 
 }
 
-
-static geFloat PointToLineDist
-    (
-      POINT const *ptFrom,
-      POINT const *ptLine1,
-      POINT const *ptLine2
-    )
-{
-    geFloat xkj, ykj;
-    geFloat xlk, ylk;
-    geFloat denom;
-    geFloat dist;
-
-    xkj = (geFloat)(ptLine1->x - ptFrom->x);
-    ykj = (geFloat)(ptLine1->y - ptFrom->y);
-    xlk = (geFloat)(ptLine2->x - ptLine1->x);
-    ylk = (geFloat)(ptLine2->y - ptLine1->y);
-    denom = (xlk*xlk) + (ylk*ylk);
-    if (denom < .0005f)
-    {
-        // segment ends coincide
-        dist = xkj*xkj + ykj*ykj;
-    }
-    else
-    {
-        geFloat t;
-        geFloat xfac, yfac;
-
-        t = -(xkj*xlk + ykj*ylk)/denom;
-        t = std::max (t, 0.0f);
-        t = std::min (t, 1.0f);
-        xfac = xkj + t*xlk;
-        yfac = ykj + t*ylk;
-        dist = xfac*xfac + yfac*yfac;
-    }
-    return (geFloat)sqrt (dist);
-}
-
-
-typedef struct FindClosestInfoTag
-{
-    CFusionDoc	*pDoc;
-    ViewVars	*v;
-    Brush		**ppFoundBrush;
-    geFloat		*pMinEdgeDist;
-    const POINT	*ptFrom;
-} FindClosestInfo;
-
-static geBoolean	FindClosestBrushCB(Brush *pBrush, void *pVoid)
-{
-    FindClosestInfo	*fci	=(FindClosestInfo *)pVoid;
-
-    if(fci->pDoc->BrushIsVisible(pBrush))
-    {
-        // for each face...
-        for (int iFace = 0; iFace < Brush_GetNumFaces(pBrush); ++iFace)
-        {
-            POINT			pt1, pt2;
-            Face			*pFace		=Brush_GetFace(pBrush, iFace);
-            const geVec3d	*FacePoints	=Face_GetPoints(pFace);
-            int				NumPoints	=Face_GetNumPoints(pFace);
-
-            // Starting with the edge formed by the last point and the first point,
-            // determine distance from mouse cursor pos to the edge.
-            pt1 = Render_OrthoWorldToView(fci->v, &FacePoints[NumPoints-1]);
-            for(int iPoint = 0; iPoint < NumPoints; ++iPoint)
-            {
-                geFloat Dist;
-
-                pt2 = Render_OrthoWorldToView (fci->v, &FacePoints[iPoint]);
-                Dist = PointToLineDist (fci->ptFrom, &pt1, &pt2);
-                if (Dist < *fci->pMinEdgeDist)
-                {
-                    *fci->pMinEdgeDist = Dist;
-                    *fci->ppFoundBrush = pBrush;
-                }
-                pt1 = pt2;	// next edge...
-            }
-        }
-    }
-    return GE_TRUE ;
-}
-
-geBoolean CFusionDoc::FindClosestBrush
-    (
-      POINT const *ptFrom,
-      ViewVars *v,
-      Brush **ppFoundBrush,
-      geFloat *pMinEdgeDist
-    )
-{
-    // determine the distance to the closest brush edge in the current view.
-    FindClosestInfo	fci;
-
-    *pMinEdgeDist = FLT_MAX;
-    *ppFoundBrush = NULL;
-
-    fci.pDoc			=this;
-    fci.v				=v;
-    fci.ppFoundBrush	=ppFoundBrush;
-    fci.pMinEdgeDist	=pMinEdgeDist;
-    fci.ptFrom			=ptFrom;
-
-    BrushList_EnumLeafBrushes(Level_GetBrushes (App->CLSB_Doc->pLevel), &fci, ::FindClosestBrushCB);
-
-    return	(*ppFoundBrush)? GE_TRUE : GE_FALSE;
-}
-
 geBoolean CFusionDoc::FindClosestEntity
     (
       POINT const *ptFrom,
@@ -2083,57 +1962,6 @@ geBoolean CFusionDoc::FindClosestEntity
     if (rslt)
     {
         *pMinEntityDist = (geFloat)sqrt (*pMinEntityDist);
-    }
-    return rslt;
-}
-
-int CFusionDoc::FindClosestThing
-    (
-      POINT const *ptFrom,
-      ViewVars *v,
-      Brush **ppMinBrush,		// NULL OK
-      CEntity **ppMinEntity,	// NULL OK
-      geFloat *pDist
-    )
-{
-    int rslt;
-
-    geBoolean FoundBrush;
-    geFloat MinEdgeDist;
-    Brush *pMinBrush;
-        
-    geBoolean FoundEntity;
-    geFloat MinEntityDist;
-    CEntity *pMinEntity;
-
-    rslt = fctNOTHING;
-    FoundBrush = FindClosestBrush (ptFrom, v, &pMinBrush, &MinEdgeDist);
-    FoundEntity = FindClosestEntity (ptFrom, v, &pMinEntity, &MinEntityDist);
-
-
-    if (FoundEntity)
-    {
-        if ((!FoundBrush) || (MinEntityDist < MinEdgeDist))
-        {
-            *pDist = MinEntityDist;
-            if( ppMinEntity != NULL )
-                *ppMinEntity = pMinEntity;
-            rslt = fctENTITY;
-        }
-        else
-        {
-            *pDist = MinEdgeDist;
-            if( ppMinBrush != NULL )
-                *ppMinBrush = pMinBrush;
-            rslt = fctBRUSH;
-        }
-    }
-    else if (FoundBrush)
-    {
-        *pDist = MinEdgeDist;
-        if( ppMinBrush != NULL )
-            *ppMinBrush = pMinBrush;
-        rslt = fctBRUSH;
     }
     return rslt;
 }
@@ -3246,7 +3074,7 @@ geBoolean CFusionDoc::GetCursorInfo(char *info, int MaxSize)
                         Brush *pMinBrush;
                         CEntity *pMinEntity;
                         geFloat Dist;
-                        FoundThingType = FindClosestThing (&ViewCursorPos, pView->VCam, &pMinBrush, &pMinEntity, &Dist);
+                        FoundThingType = App->CLSB_Doc->FindClosestThing (&ViewCursorPos, pView->VCam, &pMinBrush, &pMinEntity, &Dist);
                         if (App->CLSB_Doc->mCurrentTool==ID_TOOLS_BRUSH_MOVEROTATEBRUSH)
                             SetCursor(AfxGetApp()->LoadStandardCursor(IDC_SIZEALL));
                         else
@@ -3305,26 +3133,6 @@ void CFusionDoc::OnBrushSelectedCopytocurrent()
 //	UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 //	mModeTool=ID_TOOLS_TEMPLATE;
 //	ConfigureCurrentTool();
-}
-
-BOOL CFusionDoc::TempDeleteSelected(void)
-{
-    BOOL	ret;
-    int		i;
-    int		NumTSelBrushes = SelBrushList_GetSize (App->CLSB_Doc->pTempSelBrushes);
-
-    for(ret=FALSE, i=0;i < NumTSelBrushes;i++)
-    {
-        Brush *pBrush;
-
-        pBrush = SelBrushList_GetBrush (App->CLSB_Doc->pTempSelBrushes, 0);
-
-        Level_RemoveBrush (App->CLSB_Doc->pLevel, pBrush);
-        SelBrushList_Remove (App->CLSB_Doc->pTempSelBrushes, pBrush);
-        Brush_Destroy(&pBrush);
-        ret	=TRUE;
-    }
-    return	ret;
 }
 
 void CFusionDoc::OnBrushSelectedDelete() 
@@ -3945,7 +3753,7 @@ void CFusionDoc::DoneRotate(void)
 
     App->CLSB_Doc->mLastOp		=BRUSH_ROTATE;
 
-    TempDeleteSelected();
+    App->CLSB_Doc->TempDeleteSelected();
     TempCopySelectedBrushes();
 
     GetRotationPoint (&RotationPoint);
@@ -3992,7 +3800,7 @@ void CFusionDoc::DoneRotate(void)
     }
     if(i < NumSelBrushes)
     {
-        TempDeleteSelected();
+        App->CLSB_Doc->TempDeleteSelected();
     }
     else
     {
@@ -4738,7 +4546,7 @@ void CFusionDoc::ShearSelected(float dx, float dy, int sides, int inidx)
         int i;
         int NumSelBrushes;
 
-        TempDeleteSelected();
+        App->CLSB_Doc->TempDeleteSelected();
         TempCopySelectedBrushes();
         NumSelBrushes = SelBrushList_GetSize (App->CLSB_Doc->pTempSelBrushes);
         for (i = 0; i < NumSelBrushes; ++i)
@@ -7575,7 +7383,7 @@ const char* CFusionDoc::ReturnThingUnderPoint(CPoint point, ViewVars *v)
     geFloat Dist;
     int FoundThingType;
 
-    FoundThingType = FindClosestThing (&point, v, &pMinBrush, &pMinEntity, &Dist);
+    FoundThingType = App->CLSB_Doc->FindClosestThing (&point, v, &pMinBrush, &pMinEntity, &Dist);
     if ((FoundThingType != fctNOTHING) && (Dist <= MAX_PIXEL_SELECT_THINGNAME))
     {
         switch (FoundThingType)
