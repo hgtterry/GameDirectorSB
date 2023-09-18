@@ -293,7 +293,7 @@ void SB_Export_World::ExportTo_RFW(const char *FileName, int ExpSelected, geBool
 			{
 				if(!strstr(App->CL_Brush->Brush_GetName(pBrush),".act"))
 				{
-					if(!ExpSelected || SelBrushList_Find(App->m_pDoc->pSelBrushes, pBrush))
+					if(!ExpSelected || SelBrushList_Find(App->CLSB_Doc->pSelBrushes, pBrush))
 					{
 						if(!ExpFiles || Brush_GetGroupId(pBrush)==i)
 						{
@@ -677,7 +677,7 @@ void SB_Export_World::Export_World_Text(int ExpSelected)
 			while (pBrush != NULL)
 			{
 
-				if (SelBrushList_Find(App->m_pDoc->pSelBrushes, pBrush))
+				if (SelBrushList_Find(App->CLSB_Doc->pSelBrushes, pBrush))
 				{
 					Brush* pClone = Brush_Clone(pBrush);
 					BrushList_Append(SBList, pClone);

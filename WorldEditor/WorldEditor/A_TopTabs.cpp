@@ -1166,7 +1166,7 @@ void SB_TopTabs::Update_Dlg_Controls()
 		}
 	}
 
-	int NumSelBrushes = SelBrushList_GetSize(App->m_pDoc->pSelBrushes);
+	int NumSelBrushes = SelBrushList_GetSize(App->CLSB_Doc->pSelBrushes);
 	if (NumSelBrushes == 0)
 	{
 		EndDialog(App->CLSB_Brushes->Dimensions_Dlg_hWnd, 0);

@@ -326,17 +326,17 @@ void A_CreateStaircaseDialog::CreateNewTemplateBrush(Brush *pBrush)
 
 	assert (pBrush != NULL);
 
-	if (m_pDoc->BTemplate != NULL)
+	if (App->CLSB_Doc->BTemplate != NULL)
 	{
-		Brush_Destroy (&m_pDoc->BTemplate);
+		Brush_Destroy (&App->CLSB_Doc->BTemplate);
 	}
 
-	m_pDoc->CurBrush = pBrush;
+	App->CLSB_Doc->CurBrush = pBrush;
 
 	m_pDoc->TempEnt	= FALSE;
-	m_pDoc->SetDefaultBrushTexInfo (m_pDoc->CurBrush);
-	Brush_Bound (m_pDoc->CurBrush);
-	Brush_Center (m_pDoc->CurBrush, &BrushPos);
+	m_pDoc->SetDefaultBrushTexInfo (App->CLSB_Doc->CurBrush);
+	Brush_Bound (App->CLSB_Doc->CurBrush);
+	Brush_Center (App->CLSB_Doc->CurBrush, &BrushPos);
 
 	pTemplatePos = Level_GetTemplatePos (App->CLSB_Doc->pLevel);
 
@@ -360,7 +360,7 @@ void A_CreateStaircaseDialog::CreateNewTemplateBrush(Brush *pBrush)
 
 	geVec3d_Subtract (pTemplatePos, &BrushPos, &MoveVec);
 
-	Brush_Move (m_pDoc->CurBrush, &MoveVec);
+	Brush_Move (App->CLSB_Doc->CurBrush, &MoveVec);
 
 	App->CLSB_Doc->UpdateAllViews (UAV_ALL3DVIEWS, NULL);
 	m_pDoc->SetModifiedFlag ();

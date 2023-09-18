@@ -413,11 +413,11 @@ void A_TextureDialog::Apply_Texture()
 		{
 			int Size;
 
-			Size = SelFaceList_GetSize (App->m_pDoc->pSelFaces);
+			Size = SelFaceList_GetSize (App->CLSB_Doc->pSelFaces);
 			for (i = 0; i < Size; ++i)
 			{
 				Face *pFace;
-				pFace = SelFaceList_GetFace (App->m_pDoc->pSelFaces, i);
+				pFace = SelFaceList_GetFace (App->CLSB_Doc->pSelFaces, i);
 
 				// changed QD 12/03
 				WadFileEntry* BitmapPtr = App->m_pDoc->GetDibBitmap( m_CurrentTexture );
@@ -425,12 +425,12 @@ void A_TextureDialog::Apply_Texture()
 				// end change
 			}
 			// have to go through the selected brushes and update their child faces
-			int NumSelBrushes = SelBrushList_GetSize (App->m_pDoc->pSelBrushes);
+			int NumSelBrushes = SelBrushList_GetSize (App->CLSB_Doc->pSelBrushes);
 			for (i = 0; i < NumSelBrushes; ++i)
 			{
 				Brush *pBrush;
 
-				pBrush = SelBrushList_GetBrush (App->m_pDoc->pSelBrushes, i);
+				pBrush = SelBrushList_GetBrush (App->CLSB_Doc->pSelBrushes, i);
 				Brush_UpdateChildFaces (pBrush);
 			}
 			break;
@@ -440,10 +440,10 @@ void A_TextureDialog::Apply_Texture()
 		{
 			if(App->m_pDoc->GetSelState() & MULTIBRUSH)
 			{
-				int NumSelBrushes = SelBrushList_GetSize (App->m_pDoc->pSelBrushes);
+				int NumSelBrushes = SelBrushList_GetSize (App->CLSB_Doc->pSelBrushes);
 				for (i = 0; i < NumSelBrushes; ++i)
 				{
-					Brush *pBrush = SelBrushList_GetBrush (App->m_pDoc->pSelBrushes, i);
+					Brush *pBrush = SelBrushList_GetBrush (App->CLSB_Doc->pSelBrushes, i);
 					// changed QD 12/03
 					WadFileEntry* BitmapPtr = App->m_pDoc->GetDibBitmap( m_CurrentTexture );
 					::TextureBrush (pBrush, SelectedItem, (LPCSTR)m_CurrentTexture, BitmapPtr);
@@ -455,9 +455,9 @@ void A_TextureDialog::Apply_Texture()
 			{
 				// changed QD 12/03
 				WadFileEntry* BitmapPtr = App->m_pDoc->GetDibBitmap( m_CurrentTexture );
-				::TextureBrush (App->m_pDoc->CurBrush, SelectedItem, (LPCSTR)m_CurrentTexture, BitmapPtr);
+				::TextureBrush (App->CLSB_Doc->CurBrush, SelectedItem, (LPCSTR)m_CurrentTexture, BitmapPtr);
 				// end change
-				Brush_UpdateChildFaces (App->m_pDoc->CurBrush);
+				Brush_UpdateChildFaces (App->CLSB_Doc->CurBrush);
 			}
 			break;
 		}

@@ -22,6 +22,10 @@ SB_Doc::SB_Doc(void)
     mCurrentBitmap = 0;
     NumSelEntities = 0;
     mCurrentGroup = 0;
+
+    TempShearTemplate = NULL;
+    pSelFaces = NULL;
+    pSelBrushes = NULL;
 }
 
 SB_Doc::~SB_Doc(void)
@@ -35,7 +39,7 @@ void SB_Doc::AddBrushToWorld()
 {
     App->Get_Current_Document();
 
-    if (App->m_pDoc->TempEnt || !Brush_IsSubtract(App->m_pDoc->CurBrush))
+    if (App->m_pDoc->TempEnt || !Brush_IsSubtract(CurBrush))
     {
         App->m_pDoc->OnBrushAddtoworld();
     }
@@ -109,12 +113,12 @@ bool SB_Doc::DeleteSelectedBrushes()
 
     if (App->m_pDoc->GetSelState() & ANYBRUSH)
     {
-        int NumSelBrushes = SelBrushList_GetSize(App->m_pDoc->pSelBrushes);
+        int NumSelBrushes = SelBrushList_GetSize(pSelBrushes);
         for (int i = 0; i < NumSelBrushes; i++)
         {
             Brush* pBrush;
 
-            pBrush = SelBrushList_GetBrush(App->m_pDoc->pSelBrushes, 0);
+            pBrush = SelBrushList_GetBrush(pSelBrushes, 0);
            
             if (strstr(App->CL_Brush->Brush_GetName(pBrush), ".act") != NULL)
                 continue;
@@ -125,7 +129,7 @@ bool SB_Doc::DeleteSelectedBrushes()
             }
 
             Level_RemoveBrush(pLevel, pBrush);
-            SelBrushList_Remove(App->m_pDoc->pSelBrushes, pBrush);
+            SelBrushList_Remove(pSelBrushes, pBrush);
             Brush_Destroy(&pBrush);
         }
 
@@ -163,7 +167,7 @@ void SB_Doc::DeleteEntity(int EntityIndex)
     Brush* b = (*Entities)[EntityIndex].GetActorBrush();
     if (b != NULL)
     {
-        SelBrushList_Remove(App->m_pDoc->pSelBrushes, b);
+        SelBrushList_Remove(pSelBrushes, b);
         Level_RemoveBrush(pLevel, b);
     }
     // end change
@@ -268,7 +272,7 @@ void SB_Doc::SelectOrtho(CPoint point, ViewVars* v)
 	UpdateSelected();
 
 	App->CL_TabsControl->Select_Brushes_Tab(0);
-	App->CL_TabsGroups_Dlg->Get_Index(App->m_pDoc->CurBrush);
+	App->CL_TabsGroups_Dlg->Get_Index(CurBrush);
 
 	App->CL_TabsGroups_Dlg->Update_Dlg_Controls();
     App->CLSB_TopTabs->Update_Dlg_Controls();
@@ -295,20 +299,20 @@ void SB_Doc::DoneResize(int sides, int inidx)
 
     if (mModeTool == ID_TOOLS_TEMPLATE)
     {
-        if (Brush_IsMulti(App->m_pDoc->CurBrush))
+        if (Brush_IsMulti(CurBrush))
         {
-            BrushList_ClearCSGAndHollows((BrushList*)App->CL_Brush->Brush_GetBrushList(App->m_pDoc->CurBrush), Brush_GetModelId(App->m_pDoc->CurBrush));
-            BrushList_RebuildHollowFaces((BrushList*)App->CL_Brush->Brush_GetBrushList(App->m_pDoc->CurBrush), Brush_GetModelId(App->m_pDoc->CurBrush), fdocBrushCSGCallback, NULL);
+            BrushList_ClearCSGAndHollows((BrushList*)App->CL_Brush->Brush_GetBrushList(CurBrush), Brush_GetModelId(CurBrush));
+            BrushList_RebuildHollowFaces((BrushList*)App->CL_Brush->Brush_GetBrushList(CurBrush), Brush_GetModelId(CurBrush), fdocBrushCSGCallback, NULL);
         }
         return;
     }
 
-    int NumSelBrushes = SelBrushList_GetSize(App->m_pDoc->pSelBrushes);
+    int NumSelBrushes = SelBrushList_GetSize(pSelBrushes);
     for (int i = 0; i < NumSelBrushes; ++i)
     {
         Brush* pBrush;
 
-        pBrush = SelBrushList_GetBrush(App->m_pDoc->pSelBrushes, i);
+        pBrush = SelBrushList_GetBrush(pSelBrushes, i);
        
         if (strstr(App->CL_Brush->Brush_GetName(pBrush), ".act") != NULL)
             continue;
@@ -344,18 +348,18 @@ void SB_Doc::DoneMove(void)
         }
         else
         {
-            Brush_Move(App->m_pDoc->CurBrush, &FinalPos);
+            Brush_Move(CurBrush, &FinalPos);
         }
         return;
     }
     else
     {
-        int NumSelBrushes = SelBrushList_GetSize(App->m_pDoc->pSelBrushes);
+        int NumSelBrushes = SelBrushList_GetSize(pSelBrushes);
         for (i = 0; i < NumSelBrushes; i++)
         {
             Brush* pBrush;
 
-            pBrush = SelBrushList_GetBrush(App->m_pDoc->pSelBrushes, i);
+            pBrush = SelBrushList_GetBrush(pSelBrushes, i);
            
             if (strstr(App->CL_Brush->Brush_GetName(pBrush), ".act") != NULL)
                 continue;
@@ -392,11 +396,11 @@ void SB_Doc::Lock_AllTextures(void)
     Face* pFace;
     int NumberOfFaces;
 
-    NumberOfFaces = SelFaceList_GetSize(App->m_pDoc->pSelFaces);
+    NumberOfFaces = SelFaceList_GetSize(pSelFaces);
 
     for (int i = 0; i < NumberOfFaces; ++i)
     {
-        pFace = SelFaceList_GetFace(App->m_pDoc->pSelFaces, i);
+        pFace = SelFaceList_GetFace(pSelFaces, i);
         Face_SetTextureLock(pFace, true);
     }
 
@@ -416,7 +420,7 @@ static geBoolean fdocSelectEntity(CEntity& Ent, void* lParam)
 static geBoolean fdocSelectBrush(Brush* pBrush, void* lParam)
 {
     
-    SelBrushList_Add(App->m_pDoc->pSelBrushes, pBrush);
+    SelBrushList_Add(App->CLSB_Doc->pSelBrushes, pBrush);
 
     return GE_TRUE;
 }
@@ -432,7 +436,7 @@ static geBoolean SelAllBrushFaces(Brush* pBrush, void* lParam)
 
         pFace = Brush_GetFace(pBrush, iFace);
         Face_SetSelected(pFace, GE_TRUE);
-        SelFaceList_Add(App->m_pDoc->pSelFaces, pFace);
+        SelFaceList_Add(App->CLSB_Doc->pSelFaces, pFace);
     }
     return GE_TRUE;
 }
@@ -452,13 +456,13 @@ void SB_Doc::SelectAll(void)
 
     // Select all faces on all selected brushes
     int iBrush;
-    int NumSelBrushes = SelBrushList_GetSize(App->m_pDoc->pSelBrushes);
+    int NumSelBrushes = SelBrushList_GetSize(pSelBrushes);
 
     for (iBrush = 0; iBrush < NumSelBrushes; ++iBrush)
     {
         Brush* pBrush;
 
-        pBrush = SelBrushList_GetBrush(App->m_pDoc->pSelBrushes, iBrush);
+        pBrush = SelBrushList_GetBrush(pSelBrushes, iBrush);
 
         if (Brush_IsMulti(pBrush))
         {
@@ -484,8 +488,8 @@ void SB_Doc::UpdateSelected(void)
     App->Get_Current_Document();
 
     int		i;
-    int NumSelFaces = SelFaceList_GetSize(App->m_pDoc->pSelFaces);
-    int NumSelBrushes = SelBrushList_GetSize(App->m_pDoc->pSelBrushes);
+    int NumSelFaces = SelFaceList_GetSize(pSelFaces);
+    int NumSelBrushes = SelBrushList_GetSize(pSelBrushes);
 
     App->m_pDoc->SelState = (NumSelBrushes > 1) ? MULTIBRUSH : NumSelBrushes;
     App->m_pDoc->SelState |= (NumSelFaces > 1) ? MULTIFACE : (NumSelFaces + 1) << 3;
@@ -495,9 +499,13 @@ void SB_Doc::UpdateSelected(void)
     if (mModeTool == ID_GENERALSELECT)
     {
         if (App->m_pDoc->GetSelState() & ONEBRUSH)
-            App->m_pDoc->CurBrush = SelBrushList_GetBrush(App->m_pDoc->pSelBrushes, 0);
+        {
+            CurBrush = SelBrushList_GetBrush(pSelBrushes, 0);
+        }
         else
-            App->m_pDoc->CurBrush = App->m_pDoc->BTemplate;
+        {
+            CurBrush = BTemplate;
+        }
     }
 
     geVec3d_Clear(&SelectedGeoCenter);
@@ -510,7 +518,7 @@ void SB_Doc::UpdateSelected(void)
         }
         else
         {
-            Brush_Center(App->m_pDoc->CurBrush, &SelectedGeoCenter);
+            Brush_Center(CurBrush, &SelectedGeoCenter);
         }
     }
     else if (App->m_pDoc->SelState != NOSELECTIONS)
@@ -528,7 +536,7 @@ void SB_Doc::UpdateSelected(void)
         {
             if (NumSelBrushes)
             {
-                SelBrushList_Center(App->m_pDoc->pSelBrushes, &SelectedGeoCenter);
+                SelBrushList_Center(pSelBrushes, &SelectedGeoCenter);
             }
             else if (NumSelEntities)
             {
@@ -607,10 +615,8 @@ static geBoolean ResetSelectedFacesCB(Brush* b, void* pVoid)
 // *************************************************************************
 void SB_Doc::ResetAllSelectedFaces(void)
 {
-    App->Get_Current_Document();
-
     BrushList_EnumLeafBrushes(Level_GetBrushes(pLevel), NULL, ResetSelectedFacesCB);
-    SelFaceList_RemoveAll(App->m_pDoc->pSelFaces);
+    SelFaceList_RemoveAll(pSelFaces);
 }
 
 // *************************************************************************
@@ -618,10 +624,8 @@ void SB_Doc::ResetAllSelectedFaces(void)
 // *************************************************************************
 void SB_Doc::ResetAllSelectedBrushes(void)
 {
-    App->Get_Current_Document();
-
-    SelBrushList_RemoveAll(App->m_pDoc->pSelBrushes);
-    App->m_pDoc->CurBrush = App->m_pDoc->BTemplate;
+    SelBrushList_RemoveAll(pSelBrushes);
+    CurBrush = BTemplate;
 }
 
 static geBoolean fdocDeselectEntity(CEntity& Ent, void* lParam)
@@ -800,4 +804,57 @@ void SB_Doc::MoveSelectedBrushList(SelBrushList* pList,geVec3d const* v)
             (*Entities)[i].Move(v);
         }
     }
+}
+
+// *************************************************************************
+// *         AddCameraEntityToLevel:- Terry and Hazel Flanigan 2023        *
+// *************************************************************************
+void SB_Doc::AddCameraEntityToLevel(void)
+{
+    CEntity* pCameraEntity = App->CLSB_Camera_WE->FindCameraEntity();
+    if (!pCameraEntity)
+    {
+        // Make default camera entity
+        CEntity CameraEntity;
+        CString cstr;
+
+        CreateEntityFromName("Camera", CameraEntity);
+        cstr.LoadString(IDS_CAMERAENTITYNAME);
+        CameraEntity.SetKeyValue("%name%", cstr);
+        CameraEntity.SetOrigin(0.0f, 0.0f, 0.0f, Level_GetEntityDefs(App->CLSB_Doc->pLevel));
+        Level_AddEntity(App->CLSB_Doc->pLevel, CameraEntity);
+
+        //		pCameraEntity = FindCameraEntity();
+    }
+}
+
+// *************************************************************************
+// *         CreateEntityFromName:- Terry and Hazel Flanigan 2023          *
+// *************************************************************************
+geBoolean SB_Doc::CreateEntityFromName(char const* pEntityType, CEntity& NewEnt)
+{
+    assert(pEntityType != NULL);
+    // get all properties for this entity type...
+    EntityPropertiesList* pProps;
+
+    pProps = EntityTable_GetEntityPropertiesFromName(Level_GetEntityDefs(App->CLSB_Doc->pLevel), pEntityType, ET_ALL);
+    if (pProps == NULL)
+    {
+        return FALSE;
+    }
+
+    // Add key/value pairs for all of the properties...
+    for (int PropNo = 0; PropNo < pProps->NumProps; ++PropNo)
+    {
+        EntityProperty* p = &(pProps->Props[PropNo]);
+
+        NewEnt.SetKeyValue(p->pKey, p->pValue);
+
+    }
+
+    EntityTable_ReleaseEntityProperties(pProps);
+
+    NewEnt.SetGroupId(0);
+    NewEnt.UpdateOrigin(Level_GetEntityDefs(App->CLSB_Doc->pLevel));
+    return TRUE;
 }

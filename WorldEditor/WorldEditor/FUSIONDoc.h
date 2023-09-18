@@ -121,12 +121,6 @@ public:
 							// down an entity when enter is pressed
 	DWORD SelState;
 
-	//list related
-	Brush	*BTemplate, *CurBrush, *TempShearTemplate;
-	SelBrushList *pSelBrushes;
-	
-	SelFaceList *pSelFaces;
-
 	GNode			*mWorldBsp;
 	CEntity			mRegularEntity;
 	
@@ -165,7 +159,7 @@ public:
 	void OnBrushAddtoworld();
 	void DoGeneralSelect (void);
 	void CreateEntity(char const *pEntityName);
-	geBoolean CreateEntityFromName (char const *pEntityType, CEntity &NewEnt);
+	
 
 	// creates a template entity with which the user specifies a location for any objects
 	// they place
@@ -481,7 +475,6 @@ private:
 
 	void GetRotationPoint (geVec3d *pVec);
 	void CreateNewTemplateBrush (Brush *pBrush);
-	void AddCameraEntityToLevel (void);
 
 	geBoolean FindClosestEntity (POINT const *ptFrom, ViewVars *v, CEntity **ppMinEntity, geFloat *pMinEntityDist);
 	geBoolean FindClosestBrush (POINT const *ptFrom, ViewVars *v, Brush **ppFoundBrush, geFloat *pMinEdgeDist);

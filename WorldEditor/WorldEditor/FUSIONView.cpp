@@ -208,7 +208,7 @@ void CFusionView::OnCenterthing()
 	if (App->CLSB_Doc->mModeTool == ID_TOOLS_TEMPLATE)
 		pDoc->MoveTemplateBrush (&MoveDelta);
 	else
-		App->CLSB_Doc->MoveSelectedBrushList(pDoc->pSelBrushes, &MoveDelta);
+		App->CLSB_Doc->MoveSelectedBrushList(App->CLSB_Doc->pSelBrushes, &MoveDelta);
 
 	App->CLSB_Doc->UpdateAllViews( UAV_ALL3DVIEWS, NULL );
 }
@@ -341,7 +341,7 @@ int CFusionView::GetCursorBoxPos (const POINT *ptMousePos)
 
 //	Box3d BrushBox;
 //	if (pDoc->mModeTool == ID_TOOLS_TEMPLATE)
-		pBrushBox = Brush_GetBoundingBox (pDoc->CurBrush);
+		pBrushBox = Brush_GetBoundingBox (App->CLSB_Doc->CurBrush);
 //	else
 //	{
 //		SelBrushList_GetBoundingBox(pDoc->pSelBrushes, &BrushBox);
@@ -919,7 +919,7 @@ void CFusionView::DoneMovingBrushes ()
 
 	pDoc->SetModifiedFlag();
 
-	if (SelBrushList_GetSize (pDoc->pSelBrushes) > 0 || ModeTool == ID_TOOLS_TEMPLATE)
+	if (SelBrushList_GetSize (App->CLSB_Doc->pSelBrushes) > 0 || ModeTool == ID_TOOLS_TEMPLATE)
 	{
 		geFloat fSnapSize ;
 		const geVec3d *vMin, *vMax;
@@ -933,7 +933,7 @@ void CFusionView::DoneMovingBrushes ()
 			fSnapSize = Level_GetGridSnapSize (App->CLSB_Doc->pLevel);
 		}
 		// do the snap thing...
-		pBox = Brush_GetBoundingBox (pDoc->CurBrush);
+		pBox = Brush_GetBoundingBox (App->CLSB_Doc->CurBrush);
 		vMin = Box3d_GetMin (pBox);
 		vMax = Box3d_GetMax (pBox);
 		geVec3d_Clear (&SnapDelta);
@@ -1311,7 +1311,7 @@ void CFusionView::OnLButtonDown(UINT nFlags, CPoint point)
 				geVec3d_Clear (&App->CLSB_Doc->FinalScale);
 				if (ModeTool == ID_TOOLS_TEMPLATE)
 				{
-					pDoc->TempShearTemplate	=Brush_Clone(pDoc->CurBrush);
+					App->CLSB_Doc->TempShearTemplate	=Brush_Clone(App->CLSB_Doc->CurBrush);
 				}
 				else
 				{
@@ -1460,7 +1460,7 @@ void CFusionView::OnRButtonUp(UINT nFlags, CPoint point)
 				}
 			}
 
-			if (SelBrushList_GetSize (pDoc->pSelBrushes) != 0)
+			if (SelBrushList_GetSize (App->CLSB_Doc->pSelBrushes) != 0)
 				App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS | REBUILD_QUICK, NULL);
 			else
 				App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
@@ -1811,7 +1811,7 @@ void CFusionView::OnUpdateToolsBrushScalebrush(CCmdUI* pCmdUI)
 //		GetAdjustMode ()==ADJUST_MODE_BRUSH &&
 #pragma message ("Can't do multiple brush scaling due to Brush_Resize implementation.")
 //		SelBrushList_GetSize (pDoc->pSelBrushes) > 0)) 
-		SelBrushList_GetSize (pDoc->pSelBrushes) == 1))
+		SelBrushList_GetSize (App->CLSB_Doc->pSelBrushes) == 1))
 	{
 		pCmdUI->Enable();
 		if(GetTool()==ID_TOOLS_BRUSH_SCALEBRUSH)
@@ -2018,7 +2018,7 @@ void CFusionView::OnUpdateToolsBrushShearbrush(CCmdUI* pCmdUI)
 		(GetModeTool()==ID_GENERALSELECT &&
 //		GetAdjustMode()==ADJUST_MODE_BRUSH &&
 #pragma message ("Can't do multiple brush shear due to Brush_Shear implementation.")
-		SelBrushList_GetSize (pDoc->pSelBrushes) == 1)) 
+		SelBrushList_GetSize (App->CLSB_Doc->pSelBrushes) == 1))
 //		SelBrushList_GetSize (pDoc->pSelBrushes) > 0)) 
 	{
 		pCmdUI->Enable();
@@ -2354,8 +2354,8 @@ void CFusionView::OnToolsNextbrush()
 		if(pDoc->GetSelState()&ONEBRUSH)
 		{
 			if (!(IsKeyDown(VK_SHIFT)))
-				SelBrushList_RemoveAll (pDoc->pSelBrushes);
-			SelBrushList_Add (pDoc->pSelBrushes, Brush_GetNextBrush(pDoc->CurBrush, BList));
+				SelBrushList_RemoveAll (App->CLSB_Doc->pSelBrushes);
+			SelBrushList_Add (App->CLSB_Doc->pSelBrushes, Brush_GetNextBrush(App->CLSB_Doc->CurBrush, BList));
 			App->CLSB_Doc->UpdateSelected();
 		
 			//update the brush attributes dialog...
@@ -2370,7 +2370,7 @@ void CFusionView::OnToolsNextbrush()
 			pBrush = BrushList_GetFirst (BList, &bi);
 			if(pBrush != NULL)
 			{
-				SelBrushList_Add (pDoc->pSelBrushes, pBrush);
+				SelBrushList_Add (App->CLSB_Doc->pSelBrushes, pBrush);
 				App->CLSB_Doc->UpdateSelected();
 				App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 			}
@@ -2388,8 +2388,8 @@ void CFusionView::OnToolsPrevbrush()
 		if(pDoc->GetSelState()&ONEBRUSH)
 		{
 			if (!(IsKeyDown(VK_SHIFT)))
-				SelBrushList_RemoveAll (pDoc->pSelBrushes);
-			SelBrushList_Add (pDoc->pSelBrushes, Brush_GetPrevBrush(pDoc->CurBrush, BList));
+				SelBrushList_RemoveAll (App->CLSB_Doc->pSelBrushes);
+			SelBrushList_Add (App->CLSB_Doc->pSelBrushes, Brush_GetPrevBrush(App->CLSB_Doc->CurBrush, BList));
 			App->CLSB_Doc->UpdateSelected();
 		
 			//update the brush attributes dialog...
@@ -2404,7 +2404,7 @@ void CFusionView::OnToolsPrevbrush()
 			pBrush = BrushList_GetLast(BList, &bi);
 			if (pBrush != NULL)
 			{
-				SelBrushList_Add (pDoc->pSelBrushes, pBrush);
+				SelBrushList_Add (App->CLSB_Doc->pSelBrushes, pBrush);
 				App->CLSB_Doc->UpdateSelected();
 				App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 			}
@@ -2527,23 +2527,23 @@ void CFusionView::OnEditSelectFacesNext()
 
 	if(GetModeTool()==ID_GENERALSELECT && !pDoc->IsSelectionLocked())
 	{
-		int nSelectedFaces = SelFaceList_GetSize (pDoc->pSelFaces);
+		int nSelectedFaces = SelFaceList_GetSize (App->CLSB_Doc->pSelFaces);
 		Face *pFace;
 
 		if (nSelectedFaces == 0)
 		{
 			BrushIterator bi;
 
-			pDoc->CurBrush = BrushList_GetFirst (BList, &bi);
-			pFace = Brush_SelectFirstFace (pDoc->CurBrush);
-			SelBrushList_Add (pDoc->pSelBrushes, pDoc->CurBrush);
+			App->CLSB_Doc->CurBrush = BrushList_GetFirst (BList, &bi);
+			pFace = Brush_SelectFirstFace (App->CLSB_Doc->CurBrush);
+			SelBrushList_Add (App->CLSB_Doc->pSelBrushes, App->CLSB_Doc->CurBrush);
 		}
 		else
 		{
 			Brush *pBrush;
 
 			// get first selected face
-			pFace = SelFaceList_GetFace (pDoc->pSelFaces, nSelectedFaces-1);
+			pFace = SelFaceList_GetFace (App->CLSB_Doc->pSelFaces, nSelectedFaces-1);
 			// Remove all face selections
 			if (!(IsKeyDown(VK_SHIFT)))
 			{
@@ -2564,7 +2564,7 @@ void CFusionView::OnEditSelectFacesNext()
 			}
 		}
 
-		SelFaceList_Add (pDoc->pSelFaces, pFace);
+		SelFaceList_Add (App->CLSB_Doc->pSelFaces, pFace);
 		App->CLSB_Doc->UpdateSelected ();
 							
 		//pDoc->UpdateFaceAttributesDlg ();
@@ -2579,23 +2579,23 @@ void CFusionView::OnEditSelectFacesPrevious()
 
 	if(GetModeTool()==ID_GENERALSELECT && !pDoc->IsSelectionLocked())
 	{
-		int nSelectedFaces = SelFaceList_GetSize (pDoc->pSelFaces);
+		int nSelectedFaces = SelFaceList_GetSize (App->CLSB_Doc->pSelFaces);
 		Face *pFace;
 
 		if (nSelectedFaces == 0)
 		{
 			BrushIterator bi;
 
-			pDoc->CurBrush = BrushList_GetFirst (BList, &bi);
-			pFace = Brush_SelectFirstFace (pDoc->CurBrush);
-			SelBrushList_Add (pDoc->pSelBrushes, pDoc->CurBrush);
+			App->CLSB_Doc->CurBrush = BrushList_GetFirst (BList, &bi);
+			pFace = Brush_SelectFirstFace (App->CLSB_Doc->CurBrush);
+			SelBrushList_Add (App->CLSB_Doc->pSelBrushes, App->CLSB_Doc->CurBrush);
 		}
 		else
 		{
 			Brush *pBrush;
 
 			// get the last selected face
-			pFace = SelFaceList_GetFace (pDoc->pSelFaces, 0);
+			pFace = SelFaceList_GetFace (App->CLSB_Doc->pSelFaces, 0);
 
 			// Remove all face selections
 			if (!(IsKeyDown(VK_SHIFT)))
@@ -2618,7 +2618,7 @@ void CFusionView::OnEditSelectFacesPrevious()
 			}
 		}
 
-		SelFaceList_Add (pDoc->pSelFaces, pFace);
+		SelFaceList_Add (App->CLSB_Doc->pSelFaces, pFace);
 		App->CLSB_Doc->UpdateSelected ();
 							
 		//pDoc->UpdateFaceAttributesDlg ();

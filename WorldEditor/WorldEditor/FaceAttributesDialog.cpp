@@ -284,7 +284,7 @@ void CFaceAttributesDialog::OnResetAll()
 	if (pDoc)
 	{
 		pDoc->SetModifiedFlag();
-		SelFaceList_Enum (pDoc->pSelFaces, ::AssignFaceValues, this);
+		SelFaceList_Enum (App->CLSB_Doc->pSelFaces, ::AssignFaceValues, this);
 	}
 
 	AssignCurrentToViews();
@@ -447,10 +447,10 @@ void CFaceAttributesDialog::AssignCurrentToViews()
 	// update child faces on all selected brushes
 	int NumSelBrushes;
 
-	NumSelBrushes = SelBrushList_GetSize (pDoc->pSelBrushes);
+	NumSelBrushes = SelBrushList_GetSize (App->CLSB_Doc->pSelBrushes);
 	for (int i = 0; i < NumSelBrushes; ++i)
 	{
-		Brush *pBrush = SelBrushList_GetBrush (pDoc->pSelBrushes, i);
+		Brush *pBrush = SelBrushList_GetBrush (App->CLSB_Doc->pSelBrushes, i);
 		Brush_UpdateChildFaces (pBrush);
 	}
 	App->CLSB_Doc->UpdateAllViews(UAV_RENDER_ONLY, NULL);
@@ -499,10 +499,10 @@ void CFaceAttributesDialog::UpdatePolygonFocus ()
 	CFusionDoc *pDoc = m_pMainFrame->GetCurrentDoc();
 	if (pDoc)
 	{
-		NumberOfFaces = SelFaceList_GetSize (pDoc->pSelFaces);
+		NumberOfFaces = SelFaceList_GetSize (App->CLSB_Doc->pSelFaces);
 //		pFace = SelFaceList_GetFace (pDoc->pSelFaces, 0);
 		if (NumberOfFaces)
-			pFace = SelFaceList_GetFace (pDoc->pSelFaces, (NumberOfFaces-1));
+			pFace = SelFaceList_GetFace (App->CLSB_Doc->pSelFaces, (NumberOfFaces-1));
 		else
 			pFace = NULL;
 	}
@@ -722,7 +722,7 @@ void CFaceAttributesDialog::OnKillfocusXOffset()
 		pDoc->SetModifiedFlag();
 		UpdateData (TRUE);
 		OnIntKillFocus (m_EditXOffset, &m_TextureXOffset, 0, "0");
-		SelFaceList_Enum (pDoc->pSelFaces, ChangeXOffset, &m_TextureXOffset);
+		SelFaceList_Enum (App->CLSB_Doc->pSelFaces, ChangeXOffset, &m_TextureXOffset);
 		AssignCurrentToViews ();
 	}
 }
@@ -748,7 +748,7 @@ void CFaceAttributesDialog::OnKillfocusYOffset()
 		pDoc->SetModifiedFlag();
 		UpdateData (TRUE);
 		OnIntKillFocus (m_EditYOffset, &m_TextureYOffset, 0, "0");
-		SelFaceList_Enum (pDoc->pSelFaces, ChangeYOffset, &m_TextureYOffset);
+		SelFaceList_Enum (App->CLSB_Doc->pSelFaces, ChangeYOffset, &m_TextureYOffset);
 		AssignCurrentToViews ();
 	}
 }
@@ -774,7 +774,7 @@ void CFaceAttributesDialog::OnKillfocusXScale()
 		pDoc->SetModifiedFlag();
 		UpdateData (TRUE);
 		OnFloatKillFocus (m_EditXScale, &m_TextureXScale, 1.0f, "1.0");
-		SelFaceList_Enum (pDoc->pSelFaces, ChangeTextureXScale, &m_TextureXScale);
+		SelFaceList_Enum (App->CLSB_Doc->pSelFaces, ChangeTextureXScale, &m_TextureXScale);
 		AssignCurrentToViews ();
 	}
 }
@@ -800,7 +800,7 @@ void CFaceAttributesDialog::OnKillfocusYScale()
 		pDoc->SetModifiedFlag();
 		UpdateData (TRUE);
 		OnFloatKillFocus (m_EditYScale, &m_TextureYScale, 1.0f, "1.0");
-		SelFaceList_Enum (pDoc->pSelFaces, ChangeTextureYScale, &m_TextureYScale);
+		SelFaceList_Enum (App->CLSB_Doc->pSelFaces, ChangeTextureYScale, &m_TextureYScale);
 		AssignCurrentToViews ();
 	}
 }
@@ -826,7 +826,7 @@ void CFaceAttributesDialog::OnKillfocusEditxlightscale()
 		pDoc->SetModifiedFlag();
 		UpdateData (TRUE);
 		OnFloatKillFocus (m_EditLightXScale, &m_LightXScale, 1.0f, "1.0");
-		SelFaceList_Enum (pDoc->pSelFaces, ChangeLightXScale, &m_LightXScale);
+		SelFaceList_Enum (App->CLSB_Doc->pSelFaces, ChangeLightXScale, &m_LightXScale);
 		AssignCurrentToViews ();
 	}
 }
@@ -852,7 +852,7 @@ void CFaceAttributesDialog::OnKillfocusEditylightscale()
 		pDoc->SetModifiedFlag();
 		UpdateData (TRUE);
 		OnFloatKillFocus (m_EditLightYScale, &m_LightYScale, 1.0f, "1.0");
-		SelFaceList_Enum (pDoc->pSelFaces, ChangeLightYScale, &m_LightYScale);
+		SelFaceList_Enum (App->CLSB_Doc->pSelFaces, ChangeLightYScale, &m_LightYScale);
 		AssignCurrentToViews ();
 	}
 }
@@ -876,7 +876,7 @@ void CFaceAttributesDialog::OnKillfocusAngle()
 		pDoc->SetModifiedFlag();
 		UpdateData (TRUE);
 		OnFloatKillFocus (m_EditAngle, &m_TextureAngle, 0, "0");
-		SelFaceList_Enum (pDoc->pSelFaces, ::ChangeTextureAngle, &m_TextureAngle);
+		SelFaceList_Enum (App->CLSB_Doc->pSelFaces, ::ChangeTextureAngle, &m_TextureAngle);
 		AssignCurrentToViews ();
 	}
 }
@@ -900,7 +900,7 @@ void CFaceAttributesDialog::OnKillfocusFacelightintensity()
 		pDoc->SetModifiedFlag();
 		UpdateData (TRUE);
 		OnIntKillFocus (m_EditLightIntensity, &m_LightIntensity, 300, "300");
-		SelFaceList_Enum (pDoc->pSelFaces, ::ChangeLightIntensity, &m_LightIntensity);
+		SelFaceList_Enum (App->CLSB_Doc->pSelFaces, ::ChangeLightIntensity, &m_LightIntensity);
 		AssignCurrentToViews ();
 	}
 }
@@ -924,7 +924,7 @@ void CFaceAttributesDialog::OnKillfocusMipmapbias()
 		pDoc->SetModifiedFlag();
 		UpdateData (TRUE);
 		OnFloatKillFocus (m_EditMipMapBias, &m_MipMapBias, 0, "1.0");
-		SelFaceList_Enum (pDoc->pSelFaces, ::ChangeMipMapBias, &m_MipMapBias);
+		SelFaceList_Enum (App->CLSB_Doc->pSelFaces, ::ChangeMipMapBias, &m_MipMapBias);
 		AssignCurrentToViews ();
 	}
 }
@@ -958,7 +958,7 @@ void CFaceAttributesDialog::OnKillfocusReflectivity()
 			m_Reflectivity	=10.0f;
 		}
 
-		SelFaceList_Enum (pDoc->pSelFaces, ::ChangeReflectivity, &m_Reflectivity);
+		SelFaceList_Enum (App->CLSB_Doc->pSelFaces, ::ChangeReflectivity, &m_Reflectivity);
 		AssignCurrentToViews ();
 	}
 }
@@ -991,7 +991,7 @@ void CFaceAttributesDialog::OnKillfocusFacetranslucency()
 		{
 			m_Translucency	=255.0f;
 		}
-		SelFaceList_Enum (pDoc->pSelFaces, ::ChangeTranslucency, &m_Translucency);
+		SelFaceList_Enum (App->CLSB_Doc->pSelFaces, ::ChangeTranslucency, &m_Translucency);
 		AssignCurrentToViews ();
 	}
 }
@@ -1021,7 +1021,7 @@ void CFaceAttributesDialog::OnFlipvertical()
 
 		UpdateData(FALSE);
 
-		SelFaceList_Enum (pDoc->pSelFaces, FlipVertical, NULL);
+		SelFaceList_Enum (App->CLSB_Doc->pSelFaces, FlipVertical, NULL);
 
 		AssignCurrentToViews();
 	}
@@ -1052,7 +1052,7 @@ void CFaceAttributesDialog::OnFliphorizontal()
 
 		UpdateData(FALSE);
 
-		SelFaceList_Enum (pDoc->pSelFaces, FlipHorizontal, NULL);
+		SelFaceList_Enum (App->CLSB_Doc->pSelFaces, FlipHorizontal, NULL);
 
 		AssignCurrentToViews();
 	}
@@ -1077,7 +1077,7 @@ void CFaceAttributesDialog::OnFacelight()
 		pDoc->SetModifiedFlag();
 		UpdateData (TRUE);
 		GetDlgItem( IDC_FACELIGHTINTENSITY )->EnableWindow( m_Light && !m_Sky) ;
-		SelFaceList_Enum (pDoc->pSelFaces, SetLight, &m_Light);
+		SelFaceList_Enum (App->CLSB_Doc->pSelFaces, SetLight, &m_Light);
 		AssignCurrentToViews ();
 	}
 }
@@ -1102,7 +1102,7 @@ void CFaceAttributesDialog::OnFacemirror()
 		pDoc->SetModifiedFlag();
 		UpdateData (TRUE);
 		EnabledChange(TRUE);
-		SelFaceList_Enum (pDoc->pSelFaces, SetMirror, &m_Mirror);
+		SelFaceList_Enum (App->CLSB_Doc->pSelFaces, SetMirror, &m_Mirror);
 		AssignCurrentToViews ();
 	}
 }
@@ -1126,7 +1126,7 @@ void CFaceAttributesDialog::OnFacesky()
 		pDoc->SetModifiedFlag();
 		UpdateData (TRUE);
 		EnabledChange(TRUE);
-		SelFaceList_Enum (pDoc->pSelFaces, SetSky, &m_Sky);
+		SelFaceList_Enum (App->CLSB_Doc->pSelFaces, SetSky, &m_Sky);
 		AssignCurrentToViews ();
 	}
 }
@@ -1145,10 +1145,10 @@ void CFaceAttributesDialog::SetShadingChecks ()
 	if (pDoc)
 	{
 //	Face *pFace = SelFaceList_GetFace (pDoc->pSelFaces, 0);
-	int	NumberOfFaces = SelFaceList_GetSize (pDoc->pSelFaces);
+	int	NumberOfFaces = SelFaceList_GetSize (App->CLSB_Doc->pSelFaces);
 	Face *pFace;
 	if (NumberOfFaces)
-		pFace = SelFaceList_GetFace (pDoc->pSelFaces, (NumberOfFaces-1));
+		pFace = SelFaceList_GetFace (App->CLSB_Doc->pSelFaces, (NumberOfFaces-1));
 	else
 		return;
 
@@ -1169,7 +1169,7 @@ void CFaceAttributesDialog::OnFacefullbright()
 	{
 		pDoc->SetModifiedFlag();
 		UpdateData (TRUE);
-		SelFaceList_Enum (pDoc->pSelFaces, ::SetFullBright, &m_FullBright);
+		SelFaceList_Enum (App->CLSB_Doc->pSelFaces, ::SetFullBright, &m_FullBright);
 		SetShadingChecks ();
 		AssignCurrentToViews ();
 	}
@@ -1193,7 +1193,7 @@ void CFaceAttributesDialog::OnFacegouraud()
 	{
 		pDoc->SetModifiedFlag();
 		UpdateData (TRUE);
-		SelFaceList_Enum (pDoc->pSelFaces, ::SetGouraud, &m_Gouraud);
+		SelFaceList_Enum (App->CLSB_Doc->pSelFaces, ::SetGouraud, &m_Gouraud);
 		SetShadingChecks ();
 		AssignCurrentToViews ();
 	}
@@ -1217,7 +1217,7 @@ void CFaceAttributesDialog::OnFaceflat()
 	{
 		pDoc->SetModifiedFlag();
 		UpdateData (TRUE);
-		SelFaceList_Enum (pDoc->pSelFaces, ::SetFlat, &m_Flat);
+		SelFaceList_Enum (App->CLSB_Doc->pSelFaces, ::SetFlat, &m_Flat);
 		SetShadingChecks ();
 		AssignCurrentToViews ();
 	}
@@ -1241,7 +1241,7 @@ void CFaceAttributesDialog::OnTexturelock()
 	{
 		pDoc->SetModifiedFlag();
 		UpdateData (TRUE);
-		SelFaceList_Enum (pDoc->pSelFaces, ::SetTextureLock, &m_TextureLock);
+		SelFaceList_Enum (App->CLSB_Doc->pSelFaces, ::SetTextureLock, &m_TextureLock);
 		AssignCurrentToViews ();
 	}
 }
@@ -1265,7 +1265,7 @@ void CFaceAttributesDialog::OnTransparent()
 		pDoc->SetModifiedFlag();
 		UpdateData (TRUE);
 		GetDlgItem( IDC_FACETRANSLUCENCY )->EnableWindow( (m_Mirror || m_Transparent) && !m_Sky) ;
-		SelFaceList_Enum (pDoc->pSelFaces, ::SetTransparent, &m_Transparent);
+		SelFaceList_Enum (App->CLSB_Doc->pSelFaces, ::SetTransparent, &m_Transparent);
 		AssignCurrentToViews ();
 	}
 }

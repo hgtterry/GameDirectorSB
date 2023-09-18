@@ -73,7 +73,7 @@ void SB_Brushes::Start_Dimensions_Dlg()
 
 		//Lock_Textures(true);
 
-		SelBrushList_Center(m_pDoc->pSelBrushes, &App->CLSB_Doc->SelectedGeoCenter);
+		SelBrushList_Center(App->CLSB_Doc->pSelBrushes, &App->CLSB_Doc->SelectedGeoCenter);
 
 		CenterOfSelection = App->CLSB_Doc->SelectedGeoCenter;
 
@@ -745,7 +745,7 @@ void SB_Brushes::Move_Brush()
 {
 	geVec3d_Subtract(&App->CLSB_Brushes->CenterOfSelection, &App->CLSB_Doc->SelectedGeoCenter, &App->CLSB_Brushes->CenterOfSelection);
 
-	App->CLSB_Doc->MoveSelectedBrushList(App->CLSB_Brushes->m_pDoc->pSelBrushes, &App->CLSB_Brushes->CenterOfSelection);
+	App->CLSB_Doc->MoveSelectedBrushList(App->CLSB_Doc->pSelBrushes, &App->CLSB_Brushes->CenterOfSelection);
 
 	App->CLSB_Doc->UpdateAllViews(UAV_ALLVIEWS | REBUILD_QUICK, NULL);
 }
@@ -761,7 +761,7 @@ void SB_Brushes::Rotate_Brush(float SX, float SY, float SZ)
 	FinalScale.Y = SY;
 	FinalScale.Z = SZ;
 
-	App->m_pDoc->RotateSelectedBrushList(App->CLSB_Brushes->m_pDoc->pSelBrushes, &FinalScale);
+	App->m_pDoc->RotateSelectedBrushList(App->CLSB_Doc->pSelBrushes, &FinalScale);
 
 	App->CLSB_Doc->UpdateAllViews(UAV_ALLVIEWS | UAV_ALL3DVIEWS | REBUILD_QUICK, NULL);
 }
@@ -878,7 +878,7 @@ void SB_Brushes::Update_Pos_Dlg(HWND hDlg)
 	//Lock_Textures(true);
 
 	Get_Brush();
-	SelBrushList_Center(m_pDoc->pSelBrushes, &App->CLSB_Doc->SelectedGeoCenter);
+	SelBrushList_Center(App->CLSB_Doc->pSelBrushes, &App->CLSB_Doc->SelectedGeoCenter);
 	CenterOfSelection = App->CLSB_Doc->SelectedGeoCenter;
 	
 	char buf[255];
@@ -941,11 +941,11 @@ void SB_Brushes::Lock_Textures(bool flag)
 
 	m_pDoc->SelectAllFacesInBrushes();
 
-	NumberOfFaces = SelFaceList_GetSize(m_pDoc->pSelFaces);
+	NumberOfFaces = SelFaceList_GetSize(App->CLSB_Doc->pSelFaces);
 
 	for (int i = 0; i < NumberOfFaces; ++i)
 	{
-		pFace = SelFaceList_GetFace(m_pDoc->pSelFaces, i);
+		pFace = SelFaceList_GetFace(App->CLSB_Doc->pSelFaces, i);
 		Face_SetTextureLock(pFace, 256);
 	}
 
@@ -962,11 +962,11 @@ void SB_Brushes::Get_Brush()
 	int NumberOfBrushes;
 	Brush* pBrush;
 
-	NumberOfBrushes = SelBrushList_GetSize(App->m_pDoc->pSelBrushes);
+	NumberOfBrushes = SelBrushList_GetSize(App->CLSB_Doc->pSelBrushes);
 
 	if (NumberOfBrushes)
 	{
-		pBrush = SelBrushList_GetBrush(App->m_pDoc->pSelBrushes, (NumberOfBrushes - 1));
+		pBrush = SelBrushList_GetBrush(App->CLSB_Doc->pSelBrushes, (NumberOfBrushes - 1));
 	}
 	else
 	{
@@ -1014,7 +1014,7 @@ void SB_Brushes::Centre_CentreBrush()
 		Centre.Y = 0;
 		Centre.Z = 0;
 
-		SelBrushList_Add(App->m_pDoc->pSelBrushes, Selected_Brush);
-		App->CLSB_Doc->MoveSelectedBrushList(App->m_pDoc->pSelBrushes, &Centre);
+		SelBrushList_Add(App->CLSB_Doc->pSelBrushes, Selected_Brush);
+		App->CLSB_Doc->MoveSelectedBrushList(App->CLSB_Doc->pSelBrushes, &Centre);
 	}
 }

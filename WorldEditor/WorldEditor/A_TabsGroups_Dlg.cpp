@@ -329,7 +329,7 @@ void A_TabsGroups_Dlg::OnSelchangeBrushlist(int Index, bool Clear)
 		
 		Selected_Brush = App->CL_World->Get_Brush_ByIndex( Index );
 
-		SelBrushList_Add(App->m_pDoc->pSelBrushes, Selected_Brush);
+		SelBrushList_Add(App->CLSB_Doc->pSelBrushes, Selected_Brush);
 
 		if (Clear == 1)
 		{
@@ -384,7 +384,7 @@ void A_TabsGroups_Dlg::Fill_ListBox()
 void A_TabsGroups_Dlg::Update_Dlg_SelectedBrushesCount()
 {
 	char buff[100];
-	int NumSelBrushes = SelBrushList_GetSize(App->m_pDoc->pSelBrushes);
+	int NumSelBrushes = SelBrushList_GetSize(App->CLSB_Doc->pSelBrushes);
 	SetDlgItemText(GroupsDlg_Hwnd, IDC_ST_GD_SELECTED, itoa(NumSelBrushes, buff, 10));
 }
 
@@ -448,7 +448,7 @@ LRESULT CALLBACK A_TabsGroups_Dlg::Properties_Proc(HWND hDlg, UINT message, WPAR
 			else
 			{
 				App->CL_TabsGroups_Dlg->Selected_Index = Index;
-				App->CL_TabsGroups_Dlg->Selected_Brush = SelBrushList_GetBrush(App->m_pDoc->pSelBrushes, Index);
+				App->CL_TabsGroups_Dlg->Selected_Brush = SelBrushList_GetBrush(App->CLSB_Doc->pSelBrushes, Index);
 				App->CL_TabsGroups_Dlg->List_BrushData(hDlg);
 			}
 
@@ -521,7 +521,7 @@ void A_TabsGroups_Dlg::List_SelectedBrushes(HWND hDlg)
 {
 	SendDlgItemMessage(hDlg, IDC_LIST_SELECTEDBRUSHES, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
-	int NumSelBrushes = SelBrushList_GetSize(App->m_pDoc->pSelBrushes);
+	int NumSelBrushes = SelBrushList_GetSize(App->CLSB_Doc->pSelBrushes);
 
 	if (NumSelBrushes == 0)
 	{
@@ -531,14 +531,14 @@ void A_TabsGroups_Dlg::List_SelectedBrushes(HWND hDlg)
 
 	for (int i = 0; i < NumSelBrushes; ++i)
 	{
-		Brush* pBrush = SelBrushList_GetBrush(App->m_pDoc->pSelBrushes, i);
+		Brush* pBrush = SelBrushList_GetBrush(App->CLSB_Doc->pSelBrushes, i);
 		SendDlgItemMessage(hDlg, IDC_LIST_SELECTEDBRUSHES, LB_ADDSTRING, (WPARAM)0, (LPARAM)pBrush->Name);
 	}
 
 	SendDlgItemMessage(hDlg, IDC_LIST_SELECTEDBRUSHES, LB_SETCURSEL, (WPARAM) 0, (LPARAM)0);
 
 	Selected_Index = 0;
-	Selected_Brush = SelBrushList_GetBrush(App->m_pDoc->pSelBrushes, 0);
+	Selected_Brush = SelBrushList_GetBrush(App->CLSB_Doc->pSelBrushes, 0);
 }
 
 // *************************************************************************
@@ -785,7 +785,7 @@ void A_TabsGroups_Dlg::Update_Dlg_Controls()
 {
 	App->Get_Current_Document();
 
-	int NumSelBrushes = SelBrushList_GetSize(App->m_pDoc->pSelBrushes);
+	int NumSelBrushes = SelBrushList_GetSize(App->CLSB_Doc->pSelBrushes);
 	if (NumSelBrushes == 0)
 	{
 		EnableWindow(GetDlgItem(GroupsDlg_Hwnd, IDC_BT_GD_BRUSHPROPERTIES), 0);

@@ -615,7 +615,7 @@ void F_View::RenderOrthoView(ViewVars *v, CDC *pDC, HDC MemoryhDC) // hgtterry R
 	brushDrawData.FlagTest = NULL;
 	{
 		CEntityArray *Entities = Level_GetEntities (App->CLSB_Doc->pLevel);
-		int NumSelBrushes = SelBrushList_GetSize (m_pDoc->pSelBrushes);
+		int NumSelBrushes = SelBrushList_GetSize (App->CLSB_Doc->pSelBrushes);
 				
 		// render selected brushes and entities
 		SelectObject(MemoryhDC,PenSelected2);
@@ -624,7 +624,7 @@ void F_View::RenderOrthoView(ViewVars *v, CDC *pDC, HDC MemoryhDC) // hgtterry R
 		{
 			Brush *pBrush;
 
-			pBrush = SelBrushList_GetBrush (m_pDoc->pSelBrushes, i);
+			pBrush = SelBrushList_GetBrush (App->CLSB_Doc->pSelBrushes, i);
 			if (m_pDoc->fdocShowBrush (pBrush, &ViewBox))
 			{
 				if(Brush_IsMulti (pBrush))
@@ -673,15 +673,15 @@ void F_View::RenderOrthoView(ViewVars *v, CDC *pDC, HDC MemoryhDC) // hgtterry R
 		{
 			if(!m_pDoc->TempEnt)
 			{
-				if (Brush_TestBoundsIntersect(m_pDoc->CurBrush, &ViewBox))
+				if (Brush_TestBoundsIntersect(App->CLSB_Doc->CurBrush, &ViewBox))
 				{
-					if(Brush_IsMulti(m_pDoc->CurBrush))
+					if(Brush_IsMulti(App->CLSB_Doc->CurBrush))
 					{
-						BrushList_EnumLeafBrushes(App->CL_Brush->Brush_GetBrushList(m_pDoc->CurBrush), &brushDrawData, BrushDraw2);
+						BrushList_EnumLeafBrushes(App->CL_Brush->Brush_GetBrushList(App->CLSB_Doc->CurBrush), &brushDrawData, BrushDraw2);
 					}
 					else
 					{
-						Render_RenderBrushFacesOrtho(v, m_pDoc->CurBrush, MemoryhDC);
+						Render_RenderBrushFacesOrtho(v, App->CLSB_Doc->CurBrush, MemoryhDC);
 					}
 				}
 			}

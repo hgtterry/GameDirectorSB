@@ -257,7 +257,7 @@ void SB_Scene::Build_World(int ExpSelected)
 			while (pBrush != NULL)
 			{
 
-				if (SelBrushList_Find(App->m_pDoc->pSelBrushes, pBrush))
+				if (SelBrushList_Find(App->CLSB_Doc->pSelBrushes, pBrush))
 				{
 					Brush* pClone = Brush_Clone(pBrush);
 					BrushList_Append(SBList, pClone);

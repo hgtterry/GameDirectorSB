@@ -687,7 +687,7 @@ LRESULT CALLBACK A_Dialogs::Move_Brush_Proc(HWND hDlg, UINT message, WPARAM wPar
 				}
 				else
 				{
-					App->CLSB_Doc->MoveSelectedBrushList(App->CL_Dialogs->m_pDoc->pSelBrushes, &App->CL_Dialogs->CenterOfSelection);
+					App->CLSB_Doc->MoveSelectedBrushList(App->CLSB_Doc->pSelBrushes, &App->CL_Dialogs->CenterOfSelection);
 				}
 
 				App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
@@ -715,7 +715,7 @@ LRESULT CALLBACK A_Dialogs::Move_Brush_Proc(HWND hDlg, UINT message, WPARAM wPar
 				}
 				else
 				{
-					App->CLSB_Doc->MoveSelectedBrushList(App->CL_Dialogs->m_pDoc->pSelBrushes, &App->CL_Dialogs->CenterOfSelection);
+					App->CLSB_Doc->MoveSelectedBrushList(App->CLSB_Doc->pSelBrushes, &App->CL_Dialogs->CenterOfSelection);
 				}
 
 				App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);

@@ -260,22 +260,22 @@ void A_TabsTemplates_Dlg::CreateNewTemplateBrush(Brush *pBrush)
 
 	assert (pBrush != NULL);
 
-	if (App->m_pDoc->BTemplate != NULL)
+	if (App->CLSB_Doc->BTemplate != NULL)
 	{
-		Brush_Destroy (&App->m_pDoc->BTemplate);
+		Brush_Destroy (&App->CLSB_Doc->BTemplate);
 	}
 
-	App->m_pDoc->BTemplate = pBrush;
-	App->m_pDoc->CurBrush = pBrush;
+	App->CLSB_Doc->BTemplate = pBrush;
+	App->CLSB_Doc->CurBrush = pBrush;
 
 	App->m_pDoc->TempEnt	= FALSE;
-	App->m_pDoc->SetDefaultBrushTexInfo (App->m_pDoc->CurBrush);
-	Brush_Bound (App->m_pDoc->CurBrush);
-	Brush_Center (App->m_pDoc->CurBrush, &BrushPos);
+	App->m_pDoc->SetDefaultBrushTexInfo (App->CLSB_Doc->CurBrush);
+	Brush_Bound (App->CLSB_Doc->CurBrush);
+	Brush_Center (App->CLSB_Doc->CurBrush, &BrushPos);
 
 	pTemplatePos = Level_GetTemplatePos (App->CLSB_Doc->pLevel);
 	geVec3d_Subtract (pTemplatePos, &BrushPos, &MoveVec);
-	Brush_Move (App->m_pDoc->CurBrush, &MoveVec);
+	Brush_Move (App->CLSB_Doc->CurBrush, &MoveVec);
 
 	App->CLSB_Doc->UpdateAllViews (UAV_ALL3DVIEWS, NULL);
 	App->m_pDoc->SetModifiedFlag ();

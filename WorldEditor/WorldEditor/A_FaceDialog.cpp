@@ -353,11 +353,11 @@ LRESULT CALLBACK A_FaceDialog::FaceDialog_Proc(HWND hDlg, UINT message, WPARAM w
 			int test = SendMessage(temp, BM_GETCHECK, 0, 0);
 			if (test == BST_CHECKED)
 			{
-				NumberOfFaces = SelFaceList_GetSize(App->m_pDoc->pSelFaces);
+				NumberOfFaces = SelFaceList_GetSize(App->CLSB_Doc->pSelFaces);
 
 				for (int i = 0; i < NumberOfFaces; ++i)
 				{
-					pFace = SelFaceList_GetFace(App->m_pDoc->pSelFaces,i);
+					pFace = SelFaceList_GetFace(App->CLSB_Doc->pSelFaces,i);
 					Face_SetTextureLock(pFace,true);
 				}
 
@@ -367,11 +367,11 @@ LRESULT CALLBACK A_FaceDialog::FaceDialog_Proc(HWND hDlg, UINT message, WPARAM w
 			}
 			else
 			{
-				NumberOfFaces = SelFaceList_GetSize(App->m_pDoc->pSelFaces);
+				NumberOfFaces = SelFaceList_GetSize(App->CLSB_Doc->pSelFaces);
 
 				for (int i = 0; i < NumberOfFaces; ++i)
 				{
-					pFace = SelFaceList_GetFace(App->m_pDoc->pSelFaces, i);
+					pFace = SelFaceList_GetFace(App->CLSB_Doc->pSelFaces, i);
 					Face_SetTextureLock(pFace, false);
 				}
 
@@ -517,11 +517,11 @@ void A_FaceDialog::UpdatePolygonFocus()
 
 	if (App->m_pDoc)
 	{
-		NumberOfFaces = SelFaceList_GetSize (App->m_pDoc->pSelFaces);
+		NumberOfFaces = SelFaceList_GetSize (App->CLSB_Doc->pSelFaces);
 //		pFace = SelFaceList_GetFace (pDoc->pSelFaces, 0);
 		if (NumberOfFaces)
 		{
-			pFace = SelFaceList_GetFace(App->m_pDoc->pSelFaces, (NumberOfFaces - 1));
+			pFace = SelFaceList_GetFace(App->CLSB_Doc->pSelFaces, (NumberOfFaces - 1));
 		}
 		else
 		{
@@ -577,11 +577,11 @@ void A_FaceDialog::Update_FaceProperties_Dlg(HWND hDlg)
 	Face* pFace;
 
 
-	NumberOfFaces = SelFaceList_GetSize(App->m_pDoc->pSelFaces);
+	NumberOfFaces = SelFaceList_GetSize(App->CLSB_Doc->pSelFaces);
 	//		pFace = SelFaceList_GetFace (pDoc->pSelFaces, 0);
 	if (NumberOfFaces)
 	{
-		pFace = SelFaceList_GetFace(App->m_pDoc->pSelFaces, (NumberOfFaces - 1));
+		pFace = SelFaceList_GetFace(App->CLSB_Doc->pSelFaces, (NumberOfFaces - 1));
 	}
 	else
 	{
@@ -677,7 +677,7 @@ void A_FaceDialog::OnFlipvertical()
 	{
 		App->m_pDoc->SetModifiedFlag();
 		m_TextureYScale = -m_TextureYScale;
-		SelFaceList_Enum (App->m_pDoc->pSelFaces, FlipVertical, NULL);
+		SelFaceList_Enum (App->CLSB_Doc->pSelFaces, FlipVertical, NULL);
 		AssignCurrentToViews();
 	}
 }
@@ -704,7 +704,7 @@ bool A_FaceDialog::On_FlipHorizontal()
 	{
 		App->m_pDoc->SetModifiedFlag();
 		m_TextureXScale = -m_TextureXScale;
-		SelFaceList_Enum (App->m_pDoc->pSelFaces, FlipHorizontal, NULL);
+		SelFaceList_Enum (App->CLSB_Doc->pSelFaces, FlipHorizontal, NULL);
 		AssignCurrentToViews();
 	}
 
@@ -732,7 +732,7 @@ void A_FaceDialog::OnKillfocusAngle()
 	if (App->m_pDoc)
 	{
 		App->m_pDoc->SetModifiedFlag();
-		SelFaceList_Enum (App->m_pDoc->pSelFaces, ChangeTextureAngle, &m_TextureAngle);
+		SelFaceList_Enum (App->CLSB_Doc->pSelFaces, ChangeTextureAngle, &m_TextureAngle);
 
 		AssignCurrentToViews ();
 	}
@@ -761,7 +761,7 @@ void A_FaceDialog::OnKillfocusYOffset()
 	if (App->m_pDoc)
 	{
 		App->m_pDoc->SetModifiedFlag();
-		SelFaceList_Enum (App->m_pDoc->pSelFaces, ChangeYOffset, &m_TextureYOffset);
+		SelFaceList_Enum (App->CLSB_Doc->pSelFaces, ChangeYOffset, &m_TextureYOffset);
 		AssignCurrentToViews ();
 	}
 }
@@ -789,7 +789,7 @@ void A_FaceDialog::OnKillfocusXOffset()
 	if (App->m_pDoc)
 	{
 		App->m_pDoc->SetModifiedFlag();
-		SelFaceList_Enum (App->m_pDoc->pSelFaces, ChangeXOffset, &m_TextureXOffset);
+		SelFaceList_Enum (App->CLSB_Doc->pSelFaces, ChangeXOffset, &m_TextureXOffset);
 		AssignCurrentToViews ();
 	}
 }
@@ -817,7 +817,7 @@ void A_FaceDialog::OnKillfocusYScale()
 	if (App->m_pDoc)
 	{
 		App->m_pDoc->SetModifiedFlag();
-		SelFaceList_Enum (App->m_pDoc->pSelFaces, ChangeTextureYScale, &m_TextureYScale);
+		SelFaceList_Enum (App->CLSB_Doc->pSelFaces, ChangeTextureYScale, &m_TextureYScale);
 		AssignCurrentToViews ();
 	}
 }
@@ -845,7 +845,7 @@ void A_FaceDialog::OnKillfocusXScale()
 	if (App->m_pDoc)
 	{
 		App->m_pDoc->SetModifiedFlag();
-		SelFaceList_Enum (App->m_pDoc->pSelFaces, ChangeTextureXScale, &m_TextureXScale);
+		SelFaceList_Enum (App->CLSB_Doc->pSelFaces, ChangeTextureXScale, &m_TextureXScale);
 		AssignCurrentToViews ();
 	}
 }
@@ -864,10 +864,10 @@ void A_FaceDialog::AssignCurrentToViews()
 		// update child faces on all selected brushes
 		int NumSelBrushes;
 
-		NumSelBrushes = SelBrushList_GetSize (App->m_pDoc->pSelBrushes);
+		NumSelBrushes = SelBrushList_GetSize (App->CLSB_Doc->pSelBrushes);
 		for (int i = 0; i < NumSelBrushes; ++i)
 		{
-			Brush *pBrush = SelBrushList_GetBrush (App->m_pDoc->pSelBrushes, i);
+			Brush *pBrush = SelBrushList_GetBrush (App->CLSB_Doc->pSelBrushes, i);
 			Brush_UpdateChildFaces (pBrush);
 		}
 

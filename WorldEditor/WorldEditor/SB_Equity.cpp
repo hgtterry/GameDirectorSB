@@ -1125,7 +1125,7 @@ void SB_Equity::Do_Preview_Selected()
 
 	Get_CurrentDocument();
 
-	int NumSelBrushes = SelBrushList_GetSize(m_pDoc->pSelBrushes);
+	int NumSelBrushes = SelBrushList_GetSize(App->CLSB_Doc->pSelBrushes);
 
 	if (NumSelBrushes == 0)
 	{
@@ -1136,7 +1136,7 @@ void SB_Equity::Do_Preview_Selected()
 	
 	for (int i = 0; i < NumSelBrushes; ++i)
 	{
-		Brush* pBrush = SelBrushList_GetBrush(App->m_pDoc->pSelBrushes, i);
+		Brush* pBrush = SelBrushList_GetBrush(App->CLSB_Doc->pSelBrushes, i);
 		if (pBrush->Flags & 1 || pBrush->Flags & 1024)
 		{
 			AllGood = 1;

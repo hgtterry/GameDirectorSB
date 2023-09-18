@@ -167,7 +167,7 @@ bool SB_Level::Change_Centre_Brush_Texture()
 		return 0;
 	}
 
-	SelBrushList_Add(App->m_pDoc->pSelBrushes, Selected_Brush);
+	SelBrushList_Add(App->CLSB_Doc->pSelBrushes, Selected_Brush);
 	
 	App->CLSB_Doc->UpdateSelected();
 

@@ -229,7 +229,7 @@ bool A_Brush::Brush_Create_From_Equity()
 
 	Level_AppendBrush(App->CLSB_Doc->pLevel, pBrush);
 	Brush_SetVisible(pBrush, GE_TRUE);
-	SelBrushList_Add(App->m_pDoc->pSelBrushes, pBrush);
+	SelBrushList_Add(App->CLSB_Doc->pSelBrushes, pBrush);
 
 	App->m_pDoc->SetDefaultBrushTexInfo(pBrush);
 	Brush_Bound(pBrush);

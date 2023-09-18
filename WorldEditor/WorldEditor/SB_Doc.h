@@ -1,4 +1,7 @@
 #pragma once
+
+#include "SelFaceList.h"
+
 class SB_Doc
 {
 public:
@@ -33,6 +36,9 @@ public:
 	void MoveSelectedBrushes(geVec3d const* v);
 	void MoveSelectedBrushList(SelBrushList* pList, geVec3d const* v);
 
+	void AddCameraEntityToLevel(void);
+	geBoolean CreateEntityFromName(char const* pEntityType, CEntity& NewEnt);
+
 	int	NumSelEntities;
 	int mShowSelectedFaces;
 	int mCurrentTool, mCurrentBitmap, mShowBrush, mModeTool;
@@ -44,6 +50,10 @@ public:
 	geVec3d	SelectedGeoCenter, FinalPos, FinalRot, FinalScale;
 
 	SelBrushList* pTempSelBrushes;
+
+	Brush* BTemplate, * CurBrush, * TempShearTemplate;
+	SelBrushList* pSelBrushes;
+	SelFaceList* pSelFaces;
 
 	Level* pLevel;
 };

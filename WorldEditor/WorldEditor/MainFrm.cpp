@@ -161,8 +161,8 @@ void CMainFrame::OnUpdateSelInfo(CCmdUI *pCmdUI)
 	if(pDoc)
 	{
 		CString etxt, btxt, ftxt;
-		int NumSelFaces = SelFaceList_GetSize (pDoc->pSelFaces);
-		int NumSelBrushes = SelBrushList_GetSize (pDoc->pSelBrushes);
+		int NumSelFaces = SelFaceList_GetSize (App->CLSB_Doc->pSelFaces);
+		int NumSelBrushes = SelBrushList_GetSize (App->CLSB_Doc->pSelBrushes);
 
 		etxt.Format("Entities: %d", App->CLSB_Doc->NumSelEntities);
 		btxt.Format(" Brushes: %d", NumSelBrushes);

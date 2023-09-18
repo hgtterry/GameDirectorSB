@@ -961,7 +961,7 @@ bool SB_Loader::Load_ActorWorld()
 
 	Level_AppendBrush(App->CLSB_Doc->pLevel, mActorBrush);
 	Brush_SetVisible(mActorBrush, GE_TRUE);
-	SelBrushList_Add(m_pDoc->pSelBrushes, mActorBrush);
+	SelBrushList_Add(App->CLSB_Doc->pSelBrushes, mActorBrush);
 
 	m_pDoc->SetDefaultBrushTexInfo(mActorBrush);
 	Brush_Bound(mActorBrush);

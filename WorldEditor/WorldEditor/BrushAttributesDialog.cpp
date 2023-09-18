@@ -138,11 +138,11 @@ void CBrushAttributesDialog::SetFlagsToBrushType( void )
 	{
 	pDoc->SetModifiedFlag();
 	int i;
-	int NumBrushes = SelBrushList_GetSize (pDoc->pSelBrushes);
+	int NumBrushes = SelBrushList_GetSize (App->CLSB_Doc->pSelBrushes);
 
 	for (i = 0; i < NumBrushes; ++i)
 	{
-		Brush *pBrush = SelBrushList_GetBrush (pDoc->pSelBrushes, i);
+		Brush *pBrush = SelBrushList_GetBrush (App->CLSB_Doc->pSelBrushes, i);
 
 		switch( m_BrushType )
 		{
@@ -267,7 +267,7 @@ void CBrushAttributesDialog::AssignCurrentToValues()
 	{
 	pDoc->SetModifiedFlag();
 	char const *pName;
-	int NumBrushes = SelBrushList_GetSize (pDoc->pSelBrushes);
+	int NumBrushes = SelBrushList_GetSize (App->CLSB_Doc->pSelBrushes);
 	int i;
 
 	// update user flags
@@ -284,7 +284,7 @@ void CBrushAttributesDialog::AssignCurrentToValues()
 
 	for (i = 0; i < NumBrushes; ++i)
 	{
-		Brush *pBrush = SelBrushList_GetBrush (pDoc->pSelBrushes, i);
+		Brush *pBrush = SelBrushList_GetBrush (App->CLSB_Doc->pSelBrushes, i);
 
 		pName = App->CL_Brush->Brush_GetName (pBrush);	
 		// Flags for the Types (RB's) are always up to date.
@@ -330,10 +330,10 @@ void CBrushAttributesDialog::SetDialogFields (void)
 	CFusionDoc *pDoc = m_pMainFrame->GetCurrentDoc();
 	if (pDoc)
 	{
-		NumberOfBrushes = SelBrushList_GetSize (pDoc->pSelBrushes);
+		NumberOfBrushes = SelBrushList_GetSize (App->CLSB_Doc->pSelBrushes);
 //		pBrush = SelBrushList_GetBrush (pDoc->pSelBrushes, 0);
 		if (NumberOfBrushes)
-			pBrush = SelBrushList_GetBrush (pDoc->pSelBrushes, (NumberOfBrushes-1));
+			pBrush = SelBrushList_GetBrush (App->CLSB_Doc->pSelBrushes, (NumberOfBrushes-1));
 		else
 			pBrush = NULL;
 	}
@@ -589,7 +589,7 @@ void CBrushAttributesDialog::OnBrushflocking()
 	{
 	pDoc->SetModifiedFlag();
 	UpdateData (TRUE);
-	SelBrushList_Enum (pDoc->pSelBrushes, ::SetFlocking, &m_Flocking);
+	SelBrushList_Enum (App->CLSB_Doc->pSelBrushes, ::SetFlocking, &m_Flocking);
 	AssignCurrentToViews ();
 	}
 }
@@ -611,7 +611,7 @@ void CBrushAttributesDialog::OnBrushsheet()
 	{
 	pDoc->SetModifiedFlag();
 	UpdateData (TRUE);
-	SelBrushList_Enum (pDoc->pSelBrushes, ::SetSheet, &m_Sheet);
+	SelBrushList_Enum (App->CLSB_Doc->pSelBrushes, ::SetSheet, &m_Sheet);
 	AssignCurrentToViews ();
 	}
 }
@@ -641,7 +641,7 @@ void CBrushAttributesDialog::OnBrushdetail()
 	{
 	pDoc->SetModifiedFlag();
 	UpdateData (TRUE);
-	SelBrushList_Enum (pDoc->pSelBrushes, ::SetDetail, &m_Detail);
+	SelBrushList_Enum (App->CLSB_Doc->pSelBrushes, ::SetDetail, &m_Detail);
 	AssignCurrentToViews ();
 	}
 }
@@ -663,7 +663,7 @@ void CBrushAttributesDialog::OnBrusharea()
 	{
 	pDoc->SetModifiedFlag();
 	UpdateData (TRUE);
-	SelBrushList_Enum (pDoc->pSelBrushes, ::SetArea, &m_Area);
+	SelBrushList_Enum (App->CLSB_Doc->pSelBrushes, ::SetArea, &m_Area);
 	AssignCurrentToViews ();
 	}
 }
@@ -685,7 +685,7 @@ void CBrushAttributesDialog::OnBrushwavy()
 	{
 		pDoc->SetModifiedFlag();
 		UpdateData (TRUE);
-		SelBrushList_Enum (pDoc->pSelBrushes, ::SetWavy, &m_Wavy);
+		SelBrushList_Enum (App->CLSB_Doc->pSelBrushes, ::SetWavy, &m_Wavy);
 		AssignCurrentToViews ();
 	}
 }
@@ -718,7 +718,7 @@ void CBrushAttributesDialog::OnKillfocusName()
 			}
 // end change
 			pDoc->SetModifiedFlag();
-			SelBrushList_Enum (pDoc->pSelBrushes, ::SetName, &m_Name);
+			SelBrushList_Enum (App->CLSB_Doc->pSelBrushes, ::SetName, &m_Name);
 			AssignCurrentToViews ();
 		}
 	}
@@ -750,7 +750,7 @@ void CBrushAttributesDialog::OnSelchangeContentslist()
 
 		pDoc->SetModifiedFlag();
 		UpdateData (TRUE);
-		SelBrushList_Enum (pDoc->pSelBrushes, ::SetUserFlags, &UserFlags);
+		SelBrushList_Enum (App->CLSB_Doc->pSelBrushes, ::SetUserFlags, &UserFlags);
 		AssignCurrentToViews ();
 	}	
 }

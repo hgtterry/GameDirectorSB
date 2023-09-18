@@ -363,22 +363,22 @@ void SB_File_WE::CreateNewTemplateBrush(Brush *pBrush)
 
 	assert (pBrush != NULL);
 
-	if (App->m_pDoc->BTemplate != NULL)
+	if (App->CLSB_Doc->BTemplate != NULL)
 	{
-		Brush_Destroy (&App->m_pDoc->BTemplate);
+		Brush_Destroy (&App->CLSB_Doc->BTemplate);
 	}
 
-	App->m_pDoc->BTemplate = pBrush;
-	App->m_pDoc->CurBrush = pBrush;
+	App->CLSB_Doc->BTemplate = pBrush;
+	App->CLSB_Doc->CurBrush = pBrush;
 
 	App->m_pDoc->TempEnt	= FALSE;
-	App->m_pDoc->SetDefaultBrushTexInfo (App->m_pDoc->CurBrush);
-	Brush_Bound (App->m_pDoc->CurBrush);
-	Brush_Center (App->m_pDoc->CurBrush, &BrushPos);
+	App->m_pDoc->SetDefaultBrushTexInfo (App->CLSB_Doc->CurBrush);
+	Brush_Bound (App->CLSB_Doc->CurBrush);
+	Brush_Center (App->CLSB_Doc->CurBrush, &BrushPos);
 
 	pTemplatePos = Level_GetTemplatePos (App->CLSB_Doc->pLevel);
 	geVec3d_Subtract (pTemplatePos, &BrushPos, &MoveVec);
-	Brush_Move (App->m_pDoc->CurBrush, &MoveVec);
+	Brush_Move (App->CLSB_Doc->CurBrush, &MoveVec);
 
 	App->CLSB_Doc->UpdateAllViews (UAV_ALL3DVIEWS, NULL);
 	App->m_pDoc->SetModifiedFlag ();
@@ -390,13 +390,14 @@ void SB_File_WE::CreateNewTemplateBrush(Brush *pBrush)
 void SB_File_WE::AddCameraEntityToLevel(void)
 {
 	CEntity* pCameraEntity = App->CLSB_Camera_WE->FindCameraEntity();
+
 	if (!pCameraEntity)
 	{
 		// Make default camera entity
 		CEntity CameraEntity ;
 		CString cstr;
 
-		App->m_pDoc->CreateEntityFromName( "Camera", CameraEntity ) ;
+		App->CLSB_Doc->CreateEntityFromName( "Camera", CameraEntity ) ;
 		cstr.LoadString( IDS_CAMERAENTITYNAME ) ;
 		CameraEntity.SetKeyValue ("%name%", cstr );
 		CameraEntity.SetOrigin ( 0.0f, 0.0f, 0.0f, Level_GetEntityDefs (App->CLSB_Doc->pLevel) );
@@ -418,7 +419,7 @@ void SB_File_WE::AddZeroEntityToLevel(void)
 		CEntity ZeroEntity;
 		CString cstr;
 
-		App->m_pDoc->CreateEntityFromName("Zero", ZeroEntity);
+		App->CLSB_Doc->CreateEntityFromName("Zero", ZeroEntity);
 		cstr.LoadString(IDS_CAMERAENTITYNAME);
 		ZeroEntity.SetKeyValue("%name%", "Zero");
 		ZeroEntity.SetOrigin(0.0f, 0.0f, 0.0f, Level_GetEntityDefs(App->CLSB_Doc->pLevel));
@@ -572,7 +573,7 @@ bool SB_File_WE::ImportFile (const char *PathName, const geVec3d *location)
 
 			if(pBrush!=NULL)
 			{
-				SelBrushList_Remove(App->m_pDoc->pSelBrushes, pBrush);
+				SelBrushList_Remove(App->CLSB_Doc->pSelBrushes, pBrush);
 				Level_RemoveBrush(NewLevel, pBrush);
 				(*Entities)[i].DeleteActorBrush();
 			}
@@ -1112,9 +1113,9 @@ bool SB_File_WE::New_File()
 	}
 
 
-	App->m_pDoc->pSelBrushes = SelBrushList_Create();
+	App->CLSB_Doc->pSelBrushes = SelBrushList_Create();
 	App->CLSB_Doc->pTempSelBrushes = SelBrushList_Create();
-	App->m_pDoc->pSelFaces = SelFaceList_Create();
+	App->CLSB_Doc->pSelFaces = SelFaceList_Create();
 
 	App->m_pDoc->SetLockAxis(0);	// Start with no axis locked
 
@@ -1122,11 +1123,11 @@ bool SB_File_WE::New_File()
 		BrushTemplate_Box* pBoxTemplate;
 		pBoxTemplate = Level_GetBoxTemplate(App->CLSB_Doc->pLevel);
 
-		App->m_pDoc->BTemplate = BrushTemplate_CreateBox(pBoxTemplate);
+		App->CLSB_Doc->BTemplate = BrushTemplate_CreateBox(pBoxTemplate);
 	}
 
-	Brush_Bound(App->m_pDoc->BTemplate);
-	App->m_pDoc->CurBrush = App->m_pDoc->BTemplate;
+	Brush_Bound(App->CLSB_Doc->BTemplate);
+	App->CLSB_Doc->CurBrush = App->CLSB_Doc->BTemplate;
 
 	geVec3d_Clear(&App->CLSB_Doc->SelectedGeoCenter);
 
