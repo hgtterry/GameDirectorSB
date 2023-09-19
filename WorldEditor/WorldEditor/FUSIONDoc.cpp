@@ -7375,34 +7375,6 @@ void CFusionDoc::OnFileExportGDSB()
     App->Say("Exported");
 }
 
-
-const char* CFusionDoc::ReturnThingUnderPoint(CPoint point, ViewVars *v)
-{
-    Brush *pMinBrush;
-    CEntity *pMinEntity;
-    geFloat Dist;
-    int FoundThingType;
-
-    FoundThingType = App->CLSB_Doc->FindClosestThing (&point, v, &pMinBrush, &pMinEntity, &Dist);
-    if ((FoundThingType != fctNOTHING) && (Dist <= MAX_PIXEL_SELECT_THINGNAME))
-    {
-        switch (FoundThingType)
-        {
-            case fctBRUSH :
-                return App->CL_Brush->Brush_GetName(pMinBrush);
-                break;
-            case fctENTITY :
-                return pMinEntity->GetName();
-                break;
-            default :
-                break;
-        }
-    }
-
-    return "";
-}
-
-
 const char* CFusionDoc::GetObjectName3D(CPoint point, ViewVars *v)
 {
     int			CurEnt = 0;

@@ -276,7 +276,7 @@ public:
 	void ExportTo_RFW(const char *FileName, int ExpSelected, geBoolean ExpLights, geBoolean ExpFiles); // [281221]
 // end change
 
-	const char* ReturnThingUnderPoint(CPoint point, ViewVars *v);
+
 	const char* GetObjectName3D(CPoint point, ViewVars *v);
 
 	CEntity* GetSelectedEntity();

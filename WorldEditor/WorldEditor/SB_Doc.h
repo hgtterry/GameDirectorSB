@@ -44,6 +44,8 @@ public:
 	void BrushSelect(Brush* pBrush);
 	int FindClosestThing(POINT const* ptFrom, ViewVars* v, Brush** ppMinBrush, CEntity** ppMinEntity, geFloat* pDist);
 	geBoolean FindClosestBrush(POINT const* ptFrom, ViewVars* v, Brush** ppFoundBrush, geFloat* pMinEdgeDist);
+	const char* ReturnThingUnderPoint(CPoint point, ViewVars* v);
+
 
 	int	NumSelEntities;
 	int mShowSelectedFaces;

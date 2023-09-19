@@ -6,6 +6,16 @@
 #include "units.h"
 
 #define MAX_PIXEL_SELECT_DIST (50)
+#define MIN_ENTITY_SELECT_DIST (8.0f)
+#define MAX_PIXEL_SELECT_THINGNAME (20)
+
+// Maximum distance from entity in order for it to be selected.
+// This is in world space coordinates and is used in rendered view only.
+#define MAX_ENTITY_SELECT_DIST (16.0f)
+
+#define CAMERA_MOVEMENT_DISTANCE (32.0f)
+#define CAMERA_MOVEMENT_ANGLE (M_PI/16.0f)
+
 
 SB_Doc::SB_Doc(void)
 {
@@ -1132,4 +1142,33 @@ geBoolean SB_Doc::FindClosestBrush(POINT const* ptFrom, ViewVars* v, Brush** ppF
     BrushList_EnumLeafBrushes(Level_GetBrushes(App->CLSB_Doc->pLevel), &fci, ::FindClosestBrushCB);
 
     return	(*ppFoundBrush) ? GE_TRUE : GE_FALSE;
+}
+
+// *************************************************************************
+// *          ReturnThingUnderPoint:- Terry and Hazel Flanigan 2023        *
+// *************************************************************************
+const char* SB_Doc::ReturnThingUnderPoint(CPoint point, ViewVars* v)
+{
+    Brush* pMinBrush;
+    CEntity* pMinEntity;
+    geFloat Dist;
+    int FoundThingType;
+
+    FoundThingType = App->CLSB_Doc->FindClosestThing(&point, v, &pMinBrush, &pMinEntity, &Dist);
+    if ((FoundThingType != fctNOTHING) && (Dist <= MAX_PIXEL_SELECT_THINGNAME))
+    {
+        switch (FoundThingType)
+        {
+        case fctBRUSH:
+            return App->CL_Brush->Brush_GetName(pMinBrush);
+            break;
+        case fctENTITY:
+            return pMinEntity->GetName();
+            break;
+        default:
+            break;
+        }
+    }
+
+    return "";
 }
