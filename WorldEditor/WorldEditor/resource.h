@@ -172,6 +172,7 @@
 #define IDB_BITMAP2                     344
 #define IDB_FVFOLDERRED                 344
 #define IDD_SB_TRUEFALSE                345
+#define IDD_SB_SOUNDPLAYER              347
 #define IDC_RESET_ALL                   1000
 #define IDC_EDIT1                       1001
 #define IDC_EDIT10                      1002
@@ -614,11 +615,13 @@
 #define IDC_BT_LOWERRIGHT               1364
 #define IDC_BUTTON8                     1364
 #define IDC_BTFACEPREVIOUS              1364
+#define IDC_BT_PAUSE                    1364
 #define IDC_STTEXT                      1365
 #define IDC_GD_SPHEROID_PRIMITIVE       1365
 #define IDC_BT_FOLDER_NAME              1365
 #define IDC_CKSLOW                      1365
 #define IDC_BT_LOWERLEFT                1365
+#define IDC_BT_STOP                     1365
 #define IDC_STMESSAGE                   1366
 #define IDC_GD_CONE_PRIMITIVE           1366
 #define IDC_STTEXT2                     1366
@@ -844,6 +847,13 @@
 #define IDC_BT_ENVIRONMENT              1539
 #define IDC_TITLENAME                   1540
 #define IDC_CHECKYES                    1541
+#define IDC_SOUNDLIST                   1542
+#define IDC_EDITINT                     1543
+#define IDC_PLAY                        1544
+#define IDC_SLVOLUME                    1545
+#define IDC_EDITINT2                    1546
+#define IDC_VOLBOX                      1546
+#define IDC_STVOLUME                    1547
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772
 #define ID_BRUSH_PRIMITIVES_SPHEROID    32773
@@ -1057,9 +1067,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        347
+#define _APS_NEXT_RESOURCE_VALUE        349
 #define _APS_NEXT_COMMAND_VALUE         33092
-#define _APS_NEXT_CONTROL_VALUE         1542
+#define _APS_NEXT_CONTROL_VALUE         1548
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

@@ -36,6 +36,7 @@ public:
 	bool GetSoundFiles(HWND hDlg,char *Extention);
 	bool Remeber_SoundFile(char* File);
 	bool Play_StartUp_Sound();
+	bool Dialog_SoundFile();
 
 	char mSoundFile[255];
 	char Current_Object_Sound[255];
@@ -58,7 +59,7 @@ public:
 	std::vector<std::string> Sound_File;
 
 protected:
-
+	static LRESULT CALLBACK Dialog_SoundFile_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	
 };
 
