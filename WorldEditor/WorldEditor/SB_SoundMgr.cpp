@@ -79,6 +79,10 @@ LRESULT CALLBACK SB_SoundMgr::Dialog_SoundFile_Proc(HWND hDlg, UINT message, WPA
 			SendDlgItemMessage(hDlg,IDC_SOUNDLIST, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 			SendDlgItemMessage(hDlg,IDC_EDITINT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+			SendDlgItemMessage(hDlg, IDC_PLAY, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+			SendDlgItemMessage(hDlg, IDC_BT_PAUSE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+			SendDlgItemMessage(hDlg, IDC_BT_STOP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+			
 			SetDlgItemText(hDlg,IDC_TITLENAME,(LPCTSTR)"Sound Player");
 
 			

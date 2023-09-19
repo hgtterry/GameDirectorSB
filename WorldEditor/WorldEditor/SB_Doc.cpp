@@ -531,7 +531,7 @@ void SB_Doc::SelectAll(void)
 {
     App->Get_Current_Document();
 
-    App->m_pDoc->DoGeneralSelect();
+    DoGeneralSelect();
 
     NumSelEntities = 0;
     Level_EnumEntities(pLevel, this, fdocSelectEntity);
@@ -724,10 +724,7 @@ static geBoolean fdocDeselectEntity(CEntity& Ent, void* lParam)
 // *************************************************************************
 void SB_Doc::ResetAllSelectedEntities()
 {
-    App->Get_Current_Document();
-
-    App->m_pDoc->DoGeneralSelect();
-
+    DoGeneralSelect();
     Level_EnumEntities(pLevel, this, fdocDeselectEntity);
 }
 
@@ -1025,6 +1022,125 @@ void SB_Doc::DoneShear(int sides, int inidx)
     }
     TempDeleteSelected();
     UpdateSelected();
+}
+
+// *************************************************************************
+// *              DoneRotate:- Terry and Hazel Flanigan 2023              *
+// *************************************************************************
+void SB_Doc::DoneRotate(void)
+{
+    App->Get_Current_Document();
+
+    int			i;
+    geFloat	RSnap;
+    geXForm3d		rm;
+    geVec3d RotationPoint;
+    geVec3d TemplateReversalRot;
+
+    TemplateReversalRot = FinalRot;
+
+    mLastOp = BRUSH_ROTATE;
+
+    TempDeleteSelected();
+
+    App->m_pDoc->TempCopySelectedBrushes();
+
+    App->m_pDoc->GetRotationPoint(&RotationPoint);
+
+    if ((App->CLSB_Doc->SelState & NOENTITIES) && Level_UseGrid(pLevel))
+    {
+        RSnap = Units_DegreesToRadians((float)Level_GetRotationSnap(pLevel));
+        FinalRot.X = ((float)((int)(FinalRot.X / RSnap))) * RSnap;
+        FinalRot.Y = ((float)((int)(FinalRot.Y / RSnap))) * RSnap;
+        FinalRot.Z = ((float)((int)(FinalRot.Z / RSnap))) * RSnap;
+    }
+
+    if (mModeTool == ID_TOOLS_TEMPLATE)
+        geVec3d_Subtract(&FinalRot, &TemplateReversalRot, &FinalRot);
+
+    geXForm3d_SetEulerAngles(&rm, &FinalRot);
+
+    if (mModeTool == ID_TOOLS_TEMPLATE)
+    {
+        if (TempEnt)
+        {
+        }
+        else
+        {
+            Brush_Rotate(CurBrush, &rm, &RotationPoint);
+        }
+        return;
+    }
+
+    int NumSelBrushes = SelBrushList_GetSize(pSelBrushes);
+
+    for (i = 0; i < NumSelBrushes; i++)
+    {
+        Brush* pBrush;
+
+        pBrush = SelBrushList_GetBrush(pTempSelBrushes, i);
+        // changed QD Actors
+        // don't rotate ActorBrushes
+        if (strstr(App->CL_Brush->Brush_GetName(pBrush), ".act") != NULL)
+            continue;
+        // end change
+
+        Brush_Rotate(pBrush, &rm, &RotationPoint);
+    }
+    if (i < NumSelBrushes)
+    {
+        App->CLSB_Doc->TempDeleteSelected();
+    }
+    else
+    {
+        BrushList* BList = Level_GetBrushes(pLevel);
+        for (i = 0; i < NumSelBrushes; i++)
+        {
+            // Replace the sel list brushes with the TSelList brushes
+            Brush* TempBrush, * OldBrush;
+
+            TempBrush = SelBrushList_GetBrush(pTempSelBrushes, 0);
+            OldBrush = SelBrushList_GetBrush(pSelBrushes, 0);
+            // changed QD Actors
+            if (strstr(App->CL_Brush->Brush_GetName(OldBrush), ".act") != NULL)
+            {
+                BrushList_Remove(BList, TempBrush);
+                SelBrushList_Remove(pTempSelBrushes, TempBrush);
+                continue;
+            }
+            // end change
+
+            BrushList_Remove(BList, TempBrush);
+            BrushList_InsertAfter(BList, OldBrush, TempBrush);
+            BrushList_Remove(BList, OldBrush);
+
+            SelBrushList_Remove(pSelBrushes, OldBrush);
+            SelBrushList_Remove(pTempSelBrushes, TempBrush);
+
+            SelBrushList_Add(pSelBrushes, TempBrush);
+
+            Brush_Destroy(&OldBrush);
+        }
+    }
+
+    UpdateSelected();
+
+    App->m_pDoc->UpdateSelectedModel(BRUSH_ROTATE, &FinalRot);
+
+    geVec3d_Clear(&FinalRot);
+
+    // Find the camera entity and update the rendered view's camera position
+    {
+        CEntity* pCameraEntity = App->CLSB_Camera_WE->FindCameraEntity();
+
+        if (pCameraEntity != NULL)
+        {
+            geVec3d Angles;
+
+            pCameraEntity->GetAngles(&Angles, Level_GetEntityDefs(pLevel));
+            App->m_pDoc->SetRenderedViewCamera(&(pCameraEntity->mOrigin), &Angles);
+        }
+    }
 }
 
 // *************************************************************************
@@ -1460,5 +1576,16 @@ void SB_Doc::ConfigureCurrentTool(void)
     {
         UpdateAllViews(UAV_ALL3DVIEWS, NULL);
     }
+}
+
+// *************************************************************************
+// *           DoGeneralSelect:- Terry and Hazel Flanigan 2023             *
+// *************************************************************************
+void SB_Doc::DoGeneralSelect(void)
+{
+    mCurrentTool = CURTOOL_NONE;
+    mModeTool = ID_GENERALSELECT;
+    ConfigureCurrentTool();
+    //mpMainFrame->m_wndTabControls->m_pBrushEntityDialog->Update(this);
 }
 

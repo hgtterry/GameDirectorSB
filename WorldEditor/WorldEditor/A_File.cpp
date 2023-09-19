@@ -339,7 +339,7 @@ bool SB_File_WE::Load_File(const char *FileName)
 	
 	AddCameraEntityToLevel();
 
-	App->m_pDoc->DoGeneralSelect();
+	App->CLSB_Doc->DoGeneralSelect();
 
 	return GE_TRUE;
 LoadError:

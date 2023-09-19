@@ -111,7 +111,7 @@ public:
 	geBoolean BrushIsVisible( const Brush * pBrush ) const ;
 	geBoolean EntityIsVisible( const CEntity *pEntity ) const ;
 	void TempCopySelectedBrushes();
-	void DoneRotate(void);
+	
 	
 	void SnapScaleNearest(int sides, int inidx, ViewVars *v);
 	
@@ -135,7 +135,7 @@ public:
 	void SelectModelBrushes (BOOL Select, int ModelId);
 
 	void OnBrushAddtoworld();
-	void DoGeneralSelect (void);
+	
 	void CreateEntity(char const *pEntityName);
 	
 
@@ -183,6 +183,7 @@ public:
 	void UpdateGridInformation();
 	void MoveEntity(geVec3d *);
 	
+
 	void DoneRotateBrush();
 	void OnSelectedTypeCmdUI(CCmdUI* pCmdUI);
 	int AreBrushesSelected();
@@ -448,13 +449,13 @@ private:
 	int mCurrentBrushId;
 public:
 	void RotateSelectedBrushList (SelBrushList *pList, geVec3d const *v);
-private:
 
+
+public:
 	void GetRotationPoint (geVec3d *pVec);
-	void CreateNewTemplateBrush (Brush *pBrush);
 
 private:
-
+	void CreateNewTemplateBrush (Brush *pBrush);
 	void SetupDefaultFilename (void);
 
 public:

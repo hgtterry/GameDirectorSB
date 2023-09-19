@@ -1007,7 +1007,7 @@ void CFusionView::OnLButtonUp(UINT nFlags, CPoint point)
 		// Do what has to be done
 		DoneMovingBrushes ();
 		// switch bach to Select mode
-		GetDocument()->DoGeneralSelect();
+		App->CLSB_Doc->DoGeneralSelect();
 		// ~MS
 		IsCopying = FALSE;
 	}
@@ -1456,7 +1456,7 @@ void CFusionView::OnRButtonUp(UINT nFlags, CPoint point)
 				App->CLSB_Doc->UpdateSelected();
 				if ((GetModeTool () == ID_GENERALSELECT) || (GetModeTool () == ID_TOOLS_TEMPLATE))
 				{
-					pDoc->DoneRotate ();
+					App->CLSB_Doc->DoneRotate ();
 				}
 			}
 
@@ -2380,7 +2380,7 @@ void CFusionView::OnToolsAddtolevel()
 		pDoc->SetModifiedFlag();
 	}
 
-	pDoc->DoGeneralSelect();
+	App->CLSB_Doc->DoGeneralSelect();
 }
 
 void CFusionView::OnUpdateToolsAddtolevel(CCmdUI* pCmdUI) 

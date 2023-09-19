@@ -30,6 +30,9 @@ public:
 	void DoneResize(int sides, int inidx);
 	void DoneMove(void);
 	void DoneMoveEntity(void);
+	void DoneRotate(void);
+
+	void DoGeneralSelect(void);
 
 	void Lock_AllTextures(void);
 

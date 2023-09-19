@@ -902,7 +902,7 @@ geBoolean CFusionDoc::Load(const char *FileName)
 
     App->CLSB_Doc->AddCameraEntityToLevel ();
 
-    DoGeneralSelect();
+    App->CLSB_Doc->DoGeneralSelect();
     return GE_TRUE;
 LoadError:
     if (NewLevel != NULL)
@@ -1048,7 +1048,7 @@ void CFusionDoc::OnBrushAddtoworld()
     // fake a move
     App->CLSB_Doc->DoneMove();
     // Back to select mode
-    DoGeneralSelect();
+    App->CLSB_Doc->DoGeneralSelect();
     // ~MS
     SetModifiedFlag();
     }
@@ -1889,7 +1889,7 @@ void CFusionDoc::OnToolsFaceAdjustmentmode()
 void CFusionDoc::OnToolsToggleadjustmode() 
 {
 //MS change to select mode before changing to face adjustment
-    DoGeneralSelect();
+    App->CLSB_Doc->DoGeneralSelect();
     if( /*mModeTool == ID_GENERALSELECT && 
         !IsSelectionLocked() && */
         App->CLSB_Doc->mCurrentTool == CURTOOL_NONE )
@@ -1902,7 +1902,7 @@ void CFusionDoc::OnToolsToggleadjustmode()
 void CFusionDoc::OnUpdateToolsToggleadjustmode(CCmdUI* pCmdUI) 
 {
 //MS change to select mode before changing to face adjustment
-    DoGeneralSelect();	
+    App->CLSB_Doc->DoGeneralSelect();
     if( /*mModeTool == ID_GENERALSELECT && 
         !IsSelectionLocked() && */
         App->CLSB_Doc->mCurrentTool == CURTOOL_NONE )
@@ -2159,7 +2159,7 @@ static geBoolean SelAllBrushFaces (Brush *pBrush, void *lParam)
 
 void CFusionDoc::SelectAllBrushes (void)
 {
-    DoGeneralSelect ();
+    App->CLSB_Doc->DoGeneralSelect ();
 
     Level_EnumBrushes (App->CLSB_Doc->pLevel, this, ::fdocSelectBrush);
 
@@ -2168,7 +2168,7 @@ void CFusionDoc::SelectAllBrushes (void)
 
 void CFusionDoc::SelectAllEntities (void)
 {
-    DoGeneralSelect ();
+    App->CLSB_Doc->DoGeneralSelect ();
 
     App->CLSB_Doc->NumSelEntities = 0;
     Level_EnumEntities (App->CLSB_Doc->pLevel, this, ::fdocSelectEntity);
@@ -2178,7 +2178,7 @@ void CFusionDoc::SelectAllEntities (void)
 
 void CFusionDoc::SelectAllFacesInBrushes (void)
 {
-    DoGeneralSelect ();
+    App->CLSB_Doc->DoGeneralSelect ();
 
     // Select all faces on all selected brushes
     int iBrush;
@@ -3687,118 +3687,6 @@ void CFusionDoc::SetAllFacesTextureScale(geFloat ScaleVal)
     }
 }
 
-void CFusionDoc::DoneRotate(void)
-{
-    int			i;
-    geFloat	RSnap;
-    geXForm3d		rm;
-    geVec3d RotationPoint;
-    geVec3d TemplateReversalRot;
-
-    TemplateReversalRot = App->CLSB_Doc->FinalRot;
-
-    App->CLSB_Doc->mLastOp		=BRUSH_ROTATE;
-
-    App->CLSB_Doc->TempDeleteSelected();
-    TempCopySelectedBrushes();
-
-    GetRotationPoint (&RotationPoint);
-
-    if((App->CLSB_Doc->SelState & NOENTITIES) && Level_UseGrid (App->CLSB_Doc->pLevel))
-    {
-        RSnap		=Units_DegreesToRadians ((float)Level_GetRotationSnap (App->CLSB_Doc->pLevel));
-        App->CLSB_Doc->FinalRot.X	=((float)((int)(App->CLSB_Doc->FinalRot.X / RSnap))) * RSnap;
-        App->CLSB_Doc->FinalRot.Y	=((float)((int)(App->CLSB_Doc->FinalRot.Y / RSnap))) * RSnap;
-        App->CLSB_Doc->FinalRot.Z	=((float)((int)(App->CLSB_Doc->FinalRot.Z / RSnap))) * RSnap;
-    }
-
-    if(App->CLSB_Doc->mModeTool == ID_TOOLS_TEMPLATE)
-        geVec3d_Subtract(&App->CLSB_Doc->FinalRot, &TemplateReversalRot, &App->CLSB_Doc->FinalRot);
-
-    geXForm3d_SetEulerAngles(&rm, &App->CLSB_Doc->FinalRot);
-
-    if(App->CLSB_Doc->mModeTool == ID_TOOLS_TEMPLATE)
-    {
-        if (App->CLSB_Doc->TempEnt)
-        {
-        }
-        else
-        {
-            Brush_Rotate (App->CLSB_Doc->CurBrush, &rm, &RotationPoint);
-        }
-        return;
-    }
-
-    int NumSelBrushes = SelBrushList_GetSize (App->CLSB_Doc->pSelBrushes);
-
-    for(i=0;i < NumSelBrushes;i++)
-    {
-        Brush *pBrush;
-
-        pBrush = SelBrushList_GetBrush (App->CLSB_Doc->pTempSelBrushes, i);
-// changed QD Actors
-// don't rotate ActorBrushes
-        if(strstr(App->CL_Brush->Brush_GetName(pBrush),".act")!=NULL)
-            continue;
-// end change
-
-        Brush_Rotate (pBrush, &rm, &RotationPoint);
-    }
-    if(i < NumSelBrushes)
-    {
-        App->CLSB_Doc->TempDeleteSelected();
-    }
-    else
-    {
-        BrushList *BList = Level_GetBrushes (App->CLSB_Doc->pLevel);
-        for(i=0;i < NumSelBrushes;i++)
-        {
-            // Replace the sel list brushes with the TSelList brushes
-            Brush *TempBrush, *OldBrush;
-
-            TempBrush = SelBrushList_GetBrush (App->CLSB_Doc->pTempSelBrushes, 0);
-            OldBrush = SelBrushList_GetBrush (App->CLSB_Doc->pSelBrushes, 0);
-// changed QD Actors
-            if(strstr(App->CL_Brush->Brush_GetName(OldBrush),".act")!=NULL)
-            {
-                BrushList_Remove (BList, TempBrush);
-                SelBrushList_Remove (App->CLSB_Doc->pTempSelBrushes, TempBrush);
-                continue;
-            }
-// end change
-
-            BrushList_Remove (BList, TempBrush);
-            BrushList_InsertAfter (BList, OldBrush, TempBrush);
-            BrushList_Remove (BList, OldBrush);
-
-            SelBrushList_Remove (App->CLSB_Doc->pSelBrushes, OldBrush);
-            SelBrushList_Remove (App->CLSB_Doc->pTempSelBrushes, TempBrush);
-
-            SelBrushList_Add (App->CLSB_Doc->pSelBrushes, TempBrush);
-
-            Brush_Destroy (&OldBrush);
-        }
-    }
-    App->CLSB_Doc->UpdateSelected();
-
-    UpdateSelectedModel (BRUSH_ROTATE, &App->CLSB_Doc->FinalRot);
-
-    geVec3d_Clear (&App->CLSB_Doc->FinalRot);
-
-    // Find the camera entity and update the rendered view's camera position
-    {
-        CEntity *pCameraEntity = App->CLSB_Camera_WE->FindCameraEntity();
-
-        if (pCameraEntity != NULL)
-        {
-            geVec3d Angles;
-
-            pCameraEntity->GetAngles( &Angles, Level_GetEntityDefs (App->CLSB_Doc->pLevel) ) ;
-            SetRenderedViewCamera( &(pCameraEntity->mOrigin), &Angles) ;
-        }
-    }
-}
-
 void CFusionDoc::UpdateSelectedModel
     (
       int MoveRotate,
@@ -4005,15 +3893,7 @@ void CFusionDoc::OnUpdateConstrainhollows(CCmdUI* pCmdUI)
 
 void CFusionDoc::OnGeneralselect()
 {
-    DoGeneralSelect ();
-}
-
-void CFusionDoc::DoGeneralSelect (void)
-{
-    App->CLSB_Doc->mCurrentTool	=CURTOOL_NONE;
-    App->CLSB_Doc->mModeTool		=ID_GENERALSELECT;
-    App->CLSB_Doc->ConfigureCurrentTool();
-    //mpMainFrame->m_wndTabControls->m_pBrushEntityDialog->Update(this);
+    App->CLSB_Doc->DoGeneralSelect ();
 }
 
 void CFusionDoc::OnUpdateGeneralselect(CCmdUI* pCmdUI)

@@ -180,7 +180,7 @@ LRESULT CALLBACK A_TabsTemplates_Dlg::Templates_Proc(HWND hDlg, UINT message, WP
 				
 			}
 
-			App->m_pDoc->DoGeneralSelect();
+			App->CLSB_Doc->DoGeneralSelect();
 
 			App->CL_World->Reset_Editor();
 
