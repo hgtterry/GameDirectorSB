@@ -407,7 +407,7 @@ void A_TextureDialog::Apply_Texture()
 	
 	App->m_pDoc->SetModifiedFlag();
 
-	switch (App->m_pDoc->mAdjustMode)
+	switch (App->CLSB_Doc->mAdjustMode)
 	{
 		case ADJUST_MODE_FACE :
 		{

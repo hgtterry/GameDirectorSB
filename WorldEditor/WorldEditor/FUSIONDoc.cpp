@@ -279,12 +279,12 @@ const char *CFusionDoc::FindTextureLibrary (char const *WadName)
 // end change
 }
 
-CFusionDoc::CFusionDoc() : CDocument (), 
+CFusionDoc::CFusionDoc() : CDocument(),
 
-    LeakPoints (NULL), NumLeakPoints (0), bLeakLoaded (FALSE), bShowLeak (TRUE),
-    bShowClipBrushes (GE_TRUE), bShowDetailBrushes (GE_TRUE), bShowHintBrushes (GE_TRUE), bShowActors(GE_TRUE)/*changed QD*/,
-    mpActiveViewFrame (NULL), // mpBrushAttributes (NULL), mpFaceAttributes (NULL),
-    mAdjustMode (ADJUST_MODE_FACE)
+LeakPoints(NULL), NumLeakPoints(0), bLeakLoaded(FALSE), bShowLeak(TRUE),
+bShowClipBrushes(GE_TRUE), bShowDetailBrushes(GE_TRUE), bShowHintBrushes(GE_TRUE), bShowActors(GE_TRUE)/*changed QD*/,
+mpActiveViewFrame(NULL)
+    
 {
 
     const char *DefaultWadName;
@@ -1044,7 +1044,7 @@ void CFusionDoc::OnBrushAddtoworld()
     // Lib objects to where they were placed in Template mode
     // switch to move mode
     App->CLSB_Doc->mCurrentTool=ID_TOOLS_BRUSH_MOVEROTATEBRUSH;
-    ConfigureCurrentTool();
+    App->CLSB_Doc->ConfigureCurrentTool();
     // fake a move
     App->CLSB_Doc->DoneMove();
     // Back to select mode
@@ -1644,7 +1644,7 @@ void CFusionDoc::CreateEntity
         App->CLSB_Doc->PlaceObjectFlag = FALSE;
 
         App->CLSB_Doc->mCurrentTool=ID_TOOLS_BRUSH_MOVEROTATEBRUSH;
-        ConfigureCurrentTool();
+        App->CLSB_Doc->ConfigureCurrentTool();
 
         App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
         SetModifiedFlag();
@@ -1672,7 +1672,7 @@ void CFusionDoc::CreateObjectTemplate()
         App->CLSB_Doc->PlaceObjectFlag = TRUE;
 
         App->CLSB_Doc->mCurrentTool=ID_TOOLS_BRUSH_MOVEROTATEBRUSH;
-        ConfigureCurrentTool();
+        App->CLSB_Doc->ConfigureCurrentTool();
 
         App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
         SetModifiedFlag();
@@ -1856,7 +1856,7 @@ static geBoolean fdocBrushIsSubtract (const Brush *b)
 void CFusionDoc::OnUpdateBrushAdjustmentmode(CCmdUI* pCmdUI) 
 {
     pCmdUI->Enable( TRUE); //( mModeTool == ID_GENERALSELECT ) ? TRUE : FALSE ) ;
-    pCmdUI->SetCheck( ( mAdjustMode == ADJUST_MODE_BRUSH ) ? TRUE : FALSE ) ;
+    pCmdUI->SetCheck( (App->CLSB_Doc->mAdjustMode == ADJUST_MODE_BRUSH ) ? TRUE : FALSE ) ;
 }
 
 void CFusionDoc::OnToolsBrushAdjustmentmode() 
@@ -1866,14 +1866,14 @@ void CFusionDoc::OnToolsBrushAdjustmentmode()
         App->CLSB_Doc->mCurrentTool == CURTOOL_NONE )
     {
 //		SetAdjustmentMode( ADJUST_MODE_BRUSH ) ;
-        SetAdjustmentMode( ADJUST_MODE_FACE ) ;
+        App->CLSB_Doc->SetAdjustmentMode( ADJUST_MODE_FACE ) ;
     }
 }
 
 void CFusionDoc::OnUpdateFaceAdjustmentmode(CCmdUI* pCmdUI) 
 {
     pCmdUI->Enable( TRUE); //( mModeTool == ID_GENERALSELECT ) ? TRUE : FALSE ) ;
-    pCmdUI->SetCheck( (mAdjustMode==ADJUST_MODE_FACE) ? TRUE : FALSE ) ;
+    pCmdUI->SetCheck( (App->CLSB_Doc->mAdjustMode==ADJUST_MODE_FACE) ? TRUE : FALSE ) ;
 }
 
 void CFusionDoc::OnToolsFaceAdjustmentmode() 
@@ -1882,7 +1882,7 @@ void CFusionDoc::OnToolsFaceAdjustmentmode()
         !IsSelectionLocked() && */
         App->CLSB_Doc->mCurrentTool == CURTOOL_NONE )
     {
-        SetAdjustmentMode( ADJUST_MODE_FACE ) ;
+        App->CLSB_Doc->SetAdjustmentMode( ADJUST_MODE_FACE ) ;
     }
 }
 
@@ -1894,7 +1894,7 @@ void CFusionDoc::OnToolsToggleadjustmode()
         !IsSelectionLocked() && */
         App->CLSB_Doc->mCurrentTool == CURTOOL_NONE )
     {
-        SetAdjustmentMode( ADJUST_MODE_FACE ) ;
+        App->CLSB_Doc->SetAdjustmentMode( ADJUST_MODE_FACE ) ;
     }
 
 }
@@ -1907,56 +1907,9 @@ void CFusionDoc::OnUpdateToolsToggleadjustmode(CCmdUI* pCmdUI)
         !IsSelectionLocked() && */
         App->CLSB_Doc->mCurrentTool == CURTOOL_NONE )
     {
-        SetAdjustmentMode( ADJUST_MODE_TOGGLE ) ;	// Flip between Brush & face 
+        App->CLSB_Doc->SetAdjustmentMode( ADJUST_MODE_TOGGLE ) ;	// Flip between Brush & face 
     }
 
-}
-
-geBoolean CFusionDoc::FindClosestEntity
-    (
-      POINT const *ptFrom,
-      ViewVars *v,
-      CEntity **ppMinEntity,
-      geFloat *pMinEntityDist
-    )
-{
-    geBoolean rslt;
-    CEntityArray *Entities;
-
-    Entities = Level_GetEntities (App->CLSB_Doc->pLevel);
-    rslt = GE_FALSE;
-    // determine distance to closest entity in the current view
-    *pMinEntityDist = FLT_MAX;
-    *ppMinEntity = NULL;
-    for (int i = 0; i < Entities->GetSize(); ++i)
-    {
-        CEntity *pEnt;
-        POINT EntPosView;
-        geFloat Dist;
-        int dx, dy;
-
-        pEnt = &(*Entities)[i];
-        if (EntityIsVisible( pEnt ))
-        {
-            EntPosView = Render_OrthoWorldToView (v, &pEnt->mOrigin);
-            dx = EntPosView.x - ptFrom->x;
-            dy = EntPosView.y - ptFrom->y;
-
-            Dist = (geFloat)((dx*dx) + (dy*dy));
-            if (Dist < *pMinEntityDist)
-            {
-                *pMinEntityDist = Dist;
-                *ppMinEntity = pEnt;
-                rslt = GE_TRUE;
-            }
-        }
-    }
-
-    if (rslt)
-    {
-        *pMinEntityDist = (geFloat)sqrt (*pMinEntityDist);
-    }
-    return rslt;
 }
 
 void CFusionDoc::DoBrushSelection(Brush	*	pBrush,BrushSel	nSelType) //	brushSelToggle | brushSelAlways)
@@ -2247,7 +2200,7 @@ void CFusionDoc::SelectAllFacesInBrushes (void)
     }
     App->CLSB_Doc->UpdateSelected ();
 
-    ConfigureCurrentTool();
+    App->CLSB_Doc->ConfigureCurrentTool();
 }
 
 BOOL CFusionDoc::IsEntitySelected(void)
@@ -2857,7 +2810,7 @@ void CFusionDoc::SelectRay(CPoint point, ViewVars *v) // hgtterry Select Ray
             if (fsData.Found)
             {
                 // We found the hit face.
-                if (mAdjustMode == ADJUST_MODE_BRUSH)
+                if (App->CLSB_Doc->mAdjustMode == ADJUST_MODE_BRUSH)
                 {
                     DoBrushSelection (fsData.pFoundBrush, brushSelToggle);
                 }
@@ -3338,7 +3291,7 @@ void	CFusionDoc::RebuildTrees(void)
         Model_SetModelTree(pMod, n);
         pMod = ModelList_GetNext(ModelInfo->Models, &mi);
     }
-    if(mAdjustMode==ADJUST_MODE_FACE)
+    if(App->CLSB_Doc->mAdjustMode==ADJUST_MODE_FACE)
     {
         UpdateFaceAttributesDlg ();
     }
@@ -4006,83 +3959,6 @@ void CFusionDoc::NullFaceAttributes()
 }
 */
 
-//	This function basically sets up everything required
-//  for each tool before its use...
-void CFusionDoc::ConfigureCurrentTool(void)
-{
-    BOOL	Redraw	=FALSE;
-
-    if(App->CLSB_Doc->mModeTool==ID_TOOLS_CAMERA)
-    {
-        App->CLSB_Doc->mCurrentTool		=CURTOOL_NONE;
-        App->CLSB_Doc->mShowSelectedBrushes=(mAdjustMode==ADJUST_MODE_BRUSH);
-        App->CLSB_Doc->mShowSelectedFaces	=(mAdjustMode==ADJUST_MODE_FACE);
-        App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
-        return;
-    }
-
-    switch(mAdjustMode)
-    {
-        case ADJUST_MODE_BRUSH :
-            App->CLSB_Doc->mShowSelectedFaces	=FALSE;
-            App->CLSB_Doc->mShowSelectedBrushes=TRUE;
-            
-            App->CLSB_Doc->UpdateSelected();
-            Redraw	=TRUE;
-            break;
-
-        case ADJUST_MODE_FACE :
-            App->CLSB_Doc->mShowSelectedFaces	=TRUE;
-            App->CLSB_Doc->mShowSelectedBrushes=FALSE;
-
-            App->CLSB_Doc->UpdateSelected();
-            Redraw	=TRUE;
-            break;
-
-        default :
-            assert (0);	// bad adjustment mode
-            break;
-    }
-
-    switch(App->CLSB_Doc->mCurrentTool)
-    {
-    case ID_TOOLS_BRUSH_MOVEROTATEBRUSH:
-        if(App->CLSB_Doc->mModeTool!=ID_TOOLS_TEMPLATE)
-        {
-            App->CLSB_Doc->mShowSelectedFaces	=FALSE;
-            App->CLSB_Doc->mShowSelectedBrushes=TRUE;
-            Redraw				=TRUE;
-        }
-        else
-        {
-            App->CLSB_Doc->mShowSelectedFaces	=FALSE;
-            App->CLSB_Doc->mShowSelectedBrushes=FALSE;
-        }
-        break;
-
-    case ID_TOOLS_BRUSH_SCALEBRUSH:
-        if(App->CLSB_Doc->mModeTool!=ID_TOOLS_TEMPLATE)
-        {
-            Redraw				=TRUE;
-            App->CLSB_Doc->mShowSelectedFaces	=FALSE;
-            App->CLSB_Doc->mShowSelectedBrushes=TRUE;
-        }
-        else
-        {
-            App->CLSB_Doc->mShowSelectedFaces	=FALSE;
-            App->CLSB_Doc->mShowSelectedBrushes=FALSE;
-        }
-        break;
-
-    }
-    if(App->CLSB_Doc->mModeTool==ID_TOOLS_TEMPLATE && App->CLSB_Doc->TempEnt)
-        App->CLSB_Doc->mCurrentEntity=-1;
-
-    Redraw	=TRUE;
-    if(Redraw)
-        App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
-}
-
 //void CFusionDoc::NullBrushAttributes(void){  mpBrushAttributes=NULL;  }
 
 #pragma warning (disable:4100)
@@ -4136,7 +4012,7 @@ void CFusionDoc::DoGeneralSelect (void)
 {
     App->CLSB_Doc->mCurrentTool	=CURTOOL_NONE;
     App->CLSB_Doc->mModeTool		=ID_GENERALSELECT;
-    ConfigureCurrentTool();
+    App->CLSB_Doc->ConfigureCurrentTool();
     //mpMainFrame->m_wndTabControls->m_pBrushEntityDialog->Update(this);
 }
 
@@ -4144,90 +4020,6 @@ void CFusionDoc::OnUpdateGeneralselect(CCmdUI* pCmdUI)
 {
     pCmdUI->SetCheck ((App->CLSB_Doc->mModeTool == ID_GENERALSELECT) ? 1 : 0);
 }
-
-static geBoolean fdocSelectBrushesFromFaces (Brush *pBrush, void *lParam)
-{
-    CFusionDoc *pDoc = (CFusionDoc *)lParam;
-    int iFace, nFaces;
-
-    // if any of the brush's faces is selected, then select the brush.
-    nFaces = Brush_GetNumFaces (pBrush);
-    for (iFace = 0; iFace < nFaces; ++iFace)
-    {
-        Face *pFace;
-
-        pFace = Brush_GetFace (pBrush, iFace);
-        if (Face_IsSelected (pFace))
-        {
-            pDoc->DoBrushSelection (pBrush, brushSelAlways);
-            break;
-        }
-    }
-    return GE_TRUE;
-}
-
-void CFusionDoc::SetAdjustmentMode( fdocAdjustEnum nCmdIDMode )
-{
-    if( mAdjustMode == nCmdIDMode )
-        return ;
-
-    if (nCmdIDMode == ADJUST_MODE_TOGGLE)
-    {
-//		nCmdIDMode = (mAdjustMode == ADJUST_MODE_BRUSH) ? ADJUST_MODE_FACE : ADJUST_MODE_BRUSH;
-        nCmdIDMode = ADJUST_MODE_FACE;
-    }
-
-    switch (nCmdIDMode)
-    {
-        case ADJUST_MODE_BRUSH :
-            mAdjustMode = nCmdIDMode;
-
-            // go through brush list and select any brush that has selected faces.
-            // Ensure that all brushes in a locked group or model set are selected...
-            Level_EnumLeafBrushes (App->CLSB_Doc->pLevel, this, ::fdocSelectBrushesFromFaces);
-
-            App->CLSB_Doc->ResetAllSelectedFaces();
-            App->CLSB_Doc->UpdateSelected();
-
-            //remove face attributes dialog if present...
-//			DeleteFaceAttributes ();
-            ConfigureCurrentTool();
-            break;
-
-        case ADJUST_MODE_FACE :
-        {
-            mAdjustMode = nCmdIDMode;
-            
-            // Select all faces on all selected brushes
-            int iBrush;
-            int NumSelBrushes = SelBrushList_GetSize (App->CLSB_Doc->pSelBrushes);
-
-            for (iBrush = 0; iBrush < NumSelBrushes; ++iBrush)
-            {
-                Brush *pBrush;
-
-                pBrush = SelBrushList_GetBrush (App->CLSB_Doc->pSelBrushes, iBrush);
-                if (Brush_IsMulti (pBrush))
-                {
-                    BrushList_EnumLeafBrushes (App->CL_Brush->Brush_GetBrushList (pBrush), this, ::SelAllBrushFaces);
-                }
-                else
-                {
-                    ::SelAllBrushFaces (pBrush, this);
-                }
-            }
-            App->CLSB_Doc->UpdateSelected ();
-            //remove brush attributes dialog if present...
-//			DeleteBrushAttributes ();
-            ConfigureCurrentTool();
-            break;
-        }
-        default :
-            assert (0);		// bad mode (can't happen?)
-            break;
-    }
-}
-
 
 void CFusionDoc::OnCloseDocument() // hgtterry Exit Aplication
 {
@@ -7669,7 +7461,7 @@ void CFusionDoc::OnToolsTemplate()
 
     App->CLSB_Doc->mCurrentTool = ID_TOOLS_BRUSH_MOVEROTATEBRUSH;
 
-    SetAdjustmentMode( ADJUST_MODE_FACE ) ;
+    App->CLSB_Doc->SetAdjustmentMode( ADJUST_MODE_FACE ) ;
     //ConfigureCurrentTool();
 }
 

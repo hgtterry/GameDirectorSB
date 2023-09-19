@@ -45,7 +45,7 @@ SB_Doc::SB_Doc(void)
     mWorldBsp = NULL;
     mConstrainHollows = GE_TRUE,
     PlaceObjectFlag = FALSE;
-
+    mAdjustMode = ADJUST_MODE_FACE;
 }
 
 SB_Doc::~SB_Doc(void)
@@ -560,7 +560,7 @@ void SB_Doc::SelectAll(void)
 
     UpdateSelected();
 
-    App->m_pDoc->ConfigureCurrentTool();
+    ConfigureCurrentTool();
 }
 
 // *************************************************************************
@@ -1163,7 +1163,7 @@ int SB_Doc::FindClosestThing(POINT const* ptFrom,ViewVars* v,Brush** ppMinBrush,
 
     rslt = fctNOTHING;
     FoundBrush = FindClosestBrush(ptFrom, v, &pMinBrush, &MinEdgeDist);
-    FoundEntity = App->m_pDoc->FindClosestEntity(ptFrom, v, &pMinEntity, &MinEntityDist);
+    FoundEntity = FindClosestEntity(ptFrom, v, &pMinEntity, &MinEntityDist);
 
 
     if (FoundEntity)
@@ -1218,6 +1218,52 @@ geBoolean SB_Doc::FindClosestBrush(POINT const* ptFrom, ViewVars* v, Brush** ppF
 }
 
 // *************************************************************************
+// *            FindClosestEntity:- Terry and Hazel Flanigan 2023          *
+// *************************************************************************
+geBoolean SB_Doc::FindClosestEntity(POINT const* ptFrom,ViewVars* v,CEntity** ppMinEntity,geFloat* pMinEntityDist)
+{
+    App->Get_Current_Document();
+
+    geBoolean rslt;
+    CEntityArray* Entities;
+
+    Entities = Level_GetEntities(pLevel);
+    rslt = GE_FALSE;
+    // determine distance to closest entity in the current view
+    *pMinEntityDist = FLT_MAX;
+    *ppMinEntity = NULL;
+    for (int i = 0; i < Entities->GetSize(); ++i)
+    {
+        CEntity* pEnt;
+        POINT EntPosView;
+        geFloat Dist;
+        int dx, dy;
+
+        pEnt = &(*Entities)[i];
+        if (App->m_pDoc->EntityIsVisible(pEnt))
+        {
+            EntPosView = Render_OrthoWorldToView(v, &pEnt->mOrigin);
+            dx = EntPosView.x - ptFrom->x;
+            dy = EntPosView.y - ptFrom->y;
+
+            Dist = (geFloat)((dx * dx) + (dy * dy));
+            if (Dist < *pMinEntityDist)
+            {
+                *pMinEntityDist = Dist;
+                *ppMinEntity = pEnt;
+                rslt = GE_TRUE;
+            }
+        }
+    }
+
+    if (rslt)
+    {
+        *pMinEntityDist = (geFloat)sqrt(*pMinEntityDist);
+    }
+    return rslt;
+}
+
+// *************************************************************************
 // *          ReturnThingUnderPoint:- Terry and Hazel Flanigan 2023        *
 // *************************************************************************
 const char* SB_Doc::ReturnThingUnderPoint(CPoint point, ViewVars* v)
@@ -1244,5 +1290,175 @@ const char* SB_Doc::ReturnThingUnderPoint(CPoint point, ViewVars* v)
     }
 
     return "";
+}
+
+static geBoolean fdocSelectBrushesFromFaces(Brush* pBrush, void* lParam)
+{
+    CFusionDoc* pDoc = (CFusionDoc*)lParam;
+    int iFace, nFaces;
+
+    // if any of the brush's faces is selected, then select the brush.
+    nFaces = Brush_GetNumFaces(pBrush);
+    for (iFace = 0; iFace < nFaces; ++iFace)
+    {
+        Face* pFace;
+
+        pFace = Brush_GetFace(pBrush, iFace);
+        if (Face_IsSelected(pFace))
+        {
+            pDoc->DoBrushSelection(pBrush, brushSelAlways);
+            break;
+        }
+    }
+    return GE_TRUE;
+}
+
+// *************************************************************************
+// *          SetAdjustmentMode:- Terry and Hazel Flanigan 2023            *
+// *************************************************************************
+void SB_Doc::SetAdjustmentMode(fdocAdjustEnum nCmdIDMode)
+{
+    App->Get_Current_Document();
+
+    if (mAdjustMode == nCmdIDMode)
+        return;
+
+    if (nCmdIDMode == ADJUST_MODE_TOGGLE)
+    {
+        //		nCmdIDMode = (mAdjustMode == ADJUST_MODE_BRUSH) ? ADJUST_MODE_FACE : ADJUST_MODE_BRUSH;
+        nCmdIDMode = ADJUST_MODE_FACE;
+    }
+
+    switch (nCmdIDMode)
+    {
+    case ADJUST_MODE_BRUSH:
+        mAdjustMode = nCmdIDMode;
+
+        // go through brush list and select any brush that has selected faces.
+        // Ensure that all brushes in a locked group or model set are selected...
+        Level_EnumLeafBrushes(pLevel, this, fdocSelectBrushesFromFaces);
+
+        App->CLSB_Doc->ResetAllSelectedFaces();
+        App->CLSB_Doc->UpdateSelected();
+
+        //remove face attributes dialog if present...
+//			DeleteFaceAttributes ();
+        ConfigureCurrentTool();
+        break;
+
+    case ADJUST_MODE_FACE:
+    {
+        mAdjustMode = nCmdIDMode;
+
+        // Select all faces on all selected brushes
+        int iBrush;
+        int NumSelBrushes = SelBrushList_GetSize(pSelBrushes);
+
+        for (iBrush = 0; iBrush < NumSelBrushes; ++iBrush)
+        {
+            Brush* pBrush;
+
+            pBrush = SelBrushList_GetBrush(pSelBrushes, iBrush);
+            if (Brush_IsMulti(pBrush))
+            {
+                BrushList_EnumLeafBrushes(App->CL_Brush->Brush_GetBrushList(pBrush), this, ::SelAllBrushFaces);
+            }
+            else
+            {
+                ::SelAllBrushFaces(pBrush, this);
+            }
+        }
+        App->CLSB_Doc->UpdateSelected();
+        //remove brush attributes dialog if present...
+//			DeleteBrushAttributes ();
+        ConfigureCurrentTool();
+        break;
+    }
+    default:
+        assert(0);		// bad mode (can't happen?)
+        break;
+    }
+}
+
+// *************************************************************************
+// *          ConfigureCurrentTool:- Terry and Hazel Flanigan 2023         *
+// *************************************************************************
+void SB_Doc::ConfigureCurrentTool(void)
+{
+    BOOL	Redraw = FALSE;
+
+    if (mModeTool == ID_TOOLS_CAMERA)
+    {
+        mCurrentTool = CURTOOL_NONE;
+        mShowSelectedBrushes = (mAdjustMode == ADJUST_MODE_BRUSH);
+        mShowSelectedFaces = (mAdjustMode == ADJUST_MODE_FACE);
+        UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+        return;
+    }
+
+    switch (mAdjustMode)
+    {
+    case ADJUST_MODE_BRUSH:
+        mShowSelectedFaces = FALSE;
+        mShowSelectedBrushes = TRUE;
+
+        UpdateSelected();
+        Redraw = TRUE;
+        break;
+
+    case ADJUST_MODE_FACE:
+        mShowSelectedFaces = TRUE;
+        mShowSelectedBrushes = FALSE;
+
+        UpdateSelected();
+        Redraw = TRUE;
+        break;
+
+    default:
+        assert(0);	// bad adjustment mode
+        break;
+    }
+
+    switch (mCurrentTool)
+    {
+    case ID_TOOLS_BRUSH_MOVEROTATEBRUSH:
+        if (mModeTool != ID_TOOLS_TEMPLATE)
+        {
+            mShowSelectedFaces = FALSE;
+            mShowSelectedBrushes = TRUE;
+            Redraw = TRUE;
+        }
+        else
+        {
+            mShowSelectedFaces = FALSE;
+            mShowSelectedBrushes = FALSE;
+        }
+        break;
+
+    case ID_TOOLS_BRUSH_SCALEBRUSH:
+        if (mModeTool != ID_TOOLS_TEMPLATE)
+        {
+            Redraw = TRUE;
+            mShowSelectedFaces = FALSE;
+            mShowSelectedBrushes = TRUE;
+        }
+        else
+        {
+            mShowSelectedFaces = FALSE;
+            mShowSelectedBrushes = FALSE;
+        }
+        break;
+
+    }
+    if (mModeTool == ID_TOOLS_TEMPLATE && TempEnt)
+    {
+        mCurrentEntity = -1;
+    }
+
+    Redraw = TRUE;
+    if (Redraw)
+    {
+        UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+    }
 }
 

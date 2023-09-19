@@ -2,6 +2,13 @@
 
 #include "SelFaceList.h"
 
+enum fdocAdjustEnum
+{
+	ADJUST_MODE_TOGGLE,
+	ADJUST_MODE_BRUSH,
+	ADJUST_MODE_FACE
+};
+
 class SB_Doc
 {
 public:
@@ -43,8 +50,11 @@ public:
 	void DoneShear(int sides, int inidx);
 	BOOL TempDeleteSelected(void);
 	void BrushSelect(Brush* pBrush);
+
 	int FindClosestThing(POINT const* ptFrom, ViewVars* v, Brush** ppMinBrush, CEntity** ppMinEntity, geFloat* pDist);
 	geBoolean FindClosestBrush(POINT const* ptFrom, ViewVars* v, Brush** ppFoundBrush, geFloat* pMinEdgeDist);
+	geBoolean FindClosestEntity(POINT const* ptFrom, ViewVars* v, CEntity** ppMinEntity, geFloat* pMinEntityDist);
+
 	const char* ReturnThingUnderPoint(CPoint point, ViewVars* v);
 
 	DWORD GetSelState(void) { return SelState; }
@@ -52,7 +62,11 @@ public:
 	void SetLockAxis(int Lock) { mLockAxis = Lock; };
 	void ToggleSelectionLock(void) { SelectLock = !(SelectLock); }
 	BOOL IsSelectionLocked(void) { return SelectLock; }
+	void SetAdjustmentMode(fdocAdjustEnum nCmdIDMode);
+	void ConfigureCurrentTool(void);
 
+	// ----------------------------------------------------------- Varibles
+	fdocAdjustEnum mAdjustMode;
 
 	int	NumSelEntities;
 	int mShowSelectedFaces;

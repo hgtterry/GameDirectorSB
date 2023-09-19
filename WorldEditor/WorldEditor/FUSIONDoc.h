@@ -92,14 +92,6 @@ enum SelectionState
 //bool callback for flag checking
 typedef geBoolean (*BrushFlagTest)(const Brush *pBrush);
 
-
-enum fdocAdjustEnum
-{
-	ADJUST_MODE_TOGGLE,
-	ADJUST_MODE_BRUSH,
-	ADJUST_MODE_FACE
-};
-
 class CFusionView;
 
 class CMainFrame;
@@ -112,8 +104,6 @@ protected: // create from serialization only
 
 public:
 	
-	fdocAdjustEnum mAdjustMode;
-
 	//dialogs / controls
 	CFrameWnd *mpActiveViewFrame;
 	CMainFrame *mpMainFrame;
@@ -175,7 +165,7 @@ public:
 
 
 	void NullBrushAttributes();
-	void ConfigureCurrentTool();
+	
 	void UpdateCameraEntity( const ViewVars *v ) ;
 	void SetRenderedViewCamera( const geVec3d * pVec, const geVec3d * pPRY ) ;
 	geBoolean GetCursorInfo(char *info, int MaxSize);
@@ -223,7 +213,7 @@ public:
 	int DoBrushGroupEditor (CComboBox &cb);
 	void AddSelToGroup( void ) ;
 	void RemovesSelFromGroup( void ) ;
-	void SetAdjustmentMode ( fdocAdjustEnum nCmdIDMode ) ;
+	
 
 	// places the specified object down into the level at the specified location
 	geBoolean PlaceObject( const char *Objectname, const geVec3d *location );
@@ -463,8 +453,6 @@ private:
 	void GetRotationPoint (geVec3d *pVec);
 	void CreateNewTemplateBrush (Brush *pBrush);
 
-public:
-	geBoolean FindClosestEntity (POINT const *ptFrom, ViewVars *v, CEntity **ppMinEntity, geFloat *pMinEntityDist);
 private:
 
 	void SetupDefaultFilename (void);

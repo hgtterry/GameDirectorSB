@@ -1032,11 +1032,9 @@ LRESULT CALLBACK SB_TopTabs::Top_Camera_Proc(HWND hDlg, UINT message, WPARAM wPa
 // *************************************************************************
 void SB_TopTabs::Select_Mode()
 {
-	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
-
 	App->CLSB_Doc->mCurrentTool = CURTOOL_NONE;
 	App->CLSB_Doc->mModeTool = ID_GENERALSELECT;
-	m_pDoc->ConfigureCurrentTool();
+	App->CLSB_Doc->ConfigureCurrentTool();
 
 }
 
@@ -1047,18 +1045,18 @@ void SB_TopTabs::Select_MoveRotate()
 {
 	CFusionView			*pView;
 
-	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+	App->Get_Current_Document();
 
 	POSITION pos;
-	pos = m_pDoc->GetFirstViewPosition();
-	pView = (CFusionView*)m_pDoc->GetNextView(pos) ;
+	pos = App->m_pDoc->GetFirstViewPosition();
+	pView = (CFusionView*)App->m_pDoc->GetNextView(pos) ;
 
 	int mode = pView->GetModeTool();
 
 	if(mode == ID_TOOLS_TEMPLATE)
 	{
 		pView->SetTool( ID_TOOLS_BRUSH_MOVEROTATEBRUSH );
-		m_pDoc->ConfigureCurrentTool();
+		App->CLSB_Doc->ConfigureCurrentTool();
 	} 
 	else 
 	{
@@ -1072,7 +1070,7 @@ void SB_TopTabs::Select_MoveRotate()
 			pView->SetTool(ID_TOOLS_BRUSH_MOVEROTATEBRUSH);
 		}
 
-		m_pDoc->ConfigureCurrentTool();
+		App->CLSB_Doc->ConfigureCurrentTool();
 	}
 }
 
@@ -1089,21 +1087,21 @@ void SB_TopTabs::Select_Scale()
 	if(mode == ID_TOOLS_TEMPLATE)
 	{
 		App->CLSB_Doc->mCurrentTool = ID_TOOLS_BRUSH_SCALEBRUSH;
-		App->m_pDoc->ConfigureCurrentTool();
+		App->CLSB_Doc->ConfigureCurrentTool();
 	} 
 	else 
 	{
 		if(App->CLSB_Doc->mCurrentTool == ID_TOOLS_BRUSH_SCALEBRUSH)
 		{
 			App->CLSB_Doc->mCurrentTool = CURTOOL_NONE;
-			App->m_pDoc->mAdjustMode = ADJUST_MODE_FACE;
+			App->CLSB_Doc->mAdjustMode = ADJUST_MODE_FACE;
 		} 
 		else 
 		{
 			App->CLSB_Doc->mCurrentTool = ID_TOOLS_BRUSH_SCALEBRUSH;
 		}
 
-		App->m_pDoc->ConfigureCurrentTool();
+		App->CLSB_Doc->ConfigureCurrentTool();
 	}
 }
 
@@ -1125,7 +1123,7 @@ void SB_TopTabs::Select_Shear()
 	if(mode == ID_TOOLS_TEMPLATE)
 	{
 		pView->SetTool( ID_TOOLS_BRUSH_SHEARBRUSH);
-		App->m_pDoc->ConfigureCurrentTool();
+		App->CLSB_Doc->ConfigureCurrentTool();
 	} 
 	else 
 	{
@@ -1139,7 +1137,7 @@ void SB_TopTabs::Select_Shear()
 			pView->SetTool(ID_TOOLS_BRUSH_SHEARBRUSH);
 		}
 
-		App->m_pDoc->ConfigureCurrentTool();
+		App->CLSB_Doc->ConfigureCurrentTool();
 	}
 }
 

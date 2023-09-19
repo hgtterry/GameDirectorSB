@@ -91,7 +91,4 @@ private:
 	bool Brush_MoveRotate_Flag;
 	bool Brush_Scale_Flag;
 	bool Brush_Shear_Flag;
-
-	CFusionDoc			*m_pDoc;
-
 };

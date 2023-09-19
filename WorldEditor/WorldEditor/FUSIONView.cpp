@@ -1627,11 +1627,8 @@ void CFusionView::OnSize(UINT nType, int cx, int cy)
 
 void CFusionView::OnToolsCamera() 
 {
-	CFusionDoc* pDoc = GetDocument();
-
 	SetModeTool(ID_TOOLS_CAMERA);
-
-	pDoc->ConfigureCurrentTool();
+	App->CLSB_Doc->ConfigureCurrentTool();
 }
 
 void CFusionView::OnUpdateToolsCamera(CCmdUI* pCmdUI) 
@@ -1709,14 +1706,12 @@ void CFusionView::OnActivateView(BOOL bActivate, CView* pActivateView, CView* pD
 
 void CFusionView::OnToolsBrushMoverotatebrush() 
 {
-	CFusionDoc* pDoc = GetDocument();
-
 	int mode=GetModeTool();
 
 	if(mode==ID_TOOLS_TEMPLATE)
 	{
 		SetTool( ID_TOOLS_BRUSH_MOVEROTATEBRUSH );
-		pDoc->ConfigureCurrentTool();
+		App->CLSB_Doc->ConfigureCurrentTool();
 	} 
 	else 
 	{
@@ -1730,7 +1725,7 @@ void CFusionView::OnToolsBrushMoverotatebrush()
 		{
 			SetTool(ID_TOOLS_BRUSH_MOVEROTATEBRUSH);
 		}
-		pDoc->ConfigureCurrentTool();
+		App->CLSB_Doc->ConfigureCurrentTool();
 	}
 }
 
@@ -1762,14 +1757,13 @@ App->CLSB_Doc->GetSelState()!=NOSELECTIONS))
 
 void CFusionView::OnToolsBrushScalebrush() 
 {
-	CFusionDoc* pDoc = GetDocument();
-
+	
 	int mode=GetModeTool();
 
 	if(mode==ID_TOOLS_TEMPLATE)
 	{
 		SetTool(ID_TOOLS_BRUSH_SCALEBRUSH);
-		pDoc->ConfigureCurrentTool();
+		App->CLSB_Doc->ConfigureCurrentTool();
 	} 
 	else 
 	{
@@ -1783,7 +1777,7 @@ void CFusionView::OnToolsBrushScalebrush()
 		{
 			SetTool(ID_TOOLS_BRUSH_SCALEBRUSH);
 		}
-		pDoc->ConfigureCurrentTool();
+		App->CLSB_Doc->ConfigureCurrentTool();
 	}
 }
 
@@ -1967,14 +1961,12 @@ void CFusionView::SetTitle()
 
 void CFusionView::OnToolsBrushShearbrush() 
 {
-	CFusionDoc* pDoc = GetDocument();
-
 	int mode=GetModeTool();
 
 	if(mode==ID_TOOLS_TEMPLATE)
 	{
 		SetTool( ID_TOOLS_BRUSH_SHEARBRUSH);
-		pDoc->ConfigureCurrentTool();
+		App->CLSB_Doc->ConfigureCurrentTool();
 	} 
 	else 
 	{
@@ -1988,7 +1980,7 @@ void CFusionView::OnToolsBrushShearbrush()
 		{
 			SetTool(ID_TOOLS_BRUSH_SHEARBRUSH);
 		}
-		pDoc->ConfigureCurrentTool();
+		App->CLSB_Doc->ConfigureCurrentTool();
 	}
 }
 
@@ -2027,9 +2019,7 @@ int CFusionView::GetTool(void)
 
 fdocAdjustEnum CFusionView::GetAdjustMode(void)
 {
-	CFusionDoc* pDoc = GetDocument();
-	
-	return pDoc->mAdjustMode;
+	return App->CLSB_Doc->mAdjustMode;
 }
 
 int CFusionView::GetModeTool(void)
@@ -2044,10 +2034,8 @@ void CFusionView::SetTool(int Tool)
 
 void CFusionView::SetAdjustMode(fdocAdjustEnum Mode)
 {
-	CFusionDoc* pDoc = GetDocument();
-	
 //	pDoc->mAdjustMode = Mode;
-	pDoc->mAdjustMode = ADJUST_MODE_FACE;
+	App->CLSB_Doc->mAdjustMode = ADJUST_MODE_FACE;
 }
 
 void CFusionView::SetModeTool(int Tool)
@@ -2099,10 +2087,7 @@ void CFusionView::OnUpdateBrushRemoveselectedfromgroup(CCmdUI* pCmdUI)
 void CFusionView::OnToolsBrushMoveselectedbrushes() 
 {
 	SetTool(ID_TOOLS_BRUSH_MOVESELECTEDBRUSHES);
-
-	CFusionDoc* pDoc = GetDocument();
-	
-	pDoc->ConfigureCurrentTool();
+	App->CLSB_Doc->ConfigureCurrentTool();
 }
 
 void CFusionView::OnUpdateToolsBrushMoveselectedbrushes(CCmdUI* pCmdUI) 
