@@ -438,7 +438,7 @@ void A_TextureDialog::Apply_Texture()
 
 		case ADJUST_MODE_BRUSH :
 		{
-			if(App->m_pDoc->GetSelState() & MULTIBRUSH)
+			if(App->CLSB_Doc->GetSelState() & MULTIBRUSH)
 			{
 				int NumSelBrushes = SelBrushList_GetSize (App->CLSB_Doc->pSelBrushes);
 				for (i = 0; i < NumSelBrushes; ++i)

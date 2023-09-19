@@ -36,6 +36,16 @@ SB_Doc::SB_Doc(void)
     TempShearTemplate = NULL;
     pSelFaces = NULL;
     pSelBrushes = NULL;
+
+    SelectLock = FALSE; 
+    TempEnt = FALSE; 
+    SelState = NOSELECTIONS;
+    mShowSelectedBrushes = FALSE;
+
+    mWorldBsp = NULL;
+    mConstrainHollows = GE_TRUE,
+    PlaceObjectFlag = FALSE;
+
 }
 
 SB_Doc::~SB_Doc(void)
@@ -49,7 +59,7 @@ void SB_Doc::AddBrushToWorld()
 {
     App->Get_Current_Document();
 
-    if (App->m_pDoc->TempEnt || !Brush_IsSubtract(CurBrush))
+    if (TempEnt || !Brush_IsSubtract(CurBrush))
     {
         App->m_pDoc->OnBrushAddtoworld();
     }
@@ -76,7 +86,7 @@ void SB_Doc::DeleteCurrentThing()
         SetCursor(AfxGetApp()->LoadStandardCursor(IDC_WAIT));
 
         ResetAllSelectedFaces();
-        ReBuild = (App->m_pDoc->GetSelState() & ANYBRUSH);
+        ReBuild = (GetSelState() & ANYBRUSH);
 
         DeleteSelectedBrushes();
 
@@ -104,7 +114,7 @@ bool SB_Doc::DeleteSelectedBrushes()
     geBoolean	bAlteredCurrentGroup = GE_FALSE;
     CEntityArray* Entities = Level_GetEntities(pLevel);
 
-    for (int Ent = 0; Ent < Entities->GetSize() && (!(App->m_pDoc->GetSelState() & NOENTITIES)); Ent++)
+    for (int Ent = 0; Ent < Entities->GetSize() && (!(GetSelState() & NOENTITIES)); Ent++)
     {
         if ((*Entities)[Ent].IsSelected())
         {
@@ -115,13 +125,13 @@ bool SB_Doc::DeleteSelectedBrushes()
                     bAlteredCurrentGroup = GE_TRUE;
                 }
 
-                App->CLSB_Doc->DeleteEntity(Ent--);
+                DeleteEntity(Ent--);
                 App->m_pDoc->SetModifiedFlag();
             }
         }
     }
 
-    if (App->m_pDoc->GetSelState() & ANYBRUSH)
+    if (GetSelState() & ANYBRUSH)
     {
         int NumSelBrushes = SelBrushList_GetSize(pSelBrushes);
         for (int i = 0; i < NumSelBrushes; i++)
@@ -182,8 +192,8 @@ void SB_Doc::DeleteEntity(int EntityIndex)
     }
     // end change
     Entities->RemoveAt(EntityIndex);
-    App->m_pDoc->SelState &= (~ENTITYCLEAR);
-    App->m_pDoc->SelState |= (NumSelEntities > 1) ? MULTIENTITY : (NumSelEntities + 1) << 7;
+    SelState &= (~ENTITYCLEAR);
+    SelState |= (NumSelEntities > 1) ? MULTIENTITY : (NumSelEntities + 1) << 7;
 }
 
 // *************************************************************************
@@ -244,7 +254,7 @@ void SB_Doc::SelectOrtho(CPoint point, ViewVars* v)
 	geFloat Dist;
 	int FoundThingType;
 
-	if (App->m_pDoc->IsSelectionLocked())
+	if (IsSelectionLocked())
 	{
 		return;
 	}
@@ -352,9 +362,9 @@ void SB_Doc::DoneMove(void)
 
     if (mModeTool == ID_TOOLS_TEMPLATE)
     {
-        if (App->m_pDoc->TempEnt)
+        if (TempEnt)
         {
-            App->m_pDoc->DoneMoveEntity();
+            DoneMoveEntity();
         }
         else
         {
@@ -377,9 +387,9 @@ void SB_Doc::DoneMove(void)
             Brush_Move(pBrush, &FinalPos);
         }
 
-        if (App->m_pDoc->GetSelState() & ANYENTITY)
+        if (GetSelState() & ANYENTITY)
         {
-            App->m_pDoc->DoneMoveEntity();
+            DoneMoveEntity();
         }
 
         UpdateSelected();
@@ -389,6 +399,69 @@ void SB_Doc::DoneMove(void)
    
     geVec3d_Clear(&FinalPos);
 
+}
+
+// *************************************************************************
+// *          DoneMoveEntity:- Terry and Hazel Flanigan 2023                *
+// *************************************************************************
+void SB_Doc::DoneMoveEntity(void)
+{
+    App->Get_Current_Document();
+
+    int		i;
+    float	SnapSize;
+    CEntityArray* Entities = Level_GetEntities(pLevel);
+    CEntity* pEnt;
+
+    if (mCurrentTool == ID_TOOLS_BRUSH_MOVEROTATEBRUSH)
+    {
+        if ((GetSelState() == ONEENTITYONLY) && Level_UseGrid(pLevel))
+        {
+            SnapSize = Level_GetGridSnapSize(pLevel);
+        }
+        else
+        {
+            SnapSize = 1.0f;
+        }
+
+        for (i = 0; i < Entities->GetSize(); i++)
+        {
+            pEnt = &(*Entities)[i];
+
+            if (pEnt->IsSelected())
+            {
+                pEnt->DoneMove(SnapSize, Level_GetEntityDefs(pLevel));
+                if (pEnt->IsCamera() == GE_TRUE)	// Camera Entity?
+                    //				if( pEnt==pCameraEntity )	// Camera Entity?
+                {
+                    geVec3d	PitchRollYaw;
+
+                    pEnt->GetAngles(&PitchRollYaw, Level_GetEntityDefs(pLevel));
+                    App->m_pDoc->SetRenderedViewCamera(&(pEnt->mOrigin), &PitchRollYaw);
+                    UpdateAllViews(UAV_RENDER_ONLY, NULL);
+                }// Camera entity, update camera
+            }// Entity Selected
+        }// Loop thru Entities
+    }
+    else
+    {
+        if (mCurrentEntity < 0) //template
+        {
+            pEnt = &mRegularEntity;
+        }
+        else
+        {
+            pEnt = &(*Entities)[mCurrentEntity];
+        }
+
+        SnapSize = 1.0f;
+        if (Level_UseGrid(pLevel))
+        {
+            SnapSize = Level_GetGridSnapSize(pLevel);
+        }
+        pEnt->DoneMove(SnapSize, Level_GetEntityDefs(pLevel));
+    }
+    App->m_pDoc->SetModifiedFlag();
 }
 
 // *************************************************************************
@@ -501,14 +574,14 @@ void SB_Doc::UpdateSelected(void)
     int NumSelFaces = SelFaceList_GetSize(pSelFaces);
     int NumSelBrushes = SelBrushList_GetSize(pSelBrushes);
 
-    App->m_pDoc->SelState = (NumSelBrushes > 1) ? MULTIBRUSH : NumSelBrushes;
-    App->m_pDoc->SelState |= (NumSelFaces > 1) ? MULTIFACE : (NumSelFaces + 1) << 3;
-    App->m_pDoc->SelState |= (NumSelEntities > 1) ? MULTIENTITY : (NumSelEntities + 1) << 7;
+    SelState = (NumSelBrushes > 1) ? MULTIBRUSH : NumSelBrushes;
+    SelState |= (NumSelFaces > 1) ? MULTIFACE : (NumSelFaces + 1) << 3;
+    SelState |= (NumSelEntities > 1) ? MULTIENTITY : (NumSelEntities + 1) << 7;
 
 
     if (mModeTool == ID_GENERALSELECT)
     {
-        if (App->m_pDoc->GetSelState() & ONEBRUSH)
+        if (GetSelState() & ONEBRUSH)
         {
             CurBrush = SelBrushList_GetBrush(pSelBrushes, 0);
         }
@@ -522,16 +595,16 @@ void SB_Doc::UpdateSelected(void)
 
     if (mModeTool == ID_TOOLS_TEMPLATE)
     {
-        if (App->m_pDoc->TempEnt)
+        if (TempEnt)
         {
-            SelectedGeoCenter = App->m_pDoc->mRegularEntity.mOrigin;
+            SelectedGeoCenter = mRegularEntity.mOrigin;
         }
         else
         {
             Brush_Center(CurBrush, &SelectedGeoCenter);
         }
     }
-    else if (App->m_pDoc->SelState != NOSELECTIONS)
+    else if (SelState != NOSELECTIONS)
     {
         Model* pModel;
         ModelInfo_Type* ModelInfo = Level_GetModelInfo(pLevel);
@@ -572,7 +645,7 @@ void SB_Doc::UpdateSelected(void)
         }
     }
 
-    if (App->m_pDoc->SelState & ONEENTITY)
+    if (SelState & ONEENTITY)
     {
         CEntityArray* Entities = Level_GetEntities(pLevel);
 
@@ -1154,7 +1227,7 @@ const char* SB_Doc::ReturnThingUnderPoint(CPoint point, ViewVars* v)
     geFloat Dist;
     int FoundThingType;
 
-    FoundThingType = App->CLSB_Doc->FindClosestThing(&point, v, &pMinBrush, &pMinEntity, &Dist);
+    FoundThingType = FindClosestThing(&point, v, &pMinBrush, &pMinEntity, &Dist);
     if ((FoundThingType != fctNOTHING) && (Dist <= MAX_PIXEL_SELECT_THINGNAME))
     {
         switch (FoundThingType)
@@ -1172,3 +1245,4 @@ const char* SB_Doc::ReturnThingUnderPoint(CPoint point, ViewVars* v)
 
     return "";
 }
+

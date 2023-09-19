@@ -268,7 +268,7 @@ void A_TabsTemplates_Dlg::CreateNewTemplateBrush(Brush *pBrush)
 	App->CLSB_Doc->BTemplate = pBrush;
 	App->CLSB_Doc->CurBrush = pBrush;
 
-	App->m_pDoc->TempEnt	= FALSE;
+	App->CLSB_Doc->TempEnt	= FALSE;
 	App->m_pDoc->SetDefaultBrushTexInfo (App->CLSB_Doc->CurBrush);
 	Brush_Bound (App->CLSB_Doc->CurBrush);
 	Brush_Center (App->CLSB_Doc->CurBrush, &BrushPos);

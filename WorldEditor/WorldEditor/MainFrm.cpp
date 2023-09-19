@@ -135,7 +135,7 @@ void CMainFrame::OnUpdateSLock(CCmdUI *pCmdUI)
 	pDoc = this->GetCurrentDoc ();
 	if (pDoc != NULL)
 	{
-		if (pDoc->IsSelectionLocked()) 
+		if (App->CLSB_Doc->IsSelectionLocked())
 		{
 			m_wndStatusBar.SetPaneText(ID_SLOCK_PANE, "SLOCK");
 		}

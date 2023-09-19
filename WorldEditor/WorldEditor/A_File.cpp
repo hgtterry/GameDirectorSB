@@ -371,7 +371,7 @@ void SB_File_WE::CreateNewTemplateBrush(Brush *pBrush)
 	App->CLSB_Doc->BTemplate = pBrush;
 	App->CLSB_Doc->CurBrush = pBrush;
 
-	App->m_pDoc->TempEnt	= FALSE;
+	App->CLSB_Doc->TempEnt	= FALSE;
 	App->m_pDoc->SetDefaultBrushTexInfo (App->CLSB_Doc->CurBrush);
 	Brush_Bound (App->CLSB_Doc->CurBrush);
 	Brush_Center (App->CLSB_Doc->CurBrush, &BrushPos);
@@ -1117,7 +1117,7 @@ bool SB_File_WE::New_File()
 	App->CLSB_Doc->pTempSelBrushes = SelBrushList_Create();
 	App->CLSB_Doc->pSelFaces = SelFaceList_Create();
 
-	App->m_pDoc->SetLockAxis(0);	// Start with no axis locked
+	App->CLSB_Doc->SetLockAxis(0);	// Start with no axis locked
 
 	{
 		BrushTemplate_Box* pBoxTemplate;

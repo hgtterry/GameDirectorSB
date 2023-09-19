@@ -669,9 +669,9 @@ void F_View::RenderOrthoView(ViewVars *v, CDC *pDC, HDC MemoryhDC) // hgtterry R
 		SelectObject(MemoryhDC, PenTemplate2);
 
 		if((App->CLSB_Doc->mModeTool==ID_TOOLS_TEMPLATE)||
-			(App->CLSB_Doc->mModeTool==ID_TOOLS_CAMERA && m_pDoc->GetSelState()==NOSELECTIONS))
+			(App->CLSB_Doc->mModeTool==ID_TOOLS_CAMERA && App->CLSB_Doc->GetSelState()==NOSELECTIONS))
 		{
-			if(!m_pDoc->TempEnt)
+			if(!App->CLSB_Doc->TempEnt)
 			{
 				if (Brush_TestBoundsIntersect(App->CLSB_Doc->CurBrush, &ViewBox))
 				{

@@ -1238,9 +1238,9 @@ void A_MainView::RenderOrthoView(ViewVars *v, CDC *pDC) // hgtterry Render to vi
 		pDC->SelectObject (&PenTemplate);
 
 		if((App->CLSB_Doc->mModeTool==ID_TOOLS_TEMPLATE)||
-			(App->CLSB_Doc->mModeTool==ID_TOOLS_CAMERA && m_pDoc->GetSelState()==NOSELECTIONS))
+			(App->CLSB_Doc->mModeTool==ID_TOOLS_CAMERA && App->CLSB_Doc->GetSelState()==NOSELECTIONS))
 		{
-			if(!m_pDoc->TempEnt)
+			if(!App->CLSB_Doc->TempEnt)
 			{
 				if (Brush_TestBoundsIntersect(App->CLSB_Doc->CurBrush, &ViewBox))
 				{
@@ -1256,7 +1256,7 @@ void A_MainView::RenderOrthoView(ViewVars *v, CDC *pDC) // hgtterry Render to vi
 			}
 			else
 			{
-				fdocDrawEntity (&m_pDoc->mRegularEntity, v, pDC, Level_GetEntityDefs (App->CLSB_Doc->pLevel), GE_FALSE );
+				fdocDrawEntity (&App->CLSB_Doc->mRegularEntity, v, pDC, Level_GetEntityDefs (App->CLSB_Doc->pLevel), GE_FALSE );
 			}
 		}
 	}

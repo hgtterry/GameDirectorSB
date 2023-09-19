@@ -22,6 +22,7 @@ public:
 
 	void DoneResize(int sides, int inidx);
 	void DoneMove(void);
+	void DoneMoveEntity(void);
 
 	void Lock_AllTextures(void);
 
@@ -46,6 +47,12 @@ public:
 	geBoolean FindClosestBrush(POINT const* ptFrom, ViewVars* v, Brush** ppFoundBrush, geFloat* pMinEdgeDist);
 	const char* ReturnThingUnderPoint(CPoint point, ViewVars* v);
 
+	DWORD GetSelState(void) { return SelState; }
+	int	 GetLockAxis(void) { return mLockAxis; };
+	void SetLockAxis(int Lock) { mLockAxis = Lock; };
+	void ToggleSelectionLock(void) { SelectLock = !(SelectLock); }
+	BOOL IsSelectionLocked(void) { return SelectLock; }
+
 
 	int	NumSelEntities;
 	int mShowSelectedFaces;
@@ -62,6 +69,16 @@ public:
 	Brush* BTemplate, * CurBrush, * TempShearTemplate;
 	SelBrushList* pSelBrushes;
 	SelFaceList* pSelFaces;
+
+	int mShowSelectedBrushes;
+	int mLockAxis;
+	geBoolean	mConstrainHollows;
+	BOOL SelectLock, TempEnt;
+	BOOL PlaceObjectFlag;
+	DWORD SelState;
+
+	GNode* mWorldBsp;
+	CEntity	mRegularEntity;
 
 	Level* pLevel;
 };

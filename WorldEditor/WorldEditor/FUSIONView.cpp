@@ -158,7 +158,7 @@ void CFusionView::OnUpdateCenterthing(CCmdUI* pCmdUI)
 		return;
 	}
 
-	if ((pDoc->GetSelState()!=NOSELECTIONS) || (App->CLSB_Doc->mModeTool==ID_TOOLS_TEMPLATE))
+	if ((App->CLSB_Doc->GetSelState()!=NOSELECTIONS) || (App->CLSB_Doc->mModeTool==ID_TOOLS_TEMPLATE))
 		pCmdUI->Enable( TRUE );
 	else
 		pCmdUI->Enable( FALSE );
@@ -225,7 +225,7 @@ geBoolean CFusionView::IsKeyDown (int Key)
 void CFusionView::LockAxisView (int *dx, int *dy)
 {
 	CFusionDoc *pDoc = GetDocument ();
-	int mLockAxis = pDoc->GetLockAxis ();
+	int mLockAxis = App->CLSB_Doc->GetLockAxis ();
 
 	switch (mViewType)
 	{
@@ -252,7 +252,7 @@ void CFusionView::LockAxis( geVec3d * pWP )
 	int mLockAxis ;
 	CFusionDoc* pDoc = GetDocument();
 
-	mLockAxis = pDoc->GetLockAxis() ;
+	mLockAxis = App->CLSB_Doc->GetLockAxis() ;
 
 	if( mLockAxis & AXIS_X )	pWP->X = 0.0f ;
 	if( mLockAxis & AXIS_Y )	pWP->Y = 0.0f ;
@@ -772,7 +772,7 @@ void CFusionView::OnMouseMove (UINT nFlags, CPoint point) // hgtterry OnMouseMov
 						}// LButtonDown
 						if (RButtonIsDown)
 						{
-							if( pDoc->GetSelState() == ONEENTITYONLY )	// Angle,Arc,Radius control
+							if(App->CLSB_Doc->GetSelState() == ONEENTITYONLY )	// Angle,Arc,Radius control
 							{
 //								if( !ShiftHeld && !ControlHeld )
 								if( !ShiftHeld )
@@ -977,7 +977,7 @@ void CFusionView::DoneMovingBrushes ()
 	App->CLSB_Doc->UpdateSelected();
 
 	if ((ModeTool == ID_TOOLS_TEMPLATE) ||
-		((pDoc->GetSelState() & ANYENTITY) && (!(pDoc->GetSelState() & ANYBRUSH))) )
+		((App->CLSB_Doc->GetSelState() & ANYENTITY) && (!(App->CLSB_Doc->GetSelState() & ANYBRUSH))) )
 	{			
 		App->CLSB_Doc->UpdateAllViews( UAV_ALL3DVIEWS, NULL );
 	}
@@ -1080,7 +1080,7 @@ void CFusionView::OnLButtonUp(UINT nFlags, CPoint point)
 
 		if (mViewIs3d)
 		{
-			if(ModeTool==ID_TOOLS_TEMPLATE && pDoc->TempEnt)
+			if(ModeTool==ID_TOOLS_TEMPLATE && App->CLSB_Doc->TempEnt)
 			{
 				pDoc->PlaceTemplateEntity3D(point, VCam);	
 				pDoc->SetModifiedFlag();
@@ -1162,7 +1162,7 @@ void CFusionView::OnLButtonUp(UINT nFlags, CPoint point)
 
 					App->CLSB_Doc->UpdateSelected();
 					if((ModeTool == ID_TOOLS_TEMPLATE) ||
-					   ((pDoc->GetSelState() & ANYENTITY) && (!(pDoc->GetSelState() & ANYBRUSH))) )
+					   ((App->CLSB_Doc->GetSelState() & ANYENTITY) && (!(App->CLSB_Doc->GetSelState() & ANYBRUSH))) )
 					{			
 						App->CLSB_Doc->UpdateAllViews( UAV_ALL3DVIEWS, NULL );
 					}
@@ -1180,7 +1180,7 @@ void CFusionView::OnLButtonUp(UINT nFlags, CPoint point)
 
 					App->CLSB_Doc->UpdateSelected();
 					if((ModeTool == ID_TOOLS_TEMPLATE) ||
-					   ((pDoc->GetSelState() & ANYENTITY) && (!(pDoc->GetSelState() & ANYBRUSH))) )
+					   ((App->CLSB_Doc->GetSelState() & ANYENTITY) && (!(App->CLSB_Doc->GetSelState() & ANYBRUSH))) )
 					{			
 						App->CLSB_Doc->UpdateAllViews( UAV_ALL3DVIEWS, NULL );
 					}
@@ -1645,17 +1645,13 @@ void CFusionView::OnUpdateToolsCamera(CCmdUI* pCmdUI)
 
 void CFusionView::OnAxisX() 
 {
-	CFusionDoc* pDoc = GetDocument();
-
-	pDoc->SetLockAxis( pDoc->GetLockAxis() ^ AXIS_X ) ;
+	App->CLSB_Doc->SetLockAxis(App->CLSB_Doc->GetLockAxis() ^ AXIS_X ) ;
 }
 
 
 void CFusionView::OnUpdateAxisX(CCmdUI* pCmdUI) 
 {
-	CFusionDoc* pDoc = GetDocument();
-
-	if( pDoc->GetLockAxis() & AXIS_X )
+	if(App->CLSB_Doc->GetLockAxis() & AXIS_X )
 		pCmdUI->SetCheck();
 	else
 		pCmdUI->SetCheck(0);
@@ -1664,17 +1660,13 @@ void CFusionView::OnUpdateAxisX(CCmdUI* pCmdUI)
 
 void CFusionView::OnAxisY() 
 {
-	CFusionDoc* pDoc = GetDocument();
-
-	pDoc->SetLockAxis( pDoc->GetLockAxis() ^ AXIS_Y ) ;
+	App->CLSB_Doc->SetLockAxis(App->CLSB_Doc->GetLockAxis() ^ AXIS_Y ) ;
 }
 
 
 void CFusionView::OnUpdateAxisY(CCmdUI* pCmdUI) 
 {
-	CFusionDoc* pDoc = GetDocument();
-	
-	if( pDoc->GetLockAxis() & AXIS_Y )
+	if(App->CLSB_Doc->GetLockAxis() & AXIS_Y )
 		pCmdUI->SetCheck();
 	else
 		pCmdUI->SetCheck(0);
@@ -1683,17 +1675,13 @@ void CFusionView::OnUpdateAxisY(CCmdUI* pCmdUI)
 
 void CFusionView::OnAxisZ() 
 {
-	CFusionDoc* pDoc = GetDocument();
-
-	pDoc->SetLockAxis( pDoc->GetLockAxis() ^ AXIS_Z ) ;
+	App->CLSB_Doc->SetLockAxis(App->CLSB_Doc->GetLockAxis() ^ AXIS_Z ) ;
 }
 
 
 void CFusionView::OnUpdateAxisZ(CCmdUI* pCmdUI) 
 {
-	CFusionDoc* pDoc = GetDocument();
-	
-	if( pDoc->GetLockAxis() & AXIS_Z )
+	if(App->CLSB_Doc->GetLockAxis() & AXIS_Z )
 		pCmdUI->SetCheck();
 	else
 		pCmdUI->SetCheck(0);
@@ -1748,13 +1736,11 @@ void CFusionView::OnToolsBrushMoverotatebrush()
 
 void CFusionView::OnUpdateToolsBrushMoverotatebrush(CCmdUI* pCmdUI) 
 {
-	CFusionDoc* pDoc = GetDocument();
-
 	//that's a pretty big if
 	if(GetModeTool()==ID_TOOLS_TEMPLATE ||
 		(GetModeTool()==ID_GENERALSELECT &&
 //		GetAdjustMode()==ADJUST_MODE_BRUSH &&
-		pDoc->GetSelState()!=NOSELECTIONS)) 
+App->CLSB_Doc->GetSelState()!=NOSELECTIONS))
 	{
 		pCmdUI->Enable();
 		if(GetTool()==ID_TOOLS_BRUSH_MOVEROTATEBRUSH)
@@ -1803,10 +1789,8 @@ void CFusionView::OnToolsBrushScalebrush()
 
 void CFusionView::OnUpdateToolsBrushScalebrush(CCmdUI* pCmdUI) 
 {
-	CFusionDoc* pDoc = GetDocument();
-
 	//that's a very big if
-	if((GetModeTool()==ID_TOOLS_TEMPLATE && !pDoc->TempEnt) ||
+	if((GetModeTool()==ID_TOOLS_TEMPLATE && !App->CLSB_Doc->TempEnt) ||
 		(GetModeTool()==ID_GENERALSELECT &&
 //		GetAdjustMode ()==ADJUST_MODE_BRUSH &&
 #pragma message ("Can't do multiple brush scaling due to Brush_Resize implementation.")
@@ -2011,10 +1995,8 @@ void CFusionView::OnToolsBrushShearbrush()
 
 void CFusionView::OnUpdateToolsBrushShearbrush(CCmdUI* pCmdUI) 
 {
-	CFusionDoc* pDoc = GetDocument();
-
 	//that's a very big if
-	if((GetModeTool()==ID_TOOLS_TEMPLATE && !pDoc->TempEnt) ||
+	if((GetModeTool()==ID_TOOLS_TEMPLATE && !App->CLSB_Doc->TempEnt) ||
 		(GetModeTool()==ID_GENERALSELECT &&
 //		GetAdjustMode()==ADJUST_MODE_BRUSH &&
 #pragma message ("Can't do multiple brush shear due to Brush_Shear implementation.")
@@ -2092,9 +2074,7 @@ void CFusionView::OnBrushGroupsAddtogroup()
 
 void CFusionView::OnUpdateBrushGroupsAddtogroup(CCmdUI* pCmdUI) 
 {
-	CFusionDoc* pDoc = GetDocument();
-	
-	pCmdUI->Enable (!(pDoc->GetSelState() == NOSELECTIONS));
+	pCmdUI->Enable (!(App->CLSB_Doc->GetSelState() == NOSELECTIONS));
 }
 
 void CFusionView::OnBrushRemoveselectedfromgroup() 
@@ -2110,9 +2090,7 @@ void CFusionView::OnBrushRemoveselectedfromgroup()
 
 void CFusionView::OnUpdateBrushRemoveselectedfromgroup(CCmdUI* pCmdUI) 
 {
-	CFusionDoc* pDoc = GetDocument();
-
-	if( (App->CLSB_Doc->mCurrentGroup == 0) || (pDoc->GetSelState() == NOSELECTIONS) )
+	if( (App->CLSB_Doc->mCurrentGroup == 0) || (App->CLSB_Doc->GetSelState() == NOSELECTIONS) )
 		pCmdUI->Enable( FALSE ) ;
 	else
 		pCmdUI->Enable( TRUE ) ;
@@ -2155,13 +2133,11 @@ void CFusionView::OnUpdateToolsTemplate(CCmdUI* pCmdUI)
 
 void CFusionView::OnUpdateToolsBrushRotate45(CCmdUI* pCmdUI) 
 {
-	CFusionDoc* pDoc = GetDocument();
-
 	//that's a pretty big if
-	if((GetModeTool()==ID_TOOLS_TEMPLATE && !pDoc->TempEnt) || 
+	if((GetModeTool()==ID_TOOLS_TEMPLATE && !App->CLSB_Doc->TempEnt) ||
 	   (GetModeTool()==ID_GENERALSELECT &&
 //		GetAdjustMode()==ADJUST_MODE_BRUSH &&
-		pDoc->GetSelState()!=NOSELECTIONS))
+App->CLSB_Doc->GetSelState()!=NOSELECTIONS))
 	{
 		pCmdUI->Enable();
 	}
@@ -2240,9 +2216,8 @@ void CFusionView::OnDeselectall()
 void CFusionView::OnUpdateDeselectall(CCmdUI* pCmdUI) 
 {
 	BOOL		bEnable ;
-	CFusionDoc* pDoc = GetDocument();
-	
-	bEnable = ( pDoc->GetSelState() == NOSELECTIONS ) ? FALSE : TRUE ;
+
+	bEnable = (App->CLSB_Doc->GetSelState() == NOSELECTIONS ) ? FALSE : TRUE ;
 	pCmdUI->Enable( bEnable ) ;
 }
 
@@ -2346,12 +2321,11 @@ void CFusionView::OnToolsSettexturescale()
 void CFusionView::OnToolsNextbrush() 
 {
 
-	CFusionDoc *pDoc = GetDocument ();
 	BrushList *BList = Level_GetBrushes (App->CLSB_Doc->pLevel);
 
-	if(GetModeTool()==ID_GENERALSELECT && !pDoc->IsSelectionLocked())
+	if(GetModeTool()==ID_GENERALSELECT && !App->CLSB_Doc->IsSelectionLocked())
 	{
-		if(pDoc->GetSelState()&ONEBRUSH)
+		if(App->CLSB_Doc->GetSelState()&ONEBRUSH)
 		{
 			if (!(IsKeyDown(VK_SHIFT)))
 				SelBrushList_RemoveAll (App->CLSB_Doc->pSelBrushes);
@@ -2362,7 +2336,7 @@ void CFusionView::OnToolsNextbrush()
 //			pDoc->UpdateBrushAttributesDlg ();
 			App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 		}
-		else if(!(pDoc->GetSelState() & ANYBRUSH))
+		else if(!(App->CLSB_Doc->GetSelState() & ANYBRUSH))
 		{
 			Brush *pBrush;
 			BrushIterator bi;
@@ -2380,12 +2354,11 @@ void CFusionView::OnToolsNextbrush()
 
 void CFusionView::OnToolsPrevbrush() 
 {
-	CFusionDoc *pDoc = GetDocument ();
 	BrushList *BList = Level_GetBrushes (App->CLSB_Doc->pLevel);
 
-	if(GetModeTool()==ID_GENERALSELECT && !pDoc->IsSelectionLocked())
+	if(GetModeTool()==ID_GENERALSELECT && !App->CLSB_Doc->IsSelectionLocked())
 	{
-		if(pDoc->GetSelState()&ONEBRUSH)
+		if(App->CLSB_Doc->GetSelState()&ONEBRUSH)
 		{
 			if (!(IsKeyDown(VK_SHIFT)))
 				SelBrushList_RemoveAll (App->CLSB_Doc->pSelBrushes);
@@ -2396,7 +2369,7 @@ void CFusionView::OnToolsPrevbrush()
 //			pDoc->UpdateBrushAttributesDlg ();
 			App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 		}
-		else if(!(pDoc->GetSelState() & ANYBRUSH))
+		else if(!(App->CLSB_Doc->GetSelState() & ANYBRUSH))
 		{
 			Brush *pBrush;
 			BrushIterator bi;
@@ -2522,10 +2495,9 @@ void CFusionView::Drag(dragtime Now)
 
 void CFusionView::OnEditSelectFacesNext() 
 {
-	CFusionDoc *pDoc = GetDocument ();
 	BrushList *BList = Level_GetBrushes (App->CLSB_Doc->pLevel);
 
-	if(GetModeTool()==ID_GENERALSELECT && !pDoc->IsSelectionLocked())
+	if(GetModeTool()==ID_GENERALSELECT && !App->CLSB_Doc->IsSelectionLocked())
 	{
 		int nSelectedFaces = SelFaceList_GetSize (App->CLSB_Doc->pSelFaces);
 		Face *pFace;
@@ -2574,10 +2546,9 @@ void CFusionView::OnEditSelectFacesNext()
 
 void CFusionView::OnEditSelectFacesPrevious() 
 {
-	CFusionDoc *pDoc = GetDocument ();
 	BrushList *BList = Level_GetBrushes (App->CLSB_Doc->pLevel);
 
-	if(GetModeTool()==ID_GENERALSELECT && !pDoc->IsSelectionLocked())
+	if(GetModeTool()==ID_GENERALSELECT && !App->CLSB_Doc->IsSelectionLocked())
 	{
 		int nSelectedFaces = SelFaceList_GetSize (App->CLSB_Doc->pSelFaces);
 		Face *pFace;
@@ -2652,7 +2623,7 @@ void CFusionView::OnEditSelectEntitiesNext()
 {
 	CFusionDoc* pDoc = GetDocument();
 
-	if(GetModeTool()==ID_GENERALSELECT && !pDoc->IsSelectionLocked())
+	if(GetModeTool()==ID_GENERALSELECT && !App->CLSB_Doc->IsSelectionLocked())
 	{
 
 		CEntityArray *Entities;
@@ -2720,7 +2691,7 @@ void CFusionView::OnEditSelectEntitiesPrevious()
 {
 	CFusionDoc* pDoc = GetDocument();
 
-	if(GetModeTool()==ID_GENERALSELECT && !pDoc->IsSelectionLocked())
+	if(GetModeTool()==ID_GENERALSELECT && !App->CLSB_Doc->IsSelectionLocked())
 	{
 
 		CEntityArray *Entities;
@@ -2814,27 +2785,21 @@ void CFusionView::OnEditDeselectFaces()
 void CFusionView::OnUpdateEditDeselectBrushes(CCmdUI* pCmdUI) 
 {
 	BOOL		bEnable ;
-	CFusionDoc* pDoc = GetDocument();
-	
-	bEnable = ( pDoc->GetSelState() & ANYBRUSH ) ? TRUE : FALSE ;
+	bEnable = (App->CLSB_Doc->GetSelState() & ANYBRUSH ) ? TRUE : FALSE ;
 	pCmdUI->Enable( bEnable ) ;	
 }
 
 void CFusionView::OnUpdateEditDeselectEntities(CCmdUI* pCmdUI) 
 {
 	BOOL		bEnable ;
-	CFusionDoc* pDoc = GetDocument();
-	
-	bEnable = ( pDoc->GetSelState() & ANYENTITY ) ? TRUE : FALSE ;
+	bEnable = (App->CLSB_Doc->GetSelState() & ANYENTITY ) ? TRUE : FALSE ;
 	pCmdUI->Enable( bEnable ) ;
 }
 
 void CFusionView::OnUpdateEditDeselectFaces(CCmdUI* pCmdUI) 
 {
 	BOOL		bEnable ;
-	CFusionDoc* pDoc = GetDocument();
-	
-	bEnable = ( pDoc->GetSelState() & ANYFACE ) ? TRUE : FALSE ;
+	bEnable = (App->CLSB_Doc->GetSelState() & ANYFACE ) ? TRUE : FALSE ;
 	pCmdUI->Enable( bEnable ) ;
 }
 
@@ -2964,7 +2929,7 @@ void CFusionView::OnUpdateViewportCenteronselection(CCmdUI* pCmdUI)
 	{
 		CFusionDoc *pDoc = GetDocument ();
 		if (pDoc) {
-			if ((pDoc->GetSelState()!=NOSELECTIONS) || (App->CLSB_Doc->mModeTool == ID_TOOLS_TEMPLATE))
+			if ((App->CLSB_Doc->GetSelState()!=NOSELECTIONS) || (App->CLSB_Doc->mModeTool == ID_TOOLS_TEMPLATE))
 				pCmdUI->Enable( TRUE );
 			else
 				pCmdUI->Enable( FALSE );
@@ -3166,7 +3131,7 @@ void CFusionView::OnUpdateModifyRotate(CCmdUI* pCmdUI)
 		return;
 	}
 
-	if ((pDoc->GetSelState()!=NOSELECTIONS) || ((App->CLSB_Doc->mModeTool==ID_TOOLS_TEMPLATE) && !pDoc->PlaceObjectFlag))
+	if ((App->CLSB_Doc->GetSelState()!=NOSELECTIONS) || ((App->CLSB_Doc->mModeTool==ID_TOOLS_TEMPLATE) && !App->CLSB_Doc->PlaceObjectFlag))
 		pCmdUI->Enable( TRUE );
 	else
 		pCmdUI->Enable( FALSE );

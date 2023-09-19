@@ -113,17 +113,7 @@ protected: // create from serialization only
 public:
 	
 	fdocAdjustEnum mAdjustMode;
-	int mShowSelectedBrushes;
-	int mLockAxis;
-	geBoolean	mConstrainHollows ;
-	BOOL SelectLock, TempEnt;
-    BOOL PlaceObjectFlag;	// this flag signifies to place an object rather than putting
-							// down an entity when enter is pressed
-	DWORD SelState;
 
-	GNode			*mWorldBsp;
-	CEntity			mRegularEntity;
-	
 	//dialogs / controls
 	CFrameWnd *mpActiveViewFrame;
 	CMainFrame *mpMainFrame;
@@ -134,9 +124,7 @@ public:
 	void DoneRotate(void);
 	
 	void SnapScaleNearest(int sides, int inidx, ViewVars *v);
-	DWORD GetSelState(void){  return SelState;  }
-	int	 GetLockAxis( void ) { return mLockAxis ; } ;
-	void SetLockAxis( int Lock ) { mLockAxis = Lock ; } ;
+	
 	void SetCurrentBrushTexture();
 	BOOL IsEntitySelected();
 	void DeleteSelectedEntities();
@@ -177,8 +165,7 @@ public:
 	void ResetSelectedBrush();
 	void ResetSelectedFace(int PolyNum = 0);
 	BOOL OneBrushSelectedOnly(void);
-	void ToggleSelectionLock(void){ SelectLock=!(SelectLock); }
-	BOOL IsSelectionLocked(void){ return SelectLock; }
+
 	void RotateSelectedBrushes(geVec3d const *v);
 	void RotateSelectedBrushesDirect(geVec3d const *v);
 
@@ -205,7 +192,7 @@ public:
 //	void ChangeGridSize(geFloat Increment, CView* pSender );
 	void UpdateGridInformation();
 	void MoveEntity(geVec3d *);
-	void DoneMoveEntity();
+	
 	void DoneRotateBrush();
 	void OnSelectedTypeCmdUI(CCmdUI* pCmdUI);
 	int AreBrushesSelected();
@@ -218,7 +205,8 @@ public:
 	int CanUndo();
 	void RenderWorld(ViewVars *v, CDC* pDC);
 	void RotateTemplateBrush(geVec3d *);
-	void ShearBrush(geVec3d *);
+	
+	void ShearBrush(geVec3d*);
 	void ResetSelectedBrushAttributes();
 	void BrushListToMeters(void);
 	void BrushListToTexels(void);
@@ -489,7 +477,6 @@ private:
 //	void DeleteBrushAttributes (void);
 //	void DeleteFaceAttributes (void);
 };
-
 
 geBoolean BrushSelect( Brush *pBrush, Ogre::uint32 Action, Ogre::uint32 Data, void * pVoid ) ;
 geBoolean BrushDraw( Brush *pBrush, Ogre::uint32 Action, Ogre::uint32 Data, void * pVoid ) ;

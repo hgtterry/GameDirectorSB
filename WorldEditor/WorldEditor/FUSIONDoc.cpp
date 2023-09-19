@@ -281,17 +281,10 @@ const char *CFusionDoc::FindTextureLibrary (char const *WadName)
 
 CFusionDoc::CFusionDoc() : CDocument (), 
 
-    SelectLock (FALSE), TempEnt (FALSE), SelState (NOSELECTIONS),
-    mShowSelectedBrushes (FALSE),
     LeakPoints (NULL), NumLeakPoints (0), bLeakLoaded (FALSE), bShowLeak (TRUE),
     bShowClipBrushes (GE_TRUE), bShowDetailBrushes (GE_TRUE), bShowHintBrushes (GE_TRUE), bShowActors(GE_TRUE)/*changed QD*/,
     mpActiveViewFrame (NULL), // mpBrushAttributes (NULL), mpFaceAttributes (NULL),
-    /*mpTextureView (NULL), */mWorldBsp (NULL),
-    mAdjustMode (ADJUST_MODE_FACE),
-    mConstrainHollows (GE_TRUE),
-    //mTextureBrowserOpen (0), 
-    PlaceObjectFlag (FALSE)
-    
+    mAdjustMode (ADJUST_MODE_FACE)
 {
 
     const char *DefaultWadName;
@@ -336,7 +329,7 @@ CFusionDoc::CFusionDoc() : CDocument (),
     App->CLSB_Doc->pTempSelBrushes = SelBrushList_Create ();
     App->CLSB_Doc->pSelFaces = SelFaceList_Create ();
 
-    SetLockAxis( 0 ) ;	// Start with no axis locked
+    App->CLSB_Doc->SetLockAxis( 0 ) ;	// Start with no axis locked
     
     {
         // create our default box
@@ -358,8 +351,8 @@ CFusionDoc::CFusionDoc() : CDocument (),
 
 CFusionDoc::~CFusionDoc()
 {
-    if (mWorldBsp != NULL)		Node_ClearBsp(mWorldBsp);
-    mWorldBsp = NULL;
+    if (App->CLSB_Doc->mWorldBsp != NULL)		Node_ClearBsp(App->CLSB_Doc->mWorldBsp);
+    App->CLSB_Doc->mWorldBsp = NULL;
     if (App->CLSB_Doc->pLevel != NULL)				Level_Destroy (&App->CLSB_Doc->pLevel);
     App->CLSB_Doc->pLevel = NULL;
     if (App->CLSB_Doc->BTemplate != NULL)		Brush_Destroy (&App->CLSB_Doc->BTemplate);
@@ -943,10 +936,10 @@ void CFusionDoc::OnBrushAddtoworld()
         return;
 
     Placed = GE_FALSE;
-    if(TempEnt)
+    if(App->CLSB_Doc->TempEnt)
     {
         // here we check to see if the user is placing library objects down
-        if ( PlaceObjectFlag )
+        if (App->CLSB_Doc->PlaceObjectFlag )
         {
             geBoolean GotName;
             char ObjectName[MAX_PATH];
@@ -972,7 +965,7 @@ void CFusionDoc::OnBrushAddtoworld()
             CEntity NewEnt;
             char EntityName[MAX_PATH];
 
-            mRegularEntity.DoneMove (1, Level_GetEntityDefs (App->CLSB_Doc->pLevel));
+            App->CLSB_Doc->mRegularEntity.DoneMove (1, Level_GetEntityDefs (App->CLSB_Doc->pLevel));
 
             // now create a new entity of the currently-selected type
             //GotName = mpMainFrame->m_wndTabControls->m_pBrushEntityDialog->GetCurrentEntityName (EntityName);
@@ -1028,7 +1021,7 @@ void CFusionDoc::OnBrushAddtoworld()
 
         if(!Brush_IsHollow(nb) && !Brush_IsMulti(nb))
         {
-            mWorldBsp	=Node_AddBrushToTree(mWorldBsp, nb);
+            App->CLSB_Doc->mWorldBsp	=Node_AddBrushToTree(App->CLSB_Doc->mWorldBsp, nb);
             App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
         }
         else
@@ -1179,7 +1172,7 @@ void CFusionDoc::CopySelectedBrushes(void)
 
 void CFusionDoc::MakeSelectedBrushNewest(void)
 {
-    if(GetSelState()==ONEBRUSHONLY)
+    if(App->CLSB_Doc->GetSelState()==ONEBRUSHONLY)
     {
         Level_RemoveBrush (App->CLSB_Doc->pLevel, App->CLSB_Doc->CurBrush);
         Level_AppendBrush (App->CLSB_Doc->pLevel, App->CLSB_Doc->CurBrush);
@@ -1348,7 +1341,7 @@ void CFusionDoc::CreateNewTemplateBrush(Brush *pBrush)
     App->CLSB_Doc->BTemplate = pBrush;
     App->CLSB_Doc->CurBrush = pBrush;
 
-    TempEnt	= FALSE;
+    App->CLSB_Doc->TempEnt	= FALSE;
     SetDefaultBrushTexInfo (App->CLSB_Doc->CurBrush);
     Brush_Bound (App->CLSB_Doc->CurBrush);
     Brush_Center (App->CLSB_Doc->CurBrush, &BrushPos);
@@ -1642,13 +1635,13 @@ void CFusionDoc::CreateEntity
     
     if (App->CLSB_Doc->CreateEntityFromName (pEntityType, NewEnt))
     {
-        TempEnt = TRUE;
+        App->CLSB_Doc->TempEnt = TRUE;
 
-        mRegularEntity = NewEnt;
+        App->CLSB_Doc->mRegularEntity = NewEnt;
         App->CLSB_Doc->mCurrentEntity = -1;
         // set this flag so that doc knows when enter is pressed that user is NOT adding 
         // objects to level
-        PlaceObjectFlag = FALSE;
+        App->CLSB_Doc->PlaceObjectFlag = FALSE;
 
         App->CLSB_Doc->mCurrentTool=ID_TOOLS_BRUSH_MOVEROTATEBRUSH;
         ConfigureCurrentTool();
@@ -1667,16 +1660,16 @@ void CFusionDoc::CreateObjectTemplate()
     // make an origin
     if (App->CLSB_Doc->CreateEntityFromName ("ModelOrigin", NewEnt))
     {
-        TempEnt=TRUE;
+        App->CLSB_Doc->TempEnt=TRUE;
 
         NewEnt.SetOrigin (0.0f, 0.0f, 0.0f, Level_GetEntityDefs (App->CLSB_Doc->pLevel));
 
-        mRegularEntity=NewEnt;
+        App->CLSB_Doc->mRegularEntity=NewEnt;
         App->CLSB_Doc->mCurrentEntity=-1;
 
         // set this flag so that doc knows when enter is pressed that user is adding objects
         // to level
-        PlaceObjectFlag = TRUE;
+        App->CLSB_Doc->PlaceObjectFlag = TRUE;
 
         App->CLSB_Doc->mCurrentTool=ID_TOOLS_BRUSH_MOVEROTATEBRUSH;
         ConfigureCurrentTool();
@@ -1839,7 +1832,7 @@ void CFusionDoc::MoveEntity(geVec3d *v)
 
     if(App->CLSB_Doc->mCurrentEntity < 0) //template
     {
-        mRegularEntity.Move (v);
+        App->CLSB_Doc->mRegularEntity.Move (v);
     }
     else
     {
@@ -2379,7 +2372,7 @@ void CFusionDoc::SelectOrthoRect(CPoint ptStart, CPoint ptEnd, ViewVars *v)
 
     viewRect.NormalizeRect() ;
 
-    if(IsSelectionLocked())
+    if(App->CLSB_Doc->IsSelectionLocked())
     {
         return;
     }
@@ -2601,7 +2594,7 @@ void CFusionDoc::PlaceTemplateEntity3D(CPoint point, ViewVars *v)
             geVec3d_Subtract(&ClickPosWorld, &bdat.vp, &ClickPosWorld);
 
             geVec3d_Inverse (&ClickPosWorld);
-            mRegularEntity.mOrigin = ClickPosWorld;
+            App->CLSB_Doc->mRegularEntity.mOrigin = ClickPosWorld;
             App->CLSB_Doc->UpdateAllViews( UAV_ALL3DVIEWS, NULL );
         }
     }
@@ -3269,7 +3262,7 @@ void	CFusionDoc::InvalidateDrawTreeOriginalFaces(void)
     ModelInfo_Type	*ModelInfo;
     Model			*pMod;
 
-    Node_InvalidateTreeOGFaces(mWorldBsp);
+    Node_InvalidateTreeOGFaces(App->CLSB_Doc->mWorldBsp);
 
     ModelInfo	=Level_GetModelInfo(App->CLSB_Doc->pLevel);
     pMod		=ModelList_GetFirst(ModelInfo->Models, &mi);
@@ -3306,8 +3299,8 @@ void	CFusionDoc::RebuildTrees(void)
 
     
     //do the world csg list and tree first
-    Node_ClearBsp(mWorldBsp);
-    mWorldBsp	=NULL;
+    Node_ClearBsp(App->CLSB_Doc->mWorldBsp);
+    App->CLSB_Doc->mWorldBsp	=NULL;
 
     BrushList_ClearAllCSG (BList);
 
@@ -3315,7 +3308,7 @@ void	CFusionDoc::RebuildTrees(void)
 
     BspCallbackData.pDoc		=this;
     BspCallbackData.CurId		=CurId;
-    BspCallbackData.pTree		=&mWorldBsp;
+    BspCallbackData.pTree		=&App->CLSB_Doc->mWorldBsp;
     BspCallbackData.bAddFlocking=GE_FALSE;
 
     BrushList_EnumCSGBrushes (BList, &BspCallbackData, ::AddBrushToBspCB) ;
@@ -3447,9 +3440,9 @@ void CFusionDoc::RenderWorld(ViewVars *v, CDC *pDC) // hgtterry RenderWorld
     brushDrawData.FlagTest = NULL;
     brushDrawData.Color = PEN_WHITE_COLOR;
 
-    if((Render_GetViewType(v) & (VIEWSOLID|VIEWTEXTURE)) && mWorldBsp)
+    if((Render_GetViewType(v) & (VIEWSOLID|VIEWTEXTURE)) && App->CLSB_Doc->mWorldBsp)
     {
-        Render_RenderTree(v, mWorldBsp, pDC->m_hDC, ZFILL);
+        Render_RenderTree(v, App->CLSB_Doc->mWorldBsp, pDC->m_hDC, ZFILL);
         DoBlit	=TRUE;
     }
     else
@@ -3491,7 +3484,7 @@ void CFusionDoc::RenderWorld(ViewVars *v, CDC *pDC) // hgtterry RenderWorld
         ::DrawEntity (pEnt, v, Level_GetEntityDefs (App->CLSB_Doc->pLevel));
     }
 
-    if(!(GetSelState() & NOENTITIES))
+    if(!(App->CLSB_Doc->GetSelState() & NOENTITIES))
     {
         for(i=0;i < Entities->GetSize();i++)
         {
@@ -3554,17 +3547,17 @@ void CFusionDoc::RenderWorld(ViewVars *v, CDC *pDC) // hgtterry RenderWorld
         }
     }
 
-    if(!(GetSelState() & NOFACES))
+    if(!(App->CLSB_Doc->GetSelState() & NOFACES))
     {
         brushDrawData.Color = PEN_PURPLE_COLOR;
         BrushList_EnumLeafBrushes(BList, &brushDrawData, ::BrushDrawWireSel3dCB);
     }
 
     if((App->CLSB_Doc->mModeTool==ID_TOOLS_TEMPLATE)||
-        (App->CLSB_Doc->mModeTool==ID_TOOLS_CAMERA && GetSelState()==NOSELECTIONS))
+        (App->CLSB_Doc->mModeTool==ID_TOOLS_CAMERA && App->CLSB_Doc->GetSelState()==NOSELECTIONS))
     {
         brushDrawData.Color = PEN_BLUE_COLOR;
-        if(!TempEnt)
+        if(!App->CLSB_Doc->TempEnt)
         {
             if(Brush_IsMulti(App->CLSB_Doc->CurBrush))
             {
@@ -3577,9 +3570,9 @@ void CFusionDoc::RenderWorld(ViewVars *v, CDC *pDC) // hgtterry RenderWorld
         }
         else
         {
-            if(Render_PointInFrustum(v, &mRegularEntity.mOrigin))
+            if(Render_PointInFrustum(v, &App->CLSB_Doc->mRegularEntity.mOrigin))
             {
-                ::DrawEntity (&mRegularEntity, v, Level_GetEntityDefs (App->CLSB_Doc->pLevel));
+                ::DrawEntity (&App->CLSB_Doc->mRegularEntity, v, Level_GetEntityDefs (App->CLSB_Doc->pLevel));
             }
         }
     }
@@ -3603,9 +3596,9 @@ void CFusionDoc::MoveTemplateBrush(geVec3d *v)
     geVec3d_Add (&App->CLSB_Doc->SelectedGeoCenter, v, &App->CLSB_Doc->SelectedGeoCenter);
     geVec3d_Add (v, &App->CLSB_Doc->FinalPos, &App->CLSB_Doc->FinalPos);
 
-    if(TempEnt)
+    if(App->CLSB_Doc->TempEnt)
     {
-        mRegularEntity.Move (v);
+        App->CLSB_Doc->mRegularEntity.Move (v);
     }
     else
     {
@@ -3758,7 +3751,7 @@ void CFusionDoc::DoneRotate(void)
 
     GetRotationPoint (&RotationPoint);
 
-    if((SelState & NOENTITIES) && Level_UseGrid (App->CLSB_Doc->pLevel))
+    if((App->CLSB_Doc->SelState & NOENTITIES) && Level_UseGrid (App->CLSB_Doc->pLevel))
     {
         RSnap		=Units_DegreesToRadians ((float)Level_GetRotationSnap (App->CLSB_Doc->pLevel));
         App->CLSB_Doc->FinalRot.X	=((float)((int)(App->CLSB_Doc->FinalRot.X / RSnap))) * RSnap;
@@ -3773,7 +3766,7 @@ void CFusionDoc::DoneRotate(void)
 
     if(App->CLSB_Doc->mModeTool == ID_TOOLS_TEMPLATE)
     {
-        if (TempEnt)
+        if (App->CLSB_Doc->TempEnt)
         {
         }
         else
@@ -3882,64 +3875,6 @@ void CFusionDoc::UpdateSelectedModel
         pModel = ModelList_GetNext (ModelInfo->Models, &mi);
     }
 }
-
-void CFusionDoc::DoneMoveEntity(void)
-{
-    int		i;
-    float	SnapSize;
-    CEntityArray *Entities = Level_GetEntities (App->CLSB_Doc->pLevel);
-    CEntity *pEnt;
-
-    if (App->CLSB_Doc->mCurrentTool==ID_TOOLS_BRUSH_MOVEROTATEBRUSH)
-    {
-        if ((GetSelState()==ONEENTITYONLY) && Level_UseGrid (App->CLSB_Doc->pLevel))
-        {
-            SnapSize = Level_GetGridSnapSize (App->CLSB_Doc->pLevel);
-        }
-        else
-        {
-            SnapSize = 1.0f;
-        }
-
-        for(i=0;i < Entities->GetSize();i++)
-        {
-            pEnt = &(*Entities)[i];
-
-            if (pEnt->IsSelected ())
-            {
-                pEnt->DoneMove (SnapSize, Level_GetEntityDefs (App->CLSB_Doc->pLevel));
-                if( pEnt->IsCamera() == GE_TRUE )	// Camera Entity?
-//				if( pEnt==pCameraEntity )	// Camera Entity?
-                {				
-                    geVec3d	PitchRollYaw ;
-
-                    pEnt->GetAngles( &PitchRollYaw, Level_GetEntityDefs (App->CLSB_Doc->pLevel) ) ;
-                    SetRenderedViewCamera( &(pEnt->mOrigin), &PitchRollYaw ) ;
-                    App->CLSB_Doc->UpdateAllViews(UAV_RENDER_ONLY, NULL);
-                }// Camera entity, update camera
-            }// Entity Selected
-        }// Loop thru Entities
-    }
-    else
-    {
-        if(App->CLSB_Doc->mCurrentEntity < 0) //template
-        {
-            pEnt = &mRegularEntity;
-        }
-        else
-        {
-            pEnt = &(*Entities)[App->CLSB_Doc->mCurrentEntity];
-        }
-
-        SnapSize = 1.0f;
-        if( Level_UseGrid (App->CLSB_Doc->pLevel))
-        {
-            SnapSize = Level_GetGridSnapSize (App->CLSB_Doc->pLevel);
-        }
-        pEnt->DoneMove(SnapSize, Level_GetEntityDefs (App->CLSB_Doc->pLevel));
-    }
-    SetModifiedFlag();
-}/* CFusionDoc::DoneMoveEntity */
 
 // ME Terry
 //void CFusionDoc::UpdateAllViews(int Mode, CView* pSender, BOOL Override)
@@ -4080,7 +4015,7 @@ void CFusionDoc::ConfigureCurrentTool(void)
     if(App->CLSB_Doc->mModeTool==ID_TOOLS_CAMERA)
     {
         App->CLSB_Doc->mCurrentTool		=CURTOOL_NONE;
-        mShowSelectedBrushes=(mAdjustMode==ADJUST_MODE_BRUSH);
+        App->CLSB_Doc->mShowSelectedBrushes=(mAdjustMode==ADJUST_MODE_BRUSH);
         App->CLSB_Doc->mShowSelectedFaces	=(mAdjustMode==ADJUST_MODE_FACE);
         App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
         return;
@@ -4090,7 +4025,7 @@ void CFusionDoc::ConfigureCurrentTool(void)
     {
         case ADJUST_MODE_BRUSH :
             App->CLSB_Doc->mShowSelectedFaces	=FALSE;
-            mShowSelectedBrushes=TRUE;
+            App->CLSB_Doc->mShowSelectedBrushes=TRUE;
             
             App->CLSB_Doc->UpdateSelected();
             Redraw	=TRUE;
@@ -4098,7 +4033,7 @@ void CFusionDoc::ConfigureCurrentTool(void)
 
         case ADJUST_MODE_FACE :
             App->CLSB_Doc->mShowSelectedFaces	=TRUE;
-            mShowSelectedBrushes=FALSE;
+            App->CLSB_Doc->mShowSelectedBrushes=FALSE;
 
             App->CLSB_Doc->UpdateSelected();
             Redraw	=TRUE;
@@ -4115,13 +4050,13 @@ void CFusionDoc::ConfigureCurrentTool(void)
         if(App->CLSB_Doc->mModeTool!=ID_TOOLS_TEMPLATE)
         {
             App->CLSB_Doc->mShowSelectedFaces	=FALSE;
-            mShowSelectedBrushes=TRUE;
+            App->CLSB_Doc->mShowSelectedBrushes=TRUE;
             Redraw				=TRUE;
         }
         else
         {
             App->CLSB_Doc->mShowSelectedFaces	=FALSE;
-            mShowSelectedBrushes=FALSE;
+            App->CLSB_Doc->mShowSelectedBrushes=FALSE;
         }
         break;
 
@@ -4130,17 +4065,17 @@ void CFusionDoc::ConfigureCurrentTool(void)
         {
             Redraw				=TRUE;
             App->CLSB_Doc->mShowSelectedFaces	=FALSE;
-            mShowSelectedBrushes=TRUE;
+            App->CLSB_Doc->mShowSelectedBrushes=TRUE;
         }
         else
         {
             App->CLSB_Doc->mShowSelectedFaces	=FALSE;
-            mShowSelectedBrushes=FALSE;
+            App->CLSB_Doc->mShowSelectedBrushes=FALSE;
         }
         break;
 
     }
-    if(App->CLSB_Doc->mModeTool==ID_TOOLS_TEMPLATE && TempEnt)
+    if(App->CLSB_Doc->mModeTool==ID_TOOLS_TEMPLATE && App->CLSB_Doc->TempEnt)
         App->CLSB_Doc->mCurrentEntity=-1;
 
     Redraw	=TRUE;
@@ -4183,13 +4118,13 @@ Face *CFusionDoc::FindSelectedFace (void)
 
 void CFusionDoc::OnConstrainhollows()
 {
-    mConstrainHollows = ! mConstrainHollows ;
+    App->CLSB_Doc->mConstrainHollows = !App->CLSB_Doc->mConstrainHollows ;
     SetModifiedFlag();
 }
 
 void CFusionDoc::OnUpdateConstrainhollows(CCmdUI* pCmdUI)
 {
-    pCmdUI->SetCheck( mConstrainHollows );
+    pCmdUI->SetCheck(App->CLSB_Doc->mConstrainHollows );
 }
 
 void CFusionDoc::OnGeneralselect()
@@ -4329,7 +4264,7 @@ void CFusionDoc::OnThingAttributes()
 
 void CFusionDoc::OnUpdateEditCopy(CCmdUI* pCmdUI) 
 {
-    if(GetSelState()!=NOSELECTIONS)	pCmdUI->Enable( TRUE );
+    if(App->CLSB_Doc->GetSelState()!=NOSELECTIONS)	pCmdUI->Enable( TRUE );
     else pCmdUI->Enable( FALSE );
 }
 
@@ -4355,7 +4290,7 @@ void CFusionDoc::OnUpdateEditPaste(CCmdUI* pCmdUI)
 //	Place selected brushes on clipboard and then delete them...
 void CFusionDoc::OnEditCut() 
 {
-    BOOL	Flag	=(GetSelState() & ANYBRUSH);
+    BOOL	Flag	=(App->CLSB_Doc->GetSelState() & ANYBRUSH);
 
     OnEditCopy();
     App->CLSB_Doc->DeleteSelectedBrushes();
@@ -4375,7 +4310,7 @@ void CFusionDoc::OnEditDelete()
 
 void CFusionDoc::OnUpdateEditCut(CCmdUI* pCmdUI) 
 {
-    if(GetSelState()!=NOSELECTIONS)	pCmdUI->Enable( TRUE );
+    if(App->CLSB_Doc->GetSelState()!=NOSELECTIONS)	pCmdUI->Enable( TRUE );
     else pCmdUI->Enable( FALSE );
 }
 
@@ -7347,7 +7282,7 @@ void CFusionDoc::OnUpdateFileExport(CCmdUI* pCmdUI)
 {
     BOOL		bEnable ;
     
-    bEnable = ((GetSelState() & ANYBRUSH) ? TRUE : FALSE) || ((GetSelState() & ANYENTITY) ? TRUE : FALSE);
+    bEnable = ((App->CLSB_Doc->GetSelState() & ANYBRUSH) ? TRUE : FALSE) || ((App->CLSB_Doc->GetSelState() & ANYENTITY) ? TRUE : FALSE);
     
     pCmdUI->Enable( bEnable ) ;	
     
@@ -7360,7 +7295,7 @@ void CFusionDoc::OnUpdateFileExportGDSB(CCmdUI* pCmdUI)
 {
     BOOL		bEnable ;
     
-    bEnable = ((GetSelState() & ANYBRUSH) ? TRUE : FALSE) || ((GetSelState() & ANYENTITY) ? TRUE : FALSE);
+    bEnable = ((App->CLSB_Doc->GetSelState() & ANYBRUSH) ? TRUE : FALSE) || ((App->CLSB_Doc->GetSelState() & ANYENTITY) ? TRUE : FALSE);
     
     pCmdUI->Enable( bEnable ) ;	
     
@@ -7512,7 +7447,7 @@ CEntity* CFusionDoc::GetSelectedEntity()
 {
     CEntity* pEnt = NULL;
 
-    if(SelState & ONEENTITY)
+    if(App->CLSB_Doc->SelState & ONEENTITY)
     {
         CEntityArray *Entities = Level_GetEntities (App->CLSB_Doc->pLevel);
 
@@ -7633,9 +7568,9 @@ void CFusionDoc::OnCameraCenteronselection()
     // Get the current thing's position...
     geVec3d CurrentThingPos;
 
-    if (TempEnt)
+    if (App->CLSB_Doc->TempEnt)
     {
-        CurrentThingPos = mRegularEntity.mOrigin;
+        CurrentThingPos = App->CLSB_Doc->mRegularEntity.mOrigin;
     }
     else
     {
@@ -7715,7 +7650,7 @@ void CFusionDoc::OnCameraCenteronselection()
 
 void CFusionDoc::OnUpdateCameraCenteronselection(CCmdUI* pCmdUI) 
 {
-    if(GetSelState()!=NOSELECTIONS)
+    if(App->CLSB_Doc->GetSelState()!=NOSELECTIONS)
         pCmdUI->Enable( TRUE );
     else
         pCmdUI->Enable( FALSE );
@@ -7792,7 +7727,7 @@ void CFusionDoc::OnModifyMove()
 
 void CFusionDoc::OnUpdateModifyMove(CCmdUI* pCmdUI) 
 {
-    if ((GetSelState()!=NOSELECTIONS) || ((App->CLSB_Doc->mModeTool==ID_TOOLS_TEMPLATE) && !PlaceObjectFlag))
+    if ((App->CLSB_Doc->GetSelState()!=NOSELECTIONS) || ((App->CLSB_Doc->mModeTool==ID_TOOLS_TEMPLATE) && !App->CLSB_Doc->PlaceObjectFlag))
         pCmdUI->Enable( TRUE );
     else
         pCmdUI->Enable( FALSE );
@@ -7820,7 +7755,7 @@ void CFusionDoc::OnModifyScale()
 
 void CFusionDoc::OnUpdateModifyScale(CCmdUI* pCmdUI) 
 {
-    if ((GetSelState()!=NOSELECTIONS) || ((App->CLSB_Doc->mModeTool==ID_TOOLS_TEMPLATE) && !PlaceObjectFlag))
+    if ((App->CLSB_Doc->GetSelState()!=NOSELECTIONS) || ((App->CLSB_Doc->mModeTool==ID_TOOLS_TEMPLATE) && !App->CLSB_Doc->PlaceObjectFlag))
         pCmdUI->Enable( TRUE );
     else
         pCmdUI->Enable( FALSE );
@@ -7834,7 +7769,7 @@ void CFusionDoc::OnToolsBrushMakenewest()
 
 void CFusionDoc::OnUpdateToolsBrushMakenewest(CCmdUI* pCmdUI) 
 {
-    if (GetSelState()==ONEBRUSHONLY)
+    if (App->CLSB_Doc->GetSelState()==ONEBRUSHONLY)
         pCmdUI->Enable( TRUE );
     else
         pCmdUI->Enable( FALSE );
